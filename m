@@ -4,69 +4,86 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D7E3DCD6E4A
-	for <qemu-devel@archiver.kernel.org>; Fri, 29 May 2026 11:36:46 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 710DCCD6E43
+	for <qemu-devel@archiver.kernel.org>; Fri, 29 May 2026 11:48:07 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wSvVH-0008PP-DI; Fri, 29 May 2026 07:35:51 -0400
+	id 1wSvga-0001RY-5t; Fri, 29 May 2026 07:47:32 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <andrey@volkov.fr>)
- id 1wSvVF-0008Ob-E7; Fri, 29 May 2026 07:35:49 -0400
-Received: from 102.0.133.77.rev.sfr.net ([77.133.0.102] helo=gate.volkov.fr)
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <andrey@volkov.fr>)
- id 1wSvVC-00052p-VO; Fri, 29 May 2026 07:35:49 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=volkov.fr; s=mail;
- t=1780054541; bh=V+eIzMUsR4WfWvLNpTA2+A+GMYJflzugrSTgDrED9tc=;
- h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
- b=KtYLo8EBoXM2PB9qRQtkggeqjBMsWlhyDW0t3lhuiwyJ6/WSAjT6BR3hobDGbsVvM
- 7r/J7JaItTM8VMQAIjCLLIArViqjSxdvatNgU8yjTnrKgsLo5bhL20rSdjJljvIX1X
- m3DFdT1lsuE6SCEJbmJKNivrWoCRujKFgSwmZ/bduqoQBFUOq3+u5We+sHGzb6I70x
- bvkwiXYlWOnngWDUETAlUOqKocYXfRaigmgy0e92XsNCSMI7LKhTVi6xWtByc5F35l
- O/SggSHyoKtctc7HeTVhA5zT2QmLmfP50JcmWc+fJ8G0xgtL80vFjUYuP58H6aTYNm
- N4AlRlyWLXyNg==
-X-Virus-Scanned: Debian amavisd-new at volkov.fr
-Authentication-Results: gate.volkov.fr;
- dmarc=fail (p=reject dis=none) header.from=volkov.fr
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=volkov.fr; s=mail;
- t=1780054539; bh=V+eIzMUsR4WfWvLNpTA2+A+GMYJflzugrSTgDrED9tc=;
- h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
- b=cr/GobdYu0w9SKiGoqhjQNMkZ3y9YwqQipFRZ57yTD7oobZnj5CIZ55cnh/WqymNn
- liJMeBb3r467/uLEBCQOiPIZmPC51+hCm0RoFdpGRd3pPbikUXOFVGWqYPi1R1ZyLN
- HroG46h0hIKXPEtd5qjkhiceUr3nuwHweaoYKGTW5nYTuQGkpf97MTlDo40CytPk63
- 0t/+ORlZsT2J4/PyVg6n8WAEJ2ffQQi/Y2wkdxoujAk7DkKwsOmiQ9ijZIZMm2c2fL
- wt6qC76B6ngKzEMnvJFN0FEp8pl7uxBMYeBC3luE+8Er9SqswhP+itq9TCuw/QdcqK
- kfIM0wweJXOgg==
-Message-ID: <dca6513c-5494-4eee-a0bb-bce64ffa3934@volkov.fr>
-Date: Fri, 29 May 2026 13:35:39 +0200
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1wSvgY-0001R3-PJ
+ for qemu-devel@nongnu.org; Fri, 29 May 2026 07:47:30 -0400
+Received: from mail-wm1-x32d.google.com ([2a00:1450:4864:20::32d])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1wSvgW-00087c-7e
+ for qemu-devel@nongnu.org; Fri, 29 May 2026 07:47:30 -0400
+Received: by mail-wm1-x32d.google.com with SMTP id
+ 5b1f17b1804b1-4906869f0cbso61557265e9.1
+ for <qemu-devel@nongnu.org>; Fri, 29 May 2026 04:47:27 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1780055246; x=1780660046; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:to
+ :from:from:to:cc:subject:date:message-id:reply-to;
+ bh=18l804VH4GWVQ+GjIPdSoK2yU9tGEgdKVDXJrMiBDiI=;
+ b=nUIhi3+mga+snw1/lB5pQe4ayJwl0xRo9BowslDi/DS3ymX+GC+pqeqI3tCHED2+LD
+ iY5gGvm2HjocNm8XGHSkVoaHSDh8BnG/AcShYrK3j3Z1g+PLWvnBt5VF4CBYcoGdYDPv
+ 2859o3PCZLRUsahshI3JjRK8pV2iLdXwKv0EKeyTKB+5qJ8afgMKdQh5wTeF8z9KOQfc
+ btWebRC4oVlKfFMS3Qx8uMWgMxYaE8lCQULXqnopScR/jK5sOtRnbnRFgPDwqvZ6VL/S
+ BopMWqtTcf/uYMsnuuw+56qXhaU2LKNy8je9Dmkt75BBkSUV06Q4AoUKzza4O+UxrXaK
+ 6FUQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1780055246; x=1780660046;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:to
+ :from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=18l804VH4GWVQ+GjIPdSoK2yU9tGEgdKVDXJrMiBDiI=;
+ b=XOUXrThqhX+5l+v6Yv2waiPv9PBGTSLIo2025yano7iNpOQdNI9R4VqIxGSfiv9Ugs
+ dPVeylrC9F5jR0nonx+JdmhfMAOffJN76Y8ZkkUUXKcwPylJYIqEMcAOG5DUz+FdxKhu
+ 1pb/iThQ+8WZJg+yfu69NjqMOfONEBECvuXN05PueFldeIsW0EV/hja7kKs6M9DpsjQq
+ AptrMHjBIp09u5L99cAlTVqxqrF42jcWcFuvfQKjjtj3r1BXQXJOzS9pPGuCzG57l6Y5
+ c7UJPzzwR5HjrxqhQ8K7px2bYHqI7BDZw7493RAIzkalCpRLEpDD8tJ090RxVc5zvPbz
+ Dt7g==
+X-Gm-Message-State: AOJu0Ywrl1w39BnA1OPqAmhSAkLi5OGs7tim23gS9xuQe4v18fTXrgPK
+ Q87p/DeXPA8OfzZLdoAuKqAWnTclcAuyR0h3HLZB/iq2NvNpUa4evwGRmL+EYGQ0lwdeQE8LhZU
+ kE1KZ
+X-Gm-Gg: Acq92OGwhvw/v9olJhhea2s7BWHwZq1o9m8hxsjnmJOlTxzcPsRYCU8IZ9b+5OwGVYo
+ DeU9083PH1BhkpXXEis8Yn8WtyfxNecZ1sQ+9HBfL/ICZUYU8jKx2JraLTCUMu8CapzVaVkCNgV
+ q/wSVWTRrPGHKQVWluKVQf5i9cYX3YnXvWBdHd76sMQmYOm0+B4TXrv8N6BoDJxDun7S6EP1Ofw
+ TItHBl78Nmov6KKCk5r2zNQ5SXzR4Xl6I9MTEzmYGyGvGlIbZj/dvZqhS7f5SQ0oVRaySfA1KLI
+ lAmbezdMvoi0Vo8uTRffY6RN8U0fVb6tXIFbl/VdOnJeETT/eAwGHE4yRLXMaGXIL/vliTIRt+n
+ cGgRbYfgl6nwjAbW2BUy13Zy/Qag650Tlw4+PLQN7CHgnXHKcLn9DdCra5aUVYqtknWbPi1TTb1
+ NkaZ8P1Am5KIaSNB6aYE4rh8gcGAfCoQzjQb2A3R1N31eD9Fdo+FmYv/0ai669bsqYsRRKzP6At
+ gJ4IbddsX4RoGNnYkU1Mec4DgVKB8CfKooDar+v4g==
+X-Received: by 2002:a05:600c:4e55:b0:48a:9428:5522 with SMTP id
+ 5b1f17b1804b1-4909c0a7eeemr51457885e9.16.1780055245567; 
+ Fri, 29 May 2026 04:47:25 -0700 (PDT)
+Received: from lanath.. (wildly.archaic.org.uk. [81.2.115.145])
+ by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-45ef3563cb9sm3007358f8f.29.2026.05.29.04.47.23
+ for <qemu-devel@nongnu.org>
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Fri, 29 May 2026 04:47:23 -0700 (PDT)
+From: Peter Maydell <peter.maydell@linaro.org>
+To: qemu-devel@nongnu.org
+Subject: [PULL 00/21] target-arm queue
+Date: Fri, 29 May 2026 12:47:01 +0100
+Message-ID: <20260529114723.42040-1-peter.maydell@linaro.org>
+X-Mailer: git-send-email 2.43.0
 MIME-Version: 1.0
-Subject: Re: [PATCH v4 5/7] hw/arm: Plug FlexCAN into FSL_IMX6 and Sabrelite
-Content-Language: en-US
-To: =?UTF-8?B?TWF0ecOhxaEgQm9iZWs=?= <matyas.bobek@gmail.com>,
- qemu-devel@nongnu.org, Matyas Bobek <bobekmat@fel.cvut.cz>,
- Pavel Pisa <pisa@fel.cvut.cz>
-Cc: qemu-arm@nongnu.org, Marc Kleine-Budde <mkl@pengutronix.de>,
- Oliver Hartkopp <socketcan@hartkopp.net>,
- Nikita Ostrenkov <n.ostrenkov@gmail.com>,
- Bernhard Beschow <shentey@gmail.com>,
- Peter Maydell <peter.maydell@linaro.org>
-References: <cover.1779986496.git.matyas.bobek@gmail.com>
- <9b0a0ffeeeff5ca0ec9525659bb2296850a88c62.1779986496.git.matyas.bobek@gmail.com>
-From: Andrey VOLKOV <andrey@volkov.fr>
-In-Reply-To: <9b0a0ffeeeff5ca0ec9525659bb2296850a88c62.1779986496.git.matyas.bobek@gmail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=77.133.0.102; envelope-from=andrey@volkov.fr;
- helo=gate.volkov.fr
-X-Spam_score_int: -10
-X-Spam_score: -1.1
-X-Spam_bar: -
-X-Spam_report: (-1.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, RDNS_DYNAMIC=0.982,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- TVD_RCVD_IP=0.001 autolearn=no autolearn_force=no
+Received-SPF: pass client-ip=2a00:1450:4864:20::32d;
+ envelope-from=peter.maydell@linaro.org; helo=mail-wm1-x32d.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -82,217 +99,91 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi Matyáš, Pavel,
+Hi; here's an arm pullreq. This is mostly bug fixes; the
+new features are emulation of a couple of small Arm CPU features.
 
-Some small remarks regarding the use of hard-coded constants such as 
-FSL_IMX6_NUM_WDTS in loops, IMHO, it would be better to use 
-|ARRAY_SIZE()|instead:
+thanks
+-- PMM
 
--    for (i = 0; i < FSL_IMX6_NUM_CANS; i++) {
-+    for (i = 0; i < ARRAY_SIZE(s->can); i++) {
 
-BTW, it would be also more logical to combine |CanBusState|and 
-|FlexcanState|into a single structure (possibly anonymous), for 
-example:struct FslIMX6State { ...
+The following changes since commit 2db91528542672cf0db78b3f2cc0e22b36302b38:
 
-  struct {
-     CanBusState       *state;
-     FlexcanState       flexcan;
-  } can[FSL_IMX6_NUM_CANS];
+  Merge tag 'pull-vfio-20260527' of https://github.com/legoater/qemu into staging (2026-05-27 14:45:58 -0400)
 
-...
-};
+are available in the Git repository at:
 
-As a matter of personal preference, I would also rename "|can"|to 
-"|flexcan"/"fcan"|, since these objects represent FlexCAN controllers 
-rather than CAN2.0 ones.
+  https://gitlab.com/pm215/qemu.git tags/pull-target-arm-20260529
 
-Regards,
-Andrey VOLKOV
+for you to fetch changes up to 44f2c7f3df0028de7991385f568add12e24aca47:
 
-Le 28/05/2026 à 19:17, Matyáš Bobek a écrit :
-> FlexcanState is added to the FslIMX6State struct like other peripherals.
->
-> Add two new machine properties to Sabrelite machine for linking
-> the embedded FlexCAN instances to QEMU CAN buses by name.
-> No other machine uses FslIMX6State.
->
-> Signed-off-by: Matyáš Bobek <matyas.bobek@gmail.com>
-> Signed-off-by: Pavel Pisa <pisa@fel.cvut.cz>
-> Tested-by: Pavel Pisa <pisa@fel.cvut.cz>
-> Reviewed-by: Bernhard Beschow <shentey@gmail.com>
-> Reviewed-by: Pavel Pisa <pisa@fel.cvut.cz>
-> ---
->   hw/arm/Kconfig            |  1 +
->   hw/arm/fsl-imx6.c         | 29 +++++++++++++++++++++++++++++
->   hw/arm/sabrelite.c        | 24 ++++++++++++++++++++++++
->   include/hw/arm/fsl-imx6.h |  6 ++++++
->   4 files changed, 60 insertions(+)
->
-> diff --git a/hw/arm/Kconfig b/hw/arm/Kconfig
-> index 5b198402d5..c44fc562e1 100644
-> --- a/hw/arm/Kconfig
-> +++ b/hw/arm/Kconfig
-> @@ -519,6 +519,7 @@ config FSL_IMX6
->       select IMX_FEC
->       select IMX_I2C
->       select IMX_USBPHY
-> +    select CAN_FLEXCAN
->       select WDT_IMX2
->       select PL310  # cache controller
->       select PCI_EXPRESS_DESIGNWARE
-> diff --git a/hw/arm/fsl-imx6.c b/hw/arm/fsl-imx6.c
-> index f663ddbf0a..337921d17d 100644
-> --- a/hw/arm/fsl-imx6.c
-> +++ b/hw/arm/fsl-imx6.c
-> @@ -90,6 +90,10 @@ static void fsl_imx6_init(Object *obj)
->           snprintf(name, NAME_SIZE, "spi%d", i + 1);
->           object_initialize_child(obj, name, &s->spi[i], TYPE_IMX_SPI);
->       }
-> +    for (i = 0; i < FSL_IMX6_NUM_CANS; i++) {
-> +        snprintf(name, NAME_SIZE, "flexcan%d", i + 1);
-> +        object_initialize_child(obj, name, &s->can[i], TYPE_CAN_FLEXCAN);
-> +    }
->       for (i = 0; i < FSL_IMX6_NUM_WDTS; i++) {
->           snprintf(name, NAME_SIZE, "wdt%d", i);
->           object_initialize_child(obj, name, &s->wdt[i], TYPE_IMX2_WDT);
-> @@ -377,6 +381,27 @@ static void fsl_imx6_realize(DeviceState *dev, Error **errp)
->                              qdev_get_gpio_in(gic, spi_table[i].irq));
->       }
->   
-> +    /* Initialize all FLEXCANs */
-> +    for (i = 0; i < FSL_IMX6_NUM_CANS; i++) {
-> +        static const struct {
-> +            hwaddr addr;
-> +            unsigned int irq;
-> +        } flexcan_table[FSL_IMX6_NUM_CANS] = {
-> +            { FSL_IMX6_CAN1_ADDR, FSL_IMX6_FLEXCAN1_IRQ },
-> +            { FSL_IMX6_CAN2_ADDR, FSL_IMX6_FLEXCAN2_IRQ },
-> +        };
-> +
-> +        s->can[i].ccm = IMX_CCM(&s->ccm);
-> +        object_property_set_link(OBJECT(&s->can[i]), "canbus",
-> +                                 OBJECT(s->canbus[i]), &error_abort);
-> +
-> +        sysbus_realize(SYS_BUS_DEVICE(&s->can[i]), &error_abort);
-> +
-> +        sysbus_mmio_map(SYS_BUS_DEVICE(&s->can[i]), 0, flexcan_table[i].addr);
-> +        sysbus_connect_irq(SYS_BUS_DEVICE(&s->can[i]), 0,
-> +                           qdev_get_gpio_in(gic, flexcan_table[i].irq));
-> +    }
-> +
->       object_property_set_uint(OBJECT(&s->eth), "phy-num", s->phy_num,
->                                &error_abort);
->       qemu_configure_nic_device(DEVICE(&s->eth), true, NULL);
-> @@ -480,6 +505,10 @@ static void fsl_imx6_realize(DeviceState *dev, Error **errp)
->   
->   static const Property fsl_imx6_properties[] = {
->       DEFINE_PROP_UINT32("fec-phy-num", FslIMX6State, phy_num, 0),
-> +    DEFINE_PROP_LINK("canbus0", FslIMX6State, canbus[0], TYPE_CAN_BUS,
-> +                     CanBusState *),
-> +    DEFINE_PROP_LINK("canbus1", FslIMX6State, canbus[1], TYPE_CAN_BUS,
-> +                     CanBusState *),
->   };
->   
->   static void fsl_imx6_class_init(ObjectClass *oc, const void *data)
-> diff --git a/hw/arm/sabrelite.c b/hw/arm/sabrelite.c
-> index 7e036e6388..84bbc2f979 100644
-> --- a/hw/arm/sabrelite.c
-> +++ b/hw/arm/sabrelite.c
-> @@ -24,6 +24,7 @@ struct SabreliteMachineState {
->       MachineState parent_obj;
->   
->       FslIMX6State soc;
-> +    CanBusState *canbus[FSL_IMX6_NUM_CANS];
->   };
->   
->   #define TYPE_SABRELITE_MACHINE MACHINE_TYPE_NAME("sabrelite")
-> @@ -64,6 +65,13 @@ static void sabrelite_init(MachineState *machine)
->       /* Ethernet PHY address is 6 */
->       object_property_set_int(OBJECT(&s->soc), "fec-phy-num", 6, &error_fatal);
->   
-> +    for (int i = 0; i < FSL_IMX6_NUM_CANS; i++) {
-> +        g_autofree char *bus_name = g_strdup_printf("canbus%d", i);
-> +
-> +        object_property_set_link(OBJECT(&s->soc), bus_name,
-> +                                 OBJECT(s->canbus[i]), &error_fatal);
-> +    }
-> +
->       qdev_realize(DEVICE(&s->soc), NULL, &error_fatal);
->   
->       memory_region_add_subregion(get_system_memory(), FSL_IMX6_MMDC_ADDR,
-> @@ -112,6 +120,21 @@ static void sabrelite_init(MachineState *machine)
->       }
->   }
->   
-> +static void sabrelite_machine_instance_init(Object *obj)
-> +{
-> +    SabreliteMachineState *s = SABRELITE_MACHINE(obj);
-> +
-> +    object_property_add_link(obj, "canbus0", TYPE_CAN_BUS,
-> +                             (Object **)&s->canbus[0],
-> +                             object_property_allow_set_link,
-> +                             0);
-> +
-> +    object_property_add_link(obj, "canbus1", TYPE_CAN_BUS,
-> +                             (Object **)&s->canbus[1],
-> +                             object_property_allow_set_link,
-> +                             0);
-> +}
-> +
->   static void sabrelite_machine_class_init(ObjectClass *oc, const void *data)
->   {
->       MachineClass *mc = MACHINE_CLASS(oc);
-> @@ -128,6 +151,7 @@ static const TypeInfo sabrelite_machine_init_typeinfo = {
->       .name          = TYPE_SABRELITE_MACHINE,
->       .parent        = TYPE_MACHINE,
->       .class_init    = sabrelite_machine_class_init,
-> +    .instance_init = sabrelite_machine_instance_init,
->       .instance_size = sizeof(SabreliteMachineState),
->       .abstract      = false,
->       .interfaces    = arm_machine_interfaces,
-> diff --git a/include/hw/arm/fsl-imx6.h b/include/hw/arm/fsl-imx6.h
-> index cddd100dd6..8ea1677e86 100644
-> --- a/include/hw/arm/fsl-imx6.h
-> +++ b/include/hw/arm/fsl-imx6.h
-> @@ -30,12 +30,14 @@
->   #include "hw/sd/sdhci.h"
->   #include "hw/ssi/imx_spi.h"
->   #include "hw/net/imx_fec.h"
-> +#include "hw/net/flexcan.h"
->   #include "hw/usb/chipidea.h"
->   #include "hw/usb/imx-usb-phy.h"
->   #include "hw/pci-host/designware.h"
->   #include "hw/core/or-irq.h"
->   #include "system/memory.h"
->   #include "target/arm/cpu.h"
-> +#include "net/can_emu.h"
->   #include "qom/object.h"
->   
->   #define TYPE_FSL_IMX6 "fsl-imx6"
-> @@ -51,6 +53,7 @@ OBJECT_DECLARE_SIMPLE_TYPE(FslIMX6State, FSL_IMX6)
->   #define FSL_IMX6_NUM_WDTS 2
->   #define FSL_IMX6_NUM_USB_PHYS 2
->   #define FSL_IMX6_NUM_USBS 4
-> +#define FSL_IMX6_NUM_CANS 2
->   
->   struct FslIMX6State {
->       /*< private >*/
-> @@ -73,6 +76,7 @@ struct FslIMX6State {
->       IMXUSBPHYState     usbphy[FSL_IMX6_NUM_USB_PHYS];
->       ChipideaState      usb[FSL_IMX6_NUM_USBS];
->       IMXFECState        eth;
-> +    FlexcanState       can[FSL_IMX6_NUM_CANS];
->       DesignwarePCIEHost pcie;
->       OrIRQState         pcie4_msi_irq;
->       MemoryRegion       rom;
-> @@ -80,6 +84,8 @@ struct FslIMX6State {
->       MemoryRegion       ocram;
->       MemoryRegion       ocram_alias;
->       uint32_t           phy_num;
-> +
-> +    CanBusState       *canbus[FSL_IMX6_NUM_CANS];
->   };
->   
->   
+  hw/dma/omap_dma: Fix indentation after ifdef removal (2026-05-29 10:18:11 +0100)
+
+----------------------------------------------------------------
+target-arm queue:
+ * target/arm: Implement FEAT_CMPBR emulation
+ * target/arm: Implement FEAT_RNG_TRAP emulation
+ * target/arm: Don't assert if 64-bit EL2 AT insn sees a Domain fault
+ * target/arm: SME BFCVT, BFCVTN have "Alternate BFloat16 behaviors"
+ * target/arm: Enable REVD for SVE2.1
+ * zynq: Various minor bug fixes
+ * hw/misc: Add dummy ZYNQ DDR controller
+ * hw/block/m25p80: Add HAS_SR_TB flag for is25lp016d
+ * hw/dma/omap_dma: Remove unused ifdeffed out code
+
+----------------------------------------------------------------
+Jason Wright (2):
+      target/arm: implement FEAT_RNG_TRAP for RNDR/RNDRRS
+      target/arm: advertise FEAT_RNG_TRAP on cortex-max
+
+Peter Maydell (5):
+      target/arm: Don't assert if 64-bit EL2 AT insn sees a Domain fault
+      target/arm: SME BFCVT, BFCVTN have "Alternate BFloat16 behaviors"
+      hw/dma/omap_dma: Remove unused ifdeffed out code
+      hw/dma/omap_dma: Fix coding style in omap_dma_transfer_setup()
+      hw/dma/omap_dma: Fix indentation after ifdef removal
+
+Richard Henderson (5):
+      target/arm: Enable REVD for SVE2.1
+      target/arm: Add feature predicate for FEAT_CMPBR
+      target/arm: Implement CB, CBB, CBH
+      target/arm: Implement CB (immediate)
+      target/arm: Enable FEAT_CMPBR for -cpu max
+
+YannickV (9):
+      hw/dma/zynq-devcfg: Handle bitstream loading via DMA to 0xffffffff
+      hw/arm/zynq-devcfg: Prevent unintended unlock during initialization
+      hw/dma/zynq: Ensure PCFG_DONE bit remains set to indicate PL is in user mode
+      hw/dma/zynq-devcfg: Simulate dummy PL reset
+      hw/dma/zynq-devcfg: Indicate power-up status of PL
+      hw/misc: Add dummy ZYNQ DDR controller
+      hw/misc/zynq_slcr: Add logic for DCI configuration
+      hw/block/m25p80: Add HAS_SR_TB flag for is25lp016d
+      hw/arm/xilinx_zynq: Split xilinx_zynq into header and implementation files
+
+ MAINTAINERS                      |   2 +
+ docs/system/arm/emulation.rst    |   2 +
+ hw/arm/Kconfig                   |   1 +
+ hw/arm/xilinx_zynq.c             |  29 ++-
+ hw/block/m25p80.c                |   3 +-
+ hw/dma/omap_dma.c                | 247 ++++++++---------------
+ hw/dma/xlnx-zynq-devcfg.c        |  27 ++-
+ hw/misc/Kconfig                  |   3 +
+ hw/misc/meson.build              |   1 +
+ hw/misc/xlnx-zynq-ddrc.c         | 421 +++++++++++++++++++++++++++++++++++++++
+ hw/misc/zynq_slcr.c              |  31 +++
+ include/hw/arm/xilinx_zynq.h     |  30 +++
+ include/hw/misc/xlnx-zynq-ddrc.h | 147 ++++++++++++++
+ linux-user/aarch64/elfload.c     |   1 +
+ target/arm/cpu-features.h        |  10 +
+ target/arm/helper.c              |  58 +++++-
+ target/arm/internals.h           |  10 +
+ target/arm/tcg/a64.decode        |  11 +
+ target/arm/tcg/cpu64.c           |   3 +-
+ target/arm/tcg/translate-a64.c   |  86 ++++++++
+ target/arm/tcg/translate-sme.c   |   4 +-
+ target/arm/tcg/translate-sve.c   |   3 +-
+ 22 files changed, 939 insertions(+), 191 deletions(-)
+ create mode 100644 hw/misc/xlnx-zynq-ddrc.c
+ create mode 100644 include/hw/arm/xilinx_zynq.h
+ create mode 100644 include/hw/misc/xlnx-zynq-ddrc.h
 
