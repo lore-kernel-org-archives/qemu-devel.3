@@ -4,91 +4,96 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 80A4FCD6E49
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6BA06CD6E45
 	for <qemu-devel@archiver.kernel.org>; Fri, 29 May 2026 04:58:38 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wSpI9-0005fF-FS; Fri, 29 May 2026 00:57:53 -0400
+	id 1wSpIU-0005r1-4Y; Fri, 29 May 2026 00:58:14 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <jasowang@redhat.com>)
- id 1wSpI6-0005eT-0j
- for qemu-devel@nongnu.org; Fri, 29 May 2026 00:57:50 -0400
+ id 1wSpIS-0005nF-Gv
+ for qemu-devel@nongnu.org; Fri, 29 May 2026 00:58:12 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <jasowang@redhat.com>)
- id 1wSpI3-00085K-As
- for qemu-devel@nongnu.org; Fri, 29 May 2026 00:57:49 -0400
+ id 1wSpIQ-00087g-Qy
+ for qemu-devel@nongnu.org; Fri, 29 May 2026 00:58:12 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1780030665;
+ s=mimecast20190719; t=1780030690;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding;
- bh=V1fypGJVn2IFAyqeSiUc99YwP5V5gS7rRdMEcyTPB4c=;
- b=i4PeLGwyMHg4VTYuCIJl/DGkleeymXHfBnOS7S05eNIA5Sv/geY09NySCUwSl9raEuOXrM
- cICuCdP86c34f3lqc9QWmgoYt7ANoVWjYUGQXowB6s8Bh0eqrYE39K26BVwUx81zgBmwr0
- DUn5JvarUZREVGUNDXNluBlWyll7wtw=
-Received: from mail-dy1-f199.google.com (mail-dy1-f199.google.com
- [74.125.82.199]) by relay.mimecast.com with ESMTP with STARTTLS
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=TeaCWgxz26pIuZ3T1/Jo3a4lmDTksPW+9uKpcpmoWbE=;
+ b=LMze9WUHoCf/AJ6pSrLeqVAqv7V0pdTD3XmQbiMHkFqkvc6G3sg0zOZGvDDiXk17BAVylF
+ MtLUHX+hfkjPwZDkm8sO2/svfGjhUkZOYlECmfMeHy29MO+cAhXSAX/McwDT+3NSXPtSFd
+ ZRsiHSBYoIbpQOsBGxARge5uQkm+bl4=
+Received: from mail-dl1-f72.google.com (mail-dl1-f72.google.com
+ [74.125.82.72]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-543-k88EM_OmO16moc5OKppH8Q-1; Fri, 29 May 2026 00:57:42 -0400
-X-MC-Unique: k88EM_OmO16moc5OKppH8Q-1
-X-Mimecast-MFC-AGG-ID: k88EM_OmO16moc5OKppH8Q_1780030662
-Received: by mail-dy1-f199.google.com with SMTP id
- 5a478bee46e88-304b8d0ee63so3939978eec.0
- for <qemu-devel@nongnu.org>; Thu, 28 May 2026 21:57:42 -0700 (PDT)
+ us-mta-625-deR2WmYfPoOyoOFVxfyeLQ-1; Fri, 29 May 2026 00:58:08 -0400
+X-MC-Unique: deR2WmYfPoOyoOFVxfyeLQ-1
+X-Mimecast-MFC-AGG-ID: deR2WmYfPoOyoOFVxfyeLQ_1780030687
+Received: by mail-dl1-f72.google.com with SMTP id
+ a92af1059eb24-135916eefa0so1633787c88.1
+ for <qemu-devel@nongnu.org>; Thu, 28 May 2026 21:58:07 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1780030661; x=1780635461; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:from:to:cc:subject:date:message-id:reply-to;
- bh=V1fypGJVn2IFAyqeSiUc99YwP5V5gS7rRdMEcyTPB4c=;
- b=FHFfsAwuC5/7plZKBss9BuVbd64ZDlaG61XmoaHv5eNhiNdF+lkMlES+KJ00Hbhs3e
- um+9RL/TLW2TJQ0hGUiFuY71ytaTWLYxp3opCoSKYYF2McK7u2ZAXSxJLgVxlrtD8IRr
- 1Ov+ZAvzL2UJ+fSGYCKvcrRMd2EAeprzTdaAD2sa5wfNYmXZVs1r11EshC8MAwGK85A5
- 4idwpZUxdpvs86Vqc7EDRXTp7s2Ss/sI2lKAuafmxAR3oMNHsl0K3+zDVjZOtInNK2fi
- 6mxtGz6rcdQebvKv7f4gTPTmj3SKpLIfmNFffFVX9iVGdC4omhHokKiWhu0kYBukj/ln
- QHRw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1780030661; x=1780635461;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ d=redhat.com; s=google; t=1780030687; x=1780635487; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=V1fypGJVn2IFAyqeSiUc99YwP5V5gS7rRdMEcyTPB4c=;
- b=omwv3b9DeBvhl/OYmU4xEHOwab9zkRDyNJAPMR/GwaQCo9f4qXeD3xoGMmZXqX/he6
- FjVL6KiIzw0SACO3FDforzIpEqXy1OCFT7GbBQQ/M2vj9SR9jq8rMtiFQaNkPOqQpg2F
- 8nNsglIDe+XRKH0jQ6hhc+EzFzkSeqCcwj7Z+WV7IxZle8DpqHEnwL+3itlO93Y69K1Z
- pLOAtk1DMaGFwT/s3wY406SNNoJZrtCmP3w1T06Erpa6EdGHQeRBxae8nYqPB9JzJeyO
- grLJUobG2+h8t8EbO+dI6mQ126BvtIsrqd4wXvD/ECHUKxKQLW8yyLPF4bPUIKySG7lD
- e3ig==
-X-Gm-Message-State: AOJu0YxprSfpKgSDTmojS2cCBLTjMERImSVoLsEYQeIrkVsvus7gbe6T
- LSgiOf2eF2JJB9qISZxjoHm0LQr5YzWYtGP6ybaKYYqHg4ckYxDl8t2sPl1tNgHcmrFmKDj6Zhh
- /hBGqsL7KErr9or5XIL8yG85RfJ/MrdN/cwCJ5Wy9p/a3XlTlw5qrRcOgM6Ujgs4zNwO1zzUhpw
- i40/8uRS3+HhFOuOAGptCLPG3cDqpzVZk4auBYO8Q1h84=
-X-Gm-Gg: Acq92OEWjFT2NL4Muy/UXOkWSEFL/X+KVtAS8mPn6jkb76c/li/oSe7WTU5PnxI8mbn
- Yaex0r1kaH4Ill9VtAebxPcIZJYTOZP1xOgYZAplm9lFbfx4m5zvre7hHQprX+HWi/0Eb5QDXco
- K0coyEraFDAH0nAX3fYy69B8rG9RtgI11RA5Hx/Km37Jisbl9MKgrTwDLeWz6JyKKz8kT4gEE1p
- 5Dx+gs4M3lLEY2jB6Bq/eqmh424nQvLgiHE0LfgpLinFcolD8p7zYbwU26yYNiQvW0ngKx1FBob
- LxZsyBh4/Pp+ySIwGqiDUqNc47PYtVVV0285m30gknz0JNEx+qjQi9dbEqTsMGomIM6YHroPVbV
- Iy+uPZc0TdhH9ESbr4OdV7SKmBK2t3qnmM5BZmukeRskcZX5Vy6PvZaW9hAL43It9JsLiS+Jr
-X-Received: by 2002:a05:7300:a483:b0:304:2cc9:2ba8 with SMTP id
- 5a478bee46e88-304eb21755dmr637762eec.30.1780030661498; 
- Thu, 28 May 2026 21:57:41 -0700 (PDT)
-X-Received: by 2002:a05:7300:a483:b0:304:2cc9:2ba8 with SMTP id
- 5a478bee46e88-304eb21755dmr637741eec.30.1780030660649; 
- Thu, 28 May 2026 21:57:40 -0700 (PDT)
+ bh=TeaCWgxz26pIuZ3T1/Jo3a4lmDTksPW+9uKpcpmoWbE=;
+ b=tyr/gkmGwI/eciWVyKW2IR18l1vIySOl+MQafivMUw952U3xrNyAO0Kk+/FAZkdpAI
+ 8YUvKwupxHZ8gTy0xVqvLbYckZgFUPSDFEj4qY2K9kHm7p7NfKKcUXMAIV35EsjMlVND
+ g1ljpSoR6RRuKX0+lMoLhXhye5gGbBXhVJtWpfpdyu7PrOIDMXBzQDfeZF2zX3d/W+KN
+ Z5VoTdzMbYaBIVR19OHWLMZA/0BJM2ymenFRXAZBj8HpuEtYcxzmMYt2G5wfyetmI8/W
+ QfcnkkS4ixkt3Qrp7Yb+zgUOpMqEb6QxzsrBYUbW2T4xm5zTqFohgLvQgCZRf26H7AYS
+ gdVw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1780030687; x=1780635487;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=TeaCWgxz26pIuZ3T1/Jo3a4lmDTksPW+9uKpcpmoWbE=;
+ b=rM1a44XXt5Tfaf/f+j82Pa4GaVdXDHRj3JOF/srI10qdzytSEkiSFgjY+fYY3WnsOH
+ SGbh0hPdPA9LTinE9JhDUgrL7Gc7jtbh/vFxvdSiHATkeYrXFp2Uvx1phUwTuRcytHLs
+ YJnCtKyb59uYRxblPbzerzUrp13EeZzJCLUPcgp2PzkWUwriYfzjQZUv0cGiI0TG19Ih
+ FxoW9SvsQXT2k80sdsYV72h5S7HgoaW/ZeetzHnV9Nuevc6rrnHgy6Els5zjZqg8kyJD
+ E8oFK+8SZQKwc9SAu0FaJGhdI90P3qPD5Sx52ngCjZ1YL8TgYi8BY/lSS/J5IL/d033A
+ b6ow==
+X-Gm-Message-State: AOJu0YyU7DzV5gXktaSuOCxLTbZZi4V9AjXJREp+ymJvP2aKSjeIODxq
+ IShv2pKtgp0qE3SFXFvo6U0G0RT04G5CbjlE9zyqkRFNVxV59jy8MePwlsQKYMVog4FLeTd0iFk
+ OAV5EWCiW9BAsuHipG6dQ/FMAKDTX7nIUABSmlX+Y7eJ18rOX20CtjZkrq0GLMyYKc4HTl91vzE
+ bs7uiH9nwDOwxDwaVRNgjrDf/Z+wUIzV//CUhbkRLHuOE=
+X-Gm-Gg: Acq92OFSBAyKpFx1a6gWC4uZU5CHPASia/7FpiGM/VPPKMj+UTZhcAL9s8GqhQunpyh
+ Fie/N6HsYNGy9gfJdB4++5gScEHiB6YrRfe0+gDFCWfAbfEjCcAdhF05FPUwCNpm2pEr4E/1sqC
+ zLS6zp01G6NMqjjYUgx0Qy8cEw5JLFG4VOJ9PWO0+zLULmQj7QjdKT+vHfegzWbolfvQIQzj4sW
+ byYeetqTor2ZdnA+Y9lylIgLhdB47/4w2RZ5ZFo//eqAojHkQrM7eOrrv8+Pax63cy/fpTxnDdu
+ KROYlQUnkgEu+xMIKGa9fiWH6EjMtpPGzhPigOseQVUbrN9CjO/4usq28Efic3FG3gNB0DKybna
+ SUBWQIZehceeOnvPDIJVYOYpIgu4fk+wiOv5kFJqJZhAnWjmNI8y7sky6PsDleTDhxU2EFret
+X-Received: by 2002:a05:7022:6b86:b0:136:6d82:18ce with SMTP id
+ a92af1059eb24-137af649b32mr541513c88.23.1780030686855; 
+ Thu, 28 May 2026 21:58:06 -0700 (PDT)
+X-Received: by 2002:a05:7022:6b86:b0:136:6d82:18ce with SMTP id
+ a92af1059eb24-137af649b32mr541495c88.23.1780030686238; 
+ Thu, 28 May 2026 21:58:06 -0700 (PDT)
 Received: from localhost.localdomain ([107.172.97.67])
  by smtp.gmail.com with ESMTPSA id
- 5a478bee46e88-304ed3358b1sm562865eec.13.2026.05.28.21.57.38
+ 5a478bee46e88-304ed3358b1sm562865eec.13.2026.05.28.21.58.02
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Thu, 28 May 2026 21:57:40 -0700 (PDT)
+ Thu, 28 May 2026 21:58:05 -0700 (PDT)
 From: Jason Wang <jasowang@redhat.com>
 To: qemu-devel@nongnu.org
-Cc: Jason Wang <jasowang@redhat.com>
-Subject: [PULL 00/15] Net patches
-Date: Fri, 29 May 2026 12:57:15 +0800
-Message-ID: <20260529045730.90322-1-jasowang@redhat.com>
+Cc: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>,
+ Ben Chaney <bchaney@akamai.com>, Jason Wang <jasowang@redhat.com>
+Subject: [PULL 07/15] net/tap: net_init_tap_one(): drop model parameter
+Date: Fri, 29 May 2026 12:57:22 +0800
+Message-ID: <20260529045730.90322-8-jasowang@redhat.com>
 X-Mailer: git-send-email 2.54.0
+In-Reply-To: <20260529045730.90322-1-jasowang@redhat.com>
+References: <20260529045730.90322-1-jasowang@redhat.com>
 MIME-Version: 1.0
 Content-type: text/plain
 Content-Transfer-Encoding: 8bit
@@ -116,56 +121,75 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The following changes since commit cbf877d67a812be17a9ce404a589e1bdf722c1f6:
+From: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
 
-  Merge tag 'pbouvier/pr/docs-20260522' of https://gitlab.com/p-b-o/qemu into staging (2026-05-24 07:45:19 -0400)
+It could be simply derived from tap parameter. And this change
+simplifies further refactoring.
 
-are available in the Git repository at:
+Signed-off-by: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
+Reviewed-by: Ben Chaney <bchaney@akamai.com>
+Signed-off-by: Jason Wang <jasowang@redhat.com>
+---
+ net/tap.c | 13 +++++++------
+ 1 file changed, 7 insertions(+), 6 deletions(-)
 
-  https://github.com/jasowang/qemu.git tags/net-pull-request
-
-for you to fetch changes up to 71d027cfee8553e2ec28efa1ddd7fd0ecbadcc86:
-
-  hw/net/rocker_of_dpa: Avoid unaligned accesses in _of_dpa_flow_match() (2026-05-29 11:54:06 +0800)
-
-----------------------------------------------------------------
------BEGIN PGP SIGNATURE-----
-
-iQEzBAABCAAdFiEEIV1G9IJGaJ7HfzVi7wSWWzmNYhEFAmoZHBQACgkQ7wSWWzmN
-YhH7ywf/WZdieTiWCoi1XI2rZ6XCjdJRqTSmp+WENDDQt4tBnXXJ6PxyitFqZh7g
-oZnN1+WXgIAO0SZRPbzjspe9mFsXrFkE/7y9XijOF4F/bhbWPA/AL8SICxnjoyaC
-nOs1QU2hE7yhOqgnUHweUjNbgpUO8mIgLdSIbKYDgZq1vRFsXy2kkKbeiJkbPCfe
-0ILqltFjS5MeCl2fV0WwUquWr7VXEXb0vGPQKAzRbygmbDC+qYRF100cTrSCxnOe
-LSW8c1nf2AHZkQJmj2HWc2DUwxynAr8N8jSRPgp4JSC6B2caSQygKHGtKe19Y/Be
-u4hm+k5+HB25xkA4czheMcNvefnzoQ==
-=JjfR
------END PGP SIGNATURE-----
-
-----------------------------------------------------------------
-Peter Maydell (2):
-      hw/net/rocker_of_dpa: Check group ID pointers are not NULL
-      hw/net/rocker_of_dpa: Avoid unaligned accesses in _of_dpa_flow_match()
-
-Vladimir Sementsov-Ogievskiy (13):
-      net/af-xdp: fix type overflow
-      net/tap: net_init_tap_one(): add return value
-      net/tap: net_init_tap(): drop extra vhostfdname variable
-      net/tap: net_init_tap(): refactor parameter checking
-      net/tap: net_init_tap(): common fail label
-      net/tap: net_init_tap_one() refactor to get vhostfd param
-      net/tap: net_init_tap_one(): drop model parameter
-      net: introduce net_parse_fds()
-      net/tap: move fds parameters handling to separate functions
-      net/tap: fix vhostfds/vhostfd parameters API
-      net/tap: net_init_tap(): merge fd=, fds= and helper= cases into one
-      net/tap: net_init_tap(): relax QEMU hubs check
-      net/tap: check that user tries to define zero queues
-
- hw/net/rocker/rocker_of_dpa.c |  16 ++-
- net/af-xdp.c                  |  44 ++----
- net/tap.c                     | 324 +++++++++++++++++-------------------------
- net/util.c                    |  55 +++++++
- net/util.h                    |  14 ++
- 5 files changed, 221 insertions(+), 232 deletions(-)
+diff --git a/net/tap.c b/net/tap.c
+index 2c5f8e73fe..db3fe380a4 100644
+--- a/net/tap.c
++++ b/net/tap.c
+@@ -704,12 +704,13 @@ static int net_tap_init(const NetdevTapOptions *tap, int *vnet_hdr,
+ #define MAX_TAP_QUEUES 1024
+ 
+ static bool net_init_tap_one(const NetdevTapOptions *tap, NetClientState *peer,
+-                             const char *model, const char *name,
++                             const char *name,
+                              const char *ifname, const char *script,
+                              const char *downscript, int vhostfd,
+                              int vnet_hdr, int fd, Error **errp)
+ {
+-    TAPState *s = net_tap_fd_init(peer, model, name, fd, vnet_hdr);
++    TAPState *s = net_tap_fd_init(peer, tap->helper ? "bridge" : "tap",
++                                  name, fd, vnet_hdr);
+     bool sndbuf_required = tap->has_sndbuf;
+     int sndbuf =
+         (tap->has_sndbuf && tap->sndbuf) ? MIN(tap->sndbuf, INT_MAX) : INT_MAX;
+@@ -883,7 +884,7 @@ int net_init_tap(const Netdev *netdev, const char *name,
+             goto fail;
+         }
+ 
+-        if (!net_init_tap_one(tap, peer, "tap", name, NULL,
++        if (!net_init_tap_one(tap, peer, name, NULL,
+                               NULL, NULL,
+                               vhostfd, vnet_hdr, fd, errp)) {
+             goto fail;
+@@ -934,7 +935,7 @@ int net_init_tap(const Netdev *netdev, const char *name,
+                 goto fail;
+             }
+ 
+-            if (!net_init_tap_one(tap, peer, "tap", name, ifname,
++            if (!net_init_tap_one(tap, peer, name, ifname,
+                                   NULL, NULL,
+                                   vhostfd,
+                                   vnet_hdr, fd, errp)) {
+@@ -957,7 +958,7 @@ int net_init_tap(const Netdev *netdev, const char *name,
+             goto fail;
+         }
+ 
+-        if (!net_init_tap_one(tap, peer, "bridge", name, ifname,
++        if (!net_init_tap_one(tap, peer, name, ifname,
+                               NULL, NULL, vhostfd,
+                               vnet_hdr, fd, errp)) {
+             goto fail;
+@@ -988,7 +989,7 @@ int net_init_tap(const Netdev *netdev, const char *name,
+                 }
+             }
+ 
+-            if (!net_init_tap_one(tap, peer, "tap", name, ifname,
++            if (!net_init_tap_one(tap, peer, name, ifname,
+                                   i >= 1 ? NULL : script,
+                                   i >= 1 ? NULL : downscript,
+                                   vhostfd, vnet_hdr, fd, errp)) {
+-- 
+2.54.0
 
 
