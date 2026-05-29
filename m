@@ -4,118 +4,107 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B1732CD6E57
-	for <qemu-devel@archiver.kernel.org>; Fri, 29 May 2026 17:48:00 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 67CDFCD4F54
+	for <qemu-devel@archiver.kernel.org>; Fri, 29 May 2026 17:53:55 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wT1Ir-0003C9-6I; Fri, 29 May 2026 13:47:25 -0400
+	id 1wT1OM-00072Y-WC; Fri, 29 May 2026 13:53:07 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1wT1Io-0003Bu-3F
- for qemu-devel@nongnu.org; Fri, 29 May 2026 13:47:22 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1wT1Im-0001of-8A
- for qemu-devel@nongnu.org; Fri, 29 May 2026 13:47:21 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1780076839;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=/7GduYPlkAuLRJ44tuwhwCsEGcK7AakqOh+aTWldKGU=;
- b=YQ63QRllZQkbZ1VAN7YoP4zfWXhq3rKqJV9nQbGnNJ9bvBDxVHkT+tCt6aI2NiWRG06j7E
- 3T+fOX+lpIiKNK3ohc07ir6v1Zf94H6TNp8oLgyN6ti96BFCQdUnZuIAvMfZ+iTd2pTIKC
- VIeJlJm6ihS9LStLQWnRKcQIP3CHNow=
-Received: from mail-wm1-f69.google.com (mail-wm1-f69.google.com
- [209.85.128.69]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-613-8e5crlIDOFGj_AWkE8j5LA-1; Fri, 29 May 2026 13:47:16 -0400
-X-MC-Unique: 8e5crlIDOFGj_AWkE8j5LA-1
-X-Mimecast-MFC-AGG-ID: 8e5crlIDOFGj_AWkE8j5LA_1780076836
-Received: by mail-wm1-f69.google.com with SMTP id
- 5b1f17b1804b1-4909c0f0ba2so7481595e9.3
- for <qemu-devel@nongnu.org>; Fri, 29 May 2026 10:47:16 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1wT1OM-00072E-CH
+ for qemu-devel@nongnu.org; Fri, 29 May 2026 13:53:06 -0400
+Received: from mail-yw1-x112d.google.com ([2607:f8b0:4864:20::112d])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1wT1OK-0003O4-OH
+ for qemu-devel@nongnu.org; Fri, 29 May 2026 13:53:06 -0400
+Received: by mail-yw1-x112d.google.com with SMTP id
+ 00721157ae682-7dbfebfbf50so34362837b3.3
+ for <qemu-devel@nongnu.org>; Fri, 29 May 2026 10:53:04 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1780077183; cv=none;
+ d=google.com; s=arc-20240605;
+ b=K+U0Ij+8ImFZ6bAoP+8xjcq7wC67JIjyS6uEoQIPpQcUdURQFQaFJFlGqes+ge/ys2
+ gx/8P736z83CFGKS8UIqURCoRixI10aLcmW8NK8SuQV77AA1PNifNkAG0kxcRvY0vT8H
+ M/myQ9cC2xdkr5DqU0RgCuyLjl5Mcbm/KBSNaay0Wbc8l7mMWIOHeUtbNy4llCu5pQ80
+ XHpzVU6vIW6pmtCPBo6dj9O5CA1r0xmWVjpjWu+D1VwJnPXreE4Dgh/s3jcN7enSjK3l
+ MXTsI2U2WoVxzXWh7wpg85U2atByAvxQDslEfyc8cCvunoUp76Vxp2n26iarrfF79R8p
+ 3VAQ==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
+ s=arc-20240605; 
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:dkim-signature;
+ bh=nQlP12RUuBBVpXDhZ5MFD4U7SV/VrxoBlSj6jpPr0zk=;
+ fh=KrHbO6sOAZBJIm1jL3vWipkmYACGn1gRCgwFQrTxoFs=;
+ b=GxazGKgwjhmPieQPSmsxNEkZmX7cFVX9UquNQETVC1Ga1V0qfg89Y7zvW0SDN6V9lO
+ 73X9d/95JprTf/0bu/AhhxzVTHFYHlqlA6ZhKfeZ72XIybP/jlYCSv/JPkQNOSojTqef
+ yUEa3R+A/gl2OnnvpZz/gdx21byvL766i7sEOcORewXTfP9jHb6B8t7Ecu4NxcEYWrNB
+ KPUeoA6TWIE0RXmHghG5X37khA30ipNYE9i5tvAhTd1hqHlouTGLN8tEQ0col0wXHR7E
+ ojJCwTEe9Ld8QHhtWeGgP5Km1egFYUjvMORT4gCfi/pG6luliZLpD/5JP1C4jWQ6i9Tp
+ XISg==; darn=nongnu.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1780076835; x=1780681635; darn=nongnu.org;
- h=in-reply-to:content-transfer-encoding:content-disposition
- :mime-version:references:message-id:subject:cc:to:from:date:from:to
- :cc:subject:date:message-id:reply-to;
- bh=/7GduYPlkAuLRJ44tuwhwCsEGcK7AakqOh+aTWldKGU=;
- b=ioRK+/w6VhPmSkvtuaWrH1kLRNXqESSAcAR+jSUpbRz5uXdTcg1BSYqwZjIHvEN2pq
- ew+tTKTChYWK3MaSQ17ZljAZyVPSuPd6Mqv+nfYQcg/ssmfY0iUr9wgVNcyeS63qDhzy
- k293y0xEjqTXvqDxfdqNjDnnb6nyPmjC5pULXipq7F7mv712vgNBrAJo1zx2Or63RCK7
- k+iO9V/ZyioxbqDDpwIkpwP5GZwY3fzTB8c/XMSk3BLTXXHoHVXV3IXkiwhNitJmDYyW
- XanL0dyykTTo97nioVwFiAeUHVjuzQUiPFv8U0qgKuOEPEPK4G9NtYGtQy9wbCi28wPk
- 5GzA==
+ d=linaro.org; s=google; t=1780077183; x=1780681983; darn=nongnu.org;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:from:to:cc:subject:date:message-id:reply-to;
+ bh=nQlP12RUuBBVpXDhZ5MFD4U7SV/VrxoBlSj6jpPr0zk=;
+ b=vGH8JvPLqRgCcyi/WcyyebsifNoPCCan/OETdJWO4YnFnWcNvuBb6f4u4F2HgvP6nJ
+ k5bXMXcpBiYo8b/B8bm04rFwHTtFKgXsa9Pfx9GnRkWsnfJ/wVoW4a1DjD8wvPS83ibK
+ 8J5rpqge7Lh1LNz23THhXFub4S+EnIf3Uis0VAKAIyqo24WMleMn1ZyIotZQ1kwZjsLi
+ P8OkMfG1/KS+CGIjyY+dTI7aScj3EiYLf6uKqY/BUOR272p9MspuuDDCeZYogI0ME9Nq
+ sH2G5PfFArcIKvzqutq0QgifdgYqPSSyoWI8jkv4SVJMnV37WzEW+CDaCrFFFqvmSfMq
+ 2mfA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1780076835; x=1780681635;
- h=in-reply-to:content-transfer-encoding:content-disposition
- :mime-version:references:message-id:subject:cc:to:from:date:x-gm-gg
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=/7GduYPlkAuLRJ44tuwhwCsEGcK7AakqOh+aTWldKGU=;
- b=KnThCZe1GyLfmmqOT3J8HQzMQhBwtEn9xYHlY+W640cDCOY4Gp/1N9vds3WW4FT+Vh
- wpgajCvbcLfW48vzWjaKxVs34/AeSNlXc/vHW+CLGWe4m9Zrtc/u2j6yX5uooxe3eyLT
- cogKW+GaBHWPd/i94e/CY38jCBuTbWhb6MhVkgXPdY6AMT7TFc5NmrnI/nAzOjm6WS1l
- 6j4HQLfV9xKDv1/KkhrrrkVVPyeK6kOyXg90zG3tZiIQgQzmc3F3MgqUunM8psHfAFJQ
- j7Oj2//cyeB8hhUZMZ1wxvY74wACucZ2OUI9Fi4EP3u0n1pctHoi6X0iPIWNRDaqd9/h
- TAmQ==
+ d=1e100.net; s=20251104; t=1780077183; x=1780681983;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=nQlP12RUuBBVpXDhZ5MFD4U7SV/VrxoBlSj6jpPr0zk=;
+ b=XHaIDO0eWkWm6y0kzHeMDBxRkkKf0aK96sdVSrrbU6fPKMxiptOAs7RNreAknWitmB
+ lj2wsSNfB+MJqdbHHzLZJ6orkfRgjZNjKqDmYGyDoUftygNFbdiZub83tKat6DRV+HGv
+ +L/HO6ZH+zt+2p8F9YNQvTBg0iT1IFjX1XMTRgHDRWECeg2m+IFMcFpVzW8xwVwRGryo
+ fu4sOdDy2dQPirBiKlOlS2+Wu6EAhGv/iGi2Kt0LVQe2U9fWk1ui/wq4TczxlBGeyly3
+ zkGtOC2PcJwPoT1CiRDicn0uBM6xMq50a8hQlHzm5hrmt3uV7E5Yr1zBnmB7hEGywyGl
+ iZVQ==
 X-Forwarded-Encrypted: i=1;
- AFNElJ+XpUx44AMr+OQ+tZz5nl65lspWsd8l/N2YNSh4VDWANeA8OFM3dQiqhji3qyRiAHNxwzf+9xnx9EPo@nongnu.org
-X-Gm-Message-State: AOJu0Yxy6VuBmJhGQqqDRAEzmFX6qYbfGgE8XEahFbU265Z6MVThpcjN
- 7hnMtry/kaGwGTTs5Sp6Jn3UFoZgEY4rDRagY1k3zELnYLAOOxcLOiGOMYkjTFVP9CsP0Wde1E+
- xApPivRqc+EVmDmMf6Cz8aV2+QM2fRnA4LHdGm7ea7ihEv9ofvE/EduHxmHxeZIqu
-X-Gm-Gg: Acq92OEMqT9Uqz27b7xcDZGLR/sLVeBrHzJ6zcDCww/dtqux0HJBrjo65I6ZoPu1UMs
- uU/tt/NDQDf6hmgVRSy37B5gmsK5t/eAY8k1you7o28XjOS32jAi0G+qG+lVGMnWbHH1win1wZb
- oLbiCJFEHbv24VPDtiryTw1r9Um8HLVpj6ow4zbP1C1fIeYwvXHH3gkGf8duhcLL0aWywVlDcNy
- Wb5TEdvhn2Y4OxLr+USAZAtNnC1E1gSXE880jIFsfJpQoZFaNX9seKNhvFNBLyQRD12FmE9X8pX
- PZ6DcXY+AYLxXu4M+RAJAgfKBiJThmfleONIl+d6EA/JD+4ZwJaRIEfAlgb8QLV8W5dnPy/mvAQ
- pfMM1wB9g0XwSJo4YR0D/4rAosYkh1oGA872zyAQd25HY3ZVhOnFfSw==
-X-Received: by 2002:a05:600d:8648:20b0:490:9d5c:a3e0 with SMTP id
- 5b1f17b1804b1-490a29215ebmr8437325e9.9.1780076835501; 
- Fri, 29 May 2026 10:47:15 -0700 (PDT)
-X-Received: by 2002:a05:600d:8648:20b0:490:9d5c:a3e0 with SMTP id
- 5b1f17b1804b1-490a29215ebmr8436965e9.9.1780076834946; 
- Fri, 29 May 2026 10:47:14 -0700 (PDT)
-Received: from redhat.com (IGLD-80-230-25-45.inter.net.il. [80.230.25.45])
- by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-4909cab0e79sm110378875e9.13.2026.05.29.10.47.13
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 29 May 2026 10:47:14 -0700 (PDT)
-Date: Fri, 29 May 2026 13:47:11 -0400
-From: "Michael S. Tsirkin" <mst@redhat.com>
-To: Paolo Bonzini <pbonzini@redhat.com>
-Cc: Peter Maydell <peter.maydell@linaro.org>,
- qemu-devel <qemu-devel@nongnu.org>,
- Alex =?iso-8859-1?Q?Benn=E9e?= <alex.bennee@linaro.org>,
- Alistair Francis <alistair.francis@wdc.com>,
- BALATON Zoltan <balaton@eik.bme.hu>,
- Daniel =?iso-8859-1?Q?P=2E_Berrang=E9?= <berrange@redhat.com>,
- Fabiano Rosas <farosas@suse.de>, Kevin Wolf <kwolf@redhat.com>,
- Warner Losh <imp@bsdimp.com>,
- Philippe =?iso-8859-1?Q?Mathieu-Daud=E9?= <philmd@linaro.org>,
- Paolo Bonzini <bonzini@gnu.org>
-Subject: Re: [PATCH v2] docs/devel: relax policy on AI-generated contributions
-Message-ID: <20260529124753-mutt-send-email-mst@kernel.org>
-References: <20260529094619.1034458-1-pbonzini@redhat.com>
- <CAFEAcA_EWR_MjH1arCdi2y0saZ-Hc7zRAK97YTeEcesVRb9Rtg@mail.gmail.com>
- <20260529114114-mutt-send-email-mst@kernel.org>
- <CABgObfZ5OUOih=pSrmpCKaAWqWnKgNZ2yZvRUoctYr=tEunoXA@mail.gmail.com>
+ AFNElJ+o1a9jEPQcc//3MF4E6Vl77jX/vK+esxjfzgVjfEYiE0JskajCNu9nZSaQLKbGuI21xOxHSS0VzvYM@nongnu.org
+X-Gm-Message-State: AOJu0YyW1ZP3VHce7jA+1wprLSELFBX+fn5rt/H4eogMhbcLIrN2HpNa
+ Mhjm0Bio0Na5dDqPGl6uxq5RD9x+NcmE379pK8wKx0iG7pcsShhpggEOzKIp0OH/KT7AYHLLhIG
+ 3QzBSpTfoRAOr83sAJF9cbWZlnXhglxVtwMsOxLZOmg==
+X-Gm-Gg: Acq92OGoFmLn9uvkie+d/EYaIGNciaqebWRsh0jWXIM+1r5N50oD9rTjAnvhcUbwdg/
+ st7wrZlJigW+UOvqL4UjdxllnGrXhmki0wzUpjAV80fR4RSlyy+00VcLd8YxJot0hyncb9INwuI
+ vWUkV96pV7ra3r0C0bRt7+QQmaoENM1YPgJr9+vNc0PcEeuluilmaIQAT+HiH0JmTpPXTH2VLLK
+ 1PylGt/CY+dmweMs0kf7ZC1Mc9j+zghL8X7bX0zl1SM8ANSaSvMYrv9d4zD/OrEp1Slrqjh2mM3
+ VwZM/MOEMWS/t2Pxm9a0ouDmnPPdLu6t1P94cAs3w8kFZWkvpAQiO76J+yNWjJAobo+UPUAcNLY
+ f066GhWqcw3ik
+X-Received: by 2002:a05:690c:4889:b0:7bd:696d:5125 with SMTP id
+ 00721157ae682-7e05e667c34mr3520927b3.45.1780077183450; Fri, 29 May 2026
+ 10:53:03 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <CABgObfZ5OUOih=pSrmpCKaAWqWnKgNZ2yZvRUoctYr=tEunoXA@mail.gmail.com>
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=mst@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -24
-X-Spam_score: -2.5
+References: <20260529140559.1775511-1-chenhuacai@loongson.cn>
+ <CAFEAcA_Li+07XNfE+GpvZOzwJReqbG=x8nz=kMrQy5vqkReEUQ@mail.gmail.com>
+In-Reply-To: <CAFEAcA_Li+07XNfE+GpvZOzwJReqbG=x8nz=kMrQy5vqkReEUQ@mail.gmail.com>
+From: Peter Maydell <peter.maydell@linaro.org>
+Date: Fri, 29 May 2026 18:52:52 +0100
+X-Gm-Features: AVHnY4LS92s05pVvblpyq47ntUKCqZ2eUi8mm8_vtxMxBa2zzOB6BhKc8oo4aFg
+Message-ID: <CAFEAcA9-RixpW9Br1_3vhSsBY8KTwpcCMPar39pNX+c_vAPgrw@mail.gmail.com>
+Subject: Re: [PATCH] fw_cfg: Add support for LoongArch architecture
+To: Huacai Chen <chenhuacai@loongson.cn>
+Cc: Gabriel Somlo <somlo@cmu.edu>, "Michael S . Tsirkin" <mst@redhat.com>,
+ Huacai Chen <chenhuacai@kernel.org>, 
+ qemu-devel@nongnu.org, loongarch@lists.linux.dev, 
+ Xuerui Wang <kernel@xen0n.name>, Jiaxun Yang <jiaxun.yang@flygoat.com>
+Content-Type: text/plain; charset="UTF-8"
+Received-SPF: pass client-ip=2607:f8b0:4864:20::112d;
+ envelope-from=peter.maydell@linaro.org; helo=mail-yw1-x112d.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.445,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -131,95 +120,59 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Fri, May 29, 2026 at 06:17:29PM +0200, Paolo Bonzini wrote:
-> 
-> 
-> Il ven 29 mag 2026, 17:46 Michael S. Tsirkin <mst@redhat.com> ha scritto:
-> 
->     > If as a project we want to limit the
->     > blast-radius if we find we have to rip out a hypothetical tainted
->     > contribution, shouldn't that mean that we hold that as a project-wide
->     > line, rather than leaving it up to the opinion of the individual
->     > maintainer ?
-> 
->     I guess, the maintainer can judge that the code is unique and qemu
->     specific enough, and follows from what it is doing automatically enough,
->     that the chances it is accidentally copying something are nil?
-> 
-> 
-> One thing that I had in mind was using AI to adjust QEMU code as the kernel
-> side goes through review and APIs change. The changes at that point may be not
-> entirely mechanical and, more importantly for traceability, it probably will
-> not make sense to separate them from the original code; but the code still has
-> fundamentally a shape and design that was provided by the human.
-> 
-> Another, which is Rust-specific, is procedural macro code, which is often
-> boring, or very much tied to the shape of the generated code and human-written
-> traits, or both. See https://github.com/qemu/qemu/blob/master/rust/qemu-macros/
-> src/migration_state.rs for an example, contrasting the block starting with
-> "self.conversion = match" with the rest.
-> 
-> I don't think it makes sense to have a wholesale permission for procedural
-> macros because that is not *always* true, or true for a whole file. But say a
-> contributor wrote the overall specification/documentation first, and mostly
-> one-shotted a skeleton with a prompt like "based on the documentation, generate
-> basic attribute parsing code for the MigrationState derive macro, together with
-> a code generator that provides empty methods for an implementation of the trait
-> ::migration::MigrationState from rust/hw/migration/". Then I would absolutely
-> not reject it. This is also the intention of the suggestion around prompts—to
-> favor quick generation of boilerplate code over full "agentic" (blargh)
-> implementation.
+On Fri, 29 May 2026 at 16:52, Peter Maydell <peter.maydell@linaro.org> wrote:
+>
+> On Fri, 29 May 2026 at 15:42, Huacai Chen <chenhuacai@loongson.cn> wrote:
+> >
+> > Qemu fw_cfg support was missing for LoongArch, which made some functions
+> > unusable in virtual machines. So add the missing LoongArch defines.
+> >
+> > Signed-off-by: Huacai Chen <chenhuacai@loongson.cn>
+> > ---
+> >  drivers/firmware/Kconfig       | 2 +-
+> >  drivers/firmware/qemu_fw_cfg.c | 2 +-
+> >  2 files changed, 2 insertions(+), 2 deletions(-)
+> >
+> > diff --git a/drivers/firmware/Kconfig b/drivers/firmware/Kconfig
+> > index bbd2155d8483..9ec747716389 100644
+> > --- a/drivers/firmware/Kconfig
+> > +++ b/drivers/firmware/Kconfig
+> > @@ -121,7 +121,7 @@ config RASPBERRYPI_FIRMWARE
+> >
+> >  config FW_CFG_SYSFS
+> >         tristate "QEMU fw_cfg device support in sysfs"
+> > -       depends on SYSFS && (ARM || ARM64 || PARISC || PPC_PMAC || RISCV || SPARC || X86)
+> > +       depends on SYSFS && (ARM || ARM64 || LOONGARCH || PARISC || PPC_PMAC || RISCV || SPARC || X86)
+> >         depends on HAS_IOPORT_MAP
+> >         default n
+> >         help
+> > diff --git a/drivers/firmware/qemu_fw_cfg.c b/drivers/firmware/qemu_fw_cfg.c
+> > index 87a5421bc7d5..0c51a9df589f 100644
+> > --- a/drivers/firmware/qemu_fw_cfg.c
+> > +++ b/drivers/firmware/qemu_fw_cfg.c
+> > @@ -211,7 +211,7 @@ static void fw_cfg_io_cleanup(void)
+> >
+> >  /* arch-specific ctrl & data register offsets are not available in ACPI, DT */
+> >  #if !(defined(FW_CFG_CTRL_OFF) && defined(FW_CFG_DATA_OFF))
+> > -# if (defined(CONFIG_ARM) || defined(CONFIG_ARM64) || defined(CONFIG_RISCV))
+> > +# if (defined(CONFIG_ARM) || defined(CONFIG_ARM64) || defined(CONFIG_LOONGARCH) || defined(CONFIG_RISCV))
+> >  #  define FW_CFG_CTRL_OFF 0x08
+> >  #  define FW_CFG_DATA_OFF 0x00
+> >  #  define FW_CFG_DMA_OFF 0x10
+>
+> On the QEMU specification side we could probably nail this down
+> to "x86, sun, ppc, parisc have funny register layouts for
+> legacy reasons and all others have the 8-bytes-apart layout",
+> which might help to avoid having all this architecture-specific
+> ifdeffery changing for each new architecture, if that's
+> something people care about.
 
+I sent this QEMU patchset proposing that (and cleaning
+up some of the implementation to make it less likely that
+we add fw_cfg to any new board types with different layouts
+from the arm/riscv/loongarch "standard" one):
 
-Agreed.
+https://lore.kernel.org/qemu-devel/20260529174639.451353-1-peter.maydell@linaro.org/
 
-> 
->     > > +**Documentation and code comments**
->     > > +  While AI can help draft text, it still requires significant human
->     > > +  oversight.  Pay attention to the organization and flow of the
->     generated
->     > > +  text, and strictly fact-check all technical details as LLMs are
->     prone
->     > > +  to being confidently wrong.
->     >
->     > I think the application to documentation and comments is the part
->     > I'm least enthusiastic about here.
-> 
->     But I am very enthusiastic about less agrammatical english in both.
->     AI is super helpful for non native speakers.
-> 
-> 
-> I am also not enthusiastic for documentation; the review I gave for Philippe's
-> unedited experiment was rather scathing. The main challenge for documentation
-> is the structure of the work, which is really complicated to establish because
-> the LLM doesn't have a clue about the underlying design.
-> 
-> But there can be interesting uses nevertheless, such as integrating knowledge
-> from functional tests into documentation, that are worth exploring. Also for
-> Rust I am really trying to have *all* functions commented (and tested through
-> so tests) and AI can produce good results more often than not, especially when
-> the model has access to a human-written file-level blurb.
-> 
-> 
->     > For changes to code, we have at
->     > least some guardrails on the AI output, in the fact that it has to
->     > compile and to pass tests. For changes to documentation, the
->     > only guardrails are human eyeballs.
->     >
->     > Also both comments and documentation ideally are a record of
->     > what we intended the behaviour to be. If an LLM is effectively
->     > autogenerating something documentation-shaped from the code we
->     > lose that.
-> 
-> 
-> I agree with both of these observations, for what it's worth.
-> 
-> Paolo
-> 
-> 
->     >
->     > -- PMM
-> 
-> 
-
+-- PMM
 
