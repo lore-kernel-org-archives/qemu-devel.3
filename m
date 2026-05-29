@@ -4,69 +4,107 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B90A5CD4F54
-	for <qemu-devel@archiver.kernel.org>; Fri, 29 May 2026 16:41:04 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 939CCCD6E49
+	for <qemu-devel@archiver.kernel.org>; Fri, 29 May 2026 16:44:49 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wT0Fy-0007qX-4X; Fri, 29 May 2026 12:40:23 -0400
+	id 1wT0Jq-0000kH-KK; Fri, 29 May 2026 12:44:22 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <odaki@rsg.ci.i.u-tokyo.ac.jp>)
- id 1wT0Fp-0007qE-AT
- for qemu-devel@nongnu.org; Fri, 29 May 2026 12:40:13 -0400
-Received: from www3579.sakura.ne.jp ([49.212.243.89])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <odaki@rsg.ci.i.u-tokyo.ac.jp>)
- id 1wT0Fl-0005qa-5D
- for qemu-devel@nongnu.org; Fri, 29 May 2026 12:40:13 -0400
-Received: from [192.168.10.145] (p865013-ipoe.ipoe.ocn.ne.jp [153.242.222.12])
- (authenticated bits=0)
- by www3579.sakura.ne.jp (8.16.1/8.16.1) with ESMTPSA id 64TGdoAA010686
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NO);
- Sat, 30 May 2026 01:39:51 +0900 (JST)
- (envelope-from odaki@rsg.ci.i.u-tokyo.ac.jp)
-DKIM-Signature: a=rsa-sha256; bh=qVwEbe4eLSwNjWsW+cND962cOvzS2P6bbUU6GkRnav8=; 
- c=relaxed/relaxed; d=rsg.ci.i.u-tokyo.ac.jp;
- h=From:Message-ID:To:Subject:Date;
- s=rs20250326; t=1780072791; v=1;
- b=hDRKcPrB2f3+WC2HCIKYCTpyPQhLSaUEIlzzyHyuRVaeAziAs1yfuOnjbr70r5b+
- W6UtJIcyta8KLyLPa3HykmE4HiphdtUHRbhbl2MGbDojrp4ZTTtG5wiNqOdC0UKe
- B1OEtSRczFsDyVIEIQ7mnh2K/xp70J7KogRZEkBMY29BTRmKvpX32BnOgKy4eRAw
- 7GSGwkp+5VqF2NIqrbmy0FYDgRQwdpkUW6etqrwwsg3S6jrwEyP37pgTg96GTBhV
- BISQc9sO0gL0rlR23d81qztnC3PHeAWTunREYzr9Jjft2qJ2sfDoHoaq8/e/PYWv
- J0/L3UWHke7FNAREWEenFA==
-Message-ID: <5fd9e540-cf13-45f5-ba9a-c7faf364035b@rsg.ci.i.u-tokyo.ac.jp>
-Date: Sat, 30 May 2026 01:39:50 +0900
-MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] system/physmem: Synchronize ram_list accesses
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1wT0Jo-0000jw-SO
+ for qemu-devel@nongnu.org; Fri, 29 May 2026 12:44:20 -0400
+Received: from smtp-out2.suse.de ([2a07:de40:b251:101:10:150:64:2])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1wT0Jm-0007Ch-7A
+ for qemu-devel@nongnu.org; Fri, 29 May 2026 12:44:20 -0400
+Received: from imap1.dmz-prg2.suse.org (unknown [10.150.64.97])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+ (No client certificate requested)
+ by smtp-out2.suse.de (Postfix) with ESMTPS id D878A66DB9;
+ Fri, 29 May 2026 16:44:14 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
+ t=1780073054; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=fIR8ldmFk/8NCAmwzLgrL1AlP2jHKHnPdVQbTb6Q6go=;
+ b=X9Dho32EozBUrOJ7WaHk1R2ailJFUXGd+kiwzYS3i9cIz5+fsVApeWg9uBfQuR9iwQZziD
+ 84jOFgm9gHJ3FbVRel2YkDLmpU4ifO18PM5F/rA+ZvBxXhIQwYf9lcOOlme4zRqvhuHKut
+ pvh2yPzqtElBRw+c5pjvQg4I7NOMB0I=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
+ s=susede2_ed25519; t=1780073054;
+ h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=fIR8ldmFk/8NCAmwzLgrL1AlP2jHKHnPdVQbTb6Q6go=;
+ b=ZmKXQPwxw7J7WNl24TAXFWIdPU1kzm74coSzsSxZlgoAh7s/mFB1ujrXbZaaLV4jiLP/jE
+ w10W0mkm7dj5+WDQ==
+Authentication-Results: smtp-out2.suse.de;
+	none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
+ t=1780073054; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=fIR8ldmFk/8NCAmwzLgrL1AlP2jHKHnPdVQbTb6Q6go=;
+ b=X9Dho32EozBUrOJ7WaHk1R2ailJFUXGd+kiwzYS3i9cIz5+fsVApeWg9uBfQuR9iwQZziD
+ 84jOFgm9gHJ3FbVRel2YkDLmpU4ifO18PM5F/rA+ZvBxXhIQwYf9lcOOlme4zRqvhuHKut
+ pvh2yPzqtElBRw+c5pjvQg4I7NOMB0I=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
+ s=susede2_ed25519; t=1780073054;
+ h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=fIR8ldmFk/8NCAmwzLgrL1AlP2jHKHnPdVQbTb6Q6go=;
+ b=ZmKXQPwxw7J7WNl24TAXFWIdPU1kzm74coSzsSxZlgoAh7s/mFB1ujrXbZaaLV4jiLP/jE
+ w10W0mkm7dj5+WDQ==
+Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+ (No client certificate requested)
+ by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id 62A9A779A7;
+ Fri, 29 May 2026 16:44:14 +0000 (UTC)
+Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
+ by imap1.dmz-prg2.suse.org with ESMTPSA id rLqlCl7CGWoiBwAAD6G6ig
+ (envelope-from <farosas@suse.de>); Fri, 29 May 2026 16:44:14 +0000
+From: Fabiano Rosas <farosas@suse.de>
 To: Peter Xu <peterx@redhat.com>
-Cc: qemu-devel@nongnu.org, =?UTF-8?Q?Alex_Benn=C3=A9e?=
- <alex.bennee@linaro.org>,
- Fabiano Rosas <farosas@suse.de>, Paolo Bonzini <pbonzini@redhat.com>,
- =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-References: <20260523-tsan-v1-1-07d5eb9dcaa2@rsg.ci.i.u-tokyo.ac.jp>
- <ahYSO98JgdYJrP2e@x1.local>
- <8d81e622-1397-4579-bbe5-50ee174a3272@rsg.ci.i.u-tokyo.ac.jp>
- <ahhcvqnOWEoYmCJF@x1.local>
- <b4f87ec7-0406-430e-b645-0539a5e083be@rsg.ci.i.u-tokyo.ac.jp>
- <ahhnUz0Il0nRvhoz@x1.local>
- <bd9d973a-f467-4248-b283-f25356b3354d@rsg.ci.i.u-tokyo.ac.jp>
- <ahm7IqApbMaMhXQP@x1.local>
-Content-Language: en-US
-From: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
-In-Reply-To: <ahm7IqApbMaMhXQP@x1.local>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=49.212.243.89;
- envelope-from=odaki@rsg.ci.i.u-tokyo.ac.jp; helo=www3579.sakura.ne.jp
-X-Spam_score_int: -16
-X-Spam_score: -1.7
-X-Spam_bar: -
-X-Spam_report: (-1.7 / 5.0 requ) BAYES_00=-1.9, DKIM_INVALID=0.1,
- DKIM_SIGNED=0.1, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=no autolearn_force=no
+Cc: qemu-devel@nongnu.org, Paolo Bonzini <pbonzini@redhat.com>, Mark Kanda
+ <mark.kanda@oracle.com>, "Michael S . Tsirkin" <mst@redhat.com>, Markus
+ Armbruster <armbru@redhat.com>, Eric Blake <eblake@redhat.com>, "Maciej S.
+ Szmigiero" <maciej.szmigiero@oracle.com>, Jason Wang
+ <jasowang@redhat.com>, Ben Chaney <bchaney@akamai.com>, Vladimir
+ Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
+Subject: Re: [PATCH RFC 1/2] migration/vl: Allow set parameters with
+ -incoming config:*
+In-Reply-To: <ahmrcVkOWW5iwozk@x1.local>
+References: <20260528212947.368132-1-peterx@redhat.com>
+ <20260528212947.368132-2-peterx@redhat.com> <87pl2ftc12.fsf@suse.de>
+ <ahmrcVkOWW5iwozk@x1.local>
+Date: Fri, 29 May 2026 13:44:11 -0300
+Message-ID: <87cxyetbc4.fsf@suse.de>
+MIME-Version: 1.0
+Content-Type: text/plain
+X-Spamd-Result: default: False [-4.30 / 50.00]; BAYES_HAM(-3.00)[100.00%];
+ NEURAL_HAM_LONG(-1.00)[-1.000];
+ NEURAL_HAM_SHORT(-0.20)[-1.000]; MIME_GOOD(-0.10)[text/plain];
+ RCVD_VIA_SMTP_AUTH(0.00)[]; ARC_NA(0.00)[];
+ RCVD_TLS_ALL(0.00)[]; MISSING_XM_UA(0.00)[];
+ FUZZY_RATELIMITED(0.00)[rspamd.com]; MIME_TRACE(0.00)[0:+];
+ RCPT_COUNT_SEVEN(0.00)[11]; MID_RHS_MATCH_FROM(0.00)[];
+ DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
+ FROM_HAS_DN(0.00)[]; TO_DN_SOME(0.00)[];
+ FROM_EQ_ENVFROM(0.00)[]; TO_MATCH_ENVRCPT_ALL(0.00)[];
+ RCVD_COUNT_TWO(0.00)[2];
+ DBL_BLOCKED_OPENRESOLVER(0.00)[suse.de:mid,imap1.dmz-prg2.suse.org:helo]
+Received-SPF: pass client-ip=2a07:de40:b251:101:10:150:64:2;
+ envelope-from=farosas@suse.de; helo=smtp-out2.suse.de
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -82,334 +120,295 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 2026/05/30 1:13, Peter Xu wrote:
-> On Fri, May 29, 2026 at 05:24:54PM +0900, Akihiko Odaki wrote:
->> On 2026/05/29 1:03, Peter Xu wrote:
->>> On Fri, May 29, 2026 at 12:32:18AM +0900, Akihiko Odaki wrote:
->>>>
->>>>
->>>> On 2026/05/29 0:18, Peter Xu wrote:
->>>>> On Wed, May 27, 2026 at 04:54:42PM +0900, Akihiko Odaki wrote:
->>>>>> On 2026/05/27 6:35, Peter Xu wrote:
->>>>>>> On Sat, May 23, 2026 at 09:38:28PM +0900, Akihiko Odaki wrote:
->>>>>>>> Alex Bennée reported a ThreadSanitizer warning about a plain concurrent
->>>>>>>> access to ram_list [1]. Ensure the concurrent accesses to ram_list are
->>>>>>>> properly synchronized with atomic accesses, mutexes, or RCU.
->>>>>>>>
->>>>>>>> First, the plain assignments of ram_list.mru_block are replaced with
->>>>>>>> qatomic_set(). A comment in qemu_get_ram_block() explains why the
->>>>>>>> ordering requirement is relaxed, but it still needs to be atomically
->>>>>>>> accessed. include/qemu/atomic.h says:
->>>>>>>>
->>>>>>>>> The C11 memory model says that variables that are accessed from
->>>>>>>>> different threads should at least be done with __ATOMIC_RELAXED
->>>>>>>>> primitives or the result is undefined. Generally this has little to
->>>>>>>>> no effect on the generated code but not using the atomic primitives
->>>>>>>>> will get flagged by sanitizers as a violation.
->>>>>>>>
->>>>>>>> Second, ram_list.version accesses are replaced with atomic operations
->>>>>>>> or protected with a mutex. Unlike ram_list.mru_block, ram_list.version
->>>>>>>> has tighter ordering requirements for one of its goals: ensuring that
->>>>>>>> the reader-held rs->last_seen_block value is invalidated whenever a RAM
->>>>>>>> block is reclaimed between two RCU reader critical sections. Below are
->>>>>>>> steps a reader and an updater follow:
->>>>>>>>
->>>>>>>> Reader:
->>>>>>>>
->>>>>>>> R-1. Enter the first RCU read-side critical section:
->>>>>>>> R-1-1. rs->last_version = qatomic_load_acquire(&ram_list.version)
->>>>>>>> R-1-2. rs->last_seen_block = an element of ram_list.blocks
->>>>>>>> R-2. Enter the second RCU read-side critical section:
->>>>>>>> R-2-1. if (qatomic_read(&ram_list.version) != rs->last_version)
->>>>>>>> R-2-2.     rs->last_seen_block = NULL
->>>>>>>>
->>>>>>>> Updater:
->>>>>>>>
->>>>>>>> W-1. Enter a ram_list.mutex critical section
->>>>>>>> W-1-1. Update ram_list.blocks
->>>>>>>> W-1-2. qatomic_store_release(&ram_list.version, ram_list.version + 1)
->>>>>>>> W-2. Enter another ram_list.mutex critical section
->>>>>>>> W-2-1. QLIST_REMOVE_RCU(block, next)
->>>>>>>> W-2-2. qatomic_store_release(&ram_list.version, ram_list.version + 1)
->>>>>>>> W-2-3. call_rcu(block, reclaim_ramblock, rcu)
->>>>>>>>
->>>>>>>> W-1-2 represents the write observed by R-1-1.
->>>>>>>>
->>>>>>>> ram_list.version is read non-atomically on the update side because the
->>>>>>>> update side is serialized with ram_list.mutex. The other ram_list
->>>>>>>> accesses in these steps are reasoned about in two cases.
->>>>>>>>
->>>>>>>> When the grace period of W-2-3 contains R-2:
->>>>>>>>         qatomic_load_acquire() at R-1-1 and qatomic_store_release() at W-1-2
->>>>>>>>         enforce the following ordering:
->>>>>>>>             W-1-1 -> W-1-2 -> R-1-1 -> R-1-2
->>>>>>>>         The value of ram_list.blocks stored by W-1-1 or a newer value that
->>>>>>>>         was loaded by R-1-2 is still valid because of the grace period.
->>>>>>>>
->>>>>>>> When the grace period of W-2-3 ends before R-2:
->>>>>>>>         call_rcu() at W-2-3 and the read-side critical section at R-2 ensure
->>>>>>>>         the following ordering:
->>>>>>>>             W-2-2 -> W-2-3 -> the grace period -> R-2 -> R-2-1
->>>>>>>>         The value of ram_list.version stored by W-2-2 or a newer value that
->>>>>>>>         was loaded by R-2-1 differs from rs->last_version and the reader
->>>>>>>>         invalidates rs->last_seen_block.
->>>>>>>>
->>>>>>>> Together, these steps ensure that rs->last_seen_block is invalidated
->>>>>>>> whenever necessary. With added atomic operations, pre-existing memory
->>>>>>>> barriers are no longer necessary and are removed.
->>>>>>>>
->>>>>>>> Any other ram_list accesses are already properly synchronized.
->>>>>>>>
->>>>>>>> [1] https://lore.kernel.org/qemu-devel/878q9fbmap.fsf@draig.linaro.org/
->>>>>>>>
->>>>>>>> Signed-off-by: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
->>>>>>>
->>>>>>> Above link [1] also mentioned about a hang.  Just to double check: we're
->>>>>>> only trying to silent the TSAN warning (which is a false positive), right?
->>>>>>
->>>>>> The hang is irrelevant and this is indeed to address the TSAN warning,
->>>>>> though I'm a bit reluctant to call it false positive because, strictly
->>>>>> speaking, the code actually relies on undefined behavior.
->>>>>>
->>>>>>>
->>>>>>>> ---
->>>>>>>>      migration/ram.c  | 10 +++++-----
->>>>>>>>      system/physmem.c | 16 +++++++---------
->>>>>>>>      2 files changed, 12 insertions(+), 14 deletions(-)
->>>>>>>>
->>>>>>>> diff --git a/migration/ram.c b/migration/ram.c
->>>>>>>> index fc38ffbf8af1..6da24d725861 100644
->>>>>>>> --- a/migration/ram.c
->>>>>>>> +++ b/migration/ram.c
->>>>>>>> @@ -2495,7 +2495,10 @@ static void ram_state_reset(RAMState *rs)
->>>>>>>>          rs->last_seen_block = NULL;
->>>>>>>>          rs->last_page = 0;
->>>>>>>> -    rs->last_version = ram_list.version;
->>>>>>>> +
->>>>>>>> +    /* Read version before ram_list.blocks */
->>>>>>>> +    rs->last_version = qatomic_load_acquire(&ram_list.version);
->>>>>>>> +
->>>>>>>>          rs->xbzrle_started = false;
->>>>>>>>          ram_page_hint_reset(&rs->page_hint);
->>>>>>>> @@ -3270,13 +3273,10 @@ static int ram_save_iterate(QEMUFile *f, void *opaque)
->>>>>>>>           */
->>>>>>>>          WITH_QEMU_LOCK_GUARD(&rs->bitmap_mutex) {
->>>>>>>>              WITH_RCU_READ_LOCK_GUARD() {
->>>>>>>> -            if (ram_list.version != rs->last_version) {
->>>>>>>> +            if (qatomic_read(&ram_list.version) != rs->last_version) {
->>>>>>>>                      ram_state_reset(rs);
->>>>>>>>                  }
->>>>>>>
->>>>>>> Not directly relevant to this patch, but I never thought into why this few
->>>>>>> lines are needed at all, and then I found I don't have an answer..
->>>>>>>
->>>>>>> Here, ram_list version change should only happen during ramblock
->>>>>>> add/remove.  I can think of a few special cases:
->>>>>>>
->>>>>>> a) device add/remove (e.g. dimms) causing new / removing ramblocks, should
->>>>>>>        never happen as qdev code fails any device add/remove attempt during
->>>>>>>        migration (qdev_device_add_from_qdict, qdev_unplug)
->>>>>>>
->>>>>>> b) virtio-mem, which only manages one memory backend, hence one ramblock,
->>>>>>>        no add/remove
->>>>>>>
->>>>>>> c) virtio-gpu, will do random add/remove with memory_region_init_ram_ptr()
->>>>>>>        which means ramblocks are not migratable
->>>>>>>
->>>>>>> PS: I recall we have other special cases like ROM sizes can change on dest
->>>>>>> QEMU, but it's about used_length, not about version boosts, so doesn't
->>>>>>> matter here.
->>>>>>>
->>>>>>> Both a) and b) should make sure no change on version, c) will change
->>>>>>> version, but in a case where the ramblock is destined to be not migratable,
->>>>>>> hence not visible to migration core.
->>>>>>>
->>>>>>> The patch itself looks all fine, but I'm just wondering if we should just
->>>>>>> remove this check completely or even try to somehow trap it from happening
->>>>>>> (if we can rule out things like virtio-gpu): if something really changed,
->>>>>>> it'll be a serious problem because we sync ramblock list already during
->>>>>>> ram_save_setup.
->>>>>>
->>>>>> There is another edge case: a ram_list.blocks change may be propagated to
->>>>>> the thread calling ram_save_setup() and ram_save_iterate() at different
->>>>>> timing. We are only ensuring that ram_list.blocks changes invalidating old
->>>>>> blocks are delivered with WITH_RCU_READ_LOCK_GUARD().
->>>>>>
->>>>>> So I think there is a theoretical race condition that breaks migration,
->>>>>> though triggering it in practice may not be realistic.
->>>>>
->>>>> Could you elaborate more on the theoretical race mentioned?
->>>>>
->>>>> My comment above was trying to say there should have no such happening, the
->>>>> virtio-gpu boosting the version seems to be an accident to me because
->>>>> migration doesn't need that (because virtio-gpu ramblocks are not
->>>>> migratable anyway).
->>>>
->>>> For example, a device may be removed before migration, but the removal of
->>>> the block from ram_list.blocks and the increment of ram_list.version may not
->>>> be observed by the thread calling ram_save_setup(); RCU only guarantees that
->>>> these writes will be visible in read-side critical sections *after* the
->>>> grace period ends, which can be after the ram_save_setup() call and before
->>>> following ram_save_iterate() calls.
->>>
->>> Ah. I think it should be fine, since save_setup() holds BQL, done by all
->>> callers when invoking qemu_savevm_state_do_setup().  I expect removal of a
->>> device needs BQL too while invoking qemu_ram_free(), so serialized with it.
->>>
->>> The other thing is, very early we'll set MIGRATION_STATUS_SETUP, covering
->>> both save_setup() and save_iterate(), so things will start to get blocked
->>> very early too.
->>>
->>> OTOH, any comments on below?
->>
->> Sure.
->>
->>>
->>> Thanks,
->>>
->>>>
->>>> Regards,
->>>> Akihiko Odaki
->>>>
->>>>>
->>>>> While looking at this once more, I found that I'm lost why mru_block is
->>>>> race free..
->>>>>
->>>>> The problem is mru_block is written by the RCU readers, then... see whether
->>>>> this race can happen (even with this patch):
->>>>>
->>>>>      Reader A                              Writer
->>>>>      --------                              ------
->>>>>      rcu_read_lock()
->>>>>      walk list, find block X
->>>>>                                            QLIST_REMOVE_RCU(X)
->>>>>                                            qatomic_set(&mru_block, NULL)
->>>>>                                            call_rcu(X, reclaim_ramblock)
->>>>>      qatomic_set(&mru_block, X)  <----------- overwrites NULL
->>>>>      rcu_read_unlock()
->>>>>                                            grace period ends, X freed
->>>>>
->>>>>      Reader C
->>>>>      --------
->>>>>      rcu_read_lock()
->>>>>      qatomic_rcu_read(&mru_block) -> X
->>>>>      Read X's block->offset ...  <----------- UAF
->>
->> I agree this is problematic.
->>
->>>>>
->>>>> One thing I can think of so far is this (pesudo code only, ignoring atomic
->>>>> ops for now):
->>>>>
->>>>> qemu_ram_free():
->>>>>        qemu_mutex_lock_ramlist();
->>>>>        ...
->>>>>        QLIST_REMOVE_RCU(block, next);
->>>>>        /*
->>>>>         * 1st attempt to reset it, note: concurrent reader may set it again,
->>>>>         * even to the ramblock being freed.
->>>>>         */
->>>>>        ram_list.mru_block = NULL;
->>>>>        ram_list.version++;
->>>>>        /*
->>>>>         * Only to make sure whoever might be using this ramblock being
->>>>>         * removed to finish using it.
->>>>>         */
->>>>>        call_rcu(block, rcu_noop_fn, rcu);
->>>>>        drain_call_rcu();
->>>>>        /*
->>>>>         * 2nd attempt to clear it: after call_rcu() we make sure nobody yet
->>>>>         * has access to the ramblock being removed, hence this clear makes
->>>>>         * sure it won't get set again by anyone to the removed ramblock.
->>>>>         */
->>>>>        ram_list.mru_block = NULL;
->>>>>        call_rcu(block, reclaim_ramblock, rcu);
->>>>>        qemu_mutex_unlock_ramlist();
->>>>>
->>>>> But it looks a bit ugly.  Thoughts?
->>
->> Indeed it's not really nice. drain_call_rcu() is something we definitely
->> want to avoid; it unlocks the BQL, which is too hard to prove safety.
-> 
-> Ah, yeah I forgot that.
-> 
->>
->> The best solution I have currently in mind is to keep the mru_block inside
->> an allocation managed my RCU:
->>
->> struct RAMListVersion {
->> 	struct rcu_head rcu;
->> 	RAMBlock *mru_block;
->> 	RAMBlock *reclaim_block;
->> };
->>
->> And qemu_ram_free() will do:
->>      qemu_mutex_lock_ramlist();
->>      ...
->>      QLIST_REMOVE_RCU(block, next);
->>      ram_list.version->reclaim_block = block;
->>      call_rcu(ram_list.version, reclaim_ramlist_version, rcu);
->>      ram_list.version = g_new0(RamListVersion, 1);
->>      ram_list.version_id++;
->>      qemu_mutex_unlock_ramlist();
->>
->> qemu_get_ram_block() will do:
->>      qatomic_rcu_read(&ram_list.version)->mru_block = block;
->>
->> reclaim_ramlist_version will do:
->>      if (version->reclaim_block) {
->>           reclaim_ramblock(version->reclaim_block);
->>      }
->>
->>      g_free(version);
-> 
-> This one almost works, except I think such race can still happen:
-> 
->      writer                                   reader
->      ------                                   ------
->    qemu_get_ram_block for block X
->                                               qemu_get_ram_block
->      qemu_mutex_lock_ramlist();
->                                                 found block X
->      QLIST_REMOVE_RCU(block, next);
->      ram_list.version->reclaim_block = block;
->      call_rcu(ram_list.version, ...);
->      ram_list.version = g_new0(RamListVersion, 1);
->                                               ram_list.version->mru_block = X <-----------------
->      qemu_mutex_unlock_ramlist();
+Peter Xu <peterx@redhat.com> writes:
 
-You are right.
+> On Thu, May 28, 2026 at 07:16:57PM -0300, Fabiano Rosas wrote:
+>> Peter Xu <peterx@redhat.com> writes:
+>> 
+>> > QEMU doesn't yet have a good way to specify migration parameters so that
+>> > they can be available even during early stage of QEMU boots.  It is because
+>> > the migration object (who owns the migration parameters) will only be
+>> > created after PHASE_LATE_BACKENDS_CREATED.  It means anything before it
+>> > reading migration parameters is illegal.
+>> >
+>> > However, QEMU does have special use cases for such, namely only-migratable
+>> > flag, and cpr-transfer. Recently, we have one more possible user to read a
+>> > to-be-introduced new migration parameters during backend initialization
+>> > phase.  We can introduce yet another global variable (or per-device
+>> > parameter) to bypass this limitation, but we can also seek for a generic
+>> > solution that we can setup migration parameters very early, even during
+>> > backend initializations.
+>> >
+>> > See this discussion for more details on the context of the problem:
+>> >
+>> >   https://lore.kernel.org/r/ahdI7Vl5KraK566D@x1.local
+>> >
+>> > This patch wants to take the latter approach.
+>> >
+>> > As a start, introduce a new way to specify migration parameters in QEMU
+>> > boot commandline, as proposed in the above discussion:
+>> >
+>> >   -incoming config:key1=value1,key2=value2,...
+>> >
+>> > When specified, QEMU will parse a string formatted MigrationParameters and
+>> > keep it.  When migration object is created, it will apply all the settings
+>> > as initial value.
+>> >
+>> > Since the application of boot parameters will be after object_new()
+>> > completes, it means it happens after all machine compat properties or
+>> > -global settings (which should be done during instance_post_init()).
+>> >
+>> > So far, it's still only a way to specify parameters.  All parameters are
+>> > not visible before migration object created, like before.  Any parameter
+>> > that needs to be visible during boot will need to opt-in this feature.
+>> > Follow up patches will switch the current users to use this model.
+>> >
+>> > Signed-off-by: Peter Xu <peterx@redhat.com>
+>> > ---
+>> >  include/migration/misc.h |  5 ++++
+>> >  migration/migration.c    | 54 ++++++++++++++++++++++++++++++++++++++++
+>> >  system/vl.c              |  7 ++++++
+>> >  qemu-options.hx          | 18 ++++++++++++--
+>> >  4 files changed, 82 insertions(+), 2 deletions(-)
+>> >
+>> > diff --git a/include/migration/misc.h b/include/migration/misc.h
+>> > index 3159a5e53c..aff79b1380 100644
+>> > --- a/include/migration/misc.h
+>> > +++ b/include/migration/misc.h
+>> > @@ -133,6 +133,11 @@ bool migrate_is_uri(const char *uri);
+>> >  /* Parse @uri and return @channel, returning true on success */
+>> >  bool migrate_uri_parse(const char *uri, MigrationChannel **channel,
+>> >                         Error **errp);
+>> > +/*
+>> > + * Parse @config_str in form of "config:key1=value1,..." to initialize
+>> > + * migration parameters.
+>> > + */
+>> > +bool migration_parameters_boot_parse(const char *config_str, Error **errp);
+>> >  
+>> 
+>> 'boot' is not the right word. Maybe 'early'?
+>
+> I am ok to switch to "early".  Another option is.. "cmdline"?
+>
 
-> 
-> The fix should be simple, IMHO, my previous solution only misses that BQL
-> thing, so we can do a nested rcu free with:
-> 
-> reclaim_ramblock_prepare():
->    /*
->     * 1st round rcu free guarantees the last reader that can access
->     * this ramblock is gone.  Reset this field making sure it will
->     * never points to the ramblock being freed.
->     */
->    ram_list.mru_block = NULL;
->    call_rcu(block, reclaim_ramblock, rcu);
-> 
-> qemu_get_ram_block():
->    qemu_mutex_lock_ramlist();
->    ...
->    QLIST_REMOVE_RCU(block, next);
->    ram_list.mru_block = NULL;
->    call_rcu(block, reclaim_ramblock_prepare, rcu);
->    qemu_mutex_unlock_ramlist();
+Either is fine.
 
-Now I get it and this looks nice to me. Having a nested call_rcu() is 
-not that ugly if the underlying reasoning is described in a comment. I 
-would describe it something like following in reclaim_ramblock_prepare():
+>> 
+>> >  /* migration/multifd-device-state.c */
+>> >  typedef struct SaveCompletePrecopyThreadData {
+>> > diff --git a/migration/migration.c b/migration/migration.c
+>> > index 074d3f2c69..d918be7a44 100644
+>> > --- a/migration/migration.c
+>> > +++ b/migration/migration.c
+>> > @@ -41,6 +41,7 @@
+>> >  #include "qapi/qapi-commands-migration.h"
+>> >  #include "qapi/qapi-events-migration.h"
+>> >  #include "qapi/qmp/qerror.h"
+>> > +#include "qapi/qobject-input-visitor.h"
+>> >  #include "qobject/qnull.h"
+>> >  #include "qemu/rcu.h"
+>> >  #include "postcopy-ram.h"
+>> > @@ -94,6 +95,9 @@ enum mig_rp_message_type {
+>> >  static MigrationState *current_migration;
+>> >  static MigrationIncomingState *current_incoming;
+>> >  
+>> > +/* Only used during boot, destroyed after migration object initialized */
+>> > +static MigrationParameters *mig_boot_params;
+>> > +
+>> >  static GSList *migration_blockers[MIG_MODE__MAX];
+>> >  
+>> >  static bool migration_object_check(MigrationState *ms, Error **errp);
+>> > @@ -102,6 +106,45 @@ static bool stop_return_path_thread_on_source(MigrationState *s);
+>> >  static void migration_release_dst_files(MigrationState *ms);
+>> >  static void migration_completion_end(MigrationState *s);
+>> >  
+>> > +bool migration_parameters_boot_parse(const char *config_str, Error **errp)
+>> > +{
+>> > +    Visitor *v;
+>> > +
+>> > +    if (mig_boot_params) {
+>> > +        error_setg(errp, "Only one -incoming config:* is allowed.");
+>> > +        return false;
+>> > +    }
+>> > +
+>> > +    v = qobject_input_visitor_new_str(config_str, NULL, errp);
+>> > +    if (!v) {
+>> > +        goto fail;
+>> > +    }
+>> > +
+>> > +    if (!visit_type_MigrationParameters(v, NULL, &mig_boot_params, errp)) {
+>> > +        goto fail;
+>> > +    }
+>> > +
+>> > +    visit_free(v);
+>> > +    return true;
+>> > +
+>> > +fail:
+>> > +    visit_free(v);
+>> > +    return false;
+>> > +}
+>> > +
+>> > +static void migration_parameters_boot_apply(void)
+>> > +{
+>> > +    if (mig_boot_params) {
+>> > +        /*
+>> > +         * This can fail, because qobject visitor doesn't do sanity check
+>> > +         * on values while parsing.  It's not too late; we're still in boot
+>> > +         * phase.
+>> > +         */
+>> > +        qmp_migrate_set_parameters(mig_boot_params, &error_abort);
+>> > +        g_clear_pointer(&mig_boot_params, qapi_free_MigrationParameters);
+>> > +    }
+>> > +}
+>> > +
+>> >  static void migration_downtime_start(MigrationState *s)
+>> >  {
+>> >      trace_vmstate_downtime_checkpoint("src-downtime-start");
+>> > @@ -322,6 +365,17 @@ void migration_object_init(void)
+>> >  
+>> >      current_incoming->exit_on_error = INMIGRATE_DEFAULT_EXIT_ON_ERROR;
+>> >  
+>> > +    /*
+>> > +     * Apply boot migration parameters in case the user specified some via
+>> > +     * command line "-incoming config:*". NOTE: this will overwrite machine
+>> > +     * type compat properties and -global settings!
+>> > +     */
+>> 
+>> Hmm, but then it's exactly the same as -global migration.* ? Why do we
+>> need to extend -incoming?
+>> 
+>> Also, I don't see how qmp_migrate_set_parameters can overwrite compat
+>> properties. They're not part of MigrationParameters.
+>
+> Some of this should have been mentioned in my other replies, let me know if
+> there's still concern over there after reading those.
+>
 
-Now the last reader that retrieves the pointer to the block via 
-ram_list.blocks is gone. The reader may have assigned the block to 
-ram_list.mru_block, so reset the field making sure there is no remaining 
-pointer to the block.
+The question about -global is non-sensical, forget about it.
 
-Regards,
-Akihiko Odaki
+> In this case, after we set current_migration pointer compat properties are
+> applied, due to instance_post_init() happening within object_new().
+>
+
+Yes, but migration_properties has two distinct sets of Properties, one
+contains only compat properties that match machine.c properties and the
+other has properties that go into MigrationParameters. I was under the
+impression that we never tied compat to parameters.
+
+The only machine compat property that is also a migration parameter I
+see is zero-page-detection. Maybe we shouldn't have done that. Now we
+can't decouple MigrationParameters from -global. Unless, of course we
+declare that from now on compat needs to be done with a new property
+that's not part of MigrationParameters; and duplicate
+zero-page-detection.
+
+>> 
+>> > +    migration_parameters_boot_apply();
+>> > +
+>> > +    /*
+>> > +     * The boot parameters should have been verified already, but leave it
+>> > +     * after applying boot parameters to do one check for everything.
+>> > +     */
+>> 
+>> Will it get expensive? We do that for every QEMU start.
+>
+> Checking caps and parameters?  Why expensive?
+>
+
+Just because we're putting more migration code in QEMU's startup
+path. Most QEMU invocations don't care about migration. Eventually,
+checking every parameter twice might have an impact.
+
+> Here I should have mentioned we must do one shot check here, because
+> sometimes there're illegal mixtures of "-incoming config*" and default
+> values only after they merged together.  I'll update the comment for it,
+> IOW we must check here anyway.
+>
+
+Right.
+
+>> 
+>> >      migration_object_check(current_migration, &error_fatal);
+>> >  
+>> >      ram_mig_init();
+>> > diff --git a/system/vl.c b/system/vl.c
+>> > index da36b2c6e1..49f5fa0c7b 100644
+>> > --- a/system/vl.c
+>> > +++ b/system/vl.c
+>> > @@ -1838,6 +1838,13 @@ static void incoming_option_parse(const char *str)
+>> >  
+>> >      if (!strcmp(str, "defer")) {
+>> >          channel = NULL;
+>> > +    } else if (!strncmp(str, "config:", 7)) {
+>> > +        /*
+>> > +         * This is not a channel setup, but configuration to incoming
+>> > +         * migration parameters to make them available during early boot.
+>> > +         */
+>> > +        migration_parameters_boot_parse(str + 7, &error_fatal);
+>> > +        return;
+>> >      } else if (migrate_is_uri(str)) {
+>> >          migrate_uri_parse(str, &channel, &error_fatal);
+>> >      } else {
+>> > diff --git a/qemu-options.hx b/qemu-options.hx
+>> > index 96ae41f787..1fc92a409a 100644
+>> > --- a/qemu-options.hx
+>> > +++ b/qemu-options.hx
+>> > @@ -5366,11 +5366,15 @@ DEF("incoming", HAS_ARG, QEMU_OPTION_incoming, \
+>> >      "-incoming <channel>\n" \
+>> >      "                accept incoming migration on the migration channel\n" \
+>> >      "-incoming defer\n" \
+>> > -    "                wait for the URI to be specified via migrate_incoming\n",
+>> > +    "                wait for the URI to be specified via migrate_incoming\n"
+>> > +    "-incoming config:key1=value1,key2=value2,...\n" \
+>> > +    "                specify migration parameters valid even during boot\n",
+>> >      QEMU_ARCH_ALL)
+>> >  SRST
+>> > +
+>> >  The -incoming option specifies the migration channel for an incoming
+>> > -migration.  It may be used multiple times to specify multiple
+>> > +migration, or can also be used to setup migration parameters for the
+>> > +incoming migration.  It may be used multiple times to specify multiple
+>> >  migration channel types.  The channel type is specified in <channel>,
+>> >  or is 'main' for all other forms of -incoming.  If multiple -incoming
+>> >  options are specified for a channel type, the last one takes precedence.
+>> > @@ -5411,6 +5415,16 @@ options are specified for a channel type, the last one takes precedence.
+>> >      Wait for the URI to be specified via migrate\_incoming. The monitor
+>> >      can be used to change settings (such as migration parameters) prior
+>> >      to issuing the migrate\_incoming to allow the migration to begin.
+>> > +
+>> > +``-incoming config:key1=value1[,key2=value2,...]``
+>> > +
+>> > +    Specify migration parameters in QEMU commandlines, so that these
+>> 
+>> command line
+>
+> Fixed.
+>
+>> 
+>> > +    parameters will be available even during very early boot of QEMU.
+>> > +    They will be applied properly after QEMU boots and when the migration
+>> 
+>> The "applied properly" part is implementation detail.
+>
+> True, I simplified it:
+>
+> ``-incoming config:key1=value1[,key2=value2,...]``
+>
+>     Specify migration parameters in QEMU command line, so that these
+>     parameters will be available even during very early boot of QEMU.  It
+>     has similar effect as setting these parameters using QMP command
+>     ``migrate-set-parameters`` or HMP command ``migrate_set_parameter``.
+>
+
+ack.
+
+>> 
+>> > +    core is initialized.  From that POV, it has similar effect as setting
+>> > +    these parameters using QMP command ``migrate-set-parameters`` or HMP
+>> > +    command ``migrate_set_parameter``.
+>> > +
+>> >  ERST
+>> >  
+>> >  DEF("only-migratable", 0, QEMU_OPTION_only_migratable, \
+>> 
 
