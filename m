@@ -4,109 +4,141 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 683F0CD6E49
-	for <qemu-devel@archiver.kernel.org>; Fri, 29 May 2026 22:44:42 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id DB18DCD4F54
+	for <qemu-devel@archiver.kernel.org>; Fri, 29 May 2026 23:04:32 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wT5vn-00062p-Kb; Fri, 29 May 2026 18:43:55 -0400
+	id 1wT6FB-00029W-8U; Fri, 29 May 2026 19:03:57 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <wlosh@bsdimp.com>) id 1wT5vj-00062b-Cs
- for qemu-devel@nongnu.org; Fri, 29 May 2026 18:43:51 -0400
-Received: from mail-pj1-x1036.google.com ([2607:f8b0:4864:20::1036])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <wlosh@bsdimp.com>) id 1wT5vh-000315-58
- for qemu-devel@nongnu.org; Fri, 29 May 2026 18:43:51 -0400
-Received: by mail-pj1-x1036.google.com with SMTP id
- 98e67ed59e1d1-36bcbd7821fso506731a91.2
- for <qemu-devel@nongnu.org>; Fri, 29 May 2026 15:43:48 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1780094627; cv=none;
- d=google.com; s=arc-20240605;
- b=eb6DjrfRxAUPnaLYAoy/bZDAR8mtmAUJP1rWR/B2Kw6hofPgq9bc01vIRGry8y6fuQ
- zXAnn61MD44znQuup8XlPcFZvGExOAFddSrkucV4WvFWgE9Wj+bWgfV7JpgGawzeXbDt
- mrL50Lq36n1AiMGo9/dqYvyoIgXXe1YW6tiof0Xwg+q/zMwSRwjptE3MJ4agFDq0TfxD
- Ja+zfb8m3gr40K4I/QtUW62DLg5DL2AvYKIM3QGxVMz1yveh/OZzXqisUbCAhM0FA8nW
- 0v3OK2OUeoNCKFnsAvOAJpZnYSYXj2VScl2hmsYSwNLdXkxz/Fsa4PH/OFcSMnS9GwRA
- Ju+w==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
- s=arc-20240605; 
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:dkim-signature;
- bh=VS47PpnZMt76WVU5RFeRL3+FqpjuWRuNgKZ3zQvgmUg=;
- fh=sliOHIA2CuU4oJ0LFMgobUfSs69G+It2frpVay4tKFE=;
- b=EO+B9w9pYyYiTRXVRWmQqIGX3AXnUA1zjNKhkmwnWpePgcyQbvGOtjojQIpfA0SfBB
- DLFivmpXhK4CBUNRAfyifoeE8mp2yXFrqv1M9qwEPi5CVSvxKdxsRmv14wjLNtzWa25j
- Rl3xsFpXnphnUBLu9hDkiZk8LxhF8MMUM+skFqQhA7edQQfQZo1cBpKes8CH4u1GwdSU
- uELIdKqzO73EOOaIXFJQmgMDmm7BHgVNzgozkN1t50IihGqCmcFfevUT/d0fY7G9pL/5
- IWxhRnredlHQgpH3vSO0aflUWDe8likWUHanAKXi9p6FE/zIyYtzRfIZLO4SsWXyyfgv
- /QLA==; darn=nongnu.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=bsdimp-com.20251104.gappssmtp.com; s=20251104; t=1780094627; x=1780699427;
- darn=nongnu.org; 
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=VS47PpnZMt76WVU5RFeRL3+FqpjuWRuNgKZ3zQvgmUg=;
- b=r+Sbs2Ga87mwcAgxQ94zEe4MnpFoivVCR4vMWVhGVSPsW4nrbsNaqO6OmAVheOm88I
- 3hq/ym3/bhUI7nzKkW12EQXng09g4UPOpOqzEst039xNJdrAlO/AXlV1HFYr3kvXxBOc
- wqZVSUIROCoVJjRWFsQP2JURUbauFOfeyah5MpbkU8osq+2WiwKIwT/TGgl0WX97UQRS
- io11/FPTvpcg92ATghsqvWwW1emaOJ8wqUCYgVIvJjSwyHnnpdGGWQk9/1zaaJaRdPMk
- l31DpznSO1eq3iYA/VRhiZx6s6mevkaMkNr/wGzdq1EH1q0U1x8YfbDIOppxyV5bJcy0
- Yydg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1780094627; x=1780699427;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=VS47PpnZMt76WVU5RFeRL3+FqpjuWRuNgKZ3zQvgmUg=;
- b=SeK1Stt1t90VSzV2anFhcfjw5SgYBgV80yU1Ga3aojjdVTctPkLmoMGCxbvSvT+Gzm
- yovfl3Zw0jK99qE/cCS7g7dtr2KQ5DKzz704ptK+UBsLTZhSnFT9vsHBuItZL+JwYILU
- SbRvEtAZ9FCg/5ADYgRcjD9biTGsWTzPqFav9mvJsgkVravo4D/1Uj534eVUItO1qZV+
- 3qC8BqqZtUns7dlSZnqG/7TCVsllT5/3+2DoYMdiArr3LzsMXnvXoZmimVxnN5MF8WEE
- 9hyJBH2EVCDptC0mubZE5YxdrPTqCXL4sDq3u2K2bPU8uqRPVeUXowh6fe1YQHn9hd4u
- h66Q==
-X-Forwarded-Encrypted: i=1;
- AFNElJ+/zbIMcCaH3MCORJAiDLQqLo7hmfrO8XjVbvhq2ShZ4Z4Hb6zdZFueNBXtsD/4uVJ5089BAMb/VdNK@nongnu.org
-X-Gm-Message-State: AOJu0Ywr19AB02NrnvTspS46OvbUi8g/Ymp0+rm2zPN3Ig1z/zOa+Yot
- sdnf3IMXAFkTfXJw4RuHNPEDLBfxc31rudxI/fXyi8ULnb7nMyCTgn51691ZF+KzRsY3BBaI9iP
- MqqvqEzm164CFzzGXXHFSKBcff5u5z402vcdudmfSQw==
-X-Gm-Gg: Acq92OFVPEIyPgND1v8UcmPukjzMc+bHjV0hOKstA7HmK1PXQYze+y9ax60/CW7bgfQ
- AY1p94BVC4jUrHveR6quU0J8XD+SZ9fmxAMsKvyseNwiqNHworP/x5iPEUksNNFvFal0w1044ue
- D+ZlPDLm+Oxixe85Y+rybJSP4OiEwl6gmykMXcIQHBVTd6oPzkUQaXHerewbtMBVZfUMYenVRjk
- g1L9Vn6AobDmKCHJRGnla+bMwHwz4IAsJik4g59uMMHwmlxZdu/v9fy51PuwnGoT2SSZb3mpn9V
- Y9MUdEc9sf/cnb5DLz6IqCHBfKF8
-X-Received: by 2002:a17:90b:3b90:b0:368:78da:803 with SMTP id
- 98e67ed59e1d1-36c4ff86dc5mr1162533a91.12.1780094627138; Fri, 29 May 2026
- 15:43:47 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <nathanc@nvidia.com>)
+ id 1wT6F8-00028N-Sa; Fri, 29 May 2026 19:03:54 -0400
+Received: from mail-southcentralusazlp170120001.outbound.protection.outlook.com
+ ([2a01:111:f403:c10d::1] helo=SN4PR2101CU001.outbound.protection.outlook.com)
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <nathanc@nvidia.com>)
+ id 1wT6F7-0007QT-6t; Fri, 29 May 2026 19:03:54 -0400
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=ZA/VXEolSsDZCHXKKblwUEwchaaO5PedPmSJLxd17rmyFQpqgcpPJxfRCg8t+V2BJ/AQxkzMicTAujHriMScAFFjUhxv3hIftperPcXOd0BSt022Ob9sUM2LlHBspFL0m78dFThipU+imfNymRsmu0EPAeTkSqF62jM9bsWS7hqgM/vh1Q7Ewt1e6167MdrEGF2BM0/w6VmMr+VHtiESgY7PPlzPbA8Rrd8m0X+zP8igCgrIBRUhQvkROtfWifYR3HElMriUNrrQ1IbSCFHFJJKFt7EjPLx0n+LjPJy7gG/4Suql/CU57z3pUB0KzWBxZ4Z1wkCp7E8LkSoojhm/UQ==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=MR7Rda5B8ZBWdzzCOwnPZYek/SAMfoCxoSFWzfscdtI=;
+ b=ZM3hNWUJwwHDto49dUbtuo35tOWkG34xBLd0o48ioos07bbiH09COftH2BCQW2IE8mWlwZntPQ6fTOUAMsBrbXCvb6NkQ5tnJfsjEp7Qomaz09AP3838L7T208w/UmalXleyAXSzXfWCWVHDGoHVeEEnJsKxxKDh9cEgtAoi+8QBVmTJl07DHo7R6TUkaAMY8MkFf+cvVHMm2XfBPQWJ4VXs9PnZS8VoPB++R0xtrs0A7hFBO45RTYUfQvCROJwbjmXwqoUQJtAfT+ux4OfBIlm48xLVJT6jNDTMBIZVjupQFHyGmutuUU9IarCltK0Oq9h6ku1YnYTbpZmn9dg0vw==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=nvidia.com; dmarc=pass action=none header.from=nvidia.com;
+ dkim=pass header.d=nvidia.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=Nvidia.com;
+ s=selector2;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=MR7Rda5B8ZBWdzzCOwnPZYek/SAMfoCxoSFWzfscdtI=;
+ b=gICFhOBtZ+Tml6QTCtoK6yqgJH9hRwh8PbXIhbb9M4YNAAjsvL0n4A9EzO6STWr+lmYwHKQUswoXhuKCn1pnJpdyjq7quiRPpAvpCmG7Oj2DJgo8yQ8R9V1R7qo0KtbdiRVXbStjZ47u+brhXHbkYNZVsF2uK3P2sx6HPkb1OB68OJ/m8q+pZFymiKszLrLtRbkuJQBF1jpG48npWzzt6jGnjPwURVV/LvSXzWgsIPxkphim7zD1aIf55rRPrbAOSijr5NiCpDB3jIbQswSLu0InxsFFmvZ2Yg3UhQFHvp2sPby3d2xHGMXmUBECPZnmxYegCUx6Vw7dFQxzFkf9sg==
+Authentication-Results: dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=nvidia.com;
+Received: from DS2PR12MB9567.namprd12.prod.outlook.com (2603:10b6:8:27c::8) by
+ MW4PR12MB5666.namprd12.prod.outlook.com (2603:10b6:303:188::20) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.71.15; Fri, 29 May
+ 2026 23:03:45 +0000
+Received: from DS2PR12MB9567.namprd12.prod.outlook.com
+ ([fe80::636:1b52:24ca:d7e5]) by DS2PR12MB9567.namprd12.prod.outlook.com
+ ([fe80::636:1b52:24ca:d7e5%2]) with mapi id 15.21.0071.014; Fri, 29 May 2026
+ 23:03:45 +0000
+Message-ID: <a8f59a3c-d5be-4c9a-b840-07bac60caf5a@nvidia.com>
+Date: Fri, 29 May 2026 16:03:43 -0700
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v4 1/9] hw/arm/smmuv3: Update ATC invalidation check
+To: eric.auger@redhat.com, qemu-arm@nongnu.org, qemu-devel@nongnu.org
+Cc: Peter Maydell <peter.maydell@linaro.org>,
+ =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Zhao Liu <zhao1.liu@intel.com>, Matt Ochs <mochs@nvidia.com>,
+ Nicolin Chen <nicolinc@nvidia.com>,
+ Shameer Kolothum <skolothumtho@nvidia.com>, qemu-stable@nongnu.org
+References: <20260527221631.612026-1-nathanc@nvidia.com>
+ <20260527221631.612026-2-nathanc@nvidia.com>
+ <f4d57564-12e3-4f04-aa1c-4b828049dd15@redhat.com>
+Content-Language: en-US
+From: Nathan Chen <nathanc@nvidia.com>
+In-Reply-To: <f4d57564-12e3-4f04-aa1c-4b828049dd15@redhat.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+X-ClientProxiedBy: SJ0PR05CA0135.namprd05.prod.outlook.com
+ (2603:10b6:a03:33d::20) To DS2PR12MB9567.namprd12.prod.outlook.com
+ (2603:10b6:8:27c::8)
 MIME-Version: 1.0
-References: <CAJSP0QULyy5C0YEaxz2ChNy3_zfc5VwaMhB18R=yHDgnhBYo9w@mail.gmail.com>
- <CAJSP0QWt8Q5+yY1F6--XyvcAV3afg3msAcO6vaNDeWS=B9Oqag@mail.gmail.com>
- <CANCZdfpbDU+jCr6+Lj-ZV7h5H_ByHf=VJordfQ8OcH3+JsmJ4Q@mail.gmail.com>
- <CAJSP0QX=Uu0cy6z8oCsQK_EKJ8LUW1v3Tsd09JoAU=Py4MkRrw@mail.gmail.com>
- <CANCZdfrfiVp=BiCEUzYRFFeZBpUoODBwL5b-QQgbA21Ev76noA@mail.gmail.com>
- <CAJSP0QWrNzf_NS1hx4c2TFRLp0Son=_kAx7qq_CeMBinEV=CNw@mail.gmail.com>
- <CAJSP0QUMZ76ioyGNLemN0qROCFxh_yAZGUkwFReFxgFiMJx70Q@mail.gmail.com>
- <CANCZdfpQA=90x-dS=d4-Vtt43zdSWYg==rcx326wrCfWAbuP_w@mail.gmail.com>
- <CAJSP0QU27JHhDq0k9+pgu3PVzAwfppReWRzdi-UCrT9CdbRG0g@mail.gmail.com>
-In-Reply-To: <CAJSP0QU27JHhDq0k9+pgu3PVzAwfppReWRzdi-UCrT9CdbRG0g@mail.gmail.com>
-From: Warner Losh <imp@bsdimp.com>
-Date: Fri, 29 May 2026 16:43:36 -0600
-X-Gm-Features: AVHnY4KNSN6V0H-P-qBpcGJuyxHCINfu-t_7CVxpp0JJ0_O3wdyAfDt8uaxT78Y
-Message-ID: <CANCZdfppQVMtQYMRDVZaB4_k3Vt5X7=k-5a1HBUvUT3+Pp3i7Q@mail.gmail.com>
-Subject: Re: FreeBSD CI after Cirrus shuts down?
-To: Stefan Hajnoczi <stefanha@gmail.com>
-Cc: Li-Wen Hsu <lwhsu@freebsd.org>, Alex Bennee <alex.bennee@linaro.org>, 
- qemu-devel <qemu-devel@nongnu.org>
-Content-Type: multipart/alternative; boundary="000000000000eae09a0652fc93e0"
-Received-SPF: none client-ip=2607:f8b0:4864:20::1036;
- envelope-from=wlosh@bsdimp.com; helo=mail-pj1-x1036.google.com
-X-Spam_score_int: -18
-X-Spam_score: -1.9
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: DS2PR12MB9567:EE_|MW4PR12MB5666:EE_
+X-MS-Office365-Filtering-Correlation-Id: f9052d80-33cc-44c4-2a11-08debdd6892f
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam: BCL:0;
+ ARA:13230040|376014|366016|1800799024|11063799006|22082099003|4143699003|56012099006|18002099003;
+X-Microsoft-Antispam-Message-Info: 4ktBHGt5kMsSpOWHi7LuUaOXKTHRKdg+7KQ6Ndv35TUwIvQ9U2lSUtSV+F9aFNZ6s5EClBxicD9UY1vHPJWFevZXcyiBUdx80SGkyzNsW0IzxQO7C6TDCeLVWDb9GMMuNqn2tebnvHcb/lrXft9S+kEcLaGOmIq96k4fQDxThXMhiHlCsrAHQoHan9luxbUwKPeEqh/SPL6ol2kHFNWpPOKKwW5Zld1uEf51csblzevuaQzgMivA7SvyEdwzd9lfltV5d8qEo1x7ea1JOcAXObY9VTxX+EUJAuW5mC9ufmDBxC2OAge7JwU8RcS9HqZIopqXAf6MgED9Y92e5Rs0S9VFavG/U0ocEgllQrW/Oa36yQ8lnMMXe3H4nCV/lh8SUvlvG1dt/QnD6oM/iv4nETk8y+uNn4o7ClRZk6b1pTs5nqNCkRBwDRW80B78UpR6EAMssaP6V2rzoIpCWvd/2tazxFqD4W9hx52diwx/snedMk9CVnWmpSu6vxonq3EuKBmT9NYzkXswQ2Lgs9KKL68Y0veIoaXYQaDk7NWZ2VfyaUNCyhdBsiHTrPEvS0eCD6nJSi7VAkXaHiXwKPtd9OfJdPnl2XtkCmHmAGgLJXxKLX3L3rTUE4hXYuUSIC1fKA0LUL+79NoVS+68Yk43oiTbV3zg89M9dj4SuQxJcyiEMABGIDnFijOjvX4xhQA7
+X-Forefront-Antispam-Report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
+ IPV:NLI; SFV:NSPM; H:DS2PR12MB9567.namprd12.prod.outlook.com; PTR:; CAT:NONE;
+ SFS:(13230040)(376014)(366016)(1800799024)(11063799006)(22082099003)(4143699003)(56012099006)(18002099003);
+ DIR:OUT; SFP:1101; 
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0: =?utf-8?B?R1E1V3lndnRURFFVQm5BSXIrNHEzRmd6ZlVFMUZST0dRZWtrdmtIeUFKTHBF?=
+ =?utf-8?B?SUppUE1TRUhORXdZSGRaZXFYYTRKMVMxZUVITnVqNW8vWmkvYTR2UldwN3E1?=
+ =?utf-8?B?UXljU2hhcVNyVCt5VG5qRzhMS09WdHgvR3EzT2xycmY0dWJUV2VkVG1DKzNv?=
+ =?utf-8?B?YnNQeWhvVnF4MG9lWlpEUlNTaThhdG1talRmeW5YWXQ1YWxrY3RDZmllK1FV?=
+ =?utf-8?B?UHNyZUFZZkZlRTF6eWVIaHdmOEpva01pb2c0K0hJV3VWbUJ5T2hHeDA1ZVY4?=
+ =?utf-8?B?NXNEaVFBaE9MT0EyZTYvOEwrcGo4cWQ5RmJjcmdyd0k2c3ZxeExaZkg0ZkJh?=
+ =?utf-8?B?R1doclcwZFUraHdYRGU5dGpOQ0p3aG02b2syMHJadE02dzlaTkxvTlRKNTlS?=
+ =?utf-8?B?a1k2WkZxVklDS0x5a3UwZTdmeDdmMGhvYnExYVlodlNHODEzb0FCRHgvdVJG?=
+ =?utf-8?B?c2dyaDRsa0t5c3hTWHovZEY3SjFaRVI3THNGaE5tVVJGTDFUaDh4cXhyMXI1?=
+ =?utf-8?B?eWhqTFZqdVM0amhwcmdqaEtjdE5ZWjE4MDhkUUlBRFYvN3hvanc1WTFIbVU0?=
+ =?utf-8?B?N1BGeHBpT3FFclZOS0x5VmFwWi9nVWhvRTd2UE5CWFA0Vk1wbDZ3WVVoU00r?=
+ =?utf-8?B?aVVRZUpJS0V3aXhqdE9lRWhDY2NDMFA1NGUvMWw0cnA3Nmx6QVdDdW9xb1dp?=
+ =?utf-8?B?amhZLzBGOGRFaHZoTnNBUXY5eVpqRHhwNFNsLy9icWVTLzErbGJtYkdOcXF3?=
+ =?utf-8?B?NEt4cWtqRGxWUm1OV3BCbnFndUdGNnJUY3FIOHAvVWl4SnVjeWU5THhKM285?=
+ =?utf-8?B?bHlyd2lVVkNDNXBFak9jTlFLK0NlWW8wOTR4MDRpNXZOeXdsYThkMEhINHpn?=
+ =?utf-8?B?M3lSdk9SUnZZZ1M2WjBiYklLVW1JWGtEWFZneEJWMWs2WVcrR3ZsRHNyRXpm?=
+ =?utf-8?B?TTlUVjdFTkcza3RIUmRidmlUV2tjQUpyKzVvNTVyUm1jclUyL2pjMmhYRTE5?=
+ =?utf-8?B?UFVLblpKbVRKWGhtZGp4Y291dC85RUFadHJUak5vVG56WVhHRVRRMnJOSTJK?=
+ =?utf-8?B?bkwvNHV6Y1FuTCtlaENLU1ZFZTMxK1htdUVQS21CWWpNV3lwRVJEcmNybi93?=
+ =?utf-8?B?dTRvWFU3WURySmp5RFdsS09LZTR5Mk5VVTF2Kzc2R2NDT0ZNbThpUWFXdkQr?=
+ =?utf-8?B?b2NpOXhyaDBNZjVEUTFscW9VNUxpZ0RXTld2TlgvdXozOXJQK1pBQzYrS2sv?=
+ =?utf-8?B?ZGZ6L0tweVFQbXduZDNhZ2lFem1LSjRmMnlGV2E5anZJSnZYZVcvazJua0dU?=
+ =?utf-8?B?djI0WnJNRE9jRm0ycEJ1enFUeCtnUGhTOVpNVVk1MDZGRzZzeW9UdnlObE1o?=
+ =?utf-8?B?dXFtaFpWd0I2UzFuMHVLWXRIei9FbEFFVlBVOTJST3ZQK3hZd0lreC9vOGtR?=
+ =?utf-8?B?NUFMTXM4VDJNKzUwdm9NYmxweUVMM292eUlmdDc3V3Axb0d1REprczdnTXpi?=
+ =?utf-8?B?Q3pjSTlHMTR6R3JjU1VhVGZyRmxzMmxHeHN6ZWdvc2ExRzVKQjlXS0hodHR4?=
+ =?utf-8?B?bGt3MmE1MXVNcjFtajFBRmVpemdnV2VoT0lJeDBSelFBRzA4UFpoQzlTKytF?=
+ =?utf-8?B?MUk1dUxPc1IxU0tUeTZsQzBLb2FldjdSYSswS1dqZUNyd1A4RTNCTHVwVHpM?=
+ =?utf-8?B?ZDFPTjlxbzhiNzB0QkptR3JIVzVyMDdxbVd2b2FaSlMvWFV0M1dkL3Y4Y213?=
+ =?utf-8?B?Tmh1S3ZYTlBDLzVFTWxZZ2xFQWlvOEs2cFZjOHFpRFFoLzJLSUovSldTM2l1?=
+ =?utf-8?B?a2hPWlNpc085Q2llay9OdWlYallOdXV4SU9WRVlVUHVoR3gvNDFsVjJvU1RH?=
+ =?utf-8?B?VFI4aHcrQVl2RFdTSHhmMk9HNjlVeVdvNW5HbjVEakltKzZmRjR6clk2VkNJ?=
+ =?utf-8?B?TlRaL3A5Smd5eTVjUWNKZ3hWeTZwTlkyaDg5THUvY21EYzQ3TDg2MDJ4eHQ0?=
+ =?utf-8?B?WW9DdWZyNElEeUJpTlZ2MkZLYi9xUTdTV2hPU3J3d2dUcDkxbXIxNHZXeWpt?=
+ =?utf-8?B?Z0NRTnNqM09UN3I4NHdZMUdoZFR1MjV4QklnQmRUN2NjVUorOUFCbzdCanNK?=
+ =?utf-8?B?VjBWKy9XclpIdnRGdThSc3owd0d4Um4vRTdXRWdqd0czYUYwVThQQ1Q5dnJT?=
+ =?utf-8?B?bW5pODYvMFpHQ2doaXZQS2VIK2hSWi9Qc0pPdktQL1RleXRBZHNKTmtNTjJl?=
+ =?utf-8?B?MkpsUkhVZ1N0aHQ1bHc4ZEZBYytGc2RoNHJ1WWpqUXVBNlR2VE1KTTVNUjZW?=
+ =?utf-8?B?dkpYVW13U3N2N0xiSGR2bmhIQ1NpVlpFR3kvWUoxc1kzODFwNHJidz09?=
+X-OriginatorOrg: Nvidia.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: f9052d80-33cc-44c4-2a11-08debdd6892f
+X-MS-Exchange-CrossTenant-AuthSource: DS2PR12MB9567.namprd12.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 29 May 2026 23:03:45.7182 (UTC)
+X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
+X-MS-Exchange-CrossTenant-Id: 43083d15-7273-40c1-b7db-39efd9ccc17a
+X-MS-Exchange-CrossTenant-MailboxType: HOSTED
+X-MS-Exchange-CrossTenant-UserPrincipalName: 6AIdh6/M1/GykTgpWkzS+gNGzS5gsRIKzOT2ON8CUmyGdcxDIB4gclIlDplRvREU28JLrXHx5d+UzqJRxfOhfA==
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: MW4PR12MB5666
+Received-SPF: permerror client-ip=2a01:111:f403:c10d::1;
+ envelope-from=nathanc@nvidia.com;
+ helo=SN4PR2101CU001.outbound.protection.outlook.com
+X-Spam_score_int: -14
+X-Spam_score: -1.5
 X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, HTML_MESSAGE=0.001, RCVD_IN_DNSWL_NONE=-0.0001,
- SPF_HELO_NONE=0.001, SPF_NONE=0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-1.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.445,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ FORGED_SPF_HELO=1, SPF_HELO_PASS=-0.001,
+ SPF_NONE=0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -122,135 +154,45 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
---000000000000eae09a0652fc93e0
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
 
-On Fri, May 29, 2026 at 4:07=E2=80=AFPM Stefan Hajnoczi <stefanha@gmail.com=
-> wrote:
 
-> On Fri, May 29, 2026, 16:56 Warner Losh <imp@bsdimp.com> wrote:
->
+On 5/28/2026 1:35 AM, Eric Auger wrote:
+> On 5/28/26 12:16 AM, Nathan Chen wrote:
+>> From: Nathan Chen<nathanc@nvidia.com>
 >>
+>> Use smmuv3_ats_enabled() to determine whether ATS is enabled for the
+>> guest when handling an ATC invalidation command, as setting the ATS
+>> property value to 'auto' will resolve to ATS being detected as
+>> enabled in the ATC invalidation check otherwise.
 >>
->> On Fri, May 29, 2026 at 7:18=E2=80=AFAM Stefan Hajnoczi <stefanha@gmail.=
-com>
->> wrote:
+>> Fixes: f7f5013a55a3 ("hw/arm/smmuv3-accel: Add support for ATS")
+>> Suggested-by: Shameer Kolothum<skolothumtho@nvidia.com>
+> nit: Reported-by whould have been more suited
+I see, I will change the tag here.
+
+Thanks,
+Nathan
+
+>> Signed-off-by: Nathan Chen<nathanc@nvidia.com>
+>> ---
+>>   hw/arm/smmuv3.c | 2 +-
+>>   1 file changed, 1 insertion(+), 1 deletion(-)
 >>
->>> Hi Warner,
->>> How are things going? A few options if you're willing to take on the
->>> maintenance of a FreeBSD gitlab-runner VM hosted at OSUOSL:
->>>
->>
->> They are going well...
->>
->>
->>> 1. A FreeBSD 14.1 (zfs) VM as a temporary solution until a more recent
->>> FreeBSD guest can be deployed.
->>>
->>
->> Yea, let's start here, though see below.
->>
->
-> Great, I will send you the login details tomorrow.
->
+>> diff --git a/hw/arm/smmuv3.c b/hw/arm/smmuv3.c
+>> index 5c2855c377..0c65dc8c91 100644
+>> --- a/hw/arm/smmuv3.c
+>> +++ b/hw/arm/smmuv3.c
+>> @@ -1528,7 +1528,7 @@ static int smmuv3_cmdq_consume(SMMUv3State *s, Error **errp)
+>>           {
+>>               SMMUDevice *sdev = smmu_find_sdev(bs, CMD_SID(&cmd));
+>>   
+>> -            if (!sdev || !s->ats) {
+>> +            if (!sdev || !smmuv3_ats_enabled(s)) {
+>>                   trace_smmuv3_unhandled_cmd(type);
+>>                   break;
+>>               }
+> Reviewed-by: Eric Auger<eric.auger@redhat.com>
+> 
+> Eric
 
-Cool. There's a good chance that I'll be out tomorrow, but I'll be around
-Sunday.
-
-2. A FreeBSD 13.1 (zfs) or Linux VM for the purposes of a live system
->>> installation (e.g. dd and reboot or some other trick to overwrite the
->>> live system). We can screen share and you tell me what to type if
->>> remote console access is needed.
->>> 3. You provide a recent FreeBSD disk image, I upload it to OSUOSL's
->>> OpenStack, and I create a new VM from your image.
->>>
->>
->> What format is this VM in?
->>
->
-> The image should be a raw image for x86_64 guests with virtio drivers. My
-> understanding is that you can use EFI if you want, but the default is BIO=
-S.
->
-
-Yea, I have some scripts to do this...
-
-
-> You can find details on the OSUOSL OpenStack setup and how to create
-> images here:
-> https://wiki.osuosl.org/openstack/guests.html#manual-guest-installation
->
-
-"Create a 3G qcow2 disk image"
-
-OK. I know how I need to tweak my scripts!  I'll let you know when I have
-this
-and/or when there's a gitlab runner.
-
-Warner
-
---000000000000eae09a0652fc93e0
-Content-Type: text/html; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-
-<div dir=3D"ltr"><div dir=3D"ltr"><br></div><br><div class=3D"gmail_quote g=
-mail_quote_container"><div dir=3D"ltr" class=3D"gmail_attr">On Fri, May 29,=
- 2026 at 4:07=E2=80=AFPM Stefan Hajnoczi &lt;<a href=3D"mailto:stefanha@gma=
-il.com">stefanha@gmail.com</a>&gt; wrote:<br></div><blockquote class=3D"gma=
-il_quote" style=3D"margin:0px 0px 0px 0.8ex;border-left:1px solid rgb(204,2=
-04,204);padding-left:1ex"><div dir=3D"auto"><div><div class=3D"gmail_quote"=
-><div dir=3D"ltr" class=3D"gmail_attr">On Fri, May 29, 2026, 16:56 Warner L=
-osh &lt;<a href=3D"mailto:imp@bsdimp.com" target=3D"_blank">imp@bsdimp.com<=
-/a>&gt; wrote:<br></div><blockquote class=3D"gmail_quote" style=3D"margin:0=
-px 0px 0px 0.8ex;border-left:1px solid rgb(204,204,204);padding-left:1ex"><=
-div dir=3D"ltr"><div dir=3D"ltr"><br></div><br><div class=3D"gmail_quote"><=
-div dir=3D"ltr" class=3D"gmail_attr">On Fri, May 29, 2026 at 7:18=E2=80=AFA=
-M Stefan Hajnoczi &lt;<a href=3D"mailto:stefanha@gmail.com" rel=3D"noreferr=
-er" target=3D"_blank">stefanha@gmail.com</a>&gt; wrote:<br></div><blockquot=
-e class=3D"gmail_quote" style=3D"margin:0px 0px 0px 0.8ex;border-left:1px s=
-olid rgb(204,204,204);padding-left:1ex">Hi Warner,<br>
-How are things going? A few options if you&#39;re willing to take on the<br=
->
-maintenance of a FreeBSD gitlab-runner VM hosted at OSUOSL:<br></blockquote=
-><div><br></div><div>They are going well...</div><div>=C2=A0</div><blockquo=
-te class=3D"gmail_quote" style=3D"margin:0px 0px 0px 0.8ex;border-left:1px =
-solid rgb(204,204,204);padding-left:1ex">
-1. A FreeBSD 14.1 (zfs) VM as a temporary solution until a more recent<br>
-FreeBSD guest can be deployed.<br></blockquote><div><br></div><div>Yea, let=
-&#39;s start here, though see below.</div></div></div></blockquote></div></=
-div><div dir=3D"auto"><br></div><div dir=3D"auto">Great, I will send you th=
-e login details tomorrow.=C2=A0</div></div></blockquote><div><br></div><div=
->Cool. There&#39;s a good chance that I&#39;ll be out tomorrow, but I&#39;l=
-l be around Sunday.</div><div><br></div><blockquote class=3D"gmail_quote" s=
-tyle=3D"margin:0px 0px 0px 0.8ex;border-left:1px solid rgb(204,204,204);pad=
-ding-left:1ex"><div dir=3D"auto"><div dir=3D"auto"><div class=3D"gmail_quot=
-e"><blockquote class=3D"gmail_quote" style=3D"margin:0px 0px 0px 0.8ex;bord=
-er-left:1px solid rgb(204,204,204);padding-left:1ex"><div dir=3D"ltr"><div =
-class=3D"gmail_quote"><blockquote class=3D"gmail_quote" style=3D"margin:0px=
- 0px 0px 0.8ex;border-left:1px solid rgb(204,204,204);padding-left:1ex">
-2. A FreeBSD 13.1 (zfs) or Linux VM for the purposes of a live system<br>
-installation (e.g. dd and reboot or some other trick to overwrite the<br>
-live system). We can screen share and you tell me what to type if<br>
-remote console access is needed.<br>
-3. You provide a recent FreeBSD disk image, I upload it to OSUOSL&#39;s<br>
-OpenStack, and I create a new VM from your image.<br></blockquote><div><br>=
-</div><div>What format is this VM in?</div></div></div></blockquote></div><=
-/div><div dir=3D"auto"><br></div><div dir=3D"auto">The image should be a ra=
-w image for x86_64 guests with virtio drivers. My understanding is that you=
- can use EFI if you want, but the default is BIOS.</div></div></blockquote>=
-<div><br></div><div>Yea, I have some scripts to do this...</div><div>=C2=A0=
-</div><blockquote class=3D"gmail_quote" style=3D"margin:0px 0px 0px 0.8ex;b=
-order-left:1px solid rgb(204,204,204);padding-left:1ex"><div dir=3D"auto"><=
-div dir=3D"auto">You can find details on the OSUOSL OpenStack setup and how=
- to create images here:</div><div dir=3D"auto"><a href=3D"https://wiki.osuo=
-sl.org/openstack/guests.html#manual-guest-installation" target=3D"_blank">h=
-ttps://wiki.osuosl.org/openstack/guests.html#manual-guest-installation</a><=
-/div></div></blockquote><div><br></div><div>&quot;Create a 3G qcow2 disk im=
-age&quot;</div><div><br></div><div>OK. I know how I need to tweak my script=
-s!=C2=A0 I&#39;ll let you know when I have this</div><div>and/or when there=
-&#39;s a gitlab runner.</div><div><br></div><div>Warner<br><br></div><div>=
-=C2=A0</div></div></div>
-
---000000000000eae09a0652fc93e0--
 
