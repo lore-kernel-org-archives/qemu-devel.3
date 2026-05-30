@@ -4,112 +4,95 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id F4049CD6E4A
-	for <qemu-devel@archiver.kernel.org>; Sat, 30 May 2026 11:05:00 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E8F08CD6E49
+	for <qemu-devel@archiver.kernel.org>; Sat, 30 May 2026 13:30:36 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wTHUO-0004jg-P0; Sat, 30 May 2026 07:04:24 -0400
+	id 1wTJkm-0001pu-LC; Sat, 30 May 2026 09:29:28 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <stefanha@gmail.com>)
- id 1wTHUN-0004jU-Vw
- for qemu-devel@nongnu.org; Sat, 30 May 2026 07:04:24 -0400
-Received: from mail-ed1-x536.google.com ([2a00:1450:4864:20::536])
+ (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
+ id 1wTJkl-0001pm-8g
+ for qemu-devel@nongnu.org; Sat, 30 May 2026 09:29:27 -0400
+Received: from mail-wr1-x42e.google.com ([2a00:1450:4864:20::42e])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <stefanha@gmail.com>)
- id 1wTHUM-0006Mz-GM
- for qemu-devel@nongnu.org; Sat, 30 May 2026 07:04:23 -0400
-Received: by mail-ed1-x536.google.com with SMTP id
- 4fb4d7f45d1cf-68c5eecdd56so1426515a12.3
- for <qemu-devel@nongnu.org>; Sat, 30 May 2026 04:04:22 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1780139061; cv=none;
- d=google.com; s=arc-20240605;
- b=hYs3lCVBcqiiUwh8Br6ulhllSrk7X1gAqv3uPpu/aaTa8EdVTr5sjDf6e8m9z9cogA
- XTxqpo4xYwFkH0ocHMt7As8dhjc/GB5vI646IgY5Z67Rdo5ZAutNkKIqVyrr+Re/TXIT
- mpe1cDpNwRksLsQQnRiCb4kJlc76MUruRabZOJAQ14cibZdFTmHglV1VXSsWKxe9q62j
- t5KDcUgI9R50w8yhfne+DRt39JlbEQpb9jXSZEVbLh9biJImD5jRUn4dOs+zKBvGGibG
- LGcDQ8UTYey5BXuZxkpaME6pZWEmxG7ZyRKP5zTWrBWqV0+fahjKLi12BjRbogQ8888d
- G6kw==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
- s=arc-20240605; 
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:dkim-signature;
- bh=qPnTJg/Lzrmi76Fw6argkaw5mKM0iBaalFZqNskxC+I=;
- fh=6xfvgCOniLKoqQc7pml9COjz7CYYfy4pGMhYD7FaAv8=;
- b=cSh+yGUmanFBCOZBGxa6hyWL9hRXum00GJzoWqdhD6/BPuu/8GxV1OoAFJ8C1iiRSX
- XebIT7e7P2ljAodxr15EeJ2NQEKFcMrZVUzBhlVq4t6xoboPDldKtN3FVkow6RvyiErq
- Fn/XyVzHiPb28jZed1hWQZM26rPo6Xe4Iv8Z44C0EMHK8wurQpH/E97IHv0RULbgVruA
- 7y22FIlQ9Qev6MZieslGl9I/1pSpN/KNXxqw7hS9nB+0rH3bxBw0auuIopxDdZsEbNsu
- wivREmj8UBouqwYC7x0k+V8AMiCH3b6iL/HowjhIwzheKP5TkmTLi/L+bvE2IrHbuGDs
- V8IA==; darn=nongnu.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
+ (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
+ id 1wTJkj-0004PK-NL
+ for qemu-devel@nongnu.org; Sat, 30 May 2026 09:29:26 -0400
+Received: by mail-wr1-x42e.google.com with SMTP id
+ ffacd0b85a97d-441209fb77eso9081365f8f.1
+ for <qemu-devel@nongnu.org>; Sat, 30 May 2026 06:29:24 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1780139061; x=1780743861; darn=nongnu.org;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=qPnTJg/Lzrmi76Fw6argkaw5mKM0iBaalFZqNskxC+I=;
- b=ni+ZmjaSg6cLtc9mMTrKBFiRCmQqAcU6PzE2H6IHws7LT+Xl6owjsHmxY0cdxbzV2T
- 7WEJ0MeozfBWSYaEIv2djqjKJ0oWXY1yS5Q4wqD+Q8J/acZ7cWvGYmHE0LKqtJiOmsao
- O7UZ5aZhY6QIPXSCwHWod1N3AYfaOlLmwoXclir2MEpXqSKhlMxTGm/WQAI75qZTP6iA
- uEovfJj+WQK7uB1wNnmvpybsODpLzOO2nj0nQ0wtQzAd2XzvMOesyZMcYnb2C9OIyT8l
- l2uE2S5b+/Ed8n4WlZtFccSFor57sKovz6AB71hupJRfGYbo/D4HA1nB/FKLJ/BT7KAO
- kMIA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1780139061; x=1780743861;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ d=linaro.org; s=google; t=1780147763; x=1780752563; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:user-agent
+ :references:in-reply-to:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=qPnTJg/Lzrmi76Fw6argkaw5mKM0iBaalFZqNskxC+I=;
- b=WhWeNZhvK0j2COWUoEs2i5sSfe29tnhRK3S2u/ezIylSKE7LH/PtJPqKWVrCcQ1aGc
- qWgChAcUbtSf7RHQbzLqeVQ4z8y9h6evrQph3UdWneuEsprwD+hnlK2GtkFvcu3a9OZ0
- xOTVGeUSNqzVXjGtetMETDhP9zNqiDAH7Mmdp0Bs96jWOfk4yrl6BQ1kh4rih+Jj5LEX
- wMnEXjBdDwvF+my0jxKxvV9GEGLZjT8tLVGRe0XcdWw/MPriEsIND0eQyTtNPYFDqZtA
- UBGyTGR9UAq6ibfkthLr4+HsJdy4zIPO8yBcHhLK5WJ90a9q4BvxX4vhoQqpP2nna5ee
- 6mcA==
-X-Forwarded-Encrypted: i=1;
- AFNElJ971T5ylug8dTMcPgiPn5udRo9dCznoh/NBc+MHpSTVIxAUghrqzDcWMFhKQfgNAIIMJh+8VsWWv7mJ@nongnu.org
-X-Gm-Message-State: AOJu0YxQmxsPRvOTHRmZ8iL8oqqGtQmzAE7lW7Z6qT62gGs+X285WaC9
- HKVuPCVR2Lbz3qaygd4hU3Tj6t2JM85OG1CQwMcexSifYuPcn/YPlYpwE7ct3Z+1LURIRpPklUA
- LrKGxHS/Nw5b/EmqPSlowx7jN9WM4RZA=
-X-Gm-Gg: Acq92OEZhHMTuxNmWNRU55wp0zZ0tPTHDBcWHKkmaKpSx5ltCEVnB9Zj5b2xJTJNLC9
- g3tq38oVAQcPFETBDn4SEh7jq0Q+VcwElv4ZjRJif9zLb4V+Kql9zOqMZMaD1TfDtxBwYR5tPGa
- whgmhbbYs0+TWWTq5GdNE0M3CqM9UZZj1sQ0one8g3yhslnEC+WuXjIDK2tKU26WCB6AIn5ly1c
- MCyGkxynYZ+F+Gz/ZD26AHveQP27AdGfhVBEKX3b0ERKl8rXPKkx9BONeJVMNo98t4f47BuLm3F
- v5rotcRC/Rwb94azYPE88vS4wVM7STue+/NBNIFvhWXs5zm8hXHF
-X-Received: by 2002:a05:6402:278f:b0:68b:1e3:f626 with SMTP id
- 4fb4d7f45d1cf-68c87d86170mr1953337a12.0.1780139060822; Sat, 30 May 2026
- 04:04:20 -0700 (PDT)
+ bh=OGjxcXFKQaJWCitxfrkzROrkKg6cLM70RNbxKwS5Hfk=;
+ b=mjUdZSCLmoUpMLBPCvL11RnhCtJRgfua0/CtOTiIiUMADswWr4J644gJ1KSrd5gZdx
+ C9+4qvpln5tJv2I4AKipr67QG52L4GVqjcCPDFdMDEH+BsqF6qkZuo4XXHBAMa1Zuszv
+ F5vbEDCbkxLRwaqpA/Akp5f1nWCsoCT57LrVcKQxbmpD8Yy1OZpZafaHm+HebN1C4jdQ
+ bzNofEhOVJWsOrBZO2PVrSYO9yHhxF4qRR00OdwSS6BaDZvHov+gYkWkLUvn+SF3Q/Zv
+ AdN/m09EDrxWX7mpDRGFLLf85FPodGySWw09bIWj7C9dBERRYcnS2kBmZxu2IVLNrQuT
+ Qsig==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1780147763; x=1780752563;
+ h=content-transfer-encoding:mime-version:message-id:date:user-agent
+ :references:in-reply-to:subject:cc:to:from:x-gm-gg
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=OGjxcXFKQaJWCitxfrkzROrkKg6cLM70RNbxKwS5Hfk=;
+ b=KUHJmWLlyoR/ub8icI90x5HPdQR+9Ul8c88vUbIKB1YxDTcYwLpQPCowLFq0WPfHxQ
+ I05D4K6LweHLUuBeguWozht7chTmwDDGzHl3bDDjj5hs2TKx6pZSdF2vAfJarARS+1qO
+ rSqnCKgGu4D+YpeP70BLTgpcXyyHpLUMCRgy2hn3+cooYTfzQSNcBMLhZ6MFwTGtTKVo
+ zFagu9YTh1KqA1X7uMC1BtC5MUMKU2ZHgPHagt5dlk9AF/8hgy+A2LGL2ZhVCn40//Qh
+ CxpNgfCWc68fTVJ5bl91MEAk4aF9WqoOrBznV3u8CifnsXUXqn33cVsF1HCbWQa3/2mX
+ FCxg==
+X-Gm-Message-State: AOJu0Yw5iWPMkjARmPI6AqhnqnMncdr+BMQls1l7sOq/5ElNvMy0EOUm
+ 3FFBeH42E3tf/+eZe7Jk0siqpi8ah7CGga4dZKPfVAg0dGNaI30RMU81NJ1gP5zmULs=
+X-Gm-Gg: Acq92OFnJrHdr58oLinfJKrPv5Cg2QegP+tkto2MPdK108uz+lRxK/oT152328InKtc
+ 6ukKfBNR7SjFycfpe/r1IbHkRXRY5tpY4UFnpd4zW90Ip7ehggUTgwu0z3Nkg1KJImmHL/Ofg7/
+ BfVGKHR4iz9556HD/d+NLypKqKlBI2x1ld8i2Cv/ON9OhFXOXsVUbKEhQoUysyo0uMVBAKJFZZ7
+ rjs4WzAJd/TaQE3NXMgeYGlscT4iYrQVeGT53hsPzqOdR0MzQN4Ao//vUpjiOczEkPphpQPpG1T
+ bZKbMHgiUFZ2qpDhqRxwW3IloEGJ43AbMYoOQKpPN0Kv2HnS5ruPlCCT/5sCEkjUsKs53+1Cqx8
+ keBtR7rP7wVhO6IYK0B7/ogvWHnL7saHRH92jfaTDHyt36ktsLpK+hB4fXTcwLzKZcOOq6m+tcy
+ PhfcnGGtHqu/6VRJYmw4ke/wSS+2IjzXiI+w==
+X-Received: by 2002:a05:6000:481e:b0:45e:8edc:dacc with SMTP id
+ ffacd0b85a97d-45ef1392e8emr10642870f8f.27.1780147762642; 
+ Sat, 30 May 2026 06:29:22 -0700 (PDT)
+Received: from draig.lan ([185.124.0.195]) by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-45ef34a065esm11219295f8f.5.2026.05.30.06.29.21
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Sat, 30 May 2026 06:29:21 -0700 (PDT)
+Received: from draig (localhost [IPv6:::1])
+ by draig.lan (Postfix) with ESMTP id 8D10F5F7B7;
+ Sat, 30 May 2026 14:29:20 +0100 (BST)
+From: =?utf-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
+To: Bin Guo <guobin@linux.alibaba.com>
+Cc: qemu-devel@nongnu.org,  Warner Losh <imp@bsdimp.com>,  Kyle Evans
+ <kevans@freebsd.org>,  Laurent Vivier <laurent@vivier.eu>,  Philippe
+ =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>,  Daniel P .
+ =?utf-8?Q?Berrang=C3=A9?=
+ <berrange@redhat.com>,  Thomas Huth <thuth@redhat.com>,  Markus Armbruster
+ <armbru@redhat.com>
+Subject: Re: [PATCH v2] util/cutils: drop qemu_strnlen() in favor of strnlen()
+In-Reply-To: <20260530062816.59206-1-guobin@linux.alibaba.com> (Bin Guo's
+ message of "Sat, 30 May 2026 14:28:16 +0800")
+References: <20260530062816.59206-1-guobin@linux.alibaba.com>
+User-Agent: mu4e 1.14.1; emacs 30.1
+Date: Sat, 30 May 2026 14:29:20 +0100
+Message-ID: <87tsrpf2kv.fsf@draig.linaro.org>
 MIME-Version: 1.0
-References: <CAJSP0QULyy5C0YEaxz2ChNy3_zfc5VwaMhB18R=yHDgnhBYo9w@mail.gmail.com>
- <CAJSP0QWt8Q5+yY1F6--XyvcAV3afg3msAcO6vaNDeWS=B9Oqag@mail.gmail.com>
- <CANCZdfpbDU+jCr6+Lj-ZV7h5H_ByHf=VJordfQ8OcH3+JsmJ4Q@mail.gmail.com>
- <CAJSP0QX=Uu0cy6z8oCsQK_EKJ8LUW1v3Tsd09JoAU=Py4MkRrw@mail.gmail.com>
- <CANCZdfrfiVp=BiCEUzYRFFeZBpUoODBwL5b-QQgbA21Ev76noA@mail.gmail.com>
- <CAJSP0QWrNzf_NS1hx4c2TFRLp0Son=_kAx7qq_CeMBinEV=CNw@mail.gmail.com>
- <CAJSP0QUMZ76ioyGNLemN0qROCFxh_yAZGUkwFReFxgFiMJx70Q@mail.gmail.com>
- <CANCZdfpQA=90x-dS=d4-Vtt43zdSWYg==rcx326wrCfWAbuP_w@mail.gmail.com>
- <CAJSP0QU27JHhDq0k9+pgu3PVzAwfppReWRzdi-UCrT9CdbRG0g@mail.gmail.com>
- <CANCZdfppQVMtQYMRDVZaB4_k3Vt5X7=k-5a1HBUvUT3+Pp3i7Q@mail.gmail.com>
-In-Reply-To: <CANCZdfppQVMtQYMRDVZaB4_k3Vt5X7=k-5a1HBUvUT3+Pp3i7Q@mail.gmail.com>
-From: Stefan Hajnoczi <stefanha@gmail.com>
-Date: Sat, 30 May 2026 07:04:08 -0400
-X-Gm-Features: AVHnY4L2JgqDYJ499CVgIL28WrkVfO1rMKeqfl1pNUE9ahSXkioOGqsxtskpHZU
-Message-ID: <CAJSP0QXEKm+t0NHtEFFXqBoZaBArb42X2TfYY3qO+-6gDSD2WQ@mail.gmail.com>
-Subject: Re: FreeBSD CI after Cirrus shuts down?
-To: Warner Losh <imp@bsdimp.com>
-Cc: Li-Wen Hsu <lwhsu@freebsd.org>, Alex Bennee <alex.bennee@linaro.org>, 
- qemu-devel <qemu-devel@nongnu.org>
-Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2a00:1450:4864:20::536;
- envelope-from=stefanha@gmail.com; helo=mail-ed1-x536.google.com
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2a00:1450:4864:20::42e;
+ envelope-from=alex.bennee@linaro.org; helo=mail-wr1-x42e.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- T_PDS_OTHER_BAD_TLD=0.01 autolearn=ham autolearn_force=no
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -125,17 +108,24 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi Warner,
-I was able to install FreeBSD 15.0 because there was a netboot.xyz
-image available in OSUOSL's OpenStack.
+Bin Guo <guobin@linux.alibaba.com> writes:
 
-You can now ssh into 140.211.166.82 as root with your GitLab ssh key.
-The machine is now yours. Please let me know if you need anything.
+> There are only three call sites, and strnlen() is available on all
+> supported platforms (POSIX.1-2008, Windows via UCRT, MinGW).  Remove
+> the hand-rolled wrapper and use the standard function directly.
+>
+> While here, align bsd-user/uaccess.c to use size_t for max_len/len,
+> matching linux-user/uaccess.c and eliminating a signed/unsigned mismatch.
+>
+> Also remove the stale qemu_strnlen() entry from docs/devel/style.rst.
+>
+> Suggested-by: Philippe Mathieu-Daud=C3=A9 <philmd@linaro.org>
+> Reviewed-by: Philippe Mathieu-Daud=C3=A9 <philmd@linaro.org>
+> Signed-off-by: Bin Guo <guobin@linux.alibaba.com>
 
-Here are the host key fingerprints:
-140.211.166.82 ED25519 SHA256:fnEX4BeNwRVgwfwR9GQ/fmTN0mM6M59nr1GYXwWR8jM
-140.211.166.82 RSA SHA256:x8IuTdim+j6H6Q1k44hkpDZwrM3zO9v5OD6RJpZ78bE
-140.211.166.82 ECDSA SHA256:E3hh4ijePh3u7U0SQAwkaI+lil4mzrKmNamcUeexywE
+Reviewed-by: Alex Benn=C3=A9e <alex.bennee@linaro.org>
 
-Stefan
+--=20
+Alex Benn=C3=A9e
+Virtualisation Tech Lead @ Linaro
 
