@@ -4,103 +4,113 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3419ACD5BD0
-	for <qemu-devel@archiver.kernel.org>; Sat, 30 May 2026 13:41:42 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2B5CDCD6E49
+	for <qemu-devel@archiver.kernel.org>; Sat, 30 May 2026 14:57:45 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wTJvs-0003Wn-DI; Sat, 30 May 2026 09:40:56 -0400
+	id 1wTL7P-0007BK-Dj; Sat, 30 May 2026 10:56:55 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <wlosh@bsdimp.com>) id 1wTJvq-0003WR-1n
- for qemu-devel@nongnu.org; Sat, 30 May 2026 09:40:54 -0400
-Received: from mail-pj1-x1034.google.com ([2607:f8b0:4864:20::1034])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <wlosh@bsdimp.com>) id 1wTJvn-0001ka-4P
- for qemu-devel@nongnu.org; Sat, 30 May 2026 09:40:53 -0400
-Received: by mail-pj1-x1034.google.com with SMTP id
- 98e67ed59e1d1-367cbac9c37so8767217a91.2
- for <qemu-devel@nongnu.org>; Sat, 30 May 2026 06:40:50 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1780148449; cv=none;
+ (Exim 4.90_1) (envelope-from <anisinha@redhat.com>)
+ id 1wTL7O-0007BC-63
+ for qemu-devel@nongnu.org; Sat, 30 May 2026 10:56:54 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <anisinha@redhat.com>)
+ id 1wTL7M-0004Zf-Nf
+ for qemu-devel@nongnu.org; Sat, 30 May 2026 10:56:53 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1780153010;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:mime-version:mime-version:content-type:content-type;
+ bh=KrgN+/IE6PA4Nu2OKHuml+af+qAz1xXZaa3UKnuqzBQ=;
+ b=HenKynm2Dt0ZijOwFZri47bbJ/gB6650NeojpdL1NaP3skWIBdb3g20AHdVnM7K3CWNxOj
+ hDknrIslaGjE1nA5joZfpBjgGMC/KPczJS62HSulz/02mMWnWWCD4J2Xs4+ou9coHWmQMm
+ sPVDIL+9kyduKLP23P3ZxcV4gKWvU+w=
+Received: from mail-qv1-f70.google.com (mail-qv1-f70.google.com
+ [209.85.219.70]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-323-PTqNzVSwNRef3R3-nCdCqQ-1; Sat, 30 May 2026 10:56:47 -0400
+X-MC-Unique: PTqNzVSwNRef3R3-nCdCqQ-1
+X-Mimecast-MFC-AGG-ID: PTqNzVSwNRef3R3-nCdCqQ_1780153007
+Received: by mail-qv1-f70.google.com with SMTP id
+ 6a1803df08f44-8c3bdb60dadso135101116d6.1
+ for <qemu-devel@nongnu.org>; Sat, 30 May 2026 07:56:47 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1780153007; cv=none;
  d=google.com; s=arc-20240605;
- b=HuTMSTF4JnSMcHzxWULctUkvOHj5h3kj3eypOZEXKjO7Es8ydbn5wDPfd36tBIKGkS
- GAgtbVx8KBTAfNs/DQ/glctm/ikFWRCe4RWw1hHKH8CNnNgqmOZLkpG2fAQvIeK3PrS0
- wWNwdk8jmbl/y3BS5DWYPrPg2P4Ixn1iqgKbx/8rTtCyVfEX4KqBP7sK4+7HMfES+8sU
- oJ7uWS6Z0Vthg16yilQTPfEhysROx537FE3JIVXKevKM5YUuUl9ruv6VEMXnQGuY4pDS
- h5mTK+Tp/NxPMXcpwTVZkTTqce7i9K97ueoFrMC1/GTQL+ck0k+rQiWy97o2WZOmC+CL
- 9gzg==
+ b=i1UXi7nnKhJtNWXD8k2LNBOVfBcBH1K24Ovthy+h9DNyyNGt2ybtfIl3HVKluQWL0k
+ V0bmXznw1lUCGyGU6C3UV+6d0Q9Qm2+3zbWNTonxWRLv5n7P3m5pyDvnjUeb48NBnjCP
+ SRvwNL220BVUwgmeqjuTsVWt/JSo3+Ivpme6HAB7ToB21lzffhP2ESlOhAiBp0akRR/2
+ RKn2NZZ8txTbekRXkxQkpD96R2lxAjKnpqKLKumibHXUwyucutD9yS/m+Lb3cHRtKvBL
+ Ew88DzUpVjX3ojYqzN/rpBM9J469/jYnfQTjEBRPE2/mV+H7w7SHs8UpnuT3Z4Da783x
+ pMhQ==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
  s=arc-20240605; 
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:dkim-signature;
- bh=deJawHKMx/iifZecP/L4VSAEmzsmI7R4Zj1KDnwYLaI=;
- fh=yW/FlwrVuroo6hzJ7k80gucgJHTlQ6qOhm5Wg56vJuk=;
- b=CnhPsq7U3tuPeLMWHj0bEd4gsSwZuafQ5h55YDowsNhMDZQIx8TWRb92mpfpKzF1hR
- +t9eAUQHJ19j5UPGxvb3xu8rE49avcp8exInunHUEmty4q5hvFoKFgZ38hBunBHgrFZo
- w2NEqopVUagSCVLczKHskahNTLRI28ZiZJLQuklObCSJYKby7SH9C1fIy5ZTQSyQk2m1
- CCGo9u6SMokum6rJd13i9Q+rV4evXw6HY1JNQQLEkkXcDoJJoEvAQODQ17URhT0owyVd
- +CBC1Y1RSuMU2UeEtmckAQfBmH4zs+x57fgRep/rzjL/WaffqyuS8DEUCAxaRkaDpw0N
- KVdA==; darn=nongnu.org
+ h=to:subject:message-id:date:from:mime-version:dkim-signature;
+ bh=KrgN+/IE6PA4Nu2OKHuml+af+qAz1xXZaa3UKnuqzBQ=;
+ fh=OxaQKzCgn6hyn0RCh2n2TYHljlQPbG7ri9jbfVYTE3I=;
+ b=DuQ9cO4YgPcq9Rf4WTqoyfQAl5+/1bTHLA1i8+yRU407mGSqnSfmulCQycPyQ8FmPS
+ ZI0mdVNP9MXIWazQyd4oplNXkjlqcuwioZrrDXb5QbODDDfJm2etwiY7qcRA/txI4CO/
+ 9z2B2DWFtZQ8jk/Dx9aJMGjgr6Fir2uog9wb2Opqm464hC5y5iv84vyZiF+EclIirQH3
+ /zGbY9mvXfBFVtN11PyF/yIXsP6OSOUonImYD65cKNaobqcFD1oB82c0XHV3DkpLeVPN
+ /rHdxW2P88vf+eirMC/Agc710C14CHXN1QiRsXz7iIkXCIvRuJWp7ycy14iiTXfjKdfB
+ 8sPg==; darn=nongnu.org
 ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=bsdimp-com.20251104.gappssmtp.com; s=20251104; t=1780148449; x=1780753249;
- darn=nongnu.org; 
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=deJawHKMx/iifZecP/L4VSAEmzsmI7R4Zj1KDnwYLaI=;
- b=mwuXTVsGWRuBciGkVLsFmV7S7Vs2xf5TGbNMzm+d61Y/FzIZRURLN7u9HNAHako/lE
- /F0hi0DZTc4tgFzoYaV+yPflY3eSVAnKm41a1AnbKTkna0WWUUF1NO4Se46X2fHYI8pG
- T0sv3sg+gKoEfs2c8jX6wl9xsDZLzEYGN3OlyQSxd/sSXBN4Imi/r+k54uznub4Sp4wf
- //ZtDBeRd4mWdSEHueeSZDAa6QooHKcY8tu4H+Sk6OGuk+wwaDDtVDbqsrkHc8vYBDr+
- NbF2R+o/L3DmbzOwtz+iqyshW+4knhzI/dOFba74Qe1HO8O7LVZHSuU8q5H8GMQL3BNB
- M8SQ==
+ d=redhat.com; s=google; t=1780153007; x=1780757807; darn=nongnu.org;
+ h=to:subject:message-id:date:from:mime-version:from:to:cc:subject
+ :date:message-id:reply-to;
+ bh=KrgN+/IE6PA4Nu2OKHuml+af+qAz1xXZaa3UKnuqzBQ=;
+ b=En0MFYXRm+WN7HYCKXkyP4j2GrSuLYow2xI+D3sinM6/oKQyy3jnX9tkYHVZJdN1iM
+ NnEnfNXvmegMgvKLDXExRgR5hNrE9ve3grPm0eJaoVXT8g7jCNYSeZdhDQY6NektwulD
+ TpxpLQkiuQU4DCzi7J9tYLPjKR1lKoXweOvb8V9jW8fH2aL68FnWFPT1T+tVNWzeQ60c
+ 4S5N2539qCKz2FKBd7raAMS6hQz9hY1/6nVHytjOpiEvViKMjftrHaUEuskkyRKLbKsW
+ dgG3J3N03V1dC/SngZ8PYWg/wbHaaQptHeu3SFBOUtSzcl37uuZBst1YGiKT1VOq5E+e
+ ONNw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1780148449; x=1780753249;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=deJawHKMx/iifZecP/L4VSAEmzsmI7R4Zj1KDnwYLaI=;
- b=lMeBFGS9ml0gvU/s6K6G6YRnxjeRprddBfJEWKxKBSINjDqVKpQEzQkbo8/12w0eHt
- LvORZeUkSTBouTrPZGTGCSwivt6iU9S0Q7FoomWSA/aM3mnVQP764ULfXRe2gqQsrCJX
- pr2lQAd38G/EjECgIhcffb6NJjaQpKUr8WZdzgJOqDNJr2SRYOpiUFHQYYYjg0QeTfl+
- PplT9XQAWrsGx+rYrzXC9t8SrEk4FoxIKBP+mt8NvC6bTyDhgMUaPKehVFDM8xqPSeuJ
- rfKpETZ6j5a8MlVcf+T/lfZ8Qz9Uwxi3UOZoW5vUvMhs2K3Sl2aCORxMhdeaCiiribXY
- jkrA==
-X-Gm-Message-State: AOJu0Yw6eUvqY7rsWo7bfhEESaY7getBS59nzu2tPbmIXL4JpuwdstvN
- xz85Szk2/1NXsreWUYok5JQJxrVnN30z+SSqS50NVM/A+fPS+ekL/G5gu7vq03L0zfhXmiYKOdP
- FnZRIbmDSrMu2mFHOcZDOVDnbxrNs64Wm0bqzA6cbvA==
-X-Gm-Gg: Acq92OEhskR+litmRtU8Gkl/KLxgRJwdezVcAeutasPZz4DpKFFXXNJIU0ULrO+9HzJ
- tjSFPm2JGjWdP/3o+eW9Bqwtlizug6hkGNj4bjdPi/nGK7OBWy8Fz7dTUagtLVLwtopjjbsrZ7a
- OoI0RIgsr/JTkyJHVO1qYvM6WwScBAQ3jERNHjMSimDhbz2bpjVYWgsGP51bhdirIm0lU+YsEpQ
- UV4HL7Hk4A4eCSPzKYm1sF8X9uhKm/1WciSMoNE2fsQJGMqbfuHWZlJvS+YwUmMbzrB8xYi4T7r
- +tXNTgOw5LGFz2r/IgFEUf9HXsndTdcCdoGmuukHqdgpEJmN
-X-Received: by 2002:a17:90b:3d84:b0:369:7421:75cf with SMTP id
- 98e67ed59e1d1-36c501eb0a7mr3656534a91.16.1780148448830; Sat, 30 May 2026
- 06:40:48 -0700 (PDT)
+ d=1e100.net; s=20251104; t=1780153007; x=1780757807;
+ h=to:subject:message-id:date:from:mime-version:x-gm-gg
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=KrgN+/IE6PA4Nu2OKHuml+af+qAz1xXZaa3UKnuqzBQ=;
+ b=AeMEbFxyBSRjGwCOHx7gLJSrjkK6O8nPr83/VsdchnD65KmBomcBjPEbRS1btfPKO0
+ 74HHLttweq7oYTpJRPNHa5rr8eQuGR/ZfJHdX46dGepggyQpXBDZGf82FluIU/71TAIY
+ DJ91dO2YzanoaeSOLTG9LobeQrURpIhRu476WhB2fduJcAGwOyVrZmlIexrFiCJFKGr9
+ cr/NuvP5uKTT+FjkV/sIqhTGwtcKe4JUoulp4+1OLZK9x1QwWqhADKdnz0WX/AOlrinB
+ wumPNUJSXFQ0mWVbeD3KTLzqeB1M8jRuYdV3QhPtbYmf6aQPYylo9JDjzybz0Xq5lwai
+ cDiA==
+X-Gm-Message-State: AOJu0YwbLeWO/sY6j4DF9UqYOUuCdx8w7g5OMRcKei+o9iRYzCpcXhkJ
+ yZZlR51Na1CLk4mDqU41lGyVyN6QgQ57mPOugMiAHFK+jhEqPs/hnzDj7n1PKcjLuKCSl6x0FFl
+ 2XbC41UyziHDX60llT/2cC5uVBsBPuwNxvUgvt2VRmmxMIhHU73dloomTJD20fYPEVdH8nVz1TM
+ RzXXfQpHDOTi5GkBkQ6fcIkhEAn5zEj3RtpXDbVbI=
+X-Gm-Gg: Acq92OHFu+3dJK9Mm9SJzTLYvVJr7UPMLjUywvh5mhnmEwd5tzdR+hVn50Yt9xMf4Of
+ CruB0dOljnW+nGCDByzP/QFt95lOQ1fu1A01N+umMjHQTGbcdHEawW+EkxrIp4CWZYV+OGh2Chb
+ BRI05jOMYiSRM8dIUVWfcxd6rOTLSlqNma1sb6miYqt3hsMOCQJSeoi9AxJw6RKIu/KaLXYpaul
+ OkskmYzaEQuzA8fttytrkfMDdUYyjKC9FF9WZ6afHnXVIcY2RN5+2UDLWnJJ1qPrCKceQcBsJIB
+ yIMJ3/k=
+X-Received: by 2002:a05:6214:cc2:b0:8cc:d606:1762 with SMTP id
+ 6a1803df08f44-8ccefdbd942mr69832976d6.22.1780153007379; 
+ Sat, 30 May 2026 07:56:47 -0700 (PDT)
+X-Received: by 2002:a05:6214:cc2:b0:8cc:d606:1762 with SMTP id
+ 6a1803df08f44-8ccefdbd942mr69832596d6.22.1780153006949; Sat, 30 May 2026
+ 07:56:46 -0700 (PDT)
 MIME-Version: 1.0
-References: <20260530062816.59206-1-guobin@linux.alibaba.com>
-In-Reply-To: <20260530062816.59206-1-guobin@linux.alibaba.com>
-From: Warner Losh <imp@bsdimp.com>
-Date: Sat, 30 May 2026 07:40:37 -0600
-X-Gm-Features: AVHnY4KyoFCgEnWiyvrua-IvlNT6DF0tvbYnLn2JCJErai_LborbivIeAvn60pg
-Message-ID: <CANCZdfpWDH=5JBjbKO9-3ihb0xtSOjoFvEkQLwsKSDrdLveEaQ@mail.gmail.com>
-Subject: Re: [PATCH v2] util/cutils: drop qemu_strnlen() in favor of strnlen()
-To: Bin Guo <guobin@linux.alibaba.com>
-Cc: QEMU Developers <qemu-devel@nongnu.org>, Kyle Evans <kevans@freebsd.org>, 
- Laurent Vivier <laurent@vivier.eu>,
- =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>, 
- =?UTF-8?B?QWxleCBCZW5uw6ll?= <alex.bennee@linaro.org>, 
- =?UTF-8?Q?Daniel_P_=2E_Berrang=C3=A9?= <berrange@redhat.com>, 
- Thomas Huth <thuth@redhat.com>, Markus Armbruster <armbru@redhat.com>
-Content-Type: multipart/alternative; boundary="000000000000f0b43b0653091b25"
-Received-SPF: none client-ip=2607:f8b0:4864:20::1034;
- envelope-from=wlosh@bsdimp.com; helo=mail-pj1-x1034.google.com
-X-Spam_score_int: -18
-X-Spam_score: -1.9
-X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, HTML_MESSAGE=0.001, RCVD_IN_DNSWL_NONE=-0.0001,
- SPF_HELO_NONE=0.001, SPF_NONE=0.001 autolearn=ham autolearn_force=no
+From: Ani Sinha <anisinha@redhat.com>
+Date: Sat, 30 May 2026 20:26:34 +0530
+X-Gm-Features: AVHnY4Ks6TTqCXTr75Wv5SHklTJcxWZ9WsbENBU4iu7vc__jmy6XQQckWo1w1eY
+Message-ID: <CAK3XEhMNqHbkL2P6Xg3_hJ8WAxhPQgurjvuZg-vXUDZ5=x-RRA@mail.gmail.com>
+Subject: artifact download for qtest
+To: qemu-devel <qemu-devel@nongnu.org>
+Content-Type: text/plain; charset="UTF-8"
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=anisinha@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -24
+X-Spam_score: -2.5
+X-Spam_bar: --
+X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.445,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -116,327 +126,21 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
---000000000000f0b43b0653091b25
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Hi,
 
-On Sat, May 30, 2026, 12:28=E2=80=AFAM Bin Guo <guobin@linux.alibaba.com> w=
-rote:
+I am trying to write a qtest for which I need an IGVM file. I have the
+file, about 54 MiB in size. Instead of committing this IGVM binary
+file with the test, I wanted to check if I can put it somewhere, say
+in a gitlab repo and then make the test download it. This would be
+similar to asset downloads for functional tests. No this test cannot
+be a python functional test.  I am wondering if anyone has faced this
+situation before and what the best way to solve this problem is.
 
-> There are only three call sites, and strnlen() is available on all
-> supported platforms (POSIX.1-2008, Windows via UCRT, MinGW).  Remove
-> the hand-rolled wrapper and use the standard function directly.
->
-> While here, align bsd-user/uaccess.c to use size_t for max_len/len,
-> matching linux-user/uaccess.c and eliminating a signed/unsigned mismatch.
->
-> Also remove the stale qemu_strnlen() entry from docs/devel/style.rst.
->
-> Suggested-by: Philippe Mathieu-Daud=C3=A9 <philmd@linaro.org>
-> Reviewed-by: Philippe Mathieu-Daud=C3=A9 <philmd@linaro.org>
-> Signed-off-by: Bin Guo <guobin@linux.alibaba.com>
-> ---
->  bsd-user/uaccess.c    |  4 ++--
->  docs/devel/style.rst  |  1 -
->  include/qemu/cutils.h | 17 +----------------
->  linux-user/uaccess.c  |  2 +-
->  util/cutils.c         | 15 +--------------
->  5 files changed, 5 insertions(+), 34 deletions(-)
->
+I am very much aware that bios-tabes-test has a bunch of master acpi
+blobs checked in. If I recall correctly people dislike this approach
+for future tests.
 
-Reviewed-by: Warner Losh <imp@bsdimp.com>
+Thanks
+Ani
 
-Normally not a fan of while I'm here fixes, but this one is correct and too
-small to split out.
-
-Warner
-
-diff --git a/bsd-user/uaccess.c b/bsd-user/uaccess.c
-> index 89163257f4..7ad4b580f4 100644
-> --- a/bsd-user/uaccess.c
-> +++ b/bsd-user/uaccess.c
-> @@ -43,7 +43,7 @@ abi_long target_strlen(abi_ulong guest_addr1)
->  {
->      uint8_t *ptr;
->      abi_ulong guest_addr;
-> -    int max_len, len;
-> +    size_t max_len, len;
->
->      guest_addr =3D guest_addr1;
->      for (;;) {
-> @@ -51,7 +51,7 @@ abi_long target_strlen(abi_ulong guest_addr1)
->          ptr =3D lock_user(VERIFY_READ, guest_addr, max_len, 1);
->          if (!ptr)
->              return -TARGET_EFAULT;
-> -        len =3D qemu_strnlen((const char *)ptr, max_len);
-> +        len =3D strnlen((const char *)ptr, max_len);
->          unlock_user(ptr, guest_addr, 0);
->          guest_addr +=3D len;
->          /* we don't allow wrapping or integer overflow */
-> diff --git a/docs/devel/style.rst b/docs/devel/style.rst
-> index d025933808..0b854ae042 100644
-> --- a/docs/devel/style.rst
-> +++ b/docs/devel/style.rst
-> @@ -519,7 +519,6 @@ QEMU provides other useful string functions:
->
->      int strstart(const char *str, const char *val, const char **ptr)
->      int stristart(const char *str, const char *val, const char **ptr)
-> -    int qemu_strnlen(const char *s, int max_len)
->
->  There are also replacement character processing macros for isxyz and
-> toxyz,
->  so instead of e.g. isalnum you should use qemu_isalnum.
-> diff --git a/include/qemu/cutils.h b/include/qemu/cutils.h
-> index 36c68ce86c..d249f22676 100644
-> --- a/include/qemu/cutils.h
-> +++ b/include/qemu/cutils.h
-> @@ -101,22 +101,7 @@ int strstart(const char *str, const char *val, const
-> char **ptr);
->   *          false otherwise.
->   */
->  int stristart(const char *str, const char *val, const char **ptr);
-> -/**
-> - * qemu_strnlen:
-> - * @s: string
-> - * @max_len: maximum number of bytes in @s to scan
-> - *
-> - * Return the length of the string @s, like strlen(), but do not
-> - * examine more than @max_len bytes of the memory pointed to by @s.
-> - * If no NUL terminator is found within @max_len bytes, then return
-> - * @max_len instead.
-> - *
-> - * This function has the same behaviour as the POSIX strnlen()
-> - * function.
-> - *
-> - * Returns: length of @s in bytes, or @max_len, whichever is smaller.
-> - */
-> -int qemu_strnlen(const char *s, int max_len);
-> +
->  /**
->   * qemu_strsep:
->   * @input: pointer to string to parse
-> diff --git a/linux-user/uaccess.c b/linux-user/uaccess.c
-> index 27e841e651..f9bd713edd 100644
-> --- a/linux-user/uaccess.c
-> +++ b/linux-user/uaccess.c
-> @@ -99,7 +99,7 @@ ssize_t target_strlen(abi_ulong guest_addr1)
->          ptr =3D lock_user(VERIFY_READ, guest_addr, max_len, 1);
->          if (!ptr)
->              return -TARGET_EFAULT;
-> -        len =3D qemu_strnlen((const char *)ptr, max_len);
-> +        len =3D strnlen((const char *)ptr, max_len);
->          unlock_user(ptr, guest_addr, 0);
->          guest_addr +=3D len;
->          /* we don't allow wrapping or integer overflow */
-> diff --git a/util/cutils.c b/util/cutils.c
-> index 9803f11a59..f39a97e509 100644
-> --- a/util/cutils.c
-> +++ b/util/cutils.c
-> @@ -54,7 +54,7 @@
->
->  void strpadcpy(char *buf, int buf_size, const char *str, char pad)
->  {
-> -    int len =3D qemu_strnlen(str, buf_size);
-> +    size_t len =3D strnlen(str, buf_size);
->      memcpy(buf, str, len);
->      memset(buf + len, pad, buf_size - len);
->  }
-> @@ -118,19 +118,6 @@ int stristart(const char *str, const char *val, cons=
-t
-> char **ptr)
->      return 1;
->  }
->
-> -/* XXX: use host strnlen if available ? */
-> -int qemu_strnlen(const char *s, int max_len)
-> -{
-> -    int i;
-> -
-> -    for(i =3D 0; i < max_len; i++) {
-> -        if (s[i] =3D=3D '\0') {
-> -            break;
-> -        }
-> -    }
-> -    return i;
-> -}
-> -
->  char *qemu_strsep(char **input, const char *delim)
->  {
->      char *result =3D *input;
-> --
-> 2.50.1 (Apple Git-155)
->
->
-
---000000000000f0b43b0653091b25
-Content-Type: text/html; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-
-<div dir=3D"auto"><div><br><br><div class=3D"gmail_quote gmail_quote_contai=
-ner"><div dir=3D"ltr" class=3D"gmail_attr">On Sat, May 30, 2026, 12:28=E2=
-=80=AFAM Bin Guo &lt;<a href=3D"mailto:guobin@linux.alibaba.com">guobin@lin=
-ux.alibaba.com</a>&gt; wrote:<br></div><blockquote class=3D"gmail_quote" st=
-yle=3D"margin:0 0 0 .8ex;border-left:1px #ccc solid;padding-left:1ex">There=
- are only three call sites, and strnlen() is available on all<br>
-supported platforms (POSIX.1-2008, Windows via UCRT, MinGW).=C2=A0 Remove<b=
-r>
-the hand-rolled wrapper and use the standard function directly.<br>
-<br>
-While here, align bsd-user/uaccess.c to use size_t for max_len/len,<br>
-matching linux-user/uaccess.c and eliminating a signed/unsigned mismatch.<b=
-r>
-<br>
-Also remove the stale qemu_strnlen() entry from docs/devel/style.rst.<br>
-<br>
-Suggested-by: Philippe Mathieu-Daud=C3=A9 &lt;<a href=3D"mailto:philmd@lina=
-ro.org" target=3D"_blank" rel=3D"noreferrer">philmd@linaro.org</a>&gt;<br>
-Reviewed-by: Philippe Mathieu-Daud=C3=A9 &lt;<a href=3D"mailto:philmd@linar=
-o.org" target=3D"_blank" rel=3D"noreferrer">philmd@linaro.org</a>&gt;<br>
-Signed-off-by: Bin Guo &lt;<a href=3D"mailto:guobin@linux.alibaba.com" targ=
-et=3D"_blank" rel=3D"noreferrer">guobin@linux.alibaba.com</a>&gt;<br>
----<br>
-=C2=A0bsd-user/uaccess.c=C2=A0 =C2=A0 |=C2=A0 4 ++--<br>
-=C2=A0docs/devel/style.rst=C2=A0 |=C2=A0 1 -<br>
-=C2=A0include/qemu/cutils.h | 17 +----------------<br>
-=C2=A0linux-user/uaccess.c=C2=A0 |=C2=A0 2 +-<br>
-=C2=A0util/cutils.c=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0| 15 +--------------<b=
-r>
-=C2=A05 files changed, 5 insertions(+), 34 deletions(-)<br></blockquote></d=
-iv></div><div dir=3D"auto"><br></div><div dir=3D"auto">Reviewed-by: Warner =
-Losh &lt;<a href=3D"mailto:imp@bsdimp.com">imp@bsdimp.com</a>&gt;</div><div=
- dir=3D"auto"><br></div><div dir=3D"auto">Normally not a fan of while I&#39=
-;m here fixes, but this one is correct and too small to split out.</div><di=
-v dir=3D"auto"><br></div><div dir=3D"auto">Warner</div><div dir=3D"auto"><b=
-r></div><div dir=3D"auto"><div class=3D"gmail_quote gmail_quote_container">=
-<blockquote class=3D"gmail_quote" style=3D"margin:0 0 0 .8ex;border-left:1p=
-x #ccc solid;padding-left:1ex">
-diff --git a/bsd-user/uaccess.c b/bsd-user/uaccess.c<br>
-index 89163257f4..7ad4b580f4 100644<br>
---- a/bsd-user/uaccess.c<br>
-+++ b/bsd-user/uaccess.c<br>
-@@ -43,7 +43,7 @@ abi_long target_strlen(abi_ulong guest_addr1)<br>
-=C2=A0{<br>
-=C2=A0 =C2=A0 =C2=A0uint8_t *ptr;<br>
-=C2=A0 =C2=A0 =C2=A0abi_ulong guest_addr;<br>
--=C2=A0 =C2=A0 int max_len, len;<br>
-+=C2=A0 =C2=A0 size_t max_len, len;<br>
-<br>
-=C2=A0 =C2=A0 =C2=A0guest_addr =3D guest_addr1;<br>
-=C2=A0 =C2=A0 =C2=A0for (;;) {<br>
-@@ -51,7 +51,7 @@ abi_long target_strlen(abi_ulong guest_addr1)<br>
-=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0ptr =3D lock_user(VERIFY_READ, guest_addr=
-, max_len, 1);<br>
-=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0if (!ptr)<br>
-=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0return -TARGET_EFAULT;<br>
--=C2=A0 =C2=A0 =C2=A0 =C2=A0 len =3D qemu_strnlen((const char *)ptr, max_le=
-n);<br>
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 len =3D strnlen((const char *)ptr, max_len);<b=
-r>
-=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0unlock_user(ptr, guest_addr, 0);<br>
-=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0guest_addr +=3D len;<br>
-=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0/* we don&#39;t allow wrapping or integer=
- overflow */<br>
-diff --git a/docs/devel/style.rst b/docs/devel/style.rst<br>
-index d025933808..0b854ae042 100644<br>
---- a/docs/devel/style.rst<br>
-+++ b/docs/devel/style.rst<br>
-@@ -519,7 +519,6 @@ QEMU provides other useful string functions:<br>
-<br>
-=C2=A0 =C2=A0 =C2=A0int strstart(const char *str, const char *val, const ch=
-ar **ptr)<br>
-=C2=A0 =C2=A0 =C2=A0int stristart(const char *str, const char *val, const c=
-har **ptr)<br>
--=C2=A0 =C2=A0 int qemu_strnlen(const char *s, int max_len)<br>
-<br>
-=C2=A0There are also replacement character processing macros for isxyz and =
-toxyz,<br>
-=C2=A0so instead of e.g. isalnum you should use qemu_isalnum.<br>
-diff --git a/include/qemu/cutils.h b/include/qemu/cutils.h<br>
-index 36c68ce86c..d249f22676 100644<br>
---- a/include/qemu/cutils.h<br>
-+++ b/include/qemu/cutils.h<br>
-@@ -101,22 +101,7 @@ int strstart(const char *str, const char *val, const c=
-har **ptr);<br>
-=C2=A0 *=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 false otherwise.<br>
-=C2=A0 */<br>
-=C2=A0int stristart(const char *str, const char *val, const char **ptr);<br=
->
--/**<br>
-- * qemu_strnlen:<br>
-- * @s: string<br>
-- * @max_len: maximum number of bytes in @s to scan<br>
-- *<br>
-- * Return the length of the string @s, like strlen(), but do not<br>
-- * examine more than @max_len bytes of the memory pointed to by @s.<br>
-- * If no NUL terminator is found within @max_len bytes, then return<br>
-- * @max_len instead.<br>
-- *<br>
-- * This function has the same behaviour as the POSIX strnlen()<br>
-- * function.<br>
-- *<br>
-- * Returns: length of @s in bytes, or @max_len, whichever is smaller.<br>
-- */<br>
--int qemu_strnlen(const char *s, int max_len);<br>
-+<br>
-=C2=A0/**<br>
-=C2=A0 * qemu_strsep:<br>
-=C2=A0 * @input: pointer to string to parse<br>
-diff --git a/linux-user/uaccess.c b/linux-user/uaccess.c<br>
-index 27e841e651..f9bd713edd 100644<br>
---- a/linux-user/uaccess.c<br>
-+++ b/linux-user/uaccess.c<br>
-@@ -99,7 +99,7 @@ ssize_t target_strlen(abi_ulong guest_addr1)<br>
-=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0ptr =3D lock_user(VERIFY_READ, guest_addr=
-, max_len, 1);<br>
-=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0if (!ptr)<br>
-=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0return -TARGET_EFAULT;<br>
--=C2=A0 =C2=A0 =C2=A0 =C2=A0 len =3D qemu_strnlen((const char *)ptr, max_le=
-n);<br>
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 len =3D strnlen((const char *)ptr, max_len);<b=
-r>
-=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0unlock_user(ptr, guest_addr, 0);<br>
-=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0guest_addr +=3D len;<br>
-=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0/* we don&#39;t allow wrapping or integer=
- overflow */<br>
-diff --git a/util/cutils.c b/util/cutils.c<br>
-index 9803f11a59..f39a97e509 100644<br>
---- a/util/cutils.c<br>
-+++ b/util/cutils.c<br>
-@@ -54,7 +54,7 @@<br>
-<br>
-=C2=A0void strpadcpy(char *buf, int buf_size, const char *str, char pad)<br=
->
-=C2=A0{<br>
--=C2=A0 =C2=A0 int len =3D qemu_strnlen(str, buf_size);<br>
-+=C2=A0 =C2=A0 size_t len =3D strnlen(str, buf_size);<br>
-=C2=A0 =C2=A0 =C2=A0memcpy(buf, str, len);<br>
-=C2=A0 =C2=A0 =C2=A0memset(buf + len, pad, buf_size - len);<br>
-=C2=A0}<br>
-@@ -118,19 +118,6 @@ int stristart(const char *str, const char *val, const =
-char **ptr)<br>
-=C2=A0 =C2=A0 =C2=A0return 1;<br>
-=C2=A0}<br>
-<br>
--/* XXX: use host strnlen if available ? */<br>
--int qemu_strnlen(const char *s, int max_len)<br>
--{<br>
--=C2=A0 =C2=A0 int i;<br>
--<br>
--=C2=A0 =C2=A0 for(i =3D 0; i &lt; max_len; i++) {<br>
--=C2=A0 =C2=A0 =C2=A0 =C2=A0 if (s[i] =3D=3D &#39;\0&#39;) {<br>
--=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 break;<br>
--=C2=A0 =C2=A0 =C2=A0 =C2=A0 }<br>
--=C2=A0 =C2=A0 }<br>
--=C2=A0 =C2=A0 return i;<br>
--}<br>
--<br>
-=C2=A0char *qemu_strsep(char **input, const char *delim)<br>
-=C2=A0{<br>
-=C2=A0 =C2=A0 =C2=A0char *result =3D *input;<br>
--- <br>
-2.50.1 (Apple Git-155)<br>
-<br>
-</blockquote></div></div></div>
-
---000000000000f0b43b0653091b25--
 
