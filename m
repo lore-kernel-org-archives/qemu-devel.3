@@ -4,65 +4,98 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id ADABECD6E52
-	for <qemu-devel@archiver.kernel.org>; Sat, 30 May 2026 01:23:25 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A38C4CD6E51
+	for <qemu-devel@archiver.kernel.org>; Sat, 30 May 2026 02:36:31 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wT8Pb-0006vv-6s; Fri, 29 May 2026 21:22:51 -0400
+	id 1wT9YA-0001uf-3T; Fri, 29 May 2026 22:35:46 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <alanosong@163.com>) id 1wT8PX-0006vV-GZ
- for qemu-devel@nongnu.org; Fri, 29 May 2026 21:22:48 -0400
-Received: from m16.mail.163.com ([117.135.210.3])
+ (Exim 4.90_1) (envelope-from <noreply@launchpad.net>)
+ id 1wT9Y6-0001u0-LL
+ for qemu-devel@nongnu.org; Fri, 29 May 2026 22:35:42 -0400
+Received: from smtp-relay-services-0.canonical.com ([185.125.188.250])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <alanosong@163.com>) id 1wT8PU-0001YV-DY
- for qemu-devel@nongnu.org; Fri, 29 May 2026 21:22:47 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=163.com;
- s=s110527; h=Date:From:To:Subject:Content-Type:MIME-Version:
- Message-ID; bh=dv2GqSYLJfkXV9V1JJaK90GhUca45LXbyZt3zhN37jg=; b=X
- +nrfiNR+lKkza5YwlBfVD0rURIS5DcKT8an40dwXlZIbZfIv98YlyoUP1Ezypzqz
- a3BH9/kO+1mq79qtL23vbwpOaV7LxIWIRp1vX7q2ekiOeOcCzAqq4rEg2T4wd6p7
- pspROl/qo5SiNcqqhPGSsy73cLTWrjIcz/D9QpoZ50=
-Received: from alanosong$163.com ( [59.173.202.83] ) by
- ajax-webmail-wmsvr-40-110 (Coremail) ; Sat, 30 May 2026 09:22:12 +0800
- (CST)
-X-Originating-IP: [59.173.202.83]
-Date: Sat, 30 May 2026 09:22:12 +0800 (CST)
-From: "Alano Song" <alanosong@163.com>
-To: =?GBK?Q?Philippe_Mathieu-Daud=A8=A6?= <philmd@linaro.org>
-Cc: qemu-devel@nongnu.org, dave@treblig.org, pbonzini@redhat.com,
- zhao1.liu@intel.com
-Subject: Re: [PATCH] target/i386/monitor: Refine `info tlb` command logic
-X-Priority: 3
-X-Mailer: Coremail Webmail Server Version 2023.4-cmXT build
- 20260403(27802f6d) Copyright (c) 2002-2026 www.mailtech.cn 163com
-In-Reply-To: <2e90e85b-a8cb-4f6c-b7d4-f2f6159b6d55@linaro.org>
-References: <20260524124129.174254-1-AlanoSong@163.com>
- <2e90e85b-a8cb-4f6c-b7d4-f2f6159b6d55@linaro.org>
-X-NTES-SC: AL_Qu2TAv2bu0ko5CaaYOkcm0wQgOk5XsCwu/wk3YNec+YElCTx3CsGRk5yPUnv4cy9IgSwuySreSZr1/ZeTLdHFAl0Rq8BtHVRGeq0E6KClw==
-Content-Type: multipart/alternative; 
- boundary="----=_Part_5080_236516077.1780104132638"
+ (Exim 4.90_1) (envelope-from <noreply@launchpad.net>)
+ id 1wT9Y3-0000We-Jk
+ for qemu-devel@nongnu.org; Fri, 29 May 2026 22:35:42 -0400
+Received: from scripts.lp.internal (scripts.lp.internal [10.131.215.246])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by smtp-relay-services-0.canonical.com (Postfix) with ESMTPSA id 1413845A94
+ for <qemu-devel@nongnu.org>; Sat, 30 May 2026 02:35:37 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=launchpad.net;
+ s=20210803; t=1780108537;
+ bh=rWoGzfNLyCZwSIS58xks30VxTQgpD9WDMRQ//1ktd/E=;
+ h=MIME-Version:Content-Type:Date:From:To:Reply-To:References:
+ Message-Id:Subject;
+ b=GKvkhKXfnqyxIO/jhGE+7ZhtYUvNptx6cxbh4zU2ZCwnrNIiQsTEissn48amV6usF
+ 4aCN4nEPWOE0nRdRmMHRoETMRB2N8F++pZlSM0pVlsDPpqPgqJmI7673V6oUpNc9yE
+ LsyXQs0OItpMUaNdUE92T5fN3ZmfxVLXYbDNAdyXdZKDR0dgiUJIP5rcqJVlUWVf4I
+ 9OeEq3QSVnHszW5v45m9WAVE2CVtF3ZIPrRJBCKStM9O8soLIpJ64ASQ9oVoZ7hzq0
+ NryO6sTYguZNK22fLS/UFgpjHcYi+hsAlHyY4oj4Luf9LUhZbgG2nb8B/i0241Vw7n
+ senTaB5h2WXxg==
+Received: from scripts.lp.internal (localhost [127.0.0.1])
+ by scripts.lp.internal (Postfix) with ESMTP id E69567EEB4
+ for <qemu-devel@nongnu.org>; Sat, 30 May 2026 02:35:36 +0000 (UTC)
 MIME-Version: 1.0
-Message-ID: <5f951c07.4fa.19e7679781f.Coremail.alanosong@163.com>
-X-Coremail-Locale: zh_CN
-X-CM-TRANSID: bigvCgD3d4jEOxpqsOKtAA--.15210W
-X-CM-SenderInfo: xdod00pvrqwqqrwthudrp/xtbC0wQhNWoaO8QrBgAA3h
-X-Coremail-Antispam: 1U5529EdanIXcx71UUUUU7vcSsGvfC2KfnxnUU==
-Received-SPF: pass client-ip=117.135.210.3; envelope-from=alanosong@163.com;
- helo=m16.mail.163.com
-X-Spam_score_int: 4
-X-Spam_score: 0.4
-X-Spam_bar: /
-X-Spam_report: (0.4 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1, DKIM_VALID=-0.1,
- DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
- HTML_MESSAGE=0.001, MIME_CHARSET_FARAWAY=2.45, RCVD_IN_DNSWL_NONE=-0.0001,
- RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: quoted-printable
+Date: Sat, 30 May 2026 02:27:19 -0000
+From: Ubuntu SRU Bot <2133804@bugs.launchpad.net>
+To: qemu-devel@nongnu.org
+X-Launchpad-Notification-Type: bug
+X-Launchpad-Bug: product=qemu; status=Fix Released; importance=Unknown;
+ assignee=None; 
+X-Launchpad-Bug: distribution=ubuntu; sourcepackage=qemu; component=main;
+ milestone=ubuntu-26.04; status=Fix Released; importance=High;
+ assignee=hector.cao@canonical.com; 
+X-Launchpad-Bug: distribution=ubuntu; distroseries=jammy; sourcepackage=qemu;
+ component=main; status=Confirmed; importance=Medium;
+ assignee=hector.cao@canonical.com; 
+X-Launchpad-Bug: distribution=ubuntu; distroseries=noble; sourcepackage=qemu;
+ component=main; milestone=ubuntu-24.04.4; status=Incomplete; importance=Medium;
+ assignee=hector.cao@canonical.com; 
+X-Launchpad-Bug: distribution=ubuntu; distroseries=plucky; sourcepackage=qemu;
+ component=main; status=Won't Fix; importance=Medium; assignee=None; 
+X-Launchpad-Bug: distribution=ubuntu; distroseries=questing; sourcepackage=qemu;
+ component=main; status=Fix Committed; importance=Medium;
+ assignee=hector.cao@canonical.com; 
+X-Launchpad-Bug: distribution=ubuntu; distroseries=resolute; sourcepackage=qemu;
+ component=main; milestone=ubuntu-26.04; status=Fix Released; importance=High;
+ assignee=hector.cao@canonical.com; 
+X-Launchpad-Bug-Tags: server-todo verification-needed-questing
+X-Launchpad-Bug-Information-Type: Public
+X-Launchpad-Bug-Private: no
+X-Launchpad-Bug-Security-Vulnerability: no
+X-Launchpad-Bug-Commenters: ahasenack hectorcao janitor mjt+launchpad-tls
+ paelzer ubuntu-sru-bot utkarsh xypron
+X-Launchpad-Bug-Reporter: Heinrich Schuchardt (xypron)
+X-Launchpad-Bug-Modifier: Ubuntu SRU Bot (ubuntu-sru-bot)
+References: <176477927666.3767208.4954653462090539439.malonedeb@juju-98d295-prod-launchpad-3>
+Message-Id: <20260530022719.B202FFC07C@ubuntu-archive-toolbox.internal>
+Subject: [Bug 2133804] Autopkgtest regression report
+ (qemu/1:10.1.0+ds-5ubuntu2.7)
+X-Launchpad-Message-Rationale: Subscriber (QEMU) @qemu-devel-ml
+X-Launchpad-Message-For: qemu-devel-ml
+Precedence: bulk
+X-Generated-By: Launchpad (canonical.com);
+ Revision="e655887187b0b1e1a70625cd2d210bb3cf47cd14";
+ Instance="launchpad-scripts"
+X-Launchpad-Hash: 16dffddff4f34149711aa7a01b4cc46fee355a41
+Received-SPF: pass client-ip=185.125.188.250;
+ envelope-from=noreply@launchpad.net; helo=smtp-relay-services-0.canonical.com
+X-Spam_score_int: -42
+X-Spam_score: -4.3
+X-Spam_bar: ----
+X-Spam_report: (-4.3 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_MED=-2.3,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
-Precedence: list
 List-Id: qemu development <qemu-devel.nongnu.org>
 List-Unsubscribe: <https://lists.nongnu.org/mailman/options/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=unsubscribe>
@@ -71,126 +104,157 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-To: Bug 2133804 <2133804@bugs.launchpad.net>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-------=_Part_5080_236516077.1780104132638
-Content-Type: text/plain; charset=GBK
-Content-Transfer-Encoding: base64
+All autopkgtests for the newly accepted qemu (1:10.1.0+ds-5ubuntu2.7) for q=
+uesting have finished running.
+The following regressions have been reported in tests triggered by the pack=
+age:
 
-CgoKQXQgMjAyNi0wNS0yOCAyMzoyNDo1NiwgIlBoaWxpcHBlIE1hdGhpZXUtRGF1ZKimIiA8cGhp
-bG1kQGxpbmFyby5vcmc+IHdyb3RlOgo+SGksCj4KPk9uIDI0LzUvMjYgMTQ6NDEsIEFsYW5vU29u
-Z0AxNjMuY29tIHdyb3RlOgo+PiBXaGVuIGJvb3RpbmcgYW4gaTM4NiBndWVzdCwgdGhlIGBpbmZv
-IHRsYmAgY29tbWFuZAo+PiBtYXkgd2FsayB0aGUgZW50aXJlIHBhZ2UgdGFibGUgaGllcmFyY2h5
-IGFuZCBlbWl0Cj4+IGFuIGVub3Jtb3VzIGFtb3VudCBvZiBvdXRwdXQgKGFzIG1hbnkgYXMgODAw
-KyBtaWxsaW9uCj4+IGVudHJpZXMgdW5kZXIgbXkgdGVzdCkuCj4+IEl0IHdpbGwgdGFrZSBkb3pl
-bnMgb2YgbWludXRlcyB0byBwcmludCBhbGwgdGhlIGluZm8sCj4+IGJlY2F1c2UgZWFjaCBtb25p
-dG9yIHByaW50IGZ1bmN0aW9uIHdpbGwgaG9sZHMgJ21vbl9sb2NrJy4KPj4gVGhpcyBlZmZlY3Rp
-dmVseSBoYW5ncyB0aGUgcWVtdSBtb25pdG9yLCBhbmQgZXZlbiBsZWFkaW5nCj4+IHRvIHByb2dy
-YW0gZXhpdCBkdWUgdG8gdGltZW91dC4KPj4gCj4+IFNvIGl0IG1heSBiZSBiZXR0ZXIgdG8gc2hv
-dyBvbmx5IHRoZSBmaXJzdCAzMiBlbnRyaWVzCj4+IGFuZCB0aGUgbGFzdCBlbnRyeSBieSBkZWZh
-dWx0Lgo+PiAKPj4gQW5kIGlmIGZ1bGwgb3V0cHV0IGlzIHJlcXVpcmVkLCB0aGUgdXNlciBjYW4g
-cmVkaXJlY3QKPj4gdGhlIG91dHB1dCB0byBhIGZpbGUgYnkgc3BlY2lmeWluZyBhIGZpbGUgbmFt
-ZSwgZS5nLjoKPj4gYGluZm8gdGxiIHh4eC50eHRgLgo+PiAKPj4gU2lnbmVkLW9mZi1ieTogQWxh
-bm8gU29uZyA8QWxhbm9Tb25nQDE2My5jb20+Cj4+IC0tLQo+PiAgIGhtcC1jb21tYW5kcy1pbmZv
-Lmh4ICB8ICAxMCArLQo+PiAgIHRhcmdldC9pMzg2L21vbml0b3IuYyB8IDIzMCArKysrKysrKysr
-KysrKysrKysrKysrKysrKysrKysrKysrLS0tLS0tLS0KPj4gICAyIGZpbGVzIGNoYW5nZWQsIDE5
-NSBpbnNlcnRpb25zKCspLCA0NSBkZWxldGlvbnMoLSkKPj4gCj4+IGRpZmYgLS1naXQgYS9obXAt
-Y29tbWFuZHMtaW5mby5oeCBiL2htcC1jb21tYW5kcy1pbmZvLmh4Cj4+IGluZGV4IDgyMTM0ZWI2
-YzIuLjMzYjQ2MDRkMTEgMTAwNjQ0Cj4+IC0tLSBhL2htcC1jb21tYW5kcy1pbmZvLmh4Cj4+ICsr
-KyBiL2htcC1jb21tYW5kcy1pbmZvLmh4Cj4+IEBAIC0xODgsMTcgKzE4OCwxOSBAQCBFUlNUCj4+
-ICAgCj4+ICAgICAgIHsKPj4gICAgICAgICAgIC5uYW1lICAgICAgID0gInRsYiIsCj4+IC0gICAg
-ICAgIC5hcmdzX3R5cGUgID0gIiIsCj4+IC0gICAgICAgIC5wYXJhbXMgICAgID0gIiIsCj4+IC0g
-ICAgICAgIC5oZWxwICAgICAgID0gInNob3cgdmlydHVhbCB0byBwaHlzaWNhbCBtZW1vcnkgbWFw
-cGluZ3MiLAo+PiArICAgICAgICAuYXJnc190eXBlICA9ICJmaWxlOnM/IiwKPj4gKyAgICAgICAg
-LnBhcmFtcyAgICAgPSAiW2ZpbGVdIiwKPj4gKyAgICAgICAgLmhlbHAgICAgICAgPSAic2hvdyB2
-aXJ0dWFsIHRvIHBoeXNpY2FsIG1lbW9yeSBtYXBwaW5ncyAob3B0aW9uYWxseSBzYXZlIHRvIGZp
-bGUpIiwKPj4gICAgICAgICAgIC5jbWQgICAgICAgID0gaG1wX2luZm9fdGxiLAo+PiAgICAgICAg
-ICAgLmFyY2hfYml0bWFzayA9IFFFTVVfQVJDSF9JMzg2IHwgUUVNVV9BUkNIX1NINCB8IFFFTVVf
-QVJDSF9TUEFSQyBcCj4+ICAgICAgICAgICAgICAgICAgICAgICAgICAgfCBRRU1VX0FSQ0hfUFBD
-IHwgUUVNVV9BUkNIX1hURU5TQSB8IFFFTVVfQVJDSF9NNjhLLAo+PiAgICAgICB9LAo+PiAgIAo+
-PiAgIFNSU1QKPj4gLSAgYGBpbmZvIHRsYmBgCj4+ICsgIGBgaW5mbyB0bGJgYCBbKmZpbGUqXQo+
-PiAgICAgICBTaG93IHZpcnR1YWwgdG8gcGh5c2ljYWwgbWVtb3J5IG1hcHBpbmdzLgo+PiArICAg
-IElmICpmaWxlKiBpcyBzcGVjaWZpZWQsIHRoZSBvdXRwdXQgaXMgc2F2ZWQgdG8gdGhlIGdpdmVu
-IGZpbGUKPj4gKyAgICBpbnN0ZWFkIG9mIGJlaW5nIHByaW50ZWQgdG8gdGhlIG1vbml0b3IuCj4+
-ICAgRVJTVAo+Cj5XaGF0IGFib3V0IHBhc3NpbmcgY291bnQgb3IgcmFuZ2UgYnkgYXJndW1lbnQg
-aW5zdGVhZCwga2VlcGluZyB0aGUKCj5kZWZhdWx0IGJlaGF2aW9yPwoKCkhpLCBQaGlsaXBwZToK
-CgpZb3VyIHN1Z2dlc3Rpb24gaXMgZ29vZCwKSSBjYW4gYWRkIHNldmVyYWwgb3B0aW9ucywKc28g
-dGhhdCB1c2VycyBjYW4gY29udHJvbCB0aGUgb3V0cHV0IHJhbmdlIGFuZCBjb3VudC4KCgpBbmQg
-anVzdCBhcyBJIGRlc2NyaWJlZCBlYXJsaWVyLCB3ZSBzaG91bGQgbW9kaWZ5IHRoZSBkZWZhdWx0
-IGJlaGF2aW9yOgpvbmx5IHByaW50IHRoZSBmaXJzdCAzMiBlbnRyaWVzIGFuZCB0aGUgbGFzdCBl
-bnRyeS4Kc28gdGhhdCB1c2VycyBjYW4ga25vdyB0aGUgcmFuZ2Ugd2hpbGUgYXZvaWRpbmcKdGhl
-IG91dHB1dCBvZiBhbGwgdGhlIGVudHJpZXMgKHRoZXJlIGFyZSB0b28gbWFueSkuCgoKQWxhbm8u
-CgoKCg==
-------=_Part_5080_236516077.1780104132638
-Content-Type: text/html; charset=GBK
-Content-Transfer-Encoding: base64
+casper/25.10.2 (amd64, arm64)
+edk2/2025.02-8ubuntu3.1 (arm64)
+genimage/18-1.1 (ppc64el)
+ipmitool/1.8.19-9ubuntu2 (amd64)
+sbuild/0.88.3ubuntu3 (armhf)
+ubuntu-boot-test/7 (ppc64el)
 
-PGRpdiBkYXRhLW50ZXM9Im50ZXNfbWFpbF9ib2R5X3Jvb3QiIHN0eWxlPSJsaW5lLWhlaWdodDox
-Ljc7Y29sb3I6IzAwMDAwMDtmb250LXNpemU6MTRweDtmb250LWZhbWlseTpBcmlhbCI+PGRpdiBz
-dHlsZT0ibWFyZ2luOiAwOyI+PGJyPjwvZGl2PjxwcmU+PGJyPkF0IDIwMjYtMDUtMjggMjM6MjQ6
-NTYsICJQaGlsaXBwZSBNYXRoaWV1LURhdWSopiIgJmx0O3BoaWxtZEBsaW5hcm8ub3JnJmd0OyB3
-cm90ZToKJmd0O0hpLAomZ3Q7CiZndDtPbiAyNC81LzI2IDE0OjQxLCBBbGFub1NvbmdAMTYzLmNv
-bSB3cm90ZToKJmd0OyZndDsgV2hlbiBib290aW5nIGFuIGkzODYgZ3Vlc3QsIHRoZSBgaW5mbyB0
-bGJgIGNvbW1hbmQKJmd0OyZndDsgbWF5IHdhbGsgdGhlIGVudGlyZSBwYWdlIHRhYmxlIGhpZXJh
-cmNoeSBhbmQgZW1pdAomZ3Q7Jmd0OyBhbiBlbm9ybW91cyBhbW91bnQgb2Ygb3V0cHV0IChhcyBt
-YW55IGFzIDgwMCsgbWlsbGlvbgomZ3Q7Jmd0OyBlbnRyaWVzIHVuZGVyIG15IHRlc3QpLgomZ3Q7
-Jmd0OyBJdCB3aWxsIHRha2UgZG96ZW5zIG9mIG1pbnV0ZXMgdG8gcHJpbnQgYWxsIHRoZSBpbmZv
-LAomZ3Q7Jmd0OyBiZWNhdXNlIGVhY2ggbW9uaXRvciBwcmludCBmdW5jdGlvbiB3aWxsIGhvbGRz
-ICdtb25fbG9jaycuCiZndDsmZ3Q7IFRoaXMgZWZmZWN0aXZlbHkgaGFuZ3MgdGhlIHFlbXUgbW9u
-aXRvciwgYW5kIGV2ZW4gbGVhZGluZwomZ3Q7Jmd0OyB0byBwcm9ncmFtIGV4aXQgZHVlIHRvIHRp
-bWVvdXQuCiZndDsmZ3Q7IAomZ3Q7Jmd0OyBTbyBpdCBtYXkgYmUgYmV0dGVyIHRvIHNob3cgb25s
-eSB0aGUgZmlyc3QgMzIgZW50cmllcwomZ3Q7Jmd0OyBhbmQgdGhlIGxhc3QgZW50cnkgYnkgZGVm
-YXVsdC4KJmd0OyZndDsgCiZndDsmZ3Q7IEFuZCBpZiBmdWxsIG91dHB1dCBpcyByZXF1aXJlZCwg
-dGhlIHVzZXIgY2FuIHJlZGlyZWN0CiZndDsmZ3Q7IHRoZSBvdXRwdXQgdG8gYSBmaWxlIGJ5IHNw
-ZWNpZnlpbmcgYSBmaWxlIG5hbWUsIGUuZy46CiZndDsmZ3Q7IGBpbmZvIHRsYiB4eHgudHh0YC4K
-Jmd0OyZndDsgCiZndDsmZ3Q7IFNpZ25lZC1vZmYtYnk6IEFsYW5vIFNvbmcgJmx0O0FsYW5vU29u
-Z0AxNjMuY29tJmd0OwomZ3Q7Jmd0OyAtLS0KJmd0OyZndDsgICBobXAtY29tbWFuZHMtaW5mby5o
-eCAgfCAgMTAgKy0KJmd0OyZndDsgICB0YXJnZXQvaTM4Ni9tb25pdG9yLmMgfCAyMzAgKysrKysr
-KysrKysrKysrKysrKysrKysrKysrKysrKysrKy0tLS0tLS0tCiZndDsmZ3Q7ICAgMiBmaWxlcyBj
-aGFuZ2VkLCAxOTUgaW5zZXJ0aW9ucygrKSwgNDUgZGVsZXRpb25zKC0pCiZndDsmZ3Q7IAomZ3Q7
-Jmd0OyBkaWZmIC0tZ2l0IGEvaG1wLWNvbW1hbmRzLWluZm8uaHggYi9obXAtY29tbWFuZHMtaW5m
-by5oeAomZ3Q7Jmd0OyBpbmRleCA4MjEzNGViNmMyLi4zM2I0NjA0ZDExIDEwMDY0NAomZ3Q7Jmd0
-OyAtLS0gYS9obXAtY29tbWFuZHMtaW5mby5oeAomZ3Q7Jmd0OyArKysgYi9obXAtY29tbWFuZHMt
-aW5mby5oeAomZ3Q7Jmd0OyBAQCAtMTg4LDE3ICsxODgsMTkgQEAgRVJTVAomZ3Q7Jmd0OyAgIAom
-Z3Q7Jmd0OyAgICAgICB7CiZndDsmZ3Q7ICAgICAgICAgICAubmFtZSAgICAgICA9ICJ0bGIiLAom
-Z3Q7Jmd0OyAtICAgICAgICAuYXJnc190eXBlICA9ICIiLAomZ3Q7Jmd0OyAtICAgICAgICAucGFy
-YW1zICAgICA9ICIiLAomZ3Q7Jmd0OyAtICAgICAgICAuaGVscCAgICAgICA9ICJzaG93IHZpcnR1
-YWwgdG8gcGh5c2ljYWwgbWVtb3J5IG1hcHBpbmdzIiwKJmd0OyZndDsgKyAgICAgICAgLmFyZ3Nf
-dHlwZSAgPSAiZmlsZTpzPyIsCiZndDsmZ3Q7ICsgICAgICAgIC5wYXJhbXMgICAgID0gIltmaWxl
-XSIsCiZndDsmZ3Q7ICsgICAgICAgIC5oZWxwICAgICAgID0gInNob3cgdmlydHVhbCB0byBwaHlz
-aWNhbCBtZW1vcnkgbWFwcGluZ3MgKG9wdGlvbmFsbHkgc2F2ZSB0byBmaWxlKSIsCiZndDsmZ3Q7
-ICAgICAgICAgICAuY21kICAgICAgICA9IGhtcF9pbmZvX3RsYiwKJmd0OyZndDsgICAgICAgICAg
-IC5hcmNoX2JpdG1hc2sgPSBRRU1VX0FSQ0hfSTM4NiB8IFFFTVVfQVJDSF9TSDQgfCBRRU1VX0FS
-Q0hfU1BBUkMgXAomZ3Q7Jmd0OyAgICAgICAgICAgICAgICAgICAgICAgICAgIHwgUUVNVV9BUkNI
-X1BQQyB8IFFFTVVfQVJDSF9YVEVOU0EgfCBRRU1VX0FSQ0hfTTY4SywKJmd0OyZndDsgICAgICAg
-fSwKJmd0OyZndDsgICAKJmd0OyZndDsgICBTUlNUCiZndDsmZ3Q7IC0gIGBgaW5mbyB0bGJgYAom
-Z3Q7Jmd0OyArICBgYGluZm8gdGxiYGAgWypmaWxlKl0KJmd0OyZndDsgICAgICAgU2hvdyB2aXJ0
-dWFsIHRvIHBoeXNpY2FsIG1lbW9yeSBtYXBwaW5ncy4KJmd0OyZndDsgKyAgICBJZiAqZmlsZSog
-aXMgc3BlY2lmaWVkLCB0aGUgb3V0cHV0IGlzIHNhdmVkIHRvIHRoZSBnaXZlbiBmaWxlCiZndDsm
-Z3Q7ICsgICAgaW5zdGVhZCBvZiBiZWluZyBwcmludGVkIHRvIHRoZSBtb25pdG9yLgomZ3Q7Jmd0
-OyAgIEVSU1QKJmd0OwomZ3Q7V2hhdCBhYm91dCBwYXNzaW5nIGNvdW50IG9yIHJhbmdlIGJ5IGFy
-Z3VtZW50IGluc3RlYWQsIGtlZXBpbmcgdGhlCjwvcHJlPjxkaXY+PHNwYW4gc3R5bGU9ImZvbnQt
-ZmFtaWx5OiBtb25vc3BhY2U7Ij4mZ3Q7ZGVmYXVsdCBiZWhhdmlvcj88L3NwYW4+PC9kaXY+PGRp
-dj48c3BhbiBzdHlsZT0iZm9udC1mYW1pbHk6IG1vbm9zcGFjZTsiPjxicj48L3NwYW4+PC9kaXY+
-PGRpdj48c3BhbiBzdHlsZT0iZm9udC1mYW1pbHk6IG1vbm9zcGFjZTsiPkhpLCZuYnNwO1BoaWxp
-cHBlOjwvc3Bhbj48L2Rpdj48ZGl2Pjxicj48L2Rpdj48ZGl2PjxzcGFuIHN0eWxlPSJmb250LWZh
-bWlseTogbW9ub3NwYWNlOyI+WW91ciBzdWdnZXN0aW9uIGlzIGdvb2QsPC9zcGFuPjwvZGl2Pjxk
-aXY+PHNwYW4gc3R5bGU9ImZvbnQtZmFtaWx5OiBtb25vc3BhY2U7Ij5JIGNhbiBhZGQgc2V2ZXJh
-bCBvcHRpb25zLDwvc3Bhbj48L2Rpdj48ZGl2PjxzcGFuIHN0eWxlPSJmb250LWZhbWlseTogbW9u
-b3NwYWNlOyI+c28gdGhhdCB1c2VycyBjYW4gY29udHJvbCB0aGUgb3V0cHV0IHJhbmdlIGFuZCBj
-b3VudC48L3NwYW4+PC9kaXY+PGRpdj48c3BhbiBzdHlsZT0iZm9udC1mYW1pbHk6IG1vbm9zcGFj
-ZTsiPjxicj48L3NwYW4+PC9kaXY+PGRpdj48c3BhbiBzdHlsZT0iZm9udC1mYW1pbHk6IG1vbm9z
-cGFjZTsiPkFuZCBqdXN0IGFzIEkgZGVzY3JpYmVkIGVhcmxpZXIsIHdlIHNob3VsZCBtb2RpZnkg
-dGhlIGRlZmF1bHQgYmVoYXZpb3I6PC9zcGFuPjwvZGl2PjxkaXY+PHNwYW4gc3R5bGU9ImZvbnQt
-ZmFtaWx5OiBtb25vc3BhY2U7Ij5vbmx5IHByaW50IHRoZSBmaXJzdCAzMiBlbnRyaWVzIGFuZCB0
-aGUgbGFzdCBlbnRyeS48L3NwYW4+PC9kaXY+PGRpdj48c3BhbiBzdHlsZT0iZm9udC1mYW1pbHk6
-IG1vbm9zcGFjZTsiPnNvIHRoYXQgdXNlcnMgY2FuIGtub3cgdGhlIHJhbmdlIHdoaWxlIGF2b2lk
-aW5nPC9zcGFuPjwvZGl2PjxkaXY+PHNwYW4gc3R5bGU9ImZvbnQtZmFtaWx5OiBtb25vc3BhY2U7
-Ij50aGUgb3V0cHV0IG9mIGFsbCB0aGUgZW50cmllcyAodGhlcmUgYXJlIHRvbyBtYW55KS48L3Nw
-YW4+PC9kaXY+PGRpdj48c3BhbiBzdHlsZT0iZm9udC1mYW1pbHk6IG1vbm9zcGFjZTsiPjxicj48
-L3NwYW4+PC9kaXY+PGRpdj48c3BhbiBzdHlsZT0iZm9udC1mYW1pbHk6IG1vbm9zcGFjZTsiPkFs
-YW5vLjwvc3Bhbj48L2Rpdj48ZGl2Pjxicj48L2Rpdj48ZGl2Pjxicj48L2Rpdj48L2Rpdj4=
-------=_Part_5080_236516077.1780104132638--
+
+Please visit the excuses page listed below and investigate the failures, pr=
+oceeding afterwards as per the StableReleaseUpdates policy regarding autopk=
+gtest regressions [1].
+
+https://ubuntu-archive-team.ubuntu.com/proposed-
+migration/questing/update_excuses.html#qemu
+
+[1] https://documentation.ubuntu.com/project/SRU/howto/autopkgtest-
+failure/
+
+Thank you!
+
+--=20
+You received this bug notification because you are a member of qemu-
+devel-ml, which is subscribed to QEMU.
+https://bugs.launchpad.net/bugs/2133804
+
+Title:
+  QEMU does not emulate IOCTL TCGETS2
+
+Status in QEMU:
+  Fix Released
+Status in qemu package in Ubuntu:
+  Fix Released
+Status in qemu source package in Jammy:
+  Confirmed
+Status in qemu source package in Noble:
+  Incomplete
+Status in qemu source package in Plucky:
+  Won't Fix
+Status in qemu source package in Questing:
+  Fix Committed
+Status in qemu source package in Resolute:
+  Fix Released
+
+Bug description:
+  [ Impact ]
+
+  - Terminal prompt is missing for multiarch containers with qemu-user
+
+  - Users cannot see the prompt but still can type the commands
+  =C2=A0=C2=A0However the absence of the prompt can be misleading and make =
+users think that the container hangs.
+
+  - this fix implements the missing ioctl TERMIOS2
+
+  [ Test Plan ]
+
+  On an amd64 host
+
+  $ sudo apt install -y docker.io qemu-user-static
+  $ sudo usermod -aG docker ubuntu
+  $ newgrp docker
+  $ docker run --platform=3Dlinux/arm64 -it ubuntu:26.04 bash
+  =C2=A0(this runs on AMD64 host, if you are runnig on ARM64, use -platform=
+=3Dlinux/riscv64 instead)
+
+  After docker pulls the image and run the container, you cannot see the
+  prompt
+
+  ...
+  Status: Downloaded newer image for ubuntu:26.04
+  ...
+
+  $ docker run --platform=3Dlinux/arm64 -it ubuntu:24.04 bash
+
+  Doing the same for Ubuntu Noble image works.
+
+  $ docker run --platform=3Dlinux/arm64 -it ubuntu:24.04 bash
+  Unable to find image 'ubuntu:24.04' locally
+  24.04: Pulling from library/ubuntu
+  818154cda96d: Pull complete
+  352b2c3faa58: Download complete
+  Digest: sha256:c4a8d5503dfb2a3eb8ab5f807da5bc69a85730fb49b5cfca2330194ebc=
+c41c7b
+  Status: Downloaded newer image for ubuntu:24.04
+  root@bf8124075385:/#
+
+  With this fix, the users should see the prompt when they run bash
+  interactively in the container:
+
+  $ docker run --platform=3Dlinux/arm64 -it ubuntu:26.04 bash
+  root@bf8124075385:/#
+
+  [ Where problems could occur ]
+
+  The fix is around the termios managament so regressions can happen there.
+  There might be regressions on the prompt display.
+
+  The prompt display is widely used so potential regressions should be
+  visible quickly.
+
+  [ Other Info ]
+
+  None
+
+  -- Original bug report ---
+
+  In Ubuntu 25.10 we moved to glibc 2.42. Here glibc has changed the
+  implementation of isatty(). It now uses IOCTL TCGETS2 instead of
+  TCGETS. TCGETS2 is not emulated by static QEMU (qemu-riscv64, qemu-
+  arm64, ...).
+
+  This leads to failures in containers for foreign architectures. E.g. no c=
+onsole prompt is displayed.
+  A detailed analysis is contained in LP #2133188.
+
+  A proper implementation of the missing IOCTLs will include:
+
+  Functions:
+
+  in linux-user/syscall.c:
+  host_to_target_termios2()
+  target_to_host_termios2()
+  print_termios2()
+
+  Definitions:
+
+  in linux-user/syscall.c
+  #define termios2 host_termios2
+
+  in linux-user/syscall_types.h
+  STRUCT_SPECIAL(termios2)
+
+  in linux-user/ioctls.h:
+  IOCTL(TCGETS2, IOC_R, MK_PTR(MK_STRUCT(STRUCT_termios2)))
+  IOCTL(TCSETS2, IOC_W, MK_PTR(MK_STRUCT(STRUCT_termios2)))
+  IOCTL(TCSETSF2, IOC_W, MK_PTR(MK_STRUCT(STRUCT_termios2)))
+  IOCTL(TCSETSW2, IOC_W, MK_PTR(MK_STRUCT(STRUCT_termios2)))
+
+  in linux-user/user-internals.h:
+  void print_termios2(void *arg);
+
+To manage notifications about this bug go to:
+https://bugs.launchpad.net/qemu/+bug/2133804/+subscriptions
 
 
