@@ -4,81 +4,79 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id CBA20CD6E53
-	for <qemu-devel@archiver.kernel.org>; Sat, 30 May 2026 21:14:55 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D6973CD4F54
+	for <qemu-devel@archiver.kernel.org>; Sat, 30 May 2026 23:13:27 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wTQzg-0005hZ-N6; Sat, 30 May 2026 17:13:20 -0400
+	id 1wTSr9-0008R2-8l; Sat, 30 May 2026 19:12:39 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1wTQzU-0005eE-Lf
- for qemu-devel@nongnu.org; Sat, 30 May 2026 17:13:08 -0400
-Received: from mail-pl1-x62d.google.com ([2607:f8b0:4864:20::62d])
+ id 1wTSr5-0008Ph-QG
+ for qemu-devel@nongnu.org; Sat, 30 May 2026 19:12:37 -0400
+Received: from mail-pj1-x1034.google.com ([2607:f8b0:4864:20::1034])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1wTQzS-0000ma-7O
- for qemu-devel@nongnu.org; Sat, 30 May 2026 17:13:08 -0400
-Received: by mail-pl1-x62d.google.com with SMTP id
- d9443c01a7336-2c0c20f0c0aso997275ad.0
- for <qemu-devel@nongnu.org>; Sat, 30 May 2026 14:13:04 -0700 (PDT)
+ id 1wTSr2-0007Ma-VU
+ for qemu-devel@nongnu.org; Sat, 30 May 2026 19:12:35 -0400
+Received: by mail-pj1-x1034.google.com with SMTP id
+ 98e67ed59e1d1-36d6bb38b44so395492a91.0
+ for <qemu-devel@nongnu.org>; Sat, 30 May 2026 16:12:32 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1780175584; x=1780780384; darn=nongnu.org;
+ d=linaro.org; s=google; t=1780182752; x=1780787552; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=LyTvLUnnO1vXqEM/LWenPW1IEdmUpPSMFl0cuHem8z4=;
- b=cVjhLiH+2Z3ViqdemRMr7ueaO4+cgxG3DdcDFR8A6h7bnHRkEBm4SbCRA7w2af+ggf
- lGmkr/Vaw2r47V92Yym8GTQQ4xdaHcQsUqON/eH0bpK25CN8dtVVVBsIkxA/yORyanS/
- ESQByiZk1J+UM7uzUTs8s7Ie4PN1JMdBEC52YkFn1LaDcTbm+vSWRBW2j0wW6fAYAewd
- f3r85RIPehy+Uu4gNtAY4gDIjj1ToEHZs+3TU1u02iXVeWdWs7lZe9VlV5Zk8kdIWMiy
- i845lcpUz551s60ex6v98LwipIqKAFuHgafPhQGv8P7uU4bYmomCBOesoTq+qW/RBmCY
- +3Jw==
+ bh=dfTQIO3Td5ZnJtjFXmscxPDzamgvs+aWLTRE3ZdC8D8=;
+ b=bc6pqyPdhwix//MalUMbWfv9uSuxUubjkURyV2DSU1Sn3f7zlJO4wFrEuXIvXMquab
+ AzNY3nABKOV7FMb4mn0U3uldzFSiE4pbYExYhamQ4dySf2EthwkZp8pTfl1CrTFAPjC+
+ 9mNomZex7S9S6HCGwAA3hDjUh2dbXg/jaXlx61xPlcVlLEmnSJwoDxnEn9aqm4gx7z38
+ qQpHFa8OoVIHX+W/hC9UWTTmmtWXRVgxz3F8nsz2k6jPexTWnHcri18WrfD0t9VYTLki
+ jjGtgXwB3/7oVhtDfUifCWho68oSnm+QdYeyc7P3ggTfGRannBo6dvjc0Rx88VKohkhz
+ HIMw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1780175584; x=1780780384;
+ d=1e100.net; s=20251104; t=1780182752; x=1780787552;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to;
- bh=LyTvLUnnO1vXqEM/LWenPW1IEdmUpPSMFl0cuHem8z4=;
- b=UvS5lOcELiU/RyeU/flltAZvYSsLQgnGiWnE2Jp4d/mjavt88NinVDaEBFmSemEsnr
- CTlpM1Yt4d91SgRq+KFaDmfxCVx0Jr2P+C8g9c88hzXkGNgT+lWI9cd40vuWNWMvwye0
- F3lwA8SvcCis7exEfo8BWA9CGsaUEjqv0ZufpWK4CuFxnItVnVOmrgQFrJsAneOZxDJG
- R4tIUte3sAcpzcKnh0kECuNH81b1dsNE1/lHkWe9Pev5v7bKEmOskc8q1Tm0HNqOorJv
- io79PtH26AnLtegZWwOiQVTTaookfvk9kIV2uCdIiFsRsoRTI6LFm+s+zUoq6/Jx5D3y
- N6fg==
-X-Gm-Message-State: AOJu0YyTD7EdGagnGytDNeG7N+UeZiLUPSjVH4v3D3Cw+Hr0RJYUgdjk
- EN5exP/BDX62JOa8NHnQYEozXLXwRQ7vip/oWxhujq/trNB5AgUopgIs3ef3uPAIggAWAK5Gs7s
- izR4vvYk=
-X-Gm-Gg: Acq92OGY8vvmQjyT/omhYeUE4YjjXKZbOBNjuHE6WASdimc+v8h9zyrmJD47ClBZ9sr
- QXPWq3aGYmSwiX5/GfJxUOsDyER6Ygst209xGByK3kp9eFEEddi5+nEjza54AUgSKTLs7fW+E8y
- pTidOedUmjBrayQoxo/9Eyc9ZztVBrUC3GhF0PqN1TLfJ8JSkpht5tSU3MOpsJrJ9GrpAHsLLFk
- vMwvfv6v684S7aBVeRqfwVUUgj9q9upKr1tWNU+kbOR268QgLIYDDUyV0XhK5eDYk2zUatPNTj+
- OpCTddbyOQaQUBxCaWPuyubsMF5kDttBvfzWK5+OOY5Ka67lBDnk++w1Fe85vf8s411HHmr03QY
- jVyAKL/SGzRh5QAusbz2STxZTY4pVGRtYv/YoXd7GASFiHh5ikoHO2ve/3kEeBBX74jj4d6MdSp
- FhHq13DsXVNyGT5OKaMh2FHZMhVxe3kiLLh8eOrY8FXnN63VRcTw==
-X-Received: by 2002:a17:902:ef4c:b0:2c0:c38d:9d51 with SMTP id
- d9443c01a7336-2c0c38da22dmr6834525ad.21.1780175583742; 
- Sat, 30 May 2026 14:13:03 -0700 (PDT)
+ bh=dfTQIO3Td5ZnJtjFXmscxPDzamgvs+aWLTRE3ZdC8D8=;
+ b=fsEOamW0dZAcXkUCnZDZhkVl35N/bpd88kolmXyW1y2gLfz1q6Jdp9PgR7XUXBBy87
+ X10DFPwRkFYDos0guvfdtrjcF2MdDGIzH2Wk8Ikam0RR1Ovs/BerHyCZ053WBV7o0BNT
+ l4GNFoAQ8ot1i4QpBycEAft+ymkVC219cV4ZaWEy95ON5+dwQCbMI0pKuO/jZ6Z5F4jH
+ iqoIbUNsZCm1B1L4F+PN0jtWgBc2WoMCEUchqrTD2x3cfu5SPc7CX3ZZSLqJ/NtDddna
+ 1kRvSTm1hT798Qdsy0cj25dF1FHXZlj2rs/ZfmjWxOWICQyKRP76kWi0f0d66ngnJ8BN
+ VyWw==
+X-Gm-Message-State: AOJu0Ywu1GCkIVIQN2lOM3bQ6hJLdp2y//cyIExkxtU9+8Vu1lg1SD2H
+ UONJEzpU8TC6wKJ+5XN2YY/vGqjUItIe06XQJ6yL0uYDX8vFH/r+eD6vFVLTlUsNbHbcL4v8a6e
+ xXIT3qc0=
+X-Gm-Gg: Acq92OEYfq/O7SSA1QlUICGqwx27hCypTiREgRBZVbCkZmZxNYsxQpmmO7Fis1zEjgp
+ aVv0Z0T140rhVWOTmS1YipCBnqd8DnJ9S3ZmlFfO2X4/+779Co3J9lX8Fw4X0yedera2fIHjjsX
+ 3rmQ9vR9sl84/HzJgXPGYly6AL36kG+yW8uBLvV4j67347mi64m+4uvtijxN8TcOTBhJ+BmgCFS
+ ZqU+WbnNZl6xMxo/nCNkYNaDa0IlGSBM+4jW32EMUiFX/AJFUSXR32cJGPrlh6wS8cjQFW5+c6f
+ XrH7utc7OjH5D5D1nCvC9EiC2YnY2/TLnBwWC2JNWJqxlBIwkxKBGjrIWoNMPW1+6cVbyByPjNP
+ B6BtIMPSukeCGOFXw1gUedgknH4toXGVcXq/QZWgv/+F3IDkohcjC7nzI0i25WOI24bx8IhUPDN
+ gpwWnEZ40WJZw8ohz+2QoNZ4uzCmXteIdcI5c5M8g=
+X-Received: by 2002:a17:90b:2f46:b0:368:a297:bd38 with SMTP id
+ 98e67ed59e1d1-36c4ff3a634mr4539942a91.7.1780182751649; 
+ Sat, 30 May 2026 16:12:31 -0700 (PDT)
 Received: from stoup.. ([71.212.142.33]) by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-2bf23c580c6sm59592895ad.82.2026.05.30.14.13.02
+ 41be03b00d2f7-c857729d3d1sm5634356a12.21.2026.05.30.16.12.31
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Sat, 30 May 2026 14:13:02 -0700 (PDT)
+ Sat, 30 May 2026 16:12:31 -0700 (PDT)
 From: Richard Henderson <richard.henderson@linaro.org>
 To: qemu-devel@nongnu.org
-Cc: imp@bsdimp.com,
-	deller@gmx.de
-Subject: [PATCH 13/13] common-user: Move guest_base,
- have_guest_base to probe-guest-base.c
-Date: Sat, 30 May 2026 14:12:47 -0700
-Message-ID: <20260530211248.375318-14-richard.henderson@linaro.org>
+Cc: qemu-arm@nongnu.org
+Subject: [PATCH v8 01/41] target/arm: Introduce arm_init_fp_status
+Date: Sat, 30 May 2026 16:11:49 -0700
+Message-ID: <20260530231229.400441-2-richard.henderson@linaro.org>
 X-Mailer: git-send-email 2.43.0
-In-Reply-To: <20260530211248.375318-1-richard.henderson@linaro.org>
-References: <20260530211248.375318-1-richard.henderson@linaro.org>
+In-Reply-To: <20260530231229.400441-1-richard.henderson@linaro.org>
+References: <20260530231229.400441-1-richard.henderson@linaro.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::62d;
- envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x62d.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::1034;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pj1-x1034.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -101,64 +99,57 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Unify the definitions of guest_base and have_guest_base.
+Create a function to set all default controls for a float_status.
+Other settings for specific FPST will be set afterward.
 
 Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
 ---
- bsd-user/main.c                | 3 +--
- common-user/probe-guest-base.c | 4 ++++
- linux-user/main.c              | 2 --
- 3 files changed, 5 insertions(+), 4 deletions(-)
+ target/arm/cpu.c | 19 +++++++++++--------
+ 1 file changed, 11 insertions(+), 8 deletions(-)
 
-diff --git a/bsd-user/main.c b/bsd-user/main.c
-index 772a26199b..3201da2318 100644
---- a/bsd-user/main.c
-+++ b/bsd-user/main.c
-@@ -62,8 +62,7 @@ intptr_t qemu_host_page_mask;
+diff --git a/target/arm/cpu.c b/target/arm/cpu.c
+index a13e6dae2a..b75c6a6622 100644
+--- a/target/arm/cpu.c
++++ b/target/arm/cpu.c
+@@ -304,6 +304,13 @@ static void cp_reg_check_reset(gpointer key, gpointer value,  gpointer opaque)
+     assert(oldvalue == newvalue);
+ }
  
- static bool opt_one_insn_per_tb;
- static unsigned long opt_tb_size;
--uintptr_t guest_base;
--bool have_guest_base;
++static void arm_init_fp_status(float_status *s)
++{
++    memset(s, 0, sizeof(*s));
++    arm_set_default_fp_behaviours(s);
++    /* We want 0 for all other settings. */
++}
 +
- /*
-  * When running 32-on-64 we should make sure we can fit all of the possible
-  * guest address space into a contiguous chunk of virtual host memory.
-diff --git a/common-user/probe-guest-base.c b/common-user/probe-guest-base.c
-index 77722fe63f..6f1247cf1a 100644
---- a/common-user/probe-guest-base.c
-+++ b/common-user/probe-guest-base.c
-@@ -7,6 +7,7 @@
- #include "qemu/log.h"
- #include "user/guest-base.h"
- #include "user/mmap-min-addr.h"
-+#include "user/guest-base.h"
- #include "user/guest-host.h"
- #include "user/probe-guest-base.h"
- #include "user/selfmap.h"
-@@ -18,6 +19,9 @@
- #define MAP_FIXED_NOREPLACE  (MAP_FIXED | MAP_EXCL)
- #endif
+ static void arm_cpu_reset_hold(Object *obj, ResetType type)
+ {
+     CPUState *cs = CPU(obj);
+@@ -626,20 +633,16 @@ static void arm_cpu_reset_hold(Object *obj, ResetType type)
+         env->sau.ctrl = 0;
+     }
  
-+uintptr_t guest_base;
-+bool have_guest_base;
++    for (int i = 0; i < FPST_COUNT; i++) {
++        arm_init_fp_status(&env->vfp.fp_status[i]);
++    }
 +
- /**
-  * pgb_try_mmap:
-  * @addr: host start address
-diff --git a/linux-user/main.c b/linux-user/main.c
-index 01cf5bf079..60a695b7ca 100644
---- a/linux-user/main.c
-+++ b/linux-user/main.c
-@@ -79,8 +79,6 @@ static envlist_t *envlist;
- static const char *cpu_model;
- static const char *cpu_type;
- static const char *seed_optarg;
--uintptr_t guest_base;
--bool have_guest_base;
- 
- /*
-  * Used to implement backwards-compatibility for the `-strace`, and
+     set_flush_to_zero(1, &env->vfp.fp_status[FPST_STD]);
+     set_flush_inputs_to_zero(1, &env->vfp.fp_status[FPST_STD]);
+     set_default_nan_mode(1, &env->vfp.fp_status[FPST_STD]);
+     set_default_nan_mode(1, &env->vfp.fp_status[FPST_STD_F16]);
+     set_default_nan_mode(1, &env->vfp.fp_status[FPST_ZA]);
+     set_default_nan_mode(1, &env->vfp.fp_status[FPST_ZA_F16]);
+-    arm_set_default_fp_behaviours(&env->vfp.fp_status[FPST_A32]);
+-    arm_set_default_fp_behaviours(&env->vfp.fp_status[FPST_A64]);
+-    arm_set_default_fp_behaviours(&env->vfp.fp_status[FPST_ZA]);
+-    arm_set_default_fp_behaviours(&env->vfp.fp_status[FPST_STD]);
+-    arm_set_default_fp_behaviours(&env->vfp.fp_status[FPST_A32_F16]);
+-    arm_set_default_fp_behaviours(&env->vfp.fp_status[FPST_A64_F16]);
+-    arm_set_default_fp_behaviours(&env->vfp.fp_status[FPST_ZA_F16]);
+-    arm_set_default_fp_behaviours(&env->vfp.fp_status[FPST_STD_F16]);
+     arm_set_ah_fp_behaviours(&env->vfp.fp_status[FPST_AH]);
+     set_flush_to_zero(1, &env->vfp.fp_status[FPST_AH]);
+     set_flush_inputs_to_zero(1, &env->vfp.fp_status[FPST_AH]);
 -- 
 2.43.0
 
