@@ -4,80 +4,80 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6A6F4CD6E59
-	for <qemu-devel@archiver.kernel.org>; Sat, 30 May 2026 21:14:08 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1D5BFCD5BD0
+	for <qemu-devel@archiver.kernel.org>; Sat, 30 May 2026 21:14:31 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wTQzS-0005dQ-CO; Sat, 30 May 2026 17:13:06 -0400
+	id 1wTQzU-0005e2-Ad; Sat, 30 May 2026 17:13:08 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1wTQzJ-0005cN-So
- for qemu-devel@nongnu.org; Sat, 30 May 2026 17:12:58 -0400
-Received: from mail-pl1-x635.google.com ([2607:f8b0:4864:20::635])
+ id 1wTQzN-0005dE-Sk
+ for qemu-devel@nongnu.org; Sat, 30 May 2026 17:13:02 -0400
+Received: from mail-pl1-x62f.google.com ([2607:f8b0:4864:20::62f])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1wTQzH-0000cp-TZ
- for qemu-devel@nongnu.org; Sat, 30 May 2026 17:12:57 -0400
-Received: by mail-pl1-x635.google.com with SMTP id
- d9443c01a7336-2c0b9328c4aso1919105ad.0
- for <qemu-devel@nongnu.org>; Sat, 30 May 2026 14:12:55 -0700 (PDT)
+ id 1wTQzM-0000dz-Fl
+ for qemu-devel@nongnu.org; Sat, 30 May 2026 17:13:01 -0400
+Received: by mail-pl1-x62f.google.com with SMTP id
+ d9443c01a7336-2c0bb4a94b8so1655105ad.2
+ for <qemu-devel@nongnu.org>; Sat, 30 May 2026 14:13:00 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1780175574; x=1780780374; darn=nongnu.org;
+ d=linaro.org; s=google; t=1780175579; x=1780780379; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=UXIpY+BcyO+KWcNu+Dj75+LCljfhirlOj1U9J8zLtBs=;
- b=CscD1lMc2eDqr22+npw51Y+oaM1CYQffK6sr4ImT/mydUGs+/Za4weLdpCcdPPFMOQ
- 2qFo8YqC55O+sXAJnKBlqzHAw3Q4H5XyiEmaiI8MjiTVKpoH94wiHoGolcNVqnoW7kAh
- YKgQj9/ESea1pBugat6F6zuK63EbAzO1JkqnBAGPHjs90O4rIUry549O0JItduGFX6q+
- YOc5tkAQ0K0JTX6JxbGTABDhUCiDvBdnXOl00noWLp6pETNDmJsldBZ0TGifc0bPfPX+
- nj1ci2uMJ3DCbPdVYHAUjjMPqbJhrhN3Orc5ky18qyZXCccFlit9C6yhdT8DFa4DW7bU
- imzw==
+ bh=riZGLawdoBOsnTwywvNnX4cT6gxxxwkn5L7hcDVC/T8=;
+ b=CST/WvmVJ4UbgyHTmUijqvvUBZbEG83j5p+w3cWWXKNvUYNKtlJ4CeLaBGWfgii4Gs
+ rzgplRqxBqIxYidLi2oVyqERdxwpdu7DXX+1kb4Fcvo71y0wrS4jzCxNOLqm4u0iG1fF
+ 06tPFNAJFUGS9ttnCkGak9JmlPhv2CcMGvpGx/D9Em9u6GIn+DfJBfF16HYIsHpPk0nJ
+ Dst42VwsuPfdnjso3T4ABTia7R3F2JI7Q3VOtGBQHkQ6Z//L/drflYTtKz7ZACa2+FJh
+ cH/ZbQ4yjcjjIV3VXDnN4InZ/0Kj1/sH6N4Fdw1l4TVSi0LovGaF6v+7ovaAMY743K/M
+ VeDQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1780175574; x=1780780374;
+ d=1e100.net; s=20251104; t=1780175579; x=1780780379;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to;
- bh=UXIpY+BcyO+KWcNu+Dj75+LCljfhirlOj1U9J8zLtBs=;
- b=igOsgfrfx0L5qiC1v8rWpM7bRVZZIF5AHILxUv4EzSMZxqtV5Ce7OB3umgVnVLpvVQ
- ui+H8WW0MQzjbK/mDBDt+P3ZNyicURq/bLACxpQ/pKdYu97zPf4LOK81mQcwEkbrqpe7
- Qb4HSsy0X6tVQo4bYUnskst7ad8br1BvXjV6OBXFQklFet3SuLbPRs48o6jF9max5fyc
- isj5N182hdyLInz37ozDqQDL+FQ5Z+xt3qs2PWLU6n5VBhPGWBKlpdZcGmtIY4YGWlRh
- ELMHR90kitmUh+5yX30CP2FVN+wUZqnM1NJ4pokAYbnxQRDbEsioYlx4MZO0aWKdhDRo
- xnSQ==
-X-Gm-Message-State: AOJu0YzzwdmsElazjJYSY/M5639pi/eDxz7vzQIqlBSer/TlLDQiWCWY
- NvoA3qBU8Yuw3sFxgTpwc5OZ4Klt6pX2+eB1G6MtmXilmQcoiW4iLaoGSkB76cjLxuDhLlcQCMy
- hNHf4zIQ=
-X-Gm-Gg: Acq92OGafD8XgeEIvXIvg7MwjCB1Vs/SDspeSR6nACGJe/nip5A7x6ECl7o38nvvDqH
- QhmWonAvAFiGndOVh+Xb3Gic0mby8BNG1vpqMb3ZwoDLcmElegnQcv+6EVuTOLqtP8r1HB3BZAh
- Cd4Ed3pvIJrOPcLFpUA6P9Y0BMa9Nfz6p4pDsIjppH5/N/E7KAdwREWJXCE0xBRcJOp+XBDoo41
- iWrssfyl7EaHPBeDj0V/1K9gnzauRZfOTwTiydJuywC8JzLhlV9g0FyB4SkaQk5zOs5ndSPFBvc
- 5wOPdrTYMoiAUFQYIu1VO8Prs0RuONm56ilSXla5pk6Wy0quSW9jWR676ZnWoz7aSuZFcH/0j7Y
- kjkMPe8TvfTvlFuSz+FN+tMobOo94Kkx1zNy2HA/uggs3hfWLQ0oyK9f/s6pP7wdOY8LFswuji3
- LlBPz1wx5sCbXrhLYbFij8U9epR/ButzP4xIYyh4o=
-X-Received: by 2002:a17:903:1207:b0:2bd:3bfd:7512 with SMTP id
- d9443c01a7336-2bf368468ddmr58029325ad.29.1780175574200; 
- Sat, 30 May 2026 14:12:54 -0700 (PDT)
+ bh=riZGLawdoBOsnTwywvNnX4cT6gxxxwkn5L7hcDVC/T8=;
+ b=Pdt8bC2eZHpMX+LoX0PDM57FfG2FyOfx6P7Sk1co/1MWg2o/hce9XqyRJIfqGoDCGQ
+ WNo7IUfrFFKP4aeQBlHrYonzSD8AKdjlwpAJbfpa16et12OTqDUuOn6Zi8sjaPW4iG7J
+ CB1l1MOA8PbJtkp2nlXxbH08lnLcjgk73oSrISyqrzCS/TPqGxl+Oc2ne0GbwHSlykio
+ nDZsNqkkpksrwgeCocYnNKcIDTUhH7QIwyrqEIELDEI6WHzNnUntjPM99u+uEl4oiK88
+ O4dOsrNxcVZ29C4bkB+y6PK5wdaBvJNCxKzGt0p0tyj5ObVR8Ho9W8T6TBZrreuVchyh
+ wslg==
+X-Gm-Message-State: AOJu0YwADls3AHrfoQFVEvLWkaw6gLYzXmJG1hccuXODNHuzgaDHNqIY
+ eRGeOXKpnbyMGVFWzF3CBbkIpvMebtv8lZLZ3mjjTY5dkuuVyc1aINKWUMsv2UI57Zqt7UxHrFy
+ /Sh22gS0=
+X-Gm-Gg: Acq92OESadkvilWPUgyeDmApQkEe/3fXb0UgYsiIvMj2NX60N6vr+QJdLPFJAhbA3Ul
+ PkdhUZUixiesG1rYhsMeIGrzHRfK4XeZSoVIc+xq5UE0cKvzpj7jpPK9dlDEVnwRfHqvoncCpBl
+ lGdkXYJIbo3HktqATrYcSSTOAPCuVtOW+efkXfXcV8TbQhH/TZrpBk6ktz0zXrK/Bgl6yd3oAGC
+ fOT8jjm0QKcVnBRSRkm0uxit5eTYZ0TA9xzjq0Zp26N/rYRWDINuXrwgyLy0kcNABFpKk+QurVC
+ jjWkFMhJjPmi+QT/I0/NoPTaec0gcwOE433QyC4xlOE/JqrWsPxfmYSzOYnJadT7Z/MB1D20xQ5
+ muuhFyQBd3/hPXcoBWq7VIr9G5YGCrCfTvqRK+2mt6fDIEHiJkzMpfTbIfj3ISZzXwi7UO2fOCw
+ 1ffWRfzzs/m5XEHeqh/WSv3W2W3Zk4QJhDbnZVqvZGqM7WdJphag==
+X-Received: by 2002:a17:903:3510:b0:2bf:3559:b25f with SMTP id
+ d9443c01a7336-2bf367dd7ffmr65151115ad.18.1780175577173; 
+ Sat, 30 May 2026 14:12:57 -0700 (PDT)
 Received: from stoup.. ([71.212.142.33]) by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-2bf23c580c6sm59592895ad.82.2026.05.30.14.12.53
+ d9443c01a7336-2bf23c580c6sm59592895ad.82.2026.05.30.14.12.56
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Sat, 30 May 2026 14:12:53 -0700 (PDT)
+ Sat, 30 May 2026 14:12:56 -0700 (PDT)
 From: Richard Henderson <richard.henderson@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: imp@bsdimp.com,
 	deller@gmx.de
-Subject: [PATCH 04/13] linux-user: Pass image_range to probe_guest_base
-Date: Sat, 30 May 2026 14:12:38 -0700
-Message-ID: <20260530211248.375318-5-richard.henderson@linaro.org>
+Subject: [PATCH 08/13] include/user/guest-host: Include missing cpu.h
+Date: Sat, 30 May 2026 14:12:42 -0700
+Message-ID: <20260530211248.375318-9-richard.henderson@linaro.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20260530211248.375318-1-richard.henderson@linaro.org>
 References: <20260530211248.375318-1-richard.henderson@linaro.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::635;
- envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x635.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::62f;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x62f.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -100,202 +100,25 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Pass a PGBRange structure instead of separate guest_loaddr
-and guest_hiaddr parameters.  This allows NULL to indicate
-that the image is relocatable, so that image_range->lo == 0
-is a valid fixed setting.
+This file uses CPUState without including the required header.
 
-Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/1890
 Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
 ---
- linux-user/user-internals.h | 13 ++++-------
- linux-user/elfload.c        | 46 +++++++++++++++++--------------------
- linux-user/flatload.c       |  2 +-
- 3 files changed, 27 insertions(+), 34 deletions(-)
+ include/user/guest-host.h | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/linux-user/user-internals.h b/linux-user/user-internals.h
-index 73b0109e9c..3f41d3f33c 100644
---- a/linux-user/user-internals.h
-+++ b/linux-user/user-internals.h
-@@ -83,24 +83,21 @@ typedef struct PGBRange {
- /**
-  * probe_guest_base:
-  * @image_name: the executable being loaded
-- * @loaddr: the lowest fixed address within the executable
-- * @hiaddr: the highest fixed address within the executable
-+ * @image_range: the fixed addresses within the executable
-  *
-  * Creates the initial guest address space in the host memory space.
-  *
-- * If @loaddr == 0, then no address in the executable is fixed, i.e.
-- * it is fully relocatable.  In that case @hiaddr is the size of the
-- * executable minus one.
-+ * If @image_range is NULL, then no address in the executable is fixed,
-+ * i.e. it is fully relocatable.
-  *
-  * This function will not return if a valid value for guest_base
-  * cannot be chosen.  On return, the executable loader can expect
-  *
-- *    target_mmap(loaddr, hiaddr - loaddr + 1, ...)
-+ *    target_mmap(i->lo, i->hi - i->lo + 1, ...)
-  *
-  * to succeed.
-  */
--void probe_guest_base(const char *image_name,
--                      abi_ulong loaddr, abi_ulong hiaddr);
-+void probe_guest_base(const char *image_name, const PGBRange *image_range);
+diff --git a/include/user/guest-host.h b/include/user/guest-host.h
+index ef83ad8a18..506efc097e 100644
+--- a/include/user/guest-host.h
++++ b/include/user/guest-host.h
+@@ -10,6 +10,7 @@
  
- /* syscall.c */
- int host_to_target_waitstatus(int status);
-diff --git a/linux-user/elfload.c b/linux-user/elfload.c
-index 33565ad7be..10a826e658 100644
---- a/linux-user/elfload.c
-+++ b/linux-user/elfload.c
-@@ -847,14 +847,13 @@ static bool pgb_try_mmap_set(const PGBAddrs *ga, uintptr_t base, uintptr_t brk)
- /**
-  * pgb_addr_set:
-  * @ga: output set of guest addrs
-- * @guest_loaddr: guest image low address
-- * @guest_loaddr: guest image high address
-+ * @image_range: fixed guest image addresses
-  * @identity: create for identity mapping
-  *
-  * Fill in @ga with the image, COMMPAGE and NULL page.
-  */
--static bool pgb_addr_set(PGBAddrs *ga, abi_ulong guest_loaddr,
--                         abi_ulong guest_hiaddr, bool try_identity)
-+static bool pgb_addr_set(PGBAddrs *ga, const PGBRange *image_range,
-+                         bool try_identity)
- {
-     int n;
+ #include "exec/vaddr.h"
+ #include "user/guest-base.h"
++#include "hw/core/cpu.h"
+ #include "accel/tcg/cpu-ops.h"
  
-@@ -866,7 +865,7 @@ static bool pgb_addr_set(PGBAddrs *ga, abi_ulong guest_loaddr,
-         if (LO_COMMPAGE != -1 && LO_COMMPAGE < mmap_min_addr) {
-             return false;
-         }
--        if (guest_loaddr != 0 && guest_loaddr < mmap_min_addr) {
-+        if (image_range && image_range->lo < mmap_min_addr) {
-             return false;
-         }
-     }
-@@ -892,10 +891,8 @@ static bool pgb_addr_set(PGBAddrs *ga, abi_ulong guest_loaddr,
-         }
- 
-         /* Add the guest image for ET_EXEC. */
--        if (guest_loaddr) {
--            ga->bounds[n].lo = guest_loaddr;
--            ga->bounds[n].hi = guest_hiaddr;
--            n++;
-+        if (image_range) {
-+            ga->bounds[n++] = *image_range;
-         }
-     }
- 
-@@ -928,8 +925,8 @@ static void pgb_fail_in_use(const char *image_name)
-     exit(EXIT_FAILURE);
- }
- 
--static void pgb_fixed(const char *image_name, uintptr_t guest_loaddr,
--                      uintptr_t guest_hiaddr, uintptr_t align)
-+static void pgb_fixed(const char *image_name, const PGBRange *image_range,
-+                      uintptr_t align)
- {
-     PGBAddrs ga;
-     uintptr_t brk = (uintptr_t)sbrk(0);
-@@ -941,7 +938,7 @@ static void pgb_fixed(const char *image_name, uintptr_t guest_loaddr,
-         exit(EXIT_FAILURE);
-     }
- 
--    if (!pgb_addr_set(&ga, guest_loaddr, guest_hiaddr, !guest_base)
-+    if (!pgb_addr_set(&ga, image_range, !guest_base)
-         || !pgb_try_mmap_set(&ga, guest_base, brk)) {
-         pgb_fail_in_use(image_name);
-     }
-@@ -1026,15 +1023,15 @@ static uintptr_t pgb_find_itree(const PGBAddrs *ga, IntervalTreeRoot *root,
-     return pgb_try_mmap_set(ga, base, brk) ? base : -1;
- }
- 
--static void pgb_dynamic(const char *image_name, uintptr_t guest_loaddr,
--                        uintptr_t guest_hiaddr, uintptr_t align)
-+static void pgb_dynamic(const char *image_name, const PGBRange *image_range,
-+                        uintptr_t align)
- {
-     IntervalTreeRoot *root;
-     uintptr_t brk, ret;
-     PGBAddrs ga;
- 
-     /* Try the identity map first. */
--    if (pgb_addr_set(&ga, guest_loaddr, guest_hiaddr, true)) {
-+    if (pgb_addr_set(&ga, image_range, true)) {
-         brk = (uintptr_t)sbrk(0);
-         if (pgb_try_mmap_set(&ga, 0, brk)) {
-             guest_base = 0;
-@@ -1046,7 +1043,7 @@ static void pgb_dynamic(const char *image_name, uintptr_t guest_loaddr,
-      * Rebuild the address set for non-identity map.
-      * This differs in the mapping of the guest NULL page.
-      */
--    pgb_addr_set(&ga, guest_loaddr, guest_hiaddr, false);
-+    pgb_addr_set(&ga, image_range, false);
- 
-     root = read_self_maps();
- 
-@@ -1085,24 +1082,23 @@ static void pgb_dynamic(const char *image_name, uintptr_t guest_loaddr,
-     guest_base = ret;
- }
- 
--void probe_guest_base(const char *image_name, abi_ulong guest_loaddr,
--                      abi_ulong guest_hiaddr)
-+void probe_guest_base(const char *image_name, const PGBRange *image_range)
- {
-     /* In order to use host shmat, we must be able to honor SHMLBA.  */
-     uintptr_t align = MAX(SHMLBA, TARGET_PAGE_SIZE);
- 
-     /* Sanity check the guest binary. */
--    if (reserved_va && guest_hiaddr > reserved_va) {
-+    if (reserved_va && image_range && image_range->hi > reserved_va) {
-         error_report("%s: requires more than reserved virtual "
--                     "address space (0x%" PRIx64 " > 0x%lx)",
--                     image_name, (uint64_t)guest_hiaddr, reserved_va);
-+                     "address space (0x%" VADDR_PRIx " > 0x%lx)",
-+                     image_name, image_range->hi, reserved_va);
-         exit(EXIT_FAILURE);
-     }
- 
-     if (have_guest_base) {
--        pgb_fixed(image_name, guest_loaddr, guest_hiaddr, align);
-+        pgb_fixed(image_name, image_range, align);
-     } else {
--        pgb_dynamic(image_name, guest_loaddr, guest_hiaddr, align);
-+        pgb_dynamic(image_name, image_range, align);
-     }
- 
-     /* Reserve and initialize the commpage. */
-@@ -1362,10 +1358,10 @@ static void load_elf_image(const char *image_name, const ImageSource *src,
-              * Make sure that the low address does not conflict with
-              * MMAP_MIN_ADDR or the QEMU application itself.
-              */
--            probe_guest_base(image_name, range.lo, range.hi);
-+            probe_guest_base(image_name, &range);
-         } else {
-             /* The binary is dynamic; we still need to select guest_base. */
--            probe_guest_base(image_name, 0, 0);
-+            probe_guest_base(image_name, NULL);
- 
-             /*
-              * Avoid collision with the loader by providing a different
-diff --git a/linux-user/flatload.c b/linux-user/flatload.c
-index 8abdd2aef2..45d69040c6 100644
---- a/linux-user/flatload.c
-+++ b/linux-user/flatload.c
-@@ -261,7 +261,7 @@ static int load_flat_file(struct linux_binprm * bprm,
-     /*
-      * Allocate the address space.
-      */
--    probe_guest_base(bprm->filename, 0, 0);
-+    probe_guest_base(bprm->filename, NULL);
- 
-     /*
-      * there are a couple of cases here,  the separate code/data
+ /*
 -- 
 2.43.0
 
