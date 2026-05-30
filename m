@@ -4,103 +4,98 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 229DECD6E49
-	for <qemu-devel@archiver.kernel.org>; Sat, 30 May 2026 15:30:46 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2F118CD5BD0
+	for <qemu-devel@archiver.kernel.org>; Sat, 30 May 2026 16:36:30 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wTLdW-0007Xd-23; Sat, 30 May 2026 11:30:06 -0400
+	id 1wTMf2-00026n-8S; Sat, 30 May 2026 12:35:44 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <emmanuelugwu121@gmail.com>)
- id 1wTLdT-0007Wm-MX
- for qemu-devel@nongnu.org; Sat, 30 May 2026 11:30:03 -0400
-Received: from mail-dl1-x1229.google.com ([2607:f8b0:4864:20::1229])
+ (Exim 4.90_1) (envelope-from <komolmoni@gmail.com>)
+ id 1wTLJt-00027K-0y
+ for qemu-devel@nongnu.org; Sat, 30 May 2026 11:09:49 -0400
+Received: from mail-ed1-x531.google.com ([2a00:1450:4864:20::531])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <emmanuelugwu121@gmail.com>)
- id 1wTLdR-0000O4-Hn
- for qemu-devel@nongnu.org; Sat, 30 May 2026 11:30:03 -0400
-Received: by mail-dl1-x1229.google.com with SMTP id
- a92af1059eb24-13721dfd471so7352010c88.1
- for <qemu-devel@nongnu.org>; Sat, 30 May 2026 08:30:00 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1780154999; cv=none;
+ (Exim 4.90_1) (envelope-from <komolmoni@gmail.com>)
+ id 1wTLJr-00082h-Bt
+ for qemu-devel@nongnu.org; Sat, 30 May 2026 11:09:48 -0400
+Received: by mail-ed1-x531.google.com with SMTP id
+ 4fb4d7f45d1cf-68719234fd8so2280643a12.3
+ for <qemu-devel@nongnu.org>; Sat, 30 May 2026 08:09:46 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1780153785; cv=none;
  d=google.com; s=arc-20240605;
- b=BaUMShS8t3cLGie9Mr365nWhoQ5l6ymspyhZTrZt5cE89zJWrFb57zFGm84Ntcc5K1
- BgGltwU92tQ78D2s1ALmVASHKPxYkABgDBCS+yKmopHqfYKEyD8OBxpyJ6OPcJw4YNET
- /AGzFI3uoeM+ikOci1K3YqTYmlk1g7iUlYSJjmR1pg/PrCHo/Towzkq8TsRcuSmXuyek
- /5yvFgg3Q1xyTYXn5a9gX1agfZUhrDUUjbZ78W+LJJHiLaYsNpGfoXpyglDjUhowCev5
- ye8Kh5HPq/ydYjZI6IWiFgws6GfOdp5SZa3FSMDSFJWJnEPCSzPK0IhIk+CLAGz+zDQr
- EX7Q==
+ b=SOckriK8+ecsHWpyIKi1/fRYJtp+zq00Pcsx6k8rVnB3NyxzAnKDn10KO7t+vhBAuj
+ sMR7QXSrC13xC2D+4+EobmE6foz+Uc7vbX0phrHqfUQbc/84mCeguU2H7tWQREvt9mn3
+ rcSpUB4Kb44+x9vvZTHqZawPSh4JpVRjY1XTbKfZmPtdC3kMiGBDbJGX1I4XV6oh4WX4
+ jL5V+34E1KgkDYVZL6r80IlLsz+TQEh19NbkDEOL8bBBm+kzzXDdv2FeivFidMehUEG6
+ tzsoNEN7sS2v7FFfF3Q3XUEAVF4y7PPKCKLxRik/pbicOF8oxVDCmXbW0KD+XIFY9U7e
+ K1Yw==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
  s=arc-20240605; 
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:dkim-signature;
- bh=IbH9HYSgyWB4an40BXdBnztx4w44XvAlnVNXhLAMqEM=;
- fh=Sh5V2wZoPmZcQTeMKGPa6OgJ9YbA/Nm7TTNJwX99Vxo=;
- b=bP+pTzHF99TMAN2ha98XL2I0VvvXWlSki8y0wSQGwOqikYGLOE/WzyrJGEO5b9xDPP
- dGpZwxEFUx9jj/lPZFdFstcsdAZ6+lNWOICS+hNwyWBZmOBVxXljGv65IejJt6aJMwpZ
- 0Z5bzaQpf0qQcbsQpBOC7ktO4lHKnMDiArZUweWym8WSs/dz7zSbnaYzqpNvc5ZkOcVZ
- aKLYVLGW4gjT412fcbf9jt55Aap1D5q5IAXch5j8tBf6ZlrfLkKuxtvG8YxM8F9Rr835
- 25aa/X24ed57eMbqe15hLlPlgh9/23auTBTNWZaF8mnXsotJN2/Bpx//TycsO0LrPyy4
- mJ6g==; darn=nongnu.org
+ h=to:subject:message-id:date:from:mime-version:dkim-signature;
+ bh=6Sdf8AzBzMlo8Fby273aICdcGtvbsvKwTPdMajfaafk=;
+ fh=PnYt+qEB9tAfMKoqBm2xjKOFpYyFFGPudh5cVIoieJM=;
+ b=RFqM45f9m0jOCDXkzyvfc7IBmeB6pBF4cCmJKzYlyAYyLl/lRRUO/2FOOkQMdsK7VP
+ XTdYdVt4Is0VcrA1lIrqaDiVt2hAZIdx6be7t6VENS1dalugnZ8Wwq4BviZfBUHW5oYV
+ cH8vpBI0H6MD8parKrX8GkQ+9y0mUl6fic/0x8rXhazmR5UJgPVu9BemfcesEo7HYPX3
+ Or7OvsEHPsFRMzNPcdwxQkREX6lGk4v6Q1NuP7dmoF/rgqoWce/9M4XqeXuG6ahV4b/X
+ gpsOFjjm3BrClG0PdpjOZBxwD/LZ5q2bjk9pxq4D3mZRgRxq4EHKNV9mTTwRoEfoXLQ7
+ domA==; darn=nongnu.org
 ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1780154999; x=1780759799; darn=nongnu.org;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=IbH9HYSgyWB4an40BXdBnztx4w44XvAlnVNXhLAMqEM=;
- b=ExSGHdR+d4z3ib9HuEl5ei+TpUuVdXPWcaL2DdzE79GJQBYPoJF3SCrfGhF+DlMiLk
- XZ94rhMH3ro/UFQ7/LRYn70NttHyuYiescteXhP70vp1wA+63ut2Hb3i7p+k6F2lFRdK
- YL5IpKsORbyFEyW7/N/Fv46GhcDQZA6+o8vmiThsG8ig0hU4Ubnf3P0ifOjtI7oiPIJZ
- GzNiiQk1ydZQWrQ1RQGckArGopGk8NkFAIuERV/zrft4O6h1QGfQ22BrVZQPoq/rMNDX
- vKU2TGk3O4V/Rhl+fNzadF8o7RyzKGg4cg1qWIA+usOxajlumsGi9OfT6jMy54SOikax
- 3UxQ==
+ d=gmail.com; s=20251104; t=1780153785; x=1780758585; darn=nongnu.org;
+ h=to:subject:message-id:date:from:mime-version:from:to:cc:subject
+ :date:message-id:reply-to;
+ bh=6Sdf8AzBzMlo8Fby273aICdcGtvbsvKwTPdMajfaafk=;
+ b=I04kuMtARFqVZyieNT2xklm8bscw+6KRebZnRDKG6CVe1y48kLh3ml8XU9m4SJddHk
+ e0eejZsa5pcGu5IFIUA8nQuEtKrQQsTD6sc24kuPhEwtmgxbDLVd2HGvwzy8ca0jngmr
+ I4dQjAsndLwPW2V6DOh6s/CuGl5WNL84CLVRZCkymMeAEmcvDkoyPMoGz/OLYAwAM4ye
+ Se0ioYyp/yI+jBnXQntKADr0aeEF+SHnuakFy/tLi/5vefCMrxE64ONx6FDqJXhM257j
+ T5k50rRy2wD8u2ch9gbD9wVA9RzwHbRrs2Di/+gy72GBgwONi+sKE/QVv79ghSz88yuh
+ wNmQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1780154999; x=1780759799;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=IbH9HYSgyWB4an40BXdBnztx4w44XvAlnVNXhLAMqEM=;
- b=GTad5DC1tDb9zJZ0TalysLbim1z8gwc73GQ4uu8GsbtFkKeX5Sllfj88gtnLBUoDlC
- qucxk3DCI4g3glirg7cPKeiijOHmIFb4yJxBJKAs/BzEWitPwCDPdwdzTlF2Kb4U+o9a
- qeD75oxWW4rEq3FfqxLlkTZ3TzVUQyugWSRQfHYTjBzK+UC9dfk/p5XguuaWARPTSAqV
- K06mCequ05SUeZ3WH/ii+EMvH3HxKtwDxEHZF+LLqcX9BGuBDQFRcKkPiAVHyAKd8gJ8
- yLasFGWguF2WBdQubXfMTw2AwMXoLWlU5GXA7L/cct97RSfpHs6o5ga6eYqFoyrJ/khz
- Zitw==
-X-Gm-Message-State: AOJu0Yz/XyvcxF+fkI/eXLv1ivRifCpGQEb4nzH612rGFcABiuDifxg6
- xabUc5B0xvgWJwymLtx4i6GZ4mWIT0XElLRYei9Hx4uxiTdeLjlvreUIoobExkpWJMTQOIS8Zf4
- U68v12ywRP/NwC8P/DHUrRsRkUebhpzY=
-X-Gm-Gg: Acq92OHWzNBHqev9KAjwetep13qWN6aZzfmbmBK2uxhM6stv5YLL1Gj/5GwW6eTywqB
- s5lCxtJQ8QZzSo0a7NQV2O8gmCSXaSt/cEe0ggn82qUJLYl2IQtBLOKSF6J6DHoVokZbo1vJo7x
- wigCNiGevQGzu/BT/9r7YlANTrs421k9OmGb32wi6n7g/f39kHHRCk9OW4lU2XgiNohnUPTQQBh
- jZ/W0wDbcE1yXrbCUVvX07XLrZ7lRkzn57kYr7RG4D7eyMAmTrSorLE46+RqqMzhIdbWAdbin/J
- wxIYvF5iaCrFiZaM1A==
-X-Received: by 2002:a05:7022:622:b0:137:c0a7:8d07 with SMTP id
- a92af1059eb24-137d426caccmr1701399c88.39.1780154998745; Sat, 30 May 2026
- 08:29:58 -0700 (PDT)
+ d=1e100.net; s=20251104; t=1780153785; x=1780758585;
+ h=to:subject:message-id:date:from:mime-version:x-gm-gg
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=6Sdf8AzBzMlo8Fby273aICdcGtvbsvKwTPdMajfaafk=;
+ b=sM32A6cb6KE57+5aLnKz1UtNQA+9BSZMWCJmwQp6IeMwV7ts++v5rrxc8mMfvBYucU
+ rtteSeGkvfc44pYyM0Z3UupmuUBJkDb0PV+YIDIuNsLT3a5YelRqw8vuwp+jsLGT7xZO
+ zzV8rtH1p7t33vVxAqVi/RY3Cdr17dsSwsxnyzsjWccdBoHQuj2ouvxNsLKXoaPkRwww
+ /pUsn2f3E7w4ykPZ2qoG0Ba+TuNnqCd9iexxfzJY2X5ecOi3XbDuPS5qFokC9I4DHSzf
+ cBog40PdxYayd4pBYCNzxMg0t7UZh+nh3upI6uH84D8Lf2H8wdHqZrVKJAyX118cm1Mz
+ urRg==
+X-Gm-Message-State: AOJu0YwDeNGTxn3u0ta9Hthz6MpP5jKM2quwy3/aw7ItNL+fSsw6nohr
+ ezSyJbhte5IsGNqkByNvhW7irlJHxtMjRvzhYlxW61PIn15EB5KBbX1H12UQtBYxTwsbRvyYIL/
+ PVW1g6Xo8go/zyEmfCUeV24SqrmPQx6N8dtoF
+X-Gm-Gg: Acq92OEFAHn9ECNuoQH6pULn/jRs1DbMnKwighmkbUVn2Py1dHXOuWp5qGFs3IqBWyo
+ lvj/AhnkIYZtkQOJkXBRISovoV69d1JrIc8fUrf3YgEgqiiRO2/rTLJDSmVwsh0q6qErf2J0UO5
+ HzvoC3McVRTsKsj+GjGtDZerA2Y+G8oktX0pKoRviYwlMeQk+A2HyQD9Clan8XGa7af41VnFuQp
+ af/zNWVRpGo52yI8OpfXW02BZNRBtONo/3hWmZB15lzmrVUfWB0zPaLlNkFwvNJDCHy/kVXOZfm
+ 35Cc6d7d1m5RlxT+hQ==
+X-Received: by 2002:a17:906:3098:b0:beb:133d:cf02 with SMTP id
+ a640c23a62f3a-beb133dd1d4mr88695566b.26.1780153784277; Sat, 30 May 2026
+ 08:09:44 -0700 (PDT)
 MIME-Version: 1.0
-References: <CALk1091JwDs9SGCydB2Q-4BunCbo=VEa429bmRjmQw4SwZrULg@mail.gmail.com>
- <cac9af29-5628-4490-a1f4-d84ed3c190e0@gmx.de>
-In-Reply-To: <cac9af29-5628-4490-a1f4-d84ed3c190e0@gmx.de>
-From: Emmanuel Ugwu <emmanuelugwu121@gmail.com>
-Date: Sat, 30 May 2026 16:29:46 +0100
-X-Gm-Features: AVHnY4LsiKXr81F8JATFtvsKgozPkG8ou5FGuP0WwUvywyZF1-GFkBqNXDHKx-s
-Message-ID: <CALk10906dGjE=gmO=wr7Cea2VQLbnhsygBbgaESuqmw+YYBCAA@mail.gmail.com>
-Subject: Re: [QUESTION] - SCSI tape boot
-To: Helge Deller <deller@gmx.de>
-Cc: qemu-devel@nongnu.org
-Content-Type: multipart/alternative; boundary="000000000000586d3406530aa21b"
-Received-SPF: pass client-ip=2607:f8b0:4864:20::1229;
- envelope-from=emmanuelugwu121@gmail.com; helo=mail-dl1-x1229.google.com
-X-Spam_score_int: -17
-X-Spam_score: -1.8
-X-Spam_bar: -
-X-Spam_report: (-1.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001, HTML_MESSAGE=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+From: komol moni <komolmoni@gmail.com>
+Date: Sat, 30 May 2026 21:09:32 +0600
+X-Gm-Features: AVHnY4KJAyM4N4uNHlOPtImkHJyY7ZcysjZZFmNW1fEAfkg3uUmQzGtp03tx1_c
+Message-ID: <CAFH-dFZKdjVFf=n+xpAKursHzNh8Tn67N+GW778JTvCybq+5Jw@mail.gmail.com>
+Subject: Subject: [RFC/PROPOSAL] Improve Default PC Speaker and Audio Backend
+ Configuration for Installer Environments
+To: qemu-devel@nongnu.org
+Content-Type: multipart/alternative; boundary="000000000000f5205106530a5978"
+Received-SPF: pass client-ip=2a00:1450:4864:20::531;
+ envelope-from=komolmoni@gmail.com; helo=mail-ed1-x531.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ HTML_MESSAGE=0.001, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
+X-Mailman-Approved-At: Sat, 30 May 2026 12:35:38 -0400
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -115,21 +110,69 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
---000000000000586d3406530aa21b
+--000000000000f5205106530a5978
 Content-Type: text/plain; charset="UTF-8"
 
-Ok thanks for the feedback. I'll keep you posted on the progress.
+Subject: [RFC/PROPOSAL] Improve Default PC Speaker and Audio Backend
+Configuration for Installer Environments
 
-Emmanuel
+Hello QEMU Developers,
 
---000000000000586d3406530aa21b
+I would like to propose an enhancement to QEMU's default audio handling,
+specifically regarding the emulation of the PC speaker (pcspkr) and audio
+backends during operating system installations (like Debian or Kali Linux).
+
+Current Behavior:
+Currently, when launching QEMU, the virtual PC speaker beep and installer
+audio often do not work out-of-the-box without complex command-line
+arguments (like `-machine pcspk-audiodev=...`). This creates accessibility
+barriers for users who rely on audio cues (like the installer beep) during
+text-mode OS installations.
+
+Proposed Change:
+I propose that QEMU dynamically links or automatically configures a default
+host audio backend (such as PipeWire, PulseAudio, or CoreAudio depending on
+the host OS) to the emulated motherboard speaker and sound cards by
+default, without requiring manual backend routing from the user.
+
+Why This Matters:
+1. Improves accessibility for visually impaired users who rely on installer
+beeps.
+2. Creates a more seamless user experience for beginners.
+
+I look forward to hearing your thoughts on the feasibility of this change.
+
+Best regards,
+Ahanaf Labib
+
+--000000000000f5205106530a5978
 Content-Type: text/html; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 
-<div dir=3D"ltr"><div dir=3D"auto"><div>Ok thanks for the feedback. I&#39;l=
-l keep you posted on the=C2=A0progress.</div><div dir=3D"auto"><br></div><d=
-iv data-smartmail=3D"gmail_signature" dir=3D"auto">Emmanuel</div></div>
-</div>
+<div dir=3D"auto">Subject: [RFC/PROPOSAL] Improve Default PC Speaker and Au=
+dio Backend Configuration for Installer Environments<div dir=3D"auto"><br><=
+/div><div dir=3D"auto">Hello QEMU Developers,</div><div dir=3D"auto"><br></=
+div><div dir=3D"auto">I would like to propose an enhancement to QEMU&#39;s =
+default audio handling, specifically regarding the emulation of the PC spea=
+ker (pcspkr) and audio backends during operating system installations (like=
+ Debian or Kali Linux).</div><div dir=3D"auto"><br></div><div dir=3D"auto">=
+Current Behavior:</div><div dir=3D"auto">Currently, when launching QEMU, th=
+e virtual PC speaker beep and installer audio often do not work out-of-the-=
+box without complex command-line arguments (like `-machine pcspk-audiodev=
+=3D...`). This creates accessibility barriers for users who rely on audio c=
+ues (like the installer beep) during text-mode OS installations.</div><div =
+dir=3D"auto"><br></div><div dir=3D"auto">Proposed Change:</div><div dir=3D"=
+auto">I propose that QEMU dynamically links or automatically configures a d=
+efault host audio backend (such as PipeWire, PulseAudio, or CoreAudio depen=
+ding on the host OS) to the emulated motherboard speaker and sound cards by=
+ default, without requiring manual backend routing from the user.</div><div=
+ dir=3D"auto"><br></div><div dir=3D"auto">Why This Matters:</div><div dir=
+=3D"auto">1. Improves accessibility for visually impaired users who rely on=
+ installer beeps.</div><div dir=3D"auto">2. Creates a more seamless user ex=
+perience for beginners.</div><div dir=3D"auto"><br></div><div dir=3D"auto">=
+I look forward to hearing your thoughts on the feasibility of this change.<=
+/div><div dir=3D"auto"><br></div><div dir=3D"auto">Best regards,</div><div =
+dir=3D"auto">Ahanaf Labib</div><div dir=3D"auto"><br></div></div>
 
---000000000000586d3406530aa21b--
+--000000000000f5205106530a5978--
 
