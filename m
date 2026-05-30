@@ -4,85 +4,112 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 71806CD5BD0
-	for <qemu-devel@archiver.kernel.org>; Sat, 30 May 2026 10:22:12 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id F4049CD6E4A
+	for <qemu-devel@archiver.kernel.org>; Sat, 30 May 2026 11:05:00 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wTGov-0005l2-Vy; Sat, 30 May 2026 06:21:34 -0400
+	id 1wTHUO-0004jg-P0; Sat, 30 May 2026 07:04:24 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <314abh@gmail.com>) id 1wTGot-0005kt-HF
- for qemu-devel@nongnu.org; Sat, 30 May 2026 06:21:31 -0400
-Received: from mail-pf1-x42a.google.com ([2607:f8b0:4864:20::42a])
+ (Exim 4.90_1) (envelope-from <stefanha@gmail.com>)
+ id 1wTHUN-0004jU-Vw
+ for qemu-devel@nongnu.org; Sat, 30 May 2026 07:04:24 -0400
+Received: from mail-ed1-x536.google.com ([2a00:1450:4864:20::536])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <314abh@gmail.com>) id 1wTGos-00044T-2T
- for qemu-devel@nongnu.org; Sat, 30 May 2026 06:21:31 -0400
-Received: by mail-pf1-x42a.google.com with SMTP id
- d2e1a72fcca58-8353c9f24d2so7446545b3a.3
- for <qemu-devel@nongnu.org>; Sat, 30 May 2026 03:21:29 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <stefanha@gmail.com>)
+ id 1wTHUM-0006Mz-GM
+ for qemu-devel@nongnu.org; Sat, 30 May 2026 07:04:23 -0400
+Received: by mail-ed1-x536.google.com with SMTP id
+ 4fb4d7f45d1cf-68c5eecdd56so1426515a12.3
+ for <qemu-devel@nongnu.org>; Sat, 30 May 2026 04:04:22 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1780139061; cv=none;
+ d=google.com; s=arc-20240605;
+ b=hYs3lCVBcqiiUwh8Br6ulhllSrk7X1gAqv3uPpu/aaTa8EdVTr5sjDf6e8m9z9cogA
+ XTxqpo4xYwFkH0ocHMt7As8dhjc/GB5vI646IgY5Z67Rdo5ZAutNkKIqVyrr+Re/TXIT
+ mpe1cDpNwRksLsQQnRiCb4kJlc76MUruRabZOJAQ14cibZdFTmHglV1VXSsWKxe9q62j
+ t5KDcUgI9R50w8yhfne+DRt39JlbEQpb9jXSZEVbLh9biJImD5jRUn4dOs+zKBvGGibG
+ LGcDQ8UTYey5BXuZxkpaME6pZWEmxG7ZyRKP5zTWrBWqV0+fahjKLi12BjRbogQ8888d
+ G6kw==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
+ s=arc-20240605; 
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:dkim-signature;
+ bh=qPnTJg/Lzrmi76Fw6argkaw5mKM0iBaalFZqNskxC+I=;
+ fh=6xfvgCOniLKoqQc7pml9COjz7CYYfy4pGMhYD7FaAv8=;
+ b=cSh+yGUmanFBCOZBGxa6hyWL9hRXum00GJzoWqdhD6/BPuu/8GxV1OoAFJ8C1iiRSX
+ XebIT7e7P2ljAodxr15EeJ2NQEKFcMrZVUzBhlVq4t6xoboPDldKtN3FVkow6RvyiErq
+ Fn/XyVzHiPb28jZed1hWQZM26rPo6Xe4Iv8Z44C0EMHK8wurQpH/E97IHv0RULbgVruA
+ 7y22FIlQ9Qev6MZieslGl9I/1pSpN/KNXxqw7hS9nB+0rH3bxBw0auuIopxDdZsEbNsu
+ wivREmj8UBouqwYC7x0k+V8AMiCH3b6iL/HowjhIwzheKP5TkmTLi/L+bvE2IrHbuGDs
+ V8IA==; darn=nongnu.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1780136488; x=1780741288; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:from:to:cc:subject:date:message-id:reply-to;
- bh=KGXs0zklixupHui+lUe2OoB4NdpP2UqJjahJ3jAoXkY=;
- b=LoaLEkwx50GdB2VoWDU76/ViLB1jtA/r2acFDCsD5wUfciOJPdCNDaYCAvhvk3ULET
- TewpX5BM2IXAOwrazJMwn+0MKo2kh6n10blXMV/QBTLphGYsTqlqA1yPfbblFki9pY2C
- bmJPaacoBUG/XDxeg2b8cmXUQHR7znoc6pCaDBadfDkmANZfrnq2y5VBWRS9WuX3L3Z8
- ZG8lybpDSanfshrzINb7Ntl3KFFqYWKMjtVkC8prNax2fgU0p2fz82sPlZ44tSQA6mX1
- 5YSxbFD6w84JN285ipJy158Z+seObP17HR/NrCt0PKUhIbwg9kQlhkHrMUV2Jm5HQVs1
- lTIA==
+ d=gmail.com; s=20251104; t=1780139061; x=1780743861; darn=nongnu.org;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:from:to:cc:subject:date:message-id:reply-to;
+ bh=qPnTJg/Lzrmi76Fw6argkaw5mKM0iBaalFZqNskxC+I=;
+ b=ni+ZmjaSg6cLtc9mMTrKBFiRCmQqAcU6PzE2H6IHws7LT+Xl6owjsHmxY0cdxbzV2T
+ 7WEJ0MeozfBWSYaEIv2djqjKJ0oWXY1yS5Q4wqD+Q8J/acZ7cWvGYmHE0LKqtJiOmsao
+ O7UZ5aZhY6QIPXSCwHWod1N3AYfaOlLmwoXclir2MEpXqSKhlMxTGm/WQAI75qZTP6iA
+ uEovfJj+WQK7uB1wNnmvpybsODpLzOO2nj0nQ0wtQzAd2XzvMOesyZMcYnb2C9OIyT8l
+ l2uE2S5b+/Ed8n4WlZtFccSFor57sKovz6AB71hupJRfGYbo/D4HA1nB/FKLJ/BT7KAO
+ kMIA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1780136488; x=1780741288;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ d=1e100.net; s=20251104; t=1780139061; x=1780743861;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
  :message-id:reply-to;
- bh=KGXs0zklixupHui+lUe2OoB4NdpP2UqJjahJ3jAoXkY=;
- b=ZqYxG3tBZIMqrHeBupSHVe2U4glfg4uHqnhuicsCN7DnqLAV3wDA+LYrGeK2bQQU+9
- fA8YqRFRrItPLYmOB1EhujrbKC4KVuIpWrJoNUzzh3pfs1RAM1ulK5AdnE8FnfZ9delT
- plhJZf9cYUFYV7VKXebw8kRECG2hPFR3m9z8XcUep2Ux1SsRlUjPk0sl4saEEuJsllvB
- 8nE6d1YwWZVZzbNgy7X3+tJ5wNhxLfV/WdG8N+/9Cp6LgDZ9jh5HCkvB77dzJSou3hfp
- DgxtXiJSPMuUd2I7Dc6Yn+lZbESuShyBcksgyPdKu0O06dQlm2YOYDvt91egBWy9xfVj
- IjfQ==
-X-Gm-Message-State: AOJu0Yy6iHXRBUxiHymrpq1k8onMsx2LJoyf/J6E90TVh6JODoE1Xk0A
- vA8yp0cUV0BMq1c9OLcj7N1m7e3SR5aYXizx43Z48ntL/KEfHcQ80X5Gs/9/pg==
-X-Gm-Gg: Acq92OHuHPbnfnQ/h/36+/tm9Ii9B7/l+/jplsqLNfanYaXqGzUTUtAz8JUFzA4/dq+
- aQYb6m0AX5qgL2v2WmhUkI/0C3j7o2FF17j2XZUEDowIT4KjEFiq2tNBL/c+5od7IQiOAJwkmMt
- s44lVUnoUOA146nmc+1dTSyUqGmPURR3kdqotNm9C2NeEpNjpe9AvcB+g2vCjcRnRpWqdJaSpb0
- qUrIW61N4LMbdabsIpQpDV+QIxDzt1HzIg162F+e0ZBK56Kfhh3AaGRXvQZIw/YlxNMCoaejgPH
- YtVATUgmQa9USBDypvSXNkXX5FSNflg811F5iwtzso6VuO1LveTi2LDYtLHvCMT3hloL0y6vwGw
- axJ5txX+VkJPQTsyxHpAfvETmpYxUDXJVVf/M084D1QQIbkl1GN+Go4KJotus6ZaaQMQSEBfPQS
- CU2EJWccEMXBKPzxXj0JzG8be5s+KhZAY=
-X-Received: by 2002:a05:6a00:6f50:b0:842:2ae0:968d with SMTP id
- d2e1a72fcca58-8422ae09a48mr1844918b3a.32.1780136488439; 
- Sat, 30 May 2026 03:21:28 -0700 (PDT)
-Received: from arch ([112.133.246.20]) by smtp.gmail.com with ESMTPSA id
- d2e1a72fcca58-84214c92fc6sm4364229b3a.36.2026.05.30.03.21.23
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Sat, 30 May 2026 03:21:27 -0700 (PDT)
-From: Abhigyan Kumar <314abh@gmail.com>
-To: qemu-devel@nongnu.org
-Cc: qemu-riscv@nongnu.org, Alistair Francis <alistair.francis@wdc.com>,
- Weiwei Li <liwei1518@gmail.com>,
- Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>,
- Liu Zhiwei <zhiwei_liu@linux.alibaba.com>,
- Chao Liu <chao.liu.zevorn@gmail.com>, Palmer Dabbelt <palmer@dabbelt.com>,
- Abhigyan Kumar <314abh@gmail.com>
-Subject: [PATCH v2] target/riscv: mask vxrm csrw write to the low 2 bits
-Date: Sat, 30 May 2026 15:51:00 +0530
-Message-ID: <20260530102100.78150-1-314abh@gmail.com>
-X-Mailer: git-send-email 2.54.0
+ bh=qPnTJg/Lzrmi76Fw6argkaw5mKM0iBaalFZqNskxC+I=;
+ b=WhWeNZhvK0j2COWUoEs2i5sSfe29tnhRK3S2u/ezIylSKE7LH/PtJPqKWVrCcQ1aGc
+ qWgChAcUbtSf7RHQbzLqeVQ4z8y9h6evrQph3UdWneuEsprwD+hnlK2GtkFvcu3a9OZ0
+ xOTVGeUSNqzVXjGtetMETDhP9zNqiDAH7Mmdp0Bs96jWOfk4yrl6BQ1kh4rih+Jj5LEX
+ wMnEXjBdDwvF+my0jxKxvV9GEGLZjT8tLVGRe0XcdWw/MPriEsIND0eQyTtNPYFDqZtA
+ UBGyTGR9UAq6ibfkthLr4+HsJdy4zIPO8yBcHhLK5WJ90a9q4BvxX4vhoQqpP2nna5ee
+ 6mcA==
+X-Forwarded-Encrypted: i=1;
+ AFNElJ971T5ylug8dTMcPgiPn5udRo9dCznoh/NBc+MHpSTVIxAUghrqzDcWMFhKQfgNAIIMJh+8VsWWv7mJ@nongnu.org
+X-Gm-Message-State: AOJu0YxQmxsPRvOTHRmZ8iL8oqqGtQmzAE7lW7Z6qT62gGs+X285WaC9
+ HKVuPCVR2Lbz3qaygd4hU3Tj6t2JM85OG1CQwMcexSifYuPcn/YPlYpwE7ct3Z+1LURIRpPklUA
+ LrKGxHS/Nw5b/EmqPSlowx7jN9WM4RZA=
+X-Gm-Gg: Acq92OEZhHMTuxNmWNRU55wp0zZ0tPTHDBcWHKkmaKpSx5ltCEVnB9Zj5b2xJTJNLC9
+ g3tq38oVAQcPFETBDn4SEh7jq0Q+VcwElv4ZjRJif9zLb4V+Kql9zOqMZMaD1TfDtxBwYR5tPGa
+ whgmhbbYs0+TWWTq5GdNE0M3CqM9UZZj1sQ0one8g3yhslnEC+WuXjIDK2tKU26WCB6AIn5ly1c
+ MCyGkxynYZ+F+Gz/ZD26AHveQP27AdGfhVBEKX3b0ERKl8rXPKkx9BONeJVMNo98t4f47BuLm3F
+ v5rotcRC/Rwb94azYPE88vS4wVM7STue+/NBNIFvhWXs5zm8hXHF
+X-Received: by 2002:a05:6402:278f:b0:68b:1e3:f626 with SMTP id
+ 4fb4d7f45d1cf-68c87d86170mr1953337a12.0.1780139060822; Sat, 30 May 2026
+ 04:04:20 -0700 (PDT)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::42a;
- envelope-from=314abh@gmail.com; helo=mail-pf1-x42a.google.com
-X-Spam_score_int: -13
-X-Spam_score: -1.4
-X-Spam_bar: -
-X-Spam_report: (-1.4 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+References: <CAJSP0QULyy5C0YEaxz2ChNy3_zfc5VwaMhB18R=yHDgnhBYo9w@mail.gmail.com>
+ <CAJSP0QWt8Q5+yY1F6--XyvcAV3afg3msAcO6vaNDeWS=B9Oqag@mail.gmail.com>
+ <CANCZdfpbDU+jCr6+Lj-ZV7h5H_ByHf=VJordfQ8OcH3+JsmJ4Q@mail.gmail.com>
+ <CAJSP0QX=Uu0cy6z8oCsQK_EKJ8LUW1v3Tsd09JoAU=Py4MkRrw@mail.gmail.com>
+ <CANCZdfrfiVp=BiCEUzYRFFeZBpUoODBwL5b-QQgbA21Ev76noA@mail.gmail.com>
+ <CAJSP0QWrNzf_NS1hx4c2TFRLp0Son=_kAx7qq_CeMBinEV=CNw@mail.gmail.com>
+ <CAJSP0QUMZ76ioyGNLemN0qROCFxh_yAZGUkwFReFxgFiMJx70Q@mail.gmail.com>
+ <CANCZdfpQA=90x-dS=d4-Vtt43zdSWYg==rcx326wrCfWAbuP_w@mail.gmail.com>
+ <CAJSP0QU27JHhDq0k9+pgu3PVzAwfppReWRzdi-UCrT9CdbRG0g@mail.gmail.com>
+ <CANCZdfppQVMtQYMRDVZaB4_k3Vt5X7=k-5a1HBUvUT3+Pp3i7Q@mail.gmail.com>
+In-Reply-To: <CANCZdfppQVMtQYMRDVZaB4_k3Vt5X7=k-5a1HBUvUT3+Pp3i7Q@mail.gmail.com>
+From: Stefan Hajnoczi <stefanha@gmail.com>
+Date: Sat, 30 May 2026 07:04:08 -0400
+X-Gm-Features: AVHnY4L2JgqDYJ499CVgIL28WrkVfO1rMKeqfl1pNUE9ahSXkioOGqsxtskpHZU
+Message-ID: <CAJSP0QXEKm+t0NHtEFFXqBoZaBArb42X2TfYY3qO+-6gDSD2WQ@mail.gmail.com>
+Subject: Re: FreeBSD CI after Cirrus shuts down?
+To: Warner Losh <imp@bsdimp.com>
+Cc: Li-Wen Hsu <lwhsu@freebsd.org>, Alex Bennee <alex.bennee@linaro.org>, 
+ qemu-devel <qemu-devel@nongnu.org>
+Content-Type: text/plain; charset="UTF-8"
+Received-SPF: pass client-ip=2a00:1450:4864:20::536;
+ envelope-from=stefanha@gmail.com; helo=mail-ed1-x536.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
- FROM_STARTS_WITH_NUMS=0.738, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=no autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ T_PDS_OTHER_BAD_TLD=0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -98,36 +125,17 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Citing the RISC-V specification:
+Hi Warner,
+I was able to install FreeBSD 15.0 because there was a netboot.xyz
+image available in OSUOSL's OpenStack.
 
-    "The vector fixed-point rounding-mode register holds a two-bit
-    read-write rounding-mode field in the least-significant bits
-    (vxrm[1:0]). The upper bits, vxrm[XLEN-1:2], should be written as
-    zeros."
+You can now ssh into 140.211.166.82 as root with your GitLab ssh key.
+The machine is now yours. Please let me know if you need anything.
 
-QEMU wrote full value into env->vxrm causing read of upper bits too.
-Used existing macros for bit-masking. Previous had a hard-coded value.
+Here are the host key fingerprints:
+140.211.166.82 ED25519 SHA256:fnEX4BeNwRVgwfwR9GQ/fmTN0mM6M59nr1GYXwWR8jM
+140.211.166.82 RSA SHA256:x8IuTdim+j6H6Q1k44hkpDZwrM3zO9v5OD6RJpZ78bE
+140.211.166.82 ECDSA SHA256:E3hh4ijePh3u7U0SQAwkaI+lil4mzrKmNamcUeexywE
 
-Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/3470
-Signed-off-by: Abhigyan Kumar <314abh@gmail.com>
----
- target/riscv/csr.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
-
-diff --git a/target/riscv/csr.c b/target/riscv/csr.c
-index 5514e0f45..7b98d66db 100644
---- a/target/riscv/csr.c
-+++ b/target/riscv/csr.c
-@@ -977,7 +977,7 @@ static RISCVException write_vxrm(CPURISCVState *env, int csrno,
- #if !defined(CONFIG_USER_ONLY)
-     env->mstatus |= MSTATUS_VS;
- #endif
--    env->vxrm = val;
-+    env->vxrm = val & (VCSR_VXRM >> VCSR_VXRM_SHIFT);
-     return RISCV_EXCP_NONE;
- }
- 
--- 
-2.54.0
-
+Stefan
 
