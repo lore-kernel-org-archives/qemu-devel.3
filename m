@@ -4,85 +4,61 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 023FBCD5BD0
-	for <qemu-devel@archiver.kernel.org>; Sat, 30 May 2026 05:33:07 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4D4E4CD6E4A
+	for <qemu-devel@archiver.kernel.org>; Sat, 30 May 2026 06:29:28 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wTCJ9-0003H1-LD; Sat, 30 May 2026 01:32:27 -0400
+	id 1wTDBk-00074v-1N; Sat, 30 May 2026 02:28:52 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <314abh@gmail.com>) id 1wTCJ0-0003GA-W8
- for qemu-devel@nongnu.org; Sat, 30 May 2026 01:32:19 -0400
-Received: from mail-pl1-x633.google.com ([2607:f8b0:4864:20::633])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <314abh@gmail.com>) id 1wTCIy-0007G1-8b
- for qemu-devel@nongnu.org; Sat, 30 May 2026 01:32:18 -0400
-Received: by mail-pl1-x633.google.com with SMTP id
- d9443c01a7336-2bf30d530bdso8830215ad.3
- for <qemu-devel@nongnu.org>; Fri, 29 May 2026 22:32:15 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <guobin@linux.alibaba.com>)
+ id 1wTDBi-00074n-2Z
+ for qemu-devel@nongnu.org; Sat, 30 May 2026 02:28:50 -0400
+Received: from [115.124.30.111] (helo=out30-111.freemail.mail.aliyun.com)
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <guobin@linux.alibaba.com>)
+ id 1wTDBc-0005qc-6b
+ for qemu-devel@nongnu.org; Sat, 30 May 2026 02:28:49 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1780119134; x=1780723934; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:from:to:cc:subject:date:message-id:reply-to;
- bh=8BLEpb1qVJQlLoIKuGkWEWOKI1hjsxY8cabZ5Za7MGU=;
- b=Tn9zYzl5Q+J9NWEJHosEL9QGdyLgNa/bl5cBjdYRnp+e0ltDz9grwT59390Y04v6+T
- cDRfwpSUFVVfzFYncNWXVTrfzAmv7AF4GaiN0q0adNC7JOWv9watSSMKvBssL8yJGo7f
- wmJSVhJKyrDwVgfYdMTneR/qY3w6hwH7/gL93WgvirPRXxxipwJZv45m9Oc417kKStHc
- ihu8xhwe0vDTktBdnDua+lHcysG5f4TFxWqnRbla+3kbOCxr9jWSDyNUbUrl5UzkHWQN
- d3DcB/RDhUkGu40ThrDuw43hW6nyI5/bpqFUN9nqroNBy5LP1wkUDSAPFtsuna0bG8to
- cdtQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1780119134; x=1780723934;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=8BLEpb1qVJQlLoIKuGkWEWOKI1hjsxY8cabZ5Za7MGU=;
- b=XHprSDs/DUN49nSYM/c6Gw8lAG5dmQmFP5d5XfsFy/yjvgT3XljXJFpfGEcZlZS0P6
- hSJzM9mpcoPMb2k1JCjRLYdzVTC0E4duyYCQE6ETub6/zOLUX5rIQf/KNiQTiwBhkJCq
- aInYr/9Ddupcrh24nYaLlal9hRcQ9PgXeLTVNl/ktDrU5G6vVC2bVZr+EAxh4Y6h0R61
- +8WyEnRFj3j2/xeciDPLcflxqVmUw9H1RHIEACmhS7CTgrg/1AxX9DIlmhJX2DA7Z8nY
- D8iNrDDvUQBvOVEmTUBvfjnboed8hFWmmZ8/kOCNFVQwXbQ0hegsw1uQgNlgI759DpPq
- qkRQ==
-X-Gm-Message-State: AOJu0Yx9xmaFebKYE4OdWhJ7K0/b14bJZ3TL+8ORWURRPpQQLnZBuRLy
- regkeOWIsZi3kA3iRLJ0lM+/qYQ4aaWSDZLymmwNRMHDY7joJKKaFU4EAVfbBQ==
-X-Gm-Gg: Acq92OEMQBmmxHOX3fysxGFVZ0tIczt9ZnD8+gcKn/8qHd/KRRwvphpRzwMdqw+2uw4
- 1eb4RZMnOazTvuWZYYQhJD2uDOX0DoX0HZTCrVPZ+xh9z2t/jU+ppxou/fPK5DWWUa+mq7KeI+B
- ntPZxi3OSqbcD6nYen2CbbFNtyzcxfUk+yCu/FpCOnhHf/26yFzqiEluKZPyHWDwGgkjoorT9/e
- ZntKCQH1VffP9q45pvZUg14GMEzTRuqvqB+Ue69M1C1DlzMsshvQLhXqdRvahI0Z/Rr6V5Wpj6O
- l9502DMhN6+PEC6SBVmdkr6/XMqCU3PCk01AJE7hygYnSuPQ+S5gyYv5GrbrpISoabhqaaZfawu
- 55d7BLdf45zb/Mi7U/vxPJ8HQOpZ19OeBKcmZL7O1PgMyV2aTs8BkKE2+ksqkJBmkqmMtsNZSi0
- NHJ9LYnI/O4jUnoRMrk7gVOZp7etZX8A==
-X-Received: by 2002:a17:903:1a87:b0:2bc:90b6:3e6f with SMTP id
- d9443c01a7336-2bf36779dabmr32233225ad.4.1780119134536; 
- Fri, 29 May 2026 22:32:14 -0700 (PDT)
-Received: from arch ([112.133.246.2]) by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-2bf239e5d78sm37216385ad.12.2026.05.29.22.32.09
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 29 May 2026 22:32:12 -0700 (PDT)
-From: Abhigyan Kumar <314abh@gmail.com>
+ d=linux.alibaba.com; s=default;
+ t=1780122499; h=From:To:Subject:Date:Message-ID:MIME-Version:Content-Type;
+ bh=z4y8uU2x8AV1KIYxLjQG+6/0XGc9ZwUDlfvJk+6eJYo=;
+ b=gCe/7mnGV/slPUAx7Rv4nCiT5PYmeMFg7aV+acPVU1SMUaiJyx6toao8tIHvpl760YCBC++LQUe8Ii7ku7HEv/lg5x0TDkwx0vfrkweYVCBPRvsHF4GcNoxL53tfP4t6gu4mqjFbdvj8V2bn7cTsTq567SMJVGGz5CepKL+IeeQ=
+X-Alimail-AntiSpam: AC=PASS; BC=-1|-1; BR=01201311R161e4; CH=green; DM=||false|;
+ DS=||; FP=0|-1|-1|-1|0|-1|-1|-1; HT=maildocker-contentspam011083073210;
+ MF=guobin@linux.alibaba.com; NM=1; PH=DS; RN=9; SR=0;
+ TI=SMTPD_---0X3r4Fqm_1780122497; 
+Received: from localhost(mailfrom:guobin@linux.alibaba.com
+ fp:SMTPD_---0X3r4Fqm_1780122497 cluster:ay36) by smtp.aliyun-inc.com;
+ Sat, 30 May 2026 14:28:18 +0800
+From: Bin Guo <guobin@linux.alibaba.com>
 To: qemu-devel@nongnu.org
-Cc: qemu-riscv@nongnu.org, Alistair Francis <alistair.francis@wdc.com>,
- Weiwei Li <liwei1518@gmail.com>,
- Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>,
- Liu Zhiwei <zhiwei_liu@linux.alibaba.com>,
- Chao Liu <chao.liu.zevorn@gmail.com>, Palmer Dabbelt <palmer@dabbelt.com>,
- Abhigyan Kumar <314abh@gmail.com>
-Subject: [PATCH] target/riscv: fix invalid sstc predicate in gdbstub
-Date: Sat, 30 May 2026 11:02:00 +0530
-Message-ID: <20260530053200.902591-1-314abh@gmail.com>
-X-Mailer: git-send-email 2.54.0
+Cc: Warner Losh <imp@bsdimp.com>, Kyle Evans <kevans@freebsd.org>,
+ Laurent Vivier <laurent@vivier.eu>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ =?UTF-8?q?Daniel=20P=20=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
+ Thomas Huth <thuth@redhat.com>, Markus Armbruster <armbru@redhat.com>
+Subject: [PATCH v2] util/cutils: drop qemu_strnlen() in favor of strnlen()
+Date: Sat, 30 May 2026 14:28:16 +0800
+Message-ID: <20260530062816.59206-1-guobin@linux.alibaba.com>
+X-Mailer: git-send-email 2.50.1
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::633;
- envelope-from=314abh@gmail.com; helo=mail-pl1-x633.google.com
-X-Spam_score_int: -13
-X-Spam_score: -1.4
-X-Spam_bar: -
-X-Spam_report: (-1.4 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
- FROM_STARTS_WITH_NUMS=0.738, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=no autolearn_force=no
+X-Host-Lookup-Failed: Reverse DNS lookup failed for 115.124.30.111 (deferred)
+Received-SPF: pass client-ip=115.124.30.111;
+ envelope-from=guobin@linux.alibaba.com;
+ helo=out30-111.freemail.mail.aliyun.com
+X-Spam_score_int: -166
+X-Spam_score: -16.7
+X-Spam_bar: ----------------
+X-Spam_report: (-16.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, ENV_AND_HDR_SPF_MATCH=-0.5,
+ RCVD_IN_DNSWL_NONE=-0.0001, RDNS_NONE=0.793, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001, UNPARSEABLE_RELAY=0.001, USER_IN_DEF_DKIM_WL=-7.5,
+ USER_IN_DEF_SPF_WL=-7.5 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -98,34 +74,135 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-sstc function incorrectly checks for avaibility of env->rdtime_fn.
-This causes it to fail each time it's called because rdtime_fn is setup
-later in the procedure (when timer devices are created). This prevents
-stimecmp's addition to gdb.
+There are only three call sites, and strnlen() is available on all
+supported platforms (POSIX.1-2008, Windows via UCRT, MinGW).  Remove
+the hand-rolled wrapper and use the standard function directly.
 
-This change ensures only the riscv_cpu_cfg(env) check is done. rdtime_fn
-will always be NULL otherwise and fail.
+While here, align bsd-user/uaccess.c to use size_t for max_len/len,
+matching linux-user/uaccess.c and eliminating a signed/unsigned mismatch.
 
-Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/3496
-Signed-off-by: Abhigyan Kumar <314abh@gmail.com>
+Also remove the stale qemu_strnlen() entry from docs/devel/style.rst.
+
+Suggested-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Signed-off-by: Bin Guo <guobin@linux.alibaba.com>
 ---
- target/riscv/csr.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ bsd-user/uaccess.c    |  4 ++--
+ docs/devel/style.rst  |  1 -
+ include/qemu/cutils.h | 17 +----------------
+ linux-user/uaccess.c  |  2 +-
+ util/cutils.c         | 15 +--------------
+ 5 files changed, 5 insertions(+), 34 deletions(-)
 
-diff --git a/target/riscv/csr.c b/target/riscv/csr.c
-index f5b0895fd..d72df945f 100644
---- a/target/riscv/csr.c
-+++ b/target/riscv/csr.c
-@@ -590,7 +590,7 @@ static RISCVException sstc(CPURISCVState *env, int csrno)
+diff --git a/bsd-user/uaccess.c b/bsd-user/uaccess.c
+index 89163257f4..7ad4b580f4 100644
+--- a/bsd-user/uaccess.c
++++ b/bsd-user/uaccess.c
+@@ -43,7 +43,7 @@ abi_long target_strlen(abi_ulong guest_addr1)
  {
-     bool hmode_check = false;
+     uint8_t *ptr;
+     abi_ulong guest_addr;
+-    int max_len, len;
++    size_t max_len, len;
  
--    if (!riscv_cpu_cfg(env)->ext_sstc || !env->rdtime_fn) {
-+    if (!riscv_cpu_cfg(env)->ext_sstc) {
-         return RISCV_EXCP_ILLEGAL_INST;
-     }
+     guest_addr = guest_addr1;
+     for (;;) {
+@@ -51,7 +51,7 @@ abi_long target_strlen(abi_ulong guest_addr1)
+         ptr = lock_user(VERIFY_READ, guest_addr, max_len, 1);
+         if (!ptr)
+             return -TARGET_EFAULT;
+-        len = qemu_strnlen((const char *)ptr, max_len);
++        len = strnlen((const char *)ptr, max_len);
+         unlock_user(ptr, guest_addr, 0);
+         guest_addr += len;
+         /* we don't allow wrapping or integer overflow */
+diff --git a/docs/devel/style.rst b/docs/devel/style.rst
+index d025933808..0b854ae042 100644
+--- a/docs/devel/style.rst
++++ b/docs/devel/style.rst
+@@ -519,7 +519,6 @@ QEMU provides other useful string functions:
  
+     int strstart(const char *str, const char *val, const char **ptr)
+     int stristart(const char *str, const char *val, const char **ptr)
+-    int qemu_strnlen(const char *s, int max_len)
+ 
+ There are also replacement character processing macros for isxyz and toxyz,
+ so instead of e.g. isalnum you should use qemu_isalnum.
+diff --git a/include/qemu/cutils.h b/include/qemu/cutils.h
+index 36c68ce86c..d249f22676 100644
+--- a/include/qemu/cutils.h
++++ b/include/qemu/cutils.h
+@@ -101,22 +101,7 @@ int strstart(const char *str, const char *val, const char **ptr);
+  *          false otherwise.
+  */
+ int stristart(const char *str, const char *val, const char **ptr);
+-/**
+- * qemu_strnlen:
+- * @s: string
+- * @max_len: maximum number of bytes in @s to scan
+- *
+- * Return the length of the string @s, like strlen(), but do not
+- * examine more than @max_len bytes of the memory pointed to by @s.
+- * If no NUL terminator is found within @max_len bytes, then return
+- * @max_len instead.
+- *
+- * This function has the same behaviour as the POSIX strnlen()
+- * function.
+- *
+- * Returns: length of @s in bytes, or @max_len, whichever is smaller.
+- */
+-int qemu_strnlen(const char *s, int max_len);
++
+ /**
+  * qemu_strsep:
+  * @input: pointer to string to parse
+diff --git a/linux-user/uaccess.c b/linux-user/uaccess.c
+index 27e841e651..f9bd713edd 100644
+--- a/linux-user/uaccess.c
++++ b/linux-user/uaccess.c
+@@ -99,7 +99,7 @@ ssize_t target_strlen(abi_ulong guest_addr1)
+         ptr = lock_user(VERIFY_READ, guest_addr, max_len, 1);
+         if (!ptr)
+             return -TARGET_EFAULT;
+-        len = qemu_strnlen((const char *)ptr, max_len);
++        len = strnlen((const char *)ptr, max_len);
+         unlock_user(ptr, guest_addr, 0);
+         guest_addr += len;
+         /* we don't allow wrapping or integer overflow */
+diff --git a/util/cutils.c b/util/cutils.c
+index 9803f11a59..f39a97e509 100644
+--- a/util/cutils.c
++++ b/util/cutils.c
+@@ -54,7 +54,7 @@
+ 
+ void strpadcpy(char *buf, int buf_size, const char *str, char pad)
+ {
+-    int len = qemu_strnlen(str, buf_size);
++    size_t len = strnlen(str, buf_size);
+     memcpy(buf, str, len);
+     memset(buf + len, pad, buf_size - len);
+ }
+@@ -118,19 +118,6 @@ int stristart(const char *str, const char *val, const char **ptr)
+     return 1;
+ }
+ 
+-/* XXX: use host strnlen if available ? */
+-int qemu_strnlen(const char *s, int max_len)
+-{
+-    int i;
+-
+-    for(i = 0; i < max_len; i++) {
+-        if (s[i] == '\0') {
+-            break;
+-        }
+-    }
+-    return i;
+-}
+-
+ char *qemu_strsep(char **input, const char *delim)
+ {
+     char *result = *input;
 -- 
-2.54.0
+2.50.1 (Apple Git-155)
 
 
