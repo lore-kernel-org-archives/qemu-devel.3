@@ -4,80 +4,80 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 49462CD5BD0
-	for <qemu-devel@archiver.kernel.org>; Sat, 30 May 2026 21:14:07 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3CAD0CD6E49
+	for <qemu-devel@archiver.kernel.org>; Sat, 30 May 2026 21:14:08 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wTQzV-0005eR-3k; Sat, 30 May 2026 17:13:09 -0400
+	id 1wTQzW-0005fB-Mb; Sat, 30 May 2026 17:13:10 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1wTQzL-0005cn-Ft
+ id 1wTQzL-0005cr-JH
  for qemu-devel@nongnu.org; Sat, 30 May 2026 17:13:00 -0400
-Received: from mail-pl1-x633.google.com ([2607:f8b0:4864:20::633])
+Received: from mail-pl1-x631.google.com ([2607:f8b0:4864:20::631])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1wTQzJ-0000d2-EJ
+ id 1wTQzK-0000dG-0l
  for qemu-devel@nongnu.org; Sat, 30 May 2026 17:12:59 -0400
-Received: by mail-pl1-x633.google.com with SMTP id
- d9443c01a7336-2bf22d29dabso13273545ad.2
+Received: by mail-pl1-x631.google.com with SMTP id
+ d9443c01a7336-2bf36a6905cso6367145ad.3
  for <qemu-devel@nongnu.org>; Sat, 30 May 2026 14:12:57 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1780175576; x=1780780376; darn=nongnu.org;
+ d=linaro.org; s=google; t=1780175577; x=1780780377; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=J/h6IUrlognRVrhf7VP7UXXkxNTUlEyz8hZZ9YneTZI=;
- b=mmGus7Qwa2xRUytoLml8K+INQCQBJl7shTvYAmG5eY+jB5ZSO+GUsach5xSDGFTuAC
- 1Lm4AtftKQBMrkV0TntOUoSfBfmn1YhCynYsVCmqClPoIMZyH9XGHeYqtwh9TNL55oa+
- ODauGfqYCaFVdLTQRRuXXtUw/bCEJgPtfAswtNXvOS0AsVp2vkzxeLE7mx/nBD4er6Qi
- /BJtdbQuY+5yTRkpmoo3t0hZZ5qM14EHjnfOSgbJph/Op/l6+D2ATj1p5zjdZL8jvQ1a
- VUEV3p+czTr6dfgRDxtlakO8MBzCrDOfHUThWM3tsnI0EOuySFN11vVyWz34K6qMacAD
- FBHQ==
+ bh=VB0QJcqyoVRmXmBw8fsbJF6h0psM6cqzMVuAr7gGazU=;
+ b=QNB1TGxq3x0i4L5XzSO2ez1/JT8o47NKtc41hqOPOffcxpVlYHuAZ0/W1anIFW7uDZ
+ WpEjClmhn7Q9Ptgt4RqQ9tZTobblsOGtOFisQ8ElKDtZ9fyZDHMvkNMDPbwESEv5I8DS
+ 0SZH2mygzr7r3csPgfDapQf+KWCnEUO4XQXmX+KIiRRdfH/Y3U2qbSMGcTVVE+jebp1W
+ pd9Htdr8smEKNZ+41Vb+5BKYtlgNGqA6kActHKtAGZQVJqVg235kOzOd7pSDkUh/13xg
+ yaogPz7mTPZ41vmgi1RBKhYHAfwmuvHei5yd0Ud4t7wDkkXN9daXnwpQUk0GxFf1CUNw
+ m0qg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1780175576; x=1780780376;
+ d=1e100.net; s=20251104; t=1780175577; x=1780780377;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to;
- bh=J/h6IUrlognRVrhf7VP7UXXkxNTUlEyz8hZZ9YneTZI=;
- b=d/80JeEM/ljwj6LcQol2aHYoiq+8BRy4GGC7dmP1sXQyMqYzqTnsWBIMF2b2+k6S0S
- Dw0hISSqiSMQ4X090HSgKzZJPRRp49Zg93T8VdUi4Y87SMyAW8Gw3j6zP8SGhrahcWka
- gUl8VwWXUbMvNp7f6m6e12wzu0nLiDKD1tCDUVqJKs4IhJeMP5b5J+f+FlBEYANSwMr1
- uUULkjj0DyREdxnMyVwsup+KE70Kdi68UINIglQNuZQOJ4+H+cKIyFHxPlMq/H/2trgg
- SQM90o9Q0X8UkgFDWNgiPx7C4z1GkVzhLX00PjfB179MeKXIiD+41RFGGY13+z1Al3oa
- 1xoA==
-X-Gm-Message-State: AOJu0YyadiofTFjto6sh7RQqsLihj09UnkXeVf5zfA5khEUAkLeoY7XT
- WV6f6Pn9E8W0IYwQquCLmT2tA6k6awNK2iiWEzugsS1HU/N/izAc2lHATJjSKJNLlcoRfHV/b5t
- 0gUvISMA=
-X-Gm-Gg: Acq92OHlmtC4QUUR7CFFLfhvP9ZK7h+l8/ZQeAyO0NALy03nuZZwQjn5rGeAtFFN0zn
- mUaaIYVcz2KXyOg977l8x8VpoOZW89UnbLh8ku1FBpZhqLiFl4nhgHEBKpWh+FfeHVJJ7thRSBc
- IRw4+zo/X5A14tHyf2tRglm4Mx+2q365oS6aio75rFKXWI1k3Ntlrd6LMd9+6S2/QIkJyt9Le/K
- IE+LqmKcSjcXMnr2VPGh7OgyDRCsSEcWlTGMCGY2BSEbvsi0IEvbP5ZS9if8ne0FEYH3YeSuk6d
- HaWScAPUaiNhLB+mvJ52hLtUdyXSrM2RNlVP0AJi0r7qCvk+ovXECqBKyLXIn7JSzLq4/qUEE9g
- GICOFfICed+FvGSqQOktOgU/whrHalT4dYFcY/R4FrqZoopVy5N5D+UxA7XTdFQhNkX8nrhRS3p
- vDa6Jc+ZZ7jldG+XKokCW11N+ze88lfwmtjb+8ihw=
-X-Received: by 2002:a17:903:2bce:b0:2bf:128d:f7ff with SMTP id
- d9443c01a7336-2bf367d2311mr57768705ad.16.1780175575740; 
- Sat, 30 May 2026 14:12:55 -0700 (PDT)
+ bh=VB0QJcqyoVRmXmBw8fsbJF6h0psM6cqzMVuAr7gGazU=;
+ b=qrIXvBgwNY31r9+Z3KdGyZi6pxAgv7J/xOp/GMwSrHvG5iEug04IuH43EHW9LEMIs9
+ S0x1F8lJVLAl2Oc7CLbi5pXgCKe3+xrljMZciqfFvWDGJ7ZJv/iH2ezmQVTCeD3zfRI/
+ D6AADI+HjLu41yunT38k9D3+V0hkOgdgLTcz6kR60e5Ys89kAZ+Pkt1pJqORw9kPDzbc
+ +NilO/d2L5nP0fn5+HXcz2r5Z5SzcBN49XhpPlC9T7yRz+j1LGo0UUeultnPpwLM0PC3
+ m0WfKpNGjbhVBv4ShYigR//pA5vGfS3jqntonulDbexnI9yYTgRv1uhJnhtfU29K0xar
+ /mzw==
+X-Gm-Message-State: AOJu0YywuuHfPwXWgTxDBGadod7kSXnTa7FkYby+8yE7f8Hp0vBDlipE
+ QxbO/Dvs0C8Ls7ok2tFeklxuAZhJs94Gk2jVX8Ve5TKLsWKWHcCrRJTOLkkUgnACVXxbdp0rr/G
+ dxOfMAYs=
+X-Gm-Gg: Acq92OGsMiMYG7tfpXimwcOwtjbf4LnVuOA/rH5jjdKdfLF4p+FrEpgfPDconJt01Ef
+ meSvYWBdZBD1B/gb7uFoHNGhJaJoCpU5iVvTUyCUbB3L5GVi/OM5sG9COdB/UXQGhRZwWDnKmny
+ sMdBxt4ykgUrhQxgeLao7XJMGiBZuwsO+gSBXm+CQaEkRo+rAzj+W3W0K4KCvj4AUMmlvpIzh8M
+ A6WeYdqU3U/sXjJ2xJ2P5OzFn+v1Wrq5RjiIPH7cX4DzBJ5ZNFcyFsW7U9HH72t9zbJ3x8IDX7H
+ UvxIkaCVFmE+SkzY9MQiWq6rYgoPfkK68YYWxPDiEUTzcwrluFHtxf5q39U1/Bq8OjR6M74sEam
+ M6mO06cl7QsH5FvJckL7COonZqfCTozPfDE9IgAlsPELPvCid88ueG6bQRRK4jNHnMDGC6BCMFx
+ NHjhvqLFd/ht1cqnp5pfSXTw8V1jPk2uHxn1o4Fo8=
+X-Received: by 2002:a17:902:c949:b0:2be:1c3c:72bb with SMTP id
+ d9443c01a7336-2bf36860a25mr59753535ad.33.1780175576541; 
+ Sat, 30 May 2026 14:12:56 -0700 (PDT)
 Received: from stoup.. ([71.212.142.33]) by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-2bf23c580c6sm59592895ad.82.2026.05.30.14.12.55
+ d9443c01a7336-2bf23c580c6sm59592895ad.82.2026.05.30.14.12.56
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Sat, 30 May 2026 14:12:55 -0700 (PDT)
+ Sat, 30 May 2026 14:12:56 -0700 (PDT)
 From: Richard Henderson <richard.henderson@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: imp@bsdimp.com,
 	deller@gmx.de
-Subject: [PATCH 06/13] common-user: Move mmap_min_addr from linux-user
-Date: Sat, 30 May 2026 14:12:40 -0700
-Message-ID: <20260530211248.375318-7-richard.henderson@linaro.org>
+Subject: [PATCH 07/13] common-user: Initialize mmap_min_addr for FreeBSD
+Date: Sat, 30 May 2026 14:12:41 -0700
+Message-ID: <20260530211248.375318-8-richard.henderson@linaro.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20260530211248.375318-1-richard.henderson@linaro.org>
 References: <20260530211248.375318-1-richard.henderson@linaro.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::633;
- envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x633.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::631;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x631.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -100,189 +100,44 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Introduce user/mmap-min-addr.h.  Initialize the variable
-from a constructor instead of main.
+Use sysctl to fetch the vm layout of the current process.
 
 Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
 ---
- include/user/mmap-min-addr.h | 12 ++++++++++++
- linux-user/user-internals.h  |  1 -
- common-user/mmap-min-addr.c  | 37 ++++++++++++++++++++++++++++++++++++
- linux-user/elfload.c         |  1 +
- linux-user/main.c            | 33 +++-----------------------------
- linux-user/mmap.c            |  1 +
- common-user/meson.build      |  1 +
- 7 files changed, 55 insertions(+), 31 deletions(-)
- create mode 100644 include/user/mmap-min-addr.h
- create mode 100644 common-user/mmap-min-addr.c
+ common-user/mmap-min-addr.c | 13 +++++++++++++
+ 1 file changed, 13 insertions(+)
 
-diff --git a/include/user/mmap-min-addr.h b/include/user/mmap-min-addr.h
-new file mode 100644
-index 0000000000..ded0b6909d
---- /dev/null
-+++ b/include/user/mmap-min-addr.h
-@@ -0,0 +1,12 @@
-+/* SPDX-License-Identifier: GPL-2.0-or-later */
-+
-+#ifndef USER_MMAP_MIN_ADDR_H
-+#define USER_MMAP_MIN_ADDR_H
-+
-+#ifndef CONFIG_USER_ONLY
-+#error Cannot include this header from system emulation
-+#endif
-+
-+extern uintptr_t mmap_min_addr;
-+
-+#endif
-diff --git a/linux-user/user-internals.h b/linux-user/user-internals.h
-index 3f41d3f33c..bc6b9f44e6 100644
---- a/linux-user/user-internals.h
-+++ b/linux-user/user-internals.h
-@@ -29,7 +29,6 @@ void init_task_state(TaskState *ts);
- void task_settid(TaskState *);
- void stop_all_tasks(void);
- extern const char *qemu_uname_release;
--extern unsigned long mmap_min_addr;
- 
- typedef struct IOCTLEntry IOCTLEntry;
- 
 diff --git a/common-user/mmap-min-addr.c b/common-user/mmap-min-addr.c
-new file mode 100644
-index 0000000000..b2b3762386
---- /dev/null
+index b2b3762386..830c6f66a0 100644
+--- a/common-user/mmap-min-addr.c
 +++ b/common-user/mmap-min-addr.c
-@@ -0,0 +1,37 @@
-+/*
-+ * Utility function to get the minimum mmap address.
-+ * SPDX-License-Identifier: GPL-2.0-or-later
-+ */
-+
-+#include "qemu/osdep.h"
-+#include "user/mmap-min-addr.h"
-+
-+uintptr_t mmap_min_addr;
-+
-+static void __attribute__((constructor)) init(void)
-+{
-+#ifdef __linux__
-+    /*
-+     * We prefer to not make NULL pointers accessible to QEMU.
-+     * If something goes wrong below, fall back to 1 page.
-+     */
-+    size_t min_addr = qemu_real_host_page_size();
-+    /*
-+     * Read in mmap_min_addr kernel parameter.  This value is used
-+     * When loading the ELF image to determine whether guest_base
-+     * is needed.  It is also used in mmap_find_vma.
-+     */
-+    FILE *fp = fopen("/proc/sys/vm/mmap_min_addr", "r");
-+
-+    if (fp) {
-+        unsigned long tmp;
-+        if (fscanf(fp, "%lu", &tmp) == 1 && tmp != 0) {
-+            min_addr = MAX(min_addr, tmp);
-+        }
-+        fclose(fp);
-+    }
-+    mmap_min_addr = min_addr;
-+#else
-+# error
+@@ -5,6 +5,10 @@
+ 
+ #include "qemu/osdep.h"
+ #include "user/mmap-min-addr.h"
++#ifdef __FreeBSD__
++#include <sys/sysctl.h>
++#include <sys/user.h>
 +#endif
-+}
-diff --git a/linux-user/elfload.c b/linux-user/elfload.c
-index 5a30cebcc3..93ab2661e3 100644
---- a/linux-user/elfload.c
-+++ b/linux-user/elfload.c
-@@ -14,6 +14,7 @@
- #include "exec/translation-block.h"
- #include "exec/tswap.h"
- #include "user/guest-base.h"
-+#include "user/mmap-min-addr.h"
- #include "user-internals.h"
- #include "signal-common.h"
- #include "loader.h"
-diff --git a/linux-user/main.c b/linux-user/main.c
-index c08c73fd80..01cf5bf079 100644
---- a/linux-user/main.c
-+++ b/linux-user/main.c
-@@ -39,6 +39,7 @@
- #include "qemu/module.h"
- #include "qemu/plugin.h"
- #include "user/guest-base.h"
-+#include "user/mmap-min-addr.h"
- #include "user/page-protection.h"
- #include "exec/gdbstub.h"
- #include "gdbstub/user.h"
-@@ -78,7 +79,6 @@ static envlist_t *envlist;
- static const char *cpu_model;
- static const char *cpu_type;
- static const char *seed_optarg;
--unsigned long mmap_min_addr;
- uintptr_t guest_base;
- bool have_guest_base;
  
-@@ -914,35 +914,8 @@ int main(int argc, char **argv, char **envp)
-     target_environ = envlist_to_environ(envlist, NULL);
-     envlist_free(envlist);
+ uintptr_t mmap_min_addr;
  
--    /*
--     * Read in mmap_min_addr kernel parameter.  This value is used
--     * When loading the ELF image to determine whether guest_base
--     * is needed.  It is also used in mmap_find_vma.
--     */
--    {
--        FILE *fp;
--
--        if ((fp = fopen("/proc/sys/vm/mmap_min_addr", "r")) != NULL) {
--            unsigned long tmp;
--            if (fscanf(fp, "%lu", &tmp) == 1 && tmp != 0) {
--                mmap_min_addr = MAX(tmp, host_page_size);
--                qemu_log_mask(CPU_LOG_PAGE, "host mmap_min_addr=0x%lx\n",
--                              mmap_min_addr);
--            }
--            fclose(fp);
--        }
--    }
--
--    /*
--     * We prefer to not make NULL pointers accessible to QEMU.
--     * If we're in a chroot with no /proc, fall back to 1 page.
--     */
--    if (mmap_min_addr == 0) {
--        mmap_min_addr = host_page_size;
--        qemu_log_mask(CPU_LOG_PAGE,
--                      "host mmap_min_addr=0x%lx (fallback)\n",
--                      mmap_min_addr);
--    }
-+    qemu_log_mask(CPU_LOG_PAGE, "host mmap_min_addr=0x%" PRIxPTR "\n",
-+                  mmap_min_addr);
- 
-     /*
-      * Prepare copy of argv vector for target.
-diff --git a/linux-user/mmap.c b/linux-user/mmap.c
-index b4b7b3e5cc..f81417182e 100644
---- a/linux-user/mmap.c
-+++ b/linux-user/mmap.c
-@@ -24,6 +24,7 @@
- #include "exec/mmap-lock.h"
- #include "qemu.h"
- #include "user/page-protection.h"
-+#include "user/mmap-min-addr.h"
- #include "user-internals.h"
- #include "user-mmap.h"
- #include "target_mman.h"
-diff --git a/common-user/meson.build b/common-user/meson.build
-index ac9de5b9e3..f9e2e83f9a 100644
---- a/common-user/meson.build
-+++ b/common-user/meson.build
-@@ -5,6 +5,7 @@ endif
- common_user_inc += include_directories('host/' / host_arch)
- 
- user_ss.add(files(
-+  'mmap-min-addr.c',
-   'safe-syscall.S',
-   'safe-syscall-error.c',
- ))
+@@ -31,6 +35,15 @@ static void __attribute__((constructor)) init(void)
+         fclose(fp);
+     }
+     mmap_min_addr = min_addr;
++#elif defined(__FreeBSD__)
++    int mib[] = { CTL_KERN, KERN_PROC, KERN_PROC_VM_LAYOUT, getpid() };
++    struct kinfo_vm_layout info;
++    size_t info_len = sizeof(info);
++
++    mmap_min_addr =
++        (sysctl(mib, ARRAY_SIZE(mib), &info, &info_len, NULL, 0) < 0
++         ? qemu_real_host_page_size()
++         : info.kvm_min_user_addr);
+ #else
+ # error
+ #endif
 -- 
 2.43.0
 
