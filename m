@@ -4,68 +4,85 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4559FCD6E52
-	for <qemu-devel@archiver.kernel.org>; Sun, 31 May 2026 14:19:15 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 802A4CD6E5D
+	for <qemu-devel@archiver.kernel.org>; Sun, 31 May 2026 15:34:44 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wTh0G-0002lU-0D; Sun, 31 May 2026 10:19:00 -0400
+	id 1wTiB3-0001TC-NJ; Sun, 31 May 2026 11:34:13 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <christian@sourceandstack.com>)
- id 1wTdUj-0005HN-1R; Sun, 31 May 2026 06:34:13 -0400
-Received: from sourceandstack.com ([159.223.220.208])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <christian@sourceandstack.com>)
- id 1wTdUh-0004mn-4x; Sun, 31 May 2026 06:34:12 -0400
-Received: from fedora.home (apoitiers-157-1-11-96.w90-5.abo.wanadoo.fr
- [90.5.14.96])
- by sourceandstack.com (Postfix) with ESMTPSA id E5EF7480393B;
- Sun, 31 May 2026 10:34:07 +0000 (UTC)
-DKIM-Filter: OpenDKIM Filter v2.11.0 sourceandstack.com E5EF7480393B
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=sourceandstack.com;
- s=mail; t=1780223648;
- bh=EnYS33h/AhF9AFXQzHm8U0FQ0sY2KKXuUydYAwZDAg0=;
- h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
- b=IPsVmk9su1yxpnYN/PcXgBmSS/Mezsi0BPpOaOXS83Qkm3MzBlQk+bL/kuLS8A5GE
- n9A0H3F+gbYm+kdu7BruMnChhK+c+eg7oGf7t7jO7Kw7J7t2Zi8DEqZ6QYNf/GAeZl
- JjBp7tV87goDNdW0AOtyXVFale80BzTZGBBmTvbI=
-From: Christian Hergert <christian@sourceandstack.com>
+ (Exim 4.90_1) (envelope-from <hemanshu.khilari.foss@gmail.com>)
+ id 1wTiB2-0001Sj-C6
+ for qemu-devel@nongnu.org; Sun, 31 May 2026 11:34:12 -0400
+Received: from mail-pj1-x1043.google.com ([2607:f8b0:4864:20::1043])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <hemanshu.khilari.foss@gmail.com>)
+ id 1wTiB0-00066L-QC
+ for qemu-devel@nongnu.org; Sun, 31 May 2026 11:34:12 -0400
+Received: by mail-pj1-x1043.google.com with SMTP id
+ 98e67ed59e1d1-36dac5d5d05so97789a91.2
+ for <qemu-devel@nongnu.org>; Sun, 31 May 2026 08:34:10 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=gmail.com; s=20251104; t=1780241649; x=1780846449; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:from:to:cc:subject:date:message-id:reply-to;
+ bh=vLoZ31hwfq44UN2n4LvdkzlXAdAKJFZLv48jde8pkZ0=;
+ b=FpHm1bIXuBYXR3BYRNgO5+7jicPUWPLp1fKa69dCg6w4d+vtgzuZhcpmPK6LeCew3w
+ 6hSQFnQ1lHxPtlc0eWxKS1JQpNCoruZa39Cfoei25rvq8V86qhzxCk1oIXhrm+/I7nO0
+ iRNM+XNLFkZqUVTeKlIFponI3Y1I2RH0XkzjrWOO1BVsebZ553KR8SbRNxUaOTGj29Ls
+ vxi9JAibVgstQ71Ga2WH+JFgkNi5adp/3qW2pGQP7E3QmjtaqPAvkTfjU4uoeT7vpyd3
+ Hgx22/RsamNR25P/Gjuj/3qDy9dRGmT3q2Y94nQeDOGxn7pBdUNmYLMWLYyjiTVDFVex
+ UeBA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1780241649; x=1780846449;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=vLoZ31hwfq44UN2n4LvdkzlXAdAKJFZLv48jde8pkZ0=;
+ b=F0qsQQHbskg6TyvA6kcQ07W9UCa51NZHwaS+I20TWrFIo71FhAlHtFgLRpKI23q9Ga
+ MCAFx1EhkgDwDuRt8lxtoVD13EHmA708oYxJ4mTidKCcp48f1o5zrgx+MCuhIRXQAbyu
+ jmtIBniMTAmOZfBUDIy71QZHiwNUXAr506TDnyhSUtrF9MZgPpkN36cxJHMc/92u4ePU
+ 8QlR0HTdwOKruh6kswHK4M9NWrdx3VAcHpqFqG8MLsx83iJdhSV0xnlifZ7VfRLnpkdS
+ I4TSwVcpXOWY4ibHBxhpVWlT6230+ON7eEwZFvTF678cAx1uHW7vmIx3B2IF0Tm8J2G/
+ 2I1Q==
+X-Gm-Message-State: AOJu0Yx8rLk9Ju56ueV0HuQgeuSESx14uziuFHlNzZ5hvbc1Q3bTpvSR
+ Qkp2HtkeB0dHK2PqAwcky+XedbK1xhiJPe2LeDjY1e6VFfNyhwzwt+4VBrM/W59qfIo=
+X-Gm-Gg: Acq92OEzAo3wmpFCCGzWIHCDzJBrBqicbfHEULg90zKgb+A2VzTdZgOwym+CjtQPiNG
+ ROV/HNrA8Um3u5lSvNiIp0vpZKaLG1gVbhY+1SpBtxzP0hpL713N9VGcg+ym0ujRz+pZ/jqv41z
+ 5Y3hJa1LLkjyrwnMdd0whNJTf4nnCRQEYHap+OBKlXEO72WdwuYjb6OjOYAKmbF56wchXHCwjas
+ QxEGSvtQ1u72+FHU4tV/wX4yttbe/Hbja/7DBX1ivIZePu+fzDeHjgfy4s5L4vJt2xQcMZHroiO
+ M3puwXWmL/bTUCvcpQSFM3S4Zi71/5b9ZpmeGEJqO0yYM8pKCj0Y5P2uJQEqSNVcZxMGyD51Z4G
+ CAenUigG+LZKHCxlyhMm0hslGClM3z/YYEWV+cZ/UXFOL0+X2o2UhspnifQByeibWCYevQseO/D
+ PJe7ehE0J/8nwTOPK7wf4s8INsMTa3NGGwvNOiWFrK3l4zC64=
+X-Received: by 2002:a17:90b:578c:b0:36b:aed6:235a with SMTP id
+ 98e67ed59e1d1-36c67facb44mr6949630a91.22.1780241648939; 
+ Sun, 31 May 2026 08:34:08 -0700 (PDT)
+Received: from fedora.. ([2405:201:3005:d874:1572:5c02:3b40:ecec])
+ by smtp.gmail.com with ESMTPSA id
+ 98e67ed59e1d1-36bc0c391cbsm8348464a91.16.2026.05.31.08.34.05
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Sun, 31 May 2026 08:34:08 -0700 (PDT)
+From: "hemanshu.khilari.foss" <hemanshu.khilari.foss@gmail.com>
 To: qemu-devel@nongnu.org
-Cc: Hanna Reitz <hreitz@redhat.com>, qemu-block@nongnu.org,
- Kevin Wolf <kwolf@redhat.com>,
- Christian Hergert <christian@sourceandstack.com>
-Subject: [PATCH 1/1] block/vvfat: defer write commits to half-second timer
-Date: Sun, 31 May 2026 12:34:37 +0200
-Message-ID: <20260531103437.2896462-2-christian@sourceandstack.com>
-X-Mailer: git-send-email 2.54.0
-In-Reply-To: <20260531103437.2896462-1-christian@sourceandstack.com>
-References: <20260531103437.2896462-1-christian@sourceandstack.com>
+Cc: "hemanshu.khilari.foss" <hemanshu.khilari.foss@gmail.com>, luc@lmichel.fr,
+ peter.maydell@linaro.org, hemanshu_dev@proton.me
+Subject: [PATCH v2] hw/core/qdev-clock: Fix potential null pointer dereference
+Date: Sun, 31 May 2026 21:03:55 +0530
+Message-ID: <20260531153354.88909-2-hemanshu.khilari.foss@gmail.com>
+X-Mailer: git-send-email 2.42.0
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-X-Rspamd-Queue-Id: E5EF7480393B
-X-Spamd-Result: default: False [1.40 / 15.00]; MID_CONTAINS_FROM(1.00)[];
- R_MISSING_CHARSET(0.50)[]; MIME_GOOD(-0.10)[text/plain];
- LOCAL_OUTBOUND(0.00)[];
- ASN(0.00)[asn:3215, ipnet:90.5.0.0/17, country:FR];
- MIME_TRACE(0.00)[0:+]; TO_DN_SOME(0.00)[];
- FROM_EQ_ENVFROM(0.00)[]; ARC_NA(0.00)[];
- RCPT_COUNT_FIVE(0.00)[5]; RCVD_COUNT_ZERO(0.00)[0];
- TO_MATCH_ENVRCPT_ALL(0.00)[];
- URIBL_BLOCKED(0.00)[sourceandstack.com:from_mime,sourceandstack.com:mid,sourceandstack.com:from_smtp,sourceandstack.com:email];
- FROM_HAS_DN(0.00)[]
-X-Rspamd-Action: no action
-X-Rspamd-Server: sourceandstack.com
-Received-SPF: pass client-ip=159.223.220.208;
- envelope-from=christian@sourceandstack.com; helo=sourceandstack.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::1043;
+ envelope-from=hemanshu.khilari.foss@gmail.com; helo=mail-pj1-x1043.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_PASS=-0.001,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
-X-Mailman-Approved-At: Sun, 31 May 2026 10:18:14 -0400
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -80,247 +97,45 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-This keeps consistent reads but defers writes to a half-second timer by
-implementing the suggested TODO in block/vvfat.c.
+qdev_get_clocklist() function returns a pointer to the NamedClockList
+struct. This function is called in qdev_alias_clock() and the returned
+pointer is immediately dereferenced without a null check.
 
-I noticed slow boot performance when testing a UKI image. It was roughly
-18 seconds to a login prompt with a simple userspace. I profiled quickly
-with Sysprof which showed an overwhelming amount of time spent in
-check_directory_consistency().
+Passing clock name that doesn't exist to qdev_get_clocklist() is a
+programming error, and so this change is not fixing a bug, only making
+the reporting of that programming error a bit more helpful and bringing
+it in to line with qdev_get_clock_in() and qdev_get_clock_out().
 
-The -drive in question here is the following:
-
- file=fat:rw:/tmp/machines-uki-esp-HVCXP3,format=raw,media=disk
-
-which has a temporary NvVars in it for quick throwaway VM testing which
-I use in conjunction with mkosi.
-
-With this commit in place, boot to login reduces from 18 seconds to 6.
-
-Signed-off-by: Christian Hergert <christian@sourceandstack.com>
+Cc: luc@lmichel.fr
+Cc: peter.maydell@linaro.org
+Cc: hemanshu_dev@proton.me
+Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/2342
+Signed-off-by: hemanshu.khilari.foss <hemanshu.khilari.foss@gmail.com>
 ---
- block/vvfat.c | 130 ++++++++++++++++++++++++++++++++++++++++++++++++--
- 1 file changed, 125 insertions(+), 5 deletions(-)
+ hw/core/qdev-clock.c | 9 ++++++++-
+ 1 file changed, 8 insertions(+), 1 deletion(-)
 
-diff --git a/block/vvfat.c b/block/vvfat.c
-index e334b9febb..49756ac5e0 100644
---- a/block/vvfat.c
-+++ b/block/vvfat.c
-@@ -32,6 +32,7 @@
- #include "block/qdict.h"
- #include "qemu/module.h"
- #include "qemu/option.h"
-+#include "qemu/timer.h"
- #include "qemu/bswap.h"
- #include "migration/blocker.h"
- #include "qobject/qdict.h"
-@@ -53,8 +54,6 @@
-     Note that DOS assumes the system files to be the first files in the
-     file system (test if the boot sector still relies on that fact)! */
- /* MAYBE TODO: write block-visofs.c */
--/* TODO: call try_commit() only after a timeout */
--
- /* #define DEBUG */
- 
- #ifdef DEBUG
-@@ -80,6 +79,8 @@ static void checkpoint(void);
- #define DIR_KANJI_FAKE 0x05
- #define DIR_FREE 0x00
- 
-+#define VVFAT_COMMIT_DELAY_NS (NANOSECONDS_PER_SECOND / 2)
-+
- /* dynamic array functions */
- typedef struct array_t {
-     char* pointer;
-@@ -332,6 +333,8 @@ typedef struct BDRVVVFATState {
-     void* fat2;
-     char* used_clusters;
-     array_t commits;
-+    QEMUTimer *commit_timer;
-+    bool commit_pending;
-     const char* path;
-     int downcase_short_names;
- 
-@@ -1052,6 +1055,8 @@ static BDRVVVFATState *vvv = NULL;
- 
- static int enable_write_target(BlockDriverState *bs, Error **errp);
- static int coroutine_fn is_consistent(BDRVVVFATState *s);
-+static void vvfat_attach_aio_context(BlockDriverState *bs,
-+                                     AioContext *new_context);
- 
- static QemuOptsList runtime_opts = {
-     .name = "vvfat",
-@@ -1278,6 +1283,7 @@ static int vvfat_open(BlockDriverState *bs, QDict *options, int flags,
-     }
- 
-     qemu_co_mutex_init(&s->lock);
-+    vvfat_attach_aio_context(bs, bdrv_get_aio_context(bs));
- 
-     qemu_opts_del(opts);
- 
-@@ -2973,6 +2979,60 @@ DLOG(checkpoint());
-     return do_commit(s);
- }
- 
-+static int coroutine_fn GRAPH_RDLOCK
-+vvfat_commit_now(BDRVVVFATState *s)
-+{
-+    int ret;
-+
-+    if (s->commit_timer) {
-+        timer_del(s->commit_timer);
-+    }
-+    if (!s->commit_pending) {
-+        return 0;
-+    }
-+
-+    qemu_co_mutex_lock(&s->lock);
-+    ret = try_commit(s);
-+    qemu_co_mutex_unlock(&s->lock);
-+
-+    if (ret == 0) {
-+        s->commit_pending = false;
-+    }
-+
-+    return ret;
-+}
-+
-+static void coroutine_fn vvfat_commit_timer_entry(void *opaque)
-+{
-+    BlockDriverState *bs = opaque;
-+    BDRVVVFATState *s = bs->opaque;
-+    GRAPH_RDLOCK_GUARD();
-+
-+    vvfat_commit_now(s);
-+    bdrv_dec_in_flight(bs);
-+}
-+
-+static void vvfat_commit_timer_cb(void *opaque)
-+{
-+    BlockDriverState *bs = opaque;
-+    Coroutine *co;
-+
-+    co = qemu_coroutine_create(vvfat_commit_timer_entry, bs);
-+    bdrv_inc_in_flight(bs);
-+    qemu_coroutine_enter(co);
-+}
-+
-+static void vvfat_schedule_commit(BDRVVVFATState *s)
-+{
-+    s->commit_pending = true;
-+
-+    if (s->commit_timer) {
-+        timer_mod_ns(s->commit_timer,
-+                     qemu_clock_get_ns(QEMU_CLOCK_VIRTUAL) +
-+                     VVFAT_COMMIT_DELAY_NS);
-+    }
-+}
-+
- static int coroutine_fn GRAPH_RDLOCK
- vvfat_write(BlockDriverState *bs, int64_t sector_num,
-             const uint8_t *buf, int nb_sectors)
-@@ -3098,8 +3158,7 @@ DLOG(fprintf(stderr, "Write to qcow backend: %d + %d\n", (int)sector_num, nb_sec
-     }
- 
- DLOG(checkpoint());
--    /* TODO: add timeout */
--    try_commit(s);
-+    vvfat_schedule_commit(s);
- 
- DLOG(checkpoint());
-     return 0;
-@@ -3133,6 +3192,34 @@ vvfat_co_pwritev(BlockDriverState *bs, int64_t offset, int64_t bytes,
-     return ret;
- }
- 
-+static int coroutine_fn GRAPH_RDLOCK
-+vvfat_co_flush(BlockDriverState *bs)
-+{
-+    BDRVVVFATState *s = bs->opaque;
-+
-+    if (s->qcow == NULL) {
-+        return 0;
-+    }
-+
-+    return vvfat_commit_now(s);
-+}
-+
-+static void vvfat_drain_begin(BlockDriverState *bs)
-+{
-+    BDRVVVFATState *s = bs->opaque;
-+    Coroutine *co;
-+
-+    if (!s->commit_timer || !timer_pending(s->commit_timer)) {
-+        return;
-+    }
-+
-+    timer_del(s->commit_timer);
-+
-+    co = qemu_coroutine_create(vvfat_commit_timer_entry, bs);
-+    bdrv_inc_in_flight(bs);
-+    aio_co_enter(bdrv_get_aio_context(bs), co);
-+}
-+
- static int coroutine_fn vvfat_co_block_status(BlockDriverState *bs,
-                                               unsigned int mode,
-                                               int64_t offset, int64_t bytes,
-@@ -3229,6 +3316,11 @@ static void vvfat_close(BlockDriverState *bs)
+diff --git a/hw/core/qdev-clock.c b/hw/core/qdev-clock.c
+index 6e2967e433..861f78f94c 100644
+--- a/hw/core/qdev-clock.c
++++ b/hw/core/qdev-clock.c
+@@ -157,7 +157,14 @@ Clock *qdev_alias_clock(DeviceState *dev, const char *name,
+                         DeviceState *alias_dev, const char *alias_name)
  {
-     BDRVVVFATState *s = bs->opaque;
- 
-+    if (s->commit_timer) {
-+        timer_free(s->commit_timer);
-+        s->commit_timer = NULL;
+     NamedClockList *ncl = qdev_get_clocklist(dev, name);
+-    Clock *clk = ncl->clock;
++    Clock *clk;
++
++    if (!ncl) {
++        error_report("Can not find clock '%s' for device type '%s'",
++                     name, object_get_typename(OBJECT(dev)));
++        abort();
 +    }
-+
-     vvfat_close_current_file(s);
-     array_free(&(s->fat));
-     array_free(&(s->directory));
-@@ -3240,6 +3332,30 @@ static void vvfat_close(BlockDriverState *bs)
-     }
- }
++    clk = ncl->clock;
  
-+static void vvfat_detach_aio_context(BlockDriverState *bs)
-+{
-+    BDRVVVFATState *s = bs->opaque;
-+
-+    if (s->commit_timer) {
-+        timer_free(s->commit_timer);
-+        s->commit_timer = NULL;
-+    }
-+}
-+
-+static void vvfat_attach_aio_context(BlockDriverState *bs,
-+                                     AioContext *new_context)
-+{
-+    BDRVVVFATState *s = bs->opaque;
-+
-+    if (s->qcow) {
-+        s->commit_timer = aio_timer_new(new_context, QEMU_CLOCK_VIRTUAL,
-+                                        SCALE_NS, vvfat_commit_timer_cb, bs);
-+        if (s->commit_pending) {
-+            vvfat_schedule_commit(s);
-+        }
-+    }
-+}
-+
- static const char *const vvfat_strong_runtime_opts[] = {
-     "dir",
-     "fat-type",
-@@ -3263,7 +3379,11 @@ static BlockDriver bdrv_vvfat = {
+     ncl = qdev_init_clocklist(alias_dev, alias_name, true, ncl->output, clk);
  
-     .bdrv_co_preadv         = vvfat_co_preadv,
-     .bdrv_co_pwritev        = vvfat_co_pwritev,
--    .bdrv_co_block_status   = vvfat_co_block_status,
-+    .bdrv_co_flush          = vvfat_co_flush,
-+    .bdrv_drain_begin       = vvfat_drain_begin,
-+    .bdrv_co_block_status    = vvfat_co_block_status,
-+    .bdrv_detach_aio_context = vvfat_detach_aio_context,
-+    .bdrv_attach_aio_context = vvfat_attach_aio_context,
- 
-     .strong_runtime_opts    = vvfat_strong_runtime_opts,
- };
 -- 
-2.54.0
+2.42.0
 
 
