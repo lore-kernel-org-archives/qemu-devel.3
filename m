@@ -4,93 +4,93 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B9641CD6E4A
-	for <qemu-devel@archiver.kernel.org>; Sun, 31 May 2026 03:41:29 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A3250CD6E51
+	for <qemu-devel@archiver.kernel.org>; Sun, 31 May 2026 04:10:22 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wTX2X-0002nb-GT; Sat, 30 May 2026 23:40:41 -0400
+	id 1wTXUj-0005c5-Tg; Sun, 31 May 2026 00:09:49 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <wlosh@bsdimp.com>) id 1wTX2W-0002nT-8I
- for qemu-devel@nongnu.org; Sat, 30 May 2026 23:40:40 -0400
-Received: from mail-pl1-x631.google.com ([2607:f8b0:4864:20::631])
+ (Exim 4.90_1) (envelope-from <wlosh@bsdimp.com>) id 1wTXUg-0005bi-Ez
+ for qemu-devel@nongnu.org; Sun, 31 May 2026 00:09:46 -0400
+Received: from mail-pl1-x62a.google.com ([2607:f8b0:4864:20::62a])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <wlosh@bsdimp.com>) id 1wTX2T-0004Dq-LZ
- for qemu-devel@nongnu.org; Sat, 30 May 2026 23:40:39 -0400
-Received: by mail-pl1-x631.google.com with SMTP id
- d9443c01a7336-2bf36a6905cso7172995ad.3
- for <qemu-devel@nongnu.org>; Sat, 30 May 2026 20:40:36 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1780198835; cv=none;
+ (Exim 4.90_1) (envelope-from <wlosh@bsdimp.com>) id 1wTXUc-0005dD-VP
+ for qemu-devel@nongnu.org; Sun, 31 May 2026 00:09:46 -0400
+Received: by mail-pl1-x62a.google.com with SMTP id
+ d9443c01a7336-2c0bb4a94b8so2594055ad.2
+ for <qemu-devel@nongnu.org>; Sat, 30 May 2026 21:09:40 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1780200579; cv=none;
  d=google.com; s=arc-20240605;
- b=FDijk7dmzyMvUtpGhx6d2QHhi+0D4/l6TjrWXmLARUTzyH9LkDEyOq3nCT8xGZRTIx
- Xfd7K5HDEc/gBpzNCsaOX8kwKlQVeC2zu5WuQPwD/+m1vtfA9pqrhw7z6hiwZ/r4Ttt8
- 8PhAmMbUOTkntpsShc4VAy9VkxXIsN8yZLdXrK2CDVi2FhWgVpyWK6J99vG23+l6t66V
- Ww+DOdpNGKArZfEgq571KFMEJIBQ4muDEcHnULodvOE1bnAsf4m5Uw/qoSw5HHP/xdFb
- an3MwVXvnVEeJi1Q9lmBWKzpLcGt2c4XJ64i9jviqb/g8zrnXeUT56Kr6Najchf7p0eT
- VqDg==
+ b=HEcgZqRePT8jEiuVq/kvCntC1g56a4YxCKprc5L/X2ZTa1e1tALFBv/ctyML7qZfuh
+ 7Ejsy5xk3Q6Do7iaCMJG/LBS6fqCFFIy2HAWQO+fk2rKA/Twt24zZvhwjZbrWCS53r16
+ I/vInrxSzz3Sbg/kYX8+fJPxApAHAneGm4X0c1Iz/EXmXsdyH1T9HP/CQKmHk1XNdAAt
+ 4peVS1anPLeCEKOv0oNno8Tmdt6I+kSkPIrioT0QF/S7ozH0g817iCnWO2gEu/yBb4g6
+ OguG6P+mX2WKGc7cUXSmg14ViE6ZfLS+EO6Mlp3Kf/zMjEo0nSN/lzRlpySBRIJCyoDz
+ n5aA==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
  s=arc-20240605; 
  h=cc:to:subject:message-id:date:from:in-reply-to:references
  :mime-version:dkim-signature;
- bh=YDfqwK/IULEm4XjKiL9W3gcuYgzin+kA8+pzThhmh6c=;
+ bh=m+X9UzW+ndttKFN0RYwOuRaV+k7+o2uUhzwiq3qR8qg=;
  fh=+DxRVnEC95Ptxk5HMfIFqaUwIao1HhLaAPFCgZPm1R4=;
- b=M9sTfhtuUr05AQtkI3DGv9L2pcv4FN5igq29weWdXqRinn8YzkiI78WzapMY3jZZXC
- ZFUAMuai1Sa4HjHVVDHmAkP7muYigap/eiQXMSX21ZCE9eJrPaeio8UVXmSdEBfiNSTD
- sfO18MDhWivQS7W/fR2X+Mq5jkeXtogErBlCBWGm9xfE+ShZigQQfN7u2L3dfUVTg/d1
- TRGS/tmsNfsf5yIHjfORRhX3zq3hoV5mRP1JQtj9fWt4Naxjzf7oYrho93EJGsg5TmdL
- YTScrQ33fcBzZGpve7JkBiousvxrSfao/PUHFATMKRueSRGDjh8j0w/Tnc7sodf8IE2U
- OWMw==; darn=nongnu.org
+ b=MunHf5I2OhMM3Q/TPYAOSrcJECCQSKO6wb+bLHzNN1Y1Dq1Jxi8VQ3XdEzYsgv9I/9
+ POlwsVgqdf/Oz1zP/zIQIJohT7oSMK9luFvyXjhZv1DqsNlQl8gkYaAhYhTye3hF9eVs
+ jiz6roKlN1Me0GZyZ1tCrdnQBkGAnBKQQWsupn4EEPrYb+CJEWkc3MuVYe3aRIMjf+Um
+ b9Lv9VqlAEg/eZTOtbp+d+j7opKhRo17VtT6J4ddOZiZYht9zAceZUWR8va6TksEAtZ2
+ qCpY40nlKGshnl3jZy22vrarF1AnK7SSvRqPl7YrHGKhD23KQc8EgV+W5kLOXt3dNJVf
+ Ow9g==; darn=nongnu.org
 ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=bsdimp-com.20251104.gappssmtp.com; s=20251104; t=1780198835; x=1780803635;
+ d=bsdimp-com.20251104.gappssmtp.com; s=20251104; t=1780200579; x=1780805379;
  darn=nongnu.org; 
  h=cc:to:subject:message-id:date:from:in-reply-to:references
  :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=YDfqwK/IULEm4XjKiL9W3gcuYgzin+kA8+pzThhmh6c=;
- b=aK2F7edh6JsHSiIGGkmX50VmKYQ+gfTEo6qxnZIj/8VLjY+bG0P2saO4+Oyr6uLTqH
- 1a5ewAsthDGnBRo/Nxo2PAyQKz7NBbZhuYccKwsPCKWUfirboqCUtFueEcPdGKWB5c5N
- yWuovgm1nv7xHSGso8RjDrFc5Ieuj1kiZstX33QLS+dtjoPCfgyVTUtltq+xPTGy3BZZ
- DjW2lFtl7q1uNlN9IOF/Bt7SfwMgBxmagPuTw7SFkqWHQOuAI7oFCxGwBaRx5ugaruPz
- o8N/rY2pav6ZWlGbkDI1IxO3NEnv9C65opnNtbDD+DXRxKZWzxujue8Wqamuw4d/q+4R
- D2sQ==
+ bh=m+X9UzW+ndttKFN0RYwOuRaV+k7+o2uUhzwiq3qR8qg=;
+ b=PNq56C19xG1qgCIG4PHOQdQBTulwZZoF5w3+RdKt6YnFzt91WxndjgDVWBLAo6WV8J
+ KIqNUyghI0sRjt5NcU8kYkohG5iUFi7Jiaa65uFYupcp5Gi+tnHHSjRuLqIRu15K66IQ
+ 7z8KPPQug+Hp/yt+qZJ2Cct2Ji5gPAauFJ6xbM8/14ruv8+5H2NxRPcnJYAS+SB3PLJy
+ hM3QJjixRg/CfEzBQwSPCIYuik0Qt+hCkFkEf7sJnfiJad8mX8beZkXG+kb5PJXdkyyO
+ smZGX4nx2hBUE97ichcshx/0LeWY0tScTXg5OQiuVo7FQ0TzldiF+6m2qEVLkSZvb4Sz
+ c2hw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1780198835; x=1780803635;
+ d=1e100.net; s=20251104; t=1780200579; x=1780805379;
  h=cc:to:subject:message-id:date:from:in-reply-to:references
  :mime-version:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
  :message-id:reply-to;
- bh=YDfqwK/IULEm4XjKiL9W3gcuYgzin+kA8+pzThhmh6c=;
- b=ncLwJGa22Zd+4nMjJf7Rvu/vJiPlHOJ2z7mrqxuLeeAzJIrK9d72wvlslep6qbkUp3
- +GYjql3eJxf+JB1gooB0px+VC9feeERSPQzbCbNk90zTUGmSFzL3b6yFtdKTex8g06d1
- IFm9Fu9v35SFhuv4vJfXRxwsI5U4CWGuMITmg5iABYsKlS+bQUxoKiENdeMRNJAH78wP
- lAY9ArOouwbBnIkOd2FVTJgrdiP164mudMv03oTDDq+TFn51s0+K3nJNGBe5dLHj23Kh
- 00e4AOKaSCvkxsFItUjfSEObsl9KJtdkvYDguVKmuvEsP1yS8ydfEXLWDR7KfNIgpW9Y
- JBcg==
-X-Gm-Message-State: AOJu0YwPWDrrJTlJh0/w+D2CO/UWVjcXfRAGUtGgebM1qRWvWnTj710E
- 7bwhvXoq6AcJMU0K1GoVc3a6/dI+rad1veeA6futy+lhRtYtcbzc6TN97bvQBun6oEcTR5yz9XD
- TloYEslYcmIQFU5/ZROvBceysMoV0CbGFngE6J30+xg==
-X-Gm-Gg: Acq92OHqQKAEDA6rCC0WUy3LpSopgE638w3VwjAp/KVsFyOtJxgHHNZZrAWx5Xi7GZJ
- As+vx8aZXvtsTu5dTlINLwWwIJXblebC/dnvw2Wos37FfiR7ueNoZQyBPD6WjA6J7YNqh5KoGnG
- pU5ys2/57zg9x4L5D67SLPuqI+BFySzPGBhG+CVQ3SkXf4fd1amcF19RiKbkChKCTsY5wgVc4Qx
- QXAq182mZu1qbkoKRyyQchjkNTw2PyCPFh7HyDkGLp/EbMC+KmvFgb1UFIO68sx4tacCrdZ5BNV
- NuuN00RgfgjIALaTG3im/K0tOwSOT1G2DUCT9xcKz/GhDig=
-X-Received: by 2002:a17:903:1207:b0:2bd:3bfd:7512 with SMTP id
- d9443c01a7336-2bf368468ddmr67677745ad.29.1780198835211; Sat, 30 May 2026
- 20:40:35 -0700 (PDT)
+ bh=m+X9UzW+ndttKFN0RYwOuRaV+k7+o2uUhzwiq3qR8qg=;
+ b=IHOutgLhmHvQTJnuZA8lBsBZiFzDxIJwg47P77m5WWzyor3eXzJ1Vt7D+xJVRGqRY0
+ ft3zr+iTcIP9dxeGLj13HcEWC9Mi6Hqn7gztoF0HfoJCKYVSMzqGOwlVzMbfpE8duljM
+ s9tUTbNx+8rrhzoJSE+tmQScibJuEunNK5IgYxm8pPT+2cqAOjhnzNJy4SATXu65SLhv
+ Euf7N9inkAafjAMnGOXHcPkHBzXgnAXrrL0m9vOoyLdmOeu/98yFrwY3VYAx4gsV+srd
+ 9si06KHHqSmaTE889sl3QJLYyIU6byrrEi6k6f4vuD/37yUHl4ezb9irptbT88KM6QYM
+ Cp5A==
+X-Gm-Message-State: AOJu0Yyuwc392jpHf7eq6KaX+1fFtYuPEjPygPJtREnWpnKpSJBcSIF/
+ vYCUSEO7VoAirGWCdLFo0EeZQu+Rif29IdARNClIP19EASfoSjNT0GuzdLMuAkhmo4RFI7+GwV2
+ UaFfLRv0YmfcOyX+KkTEhDxHYdRe+o+pqbXN5mnWhKg==
+X-Gm-Gg: Acq92OG53a6E2P7pZsIX+wFojCcCFT6l56N/RdMsKplci26LMREgIXZAtmNEUMCq7hN
+ 3iIfC+u8eGw58upr/L+IAspbyQNXHxZq82uodABucyS+ghNtYGG8Tir6Qz3P1IoRbQspm1IxWwS
+ 6uBJaL8EASXNut4iGhsH8bRSMPgqqj/RyNKtZG7I+LaWLi4OZF/QOej38KUVD4DgylCoHYqKrVs
+ CMefjT73oc0/6he3SxxDaSTqWRz9OBctTpTyHKRpgQkXg97kEXMU94iDAJ0NN2M4NqMmZI4FGwt
+ TRpBvrV3zmuABHbjj4MAaXvTmJ7Igfytq/Ly0mgMSELGdvI=
+X-Received: by 2002:a17:903:19ee:b0:2c0:d29b:3502 with SMTP id
+ d9443c01a7336-2c0d29b3a6cmr745315ad.38.1780200579478; Sat, 30 May 2026
+ 21:09:39 -0700 (PDT)
 MIME-Version: 1.0
 References: <20260530211248.375318-1-richard.henderson@linaro.org>
- <20260530211248.375318-11-richard.henderson@linaro.org>
-In-Reply-To: <20260530211248.375318-11-richard.henderson@linaro.org>
+ <20260530211248.375318-8-richard.henderson@linaro.org>
+In-Reply-To: <20260530211248.375318-8-richard.henderson@linaro.org>
 From: Warner Losh <imp@bsdimp.com>
-Date: Sat, 30 May 2026 21:40:24 -0600
-X-Gm-Features: AVHnY4Iip-78k1v3TLww3Lkrl6_gGCs3n_dDnOkhXgrwpnSas8JPMuY4PsdDhV4
-Message-ID: <CANCZdfqqNMaK3SRHQ9NpYNFvOdoOaFzu8-zEWPueZ1nMvS1ZFw@mail.gmail.com>
-Subject: Re: [PATCH 10/13] common-user: Implement read_self_maps for FreeBSD
+Date: Sat, 30 May 2026 22:09:27 -0600
+X-Gm-Features: AVHnY4IoQGQV50R9omLS0b_EcrLxe1Nms1pca-1P8Fec18UaoDGEJKPSEC6gUHY
+Message-ID: <CANCZdfrEDhzu7Qnh48Vek2hitc-NDXAUNmx5Em+cdiZSYcFW=g@mail.gmail.com>
+Subject: Re: [PATCH 07/13] common-user: Initialize mmap_min_addr for FreeBSD
 To: Richard Henderson <richard.henderson@linaro.org>
 Cc: qemu-devel@nongnu.org, deller@gmx.de
-Content-Type: multipart/alternative; boundary="00000000000033dc21065314d70d"
-Received-SPF: none client-ip=2607:f8b0:4864:20::631;
- envelope-from=wlosh@bsdimp.com; helo=mail-pl1-x631.google.com
+Content-Type: multipart/alternative; boundary="0000000000002b42900653153fae"
+Received-SPF: none client-ip=2607:f8b0:4864:20::62a;
+ envelope-from=wlosh@bsdimp.com; helo=mail-pl1-x62a.google.com
 X-Spam_score_int: -18
 X-Spam_score: -1.9
 X-Spam_bar: -
@@ -112,234 +112,132 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
---00000000000033dc21065314d70d
+--0000000000002b42900653153fae
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 
-On Sat, May 30, 2026 at 3:13=E2=80=AFPM Richard Henderson <
+On Sat, May 30, 2026 at 3:12=E2=80=AFPM Richard Henderson <
 richard.henderson@linaro.org> wrote:
 
-> Use kinfo_getvmmap from -luser.
+> Use sysctl to fetch the vm layout of the current process.
 >
 > Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
 > ---
->  common-user/selfmap.c   | 41 ++++++++++++++++++++++++++++++++++++++++-
->  common-user/meson.build |  5 +++++
->  2 files changed, 45 insertions(+), 1 deletion(-)
+>  common-user/mmap-min-addr.c | 13 +++++++++++++
+>  1 file changed, 13 insertions(+
 >
-> diff --git a/common-user/selfmap.c b/common-user/selfmap.c
-> index a1b88dee66..151d066801 100644
-> --- a/common-user/selfmap.c
-> +++ b/common-user/selfmap.c
-> @@ -9,6 +9,10 @@
+
+Reviewed-by: Warner Losh <imp@bsdimp.com>
+
+I hardcoded my version to qemu_real_host_page_size(), but this is better
+than what I'd done. It keeps it from being 0, and the FreeBSD kernel won't
+map anything between this value and info.kvm_min_user_addr. I do know
+that x86 and aarch64 these are two are the same value, and those are the
+only hosts I care about at the moment (until I get through the upstreaming
+backlog).
+
+
+> diff --git a/common-user/mmap-min-addr.c b/common-user/mmap-min-addr.c
+> index b2b3762386..830c6f66a0 100644
+> --- a/common-user/mmap-min-addr.c
+> +++ b/common-user/mmap-min-addr.c
+> @@ -5,6 +5,10 @@
+>
 >  #include "qemu/osdep.h"
->  #include "qemu/cutils.h"
->  #include "user/selfmap.h"
+>  #include "user/mmap-min-addr.h"
 > +#ifdef __FreeBSD__
-> +#include <libutil.h>
+> +#include <sys/sysctl.h>
 > +#include <sys/user.h>
 > +#endif
 >
->  IntervalTreeRoot *read_self_maps(void)
->  {
-> @@ -80,9 +84,44 @@ IntervalTreeRoot *read_self_maps(void)
->      g_strfreev(lines);
->      g_free(maps);
+>  uintptr_t mmap_min_addr;
 >
-> +    return root;
+> @@ -31,6 +35,15 @@ static void __attribute__((constructor)) init(void)
+>          fclose(fp);
+>      }
+>      mmap_min_addr =3D min_addr;
 > +#elif defined(__FreeBSD__)
-> +    int n =3D 0;
-> +    struct kinfo_vmentry *entries =3D kinfo_getvmmap(getpid(), &n);
-> +    IntervalTreeRoot *root;
+> +    int mib[] =3D { CTL_KERN, KERN_PROC, KERN_PROC_VM_LAYOUT, getpid() }=
+;
+> +    struct kinfo_vm_layout info;
+> +    size_t info_len =3D sizeof(info);
 > +
-> +    if (!entries) {
-> +        return NULL;
-> +    }
-> +    root =3D g_new0(IntervalTreeRoot, 1);
-> +
-> +    for (int i =3D 0; i < n; ++i) {
-> +        struct kinfo_vmentry *k =3D &entries[i];
-> +        size_t path_len =3D strnlen(k->kve_path, sizeof(k->kve_path)) + =
-1;
-> +        MapInfo *e =3D g_malloc0(sizeof(*e) + path_len);
-> +
-> +        e->itree.start =3D k->kve_start;
-> +        e->itree.last =3D k->kve_end - 1;
-> +
-> +        /* ??? The rest of these fields are only used in linux-user. */
-> +        e->dev =3D k->kve_vn_fsid_freebsd11;
-> +        e->inode =3D k->kve_vn_fileid;
-> +        e->offset =3D k->kve_offset;
-> +        e->is_read =3D k->kve_protection & KVME_PROT_READ;
-> +        e->is_write =3D k->kve_protection & KVME_PROT_WRITE;
-> +        e->is_exec =3D k->kve_protection & KVME_PROT_EXEC;
-> +        e->is_priv =3D k->kve_flags & KVME_FLAG_COW;
-> +        if (path_len) {
-> +            e->path =3D memcpy(e + 1, k->kve_path, path_len);
-> +        }
-> +
-> +        interval_tree_insert(&e->itree, root);
-> +    }
-> +
-> +    free(entries);
->      return root;
+> +    mmap_min_addr =3D
+> +        (sysctl(mib, ARRAY_SIZE(mib), &info, &info_len, NULL, 0) < 0
+> +         ? qemu_real_host_page_size()
+> +         : info.kvm_min_user_addr);
 >  #else
-> -    return NULL;
-> +# error
+>  # error
 >  #endif
->  }
+> --
+> 2.43.0
 >
-> diff --git a/common-user/meson.build b/common-user/meson.build
-> index 831a7273fb..5e041de55e 100644
-> --- a/common-user/meson.build
-> +++ b/common-user/meson.build
-> @@ -10,3 +10,8 @@ user_ss.add(files(
->    'safe-syscall-error.c',
->    'selfmap.c',
->  ))
-> +
-> +if host_os =3D=3D 'freebsd'
-> +  libutil =3D cc.find_library('util', required: true)
-> +  user_ss.add(libutil)
-> +endif
 >
 
-I have an implementation of this in bltiz. I'll compare the two. Do you wan=
-t
-me to send that to the list, or can you look at
-https://github.com/qemu-bsd-user/qemu-bsd-user/commit/a19b96e7719d570d9a8b6=
-05f2e89d59750110990
-and
-https://github.com/qemu-bsd-user/qemu-bsd-user/commit/f6708d9cd0ee6e3d950ce=
-2adc9a36ecd9b3eb7cc
-to see what I've done. It works, and I think it's right. I used the sysctl
-interface directly rather than the
-kinfo_getvmmap to avoid the libutil dependency, but maybe that's not a big
-concern.
-
-I'll go over the rest of this series in a bit. This one caught my eye when
-catching up on email.
-
-Warner
-
---00000000000033dc21065314d70d
+--0000000000002b42900653153fae
 Content-Type: text/html; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 
 <div dir=3D"ltr"><div dir=3D"ltr"><br></div><br><div class=3D"gmail_quote g=
 mail_quote_container"><div dir=3D"ltr" class=3D"gmail_attr">On Sat, May 30,=
- 2026 at 3:13=E2=80=AFPM Richard Henderson &lt;<a href=3D"mailto:richard.he=
+ 2026 at 3:12=E2=80=AFPM Richard Henderson &lt;<a href=3D"mailto:richard.he=
 nderson@linaro.org">richard.henderson@linaro.org</a>&gt; wrote:<br></div><b=
 lockquote class=3D"gmail_quote" style=3D"margin:0px 0px 0px 0.8ex;border-le=
-ft:1px solid rgb(204,204,204);padding-left:1ex">Use kinfo_getvmmap from -lu=
-ser.<br>
+ft:1px solid rgb(204,204,204);padding-left:1ex">Use sysctl to fetch the vm =
+layout of the current process.<br>
 <br>
 Signed-off-by: Richard Henderson &lt;<a href=3D"mailto:richard.henderson@li=
 naro.org" target=3D"_blank">richard.henderson@linaro.org</a>&gt;<br>
 ---<br>
-=C2=A0common-user/selfmap.c=C2=A0 =C2=A0| 41 ++++++++++++++++++++++++++++++=
-++++++++++-<br>
-=C2=A0common-user/meson.build |=C2=A0 5 +++++<br>
-=C2=A02 files changed, 45 insertions(+), 1 deletion(-)<br>
+=C2=A0common-user/mmap-min-addr.c | 13 +++++++++++++<br>
+=C2=A01 file changed, 13 insertions(+<br></blockquote><div><br></div><div>R=
+eviewed-by: Warner Losh &lt;<a href=3D"mailto:imp@bsdimp.com">imp@bsdimp.co=
+m</a>&gt;</div><div><br></div><div>I hardcoded my version to qemu_real_host=
+_page_size(), but this is better</div><div>than what=C2=A0I&#39;d done. It =
+keeps it from being 0, and the FreeBSD kernel won&#39;t</div><div>map anyth=
+ing between this value and info.kvm_min_user_addr. I do know</div><div>that=
+ x86 and aarch64 these are two are the same value, and those are the</div><=
+div>only hosts I care about at the moment (until I get through the upstream=
+ing</div><div>backlog).</div><div>=C2=A0</div><blockquote class=3D"gmail_qu=
+ote" style=3D"margin:0px 0px 0px 0.8ex;border-left:1px solid rgb(204,204,20=
+4);padding-left:1ex">
+diff --git a/common-user/mmap-min-addr.c b/common-user/mmap-min-addr.c<br>
+index b2b3762386..830c6f66a0 100644<br>
+--- a/common-user/mmap-min-addr.c<br>
++++ b/common-user/mmap-min-addr.c<br>
+@@ -5,6 +5,10 @@<br>
 <br>
-diff --git a/common-user/selfmap.c b/common-user/selfmap.c<br>
-index a1b88dee66..151d066801 100644<br>
---- a/common-user/selfmap.c<br>
-+++ b/common-user/selfmap.c<br>
-@@ -9,6 +9,10 @@<br>
 =C2=A0#include &quot;qemu/osdep.h&quot;<br>
-=C2=A0#include &quot;qemu/cutils.h&quot;<br>
-=C2=A0#include &quot;user/selfmap.h&quot;<br>
+=C2=A0#include &quot;user/mmap-min-addr.h&quot;<br>
 +#ifdef __FreeBSD__<br>
-+#include &lt;libutil.h&gt;<br>
++#include &lt;sys/sysctl.h&gt;<br>
 +#include &lt;sys/user.h&gt;<br>
 +#endif<br>
 <br>
-=C2=A0IntervalTreeRoot *read_self_maps(void)<br>
-=C2=A0{<br>
-@@ -80,9 +84,44 @@ IntervalTreeRoot *read_self_maps(void)<br>
-=C2=A0 =C2=A0 =C2=A0g_strfreev(lines);<br>
-=C2=A0 =C2=A0 =C2=A0g_free(maps);<br>
+=C2=A0uintptr_t mmap_min_addr;<br>
 <br>
-+=C2=A0 =C2=A0 return root;<br>
+@@ -31,6 +35,15 @@ static void __attribute__((constructor)) init(void)<br>
+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0fclose(fp);<br>
+=C2=A0 =C2=A0 =C2=A0}<br>
+=C2=A0 =C2=A0 =C2=A0mmap_min_addr =3D min_addr;<br>
 +#elif defined(__FreeBSD__)<br>
-+=C2=A0 =C2=A0 int n =3D 0;<br>
-+=C2=A0 =C2=A0 struct kinfo_vmentry *entries =3D kinfo_getvmmap(getpid(), &=
-amp;n);<br>
-+=C2=A0 =C2=A0 IntervalTreeRoot *root;<br>
++=C2=A0 =C2=A0 int mib[] =3D { CTL_KERN, KERN_PROC, KERN_PROC_VM_LAYOUT, ge=
+tpid() };<br>
++=C2=A0 =C2=A0 struct kinfo_vm_layout info;<br>
++=C2=A0 =C2=A0 size_t info_len =3D sizeof(info);<br>
 +<br>
-+=C2=A0 =C2=A0 if (!entries) {<br>
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 return NULL;<br>
-+=C2=A0 =C2=A0 }<br>
-+=C2=A0 =C2=A0 root =3D g_new0(IntervalTreeRoot, 1);<br>
-+<br>
-+=C2=A0 =C2=A0 for (int i =3D 0; i &lt; n; ++i) {<br>
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 struct kinfo_vmentry *k =3D &amp;entries[i];<b=
-r>
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 size_t path_len =3D strnlen(k-&gt;kve_path, si=
-zeof(k-&gt;kve_path)) + 1;<br>
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 MapInfo *e =3D g_malloc0(sizeof(*e) + path_len=
-);<br>
-+<br>
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 e-&gt;itree.start =3D k-&gt;kve_start;<br>
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 e-&gt;itree.last =3D k-&gt;kve_end - 1;<br>
-+<br>
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 /* ??? The rest of these fields are only used =
-in linux-user. */<br>
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 e-&gt;dev =3D k-&gt;kve_vn_fsid_freebsd11;<br>
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 e-&gt;inode =3D k-&gt;kve_vn_fileid;<br>
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 e-&gt;offset =3D k-&gt;kve_offset;<br>
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 e-&gt;is_read =3D k-&gt;kve_protection &amp; K=
-VME_PROT_READ;<br>
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 e-&gt;is_write =3D k-&gt;kve_protection &amp; =
-KVME_PROT_WRITE;<br>
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 e-&gt;is_exec =3D k-&gt;kve_protection &amp; K=
-VME_PROT_EXEC;<br>
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 e-&gt;is_priv =3D k-&gt;kve_flags &amp; KVME_F=
-LAG_COW;<br>
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 if (path_len) {<br>
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 e-&gt;path =3D memcpy(e + 1, k-&=
-gt;kve_path, path_len);<br>
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 }<br>
-+<br>
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 interval_tree_insert(&amp;e-&gt;itree, root);<=
-br>
-+=C2=A0 =C2=A0 }<br>
-+<br>
-+=C2=A0 =C2=A0 free(entries);<br>
-=C2=A0 =C2=A0 =C2=A0return root;<br>
++=C2=A0 =C2=A0 mmap_min_addr =3D<br>
++=C2=A0 =C2=A0 =C2=A0 =C2=A0 (sysctl(mib, ARRAY_SIZE(mib), &amp;info, &amp;=
+info_len, NULL, 0) &lt; 0<br>
++=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0? qemu_real_host_page_size()<br>
++=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0: info.kvm_min_user_addr);<br>
 =C2=A0#else<br>
--=C2=A0 =C2=A0 return NULL;<br>
-+# error<br>
+=C2=A0# error<br>
 =C2=A0#endif<br>
-=C2=A0}<br>
+-- <br>
+2.43.0<br>
 <br>
-diff --git a/common-user/meson.build b/common-user/meson.build<br>
-index 831a7273fb..5e041de55e 100644<br>
---- a/common-user/meson.build<br>
-+++ b/common-user/meson.build<br>
-@@ -10,3 +10,8 @@ user_ss.add(files(<br>
-=C2=A0 =C2=A0&#39;safe-syscall-error.c&#39;,<br>
-=C2=A0 =C2=A0&#39;selfmap.c&#39;,<br>
-=C2=A0))<br>
-+<br>
-+if host_os =3D=3D &#39;freebsd&#39;<br>
-+=C2=A0 libutil =3D cc.find_library(&#39;util&#39;, required: true)<br>
-+=C2=A0 user_ss.add(libutil)<br>
-+endif<br></blockquote><div><br></div><div>I have an implementation of this=
- in bltiz.=C2=A0I&#39;ll compare the two. Do you want</div><div>me to send =
-that to the list, or can you look at</div><div><a href=3D"https://github.co=
-m/qemu-bsd-user/qemu-bsd-user/commit/a19b96e7719d570d9a8b605f2e89d597501109=
-90">https://github.com/qemu-bsd-user/qemu-bsd-user/commit/a19b96e7719d570d9=
-a8b605f2e89d59750110990</a></div><div>and</div><div><a href=3D"https://gith=
-ub.com/qemu-bsd-user/qemu-bsd-user/commit/f6708d9cd0ee6e3d950ce2adc9a36ecd9=
-b3eb7cc">https://github.com/qemu-bsd-user/qemu-bsd-user/commit/f6708d9cd0ee=
-6e3d950ce2adc9a36ecd9b3eb7cc</a></div><div>to see what I&#39;ve done. It wo=
-rks, and I think it&#39;s right. I used the sysctl interface directly rathe=
-r than the</div><div>kinfo_getvmmap to avoid the libutil dependency, but ma=
-ybe that&#39;s not a big concern.</div><div><br></div><div>I&#39;ll go over=
- the rest of this series in a bit. This one caught my eye when catching up =
-on email.</div><div><br></div><div>Warner</div></div></div>
+</blockquote></div></div>
 
---00000000000033dc21065314d70d--
+--0000000000002b42900653153fae--
 
