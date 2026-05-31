@@ -4,86 +4,85 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9B553CD6E55
-	for <qemu-devel@archiver.kernel.org>; Sun, 31 May 2026 21:32:10 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 73FE3CD6E55
+	for <qemu-devel@archiver.kernel.org>; Sun, 31 May 2026 21:33:14 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wTnkl-0007s4-Qa; Sun, 31 May 2026 17:31:27 -0400
+	id 1wTnmM-0008Fp-JJ; Sun, 31 May 2026 17:33:06 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wTnkk-0007rY-3R
- for qemu-devel@nongnu.org; Sun, 31 May 2026 17:31:26 -0400
-Received: from mail-wm1-x331.google.com ([2a00:1450:4864:20::331])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wTnmK-0008Fh-Uy
+ for qemu-devel@nongnu.org; Sun, 31 May 2026 17:33:05 -0400
+Received: from mail-wm1-x335.google.com ([2a00:1450:4864:20::335])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wTnki-0002UZ-He
- for qemu-devel@nongnu.org; Sun, 31 May 2026 17:31:25 -0400
-Received: by mail-wm1-x331.google.com with SMTP id
- 5b1f17b1804b1-490a7627033so5749925e9.0
- for <qemu-devel@nongnu.org>; Sun, 31 May 2026 14:31:23 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wTnmJ-0003LN-He
+ for qemu-devel@nongnu.org; Sun, 31 May 2026 17:33:04 -0400
+Received: by mail-wm1-x335.google.com with SMTP id
+ 5b1f17b1804b1-490a7629380so6832955e9.0
+ for <qemu-devel@nongnu.org>; Sun, 31 May 2026 14:33:03 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1780263083; x=1780867883; darn=nongnu.org;
+ d=linaro.org; s=google; t=1780263182; x=1780867982; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:references:cc:to
  :content-language:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=52YR4vIwH5uaicviTHCbMKXYNptwD2H6O2cWTaClfiE=;
- b=rvckZLmbDRMIenGgUUoBY9uBCFE3qSfNAQL9d2U78lRNEFdtJTe7GQYdIUwDskfXCZ
- 1o5emfPb69vg119eK95geCUYZe3aDgJzpaiihLm6U8Cc7q69v27Ob+GsYAHmsNhafS0l
- I9wsC+uXDyRQ2ZedwhS5uGm8nzzINr9ZYQyCq+u8Ute0f6QRC5IKrHv5oQLgIIOW1mai
- js77p651H/hvWg3Izx/fb/chyG8tgy+wwch57B4COxwMVA01X8cejCwdnJmEqLJfV2M8
- gh6eKKkfzgWhw2bgbcglzHqgBFJJkOjCk34Qaq0CDaN671y//scdkUKqi/emqpKGiLnj
- as0w==
+ bh=dCkE/F1GKuGxgYCcb8cb4qsK2Gk7UDCq+2NWT7B+q54=;
+ b=W94gXTtqfZrAECHVDkgIc66WC57+iBnOvCTw/gHORRhzLHF52gev7qSoIA8CRr3gXt
+ N9oXjXXPIePu9XH6h7OZ/EIQVfsiENrJi8uCQkJ305iV4oWy4bMg6qxMjeOxfNRDbUFw
+ mv8aOGbSGPYDr5GmLbm6fbXt0wvtHEkmh9/vnPLbSr0YremcXoomNvhA3KnnT0PZXk7H
+ 7Xae0kHBF9YpyLV1r/0eKaSVz+zF6aVn7o4kavGp3eQlJFybXZAWPc/6eOvgzu+GbgZ8
+ 80Upu8JzryBMCvsCTLZMTzQxfCoGJPgU3ugtt8HDbDAMXm0vRTGy1a1cGfJzczFBpxyT
+ 22Rg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1780263083; x=1780867883;
+ d=1e100.net; s=20251104; t=1780263182; x=1780867982;
  h=content-transfer-encoding:in-reply-to:from:references:cc:to
  :content-language:subject:user-agent:mime-version:date:message-id
  :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=52YR4vIwH5uaicviTHCbMKXYNptwD2H6O2cWTaClfiE=;
- b=aWg0KUlHWUlq69d7OsVJbcXqnCnAM4/qYMJG0YEbaXWa/wT4K/f7sdKt5ab9XZELy5
- HXHu8VCN8rwbz9CQM1kPq+kdKuoG76nIHtd02Sf9YDNn+FW834hvD/I7qQkGRNaloHkE
- pD1FMozs2cOO+rnpAN8QR+Kf5YgI+LiuxAT6i86wu9alwg3PCNWVbYeGPLtEVaSOkN1r
- lQbqVxPggDXXSbNoAoqqxVpeBN0+VLaffLtcoX2P0fJbWltCcereOC9zF4w/iUbE1Vp0
- IWDPXbfeUjCNc/jsXLiKI+PYivNdjgfczqDtyWw4LMzpjVEKHFyv6tqnpZTLWQ0HGW6T
- aekA==
+ bh=dCkE/F1GKuGxgYCcb8cb4qsK2Gk7UDCq+2NWT7B+q54=;
+ b=ZsbCydeFHwBBEMNSEwdaqcHRQBWusI+E3O4ko6rCbMmXo++keMoyYA6ArhsvwpKddO
+ 7Tpox/yH4MN44OqlG3cANB8yp16C60+odLIbU3lN/eJlC+qCZglEPVFqwEP/8Hsz6pva
+ Ffw55CVWuCTDtdzQyT3x7eYTqm0NBVgn+nnXGf1Qwv31+68sUwFrsrm4/vIR324+4Bb1
+ cfK/7cA5Lj4ZxcqFP8EK0F9JGkrwK/eg+sbjME4EF5Y6WlOS/zOIcOuj9OZpPzPWaoy3
+ 6GCODlV6TYoHNM2ebUtHrzn1E8RD0I9n0zHWX13H8LDHqR9fFcGchJwq7VfDkYw3RDP6
+ qK6A==
 X-Forwarded-Encrypted: i=1;
- AFNElJ+kM32eJzDEBzDbNQYhDIdiIxyxn7HMn/3Nim/eIH4b3/524yGnMe5UBBZ0lEJ/BFi6YPdYSh/WAveh@nongnu.org
-X-Gm-Message-State: AOJu0YzCdk7SgrEJHgSB33CIwLlJTGI9ASzoMSETXdmLQwOEpXHOZvsa
- M/kQgcHM0ScFYWyg+zykWkUtYcdetLNlcDSne9u6hLxaY1gRcygEHYBGJeLtX4wBA8E=
-X-Gm-Gg: Acq92OE6QJAUfH1hp6D37C2BeuXKroYKBITHcqyISoYx9BMk3ShhCcvW09GtGf1BGIs
- dm7TKb6A55paQ0W/A9tZZlzq3bBSaun9H0JwI0mBVGeLHnDilO8gHcsXgoRG1KxbHCdGTrrf7Qf
- b01eolaYb2aMfaj+WoS2j3k3+IcySFzSXBp9uo8tFy7ufQz9gBvR9KWbvsaI3PAYwIIU6zEhkyr
- tHqM/OqUFZdgt+7vTxr9JqxJmPqrA4Cll670+PsZJOusKLPTGJB+lS/fo8DFNH8ezTCBN/5MHQS
- c+x7lzQbYEb6EJciKRDh6fEUdVEWMC4Dv/XTsEu5tTvlO2N2zzGCHgPcPclKZeawGV/OnF1qMP3
- RmyoZqYMsowslUs3MEC1mSV7xAk/sGD9VbHEA+Jv7iurd4kcy4bzREzszuKFkEqTqCRJF5sl4rv
- P1gPe0+u2MOQKRaBW1UgYa5sy5PwCjanPdOvvh1n3pxeAjFbQ4ElhPZYVggTZ6mnxyT/S7Nijjm
- hxX
-X-Received: by 2002:a05:600c:4f08:b0:48a:581c:ead with SMTP id
- 5b1f17b1804b1-490a290da24mr128772265e9.10.1780263082642; 
- Sun, 31 May 2026 14:31:22 -0700 (PDT)
+ AFNElJ+88f5XUzhu5OwEohw1+uYfab0ydzU46jCNMlW1FrhVuSI80lU3sIjlm6f6zTNE5NPoSzF/aIxiCNCb@nongnu.org
+X-Gm-Message-State: AOJu0YwGKYvogfC3ashHuztGACQlkWxepDsfdp/O5+gVgnQJeUcHz3ch
+ 1GTUUhHUJo0yEAqcx2Q4jZo0BPksAo3ysXb3EYneYD57kvcOmzPCEukx/QljHjCImls=
+X-Gm-Gg: Acq92OE05VyqiyP4jrTXRKKbEcoQzvW9QaNLpi0/jHBKKbYq/ZqLcFpPkVK6PafMtUH
+ 1RAJkslspFAQi9YOCtViBbBBmQXoDulf7YyucZmCRmcZttr37s/TdBu8hIlmyp/T6VCSae1oCNa
+ Wg30b2SHek2e04kk8ZQM8k1hF1N1Pjav5fNf+0rZWHnBwtYIEo7KUyK773hK0ivbeUAltLJWFxf
+ H4A4atKmHGbWt11PJ06SCNS/2FcbnIwMz3q7RPEIZBEa3nUcGkg8/o+Y6E4LhD60gGepA7qHPYD
+ raAKauF3JyOfTLKnG/jtDsejS9Ba25G6tjKOV2qkiXVgEYP02+boR4XvXfqAN96M0kfwHXPBMCc
+ Yt8IquFtGBZEA7ni9x/q+zitHLkq9YOJe+In2YqnZSNy1cnKcitp0zS1QmovLrtDgWxddSOJ1Et
+ X1xlIYXlLJEZNU4BEkAbvBgQc9JUSfpEM8GNPKR5GJ3cNJbQ1uuA/e7CT1Wmo6poiHLjQ2ok1eI
+ hfH
+X-Received: by 2002:a05:600c:1d11:b0:48e:8741:fd42 with SMTP id
+ 5b1f17b1804b1-490a291fa6fmr151217035e9.12.1780263181596; 
+ Sun, 31 May 2026 14:33:01 -0700 (PDT)
 Received: from [192.168.69.207] (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-4909c0498e0sm85683455e9.0.2026.05.31.14.31.21
+ 5b1f17b1804b1-4909c967c77sm218703535e9.1.2026.05.31.14.33.00
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Sun, 31 May 2026 14:31:21 -0700 (PDT)
-Message-ID: <c71f8159-5c3d-4e02-aa08-7d979f5454ab@linaro.org>
-Date: Sun, 31 May 2026 23:31:20 +0200
+ Sun, 31 May 2026 14:33:00 -0700 (PDT)
+Message-ID: <b9a9fe50-ca85-47cd-9672-c56f2d51f3ec@linaro.org>
+Date: Sun, 31 May 2026 23:33:00 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v7 38/38] target/hexagon: Add hex_interrupts support
+Subject: Re: [PATCH v7 35/38] target/hexagon: Define MMU_INDEX TB_FLAGS field
 Content-Language: en-US
 To: Brian Cain <brian.cain@oss.qualcomm.com>, qemu-devel@nongnu.org
 Cc: matheus.bernardino@oss.qualcomm.com, pierrick.bouvier@oss.qualcomm.com,
- ltaylorsimpson@gmail.com, Brian Cain <bcain@quicinc.com>,
- Sid Manning <sidneym@quicinc.com>, Michael Lambert <mlambert@quicinc.com>
+ ltaylorsimpson@gmail.com
 References: <20260529215554.606133-1-brian.cain@oss.qualcomm.com>
- <20260529215554.606133-39-brian.cain@oss.qualcomm.com>
+ <20260529215554.606133-36-brian.cain@oss.qualcomm.com>
 From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <20260529215554.606133-39-brian.cain@oss.qualcomm.com>
+In-Reply-To: <20260529215554.606133-36-brian.cain@oss.qualcomm.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::331;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x331.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::335;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x335.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -107,20 +106,14 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On 29/5/26 23:55, Brian Cain wrote:
-> From: Brian Cain <bcain@quicinc.com>
+> Declare the MMU_INDEX field in TB_FLAGS and use it to extract
+> the mmu index in translate.c initialization.
 > 
-> Co-authored-by: Taylor Simpson <ltaylorsimpson@gmail.com>
-> Co-authored-by: Sid Manning <sidneym@quicinc.com>
-> Co-authored-by: Michael Lambert <mlambert@quicinc.com>
 > Signed-off-by: Brian Cain <brian.cain@oss.qualcomm.com>
 > ---
->   target/hexagon/cpu.h            |   2 +
->   target/hexagon/hex_interrupts.h |  15 ++
->   target/hexagon/cpu.c            |   4 +
->   target/hexagon/hex_interrupts.c | 371 ++++++++++++++++++++++++++++++++
->   4 files changed, 392 insertions(+)
->   create mode 100644 target/hexagon/hex_interrupts.h
->   create mode 100644 target/hexagon/hex_interrupts.c
+>   target/hexagon/cpu.h       | 1 +
+>   target/hexagon/translate.c | 2 +-
+>   2 files changed, 2 insertions(+), 1 deletion(-)
 
-Patch #28 mentions NMI, how is it handled?
+Squash with patch #33?
 
