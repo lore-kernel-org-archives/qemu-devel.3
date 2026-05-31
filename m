@@ -4,185 +4,95 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id CF96ACD6E57
-	for <qemu-devel@archiver.kernel.org>; Sun, 31 May 2026 22:26:30 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7B56BCD6E57
+	for <qemu-devel@archiver.kernel.org>; Sun, 31 May 2026 22:52:41 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wTobD-0002Ty-Ie; Sun, 31 May 2026 18:25:39 -0400
+	id 1wTp0c-0005LF-VZ; Sun, 31 May 2026 18:51:55 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <deller@gmx.de>) id 1wTob5-0002Tg-JI
- for qemu-devel@nongnu.org; Sun, 31 May 2026 18:25:31 -0400
-Received: from mout.gmx.net ([212.227.15.19])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <deller@gmx.de>) id 1wTob3-0001kl-3u
- for qemu-devel@nongnu.org; Sun, 31 May 2026 18:25:31 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmx.de;
- s=s31663417; t=1780266326; x=1780871126; i=deller@gmx.de;
- bh=GhtXO41NDJldsfTpQ02qnWBSnzsvy4UiLdtWs9dm7XQ=;
- h=X-UI-Sender-Class:Message-ID:Date:MIME-Version:Subject:To:Cc:
- References:From:In-Reply-To:Content-Type:
- Content-Transfer-Encoding:cc:content-transfer-encoding:
- content-type:date:from:message-id:mime-version:reply-to:subject:
- to;
- b=kHAO85JibmLRBuSnzr7YF3QUFOyJOJUD4wtz/JCqF92sB9ACMMxdcJsvxgi7a+sO
- ZYUgK13Txe6kyowYzEFAnHFmsj0OVfQPuG6bvdopA/fLXuIIbBworpNemGq7BfTBS
- BydQfpoK8lvKBfHkfLMee51igPHTh5j6KMsqhOAN/aZuyLN60dYWsSJiQqcczgCTD
- d/S+/hQ4XSMMzrOjQDTFZq0YEPll2Qu6Fr37N/9xxpuEf6DgLxgmphfNDx4xn5xEj
- 4AY4fmchAfRBmbrfEkVqrDj8C86xzGw7jdVT0UcKIyi8CkEX3n5YaxE+B9/eWf2qn
- 4NW6WHp6OG3Us2Pc+g==
-X-UI-Sender-Class: 724b4f7f-cbec-4199-ad4e-598c01a50d3a
-Received: from client.hidden.invalid by mail.gmx.net (mrgmx005
- [212.227.17.190]) with ESMTPSA (Nemesis) id 1MFsUv-1wVh5042UJ-0001Ct; Mon, 01
- Jun 2026 00:25:26 +0200
-Message-ID: <a7deb6a9-6192-4b16-8374-506c79729417@gmx.de>
-Date: Mon, 1 Jun 2026 00:25:24 +0200
+ (Exim 4.90_1) (envelope-from <shentey@gmail.com>) id 1wTp0b-0005L2-PY
+ for qemu-devel@nongnu.org; Sun, 31 May 2026 18:51:53 -0400
+Received: from mail-wr1-x42c.google.com ([2a00:1450:4864:20::42c])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <shentey@gmail.com>) id 1wTp0a-0002Du-18
+ for qemu-devel@nongnu.org; Sun, 31 May 2026 18:51:53 -0400
+Received: by mail-wr1-x42c.google.com with SMTP id
+ ffacd0b85a97d-45ef4223be7so1263263f8f.2
+ for <qemu-devel@nongnu.org>; Sun, 31 May 2026 15:51:51 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=gmail.com; s=20251104; t=1780267910; x=1780872710; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:references
+ :in-reply-to:subject:cc:to:from:date:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=tVD8pp94OInapvhizfEjV8BMP7eAhx3/9Ah5xRZ7yB8=;
+ b=WbkGS/6h6UpF3yik1IL7XvNq4at8nveqnQD12ZCxgF2dhVDpag40kZfL8la5ZmPNkd
+ JdvTKoq3WvLhYYSL4TssM6b630fkRn4CcHsForwnqrO/z8GBgOzmeIb1bUGQ66RvUdRX
+ VxAQ9nxsma4A/lKoqxA16BLYm+yYJQxNH/SHAKfL1/eaFLMjxO/Gslw71pyj2oa8h7si
+ p9zm8hXL9TNJ5kHt0mduiW1Hfj3ukFYmspDcuEBbU3FKI4NIedTQHMfA7wTkZiynH/Jo
+ L8dXvQgkI6QTjseBlFDCILPw/SFtnIA8Ic0RzwO0kom56uuHS3qWeYY+quNRQ4kMpE6D
+ wHCg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1780267910; x=1780872710;
+ h=content-transfer-encoding:mime-version:message-id:references
+ :in-reply-to:subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=tVD8pp94OInapvhizfEjV8BMP7eAhx3/9Ah5xRZ7yB8=;
+ b=gvKe4gDeQdJSh489YqBIxusdpk0YVp1+TvJMZNLT/jeE+coeYujsGfttpXOorWQji+
+ jJMD17zeGnpISupNwNFLCKXMlO4PXWvaxGZwaxTLdaMvNkSVu1b8o8O5RrbFxVbYi9Wy
+ +EXKoCd5struPSuVgr/V47/bPKtRFlYUxQa1oZf3+u0BeXypkhBxPQqZlimZhONQQMiV
+ ree0WtKW2RCXXTjHP5maO2j1P1YePglvue5W7dV9mF8qnNlJtRRryqHg/iaudRePjKIm
+ B5jVVfdSutbDlGUUFgX3GQI5x7Y0sjxXZn8F774+6cqgQxkUYs0ZUtyHYolWDwtZmZ9E
+ TSOA==
+X-Forwarded-Encrypted: i=1;
+ AFNElJ9UvRdMorhT5kf/QF9CZLM8j3rvnKctv6SyXChNDZa8d/j4/Lb3VYxZWqW5dZNhi1YAgCd7iMvARgzi@nongnu.org
+X-Gm-Message-State: AOJu0YyOLjxr0C/EoOjYePKPKpbNcGQgN9JUjc8sG1mMOUw1+4pUFlyJ
+ 2GncKZS+tSBIV9o1tnZhaTRhejHavBaZSIMfnxB2TphmTMH/qb+I7aYp
+X-Gm-Gg: Acq92OEUwRTtnGwpgpX6CsHjiohuUDarHvYfMt/ssVxMjUAxwypJ0IoAIpm4Jg6nY6I
+ b/ZjSuZej/PoqVfWXpjQrFG5W1KbLTDw8gOwc3WtCODnPDZefyo7rCV9QGb28RQjMS8LAzhhZRg
+ DW1rz3ccJCAe2gjgBaicCwKMeUUnKC2yst06zXYrYa5PUnihDnQLo3+/kfn+43Rnf9/kgfCXUYJ
+ ep60sCdfwt+/S3NEjfW13kiSJxz76ipEn56zvIcezqWIw49Lh2fPO5gv2OudKZMFETG43ktkT3y
+ NNb7nggpYjeRtcGjx7PF2AuF9eE8BYnQBKL4M/yMAdkXZsOeNld4a8qieALHe3EiHPH3LYpbycy
+ GPgH6xTTJm/Yq6G2IXmCWZwY2sTCHyG+fYM7Vgac2+T/3IWf03nLxdru3voD/hslo2c+M+DQ5Bn
+ coHQ2iO50qdC5850FnDaUSINIge0ZibRYh8YJU6dMp9smnK0Ex+/zN6IUrVdWGQp+X/+Gzp80l2
+ nxdBVpHXwv9a8x1DFkPPeMxm/R4PXgMYJSwizBj5hCWTlkI+VKTGvMy
+X-Received: by 2002:a05:6000:22c7:b0:45e:f61f:7952 with SMTP id
+ ffacd0b85a97d-45ef6b0ed94mr16385156f8f.12.1780267909491; 
+ Sun, 31 May 2026 15:51:49 -0700 (PDT)
+Received: from ehlo.thunderbird.net
+ (dynamic-2a02-3100-1de4-8e00-0110-758a-6876-5140.310.pool.telefonica.de.
+ [2a02:3100:1de4:8e00:110:758a:6876:5140])
+ by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-45ef3559645sm19585771f8f.26.2026.05.31.15.51.48
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Sun, 31 May 2026 15:51:49 -0700 (PDT)
+Date: Sun, 31 May 2026 22:51:45 +0000
+From: Bernhard Beschow <shentey@gmail.com>
+To: Gaurav Sharma <gaurav.sharma_7@nxp.com>,
+ "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>
+CC: "pbonzini@redhat.com" <pbonzini@redhat.com>,
+ "peter.maydell@linaro.org" <peter.maydell@linaro.org>
+Subject: =?US-ASCII?Q?RE=3A_=5BEXT=5D_Re=3A_=5BPATCHv1_0/7?=
+ =?US-ASCII?Q?=5D_hw/arm=3A_Adding_Cortex-M7?=
+ =?US-ASCII?Q?_Asymmetric_Multiprocessing_boot_support_for_i=2EMX8MP?=
+In-Reply-To: <AM0PR04MB4370F0A97B0CF2363BFE9CA187082@AM0PR04MB4370.eurprd04.prod.outlook.com>
+References: <20260519175635.3245229-1-gaurav.sharma_7@nxp.com>
+ <D6AE3A65-8ED9-47B9-B7D5-51D8500B47AF@gmail.com>
+ <AM0PR04MB4370F0A97B0CF2363BFE9CA187082@AM0PR04MB4370.eurprd04.prod.outlook.com>
+Message-ID: <A626B2F1-D50B-4E0B-857C-2E101B6FFB1A@gmail.com>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 05/13] linux-user: Use PGBRange for commpage
-To: Richard Henderson <richard.henderson@linaro.org>, qemu-devel@nongnu.org
-Cc: imp@bsdimp.com
-References: <20260530211248.375318-1-richard.henderson@linaro.org>
- <20260530211248.375318-6-richard.henderson@linaro.org>
-Content-Language: en-US
-From: Helge Deller <deller@gmx.de>
-Autocrypt: addr=deller@gmx.de; keydata=
- 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
-In-Reply-To: <20260530211248.375318-6-richard.henderson@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Type: text/plain;
+ charset=utf-8
 Content-Transfer-Encoding: quoted-printable
-X-Provags-ID: V03:K1:mhLoI/wibbunBWYxoycY+9bteHiN2/5bgN9WW5AuEEzmwleqW3K
- DxXEo7HvuUwMtsGKxEpzs2wVi47G1O0NrQ+eIXZyPm5e0EGhY58WrRzECKPdUbelWC0IcnV
- jc13jyx2XHs+Oz6TUGVmy7Ls9Y4wIYA1K6sReaVdslZZvXn1PCC+hA0H3MikP86FQqaGeHv
- fVdCTA+A0rV2NF0NbOhpQ==
-UI-OutboundReport: notjunk:1;M01:P0:HcqFJU3wPWA=;BZw8mAaYFhBH46w1jrHCuloOMsC
- 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
-Received-SPF: pass client-ip=212.227.15.19; envelope-from=deller@gmx.de;
- helo=mout.gmx.net
-X-Spam_score_int: -27
-X-Spam_score: -2.8
+Received-SPF: pass client-ip=2a00:1450:4864:20::42c;
+ envelope-from=shentey@gmail.com; helo=mail-wr1-x42c.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_MSPIKE_H2=0.001, SPF_HELO_NONE=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -199,22 +109,167 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 5/30/26 23:12, Richard Henderson wrote:
-> This simplifies check for no commpage to a NULL pointer
-> check, rather than reserved values for LO_COMMPAGE and
-> HI_COMMPAGE.
->=20
-> Unify {LO,HI}_COMMPAGE into a single COMMPAGE define.
->=20
-> Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
-> ---
->   linux-user/arm/target_elf.h  |  2 +-
->   linux-user/hppa/target_elf.h |  2 +-
->   linux-user/arm/elfload.c     |  2 +-
->   linux-user/elfload.c         | 64 ++++++++++++++----------------------
->   linux-user/hppa/elfload.c    |  4 +--
->   5 files changed, 30 insertions(+), 44 deletions(-)
 
 
-Reviewed-by: Helge Deller <deller@gmx.de>
+Am 27=2E Mai 2026 17:34:33 UTC schrieb Gaurav Sharma <gaurav=2Esharma_7@nx=
+p=2Ecom>:
+>
+>
+>> -----Original Message-----
+>> From: Bernhard Beschow <shentey@gmail=2Ecom>
+>> Sent: 27 May 2026 02:56
+>> To: Gaurav Sharma <gaurav=2Esharma_7@nxp=2Ecom>; qemu-devel@nongnu=2Eor=
+g
+>> Cc: pbonzini@redhat=2Ecom; peter=2Emaydell@linaro=2Eorg
+>> Subject: [EXT] Re: [PATCHv1 0/7] hw/arm: Adding Cortex-M7 Asymmetric
+>> Multiprocessing boot support for i=2EMX8MP
+>>=20
+>> Caution: This is an external email=2E Please take care when clicking li=
+nks or
+>> opening attachments=2E When in doubt, report the message using the 'Rep=
+ort
+>> this email' button
+>>=20
+>>=20
+>> Am 19=2E Mai 2026 17:56:28 UTC schrieb Gaurav Sharma
+>> <gaurav=2Esharma_7@nxp=2Ecom>:
+>> >Changes in v1:
+>> >
+>> >This series adds Asymmetric Multiprocessing (AMP) boot support for the
+>> >Cortex-M7 core on the i=2EMX8MP SoC=2E The M7 firmware can be loaded a=
+nd
+>> >started from Linux running on the Cortex-A53 cores via the remoteproc
+>> >framework=2E
+>> >
+>> >The series introduces the following peripheral models needed for AMP:
+>> >  - GPC (General Power Controller)
+>> >  - GPR (General Purpose Registers)
+>> >  - SRC (System Reset Controller) authored by Bernhard Beschow
+>> ><shentey@gmail=2Ecom>
+>> >  - MU (Messaging Unit)
+>> >  - Extends the CCM with M7 clock outputs and wires into the i=2EMX8MP
+>> >SoC
+>> >  - Enable Cortex-M7 boot in i=2EMX8MP EVK functional test
+>>=20
+>> Awesome work!
+>>=20
+>> I'd like to experiment with this series myself=2E Could there be some "=
+cooking
+>> recipe" in the board documentation for easy reproduction/failsafe tutor=
+ial? Is
+>> there perhaps some Buildroot defconfig with the appropriate support
+>> enabled? Or even better: Are there any binary images that could be used=
+ in a
+>> functional test in addition?
+>>=20
+>
+>Hey Bernhard,=20
+>Thanks for your feedback!
+>
+>There's an application note that covers this use-case (AN5317, referenced=
+ in the rst doc)=2E However, the complete setup requires combining informat=
+ion from multiple sources=2E
+>
+>Requirements to exercise M7 image loading via Linux:
+>
+>1=2E RPMSG-specific device tree with M7 DDR alias - covered in AN5317
+>2=2E Bare-metal ELF executable linked to run from DDR - requires building=
+ from MCUXpresso SDK
+>
+>Building the M7 firmware:
+>
+>1=2E Download the MCUXpresso SDK for i=2EMX8MP
+>2=2E Build a DDR-linked example using the ARM GCC toolchain (e=2Eg=2E, bo=
+ards/evkmimx8mp/driver_examples/uart/polling)
+>3=2E Copy the resulting ELF to the guest Linux filesystem
+>4=2E Load via remoteproc as documented in the rst
+>
+>Currently there isn't a single official document covering the complete en=
+d-to-end flow=2E Users might need to refer two different sources at best=2E=
+ I can add concise build instructions to the rst doc itself, providing a se=
+lf-contained reference=2E How does that sound?
+
+Yes, sounds good! One way to think about it is to provide detailed instruc=
+tions for conducting a manual test for somebody who has never done this bef=
+ore=2E
+
+>
+>Regarding binary images: We can provide a pre-built test ELF for function=
+al testing, though users would still need the appropriate device tree confi=
+guration=2E
+
+I think binary images would only be needed for fully automated functional =
+tests=2E AFAIU this requires kernel support for e=2Eg=2E remoteproc -- do n=
+ormal Linux distributions enable this? Then the device tree blob would need=
+ to be patched and the M7 ELF be injected into the guest=2E I wonder if the=
+ functional testing framework can do this?
+
+Anyhow, this is juat an idea for fully automated tests which QEMU encurage=
+s=2E If it is infeasible it shall not block this series=2E
+
+>
+>> Last but not least: Wouldn't it be useful if you became co-maintainer o=
+f the
+>> imx8mp-evk? Perhaps the two sections in the MAINTAINERS file could be
+>> merged=2E
+>>=20
+>
+>Sure=2E I can add myself to the MAINTAINERS of imx8mp-evk, but what do yo=
+u mean by merging the two sections in the MAINTAINERS file ?
+
+I was thinking about merging the imx8mm and imx8mp sections in the MAINTAI=
+NERS file, similar to the MPS2 and MPS3 family of boards=2E It seems that m=
+ore shared device models might evolve in the future where choosing between =
+imx8mm and imx8mp sections becomes awkward=2E Moreover, when modifying one =
+SoC, the other one should probably be kept in sync=2E Hence it might make s=
+ense to merge the sections=2E What do you think?
+
+>
+>> Best regards,
+>> Bernhard
+>>=20
+>> >
+>> >Signed-off-by: Gaurav Sharma <gaurav=2Esharma_7@nxp=2Ecom>
+>> >
+>> >Bernhard Beschow (1):
+>> >  hw/misc: Add SRC (System Reset Controller) to i=2EMX8MP
+>> >
+>> >Gaurav Sharma (6):
+>> >  hw/misc: Add i=2EMX8MP GPC (General Power Controller) IP
+>> >  hw/misc: Add GPR (General Purpose Register) IP to iMX8MP
+>> >  hw/misc: Add MU (Messaging Unit) IP to i=2EMX8MP device model
+>> >  hw/misc: Extend i=2EMX8MP CCM with Cortex-M7 clock outputs
+>> >  hw/arm: Enable Cortex-M7 AMP boot on i=2EMX8MP
+>> >  tests/functional: Enable Cortex-M7 boot in i=2EMX8MP EVK functional
+>> >test
+>> >
+>> > docs/system/arm/imx8m=2Erst                   |  90 +++-
+>> > hw/arm/Kconfig                              |   4 +
+>> > hw/arm/fsl-imx8mp=2Ec                         | 212 ++++++++++
+>> > hw/misc/Kconfig                             |  12 +
+>> > hw/misc/imx8mp_ccm=2Ec                        |   9 +
+>> > hw/misc/imx8mp_gpc=2Ec                        | 124 ++++++
+>> > hw/misc/imx8mp_gpr=2Ec                        | 129 ++++++
+>> > hw/misc/imx8mp_mu=2Ec                         | 308 ++++++++++++++
+>> > hw/misc/imx8mp_src=2Ec                        | 431 +++++++++++++++++=
++++
+>> > hw/misc/meson=2Ebuild                         |   4 +
+>> > hw/misc/trace-events                        |   5 +
+>> > include/hw/arm/fsl-imx8mp=2Eh                 |  29 +-
+>> > include/hw/misc/imx8mp_ccm=2Eh                |   3 +
+>> > include/hw/misc/imx8mp_gpc=2Eh                |  34 ++
+>> > include/hw/misc/imx8mp_gpr=2Eh                |  56 +++
+>> > include/hw/misc/imx8mp_mu=2Eh                 |  53 +++
+>> > include/hw/misc/imx8mp_src=2Eh                |  32 ++
+>> > tests/functional/aarch64/test_imx8mp_evk=2Epy |   3 +-
+>> > 18 files changed, 1535 insertions(+), 3 deletions(-) create mode
+>> > 100644 hw/misc/imx8mp_gpc=2Ec create mode 100644 hw/misc/imx8mp_gpr=
+=2Ec
+>> > create mode 100644 hw/misc/imx8mp_mu=2Ec create mode 100644
+>> > hw/misc/imx8mp_src=2Ec create mode 100644
+>> include/hw/misc/imx8mp_gpc=2Eh
+>> > create mode 100644 include/hw/misc/imx8mp_gpr=2Eh create mode 100644
+>> > include/hw/misc/imx8mp_mu=2Eh create mode 100644
+>> > include/hw/misc/imx8mp_src=2Eh
+>> >
 
