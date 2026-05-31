@@ -4,94 +4,92 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2F136CD5BD1
-	for <qemu-devel@archiver.kernel.org>; Sun, 31 May 2026 04:45:41 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 58F2ACD6E51
+	for <qemu-devel@archiver.kernel.org>; Sun, 31 May 2026 04:58:59 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wTY3C-0005oT-CZ; Sun, 31 May 2026 00:45:26 -0400
+	id 1wTYFZ-00088x-Ac; Sun, 31 May 2026 00:58:13 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <wlosh@bsdimp.com>) id 1wTY3A-0005nw-7u
- for qemu-devel@nongnu.org; Sun, 31 May 2026 00:45:24 -0400
-Received: from mail-pl1-x62f.google.com ([2607:f8b0:4864:20::62f])
+ (Exim 4.90_1) (envelope-from <wlosh@bsdimp.com>) id 1wTYFX-00088o-HZ
+ for qemu-devel@nongnu.org; Sun, 31 May 2026 00:58:11 -0400
+Received: from mail-pj1-x102f.google.com ([2607:f8b0:4864:20::102f])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <wlosh@bsdimp.com>) id 1wTY38-0001wY-G4
- for qemu-devel@nongnu.org; Sun, 31 May 2026 00:45:23 -0400
-Received: by mail-pl1-x62f.google.com with SMTP id
- d9443c01a7336-2be1dd4af34so137851755ad.1
- for <qemu-devel@nongnu.org>; Sat, 30 May 2026 21:45:22 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1780202721; cv=none;
+ (Exim 4.90_1) (envelope-from <wlosh@bsdimp.com>) id 1wTYFV-0005Fa-4x
+ for qemu-devel@nongnu.org; Sun, 31 May 2026 00:58:11 -0400
+Received: by mail-pj1-x102f.google.com with SMTP id
+ 98e67ed59e1d1-36d98b68d68so161499a91.2
+ for <qemu-devel@nongnu.org>; Sat, 30 May 2026 21:58:08 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1780203487; cv=none;
  d=google.com; s=arc-20240605;
- b=aimA6ytOTQ1fwMvhmSjmI17VlHf4EIiQr+iV2eNvxSMCbXqzlA8MfJqE2oDHLSs4f3
- y7H6+dE9YHO0kX7iYs1IzSXffMI6X2eIv11oPDPJC5VsW72cbymT9BHD5o98BvQTUAhC
- H5j5HKwnFcbdN8wZVlSz3ry3qBqsPSHaEwJubhvuc0/cfAgqiuivMzJwcJzPfr41pM5a
- wkc3jrX8jERbs+awNUKwTOz1s16PehxaSJX3QuO1Kk69TFC1smYHrl3Vla8VORfQQLad
- ixdHq9Qu/910wTbsKlGAeMcIIt7bBF0tti0V5alwOEbbZ9TuBT6WcY0BTAU4p981Ap2j
- 3ZFw==
+ b=eRDaPKSE7IKY1slM5ZpZo9xu8iwwn1tXNbxD5Z5re9rHovM31hv+7YIr4DOkZRNZB8
+ RqFRZgmOcsoIsw7oaalmHtJ1tA0BtzMbSebURqOoWdH21YFhFt1ieYZ98ZUQs69Qgi4W
+ UZxDeSBbjgSvfxz66JNE2VfD6On7ypofNazwxMFLCqxDGDw5p7EIKLxOTo8L8wHV6u9X
+ /airjR2E2NDUe+vA5g2/YnYr3RcskWXJfKoSdDP770bIi8SOu3onPR/Htv7Z5uW4p1WV
+ QbxN5gudPn5BLIjReJwEmPynPn8u78TLfQQL3M/xIlEkop6gZThVFOWy6mw08cfsIvto
+ bQ6Q==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
  s=arc-20240605; 
  h=cc:to:subject:message-id:date:from:in-reply-to:references
  :mime-version:dkim-signature;
- bh=jMUaN2mK6QvdcV6QAQn6pFE8Rhqvdm8Pdwam40bg9Eg=;
+ bh=p0giyAhNjbu/r6c/Y9/toWRecSArJBl3oNPVRW1XWOg=;
  fh=+DxRVnEC95Ptxk5HMfIFqaUwIao1HhLaAPFCgZPm1R4=;
- b=XJ8vvDw1o51+VpI1ZgN5MNWU9ztFkDP8v6hwLA8aTsKE9ZStoMN9qO+kA3TuvUqhx+
- S50111QxU3m9Pc6FDerObbuoBxjUZzdoEOlW5qzBdQu+axBGAtrpQlYMvW1xhLMwsdxj
- KUS7ni5DE4yRli4WTrHhsqoi5x9MLdNxoRLmWNLfztk5tvVHKy9KKakbtVLP4HDQ3O7l
- jp19qVTIyfN45PmVShTS0+qACFYGAf8mORv6Omg5dFmBLM4YpklkTD5x3JBLErLxxK+H
- VGeuNQVbqAy9eSP0vgfOfv/buzb3GJw8OvmfoEtPc4ls3B0qxB95UBJ7zHinvKt9Hqiy
- rYdQ==; darn=nongnu.org
+ b=B3ABAzj1LV27qiGvotlLRGYReeZQL2FJMrDTfbMIoR3wUtomH8HICgnbDfRmnGrzVm
+ H0dIa5VYy/loj98veycJWpYZAsOJTNIrwCE9RtsO6ncFZbPwY9mvOrbASGaN6L28Jimu
+ +eopF/qGY5DxiEM/JiLwzH5NMoGdSIb1NTyDsFsbOqn3HiXT1yblukqC2SgOCWCbmW+B
+ X1eATfqqJKSKSIG39ToP/lTqc+HBJZmNR9VSgpa88yx1yenby0TKDM5plaIgid8pVYeU
+ fRUBGeJ6brcaHpG1/ppFx8fRLgFiwqZbXLwKzQHnrPUxMBbooJdwOg9O4sWRSeT+Ymju
+ HpBg==; darn=nongnu.org
 ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=bsdimp-com.20251104.gappssmtp.com; s=20251104; t=1780202721; x=1780807521;
+ d=bsdimp-com.20251104.gappssmtp.com; s=20251104; t=1780203487; x=1780808287;
  darn=nongnu.org; 
  h=cc:to:subject:message-id:date:from:in-reply-to:references
  :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=jMUaN2mK6QvdcV6QAQn6pFE8Rhqvdm8Pdwam40bg9Eg=;
- b=Z5j5VzNfAmmetv9dJfnduI95FmlIEC5qTyCb/k3qAiGGwsOpDyW450rB7HA6eUFB9l
- pzWU8aZZdeUuw6QVT1WSidbwdXq8TqLs5e5tNXlufz5bvqXZCZaeoNzGg0wMH4xw5U85
- K3AfZZo2DRW14r2ZkA6D/I2iAo6U5axqN6qqW2zPA92AHkEG/pob+/0NYiy/1LZ8n9P8
- C34cm+gRUpsK/0te6b9uou49tbkM42iTq0byviA++o1i6oZnkuBUVnglcpFP010jL1Qr
- rHMdcCcBtnYr9a4b59e2VhqwwrlYelJYuRyGkfFXxS5SWEuGIHC6nfzYJs5WKAFdtabm
- M96A==
+ bh=p0giyAhNjbu/r6c/Y9/toWRecSArJBl3oNPVRW1XWOg=;
+ b=Y3ek46GJ7wQfIEGCWLqQPoRJ+bF8/0IAUC/u2Z65d5XGzcvRuGmFeDgEi00eJSF+5X
+ 13xeIjeJo08Kiw5+1X1oO3qG6phT+AScJBeYeJ/cnx1Og4PPztYFJeaQ03Y7ucY+dw0D
+ tgEqttQbZ1y6MT8ZuIDkCnALhXnLWwDxlvsDTwj182pTTl4WEotFBLAzeyVDK/utQhfC
+ cymqrFYA6gHT76Yozh4TvxBsY2OCpX1ypwfbyiF6todPSdfZRYZr2StOSgu071FUWXbo
+ olLZ6x5vxBuEcAIv+k6P11/VpzgOX+ADF+VjE0oiWTRqBOOlaYqHO/N0tPFACCetQBiY
+ CcTg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1780202721; x=1780807521;
+ d=1e100.net; s=20251104; t=1780203487; x=1780808287;
  h=cc:to:subject:message-id:date:from:in-reply-to:references
  :mime-version:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
  :message-id:reply-to;
- bh=jMUaN2mK6QvdcV6QAQn6pFE8Rhqvdm8Pdwam40bg9Eg=;
- b=d4cjc8hHGEXUWOz8aXOnRjEV3Ru3SztmhgmjMaJhhyxt1StZt3x4LTcRxVR9dfWmN6
- 0cYZSV4+cVlOw8yaRUe08OaceeGEeUHrViLDLMvQxBMdATc5dKtqy0vu6kA43hO7E3Fo
- rcvby8raAVV+oVRLPRiOwKdQ03gO9HlF8Bs7pEQfzAnObYBS3FOaxpAF0N+uGtCmyjHu
- Idi6ZzwryDvZmThT5V4ielkQ2WrrxSqQ1j8p9wgzcjfbqXJ7Ou3rTOwDTJFFKsECpcUA
- FohgsvSXSYTf+bhWS5i1bvgFG7dVYktimqYhSrDp6a+LkLhJ9K1XrNY1oBDjv0nlvaDw
- zuXw==
-X-Gm-Message-State: AOJu0Yx/guPXcRgq600tzquzvZSehBO1XemPTg7Pzu8oPK3HpQLG6M/m
- fmIALXjnodVm0kGabIvZEyD4mBDmK82vxS8gqZBZixz6XCOs1CDynd2CirZ31fpAN4SSUNweUJj
- cNX5uYGCaZU4s26rwB8tBy9GNhzIOgu+qmntgO7+Vpw==
-X-Gm-Gg: Acq92OEBOdLndAncO1DxEonASLjm2e0POm/kzwxdzwhgpZvJE3+ZZCvMYOX/EgthkCQ
- b7XJkG0GiuyGCV2z3azUPlBqYAlQgdRlkGGeiKJJl6iiyE9Sv+NMpkvlwox4mn3VGQTaslmdLrb
- KaTnt5rooiNURpTJ7NASXsaQeMt01QxddlndYMN3Kmd+76edrYej13ovIBcXIhRP87FppNzOWYm
- fPOjpFvKWWMBrECwgLozq7CXIfKkAKKdRlVS9qlJ/iFZvd9TsOepd0MjPD1qR2wEjwPpEg6K4hL
- BsRWdXgq3V+VWvope7fSBrAiwfptIsrHhF41QF++Zuf+fKo=
-X-Received: by 2002:a17:902:e74d:b0:2c0:b932:8680 with SMTP id
- d9443c01a7336-2c0b9328f18mr29091705ad.10.1780202720928; Sat, 30 May 2026
- 21:45:20 -0700 (PDT)
+ bh=p0giyAhNjbu/r6c/Y9/toWRecSArJBl3oNPVRW1XWOg=;
+ b=CRNttUzq1quHdSciSBZnnV4PPsiZELhI93bE0R78ERJCIXdu2AHzhXBWQ7N1LFO8cS
+ t1E94+XJMMRUWOIip5TBBuXgWMWeHsmvmuV/LxNgSHo9l9grSdwzgH6iMM2olRNi2jYn
+ lBRbV6CSQmWA5nr/KbSxp9AdaH3e1bjlxyB9AWFuJ6klJ5kPCz4FYjpL40tuTnQSv0MN
+ BAk+qxZ1FChcfVuRuf01oVEVvaCtxncAVcfij2n/DAhcVHZma3imVwXYycwDz9Alf4Mn
+ MvrfGsjtgubjiQPngfMPlymft7g+hqjI6aCpGBbVXZU4Xr9aMneoK0Nt1IMSFAipQx5F
+ laRQ==
+X-Gm-Message-State: AOJu0Yxa5DgUj9D93W0n+hh2zUtXcoECJPZM6HD0txBmu6K3nWouk2Zn
+ NHrQ4zKVzdY6xLE7ebPOur+0g537flCCHZb6Lwx2/eFHPM4zVlLwI/ENWuK0E3dOQ653cPiiwQx
+ ioybEeLaLN7/yqsmFS8SnMhcir5rgJvpTQfcsU8BqVA==
+X-Gm-Gg: Acq92OHIV46xRaycA3KF1Y1RoEmybvpT1GH7DHwYXgc8PCdrae+cI2qDOZBrLh0zJu3
+ XlIKab5SELlBZCTe4iRcMWEP+zGOqtz0/7DYg8Ye9Y9UF21W51Irj7Phen8CZXXM4kSz2ukkimc
+ Ft2DBhNHECywZpyY3rpQ4lYNXlAeYt7jMBsRd70F4WcTPiCX0EZfunW5S8NcOBFQxQ43S55LRAA
+ bDELddWA+640XsrcWgsKK/keH4eL5kRbDJGRYUlYkJ8z12pjTmBXj/vbpgSPevj9B6tP9Ih9KAo
+ isZsSA2MyHlfdPDZUu0cBhn5Ei5oLXc9DG9X8LboefVjVdhUm+2YVKJYBg==
+X-Received: by 2002:a17:903:8c8:b0:2bd:606d:b342 with SMTP id
+ d9443c01a7336-2bf36833abfmr64966555ad.26.1780203487134; Sat, 30 May 2026
+ 21:58:07 -0700 (PDT)
 MIME-Version: 1.0
 References: <20260530211248.375318-1-richard.henderson@linaro.org>
- <20260530211248.375318-14-richard.henderson@linaro.org>
-In-Reply-To: <20260530211248.375318-14-richard.henderson@linaro.org>
+In-Reply-To: <20260530211248.375318-1-richard.henderson@linaro.org>
 From: Warner Losh <imp@bsdimp.com>
-Date: Sat, 30 May 2026 22:45:08 -0600
-X-Gm-Features: AVHnY4JwS6TW6z1NSu9xpE_hBQu90VzSBNhJkEkR6AC8e2CdQSWEo3buR7VL82o
-Message-ID: <CANCZdfr=C8n_cDQa3jWgSCMuoqnC-v0+qJnepjLKH0jMozXmeg@mail.gmail.com>
-Subject: Re: [PATCH 13/13] common-user: Move guest_base,
- have_guest_base to probe-guest-base.c
+Date: Sat, 30 May 2026 22:57:55 -0600
+X-Gm-Features: AVHnY4JdR_lMLPn2s1Rk1WosWH5LUNLFTwgN07e_LlcEB2ttG21X_N_stnOllDI
+Message-ID: <CANCZdfor7DamDsGrMx+=-VRJMdHFqm+TnhpkKaPxD+xJ8CCyZQ@mail.gmail.com>
+Subject: Re: [PATCH 00/13] *-user: probe_guest_base improvments
 To: Richard Henderson <richard.henderson@linaro.org>
 Cc: qemu-devel@nongnu.org, deller@gmx.de
-Content-Type: multipart/alternative; boundary="000000000000cf3c5c065315becc"
-Received-SPF: none client-ip=2607:f8b0:4864:20::62f;
- envelope-from=wlosh@bsdimp.com; helo=mail-pl1-x62f.google.com
+Content-Type: multipart/alternative; boundary="0000000000007a91c5065315ece9"
+Received-SPF: none client-ip=2607:f8b0:4864:20::102f;
+ envelope-from=wlosh@bsdimp.com; helo=mail-pj1-x102f.google.com
 X-Spam_score_int: -18
 X-Spam_score: -1.9
 X-Spam_bar: -
@@ -113,164 +111,169 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
---000000000000cf3c5c065315becc
+--0000000000007a91c5065315ece9
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 
-On Sat, May 30, 2026 at 3:13=E2=80=AFPM Richard Henderson <
+On Sat, May 30, 2026 at 3:12=E2=80=AFPM Richard Henderson <
 richard.henderson@linaro.org> wrote:
 
-> Unify the definitions of guest_base and have_guest_base.
+> The first 4 patches fix the ambiguous guest_lobase parameter,
+> which affects an odd usage of a bare metal image with qemu-arm.
 >
-> Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
-> ---
->  bsd-user/main.c                | 3 +--
->  common-user/probe-guest-base.c | 4 ++++
->  linux-user/main.c              | 2 --
->  3 files changed, 5 insertions(+), 4 deletions(-)
+> The rest of the patches improve bsd-user to use probe_guest_base.
 >
 
-Reviewed-by: Warner Losh <imp@bsdimp.com>
+Thanks for taking the time to do this. I had some parallel work on this, bu=
+t
+I think this is likely a better base. The few things I think I might have
+done a
+bit better I've commented on in the reviews, but this series overall is muc=
+h
+more complete than I did in the blitz branch. Thank you!
+
+Warner
 
 
-> diff --git a/bsd-user/main.c b/bsd-user/main.c
-> index 772a26199b..3201da2318 100644
-> --- a/bsd-user/main.c
-> +++ b/bsd-user/main.c
-> @@ -62,8 +62,7 @@ intptr_t qemu_host_page_mask;
+> r~
 >
->  static bool opt_one_insn_per_tb;
->  static unsigned long opt_tb_size;
-> -uintptr_t guest_base;
-> -bool have_guest_base;
-> +
->  /*
->   * When running 32-on-64 we should make sure we can fit all of the
-> possible
->   * guest address space into a contiguous chunk of virtual host memory.
-> diff --git a/common-user/probe-guest-base.c
-> b/common-user/probe-guest-base.c
-> index 77722fe63f..6f1247cf1a 100644
-> --- a/common-user/probe-guest-base.c
-> +++ b/common-user/probe-guest-base.c
-> @@ -7,6 +7,7 @@
->  #include "qemu/log.h"
->  #include "user/guest-base.h"
->  #include "user/mmap-min-addr.h"
-> +#include "user/guest-base.h"
->  #include "user/guest-host.h"
->  #include "user/probe-guest-base.h"
->  #include "user/selfmap.h"
-> @@ -18,6 +19,9 @@
->  #define MAP_FIXED_NOREPLACE  (MAP_FIXED | MAP_EXCL)
->  #endif
+> Richard Henderson (13):
+>   linux-user: Introduce PGBRange
+>   linux-user: Use PGBRange in load_elf_image
+>   linux-user: Drop hiaddr out-of-range check in probe_guest_base
+>   linux-user: Pass image_range to probe_guest_base
+>   linux-user: Use PGBRange for commpage
+>   common-user: Move mmap_min_addr from linux-user
+>   common-user: Initialize mmap_min_addr for FreeBSD
+>   include/user/guest-host: Include missing cpu.h
+>   common-user: Move selfmap from util
+>   common-user: Implement read_self_maps for FreeBSD
+>   common-user: Move probe_guest_base from linux-user
+>   bsd-user: Use probe_guest_base
+>   common-user: Move guest_base, have_guest_base to probe-guest-base.c
 >
-> +uintptr_t guest_base;
-> +bool have_guest_base;
-> +
->  /**
->   * pgb_try_mmap:
->   * @addr: host start address
-> diff --git a/linux-user/main.c b/linux-user/main.c
-> index 01cf5bf079..60a695b7ca 100644
-> --- a/linux-user/main.c
-> +++ b/linux-user/main.c
-> @@ -79,8 +79,6 @@ static envlist_t *envlist;
->  static const char *cpu_model;
->  static const char *cpu_type;
->  static const char *seed_optarg;
-> -uintptr_t guest_base;
-> -bool have_guest_base;
+>  include/user/guest-host.h        |   1 +
+>  include/user/mmap-min-addr.h     |  12 +
+>  include/user/probe-guest-base.h  |  37 +++
+>  include/{qemu =3D> user}/selfmap.h |   0
+>  linux-user/arm/target_elf.h      |   2 +-
+>  linux-user/hppa/target_elf.h     |   2 +-
+>  linux-user/user-internals.h      |  17 +-
+>  bsd-user/elfload.c               |  37 +--
+>  bsd-user/main.c                  |  42 +---
+>  common-user/mmap-min-addr.c      |  50 ++++
+>  common-user/probe-guest-base.c   | 347 +++++++++++++++++++++++++++
+>  {util =3D> common-user}/selfmap.c  |  45 +++-
+>  linux-user/arm/elfload.c         |   2 +-
+>  linux-user/elfload.c             | 400 ++-----------------------------
+>  linux-user/flatload.c            |   3 +-
+>  linux-user/hppa/elfload.c        |   4 +-
+>  linux-user/main.c                |  35 +--
+>  linux-user/mmap.c                |   1 +
+>  linux-user/syscall.c             |   2 +-
+>  common-user/meson.build          |   8 +
+>  util/meson.build                 |   4 -
+>  21 files changed, 565 insertions(+), 486 deletions(-)
+>  create mode 100644 include/user/mmap-min-addr.h
+>  create mode 100644 include/user/probe-guest-base.h
+>  rename include/{qemu =3D> user}/selfmap.h (100%)
+>  create mode 100644 common-user/mmap-min-addr.c
+>  create mode 100644 common-user/probe-guest-base.c
+>  rename {util =3D> common-user}/selfmap.c (69%)
 >
->  /*
->   * Used to implement backwards-compatibility for the `-strace`, and
 > --
 > 2.43.0
 >
 >
 
---000000000000cf3c5c065315becc
+--0000000000007a91c5065315ece9
 Content-Type: text/html; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 
 <div dir=3D"ltr"><div dir=3D"ltr"><br></div><br><div class=3D"gmail_quote g=
 mail_quote_container"><div dir=3D"ltr" class=3D"gmail_attr">On Sat, May 30,=
- 2026 at 3:13=E2=80=AFPM Richard Henderson &lt;<a href=3D"mailto:richard.he=
+ 2026 at 3:12=E2=80=AFPM Richard Henderson &lt;<a href=3D"mailto:richard.he=
 nderson@linaro.org">richard.henderson@linaro.org</a>&gt; wrote:<br></div><b=
 lockquote class=3D"gmail_quote" style=3D"margin:0px 0px 0px 0.8ex;border-le=
-ft:1px solid rgb(204,204,204);padding-left:1ex">Unify the definitions of gu=
-est_base and have_guest_base.<br>
+ft:1px solid rgb(204,204,204);padding-left:1ex">The first 4 patches fix the=
+ ambiguous guest_lobase parameter,<br>
+which affects an odd usage of a bare metal image with qemu-arm.<br>
 <br>
-Signed-off-by: Richard Henderson &lt;<a href=3D"mailto:richard.henderson@li=
-naro.org" target=3D"_blank">richard.henderson@linaro.org</a>&gt;<br>
----<br>
+The rest of the patches improve bsd-user to use probe_guest_base.<br></bloc=
+kquote><div><br></div><div>Thanks for taking=C2=A0the time to do this. I ha=
+d some parallel work on this, but</div><div>I think this is likely a better=
+ base. The few things I think I might have done a</div><div>bit better I&#3=
+9;ve commented on in the reviews, but this series overall is much</div><div=
+>more complete than I did in the blitz branch. Thank you!</div><div><br></d=
+iv><div>Warner</div><div>=C2=A0</div><blockquote class=3D"gmail_quote" styl=
+e=3D"margin:0px 0px 0px 0.8ex;border-left:1px solid rgb(204,204,204);paddin=
+g-left:1ex">
+r~<br>
+<br>
+Richard Henderson (13):<br>
+=C2=A0 linux-user: Introduce PGBRange<br>
+=C2=A0 linux-user: Use PGBRange in load_elf_image<br>
+=C2=A0 linux-user: Drop hiaddr out-of-range check in probe_guest_base<br>
+=C2=A0 linux-user: Pass image_range to probe_guest_base<br>
+=C2=A0 linux-user: Use PGBRange for commpage<br>
+=C2=A0 common-user: Move mmap_min_addr from linux-user<br>
+=C2=A0 common-user: Initialize mmap_min_addr for FreeBSD<br>
+=C2=A0 include/user/guest-host: Include missing cpu.h<br>
+=C2=A0 common-user: Move selfmap from util<br>
+=C2=A0 common-user: Implement read_self_maps for FreeBSD<br>
+=C2=A0 common-user: Move probe_guest_base from linux-user<br>
+=C2=A0 bsd-user: Use probe_guest_base<br>
+=C2=A0 common-user: Move guest_base, have_guest_base to probe-guest-base.c<=
+br>
+<br>
+=C2=A0include/user/guest-host.h=C2=A0 =C2=A0 =C2=A0 =C2=A0 |=C2=A0 =C2=A01 =
++<br>
+=C2=A0include/user/mmap-min-addr.h=C2=A0 =C2=A0 =C2=A0|=C2=A0 12 +<br>
+=C2=A0include/user/probe-guest-base.h=C2=A0 |=C2=A0 37 +++<br>
+=C2=A0include/{qemu =3D&gt; user}/selfmap.h |=C2=A0 =C2=A00<br>
+=C2=A0linux-user/arm/target_elf.h=C2=A0 =C2=A0 =C2=A0 |=C2=A0 =C2=A02 +-<br=
+>
+=C2=A0linux-user/hppa/target_elf.h=C2=A0 =C2=A0 =C2=A0|=C2=A0 =C2=A02 +-<br=
+>
+=C2=A0linux-user/user-internals.h=C2=A0 =C2=A0 =C2=A0 |=C2=A0 17 +-<br>
+=C2=A0bsd-user/elfload.c=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =
+=C2=A0|=C2=A0 37 +--<br>
 =C2=A0bsd-user/main.c=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
-=A0 | 3 +--<br>
-=C2=A0common-user/probe-guest-base.c | 4 ++++<br>
-=C2=A0linux-user/main.c=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 | 2=
- --<br>
-=C2=A03 files changed, 5 insertions(+), 4 deletions(-)<br></blockquote><div=
-><br></div><div>Reviewed-by: Warner Losh &lt;<a href=3D"mailto:imp@bsdimp.c=
-om">imp@bsdimp.com</a>&gt;</div><div>=C2=A0</div><blockquote class=3D"gmail=
-_quote" style=3D"margin:0px 0px 0px 0.8ex;border-left:1px solid rgb(204,204=
-,204);padding-left:1ex">
-diff --git a/bsd-user/main.c b/bsd-user/main.c<br>
-index 772a26199b..3201da2318 100644<br>
---- a/bsd-user/main.c<br>
-+++ b/bsd-user/main.c<br>
-@@ -62,8 +62,7 @@ intptr_t qemu_host_page_mask;<br>
+=A0 =C2=A0 |=C2=A0 42 +---<br>
+=C2=A0common-user/mmap-min-addr.c=C2=A0 =C2=A0 =C2=A0 |=C2=A0 50 ++++<br>
+=C2=A0common-user/probe-guest-base.c=C2=A0 =C2=A0| 347 ++++++++++++++++++++=
++++++++<br>
+=C2=A0{util =3D&gt; common-user}/selfmap.c=C2=A0 |=C2=A0 45 +++-<br>
+=C2=A0linux-user/arm/elfload.c=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0|=C2=A0 =C2=
+=A02 +-<br>
+=C2=A0linux-user/elfload.c=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0|=
+ 400 ++-----------------------------<br>
+=C2=A0linux-user/flatload.c=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 |=C2=
+=A0 =C2=A03 +-<br>
+=C2=A0linux-user/hppa/elfload.c=C2=A0 =C2=A0 =C2=A0 =C2=A0 |=C2=A0 =C2=A04 =
++-<br>
+=C2=A0linux-user/main.c=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
+=A0 |=C2=A0 35 +--<br>
+=C2=A0linux-user/mmap.c=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
+=A0 |=C2=A0 =C2=A01 +<br>
+=C2=A0linux-user/syscall.c=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0|=
+=C2=A0 =C2=A02 +-<br>
+=C2=A0common-user/meson.build=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 |=C2=A0 =C2=
+=A08 +<br>
+=C2=A0util/meson.build=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
+=A0 =C2=A0|=C2=A0 =C2=A04 -<br>
+=C2=A021 files changed, 565 insertions(+), 486 deletions(-)<br>
+=C2=A0create mode 100644 include/user/mmap-min-addr.h<br>
+=C2=A0create mode 100644 include/user/probe-guest-base.h<br>
+=C2=A0rename include/{qemu =3D&gt; user}/selfmap.h (100%)<br>
+=C2=A0create mode 100644 common-user/mmap-min-addr.c<br>
+=C2=A0create mode 100644 common-user/probe-guest-base.c<br>
+=C2=A0rename {util =3D&gt; common-user}/selfmap.c (69%)<br>
 <br>
-=C2=A0static bool opt_one_insn_per_tb;<br>
-=C2=A0static unsigned long opt_tb_size;<br>
--uintptr_t guest_base;<br>
--bool have_guest_base;<br>
-+<br>
-=C2=A0/*<br>
-=C2=A0 * When running 32-on-64 we should make sure we can fit all of the po=
-ssible<br>
-=C2=A0 * guest address space into a contiguous chunk of virtual host memory=
-.<br>
-diff --git a/common-user/probe-guest-base.c b/common-user/probe-guest-base.=
-c<br>
-index 77722fe63f..6f1247cf1a 100644<br>
---- a/common-user/probe-guest-base.c<br>
-+++ b/common-user/probe-guest-base.c<br>
-@@ -7,6 +7,7 @@<br>
-=C2=A0#include &quot;qemu/log.h&quot;<br>
-=C2=A0#include &quot;user/guest-base.h&quot;<br>
-=C2=A0#include &quot;user/mmap-min-addr.h&quot;<br>
-+#include &quot;user/guest-base.h&quot;<br>
-=C2=A0#include &quot;user/guest-host.h&quot;<br>
-=C2=A0#include &quot;user/probe-guest-base.h&quot;<br>
-=C2=A0#include &quot;user/selfmap.h&quot;<br>
-@@ -18,6 +19,9 @@<br>
-=C2=A0#define MAP_FIXED_NOREPLACE=C2=A0 (MAP_FIXED | MAP_EXCL)<br>
-=C2=A0#endif<br>
-<br>
-+uintptr_t guest_base;<br>
-+bool have_guest_base;<br>
-+<br>
-=C2=A0/**<br>
-=C2=A0 * pgb_try_mmap:<br>
-=C2=A0 * @addr: host start address<br>
-diff --git a/linux-user/main.c b/linux-user/main.c<br>
-index 01cf5bf079..60a695b7ca 100644<br>
---- a/linux-user/main.c<br>
-+++ b/linux-user/main.c<br>
-@@ -79,8 +79,6 @@ static envlist_t *envlist;<br>
-=C2=A0static const char *cpu_model;<br>
-=C2=A0static const char *cpu_type;<br>
-=C2=A0static const char *seed_optarg;<br>
--uintptr_t guest_base;<br>
--bool have_guest_base;<br>
-<br>
-=C2=A0/*<br>
-=C2=A0 * Used to implement backwards-compatibility for the `-strace`, and<b=
-r>
 -- <br>
 2.43.0<br>
 <br>
 </blockquote></div></div>
 
---000000000000cf3c5c065315becc--
+--0000000000007a91c5065315ece9--
 
