@@ -4,85 +4,84 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 22A1ECD6E55
-	for <qemu-devel@archiver.kernel.org>; Sun, 31 May 2026 21:41:03 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 61638CD6E55
+	for <qemu-devel@archiver.kernel.org>; Sun, 31 May 2026 21:43:26 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wTntV-0000vI-F7; Sun, 31 May 2026 17:40:30 -0400
+	id 1wTnw6-0001Qo-8M; Sun, 31 May 2026 17:43:10 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wTntT-0000sb-IG
- for qemu-devel@nongnu.org; Sun, 31 May 2026 17:40:27 -0400
-Received: from mail-wm1-x335.google.com ([2a00:1450:4864:20::335])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wTnw4-0001Qd-7u
+ for qemu-devel@nongnu.org; Sun, 31 May 2026 17:43:08 -0400
+Received: from mail-wr1-x435.google.com ([2a00:1450:4864:20::435])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wTntR-0006YY-VZ
- for qemu-devel@nongnu.org; Sun, 31 May 2026 17:40:27 -0400
-Received: by mail-wm1-x335.google.com with SMTP id
- 5b1f17b1804b1-490a7a34493so4391515e9.0
- for <qemu-devel@nongnu.org>; Sun, 31 May 2026 14:40:25 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wTnw2-0007G2-TK
+ for qemu-devel@nongnu.org; Sun, 31 May 2026 17:43:08 -0400
+Received: by mail-wr1-x435.google.com with SMTP id
+ ffacd0b85a97d-45f3cf907ceso475643f8f.2
+ for <qemu-devel@nongnu.org>; Sun, 31 May 2026 14:43:06 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1780263624; x=1780868424; darn=nongnu.org;
+ d=linaro.org; s=google; t=1780263785; x=1780868585; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:references:cc:to
  :content-language:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=vY8e8LFZmtieVlg0sM6NR5U1wF+PPnwi7ROkOdCQcbI=;
- b=TQCW3P4U5GrxIf9qatxHhN/AsCnVCp2NERFZyZYatmG2hU/VkK+d5ZK1F30aOSB4f7
- IPNQ+KDJBHZZ0t7q5GOgVqRCcBpP1UbXsNWn5fBOGfS7AluCEbNoSD/RldDoEEcVkksB
- 1wKD8rBDfnKlxLtC2PJT16iZGi6EZip6ugPOYVZEMEVsmxyMTSlcdDliVMHmGiJtMYqf
- 4e1QK0gCGLZyO67gpizpOBpvk3rI8deU5Jl6AQ2XA+lGUpYTL0F82KYrWLv+or5PRljH
- 0waSbczGlV0xYW3hubEb9CjUEF0t9oIgPxPcuNGhxKkSG2BLfK77iI/b9Dldov+66odP
- O9Sw==
+ bh=TEf39xkJAmb1A8rYQ7UzzOsMEtse9eEIACZEcWTgwok=;
+ b=YUPzhTsnhGjJxn9cpahGhULPnYSYYxvzcVN07wFVFSN7qPQrkZAJ8IlhVmy8AHEZa+
+ 36MVKQwQHgH3JqXp+HJYg3ZLc6oy0Cccu3Ijw0UY3Pdjx23fo8n20dBTaNQF2m6jkG+M
+ 01LiwMJXLwnBivExWQ8iE5LuORGo0mdI1khZemSJazZ/WSLpDbnKRb7RSaA/XA3PwDSw
+ WKcF0V/vFsaJotnin1pjIHXdXYWstRJA6WXQ7edJi09MjlZWLHmz/CRFbqps6CXJKnSN
+ EycbW7PWN5ODab78TQ17Kx1yMtxUZGgEPxDT5U7i9cwdaa5SxoQ+wbRC3apa9ZGGkATu
+ 5/7A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1780263624; x=1780868424;
+ d=1e100.net; s=20251104; t=1780263785; x=1780868585;
  h=content-transfer-encoding:in-reply-to:from:references:cc:to
  :content-language:subject:user-agent:mime-version:date:message-id
  :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=vY8e8LFZmtieVlg0sM6NR5U1wF+PPnwi7ROkOdCQcbI=;
- b=hHUasicRv6TqGQC/oEicH0GlSu3OkEgd/Kex8CAOiDvw/4jQAMWNhmLa6MyxbY1Mnx
- NBzBC3Vvtd/JJaVcnP5pDeWfZNfVRc2o6j6SR5VKmUIhI2aSAs2Y1GsF97l7ReDWuDiz
- 7ej/YqyRuD0MJvuPAz1/FTVVZtmTEL2urtjYec8lv+tBRoSpZqhDiuBGlw/7oseeJWPM
- NOnssQ/qEdl2cEAJ4XFBcwmID4c/iB6/QTpF/xhG7AFUDWagV9pgjALbyuI4pncKx5t1
- M4nS6ovVggjmJkQc/E/qtT6prL34fxLe4W+ht7Px3DyXiSVZ3HDC2CTYYkfFoigXWbCD
- XNeQ==
+ bh=TEf39xkJAmb1A8rYQ7UzzOsMEtse9eEIACZEcWTgwok=;
+ b=Pwp/RruZ41zmdnmeWbbdHHB98uHLvko+at2VGpabiYAz4seJAaR6xKY0ZyjJRmfslb
+ ZourTZ2A3zGzKw8ywilX5tecDhUB4Rt1vFpSH/mA3Vm+6I1OyxCWZhwiuw3SQkhRzvt2
+ urovOJnrh/8K52LI6bwUCTCotSxqrGoKNb33n/496b6hRT/uXaJyJGbHdC9TU3RpY28i
+ CWzBwkY0rMViRIY8SSWovct4sI+xLmB5VDPFnfTTygt300g7d9VU6F2QhIERkm4v9A32
+ PSjptNk4QcDXnCN8fSxFaWXyVWqYeOo0oXkQ8cbe1gS4BV3eiTwu7nXrX5xve4laEZnX
+ PiOQ==
 X-Forwarded-Encrypted: i=1;
- AFNElJ9rENCqitQhGzFK91FADdkyWgF4zh6HZs2+W24caZ7/LScu3qnmUV6Smwcw6o6nKSfftiuKQfBvC2hO@nongnu.org
-X-Gm-Message-State: AOJu0YwSK3Ev0+5YvxnV0nXmGam2C4/hrELjW4tdhh8g/0G53d23sacW
- s/MbtEhh/n+QFEdcV0VO7ckiqmVG6lI/1YKSeZRPp3CBTPsCH+v/E9AtyGUwiHn7Nfs=
-X-Gm-Gg: Acq92OFAo6YIBOGa77Q0X6JtK5Iqrey+jgbT5FUKPO8+MhtQZK7NwAx33Du18txNIXw
- ZAJFtps2zKFgbP0DuyJJymv5G1QaxDycdSPErywF/YG5b+OBDhvcgonY62A62HO8Y0cXgzzn3k0
- bH66LkkIvMAMVBdJpHz30GAqnZb/mKO6y4HW/+L/7lWpgeNzLijk3gjryqyOUbSN9AAFQenit+N
- jemSZCW0aoR7BePHW9ECfp0BhY5uk/HagpaMXgbdM/iI6/6n5wKVzzIlFcevOx09o4qV+5rjgoG
- vzSnu6awLwNSfJM+kgxHrl+AGea7ddCYFHmTVbj1Vq3uW857BRVRov3CVEStkUnCmRlWstoPLwk
- AKsckPgkDMDnzIVp+XktgnDgIWDMujI51b51x18WtGwAFM1EBRWquJKRZiTOg9Q6zqmZS7A1bhv
- 32YLgu/cLRikmWsTAHfl0YS3vhQz/GMsQc8S/mPlliq8HrshMH6XvohmM39TFnwHrjjyZvFNmeh
- s35zLjwtJD+SGs=
-X-Received: by 2002:a05:600c:1387:b0:490:3cf0:8d81 with SMTP id
- 5b1f17b1804b1-490a2a4e8ebmr108891275e9.13.1780263624072; 
- Sun, 31 May 2026 14:40:24 -0700 (PDT)
+ AFNElJ9SFc4hCgbh9MUYwjGlGd4wkHIsjLzFNNtlcjtViw7veuYCmYRs6x1XVE3+2eowC7E/nUIU95l6tyxY@nongnu.org
+X-Gm-Message-State: AOJu0YwcBpGCoQYl6M22KW0JkTkll3t9boDlqR6x0GeXZXQcwCl9kxCU
+ wQcEm266EaAwQKxB9sq2KCBvZmyxYXbVF20puZRVzEAs+todqR43Hs1lVzvlHq5bPzU=
+X-Gm-Gg: Acq92OF9uBGZkBKlgNJSsvlino8VkhSn/n6FmDqcGcvol1VZhYcfBGQ1oetwqpHQbOO
+ +3E6B3aMWoRf7BRZTZy/UsCfpqhCIcSdeTxYWjBw3ywHJGVvn4wZpHB9bclftsjXfSO1SBPtVh4
+ 0MIZrsmE57HQ65k45S9gz/MSOBnA/tB2kt4KiHx/kj1pbE4voxvo0+PEWiHXP3fxlRXvopGaA0m
+ luZcG8mWjOc85/7DmutY/zVZDH497Js/HMuPf5w1sgBCxrXHXMw4NNKGfiOJl7f2mtvyZl0tniJ
+ v4+BABzDDwPEgqrfsrZ7lTG2gjbYYeTSqr4Xl0vP51EjutwPfku4w8fgc5Sv1Tq/Sxxjhzqlwbr
+ SVoe3/A3epBPEmW8Bj200J7uGvemN8YM1KFjhPcSRK8o1sMHernMLa05d6qSxvcOC+qX2bxBxvZ
+ IDiJhyO0GBddRVqvGtB4uS3xDcHgeMbsQA9yiZmu8suu1ZJZ7/jZk93HQDct9bKVKdrMG6fJKFy
+ zLa
+X-Received: by 2002:a5d:6f0a:0:b0:460:e2e:6e2b with SMTP id
+ ffacd0b85a97d-4600e2e6fc3mr5691367f8f.20.1780263784739; 
+ Sun, 31 May 2026 14:43:04 -0700 (PDT)
 Received: from [192.168.69.207] (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-4909d7002e8sm224393425e9.15.2026.05.31.14.40.23
+ ffacd0b85a97d-45ef354cd7csm20201833f8f.18.2026.05.31.14.43.02
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Sun, 31 May 2026 14:40:23 -0700 (PDT)
-Message-ID: <b5cf1580-4d2e-4532-ba19-7c4a0c3c5c8e@linaro.org>
-Date: Sun, 31 May 2026 23:40:22 +0200
+ Sun, 31 May 2026 14:43:04 -0700 (PDT)
+Message-ID: <9db36f7a-2b63-4580-84e4-804751015fd4@linaro.org>
+Date: Sun, 31 May 2026 23:43:02 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v7 32/38] target/hexagon: Add pcycle setting functionality
+Subject: Re: [PATCH 01/13] linux-user: Introduce PGBRange
 Content-Language: en-US
-To: Brian Cain <brian.cain@oss.qualcomm.com>, qemu-devel@nongnu.org
-Cc: matheus.bernardino@oss.qualcomm.com, pierrick.bouvier@oss.qualcomm.com,
- ltaylorsimpson@gmail.com
-References: <20260529215554.606133-1-brian.cain@oss.qualcomm.com>
- <20260529215554.606133-33-brian.cain@oss.qualcomm.com>
+To: Richard Henderson <richard.henderson@linaro.org>, qemu-devel@nongnu.org
+Cc: imp@bsdimp.com, deller@gmx.de
+References: <20260530211248.375318-1-richard.henderson@linaro.org>
+ <20260530211248.375318-2-richard.henderson@linaro.org>
 From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <20260529215554.606133-33-brian.cain@oss.qualcomm.com>
+In-Reply-To: <20260530211248.375318-2-richard.henderson@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::335;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x335.google.com
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::435;
+ envelope-from=philmd@linaro.org; helo=mail-wr1-x435.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -105,67 +104,32 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 29/5/26 23:55, Brian Cain wrote:
-> Replace pcycle set stubs with real implementations that
-> distribute cycle count changes across all active threads.
+On 30/5/26 23:12, Richard Henderson wrote:
+> Create a structure to hold a beginning/end range for guest virtual
+> addresses, for use by probe_guest_base.  Use vaddr for clarity.
 > 
-> Reviewed-by: Taylor Simpson <ltaylorsimpson@gmail.com>
-> Signed-off-by: Brian Cain <brian.cain@oss.qualcomm.com>
+> Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
 > ---
->   target/hexagon/cpu_helper.c | 43 ++++++++++++++++++++++++++++++++++---
->   1 file changed, 40 insertions(+), 3 deletions(-)
+>   linux-user/user-internals.h |  5 +++++
+>   linux-user/elfload.c        | 36 ++++++++++++++++++------------------
+>   2 files changed, 23 insertions(+), 18 deletions(-)
 > 
-> diff --git a/target/hexagon/cpu_helper.c b/target/hexagon/cpu_helper.c
-> index bb991a671e8..64c5746c6d9 100644
-> --- a/target/hexagon/cpu_helper.c
-> +++ b/target/hexagon/cpu_helper.c
-
-
->   void hexagon_set_sys_pcycle_count(CPUHexagonState *env, uint64_t val)
->   {
-> -    g_assert_not_reached();
-> +    CPUState *cs;
-> +    uint64_t total;
-> +    int num_threads;
-> +    int64_t delta, per_thread, remainder;
-> +
-> +    g_assert(bql_locked());
-> +    total = hexagon_get_sys_pcycle_count(env);
-> +
-> +    /* Count active threads */
-> +    num_threads = 0;
-> +    CPU_FOREACH(cs) {
-
-Not an issue as of today, but this won't scale in heterogeneous setup.
-
-I suppose we'd need some cluster concept here:
-
-        CPUClusterState *cluster = cpu_get_cluster(cs);
-        CPU_CLUSTER_FOREACH(cluster, cs) {
-
-> +        num_threads++;
-> +    }
-> +    g_assert(num_threads > 0);
-> +
-> +    /*
-> +     * Distribute the delta evenly across all threads.
-> +     * Any remainder goes to the calling thread.
-> +     */
-> +    delta = (int64_t)(val - total);
-> +    per_thread = delta / num_threads;
-> +    remainder = delta - per_thread * num_threads;
-> +
-> +    CPU_FOREACH(cs) {
-
-CPU_FOREACH's @cs variable declaration overrides the other one
-declared in prologue.
-
-> +        CPUHexagonState *thread_env = cpu_env(cs);
-> +        thread_env->t_cycle_count += per_thread;
-> +    }
-> +    env->t_cycle_count += remainder;
->   }
+> diff --git a/linux-user/user-internals.h b/linux-user/user-internals.h
+> index 21daf422b7..73b0109e9c 100644
+> --- a/linux-user/user-internals.h
+> +++ b/linux-user/user-internals.h
+> @@ -75,6 +75,11 @@ void clone_fork_end(bool child);
+>   void fork_start(void);
+>   void fork_end(pid_t pid);
 >   
->   static void hexagon_resume_thread(CPUHexagonState *env)
 
+Short docstring?
+
+Otherwise,
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+
+> +typedef struct PGBRange {
+> +    vaddr lo;
+> +    vaddr hi;
+> +} PGBRange;
 
