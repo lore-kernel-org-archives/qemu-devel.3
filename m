@@ -4,30 +4,30 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id EB5FFCD6E56
-	for <qemu-devel@archiver.kernel.org>; Sun, 31 May 2026 09:32:35 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D374FCD5BD1
+	for <qemu-devel@archiver.kernel.org>; Sun, 31 May 2026 09:32:42 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wTcWW-00020s-HU; Sun, 31 May 2026 05:32:00 -0400
+	id 1wTcWr-000252-RR; Sun, 31 May 2026 05:32:21 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <parthiban@linumiz.com>)
- id 1wTcWT-00020E-6v
- for qemu-devel@nongnu.org; Sun, 31 May 2026 05:31:57 -0400
+ id 1wTcWd-00022X-BC
+ for qemu-devel@nongnu.org; Sun, 31 May 2026 05:32:08 -0400
 Received: from mail-japaneastazlp170120005.outbound.protection.outlook.com
  ([2a01:111:f403:c405::5] helo=TYPPR03CU001.outbound.protection.outlook.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <parthiban@linumiz.com>)
- id 1wTcWR-0008Ra-8Q
- for qemu-devel@nongnu.org; Sun, 31 May 2026 05:31:56 -0400
+ id 1wTcWb-0008Ra-1w
+ for qemu-devel@nongnu.org; Sun, 31 May 2026 05:32:07 -0400
 ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=plcKn5JWhCLeyYKF6EygDBkDLAmYv/GACqdu3iT4S13WrKYOOnGV0LmqQPUIoHDzEV6Wv2ajpsdlU7vtTJNtRAhYvtl12DKldnSAHn9Ze4G40cYF6+PQLZOB79QkWHTHDo1u7cRXW0PbwglZ2ntkNPr9WKetoXr3D+oW3PD610HcLMVSkOHVRnviUTGgLvi329xhAkJtNX+2SPdqhNigN28q+k/6BhJ3IwEjnAY61tziM++pHPRjAuESMbPiejKRJzlkAhyFvObQJUi7ZZ/nGf0KFrAwxHvqB2jSfwxgx6N9B5kS5LOgNEk1goItWkCPcnHkF2Gfyq36oItCBmdUtA==
+ b=ZpFhbnaAiId4bxSEt5jnQ8W0i9MvzkCC6gEHfZ887BCPgmaHh0PIJHYzpMJFzbAU3Lo5yeMXMtbIJJcdEe1NIbb/pZ0jVPVH9hKKw2+V0hrOxlzVVgjx6GEJ4KTgCfeiJ62Ws5vM4L93dEVj1uOTNvM+zIdF047mDTSRxGii87qSheoZy2kF/Lz8wIQKUZcpjtEBZhGZWpX0Vqv6QGomFOGofm4zgh2urSX/g2+f4geiPMiU7eTcmEkUaO7V0yB2XJ43TXgtw1P5SW3CRhkfpzjeEso/LsyAWw1CKzU4zQhtM2IVInzI1Q8EP89oaSmcvROCy+MP6kBwtPkVRcGuag==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
  s=arcselector10001;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=fQzYAbfSeqNI11mvKUF4Tg0Qrx2d3NkPiD9QdRH8Lg0=;
- b=jLdl6gdx5RRotGUhGtIvepMbJXBnun01Yb5UBex1nHFUCYgvCFJL2W+Ca7VEJYHsqUkZ4bO24SheHzZX7DjP7knEIbB9addpJ0VyheokaEuG7sT4zc18Z6Axa8DCzFQgRI2bMUbbu0u0Ky0dxMHGUzMzLXfD8CuY9nfx94Oxm3iixOVKOZK7gWIVcMl3Wg1a7PeUZwyEBBAHQ8xPPuHegjUDO5XxtDq6eByKOYg10/82YUDIzgpOh5dgb61+yaR92CelN4cioTI+rrZvjv97Ap1C1UrEIrZPx4E33z/e8VN/AjKbIYMSP12JLO97o4nXXUDbDeuZeFabVfmD6uaEwQ==
+ bh=hMS+6Q54lcJQrB+zi+0CqwTCKKxLjS4AuzCNBQQV+Eo=;
+ b=NzfqgYnGALRs4pJpv42WxS1eGKEu9QiJnOliwW07wX7Or4rFhL7U6y+x+u8yObl5X3O5Ti1vm8KcU7Knvej8/j/2Su2bPpOXdQHsZUrHHDbl1dbHO5mJxE6M64oYktcKVfJ2TNz+mrL7gq0OWasqhqH+XnWrPQGkpy2cuRbfcyzMQnfzOr0Mv/mjDEjDPxnAIYuwcylhUw2lgUuRzgqIVFJllFwcXxhiMcOzUH3TghvxQUnpfSCOKg8N6KkKugdoxwyS41LuibiisX1gwKuLp/bHQ0d1ene1Lde0uiXYeq+mrfkKTSL8whKJRTmY9NTwSTN/sWPQbfErtPiGASMp3g==
 ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
  smtp.mailfrom=linumiz.com; dmarc=pass action=none header.from=linumiz.com;
  dkim=pass header.d=linumiz.com; arc=none
@@ -37,18 +37,17 @@ Received: from TYZPR06MB6935.apcprd06.prod.outlook.com (2603:1096:405:3c::9)
  by TYSPR06MB6627.apcprd06.prod.outlook.com (2603:1096:400:474::8) with
  Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.71.16; Sun, 31 May
- 2026 09:31:42 +0000
+ 2026 09:31:48 +0000
 Received: from TYZPR06MB6935.apcprd06.prod.outlook.com
  ([fe80::30b6:5b0d:1b00:5a01]) by TYZPR06MB6935.apcprd06.prod.outlook.com
  ([fe80::30b6:5b0d:1b00:5a01%5]) with mapi id 15.21.0071.014; Sun, 31 May 2026
- 09:31:42 +0000
+ 09:31:48 +0000
 From: Parthiban Nallathambi <parthiban@linumiz.com>
-Date: Sun, 31 May 2026 15:00:53 +0530
-Subject: [PATCH 02/10] target/tricore: implement memory protection in
- get_physical_address
+Date: Sun, 31 May 2026 15:00:57 +0530
+Subject: [PATCH 06/10] hw/timer: add TriCore System Timer Module (STM)
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20260531-dev-ifx-tricore-upstream-rebase-minimal-v1-2-1c39053e5e95@linumiz.com>
+Message-Id: <20260531-dev-ifx-tricore-upstream-rebase-minimal-v1-6-1c39053e5e95@linumiz.com>
 References: <20260531-dev-ifx-tricore-upstream-rebase-minimal-v1-0-1c39053e5e95@linumiz.com>
 In-Reply-To: <20260531-dev-ifx-tricore-upstream-rebase-minimal-v1-0-1c39053e5e95@linumiz.com>
 To: qemu-devel@nongnu.org
@@ -62,65 +61,65 @@ X-ClientProxiedBy: BM1P287CA0022.INDP287.PROD.OUTLOOK.COM
 MIME-Version: 1.0
 X-MS-PublicTrafficType: Email
 X-MS-TrafficTypeDiagnostic: TYZPR06MB6935:EE_|TYSPR06MB6627:EE_
-X-MS-Office365-Filtering-Correlation-Id: 7b782f75-1c78-4b63-6723-08debef76cad
+X-MS-Office365-Filtering-Correlation-Id: 5cf53f4a-d765-4f9b-c51c-08debef77082
 X-MS-Exchange-SenderADCheck: 1
 X-MS-Exchange-AntiSpam-Relay: 0
 X-Microsoft-Antispam: BCL:0;
- ARA:13230040|366016|1800799024|376014|52116014|6133799003|3023799007|18002099003|22082099003|56012099006|38350700014;
-X-Microsoft-Antispam-Message-Info: Q7Ptql62pKPZ5u5/vEtdlHqurx1sMRV5g8g0pzkh2cL34C+Yu9wl6wGsCbeULV46Gk+07icC6GYszzd6EvjCFkkBjlxeCFmrOgz8P/Jq/nuomDrMMujb6MWUgPeukROpumfaFgVOuopWVBod8zRoLmH3QuXyihOksjmNep4ndViRWswNXOBwTDwRuKYG12qBkjXw9wDWj/ouG5FaM2B1drdB/TRQC8CijJiIVzGJAo3+4NDiEGwyvYy2FBTE9480THpGB+5a5SjAcfoIc+IC2Abik1QT6SwAjK/ZwxlAz+RP3RSDT25B3lvJLlmKuDMDTlgXDYF7Gcfp8GSelDNeSrLBtGEPNHZ8+rhy3AEJuRtlI/sEJ+qbES3Ectwb8LypOIOdr6mtqQgQdoLv2U1Wr8p7HNjy8AoO8fihlnFiD+w9C45OZ4IoFf2MdJIiTFPTMkHJmtSuSgDXClyMGRiHMERX14g8MDo29OPY4+wv57d8W0mZNt9qxgqQ3LvwJJLN4IceJ29Idq9L0xWDyt5DrQgubxP81K8GAnl6oXvah6vC9/A2fqmeW17HwfbGCZEXBn75517sJGEeWHt43GBk2TTt/tgxGkbGUyVVpB1ECuf6CTiE/hj+Rif5RUJ7YH/T4EkZ1lMHKlFznz2IaSKyEk/w2YayorRGARJ+pkF+vH4HpYmhibLHTIXP3MLsXNlZM1hOuQHRFj/yGaVId6qv9eyguOnT1cUY5sKUKnYOXiOeoptZs/VTexr3xlQ6Dy1y
+ ARA:13230040|366016|1800799024|376014|52116014|18002099003|22082099003|56012099006|38350700014;
+X-Microsoft-Antispam-Message-Info: KDwgvqxMaeT6FvJ+QHO5JuFMkFpo+U1VEyhEU787T3ph/wfVhxPM9jYewFZ9xuTmMyJJ2keO84UjaAx+CO4tAbXqEbVP3TosIDePvQiSzogYuJc389gGLENgKHAFjFdJfnr+MwSri4g0kFc/E2W2iSxanVRvWOZeYNrJAoiHPY+mmzoVJsiQ8Ql+J4lITOxQm4HmaKLc+A2Ghi7VQNbkM+C/9rfFJTjLebdrof9NH6CTlucT/Ve65vaZ8JWoKejNcH1XV68Tzd9lGsDI+cRscNTBv91EJC/uD/z18FLr7N3JYo6JstMfbSdM0pdtNVnRdZNt8PluhGKp8m8XqR3ptjHKn0DXWy0bhzB99Rkdil90GP6ZmNBtsO6ddr2bNG7IFv08Dk2Ne/hzbPPP4iA2ghDXDvKkz+WC8v5G7/sY1ULIeAnN7CePZi5GH08m0bAK4xpIkbAt6hcaoTjuKTbrdgOGudbxc/0b9YBAj2ohEoa9kB/r+/80InveD4iLIRRSXPcKg6Tu0qREUGA2IZZqglea1Z2r8zK96CFO7uJPAt/887pkBeKVxKv/fEbS2cX5h48o2druSMm+gO0gTih3FTqYkhQBvGXiySGS3JunGpzO6sQKA80Kzffp8VIEUBJ6XDx07CLun8VadaFeMpQ5fWonwD0d2wBhWjB0FFyymfFfCf2u+ZkITRR55GHlEezQVXscFGXk26yOgAyhl3sjAUgQ9TtUFmryQha9mahaTHwYTR/FdUsJehL2Kko9BnKM
 X-Forefront-Antispam-Report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
  IPV:NLI; SFV:NSPM; H:TYZPR06MB6935.apcprd06.prod.outlook.com; PTR:; CAT:NONE;
- SFS:(13230040)(366016)(1800799024)(376014)(52116014)(6133799003)(3023799007)(18002099003)(22082099003)(56012099006)(38350700014);
+ SFS:(13230040)(366016)(1800799024)(376014)(52116014)(18002099003)(22082099003)(56012099006)(38350700014);
  DIR:OUT; SFP:1102; 
 X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0: =?utf-8?B?eng1UWs5UFpHbTlhcWxBRS9hUXRQYVNRR0t2WVJxYVkvNE5NT3RyejBGUkZE?=
- =?utf-8?B?OWRCZ1lhMUU4MGZQYWl5dVpXOGlsaWQxMVFPY3BJYnNPZWNXeFBsNXpyb0Fu?=
- =?utf-8?B?Z09IS2N5SWMwckdoVTMvVmtJQnBybnloNlZ0aW5aVnVvRmpaNUswMHd6Tzlu?=
- =?utf-8?B?bnhTeWhYUzdCRkR2cFAyUHBLQjZQREhRK2VxaTRFT0lsWW5GbXcyckQ1YjFF?=
- =?utf-8?B?dkdMbFRtbitHS2NTR1ZvbmZNVmNqc2MvU2Y3Qjh1NzhZRWsxN00xSFEya1Bl?=
- =?utf-8?B?czFvS1pwenkyeWdESG5kM0M5MHVRcnNJY3p6ZGkyWStwWUY2eXNEOXBTM0gr?=
- =?utf-8?B?WHhjQkJaNXA3M1pKUVRXTER6bmVrMkQ2Ui9uWko4bDVKTGphUisvdnMrdWsv?=
- =?utf-8?B?VXovNEJXM3U5eENFY0JES3pnY3ZMamJVbEl5WTVBUExHNmoyVXZXTk5UZ1g1?=
- =?utf-8?B?U2JHQ2dqSTRGOUd3Z3c0bmxmTXlWbUlWMXR6TDlHaE02b042UktBQTZUVlpL?=
- =?utf-8?B?TDNjS3VGN0ZLczdSUEhkRklUZEljcE1WaTBtMDkvN0Yzck1VVk54emluZ2Q3?=
- =?utf-8?B?Uk5PZnZERDA0S2IvNklLZTlMYTY2NFZERjJadGJEdW1TTml5bWxYY0EydUk3?=
- =?utf-8?B?eXA5ZzJGWjJGaHZlSm9sd1VFd2pHbTZSUnArbDRCZTRYaUxFRXYxOHJyaURx?=
- =?utf-8?B?RUZvcXFzMWI0amlsRUljZXc4QllXVTRyV3d4SnI3NENDeWdabEV3NEVnSkN4?=
- =?utf-8?B?WkJRS1NXcytvdDJFTlJGdGZoVU9PN3A5ZEd1T1hwd21KdFdvL0VJNGpxT0Rs?=
- =?utf-8?B?dWNuaCt6Tk1XS0dDdXR3TjBNOEtCRHk2cC82UFEwRndkUGUwRXQvTlE2K1Zp?=
- =?utf-8?B?OWNpcnlEbWU3c2pSRVUvS2MrbmN5dW5CYnIwNTQzWStQSlIwVGc3N1BlVHdx?=
- =?utf-8?B?VkVVQllldGszeGxJN2hUcWgyQ21uTDNOcUhXRDZibm5KeE5INEFMSWp5eEpo?=
- =?utf-8?B?YVNDQzRwQVVCQnNiUHNTTFBNYUxhdUR2UHNvcVdodTFnOUdjL2xkaXMxQ0lj?=
- =?utf-8?B?WXE0b2Zxc2pZVWpheFA1azQ4d0xMSXlsUTI1UFR4NGNwSjUrWmVzc0ozTUJa?=
- =?utf-8?B?bU9KWkx0WmdZQTBjcytBSDV5bytRa2ZKWXRoT0JuRnlWTjk4U1VFU1puTWFL?=
- =?utf-8?B?c3NHb0g5cWNROFE5WUNBb3VIc01WYUlmWGRmQW1aZGNjeWxWV01vbDJhZk9O?=
- =?utf-8?B?TDhIZEgzOVZqM2dNMThRSjNlcUV4NlVzQ1VTV0ZYOG0xU213SmVMN2EyTHMv?=
- =?utf-8?B?MkxUUFJhUlEwdWoveDN1bG1acW55R0hZSzhvU0hUWWpralVmZE9wY29rUXBk?=
- =?utf-8?B?cEZ6V0ttdEwxNmQyYjh1MzFQQkEvdUJUOW1xdnRLcnpQa281NWdtM3JTV1Zk?=
- =?utf-8?B?QzI0WFUzVGVYWFhVNFhwMU1JRFI1b1FlWXI3Nm1OZWJ3am5Zc0h4TkU2bjRw?=
- =?utf-8?B?V09WeGNxSnN4RzhTS281SGhhZmxXOXNGc1NTVEh0WjVHcDF6MEUrV0NEUm1h?=
- =?utf-8?B?YVVxUU12ZlV6YzZCUXVUbFBRdko3L2ozZzBZYk15Z2RJSjdWR3lQdlcxUmow?=
- =?utf-8?B?a3FObzJ5dFJVZzZncHdEMUpGaXVqWUtWWElFT1RPTnNOdE8xaHpIbEI1Ylpr?=
- =?utf-8?B?WURPODRsS2JUWnR0R2xESGtHWTR4b0hpQWdvQ2RhZWJEakUvZEFBKzdtRE9u?=
- =?utf-8?B?UEZmc0FocjRBTXVyNi9mWGhZREo1WXJIZVhiRlB1N1VyOS9CaGNHNzc5MTIy?=
- =?utf-8?B?N2xGdy9hT0cvb1BCMGFZRTdwWkxnenJUV0lvTVZHZXp0NlBLZU5Md2hnWjgw?=
- =?utf-8?B?cGNHa2lMbk13d0o4aXNyZXhaT1c4YzF4WGgwdmI5aGRlSTdLL3ZNNnlpNU5p?=
- =?utf-8?B?S0hZVFRWTTBmY000b3hTVUlQS2MweXZWMVIyZTA4YW92djlkbEgwMkZLbjNv?=
- =?utf-8?B?eHNhaC9GUzYxMHpIVFNGZ3V0TThwWkQzV3VoMHVwaGJadExyQ21GRHZWRkZV?=
- =?utf-8?B?V1hSZU5YNGpVc1pub2RLNHdXN0Ixd0dGdU9vbDJGWEIyZnk5VE1zcTlUVDU3?=
- =?utf-8?B?V2J1MlFrQVV3dEI2YllBaGsyY0J5WkViT1luRWVIYVBkMCtuWk94Q0xWR0J1?=
- =?utf-8?B?ZE9YeVp2N01uOG9nL2xEMlVlWGlPQ2JlSzFBZGtickxGRjM3a1ZWdEtROHJU?=
- =?utf-8?B?bXg2cUorOStUN2NHd21QV3pCcjg4YlM2WjJkZjZ1S1JMQXJObk9USDJLaFpG?=
- =?utf-8?B?MGJCNnA1Z2ZmRVVBWWZRVTBzZ2RrT1doUEdNcld0Y2F0YXBsN3B5dz09?=
+X-MS-Exchange-AntiSpam-MessageData-0: =?utf-8?B?SHhCaWNjUys3M2RWbUFLNUJoZTU5dWUxRmtoN3hUSnQrNlVQRGMyTUNtWmRr?=
+ =?utf-8?B?OGgwNktQUU5lcUVTTTZ4REVGMDF6dkZIVEhtYjFreWtJMXFkclJSekVCRzdP?=
+ =?utf-8?B?Z2tEa1dzUVlLMWFHSk9iYnZYTTNwQ2tOWE9qdnhjQ1V0ME51Zjh4akd4VDdv?=
+ =?utf-8?B?am5LS1hMQ0Y2endJam5oOU5DTzVXU01kRURKMFl3Y3FNOEhkR2c4WWdlWVZH?=
+ =?utf-8?B?Uy9NZUdISUgrcUhmKzQ0c1Z2YTUzWVZmci81bFdrYy9LeWNURm5qZXp3RVM0?=
+ =?utf-8?B?TGxhSXRoWnBXVThlUTl3R0tsdHllaDcrbnVrZ3ljcUpMUEtaa1N6UktTMWhE?=
+ =?utf-8?B?VHoxUzZ6UDQ3TTF3dnVlMktyYmVtTUFINERwOWRaYy80cHArM1FOa2tJRzV2?=
+ =?utf-8?B?MEtIWFRoZHp5cjJLc3RQWmswRkhpWHBMR25Ld0xZWWNXeTlnd1lRQlhncU43?=
+ =?utf-8?B?T1pJaDNNNWJjOFg5ZDByYnBObmpKaFBHWHZqcThOSmd4SXpTV0cxSmdwLzlT?=
+ =?utf-8?B?elU1R3lzMGZuYXZMK3VhZms4SEhkQzFjV0dzWHV2NjI5blhyTk9vUVEvaEVt?=
+ =?utf-8?B?dTVaeW4yNFoxZitBQktXRTUrQ1YwVXpJWHZHaEtBallmYWhiS0JrZG83RmhY?=
+ =?utf-8?B?ejA0Uzdmd2lqeGgwTE1ldWJZVStkVVh5WWJIQkhQWEJ1dCttUTlaQXR3RTNr?=
+ =?utf-8?B?c0xOZ3FNSmhmS08zeVRsUE5QeVJBa3hzZmZleU5mVG5CeXY4SmJ4RDZsSEYz?=
+ =?utf-8?B?ZEZ6aTBTR1BMSEhMMDdrbFN3ZHF2bGdIUnVKYnlRd0l5N1pBVVJ2SnlSVkpE?=
+ =?utf-8?B?N3M1YWFBWHVDdlBESTdJSUFFaHZhT0Y1WGVwSWplckgzVCs4MFFEV0k0RE1Y?=
+ =?utf-8?B?QjE4ZXZnN0k3SnJZcDRLdDVRMHBWUWxYSUVINFN6UDJwZTB4cUg4dVJyN2Zi?=
+ =?utf-8?B?aEc1SkNzN0tKcVljWDdsOWs0Z3Y0SlFIUkVFTWd0eXBzSHNFSU41cHBBMFRn?=
+ =?utf-8?B?eWlFNkU0bzlwdVRXM2lwa3JFbk16dHlhbDRTR3oxTkI3K05lYTVRK1hlUVMr?=
+ =?utf-8?B?UlM4NDdIQXQxVlI1aUF2bzRlM1o2R3Z4RDdJSmFNRXhRUWJSNGg5Q0FQdFJE?=
+ =?utf-8?B?cEpjaFJBQmM0ZUZibGtDd29ybTJxNUhMQlIxREErdUJxQ0lBRmFIQVI4NEMv?=
+ =?utf-8?B?NjR2RkVma01DMXRpM2NWbTJHWDNwKzNUbUV4WlV0SnBCUHZDY2tPc3pCQ3Zl?=
+ =?utf-8?B?Y3gwT0RuRUVvc05lWjJxSnc1Tk9JMFUzUndmdGdVckIxRGV6RGNzczJqQW4r?=
+ =?utf-8?B?dkk0ZVBWWjMrL2Z3QUFEWlJwbEp5b2JVZDRsd0RsRkt1b0crVkdtNVZzVDVo?=
+ =?utf-8?B?T0Q5Y09pS29jSDFtNnNZcS9CTlpja0ZjSnV2ZVJORHNFRWEvS0x5NjZ5T3Nv?=
+ =?utf-8?B?dTlYSW5DQ1NyalVEUDBqUzkwNEdibUFQaFc4SEoxSGxZZkNCMVhrWTJPalhS?=
+ =?utf-8?B?ZVE1MXJXNWNRT2I3NjB3Q3FOMGNXN0pWUHRzMEEvS1RScjVFemRUcXNGYUpk?=
+ =?utf-8?B?Sm9GV3JENUhJb3hxYVNrV3gxamgxYnZyWXFxTHRWVEsxVTE1NUtlSHBXdVJY?=
+ =?utf-8?B?dHM1SDlNZSs4dEQ3T3RIeVltWkYyYTQwKzVMOFl6SE9HcG9KTXF2T2w3VS9r?=
+ =?utf-8?B?a1BocnFNM3VxL1EzcVIvNEVEZis5ZHlqRlhmQWszeUx5b2JNd2ROSzdWTVpj?=
+ =?utf-8?B?SjZ0UzJRK2F2cDlQUlNyU2NDdGphSlVtc2MrRW1ML2F4bzZQUlRrczliQ29p?=
+ =?utf-8?B?SkhhdkE0d3dZTzY0WDY4VXJNU2lFRW1tYmF3c1NUOVo3ZEV6MlBBbVArVDRS?=
+ =?utf-8?B?V3hKbFZwb25qQzRUbGdFcmlhUzNZcjhERDR0QzV2QkMvZExIc1k0bGtLdEhv?=
+ =?utf-8?B?TXkycy9wTEVhZDRyNkJPZ2JZTHM1anBzU0ZhWXJCMU5BbU1wMytxY292T0xm?=
+ =?utf-8?B?ZEViVC90QUkzTW4ycExBZ2RRemRpZVU3V2c3dysvV3c3YkNLOWdYNlNIcEhQ?=
+ =?utf-8?B?aVBNUElCVXUrL1UzTWVWdHhZRFgyZzhNMkxpWnp3c3V5SlVKbXlYc2RxYjJJ?=
+ =?utf-8?B?bXliVHR2QWRRTUpOV3V5cnQrSllnU1pqRlNMa1MvMVI5dWZHQVJRanIzMnhQ?=
+ =?utf-8?B?TGFVWk5UQjJ1cUNGQTFHYVpscTNRZDZ4SFN5TkoyK0UzQmZkNGNYWWhrWnBr?=
+ =?utf-8?B?MURMcWlmK0pvdjlpSGQxeFZOZ2NxVm5qZnZ3U0NvemNWd2tCcWJtanFVTnQ0?=
+ =?utf-8?B?RWJiOEtDeW9sUXQrYWVUL0czQWk1UHdFVjVIdnJMandEdDh5T0N0UT09?=
 X-OriginatorOrg: linumiz.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 7b782f75-1c78-4b63-6723-08debef76cad
+X-MS-Exchange-CrossTenant-Network-Message-Id: 5cf53f4a-d765-4f9b-c51c-08debef77082
 X-MS-Exchange-CrossTenant-AuthSource: TYZPR06MB6935.apcprd06.prod.outlook.com
 X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 31 May 2026 09:31:42.3728 (UTC)
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 31 May 2026 09:31:48.7711 (UTC)
 X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
 X-MS-Exchange-CrossTenant-Id: 808466aa-232a-41f4-ac23-289e3a6840d4
 X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: Nb5LS53kpTJ1tlaT9mYhAVWEY95SINiXDkUA8JPhg5/CwQs7fmXmvax4DFfLUUregooFT0pc/MU/gr+2hRXc9Q==
+X-MS-Exchange-CrossTenant-UserPrincipalName: f8oQtdcV5EnbBc9GaebD8dt/c38cYuowqyUEgx23fOQ5R7NlFo0KEURUKTPhTW31KspGkDDh4sgDYDHaudITZQ==
 X-MS-Exchange-Transport-CrossTenantHeadersStamped: TYSPR06MB6627
 Received-SPF: pass client-ip=2a01:111:f403:c405::5;
  envelope-from=parthiban@linumiz.com;
@@ -145,322 +144,457 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-raise_mmu_exception() was an empty stub and get_physical_address()
-always returned full RWX permissions.  Fill in the MPU:
+Free-running 64-bit counter with compare match interrupt.
+TIM0..TIM6 give shifted views of the counter, CMP0 fires
+when the masked counter matches the programmed value.
 
-  - Walk 16 DPR ranges against DPRE/DPWE bitmasks for R/W
-  - Walk 16 CPR ranges against CPXE bitmasks for X
-  - Block instruction fetch from peripheral space (segments E/F)
-  - Dispatch TRAPC_PROT / TRAPC_SYSBUS in raise_mmu_exception()
-
-Also fix a missing else in FIELD_SETTER_WITH_FEATURE and stop
-force-adding PAGE_EXEC in tricore_cpu_tlb_fill().
-
+Originally-by: Christoph Seitz <christoph.seitz@infineon.com>
 Signed-off-by: Parthiban Nallathambi <parthiban@linumiz.com>
 ---
- target/tricore/helper.c | 242 +++++++++++++++++++++++++++++++++++++++++++++++-
- 1 file changed, 237 insertions(+), 5 deletions(-)
+ hw/timer/Kconfig               |   4 +
+ hw/timer/meson.build           |   2 +
+ hw/timer/tricore_stm.c         | 328 +++++++++++++++++++++++++++++++++++++++++
+ include/hw/timer/tricore_stm.h |  76 ++++++++++
+ 4 files changed, 410 insertions(+)
 
-diff --git a/target/tricore/helper.c b/target/tricore/helper.c
-index ce1693622b..e50ea09a92 100644
---- a/target/tricore/helper.c
-+++ b/target/tricore/helper.c
-@@ -27,6 +27,9 @@
- #include "qemu/qemu-print.h"
+diff --git a/hw/timer/Kconfig b/hw/timer/Kconfig
+index b3d823ce2c..250452b3fa 100644
+--- a/hw/timer/Kconfig
++++ b/hw/timer/Kconfig
+@@ -65,3 +65,7 @@ config STELLARIS_GPTM
  
- enum {
-+    TLBRET_MPX = -12,
-+    TLBRET_MPW = -11,
-+    TLBRET_MPR = -10,
-     TLBRET_DIRTY = -4,
-     TLBRET_INVALID = -3,
-     TLBRET_NOMATCH = -2,
-@@ -34,6 +37,207 @@ enum {
-     TLBRET_MATCH = 0
- };
+ config AVR_TIMER16
+     bool
++
++config TRICORE_STM
++    bool
++    select TRICORE_IRBUS
+diff --git a/hw/timer/meson.build b/hw/timer/meson.build
+index 201b5d8316..78d67a7e69 100644
+--- a/hw/timer/meson.build
++++ b/hw/timer/meson.build
+@@ -34,3 +34,5 @@ specific_ss.add(when: 'CONFIG_IBEX', if_true: files('ibex_timer.c'))
+ system_ss.add(when: 'CONFIG_SIFIVE_PWM', if_true: files('sifive_pwm.c'))
  
-+static uint32_t tricore_mpu_dpr_lower(CPUTriCoreState *env, int idx)
+ system_ss.add(when: 'CONFIG_AVR_TIMER16', if_true: files('avr_timer16.c'))
++
++system_ss.add(when: 'CONFIG_TRICORE_STM', if_true: files('tricore_stm.c'))
+diff --git a/hw/timer/tricore_stm.c b/hw/timer/tricore_stm.c
+new file mode 100644
+index 0000000000..376e680bc7
+--- /dev/null
++++ b/hw/timer/tricore_stm.c
+@@ -0,0 +1,328 @@
++/* SPDX-License-Identifier: GPL-2.0-or-later */
++/*
++ * QEMU TriCore System Timer Module (STM)
++ *
++ * Copyright (c) 2024 Infineon Technologies AG
++ */
++
++#include "qemu/osdep.h"
++#include "hw/core/clock.h"
++#include "hw/core/irq.h"
++#include "hw/core/qdev-clock.h"
++#include "hw/timer/tricore_stm.h"
++#include "qemu/bitops.h"
++#include "qemu/log.h"
++#include "qemu/module.h"
++#include "qemu/timer.h"
++
++enum {
++    R_CLC,
++    R_RESERVED1,
++    R_ID,
++    R_RESERVED2,
++    R_TIM0,
++    R_TIM1,
++    R_TIM2,
++    R_TIM3,
++    R_TIM4,
++    R_TIM5,
++    R_TIM6,
++    R_CAP,
++    R_CMP0,
++    R_CMP1,
++    R_CMCON,
++    R_ICR,
++    R_ISCR,
++    R_RESERVED3,
++    R_TIM0SV  = 0x50 / 4,
++    R_CAPSV,
++    R_RESERVED4,
++    R_OCS     = 0xE8 / 4,
++    R_KRSTCLR,
++    R_KRST1,
++    R_KRST0,
++    R_ACCEN1,
++    R_ACCEN0,
++};
++
++static void tricore_stm_tim_update(TriCoreSTMState *s)
 +{
-+    switch (idx) {
-+    case 0:  return env->DPR0_0L;
-+    case 1:  return env->DPR0_1L;
-+    case 2:  return env->DPR0_2L;
-+    case 3:  return env->DPR0_3L;
-+    case 4:  return env->DPR1_0L;
-+    case 5:  return env->DPR1_1L;
-+    case 6:  return env->DPR1_2L;
-+    case 7:  return env->DPR1_3L;
-+    case 8:  return env->DPR2_0L;
-+    case 9:  return env->DPR2_1L;
-+    case 10: return env->DPR2_2L;
-+    case 11: return env->DPR2_3L;
-+    case 12: return env->DPR3_0L;
-+    case 13: return env->DPR3_1L;
-+    case 14: return env->DPR3_2L;
-+    case 15: return env->DPR3_3L;
-+    default: return 0;
++    int64_t now = qemu_clock_get_ns(QEMU_CLOCK_VIRTUAL);
++
++    s->tim_counter += clock_ns_to_ticks(s->fstm, now - s->tim_base_ns);
++    s->tim_base_ns = now;
++}
++
++static void tricore_stm_timer_update(TriCoreSTMState *s)
++{
++    uint32_t mstart = (s->regs[R_CMCON] & MASK_CMCON_MSTART0) >> 8;
++    uint32_t msize = s->regs[R_CMCON] & MASK_CMCON_MSIZE0;
++    uint32_t nbits = msize + 1;
++    uint64_t tim_target = s->tim_counter;
++
++    if (!(s->regs[R_ICR] & MASK_ICR_CMP0EN) &&
++        (s->regs[R_ICR] & MASK_ICR_CMP0IR)) {
++        return;
++    }
++
++    /* Calculate the target TIM value */
++    if (mstart) {
++        tim_target = deposit64(tim_target, 0, mstart, 0);
++    }
++    tim_target = deposit64(tim_target, mstart, nbits,
++                           (uint64_t)s->regs[R_CMP0]);
++
++    /* Wrap around if needed */
++    if (tim_target <= s->tim_counter) {
++        tim_target += (1ULL << (mstart + nbits));
++    }
++
++    timer_mod(s->timer,
++              s->tim_base_ns +
++              clock_ticks_to_ns(s->fstm, tim_target - s->tim_counter));
++}
++
++static void tricore_stm_clock_update(void *opaque, enum ClockEvent event)
++{
++    TriCoreSTMState *s = TRICORE_STM(opaque);
++
++    if (event == ClockPreUpdate) {
++        tricore_stm_tim_update(s);
++    } else {
++        tricore_stm_timer_update(s);
 +    }
 +}
 +
-+static uint32_t tricore_mpu_dpr_upper(CPUTriCoreState *env, int idx)
++static void tricore_stm_write(void *opaque, hwaddr offset,
++                              uint64_t value, unsigned size)
 +{
-+    switch (idx) {
-+    case 0:  return env->DPR0_0U;
-+    case 1:  return env->DPR0_1U;
-+    case 2:  return env->DPR0_2U;
-+    case 3:  return env->DPR0_3U;
-+    case 4:  return env->DPR1_0U;
-+    case 5:  return env->DPR1_1U;
-+    case 6:  return env->DPR1_2U;
-+    case 7:  return env->DPR1_3U;
-+    case 8:  return env->DPR2_0U;
-+    case 9:  return env->DPR2_1U;
-+    case 10: return env->DPR2_2U;
-+    case 11: return env->DPR2_3U;
-+    case 12: return env->DPR3_0U;
-+    case 13: return env->DPR3_1U;
-+    case 14: return env->DPR3_2U;
-+    case 15: return env->DPR3_3U;
-+    default: return 0;
-+    }
-+}
++    TriCoreSTMState *s = TRICORE_STM(opaque);
++    hwaddr reg_addr = offset >> 2;
 +
-+static uint32_t tricore_mpu_cpr_lower(CPUTriCoreState *env, int idx)
-+{
-+    switch (idx) {
-+    case 0:  return env->CPR0_0L;
-+    case 1:  return env->CPR0_1L;
-+    case 2:  return env->CPR0_2L;
-+    case 3:  return env->CPR0_3L;
-+    case 4:  return env->CPR1_0L;
-+    case 5:  return env->CPR1_1L;
-+    case 6:  return env->CPR1_2L;
-+    case 7:  return env->CPR1_3L;
-+    case 8:  return env->CPR2_0L;
-+    case 9:  return env->CPR2_1L;
-+    case 10: return env->CPR2_2L;
-+    case 11: return env->CPR2_3L;
-+    case 12: return env->CPR3_0L;
-+    case 13: return env->CPR3_1L;
-+    case 14: return env->CPR3_2L;
-+    case 15: return env->CPR3_3L;
-+    default: return 0;
-+    }
-+}
-+
-+static uint32_t tricore_mpu_cpr_upper(CPUTriCoreState *env, int idx)
-+{
-+    switch (idx) {
-+    case 0:  return env->CPR0_0U;
-+    case 1:  return env->CPR0_1U;
-+    case 2:  return env->CPR0_2U;
-+    case 3:  return env->CPR0_3U;
-+    case 4:  return env->CPR1_0U;
-+    case 5:  return env->CPR1_1U;
-+    case 6:  return env->CPR1_2U;
-+    case 7:  return env->CPR1_3U;
-+    case 8:  return env->CPR2_0U;
-+    case 9:  return env->CPR2_1U;
-+    case 10: return env->CPR2_2U;
-+    case 11: return env->CPR2_3U;
-+    case 12: return env->CPR3_0U;
-+    case 13: return env->CPR3_1U;
-+    case 14: return env->CPR3_2U;
-+    case 15: return env->CPR3_3U;
-+    default: return 0;
-+    }
-+}
-+
-+static uint32_t tricore_mpu_dpre(CPUTriCoreState *env, int prs)
-+{
-+    switch (prs) {
-+    case 0: return env->DPRE_0;
-+    case 1: return env->DPRE_1;
-+    case 2: return env->DPRE_2;
-+    case 3: return env->DPRE_3;
-+    default: return 0;
-+    }
-+}
-+
-+static uint32_t tricore_mpu_dpwe(CPUTriCoreState *env, int prs)
-+{
-+    switch (prs) {
-+    case 0: return env->DPWE_0;
-+    case 1: return env->DPWE_1;
-+    case 2: return env->DPWE_2;
-+    case 3: return env->DPWE_3;
-+    default: return 0;
-+    }
-+}
-+
-+static uint32_t tricore_mpu_cpxe(CPUTriCoreState *env, int prs)
-+{
-+    switch (prs) {
-+    case 0: return env->CPXE_0;
-+    case 1: return env->CPXE_1;
-+    case 2: return env->CPXE_2;
-+    case 3: return env->CPXE_3;
-+    default: return 0;
-+    }
-+}
-+
-+static bool tricore_mpu_enabled(CPUTriCoreState *env)
-+{
-+    /*
-+     * The MPU is enabled when SYSCON.MPEN (bit 1) is set.
-+     * As a pragmatic fallback, also treat the MPU as enabled
-+     * when any enable bitmap is nonzero, since some RTOS ports
-+     * program the range/enable registers without setting SYSCON.MPEN.
-+     */
-+    if (env->SYSCON & MASK_SYSCON_PRO_TEN) {
-+        return true;
-+    }
-+    return (env->DPRE_0 | env->DPRE_1 | env->DPRE_2 | env->DPRE_3 |
-+            env->DPWE_0 | env->DPWE_1 | env->DPWE_2 | env->DPWE_3 |
-+            env->CPXE_0 | env->CPXE_1 | env->CPXE_2 | env->CPXE_3) != 0;
-+}
-+
-+static int tricore_mpu_check(CPUTriCoreState *env, vaddr address,
-+                             MMUAccessType access_type, int *prot)
-+{
-+    int prs = (env->PSW & MASK_PSW_PRS) >> 12;
-+    uint32_t dpre = tricore_mpu_dpre(env, prs);
-+    uint32_t dpwe = tricore_mpu_dpwe(env, prs);
-+    uint32_t cpxe = tricore_mpu_cpxe(env, prs);
-+    int i;
-+
-+    *prot = 0;
-+
-+    /* Walk the 16 data protection ranges */
-+    for (i = 0; i < 16; i++) {
-+        uint32_t lower = tricore_mpu_dpr_lower(env, i);
-+        uint32_t upper = tricore_mpu_dpr_upper(env, i);
-+
-+        if (address >= lower && address < upper) {
-+            if (dpre & (1u << i)) {
-+                *prot |= PAGE_READ;
-+            }
-+            if (dpwe & (1u << i)) {
-+                *prot |= PAGE_WRITE;
-+            }
-+        }
-+    }
-+
-+    /* Walk the 16 code protection ranges */
-+    for (i = 0; i < 16; i++) {
-+        uint32_t lower = tricore_mpu_cpr_lower(env, i);
-+        uint32_t upper = tricore_mpu_cpr_upper(env, i);
-+
-+        if (address >= lower && address < upper) {
-+            if (cpxe & (1u << i)) {
-+                *prot |= PAGE_EXEC;
-+            }
-+        }
-+    }
-+
-+    /* Check the requested access against accumulated permissions */
-+    switch (access_type) {
-+    case MMU_DATA_LOAD:
-+        if (!(*prot & PAGE_READ)) {
-+            return TLBRET_MPR;
-+        }
++    switch (reg_addr) {
++    case R_CLC:
++    case R_ID:
++    case R_TIM0:
++    case R_TIM1:
++    case R_TIM2:
++    case R_TIM3:
++    case R_TIM4:
++    case R_TIM5:
++    case R_TIM6:
++    case R_CAP:
++        s->regs[reg_addr] = value;
 +        break;
-+    case MMU_DATA_STORE:
-+        if (!(*prot & PAGE_WRITE)) {
-+            return TLBRET_MPW;
++    case R_CMP0:
++        s->regs[reg_addr] = value;
++        tricore_stm_tim_update(s);
++        tricore_stm_timer_update(s);
++        break;
++    case R_CMP1:
++    case R_ICR:
++        s->regs[reg_addr] = value;
++        tricore_stm_timer_update(s);
++        break;
++    case R_CMCON:
++        s->regs[reg_addr] = value;
++        tricore_stm_tim_update(s);
++        tricore_stm_timer_update(s);
++        break;
++    case R_ISCR:
++        if (value & MASK_ISCR_CMP0IRR) {
++            qatomic_and(&s->regs[R_ICR], ~MASK_ICR_CMP0IR);
 +        }
-+        break;
-+    case MMU_INST_FETCH:
-+        if (!(*prot & PAGE_EXEC)) {
-+            return TLBRET_MPX;
++        if (value & MASK_ISCR_CMP1IRR) {
++            qatomic_and(&s->regs[R_ICR], ~MASK_ICR_CMP1IR);
 +        }
++        if (value & MASK_ISCR_CMP0IRS) {
++            qatomic_or(&s->regs[R_ICR], MASK_ICR_CMP0IR);
++        }
++        if (value & MASK_ISCR_CMP1IRS) {
++            qatomic_or(&s->regs[R_ICR], MASK_ICR_CMP1IR);
++        }
++        tricore_stm_timer_update(s);
 +        break;
-+    }
-+
-+    return TLBRET_MATCH;
-+}
-+
- static int get_physical_address(CPUTriCoreState *env, hwaddr *physical,
-                                 int *prot, vaddr address,
-                                 MMUAccessType access_type, int mmu_idx)
-@@ -43,6 +247,19 @@ static int get_physical_address(CPUTriCoreState *env, hwaddr *physical,
-     *physical = address & 0xFFFFFFFF;
-     *prot = PAGE_READ | PAGE_WRITE | PAGE_EXEC;
- 
-+    /*
-+     * Block instruction fetch from peripheral space
-+     * (segments 0xE and 0xF).
-+     */
-+    if (access_type == MMU_INST_FETCH &&
-+        (address & 0xE0000000) == 0xE0000000) {
-+        return TLBRET_MPX;
-+    }
-+
-+    if (tricore_mpu_enabled(env)) {
-+        ret = tricore_mpu_check(env, address, access_type, prot);
-+    }
-+
-     return ret;
- }
- 
-@@ -60,10 +277,25 @@ hwaddr tricore_cpu_get_phys_addr_debug(CPUState *cs, vaddr addr)
-     return phys_addr;
- }
- 
--/* TODO: Add exception support */
- static void raise_mmu_exception(CPUTriCoreState *env, vaddr address,
-                                 int rw, int tlb_error)
- {
-+    CPUState *cs = env_cpu(env);
-+
-+    switch (tlb_error) {
-+    case TLBRET_MPR:
-+        cs->exception_index = TRAPC_PROT;
-+        break;
-+    case TLBRET_MPW:
-+        cs->exception_index = TRAPC_PROT;
-+        break;
-+    case TLBRET_MPX:
-+        cs->exception_index = TRAPC_PROT;
++    case R_TIM0SV:
++    case R_CAPSV:
++    case R_OCS:
++    case R_KRSTCLR:
++    case R_KRST1:
++    case R_KRST0:
++    case R_ACCEN1:
++    case R_ACCEN0:
++        s->regs[reg_addr] = value;
 +        break;
 +    default:
-+        cs->exception_index = TRAPC_SYSBUS;
++        qemu_log_mask(LOG_UNIMP,
++                      "tricore_stm: write to unknown register 0x%"
++                      HWADDR_PRIx "\n", offset);
 +        break;
 +    }
- }
- 
- bool tricore_cpu_tlb_fill(CPUState *cs, vaddr address, int size,
-@@ -73,9 +305,8 @@ bool tricore_cpu_tlb_fill(CPUState *cs, vaddr address, int size,
-     CPUTriCoreState *env = cpu_env(cs);
-     hwaddr physical;
-     int prot;
--    int ret = 0;
-+    int ret;
- 
--    rw &= 1;
-     ret = get_physical_address(env, &physical, &prot,
-                                address, rw, mmu_idx);
- 
-@@ -85,7 +316,7 @@ bool tricore_cpu_tlb_fill(CPUState *cs, vaddr address, int size,
- 
-     if (ret == TLBRET_MATCH) {
-         tlb_set_page(cs, address & TARGET_PAGE_MASK,
--                     physical & TARGET_PAGE_MASK, prot | PAGE_EXEC,
-+                     physical & TARGET_PAGE_MASK, prot,
-                      mmu_idx, TARGET_PAGE_SIZE);
-         return true;
-     } else {
-@@ -170,8 +401,9 @@ void NAME(CPUTriCoreState *env, uint32_t val)                            \
- {                                                                         \
-     if (tricore_has_feature(env, TRICORE_FEATURE_##FEATURE)) {            \
-         env->REG = FIELD_DP32(env->REG, REG, FIELD ## _ ## FEATURE, val); \
-+    } else {                                                              \
-+        env->REG = FIELD_DP32(env->REG, REG, FIELD ## _13, val);          \
-     }                                                                     \
--    env->REG = FIELD_DP32(env->REG, REG, FIELD ## _13, val);              \
- }
- 
- #define FIELD_SETTER(NAME, REG, FIELD)                \
++}
++
++static uint64_t tricore_stm_read(void *opaque, hwaddr offset,
++                                 unsigned size)
++{
++    TriCoreSTMState *s = TRICORE_STM(opaque);
++    uint64_t r = 0;
++    hwaddr reg_addr = offset >> 2;
++
++    if ((reg_addr >= R_TIM0 && reg_addr <= R_TIM6) ||
++        reg_addr == R_TIM0SV) {
++        tricore_stm_tim_update(s);
++        s->regs[R_CAP] = (uint32_t)(s->tim_counter >> 32);
++    }
++
++    switch (reg_addr) {
++    case R_CLC:
++    case R_ID:
++        r = s->regs[reg_addr];
++        break;
++    case R_TIM0:
++    case R_TIM1:
++    case R_TIM2:
++    case R_TIM3:
++    case R_TIM4:
++    case R_TIM5:
++    case R_TIM6:
++        r = s->tim_counter << (reg_addr - R_TIM0) * 4;
++        break;
++    case R_CAP:
++        r = s->regs[R_CAP];
++        break;
++    case R_ISCR:
++        r = 0;
++        break;
++    case R_CMP0:
++    case R_CMP1:
++    case R_CMCON:
++    case R_ICR:
++        r = s->regs[reg_addr];
++        break;
++    case R_TIM0SV:
++        r = s->tim_counter;
++        break;
++    case R_CAPSV:
++        r = s->regs[R_CAP];
++        break;
++    case R_OCS:
++    case R_KRSTCLR:
++    case R_KRST1:
++    case R_KRST0:
++    case R_ACCEN1:
++    case R_ACCEN0:
++        r = s->regs[reg_addr];
++        break;
++    default:
++        qemu_log_mask(LOG_UNIMP,
++                      "tricore_stm: read from unknown register 0x%"
++                      HWADDR_PRIx "\n", offset);
++        r = 0;
++        break;
++    }
++
++    return r;
++}
++
++static void tricore_stm_reset(DeviceState *dev)
++{
++    TriCoreSTMState *s = TRICORE_STM(dev);
++
++    s->regs[R_CLC] = RESET_TRICORE_STM_CLC;
++    s->regs[R_ID] = RESET_TRICORE_STM_ID;
++    s->regs[R_TIM0] = RESET_TRICORE_STM_TIM0;
++    s->regs[R_TIM1] = RESET_TRICORE_STM_TIM1;
++    s->regs[R_TIM2] = RESET_TRICORE_STM_TIM2;
++    s->regs[R_TIM3] = RESET_TRICORE_STM_TIM3;
++    s->regs[R_TIM4] = RESET_TRICORE_STM_TIM4;
++    s->regs[R_TIM5] = RESET_TRICORE_STM_TIM5;
++    s->regs[R_TIM6] = RESET_TRICORE_STM_TIM6;
++    s->regs[R_CAP] = RESET_TRICORE_STM_CAP;
++    s->regs[R_CMP0] = RESET_TRICORE_STM_CMP0;
++    s->regs[R_CMP1] = RESET_TRICORE_STM_CMP1;
++    s->regs[R_CMCON] = RESET_TRICORE_STM_CMCON;
++    s->regs[R_ICR] = RESET_TRICORE_STM_ICR;
++    s->regs[R_ISCR] = RESET_TRICORE_STM_ISCR;
++    s->regs[R_TIM0SV] = RESET_TRICORE_STM_TIM0SV;
++    s->regs[R_CAPSV] = RESET_TRICORE_STM_CAPSV;
++    s->regs[R_OCS] = RESET_TRICORE_STM_OCS;
++    s->regs[R_KRSTCLR] = RESET_TRICORE_STM_KRSTCLR;
++    s->regs[R_KRST1] = RESET_TRICORE_STM_KRST1;
++    s->regs[R_KRST0] = RESET_TRICORE_STM_KRST0;
++    s->regs[R_ACCEN1] = RESET_TRICORE_STM_ACCEN1;
++    s->regs[R_ACCEN0] = RESET_TRICORE_STM_ACCEN0;
++
++    s->tim_counter = 0;
++    s->tim_base_ns = qemu_clock_get_ns(QEMU_CLOCK_VIRTUAL);
++}
++
++static const MemoryRegionOps tricore_stm_ops = {
++    .read = tricore_stm_read,
++    .write = tricore_stm_write,
++    .valid = {
++        .min_access_size = 4,
++        .max_access_size = 4,
++    },
++    .endianness = DEVICE_LITTLE_ENDIAN,
++};
++
++static void tricore_stm_timer_hit(void *opaque)
++{
++    TriCoreSTMState *s = TRICORE_STM(opaque);
++
++    qatomic_or(&s->regs[R_ICR], MASK_ICR_CMP0IR);
++
++    if (s->regs[R_ICR] & MASK_ICR_CMP0EN) {
++        qemu_irq_pulse(s->irq);
++    }
++
++    tricore_stm_tim_update(s);
++    tricore_stm_timer_update(s);
++}
++
++static void tricore_stm_realize(DeviceState *dev, Error **errp)
++{
++    TriCoreSTMState *s = TRICORE_STM(dev);
++    SysBusDevice *sbd = SYS_BUS_DEVICE(dev);
++
++    s->timer = timer_new_ns(QEMU_CLOCK_VIRTUAL, tricore_stm_timer_hit, s);
++    s->tim_base_ns = qemu_clock_get_ns(QEMU_CLOCK_VIRTUAL);
++    s->tim_counter = 0;
++
++    sysbus_init_mmio(sbd, &s->iomem);
++    sysbus_init_irq(sbd, &s->irq);
++}
++
++static void tricore_stm_init(Object *obj)
++{
++    TriCoreSTMState *s = TRICORE_STM(obj);
++
++    memory_region_init_io(&s->iomem, OBJECT(s), &tricore_stm_ops, s,
++                          "tricore_stm", 0x100);
++    s->fstm = qdev_init_clock_in(DEVICE(s), "fstm",
++                                 tricore_stm_clock_update, s,
++                                 ClockPreUpdate | ClockUpdate);
++}
++
++static void tricore_stm_class_init(ObjectClass *klass, const void *data)
++{
++    DeviceClass *dc = DEVICE_CLASS(klass);
++
++    dc->legacy_reset = tricore_stm_reset;
++    dc->realize = tricore_stm_realize;
++}
++
++static const TypeInfo tricore_stm_info = {
++    .name = TYPE_TRICORE_STM,
++    .parent = TYPE_SYS_BUS_DEVICE,
++    .instance_size = sizeof(TriCoreSTMState),
++    .instance_init = tricore_stm_init,
++    .class_init = tricore_stm_class_init,
++};
++
++static void tricore_stm_register_types(void)
++{
++    type_register_static(&tricore_stm_info);
++}
++
++type_init(tricore_stm_register_types)
+diff --git a/include/hw/timer/tricore_stm.h b/include/hw/timer/tricore_stm.h
+new file mode 100644
+index 0000000000..48345f5181
+--- /dev/null
++++ b/include/hw/timer/tricore_stm.h
+@@ -0,0 +1,76 @@
++/* SPDX-License-Identifier: GPL-2.0-or-later */
++/*
++ * QEMU TriCore System Timer Module (STM)
++ *
++ * Copyright (c) 2024 Infineon Technologies AG
++ */
++
++#ifndef HW_TRICORE_STM_H
++#define HW_TRICORE_STM_H
++
++#include "hw/core/clock.h"
++#include "hw/core/sysbus.h"
++#include "qom/object.h"
++#include "qemu/timer.h"
++
++#define TYPE_TRICORE_STM "tricore_stm"
++OBJECT_DECLARE_SIMPLE_TYPE(TriCoreSTMState, TRICORE_STM)
++
++#define MASK_ICR_CMP0EN     0x01
++#define MASK_ICR_CMP0IR     0x02
++#define MASK_ICR_CMP1EN     0x10
++#define MASK_ICR_CMP1IR     0x20
++
++#define MASK_ISCR_CMP0IRR   0x1
++#define MASK_ISCR_CMP0IRS   0x2
++#define MASK_ISCR_CMP1IRR   0x4
++#define MASK_ISCR_CMP1IRS   0x8
++
++#define MASK_CMCON_MSIZE0   0x1F
++#define MASK_CMCON_MSTART0  0x1F00
++#define MASK_CMCON_MSIZE1   0x1F0000
++#define MASK_CMCON_MSTART1  0x1F000000
++
++#define STM_R_MAX           (0x100 / 4)
++
++/* Reset values */
++#define RESET_TRICORE_STM_CLC       0x0
++#define RESET_TRICORE_STM_ID        0x0000C000
++#define RESET_TRICORE_STM_TIM0      0x0
++#define RESET_TRICORE_STM_TIM1      0x0
++#define RESET_TRICORE_STM_TIM2      0x0
++#define RESET_TRICORE_STM_TIM3      0x0
++#define RESET_TRICORE_STM_TIM4      0x0
++#define RESET_TRICORE_STM_TIM5      0x0
++#define RESET_TRICORE_STM_TIM6      0x0
++#define RESET_TRICORE_STM_CAP       0x0
++#define RESET_TRICORE_STM_CMP0      0x0
++#define RESET_TRICORE_STM_CMP1      0x0
++#define RESET_TRICORE_STM_CMCON     0x0
++#define RESET_TRICORE_STM_ICR       0x0
++#define RESET_TRICORE_STM_ISCR      0x0
++#define RESET_TRICORE_STM_TIM0SV    0x0
++#define RESET_TRICORE_STM_CAPSV     0x0
++#define RESET_TRICORE_STM_OCS       0x0
++#define RESET_TRICORE_STM_KRSTCLR   0x0
++#define RESET_TRICORE_STM_KRST1     0x0
++#define RESET_TRICORE_STM_KRST0     0x0
++#define RESET_TRICORE_STM_ACCEN1    0x0
++#define RESET_TRICORE_STM_ACCEN0    0xFFFFFFFF
++
++struct TriCoreSTMState {
++    /* <private> */
++    SysBusDevice parent_obj;
++
++    /* <public> */
++    MemoryRegion iomem;
++    QEMUTimer *timer;
++    Clock *fstm;
++    qemu_irq irq;
++
++    uint32_t regs[STM_R_MAX];
++    uint64_t tim_counter;
++    int64_t tim_base_ns;
++};
++
++#endif /* HW_TRICORE_STM_H */
 
 -- 
 2.47.3
