@@ -4,85 +4,88 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 802A4CD6E5D
-	for <qemu-devel@archiver.kernel.org>; Sun, 31 May 2026 15:34:44 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id AC707CD6E52
+	for <qemu-devel@archiver.kernel.org>; Sun, 31 May 2026 15:35:54 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wTiB3-0001TC-NJ; Sun, 31 May 2026 11:34:13 -0400
+	id 1wTiCV-00021D-5L; Sun, 31 May 2026 11:35:43 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <hemanshu.khilari.foss@gmail.com>)
- id 1wTiB2-0001Sj-C6
- for qemu-devel@nongnu.org; Sun, 31 May 2026 11:34:12 -0400
-Received: from mail-pj1-x1043.google.com ([2607:f8b0:4864:20::1043])
+ (Exim 4.90_1) (envelope-from <samyak.bambole07@gmail.com>)
+ id 1wThzh-0007sy-Cn
+ for qemu-devel@nongnu.org; Sun, 31 May 2026 11:22:31 -0400
+Received: from mail-pj1-x1030.google.com ([2607:f8b0:4864:20::1030])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <hemanshu.khilari.foss@gmail.com>)
- id 1wTiB0-00066L-QC
- for qemu-devel@nongnu.org; Sun, 31 May 2026 11:34:12 -0400
-Received: by mail-pj1-x1043.google.com with SMTP id
- 98e67ed59e1d1-36dac5d5d05so97789a91.2
- for <qemu-devel@nongnu.org>; Sun, 31 May 2026 08:34:10 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <samyak.bambole07@gmail.com>)
+ id 1wThzf-0001Gm-7b
+ for qemu-devel@nongnu.org; Sun, 31 May 2026 11:22:28 -0400
+Received: by mail-pj1-x1030.google.com with SMTP id
+ 98e67ed59e1d1-36dac5d5d05so95411a91.2
+ for <qemu-devel@nongnu.org>; Sun, 31 May 2026 08:22:26 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1780241649; x=1780846449; darn=nongnu.org;
+ d=gmail.com; s=20251104; t=1780240945; x=1780845745; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:message-id:date:subject:cc
  :to:from:from:to:cc:subject:date:message-id:reply-to;
- bh=vLoZ31hwfq44UN2n4LvdkzlXAdAKJFZLv48jde8pkZ0=;
- b=FpHm1bIXuBYXR3BYRNgO5+7jicPUWPLp1fKa69dCg6w4d+vtgzuZhcpmPK6LeCew3w
- 6hSQFnQ1lHxPtlc0eWxKS1JQpNCoruZa39Cfoei25rvq8V86qhzxCk1oIXhrm+/I7nO0
- iRNM+XNLFkZqUVTeKlIFponI3Y1I2RH0XkzjrWOO1BVsebZ553KR8SbRNxUaOTGj29Ls
- vxi9JAibVgstQ71Ga2WH+JFgkNi5adp/3qW2pGQP7E3QmjtaqPAvkTfjU4uoeT7vpyd3
- Hgx22/RsamNR25P/Gjuj/3qDy9dRGmT3q2Y94nQeDOGxn7pBdUNmYLMWLYyjiTVDFVex
- UeBA==
+ bh=5t15FBFncCfWhIEHbAPJ4/OENNZt8mgYjYpEmZUPm7U=;
+ b=NMc8SvBgxw3BBx2dTE2safwyrXLsoyU8NwDv0Ihb/J0McFogiM+h1iTer5xPjT4A7y
+ 8HWDzKxR2qpNyWL3iYK65aoMqTYnJsXqjVpeaZE2ijfhXAqqHL+eroYi3uR0aXkCz9lN
+ Dxyx0PW3/8Oq7AFfRCzp8yp07vLterf4UHGPv6MX2rc1e2XBVwaSL4Lm+hQrAkI3HeZK
+ ivX1ZTurR8J4hI/4N7EQ+4SYcjtOQFDeKqYMg/G/LppOL9TP6U5d4auXeJgnT/Ed9NRV
+ 6Lb1lGDV7Ad8mYcAVE41dHDHdzzamuVIkWA3riUdtJeP2bkEmyAzpuvbNq1C28dRJ8Lj
+ Inpw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1780241649; x=1780846449;
+ d=1e100.net; s=20251104; t=1780240945; x=1780845745;
  h=content-transfer-encoding:mime-version:message-id:date:subject:cc
  :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
  :message-id:reply-to;
- bh=vLoZ31hwfq44UN2n4LvdkzlXAdAKJFZLv48jde8pkZ0=;
- b=F0qsQQHbskg6TyvA6kcQ07W9UCa51NZHwaS+I20TWrFIo71FhAlHtFgLRpKI23q9Ga
- MCAFx1EhkgDwDuRt8lxtoVD13EHmA708oYxJ4mTidKCcp48f1o5zrgx+MCuhIRXQAbyu
- jmtIBniMTAmOZfBUDIy71QZHiwNUXAr506TDnyhSUtrF9MZgPpkN36cxJHMc/92u4ePU
- 8QlR0HTdwOKruh6kswHK4M9NWrdx3VAcHpqFqG8MLsx83iJdhSV0xnlifZ7VfRLnpkdS
- I4TSwVcpXOWY4ibHBxhpVWlT6230+ON7eEwZFvTF678cAx1uHW7vmIx3B2IF0Tm8J2G/
- 2I1Q==
-X-Gm-Message-State: AOJu0Yx8rLk9Ju56ueV0HuQgeuSESx14uziuFHlNzZ5hvbc1Q3bTpvSR
- Qkp2HtkeB0dHK2PqAwcky+XedbK1xhiJPe2LeDjY1e6VFfNyhwzwt+4VBrM/W59qfIo=
-X-Gm-Gg: Acq92OEzAo3wmpFCCGzWIHCDzJBrBqicbfHEULg90zKgb+A2VzTdZgOwym+CjtQPiNG
- ROV/HNrA8Um3u5lSvNiIp0vpZKaLG1gVbhY+1SpBtxzP0hpL713N9VGcg+ym0ujRz+pZ/jqv41z
- 5Y3hJa1LLkjyrwnMdd0whNJTf4nnCRQEYHap+OBKlXEO72WdwuYjb6OjOYAKmbF56wchXHCwjas
- QxEGSvtQ1u72+FHU4tV/wX4yttbe/Hbja/7DBX1ivIZePu+fzDeHjgfy4s5L4vJt2xQcMZHroiO
- M3puwXWmL/bTUCvcpQSFM3S4Zi71/5b9ZpmeGEJqO0yYM8pKCj0Y5P2uJQEqSNVcZxMGyD51Z4G
- CAenUigG+LZKHCxlyhMm0hslGClM3z/YYEWV+cZ/UXFOL0+X2o2UhspnifQByeibWCYevQseO/D
- PJe7ehE0J/8nwTOPK7wf4s8INsMTa3NGGwvNOiWFrK3l4zC64=
-X-Received: by 2002:a17:90b:578c:b0:36b:aed6:235a with SMTP id
- 98e67ed59e1d1-36c67facb44mr6949630a91.22.1780241648939; 
- Sun, 31 May 2026 08:34:08 -0700 (PDT)
-Received: from fedora.. ([2405:201:3005:d874:1572:5c02:3b40:ecec])
+ bh=5t15FBFncCfWhIEHbAPJ4/OENNZt8mgYjYpEmZUPm7U=;
+ b=q7YigkDcJEfO/tkV91uFV1687mR6ak0UWm7j7/HSSOB5bs4yPBstT8rqPudirDxgGX
+ PDanRXaQ2u8JFnG2LoM/YFIskkIO0cW23FXIfesQ/ECAnfgy1SnlSu2OMcNyy+kZxDxF
+ XSgo+2xldgUP5aFDFKM7sfwZPOYK7LkeXrENiZnigsU6ROyNuhI4x5NcZbhSRpWus9oa
+ Nz/RJmuurgYMefe63OAn6v/YYxB3oVzySm36TxHZeNBK9ho1l5cCHrxCLJ3sgwb5Y2T2
+ iUcLMZaYAq0DQ0mMwG7KrIg452aJxU4ataUWshEU10bXcFlgtcncogXop285gbTCOcl5
+ nmLA==
+X-Gm-Message-State: AOJu0YzAt0e5ClCkWb3kAhdvNa4cKHSlFRFAXewWvTowjp9Cj/X64L+3
+ 7usHQfCgmATeR3SbTxfSFxcrzIGs6EK6KYYSwD9kdHBOp0LwAKjVUpUb82D9ng==
+X-Gm-Gg: Acq92OFrzmF8G74+BMMMBhFhrw4r+mIt2XU/3kTcxKWVE8mtc35xx1MIJCf17nyYz7y
+ aUP9mAezmVjZ1+//sTbNcJduj0kBxB6ES7ZlpX10gHEh7OfkLgyh/o3KgSN8s5D94XAZczvg3VH
+ jIa7v/uCpSUyPzPc+mAVfEjBE+hCJ/13XlhsxFI+k4Z0vdNZzx1Po8F82dx09kt0kocAm7I04Fh
+ QDE12sCfz0wxLk8DUWvlIbwe50ngAPFG9U8gE2W9T38nCMndYcfQBWxz97qaYswOOq+pm0sJ+4h
+ hONmMnwmJwA39Cc2DjN71VlcAv+n64Nl8/iDYPE6ltWXPagp1eWFO3mkU6E9YNiM0KEcLIxiUh9
+ 7vFFfzAw+9YVulMW/JJqCjDS/Hekh53mZsAWl5cfI1LN85iy3bTs0pVOh31rpzXD3kp4Ow0k5l3
+ jWCqCH86tGhX9d9+jS0FXr6/5Hs7OOMm00fmngNN5XWaJ9YJSHCGUMBzXVV706uUsNKHVQwk8=
+X-Received: by 2002:a17:90b:562b:b0:36d:8e49:d8 with SMTP id
+ 98e67ed59e1d1-36d8e49038cmr3985103a91.15.1780240944984; 
+ Sun, 31 May 2026 08:22:24 -0700 (PDT)
+Received: from localhost.localdomain
+ ([2401:4900:88b1:bfce:96bb:43ff:fec0:e782])
  by smtp.gmail.com with ESMTPSA id
- 98e67ed59e1d1-36bc0c391cbsm8348464a91.16.2026.05.31.08.34.05
+ 98e67ed59e1d1-36bbd667fa4sm5603408a91.0.2026.05.31.08.22.23
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Sun, 31 May 2026 08:34:08 -0700 (PDT)
-From: "hemanshu.khilari.foss" <hemanshu.khilari.foss@gmail.com>
+ Sun, 31 May 2026 08:22:24 -0700 (PDT)
+From: Samyak <samyak.bambole07@gmail.com>
 To: qemu-devel@nongnu.org
-Cc: "hemanshu.khilari.foss" <hemanshu.khilari.foss@gmail.com>, luc@lmichel.fr,
- peter.maydell@linaro.org, hemanshu_dev@proton.me
-Subject: [PATCH v2] hw/core/qdev-clock: Fix potential null pointer dereference
-Date: Sun, 31 May 2026 21:03:55 +0530
-Message-ID: <20260531153354.88909-2-hemanshu.khilari.foss@gmail.com>
-X-Mailer: git-send-email 2.42.0
+Cc: Samyak <samyak.bambole07@gmail.com>
+Subject: [PATCH] hw/misc/applesmc: replace DEVICE_NATIVE_ENDIAN with
+ DEVICE_LITTLE_ENDIAN
+Date: Sun, 31 May 2026 20:52:10 +0530
+Message-ID: <20260531152210.264330-1-samyak.bambole07@gmail.com>
+X-Mailer: git-send-email 2.54.0
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::1043;
- envelope-from=hemanshu.khilari.foss@gmail.com; helo=mail-pj1-x1043.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+Received-SPF: pass client-ip=2607:f8b0:4864:20::1030;
+ envelope-from=samyak.bambole07@gmail.com; helo=mail-pj1-x1030.google.com
+X-Spam_score_int: -17
+X-Spam_score: -1.8
+X-Spam_bar: -
+X-Spam_report: (-1.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
+X-Mailman-Approved-At: Sun, 31 May 2026 11:35:40 -0400
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -97,45 +100,46 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-qdev_get_clocklist() function returns a pointer to the NamedClockList
-struct. This function is called in qdev_alias_clock() and the returned
-pointer is immediately dereferenced without a null check.
+Use explicit DEVICE_LITTLE_ENDIAN same as other devices in /hw/i386,
+since the Apple SMC is x86 only.
 
-Passing clock name that doesn't exist to qdev_get_clocklist() is a
-programming error, and so this change is not fixing a bug, only making
-the reporting of that programming error a bit more helpful and bringing
-it in to line with qdev_get_clock_in() and qdev_get_clock_out().
-
-Cc: luc@lmichel.fr
-Cc: peter.maydell@linaro.org
-Cc: hemanshu_dev@proton.me
-Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/2342
-Signed-off-by: hemanshu.khilari.foss <hemanshu.khilari.foss@gmail.com>
+This was flagged by scripts/checkpatch.pl
 ---
- hw/core/qdev-clock.c | 9 ++++++++-
- 1 file changed, 8 insertions(+), 1 deletion(-)
+ hw/misc/applesmc.c | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
-diff --git a/hw/core/qdev-clock.c b/hw/core/qdev-clock.c
-index 6e2967e433..861f78f94c 100644
---- a/hw/core/qdev-clock.c
-+++ b/hw/core/qdev-clock.c
-@@ -157,7 +157,14 @@ Clock *qdev_alias_clock(DeviceState *dev, const char *name,
-                         DeviceState *alias_dev, const char *alias_name)
- {
-     NamedClockList *ncl = qdev_get_clocklist(dev, name);
--    Clock *clk = ncl->clock;
-+    Clock *clk;
-+
-+    if (!ncl) {
-+        error_report("Can not find clock '%s' for device type '%s'",
-+                     name, object_get_typename(OBJECT(dev)));
-+        abort();
-+    }
-+    clk = ncl->clock;
- 
-     ncl = qdev_init_clocklist(alias_dev, alias_name, true, ncl->output, clk);
- 
+diff --git a/hw/misc/applesmc.c b/hw/misc/applesmc.c
+index fd96f5f245..aae7fad3a2 100644
+--- a/hw/misc/applesmc.c
++++ b/hw/misc/applesmc.c
+@@ -278,7 +278,7 @@ static void qdev_applesmc_isa_reset(DeviceState *dev)
+ static const MemoryRegionOps applesmc_data_io_ops = {
+     .write = applesmc_io_data_write,
+     .read = applesmc_io_data_read,
+-    .endianness = DEVICE_NATIVE_ENDIAN,
++    .endianness = DEVICE_LITTLE_ENDIAN,
+     .impl = {
+         .min_access_size = 1,
+         .max_access_size = 1,
+@@ -288,7 +288,7 @@ static const MemoryRegionOps applesmc_data_io_ops = {
+ static const MemoryRegionOps applesmc_cmd_io_ops = {
+     .write = applesmc_io_cmd_write,
+     .read = applesmc_io_cmd_read,
+-    .endianness = DEVICE_NATIVE_ENDIAN,
++    .endianness = DEVICE_LITTLE_ENDIAN,
+     .impl = {
+         .min_access_size = 1,
+         .max_access_size = 1,
+@@ -298,7 +298,7 @@ static const MemoryRegionOps applesmc_cmd_io_ops = {
+ static const MemoryRegionOps applesmc_err_io_ops = {
+     .write = applesmc_io_err_write,
+     .read = applesmc_io_err_read,
+-    .endianness = DEVICE_NATIVE_ENDIAN,
++    .endianness = DEVICE_LITTLE_ENDIAN,
+     .impl = {
+         .min_access_size = 1,
+         .max_access_size = 1,
 -- 
-2.42.0
+2.54.0
 
 
