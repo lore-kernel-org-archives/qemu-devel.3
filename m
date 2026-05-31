@@ -4,91 +4,91 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 25CE2CD5BD1
-	for <qemu-devel@archiver.kernel.org>; Sun, 31 May 2026 04:11:28 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2B040CD5BD1
+	for <qemu-devel@archiver.kernel.org>; Sun, 31 May 2026 04:12:07 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wTXW3-0006BC-OR; Sun, 31 May 2026 00:11:11 -0400
+	id 1wTXWq-0006bH-BY; Sun, 31 May 2026 00:12:00 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <wlosh@bsdimp.com>) id 1wTXW2-0006Ae-IK
- for qemu-devel@nongnu.org; Sun, 31 May 2026 00:11:10 -0400
+ (Exim 4.90_1) (envelope-from <wlosh@bsdimp.com>) id 1wTXWn-0006af-VK
+ for qemu-devel@nongnu.org; Sun, 31 May 2026 00:11:58 -0400
 Received: from mail-pj1-x1029.google.com ([2607:f8b0:4864:20::1029])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <wlosh@bsdimp.com>) id 1wTXW0-0006Lp-G2
- for qemu-devel@nongnu.org; Sun, 31 May 2026 00:11:10 -0400
+ (Exim 4.90_1) (envelope-from <wlosh@bsdimp.com>) id 1wTXWl-0006er-SS
+ for qemu-devel@nongnu.org; Sun, 31 May 2026 00:11:57 -0400
 Received: by mail-pj1-x1029.google.com with SMTP id
- 98e67ed59e1d1-36bcbd7821fso846902a91.2
- for <qemu-devel@nongnu.org>; Sat, 30 May 2026 21:11:08 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1780200667; cv=none;
+ 98e67ed59e1d1-36b903567fdso2807836a91.1
+ for <qemu-devel@nongnu.org>; Sat, 30 May 2026 21:11:55 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1780200714; cv=none;
  d=google.com; s=arc-20240605;
- b=V47UskFeMZxW7FkotHNDhTfSygRtrknu110sNocYFr4gWQLfY8C2vQRVoxK5hZLDFb
- 3sIvN7xpfYJg3H8CIG5MOC5BqM9Z6yK/DguMM6mgf7kmz4ls8XoDfQD1L5tqWoXtmRIl
- tm0ll2SniDtbySNG8XU3dN4xGxla5ShXVveLKdA5B7O3I+F5vKvu7EVwY/mN8F/Z10XT
- zEPQcba3OX0+iEuLeS5aUqHhWrOEf9PVH7Gc7z8ZWGTQj7ccXUqJatuZKSywDaoifYSq
- jVzAwfjcTFgj3ltgLseq2lNY8Cna/VGheGnKBUi3xNotwBbcfRYgr3sOVP58Riqgnrwz
- msQA==
+ b=CbH5dnIlQGUb7V0i6sRjQ31S+cpOWahVuLf7r9aPKEhrfXuJ/I9n00kfDRq/NTjZP3
+ Aj8HJS9IlVzFdG9tW1aQTix5CUK+p+5a5UW6dLYv7u0BtuTVE73z+AICxEgl2sOH3TLP
+ HsDskWkydU7s42iurCeSmLlJVuuhxOYAoWhjGguWk/HBcmdf2QEHVkl12gfhe4IdB0XN
+ tMAeXZxPuL1zeJX1Y52xkJj7Tg4f1Il4a3/hj8FcyM4Ol4o2UnpKOwt/QDXvzVm94NcP
+ pZh5qf3TJ4ojBkl4+wJn0U13c6qa4dzzlCbMacfC+c3Qu2G1velH92TZwwwAbuz9vk+U
+ sOxQ==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
  s=arc-20240605; 
  h=cc:to:subject:message-id:date:from:in-reply-to:references
  :mime-version:dkim-signature;
- bh=rBSKeC2mjnymwbcb7giR6OlsSEyc24yHmcU7wn9kZKM=;
+ bh=/0fpWwcEywueB0o+WLyHrf/0yZFoyIMoErxz7clMFe8=;
  fh=+DxRVnEC95Ptxk5HMfIFqaUwIao1HhLaAPFCgZPm1R4=;
- b=iWHcECVzrLQo9PbtFip1sbJ+GZ1NQstXMD1Ps1P73JIVDubsxyxKi6Z8M1ISwZLlbZ
- e8yNSJzAGQ94PmePG4p36z7um5C0z28PFWI0XUGFVZZCT76SHl9VKcsj0PuYFBWG5Rri
- lwTO4PL/s8cIwVGjY98j7gCF1U+S/SSdmLJQ/3MaGi2O0VN6CtRvxF2x5WQ53yzyvU3Z
- XcNplfjE2RaVvFrI+fI4YW40Bt9j29LpVDAnDCX8cTGlvbj6iQfCHW0SO7ApvCIbJ8rD
- zKVHwWcx0k7lPe/uytjNtDewlELQ6xmFZ15Oi7+XtdBGGzYE4EIy6GxwYC9/QalRCmdD
- dEJQ==; darn=nongnu.org
+ b=RYB0x3Gh/asb2kXb7FqyvvtLCxSsdp0S88wqznVhIzJwjxta8L58GmzrPpoHPw4ioa
+ 2CNQ94/qYaFhDlamhow6i0gc7wgbiumVlaMTCANJCUp21NhQKkZAmn0FwTQepBVGx9mW
+ xMr48+0xS0WRAs6PxSpiSoYl/bR2HelaVbtZW4hzNnZgnzPvWABK/HA/jr7St6OjGZal
+ Ago+oen8bEqqWCNKbolWwhyex1A07v4Jl0hsfCtSZ89xQO8xQoz1CD/upUzJp2qlSRBN
+ gicch+2cIMmMQOUuOb2wBRXK0X7xwg5H/J+RXlEcDjmiH1Ug0WP37lvUoVDpt2TxEoML
+ 53BA==; darn=nongnu.org
 ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=bsdimp-com.20251104.gappssmtp.com; s=20251104; t=1780200667; x=1780805467;
+ d=bsdimp-com.20251104.gappssmtp.com; s=20251104; t=1780200714; x=1780805514;
  darn=nongnu.org; 
  h=cc:to:subject:message-id:date:from:in-reply-to:references
  :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=rBSKeC2mjnymwbcb7giR6OlsSEyc24yHmcU7wn9kZKM=;
- b=WM9YdTtk1Ncv478fq2VRYvl0CgZK5b1TOtxJoy/hB3CF19bIBdVQA7+wzEPWBn8kSu
- 1d9ckJgnhIL1oNXRw/3JL3QzY5rKRNK9qWz+rTPM0nhhjdZS1X6vKKAqmiTqsNzOyshb
- K55ArR2MXfqRF5qPTpNi+Tuo3aYpbjoHflR7zBlNNPR32AXRli0FRx1kyi7O7ueB06uC
- FNAvGBQ5OrOx4azDGopc+QpG9CRq2gl4x/A2k/KNKjugEhAX0QrbuiKXXMSP2Ndxk7tc
- 0KFAk+OdeRKPxWg23kKmuCXKKddWgXSHileXT/q2tu6POY7jalgN3IkA0lO7XoKMH5lG
- 5k9g==
+ bh=/0fpWwcEywueB0o+WLyHrf/0yZFoyIMoErxz7clMFe8=;
+ b=k+QA9xdYkd4O+Jsu5FHkBiJc4RPcNBeCTJ4LqODzqFR6UyktfTJkOPWxAvGgmNZ/Xa
+ baOIAbpBPBGRptPgWHi2X31pgIbWYoTa1saDrtGK9OQ67DpwD5q9Kj9QE8KBAO7oJiUU
+ cPgBBMcbvdflag+oqcweRiZxt1P8PjNXMZ5Dy3PLFxRwsmX8JJeZaC/HuHJGcifyn2ze
+ N/pnx+M8zXcTVzmpK3rLtrL4KOg2reeecCqozNlZVJChZDoqXv5uki1QWiQwg2CLMAZc
+ lp0vPAmGJdDLlPON3zPIcBU0238hSq2DvKstxh/Oh423PNJozP9yNoF2iIKiRLWSQudk
+ l0Wg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1780200667; x=1780805467;
+ d=1e100.net; s=20251104; t=1780200714; x=1780805514;
  h=cc:to:subject:message-id:date:from:in-reply-to:references
  :mime-version:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
  :message-id:reply-to;
- bh=rBSKeC2mjnymwbcb7giR6OlsSEyc24yHmcU7wn9kZKM=;
- b=L09gqxEl3znoZaG/cSorNPOc2l9/fkyUJFqbwCdh07CgB6WCYmyT8pdADq9MnONide
- idGoZrDEm3NW5zAp/f55+5I1sAabdvXBBjOIn7gyYF8cKGA5FWcC/h7yIUEe5DpAYDYN
- pc1DvxWOi/6WVcSYGDSEflMcN94Jyby0DPq7HMj6KN6i15ua2mRuWmc7xAvYjLFqW3ER
- LWxYAh6dcYuM8fj8IduXWZA9g55JCgRga+85a8xEiBN106q1aQuP4LKRh8D5p24d2ocH
- kWFuWmGluSrmVVPBykk2d2+KyLc+fgQuV8v7I0PyImQIW6T4ElypgWnrg5DSybGH8cp3
- hwLQ==
-X-Gm-Message-State: AOJu0YxKEc4O0s5mcsxss2fk4H47FrfuRELQjOnMLGF8+MoF4GOT4E3Q
- mW+8KzZzJXu67qHajgq2qp5gE62b+qr2ohbRNRpSD1ipA0K6Xk5yKbTZ/u9cIzskA9PVEDgRx8f
- o37FLdoLoLLaZJ+M+NPzTAui28zPLtHlNHiiv6P4btQ==
-X-Gm-Gg: Acq92OEqsfhDYweT+p8rC981sMnQr0jcnrsSuOkofBA3usWIjR8Y2O0pYVpLkzRvgVt
- Z8tplZWkjMUbFFic+21JHSjo68z3CR2kG1KiCOVh5X2d+E2U3d6M6/vTED7n66ybAKchxHqaXJN
- 1Yv3f0awJRbvi6krh+VnlFGmyN3JAS7/DfguQXoy4JUr/4HNncBYiIGXQnoH2Aqenmjuq2CDSw6
- AOvAoVk8CBIOTBE0biydhxoRdf51DkmtRvI62lnxR5r5nC7gG8c4q5dcgaK+Pi2XfeNSHSJMErh
- NuvvUFZLlFHjqPvw+bgfIzY/+BhHAsPVtBGvY07/dbzJF8M=
-X-Received: by 2002:a17:90b:5704:b0:36b:71e6:3e01 with SMTP id
- 98e67ed59e1d1-36c501e108cmr5417101a91.16.1780200666660; Sat, 30 May 2026
- 21:11:06 -0700 (PDT)
+ bh=/0fpWwcEywueB0o+WLyHrf/0yZFoyIMoErxz7clMFe8=;
+ b=m3hVUDtGGSzBSAz6jX1eyyV/UeyF9IDkewljzjSaWyXZMm5hW/QbDS6e69HTprgqNw
+ gKHfbPeXAJAhLqNqkKJ8+htFff6f38Gm6yIBdTvJZOoeAKrhIDufQOllvh1nOpcxD2JC
+ o+Yo4yGAaHvZU9LyXGsY6UjXRwVAQ93PmwGIvtQTM8Etja+cO4s73ocyEy+5HGYyOqBG
+ ghikbNRQ56OPfZ/rGSmfUo/DoKvuI+mLsLe5f/0cAdE6aXcxw2o1FkXcxyM0FV16v2Pp
+ 56bctF4HJa5IGaNw+QKroTm9nkHQe3nsvN6+YxvKcfeYNcJjfWveMdXiZmeu3mgz8OK1
+ a1IA==
+X-Gm-Message-State: AOJu0YxW34QhoV+IB2cPxv9YI0aRja8b9VXhEr2tiYika1Cx5U4r5fwq
+ RHhqvMGWku0bHTwFdAGRFV2JdrWqvB6rNUTH25cLeebHJ8CsLW85uh2/yMhiTanUreQ1xYfK+yn
+ 1gAac0rtbRwcPGAhkWoYmWYA57YOXbY1/wUK/MlR6v+2ZjFYkZ441
+X-Gm-Gg: Acq92OFhJdLTQMIm29ElFq074tKFeVBhojW71HNv7z/RmBU7+7/Bv9X7SdzfD786nvd
+ 1to6iJTNv/tuRIBgInXIWtBDeO2H8Vznk5GAQGMvzVuvcTR7+a1hiQ5RMHLRRT7qCfCZ1qWHJLT
+ +CmjEvMnXvUU9W/ThIsssWQUtXErA9pAk+cxpe+3Cs9wQ6gCKlhAoh1RCcUJqPdSNFEL0okbTD8
+ Oy3h7RA2pXGUntlG4iYtbsnpvYURtcxxUa7CJpnhGRDG4AP4kN/r7FlmF+URidGiFrS6/9GI8tc
+ V6fw+0k+yyixVkLIoYCeECu+Ka2kxcG5cdbaUX5EPGPC4k4=
+X-Received: by 2002:a17:90a:d604:b0:369:69f8:ad6b with SMTP id
+ 98e67ed59e1d1-36c2eb88bd7mr5216339a91.0.1780200714534; Sat, 30 May 2026
+ 21:11:54 -0700 (PDT)
 MIME-Version: 1.0
 References: <20260530211248.375318-1-richard.henderson@linaro.org>
- <20260530211248.375318-2-richard.henderson@linaro.org>
-In-Reply-To: <20260530211248.375318-2-richard.henderson@linaro.org>
+ <20260530211248.375318-3-richard.henderson@linaro.org>
+In-Reply-To: <20260530211248.375318-3-richard.henderson@linaro.org>
 From: Warner Losh <imp@bsdimp.com>
-Date: Sat, 30 May 2026 22:10:55 -0600
-X-Gm-Features: AVHnY4K73rIyFXRdr8iz1VkpxYnudxlImCVynONN3YxE3VNVZQZwzBKag5xC0mE
-Message-ID: <CANCZdfrCybo5xi0O4J9Av4RRP7e-0hDR7+ZKAhVS2oS7OAFoHg@mail.gmail.com>
-Subject: Re: [PATCH 01/13] linux-user: Introduce PGBRange
+Date: Sat, 30 May 2026 22:11:43 -0600
+X-Gm-Features: AVHnY4Lsp-WnZq9U5_HQvBSvEnnmkVNSrkZ1kaZd3H2wOeMJgrpkeyStyZQsMqg
+Message-ID: <CANCZdfrsov9RFOwc+UN7_cuPBFkKB8io6YrWpsPMM_VacpbPHw@mail.gmail.com>
+Subject: Re: [PATCH 02/13] linux-user: Use PGBRange in load_elf_image
 To: Richard Henderson <richard.henderson@linaro.org>
 Cc: qemu-devel@nongnu.org, deller@gmx.de
-Content-Type: multipart/alternative; boundary="0000000000005d945a0653154492"
+Content-Type: multipart/alternative; boundary="000000000000380f9806531547b8"
 Received-SPF: none client-ip=2607:f8b0:4864:20::1029;
  envelope-from=wlosh@bsdimp.com; helo=mail-pj1-x1029.google.com
 X-Spam_score_int: -18
@@ -112,151 +112,133 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
---0000000000005d945a0653154492
+--000000000000380f9806531547b8
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 
 On Sat, May 30, 2026 at 3:12=E2=80=AFPM Richard Henderson <
 richard.henderson@linaro.org> wrote:
 
-> Create a structure to hold a beginning/end range for guest virtual
-> addresses, for use by probe_guest_base.  Use vaddr for clarity.
+> Collect into range instead of loaddr+hiaddr.
 >
 > Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
 > ---
->  linux-user/user-internals.h |  5 +++++
->  linux-user/elfload.c        | 36 ++++++++++++++++++------------------
->  2 files changed, 23 insertions(+), 18 deletions(-)
+>  linux-user/elfload.c | 24 ++++++++++++------------
+>  1 file changed, 12 insertions(+), 12 deletions(-)
 >
 
 Reviewed-by: Warner Losh <imp@bsdimp.com>
 
-This mechanical change looks good to me, and I didn't see any mistakes in
-the array to struct conversion.
 
-
-> diff --git a/linux-user/user-internals.h b/linux-user/user-internals.h
-> index 21daf422b7..73b0109e9c 100644
-> --- a/linux-user/user-internals.h
-> +++ b/linux-user/user-internals.h
-> @@ -75,6 +75,11 @@ void clone_fork_end(bool child);
->  void fork_start(void);
->  void fork_end(pid_t pid);
->
-> +typedef struct PGBRange {
-> +    vaddr lo;
-> +    vaddr hi;
-> +} PGBRange;
-> +
->  /**
->   * probe_guest_base:
->   * @image_name: the executable being loaded
 > diff --git a/linux-user/elfload.c b/linux-user/elfload.c
-> index 0e757787d2..e1e1ee4674 100644
+> index e1e1ee4674..fb774adf25 100644
 > --- a/linux-user/elfload.c
 > +++ b/linux-user/elfload.c
-> @@ -828,15 +828,15 @@ static int pgb_try_mmap_skip_brk(uintptr_t addr,
-> uintptr_t addr_last,
->   */
->
->  typedef struct PGBAddrs {
-> -    uintptr_t bounds[3][2]; /* start/last pairs */
-> +    PGBRange bounds[3];
->      int nbounds;
->  } PGBAddrs;
->
->  static bool pgb_try_mmap_set(const PGBAddrs *ga, uintptr_t base,
-> uintptr_t brk)
+> @@ -1278,7 +1278,8 @@ static void load_elf_image(const char *image_name,
+> const ImageSource *src,
+>                             char **pinterp_name)
 >  {
->      for (int i =3D ga->nbounds - 1; i >=3D 0; --i) {
-> -        if (pgb_try_mmap_skip_brk(ga->bounds[i][0] + base,
-> -                                  ga->bounds[i][1] + base,
-> +        if (pgb_try_mmap_skip_brk(ga->bounds[i].lo + base,
-> +                                  ga->bounds[i].hi + base,
->                                    brk, i =3D=3D 0 && reserved_va) <=3D 0=
-) {
->              return false;
->          }
-> @@ -875,26 +875,26 @@ static bool pgb_addr_set(PGBAddrs *ga, abi_ulong
-> guest_loaddr,
->      n =3D 0;
->
->      if (reserved_va) {
-> -        ga->bounds[n][0] =3D try_identity ? mmap_min_addr : 0;
-> -        ga->bounds[n][1] =3D reserved_va;
-> +        ga->bounds[n].lo =3D try_identity ? mmap_min_addr : 0;
-> +        ga->bounds[n].hi =3D reserved_va;
->          n++;
->          /* LO_COMMPAGE and NULL handled by reserving from 0. */
->      } else {
->          /* Add any LO_COMMPAGE or NULL page. */
->          if (LO_COMMPAGE !=3D -1) {
-> -            ga->bounds[n][0] =3D 0;
-> -            ga->bounds[n][1] =3D LO_COMMPAGE + TARGET_PAGE_SIZE - 1;
-> +            ga->bounds[n].lo =3D 0;
-> +            ga->bounds[n].hi =3D LO_COMMPAGE + TARGET_PAGE_SIZE - 1;
->              n++;
->          } else if (!try_identity) {
-> -            ga->bounds[n][0] =3D 0;
-> -            ga->bounds[n][1] =3D TARGET_PAGE_SIZE - 1;
-> +            ga->bounds[n].lo =3D 0;
-> +            ga->bounds[n].hi =3D TARGET_PAGE_SIZE - 1;
->              n++;
->          }
->
->          /* Add the guest image for ET_EXEC. */
->          if (guest_loaddr) {
-> -            ga->bounds[n][0] =3D guest_loaddr;
-> -            ga->bounds[n][1] =3D guest_hiaddr;
-> +            ga->bounds[n].lo =3D guest_loaddr;
-> +            ga->bounds[n].hi =3D guest_hiaddr;
->              n++;
+>      g_autofree struct elf_phdr *phdr =3D NULL;
+> -    abi_ulong load_addr, load_bias, loaddr, hiaddr, error, align;
+> +    PGBRange range =3D { -1, 0 };
+> +    abi_ulong load_addr, load_bias, error, align;
+>      size_t reserve_size, align_size;
+>      int i, prot_exec;
+>      Error *err =3D NULL;
+> @@ -1318,19 +1319,18 @@ static void load_elf_image(const char *image_name=
+,
+> const ImageSource *src,
+>       * Find the maximum size of the image and allocate an appropriate
+>       * amount of memory to handle that.  Locate the interpreter, if any.
+>       */
+> -    loaddr =3D -1, hiaddr =3D 0;
+>      align =3D 0;
+>      info->exec_stack =3D EXSTACK_DEFAULT;
+>      for (i =3D 0; i < ehdr->e_phnum; ++i) {
+>          struct elf_phdr *eppnt =3D phdr + i;
+>          if (eppnt->p_type =3D=3D PT_LOAD) {
+>              abi_ulong a =3D eppnt->p_vaddr & TARGET_PAGE_MASK;
+> -            if (a < loaddr) {
+> -                loaddr =3D a;
+> +            if (a < range.lo) {
+> +                range.lo =3D a;
+>              }
+>              a =3D eppnt->p_vaddr + eppnt->p_memsz - 1;
+> -            if (a > hiaddr) {
+> -                hiaddr =3D a;
+> +            if (a > range.hi) {
+> +                range.hi =3D a;
+>              }
+>              ++info->nsegs;
+>              align |=3D eppnt->p_align;
+> @@ -1361,7 +1361,7 @@ static void load_elf_image(const char *image_name,
+> const ImageSource *src,
 >          }
 >      }
-> @@ -909,8 +909,8 @@ static bool pgb_addr_set(PGBAddrs *ga, abi_ulong
-> guest_loaddr,
 >
->      /* Add any HI_COMMPAGE not covered by reserved_va. */
->      if (reserved_va < HI_COMMPAGE) {
-> -        ga->bounds[n][0] =3D HI_COMMPAGE & qemu_real_host_page_mask();
-> -        ga->bounds[n][1] =3D HI_COMMPAGE + TARGET_PAGE_SIZE - 1;
-> +        ga->bounds[n].lo =3D HI_COMMPAGE & qemu_real_host_page_mask();
-> +        ga->bounds[n].hi =3D HI_COMMPAGE + TARGET_PAGE_SIZE - 1;
->          n++;
+> -    load_addr =3D loaddr;
+> +    load_addr =3D range.lo;
+>
+>      align =3D pow2ceil(align);
+>
+> @@ -1371,13 +1371,13 @@ static void load_elf_image(const char *image_name=
+,
+> const ImageSource *src,
+>               * Make sure that the low address does not conflict with
+>               * MMAP_MIN_ADDR or the QEMU application itself.
+>               */
+> -            probe_guest_base(image_name, loaddr, hiaddr);
+> +            probe_guest_base(image_name, range.lo, range.hi);
+>          } else {
+>              /*
+>               * The binary is dynamic, but we still need to
+>               * select guest_base.  In this case we pass a size.
+>               */
+> -            probe_guest_base(image_name, 0, hiaddr - loaddr);
+> +            probe_guest_base(image_name, 0, range.hi - range.lo);
+>
+>              /*
+>               * Avoid collision with the loader by providing a different
+> @@ -1414,7 +1414,7 @@ static void load_elf_image(const char *image_name,
+> const ImageSource *src,
+>       * In both cases, we will overwrite pages in this range with mapping=
+s
+>       * from the executable.
+>       */
+> -    reserve_size =3D (size_t)hiaddr - loaddr + 1;
+> +    reserve_size =3D range.hi - range.lo + 1;
+>      align_size =3D reserve_size;
+>
+>      if (ehdr->e_type !=3D ET_EXEC && align > qemu_real_host_page_size())=
+ {
+> @@ -1443,7 +1443,7 @@ static void load_elf_image(const char *image_name,
+> const ImageSource *src,
+>          load_addr =3D align_addr;
 >      }
 >
-> @@ -976,8 +976,8 @@ static uintptr_t pgb_try_itree(const PGBAddrs *ga,
-> uintptr_t base,
->                                 IntervalTreeRoot *root)
->  {
->      for (int i =3D ga->nbounds - 1; i >=3D 0; --i) {
-> -        uintptr_t s =3D base + ga->bounds[i][0];
-> -        uintptr_t l =3D base + ga->bounds[i][1];
-> +        uintptr_t s =3D base + ga->bounds[i].lo;
-> +        uintptr_t l =3D base + ga->bounds[i].hi;
->          IntervalTreeNode *n;
+> -    load_bias =3D load_addr - loaddr;
+> +    load_bias =3D load_addr - range.lo;
 >
->          if (l < s) {
-> @@ -1076,9 +1076,9 @@ static void pgb_dynamic(const char *image_name,
-> uintptr_t guest_loaddr,
->                       "guest address mapping requirements", image_name);
->
->          for (int i =3D 0; i < ga.nbounds; ++i) {
-> -            error_printf("  %0*" PRIx64 "-%0*" PRIx64 "\n",
-> -                         w, (uint64_t)ga.bounds[i][0],
-> -                         w, (uint64_t)ga.bounds[i][1]);
-> +            error_printf("  %0*" VADDR_PRIx "-%0*" VADDR_PRIx "\n",
-> +                         w, ga.bounds[i].lo,
-> +                         w, ga.bounds[i].hi);
->          }
->          exit(EXIT_FAILURE);
->      }
+>      if (elf_is_fdpic(ehdr)) {
+>          struct elf32_fdpic_loadseg *loadsegs =3D info->loadsegs =3D
+> @@ -1474,7 +1474,7 @@ static void load_elf_image(const char *image_name,
+> const ImageSource *src,
+>      info->start_data =3D -1;
+>      info->end_data =3D 0;
+>      /* Usual start for brk is after all sections of the main executable.
+> */
+> -    info->brk =3D TARGET_PAGE_ALIGN(hiaddr + load_bias);
+> +    info->brk =3D TARGET_PAGE_ALIGN(range.hi + load_bias);
+>      info->elf_flags =3D ehdr->e_flags;
+>  #ifdef TARGET_MIPS
+>      info->use_k0_tls =3D (ehdr->e_flags & EF_MIPS_MACH) =3D=3D
+> EF_MIPS_MACH_OCTEON;
 > --
 > 2.43.0
 >
 >
 
---0000000000005d945a0653154492
+--000000000000380f9806531547b8
 Content-Type: text/html; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 
@@ -265,183 +247,144 @@ mail_quote_container"><div dir=3D"ltr" class=3D"gmail_attr">On Sat, May 30,=
  2026 at 3:12=E2=80=AFPM Richard Henderson &lt;<a href=3D"mailto:richard.he=
 nderson@linaro.org">richard.henderson@linaro.org</a>&gt; wrote:<br></div><b=
 lockquote class=3D"gmail_quote" style=3D"margin:0px 0px 0px 0.8ex;border-le=
-ft:1px solid rgb(204,204,204);padding-left:1ex">Create a structure to hold =
-a beginning/end range for guest virtual<br>
-addresses, for use by probe_guest_base.=C2=A0 Use vaddr for clarity.<br>
+ft:1px solid rgb(204,204,204);padding-left:1ex">Collect into range instead =
+of loaddr+hiaddr.<br>
 <br>
 Signed-off-by: Richard Henderson &lt;<a href=3D"mailto:richard.henderson@li=
 naro.org" target=3D"_blank">richard.henderson@linaro.org</a>&gt;<br>
 ---<br>
-=C2=A0linux-user/user-internals.h |=C2=A0 5 +++++<br>
-=C2=A0linux-user/elfload.c=C2=A0 =C2=A0 =C2=A0 =C2=A0 | 36 ++++++++++++++++=
-++------------------<br>
-=C2=A02 files changed, 23 insertions(+), 18 deletions(-)<br></blockquote><d=
-iv><br></div><div>Reviewed-by: Warner Losh &lt;<a href=3D"mailto:imp@bsdimp=
-.com">imp@bsdimp.com</a>&gt;</div><div><br></div><div>This mechanical chang=
-e looks good to me, and I didn&#39;t see any mistakes in the array to struc=
-t conversion.</div><div>=C2=A0</div><blockquote class=3D"gmail_quote" style=
-=3D"margin:0px 0px 0px 0.8ex;border-left:1px solid rgb(204,204,204);padding=
--left:1ex">
-diff --git a/linux-user/user-internals.h b/linux-user/user-internals.h<br>
-index 21daf422b7..73b0109e9c 100644<br>
---- a/linux-user/user-internals.h<br>
-+++ b/linux-user/user-internals.h<br>
-@@ -75,6 +75,11 @@ void clone_fork_end(bool child);<br>
-=C2=A0void fork_start(void);<br>
-=C2=A0void fork_end(pid_t pid);<br>
-<br>
-+typedef struct PGBRange {<br>
-+=C2=A0 =C2=A0 vaddr lo;<br>
-+=C2=A0 =C2=A0 vaddr hi;<br>
-+} PGBRange;<br>
-+<br>
-=C2=A0/**<br>
-=C2=A0 * probe_guest_base:<br>
-=C2=A0 * @image_name: the executable being loaded<br>
+=C2=A0linux-user/elfload.c | 24 ++++++++++++------------<br>
+=C2=A01 file changed, 12 insertions(+), 12 deletions(-)<br></blockquote><di=
+v><br></div><div>Reviewed-by: Warner Losh &lt;<a href=3D"mailto:imp@bsdimp.=
+com">imp@bsdimp.com</a>&gt;</div><div>=C2=A0</div><blockquote class=3D"gmai=
+l_quote" style=3D"margin:0px 0px 0px 0.8ex;border-left:1px solid rgb(204,20=
+4,204);padding-left:1ex">
 diff --git a/linux-user/elfload.c b/linux-user/elfload.c<br>
-index 0e757787d2..e1e1ee4674 100644<br>
+index e1e1ee4674..fb774adf25 100644<br>
 --- a/linux-user/elfload.c<br>
 +++ b/linux-user/elfload.c<br>
-@@ -828,15 +828,15 @@ static int pgb_try_mmap_skip_brk(uintptr_t addr, uint=
-ptr_t addr_last,<br>
-=C2=A0 */<br>
-<br>
-=C2=A0typedef struct PGBAddrs {<br>
--=C2=A0 =C2=A0 uintptr_t bounds[3][2]; /* start/last pairs */<br>
-+=C2=A0 =C2=A0 PGBRange bounds[3];<br>
-=C2=A0 =C2=A0 =C2=A0int nbounds;<br>
-=C2=A0} PGBAddrs;<br>
-<br>
-=C2=A0static bool pgb_try_mmap_set(const PGBAddrs *ga, uintptr_t base, uint=
-ptr_t brk)<br>
+@@ -1278,7 +1278,8 @@ static void load_elf_image(const char *image_name, co=
+nst ImageSource *src,<br>
+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
+=A0 =C2=A0 =C2=A0 =C2=A0 char **pinterp_name)<br>
 =C2=A0{<br>
-=C2=A0 =C2=A0 =C2=A0for (int i =3D ga-&gt;nbounds - 1; i &gt;=3D 0; --i) {<=
-br>
--=C2=A0 =C2=A0 =C2=A0 =C2=A0 if (pgb_try_mmap_skip_brk(ga-&gt;bounds[i][0] =
-+ base,<br>
--=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
-=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 ga-&gt;bounds[i][1] + base,<b=
-r>
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 if (pgb_try_mmap_skip_brk(ga-&gt;bounds[i].lo =
-+ base,<br>
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
-=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 ga-&gt;bounds[i].hi + base,<b=
-r>
-=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
-=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0brk, i =3D=3D 0 &amp;&a=
-mp; reserved_va) &lt;=3D 0) {<br>
-=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0return false;<br>
-=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0}<br>
-@@ -875,26 +875,26 @@ static bool pgb_addr_set(PGBAddrs *ga, abi_ulong gues=
-t_loaddr,<br>
-=C2=A0 =C2=A0 =C2=A0n =3D 0;<br>
-<br>
-=C2=A0 =C2=A0 =C2=A0if (reserved_va) {<br>
--=C2=A0 =C2=A0 =C2=A0 =C2=A0 ga-&gt;bounds[n][0] =3D try_identity ? mmap_mi=
-n_addr : 0;<br>
--=C2=A0 =C2=A0 =C2=A0 =C2=A0 ga-&gt;bounds[n][1] =3D reserved_va;<br>
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 ga-&gt;bounds[n].lo =3D try_identity ? mmap_mi=
-n_addr : 0;<br>
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 ga-&gt;bounds[n].hi =3D reserved_va;<br>
-=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0n++;<br>
-=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0/* LO_COMMPAGE and NULL handled by reserv=
-ing from 0. */<br>
-=C2=A0 =C2=A0 =C2=A0} else {<br>
-=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0/* Add any LO_COMMPAGE or NULL page. */<b=
-r>
-=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0if (LO_COMMPAGE !=3D -1) {<br>
--=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 ga-&gt;bounds[n][0] =3D 0;<br>
--=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 ga-&gt;bounds[n][1] =3D LO_COMMP=
-AGE + TARGET_PAGE_SIZE - 1;<br>
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 ga-&gt;bounds[n].lo =3D 0;<br>
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 ga-&gt;bounds[n].hi =3D LO_COMMP=
-AGE + TARGET_PAGE_SIZE - 1;<br>
-=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0n++;<br>
-=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0} else if (!try_identity) {<br>
--=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 ga-&gt;bounds[n][0] =3D 0;<br>
--=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 ga-&gt;bounds[n][1] =3D TARGET_P=
-AGE_SIZE - 1;<br>
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 ga-&gt;bounds[n].lo =3D 0;<br>
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 ga-&gt;bounds[n].hi =3D TARGET_P=
-AGE_SIZE - 1;<br>
-=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0n++;<br>
-=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0}<br>
-<br>
-=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0/* Add the guest image for ET_EXEC. */<br=
+=C2=A0 =C2=A0 =C2=A0g_autofree struct elf_phdr *phdr =3D NULL;<br>
+-=C2=A0 =C2=A0 abi_ulong load_addr, load_bias, loaddr, hiaddr, error, align=
+;<br>
++=C2=A0 =C2=A0 PGBRange range =3D { -1, 0 };<br>
++=C2=A0 =C2=A0 abi_ulong load_addr, load_bias, error, align;<br>
+=C2=A0 =C2=A0 =C2=A0size_t reserve_size, align_size;<br>
+=C2=A0 =C2=A0 =C2=A0int i, prot_exec;<br>
+=C2=A0 =C2=A0 =C2=A0Error *err =3D NULL;<br>
+@@ -1318,19 +1319,18 @@ static void load_elf_image(const char *image_name, =
+const ImageSource *src,<br>
+=C2=A0 =C2=A0 =C2=A0 * Find the maximum size of the image and allocate an a=
+ppropriate<br>
+=C2=A0 =C2=A0 =C2=A0 * amount of memory to handle that.=C2=A0 Locate the in=
+terpreter, if any.<br>
+=C2=A0 =C2=A0 =C2=A0 */<br>
+-=C2=A0 =C2=A0 loaddr =3D -1, hiaddr =3D 0;<br>
+=C2=A0 =C2=A0 =C2=A0align =3D 0;<br>
+=C2=A0 =C2=A0 =C2=A0info-&gt;exec_stack =3D EXSTACK_DEFAULT;<br>
+=C2=A0 =C2=A0 =C2=A0for (i =3D 0; i &lt; ehdr-&gt;e_phnum; ++i) {<br>
+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0struct elf_phdr *eppnt =3D phdr + i;<br>
+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0if (eppnt-&gt;p_type =3D=3D PT_LOAD) {<br=
 >
-=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0if (guest_loaddr) {<br>
--=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 ga-&gt;bounds[n][0] =3D guest_lo=
-addr;<br>
--=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 ga-&gt;bounds[n][1] =3D guest_hi=
-addr;<br>
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 ga-&gt;bounds[n].lo =3D guest_lo=
-addr;<br>
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 ga-&gt;bounds[n].hi =3D guest_hi=
-addr;<br>
-=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0n++;<br>
+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0abi_ulong a =3D eppnt-&gt;p=
+_vaddr &amp; TARGET_PAGE_MASK;<br>
+-=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 if (a &lt; loaddr) {<br>
+-=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 loaddr =3D a;<br>
++=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 if (a &lt; range.lo) {<br>
++=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 range.lo =3D a;<br=
+>
+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0}<br>
+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0a =3D eppnt-&gt;p_vaddr + e=
+ppnt-&gt;p_memsz - 1;<br>
+-=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 if (a &gt; hiaddr) {<br>
+-=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 hiaddr =3D a;<br>
++=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 if (a &gt; range.hi) {<br>
++=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 range.hi =3D a;<br=
+>
+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0}<br>
+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0++info-&gt;nsegs;<br>
+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0align |=3D eppnt-&gt;p_alig=
+n;<br>
+@@ -1361,7 +1361,7 @@ static void load_elf_image(const char *image_name, co=
+nst ImageSource *src,<br>
 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0}<br>
 =C2=A0 =C2=A0 =C2=A0}<br>
-@@ -909,8 +909,8 @@ static bool pgb_addr_set(PGBAddrs *ga, abi_ulong guest_=
-loaddr,<br>
 <br>
-=C2=A0 =C2=A0 =C2=A0/* Add any HI_COMMPAGE not covered by reserved_va. */<b=
-r>
-=C2=A0 =C2=A0 =C2=A0if (reserved_va &lt; HI_COMMPAGE) {<br>
--=C2=A0 =C2=A0 =C2=A0 =C2=A0 ga-&gt;bounds[n][0] =3D HI_COMMPAGE &amp; qemu=
-_real_host_page_mask();<br>
--=C2=A0 =C2=A0 =C2=A0 =C2=A0 ga-&gt;bounds[n][1] =3D HI_COMMPAGE + TARGET_P=
-AGE_SIZE - 1;<br>
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 ga-&gt;bounds[n].lo =3D HI_COMMPAGE &amp; qemu=
-_real_host_page_mask();<br>
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 ga-&gt;bounds[n].hi =3D HI_COMMPAGE + TARGET_P=
-AGE_SIZE - 1;<br>
-=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0n++;<br>
+-=C2=A0 =C2=A0 load_addr =3D loaddr;<br>
++=C2=A0 =C2=A0 load_addr =3D range.lo;<br>
+<br>
+=C2=A0 =C2=A0 =C2=A0align =3D pow2ceil(align);<br>
+<br>
+@@ -1371,13 +1371,13 @@ static void load_elf_image(const char *image_name, =
+const ImageSource *src,<br>
+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 * Make sure that the low a=
+ddress does not conflict with<br>
+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 * MMAP_MIN_ADDR or the QEM=
+U application itself.<br>
+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 */<br>
+-=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 probe_guest_base(image_name, loa=
+ddr, hiaddr);<br>
++=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 probe_guest_base(image_name, ran=
+ge.lo, range.hi);<br>
+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0} else {<br>
+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0/*<br>
+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 * The binary is dynamic, b=
+ut we still need to<br>
+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 * select guest_base.=C2=A0=
+ In this case we pass a size.<br>
+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 */<br>
+-=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 probe_guest_base(image_name, 0, =
+hiaddr - loaddr);<br>
++=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 probe_guest_base(image_name, 0, =
+range.hi - range.lo);<br>
+<br>
+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0/*<br>
+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 * Avoid collision with the=
+ loader by providing a different<br>
+@@ -1414,7 +1414,7 @@ static void load_elf_image(const char *image_name, co=
+nst ImageSource *src,<br>
+=C2=A0 =C2=A0 =C2=A0 * In both cases, we will overwrite pages in this range=
+ with mappings<br>
+=C2=A0 =C2=A0 =C2=A0 * from the executable.<br>
+=C2=A0 =C2=A0 =C2=A0 */<br>
+-=C2=A0 =C2=A0 reserve_size =3D (size_t)hiaddr - loaddr + 1;<br>
++=C2=A0 =C2=A0 reserve_size =3D range.hi - range.lo + 1;<br>
+=C2=A0 =C2=A0 =C2=A0align_size =3D reserve_size;<br>
+<br>
+=C2=A0 =C2=A0 =C2=A0if (ehdr-&gt;e_type !=3D ET_EXEC &amp;&amp; align &gt; =
+qemu_real_host_page_size()) {<br>
+@@ -1443,7 +1443,7 @@ static void load_elf_image(const char *image_name, co=
+nst ImageSource *src,<br>
+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0load_addr =3D align_addr;<br>
 =C2=A0 =C2=A0 =C2=A0}<br>
 <br>
-@@ -976,8 +976,8 @@ static uintptr_t pgb_try_itree(const PGBAddrs *ga, uint=
-ptr_t base,<br>
-=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
-=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 IntervalTreeRoot *root)<br>
-=C2=A0{<br>
-=C2=A0 =C2=A0 =C2=A0for (int i =3D ga-&gt;nbounds - 1; i &gt;=3D 0; --i) {<=
-br>
--=C2=A0 =C2=A0 =C2=A0 =C2=A0 uintptr_t s =3D base + ga-&gt;bounds[i][0];<br=
->
--=C2=A0 =C2=A0 =C2=A0 =C2=A0 uintptr_t l =3D base + ga-&gt;bounds[i][1];<br=
->
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 uintptr_t s =3D base + ga-&gt;bounds[i].lo;<br=
->
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 uintptr_t l =3D base + ga-&gt;bounds[i].hi;<br=
->
-=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0IntervalTreeNode *n;<br>
+-=C2=A0 =C2=A0 load_bias =3D load_addr - loaddr;<br>
++=C2=A0 =C2=A0 load_bias =3D load_addr - range.lo;<br>
 <br>
-=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0if (l &lt; s) {<br>
-@@ -1076,9 +1076,9 @@ static void pgb_dynamic(const char *image_name, uintp=
-tr_t guest_loaddr,<br>
-=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
-=A0 &quot;guest address mapping requirements&quot;, image_name);<br>
-<br>
-=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0for (int i =3D 0; i &lt; ga.nbounds; ++i)=
- {<br>
--=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 error_printf(&quot;=C2=A0 %0*&qu=
-ot; PRIx64 &quot;-%0*&quot; PRIx64 &quot;\n&quot;,<br>
--=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
-=A0 =C2=A0 =C2=A0w, (uint64_t)ga.bounds[i][0],<br>
--=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
-=A0 =C2=A0 =C2=A0w, (uint64_t)ga.bounds[i][1]);<br>
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 error_printf(&quot;=C2=A0 %0*&qu=
-ot; VADDR_PRIx &quot;-%0*&quot; VADDR_PRIx &quot;\n&quot;,<br>
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
-=A0 =C2=A0 =C2=A0w, ga.bounds[i].lo,<br>
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
-=A0 =C2=A0 =C2=A0w, ga.bounds[i].hi);<br>
-=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0}<br>
-=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0exit(EXIT_FAILURE);<br>
-=C2=A0 =C2=A0 =C2=A0}<br>
+=C2=A0 =C2=A0 =C2=A0if (elf_is_fdpic(ehdr)) {<br>
+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0struct elf32_fdpic_loadseg *loadsegs =3D =
+info-&gt;loadsegs =3D<br>
+@@ -1474,7 +1474,7 @@ static void load_elf_image(const char *image_name, co=
+nst ImageSource *src,<br>
+=C2=A0 =C2=A0 =C2=A0info-&gt;start_data =3D -1;<br>
+=C2=A0 =C2=A0 =C2=A0info-&gt;end_data =3D 0;<br>
+=C2=A0 =C2=A0 =C2=A0/* Usual start for brk is after all sections of the mai=
+n executable. */<br>
+-=C2=A0 =C2=A0 info-&gt;brk =3D TARGET_PAGE_ALIGN(hiaddr + load_bias);<br>
++=C2=A0 =C2=A0 info-&gt;brk =3D TARGET_PAGE_ALIGN(range.hi + load_bias);<br=
+>
+=C2=A0 =C2=A0 =C2=A0info-&gt;elf_flags =3D ehdr-&gt;e_flags;<br>
+=C2=A0#ifdef TARGET_MIPS<br>
+=C2=A0 =C2=A0 =C2=A0info-&gt;use_k0_tls =3D (ehdr-&gt;e_flags &amp; EF_MIPS=
+_MACH) =3D=3D EF_MIPS_MACH_OCTEON;<br>
 -- <br>
 2.43.0<br>
 <br>
 </blockquote></div></div>
 
---0000000000005d945a0653154492--
+--000000000000380f9806531547b8--
 
