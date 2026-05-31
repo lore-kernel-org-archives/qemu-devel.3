@@ -4,101 +4,140 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7C543CD6E52
-	for <qemu-devel@archiver.kernel.org>; Sun, 31 May 2026 18:22:49 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2F747CD6E52
+	for <qemu-devel@archiver.kernel.org>; Sun, 31 May 2026 19:53:56 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wTkoA-0002d1-BV; Sun, 31 May 2026 14:22:46 -0400
+	id 1wTmDl-0000ux-BP; Sun, 31 May 2026 15:53:17 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <wlosh@bsdimp.com>) id 1wTknw-0002Sf-Li
- for qemu-devel@nongnu.org; Sun, 31 May 2026 14:22:38 -0400
-Received: from mail-pg1-x535.google.com ([2607:f8b0:4864:20::535])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <wlosh@bsdimp.com>) id 1wTkns-0003lE-Lc
- for qemu-devel@nongnu.org; Sun, 31 May 2026 14:22:31 -0400
-Received: by mail-pg1-x535.google.com with SMTP id
- 41be03b00d2f7-c859878eb48so252218a12.0
- for <qemu-devel@nongnu.org>; Sun, 31 May 2026 11:22:27 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1780251746; cv=none;
- d=google.com; s=arc-20240605;
- b=WVo26MKrn6jl01wg/PI2Bh/RatL7bbl+c28rZ65odOa8VUMYpiFsxIUz4EEW0QgzSb
- PpK6PWWsSiUyMwYd9UTPisZxN83nOYnotjDnda49lsK+w85PnSjWfGCpcX3FvKGzFUKW
- pmUFG/k3xiYOZCQfnr3Ga+NaXmBvuFrMrdwnma73WHVMMPG+f8DYQ/Uz3/92oCFvyY/Y
- 1Scj53nzNNTyv0E8+yaOQNGxcRIzyiFrOQMsm64pwfs7jCojMhcUNUl1Ae6Uao2g1Lha
- mkQMlYHTaZlY6UAxk9E9ULZu2FLdGzYm2b45COEJZKfBpa5JrBftVLAkIXZwcQ+i4W6+
- plRg==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
- s=arc-20240605; 
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:dkim-signature;
- bh=T2jlzkw52YuSDE5Uz90QJ+PmFoyjk/F7jdTMC7FKKHM=;
- fh=+DxRVnEC95Ptxk5HMfIFqaUwIao1HhLaAPFCgZPm1R4=;
- b=DCc5RQbct4Wcu8aHn9haYu7MwZvQZMMpij4Nk+TqbMYFovh0fey+uM7c4FXUHese87
- nAq0ugI04dcUCrH1JeT7CK6ehzsd3eHrMvv2mtGAkiwjEyBOrDGo2zGHR+l+nxvsmDFW
- YZJTrBY1BGrOgv9JtpuiWRBGavG2UObZ2LDIWGlwWz0FRrNuAwoz/U4KyWIJpqdNg+oC
- tZr+mii29Ko3xUyI5CcB95iDSUExZ1tNOfNsw31PU+poOOW4OQALay8wqZUB8rqREsZU
- f+a1kQiOggvZfV2vx8gejF6ssSHBxcPg15Ux2wJE87TIpCP0U8K4hh78qI+qoNvXDAHR
- nN3g==; darn=nongnu.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
+ (Exim 4.90_1) (envelope-from <daniel.barboza@oss.qualcomm.com>)
+ id 1wTmDk-0000ui-1f
+ for qemu-devel@nongnu.org; Sun, 31 May 2026 15:53:16 -0400
+Received: from mx0b-0031df01.pphosted.com ([205.220.180.131])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <daniel.barboza@oss.qualcomm.com>)
+ id 1wTmDi-0007BX-FW
+ for qemu-devel@nongnu.org; Sun, 31 May 2026 15:53:15 -0400
+Received: from pps.filterd (m0279868.ppops.net [127.0.0.1])
+ by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
+ 64V5ql9L945416
+ for <qemu-devel@nongnu.org>; Sun, 31 May 2026 19:53:11 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+ cc:content-transfer-encoding:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+ F0I9zbbd5W6x0Xb8ZvPu/QkdgllHVFeYCk7Y+KB0bR8=; b=ThqPnszVNncStfoD
+ esLp5P35hzf5JYG87vsm4vDepbRpM6rkKk1CnZySRp36xVFrnN27OghhFxDF6rOb
+ JSR+7twbHmH6OF1OwPhtVWIXE1TjjfpEtmoOdA45vDZzFCY4+ox7jZPDleMC7LIP
+ qHjSpv7NyHbB7RjBwr89zPmsrXyvteMe8qEELona3LONdegqDUHaivhp92vDqMV4
+ /10+4Jn/MER7i1YJCag6bdLeuLxTQR+Xyx6+zV8fvYrvySMNP9aXgAJ3fVBZK/qc
+ 27YNY6oNdkCOPCSvOsATdM0Q4QMAlHc0/Ts5gvRE81HxC5YpR7XF/4ZnnvY7w3bV
+ Ug6nQg==
+Received: from mail-qk1-f200.google.com (mail-qk1-f200.google.com
+ [209.85.222.200])
+ by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4efq7fchqf-1
+ (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
+ for <qemu-devel@nongnu.org>; Sun, 31 May 2026 19:53:10 +0000 (GMT)
+Received: by mail-qk1-f200.google.com with SMTP id
+ af79cd13be357-914d0204c67so1618041885a.0
+ for <qemu-devel@nongnu.org>; Sun, 31 May 2026 12:53:10 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=bsdimp-com.20251104.gappssmtp.com; s=20251104; t=1780251746; x=1780856546;
- darn=nongnu.org; 
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=T2jlzkw52YuSDE5Uz90QJ+PmFoyjk/F7jdTMC7FKKHM=;
- b=uPXLsgeSfvr+w91aB/HGJkMRWRt0es09kdEtm1pCk3lPSy5J15KO3q40iAMTIAQ7Mf
- chp53qROQtbhhNuJ6mYm3DY04ClXzRDZtk5/FFEGsxEc9MNo8Aconk0JnxrZKNtvsfzy
- 9YGnZyVD18rGjfLdxRavQp0OoXQsrkTb5hPHdrSGV8TbH81hK7dxWhRpLhM+xgH1/JrI
- 5dJR31Yg9qHGPE/Zc+abEz5wjg8q4pSFui0FkqhIGcdZqNiPsDGqRqPTOzEbWLQSydv7
- wlRTwo/lAVKVxhgNH8QfzEgU897eA161ktbayOB/MbsyF55JvJ68TAVkG5yN12b0xa2T
- r85Q==
+ d=oss.qualcomm.com; s=google; t=1780257190; x=1780861990; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:content-language:from
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=F0I9zbbd5W6x0Xb8ZvPu/QkdgllHVFeYCk7Y+KB0bR8=;
+ b=d7+UHZxFIXM7ct21G8QN6gRYMldBbGVI+0DxErK0CIvEu8zASC1Qu++LI73VBWONUj
+ NpkHTYXJN7+VNodD1YZD2PELTTzukd2cHgkzt3OWkpYXUPGBUoPxiKjLPJori6s7BMsg
+ hr96VETCoipQFyZyW7fCfokzJJ6TLp3UoDlf7w19bqOrXWCPoOgfuhAvc40DOKIRtNlU
+ xWc9LgDT/iBFMT7kJSVOmX12oJVb4c38XBNsQP6RG2b/V+lo3W0PdsuPxf8WjHo9evyq
+ cxB/SaTUj4kWpj096NaNlXcDJw21Eo2m/O7LDNE5gvhGgyc6qeby0ASS5/9FE1VOaXCT
+ 9Ylw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1780251746; x=1780856546;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=T2jlzkw52YuSDE5Uz90QJ+PmFoyjk/F7jdTMC7FKKHM=;
- b=I9VhVoYAS7QElgpl9D5Hd9V/ca8F5b5H8u24mkYoOH/GiEjzOsRJ03r6lgojmB1/DN
- jPzLVSkyQkrUGFq0Si4oFOG/JMaP/b0GdtV+kc6hkRx7DoWRTF/BcvlEXvLStwrWuOBt
- 2+zF1Ek/zGiDze3xF0f5oAoR7y+gZocv1jxYnCVSfDhaX67H//JtrVPM67NIZbG6V1eW
- 9klkwxBM1VKmEqnCQEHrveA6X1+X67k2dR3NJrP2gs4GyZEJxpYnEHbXwcGZYiVtTUx0
- pDw74k880kp2CRuwrbvCln8YjnmP67dITqv1aqFlpjAAVrxIisEdJOP34esTsODmymDC
- ZMlw==
-X-Gm-Message-State: AOJu0YzlSUS/gS9JmwhiqgTAL5UYWkk8Au6KzRpc5XhkWogthZ4D8RHP
- xtxqjkasv7oMJkurxI4ozMO7tCJkFX5gbErxawDkyHkrkdlWmz9auDhNAMJfbIvBHOsq0UmpDnG
- 0m3qoZa6cmO1aDxIMDuAcpBSo6gK5ONN4pWTsYjkkTg==
-X-Gm-Gg: Acq92OGEK42VA79KcCmbBbby0syhikJsiuotzN52HaqKFv8so06uvy8rtNWan058qxP
- YDbiu4Mf21vY8tNCTa1Cto91assCmGSEvwDMM9QLY2JlATl0aiyCgiyrZbJC8BK6pov6h5Fuon/
- 81ag8pDgGiS8zJPgj2ic+m5VHmjIDrwwY0afMNuyn2HkLwIKyT7ikmewR37RgPnpZCwkaHKOZ5o
- by2u9M+DQwx0LflyUKJwFIT7yi2iJQNP19OLp0+Xr9+cfywe2ur3nZMmETCBuHv4VYKkmLnA4zs
- Ylt2q0RnXBQrKbsSjD7Q3tlSzX7vscnquWHt2e2J9S1ZuRipDWTVDh952w==
-X-Received: by 2002:a05:6a21:3a47:b0:39f:1f92:28e with SMTP id
- adf61e73a8af0-3b42823a98bmr9506835637.27.1780251746330; Sun, 31 May 2026
- 11:22:26 -0700 (PDT)
+ d=1e100.net; s=20251104; t=1780257190; x=1780861990;
+ h=content-transfer-encoding:in-reply-to:content-language:from
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=F0I9zbbd5W6x0Xb8ZvPu/QkdgllHVFeYCk7Y+KB0bR8=;
+ b=Hv+8mn6MFyzUTpklYnnbYUUhNN8tl+pOyJud/uVCv0g9sTuPQmspbJ4pn3pq3RLK63
+ 0yf7jfF/qspbaRGOclCv2TlwX26vFYAlz6ydtgD02z3aH8Whx7ks5dbwx61QGlXiMPrf
+ CoIvbI9hTKdWtv03SomZjoE9+NCqd0ofHKeHtV6C0qqjyu55PSV4JKfPsVKwiFjJhMlH
+ h2lPcsgKcK4VGScE+TbrP8S53kfZI/Fgqui+RAeqIooxqUpJ1ATIPGcA5Z5QGZCPZFR0
+ CDKd9rbero4hZffVoBCYeStqVejHfLBSZYu+gyTyYiLgS0yYLKOBeneXQj0Ti0AtH8Jp
+ RfDw==
+X-Forwarded-Encrypted: i=1;
+ AFNElJ/UlIUIyMyolvkBl0Hq8vAVwmxEkhPf80PzX3/MIU7gEj6sMbwzj853eeByHAP1BHM+2IvqWY1Qomid@nongnu.org
+X-Gm-Message-State: AOJu0Yxj7S12Ex3qHptoQeB3xp0zY7VWL/uNbeUoF1qQ0PFOZtn/4oZ/
+ Z5cfRfvFD6h7uezyzWEL7Ip7NjwZVyQwFO9eoQRXhfPNLX19x+qJEsByPqfCtPKsiKKObvl0Iwl
+ gC53+7q/yHVySZHiarzqQ3GZu69iMSGO0T75jCQCVelTK+f0PKMr0ocdapg==
+X-Gm-Gg: Acq92OGfPv4XCKtb3qd7StjrNthqxVGD9FGyHOL71Deewm7nDF3xhqG/0+9UGT6uW/X
+ ldkFGufBKjIue/g2/kJTqPO7xLI3lTJN+2cTxVLHeGbj/DWVK7K37XCQeD3i065Ov9uMevG/dY1
+ e1pSH561JOfi4K0zYL83u+K+tNV0eoAhzG6rFdk+MIJY5w0c6lbm1S+UwZ5mEv6LhbYOVqdsk76
+ A4IrJu49a0zzZNGhO0vARzt8Sl+BRr61hAaghdNHb5GTlKOmhbzqcOtd4BwXpZvHdkSd4IILCni
+ BXgXM5Ygz5U2Uv7wvpE1UMv4NxvH/GnL919ASUzD2vIvsgF8BDtQpUCj4MbdV1rL5bjnM9phWCt
+ IUHpopV/OmQdrICZEeOgXfHfdQOySJ0zZAPQ0wgIckJDvaXHTux7oRg49l3d466hAXJG0
+X-Received: by 2002:a05:620a:1b95:b0:8cf:d717:c22e with SMTP id
+ af79cd13be357-9153d9f87a7mr1355164285a.28.1780257190056; 
+ Sun, 31 May 2026 12:53:10 -0700 (PDT)
+X-Received: by 2002:a05:620a:1b95:b0:8cf:d717:c22e with SMTP id
+ af79cd13be357-9153d9f87a7mr1355158485a.28.1780257189559; 
+ Sun, 31 May 2026 12:53:09 -0700 (PDT)
+Received: from [192.168.68.106] ([177.170.117.62])
+ by smtp.gmail.com with ESMTPSA id
+ af79cd13be357-915325fbaf7sm840674985a.31.2026.05.31.12.53.07
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Sun, 31 May 2026 12:53:08 -0700 (PDT)
+Message-ID: <0ecca170-beed-400e-a606-d32c6211be7e@oss.qualcomm.com>
+Date: Sun, 31 May 2026 16:53:05 -0300
 MIME-Version: 1.0
-References: <20260530211248.375318-1-richard.henderson@linaro.org>
- <20260530211248.375318-12-richard.henderson@linaro.org>
- <CANCZdfpLTPL4UKFMHrevMPJ-3NguLPpRXkNYrJnQjyMyvwVoQg@mail.gmail.com>
- <22f680f0-5323-4aa0-b692-f76889a04039@linaro.org>
-In-Reply-To: <22f680f0-5323-4aa0-b692-f76889a04039@linaro.org>
-From: Warner Losh <imp@bsdimp.com>
-Date: Sun, 31 May 2026 12:22:14 -0600
-X-Gm-Features: AVHnY4Ls-RxywyM2Tbw6ogAlmwFIq5jmVfHSYx_yTPvjrGsK3j4mNbsAJrQNTrc
-Message-ID: <CANCZdfp4mTvmZijxezSr9Tk7wMqm_MVc_C1eNO0LAra9m454XA@mail.gmail.com>
-Subject: Re: [PATCH 11/13] common-user: Move probe_guest_base from linux-user
-To: Richard Henderson <richard.henderson@linaro.org>
-Cc: qemu-devel@nongnu.org, deller@gmx.de
-Content-Type: multipart/alternative; boundary="000000000000f3772d06532128ee"
-Received-SPF: none client-ip=2607:f8b0:4864:20::535;
- envelope-from=wlosh@bsdimp.com; helo=mail-pg1-x535.google.com
-X-Spam_score_int: -18
-X-Spam_score: -1.9
-X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, HTML_MESSAGE=0.001, RCVD_IN_DNSWL_NONE=-0.0001,
- SPF_HELO_NONE=0.001, SPF_NONE=0.001 autolearn=ham autolearn_force=no
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v2] target/riscv: mask vxrm csrw write to the low 2 bits
+To: Abhigyan Kumar <314abh@gmail.com>, qemu-devel@nongnu.org
+Cc: qemu-riscv@nongnu.org, Alistair Francis <alistair.francis@wdc.com>,
+ Weiwei Li <liwei1518@gmail.com>, Liu Zhiwei <zhiwei_liu@linux.alibaba.com>,
+ Chao Liu <chao.liu.zevorn@gmail.com>, Palmer Dabbelt <palmer@dabbelt.com>
+References: <20260530102100.78150-1-314abh@gmail.com>
+From: Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>
+Content-Language: en-US
+In-Reply-To: <20260530102100.78150-1-314abh@gmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+X-Proofpoint-ORIG-GUID: Ig0Vu0maf4zi83A3EqZ9f5axNSkDR5sc
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNTMxMDIxNiBTYWx0ZWRfX4pDzF1hDyYDn
+ MAIiyxhp43c4R9jbXXy9ioHH0KWGAGl1xfzohGj8QIeZFRWBVHmym3y5MWxrCG5lfmj690GhdTS
+ R+iw2oGzYrhxhYNc/zPkIXHi847stz4qAk4OsPhNVVys6sZ2gqmdg2UD+/uzsmxw4IvKVndDJc9
+ EVZwsGuD6qLl0NMwT+nZ8q2m/luA08PmG9X+STiOZZQoqzpOYYQkax7G9gllOaG3eSwgqTjy0C+
+ +wpeLh0reenn+FHgnUXxRY0FCG/eVDv/PhlIhYZTQUBHGhyr2CGm7NCQ2nbqcI9BI9mtlDw4NNF
+ /4p8BzAzdQRd/Q4CKjSnObRIZAIJjM+jQvyViJql2dvp9ivlqTAQy7XzXqjo6OyYCnySE4Yx3Dk
+ 1IMtSaelX/73iXMlMo3JQEvN4NX5qE/cvf4YBAHofDDVpduHuW8pxlKuI+h108p6koHEcKHpmk/
+ l2qOeY+O02oi1MwKlfQ==
+X-Proofpoint-GUID: Ig0Vu0maf4zi83A3EqZ9f5axNSkDR5sc
+X-Authority-Analysis: v=2.4 cv=XqzK/1F9 c=1 sm=1 tr=0 ts=6a1c91a6 cx=c_pps
+ a=hnmNkyzTK/kJ09Xio7VxxA==:117 a=gdiugJE53z4H+vvYeRBHqw==:17
+ a=IkcTkHD0fZMA:10 a=NGcC8JguVDcA:10 a=s4-Qcg_JpJYA:10
+ a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=ZpdpYltYx_vBUK5n70dp:22
+ a=p0WdMEafAAAA:8 a=pGLkceISAAAA:8 a=EUspDBNiAAAA:8 a=SJkb1_gNzY3JbkFYywgA:9
+ a=QEXdDO2ut3YA:10 a=PEH46H7Ffwr30OY-TuGO:22
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.125,FMLib:17.12.100.49
+ definitions=2026-05-31_06,2026-05-28_03,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ malwarescore=0 bulkscore=0 adultscore=0 clxscore=1015 phishscore=0
+ impostorscore=0 lowpriorityscore=0 priorityscore=1501 spamscore=0
+ suspectscore=0 classifier=typeunknown authscore=0 authtc= authcc=
+ route=outbound adjust=0 reason=mlx scancount=1 engine=8.22.0-2605210000
+ definitions=main-2605310216
+Received-SPF: pass client-ip=205.220.180.131;
+ envelope-from=daniel.barboza@oss.qualcomm.com; helo=mx0b-0031df01.pphosted.com
+X-Spam_score_int: -27
+X-Spam_score: -2.8
+X-Spam_bar: --
+X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -114,73 +153,40 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
---000000000000f3772d06532128ee
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
 
-On Sun, May 31, 2026 at 11:33=E2=80=AFAM Richard Henderson <
-richard.henderson@linaro.org> wrote:
 
-> On 5/30/26 21:44, Warner Losh wrote:
-> >     +    void *p =3D mmap((void *)addr, size, PROT_NONE,
-> >     +                   MAP_ANONYMOUS | MAP_PRIVATE |
-> >     +                   MAP_NORESERVE | MAP_FIXED_NOREPLACE, -1, 0);
-> >
-> >
-> > +    void *p =3D mmap((void *)addr, size, PROT_NONE,
-> > +                   MAP_ANON | MAP_PRIVATE | MAP_FIXED | MAP_EXCL, -1,
-> 0);
-> >
-> > is what I had in my port. ANON and ANONYMOUS are the same. FreeBSD
-> doesn't define
-> > MAP_NORESERVE that I can see, though you could define it above to be 0.
-> FreeBSD used
-> > to define this, but it has no meaning in the current kernels.
->
-> We default MAP_NORESERVE to 0 in qemu/osdep.h.
->
+On 5/30/2026 7:21 AM, Abhigyan Kumar wrote:
+> Citing the RISC-V specification:
+> 
+>      "The vector fixed-point rounding-mode register holds a two-bit
+>      read-write rounding-mode field in the least-significant bits
+>      (vxrm[1:0]). The upper bits, vxrm[XLEN-1:2], should be written as
+>      zeros."
+> 
+> QEMU wrote full value into env->vxrm causing read of upper bits too.
+> Used existing macros for bit-masking. Previous had a hard-coded value.
+> 
+> Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/3470
+> Signed-off-by: Abhigyan Kumar <314abh@gmail.com>
+> ---
 
-Oh! So we do. I'd looked in a different file that I'd just cleaned up for
-it...
+Reviewed-by: Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>
 
-Maybe MAP_FIXED_NOREPLACE could be defined in qemu/osdep.h as well?
+>   target/riscv/csr.c | 2 +-
+>   1 file changed, 1 insertion(+), 1 deletion(-)
+> 
+> diff --git a/target/riscv/csr.c b/target/riscv/csr.c
+> index 5514e0f45..7b98d66db 100644
+> --- a/target/riscv/csr.c
+> +++ b/target/riscv/csr.c
+> @@ -977,7 +977,7 @@ static RISCVException write_vxrm(CPURISCVState *env, int csrno,
+>   #if !defined(CONFIG_USER_ONLY)
+>       env->mstatus |= MSTATUS_VS;
+>   #endif
+> -    env->vxrm = val;
+> +    env->vxrm = val & (VCSR_VXRM >> VCSR_VXRM_SHIFT);
+>       return RISCV_EXCP_NONE;
+>   }
+>   
 
-Warner
-
---000000000000f3772d06532128ee
-Content-Type: text/html; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-
-<div dir=3D"ltr"><div dir=3D"ltr"><br></div><br><div class=3D"gmail_quote g=
-mail_quote_container"><div dir=3D"ltr" class=3D"gmail_attr">On Sun, May 31,=
- 2026 at 11:33=E2=80=AFAM Richard Henderson &lt;<a href=3D"mailto:richard.h=
-enderson@linaro.org">richard.henderson@linaro.org</a>&gt; wrote:<br></div><=
-blockquote class=3D"gmail_quote" style=3D"margin:0px 0px 0px 0.8ex;border-l=
-eft:1px solid rgb(204,204,204);padding-left:1ex">On 5/30/26 21:44, Warner L=
-osh wrote:<br>
-&gt;=C2=A0 =C2=A0 =C2=A0+=C2=A0 =C2=A0 void *p =3D mmap((void *)addr, size,=
- PROT_NONE,<br>
-&gt;=C2=A0 =C2=A0 =C2=A0+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =
-=C2=A0 =C2=A0 =C2=A0MAP_ANONYMOUS | MAP_PRIVATE |<br>
-&gt;=C2=A0 =C2=A0 =C2=A0+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =
-=C2=A0 =C2=A0 =C2=A0MAP_NORESERVE | MAP_FIXED_NOREPLACE, -1, 0);<br>
-&gt; <br>
-&gt; <br>
-&gt; + =C2=A0 =C2=A0void *p =3D mmap((void *)addr, size, PROT_NONE,<br>
-&gt; + =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 MAP_A=
-NON | MAP_PRIVATE | MAP_FIXED | MAP_EXCL, -1, 0);<br>
-&gt; <br>
-&gt; is what I had in my port. ANON and ANONYMOUS are the same. FreeBSD doe=
-sn&#39;t define<br>
-&gt; MAP_NORESERVE that I can see, though you could define it above to be 0=
-. FreeBSD used<br>
-&gt; to define this, but it has no meaning in the current kernels.<br>
-<br>
-We default MAP_NORESERVE to 0 in qemu/osdep.h.<br></blockquote><div><br></d=
-iv><div>Oh! So we do. I&#39;d looked in a different file that I&#39;d just =
-cleaned up for it...</div><div><br></div><div>Maybe MAP_FIXED_NOREPLACE cou=
-ld be defined in qemu/osdep.h as well?</div><div><br></div><div>Warner=C2=
-=A0</div></div></div>
-
---000000000000f3772d06532128ee--
 
