@@ -4,87 +4,89 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 86A37CD6E52
-	for <qemu-devel@archiver.kernel.org>; Sun, 31 May 2026 15:40:11 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2B972CD6E56
+	for <qemu-devel@archiver.kernel.org>; Sun, 31 May 2026 17:34:33 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wTiGS-0002lK-3i; Sun, 31 May 2026 11:39:48 -0400
+	id 1wTk2r-0002rZ-Ms; Sun, 31 May 2026 13:33:53 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <samyak.bambole07@gmail.com>)
- id 1wTiGQ-0002jy-Cs
- for qemu-devel@nongnu.org; Sun, 31 May 2026 11:39:46 -0400
-Received: from mail-pl1-x633.google.com ([2607:f8b0:4864:20::633])
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1wTk2p-0002rL-99
+ for qemu-devel@nongnu.org; Sun, 31 May 2026 13:33:52 -0400
+Received: from mail-pl1-x62c.google.com ([2607:f8b0:4864:20::62c])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <samyak.bambole07@gmail.com>)
- id 1wTiGO-00075S-TY
- for qemu-devel@nongnu.org; Sun, 31 May 2026 11:39:46 -0400
-Received: by mail-pl1-x633.google.com with SMTP id
- d9443c01a7336-2bf125989f2so20504695ad.3
- for <qemu-devel@nongnu.org>; Sun, 31 May 2026 08:39:44 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1wTk2n-0005PH-Sl
+ for qemu-devel@nongnu.org; Sun, 31 May 2026 13:33:51 -0400
+Received: by mail-pl1-x62c.google.com with SMTP id
+ d9443c01a7336-2c0a5354da1so7275465ad.0
+ for <qemu-devel@nongnu.org>; Sun, 31 May 2026 10:33:49 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1780241983; x=1780846783; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=eweo+AOP/LZy7+9wjmBN/ms5He+OgWhoGr43HaLs7OY=;
- b=ap5Qm2nPxvRypcMAp1KfltUW7VQIfpZYLCEQwGo79lmaaQxLJ97+f/bK/yOM0Es18r
- VweXY8wfcds/LRlIz7TSA0De3QX/9xAfAL2M4IyE+2SPILTypfdLyY537Rww471ZlHHZ
- s+ZX4Y4NL7i28CGH4GoucyI7nVv6q3uUyCDaWkCwewk9xWO87wG9zC1jjYwwIGgHcZGu
- NGc0apwrk9kHVL49YbO1Yx4QDk1GfjMlpQAD3iyBrBCpC+vRwZDFApBQslYl1k+jtCjJ
- xZxaothglyDwgNGNtg7X0q5Vpe/KvhfreOlUEPbU7q3qiMSbE2OhYxgdcaQX9sZ//EvL
- JrIg==
+ d=linaro.org; s=google; t=1780248828; x=1780853628; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:content-language:from
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=UO2PNWkD8jqU75AB4uaGBlJqb9vHisDn96q/lQ5MBGk=;
+ b=s+c0HjJf6tVaRelE3mOPx2l2y3jdaFWcX4sb2hJbPDAwRXo/W7+r3zh89HnP223Y7Z
+ z1kBKG3NtjtoWscOlzod8KulY193GIjyouIeA4SKrfvLAyKANbHX89zFU8xeL4B3i/qt
+ JbHUy1Rsts8vrqSGoHlB1WHQPnFJUf9YAsk/OjtVgi1JlHWhY5uSl9tn+IDrQpp3PWQ9
+ TC7EQ0194onz1ZyzWkdn2gbZGnj5JQ1sAcuUGKTcx26jD/Z2OT0jk/n0viIYQRwH9sbo
+ Bic5J3iMYUbD89n6HQHa3Wqih3GCIsNqiE2+EzY6B6yDlx1F9Rm+N9xxAYpQITcF4H/V
+ SlxA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1780241983; x=1780846783;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to;
- bh=eweo+AOP/LZy7+9wjmBN/ms5He+OgWhoGr43HaLs7OY=;
- b=j767HWjobLrhXDCya76tkgVMJUCiqhP1o/i6lAEx1HhzTdwH1MBvlMCQIqjz7CDT4n
- 0lXTEb598AXTpPQc2CE1K3FB3zpTdEDrrP3Mg5T0r+s1dqgi2sBpDS59wH7oNbZbzDa0
- aonUuP6M90PccaSaIIq06Gw4hB+f/lWC1NvObfyxbXFGoOCDpHObXziVkvIPMSmIl2on
- KGC/j1SLUlqLLB4ZpDkZYo5a/BLJd1VCDEqK4mN9Pz5G7IHY0WASTjmOPpEJFZMN1X0o
- BUwfkf6nApHDBsydzAHx1IbAA0/Seuh1M079/m44h4w6pCDI4kcMPHMaNghqJv+DEO+k
- jYhQ==
-X-Gm-Message-State: AOJu0YzfDUi8bmRlZJhVShv9OM/LtJOKEI4VmFnhnHsQBY9+6nKbdQMV
- iwbOvQLOrBfTqKDU1uj/5S7ERoE7SHo1YSzMSTyNcsSQZ/JKm6r6GcUxW2LNFw==
-X-Gm-Gg: Acq92OH+6iNEPVAIYyKaO4UJOu5+D2j/HAeWqCGwaMo80RRrYenyVQ1aK/pp4oytr5F
- p5m5A7gDqtvFfSLlWOd/8o9NnCfk3+Mv3/EShWgjmBfUfUifyhj+DeqiuPIbVQRDiRBj1P0Ood1
- wLtUXclHoDO0Hsm9tnXKq3D+MIUK3exD5GWhH47NkwMoMUcd497agNIgr+I5HsS+ecgiy7vgIfX
- sBHEO2H4+ERutIJxT2Zvi2VPtmPOD7xbZz44ZcnqT4P9Cj0sShwsxxknRmfdEV6UhNiuJ7W7rAp
- TTl9L3kmovtm7GZc+c8a1iTRXWAn+3oxFLCOYojfV0AB23NKlk7vEbRsH/1epwZULgDNoOq/XqK
- uJM4aZUAgTlLzRGZ+zrnOA2u2M9wuqrovYqcoCY+PnWrMozo4Ced6Xfuf3NXl4Br0p0ZeWz6nKF
- 2DJ4S0uexvqmNDrX34sU+3PikLcVE6O5Pnm9osjPUvPP/k+6dlGFhMsAvbPUEO
-X-Received: by 2002:a17:903:1a28:b0:2c0:b9a1:6493 with SMTP id
- d9443c01a7336-2c0b9a16ac9mr43368755ad.10.1780241983180; 
- Sun, 31 May 2026 08:39:43 -0700 (PDT)
-Received: from localhost.localdomain
- ([2401:4900:88b1:bfce:96bb:43ff:fec0:e782])
+ d=1e100.net; s=20251104; t=1780248828; x=1780853628;
+ h=content-transfer-encoding:in-reply-to:content-language:from
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=UO2PNWkD8jqU75AB4uaGBlJqb9vHisDn96q/lQ5MBGk=;
+ b=ayCWhkw2ImG9SiLqoPYXNkR+gq6kT0H9pAiS4ouTDPQ2K+PiGvpa3Ucay90Ju9NSj/
+ c1jI0Jvzbec93qYPnq1j+gpIG1C5/ZDRYJMZ42+Y563g7/ao3BzxJG7s9QLHBNes20yc
+ uDAom8VcGgUXWYq2hsMn8smc8UAXxT46gpLw78Muh3jX8B68bLEOmXhcscsd5gOZnllt
+ 30o4aHzFJ9dOw67HkPY+IxePZLA0Fq7a7zPHyDSROyPaoV7DW+mXHfSpgLev5zSmeNfF
+ 73oWPnjD16QDpCZLw3xPrDeNWoQFB9Lwf3lYc14ygCOP/CEhkoGtotPAu+Gb/JALxGJl
+ N0zQ==
+X-Gm-Message-State: AOJu0Yx5gfTeol4PXI/+vZrilH+Kud53HXvfq/UEbYi80IIEdCudCkyx
+ 9lZOdYL+gKyHCneZK/syjvvUondTpM2/ZkAfD7qSNhL5DP/kt/Fh0Ue++tm01eWhjm4=
+X-Gm-Gg: Acq92OHn7pa6wWDa1My9JKoDncVDKI53WwYXpR5rl6QJbqqxChN2NcBB9ivlYjqpNv3
+ EtT84swT85xfugqRKsM40k1nWCBcvw3/CM58pMqbm7394o8gWOOKhayocc6KatczWgFdBOdK3Q2
+ ujvdVIhKA9qhxFeCDsD8Ge40DPVmpRfcVE6UpktavUpNLULzybXw9dSgppiPuoUn/96S6R9Jq1p
+ MBDSV6SyRxsGsu6LvHUbR1NDvAwR79JCFLCcRie1f/S4ZB8KiycrBKaVQW4M7s8MC06/HmwO0Dy
+ wSo6IFmTZuVHNPabct46ipDUkNzIflWhokS5QY6UkM3slyCiAs4zVIKVKJ5ggy+IonQDNocJ28D
+ a0cIVg9hGi3oE2bmp+vidxTnPdAFnyrNyO16hoMYr6ou95QeVXTbYJKndynjZf3GlUbaJJ9X7iJ
+ 0vLNIq2CzgwCq8jp4D1p2D+iMUr75x+JVZeVwu2RkVgbr9jTfCIxtP2SohHA==
+X-Received: by 2002:a17:903:1112:b0:2ba:21c2:d6cb with SMTP id
+ d9443c01a7336-2bf3795a8a4mr71638655ad.16.1780248827813; 
+ Sun, 31 May 2026 10:33:47 -0700 (PDT)
+Received: from [192.168.0.4] ([71.212.142.33])
  by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-2bf28973335sm74194235ad.63.2026.05.31.08.39.41
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Sun, 31 May 2026 08:39:42 -0700 (PDT)
-From: Samyak <samyak.bambole07@gmail.com>
-To: qemu-devel@nongnu.org
-Cc: Samyak <samyak.bambole07@gmail.com>
-Subject: [PATCH v2] hw/misc/applesmc: replace DEVICE_NATIVE_ENDIAN with
- DEVICE_LITTLE_ENDIAN
-Date: Sun, 31 May 2026 21:09:29 +0530
-Message-ID: <20260531153929.286962-1-samyak.bambole07@gmail.com>
-X-Mailer: git-send-email 2.54.0
-In-Reply-To: <20260531152210.264330-1-samyak.bambole07@gmail.com>
-References: <20260531152210.264330-1-samyak.bambole07@gmail.com>
+ d9443c01a7336-2bf239e5d78sm79312555ad.12.2026.05.31.10.33.47
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Sun, 31 May 2026 10:33:47 -0700 (PDT)
+Message-ID: <22f680f0-5323-4aa0-b692-f76889a04039@linaro.org>
+Date: Sun, 31 May 2026 10:33:45 -0700
 MIME-Version: 1.0
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 11/13] common-user: Move probe_guest_base from linux-user
+To: Warner Losh <imp@bsdimp.com>
+Cc: qemu-devel@nongnu.org, deller@gmx.de
+References: <20260530211248.375318-1-richard.henderson@linaro.org>
+ <20260530211248.375318-12-richard.henderson@linaro.org>
+ <CANCZdfpLTPL4UKFMHrevMPJ-3NguLPpRXkNYrJnQjyMyvwVoQg@mail.gmail.com>
+From: Richard Henderson <richard.henderson@linaro.org>
+Content-Language: en-US
+In-Reply-To: <CANCZdfpLTPL4UKFMHrevMPJ-3NguLPpRXkNYrJnQjyMyvwVoQg@mail.gmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::633;
- envelope-from=samyak.bambole07@gmail.com; helo=mail-pl1-x633.google.com
-X-Spam_score_int: -17
-X-Spam_score: -1.8
-X-Spam_bar: -
-X-Spam_report: (-1.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+Received-SPF: pass client-ip=2607:f8b0:4864:20::62c;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x62c.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -102,50 +104,21 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Use explicit DEVICE_LITTLE_ENDIAN same as other devices in /hw/i386,
-since the Apple SMC is x86 only.
+On 5/30/26 21:44, Warner Losh wrote:
+>     +    void *p = mmap((void *)addr, size, PROT_NONE,
+>     +                   MAP_ANONYMOUS | MAP_PRIVATE |
+>     +                   MAP_NORESERVE | MAP_FIXED_NOREPLACE, -1, 0);
+> 
+> 
+> +    void *p = mmap((void *)addr, size, PROT_NONE,
+> +                   MAP_ANON | MAP_PRIVATE | MAP_FIXED | MAP_EXCL, -1, 0);
+> 
+> is what I had in my port. ANON and ANONYMOUS are the same. FreeBSD doesn't define
+> MAP_NORESERVE that I can see, though you could define it above to be 0. FreeBSD used
+> to define this, but it has no meaning in the current kernels.
 
-This was flagged by scripts/checkpatch.pl
+We default MAP_NORESERVE to 0 in qemu/osdep.h.
 
-Signed-off-by: Samyak Bambole <samyak.bambole07@gmail.com>
----
-v2: add missing Signed-off-by line
 
- hw/misc/applesmc.c | 6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
-
-diff --git a/hw/misc/applesmc.c b/hw/misc/applesmc.c
-index fd96f5f245..aae7fad3a2 100644
---- a/hw/misc/applesmc.c
-+++ b/hw/misc/applesmc.c
-@@ -278,7 +278,7 @@ static void qdev_applesmc_isa_reset(DeviceState *dev)
- static const MemoryRegionOps applesmc_data_io_ops = {
-     .write = applesmc_io_data_write,
-     .read = applesmc_io_data_read,
--    .endianness = DEVICE_NATIVE_ENDIAN,
-+    .endianness = DEVICE_LITTLE_ENDIAN,
-     .impl = {
-         .min_access_size = 1,
-         .max_access_size = 1,
-@@ -288,7 +288,7 @@ static const MemoryRegionOps applesmc_data_io_ops = {
- static const MemoryRegionOps applesmc_cmd_io_ops = {
-     .write = applesmc_io_cmd_write,
-     .read = applesmc_io_cmd_read,
--    .endianness = DEVICE_NATIVE_ENDIAN,
-+    .endianness = DEVICE_LITTLE_ENDIAN,
-     .impl = {
-         .min_access_size = 1,
-         .max_access_size = 1,
-@@ -298,7 +298,7 @@ static const MemoryRegionOps applesmc_cmd_io_ops = {
- static const MemoryRegionOps applesmc_err_io_ops = {
-     .write = applesmc_io_err_write,
-     .read = applesmc_io_err_read,
--    .endianness = DEVICE_NATIVE_ENDIAN,
-+    .endianness = DEVICE_LITTLE_ENDIAN,
-     .impl = {
-         .min_access_size = 1,
-         .max_access_size = 1,
--- 
-2.54.0
-
+r~
 
