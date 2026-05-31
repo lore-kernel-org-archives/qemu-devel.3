@@ -4,95 +4,95 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4F149CD6E52
-	for <qemu-devel@archiver.kernel.org>; Sun, 31 May 2026 18:22:07 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7C543CD6E52
+	for <qemu-devel@archiver.kernel.org>; Sun, 31 May 2026 18:22:49 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wTkmw-00020j-Ht; Sun, 31 May 2026 14:21:30 -0400
+	id 1wTkoA-0002d1-BV; Sun, 31 May 2026 14:22:46 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <wlosh@bsdimp.com>) id 1wTkmv-00020b-5I
- for qemu-devel@nongnu.org; Sun, 31 May 2026 14:21:29 -0400
-Received: from mail-pl1-x62c.google.com ([2607:f8b0:4864:20::62c])
+ (Exim 4.90_1) (envelope-from <wlosh@bsdimp.com>) id 1wTknw-0002Sf-Li
+ for qemu-devel@nongnu.org; Sun, 31 May 2026 14:22:38 -0400
+Received: from mail-pg1-x535.google.com ([2607:f8b0:4864:20::535])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <wlosh@bsdimp.com>) id 1wTkmt-0003XE-4t
- for qemu-devel@nongnu.org; Sun, 31 May 2026 14:21:28 -0400
-Received: by mail-pl1-x62c.google.com with SMTP id
- d9443c01a7336-2c0c1e0d00bso6144195ad.0
- for <qemu-devel@nongnu.org>; Sun, 31 May 2026 11:21:26 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1780251685; cv=none;
+ (Exim 4.90_1) (envelope-from <wlosh@bsdimp.com>) id 1wTkns-0003lE-Lc
+ for qemu-devel@nongnu.org; Sun, 31 May 2026 14:22:31 -0400
+Received: by mail-pg1-x535.google.com with SMTP id
+ 41be03b00d2f7-c859878eb48so252218a12.0
+ for <qemu-devel@nongnu.org>; Sun, 31 May 2026 11:22:27 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1780251746; cv=none;
  d=google.com; s=arc-20240605;
- b=f1+i9+dB/jEW1d6Ub9bgJh3qjDupXTfCTquqskVNgK+DenBnBXL2/aU+4XLYAqadhv
- Os4QjJfQbmG4tOFuaza5ul0tgZcyz/uZTJsjtkhV4e+OTp1YLlQRkvJgYgXcgYP9lDuJ
- kuXQcV2XUzHZxHqBbUnHMSYxwVBUYmylcdRjZA/NKd4QRgxNKkylNXbk0cxwoepEZ2gS
- /uRtqh5a7I5VpS3CMiBnKtybh6TLABR/0TjHSwmARSVjhNjafJ2uAoX8xh5+s8sqjByT
- D4DFQ252PLNZQozWYIexb3n4VoZZnyE4HiEAJqYBS4AmgDNBHTSW25LdazWdwBeXdOds
- WNrA==
+ b=WVo26MKrn6jl01wg/PI2Bh/RatL7bbl+c28rZ65odOa8VUMYpiFsxIUz4EEW0QgzSb
+ PpK6PWWsSiUyMwYd9UTPisZxN83nOYnotjDnda49lsK+w85PnSjWfGCpcX3FvKGzFUKW
+ pmUFG/k3xiYOZCQfnr3Ga+NaXmBvuFrMrdwnma73WHVMMPG+f8DYQ/Uz3/92oCFvyY/Y
+ 1Scj53nzNNTyv0E8+yaOQNGxcRIzyiFrOQMsm64pwfs7jCojMhcUNUl1Ae6Uao2g1Lha
+ mkQMlYHTaZlY6UAxk9E9ULZu2FLdGzYm2b45COEJZKfBpa5JrBftVLAkIXZwcQ+i4W6+
+ plRg==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
  s=arc-20240605; 
  h=cc:to:subject:message-id:date:from:in-reply-to:references
  :mime-version:dkim-signature;
- bh=Gj2fTau0XZClSxCqtUBb+S21OuadF0MOIhHItQCsflM=;
+ bh=T2jlzkw52YuSDE5Uz90QJ+PmFoyjk/F7jdTMC7FKKHM=;
  fh=+DxRVnEC95Ptxk5HMfIFqaUwIao1HhLaAPFCgZPm1R4=;
- b=Ou6WNsHPbX5yADre/+VDNAYzBL9gY0e9BigTEwZRNy9trXsAoo88C0vpNuLJYLnYvV
- sUT2f/Dh4okoOSIUUnaKY9cVKPbcmM9e/u7RBbhHsX6mfmj0itTcChwq6502j2FFzkJj
- zUB/XHXRSRjvb+rExmRhBXoDzDOIrmrSA7IN+1pXuU2HkZcd+5dO2v28dEUV8KHy/fus
- kU0b9hnmZZPwBETlZeisAkbTrrt1JqA5yLvNSDJem+CIE1XjK51nSNix4ThqP7Artv5t
- a65ztg6zU0UV34RT4+A0dFaljhf09M0eobEjDd5NgG3YCanv2dMYW0CSJZihQOOWbmWL
- zCLg==; darn=nongnu.org
+ b=DCc5RQbct4Wcu8aHn9haYu7MwZvQZMMpij4Nk+TqbMYFovh0fey+uM7c4FXUHese87
+ nAq0ugI04dcUCrH1JeT7CK6ehzsd3eHrMvv2mtGAkiwjEyBOrDGo2zGHR+l+nxvsmDFW
+ YZJTrBY1BGrOgv9JtpuiWRBGavG2UObZ2LDIWGlwWz0FRrNuAwoz/U4KyWIJpqdNg+oC
+ tZr+mii29Ko3xUyI5CcB95iDSUExZ1tNOfNsw31PU+poOOW4OQALay8wqZUB8rqREsZU
+ f+a1kQiOggvZfV2vx8gejF6ssSHBxcPg15Ux2wJE87TIpCP0U8K4hh78qI+qoNvXDAHR
+ nN3g==; darn=nongnu.org
 ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=bsdimp-com.20251104.gappssmtp.com; s=20251104; t=1780251685; x=1780856485;
+ d=bsdimp-com.20251104.gappssmtp.com; s=20251104; t=1780251746; x=1780856546;
  darn=nongnu.org; 
  h=cc:to:subject:message-id:date:from:in-reply-to:references
  :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=Gj2fTau0XZClSxCqtUBb+S21OuadF0MOIhHItQCsflM=;
- b=wmC34EujN2tfwwpH8BVatqwr6PiSejkhWOPTCGo4id6mfe8FlIqAq127PyB2a0kVsG
- JTxBvVqjrPJ0LquNPgnJcv4VFJmFwF8Q0HRydbJ8dYIKqyleg23qycyd7J7CqtdumVDw
- g0/K8XcYkhhEGseh8krZtmN43ZlPc6cisWY+XAy/TONhuP66WDErdK1cxQrGJXY5lSXv
- ra8anD6gSOZAra20YxCgiTpQDWERpkXmrHJ2SZanFmDWWKF1qLVRz1tNznmrVMydcPm+
- zaetzLNSkTsw17fsCNsuOpeB2TEcYT7AEr4yEiUezqmIVq1gEEvl6MAXSZbaCN8nD4eq
- dSMQ==
+ bh=T2jlzkw52YuSDE5Uz90QJ+PmFoyjk/F7jdTMC7FKKHM=;
+ b=uPXLsgeSfvr+w91aB/HGJkMRWRt0es09kdEtm1pCk3lPSy5J15KO3q40iAMTIAQ7Mf
+ chp53qROQtbhhNuJ6mYm3DY04ClXzRDZtk5/FFEGsxEc9MNo8Aconk0JnxrZKNtvsfzy
+ 9YGnZyVD18rGjfLdxRavQp0OoXQsrkTb5hPHdrSGV8TbH81hK7dxWhRpLhM+xgH1/JrI
+ 5dJR31Yg9qHGPE/Zc+abEz5wjg8q4pSFui0FkqhIGcdZqNiPsDGqRqPTOzEbWLQSydv7
+ wlRTwo/lAVKVxhgNH8QfzEgU897eA161ktbayOB/MbsyF55JvJ68TAVkG5yN12b0xa2T
+ r85Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1780251685; x=1780856485;
+ d=1e100.net; s=20251104; t=1780251746; x=1780856546;
  h=cc:to:subject:message-id:date:from:in-reply-to:references
  :mime-version:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
  :message-id:reply-to;
- bh=Gj2fTau0XZClSxCqtUBb+S21OuadF0MOIhHItQCsflM=;
- b=bfWvTk3ntf8nVBjxujN7Uv4PrvEbQJxbGNljAAtx2eZMuX5dA4QaGQhg8bTne44E7n
- 6MymtyQAGudiAESLKmfakm+MoB/R34oFbMfJL9J0OzwQeUQdOUW7IRUjFZerBhV+Y1f3
- JRom6e23YfRPBu47tck83hQwPRFqjUbj6LBpantTi3rZuxaPkdD07UuEdMvSHD3ppZav
- AMfp1KlbiAJY0ZsuqNKfx+FWJSGgwPZc8oIJC92eULyIQ0B4YXSk/DS2kXlKGmcMskUL
- 52Ct326Ql01ozbSzJ/NqX1piX7j9KAfP9agfTBwMhZwWpj/ThCS+Eibf6/Maal5j72mm
- szdw==
-X-Gm-Message-State: AOJu0Yz5ZubDnskYI9T1gJ/bEfjzrLp41kyf46ZpIs5c6e+c1cFt+qAt
- CSk0+6y87astEMmGnJ2Ydt2CpeloyUFnaWdUZEg6OyIESTn3j1IgX2R6jo+Qhb7CVad653/1j1D
- NzDEPWHu9nvtZoHWlqr1EM/64Fnx4ZGMiMnB3Z8OKaw==
-X-Gm-Gg: Acq92OHdNLb0QDtrnH7kJJ54K7Q37hTn330xv+4UoktycKAl5gBmuapVbeegYfV/stU
- E7f69NauLIE7fgqf0Gc2xPYyszv1ajiipkueWQR6U+vCODaSzWbyyVsUHFlJRy9SWqp6jq0qX89
- Ra6ruES+zsAmV4ofM1VwFnW58G2AtZKzHvbkkfPwN8BNMlBAIYWyb293WVxKkMBNPDN4s8s/Klb
- hWn6ZiA6WmRGKav+rqdkDrhZwYBqd9uY9vvpOj0nQAzjyxuCJi4n93XtoePth3NlqmXrcWFWqq5
- mdnIUYd9gvCHimuu02W8c1REvZz1Ml3MS+riKSsAoMJItA8=
-X-Received: by 2002:a17:902:f791:b0:2c0:cd80:47d4 with SMTP id
- d9443c01a7336-2c0cd805528mr27792125ad.23.1780251684920; Sun, 31 May 2026
- 11:21:24 -0700 (PDT)
+ bh=T2jlzkw52YuSDE5Uz90QJ+PmFoyjk/F7jdTMC7FKKHM=;
+ b=I9VhVoYAS7QElgpl9D5Hd9V/ca8F5b5H8u24mkYoOH/GiEjzOsRJ03r6lgojmB1/DN
+ jPzLVSkyQkrUGFq0Si4oFOG/JMaP/b0GdtV+kc6hkRx7DoWRTF/BcvlEXvLStwrWuOBt
+ 2+zF1Ek/zGiDze3xF0f5oAoR7y+gZocv1jxYnCVSfDhaX67H//JtrVPM67NIZbG6V1eW
+ 9klkwxBM1VKmEqnCQEHrveA6X1+X67k2dR3NJrP2gs4GyZEJxpYnEHbXwcGZYiVtTUx0
+ pDw74k880kp2CRuwrbvCln8YjnmP67dITqv1aqFlpjAAVrxIisEdJOP34esTsODmymDC
+ ZMlw==
+X-Gm-Message-State: AOJu0YzlSUS/gS9JmwhiqgTAL5UYWkk8Au6KzRpc5XhkWogthZ4D8RHP
+ xtxqjkasv7oMJkurxI4ozMO7tCJkFX5gbErxawDkyHkrkdlWmz9auDhNAMJfbIvBHOsq0UmpDnG
+ 0m3qoZa6cmO1aDxIMDuAcpBSo6gK5ONN4pWTsYjkkTg==
+X-Gm-Gg: Acq92OGEK42VA79KcCmbBbby0syhikJsiuotzN52HaqKFv8so06uvy8rtNWan058qxP
+ YDbiu4Mf21vY8tNCTa1Cto91assCmGSEvwDMM9QLY2JlATl0aiyCgiyrZbJC8BK6pov6h5Fuon/
+ 81ag8pDgGiS8zJPgj2ic+m5VHmjIDrwwY0afMNuyn2HkLwIKyT7ikmewR37RgPnpZCwkaHKOZ5o
+ by2u9M+DQwx0LflyUKJwFIT7yi2iJQNP19OLp0+Xr9+cfywe2ur3nZMmETCBuHv4VYKkmLnA4zs
+ Ylt2q0RnXBQrKbsSjD7Q3tlSzX7vscnquWHt2e2J9S1ZuRipDWTVDh952w==
+X-Received: by 2002:a05:6a21:3a47:b0:39f:1f92:28e with SMTP id
+ adf61e73a8af0-3b42823a98bmr9506835637.27.1780251746330; Sun, 31 May 2026
+ 11:22:26 -0700 (PDT)
 MIME-Version: 1.0
 References: <20260530211248.375318-1-richard.henderson@linaro.org>
- <20260530211248.375318-11-richard.henderson@linaro.org>
- <CANCZdfqE=MWrQZeYtSLPs=B3FUW4xRL_ebLyXj4txQ92PzZDUw@mail.gmail.com>
- <49b8837e-52e0-4805-9b27-b3fcd2918061@linaro.org>
-In-Reply-To: <49b8837e-52e0-4805-9b27-b3fcd2918061@linaro.org>
+ <20260530211248.375318-12-richard.henderson@linaro.org>
+ <CANCZdfpLTPL4UKFMHrevMPJ-3NguLPpRXkNYrJnQjyMyvwVoQg@mail.gmail.com>
+ <22f680f0-5323-4aa0-b692-f76889a04039@linaro.org>
+In-Reply-To: <22f680f0-5323-4aa0-b692-f76889a04039@linaro.org>
 From: Warner Losh <imp@bsdimp.com>
-Date: Sun, 31 May 2026 12:21:10 -0600
-X-Gm-Features: AVHnY4KqBAGqfWd0hgqxoYgNwxu72vp67dmKLoZwDIwfamuSYgA23Yu3-7EsU6Q
-Message-ID: <CANCZdfoGJKyBMQ-N8Vec3T5SsowqhFZRVaiTpBM2djUmsvOtwA@mail.gmail.com>
-Subject: Re: [PATCH 10/13] common-user: Implement read_self_maps for FreeBSD
+Date: Sun, 31 May 2026 12:22:14 -0600
+X-Gm-Features: AVHnY4Ls-RxywyM2Tbw6ogAlmwFIq5jmVfHSYx_yTPvjrGsK3j4mNbsAJrQNTrc
+Message-ID: <CANCZdfp4mTvmZijxezSr9Tk7wMqm_MVc_C1eNO0LAra9m454XA@mail.gmail.com>
+Subject: Re: [PATCH 11/13] common-user: Move probe_guest_base from linux-user
 To: Richard Henderson <richard.henderson@linaro.org>
 Cc: qemu-devel@nongnu.org, deller@gmx.de
-Content-Type: multipart/alternative; boundary="0000000000004a6c40065321250b"
-Received-SPF: none client-ip=2607:f8b0:4864:20::62c;
- envelope-from=wlosh@bsdimp.com; helo=mail-pl1-x62c.google.com
+Content-Type: multipart/alternative; boundary="000000000000f3772d06532128ee"
+Received-SPF: none client-ip=2607:f8b0:4864:20::535;
+ envelope-from=wlosh@bsdimp.com; helo=mail-pg1-x535.google.com
 X-Spam_score_int: -18
 X-Spam_score: -1.9
 X-Spam_bar: -
@@ -114,190 +114,73 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
---0000000000004a6c40065321250b
+--000000000000f3772d06532128ee
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 
-On Sun, May 31, 2026 at 11:44=E2=80=AFAM Richard Henderson <
+On Sun, May 31, 2026 at 11:33=E2=80=AFAM Richard Henderson <
 richard.henderson@linaro.org> wrote:
 
-> On 5/30/26 21:36, Warner Losh wrote:
-> >     +    for (int i =3D 0; i < n; ++i) {
-> >     +        struct kinfo_vmentry *k =3D &entries[i];
-> >     +        size_t path_len =3D strnlen(k->kve_path, sizeof(k->kve_pat=
-h))
-> + 1;
+> On 5/30/26 21:44, Warner Losh wrote:
+> >     +    void *p =3D mmap((void *)addr, size, PROT_NONE,
+> >     +                   MAP_ANONYMOUS | MAP_PRIVATE |
+> >     +                   MAP_NORESERVE | MAP_FIXED_NOREPLACE, -1, 0);
 > >
 > >
-> > This is shorter than what I had in blitz.
->
-> Shorter, but wrong, since it's never 0.
->
-
-True.
-
-
+> > +    void *p =3D mmap((void *)addr, size, PROT_NONE,
+> > +                   MAP_ANON | MAP_PRIVATE | MAP_FIXED | MAP_EXCL, -1,
+> 0);
 > >
-> >     +        MapInfo *e =3D g_malloc0(sizeof(*e) + path_len);
-> >
-> >
-> > My version did the following only if
-> >        if (kve->kve_type !=3D KVME_TYPE_GUARD &&
-> >              kve->kve_type !=3D KVME_TYPE_DEAD) {
-> >
-> > though now I see my version would have been better with the
-> > contrapositive and continue.
+> > is what I had in my port. ANON and ANONYMOUS are the same. FreeBSD
+> doesn't define
+> > MAP_NORESERVE that I can see, though you could define it above to be 0.
+> FreeBSD used
+> > to define this, but it has no meaning in the current kernels.
 >
-> You wouldn't want to skip GUARD, since for the purpose of probe_guest_bas=
-e
-> GUARD is
-> reserved memory.  What does DEAD mean?  Is that the multithreaded thing?
+> We default MAP_NORESERVE to 0 in qemu/osdep.h.
 >
 
-I don't know what I was thinking for either of those, now that I refresh my
-memory
-on what they are. GUARD works coincidentally because the regions are small
-and
-none would be selected...  DEAD can likely never happen in userland, since
-it's only
-for objects that are dying and in the process of being deallocated, but not
-yet
-unreferenced... I'm not sure how this could arise when this function is
-being called,
-though, so I guess my difference isn't any better at all.
+Oh! So we do. I'd looked in a different file that I'd just cleaned up for
+it...
 
+Maybe MAP_FIXED_NOREPLACE could be defined in qemu/osdep.h as well?
 
-> >     +    free(entries);
-> >
-> >
-> > I had g_free() here, but I am a 'cargo cult' glib user...
->
-> I know they're the same these days, but I minded the man page which says
-> 'free'.
->
+Warner
 
-Oh! The sysctl method vs the kinfo_getvmmap method. Yes, this is right. I'd
-malloced
-memory for mine with g_malloc...
-
-
-> >     +
-> >     +if host_os =3D=3D 'freebsd'
-> >     +  libutil =3D cc.find_library('util', required: true)
-> >     +  user_ss.add(libutil)
-> >     +endif
-> >
-> >
-> > This dependency is likely fine, but as I said in my other mail using th=
-e
-> sysctl obviates
-> > the need for this.
->
-> I'm fine either way.  Perhaps this isn't worth pulling in the external
-> dependency.
->
-
-Same.
-
-
-> > And thank you so much for writing this, even though there's a small
-> collision here. I do
-> > very much appreciate it.
->
-> You're welcome.
->
->
-> r~
->
-
---0000000000004a6c40065321250b
+--000000000000f3772d06532128ee
 Content-Type: text/html; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 
 <div dir=3D"ltr"><div dir=3D"ltr"><br></div><br><div class=3D"gmail_quote g=
 mail_quote_container"><div dir=3D"ltr" class=3D"gmail_attr">On Sun, May 31,=
- 2026 at 11:44=E2=80=AFAM Richard Henderson &lt;<a href=3D"mailto:richard.h=
+ 2026 at 11:33=E2=80=AFAM Richard Henderson &lt;<a href=3D"mailto:richard.h=
 enderson@linaro.org">richard.henderson@linaro.org</a>&gt; wrote:<br></div><=
 blockquote class=3D"gmail_quote" style=3D"margin:0px 0px 0px 0.8ex;border-l=
-eft:1px solid rgb(204,204,204);padding-left:1ex">On 5/30/26 21:36, Warner L=
+eft:1px solid rgb(204,204,204);padding-left:1ex">On 5/30/26 21:44, Warner L=
 osh wrote:<br>
-&gt;=C2=A0 =C2=A0 =C2=A0+=C2=A0 =C2=A0 for (int i =3D 0; i &lt; n; ++i) {<b=
-r>
-&gt;=C2=A0 =C2=A0 =C2=A0+=C2=A0 =C2=A0 =C2=A0 =C2=A0 struct kinfo_vmentry *=
-k =3D &amp;entries[i];<br>
-&gt;=C2=A0 =C2=A0 =C2=A0+=C2=A0 =C2=A0 =C2=A0 =C2=A0 size_t path_len =3D st=
-rnlen(k-&gt;kve_path, sizeof(k-&gt;kve_path)) + 1;<br>
+&gt;=C2=A0 =C2=A0 =C2=A0+=C2=A0 =C2=A0 void *p =3D mmap((void *)addr, size,=
+ PROT_NONE,<br>
+&gt;=C2=A0 =C2=A0 =C2=A0+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =
+=C2=A0 =C2=A0 =C2=A0MAP_ANONYMOUS | MAP_PRIVATE |<br>
+&gt;=C2=A0 =C2=A0 =C2=A0+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =
+=C2=A0 =C2=A0 =C2=A0MAP_NORESERVE | MAP_FIXED_NOREPLACE, -1, 0);<br>
 &gt; <br>
 &gt; <br>
-&gt; This is shorter than what I had in blitz.<br>
+&gt; + =C2=A0 =C2=A0void *p =3D mmap((void *)addr, size, PROT_NONE,<br>
+&gt; + =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 MAP_A=
+NON | MAP_PRIVATE | MAP_FIXED | MAP_EXCL, -1, 0);<br>
+&gt; <br>
+&gt; is what I had in my port. ANON and ANONYMOUS are the same. FreeBSD doe=
+sn&#39;t define<br>
+&gt; MAP_NORESERVE that I can see, though you could define it above to be 0=
+. FreeBSD used<br>
+&gt; to define this, but it has no meaning in the current kernels.<br>
 <br>
-Shorter, but wrong, since it&#39;s never 0.<br></blockquote><div><br></div>=
-<div>True.</div><div>=C2=A0</div><blockquote class=3D"gmail_quote" style=3D=
-"margin:0px 0px 0px 0.8ex;border-left:1px solid rgb(204,204,204);padding-le=
-ft:1ex">
-&gt; <br>
-&gt;=C2=A0 =C2=A0 =C2=A0+=C2=A0 =C2=A0 =C2=A0 =C2=A0 MapInfo *e =3D g_mallo=
-c0(sizeof(*e) + path_len);<br>
-&gt; <br>
-&gt; <br>
-&gt; My version did the following only if<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 if (kve-&gt;kve_type !=3D KVME_TYPE_GUARD &=
-amp;&amp;<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 kve-&gt;kve_type !=3D =
-KVME_TYPE_DEAD) {<br>
-&gt; <br>
-&gt; though now I see my version would have been better with the<br>
-&gt; contrapositive and continue.<br>
-<br>
-You wouldn&#39;t want to skip GUARD, since for the purpose of probe_guest_b=
-ase GUARD is <br>
-reserved memory.=C2=A0 What does DEAD mean?=C2=A0 Is that the multithreaded=
- thing?<br></blockquote><div><br></div><div>I don&#39;t know what I was thi=
-nking for either of those, now that I refresh my memory</div><div>on what t=
-hey are. GUARD works coincidentally because the regions are small and</div>=
-<div>none would be selected...=C2=A0 DEAD can likely never happen in userla=
-nd, since it&#39;s only</div><div>for objects that are dying and in the pro=
-cess of being deallocated, but not yet</div><div>unreferenced... I&#39;m no=
-t sure how this could arise when this function is being called,</div><div>t=
-hough, so I guess my difference isn&#39;t any better at all.</div><div>=C2=
-=A0</div><blockquote class=3D"gmail_quote" style=3D"margin:0px 0px 0px 0.8e=
-x;border-left:1px solid rgb(204,204,204);padding-left:1ex">
-&gt;=C2=A0 =C2=A0 =C2=A0+=C2=A0 =C2=A0 free(entries);<br>
-&gt; <br>
-&gt; <br>
-&gt; I had g_free() here, but I am a &#39;cargo cult&#39; glib user...<br>
-<br>
-I know they&#39;re the same these days, but I minded the man page which say=
-s &#39;free&#39;.<br></blockquote><div><br></div><div>Oh! The sysctl method=
- vs the kinfo_getvmmap method. Yes, this is right. I&#39;d malloced</div><d=
-iv>memory for mine with g_malloc...</div><div>=C2=A0</div><blockquote class=
-=3D"gmail_quote" style=3D"margin:0px 0px 0px 0.8ex;border-left:1px solid rg=
-b(204,204,204);padding-left:1ex">
-&gt;=C2=A0 =C2=A0 =C2=A0+<br>
-&gt;=C2=A0 =C2=A0 =C2=A0+if host_os =3D=3D &#39;freebsd&#39;<br>
-&gt;=C2=A0 =C2=A0 =C2=A0+=C2=A0 libutil =3D cc.find_library(&#39;util&#39;,=
- required: true)<br>
-&gt;=C2=A0 =C2=A0 =C2=A0+=C2=A0 user_ss.add(libutil)<br>
-&gt;=C2=A0 =C2=A0 =C2=A0+endif<br>
-&gt; <br>
-&gt; <br>
-&gt; This dependency is likely fine, but as I said in my other mail using t=
-he sysctl obviates <br>
-&gt; the need for this.<br>
-<br>
-I&#39;m fine either way.=C2=A0 Perhaps this isn&#39;t worth pulling in the =
-external dependency.<br></blockquote><div><br></div><div>Same.=C2=A0</div><=
-div>=C2=A0</div><blockquote class=3D"gmail_quote" style=3D"margin:0px 0px 0=
-px 0.8ex;border-left:1px solid rgb(204,204,204);padding-left:1ex">
-&gt; And thank you so much for writing this, even though there&#39;s a smal=
-l collision here. I do <br>
-&gt; very much appreciate it.<br>
-<br>
-You&#39;re welcome.<br>
-<br>
-<br>
-r~<br>
-</blockquote></div></div>
+We default MAP_NORESERVE to 0 in qemu/osdep.h.<br></blockquote><div><br></d=
+iv><div>Oh! So we do. I&#39;d looked in a different file that I&#39;d just =
+cleaned up for it...</div><div><br></div><div>Maybe MAP_FIXED_NOREPLACE cou=
+ld be defined in qemu/osdep.h as well?</div><div><br></div><div>Warner=C2=
+=A0</div></div></div>
 
---0000000000004a6c40065321250b--
+--000000000000f3772d06532128ee--
 
