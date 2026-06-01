@@ -4,149 +4,128 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 27972CD6E4C
-	for <qemu-devel@archiver.kernel.org>; Mon,  1 Jun 2026 07:02:50 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id BEA92CD6E4C
+	for <qemu-devel@archiver.kernel.org>; Mon,  1 Jun 2026 07:56:41 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wTwfD-0000Sm-34; Mon, 01 Jun 2026 03:02:19 -0400
+	id 1wTxUr-0008Ib-4w; Mon, 01 Jun 2026 03:55:41 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mhonap@nvidia.com>)
- id 1wTwf5-0000SE-F7; Mon, 01 Jun 2026 03:02:12 -0400
-Received: from mail-westcentralusazlp170100005.outbound.protection.outlook.com
- ([2a01:111:f403:c112::5] helo=CY7PR03CU001.outbound.protection.outlook.com)
+ (Exim 4.90_1) (envelope-from <anushree.mathur@linux.ibm.com>)
+ id 1wTxUp-0008IC-7U; Mon, 01 Jun 2026 03:55:39 -0400
+Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mhonap@nvidia.com>)
- id 1wTwf3-0003xg-8q; Mon, 01 Jun 2026 03:02:11 -0400
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=gWWqTYK4yB47NxdA5NomKfl320QyWg+dZVpq+GTJRkZCjrTrzW5DXTKIwq+iphOrYpXultTqdXNBc0LcZ/wPl19OXpLQmDvTc9MSLhmve8EBsLcOriSTNxnr95J9AhPXYhfW/tATk9phOmrmAeLxqzP1GGScyCTsIU+u2SvJ5fxWwdj7IkJwor3sBdQjwB1U67TjeUg3JgXZAX6PdesllHfwASFw9VAFlNH+GoRJEjFrCpz/ESS3g+jaOZeN/pqe8F7JSZpZcLL9r4vjPgPCgKRhW2oyR/q0L8DDgxzUSLbezKMJqbKvYmbiRKeypeN9FpBM3Fu3zAsOCCfcHfvlLQ==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=zRd0M1UOFkb1tjIiizfPZU4O4TKzgUPAHV5FPF+lzvE=;
- b=GbqDkf1kIJTnu2Prt6r5eqYashz1dLPkW5a/CVFuFTSGfrQoNhqACRHVDgFn/oAiPYzsFzM/zAnUqkxFW3akWs3xA19FvXXYu65TN1yI7GF1Zlf0x4YL/OsVXAz7ZYD9G7GbWQEfWBiZleXUpKv1YHeoNVwYECWNJpuKZUJMDXyPxJMTFgXXin08rDR9/lEKhyd5VHoaGhp1dt5yWKb7vuQvLNXljOUQlZSQcxmiMTPGocxMTi06hhG6lRoYEfL+OGd1FiFgNMhUZH2W1GJyy5V6COm9rXYLeAygJ7M/WKnH1k2wTJb4f7Wxu3eWJ5Z0aYoTsWGoggYoLk8n4gvlPQ==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=nvidia.com; dmarc=pass action=none header.from=nvidia.com;
- dkim=pass header.d=nvidia.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=Nvidia.com;
- s=selector2;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=zRd0M1UOFkb1tjIiizfPZU4O4TKzgUPAHV5FPF+lzvE=;
- b=i4mn+AJpN1Ws4urnuButXRoWzDXSmQCyZkRhvyV7u4+wEqEoz3+qEtWYOsYckSvlAJP2tbjOfkvadpr8fe5RcbGqU4ycxgoxHAxWwz0HaSRLzltoW7yA86LHR2MpTwGZUq1NH+Sl451LQPD1OQABaLekhGdik+tL84tWrSXiS5ZkxwTt0lg8PV9pmIJtFog/ESwfQ3nwwyBa5xy9DUAC1egD0oayN/PcZk4jZ4Ff/lrzeX0MlPZMnLfedvX6VWbptAfCfkW5QON5h7pL5K6aP9YdpVzO27ZXZUv64tXjCt1Q+gP888Ns0ljkPZoQ8eRl2dCklV6PWluWt7rgC/aQVw==
-Received: from IA1PR12MB9030.namprd12.prod.outlook.com (2603:10b6:208:3f2::22)
- by PH7PR12MB7892.namprd12.prod.outlook.com (2603:10b6:510:27e::19)
- with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.71.17; Mon, 1 Jun 2026
- 07:02:01 +0000
-Received: from IA1PR12MB9030.namprd12.prod.outlook.com
- ([fe80::2c1d:ed27:b53a:97d2]) by IA1PR12MB9030.namprd12.prod.outlook.com
- ([fe80::2c1d:ed27:b53a:97d2%6]) with mapi id 15.21.0071.014; Mon, 1 Jun 2026
- 07:02:01 +0000
-From: Manish Honap <mhonap@nvidia.com>
-To: Jonathan Cameron <jic23@kernel.org>
-CC: Alex Williamson <alwilliamson@nvidia.com>, Shameer Kolothum Thodi
- <skolothumtho@nvidia.com>, Ankit Agrawal <ankita@nvidia.com>,
- "mst@redhat.com" <mst@redhat.com>, "imammedo@redhat.com"
- <imammedo@redhat.com>, "anisinha@redhat.com" <anisinha@redhat.com>,
- "eric.auger@redhat.com" <eric.auger@redhat.com>, "peter.maydell@linaro.org"
- <peter.maydell@linaro.org>, "shannon.zhaosl@gmail.com"
- <shannon.zhaosl@gmail.com>, "jonathan.cameron@huawei.com"
- <jonathan.cameron@huawei.com>, "fan.ni@samsung.com" <fan.ni@samsung.com>,
- "pbonzini@redhat.com" <pbonzini@redhat.com>, "richard.henderson@linaro.org"
- <richard.henderson@linaro.org>, "marcel.apfelbaum@gmail.com"
- <marcel.apfelbaum@gmail.com>, "clg@redhat.com" <clg@redhat.com>,
- "cohuck@redhat.com" <cohuck@redhat.com>, "dan.j.williams@intel.com"
- <dan.j.williams@intel.com>, "dave.jiang@intel.com" <dave.jiang@intel.com>,
- "alejandro.lucero-palau@amd.com" <alejandro.lucero-palau@amd.com>, Vikram
- Sethi <vsethi@nvidia.com>, Neo Jia <cjia@nvidia.com>, "Tarun Gupta (SW-GPU)"
- <targupta@nvidia.com>, Zhi Wang <zhiw@nvidia.com>, Krishnakant Jaju
- <kjaju@nvidia.com>, "linux-cxl@vger.kernel.org" <linux-cxl@vger.kernel.org>,
- "kvm@vger.kernel.org" <kvm@vger.kernel.org>, "qemu-devel@nongnu.org"
- <qemu-devel@nongnu.org>, "qemu-arm@nongnu.org" <qemu-arm@nongnu.org>, Manish
- Honap <mhonap@nvidia.com>
-Subject: RE: [RFC 7/9] hw/vfio+cxl: Program HDM decoder 0 at machine_done for
- firmware-committed devices
-Thread-Topic: [RFC 7/9] hw/vfio+cxl: Program HDM decoder 0 at machine_done for
- firmware-committed devices
-Thread-Index: AQHc1nG4jkRxZqV5Xk+1suvmucEul7YVcxoAgBQD5JA=
-Date: Mon, 1 Jun 2026 07:02:01 +0000
-Message-ID: <IA1PR12MB90304A1604F3C41C211F44DEBD152@IA1PR12MB9030.namprd12.prod.outlook.com>
-References: <20260427181235.3003865-1-mhonap@nvidia.com>
- <20260427181235.3003865-8-mhonap@nvidia.com>
- <20260519140416.02a793ce@jic23-huawei>
-In-Reply-To: <20260519140416.02a793ce@jic23-huawei>
-Accept-Language: en-US
-Content-Language: en-US
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-authentication-results: dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=nvidia.com;
-x-ms-publictraffictype: Email
-x-ms-traffictypediagnostic: IA1PR12MB9030:EE_|PH7PR12MB7892:EE_
-x-ms-office365-filtering-correlation-id: 739a885f-3ec2-49c8-ba90-08debfabae1f
-x-ms-exchange-senderadcheck: 1
-x-ms-exchange-antispam-relay: 0
-x-microsoft-antispam: BCL:0;
- ARA:13230040|1800799024|376014|7416014|366016|22082099003|18002099003|3023799007|11063799006|4143699003|56012099006|38070700021;
-x-microsoft-antispam-message-info: BeKuS8X+aVNVEIBVbk+bKVAKmg4lbDsby/jKxMeQcaB7AcOngSkMv/bwuSNFJ9tODeOWy7+zVoRL3kBbwup3hhGxImp3kerVflWxxlEr7yELA0qBVaC9r2FGzgh1i3oM0Q4GBZY0XnkRYbnbiLJLzfd1JROYuSHlg0dQrXFtXkp9Mc+HeL0780J3ndVHZVwYUjKfwzkFaPPhUlLq1Al/tUsUBjfJdyw5LEYPlh1oS4xiovsdntbxD0YnvEax0YT8cqBbRcXLY7JCify345wuoP/siJfTnkODoxT//Nnyn6NLvZP3PH1o5xkiF+dYTKgBSTIsC1FeLjpAM+bHsjEspJBVBrXvACSqy+PE6NOD76koSedVVpHGEY43gcV3FO26Tiynqvz/xZBtzJvG5mSCtOXn5/eWBmpI8VRdvUN0HMEhGkXxVD3wgXK6Iv9ykB0wu3i7rscSwYdyYFkpRlnp46DeM5H9GJOAYcKbuc6FMlDIDS2+Wq8bw4bgIipK1d2svWsoAe/xspWQtleq6AkcVi9xrWRCu7VZUnY0B+aBiTD/zUOFkl4kFFDGbPu5thHNvGaFgOrEbbcKmgaZp/tQlr2a+CO4srUNLvD23ltb9HSz2chUyTQlLoFkVv6rEkPHOesK+wIfKPj2PEIt5v1y1DY8jbtAE+WU5qA789v/49M1GvxklqC4NZ6cE01J7Yp22a2iedrg+TTI+eQxRNoQjzmUH8ePEdJtKe2Scd7bQgJVBhzSvb52w+hCHDgIuRe4
-x-forefront-antispam-report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
- IPV:NLI; SFV:NSPM; H:IA1PR12MB9030.namprd12.prod.outlook.com; PTR:; CAT:NONE;
- SFS:(13230040)(1800799024)(376014)(7416014)(366016)(22082099003)(18002099003)(3023799007)(11063799006)(4143699003)(56012099006)(38070700021);
- DIR:OUT; SFP:1101; 
-x-ms-exchange-antispam-messagedata-chunkcount: 1
-x-ms-exchange-antispam-messagedata-0: =?us-ascii?Q?abmaNeqOM5gLjlRFWGA23n/klxdL2tm0K1GXDWtJFuFe5OdsGcG6gcU2q9RT?=
- =?us-ascii?Q?ixmucTGo+agJn6qhWzk50x3A7DfmwASKhv/CvRdeCYFefmp8xdD3lwCEJG35?=
- =?us-ascii?Q?9pzbNnqdEhkkVhNM4BeUwb69l7O8zCjXyGSvjcXSP886u8DdNFYWplLVpKaQ?=
- =?us-ascii?Q?QesclMgDRSXg3J1Ck4j1kd3Wmrtnw1WhvJgDIDnP7Ylj5a7hrunL7BA6/8AB?=
- =?us-ascii?Q?YFBeQM0F/PLuYt/Q/GkdTiL573mtymu3lT4d/FPpHyLVVIOy7jDccMT03cAh?=
- =?us-ascii?Q?q7/rQGCeV+u5ghhzT3753Qb8kWy9gLDwOg0lSZcczHcl/A3L6BOi0wIcPRh/?=
- =?us-ascii?Q?yfslR6/6d+og91jsAeqUmdtChnXm7yaBM1DqgMqzXMuJkHj906gGc0Y9wage?=
- =?us-ascii?Q?F+BqnDlNy1CBuDd7TPLiev1ZBI++ZL2Tdg1dIiwfFXQwIWOJ/1s2ZlxRm+G4?=
- =?us-ascii?Q?I196r/SttH4Ojf5+KanB7T+1Gs1DgeEWK8n3BxocKxpvqiIoFQ7lLqP7P3G3?=
- =?us-ascii?Q?UKo8okQgX55TrPR7sFhMTukcoj/3R13+y9e7+rb2J2ME76KHMaKlrbPd2luB?=
- =?us-ascii?Q?hbGOHDf7Eai3v1RIUIEqBOWeO402DYitOHAaHqMKz/vbBMORaSXMEg1t5OQ+?=
- =?us-ascii?Q?ZamL5yIpU5mw+HojiUYF2mHOM/F7QkK8roEIzEaneNc0ZyXQrfqIOKwi+1Wv?=
- =?us-ascii?Q?sBTNLWGBC7wEPFOPqym3EABxUBrUhQpuFs6qXzd9EnT+6K7mD1V9LEtrnqAb?=
- =?us-ascii?Q?shArYvHgU/S433YlfMlRnYm57+hcHVSRTNyerMd78O5TRORf5i7+yxkvPCI+?=
- =?us-ascii?Q?MW36HXeg2oxr1PaOpAwowy62kPNE7Rh996w8C3JFdKWcNOMf5q1CB9HnR5nC?=
- =?us-ascii?Q?ie3mmGmjLlJmiJwqRv8PSjEy2suIfzkLabu6wtuMkwr/VpGByhqoJKyrWTvg?=
- =?us-ascii?Q?0IeRWDaIsz15Qne1/rSOu7PTuN3XGD1c2PkvBGmsDDiXR4tZx21lQ/o6VD8+?=
- =?us-ascii?Q?xJGEoJA6KWiB3BqBDopkr8FBq/s5luLbJqSEEFl4UsnAvfevOBTaA4N0AAT6?=
- =?us-ascii?Q?5zHwEKX+GJnmyc3X2RB19CvF/JwZXL1CEqXz859jFA2U94BE9fuvVGmwvK3F?=
- =?us-ascii?Q?FKUtmsvRX6ime6RPpqTzswdOiLFW7Pi8zHvjj96FGoSRu3VNwIPUQsZM5KwS?=
- =?us-ascii?Q?cWAIp0/JelGlYNDyHTGitFBaJi/95YceJFUpi+9BOtQQwZ5YNQfTdAYt7bY+?=
- =?us-ascii?Q?C1ihwznIkHLDyz149bIaO7pUFiOFvDsXsxH8a3NWu11SEF5iwkhpWUqHScDU?=
- =?us-ascii?Q?AQkO4WLD8KY2XqgQv6Jd23iY04oi4tUNwyjUUPyDM0BmEqJyyhiZF8U9xMh0?=
- =?us-ascii?Q?5CNsDH5GoxVpe8rDSpTiBD5FDJkwyq04gg0aeAmxszLXeWOjhkz4fTHGF1Mt?=
- =?us-ascii?Q?fuKdgtjKrqrmxvlFVNX0F+lN5hB0pkTOo6LDlFxe+KtDPghvMavHD5GKwTP/?=
- =?us-ascii?Q?ZcwraxUzyPNIAzSf23Ozjdhi3K+cqvs4CSFN2AZXwcyVlk5RVzGGGqmMl7/Q?=
- =?us-ascii?Q?6/qn9RK7aEFawcx3HVHyWm8J43BIumUFqSUQAaYlLcgVEU9fkAV/pEcB7uQt?=
- =?us-ascii?Q?RMT2hnQWqdXdF+14ig7lzpUBw1YdAGeW9RK9KY0FugAC2q2T4zlcRYE9gF4r?=
- =?us-ascii?Q?eS6uIQNHJAtNdUPYEkgcTxdzEPWO9ze+HqtdqAcAQr7JGonK?=
-Content-Type: text/plain; charset="us-ascii"
-Content-Transfer-Encoding: quoted-printable
+ (Exim 4.90_1) (envelope-from <anushree.mathur@linux.ibm.com>)
+ id 1wTxUn-0001Zj-AA; Mon, 01 Jun 2026 03:55:38 -0400
+Received: from pps.filterd (m0356516.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
+ 6516loQJ2548014; Mon, 1 Jun 2026 07:55:05 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
+ :content-transfer-encoding:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to; s=pp1; bh=tIihLj
+ K/P9jxa16OO6bZuxhmsUAoFPmQnYeT0+yGMCI=; b=KXcraysT2BoEalv1QZmtbN
+ QL0I6nVgQLZF4DMC2gqZqUmDbtSH6Hine9dR84tT88i5Pb4JC+ysQsCZlSyKiyHi
+ 99mbV8lkfLVDaTHQhRwrLTRBdEMxQe4VneUXQXd0teNRmtGLF8uxKwk3fVIvRGL5
+ 5wDnCs2zq7MbXlQCXxFzErJ7sMAbp4c+YS3bljVPOxPUTJxChXvJAxNbq2qV5vvj
+ AWep4PXQFnE0Jz32fmrL9nwLxxUm+L/+m5eh3dQyf2BVuED/TRxYCIDQlcGmOxIF
+ R+fK2B1T71piKsncpbnZ1vmGBMh5Cbl0lW40seO/VqB/LiM5+HT5XPT3xFcKfBsQ
+ ==
+Received: from ppma13.dal12v.mail.ibm.com
+ (dd.9e.1632.ip4.static.sl-reverse.com [50.22.158.221])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4efnahfhj2-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Mon, 01 Jun 2026 07:55:05 +0000 (GMT)
+Received: from pps.filterd (ppma13.dal12v.mail.ibm.com [127.0.0.1])
+ by ppma13.dal12v.mail.ibm.com (8.18.1.7/8.18.1.7) with ESMTP id 6517sF0e015540;
+ Mon, 1 Jun 2026 07:55:04 GMT
+Received: from smtprelay01.wdc07v.mail.ibm.com ([172.16.1.68])
+ by ppma13.dal12v.mail.ibm.com (PPS) with ESMTPS id 4egcegcuk5-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Mon, 01 Jun 2026 07:55:04 +0000 (GMT)
+Received: from smtpav05.wdc07v.mail.ibm.com (smtpav05.wdc07v.mail.ibm.com
+ [10.39.53.232])
+ by smtprelay01.wdc07v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 6517t2i61573868
+ (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Mon, 1 Jun 2026 07:55:02 GMT
+Received: from smtpav05.wdc07v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 7191958053;
+ Mon,  1 Jun 2026 07:55:02 +0000 (GMT)
+Received: from smtpav05.wdc07v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 770C158043;
+ Mon,  1 Jun 2026 07:54:52 +0000 (GMT)
+Received: from [9.61.253.9] (unknown [9.61.253.9])
+ by smtpav05.wdc07v.mail.ibm.com (Postfix) with ESMTP;
+ Mon,  1 Jun 2026 07:54:52 +0000 (GMT)
+Message-ID: <199da924-0621-4ffa-a9a0-126cfcccca4e@linux.ibm.com>
+Date: Mon, 1 Jun 2026 13:24:50 +0530
 MIME-Version: 1.0
-X-OriginatorOrg: Nvidia.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-AuthSource: IA1PR12MB9030.namprd12.prod.outlook.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 739a885f-3ec2-49c8-ba90-08debfabae1f
-X-MS-Exchange-CrossTenant-originalarrivaltime: 01 Jun 2026 07:02:01.4317 (UTC)
-X-MS-Exchange-CrossTenant-fromentityheader: Hosted
-X-MS-Exchange-CrossTenant-id: 43083d15-7273-40c1-b7db-39efd9ccc17a
-X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
-X-MS-Exchange-CrossTenant-userprincipalname: P0xIeBXZeu76c0hwrXrh/nzpatuaM1te0GtDs7bLxGD2pmVgj2zSguU2b7pvTNVdLzoXxS66XR6p4iu8jWuLig==
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: PH7PR12MB7892
-Received-SPF: permerror client-ip=2a01:111:f403:c112::5;
- envelope-from=mhonap@nvidia.com;
- helo=CY7PR03CU001.outbound.protection.outlook.com
-X-Spam_score_int: -14
-X-Spam_score: -1.5
-X-Spam_bar: -
-X-Spam_report: (-1.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.445,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- FORGED_SPF_HELO=1, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_PASS=-0.001,
- SPF_NONE=0.001 autolearn=no autolearn_force=no
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 00/17] accel: Remove need for AccelCPUClass
+To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ qemu-devel@nongnu.org
+Cc: Reinoud Zandijk <reinoud@netbsd.org>,
+ Pedro Barbuda <pbarbuda@microsoft.com>,
+ Nicholas Piggin <npiggin@gmail.com>,
+ Glenn Miles <milesg@linux.ibm.com>, Alexander Graf <agraf@csgraf.de>,
+ Peter Maydell <peter.maydell@linaro.org>,
+ Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
+ Marcelo Tosatti <mtosatti@redhat.com>, qemu-arm@nongnu.org,
+ Richard Henderson <richard.henderson@linaro.org>,
+ Roman Bolshakov <rbolshakov@ddn.com>, Anton Johansson <anjo@rev.ng>,
+ Paolo Bonzini <pbonzini@redhat.com>,
+ =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@mailo.com>,
+ Palmer Dabbelt <palmer@dabbelt.com>, Song Gao <gaosong@loongson.cn>,
+ qemu-riscv@nongnu.org, Liu Zhiwei <zhiwei_liu@linux.alibaba.com>,
+ Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>,
+ Harsh Prateek Bora <harshpb@linux.ibm.com>,
+ Phil Dennis-Jordan <phil@philjordan.eu>,
+ Alistair Francis <alistair.francis@wdc.com>, qemu-ppc@nongnu.org,
+ Weiwei Li <liwei1518@gmail.com>, Chao Liu <chao.liu.zevorn@gmail.com>,
+ kvm@vger.kernel.org, Claudio Fontana <cfontana@suse.de>,
+ Chinmay Rath <rathc@linux.ibm.com>,
+ Mohamed Mediouni <mohamed@unpredictable.fr>
+References: <20260529142434.87880-1-philmd@linaro.org>
+Content-Language: en-US
+From: Anushree Mathur <anushree.mathur@linux.ibm.com>
+In-Reply-To: <20260529142434.87880-1-philmd@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+X-TM-AS-GCONF: 00
+X-Proofpoint-Reinject: loops=2 maxloops=12
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNjAxMDA3NSBTYWx0ZWRfX+D55tEl1xiiA
+ TFEcOFVpZa3buuD+BIpFsaArV0ycU5s+GpDasVB0e+EFDlpA63s/J+YoAKh4gDHJRtie0a0mUHO
+ 3nFuRY+snpjASa3G+FNt1XwEpCIPdPF0ZOFoPJtVfOPSG3Q3zCsC4zw/ALA4Xl9w0sM7hfS9XrU
+ WnMWci/pAeVmBuMlB/CTVWMiqRzpyKkIcYl8R9ccdwycZffmSonFbaKL7g6WW9ja5wGLlaaBqXy
+ p7H82LmzJrMcI7WIHtFZQfwL7C/pxUUV2drekUBN4IbQ72f28elQfTWj65Nnje0Jceod5S/GXwJ
+ PB4JmtrSiVGkiAO2SM9aQNzuDfDyhlnRxGDj1hvWJygsM+Oyet9NiFflKGWu94/LwMYsBY2clWL
+ BNH2aOronGeQTMf9Q82yCTNj8exSY5lkilyqO7v0VDYpPP1jonMQ4fNg9g2RlZUJzZhHwSGbbj8
+ a7lK7OoXNoqPmCEalrw==
+X-Proofpoint-ORIG-GUID: stbE1dKQO2CIs2klcuivsEzaTA0EBb87
+X-Authority-Analysis: v=2.4 cv=cOzQdFeN c=1 sm=1 tr=0 ts=6a1d3ad9 cx=c_pps
+ a=AfN7/Ok6k8XGzOShvHwTGQ==:117 a=AfN7/Ok6k8XGzOShvHwTGQ==:17
+ a=IkcTkHD0fZMA:10 a=FelO9ux0wxsA:10 a=VkNPw1HP01LnGYTKEx00:22
+ a=RnoormkPH1_aCDwRdu11:22 a=Y2IxJ9c9Rs8Kov3niI8_:22 a=M1uAcgqxGuUR1RF059AA:9
+ a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
+X-Proofpoint-GUID: yqXAUGPoAcBrwED1JsmjUFs4wkBDWkZD
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.125,FMLib:17.12.100.49
+ definitions=2026-06-01_02,2026-05-28_03,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ clxscore=1011 impostorscore=0 lowpriorityscore=0 spamscore=0 bulkscore=0
+ malwarescore=0 phishscore=0 suspectscore=0 priorityscore=1501 adultscore=0
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.22.0-2605210000 definitions=main-2606010075
+Received-SPF: pass client-ip=148.163.158.5;
+ envelope-from=anushree.mathur@linux.ibm.com; helo=mx0b-001b2d01.pphosted.com
+X-Spam_score_int: -26
+X-Spam_score: -2.7
+X-Spam_bar: --
+X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
+ RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -164,161 +143,137 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 
 
-> -----Original Message-----
-> From: Jonathan Cameron <jic23@kernel.org>
-> Sent: 19 May 2026 18:34
-> To: Manish Honap <mhonap@nvidia.com>
-> Cc: Alex Williamson <alwilliamson@nvidia.com>; Shameer Kolothum Thodi
-> <skolothumtho@nvidia.com>; Ankit Agrawal <ankita@nvidia.com>;
-> mst@redhat.com; imammedo@redhat.com; anisinha@redhat.com;
-> eric.auger@redhat.com; peter.maydell@linaro.org; shannon.zhaosl@gmail.com=
-;
-> jonathan.cameron@huawei.com; fan.ni@samsung.com; pbonzini@redhat.com;
-> richard.henderson@linaro.org; marcel.apfelbaum@gmail.com; clg@redhat.com;
-> cohuck@redhat.com; dan.j.williams@intel.com; dave.jiang@intel.com;
-> alejandro.lucero-palau@amd.com; Vikram Sethi <vsethi@nvidia.com>; Neo Jia
-> <cjia@nvidia.com>; Tarun Gupta (SW-GPU) <targupta@nvidia.com>; Zhi Wang
-> <zhiw@nvidia.com>; Krishnakant Jaju <kjaju@nvidia.com>; linux-
-> cxl@vger.kernel.org; kvm@vger.kernel.org; qemu-devel@nongnu.org; qemu-
-> arm@nongnu.org
-> Subject: Re: [RFC 7/9] hw/vfio+cxl: Program HDM decoder 0 at machine_done
-> for firmware-committed devices
->=20
-> External email: Use caution opening links or attachments
->=20
->=20
-> On Mon, 27 Apr 2026 23:42:33 +0530
-> <mhonap@nvidia.com> wrote:
->=20
-> > From: Manish Honap <mhonap@nvidia.com>
-> >
-> > setup_locked_hdm() runs as a machine_done notifier after all devices
-> > have been realized. It programs HDM decoder 0 with the CFMWS base
->=20
-> Be more specific on this.  Which HDM Decoder?  i.e. what device is it in.
-> Ultimately there may be several in the path.  Are you supporting that?
-> The reference to FLR() later would only apply to an endpoint (can't FLR a
-> host bridge) + the code is clearly operating on the shadow registers for
-> the EP.
->=20
-> I guess maybe you are relying on pass through host bridge decoders?
-> If you are - you need to go check those - or better yet program and lock
-> them as well.
+On 29/05/26 7:54 PM, Philippe Mathieu-Daudé wrote:
+> Move cpu_init/realize hooks from AccelCPUClass to
+> AccelOpsClass. Specialize them for TCG in TCGCPUOps.
+>
+> This drastically simplifies the need of per-binary QOM
+> types per accelerator per target (see also the nice
+> diff-stat).
+>
+> Based-on: tag single-binary-20260528
+>
+> Ignoring checkpatch.pl:
+>
+>    WARNING: added, moved or deleted file(s), does MAINTAINERS need updating?
+>      accel/accel-target.c
+>      include/accel/accel-cpu-target.h
+>      include/accel/accel-cpu.h
+>
+> Philippe Mathieu-Daudé (17):
+>    target/loongarch: Remove unused 'accel/accel-cpu-target.h' header
+>    accel: Remove AccelCPUClass::cpu_class_init()
+>    accel: Rename AccelOpsClass::cpu_target_realize() -> cpu_realize()
+>    accel/hvf: Remove need for AccelCPUClass::cpu_target_realize
+>    accel/kvm: Remove need for AccelCPUClass::cpu_target_realize
+>    accel: Introduce AccelOpsClass::cpu_instance_init handler
+>    accel/whpx: Convert AccelCPUClass -> AccelOpsClass::cpu_instance_init
+>    accel/nvmm: Convert AccelCPUClass -> AccelOpsClass::cpu_instance_init
+>    accel/hvf: Convert AccelCPUClass -> AccelOpsClass::cpu_instance_init
+>    accel/kvm: Convert AccelCPUClass -> AccelOpsClass::cpu_instance_init
+>    accel/tcg: Convert AccelCPUClass -> new TCGCPUOps::cpu_instance_init
+>    accel: Remove AccelCPUClass::cpu_instance_init()
+>    accel/tcg: Convert AccelCPUClass -> new TCGCPUOps::cpu_realize
+>    accel/tcg: Convert X86 AccelCPUClass -> TCGCPUOps::cpu_realize
+>    accel/tcg: Convert RISCV AccelCPUClass -> TCGCPUOps::cpu_realize
+>    accel: Remove AccelCPUClass::cpu_target_realize()
+>    accel: Remove AccelCPUClass and 'accel/accel-cpu-target.h'
+>
+>   accel/tcg/tcg-accel-ops.h         |  1 +
+>   include/accel/accel-cpu-ops.h     |  3 +-
+>   include/accel/accel-cpu-target.h  | 31 --------------
+>   include/accel/accel-cpu.h         | 23 -----------
+>   include/accel/tcg/cpu-ops.h       |  2 +
+>   include/system/hvf_int.h          |  1 +
+>   include/system/kvm.h              |  3 ++
+>   target/i386/nvmm/nvmm-accel-ops.h |  2 +
+>   accel/accel-common.c              | 68 ++++---------------------------
+>   accel/hvf/hvf-accel-ops.c         |  3 +-
+>   accel/kvm/kvm-accel-ops.c         |  2 +
+>   accel/tcg/cpu-exec.c              | 15 ++++++-
+>   accel/tcg/tcg-accel-ops.c         |  1 +
+>   accel/whpx/whpx-accel-ops.c       |  2 +
+>   accel/whpx/whpx-common.c          | 17 --------
+>   target/arm/hvf/hvf.c              |  4 ++
+>   target/arm/whpx/whpx-all.c        |  1 -
+>   target/i386/hvf/hvf-cpu.c         | 25 ++----------
+>   target/i386/hvf/hvf.c             |  5 ---
+>   target/i386/kvm/kvm-cpu.c         | 25 +-----------
+>   target/i386/nvmm/nvmm-accel-ops.c |  2 +
+>   target/i386/nvmm/nvmm-all.c       | 19 +--------
+>   target/i386/tcg/tcg-cpu.c         | 28 ++-----------
+>   target/i386/whpx/whpx-all.c       |  1 -
+>   target/loongarch/tcg/tcg_cpu.c    |  1 -
+>   target/ppc/kvm.c                  | 23 +----------
+>   target/riscv/kvm/kvm-cpu.c        | 33 +--------------
+>   target/riscv/tcg/tcg-cpu.c        | 28 +++----------
+>   28 files changed, 64 insertions(+), 305 deletions(-)
+>   delete mode 100644 include/accel/accel-cpu-target.h
+>   delete mode 100644 include/accel/accel-cpu.h
+>
 
-Yes, for current RFC I had restricted the scope to endpoint decoders with t=
-he
-setup having default value for hdm_for_passthrough. You are correct, this
-assumption was not enforced in the code.
+Hi Philippe,
+I am seeing a compilation issue when I am building the qemu after 
+applying this series of patch. I have tested this for arch PPC.
 
-For next V2, I will add realize-time checks in vfio_cxl_setup() that refuse=
- to
-start unless:
-    - cxl_get_hb_passthrough(hb) is true
-    - pcie_count_ds_ports(hb->bus) =3D=3D 1
-    - no switch is present between the cxl-rp and the vfio-pci
+After applying the patch when I ran make command it failed with the 
+below error:
 
->=20
-> > address so the guest can fault into device memory from the first
-> > instruction.
-> >
-> > The notifier is only registered when the kernel reports the device as
-> > firmware-committed (VFIO_CXL_CAP_FIRMWARE_COMMITTED). The host is
-> > responsible for HDM decoder programming; the guest has no mechanism to
-> > remap host physical address mappings.
->=20
-> Maybe say why this matters.  Presumably because only thing we can program
-> from the guest is GPA to HPA mappings so linear ranges remain linear etc
-> (more or less anyway given constraints on how many regions we can plug
-> into qemu!)
+[2418/2928] Compiling C object 
+libqemu-ppc64-softmmu.a.p/hw_intc_xics_pnv.c.o
+[2419/2928] Compiling C object 
+libqemu-ppc64-softmmu.a.p/hw_ppc_spapr_drc.c.o
+[2420/2928] Compiling C object 
+libqemu-ppc64-softmmu.a.p/libdecnumber_dpd_decimal32.c.o
+[2421/2928] Compiling C object 
+libqemu-ppc64-softmmu.a.p/target_ppc_mmu_helper.c.o
+[2422/2928] Compiling C object 
+libqemu-ppc64-softmmu.a.p/accel_kvm_kvm-accel-ops.c.o
+FAILED: [code=1] libqemu-ppc64-softmmu.a.p/accel_kvm_kvm-accel-ops.c.o
+cc -m64 -mlittle-endian -Ilibqemu-ppc64-softmmu.a.p -I. -I.. 
+-Itarget/ppc -I../target/ppc -Isubprojects/dtc/libfdt 
+-I../subprojects/dtc/libfdt -Isubprojects/libvduse 
+-I../subprojects/libvduse -Iqapi -Itrace -Iui -Iui/shader 
+-I/usr/include/glib-2.0 -I/usr/lib64/glib-2.0/include 
+-I/usr/include/libmount -I/usr/include/blkid -I/usr/include/gio-unix-2.0 
+-fdiagnostics-color=auto -Wall -Winvalid-pch -Werror -std=gnu11 -O2 -g 
+-D_GNU_SOURCE -D_FILE_OFFSET_BITS=64 -D_LARGEFILE_SOURCE 
+-fno-strict-aliasing -fno-common -fwrapv -ftrivial-auto-var-init=zero 
+-fzero-init-padding-bits=all -fzero-call-used-regs=used-gpr 
+-fstack-protector-strong -Wempty-body -Wendif-labels 
+-Wexpansion-to-defined -Wformat-overflow=2 -Wformat-security 
+-Wformat-y2k -Wignored-qualifiers -Wimplicit-fallthrough=2 -Winit-self 
+-Wmissing-format-attribute -Wmissing-prototypes -Wnested-externs 
+-Wold-style-declaration -Wold-style-definition -Wredundant-decls 
+-Wshadow=local -Wstrict-prototypes -Wtype-limits -Wundef -Wvla 
+-Wwrite-strings -Wno-missing-include-dirs -Wno-psabi 
+-Wno-shift-negative-value -isystem /home/Anu/qemu/linux-headers -isystem 
+linux-headers -iquote . -iquote /home/Anu/qemu -iquote 
+/home/Anu/qemu/include -iquote /home/Anu/qemu/host/include/ppc64 -iquote 
+/home/Anu/qemu/host/include/generic -iquote /home/Anu/qemu/tcg/ppc64 
+-pthread -fPIE -isystem../linux-headers -isystemlinux-headers 
+-DCOMPILING_PER_TARGET '-DCONFIG_TARGET="ppc64-softmmu-config-target.h"' 
+'-DCONFIG_DEVICES="ppc64-softmmu-config-devices.h"' -MD -MQ 
+libqemu-ppc64-softmmu.a.p/accel_kvm_kvm-accel-ops.c.o -MF 
+libqemu-ppc64-softmmu.a.p/accel_kvm_kvm-accel-ops.c.o.d -o 
+libqemu-ppc64-softmmu.a.p/accel_kvm_kvm-accel-ops.c.o -c 
+../accel/kvm/kvm-accel-ops.c
+../accel/kvm/kvm-accel-ops.c: In function ‘kvm_accel_ops_class_init’:
+../accel/kvm/kvm-accel-ops.c:101:8: error: ‘AccelOpsClass’ has no member 
+named ‘cpu_target_realize’
+   101 |     ops->cpu_target_realize = kvm_arch_cpu_realize;
+       |        ^~
+[2423/2928] Compiling C object 
+libqemu-ppc64-softmmu.a.p/hw_ppc_spapr_nested.c.o
+[2424/2928] Compiling C object 
+libqemu-ppc64-softmmu.a.p/hw_remote_memory.c.o
+[2425/2928] Compiling C object 
+libqemu-ppc64-softmmu.a.p/libdecnumber_decContext.c.o
+[2426/2928] Compiling C object 
+qga/qemu-ga.p/meson-generated_.._qga-qapi-emit-events.c.o
+[2427/2928] Compiling C object libqemu-ppc64-softmmu.a.p/hw_intc_ppc-uic.c.o
 
-okay, I will add the details for this in v2.
 
->=20
-> >
-> > The function uses cxl->fmws_base (set by the optional cxl-fmws-base
-> > device property) if non-zero; otherwise it falls back to the
->=20
-> Why is that property needed?  If it is add it in a separate patch where
-> you can explain the need to force it. Smells like a hack so far.
-
-Yes, I will update in v2 so that this part is handled by the value provided
-by CFMWS setting.
-
->=20
-> > cxl_fmws_base global captured by cxl_fmws_set_memmap() during machine
-> > memory-map init. If neither is set, it warns and returns without
-> > programming anything.
->=20
-> Which CFMWS is that base in?  How is that controlled?  We may well have
-> some type 3 devices in same VM and probably want those in different CFMWs
-> (we'll need to actually upstream the patch to control constraints so the
-> kernel won't try using your CFMWS for those - currently all CFMWS are
-> entirely flexible).
->=20
->=20
-> >
-> > If COMMIT_LOCK is set in decoder 0 CTRL at machine_done time
-> > (left-over from a prior FLR?), it is cleared before writing BASE so
-> > the subsequent write is not blocked. COMMIT_LOCK is re-set after
-> > programming so the hardware enforces the committed base.
->=20
-> Hmm. We should look into whether there is a correct way to reset that.
-> Though as above from the description I'm not sure which decoder this is
-> resetting.
-
-Yes, I will rectify this in V2. This is referring to endpoint decoder.
-
->=20
-> >
-> > read_region() return is checked; failure aborts programming rather
-> > than leaving ctrl uninitialized. All write_region() failures are
-> propagated.
-> > The function exits cleanly rather than leaving the decoder half-
-> programmed.
-> >
-> > Add cxl_fmws_base as a hwaddr global in cxl-host.c (and a stub in
-> > cxl-host-stubs.c). It is set once by cxl_fmws_set_memmap() and read
-> > later at machine_done time.
-> >
-> > Signed-off-by: Zhi Wang <zhiw@nvidia.com>
-> > Signed-off-by: Manish Honap <mhonap@nvidia.com>
->=20
->=20
-> > @@ -3486,6 +3646,18 @@ static bool vfio_cxl_setup(VFIOPCIDevice *vdev,
-> Error **errp)
-> >      trace_vfio_cxl_setup_params(vbasedev->name, cxl-
-> >hdm_regs_bar_index,
-> >                                   cxl->hdm_regs_offset, cxl-
-> >hdm_regs_size,
-> >                                   cxl->dpa_size);
-> > +
-> > +    /*
-> > +     * Only pre-program the HDM decoder if the kernel reported the
-> device as
-> > +     * firmware-committed.  Non-committed devices need guest driver
-> > + involvement
->=20
-> For wording these can we be very clear which kernel.  Though I'm also
-> unsure what FIRMWARE_COMMITTED means here.  Does it actually mean host
-> firmware, or does it mean something running on the host pre guest boot
-> (e.g. could it be qemu?)
-
-yes, this is referring to HOST_FIRMWARE. Sorry for the bad wording.
-I will update this flag name in the kernel-v3 and qemu-v2
-
->=20
-> > +     * to commit the decoder; registering the notifier for them would
-> write an
-> > +     * uncommitted BASE value that the hardware ignores.
-> > +     */
-> > +    if (cap->flags & VFIO_CXL_CAP_FIRMWARE_COMMITTED) {
-> > +        cxl->machine_done.notify =3D setup_locked_hdm;
-> > +        qemu_add_machine_init_done_notifier(&cxl->machine_done);
-> > +    }
-> > +
-> >      return true;
-> >  }
-> >
->=20
-
+Thank you,
+Anushree Mathur
 
