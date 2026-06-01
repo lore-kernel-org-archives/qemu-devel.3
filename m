@@ -4,46 +4,47 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2A114CD5BD1
-	for <qemu-devel@archiver.kernel.org>; Mon,  1 Jun 2026 02:13:05 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A0EC3CD5BD1
+	for <qemu-devel@archiver.kernel.org>; Mon,  1 Jun 2026 02:33:05 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wTs8k-0005FM-RI; Sun, 31 May 2026 22:12:30 -0400
+	id 1wTsRf-0007Hu-Oz; Sun, 31 May 2026 22:32:03 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <gaosong@loongson.cn>)
- id 1wTs8j-0005F9-5C; Sun, 31 May 2026 22:12:29 -0400
-Received: from mail.loongson.cn ([114.242.206.163])
- by eggs.gnu.org with esmtp (Exim 4.90_1)
- (envelope-from <gaosong@loongson.cn>)
- id 1wTs8g-0007eF-JV; Sun, 31 May 2026 22:12:28 -0400
-Received: from loongson.cn (unknown [10.2.5.185])
- by gateway (Coremail) with SMTP id _____8CxX+p_6hxqXi0PAA--.41833S3;
- Mon, 01 Jun 2026 10:12:15 +0800 (CST)
-Received: from localhost.localdomain (unknown [10.2.5.185])
- by front1 (Coremail) with SMTP id qMiowJBxpsB96hxqCrCXAA--.56475S2;
- Mon, 01 Jun 2026 10:12:13 +0800 (CST)
-From: Song Gao <gaosong@loongson.cn>
-To: qemu-devel@nongnu.org
-Cc: maobibo@loongson.cn, lixianglai@loongson.cn,
- Qiang Ma <maqianga@uniontech.com>, qemu-stable@nongnu.org,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: [PATCH] target/loongarch/kvm: Include missing exec/target_long.h
- header
-Date: Mon,  1 Jun 2026 09:46:01 +0800
-Message-Id: <20260601014601.4047201-1-gaosong@loongson.cn>
-X-Mailer: git-send-email 2.39.1
+ (Exim 4.90_1) (envelope-from <steven_lee@aspeedtech.com>)
+ id 1wTsRd-0007HW-BX; Sun, 31 May 2026 22:32:01 -0400
+Received: from mail.aspeedtech.com ([211.20.114.72]
+ helo=twmbx01.aspeedtech.com)
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <steven_lee@aspeedtech.com>)
+ id 1wTsRa-0004V7-Lg; Sun, 31 May 2026 22:32:01 -0400
+Received: from TWMBX01.aspeed.com (192.168.0.62) by TWMBX01.aspeed.com
+ (192.168.0.62) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1748.10; Mon, 1 Jun
+ 2026 10:31:49 +0800
+Received: from mail.aspeedtech.com (192.168.10.10) by TWMBX01.aspeed.com
+ (192.168.0.62) with Microsoft SMTP Server id 15.2.1748.10 via Frontend
+ Transport; Mon, 1 Jun 2026 10:31:49 +0800
+To: =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@kaod.org>, Peter Maydell
+ <peter.maydell@linaro.org>, Troy Lee <leetroy@gmail.com>, Jamin Lin
+ <jamin_lin@aspeedtech.com>, Kane Chen <kane_chen@aspeedtech.com>, "Andrew
+ Jeffery" <andrew@codeconstruct.com.au>, Joel Stanley <joel@jms.id.au>,
+ Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>, Fabiano Rosas
+ <farosas@suse.de>, Laurent Vivier <lvivier@redhat.com>, Paolo Bonzini
+ <pbonzini@redhat.com>, "open list:All patches CC here"
+ <qemu-devel@nongnu.org>, "open list:ASPEED BMCs" <qemu-arm@nongnu.org>
+CC: <troy_lee@aspeedtech.com>, <longzl2@lenovo.com>,
+ <yunlin.tang@aspeedtech.com>, <steven_lee@aspeedtech.com>
+Subject: [PATCH 0/6] aspeed: Add AST1040 Caliptra mailbox support
+Date: Mon, 1 Jun 2026 10:31:41 +0800
+Message-ID: <20260601023149.2309299-1-steven_lee@aspeedtech.com>
+X-Mailer: git-send-email 2.43.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-X-CM-TRANSID: qMiowJBxpsB96hxqCrCXAA--.56475S2
-X-CM-SenderInfo: 5jdr20tqj6z05rqj20fqof0/
-X-Coremail-Antispam: 1Uk129KBjDUn29KB7ZKAUJUUUUU529EdanIXcx71UUUUU7KY7
- ZEXasCq-sGcSsGvfJ3UbIjqfuFe4nvWSU5nxnvy29KBjDU0xBIdaVrnUUvcSsGvfC2Kfnx
- nUUI43ZEXa7xR_UUUUUUUUU==
-Received-SPF: pass client-ip=114.242.206.163; envelope-from=gaosong@loongson.cn;
- helo=mail.loongson.cn
+Content-Type: text/plain
+Received-SPF: pass client-ip=211.20.114.72;
+ envelope-from=steven_lee@aspeedtech.com; helo=twmbx01.aspeedtech.com
 X-Spam_score_int: -18
 X-Spam_score: -1.9
 X-Spam_bar: -
@@ -61,41 +62,82 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-to:  Steven Lee <steven_lee@aspeedtech.com>
+From:  Steven Lee via qemu development <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Qiang Ma <maqianga@uniontech.com>
+This series adds AST1040 Caliptra MCI mailbox support for the
+ast1040-evb machine.
 
-After commit 71cab1a42d2 removed the indirect include of
-exec/cpu-defs.h from target/loongarch/cpu.h, the TARGET_FMT_lx
-macro is no longer visible in kvm.c, causing build failures:
+AST1040 firmware accesses Caliptra through an MCI page aperture. This
+series adds an AST1040 SCU model with the CPTRA page-select registers, a
+mailbox frontend that exposes the Caliptra SRAM and CSR windows, and an
+optional external chardev peer so a Caliptra simulator can service
+EXECUTE requests.
 
-  error: expected ')' before TARGET_FMT_lx
+The SoC wiring maps the mailbox SRAM, CSR window and 4 KiB remap
+aperture. The EVB machine also gets a cptra-peer option for linking the
+external peer after the machine is initialized.
 
-Add the missing exec/target_long.h to fix it.
+The external peer backend is intended for co-simulation with an external
+Caliptra model. The current bring-up backend used for manual testing is
+caliptra-server:
 
-Cc: qemu-stable@nongnu.org
-Fixes: 71cab1a42d2 ("target/cpu: Do not include 'exec/cpu-defs.h' anymore")
-Signed-off-by: Qiang Ma <maqianga@uniontech.com>
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Reviewed-by: Song Gao <gaosong@loongson.cn>
----
- target/loongarch/kvm/kvm.c | 1 +
- 1 file changed, 1 insertion(+)
+  https://github.com/stevenlee7189/caliptra-server/blob/main-2.x/README.md
 
-diff --git a/target/loongarch/kvm/kvm.c b/target/loongarch/kvm/kvm.c
-index 9d844c4905..4af4ab2ed0 100644
---- a/target/loongarch/kvm/kvm.c
-+++ b/target/loongarch/kvm/kvm.c
-@@ -6,6 +6,7 @@
-  */
- 
- #include "qemu/osdep.h"
-+#include "exec/target_long.h"
- #include <sys/ioctl.h>
- #include <linux/kvm.h>
- #include "asm-loongarch/kvm_para.h"
+That README includes the server command line, the matching QEMU command
+line, and the guest-side MFWV smoke test sequence used to validate the
+MCI aperture, LOCK/CMD/DLEN/EXECUTE flow, and FirmwareVersion response.
+The qtest added by this series does not depend on that repository; it
+uses a socket-backed test peer to validate the QEMU-side protocol and
+mailbox flow.
+
+Patch layout:
+- patches 1-2 add the AST1040 SCU model and mailbox frontend
+- patch 3 adds the external chardev peer backend
+- patch 4 wires the mailbox into the AST1040 SoC and EVB machine
+- patches 5-6 add qtest coverage and documentation
+
+The qtest covers mailbox lock, execute and completion flow through a
+socket-backed peer, and verifies that SCU CPTRA_PAGE_REG0 remaps the MCI
+aperture between CSR and SRAM pages.
+
+Validation:
+- scripts/checkpatch.pl --branch origin/master..HEAD
+- qtest coverage for the AST1040 mailbox execute path with a
+  socket-backed external peer
+- manual co-simulation bring-up with caliptra-server through
+  cptra-mbox-peer-extern
+
+Steven Lee (6):
+  hw/misc/aspeed_scu: Add AST1040 SCU model
+  hw/misc: Add ASPEED Caliptra mailbox frontend
+  hw/misc: Add external Caliptra mailbox peer
+  hw/arm/aspeed_ast1040: Wire Caliptra mailbox
+  tests/qtest: Add ASPEED Caliptra mailbox test
+  docs/system/arm: Document AST1040 Caliptra mailbox
+
+ MAINTAINERS                          |   1 +
+ docs/system/arm/aspeed.rst           |  32 +++
+ include/hw/arm/aspeed_soc.h          |  11 +
+ include/hw/misc/aspeed_cptra_mbox.h  | 133 ++++++++++
+ include/hw/misc/aspeed_scu.h         |  10 +
+ hw/arm/aspeed_ast1040.c              |  60 ++++-
+ hw/arm/aspeed_ast1040_evb.c          |  74 +++++-
+ hw/misc/aspeed_cptra_mbox.c          | 380 +++++++++++++++++++++++++++
+ hw/misc/aspeed_scu.c                 | 251 ++++++++++++++++++
+ hw/misc/cptra_mbox_peer_extern.c     | 318 ++++++++++++++++++++++
+ tests/qtest/aspeed_cptra_mbox-test.c | 223 ++++++++++++++++
+ hw/misc/meson.build                  |   2 +
+ hw/misc/trace-events                 |   6 +
+ tests/qtest/meson.build              |   3 +-
+ 14 files changed, 1498 insertions(+), 6 deletions(-)
+ create mode 100644 include/hw/misc/aspeed_cptra_mbox.h
+ create mode 100644 hw/misc/aspeed_cptra_mbox.c
+ create mode 100644 hw/misc/cptra_mbox_peer_extern.c
+ create mode 100644 tests/qtest/aspeed_cptra_mbox-test.c
+
 -- 
-2.47.3
-
+2.43.0
 
