@@ -4,66 +4,67 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4B609CD5BD1
-	for <qemu-devel@archiver.kernel.org>; Mon,  1 Jun 2026 21:45:24 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D1C82CD6E55
+	for <qemu-devel@archiver.kernel.org>; Mon,  1 Jun 2026 21:45:27 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wUAQl-0002Xv-DP; Mon, 01 Jun 2026 17:44:19 -0400
+	id 1wUAQq-0002aI-08; Mon, 01 Jun 2026 17:44:24 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <faithilikerun@gmail.com>)
- id 1wUAQj-0002XR-Te
- for qemu-devel@nongnu.org; Mon, 01 Jun 2026 17:44:17 -0400
-Received: from mail-wm1-x331.google.com ([2a00:1450:4864:20::331])
+ id 1wUAQo-0002Zg-RF
+ for qemu-devel@nongnu.org; Mon, 01 Jun 2026 17:44:22 -0400
+Received: from mail-wr1-x431.google.com ([2a00:1450:4864:20::431])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <faithilikerun@gmail.com>)
- id 1wUAQg-0001nL-1h
- for qemu-devel@nongnu.org; Mon, 01 Jun 2026 17:44:17 -0400
-Received: by mail-wm1-x331.google.com with SMTP id
- 5b1f17b1804b1-490afc47455so3393235e9.2
- for <qemu-devel@nongnu.org>; Mon, 01 Jun 2026 14:44:13 -0700 (PDT)
+ id 1wUAQj-0001o3-Rc
+ for qemu-devel@nongnu.org; Mon, 01 Jun 2026 17:44:22 -0400
+Received: by mail-wr1-x431.google.com with SMTP id
+ ffacd0b85a97d-45ef616daf6so3174651f8f.3
+ for <qemu-devel@nongnu.org>; Mon, 01 Jun 2026 14:44:17 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1780350252; x=1780955052; darn=nongnu.org;
+ d=gmail.com; s=20251104; t=1780350256; x=1780955056; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=ymJmL3qOXHCG8FJ2uymW2DL+4wNLBmWp3wS7VNxGjTg=;
- b=b+Cotit+JprXTzOMF+ijfxWGB5cYVNGnwgNjuBeh+RhKNUS0RE7aMYF/HmQNo/ciLb
- cZSEtV1dChuzpu7ZppL2zehSk+YQCykTFvu6wAG4M+qMXjvPuXv5vg9AlNA7HfQuWF74
- MO0VHbSb3NfZ15WO0ussr9csjnbNk988siwZy1ADaz3RQjG4AznBiHjdcV/cxe+hiEpw
- 5SX2iyiMdZHiYR7lTCpIK/y/pZmkMh6WqSDXYeb9jTUMBxvJsNAJfCPQZu9lBJJ7YTcZ
- 25uI0OF+W87xIHum5NhvwDkCy2Y1MvO9RMQdrRA6qZh61RRA3F+VoJhb0zoasiRpcKcr
- SBWw==
+ bh=Wsrla9w7cxfqWHfPUnlL8cS6PRasDI8O0ntvbDIINV0=;
+ b=hqW20t8j9kkalYFBVgrlHq/KhoBAVxQCpTYfOKzNPEw4hUs8XDnRRjyAjB2fZ0Fq7p
+ xPB41lGt9GbzJhuIOXB/YHThfGMIrp6YBc/bHR/XEayuw4hnhVfcy28iwXbkoC3NsZXd
+ 7K4815NQTQGMsNR/qOeRdDsN4ReIaKKH5F2S/wlAMW1zVEIx4KVdxgfy2Ge7DHRlU1QN
+ UT8i31zE//Aa81+6SenfOnDaEW4hSAHGTJwadlvGf/dbISWdOJLu894bEPqygOqu2n2u
+ rRno4mK8RjPz5pIQqfeg3scaEG1pfU18LrVK8ULA8FNfjnvc5FtZc7DZ+O8xC6orS+X5
+ 3qCQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1780350252; x=1780955052;
+ d=1e100.net; s=20251104; t=1780350256; x=1780955056;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to;
- bh=ymJmL3qOXHCG8FJ2uymW2DL+4wNLBmWp3wS7VNxGjTg=;
- b=FzfFbD2hD2H2MuCw4qMXHJBpE3jranycqD+OQCH1O4l6+NpeT0idFEj8apGIk7JMQK
- QsLuWgyaFtUeZNrhVLkHVYUNiztpCC64LVseCKEhuE4Yo1h9T1Lykl/Ng+Mn8RaRo+Tw
- odgEFgAphMxpuW3FhhP0mHG3YpOx9eS2aejjSG2jMBX8Aw7/ITjG8TZYUH0/qN9GQKUI
- IKYGpk2a5lVbavZuMmuC5P9Aq2FGigPiC3nTCTnrFrPH8hy2pzvQlh0m4Fxa0Q66zora
- xOWqDglp6UMICTfiSGdhZVs1g/7MqLwa7HY4B/qo2WnyTNfrOAKDSnifnHBjmcSBEcv0
- gdBQ==
-X-Gm-Message-State: AOJu0YxY7jNL7l2SliBxzEIEQ5HqdvpvWldzjeInKqtLQITPCqeWcQt9
- mO9rAe9AosFLR5PGuFAjgP70whVaKgqCMVPUXO+hXo9r/uF0jogZb2luq2qxNFXtSsQ=
-X-Gm-Gg: Acq92OFwrZYbSAE841CnAuSdKqQpSjD1lSnR1ReZNzdsWr+/Hirj0/QaPNiCD2KzEBB
- 9mR7Yuxxo4d5bBC+VCo9bZXVv+jHKTTcyWBi0OXIEZTsXbv53bkjKG1lq2oZDMgprQc6pOXtKgp
- CYAAbB6ymPOEL7z+jZHgJbXj7SjpnC50z8rszhWklRkfXb/LuMEgigwqi86UFrrux8r9NoNfT25
- +LGpIe6MWPhToUJdKRGaKLhs9SSBeu0dLMTrzkf7jb/jiBoXvfpg3+Z7yslJv9X52+HczUOcqum
- p+mi78V1kL1OzeHwvUXfIBjCN7bp9SZ48W8t6YYYjmeo1WKIr2aqjRetrMCEyayBk7C2pq9GL/7
- e7rIO5IRX2UZwixmzE5zMuVGRl6ukUKyWd807XxDCflyGvb2ZLcIv7jVm0DsCgkiQ/4vy6k/myE
- TVBtJppwmmnYNzz2ZFvdIm8x119xg33aViGCj4VTzgEl2dXAlAlgY3u215R6hfQKg4Qw==
-X-Received: by 2002:a05:600c:6287:b0:490:a1a6:6f24 with SMTP id
- 5b1f17b1804b1-490a29338a8mr232999175e9.15.1780350252045; 
- Mon, 01 Jun 2026 14:44:12 -0700 (PDT)
+ bh=Wsrla9w7cxfqWHfPUnlL8cS6PRasDI8O0ntvbDIINV0=;
+ b=kOEoiwpLnv4CuBMdRIYEuakuYxdBl4j6jpOuPczLd7yc9HAxCquq6htxICvGJpi4JK
+ ZQ+bTOmFphljghLb5U1yoDoGREzltdEEr9oZM72u+HPMUPFni/I6OG2rF3kP/BnhtBeI
+ NradnNNgrpJX4h8jA94yo9MbNAAJ7ZGpnqAe6WfAC5HOfguzaDMIGOdFaEC5d/odD200
+ o4N0/FRqRkzPNofMKANTOqZf5zCN3IluOChGHlTCQBc9pPk2702nV8xWYFp+CGQzxMnp
+ Ut3DJlFAJycFSHjlbnehKQOnJIatO6RAwCUNZH/XH3b2i6pxbkfbR2fjhAWyPi87Ol4l
+ LDjQ==
+X-Gm-Message-State: AOJu0YxWaLVELZuIwPoj8EPp9+fcN1fkaDHJZndLm3bwlI0AN1aC/WaT
+ gX+xOSCm7er0mMzTFb6MAnkaslpfwwi4FYnx97HCyuOOY7lEOSkGfdTh/IXBagKON2g=
+X-Gm-Gg: Acq92OFhIue/YEjz8zzwTrHs4AGkOhiFMrHGIfUcypGNqO7V6jZ4VPIUP9qYkigZq2S
+ LruPwL76SAxXxwu8FqhDTb/a01ZDAOLiAqntZLZot6Q7a4yTPXR4fHJzx73hkMCPCXjMvrrpyya
+ 9GI7T95wlfSBB+8opFHgxxMrBnfgoR4G2A+mh6PacYWdIqpPz1lOI4mE2QTFkU7xBU8RpnF4rg2
+ arx2LzIFzkC7EQaHmBxFggQwn0HrbrByhZg7dO85+aOaHtCr9RyPO31tQSScARQ54N5DjkSUMZ4
+ m3aP/seDTrpxLpkYIIDm9Axn8vXSutjpMzMQ8lTweE9f5wXZ3aiYJwtNaCMNvn8h9UmY2Z29qZ0
+ obSCa/9YnDZ/y7jPLXPGks3OLPH0ZUjLWQuMmcFPl6C9Ygqazjd8gbpNz68G8/fRsRD3sgcSzgE
+ S89TslIqS8cxPYc6L2v97JRuL3pXKg2LFpgs/Ybknjagnxfnw/wcTZtsff2+OD1DGpPteeBS52u
+ tKg
+X-Received: by 2002:a5d:55c2:0:b0:45e:e509:d2fa with SMTP id
+ ffacd0b85a97d-45ef6aec7a8mr18258142f8f.3.1780350256003; 
+ Mon, 01 Jun 2026 14:44:16 -0700 (PDT)
 Received: from dobby ([2a02:8109:a394:4800:595:8cac:dffc:932f])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-45ef356b129sm35423496f8f.32.2026.06.01.14.44.10
+ ffacd0b85a97d-45ef356b129sm35423496f8f.32.2026.06.01.14.44.14
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 01 Jun 2026 14:44:11 -0700 (PDT)
+ Mon, 01 Jun 2026 14:44:15 -0700 (PDT)
 From: Sam Li <faithilikerun@gmail.com>
 To: qemu-devel@nongnu.org
 Cc: Markus Armbruster <armbru@redhat.com>, qemu-block@nongnu.org,
@@ -72,23 +73,23 @@ Cc: Markus Armbruster <armbru@redhat.com>, qemu-block@nongnu.org,
  dmitry.fomichev@wdc.com, Hanna Reitz <hreitz@redhat.com>, hare@suse.de,
  "Michael S. Tsirkin" <mst@redhat.com>, Kevin Wolf <kwolf@redhat.com>,
  cassel@kernel.org, dlemoal@kernel.org, Sam Li <faithilikerun@gmail.com>
-Subject: [PATCH v11 2/5] qcow2: add configurations for zoned format extension
-Date: Mon,  1 Jun 2026 23:44:02 +0200
-Message-ID: <20260601214405.252818-3-faithilikerun@gmail.com>
+Subject: [PATCH v11 4/5] qcow2: add zoned emulation capability
+Date: Mon,  1 Jun 2026 23:44:04 +0200
+Message-ID: <20260601214405.252818-5-faithilikerun@gmail.com>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260601214405.252818-1-faithilikerun@gmail.com>
 References: <20260601214405.252818-1-faithilikerun@gmail.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::331;
- envelope-from=faithilikerun@gmail.com; helo=mail-wm1-x331.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Received-SPF: pass client-ip=2a00:1450:4864:20::431;
+ envelope-from=faithilikerun@gmail.com; helo=mail-wr1-x431.google.com
+X-Spam_score_int: -10
+X-Spam_score: -1.1
+X-Spam_bar: -
+X-Spam_report: (-1.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FORGED_GMAIL_RCVD=1,
+ FREEMAIL_FROM=0.001, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -104,922 +105,1338 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-To configure the zoned format feature on the qcow2 driver, it
-requires settings as: the device size, zone model, zone size,
-zone capacity, number of conventional zones, limits on zone
-resources (max append bytes, max open zones, and max_active_zones).
+By adding zone operations and zoned metadata, the zoned emulation
+capability enables full emulation support of zoned device using
+a qcow2 file. The zoned device metadata includes zone type,
+zoned device state and write pointer (WP) of each zone, which is
+stored to an array of unsigned integers.
 
-To create a qcow2 image with zoned format feature, use command like
-this:
-qemu-img create -f qcow2 zbc.qcow2 -o size=768M \
--o zone.size=64M -o zone.capacity=64M -o zone.conventional_zones=0 \
--o zone.max_append_bytes=4096 -o zone.max_open_zones=6 \
--o zone.max_active_zones=8 -o zone.mode=host-managed
+WP accessor (qcow2_rw_wp_at) routes reads and writes of an 8-byte
+WP slot through the write pointer cache. The write pointer cache is
+written to disk after the qcow2 metadata is written, thus guaranteeing
+that the write pointer is updated after the corresponding data is
+written. Per-completion cache flush is deferred. The WP cluster reaches
+disk on the next flush.
+
+Each zone of a zoned device makes state transitions following
+the zone state machine. The zone state machine mainly describes
+five states, IMPLICIT OPEN, EXPLICIT OPEN, FULL, EMPTY and CLOSED.
+READ ONLY and OFFLINE states will generally be affected by device
+internal events. The operations on zones cause corresponding state
+changing.
+
+Zoned devices have limits on zone resources, which put constraints on
+write operations on zones. It is managed by active zone queues
+following LRU policy.
 
 Signed-off-by: Sam Li <faithilikerun@gmail.com>
 ---
- block/file-posix.c               |   2 +-
- block/qcow2.c                    | 329 ++++++++++++++++++++++++++++++-
- block/qcow2.h                    |  83 +++++++-
- docs/interop/qcow2.rst           | 117 ++++++++++-
- include/block/block_int-common.h |  15 +-
- qapi/block-core.json             |  91 ++++++++-
- 6 files changed, 628 insertions(+), 9 deletions(-)
+ block/qcow2-cache.c    |    8 +
+ block/qcow2-refcount.c |    7 +
+ block/qcow2.c          | 1137 +++++++++++++++++++++++++++++++++++++++-
+ block/trace-events     |    2 +
+ 4 files changed, 1149 insertions(+), 5 deletions(-)
 
-diff --git a/block/file-posix.c b/block/file-posix.c
-index e49b13d6ab..14278785b9 100644
---- a/block/file-posix.c
-+++ b/block/file-posix.c
-@@ -3607,7 +3607,7 @@ raw_co_zone_append(BlockDriverState *bs,
+diff --git a/block/qcow2-cache.c b/block/qcow2-cache.c
+index 23d9588b08..bdfb11ce88 100644
+--- a/block/qcow2-cache.c
++++ b/block/qcow2-cache.c
+@@ -275,6 +275,14 @@ int qcow2_cache_set_dependency(BlockDriverState *bs, Qcow2Cache *c,
+ {
+     int ret;
  
-     if (*offset & zone_size_mask) {
-         error_report("sector offset %" PRId64 " is not aligned to zone size "
--                     "%" PRId32 "", *offset / 512, bs->bl.zone_size / 512);
-+                     "%" PRId64 "", *offset / 512, bs->bl.zone_size / 512);
-         return -EINVAL;
++    /*
++     * If the dependency graph is unchanged, nothing to do. This avoids
++     * a synchronous flush on every call below.
++     */
++    if (c->depends == dependency) {
++        return 0;
++    }
++
+     if (dependency->depends) {
+         ret = qcow2_cache_flush_dependency(bs, dependency);
+         if (ret < 0) {
+diff --git a/block/qcow2-refcount.c b/block/qcow2-refcount.c
+index 6512cda407..f551726609 100644
+--- a/block/qcow2-refcount.c
++++ b/block/qcow2-refcount.c
+@@ -1239,6 +1239,13 @@ int qcow2_write_caches(BlockDriverState *bs)
+         }
      }
  
++    if (s->wp_cache) {
++        ret = qcow2_cache_write(bs, s->wp_cache);
++        if (ret < 0) {
++            return ret;
++        }
++    }
++
+     return 0;
+ }
+ 
 diff --git a/block/qcow2.c b/block/qcow2.c
-index 81fd299b4c..29eec33e34 100644
+index 29eec33e34..bdc8923b71 100644
 --- a/block/qcow2.c
 +++ b/block/qcow2.c
-@@ -73,6 +73,7 @@ typedef struct {
- #define  QCOW2_EXT_MAGIC_CRYPTO_HEADER 0x0537be77
- #define  QCOW2_EXT_MAGIC_BITMAPS 0x23852875
- #define  QCOW2_EXT_MAGIC_DATA_FILE 0x44415441
-+#define  QCOW2_EXT_MAGIC_ZONED_FORMAT 0x007a6264
- 
- static int coroutine_fn
- qcow2_co_preadv_compressed(BlockDriverState *bs,
-@@ -194,6 +195,93 @@ qcow2_extract_crypto_opts(QemuOpts *opts, const char *fmt, Error **errp)
+@@ -195,6 +195,300 @@ qcow2_extract_crypto_opts(QemuOpts *opts, const char *fmt, Error **errp)
      return cryptoopts_qdict;
  }
  
++#define QCOW2_ZT_IS_CONV(wp)    (wp & 1ULL << 59)
++#define QCOW2_GET_WP(wp)        ((wp << 5) >> 5)
++
 +/*
-+ * Passing by the zoned device configurations by a zoned_header struct, check
-+ * if the zone device options are under constraints. Return false when some
-+ * option is invalid
++ * To emulate a real zoned device, closed, empty and full states are
++ * preserved after a power cycle. The open states are in-memory and will
++ * be lost after closing the device. Read-only and offline states are
++ * device-internal events, which are not considered for simplicity.
 + */
-+static bool
-+qcow2_check_zone_options(Qcow2ZonedHeaderExtension *zone_opt, Error **errp)
++static inline BlockZoneState qcow2_get_zone_state(BlockDriverState *bs,
++                                                  uint32_t index)
 +{
-+    uint32_t sequential_zones;
++    BDRVQcow2State *s = bs->opaque;
++    Qcow2ZoneListEntry *zone_entry = &s->zone_list_entries[index];
++    uint64_t zone_wp = bs->wps->wp[index];
++    uint64_t zone_start;
 +
-+    assert(zone_opt != NULL);
-+
-+    if (zone_opt->zoned != QCOW2_Z_NONE && zone_opt->zoned != QCOW2_Z_HM) {
-+        error_setg(errp, "Zoned extension header zoned field has unknown "
-+                   "value %" PRIu8, zone_opt->zoned);
-+        return false;
++    if (QCOW2_ZT_IS_CONV(zone_wp)) {
++        return BLK_ZS_NOT_WP;
 +    }
 +
-+    if (!is_power_of_2(zone_opt->zone_size)) {
-+        error_setg(errp, "Zoned extension header zone_size %" PRIu64
-+                   "B is not a power of 2", zone_opt->zone_size);
-+        return false;
++    if (QTAILQ_IN_USE(zone_entry, exp_open_zone_entry)) {
++        return BLK_ZS_EOPEN;
++    }
++    if (QTAILQ_IN_USE(zone_entry, imp_open_zone_entry)) {
++        return BLK_ZS_IOPEN;
 +    }
 +
-+    if (zone_opt->nr_zones > UINT32_MAX / 8) {
-+        error_setg(errp, "Zoned extension header nr_zones %" PRIu32
-+                   " exceeds maximum %u",
-+                   zone_opt->nr_zones, UINT32_MAX / 8);
-+        return false;
++    zone_start = index * bs->bl.zone_size;
++    if (zone_wp == zone_start) {
++        return BLK_ZS_EMPTY;
++    }
++    if (zone_wp >= zone_start + bs->bl.zone_capacity) {
++        return BLK_ZS_FULL;
++    }
++    if (zone_wp > zone_start) {
++        if (!QTAILQ_IN_USE(zone_entry, closed_zone_entry)) {
++            /*
++             * The number of closed zones is not always updated in time when
++             * the device is closed. However, it only matters when doing
++             * zone report. Refresh the count and list of closed zones to
++             * provide correct zone states for zone report.
++             */
++            QTAILQ_INSERT_HEAD(&s->closed_zones, zone_entry, closed_zone_entry);
++            s->nr_zones_closed++;
++        }
++        return BLK_ZS_CLOSED;
++    }
++    return BLK_ZS_NOT_WP;
++}
++
++static void qcow2_rm_exp_open_zone(BDRVQcow2State *s,
++                                   uint32_t index)
++{
++    Qcow2ZoneListEntry *zone_entry = &s->zone_list_entries[index];
++
++    QTAILQ_REMOVE(&s->exp_open_zones, zone_entry, exp_open_zone_entry);
++    s->nr_zones_exp_open--;
++}
++
++static void qcow2_rm_imp_open_zone(BDRVQcow2State *s,
++                                   int32_t index)
++{
++    Qcow2ZoneListEntry *zone_entry;
++    if (index < 0) {
++        /* Apply LRU when the index is not specified. */
++        zone_entry = QTAILQ_LAST(&s->imp_open_zones);
++    } else {
++        zone_entry = &s->zone_list_entries[index];
 +    }
 +
-+    if (zone_opt->zone_capacity > zone_opt->zone_size) {
-+        error_setg(errp, "zone capacity %" PRIu64 "B exceeds zone size "
-+                   "%" PRIu64 "B", zone_opt->zone_capacity,
-+                   zone_opt->zone_size);
-+        return false;
++    QTAILQ_REMOVE(&s->imp_open_zones, zone_entry, imp_open_zone_entry);
++    s->nr_zones_imp_open--;
++}
++
++static void qcow2_rm_open_zone(BDRVQcow2State *s,
++                               uint32_t index)
++{
++    Qcow2ZoneListEntry *zone_entry = &s->zone_list_entries[index];
++
++    if (QTAILQ_IN_USE(zone_entry, exp_open_zone_entry)) {
++        qcow2_rm_exp_open_zone(s, index);
++    } else if (QTAILQ_IN_USE(zone_entry, imp_open_zone_entry)) {
++        qcow2_rm_imp_open_zone(s, index);
++    }
++}
++
++static void qcow2_rm_closed_zone(BDRVQcow2State *s,
++                                 uint32_t index)
++{
++    Qcow2ZoneListEntry *zone_entry = &s->zone_list_entries[index];
++
++    QTAILQ_REMOVE(&s->closed_zones, zone_entry, closed_zone_entry);
++    s->nr_zones_closed--;
++}
++
++static void qcow2_do_imp_open_zone(BDRVQcow2State *s,
++                                   uint32_t index,
++                                   BlockZoneState zs)
++{
++    Qcow2ZoneListEntry *zone_entry = &s->zone_list_entries[index];
++
++    switch (zs) {
++    case BLK_ZS_EMPTY:
++        break;
++    case BLK_ZS_CLOSED:
++        qcow2_rm_closed_zone(s, index);
++        break;
++    case BLK_ZS_IOPEN:
++        /*
++         * The LRU policy: update the zone that is most recently
++         * used to the head of the zone list
++         */
++        if (zone_entry == QTAILQ_FIRST(&s->imp_open_zones)) {
++            return;
++        }
++        QTAILQ_REMOVE(&s->imp_open_zones, zone_entry, imp_open_zone_entry);
++        s->nr_zones_imp_open--;
++        break;
++    default:
++        return;
 +    }
 +
-+    if (!QEMU_IS_ALIGNED(zone_opt->max_append_bytes, BDRV_SECTOR_SIZE)) {
-+        error_setg(errp, "max append bytes %" PRIu32 "B is not aligned "
-+                   "to %" PRIu64, zone_opt->max_append_bytes,
-+                   (uint64_t)BDRV_SECTOR_SIZE);
-+        return false;
++    QTAILQ_INSERT_HEAD(&s->imp_open_zones, zone_entry, imp_open_zone_entry);
++    s->nr_zones_imp_open++;
++}
++
++static void qcow2_do_exp_open_zone(BDRVQcow2State *s,
++                                   uint32_t index)
++{
++    Qcow2ZoneListEntry *zone_entry = &s->zone_list_entries[index];
++
++    QTAILQ_INSERT_HEAD(&s->exp_open_zones, zone_entry, exp_open_zone_entry);
++    s->nr_zones_exp_open++;
++}
++
++/*
++ * The list of zones is managed using an LRU policy: the last
++ * zone of the list is always the one that was least recently used
++ * for writing and is chosen as the zone to close to be able to
++ * implicitly open another zone.
++ *
++ * We can only close the open zones. The index is not specified
++ * when it is less than 0.
++ */
++static void qcow2_do_close_zone(BlockDriverState *bs,
++                                int32_t index,
++                                BlockZoneState zs)
++{
++    BDRVQcow2State *s = bs->opaque;
++    Qcow2ZoneListEntry *zone_entry;
++
++    if (index >= 0) {
++        zone_entry = &s->zone_list_entries[index];
++    } else {
++        /* before removal of the last implicitly open zone */
++        zone_entry = QTAILQ_LAST(&s->imp_open_zones);
 +    }
 +
-+    if (zone_opt->max_append_bytes + BDRV_SECTOR_SIZE >=
-+        zone_opt->zone_capacity) {
-+        error_setg(errp, "max append bytes %" PRIu32 "B exceeds zone "
-+                   "capacity %" PRIu64 "B by more than block size",
-+                   zone_opt->max_append_bytes, zone_opt->zone_capacity);
-+        return false;
++    if (zs == BLK_ZS_IOPEN) {
++        qcow2_rm_imp_open_zone(s, index);
++        goto close_zone;
 +    }
 +
-+    if (zone_opt->conventional_zones >= zone_opt->nr_zones) {
-+        error_setg(errp, "Conventional_zones %" PRIu32 " exceeds "
-+                   "nr_zones %" PRIu32 ".",
-+                   zone_opt->conventional_zones, zone_opt->nr_zones);
-+        return false;
++    if (index >= 0 && zs == BLK_ZS_EOPEN) {
++        qcow2_rm_exp_open_zone(s, index);
++        /*
++         * The zone state changes when the zone is removed from the list of
++         * open zones (explicitly open -> empty). The closed zone list is
++         * refreshed during get_zone_state().
++         */
++        qcow2_get_zone_state(bs, index);
++    }
++    return;
++
++close_zone:
++    QTAILQ_INSERT_HEAD(&s->closed_zones, zone_entry, closed_zone_entry);
++    s->nr_zones_closed++;
++}
++
++/*
++ * Read/Write the new wp value for zone `index` through write pointe
++ * cache. Reads return the value currently held in the cache, which may
++ * be ahead of the on-disk value if the cache hasn't been flushed yet.
++ * Writes update the cache and mark the entry dirty.
++ */
++static int coroutine_fn GRAPH_RDLOCK
++qcow2_rw_wp_at(BlockDriverState *bs, uint64_t *wp,
++                  int32_t index, bool is_write) {
++    BDRVQcow2State *s = bs->opaque;
++    uint64_t wp_byte_off = sizeof(uint64_t) * index;
++    uint64_t cluster_file_off =
++        s->zoned_header.zonedmeta_offset +
++        (wp_byte_off & ~((uint64_t)s->cluster_size - 1));
++    size_t off_in_cluster = wp_byte_off & (s->cluster_size - 1);
++    void *cluster_buf;
++    uint64_t *slot;
++    int ret;
++
++    assert(s->wp_cache != NULL);
++
++    qemu_co_mutex_lock(&s->lock);
++    ret = qcow2_cache_get(bs, s->wp_cache, cluster_file_off, &cluster_buf);
++    if (ret < 0) {
++        qemu_co_mutex_unlock(&s->lock);
++        error_report("Failed to %s WP slot (zone %d): %s",
++                     is_write ? "write" : "read", index, strerror(-ret));
++        return ret;
 +    }
 +
-+    if (zone_opt->max_active_zones > zone_opt->nr_zones) {
-+        error_setg(errp, "Max_active_zones %" PRIu32 " exceeds "
-+                   "nr_zones %" PRIu32 ". Set it to nr_zones.",
-+                   zone_opt->max_active_zones, zone_opt->nr_zones);
-+        zone_opt->max_active_zones = zone_opt->nr_zones;
++    slot = (uint64_t *)((char *)cluster_buf + off_in_cluster);
++    if (is_write) {
++        *slot = *wp;
++        qcow2_cache_entry_mark_dirty(s->wp_cache, cluster_buf);
++    } else {
++        *wp = *slot;
++    }
++    qcow2_cache_put(s->wp_cache, &cluster_buf);
++    qemu_co_mutex_unlock(&s->lock);
++
++    trace_qcow2_wp_tracking(index, *wp >> BDRV_SECTOR_BITS);
++    return 0;
++}
++
++static bool qcow2_can_activate_zone(BlockDriverState *bs)
++{
++    BDRVQcow2State *s = bs->opaque;
++
++    /* When the max active zone is zero, there is no limit on active zones */
++    if (!s->zoned_header.max_active_zones) {
++        return true;
 +    }
 +
-+    sequential_zones = zone_opt->nr_zones - zone_opt->conventional_zones;
-+    if (zone_opt->max_open_zones > sequential_zones) {
-+        error_setg(errp, "Max_open_zones field can not be larger than"
-+                   "the number of SWR zones. Set it to number of SWR"
-+                   "zones %" PRIu32 ".", sequential_zones);
-+        zone_opt->max_open_zones = sequential_zones;
-+    }
-+    if (zone_opt->max_active_zones != 0 &&
-+        zone_opt->max_open_zones > zone_opt->max_active_zones) {
-+        error_setg(errp, "Max_open_zones %" PRIu32 " exceeds "
-+                   "max_active_zones %" PRIu32 ". Set it to "
-+                   "max_active_zones.",
-+                   zone_opt->max_open_zones,
-+                   zone_opt->max_active_zones);
-+        zone_opt->max_open_zones = zone_opt->max_active_zones;
++    /* Active zones are zones that are open or closed */
++    return s->nr_zones_exp_open + s->nr_zones_imp_open + s->nr_zones_closed
++        < s->zoned_header.max_active_zones;
++}
++
++/*
++ * This function manages open zones under active zones limit. It checks
++ * if a zone can transition to open state while maintaining max open and
++ * active zone limits.
++ */
++static bool qcow2_can_open_zone(BlockDriverState *bs)
++{
++    BDRVQcow2State *s = bs->opaque;
++
++    /* When the max open zone is zero, there is no limit on open zones */
++    if (!s->zoned_header.max_open_zones) {
++        return true;
 +    }
 +
-+    return true;
++    /*
++     * The open zones are zones with the states of explicitly and
++     * implicitly open.
++     */
++    if (s->nr_zones_imp_open + s->nr_zones_exp_open <
++        s->zoned_header.max_open_zones) {
++        return true;
++    }
++
++    /*
++     * Zones are managed one at a time. Thus, the number of implicitly open
++     * zone can never be over the open zone limit. When the active zone limit
++     * is not reached, close only one implicitly open zone.
++     */
++    if (qcow2_can_activate_zone(bs)) {
++        qcow2_do_close_zone(bs, -1, BLK_ZS_IOPEN);
++        trace_qcow2_imp_open_zones(0x23, s->nr_zones_imp_open);
++        return true;
++    }
++    return false;
++}
++
++static inline int coroutine_fn GRAPH_RDLOCK
++qcow2_refresh_zonedmeta(BlockDriverState *bs)
++{
++    int ret;
++    BDRVQcow2State *s = bs->opaque;
++    uint64_t wps_size = s->zoned_header.nr_zones * sizeof(uint64_t);
++    g_autofree uint64_t *temp = NULL;
++
++    temp = g_new(uint64_t, s->zoned_header.nr_zones);
++    ret = bdrv_pread(bs->file, s->zoned_header.zonedmeta_offset,
++                     wps_size, temp, 0);
++    if (ret < 0) {
++        error_report("Cannot read metadata");
++        return ret;
++    }
++
++    memcpy(bs->wps->wp, temp, wps_size);
++    return 0;
 +}
 +
  /*
-  * read qcow2 extension and fill bs
-  * start reading from start_offset
-@@ -211,6 +299,7 @@ qcow2_read_extensions(BlockDriverState *bs, uint64_t start_offset,
-     uint64_t offset;
-     int ret;
-     Qcow2BitmapHeaderExt bitmaps_ext;
-+    Qcow2ZonedHeaderExtension zoned_ext;
- 
-     if (need_update_header != NULL) {
-         *need_update_header = false;
-@@ -432,6 +521,50 @@ qcow2_read_extensions(BlockDriverState *bs, uint64_t start_offset,
-             break;
-         }
- 
-+        case QCOW2_EXT_MAGIC_ZONED_FORMAT:
-+        {
-+            if (ext.len != sizeof(zoned_ext)) {
-+                error_setg(errp, "zoned_ext: unexpected len=%" PRIu32 " "
-+                           "(expected %zu)", ext.len, sizeof(zoned_ext));
-+                return -EINVAL;
-+            }
-+            ret = bdrv_pread(bs->file, offset, ext.len, &zoned_ext, 0);
+  * Passing by the zoned device configurations by a zoned_header struct, check
+  * if the zone device options are under constraints. Return false when some
+@@ -545,7 +839,37 @@ qcow2_read_extensions(BlockDriverState *bs, uint64_t start_offset,
+                 be32_to_cpu(zoned_ext.max_active_zones);
+             zoned_ext.max_append_bytes =
+                 be32_to_cpu(zoned_ext.max_append_bytes);
++            zoned_ext.zonedmeta_offset =
++                be64_to_cpu(zoned_ext.zonedmeta_offset);
+             s->zoned_header = zoned_ext;
++            bs->wps = g_malloc(sizeof(BlockZoneWps)
++                + s->zoned_header.nr_zones * sizeof(uint64_t));
++            ret = qcow2_refresh_zonedmeta(bs);
 +            if (ret < 0) {
-+                error_setg_errno(errp, -ret, "zoned_ext: "
-+                                 "Could not read ext header");
 +                return ret;
 +            }
 +
-+            zoned_ext.zone_size = be64_to_cpu(zoned_ext.zone_size);
-+            zoned_ext.zone_capacity = be64_to_cpu(zoned_ext.zone_capacity);
-+            zoned_ext.conventional_zones =
-+                be32_to_cpu(zoned_ext.conventional_zones);
-+            zoned_ext.nr_zones = be32_to_cpu(zoned_ext.nr_zones);
-+            zoned_ext.max_open_zones = be32_to_cpu(zoned_ext.max_open_zones);
-+            zoned_ext.max_active_zones =
-+                be32_to_cpu(zoned_ext.max_active_zones);
-+            zoned_ext.max_append_bytes =
-+                be32_to_cpu(zoned_ext.max_append_bytes);
-+            s->zoned_header = zoned_ext;
++            s->zone_list_entries = g_new0(Qcow2ZoneListEntry,
++                                          zoned_ext.nr_zones);
++            QTAILQ_INIT(&s->exp_open_zones);
++            QTAILQ_INIT(&s->imp_open_zones);
++            QTAILQ_INIT(&s->closed_zones);
++            qemu_co_mutex_init(&bs->wps->colock);
 +
-+            /* refuse to open broken images */
-+            if (zoned_ext.nr_zones != DIV_ROUND_UP(bs->total_sectors *
-+                BDRV_SECTOR_SIZE, zoned_ext.zone_size)) {
-+                error_setg(errp, "Zoned extension header nr_zones field "
-+                           "is wrong");
-+                return -EINVAL;
-+            }
-+            if (!qcow2_check_zone_options(&zoned_ext, errp)) {
-+                return -EINVAL;
++            s->zone_wp_state = g_new0(Qcow2ZoneWPState, zoned_ext.nr_zones);
++            for (uint32_t i = 0; i < zoned_ext.nr_zones; i++) {
++                QTAILQ_INIT(&s->zone_wp_state[i].in_flight);
++                QTAILQ_INIT(&s->zone_wp_state[i].completed_pending);
 +            }
 +
-+#ifdef DEBUG_EXT
-+            printf("Qcow2: Got zoned format extension: "
-+                   "offset=%" PRIu32 "\n", offset);
-+#endif
++            s->wp_cache = qcow2_cache_create(bs,
++                DIV_ROUND_UP(zoned_ext.nr_zones * sizeof(uint64_t),
++                             s->cluster_size),
++                s->cluster_size);
++            if (!s->wp_cache) {
++                error_setg(errp, "Could not allocate the write pointer cache");
++                return -ENOMEM;
++            }
+ 
+             /* refuse to open broken images */
+             if (zoned_ext.nr_zones != DIV_ROUND_UP(bs->total_sectors *
+@@ -2911,21 +3235,277 @@ static coroutine_fn GRAPH_RDLOCK int qcow2_co_pwritev_task_entry(AioTask *task)
+                                  t->l2meta);
+ }
+ 
++/*
++ * Walk the per-zone completed_pending list while the head's LBA equals
++ * the cached persisted-WP, advancing persisted-WP and marking each
++ * covered request RESOLVED. On any advance, the new persisted-WP is
++ * written into the WP cache and depends-on qcow2 L2 table cache is
++ * established so write pointer is updated after the corresponding write
++ * completes.
++ *
++ * Caller holds bs->wps->colock.
++ */
+ static int coroutine_fn GRAPH_RDLOCK
+-qcow2_co_pwritev_part(BlockDriverState *bs, int64_t offset, int64_t bytes,
+-                      QEMUIOVector *qiov, size_t qiov_offset,
+-                      BdrvRequestFlags flags)
++qcow2_wp_greedy_advance_locked(BlockDriverState *bs, uint32_t index)
++{
++    BDRVQcow2State *s = bs->opaque;
++    Qcow2ZoneWPState *zs = &s->zone_wp_state[index];
++    uint64_t wp_byte_off = sizeof(uint64_t) * index;
++    uint64_t cluster_file_off =
++        s->zoned_header.zonedmeta_offset +
++        (wp_byte_off & ~((uint64_t)s->cluster_size - 1));
++    size_t off_in_cluster = wp_byte_off & (s->cluster_size - 1);
++    void *cluster_buf;
++    uint64_t *slot;
++    uint64_t persisted_wp, new_persisted_wp;
++    Qcow2WPReq *head;
++    bool any_advanced = false;
++    int ret;
++
++    qemu_co_mutex_lock(&s->lock);
++    ret = qcow2_cache_get(bs, s->wp_cache, cluster_file_off, &cluster_buf);
++    if (ret < 0) {
++        qemu_co_mutex_unlock(&s->lock);
++        return ret;
++    }
++    slot = (uint64_t *)((char *)cluster_buf + off_in_cluster);
++    persisted_wp = *slot;
++    new_persisted_wp = persisted_wp;
++
++    QTAILQ_FOREACH(head, &zs->completed_pending, entry) {
++        if (head->lba != new_persisted_wp) {
++            break;
++        }
++        new_persisted_wp += head->len;
++        any_advanced = true;
++    }
++
++    if (!any_advanced) {
++        qcow2_cache_put(s->wp_cache, &cluster_buf);
++        qemu_co_mutex_unlock(&s->lock);
++        return 0;
++    }
++
++    *slot = new_persisted_wp;
++    qcow2_cache_entry_mark_dirty(s->wp_cache, cluster_buf);
++    qcow2_cache_put(s->wp_cache, &cluster_buf);
++
++    qcow2_cache_set_dependency(bs, s->wp_cache, s->l2_table_cache);
++    qemu_co_mutex_unlock(&s->lock);
++
++    while (!QTAILQ_EMPTY(&zs->completed_pending)) {
++        head = QTAILQ_FIRST(&zs->completed_pending);
++        if (head->lba >= new_persisted_wp) {
++            break;
++        }
++        QTAILQ_REMOVE(&zs->completed_pending, head, entry);
++        head->state = QCOW2_WP_REQ_RESOLVED;
++        qemu_co_queue_restart_all(&head->wait);
++    }
++
++    return 0;
++}
++
++/*
++ * Insert req into the zone's completed_pending list in ascending LBA
++ * order. Data writes may complete out of order; greedy_advance walks
++ * the list head while head->lba == persisted_wp, so the list must
++ * stay sorted.
++ *
++ * Caller holds bs->wps->colock.
++ */
++static void
++qcow2_wp_insert_pending_locked(Qcow2ZoneWPState *zs, Qcow2WPReq *req)
++{
++    Qcow2WPReq *iter;
++
++    req->state = QCOW2_WP_REQ_PENDING;
++
++    QTAILQ_FOREACH(iter, &zs->completed_pending, entry) {
++        if (iter->lba > req->lba) {
++            QTAILQ_INSERT_BEFORE(iter, req, entry);
++            return;
++        }
++    }
++    QTAILQ_INSERT_TAIL(&zs->completed_pending, req, entry);
++}
++
++/*
++ * Peer requests with lba > failed_lba are marked ABORTED. Survivors
++ * with lba < failed_lba are left untouched. Logical WP is rolled back
++ * to the contiguous extent above persisted-WP that remains covered by
++ * survivor requests.
++ *
++ * Caller holds bs->wps->colock.
++ */
++static void
++qcow2_wp_abort_higher_peers_locked(BlockDriverState *bs, uint32_t index,
++                                    uint64_t failed_lba)
++{
++    BDRVQcow2State *s = bs->opaque;
++    Qcow2ZoneWPState *zs = &s->zone_wp_state[index];
++    Qcow2WPReq *r, *next;
++    uint64_t logical_wp;
++
++    QTAILQ_FOREACH(r, &zs->in_flight, entry) {
++        if (r->lba > failed_lba && r->state != QCOW2_WP_REQ_ABORTED) {
++            r->state = QCOW2_WP_REQ_ABORTED;
++            qemu_co_queue_restart_all(&r->wait);
++        }
++    }
++    QTAILQ_FOREACH_SAFE(r, &zs->completed_pending, entry, next) {
++        if (r->lba > failed_lba) {
++            r->state = QCOW2_WP_REQ_ABORTED;
++            QTAILQ_REMOVE(&zs->completed_pending, r, entry);
++            qemu_co_queue_restart_all(&r->wait);
++        }
++    }
++
++    /* Rewind logical_wp to the highest survivor end_offset. */
++    logical_wp = failed_lba;
++    QTAILQ_FOREACH(r, &zs->in_flight, entry) {
++        if (r->lba < failed_lba && r->lba + r->len > logical_wp) {
++            logical_wp = r->lba + r->len;
++        }
++    }
++    QTAILQ_FOREACH(r, &zs->completed_pending, entry) {
++        if (r->lba < failed_lba && r->lba + r->len > logical_wp) {
++            logical_wp = r->lba + r->len;
++        }
++    }
++    bs->wps->wp[index] = logical_wp;
++}
++
++/*
++ * If it is an append write request, the offset pointer needs to be updated to
++ * the wp value of that zone after the IO completion. The unique pointer is
++ * passed on to this function to prevent the value being changed in condition of
++ * multiple concurrent writes.
++ */
++static int coroutine_fn GRAPH_RDLOCK
++qcow2_co_pwv_part(BlockDriverState *bs, int64_t *offset_ptr, int64_t bytes,
++                  QEMUIOVector *qiov, size_t qiov_offset, bool is_append,
++                  BdrvRequestFlags flags)
+ {
+     BDRVQcow2State *s = bs->opaque;
+     int offset_in_cluster;
+     int ret;
+     unsigned int cur_bytes; /* number of sectors in current iteration */
+     uint64_t host_offset;
++    int64_t offset = *offset_ptr;
+     QCowL2Meta *l2meta = NULL;
+     AioTaskPool *aio = NULL;
++    int64_t start_offset, start_bytes;
++    BlockZoneState zs;
++    int64_t end_zone, end_offset;
++    uint64_t *wp;
++    int64_t zone_size = bs->bl.zone_size;
++    int64_t zone_capacity = bs->bl.zone_capacity;
++    int index = 0;
++    Qcow2WPReq req;
++    Qcow2WPReq *wp_req = NULL;
+ 
+     trace_qcow2_writev_start_req(qemu_coroutine_self(), offset, bytes);
+ 
++    start_offset = offset;
++    start_bytes = bytes;
++    if (bs->bl.zoned == BLK_Z_HM) {
++        index = start_offset / zone_size;
++        wp = &bs->wps->wp[index];
++        if (!QCOW2_ZT_IS_CONV(*wp)) {
++            if (offset != *wp && !is_append) {
++                /* The write offset must be equal to the zone write pointer */
++                error_report("Offset 0x%" PRIx64 " of regular writes must be "
++                             "equal to the zone write pointer 0x%" PRIx64 "",
++                             offset, *wp);
++                return -EINVAL;
++            }
++
++            if (is_append) {
++                /*
++                 * The offset of append write is the write pointer value of
++                 * that zone.
++                 */
++                start_offset = *wp;
++            }
++
++            end_offset = start_offset + start_bytes;
++
++            /* Only allow writes when there are zone resources left */
++            zs = qcow2_get_zone_state(bs, index);
++            if (zs == BLK_ZS_CLOSED || zs == BLK_ZS_EMPTY) {
++                if (!qcow2_can_open_zone(bs)) {
++                    error_report("no more open zones available");
++                    return -EINVAL;
++                }
++            }
++
++            /*
++             * Align up (start_offset, zone_size), the start offset is not
++             * necessarily power of two.
++             */
++            end_zone = index * zone_size + zone_capacity;
++            /* Write cannot exceed the zone capacity. */
++            if (end_offset > end_zone) {
++                error_report("write exceeds zone capacity with end_offset:"
++                             "0x%lx, end_zone: 0x%lx",
++                             end_offset / 512, end_zone / 512);
++                return -EINVAL;
++            }
++
++            /*
++             * Real drives change states before it can write to the zone. If
++             * the write fails, the zone state may have changed.
++             *
++             * The zone state transitions to implicit open when the original
++             * state is empty or closed. When the wp reaches the end, the
++             * open states (explicit open, implicit open) become full.
++             */
++            zs = qcow2_get_zone_state(bs, index);
++            if (!(end_offset & (zone_capacity - 1))) {
++                /* Being aligned to zone capacity implies full state */
++                qcow2_rm_open_zone(s, index);
++                trace_qcow2_imp_open_zones(0x24,
++                                           s->nr_zones_imp_open);
++            } else {
++                qcow2_do_imp_open_zone(s, index, zs);
++                trace_qcow2_imp_open_zones(0x24,
++                                           s->nr_zones_imp_open);
++            }
++
++            /*
++             * Submission for a zone append write. The logical-WP is updated
++             * while the on-disk WP is not touched.
++             */
++            qemu_co_mutex_lock(&bs->wps->colock);
++            if (is_append) {
++                start_offset = *wp;
++                end_offset = start_offset + start_bytes;
++                end_zone = (uint64_t)index * zone_size + zone_capacity;
++                if (end_offset > end_zone) {
++                    qemu_co_mutex_unlock(&bs->wps->colock);
++                    error_report("append: end_offset 0x%" PRIx64
++                                 " > end_zone 0x%" PRIx64,
++                                 end_offset, end_zone);
++                    return -EINVAL;
++                }
++                *offset_ptr = start_offset;
++                offset = start_offset;
++            }
++
++            wp_req = &req;
++            wp_req->lba = start_offset;
++            wp_req->len = start_bytes;
++            wp_req->state = QCOW2_WP_REQ_INFLIGHT;
++            qemu_co_queue_init(&wp_req->wait);
++            QTAILQ_INSERT_TAIL(&s->zone_wp_state[index].in_flight,
++                               wp_req, entry);
++
++            *wp = end_offset;
++            qemu_co_mutex_unlock(&bs->wps->colock);
++        }
++    }
++
+     while (bytes != 0 && aio_task_pool_status(aio) == 0) {
+ 
+         l2meta = NULL;
+@@ -2989,11 +3569,75 @@ fail_nometa:
+         g_free(aio);
+     }
+ 
++    if (wp_req != NULL) {
++        qemu_co_mutex_lock(&bs->wps->colock);
++        QTAILQ_REMOVE(&s->zone_wp_state[index].in_flight, wp_req, entry);
++
++        if (wp_req->state == QCOW2_WP_REQ_ABORTED) {
++            /*
++             * A peer's failure handler aborted us. Whether our data
++             * write itself succeeded or not, reject it.
++             */
++            qemu_co_mutex_unlock(&bs->wps->colock);
++            ret = ret < 0 ? ret : -EIO;
++            goto wp_done;
++        }
++
++        if (ret < 0) {
++            /*
++             * This req's data write failed. Higher-LBA peers (still
++             * in_flight or already completed_pending) are marked ABORTED,
++             * their waiters woken; logical-WP rewinds to the highest
++             * surviving end_offset below this LBA. The zone remains usable.
++             */
++            qcow2_wp_abort_higher_peers_locked(bs, index, wp_req->lba);
++            qemu_co_mutex_unlock(&bs->wps->colock);
++            goto wp_done;
++        }
++
++        qcow2_wp_insert_pending_locked(&s->zone_wp_state[index], wp_req);
++
++        ret = qcow2_wp_greedy_advance_locked(bs, index);
++        if (ret < 0) {
++            if (wp_req->state == QCOW2_WP_REQ_PENDING) {
++                QTAILQ_REMOVE(&s->zone_wp_state[index].completed_pending,
++                              wp_req, entry);
++            }
++            qcow2_wp_abort_higher_peers_locked(bs, index, wp_req->lba);
++            qemu_co_mutex_unlock(&bs->wps->colock);
++            goto wp_done;
++        }
++
++        /* Block until this write pointer req is RESOLVED or ABORTED. */
++        while (wp_req->state == QCOW2_WP_REQ_PENDING) {
++            qemu_co_queue_wait(&wp_req->wait, &bs->wps->colock);
++        }
++
++        if (wp_req->state == QCOW2_WP_REQ_ABORTED) {
++            ret = -EIO;
++        } else {
++            assert(wp_req->state == QCOW2_WP_REQ_RESOLVED);
++            ret = 0;
++        }
++        qemu_co_mutex_unlock(&bs->wps->colock);
++    }
++
++wp_done:
+     trace_qcow2_writev_done_req(qemu_coroutine_self(), ret);
+ 
+     return ret;
+ }
+ 
++static int coroutine_fn GRAPH_RDLOCK
++qcow2_co_pwritev_part(BlockDriverState *bs, int64_t offset, int64_t bytes,
++                      QEMUIOVector *qiov, size_t qiov_offset,
++                      BdrvRequestFlags flags)
++{
++    return qcow2_co_pwv_part(bs, &offset, bytes, qiov, qiov_offset, false,
++                             flags);
++}
++
++
+ static int GRAPH_RDLOCK qcow2_inactivate(BlockDriverState *bs)
+ {
+     BDRVQcow2State *s = bs->opaque;
+@@ -3022,6 +3666,15 @@ static int GRAPH_RDLOCK qcow2_inactivate(BlockDriverState *bs)
+                      strerror(-ret));
+     }
+ 
++    if (s->wp_cache) {
++        ret = qcow2_cache_flush(bs, s->wp_cache);
++        if (ret) {
++            result = ret;
++            error_report("Failed to flush the WP cache: %s",
++                         strerror(-ret));
++        }
++    }
++
+     if (result == 0) {
+         qcow2_mark_clean(bs);
+     }
+@@ -3029,6 +3682,25 @@ static int GRAPH_RDLOCK qcow2_inactivate(BlockDriverState *bs)
+     return result;
+ }
+ 
++static void qcow2_do_close_all_zone(BDRVQcow2State *s)
++{
++    Qcow2ZoneListEntry *zone_entry, *next;
++
++    QTAILQ_FOREACH_SAFE(zone_entry, &s->imp_open_zones, imp_open_zone_entry,
++                        next) {
++        QTAILQ_REMOVE(&s->imp_open_zones, zone_entry, imp_open_zone_entry);
++        s->nr_zones_imp_open--;
++    }
++
++    QTAILQ_FOREACH_SAFE(zone_entry, &s->exp_open_zones, exp_open_zone_entry,
++                        next) {
++        QTAILQ_REMOVE(&s->exp_open_zones, zone_entry, exp_open_zone_entry);
++        s->nr_zones_exp_open--;
++    }
++
++    assert(s->nr_zones_imp_open + s->nr_zones_exp_open == 0);
++}
++
+ static void coroutine_mixed_fn GRAPH_RDLOCK
+ qcow2_do_close(BlockDriverState *bs, bool close_data_file)
+ {
+@@ -3044,6 +3716,10 @@ qcow2_do_close(BlockDriverState *bs, bool close_data_file)
+     cache_clean_timer_del_and_wait(bs);
+     qcow2_cache_destroy(s->l2_table_cache);
+     qcow2_cache_destroy(s->refcount_block_cache);
++    if (s->wp_cache) {
++        qcow2_cache_destroy(s->wp_cache);
++        s->wp_cache = NULL;
++    }
+ 
+     qcrypto_block_free(s->crypto);
+     s->crypto = NULL;
+@@ -3068,6 +3744,12 @@ qcow2_do_close(BlockDriverState *bs, bool close_data_file)
+ 
+     qcow2_refcount_close(bs);
+     qcow2_free_snapshots(bs);
++    qcow2_do_close_all_zone(s);
++    g_free(s->zone_list_entries);
++    s->zone_list_entries = NULL;
++    g_free(s->zone_wp_state);
++    s->zone_wp_state = NULL;
++    g_free(bs->wps);
+ }
+ 
+ static void GRAPH_UNLOCKED qcow2_close(BlockDriverState *bs)
+@@ -3385,7 +4067,9 @@ int qcow2_update_header(BlockDriverState *bs)
+             .max_active_zones   =
+                 cpu_to_be32(s->zoned_header.max_active_zones),
+             .max_append_bytes =
+-                cpu_to_be32(s->zoned_header.max_append_bytes)
++                cpu_to_be32(s->zoned_header.max_append_bytes),
++            .zonedmeta_offset   =
++                cpu_to_be64(s->zoned_header.zonedmeta_offset),
+         };
+         ret = header_ext_add(buf, QCOW2_EXT_MAGIC_ZONED_FORMAT,
+                              &zoned_header, sizeof(zoned_header),
+@@ -3794,7 +4478,8 @@ qcow2_co_create(BlockdevCreateOptions *create_options, Error **errp)
+     int version;
+     int refcount_order;
+     uint64_t *refcount_table;
+-    int ret;
++    uint64_t zoned_meta_size, zoned_clusterlen;
++    int ret, offset, i;
+     uint8_t compression_type = QCOW2_COMPRESSION_TYPE_ZLIB;
+ 
+     assert(create_options->driver == BLOCKDEV_DRIVER_QCOW2);
+@@ -4155,6 +4840,41 @@ qcow2_co_create(BlockdevCreateOptions *create_options, Error **errp)
+             ret = -EINVAL;
+             goto unlock;
+         }
++
++        uint32_t nrz = s->zoned_header.nr_zones;
++        zoned_meta_size =  sizeof(uint64_t) * nrz;
++        g_autofree uint64_t *meta = NULL;
++        meta = g_new0(uint64_t, nrz);
++
++        for (i = 0; i < s->zoned_header.conventional_zones; ++i) {
++            meta[i] = i * s->zoned_header.zone_size;
++            meta[i] |= 1ULL << 59;
++        }
++
++        for (; i < nrz; ++i) {
++            meta[i] = i * s->zoned_header.zone_size;
++        }
++
++        offset = qcow2_alloc_clusters(blk_bs(blk), zoned_meta_size);
++        if (offset < 0) {
++            ret = offset;
++            error_setg_errno(errp, -ret, "Could not allocate clusters "
++                                         "for zoned metadata size");
++            goto unlock;
++        }
++        s->zoned_header.zonedmeta_offset = offset;
++
++        zoned_clusterlen = size_to_clusters(s, zoned_meta_size)
++                * s->cluster_size;
++        ret = qcow2_pre_write_overlap_check(blk_bs(blk), 0, offset,
++                                            zoned_clusterlen, false);
++        assert(ret == 0);
++        ret = bdrv_pwrite(blk_bs(blk)->file, offset, zoned_meta_size, meta, 0);
++        if (ret < 0) {
++            error_setg_errno(errp, -ret, "Could not write zoned metadata "
++                                         "to disk");
++            goto unlock;
++        }
+     } else {
+         s->zoned_header.zoned = QCOW2_Z_NONE;
+     }
+@@ -4554,6 +5274,409 @@ qcow2_co_pdiscard(BlockDriverState *bs, int64_t offset, int64_t bytes)
+     return ret;
+ }
+ 
++static int coroutine_fn
++qcow2_co_zone_report(BlockDriverState *bs, int64_t offset,
++                     unsigned int *nr_zones, BlockZoneDescriptor *zones)
++{
++    BDRVQcow2State *s = bs->opaque;
++    uint64_t zone_size = s->zoned_header.zone_size;
++    int64_t capacity = bs->total_sectors << BDRV_SECTOR_BITS;
++    int64_t size = bs->bl.nr_zones * zone_size;
++    unsigned int nrz;
++    int i = 0;
++    int si;
++
++    if (offset >= capacity) {
++        error_report("offset %" PRId64 " is equal to or greater than the "
++                     "device capacity %" PRId64 "", offset, capacity);
++        return -EINVAL;
++    }
++
++    nrz = ((*nr_zones) < bs->bl.nr_zones) ? (*nr_zones) : bs->bl.nr_zones;
++    si = offset / zone_size; /* Zone size cannot be 0 for zoned device */
++    qemu_co_mutex_lock(&bs->wps->colock);
++    for (; i < nrz; ++i) {
++        if (i + si >= bs->bl.nr_zones) {
 +            break;
 +        }
 +
-         default:
-             /* unknown magic - save it in case we need to rewrite the header */
-             /* If you add a new feature, make sure to also update the fast
-@@ -2068,6 +2201,25 @@ static void qcow2_refresh_limits(BlockDriverState *bs, Error **errp)
-     }
-     bs->bl.pwrite_zeroes_alignment = s->subcluster_size;
-     bs->bl.pdiscard_alignment = s->cluster_size;
++        zones[i].start = (si + i) * zone_size;
 +
-+    switch (s->zoned_header.zoned) {
-+    case QCOW2_Z_HM:
-+        bs->bl.zoned = BLK_Z_HM;
++        /* The last zone can be smaller than the zone size */
++        if ((si + i + 1) == bs->bl.nr_zones && size > capacity) {
++            uint32_t l = zone_size - (size - capacity);
++            zones[i].length = l;
++            zones[i].cap = l;
++        } else {
++            zones[i].length = zone_size;
++            zones[i].cap = zone_size;
++        }
++
++        uint64_t wp = bs->wps->wp[si + i];
++        if (QCOW2_ZT_IS_CONV(wp)) {
++            zones[i].type = BLK_ZT_CONV;
++            zones[i].state = BLK_ZS_NOT_WP;
++            /* Clear masking bits */
++            wp = QCOW2_GET_WP(wp);
++        } else {
++            zones[i].type = BLK_ZT_SWR;
++            zones[i].state = qcow2_get_zone_state(bs, si + i);
++        }
++        zones[i].wp = wp;
++    }
++    qemu_co_mutex_unlock(&bs->wps->colock);
++    *nr_zones = i;
++    return 0;
++}
++
++static int coroutine_fn GRAPH_RDLOCK
++qcow2_open_zone(BlockDriverState *bs, uint32_t index) {
++    BDRVQcow2State *s = bs->opaque;
++    int ret;
++
++    qemu_co_mutex_lock(&bs->wps->colock);
++    BlockZoneState zs = qcow2_get_zone_state(bs, index);
++    trace_qcow2_imp_open_zones(BLK_ZO_OPEN, s->nr_zones_imp_open);
++
++    switch (zs) {
++    case BLK_ZS_EMPTY:
++        if (!qcow2_can_activate_zone(bs)) {
++            ret = -EBUSY;
++            goto unlock;
++        }
 +        break;
-+    case QCOW2_Z_NONE:
++    case BLK_ZS_IOPEN:
++        qcow2_rm_imp_open_zone(s, index);
++        break;
++    case BLK_ZS_EOPEN:
++        return 0;
++    case BLK_ZS_CLOSED:
++        if (!qcow2_can_open_zone(bs)) {
++            ret = -EINVAL;
++            goto unlock;
++        }
++        qcow2_rm_closed_zone(s, index);
++        break;
++    case BLK_ZS_FULL:
++        break;
 +    default:
-+        bs->bl.zoned = BLK_Z_NONE;
++        ret = -EINVAL;
++        goto unlock;
++    }
++
++    qcow2_do_exp_open_zone(s, index);
++    ret = 0;
++
++unlock:
++    qemu_co_mutex_unlock(&bs->wps->colock);
++    return ret;
++}
++
++static int qcow2_close_zone(BlockDriverState *bs, uint32_t index)
++{
++    int ret;
++
++    qemu_co_mutex_lock(&bs->wps->colock);
++    BlockZoneState zs = qcow2_get_zone_state(bs, index);
++
++    switch (zs) {
++    case BLK_ZS_EMPTY:
++        break;
++    case BLK_ZS_IOPEN:
++        break;
++    case BLK_ZS_EOPEN:
++        break;
++    case BLK_ZS_CLOSED:
++        /* Closing a closed zone is not an error */
++        ret = 0;
++        goto unlock;
++    case BLK_ZS_FULL:
++        break;
++    default:
++        ret = -EINVAL;
++        goto unlock;
++    }
++    qcow2_do_close_zone(bs, index, zs);
++    ret = 0;
++
++unlock:
++    qemu_co_mutex_unlock(&bs->wps->colock);
++    return ret;
++}
++
++static int coroutine_fn GRAPH_RDLOCK
++qcow2_finish_zone(BlockDriverState *bs, uint32_t index) {
++    BDRVQcow2State *s = bs->opaque;
++    int ret;
++
++    qemu_co_mutex_lock(&bs->wps->colock);
++    uint64_t *wp = &bs->wps->wp[index];
++    BlockZoneState zs = qcow2_get_zone_state(bs, index);
++
++    switch (zs) {
++    case BLK_ZS_EMPTY:
++        if (!qcow2_can_activate_zone(bs)) {
++            ret = -EBUSY;
++            goto unlock;
++        }
++        break;
++    case BLK_ZS_IOPEN:
++        qcow2_rm_imp_open_zone(s, index);
++        trace_qcow2_imp_open_zones(BLK_ZO_FINISH, s->nr_zones_imp_open);
++        break;
++    case BLK_ZS_EOPEN:
++        qcow2_rm_exp_open_zone(s, index);
++        break;
++    case BLK_ZS_CLOSED:
++        if (!qcow2_can_open_zone(bs)) {
++            ret = -EINVAL;
++            goto unlock;
++        }
++        qcow2_rm_closed_zone(s, index);
++        break;
++    case BLK_ZS_FULL:
++        ret = 0;
++        goto unlock;
++    default:
++        ret = -EINVAL;
++        goto unlock;
++    }
++
++    /* Reject if any append write is still in flight for this zone. */
++    if (s->zone_wp_state &&
++        !QTAILQ_EMPTY(&s->zone_wp_state[index].in_flight)) {
++        ret = -EBUSY;
++        goto unlock;
++    }
++
++    *wp = ((uint64_t)index + 1) * s->zoned_header.zone_size;
++    ret = qcow2_rw_wp_at(bs, wp, index, true);
++    if (ret < 0) {
++        goto unlock;
++    }
++
++    /*
++     * Flush the WP cache so the on-disk write pointer reflects the new state
++     * on return.
++     */
++    qemu_co_mutex_lock(&s->lock);
++    ret = qcow2_cache_flush(bs, s->wp_cache);
++    qemu_co_mutex_unlock(&s->lock);
++
++unlock:
++    qemu_co_mutex_unlock(&bs->wps->colock);
++    return ret;
++}
++
++static int coroutine_fn GRAPH_RDLOCK
++qcow2_reset_zone(BlockDriverState *bs, uint32_t index,
++                            int64_t len) {
++    BDRVQcow2State *s = bs->opaque;
++    int nrz = bs->bl.nr_zones;
++    int zone_size = bs->bl.zone_size;
++    int n, ret = 0;
++    bool any_dirtied = false;
++
++    qemu_co_mutex_lock(&bs->wps->colock);
++    uint64_t *wp = &bs->wps->wp[index];
++    if (len == bs->total_sectors << BDRV_SECTOR_BITS) {
++        n = nrz;
++        index = 0;
++        wp = &bs->wps->wp[0];
++    } else {
++        n = len / zone_size;
++    }
++
++    for (int i = 0; i < n; ++i) {
++        uint64_t *wp_i = (uint64_t *)(wp + i);
++        uint64_t wpi_v = *wp_i;
++        if (QCOW2_ZT_IS_CONV(wpi_v)) {
++            continue;
++        }
++
++        /* Reject if any write is in flight for this zone. */
++        if (s->zone_wp_state &&
++            !QTAILQ_EMPTY(&s->zone_wp_state[index + i].in_flight)) {
++            ret = -EBUSY;
++            goto unlock;
++        }
++
++        BlockZoneState zs = qcow2_get_zone_state(bs, index + i);
++        switch (zs) {
++        case BLK_ZS_EMPTY:
++            break;
++        case BLK_ZS_IOPEN:
++            qcow2_rm_imp_open_zone(s, index + i);
++            trace_qcow2_imp_open_zones(BLK_ZO_RESET, s->nr_zones_imp_open);
++            break;
++        case BLK_ZS_EOPEN:
++            qcow2_rm_exp_open_zone(s, index + i);
++            break;
++        case BLK_ZS_CLOSED:
++            qcow2_rm_closed_zone(s, index + i);
++            break;
++        case BLK_ZS_FULL:
++            break;
++        default:
++            ret = -EINVAL;
++            goto unlock;
++        }
++
++        if (zs == BLK_ZS_EMPTY) {
++            continue;
++        }
++
++        /*
++         * Zero the data extent first. Date write fires before the WP cluster
++         * hits disk. So the wp advance cannot become durable while stale data
++         * is still readable.
++         */
++        ret = qcow2_co_pwrite_zeroes(bs, (uint64_t)(index + i) * zone_size,
++                                     zone_size, 0);
++        if (ret < 0) {
++            error_report("Failed to clear zone data at zone %u",
++                         index + i);
++            goto unlock;
++        }
++
++        qemu_co_mutex_lock(&s->lock);
++        qcow2_cache_depends_on_flush(s->wp_cache);
++        qemu_co_mutex_unlock(&s->lock);
++
++        *wp_i = (uint64_t)(index + i) * zone_size;
++        ret = qcow2_rw_wp_at(bs, wp_i, index + i, true);
++        if (ret < 0) {
++            goto unlock;
++        }
++        any_dirtied = true;
++    }
++
++    if (any_dirtied) {
++        /* Single flush at the end. */
++        qemu_co_mutex_lock(&s->lock);
++        ret = qcow2_cache_flush(bs, s->wp_cache);
++        qemu_co_mutex_unlock(&s->lock);
++    }
++
++unlock:
++    qemu_co_mutex_unlock(&bs->wps->colock);
++    return ret;
++}
++
++static int coroutine_fn GRAPH_RDLOCK
++qcow2_co_zone_mgmt(BlockDriverState *bs, BlockZoneOp op,
++                                           int64_t offset, int64_t len)
++{
++    BDRVQcow2State *s = bs->opaque;
++    int ret = 0;
++    int64_t capacity = bs->total_sectors << BDRV_SECTOR_BITS;
++    int64_t zone_size = s->zoned_header.zone_size;
++    int64_t zone_size_mask = zone_size - 1;
++    uint32_t index = offset / zone_size;
++    BlockZoneWps *wps = bs->wps;
++
++    if (offset >= capacity) {
++        error_report("offset %" PRId64 " is equal to or greater than the"
++                     "device capacity %" PRId64 "", offset, capacity);
++        return -EINVAL;
++    }
++
++    if (offset & zone_size_mask) {
++        error_report("sector offset %" PRId64 " is not aligned to zone size"
++                     " %" PRId64 "", offset / 512, zone_size / 512);
++        return -EINVAL;
++    }
++
++    if (((offset + len) < capacity && len & zone_size_mask) ||
++        offset + len > capacity) {
++        error_report("number of sectors %" PRId64 " is not aligned to zone"
++                     " size %" PRId64 "", len / 512, zone_size / 512);
++        return -EINVAL;
++    }
++
++    qemu_co_mutex_lock(&wps->colock);
++    uint64_t wpv = wps->wp[index];
++    qemu_co_mutex_unlock(&wps->colock);
++
++    if (QCOW2_ZT_IS_CONV(wpv)) {
++        /*
++         * ZONE_RESET_ALL is a global operation that is allowed when the
++         * starting zone is conventional; the zone reset path itself skips
++         * conventional zones.
++         */
++        if (op != BLK_ZO_RESET || len != capacity) {
++            error_report("zone mgmt operation 0x%x is not allowed on "
++                         "a conventional zone", op);
++            return -EIO;
++        }
++    }
++
++    switch (op) {
++    case BLK_ZO_OPEN:
++        ret = qcow2_open_zone(bs, index);
++        break;
++    case BLK_ZO_CLOSE:
++        ret = qcow2_close_zone(bs, index);
++        break;
++    case BLK_ZO_FINISH:
++        ret = qcow2_finish_zone(bs, index);
++        break;
++    case BLK_ZO_RESET:
++        ret = qcow2_reset_zone(bs, index, len);
++        break;
++    default:
++        error_report("Unsupported zone op: 0x%x", op);
++        ret = -ENOTSUP;
 +        break;
 +    }
++    return ret;
++}
 +
-+    bs->bl.nr_zones = s->zoned_header.nr_zones;
-+    bs->bl.max_append_sectors = s->zoned_header.max_append_bytes
-+        >> BDRV_SECTOR_BITS;
-+    bs->bl.max_active_zones = s->zoned_header.max_active_zones;
-+    bs->bl.max_open_zones = s->zoned_header.max_open_zones;
-+    bs->bl.zone_size = s->zoned_header.zone_size;
-+    bs->bl.zone_capacity = s->zoned_header.zone_capacity;
-+    bs->bl.write_granularity = BDRV_SECTOR_SIZE;
- }
- 
- static int GRAPH_UNLOCKED
-@@ -3170,6 +3322,11 @@ int qcow2_update_header(BlockDriverState *bs)
-                 .bit  = QCOW2_INCOMPAT_EXTL2_BITNR,
-                 .name = "extended L2 entries",
-             },
-+            {
-+                .type = QCOW2_FEAT_TYPE_INCOMPATIBLE,
-+                .bit  = QCOW2_INCOMPAT_ZONED_FORMAT_BITNR,
-+                .name = "zoned format",
-+            },
-             {
-                 .type = QCOW2_FEAT_TYPE_COMPATIBLE,
-                 .bit  = QCOW2_COMPAT_LAZY_REFCOUNTS_BITNR,
-@@ -3215,6 +3372,31 @@ int qcow2_update_header(BlockDriverState *bs)
-         buflen -= ret;
-     }
- 
-+    /* Zoned devices header extension */
-+    if (s->zoned_header.zoned == QCOW2_Z_HM) {
-+        Qcow2ZonedHeaderExtension zoned_header = {
-+            .zoned              = s->zoned_header.zoned,
-+            .zone_size          = cpu_to_be64(s->zoned_header.zone_size),
-+            .zone_capacity      = cpu_to_be64(s->zoned_header.zone_capacity),
-+            .conventional_zones =
-+                cpu_to_be32(s->zoned_header.conventional_zones),
-+            .nr_zones           = cpu_to_be32(s->zoned_header.nr_zones),
-+            .max_open_zones     = cpu_to_be32(s->zoned_header.max_open_zones),
-+            .max_active_zones   =
-+                cpu_to_be32(s->zoned_header.max_active_zones),
-+            .max_append_bytes =
-+                cpu_to_be32(s->zoned_header.max_append_bytes)
-+        };
-+        ret = header_ext_add(buf, QCOW2_EXT_MAGIC_ZONED_FORMAT,
-+                             &zoned_header, sizeof(zoned_header),
-+                             buflen);
-+        if (ret < 0) {
-+            goto fail;
-+        }
-+        buf += ret;
-+        buflen -= ret;
++static int coroutine_fn GRAPH_RDLOCK
++qcow2_co_zone_append(BlockDriverState *bs, int64_t *offset, QEMUIOVector *qiov,
++                     BdrvRequestFlags flags)
++{
++    assert(flags == 0);
++    int64_t capacity = bs->total_sectors << BDRV_SECTOR_BITS;
++    int64_t zone_size_mask = bs->bl.zone_size - 1;
++    int64_t iov_len = 0;
++    int64_t len = 0;
++
++    if (*offset >= capacity) {
++        error_report("*offset %" PRId64 " is equal to or greater than the"
++                     "device capacity %" PRId64 "", *offset, capacity);
++        return -EINVAL;
 +    }
 +
-     /* Keep unknown header extensions */
-     QLIST_FOREACH(uext, &s->unknown_header_ext, next) {
-         ret = header_ext_add(buf, uext->magic, uext->data, uext->len, buflen);
-@@ -3589,6 +3771,8 @@ qcow2_co_create(BlockdevCreateOptions *create_options, Error **errp)
-     ERRP_GUARD();
-     BlockdevCreateOptionsQcow2 *qcow2_opts;
-     QDict *options;
-+    Qcow2ZoneCreateOptions *zone_struct;
-+    Qcow2ZoneHostManaged *zone_host_managed;
- 
-     /*
-      * Open the image file and write a minimal qcow2 header.
-@@ -3615,6 +3799,8 @@ qcow2_co_create(BlockdevCreateOptions *create_options, Error **errp)
- 
-     assert(create_options->driver == BLOCKDEV_DRIVER_QCOW2);
-     qcow2_opts = &create_options->u.qcow2;
-+    zone_struct = create_options->u.qcow2.zone;
-+    zone_host_managed = &create_options->u.qcow2.zone->u.host_managed;
- 
-     bs = bdrv_co_open_blockdev_ref(qcow2_opts->file, errp);
-     if (bs == NULL) {
-@@ -3828,6 +4014,14 @@ qcow2_co_create(BlockdevCreateOptions *create_options, Error **errp)
-         header->incompatible_features |=
-             cpu_to_be64(QCOW2_INCOMPAT_DATA_FILE);
-     }
-+    if (zone_struct && zone_struct->mode == QCOW2_ZONE_MODEL_HOST_MANAGED) {
-+        /*
-+         * The incompatible bit must be set when the zone model is
-+         * host-managed
-+         */
-+        header->incompatible_features |=
-+            cpu_to_be64(QCOW2_INCOMPAT_ZONED_FORMAT);
-+    }
-     if (qcow2_opts->data_file_raw) {
-         header->autoclear_features |=
-             cpu_to_be64(QCOW2_AUTOCLEAR_DATA_FILE_RAW);
-@@ -3885,10 +4079,9 @@ qcow2_co_create(BlockdevCreateOptions *create_options, Error **errp)
-     bdrv_graph_co_rdlock();
-     ret = qcow2_alloc_clusters(blk_bs(blk), 3 * cluster_size);
-     if (ret < 0) {
--        bdrv_graph_co_rdunlock();
-         error_setg_errno(errp, -ret, "Could not allocate clusters for qcow2 "
-                          "header and refcount table");
--        goto out;
-+        goto unlock;
- 
-     } else if (ret != 0) {
-         error_report("Huh, first cluster in empty image is already in use?");
-@@ -3896,11 +4089,76 @@ qcow2_co_create(BlockdevCreateOptions *create_options, Error **errp)
-     }
- 
-     /* Set the external data file if necessary */
-+    BDRVQcow2State *s = blk_bs(blk)->opaque;
-     if (data_bs) {
--        BDRVQcow2State *s = blk_bs(blk)->opaque;
-         s->image_data_file = g_strdup(data_bs->filename);
-     }
- 
-+    if (zone_struct && zone_struct->mode == QCOW2_ZONE_MODEL_HOST_MANAGED) {
-+        s->zoned_header.zoned = QCOW2_Z_HM;
-+
-+        if (zone_host_managed->has_size) {
-+            s->zoned_header.zone_size = zone_host_managed->size;
-+        } else {
-+            s->zoned_header.zone_size = DEFAULT_ZONE_SIZE;
-+        }
-+
-+        if (s->zoned_header.zone_size == 0) {
-+            error_setg(errp, "Zoned extension header zone_size field "
-+                       "can not be 0");
-+            s->zoned_header.zoned = QCOW2_Z_NONE;
-+            ret = -EINVAL;
-+            goto unlock;
-+        }
-+        s->zoned_header.nr_zones = DIV_ROUND_UP(qcow2_opts->size,
-+                                                s->zoned_header.zone_size);
-+
-+        if (zone_host_managed->has_capacity) {
-+            s->zoned_header.zone_capacity = zone_host_managed->capacity;
-+        } else {
-+            s->zoned_header.zone_capacity = s->zoned_header.zone_size;
-+        }
-+
-+        if (zone_host_managed->has_conventional_zones) {
-+            s->zoned_header.conventional_zones =
-+                zone_host_managed->conventional_zones;
-+        } else {
-+            s->zoned_header.conventional_zones = 0;
-+        }
-+
-+        if (zone_host_managed->has_max_active_zones) {
-+            s->zoned_header.max_active_zones =
-+                zone_host_managed->max_active_zones;
-+        } else {
-+            s->zoned_header.max_active_zones = 0;
-+        }
-+
-+        if (zone_host_managed->has_max_open_zones) {
-+            s->zoned_header.max_open_zones =
-+                zone_host_managed->max_open_zones;
-+        } else if (zone_host_managed->has_max_active_zones) {
-+            s->zoned_header.max_open_zones =
-+                zone_host_managed->max_active_zones;
-+        } else {
-+            s->zoned_header.max_open_zones = 0;
-+        }
-+
-+        if (zone_host_managed->has_max_append_bytes) {
-+            s->zoned_header.max_append_bytes =
-+                    zone_host_managed->max_append_bytes;
-+        } else {
-+            s->zoned_header.max_append_bytes = DEFAULT_ZONE_MAX_APPEND_BYTES;
-+        }
-+
-+        if (!qcow2_check_zone_options(&s->zoned_header, errp)) {
-+            s->zoned_header.zoned = QCOW2_Z_NONE;
-+            ret = -EINVAL;
-+            goto unlock;
-+        }
-+    } else {
-+        s->zoned_header.zoned = QCOW2_Z_NONE;
++    /* offset + len should not pass the end of that zone starting from offset */
++    if (*offset & zone_size_mask) {
++        error_report("sector offset %" PRId64 " is not aligned to zone size "
++                     "%" PRId64 "", *offset / 512, bs->bl.zone_size / 512);
++        return -EINVAL;
 +    }
 +
-     /* Create a full header (including things like feature table) */
-     ret = qcow2_update_header(blk_bs(blk));
-     bdrv_graph_co_rdunlock();
-@@ -3974,6 +4232,9 @@ qcow2_co_create(BlockdevCreateOptions *create_options, Error **errp)
-     }
- 
-     ret = 0;
-+    goto out;
-+unlock:
-+    bdrv_graph_co_rdunlock();
- out:
-     blk_co_unref(blk);
-     bdrv_co_unref(bs);
-@@ -4052,6 +4313,10 @@ qcow2_co_create_opts(BlockDriver *drv, const char *filename, QemuOpts *opts,
-         { BLOCK_OPT_COMPAT_LEVEL,       "version" },
-         { BLOCK_OPT_DATA_FILE_RAW,      "data-file-raw" },
-         { BLOCK_OPT_COMPRESSION_TYPE,   "compression-type" },
-+        { BLOCK_OPT_CONVENTIONAL_ZONES, "zone.conventional-zones" },
-+        { BLOCK_OPT_MAX_OPEN_ZONES,     "zone.max-open-zones" },
-+        { BLOCK_OPT_MAX_ACTIVE_ZONES,   "zone.max-active-zones" },
-+        { BLOCK_OPT_MAX_APPEND_BYTES,   "zone.max-append-bytes" },
-         { NULL, NULL },
-     };
- 
-@@ -5442,6 +5707,29 @@ qcow2_get_specific_info(BlockDriverState *bs, Error **errp)
-             .data_file_raw      = data_file_is_raw(bs),
-             .compression_type   = s->compression_type,
-         };
-+        if (s->zoned_header.zoned == QCOW2_Z_HM) {
-+            ImageInfoSpecificQCow2Zoned *z =
-+                g_new0(ImageInfoSpecificQCow2Zoned, 1);
-+            *z = (ImageInfoSpecificQCow2Zoned){
-+                .mode = QCOW2_ZONE_MODEL_HOST_MANAGED,
-+                .nr_zones = s->zoned_header.nr_zones,
-+                .u.host_managed = {
-+                    .has_size = true,
-+                    .size = s->zoned_header.zone_size,
-+                    .has_capacity = true,
-+                    .capacity = s->zoned_header.zone_capacity,
-+                    .has_conventional_zones = true,
-+                    .conventional_zones = s->zoned_header.conventional_zones,
-+                    .has_max_open_zones = true,
-+                    .max_open_zones = s->zoned_header.max_open_zones,
-+                    .has_max_active_zones = true,
-+                    .max_active_zones = s->zoned_header.max_active_zones,
-+                    .has_max_append_bytes = true,
-+                    .max_append_bytes = s->zoned_header.max_append_bytes,
-+                },
-+            };
-+            spec_info->u.qcow2.data->zone = z;
++    int64_t wg = bs->bl.write_granularity;
++    int64_t wg_mask = wg - 1;
++    for (int i = 0; i < qiov->niov; i++) {
++        iov_len = qiov->iov[i].iov_len;
++        if (iov_len & wg_mask) {
++            error_report("len of IOVector[%d] 0x%" PRIx64 " is not aligned to "
++                         "block size 0x%" PRIx64 "", i, iov_len, wg);
++            return -EINVAL;
 +        }
-     } else {
-         /* if this assertion fails, this probably means a new version was
-          * added without having it covered here */
-@@ -6265,6 +6553,41 @@ static QemuOptsList qcow2_create_opts = {
-             .type = QEMU_OPT_BOOL,                                      \
-             .help = "Assume the external data file already exists and " \
-                     "do not overwrite it"                               \
-+        },                                                              \
-+        {                                                               \
-+            .name = BLOCK_OPT_ZONE_MODEL,                               \
-+            .type = QEMU_OPT_STRING,                                    \
-+            .help = "zone model modes, mode choice: host-managed",      \
-+        },                                                              \
-+        {                                                               \
-+            .name = BLOCK_OPT_ZONE_SIZE,                                \
-+            .type = QEMU_OPT_SIZE,                                      \
-+            .help = "zone size",                                        \
-+        },                                                              \
-+        {                                                               \
-+            .name = BLOCK_OPT_ZONE_CAPACITY,                            \
-+            .type = QEMU_OPT_SIZE,                                      \
-+            .help = "zone capacity",                                    \
-+        },                                                              \
-+        {                                                               \
-+            .name = BLOCK_OPT_CONVENTIONAL_ZONES,                       \
-+            .type = QEMU_OPT_NUMBER,                                    \
-+            .help = "numbers of conventional zones",                    \
-+        },                                                              \
-+        {                                                               \
-+            .name = BLOCK_OPT_MAX_APPEND_BYTES,                         \
-+            .type = QEMU_OPT_SIZE,                                      \
-+            .help = "max append bytes",                                 \
-+        },                                                              \
-+        {                                                               \
-+            .name = BLOCK_OPT_MAX_ACTIVE_ZONES,                         \
-+            .type = QEMU_OPT_NUMBER,                                    \
-+            .help = "max active zones",                                 \
-+        },                                                              \
-+        {                                                               \
-+            .name = BLOCK_OPT_MAX_OPEN_ZONES,                           \
-+            .type = QEMU_OPT_NUMBER,                                    \
-+            .help = "max open zones",                                   \
-         },
-         QCOW_COMMON_OPTIONS,
-         { /* end of list */ }
-diff --git a/block/qcow2.h b/block/qcow2.h
-index 192a45d596..66474a686f 100644
---- a/block/qcow2.h
-+++ b/block/qcow2.h
-@@ -129,6 +129,12 @@
++    }
++    len = qiov->size;
++
++    if ((len >> BDRV_SECTOR_BITS) > bs->bl.max_append_sectors) {
++        error_report("len 0x%" PRIx64 " in sectors is greater than "
++                     "max_append_sectors 0x%" PRIx32 "",
++                     len >> BDRV_SECTOR_BITS, bs->bl.max_append_sectors);
++        return -EINVAL;
++    }
++
++    return qcow2_co_pwv_part(bs, offset, len, qiov, 0, true, 0);
++}
++
+ static int coroutine_fn GRAPH_RDLOCK
+ qcow2_co_copy_range_from(BlockDriverState *bs,
+                          BdrvChild *src, int64_t src_offset,
+@@ -6643,6 +7766,10 @@ BlockDriver bdrv_qcow2 = {
+     .bdrv_co_pwritev_compressed_part    = qcow2_co_pwritev_compressed_part,
+     .bdrv_make_empty                    = qcow2_make_empty,
  
- #define DEFAULT_CLUSTER_SIZE 65536
++    .bdrv_co_zone_report                = qcow2_co_zone_report,
++    .bdrv_co_zone_mgmt                  = qcow2_co_zone_mgmt,
++    .bdrv_co_zone_append                = qcow2_co_zone_append,
++
+     .bdrv_snapshot_create               = qcow2_snapshot_create,
+     .bdrv_snapshot_goto                 = qcow2_snapshot_goto,
+     .bdrv_snapshot_delete               = qcow2_snapshot_delete,
+diff --git a/block/trace-events b/block/trace-events
+index 950c82d4b8..30a3e303ca 100644
+--- a/block/trace-events
++++ b/block/trace-events
+@@ -76,6 +76,8 @@ qcow2_writev_data(void *co, uint64_t offset) "co %p offset 0x%" PRIx64
+ qcow2_pwrite_zeroes_start_req(void *co, int64_t offset, int64_t bytes) "co %p offset 0x%" PRIx64 " bytes %" PRId64
+ qcow2_pwrite_zeroes(void *co, int64_t offset, int64_t bytes) "co %p offset 0x%" PRIx64 " bytes %" PRId64
+ qcow2_skip_cow(void *co, uint64_t offset, int nb_clusters) "co %p offset 0x%" PRIx64 " nb_clusters %d"
++qcow2_wp_tracking(int index, uint64_t wp) "wps[%d]: 0x%" PRIx64
++qcow2_imp_open_zones(uint8_t op, int nrz) "nr_imp_open_zones after op 0x%x: %d"
  
-+#define DEFAULT_ZONE_SIZE (256 * MiB)
-+#define DEFAULT_ZONE_MAX_APPEND_BYTES (64 * KiB)
-+
-+#define QCOW2_Z_NONE 0 /* Regular block device */
-+#define QCOW2_Z_HM 1 /* Host-managed zoned block device */
-+
- #define QCOW2_OPT_DATA_FILE "data-file"
- #define QCOW2_OPT_LAZY_REFCOUNTS "lazy-refcounts"
- #define QCOW2_OPT_DISCARD_REQUEST "pass-discard-request"
-@@ -237,6 +243,60 @@ typedef struct Qcow2CryptoHeaderExtension {
-     uint64_t length;
- } QEMU_PACKED Qcow2CryptoHeaderExtension;
- 
-+typedef struct Qcow2ZonedHeaderExtension {
-+    /* Zoned device attributes */
-+    uint8_t zoned;
-+    uint8_t reserved[3];
-+    uint32_t nr_zones;
-+    uint64_t zone_size;
-+    uint64_t zone_capacity;
-+    uint32_t conventional_zones;
-+    uint32_t max_active_zones;
-+    uint32_t max_open_zones;
-+    uint32_t max_append_bytes;
-+    uint64_t zonedmeta_offset;
-+} QEMU_PACKED Qcow2ZonedHeaderExtension;
-+
-+typedef struct Qcow2ZoneListEntry {
-+    QTAILQ_ENTRY(Qcow2ZoneListEntry) exp_open_zone_entry;
-+    QTAILQ_ENTRY(Qcow2ZoneListEntry) imp_open_zone_entry;
-+    QTAILQ_ENTRY(Qcow2ZoneListEntry) closed_zone_entry;
-+} Qcow2ZoneListEntry;
-+
-+/*
-+ * Per-zone tracking for write pointer (WP) advance. A submitter
-+ * reserves an LBA range, performs the data write outside the zone
-+ * lock, then waits until the persisted WP catches up to its end
-+ * offset before returning success to the guest. A failure aborts
-+ * all higher-LBA peers in the same zone.
-+ */
-+typedef enum Qcow2WPReqState {
-+    /* data write submitted, awaiting completion */
-+    QCOW2_WP_REQ_INFLIGHT,
-+    /* data write completed, persisted WP not yet advanced past lba + len */
-+    QCOW2_WP_REQ_PENDING,
-+    /* persisted WP covers this range, submitter may ack success */
-+    QCOW2_WP_REQ_RESOLVED,
-+    /* data write failed, or a lower-LBA peer in the same zone failed */
-+    QCOW2_WP_REQ_ABORTED,
-+} Qcow2WPReqState;
-+
-+typedef struct Qcow2WPReq {
-+    uint64_t lba;                       /* start offset of the data write */
-+    uint64_t len;                       /* length in bytes */
-+    Qcow2WPReqState state;
-+    /* submitter waits for the data write to reach a terminal state */
-+    CoQueue wait;
-+    QTAILQ_ENTRY(Qcow2WPReq) entry;
-+} Qcow2WPReq;
-+
-+typedef struct Qcow2ZoneWPState {
-+    /* INFLIGHT reqs */
-+    QTAILQ_HEAD(, Qcow2WPReq) in_flight;
-+    /* PENDING reqs, sorted by lba */
-+    QTAILQ_HEAD(, Qcow2WPReq) completed_pending;
-+} Qcow2ZoneWPState;
-+
- typedef struct Qcow2UnknownHeaderExtension {
-     uint32_t magic;
-     uint32_t len;
-@@ -257,17 +317,20 @@ enum {
-     QCOW2_INCOMPAT_DATA_FILE_BITNR  = 2,
-     QCOW2_INCOMPAT_COMPRESSION_BITNR = 3,
-     QCOW2_INCOMPAT_EXTL2_BITNR      = 4,
-+    QCOW2_INCOMPAT_ZONED_FORMAT_BITNR = 5,
-     QCOW2_INCOMPAT_DIRTY            = 1 << QCOW2_INCOMPAT_DIRTY_BITNR,
-     QCOW2_INCOMPAT_CORRUPT          = 1 << QCOW2_INCOMPAT_CORRUPT_BITNR,
-     QCOW2_INCOMPAT_DATA_FILE        = 1 << QCOW2_INCOMPAT_DATA_FILE_BITNR,
-     QCOW2_INCOMPAT_COMPRESSION      = 1 << QCOW2_INCOMPAT_COMPRESSION_BITNR,
-     QCOW2_INCOMPAT_EXTL2            = 1 << QCOW2_INCOMPAT_EXTL2_BITNR,
-+    QCOW2_INCOMPAT_ZONED_FORMAT     = 1 << QCOW2_INCOMPAT_ZONED_FORMAT_BITNR,
- 
-     QCOW2_INCOMPAT_MASK             = QCOW2_INCOMPAT_DIRTY
-                                     | QCOW2_INCOMPAT_CORRUPT
-                                     | QCOW2_INCOMPAT_DATA_FILE
-                                     | QCOW2_INCOMPAT_COMPRESSION
--                                    | QCOW2_INCOMPAT_EXTL2,
-+                                    | QCOW2_INCOMPAT_EXTL2
-+                                    | QCOW2_INCOMPAT_ZONED_FORMAT,
- };
- 
- /* Compatible feature bits */
-@@ -426,6 +489,24 @@ typedef struct BDRVQcow2State {
-      * is to convert the image with the desired compression type set.
-      */
-     Qcow2CompressionType compression_type;
-+
-+    /* States of zoned device */
-+    Qcow2ZonedHeaderExtension zoned_header;
-+    QTAILQ_HEAD(, Qcow2ZoneListEntry) exp_open_zones;
-+    QTAILQ_HEAD(, Qcow2ZoneListEntry) imp_open_zones;
-+    QTAILQ_HEAD(, Qcow2ZoneListEntry) closed_zones;
-+    Qcow2ZoneListEntry *zone_list_entries;
-+    uint32_t nr_zones_exp_open;
-+    uint32_t nr_zones_imp_open;
-+    uint32_t nr_zones_closed;
-+
-+    /* Per-zone in-memory WP tracking for zoned imgaes. */
-+    Qcow2ZoneWPState *zone_wp_state;
-+    /*
-+     * Cache holding the on-disk zonedmeta cluster(s) for zoned image.
-+     * WP advances go through this cache.
-+     */
-+    Qcow2Cache *wp_cache;
- } BDRVQcow2State;
- 
- typedef struct Qcow2COWRegion {
-diff --git a/docs/interop/qcow2.rst b/docs/interop/qcow2.rst
-index 5948591107..1e2689b99e 100644
---- a/docs/interop/qcow2.rst
-+++ b/docs/interop/qcow2.rst
-@@ -128,7 +128,26 @@ the next fields through ``header_length``.
-                                 allows subcluster-based allocation. See the
-                                 Extended L2 Entries section for more details.
- 
--                    Bits 5-63:  Reserved (set to 0)
-+                    Bit 5:      Zoned extension bit. If this bit is set then
-+                                the file is an emulated zoned device. The
-+                                zoned extension must be present.
-+                                Implementations that do not support zoned
-+                                emulation cannot open this file because it
-+                                generally only make sense to interpret the
-+                                data along with the zone information and
-+                                write pointers.
-+
-+                                It is unsafe when any qcow2 user without
-+                                knowing the zoned extension reads or edits
-+                                a file with the zoned extension. The write
-+                                pointer tracking can be corrupted when a
-+                                writer edits a file, like overwriting beyond
-+                                the write pointer locations. Or a reader tries
-+                                to access a file without knowing write
-+                                pointers where the software setup will cause
-+                                invalid reads.
-+
-+                    Bits 6-63:  Reserved (set to 0)
- 
-          80 -  87:  compatible_features
-                     Bitmask of compatible features. An implementation can
-@@ -259,6 +278,7 @@ be stored. Each extension has a structure like the following::
-                         0x23852875 - Bitmaps extension
-                         0x0537be77 - Full disk encryption header pointer
-                         0x44415441 - External data file name string
-+                        0x007a6264 - Zoned extension
-                         other      - Unknown header extension, can be safely
-                                      ignored
- 
-@@ -344,6 +364,101 @@ The fields of the bitmaps extension are::
-                    Offset into the image file at which the bitmap directory
-                    starts. Must be aligned to a cluster boundary.
- 
-+Zoned extension
-+---------------
-+
-+The zoned extension must be present if the incompatible_features bit 5 is set,
-+and omitted when it is clear. It contains fields for emulating the zoned
-+storage model (https://zonedstorage.io/). Currently only the host-managed zone
-+model is supported.
-+
-+The fields of the zoned extension are::
-+
-+    Byte       0:  zoned
-+                   The byte represents the zoned model of the device. 0 is for
-+                   a non-zoned device (all other information in this header
-+                   is ignored). 1 is for a host-managed device, which only
-+                   allows for sequential writes within each zone. Other
-+                   values may be added later, the implementation must refuse
-+                   to open a device containing an unknown zone model.
-+
-+          1 -  3:  Reserved, must be zero.
-+
-+          4 -  7:  nr_zones
-+                   The number of zones. It is the sum of conventional zones
-+                   and sequential zones. The maximum value for nr_zones is
-+                   (2^32 - 1)/8 = 536870911.
-+
-+          8 - 15:  zone_size
-+                   Total size of each zone, in bytes. The 64-bit field is to
-+                   satisfy the virtio-blk zone_size range and emulate a read
-+                   zoned device, whose maximum zone size can be as large as
-+                   2TB.
-+
-+                   The value must be power of 2. Linux currently requires
-+                   the zone size to be a power of 2 number of LBAs. Qcow2
-+                   following this is mainly to allow emulating a real
-+                   ZNS drive configuration. It is not relevant to the cluster
-+                   size.
-+
-+         16 - 23:  zone_capacity
-+                   The number of writable bytes within the zones. The bytes
-+                   between zone capacity and zone size are unusable: reads
-+                   will return 0s and writes will fail.
-+
-+                   A zone capacity is always smaller or equal to the zone
-+                   size. It is for emulating a real ZNS drive configuration,
-+                   which has the constraint of aligning to some hardware erase
-+                   block size.
-+
-+         24 - 27:  conventional_zones
-+                   The number of conventional zones. The conventional zones
-+                   allow sequential writes and random writes. While the
-+                   sequential zones only allow sequential writes.
-+
-+         28 - 31:  max_active_zones
-+                   The number of the zones that can be in the implicit open,
-+                   explicit open or closed state. It cannot be larger than
-+                   nr_zones.
-+
-+         32 - 35:  max_open_zones
-+                   The maximal number of open (implicitly open or explicitly
-+                   open) zones. It cannot be larger than the number of SWR
-+                   zones of the device, nor larger than max_active_zones.
-+
-+                   If the limits of open zones or active zones are equal to
-+                   the total number of SWR zones, then it's the same as having
-+                   no limits therefore max open zones and max active zones are
-+                   set to 0.
-+
-+         36 - 39:  max_append_bytes
-+                   The number of bytes of a zone append request that can be
-+                   issued to the device. It must be 512-byte aligned and less
-+                   than the zone capacity.
-+
-+         40 - 47:  zonedmeta_offset
-+                   The offset of zoned metadata structure in the contained
-+                   image, in bytes.
-+
-+The zonedmeta clusters contain a table of the zone write pointers. Each entry
-+is a 64-bit value encoding both the zone type and the zone's write pointer::
-+
-+    Bit   0 - 58:  Write pointer offset, in bytes, indicates the starting
-+                   point of the next write position in that zone.
-+                   For conventional zones the value is the zone's starting
-+                   offset.
-+
-+              59:  Zone type. 0 = SWR; 1 = conventional.
-+
-+         60 - 63:  Reserved, must be zero.
-+
-+
-+Each zone's write pointer in the zonedmeta area is durable on disk only after
-+the data it covers is durable. For a write to a SWR zone, the data is written
-+back to disk first, then the non-zoned qcow2 L1/L2/refcount metadata is written,
-+and finally the write pointers are written. This ordering ensures that after
-+a power failure the on-disk write pointer never leads data being written.
-+
- Full disk encryption header pointer
- -----------------------------------
- 
-diff --git a/include/block/block_int-common.h b/include/block/block_int-common.h
-index 147c08155f..349876bc65 100644
---- a/include/block/block_int-common.h
-+++ b/include/block/block_int-common.h
-@@ -57,6 +57,13 @@
- #define BLOCK_OPT_COMPRESSION_TYPE  "compression_type"
- #define BLOCK_OPT_EXTL2             "extended_l2"
- #define BLOCK_OPT_KEEP_DATA_FILE    "keep_data_file"
-+#define BLOCK_OPT_ZONE_MODEL        "zone.mode"
-+#define BLOCK_OPT_ZONE_SIZE         "zone.size"
-+#define BLOCK_OPT_ZONE_CAPACITY     "zone.capacity"
-+#define BLOCK_OPT_CONVENTIONAL_ZONES    "zone.conventional_zones"
-+#define BLOCK_OPT_MAX_APPEND_BYTES      "zone.max_append_bytes"
-+#define BLOCK_OPT_MAX_ACTIVE_ZONES      "zone.max_active_zones"
-+#define BLOCK_OPT_MAX_OPEN_ZONES        "zone.max_open_zones"
- 
- #define BLOCK_PROBE_BUF_SIZE        512
- 
-@@ -901,7 +908,13 @@ typedef struct BlockLimits {
-     BlockZoneModel zoned;
- 
-     /* zone size expressed in bytes */
--    uint32_t zone_size;
-+    uint64_t zone_size;
-+
-+    /*
-+     * The number of usable logical blocks within the zone, expressed
-+     * in bytes. A zone capacity is smaller or equal to the zone size.
-+     */
-+    uint64_t zone_capacity;
- 
-     /* total number of zones */
-     uint32_t nr_zones;
-diff --git a/qapi/block-core.json b/qapi/block-core.json
-index 1f87b07850..4542bfc8f5 100644
---- a/qapi/block-core.json
-+++ b/qapi/block-core.json
-@@ -93,6 +93,9 @@
- #
- # @compression-type: the image cluster compression method (since 5.1)
- #
-+# @zone: zoned configuration; only set when the image was created
-+#     with a zoned model (since 11.1)
-+#
- # Since: 1.7
- ##
- { 'struct': 'ImageInfoSpecificQCow2',
-@@ -106,7 +109,8 @@
-       'refcount-bits': 'int',
-       '*encrypt': 'ImageInfoSpecificQCow2Encryption',
-       '*bitmaps': ['Qcow2BitmapInfo'],
--      'compression-type': 'Qcow2CompressionType'
-+      'compression-type': 'Qcow2CompressionType',
-+      '*zone': 'ImageInfoSpecificQCow2Zoned'
-   } }
- 
- ##
-@@ -5221,6 +5225,85 @@
- { 'enum': 'Qcow2CompressionType',
-   'data': [ 'zlib', { 'name': 'zstd', 'if': 'CONFIG_ZSTD' } ] }
- 
-+##
-+# @Qcow2ZoneModel:
-+#
-+# Zoned device model used in qcow2 image file
-+#
-+# @host-managed: The host-managed model only allows sequential write
-+#     over the device zones.
-+#
-+# Since: 11.1
-+##
-+{ 'enum': 'Qcow2ZoneModel',
-+  'data': [ 'host-managed'] }
-+
-+##
-+# @Qcow2ZoneHostManaged:
-+#
-+# The host-managed zone model.  It only allows sequential writes.
-+#
-+# @size: Total number of bytes within zones (default: 256 MB).
-+#
-+# @capacity: The usable space within each zone, in bytes.  Always
-+#     smaller than or equal to @size (default: same as @size).
-+#
-+# @conventional-zones: The number of conventional zones of the
-+#     zoned device (default: 0).
-+#
-+# @max-open-zones: The maximal number of open zones.  Must be less
-+#     than or equal to the number of non-conventional zones (i.e.
-+#     ``size / zone.size - @conventional-zones``), and less than or
-+#     equal to @max-active-zones (default: 0, meaning no limit).
-+#
-+# @max-active-zones: The maximal number of zones in the implicit
-+#     open, explicit open or closed state.  It is less than or equal
-+#     to the number of zones (default: 0, meaning no limit).
-+#
-+# @max-append-bytes: The maximal size in bytes of a zone-append
-+#     request that can be issued to the device.  Must be a multiple
-+#     of 512, and less than @capacity (default: 64 KB).
-+#
-+# Since: 11.1
-+##
-+{ 'struct': 'Qcow2ZoneHostManaged',
-+  'data': { '*size':          'size',
-+            '*capacity':      'size',
-+            '*conventional-zones': 'uint32',
-+            '*max-open-zones':     'uint32',
-+            '*max-active-zones':   'uint32',
-+            '*max-append-bytes':   'size' } }
-+
-+##
-+# @Qcow2ZoneCreateOptions:
-+#
-+# Creation options for zoned qcow2 images.
-+#
-+# @mode: The zone model used by the image.
-+#
-+# Since: 11.1
-+##
-+{ 'union': 'Qcow2ZoneCreateOptions',
-+  'base': { 'mode': 'Qcow2ZoneModel' },
-+  'discriminator': 'mode',
-+  'data': { 'host-managed': 'Qcow2ZoneHostManaged' } }
-+
-+##
-+# @ImageInfoSpecificQCow2Zoned:
-+#
-+# @mode: The zone model used by the image.
-+#
-+# @nr-zones: total number of zones in the image, derived at create
-+#     time from the size and the zone size.
-+#
-+# Since: 11.1
-+##
-+{ 'union': 'ImageInfoSpecificQCow2Zoned',
-+  'base': { 'mode':     'Qcow2ZoneModel',
-+            'nr-zones': 'uint32' },
-+  'discriminator': 'mode',
-+  'data': { 'host-managed': 'Qcow2ZoneHostManaged' } }
-+
- ##
- # @BlockdevCreateOptionsQcow2:
- #
-@@ -5263,6 +5346,9 @@
- # @compression-type: The image cluster compression method
- #     (default: zlib, since 5.1)
- #
-+# @zone: Options for zoned images.  If absent, the device is not
-+#     zoned.  (since 11.1)
-+#
- # Since: 2.12
- ##
- { 'struct': 'BlockdevCreateOptionsQcow2',
-@@ -5279,7 +5365,8 @@
-             '*preallocation':   'PreallocMode',
-             '*lazy-refcounts':  'bool',
-             '*refcount-bits':   'int',
--            '*compression-type':'Qcow2CompressionType' } }
-+            '*compression-type':'Qcow2CompressionType',
-+            '*zone':            'Qcow2ZoneCreateOptions' } }
- 
- ##
- # @BlockdevCreateOptionsQed:
+ # qcow2-cluster.c
+ qcow2_alloc_clusters_offset(void *co, uint64_t offset, int bytes) "co %p offset 0x%" PRIx64 " bytes %d"
 -- 
 2.53.0
 
