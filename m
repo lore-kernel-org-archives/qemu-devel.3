@@ -4,120 +4,134 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 97F14CD5BD1
-	for <qemu-devel@archiver.kernel.org>; Mon,  1 Jun 2026 13:52:32 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A35AFCD6E55
+	for <qemu-devel@archiver.kernel.org>; Mon,  1 Jun 2026 13:52:42 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wU33e-0002t8-TY; Mon, 01 Jun 2026 09:51:58 -0400
+	id 1wU34B-0002vB-H2; Mon, 01 Jun 2026 09:52:31 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <stefanha@gmail.com>)
- id 1wU33d-0002sl-CO
- for qemu-devel@nongnu.org; Mon, 01 Jun 2026 09:51:57 -0400
-Received: from mail-ed1-x52e.google.com ([2a00:1450:4864:20::52e])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <stefanha@gmail.com>)
- id 1wU33b-00036e-Jq
- for qemu-devel@nongnu.org; Mon, 01 Jun 2026 09:51:56 -0400
-Received: by mail-ed1-x52e.google.com with SMTP id
- 4fb4d7f45d1cf-68bd167797dso4390732a12.0
- for <qemu-devel@nongnu.org>; Mon, 01 Jun 2026 06:51:54 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1780321913; cv=none;
- d=google.com; s=arc-20240605;
- b=HlIck61t2Q7RgbYu0amfWPUjqlI6SWQDCmi29uY+wz6RgKQc8tKPkBV6p01W1/l04t
- zMK9XsEh0XSVAJ8HCET9DKktRjWCvX9bfoKnPXBm5nLdjwMs+le+pUTuIx4RBBhvLdKL
- 8AMWkUQiG6HlyTQX/zyOHDJaMfx8IzZ4gg2kmHpRw3wyWid/QLrrEcVgWVpxC9zury2l
- 2oXM0aEF37aJQINd8LppCocUNfQQnb2yk0eYegB2/veBNDYvKd/Wr1rhxpRPMZAk4j40
- 6IoONrDagM7u8QQoGGouFWowUu0MTezfsMCLOxTYjH/CUqu2Mwp98nCTaydNoBKECG3e
- LXoA==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
- s=arc-20240605; 
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:dkim-signature;
- bh=yIn4Seet9cMWpXtd/icQ72RbrP4cPSiitnDC6hJf34Q=;
- fh=4ZKDTZwpCmIjlZIabNLDSiteu+73ynXgc0SM8IFFnQg=;
- b=LgrJbbr9MIVg4nDSemxA4J5Ulk3MPtEiGJIcxnic1UERWEJaMhwBgo7XnPltKeTjf6
- m06r+36uVkJpOpoTkDb4BShT0puklAz+K3cx6U7X7XzRnR9U3k1EHqzKs+L9UZxq1qQj
- bkDzbsRm8Vcr5aetefuYxRh4nPz0ZoMOeLF6D9/RUSCi7KjkWfiOj10YLsehGun9X+j/
- oitwJcYRn0d93V45wwJMZxFUbuN1w/zwLlmOgKFBOzfzsb80QHfVs1IswnGMWhBOr0bP
- 1u3Q8MDRqPAjw5+eY+8Xj9RbqX9+BvgAIOMhOv3cQLUqL/MbbeMhX+ksxXW69/jMWbHC
- vnWg==; darn=nongnu.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1780321913; x=1780926713; darn=nongnu.org;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:from:to:cc:subject:date
- :message-id:reply-to;
- bh=yIn4Seet9cMWpXtd/icQ72RbrP4cPSiitnDC6hJf34Q=;
- b=L+qIG354aJpFCFqKd8NrObr3XgiCHN4yRlYGF5iQBq5wTNVy+5CU/Q1h2CVFRW+fRp
- e+u0E8HfVIPoVbplQs5u7DgLXl8UuK+lCV0QaSJVTl2HY8ljeJrHHpF8S9s24oK6zhhd
- HUlgD5qrAeSX9N1GPKyXjLQ5G/8kRxRQtzKTurwuNBTMv5yd+YRTBOTjjl0xWg4HerWA
- sRqvpPvcd4CWSqeiljHx26rHi+CvTW0fOaJQHvFsb0YXZw867Bm3lY8MmRXNDUeOZI0j
- h5Cf4MfZKbhGdhOHQMKjZYgNHi5MiWPVzQhei9fWE3zSSqQtO/VU/aCZ7OKr3fLT3/4X
- U31A==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1780321913; x=1780926713;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to;
- bh=yIn4Seet9cMWpXtd/icQ72RbrP4cPSiitnDC6hJf34Q=;
- b=hS1aFKMGmAixRO65MZdBWdqU9nwOhjPYrUVxQ6/KWo3BfEDu0h6lYQz6MA4YdQHz9i
- pH9RACWDm9+DA+wNw/Le8dR/+oXS7vOyUFf7c4Dc3h6MyykqM8o49bdoDwDh50R7+CNC
- k3ZNpXFPivQI/HsVxBseNlAEmwyVAN5uqxRmQ1tKNtNVEC/63PVz8B6NNoLD7351KqBu
- yIp2vQP9uqGlSncqpefdEo60Eu3O93nieOoRAhFiVCpzGvXAA0rTfgED1Rl16LRHvq5a
- Pdb0cwRJxl6m49q9tDUaLQl2oZXHdaywilPjNjlr2VxcYXiYSyS365dbE2MP3mUlSs1D
- B4gw==
-X-Forwarded-Encrypted: i=1;
- AFNElJ9vyAnSrobZ9sfM1TLOqdrjfmJjelEBbLSJ1MBVjkCV0z1uNQOnPTbOdq9pN/wMvRDfA6wHn3sKTSm/@nongnu.org
-X-Gm-Message-State: AOJu0YxwuWahOubkLAeDz47egng8AfjoPp5R/mEvSikDEFTTlE/mARxs
- 8SrvTzrch81hmPS5FjmNbQwOcJtI19SGitzavFZQwPa553ko2cXDPZNQvfyvK0PM3xBROHsSABu
- 5ziz279vnagKeUUHl1OqneA+8duOQtkY=
-X-Gm-Gg: Acq92OHjAfgdV7OWxIeH8CLn5QwTa/BkxHvk82tQUf8Wlo0oewDGtKxkdLtogEZ7gf0
- 1L8vKamtGn/D0NHOS+dNPFyBUj/n1vEjmtAn5mFUhYNHkMyLly1kPMdqUe1oeSbljw0nbNr3qY/
- 9+cx4/P71uS0l1rJrxekqAUt68Yklofm7/G3djVIc0T+ZMopbC/rFne0e8T/RV0sjCaVc9uyJfa
- 4NPMXap3bHKRbjFzfEZUrIzCtQ4PuMdaBacIZnx7rwBK3ZSXfV+65lDbPfDZ36c+8ndtk3wyl+3
- O21YCfVN1mpqgp7RRv9I9ZNRsaCIAS/0v7Dg6fBjzgtiM6HhYwqP
-X-Received: by 2002:a05:6402:2b8d:b0:67b:89f5:26c7 with SMTP id
- 4fb4d7f45d1cf-68c8bba7203mr5475929a12.26.1780321912926; Mon, 01 Jun 2026
- 06:51:52 -0700 (PDT)
-MIME-Version: 1.0
-References: <874ijtz038.fsf@draig.linaro.org>
- <CADSE00+RdBUhFVBDSXtVd1J5SaccqWy+RBxqnxuLKUYcitFMPw@mail.gmail.com>
- <20260601083628-mutt-send-email-mst@kernel.org>
- <CADSE00+kRnEC08LLVu6H065u2KaxBm-KnSN_8y6+964-FLbJMA@mail.gmail.com>
- <20260601090953-mutt-send-email-mst@kernel.org>
-In-Reply-To: <20260601090953-mutt-send-email-mst@kernel.org>
-From: Stefan Hajnoczi <stefanha@gmail.com>
-Date: Mon, 1 Jun 2026 09:51:40 -0400
-X-Gm-Features: AVHnY4K4RWlphAxNghQcViOsEmY2TXDYfUv1TImvk_Ri_z_fBAKqWEEKXrEaY9U
-Message-ID: <CAJSP0QV4W=5MJsSGggACv-tqxDtiieKc0YzEn8t-R=RD94KJaQ@mail.gmail.com>
-Subject: Re: Where should the vhost-user specification live?
-To: "Michael S. Tsirkin" <mst@redhat.com>
-Cc: Albert Esteve <aesteve@redhat.com>,
- =?UTF-8?B?QWxleCBCZW5uw6ll?= <alex.bennee@linaro.org>, 
- qemu-devel <qemu-devel@nongnu.org>, virtio-comment@lists.linux.dev, 
- dev@lists.cloudhypervisor.org, rust-vmm@lists.opendev.org, 
- Stefano Garzarella <sgarzare@redhat.com>,
- Manos Pitsidianakis <manos.pitsidianakis@linaro.org>, 
- Demi Marie Obenour <demi@invisiblethingslab.com>, Alyssa Ross <hi@alyssa.is>, 
- Mark Burton <MBURTON@qti.qualcomm.com>, Matti Moell <matti@qti.qualcomm.com>, 
- Stefan Hajnoczi <stefanha@redhat.com>, Viresh Kumar <viresh.kumar@linaro.org>, 
- Dorinda Bassey <dbassey@redhat.com>, Sergio Lopez <slp@redhat.com>, 
- Vishwanath Seshagiri <vishs@meta.com>, Rob Bradford <rbradford@meta.com>, 
- Zhengyu Zhao <zhaozhengyu@bytedance.com>,
- "Jorge E. Moreira" <jemoreira@google.com>
-Content-Type: text/plain; charset="UTF-8"
+ (Exim 4.90_1) (envelope-from <skolothumtho@nvidia.com>)
+ id 1wU348-0002uT-3t; Mon, 01 Jun 2026 09:52:28 -0400
+Received: from mail-westus3azlp170100009.outbound.protection.outlook.com
+ ([2a01:111:f403:c107::9] helo=PH7PR06CU001.outbound.protection.outlook.com)
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <skolothumtho@nvidia.com>)
+ id 1wU345-0003HK-Jo; Mon, 01 Jun 2026 09:52:26 -0400
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=T5C7WMdI3gRtNfu3UrRJYmmqMsZP4bqc7F8dqjpRVkRXyGD/9yh6RuZPnPIhC5lZ3kMYDMVlyahwhaU99doTFXcrhKDMuSvpNP0h3irdGrd+ogmADn2hKj+Zet345E/7kPoa9Nr5NxUV/6nVE4MvDyE3efyJ4FyjIVPQQyeoKPfuCkM9a5HZltgYsPAJXNfG5mZPD3XGhfHH9lTZ4KNumtwhattZ6nyRvIMVK7xAIkdup5rtnmbCdrrSfHc1lu/pBiRzl6qkOJjQA3uYNDoCRXmMzv0qYhCLU+ZBgxTrCelvQm5ubUOdDWd5p/nYGThRGufPVyJRC1UCLIfMAZNJBg==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=+x6o3K/NIgI5z3dJ7RR2lixYxYsNxxt6Awh+FXg1OJk=;
+ b=Lo4Zd/J9iNolbnoXRIl/8/3PcXeFqwwD8SuJaa2F2YxC3jKC4kyXTAOy+XEjKVvVojMamoL3QvH4ZuivpjR4LGQjwPL/ZrNodEItnDydn6yZVu8g0hu6i6Zo9dVtyioYJoEDF9kfm6VWFqUuja43XEtwVNQ/aQwu8PS2773VfxdUy6zOznMInwF2h9EsFCqTIj23m/zrDdi6JpQkC1/XKFain/4/geOfsjsPQ3B7N8ZzXlL56zXck8MUrcDP24Fmr3uFSFtbfPMLU92mMVoj/mrRWUGAMETMgpIvmub/EGx8zF48Ns69CGd5S8w/9bLHtqj8wNNzuZMi66T0rp/nLA==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=nvidia.com; dmarc=pass action=none header.from=nvidia.com;
+ dkim=pass header.d=nvidia.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=Nvidia.com;
+ s=selector2;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=+x6o3K/NIgI5z3dJ7RR2lixYxYsNxxt6Awh+FXg1OJk=;
+ b=GUMe2K2Va3fyzYJJKtmtqu7M5FkmKH49CpYeAaoWpVMFgue+H4cklPnLuONgEZCnm7RGm7DJBujXt7XkiUS838w+BUjETfhjdRih366e49Pam1pwQmMNDTcSyho1/smZs6v3pv/04CZdX2EnyL0cdLjBEG+PuL0wbCE4eOuJkytxrACHrDnOG6P8nwvgPk39HjJfJJmVZ7fF+enxtBxB6LchPK7M6hQmjoIWsfYZjnNx6zjsMALQFtJ8SM86RfcmAdxYgbZ7o2HZnah9gO9w8zF2UqQCUKMxpMOtVw4JKwrX4YUbar0PmsAxlXU4ISb4+N88h/K8vG97xMoDrRBIZw==
+Received: from CH3PR12MB7548.namprd12.prod.outlook.com (2603:10b6:610:144::12)
+ by SA1PR12MB6797.namprd12.prod.outlook.com (2603:10b6:806:259::21)
+ with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.71.15; Mon, 1 Jun 2026
+ 13:52:15 +0000
+Received: from CH3PR12MB7548.namprd12.prod.outlook.com
+ ([fe80::b710:d6a1:ab16:76de]) by CH3PR12MB7548.namprd12.prod.outlook.com
+ ([fe80::b710:d6a1:ab16:76de%6]) with mapi id 15.21.0071.015; Mon, 1 Jun 2026
+ 13:52:15 +0000
+From: Shameer Kolothum Thodi <skolothumtho@nvidia.com>
+To: Nathan Chen <nathanc@nvidia.com>, "qemu-arm@nongnu.org"
+ <qemu-arm@nongnu.org>, "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>
+CC: Eric Auger <eric.auger@redhat.com>, Peter Maydell
+ <peter.maydell@linaro.org>, =?iso-8859-1?Q?Philippe_Mathieu-Daud=E9?=
+ <philmd@linaro.org>, Zhao Liu <zhao1.liu@intel.com>, Matt Ochs
+ <mochs@nvidia.com>, Nicolin Chen <nicolinc@nvidia.com>
+Subject: RE: [PATCH v4 9/9] qemu-options.hx: Support "auto" for accel SMMUv3
+ properties
+Thread-Topic: [PATCH v4 9/9] qemu-options.hx: Support "auto" for accel SMMUv3
+ properties
+Thread-Index: AQHc7iaM1xQt0CoB/kKb8Zh+sEeHC7YpvzXw
+Date: Mon, 1 Jun 2026 13:52:15 +0000
+Message-ID: <CH3PR12MB75482AC2A81258EF5EE9D3B6AB152@CH3PR12MB7548.namprd12.prod.outlook.com>
+References: <20260527221631.612026-1-nathanc@nvidia.com>
+ <20260527221631.612026-10-nathanc@nvidia.com>
+In-Reply-To: <20260527221631.612026-10-nathanc@nvidia.com>
+Accept-Language: en-US, en-GB
+Content-Language: en-US
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+authentication-results: dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=nvidia.com;
+x-ms-publictraffictype: Email
+x-ms-traffictypediagnostic: CH3PR12MB7548:EE_|SA1PR12MB6797:EE_
+x-ms-office365-filtering-correlation-id: ebad69e5-ca02-496b-96c7-08debfe4fd3e
+x-ms-exchange-senderadcheck: 1
+x-ms-exchange-antispam-relay: 0
+x-microsoft-antispam: BCL:0;
+ ARA:13230040|366016|376014|1800799024|22082099003|18002099003|38070700021|56012099006|4143699003|11063799006;
+x-microsoft-antispam-message-info: WoqIuH2B0KoJVP8Y96H3SAm3YzkA3Kj3+1E9owkT6ghY2E/PJMQCd7h9JyfUOqpARpMdPH8n2cKy2mhs8aaskvVxe8myl23mgbHoYSaws3lRoyYB6RIDqyey2p20yIdfBbr2PKrMhl4pcI9qqaeJQ7xSbMtzBcVbRoJ3hnVojcSSo49qmjkVzd5vnfUECnBo/0EcT2gCa5bbuKP2OOFAn6JjPrMtHeW2ac4uAsExwX1T/z3XMWjc1/KtwYXHjLYn4ebRWZbTSIkfjF609UutlamNgHVA9i1i6Bj7VAjeaID2asHBlmQvICjMXOjQdRpQILU0lGUTxre3uUNg1kGra8/YzeVePKYjF4kLQQ/H6+Xd+zs55uVogQDxNN16X3m/tJtk+9O3T13XK9klTTWCBOVEbhy+baUkBeYWaKtr/lIkVG1MOaL06PPkYqsfaubc8J1SDfzDHdhKrU0qcC2l+j3/fMHLUeLQl5oxIZjHLgxb8a7T8z2uXxliaxWu4fiIDKof/SWW8eUl0uMtNKyFXRa5VrOs9AP14DKlP7VftHU2Y00QYGkpmHxXW3TMtKWZ7pjsWSQVHoVigvL1I1/DOLs/uLx4j3nh0tbST5p4u9nNn0hCe6ecYLJqy9kJ8pzeUo2MtyM3C19nlgIlhcYQlNlk9sS6Jg8k6Ozee5JXToQbX8tD4qNhwDHFIpEXZ5pc7eJalIZ52bNqDzcH+CojILPWJxILWh8uCOwmvOH+0BW0Q93fb8rT9iYQczNkC+Ks
+x-forefront-antispam-report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
+ IPV:NLI; SFV:NSPM; H:CH3PR12MB7548.namprd12.prod.outlook.com; PTR:; CAT:NONE;
+ SFS:(13230040)(366016)(376014)(1800799024)(22082099003)(18002099003)(38070700021)(56012099006)(4143699003)(11063799006);
+ DIR:OUT; SFP:1101; 
+x-ms-exchange-antispam-messagedata-chunkcount: 1
+x-ms-exchange-antispam-messagedata-0: =?iso-8859-1?Q?U9/+0MNbD614m4ljkMaBPS64y0i5tZNqPHaIpXJZKBqNgaCb9aXtDASLsh?=
+ =?iso-8859-1?Q?c7So5hzkzhzqNbcWt/OCGwRI4kvwlUkaIfnYo2W5H8GY3Dh47gv+yb0Nwp?=
+ =?iso-8859-1?Q?TRZnWzC5Ya+YGZWTc/Q3Ggs4AbzqCwOz6WnS/bQ1Mmsh3DrPMMjFAPx7et?=
+ =?iso-8859-1?Q?tBSYSTWsutGovNPcUJTwiXFphemzpHX5cURj1/XboKJqor9beVzjbdwNBJ?=
+ =?iso-8859-1?Q?wwNuTdkJ9JgeftBxA8ShBRHMg/InsD+zZi89u1NV8LTh9wmnysIxjYluPn?=
+ =?iso-8859-1?Q?i2+jJ8Upty2ONsnpXQ0z9qaxlpqS4uH15x0x3y4EbSa4t0AWqR/Fpxgvwb?=
+ =?iso-8859-1?Q?8hJIy558vptL4OC9YutjnWXj1sESdBk7trGosmNqdDEJykMBFzPztmxVsD?=
+ =?iso-8859-1?Q?I3QLx1aFijMcw3uzFBbLBPQ/uYrLuDtSSbtjqepoKyyP18R+HSXNHHXzzV?=
+ =?iso-8859-1?Q?og52qPXgKK9iLBCaAp9h2ZBRGAfdwnk36L01jPzjsyRYGSNca0FbLT1DFZ?=
+ =?iso-8859-1?Q?M2A2KN0gT7h3+UdepjUYlME3T7BEBnJxo9irwhcu8eRpRoDwAg4QD5GH/t?=
+ =?iso-8859-1?Q?TEhkTkFunm39DNub/Cap5lJZsFzgP4WSiup9xmifM5EVndXyoQ1YUUO8fS?=
+ =?iso-8859-1?Q?WicIkAbYMXKY554ZMgGJ4hTsa0iFHoatvXn5cZTsXtZe6MOt3Rspwc+Hj8?=
+ =?iso-8859-1?Q?lIt3g/LJJuCEbsM0XpW5n0YK7rmT1qWPf6OZfH0S6yJeDUbyic1vTBpUgn?=
+ =?iso-8859-1?Q?pRzdo2PHP2e8SHG4Kt5Kfyo+ASmj8pt9G8OJ7jdG3+DK8OGNvHmAvwUpK2?=
+ =?iso-8859-1?Q?P7GD9JPJ7tk0wJw4j7wlW6qJootxJXmxSRakb7j9NS1C4GYi9a6qdBYf+c?=
+ =?iso-8859-1?Q?xi0FmgB6d80sDB2k5bnCvUblFLT3W/zWEWL+BDq08e+5/RDTkN3f5SN9km?=
+ =?iso-8859-1?Q?qpGoIgp9QYbhRfhprKYYomfIwiR9pc/yBsZR+RJi98EHhPJ22wr9EomT3n?=
+ =?iso-8859-1?Q?phG+BrgTwDAj98yishRYD0e3weaWWYiEtUQUVpIbAuN/gtLO0LJ6xJ0F/X?=
+ =?iso-8859-1?Q?bMdqYB2j0zGByFxtfs6HNP/Fz8YRXuWssPsmBOqz2jFpnt2ihcUW+1YFx2?=
+ =?iso-8859-1?Q?s2MC+u0B/qI5Q8d8GtxKZXDGHePSPaXKdpOqQ39/FfxX9LdCPQYXTvWP/B?=
+ =?iso-8859-1?Q?CwraOHar0zdRvSVIFfne4HpwY4qpPVF+4DEwleIPUN/rOLGhCyp0ne8bFt?=
+ =?iso-8859-1?Q?IApedReo51c4xaZjav8u5XVQqmYIRifivfBAKfbPRaAbvDR3k5walVsods?=
+ =?iso-8859-1?Q?Z4xaGZyVS9R8b8ultQPYARNFZGS7a/7G603/7Gdft7kTbyVLVGxTdDxzsO?=
+ =?iso-8859-1?Q?Vk1szJpcmlTDdLXrp/XvshT3ROvb+psVj48vGc9LY7K6ThUKfz0me7Sxtn?=
+ =?iso-8859-1?Q?PW+hnF4WyfTkJjcTHiQ/eJDwA06z0pNS25QMRUxD6887JRcateWzERa5qr?=
+ =?iso-8859-1?Q?moHR9fapuXUtrNr3AecQtRWlr5/Dst+kPS28jUOMIai2zVMZvouiGhdA5/?=
+ =?iso-8859-1?Q?MI9fumsLIg5Q1ewwJY4N0lNNUHoSwtqh4R0cxNRGyQbKEKvZCQc4OeyBTR?=
+ =?iso-8859-1?Q?pPIO1gynUiCBK9Tn3OHNWdJl24Ead2enU1u/r7BicQjTcfh1HEKZp996hf?=
+ =?iso-8859-1?Q?2jWeNubI/fscy7M24euiW+8rJISakasd6G1qe4MUZbh1f+713B55xUbF3C?=
+ =?iso-8859-1?Q?qVfa2GlQv0Lb4WB4o+2xOqiqwg4gnhOhJYJRsKTDxchw9Sucj9qDJJ5vkP?=
+ =?iso-8859-1?Q?j5a+yAy97A=3D=3D?=
+Content-Type: text/plain; charset="iso-8859-1"
 Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::52e;
- envelope-from=stefanha@gmail.com; helo=mail-ed1-x52e.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+MIME-Version: 1.0
+X-OriginatorOrg: Nvidia.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-AuthSource: CH3PR12MB7548.namprd12.prod.outlook.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: ebad69e5-ca02-496b-96c7-08debfe4fd3e
+X-MS-Exchange-CrossTenant-originalarrivaltime: 01 Jun 2026 13:52:15.5005 (UTC)
+X-MS-Exchange-CrossTenant-fromentityheader: Hosted
+X-MS-Exchange-CrossTenant-id: 43083d15-7273-40c1-b7db-39efd9ccc17a
+X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
+X-MS-Exchange-CrossTenant-userprincipalname: QMe2hhoRaaEm9Qwv/FE0EWNtHV3tsE9KfVGDD0Hs7Jc69mXT0lFGW/8TOiOXDDopUinerXzpThN1rRbEa/mYZQ==
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: SA1PR12MB6797
+Received-SPF: permerror client-ip=2a01:111:f403:c107::9;
+ envelope-from=skolothumtho@nvidia.com;
+ helo=PH7PR06CU001.outbound.protection.outlook.com
+X-Spam_score_int: -24
+X-Spam_score: -2.5
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.445,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ SPF_HELO_NONE=0.001, SPF_NONE=0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -133,74 +147,31 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Mon, Jun 1, 2026 at 9:12=E2=80=AFAM Michael S. Tsirkin <mst@redhat.com> =
-wrote:
->
-> On Mon, Jun 01, 2026 at 03:05:50PM +0200, Albert Esteve wrote:
-> > On Mon, Jun 1, 2026 at 2:39=E2=80=AFPM Michael S. Tsirkin <mst@redhat.c=
-om> wrote:
-> > >
-> > > On Mon, Jun 01, 2026 at 02:32:11PM +0200, Albert Esteve wrote:
-> > > >  But also because, in my opinion, separating
-> > > > the specification would improve development agility by decoupling
-> > > > specification development from QEMU's review and release cycles.
-> > >
-> > > Generally for QEMU this will be less agility, unless I misunderstand
-> > > what is proposed)
-> > >
-> > > Because presumably there will need to be spec releases then?
-> > >
-> > > So
-> > >         new feature -> spec tree -> spec release -> qemu implementati=
-on -> qemu release
-> > >
-> > > is surely longer that what we have now.
-> >
-> > I see your point.
-> >
-> > However, we do not really need to introduce a heavy release management
-> > layer. We could just operate it as a living document, where the main
-> > branch is the authoritative source of truth.
-> >
-> > For the workflow, development doesn't have to be strictly sequential
-> > either. A contributor can propose the spec update while working on the
-> > implementation, much like we do for VirtIO updates. Actually, this way
-> > one update/change supports the other.
-> >
-> > I guess my point is that a dedicated repository could lower the
-> > barrier for new changes AND keep QEMU's own development speed mostly
-> > unaffected.
-> >
-> > BR,
-> > Albert
->
-> Something something submodule? Possibly. If you want to make progress
-> on this, pls think of the process, try it out.
 
-If I understand correctly, the motivation for moving the spec
-somewhere else is to replace the email patch review process with a git
-forge review process?
 
-This seems like a superficial change and is not worth in my opinion if
-you consider we'll have to redirect from the old spec location and
-move the community over to the new repo. We could actually lose spec
-change reviewers in the process either because they don't know what's
-going on or decide that they prefer to spend time elsewhere when faced
-with switching processes (the people who review and participate in
-discussion do so out of personal interest and as far as I'm aware no
-one is employed to work on vhost-user as their #1 priority).
+> -----Original Message-----
+> From: Nathan Chen <nathanc@nvidia.com>
+> Sent: 27 May 2026 23:17
+> To: qemu-arm@nongnu.org; qemu-devel@nongnu.org
+> Cc: Eric Auger <eric.auger@redhat.com>; Peter Maydell
+> <peter.maydell@linaro.org>; Philippe Mathieu-Daud=E9 <philmd@linaro.org>;
+> Zhao Liu <zhao1.liu@intel.com>; Matt Ochs <mochs@nvidia.com>; Nicolin
+> Chen <nicolinc@nvidia.com>; Shameer Kolothum Thodi
+> <skolothumtho@nvidia.com>; Nathan Chen <nathanc@nvidia.com>
+> Subject: [PATCH v4 9/9] qemu-options.hx: Support "auto" for accel SMMUv3
+> properties
+>=20
+> From: Nathan Chen <nathanc@nvidia.com>
+>=20
+> Update documentation now that "auto" is supported for accelerated
+> SMMUv3
+> properties.
+>=20
+> Reviewed-by: Eric Auger <eric.auger@redhat.com>
+> Signed-off-by: Nathan Chen <nathanc@nvidia.com>
 
-Having said that, here is what I imagine it would involve:
+Reviewed-by: Shameer Kolothum <skolothumtho@nvidia.com>
 
-1. Michael creates a new repo on a git forge (if he wants it to be
-under the GitLab qemu-project organization I can help with creating
-the repo, otherwise he creates a new organization and repo).
-2. Discussion happens in Issues.
-3. Spec changes are proposed in Merge Requests. Michael merges them
-once consensus has been reached.
-
-It's similar to what we have now in qemu.git, except that a git forge is us=
-ed.
-
-Stefan
+Thanks,
+Shameer
 
