@@ -4,122 +4,121 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 643D7CD6E56
-	for <qemu-devel@archiver.kernel.org>; Mon,  1 Jun 2026 11:53:53 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A80D9CD6E56
+	for <qemu-devel@archiver.kernel.org>; Mon,  1 Jun 2026 11:53:58 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wU1Ce-0007XE-5P; Mon, 01 Jun 2026 07:53:08 -0400
+	id 1wU191-0005G1-AU; Mon, 01 Jun 2026 07:49:23 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@kaod.org>) id 1wU1Cc-0007R8-Tp
- for qemu-devel@nongnu.org; Mon, 01 Jun 2026 07:53:06 -0400
-Received: from smtpout3.mo540.mail-out.ovh.net ([51.210.91.52])
+ (Exim 4.90_1) (envelope-from <skolothumtho@nvidia.com>)
+ id 1wU18y-00059Z-5f; Mon, 01 Jun 2026 07:49:20 -0400
+Received: from mail-southcentralusazlp170130001.outbound.protection.outlook.com
+ ([2a01:111:f403:c10c::1] helo=SA9PR02CU001.outbound.protection.outlook.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@kaod.org>) id 1wU1CZ-0006IL-1s
- for qemu-devel@nongnu.org; Mon, 01 Jun 2026 07:53:06 -0400
-Received: from director6.derp.mail-out.ovh.net
- (director6.derp.mail-out.ovh.net [51.255.22.22])
- by mo540.mail-out.ovh.net (Postfix) with ESMTPS id 4gTXQf427Mz43QY;
- Mon,  1 Jun 2026 11:52:58 +0000 (UTC)
-Received: from director6.derp.mail-out.ovh.net
- (director6.derp.mail-out.ovh.net. [127.0.0.1])
- by director6.derp.mail-out.ovh.net (inspect_sender_mail_agent) with SMTP
- for <alexander.hansen@9elements.com>; Mon,  1 Jun 2026 11:52:58 +0000 (UTC)
-Received: from mta7.priv.ovhmail-u2.ea.mail.ovh.net (unknown [10.110.43.33])
- by director6.derp.mail-out.ovh.net (Postfix) with ESMTPS id 4gTXQf2kdDz7tgy;
- Mon,  1 Jun 2026 11:52:58 +0000 (UTC)
-Received: from kaod.org (unknown [10.1.6.4])
- (Authenticated sender: clg@kaod.org)
- by mta7.priv.ovhmail-u2.ea.mail.ovh.net (Postfix) with ESMTPSA id 71E48203041; 
- Mon,  1 Jun 2026 11:52:56 +0000 (UTC)
-Authentication-Results: garm.ovh; auth=pass
- (GARM-110S004323e0bc1-44b2-4bbe-b864-f9c5b3468661,
- E35A50153BDE4127F94F88E3CE699B0651996EDF) smtp.auth=clg@kaod.org
-X-OVh-ClientIp: 82.64.250.170
-Message-ID: <3e81e148-62f5-42c9-980b-0d014711281c@kaod.org>
-Date: Mon, 1 Jun 2026 13:52:55 +0200
+ (Exim 4.90_1) (envelope-from <skolothumtho@nvidia.com>)
+ id 1wU18w-00052T-Kr; Mon, 01 Jun 2026 07:49:19 -0400
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=XeaOtYDAiaDli3cJX+3u+G4j5m47MtjGo9Yn+cB4X6NY+zdY01ynyY+vwHbajDypmdCAKWzPPsLhsX64vhdsCFVEIIc6G5DGtcPPrrnucmny3PrjmUooxuaqzb/zW/v2E08LWqe40qAi9X/IYbGJDQcFRB74WO1JmrRqPxDJ4AkZbce496fA3+FK/cPHV+hiEGVIRsl+13eUwTJTLeawHbrpRDrk8ITHIqxd2tJcbctmd8I2Qq6yIlrF4j77/3hB05XS9K9K2UQ9pLlN2pYHe3vRSuTguuOg4+sdTYzZ/NGpyw0RS94EQp9Us1cdeiZK1LQDwbxwJQRkNfcoQulsFg==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=/KxWJdalEDGmuzUoOOwBqAP1TSzkp1U8DUb6aknlhvM=;
+ b=VZLnKR0TRNqAiQbewJWXcf4bVMZ86uAUORxfKj/cwydTva4EIrrVSx9hocOIUwpyaW4A0z12CCteZgiU2SmetZBoOIyz4RTIcS3X+gSRrhzDzgQyLnxP/yJckAWp9oMbsWbhURnDcDYrjTyk/9UvUCoq9VNadbihg14rVu7qCfuhcoDZyZskeA5aKIxag0+jqsv3+LcCqQ+NpDhkQfcolfqaXjBsXIfsDsL7AUJI8mMDhUSOUX2OexsSNy8RVCFAAEoXsPvcu3FFgMPBXpaBRxgqj2tIqT3+XIOSTfo8QYsKvWNzGZ+Ex3InxUE7yeZEVWPqKVVVi4uZ7wDzOpg22w==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass (sender ip is
+ 216.228.117.160) smtp.rcpttodomain=nongnu.org smtp.mailfrom=nvidia.com;
+ dmarc=pass (p=reject sp=reject pct=100) action=none header.from=nvidia.com;
+ dkim=none (message not signed); arc=none (0)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=Nvidia.com;
+ s=selector2;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=/KxWJdalEDGmuzUoOOwBqAP1TSzkp1U8DUb6aknlhvM=;
+ b=VNZBq02DNsgnHw4BsieqVPEBV4qEOE8R76ccv3RzUx5fkqvQVEtSRhZvTxw2EO6himj86vxPg/ojB6Yez2oOojGAy5cxg2TnoMguEv0TipZJtO4JJFi52ztOd0hyv6U4FZe1ST9zDqmN7IrqTGPwxAHqbF2D5Bup7ddf12UcfLoF9uqNfgwD2+JEoRdoj2BaFkOKYywXaiosiNMWWdNs9uGXOsm6hD8rCce5NcJSQDJwc+/D2gWp/QB/AOt9Oet3ehR9aYd6x3RwoY51I4NJYTR7XBuEa0LLUAmxUrcuomdaTeXvVF7dpZiOHlOPBb63ayvtehUkeK0Oy3pO6duXwg==
+Received: from MN0P223CA0022.NAMP223.PROD.OUTLOOK.COM (2603:10b6:208:52b::23)
+ by BY5PR12MB4164.namprd12.prod.outlook.com (2603:10b6:a03:207::13)
+ with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.71.16; Mon, 1 Jun 2026
+ 11:49:08 +0000
+Received: from BN2PEPF000055DB.namprd21.prod.outlook.com
+ (2603:10b6:208:52b:cafe::2c) by MN0P223CA0022.outlook.office365.com
+ (2603:10b6:208:52b::23) with Microsoft SMTP Server (version=TLS1_3,
+ cipher=TLS_AES_256_GCM_SHA384) id 15.21.71.16 via Frontend Transport; Mon, 1
+ Jun 2026 11:49:06 +0000
+X-MS-Exchange-Authentication-Results: spf=pass (sender IP is 216.228.117.160)
+ smtp.mailfrom=nvidia.com;
+ dkim=none (message not signed)
+ header.d=none;dmarc=pass action=none header.from=nvidia.com;
+Received-SPF: Pass (protection.outlook.com: domain of nvidia.com designates
+ 216.228.117.160 as permitted sender) receiver=protection.outlook.com;
+ client-ip=216.228.117.160; helo=mail.nvidia.com; pr=C
+Received: from mail.nvidia.com (216.228.117.160) by
+ BN2PEPF000055DB.mail.protection.outlook.com (10.167.245.5) with Microsoft
+ SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.21.92.0 via Frontend Transport; Mon, 1 Jun 2026 11:49:06 +0000
+Received: from rnnvmail201.nvidia.com (10.129.68.8) by mail.nvidia.com
+ (10.129.200.66) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.2562.20; Mon, 1 Jun
+ 2026 04:48:54 -0700
+Received: from NV-2Y5XW94.nvidia.com (10.126.230.37) by rnnvmail201.nvidia.com
+ (10.129.68.8) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.2562.20; Mon, 1 Jun
+ 2026 04:48:51 -0700
+From: Shameer Kolothum <skolothumtho@nvidia.com>
+To: <qemu-arm@nongnu.org>, <qemu-devel@nongnu.org>
+CC: <eric.auger@redhat.com>, <peter.maydell@linaro.org>, <clg@redhat.com>,
+ <alex@shazbot.org>, <nicolinc@nvidia.com>, <nathanc@nvidia.com>,
+ <mochs@nvidia.com>, <jan@nvidia.com>, <jgg@nvidia.com>,
+ <zhenzhong.duan@intel.com>, <kjaju@nvidia.com>, <phrdina@redhat.com>,
+ <skolothumtho@nvidia.com>
+Subject: [PATCH v6 13/31] hw/arm/tegra241-cmdqv: Implement CMDQV vIOMMU
+ alloc/free
+Date: Mon, 1 Jun 2026 12:42:03 +0100
+Message-ID: <20260601114221.457995-14-skolothumtho@nvidia.com>
+X-Mailer: git-send-email 2.43.0
+In-Reply-To: <20260601114221.457995-1-skolothumtho@nvidia.com>
+References: <20260601114221.457995-1-skolothumtho@nvidia.com>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v5 4/5] hw/sensor: support MAX11615
-To: Alexander Hansen <alexander.hansen@9elements.com>, qemu-devel@nongnu.org
-Cc: Titus Rwantare <titusr@google.com>,
- Jonathan Cameron <jonathan.cameron@huawei.com>,
- =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Paolo Bonzini <pbonzini@redhat.com>, Peter Maydell
- <peter.maydell@linaro.org>, qemu-arm@nongnu.org,
- Steven Lee <steven_lee@aspeedtech.com>, Troy Lee <leetroy@gmail.com>,
- Jamin Lin <jamin_lin@aspeedtech.com>, Kane Chen <kane_chen@aspeedtech.com>,
- Andrew Jeffery <andrew@codeconstruct.com.au>, Joel Stanley <joel@jms.id.au>
-References: <20260529124237.94087-1-alexander.hansen@9elements.com>
- <20260529124237.94087-5-alexander.hansen@9elements.com>
-Content-Language: en-US, fr
-From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>
-Autocrypt: addr=clg@kaod.org; keydata=
- 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
-In-Reply-To: <20260529124237.94087-5-alexander.hansen@9elements.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-x-ovh-tracer-id: 8257912867148573935
-X-VR-SPAMSTATE: OK
-X-VR-SPAMSCORE: -100
-X-VR-SPAMCAUSE: dmFkZTFi/CZr8M1ZViedxH6T9xE+SxebVXFn7KkX7KUQqu4ccNQkm/b7kqNZVNqAU4LlpTZ6JivUjcn7WILF2mHJfBp2f6Ov68RtSkOfo1ne7PMSpVXh9XJDlcsYQBtTf3GStk9GRw/GBjRavLGfl4VDc1ZV/nWpAV0MJYLRzaEb4xbdLASULtQkLNq6FUlYEOXrb29s3KXlaV6R+Ikwdy9syvRdEfOZF5T4l1fwS1NwS41Zq2ColJ192iNc+60Ipj1+JE0ENzrBgLwSflDqm9BWHIORjvUPJB2DqvxUEuQqqnF5MfFHRg2BQO+VHu/LTPyDuWJspQ38gfsoV8Dx8FuEPYN3DoIOOI2dUxLYFZLVmNDPW1DfwpDbMGY1MObYuMZXyET2aBIK0XkZQPouFqE1WZSTOjEC9PUIhGVQqsWfJ58f8utZwc+taiqiswRGeY+S0FT8cKBB2Cnq/LzB4Zzm411sYHUejaV4wZtrcZ9wjYYDTNqRv8uh/kOgHqLvSxt50mzn92yGX6XmAm7Aw87S+1VPO8hc/H2BshMdwkLc+bQU8kOsTJfMzXnhXYSxt30ZxpUWPGRZlBSMffnIxxMYoRkDXtjKd1P5kK+lK4sPjSASKI4RqIrascITfl2XzG7E8nU/E18vGozc9cawqg6pFfbkxNPZyDSkRMJ2wZ6qp2pSYg
-DKIM-Signature: a=rsa-sha256; bh=cpgPPPGVlRKviENwcPgydEbReZUSZpbAU0VZAPYLttY=; 
- c=relaxed/relaxed; d=kaod.org; h=From; s=ovhmo393970-selector1;
- t=1780314780; v=1;
- b=pTC0NET2gHXga4tlYOFGSWrAOiNS1n27c3Pb5ppsRdtziEIvA2HBsMwumBcbr/O9LKXiSlpD
- 3ycFOwa/45D3RZxY9DqyiqFPwf6P6EUyGHki1nIWGzV2Sk8Bi8wJrG4HVh2esg7+hTl5UDzyvHV
- b5p5WDNh80l9DhCozEF4+iHF5JjgWuszxJYJZnNWO9Rz4iXegOcZdB6EDGuBuecaN9PXjn/qvMP
- XjHAxutUI0anf8TVvYNXtKJIbHSWXbRRJsmGnX7326rcPMjzOakm1MvfWeiv9uLltCh7aabHDvh
- Sjb0DBkFQQbJRmzLi9sp+hXChvKwRsZKVsSmLtGqbaefg==
-Received-SPF: pass client-ip=51.210.91.52; envelope-from=clg@kaod.org;
- helo=smtpout3.mo540.mail-out.ovh.net
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+Content-Type: text/plain
+X-Originating-IP: [10.126.230.37]
+X-ClientProxiedBy: rnnvmail203.nvidia.com (10.129.68.9) To
+ rnnvmail201.nvidia.com (10.129.68.8)
+X-EOPAttributedMessage: 0
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: BN2PEPF000055DB:EE_|BY5PR12MB4164:EE_
+X-MS-Office365-Filtering-Correlation-Id: 97d7078b-623c-422e-04fc-08debfd3c93a
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam: BCL:0;
+ ARA:13230040|376014|1800799024|82310400026|36860700016|11063799006|56012099006|18002099003|22082099003;
+X-Microsoft-Antispam-Message-Info: uPpsYCif3bCHZe3wlZSgn9r/faPH5WyqFxUqQElK4bti4D8sbJCo73MCUTPx8vaLAIkLDH9NmiGocmS6PiiOpDa5eKSig29xXHxmvhF8kDEUNPyL0mrbCIFHMJK22IF8v0ElChNVE8vXdnG1o5csAda0jO/RVttoofT/+3rYjLyyMW8J61b3muBcynaXE9aGS/Bg4JTEeo1nHsw3Fcj8YVIVXIC8IGURRny4DrNtr2AIBJUwU646FYFy50RpXY3K2DQ9/1nZSjBDgTErCAOx7s7RT7ktsn6jhCnaiSLjNGt6lzE6kxqDDJfglOZHw3pBbpX9gZGMvFUF8ol7XooXCk+akQIVmGH0t8vqh3lhzc2nJbfIZK9tssWsZX7z8fL5o7hIKnkFiEcZDGM9BEuXuKAhQJRRS561+wmo5bXlD2F2kr0V7eZp0NR6tS4H7L4FZA4YjDvXad988jLpZ6A978E/X0SpEZe8w1qlGCJEff54p7yxDyONwD4EKXt+mUurWxmi+zEH1LaGY5PGEdx9ORncQ85SYIB5O1IQpt2jRAZikoNdsmXB4pEjB2RMsKLCXJhbYX9pLieA86U6Ghh9XaLVFOq0z2lgYS8y7MDAG+F9KSCr18iFWOTzvBkYntuVZuPp/ao4a3pgH8VJw6LLE7nGNgMSpA0OMSAR+Df1hOe9LmVOTP4hMA/MltqDRkTSOPXDGtDtTXZgQ8QMwNWm20Cgveij07K1KhE/uCNaTkc=
+X-Forefront-Antispam-Report: CIP:216.228.117.160; CTRY:US; LANG:en; SCL:1; SRV:;
+ IPV:NLI; SFV:NSPM; H:mail.nvidia.com; PTR:dc6edge1.nvidia.com; CAT:NONE;
+ SFS:(13230040)(376014)(1800799024)(82310400026)(36860700016)(11063799006)(56012099006)(18002099003)(22082099003);
+ DIR:OUT; SFP:1101; 
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0: 6LUW0GeGJ2h39UgRXKigALlvE5wjGULZmp2ylmMF2jIH3+tFIuvxfzfX9MncD9SUCelmLfaEaa47CGftG4O0GRZx4ngE3cThpd8k3JV/4PK2gPClS9nGE8sXpspOI4GklH6Cu1BdXOMGuRD5AGfTPEB+3QYSmgo6XpuEAOd6I9dyGgL7HV1niyiYe2qFciml0w1F29lV+keracvaIi5W4I5azsD29zxLecBcc1jsoAK+y0z6cLyDg8u9PVK0dy+74QlKfTy6FNLWadCzdPrDvblSyqhZqrvorDrkKOPb19xIXSG90MWyKlZtFO0pa8tNv1bdnMRKx56uh4LhYhsa6lzbTr5F2G+n5pPvSDWkoX240OUq8d3i++AGyKfzTUTzIt2u9sa5cbR4XYxclP8VEQ+md2xdkbPDSs+Lel5h4BopgQzfbEaL2IwVmAyVB99x
+X-OriginatorOrg: Nvidia.com
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 01 Jun 2026 11:49:06.6377 (UTC)
+X-MS-Exchange-CrossTenant-Network-Message-Id: 97d7078b-623c-422e-04fc-08debfd3c93a
+X-MS-Exchange-CrossTenant-Id: 43083d15-7273-40c1-b7db-39efd9ccc17a
+X-MS-Exchange-CrossTenant-OriginalAttributedTenantConnectingIp: TenantId=43083d15-7273-40c1-b7db-39efd9ccc17a; Ip=[216.228.117.160];
+ Helo=[mail.nvidia.com]
+X-MS-Exchange-CrossTenant-AuthSource: BN2PEPF000055DB.namprd21.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Anonymous
+X-MS-Exchange-CrossTenant-FromEntityHeader: HybridOnPrem
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: BY5PR12MB4164
+Received-SPF: permerror client-ip=2a01:111:f403:c10c::1;
+ envelope-from=skolothumtho@nvidia.com;
+ helo=SA9PR02CU001.outbound.protection.outlook.com
+X-Spam_score_int: -14
+X-Spam_score: -1.5
+X-Spam_bar: -
+X-Spam_report: (-1.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.445,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ FORGED_SPF_HELO=1, SPF_HELO_PASS=-0.001,
+ SPF_NONE=0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -135,545 +134,111 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 5/29/26 14:37, Alexander Hansen wrote:
-> Product: [1]
-> Datasheet: [2]
-> 
-> Sensor readings can be provided upon creation of the device. In case no
-> readings are provided the ADC reads a pre-defined arbitrary value.
-> 
-> root@yosemite4:~# cat /sys/bus/iio/devices/iio:device2/name
-> max11615
-> root@yosemite4:~# cat /sys/bus/iio/devices/iio:device2/in_voltage0_raw
-> 1922
-> root@yosemite4:~# cat /sys/bus/iio/devices/iio:device2/in_voltage_scale
-> 0.500000000
-> 
-> trace:
-> less /tmp/qemu-trace.log | grep -i max116
-> max11615_realize i2c_addr: 0x33
-> max11615_realize i2c_addr: 0x33
-> max11615_event i2c_addr: 0x33, event: 0x01
-> max11615_write_setup i2c_addr: 0x33, data: 0xd2
-> max11615_write_config i2c_addr: 0x33, data: 0x0f
-> max11615_event i2c_addr: 0x33, event: 0x03
-> max11615_event i2c_addr: 0x33, event: 0x01
-> max11615_write_setup i2c_addr: 0x33, data: 0xd2
-> max11615_write_config i2c_addr: 0x33, data: 0x0f
-> max11615_event i2c_addr: 0x33, event: 0x03
-> max11615_event i2c_addr: 0x33, event: 0x01
-> max11615_write_setup i2c_addr: 0x33, data: 0xd2
-> max11615_write_config i2c_addr: 0x33, data: 0x61
-> max11615_event i2c_addr: 0x33, event: 0x03
-> max11615_event i2c_addr: 0x33, event: 0x00
-> max11615_recv i2c_addr: 0x33, reg_addr: 0x00
-> max11615_recv_return i2c_addr: 0x33, returns: 0xfa
-> max11615_recv i2c_addr: 0x33, reg_addr: 0x00
-> max11615_recv_return i2c_addr: 0x33, returns: 0xd2
-> max11615_event i2c_addr: 0x33, event: 0x04
-> max11615_event i2c_addr: 0x33, event: 0x03
-> 
-> References:
-> [1] https://www.analog.com/en/products/MAX11615.html
-> [2] https://www.analog.com/media/en/technical-documentation/data-sheets/MAX11612-MAX11617.pdf
-> 
-> Cc: Titus Rwantare <titusr@google.com>
-> Cc: "Cédric Le Goater" <clg@kaod.org> (maintainer:ASPEED BMCs)
-> Cc: Jonathan Cameron <jonathan.cameron@huawei.com>
-> Cc: "Philippe Mathieu-Daudé" <philmd@linaro.org> (odd fixer:Overall sensors)
-> Cc: Paolo Bonzini <pbonzini@redhat.com> (maintainer:Kconfig)
-> Cc: Peter Maydell <peter.maydell@linaro.org> (supporter:ARM TCG CPUs)
-> Cc: qemu-devel@nongnu.org (open list:All patches CC here)
-> Cc: qemu-arm@nongnu.org (open list:ARM TCG CPUs)
-> Signed-off-by: Alexander Hansen <alexander.hansen@9elements.com>
-> ---
->   MAINTAINERS                              |   1 +
->   include/hw/sensor/max11615.h             |  20 ++
->   hw/arm/aspeed_ast2600_fby4.c             |   8 +-
->   hw/sensor/max11615.c                     | 312 +++++++++++++++++++++++
->   hw/arm/Kconfig                           |   1 +
->   hw/sensor/Kconfig                        |   4 +
->   hw/sensor/meson.build                    |   1 +
->   hw/sensor/trace-events                   |   8 +
->   tests/functional/arm/test_aspeed_fby4.py |   8 +
->   9 files changed, 362 insertions(+), 1 deletion(-)
->   create mode 100644 include/hw/sensor/max11615.h
->   create mode 100644 hw/sensor/max11615.c
-> 
-> diff --git a/MAINTAINERS b/MAINTAINERS
-> index 2a0dbd1cc4..195e3c7927 100644
-> --- a/MAINTAINERS
-> +++ b/MAINTAINERS
-> @@ -3987,6 +3987,7 @@ S: Maintained
->   F: hw/i2c/pmbus_device.c
->   F: hw/sensor/adm1272.c
->   F: hw/sensor/isl_pmbus_vr.c
-> +F: hw/sensor/max11615.c
->   F: hw/sensor/max31790.c
->   F: hw/sensor/max34451.c
->   F: include/hw/i2c/pmbus_device.h
-> diff --git a/include/hw/sensor/max11615.h b/include/hw/sensor/max11615.h
-> new file mode 100644
-> index 0000000000..0460ee5963
-> --- /dev/null
-> +++ b/include/hw/sensor/max11615.h
-> @@ -0,0 +1,20 @@
-> +/* SPDX-License-Identifier: GPL-2.0-or-later */
-> +#ifndef QEMU_MAX11615_H
-> +#define QEMU_MAX11615_H
-> +
-> +#include "qemu/osdep.h"
+From: Nicolin Chen <nicolinc@nvidia.com>
 
-Please remove this include.
+Replace the stub implementation with real vIOMMU allocation for
+Tegra241 CMDQV.
 
-> +#include "hw/i2c/i2c.h"
-> +
-> +#define TYPE_MAX11615 "max11615"
-> +
-> +/*
-> + * Create and realize a MAX11615 ADC with constant caller-supplied readings
-> + * @bus: I2C bus to put it on
-> + * @address: I2C address
-> + * @init_values: array of readings for each ADC channel
-> + * @init_values_size: Size of @init_values, can be less than the number of channels
-> + */
-> +I2CSlave *max11615_init_with_values(I2CBus *bus, uint8_t address,
-> +                                    const uint16_t *init_values, uint32_t init_values_size);
-> +
-> +#endif
-> diff --git a/hw/arm/aspeed_ast2600_fby4.c b/hw/arm/aspeed_ast2600_fby4.c
-> index 1f391022a2..c55f7ca895 100644
-> --- a/hw/arm/aspeed_ast2600_fby4.c
-> +++ b/hw/arm/aspeed_ast2600_fby4.c
-> @@ -11,6 +11,7 @@
->   #include "hw/arm/aspeed.h"
->   #include "hw/arm/aspeed_soc.h"
->   #include "hw/nvram/eeprom_at24c.h"
-> +#include "hw/sensor/max11615.h"
->   #include "hw/i2c/i2c_mux_pca954x.h"
->   #include "hw/gpio/pca9552.h"
->   
-> @@ -185,7 +186,12 @@ static void fby4_i2c_init_fanboard(I2CSlave *fan_mux, size_t eepromSize)
->           i2c_slave_create_simple(bus, "max31790", 0x2f);
->   
->           /* maxim,max11615 @ 0x33   (adc) */
-> -        /* TODO */
-> +        static const uint16_t adc_values[8] = {
-> +            1922, 1000,
-> +            1922, 1000,
-> +            1922, 1000,
-> +            1922, 1000};
-> +        max11615_init_with_values(bus, 0x33, adc_values, 8);
+Allocate a matching vEVENTQ together with the vIOMMU, since it is
+specific to the Tegra241 CMDQV vIOMMU and used to receive CMDQV
+events.
 
-see below
->   
->           at24c_eeprom_init_rom(
->               bus, 0x52, eepromSize,
-> diff --git a/hw/sensor/max11615.c b/hw/sensor/max11615.c
-> new file mode 100644
-> index 0000000000..594bc3d290
-> --- /dev/null
-> +++ b/hw/sensor/max11615.c
-> @@ -0,0 +1,312 @@
-> +/*
-> + * Maxim MAX11615 Low-Power 12 bit ADC
-> + * Models MAX11612,MAX11613,MAX11614,MAX11615,MAX11616,MAX11617
-> + *
-> + * Datasheet:
-> + * https://www.analog.com/media/en/technical-documentation/data-sheets/MAX11612-MAX11617.pdf
-> + *
-> + * Copyright 2026 9elements
-> + *
-> + * SPDX-License-Identifier: GPL-2.0-or-later
-> + */
-> +
-> +#include "hw/sensor/max11615.h"
-> +#include "hw/i2c/i2c.h"
-> +#include "migration/vmstate.h"
-> +#include "qapi/error.h"
-> +#include "qapi/visitor.h"
-> +#include "qemu/log.h"
-> +#include "qemu/module.h"
-> +#include "qemu/osdep.h"
-> +#include "trace.h"
-> +
-> +#define MAX11615_NUM_CHANNELS 8
-> +
-> +struct MAX11615State {
-> +    I2CSlave i2c;
-> +
-> +    /* true: single-ended mode, false: differential mode */
-> +    bool single_ended;
-> +
-> +    /*
-> +     * Output data coding for the MAX11612–MAX11617 is
-> +     * binary in unipolar mode and two’s complement in bipolar mode
-> +     */
-> +    bool bipolar;
-> +
-> +    /* The MAX11613/MAX11615/MAX11617 feature a 2.048V internal reference */
-> +    uint16_t vref;
-> +
-> +    uint16_t channels[MAX11615_NUM_CHANNELS];
-> +
-> +    /* output buffer */
-> +    uint8_t outlen;
-> +    uint8_t outbuf[2];
-> +
-> +    /* selected channel for read/write operation */
-> +    uint8_t pointer;
-> +};
-> +
-> +struct MAX11615Class {
-> +    I2CSlaveClass parent_class;
-> +};
-> +
-> +OBJECT_DECLARE_TYPE(MAX11615State, MAX11615Class, MAX11615)
-> +
-> +static void max11615_set_outbuf(MAX11615State *s, uint16_t value)
-> +{
-> +    uint8_t msb = value >> 8;
-> +    uint8_t lsb = value & 0xff;
-> +    s->outbuf[0] = 0b11110000 | (msb & 0b00001111);
-> +    s->outbuf[1] = lsb;
-> +}
-> +
-> +static void max11615_read_single_ended(MAX11615State *s)
-> +{
-> +    /* Table 3. Channel Selection in Single-Ended Mode */
-> +    /* read an ADC channel, first 4 bits must be high */
-> +    uint16_t value = s->channels[s->pointer];
-> +    /*
-> +     * In single-ended mode, the MAX11612–MAX11617 always
-> +     * operates in unipolar mode irrespective of BIP/UNI.
-> +     */
-> +    if (value > s->vref) {
-> +        value = 0xfff;
-> +    }
-> +    max11615_set_outbuf(s, value);
-> +}
-> +
-> +static int16_t max11615_differential_value(MAX11615State *s)
-> +{
-> +    /* Table 4. Channel Selection in Differential Mode */
-> +    size_t i1 = s->pointer;
-> +    size_t i2 = (s->pointer % 2 == 0) ? s->pointer + 1 : s->pointer - 1;
-> +
-> +    const int16_t ch1 = s->channels[i1];
-> +    const int16_t ch2 = s->channels[i2];
-> +    return ch1 - ch2;
-> +}
-> +
-> +static void max11615_read_differential(MAX11615State *s)
-> +{
-> +    const int16_t value = max11615_differential_value(s);
-> +    uint16_t vu = value;
-> +
-> +    /* full-scale transition: Figure 12, Figure 13 */
-> +    if (s->bipolar) {
-> +        const uint16_t fs = s->vref / 2;
-> +        if (value < -fs) {
-> +            vu = 0b100000000000;
-> +        }
-> +        if (value > fs) {
-> +            vu = 0b011111111111;
-> +        }
-> +    } else {
-> +        /*
-> +         * A negative differential analog input in unipolar mode causes the
-> +         * digital output code to be zero
-> +         */
-> +        if (value < 0) {
-> +            vu = 0;
-> +        }
-> +    }
-> +
-> +    max11615_set_outbuf(s, vu);
-> +}
-> +
-> +static void max11615_read(MAX11615State *s)
-> +{
-> +    if (s->single_ended) {
-> +        max11615_read_single_ended(s);
-> +    } else {
-> +        max11615_read_differential(s);
-> +    }
-> +}
-> +
-> +static void max11615_write_config_byte(MAX11615State *s, uint8_t data)
-> +{
-> +    trace_max11615_write_config(s->i2c.address, data);
-> +
-> +    uint8_t scan_select = (data >> 5) & 0b11;
-> +
-> +    if (scan_select != 0b11) {
-> +        qemu_log_mask(LOG_UNIMP, "%s: unimplemented scan select\n", __func__);
-> +    }
-> +
-> +    uint8_t channel_select = (data >> 1) & 0b1111;
-> +
-> +    /* Table 3. Channel Selection */
-> +    if (channel_select >= MAX11615_NUM_CHANNELS) {
-> +        qemu_log_mask(LOG_GUEST_ERROR, "%s: invalid channel select", __func__);
+Free both objects on teardown.
 
-missing \n
-> +        channel_select = MAX11615_NUM_CHANNELS - 1;
-> +    }
-> +    s->pointer = channel_select;
-> +    s->single_ended = data & 0x1;
-> +}
-> +
-> +static void max11615_write_setup_byte(MAX11615State *s, uint8_t data)
-> +{
-> +    trace_max11615_write_setup(s->i2c.address, data);
-> +    /* we ignore the setup byte, not implemented */
-> +
-> +    /* 1 = no action, 0 = resets the configuration register to default */
-> +    const bool rst = ((data >> 1) & 0b1) == 0b0;
-> +
-> +    if (rst) {
-> +        s->single_ended = true;
-> +        s->pointer = 0;
-> +    }
-> +
-> +    s->bipolar = ((data >> 2) & 0b1) == 0b1;
-> +
-> +    /* Table 6. Reference Voltage */
-> +    const uint8_t sel = (data >> 4) & 0b111;
-> +
-> +    if (sel == 0b10 || sel == 0b11) {
-> +        qemu_log_mask(LOG_UNIMP, "%s: unsupported: external vref\n", __func__);
-> +    }
-> +}
-> +
-> +static int max11615_send(I2CSlave *i2c, uint8_t data)
-> +{
-> +    MAX11615State *s = MAX11615(i2c);
-> +    const uint8_t msb = (data >> 7) & 0b1;
-> +
-> +    if (msb) {
-> +        max11615_write_setup_byte(s, data);
-> +    } else {
-> +        max11615_write_config_byte(s, data);
-> +    }
-> +
-> +    s->outlen = 0;
-> +    return 0;
-> +}
-> +
-> +static uint8_t max11615_recv(I2CSlave *i2c)
-> +{
-> +    MAX11615State *s = MAX11615(i2c);
-> +    trace_max11615_recv(s->i2c.address, s->pointer);
-> +
-> +    if (s->outlen >= 2) {
-> +        /* MAX11615 supports multichannel scan with wraparound */
-> +        /* see datasheet page 17 */
-> +
-> +        s->outlen = 0;
-> +
-> +        s->pointer++;
-> +        if (s->pointer >= MAX11615_NUM_CHANNELS) {
-> +            s->pointer = 0;
-> +        }
-> +    }
-> +
-> +    max11615_read(s);
-> +
-> +    const uint8_t data = s->outbuf[s->outlen++];
-> +
-> +    trace_max11615_recv_return(s->i2c.address, data);
-> +    return data;
-> +}
-> +
-> +static int max11615_event(I2CSlave *i2c, enum i2c_event event)
-> +{
-> +    MAX11615State *s = MAX11615(i2c);
-> +
-> +    trace_max11615_event(s->i2c.address, event);
-> +
-> +    switch (event) {
-> +    case I2C_START_RECV:
-> +        s->outlen = 0;
-> +        break;
-> +    default:
-> +        break;
-> +    }
-> +
-> +    return 0;
-> +}
-> +
-> +static const VMStateDescription vmstate_max11615 = {
-> +    .name = TYPE_MAX11615,
-> +    .version_id = 0,
-> +    .minimum_version_id = 0,
-> +    .fields =
-> +        (const VMStateField[]){ VMSTATE_BOOL(single_ended, MAX11615State),
-> +                                VMSTATE_BOOL(bipolar, MAX11615State),
-> +                                VMSTATE_UINT16(vref, MAX11615State),
-> +                                VMSTATE_UINT16_ARRAY(channels, MAX11615State,
-> +                                                     MAX11615_NUM_CHANNELS),
-> +                                VMSTATE_UINT8(outlen, MAX11615State),
-> +                                VMSTATE_UINT8_ARRAY(outbuf, MAX11615State, 2),
-> +                                VMSTATE_UINT8(pointer, MAX11615State),
-> +                                VMSTATE_I2C_SLAVE(i2c, MAX11615State),
-> +                                VMSTATE_END_OF_LIST() }
-> +};
-> +
-> +I2CSlave *max11615_init_with_values(I2CBus *bus, uint8_t address,
-> +                                    const uint16_t *init_values,
-> +                                    uint32_t init_values_size)
-> +{
-> +    MAX11615State *s;
-> +
-> +    s = MAX11615(i2c_slave_new(TYPE_MAX11615, address));
-> +
-> +    for (int i = 0; i < MAX11615_NUM_CHANNELS; i++) {
-> +        /* arbitrary value if there is no data*/
-> +        s->channels[i] =
-> +            i < init_values_size ? init_values[i] : 0b0000101011010010;
-> +    }
+Reviewed-by: Eric Auger <eric.auger@redhat.com>
+Co-developed-by: Shameer Kolothum <skolothumtho@nvidia.com>
+Signed-off-by: Nicolin Chen <nicolinc@nvidia.com>
+Signed-off-by: Shameer Kolothum <skolothumtho@nvidia.com>
+---
+ hw/arm/tegra241-cmdqv.h |  1 +
+ hw/arm/tegra241-cmdqv.c | 48 ++++++++++++++++++++++++++++++++++++++++-
+ 2 files changed, 48 insertions(+), 1 deletion(-)
 
-s->channels[i] is set here and then machine resets occur and ....
-
-> +    i2c_slave_realize_and_unref(I2C_SLAVE(s), bus, &error_abort);
-> +
-> +    return I2C_SLAVE(s);
-> +}
-> +
-> +static void max11615_reset(DeviceState *dev)
-> +{
-> +    MAX11615State *s = MAX11615(dev);
-> +
-> +    s->single_ended = true;
-> +    s->bipolar = false;
-> +    s->vref = 2048;
-> +    s->pointer = 0;
-> +    s->outlen = 0;
-> +
-> +    for (int i = 0; i < MAX11615_NUM_CHANNELS; i++) {
-> +        s->channels[i] = 0b0000101011010010;
-> +    }
-
-s->channels[i] should be reset again, which makes me wonder if the
-functional test really works.
-
-> +}
-> +
-> +static void max11615_realize(DeviceState *dev, Error **errp)
-> +{
-> +    MAX11615State *s = MAX11615(dev);
-> +
-> +    trace_max11615_realize(s->i2c.address);
-> +}
-
-
-realize seems useless.
-
-
-> +static void max11615_class_init(ObjectClass *klass, const void *data)
-> +{
-> +    DeviceClass *dc = DEVICE_CLASS(klass);
-> +    I2CSlaveClass *k = I2C_SLAVE_CLASS(klass);
-> +
-> +    dc->realize = max11615_realize;
-> +    dc->desc = "Maxim MAX11615 12-bit ADC";
-> +    dc->vmsd = &vmstate_max11615;
-> +    dc->legacy_reset = max11615_reset;
-> +    k->event = max11615_event;
-> +    k->recv = max11615_recv;
-> +    k->send = max11615_send;
-> +}
-> +
-> +static const TypeInfo max11615_info = {
-> +    .name = TYPE_MAX11615,
-> +    .parent = TYPE_I2C_SLAVE,
-> +    .instance_size = sizeof(MAX11615State),
-> +    .class_size = sizeof(MAX11615Class),
-> +    .class_init = max11615_class_init,
-> +};
-> +
-> +static void max11615_register_types(void)
-> +{
-> +    type_register_static(&max11615_info);
-> +}
-> +
-> +type_init(max11615_register_types)
-> diff --git a/hw/arm/Kconfig b/hw/arm/Kconfig
-> index 99864eb878..76a7d327a9 100644
-> --- a/hw/arm/Kconfig
-> +++ b/hw/arm/Kconfig
-> @@ -553,6 +553,7 @@ config ASPEED_SOC
->       select PMBUS
->       select MAX31785
->       select MAX31790
-> +    select MAX11615
->       select FSI_APB2OPB_ASPEED
->       select AT24C
->       select PCI_EXPRESS
-> diff --git a/hw/sensor/Kconfig b/hw/sensor/Kconfig
-> index 767f198e92..441bee7604 100644
-> --- a/hw/sensor/Kconfig
-> +++ b/hw/sensor/Kconfig
-> @@ -47,3 +47,7 @@ config MAX31785
->   config MAX31790
->       bool
->       depends on I2C
-> +
-> +config MAX11615
-> +    bool
-> +    depends on I2C
-> diff --git a/hw/sensor/meson.build b/hw/sensor/meson.build
-> index 4987c3b253..a1e26604fa 100644
-> --- a/hw/sensor/meson.build
-> +++ b/hw/sensor/meson.build
-> @@ -9,3 +9,4 @@ system_ss.add(when: 'CONFIG_LSM303DLHC_MAG', if_true: files('lsm303dlhc_mag.c'))
->   system_ss.add(when: 'CONFIG_ISL_PMBUS_VR', if_true: files('isl_pmbus_vr.c'))
->   system_ss.add(when: 'CONFIG_MAX31785', if_true: files('max31785.c'))
->   system_ss.add(when: 'CONFIG_MAX31790', if_true: files('max31790.c'))
-> +system_ss.add(when: 'CONFIG_MAX11615', if_true: files('max11615.c'))
-> diff --git a/hw/sensor/trace-events b/hw/sensor/trace-events
-> index 0bde02e676..23e34d8297 100644
-> --- a/hw/sensor/trace-events
-> +++ b/hw/sensor/trace-events
-> @@ -15,3 +15,11 @@ max31790_pwm_write(uint8_t i2c_addr, size_t index, uint16_t value) "i2c_addr: 0x
->   max31790_rpm_write(uint8_t i2c_addr, size_t index, uint16_t value) "i2c_addr: 0x%02x, index: %zu, value: 0x%04x"
->   max31790_tach_count_reg(uint8_t i2c_addr, size_t index, uint16_t value) "i2c_addr: 0x%02x, index: %zu, value: 0x%04x"
->   
-> +# max11615.c
-> +max11615_write_setup(uint8_t i2c_addr, uint8_t send) "i2c_addr: 0x%02x, data: 0x%02x"
-> +max11615_write_config(uint8_t i2c_addr, uint8_t send) "i2c_addr: 0x%02x, data: 0x%02x"
-> +max11615_recv(uint8_t i2c_addr, uint8_t reg_addr) "i2c_addr: 0x%02x, reg_addr: 0x%02x"
-> +max11615_recv_return(uint8_t i2c_addr, uint8_t data) "i2c_addr: 0x%02x, returns: 0x%02x"
-> +max11615_event(uint8_t i2c_addr, uint8_t event) "i2c_addr: 0x%02x, event: 0x%02x"
-> +max11615_realize(uint8_t i2c_addr) "i2c_addr: 0x%02x"
-> +
-> diff --git a/tests/functional/arm/test_aspeed_fby4.py b/tests/functional/arm/test_aspeed_fby4.py
-> index dc2437a533..4ace4985d2 100755
-> --- a/tests/functional/arm/test_aspeed_fby4.py
-> +++ b/tests/functional/arm/test_aspeed_fby4.py
-> @@ -60,6 +60,14 @@ def do_test_arm_aspeed_openbmc_no_network(self, machine, image, uboot,
->           exec_command_and_wait_for_pattern(self,
->               "cat /sys/class/hwmon/hwmon2/fan1_input", "10685");
->   
-> +        # MAX11615 test
-> +        exec_command_and_wait_for_pattern(self,
-> +            "cat /sys/bus/i2c/devices/30-0033/iio:device*/name", "max11615");
-> +        exec_command_and_wait_for_pattern(self,
-> +            "cat /sys/bus/i2c/devices/30-0033/iio:device*/in_voltage0_raw", "4095");
-
-This is 0xfff. Which value is expected ? This does not reflect well in
-the board. Looks like a make-it-work value for me.
-
-Thanks,
-
-C.
-
-> +        exec_command_and_wait_for_pattern(self,
-> +            "cat /sys/bus/i2c/devices/30-0033/iio:device*/in_voltage_scale", "0.500000000");
-> +
->       def test_arm_ast2600_yosemitev4_openbmc(self):
->           image_path = self.uncompress(self.ASSET_YOSEMITE_V4_FLASH)
->   
+diff --git a/hw/arm/tegra241-cmdqv.h b/hw/arm/tegra241-cmdqv.h
+index a5f65a8991..9fc720e96c 100644
+--- a/hw/arm/tegra241-cmdqv.h
++++ b/hw/arm/tegra241-cmdqv.h
+@@ -32,6 +32,7 @@ typedef struct Tegra241CMDQV {
+     SMMUv3AccelState *s_accel;
+     MemoryRegion mmio_cmdqv;
+     qemu_irq irq;
++    IOMMUFDVeventq *veventq;
+ } Tegra241CMDQV;
+ 
+ const SMMUv3AccelCmdqvOps *tegra241_cmdqv_get_ops(void);
+diff --git a/hw/arm/tegra241-cmdqv.c b/hw/arm/tegra241-cmdqv.c
+index 2875affc8d..c1351c8519 100644
+--- a/hw/arm/tegra241-cmdqv.c
++++ b/hw/arm/tegra241-cmdqv.c
+@@ -10,6 +10,7 @@
+ #include "qemu/osdep.h"
+ 
+ #include "hw/arm/smmuv3.h"
++#include "hw/arm/smmuv3-common.h"
+ #include "smmuv3-accel.h"
+ #include "tegra241-cmdqv.h"
+ 
+@@ -26,13 +27,58 @@ static void tegra241_cmdqv_write_mmio(void *opaque, hwaddr offset,
+ 
+ static void tegra241_cmdqv_free_viommu(SMMUv3State *s)
+ {
++    SMMUv3AccelState *accel = s->s_accel;
++    IOMMUFDViommu *viommu = accel->viommu;
++    Tegra241CMDQV *cmdqv = accel->cmdqv;
++    IOMMUFDVeventq *veventq = cmdqv->veventq;
++
++    if (!viommu) {
++        return;
++    }
++    if (veventq) {
++        close(veventq->veventq_fd);
++        iommufd_backend_free_id(viommu->iommufd, veventq->veventq_id);
++        g_free(veventq);
++        cmdqv->veventq = NULL;
++    }
++    iommufd_backend_free_id(viommu->iommufd, viommu->viommu_id);
+ }
+ 
+ static bool
+ tegra241_cmdqv_alloc_viommu(SMMUv3State *s, HostIOMMUDeviceIOMMUFD *idev,
+                             uint32_t *out_viommu_id, Error **errp)
+ {
+-    error_setg(errp, "NVIDIA Tegra241 CMDQV is unsupported");
++    Tegra241CMDQV *cmdqv = s->s_accel->cmdqv;
++    uint32_t viommu_id, veventq_id, veventq_fd;
++    IOMMUFDVeventq *veventq;
++
++    if (!iommufd_backend_alloc_viommu(idev->iommufd, idev->devid,
++                                      IOMMU_VIOMMU_TYPE_TEGRA241_CMDQV,
++                                      idev->hwpt_id, cmdqv->cmdqv_data,
++                                      sizeof(*cmdqv->cmdqv_data), &viommu_id,
++                                      errp)) {
++        return false;
++    }
++
++    if (!iommufd_backend_alloc_veventq(idev->iommufd, viommu_id,
++                                       IOMMU_VEVENTQ_TYPE_TEGRA241_CMDQV,
++                                       1 << SMMU_EVENTQS, &veventq_id,
++                                       &veventq_fd,
++                                       errp)) {
++        error_append_hint(errp, "Tegra241 CMDQV: failed to alloc veventq");
++        goto free_viommu;
++    }
++
++    veventq = g_new(IOMMUFDVeventq, 1);
++    veventq->veventq_id = veventq_id;
++    veventq->veventq_fd = veventq_fd;
++    cmdqv->veventq = veventq;
++
++    *out_viommu_id = viommu_id;
++    return true;
++
++free_viommu:
++    iommufd_backend_free_id(idev->iommufd, viommu_id);
+     return false;
+ }
+ 
+-- 
+2.43.0
 
 
