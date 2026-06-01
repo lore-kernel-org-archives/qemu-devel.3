@@ -4,128 +4,114 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A0B83CD5BD1
-	for <qemu-devel@archiver.kernel.org>; Mon,  1 Jun 2026 13:07:01 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 49DEACD6E57
+	for <qemu-devel@archiver.kernel.org>; Mon,  1 Jun 2026 13:12:21 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wU2La-0007NV-5I; Mon, 01 Jun 2026 09:06:26 -0400
+	id 1wU2Qb-0000OD-6n; Mon, 01 Jun 2026 09:11:37 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <aesteve@redhat.com>)
- id 1wU2LP-0007MJ-6y
- for qemu-devel@nongnu.org; Mon, 01 Jun 2026 09:06:15 -0400
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1wU2QY-0000Ny-Ji
+ for qemu-devel@nongnu.org; Mon, 01 Jun 2026 09:11:34 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <aesteve@redhat.com>)
- id 1wU2LN-0005Uv-LP
- for qemu-devel@nongnu.org; Mon, 01 Jun 2026 09:06:14 -0400
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1wU2QV-0000LI-Al
+ for qemu-devel@nongnu.org; Mon, 01 Jun 2026 09:11:32 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1780319171;
+ s=mimecast20190719; t=1780319489;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=a3EOOtKkYtNzlyL7wJDq11Tzx8zN1iGmDGeYtUEcaj4=;
- b=NdmChDLsvZ6AYkcQILSxao1ajTxjxHNQNLu4mj8gMzfDruUGtDoOn5RqPsm3yraPJFSvM1
- mnju3ThDK10o4gJVg0gdkkIOZ+RMKWhxyCeJxdIb5EvHCVJ65YRRrKX38nPSdqh2eBoL5J
- P5NwgQt5N5/NpxGjILWycID4UmskGMk=
-Received: from mail-yw1-f197.google.com (mail-yw1-f197.google.com
- [209.85.128.197]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=0ECHPmOAKI6Nwk0NjCQ/5FeLRB8gynrXIGdywqExjSo=;
+ b=DXY0TUM8dMkRy/Nfn/XdA9EkBV8VzqAa29c+BXaEbJogyWFuAK4TpY1fAyn8YTvs8B7NVQ
+ GrV9mqz68lJciAfhKTwipPzyklF1rYvjQWooHulAV82/PwOGnw1to+f+2kFvu7vaBCmIQM
+ s1SYKc37glx+cEduOILEV8EfzFznJs8=
+Received: from mail-wr1-f70.google.com (mail-wr1-f70.google.com
+ [209.85.221.70]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-507-F9lXw4YMOXuAzozWq3emKw-1; Mon, 01 Jun 2026 09:06:07 -0400
-X-MC-Unique: F9lXw4YMOXuAzozWq3emKw-1
-X-Mimecast-MFC-AGG-ID: F9lXw4YMOXuAzozWq3emKw_1780319167
-Received: by mail-yw1-f197.google.com with SMTP id
- 00721157ae682-7dc407c707eso70016687b3.1
- for <qemu-devel@nongnu.org>; Mon, 01 Jun 2026 06:06:07 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1780319167; cv=none;
- d=google.com; s=arc-20240605;
- b=eWY1THbh5Owdppir96qsF1Z2jFq4PoLAk0sbkOVxZP4yHLPGVeuQJu/vMK5ZdxvF95
- 0FlZnHVhiNHMCTy5rgn5ls4IRafvD6+bHWQQqJVcKrvIsh16eNfFVvRsp2/8WBJPpkqw
- GQWqhOkgdmWrFZQ6+h932QU9zKMZaoiU+zT04MJ0Wv6kvRfblNlEf1+BJZa0ysr5b+kW
- uB9pBnKYamjhrkLt39nwgMLpFGmY3x4+oMVz0QxfRRBb6nucnCcY5EEbIL43u0yvqt/s
- 1OnjRvXOBLApLJGTKCk7CWv95/oFYxeqWzGk+wg3yN2Uklr3NDkltO1zdYOJyrup8Zf9
- 8Iog==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
- s=arc-20240605; 
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:dkim-signature;
- bh=a3EOOtKkYtNzlyL7wJDq11Tzx8zN1iGmDGeYtUEcaj4=;
- fh=Evf3d5FlozXjAsB0VmS2bSCpk8yAb866bzU3WfB6+no=;
- b=gZuuP/zK3ms/lcGol2xjwd+iC56Q5D47cSxXdVSMRPxaCHMwqTSyuh8el4NlZKecUJ
- iOkjeegCAia+ryf3pa/6ivcnMupbhC4PHr7D7z2KLGDFcbvcgtIJF5lo7fBez+GqeoTL
- 9RvEddrCiidWyHeVvi1Eh+a/eFmpyxVbTDvdFq1Txq1U59xUXMgehithX58jSFFQTkNc
- 6QFEimaTmFkRQhZZnxt2Sud2CruRpEtdhUlOKubfd8PWWN1dDYR7sOyoKXviqHhLHhA1
- zem2bpSsfc6nZf7ZPPEzXY+lLMQNQE67NFkXok53oAtbNXRr3jjscSCq6DlZSAfAU4cr
- 0Uhw==; darn=nongnu.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
+ us-mta-397-i_iA-PT-NKWXi2Ey4gtt8g-1; Mon, 01 Jun 2026 09:11:27 -0400
+X-MC-Unique: i_iA-PT-NKWXi2Ey4gtt8g-1
+X-Mimecast-MFC-AGG-ID: i_iA-PT-NKWXi2Ey4gtt8g_1780319486
+Received: by mail-wr1-f70.google.com with SMTP id
+ ffacd0b85a97d-4600cf05f07so1073786f8f.2
+ for <qemu-devel@nongnu.org>; Mon, 01 Jun 2026 06:11:27 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1780319167; x=1780923967; darn=nongnu.org;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:from:to:cc:subject:date
- :message-id:reply-to;
- bh=a3EOOtKkYtNzlyL7wJDq11Tzx8zN1iGmDGeYtUEcaj4=;
- b=Oo9Ypy8YsPAIhBnq7fuiqMbutVrif2VUFtNh+KstlRwPABpE4d4F1SkOw0jAAytvxQ
- dfMPzhexreJQ7Fcl7LJSPOGuxp0O2nvDxkrb5D6VpOHsiZT2hUePG42dPP2klxhHjQAv
- YijZ1jdXD0oTjOeQlKC2AQENNbn3/58feoRdeIBJNIzLYv4oF+39fa/f0traeLBKY3Kl
- xxLNVrtrwYoDV82/J5lguhMfq9feThG9MgP+GUVkiobBGxrgFfFjCp1kd2Xn9XVJnc6F
- ec2ua4qGJ6g7Kd52jqYvQ2ZLbCPTo1ynhZAfFCYMDVgqijfKz6i+tH54/G/anNcIgje0
- cKVg==
+ d=redhat.com; s=google; t=1780319486; x=1780924286; darn=nongnu.org;
+ h=in-reply-to:content-transfer-encoding:content-disposition
+ :mime-version:references:message-id:subject:cc:to:from:date:from:to
+ :cc:subject:date:message-id:reply-to;
+ bh=0ECHPmOAKI6Nwk0NjCQ/5FeLRB8gynrXIGdywqExjSo=;
+ b=klW4tLVZdgvi/V8RP8VqRfx6tJMGR2WcFyZD7fxrPZKsCexOSojOl9I/Eoxy5yJLmy
+ UuDRjlB0Dp2eyP3gZu3po6FmXcY93Ifk99elBlGy03CNOT/v7Qdg0qyQeKtgfLYj5OgJ
+ yO0KrpU7owuk36M3m3fp+aGccc6uXDZErEI0aXmYaCdF44MRu9XTGDsbrpgWjcliwhYt
+ sAmigNVXVYRWjxU3ZDztHm21Dcl/v8D2tuIhQc1oJnP0IWeUf+MvQ/loD9iMc00Xd0ly
+ qwFHJYUHUP8bCjtAYhOQb4iaJwexFm4dv4oTlAfENbyRU2mGps2GyUjw1PeGwOEWAHM/
+ KR/g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1780319167; x=1780923967;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to;
- bh=a3EOOtKkYtNzlyL7wJDq11Tzx8zN1iGmDGeYtUEcaj4=;
- b=ZKtAgBiMjsHOLLm5+Yx3ZHQRooKwSgeqcCZNvDe0yBEHxOuluIW/MWlblk6N5vaqJR
- w5CkMpTAbSgaxy7R+6uboXbCohK18zVXPETGY/WsfhvonKzO1IVYSRC+9EipchQTpKa6
- Qr2Rity4n5dvTzyGFu2eF+LUariy0n+LcR5OaTg3yuDKLapg2sIulmAHeWWSMJmirWDx
- hhOMMkFhvH5BMg2aY2tkhOUITQyFXlpkjFvzDLclBeasGhwg0+FfOyWMz33B35cABrMD
- V/fqkMOnIaPIkJA+Onmj7X4GZkYAZJ7jdVyoVXJH5EJip88nZOJ3oBbgjKrDBE4Oz90Y
- z4Cg==
+ d=1e100.net; s=20251104; t=1780319486; x=1780924286;
+ h=in-reply-to:content-transfer-encoding:content-disposition
+ :mime-version:references:message-id:subject:cc:to:from:date:x-gm-gg
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=0ECHPmOAKI6Nwk0NjCQ/5FeLRB8gynrXIGdywqExjSo=;
+ b=rbCwjqw56wEq1cxv9RxcXc5bOtS7rbcExXgEhtBfhEXI+V2H8jQWUvqA9LQOB1dpWl
+ R2MlVGz53ribLH+cHlHKHZWkad+x34Kct4xL0zrqZlw34PD2IVxNkK1cW1GXR0N+R/29
+ q4fydggFB0cK/FEKVcS/Sq5GrHUTwegotqc8p+u4rtMMen4/n+NhgpRR+qPRSHd43uU/
+ VIutw6M0tHplrjuGL//6XbfyKzel2GBfYI4N+crK+kIVk6xBD1Qr7UkZnmBTMa8SA2fx
+ NQneXm5uamMwpQVWHd6iOUgXy+/o4Nyala+/lLfFzvLfQFxnIqlZGi50emaDlqZhmmzr
+ 31AQ==
 X-Forwarded-Encrypted: i=1;
- AFNElJ/lpETR0tjeM8q+96MLvemVQTarEUeFxzybN2iS4h0nTRmNxNJMPgcMBL5O3ORHMsbYGsOWfu7ebRjv@nongnu.org
-X-Gm-Message-State: AOJu0Yz4o4cN9ArDWaLrDpqowaACa/B1QrMZXGJmSVwlw8rmpK3gkYIG
- gS1N4DqbG5Q9QowBJM0/5zPGGJTc/2xRpDYjHYoYd3bVbTv+vsQ2HaUGAArrrSmdB3Mim4txZe5
- S07VAe8HAXcO/lLhEm78Co6lkPY8wHbzJVjkTpzwmoFurT9LYsu5s8eqZS6d/9g6TuBmasCPXzM
- xnq+cOIg9g54ka2+DKnb1UIuQi/7FV8FY=
-X-Gm-Gg: Acq92OEt5NGh2K1X43nhKveKO3fxelA3AXcvLPNam8i4rAvg3DaExvRdD4LBg8DtqQs
- Qa4Eq7PjbO6vQmb595NBd6ak9XaNFubn4YryH+pEVcHf/EYeuePLNix3bjO50q3IfWfQsH5pOlR
- H49hcxKOidTzzAiV2QWMn4et5hdDGPVWB3iBoh8R0DjO5dCLYFk7l3i4BpXK7zJfGoFd/uWGsF1
- i0ifoP+AVrR/gbk
-X-Received: by 2002:a05:690c:3391:b0:79a:c40d:b734 with SMTP id
- 00721157ae682-7e05ea48534mr91668387b3.48.1780319167179; 
- Mon, 01 Jun 2026 06:06:07 -0700 (PDT)
-X-Received: by 2002:a05:690c:3391:b0:79a:c40d:b734 with SMTP id
- 00721157ae682-7e05ea48534mr91663157b3.48.1780319162192; Mon, 01 Jun 2026
- 06:06:02 -0700 (PDT)
-MIME-Version: 1.0
+ AFNElJ98W85FJHyljBJHMHdnUT3H83KoTGcYDCUyZkYwoBTtyrtcw+U6AYXPTidvFF8PcuFQfsauiAYJeLJ+@nongnu.org
+X-Gm-Message-State: AOJu0YzKpAKfTNZMT/5wCNjDIMKDS+dDLNO7lvcMCM714ciYhE2BXXwr
+ 7rY8DG34laWaR5jVeCdmYVKy4pESZh6lzkilmEHBYrul6nhnQ1zg6Oc+BPEF8RelUiT0gRmgvMx
+ kFUWkN2AqzjtvUHFzfd/mqHum6zvvkoDCZTVBzmGsToe9VvzhVFpinbJf
+X-Gm-Gg: Acq92OGTKxHbwOyZ+jDbExftq796NYe7UQUVy1tzLtrB9L0N6jtoReW0FMmDHvOB5jk
+ WXYu8pXovNPt0wxF/8/5SR9r0fb7Wehg0M3GGcPYs4HcIhSgj32bA7pc2YMeS5kY7WP/r8Y7y54
+ BwHFX52TqjBW+Re6fBJFDlC1Ez3xdVMFopokx+Go5MDfQzz6gHasKiwbt0fb7LQEG9Oi7yy98v4
+ u96mj/mqGnOCsqiOZQ6drwfeUNh1qrJGcMn/7tcCLgQIHd+CElFOUnEfld+bL8Bi7iL7F05vTqT
+ zB2133FJgXFgQccmFvNLcw2Ch4phlivVU8tNaNKbMuvzRPYW8XHmmNrMAJ9/MIBZG+J+NTch1RT
+ SPgsCoTwicliLelFb6df+KCWipLB0Z0FbfVAeYi6zE8G/E1vj9LuNyg==
+X-Received: by 2002:a05:6000:4610:b0:45e:db3b:921d with SMTP id
+ ffacd0b85a97d-45ef6b67882mr21226140f8f.31.1780319485960; 
+ Mon, 01 Jun 2026 06:11:25 -0700 (PDT)
+X-Received: by 2002:a05:6000:4610:b0:45e:db3b:921d with SMTP id
+ ffacd0b85a97d-45ef6b67882mr21226068f8f.31.1780319485453; 
+ Mon, 01 Jun 2026 06:11:25 -0700 (PDT)
+Received: from redhat.com (IGLD-80-230-25-45.inter.net.il. [80.230.25.45])
+ by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-45ef32fabcasm24599676f8f.0.2026.06.01.06.11.23
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Mon, 01 Jun 2026 06:11:24 -0700 (PDT)
+Date: Mon, 1 Jun 2026 09:11:21 -0400
+From: "Michael S. Tsirkin" <mst@redhat.com>
+To: Albert Esteve <aesteve@redhat.com>
+Cc: Alex =?iso-8859-1?Q?Benn=E9e?= <alex.bennee@linaro.org>,
+ qemu-devel <qemu-devel@nongnu.org>, virtio-comment@lists.linux.dev,
+ dev@lists.cloudhypervisor.org, rust-vmm@lists.opendev.org,
+ Stefano Garzarella <sgarzare@redhat.com>,
+ Manos Pitsidianakis <manos.pitsidianakis@linaro.org>,
+ Demi Marie Obenour <demi@invisiblethingslab.com>,
+ Alyssa Ross <hi@alyssa.is>, Mark Burton <MBURTON@qti.qualcomm.com>,
+ Matti Moell <matti@qti.qualcomm.com>,
+ Stefan Hajnoczi <stefanha@redhat.com>,
+ Viresh Kumar <viresh.kumar@linaro.org>,
+ Dorinda Bassey <dbassey@redhat.com>, Sergio Lopez <slp@redhat.com>,
+ Vishwanath Seshagiri <vishs@meta.com>, Rob Bradford <rbradford@meta.com>,
+ Zhengyu Zhao <zhaozhengyu@bytedance.com>,
+ "Jorge E. Moreira" <jemoreira@google.com>
+Subject: Re: Where should the vhost-user specification live?
+Message-ID: <20260601090953-mutt-send-email-mst@kernel.org>
 References: <874ijtz038.fsf@draig.linaro.org>
  <CADSE00+RdBUhFVBDSXtVd1J5SaccqWy+RBxqnxuLKUYcitFMPw@mail.gmail.com>
  <20260601083628-mutt-send-email-mst@kernel.org>
-In-Reply-To: <20260601083628-mutt-send-email-mst@kernel.org>
-From: Albert Esteve <aesteve@redhat.com>
-Date: Mon, 1 Jun 2026 15:05:50 +0200
-X-Gm-Features: AVHnY4KxqNrVCAnBvGqVDNl4sx_O6LVtLUuikZg1pVoCVm_RBbEptTRzSNfWocM
-Message-ID: <CADSE00+kRnEC08LLVu6H065u2KaxBm-KnSN_8y6+964-FLbJMA@mail.gmail.com>
-Subject: Re: Where should the vhost-user specification live?
-To: "Michael S. Tsirkin" <mst@redhat.com>
-Cc: =?UTF-8?B?QWxleCBCZW5uw6ll?= <alex.bennee@linaro.org>, 
- qemu-devel <qemu-devel@nongnu.org>, virtio-comment@lists.linux.dev, 
- dev@lists.cloudhypervisor.org, rust-vmm@lists.opendev.org, 
- Stefano Garzarella <sgarzare@redhat.com>,
- Manos Pitsidianakis <manos.pitsidianakis@linaro.org>, 
- Demi Marie Obenour <demi@invisiblethingslab.com>, Alyssa Ross <hi@alyssa.is>, 
- Mark Burton <MBURTON@qti.qualcomm.com>, Matti Moell <matti@qti.qualcomm.com>, 
- Stefan Hajnoczi <stefanha@redhat.com>, Viresh Kumar <viresh.kumar@linaro.org>, 
- Dorinda Bassey <dbassey@redhat.com>, Sergio Lopez <slp@redhat.com>, 
- Vishwanath Seshagiri <vishs@meta.com>, Rob Bradford <rbradford@meta.com>, 
- Zhengyu Zhao <zhaozhengyu@bytedance.com>,
- "Jorge E. Moreira" <jemoreira@google.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=aesteve@redhat.com;
+ <CADSE00+kRnEC08LLVu6H065u2KaxBm-KnSN_8y6+964-FLbJMA@mail.gmail.com>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <CADSE00+kRnEC08LLVu6H065u2KaxBm-KnSN_8y6+964-FLbJMA@mail.gmail.com>
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=mst@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -24
 X-Spam_score: -2.5
@@ -149,51 +135,53 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Mon, Jun 1, 2026 at 2:39=E2=80=AFPM Michael S. Tsirkin <mst@redhat.com> =
-wrote:
->
-> On Mon, Jun 01, 2026 at 02:32:11PM +0200, Albert Esteve wrote:
-> >  But also because, in my opinion, separating
-> > the specification would improve development agility by decoupling
-> > specification development from QEMU's review and release cycles.
->
-> Generally for QEMU this will be less agility, unless I misunderstand
-> what is proposed)
->
-> Because presumably there will need to be spec releases then?
->
-> So
->         new feature -> spec tree -> spec release -> qemu implementation -=
-> qemu release
->
-> is surely longer that what we have now.
+On Mon, Jun 01, 2026 at 03:05:50PM +0200, Albert Esteve wrote:
+> On Mon, Jun 1, 2026 at 2:39 PM Michael S. Tsirkin <mst@redhat.com> wrote:
+> >
+> > On Mon, Jun 01, 2026 at 02:32:11PM +0200, Albert Esteve wrote:
+> > >  But also because, in my opinion, separating
+> > > the specification would improve development agility by decoupling
+> > > specification development from QEMU's review and release cycles.
+> >
+> > Generally for QEMU this will be less agility, unless I misunderstand
+> > what is proposed)
+> >
+> > Because presumably there will need to be spec releases then?
+> >
+> > So
+> >         new feature -> spec tree -> spec release -> qemu implementation -> qemu release
+> >
+> > is surely longer that what we have now.
+> 
+> I see your point.
+> 
+> However, we do not really need to introduce a heavy release management
+> layer. We could just operate it as a living document, where the main
+> branch is the authoritative source of truth.
+> 
+> For the workflow, development doesn't have to be strictly sequential
+> either. A contributor can propose the spec update while working on the
+> implementation, much like we do for VirtIO updates. Actually, this way
+> one update/change supports the other.
+> 
+> I guess my point is that a dedicated repository could lower the
+> barrier for new changes AND keep QEMU's own development speed mostly
+> unaffected.
+> 
+> BR,
+> Albert
 
-I see your point.
+Something something submodule? Possibly. If you want to make progress
+on this, pls think of the process, try it out.
 
-However, we do not really need to introduce a heavy release management
-layer. We could just operate it as a living document, where the main
-branch is the authoritative source of truth.
-
-For the workflow, development doesn't have to be strictly sequential
-either. A contributor can propose the spec update while working on the
-implementation, much like we do for VirtIO updates. Actually, this way
-one update/change supports the other.
-
-I guess my point is that a dedicated repository could lower the
-barrier for new changes AND keep QEMU's own development speed mostly
-unaffected.
-
-BR,
-Albert
-
->
-> Whether there will be more agility for non qemu users will depend on
-> how often spec releases are cut.
->
->
->
-> --
-> MST
->
+> >
+> > Whether there will be more agility for non qemu users will depend on
+> > how often spec releases are cut.
+> >
+> >
+> >
+> > --
+> > MST
+> >
 
 
