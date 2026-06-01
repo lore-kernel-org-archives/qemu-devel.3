@@ -4,61 +4,64 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1E282CD6E56
-	for <qemu-devel@archiver.kernel.org>; Mon,  1 Jun 2026 02:51:24 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 12030CD6E5D
+	for <qemu-devel@archiver.kernel.org>; Mon,  1 Jun 2026 02:51:44 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wTsjL-00034s-5e; Sun, 31 May 2026 22:50:19 -0400
+	id 1wTsjc-0003Fj-Vn; Sun, 31 May 2026 22:50:37 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <jamin_lin@aspeedtech.com>)
- id 1wTsjJ-00034V-9K; Sun, 31 May 2026 22:50:17 -0400
-Received: from mail-japaneastazlp170120005.outbound.protection.outlook.com
- ([2a01:111:f403:c405::5] helo=TYPPR03CU001.outbound.protection.outlook.com)
+ id 1wTsja-0003DV-4Z; Sun, 31 May 2026 22:50:34 -0400
+Received: from mail-japaneastazlp170130007.outbound.protection.outlook.com
+ ([2a01:111:f403:c405::7] helo=TYDPR03CU002.outbound.protection.outlook.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <jamin_lin@aspeedtech.com>)
- id 1wTsjG-0002Y8-Gg; Sun, 31 May 2026 22:50:16 -0400
+ id 1wTsjY-0002lH-1V; Sun, 31 May 2026 22:50:33 -0400
 ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=haakCt4lc8wY154i6wueuN3Q2qlcy8s3UmbUDsvBseEk1eZUt+UaomQaay0g3ldeds8+Wr9gRzKompYg4/Ue0jC0IYe903HT3KiximW1q8lwrEBoSHdDMnHoAx2VI79KTfa5w0LYmZoYDGkq5/e0erQnh2VR9PWWd8bUhZBqSnnnhIL4pD61np/Lt2JnXycyZdT+X+0cu7dWlhOysA4gGSm5tIbAI0GmZ0NPgATBM9+3zQus9SCDMyFZx3BKUSQ7dj8eyk1Tz/4Y9AKDmgNj0lre93geKjvCWBuwjb6bVxonhq4SvHYJy8ko340cgjmD+x/4R23agGvfclsPB/Ts3w==
+ b=rGOJ1BE+b88yX2GppZJz9FCBqGPDGPFtWFwccFSmWc4drjLGeHSL6ORAMGzlNhAeXLZftBh4f7uLPMjIsQ+fYs4jT/J16BfxJpuuXkKDjJ4MhFF0hi4palJsZdiOiqOmS6ArxspwBk/ZFdvlyJPO4V6CgQyWRMgyLrdg1jnUWE1NYj3ZEq7uahBcrZP+jI3J//jbuM8FZtuNoLdrI+EVc3KtPPFfwoAYDCtvGDVMwaYvAqCxcQeBla6u2AXMbjuUyx4rAVc18j7gzIhFOSk2kA0eUbeJKefAS+PJlfD3hdtvNy0E8E+7whxbwKFtzrXoENSZy0Ep33gM+h9kBnZ7YA==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
  s=arcselector10001;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=p7+ueVrvgoim3xCNjSGcEPKDoLDh7epFxcGC7SUpJO0=;
- b=k2J9T37MGVNvzEoV0p498NYviYI/AhO+OIn3UOTb03qg8+/HlrkwPOjKCnmeJmjXYYhNEWYyjNR+e5sVGzub6KPXkyiFQcBJKEk14dqZcX3lI9PuI4vVuKr+23rF+61nxVJ2+dIMMxcEJxMM0PFqE28TmVGejLExF8zcpPL99png6sUF15PD4MiU9XTunqVctCFcJDYSL7daQmN9DRM/crFo+61BXwT32Wclh0O2+Mff0CskWYuVnhFlQotcu7EJU0Hj7PaNvdUAFAIWiBp8ZggfSV599euphi2wTdKQm0WbxpEBA24lFgYbcuaLJhPEKkTCJRoaaVsceJSbhYeZdQ==
+ bh=2e9komiWATwtpKlx/larYwjq0l1Cl8HzbT4y7L51pmQ=;
+ b=Zs8ntI4QrgbWd+2hZDYcYD5wa7zi5Xih00f6dKoW+61hIqgER5D2N+fhbtnd+m8ERe5P7cN97A2/C48AUk8Sr8ll/sMDVgwH4gRAoPYRYY0k9CYw6HFmnlMIr4/zHejf2JSJmz5Bttt3z9Cf+tAKCoq/wGbc6eBKz7I6x96Hp7Q/2YyBZRTRF3m9Ezg1MRs0jnM8s1rD8HGZD6M9iMBg5UFvsDbkC4VfKREeKqJkp2Q9IiIP8/+1GL1Rw+atD52rkrHwhovrXQLD7S/cMuwcetm4OCsK2fGTmnt3K7n7ovjiP+SlZlmL+A015WniQ4YWQdzfgaO0B0sgWHkvLQR7cg==
 ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
  smtp.mailfrom=aspeedtech.com; dmarc=pass action=none
  header.from=aspeedtech.com; dkim=pass header.d=aspeedtech.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=aspeedtech.com;
  s=selector1;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=p7+ueVrvgoim3xCNjSGcEPKDoLDh7epFxcGC7SUpJO0=;
- b=jwM0Kbw9kRZKF59A009MIvjHWgFDC1ZDBtq24dKvPHZBr3rS7ewKzTN2vQ8TNffK0RpCRx/ZwgqK8maXu62/Kiym8Wxza5ChveHdajhjANRY7bm5aXZEymYNKAkWSPR3d/+TW03OvCGXpzP3BYnX3pcz0dUOUtxWvcfB77ErPWryZ6rzT62zVyuddDFYhAFeKUlJb994mTZ26/KZzZ54y+Ei3JJULH3MWUE80K5EwhbExQVI6zCR//0SGGft+tUThyRPz/mrS7qB9q8QU/REErW+OOzTubvxUOoSX0aXhlYrOOHK0Tq5bkrF+v3z/1FDs2SzC0nXRImX6ygsoa2erw==
+ bh=2e9komiWATwtpKlx/larYwjq0l1Cl8HzbT4y7L51pmQ=;
+ b=XL03mejdUWACEFhgQEd4ED8UeUfFtPOBbxAp22No397uPyu7I2tcYf2LVYeXbswD7g75Vcy28Gvts614ReIihxPE0NrFjhCgQfERl4QOzu17ktS1GNBlloyu/MICruL5AbJS8g04EbxsDfJ4KXnXlumZbV4C9A+3X11FRShjKSP5w3BPwjbcfpqee4JOGjrzbURC28TghUZpkYLgfUfANOCi9sP4TdlCTOstKmueVtXyXF2oPC+NvFqwB1UpL1gu2xiSQyoJgq+x2F/gZTBML/YOhyMe5WHLdaG2ntiJ74ddDXhQY1550dLw46Gxc1auvfBCPjT2RsuBqskU4GRATQ==
 Received: from TYPPR06MB8206.apcprd06.prod.outlook.com (2603:1096:405:383::19)
- by KU4PR06MB8361.apcprd06.prod.outlook.com (2603:1096:d10:7a::9) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.71.15; Mon, 1 Jun 2026
- 02:50:01 +0000
+ by SEYPR06MB5490.apcprd06.prod.outlook.com (2603:1096:101:b6::12)
+ with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.71.17; Mon, 1 Jun 2026
+ 02:50:26 +0000
 Received: from TYPPR06MB8206.apcprd06.prod.outlook.com
  ([fe80::e659:1ead:77cb:f6d3]) by TYPPR06MB8206.apcprd06.prod.outlook.com
  ([fe80::e659:1ead:77cb:f6d3%2]) with mapi id 15.21.0071.014; Mon, 1 Jun 2026
- 02:50:01 +0000
+ 02:50:26 +0000
 From: Jamin Lin <jamin_lin@aspeedtech.com>
-To: =?iso-8859-1?Q?C=E9dric_Le_Goater?= <clg@kaod.org>, Peter Maydell
- <peter.maydell@linaro.org>, Steven Lee <steven_lee@aspeedtech.com>, Troy Lee
+To: Alistair Francis <alistair@alistair23.me>, Peter Maydell
+ <peter.maydell@linaro.org>, =?iso-8859-1?Q?C=E9dric_Le_Goater?=
+ <clg@kaod.org>, Steven Lee <steven_lee@aspeedtech.com>, Troy Lee
  <leetroy@gmail.com>, Kane Chen <kane_chen@aspeedtech.com>, Andrew Jeffery
- <andrew@codeconstruct.com.au>, Joel Stanley <joel@jms.id.au>, Alistair
- Francis <alistair@alistair23.me>, Ninad Palsule <ninad@linux.ibm.com>, Jason
- Wang <jasowang@redhat.com>, "open list:ASPEED BMCs" <qemu-arm@nongnu.org>,
- "open list:All patches CC here" <qemu-devel@nongnu.org>
+ <andrew@codeconstruct.com.au>, Joel Stanley <joel@jms.id.au>, Ninad Palsule
+ <ninad@linux.ibm.com>, Jason Wang <jasowang@redhat.com>, "open
+ list:STM32F205" <qemu-arm@nongnu.org>, "open list:All patches CC here"
+ <qemu-devel@nongnu.org>
 CC: Jamin Lin <jamin_lin@aspeedtech.com>, Troy Lee <troy_lee@aspeedtech.com>
-Subject: [PATCH v1 00/24] hw/aspeed: Convert all Aspeed devices to
+Subject: [PATCH v1 17/24] hw/watchdog/wdt_aspeed: Convert to DEFINE_TYPES()
+ with inlined TypeInfo
+Thread-Topic: [PATCH v1 17/24] hw/watchdog/wdt_aspeed: Convert to
  DEFINE_TYPES() with inlined TypeInfo
-Thread-Topic: [PATCH v1 00/24] hw/aspeed: Convert all Aspeed devices to
- DEFINE_TYPES() with inlined TypeInfo
-Thread-Index: AQHc8XFXKPB/fbK5wU+1bqPPadAJVA==
-Date: Mon, 1 Jun 2026 02:50:00 +0000
-Message-ID: <20260601024959.2347639-1-jamin_lin@aspeedtech.com>
+Thread-Index: AQHc8XFmwSp1HhAb80yAEHozCwSUfA==
+Date: Mon, 1 Jun 2026 02:50:26 +0000
+Message-ID: <20260601024959.2347639-18-jamin_lin@aspeedtech.com>
+References: <20260601024959.2347639-1-jamin_lin@aspeedtech.com>
+In-Reply-To: <20260601024959.2347639-1-jamin_lin@aspeedtech.com>
 Accept-Language: zh-TW, en-US
 Content-Language: en-US
 X-MS-Has-Attach: 
@@ -66,72 +69,72 @@ X-MS-TNEF-Correlator:
 authentication-results: dkim=none (message not signed)
  header.d=none;dmarc=none action=none header.from=aspeedtech.com;
 x-ms-publictraffictype: Email
-x-ms-traffictypediagnostic: TYPPR06MB8206:EE_|KU4PR06MB8361:EE_
-x-ms-office365-filtering-correlation-id: 57bc208e-1952-44c4-336d-08debf887993
+x-ms-traffictypediagnostic: TYPPR06MB8206:EE_|SEYPR06MB5490:EE_
+x-ms-office365-filtering-correlation-id: 58a0b148-0303-46a9-db33-08debf8888e8
 x-ms-exchange-senderadcheck: 1
 x-ms-exchange-antispam-relay: 0
 x-microsoft-antispam: BCL:0;
- ARA:13230040|366016|7416014|376014|1800799024|18002099003|38070700021|921020|56012099006;
-x-microsoft-antispam-message-info: o4luI0KsLus1xm013726dtBzEk3wHQtW89+woM3hzb+IW2I8LHHCvBsdBH8HcXgMph7yrQqxorVdf855261w/XXJUBLqAqRouxETS9oLDT2caUWv5wvW3x9C2++isP/98uWqqwMKWzV0M2O8DoCku1SrEzF7LD1vUS3S4M1AHCjOuytR2A/KFxLEwhsT1Ea2BEXtd3BwsiTwvaRgXKehIq0LI+A0dJSTeCzuJEuAkwTjWXg+M9/IXsI6PpXHpXEa6ZggBnb2bbk/Z7gguyiqMBDvX7uP6VE45OC7KYoSoaWwsGfOR6aq2A2+Xu8id2DFGZ//UpW84LKQgLIY3/WOWcV3QF0drb4alNUr6HcMkRbqEoTBpagCh/Y6kjkNlX/yktZCYxGiezoKMsd0M5uvRgwXUIKsGcPTy9URtpAGEukvlbsDq8ULmS82e1pg0BbfOSXcR0Zhiy+MafYCgEoXwyT7pPj9TqcB/flRL09yJsGf5/ctpO2PkiHQ99qDIr/8qzIBAo6o4qX1ZCRLL1pno0GeIO6sVnpM/GKacjNbsc4wE+97q+t4svklv33l6AV8cke+Kzwv6pWJTlY/IfuPdFIjsjtYU79dFcvSwYfIhQRZIx0Z0Su6kfcWMsf0zfqDEU0TiK0AXXWWi9gPVhp2xlxf2D1pwb+WS1T3n6+yOb97TTSE0Q31jG0M21f7yyQ2YmZx2UVZJ9NSNKMWbXqYUoBBIa6j0Lnos23YEUeHTOVRA4g8k0bPX44ZhWmVswDzUj8Aj0vGm4uAB7wgN47Kjg==
+ ARA:13230040|366016|1800799024|7416014|376014|921020|38070700021|22082099003|18002099003|56012099006;
+x-microsoft-antispam-message-info: DB5HlPWy+5xjlRhgALyD/EwaBAvEHWaYw4FF7t6j5H7JIwns6xWk6zNYXiy6UrlfLGgQ242QmmmjOTsnzq1mLPcCP9yTxK0CWtQMsZQDhUmIzu8J6ZlWmXK9QKdMOfXF80xEfupojyT1dO3I4fKfSJahS1+PYrWdzT/F5buYV/4DyIAnSRiFVi2QNR3O4TtZGQYyTpNLH144VygxHlbfILiYUoS0OTBMolGjIKz9ZWuVMPoOBLrfN0UvlwfntUZ0w6ItL5tm8oVKIAXw60Q5p13nTmzkBd66e51ezkh+IH18xG9/CG6M1YJ6Ui5taZ6cYtCdxAafDAQGiZfM2L/gLtWr3mjfhU5Z2RXXAvCtRafiYx22sjr0eVqNWXwQT8ri8PEpr8kIIVtqPv5HX24dFEZcjnhzFEJrLciEYRhFRumrGSNWT7H/xIGrz1vu6zCHpHWESm2r/cxC+Glzqu8b6gYtsujUKe70+3bIQhIReMINPO4ZgjkvBz3mx+GLZ43vc+F+Po/QlOikzRlL3+5p0ye9lXqC6/LJ/VsdxHGT5GVlHEJtc8GWUc+pp6mDAMEGszNGCHr4ctpLPULfOQBidAY1+e987i4g+GlUfmaALn68Wt/bF8bFxxXEWj0VB1Vk+JWjtTGiGAUe7LErhcqmAT/3TzM9gKLR/RoRKQRk9UELkpT9CLRNXgnurvG4AGps57uZ32fsIw5Yh5wEUnDVChFnvJ9O4cgXBJM3YvJnOnTdhy09yaVU0zbWH38XN1nNibF2qiCTSzC+UkY0IK0bIQ==
 x-forefront-antispam-report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
  IPV:NLI; SFV:NSPM; H:TYPPR06MB8206.apcprd06.prod.outlook.com; PTR:; CAT:NONE;
- SFS:(13230040)(366016)(7416014)(376014)(1800799024)(18002099003)(38070700021)(921020)(56012099006);
+ SFS:(13230040)(366016)(1800799024)(7416014)(376014)(921020)(38070700021)(22082099003)(18002099003)(56012099006);
  DIR:OUT; SFP:1102; 
 x-ms-exchange-antispam-messagedata-chunkcount: 1
-x-ms-exchange-antispam-messagedata-0: =?iso-8859-1?Q?vvpERFFjmAcA+JqWgvsPbYkHDLcJ8j5Fam8Wd2vWVvn2Z71AdbRcGF6nLE?=
- =?iso-8859-1?Q?MoPT48l9xIhXxfVst4XIk7AHAva2IHOSS10wjM5PrTkRyVvUSWmmyJdIT0?=
- =?iso-8859-1?Q?AxmMWqNHz7LzC2IsQ0LJo8zSvmcxsn5g4oTVrNd+9X/G2hnAcPHLiVoDKc?=
- =?iso-8859-1?Q?vIlvV4JjDgqXTli9W3lgUyl9UD3UzUNVP8JPwIewfq95ZfPem+ALqYyUSs?=
- =?iso-8859-1?Q?QraP03hWgkv2tadeAJgMJkcJ72PwE7Bw+3etzSuc6etsn6fAp37HHVTJWu?=
- =?iso-8859-1?Q?QxNwlOv2Jz3p82HAqU+bhMMWvAbns+OwP63GZ5Y/ciEIxhim490/zFgwGL?=
- =?iso-8859-1?Q?9JowyAML8c4OkBlpptojxXMOs60gyB+H1e7XqrMdgjNbzr/l4f/uwjCFOi?=
- =?iso-8859-1?Q?WtGd+fHjqObUGQlfLzMFgftVIoTf0KibrvFSAqLo1qZR/vLCeluYKwfGjw?=
- =?iso-8859-1?Q?wTog5iLqJFGypUpNOtRDgMtSjppJqSAWcm1GjKBFc+zdcnrEqrBRAJSAxw?=
- =?iso-8859-1?Q?KfBJ2U/izI3liRDthpmkTOypmvFRkoeHDlq+s/sUi7rN8Szc6/A7YGCIcL?=
- =?iso-8859-1?Q?BbEL7+UCSYkOcVOVa4FUky3ZnqSWW26YcGy4B0DqEaO0luiLtjWbhDa6Y3?=
- =?iso-8859-1?Q?ajMJhPPgHJgKXntudoCzd6UOV379tHTAOkVjLfwAdA3UzK93iTMJ3kQWAk?=
- =?iso-8859-1?Q?8RmIdsdQX2O06cO9dJgq5XA0In0EmqbcouSvNXQB01Anzw9msboFAa945J?=
- =?iso-8859-1?Q?i1QVF9HVqlNFdiSFkRsPkVMF0USKL8NoJ4C21r6XHbOcy4Q2XaYxNShfNV?=
- =?iso-8859-1?Q?hCxx1zve/antQykkA9T+gYXtxJwuYQPKo+lvxIgwnV11ddo7ZZkG7XF3El?=
- =?iso-8859-1?Q?pllZslOIne03mtJjQHkpHDVa8EdP5oXN9tCLwVRh+p3AbuTU1GFNioRLOp?=
- =?iso-8859-1?Q?irVcI7hzC1hDXv8EIHr5wvEvTTLTz0dwEG0NeEXTKJg+qV61/KvIuGdTGx?=
- =?iso-8859-1?Q?H7/toitfKYJgObsgVfxueF/7JrYRMBh3e7MOZPZYS8JOpkSyMHDxJwZGna?=
- =?iso-8859-1?Q?iBQbVr3m3sZC83Z9J/yvlHb9jur+lSKbInq2CiPUHLDRDBOpUHdcNlvxzL?=
- =?iso-8859-1?Q?Sc7CwbIGHhx+HKndziNl9nX7LrO5AA9C3PLxerddZXh95sLtMVjvIOO0/5?=
- =?iso-8859-1?Q?1nc8+Dg2YZVZz/u5rp1ErrWalPIJ9UUawu8Gexx2fAJwpthxvATLakY64A?=
- =?iso-8859-1?Q?nXQ/cm+EbVJj8iZwOvRv8uDog8W3B9E+bkOha15x8lW4p2BPaMIVJV30nt?=
- =?iso-8859-1?Q?dANkRLuzcv5huJWEHqI00w+6W1rs6aq2pV0M4jFTbAjBwscIKaBYYhmmfV?=
- =?iso-8859-1?Q?/Y/tL/Lda8mavoO6FMEUpbjchI+IWl2Pk2OQ9XDPdgwF92EOEibNk9u+tQ?=
- =?iso-8859-1?Q?/L/SPcGchU0971LSNTszW5wuzjrxJPCxIgOJN0ILsfwilF++OUMlpIJLpA?=
- =?iso-8859-1?Q?PxeLL/jU4O8yqfaebkTiSQoQHDby9libnjDGCPSzDoEpFRhR+T7aFY+Fjt?=
- =?iso-8859-1?Q?l+CNWY/LlBLJLFvnVrB64/ITBb+C+K5fNNmGB5SyGJq7F2QQaqMTVlu9T/?=
- =?iso-8859-1?Q?ZujTmES9eZ5rAucvF+F6+awq2eubQHMiE/apblHZzCtRA9vKFAkNA5TG9h?=
- =?iso-8859-1?Q?C2+g4al3ZX1v+FBtG/knQ6r+Xa6C3ueI1NasXDk3nQjycwdZbBlKUOttR9?=
- =?iso-8859-1?Q?qOCYQcc5tIsGWp3HyoNdtAfDcRDFuoo6bskokHv8EJinl2Gr2ennYyfCZq?=
- =?iso-8859-1?Q?4mQh4jFBfg=3D=3D?=
+x-ms-exchange-antispam-messagedata-0: =?iso-8859-1?Q?46NEJ4fQ4HvFSRB9fQqzs+2lGh1nKPVHd4u6LHsKTx9B8i8b3YeCzDxTb+?=
+ =?iso-8859-1?Q?pKEvHbl5yKczjCL3H8WBoasG5VFnkprwEPd+nbO42bPG+XRs2nN2dpXm8Y?=
+ =?iso-8859-1?Q?P0Jo2+PZ+guYjDSHo9P5s/HVKcoQLAX3MkdU7ZV+sZY3vVu5TkpF+3zDVH?=
+ =?iso-8859-1?Q?8Eb1F+uUQ7BJrslI1/SJwXDEtawUb/y+rGWqWm1XR36VH6bb2X8IEgS4Mb?=
+ =?iso-8859-1?Q?hyYSS4LPvb2/aPHZsYlux1xL2C/tHaf12iiOZ9SX+1EH79zMC6jF6tMXXS?=
+ =?iso-8859-1?Q?4XiKempqpwcXnps+P5rnUR//mhtD2YeQCwu4ZF1pXzPWaILKTBuEEfpfwP?=
+ =?iso-8859-1?Q?+MR0VKOeQThZchTfER6lWsWXRl/9Ue7R6O+hGOzk2QTYyID9U0uBTBLKAM?=
+ =?iso-8859-1?Q?BZjosoIYRnKqlGTakcAQ15cYc6rh0hi8YhRBzG3gbnxqpfxZeNKtmhswaQ?=
+ =?iso-8859-1?Q?TfuawP9Db09v8UUpG9v3BKxWArcu/Klu6QOelvfRrvIViU3Hst6EWEvPAf?=
+ =?iso-8859-1?Q?u99RAnBuIbmBSe48l3ASonqojxLltGqmxcljZonDEAlOOBi+rdrXLlxlMW?=
+ =?iso-8859-1?Q?j7yemLF7SmN8Ee6eOWDoKtS3KCqcK0Ci0BY56v6ZJDpiDGP127PfTk4PcT?=
+ =?iso-8859-1?Q?ZUtPdk9ngRRS21S6wL9lzZ3yrHIDQN5LyP/E8PrO3K1sOBUo6zsAuZSD8z?=
+ =?iso-8859-1?Q?AiaDpBGpQdIfy6EDxot8dXnHMrer86Bv+J9btRD2J/yiF7BOJ4rRenxGFT?=
+ =?iso-8859-1?Q?vGOgC4DXvshdhS4SEepDGfcX5iMuQ60x26sWB0e4oxcTsgLHmUcAH+5ffF?=
+ =?iso-8859-1?Q?M3dpkOTeGtmHNInLdHI1cWcQpYppfCPX+omJ1faNHLnTyW2N/aQrX0TBL9?=
+ =?iso-8859-1?Q?l+Qar3QAwoNG/MF9bBxGJeJcBIj9jn0108ya3YAQrJbWJl8JAE+ew/Wp2P?=
+ =?iso-8859-1?Q?J/lg1cXSE+Adcj+fhSFtymdwelgWLKDLPW1Y9hZp8VmK2BM1iYaflR0FWQ?=
+ =?iso-8859-1?Q?Ynd85MOmXEh1I2t5v8XvRnNJm0SikCZ+5P/GCmkGPOmQksSQfTMQ8qs8JE?=
+ =?iso-8859-1?Q?9OdqDJAUL1XPdK2YH6pz0pFW+hWzyRWoZR+rJUell+GgUWnukmiuC41XTJ?=
+ =?iso-8859-1?Q?hnJCO8qX3aTpp9Pmf0LnR3g22xIq9jZ9N73tyCby2o4wsU4Fr2qCOUHKOs?=
+ =?iso-8859-1?Q?6/iap6CuvAnwi0rJlwqWUo4UBfkfAnxUoAk7MKwkDO2VDFMBr44cJPH3E4?=
+ =?iso-8859-1?Q?tiv4i/BV1OdH7YWEOTd0bCW5Fp6LWS6Y5yqQXskNPYVxzWol9Afu9cWOSr?=
+ =?iso-8859-1?Q?RlJQeh+FHu7vPrMcZOenpFrglZq+o4apoapgoSCqXUbwuqvED9ciNa0NAR?=
+ =?iso-8859-1?Q?yB6NZEJfl+067Sbk73K6tRxyeSaPwffIfHQv/mj3k4DnRNAZHYJ7DQhEqO?=
+ =?iso-8859-1?Q?12d2w7927I2iukwvPSQ0q1cjqxeQpi+JJEMWb8qFwS8ApnjIpPd5VElY8P?=
+ =?iso-8859-1?Q?uj9bOWuGZLURIc9JLbkUWz7ySde3LEjWIY67KArijNsffvdUtT/jrYCDTR?=
+ =?iso-8859-1?Q?VcuYYR4+X4aVzN4BNFBJM0XYooNJ2zBeAkIcsJ/+KpZTwd0ByAuCkhoq2e?=
+ =?iso-8859-1?Q?twqYZXFd499H/2CDzWq9YP6Rd5JbkyD8v3JsPK8/AfgJOdL89YPZl9a5gc?=
+ =?iso-8859-1?Q?WikvG8XqsNZeDstLfbfvTfxZt5C8E6WC5B24Gwy5h5kXkhLql6Q3DqMw4g?=
+ =?iso-8859-1?Q?rlm87qx9ekcm1PG+tMdZs0n73VrdaopOdSvy54Oqj65tqjCjjA58/BkzxC?=
+ =?iso-8859-1?Q?2TtdZTXmiQ=3D=3D?=
 Content-Type: text/plain; charset="iso-8859-1"
 Content-Transfer-Encoding: quoted-printable
 MIME-Version: 1.0
-X-Exchange-RoutingPolicyChecked: DIRtbZ+nWy45KD+ql3tGoDBUXGfM0+JFnbd71xUJnp/CuFN+3OZ9SwektLAcX0UQYZ0B+TDjRnnKGbjy1aIkKcJjjDl+581zhps8oZwwZBRIIqDtatKOmi1n4+0AkjPBceyahTZhOIXzLFIzAFtaPCTnyjFCOnTCuIwvD9t1bTqK3F3jBVRAQmOFZYmdyN1W5rNKKJOR7bZFYlcOhBToWudq/O1S1cw2ftNXjgxUbR5S1aAPMM0w5Z9BTRa4tiP7PHWFCNJvs9HzwgbJAMhr+tu8WtGM3sE34iLZHU9HdigW3GSGAaZMhrmaCMnnk15RlHY4M91LIWKWAMKzNWcdgg==
+X-Exchange-RoutingPolicyChecked: cGLCyGoPPMT3pj+fwGmX/3rZiMnXVWwR+3HBkl0HgNgcv6PJC3WHcx6yVxKbSw77N3TflVTFCKfSeJnzzO4D/IqeFX65dMMEVhfACsvVXK0MLrB7EWStCOOjbOAL+Fsgw084DpHziMQ4WiMMbDXxVFmslplbmZIlOeatabN8gFVjxFd1DzE+bT7ts2KOEntSJetqx4DJ+ZahaatER8UBWf1mwwpRU/MZ4y57bl9WVW9eIsNWqBy9f3+AIYswjoytBmq8/GFF63SlmlVjcXMufbmNb4YidF8rTbCU3J2Ibv5Ff6p1W24RuWm3Y/FFPA0XKYxks858wEprArHQHw2Zfw==
 X-OriginatorOrg: aspeedtech.com
 X-MS-Exchange-CrossTenant-AuthAs: Internal
 X-MS-Exchange-CrossTenant-AuthSource: TYPPR06MB8206.apcprd06.prod.outlook.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 57bc208e-1952-44c4-336d-08debf887993
-X-MS-Exchange-CrossTenant-originalarrivaltime: 01 Jun 2026 02:50:00.8914 (UTC)
+X-MS-Exchange-CrossTenant-Network-Message-Id: 58a0b148-0303-46a9-db33-08debf8888e8
+X-MS-Exchange-CrossTenant-originalarrivaltime: 01 Jun 2026 02:50:26.5963 (UTC)
 X-MS-Exchange-CrossTenant-fromentityheader: Hosted
 X-MS-Exchange-CrossTenant-id: 43d4aa98-e35b-4575-8939-080e90d5a249
 X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
-X-MS-Exchange-CrossTenant-userprincipalname: 5RHZP7/gd6szJGY0RfGxmXBwzAKMtPzxj7mfvIvhJIen/6gAGUuDw86RBYe7sOS5LU6ifpQy07UdKq7E6Omhol+v0DUk/uI+cHixUNumiS0=
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: KU4PR06MB8361
-Received-SPF: pass client-ip=2a01:111:f403:c405::5;
+X-MS-Exchange-CrossTenant-userprincipalname: hPtFCxuZE7AkUKXLRaG6KiI/jy1DkIdXYNYuv9sbFTFkGyzSXGug/1UfnZD34+gVhOFLebNrMqUboDRDIs9/Kvo9SByGDoOPuGhYBDzsK7k=
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: SEYPR06MB5490
+Received-SPF: pass client-ip=2a01:111:f403:c405::7;
  envelope-from=jamin_lin@aspeedtech.com;
- helo=TYPPR03CU001.outbound.protection.outlook.com
+ helo=TYDPR03CU002.outbound.protection.outlook.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_PASS=-0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -148,78 +151,170 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The QEMU community now prefers the DEFINE_TYPES() macro over the legacy=0A=
-type_register_static()/type_init() pattern for device type registration.=0A=
-DEFINE_TYPES() accepts an array of TypeInfo structs and registers them=0A=
-all in a single call, making the registration code more concise and=0A=
-consistent with modern QEMU coding style.=0A=
+Replace the legacy type_register_static()/type_init() registration=0A=
+pattern with the modern DEFINE_TYPES() macro.=0A=
 =0A=
-This series converts all Aspeed device models to use DEFINE_TYPES() and=0A=
-further inlines the individual static TypeInfo variable declarations=0A=
-directly into the types array, eliminating the need for standalone=0A=
-TypeInfo variables scattered throughout each file.=0A=
+Inline 6 standalone TypeInfo variables (aspeed_wdt_info as abstract=0A=
+base, aspeed_2400_wdt_info, aspeed_2500_wdt_info, aspeed_2600_wdt_info,=0A=
+aspeed_1030_wdt_info, aspeed_2700_wdt_info) directly into the=0A=
+'aspeed_wdt_types[]' array, removing the need for separate declarations.=0A=
 =0A=
-v1:=0A=
-  The changes are purely mechanical refactoring with no functional=0A=
-  difference. The 24 patches cover all Aspeed-related device models=0A=
-  across hw/adc, hw/arm, hw/fsi, hw/gpio, hw/i2c, hw/intc, hw/misc,=0A=
-  hw/net, hw/nvram, hw/pci-host, hw/rtc, hw/ssi, hw/timer and=0A=
-  hw/watchdog.=0A=
+No functional change.=0A=
 =0A=
-Jamin Lin (24):=0A=
-  hw/misc/aspeed_hace: Convert to DEFINE_TYPES() with inlined TypeInfo=0A=
-  hw/misc/aspeed_lpc: Convert to DEFINE_TYPES() with inlined TypeInfo=0A=
-  hw/misc/aspeed_ltpi: Convert to DEFINE_TYPES() with inlined TypeInfo=0A=
-  hw/misc/aspeed_pwm: Convert to DEFINE_TYPES() with inlined TypeInfo=0A=
-  hw/misc/aspeed_sbc: Convert to DEFINE_TYPES() with inlined TypeInfo=0A=
-  hw/misc/aspeed_scu: Convert to DEFINE_TYPES() with inlined TypeInfo=0A=
-  hw/misc/aspeed_sdmc: Convert to DEFINE_TYPES() with inlined TypeInfo=0A=
-  hw/misc:aspeed_sli: Convert to DEFINE_TYPES() with inlined TypeInfo=0A=
-  hw/misc/aspeed_xdma: Convert to DEFINE_TYPES() with inlined TypeInfo=0A=
-  hw/adc/aspeed_adc: Convert to DEFINE_TYPES() with inlined TypeInfo=0A=
-  hw/arm/aspeed_ast1700: Convert to DEFINE_TYPES() with inlined TypeInfo=0A=
-  hw/gpio/aspeed_gpio: Convert to DEFINE_TYPES() with inlined TypeInfo=0A=
-  hw/gpio/aspeed_sgpio: Convert to DEFINE_TYPES() with inlined TypeInfo=0A=
-  hw/intc/aspeed_intc: convert to DEFINE_TYPES() with inlined TypeInfo=0A=
-  hw/intc/aspeed_vic: Convert to DEFINE_TYPES() with inlined TypeInfo=0A=
-  hw/rtc/aspeed_rtc: Convert to DEFINE_TYPES() with inlined TypeInfo=0A=
-  hw/watchdog/wdt_aspeed: Convert to DEFINE_TYPES() with inlined=0A=
-    TypeInfo=0A=
-  hw/nvram/aspeed_otp: Convert to DEFINE_TYPES() with inlined TypeInfo=0A=
-  hw/timer/aspeed_timer: Convert to DEFINE_TYPES() with inlined TypeInfo=0A=
-  hw/fsi/aspeed_apb2opb: Convert to DEFINE_TYPES() with inlined TypeInfo=0A=
-  hw/pci-host/aspeed_pcie: Convert to DEFINE_TYPES() with inlined=0A=
-    TypeInfo=0A=
-  hw/i2c/aspeed_i2c: Convert to DEFINE_TYPES() with inlined TypeInfo=0A=
-  hw/net/ftgmac100: Convert to DEFINE_TYPES() with inlined TypeInfo=0A=
-  hw/ssi/aspeed_smc: Convert to DEFINE_TYPES() with inlined TypeInfo=0A=
+Signed-off-by: Jamin Lin <jamin_lin@aspeedtech.com>=0A=
+---=0A=
+ hw/watchdog/wdt_aspeed.c | 93 +++++++++++++++++-----------------------=0A=
+ 1 file changed, 40 insertions(+), 53 deletions(-)=0A=
 =0A=
- hw/adc/aspeed_adc.c       |  95 +++++++---------=0A=
- hw/arm/aspeed_ast1700.c   |  21 ++--=0A=
- hw/fsi/aspeed_apb2opb.c   |  42 +++----=0A=
- hw/gpio/aspeed_gpio.c     | 107 ++++++++----------=0A=
- hw/gpio/aspeed_sgpio.c    |  37 +++----=0A=
- hw/i2c/aspeed_i2c.c       | 113 ++++++++-----------=0A=
- hw/intc/aspeed_intc.c     | 121 +++++++++-----------=0A=
- hw/intc/aspeed_vic.c      |  19 ++--=0A=
- hw/misc/aspeed_hace.c     |  81 ++++++--------=0A=
- hw/misc/aspeed_lpc.c      |  21 ++--=0A=
- hw/misc/aspeed_ltpi.c     |  19 ++--=0A=
- hw/misc/aspeed_pwm.c      |  19 ++--=0A=
- hw/misc/aspeed_sbc.c      |  46 ++++----=0A=
- hw/misc/aspeed_scu.c      | 107 ++++++++----------=0A=
- hw/misc/aspeed_sdmc.c     |  73 ++++++------=0A=
- hw/misc/aspeed_sli.c      |  44 ++++----=0A=
- hw/misc/aspeed_xdma.c     |  58 +++++-----=0A=
- hw/net/ftgmac100.c        |  32 +++---=0A=
- hw/nvram/aspeed_otp.c     |  19 ++--=0A=
- hw/pci-host/aspeed_pcie.c |  94 +++++++---------=0A=
- hw/rtc/aspeed_rtc.c       |  19 ++--=0A=
- hw/ssi/aspeed_smc.c       | 228 ++++++++++++++++----------------------=0A=
- hw/timer/aspeed_timer.c   |  83 ++++++--------=0A=
- hw/watchdog/wdt_aspeed.c  |  93 +++++++---------=0A=
- 24 files changed, 678 insertions(+), 913 deletions(-)=0A=
-=0A=
+diff --git a/hw/watchdog/wdt_aspeed.c b/hw/watchdog/wdt_aspeed.c=0A=
+index ae411593c5..deed970c89 100644=0A=
+--- a/hw/watchdog/wdt_aspeed.c=0A=
++++ b/hw/watchdog/wdt_aspeed.c=0A=
+@@ -321,15 +321,6 @@ static void aspeed_wdt_class_init(ObjectClass *klass, =
+const void *data)=0A=
+     dc->desc =3D "Aspeed watchdog device";=0A=
+ }=0A=
+ =0A=
+-static const TypeInfo aspeed_wdt_info =3D {=0A=
+-    .parent =3D TYPE_SYS_BUS_DEVICE,=0A=
+-    .name  =3D TYPE_ASPEED_WDT,=0A=
+-    .instance_size  =3D sizeof(AspeedWDTState),=0A=
+-    .class_init =3D aspeed_wdt_class_init,=0A=
+-    .class_size    =3D sizeof(AspeedWDTClass),=0A=
+-    .abstract      =3D true,=0A=
+-};=0A=
+-=0A=
+ static void aspeed_2400_wdt_class_init(ObjectClass *klass, const void *dat=
+a)=0A=
+ {=0A=
+     DeviceClass *dc =3D DEVICE_CLASS(klass);=0A=
+@@ -345,13 +336,6 @@ static void aspeed_2400_wdt_class_init(ObjectClass *kl=
+ass, const void *data)=0A=
+     awc->default_reload_value =3D 0x03EF1480;=0A=
+ }=0A=
+ =0A=
+-static const TypeInfo aspeed_2400_wdt_info =3D {=0A=
+-    .name =3D TYPE_ASPEED_2400_WDT,=0A=
+-    .parent =3D TYPE_ASPEED_WDT,=0A=
+-    .instance_size =3D sizeof(AspeedWDTState),=0A=
+-    .class_init =3D aspeed_2400_wdt_class_init,=0A=
+-};=0A=
+-=0A=
+ static void aspeed_2500_wdt_reset_pulse(AspeedWDTState *s, uint32_t proper=
+ty)=0A=
+ {=0A=
+     if (property) {=0A=
+@@ -383,13 +367,6 @@ static void aspeed_2500_wdt_class_init(ObjectClass *kl=
+ass, const void *data)=0A=
+     awc->default_reload_value =3D 0x014FB180;=0A=
+ }=0A=
+ =0A=
+-static const TypeInfo aspeed_2500_wdt_info =3D {=0A=
+-    .name =3D TYPE_ASPEED_2500_WDT,=0A=
+-    .parent =3D TYPE_ASPEED_WDT,=0A=
+-    .instance_size =3D sizeof(AspeedWDTState),=0A=
+-    .class_init =3D aspeed_2500_wdt_class_init,=0A=
+-};=0A=
+-=0A=
+ static void aspeed_2600_wdt_class_init(ObjectClass *klass, const void *dat=
+a)=0A=
+ {=0A=
+     DeviceClass *dc =3D DEVICE_CLASS(klass);=0A=
+@@ -406,13 +383,6 @@ static void aspeed_2600_wdt_class_init(ObjectClass *kl=
+ass, const void *data)=0A=
+     awc->default_reload_value =3D 0x014FB180;=0A=
+ }=0A=
+ =0A=
+-static const TypeInfo aspeed_2600_wdt_info =3D {=0A=
+-    .name =3D TYPE_ASPEED_2600_WDT,=0A=
+-    .parent =3D TYPE_ASPEED_WDT,=0A=
+-    .instance_size =3D sizeof(AspeedWDTState),=0A=
+-    .class_init =3D aspeed_2600_wdt_class_init,=0A=
+-};=0A=
+-=0A=
+ static void aspeed_1030_wdt_class_init(ObjectClass *klass, const void *dat=
+a)=0A=
+ {=0A=
+     DeviceClass *dc =3D DEVICE_CLASS(klass);=0A=
+@@ -429,13 +399,6 @@ static void aspeed_1030_wdt_class_init(ObjectClass *kl=
+ass, const void *data)=0A=
+     awc->default_reload_value =3D 0x014FB180;=0A=
+ }=0A=
+ =0A=
+-static const TypeInfo aspeed_1030_wdt_info =3D {=0A=
+-    .name =3D TYPE_ASPEED_1030_WDT,=0A=
+-    .parent =3D TYPE_ASPEED_WDT,=0A=
+-    .instance_size =3D sizeof(AspeedWDTState),=0A=
+-    .class_init =3D aspeed_1030_wdt_class_init,=0A=
+-};=0A=
+-=0A=
+ static void aspeed_2700_wdt_class_init(ObjectClass *klass, const void *dat=
+a)=0A=
+ {=0A=
+     DeviceClass *dc =3D DEVICE_CLASS(klass);=0A=
+@@ -452,21 +415,45 @@ static void aspeed_2700_wdt_class_init(ObjectClass *k=
+lass, const void *data)=0A=
+     awc->default_reload_value =3D 0x014FB180;=0A=
+ }=0A=
+ =0A=
+-static const TypeInfo aspeed_2700_wdt_info =3D {=0A=
+-    .name =3D TYPE_ASPEED_2700_WDT,=0A=
+-    .parent =3D TYPE_ASPEED_WDT,=0A=
+-    .instance_size =3D sizeof(AspeedWDTState),=0A=
+-    .class_init =3D aspeed_2700_wdt_class_init,=0A=
++static const TypeInfo aspeed_wdt_types[] =3D {=0A=
++    {=0A=
++        .parent =3D TYPE_SYS_BUS_DEVICE,=0A=
++        .name  =3D TYPE_ASPEED_WDT,=0A=
++        .instance_size  =3D sizeof(AspeedWDTState),=0A=
++        .class_init =3D aspeed_wdt_class_init,=0A=
++        .class_size    =3D sizeof(AspeedWDTClass),=0A=
++        .abstract      =3D true,=0A=
++    },=0A=
++    {=0A=
++        .name =3D TYPE_ASPEED_1030_WDT,=0A=
++        .parent =3D TYPE_ASPEED_WDT,=0A=
++        .instance_size =3D sizeof(AspeedWDTState),=0A=
++        .class_init =3D aspeed_1030_wdt_class_init,=0A=
++    },=0A=
++    {=0A=
++        .name =3D TYPE_ASPEED_2400_WDT,=0A=
++        .parent =3D TYPE_ASPEED_WDT,=0A=
++        .instance_size =3D sizeof(AspeedWDTState),=0A=
++        .class_init =3D aspeed_2400_wdt_class_init,=0A=
++    },=0A=
++    {=0A=
++        .name =3D TYPE_ASPEED_2500_WDT,=0A=
++        .parent =3D TYPE_ASPEED_WDT,=0A=
++        .instance_size =3D sizeof(AspeedWDTState),=0A=
++        .class_init =3D aspeed_2500_wdt_class_init,=0A=
++    },=0A=
++    {=0A=
++        .name =3D TYPE_ASPEED_2600_WDT,=0A=
++        .parent =3D TYPE_ASPEED_WDT,=0A=
++        .instance_size =3D sizeof(AspeedWDTState),=0A=
++        .class_init =3D aspeed_2600_wdt_class_init,=0A=
++    },=0A=
++    {=0A=
++        .name =3D TYPE_ASPEED_2700_WDT,=0A=
++        .parent =3D TYPE_ASPEED_WDT,=0A=
++        .instance_size =3D sizeof(AspeedWDTState),=0A=
++        .class_init =3D aspeed_2700_wdt_class_init,=0A=
++    }=0A=
+ };=0A=
+ =0A=
+-static void wdt_aspeed_register_types(void)=0A=
+-{=0A=
+-    type_register_static(&aspeed_wdt_info);=0A=
+-    type_register_static(&aspeed_2400_wdt_info);=0A=
+-    type_register_static(&aspeed_2500_wdt_info);=0A=
+-    type_register_static(&aspeed_2600_wdt_info);=0A=
+-    type_register_static(&aspeed_2700_wdt_info);=0A=
+-    type_register_static(&aspeed_1030_wdt_info);=0A=
+-}=0A=
+-=0A=
+-type_init(wdt_aspeed_register_types)=0A=
++DEFINE_TYPES(aspeed_wdt_types)=0A=
 -- =0A=
 2.43.0=0A=
 
