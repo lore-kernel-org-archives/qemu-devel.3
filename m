@@ -4,97 +4,96 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1BAA0CD5BD1
-	for <qemu-devel@archiver.kernel.org>; Mon,  1 Jun 2026 03:09:42 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C2454CD6E55
+	for <qemu-devel@archiver.kernel.org>; Mon,  1 Jun 2026 03:17:20 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wTt1i-0007On-KR; Sun, 31 May 2026 23:09:18 -0400
+	id 1wTt8t-0000C4-Tf; Sun, 31 May 2026 23:16:43 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1wTt1h-0007OA-Nn
- for qemu-devel@nongnu.org; Sun, 31 May 2026 23:09:17 -0400
-Received: from mail-ed1-x531.google.com ([2a00:1450:4864:20::531])
+ id 1wTt8r-0000BY-UC
+ for qemu-devel@nongnu.org; Sun, 31 May 2026 23:16:41 -0400
+Received: from mail-ej1-x635.google.com ([2a00:1450:4864:20::635])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1wTt1g-0004Yp-8L
- for qemu-devel@nongnu.org; Sun, 31 May 2026 23:09:17 -0400
-Received: by mail-ed1-x531.google.com with SMTP id
- 4fb4d7f45d1cf-687ed9aabb3so5117243a12.1
- for <qemu-devel@nongnu.org>; Sun, 31 May 2026 20:09:15 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1780283354; cv=none;
+ id 1wTt8q-0007sk-D0
+ for qemu-devel@nongnu.org; Sun, 31 May 2026 23:16:41 -0400
+Received: by mail-ej1-x635.google.com with SMTP id
+ a640c23a62f3a-bec3f69d343so102212766b.0
+ for <qemu-devel@nongnu.org>; Sun, 31 May 2026 20:16:40 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1780283799; cv=none;
  d=google.com; s=arc-20240605;
- b=C8TrVw4d3su1EYjhTjPLhYyxdLGqwyo1D4ivNzLEF67b/0haZFsTLxK0IS9XQOpfau
- mXHux6GGifn8Aah7HRvmmKXukXjuLZFKaN+urhczET0PqAemd353oZS5FXT4hsyxj67N
- 7tf0KCL7ssBZdDHZalJlEyOixSZ5LnpKO1dDsBfAXNnQ/PVBioJtTYxGiYeJCwWowfZg
- RxnLkA/xdWMLsMPtygAA9O5HT+fG9KcPF6dXq0ap4NeVB16badQbcKgnurmvw0rc+UJ7
- WYJcheo+eqfhIxlLNchfuTPEZx05u7TlCr76o8Zf1UHCr06Ut4x6+Ug2nxPJSXD/hBKS
- isyw==
+ b=KJFiL73fdc3dmcunGmWdSsluJ69EveRqhDpHMQQPC64BiHTeT04vqGC++wdp5ePYUt
+ 6n6Dp1SOMgqRb8qXYZlHZnlgMgnBE9P8QL8V85WtGUUvxqUQZ8mZhorvjk8kbvTAxGBn
+ 3dp/Lv3WUUzYPXL5cmcLDN0DSbsXjThf0tctQvz+pf/RyiIvi8ZTTp5gIfOrRvLzhqBm
+ btRwx5eVgigJdkocpEcV8B/a9xG3ja4iwO/RLvJKt4zT6Y7dEyJ35HbZxLl8CV0uHxSI
+ CqAtS2hjLwiAFpu0NFe8RLy3iLHBWSEvHSpDvZw15bocLo5V+4lEx6nU3BY5qS6k7keb
+ Anhg==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
  s=arc-20240605; 
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:dkim-signature;
- bh=n4sbSR2xC6UUdTGOGPF+IffDjA0MczriSf99ZJRi3X0=;
+ bh=RXoDANf3J8QHeoQGdRR8wDPh6TPDX0vUUUjR7ERULJI=;
  fh=+dPXGxW3pQNYFrTSil53fSXYfdhGIs7bI6Dyql1Mx+Q=;
- b=AwxJji1WP7cYrKY1BeBUNDSXDFeN61UpD+U4/ogTGGv1Dw6EMgILomNqtYPLObNr94
- JxR7U0Ktb40T03MrkFgrCjE04b8It+ypLV+sVrwWunBqcxmvJ0W5dlyPM0gaGA7/0/Sw
- 6/BWiF7bJEoiOZ899mDV6EvYqBROGj6YafIvdGFpZSNJWLuyJvJP2akr8ok5lf47Rtx6
- m8WyxSjt/krsnWzJ832dZao7SNcUKSYCJwjudBUZ08tJJRXLyGPWAWk3c7qh6NVvzZrV
- MqnOFVHrXwljsfGLKj0KtQ9O6LlSwF0OnjccQ8IHiCkWdlVcIjTujrq/dpAdr4LBdhM7
- HkaQ==; darn=nongnu.org
+ b=Ps9/y+QoGLiFdMWtBkJSNqunkYnzLnkDwzMztJJG2jF7L2Cxn9qlb4M2ubIJf9+GjG
+ ahaaWqE3rjMEoAmJgFkw07JaERYtWjSAzYBjaWXSdhhp6lVBVQtI6QLG2kHTgIp8/8x7
+ 2gykYq8eNeew1sAofsinO+zhnpC9oQLho6osHInUJwlAkToKo2bFQzoLwuyGNU8/fAzm
+ U1lqZrZBPZ+WLhdexQpdnuYxXbz6au/lI4IR4DxjIsdbpNp6h7VasEGg7HglMtts7wPR
+ jEbGHDKwb6KejYxju5gYejj+ltAuSjt2/xXAuwh6iGmllF+sNFUNE94cfHKQ3MCoNSxb
+ V+nQ==; darn=nongnu.org
 ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1780283354; x=1780888154; darn=nongnu.org;
+ d=gmail.com; s=20251104; t=1780283799; x=1780888599; darn=nongnu.org;
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:from:to:cc:subject:date
  :message-id:reply-to;
- bh=n4sbSR2xC6UUdTGOGPF+IffDjA0MczriSf99ZJRi3X0=;
- b=q84Pbz+Ojf0foHqrAvenV4i6FH3t5fXxZ/nETTc8Nvb18mm9Qm3msC3WUYtEDYBb3X
- KKubcOgVJ2vB939xX1p7BR/4T1QiaDsmzxG1vVVe9+CJl0/01D+CZUjBimlQkal8vpUi
- hCXhdAJ1+9gxqFS2LRxiwkH5kLnw3r1hj39t2q2obzV9pHJAG6yLJ6zqdvdCBPyLqP2H
- VMOsnNoUVV2zpTnMlPzw5WW3fezciGqYd+VMAFVE1iUBK4XmicCYZW6adfu5/T/yMad9
- XoYBMrNG6e2zed2S/lLljIjLggwPOJ2zKW8G2xqtWib1faqT3cnPC/SBN7jXqtglZEsB
- Ihtw==
+ bh=RXoDANf3J8QHeoQGdRR8wDPh6TPDX0vUUUjR7ERULJI=;
+ b=FaCTwBcNud5SGplPN2/zYCngaJ26aKnjL/elVEG1nnoWsi2kaSb8W3+GRr1/Vg0vqc
+ GOmIDJc2es+iOOyY7/tkx82L4SA6MDlYLLqreK1ORgGq5Z3OCZRJBebn6EJLGSTAdIYA
+ lepsfXa0wmqmYU6VpPvf7+X9ZyXlCqSOe/Drxfxys4yT/deTB6EIXZdvOIL5RSb5DBgi
+ I028YQlFuF/FO6jTzmAeNj/HVBZg4EwNap988bQO8IPaqJGnpNjYHD9buz1gj4x/kTV/
+ 6WTopb12E3ZPSWzBj9qaDxqomO93oL4yUvDfvHWVlV71kilbXjjsTtzK6gLD9+My9Zby
+ qXRw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1780283354; x=1780888154;
+ d=1e100.net; s=20251104; t=1780283799; x=1780888599;
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to;
- bh=n4sbSR2xC6UUdTGOGPF+IffDjA0MczriSf99ZJRi3X0=;
- b=NXQZ6YacYX3hHqZMjnAvsoWuEBmwgCMYv5KxJQe7GsknpL+X18waM0yxtN9ahRdnSt
- lq33zIygYSdTCo7VGDs5nk+NiPmp3JJDz617NRnfSPOhCEsAq7bnUKbJXjqFFHXBlqSj
- FqFbUMvOb+eCd1sII0GZXY2lkbWx9p8yghf1gBuRyzKcUNyMeRfJXhA+7L//HXigGAZn
- 0AF+tpmxhrjY+QuQj43HnGqMXoOFjmV79aY9zXK7NxIiCS8ETNb+UzvdE/lX3s23aSKD
- 7Nyyg1czlqo2LzdtNwlUrcdEa8Z3NNaYKa0fZcK1bwMhabx00v2+Q56gueC/22H8jP56
- tHng==
-X-Gm-Message-State: AOJu0YzOAer/hZaatvOk7fEzAyoYID8zMmIpmxhMAgmuCImhHneKAgJA
- Mh43Hv/JOllMdxQkJ6oUfiLoLwek27PEVzMvZoKP9iCnoxDp7J4SQPboikKE0JMb5ZjOhBlSzPW
- JNHxWuIw9YlZTPjW1AlugxbIn4MQlrtE=
-X-Gm-Gg: Acq92OG+pI9xOrEUYDDuojNCb++vixrK02Bj9kE3dbnbsW5Uyy3I4rXmHlT3rOrFuLZ
- /PMJ1SecQNCLDS1dAySpcjBR0wmXxA07WIqe/xUma0ogXPQsJ6a909B8T4E1rLOiBiQOhGtn6BT
- hoWoN8YjFe4OddePLytO6Y7FzfGCGVBfZtAbECQTpqjFqpc/KTY3IGZYE6nmLbLnRBt26WXrhsz
- W6QRAzHw5TqvUQHUR2d0mbW95zIHuhGA/hU8eNWr9vaqtx3z5DO4gy/troXVQVzLTvFpF+vunwY
- 7rRIAFSthfiwowTr7cP7qeyoxhi3TorOjwxZI8rvHrz5hJLt
-X-Received: by 2002:a17:907:1dc7:b0:bec:929b:cee6 with SMTP id
- a640c23a62f3a-bec929bd40bmr141662666b.20.1780283353776; Sun, 31 May 2026
- 20:09:13 -0700 (PDT)
+ bh=RXoDANf3J8QHeoQGdRR8wDPh6TPDX0vUUUjR7ERULJI=;
+ b=mClOEibe7z7x5gkW9KlrmVpRNgIwWkvAvNu/tenwxJhM9DbLazL2G4U6lcl4FaPImY
+ /9klL785Zey0owE+n7B5DWgKy7O2l77O3tZ5lYKMYGJ0FX25CWskF4rMfkAcVEA6kAEO
+ BbNcEHJP+VB3tied4X+OMb+oLNMVxjVW/1f61LcbQOV6BFdgbSGgOsLVARzgc0HsWUcf
+ uWhD1u8LZVx4ZaKHun3KR/Dh13Qrd+8PrHFmOVgVlZeGA5fEVlzv89zmQ0QtdbJmj058
+ w5CPlAk04F5fddEiRfe48OhFCZu/Mo6PWCDYmGTYvKEqFAJphmgpKnzI1e0WR0rGQV7z
+ hIRg==
+X-Gm-Message-State: AOJu0Yw/ObhTrrDqA0o/NoTL3HQB/AAvqIPp5HK5b/1Zs6nQTjVNWu3+
+ es/yCoeI0TV34hkQvibsQefeYe/lktahhlgBFkKtFEVQ6WwbZdh6y+qJt5z7jZGj8vq+YDLvKfy
+ IkWh6aD6Xi0Vqif8hKTzdTMU4cSy3wwA=
+X-Gm-Gg: Acq92OEYG89z44t+5AfYWnmOPHfhqfYoOiCqGeCI7RTxMTUVwW/v9TO3WwYR4jiFeXD
+ pHZZKSs4z6F6+/3ry2rRdNnCrhDWTM293Fb4LJngcBr9zHUMIIAWVo1gRfOSOKvTYUKPro24cjb
+ d2uFM6as/vN6H2Rle0gBXW0ZfL8kcLDal+MlYwKuSOoACZfYtKLn/06pY4+TXQQHY/exrmFubuR
+ 83/Ro+s55xzQ4pvKVOFPmx2C7PM/LKMuBH4sfDX1rnfhbkUFxDbI5uvVdWOPUdoWRqex1BBuJrX
+ VGy1dXas9BQ8nfLgpkBLWeoCsxU0TycgS187NLB/67X561aL
+X-Received: by 2002:a17:907:a2c8:b0:bda:916b:c87e with SMTP id
+ a640c23a62f3a-beab01dcaf3mr396407566b.12.1780283798490; Sun, 31 May 2026
+ 20:16:38 -0700 (PDT)
 MIME-Version: 1.0
 References: <20260527200355.2068879-1-daniel.barboza@oss.qualcomm.com>
- <20260527200355.2068879-2-daniel.barboza@oss.qualcomm.com>
-In-Reply-To: <20260527200355.2068879-2-daniel.barboza@oss.qualcomm.com>
+In-Reply-To: <20260527200355.2068879-1-daniel.barboza@oss.qualcomm.com>
 From: Alistair Francis <alistair23@gmail.com>
-Date: Mon, 1 Jun 2026 13:08:46 +1000
-X-Gm-Features: AVHnY4LGYH77SdW-Q81ino76eRCbfO5-aUZoEUlHxUGh2FWBaMDE6gnhCm2yQ68
-Message-ID: <CAKmqyKPAVkCfjcN6kyLTu_EVkU35k3T85qM99MGaw7qVHoqzHw@mail.gmail.com>
-Subject: Re: [PATCH v2 1/1] disas/riscv.c: fix inst_length()
+Date: Mon, 1 Jun 2026 13:16:11 +1000
+X-Gm-Features: AVHnY4Krq8bZIPAXGudAgWrN43R-V_ISpZtF5RdXU3hB2BspUz2YL-LdUR-f2fE
+Message-ID: <CAKmqyKOA7oD6AmwgxiwPjV9R4NBVXv+4bgAHeUECiqiLQv+dhA@mail.gmail.com>
+Subject: Re: [PATCH v2 0/1] disas/riscv.c: fix inst_length()
 To: Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>
 Cc: qemu-devel@nongnu.org, qemu-riscv@nongnu.org, alistair.francis@wdc.com, 
  liwei1518@gmail.com, zhiwei_liu@linux.alibaba.com, chao.liu.zevorn@gmail.com
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::531;
- envelope-from=alistair23@gmail.com; helo=mail-ed1-x531.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::635;
+ envelope-from=alistair23@gmail.com; helo=mail-ej1-x635.google.com
 X-Spam_score_int: -17
 X-Spam_score: -1.8
 X-Spam_bar: -
@@ -102,7 +101,7 @@ X-Spam_report: (-1.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -121,71 +120,34 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 On Thu, May 28, 2026 at 6:05=E2=80=AFAM Daniel Henrique Barboza
 <daniel.barboza@oss.qualcomm.com> wrote:
 >
-> inst_length() can return 0 if 'inst' happens to not match any known
-> encoding (like [1]).  Returning 0 is not desirable, even for unknown
-> encodings, given that it will cause a loop in target_disas() later on.
+> Hello,
 >
-> The most recent version of the RISC-V unpriv spec ditched the
-> sophisticated instruction-length encoding.  We're now supporting only
-> 16-bit and 32-bit length instructions, where:
 >
-> "All the 32-bit instructions in the base ISA have their lowest two bits
-> set to 11.  The optional compressed 16-bit instruction-set extensions
-> have their lowest two bits equal to 00, 01, or 10."
+> In this new version we're fixing the disas function by reducing the
+> encodings we support, which is super fine.  Thanks to Alistair for
+> pointing this out in the v1 review.
 >
-> So the code is now simpler, never returning 0, and in fact it's the same
-> thing we're already doing in insn_len() from target/riscv/internals.h.
-> Due to include shenarigans we can't use that function in disas/riscv.c,
-> but I believe we can cut ourselves some slack this time and not lose
-> sleep over a 1 line of duplicated logic.  We're documenting it though!
 >
-> [1] https://gitlab.com/qemu-project/qemu/-/work_items/3479
->
-> Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/3479
-> Signed-off-by: Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>
+> Changes from v1:
+> - support only 16 and 32 bit inst length as specified in the RISC-V
+>   unpriv ISA
+> - v1 link: https://lore.kernel.org/qemu-devel/20260520173522.1794433-1-da=
+niel.barboza@oss.qualcomm.com/
 
-Reviewed-by: Alistair Francis <alistair.francis@wdc.com>
+Thanks!
+
+Applied to riscv-to-apply.next
 
 Alistair
 
-> ---
+>
+>
+> Daniel Henrique Barboza (1):
+>   disas/riscv.c: fix inst_length()
+>
 >  disas/riscv.c | 20 ++------------------
 >  1 file changed, 2 insertions(+), 18 deletions(-)
 >
-> diff --git a/disas/riscv.c b/disas/riscv.c
-> index d416a4d6b3..fbdb24fcea 100644
-> --- a/disas/riscv.c
-> +++ b/disas/riscv.c
-> @@ -5057,26 +5057,10 @@ static bool check_constraints(rv_decode *dec, con=
-st rvc_constraint *c)
->      return true;
->  }
->
-> -/* instruction length */
-> -
-> +/* Same as insn_len() from target/riscv/internals.h */
->  static size_t inst_length(rv_inst inst)
->  {
-> -    /* NOTE: supports maximum instruction size of 64-bits */
-> -
-> -    /*
-> -     * instruction length coding
-> -     *
-> -     *      aa - 16 bit aa !=3D 11
-> -     *   bbb11 - 32 bit bbb !=3D 111
-> -     *  011111 - 48 bit
-> -     * 0111111 - 64 bit
-> -     */
-> -
-> -    return (inst &      0b11) !=3D 0b11      ? 2
-> -         : (inst &   0b11100) !=3D 0b11100   ? 4
-> -         : (inst &  0b111111) =3D=3D 0b011111  ? 6
-> -         : (inst & 0b1111111) =3D=3D 0b0111111 ? 8
-> -         : 0;
-> +    return (inst & 3) =3D=3D 3 ? 4 : 2;
->  }
->
->  /* format instruction */
 > --
 > 2.43.0
 >
