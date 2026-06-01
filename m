@@ -4,65 +4,66 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1AEF7CD6E55
-	for <qemu-devel@archiver.kernel.org>; Mon,  1 Jun 2026 21:44:53 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3FC3ACD5BD1
+	for <qemu-devel@archiver.kernel.org>; Mon,  1 Jun 2026 21:45:02 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wUAQg-0002WM-CH; Mon, 01 Jun 2026 17:44:14 -0400
+	id 1wUAQr-0002ar-C3; Mon, 01 Jun 2026 17:44:25 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <faithilikerun@gmail.com>)
- id 1wUAQe-0002Vm-IX
- for qemu-devel@nongnu.org; Mon, 01 Jun 2026 17:44:12 -0400
-Received: from mail-wr1-x433.google.com ([2a00:1450:4864:20::433])
+ id 1wUAQp-0002Zo-MC
+ for qemu-devel@nongnu.org; Mon, 01 Jun 2026 17:44:23 -0400
+Received: from mail-wr1-x434.google.com ([2a00:1450:4864:20::434])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <faithilikerun@gmail.com>)
- id 1wUAQc-0001mk-Sf
- for qemu-devel@nongnu.org; Mon, 01 Jun 2026 17:44:12 -0400
-Received: by mail-wr1-x433.google.com with SMTP id
- ffacd0b85a97d-45ebafde87cso7034321f8f.3
- for <qemu-devel@nongnu.org>; Mon, 01 Jun 2026 14:44:10 -0700 (PDT)
+ id 1wUAQl-0001ph-J7
+ for qemu-devel@nongnu.org; Mon, 01 Jun 2026 17:44:23 -0400
+Received: by mail-wr1-x434.google.com with SMTP id
+ ffacd0b85a97d-45ef189aa1cso3000720f8f.0
+ for <qemu-devel@nongnu.org>; Mon, 01 Jun 2026 14:44:19 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1780350249; x=1780955049; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:from:to:cc:subject:date:message-id:reply-to;
- bh=z8n70Sy4CJ1FIPBfOrTJVgIMJGkB3v8thuzrdqlBMFM=;
- b=StNYFn8mpZT5ozBIkeMh66baLTJNmPd6I/4hrZZDQ1BZEaK7N+0GaAN/ya//ippEUz
- aIJuX3hy1mpbsjvBAhHWUNCc89hXWIh41EJetwxpNbc0itCWpa/PI98W7rLcjXg0e/Xw
- nwR2N6wMeqkSMMP2Esit++YY0wTdFxlrKFlzCHkAqlWBasibcw6NOFKpn6ZusBtpGrsq
- X0lkPWfNjbx4BWR5331ZfrEGsh5pLeRNFovhrKnuyojPkRIbKk5rZRl6IsIGcdBQUWAA
- /9uac0ONrYAmD4yEQ8ReYY8xZ5U6GHcGH9cgJREUYiaSSfMYAVPhfIyvRapLa78km/5z
- +zWA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1780350249; x=1780955049;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ d=gmail.com; s=20251104; t=1780350258; x=1780955058; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=z8n70Sy4CJ1FIPBfOrTJVgIMJGkB3v8thuzrdqlBMFM=;
- b=OlePXNcmWYpy90uDQsLnyWjJPHcf9HASLbApVSrI7PCFnRpXk9aUwYZ52RA8J80QSj
- PGyI+3T0l8DOJGeU9DzCwJG3WSFfH2ZtFKsCDnpU9Jv0udIHSxvgomXHeysjnmJoPkN0
- /wjWRJZSWSiEX9h6NPvqwLKCNFPHN1xvxgq1bL+zOPxQYQAO+Ph50HCPdpyMC04XGUtN
- +eWF52w9/zUaJc5YICTbQtPAlILkhlnbk/2reO9yPZc0NdLZRTrDkx2uDdae+L5WWY4G
- rZa+FrDHHXpRSVTo88tFtIxx7Vum4L4yc3lCZJ6fbCBqu1qajhfl2yzWJpCtZn5JMD9B
- qeQQ==
-X-Gm-Message-State: AOJu0YzEQ/r7MdLC5cmmfpCyTHQVlpAAr/TGvkpiyACxcbkMVPMx3Av8
- MiccUU9wabfxjv6oBDbgRoj9ioB5dB3yLzR5nzac6Gr9DCZoBKwRoCD9DghcJqzvEi0=
-X-Gm-Gg: Acq92OHyVlpx/JiMElHHJP4MMG+vz9m3nvu4Nwe0vztKmN/5unL5/XP/96oRfTIHPBP
- TDzatdU0CQNQ2zi95eYevX55u7Lv4rZyhyBjJbGL1MCiF3axYn8cWXCk0g67JhaALfFnjwwWXoJ
- kBjWOdqO/aEEsfY73ia21VnQXMljx/qQ3jtKWTiDzMQf/NPR51cbmt/czWiV1Tr3FD1bZxvgRTC
- sZGckFOFHatCZq4iXUB8SBMWxIMoMLBetSi2DLSzn0Lun9yx/WANOGw6GR+z8i+2BB3mtVwuYsG
- piM0WNEzbLv0sNriKB+a5Z/sF/yOv98Z0RuX9yvsNFcKzVmpseP7uRvBq4EjmkSRcI26mSfXPMx
- EBGCg3pnFtKmZBvQ4Grj/Rn872nK8xg1FOqBceMp8o3YbmgN6CaKtjB+Ewznt8lCRcn7fnp/lOz
- 2NTFwAQz69ZMZXA3tEqhp9Vta4ZmhakaHUuax446XgIXgcYvm/kKgcEC19zHz6sS0PYg==
-X-Received: by 2002:a5d:6049:0:b0:45e:655d:6f7 with SMTP id
- ffacd0b85a97d-45ef6b6b9damr17143465f8f.24.1780350248504; 
- Mon, 01 Jun 2026 14:44:08 -0700 (PDT)
+ bh=OawgwAEBDe5M3zQW/bMmaejgW8J1szv+8A4bMXc0XjE=;
+ b=NOyDB2eMO2JZBj+bvUwteBdBN4vD2vf02qgUt3DZu9cxgKgy8ivve2WQlHbiw5qslM
+ pE5kKafFubZTNYyBktbsZSeyc4Y6Bl7jqunqxH+TkD4cTZXUcMyJQIpyVDQHns6a/P3Y
+ /t6hqWiVj9WGLkKmtkOqSUIuPDHG8EJek30qdsVl+VZYRWspYTeTqK4VzOTgto7CSL9e
+ 33UKuTOAo2jorsbQg5vzf4YzRXCQLyGn3kEBjOddaOj8bJerxfePjms5xnwribgAQlTd
+ AewTb4pz251dPml3QiJoP9IB1vmVV4YFanoSV8cGcDD8Q4k5rIQUtfb13Nlo+CSxbQJ4
+ 4igw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1780350258; x=1780955058;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=OawgwAEBDe5M3zQW/bMmaejgW8J1szv+8A4bMXc0XjE=;
+ b=bSzenTy9w6+gPAy3XOmBYGBdXovLS5vwa7EAoJCGVrpNYmZkmvow6P6eJ3rUawAD81
+ LAQ606y5e10eDVqvDjPaN4ipNv8/B7hgciStKeuquT/u+ENJx1c8kYx5Yc3v9zvEWs+H
+ vso2luHukPvCdOtuqEFVMVyw41CD0P6fxMgp+rwwx82iDUfg3HVk+347CJB1+eHy6X2J
+ i7gG9ox/81eP5ikA+lBLwk9f7Iq1gpTEUS/ZZe6GoolHRNM/Y97cfX7WsyRXhzXq+xZ7
+ 577InvoPm+BB0ZdOfO/t0IM2RT72e3AmvXBND5v0g2O80VRZf9m4sPor7JQS4gnb6kcC
+ F2og==
+X-Gm-Message-State: AOJu0YyQ/q0eD5Rgi+Vp/opc5BYpQVzuQ/D3ffQAjxCBXbA5zIln1Rxx
+ Y7LF7co2FVOoA66HNm7V8NspViXNAw6MIPaTrObNSwwRi1WIGC50RZxlQa1+deKJl18=
+X-Gm-Gg: Acq92OH92/Qed7aQTAlHxFxMhFiEhwcfUgReBjP4bi17cpnIMc71LhswAV4QAbueid8
+ KSP1zJ6F89hI9r6kGbEQoQi21p8mweiKDXb2dKgu96RJzpt7oEkfOmWAE/3gtCMsDeuL9qBQFKc
+ E8nntGGez6dS6OG+M6ms7RwZ4O9EtV05p7mDUs99HS0/NjqmCBsFE20Od+1Lcte6gusK/MVtgCF
+ /nNRDJ11yhbDcmXyTFJzX+xSw9aQ6WVqtO4yaB0pA2fgQGsIqI7ScKyKZiR76v1Y4JbTIGqE/Pd
+ 4WpiY4AwHVTz5UQj3zsJwF5svBupL2MTicE3HqyA70ZV+tmtnbXYgziI6utu6coidJZtowStcCt
+ GIT9BNmACmNudR16RxBPyp60JfQp/to1HKUwuZxLZaf/zyM1bAn3MvHHdnwPru9ttdzSCD17gg4
+ YDJA43aMMkJ0/isSncaVo118oTxN7Wcb4OOVpj+NeLEm82ojwWTV/LP7IW9Ik6WqByEw==
+X-Received: by 2002:adf:f14e:0:b0:45e:e44b:3136 with SMTP id
+ ffacd0b85a97d-45ef6b4edffmr17540814f8f.19.1780350257865; 
+ Mon, 01 Jun 2026 14:44:17 -0700 (PDT)
 Received: from dobby ([2a02:8109:a394:4800:595:8cac:dffc:932f])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-45ef356b129sm35423496f8f.32.2026.06.01.14.44.06
+ ffacd0b85a97d-45ef356b129sm35423496f8f.32.2026.06.01.14.44.16
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 01 Jun 2026 14:44:08 -0700 (PDT)
+ Mon, 01 Jun 2026 14:44:17 -0700 (PDT)
 From: Sam Li <faithilikerun@gmail.com>
 To: qemu-devel@nongnu.org
 Cc: Markus Armbruster <armbru@redhat.com>, qemu-block@nongnu.org,
@@ -71,15 +72,16 @@ Cc: Markus Armbruster <armbru@redhat.com>, qemu-block@nongnu.org,
  dmitry.fomichev@wdc.com, Hanna Reitz <hreitz@redhat.com>, hare@suse.de,
  "Michael S. Tsirkin" <mst@redhat.com>, Kevin Wolf <kwolf@redhat.com>,
  cassel@kernel.org, dlemoal@kernel.org, Sam Li <faithilikerun@gmail.com>
-Subject: [PATCH v11 0/5] Add full zoned storage emulation to the qcow2 driver
-Date: Mon,  1 Jun 2026 23:44:00 +0200
-Message-ID: <20260601214405.252818-1-faithilikerun@gmail.com>
+Subject: [PATCH v11 5/5] iotests: test the zoned format feature for qcow2 file
+Date: Mon,  1 Jun 2026 23:44:05 +0200
+Message-ID: <20260601214405.252818-6-faithilikerun@gmail.com>
 X-Mailer: git-send-email 2.53.0
-Content-Type: text/plain; charset="utf-8"
+In-Reply-To: <20260601214405.252818-1-faithilikerun@gmail.com>
+References: <20260601214405.252818-1-faithilikerun@gmail.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::433;
- envelope-from=faithilikerun@gmail.com; helo=mail-wr1-x433.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::434;
+ envelope-from=faithilikerun@gmail.com; helo=mail-wr1-x434.google.com
 X-Spam_score_int: -10
 X-Spam_score: -1.1
 X-Spam_bar: -
@@ -102,142 +104,429 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-This patch series add a new extension - zoned format - to the
-qcow2 driver, allowing full zoned storage emulation on a qcow2
-image file. A user can attach such an image to a guest and have
-it appear as a host-managed zoned block device.
+The zoned format feature can be tested by:
+$ tests/qemu-iotests/check -qcow2 zoned-qcow2
 
-The zoned format is opt-in through a new qcow2 header extension
-that pins the zone geometry. Behind the extension is a dedicated
-zoned metadata region that stores one 8-byte write pointer (WP)
-per zone. The extension is gated by an incompatible bit, so an
-older qcow2 implementation cannot accidentally open the image.
-
-Each write pointer is routed through the write pointer cache,
-a Qcow2Cache object. The write pointer cache is written to disk
-after the qcow2 metadata is written, thus guaranteeing that
-the write pointer is updated after the corresponding data is
-written.
-
-Zone states are in memory. Read-only and offline states are
-device-internal events, which are not modelled in qcow2
-emulation for simplicity. The other zone states
-(closed, empty, full) can be inferred from write poiner
-values, presistent across QEMU reboots. The open states are
-kept in memory using open zone lists.
-
-To create a qcow2 file with the zoned format:
-
-    qemu-img create -f qcow2 zbc.qcow2 \
-        -o size=768M \
-        -o zone.size=64M \
-        -o zone.capacity=64M \
-        -o zone.conventional_zones=0 \
-        -o zone.max_append_bytes=4096 \
-        -o zone.max_open_zones=6 \
-        -o zone.max_active_zones=8 \
-        -o zone.mode=host-managed
-
-Then attach it to a guest via the QEMU command line:
-    -blockdev node-name=drive1,driver=qcow2,\
-              file.driver=file,file.filename=zbc.qcow2 \
-    -device virtio-blk-pci,drive=drive1 \
-
-v10->v11:
-- add write ordering through write pointer cache [Stefan]
-- add new test cases to iotests for zone append write
-- add zoned image info to qemu-img --info
-- move virtio-blk cross-zone-boundary merge fix into its own patch [Stefan]
-- fix specs and docs:
-    * document bit 59 conventional-zone marker in qcow2.rst [Stefan]
-    * spell out write ordering for crash consistency [Stefan]
-    * QAPI: rephrase comments, bump version [Markus]
-- fix review comments [Stefan]
-
-v9->v10:
-- add cross-boundary constraint for merging writes on zoned devices
-- extract call from assert() to fix image creation crash
-
-v8->v9:
-- fix compilation err after modifying types
-
-v7->v8:
-- sets default values for zoned img confurations [Markus, Damien]
-- changes the type of zone_size, zone_capacity from uint32_t to uint64_t [Stefan]
-- fix docs [Stefan]
-- modify append writes to increase concurrency [Damien, Stefan]
-- use tailqueue to track active zones [Stefan]
-- fix undefined behavior of ranges_overlap()
-- fix the iotest of case 2(1)
-
-v6->v7:
-- modify zone resource managemant (style) [Damien]
-- fix accessing list with negative index err
-- add some tests for zrm in iotests
-- address review comments [Markus]
-
-v5->v6:
-- fix docs and specs [Eric, Markus, Stefan]
-- add general sanity checks for zoned device configurations while creation and opening [Eric]
-- fix LRU when implicitly open a zone for a long time [Stefan]
-
-v4->v5:
-- add incompatible bit for zoned format [Eric]
-- fix and manage zone resources via LRU [Damien]
-- renaming functions and fields, spec changes [Markus, Damien]
-- add closed zone list
-- make qemu iotests for zoned device consecutive [Stefan]
-
-v3->v4:
-- use QLIST for implicit, explicit open zones management [Stefan]
-- keep zone states in memory and drop state bits in wp metadata structure [Damien, Stefan]
-- change zone resource management and iotests accordingly
-- add tracing for number of implicit zones
-- address review comments [Stefan, Markus]:
-  * documentation, config, style
-
-v2->v3:
-- drop zoned_profile option [Klaus]
-- reformat doc comments of qcow2 [Markus]
-- add input validation and checks for zoned information [Stefan]
-- code style: format, comments, documentation, naming [Stefan]
-- add tracing function for wp tracking [Stefan]
-- reconstruct io path in check_zone_resources [Stefan]
-
-v1->v2:
-- add more tests to qemu-io zoned commands
-- make zone append change state to full when wp reaches end
-- add documentation to qcow2 zoned extension header
-- address review comments (Stefan):
-  * fix zoned_mata allocation size
-  * use bitwise or than addition
-  * fix wp index overflow and locking
-  * cleanups: comments, naming
-
-Sam Li (5):
-  docs/qcow2: add the zoned format feature
-  qcow2: add configurations for zoned format extension
-  virtio-blk: do not merge writes across a zone boundary
-  qcow2: add zoned emulation capability
-  iotests: test the zoned format feature for qcow2 file
-
- block/file-posix.c                       |    2 +-
- block/qcow2-cache.c                      |    8 +
- block/qcow2-refcount.c                   |    7 +
- block/qcow2.c                            | 1464 +++++++++++++++++++++-
- block/qcow2.h                            |   83 +-
- block/trace-events                       |    2 +
- docs/interop/qcow2.rst                   |  117 +-
- docs/system/qemu-block-drivers.rst.inc   |   47 +
- hw/block/virtio-blk.c                    |   22 +-
- include/block/block_int-common.h         |   15 +-
- qapi/block-core.json                     |   91 +-
- tests/qemu-iotests/tests/zoned-qcow2     |  209 +++
- tests/qemu-iotests/tests/zoned-qcow2.out |  191 +++
- 13 files changed, 2244 insertions(+), 14 deletions(-)
+Signed-off-by: Sam Li <faithilikerun@gmail.com>
+---
+ tests/qemu-iotests/tests/zoned-qcow2     | 209 +++++++++++++++++++++++
+ tests/qemu-iotests/tests/zoned-qcow2.out | 191 +++++++++++++++++++++
+ 2 files changed, 400 insertions(+)
  create mode 100755 tests/qemu-iotests/tests/zoned-qcow2
  create mode 100644 tests/qemu-iotests/tests/zoned-qcow2.out
 
+diff --git a/tests/qemu-iotests/tests/zoned-qcow2 b/tests/qemu-iotests/tests/zoned-qcow2
+new file mode 100755
+index 0000000000..d37100c8ab
+--- /dev/null
++++ b/tests/qemu-iotests/tests/zoned-qcow2
+@@ -0,0 +1,209 @@
++#!/usr/bin/env bash
++#
++# SPDX-License-Identifier: GPL-2.0-or-later
++#
++# Test zone management operations for qcow2 file.
++#
++
++seq="$(basename $0)"
++echo "QA output created by $seq"
++status=1 # failure is the default!
++
++file_name="zbc.qcow2"
++_cleanup()
++{
++  _cleanup_test_img
++  _rm_test_img "$file_name"
++}
++trap "_cleanup; exit \$status" 0 1 2 3 15
++
++# get standard environment, filters and checks
++. ../common.rc
++. ../common.filter
++. ../common.qemu
++
++# This test only runs on Linux hosts with qcow2 image files.
++_supported_fmt qcow2
++_supported_proto file
++_supported_os Linux
++
++echo
++echo "=== Initial image setup ==="
++echo
++
++$QEMU_IMG create -f qcow2 $file_name -o size=768M -o zone.size=64M -o \
++zone.capacity=64M -o zone.conventional_zones=0 -o zone.max_append_bytes=32M \
++-o zone.max_open_zones=6 -o zone.max_active_zones=8 -o zone.mode=host-managed
++
++IMG="--image-opts -n driver=qcow2,file.driver=file,file.filename=$file_name"
++QEMU_IO_OPTIONS=$QEMU_IO_OPTIONS_NO_FMT
++
++echo
++echo "=== Testing a qcow2 img with zoned format ==="
++echo
++echo "case 1: test zone operations one by one"
++
++echo "(1) report zones[0]:"
++$QEMU_IO $IMG -c "zrp 0 1"
++echo
++echo "report zones[0~9]:"
++$QEMU_IO $IMG -c "zrp 0 10"
++echo
++echo "report zones[-1]:"  # zones[-1] dictates the last zone
++$QEMU_IO $IMG -c "zrp 0x2C000000 2" # 0x2C000000 / 512 = 0x160000
++echo
++echo
++echo "(2) open zones[0], zones[1], zones[-1] then close, finish, reset:"
++$QEMU_IO $IMG << EOF
++zo 0 0x4000000
++zrp 0 1
++zo 0x4000000 0x4000000
++zrp 0x4000000 1
++zo 0x2C000000 0x4000000
++zrp 0x2C000000 2
++zc 0 0x4000000
++zrp 0 1
++zc 0x4000000 0x4000000
++zrp 0x4000000 1
++zc 0x2C000000 0x4000000
++zrp 0x2C000000 2
++zf 0 0x4000000
++zrp 0 1
++zf 64M 64M
++zrp 0x4000000 2
++zf 0x2C000000 0x4000000
++zrp 0x2C000000 2
++zrs 0 0x4000000
++zrp 0 1
++zrs 0x4000000 0x4000000
++zrp 0x4000000 1
++zrs 0x2C000000 0x4000000
++zrp 0x2C000000 2
++EOF
++
++echo
++echo "(3) append write with (4k, 8k) data"
++$QEMU_IO $IMG -c "zrp 0 12" # the physical block size of the device is 4096
++echo "Append write zones[0], zones[1] twice"
++$QEMU_IO $IMG << EOF
++zap -p 0 0x1000 0x2000
++zrp 0 1
++zap -p 0 0x1000 0x2000
++zrp 0 1
++zap -p 0x4000000 0x1000 0x2000
++zrp 0x4000000 1
++zap -p 0x4000000 0x1000 0x2000
++zrp 0x4000000 1
++EOF
++
++echo
++echo "Reset all:"
++$QEMU_IO $IMG -c "zrp 0 12" -c "zrs 0 768M" -c "zrp 0 12"
++echo
++echo
++
++echo "case 2: test a sets of ops that works or not"
++echo "(1) append write (4k, 4k) and then write to full"
++$QEMU_IO $IMG << EOF
++zap -p 0 0x1000 0x1000
++zrp 0 1
++zap -p 0 0x1000 0x1ffd000
++zap -p 0 0x1000000 0x1000000
++zrp 0 1
++EOF
++
++echo "Reset zones[0]:"
++$QEMU_IO $IMG -c "zrs 0 64M" -c "zrp 0 1"
++
++echo "(2) write in zones[0], zones[3], zones[8], and then reset all"
++$QEMU_IO $IMG << EOF
++zap -p 0 0x1000 0x1000
++zap -p 0xc000000 0x1000 0x1000
++zap -p 0x20000000 0x1000 0x1000
++zrp 0 12
++zrs 0 768M
++zrp 0 12
++EOF
++
++echo "case 3: test zone resource management"
++echo "(1) write in zones[0], zones[1], zones[2] and then close it"
++$QEMU_IO $IMG << EOF
++zap -p 0 0x1000 0x1000
++zap -p 0x4000000 0x1000 0x1000
++zap -p 0x8000000 0x1000 0x1000
++zrp 0 12
++zc 0 64M
++zc 0x4000000 64M
++zc 0x8000000 64M
++zrp 0 12
++EOF
++
++echo "(2) reset all after 3(1)"
++$QEMU_IO $IMG << EOF
++zrs 0 768M
++zrp 0 12
++EOF
++
++echo
++echo "case 4: WP cache crash consistency under concurrent appends"
++echo "(1) concurrent writes to the same sequential zone (zone 5 @ 320M)"
++# Three concurrent aio_writes at WP, WP+4K, WP+8K. Data writes are
++# permitted to complete out of order
++$QEMU_IO $IMG <<EOF
++aio_write -q -P 0xa1 0x14000000 4k
++aio_write -q -P 0xa2 0x14001000 4k
++aio_write -q -P 0xa3 0x14002000 4k
++aio_flush
++zrp 0x14000000 1
++read -q -P 0xa1 0x14000000 4k
++read -q -P 0xa2 0x14001000 4k
++read -q -P 0xa3 0x14002000 4k
++EOF
++
++echo "(2) concurrent writes to different sequential zones (zones 6, 7, 9)"
++# Spread across three zones. No per-zone interaction; each zone's WP
++# must advance independently.
++$QEMU_IO $IMG <<EOF
++aio_write -q -P 0xb1 0x18000000 4k
++aio_write -q -P 0xb2 0x1C000000 4k
++aio_write -q -P 0xb3 0x24000000 4k
++aio_flush
++zrp 0x18000000 1
++zrp 0x1C000000 1
++zrp 0x24000000 1
++read -q -P 0xb1 0x18000000 4k
++read -q -P 0xb2 0x1C000000 4k
++read -q -P 0xb3 0x24000000 4k
++EOF
++
++echo "(3) reset zones with no in-flight writes (zones 5, 6)"
++# Reset zones 5 and 6 (which we wrote in (1) and (2)). WP should drop
++# back to zone_start; data reads must return zero (unallocated
++# post-reset).
++$QEMU_IO $IMG -c "zrs 0x14000000 64M" -c "zrs 0x18000000 64M" \
++              -c "zrp 0x14000000 1" -c "zrp 0x18000000 1" \
++              -c "read -q -P 0 0x14000000 4k" \
++              -c "read -q -P 0 0x18000000 4k"
++
++echo "(4) BLKRESETALL after concurrent writes"
++# Reset everything first, refill three zones with concurrent writes,
++# then RESETALL. Each zone's WP must return to its start.
++$QEMU_IO $IMG <<EOF
++zrs 0 768M
++aio_write -q -P 0xc1 0x14000000 4k
++aio_write -q -P 0xc2 0x18000000 4k
++aio_write -q -P 0xc3 0x1C000000 4k
++aio_flush
++zrp 0x14000000 1
++zrp 0x18000000 1
++zrp 0x1C000000 1
++zrs 0 768M
++zrp 0x14000000 1
++zrp 0x18000000 1
++zrp 0x1C000000 1
++EOF
++
++# success, all done
++echo "*** done"
++rm -f $seq.full
++status=0
+diff --git a/tests/qemu-iotests/tests/zoned-qcow2.out b/tests/qemu-iotests/tests/zoned-qcow2.out
+new file mode 100644
+index 0000000000..2e2c65b6c0
+--- /dev/null
++++ b/tests/qemu-iotests/tests/zoned-qcow2.out
+@@ -0,0 +1,191 @@
++QA output created by zoned-qcow2
++
++=== Initial image setup ===
++
++Formatting 'zbc.qcow2', fmt=qcow2 cluster_size=65536 extended_l2=off compression_type=zlib zone.mode=host-managed zone.size=67108864 zone.capacity=67108864 zone.conventional_zones=0 zone.max_append_bytes=33554432 zone.max_active_zones=8 zone.max_open_zones=6 size=805306368 lazy_refcounts=off refcount_bits=16
++
++=== Testing a qcow2 img with zoned format ===
++
++case 1: test zone operations one by one
++(1) report zones[0]:
++start: 0x0, len 0x20000, cap 0x20000, wptr 0x0, zcond:1, [type: 2]
++
++report zones[0~9]:
++start: 0x0, len 0x20000, cap 0x20000, wptr 0x0, zcond:1, [type: 2]
++start: 0x20000, len 0x20000, cap 0x20000, wptr 0x20000, zcond:1, [type: 2]
++start: 0x40000, len 0x20000, cap 0x20000, wptr 0x40000, zcond:1, [type: 2]
++start: 0x60000, len 0x20000, cap 0x20000, wptr 0x60000, zcond:1, [type: 2]
++start: 0x80000, len 0x20000, cap 0x20000, wptr 0x80000, zcond:1, [type: 2]
++start: 0xa0000, len 0x20000, cap 0x20000, wptr 0xa0000, zcond:1, [type: 2]
++start: 0xc0000, len 0x20000, cap 0x20000, wptr 0xc0000, zcond:1, [type: 2]
++start: 0xe0000, len 0x20000, cap 0x20000, wptr 0xe0000, zcond:1, [type: 2]
++start: 0x100000, len 0x20000, cap 0x20000, wptr 0x100000, zcond:1, [type: 2]
++start: 0x120000, len 0x20000, cap 0x20000, wptr 0x120000, zcond:1, [type: 2]
++
++report zones[-1]:
++start: 0x160000, len 0x20000, cap 0x20000, wptr 0x160000, zcond:1, [type: 2]
++
++
++(2) open zones[0], zones[1], zones[-1] then close, finish, reset:
++qemu-io> qemu-io> start: 0x0, len 0x20000, cap 0x20000, wptr 0x0, zcond:3, [type: 2]
++qemu-io> qemu-io> start: 0x20000, len 0x20000, cap 0x20000, wptr 0x20000, zcond:3, [type: 2]
++qemu-io> qemu-io> start: 0x160000, len 0x20000, cap 0x20000, wptr 0x160000, zcond:3, [type: 2]
++qemu-io> qemu-io> start: 0x0, len 0x20000, cap 0x20000, wptr 0x0, zcond:1, [type: 2]
++qemu-io> qemu-io> start: 0x20000, len 0x20000, cap 0x20000, wptr 0x20000, zcond:1, [type: 2]
++qemu-io> qemu-io> start: 0x160000, len 0x20000, cap 0x20000, wptr 0x160000, zcond:1, [type: 2]
++qemu-io> qemu-io> start: 0x0, len 0x20000, cap 0x20000, wptr 0x20000, zcond:14, [type: 2]
++qemu-io> qemu-io> start: 0x20000, len 0x20000, cap 0x20000, wptr 0x40000, zcond:14, [type: 2]
++start: 0x40000, len 0x20000, cap 0x20000, wptr 0x40000, zcond:1, [type: 2]
++qemu-io> qemu-io> start: 0x160000, len 0x20000, cap 0x20000, wptr 0x180000, zcond:14, [type: 2]
++qemu-io> qemu-io> start: 0x0, len 0x20000, cap 0x20000, wptr 0x0, zcond:1, [type: 2]
++qemu-io> qemu-io> start: 0x20000, len 0x20000, cap 0x20000, wptr 0x20000, zcond:1, [type: 2]
++qemu-io> qemu-io> start: 0x160000, len 0x20000, cap 0x20000, wptr 0x160000, zcond:1, [type: 2]
++qemu-io>
++(3) append write with (4k, 8k) data
++start: 0x0, len 0x20000, cap 0x20000, wptr 0x0, zcond:1, [type: 2]
++start: 0x20000, len 0x20000, cap 0x20000, wptr 0x20000, zcond:1, [type: 2]
++start: 0x40000, len 0x20000, cap 0x20000, wptr 0x40000, zcond:1, [type: 2]
++start: 0x60000, len 0x20000, cap 0x20000, wptr 0x60000, zcond:1, [type: 2]
++start: 0x80000, len 0x20000, cap 0x20000, wptr 0x80000, zcond:1, [type: 2]
++start: 0xa0000, len 0x20000, cap 0x20000, wptr 0xa0000, zcond:1, [type: 2]
++start: 0xc0000, len 0x20000, cap 0x20000, wptr 0xc0000, zcond:1, [type: 2]
++start: 0xe0000, len 0x20000, cap 0x20000, wptr 0xe0000, zcond:1, [type: 2]
++start: 0x100000, len 0x20000, cap 0x20000, wptr 0x100000, zcond:1, [type: 2]
++start: 0x120000, len 0x20000, cap 0x20000, wptr 0x120000, zcond:1, [type: 2]
++start: 0x140000, len 0x20000, cap 0x20000, wptr 0x140000, zcond:1, [type: 2]
++start: 0x160000, len 0x20000, cap 0x20000, wptr 0x160000, zcond:1, [type: 2]
++Append write zones[0], zones[1] twice
++qemu-io> After zap done, the append sector is 0x0
++qemu-io> start: 0x0, len 0x20000, cap 0x20000, wptr 0x18, zcond:2, [type: 2]
++qemu-io> After zap done, the append sector is 0x18
++qemu-io> start: 0x0, len 0x20000, cap 0x20000, wptr 0x30, zcond:2, [type: 2]
++qemu-io> After zap done, the append sector is 0x20000
++qemu-io> start: 0x20000, len 0x20000, cap 0x20000, wptr 0x20018, zcond:2, [type: 2]
++qemu-io> After zap done, the append sector is 0x20018
++qemu-io> start: 0x20000, len 0x20000, cap 0x20000, wptr 0x20030, zcond:2, [type: 2]
++qemu-io>
++Reset all:
++start: 0x0, len 0x20000, cap 0x20000, wptr 0x30, zcond:4, [type: 2]
++start: 0x20000, len 0x20000, cap 0x20000, wptr 0x20030, zcond:4, [type: 2]
++start: 0x40000, len 0x20000, cap 0x20000, wptr 0x40000, zcond:1, [type: 2]
++start: 0x60000, len 0x20000, cap 0x20000, wptr 0x60000, zcond:1, [type: 2]
++start: 0x80000, len 0x20000, cap 0x20000, wptr 0x80000, zcond:1, [type: 2]
++start: 0xa0000, len 0x20000, cap 0x20000, wptr 0xa0000, zcond:1, [type: 2]
++start: 0xc0000, len 0x20000, cap 0x20000, wptr 0xc0000, zcond:1, [type: 2]
++start: 0xe0000, len 0x20000, cap 0x20000, wptr 0xe0000, zcond:1, [type: 2]
++start: 0x100000, len 0x20000, cap 0x20000, wptr 0x100000, zcond:1, [type: 2]
++start: 0x120000, len 0x20000, cap 0x20000, wptr 0x120000, zcond:1, [type: 2]
++start: 0x140000, len 0x20000, cap 0x20000, wptr 0x140000, zcond:1, [type: 2]
++start: 0x160000, len 0x20000, cap 0x20000, wptr 0x160000, zcond:1, [type: 2]
++start: 0x0, len 0x20000, cap 0x20000, wptr 0x0, zcond:1, [type: 2]
++start: 0x20000, len 0x20000, cap 0x20000, wptr 0x20000, zcond:1, [type: 2]
++start: 0x40000, len 0x20000, cap 0x20000, wptr 0x40000, zcond:1, [type: 2]
++start: 0x60000, len 0x20000, cap 0x20000, wptr 0x60000, zcond:1, [type: 2]
++start: 0x80000, len 0x20000, cap 0x20000, wptr 0x80000, zcond:1, [type: 2]
++start: 0xa0000, len 0x20000, cap 0x20000, wptr 0xa0000, zcond:1, [type: 2]
++start: 0xc0000, len 0x20000, cap 0x20000, wptr 0xc0000, zcond:1, [type: 2]
++start: 0xe0000, len 0x20000, cap 0x20000, wptr 0xe0000, zcond:1, [type: 2]
++start: 0x100000, len 0x20000, cap 0x20000, wptr 0x100000, zcond:1, [type: 2]
++start: 0x120000, len 0x20000, cap 0x20000, wptr 0x120000, zcond:1, [type: 2]
++start: 0x140000, len 0x20000, cap 0x20000, wptr 0x140000, zcond:1, [type: 2]
++start: 0x160000, len 0x20000, cap 0x20000, wptr 0x160000, zcond:1, [type: 2]
++
++
++case 2: test a sets of ops that works or not
++(1) append write (4k, 4k) and then write to full
++qemu-io> After zap done, the append sector is 0x0
++qemu-io> start: 0x0, len 0x20000, cap 0x20000, wptr 0x10, zcond:2, [type: 2]
++qemu-io> After zap done, the append sector is 0x10
++qemu-io> After zap done, the append sector is 0x10000
++qemu-io> start: 0x0, len 0x20000, cap 0x20000, wptr 0x20000, zcond:14, [type: 2]
++qemu-io> Reset zones[0]:
++start: 0x0, len 0x20000, cap 0x20000, wptr 0x0, zcond:1, [type: 2]
++(2) write in zones[0], zones[3], zones[8], and then reset all
++qemu-io> After zap done, the append sector is 0x0
++qemu-io> After zap done, the append sector is 0x60000
++qemu-io> After zap done, the append sector is 0x100000
++qemu-io> start: 0x0, len 0x20000, cap 0x20000, wptr 0x10, zcond:2, [type: 2]
++start: 0x20000, len 0x20000, cap 0x20000, wptr 0x20000, zcond:1, [type: 2]
++start: 0x40000, len 0x20000, cap 0x20000, wptr 0x40000, zcond:1, [type: 2]
++start: 0x60000, len 0x20000, cap 0x20000, wptr 0x60010, zcond:2, [type: 2]
++start: 0x80000, len 0x20000, cap 0x20000, wptr 0x80000, zcond:1, [type: 2]
++start: 0xa0000, len 0x20000, cap 0x20000, wptr 0xa0000, zcond:1, [type: 2]
++start: 0xc0000, len 0x20000, cap 0x20000, wptr 0xc0000, zcond:1, [type: 2]
++start: 0xe0000, len 0x20000, cap 0x20000, wptr 0xe0000, zcond:1, [type: 2]
++start: 0x100000, len 0x20000, cap 0x20000, wptr 0x100010, zcond:2, [type: 2]
++start: 0x120000, len 0x20000, cap 0x20000, wptr 0x120000, zcond:1, [type: 2]
++start: 0x140000, len 0x20000, cap 0x20000, wptr 0x140000, zcond:1, [type: 2]
++start: 0x160000, len 0x20000, cap 0x20000, wptr 0x160000, zcond:1, [type: 2]
++qemu-io> qemu-io> start: 0x0, len 0x20000, cap 0x20000, wptr 0x0, zcond:1, [type: 2]
++start: 0x20000, len 0x20000, cap 0x20000, wptr 0x20000, zcond:1, [type: 2]
++start: 0x40000, len 0x20000, cap 0x20000, wptr 0x40000, zcond:1, [type: 2]
++start: 0x60000, len 0x20000, cap 0x20000, wptr 0x60000, zcond:1, [type: 2]
++start: 0x80000, len 0x20000, cap 0x20000, wptr 0x80000, zcond:1, [type: 2]
++start: 0xa0000, len 0x20000, cap 0x20000, wptr 0xa0000, zcond:1, [type: 2]
++start: 0xc0000, len 0x20000, cap 0x20000, wptr 0xc0000, zcond:1, [type: 2]
++start: 0xe0000, len 0x20000, cap 0x20000, wptr 0xe0000, zcond:1, [type: 2]
++start: 0x100000, len 0x20000, cap 0x20000, wptr 0x100000, zcond:1, [type: 2]
++start: 0x120000, len 0x20000, cap 0x20000, wptr 0x120000, zcond:1, [type: 2]
++start: 0x140000, len 0x20000, cap 0x20000, wptr 0x140000, zcond:1, [type: 2]
++start: 0x160000, len 0x20000, cap 0x20000, wptr 0x160000, zcond:1, [type: 2]
++qemu-io> case 3: test zone resource management
++(1) write in zones[0], zones[1], zones[2] and then close it
++qemu-io> After zap done, the append sector is 0x0
++qemu-io> After zap done, the append sector is 0x20000
++qemu-io> After zap done, the append sector is 0x40000
++qemu-io> start: 0x0, len 0x20000, cap 0x20000, wptr 0x10, zcond:2, [type: 2]
++start: 0x20000, len 0x20000, cap 0x20000, wptr 0x20010, zcond:2, [type: 2]
++start: 0x40000, len 0x20000, cap 0x20000, wptr 0x40010, zcond:2, [type: 2]
++start: 0x60000, len 0x20000, cap 0x20000, wptr 0x60000, zcond:1, [type: 2]
++start: 0x80000, len 0x20000, cap 0x20000, wptr 0x80000, zcond:1, [type: 2]
++start: 0xa0000, len 0x20000, cap 0x20000, wptr 0xa0000, zcond:1, [type: 2]
++start: 0xc0000, len 0x20000, cap 0x20000, wptr 0xc0000, zcond:1, [type: 2]
++start: 0xe0000, len 0x20000, cap 0x20000, wptr 0xe0000, zcond:1, [type: 2]
++start: 0x100000, len 0x20000, cap 0x20000, wptr 0x100000, zcond:1, [type: 2]
++start: 0x120000, len 0x20000, cap 0x20000, wptr 0x120000, zcond:1, [type: 2]
++start: 0x140000, len 0x20000, cap 0x20000, wptr 0x140000, zcond:1, [type: 2]
++start: 0x160000, len 0x20000, cap 0x20000, wptr 0x160000, zcond:1, [type: 2]
++qemu-io> qemu-io> qemu-io> qemu-io> start: 0x0, len 0x20000, cap 0x20000, wptr 0x10, zcond:4, [type: 2]
++start: 0x20000, len 0x20000, cap 0x20000, wptr 0x20010, zcond:4, [type: 2]
++start: 0x40000, len 0x20000, cap 0x20000, wptr 0x40010, zcond:4, [type: 2]
++start: 0x60000, len 0x20000, cap 0x20000, wptr 0x60000, zcond:1, [type: 2]
++start: 0x80000, len 0x20000, cap 0x20000, wptr 0x80000, zcond:1, [type: 2]
++start: 0xa0000, len 0x20000, cap 0x20000, wptr 0xa0000, zcond:1, [type: 2]
++start: 0xc0000, len 0x20000, cap 0x20000, wptr 0xc0000, zcond:1, [type: 2]
++start: 0xe0000, len 0x20000, cap 0x20000, wptr 0xe0000, zcond:1, [type: 2]
++start: 0x100000, len 0x20000, cap 0x20000, wptr 0x100000, zcond:1, [type: 2]
++start: 0x120000, len 0x20000, cap 0x20000, wptr 0x120000, zcond:1, [type: 2]
++start: 0x140000, len 0x20000, cap 0x20000, wptr 0x140000, zcond:1, [type: 2]
++start: 0x160000, len 0x20000, cap 0x20000, wptr 0x160000, zcond:1, [type: 2]
++qemu-io> (2) reset all after 3(1)
++qemu-io> qemu-io> start: 0x0, len 0x20000, cap 0x20000, wptr 0x0, zcond:1, [type: 2]
++start: 0x20000, len 0x20000, cap 0x20000, wptr 0x20000, zcond:1, [type: 2]
++start: 0x40000, len 0x20000, cap 0x20000, wptr 0x40000, zcond:1, [type: 2]
++start: 0x60000, len 0x20000, cap 0x20000, wptr 0x60000, zcond:1, [type: 2]
++start: 0x80000, len 0x20000, cap 0x20000, wptr 0x80000, zcond:1, [type: 2]
++start: 0xa0000, len 0x20000, cap 0x20000, wptr 0xa0000, zcond:1, [type: 2]
++start: 0xc0000, len 0x20000, cap 0x20000, wptr 0xc0000, zcond:1, [type: 2]
++start: 0xe0000, len 0x20000, cap 0x20000, wptr 0xe0000, zcond:1, [type: 2]
++start: 0x100000, len 0x20000, cap 0x20000, wptr 0x100000, zcond:1, [type: 2]
++start: 0x120000, len 0x20000, cap 0x20000, wptr 0x120000, zcond:1, [type: 2]
++start: 0x140000, len 0x20000, cap 0x20000, wptr 0x140000, zcond:1, [type: 2]
++start: 0x160000, len 0x20000, cap 0x20000, wptr 0x160000, zcond:1, [type: 2]
++qemu-io>
++case 4: WP cache crash consistency under concurrent appends
++(1) concurrent writes to the same sequential zone (zone 5 @ 320M)
++qemu-io> qemu-io> qemu-io> qemu-io> qemu-io> start: 0xa0000, len 0x20000, cap 0x20000, wptr 0xa0018, zcond:2, [type: 2]
++qemu-io> qemu-io> qemu-io> qemu-io> (2) concurrent writes to different sequential zones (zones 6, 7, 9)
++qemu-io> qemu-io> qemu-io> qemu-io> qemu-io> start: 0xc0000, len 0x20000, cap 0x20000, wptr 0xc0008, zcond:2, [type: 2]
++qemu-io> start: 0xe0000, len 0x20000, cap 0x20000, wptr 0xe0008, zcond:2, [type: 2]
++qemu-io> start: 0x120000, len 0x20000, cap 0x20000, wptr 0x120008, zcond:2, [type: 2]
++qemu-io> qemu-io> qemu-io> qemu-io> (3) reset zones with no in-flight writes (zones 5, 6)
++start: 0xa0000, len 0x20000, cap 0x20000, wptr 0xa0000, zcond:1, [type: 2]
++start: 0xc0000, len 0x20000, cap 0x20000, wptr 0xc0000, zcond:1, [type: 2]
++(4) BLKRESETALL after concurrent writes
++qemu-io> qemu-io> qemu-io> qemu-io> qemu-io> qemu-io> start: 0xa0000, len 0x20000, cap 0x20000, wptr 0xa0008, zcond:2, [type: 2]
++qemu-io> start: 0xc0000, len 0x20000, cap 0x20000, wptr 0xc0008, zcond:2, [type: 2]
++qemu-io> start: 0xe0000, len 0x20000, cap 0x20000, wptr 0xe0008, zcond:2, [type: 2]
++qemu-io> qemu-io> start: 0xa0000, len 0x20000, cap 0x20000, wptr 0xa0000, zcond:1, [type: 2]
++qemu-io> start: 0xc0000, len 0x20000, cap 0x20000, wptr 0xc0000, zcond:1, [type: 2]
++qemu-io> start: 0xe0000, len 0x20000, cap 0x20000, wptr 0xe0000, zcond:1, [type: 2]
++qemu-io> *** done
 -- 
 2.53.0
 
