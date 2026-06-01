@@ -4,91 +4,143 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id BBCECCD6E55
-	for <qemu-devel@archiver.kernel.org>; Mon,  1 Jun 2026 15:19:32 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 68E56CD6E55
+	for <qemu-devel@archiver.kernel.org>; Mon,  1 Jun 2026 15:27:32 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wU4PW-0003Rp-0K; Mon, 01 Jun 2026 11:18:38 -0400
+	id 1wU4Xc-0005hd-VB; Mon, 01 Jun 2026 11:27:00 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <stefanha@redhat.com>)
- id 1wU4PM-0003IX-BS
- for qemu-devel@nongnu.org; Mon, 01 Jun 2026 11:18:29 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <skolothumtho@nvidia.com>)
+ id 1wU4Xb-0005hP-UO; Mon, 01 Jun 2026 11:27:00 -0400
+Received: from mail-westus3azlp170110003.outbound.protection.outlook.com
+ ([2a01:111:f403:c107::3] helo=PH0PR06CU001.outbound.protection.outlook.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <stefanha@redhat.com>)
- id 1wU4PJ-0004Ik-Vq
- for qemu-devel@nongnu.org; Mon, 01 Jun 2026 11:18:27 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1780327104;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=Zt3eyMH0ipYhRk9m1oEQ4cSndFpI0aHFkvbSlW+mJ4A=;
- b=dhQUaFyr0ewTo17wmRRWtns78dPP3x+9tEI5L/M16P4bEqalFEoT4CnUIGSyFAnRaeQ+kQ
- VQ5JhCi+kNmuddPbSJYRPw3o+IirNUKiXpT6DXmxq9Feh7gaWiTfpGaRjG2wM1dQC6hOZE
- /dnp9dKvgGuy3RZtPGz8WLXYqsyMl0A=
-Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-402-pfvITQBVNVynAQHGWMtMBA-1; Mon,
- 01 Jun 2026 11:18:21 -0400
-X-MC-Unique: pfvITQBVNVynAQHGWMtMBA-1
-X-Mimecast-MFC-AGG-ID: pfvITQBVNVynAQHGWMtMBA_1780327099
-Received: from mx-prod-int-10.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-10.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.95])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 115BF1956095; Mon,  1 Jun 2026 15:18:18 +0000 (UTC)
-Received: from localhost (unknown [10.2.16.102])
- by mx-prod-int-10.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 63D201684; Mon,  1 Jun 2026 15:18:16 +0000 (UTC)
-Date: Mon, 1 Jun 2026 11:18:15 -0400
-From: Stefan Hajnoczi <stefanha@redhat.com>
-To: Albert Esteve <aesteve@redhat.com>
-Cc: Stefan Hajnoczi <stefanha@gmail.com>,
- "Michael S. Tsirkin" <mst@redhat.com>,
- Alex =?iso-8859-1?Q?Benn=E9e?= <alex.bennee@linaro.org>,
- qemu-devel <qemu-devel@nongnu.org>, virtio-comment@lists.linux.dev,
- dev@lists.cloudhypervisor.org, rust-vmm@lists.opendev.org,
- Stefano Garzarella <sgarzare@redhat.com>,
- Manos Pitsidianakis <manos.pitsidianakis@linaro.org>,
- Demi Marie Obenour <demi@invisiblethingslab.com>,
- Alyssa Ross <hi@alyssa.is>, Mark Burton <MBURTON@qti.qualcomm.com>,
- Matti Moell <matti@qti.qualcomm.com>,
- Viresh Kumar <viresh.kumar@linaro.org>,
- Dorinda Bassey <dbassey@redhat.com>, Sergio Lopez <slp@redhat.com>,
- Vishwanath Seshagiri <vishs@meta.com>, Rob Bradford <rbradford@meta.com>,
- Zhengyu Zhao <zhaozhengyu@bytedance.com>,
- "Jorge E. Moreira" <jemoreira@google.com>
-Subject: Re: Where should the vhost-user specification live?
-Message-ID: <20260601151815.GC411459@fedora>
-References: <874ijtz038.fsf@draig.linaro.org>
- <CADSE00+RdBUhFVBDSXtVd1J5SaccqWy+RBxqnxuLKUYcitFMPw@mail.gmail.com>
- <20260601083628-mutt-send-email-mst@kernel.org>
- <CADSE00+kRnEC08LLVu6H065u2KaxBm-KnSN_8y6+964-FLbJMA@mail.gmail.com>
- <20260601090953-mutt-send-email-mst@kernel.org>
- <CAJSP0QV4W=5MJsSGggACv-tqxDtiieKc0YzEn8t-R=RD94KJaQ@mail.gmail.com>
- <CADSE00+ziHc8W2FqNT-aJU0Lt4sZ=NfQLc65m16vpT++pZM+xQ@mail.gmail.com>
+ (Exim 4.90_1) (envelope-from <skolothumtho@nvidia.com>)
+ id 1wU4Xa-00088I-7a; Mon, 01 Jun 2026 11:26:59 -0400
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=gt0bWa4td3UtHNcYzht82I7a307bdsihZuae+V1Xz6Jp14+SKLO760YzEF2DoiQNrEILuVphwjJrfIvOpgM64O7kk7X5hqeT1gLbGAkwFo59XVvoPybHZe4RFcn+cxpALJvpHcfuqlwIn0Iqe4fZPLB9rGecxOai+xQKzfM2cRDrAFJClOI2SU5PU6b4giottZQgSdnQTD9r9lXsVIFqHX8AbdyvVksdhbJfyctJrgM+STfJg1ZQsJL+cvhPlVDQqNJY6+LryfRPqDspizN3XFXgEK4Ron6rZlatXAAV3L167CGOnysTQ1WJbl4WknTrvYd7oVA9AA0EcSDNXHWy6g==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=s2uXg75Wxk1Nf5QKn+FxRUYs+bqymL6msGKQS8TAjZQ=;
+ b=mtca9KdLUROHA9kx+1oOZKwcoJbNOWR2bGQXRGah9ZzGIF/NMi63SIhHOWuyKa/akHO5dKJBTUi5FjMnpowXZHMkrtasOKdsShKb6p5jOWetkcG4EE5khrC0WchE2glO8vb2Ibjbv/gyujMrD3U5xCC5cxRHIE/T1o2er7Hve5RiVazJJEfhD4cFPKr6+9Eux/MT0JDnbHlnkA8cOt2YqR1+njAEzX7B3SOJjNn3inW2GqPcQbkHeR00L5mRa8kqDA44P7vdJ0z7YZZaEzLLled0H6N3BZRPAb1XeWI5IjyFVHZymQwwROgf1hN4bX2uhTXnAMmlI8HdziSMpV6eBg==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=nvidia.com; dmarc=pass action=none header.from=nvidia.com;
+ dkim=pass header.d=nvidia.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=Nvidia.com;
+ s=selector2;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=s2uXg75Wxk1Nf5QKn+FxRUYs+bqymL6msGKQS8TAjZQ=;
+ b=SgfQdVNFR1wR5Y8GfRb89Y8T+HcKm++b0oVhKs/dNmunqYuYYXj6gKbVd4tQ96r6F478ssjLp8chYXyYm90PGG7njWSOQsgcj/iq6+vVklKui3tuNg4T1QBIXNzjM1M7nvtg/t5UowY6WB0jiAeXJp8zm0XaMep6+IxUVejtaQ0iPRE5jQ361uA6vIZu7X3F8KRsaymIKA0HS9bZXNPgi+bZBZ0whp5V0IWwLSOj/9S1DN/dV1PgzlR2m8nX+BAZAZOktUmvDuQEj5PyGnNSfZt0SY6zs2UyJi9MHeOxsqpvbrA6OWE47G36Pz/UK4u61r71j8/J8FdP+WgGzGRmug==
+Received: from CH3PR12MB7548.namprd12.prod.outlook.com (2603:10b6:610:144::12)
+ by MN0PR12MB6197.namprd12.prod.outlook.com (2603:10b6:208:3c6::22)
+ with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.71.15; Mon, 1 Jun 2026
+ 15:26:46 +0000
+Received: from CH3PR12MB7548.namprd12.prod.outlook.com
+ ([fe80::b710:d6a1:ab16:76de]) by CH3PR12MB7548.namprd12.prod.outlook.com
+ ([fe80::b710:d6a1:ab16:76de%6]) with mapi id 15.21.0071.015; Mon, 1 Jun 2026
+ 15:26:46 +0000
+From: Shameer Kolothum Thodi <skolothumtho@nvidia.com>
+To: Eric Auger <eric.auger@redhat.com>, "eric.auger.pro@gmail.com"
+ <eric.auger.pro@gmail.com>, "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>,
+ "qemu-arm@nongnu.org" <qemu-arm@nongnu.org>, "kvmarm@lists.linux.dev"
+ <kvmarm@lists.linux.dev>, "peter.maydell@linaro.org"
+ <peter.maydell@linaro.org>, "shaju.abraham@nutanix.com"
+ <shaju.abraham@nutanix.com>, "khushit.shah@nutanix.com"
+ <khushit.shah@nutanix.com>, "yangjinqian1@huawei.com"
+ <yangjinqian1@huawei.com>, "cohuck@redhat.com" <cohuck@redhat.com>,
+ "richard.henderson@linaro.org" <richard.henderson@linaro.org>,
+ "sebott@redhat.com" <sebott@redhat.com>, "philmd@linaro.org"
+ <philmd@linaro.org>
+CC: "maz@kernel.org" <maz@kernel.org>, "oliver.upton@linux.dev"
+ <oliver.upton@linux.dev>, "pbonzini@redhat.com" <pbonzini@redhat.com>,
+ "armbru@redhat.com" <armbru@redhat.com>, "berrange@redhat.com"
+ <berrange@redhat.com>, "abologna@redhat.com" <abologna@redhat.com>,
+ "jdenemar@redhat.com" <jdenemar@redhat.com>
+Subject: RE: [PATCH v5 09/18] target/arm/kvm: Introduce
+ kvm_get_writable_id_regs
+Thread-Topic: [PATCH v5 09/18] target/arm/kvm: Introduce
+ kvm_get_writable_id_regs
+Thread-Index: AQHc55OmmG1EZz6IvU+saqlCwZjBQ7Yp5jBA
+Date: Mon, 1 Jun 2026 15:26:46 +0000
+Message-ID: <CH3PR12MB75486B98CDFBA297999F9DEAAB152@CH3PR12MB7548.namprd12.prod.outlook.com>
+References: <20260519132905.145643-1-eric.auger@redhat.com>
+ <20260519132905.145643-10-eric.auger@redhat.com>
+In-Reply-To: <20260519132905.145643-10-eric.auger@redhat.com>
+Accept-Language: en-US, en-GB
+Content-Language: en-US
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+authentication-results: dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=nvidia.com;
+x-ms-publictraffictype: Email
+x-ms-traffictypediagnostic: CH3PR12MB7548:EE_|MN0PR12MB6197:EE_
+x-ms-office365-filtering-correlation-id: e2705273-f7d3-4c01-8de0-08debff2313f
+x-ms-exchange-senderadcheck: 1
+x-ms-exchange-antispam-relay: 0
+x-microsoft-antispam: BCL:0;
+ ARA:13230040|1800799024|376014|7416014|366016|18002099003|22082099003|11063799006|4143699003|56012099006|921020|38070700021;
+x-microsoft-antispam-message-info: wJhNZxZ1pOu5cbrxh2jM7NLhRo3GU5ltR8jIAucJxy8I7OsEeY4rGa+j4ZfjbwHMwWWj5wAwJb1/RGoCFpnuWJElQXPEE8Z2R3Ik+MiHPuTgduy7aC8X8mgAez186W3cA/ziWFVRxuT55fabdT5snoQP1oNEEcXTy9aJC9t1bLskBZVblJ1CUzuFgpu7JjCpbQlTuTWZrdOhcPb/zK420a6XUzYDcc5pP9enhMB0pEKjQWFdzL8RushTNq7W5EIBV/I2rEtLT1TqcZYhzj/p/FB6dYpBetzGpv6JmTuFoeo03ylm9Q1yuCo+FmpJiZn9JoEBPs8qyYl3x0qDFjfB8XI/wsabxU6d7bSKazIDuhU3DZ3C/78IXxFZtvN8qS5kERl+VROHMjFeMcVYX32iIdUvCgnaPumVQL+pTuGRGHh2+hKl+cTvU9/E0/9ergDTN5ptr/9Q4zaFQXrJqjMtQakL3vnG6N4UcsdlRssvGnptHppKc6Moa4fbEXu41kXGJ9lo+wABBe5QZ01kSc9BCRK/gDj82XVyDHx1VUXez1FAcvQjc0GCfOB4bSJlaeheL3Sz4VffJGxmdOWDC/yY3o5Q4LnJe2UYCV7dx9uheOY9lHLs0AWY60xlCXZ85mfhRv2fWfByOtDrNqt+7rNZEFgSiCz6XbYHJh4jJkXOl6yxY0S3W7WKHFOGa+qp8zp8LQzrqUlosse4k3sY2h1Jr7zfdcnO5gNjR1QG4J1L4ggQwF6Tes6N0kOV+zTby72r+B8FcxQrQ2BLxhqbP6VHTQ==
+x-forefront-antispam-report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
+ IPV:NLI; SFV:NSPM; H:CH3PR12MB7548.namprd12.prod.outlook.com; PTR:; CAT:NONE;
+ SFS:(13230040)(1800799024)(376014)(7416014)(366016)(18002099003)(22082099003)(11063799006)(4143699003)(56012099006)(921020)(38070700021);
+ DIR:OUT; SFP:1101; 
+x-ms-exchange-antispam-messagedata-chunkcount: 1
+x-ms-exchange-antispam-messagedata-0: =?us-ascii?Q?/Tb0edUFAxlsE7EPokEfwHFr3XTcd5f6X/jdY1koGDHV280WbJUq8bT7hKRE?=
+ =?us-ascii?Q?1P2Ku75dcnyAadnfeXzck19s45rhfZ3EQfm4uk30ntsT0mZutdyW5HrB5qRN?=
+ =?us-ascii?Q?f8ZCj2Lg0M5+3Y7OX3SRT0uTF48y/GrEK2ni29XvS1x2QOXNirIY8P5sty5l?=
+ =?us-ascii?Q?eaJTsjrezyKoDs7k94Ui/DkdqPTvJ+rriQou5jAZFDtXs2Ru9gONfrgyt2yR?=
+ =?us-ascii?Q?uri8xScXhut0ZaVmz/5XhVV5IrsMePyEiGhJzxEjetbWO7XbPPN3udEL7+Lg?=
+ =?us-ascii?Q?t1DygWzmPFksjooQEEXvXZasDHaG4LHyEadoRtEYCBIEVqGesIrTBG6rKEg5?=
+ =?us-ascii?Q?pc22iHbQkU5b9pOZpLlurDePKqCnolVCDm8Q52cjH8pcfrFt0NcpK2J3aEYZ?=
+ =?us-ascii?Q?KGKmN6/GnmsnZQeo8/dAxmctpftovaLRS1PE0MdCG5iglc8mYIaJXjv+heGr?=
+ =?us-ascii?Q?1U83X8FBg+4C3iFEMqCP4U9QvqRlIXfjFcA1klNcuPSHuz52pX6LdFS4AbDY?=
+ =?us-ascii?Q?bQhZpN86ZvZWP/jt7goZ67ENBI0EvCX7FXGLUVVWjxNJTPn4jI229Z8zTd49?=
+ =?us-ascii?Q?NBmhLZT89BdN3JkISQXn6BAERauZffH9u3n9DB6Dpe3xGtirGXPFj+DF/DL6?=
+ =?us-ascii?Q?SLj3mc3pnnxEC91nffiZsrHtdy4L6evb4U7Mdtu8sYmfb9a490ut+8qUy31i?=
+ =?us-ascii?Q?3T7oiSwrjxhWS3dZm1g0WyX2OnmtWrjiFwU9Ym+Xwji9yZma7VidHqFsfiYW?=
+ =?us-ascii?Q?h/fewSlUMX3wJnZwjCNYdSibbMmp+XNduuzCMo7cidWahMZkBwLxYgwTw8Q5?=
+ =?us-ascii?Q?grW6HG6mbAL89BXzaVaWnFWKqWgqk8N/OidpGVOejfjT4NZD8eltsmRZUqJC?=
+ =?us-ascii?Q?s95lioRlIwh5T/dlt78w7IFD1Cc54hkMOHHD5BJ1umgDSDaFVKszx+WhFZ0A?=
+ =?us-ascii?Q?gg2YZi79FNDcsV9RDloEsUd0ZDCAfpidfoTygmqBI2U+aUWilOg4cVBGAn8m?=
+ =?us-ascii?Q?RwyL8G43Ame+irYBT9cIbU63bpesRWFh19PXTLDinhngnsd4YDJS1BrtLXtT?=
+ =?us-ascii?Q?uPyfiRepWBsPSxiC0YhxEYfvrYWXylTP5s4Y2bRdqulFXPw4lrkqfPG8oTQR?=
+ =?us-ascii?Q?w61A1eHDsdE1Lq4DqChAvjLrhcBhNVc5ESZNWz0WyE6axbeqPvKO/mkDwlHN?=
+ =?us-ascii?Q?Fn9c82LR4HZ7jc4g/CDCZXXQcyxPMg+j16lIMqBux7eCdmGfA6furqfq1/8K?=
+ =?us-ascii?Q?tzp4kj/ChoOHcz/itOAnO4hrCX285XLi+cORJuUP/x0f7lJV17+v+p2B0HCO?=
+ =?us-ascii?Q?GX9FBIi+iu9fHZkCoR9MIT6seRqkJZbvD50/Jvqi15TGIA2Gs9P0cWmdCX4G?=
+ =?us-ascii?Q?cVavvAsQc8iQqABWuEg+nR4finfImmaZ7yP3u5OIhEBbUG+okpQCqHbhZinz?=
+ =?us-ascii?Q?s92gZzJI3Dfm25BPWiy6fnxQ3qDM3NHJXUnQTbRJKLUzZBKhsihPN0PbMOg+?=
+ =?us-ascii?Q?KId+1tboCqHiOAupkj4AqA0X/D9nkJ4c4dPIbPQf/jNd08JIzomnwrmzdto2?=
+ =?us-ascii?Q?5LY1NzvR0ZGo8tG8pMQepYTEJDUPNs2fPRV0DhJlmccUdGKlRX90jSErbdpm?=
+ =?us-ascii?Q?jarPaua8oN5SzRyKHwjRk6HIl5ZAfys0O6PIh8JwCPQoDG72NZxJtmuRbYsQ?=
+ =?us-ascii?Q?SmDk84kz7OhhptbrmzEC7Z3vkxws1lcpGamS1b0YeFAwsapitVBA3MWnchZQ?=
+ =?us-ascii?Q?8Js/tydyTg=3D=3D?=
+Content-Type: text/plain; charset="us-ascii"
+Content-Transfer-Encoding: quoted-printable
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
- protocol="application/pgp-signature"; boundary="HQ4jA1N2etY42/kr"
-Content-Disposition: inline
-In-Reply-To: <CADSE00+ziHc8W2FqNT-aJU0Lt4sZ=NfQLc65m16vpT++pZM+xQ@mail.gmail.com>
-X-Scanned-By: MIMEDefang 3.6 on 10.30.177.95
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=stefanha@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: 8
-X-Spam_score: 0.8
-X-Spam_bar: /
-X-Spam_report: (0.8 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.445,
+X-OriginatorOrg: Nvidia.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-AuthSource: CH3PR12MB7548.namprd12.prod.outlook.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: e2705273-f7d3-4c01-8de0-08debff2313f
+X-MS-Exchange-CrossTenant-originalarrivaltime: 01 Jun 2026 15:26:46.2336 (UTC)
+X-MS-Exchange-CrossTenant-fromentityheader: Hosted
+X-MS-Exchange-CrossTenant-id: 43083d15-7273-40c1-b7db-39efd9ccc17a
+X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
+X-MS-Exchange-CrossTenant-userprincipalname: 7hRJIwe1j6OxzszMh2M9IzKOzUQBHFRjmxKQS+2SEavgNM8gcc8H6fHzylTr8IaI57VAOFM9njv48TTIIL+A5g==
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: MN0PR12MB6197
+Received-SPF: permerror client-ip=2a01:111:f403:c107::3;
+ envelope-from=skolothumtho@nvidia.com;
+ helo=PH0PR06CU001.outbound.protection.outlook.com
+X-Spam_score_int: -24
+X-Spam_score: -2.5
+X-Spam_bar: --
+X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.445,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_SBL_CSS=3.335, SPF_HELO_PASS=-0.001,
- SPF_PASS=-0.001 autolearn=no autolearn_force=no
+ SPF_HELO_NONE=0.001, SPF_NONE=0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -105,147 +157,92 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 
---HQ4jA1N2etY42/kr
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
 
-On Mon, Jun 01, 2026 at 04:27:46PM +0200, Albert Esteve wrote:
-> On Mon, Jun 1, 2026 at 3:51=E2=80=AFPM Stefan Hajnoczi <stefanha@gmail.co=
-m> wrote:
-> >
-> > On Mon, Jun 1, 2026 at 9:12=E2=80=AFAM Michael S. Tsirkin <mst@redhat.c=
-om> wrote:
-> > >
-> > > On Mon, Jun 01, 2026 at 03:05:50PM +0200, Albert Esteve wrote:
-> > > > On Mon, Jun 1, 2026 at 2:39=E2=80=AFPM Michael S. Tsirkin <mst@redh=
-at.com> wrote:
-> > > > >
-> > > > > On Mon, Jun 01, 2026 at 02:32:11PM +0200, Albert Esteve wrote:
-> > > > > >  But also because, in my opinion, separating
-> > > > > > the specification would improve development agility by decoupli=
-ng
-> > > > > > specification development from QEMU's review and release cycles.
-> > > > >
-> > > > > Generally for QEMU this will be less agility, unless I misunderst=
-and
-> > > > > what is proposed)
-> > > > >
-> > > > > Because presumably there will need to be spec releases then?
-> > > > >
-> > > > > So
-> > > > >         new feature -> spec tree -> spec release -> qemu implemen=
-tation -> qemu release
-> > > > >
-> > > > > is surely longer that what we have now.
-> > > >
-> > > > I see your point.
-> > > >
-> > > > However, we do not really need to introduce a heavy release managem=
-ent
-> > > > layer. We could just operate it as a living document, where the main
-> > > > branch is the authoritative source of truth.
-> > > >
-> > > > For the workflow, development doesn't have to be strictly sequential
-> > > > either. A contributor can propose the spec update while working on =
-the
-> > > > implementation, much like we do for VirtIO updates. Actually, this =
-way
-> > > > one update/change supports the other.
-> > > >
-> > > > I guess my point is that a dedicated repository could lower the
-> > > > barrier for new changes AND keep QEMU's own development speed mostly
-> > > > unaffected.
-> > > >
-> > > > BR,
-> > > > Albert
-> > >
-> > > Something something submodule? Possibly. If you want to make progress
-> > > on this, pls think of the process, try it out.
-> >
-> > If I understand correctly, the motivation for moving the spec
-> > somewhere else is to replace the email patch review process with a git
-> > forge review process?
-> >
-> > This seems like a superficial change and is not worth in my opinion if
-> > you consider we'll have to redirect from the old spec location and
-> > move the community over to the new repo.
+> -----Original Message-----
+> From: Eric Auger <eric.auger@redhat.com>
+> Sent: 19 May 2026 14:27
+> To: eric.auger.pro@gmail.com; eric.auger@redhat.com; qemu-
+> devel@nongnu.org; qemu-arm@nongnu.org; kvmarm@lists.linux.dev;
+> peter.maydell@linaro.org; shaju.abraham@nutanix.com;
+> khushit.shah@nutanix.com; yangjinqian1@huawei.com;
+> cohuck@redhat.com; richard.henderson@linaro.org; sebott@redhat.com;
+> Shameer Kolothum Thodi <skolothumtho@nvidia.com>; philmd@linaro.org
+> Cc: maz@kernel.org; oliver.upton@linux.dev; pbonzini@redhat.com;
+> armbru@redhat.com; berrange@redhat.com; abologna@redhat.com;
+> jdenemar@redhat.com
+> Subject: [PATCH v5 09/18] target/arm/kvm: Introduce
+> kvm_get_writable_id_regs
 >=20
-> The core issue from my perspective is project neutrality and
-> decoupling lifecycles.
->
-> Currently, protocol updates are tied to QEMU's tree rules and release
-> freezes for example. Since these changes also affect other projects
-> (like rust-vmm, crosvm, DPDK, etc.), separating them may make sense
-> and could streamline the process.
-
-I don't see a reason to block vhost-user.rst changes during QEMU's
-freeze. If Michael sent a vhost-user spec pull request during freeze I
-would merge it.
-
-> >We could actually lose spec
-> > change reviewers in the process either because they don't know what's
-> > going on or decide that they prefer to spend time elsewhere when faced
-> > with switching processes (the people who review and participate in
-> > discussion do so out of personal interest and as far as I'm aware no
-> > one is employed to work on vhost-user as their #1 priority).
+> External email: Use caution opening links or attachments
 >=20
-> This is a fair concern. I hope we maintain reviewer engagement. But it
-> could also be argued that contributors from other communities may be
-> more comfortable with a dedicated project-neutral home. It could well
-> go both ways, but it also represents an opportunity to grow.
 >=20
-> >
-> > Having said that, here is what I imagine it would involve:
-> >
-> > 1. Michael creates a new repo on a git forge (if he wants it to be
-> > under the GitLab qemu-project organization I can help with creating
-> > the repo, otherwise he creates a new organization and repo).
-> > 2. Discussion happens in Issues.
-> > 3. Spec changes are proposed in Merge Requests. Michael merges them
-> > once consensus has been reached.
+> From: Cornelia Huck <cohuck@redhat.com>
 >=20
-> Mostly yes, though we wouldn't necessarily need Michael as the sole
-> gatekeeper. We could invite co-maintainers from other key projects to
-> share the reviewer load.
->
-> Also I'd want to clarify that although I am advocating for this
-> change, I do not claim to have the definitive roadmap. I am just
-> sharing my view on why this could be a positive evolution. Consensus
-> may end up being to remain with the current status quo, or any of the
-> other options proposed by Alex.
+> Add an helper to retrieve the writable id reg bitmask.
+>=20
+> Signed-off-by: Eric Auger <eric.auger@redhat.com>
+> Signed-off-by: Cornelia Huck <cohuck@redhat.com>
+> ---
+>=20
+> v4 -> v5:
+> - get rid of IdRegMap datatype
+> - do not store the status of the query in cpu anymore, just
+>   return the error in case the retrieval failed
+> - add implementation in kvm-stub.c
+> ---
+>  target/arm/kvm-stub.c |  5 +++++
+>  target/arm/kvm.c      | 21 +++++++++++++++++++++
+>  target/arm/kvm_arm.h  |  2 ++
+>  3 files changed, 28 insertions(+)
+>=20
+> diff --git a/target/arm/kvm-stub.c b/target/arm/kvm-stub.c index
+> 88cbe8d85c..cd88eb741a 100644
+> --- a/target/arm/kvm-stub.c
+> +++ b/target/arm/kvm-stub.c
+> @@ -119,3 +119,8 @@ char *kvm_print_register_name(uint64_t regidx)  {
+>      g_assert_not_reached();
+>  }
+> +
+> +int kvm_arm_get_writable_id_regs(uint64_t *idregmap) {
+> +    g_assert_not_reached();
+> +}
+> diff --git a/target/arm/kvm.c b/target/arm/kvm.c index
+> 7d194ea112..4adfd20050 100644
+> --- a/target/arm/kvm.c
+> +++ b/target/arm/kvm.c
+> @@ -505,6 +505,27 @@ void
+> kvm_arm_set_cpu_features_from_host(ARMCPU *cpu)
+>      env->features =3D arm_host_cpu_features.features;  }
+>=20
+> +int kvm_arm_get_writable_id_regs(uint64_t *idregmap) {
 
-I get a sense that this is about politics in the end. Do people feel
-they are not represented and would like to have more influence in the
-vhost-user spec?
+Nit: Subject has kvm_get_writable_id_regs
 
-You bring up project neutrality and a model where Michael is no longer
-the sole maintainer. It will be necessary to propose a concrete roadmap
-and also to explain the concerns about neutrality more so it's clear
-they won't be an issue anymore in the future system.
+> +    int cap_writable_id_regs;
+> +    struct reg_mask_range range =3D {
+> +        .range =3D 0, /* up to now only a single range is supported */
+> +        .addr =3D (uint64_t)idregmap,
+> +    };
+> +    int ret;
+> +
+> +    cap_writable_id_regs =3D
+> +        kvm_check_extension(kvm_state,
+> + KVM_CAP_ARM_SUPPORTED_REG_MASK_RANGES);
+> +
+> +    if (!cap_writable_id_regs ||
+> +        !(cap_writable_id_regs & (1 << KVM_ARM_FEATURE_ID_RANGE))) {
+> +        return -ENOSYS;
+> +    }
+> +
+> +    ret =3D kvm_vm_ioctl(kvm_state, KVM_ARM_GET_REG_WRITABLE_MASKS,
+> &range);
+> +    return ret;
+Nit:
+return kvm_vm_ioctl(kvm_state, KVM_ARM_GET_REG_WRITABLE_MASKS, &range);
 
-Why is the current system not neutral and how will the new system solve
-that?
+Besides:
+Reviewed-by: Shameer Kolothum <skolothumtho@nvidia.com>
 
-Who should be a co-maintainer?
-
-Stefan
-
---HQ4jA1N2etY42/kr
-Content-Type: application/pgp-signature; name=signature.asc
-
------BEGIN PGP SIGNATURE-----
-
-iQEzBAEBCgAdFiEEhpWov9P5fNqsNXdanKSrs4Grc8gFAmodorcACgkQnKSrs4Gr
-c8hXJAgAxVdjUSAgTFp31oFqwGcwdKTPiiBXlpCbBdIq2oWW0N0+xIbmowne/48I
-zjsG+6JgWNqnzZ5U7FFCQ9EuD72ovhkCo0RHvYA3YEg/i70vqaeG8d68UDJRE5YZ
-21dAoXmjVGgJJaMpfho5DXGylcm/hp38rAe6qEqCNA0U2VJX74chbRdcZrS1rV6O
-g8hdgasuFd0cuiYBqs5Swk9GN3YLAQx/zxFFmUJImSOYvASQ/ha67N+UguLeFbtN
-muEPBSq83QIkwbGN8Nk0OdKlqwDoKDUOapjEp/rrTTOA85NFbFQC/WAOZEFEqltL
-v8Nst8Xif4sIOnpYurLrsu6bVUlRsA==
-=mxa9
------END PGP SIGNATURE-----
-
---HQ4jA1N2etY42/kr--
-
+Thanks,
+Shameer
 
