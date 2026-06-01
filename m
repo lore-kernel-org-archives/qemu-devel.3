@@ -4,95 +4,105 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9B431CD6E55
-	for <qemu-devel@archiver.kernel.org>; Mon,  1 Jun 2026 20:59:53 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 90EF6CD5BD1
+	for <qemu-devel@archiver.kernel.org>; Mon,  1 Jun 2026 21:02:18 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wU9j4-0001ng-Gk; Mon, 01 Jun 2026 16:59:10 -0400
+	id 1wU9lr-0002Rn-Pp; Mon, 01 Jun 2026 17:02:04 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1wU9j2-0001nV-LB
- for qemu-devel@nongnu.org; Mon, 01 Jun 2026 16:59:08 -0400
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1wU9lp-0002PZ-7n
+ for qemu-devel@nongnu.org; Mon, 01 Jun 2026 17:02:01 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1wU9j0-0004zt-Vi
- for qemu-devel@nongnu.org; Mon, 01 Jun 2026 16:59:08 -0400
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1wU9ll-0005tQ-TR
+ for qemu-devel@nongnu.org; Mon, 01 Jun 2026 17:02:00 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1780347545;
+ s=mimecast20190719; t=1780347717;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:
- content-transfer-encoding:content-transfer-encoding;
- bh=IM5a/KeDxm3nVvcZ8LYZX+YAtYBxczLgt64FxNLfqiI=;
- b=ahnynGC+svF3qVya18mW7wIHO0MgGv0huX11i0WVqJKF8n/PNAPtTIOGJXNA/eMtXkozfI
- RiQRGNsF2bgfrT1gnlrMluKvVx5u+6AweBeqLpfF32IMi7xacr0fxIucDuvalQ8333YNq0
- PGx90nFyv5cZI2nwNk+G+VQXjEv8JSU=
-Received: from mail-qk1-f199.google.com (mail-qk1-f199.google.com
- [209.85.222.199]) by relay.mimecast.com with ESMTP with STARTTLS
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=01zOL1KxA7hg5pWrtwMF6Lsfw0PlBv8gPEfReA+HU9Q=;
+ b=ermgX6YsTejyoJIHAboyBFa2tJlFyLlO/Gqbisvji8VLz4IVvrP3aDj+Iq+IBaUsyLRskl
+ Ydhi1ounoEYLKTLamTgiUacPvMuzb4vt/H6plgtSSIZbjrok0fRCuJIYrLUvKOPTiJjLiP
+ HDeU+uyHEBqe5ykSrvWrc5EDSPPTMJM=
+Received: from mail-qv1-f70.google.com (mail-qv1-f70.google.com
+ [209.85.219.70]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-394-q7_1tQ-aOiuOfsUbA5QkPw-1; Mon, 01 Jun 2026 16:59:03 -0400
-X-MC-Unique: q7_1tQ-aOiuOfsUbA5QkPw-1
-X-Mimecast-MFC-AGG-ID: q7_1tQ-aOiuOfsUbA5QkPw_1780347543
-Received: by mail-qk1-f199.google.com with SMTP id
- af79cd13be357-914c8954923so1666643185a.1
- for <qemu-devel@nongnu.org>; Mon, 01 Jun 2026 13:59:03 -0700 (PDT)
+ us-mta-510-pebCf12COPa0W78Wvl9-pA-1; Mon, 01 Jun 2026 17:01:55 -0400
+X-MC-Unique: pebCf12COPa0W78Wvl9-pA-1
+X-Mimecast-MFC-AGG-ID: pebCf12COPa0W78Wvl9-pA_1780347715
+Received: by mail-qv1-f70.google.com with SMTP id
+ 6a1803df08f44-8ccd719a2f2so45304276d6.0
+ for <qemu-devel@nongnu.org>; Mon, 01 Jun 2026 14:01:55 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1780347543; x=1780952343; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:from:to:cc:subject:date:message-id:reply-to;
- bh=IM5a/KeDxm3nVvcZ8LYZX+YAtYBxczLgt64FxNLfqiI=;
- b=gTJ/94cZ3668B1sexOZt2sIgy0rNnfH2nz4hES1X09XUa2X03lGxyZGEi7A7LTP0qD
- VOaDfdDHtRyC7mPjeLyDCVwMXO8+vz5W/yfxcTshnrGvCJS0OvjmyvEjf8Szw0WT6tfE
- WdQ0ZtbSMMrPqinHPUEQU3gT/GW2zcV6Ra5qlaKnq6cW4wa+XOkQOJXinOXaCX8X5+Ie
- I3JsWXWiT8pkROjPzo/2eaQ4v7jn2b3Qs+fMoRpRs0FL3cnhY0vP3lZL/2jNg6vQ8WCy
- OlptCNFcC/Ne9U2Y41Xce+7NFxJ7Hbj0ycV3PLRvDaQZmPLXxX8pOH928aVwwlzAvzlm
- /kWw==
+ d=redhat.com; s=google; t=1780347715; x=1780952515; darn=nongnu.org;
+ h=in-reply-to:content-transfer-encoding:content-disposition
+ :mime-version:references:message-id:subject:cc:to:from:date:from:to
+ :cc:subject:date:message-id:reply-to;
+ bh=01zOL1KxA7hg5pWrtwMF6Lsfw0PlBv8gPEfReA+HU9Q=;
+ b=nDJdgTH3YgwvfFYCAaKUSRAXFX+bhv02Bp3b01LsavA/GNsn+ONDqmqwGvVAuLaCXR
+ ieLhXgPxizW0rPVa7L7CAbXnsUjgp5lz+cONC8v/mtvJU5PG86d5sYSRWCsfxxTbGusA
+ o8XlWgKRPbx+iBSYs3ED0D1J8IXsX9l6umrc3+O5KNPmBLlgQxx5O3EfvGuJHaKuIL6/
+ T7et8gTqV5s1oAB41o2wZY94jCao5evl/R4hwbZUtUJt+7rA1GLcUrPFggmKTTB3sric
+ PenHrp8jE72DWTOisZXVYaOlB+KIw0V5M/sH1/8hbdmGE5U+DFNE+iKj8K5tcxzIVjid
+ Lwrg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1780347543; x=1780952343;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=IM5a/KeDxm3nVvcZ8LYZX+YAtYBxczLgt64FxNLfqiI=;
- b=ZF2M2/Iu5B9TGAoLpmXeFEJ9sScrmFJUzdWIHDWuQeqLLvqSZY2C4TN/oMsioU/BkV
- u2K2YI9jdcsRwRgc+8DmmgJsv+lZSaTpZuk3nyo+PtOtzYRN1uZmN0dtGkVIzqqnKqPr
- BVBxshkS50gPN8DvIDyIYmnb6XRd6CyLV+1hGzXxtcOnHullYVpnvYIju/aXCmTQDdkF
- AdceSxoWQiQBMlt28zB0c9bFvbEixXEHIY3xeyoD9w0kIeJkqNQFU+jy4Sg2TLRLLCjM
- +KUCkp+HI9jMnHgx03VXUPoVZsKKcVLHMqcp4qnTsu4KRaadJqFiETp6r9VYR30vjLH0
- 7opQ==
-X-Gm-Message-State: AOJu0YyzDS7Md1E/pYOBoo6fOXS42qv0+wTBizR2WHgJB9M15y+a5fl8
- P/o4Qv5LRbSI9jhVgQoSvh0Vi/KlD8WAiArX0aq3jXTiC/gyqAf4t1ewz0byFOAMRK7vGetybyR
- jgtjYXcqGTrlakeDLWNdPi9WdakSIh0LD5A9ZhFGFI7ow9gTD6K5b7DAWQGyZHN6iW7hu055aa1
- grrrGxFEuNiNlsvhMM22svLG/yGGhcnS9Kkrm3xQ==
-X-Gm-Gg: Acq92OEzk9ikKElbzHaE3EWFg2ukIN8HKAbBYskP7N2z1K3HZXt2TIb/XnA9BL7LUIT
- Re4uOkt8CDZ3IRiNGkaSPmXboY5GiYw4pLLg2wQcZJLU3K8Ycrf7obhFkbrIcMeABapvzVBd74b
- 2ydcG4TtcDlkT6EK8QaHWEMjqoER0zWdZk16kBbvM5PI7etuJG2yTD+Vnmvh8lQpMUUBNH+T4dk
- WkUU3Pjv3q/hbYbAKiCkHYTEoWi2rS7YMbm5b0JP59RghAdybBmZVl39q/h1yq2iijorYb/WBVj
- ypXlF2jjoaqqDiQyDwic/0rHjmlIZ8VFhCdczT2X832E4PN7tX1kxgMUkmO2J/aqputYs9xY7t2
- DGosSs0qriYx2IUBV0jNE8e8=
-X-Received: by 2002:a05:620a:2990:b0:908:e262:52c3 with SMTP id
- af79cd13be357-9153dc692damr1972879885a.46.1780347543316; 
- Mon, 01 Jun 2026 13:59:03 -0700 (PDT)
-X-Received: by 2002:a05:620a:2990:b0:908:e262:52c3 with SMTP id
- af79cd13be357-9153dc692damr1972874785a.46.1780347542767; 
- Mon, 01 Jun 2026 13:59:02 -0700 (PDT)
-Received: from x1.com ([142.189.10.167]) by smtp.gmail.com with ESMTPSA id
- af79cd13be357-91566f4abf3sm271304885a.27.2026.06.01.13.59.01
+ d=1e100.net; s=20251104; t=1780347715; x=1780952515;
+ h=in-reply-to:content-transfer-encoding:content-disposition
+ :mime-version:references:message-id:subject:cc:to:from:date:x-gm-gg
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=01zOL1KxA7hg5pWrtwMF6Lsfw0PlBv8gPEfReA+HU9Q=;
+ b=drhyFV5bv2ue5OvEHtyYczWYZqSlrweQMEWtxOxE/t+sFIYVvwwSk6I2mUUmUNErd6
+ GsMWmDngyKKSnMkrDPs6NbApgUH297wr8YoL446GEg5qULvjxCH0+/iIh0EIVEymaKu/
+ 81aSnpX7f1Zyb4oZ09wZt48HHtBnHCAHrSOIuyV+pDlqLm2tKvH4+xmckTx5H61JCLyD
+ u1+EIFge09AG+nciwiznEilGODFGhCjE9+uNAk/+LlgdVwkPMntueBPRt1ITzjLmll1+
+ kx1NrTcHCg+tsgMc6oy1dM3oxa1tr6GhirNeSJX25NIjJShiVcjfIKKzj7X+U5ijLNea
+ c+cw==
+X-Gm-Message-State: AOJu0Yzb6Zqm6TGXRMlAX+DVvUgrplHH605genI4YZyAnR8Hk9+4iaiy
+ PtB/EwnU+vvfzbgaDgXzKsvT4RB8fW/FA7cCtDC9dLo2BdTzJlGJI0BcCietW6HoUSHekUUYmSj
+ o9NDEvlA28UVwVddcKX+LKCrrM0dSr30XNQ/JRHxyfB5Gius02yBq9rix
+X-Gm-Gg: Acq92OG3P2ple0ivRkUsmjC/vjuiTW9LPR38G5/BmwoqUM8syaJnHUm7XaGU0xjE0On
+ JjwAYwE+u8hyp5MrAoH4DVLFOui24U5vX/FjZCQAxBLgK4qnnHWcPhvJr1w4Y1u8BYG3gld2Cjw
+ 8qD7o/HIGftoUGF2SwjwbOCPuQHReifJoDsXInhVcceFoDkoDukR0lQO+xXFEudYQrIRBil7f+g
+ MQ45Re5dDPUGAS84wTaq5Qj5vVRHkkkZpiInKi7+zb2FbJM36/JwgDoOqPui7U7VHw2ASmIj8Gn
+ yxMOk6piQ1R46OJjwiOtSdAmz5ZJV1xLusgrD6lM54JrMwlth3rLFoL0c1jO36NhRo4u3jq0pCj
+ l7RloUquwUh1UpJ4mhK4tuJ40Hw==
+X-Received: by 2002:ad4:5b8a:0:b0:8cc:f592:3023 with SMTP id
+ 6a1803df08f44-8ccf5923483mr165846066d6.37.1780347715152; 
+ Mon, 01 Jun 2026 14:01:55 -0700 (PDT)
+X-Received: by 2002:ad4:5b8a:0:b0:8cc:f592:3023 with SMTP id
+ 6a1803df08f44-8ccf5923483mr165845666d6.37.1780347714569; 
+ Mon, 01 Jun 2026 14:01:54 -0700 (PDT)
+Received: from x1.local ([142.189.10.167]) by smtp.gmail.com with ESMTPSA id
+ 6a1803df08f44-8ccea0635b1sm104312046d6.11.2026.06.01.14.01.53
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 01 Jun 2026 13:59:02 -0700 (PDT)
+ Mon, 01 Jun 2026 14:01:53 -0700 (PDT)
+Date: Mon, 1 Jun 2026 17:01:52 -0400
 From: Peter Xu <peterx@redhat.com>
-To: qemu-devel@nongnu.org
-Cc: peterx@redhat.com,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@mailo.com>,
+To: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
+Cc: qemu-devel@nongnu.org,
+ Alex =?utf-8?Q?Benn=C3=A9e?= <alex.bennee@linaro.org>,
  Fabiano Rosas <farosas@suse.de>, Paolo Bonzini <pbonzini@redhat.com>,
- =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
- Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
-Subject: [PATCH] memory/ramblock: Fix clear of mru_block on possible race
- condition
-Date: Mon,  1 Jun 2026 16:59:00 -0400
-Message-ID: <20260601205900.1067714-1-peterx@redhat.com>
-X-Mailer: git-send-email 2.53.0
+ Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+Subject: Re: [PATCH] system/physmem: Synchronize ram_list accesses
+Message-ID: <ah3zQGQa8oJYskTO@x1.local>
+References: <20260523-tsan-v1-1-07d5eb9dcaa2@rsg.ci.i.u-tokyo.ac.jp>
+ <ahYSO98JgdYJrP2e@x1.local>
+ <8d81e622-1397-4579-bbe5-50ee174a3272@rsg.ci.i.u-tokyo.ac.jp>
+ <ahhcvqnOWEoYmCJF@x1.local>
+ <b4f87ec7-0406-430e-b645-0539a5e083be@rsg.ci.i.u-tokyo.ac.jp>
+ <ahhnUz0Il0nRvhoz@x1.local>
+ <bd9d973a-f467-4248-b283-f25356b3354d@rsg.ci.i.u-tokyo.ac.jp>
+ <ahm7IqApbMaMhXQP@x1.local>
+ <5fd9e540-cf13-45f5-ba9a-c7faf364035b@rsg.ci.i.u-tokyo.ac.jp>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
+In-Reply-To: <5fd9e540-cf13-45f5-ba9a-c7faf364035b@rsg.ci.i.u-tokyo.ac.jp>
 Received-SPF: pass client-ip=170.10.133.124; envelope-from=peterx@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -24
@@ -117,95 +127,343 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The race condition was not reported in any real bug, but I found it while
-reviewing some relevant chnages from Akihiko [1].  It's not clear if
-there's any way to reproduce it, so far it's only theoretical.  Hence
-there's also no Fixes tag attached.  There's also no need to copy stable
-until we have a solid reproducer.
+On Sat, May 30, 2026 at 01:39:50AM +0900, Akihiko Odaki wrote:
+> On 2026/05/30 1:13, Peter Xu wrote:
+> > On Fri, May 29, 2026 at 05:24:54PM +0900, Akihiko Odaki wrote:
+> > > On 2026/05/29 1:03, Peter Xu wrote:
+> > > > On Fri, May 29, 2026 at 12:32:18AM +0900, Akihiko Odaki wrote:
+> > > > > 
+> > > > > 
+> > > > > On 2026/05/29 0:18, Peter Xu wrote:
+> > > > > > On Wed, May 27, 2026 at 04:54:42PM +0900, Akihiko Odaki wrote:
+> > > > > > > On 2026/05/27 6:35, Peter Xu wrote:
+> > > > > > > > On Sat, May 23, 2026 at 09:38:28PM +0900, Akihiko Odaki wrote:
+> > > > > > > > > Alex Bennée reported a ThreadSanitizer warning about a plain concurrent
+> > > > > > > > > access to ram_list [1]. Ensure the concurrent accesses to ram_list are
+> > > > > > > > > properly synchronized with atomic accesses, mutexes, or RCU.
+> > > > > > > > > 
+> > > > > > > > > First, the plain assignments of ram_list.mru_block are replaced with
+> > > > > > > > > qatomic_set(). A comment in qemu_get_ram_block() explains why the
+> > > > > > > > > ordering requirement is relaxed, but it still needs to be atomically
+> > > > > > > > > accessed. include/qemu/atomic.h says:
+> > > > > > > > > 
+> > > > > > > > > > The C11 memory model says that variables that are accessed from
+> > > > > > > > > > different threads should at least be done with __ATOMIC_RELAXED
+> > > > > > > > > > primitives or the result is undefined. Generally this has little to
+> > > > > > > > > > no effect on the generated code but not using the atomic primitives
+> > > > > > > > > > will get flagged by sanitizers as a violation.
+> > > > > > > > > 
+> > > > > > > > > Second, ram_list.version accesses are replaced with atomic operations
+> > > > > > > > > or protected with a mutex. Unlike ram_list.mru_block, ram_list.version
+> > > > > > > > > has tighter ordering requirements for one of its goals: ensuring that
+> > > > > > > > > the reader-held rs->last_seen_block value is invalidated whenever a RAM
+> > > > > > > > > block is reclaimed between two RCU reader critical sections. Below are
+> > > > > > > > > steps a reader and an updater follow:
+> > > > > > > > > 
+> > > > > > > > > Reader:
+> > > > > > > > > 
+> > > > > > > > > R-1. Enter the first RCU read-side critical section:
+> > > > > > > > > R-1-1. rs->last_version = qatomic_load_acquire(&ram_list.version)
+> > > > > > > > > R-1-2. rs->last_seen_block = an element of ram_list.blocks
+> > > > > > > > > R-2. Enter the second RCU read-side critical section:
+> > > > > > > > > R-2-1. if (qatomic_read(&ram_list.version) != rs->last_version)
+> > > > > > > > > R-2-2.     rs->last_seen_block = NULL
+> > > > > > > > > 
+> > > > > > > > > Updater:
+> > > > > > > > > 
+> > > > > > > > > W-1. Enter a ram_list.mutex critical section
+> > > > > > > > > W-1-1. Update ram_list.blocks
+> > > > > > > > > W-1-2. qatomic_store_release(&ram_list.version, ram_list.version + 1)
+> > > > > > > > > W-2. Enter another ram_list.mutex critical section
+> > > > > > > > > W-2-1. QLIST_REMOVE_RCU(block, next)
+> > > > > > > > > W-2-2. qatomic_store_release(&ram_list.version, ram_list.version + 1)
+> > > > > > > > > W-2-3. call_rcu(block, reclaim_ramblock, rcu)
+> > > > > > > > > 
+> > > > > > > > > W-1-2 represents the write observed by R-1-1.
+> > > > > > > > > 
+> > > > > > > > > ram_list.version is read non-atomically on the update side because the
+> > > > > > > > > update side is serialized with ram_list.mutex. The other ram_list
+> > > > > > > > > accesses in these steps are reasoned about in two cases.
+> > > > > > > > > 
+> > > > > > > > > When the grace period of W-2-3 contains R-2:
+> > > > > > > > >         qatomic_load_acquire() at R-1-1 and qatomic_store_release() at W-1-2
+> > > > > > > > >         enforce the following ordering:
+> > > > > > > > >             W-1-1 -> W-1-2 -> R-1-1 -> R-1-2
+> > > > > > > > >         The value of ram_list.blocks stored by W-1-1 or a newer value that
+> > > > > > > > >         was loaded by R-1-2 is still valid because of the grace period.
+> > > > > > > > > 
+> > > > > > > > > When the grace period of W-2-3 ends before R-2:
+> > > > > > > > >         call_rcu() at W-2-3 and the read-side critical section at R-2 ensure
+> > > > > > > > >         the following ordering:
+> > > > > > > > >             W-2-2 -> W-2-3 -> the grace period -> R-2 -> R-2-1
+> > > > > > > > >         The value of ram_list.version stored by W-2-2 or a newer value that
+> > > > > > > > >         was loaded by R-2-1 differs from rs->last_version and the reader
+> > > > > > > > >         invalidates rs->last_seen_block.
+> > > > > > > > > 
+> > > > > > > > > Together, these steps ensure that rs->last_seen_block is invalidated
+> > > > > > > > > whenever necessary. With added atomic operations, pre-existing memory
+> > > > > > > > > barriers are no longer necessary and are removed.
+> > > > > > > > > 
+> > > > > > > > > Any other ram_list accesses are already properly synchronized.
+> > > > > > > > > 
+> > > > > > > > > [1] https://lore.kernel.org/qemu-devel/878q9fbmap.fsf@draig.linaro.org/
+> > > > > > > > > 
+> > > > > > > > > Signed-off-by: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
+> > > > > > > > 
+> > > > > > > > Above link [1] also mentioned about a hang.  Just to double check: we're
+> > > > > > > > only trying to silent the TSAN warning (which is a false positive), right?
+> > > > > > > 
+> > > > > > > The hang is irrelevant and this is indeed to address the TSAN warning,
+> > > > > > > though I'm a bit reluctant to call it false positive because, strictly
+> > > > > > > speaking, the code actually relies on undefined behavior.
+> > > > > > > 
+> > > > > > > > 
+> > > > > > > > > ---
+> > > > > > > > >      migration/ram.c  | 10 +++++-----
+> > > > > > > > >      system/physmem.c | 16 +++++++---------
+> > > > > > > > >      2 files changed, 12 insertions(+), 14 deletions(-)
+> > > > > > > > > 
+> > > > > > > > > diff --git a/migration/ram.c b/migration/ram.c
+> > > > > > > > > index fc38ffbf8af1..6da24d725861 100644
+> > > > > > > > > --- a/migration/ram.c
+> > > > > > > > > +++ b/migration/ram.c
+> > > > > > > > > @@ -2495,7 +2495,10 @@ static void ram_state_reset(RAMState *rs)
+> > > > > > > > >          rs->last_seen_block = NULL;
+> > > > > > > > >          rs->last_page = 0;
+> > > > > > > > > -    rs->last_version = ram_list.version;
+> > > > > > > > > +
+> > > > > > > > > +    /* Read version before ram_list.blocks */
+> > > > > > > > > +    rs->last_version = qatomic_load_acquire(&ram_list.version);
+> > > > > > > > > +
+> > > > > > > > >          rs->xbzrle_started = false;
+> > > > > > > > >          ram_page_hint_reset(&rs->page_hint);
+> > > > > > > > > @@ -3270,13 +3273,10 @@ static int ram_save_iterate(QEMUFile *f, void *opaque)
+> > > > > > > > >           */
+> > > > > > > > >          WITH_QEMU_LOCK_GUARD(&rs->bitmap_mutex) {
+> > > > > > > > >              WITH_RCU_READ_LOCK_GUARD() {
+> > > > > > > > > -            if (ram_list.version != rs->last_version) {
+> > > > > > > > > +            if (qatomic_read(&ram_list.version) != rs->last_version) {
+> > > > > > > > >                      ram_state_reset(rs);
+> > > > > > > > >                  }
+> > > > > > > > 
+> > > > > > > > Not directly relevant to this patch, but I never thought into why this few
+> > > > > > > > lines are needed at all, and then I found I don't have an answer..
+> > > > > > > > 
+> > > > > > > > Here, ram_list version change should only happen during ramblock
+> > > > > > > > add/remove.  I can think of a few special cases:
+> > > > > > > > 
+> > > > > > > > a) device add/remove (e.g. dimms) causing new / removing ramblocks, should
+> > > > > > > >        never happen as qdev code fails any device add/remove attempt during
+> > > > > > > >        migration (qdev_device_add_from_qdict, qdev_unplug)
+> > > > > > > > 
+> > > > > > > > b) virtio-mem, which only manages one memory backend, hence one ramblock,
+> > > > > > > >        no add/remove
+> > > > > > > > 
+> > > > > > > > c) virtio-gpu, will do random add/remove with memory_region_init_ram_ptr()
+> > > > > > > >        which means ramblocks are not migratable
+> > > > > > > > 
+> > > > > > > > PS: I recall we have other special cases like ROM sizes can change on dest
+> > > > > > > > QEMU, but it's about used_length, not about version boosts, so doesn't
+> > > > > > > > matter here.
+> > > > > > > > 
+> > > > > > > > Both a) and b) should make sure no change on version, c) will change
+> > > > > > > > version, but in a case where the ramblock is destined to be not migratable,
+> > > > > > > > hence not visible to migration core.
+> > > > > > > > 
+> > > > > > > > The patch itself looks all fine, but I'm just wondering if we should just
+> > > > > > > > remove this check completely or even try to somehow trap it from happening
+> > > > > > > > (if we can rule out things like virtio-gpu): if something really changed,
+> > > > > > > > it'll be a serious problem because we sync ramblock list already during
+> > > > > > > > ram_save_setup.
+> > > > > > > 
+> > > > > > > There is another edge case: a ram_list.blocks change may be propagated to
+> > > > > > > the thread calling ram_save_setup() and ram_save_iterate() at different
+> > > > > > > timing. We are only ensuring that ram_list.blocks changes invalidating old
+> > > > > > > blocks are delivered with WITH_RCU_READ_LOCK_GUARD().
+> > > > > > > 
+> > > > > > > So I think there is a theoretical race condition that breaks migration,
+> > > > > > > though triggering it in practice may not be realistic.
+> > > > > > 
+> > > > > > Could you elaborate more on the theoretical race mentioned?
+> > > > > > 
+> > > > > > My comment above was trying to say there should have no such happening, the
+> > > > > > virtio-gpu boosting the version seems to be an accident to me because
+> > > > > > migration doesn't need that (because virtio-gpu ramblocks are not
+> > > > > > migratable anyway).
+> > > > > 
+> > > > > For example, a device may be removed before migration, but the removal of
+> > > > > the block from ram_list.blocks and the increment of ram_list.version may not
+> > > > > be observed by the thread calling ram_save_setup(); RCU only guarantees that
+> > > > > these writes will be visible in read-side critical sections *after* the
+> > > > > grace period ends, which can be after the ram_save_setup() call and before
+> > > > > following ram_save_iterate() calls.
+> > > > 
+> > > > Ah. I think it should be fine, since save_setup() holds BQL, done by all
+> > > > callers when invoking qemu_savevm_state_do_setup().  I expect removal of a
+> > > > device needs BQL too while invoking qemu_ram_free(), so serialized with it.
+> > > > 
+> > > > The other thing is, very early we'll set MIGRATION_STATUS_SETUP, covering
+> > > > both save_setup() and save_iterate(), so things will start to get blocked
+> > > > very early too.
+> > > > 
+> > > > OTOH, any comments on below?
+> > > 
+> > > Sure.
+> > > 
+> > > > 
+> > > > Thanks,
+> > > > 
+> > > > > 
+> > > > > Regards,
+> > > > > Akihiko Odaki
+> > > > > 
+> > > > > > 
+> > > > > > While looking at this once more, I found that I'm lost why mru_block is
+> > > > > > race free..
+> > > > > > 
+> > > > > > The problem is mru_block is written by the RCU readers, then... see whether
+> > > > > > this race can happen (even with this patch):
+> > > > > > 
+> > > > > >      Reader A                              Writer
+> > > > > >      --------                              ------
+> > > > > >      rcu_read_lock()
+> > > > > >      walk list, find block X
+> > > > > >                                            QLIST_REMOVE_RCU(X)
+> > > > > >                                            qatomic_set(&mru_block, NULL)
+> > > > > >                                            call_rcu(X, reclaim_ramblock)
+> > > > > >      qatomic_set(&mru_block, X)  <----------- overwrites NULL
+> > > > > >      rcu_read_unlock()
+> > > > > >                                            grace period ends, X freed
+> > > > > > 
+> > > > > >      Reader C
+> > > > > >      --------
+> > > > > >      rcu_read_lock()
+> > > > > >      qatomic_rcu_read(&mru_block) -> X
+> > > > > >      Read X's block->offset ...  <----------- UAF
+> > > 
+> > > I agree this is problematic.
+> > > 
+> > > > > > 
+> > > > > > One thing I can think of so far is this (pesudo code only, ignoring atomic
+> > > > > > ops for now):
+> > > > > > 
+> > > > > > qemu_ram_free():
+> > > > > >        qemu_mutex_lock_ramlist();
+> > > > > >        ...
+> > > > > >        QLIST_REMOVE_RCU(block, next);
+> > > > > >        /*
+> > > > > >         * 1st attempt to reset it, note: concurrent reader may set it again,
+> > > > > >         * even to the ramblock being freed.
+> > > > > >         */
+> > > > > >        ram_list.mru_block = NULL;
+> > > > > >        ram_list.version++;
+> > > > > >        /*
+> > > > > >         * Only to make sure whoever might be using this ramblock being
+> > > > > >         * removed to finish using it.
+> > > > > >         */
+> > > > > >        call_rcu(block, rcu_noop_fn, rcu);
+> > > > > >        drain_call_rcu();
+> > > > > >        /*
+> > > > > >         * 2nd attempt to clear it: after call_rcu() we make sure nobody yet
+> > > > > >         * has access to the ramblock being removed, hence this clear makes
+> > > > > >         * sure it won't get set again by anyone to the removed ramblock.
+> > > > > >         */
+> > > > > >        ram_list.mru_block = NULL;
+> > > > > >        call_rcu(block, reclaim_ramblock, rcu);
+> > > > > >        qemu_mutex_unlock_ramlist();
+> > > > > > 
+> > > > > > But it looks a bit ugly.  Thoughts?
+> > > 
+> > > Indeed it's not really nice. drain_call_rcu() is something we definitely
+> > > want to avoid; it unlocks the BQL, which is too hard to prove safety.
+> > 
+> > Ah, yeah I forgot that.
+> > 
+> > > 
+> > > The best solution I have currently in mind is to keep the mru_block inside
+> > > an allocation managed my RCU:
+> > > 
+> > > struct RAMListVersion {
+> > > 	struct rcu_head rcu;
+> > > 	RAMBlock *mru_block;
+> > > 	RAMBlock *reclaim_block;
+> > > };
+> > > 
+> > > And qemu_ram_free() will do:
+> > >      qemu_mutex_lock_ramlist();
+> > >      ...
+> > >      QLIST_REMOVE_RCU(block, next);
+> > >      ram_list.version->reclaim_block = block;
+> > >      call_rcu(ram_list.version, reclaim_ramlist_version, rcu);
+> > >      ram_list.version = g_new0(RamListVersion, 1);
+> > >      ram_list.version_id++;
+> > >      qemu_mutex_unlock_ramlist();
+> > > 
+> > > qemu_get_ram_block() will do:
+> > >      qatomic_rcu_read(&ram_list.version)->mru_block = block;
+> > > 
+> > > reclaim_ramlist_version will do:
+> > >      if (version->reclaim_block) {
+> > >           reclaim_ramblock(version->reclaim_block);
+> > >      }
+> > > 
+> > >      g_free(version);
+> > 
+> > This one almost works, except I think such race can still happen:
+> > 
+> >      writer                                   reader
+> >      ------                                   ------
+> >    qemu_get_ram_block for block X
+> >                                               qemu_get_ram_block
+> >      qemu_mutex_lock_ramlist();
+> >                                                 found block X
+> >      QLIST_REMOVE_RCU(block, next);
+> >      ram_list.version->reclaim_block = block;
+> >      call_rcu(ram_list.version, ...);
+> >      ram_list.version = g_new0(RamListVersion, 1);
+> >                                               ram_list.version->mru_block = X <-----------------
+> >      qemu_mutex_unlock_ramlist();
+> 
+> You are right.
+> 
+> > 
+> > The fix should be simple, IMHO, my previous solution only misses that BQL
+> > thing, so we can do a nested rcu free with:
+> > 
+> > reclaim_ramblock_prepare():
+> >    /*
+> >     * 1st round rcu free guarantees the last reader that can access
+> >     * this ramblock is gone.  Reset this field making sure it will
+> >     * never points to the ramblock being freed.
+> >     */
+> >    ram_list.mru_block = NULL;
+> >    call_rcu(block, reclaim_ramblock, rcu);
+> > 
+> > qemu_get_ram_block():
+> >    qemu_mutex_lock_ramlist();
+> >    ...
+> >    QLIST_REMOVE_RCU(block, next);
+> >    ram_list.mru_block = NULL;
+> >    call_rcu(block, reclaim_ramblock_prepare, rcu);
+> >    qemu_mutex_unlock_ramlist();
+> 
+> Now I get it and this looks nice to me. Having a nested call_rcu() is not
+> that ugly if the underlying reasoning is described in a comment. I would
+> describe it something like following in reclaim_ramblock_prepare():
+> 
+> Now the last reader that retrieves the pointer to the block via
+> ram_list.blocks is gone. The reader may have assigned the block to
+> ram_list.mru_block, so reset the field making sure there is no remaining
+> pointer to the block.
 
-Currently, mru_block might still points to ramblocks that are removed if
-below race condition happens:
+Thanks for double checking.  I've queued the current patch for ASAN, and
+posted that fix as a separate patch on top, here:
 
-  Reader A                              Writer
-  --------                              ------
-  rcu_read_lock()
-  walk list, find block X
-                                        QLIST_REMOVE_RCU(X)
-                                        qatomic_set(&mru_block, NULL)
-                                        call_rcu(X, reclaim_ramblock)
-  qatomic_set(&mru_block, X)  <----------- overwrites NULL
-  rcu_read_unlock()
-                                        grace period ends, X freed
+  [PATCH] memory/ramblock: Fix clear of mru_block on possible race condition
 
-  Reader C
-  --------
-  rcu_read_lock()
-  qatomic_rcu_read(&mru_block) -> X
-  Read X's block->offset ...  <----------- UAF
+Thanks,
 
-To fix it, we can introduce a nested RCU free for reset of the mru_block
-field, and only free the ramblock until the 2nd RCU call.
-
-Since QEMU always: (1) dequeue the RCU node before invoking the
-function, (2) reset all fields in rcu_head in the call_rcu1() call, nested
-RCU will work all fine like what's used in this patch.
-
-[1] https://lore.kernel.org/r/5fd9e540-cf13-45f5-ba9a-c7faf364035b@rsg.ci.i.u-tokyo.ac.jp
-
-Cc: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
-Signed-off-by: Peter Xu <peterx@redhat.com>
----
-
-Based-on: <5fd9e540-cf13-45f5-ba9a-c7faf364035b@rsg.ci.i.u-tokyo.ac.jp>
-
-Since there's no reproducer, I didn't verify the problem as-is.  What I did
-is I ran this through some high concurrency "make check -jN" (8 processes
-with 4 cores pinned, hence 8*N make-check threads running concurrently on 4
-physical cores), I didn't see any regression.
----
- system/physmem.c | 18 +++++++++++++++++-
- 1 file changed, 17 insertions(+), 1 deletion(-)
-
-diff --git a/system/physmem.c b/system/physmem.c
-index 9e1ac13e82..1697568fa7 100644
---- a/system/physmem.c
-+++ b/system/physmem.c
-@@ -2590,6 +2590,21 @@ static void reclaim_ramblock(RAMBlock *block)
-     g_free(block);
- }
- 
-+static void reclaim_ramblock_prepare(RAMBlock *block)
-+{
-+    /*
-+     * 1st round rcu free guarantees the last reader that can access this
-+     * ramblock is gone.  Reset this field making sure it will never point
-+     * to the ramblock being freed.
-+     */
-+    qatomic_set(&ram_list.mru_block, NULL);
-+    /*
-+     * Note: this is an intended nested use of rcu_head.  If needed, we can
-+     * provide two rcu_heads for ramblock.
-+     */
-+    call_rcu(block, reclaim_ramblock, rcu);
-+}
-+
- void qemu_ram_free(RAMBlock *block)
- {
-     g_autofree char *name = NULL;
-@@ -2607,10 +2622,11 @@ void qemu_ram_free(RAMBlock *block)
-     name = cpr_name(block->mr);
-     cpr_delete_fd(name, 0);
-     QLIST_REMOVE_RCU(block, next);
-+    /* First attempt of reset, see reclaim_ramblock_prepare() for the 2nd */
-     qatomic_set(&ram_list.mru_block, NULL);
-     /* Write list before version */
-     qatomic_store_release(&ram_list.version, ram_list.version + 1);
--    call_rcu(block, reclaim_ramblock, rcu);
-+    call_rcu(block, reclaim_ramblock_prepare, rcu);
-     qemu_mutex_unlock_ramlist();
- }
- 
 -- 
-2.53.0
+Peter Xu
 
 
