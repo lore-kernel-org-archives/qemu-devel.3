@@ -4,104 +4,60 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C2454CD6E55
-	for <qemu-devel@archiver.kernel.org>; Mon,  1 Jun 2026 03:17:20 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 48529CD6E55
+	for <qemu-devel@archiver.kernel.org>; Mon,  1 Jun 2026 03:17:28 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wTt8t-0000C4-Tf; Sun, 31 May 2026 23:16:43 -0400
+	id 1wTt9A-0000F5-IA; Sun, 31 May 2026 23:17:00 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1wTt8r-0000BY-UC
- for qemu-devel@nongnu.org; Sun, 31 May 2026 23:16:41 -0400
-Received: from mail-ej1-x635.google.com ([2a00:1450:4864:20::635])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1wTt8q-0007sk-D0
- for qemu-devel@nongnu.org; Sun, 31 May 2026 23:16:41 -0400
-Received: by mail-ej1-x635.google.com with SMTP id
- a640c23a62f3a-bec3f69d343so102212766b.0
- for <qemu-devel@nongnu.org>; Sun, 31 May 2026 20:16:40 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1780283799; cv=none;
- d=google.com; s=arc-20240605;
- b=KJFiL73fdc3dmcunGmWdSsluJ69EveRqhDpHMQQPC64BiHTeT04vqGC++wdp5ePYUt
- 6n6Dp1SOMgqRb8qXYZlHZnlgMgnBE9P8QL8V85WtGUUvxqUQZ8mZhorvjk8kbvTAxGBn
- 3dp/Lv3WUUzYPXL5cmcLDN0DSbsXjThf0tctQvz+pf/RyiIvi8ZTTp5gIfOrRvLzhqBm
- btRwx5eVgigJdkocpEcV8B/a9xG3ja4iwO/RLvJKt4zT6Y7dEyJ35HbZxLl8CV0uHxSI
- CqAtS2hjLwiAFpu0NFe8RLy3iLHBWSEvHSpDvZw15bocLo5V+4lEx6nU3BY5qS6k7keb
- Anhg==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
- s=arc-20240605; 
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:dkim-signature;
- bh=RXoDANf3J8QHeoQGdRR8wDPh6TPDX0vUUUjR7ERULJI=;
- fh=+dPXGxW3pQNYFrTSil53fSXYfdhGIs7bI6Dyql1Mx+Q=;
- b=Ps9/y+QoGLiFdMWtBkJSNqunkYnzLnkDwzMztJJG2jF7L2Cxn9qlb4M2ubIJf9+GjG
- ahaaWqE3rjMEoAmJgFkw07JaERYtWjSAzYBjaWXSdhhp6lVBVQtI6QLG2kHTgIp8/8x7
- 2gykYq8eNeew1sAofsinO+zhnpC9oQLho6osHInUJwlAkToKo2bFQzoLwuyGNU8/fAzm
- U1lqZrZBPZ+WLhdexQpdnuYxXbz6au/lI4IR4DxjIsdbpNp6h7VasEGg7HglMtts7wPR
- jEbGHDKwb6KejYxju5gYejj+ltAuSjt2/xXAuwh6iGmllF+sNFUNE94cfHKQ3MCoNSxb
- V+nQ==; darn=nongnu.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1780283799; x=1780888599; darn=nongnu.org;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:from:to:cc:subject:date
- :message-id:reply-to;
- bh=RXoDANf3J8QHeoQGdRR8wDPh6TPDX0vUUUjR7ERULJI=;
- b=FaCTwBcNud5SGplPN2/zYCngaJ26aKnjL/elVEG1nnoWsi2kaSb8W3+GRr1/Vg0vqc
- GOmIDJc2es+iOOyY7/tkx82L4SA6MDlYLLqreK1ORgGq5Z3OCZRJBebn6EJLGSTAdIYA
- lepsfXa0wmqmYU6VpPvf7+X9ZyXlCqSOe/Drxfxys4yT/deTB6EIXZdvOIL5RSb5DBgi
- I028YQlFuF/FO6jTzmAeNj/HVBZg4EwNap988bQO8IPaqJGnpNjYHD9buz1gj4x/kTV/
- 6WTopb12E3ZPSWzBj9qaDxqomO93oL4yUvDfvHWVlV71kilbXjjsTtzK6gLD9+My9Zby
- qXRw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1780283799; x=1780888599;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to;
- bh=RXoDANf3J8QHeoQGdRR8wDPh6TPDX0vUUUjR7ERULJI=;
- b=mClOEibe7z7x5gkW9KlrmVpRNgIwWkvAvNu/tenwxJhM9DbLazL2G4U6lcl4FaPImY
- /9klL785Zey0owE+n7B5DWgKy7O2l77O3tZ5lYKMYGJ0FX25CWskF4rMfkAcVEA6kAEO
- BbNcEHJP+VB3tied4X+OMb+oLNMVxjVW/1f61LcbQOV6BFdgbSGgOsLVARzgc0HsWUcf
- uWhD1u8LZVx4ZaKHun3KR/Dh13Qrd+8PrHFmOVgVlZeGA5fEVlzv89zmQ0QtdbJmj058
- w5CPlAk04F5fddEiRfe48OhFCZu/Mo6PWCDYmGTYvKEqFAJphmgpKnzI1e0WR0rGQV7z
- hIRg==
-X-Gm-Message-State: AOJu0Yw/ObhTrrDqA0o/NoTL3HQB/AAvqIPp5HK5b/1Zs6nQTjVNWu3+
- es/yCoeI0TV34hkQvibsQefeYe/lktahhlgBFkKtFEVQ6WwbZdh6y+qJt5z7jZGj8vq+YDLvKfy
- IkWh6aD6Xi0Vqif8hKTzdTMU4cSy3wwA=
-X-Gm-Gg: Acq92OEYG89z44t+5AfYWnmOPHfhqfYoOiCqGeCI7RTxMTUVwW/v9TO3WwYR4jiFeXD
- pHZZKSs4z6F6+/3ry2rRdNnCrhDWTM293Fb4LJngcBr9zHUMIIAWVo1gRfOSOKvTYUKPro24cjb
- d2uFM6as/vN6H2Rle0gBXW0ZfL8kcLDal+MlYwKuSOoACZfYtKLn/06pY4+TXQQHY/exrmFubuR
- 83/Ro+s55xzQ4pvKVOFPmx2C7PM/LKMuBH4sfDX1rnfhbkUFxDbI5uvVdWOPUdoWRqex1BBuJrX
- VGy1dXas9BQ8nfLgpkBLWeoCsxU0TycgS187NLB/67X561aL
-X-Received: by 2002:a17:907:a2c8:b0:bda:916b:c87e with SMTP id
- a640c23a62f3a-beab01dcaf3mr396407566b.12.1780283798490; Sun, 31 May 2026
- 20:16:38 -0700 (PDT)
-MIME-Version: 1.0
-References: <20260527200355.2068879-1-daniel.barboza@oss.qualcomm.com>
-In-Reply-To: <20260527200355.2068879-1-daniel.barboza@oss.qualcomm.com>
-From: Alistair Francis <alistair23@gmail.com>
-Date: Mon, 1 Jun 2026 13:16:11 +1000
-X-Gm-Features: AVHnY4Krq8bZIPAXGudAgWrN43R-V_ISpZtF5RdXU3hB2BspUz2YL-LdUR-f2fE
-Message-ID: <CAKmqyKOA7oD6AmwgxiwPjV9R4NBVXv+4bgAHeUECiqiLQv+dhA@mail.gmail.com>
-Subject: Re: [PATCH v2 0/1] disas/riscv.c: fix inst_length()
-To: Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>
-Cc: qemu-devel@nongnu.org, qemu-riscv@nongnu.org, alistair.francis@wdc.com, 
- liwei1518@gmail.com, zhiwei_liu@linux.alibaba.com, chao.liu.zevorn@gmail.com
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::635;
- envelope-from=alistair23@gmail.com; helo=mail-ej1-x635.google.com
-X-Spam_score_int: -17
-X-Spam_score: -1.8
-X-Spam_bar: -
-X-Spam_report: (-1.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ (Exim 4.90_1) (envelope-from <liu.xuemei1@zte.com.cn>)
+ id 1wTt98-0000Ei-Nv; Sun, 31 May 2026 23:16:58 -0400
+Received: from mxhk.zte.com.cn ([160.30.148.34])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <liu.xuemei1@zte.com.cn>)
+ id 1wTt96-0007td-Ln; Sun, 31 May 2026 23:16:58 -0400
+Received: from mse-fl2.zte.com.cn (unknown [10.5.228.133])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange x25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mxhk.zte.com.cn (FangMail) with ESMTPS id 4gTJz065H4z5B13X;
+ Mon, 01 Jun 2026 11:16:44 +0800 (CST)
+Received: from xaxapp01.zte.com.cn ([10.88.99.176])
+ by mse-fl2.zte.com.cn with SMTP id 6513GacE027226;
+ Mon, 1 Jun 2026 11:16:36 +0800 (+08)
+ (envelope-from liu.xuemei1@zte.com.cn)
+Received: from mapi (xaxapp05[null]) by mapi (Zmail) with MAPI id mid32;
+ Mon, 1 Jun 2026 11:16:37 +0800 (CST)
+X-Zmail-TransId: 2afc6a1cf99574e-03679
+X-Mailer: Zmail v1.0
+Message-ID: <20260601111637608gw-0SX_SUzpTzaHRaZftH@zte.com.cn>
+Date: Mon, 1 Jun 2026 11:16:37 +0800 (CST)
+Mime-Version: 1.0
+From: <liu.xuemei1@zte.com.cn>
+To: <palmer@dabbelt.com>, <alistair.francis@wdc.com>, <liwei1518@gmail.com>,
+ <daniel.barboza@oss.qualcomm.com>, <zhiwei_liu@linux.alibaba.com>,
+ <chao.liu.zevorn@gmail.com>
+Cc: <qemu-riscv@nongnu.org>, <qemu-devel@nongnu.org>
+Subject: =?UTF-8?B?W1BBVENIXSBody9pbnRjOiBGaXggS1ZNIFZNIHN0YXJ0IGZhaWx1cmUgd2hlbiBBSUEgaXMgY29uZmlndXJlZCBhcyBhcGxpYy1pbXNpYw==?=
+Content-Type: text/plain;
+	charset="UTF-8"
+X-MAIL: mse-fl2.zte.com.cn 6513GacE027226
+X-TLS: YES
+X-ENVELOPE-SENDER: liu.xuemei1@zte.com.cn
+X-SOURCE-IP: 10.5.228.133 unknown Mon, 01 Jun 2026 11:16:44 +0800
+X-CLEAN: YES
+X-Fangmail-Anti-Spam-Filtered: true
+X-Fangmail-MID-QID: 6A1CF99C.000/4gTJz065H4z5B13X
+Received-SPF: pass client-ip=160.30.148.34;
+ envelope-from=liu.xuemei1@zte.com.cn; helo=mxhk.zte.com.cn
+X-Spam_score_int: -8
+X-Spam_score: -0.9
+X-Spam_bar: /
+X-Spam_report: (-0.9 / 5.0 requ) BAYES_00=-1.9, CTE_8BIT_MISMATCH=1,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ UNPARSEABLE_RELAY=0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -117,39 +73,129 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, May 28, 2026 at 6:05=E2=80=AFAM Daniel Henrique Barboza
-<daniel.barboza@oss.qualcomm.com> wrote:
->
-> Hello,
->
->
-> In this new version we're fixing the disas function by reducing the
-> encodings we support, which is super fine.  Thanks to Alistair for
-> pointing this out in the v1 review.
->
->
-> Changes from v1:
-> - support only 16 and 32 bit inst length as specified in the RISC-V
->   unpriv ISA
-> - v1 link: https://lore.kernel.org/qemu-devel/20260520173522.1794433-1-da=
-niel.barboza@oss.qualcomm.com/
+From: Xuemei Liu <liu.xuemei1@zte.com.cn>
 
-Thanks!
+Since commits 99bfcd329a ("hw/intc: riscv_aplic: Add reset API to APLIC")
+and 766391483b ("hw/intc: riscv_imsic: Add reset API to IMSIC"), when KVM
+acceleration is used and AIA is configured as aplic-imsic, the APLIC and
+IMSIC devices are not emulated (they are handled in-kernel). In such
+cases, the realize functions do not allocate memory for their internal
+register state, leaving the corresponding pointers NULL.
 
-Applied to riscv-to-apply.next
+The reset functions riscv_aplic_reset_enter() and riscv_imsic_reset_enter()
+subsequently attempt to access these NULL pointers (e.g., via memset),
+causing a segmentation fault and VM start failure.
 
-Alistair
+Fix this by guarding the reset operations with condition checks that
+skip the emulated‑specific logic when the in‑kernel mode is active:
+- For APLIC, check riscv_use_emulated_aplic(aplic->msimode).
+- For IMSIC, check !kvm_irqchip_in_kernel().
 
->
->
-> Daniel Henrique Barboza (1):
->   disas/riscv.c: fix inst_length()
->
->  disas/riscv.c | 20 ++------------------
->  1 file changed, 2 insertions(+), 18 deletions(-)
->
-> --
-> 2.43.0
->
->
+Fixes: 99bfcd329a ("hw/intc: riscv_aplic: Add reset API to APLIC")
+Fixes: 766391483b ("hw/intc: riscv_imsic: Add reset API to IMSIC")
+
+Signed-off-by: Xuemei Liu <liu.xuemei1@zte.com.cn>
+---
+ hw/intc/riscv_aplic.c | 52 ++++++++++++++++++++++---------------------
+ hw/intc/riscv_imsic.c | 16 +++++++------
+ 2 files changed, 36 insertions(+), 32 deletions(-)
+
+diff --git a/hw/intc/riscv_aplic.c b/hw/intc/riscv_aplic.c
+index c2c67c29e6..0f61b67fc5 100644
+--- a/hw/intc/riscv_aplic.c
++++ b/hw/intc/riscv_aplic.c
+@@ -910,35 +910,37 @@ static void riscv_aplic_reset_enter(Object *obj, ResetType type)
+     RISCVAPLICState *aplic = RISCV_APLIC(obj);
+     int i;
+
+-    aplic->domaincfg = 0;
+-    memset(aplic->sourcecfg, 0, sizeof(uint32_t) * aplic->num_irqs);
+-    memset(aplic->target, 0, sizeof(uint32_t) * aplic->num_irqs);
+-    if (!aplic->msimode) {
+-        for (i = 0; i < aplic->num_irqs; i++) {
+-            aplic->target[i] = 1;
++    if (riscv_use_emulated_aplic(aplic->msimode)) {
++        aplic->domaincfg = 0;
++        memset(aplic->sourcecfg, 0, sizeof(uint32_t) * aplic->num_irqs);
++        memset(aplic->target, 0, sizeof(uint32_t) * aplic->num_irqs);
++        if (!aplic->msimode) {
++            for (i = 0; i < aplic->num_irqs; i++) {
++                aplic->target[i] = 1;
++            }
+         }
+-    }
+
+-    for (i = 0; i < aplic->num_irqs ; i++) {
+-        riscv_aplic_set_enabled_raw(aplic, i, false);
+-    }
+-
+-    /* Need to unlock [ms]msicfgaddrh.L */
+-    aplic->mmsicfgaddr = 0;
+-    aplic->mmsicfgaddrH = 0;
+-    aplic->smsicfgaddr = 0;
+-    aplic->smsicfgaddrH = 0;
+-
+-    if (!aplic->msimode) {
+-        /* Reset IDC registers only in non-MSI mode */
+-        for (i = 0; i < aplic->num_harts; i++) {
+-            aplic->idelivery[i] = 0;
+-            aplic->iforce[i] = 0;
+-            aplic->ithreshold[i] = 0;
++        for (i = 0; i < aplic->num_irqs ; i++) {
++            riscv_aplic_set_enabled_raw(aplic, i, false);
+         }
+
+-        for (i = 0; i < aplic->num_harts; i++) {
+-            qemu_irq_lower(aplic->external_irqs[i]);
++        /* Need to unlock [ms]msicfgaddrh.L */
++        aplic->mmsicfgaddr = 0;
++        aplic->mmsicfgaddrH = 0;
++        aplic->smsicfgaddr = 0;
++        aplic->smsicfgaddrH = 0;
++
++        if (!aplic->msimode) {
++            /* Reset IDC registers only in non-MSI mode */
++            for (i = 0; i < aplic->num_harts; i++) {
++                aplic->idelivery[i] = 0;
++                aplic->iforce[i] = 0;
++                aplic->ithreshold[i] = 0;
++            }
++
++            for (i = 0; i < aplic->num_harts; i++) {
++                qemu_irq_lower(aplic->external_irqs[i]);
++            }
+         }
+     }
+ }
+diff --git a/hw/intc/riscv_imsic.c b/hw/intc/riscv_imsic.c
+index ac59496c22..6dbbc152a2 100644
+--- a/hw/intc/riscv_imsic.c
++++ b/hw/intc/riscv_imsic.c
+@@ -347,15 +347,17 @@ static void riscv_imsic_reset_enter(Object *obj, ResetType type)
+     RISCVIMSICState *imsic = RISCV_IMSIC(obj);
+     int i;
+
+-    memset(imsic->eidelivery, 0, sizeof(uint32_t) * imsic->num_pages);
+-    memset(imsic->eithreshold, 0, sizeof(uint32_t) * imsic->num_pages);
++    if (!kvm_irqchip_in_kernel()) {
++        memset(imsic->eidelivery, 0, sizeof(uint32_t) * imsic->num_pages);
++        memset(imsic->eithreshold, 0, sizeof(uint32_t) * imsic->num_pages);
+
+-    for (i = 0; i < imsic->num_eistate; i++) {
+-        imsic->eistate[i] &= ~IMSIC_EISTATE_ENABLED;
+-    }
++        for (i = 0; i < imsic->num_eistate; i++) {
++            imsic->eistate[i] &= ~IMSIC_EISTATE_ENABLED;
++        }
+
+-    for (i = 0; i < imsic->num_pages; i++) {
+-        qemu_irq_lower(imsic->external_irqs[i]);
++        for (i = 0; i < imsic->num_pages; i++) {
++            qemu_irq_lower(imsic->external_irqs[i]);
++        }
+     }
+ }
+
+-- 
+2.27.0
 
