@@ -4,114 +4,63 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id AA768CD6E4C
-	for <qemu-devel@archiver.kernel.org>; Mon,  1 Jun 2026 04:05:45 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5C579CD6E4C
+	for <qemu-devel@archiver.kernel.org>; Mon,  1 Jun 2026 05:29:21 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wTtu7-0001zf-P1; Mon, 01 Jun 2026 00:05:32 -0400
+	id 1wTvCR-0002rg-EJ; Mon, 01 Jun 2026 01:28:31 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1wTtsk-0001Mt-Uj
- for qemu-devel@nongnu.org; Mon, 01 Jun 2026 00:04:07 -0400
-Received: from mail-ed1-x536.google.com ([2a00:1450:4864:20::536])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1wTtsh-00056C-P4
- for qemu-devel@nongnu.org; Mon, 01 Jun 2026 00:04:05 -0400
-Received: by mail-ed1-x536.google.com with SMTP id
- 4fb4d7f45d1cf-68b2229b48eso6190787a12.2
- for <qemu-devel@nongnu.org>; Sun, 31 May 2026 21:04:03 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1780286642; cv=none;
- d=google.com; s=arc-20240605;
- b=a8mhKTzNFvW7xi8pWd7IQgDyWM8BXn1eI9MLHYLnkmbUn0BL4Jf+w1MnBP8U96S4G/
- 3kIi7BixPdPauEoGnUVYsX/ZaLvUmmabyB7ZKhfbsXbtq+4xLb+kWSMrU0ZMYnwrtBBh
- tjH6Tbba7HOpo1++aza7JkDh6udCZmsEKri9Yj+7xYA1xagIfMdRnjeMte+IpvPfGNSM
- Ryv5aXa/4r31qRO5/suir2NU6Ezc0DS9ZpS61PZDx4l2oNC7j6Qrt3A2b2M/XFlqOiMO
- Fygf4fWn9mRs16Tni23ukw/fiITTVFh+3b6dqTSfVLYInPg1avN4UvvpI6S7RQ49ix1j
- rMBw==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
- s=arc-20240605; 
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:dkim-signature;
- bh=NC2xQWYBXNBidmnkAft1EwZSoT5dXFiA4v6h8LSB9DU=;
- fh=y21jMATNUjZYf6r36OFPp+gpw+U93wvDhwZNTve8/io=;
- b=UjBt8g3vVj/tKsC+fxKu7Jdr1jofslxLDSYt9zk6ZeRJ2bNAfQdrKJrL4F6BpsFOmH
- trnhbTraL+gI685IHEEvqleMp0VSJPpnuW1fv7hkC11PtLqvH9S6c6GHvGAOZdmA5bEm
- H5lgVjCRLOUTnFYLfaeA/c4eXqM071FiR9qhU6VrZ7kO08//ptLZmUnz/Me0SNmrlZ5k
- QqO2q9PAjq/frotWUWaSRBYdUjnXwzgRls3P/qkolCCtys9D8Q5i4rtiPNhrNX1pozlJ
- ZiM5irCQ5jZrAmc9f8ZhCN/SWhRxeHHybj1PaQwtbWMgeIOErFxuaWIOgYokJbt/uMBv
- gyyw==; darn=nongnu.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1780286642; x=1780891442; darn=nongnu.org;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:from:to:cc:subject:date
- :message-id:reply-to;
- bh=NC2xQWYBXNBidmnkAft1EwZSoT5dXFiA4v6h8LSB9DU=;
- b=NChK+rgJax/+MOJo3IyfQKBk/8W/5eO9FfK0TVrBSBg0DBjW5X1CyGB164pCG+egbo
- 2ldIByIDWk13bJKN6azpAaqJ/2Vp7ygbNX4eE+bGGY1VQEGDHhPWUBx2rE8/9ruOBD8e
- I+/n9Bh2/gmT6hDlWYbMycnJ5QmigzESiE/CuTvsoLUu1RI81DyFFBKLGnf0g+ev3zJH
- baIPYxSHY/SV9z7MP9Mm5SPEsoPKL+veYYFzk9AaiWJdbpdR0ZAIsO/MsBpy9ST4yYTv
- R5TzsLq3wFAz67hTeLui7k+nyrIbJCmad1Hf61XerZWPQoRQHK6ZJUO8xW4il5IKUzKP
- Bmcw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1780286642; x=1780891442;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to;
- bh=NC2xQWYBXNBidmnkAft1EwZSoT5dXFiA4v6h8LSB9DU=;
- b=NDQK7/WgOIdl3xHeaXX9SUoJbNlzNY2zRLb1AHtYyBUmdb5aNKl8npq0kFJOFH+azT
- VrXzY7B5X0EE/RQpjdkGfd/GHlZlBs9U+VBALz2bgz3g46/j2F5g3G6gfsY2eUurC19D
- n96j3hvB85oBJuMEVs2vRTh35rojxTrWagmHGOHnUP+kvYlO61A+lWMYYTmm5Oufs+Ll
- MYU8yzXMWUU5zs2P5k4SoR4xSGBDBGgWiegwVVGgkjJtfyAr6UIinAbJV9xqsKK7/KMc
- KVwJ35JQbQV4hCIPxlkTE7/qMprTH8ETx4d2GoIMcRTPY/e7fycyoFgZRFa5e+6pYy4w
- StdA==
-X-Gm-Message-State: AOJu0YwaIuMvwjO9i7e0d9Qrt9Dtht2xHdUnWD6B/fqahS6LvxMe2swL
- JDGqlzBO0An3yZHX38IGbkiMwdfv1mS7LEUXf2L4h3GDQYZ5Vka3rsaPMvwRipen7gY8gDamQfZ
- VrofGImTMD69Zd1Y/+4IlTRzgg2OYCSI=
-X-Gm-Gg: Acq92OFPl4y9D6wzX+iDpQprC6WL7kAC9S1hWBHr66BZWjFxGSjEXeGwUwc4hcPrquo
- fE+XZBtj8ZPMirrAXdoas6fI+OdSN3plf3QveoGO8/p83KwoCtvaqeI7eYrnu70HRfwzm0vDePl
- z4nXV4AmlVz1/mdb7TtWsYa9VQnOqBMPCNxhWtePjIy5LpsXz2vYnHK8rlocFncB4AL9OqhaIkA
- Kin8MxIZtrITvM5+/pjWq/Jf02n6/7pMHItZGfXfYxp+qbWCW3bzXlgcszYkwjPMpdqEKHOFkd1
- UIMi8C1k1zrqhF6AbxdUA/0io0zUw8AuCS/QxAayzHQmVJVN
-X-Received: by 2002:a17:907:7351:b0:beb:a431:6750 with SMTP id
- a640c23a62f3a-beba4316bd4mr238824066b.29.1780286642114; Sun, 31 May 2026
- 21:04:02 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <da.gomez@kernel.org>)
+ id 1wTvCO-0002rB-EC; Mon, 01 Jun 2026 01:28:28 -0400
+Received: from tor.source.kernel.org ([172.105.4.254])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <da.gomez@kernel.org>)
+ id 1wTvCM-0005NQ-UP; Mon, 01 Jun 2026 01:28:28 -0400
+Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
+ by tor.source.kernel.org (Postfix) with ESMTP id EA5EC60018;
+ Mon,  1 Jun 2026 05:28:17 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 555DC1F00893;
+ Mon,  1 Jun 2026 05:28:15 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
+ s=k20260515; t=1780291697;
+ bh=lW1lbXFBl5z7UWbTx1L9N0qC8bNKattadDXAk4Op6IE=;
+ h=Date:Subject:To:Cc:References:From:In-Reply-To;
+ b=oY/CxgBcGYSh1N+2tnyL7A/ptTxxmxNgOlOP/Ys908F6dSjmhmATh8AMkWk1sIKrh
+ /cHXqlyUMyVbbDBKlD/jJNu71cZ2O6AEy8Hv9FbV+69NoOTFzTPTi60gherRU/t0Ut
+ h0nh5Us8ivm4vvp3snUPwOAux7AjLz137dROqr2TiQc0i6ImCENxBnIN9md68gFoSb
+ 0TCj5HIy5an0wKDCw5mBlRWSuhxlpSqLxFGAh0fZPA/iGTL5e+3L/oiFtnbdFrFFx1
+ nOXxUneNyzSTaCQPG6SkfU0M1NMu/4M+k+wa9kENSFCRCozez4oA4hyl1xEx+5cLbk
+ NohtglaWM/v/w==
+Message-ID: <4a80956e-64dc-4c83-bc2b-f997ba2f41dc@kernel.org>
+Date: Mon, 1 Jun 2026 07:28:13 +0200
 MIME-Version: 1.0
-References: <20260527201348.29511-1-philmd@linaro.org>
- <20260527201348.29511-13-philmd@linaro.org>
-In-Reply-To: <20260527201348.29511-13-philmd@linaro.org>
-From: Alistair Francis <alistair23@gmail.com>
-Date: Mon, 1 Jun 2026 14:03:35 +1000
-X-Gm-Features: AVHnY4JwMPycNbxBbHqU5CvNOUuGmIRdzcwnJLC1nR-4azHKyDjbRXJM03FKz3A
-Message-ID: <CAKmqyKPH2B8iz7Kkg2z9hfL-UGxudCrVRdHwOATsbqqYomVxSg@mail.gmail.com>
-Subject: Re: [PATCH v11 12/12] tests/functional: Add RISC-V endianness test
-To: =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>
-Cc: qemu-devel@nongnu.org, 
- Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>, qemu-riscv@nongnu.org, 
- Djordje Todorovic <Djordje.Todorovic@htecgroup.com>,
- Anton Johansson <anjo@rev.ng>, 
- Weiwei Li <liwei1518@gmail.com>, Liu Zhiwei <zhiwei_liu@linux.alibaba.com>, 
- Chao Liu <chao.liu.zevorn@gmail.com>, 
- Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>,
- Palmer Dabbelt <palmer@dabbelt.com>, 
- Alistair Francis <alistair.francis@wdc.com>,
- Christoph Muellner <christoph.muellner@vrull.eu>, 
- Thomas Huth <thuth@redhat.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::536;
- envelope-from=alistair23@gmail.com; helo=mail-ed1-x536.google.com
-X-Spam_score_int: -17
-X-Spam_score: -1.8
-X-Spam_bar: -
-X-Spam_report: (-1.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 1/3] dma-helpers: chunk dma_blk_cb at IOV_MAX
+To: Keith Busch <kbusch@kernel.org>, Daniel Gomez <da.gomez@kernel.org>
+Cc: qemu-devel@nongnu.org, Paolo Bonzini <pbonzini@redhat.com>,
+ Peter Xu <peterx@redhat.com>, =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?=
+ <philmd@linaro.org>, Klaus Jensen <its@irrelevant.dk>,
+ Jesper Devantier <foss@defmacro.it>, qemu-block@nongnu.org,
+ Daniel Gomez <da.gomez@samsung.com>, GOST <gost.dev@samsung.com>,
+ Klaus Jensen <k.jensen@samsung.com>
+References: <20260529-align-nvme-mdts-with-linux-v1-0-221d4d21ab43@samsung.com>
+ <20260529-align-nvme-mdts-with-linux-v1-1-221d4d21ab43@samsung.com>
+ <ahmlzjtnRoCtBP8a@kbusch-mbp>
+Content-Language: en-US
+From: Daniel Gomez <da.gomez@kernel.org>
+In-Reply-To: <ahmlzjtnRoCtBP8a@kbusch-mbp>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=172.105.4.254; envelope-from=da.gomez@kernel.org;
+ helo=tor.source.kernel.org
+X-Spam_score_int: -24
+X-Spam_score: -2.5
+X-Spam_bar: --
+X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.445,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -127,110 +76,50 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, May 28, 2026 at 6:16=E2=80=AFAM Philippe Mathieu-Daud=C3=A9
-<philmd@linaro.org> wrote:
->
-> From: Djordje Todorovic <Djordje.Todorovic@htecgroup.com>
->
-> Add functional test for the RISC-V 'big-endian' CPU property.
->
-> Signed-off-by: Djordje Todorovic <djordje.todorovic@htecgroup.com>
-> Reviewed-by: Thomas Huth <thuth@redhat.com>
-> Reviewed-by: Philippe Mathieu-Daud=C3=A9 <philmd@linaro.org>
-> Tested-by: Philippe Mathieu-Daud=C3=A9 <philmd@linaro.org>
-> Signed-off-by: Philippe Mathieu-Daud=C3=A9 <philmd@linaro.org>
+On 29/05/2026 16.42, Keith Busch wrote:
+> On Fri, May 29, 2026 at 02:36:13PM +0200, Daniel Gomez wrote:
+>> From: Daniel Gomez <da.gomez@samsung.com>
+>>
+>> dma_blk_cb() submits dbs->iov to io_func() in one shot, so callers
+>> must keep dbs->iov.niov below IOV_MAX or the host preadv()/pwritev()
+>> rejects the call.
+>>
+>> Break the accumulation loop when niov reaches IOV_MAX. The existing
+>> re-entry path resumes mapping and submits a follow-up chunk under
+>> the same AIOCB, so callers no longer carry that constraint.
+> 
+> Thanks, I like the idea. One question below.
+> 
+>> -        if (!mem)
+>> +        if (!mem || dbs->iov.niov >= IOV_MAX) {
+>>              break;
+>> +        }
+> 
+> Won't this leak "mem" if it is not NULL, but we've hit the iov.niov
+> condition? If so, I think you can move this new check to after the
+> qemu_iovec_add call.
 
-Reviewed-by: Alistair Francis <alistair.francis@wdc.com>
+Good catch, thanks. For v2, I'll move the new break condition after
+qemu_iovec_add and sg length accounting:
 
-Alistair
+@@ -156,15 +156,17 @@ static void dma_blk_cb(void *opaque, int ret)
+                 }
+             }
+         }
+-        if (!mem || dbs->iov.niov >= IOV_MAX) {
++        if (!mem)
+             break;
+-        }
+         qemu_iovec_add(&dbs->iov, mem, cur_len);
+         dbs->sg_cur_byte += cur_len;
+         if (dbs->sg_cur_byte == dbs->sg->sg[dbs->sg_cur_index].len) {
+             dbs->sg_cur_byte = 0;
+             ++dbs->sg_cur_index;
+         }
++        if (dbs->iov.niov >= IOV_MAX) {
++            break;
++        }
+     }
 
-> ---
->  tests/functional/riscv64/meson.build        |  1 +
->  tests/functional/riscv64/test_endianness.py | 57 +++++++++++++++++++++
->  2 files changed, 58 insertions(+)
->  create mode 100644 tests/functional/riscv64/test_endianness.py
->
-> diff --git a/tests/functional/riscv64/meson.build b/tests/functional/risc=
-v64/meson.build
-> index b996c89d7df..5871211e899 100644
-> --- a/tests/functional/riscv64/meson.build
-> +++ b/tests/functional/riscv64/meson.build
-> @@ -11,6 +11,7 @@ tests_riscv64_system_quick =3D [
->  ]
->
->  tests_riscv64_system_thorough =3D [
-> +  'endianness',
->    'boston',
->    'sifive_u',
->    'tuxrun',
-> diff --git a/tests/functional/riscv64/test_endianness.py b/tests/function=
-al/riscv64/test_endianness.py
-> new file mode 100644
-> index 00000000000..9e0b3b7db5c
-> --- /dev/null
-> +++ b/tests/functional/riscv64/test_endianness.py
-> @@ -0,0 +1,57 @@
-> +#!/usr/bin/env python3
-> +#
-> +# Functional tests for RISC-V big-endian support
-> +#
-> +# Copyright (c) 2026 MIPS
-> +#
-> +# SPDX-License-Identifier: GPL-2.0-or-later
-> +
-> +from qemu_test import QemuSystemTest, Asset
-> +from qemu_test import wait_for_console_pattern
-> +
-> +
-> +class RiscvBigEndian(QemuSystemTest):
-> +    """
-> +    Tests for RISC-V runtime big-endian data support.
-> +
-> +    Uses a bare-metal RV64 ELF that detects data endianness at runtime
-> +    by storing a 32-bit word and reading back byte 0. Prints "ENDIAN: BE=
-"
-> +    or "ENDIAN: LE" to the NS16550A UART on the virt machine.
-> +    """
-> +
-> +    timeout =3D 10
-> +
-> +    ASSET_BE_TEST =3D Asset(
-> +        'https://github.com/MIPS/linux-test-downloads/raw/main/'
-> +        'riscvbe-baremetal/be-test-bare-metal.elf',
-> +        '9ad51b675e101de65908fadbac064ed1d0564c17463715d09dd734db86ea0f5=
-8')
-> +
-> +    def _run_bare_metal(self, big_endian=3DFalse):
-> +        self.set_machine('virt')
-> +        kernel =3D self.ASSET_BE_TEST.fetch()
-> +        self.vm.add_args('-bios', 'none')
-> +        self.vm.add_args('-kernel', kernel)
-> +        if big_endian:
-> +            self.vm.add_args('-cpu', 'rv64,big-endian=3Don')
-> +        self.vm.set_console()
-> +        self.vm.launch()
-> +        expected =3D 'ENDIAN: BE' if big_endian else 'ENDIAN: LE'
-> +        wait_for_console_pattern(self, expected)
-> +
-> +    def test_bare_metal_littleendian(self):
-> +        """
-> +        Boot bare-metal ELF on virt with default little-endian CPU.
-> +        Expects "ENDIAN: LE" on UART.
-> +        """
-> +        self._run_bare_metal(big_endian=3DFalse)
-> +
-> +    def test_bare_metal_bigendian(self):
-> +        """
-> +        Boot bare-metal ELF on virt with big-endian=3Don CPU property.
-> +        Expects "ENDIAN: BE" on UART.
-> +        """
-> +        self._run_bare_metal(big_endian=3DTrue)
-> +
-> +
-> +if __name__ =3D=3D '__main__':
-> +    QemuSystemTest.main()
-> --
-> 2.53.0
->
->
+     if (dbs->iov.size == 0) {
 
