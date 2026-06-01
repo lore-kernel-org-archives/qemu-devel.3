@@ -4,60 +4,145 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 83661CD5BD1
-	for <qemu-devel@archiver.kernel.org>; Mon,  1 Jun 2026 14:46:41 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E9C18CD6E55
+	for <qemu-devel@archiver.kernel.org>; Mon,  1 Jun 2026 14:51:37 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wU3u8-0004bc-NU; Mon, 01 Jun 2026 10:46:12 -0400
+	id 1wU3yo-0005pr-IK; Mon, 01 Jun 2026 10:51:02 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mcasquer@redhat.com>)
- id 1wU3u2-0004a2-89
- for qemu-devel@nongnu.org; Mon, 01 Jun 2026 10:46:06 -0400
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1wU3ym-0005pd-Pn
+ for qemu-devel@nongnu.org; Mon, 01 Jun 2026 10:51:00 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mcasquer@redhat.com>)
- id 1wU3u0-00029C-IN
- for qemu-devel@nongnu.org; Mon, 01 Jun 2026 10:46:05 -0400
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1wU3yl-0003Yb-3n
+ for qemu-devel@nongnu.org; Mon, 01 Jun 2026 10:51:00 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1780325161;
+ s=mimecast20190719; t=1780325456;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:
- content-transfer-encoding:content-transfer-encoding;
- bh=1rwRmaRjrEk9S8N/sDBUwePNzmT7sYxcYoAqqlGW4KE=;
- b=i0ih906INIM268fRYmDa2CiawPsdm+D1EP1AW93DyvWk2Mh9pMOcRk8qr4XaHDBQMq/L7r
- k3s2ePDpLxBrIYH0pDFMaiOYxmVTynsXSvHH8hhUq2WX77nseAiVYLXqib/bc1C7LlFJko
- 4arMhktp5m4M1CHhXSzcZ3dS42/uAL0=
-Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-498-FLcDaCIzPbGJPrPBDDmlnw-1; Mon,
- 01 Jun 2026 10:44:33 -0400
-X-MC-Unique: FLcDaCIzPbGJPrPBDDmlnw-1
-X-Mimecast-MFC-AGG-ID: FLcDaCIzPbGJPrPBDDmlnw_1780325073
-Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id C605C180034A; Mon,  1 Jun 2026 14:44:32 +0000 (UTC)
-Received: from fedora.redhat.com (unknown [10.44.48.177])
- by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id CABCB19560A2; Mon,  1 Jun 2026 14:44:30 +0000 (UTC)
-From: Mario Casquero <mcasquer@redhat.com>
-To: qemu-devel@nongnu.org
-Cc: clg@redhat.com,
-	alex@shazbot.org,
-	Mario Casquero <mcasquer@redhat.com>
-Subject: [PATCH] vfio/pci: Initialize rom_read_failed in vfio_pci_load_rom()
-Date: Mon,  1 Jun 2026 16:43:39 +0200
-Message-ID: <20260601144339.339275-1-mcasquer@redhat.com>
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
+ bh=JLPguxaVaRiMefwWY1hzAPZ7UkLymAP6ZFzD2hWvAM8=;
+ b=EDcB8ncSPGSaPin20ponfdhEtYAf32flA9bC0dE6ycvzRgl3dep8/WJULVE6TW1gW4jo1d
+ QaFTKt6b6bGkidS9m8miJmy7K1jZ1e8zQmhcMFbUso/bBTT4OAR6Df7GzJNO8YU6cw1jmo
+ x5u7elYz8IyKWmxaWR69yeI6b2dZ/t4=
+Received: from mail-wm1-f71.google.com (mail-wm1-f71.google.com
+ [209.85.128.71]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-516-SNxTSdAiMmuDZOurmdYjbg-1; Mon, 01 Jun 2026 10:50:55 -0400
+X-MC-Unique: SNxTSdAiMmuDZOurmdYjbg-1
+X-Mimecast-MFC-AGG-ID: SNxTSdAiMmuDZOurmdYjbg_1780325454
+Received: by mail-wm1-f71.google.com with SMTP id
+ 5b1f17b1804b1-490aadb1386so4183025e9.0
+ for <qemu-devel@nongnu.org>; Mon, 01 Jun 2026 07:50:55 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=redhat.com; s=google; t=1780325454; x=1780930254; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:autocrypt:from
+ :content-language:references:cc:to:subject:user-agent:mime-version
+ :date:message-id:from:to:cc:subject:date:message-id:reply-to;
+ bh=JLPguxaVaRiMefwWY1hzAPZ7UkLymAP6ZFzD2hWvAM8=;
+ b=VHP5JGGnxGjnd8Y7Yv6CgcGr0T+eKn4/JCzJkMCpH/LZIYkc9hU954MX+DTTwCvbZ2
+ zszgy3/miQiiGyyTT9rvmjgDojD+Ht++pxgscF8hxwWBax9yFmAOJ+4M3BxjHWAMYwT1
+ /Aysd2lqmSKQO8/AuefwE6srDBrPEUu4+mtRJfway/0+E7MizzYuOFhEmOuPm4MDLjHJ
+ vKv6ZiB0u/d27fs01k9B9xgslwLyN5XtJjM4lDox86YKLC3mBEzexQ+FQeNE+UWstyBN
+ YHF+jTeKrWL9mtdtmOHNIhCS9RmrrVxKeV5Eljq9KDWPOJdpCxp12hjtg78RCFwdvvaO
+ mnIQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1780325454; x=1780930254;
+ h=content-transfer-encoding:in-reply-to:autocrypt:from
+ :content-language:references:cc:to:subject:user-agent:mime-version
+ :date:message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=JLPguxaVaRiMefwWY1hzAPZ7UkLymAP6ZFzD2hWvAM8=;
+ b=H/f0X6USKwqNp4nsITt8ua66ro36nlNKNK5zyRGDJUuzgLfl9CAlvyYLa2Z+YS1zNK
+ YEI4/qi/xT0q4tXSO1abGfcOXXeiyC1baAU5J04e+tO3q/PImsupkIFCEC86FG/LKix3
+ /jMCg01hA3b33kMEZp1rwgszOSSZfEgaLqQQM1gFyIK8r8xvNNrF7yyQQFMXt74TQ232
+ L02LslJMYONKNiUuDEchYPJQ9SgHx5lCzxPKcH4lKN3BYjymAZE9os7dEVgkL70mf9Rd
+ YTB8u3Y02mOmmz+YCEK8N93GxZpFQGxlZQR5+1ZcAcIygNInmBydxEtPeUh9uH6oElSm
+ DY7A==
+X-Forwarded-Encrypted: i=1;
+ AFNElJ84/AnCAcV9s54OcdyNBHOdbNbp0UgVGy1gswYoiCyMEHEfgEKV+zGIvVeGcEj5zCmcWJBxyCiQcDU4@nongnu.org
+X-Gm-Message-State: AOJu0Yy8bStrUQMrBi2BiFrKrvPJTZ7KqpyOyWEiBbrkIc5Bdn7CjF6O
+ Ge1VU6XrwobEo7x8Et6O5xZB/uhld2gv6EwdAdv9sc06Tu4ukwKM3L9iaVQo5Plszcc26wMQp4z
+ cvAHaELlcRPXkg0NgzR1emj7/IsSy8jMg1MVtlZVKLImjsZHjcCitF0Mn
+X-Gm-Gg: Acq92OFulvGR86ZaXDAk97vLcgwwsNG2Fn6j6t0KDh9y+bLnDKprbXx/tp7Ozy3uYhy
+ cI11PQs/u9LbPBRGsLA9Q/Mwae4TLWtd6Yb8QtRPFjk4Rpb0CPo2HlDpCIO5reCL3LlbFmot7xq
+ sof6XBDJ+iapGqRwqUOlQdizqfW32D6xXeViYuztqTTW6UdrfBmVb2ajAMk/kk7jOEF0EMlKtVq
+ do7oHyqo9+mmhkgnWDV+ol4ycgGUJotAE7cWmJP8MSe+XtZV2htrtg11mJB3uIPXkqqP9YupUL0
+ gQ3dzdv7QteKiOcnhjhwNh+rys9FnKGT4ztquUffIBzhFu311xLG3uKgwnOFi+cPyjhiSWmlDCD
+ h2Jop11SNakY2rVSYQfOu1FPihyhHBtVrGaRQxzmmu3HHQrhO6o9y/EcXEcGukYlLqzjk63s=
+X-Received: by 2002:a05:600c:5254:b0:48f:e044:927d with SMTP id
+ 5b1f17b1804b1-490a2a43b6cmr170908405e9.10.1780325453941; 
+ Mon, 01 Jun 2026 07:50:53 -0700 (PDT)
+X-Received: by 2002:a05:600c:5254:b0:48f:e044:927d with SMTP id
+ 5b1f17b1804b1-490a2a43b6cmr170908025e9.10.1780325453461; 
+ Mon, 01 Jun 2026 07:50:53 -0700 (PDT)
+Received: from ?IPV6:2a01:e0a:280:24f0:9db0:474c:ff43:9f5c?
+ ([2a01:e0a:280:24f0:9db0:474c:ff43:9f5c])
+ by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-490ae39c281sm33866965e9.14.2026.06.01.07.50.52
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Mon, 01 Jun 2026 07:50:52 -0700 (PDT)
+Message-ID: <2e0f6a3a-f20c-4c07-8922-76f92a2423ea@redhat.com>
+Date: Mon, 1 Jun 2026 16:50:51 +0200
 MIME-Version: 1.0
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH] vfio/pci: Initialize rom_read_failed in
+ vfio_pci_load_rom()
+To: Mario Casquero <mcasquer@redhat.com>, qemu-devel@nongnu.org
+Cc: alex@shazbot.org
+References: <20260601144339.339275-1-mcasquer@redhat.com>
+Content-Language: en-US, fr
+From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>
+Autocrypt: addr=clg@redhat.com; keydata=
+ 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
+ uVKe8BVz4atMOoktmt0GWTOC8P4=
+In-Reply-To: <20260601144339.339275-1-mcasquer@redhat.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.12
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=mcasquer@redhat.com;
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=clg@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -24
 X-Spam_score: -2.5
@@ -81,65 +166,80 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-When vfio_device_get_region_info() fails in vfio_pci_load_rom(),
-the function returns without setting vdev->rom_read_failed to true,
-and without allocating vdev->rom. This leaves vdev->rom as NULL.
+On 6/1/26 16:43, Mario Casquero wrote:
+> When vfio_device_get_region_info() fails in vfio_pci_load_rom(),
+> the function returns without setting vdev->rom_read_failed to true,
+> and without allocating vdev->rom. This leaves vdev->rom as NULL.
+> 
+> Signed-off-by: Mario Casquero <mcasquer@redhat.com>
+> ---
+>   hw/vfio/pci.c | 10 ++++++----
+>   1 file changed, 6 insertions(+), 4 deletions(-)
+> 
+> diff --git a/hw/vfio/pci.c b/hw/vfio/pci.c
+> index 9c06b25e63..d73614d3de 100644
+> --- a/hw/vfio/pci.c
+> +++ b/hw/vfio/pci.c
+> @@ -1027,7 +1027,7 @@ static void vfio_update_msi(VFIOPCIDevice *vdev)
+>       }
+>   }
+> 
+> -static void vfio_pci_load_rom(VFIOPCIDevice *vdev)
+> +static bool vfio_pci_load_rom(VFIOPCIDevice *vdev)
+>   {
+>       VFIODevice *vbasedev = &vdev->vbasedev;
+>       struct vfio_region_info *reg_info = NULL;
+> @@ -1041,7 +1041,7 @@ static void vfio_pci_load_rom(VFIOPCIDevice *vdev)
+> 
+>       if (ret != 0) {
+>           error_report("vfio: Error getting ROM info: %s", strerror(-ret));
+> -        return;
+> +        return false;
+>       }
+> 
+>       trace_vfio_pci_load_rom(vbasedev->name, (unsigned long)reg_info->size,
+> @@ -1057,7 +1057,7 @@ static void vfio_pci_load_rom(VFIOPCIDevice *vdev)
+>           error_printf("Device option ROM contents are probably invalid "
+>                       "(check dmesg).\nSkip option ROM probe with rombar=0, "
+>                       "or load from file with romfile=\n");
+> -        return;
+> +        return false;
+>       }
+> 
+>       vdev->rom = g_malloc(size);
+> @@ -1113,6 +1113,8 @@ static void vfio_pci_load_rom(VFIOPCIDevice *vdev)
+>               data[6] = -csum;
+>           }
+>       }
+> +
+> +    return true;
+>   }
+> 
+>   /* "Raw" read of underlying config space. */
+> @@ -1146,7 +1148,7 @@ static uint64_t vfio_rom_read(void *opaque, hwaddr addr, unsigned size)
+> 
+>       /* Load the ROM lazily when the guest tries to read it */
+>       if (unlikely(!vdev->rom && !vdev->rom_read_failed)) {
+> -        vfio_pci_load_rom(vdev);
+> +        vdev->rom_read_failed = !vfio_pci_load_rom(vdev);
+>       }
+> 
+>       memcpy(&val, vdev->rom + addr,
 
-Signed-off-by: Mario Casquero <mcasquer@redhat.com>
----
- hw/vfio/pci.c | 10 ++++++----
- 1 file changed, 6 insertions(+), 4 deletions(-)
+In a followup patch, I would add a guest error log when the guest attempts
+to read from a ROM that failed to load.
 
-diff --git a/hw/vfio/pci.c b/hw/vfio/pci.c
-index 9c06b25e63..d73614d3de 100644
---- a/hw/vfio/pci.c
-+++ b/hw/vfio/pci.c
-@@ -1027,7 +1027,7 @@ static void vfio_update_msi(VFIOPCIDevice *vdev)
-     }
- }
+> --
+> 2.54.0
+> 
 
--static void vfio_pci_load_rom(VFIOPCIDevice *vdev)
-+static bool vfio_pci_load_rom(VFIOPCIDevice *vdev)
- {
-     VFIODevice *vbasedev = &vdev->vbasedev;
-     struct vfio_region_info *reg_info = NULL;
-@@ -1041,7 +1041,7 @@ static void vfio_pci_load_rom(VFIOPCIDevice *vdev)
+Anyhow,
 
-     if (ret != 0) {
-         error_report("vfio: Error getting ROM info: %s", strerror(-ret));
--        return;
-+        return false;
-     }
 
-     trace_vfio_pci_load_rom(vbasedev->name, (unsigned long)reg_info->size,
-@@ -1057,7 +1057,7 @@ static void vfio_pci_load_rom(VFIOPCIDevice *vdev)
-         error_printf("Device option ROM contents are probably invalid "
-                     "(check dmesg).\nSkip option ROM probe with rombar=0, "
-                     "or load from file with romfile=\n");
--        return;
-+        return false;
-     }
+Reviewed-by: Cédric Le Goater <clg@redhat.com>
 
-     vdev->rom = g_malloc(size);
-@@ -1113,6 +1113,8 @@ static void vfio_pci_load_rom(VFIOPCIDevice *vdev)
-             data[6] = -csum;
-         }
-     }
-+
-+    return true;
- }
+Thanks !
 
- /* "Raw" read of underlying config space. */
-@@ -1146,7 +1148,7 @@ static uint64_t vfio_rom_read(void *opaque, hwaddr addr, unsigned size)
-
-     /* Load the ROM lazily when the guest tries to read it */
-     if (unlikely(!vdev->rom && !vdev->rom_read_failed)) {
--        vfio_pci_load_rom(vdev);
-+        vdev->rom_read_failed = !vfio_pci_load_rom(vdev);
-     }
-
-     memcpy(&val, vdev->rom + addr,
---
-2.54.0
+C.
 
 
