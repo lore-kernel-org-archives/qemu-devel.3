@@ -4,60 +4,111 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 48529CD6E55
-	for <qemu-devel@archiver.kernel.org>; Mon,  1 Jun 2026 03:17:28 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9D97DCD6E55
+	for <qemu-devel@archiver.kernel.org>; Mon,  1 Jun 2026 03:19:23 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wTt9A-0000F5-IA; Sun, 31 May 2026 23:17:00 -0400
+	id 1wTtB1-00018B-3x; Sun, 31 May 2026 23:18:56 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <liu.xuemei1@zte.com.cn>)
- id 1wTt98-0000Ei-Nv; Sun, 31 May 2026 23:16:58 -0400
-Received: from mxhk.zte.com.cn ([160.30.148.34])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <liu.xuemei1@zte.com.cn>)
- id 1wTt96-0007td-Ln; Sun, 31 May 2026 23:16:58 -0400
-Received: from mse-fl2.zte.com.cn (unknown [10.5.228.133])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange x25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mxhk.zte.com.cn (FangMail) with ESMTPS id 4gTJz065H4z5B13X;
- Mon, 01 Jun 2026 11:16:44 +0800 (CST)
-Received: from xaxapp01.zte.com.cn ([10.88.99.176])
- by mse-fl2.zte.com.cn with SMTP id 6513GacE027226;
- Mon, 1 Jun 2026 11:16:36 +0800 (+08)
- (envelope-from liu.xuemei1@zte.com.cn)
-Received: from mapi (xaxapp05[null]) by mapi (Zmail) with MAPI id mid32;
- Mon, 1 Jun 2026 11:16:37 +0800 (CST)
-X-Zmail-TransId: 2afc6a1cf99574e-03679
-X-Mailer: Zmail v1.0
-Message-ID: <20260601111637608gw-0SX_SUzpTzaHRaZftH@zte.com.cn>
-Date: Mon, 1 Jun 2026 11:16:37 +0800 (CST)
-Mime-Version: 1.0
-From: <liu.xuemei1@zte.com.cn>
-To: <palmer@dabbelt.com>, <alistair.francis@wdc.com>, <liwei1518@gmail.com>,
- <daniel.barboza@oss.qualcomm.com>, <zhiwei_liu@linux.alibaba.com>,
- <chao.liu.zevorn@gmail.com>
-Cc: <qemu-riscv@nongnu.org>, <qemu-devel@nongnu.org>
-Subject: =?UTF-8?B?W1BBVENIXSBody9pbnRjOiBGaXggS1ZNIFZNIHN0YXJ0IGZhaWx1cmUgd2hlbiBBSUEgaXMgY29uZmlndXJlZCBhcyBhcGxpYy1pbXNpYw==?=
-Content-Type: text/plain;
-	charset="UTF-8"
-X-MAIL: mse-fl2.zte.com.cn 6513GacE027226
-X-TLS: YES
-X-ENVELOPE-SENDER: liu.xuemei1@zte.com.cn
-X-SOURCE-IP: 10.5.228.133 unknown Mon, 01 Jun 2026 11:16:44 +0800
-X-CLEAN: YES
-X-Fangmail-Anti-Spam-Filtered: true
-X-Fangmail-MID-QID: 6A1CF99C.000/4gTJz065H4z5B13X
-Received-SPF: pass client-ip=160.30.148.34;
- envelope-from=liu.xuemei1@zte.com.cn; helo=mxhk.zte.com.cn
-X-Spam_score_int: -8
-X-Spam_score: -0.9
-X-Spam_bar: /
-X-Spam_report: (-0.9 / 5.0 requ) BAYES_00=-1.9, CTE_8BIT_MISMATCH=1,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- UNPARSEABLE_RELAY=0.001 autolearn=no autolearn_force=no
+ (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
+ id 1wTtAy-00017f-BD
+ for qemu-devel@nongnu.org; Sun, 31 May 2026 23:18:52 -0400
+Received: from mail-ed1-x52b.google.com ([2a00:1450:4864:20::52b])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
+ id 1wTtAw-0008Qx-Ly
+ for qemu-devel@nongnu.org; Sun, 31 May 2026 23:18:52 -0400
+Received: by mail-ed1-x52b.google.com with SMTP id
+ 4fb4d7f45d1cf-68719234fd8so3431916a12.3
+ for <qemu-devel@nongnu.org>; Sun, 31 May 2026 20:18:49 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1780283928; cv=none;
+ d=google.com; s=arc-20240605;
+ b=hnvsW0umbf06WGYhO/7UkGYpJWXEickiYTsITigfGZbIew5MhOjfZGDb5OzVnTcuUr
+ yarmdpoM2Rx8DEVB2QM63VgAatKHFhnrAmtZkofmQMe+llzof6E7awiQa/+MsVvvyeKL
+ SDrvOvvmcfyUQ8MlHUq+x8ava0KrmR31Nb9xLa61Cq6GFJl0qqdvfyI9AqWPqETtV7W0
+ b0niK0aOm6IB3DbLhGu0Z/RY7rWDGXLBRrDhQe/gw8MJLrACnvmhANqzPjWYDI4QjuAM
+ x8irDS0QTsd9ewB87uVjZzl271x1vM/TtBOlc1QD5lhXK10FTA8UMHZTYRii7bBjRXhT
+ 383g==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
+ s=arc-20240605; 
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:dkim-signature;
+ bh=ZYbT2BfM+E2WrII7NZWnao+oh21andYNC8XR6r7/ckg=;
+ fh=oW2qxBvETIKWy8k3OLD7/ksC+fNOktyr9NthcLPsMsY=;
+ b=eSFVeiqyTZp6q638hJmZ7V19dmmll98DeOv+pfcXzCB189Sb1q/nbB5avdCoPwTRY4
+ ODrrsqqEjiEFiJok5p42LxpfgwJLOJNFPOw/Ca6c1/66bo1vBU2cUiEHUfctpKtchLBH
+ G7qEqtg0DLu3sbFPQIdxwkrcsb9DsJZGoKnlRxYnkUBSZ0YkC8y39SSu4aHSFFxR6MOe
+ kVDg/z5hjc9D8TBB0RuKGFcJSFresUx2RSuiGkcbtoXbzsqmd2k+tZfA4yd/MxWzut8U
+ Uxk2KOBoC81C9U14qSHxh7uclJKLcslmRazlWi4/jmPbpD1Vq6y5edzGzdCDMZZN3fPJ
+ vb3w==; darn=nongnu.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=gmail.com; s=20251104; t=1780283928; x=1780888728; darn=nongnu.org;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=ZYbT2BfM+E2WrII7NZWnao+oh21andYNC8XR6r7/ckg=;
+ b=d5QC7TGIHLycEBfbUmIdDcGPqXHLcSu1l4JRvzLvA0lSE2b0GJHuiauH6BHIyJxzNr
+ DS2g+yR6OVrg8pVpatIk/A75Fuc8nUJcIDFWy0LLpU66nEMFZjt/9tLG+5n1wszUyiEd
+ BHM+4ieEreThNXzus3P4t99+KC5u86BTXkCPzmUqi/uFvTtcCwa0dyKokzuzeQW2okfa
+ aqnaTBMiKuBZKL+qggMHsFvuTlXnFfG0eQAu9PvUCFI+aJZNRAKa3uz75zGRGkKrMz07
+ f6364oGBHTQLVd58xjtiu5ra0dpIZyq0mXOaj6HHOepAiGmgNDoeKrt9b7LlVb9Td08H
+ P0qw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1780283928; x=1780888728;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=ZYbT2BfM+E2WrII7NZWnao+oh21andYNC8XR6r7/ckg=;
+ b=gA30tQYxfwjFIOacHqvjxj/TVtUB+9xlvOI+HtVUawM5cfb2+a7wGovSvIUcmOIs59
+ hDLaLcBkDZxuEL42RhPQ5C7YwDagtFnXLwUbR70XJ2zODDrJUVBSGAhoHxuGqIQxG9Sh
+ 56vksYpJ9fAlDvtAgA5Mt6J5CCPsLlBm9xP5sKcdvZyRWvuEusmMoIy2ObivMnaY3c4M
+ TA0cgYqP17Mp5tmVxchZima1pJsR3otV3JPOmCTdBkdN2b9+7ixmHFox7UtoGpEE8hN4
+ mwI6deAz9m4td29lTK5obeHASvp2U07+oAewlUJWGq6BoNm/CoRqYb5Ml7gEZvhU8B/W
+ I61A==
+X-Gm-Message-State: AOJu0YzdL3Pm5JVr+NIrm/J40+nDyAEkcvr7I+vYIV95tvHOpvqqhnXp
+ vNvUZ8Va2OJVApTop38/BQJDznPEwO4v04rZbKK2F9JN4VM3Gm9oSmEGxTa1hsh6eRjdhv6YiaI
+ a4wU6A83Jwb/2/GWdHa9MoPYbY3RA5kJdLZtMmOI=
+X-Gm-Gg: Acq92OFwD2m/kr18OJfoRqjs4fc8USnAle8wJ40JUmo0cAcBAYz6DbVXrOFEaFEXQT1
+ jO2j2OkSUF994xvPL3KhOZcBnYUPmudReBnOhd7qZIM4fm8HjAuUV1l+MAWvHyRyX6tTbPaPqV9
+ Irp0zhuliLtHW5FLOhHzoaB0iiuOR77FFepPC2OWFDl3C/mnjjNLtb4VXxtk3YvPJmlSa2zLXjt
+ PVoTVWVwhPylNV3tiaJhwfdhL03j2sG2dSM8z4YeJXpeeENSRUxoFZ/ITLfcoj1OVgYL6phakKr
+ PJK/Wr+PPh8ZBqNPSaISNGHs/U9kpzk3HaMZc/InnEv95l9O
+X-Received: by 2002:a17:907:d9e:b0:bce:80db:77ef with SMTP id
+ a640c23a62f3a-beab3852a00mr466063466b.43.1780283927934; Sun, 31 May 2026
+ 20:18:47 -0700 (PDT)
+MIME-Version: 1.0
+References: <20241231032654.133039-1-frank.chang@sifive.com>
+ <20241231032654.133039-3-frank.chang@sifive.com>
+ <CAKmqyKNvZQ2XEAgwCDpOHVfV_NPnmMBD+ZV2q5dRAhoaKcpvug@mail.gmail.com>
+ <CAE_xrPh=Bcq8f3Jho0tcZWzJ4zxrNuKPtONW7fgKAvKKadOzCg@mail.gmail.com>
+In-Reply-To: <CAE_xrPh=Bcq8f3Jho0tcZWzJ4zxrNuKPtONW7fgKAvKKadOzCg@mail.gmail.com>
+From: Alistair Francis <alistair23@gmail.com>
+Date: Mon, 1 Jun 2026 13:18:21 +1000
+X-Gm-Features: AVHnY4JSwS-sxDAPxTIVn-HbPl8nQo4mTv5CDW05WTTloJ0GCSCKdF-Eh5jLHng
+Message-ID: <CAKmqyKNsiNr8rdrOr4c0n64p+k8GR-8mjdhm3vBredWknOERUw@mail.gmail.com>
+Subject: Re: [PATCH v11 2/6] target/riscv: Add Smrnmi CSRs
+To: Frank Chang <frank.chang@sifive.com>
+Cc: qemu-devel@nongnu.org, qemu-riscv@nongnu.org, 
+ Palmer Dabbelt <palmer@dabbelt.com>,
+ Alistair Francis <alistair.francis@wdc.com>, 
+ Bin Meng <bmeng.cn@gmail.com>, Weiwei Li <liwei1518@gmail.com>, 
+ Daniel Henrique Barboza <dbarboza@ventanamicro.com>,
+ Liu Zhiwei <zhiwei_liu@linux.alibaba.com>, Tommy Wu <tommy.wu@sifive.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2a00:1450:4864:20::52b;
+ envelope-from=alistair23@gmail.com; helo=mail-ed1-x52b.google.com
+X-Spam_score_int: -17
+X-Spam_score: -1.8
+X-Spam_bar: -
+X-Spam_report: (-1.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -73,129 +124,83 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Xuemei Liu <liu.xuemei1@zte.com.cn>
-
-Since commits 99bfcd329a ("hw/intc: riscv_aplic: Add reset API to APLIC")
-and 766391483b ("hw/intc: riscv_imsic: Add reset API to IMSIC"), when KVM
-acceleration is used and AIA is configured as aplic-imsic, the APLIC and
-IMSIC devices are not emulated (they are handled in-kernel). In such
-cases, the realize functions do not allocate memory for their internal
-register state, leaving the corresponding pointers NULL.
-
-The reset functions riscv_aplic_reset_enter() and riscv_imsic_reset_enter()
-subsequently attempt to access these NULL pointers (e.g., via memset),
-causing a segmentation fault and VM start failure.
-
-Fix this by guarding the reset operations with condition checks that
-skip the emulated‑specific logic when the in‑kernel mode is active:
-- For APLIC, check riscv_use_emulated_aplic(aplic->msimode).
-- For IMSIC, check !kvm_irqchip_in_kernel().
-
-Fixes: 99bfcd329a ("hw/intc: riscv_aplic: Add reset API to APLIC")
-Fixes: 766391483b ("hw/intc: riscv_imsic: Add reset API to IMSIC")
-
-Signed-off-by: Xuemei Liu <liu.xuemei1@zte.com.cn>
----
- hw/intc/riscv_aplic.c | 52 ++++++++++++++++++++++---------------------
- hw/intc/riscv_imsic.c | 16 +++++++------
- 2 files changed, 36 insertions(+), 32 deletions(-)
-
-diff --git a/hw/intc/riscv_aplic.c b/hw/intc/riscv_aplic.c
-index c2c67c29e6..0f61b67fc5 100644
---- a/hw/intc/riscv_aplic.c
-+++ b/hw/intc/riscv_aplic.c
-@@ -910,35 +910,37 @@ static void riscv_aplic_reset_enter(Object *obj, ResetType type)
-     RISCVAPLICState *aplic = RISCV_APLIC(obj);
-     int i;
-
--    aplic->domaincfg = 0;
--    memset(aplic->sourcecfg, 0, sizeof(uint32_t) * aplic->num_irqs);
--    memset(aplic->target, 0, sizeof(uint32_t) * aplic->num_irqs);
--    if (!aplic->msimode) {
--        for (i = 0; i < aplic->num_irqs; i++) {
--            aplic->target[i] = 1;
-+    if (riscv_use_emulated_aplic(aplic->msimode)) {
-+        aplic->domaincfg = 0;
-+        memset(aplic->sourcecfg, 0, sizeof(uint32_t) * aplic->num_irqs);
-+        memset(aplic->target, 0, sizeof(uint32_t) * aplic->num_irqs);
-+        if (!aplic->msimode) {
-+            for (i = 0; i < aplic->num_irqs; i++) {
-+                aplic->target[i] = 1;
-+            }
-         }
--    }
-
--    for (i = 0; i < aplic->num_irqs ; i++) {
--        riscv_aplic_set_enabled_raw(aplic, i, false);
--    }
--
--    /* Need to unlock [ms]msicfgaddrh.L */
--    aplic->mmsicfgaddr = 0;
--    aplic->mmsicfgaddrH = 0;
--    aplic->smsicfgaddr = 0;
--    aplic->smsicfgaddrH = 0;
--
--    if (!aplic->msimode) {
--        /* Reset IDC registers only in non-MSI mode */
--        for (i = 0; i < aplic->num_harts; i++) {
--            aplic->idelivery[i] = 0;
--            aplic->iforce[i] = 0;
--            aplic->ithreshold[i] = 0;
-+        for (i = 0; i < aplic->num_irqs ; i++) {
-+            riscv_aplic_set_enabled_raw(aplic, i, false);
-         }
-
--        for (i = 0; i < aplic->num_harts; i++) {
--            qemu_irq_lower(aplic->external_irqs[i]);
-+        /* Need to unlock [ms]msicfgaddrh.L */
-+        aplic->mmsicfgaddr = 0;
-+        aplic->mmsicfgaddrH = 0;
-+        aplic->smsicfgaddr = 0;
-+        aplic->smsicfgaddrH = 0;
+On Wed, May 27, 2026 at 6:23=E2=80=AFPM Frank Chang <frank.chang@sifive.com=
+> wrote:
+>
+> Hi Alistair,
+>
+> On Wed, May 27, 2026 at 8:57=E2=80=AFAM Alistair Francis <alistair23@gmai=
+l.com> wrote:
+>>
+>> On Tue, Dec 31, 2024 at 1:28=E2=80=AFPM <frank.chang@sifive.com> wrote:
+>> >
+>> > From: Tommy Wu <tommy.wu@sifive.com>
+>> >
+>> > The Smrnmi extension adds the 'mnscratch', 'mnepc', 'mncause',
+>> > 'mnstatus' CSRs.
+>> >
+>> > Signed-off-by: Frank Chang <frank.chang@sifive.com>
+>> > Signed-off-by: Tommy Wu <tommy.wu@sifive.com>
+>> > Reviewed-by: Alistair Francis <alistair.francis@wdc.com>
+>> > ---
+>> >  target/riscv/cpu.c      |  5 +++
+>> >  target/riscv/cpu.h      |  7 ++++
+>> >  target/riscv/cpu_bits.h | 11 ++++++
+>> >  target/riscv/csr.c      | 82 ++++++++++++++++++++++++++++++++++++++++=
 +
-+        if (!aplic->msimode) {
-+            /* Reset IDC registers only in non-MSI mode */
-+            for (i = 0; i < aplic->num_harts; i++) {
-+                aplic->idelivery[i] = 0;
-+                aplic->iforce[i] = 0;
-+                aplic->ithreshold[i] = 0;
-+            }
-+
-+            for (i = 0; i < aplic->num_harts; i++) {
-+                qemu_irq_lower(aplic->external_irqs[i]);
-+            }
-         }
-     }
- }
-diff --git a/hw/intc/riscv_imsic.c b/hw/intc/riscv_imsic.c
-index ac59496c22..6dbbc152a2 100644
---- a/hw/intc/riscv_imsic.c
-+++ b/hw/intc/riscv_imsic.c
-@@ -347,15 +347,17 @@ static void riscv_imsic_reset_enter(Object *obj, ResetType type)
-     RISCVIMSICState *imsic = RISCV_IMSIC(obj);
-     int i;
+>> >  4 files changed, 105 insertions(+)
+>> >
+>> > diff --git a/target/riscv/cpu.c b/target/riscv/cpu.c
+>> > index 58bb5196a8..c5d5c2f7df 100644
+>> > --- a/target/riscv/cpu.c
+>> > +++ b/target/riscv/cpu.c
+>> > @@ -1127,6 +1127,11 @@ static void riscv_cpu_reset_hold(Object *obj, R=
+esetType type)
+>> >          riscv_trigger_reset_hold(env);
+>> >      }
+>> >
+>> > +    if (cpu->cfg.ext_smrnmi) {
+>> > +        env->rnmip =3D 0;
+>> > +        env->mnstatus =3D set_field(env->mnstatus, MNSTATUS_NMIE, fal=
+se);
+>> > +    }
+>> > +
+>> >      if (kvm_enabled()) {
+>> >          kvm_riscv_reset_vcpu(cpu);
+>> >      }
+>> > diff --git a/target/riscv/cpu.h b/target/riscv/cpu.h
+>> > index 284b112821..a2cb471b3c 100644
+>> > --- a/target/riscv/cpu.h
+>> > +++ b/target/riscv/cpu.h
+>> > @@ -486,6 +486,13 @@ struct CPUArchState {
+>> >      uint64_t kvm_timer_state;
+>> >      uint64_t kvm_timer_frequency;
+>> >  #endif /* CONFIG_KVM */
+>> > +
+>> > +    /* RNMI */
+>> > +    target_ulong mnscratch;
+>> > +    target_ulong mnepc;
+>> > +    target_ulong mncause; /* mncause without bit XLEN-1 set to 1 */
+>> > +    target_ulong mnstatus;
+>> > +    target_ulong rnmip;
+>>
+>> These have been added to the wrong part of the struct, they should be
+>> above the comment
+>>
+>> /* Fields from here on are preserved across CPU reset. */
+>>
+>> Can you fix this up please?
+>
+>
+> Sure, I can submit a patchset to move these fields above this line.
+>
+> BTW, do we have a plan to support resetting the registers on CPU reset, s=
+imilar to other architectures?
+> E.g., For ARM, it has struct {} end_reset_fields, and the registers are r=
+eset to 0 on CPU reset:
+> https://github.com/qemu/qemu/blob/master/target/arm/cpu.c#L320
 
--    memset(imsic->eidelivery, 0, sizeof(uint32_t) * imsic->num_pages);
--    memset(imsic->eithreshold, 0, sizeof(uint32_t) * imsic->num_pages);
-+    if (!kvm_irqchip_in_kernel()) {
-+        memset(imsic->eidelivery, 0, sizeof(uint32_t) * imsic->num_pages);
-+        memset(imsic->eithreshold, 0, sizeof(uint32_t) * imsic->num_pages);
+I don't have plans, but that is a good idea. Patches welcome :)
 
--    for (i = 0; i < imsic->num_eistate; i++) {
--        imsic->eistate[i] &= ~IMSIC_EISTATE_ENABLED;
--    }
-+        for (i = 0; i < imsic->num_eistate; i++) {
-+            imsic->eistate[i] &= ~IMSIC_EISTATE_ENABLED;
-+        }
-
--    for (i = 0; i < imsic->num_pages; i++) {
--        qemu_irq_lower(imsic->external_irqs[i]);
-+        for (i = 0; i < imsic->num_pages; i++) {
-+            qemu_irq_lower(imsic->external_irqs[i]);
-+        }
-     }
- }
-
--- 
-2.27.0
+Alistair
 
