@@ -4,100 +4,95 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 18B4CCD5BD1
-	for <qemu-devel@archiver.kernel.org>; Mon,  1 Jun 2026 21:55:53 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B01ACCD6E60
+	for <qemu-devel@archiver.kernel.org>; Mon,  1 Jun 2026 21:56:03 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wUAak-0006cI-9j; Mon, 01 Jun 2026 17:54:38 -0400
+	id 1wUAaj-0006cF-Tw; Mon, 01 Jun 2026 17:54:37 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <stefanb@linux.ibm.com>)
- id 1wUAah-0006as-Mp
- for qemu-devel@nongnu.org; Mon, 01 Jun 2026 17:54:35 -0400
+ id 1wUAag-0006aW-9z
+ for qemu-devel@nongnu.org; Mon, 01 Jun 2026 17:54:34 -0400
 Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <stefanb@linux.ibm.com>)
- id 1wUAag-0003rH-0w
- for qemu-devel@nongnu.org; Mon, 01 Jun 2026 17:54:35 -0400
-Received: from pps.filterd (m0360083.ppops.net [127.0.0.1])
+ id 1wUAad-0003qK-Mo
+ for qemu-devel@nongnu.org; Mon, 01 Jun 2026 17:54:34 -0400
+Received: from pps.filterd (m0353729.ppops.net [127.0.0.1])
  by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 651FfpOV1648854; Mon, 1 Jun 2026 21:54:32 GMT
+ 651EYswP867987; Mon, 1 Jun 2026 21:54:29 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
- :content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=pp1; bh=Y1iE8V
- 4VOnXJTVnc5bGufKVvHR4Uy6Kg/1WQvhlMlrU=; b=PNGBQ7xXjIHUSI1ebQqfiP
- W/LzuXqWYGI9ZWSnAy976QSB+oVAfhD1um25pwmMhpPMflsfy3Vw1FrxDezPVBq/
- k9u8MuVTvI6KR/bc+eehKxX2y8+lKy5sDZ5QSmKsi+aZQFWtH7XHqtRAaQPjNNqL
- i1NL9CbGwb7w0LLG6u+jS+3pLarRbqnIUUwj6TWhgrVzn5mWqv8mUUYTxiUrxjmk
- pxpguHk0FXOiv7OxQcFHfBpLj62K1PCkMWYxAVEmejs18+mrkixWk6VlPgFzVI0e
- vU3e8WSt+PSWgTx+/tJkIFVuVziGW6OCNd4Smyht4WFWXm4Ot70RRXmfXe32HkSw
- ==
-Received: from ppma23.wdc07v.mail.ibm.com
- (5d.69.3da9.ip4.static.sl-reverse.com [169.61.105.93])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4efqd434he-1
+ :content-transfer-encoding:date:from:in-reply-to:message-id
+ :mime-version:references:subject:to; s=pp1; bh=AVcIyrH3cFL80WBc2
+ kgpR87P3qLBk9N1sWKrDncjlbs=; b=qFHbgBxP5EQ7LjVMWZ495Wn5g8AwuROsE
+ AruuQDsF7p1fHgyuI0Ys3HGGsP5AhwX4dAqDT15A6GJDWutjISYGSE91hLeTPwvE
+ yfykTcxNt9yHeauVc0qEBdUE9rc5g7mKyKmZ2jrLWXb/L26kNThTAPwv/5J34ojo
+ TqZY2o8w3eFtdJWAe77B5A3cXGZsZ1BnYd1EpdTgZrGk9NUvicB/ekt2+jqADHPa
+ BEvaQdULsUsjL/ZVWR3u0Gll0yUGcVpIT3EjzgfnoGHfrhRocSagIAcisUTpTgvh
+ g6hueKN5odEf2/j/16+QdBo03hdcPFQZ6n8gEr6B08FxWwbEsbarw==
+Received: from ppma22.wdc07v.mail.ibm.com
+ (5c.69.3da9.ip4.static.sl-reverse.com [169.61.105.92])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4efqjq32d1-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Mon, 01 Jun 2026 21:54:31 +0000 (GMT)
-Received: from pps.filterd (ppma23.wdc07v.mail.ibm.com [127.0.0.1])
- by ppma23.wdc07v.mail.ibm.com (8.18.1.7/8.18.1.7) with ESMTP id 651Ls8vF002482;
- Mon, 1 Jun 2026 21:54:30 GMT
-Received: from smtprelay07.wdc07v.mail.ibm.com ([172.16.1.74])
- by ppma23.wdc07v.mail.ibm.com (PPS) with ESMTPS id 4egbqh869r-1
+ Mon, 01 Jun 2026 21:54:29 +0000 (GMT)
+Received: from pps.filterd (ppma22.wdc07v.mail.ibm.com [127.0.0.1])
+ by ppma22.wdc07v.mail.ibm.com (8.18.1.7/8.18.1.7) with ESMTP id 651Ls63d005268;
+ Mon, 1 Jun 2026 21:54:28 GMT
+Received: from smtprelay05.wdc07v.mail.ibm.com ([172.16.1.72])
+ by ppma22.wdc07v.mail.ibm.com (PPS) with ESMTPS id 4egakvrctb-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Mon, 01 Jun 2026 21:54:30 +0000 (GMT)
+ Mon, 01 Jun 2026 21:54:28 +0000 (GMT)
 Received: from smtpav03.wdc07v.mail.ibm.com (smtpav03.wdc07v.mail.ibm.com
  [10.39.53.230])
- by smtprelay07.wdc07v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 651LsUrO9962150
+ by smtprelay05.wdc07v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 651LsSfv3342870
  (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Mon, 1 Jun 2026 21:54:30 GMT
+ Mon, 1 Jun 2026 21:54:28 GMT
 Received: from smtpav03.wdc07v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 394FE5805A;
- Mon,  1 Jun 2026 21:54:30 +0000 (GMT)
+ by IMSVA (Postfix) with ESMTP id E977258054;
+ Mon,  1 Jun 2026 21:54:27 +0000 (GMT)
 Received: from smtpav03.wdc07v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 912FF58054;
- Mon,  1 Jun 2026 21:54:29 +0000 (GMT)
+ by IMSVA (Postfix) with ESMTP id 7260A5805C;
+ Mon,  1 Jun 2026 21:54:27 +0000 (GMT)
 Received: from sbct-3.pok.ibm.com (unknown [9.47.158.153])
  by smtpav03.wdc07v.mail.ibm.com (Postfix) with ESMTP;
- Mon,  1 Jun 2026 21:54:29 +0000 (GMT)
+ Mon,  1 Jun 2026 21:54:27 +0000 (GMT)
 From: Stefan Berger <stefanb@linux.ibm.com>
 To: qemu-devel@nongnu.org
-Cc: peter.maydell@linaro.org, Arun Menon <armenon@redhat.com>,
- =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
- Peter Xu <peterx@redhat.com>, Stefan Berger <stefanb@linux.ibm.com>
-Subject: [PULL v1 08/16] ui/vdagent: Use VMSTATE_GBYTEARRAY to safely migrate
- outbuf
-Date: Mon,  1 Jun 2026 17:54:01 -0400
-Message-ID: <20260601215410.517009-9-stefanb@linux.ibm.com>
+Cc: peter.maydell@linaro.org, Stefan Berger <stefanb@linux.ibm.com>,
+ Arun Menon <armenon@redhat.com>
+Subject: [PULL v1 05/16] tests: Check whether the I2C master flag is set
+Date: Mon,  1 Jun 2026 17:53:58 -0400
+Message-ID: <20260601215410.517009-6-stefanb@linux.ibm.com>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260601215410.517009-1-stefanb@linux.ibm.com>
 References: <20260601215410.517009-1-stefanb@linux.ibm.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 X-TM-AS-GCONF: 00
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNjAxMDIxMSBTYWx0ZWRfX0SnBHVIdvDHp
- f7eAbny0YrzfNsufEjF5rrAaUIn72QW464D8whblYrECRLqNm2PZGwQR+xDIXwRFdLDeEdiS3wU
- VQsknH2b6BO2f682USZ39ta9kFBYj6WoEbA4SoYBxX+1Bz6k2lJdSaxywFxnc0QWytM1W19BMoc
- y+K1wj8EgrZ0IGZz84tEdejbSkcnxV1ah1yBObyLnYwIAcCIdJTO6fEaVDxMiOisj43e3DONpEH
- VP+lObIA2ZCaVG/OBLrP4n3vQB1bzCiVFUCVTa4/GyrV2vfRYTDLnPsyaav9tO6SXNv56Iw75D5
- 3cFJs8cl9OT1iHa4ruM/FpRezIMEK2BTQG84VOfNqaQgXzOnaAboqjHuUW1IpEBZy0ir209nUhg
- 47lFM+KerQB7XIpPAaPTD4MYK64bbDRg9qKWXz5VFZMcq+3XJp7LB8pnxE0va+2IZhVgXZcboGo
- LNeUD3y0kMGV5JwVdOw==
-X-Proofpoint-GUID: cf4I66GbT05Bcj1L5KVJYVTYMJMKuIiw
-X-Proofpoint-ORIG-GUID: cf4I66GbT05Bcj1L5KVJYVTYMJMKuIiw
-X-Authority-Analysis: v=2.4 cv=DZknbPtW c=1 sm=1 tr=0 ts=6a1dff97 cx=c_pps
- a=3Bg1Hr4SwmMryq2xdFQyZA==:117 a=3Bg1Hr4SwmMryq2xdFQyZA==:17
- a=IkcTkHD0fZMA:10 a=FelO9ux0wxsA:10 a=VkNPw1HP01LnGYTKEx00:22
- a=RnoormkPH1_aCDwRdu11:22 a=iQ6ETzBq9ecOQQE5vZCe:22 a=VwQbUJbxAAAA:8
- a=20KFwNOVAAAA:8 a=VnNF1IyMAAAA:8 a=LLg8hcPoKadeHjzegnYA:9 a=3ZKOabzyN94A:10
- a=QEXdDO2ut3YA:10
+X-Proofpoint-ORIG-GUID: DWgbgdj3gq5xZhXMVX7Zg_hnDwjVjX3Y
+X-Proofpoint-GUID: DWgbgdj3gq5xZhXMVX7Zg_hnDwjVjX3Y
+X-Authority-Analysis: v=2.4 cv=bcVbluPB c=1 sm=1 tr=0 ts=6a1dff95 cx=c_pps
+ a=5BHTudwdYE3Te8bg5FgnPg==:117 a=5BHTudwdYE3Te8bg5FgnPg==:17
+ a=FelO9ux0wxsA:10 a=VkNPw1HP01LnGYTKEx00:22 a=RnoormkPH1_aCDwRdu11:22
+ a=uAbxVGIbfxUO_5tXvNgY:22 a=VwQbUJbxAAAA:8 a=VnNF1IyMAAAA:8 a=20KFwNOVAAAA:8
+ a=hDG30pTYrb-JhymLzFwA:9
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNjAxMDIxMSBTYWx0ZWRfX9e7EUFWhwECG
+ GgMUiL/1lKneu/xee8vBzdqnQS4zs9dqrpIev+JMw5J5wYBgtyO7SlhHsAK7/Gt53GKv6qkvJSA
+ S4NaiY6zq/53XjnhnCjSJgh4n2C2D9VYg8+hnB2CwDqscDddH4jnAQndCgtKmB77AT3XA2veizn
+ ejXw23ToUBQd/PlT/KdcUaoYUdu0bhEYf2MCGiJaWXW/9OIRIIpwjNfb3XfKBd15DCESooQs5RY
+ wUaTpxVQrFFkkdprDIvXGoz+lAqol3mwBYyENGF3F7QSEV6d2SzVSRb3+VZF7ALo5+sXzJjxYIj
+ 8BdkOrhMwl2YPhLlycDLvyR/t/EEuq+1xxkH6fkgp1Cf8hZjw6cNm17j+5cAi965dGL9GzLGjmH
+ abnZTY9tt6jlF4D3pSEqOUjJ2g4H25u5FedcHW1jALlBxTpsDeVVyH/0VkxqG3dEQ2zGiDdnYPK
+ 3xgjwDUifhKG79FUjUQ==
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.125,FMLib:17.12.100.49
  definitions=2026-06-01_06,2026-05-28_03,2025-10-01_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- spamscore=0 clxscore=1015 suspectscore=0 impostorscore=0 lowpriorityscore=0
- phishscore=0 malwarescore=0 priorityscore=1501 bulkscore=0 adultscore=0
+ impostorscore=0 clxscore=1015 adultscore=0 priorityscore=1501 phishscore=0
+ lowpriorityscore=0 bulkscore=0 malwarescore=0 spamscore=0 suspectscore=0
  classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
  reason=mlx scancount=1 engine=8.22.0-2605210000 definitions=main-2606010211
 Received-SPF: pass client-ip=148.163.156.1; envelope-from=stefanb@linux.ibm.com;
@@ -124,57 +119,45 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Arun Menon <armenon@redhat.com>
+Replace the 'once' variable with a check for whether the master flag is
+set so that the flag can be set when needed.
 
-Migrating a GLib GByteArray is now possible directly using the newly
-introduced VMSTATE_GBYTEARRAY. It uses the standard GLib API calls to
-create the array, or resize it.
-
-This is safer than implementing a C struct and manually updating the
-data and len fields. This commit uses the VMSTATE_GBYTEARRAY in vdagent
-to store the outbuf variable.
-
-Signed-off-by: Arun Menon <armenon@redhat.com>
-Suggested-by: Marc-André Lureau <marcandre.lureau@redhat.com>
-Reviewed-by: Marc-André Lureau <marcandre.lureau@redhat.com>
-Reviewed-by: Peter Xu <peterx@redhat.com>
-Link: https://lore.kernel.org/qemu-devel/20260423105733.113046-3-armenon@redhat.com
+Reviewed-by: Arun Menon <armenon@redhat.com>
+Link: https://lore.kernel.org/qemu-devel/20260429121743.1346635-6-stefanb@linux.ibm.com
 Signed-off-by: Stefan Berger <stefanb@linux.ibm.com>
 ---
- ui/vdagent.c | 13 +------------
- 1 file changed, 1 insertion(+), 12 deletions(-)
+ tests/qtest/qtest_aspeed.c | 9 ++++++---
+ 1 file changed, 6 insertions(+), 3 deletions(-)
 
-diff --git a/ui/vdagent.c b/ui/vdagent.c
-index 8fa325bffa..b9784d4d9b 100644
---- a/ui/vdagent.c
-+++ b/ui/vdagent.c
-@@ -964,17 +964,6 @@ static const VMStateDescription vmstate_chunk = {
-     }
- };
+diff --git a/tests/qtest/qtest_aspeed.c b/tests/qtest/qtest_aspeed.c
+index f6da9adea9..7bf5abb9be 100644
+--- a/tests/qtest/qtest_aspeed.c
++++ b/tests/qtest/qtest_aspeed.c
+@@ -15,18 +15,21 @@
+ #include "qtest_aspeed.h"
+ #include "hw/i2c/aspeed_i2c.h"
  
--static const VMStateDescription vmstate_vdba = {
--    .name = "vdagent/bytearray",
--    .version_id = 0,
--    .minimum_version_id = 0,
--    .fields = (const VMStateField[]) {
--        VMSTATE_UINT32(len, GByteArray),
--        VMSTATE_VBUFFER_ALLOC_UINT32(data, GByteArray, 0, 0, len),
--        VMSTATE_END_OF_LIST()
--    }
--};
--
- struct CBInfoArray {
-     uint32_t n;
-     QemuClipboardInfo cbinfo[QEMU_CLIPBOARD_SELECTION__COUNT];
-@@ -1064,7 +1053,7 @@ static const VMStateDescription vmstate_vdagent = {
-         VMSTATE_UINT32(xsize, VDAgentChardev),
-         VMSTATE_UINT32(xoff, VDAgentChardev),
-         VMSTATE_VBUFFER_ALLOC_UINT32(xbuf, VDAgentChardev, 0, 0, xsize),
--        VMSTATE_STRUCT_POINTER(outbuf, VDAgentChardev, vmstate_vdba, GByteArray),
-+        VMSTATE_GBYTEARRAY(outbuf, VDAgentChardev, 0),
-         VMSTATE_UINT32(mouse_x, VDAgentChardev),
-         VMSTATE_UINT32(mouse_y, VDAgentChardev),
-         VMSTATE_UINT32(mouse_btn, VDAgentChardev),
++static bool aspeed_i2c_is_master_enabled(QTestState *s, uint32_t baseaddr)
++{
++    return qtest_readl(s, baseaddr + A_I2CC_FUN_CTRL) & A_I2CD_MASTER_EN;
++}
++
+ static void aspeed_i2c_startup(QTestState *s, uint32_t baseaddr,
+                                uint8_t slave_addr, uint8_t reg)
+ {
+     uint32_t v;
+-    static int once;
+ 
+-    if (!once) {
++    if (!aspeed_i2c_is_master_enabled(s, baseaddr)) {
+         /* one time: enable master */
+        qtest_writel(s, baseaddr + A_I2CC_FUN_CTRL, 0);
+        v = qtest_readl(s, baseaddr + A_I2CC_FUN_CTRL) | A_I2CD_MASTER_EN;
+        qtest_writel(s, baseaddr + A_I2CC_FUN_CTRL, v);
+-       once = 1;
+     }
+ 
+     /* select device */
 -- 
 2.54.0
 
