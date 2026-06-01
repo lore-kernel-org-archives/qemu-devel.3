@@ -4,74 +4,116 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id AC34ACD6E56
-	for <qemu-devel@archiver.kernel.org>; Mon,  1 Jun 2026 10:07:51 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 81C3DCD6E55
+	for <qemu-devel@archiver.kernel.org>; Mon,  1 Jun 2026 10:34:49 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wTzY9-0000ui-UF; Mon, 01 Jun 2026 06:07:15 -0400
+	id 1wTzy5-0003kj-EC; Mon, 01 Jun 2026 06:34:01 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1wTzXz-0000u3-AF
- for qemu-devel@nongnu.org; Mon, 01 Jun 2026 06:07:05 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <FangSheng.Huang@amd.com>)
+ id 1wTzy3-0003kb-F6
+ for qemu-devel@nongnu.org; Mon, 01 Jun 2026 06:33:59 -0400
+Received: from mail-centralusazon11010017.outbound.protection.outlook.com
+ ([52.101.61.17] helo=DM1PR04CU001.outbound.protection.outlook.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1wTzXw-0005Ee-CI
- for qemu-devel@nongnu.org; Mon, 01 Jun 2026 06:07:02 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1780308419;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=9DPy6D+9qGorVXp/xpY+GuE4b05S2PfuO6qDPxnpEVk=;
- b=YBGxXCj/vc+v2HSlOw6I5Ui6gfRuHo9Gv7vtLDa/mG8/k7/55YL1a05qFkxflE5+ZcG/Zy
- wTZQHz4JyiOQN/FG/Vpcu0xoqbInRkNLcUfez2GnXr0CB1hHLSU8JjlJJmDMrLNE38l89W
- TmpJgX+FcFYTBzJRUbfW3Rt6hDMU79Q=
-Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-43-8MKjhvS0P5u4NK5N9znBlQ-1; Mon,
- 01 Jun 2026 06:06:55 -0400
-X-MC-Unique: 8MKjhvS0P5u4NK5N9znBlQ-1
-X-Mimecast-MFC-AGG-ID: 8MKjhvS0P5u4NK5N9znBlQ_1780308415
-Received: from mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.111])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id C3BE3180047F; Mon,  1 Jun 2026 10:06:54 +0000 (UTC)
-Received: from blackfin.pond.sub.org (unknown [10.44.22.2])
- by mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 135D81800352; Mon,  1 Jun 2026 10:06:54 +0000 (UTC)
-Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
- id A173721E6A01; Mon, 01 Jun 2026 12:06:51 +0200 (CEST)
-From: Markus Armbruster <armbru@redhat.com>
-To: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
-Cc: qemu-devel@nongnu.org,  philmd@linaro.org,
- John Snow <jsnow@redhat.com>, Cleber Rosa <cleber@redhat.com>
-Subject: Re: [PATCH 00/39] MAINTAINERS: Fix F: lines
-In-Reply-To: <d52c0fca-3a8a-4d4f-abff-f772605512b8@oss.qualcomm.com> (Pierrick
- Bouvier's message of "Fri, 22 May 2026 13:18:19 -0700")
-References: <20260521080511.999266-1-armbru@redhat.com>
- <d52c0fca-3a8a-4d4f-abff-f772605512b8@oss.qualcomm.com>
-Date: Mon, 01 Jun 2026 12:06:51 +0200
-Message-ID: <87y0gy8thg.fsf@pond.sub.org>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+ (Exim 4.90_1) (envelope-from <FangSheng.Huang@amd.com>)
+ id 1wTzy0-0005mF-VC
+ for qemu-devel@nongnu.org; Mon, 01 Jun 2026 06:33:58 -0400
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=iOSd7YABCNWO8NxSas0J61ad/WOp10FuRjMEsKHya/JLurjoAaPY7ZmgoLJbW0JNsGgf9yZT3n+tZkKzzGsoUMkEq58DZz75HsVXOosZoPRG5Z4ZkY80SV1JNPWbw+n0OVU/4C2KOi4oZw0HfrCzaDDydzfLLSGajL4tsfaIkUTzOO3MlgzimrU13rW00qGcxh5NKrUDRWTGVP2oJ/ZhCEeBjZKXFo4O/ehO9WV1dBH1kohYJe0/28mAAlNc3BIE1L1ZhIj5Zn9SIqUKrdkiEVnlzSP+dkJ5Hu/tcYo4H2e9kivvX3CjOJ6/TY5JD/uHpV4oiCr8+Q6T9VT00R2DDg==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=Z7b0oCGIMyf6Z+zRIK3VSX1cTY/UzV4q6KNCeAcM9Zc=;
+ b=K+bFhHfc00GiYTcKeXAkyFZRo7yoB4s+qHpYbPWWrVuXbR4lqYijj73lBOyBtk1gbkgbvRr5XbGPNi0ZCotwediTbgvnGSj4uRRnpL15K6ZxumQ+EB0llKK+siYnFaQ4CoDpNqDxjETEr9yoy85cUfmExpsiRzclJRDsEw7XGnEETYldWR41W/24VtN/ap2F+fO5woNWriAclYEdEGo2e8wnZmSWUnQjO/2qZWL+wzIe7SjqGz/DPp4N1v4bsvvT+5596Pfr1MLKzqZlLRZMvArp+g4OALA589f5Jf/iBijoQaKPSTQ2JZzUtnIozr7iXmlVoE/C1qKALn6YaSZ3sQ==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass (sender ip is
+ 165.204.84.17) smtp.rcpttodomain=redhat.com smtp.mailfrom=amd.com; dmarc=pass
+ (p=quarantine sp=quarantine pct=100) action=none header.from=amd.com;
+ dkim=none (message not signed); arc=none (0)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=amd.com; s=selector1; 
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=Z7b0oCGIMyf6Z+zRIK3VSX1cTY/UzV4q6KNCeAcM9Zc=;
+ b=gBtUTe+J4OmcjtiCN3ELFSdJNNsGB8X6Jdft0lM83SS6ul7h3qt4WtTXiAAo0NQ3fmEGt52H80aCBJlweBjiTP22rnZ/nLLeop/iUtHzrITtSr4rZsLlmSsbiloOgAYWfauHmKpeCBxnhn1EQwur08h3x8G7q6mjjlL3WYEF9lc=
+Received: from SJ2PR07CA0024.namprd07.prod.outlook.com (2603:10b6:a03:505::14)
+ by PH7PR12MB5832.namprd12.prod.outlook.com (2603:10b6:510:1d7::6)
+ with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.71.15; Mon, 1 Jun 2026
+ 10:28:47 +0000
+Received: from MW1PEPF0001615A.namprd21.prod.outlook.com
+ (2603:10b6:a03:505:cafe::15) by SJ2PR07CA0024.outlook.office365.com
+ (2603:10b6:a03:505::14) with Microsoft SMTP Server (version=TLS1_3,
+ cipher=TLS_AES_256_GCM_SHA384) id 15.21.71.16 via Frontend Transport; Mon, 1
+ Jun 2026 10:28:47 +0000
+X-MS-Exchange-Authentication-Results: spf=pass (sender IP is 165.204.84.17)
+ smtp.mailfrom=amd.com; dkim=none (message not signed)
+ header.d=none;dmarc=pass action=none header.from=amd.com;
+Received-SPF: Pass (protection.outlook.com: domain of amd.com designates
+ 165.204.84.17 as permitted sender) receiver=protection.outlook.com;
+ client-ip=165.204.84.17; helo=satlexmb07.amd.com; pr=C
+Received: from satlexmb07.amd.com (165.204.84.17) by
+ MW1PEPF0001615A.mail.protection.outlook.com (10.167.249.85) with Microsoft
+ SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.21.92.0 via Frontend Transport; Mon, 1 Jun 2026 10:28:46 +0000
+Received: from satlexmb08.amd.com (10.181.42.217) by satlexmb07.amd.com
+ (10.181.42.216) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.2562.41; Mon, 1 Jun
+ 2026 05:28:46 -0500
+Received: from [10.65.96.188] (10.180.168.240) by satlexmb08.amd.com
+ (10.181.42.217) with Microsoft SMTP Server id 15.2.2562.41 via Frontend
+ Transport; Mon, 1 Jun 2026 05:28:44 -0500
+Message-ID: <78d0eeee-d6b4-4d7d-8219-36ddb5057721@amd.com>
+Date: Mon, 1 Jun 2026 18:28:44 +0800
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.111
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=armbru@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v8 1/1] hw/mem: add spm-memory device for Specific Purpose
+ Memory
+To: Igor Mammedov <imammedo@redhat.com>
+CC: <qemu-devel@nongnu.org>, <david@kernel.org>, <gourry@gourry.net>,
+ <Zhigang.Luo@amd.com>, <Lianjie.Shi@amd.com>
+References: <20260527074215.229119-1-FangSheng.Huang@amd.com>
+ <20260527074215.229119-2-FangSheng.Huang@amd.com>
+ <20260601105057.2d764e55@imammedo>
+From: "Huang, FangSheng (Jerry)" <FangSheng.Huang@amd.com>
+In-Reply-To: <20260601105057.2d764e55@imammedo>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Transfer-Encoding: 7bit
+X-EOPAttributedMessage: 0
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: MW1PEPF0001615A:EE_|PH7PR12MB5832:EE_
+X-MS-Office365-Filtering-Correlation-Id: cc91a871-60d7-4111-cf1a-08debfc89059
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam: BCL:0;
+ ARA:13230040|376014|36860700016|1800799024|82310400026|22082099003|18002099003|6133799003|3023799007|4143699003|11063799006|56012099006;
+X-Microsoft-Antispam-Message-Info: N3CpE+bh8iFtecpVnsLDZ+G/pIAq4MKZldQAWbBFSw2r4pph/Z1nE3tYZFRJe3d5C5SRYzLafcZ/WjpFThsjAVr5LfMcIm5ba5+6EskziW2FNUqq2faAizFsUzj2it7N0VkA/D3MVpxim7AlLUgMQuXkdoRLHhcksuzGoziUVaBH+AfCuxRE8zOya56xm5UlJXWEX9DyNFZ6m4hvtSw+3pFO8VKxuDxU0eG8mXOS2/VVu+R4SxHehGba8TmATIA0Bz6giU0J7EV+IYP1wbSP1s0+jR/l8JoqtVGuqgfhD3xG5NuyTWb+a/ygvwbNs85ii4ltupT572Mb/7etCEKnC1FMK7e1qL3nldLpNVVR0nIL/4ScDLdIxOCHhJ2fFaXkZmmzyGZaQ5Kl981YCdccZXBCw84b6fGYE4l7u4xZlQs2+2b1GCSvnqiprNUX7o1fldaobIa0O1aIPutIWAK40dvvxzn8EhelrNpLGtZb8vpZOs9zbUEe0+q3uSsbQKeU+FxUsMp47SoKUnnu7yEqqK4avUbpVNFmLVhIn/UYo6l7vJJaultDm+oTXIbH4bjXxEYMuki4EgE5Df1U7dfpKmpal7giCDW+JyPnDzvtvWjyf+4lpLGzsRl46Q1JIif7grzxzrrUISm+tSf0KcJIs+1TqWIMoIQ3pl3xA7OUxMMs5ZkdgrYuHmGMyY8djszDhdRHDeXKbXD/Cq49q1xTSy1t55bJbFHk7SqqNyenUN8=
+X-Forefront-Antispam-Report: CIP:165.204.84.17; CTRY:US; LANG:en; SCL:1; SRV:;
+ IPV:NLI; SFV:NSPM; H:satlexmb07.amd.com; PTR:InfoDomainNonexistent; CAT:NONE;
+ SFS:(13230040)(376014)(36860700016)(1800799024)(82310400026)(22082099003)(18002099003)(6133799003)(3023799007)(4143699003)(11063799006)(56012099006);
+ DIR:OUT; SFP:1101; 
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0: Q/tUABM1ROwa3hpiBYEXOBEcR/Bm0Fsyzvomi0DS+Fnm/bN1BkKNA24j2SdRAuQL0Fh682fdZntncbYnQWNVggYpE/lzJ9EBh5GoV4t37NP1N1o1ZSTSYnLXTFb+fGlmJW5Fb149l2G2ihQ87piVwTqDFPso3jMx1uTIrbqZmfCMj2nNZjzkGUHWNW2l00m1WmsKYeeQeWHF4QHWELUsJUSJ1LwcKFuRMk8kxaGOt4TBimdZrlzfMgNcHZ7rI4YUOdCNYW+EV8qNDSJTOU9koaKzdZLo7zXaqZ52xEUjN7Ebq1FRNoQrbkfdhg6LoZucdHY/UGCI5Dxn2NVLBaWycszGebaNYbzCtvRhAUB23YYNOM4VujBHcgSayQCygBXfATv6TXm/w20jsJrJepaKouPH9oG3p0ULvYoSqUZl6cDzC7bxZO8pacqcElZG/fm3
+X-OriginatorOrg: amd.com
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 01 Jun 2026 10:28:46.8012 (UTC)
+X-MS-Exchange-CrossTenant-Network-Message-Id: cc91a871-60d7-4111-cf1a-08debfc89059
+X-MS-Exchange-CrossTenant-Id: 3dd8961f-e488-4e60-8e11-a82d994e183d
+X-MS-Exchange-CrossTenant-OriginalAttributedTenantConnectingIp: TenantId=3dd8961f-e488-4e60-8e11-a82d994e183d; Ip=[165.204.84.17];
+ Helo=[satlexmb07.amd.com]
+X-MS-Exchange-CrossTenant-AuthSource: MW1PEPF0001615A.namprd21.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Anonymous
+X-MS-Exchange-CrossTenant-FromEntityHeader: HybridOnPrem
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: PH7PR12MB5832
+Received-SPF: permerror client-ip=52.101.61.17;
+ envelope-from=FangSheng.Huang@amd.com;
+ helo=DM1PR04CU001.outbound.protection.outlook.com
 X-Spam_score_int: -24
 X-Spam_score: -2.5
 X-Spam_bar: --
 X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.445,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001, SPF_HELO_PASS=-0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -87,314 +129,185 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com> writes:
+Hi Igor,
 
-> Hi Markus,
+Thanks for the detailed review.  Inline.
+
+On 6/1/2026 4:50 PM, Igor Mammedov wrote:
+> On Wed, 27 May 2026 15:42:15 +0800
+> fanhuang <FangSheng.Huang@amd.com> wrote:
+> 
+>> Introduce a TYPE_MEMORY_DEVICE subclass `spm-memory` for boot-time
+>> SOFT_RESERVED memory exposed to the guest with a per-device NUMA
+>> proximity domain.
+>>
+>> The device targets accelerator memory (HBM and similar) that the
+>> firmware hands to the guest OS as SOFT_RESERVED memory, so a driver
+>> in the guest -- rather than the kernel's general allocator -- owns
+>> the range.  Per-device NUMA placement matches the natural shape of
+>> multiple HBM blocks (one block == one driver claim == one PXM).
+>>
+>> [...]
+>>
+>> CONFIG_SPM_MEMORY is selected by the i386 PC and Q35 machines
+>> (same as DIMM).
+> 
+> this pass is mostly high level review.
+> patch is doing too much things at once,
+> Suggest to split it on several pieces,
+>   1. introducing spm-memory boiler plate code
+>   2. SRAT mangling
+>   3. adding E820 entry
 >
-> On 5/21/2026 1:04 AM, Markus Armbruster wrote:
->> Quite a few F: lines don't match any files.  The quick & dirty check
->>=20
->>     $ ls `sed -n 's/^F: *//p' MAINTAINERS ` >/dev/null
->>=20
->> finds about fifty.
->>=20
->> Philippe Mathieu-Daud=C3=A9 recently posted a few fixes:
->>=20
->>   MAINTAINERS: Fix docker/dockerfiles/debian-hexagon-cross.docker path
->>   MAINTAINERS: Cover debian-loongarch-cross.docker with LoongArch section
->>   MAINTAINERS: Cover debian-xtensa-cross.docker with Xtensa section
->>   MAINTAINERS: Cover debian-tricore-cross.docker with TriCore section
->>   MAINTAINERS: Cover python.docker with Python library section
->>   MAINTAINERS: Fix s390x storage key/attribute device paths
->>   MAINTAINERS: Fix tcg/s390x/ path
->>   MAINTAINERS: Correct scripts/coverity-model.c path
->>   MAINTAINERS: Fix hexagon-linux-user.mak path
->>=20
->> These are in
->>=20
->>    Subject: [PATCH 0/7] docker: Remove LegacyKeyValueFormat warnings
->>    Date: Mon, 18 May 2026 12:22:15 +0200
->>    Message-ID: <20260518102222.80735-1-philmd@linaro.org>
->>=20
->>    Subject: [PATCH v2 0/4] buildsys: Stop checking for ESA/390 host
->>    Date: Tue, 19 May 2026 19:12:36 +0200
->>    Message-ID: <20260519171240.97420-1-philmd@linaro.org>
->>=20
->>=20
->>    Subject: [PATCH] MAINTAINERS: Correct scripts/coverity-model.c path
->>    Date: Tue, 19 May 2026 19:19:26 +0200
->>    Message-ID: <20260519171926.98099-1-philmd@linaro.org>
->>=20
->>    Subject: [PATCH] MAINTAINERS: Fix hexagon-linux-user.mak path
->>    Date: Wed, 20 May 2026 14:39:47 +0200
->>    Message-ID: <20260520123947.12711-1-philmd@linaro.org>
->>=20
->> This series takes care of the remainder, except for one discussed
->> below.  It applies cleanly with and without Philippe's patches.
->>=20
->> The exception is the last line in
->>=20
->>     Python scripts
->>     M: John Snow <jsnow@redhat.com>
->>     M: Cleber Rosa <crosa@redhat.com>
->>     S: Odd Fixes
->>     F: scripts/*.py
->>     F: tests/*.py
->>=20
->> Both F: are actually wrong here: they match only in the scripts/ and
->> tests/ not further down.  Left for another day.
->>=20
->> Markus Armbruster (39):
->>   MAINTAINERS: Improve another "Overall" section headline
->>   MAINTAINERS: Delete trailing colons in section headlines
->>   MAINTAINERS: Drop stale F: from "Guest CPU cores (TCG)"
->>   MAINTAINERS: Drop stale F: in "RISC-V TCG CPUs"
->>   MAINTAINERS: Drop stale F: in "SPARC TCG CPUs"
->>   MAINTAINERS: Drop stale F: from "Overall KVM CPUs"
->>   MAINTAINERS: Drop stale F: from "Overall CPUs other accelerators"
->>   MAINTAINERS: Drop stale F: from "virtio"
->>   MAINTAINERS: Fix F: in "Apple Silicon HVF CPUs"
->>   MAINTAINERS: Drop bad F: in "X86 Xen CPUs"
->>   MAINTAINERS: Fix F: in "WebAssembly"
->>   MAINTAINERS: Fix F: in "Allwinner-a10"
->>   MAINTAINERS: Fix F: in "Raspberry Pi"
->>   MAINTAINERS: Drop bad F: from "Xilinx Zynq"
->>   MAINTAINERS: Drop stale F: from "New World (mac99)"
->>   MAINTAINERS: Drop stale F: from "sPAPR (pseries)"
->>   MAINTAINERS: Fix F: typo in "sam460ex"
->>   MAINTAINERS: Fix F: in "SiFive Machines"
->>   MAINTAINERS: Fix F: typo in "ACPI/HEST/GHES/ARM processor CPER"
->>   MAINTAINERS: Fix F: in "SSI"
->>   MAINTAINERS: Fix F: in "vhost"
->>   MAINTAINERS: Fix F: in "virtio-input"
->>   MAINTAINERS: Fix bad / stale F: in "virtio-rng"
->>   MAINTAINERS: Fix F: in "vhost-user-stubs"
->>   MAINTAINERS: Fix F: in "virtio-snd" and "virtio-gpu"
->>   MAINTAINERS: Fix F: typo in "pcf8574"
->>   MAINTAINERS: Drop stale F: from "Block I/O path"
->>   MAINTAINERS: Fix F: typo in "Dump"
->>   MAINTAINERS: Drop stale F: from "Human Monitor (HMP)"
->>   MAINTAINERS: Fix F: in "QDev"
->>   MAINTAINERS: Fix F: in "QMP"
->>   MAINTAINERS: Fix F: typo in "I3C"
->>   MAINTAINERS: Drop stale F: from "EDK2 Firmware"
->>   MAINTAINERS: Drop stale F: from "TCI TCG target"
->>   MAINTAINERS: Drop stale F: from "Linux io_uring"
->>   MAINTAINERS: Fix F: in "VFIO-USER"
->>   MAINTAINERS: Fix F: in "Build and test automation"
->>   MAINTAINERS: Drop stale F: from "Sphinx documentation configuration
->>     ..."
->>   MAINTAINERS: Fix F: in "Rust build system integration"
->>=20
->>  MAINTAINERS | 73 ++++++++++++++++++-----------------------------------
->>  1 file changed, 24 insertions(+), 49 deletions(-)
->>=20
+
+Will split as (1) spm-memory boilerplate, (2) SRAT mangling, and
+(3) E820 + pc.c plug-handler integration; MAINTAINERS becomes (4).
+
+>>
+>> MAINTAINERS gets new file entries under the existing "Memory devices"
+>> stanza.
+>>
+>> Signed-off-by: FangSheng Huang <FangSheng.Huang@amd.com>
+>> ---
+>>   MAINTAINERS                  |   2 +
+> a separate patch, pls.
+> 
+
+Yes, will be patch (4) on its own.
+
 >
-> thanks for posting this.
+> [...]
+> 
+>> +    cursor = ms->device_memory->base;
+>> +    end = cursor + memory_region_size(&ms->device_memory->mr);
+>> +
+>> +    object_child_foreach_recursive(qdev_get_machine(),
+>> +                                   collect_spm_ranges_cb, ranges);
+> it's not an objection, but could we do better here, i.e. idea would be:
+> instead of full machine scan, take  ms->device_memory and go over
+> children regions -> pick only SPM device owned ones.
 >
-> In addition, see the patch attached to this email.
-> It integrates checking this directly at configure time, so we never run
-> into any missing entry again in the future.
+
+Noted -- I'll stay with the current full-scan pattern for v9.
+The subregion's owner is the backend rather than the device, so
+a clean device_memory walk would need an extra backend->device
+reverse lookup.  Happy to add that if you'd prefer.
+
+>> -    /*
+>> -     * Entry is required for Windows to enable memory hotplug in OS
+>> -     * and for Linux to enable SWIOTLB when booted with less than
+>> -     * 4G of RAM. Windows works better if the entry sets proximity
+>> -     * to the highest NUMA node in the machine.
+>> -     * Memory devices may override proximity set by this entry,
+>> -     * providing _PXM method if necessary.
+>> -     */
+> 
+> don't just delete comment,as it still stands true. we should keep reminder
+> why we adding place holder(s) and its quirks.
 >
-> I share this here not for a review, but simply to avoid a duplicated
-> effort, and make sure people know it will be sent after this series.
+
+Will keep an adapted version of the comment alongside the new
+partition logic.
+
 >
-> I don't believe in adding this in checkpatch, because it's not enforced
-> systematically unfortunately. Breaking the meson configuration is a good
-> way to make sure it's enforced by design.
-
-No objection.
-
-> With your series applied, the left entries are:
-
-Most of these are fixed in Philippe's patches mentioned above.
-
-> No matching files for /usr2/pbouvier/.work/qemu/MAINTAINERS +258:
-> configs/targets/hexagon-linux-user/default.mak
-
-MAINTAINERS: Fix hexagon-linux-user.mak path
-
-> No matching files for /usr2/pbouvier/.work/qemu/MAINTAINERS +259:
-> docker/dockerfiles/debian-hexagon-cross.docker
-
-MAINTAINERS: Fix docker/dockerfiles/debian-hexagon-cross.docker path
-
-> No matching files for /usr2/pbouvier/.work/qemu/MAINTAINERS +2956:
-> hw/s390x/storage-keys.h
-> No matching files for /usr2/pbouvier/.work/qemu/MAINTAINERS +2965:
-> hw/s390x/storage-attributes.h
-
-MAINTAINERS: Fix s390x storage key/attribute device paths
-
-> No matching files for /usr2/pbouvier/.work/qemu/MAINTAINERS +3241:
-> scripts/coverity-model.c
-
-MAINTAINERS: Correct scripts/coverity-model.c path
-
-> No matching files for /usr2/pbouvier/.work/qemu/MAINTAINERS +3468:
-> tests/*.py
-
-This is the exception I mentioned above.
-
-The intent is to match *.py below tests/.  It actually matches only in
-tests/, not in its subdirectories.
-
-Here's a dumb fix:
-
-    F: tests/*.py
-    F: tests/*/*.py
-    F: tests/*/*/*.py
-    F: tests/*/*/*/*.py
-
-for however many levels we have.  Same for the scripts/ line next to it.
-Blech.
-
-The smart fix might be to port N: from the kernel.
-
-	N: Files and directories *Regex* patterns.
-	   N:	[^a-z]tegra	all files whose path contains tegra
-	                        (not including files like integrator)
-	   One pattern per line.  Multiple N: lines acceptable.
-	   scripts/get_maintainer.pl has different behavior for files that
-	   match F: pattern and matches of N: patterns.  By default,
-	   get_maintainer will not look at git log history when an F: pattern
-	   match occurs.  When an N: match occurs, git log history is used
-	   to also notify the people that have git commit signatures.
-
-But I wonder: is this section useful at all?
-
-> No matching files for /usr2/pbouvier/.work/qemu/MAINTAINERS +4149:
-> tcg/s390/
-
-MAINTAINERS: Fix tcg/s390x/ path
-
-> Once your current series is pulled, I'll fix the remaining and send the
-> attached patch. Or feel free to do it directly if you like the idea :)
+> [...]
 >
-> Regards,
-> Pierrick
-
-Two remarks inline.
-
-> From 6c9b49ac7ec06c0159d2b4ba9c9d1081e02ef765 Mon Sep 17 00:00:00 2001
-> From: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
-> Date: Fri, 22 May 2026 12:23:17 -0700
-> Subject: [PATCH] meson.build: check MAINTAINERS file is consistent with s=
-ource
->  tree
+>> +static void spm_memory_realize(DeviceState *dev, Error **errp)
+>> +{
+>> +    ERRP_GUARD();
+>> +    SpmMemoryDevice *spm = SPM_MEMORY(dev);
+> 
+>> +    MachineState *ms = MACHINE(qdev_get_machine());
+> 
+> pls do not use machine from device proper code.
+> we do have plug handlers that provide it at the time when necessary.
 >
-> We add a new script: scripts/check-maintainers-file.py, that will run at
-> configuration time (and not at build time), to not hurt build time.
-> This script runs in 0.2s on my dev VM, which has an old cpu.
+
+Will remove the MachineState reference; machine-level work moves
+to the pc.c plug handler (see below).
+
+>> +
+> 
+>> +    if (phase_check(PHASE_MACHINE_READY)) {
+>> +        error_setg(errp, "spm-memory: hotplug is not supported "
+>> +                         "(boot-time-only device)");
+>> +        return;
+>> +    }
+> 
+> shouldn't be necessary, dc->hotpluggable in class init should be sufficient.
+> 
+
+Confirmed -- will drop the check.
+
+> 
+>> +    spm_memory_check_node_exclusive(spm, ms, errp);
+>> +    if (*errp) {
+>> +        return;
+>> +    }
+> 
+> As far as I understood fro previous discussions, so far it's our
+> own precaution.
 >
-> We can expect things to be mostly in sync since adding or removing a
-> source or test file will trigger a configure step.
-> For the rest, like docs, tcg tests, or remaining files, GitLab CI will
-> build things from scratch and always run the configure step.
+> I'd drop that, well, if you find a spec requiring it then
+> it should be a separate patch pointing to spec (or something else that
+> justifies it).
 >
-> With this, it should be impossible by design to have an upstream
-> MAINTAINERS file with non existing file entries.
+
+No spec to cite.  Will drop the check and the associated helpers
+in v9.
+
+>> +
+>> +    memory_device_pre_plug(MEMORY_DEVICE(spm), ms, errp);
+>> +    if (*errp) {
+>> +        return;
+>> +    }
+> 
+>> +
+>> +    host_memory_backend_set_mapped(spm->hostmem, true);
+>> +    memory_device_plug(MEMORY_DEVICE(spm), ms);
+> 
+> That's basically code duplication,
+> that doesn't belong to realize_fn, see how it's used by other devices.
+> 
+> The gist is mapping into address space, generic checks, machine related
+> steps go into machine handlers.
 >
-> Signed-off-by: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
-> ---
->  meson.build                       |  5 +++
->  scripts/check-maintainers-file.py | 53 +++++++++++++++++++++++++++++++
->  2 files changed, 58 insertions(+)
->  create mode 100755 scripts/check-maintainers-file.py
+
+Will move pre_plug / plug / set_mapped into pc_spm_memory_pre_plug /
+pc_spm_memory_plug in hw/i386/pc.c, hooked via the existing
+pc_machine_device_{pre_,}plug_cb dispatch (same pattern as pc-dimm).
+
+> 
+>> +
+>> +    QLIST_INSERT_HEAD(&spm_memory_list, spm, next);
+> Don't use global list, unless you have to, see below.
 >
-> diff --git a/meson.build b/meson.build
-> index eeb096c1487..ddfb0b90ca6 100644
-> --- a/meson.build
-> +++ b/meson.build
-> @@ -18,6 +18,11 @@ add_test_setup('thorough',
->=20=20
->  meson.add_postconf_script(find_program('scripts/symlink-install-tree.py'=
-))
->=20=20
-> +# check our MAINTAINERS file is consistent
-> +check_maintainers =3D find_program('scripts/check-maintainers-file.py')
-> +maintainers_file =3D files('MAINTAINERS')
-> +run_command([check_maintainers, maintainers_file], check: true, console:=
- true)
 
-My version of meson (1.8.5) chokes on console: true.  According to
-https://mesonbuild.com/Reference-manual_functions_run_command.html#run_comm=
-and_console
-it's new in 1.11.0.
+Goes away with the plug-handler move below.
 
-I tested with it deleted.
+>> +
+>> +    if (!spm_machine_done_registered) {
+>> +        spm_machine_done_notifier.notify = spm_memory_machine_done;
+>> +        qemu_add_machine_init_done_notifier(&spm_machine_done_notifier);
+>> +        spm_machine_done_registered = true;
+>> +    }
+> 
+> e820 part should also go to machine specific plug handler,
+> that will also hel with getting rid of spm_memory_list.
+> That also should let you get rid of adding machine_done handler,
+> the machine plug handler, would do the job instead (and much earlier).
+>
 
-> +
->  ####################
->  # Global variables #
->  ####################
-> diff --git a/scripts/check-maintainers-file.py b/scripts/check-maintainer=
-s-file.py
-> new file mode 100755
-> index 00000000000..b001816a401
-> --- /dev/null
-> +++ b/scripts/check-maintainers-file.py
-> @@ -0,0 +1,53 @@
-> +#! /usr/bin/env python3
-> +
-> +# Check incorrect file entries in MAINTAINERS
-> +#
-> +# Author: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
-> +#
-> +# SPDX-License-Identifier: GPL-2.0-or-later
-> +
-> +import argparse
-> +import glob
-> +import sys
-> +
-> +
-> +def check_one_entry(line) -> bool:
-> +    return True
-> +
-> +
-> +def main() -> None:
-> +    parser =3D argparse.ArgumentParser(description=3D"Check MAINTAINERS =
-file")
-> +    parser.add_argument("maintainers", help=3D"Path to MAINTAINERS file")
-> +    args =3D parser.parse_args()
-> +
-> +    found_file_entry =3D False
-> +    found_incorrect_entries =3D False
-> +    line_counter =3D 0
-> +
-> +    with open(args.maintainers) as file:
-> +        for entry in file:
-> +            line_counter +=3D 1
-> +
-> +            if not entry.startswith("F:"):
-> +                continue
-> +            entry =3D entry[2:].strip()
-> +            found_file_entry =3D True
-> +
-> +            file_exists =3D len(glob.glob(entry, recursive=3DTrue)) > 0
+Yes -- e820_add_entry moves into pc_spm_memory_plug(), eliminating
+both the global list and the machine-init-done notifier.
 
-I'm afraid this matches files not in git, just like my quick & dirty
-one-liner.  Shouldn't we match against contents of HEAD, say output of
-"git-ls-tree -r --name-only @"?
+> [...]  
+>
 
-> +            if file_exists:
-> +                continue
-> +
-> +            found_incorrect_entries =3D True
-> +            print(
-> +                f"No matching files for {args.maintainers} +{line_counte=
-r}: {entry}",
-> +                file=3Dsys.stderr,
-> +            )
-> +
-> +    if not found_file_entry:
-> +        raise Exception("no file entry found - is MAINTAINERS path corre=
-ct?")
-> +    if found_incorrect_entries:
-> +        raise Exception(f"incorrect entries found in {args.maintainers}")
-> +
-> +
-> +if __name__ =3D=3D "__main__":
-> +    main()
+Will respin and post v9 shortly.
+
+Best regards,
+FangSheng Huang (Jerry)
+
 
 
