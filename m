@@ -4,70 +4,70 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 357B5CD6E65
-	for <qemu-devel@archiver.kernel.org>; Mon,  1 Jun 2026 21:56:05 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id AF41FCD6E55
+	for <qemu-devel@archiver.kernel.org>; Mon,  1 Jun 2026 21:56:09 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wUAam-0006du-IC; Mon, 01 Jun 2026 17:54:40 -0400
+	id 1wUAap-0006fs-4h; Mon, 01 Jun 2026 17:54:43 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <stefanb@linux.ibm.com>)
- id 1wUAak-0006cQ-O9
- for qemu-devel@nongnu.org; Mon, 01 Jun 2026 17:54:38 -0400
-Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
+ id 1wUAam-0006dx-KU
+ for qemu-devel@nongnu.org; Mon, 01 Jun 2026 17:54:40 -0400
+Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <stefanb@linux.ibm.com>)
- id 1wUAai-0003s6-QN
- for qemu-devel@nongnu.org; Mon, 01 Jun 2026 17:54:38 -0400
-Received: from pps.filterd (m0360083.ppops.net [127.0.0.1])
+ id 1wUAak-0003t3-Ju
+ for qemu-devel@nongnu.org; Mon, 01 Jun 2026 17:54:40 -0400
+Received: from pps.filterd (m0356516.ppops.net [127.0.0.1])
  by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 651Ebg7f2914981; Mon, 1 Jun 2026 21:54:34 GMT
+ 651F44V13293469; Mon, 1 Jun 2026 21:54:37 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
  :content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=pp1; bh=4e8hWC
- mPjEb9LEEKqu0PDNGGEs+2/SRKzAG4LNKxa/o=; b=A6cDatfMesXl4AmyQRFd+C
- VFNvHilnponL15I62bs1Fy11q6LxkCOa5zcu3o5sLfVjMfuHARmD4oSoil0gaioK
- qnjepYcArmXiMEyHijcykK6BspDSYfmopoOemlJSpoxoGq8JQYN0K4BRQqQmZPPy
- hJArOFKBtktbDy7pkBsY6O+vPlZnxydNHwMH0ZxTg93CeG2K0mLdDJq7rQQyPWUv
- eemLdf8oE90AwCz1pBhz/BWXrOnfC9E4EBGd9ff3GtLrpwxr5PkQKIXxsywM0/gO
- OhvfD2bm2rlEvrqQSV5gMkxm87hBUS+iJqtXWsFL75stYPkfTEUdX5gjEqbMuo9A
+ :message-id:mime-version:references:subject:to; s=pp1; bh=jeyhXa
+ FdJY2BoFJuoMUUM6D/5c/d58X3M/k8NhX0gjw=; b=geT1n1ogBzzJu4IFVKDLJD
+ QHre90eARtSmMaIFLs9SAWg09UH83whuWST05hLL2O6ItIrXgXVFiU9uC4WPo9yU
+ aX2zFPfKpcOcmEKdD8N1cPkmklHVPKg/EDXEwlWwPQ5OtHT8VgOKS8+wk6mBvpZY
+ eyqAwPLA0hzWZeCja8DBJe45jJGaau4nUvr7G2Fz3YG//R96W+sVXcyyM4fVS3a9
+ iQL5GNr2jqnGta1db46v6VaYyvlGqcZwYdSfLl9GH1xMf7hmmM3cuV4/9EV1jL2b
+ qbZftLgp7T1PTtVk0v9kPi2El5SV6SHrkuMTBrasEOtbTSjXT0CEnVkSbFt8huWQ
  ==
-Received: from ppma23.wdc07v.mail.ibm.com
- (5d.69.3da9.ip4.static.sl-reverse.com [169.61.105.93])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4efqd434hk-1
+Received: from ppma21.wdc07v.mail.ibm.com
+ (5b.69.3da9.ip4.static.sl-reverse.com [169.61.105.91])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4efnahjwht-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Mon, 01 Jun 2026 21:54:34 +0000 (GMT)
-Received: from pps.filterd (ppma23.wdc07v.mail.ibm.com [127.0.0.1])
- by ppma23.wdc07v.mail.ibm.com (8.18.1.7/8.18.1.7) with ESMTP id 651LsDG4002514;
- Mon, 1 Jun 2026 21:54:33 GMT
-Received: from smtprelay03.dal12v.mail.ibm.com ([172.16.1.5])
- by ppma23.wdc07v.mail.ibm.com (PPS) with ESMTPS id 4egbqh869t-1
+ Mon, 01 Jun 2026 21:54:37 +0000 (GMT)
+Received: from pps.filterd (ppma21.wdc07v.mail.ibm.com [127.0.0.1])
+ by ppma21.wdc07v.mail.ibm.com (8.18.1.7/8.18.1.7) with ESMTP id 651LsFMA029581;
+ Mon, 1 Jun 2026 21:54:36 GMT
+Received: from smtprelay06.dal12v.mail.ibm.com ([172.16.1.8])
+ by ppma21.wdc07v.mail.ibm.com (PPS) with ESMTPS id 4egb7k09bc-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Mon, 01 Jun 2026 21:54:33 +0000 (GMT)
+ Mon, 01 Jun 2026 21:54:36 +0000 (GMT)
 Received: from smtpav03.wdc07v.mail.ibm.com (smtpav03.wdc07v.mail.ibm.com
  [10.39.53.230])
- by smtprelay03.dal12v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 651LsWUx32375304
+ by smtprelay06.dal12v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 651LsZos22282826
  (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Mon, 1 Jun 2026 21:54:32 GMT
+ Mon, 1 Jun 2026 21:54:36 GMT
 Received: from smtpav03.wdc07v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 605E458054;
- Mon,  1 Jun 2026 21:54:32 +0000 (GMT)
+ by IMSVA (Postfix) with ESMTP id C6D8658054;
+ Mon,  1 Jun 2026 21:54:35 +0000 (GMT)
 Received: from smtpav03.wdc07v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id CA8D95805D;
- Mon,  1 Jun 2026 21:54:31 +0000 (GMT)
+ by IMSVA (Postfix) with ESMTP id 4F49658064;
+ Mon,  1 Jun 2026 21:54:35 +0000 (GMT)
 Received: from sbct-3.pok.ibm.com (unknown [9.47.158.153])
  by smtpav03.wdc07v.mail.ibm.com (Postfix) with ESMTP;
- Mon,  1 Jun 2026 21:54:31 +0000 (GMT)
+ Mon,  1 Jun 2026 21:54:35 +0000 (GMT)
 From: Stefan Berger <stefanb@linux.ibm.com>
 To: qemu-devel@nongnu.org
-Cc: peter.maydell@linaro.org, Arun Menon <armenon@redhat.com>,
- =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
- Stefan Berger <stefanb@linux.ibm.com>
-Subject: [PULL v1 11/16] hw/tpm: Add internal buffer state for chunking
-Date: Mon,  1 Jun 2026 17:54:04 -0400
-Message-ID: <20260601215410.517009-12-stefanb@linux.ibm.com>
+Cc: peter.maydell@linaro.org, Stefan Berger <stefanb@linux.ibm.com>,
+ =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>
+Subject: [PULL v1 16/16] tpm_emulator: Disconnect if response exceeds
+ negotiated buffer size
+Date: Mon,  1 Jun 2026 17:54:09 -0400
+Message-ID: <20260601215410.517009-17-stefanb@linux.ibm.com>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260601215410.517009-1-stefanb@linux.ibm.com>
 References: <20260601215410.517009-1-stefanb@linux.ibm.com>
@@ -75,38 +75,38 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 X-TM-AS-GCONF: 00
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNjAxMDIxMSBTYWx0ZWRfX+lPgZq48w8H/
- 0Qr1OVIcy6x2Z9WWur09y7+tzwlxDmZSL/2MNE7E7tJPzt5biI0Vv+2Rt431+R5znQBwDLvFEBF
- udUN8OSRJebV57FjywkTyRkD2jxpuEJ5rsltoFumjrOATSEiHXXkPnlMXBYXLVk/UIP8eFJ4Gp4
- At3VJz4YUbNOTxDK24+qSxz+IMhrgkR7AlYKrxwBmxxYv1yvyQWErihE6Vj19tzbCsjioBdrFI1
- V0dvr6Qosw0741HbFp26tZ186SkApKjd8qbUSbhnLUFS01pBPhtNb6bHOjaZl/FiPVmXieGu3kb
- A0VTVa9jOmCmjeKPDF710QChwn1N0IbO3xwHoaTpeJcnCLUt8Vw7IZpTs+CbIR0PnDhj4E3skY7
- 1shXV1OOgN4jV5Y7Sy4gIXd+iZ6qtET7JBRSWG6eieMq3PzlFhN4Ofmi/qfSPf6eiVq/ca2cXZa
- ZnGIOTjizPDjfP4xQVg==
-X-Proofpoint-GUID: dOMEsx9RnA0YuqrSNcp3EHbKvswyM8fq
-X-Proofpoint-ORIG-GUID: dOMEsx9RnA0YuqrSNcp3EHbKvswyM8fq
-X-Authority-Analysis: v=2.4 cv=DZknbPtW c=1 sm=1 tr=0 ts=6a1dff9a cx=c_pps
- a=3Bg1Hr4SwmMryq2xdFQyZA==:117 a=3Bg1Hr4SwmMryq2xdFQyZA==:17
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNjAxMDIxMSBTYWx0ZWRfXy7qm1Flmt1fh
+ 11einnNJAoZkvBHcnApm5hG65UV0ZyXQPL/r8KTsOwdN0TCPjdZjiLlP8TcrzUMSM09gqqWRwel
+ MZmnkOMdhys5NT9p2kMlzbGQbJTdm9xB0zBl4TCbbIVUOf8MRPKtRZ4ISjPl1nE9fxxlLS/oZLi
+ 3A4NBi5QMkmvmj05oKDKTFiMS+Tjs62p+zF6En9Mdt8UT+xUfMlq4LwcxWLgqZK5MHyqFStusid
+ TEcEdoOevBfD8Px4BsxC7jogQ4of0Cak05J2r0OJN4ev+IGdUetjX0H2PqYdma8QXNaKYnl1QMY
+ vOCGDjqCOff/rG/oSIQninZZg92T+VdLo/zwwGdDHEJ6e49ZZke1i6sFxnOKf0l/oW16I6XxILx
+ ilJOV18aDMNRge4SGgX4bgU/3OppUZC0CiHsfNDVsPNNkSsDWWFAeXJ72duvP4lffMH4vP0c3h7
+ 1loadQco6YSmRtTnJgg==
+X-Proofpoint-ORIG-GUID: 8jycQKzV4q3aD6hyDkWufGbtATSkZlI7
+X-Authority-Analysis: v=2.4 cv=cOzQdFeN c=1 sm=1 tr=0 ts=6a1dff9d cx=c_pps
+ a=GFwsV6G8L6GxiO2Y/PsHdQ==:117 a=GFwsV6G8L6GxiO2Y/PsHdQ==:17
  a=IkcTkHD0fZMA:10 a=FelO9ux0wxsA:10 a=VkNPw1HP01LnGYTKEx00:22
- a=RnoormkPH1_aCDwRdu11:22 a=iQ6ETzBq9ecOQQE5vZCe:22 a=VwQbUJbxAAAA:8
- a=20KFwNOVAAAA:8 a=VnNF1IyMAAAA:8 a=kRDQt3OQBu7VwNepQ70A:9 a=3ZKOabzyN94A:10
+ a=RnoormkPH1_aCDwRdu11:22 a=Y2IxJ9c9Rs8Kov3niI8_:22 a=VwQbUJbxAAAA:8
+ a=VnNF1IyMAAAA:8 a=20KFwNOVAAAA:8 a=ZkoTrUv0hqWFqrPu6skA:9 a=3ZKOabzyN94A:10
  a=QEXdDO2ut3YA:10
+X-Proofpoint-GUID: 8jycQKzV4q3aD6hyDkWufGbtATSkZlI7
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.125,FMLib:17.12.100.49
  definitions=2026-06-01_06,2026-05-28_03,2025-10-01_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- spamscore=0 clxscore=1015 suspectscore=0 impostorscore=0 lowpriorityscore=0
- phishscore=0 malwarescore=0 priorityscore=1501 bulkscore=0 adultscore=0
+ clxscore=1015 impostorscore=0 lowpriorityscore=0 spamscore=0 bulkscore=0
+ malwarescore=0 phishscore=0 suspectscore=0 priorityscore=1501 adultscore=0
  classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
  reason=mlx scancount=1 engine=8.22.0-2605210000 definitions=main-2606010211
-Received-SPF: pass client-ip=148.163.156.1; envelope-from=stefanb@linux.ibm.com;
- helo=mx0a-001b2d01.pphosted.com
+Received-SPF: pass client-ip=148.163.158.5; envelope-from=stefanb@linux.ibm.com;
+ helo=mx0b-001b2d01.pphosted.com
 X-Spam_score_int: -26
 X-Spam_score: -2.7
 X-Spam_bar: --
 X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
- RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
+ RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -123,109 +123,64 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Arun Menon <armenon@redhat.com>
+Disconnect from the emulator if a response was to exceed the negotiated
+buffer size.
 
-- Introduce GByteArray buffers to hold the command request and response
-  data during chunked TPM CRB transactions.
-- Add helper function to clean them.
+The TPM TIS and SPAPR use 4096 bytes and the CRB 3968 bytes. There are
+currently no TPM 2 responses using this size of a buffer and therefore
+no response will be sent that is exceeding this size.
 
-Signed-off-by: Arun Menon <armenon@redhat.com>
+Fixes: f4ede81eed29 ("tpm: Added support for TPM emulator")
 Reviewed-by: Marc-André Lureau <marcandre.lureau@redhat.com>
-Reviewed-by: Stefan Berger <stefanb@linux.ibm.com>
-Link: https://lore.kernel.org/qemu-devel/20260506075813.120781-4-armenon@redhat.com
+Link: https://lore.kernel.org/qemu-devel/20260511142219.797048-3-stefanb@linux.ibm.com
 Signed-off-by: Stefan Berger <stefanb@linux.ibm.com>
 ---
- hw/tpm/tpm_crb.c | 33 +++++++++++++++++++++++++++++----
- 1 file changed, 29 insertions(+), 4 deletions(-)
+ backends/tpm/tpm_emulator.c | 22 ++++++++++++++++++++--
+ 1 file changed, 20 insertions(+), 2 deletions(-)
 
-diff --git a/hw/tpm/tpm_crb.c b/hw/tpm/tpm_crb.c
-index a0f472652e..1c944d7ef2 100644
---- a/hw/tpm/tpm_crb.c
-+++ b/hw/tpm/tpm_crb.c
-@@ -38,10 +38,13 @@ struct CRBState {
-     TPMBackend *tpmbe;
-     TPMBackendCmd cmd;
-     uint32_t regs[TPM_CRB_R_MAX];
-+    size_t be_buffer_size;
-     MemoryRegion mmio;
-     MemoryRegion cmdmem;
- 
--    size_t be_buffer_size;
-+    GByteArray *command_buffer;
-+    GByteArray *response_buffer;
-+    uint32_t response_offset;
- 
-     TPMPPI ppi;
- 
-@@ -86,6 +89,13 @@ enum crb_cancel {
- 
- #define TPM_CRB_NO_LOCALITY 0xff
- 
-+static void tpm_crb_clear_internal_buffers(CRBState *s)
-+{
-+    g_byte_array_set_size(s->response_buffer, 0);
-+    g_byte_array_set_size(s->command_buffer, 0);
-+    s->response_offset = 0;
-+}
-+
- static uint64_t tpm_crb_mmio_read(void *opaque, hwaddr addr,
-                                   unsigned size)
+diff --git a/backends/tpm/tpm_emulator.c b/backends/tpm/tpm_emulator.c
+index ac5427b84e..95d2de2f48 100644
+--- a/backends/tpm/tpm_emulator.c
++++ b/backends/tpm/tpm_emulator.c
+@@ -176,8 +176,10 @@ static int tpm_emulator_unix_tx_bufs(TPMEmulator *tpm_emu,
+                                      bool *selftest_done,
+                                      Error **errp)
  {
-@@ -135,9 +145,11 @@ static void tpm_crb_mmio_write(void *opaque, hwaddr addr,
-         }
-         break;
-     case A_CRB_CTRL_CANCEL:
--        if (val == CRB_CANCEL_INVOKE &&
--            s->regs[R_CRB_CTRL_START] & CRB_START_INVOKE) {
--            tpm_backend_cancel_cmd(s->tpmbe);
-+        if (val == CRB_CANCEL_INVOKE) {
-+            if (s->regs[R_CRB_CTRL_START] & CRB_START_INVOKE) {
-+                tpm_backend_cancel_cmd(s->tpmbe);
-+            }
-+            tpm_crb_clear_internal_buffers(s);
-         }
-         break;
-     case A_CRB_CTRL_START:
-@@ -239,6 +251,7 @@ static void tpm_crb_reset(void *dev)
+-    ssize_t ret;
+     bool is_selftest = false;
++    Error *local_err = NULL;
++    uint32_t to_read;
++    ssize_t ret;
  
-     tpm_ppi_reset(&s->ppi);
-     tpm_backend_reset(s->tpmbe);
-+    tpm_crb_clear_internal_buffers(s);
- 
-     memset(s->regs, 0, sizeof(s->regs));
- 
-@@ -305,6 +318,9 @@ static void tpm_crb_realize(DeviceState *dev, Error **errp)
-     memory_region_add_subregion(get_system_memory(),
-         TPM_CRB_ADDR_BASE + sizeof(s->regs), &s->cmdmem);
- 
-+    s->command_buffer = g_byte_array_new();
-+    s->response_buffer = g_byte_array_new();
-+
-     tpm_ppi_init(&s->ppi, get_system_memory(),
-                  TPM_PPI_ADDR_BASE, OBJECT(s));
- 
-@@ -315,12 +331,21 @@ static void tpm_crb_realize(DeviceState *dev, Error **errp)
+     if (selftest_done) {
+         *selftest_done = false;
+@@ -195,9 +197,25 @@ static int tpm_emulator_unix_tx_bufs(TPMEmulator *tpm_emu,
+         return -1;
      }
- }
  
-+static void tpm_crb_unrealize(DeviceState *dev)
-+{
-+    CRBState *s = CRB(dev);
++    /*
++     * Size of response from emulator must be <= out_len (= negotiated buffer
++     * size)
++     */
++    to_read = tpm_cmd_get_size(out);
++    if (to_read > out_len) {
++        if (qio_channel_shutdown(tpm_emu->data_ioc, QIO_CHANNEL_SHUTDOWN_BOTH,
++                                 &local_err) < 0) {
++            error_report_err(local_err);
++        }
++        error_setg(errp, "tpm-emulator: Disconnected after receiving "
++                   "unacceptable large response (%u > %u)",
++                   to_read, out_len);
++        return -1;
++    }
 +
-+    g_clear_pointer(&s->command_buffer, g_byte_array_unref);
-+    g_clear_pointer(&s->response_buffer, g_byte_array_unref);
-+}
-+
- static void tpm_crb_class_init(ObjectClass *klass, const void *data)
- {
-     DeviceClass *dc = DEVICE_CLASS(klass);
-     TPMIfClass *tc = TPM_IF_CLASS(klass);
- 
-     dc->realize = tpm_crb_realize;
-+    dc->unrealize = tpm_crb_unrealize;
-     device_class_set_props(dc, tpm_crb_properties);
-     dc->vmsd  = &vmstate_tpm_crb;
-     dc->user_creatable = true;
+     ret = qio_channel_read_all(tpm_emu->data_ioc,
+               (char *)out + sizeof(struct tpm_resp_hdr),
+-              tpm_cmd_get_size(out) - sizeof(struct tpm_resp_hdr), errp);
++              to_read - sizeof(struct tpm_resp_hdr), errp);
+     if (ret != 0) {
+         return -1;
+     }
 -- 
 2.54.0
 
