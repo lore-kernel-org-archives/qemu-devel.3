@@ -4,66 +4,66 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B7906CD6E5D
-	for <qemu-devel@archiver.kernel.org>; Mon,  1 Jun 2026 11:52:12 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id EECABCD6E56
+	for <qemu-devel@archiver.kernel.org>; Mon,  1 Jun 2026 11:52:21 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wU1B4-0001Yh-De; Mon, 01 Jun 2026 07:51:32 -0400
+	id 1wU1Au-0001RW-Vc; Mon, 01 Jun 2026 07:51:24 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <skolothumtho@nvidia.com>)
- id 1wU19m-0007HC-Kt; Mon, 01 Jun 2026 07:50:13 -0400
-Received: from mail-westus2azlp170100005.outbound.protection.outlook.com
- ([2a01:111:f403:c005::5] helo=CO1PR03CU002.outbound.protection.outlook.com)
+ id 1wU1A6-0007y8-CF; Mon, 01 Jun 2026 07:50:33 -0400
+Received: from mail-westus3azlp170120001.outbound.protection.outlook.com
+ ([2a01:111:f403:c107::1] helo=PH8PR06CU001.outbound.protection.outlook.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <skolothumtho@nvidia.com>)
- id 1wU19k-0005Ee-SJ; Mon, 01 Jun 2026 07:50:10 -0400
+ id 1wU1A2-0005Sr-LZ; Mon, 01 Jun 2026 07:50:29 -0400
 ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=hj7hAr7S6O0ZvyV2WDaWIgsDUFdDHSScEZLi7Zf4GsgcAZPZX+EuhHA1nH5+uat3/8mSnsgJXiICXyLdUQbWoCU10liEV4vo+dG5drEnOQmxvrMbcz70ll7yd3WuQbn39lO0ZdixjELoKRkEWTr6vVwvWG9RoslfN5WrRRHpprDNm2ItsfEhDEZPHxJdlP7ZVafQIzKMv4JOvNWtVOiZK749qJOMJkvCUiDU2RmyCcu23U4NnsZSExXdC4SXmrONxSjGlWssam4bkr16+2lmbRr0v1/DmrhZUocazZxpaCwGahrn1ZK/GwM90XeXljQLyqTg0m6jkSWub9rYiKV5jA==
+ b=SpHcHRXTllryZljJUJQI+3LPJLYCsDwBfBnidi2gLg6Asq3/NVs7KJDml7l0U7thXWe1lpi6F8rlSxMT7SVDmh7kl7WyjH1BoqaxMLk56zmNOS1dQeiUq+ljMal64mKGH9Je/33Bg5dQsOJQ6YfD3aPDoku2qM3rUWq46vUaCR7PT90RZmupJ2mt1tDzo5wwQT93DB7WM8PiLG9kKRGu77iqnWxmN6ucBq/5LDrSA+JcEnr+Mx9/iadvf+QbewSSyBgAfm6ay8zvp90zqwQidqJFf1r4TRPRi2aQ6+ipYTl2vSqjPRG2DvPqB6zmmlh+Qva7o5ZritTIv1YmpnZ60A==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
  s=arcselector10001;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=hg39hGx6Z7k4sx3v6fX2GDqWQ+t8NUQoKLYzUnVxdXA=;
- b=b7zZb53I6Y46WYKWtjZ6CofrYvihOOblspHMcJNuzANAJ5PD/ZtW3BwRTTrqZxE0/fLdd4lFTMblGikcfPwHkaF8oybxPo78yy9Q4nym4FE0DJ6djWBAfzTXZwOmKc69S7N22K4csg16nTUTcuub6/PFrDdimLvt6qDPFxshbBZKF6PwrcDL47Cogwi8RW19sKqZidmn+em/umz/yLCFzrW6GKHhSFGGQlr/cLkNq3zNz1QGKGRfT6qzpjl+QU+oSDQ9/dnktnzYN99T+Ky5fEzzK4nsBNerm9RfNTbq6Y0OjtUor6Wfmzn0x6PNoab++8BbcWL20LAZnN35Gybmuw==
+ bh=TJVi0qXUpSynhc9Xo1f4s6nzrSiItVXp5g62zMebwRs=;
+ b=Q9uCK5XxPpgx1mzFfm94oAWGaI6e1rrfl9rXDRyXamXMTv32Sp6Ue6Qt5jZzmgcaPIugyy9x8AhH9uPOTfsRNfvRXEg1hvWqleTiR1g+kYv7XIlFfafzpj6+YEf5K3DwnJZDQ+zKv3e+mZtFP+RH2dHhFAGyNhUC/MN5QxINX7stXg1onm4ZN3IsMxkVjd3UDQEqCyqaUqHOs09hmDxKcGXhM/E+8cmnjfWMOTzNgusS/DVbygyIGEkb3QwW5aLesm/5HM9ZSF9f+Y8ytMfA46BzSClq1fI0uERdvdkuFHcgV6dvk35PW42LnK0EyRXgKwPnfpOKRuJq0rm4bNV7xQ==
 ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass (sender ip is
- 216.228.117.160) smtp.rcpttodomain=nongnu.org smtp.mailfrom=nvidia.com;
+ 216.228.117.161) smtp.rcpttodomain=nongnu.org smtp.mailfrom=nvidia.com;
  dmarc=pass (p=reject sp=reject pct=100) action=none header.from=nvidia.com;
  dkim=none (message not signed); arc=none (0)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=Nvidia.com;
  s=selector2;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=hg39hGx6Z7k4sx3v6fX2GDqWQ+t8NUQoKLYzUnVxdXA=;
- b=Dw850Yby6M8rRwH1zdiPCtqYLszWKJc1e7/5eEGnzwuGzxakVnIQ1kyyDBXcG52MxzakUyDqi8SAbdYyePCXAxKd/GKLCr9Yz/FXLu1D6aYEM/E/+gh3E9LhWQmsf8UroLBH2PrP7p3acI24LKsO4CDEFHokVEmyx/Z5gru0kxNQSDfYTxfLwllfRYH9WK8z5qKqsGSsPCJ3/rs6ay0csE0jiDtd8BSKctQX4fVGN7A5Nj4eSND18gtU7YN2it6PpMigiq6QnmSJWlBGoemMgVE8fc66kF0iwKv6vbmpVTxF3OCFmYGqZIQwEKjWzJxow5ubrkxk124wjR6lCGdFLA==
-Received: from BN0PR02CA0032.namprd02.prod.outlook.com (2603:10b6:408:e5::7)
- by PH8PR12MB6699.namprd12.prod.outlook.com (2603:10b6:510:1ce::17) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.71.15; Mon, 1 Jun 2026
- 11:50:02 +0000
-Received: from BN2PEPF000055DA.namprd21.prod.outlook.com
- (2603:10b6:408:e5:cafe::7f) by BN0PR02CA0032.outlook.office365.com
- (2603:10b6:408:e5::7) with Microsoft SMTP Server (version=TLS1_3,
- cipher=TLS_AES_256_GCM_SHA384) id 15.21.71.16 via Frontend Transport; Mon, 1
- Jun 2026 11:50:01 +0000
-X-MS-Exchange-Authentication-Results: spf=pass (sender IP is 216.228.117.160)
+ bh=TJVi0qXUpSynhc9Xo1f4s6nzrSiItVXp5g62zMebwRs=;
+ b=W5/08+bE4h6gF4JMDDFexa2iMm7HUSyP2fG7S+5Rmd4bIGSRjtTi6TOW06i5AeIjACnEeg6toAlqrPDtJBuohf7kAw5cys+yAtK9nkHPMLx8tUAUvMJA73oVqsyvpioxjZtL31KHYa831z131c2fTMZ0PJGu9xWCiY8rHk+x5rYjD2bjLZ78sdHIhOXUYQrJDVdMp+zKjsRwx+EDAJdQjj7vnYMEGbuq2yeY8iOMUd8UTvH4QrBCS0URapezjFTti67dHXAANcp2GqRP/xB5ZUMBxvu3Mz2k44BwAOWR/6Ot6dL8521YjbpDIhUGYGfi0ObTbECLaBkMeubrZblCSQ==
+Received: from IA1P220CA0007.NAMP220.PROD.OUTLOOK.COM (2603:10b6:208:461::17)
+ by CY8PR12MB8412.namprd12.prod.outlook.com (2603:10b6:930:6f::11)
+ with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.71.16; Mon, 1 Jun 2026
+ 11:50:13 +0000
+Received: from BL6PEPF0001AB53.namprd02.prod.outlook.com
+ (2603:10b6:208:461:cafe::4c) by IA1P220CA0007.outlook.office365.com
+ (2603:10b6:208:461::17) with Microsoft SMTP Server (version=TLS1_3,
+ cipher=TLS_AES_256_GCM_SHA384) id 15.21.71.17 via Frontend Transport; Mon, 1
+ Jun 2026 11:50:13 +0000
+X-MS-Exchange-Authentication-Results: spf=pass (sender IP is 216.228.117.161)
  smtp.mailfrom=nvidia.com;
  dkim=none (message not signed)
  header.d=none;dmarc=pass action=none header.from=nvidia.com;
 Received-SPF: Pass (protection.outlook.com: domain of nvidia.com designates
- 216.228.117.160 as permitted sender) receiver=protection.outlook.com;
- client-ip=216.228.117.160; helo=mail.nvidia.com; pr=C
-Received: from mail.nvidia.com (216.228.117.160) by
- BN2PEPF000055DA.mail.protection.outlook.com (10.167.245.4) with Microsoft
+ 216.228.117.161 as permitted sender) receiver=protection.outlook.com;
+ client-ip=216.228.117.161; helo=mail.nvidia.com; pr=C
+Received: from mail.nvidia.com (216.228.117.161) by
+ BL6PEPF0001AB53.mail.protection.outlook.com (10.167.241.5) with Microsoft
  SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.21.92.0 via Frontend Transport; Mon, 1 Jun 2026 11:50:01 +0000
+ 15.21.92.5 via Frontend Transport; Mon, 1 Jun 2026 11:50:13 +0000
 Received: from rnnvmail201.nvidia.com (10.129.68.8) by mail.nvidia.com
- (10.129.200.66) with Microsoft SMTP Server (version=TLS1_2,
+ (10.129.200.67) with Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.2562.20; Mon, 1 Jun
- 2026 04:49:51 -0700
+ 2026 04:50:00 -0700
 Received: from NV-2Y5XW94.nvidia.com (10.126.230.37) by rnnvmail201.nvidia.com
  (10.129.68.8) with Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.2562.20; Mon, 1 Jun
- 2026 04:49:47 -0700
+ 2026 04:49:57 -0700
 From: Shameer Kolothum <skolothumtho@nvidia.com>
 To: <qemu-arm@nongnu.org>, <qemu-devel@nongnu.org>
 CC: <eric.auger@redhat.com>, <peter.maydell@linaro.org>, <clg@redhat.com>,
@@ -71,9 +71,10 @@ CC: <eric.auger@redhat.com>, <peter.maydell@linaro.org>, <clg@redhat.com>,
  <mochs@nvidia.com>, <jan@nvidia.com>, <jgg@nvidia.com>,
  <zhenzhong.duan@intel.com>, <kjaju@nvidia.com>, <phrdina@redhat.com>,
  <skolothumtho@nvidia.com>
-Subject: [PATCH v6 26/31] hw/arm/smmuv3: Add per-device identifier property
-Date: Mon, 1 Jun 2026 12:42:16 +0100
-Message-ID: <20260601114221.457995-27-skolothumtho@nvidia.com>
+Subject: [PATCH v6 28/31] hw/arm/virt-acpi: Advertise Tegra241 CMDQV nodes in
+ DSDT
+Date: Mon, 1 Jun 2026 12:42:18 +0100
+Message-ID: <20260601114221.457995-29-skolothumtho@nvidia.com>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20260601114221.457995-1-skolothumtho@nvidia.com>
 References: <20260601114221.457995-1-skolothumtho@nvidia.com>
@@ -85,39 +86,38 @@ X-ClientProxiedBy: rnnvmail203.nvidia.com (10.129.68.9) To
  rnnvmail201.nvidia.com (10.129.68.8)
 X-EOPAttributedMessage: 0
 X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: BN2PEPF000055DA:EE_|PH8PR12MB6699:EE_
-X-MS-Office365-Filtering-Correlation-Id: 9745510a-0c0e-47c9-feeb-08debfd3ea15
+X-MS-TrafficTypeDiagnostic: BL6PEPF0001AB53:EE_|CY8PR12MB8412:EE_
+X-MS-Office365-Filtering-Correlation-Id: 7b8a4e43-619b-418c-13f7-08debfd3f0da
 X-MS-Exchange-SenderADCheck: 1
 X-MS-Exchange-AntiSpam-Relay: 0
 X-Microsoft-Antispam: BCL:0;
- ARA:13230040|1800799024|82310400026|376014|36860700016|22082099003|18002099003|56012099006|11063799006;
-X-Microsoft-Antispam-Message-Info: xVLB3iNFPTJCL8j4qfGQY36JZlN6G/p0G/pnQcwzYrAj/l9mKsdGewT9LTnCQI6VjT7O2VTdX5tVvmETebikjlMZD860d7UgAE4Po5L7VZjKrUSJeBzbJ/Os8sZ8xoIDCEdiwdyqyaWu7jLqSUDSEhIaXDB24fNXVkIAyDgKV4qpDg6LKKaNJNNo+5VXVvlwLPd7MZMortGWjn9hwjUQPmEQ+2/pKfop6FbgEI3pji6r5px9HTN5v5pbeCiL8VUzu5jzNntTxQqaeJoO90PAVxp5FEGNeU3Sl3QjPHnUtpVTPTh81zs1rcPPyx+eHyq5aofixonpoXKqlN7OdzW1bf+OKYflQl8B3kT+MyGNdTCtmH7O2tkNJ9/9WnhvVjAfxXZ/sroI0skhIfzpN1jeVD8E25857q6e8C/hwdmpxWZiapFi2kieSf6iPBmebEY0mxWsD2JFLDCfdlg2dLUKx1u58qchArnBgh/tXIchQ88Vsz+2yk2A+DUBLQdxjL6Lw+RTjTKzY3jf/7eQx431+sptiSYvYRABQPX+/ZF9S8xq9Dxe0C4o6GMsuGUFaLMyS6sOAvAUCUHwhTLchw/kn5CFeUwcNLfZxyaFqr8q5eUg5lo91JKOX28dtSU5FJZ6zb6JsqoovomEnI2V3JB0gKtgcffpVTDi25/z8rlqIzEsLdllzmlEIAdlbK9K7e8UH0OqGdoNZfW/zvtG6pJ4v9/X8DPw2Fipe+qJujqOARM=
-X-Forefront-Antispam-Report: CIP:216.228.117.160; CTRY:US; LANG:en; SCL:1; SRV:;
- IPV:NLI; SFV:NSPM; H:mail.nvidia.com; PTR:dc6edge1.nvidia.com; CAT:NONE;
- SFS:(13230040)(1800799024)(82310400026)(376014)(36860700016)(22082099003)(18002099003)(56012099006)(11063799006);
+ ARA:13230040|82310400026|36860700016|376014|1800799024|11063799006|6133799003|18002099003|22082099003|56012099006;
+X-Microsoft-Antispam-Message-Info: 2xJmNqHwtk0a6/UgOJiyx47NR6ufHHxIQMJjTwJfNotKMjzLX8EA2QV/e3hT8BZQufOIIdDjzy92oPv6LFnd15Q6751Ig4MZY/DlGi+ehXgCelM9f8SRfDvWsQvHV9PLcw5yW/TlrM9wTl5/2dc12CjHfQndk0/oUNSzUYY6LI8FzGl0BdwadNd2KXNbQIKOe1OmZLNmfakL/9mY66a/7+jkngq33HMdT6qsmqfvyE0BB5WTRKk0krWiGh69V/yJnU1HfRQ2nuEWdMBVk2Cafhr++rvG1PP6hOPbnT2AHlh01wezqHA6zDnPjBVjA8m7wbCfMZWBslS7G6Y2o/JjIfpKiwctftvMMW1R9Pnk+EsCMha8oAMceaBJJF89O+SCdVIPg0Wng8btPl/wYFF5xNFhtnLLWTvrgDmgDJepZ/YbfzTQrfXwWaPXkyzHHUbTPDehm192UiX0u6lhJISjbKT3wH4Cht8OHQPOJuC9WIkVcSNEyMV6AabpSiNWMKNrWfDa+jbPALJfzlhjLl1WoaBa0zVkkrpphpKBYE+Gic8lGiyomL1tW0B8kuhq+qGXr3ForEPgniIODU6efC/zvUiXAGlQ1BOnKA2EO9Q3T8ag8pwb8L/UgtTv4BqJt7bOo4+sWr/RHUzteEICr5rKsrUOPxILR4SYADsZ95B738kOYRxkuXd9PhEycbhaJdsBhXBAqm4cB6bnHOMXkS4/PqHS1VpyWUqT2f54i3PlcG4=
+X-Forefront-Antispam-Report: CIP:216.228.117.161; CTRY:US; LANG:en; SCL:1; SRV:;
+ IPV:NLI; SFV:NSPM; H:mail.nvidia.com; PTR:dc6edge2.nvidia.com; CAT:NONE;
+ SFS:(13230040)(82310400026)(36860700016)(376014)(1800799024)(11063799006)(6133799003)(18002099003)(22082099003)(56012099006);
  DIR:OUT; SFP:1101; 
 X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0: i4xDwVx0j7RRhRvhgkNAjIHb0tiVdPHDU4cPRf1C143DKmHSEFkJtO5N4PSLzZp7GJMM++1cp0rtfZtrtNJGyzMr0AQaKMsLiA30Khlu3Rq3hktW1yrZotVESwjfIuUfr/i2OR1a5P4SVfCEodqzOiY3+B12t7Tpr3N+LK3nnilCtonyjSkMoYJET2C0aY0ahLAjcFhJsvgI45CjCn9wMrl3l5Tjr+Kw6CXRfRiEoli6rkS984+YbtdtZkgORu3b3JU78UWOaMGVsIrL3A3+u1RHAp15XNLYhynQRw7u7wIXk/xx8/DAaC887emgdwCLmQ7QChyQ4GcHYQaODJwQV6KKCOYVgFWYcg4uzIlvAvdip90GrugqyPJfyqbZKgnEK8HcsqSnvUIL288yAFv5hxFPJ5/hrEIj3C5twW3Q3IVpNPkZsxI0LbSd9LE05K2R
+X-MS-Exchange-AntiSpam-MessageData-0: rs3yd8zJWpZcEQdRAZXnnycWzeKWcbySUVnCgS7xmAd9+tjm5r8zvWde5V7KiPbCRbcMjanZLJJjbo/UTy/CnUAwJK30NGoIGnJ4gtsvJHs4ms8HhfUiuOkIJGKjQQedZEh6IK8h0EppqnKCCrKRC9PBao1NgR0A4YqKUPCOhew7eUETUMAa6Lybl/PPxx0Ma6BttJ5MRwAro8D3uVaGBRuSBR74yrHVgGckdgDzV6OTN3K9kjLZGJtuZ3/1AEA2fytWg/gNnhAk9RZz2N5JYLS51oBHGBtQNBgpExCySydhwo/+Z6MPUmaCrCYeGC1ZhYXTd/apxsu3g8DbYcx8NYZCNOLLe6AUQ0UNCgAYtjEQg4DMtHdcEKKBMmB6e2pOchD2/7h0W6OvJ7mIp5Vl7X4jtBxpSHzF0qTC2ZYHUQjAHpADjoj4RJVlcB3hz+UM
 X-OriginatorOrg: Nvidia.com
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 01 Jun 2026 11:50:01.7711 (UTC)
-X-MS-Exchange-CrossTenant-Network-Message-Id: 9745510a-0c0e-47c9-feeb-08debfd3ea15
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 01 Jun 2026 11:50:13.1224 (UTC)
+X-MS-Exchange-CrossTenant-Network-Message-Id: 7b8a4e43-619b-418c-13f7-08debfd3f0da
 X-MS-Exchange-CrossTenant-Id: 43083d15-7273-40c1-b7db-39efd9ccc17a
-X-MS-Exchange-CrossTenant-OriginalAttributedTenantConnectingIp: TenantId=43083d15-7273-40c1-b7db-39efd9ccc17a; Ip=[216.228.117.160];
+X-MS-Exchange-CrossTenant-OriginalAttributedTenantConnectingIp: TenantId=43083d15-7273-40c1-b7db-39efd9ccc17a; Ip=[216.228.117.161];
  Helo=[mail.nvidia.com]
-X-MS-Exchange-CrossTenant-AuthSource: BN2PEPF000055DA.namprd21.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthSource: BL6PEPF0001AB53.namprd02.prod.outlook.com
 X-MS-Exchange-CrossTenant-AuthAs: Anonymous
 X-MS-Exchange-CrossTenant-FromEntityHeader: HybridOnPrem
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: PH8PR12MB6699
-Received-SPF: permerror client-ip=2a01:111:f403:c005::5;
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: CY8PR12MB8412
+Received-SPF: permerror client-ip=2a01:111:f403:c107::1;
  envelope-from=skolothumtho@nvidia.com;
- helo=CO1PR03CU002.outbound.protection.outlook.com
-X-Spam_score_int: -14
-X-Spam_score: -1.5
-X-Spam_bar: -
-X-Spam_report: (-1.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.445,
+ helo=PH8PR06CU001.outbound.protection.outlook.com
+X-Spam_score_int: -24
+X-Spam_score: -2.5
+X-Spam_bar: --
+X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.445,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- FORGED_SPF_HELO=1, SPF_HELO_PASS=-0.001,
- SPF_NONE=0.001 autolearn=no autolearn_force=no
+ SPF_HELO_NONE=0.001, SPF_NONE=0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -133,116 +133,153 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Add an "identifier" property to the SMMUv3 device and use it when
-building the ACPI IORT SMMUv3 node Identifier field.
+From: Nicolin Chen <nicolinc@nvidia.com>
 
-This avoids relying on device enumeration order and provides a stable
-per-device identifier. A subsequent patch will use the same identifier
-when generating the DSDT description for Tegra241 CMDQV, ensuring that
-the IORT and DSDT entries refer to the same SMMUv3 instance.
+Add ACPI DSDT support for Tegra241 CMDQV when the SMMUv3 instance is
+created with tegra241-cmdqv.
 
-The identifier is assigned at pre-plug time, accounting for the ITS Group
-node that build_iort() places before SMMUv3 nodes in the IORT table, so
-that identifiers are globally unique across all IORT nodes.
+For each accelerated SMMUv3 instance, add a Tegra241 CMDQV device
+object under the DSDT \_SB namespace, with HID "NVDA200C" and a UID
+that matches the Identifier of the corresponding SMMUv3 IORT node, so
+the guest OS can associate the DSDT device with the right SMMU. The
+_CRS covers the CMDQV MMIO aperture plus its interrupt, and _CCA
+declares I/O cache coherency.
 
-No functional change: IORT blob content for bios-tables qtest is identical
-to before.
+See ACPI Specification 6.5, Section 6 (Device Configuration) for
+_HID/_UID/_CCA/_CRS.
 
+Generated DSDT entry for a CMDQV instance paired with SMMUv3 Identifier=1:
+  ...
+  Device (CV01)
+  {
+      Name (_HID, "NVDA200C")  // _HID: Hardware ID
+      Name (_UID, One)  // _UID: Unique ID
+      Name (_CCA, One)  // _CCA: Cache Coherency Attribute
+      Name (_CRS, ResourceTemplate ()  // _CRS: Current Resource Settings
+      {
+          QWordMemory (ResourceProducer, PosDecode, MinFixed, MaxFixed, Cacheable, ReadWrite,
+              0x0000000000000000, // Granularity
+              0x000000000C080000, // Range Minimum
+              0x000000000C0CFFFF, // Range Maximum
+              0x0000000000000000, // Translation Offset
+              0x0000000000050000, // Length
+              ,, , AddressRangeMemory, TypeStatic)
+          Interrupt (ResourceConsumer, Edge, ActiveHigh, Exclusive, ,, )
+          {
+              0x00000094,
+          }
+      })
+  }
+  ...
+Generated IORT SMMUv3 node (Identifier = 1):
+
+  ...
+  [048h 0072 001h]                        Type : 04
+  [049h 0073 002h]                      Length : 0058
+  [04Bh 0075 001h]                    Revision : 04
+  [04Ch 0076 004h]                  Identifier : 00000001
+  [050h 0080 004h]               Mapping Count : 00000001
+  [054h 0084 004h]              Mapping Offset : 00000044
+  ...
+
+Signed-off-by: Nicolin Chen <nicolinc@nvidia.com>
 Reviewed-by: Eric Auger <eric.auger@redhat.com>
-Reviewed-by: Nicolin Chen <nicolinc@nvidia.com>
+Co-developed-by: Shameer Kolothum <skolothumtho@nvidia.com>
 Signed-off-by: Shameer Kolothum <skolothumtho@nvidia.com>
 ---
- include/hw/arm/smmuv3.h  |  1 +
- hw/arm/smmuv3.c          |  2 ++
- hw/arm/virt-acpi-build.c |  5 ++++-
- hw/arm/virt.c            | 12 ++++++++++++
- 4 files changed, 19 insertions(+), 1 deletion(-)
+ hw/arm/virt-acpi-build.c | 52 ++++++++++++++++++++++++++++++++++++++++
+ hw/arm/trace-events      |  1 +
+ 2 files changed, 53 insertions(+)
 
-diff --git a/include/hw/arm/smmuv3.h b/include/hw/arm/smmuv3.h
-index 34d0f65eaa..d39fe8850b 100644
---- a/include/hw/arm/smmuv3.h
-+++ b/include/hw/arm/smmuv3.h
-@@ -65,6 +65,7 @@ struct SMMUv3State {
-     qemu_irq     irq[4];
-     QemuMutex mutex;
-     char *stage;
-+    uint8_t identifier;
- 
-     /* SMMU has HW accelerator support for nested S1 + s2 */
-     bool accel;
-diff --git a/hw/arm/smmuv3.c b/hw/arm/smmuv3.c
-index 4e630b6403..0d111d638b 100644
---- a/hw/arm/smmuv3.c
-+++ b/hw/arm/smmuv3.c
-@@ -2126,6 +2126,8 @@ static const Property smmuv3_properties[] = {
-      * Defaults to stage 1
-      */
-     DEFINE_PROP_STRING("stage", SMMUv3State, stage),
-+    /* Identifier used for ACPI IORT SMMUv3 (and DSDT for CMDQV) generation */
-+    DEFINE_PROP_UINT8("identifier", SMMUv3State, identifier, 0),
-     DEFINE_PROP_BOOL("accel", SMMUv3State, accel, false),
-     /* GPA of MSI doorbell, for SMMUv3 accel use. */
-     DEFINE_PROP_UINT64("msi-gpa", SMMUv3State, msi_gpa, 0),
 diff --git a/hw/arm/virt-acpi-build.c b/hw/arm/virt-acpi-build.c
-index b00f3477ca..9d05982137 100644
+index 9d05982137..99490aa7b1 100644
 --- a/hw/arm/virt-acpi-build.c
 +++ b/hw/arm/virt-acpi-build.c
-@@ -349,6 +349,7 @@ static int iort_idmap_compare(gconstpointer a, gconstpointer b)
- typedef struct AcpiIortSMMUv3Dev {
-     int irq;
-     hwaddr base;
-+    uint8_t id;
-     GArray *rc_smmu_idmaps;
-     /* Offset of the SMMUv3 IORT Node relative to the start of the IORT */
-     size_t offset;
-@@ -411,6 +412,7 @@ static int populate_smmuv3_dev(VirtMachineState *vms, GArray *sdev_blob)
-                                                &error_abort));
-         sdev.accel = object_property_get_bool(obj, "accel", &error_abort);
-         sdev.ats = smmuv3_ats_enabled(ARM_SMMUV3(obj));
-+        sdev.id = object_property_get_uint(obj, "identifier", &error_abort);
-         pbus = PLATFORM_BUS_DEVICE(vms->platform_bus_dev);
-         sbdev = SYS_BUS_DEVICE(obj);
-         sdev.base = platform_bus_get_mmio_addr(pbus, sbdev, 0);
-@@ -637,7 +639,8 @@ build_iort(GArray *table_data, BIOSLinker *linker, VirtMachineState *vms)
-                      (ID_MAPPING_ENTRY_SIZE * smmu_mapping_count);
-         build_append_int_noprefix(table_data, node_size, 2); /* Length */
-         build_append_int_noprefix(table_data, 4, 1); /* Revision */
--        build_append_int_noprefix(table_data, id++, 4); /* Identifier */
-+        build_append_int_noprefix(table_data, sdev->id, 4); /* Identifier */
-+        id++;  /* advance shared counter for RC/RMR node uniqueness */
-         /* Number of ID mappings */
-         build_append_int_noprefix(table_data, smmu_mapping_count, 4);
-         /* Reference to ID Array */
-diff --git a/hw/arm/virt.c b/hw/arm/virt.c
-index 2add7401a1..d8d27f2ef6 100644
---- a/hw/arm/virt.c
-+++ b/hw/arm/virt.c
-@@ -254,6 +254,9 @@ static MemMapEntry extended_memmap[] = {
-     /* Any CXL Fixed memory windows come here */
- };
+@@ -65,6 +65,9 @@
+ #include "target/arm/cpu.h"
+ #include "target/arm/multiprocessing.h"
  
-+/* Counts SMMUv3 devices plugged; used to assign stable IORT identifiers */
-+static uint8_t smmuv3_dev_id;
++#include "smmuv3-accel.h"
++#include "tegra241-cmdqv.h"
 +
- static const int a15irqmap[] = {
-     [VIRT_UART0] = 1,
-     [VIRT_RTC] = 2,
-@@ -3830,6 +3833,15 @@ static void virt_machine_device_pre_plug_cb(HotplugHandler *hotplug_dev,
-                                      OBJECT(vms->sysmem), NULL);
-             object_property_set_link(OBJECT(dev), "secure-memory",
-                                      OBJECT(vms->secure_sysmem), NULL);
-+            /*
-+             * In build_iort(), the ITS node(id=0) precedes SMMUv3 nodes
-+             * when present. Account for it so this SMMUv3's identifier
-+             * is globally unique across all IORT nodes.
-+             */
-+            uint8_t its_offset = (vms->msi_controller == VIRT_MSI_CTRL_ITS)
-+                                  ? 1 : 0;
-+            object_property_set_uint(OBJECT(dev), "identifier",
-+                                     its_offset + smmuv3_dev_id++, NULL);
-         }
-         if (object_property_get_bool(OBJECT(dev), "accel", &error_abort)) {
-             hwaddr db_start = 0;
+ #define ARM_SPI_BASE 32
+ 
+ #define ACPI_BUILD_TABLE_SIZE             0x20000
+@@ -1121,6 +1124,51 @@ static void build_fadt_rev6(GArray *table_data, BIOSLinker *linker,
+     build_fadt(table_data, linker, &fadt, vms->oem_id, vms->oem_table_id);
+ }
+ 
++static void acpi_dsdt_add_tegra241_cmdqv(Aml *scope, VirtMachineState *vms)
++{
++    for (int i = 0; i < vms->smmuv3_devices->len; i++) {
++        Object *obj = OBJECT(g_ptr_array_index(vms->smmuv3_devices, i));
++        PlatformBusDevice *pbus;
++        Aml *dev, *crs, *addr;
++        SysBusDevice *sbdev;
++        hwaddr base;
++        uint32_t id;
++        int irq;
++
++        if (smmuv3_accel_cmdqv_type(obj) != SMMUV3_CMDQV_TEGRA241) {
++            continue;
++        }
++        id = object_property_get_uint(obj, "identifier", &error_abort);
++        pbus = PLATFORM_BUS_DEVICE(vms->platform_bus_dev);
++        sbdev = SYS_BUS_DEVICE(obj);
++        base = platform_bus_get_mmio_addr(pbus, sbdev, 1);
++        base += vms->memmap[VIRT_PLATFORM_BUS].base;
++        irq = platform_bus_get_irqn(pbus, sbdev, NUM_SMMU_IRQS);
++        irq += vms->irqmap[VIRT_PLATFORM_BUS];
++        irq += ARM_SPI_BASE;
++
++        dev = aml_device("CV%.02u", id);
++        aml_append(dev, aml_name_decl("_HID", aml_string("NVDA200C")));
++        aml_append(dev, aml_name_decl("_UID", aml_int(id)));
++        aml_append(dev, aml_name_decl("_CCA", aml_int(1)));
++
++        crs = aml_resource_template();
++        addr = aml_qword_memory(AML_POS_DECODE, AML_MIN_FIXED, AML_MAX_FIXED,
++                                AML_CACHEABLE, AML_READ_WRITE, 0x0, base,
++                                base + TEGRA241_CMDQV_IO_LEN - 0x1, 0x0,
++                                TEGRA241_CMDQV_IO_LEN);
++        aml_append(crs, addr);
++        aml_append(crs, aml_interrupt(AML_CONSUMER, AML_EDGE,
++                                      AML_ACTIVE_HIGH, AML_EXCLUSIVE,
++                                      (uint32_t *)&irq, 1));
++        aml_append(dev, aml_name_decl("_CRS", crs));
++
++        aml_append(scope, dev);
++
++        trace_virt_acpi_dsdt_tegra241_cmdqv(id, base, irq);
++    }
++}
++
+ /* DSDT */
+ static void
+ build_dsdt(GArray *table_data, BIOSLinker *linker, VirtMachineState *vms)
+@@ -1185,6 +1233,10 @@ build_dsdt(GArray *table_data, BIOSLinker *linker, VirtMachineState *vms)
+     acpi_dsdt_add_tpm(scope, vms);
+ #endif
+ 
++    if (!vms->legacy_smmuv3_present) {
++        acpi_dsdt_add_tegra241_cmdqv(scope, vms);
++    }
++
+     aml_append(dsdt, scope);
+ 
+     pci0_scope = aml_scope("\\_SB.PCI0");
+diff --git a/hw/arm/trace-events b/hw/arm/trace-events
+index e655b2e26e..1d5d8d1f6c 100644
+--- a/hw/arm/trace-events
++++ b/hw/arm/trace-events
+@@ -9,6 +9,7 @@ omap1_lpg_led(const char *onoff) "omap1 LPG: LED is %s"
+ 
+ # virt-acpi-build.c
+ virt_acpi_setup(void) "No fw cfg or ACPI disabled. Bailing out."
++virt_acpi_dsdt_tegra241_cmdqv(int smmu_id, uint64_t base, uint32_t irq) "DSDT: add cmdqv node for (id=%d), base=0x%" PRIx64 ", irq=%d"
+ 
+ # smmu-common.c
+ smmu_add_mr(const char *name) "%s"
 -- 
 2.43.0
 
