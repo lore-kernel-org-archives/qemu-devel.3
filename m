@@ -4,105 +4,102 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 90EF6CD5BD1
-	for <qemu-devel@archiver.kernel.org>; Mon,  1 Jun 2026 21:02:18 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3B613CD5BD1
+	for <qemu-devel@archiver.kernel.org>; Mon,  1 Jun 2026 21:09:04 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wU9lr-0002Rn-Pp; Mon, 01 Jun 2026 17:02:04 -0400
+	id 1wU9rb-0004hI-5q; Mon, 01 Jun 2026 17:07:59 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1wU9lp-0002PZ-7n
- for qemu-devel@nongnu.org; Mon, 01 Jun 2026 17:02:01 -0400
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1wU9rX-0004gn-Oi
+ for qemu-devel@nongnu.org; Mon, 01 Jun 2026 17:07:57 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1wU9ll-0005tQ-TR
- for qemu-devel@nongnu.org; Mon, 01 Jun 2026 17:02:00 -0400
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1wU9rU-0008Eo-MW
+ for qemu-devel@nongnu.org; Mon, 01 Jun 2026 17:07:55 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1780347717;
+ s=mimecast20190719; t=1780348068;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=01zOL1KxA7hg5pWrtwMF6Lsfw0PlBv8gPEfReA+HU9Q=;
- b=ermgX6YsTejyoJIHAboyBFa2tJlFyLlO/Gqbisvji8VLz4IVvrP3aDj+Iq+IBaUsyLRskl
- Ydhi1ounoEYLKTLamTgiUacPvMuzb4vt/H6plgtSSIZbjrok0fRCuJIYrLUvKOPTiJjLiP
- HDeU+uyHEBqe5ykSrvWrc5EDSPPTMJM=
-Received: from mail-qv1-f70.google.com (mail-qv1-f70.google.com
- [209.85.219.70]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=PsFam362ubese9gGiHBA3kwAT7GbDoBwsOcTzymT1A4=;
+ b=ZawJ4qbAU6uVuPfyJJF8ieJlx9AHPH+FzMFpThUFyqJM5MC34vniZutrIeaqo5D8QFcTgK
+ qNTxRvFXyWcCEo4nl2yYLzGmV84xoq0NjIVs5yT66fVm1dDaw7lSGnlakAojVLSvlkmdV4
+ MJLSr1K+pgh/0j8RpiKDxMO++NFPpeI=
+Received: from mail-qt1-f200.google.com (mail-qt1-f200.google.com
+ [209.85.160.200]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-510-pebCf12COPa0W78Wvl9-pA-1; Mon, 01 Jun 2026 17:01:55 -0400
-X-MC-Unique: pebCf12COPa0W78Wvl9-pA-1
-X-Mimecast-MFC-AGG-ID: pebCf12COPa0W78Wvl9-pA_1780347715
-Received: by mail-qv1-f70.google.com with SMTP id
- 6a1803df08f44-8ccd719a2f2so45304276d6.0
- for <qemu-devel@nongnu.org>; Mon, 01 Jun 2026 14:01:55 -0700 (PDT)
+ us-mta-526-HZj3BY7wMJyxbcxp6JxbXA-1; Mon, 01 Jun 2026 17:07:47 -0400
+X-MC-Unique: HZj3BY7wMJyxbcxp6JxbXA-1
+X-Mimecast-MFC-AGG-ID: HZj3BY7wMJyxbcxp6JxbXA_1780348067
+Received: by mail-qt1-f200.google.com with SMTP id
+ d75a77b69052e-51760f997fdso18890261cf.2
+ for <qemu-devel@nongnu.org>; Mon, 01 Jun 2026 14:07:47 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1780347715; x=1780952515; darn=nongnu.org;
- h=in-reply-to:content-transfer-encoding:content-disposition
- :mime-version:references:message-id:subject:cc:to:from:date:from:to
- :cc:subject:date:message-id:reply-to;
- bh=01zOL1KxA7hg5pWrtwMF6Lsfw0PlBv8gPEfReA+HU9Q=;
- b=nDJdgTH3YgwvfFYCAaKUSRAXFX+bhv02Bp3b01LsavA/GNsn+ONDqmqwGvVAuLaCXR
- ieLhXgPxizW0rPVa7L7CAbXnsUjgp5lz+cONC8v/mtvJU5PG86d5sYSRWCsfxxTbGusA
- o8XlWgKRPbx+iBSYs3ED0D1J8IXsX9l6umrc3+O5KNPmBLlgQxx5O3EfvGuJHaKuIL6/
- T7et8gTqV5s1oAB41o2wZY94jCao5evl/R4hwbZUtUJt+7rA1GLcUrPFggmKTTB3sric
- PenHrp8jE72DWTOisZXVYaOlB+KIw0V5M/sH1/8hbdmGE5U+DFNE+iKj8K5tcxzIVjid
- Lwrg==
+ d=redhat.com; s=google; t=1780348067; x=1780952867; darn=nongnu.org;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+ bh=PsFam362ubese9gGiHBA3kwAT7GbDoBwsOcTzymT1A4=;
+ b=TiFqrtdQZmrY4Da9dAKOavBa61E+hVy+xyb3UOMYZNMECXhVGFJgpxJRghNyfRbPAB
+ 0o2e9aiwJuUvrthhQQ5KmLXZjnpp7lZBD8RL9yyUc0NJ0yHZIk1RbIoKbHCjcz1+WgwN
+ cUJYm/DjN93G5FqtpAVsYYxKjG7dro1wpXLKL8Ciyvrx+i9x26O+AUWJgjxEwJ5WKwy9
+ T0hkIrBeTZ6nr52W7/RT3/bdTICpn4K528sO4lqjl3vToXmvgtXyPm5FCok7ZAqmwgc+
+ gLmAktSoLFNz1dIZxFQ2WC5DBFNQ+eRTKBHdTe1Y8OD9gq45qtB0t2HnvGyteZ1M2i6z
+ jY1Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1780347715; x=1780952515;
- h=in-reply-to:content-transfer-encoding:content-disposition
- :mime-version:references:message-id:subject:cc:to:from:date:x-gm-gg
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=01zOL1KxA7hg5pWrtwMF6Lsfw0PlBv8gPEfReA+HU9Q=;
- b=drhyFV5bv2ue5OvEHtyYczWYZqSlrweQMEWtxOxE/t+sFIYVvwwSk6I2mUUmUNErd6
- GsMWmDngyKKSnMkrDPs6NbApgUH297wr8YoL446GEg5qULvjxCH0+/iIh0EIVEymaKu/
- 81aSnpX7f1Zyb4oZ09wZt48HHtBnHCAHrSOIuyV+pDlqLm2tKvH4+xmckTx5H61JCLyD
- u1+EIFge09AG+nciwiznEilGODFGhCjE9+uNAk/+LlgdVwkPMntueBPRt1ITzjLmll1+
- kx1NrTcHCg+tsgMc6oy1dM3oxa1tr6GhirNeSJX25NIjJShiVcjfIKKzj7X+U5ijLNea
- c+cw==
-X-Gm-Message-State: AOJu0Yzb6Zqm6TGXRMlAX+DVvUgrplHH605genI4YZyAnR8Hk9+4iaiy
- PtB/EwnU+vvfzbgaDgXzKsvT4RB8fW/FA7cCtDC9dLo2BdTzJlGJI0BcCietW6HoUSHekUUYmSj
- o9NDEvlA28UVwVddcKX+LKCrrM0dSr30XNQ/JRHxyfB5Gius02yBq9rix
-X-Gm-Gg: Acq92OG3P2ple0ivRkUsmjC/vjuiTW9LPR38G5/BmwoqUM8syaJnHUm7XaGU0xjE0On
- JjwAYwE+u8hyp5MrAoH4DVLFOui24U5vX/FjZCQAxBLgK4qnnHWcPhvJr1w4Y1u8BYG3gld2Cjw
- 8qD7o/HIGftoUGF2SwjwbOCPuQHReifJoDsXInhVcceFoDkoDukR0lQO+xXFEudYQrIRBil7f+g
- MQ45Re5dDPUGAS84wTaq5Qj5vVRHkkkZpiInKi7+zb2FbJM36/JwgDoOqPui7U7VHw2ASmIj8Gn
- yxMOk6piQ1R46OJjwiOtSdAmz5ZJV1xLusgrD6lM54JrMwlth3rLFoL0c1jO36NhRo4u3jq0pCj
- l7RloUquwUh1UpJ4mhK4tuJ40Hw==
-X-Received: by 2002:ad4:5b8a:0:b0:8cc:f592:3023 with SMTP id
- 6a1803df08f44-8ccf5923483mr165846066d6.37.1780347715152; 
- Mon, 01 Jun 2026 14:01:55 -0700 (PDT)
-X-Received: by 2002:ad4:5b8a:0:b0:8cc:f592:3023 with SMTP id
- 6a1803df08f44-8ccf5923483mr165845666d6.37.1780347714569; 
- Mon, 01 Jun 2026 14:01:54 -0700 (PDT)
+ d=1e100.net; s=20251104; t=1780348067; x=1780952867;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=PsFam362ubese9gGiHBA3kwAT7GbDoBwsOcTzymT1A4=;
+ b=VywlTfI7lB/KJgeeAm3pSNwWKe3wo5CeMeaNEDxTc6cyF5tIg0q6+lQimLLMX5eiZj
+ DKGHQpIAueCAjhDNFaAfWPz6Z0oWBTqmjpNSZRbRsalImDLAlFzXsjcoaJUWERlB2TJB
+ WvBp67bG7pZk25aZ+rd/pfdzH4e6rQZaVgN8aJy/GA7wUZGN8OWpAN8f+pcueAEgLBX+
+ a4TpqSwmOsjt5xqqAt9Rt5Bzv5OAkuUKq5qT4mpfrt5PdMRo/2dD819fLjQ55XhOBGhD
+ ZEYxX8umMwRipxCVg8AUFJT/PZ6FcnW8ItrVIs5yUW+/d+4dti2ORH6DpcCl5IjIhI1+
+ Fz1w==
+X-Forwarded-Encrypted: i=1;
+ AFNElJ8A0GJj6RtrtKzjdoK7f+6JejAVeyjUyfMc+e9LR4Tc9VUsUrgIxPTpxZxcPTu+eTLsJvQoGAh8wpiY@nongnu.org
+X-Gm-Message-State: AOJu0YyFsWKpH2QSF+NYHZRW9G2uS6s/ibVyVFdJ1q1JwfrMOdBpGdQ/
+ havuFVWZNUCMDF3RviLXWblaxTXCGiQ30OxqCNBfCa9aye8GE1uKMIgQ1tFsEO75dEa49EKVU1J
+ 0bcVcQ5POddXz0cMfq7U0EP4KPLxmDr98M1hexOvxw4TzXLJp4thWI8ow
+X-Gm-Gg: Acq92OF3uLwUUEkVznhvlZGOjsQO44G1nToFIVrYP1mP3Wo2zSd9Hn414OA2rC6R56U
+ UtRK/yyw5bYKscljaHu4yDeFp/EPVgZhhE2L0jkxylwWaqi7+RZbo411Xg1uxFpU76et7IIFwr7
+ hFmmn4K/DvOo13v/1MI0qbyQMbiVCC3xKSqX9qlPU6kfvPUzLK3XnfC+YD53b4DtqN4UajMRyf7
+ 5g8SwsUe9KyASSm3mqr2uNv2f+ozq5NFpeuA3BPeIoORJkbLlGVJrtZNwh3NiCgXVsQ0LY2acdv
+ KMEnLtYt+ENYPxj9fVtHqrhNnvTn+M2lb/oToJMrRTxarAJUFz7Hy6upzy9pexyl9mDrayCcwIN
+ 19Hox+fBvVl3XG7HvXqyTJ1iBKA==
+X-Received: by 2002:a05:622a:17cf:b0:50e:a1ab:67ea with SMTP id
+ d75a77b69052e-5173a7d7d8cmr183933711cf.40.1780348066973; 
+ Mon, 01 Jun 2026 14:07:46 -0700 (PDT)
+X-Received: by 2002:a05:622a:17cf:b0:50e:a1ab:67ea with SMTP id
+ d75a77b69052e-5173a7d7d8cmr183932851cf.40.1780348066344; 
+ Mon, 01 Jun 2026 14:07:46 -0700 (PDT)
 Received: from x1.local ([142.189.10.167]) by smtp.gmail.com with ESMTPSA id
- 6a1803df08f44-8ccea0635b1sm104312046d6.11.2026.06.01.14.01.53
+ d75a77b69052e-51741de5b6esm68380521cf.30.2026.06.01.14.07.45
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 01 Jun 2026 14:01:53 -0700 (PDT)
-Date: Mon, 1 Jun 2026 17:01:52 -0400
+ Mon, 01 Jun 2026 14:07:45 -0700 (PDT)
+Date: Mon, 1 Jun 2026 17:07:44 -0400
 From: Peter Xu <peterx@redhat.com>
-To: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
-Cc: qemu-devel@nongnu.org,
- Alex =?utf-8?Q?Benn=C3=A9e?= <alex.bennee@linaro.org>,
- Fabiano Rosas <farosas@suse.de>, Paolo Bonzini <pbonzini@redhat.com>,
- Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: Re: [PATCH] system/physmem: Synchronize ram_list accesses
-Message-ID: <ah3zQGQa8oJYskTO@x1.local>
-References: <20260523-tsan-v1-1-07d5eb9dcaa2@rsg.ci.i.u-tokyo.ac.jp>
- <ahYSO98JgdYJrP2e@x1.local>
- <8d81e622-1397-4579-bbe5-50ee174a3272@rsg.ci.i.u-tokyo.ac.jp>
- <ahhcvqnOWEoYmCJF@x1.local>
- <b4f87ec7-0406-430e-b645-0539a5e083be@rsg.ci.i.u-tokyo.ac.jp>
- <ahhnUz0Il0nRvhoz@x1.local>
- <bd9d973a-f467-4248-b283-f25356b3354d@rsg.ci.i.u-tokyo.ac.jp>
- <ahm7IqApbMaMhXQP@x1.local>
- <5fd9e540-cf13-45f5-ba9a-c7faf364035b@rsg.ci.i.u-tokyo.ac.jp>
+To: Michael Tokarev <mjt@tls.msk.ru>
+Cc: Fabiano Rosas <farosas@suse.de>,
+ Alistair Francis <Alistair.Francis@wdc.com>, Zishun Yi <vulab@iscas.ac.cn>,
+ "qemu-riscv@nongnu.org" <qemu-riscv@nongnu.org>,
+ "qemu-stable@nongnu.org" <qemu-stable@nongnu.org>,
+ "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>
+Subject: Re: [PATCH v1] target/riscv: Add mseccfg to VMStateDescription
+Message-ID: <ah30oAWataEPHDfu@x1.local>
+References: <20260511124828.3210477-1-vulab@iscas.ac.cn>
+ <bcc0aaa1-8d1c-4f52-a681-85bc903c8d66@tls.msk.ru>
+ <6e42ecc1026a057e07e73386463bd57e1467a46f.camel@wdc.com>
+ <bf46f39c-6173-4cfd-b374-63529892a1fb@tls.msk.ru>
+ <87ecix59j9.fsf@suse.de>
+ <da24799f-dd23-49b6-8e7f-65d757721d3d@tls.msk.ru>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <5fd9e540-cf13-45f5-ba9a-c7faf364035b@rsg.ci.i.u-tokyo.ac.jp>
+In-Reply-To: <da24799f-dd23-49b6-8e7f-65d757721d3d@tls.msk.ru>
 Received-SPF: pass client-ip=170.10.133.124; envelope-from=peterx@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -24
@@ -111,7 +108,7 @@ X-Spam_bar: --
 X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.445,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -127,339 +124,84 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Sat, May 30, 2026 at 01:39:50AM +0900, Akihiko Odaki wrote:
-> On 2026/05/30 1:13, Peter Xu wrote:
-> > On Fri, May 29, 2026 at 05:24:54PM +0900, Akihiko Odaki wrote:
-> > > On 2026/05/29 1:03, Peter Xu wrote:
-> > > > On Fri, May 29, 2026 at 12:32:18AM +0900, Akihiko Odaki wrote:
-> > > > > 
-> > > > > 
-> > > > > On 2026/05/29 0:18, Peter Xu wrote:
-> > > > > > On Wed, May 27, 2026 at 04:54:42PM +0900, Akihiko Odaki wrote:
-> > > > > > > On 2026/05/27 6:35, Peter Xu wrote:
-> > > > > > > > On Sat, May 23, 2026 at 09:38:28PM +0900, Akihiko Odaki wrote:
-> > > > > > > > > Alex Bennée reported a ThreadSanitizer warning about a plain concurrent
-> > > > > > > > > access to ram_list [1]. Ensure the concurrent accesses to ram_list are
-> > > > > > > > > properly synchronized with atomic accesses, mutexes, or RCU.
-> > > > > > > > > 
-> > > > > > > > > First, the plain assignments of ram_list.mru_block are replaced with
-> > > > > > > > > qatomic_set(). A comment in qemu_get_ram_block() explains why the
-> > > > > > > > > ordering requirement is relaxed, but it still needs to be atomically
-> > > > > > > > > accessed. include/qemu/atomic.h says:
-> > > > > > > > > 
-> > > > > > > > > > The C11 memory model says that variables that are accessed from
-> > > > > > > > > > different threads should at least be done with __ATOMIC_RELAXED
-> > > > > > > > > > primitives or the result is undefined. Generally this has little to
-> > > > > > > > > > no effect on the generated code but not using the atomic primitives
-> > > > > > > > > > will get flagged by sanitizers as a violation.
-> > > > > > > > > 
-> > > > > > > > > Second, ram_list.version accesses are replaced with atomic operations
-> > > > > > > > > or protected with a mutex. Unlike ram_list.mru_block, ram_list.version
-> > > > > > > > > has tighter ordering requirements for one of its goals: ensuring that
-> > > > > > > > > the reader-held rs->last_seen_block value is invalidated whenever a RAM
-> > > > > > > > > block is reclaimed between two RCU reader critical sections. Below are
-> > > > > > > > > steps a reader and an updater follow:
-> > > > > > > > > 
-> > > > > > > > > Reader:
-> > > > > > > > > 
-> > > > > > > > > R-1. Enter the first RCU read-side critical section:
-> > > > > > > > > R-1-1. rs->last_version = qatomic_load_acquire(&ram_list.version)
-> > > > > > > > > R-1-2. rs->last_seen_block = an element of ram_list.blocks
-> > > > > > > > > R-2. Enter the second RCU read-side critical section:
-> > > > > > > > > R-2-1. if (qatomic_read(&ram_list.version) != rs->last_version)
-> > > > > > > > > R-2-2.     rs->last_seen_block = NULL
-> > > > > > > > > 
-> > > > > > > > > Updater:
-> > > > > > > > > 
-> > > > > > > > > W-1. Enter a ram_list.mutex critical section
-> > > > > > > > > W-1-1. Update ram_list.blocks
-> > > > > > > > > W-1-2. qatomic_store_release(&ram_list.version, ram_list.version + 1)
-> > > > > > > > > W-2. Enter another ram_list.mutex critical section
-> > > > > > > > > W-2-1. QLIST_REMOVE_RCU(block, next)
-> > > > > > > > > W-2-2. qatomic_store_release(&ram_list.version, ram_list.version + 1)
-> > > > > > > > > W-2-3. call_rcu(block, reclaim_ramblock, rcu)
-> > > > > > > > > 
-> > > > > > > > > W-1-2 represents the write observed by R-1-1.
-> > > > > > > > > 
-> > > > > > > > > ram_list.version is read non-atomically on the update side because the
-> > > > > > > > > update side is serialized with ram_list.mutex. The other ram_list
-> > > > > > > > > accesses in these steps are reasoned about in two cases.
-> > > > > > > > > 
-> > > > > > > > > When the grace period of W-2-3 contains R-2:
-> > > > > > > > >         qatomic_load_acquire() at R-1-1 and qatomic_store_release() at W-1-2
-> > > > > > > > >         enforce the following ordering:
-> > > > > > > > >             W-1-1 -> W-1-2 -> R-1-1 -> R-1-2
-> > > > > > > > >         The value of ram_list.blocks stored by W-1-1 or a newer value that
-> > > > > > > > >         was loaded by R-1-2 is still valid because of the grace period.
-> > > > > > > > > 
-> > > > > > > > > When the grace period of W-2-3 ends before R-2:
-> > > > > > > > >         call_rcu() at W-2-3 and the read-side critical section at R-2 ensure
-> > > > > > > > >         the following ordering:
-> > > > > > > > >             W-2-2 -> W-2-3 -> the grace period -> R-2 -> R-2-1
-> > > > > > > > >         The value of ram_list.version stored by W-2-2 or a newer value that
-> > > > > > > > >         was loaded by R-2-1 differs from rs->last_version and the reader
-> > > > > > > > >         invalidates rs->last_seen_block.
-> > > > > > > > > 
-> > > > > > > > > Together, these steps ensure that rs->last_seen_block is invalidated
-> > > > > > > > > whenever necessary. With added atomic operations, pre-existing memory
-> > > > > > > > > barriers are no longer necessary and are removed.
-> > > > > > > > > 
-> > > > > > > > > Any other ram_list accesses are already properly synchronized.
-> > > > > > > > > 
-> > > > > > > > > [1] https://lore.kernel.org/qemu-devel/878q9fbmap.fsf@draig.linaro.org/
-> > > > > > > > > 
-> > > > > > > > > Signed-off-by: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
-> > > > > > > > 
-> > > > > > > > Above link [1] also mentioned about a hang.  Just to double check: we're
-> > > > > > > > only trying to silent the TSAN warning (which is a false positive), right?
-> > > > > > > 
-> > > > > > > The hang is irrelevant and this is indeed to address the TSAN warning,
-> > > > > > > though I'm a bit reluctant to call it false positive because, strictly
-> > > > > > > speaking, the code actually relies on undefined behavior.
-> > > > > > > 
-> > > > > > > > 
-> > > > > > > > > ---
-> > > > > > > > >      migration/ram.c  | 10 +++++-----
-> > > > > > > > >      system/physmem.c | 16 +++++++---------
-> > > > > > > > >      2 files changed, 12 insertions(+), 14 deletions(-)
-> > > > > > > > > 
-> > > > > > > > > diff --git a/migration/ram.c b/migration/ram.c
-> > > > > > > > > index fc38ffbf8af1..6da24d725861 100644
-> > > > > > > > > --- a/migration/ram.c
-> > > > > > > > > +++ b/migration/ram.c
-> > > > > > > > > @@ -2495,7 +2495,10 @@ static void ram_state_reset(RAMState *rs)
-> > > > > > > > >          rs->last_seen_block = NULL;
-> > > > > > > > >          rs->last_page = 0;
-> > > > > > > > > -    rs->last_version = ram_list.version;
-> > > > > > > > > +
-> > > > > > > > > +    /* Read version before ram_list.blocks */
-> > > > > > > > > +    rs->last_version = qatomic_load_acquire(&ram_list.version);
-> > > > > > > > > +
-> > > > > > > > >          rs->xbzrle_started = false;
-> > > > > > > > >          ram_page_hint_reset(&rs->page_hint);
-> > > > > > > > > @@ -3270,13 +3273,10 @@ static int ram_save_iterate(QEMUFile *f, void *opaque)
-> > > > > > > > >           */
-> > > > > > > > >          WITH_QEMU_LOCK_GUARD(&rs->bitmap_mutex) {
-> > > > > > > > >              WITH_RCU_READ_LOCK_GUARD() {
-> > > > > > > > > -            if (ram_list.version != rs->last_version) {
-> > > > > > > > > +            if (qatomic_read(&ram_list.version) != rs->last_version) {
-> > > > > > > > >                      ram_state_reset(rs);
-> > > > > > > > >                  }
-> > > > > > > > 
-> > > > > > > > Not directly relevant to this patch, but I never thought into why this few
-> > > > > > > > lines are needed at all, and then I found I don't have an answer..
-> > > > > > > > 
-> > > > > > > > Here, ram_list version change should only happen during ramblock
-> > > > > > > > add/remove.  I can think of a few special cases:
-> > > > > > > > 
-> > > > > > > > a) device add/remove (e.g. dimms) causing new / removing ramblocks, should
-> > > > > > > >        never happen as qdev code fails any device add/remove attempt during
-> > > > > > > >        migration (qdev_device_add_from_qdict, qdev_unplug)
-> > > > > > > > 
-> > > > > > > > b) virtio-mem, which only manages one memory backend, hence one ramblock,
-> > > > > > > >        no add/remove
-> > > > > > > > 
-> > > > > > > > c) virtio-gpu, will do random add/remove with memory_region_init_ram_ptr()
-> > > > > > > >        which means ramblocks are not migratable
-> > > > > > > > 
-> > > > > > > > PS: I recall we have other special cases like ROM sizes can change on dest
-> > > > > > > > QEMU, but it's about used_length, not about version boosts, so doesn't
-> > > > > > > > matter here.
-> > > > > > > > 
-> > > > > > > > Both a) and b) should make sure no change on version, c) will change
-> > > > > > > > version, but in a case where the ramblock is destined to be not migratable,
-> > > > > > > > hence not visible to migration core.
-> > > > > > > > 
-> > > > > > > > The patch itself looks all fine, but I'm just wondering if we should just
-> > > > > > > > remove this check completely or even try to somehow trap it from happening
-> > > > > > > > (if we can rule out things like virtio-gpu): if something really changed,
-> > > > > > > > it'll be a serious problem because we sync ramblock list already during
-> > > > > > > > ram_save_setup.
-> > > > > > > 
-> > > > > > > There is another edge case: a ram_list.blocks change may be propagated to
-> > > > > > > the thread calling ram_save_setup() and ram_save_iterate() at different
-> > > > > > > timing. We are only ensuring that ram_list.blocks changes invalidating old
-> > > > > > > blocks are delivered with WITH_RCU_READ_LOCK_GUARD().
-> > > > > > > 
-> > > > > > > So I think there is a theoretical race condition that breaks migration,
-> > > > > > > though triggering it in practice may not be realistic.
-> > > > > > 
-> > > > > > Could you elaborate more on the theoretical race mentioned?
-> > > > > > 
-> > > > > > My comment above was trying to say there should have no such happening, the
-> > > > > > virtio-gpu boosting the version seems to be an accident to me because
-> > > > > > migration doesn't need that (because virtio-gpu ramblocks are not
-> > > > > > migratable anyway).
-> > > > > 
-> > > > > For example, a device may be removed before migration, but the removal of
-> > > > > the block from ram_list.blocks and the increment of ram_list.version may not
-> > > > > be observed by the thread calling ram_save_setup(); RCU only guarantees that
-> > > > > these writes will be visible in read-side critical sections *after* the
-> > > > > grace period ends, which can be after the ram_save_setup() call and before
-> > > > > following ram_save_iterate() calls.
-> > > > 
-> > > > Ah. I think it should be fine, since save_setup() holds BQL, done by all
-> > > > callers when invoking qemu_savevm_state_do_setup().  I expect removal of a
-> > > > device needs BQL too while invoking qemu_ram_free(), so serialized with it.
-> > > > 
-> > > > The other thing is, very early we'll set MIGRATION_STATUS_SETUP, covering
-> > > > both save_setup() and save_iterate(), so things will start to get blocked
-> > > > very early too.
-> > > > 
-> > > > OTOH, any comments on below?
-> > > 
-> > > Sure.
-> > > 
-> > > > 
-> > > > Thanks,
-> > > > 
-> > > > > 
-> > > > > Regards,
-> > > > > Akihiko Odaki
-> > > > > 
-> > > > > > 
-> > > > > > While looking at this once more, I found that I'm lost why mru_block is
-> > > > > > race free..
-> > > > > > 
-> > > > > > The problem is mru_block is written by the RCU readers, then... see whether
-> > > > > > this race can happen (even with this patch):
-> > > > > > 
-> > > > > >      Reader A                              Writer
-> > > > > >      --------                              ------
-> > > > > >      rcu_read_lock()
-> > > > > >      walk list, find block X
-> > > > > >                                            QLIST_REMOVE_RCU(X)
-> > > > > >                                            qatomic_set(&mru_block, NULL)
-> > > > > >                                            call_rcu(X, reclaim_ramblock)
-> > > > > >      qatomic_set(&mru_block, X)  <----------- overwrites NULL
-> > > > > >      rcu_read_unlock()
-> > > > > >                                            grace period ends, X freed
-> > > > > > 
-> > > > > >      Reader C
-> > > > > >      --------
-> > > > > >      rcu_read_lock()
-> > > > > >      qatomic_rcu_read(&mru_block) -> X
-> > > > > >      Read X's block->offset ...  <----------- UAF
-> > > 
-> > > I agree this is problematic.
-> > > 
-> > > > > > 
-> > > > > > One thing I can think of so far is this (pesudo code only, ignoring atomic
-> > > > > > ops for now):
-> > > > > > 
-> > > > > > qemu_ram_free():
-> > > > > >        qemu_mutex_lock_ramlist();
-> > > > > >        ...
-> > > > > >        QLIST_REMOVE_RCU(block, next);
-> > > > > >        /*
-> > > > > >         * 1st attempt to reset it, note: concurrent reader may set it again,
-> > > > > >         * even to the ramblock being freed.
-> > > > > >         */
-> > > > > >        ram_list.mru_block = NULL;
-> > > > > >        ram_list.version++;
-> > > > > >        /*
-> > > > > >         * Only to make sure whoever might be using this ramblock being
-> > > > > >         * removed to finish using it.
-> > > > > >         */
-> > > > > >        call_rcu(block, rcu_noop_fn, rcu);
-> > > > > >        drain_call_rcu();
-> > > > > >        /*
-> > > > > >         * 2nd attempt to clear it: after call_rcu() we make sure nobody yet
-> > > > > >         * has access to the ramblock being removed, hence this clear makes
-> > > > > >         * sure it won't get set again by anyone to the removed ramblock.
-> > > > > >         */
-> > > > > >        ram_list.mru_block = NULL;
-> > > > > >        call_rcu(block, reclaim_ramblock, rcu);
-> > > > > >        qemu_mutex_unlock_ramlist();
-> > > > > > 
-> > > > > > But it looks a bit ugly.  Thoughts?
-> > > 
-> > > Indeed it's not really nice. drain_call_rcu() is something we definitely
-> > > want to avoid; it unlocks the BQL, which is too hard to prove safety.
-> > 
-> > Ah, yeah I forgot that.
-> > 
-> > > 
-> > > The best solution I have currently in mind is to keep the mru_block inside
-> > > an allocation managed my RCU:
-> > > 
-> > > struct RAMListVersion {
-> > > 	struct rcu_head rcu;
-> > > 	RAMBlock *mru_block;
-> > > 	RAMBlock *reclaim_block;
-> > > };
-> > > 
-> > > And qemu_ram_free() will do:
-> > >      qemu_mutex_lock_ramlist();
-> > >      ...
-> > >      QLIST_REMOVE_RCU(block, next);
-> > >      ram_list.version->reclaim_block = block;
-> > >      call_rcu(ram_list.version, reclaim_ramlist_version, rcu);
-> > >      ram_list.version = g_new0(RamListVersion, 1);
-> > >      ram_list.version_id++;
-> > >      qemu_mutex_unlock_ramlist();
-> > > 
-> > > qemu_get_ram_block() will do:
-> > >      qatomic_rcu_read(&ram_list.version)->mru_block = block;
-> > > 
-> > > reclaim_ramlist_version will do:
-> > >      if (version->reclaim_block) {
-> > >           reclaim_ramblock(version->reclaim_block);
-> > >      }
-> > > 
-> > >      g_free(version);
-> > 
-> > This one almost works, except I think such race can still happen:
-> > 
-> >      writer                                   reader
-> >      ------                                   ------
-> >    qemu_get_ram_block for block X
-> >                                               qemu_get_ram_block
-> >      qemu_mutex_lock_ramlist();
-> >                                                 found block X
-> >      QLIST_REMOVE_RCU(block, next);
-> >      ram_list.version->reclaim_block = block;
-> >      call_rcu(ram_list.version, ...);
-> >      ram_list.version = g_new0(RamListVersion, 1);
-> >                                               ram_list.version->mru_block = X <-----------------
-> >      qemu_mutex_unlock_ramlist();
+On Fri, May 29, 2026 at 10:43:13AM +0300, Michael Tokarev wrote:
+> [Trimmed the Cc list a bit]
 > 
-> You are right.
+> On 27.05.2026 15:20, Fabiano Rosas wrote:
 > 
+> > There are no migration compatibility guarantees for an unversioned
+> > machine type. Only migration and snapshots from same-version QEMUs are
+> > expected to work in this case. Other scenarios may or may not work.
+> ..
 > > 
-> > The fix should be simple, IMHO, my previous solution only misses that BQL
-> > thing, so we can do a nested rcu free with:
+> > The addition from this patch is in a subsection, so .needed will
+> > determine whether it will be put on the stream. If we backport the
+> > change, then the stable QEMU build will (likely) start sending this
+> > subsection, which the old, non-stable QEMU will not recognize and
+> > migration will fail. Migration from stable-stable would likely work.
 > > 
-> > reclaim_ramblock_prepare():
-> >    /*
-> >     * 1st round rcu free guarantees the last reader that can access
-> >     * this ramblock is gone.  Reset this field making sure it will
-> >     * never points to the ramblock being freed.
-> >     */
-> >    ram_list.mru_block = NULL;
-> >    call_rcu(block, reclaim_ramblock, rcu);
+> > So any stable versions that (would) contain this patch are likely to
+> > block migration from that version into an unpatched QEMU.
 > > 
-> > qemu_get_ram_block():
-> >    qemu_mutex_lock_ramlist();
-> >    ...
-> >    QLIST_REMOVE_RCU(block, next);
-> >    ram_list.mru_block = NULL;
-> >    call_rcu(block, reclaim_ramblock_prepare, rcu);
-> >    qemu_mutex_unlock_ramlist();
+> > Note that since the machine is unversioned, migration from QEMU x to
+> > QEMU x+1 is already prone to being broken.
 > 
-> Now I get it and this looks nice to me. Having a nested call_rcu() is not
-> that ugly if the underlying reasoning is described in a comment. I would
-> describe it something like following in reclaim_ramblock_prepare():
+> Yeah, this was my understanding too.
 > 
-> Now the last reader that retrieves the pointer to the block via
-> ram_list.blocks is gone. The reader may have assigned the block to
-> ram_list.mru_block, so reset the field making sure there is no remaining
-> pointer to the block.
+> And given all the above, I think we should apply the fixes to the
+> stable series, and treat this as changing version (the version is
+> actually changed, but only the minor version).  Yes, the VMs wont
+> be migratable between 10.0.9 and 10.0.10, exactly like it was
+> not-migratable between 10.0.x and 10.1.x.  Because basically, with
+> no versioned machines, there's basically no migration capability
+> between different qemus *at all*.
+> 
+> When we do have versioned machines, we can't add fields to previous
+> versions anymore, exactly because of the migration guarantees.  But
+> as long as we don't, there's no guarantees at all.  And the only
+> place where migration can be done is between different hosts with
+> the same qemu versions.
+> 
+> The above description leaves one question still.  What happens when
+> migrating from unpatched qemu to a patched qemu?  Will the migration
+> fail due to missing field, or succeed, making the missing field to
+> have a default value?
+> 
+> If it will succeed, then we definitely should add the field to fix
+> the original issue.
+> 
+> BTW, can't we just skip, at the receive end, fields we don't know about?
 
-Thanks for double checking.  I've queued the current patch for ASAN, and
-posted that fix as a separate patch on top, here:
+We don't have enough info to skip.
 
-  [PATCH] memory/ramblock: Fix clear of mru_block on possible race condition
+We have headers for VMSD, we don't have headers for VMSD fields.  We
+currently dump fields with pure binary streams.  It means when there's a
+new field added to migration stream, dest QEMU has no way to know it's a
+new field, it'll treat it as the next thing it expects to see, which can be
+anything.  We still have the VMSD footer to guard us making sure it don't
+bleed outside of the current VMSD, though.
+
+> 
+> But all this is.. well... sort of moot for this very change already.
+> 
+> I haven't realized that this discussion is about a change which I
+> *already* applied (I wanted to revert it until this question settles,
+> but I forgot to do that!).  And meanwhile, I released the next set
+> of stable qemu releases, with the changes in question (two of them)
+> applied.  It wasn't my intention (or else I'd not start this
+> discussion in the first place, obviously).
+> 
+> So we do have this migration breakage already, "thanks" to my sloppiness.
+> 
+> And I don't want to break things for users for no reason.  The original
+> issue were described as a security issue even, so there's a reason to
+> fix it.  I think.
+> 
+> But in the future I'll try to be more careful about such things.
+> Again, understanding the machinery and consequences helps here too.
+
+Before machine versioning is introduced, this looks like the right thing to
+do.
 
 Thanks,
 
