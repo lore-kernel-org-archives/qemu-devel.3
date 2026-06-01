@@ -4,106 +4,109 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A5CA9CD6E55
-	for <qemu-devel@archiver.kernel.org>; Mon,  1 Jun 2026 21:56:15 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C51F6CD6E60
+	for <qemu-devel@archiver.kernel.org>; Mon,  1 Jun 2026 21:56:16 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wUAai-0006b7-0Q; Mon, 01 Jun 2026 17:54:36 -0400
+	id 1wUAar-0006gj-D8; Mon, 01 Jun 2026 17:54:45 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <stefanb@linux.ibm.com>)
- id 1wUAae-0006ZR-UR
- for qemu-devel@nongnu.org; Mon, 01 Jun 2026 17:54:32 -0400
-Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
+ id 1wUAam-0006dy-L3
+ for qemu-devel@nongnu.org; Mon, 01 Jun 2026 17:54:40 -0400
+Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <stefanb@linux.ibm.com>)
- id 1wUAab-0003pc-Sd
- for qemu-devel@nongnu.org; Mon, 01 Jun 2026 17:54:32 -0400
-Received: from pps.filterd (m0356516.ppops.net [127.0.0.1])
+ id 1wUAak-0003sT-87
+ for qemu-devel@nongnu.org; Mon, 01 Jun 2026 17:54:40 -0400
+Received: from pps.filterd (m0353729.ppops.net [127.0.0.1])
  by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 651GtHL92415657; Mon, 1 Jun 2026 21:54:26 GMT
+ 651FSGjq798759; Mon, 1 Jun 2026 21:54:36 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
- :content-transfer-encoding:date:from:in-reply-to:message-id
- :mime-version:references:subject:to; s=pp1; bh=XCzspYkogliws8oIC
- JPxI7vAv69/YR57DVkiYYvwANc=; b=KovHkorA6JF8k3Lkg1mHRR5AMLoXUmeWv
- wK65mGVztyYlw2stkbPbcyGsc6a2r/lhOGHbRcd0NGlua2mdAYhWAP64KT+pBsmB
- Z6iEdqoXFNBnr4bn5pF1i+zLNxWGGQLLlpvDrVKMOrxIb0oPygzetoOvF+W7zhY9
- mVWdGHYzhTS5TEaWtNl8vJqlrYQVwPUIvTF+JAqFhJq/P5qUxEhKkZqezlxym/ah
- JrxlamOvnMpAYGyF8Qz+wvzEtlfdeGyoBGwMEIUqL1ZbA47xP5KP0bmDG7vNgJZJ
- oR6/OeO2ezrZ1yAmp0A+aAXCdWHwKUInyOP3zzK7rEkK5BrtlAPEw==
+ :content-transfer-encoding:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to; s=pp1; bh=0fvibv
+ fYHMaqNdOzW8NmvIcE/akjc3jNhpeJ8WG0rnQ=; b=GwRLnTHfl3w+xWTx8hz5td
+ MZDjpRVww4LFCYkTLFvzra24ChYxQzWWwW48N18NR5ymLzHrb8n9xbWZcDMBMxpK
+ cYsadYc+LYn8MgQ59ucxm/Kia/7JNO96D5gw+Djtx84R/OT7dPveq1GGWri/qQ8q
+ P2f44wia46kRDPT1d1hOXhvG8R+gY540mC/xkBLUCnICVGv51QOWrcXX2RT2K+QT
+ 6uz+fPH+e++5QwMU9lL8iY/UqyrvRmBeDcqZRA6nhz6zbnGhAPutOs7oRnZ7j/2s
+ MjMD0DXQvz/Jttmc6Yhg1+CzycdewOqViPkd6wer4xGEZlzV9bvAYwEDxtuqzL2A
+ ==
 Received: from ppma22.wdc07v.mail.ibm.com
  (5c.69.3da9.ip4.static.sl-reverse.com [169.61.105.92])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4efnahjwh7-1
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4efqjq32db-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Mon, 01 Jun 2026 21:54:26 +0000 (GMT)
+ Mon, 01 Jun 2026 21:54:35 +0000 (GMT)
 Received: from pps.filterd (ppma22.wdc07v.mail.ibm.com [127.0.0.1])
- by ppma22.wdc07v.mail.ibm.com (8.18.1.7/8.18.1.7) with ESMTP id 651LsCBU005299;
- Mon, 1 Jun 2026 21:54:25 GMT
-Received: from smtprelay02.wdc07v.mail.ibm.com ([172.16.1.69])
- by ppma22.wdc07v.mail.ibm.com (PPS) with ESMTPS id 4egakvrct6-1
+ by ppma22.wdc07v.mail.ibm.com (8.18.1.7/8.18.1.7) with ESMTP id 651LsCBW005299;
+ Mon, 1 Jun 2026 21:54:34 GMT
+Received: from smtprelay04.dal12v.mail.ibm.com ([172.16.1.6])
+ by ppma22.wdc07v.mail.ibm.com (PPS) with ESMTPS id 4egakvrcts-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Mon, 01 Jun 2026 21:54:25 +0000 (GMT)
+ Mon, 01 Jun 2026 21:54:34 +0000 (GMT)
 Received: from smtpav03.wdc07v.mail.ibm.com (smtpav03.wdc07v.mail.ibm.com
  [10.39.53.230])
- by smtprelay02.wdc07v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 651LsPfe30278366
+ by smtprelay04.dal12v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 651LsXDG25428514
  (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Mon, 1 Jun 2026 21:54:25 GMT
+ Mon, 1 Jun 2026 21:54:34 GMT
 Received: from smtpav03.wdc07v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 486D05805A;
- Mon,  1 Jun 2026 21:54:25 +0000 (GMT)
+ by IMSVA (Postfix) with ESMTP id D6A985805C;
+ Mon,  1 Jun 2026 21:54:33 +0000 (GMT)
 Received: from smtpav03.wdc07v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id C49E058054;
- Mon,  1 Jun 2026 21:54:24 +0000 (GMT)
+ by IMSVA (Postfix) with ESMTP id 435075805D;
+ Mon,  1 Jun 2026 21:54:33 +0000 (GMT)
 Received: from sbct-3.pok.ibm.com (unknown [9.47.158.153])
  by smtpav03.wdc07v.mail.ibm.com (Postfix) with ESMTP;
- Mon,  1 Jun 2026 21:54:24 +0000 (GMT)
+ Mon,  1 Jun 2026 21:54:33 +0000 (GMT)
 From: Stefan Berger <stefanb@linux.ibm.com>
 To: qemu-devel@nongnu.org
-Cc: peter.maydell@linaro.org, Stefan Berger <stefanb@linux.ibm.com>,
- Arun Menon <armenon@redhat.com>
-Subject: [PULL v1 01/16] tests: Move TPM I2C bus read/write functions to
- common files
-Date: Mon,  1 Jun 2026 17:53:54 -0400
-Message-ID: <20260601215410.517009-2-stefanb@linux.ibm.com>
+Cc: peter.maydell@linaro.org, Arun Menon <armenon@redhat.com>,
+ =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
+ Stefan Berger <stefanb@linux.ibm.com>
+Subject: [PULL v1 13/16] test/qtest: Add test for tpm crb chunking
+Date: Mon,  1 Jun 2026 17:54:06 -0400
+Message-ID: <20260601215410.517009-14-stefanb@linux.ibm.com>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260601215410.517009-1-stefanb@linux.ibm.com>
 References: <20260601215410.517009-1-stefanb@linux.ibm.com>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 X-TM-AS-GCONF: 00
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNjAxMDIxMSBTYWx0ZWRfX1+66sFuW5Sl6
- UtlcfS1lwqJ1uWfCt4hhnkyef1GnhGd3nHajS7SNPeOu+7Tn/S06G+w6zZ7JBB+GHQvdhikIoHk
- kVTptfBrc6DvharY69taJqztp4vTVYLzpniDpKvCe13JaIWzIWhHo3Z2gyMUWTEhniTaMmyCJyR
- ire+qBAmH+4a8FobvB2vN4XUIM6i32geSxBoDhwkjNKjj6vStl8lyCnlwR/ZyGYoa8x0diq6O2H
- +ryDjMIyd/L+XeGgbH4gjy7ALfptfQfQQroxOj1UtoKSqFV5phAqILe7MxklG5W8WlTqaa2UYUW
- /YXnLCaKZXygBiE7c9kP3uplBRd+P/81Wgp6ydFNNZx/fCQ98HyegIpeHq6N4GBQrRkxBJi5lr8
- IUukt8hfN+KgNVY8Y1LmyJrXwjrEevwNyYQZ+fbYczWj6TkM6Ebr85KSoineWBDEHitMulM7dCp
- 3fB41SmXII1GJ21rImA==
-X-Proofpoint-ORIG-GUID: cc1jHGBcK5D17kL-u7DopW2Kz08p-1N4
-X-Authority-Analysis: v=2.4 cv=cOzQdFeN c=1 sm=1 tr=0 ts=6a1dff92 cx=c_pps
+X-Proofpoint-ORIG-GUID: GjJnV3YuKPWzHb-C53XJP1P1btVTh0TC
+X-Proofpoint-GUID: GjJnV3YuKPWzHb-C53XJP1P1btVTh0TC
+X-Authority-Analysis: v=2.4 cv=bcVbluPB c=1 sm=1 tr=0 ts=6a1dff9c cx=c_pps
  a=5BHTudwdYE3Te8bg5FgnPg==:117 a=5BHTudwdYE3Te8bg5FgnPg==:17
- a=FelO9ux0wxsA:10 a=VkNPw1HP01LnGYTKEx00:22 a=RnoormkPH1_aCDwRdu11:22
- a=Y2IxJ9c9Rs8Kov3niI8_:22 a=VwQbUJbxAAAA:8 a=VnNF1IyMAAAA:8 a=20KFwNOVAAAA:8
- a=8hQrII4DcMiSDO2ebf0A:9
-X-Proofpoint-GUID: cc1jHGBcK5D17kL-u7DopW2Kz08p-1N4
+ a=IkcTkHD0fZMA:10 a=FelO9ux0wxsA:10 a=VkNPw1HP01LnGYTKEx00:22
+ a=RnoormkPH1_aCDwRdu11:22 a=uAbxVGIbfxUO_5tXvNgY:22 a=VwQbUJbxAAAA:8
+ a=20KFwNOVAAAA:8 a=VnNF1IyMAAAA:8 a=ouyvITDjc9tflmIwlwAA:9 a=3ZKOabzyN94A:10
+ a=QEXdDO2ut3YA:10
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNjAxMDIxMSBTYWx0ZWRfXzHN4E6Zb5kS6
+ ogAa3pPoVeu4NoFTuQjyrl1C+y18/CFA6Dd7A175QX0R3Ct1ZFmtoDMwInRRiJkJGiQxttmvMxU
+ njjNcRIyv1/mxYFKNE/4ErGzcC62xPQkeA3uok0uBcki/3hO2bPcB66rFaXhi5SpJpzfeIb5RZA
+ nyQRolx9qvCrelDr7MGkVl/q+X5Znvxm6XxJjNI4eLqc28DJFiUHihtaMw9s+L41iw66dEzm6bg
+ CgvpXPZrBTPGzUjeGVVORmNBBziT3ecmioz5vShKP8p3mZr2IFuiaaN7CZoWaQxXQRU+4CXMkSY
+ ZWjwpaqj11dA7BzZ3fNdDK95g6hrO9c+lOs0bflu52ujLJzr5Xj72BMV45NP4hJNX3JCoPGgMf8
+ VQFBzau0QNWxqgNyzMbNoVBfIciw9kjrtHa3O1ohPkja8K3Wzuu2IkcfS8KiQhMlltW+Tvg+6C6
+ doVio6lE6J9mQQwXwGA==
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.125,FMLib:17.12.100.49
  definitions=2026-06-01_06,2026-05-28_03,2025-10-01_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- clxscore=1015 impostorscore=0 lowpriorityscore=0 spamscore=0 bulkscore=0
- malwarescore=0 phishscore=0 suspectscore=0 priorityscore=1501 adultscore=0
+ impostorscore=0 clxscore=1015 adultscore=0 priorityscore=1501 phishscore=0
+ lowpriorityscore=0 bulkscore=0 malwarescore=0 spamscore=0 suspectscore=0
  classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
  reason=mlx scancount=1 engine=8.22.0-2605210000 definitions=main-2606010211
-Received-SPF: pass client-ip=148.163.158.5; envelope-from=stefanb@linux.ibm.com;
- helo=mx0b-001b2d01.pphosted.com
+Received-SPF: pass client-ip=148.163.156.1; envelope-from=stefanb@linux.ibm.com;
+ helo=mx0a-001b2d01.pphosted.com
 X-Spam_score_int: -26
 X-Spam_score: -2.7
 X-Spam_bar: --
 X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
- RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
+ RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -120,211 +123,217 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Move functions for reading from and writing to the Aspeed I2C device into
-a file so they can be reused by other functions.
+From: Arun Menon <armenon@redhat.com>
 
-Reviewed-by: Arun Menon <armenon@redhat.com>
-Link: https://lore.kernel.org/qemu-devel/20260429121743.1346635-2-stefanb@linux.ibm.com
+- New test case added to the swtpm test. Data is written and read from
+  the buffer in chunks.
+- The chunk size is dynamically calculated by reading the
+  CRB_CTRL_CMD_SIZE address. This can be changed manually to test.
+- Add a helper function tpm_wait_till_bit_clear()
+- Note that this commit does not yet exercise the chunked read/write
+  logic, as current transfer sizes remain small. Testing for large
+  transfers is introduced in a subsequent patch: 'tests: Use ML-DSA-87
+  operations to cause large TPM transfers with CRB'
+
+Signed-off-by: Arun Menon <armenon@redhat.com>
+Reviewed-by: Marc-André Lureau <marcandre.lureau@redhat.com>
+Reviewed-by: Stefan Berger <stefanb@linux.ibm.com>
+Link: https://lore.kernel.org/qemu-devel/20260506075813.120781-6-armenon@redhat.com
 Signed-off-by: Stefan Berger <stefanb@linux.ibm.com>
 ---
- tests/qtest/meson.build        |  2 +-
- tests/qtest/tpm-tis-i2c-test.c | 50 +-------------------------
- tests/qtest/tpm-tis-i2c-util.c | 64 ++++++++++++++++++++++++++++++++++
- tests/qtest/tpm-tis-i2c-util.h | 30 ++++++++++++++++
- 4 files changed, 96 insertions(+), 50 deletions(-)
- create mode 100644 tests/qtest/tpm-tis-i2c-util.c
- create mode 100644 tests/qtest/tpm-tis-i2c-util.h
+ tests/qtest/tpm-crb-swtpm-test.c |  10 +++
+ tests/qtest/tpm-util.c           | 109 ++++++++++++++++++++++++++-----
+ tests/qtest/tpm-util.h           |   5 ++
+ 3 files changed, 109 insertions(+), 15 deletions(-)
 
-diff --git a/tests/qtest/meson.build b/tests/qtest/meson.build
-index 728dde54b3..57512c6e56 100644
---- a/tests/qtest/meson.build
-+++ b/tests/qtest/meson.build
-@@ -401,7 +401,7 @@ qtests = {
-   'tpm-crb-test': [io, tpmemu_files],
-   'tpm-tis-swtpm-test': [io, tpmemu_files, 'tpm-tis-util.c'],
-   'tpm-tis-test': [io, tpmemu_files, 'tpm-tis-util.c'],
--  'tpm-tis-i2c-test': [io, tpmemu_files, 'qtest_aspeed.c'],
-+  'tpm-tis-i2c-test': [io, tpmemu_files, 'tpm-tis-i2c-util.c', 'qtest_aspeed.c'],
-   'tpm-tis-device-swtpm-test': [io, tpmemu_files, 'tpm-tis-util.c'],
-   'tpm-tis-device-test': [io, tpmemu_files, 'tpm-tis-util.c'],
-   'virtio-net-failover': test_migration_files,
-diff --git a/tests/qtest/tpm-tis-i2c-test.c b/tests/qtest/tpm-tis-i2c-test.c
-index 3a1af026f2..02ddf76c2c 100644
---- a/tests/qtest/tpm-tis-i2c-test.c
-+++ b/tests/qtest/tpm-tis-i2c-test.c
-@@ -20,6 +20,7 @@
- #include "hw/pci/pci_ids.h"
- #include "qtest_aspeed.h"
- #include "tpm-emu.h"
-+#include "tpm-tis-i2c-util.h"
+diff --git a/tests/qtest/tpm-crb-swtpm-test.c b/tests/qtest/tpm-crb-swtpm-test.c
+index ffeb1c396b..050c7b0c1f 100644
+--- a/tests/qtest/tpm-crb-swtpm-test.c
++++ b/tests/qtest/tpm-crb-swtpm-test.c
+@@ -33,6 +33,14 @@ static void tpm_crb_swtpm_test(const void *data)
+                         "tpm-crb", NULL);
+ }
  
- #define DEBUG_TIS_TEST 0
- 
-@@ -36,58 +37,9 @@
- #define DPRINTF_STS \
-     DPRINTF("%s: %d: sts = 0x%08x\n", __func__, __LINE__, sts)
- 
--#define I2C_SLAVE_ADDR   0x2e
--#define I2C_DEV_BUS_NUM  10
--
- static const uint8_t TPM_CMD[12] =
-     "\x80\x01\x00\x00\x00\x0c\x00\x00\x01\x44\x00\x00";
- 
--static uint32_t aspeed_bus_addr;
--
--static uint8_t cur_locty = 0xff;
--
--static void tpm_tis_i2c_set_locty(uint8_t locty)
--{
--    if (cur_locty != locty) {
--        cur_locty = locty;
--        aspeed_i2c_writeb(global_qtest, aspeed_bus_addr, I2C_SLAVE_ADDR,
--                          TPM_I2C_REG_LOC_SEL, locty);
--    }
--}
--
--static uint8_t tpm_tis_i2c_readb(uint8_t locty, uint8_t reg)
--{
--    tpm_tis_i2c_set_locty(locty);
--    return aspeed_i2c_readb(global_qtest, aspeed_bus_addr, I2C_SLAVE_ADDR, reg);
--}
--
--static uint16_t tpm_tis_i2c_readw(uint8_t locty, uint8_t reg)
--{
--    tpm_tis_i2c_set_locty(locty);
--    return aspeed_i2c_readw(global_qtest, aspeed_bus_addr, I2C_SLAVE_ADDR, reg);
--}
--
--static uint32_t tpm_tis_i2c_readl(uint8_t locty, uint8_t reg)
--{
--    tpm_tis_i2c_set_locty(locty);
--    return aspeed_i2c_readl(global_qtest, aspeed_bus_addr, I2C_SLAVE_ADDR, reg);
--}
--
--static void tpm_tis_i2c_writeb(uint8_t locty, uint8_t reg, uint8_t v)
--{
--    if (reg != TPM_I2C_REG_LOC_SEL) {
--        tpm_tis_i2c_set_locty(locty);
--    }
--    aspeed_i2c_writeb(global_qtest, aspeed_bus_addr, I2C_SLAVE_ADDR, reg, v);
--}
--
--static void tpm_tis_i2c_writel(uint8_t locty, uint8_t reg, uint32_t v)
--{
--    if (reg != TPM_I2C_REG_LOC_SEL) {
--        tpm_tis_i2c_set_locty(locty);
--    }
--    aspeed_i2c_writel(global_qtest, aspeed_bus_addr, I2C_SLAVE_ADDR, reg, v);
--}
- 
- static void tpm_tis_i2c_test_basic(const void *data)
++static void tpm_crb_chunk_swtpm_test(const void *data)
++{
++    const TestState *ts = data;
++
++    tpm_test_swtpm_test(ts->src_tpm_path, tpm_util_crb_chunk_transfer,
++                        "tpm-crb", NULL);
++}
++
+ static void tpm_crb_swtpm_migration_test(const void *data)
  {
-diff --git a/tests/qtest/tpm-tis-i2c-util.c b/tests/qtest/tpm-tis-i2c-util.c
-new file mode 100644
-index 0000000000..07b1eeba69
---- /dev/null
-+++ b/tests/qtest/tpm-tis-i2c-util.c
-@@ -0,0 +1,64 @@
-+/*
-+ * SPDX-License-Identifier: GPL-2.0-or-later
-+ *
-+ * QTest utilities for TPM TIS over I2C
-+ *
-+ * Copyright (c) 2018, 2026 IBM Corporation
-+ *
-+ * Authors:
-+ *   Stefan Berger <stefanb@linux.ibm.com>
-+ *
-+ */
+     const TestState *ts = data;
+@@ -54,6 +62,8 @@ int main(int argc, char **argv)
+     g_test_init(&argc, &argv, NULL);
+ 
+     qtest_add_data_func("/tpm/crb-swtpm/test", &ts, tpm_crb_swtpm_test);
++    qtest_add_data_func("/tpm/crb-chunk-swtpm/test", &ts,
++                        tpm_crb_chunk_swtpm_test);
+     qtest_add_data_func("/tpm/crb-swtpm-migration/test", &ts,
+                         tpm_crb_swtpm_migration_test);
+     ret = g_test_run();
+diff --git a/tests/qtest/tpm-util.c b/tests/qtest/tpm-util.c
+index 0f9bef8971..151002ea24 100644
+--- a/tests/qtest/tpm-util.c
++++ b/tests/qtest/tpm-util.c
+@@ -14,16 +14,44 @@
+ 
+ #include "qemu/osdep.h"
+ #include <glib/gstdio.h>
++#include "qemu/bswap.h"
+ 
+ #include "hw/acpi/tpm.h"
+ #include "libqtest.h"
+ #include "tpm-util.h"
+ #include "qobject/qdict.h"
+ 
++#define CRB_ADDR_START (TPM_CRB_ADDR_BASE + A_CRB_CTRL_START)
++#define CRB_ADDR_CTRL_STS (TPM_CRB_ADDR_BASE + A_CRB_CTRL_STS)
++#define CRB_ADDR_CTRL_CMD_SIZE \
++    (TPM_CRB_ADDR_BASE + A_CRB_CTRL_CMD_SIZE)
 +
-+#include "qemu/osdep.h"
-+#include "hw/acpi/tpm.h"
-+#include "libqtest-single.h"
-+#include "qtest_aspeed.h"
-+#include "tpm-tis-i2c-util.h"
++#define CRB_START_INVOKE  (1 << 0)
++#define CRB_START_RSP_RETRY (1 << 1)
++#define CRB_START_NEXT_CHUNK (1 << 2)
 +
-+uint32_t aspeed_bus_addr;
-+
-+static uint8_t cur_locty = 0xff;
-+
-+static void tpm_tis_i2c_set_locty(uint8_t locty)
++void tpm_wait_till_bit_clear(QTestState *s, uint64_t addr, uint32_t mask)
 +{
-+    if (cur_locty != locty) {
-+        cur_locty = locty;
-+        aspeed_i2c_writeb(global_qtest, aspeed_bus_addr, I2C_SLAVE_ADDR,
-+                          TPM_I2C_REG_LOC_SEL, locty);
++    uint32_t sts;
++    uint64_t end_time = g_get_monotonic_time() + 5 * G_TIME_SPAN_SECOND;
++
++    while (true) {
++        sts = qtest_readl(s, addr);
++        if ((sts & mask) == 0) {
++            break;
++        }
++        if (g_get_monotonic_time() >= end_time) {
++            g_assert_cmphex(sts & mask, ==, 0);
++            break;
++        }
 +    }
 +}
 +
-+uint8_t tpm_tis_i2c_readb(uint8_t locty, uint8_t reg)
-+{
-+    tpm_tis_i2c_set_locty(locty);
-+    return aspeed_i2c_readb(global_qtest, aspeed_bus_addr, I2C_SLAVE_ADDR, reg);
+ void tpm_util_crb_transfer(QTestState *s,
+                            const unsigned char *req, size_t req_size,
+                            unsigned char *rsp, size_t rsp_size)
+ {
++    uint32_t tpm_sts;
+     uint64_t caddr = qtest_readq(s, TPM_CRB_ADDR_BASE + A_CRB_CTRL_CMD_LADDR);
+     uint64_t raddr = qtest_readq(s, TPM_CRB_ADDR_BASE + A_CRB_CTRL_RSP_ADDR);
+ 
+@@ -31,24 +59,75 @@ void tpm_util_crb_transfer(QTestState *s,
+ 
+     qtest_memwrite(s, caddr, req, req_size);
+ 
+-    uint32_t sts, start = 1;
+-    uint64_t end_time = g_get_monotonic_time() + 5 * G_TIME_SPAN_SECOND;
+-    qtest_writel(s, TPM_CRB_ADDR_BASE + A_CRB_CTRL_START, start);
+-    while (true) {
+-        start = qtest_readl(s, TPM_CRB_ADDR_BASE + A_CRB_CTRL_START);
+-        if ((start & 1) == 0) {
+-            break;
++    qtest_writel(s, CRB_ADDR_START, CRB_START_INVOKE);
++    tpm_wait_till_bit_clear(s, CRB_ADDR_START, CRB_START_INVOKE);
++
++    tpm_sts = qtest_readl(s, CRB_ADDR_CTRL_STS);
++    g_assert_cmpint(tpm_sts & 1, ==, 0);
++
++    qtest_memread(s, raddr, rsp, rsp_size);
 +}
 +
-+uint16_t tpm_tis_i2c_readw(uint8_t locty, uint8_t reg)
++void tpm_util_crb_chunk_transfer(QTestState *s,
++                                 const unsigned char *req, size_t req_size,
++                                 unsigned char *rsp, size_t rsp_size)
 +{
-+    tpm_tis_i2c_set_locty(locty);
-+    return aspeed_i2c_readw(global_qtest, aspeed_bus_addr, I2C_SLAVE_ADDR, reg);
-+}
++    uint32_t tpm_sts;
++    size_t chunk_size;
++    unsigned char header[10];
++    uint32_t actual_response_size = 0;
 +
-+uint32_t tpm_tis_i2c_readl(uint8_t locty, uint8_t reg)
-+{
-+    tpm_tis_i2c_set_locty(locty);
-+    return aspeed_i2c_readl(global_qtest, aspeed_bus_addr, I2C_SLAVE_ADDR, reg);
-+}
++    uint64_t caddr = qtest_readq(s, TPM_CRB_ADDR_BASE + A_CRB_CTRL_CMD_LADDR);
++    uint64_t raddr = qtest_readq(s, TPM_CRB_ADDR_BASE + A_CRB_CTRL_RSP_ADDR);
++    uint32_t crb_ctrl_cmd_size = qtest_readl(s, CRB_ADDR_CTRL_CMD_SIZE);
 +
-+void tpm_tis_i2c_writeb(uint8_t locty, uint8_t reg, uint8_t v)
-+{
-+    if (reg != TPM_I2C_REG_LOC_SEL) {
-+        tpm_tis_i2c_set_locty(locty);
++    chunk_size = crb_ctrl_cmd_size;
++
++    qtest_writeb(s, TPM_CRB_ADDR_BASE + A_CRB_LOC_CTRL, 1);
++
++    for (size_t i = 0; i < req_size; i += chunk_size) {
++        bool last_chunk = false;
++        size_t current_chunk_size = chunk_size;
++
++        if (i + chunk_size > req_size) {
++            last_chunk = true;
++            current_chunk_size = req_size - i;
+         }
+-        if (g_get_monotonic_time() >= end_time) {
+-            break;
++
++        qtest_memwrite(s, caddr, req + i, current_chunk_size);
++
++        if (last_chunk) {
++            qtest_writel(s, CRB_ADDR_START, CRB_START_INVOKE);
++            tpm_wait_till_bit_clear(s, CRB_ADDR_START, CRB_START_INVOKE);
++        } else {
++            qtest_writel(s, CRB_ADDR_START, CRB_START_NEXT_CHUNK);
++            tpm_wait_till_bit_clear(s, CRB_ADDR_START, CRB_START_NEXT_CHUNK);
+         }
+-    };
+-    start = qtest_readl(s, TPM_CRB_ADDR_BASE + A_CRB_CTRL_START);
+-    g_assert_cmpint(start & 1, ==, 0);
+-    sts = qtest_readl(s, TPM_CRB_ADDR_BASE + A_CRB_CTRL_STS);
+-    g_assert_cmpint(sts & 1, ==, 0);
 +    }
-+    aspeed_i2c_writeb(global_qtest, aspeed_bus_addr, I2C_SLAVE_ADDR, reg, v);
-+}
++    tpm_sts = qtest_readl(s, CRB_ADDR_CTRL_STS);
++    g_assert_cmpint(tpm_sts & 1, ==, 0);
+ 
+-    qtest_memread(s, raddr, rsp, rsp_size);
++    /*
++     * Read response in chunks
++     */
 +
-+void tpm_tis_i2c_writel(uint8_t locty, uint8_t reg, uint32_t v)
-+{
-+    if (reg != TPM_I2C_REG_LOC_SEL) {
-+        tpm_tis_i2c_set_locty(locty);
++    qtest_memread(s, raddr, header, sizeof(header));
++    actual_response_size = ldl_be_p(&header[2]);
++
++    if (actual_response_size > rsp_size) {
++        actual_response_size = rsp_size;
 +    }
-+    aspeed_i2c_writel(global_qtest, aspeed_bus_addr, I2C_SLAVE_ADDR, reg, v);
-+}
-diff --git a/tests/qtest/tpm-tis-i2c-util.h b/tests/qtest/tpm-tis-i2c-util.h
-new file mode 100644
-index 0000000000..dfe626b43d
---- /dev/null
-+++ b/tests/qtest/tpm-tis-i2c-util.h
-@@ -0,0 +1,30 @@
-+/*
-+ * SPDX-License-Identifier: GPL-2.0-or-later
-+ *
-+ * QTest TPM TIS I2C: Common test functions used for TPM I2C on Aspeed bus
-+ *
-+ * Copyright (c) 2026 IBM Corporation
-+ *
-+ * Authors:
-+ *   Stefan Berger <stefanb@linux.ibm.com>
-+ *
-+ */
 +
-+#ifndef TESTS_TPM_TIS_I2C_UTIL_H
-+#define TESTS_TPM_TIS_I2C_UTIL_H
++    for (size_t i = 0; i < actual_response_size; i += chunk_size) {
++        size_t to_read = i + chunk_size > actual_response_size
++                       ? actual_response_size - i
++                       : chunk_size;
++        if (i > 0) {
++            qtest_writel(s, CRB_ADDR_START, CRB_START_NEXT_CHUNK);
++            tpm_wait_till_bit_clear(s, CRB_ADDR_START, CRB_START_NEXT_CHUNK);
++        }
++        qtest_memread(s, raddr, rsp + i, to_read);
++    }
+ }
+ 
+ void tpm_util_startup(QTestState *s, tx_func *tx)
+diff --git a/tests/qtest/tpm-util.h b/tests/qtest/tpm-util.h
+index 0cb28dd6e5..681544e7d8 100644
+--- a/tests/qtest/tpm-util.h
++++ b/tests/qtest/tpm-util.h
+@@ -24,10 +24,15 @@ typedef void (tx_func)(QTestState *s,
+                        const unsigned char *req, size_t req_size,
+                        unsigned char *rsp, size_t rsp_size);
+ 
++void tpm_wait_till_bit_clear(QTestState *s, uint64_t addr, uint32_t mask);
+ void tpm_util_crb_transfer(QTestState *s,
+                            const unsigned char *req, size_t req_size,
+                            unsigned char *rsp, size_t rsp_size);
+ 
++void tpm_util_crb_chunk_transfer(QTestState *s,
++                                 const unsigned char *req, size_t req_size,
++                                 unsigned char *rsp, size_t rsp_size);
 +
-+#include "qemu/osdep.h"
-+
-+extern uint32_t aspeed_bus_addr;
-+
-+#define I2C_SLAVE_ADDR   0x2e
-+#define I2C_DEV_BUS_NUM  10
-+
-+uint8_t tpm_tis_i2c_readb(uint8_t locty, uint8_t reg);
-+uint16_t tpm_tis_i2c_readw(uint8_t locty, uint8_t reg);
-+uint32_t tpm_tis_i2c_readl(uint8_t locty, uint8_t reg);
-+
-+void tpm_tis_i2c_writeb(uint8_t locty, uint8_t reg, uint8_t v);
-+void tpm_tis_i2c_writel(uint8_t locty, uint8_t reg, uint32_t v);
-+
-+#endif /* TESTS_TPM_TIS_I2C_UTIL_H */
+ void tpm_util_startup(QTestState *s, tx_func *tx);
+ void tpm_util_pcrextend(QTestState *s, tx_func *tx);
+ void tpm_util_pcrread(QTestState *s, tx_func *tx,
 -- 
 2.54.0
 
