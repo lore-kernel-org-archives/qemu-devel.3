@@ -4,123 +4,104 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3B303CD5BD1
-	for <qemu-devel@archiver.kernel.org>; Mon,  1 Jun 2026 20:25:53 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9B431CD6E55
+	for <qemu-devel@archiver.kernel.org>; Mon,  1 Jun 2026 20:59:53 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wU9Ca-0006Sh-PZ; Mon, 01 Jun 2026 16:25:36 -0400
+	id 1wU9j4-0001ng-Gk; Mon, 01 Jun 2026 16:59:10 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <willy@infradead.org>)
- id 1wU9C7-0006Ip-R7
- for qemu-devel@nongnu.org; Mon, 01 Jun 2026 16:25:08 -0400
-Received: from casper.infradead.org ([2001:8b0:10b:1236::1])
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1wU9j2-0001nV-LB
+ for qemu-devel@nongnu.org; Mon, 01 Jun 2026 16:59:08 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <willy@infradead.org>)
- id 1wU9C5-0003l7-0Z
- for qemu-devel@nongnu.org; Mon, 01 Jun 2026 16:25:07 -0400
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
- d=infradead.org; s=casper.20170209; h=In-Reply-To:Content-Type:MIME-Version:
- References:Message-ID:Subject:Cc:To:From:Date:Sender:Reply-To:
- Content-Transfer-Encoding:Content-ID:Content-Description;
- bh=6/5W0G6Gs1Q9GB3IxcldPERQvThA7tz7U249bqa4a9U=; b=JD/rgItEItTF3waKZU0fyhZfOO
- p6KhOF2dIKsWbBlXDH6Szda6v6pwxYE0KSLQ6p9Jvu4aC0kMd1Jp91bHbXXGW1JY4kLAuzDZFSXs9
- P7bQk5/xrqJRa6GrGWdxnMhnM9cOr/Mh7DhOreUlDgBnF2TcRdtGfQbRd9WsBVDwHFqfKKNmW2p+o
- Eq81r5ZCto6v0j62Ti/4LX0nmYsBAqhcbZ6JenvK3VL8pcuJJabuzAf2wJL1ohACsCSDs/sp5+nbD
- m2tuZulS6JhmLQAZ2oWemvoJrOfuaHp1Sctzmp2YTWfFeramTBO8sylg/IQVtL1hc2i3NQH4Kt9qQ
- +ovW+CfA==;
-Received: from willy by casper.infradead.org with local (Exim 4.99.1 #2 (Red
- Hat Linux)) id 1wU9Av-00000000iHG-2DOC;
- Mon, 01 Jun 2026 20:23:53 +0000
-Date: Mon, 1 Jun 2026 21:23:53 +0100
-From: Matthew Wilcox <willy@infradead.org>
-To: David Laight <david.laight.linux@gmail.com>
-Cc: Kees Cook <kees@kernel.org>, Luis Chamberlain <mcgrof@kernel.org>,
- Pengpeng Hou <pengpeng@iscas.ac.cn>, stable@vger.kernel.org,
- Petr Pavlu <petr.pavlu@suse.com>, Richard Weinberger <richard@nod.at>,
- Anton Ivanov <anton.ivanov@cambridgegreys.com>,
- Johannes Berg <johannes@sipsolutions.net>,
- "Rafael J. Wysocki" <rafael@kernel.org>,
- Len Brown <lenb@kernel.org>, Corey Minyard <corey@minyard.net>,
- Gabriel Somlo <somlo@cmu.edu>, "Michael S. Tsirkin" <mst@redhat.com>,
- Jani Nikula <jani.nikula@linux.intel.com>,
- Joonas Lahtinen <joonas.lahtinen@linux.intel.com>,
- Rodrigo Vivi <rodrigo.vivi@intel.com>,
- Tvrtko Ursulin <tursulin@ursulin.net>,
- David Airlie <airlied@gmail.com>, Simona Vetter <simona@ffwll.ch>,
- Bart Van Assche <bvanassche@acm.org>,
- Jason Gunthorpe <jgg@ziepe.ca>, Leon Romanovsky <leon@kernel.org>,
- Laurent Pinchart <laurent.pinchart@ideasonboard.com>,
- Hans de Goede <hansg@kernel.org>,
- Mauro Carvalho Chehab <mchehab@kernel.org>,
- Bjorn Helgaas <bhelgaas@google.com>, Hannes Reinecke <hare@suse.de>,
- "James E.J. Bottomley" <James.Bottomley@hansenpartnership.com>,
- "Martin K. Petersen" <martin.petersen@oracle.com>,
- Daniel Lezcano <daniel.lezcano@kernel.org>,
- Zhang Rui <rui.zhang@intel.com>, Lukasz Luba <lukasz.luba@arm.com>,
- Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
- Jiri Slaby <jirislaby@kernel.org>, Alan Stern <stern@rowland.harvard.edu>,
- Jason Wang <jasowang@redhat.com>, Xuan Zhuo <xuanzhuo@linux.alibaba.com>,
- Eugenio =?iso-8859-1?Q?P=E9rez?= <eperezma@redhat.com>,
- Jason Baron <jbaron@akamai.com>, Jim Cromie <jim.cromie@gmail.com>,
- Tiwei Bie <tiwei.btw@antgroup.com>,
- Benjamin Berg <benjamin.berg@intel.com>,
- Ilpo =?iso-8859-1?Q?J=E4rvinen?= <ilpo.jarvinen@linux.intel.com>,
- "David E. Box" <david.e.box@linux.intel.com>,
- "Maciej W. Rozycki" <macro@orcam.me.uk>,
- Srinivas Pandruvada <srinivas.pandruvada@linux.intel.com>,
- Peter Zijlstra <peterz@infradead.org>, Heiko Carstens <hca@linux.ibm.com>,
- Vasily Gorbik <gor@linux.ibm.com>, Sean Christopherson <seanjc@google.com>,
- Paolo Bonzini <pbonzini@redhat.com>,
- Thomas Gleixner <tglx@kernel.org>, Ingo Molnar <mingo@redhat.com>,
- Borislav Petkov <bp@alien8.de>,
- Dave Hansen <dave.hansen@linux.intel.com>, x86@kernel.org,
- "H. Peter Anvin" <hpa@zytor.com>, Vinod Koul <vkoul@kernel.org>,
- Frank Li <Frank.Li@kernel.org>, Daniel Gomez <da.gomez@kernel.org>,
- Sami Tolvanen <samitolvanen@google.com>,
- Aaron Tomlin <atomlin@atomlin.com>,
- Alexander Potapenko <glider@google.com>,
- Marco Elver <elver@google.com>, Dmitry Vyukov <dvyukov@google.com>,
- Andrew Morton <akpm@linux-foundation.org>,
- John Johansen <john.johansen@canonical.com>,
- Paul Moore <paul@paul-moore.com>, James Morris <jmorris@namei.org>,
- "Serge E. Hallyn" <serge@hallyn.com>,
- Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
- Georgia Garcia <georgia.garcia@canonical.com>, kvm@vger.kernel.org,
- dmaengine@vger.kernel.org, linux-modules@vger.kernel.org,
- kasan-dev@googlegroups.com, linux-mm@kvack.org,
- apparmor@lists.ubuntu.com, linux-security-module@vger.kernel.org,
- linux-um@lists.infradead.org, linux-acpi@vger.kernel.org,
- openipmi-developer@lists.sourceforge.net, qemu-devel@nongnu.org,
- intel-gfx@lists.freedesktop.org, dri-devel@lists.freedesktop.org,
- linux-rdma@vger.kernel.org, linux-media@vger.kernel.org,
- linux-pci@vger.kernel.org, linux-scsi@vger.kernel.org,
- linux-pm@vger.kernel.org, linuxppc-dev@lists.ozlabs.org,
- linux-serial@vger.kernel.org, linux-usb@vger.kernel.org,
- usb-storage@lists.one-eyed-alien.net,
- virtualization@lists.linux.dev, linux-kernel@vger.kernel.org,
- linux-arch@vger.kernel.org, netdev@vger.kernel.org,
- linux-fsdevel@vger.kernel.org, linux-hardening@vger.kernel.org
-Subject: Re: [PATCH 01/11] params: bound array element output to the caller's
- page buffer
-Message-ID: <ah3qWZ4cqhrbHZcl@casper.infradead.org>
-References: <20260521133315.work.845-kees@kernel.org>
- <20260521133326.2465264-1-kees@kernel.org>
- <20260521174631.71a06440@pumpkin>
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1wU9j0-0004zt-Vi
+ for qemu-devel@nongnu.org; Mon, 01 Jun 2026 16:59:08 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1780347545;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:
+ content-transfer-encoding:content-transfer-encoding;
+ bh=IM5a/KeDxm3nVvcZ8LYZX+YAtYBxczLgt64FxNLfqiI=;
+ b=ahnynGC+svF3qVya18mW7wIHO0MgGv0huX11i0WVqJKF8n/PNAPtTIOGJXNA/eMtXkozfI
+ RiQRGNsF2bgfrT1gnlrMluKvVx5u+6AweBeqLpfF32IMi7xacr0fxIucDuvalQ8333YNq0
+ PGx90nFyv5cZI2nwNk+G+VQXjEv8JSU=
+Received: from mail-qk1-f199.google.com (mail-qk1-f199.google.com
+ [209.85.222.199]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-394-q7_1tQ-aOiuOfsUbA5QkPw-1; Mon, 01 Jun 2026 16:59:03 -0400
+X-MC-Unique: q7_1tQ-aOiuOfsUbA5QkPw-1
+X-Mimecast-MFC-AGG-ID: q7_1tQ-aOiuOfsUbA5QkPw_1780347543
+Received: by mail-qk1-f199.google.com with SMTP id
+ af79cd13be357-914c8954923so1666643185a.1
+ for <qemu-devel@nongnu.org>; Mon, 01 Jun 2026 13:59:03 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=redhat.com; s=google; t=1780347543; x=1780952343; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:from:to:cc:subject:date:message-id:reply-to;
+ bh=IM5a/KeDxm3nVvcZ8LYZX+YAtYBxczLgt64FxNLfqiI=;
+ b=gTJ/94cZ3668B1sexOZt2sIgy0rNnfH2nz4hES1X09XUa2X03lGxyZGEi7A7LTP0qD
+ VOaDfdDHtRyC7mPjeLyDCVwMXO8+vz5W/yfxcTshnrGvCJS0OvjmyvEjf8Szw0WT6tfE
+ WdQ0ZtbSMMrPqinHPUEQU3gT/GW2zcV6Ra5qlaKnq6cW4wa+XOkQOJXinOXaCX8X5+Ie
+ I3JsWXWiT8pkROjPzo/2eaQ4v7jn2b3Qs+fMoRpRs0FL3cnhY0vP3lZL/2jNg6vQ8WCy
+ OlptCNFcC/Ne9U2Y41Xce+7NFxJ7Hbj0ycV3PLRvDaQZmPLXxX8pOH928aVwwlzAvzlm
+ /kWw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1780347543; x=1780952343;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=IM5a/KeDxm3nVvcZ8LYZX+YAtYBxczLgt64FxNLfqiI=;
+ b=ZF2M2/Iu5B9TGAoLpmXeFEJ9sScrmFJUzdWIHDWuQeqLLvqSZY2C4TN/oMsioU/BkV
+ u2K2YI9jdcsRwRgc+8DmmgJsv+lZSaTpZuk3nyo+PtOtzYRN1uZmN0dtGkVIzqqnKqPr
+ BVBxshkS50gPN8DvIDyIYmnb6XRd6CyLV+1hGzXxtcOnHullYVpnvYIju/aXCmTQDdkF
+ AdceSxoWQiQBMlt28zB0c9bFvbEixXEHIY3xeyoD9w0kIeJkqNQFU+jy4Sg2TLRLLCjM
+ +KUCkp+HI9jMnHgx03VXUPoVZsKKcVLHMqcp4qnTsu4KRaadJqFiETp6r9VYR30vjLH0
+ 7opQ==
+X-Gm-Message-State: AOJu0YyzDS7Md1E/pYOBoo6fOXS42qv0+wTBizR2WHgJB9M15y+a5fl8
+ P/o4Qv5LRbSI9jhVgQoSvh0Vi/KlD8WAiArX0aq3jXTiC/gyqAf4t1ewz0byFOAMRK7vGetybyR
+ jgtjYXcqGTrlakeDLWNdPi9WdakSIh0LD5A9ZhFGFI7ow9gTD6K5b7DAWQGyZHN6iW7hu055aa1
+ grrrGxFEuNiNlsvhMM22svLG/yGGhcnS9Kkrm3xQ==
+X-Gm-Gg: Acq92OEzk9ikKElbzHaE3EWFg2ukIN8HKAbBYskP7N2z1K3HZXt2TIb/XnA9BL7LUIT
+ Re4uOkt8CDZ3IRiNGkaSPmXboY5GiYw4pLLg2wQcZJLU3K8Ycrf7obhFkbrIcMeABapvzVBd74b
+ 2ydcG4TtcDlkT6EK8QaHWEMjqoER0zWdZk16kBbvM5PI7etuJG2yTD+Vnmvh8lQpMUUBNH+T4dk
+ WkUU3Pjv3q/hbYbAKiCkHYTEoWi2rS7YMbm5b0JP59RghAdybBmZVl39q/h1yq2iijorYb/WBVj
+ ypXlF2jjoaqqDiQyDwic/0rHjmlIZ8VFhCdczT2X832E4PN7tX1kxgMUkmO2J/aqputYs9xY7t2
+ DGosSs0qriYx2IUBV0jNE8e8=
+X-Received: by 2002:a05:620a:2990:b0:908:e262:52c3 with SMTP id
+ af79cd13be357-9153dc692damr1972879885a.46.1780347543316; 
+ Mon, 01 Jun 2026 13:59:03 -0700 (PDT)
+X-Received: by 2002:a05:620a:2990:b0:908:e262:52c3 with SMTP id
+ af79cd13be357-9153dc692damr1972874785a.46.1780347542767; 
+ Mon, 01 Jun 2026 13:59:02 -0700 (PDT)
+Received: from x1.com ([142.189.10.167]) by smtp.gmail.com with ESMTPSA id
+ af79cd13be357-91566f4abf3sm271304885a.27.2026.06.01.13.59.01
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Mon, 01 Jun 2026 13:59:02 -0700 (PDT)
+From: Peter Xu <peterx@redhat.com>
+To: qemu-devel@nongnu.org
+Cc: peterx@redhat.com,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@mailo.com>,
+ Fabiano Rosas <farosas@suse.de>, Paolo Bonzini <pbonzini@redhat.com>,
+ =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
+Subject: [PATCH] memory/ramblock: Fix clear of mru_block on possible race
+ condition
+Date: Mon,  1 Jun 2026 16:59:00 -0400
+Message-ID: <20260601205900.1067714-1-peterx@redhat.com>
+X-Mailer: git-send-email 2.53.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20260521174631.71a06440@pumpkin>
-Received-SPF: pass client-ip=2001:8b0:10b:1236::1;
- envelope-from=willy@infradead.org; helo=casper.infradead.org
-X-Spam_score_int: -43
-X-Spam_score: -4.4
-X-Spam_bar: ----
-X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_MED=-2.3, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=peterx@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -24
+X-Spam_score: -2.5
+X-Spam_bar: --
+X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.445,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -136,17 +117,95 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, May 21, 2026 at 05:46:31PM +0100, David Laight wrote:
-> On Thu, 21 May 2026 06:33:14 -0700
-> Kees Cook <kees@kernel.org> wrote:
-> > Collect each element into a temporary PAGE_SIZE buffer first and then
-> > copy only the remaining space into the caller's page buffer.
-> 
-> Should this be using a 4k buffer on all architectures?
-> Initially perhaps just using a different name for the constant until
-> all the associated PAGE_SIZE limits have been removed.
+The race condition was not reported in any real bug, but I found it while
+reviewing some relevant chnages from Akihiko [1].  It's not clear if
+there's any way to reproduce it, so far it's only theoretical.  Hence
+there's also no Fixes tag attached.  There's also no need to copy stable
+until we have a solid reproducer.
 
-If we're acually going to think about this, even 4KiB is too big.
-An 80x25 terminal is 2000 bytes (assuming no utf8), so 4KiB is two
-entire screenfuls.  Limiting to 2048 would seem reasonable to me.
+Currently, mru_block might still points to ramblocks that are removed if
+below race condition happens:
+
+  Reader A                              Writer
+  --------                              ------
+  rcu_read_lock()
+  walk list, find block X
+                                        QLIST_REMOVE_RCU(X)
+                                        qatomic_set(&mru_block, NULL)
+                                        call_rcu(X, reclaim_ramblock)
+  qatomic_set(&mru_block, X)  <----------- overwrites NULL
+  rcu_read_unlock()
+                                        grace period ends, X freed
+
+  Reader C
+  --------
+  rcu_read_lock()
+  qatomic_rcu_read(&mru_block) -> X
+  Read X's block->offset ...  <----------- UAF
+
+To fix it, we can introduce a nested RCU free for reset of the mru_block
+field, and only free the ramblock until the 2nd RCU call.
+
+Since QEMU always: (1) dequeue the RCU node before invoking the
+function, (2) reset all fields in rcu_head in the call_rcu1() call, nested
+RCU will work all fine like what's used in this patch.
+
+[1] https://lore.kernel.org/r/5fd9e540-cf13-45f5-ba9a-c7faf364035b@rsg.ci.i.u-tokyo.ac.jp
+
+Cc: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
+Signed-off-by: Peter Xu <peterx@redhat.com>
+---
+
+Based-on: <5fd9e540-cf13-45f5-ba9a-c7faf364035b@rsg.ci.i.u-tokyo.ac.jp>
+
+Since there's no reproducer, I didn't verify the problem as-is.  What I did
+is I ran this through some high concurrency "make check -jN" (8 processes
+with 4 cores pinned, hence 8*N make-check threads running concurrently on 4
+physical cores), I didn't see any regression.
+---
+ system/physmem.c | 18 +++++++++++++++++-
+ 1 file changed, 17 insertions(+), 1 deletion(-)
+
+diff --git a/system/physmem.c b/system/physmem.c
+index 9e1ac13e82..1697568fa7 100644
+--- a/system/physmem.c
++++ b/system/physmem.c
+@@ -2590,6 +2590,21 @@ static void reclaim_ramblock(RAMBlock *block)
+     g_free(block);
+ }
+ 
++static void reclaim_ramblock_prepare(RAMBlock *block)
++{
++    /*
++     * 1st round rcu free guarantees the last reader that can access this
++     * ramblock is gone.  Reset this field making sure it will never point
++     * to the ramblock being freed.
++     */
++    qatomic_set(&ram_list.mru_block, NULL);
++    /*
++     * Note: this is an intended nested use of rcu_head.  If needed, we can
++     * provide two rcu_heads for ramblock.
++     */
++    call_rcu(block, reclaim_ramblock, rcu);
++}
++
+ void qemu_ram_free(RAMBlock *block)
+ {
+     g_autofree char *name = NULL;
+@@ -2607,10 +2622,11 @@ void qemu_ram_free(RAMBlock *block)
+     name = cpr_name(block->mr);
+     cpr_delete_fd(name, 0);
+     QLIST_REMOVE_RCU(block, next);
++    /* First attempt of reset, see reclaim_ramblock_prepare() for the 2nd */
+     qatomic_set(&ram_list.mru_block, NULL);
+     /* Write list before version */
+     qatomic_store_release(&ram_list.version, ram_list.version + 1);
+-    call_rcu(block, reclaim_ramblock, rcu);
++    call_rcu(block, reclaim_ramblock_prepare, rcu);
+     qemu_mutex_unlock_ramlist();
+ }
+ 
+-- 
+2.53.0
+
 
