@@ -4,91 +4,106 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 21B28CD6E60
-	for <qemu-devel@archiver.kernel.org>; Mon,  1 Jun 2026 21:45:31 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3CDC9CD6E55
+	for <qemu-devel@archiver.kernel.org>; Mon,  1 Jun 2026 21:55:00 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wUAQm-0002Ye-9H; Mon, 01 Jun 2026 17:44:20 -0400
+	id 1wUAah-0006au-St; Mon, 01 Jun 2026 17:54:35 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <faithilikerun@gmail.com>)
- id 1wUAQl-0002Xh-40
- for qemu-devel@nongnu.org; Mon, 01 Jun 2026 17:44:19 -0400
-Received: from mail-wr1-x430.google.com ([2a00:1450:4864:20::430])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <faithilikerun@gmail.com>)
- id 1wUAQi-0001nq-0b
- for qemu-devel@nongnu.org; Mon, 01 Jun 2026 17:44:18 -0400
-Received: by mail-wr1-x430.google.com with SMTP id
- ffacd0b85a97d-45fd461e4a5so1700669f8f.0
- for <qemu-devel@nongnu.org>; Mon, 01 Jun 2026 14:44:15 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1780350254; x=1780955054; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=HkGmmtRQ4zWE64vzPoxrlG6z73EWWdlclKzKztcMn94=;
- b=kvOPLJra5RRpL19dCIjf/6dhm6/wF9IU+zobszNlbEWraBc02e6DqWdNMP5MB2sPdB
- PYNTbyPcImisBDz3ktuaotG2emR1dX7z85BcJaFqJYTAmOooTAIvJdxOdvPE6FLpu5Os
- RkeGt9LmvGDKx64R8P/UrqoythWCyCO5ydfsNlAibfkGnj76jDhwcskhyjm+MWJhx+u9
- OwbdHbACCP69bdO3AU7Pso1N5S8RH+jJk2loXgObdlR2etHKYRBzxqyT2URK4GsXrp68
- ja7qJnRbMbrcM5yot4czxEZu1oU1cQkycmZCzWjWhT5hSZ96NG0rxiACuRoa1qkEp5XV
- yUqQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1780350254; x=1780955054;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to;
- bh=HkGmmtRQ4zWE64vzPoxrlG6z73EWWdlclKzKztcMn94=;
- b=Fy2uUbmtG3DlEE5Bfk7+YSEL7JNeHjxyfxvIQ8z+9BIATDMYCwVgheYVXCaZYjRY9+
- JGk0F/jZB9tgKJMPnXrchANt+YJzNqPgKG49MTD2nMZFhHwHRlR7zatg8PxYe59bFjpW
- YO6AFxx8Hnd3xGNH9R2/+cySzUYt/b5MZ4PxSy7ms/3YDbGVCoX5irTo43qcnHE5Ov5H
- TQlzjYymwFDqhMrTy0GAkNJ9PQJbSknbrlok0R9Mg7FLWMpEcjLsz3lGI724dZNQceZI
- splcZN18EElXHQBxWE1VBHsGzfUskB4i20gu7atgetrwAH4pWXzlLfcyD/w+C03Vi+XS
- NhuA==
-X-Gm-Message-State: AOJu0Yxtfg/++tiAIIUrtpuDg1PANYbJNP9Pa7/Cei9eDHO5lnz+UdU8
- Ob6cQl3MI25SSKRQexsD0OGhQDS+yW99AwRHVqWAjnT2UdqOFYzXvsxKwRIiGuQScJA=
-X-Gm-Gg: Acq92OGnM76raPgrLHrLbKakEMgCar4Tx1lG4IcPXJYTbjHgnnHGB17Ats73B6zbXpd
- sXB5p37rRwRHUBLS9sWCfSUc7pAZLZuPhFnRs2wrTJtyYJvYTE9eyf34R9M9WlL+VToNfBdCQJs
- jJ8iYo4KDMFGg4t1d/LXbjy6TZHVwGrAHIToDrH5Js8gzOiJxp30yMblSZzntUf/kU5YjMO7tzb
- FEGax7Dg5acjf80hhl+HXfnPo/oSXVCVUBdiXLL9i+S29b/2NbyfPbcrockp/z5PAF5ZXcTVOrF
- 4Q3sqk1CSjo8YVuTJk8LXwq1EAO3fRQvP0TIaKxiS+f2GOT6WLUB3n0XPDPA4fW/GLge3nor8yw
- ZXX+aUiO0dUgLUgcT+/rsFKHT6pnRfckP/tdCcoL1MEsK3xU1HdFmQczZAp+p1hxoUcbP+YO1Hz
- quKYHjUl1nHYYtfEB5F/bgHIJX0M0JeUaau45MxklqG5SPlgXSY1tWlBmn5AYM/oxxQw==
-X-Received: by 2002:a5d:648b:0:b0:45e:ec18:f20a with SMTP id
- ffacd0b85a97d-45ef6b8cefdmr18373265f8f.32.1780350254205; 
- Mon, 01 Jun 2026 14:44:14 -0700 (PDT)
-Received: from dobby ([2a02:8109:a394:4800:595:8cac:dffc:932f])
- by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-45ef356b129sm35423496f8f.32.2026.06.01.14.44.12
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 01 Jun 2026 14:44:13 -0700 (PDT)
-From: Sam Li <faithilikerun@gmail.com>
+ (Exim 4.90_1) (envelope-from <stefanb@linux.ibm.com>)
+ id 1wUAaf-0006Za-5O
+ for qemu-devel@nongnu.org; Mon, 01 Jun 2026 17:54:33 -0400
+Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <stefanb@linux.ibm.com>)
+ id 1wUAac-0003q0-Ro
+ for qemu-devel@nongnu.org; Mon, 01 Jun 2026 17:54:32 -0400
+Received: from pps.filterd (m0353729.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
+ 651FSGjp798759; Mon, 1 Jun 2026 21:54:28 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
+ :content-transfer-encoding:date:from:in-reply-to:message-id
+ :mime-version:references:subject:to; s=pp1; bh=Ra8VkI3Tzcvvknk7p
+ Nktwigads5kFCGOP5VDpjMOFh0=; b=WKfJ4t/KqIr8goykj4GwcNU2SCOcydzqd
+ ys3YRdw8h0JVYv6ClHRBQjefNtWORdeGkeWuWWltTJ+7hV8kux1Iovftq7d1K5hR
+ 0FogMengScjFc+9ztKR22Z6+XZWR/ioFmkSslD3XG0I0nzViV1mCxoRH5YPdOABJ
+ kCC0oq7gkkMVcAdET0CtI1ZTXt8DR1qcxJHxCjxwZMXhg0azYs8Xrp6RiIZf9WeH
+ aaujaCpO51rsLjL5j2x50mVMP9HRK8scC59wjSBoK7ayahbzl5rp78khu2Le3HlU
+ e7Rahjj6QJsvLee52Cm29WA/+3PSsfWADs2p7qz4is2DwS3GJMfaQ==
+Received: from ppma21.wdc07v.mail.ibm.com
+ (5b.69.3da9.ip4.static.sl-reverse.com [169.61.105.91])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4efqjq32cv-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Mon, 01 Jun 2026 21:54:28 +0000 (GMT)
+Received: from pps.filterd (ppma21.wdc07v.mail.ibm.com [127.0.0.1])
+ by ppma21.wdc07v.mail.ibm.com (8.18.1.7/8.18.1.7) with ESMTP id 651Ls9ep029549;
+ Mon, 1 Jun 2026 21:54:27 GMT
+Received: from smtprelay03.wdc07v.mail.ibm.com ([172.16.1.70])
+ by ppma21.wdc07v.mail.ibm.com (PPS) with ESMTPS id 4egb7k09at-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Mon, 01 Jun 2026 21:54:27 +0000 (GMT)
+Received: from smtpav03.wdc07v.mail.ibm.com (smtpav03.wdc07v.mail.ibm.com
+ [10.39.53.230])
+ by smtprelay03.wdc07v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 651LruSv7143954
+ (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Mon, 1 Jun 2026 21:53:56 GMT
+Received: from smtpav03.wdc07v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id A411A5805C;
+ Mon,  1 Jun 2026 21:54:26 +0000 (GMT)
+Received: from smtpav03.wdc07v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 2CC2A58054;
+ Mon,  1 Jun 2026 21:54:26 +0000 (GMT)
+Received: from sbct-3.pok.ibm.com (unknown [9.47.158.153])
+ by smtpav03.wdc07v.mail.ibm.com (Postfix) with ESMTP;
+ Mon,  1 Jun 2026 21:54:26 +0000 (GMT)
+From: Stefan Berger <stefanb@linux.ibm.com>
 To: qemu-devel@nongnu.org
-Cc: Markus Armbruster <armbru@redhat.com>, qemu-block@nongnu.org,
- Eric Blake <eblake@redhat.com>, Stefan Hajnoczi <stefanha@redhat.com>,
- Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
- dmitry.fomichev@wdc.com, Hanna Reitz <hreitz@redhat.com>, hare@suse.de,
- "Michael S. Tsirkin" <mst@redhat.com>, Kevin Wolf <kwolf@redhat.com>,
- cassel@kernel.org, dlemoal@kernel.org, Sam Li <faithilikerun@gmail.com>
-Subject: [PATCH v11 3/5] virtio-blk: do not merge writes across a zone boundary
-Date: Mon,  1 Jun 2026 23:44:03 +0200
-Message-ID: <20260601214405.252818-4-faithilikerun@gmail.com>
-X-Mailer: git-send-email 2.53.0
-In-Reply-To: <20260601214405.252818-1-faithilikerun@gmail.com>
-References: <20260601214405.252818-1-faithilikerun@gmail.com>
+Cc: peter.maydell@linaro.org, Stefan Berger <stefanb@linux.ibm.com>,
+ Arun Menon <armenon@redhat.com>
+Subject: [PULL v1 03/16] tests: Convert string arrays to byte arrays
+Date: Mon,  1 Jun 2026 17:53:56 -0400
+Message-ID: <20260601215410.517009-4-stefanb@linux.ibm.com>
+X-Mailer: git-send-email 2.54.0
+In-Reply-To: <20260601215410.517009-1-stefanb@linux.ibm.com>
+References: <20260601215410.517009-1-stefanb@linux.ibm.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::430;
- envelope-from=faithilikerun@gmail.com; helo=mail-wr1-x430.google.com
-X-Spam_score_int: -10
-X-Spam_score: -1.1
-X-Spam_bar: -
-X-Spam_report: (-1.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FORGED_GMAIL_RCVD=1,
- FREEMAIL_FROM=0.001, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=no autolearn_force=no
+X-TM-AS-GCONF: 00
+X-Proofpoint-ORIG-GUID: fGD4w8Nn1sZX8kNOFWUDTuB3Ajp6AHVo
+X-Proofpoint-GUID: fGD4w8Nn1sZX8kNOFWUDTuB3Ajp6AHVo
+X-Authority-Analysis: v=2.4 cv=bcVbluPB c=1 sm=1 tr=0 ts=6a1dff94 cx=c_pps
+ a=GFwsV6G8L6GxiO2Y/PsHdQ==:117 a=GFwsV6G8L6GxiO2Y/PsHdQ==:17
+ a=FelO9ux0wxsA:10 a=VkNPw1HP01LnGYTKEx00:22 a=RnoormkPH1_aCDwRdu11:22
+ a=uAbxVGIbfxUO_5tXvNgY:22 a=VwQbUJbxAAAA:8 a=VnNF1IyMAAAA:8 a=20KFwNOVAAAA:8
+ a=LORrTqdot4XOhRVC2oUA:9
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNjAxMDIxMSBTYWx0ZWRfXwS1FWuNMVrBZ
+ vratDmDkZ2UVz+hbjL/3ETnob7KWKwZuk0Kg8OgYZ+p/UB+/lYFOEt7awf2X61Hf40erw3rdNGj
+ CWhZ+RjDXRlfL+O+NSwIEarh6/PJBnUfc4+p1+Sq8WtGmksjdT7CsBrU8WtBScQ8DQeI2uol4U9
+ q+CqHCs6//Aco3qhkEm3aZ83PFYKCgFPLIMgIaMk6I9zOc9Qy++OFboN3O4SAwSI1vwof4HKetK
+ Cvv7zq1WdUV18eEwJG/JiKVMOTW0+bvjDqWfLaIvjKXvQRlj6kc5d/FHT27t/MgVF1/VRxPvfV1
+ Il4legdqcA+yRqnuC5rdOZ5/7YvlW8IiHyA8wVndoJB19YT+t3M/sEKNAF0cIQEkqFKYEMPLK/S
+ Z/HhuVXRMZjUt7Ch5RvP7Q/2aa/XRV99i9JLcQ7OLILM3u6dElAmE/M6c5kY7QQcAgARw21OYjJ
+ LUt3i0mAKp8NKQ3RR4w==
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.125,FMLib:17.12.100.49
+ definitions=2026-06-01_06,2026-05-28_03,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ impostorscore=0 clxscore=1015 adultscore=0 priorityscore=1501 phishscore=0
+ lowpriorityscore=0 bulkscore=0 malwarescore=0 spamscore=0 suspectscore=0
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.22.0-2605210000 definitions=main-2606010211
+Received-SPF: pass client-ip=148.163.156.1; envelope-from=stefanb@linux.ibm.com;
+ helo=mx0a-001b2d01.pphosted.com
+X-Spam_score_int: -26
+X-Spam_score: -2.7
+X-Spam_bar: --
+X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
+ RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -104,71 +119,136 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-virtio_blk_submit_multireq() fuses adjacent in-zone writes into a
-single request. On a zoned backend, a merged zone append request
-that straddles a zone boundary is rejected by the device because
-each write must stay within a single zone.
+Convert the TPM command and response string arrays to byte arrays.
 
-Add a bail condition to the merge coalescer: if combining the
-candidate request into the current batch would cross a zone
-boundary, flush the current batch and start a new one.
-
-Signed-off-by: Sam Li <faithilikerun@gmail.com>
+Reviewed-by: Arun Menon <armenon@redhat.com>
+Link: https://lore.kernel.org/qemu-devel/20260429121743.1346635-4-stefanb@linux.ibm.com
+Signed-off-by: Stefan Berger <stefanb@linux.ibm.com>
 ---
- hw/block/virtio-blk.c | 22 +++++++++++++++++++++-
- 1 file changed, 21 insertions(+), 1 deletion(-)
+ tests/qtest/tpm-tests.c | 30 ++++++++++++++++++---------
+ tests/qtest/tpm-util.c  | 45 ++++++++++++++++++++++++++---------------
+ 2 files changed, 49 insertions(+), 26 deletions(-)
 
-diff --git a/hw/block/virtio-blk.c b/hw/block/virtio-blk.c
-index 9cb9f1fb2b..285db19ac7 100644
---- a/hw/block/virtio-blk.c
-+++ b/hw/block/virtio-blk.c
-@@ -288,6 +288,9 @@ static void virtio_blk_submit_multireq(VirtIOBlock *s, MultiReqBuffer *mrb)
-     int i = 0, start = 0, num_reqs = 0, niov = 0, nb_sectors = 0;
-     uint32_t max_transfer;
-     int64_t sector_num = 0;
-+    BlockDriverState *bs = blk_bs(s->blk);
-+    bool zone_cross;
-+    int64_t zone_sector, end_sector;
+diff --git a/tests/qtest/tpm-tests.c b/tests/qtest/tpm-tests.c
+index 197714f8d9..8bd3288f80 100644
+--- a/tests/qtest/tpm-tests.c
++++ b/tests/qtest/tpm-tests.c
+@@ -59,11 +59,16 @@ void tpm_test_swtpm_test(const char *src_tpm_path, tx_func *tx,
+     tpm_util_startup(s, tx);
+     tpm_util_pcrextend(s, tx);
  
-     if (mrb->num_reqs == 1) {
-         submit_requests(s, mrb, 0, 1, -1);
-@@ -303,17 +306,34 @@ static void virtio_blk_submit_multireq(VirtIOBlock *s, MultiReqBuffer *mrb)
-     for (i = 0; i < mrb->num_reqs; i++) {
-         VirtIOBlockReq *req = mrb->reqs[i];
-         if (num_reqs > 0) {
-+            zone_cross = false;
-+
-+            /*
-+             * On zoned backends, a single backend write must not span a zone
-+             * boundary. Bail out of merging if combining req into the current
-+             * batch would straddle a zone.
-+             */
-+            if (bs && bs->bl.zone_size > 0) {
-+                zone_sector = bs->bl.zone_size / BDRV_SECTOR_SIZE;
-+                end_sector = req->sector_num
-+                                + req->qiov.size / BDRV_SECTOR_SIZE - 1;
-+                zone_cross = (sector_num / zone_sector) !=
-+                             (end_sector / zone_sector);
-+            }
-+
-             /*
-              * NOTE: We cannot merge the requests in below situations:
-              * 1. requests are not sequential
-              * 2. merge would exceed maximum number of IOVs
-              * 3. merge would exceed maximum transfer length of backend device
-+             * 4. merge would cross a zone boundary on a zoned backend
-              */
-             if (sector_num + nb_sectors != req->sector_num ||
-                 niov > blk_get_max_iov(s->blk) - req->qiov.niov ||
-                 req->qiov.size > max_transfer ||
-                 nb_sectors > (max_transfer -
--                              req->qiov.size) / BDRV_SECTOR_SIZE) {
-+                              req->qiov.size) / BDRV_SECTOR_SIZE ||
-+                zone_cross) {
-                 submit_requests(s, mrb, start, num_reqs, niov);
-                 num_reqs = 0;
-             }
+-    static const unsigned char tpm_pcrread_resp[] =
+-        "\x80\x01\x00\x00\x00\x3e\x00\x00\x00\x00\x00\x00\x00\x16\x00\x00"
+-        "\x00\x01\x00\x0b\x03\x00\x04\x00\x00\x00\x00\x01\x00\x20\xf6\x85"
+-        "\x98\xe5\x86\x8d\xe6\x8b\x97\x29\x99\x60\xf2\x71\x7d\x17\x67\x89"
+-        "\xa4\x2f\x9a\xae\xa8\xc7\xb7\xaa\x79\xa8\x62\x56\xc1\xde";
++    static const unsigned char tpm_pcrread_resp[] = {
++        0x80, 0x01, 0x00, 0x00, 0x00, 0x3e, 0x00, 0x00,
++        0x00, 0x00, 0x00, 0x00, 0x00, 0x16, 0x00, 0x00,
++        0x00, 0x01, 0x00, 0x0b, 0x03, 0x00, 0x04, 0x00,
++        0x00, 0x00, 0x00, 0x01, 0x00, 0x20, 0xf6, 0x85,
++        0x98, 0xe5, 0x86, 0x8d, 0xe6, 0x8b, 0x97, 0x29,
++        0x99, 0x60, 0xf2, 0x71, 0x7d, 0x17, 0x67, 0x89,
++        0xa4, 0x2f, 0x9a, 0xae, 0xa8, 0xc7, 0xb7, 0xaa,
++        0x79, 0xa8, 0x62, 0x56, 0xc1, 0xde
++    };
+     tpm_util_pcrread(s, tx, tpm_pcrread_resp,
+                      sizeof(tpm_pcrread_resp));
+ 
+@@ -105,11 +110,16 @@ void tpm_test_swtpm_migration_test(const char *src_tpm_path,
+     tpm_util_startup(src_qemu, tx);
+     tpm_util_pcrextend(src_qemu, tx);
+ 
+-    static const unsigned char tpm_pcrread_resp[] =
+-        "\x80\x01\x00\x00\x00\x3e\x00\x00\x00\x00\x00\x00\x00\x16\x00\x00"
+-        "\x00\x01\x00\x0b\x03\x00\x04\x00\x00\x00\x00\x01\x00\x20\xf6\x85"
+-        "\x98\xe5\x86\x8d\xe6\x8b\x97\x29\x99\x60\xf2\x71\x7d\x17\x67\x89"
+-        "\xa4\x2f\x9a\xae\xa8\xc7\xb7\xaa\x79\xa8\x62\x56\xc1\xde";
++    static const unsigned char tpm_pcrread_resp[] = {
++        0x80, 0x01, 0x00, 0x00, 0x00, 0x3e, 0x00, 0x00,
++        0x00, 0x00, 0x00, 0x00, 0x00, 0x16, 0x00, 0x00,
++        0x00, 0x01, 0x00, 0x0b, 0x03, 0x00, 0x04, 0x00,
++        0x00, 0x00, 0x00, 0x01, 0x00, 0x20, 0xf6, 0x85,
++        0x98, 0xe5, 0x86, 0x8d, 0xe6, 0x8b, 0x97, 0x29,
++        0x99, 0x60, 0xf2, 0x71, 0x7d, 0x17, 0x67, 0x89,
++        0xa4, 0x2f, 0x9a, 0xae, 0xa8, 0xc7, 0xb7, 0xaa,
++        0x79, 0xa8, 0x62, 0x56, 0xc1, 0xde,
++    };
+     tpm_util_pcrread(src_qemu, tx, tpm_pcrread_resp,
+                      sizeof(tpm_pcrread_resp));
+ 
+diff --git a/tests/qtest/tpm-util.c b/tests/qtest/tpm-util.c
+index 2cb2dd4796..63cd5b69db 100644
+--- a/tests/qtest/tpm-util.c
++++ b/tests/qtest/tpm-util.c
+@@ -54,10 +54,14 @@ void tpm_util_crb_transfer(QTestState *s,
+ void tpm_util_startup(QTestState *s, tx_func *tx)
+ {
+     unsigned char buffer[1024];
+-    static const unsigned char tpm_startup[] =
+-        "\x80\x01\x00\x00\x00\x0c\x00\x00\x01\x44\x00\x00";
+-    static const unsigned char tpm_startup_resp[] =
+-        "\x80\x01\x00\x00\x00\x0a\x00\x00\x00\x00";
++    static const unsigned char tpm_startup[] = {
++        0x80, 0x01, 0x00, 0x00, 0x00, 0x0c, 0x00, 0x00,
++        0x01, 0x44, 0x00, 0x00
++    };
++    static const unsigned char tpm_startup_resp[] = {
++        0x80, 0x01, 0x00, 0x00, 0x00, 0x0a, 0x00, 0x00,
++        0x00, 0x00
++    };
+ 
+     tx(s, tpm_startup, sizeof(tpm_startup), buffer, sizeof(buffer));
+ 
+@@ -68,16 +72,23 @@ void tpm_util_startup(QTestState *s, tx_func *tx)
+ void tpm_util_pcrextend(QTestState *s, tx_func *tx)
+ {
+     unsigned char buffer[1024];
+-    static const unsigned char tpm_pcrextend[] =
+-        "\x80\x02\x00\x00\x00\x41\x00\x00\x01\x82\x00\x00\x00\x0a\x00\x00"
+-        "\x00\x09\x40\x00\x00\x09\x00\x00\x00\x00\x00\x00\x00\x00\x01\x00"
+-        "\x0b\x74\x65\x73\x74\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00"
+-        "\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00"
+-        "\x00";
++    static const unsigned char tpm_pcrextend[] = {
++        0x80, 0x02, 0x00, 0x00, 0x00, 0x41, 0x00, 0x00,
++        0x01, 0x82, 0x00, 0x00, 0x00, 0x0a, 0x00, 0x00,
++        0x00, 0x09, 0x40, 0x00, 0x00, 0x09, 0x00, 0x00,
++        0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x01, 0x00,
++        0x0b, 0x74, 0x65, 0x73, 0x74, 0x00, 0x00, 0x00,
++        0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
++        0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
++        0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
++        0x00
++    };
+ 
+-    static const unsigned char tpm_pcrextend_resp[] =
+-        "\x80\x02\x00\x00\x00\x13\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00"
+-        "\x01\x00\x00";
++    static const unsigned char tpm_pcrextend_resp[] = {
++        0x80, 0x02, 0x00, 0x00, 0x00, 0x13, 0x00, 0x00,
++        0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
++        0x01, 0x00, 0x00
++    };
+ 
+     tx(s, tpm_pcrextend, sizeof(tpm_pcrextend), buffer, sizeof(buffer));
+ 
+@@ -89,9 +100,11 @@ void tpm_util_pcrread(QTestState *s, tx_func *tx,
+                       const unsigned char *exp_resp, size_t exp_resp_size)
+ {
+     unsigned char buffer[1024];
+-    static const unsigned char tpm_pcrread[] =
+-        "\x80\x01\x00\x00\x00\x14\x00\x00\x01\x7e\x00\x00\x00\x01\x00\x0b"
+-        "\x03\x00\x04\x00";
++    static const unsigned char tpm_pcrread[] = {
++        0x80, 0x01, 0x00, 0x00, 0x00, 0x14, 0x00, 0x00,
++        0x01, 0x7e, 0x00, 0x00, 0x00, 0x01, 0x00, 0x0b,
++        0x03, 0x00, 0x04, 0x00
++    };
+ 
+     tx(s, tpm_pcrread, sizeof(tpm_pcrread), buffer, sizeof(buffer));
+ 
 -- 
-2.53.0
+2.54.0
 
 
