@@ -4,66 +4,68 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id F40DDCD6E4C
-	for <qemu-devel@archiver.kernel.org>; Mon,  1 Jun 2026 08:18:10 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 517CCCD6E4C
+	for <qemu-devel@archiver.kernel.org>; Mon,  1 Jun 2026 08:20:06 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wTxpu-0003GP-Vq; Mon, 01 Jun 2026 04:17:27 -0400
+	id 1wTxs8-0003p8-31; Mon, 01 Jun 2026 04:19:44 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <odaki@rsg.ci.i.u-tokyo.ac.jp>)
- id 1wTxpr-0003FC-QZ; Mon, 01 Jun 2026 04:17:23 -0400
-Received: from www3579.sakura.ne.jp ([49.212.243.89])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <odaki@rsg.ci.i.u-tokyo.ac.jp>)
- id 1wTxpo-0007G1-SR; Mon, 01 Jun 2026 04:17:23 -0400
-Received: from [133.11.54.183] (h183.csg.ci.i.u-tokyo.ac.jp [133.11.54.183])
- (authenticated bits=0)
- by www3579.sakura.ne.jp (8.16.1/8.16.1) with ESMTPSA id 6518H6cL054865
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NO);
- Mon, 1 Jun 2026 17:17:06 +0900 (JST)
- (envelope-from odaki@rsg.ci.i.u-tokyo.ac.jp)
-DKIM-Signature: a=rsa-sha256; bh=OmxuVxP55CfZq3LaxHf0z7hjMQ6fI8ZL/1s8L/JhPys=; 
- c=relaxed/relaxed; d=rsg.ci.i.u-tokyo.ac.jp;
- h=From:Message-ID:To:Subject:Date;
- s=rs20250326; t=1780301827; v=1;
- b=RuO3JzgcAjN+ki+uVM/9S7EWHzxvPO807sH96LWExV5DE1IkA4+UOqBTB3rjtJok
- Y9rCl7+uBHqMM96R0Sp95PukLC2T5VDwpN35ESqZyWw6Ttoi/0U7epWZsn2dHO89
- YOEvCPtCb3p1LrQfGbplDFxhWl+Nw8OpvK81LnZEXAy52qFT/rRlayRKFSDZ6nCC
- uh39Z823FD6V6VQrChoAOnNMnVuTsRp01dlxwmRdAZhvEks3QT4h98V76tr3urlY
- ZM3j6lvcQRtismAUfpOE5iKL0rrOoG2FpLY5rfGX7bAE9f01ghE22mtEKRCa4Ued
- 71AON00vsY+gfw4xyp0ReA==
-Message-ID: <b4f0d313-f403-404e-b761-818f0dd8ce08@rsg.ci.i.u-tokyo.ac.jp>
-Date: Mon, 1 Jun 2026 17:17:06 +0900
+ (Exim 4.90_1) (envelope-from <lixianglai@loongson.cn>)
+ id 1wTxs1-0003ne-0t
+ for qemu-devel@nongnu.org; Mon, 01 Jun 2026 04:19:39 -0400
+Received: from mail.loongson.cn ([114.242.206.163])
+ by eggs.gnu.org with esmtp (Exim 4.90_1)
+ (envelope-from <lixianglai@loongson.cn>) id 1wTxry-0007te-49
+ for qemu-devel@nongnu.org; Mon, 01 Jun 2026 04:19:36 -0400
+Received: from loongson.cn (unknown [10.20.42.126])
+ by gateway (Coremail) with SMTP id _____8AxX+uIQB1qeUQPAA--.42557S3;
+ Mon, 01 Jun 2026 16:19:21 +0800 (CST)
+Received: from [10.20.42.126] (unknown [10.20.42.126])
+ by front1 (Coremail) with SMTP id qMiowJCxGOCFQB1qCOCXAA--.25551S3;
+ Mon, 01 Jun 2026 16:19:20 +0800 (CST)
+Subject: Re: [PATCH] target/loongarch: clear the registers when cpu is reset
+To: Bibo Mao <maobibo@loongson.cn>, qemu-devel@nongnu.org
+Cc: Song Gao <gaosong@loongson.cn>
+References: <20260529063858.3437928-1-lixianglai@loongson.cn>
+ <9ede8d17-2a2c-ce1a-16e8-80fc3e984451@loongson.cn>
+From: lixianglai <lixianglai@loongson.cn>
+Message-ID: <1d5aaf66-0a4c-59f4-3f4b-7ea8de0f9c1d@loongson.cn>
+Date: Mon, 1 Jun 2026 16:09:24 +0800
+User-Agent: Mozilla/5.0 (X11; Linux loongarch64; rv:68.0) Gecko/20100101
+ Thunderbird/68.7.0
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v7 4/5] hw/arm/virt: Relax the lower bound of HighMem MMIO
- region size
-To: Igor Mammedov <imammedo@redhat.com>
-Cc: qemu-devel@nongnu.org, Peter Maydell <peter.maydell@linaro.org>,
- qemu-arm@nongnu.org, Eric Auger <eric.auger@redhat.com>,
- Andrew Jones <ajones@ventanamicro.com>, "Michael S. Tsirkin"
- <mst@redhat.com>,
- Ani Sinha <anisinha@redhat.com>, Fabiano Rosas <farosas@suse.de>,
- Laurent Vivier <lvivier@redhat.com>,
- Paolo Bonzini <pbonzini@redhat.com>, Gerd Hoffmann <kraxel@redhat.com>
-References: <20260528-virt-v7-0-42c4d18620b8@rsg.ci.i.u-tokyo.ac.jp>
- <20260528-virt-v7-4-42c4d18620b8@rsg.ci.i.u-tokyo.ac.jp>
- <20260529113930.2d455981@imammedo>
+In-Reply-To: <9ede8d17-2a2c-ce1a-16e8-80fc3e984451@loongson.cn>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Transfer-Encoding: 8bit
 Content-Language: en-US
-From: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
-In-Reply-To: <20260529113930.2d455981@imammedo>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=49.212.243.89;
- envelope-from=odaki@rsg.ci.i.u-tokyo.ac.jp; helo=www3579.sakura.ne.jp
-X-Spam_score_int: -16
-X-Spam_score: -1.7
-X-Spam_bar: -
-X-Spam_report: (-1.7 / 5.0 requ) BAYES_00=-1.9, DKIM_INVALID=0.1,
- DKIM_SIGNED=0.1, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=no autolearn_force=no
+X-CM-TRANSID: qMiowJCxGOCFQB1qCOCXAA--.25551S3
+X-CM-SenderInfo: 5ol0xt5qjotxo6or00hjvr0hdfq/
+X-Coremail-Antispam: 1Uk129KBj93XoWxJw4ftr48GF17Ar1rWF18tFc_yoWrKw4rpr
+ 18KFWqyry5tr1kAw17Jwn8Jry5Xr18t3WkJw13XFy8Ar1UXr1YqFW0qr1vgr17Aw4rAr4U
+ Ar1Dtr4UZF4UArbCm3ZEXasCq-sJn29KB7ZKAUJUUUUU529EdanIXcx71UUUUU7KY7ZEXa
+ sCq-sGcSsGvfJ3Ic02F40EFcxC0VAKzVAqx4xG6I80ebIjqfuFe4nvWSU5nxnvy29KBjDU
+ 0xBIdaVrnRJUUUvFb4IE77IF4wAFF20E14v26r1j6r4UM7CY07I20VC2zVCF04k26cxKx2
+ IYs7xG6rWj6s0DM7CIcVAFz4kK6r1j6r18M28lY4IEw2IIxxk0rwA2F7IY1VAKz4vEj48v
+ e4kI8wA2z4x0Y4vE2Ix0cI8IcVAFwI0_Jr0_JF4l84ACjcxK6xIIjxv20xvEc7CjxVAFwI
+ 0_Jr0_Gr1l84ACjcxK6I8E87Iv67AKxVWxJVW8Jr1l84ACjcxK6I8E87Iv6xkF7I0E14v2
+ 6r4UJVWxJr1le2I262IYc4CY6c8Ij28IcVAaY2xG8wAqjxCEc2xF0cIa020Ex4CE44I27w
+ Aqx4xG64xvF2IEw4CE5I8CrVC2j2WlYx0E2Ix0cI8IcVAFwI0_Jr0_Jr4lYx0Ex4A2jsIE
+ 14v26r1j6r4UMcvjeVCFs4IE7xkEbVWUJVW8JwACjcxG0xvEwIxGrwCYjI0SjxkI62AI1c
+ AE67vIY487MxAIw28IcxkI7VAKI48JMxC20s026xCaFVCjc4AY6r1j6r4UMI8I3I0E5I8C
+ rVAFwI0_Jr0_Jr4lx2IqxVCjr7xvwVAFwI0_JrI_JrWlx4CE17CEb7AF67AKxVWUXVWUAw
+ CIc40Y0x0EwIxGrwCI42IY6xIIjxv20xvE14v26r1j6r1xMIIF0xvE2Ix0cI8IcVCY1x02
+ 67AKxVWUJVW8JwCI42IY6xAIw20EY4v20xvaj40_Jr0_JF4lIxAIcVC2z280aVAFwI0_Jr
+ 0_Gr1lIxAIcVC2z280aVCY1x0267AKxVWUJVW8JbIYCTnIWIevJa73UjIFyTuYvjxUzsqW
+ UUUUU
+Received-SPF: pass client-ip=114.242.206.163;
+ envelope-from=lixianglai@loongson.cn; helo=mail.loongson.cn
+X-Spam_score_int: -48
+X-Spam_score: -4.9
+X-Spam_bar: ----
+X-Spam_report: (-4.9 / 5.0 requ) BAYES_00=-1.9, NICE_REPLY_A=-2.97,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -79,160 +81,110 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 2026/05/29 18:39, Igor Mammedov wrote:
-> On Thu, 28 May 2026 00:05:44 +0900
-> Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp> wrote:
-> 
->> Relax the lower bound of the HighMem MMIO region size to make it more
->> likely that the region fits in the PA space.
+Hi Bibo Mao :
+> On 2026/5/29 下午2:38, Xianglai Li wrote:
+>> Set the CSR_CRMD, CSR_ESTAT, CSR_MSGIS and CSR_PERFCTRL registers to the
+>> reset state when the CPU is reset.
+> Hi Xianglai,
+>
+> Thanks for the patch.
+>
+> Could you add some description how do you find this issue? such as by 
+> code reviewing or there is a real problem.
+>
+OK, I will add some descriptions related to the issue in the next 
+version of the patch.
 >>
->> The lower bound was especially problematic on Apple M2. The current
->> lower bound, 512 GiB, is too big to fit in the limited PA space on the
->> hardware. That makes the HighMem MMIO region unavailable and limits the
->> PCIe MMIO space to the base MMIO region. The base MMIO region is not big
->> enough to contain a large hostmem window configured for virtio-gpu-gl-pci
->> with DRM native context, for example.
->>
->> Relax the lower bound to 64 KiB, matching the memory map comment that
->> says "devices should generally be placed at multiples of 0x10000, to
->> accommodate guests using 64K pages." Also, automatically lower the
->> default HighMem MMIO region size to fit in the PA space for the latest
->> machine version; the older machine versions retain the previous default
->> HighMem MMIO region size for compatibility.
-> 
-> How useful/practical 64K window would be?
-> Should it be reasonably large (like 64Mb or similar), or mirror lower windows size?
-> CCing Gerd,
-> to look at it from firmware POV.
-
-Practically it's not useful. I just followed the existing convention 
-described in the comment instead of inventing another lower bound.
-
-> 
-> wrt 64K magic value, it opencoded in several places. I'd use a macro for that.
-
-The new occurrences are:
-- One numeric literal
-- One string literal
-- One documentation
-
-They cannot be cleanly shared. The existing memory map contains many 
-hardcoded values that are aligned by 64 KiB, but I think they are better 
-to stay as is. For example, the size of VIRT_CXL_HOST can be rewritten 
-as MEMMAP_GRANULARITY * 16 instead of 64 * KiB * 16, but if you do so, 
-that size will vary when changing the granularity, which is probably not 
-what we want. We actually need a fixed value that satisfies the 
-requirement of CXL and is consistent with old versions of the machine.
-
-Regards,
-Akihiko Odaki
-
-> 
->>
->> Signed-off-by: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
+>> Signed-off-by: Xianglai Li <lixianglai@loongson.cn>
 >> ---
->>   docs/system/arm/virt.rst |  2 +-
->>   include/hw/arm/virt.h    |  1 +
->>   hw/arm/virt.c            | 22 ++++++++++++++--------
->>   3 files changed, 16 insertions(+), 9 deletions(-)
+>> Cc: Bibo Mao <maobibo@loongson.cn>
+>> Cc: Song Gao <gaosong@loongson.cn>
 >>
->> diff --git a/docs/system/arm/virt.rst b/docs/system/arm/virt.rst
->> index f811e662d68d..c8284ce2fa0e 100644
->> --- a/docs/system/arm/virt.rst
->> +++ b/docs/system/arm/virt.rst
->> @@ -149,7 +149,7 @@ highmem-mmio
->>   
->>   highmem-mmio-size
->>     Set the high memory region size for PCI MMIO. Must be a power of 2 and
->> -  greater than or equal to the default size (512G).
->> +  greater than or equal to 64 KiB.
->>   
->>   gic-version
->>     Specify the version of the Generic Interrupt Controller (GIC) to provide.
->> diff --git a/include/hw/arm/virt.h b/include/hw/arm/virt.h
->> index 6c8ba8f3185b..7aa289d3936f 100644
->> --- a/include/hw/arm/virt.h
->> +++ b/include/hw/arm/virt.h
->> @@ -143,6 +143,7 @@ typedef enum VirtGICType {
->>   struct VirtMachineClass {
->>       MachineClass parent;
->>       hwaddr min_highmem_base;
->> +    hwaddr high_pcie_mmio_size;
->>       bool no_tcg_its;
->>       bool no_highmem_compact;
->>       bool no_kvm_steal_time;
->> diff --git a/hw/arm/virt.c b/hw/arm/virt.c
->> index 78a85a966ad7..dd97b0dd6a42 100644
->> --- a/hw/arm/virt.c
->> +++ b/hw/arm/virt.c
->> @@ -222,8 +222,7 @@ static const MemMapEntry base_memmap[] = {
->>   };
->>   
->>   /* Update the docs for highmem-mmio-size when changing this default */
->> -#define DEFAULT_HIGH_PCIE_MMIO_SIZE_GB 512
->> -#define DEFAULT_HIGH_PCIE_MMIO_SIZE (DEFAULT_HIGH_PCIE_MMIO_SIZE_GB * GiB)
->> +#define MAX_DEFAULT_HIGH_PCIE_MMIO_SIZE (512 * GiB)
->>   
->>   /*
->>    * Highmem IO Regions: This memory map is floating, located after the RAM.
->> @@ -249,7 +248,7 @@ static MemMapEntry extended_memmap[] = {
->>       [VIRT_CXL_HOST] =           { 0x0, 64 * KiB * 16 }, /* 16 UID */
->>       [VIRT_HIGH_PCIE_ECAM] =     { 0x0, 256 * MiB },
->>       /* Second PCIe window */
->> -    [VIRT_HIGH_PCIE_MMIO] =     { 0x0, DEFAULT_HIGH_PCIE_MMIO_SIZE },
->> +    [VIRT_HIGH_PCIE_MMIO] =     { 0x0, 0 },
->>       /* Any CXL Fixed memory windows come here */
->>   };
->>   
->> @@ -2448,9 +2447,14 @@ static void virt_set_high_memmap(VirtMachineState *vms,
->>   
->>       for (i = VIRT_LOWMEMMAP_LAST; i < ARRAY_SIZE(extended_memmap); i++) {
->>           region_enabled = virt_get_high_memmap_enabled(vms, i);
->> -        region_base = ROUND_UP(base, extended_memmap[i].size);
->>           region_size = extended_memmap[i].size;
->>   
->> +        if (i == VIRT_HIGH_PCIE_MMIO && !region_size) {
->> +            region_size = CLAMP(pow2floor(BIT_ULL(pa_bits) - base),
->> +                                64 * KiB, MAX_DEFAULT_HIGH_PCIE_MMIO_SIZE);
->> +        }
->> +
->> +        region_base = ROUND_UP(base, region_size);
->>           vms->memmap[i].base = region_base;
->>           vms->memmap[i].size = region_size;
->>   
->> @@ -3340,11 +3344,9 @@ static void virt_set_highmem_mmio_size(Object *obj, Visitor *v,
->>           return;
->>       }
->>   
->> -    if (size < DEFAULT_HIGH_PCIE_MMIO_SIZE) {
->> -        char *sz = size_to_str(DEFAULT_HIGH_PCIE_MMIO_SIZE);
->> +    if (size < 64 * KiB) {
->>           error_setg(errp, "highmem-mmio-size cannot be set to a lower value "
->> -                         "than the default (%s)", sz);
->> -        g_free(sz);
->> +                         "than 64 KiB");
->>           return;
->>       }
->>   
->> @@ -4271,6 +4273,8 @@ static void virt_instance_init(Object *obj)
->>       VirtMachineState *vms = VIRT_MACHINE(obj);
->>       VirtMachineClass *vmc = VIRT_MACHINE_GET_CLASS(vms);
->>   
->> +    extended_memmap[VIRT_HIGH_PCIE_MMIO].size = vmc->high_pcie_mmio_size;
->> +
->>       /* EL3 is disabled by default on virt: this makes us consistent
->>        * between KVM and TCG for this board, and it also allows us to
->>        * boot UEFI blobs which assume no TrustZone support.
->> @@ -4372,6 +4376,8 @@ static void virt_machine_11_0_options(MachineClass *mc)
->>        * < 255GiB we keep the legacy memory map.
->>        */
->>       vmc->min_highmem_base = base_memmap[VIRT_MEM].base + LEGACY_RAMLIMIT_BYTES;
->> +
->> +    vmc->high_pcie_mmio_size = MAX_DEFAULT_HIGH_PCIE_MMIO_SIZE;
->>   }
->>   DEFINE_VIRT_MACHINE(11, 0)
->>   
+>>   target/loongarch/cpu-csr.h |  7 +++++++
+>>   target/loongarch/cpu.c     | 19 ++++++++++++++++++-
+>>   2 files changed, 25 insertions(+), 1 deletion(-)
 >>
-> 
+>> diff --git a/target/loongarch/cpu-csr.h b/target/loongarch/cpu-csr.h
+>> index d860417af2..d936af8e57 100644
+>> --- a/target/loongarch/cpu-csr.h
+>> +++ b/target/loongarch/cpu-csr.h
+>> @@ -211,6 +211,13 @@ FIELD(CSR_DMW_64, VSEG, 60, 4)
+>>   #define LOONGARCH_CSR_PERFCTRL(N)    (0x200 + 2 * N)
+>>   #define LOONGARCH_CSR_PERFCNTR(N)    (0x201 + 2 * N)
+>>   +FIELD(CSR_PERFCTRL, EV, 0, 10)
+>> +FIELD(CSR_PERFCTRL, PLV0, 16, 1)
+>> +FIELD(CSR_PERFCTRL, PLV1, 17, 1)
+>> +FIELD(CSR_PERFCTRL, PLV2, 18, 1)
+>> +FIELD(CSR_PERFCTRL, PLV3, 19, 1)
+>> +FIELD(CSR_PERFCTRL, PMIE, 20, 1)
+>> +
+>>   /* Debug CSRs */
+>>   #define LOONGARCH_CSR_DBG            0x500 /* debug config */
+>>   FIELD(CSR_DBG, DST, 0, 1)
+>> diff --git a/target/loongarch/cpu.c b/target/loongarch/cpu.c
+>> index 8f277f7696..7f82c4c46c 100644
+>> --- a/target/loongarch/cpu.c
+>> +++ b/target/loongarch/cpu.c
+>> @@ -622,6 +622,7 @@ static void loongarch_cpu_reset_hold(Object *obj, 
+>> ResetType type)
+>>       env->CSR_CRMD = FIELD_DP64(env->CSR_CRMD, CSR_CRMD, PG, 0);
+>>       env->CSR_CRMD = FIELD_DP64(env->CSR_CRMD, CSR_CRMD, DATF, 0);
+>>       env->CSR_CRMD = FIELD_DP64(env->CSR_CRMD, CSR_CRMD, DATM, 0);
+>> +    env->CSR_CRMD = FIELD_DP64(env->CSR_CRMD, CSR_CRMD, WE, 0);
+>>         env->CSR_EUEN = FIELD_DP64(env->CSR_EUEN, CSR_EUEN, FPE, 0);
+>>       env->CSR_EUEN = FIELD_DP64(env->CSR_EUEN, CSR_EUEN, SXE, 0);
+>> @@ -633,7 +634,7 @@ static void loongarch_cpu_reset_hold(Object *obj, 
+>> ResetType type)
+>>       env->CSR_ECFG = FIELD_DP64(env->CSR_ECFG, CSR_ECFG, VS, 0);
+>>       env->CSR_ECFG = FIELD_DP64(env->CSR_ECFG, CSR_ECFG, LIE, 0);
+>>   -    env->CSR_ESTAT = env->CSR_ESTAT & (~MAKE_64BIT_MASK(0, 2));
+>> +    env->CSR_ESTAT = 0;
+>>       env->CSR_RVACFG = FIELD_DP64(env->CSR_RVACFG, CSR_RVACFG, 
+>> RBITS, 0);
+>>       env->CSR_CPUID = cs->cpu_index;
+>>       env->CSR_TCFG = FIELD_DP64(env->CSR_TCFG, CSR_TCFG, EN, 0);
+>> @@ -641,6 +642,22 @@ static void loongarch_cpu_reset_hold(Object 
+>> *obj, ResetType type)
+>>       env->CSR_TLBRERA = FIELD_DP64(env->CSR_TLBRERA, CSR_TLBRERA, 
+>> ISTLBR, 0);
+>>       env->CSR_MERRCTL = FIELD_DP64(env->CSR_MERRCTL, CSR_MERRCTL, 
+>> ISMERR, 0);
+>>       env->CSR_TID = cs->cpu_index;
+>> +
+>> +    memset(env->CSR_MSGIS, 0, sizeof(env->CSR_MSGIS));
+>> +    env->CSR_DBG = FIELD_DP64(env->CSR_DBG, CSR_DBG, DST, 0);
+>> +    for (n = 0; n < MAX_PERF_EVENTS; n++) {
+> how about for (n = 0; n < env.perf_event_num; n++) {  ?
+>
+OK, I will fix it in the next version of the patch.
+
+Thanks,
+Xianglai.
+
+> Regards
+> Bibo Mao
+>> +        env->CSR_PERFCTRL[n] = FIELD_DP64(env->CSR_PERFCTRL[n], 
+>> CSR_PERFCTRL,
+>> +                                          PLV0, 0);
+>> +        env->CSR_PERFCTRL[n] = FIELD_DP64(env->CSR_PERFCTRL[n], 
+>> CSR_PERFCTRL,
+>> +                                          PLV1, 0);
+>> +        env->CSR_PERFCTRL[n] = FIELD_DP64(env->CSR_PERFCTRL[n], 
+>> CSR_PERFCTRL,
+>> +                                          PLV2, 0);
+>> +        env->CSR_PERFCTRL[n] = FIELD_DP64(env->CSR_PERFCTRL[n], 
+>> CSR_PERFCTRL,
+>> +                                          PLV3, 0);
+>> +        env->CSR_PERFCTRL[n] = FIELD_DP64(env->CSR_PERFCTRL[n], 
+>> CSR_PERFCTRL,
+>> +                                          PMIE, 0);
+>> +    }
+>> +
+>>       /*
+>>        * Workaround for edk2-stable202408, CSR PGD register is set 
+>> only if
+>>        * its value is equal to zero for boot cpu, it causes reboot 
+>> issue.
+>>
 
 
