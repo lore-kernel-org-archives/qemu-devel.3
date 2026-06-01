@@ -4,143 +4,77 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9BB51CD5BD1
-	for <qemu-devel@archiver.kernel.org>; Mon,  1 Jun 2026 14:10:12 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C9496CD5BD1
+	for <qemu-devel@archiver.kernel.org>; Mon,  1 Jun 2026 14:14:07 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wU3Ky-0000bX-PU; Mon, 01 Jun 2026 10:09:52 -0400
+	id 1wU3OS-0001o4-SJ; Mon, 01 Jun 2026 10:13:30 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <skolothumtho@nvidia.com>)
- id 1wU3Kx-0000ao-48; Mon, 01 Jun 2026 10:09:51 -0400
-Received: from mail-westus3azlp170100009.outbound.protection.outlook.com
- ([2a01:111:f403:c107::9] helo=PH7PR06CU001.outbound.protection.outlook.com)
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1wU3OK-0001dI-8V
+ for qemu-devel@nongnu.org; Mon, 01 Jun 2026 10:13:21 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <skolothumtho@nvidia.com>)
- id 1wU3Kv-0007wR-Nc; Mon, 01 Jun 2026 10:09:50 -0400
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=UvYCG5vT02dwzGLLPT0l8SwcM4F+H8IB7uyymD0D+Kcr0t6hQsooMvQ55Mo5JPL9Q9Jcykxqw3A7EuIaipG1B1IxSBU90yhaNNCwf1uhfKulnziJa1qFljspYE5ZFViR6a5CkjozwnuOY5nVVMsfDI6RR0hr+qpyyiBH3xLP9MtFyTgaZO1XGAAHDKYWT2wjv2ieFoA9MnTVeCzm70dvmrjUohWF2IyaWkgIf9R/J8MHC59bX5w8oeB2IRCJ35xq4GHxkb04BMxocJFIfjdbxmbjtlZ/gXMt3MdSWX17NQV6RVnB3vHMBXLC4/UbrU1t36RSwQ03/OU+EOrYuww0IQ==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=FzRcqJZjpvxV0X1Gs7UJ6LCpm+F/3zkulvo+1Lc0KZw=;
- b=AiZdBtMdk0Pw4wnTPFktrwjJuiLKXbQDFIKBWQyKfcWP6RBBoIwaWWOynnhML+/2pITEyyn4XB3acgGZ8joqU1dzCPcz++r8s8JOL/11IfiyY9U8aHJC/5oRpkctlhDpbgQBokOuV8Owt8FiQ1yRPiSNS7GRZbPcg2XUF8uqAXNGlhOQTN+Rctr5vnrkmjCzFZe5kqXdD8jwqWpGzIoYHIZ99MGf4B7Eaf6QB6wzIflpjRb8gF9LuN/9+YLmjT6TOacgbRSt486MwxiiGkISqRI7thPIHsTjXfu3GmZSGRhLCIKqC+E0Kbgm8+mpTKExMoO8s3s3pcgz/1XLP9Z6jw==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=nvidia.com; dmarc=pass action=none header.from=nvidia.com;
- dkim=pass header.d=nvidia.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=Nvidia.com;
- s=selector2;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=FzRcqJZjpvxV0X1Gs7UJ6LCpm+F/3zkulvo+1Lc0KZw=;
- b=ArYYFW+YDkUR1JixNVRu9IwKOjfLQ9/OiAaZ9Ms6KNoBTQeyAwX1xA8YhmAcBgshUXWCfsg9pj7mxyaexeKjtJGreW1sq+UCM0+21082Z3cpFo+6yUHacELLEJhTHJEsPwNcolCWD1bLmMr+eWapnkNb0xcRVS9ThQA68lH+JrEd8hvsxEFF0hPTSewwAPf9ZHTCIWG2eLZFOHiBuXusjqdKK2CvhtHm9wBI7HI3dWJSnLRhMNEiIT2Kro5oy0XnV9Foge+eAEPGu2KP97B9hkKH8EUYaoGw/ODWgWAVH+xOkaryU2oYpHSOKD2qhY2aClRlSnVgU1+NMNtiCdIOUQ==
-Received: from CH3PR12MB7548.namprd12.prod.outlook.com (2603:10b6:610:144::12)
- by MW4PR12MB8610.namprd12.prod.outlook.com (2603:10b6:303:1ef::18)
- with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.71.15; Mon, 1 Jun 2026
- 14:09:42 +0000
-Received: from CH3PR12MB7548.namprd12.prod.outlook.com
- ([fe80::b710:d6a1:ab16:76de]) by CH3PR12MB7548.namprd12.prod.outlook.com
- ([fe80::b710:d6a1:ab16:76de%6]) with mapi id 15.21.0071.015; Mon, 1 Jun 2026
- 14:09:42 +0000
-From: Shameer Kolothum Thodi <skolothumtho@nvidia.com>
-To: Eric Auger <eric.auger@redhat.com>, "eric.auger.pro@gmail.com"
- <eric.auger.pro@gmail.com>, "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>,
- "qemu-arm@nongnu.org" <qemu-arm@nongnu.org>, "kvmarm@lists.linux.dev"
- <kvmarm@lists.linux.dev>, "peter.maydell@linaro.org"
- <peter.maydell@linaro.org>, "shaju.abraham@nutanix.com"
- <shaju.abraham@nutanix.com>, "khushit.shah@nutanix.com"
- <khushit.shah@nutanix.com>, "yangjinqian1@huawei.com"
- <yangjinqian1@huawei.com>, "cohuck@redhat.com" <cohuck@redhat.com>,
- "richard.henderson@linaro.org" <richard.henderson@linaro.org>,
- "sebott@redhat.com" <sebott@redhat.com>, "philmd@linaro.org"
- <philmd@linaro.org>
-CC: "maz@kernel.org" <maz@kernel.org>, "oliver.upton@linux.dev"
- <oliver.upton@linux.dev>, "pbonzini@redhat.com" <pbonzini@redhat.com>,
- "armbru@redhat.com" <armbru@redhat.com>, "berrange@redhat.com"
- <berrange@redhat.com>, "abologna@redhat.com" <abologna@redhat.com>,
- "jdenemar@redhat.com" <jdenemar@redhat.com>
-Subject: RE: [PATCH v5 03/18] target/arm/cpu-sysregs.h.inc: Update with
- automatic generation
-Thread-Topic: [PATCH v5 03/18] target/arm/cpu-sysregs.h.inc: Update with
- automatic generation
-Thread-Index: AQHc55OSIQrbkzCnZECMCWq0LLpFvrYp0VWg
-Date: Mon, 1 Jun 2026 14:09:42 +0000
-Message-ID: <CH3PR12MB75486126A2B70E920E666EE0AB152@CH3PR12MB7548.namprd12.prod.outlook.com>
-References: <20260519132905.145643-1-eric.auger@redhat.com>
- <20260519132905.145643-4-eric.auger@redhat.com>
-In-Reply-To: <20260519132905.145643-4-eric.auger@redhat.com>
-Accept-Language: en-US, en-GB
-Content-Language: en-US
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-authentication-results: dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=nvidia.com;
-x-ms-publictraffictype: Email
-x-ms-traffictypediagnostic: CH3PR12MB7548:EE_|MW4PR12MB8610:EE_
-x-ms-office365-filtering-correlation-id: 74310fcd-468b-4194-6661-08debfe76d5a
-x-ms-exchange-senderadcheck: 1
-x-ms-exchange-antispam-relay: 0
-x-microsoft-antispam: BCL:0;
- ARA:13230040|366016|376014|7416014|1800799024|22082099003|18002099003|4143699003|11063799006|56012099006|921020|38070700021;
-x-microsoft-antispam-message-info: QVExqpYuxe1UBQXwnPl5gwgPjsB2Cr4NG+rv6GSCWsD5Bvnl4LsLmbJ95BkXPvkjYHiREoo5YTnM3cv2vlZtXkFVql0hTsiAoPdhmFnukwwVONCEkMvAtjhPvqdq9F+BvvyVD2PEn5s3/YXFqW6+zpXchVUVt6dQ9xOJiCRdcTfKTS/s+aIq313S23/9jAAXT6S1/m54G0v33IdwrD89gPpwUaCGRHuyZ1LFRffZqvh/RJbL8e3GTElT4TwJlAzf9fsARYw3sm2LnoH7SljDRREgOgpzQrbPh4aToYctpkTgYlZrNZcIA4roDWij626sh4EwPrc0308P4zwFOse/bs2cZAdp5lkXHiYqVbT45FkLh7AadYVZmrVf8PMnMB0NX6Sg8whcg/zbkwFmgyRPB5Dk4EYt+YOlL4GjD4Dhk6xjmptZEUq0HeFcvwzxBt/Dj6UJo0xIh+CXmciNpwlQmP0cTIFp5+8G2qvof6j3D8yJZHBP5m0JJlvJkxHQtwS/Z/7mEbcqYczHQQlNkzubjA5Chr9LNKdS1737Z1HztCI4dt7P4au9WneHcGaAxR1b1xSswNOpsv+GhqRzNMss/Kj33WbvVAj8SIrqmKETBqcpR+mXoQeIiA+bP5BmUvy004I/R4PFG8CTVUfAabKzqZZRb8FulvJG952xgpx9a9fyl19AcHj8NiTJpZcLD2+QzOPOdY7KNEnhlTrvhEHworveTqOTLOFGJup+oeno/9CsE6Z5uVqHKj5ZNVHuBLjyxBh2hn/JTYFnVS/VNuui9Q==
-x-forefront-antispam-report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
- IPV:NLI; SFV:NSPM; H:CH3PR12MB7548.namprd12.prod.outlook.com; PTR:; CAT:NONE;
- SFS:(13230040)(366016)(376014)(7416014)(1800799024)(22082099003)(18002099003)(4143699003)(11063799006)(56012099006)(921020)(38070700021);
- DIR:OUT; SFP:1101; 
-x-ms-exchange-antispam-messagedata-chunkcount: 1
-x-ms-exchange-antispam-messagedata-0: =?us-ascii?Q?agWTVBjfu/Op2nG0rI+Fq0NkJiqV0gsRsmna6XJ1zSYfUlolvVFGLmwjFgoq?=
- =?us-ascii?Q?3jrWrufgyGpWGD+9fWwoCFa9GqfJmQhmtFXmwtNUy5+rzq3KoAatQDnKjbJG?=
- =?us-ascii?Q?RDTQMhznacVw6siIWV2dsmxCr5UkoONRxB6SOT/RQC/NfNRYLl7WTotBKqUS?=
- =?us-ascii?Q?k/mFc6FexA6Cl1OypPKjTclULiXZPjHu+4K+LC1J9zY5QVfoGmSATxpi3XOq?=
- =?us-ascii?Q?7BMFlWK5MaWnkJ7OgaKk2vlSTMEXog5kz5dbFLGC0f1GwpzMoDhs6oAIzaQp?=
- =?us-ascii?Q?V/2owVi2W1ebvRmeamGZvOkTffeKVl7r/hCSYQ6k14386L+9X0wS6l2stZo9?=
- =?us-ascii?Q?Q0bXzjvgq1MPbxfFRi814lXMg1qb9R31ewbRYbCtqTJVpBRe39kqL3PjLkV+?=
- =?us-ascii?Q?u7Qk898SNUxJZ9OGmyFme2EfCBPtR0f13QYb3pk6kjDD2Stor4qYcOlFORTg?=
- =?us-ascii?Q?EspsxPqe0U9C1z+2fGFXhufpAKTM7a9aOhXNDwLk50sCzN70sLZP7Gz60jit?=
- =?us-ascii?Q?i07Iy/H/BA3+XskgkM6IQ3jZn5049MwUR2ZoePv5LmWw6Y2VHGOKJxfrMRVD?=
- =?us-ascii?Q?7Vf+R202IoWdJtFeBCgDZpjo426rQ+pn+SkamDbSGic1gRQYZJOoiiPoqQYB?=
- =?us-ascii?Q?dYFITfRGfQ4d21bmzqSXcDH/11wRqqTh/+daDcN6uxJKPZWmHPNBfL5JBg8L?=
- =?us-ascii?Q?v454Kz6YbZ/ugMZl+I/bXvVHjrIvEx51VbAgV/f0EhVjmkeXrGwQ0UaLP+e1?=
- =?us-ascii?Q?2fpj5EgeHQyXaEOeeSUg4f3nIErB47cahVB1utrqmijqtCEN2xjuValt61HC?=
- =?us-ascii?Q?XkXHIaXnbBPPjsqWkJtzHAjiT9Odbljaz3D8w7B6+Wa3fNoAvcTU6KFEzR8w?=
- =?us-ascii?Q?eFcIAia8U8h3JmRx1M/rYQQ4LuRtWgujy7V4TWoKwaEnn2pcCFU4nKQG3o9B?=
- =?us-ascii?Q?3Jc8SEY5BD8CUrqFNmHCTzo81DqJyHxd+6w35VpS04P2xXNAU4cCxJ1230Ft?=
- =?us-ascii?Q?YQZI00Wu5iX7VqO53SPeaPe1eQ9GKaTPfxK8YKOvUXhf5kZXReo8O9XoGoZ/?=
- =?us-ascii?Q?EalDIPR69p35wg0Zl0fP5diUH60QfyzS2Fz/SUBokkAqBSzgc5eu44EjMmot?=
- =?us-ascii?Q?XpeM34aXA8UWg5GVTiDxqJ+DHGJHEspiop0dEe1iWJlRxmcOWIBhV1IlF3JI?=
- =?us-ascii?Q?OtNLy3SUe25TGYwi78sv9hfBG5qE8GLFANsYM8BjZCfVOKChzIsRsQ0T6btS?=
- =?us-ascii?Q?MxMWlz1JMAdIaqwNvl4vhf7xEyXClYez2cN0Cuy1/7ewFFG/0RfNWURcb4AC?=
- =?us-ascii?Q?GJYE/O0LeJ+ElSJpV2kLHURkJNoyiLihG1ipCt2mLtxrRBEqhWXCLeyYl1HL?=
- =?us-ascii?Q?f2NfyPvFf9m3NDFzQ08T8m6aIzJ1emiKk41rpuMSo/10HFgGgbvv0pckE8sC?=
- =?us-ascii?Q?P6j5Ws4teqiFTqcZQTmG7i4xrQP1/uLXxsc+c4mqj7tReA27pTD6o5AtvN6u?=
- =?us-ascii?Q?hRoQJJG3RssoD6P1H0nRq8Rumf5fEywTDNt4Hte/+ESS2CcOm+E6S2+L2Ryz?=
- =?us-ascii?Q?m14EbAnx71/ujLjeW26baCcKcRdEZxBZNRpBUBmu6DibPKj7RLPK5wcbBtf8?=
- =?us-ascii?Q?5uSWJq8JV2CLRVeSyiyfiGzhnwsvidtoHIP3lwctHoVotGabUIzMBGV9GJZj?=
- =?us-ascii?Q?uadMqZrA+h1YmWSlYIsdIAzIhNADdG4v/3RpBHI/deII3HYwWdHYkLISxkRB?=
- =?us-ascii?Q?7Lje44w0PA=3D=3D?=
-Content-Type: text/plain; charset="us-ascii"
-Content-Transfer-Encoding: quoted-printable
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1wU3OI-0000Yx-J0
+ for qemu-devel@nongnu.org; Mon, 01 Jun 2026 10:13:20 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1780323198;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=q4mAxw6LJGsSxtvy10XVCImBCVKwU22fquA7pM4XS8U=;
+ b=iQoSfjAe92k5DGBQgxKDGz99m1YtNqK2fVNXsWptQr5lm/6o6tHZAkYMMrgLW6ZXXeeuaK
+ N8eycJRxpdhBa0xn8GIsYOVRGrXz0jT6/oqE6n4E+Vao47FzLXX+OXKMWKYA7SW9REfuk4
+ Vp1AGMRQljIIuxe+xwPxk7fjEXxam9c=
+Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-659--_4Ie5k5OAW47wPuWEQotw-1; Mon,
+ 01 Jun 2026 10:13:14 -0400
+X-MC-Unique: -_4Ie5k5OAW47wPuWEQotw-1
+X-Mimecast-MFC-AGG-ID: -_4Ie5k5OAW47wPuWEQotw_1780323193
+Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id E565D192E275; Mon,  1 Jun 2026 14:09:36 +0000 (UTC)
+Received: from blackfin.pond.sub.org (unknown [10.44.22.2])
+ by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id D67AA19560A3; Mon,  1 Jun 2026 14:09:35 +0000 (UTC)
+Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
+ id 059B021E6A01; Mon, 01 Jun 2026 16:09:33 +0200 (CEST)
+From: Markus Armbruster <armbru@redhat.com>
+To: Mateusz Nowicki <mateusz.nowicki@posteo.net>
+Cc: qemu-devel@nongnu.org,  "Dr . David Alan Gilbert" <dave@treblig.org>,
+ Keith Busch <kbusch@kernel.org>,  Klaus Jensen <its@irrelevant.dk>,
+ Jesper Devantier <foss@defmacro.it>,  Philippe =?utf-8?Q?Mathieu-Daud?=
+ =?utf-8?Q?=C3=A9?=
+ <philmd@linaro.org>,  Zhao Liu <zhao1.liu@intel.com>,  Eric Blake
+ <eblake@redhat.com>,  qemu-block@nongnu.org
+Subject: Re: [PATCH v3 1/2] hw/nvme: add 'info nvme' HMP command
+In-Reply-To: <20260522102821.16766-2-mateusz.nowicki@posteo.net> (Mateusz
+ Nowicki's message of "Fri, 22 May 2026 10:29:18 +0000")
+References: <20260522102821.16766-1-mateusz.nowicki@posteo.net>
+ <20260522102821.16766-2-mateusz.nowicki@posteo.net>
+Date: Mon, 01 Jun 2026 16:09:32 +0200
+Message-ID: <87v7c2wdwj.fsf@pond.sub.org>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 MIME-Version: 1.0
-X-OriginatorOrg: Nvidia.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-AuthSource: CH3PR12MB7548.namprd12.prod.outlook.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 74310fcd-468b-4194-6661-08debfe76d5a
-X-MS-Exchange-CrossTenant-originalarrivaltime: 01 Jun 2026 14:09:42.4956 (UTC)
-X-MS-Exchange-CrossTenant-fromentityheader: Hosted
-X-MS-Exchange-CrossTenant-id: 43083d15-7273-40c1-b7db-39efd9ccc17a
-X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
-X-MS-Exchange-CrossTenant-userprincipalname: PS2zCd+DvS0xVadsV2vzNsaRcgaLDj2z6xd4ddAl3iZprjq3CSOJBrf5qtxb2KlNpHENWym7BfEeDl4snhfBDQ==
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: MW4PR12MB8610
-Received-SPF: permerror client-ip=2a01:111:f403:c107::9;
- envelope-from=skolothumtho@nvidia.com;
- helo=PH7PR06CU001.outbound.protection.outlook.com
-X-Spam_score_int: -24
-X-Spam_score: -2.5
-X-Spam_bar: --
-X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.445,
+Content-Type: text/plain
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.12
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=armbru@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: 8
+X-Spam_score: 0.8
+X-Spam_bar: /
+X-Spam_report: (0.8 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.445,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- SPF_HELO_NONE=0.001, SPF_NONE=0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_SBL_CSS=3.335, SPF_HELO_PASS=-0.001,
+ SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -156,35 +90,81 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+Mateusz Nowicki <mateusz.nowicki@posteo.net> writes:
 
+> Add an 'info nvme' HMP command for inspecting emulated NVMe
+> controllers from the QEMU monitor.
+>
+> For each NVMe controller in the QOM tree the command prints:
+>
+>   - PCI BDF, vendor/device ID and BAR0 base address;
+>   - Identify Controller fields visible to the host driver: SN, MN, FR
+>     and CNTLID;
+>   - the CC, CSTS and AQA registers (raw 32-bit values);
+>   - the number of admin and active I/O submission/completion queues.
+>
+> Useful when debugging the Linux NVMe driver against the QEMU emulation
+> without attaching gdb to the QEMU process.
+>
+> Example:
+>
+>   (qemu) info nvme
+>   /machine/peripheral-anon/device[0]
+>     PCI:    BDF 00:04.0  VID=8086 DID=5845  BAR0=0x00000000feb50000
+>     ID:     SN=NVME0001  MN=QEMU NVMe Ctrl  FR=...  CNTLID=0x0000
+>     CC:     0x00460001
+>     CSTS:   0x00000001
+>     AQA:    0x001f001f
+>     Queues: 1 admin + 4 IO SQ / 4 IO CQ
+>
+> Signed-off-by: Mateusz Nowicki <mateusz.nowicki@posteo.net>
+> Acked-by: Dr. David Alan Gilbert <dave@treblig.org>
+> Acked-by: Markus Armbruster <armbru@redhat.com>
+> ---
+>  hmp-commands-info.hx | 13 ++++++++
+>  hw/nvme/meson.build  |  2 +-
+>  hw/nvme/monitor.c    | 76 ++++++++++++++++++++++++++++++++++++++++++++
+>  qapi/machine.json    | 17 ++++++++++
+>  4 files changed, 107 insertions(+), 1 deletion(-)
+>  create mode 100644 hw/nvme/monitor.c
+>
+> diff --git a/hmp-commands-info.hx b/hmp-commands-info.hx
+> index 82134eb6c2..b984691c3c 100644
+> --- a/hmp-commands-info.hx
+> +++ b/hmp-commands-info.hx
+> @@ -340,6 +340,19 @@ SRST
+>      Show guest USB devices.
+>  ERST
+>  
+> +    {
+> +        .name       = "nvme",
+> +        .args_type  = "",
+> +        .params     = "",
+> +        .help       = "show emulated NVMe controllers",
+> +        .cmd_info_hrt = qmp_x_query_nvme,
+> +    },
+> +
+> +SRST
+> +  ``info nvme``
+> +    Show emulated NVMe controllers.
+> +ERST
+> +
+>      {
+>          .name       = "usbhost",
+>          .args_type  = "",
+> diff --git a/hw/nvme/meson.build b/hw/nvme/meson.build
+> index 7d5caa53c2..33dee048b0 100644
+> --- a/hw/nvme/meson.build
+> +++ b/hw/nvme/meson.build
+> @@ -1 +1 @@
+> -system_ss.add(when: 'CONFIG_NVME_PCI', if_true: files('ctrl.c', 'dif.c', 'ns.c', 'subsys.c', 'nguid.c'))
+> \ No newline at end of file
+> +system_ss.add(when: 'CONFIG_NVME_PCI', if_true: files('ctrl.c', 'dif.c', 'ns.c', 'subsys.c', 'nguid.c', 'monitor.c'))
 
-> -----Original Message-----
-> From: Eric Auger <eric.auger@redhat.com>
-> Sent: 19 May 2026 14:27
-> To: eric.auger.pro@gmail.com; eric.auger@redhat.com; qemu-
-> devel@nongnu.org; qemu-arm@nongnu.org; kvmarm@lists.linux.dev;
-> peter.maydell@linaro.org; shaju.abraham@nutanix.com;
-> khushit.shah@nutanix.com; yangjinqian1@huawei.com;
-> cohuck@redhat.com; richard.henderson@linaro.org; sebott@redhat.com;
-> Shameer Kolothum Thodi <skolothumtho@nvidia.com>; philmd@linaro.org
-> Cc: maz@kernel.org; oliver.upton@linux.dev; pbonzini@redhat.com;
-> armbru@redhat.com; berrange@redhat.com; abologna@redhat.com;
-> jdenemar@redhat.com
-> Subject: [PATCH v5 03/18] target/arm/cpu-sysregs.h.inc: Update with
-> automatic generation
->=20
-> External email: Use caution opening links or attachments
->=20
->=20
-> Generated definitions with scripts/update-aarch64-cpu-sysregs-header.py
-> based on "AARCHMRS containing the JSON files for Arm A-profile
-> architecture (2026-03)" Registers.json file.
->=20
-> Signed-off-by: Eric Auger <eric.auger@redhat.com>
-> Signed-off-by: Cornelia Huck <cohuck@redhat.com>
+Keep this list alphabetically sorted, please.
 
-Reviewed-by: Shameer Kolothum <skolothumtho@nvidia.com>
+I can tidy this up myself in my tree.
 
-Thanks,
-Shameer
+[...]
+
 
