@@ -4,99 +4,95 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id BE247CD6E60
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A3614CD5BD1
 	for <qemu-devel@archiver.kernel.org>; Mon,  1 Jun 2026 21:56:31 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wUAai-0006bp-VN; Mon, 01 Jun 2026 17:54:36 -0400
+	id 1wUAai-0006bm-Gy; Mon, 01 Jun 2026 17:54:36 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <stefanb@linux.ibm.com>)
- id 1wUAag-0006af-F5
+ id 1wUAag-0006a8-0O
  for qemu-devel@nongnu.org; Mon, 01 Jun 2026 17:54:34 -0400
 Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <stefanb@linux.ibm.com>)
- id 1wUAae-0003qe-2d
- for qemu-devel@nongnu.org; Mon, 01 Jun 2026 17:54:34 -0400
-Received: from pps.filterd (m0353725.ppops.net [127.0.0.1])
+ id 1wUAad-0003qQ-GH
+ for qemu-devel@nongnu.org; Mon, 01 Jun 2026 17:54:33 -0400
+Received: from pps.filterd (m0356516.ppops.net [127.0.0.1])
  by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 651HgGBL3001044; Mon, 1 Jun 2026 21:54:30 GMT
+ 651EIZoO1502206; Mon, 1 Jun 2026 21:54:30 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
- :content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=pp1; bh=vde4a1
- Q5tAOWSqewyxOrjeN6nP6oW09yMgbAqs+ewlo=; b=Yvbp7cQEppanDUo91nT5i6
- Rg66XM9A3kGAujWlowEiN1mQnZA+IUd8LZFuXwfnAFCTzCfC6n7lIaw/jak3tcRH
- GPqWNck7uWy1tQHJ/qIiCZ6Tmaz+mWSAS86OmuJtSbb05cdYXh+kJUVJkzYb3Sgn
- H55LLTJLYquoate6pHpi194ZhOemZATiLYktKTPeGoLSgH4pORTLn97FH6uZIOIh
- D6qj5SDworwlpHHdG9/EOIManbmTDdd/NDjLzCwYFXQepVHzIv8T2rGN93CB7gmC
- DICQ+mDuSTHjxzOkc51IVOVDst2Klg2/bKyd0quZLw8VadUx0EMApAao9it7pwzw
- ==
-Received: from ppma23.wdc07v.mail.ibm.com
- (5d.69.3da9.ip4.static.sl-reverse.com [169.61.105.93])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4efpae2rxc-1
+ :content-transfer-encoding:date:from:in-reply-to:message-id
+ :mime-version:references:subject:to; s=pp1; bh=eV0D9IU7ZEz0FiZdF
+ J4P4/D36Ke7+YJ7qke5GTmq3AM=; b=LCrDnjJo2w5kAYdlQOV6VtEcGvkPOP2PY
+ L7w9fxpTFB/mkCp/IRxUns5p1+f3kzxJr8jmtB7lpMdxBelCnsZ4R0wOdus+/7LY
+ C5GnpI0m89Q80lbD31h9Vgm2d2b4Mi7UsbvU898aMJOp4eZ/jUH11n8W/EMl372R
+ j3xAEiuZ0f5JKgSQFW/5EhkBkYtT6PMsSFT2AzsCROPRmjGrh7UyPKskTpXA+61u
+ 1mUh0pIIQy+BngboPrqYqxOG8bfcWgQ6rmIKNmyj21JyxOQIgkWCUA1wHP/AWwCH
+ avelmPXdE7p/gk7ztwfm1YLQimYbHOJum4kk5Z6+z64VChBUSGb6g==
+Received: from ppma13.dal12v.mail.ibm.com
+ (dd.9e.1632.ip4.static.sl-reverse.com [50.22.158.221])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4efnahjwhd-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
  Mon, 01 Jun 2026 21:54:30 +0000 (GMT)
-Received: from pps.filterd (ppma23.wdc07v.mail.ibm.com [127.0.0.1])
- by ppma23.wdc07v.mail.ibm.com (8.18.1.7/8.18.1.7) with ESMTP id 651Ls8vE002482;
+Received: from pps.filterd (ppma13.dal12v.mail.ibm.com [127.0.0.1])
+ by ppma13.dal12v.mail.ibm.com (8.18.1.7/8.18.1.7) with ESMTP id 651Ls9eZ022941;
  Mon, 1 Jun 2026 21:54:29 GMT
-Received: from smtprelay06.wdc07v.mail.ibm.com ([172.16.1.73])
- by ppma23.wdc07v.mail.ibm.com (PPS) with ESMTPS id 4egbqh869q-1
+Received: from smtprelay05.wdc07v.mail.ibm.com ([172.16.1.72])
+ by ppma13.dal12v.mail.ibm.com (PPS) with ESMTPS id 4egcegg1sa-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
  Mon, 01 Jun 2026 21:54:29 +0000 (GMT)
 Received: from smtpav03.wdc07v.mail.ibm.com (smtpav03.wdc07v.mail.ibm.com
  [10.39.53.230])
- by smtprelay06.wdc07v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 651LsT6t28312066
+ by smtprelay05.wdc07v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 651LsS7I31130284
  (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Mon, 1 Jun 2026 21:54:29 GMT
+ Mon, 1 Jun 2026 21:54:28 GMT
 Received: from smtpav03.wdc07v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 6AC7F5805D;
- Mon,  1 Jun 2026 21:54:29 +0000 (GMT)
+ by IMSVA (Postfix) with ESMTP id 9C2585805C;
+ Mon,  1 Jun 2026 21:54:28 +0000 (GMT)
 Received: from smtpav03.wdc07v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id C2D1358054;
+ by IMSVA (Postfix) with ESMTP id 1B32E5805A;
  Mon,  1 Jun 2026 21:54:28 +0000 (GMT)
 Received: from sbct-3.pok.ibm.com (unknown [9.47.158.153])
  by smtpav03.wdc07v.mail.ibm.com (Postfix) with ESMTP;
- Mon,  1 Jun 2026 21:54:28 +0000 (GMT)
+ Mon,  1 Jun 2026 21:54:27 +0000 (GMT)
 From: Stefan Berger <stefanb@linux.ibm.com>
 To: qemu-devel@nongnu.org
-Cc: peter.maydell@linaro.org, Arun Menon <armenon@redhat.com>,
- =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
- Peter Xu <peterx@redhat.com>, Stefan Berger <stefanb@linux.ibm.com>
-Subject: [PULL v1 07/16] migration/vmstate: Add VMState support for GByteArray
-Date: Mon,  1 Jun 2026 17:54:00 -0400
-Message-ID: <20260601215410.517009-8-stefanb@linux.ibm.com>
+Cc: peter.maydell@linaro.org, Stefan Berger <stefanb@linux.ibm.com>,
+ Arun Menon <armenon@redhat.com>
+Subject: [PULL v1 06/16] tests: Add a TPM TIS I2C swtpm test
+Date: Mon,  1 Jun 2026 17:53:59 -0400
+Message-ID: <20260601215410.517009-7-stefanb@linux.ibm.com>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260601215410.517009-1-stefanb@linux.ibm.com>
 References: <20260601215410.517009-1-stefanb@linux.ibm.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 X-TM-AS-GCONF: 00
-X-Authority-Analysis: v=2.4 cv=Zt3d7d7G c=1 sm=1 tr=0 ts=6a1dff96 cx=c_pps
- a=3Bg1Hr4SwmMryq2xdFQyZA==:117 a=3Bg1Hr4SwmMryq2xdFQyZA==:17
- a=IkcTkHD0fZMA:10 a=FelO9ux0wxsA:10 a=VkNPw1HP01LnGYTKEx00:22
- a=RnoormkPH1_aCDwRdu11:22 a=V8glGbnc2Ofi9Qvn3v5h:22 a=VwQbUJbxAAAA:8
- a=20KFwNOVAAAA:8 a=VnNF1IyMAAAA:8 a=ZarguQuSfgdiQHUm4MgA:9 a=3ZKOabzyN94A:10
- a=QEXdDO2ut3YA:10
-X-Proofpoint-GUID: CqPxD9w1V30pvbcmDopB5kaBsNHuIzyD
-X-Proofpoint-ORIG-GUID: CqPxD9w1V30pvbcmDopB5kaBsNHuIzyD
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNjAxMDIxMSBTYWx0ZWRfX0ghbEUAiY/2/
- bKOX8bEXzL+PDzJsb9tu9+ajXwcN8wQ7W5ICmiLOvueFw95kDzEH20H8lb2W89nIdeGYNYI7zHx
- o1JxjNYUwXnMH7AOIUqpFglfcU1WNUSiO2rfSdmblAoNo+kWyQQ5n/ktmLn1gA/mqJF8J+06FPp
- paWPme8ULfHTseX5MPOyYqeyxiga9gMM8B6vZ5loK+5LLSmDdvqgKZ0dyvqOjq5N1ja+EZcDPxZ
- 8oopOxzzPRikL+lNMDCLPS/x5WoA3vgCnHHO1Z7X9migMikwNxurshGb964W331G6PKL9Cwhlyd
- MFxcm4LwpySmn2QTHFKtMXaO9nJ/kOrjPABnszCb7mqV5Kx10u8v/rb6/WOm/7kyGrHWoll9E8d
- ZvAj0KHwV12G2lTfIHUr2cBjkPbOQivz+u96M1ccS2M/lBwdZkp3eGrc2AA2KHVqhsa0VlAJ3Af
- WBDNyZEXdAe/qyWhO7A==
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNjAxMDIxMSBTYWx0ZWRfXxxi3AHH7DXht
+ SdN8L6nLAyAUIO9QUBSqVqSVr3xQSMVbNs1y7JLIV0y9ALwWYrGcu4pkfQOAFWz17RRcq6PAiuE
+ Ry4inqYKn4CRBWRwIoRhplslI4eRNe3lSzK4bs4i3/nA0hmKtJnNbEgvHVsTlZP5cbs+dF/eENl
+ eayjXSrf9TVrLa2lm09kg5xQOZss3OBHv8bxQQtI0oVLBuNjzP4dec7DktkuJOgG+BXNrqIeUMU
+ U9FF3TAF4wkKBgZ+sHC4IV7PQeJPMfB0ohXXVZeudKGDAkAcNWaH84D4wwZQQbHyYls4ui0nrNg
+ D3jDC5zPCO58zKQ+JGqsi4GI9PU0xAOLs3z4qbQGdmR6bEay/UhbUWxbvhmn1m4lcsGwa9/msS6
+ nWrzfRllgQQxnoqvw8dRKPWwYSQNySIMEnJBQLH35pZXxXWtQO93MbNd6I5M+YSujrczzbka4qO
+ n2TNaAae3knLU9kKb6g==
+X-Proofpoint-ORIG-GUID: Doh4eW9rzY9KPVTb2OIGrqsp7XwAHKfb
+X-Authority-Analysis: v=2.4 cv=cOzQdFeN c=1 sm=1 tr=0 ts=6a1dff96 cx=c_pps
+ a=AfN7/Ok6k8XGzOShvHwTGQ==:117 a=AfN7/Ok6k8XGzOShvHwTGQ==:17
+ a=FelO9ux0wxsA:10 a=VkNPw1HP01LnGYTKEx00:22 a=RnoormkPH1_aCDwRdu11:22
+ a=Y2IxJ9c9Rs8Kov3niI8_:22 a=VwQbUJbxAAAA:8 a=VnNF1IyMAAAA:8 a=20KFwNOVAAAA:8
+ a=nr6cYVCJ1kreKA-1BtQA:9
+X-Proofpoint-GUID: Doh4eW9rzY9KPVTb2OIGrqsp7XwAHKfb
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.125,FMLib:17.12.100.49
  definitions=2026-06-01_06,2026-05-28_03,2025-10-01_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- impostorscore=0 suspectscore=0 priorityscore=1501 bulkscore=0 clxscore=1015
- phishscore=0 spamscore=0 malwarescore=0 adultscore=0 lowpriorityscore=0
+ clxscore=1015 impostorscore=0 lowpriorityscore=0 spamscore=0 bulkscore=0
+ malwarescore=0 phishscore=0 suspectscore=0 priorityscore=1501 adultscore=0
  classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
  reason=mlx scancount=1 engine=8.22.0-2605210000 definitions=main-2606010211
 Received-SPF: pass client-ip=148.163.158.5; envelope-from=stefanb@linux.ibm.com;
@@ -123,100 +119,203 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Arun Menon <armenon@redhat.com>
+Add a test case testing the TPM TIS over I2C with swtpm.
 
-In GLib, GByteArray is an object managed by the library. Currently,
-migrating a GByteArray requires treating it as a raw C struct and using
-VMSTATE_VBUFFER_ALLOC_UINT32. For example, see vmstate_vdba in
-ui/vdagent.c
-
-QEMU cannot pretend that GByteArray is a C struct and simply use
-VMS_ALLOC to g_malloc() the buffer. This is because, VMS_ALLOC blindly
-overwrites the data pointer with a newly allocated buffer, thereby
-leaking the previous memory. Besides, GLib tracks the array's capacity
-in a hidden alloc field. Bypassing GLib APIs leave this capacity out of
-sync with the newly allocated buffer, potentially leading to heap buffer
-overflows during subsequent g_byte_array_append() calls.
-
-This commit introduces VMSTATE_GBYTEARRAY which uses specific library
-API calls (g_byte_array_set_size()) to safely resize and populate the
-buffer.
-
-Signed-off-by: Arun Menon <armenon@redhat.com>
-Suggested-by: Marc-André Lureau <marcandre.lureau@redhat.com>
-Reviewed-by: Marc-André Lureau <marcandre.lureau@redhat.com>
-Reviewed-by: Peter Xu <peterx@redhat.com>
-Link: https://lore.kernel.org/qemu-devel/20260423105733.113046-2-armenon@redhat.com
+Reviewed-by: Arun Menon <armenon@redhat.com>
+Link: https://lore.kernel.org/qemu-devel/20260429121743.1346635-7-stefanb@linux.ibm.com
 Signed-off-by: Stefan Berger <stefanb@linux.ibm.com>
 ---
- include/migration/vmstate.h | 10 ++++++++++
- migration/vmstate-types.c   | 28 ++++++++++++++++++++++++++++
- 2 files changed, 38 insertions(+)
+ tests/qtest/meson.build              |  5 +-
+ tests/qtest/tpm-tis-i2c-swtpm-test.c | 82 ++++++++++++++++++++++++++++
+ tests/qtest/tpm-tis-i2c-util.c       | 38 +++++++++++++
+ tests/qtest/tpm-tis-i2c-util.h       |  4 ++
+ 4 files changed, 127 insertions(+), 2 deletions(-)
+ create mode 100644 tests/qtest/tpm-tis-i2c-swtpm-test.c
 
-diff --git a/include/migration/vmstate.h b/include/migration/vmstate.h
-index 0a8a2e85a6..1b7f295417 100644
---- a/include/migration/vmstate.h
-+++ b/include/migration/vmstate.h
-@@ -308,6 +308,7 @@ extern const VMStateInfo vmstate_info_bitmap;
- extern const VMStateInfo vmstate_info_qtailq;
- extern const VMStateInfo vmstate_info_gtree;
- extern const VMStateInfo vmstate_info_qlist;
-+extern const VMStateInfo vmstate_info_g_byte_array;
+diff --git a/tests/qtest/meson.build b/tests/qtest/meson.build
+index 57512c6e56..45ea497fa5 100644
+--- a/tests/qtest/meson.build
++++ b/tests/qtest/meson.build
+@@ -244,7 +244,7 @@ qtests_arm = \
+   (config_all_devices.has_key('CONFIG_ASPEED_SOC') ? qtests_aspeed : []) + \
+   (config_all_devices.has_key('CONFIG_NPCM7XX') ? qtests_npcm7xx : []) + \
+   (config_all_devices.has_key('CONFIG_GENERIC_LOADER') ? ['hexloader-test'] : []) + \
+-  (config_all_devices.has_key('CONFIG_TPM_TIS_I2C') ? ['tpm-tis-i2c-test'] : []) + \
++  (config_all_devices.has_key('CONFIG_TPM_TIS_I2C') ? ['tpm-tis-i2c-test', 'tpm-tis-i2c-swtpm-test'] : []) + \
+   (config_all_devices.has_key('CONFIG_VEXPRESS') ? ['test-arm-mptimer'] : []) + \
+   (config_all_devices.has_key('CONFIG_MICROBIT') ? ['microbit-test'] : []) + \
+   (config_all_devices.has_key('CONFIG_STM32L4X5_SOC') ? qtests_stm32l4x5 : []) + \
+@@ -263,7 +263,7 @@ qtests_aarch64 = \
+   (config_all_devices.has_key('CONFIG_XLNX_VERSAL') ? ['xlnx-canfd-test', 'xlnx-versal-trng-test'] : []) + \
+   (config_all_devices.has_key('CONFIG_RASPI') ? ['bcm2835-dma-test', 'bcm2835-i2c-test'] : []) +  \
+   (config_all_accel.has_key('CONFIG_TCG') and                                            \
+-   config_all_devices.has_key('CONFIG_TPM_TIS_I2C') ? ['tpm-tis-i2c-test'] : []) + \
++   config_all_devices.has_key('CONFIG_TPM_TIS_I2C') ? ['tpm-tis-i2c-test', 'tpm-tis-i2c-swtpm-test'] : []) + \
+   (config_all_devices.has_key('CONFIG_ASPEED_SOC') ? qtests_aspeed64 : []) + \
+   (config_all_devices.has_key('CONFIG_NPCM8XX') ? qtests_npcm8xx : []) + \
+   (config_all_devices.has_key('CONFIG_IOMMU_TESTDEV') and
+@@ -402,6 +402,7 @@ qtests = {
+   'tpm-tis-swtpm-test': [io, tpmemu_files, 'tpm-tis-util.c'],
+   'tpm-tis-test': [io, tpmemu_files, 'tpm-tis-util.c'],
+   'tpm-tis-i2c-test': [io, tpmemu_files, 'tpm-tis-i2c-util.c', 'qtest_aspeed.c'],
++  'tpm-tis-i2c-swtpm-test': [io, tpmemu_files, 'tpm-tis-i2c-util.c', 'qtest_aspeed.c'],
+   'tpm-tis-device-swtpm-test': [io, tpmemu_files, 'tpm-tis-util.c'],
+   'tpm-tis-device-test': [io, tpmemu_files, 'tpm-tis-util.c'],
+   'virtio-net-failover': test_migration_files,
+diff --git a/tests/qtest/tpm-tis-i2c-swtpm-test.c b/tests/qtest/tpm-tis-i2c-swtpm-test.c
+new file mode 100644
+index 0000000000..50d32a960b
+--- /dev/null
++++ b/tests/qtest/tpm-tis-i2c-swtpm-test.c
+@@ -0,0 +1,82 @@
++/*
++ * SPDX-License-Identifier: GPL-2.0-or-later
++ *
++ * QTest testcase for TPM TIS over I2C talking to external swtpm
++ *
++ * Copyright (c) 2018, 2026 IBM Corporation
++ *  with parts borrowed from migration-test.c that is:
++ *     Copyright (c) 2016-2018 Red Hat, Inc. and/or its affiliates
++ *
++ * Authors:
++ *   Stefan Berger <stefanb@linux.ibm.com>
++ *
++ */
++
++#include "qemu/osdep.h"
++
++#include "libqtest.h"
++#include "qemu/module.h"
++#include "tpm-tests.h"
++#include "tpm-tis-i2c-util.h"
++#include "qtest_aspeed.h"
++
++typedef struct TestState {
++    char *src_tpm_path;
++    char *dst_tpm_path;
++    char *uri;
++    const char *machine_options;
++    char *ifmodel;
++} TestState;
++
++static void tpm_tis_i2c_swtpm_test(const void *data)
++{
++    const TestState *ts = data;
++
++    tpm_test_swtpm_test(ts->src_tpm_path, tpm_tis_i2c_transfer,
++                        ts->ifmodel, ts->machine_options);
++}
++
++static void tpm_tis_swtpm_migration_test(const void *data)
++{
++    const TestState *ts = data;
++
++    tpm_test_swtpm_migration_test(ts->src_tpm_path, ts->dst_tpm_path,
++                                  ts->uri, tpm_tis_i2c_transfer,
++                                  ts->ifmodel, ts->machine_options);
++}
++
++
++int main(int argc, char **argv)
++{
++    int ret;
++    TestState ts;
++
++    ts.src_tpm_path = g_dir_make_tmp("qemu-tpm-tis-i2c-swtpm-test.XXXXXX",
++                                     NULL);
++    ts.dst_tpm_path = g_dir_make_tmp("qemu-tpm-tis-i2c-swtpm-test.XXXXXX",
++                                     NULL);
++    ts.uri = g_strdup_printf("unix:%s/migsocket", ts.src_tpm_path);
++    ts.machine_options = "-machine rainier-bmc -accel tcg";
++    ts.ifmodel = g_strdup_printf(
++                            "tpm-tis-i2c,bus=aspeed.i2c.bus.%d,address=0x%x",
++                            I2C_DEV_BUS_NUM, I2C_SLAVE_ADDR);
++
++    module_call_init(MODULE_INIT_QOM);
++    g_test_init(&argc, &argv, NULL);
++
++    aspeed_bus_addr = ast2600_i2c_calc_bus_addr(I2C_DEV_BUS_NUM);
++
++    qtest_add_data_func("/tpm/tis-i2c-swtpm/test", &ts, tpm_tis_i2c_swtpm_test);
++    qtest_add_data_func("/tpm/tis-i2c-swtpm-migration/test", &ts,
++                        tpm_tis_swtpm_migration_test);
++    ret = g_test_run();
++
++    tpm_util_rmdir(ts.dst_tpm_path);
++    g_free(ts.dst_tpm_path);
++    tpm_util_rmdir(ts.src_tpm_path);
++    g_free(ts.src_tpm_path);
++    g_free(ts.uri);
++    g_free(ts.ifmodel);
++
++    return ret;
++}
+diff --git a/tests/qtest/tpm-tis-i2c-util.c b/tests/qtest/tpm-tis-i2c-util.c
+index 6e724a4a47..c73420ec5b 100644
+--- a/tests/qtest/tpm-tis-i2c-util.c
++++ b/tests/qtest/tpm-tis-i2c-util.c
+@@ -15,6 +15,7 @@
+ #include "libqtest-single.h"
+ #include "qtest_aspeed.h"
+ #include "tpm-tis-i2c-util.h"
++#include "tpm-emu.h"
  
- #define type_check_2darray(t1,t2,n,m) ((t1(*)[n][m])0 - (t2*)0)
- /*
-@@ -957,6 +958,15 @@ extern const VMStateInfo vmstate_info_qlist;
-     .start        = offsetof(_type, _next),                              \
+ uint32_t aspeed_bus_addr;
+ 
+@@ -62,3 +63,40 @@ void tpm_tis_i2c_writel(QTestState *s, uint8_t locty, uint8_t reg, uint32_t v)
+     }
+     aspeed_i2c_writel(s, aspeed_bus_addr, I2C_SLAVE_ADDR, reg, v);
  }
++
++void tpm_tis_i2c_transfer(QTestState *s,
++                          const unsigned char *req, size_t req_size,
++                          unsigned char *rsp, size_t rsp_size)
++{
++    uint32_t sts;
++    size_t i;
++
++    /* request use of locality 0 */
++    tpm_tis_i2c_writeb(s, 0, TPM_I2C_REG_ACCESS, TPM_TIS_ACCESS_REQUEST_USE);
++
++    tpm_tis_i2c_writel(s, 0, TPM_I2C_REG_STS, TPM_TIS_STS_COMMAND_READY);
++
++    /* transmit command */
++    for (i = 0; i < req_size; i++) {
++        tpm_tis_i2c_writeb(s, 0, TPM_I2C_REG_DATA_FIFO, req[i]);
++    }
++
++    /* start processing */
++    tpm_tis_i2c_writeb(s, 0, TPM_I2C_REG_STS, TPM_TIS_STS_TPM_GO);
++
++    uint64_t end_time = g_get_monotonic_time() + 50 * G_TIME_SPAN_SECOND;
++    do {
++        sts = tpm_tis_i2c_readl(s, 0, TPM_I2C_REG_STS);
++        if ((sts & TPM_TIS_STS_DATA_AVAILABLE) != 0) {
++            break;
++        }
++    } while (g_get_monotonic_time() < end_time);
++
++    /* read response */
++    for (i = 0; i < rsp_size; i++) {
++        rsp[i] = tpm_tis_i2c_readb(s, 0, TPM_I2C_REG_DATA_FIFO);
++    }
++    /* relinquish use of locality 0 */
++    tpm_tis_i2c_writeb(s, 0,
++                       TPM_I2C_REG_ACCESS, TPM_TIS_ACCESS_ACTIVE_LOCALITY);
++}
+diff --git a/tests/qtest/tpm-tis-i2c-util.h b/tests/qtest/tpm-tis-i2c-util.h
+index 3289545f61..499bf4964a 100644
+--- a/tests/qtest/tpm-tis-i2c-util.h
++++ b/tests/qtest/tpm-tis-i2c-util.h
+@@ -27,4 +27,8 @@ uint32_t tpm_tis_i2c_readl(QTestState *s, uint8_t locty, uint8_t reg);
+ void tpm_tis_i2c_writeb(QTestState *s, uint8_t locty, uint8_t reg, uint8_t v);
+ void tpm_tis_i2c_writel(QTestState *s, uint8_t locty, uint8_t reg, uint32_t v);
  
-+#define VMSTATE_GBYTEARRAY(_field, _state, _version) {                   \
-+    .name         = (stringify(_field)),                                 \
-+    .version_id   = (_version),                                          \
-+    .size         = sizeof(GByteArray),                                  \
-+    .info         = &vmstate_info_g_byte_array,                          \
-+    .flags        = VMS_SINGLE,                                          \
-+    .offset       = vmstate_offset_pointer(_state, _field, GByteArray),  \
-+}
++void tpm_tis_i2c_transfer(QTestState *s,
++                          const unsigned char *req, size_t req_size,
++                          unsigned char *rsp, size_t rsp_size);
 +
- /* _f : field name
-    _f_n : num of elements field_name
-    _n : num of elements
-diff --git a/migration/vmstate-types.c b/migration/vmstate-types.c
-index ae465c5c2c..8c01215c25 100644
---- a/migration/vmstate-types.c
-+++ b/migration/vmstate-types.c
-@@ -924,3 +924,31 @@ const VMStateInfo vmstate_info_qlist = {
-     .load = load_qlist,
-     .save = save_qlist,
- };
-+
-+static int get_g_byte_array(QEMUFile *f, void *pv, size_t size,
-+                            const VMStateField *field)
-+{
-+    GByteArray *byte_array = *(GByteArray **)pv;
-+    uint32_t len = qemu_get_be32(f);
-+
-+    g_byte_array_set_size(byte_array, len);
-+    qemu_get_buffer(f, byte_array->data, len);
-+    return 0;
-+}
-+
-+static int put_g_byte_array(QEMUFile *f, void *pv, size_t size,
-+                            const VMStateField *field, JSONWriter *vmdesc)
-+{
-+    GByteArray *byte_array = *(GByteArray **)pv;
-+
-+    qemu_put_be32(f, byte_array->len);
-+    qemu_put_buffer(f, byte_array->data, byte_array->len);
-+
-+    return 0;
-+}
-+
-+const VMStateInfo vmstate_info_g_byte_array = {
-+    .name = "GByteArray",
-+    .get  = get_g_byte_array,
-+    .put  = put_g_byte_array,
-+};
+ #endif /* TESTS_TPM_TIS_I2C_UTIL_H */
 -- 
 2.54.0
 
