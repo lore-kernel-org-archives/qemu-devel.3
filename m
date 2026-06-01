@@ -4,77 +4,68 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D3BE5CD5BD1
-	for <qemu-devel@archiver.kernel.org>; Mon,  1 Jun 2026 14:15:50 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5C19CCD6E55
+	for <qemu-devel@archiver.kernel.org>; Mon,  1 Jun 2026 14:20:13 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wU3QD-00031c-8D; Mon, 01 Jun 2026 10:15:17 -0400
+	id 1wU3UR-0003u2-AK; Mon, 01 Jun 2026 10:19:39 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1wU3QC-0002zk-9o
- for qemu-devel@nongnu.org; Mon, 01 Jun 2026 10:15:16 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
+ id 1wU3UN-0003tc-HJ; Mon, 01 Jun 2026 10:19:37 -0400
+Received: from mgamail.intel.com ([198.175.65.13])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1wU3QA-00017b-Rq
- for qemu-devel@nongnu.org; Mon, 01 Jun 2026 10:15:16 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1780323314;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=7cqaaiEQkkhRu8pNut4pkKqMMrLXplukj+cfZ7XJ+rI=;
- b=LmvVYG3FoUAZbrawwKjKK7gdD7ahkuJhE+FHggRH2Eoy3UuwFtWeF9aKo2Nmmc0WBHLngc
- Q70qGt0JqmhyR+e+dRi4kSChd9w4187icKNrKbXxaoIAlW3dsNlMsH6vy8bfQL+lq/LR/d
- kh3tnRjCgXpgo2pITQAh5RnUlv095SU=
-Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-42-xBzPVjihNeO5sFNqWj0fMg-1; Mon,
- 01 Jun 2026 10:15:09 -0400
-X-MC-Unique: xBzPVjihNeO5sFNqWj0fMg-1
-X-Mimecast-MFC-AGG-ID: xBzPVjihNeO5sFNqWj0fMg_1780323308
-Received: from mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.111])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 781EA18D6372; Mon,  1 Jun 2026 14:14:06 +0000 (UTC)
-Received: from blackfin.pond.sub.org (unknown [10.44.22.2])
- by mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id BE65E180058F; Mon,  1 Jun 2026 14:14:05 +0000 (UTC)
-Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
- id 04C0B21E6A01; Mon, 01 Jun 2026 16:14:03 +0200 (CEST)
-From: Markus Armbruster <armbru@redhat.com>
-To: Keith Busch <kbusch@kernel.org>,  Klaus Jensen <its@irrelevant.dk>,
- Jesper Devantier <foss@defmacro.it>
-Cc: Mateusz Nowicki <mateusz.nowicki@posteo.net>, qemu-devel@nongnu.org,
- "Dr . David Alan Gilbert" <dave@treblig.org>,  Philippe =?utf-8?Q?Mathie?=
- =?utf-8?Q?u-Daud=C3=A9?=
- <philmd@linaro.org>,  Zhao Liu <zhao1.liu@intel.com>,  Eric Blake
- <eblake@redhat.com>,  qemu-block@nongnu.org
-Subject: Re: [PATCH v3 0/2] hw/nvme: HMP commands for inspecting emulated
- controllers
-In-Reply-To: <20260522102821.16766-1-mateusz.nowicki@posteo.net> (Mateusz
- Nowicki's message of "Fri, 22 May 2026 10:29:13 +0000")
-References: <20260522102821.16766-1-mateusz.nowicki@posteo.net>
-Date: Mon, 01 Jun 2026 16:14:02 +0200
-Message-ID: <87mrxebb6d.fsf@pond.sub.org>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+ (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
+ id 1wU3UI-0002Lb-Or; Mon, 01 Jun 2026 10:19:35 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+ d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+ t=1780323570; x=1811859570;
+ h=date:from:to:cc:subject:message-id:references:
+ mime-version:in-reply-to;
+ bh=m4uBVnhmdsMiDwZDG3EPdF56hHk5VGvqGLyfdqMsYk0=;
+ b=i1r/rIv188ZVz8EjzOYKjneZ9NAvr+0qiBBIjRF0qr/jnQq3j4hf8lyk
+ LrdG1DgdOw52yexBe6nkH1lipHqSh6Gf/qLIf8nctDF9OZ65hzSvvOp+0
+ eagwCd5iqnh7/HGfo2jx6ylTm18iysv6t9yHu30DQava1QYaTh2Wcmo5M
+ 2rRxtPPboPxshLWmrVBAxP4RDiSyhEw+9S7yPBGZX/5/vywgykP1DZKJ0
+ vJz3OhmOAA7SjGVdyGVCvnY8CHunZv/qnEIKsd+Fipno8c4ecl6kuTFrE
+ supmWGLRdz63fyC7zMeYhnTY4FbM0G4beATVhUQUxNUWbaP11VBpfdMo4 w==;
+X-CSE-ConnectionGUID: yrgjoLSXQTeVVMKEOnGDnQ==
+X-CSE-MsgGUID: U4A3pOa5QRW9AeOCNwA9iw==
+X-IronPort-AV: E=McAfee;i="6800,10657,11804"; a="92194513"
+X-IronPort-AV: E=Sophos;i="6.24,181,1774335600"; d="scan'208";a="92194513"
+Received: from fmviesa004.fm.intel.com ([10.60.135.144])
+ by orvoesa105.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 01 Jun 2026 07:19:25 -0700
+X-CSE-ConnectionGUID: GIz5AegcTOOMQdAWP/FhFA==
+X-CSE-MsgGUID: iisY+Ol5Qe2Hnrmy2u7NRg==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.24,181,1774335600"; d="scan'208";a="245407463"
+Received: from liuzhao-optiplex-7080.sh.intel.com (HELO localhost)
+ ([10.239.160.39])
+ by fmviesa004.fm.intel.com with ESMTP; 01 Jun 2026 07:19:24 -0700
+Date: Mon, 1 Jun 2026 22:47:15 +0800
+From: Zhao Liu <zhao1.liu@intel.com>
+To: Paolo Bonzini <pbonzini@redhat.com>
+Cc: qemu-devel@nongnu.org, qemu-rust@nongnu.org, armbru@redhat.com,
+ marcandre.lureau@redhat.com, zhao1.liu@intel.com
+Subject: Re: [PATCH v3 02/19] subprojects: add serde
+Message-ID: <ah2bc8Ee9FGcRCZn@intel.com>
+References: <20260526175618.227743-1-pbonzini@redhat.com>
+ <20260526175618.227743-3-pbonzini@redhat.com>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.111
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=armbru@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: 8
-X-Spam_score: 0.8
-X-Spam_bar: /
-X-Spam_report: (0.8 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.445,
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20260526175618.227743-3-pbonzini@redhat.com>
+Received-SPF: pass client-ip=198.175.65.13; envelope-from=zhao1.liu@intel.com;
+ helo=mgamail.intel.com
+X-Spam_score_int: -47
+X-Spam_score: -4.8
+X-Spam_bar: ----
+X-Spam_report: (-4.8 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.445,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_SBL_CSS=3.335, SPF_HELO_PASS=-0.001,
- SPF_PASS=-0.001 autolearn=no autolearn_force=no
+ RCVD_IN_DNSWL_MED=-2.3, SPF_HELO_NONE=0.001,
+ SPF_NONE=0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -90,22 +81,31 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Mateusz Nowicki <mateusz.nowicki@posteo.net> writes:
+>  anyhow_rs = dependency('anyhow-1-rs')
+>  bilge_rs = dependency('bilge-0.2-rs')
+> @@ -19,6 +21,8 @@ foreign_rs = dependency('foreign-0.3-rs')
+>  glib_sys_rs = dependency('glib-sys-0.21-rs')
+>  libc_rs = dependency('libc-0.2-rs')
+>  probe_rs = dependency('probe-0.5-rs')
+> +serde_rs = dependency('serde-1-rs')
+> +serde_derive_rs = dependency('serde_derive-1-rs', native: true)
+                                                     ^^^^^^^^^^^^
+Here we register dependency on build system...
 
-> Add two HMP commands for inspecting emulated NVMe controllers from
-> the QEMU monitor without attaching gdb to the QEMU process:
->
->   - 'info nvme'        - per-controller summary (PCI, identify
->                          fields, CC/CSTS/AQA, queue counts)
->   - 'info nvme-queues' - per-queue listing of admin and I/O SQ/CQ
->                          (size, head/tail, PRP1, doorbell offset,
->                          phase tag)
->
-> Useful for verifying queue setup, doorbell rings, AERs held in the
-> admin SQ and similar driver/controller interaction details from a
-> running QEMU monitor.
+> +serde_derive_dep = declare_dependency(
+> +  link_with: _serde_derive_rs,
+> +)
+> +
+> +meson.override_dependency('serde_derive-1-rs', serde_derive_dep)
 
-I can take this, but I'd like at least an Acked-by from an NVME
-maintainer.
+... but here it seems we register serde_derive-1-rs to host system, so
+this may trigger error for cross-compilation.
+
+IIUC, we should have:
+
+meson.override_dependency('serde_derive-1-rs', serde_derive_dep, native: true)
+
+Regards,
+Zhao
 
 
