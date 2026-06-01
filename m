@@ -4,61 +4,61 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7290DCD5BD1
-	for <qemu-devel@archiver.kernel.org>; Mon,  1 Jun 2026 14:01:18 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B00D8CD5BD1
+	for <qemu-devel@archiver.kernel.org>; Mon,  1 Jun 2026 14:01:52 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wU3CA-0004q3-PC; Mon, 01 Jun 2026 10:00:46 -0400
+	id 1wU3CK-0004tV-Nv; Mon, 01 Jun 2026 10:00:56 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <stefanha@redhat.com>)
- id 1wU3Bw-0004nj-DU
- for qemu-devel@nongnu.org; Mon, 01 Jun 2026 10:00:32 -0400
+ id 1wU3CI-0004sz-8I
+ for qemu-devel@nongnu.org; Mon, 01 Jun 2026 10:00:54 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <stefanha@redhat.com>)
- id 1wU3Bt-0005Rm-OJ
- for qemu-devel@nongnu.org; Mon, 01 Jun 2026 10:00:31 -0400
+ id 1wU3CG-0005hc-Vz
+ for qemu-devel@nongnu.org; Mon, 01 Jun 2026 10:00:54 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1780322427;
+ s=mimecast20190719; t=1780322452;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  in-reply-to:in-reply-to:references:references;
- bh=twMFXeWEp3prhifBdqt9VXL5xUwRjegGo4YhkEC6IF8=;
- b=TT8SYAR26RXG92II1HmUx0VyY39KD+Q7G/5/T/Rw1TNw9e6+0b1Jrgn7TvyIagsBesksuj
- ndWncpPm+VO1BFqAXuDMTF0FyHptz5efY9te4t5C4QfE3rvgKzzm17CttUmmn0dEs7ASIU
- Pahe62wXGdnRFXUKA6OF3VebXyEjJVY=
-Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
+ bh=EiQxrAITzjsyx3PXCB4Tf9GFB89yaakYeWYjQ5R0oWk=;
+ b=J6VNlCPolYnhOpyR04yaAAGE6MneDGNm/3XEUAdSHwf5bCHowPRw942iWTY3m74a5Uk6XN
+ PXr7pDMK9XFVY/27JGGpPPAphs29Wl8Dj4zhZBoC9Tswlngn1hD+iDs44vLJNBqU10PmeH
+ u6nOmQWXlKYNOT+LjQ40tGT7HA+OwAc=
+Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-501-zSutUSiDMcSAGfYdLUjk7w-1; Mon,
- 01 Jun 2026 10:00:25 -0400
-X-MC-Unique: zSutUSiDMcSAGfYdLUjk7w-1
-X-Mimecast-MFC-AGG-ID: zSutUSiDMcSAGfYdLUjk7w_1780322424
-Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-425-39SdTr4fNlWzT3vmdAUcDg-1; Mon,
+ 01 Jun 2026 10:00:50 -0400
+X-MC-Unique: 39SdTr4fNlWzT3vmdAUcDg-1
+X-Mimecast-MFC-AGG-ID: 39SdTr4fNlWzT3vmdAUcDg_1780322449
+Received: from mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.93])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 687061956072; Mon,  1 Jun 2026 14:00:24 +0000 (UTC)
+ by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 951FB1955F00; Mon,  1 Jun 2026 14:00:49 +0000 (UTC)
 Received: from localhost (unknown [10.2.16.102])
- by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id F148F30001BE; Mon,  1 Jun 2026 14:00:23 +0000 (UTC)
-Date: Mon, 1 Jun 2026 10:00:23 -0400
+ by mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id DD1101800267; Mon,  1 Jun 2026 14:00:48 +0000 (UTC)
+Date: Mon, 1 Jun 2026 10:00:47 -0400
 From: Stefan Hajnoczi <stefanha@redhat.com>
-To: Richard Henderson <richard.henderson@linaro.org>
-Cc: qemu-devel@nongnu.org
-Subject: Re: [PULL 0/3] tcg patch queue
-Message-ID: <20260601140023.GA410588@fedora>
-References: <20260529203101.290947-1-richard.henderson@linaro.org>
+To: Brian Cain <brian.cain@oss.qualcomm.com>
+Cc: qemu-devel@nongnu.org, stefanha@redhat.com, brian.cain@oss.qualcomm.com
+Subject: Re: [PULL 0/2] hex queue
+Message-ID: <20260601140047.GA410727@fedora>
+References: <20260529235749.879787-1-brian.cain@oss.qualcomm.com>
 MIME-Version: 1.0
 Content-Type: multipart/signed; micalg=pgp-sha512;
- protocol="application/pgp-signature"; boundary="eTMKLxU7cq3E3N83"
+ protocol="application/pgp-signature"; boundary="FBser8CWp0VN6qsk"
 Content-Disposition: inline
-In-Reply-To: <20260529203101.290947-1-richard.henderson@linaro.org>
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
+In-Reply-To: <20260529235749.879787-1-brian.cain@oss.qualcomm.com>
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.93
 Received-SPF: pass client-ip=170.10.129.124; envelope-from=stefanha@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: 8
@@ -85,7 +85,7 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 
---eTMKLxU7cq3E3N83
+--FBser8CWp0VN6qsk
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
 
@@ -93,21 +93,21 @@ Applied, thanks.
 
 Please update the changelog at https://wiki.qemu.org/ChangeLog/11.1 for any user-visible changes.
 
---eTMKLxU7cq3E3N83
+--FBser8CWp0VN6qsk
 Content-Type: application/pgp-signature; name=signature.asc
 
 -----BEGIN PGP SIGNATURE-----
 
-iQEzBAEBCgAdFiEEhpWov9P5fNqsNXdanKSrs4Grc8gFAmodkHYACgkQnKSrs4Gr
-c8jn4QgAoAhyTVKtIAuJi944/RBdXEQkqvZriDvO5KbRI1K5XGY55CY6mtUP+ZIi
-5b8kNgn+/SOST09+cQQhe+Z4pkB27p6YO3VwWMaiWtEUuXjBiuVzemOivpfYMm77
-04AQZRtudx0blBbc9yEORAERN2nnNueBM5RRQEjl87jN8rDMs4YwFgVf+NIO/EQX
-jfpy7lKCUf3TN2IpWfLRs4w+x2hsVXQzLE9xci8jZAQEF5mOAlAgFcRGp73LYjV+
-l45PodV5W0naI3ESETUogD5FXgo5lJIvKH8t5HBM2i7wVFRD9ajp1BpcvV44I+qk
-LkZnYXehxpvteWJYGUtFkYnxuFgN2Q==
-=i2kM
+iQEzBAEBCgAdFiEEhpWov9P5fNqsNXdanKSrs4Grc8gFAmodkI8ACgkQnKSrs4Gr
+c8iuzAgAhIt56v6oaCBJ1/xPFT0wJST7d6xdAh2WdHOrUkm1tf7q+I9Yig2L+BtT
+gy3MpF2yRIl+2/+qMXvP55b7erjmOREvGK+sE2sZhcOpUHYtvFwQ7B7uuyG8NL+o
+pI1mRn6E3eNkcN4whH4hODe0m0GrTek1FcMO6pmnNRHnY/e5uVrq8KfkMnDm73Yh
+FxcOMwV5xvZtYqB3VZYHsi0PAi7iKY3iD2IGNBz51DW3ordl3xBT59mqT8JUpKrD
+y4P2HrSg3FnTzqM8GuAYvTE1ZB+siiqneyQmf6fOkALbN+0TtG+cx2MqxJkVyTJn
+9sax/+tDJIOco02yFEvaIiGC95/xJQ==
+=ELgS
 -----END PGP SIGNATURE-----
 
---eTMKLxU7cq3E3N83--
+--FBser8CWp0VN6qsk--
 
 
