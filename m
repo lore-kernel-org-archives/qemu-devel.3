@@ -4,45 +4,45 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id F2519CD6E55
-	for <qemu-devel@archiver.kernel.org>; Mon,  1 Jun 2026 02:53:32 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B8796CD5BD1
+	for <qemu-devel@archiver.kernel.org>; Mon,  1 Jun 2026 02:53:45 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wTsjX-0003Az-7Q; Sun, 31 May 2026 22:50:31 -0400
+	id 1wTsjg-0003J3-GT; Sun, 31 May 2026 22:50:40 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <jamin_lin@aspeedtech.com>)
- id 1wTsjV-0003AE-1s; Sun, 31 May 2026 22:50:29 -0400
+ id 1wTsje-0003Gq-AB; Sun, 31 May 2026 22:50:38 -0400
 Received: from mail-japaneastazlp170120005.outbound.protection.outlook.com
  ([2a01:111:f403:c405::5] helo=TYPPR03CU001.outbound.protection.outlook.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <jamin_lin@aspeedtech.com>)
- id 1wTsjT-0002Y8-95; Sun, 31 May 2026 22:50:28 -0400
+ id 1wTsjb-0002Y8-Gc; Sun, 31 May 2026 22:50:38 -0400
 ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=V3Elf1hf5cSJSf459ieg0+n9SSh+pYGb4wAmPF9+jZoUDdqfyAjA3wvr7C8bIth6vedOObibVa0RCIWcIBvAg2ioFFNrzdBm8s5/556zf5rkITezX69ny2tBVDqMWdUQTOYWT1RJOlacjmg/Re7kO+2EJLnyiippSiGrvCsUGfr8XsUYZwUpe+xuYjTksQddK2gIOaUUt5sAcHbUm+tHBJctmogIRbkR9biZv3uPLzXPVElwbpc5LOW5R/X0VDGQ2Ff2l6LMvDrnzRZNGwhkl7/3Dpvl3+Y8BqEcjnOJ4qoQBxTyoX1xwcjljDzIs09syhdYaAoW3SgVVqEzfPtCHQ==
+ b=piSBh92CvL2m3UzgRD8vPi/y+h+tjnVRVBXZymkTpAXuwygEVY+ic40Sibn1yFFana1/R/2bM1kadHQF45Aiscs8/ns8ldtRZXnO4JX1pIdM9PucREwr556gHN3WfhD6doG3qgCsGZx+s7cvVLkWrc/smnbDsgmZlOps6523O7byVPxVuzkP0ITrEWKwa5sk27QK4OCHhqM1N2fxnGE+zR5myxN1imrX5aT5ZqMX9EVV4gWS94JRIntGT9UxO1didlGxyqTPtI65QbX2h7PLZXMvU9EvGCZMTp5b347Dt9wcIGD2EwMO/HUxsYNxnAGtPlJweQlTiBYJZI32J61sBw==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
  s=arcselector10001;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=Zyy50LVywkF1qN4MSkKuqIIwCAuaseZgRHzszbQLK6k=;
- b=w/g3oly0UIpStpc7sf7G9ss2XOn18iMdEHw2hv2mJP3YR0YI5weVpnQI91ZNU66jbOMmPsEOydp2nHsp+NoXViS6HzUZeBm2ZXmBTLDYRqdEb7n7FpZw1brLugUcGp2YfPcXUuWWCWFa439Nt+088qCpycXyrUgo3eSEBM1AAO9faZapQIsdsGMXSTQ0pNKhiCZQKrdhulIGyRhz70yJnR1lmDd9t9kIF4QA7onbhPQ/XbfaLRTrYz/bYLsjThdlZrERrvEikgceE0z95IAMuxuRWt8CmwFdveIhIGXJ4RD0/Pz7f/lgsE9/QZzDbGpSOSU4utYFriBLq3O8DSHqGQ==
+ bh=iMBXqgTWgKB8XBO+4bqW3LdD1U46D4GW2t1IhssiFxg=;
+ b=GFLjP1kPLMvJnIfAr44DW72qGKfzCM+9OePfL6RqDnzCH0SzDXBX+6chkaYRKVaYSNNjfB3WAvTxJyYTwkXy1O4GWHA3bLfVkkLU46jhyvsVI2R5ZA3MMdXnADzptuLwvtXvhSroE5+vd+rwaRmDWQDzbuXsc1oY+RTeJ9zCQsoT3GtFItuV+D+tlwAhvH7faPX+i3Fh8dR3OFeiJ3CaXrTf3ctxvpEcU07AtgNrpZ05emTol24ZKDs+WHH67BkCBAocgo78CictByxNlMbZzLIBvrRZu5BtMTH14xANR8JsCo52ssevlZmGNPWK1kYbKp7Cs0SBM7cjCMkmu0jV7w==
 ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
  smtp.mailfrom=aspeedtech.com; dmarc=pass action=none
  header.from=aspeedtech.com; dkim=pass header.d=aspeedtech.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=aspeedtech.com;
  s=selector1;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=Zyy50LVywkF1qN4MSkKuqIIwCAuaseZgRHzszbQLK6k=;
- b=mmvOxi1uUxEeEnFd7NARrQraTojYC7loMp79VKnhxR4HlsoBv1qMYQDjQq6ksCj9l9uG2aO3XqknJcOM6WcNFRmWGuM6V26T+NI6Bxwh4Zi/kN6IFNGLnyEZ16kz1tTR/bUfPPJqnNpUCN8YZCAelh53d8RSngEmrJmbXnsSdjlncMF4yRNqynVYagskVH/FKaZmt0BCL0hZod4/aHgAntTk+jdjqLfiA+ee8h+/0CH42u49V9sX4rWzuU31e6CcUDM7j6d7F2eSWMfaMxSkIUDBKWEz9BN1uVy33BAd+/nEXtNq71xMJa8+lwoqTfUtoe/Gay3+2NZsC/K5h52o3w==
+ bh=iMBXqgTWgKB8XBO+4bqW3LdD1U46D4GW2t1IhssiFxg=;
+ b=gL1bkVBMvVGUtC6fEAkDDt5o/kQYkE3UDZTieqt9Tvgn81xi6bjtmMsJ6TFurhT4qkGiUF3JQUX3uLIVTTLk1m1DjTyEMfdSskPM1CL7G1eG8lcuar63fAvxpCRNH9RmCS2LARe2a4PV3koENupAVWt3aColOt8C7rm3Q3ZghlSR5Zh2bX42qVzRd6TtnsggKvx9N8KZzN0C0o1nJ+173owst6bts0jWcKaqB5/N5s6F9U7EqSwXxBH202up4rE7/ykmFcWuTyjGX8K7vll0vWk9BgMOOLPknKZojKr4f0CPjReslXLW6LTKcMP4w/lideNXcOxLOYWcrtaGyhEmDw==
 Received: from TYPPR06MB8206.apcprd06.prod.outlook.com (2603:1096:405:383::19)
  by KU4PR06MB8361.apcprd06.prod.outlook.com (2603:1096:d10:7a::9) with
  Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.71.15; Mon, 1 Jun 2026
- 02:50:12 +0000
+ 02:50:22 +0000
 Received: from TYPPR06MB8206.apcprd06.prod.outlook.com
  ([fe80::e659:1ead:77cb:f6d3]) by TYPPR06MB8206.apcprd06.prod.outlook.com
  ([fe80::e659:1ead:77cb:f6d3%2]) with mapi id 15.21.0071.014; Mon, 1 Jun 2026
- 02:50:11 +0000
+ 02:50:22 +0000
 From: Jamin Lin <jamin_lin@aspeedtech.com>
 To: Alistair Francis <alistair@alistair23.me>, Peter Maydell
  <peter.maydell@linaro.org>, =?iso-8859-1?Q?C=E9dric_Le_Goater?=
@@ -53,13 +53,13 @@ To: Alistair Francis <alistair@alistair23.me>, Peter Maydell
  list:STM32F205" <qemu-arm@nongnu.org>, "open list:All patches CC here"
  <qemu-devel@nongnu.org>
 CC: Jamin Lin <jamin_lin@aspeedtech.com>, Troy Lee <troy_lee@aspeedtech.com>
-Subject: [PATCH v1 07/24] hw/misc/aspeed_sdmc: Convert to DEFINE_TYPES() with
+Subject: [PATCH v1 14/24] hw/intc/aspeed_intc: convert to DEFINE_TYPES() with
  inlined TypeInfo
-Thread-Topic: [PATCH v1 07/24] hw/misc/aspeed_sdmc: Convert to DEFINE_TYPES()
+Thread-Topic: [PATCH v1 14/24] hw/intc/aspeed_intc: convert to DEFINE_TYPES()
  with inlined TypeInfo
-Thread-Index: AQHc8XFdVeqPWvCuN02p/sqJ6WCcmQ==
-Date: Mon, 1 Jun 2026 02:50:11 +0000
-Message-ID: <20260601024959.2347639-8-jamin_lin@aspeedtech.com>
+Thread-Index: AQHc8XFjQYJQZ8HkQEGygoYsI53uWA==
+Date: Mon, 1 Jun 2026 02:50:22 +0000
+Message-ID: <20260601024959.2347639-15-jamin_lin@aspeedtech.com>
 References: <20260601024959.2347639-1-jamin_lin@aspeedtech.com>
 In-Reply-To: <20260601024959.2347639-1-jamin_lin@aspeedtech.com>
 Accept-Language: zh-TW, en-US
@@ -70,61 +70,61 @@ authentication-results: dkim=none (message not signed)
  header.d=none;dmarc=none action=none header.from=aspeedtech.com;
 x-ms-publictraffictype: Email
 x-ms-traffictypediagnostic: TYPPR06MB8206:EE_|KU4PR06MB8361:EE_
-x-ms-office365-filtering-correlation-id: f736178b-6c91-46de-56e6-08debf88801c
+x-ms-office365-filtering-correlation-id: 79cefba2-33da-4ff0-2676-08debf88864f
 x-ms-exchange-senderadcheck: 1
 x-ms-exchange-antispam-relay: 0
 x-microsoft-antispam: BCL:0;
  ARA:13230040|366016|7416014|376014|1800799024|18002099003|22082099003|38070700021|921020|56012099006;
-x-microsoft-antispam-message-info: 3HsQGwgTlM+Nf+Z6QEyGYFPJEJokJDtX+SZMXM9bgQz5B6CUNxuamRX3UCNpuEWamDHsUjdaOpUX/+1J4leHkMASyEpzL1FyR7bdIMaD9zlvvINU1hy3kcmgEI8WbCQJCy1blPHQTxj5gbRngYdchI5D95bnaEUZKz1BIuVgzltRTocSesd8rPV5bEpME7USxJ+u2l5k1IH2xy6DrvDGMVoo0Cq28wyuJ5cw2qHXHPj9EEKVm7JPQIxrIarF0RaDZsqmj7ritVsL4hrexQt978oxxQpdf+KYdfQLdbcxeGBCm8dJBJ+FwTtvCEmPBLAq91tprn6splkbYMA97zS164exLrIHWWMaOOD6BSFqd79oTN6BRVJ+WrO4A+pez9LZGoJiYK4m5rGztnHD3hZ8Zj8U3sB9IE4y0sM0XHA2W9NpSovbNguVftfnJuiTLOsim9Ff11+/EJDfzlacO3jUuPK9iAZ4Hc+hM/vkJvugQQubGeVmboOz/757KMkhubM6AV9WOwG42HOhHUhzzXuACXqwls6Y0aoTAvwJZGKQzsviq42ZCiHETRa5mhsJuoBs9LPyhcoVJWzpoK+dbkFcRvuI70xtBdwJrPtmZehpdTv57SBeb84bgortt3/V4zrcmjSBqpMQGP/osCuxtc26XNnIlmy2qqrvKaigorGrk6A/a9TdZHBPvga+yLFYXevdaLvYR+dLg6m7S8kdDKccCJMPiMicybs0F8FbSXY+pCrYjv7FpGi6qp+aRcg0GVC++e1gQ9ruojRAWpu96B65lQ==
+x-microsoft-antispam-message-info: W9HcPFXfVOt/fpYPMMo7WFBEPTVAis4Qr/dI+0KgrjAQDqbQtnOvfm5TNvbkTi9KK18n4qd7tLtHMjMJS0wtemKVCBKkldDqS0zf3NGiQWS4xxut3deRdIEU7QWCjW774vLhLbMIhaoaIlmxO438AJRBP6pRFBVbU3JkO6cODk/M/7tyyelsu4GuOudTlPQOKDbf5gYz8GKBStrp/kgYBVLY9y2BIazq1FJ6AuUbP4p/qb1lDCattOTaZNMUJ2fu2EAXBIcAlaaUJRuHfnI92ew/AdRlxgiTIyFXAoHaUvMLI5f/oBOBtbN6jvUBwZqCyiMJKbq9lUIQFmvaLC/gUfu3Csr0Engk73yq9npWpeOiynKT8/3V2ptqP4znJiN+ZGh8YH2urzPxz2Z4Z0nNDZswWiPmKwUCVCVeuBwSbHFQoEPKoCZL6M8mRip7hiAl68coiINios2u95Rg3xAaP0zseIhzweEwtcl8/og8mRiWZexvnY42Qy9ISbp6ZrzD+5C+AsqdbuFOLc/ryXdUr5rBLCA6259qQbHeB0xLtA/e4OkOrqxA1w1qJZlVzgYqO5F6ZHOofRllIOtMRPm6x/BCKVPPfoxO1JUYh75JnEP1r3dEPDLcm8wbEOp2NBF8YQgCcp+tNSYUE7Z7IAoELRMMJ8GxSbpuX4R28704KZxVQtN5hiP4FBamkBuVETqXQ9o07blofv5jxiWVaNySyCuliPLcJU18BxfnQTQy5ujcIqp+gmjVsQCrmRQ5ajPX+VJ29aOImZhFWS/cm7KpmA==
 x-forefront-antispam-report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
  IPV:NLI; SFV:NSPM; H:TYPPR06MB8206.apcprd06.prod.outlook.com; PTR:; CAT:NONE;
  SFS:(13230040)(366016)(7416014)(376014)(1800799024)(18002099003)(22082099003)(38070700021)(921020)(56012099006);
  DIR:OUT; SFP:1102; 
 x-ms-exchange-antispam-messagedata-chunkcount: 1
-x-ms-exchange-antispam-messagedata-0: =?iso-8859-1?Q?DWMh1qzji/a8uC5s8Cu6H/3nnIbq06LC1A/6kyEFhkpxFbBzqc3NyDjaWZ?=
- =?iso-8859-1?Q?cW+PM9Dz2BY4uJAxLeYRIkc464onJzXccYGraQpzuSG9ieoNpfjXlIBJEH?=
- =?iso-8859-1?Q?2RsuMl8qrOekcSyX+KVRSZ//+SWiOxsMPgFGR3VL/5QjAPdky42uxUJGik?=
- =?iso-8859-1?Q?PmW5yyfGmv7HzPE3NWZd0323S7W2xnCsm3QDSURlDREpyx5Aq1EuFhaz6W?=
- =?iso-8859-1?Q?YNxhdGpl/DQ3MrrMPWWntAFsJeCvjfcnonmAvZn2p/CQNuwfRaDyxseezc?=
- =?iso-8859-1?Q?2wD2lt/ALkA4jZEVf9eOjc6X4wIv+NmyG0f8UaLnBVXRcVlLMNp0kzZC6k?=
- =?iso-8859-1?Q?JOUJdz+llFfZyrhCDH+ZlYAWdfNTNfyclIbNbLGHZHWgjxT4zOMTBv2WUt?=
- =?iso-8859-1?Q?EFXo/sebkV3VlBJQufnAVDShsdwLFfipxEIqpZmBCeQ5mvlFOIaoVKvUT8?=
- =?iso-8859-1?Q?H23F8h4NxQTzzzk1CkeyMFOduOi2YCIKJy+qWyE0805vIwN7Q3WkPt+oQl?=
- =?iso-8859-1?Q?hNYCUi3z/lPurIbh86PWM44kzyeLbP3IrBBQDWA4YedPPKpO8w9kUIaOJ1?=
- =?iso-8859-1?Q?cDQ5A49t+ftvrGtYdE6Us+vo6ETZUnbylPTe8c06sBSL0RgEHCQ5y0iyIX?=
- =?iso-8859-1?Q?QyZTgY+9HEn/ImlMdQynJVkyXS+iUJNSSIDDqg5JVqhLQEwvl5VmuWzpV8?=
- =?iso-8859-1?Q?ORLTowCWDhdfB/NGuK7UQPgRZDNrPGISwpkM/EH5oihaFprEUnTkIzt0ah?=
- =?iso-8859-1?Q?+f4geXdxuwzg+SyiCMn8ewVLyi+r1JWs2NNEin9s5uranULQkAg4vcKSx0?=
- =?iso-8859-1?Q?Wc+to5THiN42X3cjtdMdTOhWq0VLc2M7ZW63nPy1mgTY8kELGg4tw73iCn?=
- =?iso-8859-1?Q?crxft+g/aQ7W+9lM8texjmz930WoUHNbDXfZ50lesTGAqbIhbY4LCdcei2?=
- =?iso-8859-1?Q?y4B4K8ocTW5+eIEzm49DdhIry33EgO97mLFTKretIhHRAsDpqwXm8CMxbf?=
- =?iso-8859-1?Q?8H4hAYpAcLI4YiDLPh9df6oGWzv2ZAm+csqpF8DSyhKDSCN1/1mau7/X2G?=
- =?iso-8859-1?Q?kU7m8YIcYDqraVSvNdnSdX/TZsYKL36JusWhK8OrQyNr8w5UXFVfq3fD87?=
- =?iso-8859-1?Q?VdTUKkXGVyh/2bipfnIqF/a9gYRa8cdeU2UCTNkae59FkorhnlXPKW96sp?=
- =?iso-8859-1?Q?X7NoFPez8NDNSx8tgmd/f8RXrfh1ybwJ226eDhNb/BRb0D5HVhb6Exqqfl?=
- =?iso-8859-1?Q?3hGCuzMlwJ8OBdbp3BtKwi2PWEl+zvJjmh3aDs3AWBhIOYWpbnk6yef+QA?=
- =?iso-8859-1?Q?jx23CM4C5MINeXpjKl1MpsUA3whhnTbW8LKm+aJk/HkF4Xi1FsjLJgQ27H?=
- =?iso-8859-1?Q?ijZw2VloZEg5tqme8UMS+oYI8fqCUge9Tx3IJzaLI/rOGMOC+SSWBU6UT2?=
- =?iso-8859-1?Q?yLSaxsy1NZdiI41CqqdBUjsI5EK0EOTpSszIVOHgckx4pThjXILh/IT4QE?=
- =?iso-8859-1?Q?GXTbVdFOVKrRF8rjx/Lqps+W8YIJa/OI6SuzMOcveQuggYELs/hzkBESmW?=
- =?iso-8859-1?Q?bUE5fjfOYEmCdCeNHz/JU5KRzeDvRn+uvq8KuiqPaDHDfcP4S9uxnCuBb1?=
- =?iso-8859-1?Q?kWv4gi2AnzyC445u05BXEjrJqztrd6aYc2on0A4kC4OZQOByOS5fILr3uu?=
- =?iso-8859-1?Q?zH7RWR1I5+DThRaIsC+GStNajAtZ8wSh6ChxGlKW7BibeyaxFLNhXFDn23?=
- =?iso-8859-1?Q?JDy8r3OCexw2dzexMgOr25cANDSkdwMiQXKl9qoImtqtNWxb8SAIYsNzG6?=
- =?iso-8859-1?Q?bkE6sG4eMw=3D=3D?=
+x-ms-exchange-antispam-messagedata-0: =?iso-8859-1?Q?XvYvI73f7jU5xk3B075kcIdYBOzWx5FCqznN7vehQuWyu209DSMu0xOi5K?=
+ =?iso-8859-1?Q?1ua5yXD9Z7z/jaRnE7naTcopMd03hSFINRjZP7oW8APmZ0SsOuqnE3BLmI?=
+ =?iso-8859-1?Q?6eT0VaqTz7UoIdk+PKwsplFhmX6qmTnCaERCdqdJMzVME0yNJFRVTVPcY8?=
+ =?iso-8859-1?Q?6IY3Xa8LCdVLY14+SKWimMfbYOeat6Btbbt6oDxnOBCkmUM5BxC9F/vMyt?=
+ =?iso-8859-1?Q?/xaMIdj54EQfaKPlQIem9dio51l8xCVUi4UeheqymcLqw7hNFNIuH85WhY?=
+ =?iso-8859-1?Q?OXjPyl54lOlHEEoDfnIjfdnNqYnM60MvZGtxP1bWLc8PhPdncTIS5sdh9O?=
+ =?iso-8859-1?Q?M0R4NP+G72+pQRZ0mIlWWB3ioBevCPcaDmYLph9g13yMCr6x8w7KLSb8GK?=
+ =?iso-8859-1?Q?53auCOGXGZ+RaERpzK8+9fYvBNyOZtocuM5j7jdeUPSiwLrv0vQhaR6uM9?=
+ =?iso-8859-1?Q?8gmD9JD4KFzaBDFEhRa6pbu9eLHX+jt/odBtJC4DXfBt9C92pvaOOOzbe+?=
+ =?iso-8859-1?Q?ee72R9F1deF2Us9OpwRUIemdLrUlzPiJVbY+nG4jHlNp+iDEEo3FweV9tK?=
+ =?iso-8859-1?Q?+er/wFfrpcfDL5ynolGfhn3H6h0rSRb4l28lDEhSYkMiPumERAnE6Xh28R?=
+ =?iso-8859-1?Q?/kFWLHSu54o97RILuy5MVgGddywq0OeA06l/7i+qp9v89zRqg3DbFl0M1F?=
+ =?iso-8859-1?Q?UYoISDSZ/ApqXIbCuFmnLbM3uyPctRZtpMlRzkWgy/ZzAit+rxNxvoYShi?=
+ =?iso-8859-1?Q?e4P6aWoKawXR3KZaDzQ/l6ee92EZ2Km4kF+8RA2GOl7h+FVDGGjEVpwg6R?=
+ =?iso-8859-1?Q?LCIK+DghLN+8A3jGNG0DGqxsGqYN3O60mabW9b1ExVV1FVlK2vO/5Dcz9T?=
+ =?iso-8859-1?Q?CS8KVUAAi9CJ8k0LjS5wVKXu83TVrpUyTGc89Mwy2m76yjIbaE63t2sptX?=
+ =?iso-8859-1?Q?Sw7XJ8HyLZoOSfPlGgt5OZ5Yi4aVjLUiCSKpMJjXETPu5ivPlmSn/koakk?=
+ =?iso-8859-1?Q?SigxjqyUVx7C/hkR/heAFw6c7RfF3yHNdi8yDMivH0Kkl856H7SnqVtTO8?=
+ =?iso-8859-1?Q?IosM3U0fu6uxk7u9mi9ogwS9uYWiu9hjXBcH99YLG4SDo5UOnDosrP9cv6?=
+ =?iso-8859-1?Q?2ZlBLQBQ94ykXUuscemAHF/mDSZU3UM/kU4xtTGykaHKMO47V5BDk/Pk+S?=
+ =?iso-8859-1?Q?b7iE2WcdS/+3zMYNiyTNkfhMdOQa9z1OHdalzw3Jjc9zVGrJjgTlseWYTW?=
+ =?iso-8859-1?Q?/0LCmc4HvnQH2r7j8TNC2TVAzymsNOdCW9XcifiXzFFNyHpFoRMmavLnS3?=
+ =?iso-8859-1?Q?qePSXe2n/9tDmLqxlfL9hw6L/vag5vnXyIY8ALEEZ11XGtAN3DZYSVzjm+?=
+ =?iso-8859-1?Q?SmVOjoKrrs2gOWT/VNLzjzjJVY4g/5x09wlwaCSVlu84zxEE2qdeNiJG0p?=
+ =?iso-8859-1?Q?uqMmMY5aaFELZHtDErXoy7cSVCFYujEtHXf1RN3mU14vUAE+pGP5zQPB1R?=
+ =?iso-8859-1?Q?C2txNXQX9/Cy0NHbT3cfwE+gv6dCXysop1TLQEuGJuYr7stx6lUKPXbhIH?=
+ =?iso-8859-1?Q?Mvzkv33OwCm9IJdZluiUWjTHeUL296aVdAIYenp408g7EeUtfFX3RIs2aB?=
+ =?iso-8859-1?Q?74OmMz5M0czpLfcQYWOxi7ytPH4Fyuvl1M32UYQdxRZnZYnOzSjXU3Kkgc?=
+ =?iso-8859-1?Q?UUH++3kNIshr3BXN/WzGpF+2HDADgdB1jivkW75rkHCNXXOh7DaJ9eHlrK?=
+ =?iso-8859-1?Q?/eWiSzTdvJ18yICLYaft+jwSsDPCmKb+c7lLCxvKulMzV24eO5bnS04Nd6?=
+ =?iso-8859-1?Q?DMGo4wCWIQ=3D=3D?=
 Content-Type: text/plain; charset="iso-8859-1"
 Content-Transfer-Encoding: quoted-printable
 MIME-Version: 1.0
-X-Exchange-RoutingPolicyChecked: lHOky1+0masvFEJh5Hp5wiDIh3JWwIsde4hKo2i65pOP6yhX72kPfQXZKK+GNcfqU7IrZPuwBLO+qpkx7GU5oLq7PevGq8IacPW2thAvKHSQXFsWIKnHx5m5kLff/LFF4BtwV0aJoq889ke+7xbF2s0QH8TDSAI/zybgoDHLX9qNC/QgjeaatyvxulgS8ykWo2riiqEObXX8uv85yxXA5v4oJZCB4ImlQFnKVEDTnBKKejQwcigM/6xhUEE3bbBYSZbujb8ABHrBTcpQte9axbLtDSDKgQhPSOEkBxsz6xsSM5C60aoJfoIcXurjfL5gNgDi2UPn3Fq4265OEt+0JA==
+X-Exchange-RoutingPolicyChecked: Tu2L4/FvtLwuWHcSJGy6Zjv3mnBv+mcu2z/f446y7AnJbBd8uKFz7uil6UYbGgjR44DHctJbNXwuhmHa++PBzgNrjRwQz8xCrqG65Za8EqXJonCMdeqmj0tPISg9J/jnD07GHfhhh7oU+IEJeDezwa7/Jid+ZaP3ngi+k4nzxWLG/KDSjVY7P8glc732VLGFzv4NQXGaUqMoy3KLXW8XWOQmM1YeH0+GzwIlJObeuKYoW51gl2yjfUjhKAVQkWbZ9f5DVDJ6QhcZlVSlcSLQF6BLtHcEb6BwroVixsqxElcp/DcR7QBOMK0xv7oNfAVvFrV/qf/MG6evNmHL/9V+YA==
 X-OriginatorOrg: aspeedtech.com
 X-MS-Exchange-CrossTenant-AuthAs: Internal
 X-MS-Exchange-CrossTenant-AuthSource: TYPPR06MB8206.apcprd06.prod.outlook.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: f736178b-6c91-46de-56e6-08debf88801c
-X-MS-Exchange-CrossTenant-originalarrivaltime: 01 Jun 2026 02:50:11.8470 (UTC)
+X-MS-Exchange-CrossTenant-Network-Message-Id: 79cefba2-33da-4ff0-2676-08debf88864f
+X-MS-Exchange-CrossTenant-originalarrivaltime: 01 Jun 2026 02:50:22.2399 (UTC)
 X-MS-Exchange-CrossTenant-fromentityheader: Hosted
 X-MS-Exchange-CrossTenant-id: 43d4aa98-e35b-4575-8939-080e90d5a249
 X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
-X-MS-Exchange-CrossTenant-userprincipalname: X7tIAkII/x+eXjU+Vm3TUNmjGxZDWZ9J+P6+T67sUeYJdiBiHSQLdMvhwGfMDXSiLdrrics83vbd4vr4vRpYSPZlP/0f4M6S1608VhwcgcU=
+X-MS-Exchange-CrossTenant-userprincipalname: IVrwKWGqOwZi2kc46G0ETIy37Gp9iu7QXiWrU1wkGpdkCcv7+A5/7VsRpn5QZkg184ptA6AwyiPUUrW/kihIq6c3oLunOr7GJ7maeo9eVw0=
 X-MS-Exchange-Transport-CrossTenantHeadersStamped: KU4PR06MB8361
 Received-SPF: pass client-ip=2a01:111:f403:c405::5;
  envelope-from=jamin_lin@aspeedtech.com;
@@ -154,137 +154,225 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Replace the legacy type_register_static()/type_init() registration=0A=
 pattern with the modern DEFINE_TYPES() macro.=0A=
 =0A=
-Inline 5 standalone TypeInfo variables (aspeed_sdmc_info as abstract=0A=
-base, aspeed_2400_sdmc_info, aspeed_2500_sdmc_info,=0A=
-aspeed_2600_sdmc_info, aspeed_2700_sdmc_info) directly into the=0A=
-'aspeed_sdmc_types[]' array, removing the need for separate=0A=
+Inline 9 standalone TypeInfo variables (aspeed_intc_info as abstract=0A=
+base, aspeed_2700_intc_info, aspeed_2700_intcio_info,=0A=
+aspeed_2700_intcioexp1_info, aspeed_2700_intcioexp2_info,=0A=
+aspeed_2700ssp_intc_info, aspeed_2700ssp_intcio_info,=0A=
+aspeed_2700tsp_intc_info, aspeed_2700tsp_intcio_info) directly into=0A=
+the 'aspeed_intc_types[]' array, removing the need for separate=0A=
 declarations.=0A=
 =0A=
 No functional change.=0A=
 =0A=
 Signed-off-by: Jamin Lin <jamin_lin@aspeedtech.com>=0A=
 ---=0A=
- hw/misc/aspeed_sdmc.c | 73 ++++++++++++++++++-------------------------=0A=
- 1 file changed, 31 insertions(+), 42 deletions(-)=0A=
+ hw/intc/aspeed_intc.c | 121 ++++++++++++++++++------------------------=0A=
+ 1 file changed, 51 insertions(+), 70 deletions(-)=0A=
 =0A=
-diff --git a/hw/misc/aspeed_sdmc.c b/hw/misc/aspeed_sdmc.c=0A=
-index 055abf7f50..f8fbaebee6 100644=0A=
---- a/hw/misc/aspeed_sdmc.c=0A=
-+++ b/hw/misc/aspeed_sdmc.c=0A=
-@@ -310,16 +310,6 @@ static void aspeed_sdmc_class_init(ObjectClass *klass,=
+diff --git a/hw/intc/aspeed_intc.c b/hw/intc/aspeed_intc.c=0A=
+index 3892809430..5a36fff520 100644=0A=
+--- a/hw/intc/aspeed_intc.c=0A=
++++ b/hw/intc/aspeed_intc.c=0A=
+@@ -758,16 +758,6 @@ static void aspeed_intc_class_init(ObjectClass *klass,=
  const void *data)=0A=
-     device_class_set_props(dc, aspeed_sdmc_properties);=0A=
+     aic->reg_ops =3D &aspeed_intc_ops;=0A=
  }=0A=
  =0A=
--static const TypeInfo aspeed_sdmc_info =3D {=0A=
--    .name =3D TYPE_ASPEED_SDMC,=0A=
+-static const TypeInfo aspeed_intc_info =3D {=0A=
+-    .name =3D TYPE_ASPEED_INTC,=0A=
 -    .parent =3D TYPE_SYS_BUS_DEVICE,=0A=
--    .instance_size =3D sizeof(AspeedSDMCState),=0A=
--    .instance_init =3D aspeed_sdmc_initfn,=0A=
--    .class_init =3D aspeed_sdmc_class_init,=0A=
--    .class_size =3D sizeof(AspeedSDMCClass),=0A=
--    .abstract   =3D true,=0A=
+-    .instance_init =3D aspeed_intc_instance_init,=0A=
+-    .instance_size =3D sizeof(AspeedINTCState),=0A=
+-    .class_init =3D aspeed_intc_class_init,=0A=
+-    .class_size =3D sizeof(AspeedINTCClass),=0A=
+-    .abstract =3D true,=0A=
 -};=0A=
 -=0A=
- static int aspeed_sdmc_get_ram_bits(AspeedSDMCState *s)=0A=
- {=0A=
-     AspeedSDMCClass *asc =3D ASPEED_SDMC_GET_CLASS(s);=0A=
-@@ -393,12 +383,6 @@ static void aspeed_2400_sdmc_class_init(ObjectClass *k=
+ static AspeedINTCIRQ aspeed_2700_intc_irqs[ASPEED_INTC_MAX_INPINS] =3D {=
+=0A=
+     {0, 0, 10, R_GICINT192_201_EN, R_GICINT192_201_STATUS},=0A=
+ };=0A=
+@@ -788,12 +778,6 @@ static void aspeed_2700_intc_class_init(ObjectClass *k=
 lass, const void *data)=0A=
-     asc->valid_ram_sizes =3D aspeed_2400_ram_sizes;=0A=
+     aic->irq_table_count =3D ARRAY_SIZE(aspeed_2700_intc_irqs);=0A=
  }=0A=
  =0A=
--static const TypeInfo aspeed_2400_sdmc_info =3D {=0A=
--    .name =3D TYPE_ASPEED_2400_SDMC,=0A=
--    .parent =3D TYPE_ASPEED_SDMC,=0A=
--    .class_init =3D aspeed_2400_sdmc_class_init,=0A=
+-static const TypeInfo aspeed_2700_intc_info =3D {=0A=
+-    .name =3D TYPE_ASPEED_2700_INTC,=0A=
+-    .parent =3D TYPE_ASPEED_INTC,=0A=
+-    .class_init =3D aspeed_2700_intc_class_init,=0A=
 -};=0A=
 -=0A=
- static uint32_t aspeed_2500_sdmc_compute_conf(AspeedSDMCState *s, uint32_t=
- data)=0A=
- {=0A=
-     uint32_t fixed_conf =3D ASPEED_SDMC_HW_VERSION(1) |=0A=
-@@ -461,12 +445,6 @@ static void aspeed_2500_sdmc_class_init(ObjectClass *k=
-lass, const void *data)=0A=
-     asc->valid_ram_sizes =3D aspeed_2500_ram_sizes;=0A=
+ static AspeedINTCIRQ aspeed_2700_intcioexp2_irqs[ASPEED_INTC_MAX_INPINS] =
+=3D {=0A=
+     {0, 8, 1, R_GICINT192_EN, R_GICINT192_STATUS},=0A=
+     {1, 9, 1, R_GICINT193_EN, R_GICINT193_STATUS},=0A=
+@@ -817,12 +801,6 @@ static void aspeed_2700_intcioexp2_class_init(ObjectCl=
+ass *klass,=0A=
+     aic->irq_table_count =3D ARRAY_SIZE(aspeed_2700_intcioexp2_irqs);=0A=
  }=0A=
  =0A=
--static const TypeInfo aspeed_2500_sdmc_info =3D {=0A=
--    .name =3D TYPE_ASPEED_2500_SDMC,=0A=
--    .parent =3D TYPE_ASPEED_SDMC,=0A=
--    .class_init =3D aspeed_2500_sdmc_class_init,=0A=
+-static const TypeInfo aspeed_2700_intcioexp2_info =3D {=0A=
+-    .name =3D TYPE_ASPEED_2700_INTCIOEXP2,=0A=
+-    .parent =3D TYPE_ASPEED_INTC,=0A=
+-    .class_init =3D aspeed_2700_intcioexp2_class_init,=0A=
 -};=0A=
 -=0A=
- static uint32_t aspeed_2600_sdmc_compute_conf(AspeedSDMCState *s, uint32_t=
- data)=0A=
- {=0A=
-     uint32_t fixed_conf =3D ASPEED_SDMC_HW_VERSION(3) |=0A=
-@@ -555,12 +533,6 @@ static void aspeed_2600_sdmc_class_init(ObjectClass *k=
-lass, const void *data)=0A=
-     asc->valid_ram_sizes =3D aspeed_2600_ram_sizes;=0A=
+ static AspeedINTCIRQ aspeed_2700_intcioexp1_irqs[ASPEED_INTC_MAX_INPINS] =
+=3D {=0A=
+     {0, 6, 1, R_GICINT192_EN, R_GICINT192_STATUS},=0A=
+     {1, 7, 1, R_GICINT193_EN, R_GICINT193_STATUS},=0A=
+@@ -846,12 +824,6 @@ static void aspeed_2700_intcioexp1_class_init(ObjectCl=
+ass *klass,=0A=
+     aic->irq_table_count =3D ARRAY_SIZE(aspeed_2700_intcioexp1_irqs);=0A=
  }=0A=
  =0A=
--static const TypeInfo aspeed_2600_sdmc_info =3D {=0A=
--    .name =3D TYPE_ASPEED_2600_SDMC,=0A=
--    .parent =3D TYPE_ASPEED_SDMC,=0A=
--    .class_init =3D aspeed_2600_sdmc_class_init,=0A=
+-static const TypeInfo aspeed_2700_intcioexp1_info =3D {=0A=
+-    .name =3D TYPE_ASPEED_2700_INTCIOEXP1,=0A=
+-    .parent =3D TYPE_ASPEED_INTC,=0A=
+-    .class_init =3D aspeed_2700_intcioexp1_class_init,=0A=
 -};=0A=
 -=0A=
- static void aspeed_2700_sdmc_reset_hold(Object *obj, ResetType type)=0A=
- {=0A=
-     AspeedSDMCState *s =3D ASPEED_SDMC(obj);=0A=
-@@ -690,19 +662,36 @@ static void aspeed_2700_sdmc_class_init(ObjectClass *=
-klass, const void *data)=0A=
-     asc->valid_ram_sizes =3D aspeed_2700_ram_sizes;=0A=
+ static AspeedINTCIRQ aspeed_2700_intcio_irqs[ASPEED_INTC_MAX_INPINS] =3D {=
+=0A=
+     {0, 0, 1, R_GICINT192_EN, R_GICINT192_STATUS},=0A=
+     {1, 1, 1, R_GICINT193_EN, R_GICINT193_STATUS},=0A=
+@@ -878,12 +850,6 @@ static void aspeed_2700_intcio_class_init(ObjectClass =
+*klass, const void *data)=0A=
+     aic->irq_table_count =3D ARRAY_SIZE(aspeed_2700_intcio_irqs);=0A=
  }=0A=
  =0A=
--static const TypeInfo aspeed_2700_sdmc_info =3D {=0A=
--    .name =3D TYPE_ASPEED_2700_SDMC,=0A=
--    .parent =3D TYPE_ASPEED_SDMC,=0A=
--    .class_init =3D aspeed_2700_sdmc_class_init,=0A=
-+static const TypeInfo aspeed_sdmc_types[] =3D {=0A=
+-static const TypeInfo aspeed_2700_intcio_info =3D {=0A=
+-    .name =3D TYPE_ASPEED_2700_INTCIO,=0A=
+-    .parent =3D TYPE_ASPEED_INTC,=0A=
+-    .class_init =3D aspeed_2700_intcio_class_init,=0A=
+-};=0A=
+-=0A=
+ static AspeedINTCIRQ aspeed_2700ssp_intc_irqs[ASPEED_INTC_MAX_INPINS] =3D =
+{=0A=
+     {0, 0, 10, R_SSPINT160_169_EN, R_SSPINT160_169_STATUS},=0A=
+ };=0A=
+@@ -905,12 +871,6 @@ static void aspeed_2700ssp_intc_class_init(ObjectClass=
+ *klass, const void *data)=0A=
+     aic->irq_table_count =3D ARRAY_SIZE(aspeed_2700ssp_intc_irqs);=0A=
+ }=0A=
+ =0A=
+-static const TypeInfo aspeed_2700ssp_intc_info =3D {=0A=
+-    .name =3D TYPE_ASPEED_2700SSP_INTC,=0A=
+-    .parent =3D TYPE_ASPEED_INTC,=0A=
+-    .class_init =3D aspeed_2700ssp_intc_class_init,=0A=
+-};=0A=
+-=0A=
+ static AspeedINTCIRQ aspeed_2700ssp_intcio_irqs[ASPEED_INTC_MAX_INPINS] =
+=3D {=0A=
+     {0, 0, 1, R_SSPINT160_EN, R_SSPINT160_STATUS},=0A=
+     {1, 1, 1, R_SSPINT161_EN, R_SSPINT161_STATUS},=0A=
+@@ -938,12 +898,6 @@ static void aspeed_2700ssp_intcio_class_init(ObjectCla=
+ss *klass,=0A=
+     aic->irq_table_count =3D ARRAY_SIZE(aspeed_2700ssp_intcio_irqs);=0A=
+ }=0A=
+ =0A=
+-static const TypeInfo aspeed_2700ssp_intcio_info =3D {=0A=
+-    .name =3D TYPE_ASPEED_2700SSP_INTCIO,=0A=
+-    .parent =3D TYPE_ASPEED_INTC,=0A=
+-    .class_init =3D aspeed_2700ssp_intcio_class_init,=0A=
+-};=0A=
+-=0A=
+ static AspeedINTCIRQ aspeed_2700tsp_intc_irqs[ASPEED_INTC_MAX_INPINS] =3D =
+{=0A=
+     {0, 0, 10, R_TSPINT160_169_EN, R_TSPINT160_169_STATUS},=0A=
+ };=0A=
+@@ -965,12 +919,6 @@ static void aspeed_2700tsp_intc_class_init(ObjectClass=
+ *klass, const void *data)=0A=
+     aic->irq_table_count =3D ARRAY_SIZE(aspeed_2700tsp_intc_irqs);=0A=
+ }=0A=
+ =0A=
+-static const TypeInfo aspeed_2700tsp_intc_info =3D {=0A=
+-    .name =3D TYPE_ASPEED_2700TSP_INTC,=0A=
+-    .parent =3D TYPE_ASPEED_INTC,=0A=
+-    .class_init =3D aspeed_2700tsp_intc_class_init,=0A=
+-};=0A=
+-=0A=
+ static AspeedINTCIRQ aspeed_2700tsp_intcio_irqs[ASPEED_INTC_MAX_INPINS] =
+=3D {=0A=
+     {0, 0, 1, R_TSPINT160_EN, R_TSPINT160_STATUS},=0A=
+     {1, 1, 1, R_TSPINT161_EN, R_TSPINT161_STATUS},=0A=
+@@ -998,23 +946,56 @@ static void aspeed_2700tsp_intcio_class_init(ObjectCl=
+ass *klass,=0A=
+     aic->irq_table_count =3D ARRAY_SIZE(aspeed_2700tsp_intcio_irqs);=0A=
+ }=0A=
+ =0A=
+-static const TypeInfo aspeed_2700tsp_intcio_info =3D {=0A=
+-    .name =3D TYPE_ASPEED_2700TSP_INTCIO,=0A=
+-    .parent =3D TYPE_ASPEED_INTC,=0A=
+-    .class_init =3D aspeed_2700tsp_intcio_class_init,=0A=
++static const TypeInfo aspeed_intc_types[] =3D {=0A=
 +    {=0A=
-+        .name =3D TYPE_ASPEED_SDMC,=0A=
++        .name =3D TYPE_ASPEED_INTC,=0A=
 +        .parent =3D TYPE_SYS_BUS_DEVICE,=0A=
-+        .instance_size =3D sizeof(AspeedSDMCState),=0A=
-+        .instance_init =3D aspeed_sdmc_initfn,=0A=
-+        .class_init =3D aspeed_sdmc_class_init,=0A=
-+        .class_size =3D sizeof(AspeedSDMCClass),=0A=
-+        .abstract   =3D true,=0A=
++        .instance_init =3D aspeed_intc_instance_init,=0A=
++        .instance_size =3D sizeof(AspeedINTCState),=0A=
++        .class_init =3D aspeed_intc_class_init,=0A=
++        .class_size =3D sizeof(AspeedINTCClass),=0A=
++        .abstract =3D true,=0A=
 +    },=0A=
 +    {=0A=
-+        .name =3D TYPE_ASPEED_2400_SDMC,=0A=
-+        .parent =3D TYPE_ASPEED_SDMC,=0A=
-+        .class_init =3D aspeed_2400_sdmc_class_init,=0A=
++        .name =3D TYPE_ASPEED_2700_INTC,=0A=
++        .parent =3D TYPE_ASPEED_INTC,=0A=
++        .class_init =3D aspeed_2700_intc_class_init,=0A=
 +    },=0A=
 +    {=0A=
-+        .name =3D TYPE_ASPEED_2500_SDMC,=0A=
-+        .parent =3D TYPE_ASPEED_SDMC,=0A=
-+        .class_init =3D aspeed_2500_sdmc_class_init,=0A=
++        .name =3D TYPE_ASPEED_2700_INTCIO,=0A=
++        .parent =3D TYPE_ASPEED_INTC,=0A=
++        .class_init =3D aspeed_2700_intcio_class_init,=0A=
 +    },=0A=
 +    {=0A=
-+        .name =3D TYPE_ASPEED_2600_SDMC,=0A=
-+        .parent =3D TYPE_ASPEED_SDMC,=0A=
-+        .class_init =3D aspeed_2600_sdmc_class_init,=0A=
++        .name =3D TYPE_ASPEED_2700SSP_INTC,=0A=
++        .parent =3D TYPE_ASPEED_INTC,=0A=
++        .class_init =3D aspeed_2700ssp_intc_class_init,=0A=
 +    },=0A=
 +    {=0A=
-+        .name =3D TYPE_ASPEED_2700_SDMC,=0A=
-+        .parent =3D TYPE_ASPEED_SDMC,=0A=
-+        .class_init =3D aspeed_2700_sdmc_class_init,=0A=
++        .name =3D TYPE_ASPEED_2700SSP_INTCIO,=0A=
++        .parent =3D TYPE_ASPEED_INTC,=0A=
++        .class_init =3D aspeed_2700ssp_intcio_class_init,=0A=
++    },=0A=
++    {=0A=
++        .name =3D TYPE_ASPEED_2700TSP_INTC,=0A=
++        .parent =3D TYPE_ASPEED_INTC,=0A=
++        .class_init =3D aspeed_2700tsp_intc_class_init,=0A=
++    },=0A=
++    {=0A=
++        .name =3D TYPE_ASPEED_2700TSP_INTCIO,=0A=
++        .parent =3D TYPE_ASPEED_INTC,=0A=
++        .class_init =3D aspeed_2700tsp_intcio_class_init,=0A=
++    },=0A=
++    {=0A=
++        .name =3D TYPE_ASPEED_2700_INTCIOEXP1,=0A=
++        .parent =3D TYPE_ASPEED_INTC,=0A=
++        .class_init =3D aspeed_2700_intcioexp1_class_init,=0A=
++    },=0A=
++    {=0A=
++        .name =3D TYPE_ASPEED_2700_INTCIOEXP2,=0A=
++        .parent =3D TYPE_ASPEED_INTC,=0A=
++        .class_init =3D aspeed_2700_intcioexp2_class_init,=0A=
 +    }=0A=
  };=0A=
  =0A=
--static void aspeed_sdmc_register_types(void)=0A=
+-static void aspeed_intc_register_types(void)=0A=
 -{=0A=
--    type_register_static(&aspeed_sdmc_info);=0A=
--    type_register_static(&aspeed_2400_sdmc_info);=0A=
--    type_register_static(&aspeed_2500_sdmc_info);=0A=
--    type_register_static(&aspeed_2600_sdmc_info);=0A=
--    type_register_static(&aspeed_2700_sdmc_info);=0A=
+-    type_register_static(&aspeed_intc_info);=0A=
+-    type_register_static(&aspeed_2700_intc_info);=0A=
+-    type_register_static(&aspeed_2700_intcio_info);=0A=
+-    type_register_static(&aspeed_2700_intcioexp1_info);=0A=
+-    type_register_static(&aspeed_2700_intcioexp2_info);=0A=
+-    type_register_static(&aspeed_2700ssp_intc_info);=0A=
+-    type_register_static(&aspeed_2700ssp_intcio_info);=0A=
+-    type_register_static(&aspeed_2700tsp_intc_info);=0A=
+-    type_register_static(&aspeed_2700tsp_intcio_info);=0A=
 -}=0A=
 -=0A=
--type_init(aspeed_sdmc_register_types);=0A=
-+DEFINE_TYPES(aspeed_sdmc_types)=0A=
+-type_init(aspeed_intc_register_types);=0A=
++DEFINE_TYPES(aspeed_intc_types)=0A=
 -- =0A=
 2.43.0=0A=
 
