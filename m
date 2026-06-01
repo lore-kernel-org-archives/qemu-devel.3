@@ -4,91 +4,91 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 487C4CD6E4C
-	for <qemu-devel@archiver.kernel.org>; Mon,  1 Jun 2026 03:56:31 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id AE46BCD6E4C
+	for <qemu-devel@archiver.kernel.org>; Mon,  1 Jun 2026 03:57:53 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wTtl3-0006dh-77; Sun, 31 May 2026 23:56:09 -0400
+	id 1wTtmD-0007G5-HZ; Sun, 31 May 2026 23:57:21 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1wTtkl-0006bz-MK
- for qemu-devel@nongnu.org; Sun, 31 May 2026 23:55:52 -0400
-Received: from mail-ej1-x62b.google.com ([2a00:1450:4864:20::62b])
+ id 1wTtm7-0007FK-IV
+ for qemu-devel@nongnu.org; Sun, 31 May 2026 23:57:15 -0400
+Received: from mail-ej1-x634.google.com ([2a00:1450:4864:20::634])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1wTtkj-0002oz-Fr
- for qemu-devel@nongnu.org; Sun, 31 May 2026 23:55:51 -0400
-Received: by mail-ej1-x62b.google.com with SMTP id
- a640c23a62f3a-bd8f6ef4ba6so2386357066b.3
- for <qemu-devel@nongnu.org>; Sun, 31 May 2026 20:55:49 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1780286148; cv=none;
+ id 1wTtm3-00034v-Fe
+ for qemu-devel@nongnu.org; Sun, 31 May 2026 23:57:15 -0400
+Received: by mail-ej1-x634.google.com with SMTP id
+ a640c23a62f3a-bd8f6ef4ba6so2386446466b.3
+ for <qemu-devel@nongnu.org>; Sun, 31 May 2026 20:57:10 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1780286229; cv=none;
  d=google.com; s=arc-20240605;
- b=VMch07oAJ7ZKXkXxUTmwgdXwgehoz886sqN2JCVEEsA4viPY2SFifFeQES/H8v7GmE
- cH+aUba6e5svmXH6ax4SQw5ESkPprgL0diZDKt5m2Eycdrk06IGz5KJNDM1+fSu17FLF
- 4e2HHoicS2WJkPD4uzoWqO7KsZptm2hrUvP+1iwCviDqKLtum0f8ZaqzmnbUuTn9oVZE
- fqESAD3JiF/YnYJ77e2yZQUQGqZ9u4iPMe2mT9TiLpws6nZIZqhbBi4pwbV8tft/H37U
- ZgXTw6KLLmOkipJIa4GwhcVGqF/zfiH5zDOyrf9Rm9C+AIL29v8HHiydhU8b6pLVvc/+
- dMiQ==
+ b=UN5Y1NWtNkpV7EzQdiafVfJqOuNwrR0d9ih0eRN43TBb1fBl2TVJk7G3/lsP1V8q2n
+ jp1re/2DsVatqlst3vt4+h0/UcsZHy/JKltASAuzNXkzDE13YPX/gosuUDfQwGrPuLeB
+ 08xLP9lrD5oc8YffPvUZRJdMx53jGRhX9QAbDOq06mqK0e8re3Ct26GHeaoQqPlqQSu9
+ F83fdlnUKRfMm4L4HXFjSH4F97ZJ5L56jHVY/HnFf/g6zMxZDmFm0UKHhOYp5fw4L9fH
+ 8w1Hk2TryzrfcTeSXkfYknR1s8AcqIMczyBWVZW1YN+MlbZnd7XG8ybH7XpAAyQG5Iij
+ dgoQ==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
  s=arc-20240605; 
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:dkim-signature;
- bh=nnOnrcJSjSN1lAmrzErKuLVAP/jlLgIKR/oTsGO10JE=;
+ bh=bG8rcqZZOPoDhwgw0R4h8I+oqU1nVaTcUK4zdwxk4Ko=;
  fh=oXbwLIQ6D7eZBIAfdMwTNx3JbGXBw4Kr6QcethzQnTk=;
- b=dDYiA2eiS7efNw2vCPq2jSmyjHwKjohHaLx4PsEUfh6CMfD8GRqYSKfdjR+HLk76YO
- sTjnEgZQwrso4ItXeXte0x/9KcK53kJVf7UF2gBL60Q9MgJ22GabKo6DeA7cLDqiBEZ5
- x8ke7W2hm08XGIkExwZJ04gpMOSePZVAk12q239/8obgYu4IgXWZLz1SzDZNFGja28OG
- tYnd6ttP41XI6fF+m0gGqRPqVvCgT1JvqLnjHtKKyCjFmoy4wGoRIMkIw6mUiX9iVhAU
- /Y773wlTm/sVRzvYRvSmcglHPxQC5e8g0Qz6TtFhUMY+OB9kZOxtT3APPDcDiNpiJ+hO
- ApYQ==; darn=nongnu.org
+ b=IL3p5WNIHyPo6rP9MYYPkwM/OMksEBD4ZvO8HvtyM5y2EJIudbxlFQUEAYfIsN67H2
+ sq0naZhKu2eIVj7+xl7xmZuHCXYe/iTeOTN65FwzA1wFo4jYAPFwlVaaZSVlL/KJKxui
+ EbSF1gHF36w8fkSKoTKiNdMbeRTZaOKb0E4hTIx34NppdDLRrF+5N64FsxHJFfLN08z5
+ YzwUVzOdMn13JnWOM69Ui6o+9ZOr/cosrEwNlyphzKKfgcN5hCoqLz0wPX5Fqj7338Qn
+ UT9oPEaCOkvw+j6vXPNTFZ3hP2170/Tn5j2NGw0t6wd5YgoFoCGNSj7RyQlEH5QH/Rtu
+ K6Dg==; darn=nongnu.org
 ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1780286148; x=1780890948; darn=nongnu.org;
+ d=gmail.com; s=20251104; t=1780286229; x=1780891029; darn=nongnu.org;
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:from:to:cc:subject:date
  :message-id:reply-to;
- bh=nnOnrcJSjSN1lAmrzErKuLVAP/jlLgIKR/oTsGO10JE=;
- b=lIzqMxQ2LvvquB7m5BRO/n4MfQwV8NgSsGozs9vZeQc0q8vEpJwb8fHPXlzLN84u5p
- 7lLzzCsoGSYZj0hTVOi3a8A3Ho3IR/qpRLafYkOD3+lNlNcFyWCg936u7bRB4kLcsmxC
- CdjJek/+r7yZljmVuyw/eoEE13Tnu5uE2VcM0m7D0kiMNmZLdmiOJv6XJ1AkRuGN5f1o
- nMb/fkaWJOlv3oHjkZbKbYBTCYMM6ol/4LHc4J5nOp+czQObmMiflha4SvNrC+yxoNIe
- 85rO0/MT3y/BZvE3bmBmaiEhym4UJHmuuYDzHnpZYyxI4qCEAEbbaPv0KMlYq80UPYtM
- fphA==
+ bh=bG8rcqZZOPoDhwgw0R4h8I+oqU1nVaTcUK4zdwxk4Ko=;
+ b=Ups95z7hjFc+nJPgHkPiUBoLYWjcll3czb9y3UUDqZlga9nqM5BVCB4cLkD06S4j4X
+ pRm0OzVhju7Ch/BG+wIFoEGNvtS6wC2t9mt4UU08lQkLoQA5KT4X0WgIG+xzXMkT0B28
+ FQ/aU+dIXv5p0jPuG/yVtHIzznQovcB/NvjtV9ihXjnZmKpipVJPed2BwtcY4JRD/V5A
+ HwX/4nzCoYclgOwKCE0HpPU1EWFcShNQ7bksn1MS423z2xvCEBleZE364l+Jh3Px3TDo
+ h3WqCjdtQX5mKpXChpah6qkYInA1T4tPao2D61UBYm6wl0rkgNa4fiuf7l0MdVFj2268
+ 8NNQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1780286148; x=1780890948;
+ d=1e100.net; s=20251104; t=1780286229; x=1780891029;
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to;
- bh=nnOnrcJSjSN1lAmrzErKuLVAP/jlLgIKR/oTsGO10JE=;
- b=ToHgHx1dU+Qf01IvD+r6ApM365VcbPp7MDeZv8WL4YsqX0LdG15ntuLG8IQiYHWM4R
- Vb7h/b7dUqu6D9MGXLWigW3ID6CUOstOcTyOJwxW+0c2xxqG490msER1NRGk4Gnpiosg
- O0+H4lZjV08iCohV16jkpZmF0MmYk+6fm4BH/g2cFiXO55mKwi/7a4M0Dwj6qBZ4OB0O
- poJp0sWbhURLqhLSPRWO/uXx7UacsFGuk9W1rsJ7mGSlI8N0/B34GmRn/xzMOhqYVsXL
- fhyefCbLFQPj84uKMiOGWDt/b4YfJzlTSzcdaoHxdIGZpYqCOk1AeXSO19O/Ha8Z20KL
- O03g==
-X-Gm-Message-State: AOJu0YzafYL2zA/2HvwP7lxHAGaYm0FW8iEh7MhmGucnAGZRdW43Iz10
- F7MdzNTrb2Y3m+ql+aV5Bh75uR3AdYRdFfKrvjNAhwriwlWG/6xrxL4wFOXkINR3Ad/e5+qJIFo
- VeZLcecnufwTQ7Ujh5CTPPIY4iKyU4Zs=
-X-Gm-Gg: Acq92OG6x5YnbxYTstbAv59R2mBp7wQRdSCVBDau6Xmhje2HFsdgEg6rovCj/lQ6Dt1
- WVdrvTAaryDigc9KuPSXFdX3xpEvVhzNo8SUbdK8tt4QW9sfUwmq3V9H2H0xJLd7DK118p9W5t2
- TKME+f3pbQT8mEbXtVRkrL13B8YI6BDQMHPrUpmZc8yP4c+EwERod7gXXvcT3ZzLEUL5K5R4b1j
- uzt43DJzBMM8EB3JTkoz5d7RP33icbOEOvGnQ3nbQMjALRzO2mk6li6Z+GoG3jHyQTOQc1fIn5d
- jJW5KrskgkLlbiwwf6nkowCsHZn+BDrIBV/USmtTbigtNstUbGeZN5YWHk0=
-X-Received: by 2002:a17:907:80b:b0:bdb:6077:a168 with SMTP id
- a640c23a62f3a-beab5af5f66mr486141766b.26.1780286147462; Sun, 31 May 2026
- 20:55:47 -0700 (PDT)
+ bh=bG8rcqZZOPoDhwgw0R4h8I+oqU1nVaTcUK4zdwxk4Ko=;
+ b=T3V0pDTV/gu20RYUzk2dYk+AVQNtFk4z8U1w+61hFA4SmWoUJSHyfKS8HleHTNyiXi
+ i2EaJ2KRLj9/4snFJn7O2EYsd35WyEES9v0VquieWrKkMyVSMchcegUixnO8YiOppRXI
+ WLvNagArDUXQQabFICJUVrERQDQ5X1XqYrWRNZedXoSM4Cbm/8lnseB6Pre9MdY5jvbq
+ n4k2thDE3UiSJDsGijic7GVRUyaWrwzwOqEmvZ3eUikt64uAX2BeHxzPAErrdIRI7Rb+
+ wQ6AKUzdCijtGX+sEQAIU68fqpPCahnr49jCsGIVUjyHbhYAj9Zh5cir86Z+Ktcv2Dac
+ XzQg==
+X-Gm-Message-State: AOJu0YytHFZEh+PmazPpEUIUizgd+3n3RAjcjWq1tRVaOYO+Hhnh/Xiy
+ 2hxhSK/YzqtFRWew5mXPFt40K+M6mq4yn5gA+IJ/9SBueIWjug1DZPRc3DvHIbFMIgmU1RKPQGY
+ YCQjD33rR4aW7gNXPemldqdsgiiyxmL8=
+X-Gm-Gg: Acq92OGWkoqp9GD56ZzCNPJBpGyEZFBLf7jiBUItDYV9b5StF5/fIRTTBgaZfgcytOo
+ i+6Co2AtrYR89v3Jrw/9y3hrFwmzLOG0eD8YNFWNy+0dd2HEspEFtETL1BXpUoGGcsDVsHsOoEy
+ M6wewNXUgUB5IGfnCofQ6UWLWzWQPjo7Kw2no3qbjMr1dZbbARkp8rWpWESoAPwc5O2obOK4bZ+
+ ZlUTfQ1R+9/a2/qeXerIBUL+QHyr2/4Mduyj4bMEnoHz2Xqp3dj0ljItk6y2OiBOGnm+j4aBrB4
+ FAoUTHDJnp8Y4Pq7YFCZdmL2OAuNNi1WyM21SlfI4WX7NQMJ
+X-Received: by 2002:a17:907:75f1:b0:bed:38b8:9b59 with SMTP id
+ a640c23a62f3a-bed38b8a8eemr94317366b.9.1780286229233; Sun, 31 May 2026
+ 20:57:09 -0700 (PDT)
 MIME-Version: 1.0
 References: <20260527201348.29511-1-philmd@linaro.org>
- <20260527201348.29511-6-philmd@linaro.org>
-In-Reply-To: <20260527201348.29511-6-philmd@linaro.org>
+ <20260527201348.29511-7-philmd@linaro.org>
+In-Reply-To: <20260527201348.29511-7-philmd@linaro.org>
 From: Alistair Francis <alistair23@gmail.com>
-Date: Mon, 1 Jun 2026 13:55:19 +1000
-X-Gm-Features: AVHnY4KnXJr-PqtZ0cNvu9t-sEHPgWxO1vm6OKJi6U97YcjdWz1LO7JOyCwPpCg
-Message-ID: <CAKmqyKMfUXfy_5ptMRTQch9hXMwN3rKtECoNi+5-y0FoNbwbcQ@mail.gmail.com>
-Subject: Re: [PATCH v11 05/12] target/riscv: Remove target_ulong use in
- get_physical_address()
+Date: Mon, 1 Jun 2026 13:56:42 +1000
+X-Gm-Features: AVHnY4IYPecXeM38cKoLqpb6Tvi3m1eqmX1ql6WtyUVRk7sX36Pa6EMce-9EKBs
+Message-ID: <CAKmqyKOjJ_Scd8HzKkWfDZS9byREDD9miJA2wfs2=b+kK6z9Rg@mail.gmail.com>
+Subject: Re: [PATCH v11 06/12] target/riscv: Fix page table walk endianness
+ for big-endian harts
 To: =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>
 Cc: qemu-devel@nongnu.org, 
  Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>, qemu-riscv@nongnu.org, 
@@ -102,8 +102,8 @@ Cc: qemu-devel@nongnu.org,
  Christoph Muellner <christoph.muellner@vrull.eu>
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::62b;
- envelope-from=alistair23@gmail.com; helo=mail-ej1-x62b.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::634;
+ envelope-from=alistair23@gmail.com; helo=mail-ej1-x634.google.com
 X-Spam_score_int: -17
 X-Spam_score: -1.8
 X-Spam_bar: -
@@ -127,11 +127,26 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, May 28, 2026 at 6:15=E2=80=AFAM Philippe Mathieu-Daud=C3=A9
+On Thu, May 28, 2026 at 6:16=E2=80=AFAM Philippe Mathieu-Daud=C3=A9
 <philmd@linaro.org> wrote:
 >
-> Use uint32_t for RV32, uint64_t otherwise.
+> From: Djordje Todorovic <Djordje.Todorovic@htecgroup.com>
 >
+> The page table walker reads PTEs using address_space_ldl/ldq which use
+> compile-time native endianness (always LE for RISC-V). However, when a
+> big-endian kernel writes PTEs via normal store instructions, they are
+> stored in big-endian byte order. The walker then misinterprets the PTE
+> values, causing page faults and a hang when the kernel enables the MMU.
+>
+> The RISC-V privileged specification states that implicit data memory
+> accesses to supervisor-level memory management data structures follow
+> the hart's endianness setting (MSTATUS SBE/MBE bits).
+>
+> Fix both PTE reads and atomic A/D bit updates to use the explicit _le
+> or _be memory access variants based on the hart's runtime endianness.
+>
+> Signed-off-by: Djordje Todorovic <djordje.todorovic@htecgroup.com>
+> Reviewed-by: Philippe Mathieu-Daud=C3=A9 <philmd@linaro.org>
 > Signed-off-by: Philippe Mathieu-Daud=C3=A9 <philmd@linaro.org>
 
 Reviewed-by: Alistair Francis <alistair.francis@wdc.com>
@@ -139,40 +154,68 @@ Reviewed-by: Alistair Francis <alistair.francis@wdc.com>
 Alistair
 
 > ---
->  target/riscv/cpu_helper.c | 14 ++++++++------
->  1 file changed, 8 insertions(+), 6 deletions(-)
+>  target/riscv/cpu_helper.c | 19 +++++++++++--------
+>  1 file changed, 11 insertions(+), 8 deletions(-)
 >
 > diff --git a/target/riscv/cpu_helper.c b/target/riscv/cpu_helper.c
-> index 6da67e132eb..fd7c6ac1b23 100644
+> index fd7c6ac1b23..9ec15fdf46f 100644
 > --- a/target/riscv/cpu_helper.c
 > +++ b/target/riscv/cpu_helper.c
-> @@ -1625,16 +1625,18 @@ static int get_physical_address(CPURISCVState *en=
-v, hwaddr *physical,
->              return TRANSLATE_FAIL;
+> @@ -1370,6 +1370,7 @@ static int get_physical_address(CPURISCVState *env,=
+ hwaddr *physical,
+>      target_ulong pte;
+>      hwaddr pte_addr;
+>      const hwaddr base_root =3D base;
+> +    const bool be =3D mo_endian_env(env) =3D=3D MO_BE;
+>      int i;
+>
+>   restart:
+> @@ -1418,9 +1419,11 @@ static int get_physical_address(CPURISCVState *env=
+, hwaddr *physical,
 >          }
 >
-> -        target_ulong *pte_pa =3D qemu_map_ram_ptr(mr->ram_block, addr1);
-> -        target_ulong old_pte;
-> +        void *pte_pa =3D qemu_map_ram_ptr(mr->ram_block, addr1);
-> +        uint64_t old_pte;
+>          if (riscv_cpu_mxl(env) =3D=3D MXL_RV32) {
+> -            pte =3D address_space_ldl_le(cs->as, pte_addr, attrs, &res);
+> +            pte =3D be ? address_space_ldl_be(cs->as, pte_addr, attrs, &=
+res)
+> +                     : address_space_ldl_le(cs->as, pte_addr, attrs, &re=
+s);
+>          } else {
+> -            pte =3D address_space_ldq_le(cs->as, pte_addr, attrs, &res);
+> +            pte =3D be ? address_space_ldq_be(cs->as, pte_addr, attrs, &=
+res)
+> +                     : address_space_ldq_le(cs->as, pte_addr, attrs, &re=
+s);
+>          }
+>
+>          if (res !=3D MEMTX_OK) {
+> @@ -1629,15 +1632,15 @@ static int get_physical_address(CPURISCVState *en=
+v, hwaddr *physical,
+>          uint64_t old_pte;
 >
 >          if (riscv_cpu_sxl(env) =3D=3D MXL_RV32) {
-> -            old_pte =3D qatomic_cmpxchg((uint32_t *)pte_pa, cpu_to_le32(=
-pte),
-> -                                      cpu_to_le32(updated_pte));
-> +            uint32_t cmp =3D cpu_to_le32(pte);
-> +            uint32_t val =3D cpu_to_le32(updated_pte);
-> +            old_pte =3D qatomic_cmpxchg((uint32_t *)pte_pa, cmp, val);
->              old_pte =3D le32_to_cpu(old_pte);
+> -            uint32_t cmp =3D cpu_to_le32(pte);
+> -            uint32_t val =3D cpu_to_le32(updated_pte);
+> +            uint32_t cmp =3D be ? cpu_to_be32(pte) : cpu_to_le32(pte);
+> +            uint32_t val =3D be ? cpu_to_be32(updated_pte) : cpu_to_le32=
+(updated_pte);
+>              old_pte =3D qatomic_cmpxchg((uint32_t *)pte_pa, cmp, val);
+> -            old_pte =3D le32_to_cpu(old_pte);
+> +            old_pte =3D be ? be32_to_cpu(old_pte) : le32_to_cpu(old_pte)=
+;
 >          } else {
-> -            old_pte =3D qatomic_cmpxchg(pte_pa, cpu_to_le64(pte),
-> -                                      cpu_to_le64(updated_pte));
-> +            uint64_t cmp =3D cpu_to_le64(pte);
-> +            uint64_t val =3D cpu_to_le64(updated_pte);
-> +            old_pte =3D qatomic_cmpxchg((uint64_t *)pte_pa, cmp, val);
->              old_pte =3D le64_to_cpu(old_pte);
+> -            uint64_t cmp =3D cpu_to_le64(pte);
+> -            uint64_t val =3D cpu_to_le64(updated_pte);
+> +            uint64_t cmp =3D be ? cpu_to_be64(pte) : cpu_to_le64(pte);
+> +            uint64_t val =3D be ? cpu_to_be64(updated_pte) : cpu_to_le64=
+(updated_pte);
+>              old_pte =3D qatomic_cmpxchg((uint64_t *)pte_pa, cmp, val);
+> -            old_pte =3D le64_to_cpu(old_pte);
+> +            old_pte =3D be ? be64_to_cpu(old_pte) : le64_to_cpu(old_pte)=
+;
 >          }
 >          if (old_pte !=3D pte) {
+>              goto restart;
 > --
 > 2.53.0
 >
