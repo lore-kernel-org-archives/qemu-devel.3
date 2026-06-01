@@ -4,114 +4,147 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 90E2CCD6E4C
-	for <qemu-devel@archiver.kernel.org>; Mon,  1 Jun 2026 06:06:19 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E4117CD5BD1
+	for <qemu-devel@archiver.kernel.org>; Mon,  1 Jun 2026 06:26:51 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wTvmQ-0007wl-2M; Mon, 01 Jun 2026 02:05:42 -0400
+	id 1wTw69-0003ku-JD; Mon, 01 Jun 2026 02:26:05 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <nnmlinux@linux.ibm.com>)
- id 1wTvm6-0007jV-Pg; Mon, 01 Jun 2026 02:05:23 -0400
-Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
+ (Exim 4.90_1) (envelope-from <mhonap@nvidia.com>)
+ id 1wTw66-0003kV-3D; Mon, 01 Jun 2026 02:26:02 -0400
+Received: from mail-northcentralusazlp170120005.outbound.protection.outlook.com
+ ([2a01:111:f403:c105::5] helo=CH5PR02CU005.outbound.protection.outlook.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <nnmlinux@linux.ibm.com>)
- id 1wTvm4-0001Rv-16; Mon, 01 Jun 2026 02:05:21 -0400
-Received: from pps.filterd (m0353725.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 64VBj1Kk3166613; Mon, 1 Jun 2026 06:05:14 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
- :content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=pp1; bh=BgBb9g
- sNUMFQhY8blUcNRUJnR5d3FCRzXzvRFfBVYzI=; b=JgKz08KfzK4cHb1nblncNf
- 3IxLGPGRxl9Iyo2+xWuUkrnI70k12zJgkvknPhARy8PIQvooOhjB4s5+vMk+Egdv
- wNDtwhW6egSK9liMsIeBu8Ppx4uOtfmZxUGWFOfW+mJjoS0IJz3pdNBZ3HZXaFlm
- L/rbXnBIoeOLoZasVBKzkioGWu4Z8pMwXcqiAVFEjs5Zf0RlTMD3C1DFQtAJErc+
- 53PMzRDAit2dpAbHoLyd4niFyygwQI2MQPA9LOI8EikL+xPIg/i6zPldTSbhRzDI
- ppEBXzThNyON3Nl8K4jlIctuX802C8KRCI/Bt9OprSYr4AnIdrAWTW2D06pe48UA
- ==
-Received: from ppma11.dal12v.mail.ibm.com
- (db.9e.1632.ip4.static.sl-reverse.com [50.22.158.219])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4efpadxy8r-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Mon, 01 Jun 2026 06:05:13 +0000 (GMT)
-Received: from pps.filterd (ppma11.dal12v.mail.ibm.com [127.0.0.1])
- by ppma11.dal12v.mail.ibm.com (8.18.1.7/8.18.1.7) with ESMTP id 6515s8ls013535;
- Mon, 1 Jun 2026 06:05:12 GMT
-Received: from smtprelay02.fra02v.mail.ibm.com ([9.218.2.226])
- by ppma11.dal12v.mail.ibm.com (PPS) with ESMTPS id 4egcwy4bs7-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Mon, 01 Jun 2026 06:05:12 +0000 (GMT)
-Received: from smtpav03.fra02v.mail.ibm.com (smtpav03.fra02v.mail.ibm.com
- [10.20.54.102])
- by smtprelay02.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 651658Oq52625676
- (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Mon, 1 Jun 2026 06:05:09 GMT
-Received: from smtpav03.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id D579120043;
- Mon,  1 Jun 2026 06:05:08 +0000 (GMT)
-Received: from smtpav03.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 9E9C420040;
- Mon,  1 Jun 2026 06:05:06 +0000 (GMT)
-Received: from [9.123.0.29] (unknown [9.123.0.29])
- by smtpav03.fra02v.mail.ibm.com (Postfix) with ESMTP;
- Mon,  1 Jun 2026 06:05:06 +0000 (GMT)
-Message-ID: <3e5fbe36-a0ac-40ae-8b0a-e557d18ab50a@linux.ibm.com>
-Date: Mon, 1 Jun 2026 11:35:05 +0530
-MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3 4/6] ppc/spapr: Advertise RTAS error injection call
- support via FDT property
-To: Shivaprasad G Bhat <sbhat@linux.ibm.com>, qemu-ppc@nongnu.org,
- qemu-devel@nongnu.org
-Cc: npiggin@gmail.com, harshpb@linux.ibm.com, mahesh@linux.ibm.com,
- ganeshgr@linux.ibm.com, vaibhav@linux.ibm.com,
- anushree.mathur@linux.vnet.ibm.com, clg@redhat.com,
- pierrick.bouvier@oss.qualcomm.com, philmd@linaro.org
-References: <20260520095446.64206-1-nnmlinux@linux.ibm.com>
- <20260520095446.64206-5-nnmlinux@linux.ibm.com>
- <23c8cf1d-dfe9-4273-868d-1c4e41a59fcd@linux.ibm.com>
+ (Exim 4.90_1) (envelope-from <mhonap@nvidia.com>)
+ id 1wTw61-0001Xt-2M; Mon, 01 Jun 2026 02:26:01 -0400
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=Smhy5zLFylZX959tYfr0uJaiZy3SLZPB5Vsvh4FHA4xZl6zrPlZ1lyeazGqHwKLSxfbVRvL1K6VYZbm1/xEDfD1EC5XNhFaUCPLUlcDPlTcXSQ+kSXo15m5oLi91GfWDPO/OTloOVIgOYnlBb9ChiZsUlx1gha1FpyC6Bf0cWjPn3S/UfW3P1/2/E2oaNIEzK2nCein78AvccI6NWCynCeTZK/pwaLvGQ/8JT0EK5ZG/l1OwL/iB9WQeC47mVx4j0CsHpB8qclPxVQnj/MBIXmwNpT6xE/ZWBU85xG22tzVi+CMv/OdhcfGpHq/h0rFwH7RzKW2JyKjsgn6T+8bv1g==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=nujJWKSEk+j4uPdSFjQICZXL9VGzF85tI0bN+BR8KvM=;
+ b=Qd73NRYn9PeW5jofXCdavRHZJUD2h966QJgNQMneDOMhncb4uHOfh0eZf/C7MZcLaOkNSXpR0YW8dEDv51BfuKxL8UgUq/MY1Q3PlOWdG8HQ+/RvyC7DsbqlvnNgSxOdKOlQrPyy7rOSv8xTK+ArjV03BA+9eQhd+pjAMKyvwGyURlViNbXPeLLxVeKFEJr3Y+rCpuIAjSqzPAAGKPRNjOUOsO+N1Hg6pGjJamtMltfOEX2ZXSYI4cspRWi0q31bcFQf0fAkFQRRmVR4DqsN4Ze54fm+1lRycoq6ffONKt25ngoM8tCyHRUyVeAjgAZH+LysFAh1Xq8Ba7aa2+sIbw==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=nvidia.com; dmarc=pass action=none header.from=nvidia.com;
+ dkim=pass header.d=nvidia.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=Nvidia.com;
+ s=selector2;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=nujJWKSEk+j4uPdSFjQICZXL9VGzF85tI0bN+BR8KvM=;
+ b=JsJsnP99b5nzxi8U/6C5XWcXrLHkUQK5+aM0UwIGbM/rrSU1eabBq4/79VT1wVF8eq8kvwd8sNcsKld4s8iqnzseiNPdDOfd6GLrOcCJLU3dLGHMScP/ZAYsT53zv0VdPeDjkEmmt8wagvjt7gVI4tfndoktsmAfhEpxAJNGATcbZZj56zamyZEoruszxrlhVqCsfV/ynqYOF4XErzh83OxRukBfKiQLFK0G2Q+DwGnOoXzlSqoMhkqzijFRRTqClFySOzkJc6Q/oxSaW4KstRoGoEd+bL6leiEerEWF/wcIKE2djhJcKBAPzPmjrCtLNRUE6aV+8/A73BX3z70Saw==
+Received: from IA1PR12MB9030.namprd12.prod.outlook.com (2603:10b6:208:3f2::22)
+ by MN2PR12MB4255.namprd12.prod.outlook.com (2603:10b6:208:198::12)
+ with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.71.17; Mon, 1 Jun 2026
+ 06:25:50 +0000
+Received: from IA1PR12MB9030.namprd12.prod.outlook.com
+ ([fe80::2c1d:ed27:b53a:97d2]) by IA1PR12MB9030.namprd12.prod.outlook.com
+ ([fe80::2c1d:ed27:b53a:97d2%6]) with mapi id 15.21.0071.014; Mon, 1 Jun 2026
+ 06:25:50 +0000
+From: Manish Honap <mhonap@nvidia.com>
+To: Jonathan Cameron <jic23@kernel.org>
+CC: Alex Williamson <alwilliamson@nvidia.com>, Shameer Kolothum Thodi
+ <skolothumtho@nvidia.com>, Ankit Agrawal <ankita@nvidia.com>,
+ "mst@redhat.com" <mst@redhat.com>, "imammedo@redhat.com"
+ <imammedo@redhat.com>, "anisinha@redhat.com" <anisinha@redhat.com>,
+ "eric.auger@redhat.com" <eric.auger@redhat.com>, "peter.maydell@linaro.org"
+ <peter.maydell@linaro.org>, "shannon.zhaosl@gmail.com"
+ <shannon.zhaosl@gmail.com>, "jonathan.cameron@huawei.com"
+ <jonathan.cameron@huawei.com>, "fan.ni@samsung.com" <fan.ni@samsung.com>,
+ "pbonzini@redhat.com" <pbonzini@redhat.com>, "richard.henderson@linaro.org"
+ <richard.henderson@linaro.org>, "marcel.apfelbaum@gmail.com"
+ <marcel.apfelbaum@gmail.com>, "clg@redhat.com" <clg@redhat.com>,
+ "cohuck@redhat.com" <cohuck@redhat.com>, "dan.j.williams@intel.com"
+ <dan.j.williams@intel.com>, "dave.jiang@intel.com" <dave.jiang@intel.com>,
+ "alejandro.lucero-palau@amd.com" <alejandro.lucero-palau@amd.com>, Vikram
+ Sethi <vsethi@nvidia.com>, Neo Jia <cjia@nvidia.com>, "Tarun Gupta (SW-GPU)"
+ <targupta@nvidia.com>, Zhi Wang <zhiw@nvidia.com>, Krishnakant Jaju
+ <kjaju@nvidia.com>, "linux-cxl@vger.kernel.org" <linux-cxl@vger.kernel.org>,
+ "kvm@vger.kernel.org" <kvm@vger.kernel.org>, "qemu-devel@nongnu.org"
+ <qemu-devel@nongnu.org>, "qemu-arm@nongnu.org" <qemu-arm@nongnu.org>, Manish
+ Honap <mhonap@nvidia.com>
+Subject: RE: [RFC 1/9] hw/arm/virt: Add CXL FMWS PA window for device memory
+Thread-Topic: [RFC 1/9] hw/arm/virt: Add CXL FMWS PA window for device memory
+Thread-Index: AQHc1nGdihclCKZIH0Gl4GzzPan94bYVbGMAgBP7NNA=
+Date: Mon, 1 Jun 2026 06:25:50 +0000
+Message-ID: <IA1PR12MB9030BFF376C4D5B62A672AB8BD152@IA1PR12MB9030.namprd12.prod.outlook.com>
+References: <20260427181235.3003865-1-mhonap@nvidia.com>
+ <20260427181235.3003865-2-mhonap@nvidia.com>
+ <20260519134014.474a8289@jic23-huawei>
+In-Reply-To: <20260519134014.474a8289@jic23-huawei>
+Accept-Language: en-US
 Content-Language: en-US
-From: Narayana Murty N <nnmlinux@linux.ibm.com>
-In-Reply-To: <23c8cf1d-dfe9-4273-868d-1c4e41a59fcd@linux.ibm.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-X-TM-AS-GCONF: 00
-X-Proofpoint-Reinject: loops=2 maxloops=12
-X-Authority-Analysis: v=2.4 cv=Zt3d7d7G c=1 sm=1 tr=0 ts=6a1d2119 cx=c_pps
- a=aDMHemPKRhS1OARIsFnwRA==:117 a=aDMHemPKRhS1OARIsFnwRA==:17
- a=IkcTkHD0fZMA:10 a=FelO9ux0wxsA:10 a=VkNPw1HP01LnGYTKEx00:22
- a=RnoormkPH1_aCDwRdu11:22 a=V8glGbnc2Ofi9Qvn3v5h:22 a=VnNF1IyMAAAA:8
- a=4OSCywFdi6JTqcutriUA:9 a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
-X-Proofpoint-GUID: lhKbDoG4a5_IillyXB_zm0nxl13M3enp
-X-Proofpoint-ORIG-GUID: LBvbbDbgm5-9Ja7rl4-6qaGEr-J_lorm
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNjAxMDA1NCBTYWx0ZWRfX/KazKSfbyz8v
- oX8jaLRrPSqbYHQdGuYHLQVZXX2Cfo4am6vMrOwIRFv6/gO98MW7ftWZUm5arCn7SSbtLvJERYW
- he6m+Ih9qEDvfBHxD9XSsXciP5uferMM8kNQnD/f2d8QNlbFPyAvBrWGyjrTmwVVd+EVs2s+vQY
- mdcAooCPRXFnTMcndEJ+zxdmEy88fA6a7KgRfkHdKD8G/0HzwGjuX91a6gH0ySG+fGMwxXU6VeO
- uTFYtv9VPJZUX5jtnvFmioz7UoxFN4AvsJvsJkDmrewHsWheKPCZTME+Zk869IlD4WC9KnNOPHT
- qvpYJJxoVkUpldb68/kZLOEXLtpDrHV2zfin+NPdNS6sMPingvHhmfgLJq8lOglC4sXQXIk/7od
- AQwCfM8PrmKBizGPWNbrFT08QiJOhzp3wbC/zZ5BW8aTAuyPc8xe95hufY3ywxJc5ZOJGPJYFQL
- ovMpEmsO9NZOufWncwg==
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.125,FMLib:17.12.100.49
- definitions=2026-06-01_01,2026-05-28_03,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- impostorscore=0 suspectscore=0 priorityscore=1501 bulkscore=0 clxscore=1015
- phishscore=0 spamscore=0 malwarescore=0 adultscore=0 lowpriorityscore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2605210000 definitions=main-2606010054
-Received-SPF: pass client-ip=148.163.158.5;
- envelope-from=nnmlinux@linux.ibm.com; helo=mx0b-001b2d01.pphosted.com
-X-Spam_score_int: -26
-X-Spam_score: -2.7
-X-Spam_bar: --
-X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
- RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+authentication-results: dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=nvidia.com;
+x-ms-publictraffictype: Email
+x-ms-traffictypediagnostic: IA1PR12MB9030:EE_|MN2PR12MB4255:EE_
+x-ms-office365-filtering-correlation-id: 699d0f27-222f-4a8d-38cb-08debfa6a035
+x-ms-exchange-senderadcheck: 1
+x-ms-exchange-antispam-relay: 0
+x-microsoft-antispam: BCL:0;
+ ARA:13230040|1800799024|366016|7416014|376014|56012099006|4143699003|5023799004|18002099003|22082099003|11063799006|6133799003|38070700021;
+x-microsoft-antispam-message-info: iF9kiRm8y58dayzZQpe1S9dzW8gT9JKd1pNjCvTkdRC1tcpwj5n6kEpfwQ2SCPy8eAn59VTIqUQfz/IDehV5hpW+t8uSq6b9Cr0qqIpjGmclbLkmGBEjhZCuH75dS1fLDC3eRiR7Cwtd6sxodD0KmBNpJeWFERsO3X0N5VwAu44cTlJ8LHWDbaYTTDsN2pwgFGGhfEwATUjNTFXFA50SiukD12EpSul6sE9cnNQPSnN4AepHVIwieIi0hiEMDDFThHxOJt2xaWx5G8cylLtQAxZgGHQi4UEzvq+gJSzcebAG4vr+KlSCsLXOH3z5eG2omB/RRpNt+OEAjzMhWQfQHFvt3VIt4RxWFfFl+JmgGhAnrJ28quVbkcpSykm0r2eDxpINh4r/6qvFO672P7EcxR6Goss15ta1BWclXD4mePtKWWnR0SFY4aiMuANxM7ZDeIGuB4fyMlfiPJBim6McbG5d/nnKpkQs320IbDc8lDJ/syOKx0Xg0dP5CFnces4xtOFWRFTvrlB590uWo61JjyDf57IkrrR9XqJibpBJoXz1T0CvaxItzELGANRSxDVQ8EMp8gLkw+uH+QEkhpBx9X+2O524pUHJogWRqgnWsGhn6peOVXGMeRRPyJ78IOtRrCOOZlzRjyc0gSOCKoOw2Y1BoksBBt/KmJaUk1d4hqsLWvDE8Wldj9XVD1A8gn+AWW4nTKpEjj6V/1TgtEnKiNA8vRnjah09q5Z0Ias7ZL/+7JV35EEdJsD0N7M3mhyC
+x-forefront-antispam-report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
+ IPV:NLI; SFV:NSPM; H:IA1PR12MB9030.namprd12.prod.outlook.com; PTR:; CAT:NONE;
+ SFS:(13230040)(1800799024)(366016)(7416014)(376014)(56012099006)(4143699003)(5023799004)(18002099003)(22082099003)(11063799006)(6133799003)(38070700021);
+ DIR:OUT; SFP:1101; 
+x-ms-exchange-antispam-messagedata-chunkcount: 1
+x-ms-exchange-antispam-messagedata-0: =?us-ascii?Q?i+jDtsie4TdEdnDaH+K40iDjp4bJOQCQumq5mAyZPe9CCpx+yux9ybA2IwoS?=
+ =?us-ascii?Q?S/pAwySAk+ygHMx2b8sVsMeRnkdXsnWcgH2Mk6aaZV470A4OPgv4tKnTZstF?=
+ =?us-ascii?Q?iKcZhRt9aGAJ2dyQQUnZgqWJVetiFcooRK9iLm5ADdJ9vvVlQJ+RB4/OA7vS?=
+ =?us-ascii?Q?W3UY0L5POXMBy/pABWY6ajV1sIWJ+udzh/5xToBl4pNNQjxFDZJFur6ttBNe?=
+ =?us-ascii?Q?x6S/X9xi9e9kbkz3FTv4Q6kZS4haLD4WQXehVCjR2ZGEC/4DqOgCUqSBlmD3?=
+ =?us-ascii?Q?HgxCuQYnAd0zhrxzvjwkpobmgsvrjPllDgshgNFAh+Zx+z8luELWfX+6U6LA?=
+ =?us-ascii?Q?Hwko+O19KbplKWrpG0AQDvtaPnN5RW2G7nOZCSueLGbjRcmgbcBqeBC+Pyqi?=
+ =?us-ascii?Q?RRly6zFoa9CJON2y9SXVa56dnAI0y9uENR1FBhZs6GFWVdJRS3/FMaKyHcw/?=
+ =?us-ascii?Q?Q30uJjvs4jGkPWVOo+ta3zmBFPpGtsM0dpo6gBzb4fAWFtrortx2K90z7+Mt?=
+ =?us-ascii?Q?gzQGCRlPX5zOUeBWl6cZOcSc++ogudEAQ4otPsG93BoJenI7GFBFeaxjQgs3?=
+ =?us-ascii?Q?2wFXb9tNp3v5lC58Bjmh1xeYo17He0lzgDU39kAEcLmsG9gS6fxKN7ysQxN1?=
+ =?us-ascii?Q?aQrsNVzF9Z1Ivso8OdNcXXicrY0gsa1E0Qd4kH50t9sn5uNR4ATeTUisRVVE?=
+ =?us-ascii?Q?iX3ssnddEaUJH/DC8pJdmq0vNABYMUTO0XQ8tYFXsVaGW1mIjhamlF7beNyo?=
+ =?us-ascii?Q?v7OqlLv7oq+Lr/tIrL4XtqukLLuB8madlZy+ShmCtBZUz2EKNZ+Np7wgifCv?=
+ =?us-ascii?Q?3naXB+W25CVoDKL5NX9mwoVM0DELaPJmoKYQuk7aB86Y/Fcks7I1pCaU20Ry?=
+ =?us-ascii?Q?pY1/yiT9vjdVYVAuSDBsG0E/0btm7Y10LaVCe9zxtg5dy2R37+S1vFsVhgBh?=
+ =?us-ascii?Q?t6FDTjZ4adP9yTFyp77GmdeOkqq/wpt7XCgFgWOQxAu+r3Ew2YA3eH346BYr?=
+ =?us-ascii?Q?+cs2BfV8zUBAFSJffpTdoQqFnTS/3HtrTNdfNl1OH2QEk5njB4sknDMZUQ3C?=
+ =?us-ascii?Q?kZA+UZ1Anu5wQd3zURnVHNUV6t2dN0kMcUptYshsNV3I9kTBxdZ3NOzBx8UO?=
+ =?us-ascii?Q?k9QG8Pn2MLY0Dp6B8vqTQ9sd2pibP94ZTbfxBixd6lhTFzkFM+noJmMzWVUl?=
+ =?us-ascii?Q?OfNCZ1O3Ygj8xDbub4VZJ9hMbDqyQpyrlkM8vwRSGakmpxqaHkdWapRz0JTl?=
+ =?us-ascii?Q?dWrZAZ6dPdSSRTAgn/D/lNX68kN0Z9j0sZHqxWH7w0EvTmV9IdIwBB2j+bPA?=
+ =?us-ascii?Q?1dB+1i1HTtwDdu3lhqbRBg9iZrnPyJV8meGbrKiIOarTXVpBH5k39OyKTd1x?=
+ =?us-ascii?Q?ZZZGqx24GGK79ZtjihsnXa/bobBMEVkYVF4tpDqvECiDyxWAGqrch7UcmiDG?=
+ =?us-ascii?Q?mEH8RaaPhdrFBwm+9cZKBwTCVWc0lmqKmO7e7vsVbrmyPPCJAAd6jUUetMTB?=
+ =?us-ascii?Q?e2CbEQVJJxjtleTDN83z+vl9pTtYJpFPgwRWqqfUUzkv8qPbBGpVAEQ5GktR?=
+ =?us-ascii?Q?HJ6nB4yEBjr4HTIkn5IIksBdeAn/0aaqUFX+tVIVH2NOBb2ajIxUzC+yvCfv?=
+ =?us-ascii?Q?4/vGqlPhhv2T6jrQNTUPBQ+t6qdw8CXLzkc61x0Kzv5xEgQj4VQermvPDBK0?=
+ =?us-ascii?Q?1VCe9c59+1IA6zgMKJXOQGnvuZXDKisd7PIWmJB4Jysl4f3O?=
+Content-Type: text/plain; charset="us-ascii"
+Content-Transfer-Encoding: quoted-printable
+MIME-Version: 1.0
+X-OriginatorOrg: Nvidia.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-AuthSource: IA1PR12MB9030.namprd12.prod.outlook.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: 699d0f27-222f-4a8d-38cb-08debfa6a035
+X-MS-Exchange-CrossTenant-originalarrivaltime: 01 Jun 2026 06:25:50.5354 (UTC)
+X-MS-Exchange-CrossTenant-fromentityheader: Hosted
+X-MS-Exchange-CrossTenant-id: 43083d15-7273-40c1-b7db-39efd9ccc17a
+X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
+X-MS-Exchange-CrossTenant-userprincipalname: 1X/wL8m2X3bHLFiaPbiLfDJbuo7WlucGkcI6ZFtzBxx5Utm6RYCQ5JNflV26cCH2BXwjn1hB6yoDy8GOnSqNmA==
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: MN2PR12MB4255
+Received-SPF: permerror client-ip=2a01:111:f403:c105::5;
+ envelope-from=mhonap@nvidia.com;
+ helo=CH5PR02CU005.outbound.protection.outlook.com
+X-Spam_score_int: -14
+X-Spam_score: -1.5
+X-Spam_bar: -
+X-Spam_report: (-1.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.445,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ FORGED_SPF_HELO=1, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_PASS=-0.001,
+ SPF_NONE=0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -129,64 +162,274 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 
 
-On 22/05/26 2:37 PM, Shivaprasad G Bhat wrote:
-> Hi Narayana,
->
->
-> On 5/20/26 3:24 PM, Narayana Murty N wrote:
->> Advertise RTAS error injection call support to guests through a new
->> "ibm,errinjct-tokens" property under the RTAS node in the device tree.
->>
->> This patch introduces:
->>    - spapr_get_errinject_tokens(), which retrieves or constructs a blob
->>      of supported error injection tokens from the host or fallback data.
->>    - Integration of "ibm,errinjct-tokens" into the RTAS FDT node.
->>    - Addition of "ibm,open-errinjct" and "ibm,close-errinjct" properties
->>      to advertise open/close handlers for error injection sessions.
->>
->> The ibm,errinjct-tokens property allows guests to programmatically
->> discover supported RTAS error injection facilities, enabling safe and
->> dynamic usage. The helper routine allocates memory for the token blob,
->> which the caller must free once it has been added to the FDT.
->>
->> If the device-tree file (/proc/device-tree/rtas/ibm,errinjct-tokens)
->> is not available, a static fallback blob is generated internally.
->
-> Do we really need to probe the procfs ? This path wont exist when on 
-> baremetal.
->
-> When on L1, the host compatibility may not be assured 
-> between different L1s
->
-> and I see no specific handling of compatibilities between L1s.
->
-> Why not advertise all tokens and let the errinjct return invalid argument
->
-> if the host doesn't have support the given function? The use case is 
-> anyway
->
-> an error injection which is mostly for development and testing.
->
-Hi Shiva,
-Thanks for reviewing my patches.
-On pseries procfs entries missing indicates the error injection facility
-is locked on fsp, but on powernv opal error injection is always allowed.
-So is there any different way to know the underlying platform?
+> -----Original Message-----
+> From: Jonathan Cameron <jic23@kernel.org>
+> Sent: 19 May 2026 18:10
+> To: Manish Honap <mhonap@nvidia.com>
+> Cc: Alex Williamson <alwilliamson@nvidia.com>; Shameer Kolothum Thodi
+> <skolothumtho@nvidia.com>; Ankit Agrawal <ankita@nvidia.com>;
+> mst@redhat.com; imammedo@redhat.com; anisinha@redhat.com;
+> eric.auger@redhat.com; peter.maydell@linaro.org;
+> shannon.zhaosl@gmail.com; jonathan.cameron@huawei.com;
+> fan.ni@samsung.com; pbonzini@redhat.com; richard.henderson@linaro.org;
+> marcel.apfelbaum@gmail.com; clg@redhat.com; cohuck@redhat.com;
+> dan.j.williams@intel.com; dave.jiang@intel.com; alejandro.lucero-
+> palau@amd.com; Vikram Sethi <vsethi@nvidia.com>; Neo Jia
+> <cjia@nvidia.com>; Tarun Gupta (SW-GPU) <targupta@nvidia.com>; Zhi Wang
+> <zhiw@nvidia.com>; Krishnakant Jaju <kjaju@nvidia.com>; linux-
+> cxl@vger.kernel.org; kvm@vger.kernel.org; qemu-devel@nongnu.org; qemu-
+> arm@nongnu.org
+> Subject: Re: [RFC 1/9] hw/arm/virt: Add CXL FMWS PA window for device
+> memory
+>=20
+> External email: Use caution opening links or attachments
+>=20
+>=20
+> On Mon, 27 Apr 2026 23:42:27 +0530
+> <mhonap@nvidia.com> wrote:
+>=20
+> > From: Manish Honap <mhonap@nvidia.com>
+> >
+> > CXL VFIO passthrough needs a stable guest physical address range for
+> > device memory (DPA) that falls inside a CFMWS entry the guest
+> > discovers from ACPI CEDT. Without a dedicated range in the address
+> > map, the HDM decoder has nowhere to point.
+> >
+> > Add VIRT_HIGH_CXL_MMIO immediately after the second PCIe MMIO window.
+> > It gets its own highmem_cxl_mmio flag in VirtMachineState rather than
+> > sharing highmem_cxl, so the two slots are independently controllable
+> > even though both are currently tied to CXL bridge presence.
+>=20
+> Can we clearly state here what they are.  highmem_cxl is the root bridge
+> registers. I'm not entirely sure I yet understand what highmem_cxl_mmio
+>=20
+> >
+> > The base and size flow through GPEXConfig.cxl_mmio to
+> > acpi_dsdt_add_gpex(), which carves out a QWord memory descriptor in
+> > the first CXL root bridge's _CRS. The CFMWS window is system-wide, so
+> > only the first CXL bridge gets the descriptor - subsequent ones would
+> > produce duplicate resource claims for the same range.
+>=20
+> I don't follow. CFMWS are not system wide. They refer to one or more of
+> the root bridges. I suppose you could argue that the 'or more' bit makes
+> them kind of system wide. Right now I'm not even sure why they are in
+> CRS at all as opposed to being obtained from CEDT.
+>=20
+> Maybe a spec reference for why a bridge should be claiming these
+> regions?
+>=20
+> I'm not understanding yet why we can't use the existing CFMWS support so
+> please add information on that tot his commit message.
+>=20
+>=20
+> >
+> > build_crs() already emits the bridge's own 64-bit ranges into crs.
+> > The CFMWS window is a separate system-wide range, so only that window
+> > is appended as a new QWord descriptor; the bridge ranges are not
+> > re-emitted. A warn_report() fires if the CFMWS window overlaps any
+> > existing bridge 64-bit range, since that would indicate an address
+> > layout conflict.
+> >
+> > Signed-off-by: Zhi Wang <zhiw@nvidia.com>
+> > Signed-off-by: Manish Honap <mhonap@nvidia.com>
+> > ---
+> >  hw/arm/virt-acpi-build.c   |  5 +++++
+> >  hw/arm/virt.c              |  9 +++++++++
+> >  hw/pci-host/gpex-acpi.c    | 40
+> ++++++++++++++++++++++++++++++++++++++
+> >  include/hw/arm/virt.h      |  2 ++
+> >  include/hw/pci-host/gpex.h |  1 +
+> >  5 files changed, 57 insertions(+)
+> >
+> > diff --git a/hw/arm/virt-acpi-build.c b/hw/arm/virt-acpi-build.c index
+> > 591cfc993c..863e0680fb 100644
+> > --- a/hw/arm/virt-acpi-build.c
+> > +++ b/hw/arm/virt-acpi-build.c
+> > @@ -176,6 +176,11 @@ static void acpi_dsdt_add_pci(Aml *scope, const
+> MemMapEntry *memmap,
+> >          cfg.mmio64 =3D memmap[VIRT_HIGH_PCIE_MMIO];
+> >      }
+> >
+> > +    if (vms->highmem_cxl) {
+> > +        cfg.cxl_mmio.base =3D memmap[VIRT_HIGH_CXL_MMIO].base;
+> > +        cfg.cxl_mmio.size =3D memmap[VIRT_HIGH_CXL_MMIO].size;
+> > +    }
+> > +
+> >      acpi_dsdt_add_gpex(scope, &cfg);
+> >      QLIST_FOREACH(bus, &vms->bus->child, sibling) {
+> >          if (pci_bus_is_cxl(bus)) {
+> > diff --git a/hw/arm/virt.c b/hw/arm/virt.c index
+> > ec0d8475ca..fa07819401 100644
+> > --- a/hw/arm/virt.c
+> > +++ b/hw/arm/virt.c
+> > @@ -211,6 +211,8 @@ static const MemMapEntry base_memmap[] =3D {
+> > #define DEFAULT_HIGH_PCIE_MMIO_SIZE_GB 512  #define
+> > DEFAULT_HIGH_PCIE_MMIO_SIZE (DEFAULT_HIGH_PCIE_MMIO_SIZE_GB * GiB)
+> >
+> > +#define DEFAULT_HIGH_CXL_MMIO_SIZE  DEFAULT_HIGH_PCIE_MMIO_SIZE
+> > +
+> >  /*
+> >   * Highmem IO Regions: This memory map is floating, located after the
+> RAM.
+> >   * Each MemMapEntry base (GPA) will be dynamically computed,
+> > depending on the @@ -237,6 +239,11 @@ static MemMapEntry
+> extended_memmap[] =3D {
+> >      [VIRT_HIGH_PCIE_ECAM] =3D     { 0x0, 256 * MiB },
+> >      /* Second PCIe window */
+> >      [VIRT_HIGH_PCIE_MMIO] =3D     { 0x0, DEFAULT_HIGH_PCIE_MMIO_SIZE }=
+,
+> > +    /*
+> > +     * CXL FMWS guest PA window - separate from PCIe MMIO so the two
+> are
+> > +     * independently sizeable. Same default size for now.
+> > +     */
+> > +    [VIRT_HIGH_CXL_MMIO] =3D      { 0x0, DEFAULT_HIGH_CXL_MMIO_SIZE },
+> >      /* Any CXL Fixed memory windows come here */
+>=20
+> Why not use the infra this comment is talking about?
 
-If we advertise all tokens the error messages will confuse the user
-by returning parameter error even for facility not available.
+Hello Jonathan,
 
-Regards,
-Narayana.
-> Thanks,
->
-> Shivaprasad
->
->>
->> Signed-off-by: Narayana Murty N <nnmlinux@linux.ibm.com>
->> ---
->>   hw/ppc/spapr.c | 104 +++++++++++++++++++++++++++++++++++++++++++++++++
->>   1 file changed, 104 insertions(+)
-> <snip/>
+You're right that the new VIRT_HIGH_CXL_MMIO slot is redundant.
+I will use the existing CFMWS support in V2.
+
+>=20
+> >  };
+> >
+> > @@ -1724,6 +1731,7 @@ static void
+> create_cxl_host_reg_region(VirtMachineState *vms)
+> >                         vms->memmap[VIRT_CXL_HOST].size);
+> >      memory_region_add_subregion(sysmem, vms-
+> >memmap[VIRT_CXL_HOST].base, mr);
+> >      vms->highmem_cxl =3D true;
+> > +    vms->highmem_cxl_mmio =3D true;
+> >  }
+> >
+> >  static void create_platform_bus(VirtMachineState *vms) @@ -1897,6
+> > +1905,7 @@ static inline bool
+> *virt_get_high_memmap_enabled(VirtMachineState *vms,
+> >          &vms->highmem_cxl,
+> >          &vms->highmem_ecam,
+> >          &vms->highmem_mmio,
+> > +        &vms->highmem_cxl_mmio,
+> >      };
+> >
+> >      assert(ARRAY_SIZE(extended_memmap) - VIRT_LOWMEMMAP_LAST =3D=3D di=
+ff
+> > --git a/hw/pci-host/gpex-acpi.c b/hw/pci-host/gpex-acpi.c index
+> > d9820f9b41..7de57bbc46 100644
+> > --- a/hw/pci-host/gpex-acpi.c
+> > +++ b/hw/pci-host/gpex-acpi.c
+> > @@ -7,6 +7,7 @@
+> >  #include "hw/pci/pci_bridge.h"
+> >  #include "hw/pci/pcie_host.h"
+> >  #include "hw/acpi/cxl.h"
+> > +#include "qemu/error-report.h"
+> >
+> >  static void acpi_dsdt_add_pci_route_table(Aml *dev, uint32_t irq,
+> >                                            Aml *scope, uint8_t
+> > bus_num) @@ -108,6 +109,7 @@ void acpi_dsdt_add_gpex(Aml *scope,
+> struct GPEXConfig *cfg)
+> >      CrsRangeSet crs_range_set;
+> >      CrsRangeEntry *entry;
+> >      int i;
+> > +    bool first_cxl =3D true;
+> >
+> >      /* start to construct the tables for pxb */
+> >      crs_range_set_init(&crs_range_set);
+> > @@ -161,6 +163,44 @@ void acpi_dsdt_add_gpex(Aml *scope, struct
+> GPEXConfig *cfg)
+> >               */
+> >              crs =3D build_crs(PCI_HOST_BRIDGE(BUS(bus)->parent),
+> &crs_range_set,
+> >                              cfg->pio.base, 0, 0, 0);
+> > +            if (is_cxl && first_cxl && cfg->cxl_mmio.size) {
+> > +                uint64_t cfmws_end =3D cfg->cxl_mmio.base +
+> > +                                     cfg->cxl_mmio.size - 1;
+> > +
+> > +                /*
+> > +                 * The CXL Fixed Memory Window (CFMWS) is a system-
+> wide GPA
+> > +                 * range.  Only the first CXL root bridge emits the
+> QWord
+> > +                 * descriptor; adding it to every bridge would give
+> the OS
+> > +                 * duplicate resource claims for the same range.
+> > +                 *
+> > +                 * build_crs() has already appended the bridge's own
+> 64-bit
+> > +                 * ranges into crs.  Do not copy them again here;
+> only append
+> > +                 * the CFMWS window itself as a new QWord descriptor.
+> > +                 *
+> > +                 * Warn if the CFMWS window overlaps any range
+> already claimed
+> > +                 * by the bridge; in the current address layout they
+> should be
+> > +                 * disjoint, but catch it early if the layout ever
+> changes.
+> > +                 */
+> > +                for (i =3D 0; i < crs_range_set.mem_64bit_ranges->len;
+> i++) {
+> > +                    entry =3D
+> g_ptr_array_index(crs_range_set.mem_64bit_ranges,
+> > +                                              i);
+> > +                    if (entry->base <=3D cfmws_end &&
+> > +                        entry->limit >=3D cfg->cxl_mmio.base) {
+> > +                        warn_report("CXL CFMWS [0x%"PRIx64"-
+> 0x%"PRIx64"] "
+> > +                                    "overlaps CXL root bridge 64-bit
+> range "
+> > +                                    "[0x%"PRIx64"-0x%"PRIx64"]",
+> > +                                    cfg->cxl_mmio.base, cfmws_end,
+> > +                                    entry->base, entry->limit);
+> > +                    }
+> > +                }
+> > +                aml_append(crs,
+> > +                    aml_qword_memory(AML_POS_DECODE, AML_MIN_FIXED,
+> > +                        AML_MAX_FIXED, AML_NON_CACHEABLE,
+> AML_READ_WRITE,
+> > +                        0x0000, cfg->cxl_mmio.base, cfmws_end,
+> 0x0000,
+> > +                        cfg->cxl_mmio.size));
+> > +                first_cxl =3D false;
+> > +            }
+> > +
+> >              aml_append(dev, aml_name_decl("_CRS", crs));
+> >
+> >              if (is_cxl) {
+> > diff --git a/include/hw/arm/virt.h b/include/hw/arm/virt.h index
+> > 5fcbd1c76f..88bb3c0bdf 100644
+> > --- a/include/hw/arm/virt.h
+> > +++ b/include/hw/arm/virt.h
+> > @@ -91,6 +91,7 @@ enum {
+> >      VIRT_CXL_HOST,
+> >      VIRT_HIGH_PCIE_ECAM,
+> >      VIRT_HIGH_PCIE_MMIO,
+> > +    VIRT_HIGH_CXL_MMIO,
+> >  };
+> >
+> >  typedef enum VirtIOMMUType {
+> > @@ -147,6 +148,7 @@ struct VirtMachineState {
+> >      bool highmem;
+> >      bool highmem_compact;
+> >      bool highmem_cxl;
+> > +    bool highmem_cxl_mmio;  /* VIRT_HIGH_CXL_MMIO window; follows
+> > + highmem_cxl */
+> >      bool highmem_ecam;
+> >      bool highmem_mmio;
+> >      bool highmem_redists;
+> > diff --git a/include/hw/pci-host/gpex.h b/include/hw/pci-host/gpex.h
+> > index 1da9c85bce..a7c2e2edf3 100644
+> > --- a/include/hw/pci-host/gpex.h
+> > +++ b/include/hw/pci-host/gpex.h
+> > @@ -43,6 +43,7 @@ struct GPEXConfig {
+> >      MemMapEntry mmio32;
+> >      MemMapEntry mmio64;
+> >      MemMapEntry pio;
+> > +    MemMapEntry cxl_mmio;
+> >      int         irq;
+> >      PCIBus      *bus;
+> >      bool        pci_native_hotplug;
 
 
