@@ -4,82 +4,120 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id F37ECCD5BD1
-	for <qemu-devel@archiver.kernel.org>; Mon,  1 Jun 2026 11:52:45 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0535DCD5BD1
+	for <qemu-devel@archiver.kernel.org>; Mon,  1 Jun 2026 11:52:51 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wU1Bn-0003zW-VH; Mon, 01 Jun 2026 07:52:16 -0400
+	id 1wU18l-0004nO-Hp; Mon, 01 Jun 2026 07:49:07 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1wU1Bl-0003fT-LA
- for qemu-devel@nongnu.org; Mon, 01 Jun 2026 07:52:13 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <skolothumtho@nvidia.com>)
+ id 1wU18i-0004dh-FN; Mon, 01 Jun 2026 07:49:04 -0400
+Received: from mail-westus2azlp170120002.outbound.protection.outlook.com
+ ([2a01:111:f403:c007::2] helo=MW6PR02CU001.outbound.protection.outlook.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1wU1Bj-000653-GC
- for qemu-devel@nongnu.org; Mon, 01 Jun 2026 07:52:13 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1780314729;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=umZnldik/6FFLPzE92MsWIGrcabXan45d2nAH0uiu14=;
- b=DvaTQMbrKlmycVFxzMB45HEo9s99OWAbGiIdikCjG2Vk0/4TAkfsVWOgoJ4ndNhTPsvRGw
- rB28O4PGGJQWmqobjzt9ktKc4ein8NFVYRqwcfXgDScSs4tFwVuMoiQaEMOP39u22JNxNB
- nJ+uVVzF/EjlcbZBCexYAJDpYoMKdcc=
-Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-63-m8EGVVBIPdqGIyRYPnRPWg-1; Mon,
- 01 Jun 2026 07:52:06 -0400
-X-MC-Unique: m8EGVVBIPdqGIyRYPnRPWg-1
-X-Mimecast-MFC-AGG-ID: m8EGVVBIPdqGIyRYPnRPWg_1780314724
-Received: from mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.17])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 27F8A1956094; Mon,  1 Jun 2026 11:52:04 +0000 (UTC)
-Received: from blackfin.pond.sub.org (unknown [10.44.22.2])
- by mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 518E91956095; Mon,  1 Jun 2026 11:52:03 +0000 (UTC)
-Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
- id CB9BD21E6A01; Mon, 01 Jun 2026 13:52:00 +0200 (CEST)
-From: Markus Armbruster <armbru@redhat.com>
-To: "Naveen N Rao (AMD)" <naveen@kernel.org>
-Cc: Paolo Bonzini <pbonzini@redhat.com>,  qemu-devel
- <qemu-devel@nongnu.org>,  Daniel P. =?utf-8?Q?Berrang=C3=A9?=
- <berrange@redhat.com>,
- Eduardo Habkost <eduardo@habkost.net>,  Eric Blake <eblake@redhat.com>,
- Marcelo Tosatti <mtosatti@redhat.com>,  Zhao Liu <zhao1.liu@intel.com>,
- Nikunj A Dadhania <nikunj@amd.com>,  Tom Lendacky
- <thomas.lendacky@amd.com>,  Michael Roth <michael.roth@amd.com>,  Roy
- Hopkins <roy.hopkins@randomman.co.uk>,  Srikanth Aithal
- <srikanth.aithal@amd.com>,  Kim Phillips <kim.phillips@amd.com>,  Joerg
- Roedel <joro@8bytes.org>
-Subject: Re: [PATCH v4 6/9] target/i386: SEV: Add support for enabling
- debug-swap SEV feature
-In-Reply-To: <416e7b156e49f95958f8c5c8549b48a88c1995fc.1779281646.git.naveen@kernel.org>
- (Naveen N. Rao's message of "Wed, 20 May 2026 18:57:59 +0530")
-References: <cover.1779281646.git.naveen@kernel.org>
- <416e7b156e49f95958f8c5c8549b48a88c1995fc.1779281646.git.naveen@kernel.org>
-Date: Mon, 01 Jun 2026 13:52:00 +0200
-Message-ID: <87v7c27a1r.fsf@pond.sub.org>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+ (Exim 4.90_1) (envelope-from <skolothumtho@nvidia.com>)
+ id 1wU18e-0004y6-Nd; Mon, 01 Jun 2026 07:49:03 -0400
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=T2t+NaBYB37PTxucml8o+akrPbOK9XzWhpm5Fz4WvHn4zMq8HsSpOPswK1FrrYY/krFytOBpVkP/BhIIcfLMK6rsM2d0csqQpuJKEKAzrEzud+BdR7RrsOltDg/oCQoMWnculEUugL9+J+P79CY2i1JSg1FNEsnWfSYQXWl/5FI+npA0BXk65JWCto/ooeaENtGRS8lEwEiTrpGKUGp0PT2fdo3oWyuRBn5+Iq8d04eMacCJCe66/cyAIPa1Fc2p32Pm77FT54CxbuQX95Z3FDF3UFOftLXRTvGEPVY8AgnHfLBfW1ISNzFkOrzN70ZOS2Z595F1rz9vOZZ10LmWNQ==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=o80xHJPipyEQz163kC0jClUds8kjHNw4Ko2fDKo4Xqw=;
+ b=k9hYDGtlRbhV+zAWuorCrdDxmbpBswL9/CFo4Fqml+5jqHGqq63+RJz5EFopwczWL0lStS2gipQAlMCNdR2bFJh80Li5fJr82h9kccr0mCCBZvmb4O1AXAMJM9O+gp/crPxmGsDTH/OtlMKBx7O/kwdGOaUlaw+u+cPSdg5WVCv/oRYaX4vKks5p6uea5FDfXAcbbMDl7DJgBdP6dxSZuzzYPCg9f33i601a7Ff/Co+zPVGMvioMo6xXb0CBTdWfZZizz9KsAserJ0j/0LtAi0QXoU4qVWVkBlMmcLi2EucEauRiHLaXZzLdDsfbCnTNDwIKQOi0To7l8VU5qiyOeQ==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass (sender ip is
+ 216.228.117.161) smtp.rcpttodomain=nongnu.org smtp.mailfrom=nvidia.com;
+ dmarc=pass (p=reject sp=reject pct=100) action=none header.from=nvidia.com;
+ dkim=none (message not signed); arc=none (0)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=Nvidia.com;
+ s=selector2;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=o80xHJPipyEQz163kC0jClUds8kjHNw4Ko2fDKo4Xqw=;
+ b=Ifciy4IYHG/2nb18f932/YYMBiBqySVAAM18ctZ/aMFl2bvqx6QvFQMkMLCU7gK+gklVQ6gLjswMFgwFeTG9kvMCE1FrlWRHOJMlVmKk1ISg/iMp1BIyYRqZZtVudd2Axjvziz3it88wSUIqTQFCYFMKfF/2YOJTSdINQCHcjARux3Dbi7jrPw/wW+v8YDFTVzciICG6Wbo0C9ZE8LrKQ8j1bKhc7pu/mMUWI95TUtwg9YhsCs2CpN2g0ofUgHKVHFC3mLzte33wMRJNZ/62g7Oz4zLawzKeU+K9fWtnfkOMB1qZBW7MBucHY6Odqm5QBcOk3l0nvG60jDWer+gKLg==
+Received: from IA1P220CA0008.NAMP220.PROD.OUTLOOK.COM (2603:10b6:208:461::14)
+ by MN0PR12MB6080.namprd12.prod.outlook.com (2603:10b6:208:3c8::10)
+ with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.71.15; Mon, 1 Jun 2026
+ 11:48:51 +0000
+Received: from BL6PEPF0001AB53.namprd02.prod.outlook.com
+ (2603:10b6:208:461:cafe::94) by IA1P220CA0008.outlook.office365.com
+ (2603:10b6:208:461::14) with Microsoft SMTP Server (version=TLS1_3,
+ cipher=TLS_AES_256_GCM_SHA384) id 15.21.71.17 via Frontend Transport; Mon, 1
+ Jun 2026 11:48:51 +0000
+X-MS-Exchange-Authentication-Results: spf=pass (sender IP is 216.228.117.161)
+ smtp.mailfrom=nvidia.com;
+ dkim=none (message not signed)
+ header.d=none;dmarc=pass action=none header.from=nvidia.com;
+Received-SPF: Pass (protection.outlook.com: domain of nvidia.com designates
+ 216.228.117.161 as permitted sender) receiver=protection.outlook.com;
+ client-ip=216.228.117.161; helo=mail.nvidia.com; pr=C
+Received: from mail.nvidia.com (216.228.117.161) by
+ BL6PEPF0001AB53.mail.protection.outlook.com (10.167.241.5) with Microsoft
+ SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.21.92.5 via Frontend Transport; Mon, 1 Jun 2026 11:48:51 +0000
+Received: from rnnvmail201.nvidia.com (10.129.68.8) by mail.nvidia.com
+ (10.129.200.67) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.2562.20; Mon, 1 Jun
+ 2026 04:48:41 -0700
+Received: from NV-2Y5XW94.nvidia.com (10.126.230.37) by rnnvmail201.nvidia.com
+ (10.129.68.8) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.2562.20; Mon, 1 Jun
+ 2026 04:48:38 -0700
+From: Shameer Kolothum <skolothumtho@nvidia.com>
+To: <qemu-arm@nongnu.org>, <qemu-devel@nongnu.org>
+CC: <eric.auger@redhat.com>, <peter.maydell@linaro.org>, <clg@redhat.com>,
+ <alex@shazbot.org>, <nicolinc@nvidia.com>, <nathanc@nvidia.com>,
+ <mochs@nvidia.com>, <jan@nvidia.com>, <jgg@nvidia.com>,
+ <zhenzhong.duan@intel.com>, <kjaju@nvidia.com>, <phrdina@redhat.com>,
+ <skolothumtho@nvidia.com>
+Subject: [PATCH v6 10/31] hw/arm/tegra241-cmdqv: Probe host Tegra241 CMDQV
+ support
+Date: Mon, 1 Jun 2026 12:42:00 +0100
+Message-ID: <20260601114221.457995-11-skolothumtho@nvidia.com>
+X-Mailer: git-send-email 2.43.0
+In-Reply-To: <20260601114221.457995-1-skolothumtho@nvidia.com>
+References: <20260601114221.457995-1-skolothumtho@nvidia.com>
 MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
 Content-Type: text/plain
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.17
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=armbru@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: 8
-X-Spam_score: 0.8
-X-Spam_bar: /
-X-Spam_report: (0.8 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.445,
+X-Originating-IP: [10.126.230.37]
+X-ClientProxiedBy: rnnvmail203.nvidia.com (10.129.68.9) To
+ rnnvmail201.nvidia.com (10.129.68.8)
+X-EOPAttributedMessage: 0
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: BL6PEPF0001AB53:EE_|MN0PR12MB6080:EE_
+X-MS-Office365-Filtering-Correlation-Id: cc9e4713-d09f-4667-0a26-08debfd3c036
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam: BCL:0;
+ ARA:13230040|376014|1800799024|36860700016|82310400026|22082099003|18002099003|56012099006|11063799006;
+X-Microsoft-Antispam-Message-Info: ZDi4b6svP+B/vTEaD6x+0vT/ZBjhy+q25DfYIMAyOir0dIAJ5WgoMDKovun4VaJ/BsSjQpMhGWr/OqncfTxEOLQLftFpM9khcdK/ngxV40pvOR1IXNKrB/UO+SveO40CJdqkUnmqF3ugLvVS/z0TQNXCMluZSITmtDyTP/+nGHWItfCRPNaaddrQ1dRFFNx1rLmvc4UdEyuKNKLaA1/J6x2Bwg4paiEAPny3bfJhAWO9B6sGlCPwg5HG5DNdcvwx5KZgu2W8tmBjDiaUT6r74GS89I1u8sbzEbLbIepFCYsO1TikA/o6alUoyIRF7svbmVKYrEVRYdm6SCmc21SjOAzVX8c9X2mrB4wN8r1TtBdQW/kt3ZxgiixJMpoo+OwkK7BjM65+zkTB9zsCNXJDP1VKz91PPC5ddzlk9gVVQfHn8fI4diGjmFqDmFG8PYRf4hORRPYIex0HdRi/TqI3pomn1P3Govbi52CR8O3vWWcte9ZEYM263dPpeNateou49QsTBAtpyfMKgkuY17Sw4pr5tM+mjnerf1S4sM5B0mTS7tiOXuAy8fffnTI3+HwVpzPpVOAELtOiG8bMM6N9sLZ7NKVsDih/KDnInQ51BAvvPpLjmyLXX3w6fJNZSKM2zg4DaT69E9GLqZnGlma6SImnxDHUw7RYOVh/+eqLSBQ77E72KqbJC/2FszEAocK3i0p+s/dRZ9LUGuKIyUzm/c6E66d+rp9sBMDtHoMNx2M=
+X-Forefront-Antispam-Report: CIP:216.228.117.161; CTRY:US; LANG:en; SCL:1; SRV:;
+ IPV:NLI; SFV:NSPM; H:mail.nvidia.com; PTR:dc6edge2.nvidia.com; CAT:NONE;
+ SFS:(13230040)(376014)(1800799024)(36860700016)(82310400026)(22082099003)(18002099003)(56012099006)(11063799006);
+ DIR:OUT; SFP:1101; 
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0: uqCJp5M4adlE4EI6l+LFMhoYfievUjDWzjfMvq2LkiVQcLJIHbhy0a/sbXrUj+eZY8DZ7UbwJ4mP9rEEe4emJQtu3skP643A2bSAGf3jYUV7zu6Ym+yUzyA0zLQs4mUSoG7xJbfdcytb22n8RwF4w4cx4LizC4zuBsgtMkDlnumMixdbTIxAyshSYhllLmiuhn4Ehua5T4ZfPXuNuCDYq07UxNneceFQffxhar8BUzAQJ+tSx/0qI0xMQ/s0kk38e8zQ26kJRbVFU62szdNBGLk6xlv7OnxqbyfFJFV8vd4/mMfAZuollT8xQBVrSk0bj8TRMONAj71vmiOso+p1dB4UIfrQR2sJaACCWdQ8Pz1+Zn9NAMdBqg/WB6yxOQyeeytOJmFYo4oiP5znlsyeo+HmI5Gmskxtn6wNlX7iTmg4NSR9XPOzgWBIlEyTIRUU
+X-OriginatorOrg: Nvidia.com
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 01 Jun 2026 11:48:51.5040 (UTC)
+X-MS-Exchange-CrossTenant-Network-Message-Id: cc9e4713-d09f-4667-0a26-08debfd3c036
+X-MS-Exchange-CrossTenant-Id: 43083d15-7273-40c1-b7db-39efd9ccc17a
+X-MS-Exchange-CrossTenant-OriginalAttributedTenantConnectingIp: TenantId=43083d15-7273-40c1-b7db-39efd9ccc17a; Ip=[216.228.117.161];
+ Helo=[mail.nvidia.com]
+X-MS-Exchange-CrossTenant-AuthSource: BL6PEPF0001AB53.namprd02.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Anonymous
+X-MS-Exchange-CrossTenant-FromEntityHeader: HybridOnPrem
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: MN0PR12MB6080
+Received-SPF: permerror client-ip=2a01:111:f403:c007::2;
+ envelope-from=skolothumtho@nvidia.com;
+ helo=MW6PR02CU001.outbound.protection.outlook.com
+X-Spam_score_int: -24
+X-Spam_score: -2.5
+X-Spam_bar: --
+X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.445,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_SBL_CSS=3.335, SPF_HELO_PASS=-0.001,
- SPF_PASS=-0.001 autolearn=no autolearn_force=no
+ SPF_HELO_NONE=0.001, SPF_NONE=0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -95,153 +133,83 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-"Naveen N Rao (AMD)" <naveen@kernel.org> writes:
+Use IOMMU_GET_HW_INFO to query host support for Tegra241 CMDQV.
 
-> Add support for enabling debug-swap VMSA SEV feature in SEV-ES and
-> SEV-SNP guests through a new "debug-swap" boolean property on SEV guest
-> objects. Though the boolean property is available for plain SEV guests,
-> check_sev_features() has a check that rejects attempts to enable any SEV
-> feature for a plain SEV guest.
+Validate the returned data type, version, and minimum number of vCMDQs and
+SIDs per Tegra241 CMDQ Virtual Interface(VI). Fail the probe if the host
+does not meet these requirements.
 
-Why does it make sense to add the property to objects where it's not
-supported?
+The QEMU model supports one Virtual Interface(VI) per VM with 2 vCMDQs and
+16 SIDs per VI, so the probe ensures the host implementation is compatible
+with these limits.
 
-> Though this SEV feature is called "Debug virtualization" in the APM, KVM
-> calls this "debug swap" so use the same name for consistency.
+Reviewed-by: Eric Auger <eric.auger@redhat.com>
+Reviewed-by: Nicolin Chen <nicolinc@nvidia.com>
+Signed-off-by: Shameer Kolothum <skolothumtho@nvidia.com>
+---
+ hw/arm/tegra241-cmdqv.h |  4 ++++
+ hw/arm/tegra241-cmdqv.c | 32 ++++++++++++++++++++++++++++++--
+ 2 files changed, 34 insertions(+), 2 deletions(-)
 
-Thanks for explaining this.
-
-> Sample command-line:
->   -machine q35,confidential-guest-support=sev0 \
->   -object sev-snp-guest,id=sev0,cbitpos=51,reduced-phys-bits=1,debug-swap=on
->
-> Restrict debug-swap to SEV-SNP guests at this time due to a
-> compatibility issue with SEV-ES pflash devices.
-
-What are these issues?
-
-> Signed-off-by: Naveen N Rao (AMD) <naveen@kernel.org>
-> ---
->  target/i386/sev.h |  1 +
->  target/i386/sev.c | 26 ++++++++++++++++++++++++++
->  qapi/qom.json     |  7 ++++++-
->  3 files changed, 33 insertions(+), 1 deletion(-)
->
-> diff --git a/target/i386/sev.h b/target/i386/sev.h
-> index b84ca3ce0b67..d19a39669747 100644
-> --- a/target/i386/sev.h
-> +++ b/target/i386/sev.h
-> @@ -47,6 +47,7 @@ bool sev_snp_enabled(void);
->  #define SEV_SNP_POLICY_DBG      0x80000
->  
->  #define SVM_SEV_FEAT_SNP_ACTIVE     BIT(0)
-> +#define SVM_SEV_FEAT_DEBUG_SWAP     BIT(5)
->  
->  typedef struct SevKernelLoaderContext {
->      char *setup_data;
-> diff --git a/target/i386/sev.c b/target/i386/sev.c
-> index 4553fe4d6e4a..4532b1b6a484 100644
-> --- a/target/i386/sev.c
-> +++ b/target/i386/sev.c
-> @@ -328,6 +328,11 @@ sev_set_guest_state(SevCommonState *sev_common, SevState new_state)
->      sev_common->state = new_state;
->  }
->  
-> +static bool is_sev_feature_set(SevCommonState *sev_common, uint64_t feature)
-> +{
-> +    return !!(sev_common->sev_features & feature);
-> +}
-> +
->  static void sev_set_feature(SevCommonState *sev_common, uint64_t feature, bool set)
->  {
->      if (set) {
-> @@ -527,6 +532,12 @@ static int check_sev_features(SevCommonState *sev_common, uint64_t sev_features,
->              __func__);
->          return -1;
->      }
-> +    if (sev_features && sev_es_enabled() && !sev_snp_enabled()) {
-> +        error_setg(errp,
-> +                   "%s: SEV features are not supported with SEV-ES at this time",
-> +                   __func__);
-
-Once again, I'm confused about SEV.  Remind me: what kinds of SEV guests
-exist?  The commit message suggests "plain", "ES", "SNP".  What do
-sev_es_enabled() and sev_snp_enabled() return for each of these?
-
-What are the "SEV features"?  Can we expect users to know?  I suspect
-they need to know to fix the problem!
-
-Are they exactly debug-swap?
-
-__func__ in an error message meant for users is an anti-pattern.  Not an
-objection to this patch; it matches existing errors around here.
-
-> +        return -1;
-> +    }
->      if (sev_features && !sev_es_enabled()) {
->          error_setg(errp,
->                     "%s: SEV features require either SEV-ES or SEV-SNP to be enabled",
-> @@ -2800,6 +2811,16 @@ static int cgs_set_guest_policy(ConfidentialGuestPolicyType policy_type,
->      return 0;
->  }
->  
-> +static bool sev_common_get_debug_swap(Object *obj, Error **errp)
-> +{
-> +    return is_sev_feature_set(SEV_COMMON(obj), SVM_SEV_FEAT_DEBUG_SWAP);
-> +}
-> +
-> +static void sev_common_set_debug_swap(Object *obj, bool value, Error **errp)
-> +{
-> +    sev_set_feature(SEV_COMMON(obj), SVM_SEV_FEAT_DEBUG_SWAP, value);
-> +}
-> +
->  static void
->  sev_common_class_init(ObjectClass *oc, const void *data)
->  {
-> @@ -2825,6 +2846,11 @@ sev_common_class_init(ObjectClass *oc, const void *data)
->                                     sev_common_set_kernel_hashes);
->      object_class_property_set_description(oc, "kernel-hashes",
->              "add kernel hashes to guest firmware for measured Linux boot");
-> +    object_class_property_add_bool(oc, "debug-swap",
-> +                                   sev_common_get_debug_swap,
-> +                                   sev_common_set_debug_swap);
-> +    object_class_property_set_description(oc, "debug-swap",
-> +            "enable virtualization of debug registers");
->  }
->  
->  static void
-> diff --git a/qapi/qom.json b/qapi/qom.json
-> index dd45ac1087c3..e2bb716b603e 100644
-> --- a/qapi/qom.json
-> +++ b/qapi/qom.json
-> @@ -1017,6 +1017,10 @@
->  #     designated guest firmware page for measured boot with -kernel
->  #     (default: false) (since 6.2)
->  #
-> +# @debug-swap: enable virtualization of debug registers,
-> +#     only supported on SEV-ES and SEV-SNP guests
-> +#     (default: false) (since 11.1)
-> +#
->  # Features:
->  #
->  # @confidential-guest-reset: If present, the hypervisor supports
-> @@ -1028,7 +1032,8 @@
->    'data': { '*sev-device': 'str',
->              '*cbitpos': 'uint32',
->              'reduced-phys-bits': 'uint32',
-> -            '*kernel-hashes': 'bool' },
-> +            '*kernel-hashes': 'bool',
-> +            '*debug-swap': 'bool' },
->    'features': ['confidential-guest-reset']}
->  
->  ##
-
-This is SevCommonProperties, the common base type of SevGuestProperties
-(configuration for sev-guest QOM objects) and SevSnpGuestProperties
-(sev-snp-guest objects).
-
-So, all SEV objects have property @debug-swap.  I figure the check you
-add to check_sev_features() rejects it for certain SEV objects.  I don't
-quite understand for which ones.
+diff --git a/hw/arm/tegra241-cmdqv.h b/hw/arm/tegra241-cmdqv.h
+index 74a6954017..38c8b27b4d 100644
+--- a/hw/arm/tegra241-cmdqv.h
++++ b/hw/arm/tegra241-cmdqv.h
+@@ -10,6 +10,10 @@
+ #ifndef HW_ARM_TEGRA241_CMDQV_H
+ #define HW_ARM_TEGRA241_CMDQV_H
+ 
++#define CMDQV_VER                 1
++#define CMDQV_NUM_CMDQ_LOG2       1
++#define CMDQV_NUM_SID_PER_VI_LOG2 4
++
+ const SMMUv3AccelCmdqvOps *tegra241_cmdqv_get_ops(void);
+ 
+ #endif /* HW_ARM_TEGRA241_CMDQV_H */
+diff --git a/hw/arm/tegra241-cmdqv.c b/hw/arm/tegra241-cmdqv.c
+index ad5a0d4611..3a19a1af56 100644
+--- a/hw/arm/tegra241-cmdqv.c
++++ b/hw/arm/tegra241-cmdqv.c
+@@ -38,8 +38,36 @@ static bool tegra241_cmdqv_init(SMMUv3State *s, Error **errp)
+ static bool tegra241_cmdqv_probe(SMMUv3State *s, HostIOMMUDeviceIOMMUFD *idev,
+                                  Error **errp)
+ {
+-    error_setg(errp, "NVIDIA Tegra241 CMDQV is unsupported");
+-    return false;
++    uint32_t data_type = IOMMU_HW_INFO_TYPE_TEGRA241_CMDQV;
++    struct iommu_hw_info_tegra241_cmdqv cmdqv_info;
++    uint64_t caps;
++
++    if (!iommufd_backend_get_device_info(idev->iommufd, idev->devid, &data_type,
++                                         &cmdqv_info, sizeof(cmdqv_info), &caps,
++                                         NULL, errp)) {
++        return false;
++    }
++    if (data_type != IOMMU_HW_INFO_TYPE_TEGRA241_CMDQV) {
++        error_setg(errp, "Host CMDQV: unexpected data type %u (expected %u)",
++                   data_type, IOMMU_HW_INFO_TYPE_TEGRA241_CMDQV);
++        return false;
++    }
++    if (cmdqv_info.version != CMDQV_VER) {
++        error_setg(errp, "Host CMDQV: unsupported version %u (expected %u)",
++                   cmdqv_info.version, CMDQV_VER);
++        return false;
++    }
++    if (cmdqv_info.log2vcmdqs < CMDQV_NUM_CMDQ_LOG2) {
++        error_setg(errp, "Host CMDQV: insufficient vCMDQs log2=%u (need >= %u)",
++                   cmdqv_info.log2vcmdqs, CMDQV_NUM_CMDQ_LOG2);
++        return false;
++    }
++    if (cmdqv_info.log2vsids < CMDQV_NUM_SID_PER_VI_LOG2) {
++        error_setg(errp, "Host CMDQV: insufficient SIDs log2=%u (need >= %u)",
++                   cmdqv_info.log2vsids, CMDQV_NUM_SID_PER_VI_LOG2);
++        return false;
++    }
++    return true;
+ }
+ 
+ static const SMMUv3AccelCmdqvOps tegra241_cmdqv_ops = {
+-- 
+2.43.0
 
 
