@@ -4,45 +4,45 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 57231CD5BD1
-	for <qemu-devel@archiver.kernel.org>; Mon,  1 Jun 2026 17:19:12 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E5D41CD5BD1
+	for <qemu-devel@archiver.kernel.org>; Mon,  1 Jun 2026 17:20:25 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wU6Hl-0002nw-Mw; Mon, 01 Jun 2026 13:18:45 -0400
+	id 1wU6Ij-0003cs-SL; Mon, 01 Jun 2026 13:19:46 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <clg@kaod.org>)
- id 1wU6Ha-0002eE-Ve; Mon, 01 Jun 2026 13:18:40 -0400
-Received: from smtpout1.mo528.mail-out.ovh.net ([46.105.34.251])
+ id 1wU6Id-0003aB-Uo; Mon, 01 Jun 2026 13:19:39 -0400
+Received: from smtpout1.mo2.mail-out.ovh.net ([79.137.123.219])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <clg@kaod.org>)
- id 1wU6HY-0002YZ-Ew; Mon, 01 Jun 2026 13:18:34 -0400
+ id 1wU6Ib-0002hp-BN; Mon, 01 Jun 2026 13:19:39 -0400
 Received: from director5.derp.mail-out.ovh.net
  (director5.derp.mail-out.ovh.net [51.68.94.138])
- by mo528.mail-out.ovh.net (Postfix) with ESMTPS id 4gTgfB3d67z5wb6;
- Mon,  1 Jun 2026 17:18:26 +0000 (UTC)
+ by mo2.mail-out.ovh.net (Postfix) with ESMTPS id 4gTggP6pVlz4CJ3;
+ Mon,  1 Jun 2026 17:19:29 +0000 (UTC)
 Received: from director5.derp.mail-out.ovh.net
  (director5.derp.mail-out.ovh.net. [127.0.0.1])
  by director5.derp.mail-out.ovh.net (inspect_sender_mail_agent) with SMTP
- for <alistair@alistair23.me>; Mon,  1 Jun 2026 17:18:26 +0000 (UTC)
-Received: from mta10.priv.ovhmail-u2.ea.mail.ovh.net (unknown [10.110.101.250])
- by director5.derp.mail-out.ovh.net (Postfix) with ESMTPS id 4gTgfB0lvWz7vR4;
- Mon,  1 Jun 2026 17:18:26 +0000 (UTC)
-Received: from kaod.org (unknown [10.1.6.3])
+ for <alistair@alistair23.me>; Mon,  1 Jun 2026 17:19:29 +0000 (UTC)
+Received: from mta7.priv.ovhmail-u2.ea.mail.ovh.net (unknown [10.110.58.137])
+ by director5.derp.mail-out.ovh.net (Postfix) with ESMTPS id
+ 4gTggP47Drz7vQd; Mon,  1 Jun 2026 17:19:29 +0000 (UTC)
+Received: from kaod.org (unknown [10.1.6.2])
  (Authenticated sender: clg@kaod.org)
- by mta10.priv.ovhmail-u2.ea.mail.ovh.net (Postfix) with ESMTPSA id
- 5C2D91923041; Mon,  1 Jun 2026 17:18:24 +0000 (UTC)
+ by mta7.priv.ovhmail-u2.ea.mail.ovh.net (Postfix) with ESMTPSA id EB33C203041; 
+ Mon,  1 Jun 2026 17:19:27 +0000 (UTC)
 Authentication-Results: garm.ovh; auth=pass
- (GARM-95G0017c7da7c9-6dda-4fe0-afa4-0f69e01a1626,
+ (GARM-96R00101c704de-8256-4b8e-94e1-7083206a8c59,
  E35A50153BDE4127F94F88E3CE699B0651996EDF) smtp.auth=clg@kaod.org
 X-OVh-ClientIp: 82.64.250.170
-Message-ID: <87eed226-a92f-41c2-8e23-4e74ffa09466@kaod.org>
-Date: Mon, 1 Jun 2026 19:18:23 +0200
+Message-ID: <3e22bece-b6b5-4980-9d20-d38c6685361a@kaod.org>
+Date: Mon, 1 Jun 2026 19:19:27 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v4 11/21] hw/arm/ast27x0: Share FMC controller with SSP
- and TSP
+Subject: Re: [PATCH v4 12/21] hw/arm/aspeed_ast27x0: Add unimplemented
+ Privilege Controller MMIO regions for SSP/TSP
 To: Jamin Lin <jamin_lin@aspeedtech.com>,
  Peter Maydell <peter.maydell@linaro.org>,
  Steven Lee <steven_lee@aspeedtech.com>, Troy Lee <leetroy@gmail.com>,
@@ -55,7 +55,7 @@ To: Jamin Lin <jamin_lin@aspeedtech.com>,
  <qemu-devel@nongnu.org>, "open list:Block layer core" <qemu-block@nongnu.org>
 Cc: Troy Lee <troy_lee@aspeedtech.com>
 References: <20260417032837.2664122-1-jamin_lin@aspeedtech.com>
- <20260417032837.2664122-12-jamin_lin@aspeedtech.com>
+ <20260417032837.2664122-13-jamin_lin@aspeedtech.com>
 Content-Language: en-US, fr
 From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>
 Autocrypt: addr=clg@kaod.org; keydata=
@@ -100,23 +100,23 @@ Autocrypt: addr=clg@kaod.org; keydata=
  3GlqivBNkmYsHYSlFsbxc37E1HpTEaSWsGfAHQoPn9qrDJgsgcbBVc1gkUT6hnxShKPp4Pls
  ZVMNjvPAnr5TEBgHkk54HQRhhwcYv1T2QumQizDiU6iOrUzBThaMhZO3i927SG2DwWDVzZlt
  KrCMD1aMPvb3NU8FOYRhNmIFR3fcalYr+9gDuVKe8BVz4atMOoktmt0GWTOC8P4=
-In-Reply-To: <20260417032837.2664122-12-jamin_lin@aspeedtech.com>
+In-Reply-To: <20260417032837.2664122-13-jamin_lin@aspeedtech.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-x-ovh-tracer-id: 13754556213091806347
+Content-Transfer-Encoding: 7bit
+x-ovh-tracer-id: 13772289136505760907
 X-VR-SPAMSTATE: OK
 X-VR-SPAMSCORE: -100
-X-VR-SPAMCAUSE: dmFkZTEkUb3OGfqke6ZcvyqwQoZdOTmnDvCWUUQFI5LDFyv7LopAkx1s5yNwlTZyPw6QdGKb0IjZXeMMzOZ8y4YhT8KPe0suolKAbId/bquqxGUGK76qW9tk/n7+b1zK9O39hsRBKzIA0cRFVzF655R2dypiaQTvqtMLqeC5amJ90+84VgRI5o/tpXG0M7SDtd5zgXZexl2f7hJnbu7mE9n7eNreH9ITYMmiSkd5dZwwQ719PrDwwrGKrMUWJ1BW+7Gm3gD0ctd6AoCGO4QIKlQOIKoWsH0AMSDhBa45ifnsPyWcs09g91JjH3eODe6GZg1P3TCx8kD/tZUi8kihffO3LQhhlwoS8R1iGMMG5VqIHLrbXxdGD0u2W0tsURDewULZ/zbnLsAtxmnbKvbw39UuInzRWBXCZrzHO5gZ4s4zohqIpp+dBoI/Vj9sa1+vCNgFSIQ0Zmoh+yIx427OJZWw4xLZ+Zg6FrNr8qo30Z58V+g+qpUkQhuEZAMwt7LE53z0XSdxqrthvBpW7AfdkT/9n8D4sddAJACeQ57VYuLLUOBe/TBCFOPni0u+tefZBK6ENh58Tu1FygKtUYUGTXLs2g8X88vJPRVwUGQAEqlNT433/7DcmrYGuzUkJZgamv5hjMIgp6ODJiy5gz/OwqkjWZHkAsjkQCFGYdiEaeL+SYyXBg
-DKIM-Signature: a=rsa-sha256; bh=bB6oamHjqVimcyH0YhJe7s++Tqfu5xSrWFchLyvst4c=; 
+X-VR-SPAMCAUSE: dmFkZTG11xkYjVc7pQ60C4X1ARPNSR7czKXT9p5cn/Wl47NcnaLYjmQ0sJleCnDEkzILpt+51H+z8nEQyYie+WIQDHUUaH8vO3ZyjUVJbH9NPmqon+b+IEwi8U7XM8MpTaUlf25NrcB28mcLjlnzsdFregVxhhcaFjwkdSgWIsn9hOrXKFe//sMxr5srWqMa4MfX23z/U6zN7756WTAp6MyFeoHx4MB+t6+luLf8D/q0xPS5BTkoK+JwEpidoBAk2+qEuE/+GbgD8dreWx3jHPNf0/40yxCbePNcMH7pNwCRYIUyq1/QHsJht01NlYO8RC0DyEJcdflqGhdjcvOgP4+FYuTkE6PZ/NLjyC1trx+mnGZaIpF0/jeBuM6a0CrTmvVkg6PTzSKrzzY8UI3LTQTKXoJkSd2B+E03asNSaxnE0mTzvHGyUlWWh0UJ1pOnKivTcfmUGsAa9UZ9TDaKkip4HvkseIL/Yt87cewfwvl3nnFGHhJvUDywuxd9JXeTaKLYrJYVHi6wpKCwkS7AlxG55UTrrwwAUjjKERQke3EHzQm4g7Qd8y042+04dNvkL3yrlER4Ntxmd5kj3pevRLoYupNTt+GEM33EIHXSUukk7781S+6GXKiKLWPjFoSo7bzaau32F9HNgKjaQ0nBNYznLn6MKOXDW5lI6kU4PrCixO5A1w
+DKIM-Signature: a=rsa-sha256; bh=riw5ThzDCG0mKZTh0uiSKclEKbq+bekWYIMjpV3cFR0=; 
  c=relaxed/relaxed; d=kaod.org; h=From; s=ovhmo393970-selector1;
- t=1780334307; v=1;
- b=dw+2lyoLIET4r7Fo63QaMWhTmOM/3bQuoVK3MsjLS19wNN7rGCJ09Mc+JwmPUK5qi+OaXU9D
- VNb9vcJDmRDLbY4YxN8pOqSZ/o+fFKFBaie7VCD6pr3WDp9Z/XadMHEdLEy6tTgVvkb0GKXdgUP
- +K0tU/ylRpJc6lZ7g+7hjl0W0k0qBZGFDMHocbtNWeCi+zkzpmDgZwpaIRDDpXeUEUfJvUzoAbk
- J9IQxklGLcRkZ48oOMAjomeAVrtgTKeqo3A5yj+ZNjneFXPk0Gx4RzE0bCfaVh13WWVcwcXLhli
- cbbQN05xHwFJRFyjnsHdB7v6ex+j/wl6qxfRjq6dA98bw==
-Received-SPF: pass client-ip=46.105.34.251; envelope-from=clg@kaod.org;
- helo=smtpout1.mo528.mail-out.ovh.net
+ t=1780334370; v=1;
+ b=js6w5wzaA6dwfDm4qZlahCmHbt3zVmwUZYZcKqSLSO3uD9TFkNpdM0fNWUtD8DdvOGgUth53
+ kYaigIZY0n/8X04P91jhmEguzXQgp6sGFlq2/n6PKSx9dm5P2oV0QvlxZnx2AfIIRw3DWe+nGUS
+ LOWQy+7mtKiK/GeQXKq+006hHBVZgaMk3ykmAnS3VoA3AmsXjWaCzeoZjaJmUIXKjHYoUvB/1BE
+ uK3QD+2C4sT9wIdff9+N4YzyyhvyRNhuktxik2YMdwlnBzcRz2liqACaS5Dwx2O+XnyA61XTbjG
+ 5VbKWu9buv26qw4oN8zD7seEcDdwkQ7tXWkO7Vnc6ajIA==
+Received-SPF: pass client-ip=79.137.123.219; envelope-from=clg@kaod.org;
+ helo=smtpout1.mo2.mail-out.ovh.net
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -140,159 +140,140 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On 4/17/26 05:28, Jamin Lin wrote:
-> AST2700 provides a single FMC controller shared by the main CA35 processor
-> (PSP) and the SSP/TSP coprocessors.
+> The AST2700 SSP/TSP firmware accesses Privilege Controller MMIO regions that
+> are not yet implemented in QEMU.
 > 
->  From the PSP perspective, the FMC controller is memory-mapped at
-> 0x14000000–0x140000FF. The SSP and TSP access the same controller through
-> a different address window at 0x74000000–0x740000FF.
+> This change adds unimplemented MMIO devices for the Privilege Controller
+> blocks and maps them to their corresponding physical addresses in the SSP/TSP
+> address space. These stub devices allow QEMU to safely handle firmware
+> accesses and prevent spurious exceptions, while accurately reflecting
+> the hardware memory map.
 > 
-> This change allows the SSP and TSP SoC models to reference the existing
-> PSP FMC instance instead of creating independent controllers. An MMIO
-> alias is added in the SSP and TSP address spaces to map their FMC access
-> window to the shared FMC device.
-> 
-> This ensures consistent FMC state across PSP, SSP, and TSP and matches
-> the AST2700 hardware design.
+> No functional changes.
 > 
 > Signed-off-by: Jamin Lin <jamin_lin@aspeedtech.com>
 > ---
->   include/hw/arm/aspeed_coprocessor.h |  2 ++
->   hw/arm/aspeed_ast27x0-fc.c          |  4 ++++
->   hw/arm/aspeed_ast27x0-ssp.c         | 10 ++++++++++
->   hw/arm/aspeed_ast27x0-tsp.c         | 10 ++++++++++
->   4 files changed, 26 insertions(+)
+>   include/hw/arm/aspeed_coprocessor.h |  1 +
+>   include/hw/arm/aspeed_soc.h         |  2 ++
+>   hw/arm/aspeed_ast27x0-ssp.c         | 12 ++++++++++++
+>   hw/arm/aspeed_ast27x0-tsp.c         | 12 ++++++++++++
+>   4 files changed, 27 insertions(+)
+
+please send first.
+
+Thanks,
+
+C.
+
 > 
 > diff --git a/include/hw/arm/aspeed_coprocessor.h b/include/hw/arm/aspeed_coprocessor.h
-> index 4db995d251..2460a11401 100644
+> index 2460a11401..084040bbed 100644
 > --- a/include/hw/arm/aspeed_coprocessor.h
 > +++ b/include/hw/arm/aspeed_coprocessor.h
-> @@ -50,7 +50,9 @@ struct Aspeed27x0CoprocessorState {
+> @@ -46,6 +46,7 @@ struct Aspeed27x0CoprocessorState {
+>       AspeedINTCState intc[2];
+>       UnimplementedDeviceState ipc[2];
+>       UnimplementedDeviceState scuio;
+> +    UnimplementedDeviceState pric[2];
+>   
 >       ARMv7MState armv7m;
 >   
->       MemoryRegion scu_alias;
-> +    MemoryRegion fmc_alias;
->       Aspeed2700SCUState *scu;
-> +    AspeedSMCState *fmc;
+> diff --git a/include/hw/arm/aspeed_soc.h b/include/hw/arm/aspeed_soc.h
+> index adf2f2898a..d39e4f7553 100644
+> --- a/include/hw/arm/aspeed_soc.h
+> +++ b/include/hw/arm/aspeed_soc.h
+> @@ -297,6 +297,8 @@ enum {
+>       ASPEED_DEV_IOEXP1_INTCIO,
+>       ASPEED_DEV_IOEXP0_I3C,
+>       ASPEED_DEV_IOEXP1_I3C,
+> +    ASPEED_DEV_PRIC0,
+> +    ASPEED_DEV_PRIC1,
 >   };
 >   
->   #define TYPE_ASPEED27X0SSP_COPROCESSOR "aspeed27x0ssp-coprocessor"
-> diff --git a/hw/arm/aspeed_ast27x0-fc.c b/hw/arm/aspeed_ast27x0-fc.c
-> index 62bd6a0568..56dd86e2c2 100644
-> --- a/hw/arm/aspeed_ast27x0-fc.c
-> +++ b/hw/arm/aspeed_ast27x0-fc.c
-> @@ -161,6 +161,8 @@ static bool ast2700fc_ssp_init(MachineState *machine, Error **errp)
->                                OBJECT(&psp->sram), &error_abort);
->       object_property_set_link(OBJECT(&s->ssp), "scu",
->                                OBJECT(&s->ca35.scu), &error_abort);
-
-I would change ast2700fc_ssp_init() and ast2700fc_tsp_init() to use
-a AspeedSoCState argument and not a MachineState. This to reflect
-that the AspeedSoCState *needs* to be realized before the coprocessors.
-A comment is worth adding.
-
-
-> +    object_property_set_link(OBJECT(&s->ssp), "fmc",
-> +                             OBJECT(&psp->fmc), &error_abort);
->       if (!qdev_realize(DEVICE(&s->ssp), NULL, errp)) {
->           return false;
->       }
-> @@ -193,6 +195,8 @@ static bool ast2700fc_tsp_init(MachineState *machine, Error **errp)
->                                OBJECT(&psp->sram), &error_abort);
->       object_property_set_link(OBJECT(&s->tsp), "scu",
->                                OBJECT(&s->ca35.scu), &error_abort);
-> +    object_property_set_link(OBJECT(&s->tsp), "fmc",
-> +                             OBJECT(&psp->fmc), &error_abort);
->       if (!qdev_realize(DEVICE(&s->tsp), NULL, errp)) {
->           return false;
->       }
+>   const char *aspeed_soc_cpu_type(const char * const *valid_cpu_types);
 > diff --git a/hw/arm/aspeed_ast27x0-ssp.c b/hw/arm/aspeed_ast27x0-ssp.c
-> index 0500c02755..bfd6fe4485 100644
+> index bfd6fe4485..467fdea9db 100644
 > --- a/hw/arm/aspeed_ast27x0-ssp.c
 > +++ b/hw/arm/aspeed_ast27x0-ssp.c
-> @@ -26,6 +26,7 @@ static const hwaddr aspeed_soc_ast27x0ssp_memmap[] = {
+> @@ -22,11 +22,13 @@ static const hwaddr aspeed_soc_ast27x0ssp_memmap[] = {
+>       [ASPEED_DEV_SDRAM]     =  0x00000000,
+>       [ASPEED_DEV_SRAM]      =  0x70000000,
+>       [ASPEED_DEV_INTC]      =  0x72100000,
+> +    [ASPEED_DEV_PRIC0]     =  0x72140000,
+>       [ASPEED_DEV_SCU]       =  0x72C02000,
 >       [ASPEED_DEV_TIMER1]    =  0x72C10000,
 >       [ASPEED_DEV_UART4]     =  0x72C1A000,
 >       [ASPEED_DEV_IPC0]      =  0x72C1C000,
-> +    [ASPEED_DEV_FMC]       =  0x74000000,
+>       [ASPEED_DEV_FMC]       =  0x74000000,
+> +    [ASPEED_DEV_PRIC1]     =  0x74100000,
 >       [ASPEED_DEV_SCUIO]     =  0x74C02000,
 >       [ASPEED_DEV_INTCIO]    =  0x74C18000,
 >       [ASPEED_DEV_UART0]     =  0x74C33000,
-> @@ -256,6 +257,13 @@ static void aspeed_soc_ast27x0ssp_realize(DeviceState *dev_soc, Error **errp)
->       sysbus_connect_irq(SYS_BUS_DEVICE(s->uart), 0,
->                          aspeed_soc_ast27x0ssp_get_irq(s, s->uart_dev));
-
-Please check that a->fmc is set :
-
-
-   if (!a->fmc) {
-       error_setg(errp, TYPE_ASPEED27X0SSP_COPROCESSOR ": 'fmc' link not set");
-       return;
-   }
-
-
-
+> @@ -142,6 +144,10 @@ static void aspeed_soc_ast27x0ssp_init(Object *obj)
+>                               TYPE_UNIMPLEMENTED_DEVICE);
+>       object_initialize_child(obj, "scuio", &a->scuio,
+>                               TYPE_UNIMPLEMENTED_DEVICE);
+> +    object_initialize_child(obj, "pric0", &a->pric[0],
+> +                            TYPE_UNIMPLEMENTED_DEVICE);
+> +    object_initialize_child(obj, "pric1", &a->pric[1],
+> +                            TYPE_UNIMPLEMENTED_DEVICE);
+>   }
 >   
-> +    /* FMC */
-> +    memory_region_init_alias(&a->fmc_alias, OBJECT(a), "fmc.alias",
-> +                             &a->fmc->mmio, 0,
-> +                             memory_region_size(&a->fmc->mmio));
-
-Isn't that too big for 0x14000000–0x140000FF ?
-
-What about the flash contents window ? Is there one in the coprocessor
-socs ? Is is unimplemented ?
-
-
-> +    memory_region_add_subregion(s->memory, sc->memmap[ASPEED_DEV_FMC],
-> +                                &a->fmc_alias);
-> +
->       aspeed_mmio_map_unimplemented(s->memory, SYS_BUS_DEVICE(&s->timerctrl),
->                                     "aspeed.timerctrl",
->                                     sc->memmap[ASPEED_DEV_TIMER1], 0x200);
-> @@ -273,6 +281,8 @@ static void aspeed_soc_ast27x0ssp_realize(DeviceState *dev_soc, Error **errp)
+>   static void aspeed_soc_ast27x0ssp_realize(DeviceState *dev_soc, Error **errp)
+> @@ -276,6 +282,12 @@ static void aspeed_soc_ast27x0ssp_realize(DeviceState *dev_soc, Error **errp)
+>       aspeed_mmio_map_unimplemented(s->memory, SYS_BUS_DEVICE(&a->scuio),
+>                                     "aspeed.scuio",
+>                                     sc->memmap[ASPEED_DEV_SCUIO], 0x1000);
+> +    aspeed_mmio_map_unimplemented(s->memory, SYS_BUS_DEVICE(&a->pric[0]),
+> +                                  "aspeed.pric0",
+> +                                  sc->memmap[ASPEED_DEV_PRIC0], 0x1000);
+> +    aspeed_mmio_map_unimplemented(s->memory, SYS_BUS_DEVICE(&a->pric[1]),
+> +                                  "aspeed.pric1",
+> +                                  sc->memmap[ASPEED_DEV_PRIC1], 0x1000);
+>   }
+>   
 >   static const Property aspeed_27x0_coprocessor_properties[] = {
->       DEFINE_PROP_LINK("scu", Aspeed27x0CoprocessorState, scu,
->                        TYPE_ASPEED_2700_SCU, Aspeed2700SCUState *),
-> +    DEFINE_PROP_LINK("fmc", Aspeed27x0CoprocessorState, fmc, TYPE_ASPEED_SMC,
-> +                     AspeedSMCState *),
->   };
->   
->   static void aspeed_soc_ast27x0ssp_class_init(ObjectClass *klass,
 > diff --git a/hw/arm/aspeed_ast27x0-tsp.c b/hw/arm/aspeed_ast27x0-tsp.c
-> index 4da4741d8a..166dcb14ed 100644
+> index 166dcb14ed..3a90bbec51 100644
 > --- a/hw/arm/aspeed_ast27x0-tsp.c
 > +++ b/hw/arm/aspeed_ast27x0-tsp.c
-> @@ -26,6 +26,7 @@ static const hwaddr aspeed_soc_ast27x0tsp_memmap[] = {
+> @@ -22,11 +22,13 @@ static const hwaddr aspeed_soc_ast27x0tsp_memmap[] = {
+>       [ASPEED_DEV_SDRAM]     =  0x00000000,
+>       [ASPEED_DEV_SRAM]      =  0x70000000,
+>       [ASPEED_DEV_INTC]      =  0x72100000,
+> +    [ASPEED_DEV_PRIC0]     =  0x72140000,
+>       [ASPEED_DEV_SCU]       =  0x72C02000,
 >       [ASPEED_DEV_TIMER1]    =  0x72C10000,
 >       [ASPEED_DEV_UART4]     =  0x72C1A000,
 >       [ASPEED_DEV_IPC0]      =  0x72C1C000,
-> +    [ASPEED_DEV_FMC]       =  0x74000000,
+>       [ASPEED_DEV_FMC]       =  0x74000000,
+> +    [ASPEED_DEV_PRIC1]     =  0x74100000,
 >       [ASPEED_DEV_SCUIO]     =  0x74C02000,
 >       [ASPEED_DEV_INTCIO]    =  0x74C18000,
 >       [ASPEED_DEV_UART0]     =  0x74C33000,
-> @@ -253,6 +254,13 @@ static void aspeed_soc_ast27x0tsp_realize(DeviceState *dev_soc, Error **errp)
->       sysbus_connect_irq(SYS_BUS_DEVICE(s->uart), 0,
->                          aspeed_soc_ast27x0tsp_get_irq(s, s->uart_dev));
+> @@ -142,6 +144,10 @@ static void aspeed_soc_ast27x0tsp_init(Object *obj)
+>                               TYPE_UNIMPLEMENTED_DEVICE);
+>       object_initialize_child(obj, "scuio", &a->scuio,
+>                               TYPE_UNIMPLEMENTED_DEVICE);
+> +    object_initialize_child(obj, "pric0", &a->pric[0],
+> +                            TYPE_UNIMPLEMENTED_DEVICE);
+> +    object_initialize_child(obj, "pric1", &a->pric[1],
+> +                            TYPE_UNIMPLEMENTED_DEVICE);
+>   }
 >   
-> +    /* FMC */
-> +    memory_region_init_alias(&a->fmc_alias, OBJECT(a), "fmc.alias",
-> +                             &a->fmc->mmio, 0,
-> +                             memory_region_size(&a->fmc->mmio));
-> +    memory_region_add_subregion(s->memory, sc->memmap[ASPEED_DEV_FMC],
-> +                                &a->fmc_alias);
-> +
->       aspeed_mmio_map_unimplemented(s->memory, SYS_BUS_DEVICE(&s->timerctrl),
->                                     "aspeed.timerctrl",
->                                     sc->memmap[ASPEED_DEV_TIMER1], 0x200);
-> @@ -270,6 +278,8 @@ static void aspeed_soc_ast27x0tsp_realize(DeviceState *dev_soc, Error **errp)
+>   static void aspeed_soc_ast27x0tsp_realize(DeviceState *dev_soc, Error **errp)
+> @@ -273,6 +279,12 @@ static void aspeed_soc_ast27x0tsp_realize(DeviceState *dev_soc, Error **errp)
+>       aspeed_mmio_map_unimplemented(s->memory, SYS_BUS_DEVICE(&a->scuio),
+>                                     "aspeed.scuio",
+>                                     sc->memmap[ASPEED_DEV_SCUIO], 0x1000);
+> +    aspeed_mmio_map_unimplemented(s->memory, SYS_BUS_DEVICE(&a->pric[0]),
+> +                                  "aspeed.pric0",
+> +                                  sc->memmap[ASPEED_DEV_PRIC0], 0x1000);
+> +    aspeed_mmio_map_unimplemented(s->memory, SYS_BUS_DEVICE(&a->pric[1]),
+> +                                  "aspeed.pric1",
+> +                                  sc->memmap[ASPEED_DEV_PRIC1], 0x1000);
+>   }
+>   
 >   static const Property aspeed_27x0_coprocessor_properties[] = {
->       DEFINE_PROP_LINK("scu", Aspeed27x0CoprocessorState, scu,
->                        TYPE_ASPEED_2700_SCU, Aspeed2700SCUState *),
-> +    DEFINE_PROP_LINK("fmc", Aspeed27x0CoprocessorState, fmc, TYPE_ASPEED_SMC,
-> +                     AspeedSMCState *),
->   };
->   
->   static void aspeed_soc_ast27x0tsp_class_init(ObjectClass *klass,
 
 
