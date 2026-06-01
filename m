@@ -4,95 +4,99 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B01ACCD6E60
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id AD02ACD5BD1
 	for <qemu-devel@archiver.kernel.org>; Mon,  1 Jun 2026 21:56:03 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wUAaj-0006cF-Tw; Mon, 01 Jun 2026 17:54:37 -0400
+	id 1wUAak-0006cJ-KD; Mon, 01 Jun 2026 17:54:38 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <stefanb@linux.ibm.com>)
- id 1wUAag-0006aW-9z
- for qemu-devel@nongnu.org; Mon, 01 Jun 2026 17:54:34 -0400
+ id 1wUAaj-0006br-3d
+ for qemu-devel@nongnu.org; Mon, 01 Jun 2026 17:54:37 -0400
 Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <stefanb@linux.ibm.com>)
- id 1wUAad-0003qK-Mo
- for qemu-devel@nongnu.org; Mon, 01 Jun 2026 17:54:34 -0400
-Received: from pps.filterd (m0353729.ppops.net [127.0.0.1])
+ id 1wUAah-0003rt-Bu
+ for qemu-devel@nongnu.org; Mon, 01 Jun 2026 17:54:36 -0400
+Received: from pps.filterd (m0356517.ppops.net [127.0.0.1])
  by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 651EYswP867987; Mon, 1 Jun 2026 21:54:29 GMT
+ 651KCq7x3018752; Mon, 1 Jun 2026 21:54:33 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
- :content-transfer-encoding:date:from:in-reply-to:message-id
- :mime-version:references:subject:to; s=pp1; bh=AVcIyrH3cFL80WBc2
- kgpR87P3qLBk9N1sWKrDncjlbs=; b=qFHbgBxP5EQ7LjVMWZ495Wn5g8AwuROsE
- AruuQDsF7p1fHgyuI0Ys3HGGsP5AhwX4dAqDT15A6GJDWutjISYGSE91hLeTPwvE
- yfykTcxNt9yHeauVc0qEBdUE9rc5g7mKyKmZ2jrLWXb/L26kNThTAPwv/5J34ojo
- TqZY2o8w3eFtdJWAe77B5A3cXGZsZ1BnYd1EpdTgZrGk9NUvicB/ekt2+jqADHPa
- BEvaQdULsUsjL/ZVWR3u0Gll0yUGcVpIT3EjzgfnoGHfrhRocSagIAcisUTpTgvh
- g6hueKN5odEf2/j/16+QdBo03hdcPFQZ6n8gEr6B08FxWwbEsbarw==
-Received: from ppma22.wdc07v.mail.ibm.com
- (5c.69.3da9.ip4.static.sl-reverse.com [169.61.105.92])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4efqjq32d1-1
+ :content-transfer-encoding:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to; s=pp1; bh=6Ye9pX
+ muzuXUSWs3zUFd+bVb/hVoMg833CQ8t25Cp+0=; b=SHsUpj1LS+60kB3q/C3uQ+
+ 2++Ud8PFS+dygJoxW625IVTrrt+mcjtxeVXcEFo/pAmHuWEvXlnei9bwaemf7yIT
+ PplHmrn4vY8ooqvHP79JAWnO0HeGQqnTHL/z/Wnet5hmQyYgiKiU4+HnzV1qPPyB
+ 3VWxksEdwyJzEpnXSEVUC/yVDHVyYA28gv81ORS/6lrrhOgu1MnsntJP9iU6Nrmv
+ QwqbDTSGJquTuwzMu303TmEBM65AMoWJfRcah/yq1NRp2aHjDUNrbhjyfOhkqT0q
+ 4tB6t/zq5QIwZrlqC09WJmbW/SLWo9m6p779k4pX+J8Y1bTnXw2T8hXKl4sIbFGg
+ ==
+Received: from ppma12.dal12v.mail.ibm.com
+ (dc.9e.1632.ip4.static.sl-reverse.com [50.22.158.220])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4efqm4u29v-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Mon, 01 Jun 2026 21:54:29 +0000 (GMT)
-Received: from pps.filterd (ppma22.wdc07v.mail.ibm.com [127.0.0.1])
- by ppma22.wdc07v.mail.ibm.com (8.18.1.7/8.18.1.7) with ESMTP id 651Ls63d005268;
- Mon, 1 Jun 2026 21:54:28 GMT
-Received: from smtprelay05.wdc07v.mail.ibm.com ([172.16.1.72])
- by ppma22.wdc07v.mail.ibm.com (PPS) with ESMTPS id 4egakvrctb-1
+ Mon, 01 Jun 2026 21:54:33 +0000 (GMT)
+Received: from pps.filterd (ppma12.dal12v.mail.ibm.com [127.0.0.1])
+ by ppma12.dal12v.mail.ibm.com (8.18.1.7/8.18.1.7) with ESMTP id 651Ls98R001981;
+ Mon, 1 Jun 2026 21:54:32 GMT
+Received: from smtprelay02.dal12v.mail.ibm.com ([172.16.1.4])
+ by ppma12.dal12v.mail.ibm.com (PPS) with ESMTPS id 4ega7q8fpf-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Mon, 01 Jun 2026 21:54:28 +0000 (GMT)
+ Mon, 01 Jun 2026 21:54:32 +0000 (GMT)
 Received: from smtpav03.wdc07v.mail.ibm.com (smtpav03.wdc07v.mail.ibm.com
  [10.39.53.230])
- by smtprelay05.wdc07v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 651LsSfv3342870
+ by smtprelay02.dal12v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 651LsVEe13501086
  (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Mon, 1 Jun 2026 21:54:28 GMT
+ Mon, 1 Jun 2026 21:54:32 GMT
 Received: from smtpav03.wdc07v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id E977258054;
- Mon,  1 Jun 2026 21:54:27 +0000 (GMT)
+ by IMSVA (Postfix) with ESMTP id A4E275805A;
+ Mon,  1 Jun 2026 21:54:31 +0000 (GMT)
 Received: from smtpav03.wdc07v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 7260A5805C;
- Mon,  1 Jun 2026 21:54:27 +0000 (GMT)
+ by IMSVA (Postfix) with ESMTP id 1B7E258054;
+ Mon,  1 Jun 2026 21:54:31 +0000 (GMT)
 Received: from sbct-3.pok.ibm.com (unknown [9.47.158.153])
  by smtpav03.wdc07v.mail.ibm.com (Postfix) with ESMTP;
- Mon,  1 Jun 2026 21:54:27 +0000 (GMT)
+ Mon,  1 Jun 2026 21:54:30 +0000 (GMT)
 From: Stefan Berger <stefanb@linux.ibm.com>
 To: qemu-devel@nongnu.org
-Cc: peter.maydell@linaro.org, Stefan Berger <stefanb@linux.ibm.com>,
- Arun Menon <armenon@redhat.com>
-Subject: [PULL v1 05/16] tests: Check whether the I2C master flag is set
-Date: Mon,  1 Jun 2026 17:53:58 -0400
-Message-ID: <20260601215410.517009-6-stefanb@linux.ibm.com>
+Cc: peter.maydell@linaro.org, Arun Menon <armenon@redhat.com>,
+ Stefan Berger <stefanb@linux.ibm.com>,
+ =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>
+Subject: [PULL v1 10/16] hw/tpm: Refactor CRB_CTRL_START register access
+Date: Mon,  1 Jun 2026 17:54:03 -0400
+Message-ID: <20260601215410.517009-11-stefanb@linux.ibm.com>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260601215410.517009-1-stefanb@linux.ibm.com>
 References: <20260601215410.517009-1-stefanb@linux.ibm.com>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 X-TM-AS-GCONF: 00
-X-Proofpoint-ORIG-GUID: DWgbgdj3gq5xZhXMVX7Zg_hnDwjVjX3Y
-X-Proofpoint-GUID: DWgbgdj3gq5xZhXMVX7Zg_hnDwjVjX3Y
-X-Authority-Analysis: v=2.4 cv=bcVbluPB c=1 sm=1 tr=0 ts=6a1dff95 cx=c_pps
- a=5BHTudwdYE3Te8bg5FgnPg==:117 a=5BHTudwdYE3Te8bg5FgnPg==:17
- a=FelO9ux0wxsA:10 a=VkNPw1HP01LnGYTKEx00:22 a=RnoormkPH1_aCDwRdu11:22
- a=uAbxVGIbfxUO_5tXvNgY:22 a=VwQbUJbxAAAA:8 a=VnNF1IyMAAAA:8 a=20KFwNOVAAAA:8
- a=hDG30pTYrb-JhymLzFwA:9
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNjAxMDIxMSBTYWx0ZWRfX9e7EUFWhwECG
- GgMUiL/1lKneu/xee8vBzdqnQS4zs9dqrpIev+JMw5J5wYBgtyO7SlhHsAK7/Gt53GKv6qkvJSA
- S4NaiY6zq/53XjnhnCjSJgh4n2C2D9VYg8+hnB2CwDqscDddH4jnAQndCgtKmB77AT3XA2veizn
- ejXw23ToUBQd/PlT/KdcUaoYUdu0bhEYf2MCGiJaWXW/9OIRIIpwjNfb3XfKBd15DCESooQs5RY
- wUaTpxVQrFFkkdprDIvXGoz+lAqol3mwBYyENGF3F7QSEV6d2SzVSRb3+VZF7ALo5+sXzJjxYIj
- 8BdkOrhMwl2YPhLlycDLvyR/t/EEuq+1xxkH6fkgp1Cf8hZjw6cNm17j+5cAi965dGL9GzLGjmH
- abnZTY9tt6jlF4D3pSEqOUjJ2g4H25u5FedcHW1jALlBxTpsDeVVyH/0VkxqG3dEQ2zGiDdnYPK
- 3xgjwDUifhKG79FUjUQ==
+X-Proofpoint-GUID: c9YfUJC2cFjv5KyewmPmeqjMnaTI4nrk
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNjAxMDIxMSBTYWx0ZWRfX5pXh2cXfnzcR
+ L7TYOF7Q3oLrnbqtikV+QPmTNzhgg4YSqeNEYouUdqeNBfeoDX7Anng7Vpw+HUYZHzgItdjspVM
+ yR5zJaVbo7YIEXrozxIop8mKcLm7tJQM9LeJh5rVfcuBAdQbz8Z1jhOkEth/sO4bpcG4GlcKINW
+ Hi0nHOxbCK/4odyYz42zHRNS1qkluqplyaFydDFYaNpHVHugBP8UIRK/hk7xxBIAK+t7OLEDAXh
+ hi1US84zNDQgd1L5yW7zgQ/XyS8OvSh/wdUBSV/xH6ACMkBu8gUpodAOBM3HCqgHLscUhDAXqUY
+ 1BEFt04nDZt7uXN3YiY6ayWWff44PfCFaQdJf4i19ud4cj8qrcyQCOKd3/xdBTpeYfBU/L+YiW/
+ sW2yXQJZcdB98ynGl42YPcMRh8Y1jmZUgqduydli161AdOwJgJjRQ5o24CRpSRgWelz/SlqmtF3
+ mvTRs0eWE771UNh7nfg==
+X-Proofpoint-ORIG-GUID: c9YfUJC2cFjv5KyewmPmeqjMnaTI4nrk
+X-Authority-Analysis: v=2.4 cv=Vf3H+lp9 c=1 sm=1 tr=0 ts=6a1dff99 cx=c_pps
+ a=bLidbwmWQ0KltjZqbj+ezA==:117 a=bLidbwmWQ0KltjZqbj+ezA==:17
+ a=IkcTkHD0fZMA:10 a=FelO9ux0wxsA:10 a=VkNPw1HP01LnGYTKEx00:22
+ a=RnoormkPH1_aCDwRdu11:22 a=U7nrCbtTmkRpXpFmAIza:22 a=VwQbUJbxAAAA:8
+ a=20KFwNOVAAAA:8 a=VnNF1IyMAAAA:8 a=CNonqlENI5_idcZclm0A:9 a=3ZKOabzyN94A:10
+ a=QEXdDO2ut3YA:10
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.125,FMLib:17.12.100.49
  definitions=2026-06-01_06,2026-05-28_03,2025-10-01_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- impostorscore=0 clxscore=1015 adultscore=0 priorityscore=1501 phishscore=0
- lowpriorityscore=0 bulkscore=0 malwarescore=0 spamscore=0 suspectscore=0
+ priorityscore=1501 suspectscore=0 adultscore=0 bulkscore=0 impostorscore=0
+ phishscore=0 lowpriorityscore=0 malwarescore=0 clxscore=1015 spamscore=0
  classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
  reason=mlx scancount=1 engine=8.22.0-2605210000 definitions=main-2606010211
 Received-SPF: pass client-ip=148.163.156.1; envelope-from=stefanb@linux.ibm.com;
@@ -119,45 +123,42 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Replace the 'once' variable with a check for whether the master flag is
-set so that the flag can be set when needed.
+From: Arun Menon <armenon@redhat.com>
 
-Reviewed-by: Arun Menon <armenon@redhat.com>
-Link: https://lore.kernel.org/qemu-devel/20260429121743.1346635-6-stefanb@linux.ibm.com
+Replace manual bitwise operations with ARRAY_FIELD_DP32 macros
+No functional changes.
+
+Signed-off-by: Arun Menon <armenon@redhat.com>
+Reviewed-by: Stefan Berger <stefanb@linux.ibm.com>
+Reviewed-by: Marc-André Lureau <marcandre.lureau@redhat.com>
+Link: https://lore.kernel.org/qemu-devel/20260506075813.120781-3-armenon@redhat.com
 Signed-off-by: Stefan Berger <stefanb@linux.ibm.com>
 ---
- tests/qtest/qtest_aspeed.c | 9 ++++++---
- 1 file changed, 6 insertions(+), 3 deletions(-)
+ hw/tpm/tpm_crb.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/tests/qtest/qtest_aspeed.c b/tests/qtest/qtest_aspeed.c
-index f6da9adea9..7bf5abb9be 100644
---- a/tests/qtest/qtest_aspeed.c
-+++ b/tests/qtest/qtest_aspeed.c
-@@ -15,18 +15,21 @@
- #include "qtest_aspeed.h"
- #include "hw/i2c/aspeed_i2c.h"
+diff --git a/hw/tpm/tpm_crb.c b/hw/tpm/tpm_crb.c
+index bfa09c04cf..a0f472652e 100644
+--- a/hw/tpm/tpm_crb.c
++++ b/hw/tpm/tpm_crb.c
+@@ -146,7 +146,7 @@ static void tpm_crb_mmio_write(void *opaque, hwaddr addr,
+             tpm_crb_get_active_locty(s) == locty) {
+             void *mem = memory_region_get_ram_ptr(&s->cmdmem);
  
-+static bool aspeed_i2c_is_master_enabled(QTestState *s, uint32_t baseaddr)
-+{
-+    return qtest_readl(s, baseaddr + A_I2CC_FUN_CTRL) & A_I2CD_MASTER_EN;
-+}
-+
- static void aspeed_i2c_startup(QTestState *s, uint32_t baseaddr,
-                                uint8_t slave_addr, uint8_t reg)
+-            s->regs[R_CRB_CTRL_START] |= CRB_START_INVOKE;
++            ARRAY_FIELD_DP32(s->regs, CRB_CTRL_START, Start, 1);
+             s->cmd = (TPMBackendCmd) {
+                 .in = mem,
+                 .in_len = MIN(tpm_cmd_get_size(mem), s->be_buffer_size),
+@@ -195,7 +195,7 @@ static void tpm_crb_request_completed(TPMIf *ti, int ret)
  {
-     uint32_t v;
--    static int once;
+     CRBState *s = CRB(ti);
  
--    if (!once) {
-+    if (!aspeed_i2c_is_master_enabled(s, baseaddr)) {
-         /* one time: enable master */
-        qtest_writel(s, baseaddr + A_I2CC_FUN_CTRL, 0);
-        v = qtest_readl(s, baseaddr + A_I2CC_FUN_CTRL) | A_I2CD_MASTER_EN;
-        qtest_writel(s, baseaddr + A_I2CC_FUN_CTRL, v);
--       once = 1;
-     }
- 
-     /* select device */
+-    s->regs[R_CRB_CTRL_START] &= ~CRB_START_INVOKE;
++    ARRAY_FIELD_DP32(s->regs, CRB_CTRL_START, Start, 0);
+     if (ret != 0) {
+         ARRAY_FIELD_DP32(s->regs, CRB_CTRL_STS,
+                          tpmSts, 1); /* fatal error */
 -- 
 2.54.0
 
