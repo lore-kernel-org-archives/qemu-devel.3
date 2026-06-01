@@ -4,105 +4,109 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D9081CD6E61
-	for <qemu-devel@archiver.kernel.org>; Mon,  1 Jun 2026 21:56:04 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 357B5CD6E65
+	for <qemu-devel@archiver.kernel.org>; Mon,  1 Jun 2026 21:56:05 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wUAag-0006aV-Cj; Mon, 01 Jun 2026 17:54:34 -0400
+	id 1wUAam-0006du-IC; Mon, 01 Jun 2026 17:54:40 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <stefanb@linux.ibm.com>)
- id 1wUAae-0006Z9-77
- for qemu-devel@nongnu.org; Mon, 01 Jun 2026 17:54:32 -0400
-Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
+ id 1wUAak-0006cQ-O9
+ for qemu-devel@nongnu.org; Mon, 01 Jun 2026 17:54:38 -0400
+Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <stefanb@linux.ibm.com>)
- id 1wUAac-0003pw-0M
- for qemu-devel@nongnu.org; Mon, 01 Jun 2026 17:54:31 -0400
-Received: from pps.filterd (m0356516.ppops.net [127.0.0.1])
+ id 1wUAai-0003s6-QN
+ for qemu-devel@nongnu.org; Mon, 01 Jun 2026 17:54:38 -0400
+Received: from pps.filterd (m0360083.ppops.net [127.0.0.1])
  by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 651LGMpd3717409; Mon, 1 Jun 2026 21:54:29 GMT
+ 651Ebg7f2914981; Mon, 1 Jun 2026 21:54:34 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
- :content-transfer-encoding:date:from:in-reply-to:message-id
- :mime-version:references:subject:to; s=pp1; bh=nCWF5NdZ0vtqDTdte
- KyVyZcxIQshdlAW4YcBUaaZ7G4=; b=rjj1/UEYWCGefVVnWeLMvAv4w9ygU71Rg
- ulDpLtq93lHmGWt1kruIdChbP7/l5JqGAFcttef1u+fOYUerNDcjYSb1iwgtrOSq
- GxmGZRGEjl0Z+JjIhFV1zTrxW9PLZ7OfrN5A4JwAYDtGhJbm5b42X88mH6CgTq9m
- Kva6kHJdZxzoiHHg1tl1zcOUopBiJFagndlx9XuZ1I5OQvn+d550Alxgb2smuYR2
- zMJ2D6+FqrXkLT3tahHP2c85TBn7t0YrjLFIGCidUnphUW6ch7B27gteJ9I6ICPN
- KaVw6i/Xxi2KZnDMP4/VDnjEWJh1M7vJP85gKHpb/yA0PiQ98yQSA==
-Received: from ppma13.dal12v.mail.ibm.com
- (dd.9e.1632.ip4.static.sl-reverse.com [50.22.158.221])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4efnahjwha-1
+ :content-transfer-encoding:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to; s=pp1; bh=4e8hWC
+ mPjEb9LEEKqu0PDNGGEs+2/SRKzAG4LNKxa/o=; b=A6cDatfMesXl4AmyQRFd+C
+ VFNvHilnponL15I62bs1Fy11q6LxkCOa5zcu3o5sLfVjMfuHARmD4oSoil0gaioK
+ qnjepYcArmXiMEyHijcykK6BspDSYfmopoOemlJSpoxoGq8JQYN0K4BRQqQmZPPy
+ hJArOFKBtktbDy7pkBsY6O+vPlZnxydNHwMH0ZxTg93CeG2K0mLdDJq7rQQyPWUv
+ eemLdf8oE90AwCz1pBhz/BWXrOnfC9E4EBGd9ff3GtLrpwxr5PkQKIXxsywM0/gO
+ OhvfD2bm2rlEvrqQSV5gMkxm87hBUS+iJqtXWsFL75stYPkfTEUdX5gjEqbMuo9A
+ ==
+Received: from ppma23.wdc07v.mail.ibm.com
+ (5d.69.3da9.ip4.static.sl-reverse.com [169.61.105.93])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4efqd434hk-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Mon, 01 Jun 2026 21:54:28 +0000 (GMT)
-Received: from pps.filterd (ppma13.dal12v.mail.ibm.com [127.0.0.1])
- by ppma13.dal12v.mail.ibm.com (8.18.1.7/8.18.1.7) with ESMTP id 651Ls8oI022925;
- Mon, 1 Jun 2026 21:54:28 GMT
-Received: from smtprelay04.wdc07v.mail.ibm.com ([172.16.1.71])
- by ppma13.dal12v.mail.ibm.com (PPS) with ESMTPS id 4egcegg1s9-1
+ Mon, 01 Jun 2026 21:54:34 +0000 (GMT)
+Received: from pps.filterd (ppma23.wdc07v.mail.ibm.com [127.0.0.1])
+ by ppma23.wdc07v.mail.ibm.com (8.18.1.7/8.18.1.7) with ESMTP id 651LsDG4002514;
+ Mon, 1 Jun 2026 21:54:33 GMT
+Received: from smtprelay03.dal12v.mail.ibm.com ([172.16.1.5])
+ by ppma23.wdc07v.mail.ibm.com (PPS) with ESMTPS id 4egbqh869t-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Mon, 01 Jun 2026 21:54:27 +0000 (GMT)
+ Mon, 01 Jun 2026 21:54:33 +0000 (GMT)
 Received: from smtpav03.wdc07v.mail.ibm.com (smtpav03.wdc07v.mail.ibm.com
  [10.39.53.230])
- by smtprelay04.wdc07v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 651LsRAe30933666
+ by smtprelay03.dal12v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 651LsWUx32375304
  (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Mon, 1 Jun 2026 21:54:27 GMT
+ Mon, 1 Jun 2026 21:54:32 GMT
 Received: from smtpav03.wdc07v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 4C7CC5805C;
- Mon,  1 Jun 2026 21:54:27 +0000 (GMT)
+ by IMSVA (Postfix) with ESMTP id 605E458054;
+ Mon,  1 Jun 2026 21:54:32 +0000 (GMT)
 Received: from smtpav03.wdc07v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id C957458054;
- Mon,  1 Jun 2026 21:54:26 +0000 (GMT)
+ by IMSVA (Postfix) with ESMTP id CA8D95805D;
+ Mon,  1 Jun 2026 21:54:31 +0000 (GMT)
 Received: from sbct-3.pok.ibm.com (unknown [9.47.158.153])
  by smtpav03.wdc07v.mail.ibm.com (Postfix) with ESMTP;
- Mon,  1 Jun 2026 21:54:26 +0000 (GMT)
+ Mon,  1 Jun 2026 21:54:31 +0000 (GMT)
 From: Stefan Berger <stefanb@linux.ibm.com>
 To: qemu-devel@nongnu.org
-Cc: peter.maydell@linaro.org, Stefan Berger <stefanb@linux.ibm.com>,
- Arun Menon <armenon@redhat.com>
-Subject: [PULL v1 04/16] tests: Rename id of tpmdev to tpm0
-Date: Mon,  1 Jun 2026 17:53:57 -0400
-Message-ID: <20260601215410.517009-5-stefanb@linux.ibm.com>
+Cc: peter.maydell@linaro.org, Arun Menon <armenon@redhat.com>,
+ =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
+ Stefan Berger <stefanb@linux.ibm.com>
+Subject: [PULL v1 11/16] hw/tpm: Add internal buffer state for chunking
+Date: Mon,  1 Jun 2026 17:54:04 -0400
+Message-ID: <20260601215410.517009-12-stefanb@linux.ibm.com>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260601215410.517009-1-stefanb@linux.ibm.com>
 References: <20260601215410.517009-1-stefanb@linux.ibm.com>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 X-TM-AS-GCONF: 00
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNjAxMDIxMSBTYWx0ZWRfX1ucw1/bRwn8S
- B3kTuNVEMU7T8S7Fzmc2wEeZ4v1bmtbV8ooqmD6qRrcgqu4iXZQTGcY4PdUK8i09ZqbrIC+xYPW
- RTltGq+l/LrytOQp4GN+D4fkgOhI340Lt8fgU5xz9M6AI1jofYESW1mLOS3+R0BNfAxIUO2DWXe
- E2Arx9wMve4UQZxh8KSjeB8DsOYzJNuddhAHnNfdFtmk76Cl3r4P+2vZiuKRTF2ONBSRPvgfzQ7
- xDa7L0UjrdEWdiGo3yDkpNCjpEOoLrcrfSlRseNaGYB/BPz3AMxm+NLxr4XR2iARZBc1wyLgfM4
- kWsFyWa3FEtmlWETcwpppfJfiaPIdipHUfOigb+38O1R7mC+QYKq5hu3G41lagf2Ia85r/BGCuM
- 93bNKeI+TnJIFZBg0JucF5zLQxFAdqW5nGAMk7Me7wgWpoksUHEGfamylsYlTLY3Pw5S7FyN1Ac
- yVpJnOv+WF8dGhFK/uA==
-X-Proofpoint-ORIG-GUID: YfcKF5BXGmdwWgAL36_VF6nv3sWYwFGn
-X-Authority-Analysis: v=2.4 cv=cOzQdFeN c=1 sm=1 tr=0 ts=6a1dff94 cx=c_pps
- a=AfN7/Ok6k8XGzOShvHwTGQ==:117 a=AfN7/Ok6k8XGzOShvHwTGQ==:17
- a=FelO9ux0wxsA:10 a=VkNPw1HP01LnGYTKEx00:22 a=RnoormkPH1_aCDwRdu11:22
- a=Y2IxJ9c9Rs8Kov3niI8_:22 a=VwQbUJbxAAAA:8 a=VnNF1IyMAAAA:8 a=20KFwNOVAAAA:8
- a=RyEZR7e21Zd7IhWO4CoA:9
-X-Proofpoint-GUID: YfcKF5BXGmdwWgAL36_VF6nv3sWYwFGn
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNjAxMDIxMSBTYWx0ZWRfX+lPgZq48w8H/
+ 0Qr1OVIcy6x2Z9WWur09y7+tzwlxDmZSL/2MNE7E7tJPzt5biI0Vv+2Rt431+R5znQBwDLvFEBF
+ udUN8OSRJebV57FjywkTyRkD2jxpuEJ5rsltoFumjrOATSEiHXXkPnlMXBYXLVk/UIP8eFJ4Gp4
+ At3VJz4YUbNOTxDK24+qSxz+IMhrgkR7AlYKrxwBmxxYv1yvyQWErihE6Vj19tzbCsjioBdrFI1
+ V0dvr6Qosw0741HbFp26tZ186SkApKjd8qbUSbhnLUFS01pBPhtNb6bHOjaZl/FiPVmXieGu3kb
+ A0VTVa9jOmCmjeKPDF710QChwn1N0IbO3xwHoaTpeJcnCLUt8Vw7IZpTs+CbIR0PnDhj4E3skY7
+ 1shXV1OOgN4jV5Y7Sy4gIXd+iZ6qtET7JBRSWG6eieMq3PzlFhN4Ofmi/qfSPf6eiVq/ca2cXZa
+ ZnGIOTjizPDjfP4xQVg==
+X-Proofpoint-GUID: dOMEsx9RnA0YuqrSNcp3EHbKvswyM8fq
+X-Proofpoint-ORIG-GUID: dOMEsx9RnA0YuqrSNcp3EHbKvswyM8fq
+X-Authority-Analysis: v=2.4 cv=DZknbPtW c=1 sm=1 tr=0 ts=6a1dff9a cx=c_pps
+ a=3Bg1Hr4SwmMryq2xdFQyZA==:117 a=3Bg1Hr4SwmMryq2xdFQyZA==:17
+ a=IkcTkHD0fZMA:10 a=FelO9ux0wxsA:10 a=VkNPw1HP01LnGYTKEx00:22
+ a=RnoormkPH1_aCDwRdu11:22 a=iQ6ETzBq9ecOQQE5vZCe:22 a=VwQbUJbxAAAA:8
+ a=20KFwNOVAAAA:8 a=VnNF1IyMAAAA:8 a=kRDQt3OQBu7VwNepQ70A:9 a=3ZKOabzyN94A:10
+ a=QEXdDO2ut3YA:10
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.125,FMLib:17.12.100.49
  definitions=2026-06-01_06,2026-05-28_03,2025-10-01_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- clxscore=1015 impostorscore=0 lowpriorityscore=0 spamscore=0 bulkscore=0
- malwarescore=0 phishscore=0 suspectscore=0 priorityscore=1501 adultscore=0
+ spamscore=0 clxscore=1015 suspectscore=0 impostorscore=0 lowpriorityscore=0
+ phishscore=0 malwarescore=0 priorityscore=1501 bulkscore=0 adultscore=0
  classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
  reason=mlx scancount=1 engine=8.22.0-2605210000 definitions=main-2606010211
-Received-SPF: pass client-ip=148.163.158.5; envelope-from=stefanb@linux.ibm.com;
- helo=mx0b-001b2d01.pphosted.com
+Received-SPF: pass client-ip=148.163.156.1; envelope-from=stefanb@linux.ibm.com;
+ helo=mx0a-001b2d01.pphosted.com
 X-Spam_score_int: -26
 X-Spam_score: -2.7
 X-Spam_bar: --
 X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
- RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
+ RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -119,58 +123,109 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Rename the id of the tpmdev from dev to tpm0 because this 'dev' cannot
-be used when the tpm-tis-i2c device is used.
+From: Arun Menon <armenon@redhat.com>
 
-Reviewed-by: Arun Menon <armenon@redhat.com>
-Link: https://lore.kernel.org/qemu-devel/20260429121743.1346635-5-stefanb@linux.ibm.com
+- Introduce GByteArray buffers to hold the command request and response
+  data during chunked TPM CRB transactions.
+- Add helper function to clean them.
+
+Signed-off-by: Arun Menon <armenon@redhat.com>
+Reviewed-by: Marc-André Lureau <marcandre.lureau@redhat.com>
+Reviewed-by: Stefan Berger <stefanb@linux.ibm.com>
+Link: https://lore.kernel.org/qemu-devel/20260506075813.120781-4-armenon@redhat.com
 Signed-off-by: Stefan Berger <stefanb@linux.ibm.com>
 ---
- tests/qtest/tpm-tests.c | 4 ++--
- tests/qtest/tpm-util.c  | 8 ++++----
- 2 files changed, 6 insertions(+), 6 deletions(-)
+ hw/tpm/tpm_crb.c | 33 +++++++++++++++++++++++++++++----
+ 1 file changed, 29 insertions(+), 4 deletions(-)
 
-diff --git a/tests/qtest/tpm-tests.c b/tests/qtest/tpm-tests.c
-index 8bd3288f80..1b4f932b0c 100644
---- a/tests/qtest/tpm-tests.c
-+++ b/tests/qtest/tpm-tests.c
-@@ -49,8 +49,8 @@ void tpm_test_swtpm_test(const char *src_tpm_path, tx_func *tx,
-     args = g_strdup_printf(
-         "%s "
-         "-chardev socket,id=chr,path=%s "
--        "-tpmdev emulator,id=dev,chardev=chr "
--        "-device %s,tpmdev=dev",
-+        "-tpmdev emulator,id=tpm0,chardev=chr "
-+        "-device %s,tpmdev=tpm0",
-         machine_options ? : "", addr->u.q_unix.path, ifmodel);
+diff --git a/hw/tpm/tpm_crb.c b/hw/tpm/tpm_crb.c
+index a0f472652e..1c944d7ef2 100644
+--- a/hw/tpm/tpm_crb.c
++++ b/hw/tpm/tpm_crb.c
+@@ -38,10 +38,13 @@ struct CRBState {
+     TPMBackend *tpmbe;
+     TPMBackendCmd cmd;
+     uint32_t regs[TPM_CRB_R_MAX];
++    size_t be_buffer_size;
+     MemoryRegion mmio;
+     MemoryRegion cmdmem;
  
-     s = qtest_start(args);
-diff --git a/tests/qtest/tpm-util.c b/tests/qtest/tpm-util.c
-index 63cd5b69db..0f9bef8971 100644
---- a/tests/qtest/tpm-util.c
-+++ b/tests/qtest/tpm-util.c
-@@ -240,8 +240,8 @@ void tpm_util_migration_start_qemu(QTestState **src_qemu,
-     src_qemu_args = g_strdup_printf(
-         "%s "
-         "-chardev socket,id=chr,path=%s "
--        "-tpmdev emulator,id=dev,chardev=chr "
--        "-device %s,tpmdev=dev ",
-+        "-tpmdev emulator,id=tpm0,chardev=chr "
-+        "-device %s,tpmdev=tpm0 ",
-         machine_options ? : "", src_tpm_addr->u.q_unix.path, ifmodel);
+-    size_t be_buffer_size;
++    GByteArray *command_buffer;
++    GByteArray *response_buffer;
++    uint32_t response_offset;
  
-     *src_qemu = qtest_init(src_qemu_args);
-@@ -249,8 +249,8 @@ void tpm_util_migration_start_qemu(QTestState **src_qemu,
-     dst_qemu_args = g_strdup_printf(
-         "%s "
-         "-chardev socket,id=chr,path=%s "
--        "-tpmdev emulator,id=dev,chardev=chr "
--        "-device %s,tpmdev=dev "
-+        "-tpmdev emulator,id=tpm0,chardev=chr "
-+        "-device %s,tpmdev=tpm0 "
-         "-incoming %s",
-         machine_options ? : "",
-         dst_tpm_addr->u.q_unix.path,
+     TPMPPI ppi;
+ 
+@@ -86,6 +89,13 @@ enum crb_cancel {
+ 
+ #define TPM_CRB_NO_LOCALITY 0xff
+ 
++static void tpm_crb_clear_internal_buffers(CRBState *s)
++{
++    g_byte_array_set_size(s->response_buffer, 0);
++    g_byte_array_set_size(s->command_buffer, 0);
++    s->response_offset = 0;
++}
++
+ static uint64_t tpm_crb_mmio_read(void *opaque, hwaddr addr,
+                                   unsigned size)
+ {
+@@ -135,9 +145,11 @@ static void tpm_crb_mmio_write(void *opaque, hwaddr addr,
+         }
+         break;
+     case A_CRB_CTRL_CANCEL:
+-        if (val == CRB_CANCEL_INVOKE &&
+-            s->regs[R_CRB_CTRL_START] & CRB_START_INVOKE) {
+-            tpm_backend_cancel_cmd(s->tpmbe);
++        if (val == CRB_CANCEL_INVOKE) {
++            if (s->regs[R_CRB_CTRL_START] & CRB_START_INVOKE) {
++                tpm_backend_cancel_cmd(s->tpmbe);
++            }
++            tpm_crb_clear_internal_buffers(s);
+         }
+         break;
+     case A_CRB_CTRL_START:
+@@ -239,6 +251,7 @@ static void tpm_crb_reset(void *dev)
+ 
+     tpm_ppi_reset(&s->ppi);
+     tpm_backend_reset(s->tpmbe);
++    tpm_crb_clear_internal_buffers(s);
+ 
+     memset(s->regs, 0, sizeof(s->regs));
+ 
+@@ -305,6 +318,9 @@ static void tpm_crb_realize(DeviceState *dev, Error **errp)
+     memory_region_add_subregion(get_system_memory(),
+         TPM_CRB_ADDR_BASE + sizeof(s->regs), &s->cmdmem);
+ 
++    s->command_buffer = g_byte_array_new();
++    s->response_buffer = g_byte_array_new();
++
+     tpm_ppi_init(&s->ppi, get_system_memory(),
+                  TPM_PPI_ADDR_BASE, OBJECT(s));
+ 
+@@ -315,12 +331,21 @@ static void tpm_crb_realize(DeviceState *dev, Error **errp)
+     }
+ }
+ 
++static void tpm_crb_unrealize(DeviceState *dev)
++{
++    CRBState *s = CRB(dev);
++
++    g_clear_pointer(&s->command_buffer, g_byte_array_unref);
++    g_clear_pointer(&s->response_buffer, g_byte_array_unref);
++}
++
+ static void tpm_crb_class_init(ObjectClass *klass, const void *data)
+ {
+     DeviceClass *dc = DEVICE_CLASS(klass);
+     TPMIfClass *tc = TPM_IF_CLASS(klass);
+ 
+     dc->realize = tpm_crb_realize;
++    dc->unrealize = tpm_crb_unrealize;
+     device_class_set_props(dc, tpm_crb_properties);
+     dc->vmsd  = &vmstate_tpm_crb;
+     dc->user_creatable = true;
 -- 
 2.54.0
 
