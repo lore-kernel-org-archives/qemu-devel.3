@@ -4,89 +4,89 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E9C18CD6E55
-	for <qemu-devel@archiver.kernel.org>; Mon,  1 Jun 2026 14:51:37 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A2054CD6E55
+	for <qemu-devel@archiver.kernel.org>; Mon,  1 Jun 2026 15:07:46 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wU3yo-0005pr-IK; Mon, 01 Jun 2026 10:51:02 -0400
+	id 1wU4EJ-0000Nb-Cn; Mon, 01 Jun 2026 11:07:03 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1wU3ym-0005pd-Pn
- for qemu-devel@nongnu.org; Mon, 01 Jun 2026 10:51:00 -0400
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1wU4EH-0000NK-Uv
+ for qemu-devel@nongnu.org; Mon, 01 Jun 2026 11:07:02 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1wU3yl-0003Yb-3n
- for qemu-devel@nongnu.org; Mon, 01 Jun 2026 10:51:00 -0400
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1wU4EG-0005Hz-EU
+ for qemu-devel@nongnu.org; Mon, 01 Jun 2026 11:07:01 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1780325456;
+ s=mimecast20190719; t=1780326418;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=JLPguxaVaRiMefwWY1hzAPZ7UkLymAP6ZFzD2hWvAM8=;
- b=EDcB8ncSPGSaPin20ponfdhEtYAf32flA9bC0dE6ycvzRgl3dep8/WJULVE6TW1gW4jo1d
- QaFTKt6b6bGkidS9m8miJmy7K1jZ1e8zQmhcMFbUso/bBTT4OAR6Df7GzJNO8YU6cw1jmo
- x5u7elYz8IyKWmxaWR69yeI6b2dZ/t4=
-Received: from mail-wm1-f71.google.com (mail-wm1-f71.google.com
- [209.85.128.71]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=Oy1I3xrureFv7k+OZ03qh3YuJGc2hg+ZykX43Bha1n8=;
+ b=R7equujXOJsB+FlwacibVlgTsyPzQs4tlJRt6NPddYTBiT/Mos1u/1LWrjm7jq6yerbFVX
+ nA+kb3+WfjvAc/BRHiK/WoMKVkqD4BizWHggqiaOuy6qySVbAaWDzJmxUmKWQuAggEWARS
+ VtA/3cAjEljMnnfmWN3lcZ6PRQxTgzs=
+Received: from mail-wm1-f69.google.com (mail-wm1-f69.google.com
+ [209.85.128.69]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-516-SNxTSdAiMmuDZOurmdYjbg-1; Mon, 01 Jun 2026 10:50:55 -0400
-X-MC-Unique: SNxTSdAiMmuDZOurmdYjbg-1
-X-Mimecast-MFC-AGG-ID: SNxTSdAiMmuDZOurmdYjbg_1780325454
-Received: by mail-wm1-f71.google.com with SMTP id
- 5b1f17b1804b1-490aadb1386so4183025e9.0
- for <qemu-devel@nongnu.org>; Mon, 01 Jun 2026 07:50:55 -0700 (PDT)
+ us-mta-314-5iD1bqC9NWqEyCLGhTTTkA-1; Mon, 01 Jun 2026 11:06:57 -0400
+X-MC-Unique: 5iD1bqC9NWqEyCLGhTTTkA-1
+X-Mimecast-MFC-AGG-ID: 5iD1bqC9NWqEyCLGhTTTkA_1780326416
+Received: by mail-wm1-f69.google.com with SMTP id
+ 5b1f17b1804b1-490ae016853so4108365e9.2
+ for <qemu-devel@nongnu.org>; Mon, 01 Jun 2026 08:06:56 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1780325454; x=1780930254; darn=nongnu.org;
+ d=redhat.com; s=google; t=1780326416; x=1780931216; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:autocrypt:from
  :content-language:references:cc:to:subject:user-agent:mime-version
  :date:message-id:from:to:cc:subject:date:message-id:reply-to;
- bh=JLPguxaVaRiMefwWY1hzAPZ7UkLymAP6ZFzD2hWvAM8=;
- b=VHP5JGGnxGjnd8Y7Yv6CgcGr0T+eKn4/JCzJkMCpH/LZIYkc9hU954MX+DTTwCvbZ2
- zszgy3/miQiiGyyTT9rvmjgDojD+Ht++pxgscF8hxwWBax9yFmAOJ+4M3BxjHWAMYwT1
- /Aysd2lqmSKQO8/AuefwE6srDBrPEUu4+mtRJfway/0+E7MizzYuOFhEmOuPm4MDLjHJ
- vKv6ZiB0u/d27fs01k9B9xgslwLyN5XtJjM4lDox86YKLC3mBEzexQ+FQeNE+UWstyBN
- YHF+jTeKrWL9mtdtmOHNIhCS9RmrrVxKeV5Eljq9KDWPOJdpCxp12hjtg78RCFwdvvaO
- mnIQ==
+ bh=Oy1I3xrureFv7k+OZ03qh3YuJGc2hg+ZykX43Bha1n8=;
+ b=lVKmJXOAHTet537sdbDjTt32Jivk+5W0SnyM/OMnYWTXejUbAtRGK5tFxxGM0cuWus
+ TIhmOinC5uEW4a1uK7lfk6Czr/Oj1VF8FWzGtbEE9ypwk3Tx6gRBkNlFwJ9BhJaAww5j
+ Iku49hGiBVd3SfCf965UYoxCe5dVMHJAbK8SsuvEswSgYq38L1YK717l2bAkazLgpZRL
+ cdjZAtcUcn1R274fKzJd8YLpaZS01JUdBIAgMZLrwHe7BvJAc+AXqiNo0bLlkkacWtwE
+ +KZmL8RkYholjjWMIh762fS1+xVoKqmvDAkQA6F+T7rn26WeDuJnlpanslufYQM6nSKQ
+ Kwhg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1780325454; x=1780930254;
+ d=1e100.net; s=20251104; t=1780326416; x=1780931216;
  h=content-transfer-encoding:in-reply-to:autocrypt:from
  :content-language:references:cc:to:subject:user-agent:mime-version
  :date:message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
  :message-id:reply-to;
- bh=JLPguxaVaRiMefwWY1hzAPZ7UkLymAP6ZFzD2hWvAM8=;
- b=H/f0X6USKwqNp4nsITt8ua66ro36nlNKNK5zyRGDJUuzgLfl9CAlvyYLa2Z+YS1zNK
- YEI4/qi/xT0q4tXSO1abGfcOXXeiyC1baAU5J04e+tO3q/PImsupkIFCEC86FG/LKix3
- /jMCg01hA3b33kMEZp1rwgszOSSZfEgaLqQQM1gFyIK8r8xvNNrF7yyQQFMXt74TQ232
- L02LslJMYONKNiUuDEchYPJQ9SgHx5lCzxPKcH4lKN3BYjymAZE9os7dEVgkL70mf9Rd
- YTB8u3Y02mOmmz+YCEK8N93GxZpFQGxlZQR5+1ZcAcIygNInmBydxEtPeUh9uH6oElSm
- DY7A==
+ bh=Oy1I3xrureFv7k+OZ03qh3YuJGc2hg+ZykX43Bha1n8=;
+ b=ce9kPN08z1848QsEIf3c4ZcgR0IZSbUNNqrOdm5AAUrCAuR9H4lhPknTyd5ry7HLWE
+ 8z2gJ9RhQM/+AUi31+f6tsrP6wDSUTNwrrzsm+NtiVwW1gHB34TU8XQWh0GDkW7Lj4j7
+ S0UqvySXdEQmPENH5dCA/wNjwiFBhYAA1jzIchUuEZgL0NWMG53BWURkAgylDASXL0bS
+ xxp1cDbKe4CJrkK1rNAbTfRmsoD73KNxTqYY0Fqh1y/1yPH/uVn5vXCpUOojEg7aLGKm
+ WxW0WqfdC66mjgUFRF5SWzvq9zYhajSBhQvFn4vlcYwmeIkGYKzkX/XRJgykCI3u4Cso
+ RNmw==
 X-Forwarded-Encrypted: i=1;
- AFNElJ84/AnCAcV9s54OcdyNBHOdbNbp0UgVGy1gswYoiCyMEHEfgEKV+zGIvVeGcEj5zCmcWJBxyCiQcDU4@nongnu.org
-X-Gm-Message-State: AOJu0Yy8bStrUQMrBi2BiFrKrvPJTZ7KqpyOyWEiBbrkIc5Bdn7CjF6O
- Ge1VU6XrwobEo7x8Et6O5xZB/uhld2gv6EwdAdv9sc06Tu4ukwKM3L9iaVQo5Plszcc26wMQp4z
- cvAHaELlcRPXkg0NgzR1emj7/IsSy8jMg1MVtlZVKLImjsZHjcCitF0Mn
-X-Gm-Gg: Acq92OFulvGR86ZaXDAk97vLcgwwsNG2Fn6j6t0KDh9y+bLnDKprbXx/tp7Ozy3uYhy
- cI11PQs/u9LbPBRGsLA9Q/Mwae4TLWtd6Yb8QtRPFjk4Rpb0CPo2HlDpCIO5reCL3LlbFmot7xq
- sof6XBDJ+iapGqRwqUOlQdizqfW32D6xXeViYuztqTTW6UdrfBmVb2ajAMk/kk7jOEF0EMlKtVq
- do7oHyqo9+mmhkgnWDV+ol4ycgGUJotAE7cWmJP8MSe+XtZV2htrtg11mJB3uIPXkqqP9YupUL0
- gQ3dzdv7QteKiOcnhjhwNh+rys9FnKGT4ztquUffIBzhFu311xLG3uKgwnOFi+cPyjhiSWmlDCD
- h2Jop11SNakY2rVSYQfOu1FPihyhHBtVrGaRQxzmmu3HHQrhO6o9y/EcXEcGukYlLqzjk63s=
-X-Received: by 2002:a05:600c:5254:b0:48f:e044:927d with SMTP id
- 5b1f17b1804b1-490a2a43b6cmr170908405e9.10.1780325453941; 
- Mon, 01 Jun 2026 07:50:53 -0700 (PDT)
-X-Received: by 2002:a05:600c:5254:b0:48f:e044:927d with SMTP id
- 5b1f17b1804b1-490a2a43b6cmr170908025e9.10.1780325453461; 
- Mon, 01 Jun 2026 07:50:53 -0700 (PDT)
+ AFNElJ88t4lTwrQwSAIcN1iCqYeY2xZNFPWnWCkHZT/oL4FJqRlNoz378dsz6egF3hLTz8yyHcNexwNr1oZM@nongnu.org
+X-Gm-Message-State: AOJu0Yz0K1ermSmhqLzMcVongKAv2agxkaFfueAT48C/evRafAxkYJRn
+ 0DgnTF5jB6/7a2YrrCMWzlvzKoRkgW9j/bULxCQfMHVH4DvnjIXr++rxifOprC3yByfxZgPdzIx
+ cLywKaogIWtVFSsa2y1goqz+5SfXb9l3OtqX6i2rBT2G+3yFMC7F/EVw6
+X-Gm-Gg: Acq92OEEZhP8aYu9GtFBGc/FBrAyXBtyG7H/3MrcXfM0AAHbrA9EMZGI+fok6+M++dc
+ wG2pyOQwiSciaNU3SmG+sDMXqyeDJ9nqj/hnrGKTEPP7WWoEpT3VQQCfoq+pD/Q/m/vQZgUBl5q
+ hv73LhbP/PKyZsPQLzHoYhjr4vihGmywJk+jouGXyiKqME0ITct+PX0iVVzdd9Wno/bieXat6Ti
+ HSVxgR3oEUEXkpSLnoqWAPQQa18YrMTdra2cgJm9dWt17uUZ04vnktX3jeNLUOi4hnJnVeafceJ
+ 5EhEepMJf2dfDG4ra1ps4YcQCYuG4sxEeSfHpQQBzAjNfT5Af6ct6gC/OJb7MPSMAfQsulhJWNL
+ F5z9QCe4t2QIZg6s0cSABbe5qiOqPkiZQqhL6G0erKeVqU81EsafauTf+MRlOryg3sOTzs+A=
+X-Received: by 2002:a05:600d:8445:10b0:490:3bad:3784 with SMTP id
+ 5b1f17b1804b1-490a293a0f3mr153016565e9.18.1780326415692; 
+ Mon, 01 Jun 2026 08:06:55 -0700 (PDT)
+X-Received: by 2002:a05:600d:8445:10b0:490:3bad:3784 with SMTP id
+ 5b1f17b1804b1-490a293a0f3mr153016155e9.18.1780326415279; 
+ Mon, 01 Jun 2026 08:06:55 -0700 (PDT)
 Received: from ?IPV6:2a01:e0a:280:24f0:9db0:474c:ff43:9f5c?
  ([2a01:e0a:280:24f0:9db0:474c:ff43:9f5c])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-490ae39c281sm33866965e9.14.2026.06.01.07.50.52
+ 5b1f17b1804b1-4909c0aecdfsm79647275e9.13.2026.06.01.08.06.54
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 01 Jun 2026 07:50:52 -0700 (PDT)
-Message-ID: <2e0f6a3a-f20c-4c07-8922-76f92a2423ea@redhat.com>
-Date: Mon, 1 Jun 2026 16:50:51 +0200
+ Mon, 01 Jun 2026 08:06:54 -0700 (PDT)
+Message-ID: <37de178e-e9d6-4c17-a67f-0d79cc222bea@redhat.com>
+Date: Mon, 1 Jun 2026 17:06:52 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
 Subject: Re: [PATCH] vfio/pci: Initialize rom_read_failed in
@@ -141,7 +141,7 @@ Autocrypt: addr=clg@redhat.com; keydata=
  uVKe8BVz4atMOoktmt0GWTOC8P4=
 In-Reply-To: <20260601144339.339275-1-mcasquer@redhat.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
+Content-Transfer-Encoding: 7bit
 Received-SPF: pass client-ip=170.10.133.124; envelope-from=clg@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -24
@@ -199,6 +199,17 @@ On 6/1/26 16:43, Mario Casquero wrote:
 > 
 >       trace_vfio_pci_load_rom(vbasedev->name, (unsigned long)reg_info->size,
 > @@ -1057,7 +1057,7 @@ static void vfio_pci_load_rom(VFIOPCIDevice *vdev)
+
+One little nit, you could remove the vdev->rom_read_failed assignment here :
+  
+         vdev->rom_read_failed = true;
+
+Could you send a v2 please ?
+
+Thanks,
+
+C.
+
 >           error_printf("Device option ROM contents are probably invalid "
 >                       "(check dmesg).\nSkip option ROM probe with rombar=0, "
 >                       "or load from file with romfile=\n");
@@ -225,21 +236,8 @@ On 6/1/26 16:43, Mario Casquero wrote:
 >       }
 > 
 >       memcpy(&val, vdev->rom + addr,
-
-In a followup patch, I would add a guest error log when the guest attempts
-to read from a ROM that failed to load.
-
 > --
 > 2.54.0
 > 
-
-Anyhow,
-
-
-Reviewed-by: Cédric Le Goater <clg@redhat.com>
-
-Thanks !
-
-C.
 
 
