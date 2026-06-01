@@ -4,121 +4,82 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B59E3CD6E56
-	for <qemu-devel@archiver.kernel.org>; Mon,  1 Jun 2026 11:52:44 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id F37ECCD5BD1
+	for <qemu-devel@archiver.kernel.org>; Mon,  1 Jun 2026 11:52:45 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wU1Ae-0000mc-6c; Mon, 01 Jun 2026 07:51:05 -0400
+	id 1wU1Bn-0003zW-VH; Mon, 01 Jun 2026 07:52:16 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <skolothumtho@nvidia.com>)
- id 1wU19i-0007DS-97; Mon, 01 Jun 2026 07:50:08 -0400
-Received: from mail-westus3azon11011064.outbound.protection.outlook.com
- ([40.107.208.64] helo=PH0PR06CU001.outbound.protection.outlook.com)
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1wU1Bl-0003fT-LA
+ for qemu-devel@nongnu.org; Mon, 01 Jun 2026 07:52:13 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <skolothumtho@nvidia.com>)
- id 1wU19e-0005Be-SY; Mon, 01 Jun 2026 07:50:05 -0400
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=mAmtyQ6Tg6Pz8tra/OCYbpCPIGWdKMV8a65nX6xYKqk7Qv73yY93D+FoUH4lDyZbN56ecV5QAqcSqcdRNigUMgBWcvjIYpcEDA2dedKihWbcvEjzBhWa74g+yVuKGo5E6EOvxtBIIWEFPwtvTFQVkStmUxjjWF2DSaLMdTSYK+6tbQ22hzOma59IYbFDJILiqwP8lEEZK7qQT7VQl+EVH5oLmQLKHKXcIGAssH4R4zxTIdNJNE/h2dLy8pIX7Dzz1I2n1xj0HtJ+7VggicRYQWijsRSzSQHAcSvh20VhlGpc4iIzsh9hrOo3gwJne+CzAPCUQpFThj7nAGqGI2KVZQ==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=72Jz1r++AEgYq8H/oz0Gm0FDYZ3lPQSGqmfphKCgLEY=;
- b=HY8AxrZpGPh/g9olvlqMqRTcF33xh+bw/KbG9ZT9wCAsWyGpobYuYKsJ3PLk9j3yDJKpTM34/CCE1WM79tBcrP8CRhIKIyAeHTbDhHvbQ54ti54raN4M0B371MJ2BL8A9eN6+MEsJ3lDkSfqe84SIamndpY3JfmG3G/CqsBtVpQoxF0Cdtmcx0dat+nutfQZAR7ShK0mkeLa8razFXS97j7sxzJDS4vuntASSMXk7oVE1tb9eNLQ/XUmH31x4Gnn+0bXf9D1/2dmzeptdnoAZymMiXcoKRCT1Mb8AfzSi/aldWfFp7l4ZLU6fAFzCXH1v4zRq7qCuhhOSECV54Kg+w==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass (sender ip is
- 216.228.117.161) smtp.rcpttodomain=nongnu.org smtp.mailfrom=nvidia.com;
- dmarc=pass (p=reject sp=reject pct=100) action=none header.from=nvidia.com;
- dkim=none (message not signed); arc=none (0)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=Nvidia.com;
- s=selector2;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=72Jz1r++AEgYq8H/oz0Gm0FDYZ3lPQSGqmfphKCgLEY=;
- b=j69unnzjx6ruy6kchP6vGQ1KcRyYIVDDsAEE6JS8cQVqu4ErgOmbx/ycqbJAt9QmL+7H6AqFBlIm8riEQki33glETrV1zj893hQ97jCyTzjfp6mEHecDcIG7a0GMhFrx7qy5yKIndK8FX+xEl4/ck1jt8uaScofrUlZQNcC+qR6gJiNuh2aXlPdrQ2YhtllMxLF/zeGqNZ+DTs2BKWJc1HYpk9vfcZXJTQfKsp5AVOuE6toErrnQuZeqRxbzMwq8teaYYhVe5iwRifooTOe2VJLaZhpZF8fp90YP8nJaVWVV8tKye09soVuIiz4YcjVcGuO0Hsn1/X08c+HukSI9+A==
-Received: from BL1P222CA0015.NAMP222.PROD.OUTLOOK.COM (2603:10b6:208:2c7::20)
- by CY8PR12MB8213.namprd12.prod.outlook.com (2603:10b6:930:71::10)
- with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.71.15; Mon, 1 Jun 2026
- 11:49:28 +0000
-Received: from BL6PEPF0001AB56.namprd02.prod.outlook.com
- (2603:10b6:208:2c7:cafe::41) by BL1P222CA0015.outlook.office365.com
- (2603:10b6:208:2c7::20) with Microsoft SMTP Server (version=TLS1_3,
- cipher=TLS_AES_256_GCM_SHA384) id 15.21.71.15 via Frontend Transport; Mon, 1
- Jun 2026 11:49:27 +0000
-X-MS-Exchange-Authentication-Results: spf=pass (sender IP is 216.228.117.161)
- smtp.mailfrom=nvidia.com;
- dkim=none (message not signed)
- header.d=none;dmarc=pass action=none header.from=nvidia.com;
-Received-SPF: Pass (protection.outlook.com: domain of nvidia.com designates
- 216.228.117.161 as permitted sender) receiver=protection.outlook.com;
- client-ip=216.228.117.161; helo=mail.nvidia.com; pr=C
-Received: from mail.nvidia.com (216.228.117.161) by
- BL6PEPF0001AB56.mail.protection.outlook.com (10.167.241.8) with Microsoft
- SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.21.92.5 via Frontend Transport; Mon, 1 Jun 2026 11:49:27 +0000
-Received: from rnnvmail201.nvidia.com (10.129.68.8) by mail.nvidia.com
- (10.129.200.67) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.2562.20; Mon, 1 Jun
- 2026 04:49:15 -0700
-Received: from NV-2Y5XW94.nvidia.com (10.126.230.37) by rnnvmail201.nvidia.com
- (10.129.68.8) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.2562.20; Mon, 1 Jun
- 2026 04:49:12 -0700
-From: Shameer Kolothum <skolothumtho@nvidia.com>
-To: <qemu-arm@nongnu.org>, <qemu-devel@nongnu.org>
-CC: <eric.auger@redhat.com>, <peter.maydell@linaro.org>, <clg@redhat.com>,
- <alex@shazbot.org>, <nicolinc@nvidia.com>, <nathanc@nvidia.com>,
- <mochs@nvidia.com>, <jan@nvidia.com>, <jgg@nvidia.com>,
- <zhenzhong.duan@intel.com>, <kjaju@nvidia.com>, <phrdina@redhat.com>,
- <skolothumtho@nvidia.com>
-Subject: [PATCH v6 18/31] hw/arm/tegra241-cmdqv: Allocate HW VCMDQs once
- configured
-Date: Mon, 1 Jun 2026 12:42:08 +0100
-Message-ID: <20260601114221.457995-19-skolothumtho@nvidia.com>
-X-Mailer: git-send-email 2.43.0
-In-Reply-To: <20260601114221.457995-1-skolothumtho@nvidia.com>
-References: <20260601114221.457995-1-skolothumtho@nvidia.com>
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1wU1Bj-000653-GC
+ for qemu-devel@nongnu.org; Mon, 01 Jun 2026 07:52:13 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1780314729;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=umZnldik/6FFLPzE92MsWIGrcabXan45d2nAH0uiu14=;
+ b=DvaTQMbrKlmycVFxzMB45HEo9s99OWAbGiIdikCjG2Vk0/4TAkfsVWOgoJ4ndNhTPsvRGw
+ rB28O4PGGJQWmqobjzt9ktKc4ein8NFVYRqwcfXgDScSs4tFwVuMoiQaEMOP39u22JNxNB
+ nJ+uVVzF/EjlcbZBCexYAJDpYoMKdcc=
+Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-63-m8EGVVBIPdqGIyRYPnRPWg-1; Mon,
+ 01 Jun 2026 07:52:06 -0400
+X-MC-Unique: m8EGVVBIPdqGIyRYPnRPWg-1
+X-Mimecast-MFC-AGG-ID: m8EGVVBIPdqGIyRYPnRPWg_1780314724
+Received: from mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.17])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 27F8A1956094; Mon,  1 Jun 2026 11:52:04 +0000 (UTC)
+Received: from blackfin.pond.sub.org (unknown [10.44.22.2])
+ by mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 518E91956095; Mon,  1 Jun 2026 11:52:03 +0000 (UTC)
+Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
+ id CB9BD21E6A01; Mon, 01 Jun 2026 13:52:00 +0200 (CEST)
+From: Markus Armbruster <armbru@redhat.com>
+To: "Naveen N Rao (AMD)" <naveen@kernel.org>
+Cc: Paolo Bonzini <pbonzini@redhat.com>,  qemu-devel
+ <qemu-devel@nongnu.org>,  Daniel P. =?utf-8?Q?Berrang=C3=A9?=
+ <berrange@redhat.com>,
+ Eduardo Habkost <eduardo@habkost.net>,  Eric Blake <eblake@redhat.com>,
+ Marcelo Tosatti <mtosatti@redhat.com>,  Zhao Liu <zhao1.liu@intel.com>,
+ Nikunj A Dadhania <nikunj@amd.com>,  Tom Lendacky
+ <thomas.lendacky@amd.com>,  Michael Roth <michael.roth@amd.com>,  Roy
+ Hopkins <roy.hopkins@randomman.co.uk>,  Srikanth Aithal
+ <srikanth.aithal@amd.com>,  Kim Phillips <kim.phillips@amd.com>,  Joerg
+ Roedel <joro@8bytes.org>
+Subject: Re: [PATCH v4 6/9] target/i386: SEV: Add support for enabling
+ debug-swap SEV feature
+In-Reply-To: <416e7b156e49f95958f8c5c8549b48a88c1995fc.1779281646.git.naveen@kernel.org>
+ (Naveen N. Rao's message of "Wed, 20 May 2026 18:57:59 +0530")
+References: <cover.1779281646.git.naveen@kernel.org>
+ <416e7b156e49f95958f8c5c8549b48a88c1995fc.1779281646.git.naveen@kernel.org>
+Date: Mon, 01 Jun 2026 13:52:00 +0200
+Message-ID: <87v7c27a1r.fsf@pond.sub.org>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 MIME-Version: 1.0
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: 8bit
-X-Originating-IP: [10.126.230.37]
-X-ClientProxiedBy: rnnvmail203.nvidia.com (10.129.68.9) To
- rnnvmail201.nvidia.com (10.129.68.8)
-X-EOPAttributedMessage: 0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: BL6PEPF0001AB56:EE_|CY8PR12MB8213:EE_
-X-MS-Office365-Filtering-Correlation-Id: df9b4523-20f8-4c13-d892-08debfd3d5d4
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam: BCL:0;
- ARA:13230040|376014|36860700016|82310400026|1800799024|3023799007|56012099006|11063799006|22082099003|18002099003;
-X-Microsoft-Antispam-Message-Info: fkcYxU3MvbxaMnq/Nt4yLv7Q25iB/BjMNbQ4wamVOhA0cbqmvupw7V1xGLQzhXkBlMATew27w2mTzCHhvWXu2fMUqtk6aaDA0C/2KecxjgS+6UrBMubuRxtUkqVgBCljU8georBMUOzTM2H+oxUgsrQhuet1Rgzk74+fzwoEhNFA7+KvSzN8xSXMLV4JBddFc0WFNBhFsfhj1UxMCKv4r/u4h3CnMtsl6cxkTF60jTLwRzqv3E3a4ELPHR0WvyxbvGc6znL7MKCq+3sFaUJnjl//ABz5Uy4PUyQ9ejoGDDbAIxWVoXlbzXfNO99WUIQxCJPcrMlXcgXRaDctpLQrspz4DlXKG+QZWwuTDA1/yD6uEvvbS0mVIg2TJn2XgazU5A9vK4u2li4tsJWYdGhi18OYztP6dIhW5LTZR8L63Z8pMTLqqBf6WxfrRdDtKyoN8wctdyQGVVBr5DO2cxgZBl43ulCAnSiZIRnMLHNVABxmaXULnraabVpiBFo3ZSWoINi0K6bOoVN7FDFVmNkhvYjacOQycAVjSKarw1Y2tS5DkcABc4Hl95QBULb0AHUSu4JW6k8fhnZSW65WCrdoWBBYhtV2UISdsfUQAtzzXaV7dXybhCyG6rMcXrI9cn3iqhtAHClX3/ykWEd0/Oe/hcsXwu/7dMZuBkUPr0ivuXQNGZY1fiFmEtJ8fX30XWIdTirEBcGmpPiFjVeJ6+ATDhqVIELNDjS+Y7QftKZqSKk=
-X-Forefront-Antispam-Report: CIP:216.228.117.161; CTRY:US; LANG:en; SCL:1; SRV:;
- IPV:NLI; SFV:NSPM; H:mail.nvidia.com; PTR:dc6edge2.nvidia.com; CAT:NONE;
- SFS:(13230040)(376014)(36860700016)(82310400026)(1800799024)(3023799007)(56012099006)(11063799006)(22082099003)(18002099003);
- DIR:OUT; SFP:1101; 
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0: 0yZTo3gfasIc2n7F9j9TB6ZW/ganlh1dzTcTLBOoW+bAvRReZiBA+k0G+hUD0oiyf5NB7o2Y2RLM6SWfAoxCArt85yK65a429XumH/zPoLRQ5aRqMRfMsSfj7Q8Ex0dS+1QKpDB1z89OJKdLh7EjAQsvGsAsbFxp4r3ff5ZgSg5w07MUrjGAA7LGe+y1wJzRTu+Vx/ozgI/wnC4Ij37AsFKvGFHNgLqAiZO/NISO3h8JfiUSQUoXOs05UNSRBcqkzb4ogtb25I6BZl3NT+eJta/GMlEimE1Ai3b9KH50nuhVRXFDOlg0fSFFEgPFgLYWVwNhJebWXz2baYvWGOgQwXDhEFYIDfZrEELOdpy+NF+T1C2t8UYfi+t+uC3nPd2y8vAm+A8eIZJYy1MAm2jIzwMzXPG3Vrs0KOtmJL6vJ+hILb69ZrfLEJn+G6FE0viE
-X-OriginatorOrg: Nvidia.com
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 01 Jun 2026 11:49:27.7948 (UTC)
-X-MS-Exchange-CrossTenant-Network-Message-Id: df9b4523-20f8-4c13-d892-08debfd3d5d4
-X-MS-Exchange-CrossTenant-Id: 43083d15-7273-40c1-b7db-39efd9ccc17a
-X-MS-Exchange-CrossTenant-OriginalAttributedTenantConnectingIp: TenantId=43083d15-7273-40c1-b7db-39efd9ccc17a; Ip=[216.228.117.161];
- Helo=[mail.nvidia.com]
-X-MS-Exchange-CrossTenant-AuthSource: BL6PEPF0001AB56.namprd02.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Anonymous
-X-MS-Exchange-CrossTenant-FromEntityHeader: HybridOnPrem
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: CY8PR12MB8213
-Received-SPF: permerror client-ip=40.107.208.64;
- envelope-from=skolothumtho@nvidia.com;
- helo=PH0PR06CU001.outbound.protection.outlook.com
-X-Spam_score_int: -24
-X-Spam_score: -2.5
-X-Spam_bar: --
-X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.445,
+Content-Type: text/plain
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.17
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=armbru@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: 8
+X-Spam_score: 0.8
+X-Spam_bar: /
+X-Spam_report: (0.8 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.445,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001, SPF_HELO_NONE=0.001,
- SPF_NONE=0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_SBL_CSS=3.335, SPF_HELO_PASS=-0.001,
+ SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -134,326 +95,153 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Nicolin Chen <nicolinc@nvidia.com>
+"Naveen N Rao (AMD)" <naveen@kernel.org> writes:
 
-Add support for allocating IOMMUFD hardware queues when the guest
-programs the VCMDQ BASE registers.
+> Add support for enabling debug-swap VMSA SEV feature in SEV-ES and
+> SEV-SNP guests through a new "debug-swap" boolean property on SEV guest
+> objects. Though the boolean property is available for plain SEV guests,
+> check_sev_features() has a check that rejects attempts to enable any SEV
+> feature for a plain SEV guest.
 
-VCMDQ_EN lives in VCMDQ_CONFIG, which is on the VINTF Page0 region
-that a later patch installs into guest MMIO — so QEMU won't trap its
-writes. Allocate the hardware queue instead once all of these are
-set: BASE programmed, CMDQ_ALLOC_MAP.ALLOC, and CMDQV / VINTF
-enabled. Each precondition write retries the allocation, so the
-guest may program them in any order.
+Why does it make sense to add the property to objects where it's not
+supported?
 
-iommufd_backend_alloc_hw_queue() needs the guest physical address of
-the VCMDQ ring buffer, so allocation is deferred until the guest has
-populated BASE.
+> Though this SEV feature is called "Debug virtualization" in the APM, KVM
+> calls this "debug swap" so use the same name for consistency.
 
-If a hardware queue was previously allocated for the same VCMDQ,
-free it before reallocation. All allocated VCMDQs are freed when
-CMDQV or VINTF is disabled, or when the ALLOC bit is cleared.
+Thanks for explaining this.
 
-On allocation failure, set CMDQ_INIT_ERR and clear CMDQ_EN_OK in the
-cache so trapped guest reads see the failure rather than a queue
-that looks live. Clear them on a later successful allocation.
+> Sample command-line:
+>   -machine q35,confidential-guest-support=sev0 \
+>   -object sev-snp-guest,id=sev0,cbitpos=51,reduced-phys-bits=1,debug-swap=on
+>
+> Restrict debug-swap to SEV-SNP guests at this time due to a
+> compatibility issue with SEV-ES pflash devices.
 
-Signed-off-by: Nicolin Chen <nicolinc@nvidia.com>
-Co-developed-by: Shameer Kolothum <skolothumtho@nvidia.com>
-Signed-off-by: Shameer Kolothum <skolothumtho@nvidia.com>
----
- hw/arm/tegra241-cmdqv.h |  11 +++
- hw/arm/tegra241-cmdqv.c | 154 +++++++++++++++++++++++++++++++++++++---
- 2 files changed, 156 insertions(+), 9 deletions(-)
+What are these issues?
 
-diff --git a/hw/arm/tegra241-cmdqv.h b/hw/arm/tegra241-cmdqv.h
-index c4d327a9a5..84499b840d 100644
---- a/hw/arm/tegra241-cmdqv.h
-+++ b/hw/arm/tegra241-cmdqv.h
-@@ -47,6 +47,7 @@ typedef struct Tegra241CMDQV {
-     MemoryRegion mmio_cmdqv;
-     qemu_irq irq;
-     IOMMUFDVeventq *veventq;
-+    IOMMUFDHWqueue *vcmdq[TEGRA241_CMDQV_MAX_CMDQ];
-     void *vintf_page0;
- 
-     /* CMDQ-V Config page register cache */
-@@ -364,6 +365,16 @@ SMMU_CMDQV_VI_VCMDQi_BASE_H_(1)
- SMMU_CMDQV_VI_VCMDQi_CONS_INDX_BASE_DRAM_L_(1)
- SMMU_CMDQV_VI_VCMDQi_CONS_INDX_BASE_DRAM_H_(1)
- 
-+static inline bool tegra241_cmdqv_enabled(Tegra241CMDQV *cmdqv)
-+{
-+    return cmdqv->status & R_STATUS_CMDQV_ENABLED_MASK;
-+}
-+
-+static inline bool tegra241_vintf_enabled(Tegra241CMDQV *cmdqv)
-+{
-+    return cmdqv->vintf_status & R_VINTF0_STATUS_ENABLE_OK_MASK;
-+}
-+
- const SMMUv3AccelCmdqvOps *tegra241_cmdqv_get_ops(void);
- 
- #endif /* HW_ARM_TEGRA241_CMDQV_H */
-diff --git a/hw/arm/tegra241-cmdqv.c b/hw/arm/tegra241-cmdqv.c
-index a52e153501..54d95f4e4e 100644
---- a/hw/arm/tegra241-cmdqv.c
-+++ b/hw/arm/tegra241-cmdqv.c
-@@ -18,6 +18,96 @@
- #include "tegra241-cmdqv.h"
- #include "trace.h"
- 
-+static void tegra241_cmdqv_free_vcmdq(Tegra241CMDQV *cmdqv, int index)
-+{
-+    IOMMUFDViommu *viommu = cmdqv->s_accel->viommu;
-+    IOMMUFDHWqueue *vcmdq = cmdqv->vcmdq[index];
-+
-+    if (!vcmdq) {
-+        return;
-+    }
-+    iommufd_backend_free_id(viommu->iommufd, vcmdq->hw_queue_id);
-+    g_free(vcmdq);
-+    cmdqv->vcmdq[index] = NULL;
-+}
-+
-+static void tegra241_cmdqv_free_all_vcmdq(Tegra241CMDQV *cmdqv)
-+{
-+    /* uapi/linux/iommufd.h: hw_queue destroy must be in descending @index. */
-+    for (int i = (TEGRA241_CMDQV_MAX_CMDQ - 1); i >= 0; i--) {
-+        tegra241_cmdqv_free_vcmdq(cmdqv, i);
-+    }
-+}
-+
-+/*
-+ * Allocate a host HW VCMDQ from the current cached BASE / size for @index.
-+ *
-+ * Setup is a no-op (returns true) when any of the following preconditions
-+ * isn't met yet:
-+ *  - BASE not prgrammed yet.
-+ *  - VCMDQ is not mapped to a VINTF (CMDQ_ALLOC_MAP.ALLOC == 0)
-+ *  - BASE / size don't resolve to a RAM region
-+ *  - CMDQV global enable or VINTF enable is not yet asserted
-+ */
-+static bool tegra241_cmdqv_setup_vcmdq(Tegra241CMDQV *cmdqv, int index,
-+                                       Error **errp)
-+{
-+    SMMUv3AccelState *accel = cmdqv->s_accel;
-+    uint64_t base_mask = (uint64_t)R_VCMDQ0_BASE_L_ADDR_MASK |
-+                         (uint64_t)R_VCMDQ0_BASE_H_ADDR_MASK << 32;
-+    uint64_t addr = cmdqv->vcmdq_base[index] & base_mask;
-+    uint64_t log2 = cmdqv->vcmdq_base[index] & R_VCMDQ0_BASE_L_LOG2SIZE_MASK;
-+    uint64_t size = 1ULL << (log2 + 4);
-+    IOMMUFDViommu *viommu = accel->viommu;
-+    IOMMUFDHWqueue *hw_queue;
-+    uint32_t hw_queue_id;
-+
-+    /* BASE not programmed yet. */
-+    if (!cmdqv->vcmdq_base[index]) {
-+        return true;
-+    }
-+
-+    /* VCMDQ not yet mapped to a VINTF. */
-+    if (!(cmdqv->cmdq_alloc_map[index] & R_CMDQ_ALLOC_MAP_0_ALLOC_MASK)) {
-+        return true;
-+    }
-+
-+    if (!tegra241_cmdqv_enabled(cmdqv) || !tegra241_vintf_enabled(cmdqv)) {
-+        return true;
-+    }
-+
-+    tegra241_cmdqv_free_vcmdq(cmdqv, index);
-+
-+    if (!iommufd_backend_alloc_hw_queue(viommu->iommufd, viommu->viommu_id,
-+                                        IOMMU_HW_QUEUE_TYPE_TEGRA241_CMDQV,
-+                                        index, addr, size, &hw_queue_id,
-+                                        errp)) {
-+        /* Record the failure in the cache. */
-+        cmdqv->vcmdq_gerror[index] |= R_VCMDQ0_GERROR_CMDQ_INIT_ERR_MASK;
-+        cmdqv->vcmdq_status[index] &= ~R_VCMDQ0_STATUS_CMDQ_EN_OK_MASK;
-+        return false;
-+    }
-+    hw_queue = g_new(IOMMUFDHWqueue, 1);
-+    hw_queue->hw_queue_id = hw_queue_id;
-+    hw_queue->viommu = viommu;
-+    cmdqv->vcmdq[index] = hw_queue;
-+
-+    cmdqv->vcmdq_gerror[index] &= ~R_VCMDQ0_GERROR_CMDQ_INIT_ERR_MASK;
-+    cmdqv->vcmdq_status[index] |= R_VCMDQ0_STATUS_CMDQ_EN_OK_MASK;
-+
-+    return true;
-+}
-+
-+static void tegra241_cmdqv_setup_all_vcmdq(Tegra241CMDQV *cmdqv,
-+                                           Error **errp)
-+{
-+    for (int i = 0; i < TEGRA241_CMDQV_MAX_CMDQ; i++) {
-+        if (!tegra241_cmdqv_setup_vcmdq(cmdqv, i, errp)) {
-+            return;
-+        }
-+    }
-+}
-+
- /*
-  * Read a VCMDQ Page 0 register (control/status) using VCMDQ0_* offsets.
-  *
-@@ -145,7 +235,12 @@ static void tegra241_cmdqv_write_vcmdq_page0(Tegra241CMDQV *cmdqv,
-         break;
-     case A_VCMDQ0_CONFIG:
-         if (value & R_VCMDQ0_CONFIG_CMDQ_EN_MASK) {
--            cmdqv->vcmdq_status[index] |= R_VCMDQ0_STATUS_CMDQ_EN_OK_MASK;
-+            /* Report init error if any. */
-+            if (!(cmdqv->vcmdq_gerror[index] &
-+                  R_VCMDQ0_GERROR_CMDQ_INIT_ERR_MASK)) {
-+                cmdqv->vcmdq_status[index] |=
-+                    R_VCMDQ0_STATUS_CMDQ_EN_OK_MASK;
-+            }
-         } else {
-             cmdqv->vcmdq_status[index] &= ~R_VCMDQ0_STATUS_CMDQ_EN_OK_MASK;
-         }
-@@ -169,16 +264,19 @@ static void tegra241_cmdqv_write_vcmdq_page0(Tegra241CMDQV *cmdqv,
-  */
- static void tegra241_cmdqv_write_vcmdq_page1(Tegra241CMDQV *cmdqv,
-                                              hwaddr offset0, int index,
--                                             uint32_t value, bool direct)
-+                                             uint32_t value, bool direct,
-+                                             Error **errp)
- {
-     switch (offset0) {
-     case A_VCMDQ0_BASE_L:
-         cmdqv->vcmdq_base[index] =
-             deposit64(cmdqv->vcmdq_base[index], 0, 32, value);
-+        tegra241_cmdqv_setup_vcmdq(cmdqv, index, errp);
-         break;
-     case A_VCMDQ0_BASE_H:
-         cmdqv->vcmdq_base[index] =
-             deposit64(cmdqv->vcmdq_base[index], 32, 32, value);
-+        tegra241_cmdqv_setup_vcmdq(cmdqv, index, errp);
-         break;
-     case A_VCMDQ0_CONS_INDX_BASE_DRAM_L:
-         cmdqv->vcmdq_cons_indx_base[index] =
-@@ -202,11 +300,13 @@ static void tegra241_cmdqv_write_vcmdq_page1(Tegra241CMDQV *cmdqv,
-  */
- static void tegra241_cmdqv_write_vcmdq_page1_64(Tegra241CMDQV *cmdqv,
-                                                 hwaddr offset0, int index,
--                                                uint64_t value, bool direct)
-+                                                uint64_t value, bool direct,
-+                                                Error **errp)
- {
-     switch (offset0) {
-     case A_VCMDQ0_BASE_L:
-         cmdqv->vcmdq_base[index] = value;
-+        tegra241_cmdqv_setup_vcmdq(cmdqv, index, errp);
-         break;
-     case A_VCMDQ0_CONS_INDX_BASE_DRAM_L:
-         cmdqv->vcmdq_cons_indx_base[index] = value;
-@@ -272,8 +372,14 @@ static void tegra241_cmdqv_config_vintf_write(Tegra241CMDQV *cmdqv,
-         if (value & R_VINTF0_CONFIG_ENABLE_MASK) {
-             if (tegra241_cmdqv_mmap_vintf_page0(cmdqv, errp)) {
-                 cmdqv->vintf_status |= R_VINTF0_STATUS_ENABLE_OK_MASK;
-+                /*
-+                 * VCMDQs whose BASE was programmed before VINTF was
-+                 * enabled need their hw_queue allocated now.
-+                 */
-+                tegra241_cmdqv_setup_all_vcmdq(cmdqv, errp);
-             }
-         } else {
-+            tegra241_cmdqv_free_all_vcmdq(cmdqv);
-             tegra241_cmdqv_munmap_vintf_page0(cmdqv, errp);
-             cmdqv->vintf_status &= ~R_VINTF0_STATUS_ENABLE_OK_MASK;
-         }
-@@ -388,16 +494,37 @@ static void tegra241_cmdqv_writel_mmio(Tegra241CMDQV *cmdqv, hwaddr offset,
-         cmdqv->config = value;
-         if (value & R_CONFIG_CMDQV_EN_MASK) {
-             cmdqv->status |= R_STATUS_CMDQV_ENABLED_MASK;
-+            /*
-+             * VCMDQs whose BASE was programmed before CMDQV was enabled
-+             * need their hw_queue allocated now.
-+             */
-+            tegra241_cmdqv_setup_all_vcmdq(cmdqv, &local_err);
-         } else {
-+            tegra241_cmdqv_free_all_vcmdq(cmdqv);
-             cmdqv->status &= ~R_STATUS_CMDQV_ENABLED_MASK;
-         }
-         break;
-     case A_VI_INT_MASK_0 ... A_VI_INT_MASK_1:
-         cmdqv->vi_int_mask[(offset - A_VI_INT_MASK_0) / 4] = value;
-         break;
--    case A_CMDQ_ALLOC_MAP_0 ... A_CMDQ_ALLOC_MAP_1:
--        cmdqv->cmdq_alloc_map[(offset - A_CMDQ_ALLOC_MAP_0) / 4] = value;
-+    case A_CMDQ_ALLOC_MAP_0 ... A_CMDQ_ALLOC_MAP_1: {
-+        int idx = (offset - A_CMDQ_ALLOC_MAP_0) / 4;
-+        bool was_alloc = cmdqv->cmdq_alloc_map[idx] &
-+                         R_CMDQ_ALLOC_MAP_0_ALLOC_MASK;
-+        bool now_alloc = value & R_CMDQ_ALLOC_MAP_0_ALLOC_MASK;
-+
-+        cmdqv->cmdq_alloc_map[idx] = value;
-+        /*
-+         * If the VCMDQ was already programmed (BASE) before mapping, fire
-+         * setup on the ALLOC 0->1 transition; tear down on 1->0.
-+         */
-+        if (!was_alloc && now_alloc) {
-+            tegra241_cmdqv_setup_vcmdq(cmdqv, idx, &local_err);
-+        } else if (was_alloc && !now_alloc) {
-+            tegra241_cmdqv_free_vcmdq(cmdqv, idx);
-+        }
-         break;
-+    }
-     case A_VINTF0_CONFIG ... A_VINTF0_LVCMDQ_ERR_MAP_3:
-         tegra241_cmdqv_config_vintf_write(cmdqv, offset, value, &local_err);
-         break;
-@@ -427,12 +554,14 @@ static void tegra241_cmdqv_writel_mmio(Tegra241CMDQV *cmdqv, hwaddr offset,
-         offset -= CMDQV_VINTF_PAGE1_BASE - CMDQV_VCMDQ_PAGE1_BASE;
-         index = (offset - CMDQV_VCMDQ_PAGE1_BASE) / CMDQV_VCMDQ_STRIDE;
-         tegra241_cmdqv_write_vcmdq_page1(cmdqv,
--                offset - index * CMDQV_VCMDQ_STRIDE, index, value, false);
-+                offset - index * CMDQV_VCMDQ_STRIDE, index, value, false,
-+                &local_err);
-         break;
-     case A_VCMDQ0_BASE_L ... A_VCMDQ1_CONS_INDX_BASE_DRAM_H:
-         index = (offset - CMDQV_VCMDQ_PAGE1_BASE) / CMDQV_VCMDQ_STRIDE;
-         tegra241_cmdqv_write_vcmdq_page1(cmdqv,
--                offset - index * CMDQV_VCMDQ_STRIDE, index, value, true);
-+                offset - index * CMDQV_VCMDQ_STRIDE, index, value, true,
-+                &local_err);
-         break;
-     default:
-         qemu_log_mask(LOG_UNIMP, "%s unhandled write access at 0x%" PRIx64 "\n",
-@@ -451,6 +580,7 @@ static void tegra241_cmdqv_writel_mmio(Tegra241CMDQV *cmdqv, hwaddr offset,
- static void tegra241_cmdqv_writell_mmio(Tegra241CMDQV *cmdqv, hwaddr offset,
-                                         uint64_t value)
- {
-+    Error *local_err = NULL;
-     int index;
- 
-     switch (offset) {
-@@ -463,18 +593,24 @@ static void tegra241_cmdqv_writell_mmio(Tegra241CMDQV *cmdqv, hwaddr offset,
-         offset -= CMDQV_VINTF_PAGE1_BASE - CMDQV_VCMDQ_PAGE1_BASE;
-         index = (offset - CMDQV_VCMDQ_PAGE1_BASE) / CMDQV_VCMDQ_STRIDE;
-         tegra241_cmdqv_write_vcmdq_page1_64(cmdqv,
--                offset - index * CMDQV_VCMDQ_STRIDE, index, value, false);
-+                offset - index * CMDQV_VCMDQ_STRIDE, index, value, false,
-+                &local_err);
-         break;
-     case A_VCMDQ0_BASE_L ... A_VCMDQ1_CONS_INDX_BASE_DRAM_H:
-         index = (offset - CMDQV_VCMDQ_PAGE1_BASE) / CMDQV_VCMDQ_STRIDE;
-         tegra241_cmdqv_write_vcmdq_page1_64(cmdqv,
--                offset - index * CMDQV_VCMDQ_STRIDE, index, value, true);
-+                offset - index * CMDQV_VCMDQ_STRIDE, index, value, true,
-+                &local_err);
-         break;
-     default:
-         qemu_log_mask(LOG_UNIMP,
-                       "%s unhandled 64-bit write at 0x%" PRIx64 " (WI)\n",
-                       __func__, offset);
-     }
-+
-+    if (local_err) {
-+        error_report_err(local_err);
-+    }
- }
- 
- static void tegra241_cmdqv_write_mmio(void *opaque, hwaddr offset,
--- 
-2.43.0
+> Signed-off-by: Naveen N Rao (AMD) <naveen@kernel.org>
+> ---
+>  target/i386/sev.h |  1 +
+>  target/i386/sev.c | 26 ++++++++++++++++++++++++++
+>  qapi/qom.json     |  7 ++++++-
+>  3 files changed, 33 insertions(+), 1 deletion(-)
+>
+> diff --git a/target/i386/sev.h b/target/i386/sev.h
+> index b84ca3ce0b67..d19a39669747 100644
+> --- a/target/i386/sev.h
+> +++ b/target/i386/sev.h
+> @@ -47,6 +47,7 @@ bool sev_snp_enabled(void);
+>  #define SEV_SNP_POLICY_DBG      0x80000
+>  
+>  #define SVM_SEV_FEAT_SNP_ACTIVE     BIT(0)
+> +#define SVM_SEV_FEAT_DEBUG_SWAP     BIT(5)
+>  
+>  typedef struct SevKernelLoaderContext {
+>      char *setup_data;
+> diff --git a/target/i386/sev.c b/target/i386/sev.c
+> index 4553fe4d6e4a..4532b1b6a484 100644
+> --- a/target/i386/sev.c
+> +++ b/target/i386/sev.c
+> @@ -328,6 +328,11 @@ sev_set_guest_state(SevCommonState *sev_common, SevState new_state)
+>      sev_common->state = new_state;
+>  }
+>  
+> +static bool is_sev_feature_set(SevCommonState *sev_common, uint64_t feature)
+> +{
+> +    return !!(sev_common->sev_features & feature);
+> +}
+> +
+>  static void sev_set_feature(SevCommonState *sev_common, uint64_t feature, bool set)
+>  {
+>      if (set) {
+> @@ -527,6 +532,12 @@ static int check_sev_features(SevCommonState *sev_common, uint64_t sev_features,
+>              __func__);
+>          return -1;
+>      }
+> +    if (sev_features && sev_es_enabled() && !sev_snp_enabled()) {
+> +        error_setg(errp,
+> +                   "%s: SEV features are not supported with SEV-ES at this time",
+> +                   __func__);
+
+Once again, I'm confused about SEV.  Remind me: what kinds of SEV guests
+exist?  The commit message suggests "plain", "ES", "SNP".  What do
+sev_es_enabled() and sev_snp_enabled() return for each of these?
+
+What are the "SEV features"?  Can we expect users to know?  I suspect
+they need to know to fix the problem!
+
+Are they exactly debug-swap?
+
+__func__ in an error message meant for users is an anti-pattern.  Not an
+objection to this patch; it matches existing errors around here.
+
+> +        return -1;
+> +    }
+>      if (sev_features && !sev_es_enabled()) {
+>          error_setg(errp,
+>                     "%s: SEV features require either SEV-ES or SEV-SNP to be enabled",
+> @@ -2800,6 +2811,16 @@ static int cgs_set_guest_policy(ConfidentialGuestPolicyType policy_type,
+>      return 0;
+>  }
+>  
+> +static bool sev_common_get_debug_swap(Object *obj, Error **errp)
+> +{
+> +    return is_sev_feature_set(SEV_COMMON(obj), SVM_SEV_FEAT_DEBUG_SWAP);
+> +}
+> +
+> +static void sev_common_set_debug_swap(Object *obj, bool value, Error **errp)
+> +{
+> +    sev_set_feature(SEV_COMMON(obj), SVM_SEV_FEAT_DEBUG_SWAP, value);
+> +}
+> +
+>  static void
+>  sev_common_class_init(ObjectClass *oc, const void *data)
+>  {
+> @@ -2825,6 +2846,11 @@ sev_common_class_init(ObjectClass *oc, const void *data)
+>                                     sev_common_set_kernel_hashes);
+>      object_class_property_set_description(oc, "kernel-hashes",
+>              "add kernel hashes to guest firmware for measured Linux boot");
+> +    object_class_property_add_bool(oc, "debug-swap",
+> +                                   sev_common_get_debug_swap,
+> +                                   sev_common_set_debug_swap);
+> +    object_class_property_set_description(oc, "debug-swap",
+> +            "enable virtualization of debug registers");
+>  }
+>  
+>  static void
+> diff --git a/qapi/qom.json b/qapi/qom.json
+> index dd45ac1087c3..e2bb716b603e 100644
+> --- a/qapi/qom.json
+> +++ b/qapi/qom.json
+> @@ -1017,6 +1017,10 @@
+>  #     designated guest firmware page for measured boot with -kernel
+>  #     (default: false) (since 6.2)
+>  #
+> +# @debug-swap: enable virtualization of debug registers,
+> +#     only supported on SEV-ES and SEV-SNP guests
+> +#     (default: false) (since 11.1)
+> +#
+>  # Features:
+>  #
+>  # @confidential-guest-reset: If present, the hypervisor supports
+> @@ -1028,7 +1032,8 @@
+>    'data': { '*sev-device': 'str',
+>              '*cbitpos': 'uint32',
+>              'reduced-phys-bits': 'uint32',
+> -            '*kernel-hashes': 'bool' },
+> +            '*kernel-hashes': 'bool',
+> +            '*debug-swap': 'bool' },
+>    'features': ['confidential-guest-reset']}
+>  
+>  ##
+
+This is SevCommonProperties, the common base type of SevGuestProperties
+(configuration for sev-guest QOM objects) and SevSnpGuestProperties
+(sev-snp-guest objects).
+
+So, all SEV objects have property @debug-swap.  I figure the check you
+add to check_sev_features() rejects it for certain SEV objects.  I don't
+quite understand for which ones.
 
 
