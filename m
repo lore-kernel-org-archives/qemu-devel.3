@@ -4,85 +4,80 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 64507CD6E55
-	for <qemu-devel@archiver.kernel.org>; Mon,  1 Jun 2026 16:19:09 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D56D9CD5BD1
+	for <qemu-devel@archiver.kernel.org>; Mon,  1 Jun 2026 16:19:17 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wU5M3-0007sx-AY; Mon, 01 Jun 2026 12:19:07 -0400
+	id 1wU5M1-0007mk-7d; Mon, 01 Jun 2026 12:19:05 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1wU5M1-0007mU-38
- for qemu-devel@nongnu.org; Mon, 01 Jun 2026 12:19:05 -0400
-Received: from mail-wm1-x332.google.com ([2a00:1450:4864:20::332])
+ id 1wU5Lz-0007jT-Re
+ for qemu-devel@nongnu.org; Mon, 01 Jun 2026 12:19:03 -0400
+Received: from mail-wm1-x336.google.com ([2a00:1450:4864:20::336])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1wU5Ly-0002RF-Je
- for qemu-devel@nongnu.org; Mon, 01 Jun 2026 12:19:04 -0400
-Received: by mail-wm1-x332.google.com with SMTP id
- 5b1f17b1804b1-490aebf33e9so4178685e9.3
- for <qemu-devel@nongnu.org>; Mon, 01 Jun 2026 09:19:02 -0700 (PDT)
+ id 1wU5Ly-0002R1-3q
+ for qemu-devel@nongnu.org; Mon, 01 Jun 2026 12:19:03 -0400
+Received: by mail-wm1-x336.google.com with SMTP id
+ 5b1f17b1804b1-490afc47455so2029035e9.2
+ for <qemu-devel@nongnu.org>; Mon, 01 Jun 2026 09:19:01 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1780330741; x=1780935541; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=woRFDgkeltSJSljZfKDRQkqjb3r06yY7f7258KpFoKU=;
- b=gV9MJyg6iwnxnShm5vv5LesxzsM061uigyDGjaiT4YtBaWyQhVvSgjOS1GbW7jPaBr
- G/uXCC5rqN/D+F2Oa7vlHHdq+lYllA/U5M+J/ypjFOrHpkjT4OgstXjc1n4eyrvf5u8B
- UyHpKPkRmFqzM3ArZCozYFw+yyOL6a4RX6JXiHW5My3ddisnI0RXYHr2n7D738oq9j0V
- iReq3zQ5t7hu23bV9yCAtkrX8HNW6iAjF72aDKLMhMcbv0wrO3b0a0zg7wRqNd9GE06F
- ag9bktMp/RaQHuxJvmPjXmoFtJzlhP9sEkx1wd1E5rDkra+0bR0NyEII9yw7BgLLGDRt
- SUwg==
+ d=linaro.org; s=google; t=1780330740; x=1780935540; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:from:to:cc:subject:date:message-id:reply-to;
+ bh=6Rs6x//lJnmgkzT/fkzT/8gvwllZI5nOamQ9odIMnSc=;
+ b=u8fF0xpSJTaHAgfo00Ck51x3DtmCoqchxfVdNUOs3nFXWliRR6q3yMW3uonIVcoj3N
+ +r/HJitXP3H9vy7WmNNAuStyftX7Niby86mgvD3BUdkNQPv9AjSYfyrOAXJ/x3XInYWI
+ iQv6fSigIcU5mt0DTN2l7nWfJVlg5r75uJaTpfiaqyhOi9KCH9cwocOjVWkU5fxIqaqK
+ iAbAj27evan/WQ67YKgZKfcQvVF9eg92uuPHoaSrnL8hY6/lc0TlXLjr8KZpKH1wiK6y
+ rUBmHjEy68GhUalED605JO+DC3nnnig+po8yA6SS/8yHF5yKmR5e3kAYrbZJr3G2Zsa+
+ zM1Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1780330741; x=1780935541;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to;
- bh=woRFDgkeltSJSljZfKDRQkqjb3r06yY7f7258KpFoKU=;
- b=RweV+6MxcEnwQBQjqsFrB4oWXJMoJVXfNho/xxbyNAFNBdT2qHr004E+Ch5BrjY03e
- QyhhvkQVwWGZZSjWDOuY7VvxPprd6BqDtPPw/huOMm7y8qZ67sLowO18kh9g43wtPeZ9
- y9fu27QpHX+BNu0bZnXhTNB+lvnHxOxNGQUpgYTHp9a7xAjcaYZher/UVxPdtDsCTI59
- FB1EcjqMAJ6hqo0qwhhPyUnSa92NqjZyqs7oGs8wNDoWVby4e3H1gUHceLNY1THv5uWD
- oCcl9jkhUegl8FIbTRl+WHqyUouwE7AXeU/Yfc8MxPPpFFpRffdWt4JwnWTwfB44lCGx
- akBw==
-X-Gm-Message-State: AOJu0YzfcN/ip6UcmpjjlG74EsClZKt7Z/+mWPfbIptGXg09yu4JTsoR
- PZlVelqG/EqCnWpywCSB/s8v+bKO3xElM0CN39BXoBZA0b41qYlaWDnq9mp2+g0A8Mw=
-X-Gm-Gg: Acq92OHAGvQEiwc4ojWmfkqupwUhMIj7m6zxk8aI5j/8QjzzngSf0/wvYGkLcnkYcqq
- +PVh88FZQL8mS2SpvU+OrNKr3ut5k/dLPs2sLabAn3mGvyl1X+YJcfzk2+aJFXD/16SQKYgsp1a
- EHcDj0b4fW5GQooVnosGxJ1YwzgvWftceKrLBSjghn23CXPkEE1A0Soj6lpZw93c1adp4WJ14a4
- WCAC12cweR9MFpcedKVBn99PRpzUtCzAFl0BQUXqavzfReWuhbWH6kuy/OZ8VANsuxVS8PHezuN
- kLY4jfoVyIe3fR+jd6sKGwweip0z4G9AUYiqmbcULiOxIam1T+UQbjXSXPXb+UqZXXpE4R114mF
- PcVH1UwbvO7CAXsvjVkU3g3elZiBT62OUSjxxmdvkclQ+5WO4q2QPuNZ30jOFh9q0wizR59/F5o
- 3NFHFSL41bSWycVTtzAlJOc3oIwsLZ3MSytg==
-X-Received: by 2002:a05:600d:6445:20b0:490:4f91:5519 with SMTP id
- 5b1f17b1804b1-490a2958db9mr159368015e9.18.1780330740935; 
+ d=1e100.net; s=20251104; t=1780330740; x=1780935540;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=6Rs6x//lJnmgkzT/fkzT/8gvwllZI5nOamQ9odIMnSc=;
+ b=hDUsxGnVF0KfESTVMxzGYdZGGWojAdQRkw86pGcinUTo1XKC9AQSOyWPCwDotXA3WD
+ IVou0PtHpbelwxYn+ds+Ev9KrQJTkhOJK1L70oKxSBP4D4SlwYGpq23xvJCmV1pCD3tN
+ KbAqYpvMpKMtXKfh8QixDm5ewjb0Esdsz5hFlpkb+y8Y9Tz0S68T37YIWzR3OHoSmMC7
+ jWR4v9ooHIxyfXQIH/FH2I6ufERtPirgsaFphm2iIPMGSNFIOrwpNfv4NhfW6IY0sqKY
+ lQezfgqvhPo5ivwryAsoc8V0EzGEH4ux8vHh6htHph0cfOsksxBcsnDROWIM++AezV9j
+ 2JjQ==
+X-Gm-Message-State: AOJu0YxqDJeZ3aS8vZ3z3oNndLk2GoQ5ZtTEstYPZR0ERfLkvKDDbSi3
+ t9vB0U95YXlUatgkgLqJO1zPaZC5Pt/TfkeuMos2u7StmY2W313FyeCgRAEjeEF42etnANmJxDZ
+ oCaIY
+X-Gm-Gg: Acq92OHy6CPpqRmdN75DC7mng2sfl3YzuwV+SMMzm5peYTxxldV7SJfVyO1yWAE93le
+ 8q/gqhF32HI1Hs6SDmU3sLgPXmZXM+p2+cXumZMu0d1eOcZoC+W17UA8dikHGcnEPVdwjkqyIH4
+ C/w2j8Om2ToE1vpWOcKGITYoOGKe7OvvhkWEWDwyAzGRbUFZybPNbigO952f8UXg4heecA02mIa
+ k42SQP2N9JrBK9QXFdJUYS27kost1GWoTd02P/IgWeqv5oxlNtC7DBLCk8/PWTS/ea3AqBcAhex
+ PJd/NH5myPIv2vl8HKt2E5r7zSJrbkDdOjY6J5gagWa/E7D7G6210dW0Vfp5VvSPoMXyP3UPZX+
+ YcUmRbJq7l7JtvTbHNu+o2EqJkIWiwPnZW79qyA2vUv3e1TcADLq0N9hFyR9RQEQj+U3zmJfGAe
+ WTh7z7ZPK5f5NhFTPvhbdBBogJLqKup119sw==
+X-Received: by 2002:a05:600d:8494:10b0:490:47e3:929a with SMTP id
+ 5b1f17b1804b1-490a29122ffmr159685605e9.6.1780330740150; 
  Mon, 01 Jun 2026 09:19:00 -0700 (PDT)
 Received: from draig.lan ([185.124.0.195]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-490b0e823f7sm2381655e9.13.2026.06.01.09.18.59
+ 5b1f17b1804b1-490b0e239f4sm3859355e9.7.2026.06.01.09.18.59
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
  Mon, 01 Jun 2026 09:18:59 -0700 (PDT)
 Received: from draig.lan (localhost [IPv6:::1])
- by draig.lan (Postfix) with ESMTP id 7EE9C5F8BB;
+ by draig.lan (Postfix) with ESMTP id 6936D5F7C7;
  Mon, 01 Jun 2026 17:18:58 +0100 (BST)
 From: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>
 To: qemu-devel@nongnu.org
-Cc: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
- Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
- Cornelia Huck <cohuck@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>
-Subject: [PULL 1/3] Revert "Makefile: include tests/Makefile.include before
- ninja calculation"
-Date: Mon,  1 Jun 2026 17:18:56 +0100
-Message-ID: <20260601161858.182286-2-alex.bennee@linaro.org>
+Cc: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>
+Subject: [PULL 0/3] testing hotfixes (Makefile, gitlab, docker)
+Date: Mon,  1 Jun 2026 17:18:55 +0100
+Message-ID: <20260601161858.182286-1-alex.bennee@linaro.org>
 X-Mailer: git-send-email 2.47.3
-In-Reply-To: <20260601161858.182286-1-alex.bennee@linaro.org>
-References: <20260601161858.182286-1-alex.bennee@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::332;
- envelope-from=alex.bennee@linaro.org; helo=mail-wm1-x332.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::336;
+ envelope-from=alex.bennee@linaro.org; helo=mail-wm1-x336.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -105,38 +100,36 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-This reverts commit fd63125b9089610d63a53c11ff2fda6b53a2265d which
-broke the ability to run the check-functional-FOO series of tests.
+The following changes since commit 5611a9268dae7b7ff99d478ed134052a9fc7e9f7:
 
-We will need to try something else for the MacOS builds.
+  Merge tag 'pull-9p-20260601' of https://github.com/cschoenebeck/qemu into staging (2026-06-01 08:43:53 -0400)
 
-Reviewed-by: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
-Tested-by: Cornelia Huck <cohuck@redhat.com> # running tests on an s390x
-Message-ID: <20260601143129.144786-2-alex.bennee@linaro.org>
-Signed-off-by: Alex Bennée <alex.bennee@linaro.org>
+are available in the Git repository at:
 
-diff --git a/Makefile b/Makefile
-index 829c51e364c..54547a37b1a 100644
---- a/Makefile
-+++ b/Makefile
-@@ -45,8 +45,6 @@ include config-host.mak
- include Makefile.prereqs
- Makefile.prereqs: config-host.mak
- 
--include $(SRC_PATH)/tests/Makefile.include
--
- # 0. ensure the build tree is okay
- 
- # Check that we're not trying to do an out-of-tree build from
-@@ -182,6 +180,8 @@ endif # config-host.mak does not exist
- 
- SUBDIR_MAKEFLAGS=$(if $(V),,--no-print-directory --quiet)
- 
-+include $(SRC_PATH)/tests/Makefile.include
-+
- all: recurse-all
- 
- SUBDIR_RULES=$(foreach t, all clean distclean, $(addsuffix /$(t), $(SUBDIRS)))
+  https://gitlab.com/stsquad/qemu.git tags/pull-11.1-testing-hotfix-010626-1
+
+for you to fetch changes up to 872d0ee33746aa02724051519ff03aa57278d7c3:
+
+  configure: use debian-all-test-cross for mipsel tcg tests (2026-06-01 17:16:28 +0100)
+
+----------------------------------------------------------------
+testing updates:
+
+  - revert test/Makefile.include move due to regression
+  - work-around move with explicit targets for MacOS gitlab
+  - use debian-all-test-cross for MIPS TCG tests
+
+----------------------------------------------------------------
+Alex Bennée (3):
+      Revert "Makefile: include tests/Makefile.include before ninja calculation"
+      gitlab: work around the inability to build targets for MacOS
+      configure: use debian-all-test-cross for mipsel tcg tests
+
+ configure              | 2 +-
+ Makefile               | 4 ++--
+ .gitlab-ci.d/macos.yml | 3 +++
+ 3 files changed, 6 insertions(+), 3 deletions(-)
+
 -- 
 2.47.3
 
