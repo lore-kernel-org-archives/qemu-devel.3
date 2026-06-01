@@ -4,45 +4,45 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 37A15CD6E55
-	for <qemu-devel@archiver.kernel.org>; Mon,  1 Jun 2026 17:24:02 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E3D0ACD6E55
+	for <qemu-devel@archiver.kernel.org>; Mon,  1 Jun 2026 17:29:37 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wU6ML-0006cb-QS; Mon, 01 Jun 2026 13:23:29 -0400
+	id 1wU6Rg-0008EE-86; Mon, 01 Jun 2026 13:29:00 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@kaod.org>)
- id 1wU6MJ-0006by-W7; Mon, 01 Jun 2026 13:23:28 -0400
-Received: from smtpout1.mo528.mail-out.ovh.net ([46.105.34.251])
+ (Exim 4.90_1) (envelope-from <clg@kaod.org>) id 1wU6Rd-0008DT-Bh
+ for qemu-devel@nongnu.org; Mon, 01 Jun 2026 13:28:57 -0400
+Received: from smtpout8.mo538.mail-out.ovh.net ([51.210.91.37])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@kaod.org>)
- id 1wU6MI-0003ni-Fq; Mon, 01 Jun 2026 13:23:27 -0400
-Received: from director2.derp.mail-out.ovh.net
- (director2.derp.mail-out.ovh.net [79.137.60.36])
- by mo528.mail-out.ovh.net (Postfix) with ESMTPS id 4gTglv3w9gz62VY;
- Mon,  1 Jun 2026 17:23:23 +0000 (UTC)
-Received: from director2.derp.mail-out.ovh.net
- (director2.derp.mail-out.ovh.net. [127.0.0.1])
- by director2.derp.mail-out.ovh.net (inspect_sender_mail_agent) with SMTP
- for <alistair@alistair23.me>; Mon,  1 Jun 2026 17:23:23 +0000 (UTC)
-Received: from mta7.priv.ovhmail-u2.ea.mail.ovh.net (unknown [10.110.58.228])
- by director2.derp.mail-out.ovh.net (Postfix) with ESMTPS id
- 4gTglv3HP7z20lw; Mon,  1 Jun 2026 17:23:23 +0000 (UTC)
-Received: from kaod.org (unknown [10.1.6.7])
+ (Exim 4.90_1) (envelope-from <clg@kaod.org>) id 1wU6Rb-0005UK-5G
+ for qemu-devel@nongnu.org; Mon, 01 Jun 2026 13:28:57 -0400
+Received: from director1.derp.mail-out.ovh.net
+ (director1.derp.mail-out.ovh.net [51.68.80.175])
+ by mo538.mail-out.ovh.net (Postfix) with ESMTPS id 4gTgtB4Znsz5yhd;
+ Mon,  1 Jun 2026 17:28:50 +0000 (UTC)
+Received: from director1.derp.mail-out.ovh.net
+ (director1.derp.mail-out.ovh.net. [127.0.0.1])
+ by director1.derp.mail-out.ovh.net (inspect_sender_mail_agent) with SMTP
+ for <alistair@alistair23.me>; Mon,  1 Jun 2026 17:28:50 +0000 (UTC)
+Received: from mta7.priv.ovhmail-u2.ea.mail.ovh.net (unknown [10.110.37.181])
+ by director1.derp.mail-out.ovh.net (Postfix) with ESMTPS id
+ 4gTgtB11J1z5vcX; Mon,  1 Jun 2026 17:28:50 +0000 (UTC)
+Received: from kaod.org (unknown [10.1.6.5])
  (Authenticated sender: clg@kaod.org)
- by mta7.priv.ovhmail-u2.ea.mail.ovh.net (Postfix) with ESMTPSA id EB0B5203041; 
- Mon,  1 Jun 2026 17:23:21 +0000 (UTC)
+ by mta7.priv.ovhmail-u2.ea.mail.ovh.net (Postfix) with ESMTPSA id 7E33C203041; 
+ Mon,  1 Jun 2026 17:28:48 +0000 (UTC)
 Authentication-Results: garm.ovh; auth=pass
- (GARM-104R005cf53a59d-66ad-466b-86df-d03429aeae4d,
+ (GARM-105G0068df4afd7-c5cf-414c-b9f3-ffa94b6d451a,
  E35A50153BDE4127F94F88E3CE699B0651996EDF) smtp.auth=clg@kaod.org
 X-OVh-ClientIp: 82.64.250.170
-Message-ID: <845631ed-6a52-4068-a002-92c3f70dc4df@kaod.org>
-Date: Mon, 1 Jun 2026 19:23:21 +0200
+Message-ID: <79482eb9-b4f7-4a80-8d3c-6df2fe091284@kaod.org>
+Date: Mon, 1 Jun 2026 19:28:47 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v4 19/21] hw/arm/aspeed_ast27x0-fc: Fix hardware strap
- settings
+Subject: Re: [PATCH v4 09/21] hw/misc/aspeed_scu: Add SCU support for SSP
+ SDRAM remap
 To: Jamin Lin <jamin_lin@aspeedtech.com>,
  Peter Maydell <peter.maydell@linaro.org>,
  Steven Lee <steven_lee@aspeedtech.com>, Troy Lee <leetroy@gmail.com>,
@@ -55,7 +55,7 @@ To: Jamin Lin <jamin_lin@aspeedtech.com>,
  <qemu-devel@nongnu.org>, "open list:Block layer core" <qemu-block@nongnu.org>
 Cc: Troy Lee <troy_lee@aspeedtech.com>
 References: <20260417032837.2664122-1-jamin_lin@aspeedtech.com>
- <20260417032837.2664122-20-jamin_lin@aspeedtech.com>
+ <20260417032837.2664122-10-jamin_lin@aspeedtech.com>
 Content-Language: en-US, fr
 From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>
 Autocrypt: addr=clg@kaod.org; keydata=
@@ -100,30 +100,30 @@ Autocrypt: addr=clg@kaod.org; keydata=
  3GlqivBNkmYsHYSlFsbxc37E1HpTEaSWsGfAHQoPn9qrDJgsgcbBVc1gkUT6hnxShKPp4Pls
  ZVMNjvPAnr5TEBgHkk54HQRhhwcYv1T2QumQizDiU6iOrUzBThaMhZO3i927SG2DwWDVzZlt
  KrCMD1aMPvb3NU8FOYRhNmIFR3fcalYr+9gDuVKe8BVz4atMOoktmt0GWTOC8P4=
-In-Reply-To: <20260417032837.2664122-20-jamin_lin@aspeedtech.com>
+In-Reply-To: <20260417032837.2664122-10-jamin_lin@aspeedtech.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-x-ovh-tracer-id: 13838154283589872779
+x-ovh-tracer-id: 13930196600724368523
 X-VR-SPAMSTATE: OK
 X-VR-SPAMSCORE: -100
-X-VR-SPAMCAUSE: dmFkZTFgt7mQBHukMnZgpKCq+gor8yy2HmY7SeYCZVCoHzSEr927rzGxC710iC5PAvR8yuAJ4mz4bXMfshlmFUK5RhEiSA3olVC5awS8Ciz7MmoVMn3Biww8w58XYoZyfKLYvRPlODPvX35uyonN4YHxFYZMgLzyWwG+ZOgGeArfs5Xs1ERzx74Tz1HO7rx10bJNid2vclot8eD1NrUu1CmJRXyqoRjxyIqnwZtdDqYuhLoJkSeG0XTXC09wStjYSb7Qq3RO1Y/YbTN3nw7eLvV2NXVTYCw/puvOMXueR3Xsc+z4F2HmmbdN7dC47r2IFmX86Qrfj1m0vsaQEXv7+FtciJHdDjJq9jw9fG1hXv93ekgQ2ZrGOHOgi4TUSoXJuXVLDH9HUR2p4o+O40vlWULdeK5h0KzpX8xeGZXEKwU41axIqA4NhIa2Xs74jKQ9KGu4nnZNjJ6tmdZLyHH3oVZH3zC/2VyUd+xZUuKiTNryXdOcJgFtSVR66KXA9bdvOf+BYFLSt9aWbW5iOlYYl0MRANU9wDcS8xRXeys1VrBf9xmoMZtiAKoJARDvlrKGB2j3DvJIq2M3i+0QI9NPTHZRRjHNdo4XNvJO6aHzRSzxK9xfMW0cHX5cQBE/weLkrpHSUvBqm0MFraHcgEtv4yg+tsBBnC0nKKeQMPsPpb8mIhawDQ
-DKIM-Signature: a=rsa-sha256; bh=AHwYl4e5/ZTewa/AIou3tUZQ4w1oNLGTJ+mO+VCUt+Q=; 
+X-VR-SPAMCAUSE: dmFkZTEq5M+W0gp0284aWanAiklCEQpsx5UEsKj1YT0IS/kPo4ELZR4ibgGHgfF+WgnltlE4W/W50HSU2/KvTxZFeG1QImoeBblwKzTLd6ywnuNcwc4TxM5YCe1JQvOCuLx8u3L35yAxWpw7wNAryVKJSIOZ1N8C97hZvs2Aj94hWft5UpMK1+gku1L+7ftGj7Ro95xPchGGVhptaO5UpUfKZf17SnLa7+2KYKwPpsfvCOyjaqQiXyq2wzaABvIT3pr9JhPwTCsjzS2K31ojaoAvvyNkVuOlbtZyyXq3EXXuRRVrgCjE2Lx2Mijr3q6lY35DaWJKQ8w++N3GIhyrxiMoHa+gr/nUtVieqw02gFe5zGkGMBB+Bl63N9Pt58FbNgkZ1mypKVxPbi65M0gE3Yy7BO9mHW6oAh3Fg6hrv5JvQt3WbCjd/nS1zmF6Xq/bS9VgbIiy6Bnlt2xVw6GPHJIQJFJfeKj2cqfLhVSdXFNJyNK8UURBDpPLodBKcdfjVOKUBqwdoLyEXiT7PxKC6unr4zADQl+TwNvPloGw59Z3njP8sJJLbc6oYcCB+39ihDcBSeAWWWJ5kvoNRpOAnb7RuSHuQoZtb8LhHExsrbfSX8k9MLQWLfli/ezVN+jZURIVo1BLsCJDT/L0x4HPYuRamoQixnNu6UWDc0OX6SQF0wqfhw
+DKIM-Signature: a=rsa-sha256; bh=izAVOv4dzlb862naBQNpx7T8MRKz8wXKjeJ3o/1LqTM=; 
  c=relaxed/relaxed; d=kaod.org; h=From; s=ovhmo393970-selector1;
- t=1780334603; v=1;
- b=BKkxzCYQDwSbF6uDG0h5XtqZFFHavKH8wp3T7jVizkh9kqPN0N3ALx5y9mBg3HOKrHWpbeQC
- DxXF/KOSvpjEB6RRK3jIY2cQ4yRL3L/OZUgMH0I7GYzLxQv2ufPKzLhWOBZiAnsUkjRCRZPkjf2
- bU6TIcJQcvYbsUPGPlp32rIK3RAFB1kLkpry4R3PysVlSSwoqZ/pIo6iAWWGYa9/xOQtcOGOVn8
- 1magbmz9pMDTfsc9Tsgb+3CMFvCuOJzDmkbebH5Q7hTb8MFFTfzajiSoeySFnduf9Hx/05lCA6q
- 8nLtTJs5sPKwP9Sw9i536jOEcRn4pIzUMfshLdu9mLeLQ==
-Received-SPF: pass client-ip=46.105.34.251; envelope-from=clg@kaod.org;
- helo=smtpout1.mo528.mail-out.ovh.net
+ t=1780334932; v=1;
+ b=tsvSQHH0xzjJiYRqb291fN8GU9ceBZqGluuTHSikF2OOkvYWAizJKU6TbS9PYylcuvJjMr0I
+ msjAEvNBEwGOpxAGJgzmVGV050jYHKDA/kxuh4gifuh2hrP/gL1uQXhzUHgMTk8J9ppuCVuaZyi
+ saQ2ADdebSdHXLR39RGU79PRT6A6WSaIm+BQ9JkiwNlJZ/PR+3Mqd5UHKctRBuyaKJ3Hd/O+6Sl
+ cutnUSL05CMmnA6Ht3bjrDPAaG1qQTBbVJykRAACu0Htx6vRwbHT1RjpaIYnnfCMROHrv46GfEd
+ gwXOBq7Q2BMPWgSHcmVU52ByXGIDaJ7qguRUCmGP9kJrg==
+Received-SPF: pass client-ip=51.210.91.37; envelope-from=clg@kaod.org;
+ helo=smtpout8.mo538.mail-out.ovh.net
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -139,40 +139,140 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 4/17/26 05:29, Jamin Lin wrote:
-> The hardware strap settings in the AST2700 FC machine model were incorrect.
+On 4/17/26 05:28, Jamin Lin wrote:
+> This commit adds SCU register support for SSP SDRAM remap control and runtime
+> activation. It introduces logic for the PSP to dynamically configure the mapping
+> of its own DRAM windows into SSP-visible SDRAM space, enabling shared memory
+> communication via memory region aliases.
 > 
-> Update HW_STRAP1 and HW_STRAP2 to match the values observed from the
-> real EVB dump. These values are also consistent with the current
-> aspeed_ast27x0_evb.c machine setup.
+> - coprocessor_sdram_remap[0]: maps PSP DRAM offset 0x400000000 (size: 0x1A77E000) to SSP SDRAM
+>      offset 0x5880000
+> - coprocessor_sdram_remap[1]: maps PSP DRAM offset 0x42C000000 (size: 0x05880000) to SSP SDRAM
+>      offset 0x0
+> 
+> The SCU registers AST2700_SCU_SSP_CTRL_1/2 and
+> AST2700_SCU_SSP_REMAP_ADDR_{1,2} / REMAP_SIZE_{1,2} allow runtime reconfiguration
+> of alias offset, base, and size.
+> 
+> |------------------------------------------|         |----------------------------|
+> |               PSP DRAM                   |         |        SSP SDRAM           |
+> |------------------------------------------|         |----------------------------|
+> | 0x4_0000_0000 (SCU_124 << 4)             |     --> | 0x0000_0000                |
+> |   remap1 base                            |---| |   |  - SCU_150: target addr    |
+> |   size: 0x1A77E000 (SCU_14C)             |   | |   |    remap2                  |
+> |------------------------------------------|   | |   |----------------------------|
+> |                                          |   | |   |                            |
+> | 0x4_2C00_0000 (SCU_128 << 4)             |-----|   | 0x5880000                  |
+> |   remap2 base                            |   |     |  - SCU_148: target addr    |
+> |   size: 0x05880000 (SCU_154)             |   |---> |    remap1                  |
+> |------------------------------------------|         |----------------------------|
 > 
 > Signed-off-by: Jamin Lin <jamin_lin@aspeedtech.com>
 > ---
->   hw/arm/aspeed_ast27x0-fc.c | 6 ++++--
->   1 file changed, 4 insertions(+), 2 deletions(-)
+>   hw/misc/aspeed_scu.c | 54 ++++++++++++++++++++++++++++++++++++++++++++
+>   1 file changed, 54 insertions(+)
 > 
-> diff --git a/hw/arm/aspeed_ast27x0-fc.c b/hw/arm/aspeed_ast27x0-fc.c
-> index d1ff6fbd4d..69f114e68d 100644
-> --- a/hw/arm/aspeed_ast27x0-fc.c
-> +++ b/hw/arm/aspeed_ast27x0-fc.c
-> @@ -50,8 +50,10 @@ struct Ast2700FCState {
+> diff --git a/hw/misc/aspeed_scu.c b/hw/misc/aspeed_scu.c
+> index 6512b5fccd..8d1ad95402 100644
+> --- a/hw/misc/aspeed_scu.c
+> +++ b/hw/misc/aspeed_scu.c
+> @@ -147,6 +147,14 @@
 >   
->   #define AST2700FC_BMC_RAM_SIZE (2 * GiB)
+>   /* SSP TSP */
+>   #define AST2700_SCU_SSP_CTRL_0          TO_REG(0x120)
+> +#define AST2700_SCU_SSP_CTRL_1          TO_REG(0x124)
+> +#define AST2700_SCU_SSP_CTRL_2          TO_REG(0x128)
+> +#define AST2700_SCU_SSP_REMAP_ADDR_0    TO_REG(0x140)
+> +#define AST2700_SCU_SSP_REMAP_SIZE_0    TO_REG(0x144)
+> +#define AST2700_SCU_SSP_REMAP_ADDR_1    TO_REG(0x148)
+> +#define AST2700_SCU_SSP_REMAP_SIZE_1    TO_REG(0x14C)
+> +#define AST2700_SCU_SSP_REMAP_ADDR_2    TO_REG(0x150)
+> +#define AST2700_SCU_SSP_REMAP_SIZE_2    TO_REG(0x154)
+>   #define AST2700_SCU_TSP_CTRL_0          TO_REG(0x160)
+>   #define AST2700_SSP_TSP_ENABLE          BIT(0)
+>   #define AST2700_SSP_TSP_RST             BIT(1)
+> @@ -938,6 +946,7 @@ static void aspeed_ast2700_scu_write(void *opaque, hwaddr offset,
+>   {
+>       Aspeed2700SCUState *a = ASPEED_2700_SCU(opaque);
+>       AspeedSCUState *s = ASPEED_SCU(opaque);
+> +    MemoryRegion *mr = NULL;
+>       int reg = TO_REG(offset);
+>       /* Truncate here so bitwise operations below behave as expected */
+>       uint32_t data = data64;
+> @@ -995,6 +1004,37 @@ static void aspeed_ast2700_scu_write(void *opaque, hwaddr offset,
+>           data &= ~AST2700_SSP_TSP_ENABLE;
+>           s->regs[reg] = (s->regs[reg] & ~0xff) | (data & 0xff);
+>           return;
+> +    case AST2700_SCU_SSP_CTRL_1:
+> +    case AST2700_SCU_SSP_CTRL_2:
+> +        mr = (reg == AST2700_SCU_SSP_CTRL_1) ?
+> +            &a->dram_remap_alias[0] : &a->dram_remap_alias[1];
+> +        if (a->ssp_cpuid < 0 || mr == NULL) {
+> +            return;
+> +        }
+> +        data &= 0x7fffffff;
+> +        memory_region_set_alias_offset(mr,
+> +                                       ((uint64_t) data << 4) & 0x3ffffffff);
+
+I am not sure if transactions need to be protected. To check.
+
+> +        break;
+> +    case AST2700_SCU_SSP_REMAP_ADDR_1:
+> +    case AST2700_SCU_SSP_REMAP_ADDR_2:
+> +        mr = (reg == AST2700_SCU_SSP_REMAP_ADDR_1) ?
+> +            &a->dram_remap_alias[0] : &a->dram_remap_alias[1];
+> +        if (a->ssp_cpuid < 0 || mr == NULL) {
+> +            return;
+> +        }
+> +        data &= 0x3fffffff;
+> +        memory_region_set_address(mr, data);
+> +        break;
+> +    case AST2700_SCU_SSP_REMAP_SIZE_1:
+> +    case AST2700_SCU_SSP_REMAP_SIZE_2:
+> +        mr = (reg == AST2700_SCU_SSP_REMAP_SIZE_1) ?
+> +            &a->dram_remap_alias[0] : &a->dram_remap_alias[1];
+> +        if (a->ssp_cpuid < 0 || mr == NULL) {
+> +            return;
+> +        }
+> +        data &= 0x3fffffff;
+> +        memory_region_set_size(mr, data);
+> +        break;
+>       case AST2700_SCU_SYS_RST_CTRL_1:
+>           if (a->ssp_cpuid < 0) {
+>               return;
+> @@ -1065,6 +1105,14 @@ static const uint32_t ast2700_a0_resets[ASPEED_AST2700_SCU_NR_REGS] = {
+>       [AST2700_HW_STRAP1_SEC2]        = 0x00000000,
+>       [AST2700_HW_STRAP1_SEC3]        = 0x1000408F,
+>       [AST2700_SCU_SSP_CTRL_0]        = 0x000007FE,
+> +    [AST2700_SCU_SSP_CTRL_1]        = 0x40000000,
+> +    [AST2700_SCU_SSP_CTRL_2]        = 0x42C00000,
+> +    [AST2700_SCU_SSP_REMAP_ADDR_0]  = 0x1FFFE000,
+> +    [AST2700_SCU_SSP_REMAP_SIZE_0]  = 0x00002000,
+> +    [AST2700_SCU_SSP_REMAP_ADDR_1]  = 0x05880000,
+> +    [AST2700_SCU_SSP_REMAP_SIZE_1]  = 0x1A77E000,
+> +    [AST2700_SCU_SSP_REMAP_ADDR_2]  = 0x00000000,
+> +    [AST2700_SCU_SSP_REMAP_SIZE_2]  = 0x05880000,
+>       [AST2700_SCU_TSP_CTRL_0]        = 0x000007FE,
+>       [AST2700_SCU_SYS_RST_CTRL_1]    = 0xFFC37FDC,
+>       [AST2700_SCU_SYS_RST_CTRL_2]    = 0x00001FFF,
+> @@ -1097,6 +1145,12 @@ static void aspeed_ast2700_scu_reset(DeviceState *dev)
 >   
-> -#define AST2700FC_HW_STRAP1 0x000000C0
-> -#define AST2700FC_HW_STRAP2 0x00000003
-> +/* SCU HW Strap1 */
-> +#define AST2700FC_HW_STRAP1 0x00000800
-> +/* SCUIO HW Strap1 */
-> +#define AST2700FC_HW_STRAP2 0x00000700
->   #define AST2700FC_FMC_MODEL "w25q01jvq"
->   #define AST2700FC_SPI_MODEL "w25q512jv"
+>       if (a->ssp_cpuid > 0) {
+>           arm_set_cpu_off(a->ssp_cpuid);
+
+       memory_region_transaction_begin();
+
+> +        memory_region_set_address(&a->dram_remap_alias[0], 0x5880000);
+> +        memory_region_set_alias_offset(&a->dram_remap_alias[0], 0);
+> +        memory_region_set_size(&a->dram_remap_alias[0], 0x1a77e000);
+> +        memory_region_set_address(&a->dram_remap_alias[1], 0);
+> +        memory_region_set_alias_offset(&a->dram_remap_alias[1], 0x2c000000);
+> +        memory_region_set_size(&a->dram_remap_alias[1], 0x5880000);
+
+       memory_region_transaction_commit();
+
+>       }
 >   
-
-Please send first.
-
-Thanks,
-
-C.
+>       if (a->tsp_cpuid > 0) {
 
 
