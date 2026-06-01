@@ -4,145 +4,123 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E3CA7CD6E4C
-	for <qemu-devel@archiver.kernel.org>; Mon,  1 Jun 2026 08:21:15 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id F30B1CD6E62
+	for <qemu-devel@archiver.kernel.org>; Mon,  1 Jun 2026 08:50:52 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wTxtT-0004L6-BY; Mon, 01 Jun 2026 04:21:07 -0400
+	id 1wTyLg-0007Te-W5; Mon, 01 Jun 2026 04:50:17 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pierrick.bouvier@oss.qualcomm.com>)
- id 1wTxtS-0004Kq-3V
- for qemu-devel@nongnu.org; Mon, 01 Jun 2026 04:21:06 -0400
-Received: from mx0a-0031df01.pphosted.com ([205.220.168.131])
+ (Exim 4.90_1) (envelope-from <clg@kaod.org>) id 1wTyLe-0007RE-Lx
+ for qemu-devel@nongnu.org; Mon, 01 Jun 2026 04:50:15 -0400
+Received: from smtpout3.mo540.mail-out.ovh.net ([51.210.91.52])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pierrick.bouvier@oss.qualcomm.com>)
- id 1wTxtQ-0000Bp-6w
- for qemu-devel@nongnu.org; Mon, 01 Jun 2026 04:21:05 -0400
-Received: from pps.filterd (m0279865.ppops.net [127.0.0.1])
- by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 6514L4DS2753261
- for <qemu-devel@nongnu.org>; Mon, 1 Jun 2026 08:21:00 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
- cc:content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
- gProE1uRRThJYlSwKDyi1/bUaAmIDeNRikdfxsQosQw=; b=CqUODJIeQ/gPYFDe
- kaRfuG9TfJ1YINmL2q50GcZo5Ue5zz98ncOxVW3w60e2SV6FZpMmNOKjHhHB5W7z
- dJK+UfYcVvRAJbxeKQARNtsYP2hnsEIKMlI+FSTep79hjgAssvoZ3+nT7imzDjNu
- Mzy7WVgCUZ9WzDtopPn0IJUlff22xgMd02HlI5m1LapFGxpUbyIAtN9unwzfq2Zr
- 9iby6FUjTBABTJBGiCynwzp12G2rfVjSXjzmGyLgSS81Xe7aGcLRPfhQUYb0jShT
- NLOd9QNWvbit2LQxUWITCKQFhC5X/GR5CsV3juV06/3DE06VcpGKCvh6f/EIvCEX
- 4H4Iyw==
-Received: from mail-dy1-f200.google.com (mail-dy1-f200.google.com
- [74.125.82.200])
- by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4efux563aq-1
- (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
- for <qemu-devel@nongnu.org>; Mon, 01 Jun 2026 08:21:00 +0000 (GMT)
-Received: by mail-dy1-f200.google.com with SMTP id
- 5a478bee46e88-304e7fc90b1so3018445eec.1
- for <qemu-devel@nongnu.org>; Mon, 01 Jun 2026 01:21:00 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=oss.qualcomm.com; s=google; t=1780302060; x=1780906860; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:content-language:from
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=gProE1uRRThJYlSwKDyi1/bUaAmIDeNRikdfxsQosQw=;
- b=FtAJJjiH2KjDrfwkhiQb4M2qosGp9KF5PMtHdI+Zpc+paBQ74Ah/N+GukLJ2iYIL1U
- 0JGzIP17sv58vZI6Bn/f2H5AMqjyin99e0tHbK3izAewu+3trY1XeaKNNXhL4wyS3PzY
- GcUAIKRseUVuohBh6XI777bYJ3/8ihKHZS1pKS5X5EFwpllElzJCzNASCyIyY/fx2UVq
- UlGjmFsBDxNYijsgiekma1upzkNJhZjMNNWEJq6YyeMBPrMGFJi3154hIoJ5XeHGj1wU
- L40jrE55yw9XCBsZfzBBM6Jm9SxmHEk2v/DhSQKQVWufl0ZiLxagQWfo7yy6jgEh7/F5
- 23+Q==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1780302060; x=1780906860;
- h=content-transfer-encoding:in-reply-to:content-language:from
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=gProE1uRRThJYlSwKDyi1/bUaAmIDeNRikdfxsQosQw=;
- b=O2wlbEMWyRvESxl9IK289cUQ32MMoJ+nt6Qy412swWVzt27vLKc6N2mwyVmOrdSHGi
- jXk43kn0HZ1UP9szcGymsa4P0JprhI32zW0sJ/0tcbzrd1dPiI2qvuYoNUfQyRwyc9lA
- 4qYY/VDex71JMhIZpNo7qpDMiaj2hCepjxT5OsM6R45B5tNXM3BuoX5R7sq43zJOQQKs
- ZDcEgF0WEyXODGfved0BgEMtKBc0zXebWuZ3hbBU/D9KY2Dm3PXEDjqUBQOs9++xonms
- 6GRgqOBjMJCewqzTS3Wamidx5cOdnDKg6flFyAaYo+nWKP3ZgGxS+v4vloxfJpTc80t0
- alKA==
-X-Forwarded-Encrypted: i=1;
- AFNElJ9b3F2+g6zeyVe1d0IuSt50UvmIs8+Dcj7cf7ym6sEWDAz+OMuNxFupaxgpSqTfeRtVQHJJ2bCIeMlc@nongnu.org
-X-Gm-Message-State: AOJu0YxPNP0RKVpbHGnsiyKJ9kQLSsm5Z9tn0vFp7MTU6eRwNyq46bT3
- s4QS0g8LnZ9Z6cESq1FDrLxOtEYMxAMHZ93C/U7iOLfejpppMp/ZIukVPm3bcEvPQIyDBQ6KANX
- yH3rLBxAIAzXBa80u+jz74Rxt5fiT13qQbrEhczIlAYlLpKHYNfFvHl/6bQ==
-X-Gm-Gg: Acq92OGiOgYkIpkDuMxZVH19IRcyPWY/RuWM07qMgZ1pwtJ/9CxuqF0eyL0Ji83t0dt
- 0piiA+YwolH3WDdTihmmAQWy7M3CiJQoCM/U2GsDgNqEwT8acv06x1silNI9ergwY5Ag0XulsFj
- n4eXowp13oOxPnqq4Ps8Z5CSaVYMPF8gtLM45rhIypvQIYPPY7g07254BE6vCiMOZ2HGz68Xy1H
- GOsS/vYIZbevQwI0TCyu3RiDvLVXEu79bJguXLwvbSI4UWV0WcCmV8WKpafbI45eipRZi5hFMPY
- TfGkbkUuZ7QT8olDaDyxVxhL1ZSguRee5YZ3HiuKBWknBQgeaDRncHTBV8uYmXvKpW3mUb/0Ike
- FhQCJ+NB2F6q/o2VqEROlH4gNzES5TePhmSRBfhGnl1uv53SR6jaWA9EkDpN0n7BlahpV2X0xT+
- hO2HXxo/Sx+riKnCIwRzTW99Fo
-X-Received: by 2002:a05:7300:a44c:b0:2da:a813:a5fd with SMTP id
- 5a478bee46e88-304fa5a7ac4mr4556495eec.22.1780302059830; 
- Mon, 01 Jun 2026 01:20:59 -0700 (PDT)
-X-Received: by 2002:a05:7300:a44c:b0:2da:a813:a5fd with SMTP id
- 5a478bee46e88-304fa5a7ac4mr4556481eec.22.1780302059304; 
- Mon, 01 Jun 2026 01:20:59 -0700 (PDT)
-Received: from [192.168.1.170] (216-71-219-44.dyn.novuscom.net.
- [216.71.219.44]) by smtp.gmail.com with ESMTPSA id
- 5a478bee46e88-304ed578c48sm7875190eec.20.2026.06.01.01.20.57
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 01 Jun 2026 01:20:58 -0700 (PDT)
-Message-ID: <519e6188-699b-4ed3-bbe0-f8f5ae7c62d5@oss.qualcomm.com>
-Date: Mon, 1 Jun 2026 01:20:56 -0700
+ (Exim 4.90_1) (envelope-from <clg@kaod.org>) id 1wTyLb-0000tQ-SI
+ for qemu-devel@nongnu.org; Mon, 01 Jun 2026 04:50:14 -0400
+Received: from director6.derp.mail-out.ovh.net
+ (director6.derp.mail-out.ovh.net [51.255.22.22])
+ by mo540.mail-out.ovh.net (Postfix) with ESMTPS id 4gTSMW3hccz4Qt6;
+ Mon,  1 Jun 2026 08:49:59 +0000 (UTC)
+Received: from director6.derp.mail-out.ovh.net
+ (director6.derp.mail-out.ovh.net. [127.0.0.1])
+ by director6.derp.mail-out.ovh.net (inspect_sender_mail_agent) with SMTP
+ for <alistair@alistair23.me>; Mon,  1 Jun 2026 08:49:59 +0000 (UTC)
+Received: from mta11.priv.ovhmail-u2.ea.mail.ovh.net (unknown [10.110.43.95])
+ by director6.derp.mail-out.ovh.net (Postfix) with ESMTPS id
+ 4gTSMW26DHz7th0; Mon,  1 Jun 2026 08:49:59 +0000 (UTC)
+Received: from kaod.org (unknown [10.1.6.5])
+ (Authenticated sender: clg@kaod.org)
+ by mta11.priv.ovhmail-u2.ea.mail.ovh.net (Postfix) with ESMTPSA id
+ 135512403043; Mon,  1 Jun 2026 08:49:56 +0000 (UTC)
+Authentication-Results: garm.ovh; auth=pass
+ (GARM-108S002992e5ba5-dd78-49b6-a67f-524cb20876b9,
+ E35A50153BDE4127F94F88E3CE699B0651996EDF) smtp.auth=clg@kaod.org
+X-OVh-ClientIp: 82.64.250.170
+Message-ID: <a986d247-a6f8-497d-ab37-261d8a7b43df@kaod.org>
+Date: Mon, 1 Jun 2026 10:49:53 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 2/2] semihosting/uaccess: Compile once
-To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Pierrick Bouvier <pierrick.bouvier@linaro.org>, qemu-devel@nongnu.org
-Cc: =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
- Anton Johansson <anjo@rev.ng>,
- Richard Henderson <richard.henderson@linaro.org>
-References: <20250502220524.81548-1-philmd@linaro.org>
- <20250502220524.81548-3-philmd@linaro.org>
- <5ebb1a1c-efdd-4dcd-8027-aa3dc031b755@linaro.org>
- <e287f18b-757d-4fbf-a680-7d66f962eb11@linaro.org>
-From: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
-Content-Language: en-US
-In-Reply-To: <e287f18b-757d-4fbf-a680-7d66f962eb11@linaro.org>
-Content-Type: text/plain; charset=UTF-8
+Subject: Re: [PATCH v1 00/24] hw/aspeed: Convert all Aspeed devices to
+ DEFINE_TYPES() with inlined TypeInfo
+To: Jamin Lin <jamin_lin@aspeedtech.com>,
+ Peter Maydell <peter.maydell@linaro.org>,
+ Steven Lee <steven_lee@aspeedtech.com>, Troy Lee <leetroy@gmail.com>,
+ Kane Chen <kane_chen@aspeedtech.com>,
+ Andrew Jeffery <andrew@codeconstruct.com.au>, Joel Stanley <joel@jms.id.au>,
+ Alistair Francis <alistair@alistair23.me>,
+ Ninad Palsule <ninad@linux.ibm.com>, Jason Wang <jasowang@redhat.com>,
+ "open list:ASPEED BMCs" <qemu-arm@nongnu.org>,
+ "open list:All patches CC here" <qemu-devel@nongnu.org>
+Cc: Troy Lee <troy_lee@aspeedtech.com>
+References: <20260601024959.2347639-1-jamin_lin@aspeedtech.com>
+Content-Language: en-US, fr
+From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>
+Autocrypt: addr=clg@kaod.org; keydata=
+ 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
+In-Reply-To: <20260601024959.2347639-1-jamin_lin@aspeedtech.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-X-Proofpoint-GUID: eK5S437dl00NQC6lWZtHZ3rPeMLY-Iiw
-X-Proofpoint-ORIG-GUID: eK5S437dl00NQC6lWZtHZ3rPeMLY-Iiw
-X-Authority-Analysis: v=2.4 cv=BdnoFLt2 c=1 sm=1 tr=0 ts=6a1d40ec cx=c_pps
- a=PfFC4Oe2JQzmKTvty2cRDw==:117 a=iLqgmErQAxjCjdq5jj1Aqg==:17
- a=IkcTkHD0fZMA:10 a=FelO9ux0wxsA:10 a=s4-Qcg_JpJYA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=Um2Pa8k9VHT-vaBCBUpS:22
- a=KKAkSRfTAAAA:8 a=0Eh1pWOq_tBhjFxJSD0A:9 a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
- a=6Ab_bkdmUrQuMsNx7PHu:22 a=cvBusfyB2V15izCimMoJ:22
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNjAxMDA4MiBTYWx0ZWRfX2LQ7SzLknybc
- 7dpNr3I1s/HaSouiFvC8h99y9/bTH6wj9qTh2kWccylRru+/7Pf2bR4iOOy1fyswq7adOS4uV+s
- pwKguLRvqpn5AThwaZdfEulr8X26hASq5WNFVWEnmJWjPnh/6jFWCt30/8f5vexR0B4LOf1Z6f8
- XQWa/xY8FEvl6zKSwaRZQnnweJrnkqYAiPLYFSd2phQmoUGwXemQw8FWgqcgRKcG1502syv/YtY
- ETqaGTMI1ZwhrhwtGQy2xUZTBbCWgq9/mRK7Wd9cnLvejc7Y8V88I+6UwlmAkO7/5M+hYqawIbu
- ZH/hji8mrdJlxw+n6TT+shhJ5lrG6FvwLyUhVnpBcKc9TQhE+am+qHBpDUusTI8F8yK/EUGCZ2a
- zwif4bqPIzEd8kZLHxoMCM3iu4vsyH6DPIiATCdgeJT8Q7OpqDnN9Ek7ykHXsed3eRp4GN9aY04
- X+VsBDnlCQbFqwyx6fQ==
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.125,FMLib:17.12.100.49
- definitions=2026-06-01_02,2026-05-28_03,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- lowpriorityscore=0 priorityscore=1501 spamscore=0 phishscore=0 bulkscore=0
- clxscore=1015 malwarescore=0 adultscore=0 impostorscore=0 suspectscore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2605210000 definitions=main-2606010082
-Received-SPF: pass client-ip=205.220.168.131;
- envelope-from=pierrick.bouvier@oss.qualcomm.com;
- helo=mx0a-0031df01.pphosted.com
-X-Spam_score_int: -27
-X-Spam_score: -2.8
+x-ovh-tracer-id: 5167599097832254524
+X-VR-SPAMSTATE: OK
+X-VR-SPAMSCORE: -100
+X-VR-SPAMCAUSE: dmFkZTE2KY71qfhg80v2imIbFbQWFoBudvcxBker6rpaKRwgbpHgoi/umRDTd63qh5OnqZ8TFHt6eBnX4tTg0ungWt9Q5mlnEM5iwwE1nYcTz75Z/FUNKXTMGHgEvVuPnMYWoiNNIe9CR49WWP0iHHvrlSO9h1mAB3DfbG39BdVKzmG6ms0By2/EQ0rtyBSqAOBcdjFOsVQIYdKQ+J7PPuMUB8KsLI03E9dqbVG3hlBqJ9N/oQU8Ijx3NgUM730PXMKBOP+EsBChrlajK5sDFngHUXugYUaI3GCsduAlg0rXGSl/6lW8tH0PcxT4Nt4ttAvpqJfOqZW/ES8iisytK6Z0BG9peYT3mka+pTp6iKCitdUqeDloK/mM0ltxGLelXnRXCGrtIx6a7Uzjc4nK1UzT4ogV/YQxsE3nzVhrXcgOImOsOSGKQsOxfTPhfQbr/5Tc7+BDw2hMxle21eeDqI5eh2z460IAYBQhx+Tbh2i7UDhrwG/T2fRXuOoWYYoKaxA9X7eBcuGsDvpDNNYOZCOJAn5CRIpbPacS+RWMydpPaANat8jTTV5eueogcLOC/XvdmynxOd7uUDbywWw2Tuoho6ocCmw1G5PDYjh8L8JjcWGxyJNtOoqNWxNvA7nPzHYbPF9C2Sr+jbKSwqfqmQ9qRxtRXl1+NBVCLo9yvqxMejryHw
+DKIM-Signature: a=rsa-sha256; bh=a/rg0Hn8eSqVzC2dInq+MikNnd1lbrrDHIsXG2wjLsM=; 
+ c=relaxed/relaxed; d=kaod.org; h=From; s=ovhmo393970-selector1;
+ t=1780303801; v=1;
+ b=bJf4/QFLGo0C5NeLlzam7IbqBb4LM38tfp8XwJFzfm+VrMBQfya4M1X66gG0I/2tq4fIDDaT
+ z3C88Lziwm0ULXhNgJvCRiDjf7bE1lCZbcF3WJwtpxFmK147aXNNFSj/IYNf6P0Poudbrhxv7uG
+ Wg0oQFWy+YBJ9LBZugynE5HBAnZ/Me4tsAPpV3T9OTmTESIp23/BwPkoYWGFwWy0L0i7DatxDM8
+ O2+pT9R4nJfHhEA7y+HOptVQ5kAuQKeuKmcM0d61xKynzB3hXBZbbRL6Z2ufKIsBbvehVBUVJ/j
+ QvyXsW46wndZRm4R4wBQLWjX4C71LlCDgOHeoplUgSPfA==
+Received-SPF: pass client-ip=51.210.91.52; envelope-from=clg@kaod.org;
+ helo=smtpout3.mo540.mail-out.ovh.net
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -158,58 +136,84 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 5/25/2025 9:15 AM, Philippe Mathieu-Daudé wrote:
-> On 3/5/25 22:04, Pierrick Bouvier wrote:
->> On 5/2/25 3:05 PM, Philippe Mathieu-Daudé wrote:
->>> Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
->>> ---
->>>   semihosting/meson.build | 4 +---
->>>   1 file changed, 1 insertion(+), 3 deletions(-)
->>>
->>> diff --git a/semihosting/meson.build b/semihosting/meson.build
->>> index f3d38dda91d..a0a1c081f43 100644
->>> --- a/semihosting/meson.build
->>> +++ b/semihosting/meson.build
->>> @@ -3,9 +3,7 @@ specific_ss.add(when: 'CONFIG_SEMIHOSTING', if_true:
->>> files(
->>>     'syscalls.c',
->>>   ))
->>> -specific_ss.add(when: ['CONFIG_SEMIHOSTING', 'CONFIG_SYSTEM_ONLY'],
->>> if_true: files(
->>> -  'uaccess.c',
->>> -))
->>> +libsystem_ss.add(files('uaccess.c'))
->>>   common_ss.add(when: 'CONFIG_SEMIHOSTING', if_false: files('stubs-
->>> all.c'))
->>>   user_ss.add(when: 'CONFIG_SEMIHOSTING', if_true: files('user.c'))
->>
->> Fails to build with:
->> ./configure --disable-tcg && ninja -C build
->> FAILED: libsystem.a.p/semihosting_uaccess.c.o
->> ../semihosting/uaccess.c
->> ../semihosting/uaccess.c: In function ‘uaccess_strlen_user’:
->> ../semihosting/uaccess.c:43:17: error: implicit declaration of
->> function ‘probe_access_flags’ [-Wimplicit-function-declaration]
->>      43 |         flags = probe_access_flags(env, addr, 0, MMU_DATA_LOAD,
->>         |                 ^~~~~~~~~~~~~~~~~~
->> ../semihosting/uaccess.c:43:17: error: nested extern declaration of
->> ‘probe_access_flags’ [-Werror=nested-externs]
->>
->> CONFIG_SEMIHOSTING conditional must be kept.
->> -libsystem_ss.add(files('uaccess.c'))
->> +libsystem_ss.add(when: 'CONFIG_SEMIHOSTING', if_true:
->> files('uaccess.c'))
+On 6/1/26 04:50, Jamin Lin wrote:
+> The QEMU community now prefers the DEFINE_TYPES() macro over the legacy
+> type_register_static()/type_init() pattern for device type registration.
+> DEFINE_TYPES() accepts an array of TypeInfo structs and registers them
+> all in a single call, making the registration code more concise and
+> consistent with modern QEMU coding style.
 > 
-> This produces:
+> This series converts all Aspeed device models to use DEFINE_TYPES() and
+> further inlines the individual static TypeInfo variable declarations
+> directly into the types array, eliminating the need for standalone
+> TypeInfo variables scattered throughout each file.
 > 
-> ../../meson.build:4119:28: ERROR: Entry CONFIG_SEMIHOSTING not in
-> configuration dictionary.
+> v1:
+>    The changes are purely mechanical refactoring with no functional
+>    difference. The 24 patches cover all Aspeed-related device models
+>    across hw/adc, hw/arm, hw/fsi, hw/gpio, hw/i2c, hw/intc, hw/misc,
+>    hw/net, hw/nvram, hw/pci-host, hw/rtc, hw/ssi, hw/timer and
+>    hw/watchdog.
 > 
+> Jamin Lin (24):
+>    hw/misc/aspeed_hace: Convert to DEFINE_TYPES() with inlined TypeInfo
+>    hw/misc/aspeed_lpc: Convert to DEFINE_TYPES() with inlined TypeInfo
+>    hw/misc/aspeed_ltpi: Convert to DEFINE_TYPES() with inlined TypeInfo
+>    hw/misc/aspeed_pwm: Convert to DEFINE_TYPES() with inlined TypeInfo
+>    hw/misc/aspeed_sbc: Convert to DEFINE_TYPES() with inlined TypeInfo
+>    hw/misc/aspeed_scu: Convert to DEFINE_TYPES() with inlined TypeInfo
+>    hw/misc/aspeed_sdmc: Convert to DEFINE_TYPES() with inlined TypeInfo
+>    hw/misc:aspeed_sli: Convert to DEFINE_TYPES() with inlined TypeInfo
+>    hw/misc/aspeed_xdma: Convert to DEFINE_TYPES() with inlined TypeInfo
+>    hw/adc/aspeed_adc: Convert to DEFINE_TYPES() with inlined TypeInfo
+>    hw/arm/aspeed_ast1700: Convert to DEFINE_TYPES() with inlined TypeInfo
+>    hw/gpio/aspeed_gpio: Convert to DEFINE_TYPES() with inlined TypeInfo
+>    hw/gpio/aspeed_sgpio: Convert to DEFINE_TYPES() with inlined TypeInfo
+>    hw/intc/aspeed_intc: convert to DEFINE_TYPES() with inlined TypeInfo
+>    hw/intc/aspeed_vic: Convert to DEFINE_TYPES() with inlined TypeInfo
+>    hw/rtc/aspeed_rtc: Convert to DEFINE_TYPES() with inlined TypeInfo
+>    hw/watchdog/wdt_aspeed: Convert to DEFINE_TYPES() with inlined
+>      TypeInfo
+>    hw/nvram/aspeed_otp: Convert to DEFINE_TYPES() with inlined TypeInfo
+>    hw/timer/aspeed_timer: Convert to DEFINE_TYPES() with inlined TypeInfo
+>    hw/fsi/aspeed_apb2opb: Convert to DEFINE_TYPES() with inlined TypeInfo
+>    hw/pci-host/aspeed_pcie: Convert to DEFINE_TYPES() with inlined
+>      TypeInfo
+>    hw/i2c/aspeed_i2c: Convert to DEFINE_TYPES() with inlined TypeInfo
+>    hw/net/ftgmac100: Convert to DEFINE_TYPES() with inlined TypeInfo
+>    hw/ssi/aspeed_smc: Convert to DEFINE_TYPES() with inlined TypeInfo
+> 
+>   hw/adc/aspeed_adc.c       |  95 +++++++---------
+>   hw/arm/aspeed_ast1700.c   |  21 ++--
+>   hw/fsi/aspeed_apb2opb.c   |  42 +++----
+>   hw/gpio/aspeed_gpio.c     | 107 ++++++++----------
+>   hw/gpio/aspeed_sgpio.c    |  37 +++----
+>   hw/i2c/aspeed_i2c.c       | 113 ++++++++-----------
+>   hw/intc/aspeed_intc.c     | 121 +++++++++-----------
+>   hw/intc/aspeed_vic.c      |  19 ++--
+>   hw/misc/aspeed_hace.c     |  81 ++++++--------
+>   hw/misc/aspeed_lpc.c      |  21 ++--
+>   hw/misc/aspeed_ltpi.c     |  19 ++--
+>   hw/misc/aspeed_pwm.c      |  19 ++--
+>   hw/misc/aspeed_sbc.c      |  46 ++++----
+>   hw/misc/aspeed_scu.c      | 107 ++++++++----------
+>   hw/misc/aspeed_sdmc.c     |  73 ++++++------
+>   hw/misc/aspeed_sli.c      |  44 ++++----
+>   hw/misc/aspeed_xdma.c     |  58 +++++-----
+>   hw/net/ftgmac100.c        |  32 +++---
+>   hw/nvram/aspeed_otp.c     |  19 ++--
+>   hw/pci-host/aspeed_pcie.c |  94 +++++++---------
+>   hw/rtc/aspeed_rtc.c       |  19 ++--
+>   hw/ssi/aspeed_smc.c       | 228 ++++++++++++++++----------------------
+>   hw/timer/aspeed_timer.c   |  83 ++++++--------
+>   hw/watchdog/wdt_aspeed.c  |  93 +++++++---------
+>   24 files changed, 678 insertions(+), 913 deletions(-)
 > 
 
-I'm not sure what is the context of this patch, semihosting is already
-common upstream.
+Reviewed-by: Cédric Le Goater <clg@redhat.com>
 
-Regards,
-Pierrick
+Thanks,
+
+C.
+
 
