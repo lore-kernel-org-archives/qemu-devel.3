@@ -4,123 +4,136 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C668DCD6E56
-	for <qemu-devel@archiver.kernel.org>; Mon,  1 Jun 2026 13:04:15 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A0B83CD5BD1
+	for <qemu-devel@archiver.kernel.org>; Mon,  1 Jun 2026 13:07:01 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wU2J2-0006U8-Ey; Mon, 01 Jun 2026 09:03:48 -0400
+	id 1wU2La-0007NV-5I; Mon, 01 Jun 2026 09:06:26 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@kaod.org>) id 1wU2J1-0006Tg-Gv
- for qemu-devel@nongnu.org; Mon, 01 Jun 2026 09:03:47 -0400
-Received: from smtpout1.mo540.mail-out.ovh.net ([51.210.91.50])
+ (Exim 4.90_1) (envelope-from <aesteve@redhat.com>)
+ id 1wU2LP-0007MJ-6y
+ for qemu-devel@nongnu.org; Mon, 01 Jun 2026 09:06:15 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@kaod.org>) id 1wU2Iz-0004BL-OU
- for qemu-devel@nongnu.org; Mon, 01 Jun 2026 09:03:47 -0400
-Received: from director5.derp.mail-out.ovh.net
- (director5.derp.mail-out.ovh.net [51.68.94.138])
- by mo540.mail-out.ovh.net (Postfix) with ESMTPS id 4gTZ0G0Xqzz3wYt;
- Mon,  1 Jun 2026 13:03:42 +0000 (UTC)
-Received: from director5.derp.mail-out.ovh.net
- (director5.derp.mail-out.ovh.net. [127.0.0.1])
- by director5.derp.mail-out.ovh.net (inspect_sender_mail_agent) with SMTP
- for <jamin_lin@aspeedtech.com>; Mon,  1 Jun 2026 13:03:41 +0000 (UTC)
-Received: from mta11.priv.ovhmail-u2.ea.mail.ovh.net (unknown [10.109.254.103])
- by director5.derp.mail-out.ovh.net (Postfix) with ESMTPS id 4gTZ0F4VGPz7tjH;
- Mon,  1 Jun 2026 13:03:41 +0000 (UTC)
-Received: from kaod.org (unknown [10.1.6.0])
- (Authenticated sender: clg@kaod.org)
- by mta11.priv.ovhmail-u2.ea.mail.ovh.net (Postfix) with ESMTPSA id
- F09D62403043; Mon,  1 Jun 2026 13:03:39 +0000 (UTC)
-Authentication-Results: garm.ovh; auth=pass
- (GARM-107S0011691990a-7c96-4bf8-8595-021fef9f0a81,
- E35A50153BDE4127F94F88E3CE699B0651996EDF) smtp.auth=clg@kaod.org
-X-OVh-ClientIp: 82.64.250.170
-Message-ID: <8c183f34-271c-4af2-90ea-31700b719c97@kaod.org>
-Date: Mon, 1 Jun 2026 15:03:39 +0200
+ (Exim 4.90_1) (envelope-from <aesteve@redhat.com>)
+ id 1wU2LN-0005Uv-LP
+ for qemu-devel@nongnu.org; Mon, 01 Jun 2026 09:06:14 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1780319171;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=a3EOOtKkYtNzlyL7wJDq11Tzx8zN1iGmDGeYtUEcaj4=;
+ b=NdmChDLsvZ6AYkcQILSxao1ajTxjxHNQNLu4mj8gMzfDruUGtDoOn5RqPsm3yraPJFSvM1
+ mnju3ThDK10o4gJVg0gdkkIOZ+RMKWhxyCeJxdIb5EvHCVJ65YRRrKX38nPSdqh2eBoL5J
+ P5NwgQt5N5/NpxGjILWycID4UmskGMk=
+Received: from mail-yw1-f197.google.com (mail-yw1-f197.google.com
+ [209.85.128.197]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-507-F9lXw4YMOXuAzozWq3emKw-1; Mon, 01 Jun 2026 09:06:07 -0400
+X-MC-Unique: F9lXw4YMOXuAzozWq3emKw-1
+X-Mimecast-MFC-AGG-ID: F9lXw4YMOXuAzozWq3emKw_1780319167
+Received: by mail-yw1-f197.google.com with SMTP id
+ 00721157ae682-7dc407c707eso70016687b3.1
+ for <qemu-devel@nongnu.org>; Mon, 01 Jun 2026 06:06:07 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1780319167; cv=none;
+ d=google.com; s=arc-20240605;
+ b=eWY1THbh5Owdppir96qsF1Z2jFq4PoLAk0sbkOVxZP4yHLPGVeuQJu/vMK5ZdxvF95
+ 0FlZnHVhiNHMCTy5rgn5ls4IRafvD6+bHWQQqJVcKrvIsh16eNfFVvRsp2/8WBJPpkqw
+ GQWqhOkgdmWrFZQ6+h932QU9zKMZaoiU+zT04MJ0Wv6kvRfblNlEf1+BJZa0ysr5b+kW
+ uB9pBnKYamjhrkLt39nwgMLpFGmY3x4+oMVz0QxfRRBb6nucnCcY5EEbIL43u0yvqt/s
+ 1OnjRvXOBLApLJGTKCk7CWv95/oFYxeqWzGk+wg3yN2Uklr3NDkltO1zdYOJyrup8Zf9
+ 8Iog==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
+ s=arc-20240605; 
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:dkim-signature;
+ bh=a3EOOtKkYtNzlyL7wJDq11Tzx8zN1iGmDGeYtUEcaj4=;
+ fh=Evf3d5FlozXjAsB0VmS2bSCpk8yAb866bzU3WfB6+no=;
+ b=gZuuP/zK3ms/lcGol2xjwd+iC56Q5D47cSxXdVSMRPxaCHMwqTSyuh8el4NlZKecUJ
+ iOkjeegCAia+ryf3pa/6ivcnMupbhC4PHr7D7z2KLGDFcbvcgtIJF5lo7fBez+GqeoTL
+ 9RvEddrCiidWyHeVvi1Eh+a/eFmpyxVbTDvdFq1Txq1U59xUXMgehithX58jSFFQTkNc
+ 6QFEimaTmFkRQhZZnxt2Sud2CruRpEtdhUlOKubfd8PWWN1dDYR7sOyoKXviqHhLHhA1
+ zem2bpSsfc6nZf7ZPPEzXY+lLMQNQE67NFkXok53oAtbNXRr3jjscSCq6DlZSAfAU4cr
+ 0Uhw==; darn=nongnu.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=redhat.com; s=google; t=1780319167; x=1780923967; darn=nongnu.org;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=a3EOOtKkYtNzlyL7wJDq11Tzx8zN1iGmDGeYtUEcaj4=;
+ b=Oo9Ypy8YsPAIhBnq7fuiqMbutVrif2VUFtNh+KstlRwPABpE4d4F1SkOw0jAAytvxQ
+ dfMPzhexreJQ7Fcl7LJSPOGuxp0O2nvDxkrb5D6VpOHsiZT2hUePG42dPP2klxhHjQAv
+ YijZ1jdXD0oTjOeQlKC2AQENNbn3/58feoRdeIBJNIzLYv4oF+39fa/f0traeLBKY3Kl
+ xxLNVrtrwYoDV82/J5lguhMfq9feThG9MgP+GUVkiobBGxrgFfFjCp1kd2Xn9XVJnc6F
+ ec2ua4qGJ6g7Kd52jqYvQ2ZLbCPTo1ynhZAfFCYMDVgqijfKz6i+tH54/G/anNcIgje0
+ cKVg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1780319167; x=1780923967;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=a3EOOtKkYtNzlyL7wJDq11Tzx8zN1iGmDGeYtUEcaj4=;
+ b=ZKtAgBiMjsHOLLm5+Yx3ZHQRooKwSgeqcCZNvDe0yBEHxOuluIW/MWlblk6N5vaqJR
+ w5CkMpTAbSgaxy7R+6uboXbCohK18zVXPETGY/WsfhvonKzO1IVYSRC+9EipchQTpKa6
+ Qr2Rity4n5dvTzyGFu2eF+LUariy0n+LcR5OaTg3yuDKLapg2sIulmAHeWWSMJmirWDx
+ hhOMMkFhvH5BMg2aY2tkhOUITQyFXlpkjFvzDLclBeasGhwg0+FfOyWMz33B35cABrMD
+ V/fqkMOnIaPIkJA+Onmj7X4GZkYAZJ7jdVyoVXJH5EJip88nZOJ3oBbgjKrDBE4Oz90Y
+ z4Cg==
+X-Forwarded-Encrypted: i=1;
+ AFNElJ/lpETR0tjeM8q+96MLvemVQTarEUeFxzybN2iS4h0nTRmNxNJMPgcMBL5O3ORHMsbYGsOWfu7ebRjv@nongnu.org
+X-Gm-Message-State: AOJu0Yz4o4cN9ArDWaLrDpqowaACa/B1QrMZXGJmSVwlw8rmpK3gkYIG
+ gS1N4DqbG5Q9QowBJM0/5zPGGJTc/2xRpDYjHYoYd3bVbTv+vsQ2HaUGAArrrSmdB3Mim4txZe5
+ S07VAe8HAXcO/lLhEm78Co6lkPY8wHbzJVjkTpzwmoFurT9LYsu5s8eqZS6d/9g6TuBmasCPXzM
+ xnq+cOIg9g54ka2+DKnb1UIuQi/7FV8FY=
+X-Gm-Gg: Acq92OEt5NGh2K1X43nhKveKO3fxelA3AXcvLPNam8i4rAvg3DaExvRdD4LBg8DtqQs
+ Qa4Eq7PjbO6vQmb595NBd6ak9XaNFubn4YryH+pEVcHf/EYeuePLNix3bjO50q3IfWfQsH5pOlR
+ H49hcxKOidTzzAiV2QWMn4et5hdDGPVWB3iBoh8R0DjO5dCLYFk7l3i4BpXK7zJfGoFd/uWGsF1
+ i0ifoP+AVrR/gbk
+X-Received: by 2002:a05:690c:3391:b0:79a:c40d:b734 with SMTP id
+ 00721157ae682-7e05ea48534mr91668387b3.48.1780319167179; 
+ Mon, 01 Jun 2026 06:06:07 -0700 (PDT)
+X-Received: by 2002:a05:690c:3391:b0:79a:c40d:b734 with SMTP id
+ 00721157ae682-7e05ea48534mr91663157b3.48.1780319162192; Mon, 01 Jun 2026
+ 06:06:02 -0700 (PDT)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v1 10/10] hw/arm/aspeed_ast1040: Reuse AST2700 watchdog
- models
-To: Jamin Lin <jamin_lin@aspeedtech.com>,
- Peter Maydell <peter.maydell@linaro.org>,
- Steven Lee <steven_lee@aspeedtech.com>, Troy Lee <leetroy@gmail.com>,
- Kane Chen <kane_chen@aspeedtech.com>,
- Andrew Jeffery <andrew@codeconstruct.com.au>, Joel Stanley <joel@jms.id.au>,
- "open list:ASPEED BMCs" <qemu-arm@nongnu.org>,
- "open list:All patches CC here" <qemu-devel@nongnu.org>
-Cc: Troy Lee <troy_lee@aspeedtech.com>
-References: <20260529064243.2064188-1-jamin_lin@aspeedtech.com>
- <20260529064243.2064188-11-jamin_lin@aspeedtech.com>
-Content-Language: en-US, fr
-From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>
-Autocrypt: addr=clg@kaod.org; keydata=
- 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
-In-Reply-To: <20260529064243.2064188-11-jamin_lin@aspeedtech.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-x-ovh-tracer-id: 9452211192925760523
-X-VR-SPAMSTATE: OK
-X-VR-SPAMSCORE: -100
-X-VR-SPAMCAUSE: dmFkZTGl/dIjqdgJM/NpUD3pnXqNgQDT0uUxyBa1sLRmJG4N/NPq4M9uP7IlhZuCWrfyTNZw2bnNB0znsqqLqWTFbFat/sg9uwQQFY9k7W9pB1wUVAnMT4gX1QYD6HJk5QRlMZUTw+U1qV5Fxwtt0c242wblcRAXQSJ0C3JKg9x3i6fbatScxN/+Y4f0YAiyBz3iEs7saMhv1MmeoAbmYdyRI/k3JAshjSOdNV69So+0srUL+HmXds94z7gYEgLdalZjp89MlV9rBx5L4bEJbu6ITexMbQBjQE3Iqv7exRuYMmb5o2b2p664rCK4JMrhYiC+GFkGKtCQmQXDQMJgS1RM8J+TbmiDFQ1Ej8Rh/wFRiSk2jwnnJ5OV4cBkcnFWWW037V7TNpkqrVN45nNuDv1wJ/o7mcO5rfm7yDLaqMuoE4Rzd+yP6pe/boF+UYpEZN8t5pkBqpUKmPQueGJfre4VUn7FXlJDAw6S1bj8EfWO/voQFmyLexLOTeqWSAw/IcZhZRIk5LKixK2CkhemGQ7H52woxR8kdiaT/9h0hyDYehOTm6LNNgAmj0uQK1dSINzhH72MWWXsajw7Mi6SX0EPxwDr2vzJn7p7szDIffh1f3KEQcMQp5Vj85d8BE/9KlLQ1gcl2uhYrMVaqPxDs5tKdDm2hJCzzaD2Atxu6GftFb1gvA
-DKIM-Signature: a=rsa-sha256; bh=OSG+SSYFrWmlAREMXWfE/vKOJENDVYBqcKnGKj/PaYM=; 
- c=relaxed/relaxed; d=kaod.org; h=From; s=ovhmo393970-selector1;
- t=1780319023; v=1;
- b=W/Joz1SFwX7P3IHGAH6ktcRUtOwEga3T1KLTqTwpqbKO4iVpFm2tTodFDllJZxZYGf0U2oSG
- xY1Y9JUCAzuWpG0tCMQHUvbVvSVhTvJ8FHrKb+yKw46qIAf0yeBmCufiDdR81KQG5KuKRbbPLda
- rmDT619MMo7oLKuokz+S3JlijsfwRIAtNe75rH+CuvjY9ks1fOOWjZTVMGNOthk6dqAEkzgGagf
- NSRodaX/I8TWZ/7yQk7POxbNMVyNsOWKNlj95KbSaHHQZskY5TBLXD5TV8JZW1NdX5Y9Jyttz7K
- +NxPFizH3uZXt24VF1ry1P4wsC5ccC1FQ628effr35hqQ==
-Received-SPF: pass client-ip=51.210.91.50; envelope-from=clg@kaod.org;
- helo=smtpout1.mo540.mail-out.ovh.net
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+References: <874ijtz038.fsf@draig.linaro.org>
+ <CADSE00+RdBUhFVBDSXtVd1J5SaccqWy+RBxqnxuLKUYcitFMPw@mail.gmail.com>
+ <20260601083628-mutt-send-email-mst@kernel.org>
+In-Reply-To: <20260601083628-mutt-send-email-mst@kernel.org>
+From: Albert Esteve <aesteve@redhat.com>
+Date: Mon, 1 Jun 2026 15:05:50 +0200
+X-Gm-Features: AVHnY4KxqNrVCAnBvGqVDNl4sx_O6LVtLUuikZg1pVoCVm_RBbEptTRzSNfWocM
+Message-ID: <CADSE00+kRnEC08LLVu6H065u2KaxBm-KnSN_8y6+964-FLbJMA@mail.gmail.com>
+Subject: Re: Where should the vhost-user specification live?
+To: "Michael S. Tsirkin" <mst@redhat.com>
+Cc: =?UTF-8?B?QWxleCBCZW5uw6ll?= <alex.bennee@linaro.org>, 
+ qemu-devel <qemu-devel@nongnu.org>, virtio-comment@lists.linux.dev, 
+ dev@lists.cloudhypervisor.org, rust-vmm@lists.opendev.org, 
+ Stefano Garzarella <sgarzare@redhat.com>,
+ Manos Pitsidianakis <manos.pitsidianakis@linaro.org>, 
+ Demi Marie Obenour <demi@invisiblethingslab.com>, Alyssa Ross <hi@alyssa.is>, 
+ Mark Burton <MBURTON@qti.qualcomm.com>, Matti Moell <matti@qti.qualcomm.com>, 
+ Stefan Hajnoczi <stefanha@redhat.com>, Viresh Kumar <viresh.kumar@linaro.org>, 
+ Dorinda Bassey <dbassey@redhat.com>, Sergio Lopez <slp@redhat.com>, 
+ Vishwanath Seshagiri <vishs@meta.com>, Rob Bradford <rbradford@meta.com>, 
+ Zhengyu Zhao <zhaozhengyu@bytedance.com>,
+ "Jorge E. Moreira" <jemoreira@google.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=aesteve@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -24
+X-Spam_score: -2.5
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.445,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -136,76 +149,51 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 5/29/26 08:42, Jamin Lin wrote:
-> Instantiate and realize the watchdog models for the AST1040 SoC.
-> 
-> The AST1040 watchdog controller is compatible with the AST2700 watchdog
-> controller, so reuse the existing AST2700 watchdog model.
-> 
-> Configure the AST1040 SoC with 8 watchdog instances and map them to
-> their corresponding MMIO regions. The first watchdog controller (WDT0) is
-> located at 0x74c37000, with subsequent watchdogs placed according to the
-> controller register space size.
-> 
-> Each watchdog is linked to the SCU device before realization to provide the
-> required reset and system control interactions.
-> 
-> Signed-off-by: Jamin Lin <jamin_lin@aspeedtech.com>
-> ---
->   hw/arm/aspeed_ast1040.c | 19 +++++++++++++++++++
->   1 file changed, 19 insertions(+)
-> 
-> diff --git a/hw/arm/aspeed_ast1040.c b/hw/arm/aspeed_ast1040.c
-> index a4fe0658d5..edf28c62f9 100644
-> --- a/hw/arm/aspeed_ast1040.c
-> +++ b/hw/arm/aspeed_ast1040.c
-> @@ -127,6 +127,11 @@ static void aspeed_soc_ast1040_init(Object *obj)
->       snprintf(typename, sizeof(typename), "aspeed.i2c-%s", socname);
->       object_initialize_child(obj, "i2c", &s->i2c, typename);
->   
-> +    for (i = 0; i < sc->wdts_num; i++) {
-> +        object_initialize_child(obj, "wdt[*]", &s->wdt[i],
-> +                                "aspeed.wdt-ast2700");
-> +    }
-> +
->       object_initialize_child(obj, "pwm", &s->pwm, TYPE_UNIMPLEMENTED_DEVICE);
->       object_initialize_child(obj, "espi", &s->espi, TYPE_UNIMPLEMENTED_DEVICE);
->       object_initialize_child(obj, "udc", &s->udc, TYPE_UNIMPLEMENTED_DEVICE);
-> @@ -257,6 +262,19 @@ static void aspeed_soc_ast1040_realize(DeviceState *dev_soc, Error **errp)
->           sysbus_connect_irq(SYS_BUS_DEVICE(&s->i2c.busses[i]), 0, irq);
->       }
->   
-> +    /* Watch dog */
-> +    for (i = 0; i < sc->wdts_num; i++) {
-> +        AspeedWDTClass *awc = ASPEED_WDT_GET_CLASS(&s->wdt[i]);
-> +        hwaddr wdt_offset = sc->memmap[ASPEED_DEV_WDT] + i * awc->iosize;
-> +
-> +        object_property_set_link(OBJECT(&s->wdt[i]), "scu", OBJECT(&s->scu),
-> +                                 &error_abort);
-> +        if (!sysbus_realize(SYS_BUS_DEVICE(&s->wdt[i]), errp)) {
-> +            return;
-> +        }
-> +        aspeed_mmio_map(s->memory, SYS_BUS_DEVICE(&s->wdt[i]), 0, wdt_offset);
-> +    }
-> +
->       /* Unimplemented peripherals */
->       aspeed_mmio_map_unimplemented(s->memory, SYS_BUS_DEVICE(&s->pwm),
->                                     "aspeed.pwm",
-> @@ -298,6 +316,7 @@ static void aspeed_soc_ast1040_class_init(ObjectClass *klass, const void *data)
->       sc->sram_size[1]    = 16 * MiB; /* Hyper RAM */
->       sc->uarts_num       = 13;
->       sc->sgpio_num       = 2;
-> +    sc->wdts_num        = 8;
->       sc->uarts_base      = ASPEED_DEV_UART0;
->       sc->irqmap          = aspeed_soc_ast1040_irqmap;
->       sc->memmap          = aspeed_soc_ast1040_memmap;
+On Mon, Jun 1, 2026 at 2:39=E2=80=AFPM Michael S. Tsirkin <mst@redhat.com> =
+wrote:
+>
+> On Mon, Jun 01, 2026 at 02:32:11PM +0200, Albert Esteve wrote:
+> >  But also because, in my opinion, separating
+> > the specification would improve development agility by decoupling
+> > specification development from QEMU's review and release cycles.
+>
+> Generally for QEMU this will be less agility, unless I misunderstand
+> what is proposed)
+>
+> Because presumably there will need to be spec releases then?
+>
+> So
+>         new feature -> spec tree -> spec release -> qemu implementation -=
+> qemu release
+>
+> is surely longer that what we have now.
 
+I see your point.
 
+However, we do not really need to introduce a heavy release management
+layer. We could just operate it as a living document, where the main
+branch is the authoritative source of truth.
 
-Reviewed-by: Cédric Le Goater <clg@redhat.com>
+For the workflow, development doesn't have to be strictly sequential
+either. A contributor can propose the spec update while working on the
+implementation, much like we do for VirtIO updates. Actually, this way
+one update/change supports the other.
 
-Thanks,
+I guess my point is that a dedicated repository could lower the
+barrier for new changes AND keep QEMU's own development speed mostly
+unaffected.
 
-C.
+BR,
+Albert
+
+>
+> Whether there will be more agility for non qemu users will depend on
+> how often spec releases are cut.
+>
+>
+>
+> --
+> MST
+>
 
 
