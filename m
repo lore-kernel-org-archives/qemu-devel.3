@@ -4,37 +4,41 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E5DC2CD6E60
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E5D7FCD5BD1
 	for <qemu-devel@archiver.kernel.org>; Mon,  1 Jun 2026 09:52:17 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wTzJB-0005yk-Aq; Mon, 01 Jun 2026 05:51:45 -0400
+	id 1wTzJB-0005yM-9Z; Mon, 01 Jun 2026 05:51:45 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <gaosong@loongson.cn>)
- id 1wTzJ4-0005xy-K2
- for qemu-devel@nongnu.org; Mon, 01 Jun 2026 05:51:38 -0400
+ id 1wTzJ4-0005xz-KS; Mon, 01 Jun 2026 05:51:38 -0400
 Received: from mail.loongson.cn ([114.242.206.163])
  by eggs.gnu.org with esmtp (Exim 4.90_1)
- (envelope-from <gaosong@loongson.cn>) id 1wTzJ1-0006g1-MO
- for qemu-devel@nongnu.org; Mon, 01 Jun 2026 05:51:38 -0400
+ (envelope-from <gaosong@loongson.cn>)
+ id 1wTzJ1-0006g0-Sw; Mon, 01 Jun 2026 05:51:38 -0400
 Received: from loongson.cn (unknown [10.2.5.185])
- by gateway (Coremail) with SMTP id _____8AxFekdVh1qz00PAA--.36814S3;
- Mon, 01 Jun 2026 17:51:25 +0800 (CST)
+ by gateway (Coremail) with SMTP id _____8Cx3sAgVh1q1E0PAA--.19142S3;
+ Mon, 01 Jun 2026 17:51:28 +0800 (CST)
 Received: from localhost.localdomain (unknown [10.2.5.185])
- by front1 (Coremail) with SMTP id qMiowJCx_8IYVh1q3eyXAA--.25337S2;
- Mon, 01 Jun 2026 17:51:20 +0800 (CST)
+ by front1 (Coremail) with SMTP id qMiowJCx_8IYVh1q3eyXAA--.25337S3;
+ Mon, 01 Jun 2026 17:51:27 +0800 (CST)
 From: Song Gao <gaosong@loongson.cn>
 To: qemu-devel@nongnu.org
-Subject: [PULL 0/1] loongarch queue
-Date: Mon,  1 Jun 2026 17:25:07 +0800
-Message-Id: <20260601092508.4054448-1-gaosong@loongson.cn>
+Cc: Qiang Ma <maqianga@uniontech.com>, qemu-stable@nongnu.org,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+Subject: [PULL 1/1] target/loongarch/kvm: Include missing exec/target_long.h
+ header
+Date: Mon,  1 Jun 2026 17:25:08 +0800
+Message-Id: <20260601092508.4054448-2-gaosong@loongson.cn>
 X-Mailer: git-send-email 2.39.1
+In-Reply-To: <20260601092508.4054448-1-gaosong@loongson.cn>
+References: <20260601092508.4054448-1-gaosong@loongson.cn>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-X-CM-TRANSID: qMiowJCx_8IYVh1q3eyXAA--.25337S2
+X-CM-TRANSID: qMiowJCx_8IYVh1q3eyXAA--.25337S3
 X-CM-SenderInfo: 5jdr20tqj6z05rqj20fqof0/
 X-Coremail-Antispam: 1Uk129KBjDUn29KB7ZKAUJUUUUU529EdanIXcx71UUUUU7KY7
  ZEXasCq-sGcSsGvfJ3UbIjqfuFe4nvWSU5nxnvy29KBjDU0xBIdaVrnUUvcSsGvfC2Kfnx
@@ -61,26 +65,40 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The following changes since commit 81cc5f39aa3042e9c0b2ea772b42a2c8b1488e76:
+From: Qiang Ma <maqianga@uniontech.com>
 
-  Merge tag 'pull-target-arm-20260529' of https://gitlab.com/pm215/qemu into staging (2026-05-29 12:58:25 -0400)
+After commit 71cab1a42d2 removed the indirect include of
+exec/cpu-defs.h from target/loongarch/cpu.h, the TARGET_FMT_lx
+macro is no longer visible in kvm.c, causing build failures:
 
-are available in the Git repository at:
+  error: expected ')' before TARGET_FMT_lx
 
-  https://github.com/gaosong715/qemu.git tags/pull-loongarch-20260601
+Add the missing exec/target_long.h to fix it.
 
-for you to fetch changes up to cf64389108cae812647f7d821f46d8deacc3326d:
-
-  target/loongarch/kvm: Include missing exec/target_long.h header (2026-06-01 02:52:59 -0400)
-
-----------------------------------------------------------------
-pull-loongarch-20260601
-
-----------------------------------------------------------------
-Qiang Ma (1):
-      target/loongarch/kvm: Include missing exec/target_long.h header
-
+Cc: qemu-stable@nongnu.org
+Fixes: 71cab1a42d2 ("target/cpu: Do not include 'exec/cpu-defs.h' anymore")
+Signed-off-by: Qiang Ma <maqianga@uniontech.com>
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Reviewed-by: Song Gao <gaosong@loongson.cn>
+Message-ID: <20260601014601.4047201-1-gaosong@loongson.cn>
+Signed-off-by: Song Gao <gaosong@loongson.cn>
+---
  target/loongarch/kvm/kvm.c | 1 +
  1 file changed, 1 insertion(+)
+
+diff --git a/target/loongarch/kvm/kvm.c b/target/loongarch/kvm/kvm.c
+index 9d844c4905..4af4ab2ed0 100644
+--- a/target/loongarch/kvm/kvm.c
++++ b/target/loongarch/kvm/kvm.c
+@@ -6,6 +6,7 @@
+  */
+ 
+ #include "qemu/osdep.h"
++#include "exec/target_long.h"
+ #include <sys/ioctl.h>
+ #include <linux/kvm.h>
+ #include "asm-loongarch/kvm_para.h"
+-- 
+2.54.0
 
 
