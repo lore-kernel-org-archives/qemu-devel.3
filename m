@@ -4,47 +4,48 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 44908CD6E55
-	for <qemu-devel@archiver.kernel.org>; Mon,  1 Jun 2026 10:37:06 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 72EC1CD6E55
+	for <qemu-devel@archiver.kernel.org>; Mon,  1 Jun 2026 10:37:16 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wU00p-0004R6-TV; Mon, 01 Jun 2026 06:36:51 -0400
+	id 1wU00y-0004TU-1f; Mon, 01 Jun 2026 06:37:00 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1)
- (envelope-from <198627807a6b94e2aab157cf345f98edb1ac1a7a@kylie.crudebyte.com>)
- id 1wU00n-0004Qg-7O; Mon, 01 Jun 2026 06:36:50 -0400
+ (envelope-from <be33c56898f8b18617cff91525f0b68abee8de07@kylie.crudebyte.com>)
+ id 1wU00u-0004So-LY; Mon, 01 Jun 2026 06:36:57 -0400
 Received: from kylie.crudebyte.com ([5.189.157.229])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1)
- (envelope-from <198627807a6b94e2aab157cf345f98edb1ac1a7a@kylie.crudebyte.com>)
- id 1wU00k-00072G-4e; Mon, 01 Jun 2026 06:36:47 -0400
+ (envelope-from <be33c56898f8b18617cff91525f0b68abee8de07@kylie.crudebyte.com>)
+ id 1wU00s-00075i-Gp; Mon, 01 Jun 2026 06:36:55 -0400
 DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
  d=crudebyte.com; s=kylie; h=Cc:To:Subject:Date:From:References:In-Reply-To:
  Message-ID:Content-Type:Content-Transfer-Encoding:MIME-Version:Content-ID:
- Content-Description; bh=dAZnEm7vTJ3oFE09BJyT1XgyhO/mjQhAShsQCc1F6As=; b=hZvM0
- iX3rGq+4q58GGZzJjDP+vWwJ2VCrPy7/2Ts30ABDCVVr7vLXygHJKMdZoImDdrD+jFe6w0QXgazQf
- IGID/nZ9QEzwcFvA8ppLuq4vQ34BcLtB38WkBzTi4yM59FfEPxX5cgAfoIz4O2RcAHVaUat4XpdZi
- QBHnL+Qi2cj8zZq4rJnq2Rk5BbWw7z2oJhRaK3drrjgIp1jqWP/WpM72TWcOjZr17WGngrz1iPNo+
- G6nNS5qVM15EjyZ0H2NIffCagI3l3h8Nz+Lqes8P9GgIq8wbJyYaFUXMTUiBYOIPWJ5jy9RgYcTlV
- scvDvxlm4GqcC3AM6Fw4eUC+UziOfTBaLFA8TA8vcK/lbyhVJLR2ZdM27zugkVGEOdJjKr5KArNjw
- d7BYET/oSqNQjiBunCsZx0fPOVTg1tFOLuino60ENlnDC9MfOv4badi74QkZaaseSySQIP4fBgOor
- 5tZcoTIIbNtfhduTRi1FUENDsS2+Po/+vMm0kJtaotQ2usNA3plz5WwYzHou5ng/mJfLSN5LyRf6v
- 30qsxNK0vxxnDnG54eIeBO0b3lMEheRrYQKHLTVa3py9UIaObOSXOJF9DSSjEifQ+YzuLZd1BaX2p
- EEfstg9W847yRCYf6sNjKIwNqC/7PBxiVPfQyDMbTJN6aPY7fmIgK3f5b4IMPI=;
-Message-ID: <198627807a6b94e2aab157cf345f98edb1ac1a7a.1780307575.git.qemu_oss@crudebyte.com>
+ Content-Description; bh=3bAH1zxl2nTq/kZfGqArQY/bbatoiPlV2qADmOh86XQ=; b=NFoR6
+ 3NVAJcZcAiDOHjtYL6u143Cam7LNwB5ZxQjICc9d499iMQaJJ71E5xahNgMKDGvqamW2ySp0jmCZy
+ cBBGT+k9uPKmhbRswwTRr7Hve2k5V9dgOb5KHAFEkhmIMb4NVnAO1RNbtm6GIgJRIMY5QNjLgR34z
+ 2YVcis76C9rbETgHk+GLGVBknHZeJGL2ELxXJObNJpb7cmVQEmkLu8IFuGWzr2ijbJ5EH94XyQt9h
+ 7hIZvvYDSkRSjsuNS/hEByuEVF1u1RVO55hdVimiAHfQQAtcxypPaKYsyQPEFPgnPGulHSCNdYknm
+ FPHamXDg2/0TG9arBYIABqrdO8Uo0jlN7gXKx3JS9gxEJGTtUEzZ1DJFh9GxoKNMS2PBhgoLTeWZa
+ rw/c9G9uTNxRO3X+uZTmxGBXn9hAWXg0f9UcuvhEGTLSQJanUolC8ckf7WGT1FVO6sxdq8kQYvWee
+ QT3tMclIyKL0yZXG4u3xFp/m+IHVXJYSb7J8M+yxfeTyFrpEGbJ+do363kvG9ZiYr1lGN1lwdNZ1O
+ 8Avv/yFq+u6P+RD3Y8dLYFXTJLQimmuCA+FOuVxnI9nqy+JKNztMu8TSQzqyrzHbTHf/DIFm+9B75
+ uWH+Q+BUYS72fmYDbUr5V+IYGxRmsV9TkSVw/TWCT8UDRJUFEws3GY96xkqJMU=;
+Message-ID: <be33c56898f8b18617cff91525f0b68abee8de07.1780307575.git.qemu_oss@crudebyte.com>
 In-Reply-To: <cover.1780307575.git.qemu_oss@crudebyte.com>
 References: <cover.1780307575.git.qemu_oss@crudebyte.com>
 From: Christian Schoenebeck <qemu_oss@crudebyte.com>
 Date: Mon, 01 Jun 2026 11:52:56 +0200
-Subject: [PULL 6/7] tests/9pfs: add deep absolute path test
+Subject: [PULL 5/7] tests/qtest/libqos: add qvirtqueue_reset_pool() for
+ descriptor pool reset
 To: qemu-devel@nongnu.org
 Cc: qemu-stable@nongnu.org, Greg Kurz <groug@kaod.org>,
- Peter Maydell <peter.maydell@linaro.org>,
+ Peter Maydell <peter.maydell@linaro.org>, Fabiano Rosas <farosas@suse.de>,
  Wang Jihe <wangjihe.mail@gmail.com>
 Received-SPF: pass client-ip=5.189.157.229;
- envelope-from=198627807a6b94e2aab157cf345f98edb1ac1a7a@kylie.crudebyte.com;
+ envelope-from=be33c56898f8b18617cff91525f0b68abee8de07@kylie.crudebyte.com;
  helo=kylie.crudebyte.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
@@ -67,116 +68,70 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Add fs_deep_absolute_path test that creates a deep directory
-structure with an absolute path length exceeding 16-bit range
-(i.e. >65536) to verify the previous buffer overflow fix.
+Add a function to reset the virtqueue descriptor pool state without
+reinitializing the device. This is useful for tests that issue a high
+number of requests and are limited by the simplified virtio test
+driver's descriptor tracking, which decrements num_free but never
+increments it back.
 
-This is a slow test (may take several seconds) and therefore
-registered as "slow" test and not running by default.
+The function is safe for synchronous test code where requests are
+sent and completed before the next request is issued.
 
-Use -m slow to run this test.
-
-Link: https://gitlab.com/qemu-project/qemu/-/issues/3358
-Link: https://lore.kernel.org/qemu-devel/933552b2cfc2c442fac7f4e68c777dce20ee8d7e.1779126034.git.qemu_oss@crudebyte.com
+Acked-by: Fabiano Rosas <farosas@suse.de>
+Link: https://lore.kernel.org/qemu-devel/96cf23eea1204b34443218fe76bd4a5eaf9163e8.1779126034.git.qemu_oss@crudebyte.com
 Signed-off-by: Christian Schoenebeck <qemu_oss@crudebyte.com>
 ---
- tests/qtest/virtio-9p-test.c | 69 ++++++++++++++++++++++++++++++++++++
- 1 file changed, 69 insertions(+)
+ tests/qtest/libqos/virtio.c | 23 +++++++++++++++++++++++
+ tests/qtest/libqos/virtio.h |  2 ++
+ 2 files changed, 25 insertions(+)
 
-diff --git a/tests/qtest/virtio-9p-test.c b/tests/qtest/virtio-9p-test.c
-index ac38ccf595..1c69d41e33 100644
---- a/tests/qtest/virtio-9p-test.c
-+++ b/tests/qtest/virtio-9p-test.c
-@@ -14,6 +14,7 @@
- 
- #include "qemu/osdep.h"
- #include "qemu/module.h"
-+#include "libqos/virtio.h"
- #include "libqos/virtio-9p-client.h"
- 
- #define twalk(...) v9fs_twalk((TWalkOpt) __VA_ARGS__)
-@@ -752,6 +753,72 @@ static void fs_use_after_unlink(void *obj, void *data,
-     g_assert_cmpint(attr.size, ==, 2001);
+diff --git a/tests/qtest/libqos/virtio.c b/tests/qtest/libqos/virtio.c
+index 010ff40834..ccbb325222 100644
+--- a/tests/qtest/libqos/virtio.c
++++ b/tests/qtest/libqos/virtio.c
+@@ -464,6 +464,29 @@ bool qvirtqueue_get_buf(QTestState *qts, QVirtQueue *vq, uint32_t *desc_idx,
+     return true;
  }
  
-+/* https://gitlab.com/qemu-project/qemu/-/issues/3358 */
-+static void fs_deep_absolute_path(void *obj, void *data,
-+                                  QGuestAllocator *t_alloc)
++/*
++ * qvirtqueue_reset_pool:
++ * @vq: The virtqueue to reset
++ *
++ * Reset the descriptor pool state without reinitializing the device.
++ * This is useful for tests that issue a high number of requests and
++ * are limited by the simplified virtio test driver's descriptor tracking,
++ * which decrements num_free but never increments it back.
++ *
++ * This is only safe for synchronous test code where requests are
++ * sent and completed before the next request is issued. Do not use
++ * with asynchronous code where multiple requests may be in-flight.
++ *
++ * Note: This only resets the available descriptor pool (free_head,
++ * num_free). The used ring position (last_used_idx) is NOT reset
++ * and should continue to track consumed responses across iterations.
++ */
++void qvirtqueue_reset_pool(QVirtQueue *vq)
 +{
-+    QVirtio9P *v9p = obj;
-+    v9fs_set_allocator(t_alloc);
-+
-+    if (!g_test_slow()) {
-+        g_test_skip("This is a slow test, run with -m slow");
-+        return;
-+    }
-+
-+    GString *path = g_string_new("/");
-+    char name[256];
-+    uint32_t current_fid = 0;
-+
-+    tattach({ .client = v9p });
-+
-+    /* Create deep directory structure until absolute path length
-+     * exceeds 16-bit range.
-+     */
-+    while (path->len <= 65536) {
-+        /* use 255-byte name (NAME_MAX) to reduce iterations to ~257 */
-+        memset(name, 'A', 255);
-+        name[255] = '\0';
-+
-+        /* create the directory relative to current FID */
-+        tmkdir({
-+            .client = v9p,
-+            .dfid = current_fid,
-+            .name = name
-+        });
-+
-+        /* just for locally tracking the current path length */
-+        g_string_append(path, name);
-+        g_string_append(path, "/");
-+
-+        /* acquire new FID for the newly created directory */
-+        char *wnames[] = { name };
-+        current_fid = twalk({
-+            .client = v9p,
-+            .fid = current_fid,
-+            .nwname = 1,
-+            .wnames = wnames
-+        }).newfid;
-+
-+        /* Reset descriptor pool to avoid exhaustion. The simplified
-+         * virtio test driver does never free descriptors back to the pool
-+         * after use, so we must manually reset it for the required high
-+         * amount of 9p requests here.
-+         */
-+        qvirtqueue_reset_pool(v9p->vq);
-+    }
-+
-+    /* check if the deepest directory is accessible */
-+    v9fs_attr attr = {};
-+    tgetattr({
-+        .client = v9p,
-+        .fid = current_fid,
-+        .request_mask = P9_GETATTR_BASIC,
-+        .rgetattr.attr = &attr
-+    });
-+
-+    g_string_free(path, TRUE);
++    vq->free_head = 0;
++    vq->num_free = vq->size;
 +}
 +
- static void cleanup_9p_local_driver(void *data)
+ void qvirtqueue_set_used_event(QTestState *qts, QVirtQueue *vq, uint16_t idx)
  {
-     /* remove previously created test dir when test is completed */
-@@ -819,6 +886,8 @@ static void register_virtio_9p_test(void)
-                  &opts);
-     qos_add_test("local/use_after_unlink", "virtio-9p", fs_use_after_unlink,
-                  &opts);
-+    qos_add_test("local/deep_absolute_path", "virtio-9p",
-+                 fs_deep_absolute_path, &opts);
- }
+     g_assert(vq->event);
+diff --git a/tests/qtest/libqos/virtio.h b/tests/qtest/libqos/virtio.h
+index e238f1726f..f17be0b9b6 100644
+--- a/tests/qtest/libqos/virtio.h
++++ b/tests/qtest/libqos/virtio.h
+@@ -150,6 +150,8 @@ void qvirtqueue_kick(QTestState *qts, QVirtioDevice *d, QVirtQueue *vq,
+ bool qvirtqueue_get_buf(QTestState *qts, QVirtQueue *vq, uint32_t *desc_idx,
+                         uint32_t *len);
  
- libqos_init(register_virtio_9p_test);
++void qvirtqueue_reset_pool(QVirtQueue *vq);
++
+ void qvirtqueue_set_used_event(QTestState *qts, QVirtQueue *vq, uint16_t idx);
+ 
+ void qvirtio_start_device(QVirtioDevice *vdev);
 -- 
 2.47.3
 
