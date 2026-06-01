@@ -4,106 +4,122 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A3614CD5BD1
-	for <qemu-devel@archiver.kernel.org>; Mon,  1 Jun 2026 21:56:31 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8684ACD6E55
+	for <qemu-devel@archiver.kernel.org>; Mon,  1 Jun 2026 22:07:09 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wUAai-0006bm-Gy; Mon, 01 Jun 2026 17:54:36 -0400
+	id 1wUAmG-0005Dc-TB; Mon, 01 Jun 2026 18:06:32 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <stefanb@linux.ibm.com>)
- id 1wUAag-0006a8-0O
- for qemu-devel@nongnu.org; Mon, 01 Jun 2026 17:54:34 -0400
-Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
+ (Exim 4.90_1) (envelope-from <nicolinc@nvidia.com>)
+ id 1wUAm9-0005Cz-VK; Mon, 01 Jun 2026 18:06:25 -0400
+Received: from mail-westus2azlp170100005.outbound.protection.outlook.com
+ ([2a01:111:f403:c005::5] helo=CO1PR03CU002.outbound.protection.outlook.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <stefanb@linux.ibm.com>)
- id 1wUAad-0003qQ-GH
- for qemu-devel@nongnu.org; Mon, 01 Jun 2026 17:54:33 -0400
-Received: from pps.filterd (m0356516.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 651EIZoO1502206; Mon, 1 Jun 2026 21:54:30 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
- :content-transfer-encoding:date:from:in-reply-to:message-id
- :mime-version:references:subject:to; s=pp1; bh=eV0D9IU7ZEz0FiZdF
- J4P4/D36Ke7+YJ7qke5GTmq3AM=; b=LCrDnjJo2w5kAYdlQOV6VtEcGvkPOP2PY
- L7w9fxpTFB/mkCp/IRxUns5p1+f3kzxJr8jmtB7lpMdxBelCnsZ4R0wOdus+/7LY
- C5GnpI0m89Q80lbD31h9Vgm2d2b4Mi7UsbvU898aMJOp4eZ/jUH11n8W/EMl372R
- j3xAEiuZ0f5JKgSQFW/5EhkBkYtT6PMsSFT2AzsCROPRmjGrh7UyPKskTpXA+61u
- 1mUh0pIIQy+BngboPrqYqxOG8bfcWgQ6rmIKNmyj21JyxOQIgkWCUA1wHP/AWwCH
- avelmPXdE7p/gk7ztwfm1YLQimYbHOJum4kk5Z6+z64VChBUSGb6g==
-Received: from ppma13.dal12v.mail.ibm.com
- (dd.9e.1632.ip4.static.sl-reverse.com [50.22.158.221])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4efnahjwhd-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Mon, 01 Jun 2026 21:54:30 +0000 (GMT)
-Received: from pps.filterd (ppma13.dal12v.mail.ibm.com [127.0.0.1])
- by ppma13.dal12v.mail.ibm.com (8.18.1.7/8.18.1.7) with ESMTP id 651Ls9eZ022941;
- Mon, 1 Jun 2026 21:54:29 GMT
-Received: from smtprelay05.wdc07v.mail.ibm.com ([172.16.1.72])
- by ppma13.dal12v.mail.ibm.com (PPS) with ESMTPS id 4egcegg1sa-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Mon, 01 Jun 2026 21:54:29 +0000 (GMT)
-Received: from smtpav03.wdc07v.mail.ibm.com (smtpav03.wdc07v.mail.ibm.com
- [10.39.53.230])
- by smtprelay05.wdc07v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 651LsS7I31130284
- (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Mon, 1 Jun 2026 21:54:28 GMT
-Received: from smtpav03.wdc07v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 9C2585805C;
- Mon,  1 Jun 2026 21:54:28 +0000 (GMT)
-Received: from smtpav03.wdc07v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 1B32E5805A;
- Mon,  1 Jun 2026 21:54:28 +0000 (GMT)
-Received: from sbct-3.pok.ibm.com (unknown [9.47.158.153])
- by smtpav03.wdc07v.mail.ibm.com (Postfix) with ESMTP;
- Mon,  1 Jun 2026 21:54:27 +0000 (GMT)
-From: Stefan Berger <stefanb@linux.ibm.com>
-To: qemu-devel@nongnu.org
-Cc: peter.maydell@linaro.org, Stefan Berger <stefanb@linux.ibm.com>,
- Arun Menon <armenon@redhat.com>
-Subject: [PULL v1 06/16] tests: Add a TPM TIS I2C swtpm test
-Date: Mon,  1 Jun 2026 17:53:59 -0400
-Message-ID: <20260601215410.517009-7-stefanb@linux.ibm.com>
-X-Mailer: git-send-email 2.54.0
-In-Reply-To: <20260601215410.517009-1-stefanb@linux.ibm.com>
-References: <20260601215410.517009-1-stefanb@linux.ibm.com>
+ (Exim 4.90_1) (envelope-from <nicolinc@nvidia.com>)
+ id 1wUAm8-0006SK-9C; Mon, 01 Jun 2026 18:06:25 -0400
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=ZwZTtcoQ/0bM1Md/eEvOjbeAOqWxgX9PZSsjqvFKz2nARtykY5zxDV4LFYEnXEq68mCcaZZfoIhlfnvmSJ6cxdZ7jLAMss+SSuMMM2MO8RHrTtVgHFNQIkvqBMzVU2qNncIwZVZ5ulPtdPFmV4RSkOeam9xiQT94oSQK8vV+X0wS51o1FvhYS36EctAcGOojvVOZXzMV7T9knW8yK+fw615DnkmUlEG6zX/cJS9ioPji/i+HfxvMm63Fxyyc0IiaXXsOs1d3Sm6+iMQSOWyIs0i4N8GdyusdJR4OzjwH2bqxfT90SuRmD0wx7aUF+7TynrakCP2I+iensh4vMvee1g==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=zgI3H0OEzGj1ZqauLCnL4BDmF0cOGENZ7c3CVRb9tDs=;
+ b=ym0hpMQNn2F9oXpqAVRwR6ABqlmb4SRt0KTVFrobdet4IgJlcXgFy6o1kCovARkQ11nUwxHDTd44Yse2htNmHOexzKHT//JrMHBa5OyeOg1QD1VnQKPhKh3LYjaoNcG9KmS668OO8C/Qhzn/PdQX0oF8DMdtP/kbkXb6LKFd9tyQtFxWChrI8uWiOhzWuZQQ1fPEahLZ48Yxv7mStkMZ3Obuc2psK/yzLZ6HmFF+0nurhL4cJrUeFdSWZ2aBI/mxlVDJZlL8YKqNCSUlEEwQVkCaLkWBDFexiLM2ESrfHNjPPq4ftXezugkosGCYqG4AQvwudh2UcEAVhK+aDVHs4A==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass (sender ip is
+ 216.228.117.160) smtp.rcpttodomain=nongnu.org smtp.mailfrom=nvidia.com;
+ dmarc=pass (p=reject sp=reject pct=100) action=none header.from=nvidia.com;
+ dkim=none (message not signed); arc=none (0)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=Nvidia.com;
+ s=selector2;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=zgI3H0OEzGj1ZqauLCnL4BDmF0cOGENZ7c3CVRb9tDs=;
+ b=E5GlRDcnPNfOyi6U1EJiO7QJn2e8FPiw417Z5evyDbVYN83iSQfM6itbKAcTZ0fJCWGD0oP7XVLyIJxrpqmJEBWDwfVdPdC2X8Xyj6IH07MVvc2hY0spayxdGM0ekrXaBo3s2O02hT5gkcGvXP5oyCCTbVmcY3BIptRwfAwy/8qmMuDoLqUiAHd3mAuXMRwbx/geSBHPGWCzrG49gX9S0GFHIG13F4dx+S+4Gw6DQ90Yi0mdgKD8fZ9CYSDTrt7Ru1laU8UupfgcRmMh/9x5vQyOFbdX2i8lFK4HL5bhw7/qoy/HjX5heHCfP6cWmhcVWipbPZpgpCtfgOMcJ7W2zg==
+Received: from BN9PR03CA0190.namprd03.prod.outlook.com (2603:10b6:408:f9::15)
+ by MN0PR12MB6126.namprd12.prod.outlook.com (2603:10b6:208:3c6::5)
+ with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.71.15; Mon, 1 Jun 2026
+ 22:06:13 +0000
+Received: from BN3PEPF0000B078.namprd04.prod.outlook.com
+ (2603:10b6:408:f9:cafe::43) by BN9PR03CA0190.outlook.office365.com
+ (2603:10b6:408:f9::15) with Microsoft SMTP Server (version=TLS1_3,
+ cipher=TLS_AES_256_GCM_SHA384) id 15.21.71.16 via Frontend Transport; Mon, 1
+ Jun 2026 22:06:13 +0000
+X-MS-Exchange-Authentication-Results: spf=pass (sender IP is 216.228.117.160)
+ smtp.mailfrom=nvidia.com;
+ dkim=none (message not signed)
+ header.d=none;dmarc=pass action=none header.from=nvidia.com;
+Received-SPF: Pass (protection.outlook.com: domain of nvidia.com designates
+ 216.228.117.160 as permitted sender) receiver=protection.outlook.com;
+ client-ip=216.228.117.160; helo=mail.nvidia.com; pr=C
+Received: from mail.nvidia.com (216.228.117.160) by
+ BN3PEPF0000B078.mail.protection.outlook.com (10.167.243.123) with Microsoft
+ SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.21.92.5 via Frontend Transport; Mon, 1 Jun 2026 22:06:12 +0000
+Received: from rnnvmail205.nvidia.com (10.129.68.10) by mail.nvidia.com
+ (10.129.200.66) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.2562.20; Mon, 1 Jun
+ 2026 15:05:51 -0700
+Received: from rnnvmail205.nvidia.com (10.129.68.10) by rnnvmail205.nvidia.com
+ (10.129.68.10) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.2562.20; Mon, 1 Jun
+ 2026 15:05:50 -0700
+Received: from Asurada-Nvidia (10.127.8.9) by mail.nvidia.com (10.129.68.10)
+ with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.2562.20 via Frontend
+ Transport; Mon, 1 Jun 2026 15:05:50 -0700
+Date: Mon, 1 Jun 2026 15:05:48 -0700
+From: Nicolin Chen <nicolinc@nvidia.com>
+To: Shameer Kolothum <skolothumtho@nvidia.com>
+CC: <qemu-arm@nongnu.org>, <qemu-devel@nongnu.org>, <eric.auger@redhat.com>,
+ <peter.maydell@linaro.org>, <clg@redhat.com>, <alex@shazbot.org>,
+ <nathanc@nvidia.com>, <mochs@nvidia.com>, <jan@nvidia.com>, <jgg@nvidia.com>, 
+ <zhenzhong.duan@intel.com>, <kjaju@nvidia.com>, <phrdina@redhat.com>
+Subject: Re: [PATCH v6 19/31] hw/arm/tegra241-cmdqv: Use mmap'd VINTF page0
+ as VCMDQ backing
+Message-ID: <ah4CPKqNMnRfuSxT@Asurada-Nvidia>
+References: <20260601114221.457995-1-skolothumtho@nvidia.com>
+ <20260601114221.457995-20-skolothumtho@nvidia.com>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-TM-AS-GCONF: 00
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNjAxMDIxMSBTYWx0ZWRfXxxi3AHH7DXht
- SdN8L6nLAyAUIO9QUBSqVqSVr3xQSMVbNs1y7JLIV0y9ALwWYrGcu4pkfQOAFWz17RRcq6PAiuE
- Ry4inqYKn4CRBWRwIoRhplslI4eRNe3lSzK4bs4i3/nA0hmKtJnNbEgvHVsTlZP5cbs+dF/eENl
- eayjXSrf9TVrLa2lm09kg5xQOZss3OBHv8bxQQtI0oVLBuNjzP4dec7DktkuJOgG+BXNrqIeUMU
- U9FF3TAF4wkKBgZ+sHC4IV7PQeJPMfB0ohXXVZeudKGDAkAcNWaH84D4wwZQQbHyYls4ui0nrNg
- D3jDC5zPCO58zKQ+JGqsi4GI9PU0xAOLs3z4qbQGdmR6bEay/UhbUWxbvhmn1m4lcsGwa9/msS6
- nWrzfRllgQQxnoqvw8dRKPWwYSQNySIMEnJBQLH35pZXxXWtQO93MbNd6I5M+YSujrczzbka4qO
- n2TNaAae3knLU9kKb6g==
-X-Proofpoint-ORIG-GUID: Doh4eW9rzY9KPVTb2OIGrqsp7XwAHKfb
-X-Authority-Analysis: v=2.4 cv=cOzQdFeN c=1 sm=1 tr=0 ts=6a1dff96 cx=c_pps
- a=AfN7/Ok6k8XGzOShvHwTGQ==:117 a=AfN7/Ok6k8XGzOShvHwTGQ==:17
- a=FelO9ux0wxsA:10 a=VkNPw1HP01LnGYTKEx00:22 a=RnoormkPH1_aCDwRdu11:22
- a=Y2IxJ9c9Rs8Kov3niI8_:22 a=VwQbUJbxAAAA:8 a=VnNF1IyMAAAA:8 a=20KFwNOVAAAA:8
- a=nr6cYVCJ1kreKA-1BtQA:9
-X-Proofpoint-GUID: Doh4eW9rzY9KPVTb2OIGrqsp7XwAHKfb
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.125,FMLib:17.12.100.49
- definitions=2026-06-01_06,2026-05-28_03,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- clxscore=1015 impostorscore=0 lowpriorityscore=0 spamscore=0 bulkscore=0
- malwarescore=0 phishscore=0 suspectscore=0 priorityscore=1501 adultscore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2605210000 definitions=main-2606010211
-Received-SPF: pass client-ip=148.163.158.5; envelope-from=stefanb@linux.ibm.com;
- helo=mx0b-001b2d01.pphosted.com
-X-Spam_score_int: -26
-X-Spam_score: -2.7
-X-Spam_bar: --
-X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
- RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Type: text/plain; charset="us-ascii"
+Content-Disposition: inline
+In-Reply-To: <20260601114221.457995-20-skolothumtho@nvidia.com>
+X-NV-OnPremToCloud: ExternallySecured
+X-EOPAttributedMessage: 0
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: BN3PEPF0000B078:EE_|MN0PR12MB6126:EE_
+X-MS-Office365-Filtering-Correlation-Id: 25748f12-95a7-4cc5-df68-08dec029fe76
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam: BCL:0;
+ ARA:13230040|1800799024|376014|36860700016|82310400026|22082099003|18002099003|11063799006|4143699003|56012099006;
+X-Microsoft-Antispam-Message-Info: tuh9ws3WL0kAn9sXy+op5vN6n82LmFQaMtTw7fvLPIOw5yEKftp6qY1RmkZJEblOZIFcFtVbBw+n5RY9SbqwVa0fpSV3VVw44E8Z0HF6X31BENa5kIbmLP5APNgJbrjNkr0IpfoX1QvkVMjgZSsamA//kGwJNc1z9aUnb/Uj9uetH+Dvobiz9U2pID1/b6XOC8Z3bdAnUPKYQWNpsZCCSWYB1pX1JUuqk6qxn8wFS6F7CXksqqaTlyEGqyma3A7FDS9fSfwGAz7lUUqS1ltECEFyeu9BWZ3BnQfKLEcgOR+MqhRIVg8mveCbIudWXmbww8Ttx4F43ZtNVDpq9s5MtDHIomFLDbgNK52JdT22JEQ5zXEbm3hoD1IfkeYPkCN8il1unKRuKsCekndrKRoXzaNlw6obCgqPDZk3a4iBWILRRfeYWqNrAMxrlFY1IAftiZ+MtGa5ZSEUnZgRYwl1JJzdTX5ThfGj9j2fkIoSW61z+D+n1T7IrG66aDnEbCkupHIrIvY+AtC/SMkx81q9GVGBSen8Ygbo44TfkIFRVlUd74ZgvYGpA2u9hOLusNDePHk23pI4QfQ/yWwolF6AgQAYpmslwUtAMn8IilBou3HYUy6O5uCYl+BVXGZHs/kaOiKlN1HZA+mGDmU2obdzXvv8++YGyQttiEH1nWSRhrWxLlzdNN3l99WS3TCHoq/fYwgAc7TY/tegEPJLltFM6wwQzzOPIG6WKiH0M5HQgY4=
+X-Forefront-Antispam-Report: CIP:216.228.117.160; CTRY:US; LANG:en; SCL:1; SRV:;
+ IPV:NLI; SFV:NSPM; H:mail.nvidia.com; PTR:dc6edge1.nvidia.com; CAT:NONE;
+ SFS:(13230040)(1800799024)(376014)(36860700016)(82310400026)(22082099003)(18002099003)(11063799006)(4143699003)(56012099006);
+ DIR:OUT; SFP:1101; 
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0: E0fzIvsFtUkLmu3Z4NIL5rfX2NSExJZuRDUdWf3YWjtmcvEi3eU7rvgd2B7L4YHn6JqWt3dXqYomeSlljH7LaCO7koHcL0Y5zvUKXLjSshDr8XFY+fdcpg27B8p6eyOsPXVAiQG4Ol6nYMmjbKAYgx/qLh3gjA+RywNShJUHglzNuoR9dJf8g6ForFn17CxipFnv09xfcOhzZfQoGqLO/+uB6/neARMlhMrB80717/92PSRHDC2bHg+k2omenwdBs8wWPH3ZbGbBAT6yY6xoRKBllNhbZdYEzFoYKbRa9QKKY8K631LbF9yQb4rf/gyxqJnhl1jJUI/6KpL29lRDtd5jBZmM1Y8D/iIZsKuIE83DlFcqlF2jRPBAZNT+C9AM5DPd8FhOFYbJrcm74dJFc8QX44Ys1TPlD96qACYV3HqqL/g54i52xTNkoCo/P5us
+X-OriginatorOrg: Nvidia.com
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 01 Jun 2026 22:06:12.6639 (UTC)
+X-MS-Exchange-CrossTenant-Network-Message-Id: 25748f12-95a7-4cc5-df68-08dec029fe76
+X-MS-Exchange-CrossTenant-Id: 43083d15-7273-40c1-b7db-39efd9ccc17a
+X-MS-Exchange-CrossTenant-OriginalAttributedTenantConnectingIp: TenantId=43083d15-7273-40c1-b7db-39efd9ccc17a; Ip=[216.228.117.160];
+ Helo=[mail.nvidia.com]
+X-MS-Exchange-CrossTenant-AuthSource: BN3PEPF0000B078.namprd04.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Anonymous
+X-MS-Exchange-CrossTenant-FromEntityHeader: HybridOnPrem
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: MN0PR12MB6126
+Received-SPF: permerror client-ip=2a01:111:f403:c005::5;
+ envelope-from=nicolinc@nvidia.com;
+ helo=CO1PR03CU002.outbound.protection.outlook.com
+X-Spam_score_int: -14
+X-Spam_score: -1.5
+X-Spam_bar: -
+X-Spam_report: (-1.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.445,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ FORGED_SPF_HELO=1, SPF_HELO_PASS=-0.001,
+ SPF_NONE=0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -119,204 +135,51 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Add a test case testing the TPM TIS over I2C with swtpm.
+On Mon, Jun 01, 2026 at 12:42:09PM +0100, Shameer Kolothum wrote:
+> +/*
+> + * Return a pointer into the mmap'd VINTF page0 for the VCMDQ Page 0
+> + * register at @offset0 in VCMDQ slot @index, or NULL when the VCMDQ
+> + * has no hw_queue allocated or the VINTF page0 is not mmap'd.
+> + */
+> +static inline uint32_t *tegra241_cmdqv_vintf_ptr(Tegra241CMDQV *cmdqv,
+> +                                                 int index, hwaddr offset0)
 
-Reviewed-by: Arun Menon <armenon@redhat.com>
-Link: https://lore.kernel.org/qemu-devel/20260429121743.1346635-7-stefanb@linux.ibm.com
-Signed-off-by: Stefan Berger <stefanb@linux.ibm.com>
----
- tests/qtest/meson.build              |  5 +-
- tests/qtest/tpm-tis-i2c-swtpm-test.c | 82 ++++++++++++++++++++++++++++
- tests/qtest/tpm-tis-i2c-util.c       | 38 +++++++++++++
- tests/qtest/tpm-tis-i2c-util.h       |  4 ++
- 4 files changed, 127 insertions(+), 2 deletions(-)
- create mode 100644 tests/qtest/tpm-tis-i2c-swtpm-test.c
+I'd do:
+  tegra241_cmdqv_vintf_lvcmdq_ptr()
+or just:
+  tegra241_vintf_lvcmdq_ptr()
 
-diff --git a/tests/qtest/meson.build b/tests/qtest/meson.build
-index 57512c6e56..45ea497fa5 100644
---- a/tests/qtest/meson.build
-+++ b/tests/qtest/meson.build
-@@ -244,7 +244,7 @@ qtests_arm = \
-   (config_all_devices.has_key('CONFIG_ASPEED_SOC') ? qtests_aspeed : []) + \
-   (config_all_devices.has_key('CONFIG_NPCM7XX') ? qtests_npcm7xx : []) + \
-   (config_all_devices.has_key('CONFIG_GENERIC_LOADER') ? ['hexloader-test'] : []) + \
--  (config_all_devices.has_key('CONFIG_TPM_TIS_I2C') ? ['tpm-tis-i2c-test'] : []) + \
-+  (config_all_devices.has_key('CONFIG_TPM_TIS_I2C') ? ['tpm-tis-i2c-test', 'tpm-tis-i2c-swtpm-test'] : []) + \
-   (config_all_devices.has_key('CONFIG_VEXPRESS') ? ['test-arm-mptimer'] : []) + \
-   (config_all_devices.has_key('CONFIG_MICROBIT') ? ['microbit-test'] : []) + \
-   (config_all_devices.has_key('CONFIG_STM32L4X5_SOC') ? qtests_stm32l4x5 : []) + \
-@@ -263,7 +263,7 @@ qtests_aarch64 = \
-   (config_all_devices.has_key('CONFIG_XLNX_VERSAL') ? ['xlnx-canfd-test', 'xlnx-versal-trng-test'] : []) + \
-   (config_all_devices.has_key('CONFIG_RASPI') ? ['bcm2835-dma-test', 'bcm2835-i2c-test'] : []) +  \
-   (config_all_accel.has_key('CONFIG_TCG') and                                            \
--   config_all_devices.has_key('CONFIG_TPM_TIS_I2C') ? ['tpm-tis-i2c-test'] : []) + \
-+   config_all_devices.has_key('CONFIG_TPM_TIS_I2C') ? ['tpm-tis-i2c-test', 'tpm-tis-i2c-swtpm-test'] : []) + \
-   (config_all_devices.has_key('CONFIG_ASPEED_SOC') ? qtests_aspeed64 : []) + \
-   (config_all_devices.has_key('CONFIG_NPCM8XX') ? qtests_npcm8xx : []) + \
-   (config_all_devices.has_key('CONFIG_IOMMU_TESTDEV') and
-@@ -402,6 +402,7 @@ qtests = {
-   'tpm-tis-swtpm-test': [io, tpmemu_files, 'tpm-tis-util.c'],
-   'tpm-tis-test': [io, tpmemu_files, 'tpm-tis-util.c'],
-   'tpm-tis-i2c-test': [io, tpmemu_files, 'tpm-tis-i2c-util.c', 'qtest_aspeed.c'],
-+  'tpm-tis-i2c-swtpm-test': [io, tpmemu_files, 'tpm-tis-i2c-util.c', 'qtest_aspeed.c'],
-   'tpm-tis-device-swtpm-test': [io, tpmemu_files, 'tpm-tis-util.c'],
-   'tpm-tis-device-test': [io, tpmemu_files, 'tpm-tis-util.c'],
-   'virtio-net-failover': test_migration_files,
-diff --git a/tests/qtest/tpm-tis-i2c-swtpm-test.c b/tests/qtest/tpm-tis-i2c-swtpm-test.c
-new file mode 100644
-index 0000000000..50d32a960b
---- /dev/null
-+++ b/tests/qtest/tpm-tis-i2c-swtpm-test.c
-@@ -0,0 +1,82 @@
-+/*
-+ * SPDX-License-Identifier: GPL-2.0-or-later
-+ *
-+ * QTest testcase for TPM TIS over I2C talking to external swtpm
-+ *
-+ * Copyright (c) 2018, 2026 IBM Corporation
-+ *  with parts borrowed from migration-test.c that is:
-+ *     Copyright (c) 2016-2018 Red Hat, Inc. and/or its affiliates
-+ *
-+ * Authors:
-+ *   Stefan Berger <stefanb@linux.ibm.com>
-+ *
-+ */
-+
-+#include "qemu/osdep.h"
-+
-+#include "libqtest.h"
-+#include "qemu/module.h"
-+#include "tpm-tests.h"
-+#include "tpm-tis-i2c-util.h"
-+#include "qtest_aspeed.h"
-+
-+typedef struct TestState {
-+    char *src_tpm_path;
-+    char *dst_tpm_path;
-+    char *uri;
-+    const char *machine_options;
-+    char *ifmodel;
-+} TestState;
-+
-+static void tpm_tis_i2c_swtpm_test(const void *data)
-+{
-+    const TestState *ts = data;
-+
-+    tpm_test_swtpm_test(ts->src_tpm_path, tpm_tis_i2c_transfer,
-+                        ts->ifmodel, ts->machine_options);
-+}
-+
-+static void tpm_tis_swtpm_migration_test(const void *data)
-+{
-+    const TestState *ts = data;
-+
-+    tpm_test_swtpm_migration_test(ts->src_tpm_path, ts->dst_tpm_path,
-+                                  ts->uri, tpm_tis_i2c_transfer,
-+                                  ts->ifmodel, ts->machine_options);
-+}
-+
-+
-+int main(int argc, char **argv)
-+{
-+    int ret;
-+    TestState ts;
-+
-+    ts.src_tpm_path = g_dir_make_tmp("qemu-tpm-tis-i2c-swtpm-test.XXXXXX",
-+                                     NULL);
-+    ts.dst_tpm_path = g_dir_make_tmp("qemu-tpm-tis-i2c-swtpm-test.XXXXXX",
-+                                     NULL);
-+    ts.uri = g_strdup_printf("unix:%s/migsocket", ts.src_tpm_path);
-+    ts.machine_options = "-machine rainier-bmc -accel tcg";
-+    ts.ifmodel = g_strdup_printf(
-+                            "tpm-tis-i2c,bus=aspeed.i2c.bus.%d,address=0x%x",
-+                            I2C_DEV_BUS_NUM, I2C_SLAVE_ADDR);
-+
-+    module_call_init(MODULE_INIT_QOM);
-+    g_test_init(&argc, &argv, NULL);
-+
-+    aspeed_bus_addr = ast2600_i2c_calc_bus_addr(I2C_DEV_BUS_NUM);
-+
-+    qtest_add_data_func("/tpm/tis-i2c-swtpm/test", &ts, tpm_tis_i2c_swtpm_test);
-+    qtest_add_data_func("/tpm/tis-i2c-swtpm-migration/test", &ts,
-+                        tpm_tis_swtpm_migration_test);
-+    ret = g_test_run();
-+
-+    tpm_util_rmdir(ts.dst_tpm_path);
-+    g_free(ts.dst_tpm_path);
-+    tpm_util_rmdir(ts.src_tpm_path);
-+    g_free(ts.src_tpm_path);
-+    g_free(ts.uri);
-+    g_free(ts.ifmodel);
-+
-+    return ret;
-+}
-diff --git a/tests/qtest/tpm-tis-i2c-util.c b/tests/qtest/tpm-tis-i2c-util.c
-index 6e724a4a47..c73420ec5b 100644
---- a/tests/qtest/tpm-tis-i2c-util.c
-+++ b/tests/qtest/tpm-tis-i2c-util.c
-@@ -15,6 +15,7 @@
- #include "libqtest-single.h"
- #include "qtest_aspeed.h"
- #include "tpm-tis-i2c-util.h"
-+#include "tpm-emu.h"
- 
- uint32_t aspeed_bus_addr;
- 
-@@ -62,3 +63,40 @@ void tpm_tis_i2c_writel(QTestState *s, uint8_t locty, uint8_t reg, uint32_t v)
-     }
-     aspeed_i2c_writel(s, aspeed_bus_addr, I2C_SLAVE_ADDR, reg, v);
- }
-+
-+void tpm_tis_i2c_transfer(QTestState *s,
-+                          const unsigned char *req, size_t req_size,
-+                          unsigned char *rsp, size_t rsp_size)
-+{
-+    uint32_t sts;
-+    size_t i;
-+
-+    /* request use of locality 0 */
-+    tpm_tis_i2c_writeb(s, 0, TPM_I2C_REG_ACCESS, TPM_TIS_ACCESS_REQUEST_USE);
-+
-+    tpm_tis_i2c_writel(s, 0, TPM_I2C_REG_STS, TPM_TIS_STS_COMMAND_READY);
-+
-+    /* transmit command */
-+    for (i = 0; i < req_size; i++) {
-+        tpm_tis_i2c_writeb(s, 0, TPM_I2C_REG_DATA_FIFO, req[i]);
-+    }
-+
-+    /* start processing */
-+    tpm_tis_i2c_writeb(s, 0, TPM_I2C_REG_STS, TPM_TIS_STS_TPM_GO);
-+
-+    uint64_t end_time = g_get_monotonic_time() + 50 * G_TIME_SPAN_SECOND;
-+    do {
-+        sts = tpm_tis_i2c_readl(s, 0, TPM_I2C_REG_STS);
-+        if ((sts & TPM_TIS_STS_DATA_AVAILABLE) != 0) {
-+            break;
-+        }
-+    } while (g_get_monotonic_time() < end_time);
-+
-+    /* read response */
-+    for (i = 0; i < rsp_size; i++) {
-+        rsp[i] = tpm_tis_i2c_readb(s, 0, TPM_I2C_REG_DATA_FIFO);
-+    }
-+    /* relinquish use of locality 0 */
-+    tpm_tis_i2c_writeb(s, 0,
-+                       TPM_I2C_REG_ACCESS, TPM_TIS_ACCESS_ACTIVE_LOCALITY);
-+}
-diff --git a/tests/qtest/tpm-tis-i2c-util.h b/tests/qtest/tpm-tis-i2c-util.h
-index 3289545f61..499bf4964a 100644
---- a/tests/qtest/tpm-tis-i2c-util.h
-+++ b/tests/qtest/tpm-tis-i2c-util.h
-@@ -27,4 +27,8 @@ uint32_t tpm_tis_i2c_readl(QTestState *s, uint8_t locty, uint8_t reg);
- void tpm_tis_i2c_writeb(QTestState *s, uint8_t locty, uint8_t reg, uint8_t v);
- void tpm_tis_i2c_writel(QTestState *s, uint8_t locty, uint8_t reg, uint32_t v);
- 
-+void tpm_tis_i2c_transfer(QTestState *s,
-+                          const unsigned char *req, size_t req_size,
-+                          unsigned char *rsp, size_t rsp_size);
-+
- #endif /* TESTS_TPM_TIS_I2C_UTIL_H */
--- 
-2.54.0
+>  static void tegra241_cmdqv_write_vcmdq_page0(Tegra241CMDQV *cmdqv,
+>                                               hwaddr offset0, int index,
+>                                               uint32_t value, bool direct)
+>  {
+> +    uint32_t *ptr = tegra241_cmdqv_vintf_ptr(cmdqv, index, offset0);
+> +
+> +    if (ptr) {
+> +        switch (offset0) {
+> +        case A_VCMDQ0_CONS_INDX:
+> +        case A_VCMDQ0_PROD_INDX:
+> +        case A_VCMDQ0_CONFIG:
+> +        case A_VCMDQ0_GERRORN:
+> +            *ptr = value;
+> +            goto out;
+> +        default:
+> +            break;
+> +        }
+> +    }
 
+Could stuff this into the helper? Return a valid ptr only when the
+offset0 is one of these four registers; otherwise, return NULL.
+
+Then, here if would be:
+    if (ptr) {
+        *ptr = value;
+        goto out;
+    }
+
+Doing so inside the helper could also sanitize the other callers.
+
+Otherwise, looks good to me.
+
+Reviewed-by: Nicolin Chen <nicolinc@nvidia.com>
 
