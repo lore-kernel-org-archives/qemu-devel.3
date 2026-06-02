@@ -4,110 +4,108 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id CC775CD6E5D
-	for <qemu-devel@archiver.kernel.org>; Tue,  2 Jun 2026 20:11:38 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 03D1FCD6E5D
+	for <qemu-devel@archiver.kernel.org>; Tue,  2 Jun 2026 20:18:33 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wUVSO-0001EW-SS; Tue, 02 Jun 2026 16:11:25 -0400
+	id 1wUVYf-0002OB-28; Tue, 02 Jun 2026 16:17:53 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <faithilikerun@gmail.com>)
- id 1wUVSN-0001Dw-EJ
- for qemu-devel@nongnu.org; Tue, 02 Jun 2026 16:11:23 -0400
-Received: from mail-pf1-x42b.google.com ([2607:f8b0:4864:20::42b])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <faithilikerun@gmail.com>)
- id 1wUVSL-0000N5-FD
- for qemu-devel@nongnu.org; Tue, 02 Jun 2026 16:11:23 -0400
-Received: by mail-pf1-x42b.google.com with SMTP id
- d2e1a72fcca58-8419ab3a297so3839874b3a.2
- for <qemu-devel@nongnu.org>; Tue, 02 Jun 2026 13:11:21 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1780431080; cv=none;
- d=google.com; s=arc-20240605;
- b=QLIc6bsxpLiVKdWfTyEfbAgqu/b1rc/mUpiguNXHdp8MwT8hFgym0czeXTrchtfb3r
- BZVTAe1DGRDJdc8+XI3zFLN8otUOgmfP06jg61v/76rYq+jB+gyJ8rB3xNbaI2J/ySMj
- xCZik8Kzl1vbP+uyZxrvqL/zLOZ4wkbkV+3mGXTo5g+pMz3quHsgu8Lbp6KjnCjotXO4
- 438VTJDpcdnejGq0wI6wl5mWPwTrodL8SLSfy0uy3KRlVf//M630llfDI7tSpFMT4b4f
- towFsQzYjtFTaBCEsKO+6lyNh2LGRVV47dp0WfaItYbNLXqK9RNu/n9/rkSzq130pXw6
- RkPw==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
- s=arc-20240605; 
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:dkim-signature;
- bh=J9IoDhqjhV5OHFPDOisUwCeNZFZeYMIKTrz1fuyRlTg=;
- fh=3DUQ8Ro0rOsWR3j4ZmpBArjVBN8Ppp2wDZa9Ls8Aa6s=;
- b=DsT5CJeaTJ8NF8TnbMJy1iRIo9MAVkPDHMf1ziX26GisQpBULE0zZqFxT2PVJlP2Xa
- ISyrXzju+40LkRbfz65biRI9xQ91w+ghETFb88T9wZNcODZqugk06wYIBCF5rr4eafll
- 3T60P9dvk/YkiOC6zjKMIm/mWjlNBkHJfbgXxS7MnebqYhl0HS8lPSufC2x2eabdOJXA
- gY3j7kglwlhfffsXRaLjY2uhm64+TKvmp7dOZhWrfJVavcrn2yWHBYwnnr8dIFnoNsz7
- kvBslhli2dIY6wM4uT2qe4sQgLYmuBrVuKCC+u3902JxeJ4eBcEv4HGm0oys/fVeshJx
- l5rg==; darn=nongnu.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1wUVYe-0002Nq-46
+ for qemu-devel@nongnu.org; Tue, 02 Jun 2026 16:17:52 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1wUVYc-0001xo-Cy
+ for qemu-devel@nongnu.org; Tue, 02 Jun 2026 16:17:51 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1780431469;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=yCZDeTUVjexxQ+9Tvw+5WbQmA7tbbYmLsrSFhthH/mQ=;
+ b=IzFD1EG5BTIhCvT2tiVcnqzWzO8Geo3QWUx5sSCzLSgPpDZapRAqztHUZ+rP7PL5LwLxR/
+ dpnMqgGer/V2R+k2Dz+FESzfnPO+2Lt34GtyMOI4PoRoOxCkm0nM95tMpNH9gh8EghdULa
+ t1iVWmWGwrgdJQH5gILg/TQh1h3zYJ0=
+Received: from mail-qt1-f197.google.com (mail-qt1-f197.google.com
+ [209.85.160.197]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-644-HFXUC4zOM8eP2mVmSYn9Jg-1; Tue, 02 Jun 2026 16:17:47 -0400
+X-MC-Unique: HFXUC4zOM8eP2mVmSYn9Jg-1
+X-Mimecast-MFC-AGG-ID: HFXUC4zOM8eP2mVmSYn9Jg_1780431466
+Received: by mail-qt1-f197.google.com with SMTP id
+ d75a77b69052e-51766317074so32249611cf.3
+ for <qemu-devel@nongnu.org>; Tue, 02 Jun 2026 13:17:46 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1780431080; x=1781035880; darn=nongnu.org;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:from:to:cc:subject:date
- :message-id:reply-to;
- bh=J9IoDhqjhV5OHFPDOisUwCeNZFZeYMIKTrz1fuyRlTg=;
- b=NFfy/Hl4PzoduwQnufRXtur1YXrlbEXu3MFX4dMIaojg/RPd3TB8UnpSOavleR65S6
- EeCS7BkYdW8qll9Z2+b93UoUA7HOZepYcj5BmJ+PmEaJTnh/WSbsuinxIZdw7JR19MFI
- 95xl0Rmha7q1gnPcppECvpH5iOZPwIDxTO9aONocUM3KUfqSzsTvc8ynj51k80/PYNPV
- wR1UQ/cIpW+jSJx/OgmBN7CvMkIS6p5EfHJh3ZjfMf5fKwmaoKVUAtadwA7JaE2T2ShC
- P/pBiQ7FHIvtrf4QtU8IMTs31vOgCt3vPhL7aomcr9wavAq3qWdOg8hYFsGGGHe23NWo
- Nbcw==
+ d=redhat.com; s=google; t=1780431466; x=1781036266; darn=nongnu.org;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+ bh=yCZDeTUVjexxQ+9Tvw+5WbQmA7tbbYmLsrSFhthH/mQ=;
+ b=GPrGbsmidFdLqNvJemsLJn8XtOzslN3bpEPlTaOWUSicmhDH1w+n6BAAF+OgKgFwJl
+ FM//AowvELFudGO6MK7069x0Sb34FXemJZwXkpH7FFaZEn+v/elDsZtKXw5RTyQgj3nl
+ bwiPmUdGDAirmS9gKKqUGtBcNNJejsm2SYV5wSz5DNk3ieZJRpKQDrcA/2KFMoocMYQm
+ bibIOQ9Mp32BOsuKh/pd7Gv/t59V79dPXyvkf8qBKINUXsQmqSooH/PRWTLdwPl0kowC
+ rOlesD0N+iHFnQuRlxil3cYK4OfsN9SEyjCLPKNotSppdqFIoTpGcI96qf9H96BbZIll
+ pMEA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1780431080; x=1781035880;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to;
- bh=J9IoDhqjhV5OHFPDOisUwCeNZFZeYMIKTrz1fuyRlTg=;
- b=ZeMTb32es2z3ZErA694QsuGCKVFxr8kk0cQxyjOzg/AKBwrlU7ee7CUeXSoCV4pSrH
- Bi/rMNOlgO5UmQOGn1eD1ANRqqx6pbYiAYupHIbTmCdHm+L8rsgxgVXTTZD8R0q/Ojsd
- k0guA7p/1Q4FFQXeSlljO5OvJ+6VcBt7iKYk4p1W0C2WQXAnr8YAxS9pNsv8jf+hP5XQ
- 2qHuhL01icHoq3W7S1L+byghdFY+j0Wm+H9sSrWpzT3lzVDi6ibHY3W3l6nBMNMvonwA
- C+9x7CKFl4ictHOogubJFvn1XCu/nmfe2HcoAg7Onigb80MPgCzDOS31DD4cxzzTdWda
- YYUA==
-X-Gm-Message-State: AOJu0Yz9vKZz+xaYItLM2tWKBTwqiZZWr8AVZvHdsFmLVzhQ1/j5FwjZ
- mCQhoaEhffIoWbWHlwqWkr+1/dlhuUcXbZ2h42yfHwHTEsfvuPPc+LKzjamYeXOE8EleE5B5SUe
- 4CeCPjXUE2XYqY4zo09IXOAF00y/eZK0=
-X-Gm-Gg: Acq92OElqGC7J6krPWQiVxCU72kT7zXefhf2XrqHjFsSvdgitBhsoK2fm6XcdOIYg2o
- Cjy+DCCz9+TVjivG/SQ7+Did0ZtQxw/Kh/7c05bndxMHcmGCu783M8fobm10QUOMB7CiokyXf+h
- 2Wanl7sCqDeaIX3rbxHcwDJC2REp/MHSBR+x44FjIP2nWQreZfF8DhAhsepXo/FacykdktdlAD4
- Im5V8+17+p3ZTKzwJE/UewirU6SEGnUnMlEXzPp47Cf7L6p89z62L/uqvqd2HCkQOQM4XQIjQX9
- WIYJdho5oEzd8V6TL9Y3UlyhPcPG+npvR9Z2lXzYfCUYtk3fiW51LCm3hn+TYzFdutvRV5gyKxd
- HsRGvcnT7
-X-Received: by 2002:a05:6a00:6d45:20b0:842:8500:95f1 with SMTP id
- d2e1a72fcca58-84285009a23mr235672b3a.40.1780431079668; Tue, 02 Jun 2026
- 13:11:19 -0700 (PDT)
+ d=1e100.net; s=20251104; t=1780431466; x=1781036266;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=yCZDeTUVjexxQ+9Tvw+5WbQmA7tbbYmLsrSFhthH/mQ=;
+ b=dAFAC9KI4aAaYsNZFkFIyZVfmGY6OjzGjCXOTLMy6we6hu69GDZNEKQ/jJ7tDH6pu6
+ NHCad56AySgCzti0TKub7i11lIrK/D2XNKki3MmkAPz/ksQpLCXMR8KnrRMmkNlWNB2f
+ pwee0mu4sRtt2eFd4R2c69AXmCJW3Tb62doFowAgUNNLGVh7VseOYLMKdMge8a+ITCth
+ Ky5sNsIXaUznrrhWWMsm8Hw0qN7FAl/svIWqK1dta0O6WtSVex2aCdo2uyWn7XU9eQpI
+ HAvcnwtyPz7u6DiAZnaCuSqarB+z8m+ZJEbzaYmyc7oK40su7KfwR7iAS8izl+P/vicU
+ cNGQ==
+X-Forwarded-Encrypted: i=1;
+ AFNElJ8AOg+/wRmb+TMJsqyBXozkg9gLaR0O/iGxpeZG4CgEufkqktHbsgUIOw0kUKS2ddCb4D1vFnC5oiqP@nongnu.org
+X-Gm-Message-State: AOJu0YwdTnxUkTbSAwCLx2eQZXXzUkPuJVF3RY1h05BhbPYRDEoE7cgs
+ K8zeg1fkwP54nVgYzd1YqqNuLbdMuVzexWfatMVgPhU+8VkmvpWIjzcc1qgJeDiq5DINbOEiNAQ
+ 92hHhKv+l/F6/GJmiWYUMovFCbQjWhThNhxjnsUpk4qRmduuPfr0WVQds
+X-Gm-Gg: Acq92OFqZunmTBwm6f/4/tXHtCPzPIRmqTP1191oa7Eah/+I41Hoxm9CQETVtT+apNJ
+ kb2zkvA1CWoPkNY+aPzt9oWSNgUNsfQqpILC+B4F28MpcgEZvTPalH+nm8BiCjan10EtIgftufP
+ Z2r8Og6vpjC+t8+d67C8IHo0D5mJhrsts5cmS03slyJjDyW4j1M+tdjzcOFWmOz9dDzmqUfC5ra
+ m9Ikx+TGJwly40YU7nqFBwzvSfqWindbZvCrXquFa9ImeaUJFajdAfwumdEZbpjYjYcZcWgMGXT
+ 2sP3Yu0z88e7fEWOz0+iZyfplV2MHrozVgZhPKuuHTgld6XKb4yBm8okW1p9lPjV7VRR5V2VcRZ
+ r0r6vDSDGUvEQlLs7sRPFuPL+kw==
+X-Received: by 2002:a05:622a:aa4b:20b0:516:f4f7:3318 with SMTP id
+ d75a77b69052e-5177872dddamr8147411cf.48.1780431466005; 
+ Tue, 02 Jun 2026 13:17:46 -0700 (PDT)
+X-Received: by 2002:a05:622a:aa4b:20b0:516:f4f7:3318 with SMTP id
+ d75a77b69052e-5177872dddamr8146821cf.48.1780431465480; 
+ Tue, 02 Jun 2026 13:17:45 -0700 (PDT)
+Received: from x1.local ([142.189.10.167]) by smtp.gmail.com with ESMTPSA id
+ d75a77b69052e-51775dd2e53sm6946921cf.24.2026.06.02.13.17.44
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Tue, 02 Jun 2026 13:17:44 -0700 (PDT)
+Date: Tue, 2 Jun 2026 16:17:43 -0400
+From: Peter Xu <peterx@redhat.com>
+To: "Maciej S. Szmigiero" <mail@maciej.szmigiero.name>
+Cc: Fabiano Rosas <farosas@suse.de>, Alex Williamson <alex@shazbot.org>,
+ =?utf-8?Q?C=C3=A9dric?= Le Goater <clg@redhat.com>,
+ Paolo Bonzini <pbonzini@redhat.com>,
+ Avihai Horon <avihaih@nvidia.com>, qemu-devel@nongnu.org
+Subject: Re: [PATCH 2/2] vfio/migration: Parallelize device state transitions
+Message-ID: <ah86Z0r5sMnxwgo-@x1.local>
+References: <cover.1779217494.git.maciej.szmigiero@oracle.com>
+ <743f03758d2a30df4093db140ccdd0f91f69bd7e.1779217494.git.maciej.szmigiero@oracle.com>
+ <871peqtm5t.fsf@suse.de> <ah3eheRXN1QJAGj_@x1.local>
+ <ac677bf9-1372-4905-a0b8-874a74be07be@maciej.szmigiero.name>
 MIME-Version: 1.0
-References: <20260601214405.252818-1-faithilikerun@gmail.com>
- <20260602200638.GB1043118@fedora>
-In-Reply-To: <20260602200638.GB1043118@fedora>
-From: Sam Li <faithilikerun@gmail.com>
-Date: Tue, 2 Jun 2026 22:10:53 +0200
-X-Gm-Features: AVHnY4LXaOq99WKb92Gs8IEe2iJR7JUFt1LXkd8UUyQQa-XwzRp77eoVkgKJwyc
-Message-ID: <CAAAx-8Li+26pkBNuZ2cTOvMi-9MCp=YxRis-H1udoOaT3wEs5Q@mail.gmail.com>
-Subject: Re: [PATCH v11 0/5] Add full zoned storage emulation to the qcow2
- driver
-To: Stefan Hajnoczi <stefanha@redhat.com>
-Cc: qemu-devel@nongnu.org, Markus Armbruster <armbru@redhat.com>,
- qemu-block@nongnu.org, Eric Blake <eblake@redhat.com>,
- Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>, 
- dmitry.fomichev@wdc.com, Hanna Reitz <hreitz@redhat.com>, hare@suse.de, 
- "Michael S. Tsirkin" <mst@redhat.com>, Kevin Wolf <kwolf@redhat.com>,
- cassel@kernel.org, dlemoal@kernel.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2607:f8b0:4864:20::42b;
- envelope-from=faithilikerun@gmail.com; helo=mail-pf1-x42b.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <ac677bf9-1372-4905-a0b8-874a74be07be@maciej.szmigiero.name>
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=peterx@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -24
+X-Spam_score: -2.5
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.445,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -123,56 +121,120 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, Jun 2, 2026 at 10:06=E2=80=AFPM Stefan Hajnoczi <stefanha@redhat.co=
-m> wrote:
->
-> On Mon, Jun 01, 2026 at 11:44:00PM +0200, Sam Li wrote:
-> > This patch series add a new extension - zoned format - to the
-> > qcow2 driver, allowing full zoned storage emulation on a qcow2
-> > image file. A user can attach such an image to a guest and have
-> > it appear as a host-managed zoned block device.
-> >
-> > The zoned format is opt-in through a new qcow2 header extension
-> > that pins the zone geometry. Behind the extension is a dedicated
-> > zoned metadata region that stores one 8-byte write pointer (WP)
-> > per zone. The extension is gated by an incompatible bit, so an
-> > older qcow2 implementation cannot accidentally open the image.
-> >
-> > Each write pointer is routed through the write pointer cache,
-> > a Qcow2Cache object. The write pointer cache is written to disk
-> > after the qcow2 metadata is written, thus guaranteeing that
-> > the write pointer is updated after the corresponding data is
-> > written.
-> >
-> > Zone states are in memory. Read-only and offline states are
-> > device-internal events, which are not modelled in qcow2
-> > emulation for simplicity. The other zone states
-> > (closed, empty, full) can be inferred from write poiner
-> > values, presistent across QEMU reboots. The open states are
-> > kept in memory using open zone lists.
-> >
-> > To create a qcow2 file with the zoned format:
-> >
-> >     qemu-img create -f qcow2 zbc.qcow2 \
-> >         -o size=3D768M \
-> >         -o zone.size=3D64M \
-> >         -o zone.capacity=3D64M \
-> >         -o zone.conventional_zones=3D0 \
-> >         -o zone.max_append_bytes=3D4096 \
-> >         -o zone.max_open_zones=3D6 \
-> >         -o zone.max_active_zones=3D8 \
-> >         -o zone.mode=3Dhost-managed
-> >
-> > Then attach it to a guest via the QEMU command line:
-> >     -blockdev node-name=3Ddrive1,driver=3Dqcow2,\
-> >               file.driver=3Dfile,file.filename=3Dzbc.qcow2 \
-> >     -device virtio-blk-pci,drive=3Ddrive1 \
->
-> Please run `make check-block-qcow` and ensure the tests pass. In some
-> cases the test reference output may be outdated and you can simply copy
-> the <test>.out.bad file over the <test>.out reference file.
+On Tue, Jun 02, 2026 at 12:01:32PM +0200, Maciej S. Szmigiero wrote:
+> On 1.06.2026 21:33, Peter Xu wrote:
+> > On Mon, Jun 01, 2026 at 10:39:26AM -0300, Fabiano Rosas wrote:
+> > > A bit idiosyncratic, but I don't have any better suggestions.
+> > 
+> > One thing I don't think proper with the current approach: if it's a real
+> > "priority" it should be invoked always with high->low order, no matter if
+> > running=true or not..  but that's not what will happen if we encode it with
+> > the "depth" field.
+> > 
+> > That is an implication that we have two demands, and they aren't the same,
+> > but this solution wrongly packed them together.
+> > 
+> > In 2023, VFIO already introduced VMChangeStateEntry.prepare_cb().  That is
+> > a real impl of prority queues with only two: prepare_cb() always has higher
+> > priority than the cb() itself.
+> > 
+> > Can VFIO simply leverage this existing interface, instead of hijacking
+> > "depth" in an unwanted way?
+> > 
+> > I believe the _P2P states still need to happen first for all vfio devices,
+> > then it can do the next step. Logically I think it can also be done
+> > internally within VFIO by proper impl of these two callbacks, to achieve
+> > both:
+> > 
+> > - Proper transition to P2P states first for all devices, meanwhile,
+> > - Proper concurrency of all VFIO devices on device state transitions
+> > 
+> > Would that work in a cleaner way?
+> 
+> In the VFIO migration save/source code we have two transitions:
+> PRE_COPY -> PRE_COPY_P2P done via prepare_cb() and
+> PRE_COPY_P2P -> STOP_COPY done via cb().
+> On the load/target side the situation is similar, only states are
+> different.
+> 
+> For each of these transitions we need two callbacks: one has to launch
+> per-VFIO device state change thread and the other one has to "collect"
+> (or join) these threads.
+> 
+> All handlers of the first callback have to be complete before calling
+> any handler of the second callback since otherwise there would be
+> VFIO device vs VFIO device serialization.
+> 
+> Moreover, all the prepare_cb()-related transitions have to be done
+> before any of the cb()-related is started.
+> 
+> 
+> I presume what you suggest above is to launch per-VFIO device state
+> transition thread in prepare_cb() which would then be responsible for
+> doing *both* state transitions for this VFIO device.
+> And then collect this thread in cb().
 
-Thanks, I will check this.
+Yes.
 
-Sam
+> 
+> However, this would need some extra interlocking:
+> - A lock inside VFIO code shared by all VFIO devices making sure
+> no VFIO device starts the second transition (the cb() one) before
+> all VFIO devices finish the first transition (the prepare_cb() one).
+
+Yes, more below.
+
+> 
+> - Looking at the current QEMU code, there are some non-VFIO cb()
+> handlers registered via qdev_add_vm_change_state_handler() and
+> quite a few handlers registered via qemu_add_vm_change_state_handler().
+> 
+> I presume these VFIO prepare_cb()-related transitions need to finish
+> before calling any of these handlers to maintain the current ordering
+
+IIUC, we don't necessarily need to keep this ordering; or do you see any
+real demand of that?
+
+What I see is that the order is only introduced due to P2P state of VFIO,
+it seems very specific to me.
+
+> so some kind of interlocking in vm_state_notify() between calling
+> prepare_cb() and cb() may be necessary since any "prio" based
+> ordering will have the same problem of reverse calling order on VM
+> start vs stop.
+> 
+> 
+> To be clear, I'm not insisting on the implementation from this patch -
+> any alternative one that preserves the aforementioned ordering rules
+> and has similar downtime performance is probably okay too.
+
+The problem is, IIUC patch 1 needs better justification on its own, and I
+feel like it's not doing the right thing, as discussed previously. So even
+if we want to introduce a new priority-based approach, we may want to
+rethink patch 1.
+
+IMHO it'll be perfect if we can simply reuse prepare_cb().  It seems
+working.
+
+Due to this demand, I got to learn we have pthread_barrier_init(), but..
+personally I like a simple atomic+event approach:
+
+vfio thread:
+
+  # Do step 1, ->P2P
+  if (qatomic_fetch_inc(&vfio_p2p_done) + 1 == vfio_total_devices) {                                                                  
+      qemu_event_set(&vfio_p2p_done_event);
+  }                                                                  
+  qemu_event_wait(&vfio_p2p_done_event);
+  # Do step 2, ->STOPCOPY
+
+cb() only join()s.
+
+Would this work?
+
+Thanks,
+
+-- 
+Peter Xu
+
 
