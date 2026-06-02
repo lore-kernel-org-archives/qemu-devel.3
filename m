@@ -4,92 +4,118 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4A077CD6E57
-	for <qemu-devel@archiver.kernel.org>; Tue,  2 Jun 2026 10:02:52 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2DA2ACD6E57
+	for <qemu-devel@archiver.kernel.org>; Tue,  2 Jun 2026 10:03:43 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wULwf-0000Y6-A9; Tue, 02 Jun 2026 06:02:01 -0400
+	id 1wULy5-0001gr-G9; Tue, 02 Jun 2026 06:03:29 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mhej@vps-ovh.mhejs.net>)
- id 1wULwX-0000XZ-CL
- for qemu-devel@nongnu.org; Tue, 02 Jun 2026 06:01:53 -0400
-Received: from vps-ovh.mhejs.net ([145.239.82.108])
+ (Exim 4.90_1) (envelope-from <FangSheng.Huang@amd.com>)
+ id 1wULxx-0001cp-Qi
+ for qemu-devel@nongnu.org; Tue, 02 Jun 2026 06:03:23 -0400
+Received: from mail-westus2azlp170100005.outbound.protection.outlook.com
+ ([2a01:111:f403:c005::5] helo=CO1PR03CU002.outbound.protection.outlook.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mhej@vps-ovh.mhejs.net>)
- id 1wULwV-0008Jc-Bo
- for qemu-devel@nongnu.org; Tue, 02 Jun 2026 06:01:53 -0400
-Received: from MUA
- by vps-ovh.mhejs.net with esmtpsa  (TLS1.3) tls TLS_AES_128_GCM_SHA256
- (Exim 4.99.1) (envelope-from <mhej@vps-ovh.mhejs.net>)
- id 1wULwI-000000036ji-1Zth; Tue, 02 Jun 2026 12:01:38 +0200
-Message-ID: <ac677bf9-1372-4905-a0b8-874a74be07be@maciej.szmigiero.name>
-Date: Tue, 2 Jun 2026 12:01:32 +0200
+ (Exim 4.90_1) (envelope-from <FangSheng.Huang@amd.com>)
+ id 1wULxw-0000Qu-08
+ for qemu-devel@nongnu.org; Tue, 02 Jun 2026 06:03:21 -0400
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=rxLENcdsDpveB65zYWTLciEfQTWZPC6G1GR9tGV9ev7u0FPniVIXwsOe7p6HpBBPUiahTlFTRxiDCnjcPwsfnku9+No/f6EORfCwCs9facIp/3I0VSqQWl05TDfNEGIE7l3obn5C4oTBwb4J751EbmgH4B/9NM5zoPO+b5rBaLqVCCNYJ+7BsyzL2/SuMW5kHAaMkFvYXMpJlASSYpwcazy5Ujg07LWlh7IZ4AQ+KS3tfwJlMSeBYM255nyEplkrshozB4E8+bgvAhPDpCXs83M5U5awmv0Cbr7IbiZrV080KOU8hAN9Qc/GPudTb8MWfs3di7STyzrPvDtU1/3EQQ==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=pPAxgI6WnAnoehogrTAGeuOeLNElAzhBP+juyut2Pw4=;
+ b=M2FSv2t7ZdofKzdOT6j+h+YrJEmxsq65WjSlHDSq4FIV0gTe61rHFng9+q6QDKcj8udeViTd+N0AC8heouFrP7TJVQZwHxKip2zQrojo/UGzuh+8klO32Q8PYjXNb4PGhRz9QQXyup0GFIHpIpLHTT0G0yu+9KBAaGx7nOQzXrXjlMaNWMsVWbeb52eepQ2IXkHJKhuG++59pFWGwapAuQGFzExHP+mRR/qfGVde91dt6/QnlvchIk/oT/EWj4e64wX/0HF9hTPawzZ1Nr3nwNR9d+eER7lcgWK2Q+bZEpx+ZkoZ2n1Smtb4OEkSz7DbplDRrf3ieoogHRpLGjB9nQ==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass (sender ip is
+ 165.204.84.17) smtp.rcpttodomain=kernel.org smtp.mailfrom=amd.com; dmarc=pass
+ (p=quarantine sp=quarantine pct=100) action=none header.from=amd.com;
+ dkim=none (message not signed); arc=none (0)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=amd.com; s=selector1; 
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=pPAxgI6WnAnoehogrTAGeuOeLNElAzhBP+juyut2Pw4=;
+ b=pv3ySeBR44HjsXS+ZmBxyLzPjlLEWx60Pu63jt22FHgYHhIiGexM/6cQ/XSu4UKGmEEzGbnlHCRgQDTsfRoIrRLRfU65HlScp1S+GL8L11UuBPsWOzog0wVIbFTVeK1RcYn3vtvf7p464MnHYCx8+L8eOepTF3szxpD+372VlyM=
+Received: from PH7P220CA0012.NAMP220.PROD.OUTLOOK.COM (2603:10b6:510:326::19)
+ by BN7PPF3C1137D8A.namprd12.prod.outlook.com
+ (2603:10b6:40f:fc02::6cd) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.71.15; Tue, 2 Jun 2026
+ 10:03:10 +0000
+Received: from CY4PEPF0000EE35.namprd05.prod.outlook.com
+ (2603:10b6:510:326:cafe::54) by PH7P220CA0012.outlook.office365.com
+ (2603:10b6:510:326::19) with Microsoft SMTP Server (version=TLS1_3,
+ cipher=TLS_AES_256_GCM_SHA384) id 15.21.92.7 via Frontend Transport; Tue, 2
+ Jun 2026 10:03:10 +0000
+X-MS-Exchange-Authentication-Results: spf=pass (sender IP is 165.204.84.17)
+ smtp.mailfrom=amd.com; dkim=none (message not signed)
+ header.d=none;dmarc=pass action=none header.from=amd.com;
+Received-SPF: Pass (protection.outlook.com: domain of amd.com designates
+ 165.204.84.17 as permitted sender) receiver=protection.outlook.com;
+ client-ip=165.204.84.17; helo=satlexmb07.amd.com; pr=C
+Received: from satlexmb07.amd.com (165.204.84.17) by
+ CY4PEPF0000EE35.mail.protection.outlook.com (10.167.242.41) with Microsoft
+ SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.21.92.5 via Frontend Transport; Tue, 2 Jun 2026 10:03:10 +0000
+Received: from Satlexmb09.amd.com (10.181.42.218) by satlexmb07.amd.com
+ (10.181.42.216) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.2562.41; Tue, 2 Jun
+ 2026 05:03:10 -0500
+Received: from satlexmb07.amd.com (10.181.42.216) by satlexmb09.amd.com
+ (10.181.42.218) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.2562.41; Tue, 2 Jun
+ 2026 03:03:00 -0700
+Received: from [10.65.99.184] (10.180.168.240) by satlexmb07.amd.com
+ (10.181.42.216) with Microsoft SMTP Server id 15.2.2562.41 via Frontend
+ Transport; Tue, 2 Jun 2026 05:02:59 -0500
+Message-ID: <5ff45049-d96e-428c-915d-fc14cbcb5e58@amd.com>
+Date: Tue, 2 Jun 2026 18:02:58 +0800
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 2/2] vfio/migration: Parallelize device state transitions
-To: Peter Xu <peterx@redhat.com>, Fabiano Rosas <farosas@suse.de>
-Cc: Alex Williamson <alex@shazbot.org>, =?UTF-8?Q?C=C3=A9dric_Le_Goater?=
- <clg@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>,
- Avihai Horon <avihaih@nvidia.com>, qemu-devel@nongnu.org
-References: <cover.1779217494.git.maciej.szmigiero@oracle.com>
- <743f03758d2a30df4093db140ccdd0f91f69bd7e.1779217494.git.maciej.szmigiero@oracle.com>
- <871peqtm5t.fsf@suse.de> <ah3eheRXN1QJAGj_@x1.local>
-From: "Maciej S. Szmigiero" <mail@maciej.szmigiero.name>
-Content-Language: en-US, pl-PL
-Autocrypt: addr=mail@maciej.szmigiero.name; keydata=
- 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
-In-Reply-To: <ah3eheRXN1QJAGj_@x1.local>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=145.239.82.108;
- envelope-from=mhej@vps-ovh.mhejs.net; helo=vps-ovh.mhejs.net
-X-Spam_score_int: -16
-X-Spam_score: -1.7
-X-Spam_bar: -
-X-Spam_report: (-1.7 / 5.0 requ) BAYES_00=-1.9,
- HEADER_FROM_DIFFERENT_DOMAINS=0.249, SPF_HELO_PASS=-0.001,
- SPF_PASS=-0.001 autolearn=no autolearn_force=no
+Subject: Re: [PATCH v9 0/4] hw/mem: add spm-memory device for Specific Purpose
+ Memory
+To: David Hildenbrand <david@kernel.org>, <qemu-devel@nongnu.org>,
+ <imammedo@redhat.com>, <gourry@gourry.net>
+CC: <Zhigang.Luo@amd.com>, <Lianjie.Shi@amd.com>
+References: <20260602084447.1100554-1-FangSheng.Huang@amd.com>
+ <39411489-1473-44ad-ad56-392aa27990ab@kernel.org>
+From: "Huang, FangSheng (Jerry)" <FangSheng.Huang@amd.com>
+In-Reply-To: <39411489-1473-44ad-ad56-392aa27990ab@kernel.org>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Transfer-Encoding: 8bit
+X-EOPAttributedMessage: 0
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: CY4PEPF0000EE35:EE_|BN7PPF3C1137D8A:EE_
+X-MS-Office365-Filtering-Correlation-Id: 878fd3c5-645a-4751-3721-08dec08e26fd
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam: BCL:0;
+ ARA:13230040|376014|36860700016|1800799024|82310400026|22082099003|18002099003|56012099006|11063799006|4143699003;
+X-Microsoft-Antispam-Message-Info: hbo8D2bxHZxiNfVy6IaG7KNBexFFVnSnCcNtbgMtC2jlc9kbPimDiGPZ4yWLwA4mIYDX7JRc+gJoEFJx9MqwLa3GdyO2Cad6lyIDwfqN7qQOKG7kz10vgTx9MQxhH84DWFWM7mzohdjBQFthxv2VB8Pqj0wE+JGAxlVavup4911SHa+xUgm//jmGhpruvCMmxhe6Yghq0XfVH4Vn/dhmRei2iONbj+kEpZMyT241zuiFLtMlz6DafHCnJSQW0no/XPFGyfEBDZA0H4P3uMYQJOW79GPk6Rx8CldeRZ5ujYdDW9KJosMApf0VKfKpT5zf5S94Qzn1dpQxa0wXCU5SawnZkXh7vQCF8WbmDxaTX8gxkZdk6tNpsf4FGBq3Cz1icaFvh1CtofikWwetjkC3DJAdWRcbgFVVryC6McNzwKA1ZJDyDHTlN1yIoidvCDuRu8HORB6sqRQxPv5xca2AAUzu1JWwGGNVd+hMbM5Q6flMh4HD01EBxS6ai+PJGF5jzxQrunvNojL50VYzR0wYOuIJvBeDWqDRHPZ56xVYAVR9BSbUVOj0Ji4LkLdtXn5VSSS3cubdyQhN0vCJdhlGF2IvWOw8ZESILF8YtBmKwm5ke4ss8oCHqhQckXvDDTz64m08aJ8slwnvgK59FiSM0uzkqLiP3Hz3WMaj7NFKDA998Tn7I1RMqsGLuj5l/BoGAkZt43lsoIlMsOG//ubAMPa3tLIpZxt+tvCU+9X5tXQ=
+X-Forefront-Antispam-Report: CIP:165.204.84.17; CTRY:US; LANG:en; SCL:1; SRV:;
+ IPV:NLI; SFV:NSPM; H:satlexmb07.amd.com; PTR:InfoDomainNonexistent; CAT:NONE;
+ SFS:(13230040)(376014)(36860700016)(1800799024)(82310400026)(22082099003)(18002099003)(56012099006)(11063799006)(4143699003);
+ DIR:OUT; SFP:1101; 
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0: RnhCAr/Qf6NQX+HTESqBwYtlC8M92hzcCgjKmmpQLQ3ls3SH26D6DqZO4xPVlgUmQ8gQYr8e9+rGZpz35LyXej//xBXH3ISFa6anTR5DVVZtPXMrLmZC+6Y0dz5wcBPqMC/5Q9F8DMt9ZW83qN4/dLAmTtAyI1KfYscidCUH6aRZID8j4jHyGu6KQ0On6eC8q5rcWnfV+iFWk9yCQRJtq0rjniW+oHCKRE6TI9JhvPk0bWm3d2iogKx5BqIzNZ9/npYbSro1nJNzjRcR8zhwde1gs4jzhyVFRSdEn9oTaxqbRjC9duvgtcK1qDZluEXZIbDBd2cEX0E9WRm4UTtiLckf1S5R4ENI0eA+ZweMR5a13KTJQkx7MCA4r9tz4w5sB11kSSQzoO/iuGcMLhXFpWKgihTBJf0mzzWRJ5hFaihfTqvzKVlfvyCv7BMX0r7W
+X-OriginatorOrg: amd.com
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 02 Jun 2026 10:03:10.4526 (UTC)
+X-MS-Exchange-CrossTenant-Network-Message-Id: 878fd3c5-645a-4751-3721-08dec08e26fd
+X-MS-Exchange-CrossTenant-Id: 3dd8961f-e488-4e60-8e11-a82d994e183d
+X-MS-Exchange-CrossTenant-OriginalAttributedTenantConnectingIp: TenantId=3dd8961f-e488-4e60-8e11-a82d994e183d; Ip=[165.204.84.17];
+ Helo=[satlexmb07.amd.com]
+X-MS-Exchange-CrossTenant-AuthSource: CY4PEPF0000EE35.namprd05.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Anonymous
+X-MS-Exchange-CrossTenant-FromEntityHeader: HybridOnPrem
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: BN7PPF3C1137D8A
+Received-SPF: permerror client-ip=2a01:111:f403:c005::5;
+ envelope-from=FangSheng.Huang@amd.com;
+ helo=CO1PR03CU002.outbound.protection.outlook.com
+X-Spam_score_int: -24
+X-Spam_score: -2.5
+X-Spam_bar: --
+X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.445,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -105,83 +131,22 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 1.06.2026 21:33, Peter Xu wrote:
-> On Mon, Jun 01, 2026 at 10:39:26AM -0300, Fabiano Rosas wrote:
->> A bit idiosyncratic, but I don't have any better suggestions.
+
+
+On 6/2/2026 5:36 PM, David Hildenbrand wrote:
+> On 6/2/26 10:44, fanhuang wrote:
+>> This series adds a TYPE_MEMORY_DEVICE subclass `spm-memory`
 > 
-> One thing I don't think proper with the current approach: if it's a real
-> "priority" it should be invoked always with high->low order, no matter if
-> running=true or not..  but that's not what will happen if we encode it with
-> the "depth" field.
+> Very nitty: but spm already includes "memory". And I think most things on the
+> cmdline use "mem" as abbreviation.
 > 
-> That is an implication that we have two demands, and they aren't the same,
-> but this solution wrongly packed them together.
+> "sp-mem" ? or simply "spm" ? Thoughts?
 > 
-> In 2023, VFIO already introduced VMChangeStateEntry.prepare_cb().  That is
-> a real impl of prority queues with only two: prepare_cb() always has higher
-> priority than the cb() itself.
-> 
-> Can VFIO simply leverage this existing interface, instead of hijacking
-> "depth" in an unwanted way?
-> 
-> I believe the _P2P states still need to happen first for all vfio devices,
-> then it can do the next step. Logically I think it can also be done
-> internally within VFIO by proper impl of these two callbacks, to achieve
-> both:
-> 
-> - Proper transition to P2P states first for all devices, meanwhile,
-> - Proper concurrency of all VFIO devices on device state transitions
-> 
-> Would that work in a cleaner way?
+Good point — the duplication didn't quite register when I named it.
+I lean toward simply `spm`: matches the `dimm` / `nvdimm` acronym-only
+pattern. Will go with that in the next iteration unless you'd prefer
+`sp-mem`.
 
-In the VFIO migration save/source code we have two transitions:
-PRE_COPY -> PRE_COPY_P2P done via prepare_cb() and
-PRE_COPY_P2P -> STOP_COPY done via cb().
-On the load/target side the situation is similar, only states are
-different.
-
-For each of these transitions we need two callbacks: one has to launch
-per-VFIO device state change thread and the other one has to "collect"
-(or join) these threads.
-
-All handlers of the first callback have to be complete before calling
-any handler of the second callback since otherwise there would be
-VFIO device vs VFIO device serialization.
-
-Moreover, all the prepare_cb()-related transitions have to be done
-before any of the cb()-related is started.
-
-
-I presume what you suggest above is to launch per-VFIO device state
-transition thread in prepare_cb() which would then be responsible for
-doing *both* state transitions for this VFIO device.
-And then collect this thread in cb().
-
-However, this would need some extra interlocking:
-- A lock inside VFIO code shared by all VFIO devices making sure
-no VFIO device starts the second transition (the cb() one) before
-all VFIO devices finish the first transition (the prepare_cb() one).
-
-- Looking at the current QEMU code, there are some non-VFIO cb()
-handlers registered via qdev_add_vm_change_state_handler() and
-quite a few handlers registered via qemu_add_vm_change_state_handler().
-
-I presume these VFIO prepare_cb()-related transitions need to finish
-before calling any of these handlers to maintain the current ordering
-so some kind of interlocking in vm_state_notify() between calling
-prepare_cb() and cb() may be necessary since any "prio" based
-ordering will have the same problem of reverse calling order on VM
-start vs stop.
-
-
-To be clear, I'm not insisting on the implementation from this patch -
-any alternative one that preserves the aforementioned ordering rules
-and has similar downtime performance is probably okay too.
-
-> Thanks,
-> 
-
-Thanks,
-Maciej
-
+Best regards,
+FangSheng Huang (Jerry)
 
