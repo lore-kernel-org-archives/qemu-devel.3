@@ -4,67 +4,68 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A99B3CD6E64
-	for <qemu-devel@archiver.kernel.org>; Tue,  2 Jun 2026 09:19:31 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 73342CD6E4A
+	for <qemu-devel@archiver.kernel.org>; Tue,  2 Jun 2026 09:19:39 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wULGz-0000g6-6X; Tue, 02 Jun 2026 05:18:57 -0400
+	id 1wULH5-0000uV-2m; Tue, 02 Jun 2026 05:19:03 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <fritchleybohrer@gmail.com>)
- id 1wULGV-0000Px-Ir
- for qemu-devel@nongnu.org; Tue, 02 Jun 2026 05:18:33 -0400
-Received: from mail-dy1-x1342.google.com ([2607:f8b0:4864:20::1342])
+ id 1wULH0-0000iw-5O
+ for qemu-devel@nongnu.org; Tue, 02 Jun 2026 05:18:58 -0400
+Received: from mail-dy1-x1343.google.com ([2607:f8b0:4864:20::1343])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <fritchleybohrer@gmail.com>)
- id 1wULGM-0007Um-BL
- for qemu-devel@nongnu.org; Tue, 02 Jun 2026 05:18:22 -0400
-Received: by mail-dy1-x1342.google.com with SMTP id
- 5a478bee46e88-304cf518c9dso7484681eec.1
- for <qemu-devel@nongnu.org>; Tue, 02 Jun 2026 02:18:15 -0700 (PDT)
+ id 1wULGv-0007p1-8x
+ for qemu-devel@nongnu.org; Tue, 02 Jun 2026 05:18:54 -0400
+Received: by mail-dy1-x1343.google.com with SMTP id
+ 5a478bee46e88-304e83724bfso5376285eec.0
+ for <qemu-devel@nongnu.org>; Tue, 02 Jun 2026 02:18:52 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1780391894; x=1780996694; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:from:to:cc:subject:date:message-id:reply-to;
- bh=KOqPOR5PYlNFrQ/myC0caI5VhqPE+T4MVF8I72+cnOI=;
- b=n1vpBU1+BR4wNkGn9jVH0DDdP2mFREOvB/FgY1+0HPk67X57E6NXQnxwiVVzKJv/0o
- QBqizsKiP66Rbk71f6ylmQSKW5wXJTI+UsR/SSVtS5YK22z9Wd0Di7kOry3Yd1eYVVA6
- CG7XbgFHK1y0SCQtNgigi+/chHtV1CXnz+b/OS6L5W6IzWxLleaRE97NGVWiCuQ3B6vU
- k+NenbRbTTY/iQWClqV6hXPCYX7kbwsQTIQpFtkaraqq5kzTPUYdBOhRb0NZEYbj0Hg1
- 4Eohol/AZtVxW9b34BmGaJ/ktFm5d5zZw9MzOJQZBFGlAqm6wS7KcascO98Y4Jl2qehu
- cLeQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1780391894; x=1780996694;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ d=gmail.com; s=20251104; t=1780391931; x=1780996731; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=KOqPOR5PYlNFrQ/myC0caI5VhqPE+T4MVF8I72+cnOI=;
- b=MylWqj0HekA8+RgMChSwk4XsjqCAB+vD04NpyXFDULxgVcdrFD0t2gfN17b8WwjJGn
- PYILGEDLViV7EGFTEWoSfhIJjgV/dLGRfbccQ+m8g6COiUOaPQcUQIQ6gHEI1KDgy0s7
- Cy5TQk1L3mXiBOGtY1FUPfefaPN6IJ+Q26MF+X89Sf1XgTDKPJ3zmtCWDJd8uBIXnsZz
- sz9P9i+q/zuAaclpX4qxQIvZHz/JKefVPmAU1v4Bmv9vfgKp0InxIiSCyCRwU0Ada1Jo
- quex+GPD7IHSaKxPTpZaRnwHbIox7eo5c6N3sxqoFABhn5ytTy8VBOOZUzzH548I5cLe
- zVyw==
-X-Gm-Message-State: AOJu0YyuUYfeStjYA8bgd1ZBaPe6u8rHBzbTt5TTSytHAOyIkiXwalFr
- L7XzuYPYTAZjgysV3rtYpXpUSWndR7tXnV7TmP5AHW15NgpLnbohIHJIUz9yXYzWnjNHFw==
-X-Gm-Gg: Acq92OEdgacugJdqmC1v675AKROUqm2GO+peuC9wyu3jf5YqCm4DvA7EgxJn4mW83SN
- neGqIYrIL7njJ5v8e28zYFv9VShwjd0NxQndNwjjrdnmtnq/0l5caXbmd+lax20M1E3JpxDNrWq
- aOgxqvKyGjSgt6tJDszFOCaM1ooTB/sG8/nzxpvup6igE0TCo46n6dPPKkopERR10BF/vx1QYdX
- rPhpJwEJ8lM9GJ/6JxmsI2MMudUrFyF0FLlvBHv1I4LcIITbGnIAsoQDP3CXI1IXx5L5MIgFekz
- JwcgeIYDjlC7YzkVpzVpXDz49S6g0mhf8C+matc5GjR1WVPdFw5NJjqabkU0/ftHV3t0nNF+xqC
- xTfhjVS6A35AGqubl1qbRAfVnbrBdr0ON9i65C5p24JnqEshSELFny9Ls5n2wOa79u2ffCM87oG
- 9s/6pTDSnXmcVol7P0tg2YJWuHq3H8jzd4WBJQzwP5hUu/0C6xslMlOYGa35tDZryxWWwKwR/it
- NwmUYh9M0iJ4xDo0nrEtEprXEc=
-X-Received: by 2002:a05:693c:3006:b0:304:d388:c33e with SMTP id
- 5a478bee46e88-304fa4a7fd1mr8704846eec.1.1780391893672; 
- Tue, 02 Jun 2026 02:18:13 -0700 (PDT)
+ bh=rf1sbRZ5RIrg3eme622ykejQTQoAbCXsWDkVCjzGz90=;
+ b=YQ75bAo8ljZsasWKf5kqG/m7mWI5pH8gHGE0EAjUSjPk7ZFXmAtZkvGO2oNY5NERwW
+ Q3WuLXPUAIUDjrq4CmZMMYihCGJIMWvjjQA/li7pk270vxexUl+PJBb0KdGdNNiFx9X0
+ k6Ffmx36Mw92v+vA9uemz+dfNG0pLxFVyzR67p7fdZyagAXi6o1LeMin2g+ne14pPJwY
+ 9WK5iSrbiRJLfZNhTLDFckCh1+MjYbHP2KFrT7Bo2FTNYqg7LdEGDjG/bDtpZ118o85P
+ rWb0YtwWGBmPS0xK+EXs4ReKaPw9hBcXc+bUuUUx8ViFtU3AXAFgEY5mwShHFjvnG08A
+ 5G/Q==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1780391931; x=1780996731;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=rf1sbRZ5RIrg3eme622ykejQTQoAbCXsWDkVCjzGz90=;
+ b=S4ZpiIXOOFWaeja/0NRD9kHYrBrr51tFTHuVzoSD/t2L9Uf0/ZTO6nIUZzlotDMhas
+ ILgJqjwCHN0HtA6yZ+tvIR3u6SS0BU3mZUY/x1rzY+LM+5BIa1ruBZD6FaM9z8ROcFFm
+ 1mh6xgqlg+hgjeexnKtEP1kwlA+KAka2smSvDyps18wvpDPGJWhY1p5wAU3ApIdBbZr2
+ mQAEYa6LHYvf/oB+88DxeEAm/8YXJBTLBTgQfMtShn5r2h/R9DrHyuNkKm0MhOW8uQHb
+ kRNP+v5tmN3FOktIjoeca/mHTgh/MSf2f4/lU+cpvf/Tnf26laXF1jTf9qiOpQwxIL/T
+ vXbA==
+X-Gm-Message-State: AOJu0YynWq2e6pDbGr6U+UGq4EG26sLlNZFy+yOeXhN8KTMwzSHXcq73
+ z0u8K8ZcysKa1vFr2jTtDP0BluwNfHs8xU5PbCtZm2C0R29UNc+9qoZK2wzuZi5HEMuYLA==
+X-Gm-Gg: Acq92OESTUqPPGdo0zv4q87C1if1c6+bK79GwQ6pWryXrSnikR1Be7avAli43BPS2sn
+ usErC93VwUT9moesNFHSMvh7pMpCZSldsntEs9rZQ/zfhmREe3QFhIiAs0bNe17WVzzILllyyLJ
+ TqwIX2OzguNBOUygPf2QGD81xYPy42/hCP92JInNUhqH4rBR9BNmxbtIFeeN2dLe8ATWsNz4WtT
+ RXbE0bVX0yMd+NVBB41p7OJKNO84eVrkHa9RvShLXMlEg90s/XrPfI/+nSlDn9MDlBaOZ7uW+TF
+ hTc+X8UWTN+rgmflAzD/zyvRWVmP5k42RNAoY9YjoKucTq3vdou/ivsG/2av0M2Xabi52S2nTc7
+ rzNlByiKdVOWsqcR2mXmYz7S2zwwX5k5PoJKLM0aSPfq57vEScqY0JjgOB7dLVo2vr06JvGcQd2
+ E35oTl7DumaURSuP1U/NMo9PpmPet/SdnzkpPGex4DT0VZStT/HvUeuXS6qLXoFAIBn0hHT54LX
+ piRSLI80zZiksT4FbhgswiBwpY=
+X-Received: by 2002:a05:7300:6427:b0:304:cefc:5fd7 with SMTP id
+ 5a478bee46e88-304fa6dbc01mr6528709eec.32.1780391931499; 
+ Tue, 02 Jun 2026 02:18:51 -0700 (PDT)
 Received: from openkylin..
  (ec2-54-176-108-193.us-west-1.compute.amazonaws.com. [54.176.108.193])
  by smtp.gmail.com with ESMTPSA id
- 5a478bee46e88-304ed2c3121sm11419146eec.5.2026.06.02.02.18.10
+ 5a478bee46e88-304ed2c3121sm11419146eec.5.2026.06.02.02.18.48
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 02 Jun 2026 02:18:13 -0700 (PDT)
+ Tue, 02 Jun 2026 02:18:51 -0700 (PDT)
 From: Zephyr Li <fritchleybohrer@gmail.com>
 To: qemu-devel@nongnu.org
 Cc: qemu-riscv@nongnu.org, palmer@dabbelt.com, alistair.francis@wdc.com,
@@ -72,14 +73,16 @@ Cc: qemu-riscv@nongnu.org, palmer@dabbelt.com, alistair.francis@wdc.com,
  zhiwei_liu@linux.alibaba.com, chao.liu.zevorn@gmail.com,
  alex.bennee@linaro.org, pierrick.bouvier@oss.qualcomm.com,
  philmd@linaro.org, Zephyr Li <fritchleybohrer@gmail.com>
-Subject: [PATCH v3 0/6] target/riscv: Fix no-TCG build
-Date: Tue,  2 Jun 2026 17:17:47 +0800
-Message-ID: <20260602091753.3209261-1-fritchleybohrer@gmail.com>
+Subject: [PATCH v3 6/6] gitlab-ci.d/crossbuilds: add riscv64 KVM-only build job
+Date: Tue,  2 Jun 2026 17:17:53 +0800
+Message-ID: <20260602091753.3209261-7-fritchleybohrer@gmail.com>
 X-Mailer: git-send-email 2.43.0
+In-Reply-To: <20260602091753.3209261-1-fritchleybohrer@gmail.com>
+References: <20260602091753.3209261-1-fritchleybohrer@gmail.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::1342;
- envelope-from=fritchleybohrer@gmail.com; helo=mail-dy1-x1342.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::1343;
+ envelope-from=fritchleybohrer@gmail.com; helo=mail-dy1-x1343.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -102,70 +105,37 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-This series fixes the riscv64-softmmu --disable-tcg build by keeping
-TCG-only code out of no-TCG builds while preserving common RISC-V CPU
-helpers for non-TCG configurations.
+Add CI coverage for a riscv64 --disable-tcg cross build. This ensures that
+RISC-V no-TCG/KVM-only builds keep working and prevents TCG-only code from
+being accidentally pulled into common RISC-V sources again.
 
-Compared with v2, this version replaces the no-TCG stub for
-riscv_cpu_validate_set_extensions() with a common cpu-validate.c split.
-The validator is used by common CSR code and should not live in TCG-only
-code.
+The cross_accel_build_job template enables KVM by default via
+--enable-${ACCEL:-kvm}, so the extra options only need to disable TCG.
 
-Changes in v3:
-- Replace the no-TCG stub with a new cpu-validate.c common source file.
-- Move common RISC-V extension validation and user-option tracking out of
-  target/riscv/tcg/tcg-cpu.c.
-- Move fflags and exception helpers out of TCG-only helper files.
-- Reject x-misa-w outside TCG.
-- Build RISC-V TCG-only sources only when CONFIG_TCG is enabled.
-- Add GitLab CI coverage for riscv64 KVM-only --disable-tcg builds.
+Signed-off-by: Zephyr Li <fritchleybohrer@gmail.com>
+---
+ .gitlab-ci.d/crossbuilds.yml | 8 ++++++++
+ 1 file changed, 8 insertions(+)
 
-Testing:
-- ../configure --target-list=riscv64-softmmu --enable-kvm --disable-tcg \
-      --enable-debug
-  ninja
-
-- ../configure --target-list=riscv64-softmmu,riscv64-linux-user \
-      --enable-debug
-  ninja
-
-- In the no-TCG build:
-  qemu-system-riscv64 -M virt,accel=qtest -cpu rv64,x-misa-w=true \
-      -nographic -S
-  reports "x-misa-w requires TCG".
-
-- In the TCG build:
-  qemu-system-riscv64 -M virt -accel tcg -cpu rv64,x-misa-w=true \
-      -nographic -S
-  starts without reporting "x-misa-w requires TCG".
-
-Zephyr Li (6):
-  target/riscv: move extension validation out of TCG-only code
-  target/riscv: move fflags helpers to common code
-  target/riscv: move riscv_raise_exception() out of op_helper.c
-  target/riscv: reject x-misa-w outside TCG
-  target/riscv: build TCG-only sources only with TCG
-  gitlab-ci.d/crossbuilds: add riscv64 KVM-only build job
-
- .gitlab-ci.d/crossbuilds.yml |   8 +
- target/riscv/cpu-validate.c  | 630 ++++++++++++++++++++++++++++++++++
- target/riscv/cpu.c           |  13 +-
- target/riscv/cpu.h           |   7 -
- target/riscv/cpu_helper.c    |  53 +++
- target/riscv/csr.c           |  12 +-
- target/riscv/debug.c         |   1 +
- target/riscv/fpu_helper.c    |  27 --
- target/riscv/internals.h     |  26 ++
- target/riscv/meson.build     |  10 +-
- target/riscv/op_helper.c     |  15 -
- target/riscv/tcg/tcg-cpu.c   | 637 ++---------------------------------
- target/riscv/tcg/tcg-cpu.h   |   1 -
- target/riscv/zce_helper.c    |   1 +
- 14 files changed, 769 insertions(+), 672 deletions(-)
- create mode 100644 target/riscv/cpu-validate.c
-
-
-base-commit: 5611a9268dae7b7ff99d478ed134052a9fc7e9f7
+diff --git a/.gitlab-ci.d/crossbuilds.yml b/.gitlab-ci.d/crossbuilds.yml
+index eaeeb533ce..a823aaaa21 100644
+--- a/.gitlab-ci.d/crossbuilds.yml
++++ b/.gitlab-ci.d/crossbuilds.yml
+@@ -59,6 +59,14 @@ cross-riscv64-user:
+   variables:
+     IMAGE: debian-riscv64-cross
+ 
++cross-riscv64-kvm-only:
++  extends: .cross_accel_build_job
++  needs:
++    - job: riscv64-debian-cross-container
++  variables:
++    IMAGE: debian-riscv64-cross
++    EXTRA_CONFIGURE_OPTS: --disable-tcg --without-default-features
++
+ cross-s390x-system:
+   extends: .cross_system_build_job
+   needs:
 -- 
 2.43.0
 
