@@ -4,43 +4,43 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1B5CACD6E55
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9A6F5CD6E5D
 	for <qemu-devel@archiver.kernel.org>; Tue,  2 Jun 2026 03:02:24 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wUFN0-0005kF-2K; Mon, 01 Jun 2026 23:00:46 -0400
+	id 1wUFN0-0005kH-4B; Mon, 01 Jun 2026 23:00:46 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <maobibo@loongson.cn>)
- id 1wUFMu-0005hu-To
- for qemu-devel@nongnu.org; Mon, 01 Jun 2026 23:00:41 -0400
+ id 1wUFMy-0005jc-Cq
+ for qemu-devel@nongnu.org; Mon, 01 Jun 2026 23:00:44 -0400
 Received: from mail.loongson.cn ([114.242.206.163])
  by eggs.gnu.org with esmtp (Exim 4.90_1)
- (envelope-from <maobibo@loongson.cn>) id 1wUFMs-0002Hk-AD
- for qemu-devel@nongnu.org; Mon, 01 Jun 2026 23:00:40 -0400
+ (envelope-from <maobibo@loongson.cn>) id 1wUFMv-0002Ia-Kz
+ for qemu-devel@nongnu.org; Mon, 01 Jun 2026 23:00:44 -0400
 Received: from loongson.cn (unknown [10.2.5.213])
- by gateway (Coremail) with SMTP id _____8DxBOlURx5qjJUPAA--.37605S3;
- Tue, 02 Jun 2026 11:00:36 +0800 (CST)
+ by gateway (Coremail) with SMTP id _____8Cxx3hWRx5qkJUPAA--.18824S3;
+ Tue, 02 Jun 2026 11:00:38 +0800 (CST)
 Received: from localhost.localdomain (unknown [10.2.5.213])
- by front1 (Coremail) with SMTP id qMiowJBxacFNRx5q5tqYAA--.13886S7;
- Tue, 02 Jun 2026 11:00:35 +0800 (CST)
+ by front1 (Coremail) with SMTP id qMiowJDxzsJWRx5q7dqYAA--.27658S2;
+ Tue, 02 Jun 2026 11:00:38 +0800 (CST)
 From: Bibo Mao <maobibo@loongson.cn>
 To: Song Gao <gaosong@loongson.cn>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  Richard Henderson <richard.henderson@linaro.org>
 Cc: qemu-devel@nongnu.org, SignKirigami <prcups@krgm.moe>,
  Hengyu Yu <yuhengyu25@mails.ucas.ac.cn>
-Subject: [PATCH v2 05/13] target/loongarch: Use sys_state in kvm.c when
+Subject: [PATCH v2 06/13] target/loongarch: Use sys_state in tlb_helper.c when
  accessing CSR registers
-Date: Tue,  2 Jun 2026 11:00:21 +0800
-Message-Id: <20260602030029.1476299-6-maobibo@loongson.cn>
+Date: Tue,  2 Jun 2026 11:00:22 +0800
+Message-Id: <20260602030029.1476299-7-maobibo@loongson.cn>
 X-Mailer: git-send-email 2.39.3
 In-Reply-To: <20260602030029.1476299-1-maobibo@loongson.cn>
 References: <20260602030029.1476299-1-maobibo@loongson.cn>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-X-CM-TRANSID: qMiowJBxacFNRx5q5tqYAA--.13886S7
+X-CM-TRANSID: qMiowJDxzsJWRx5q7dqYAA--.27658S2
 X-CM-SenderInfo: xpdruxter6z05rqj20fqof0/
 X-Coremail-Antispam: 1Uk129KBjDUn29KB7ZKAUJUUUUU529EdanIXcx71UUUUU7KY7
  ZEXasCq-sGcSsGvfJ3UbIjqfuFe4nvWSU5nxnvy29KBjDU0xBIdaVrnUUvcSsGvfC2Kfnx
@@ -51,7 +51,7 @@ X-Spam_score_int: -18
 X-Spam_score: -1.9
 X-Spam_bar: -
 X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001, UPPERCASE_50_75=0.008 autolearn=no autolearn_force=no
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -67,516 +67,363 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-When accessing CSR registers in file kvm.c, use sys_state rather than
-env.
+When accessing CSR registers in file tlb_helper.c, use sys_state rather
+than env. There is no function change.
 
 Signed-off-by: Bibo Mao <maobibo@loongson.cn>
 ---
- target/loongarch/kvm/kvm.c | 228 +++++++++++++++++++------------------
- 1 file changed, 116 insertions(+), 112 deletions(-)
+ target/loongarch/tcg/tlb_helper.c | 137 +++++++++++++++++-------------
+ 1 file changed, 77 insertions(+), 60 deletions(-)
 
-diff --git a/target/loongarch/kvm/kvm.c b/target/loongarch/kvm/kvm.c
-index 4af4ab2ed0..d6539c12ac 100644
---- a/target/loongarch/kvm/kvm.c
-+++ b/target/loongarch/kvm/kvm.c
-@@ -161,6 +161,7 @@ static int kvm_loongarch_put_pmu(CPUState *cs)
-     int i, ret = 0;
-     CPULoongArchState *env = cpu_env(cs);
-     LoongArchCPU *cpu = LOONGARCH_CPU(cs);
-+    CPUSysState *sys = env_sys(env);
+diff --git a/target/loongarch/tcg/tlb_helper.c b/target/loongarch/tcg/tlb_helper.c
+index 892e0eb473..7623f4f9bd 100644
+--- a/target/loongarch/tcg/tlb_helper.c
++++ b/target/loongarch/tcg/tlb_helper.c
+@@ -36,16 +36,19 @@ static bool tlb_match_asid(bool global, int asid, int tlb_asid)
  
-     if (cpu->pmu != ON_OFF_AUTO_ON) {
-         return 0;
-@@ -168,9 +169,9 @@ static int kvm_loongarch_put_pmu(CPUState *cs)
- 
-     for (i = 0; i < env->perf_event_num; i++) {
-         ret |= kvm_set_one_reg(cs, KVM_IOC_CSRID(LOONGARCH_CSR_PERFCTRL(i)),
--                               &env->CSR_PERFCTRL[i]);
-+                               &sys->CSR_PERFCTRL[i]);
-         ret |= kvm_set_one_reg(cs, KVM_IOC_CSRID(LOONGARCH_CSR_PERFCNTR(i)),
--                               &env->CSR_PERFCNTR[i]);
-+                               &sys->CSR_PERFCNTR[i]);
-     }
- 
-     return ret;
-@@ -181,6 +182,7 @@ static int kvm_loongarch_get_pmu(CPUState *cs)
-     int i, ret = 0;
-     CPULoongArchState *env = cpu_env(cs);
-     LoongArchCPU *cpu = LOONGARCH_CPU(cs);
-+    CPUSysState *sys = env_sys(env);
- 
-     if (cpu->pmu != ON_OFF_AUTO_ON) {
-         return 0;
-@@ -188,9 +190,9 @@ static int kvm_loongarch_get_pmu(CPUState *cs)
- 
-     for (i = 0; i < env->perf_event_num; i++) {
-         ret |= kvm_get_one_reg(cs, KVM_IOC_CSRID(LOONGARCH_CSR_PERFCTRL(i)),
--                               &env->CSR_PERFCTRL[i]);
-+                               &sys->CSR_PERFCTRL[i]);
-         ret |= kvm_get_one_reg(cs, KVM_IOC_CSRID(LOONGARCH_CSR_PERFCNTR(i)),
--                               &env->CSR_PERFCNTR[i]);
-+                               &sys->CSR_PERFCNTR[i]);
-     }
- 
-     return ret;
-@@ -200,170 +202,171 @@ static int kvm_loongarch_get_csr(CPUState *cs)
+ bool check_ps(CPULoongArchState *env, uint8_t tlb_ps)
  {
-     int ret = 0;
-     CPULoongArchState *env = cpu_env(cs);
 +    CPUSysState *sys = env_sys(env);
- 
-     ret |= kvm_get_one_reg(cs, KVM_IOC_CSRID(LOONGARCH_CSR_CRMD),
--                           &env->CSR_CRMD);
-+                           &sys->CSR_CRMD);
- 
-     ret |= kvm_get_one_reg(cs, KVM_IOC_CSRID(LOONGARCH_CSR_PRMD),
--                           &env->CSR_PRMD);
-+                           &sys->CSR_PRMD);
- 
-     ret |= kvm_get_one_reg(cs, KVM_IOC_CSRID(LOONGARCH_CSR_EUEN),
--                           &env->CSR_EUEN);
-+                           &sys->CSR_EUEN);
- 
-     ret |= kvm_get_one_reg(cs, KVM_IOC_CSRID(LOONGARCH_CSR_MISC),
--                           &env->CSR_MISC);
-+                           &sys->CSR_MISC);
- 
-     ret |= kvm_get_one_reg(cs, KVM_IOC_CSRID(LOONGARCH_CSR_ECFG),
--                           &env->CSR_ECFG);
-+                           &sys->CSR_ECFG);
- 
-     ret |= kvm_get_one_reg(cs, KVM_IOC_CSRID(LOONGARCH_CSR_ESTAT),
--                           &env->CSR_ESTAT);
-+                           &sys->CSR_ESTAT);
- 
-     ret |= kvm_get_one_reg(cs, KVM_IOC_CSRID(LOONGARCH_CSR_ERA),
--                           &env->CSR_ERA);
-+                           &sys->CSR_ERA);
- 
-     ret |= kvm_get_one_reg(cs, KVM_IOC_CSRID(LOONGARCH_CSR_BADV),
--                           &env->CSR_BADV);
-+                           &sys->CSR_BADV);
- 
-     ret |= kvm_get_one_reg(cs, KVM_IOC_CSRID(LOONGARCH_CSR_BADI),
--                           &env->CSR_BADI);
-+                           &sys->CSR_BADI);
- 
-     ret |= kvm_get_one_reg(cs, KVM_IOC_CSRID(LOONGARCH_CSR_EENTRY),
--                           &env->CSR_EENTRY);
-+                           &sys->CSR_EENTRY);
- 
-     ret |= kvm_get_one_reg(cs, KVM_IOC_CSRID(LOONGARCH_CSR_TLBIDX),
--                           &env->CSR_TLBIDX);
-+                           &sys->CSR_TLBIDX);
- 
-     ret |= kvm_get_one_reg(cs, KVM_IOC_CSRID(LOONGARCH_CSR_TLBEHI),
--                           &env->CSR_TLBEHI);
-+                           &sys->CSR_TLBEHI);
- 
-     ret |= kvm_get_one_reg(cs, KVM_IOC_CSRID(LOONGARCH_CSR_TLBELO0),
--                           &env->CSR_TLBELO0);
-+                           &sys->CSR_TLBELO0);
- 
-     ret |= kvm_get_one_reg(cs, KVM_IOC_CSRID(LOONGARCH_CSR_TLBELO1),
--                           &env->CSR_TLBELO1);
-+                           &sys->CSR_TLBELO1);
- 
-     ret |= kvm_get_one_reg(cs, KVM_IOC_CSRID(LOONGARCH_CSR_ASID),
--                           &env->CSR_ASID);
-+                           &sys->CSR_ASID);
- 
-     ret |= kvm_get_one_reg(cs, KVM_IOC_CSRID(LOONGARCH_CSR_PGDL),
--                           &env->CSR_PGDL);
-+                           &sys->CSR_PGDL);
- 
-     ret |= kvm_get_one_reg(cs, KVM_IOC_CSRID(LOONGARCH_CSR_PGDH),
--                           &env->CSR_PGDH);
-+                           &sys->CSR_PGDH);
- 
-     ret |= kvm_get_one_reg(cs, KVM_IOC_CSRID(LOONGARCH_CSR_PGD),
--                           &env->CSR_PGD);
-+                           &sys->CSR_PGD);
- 
-     ret |= kvm_get_one_reg(cs, KVM_IOC_CSRID(LOONGARCH_CSR_PWCL),
--                           &env->CSR_PWCL);
-+                           &sys->CSR_PWCL);
- 
-     ret |= kvm_get_one_reg(cs, KVM_IOC_CSRID(LOONGARCH_CSR_PWCH),
--                           &env->CSR_PWCH);
-+                           &sys->CSR_PWCH);
- 
-     ret |= kvm_get_one_reg(cs, KVM_IOC_CSRID(LOONGARCH_CSR_STLBPS),
--                           &env->CSR_STLBPS);
-+                           &sys->CSR_STLBPS);
- 
-     ret |= kvm_get_one_reg(cs, KVM_IOC_CSRID(LOONGARCH_CSR_RVACFG),
--                           &env->CSR_RVACFG);
-+                           &sys->CSR_RVACFG);
- 
-     ret |= kvm_get_one_reg(cs, KVM_IOC_CSRID(LOONGARCH_CSR_CPUID),
--                           &env->CSR_CPUID);
-+                           &sys->CSR_CPUID);
- 
-     ret |= kvm_get_one_reg(cs, KVM_IOC_CSRID(LOONGARCH_CSR_PRCFG1),
--                           &env->CSR_PRCFG1);
-+                           &sys->CSR_PRCFG1);
- 
-     ret |= kvm_get_one_reg(cs, KVM_IOC_CSRID(LOONGARCH_CSR_PRCFG2),
--                           &env->CSR_PRCFG2);
-+                           &sys->CSR_PRCFG2);
- 
-     ret |= kvm_get_one_reg(cs, KVM_IOC_CSRID(LOONGARCH_CSR_PRCFG3),
--                           &env->CSR_PRCFG3);
-+                           &sys->CSR_PRCFG3);
- 
-     ret |= kvm_get_one_reg(cs, KVM_IOC_CSRID(LOONGARCH_CSR_SAVE(0)),
--                           &env->CSR_SAVE[0]);
-+                           &sys->CSR_SAVE[0]);
- 
-     ret |= kvm_get_one_reg(cs, KVM_IOC_CSRID(LOONGARCH_CSR_SAVE(1)),
--                           &env->CSR_SAVE[1]);
-+                           &sys->CSR_SAVE[1]);
- 
-     ret |= kvm_get_one_reg(cs, KVM_IOC_CSRID(LOONGARCH_CSR_SAVE(2)),
--                           &env->CSR_SAVE[2]);
-+                           &sys->CSR_SAVE[2]);
- 
-     ret |= kvm_get_one_reg(cs, KVM_IOC_CSRID(LOONGARCH_CSR_SAVE(3)),
--                           &env->CSR_SAVE[3]);
-+                           &sys->CSR_SAVE[3]);
- 
-     ret |= kvm_get_one_reg(cs, KVM_IOC_CSRID(LOONGARCH_CSR_SAVE(4)),
--                           &env->CSR_SAVE[4]);
-+                           &sys->CSR_SAVE[4]);
- 
-     ret |= kvm_get_one_reg(cs, KVM_IOC_CSRID(LOONGARCH_CSR_SAVE(5)),
--                           &env->CSR_SAVE[5]);
-+                           &sys->CSR_SAVE[5]);
- 
-     ret |= kvm_get_one_reg(cs, KVM_IOC_CSRID(LOONGARCH_CSR_SAVE(6)),
--                           &env->CSR_SAVE[6]);
-+                           &sys->CSR_SAVE[6]);
- 
-     ret |= kvm_get_one_reg(cs, KVM_IOC_CSRID(LOONGARCH_CSR_SAVE(7)),
--                           &env->CSR_SAVE[7]);
-+                           &sys->CSR_SAVE[7]);
- 
-     ret |= kvm_get_one_reg(cs, KVM_IOC_CSRID(LOONGARCH_CSR_TID),
--                           &env->CSR_TID);
-+                           &sys->CSR_TID);
- 
-     ret |= kvm_get_one_reg(cs, KVM_IOC_CSRID(LOONGARCH_CSR_CNTC),
--                           &env->CSR_CNTC);
-+                           &sys->CSR_CNTC);
- 
-     ret |= kvm_get_one_reg(cs, KVM_IOC_CSRID(LOONGARCH_CSR_TICLR),
--                           &env->CSR_TICLR);
-+                           &sys->CSR_TICLR);
- 
-     ret |= kvm_get_one_reg(cs, KVM_IOC_CSRID(LOONGARCH_CSR_LLBCTL),
--                           &env->CSR_LLBCTL);
-+                           &sys->CSR_LLBCTL);
- 
-     ret |= kvm_get_one_reg(cs, KVM_IOC_CSRID(LOONGARCH_CSR_IMPCTL1),
--                           &env->CSR_IMPCTL1);
-+                           &sys->CSR_IMPCTL1);
- 
-     ret |= kvm_get_one_reg(cs, KVM_IOC_CSRID(LOONGARCH_CSR_IMPCTL2),
--                           &env->CSR_IMPCTL2);
-+                           &sys->CSR_IMPCTL2);
- 
-     ret |= kvm_get_one_reg(cs, KVM_IOC_CSRID(LOONGARCH_CSR_TLBRENTRY),
--                           &env->CSR_TLBRENTRY);
-+                           &sys->CSR_TLBRENTRY);
- 
-     ret |= kvm_get_one_reg(cs, KVM_IOC_CSRID(LOONGARCH_CSR_TLBRBADV),
--                           &env->CSR_TLBRBADV);
-+                           &sys->CSR_TLBRBADV);
- 
-     ret |= kvm_get_one_reg(cs, KVM_IOC_CSRID(LOONGARCH_CSR_TLBRERA),
--                           &env->CSR_TLBRERA);
-+                           &sys->CSR_TLBRERA);
- 
-     ret |= kvm_get_one_reg(cs, KVM_IOC_CSRID(LOONGARCH_CSR_TLBRSAVE),
--                           &env->CSR_TLBRSAVE);
-+                           &sys->CSR_TLBRSAVE);
- 
-     ret |= kvm_get_one_reg(cs, KVM_IOC_CSRID(LOONGARCH_CSR_TLBRELO0),
--                           &env->CSR_TLBRELO0);
-+                           &sys->CSR_TLBRELO0);
- 
-     ret |= kvm_get_one_reg(cs, KVM_IOC_CSRID(LOONGARCH_CSR_TLBRELO1),
--                           &env->CSR_TLBRELO1);
-+                           &sys->CSR_TLBRELO1);
- 
-     ret |= kvm_get_one_reg(cs, KVM_IOC_CSRID(LOONGARCH_CSR_TLBREHI),
--                           &env->CSR_TLBREHI);
-+                           &sys->CSR_TLBREHI);
- 
-     ret |= kvm_get_one_reg(cs, KVM_IOC_CSRID(LOONGARCH_CSR_TLBRPRMD),
--                           &env->CSR_TLBRPRMD);
-+                           &sys->CSR_TLBRPRMD);
- 
-     ret |= kvm_get_one_reg(cs, KVM_IOC_CSRID(LOONGARCH_CSR_DMW(0)),
--                           &env->CSR_DMW[0]);
-+                           &sys->CSR_DMW[0]);
- 
-     ret |= kvm_get_one_reg(cs, KVM_IOC_CSRID(LOONGARCH_CSR_DMW(1)),
--                           &env->CSR_DMW[1]);
-+                           &sys->CSR_DMW[1]);
- 
-     ret |= kvm_get_one_reg(cs, KVM_IOC_CSRID(LOONGARCH_CSR_DMW(2)),
--                           &env->CSR_DMW[2]);
-+                           &sys->CSR_DMW[2]);
- 
-     ret |= kvm_get_one_reg(cs, KVM_IOC_CSRID(LOONGARCH_CSR_DMW(3)),
--                           &env->CSR_DMW[3]);
-+                           &sys->CSR_DMW[3]);
- 
-     ret |= kvm_loongarch_get_pmu(cs);
- 
-     ret |= kvm_get_one_reg(cs, KVM_IOC_CSRID(LOONGARCH_CSR_TVAL),
--                           &env->CSR_TVAL);
-+                           &sys->CSR_TVAL);
- 
-     ret |= kvm_get_one_reg(cs, KVM_IOC_CSRID(LOONGARCH_CSR_TCFG),
--                           &env->CSR_TCFG);
-+                           &sys->CSR_TCFG);
- 
-     return ret;
- }
-@@ -372,165 +375,166 @@ static int kvm_loongarch_put_csr(CPUState *cs, KvmPutState level)
- {
-     int ret = 0;
-     CPULoongArchState *env = cpu_env(cs);
-+    CPUSysState *sys = env_sys(env);
- 
-     ret |= kvm_set_one_reg(cs, KVM_IOC_CSRID(LOONGARCH_CSR_CRMD),
--                           &env->CSR_CRMD);
-+                           &sys->CSR_CRMD);
- 
-     ret |= kvm_set_one_reg(cs, KVM_IOC_CSRID(LOONGARCH_CSR_PRMD),
--                           &env->CSR_PRMD);
-+                           &sys->CSR_PRMD);
- 
-     ret |= kvm_set_one_reg(cs, KVM_IOC_CSRID(LOONGARCH_CSR_EUEN),
--                           &env->CSR_EUEN);
-+                           &sys->CSR_EUEN);
- 
-     ret |= kvm_set_one_reg(cs, KVM_IOC_CSRID(LOONGARCH_CSR_MISC),
--                           &env->CSR_MISC);
-+                           &sys->CSR_MISC);
- 
-     ret |= kvm_set_one_reg(cs, KVM_IOC_CSRID(LOONGARCH_CSR_ECFG),
--                           &env->CSR_ECFG);
-+                           &sys->CSR_ECFG);
- 
-     ret |= kvm_set_one_reg(cs, KVM_IOC_CSRID(LOONGARCH_CSR_ESTAT),
--                           &env->CSR_ESTAT);
-+                           &sys->CSR_ESTAT);
- 
-     ret |= kvm_set_one_reg(cs, KVM_IOC_CSRID(LOONGARCH_CSR_ERA),
--                           &env->CSR_ERA);
-+                           &sys->CSR_ERA);
- 
-     ret |= kvm_set_one_reg(cs, KVM_IOC_CSRID(LOONGARCH_CSR_BADV),
--                           &env->CSR_BADV);
-+                           &sys->CSR_BADV);
- 
-     ret |= kvm_set_one_reg(cs, KVM_IOC_CSRID(LOONGARCH_CSR_BADI),
--                           &env->CSR_BADI);
-+                           &sys->CSR_BADI);
- 
-     ret |= kvm_set_one_reg(cs, KVM_IOC_CSRID(LOONGARCH_CSR_EENTRY),
--                           &env->CSR_EENTRY);
-+                           &sys->CSR_EENTRY);
- 
-     ret |= kvm_set_one_reg(cs, KVM_IOC_CSRID(LOONGARCH_CSR_TLBIDX),
--                           &env->CSR_TLBIDX);
-+                           &sys->CSR_TLBIDX);
- 
-     ret |= kvm_set_one_reg(cs, KVM_IOC_CSRID(LOONGARCH_CSR_TLBEHI),
--                           &env->CSR_TLBEHI);
-+                           &sys->CSR_TLBEHI);
- 
-     ret |= kvm_set_one_reg(cs, KVM_IOC_CSRID(LOONGARCH_CSR_TLBELO0),
--                           &env->CSR_TLBELO0);
-+                           &sys->CSR_TLBELO0);
- 
-     ret |= kvm_set_one_reg(cs, KVM_IOC_CSRID(LOONGARCH_CSR_TLBELO1),
--                           &env->CSR_TLBELO1);
-+                           &sys->CSR_TLBELO1);
- 
-     ret |= kvm_set_one_reg(cs, KVM_IOC_CSRID(LOONGARCH_CSR_ASID),
--                           &env->CSR_ASID);
-+                           &sys->CSR_ASID);
- 
-     ret |= kvm_set_one_reg(cs, KVM_IOC_CSRID(LOONGARCH_CSR_PGDL),
--                           &env->CSR_PGDL);
-+                           &sys->CSR_PGDL);
- 
-     ret |= kvm_set_one_reg(cs, KVM_IOC_CSRID(LOONGARCH_CSR_PGDH),
--                           &env->CSR_PGDH);
-+                           &sys->CSR_PGDH);
- 
-     ret |= kvm_set_one_reg(cs, KVM_IOC_CSRID(LOONGARCH_CSR_PGD),
--                           &env->CSR_PGD);
-+                           &sys->CSR_PGD);
- 
-     ret |= kvm_set_one_reg(cs, KVM_IOC_CSRID(LOONGARCH_CSR_PWCL),
--                           &env->CSR_PWCL);
-+                           &sys->CSR_PWCL);
- 
-     ret |= kvm_set_one_reg(cs, KVM_IOC_CSRID(LOONGARCH_CSR_PWCH),
--                           &env->CSR_PWCH);
-+                           &sys->CSR_PWCH);
- 
-     ret |= kvm_set_one_reg(cs, KVM_IOC_CSRID(LOONGARCH_CSR_STLBPS),
--                           &env->CSR_STLBPS);
-+                           &sys->CSR_STLBPS);
- 
-     ret |= kvm_set_one_reg(cs, KVM_IOC_CSRID(LOONGARCH_CSR_RVACFG),
--                           &env->CSR_RVACFG);
-+                           &sys->CSR_RVACFG);
- 
-     /* CPUID is constant after poweron, it should be set only once */
-     if (level >= KVM_PUT_FULL_STATE) {
-         ret |= kvm_set_one_reg(cs, KVM_IOC_CSRID(LOONGARCH_CSR_CPUID),
--                           &env->CSR_CPUID);
-+                           &sys->CSR_CPUID);
++
+     if (tlb_ps >= 64) {
+         return false;
      }
- 
-     ret |= kvm_set_one_reg(cs, KVM_IOC_CSRID(LOONGARCH_CSR_PRCFG1),
--                           &env->CSR_PRCFG1);
-+                           &sys->CSR_PRCFG1);
- 
-     ret |= kvm_set_one_reg(cs, KVM_IOC_CSRID(LOONGARCH_CSR_PRCFG2),
--                           &env->CSR_PRCFG2);
-+                           &sys->CSR_PRCFG2);
- 
-     ret |= kvm_set_one_reg(cs, KVM_IOC_CSRID(LOONGARCH_CSR_PRCFG3),
--                           &env->CSR_PRCFG3);
-+                           &sys->CSR_PRCFG3);
- 
-     ret |= kvm_set_one_reg(cs, KVM_IOC_CSRID(LOONGARCH_CSR_SAVE(0)),
--                           &env->CSR_SAVE[0]);
-+                           &sys->CSR_SAVE[0]);
- 
-     ret |= kvm_set_one_reg(cs, KVM_IOC_CSRID(LOONGARCH_CSR_SAVE(1)),
--                           &env->CSR_SAVE[1]);
-+                           &sys->CSR_SAVE[1]);
- 
-     ret |= kvm_set_one_reg(cs, KVM_IOC_CSRID(LOONGARCH_CSR_SAVE(2)),
--                           &env->CSR_SAVE[2]);
-+                           &sys->CSR_SAVE[2]);
- 
-     ret |= kvm_set_one_reg(cs, KVM_IOC_CSRID(LOONGARCH_CSR_SAVE(3)),
--                           &env->CSR_SAVE[3]);
-+                           &sys->CSR_SAVE[3]);
- 
-     ret |= kvm_set_one_reg(cs, KVM_IOC_CSRID(LOONGARCH_CSR_SAVE(4)),
--                           &env->CSR_SAVE[4]);
-+                           &sys->CSR_SAVE[4]);
- 
-     ret |= kvm_set_one_reg(cs, KVM_IOC_CSRID(LOONGARCH_CSR_SAVE(5)),
--                           &env->CSR_SAVE[5]);
-+                           &sys->CSR_SAVE[5]);
- 
-     ret |= kvm_set_one_reg(cs, KVM_IOC_CSRID(LOONGARCH_CSR_SAVE(6)),
--                           &env->CSR_SAVE[6]);
-+                           &sys->CSR_SAVE[6]);
- 
-     ret |= kvm_set_one_reg(cs, KVM_IOC_CSRID(LOONGARCH_CSR_SAVE(7)),
--                           &env->CSR_SAVE[7]);
-+                           &sys->CSR_SAVE[7]);
- 
-     ret |= kvm_set_one_reg(cs, KVM_IOC_CSRID(LOONGARCH_CSR_TID),
--                           &env->CSR_TID);
-+                           &sys->CSR_TID);
- 
-     ret |= kvm_set_one_reg(cs, KVM_IOC_CSRID(LOONGARCH_CSR_CNTC),
--                           &env->CSR_CNTC);
-+                           &sys->CSR_CNTC);
- 
-     ret |= kvm_set_one_reg(cs, KVM_IOC_CSRID(LOONGARCH_CSR_TICLR),
--                           &env->CSR_TICLR);
-+                           &sys->CSR_TICLR);
- 
-     ret |= kvm_set_one_reg(cs, KVM_IOC_CSRID(LOONGARCH_CSR_LLBCTL),
--                           &env->CSR_LLBCTL);
-+                           &sys->CSR_LLBCTL);
- 
-     ret |= kvm_set_one_reg(cs, KVM_IOC_CSRID(LOONGARCH_CSR_IMPCTL1),
--                           &env->CSR_IMPCTL1);
-+                           &sys->CSR_IMPCTL1);
- 
-     ret |= kvm_set_one_reg(cs, KVM_IOC_CSRID(LOONGARCH_CSR_IMPCTL2),
--                           &env->CSR_IMPCTL2);
-+                           &sys->CSR_IMPCTL2);
- 
-     ret |= kvm_set_one_reg(cs, KVM_IOC_CSRID(LOONGARCH_CSR_TLBRENTRY),
--                           &env->CSR_TLBRENTRY);
-+                           &sys->CSR_TLBRENTRY);
- 
-     ret |= kvm_set_one_reg(cs, KVM_IOC_CSRID(LOONGARCH_CSR_TLBRBADV),
--                           &env->CSR_TLBRBADV);
-+                           &sys->CSR_TLBRBADV);
- 
-     ret |= kvm_set_one_reg(cs, KVM_IOC_CSRID(LOONGARCH_CSR_TLBRERA),
--                           &env->CSR_TLBRERA);
-+                           &sys->CSR_TLBRERA);
- 
-     ret |= kvm_set_one_reg(cs, KVM_IOC_CSRID(LOONGARCH_CSR_TLBRSAVE),
--                           &env->CSR_TLBRSAVE);
-+                           &sys->CSR_TLBRSAVE);
- 
-     ret |= kvm_set_one_reg(cs, KVM_IOC_CSRID(LOONGARCH_CSR_TLBRELO0),
--                           &env->CSR_TLBRELO0);
-+                           &sys->CSR_TLBRELO0);
- 
-     ret |= kvm_set_one_reg(cs, KVM_IOC_CSRID(LOONGARCH_CSR_TLBRELO1),
--                           &env->CSR_TLBRELO1);
-+                           &sys->CSR_TLBRELO1);
- 
-     ret |= kvm_set_one_reg(cs, KVM_IOC_CSRID(LOONGARCH_CSR_TLBREHI),
--                           &env->CSR_TLBREHI);
-+                           &sys->CSR_TLBREHI);
- 
-     ret |= kvm_set_one_reg(cs, KVM_IOC_CSRID(LOONGARCH_CSR_TLBRPRMD),
--                           &env->CSR_TLBRPRMD);
-+                           &sys->CSR_TLBRPRMD);
- 
-     ret |= kvm_set_one_reg(cs, KVM_IOC_CSRID(LOONGARCH_CSR_DMW(0)),
--                           &env->CSR_DMW[0]);
-+                           &sys->CSR_DMW[0]);
- 
-     ret |= kvm_set_one_reg(cs, KVM_IOC_CSRID(LOONGARCH_CSR_DMW(1)),
--                           &env->CSR_DMW[1]);
-+                           &sys->CSR_DMW[1]);
- 
-     ret |= kvm_set_one_reg(cs, KVM_IOC_CSRID(LOONGARCH_CSR_DMW(2)),
--                           &env->CSR_DMW[2]);
-+                           &sys->CSR_DMW[2]);
- 
-     ret |= kvm_set_one_reg(cs, KVM_IOC_CSRID(LOONGARCH_CSR_DMW(3)),
--                           &env->CSR_DMW[3]);
-+                           &sys->CSR_DMW[3]);
- 
-     ret |= kvm_loongarch_put_pmu(cs);
- 
-@@ -539,10 +543,10 @@ static int kvm_loongarch_put_csr(CPUState *cs, KvmPutState level)
-      * guest timer
-      */
-     ret |= kvm_set_one_reg(cs, KVM_IOC_CSRID(LOONGARCH_CSR_TVAL),
--                           &env->CSR_TVAL);
-+                           &sys->CSR_TVAL);
- 
-     ret |= kvm_set_one_reg(cs, KVM_IOC_CSRID(LOONGARCH_CSR_TCFG),
--                           &env->CSR_TCFG);
-+                           &sys->CSR_TCFG);
-     return ret;
+-    return BIT_ULL(tlb_ps) & (env->CSR_PRCFG2);
++    return BIT_ULL(tlb_ps) & (sys->CSR_PRCFG2);
  }
  
+ static void raise_mmu_exception(CPULoongArchState *env, vaddr address,
+                                 MMUAccessType access_type, TLBRet tlb_error)
+ {
+     CPUState *cs = env_cpu(env);
++    CPUSysState *sys = env_sys(env);
+ 
+     switch (tlb_error) {
+     default:
+@@ -62,7 +65,7 @@ static void raise_mmu_exception(CPULoongArchState *env, vaddr address,
+         } else if (access_type == MMU_INST_FETCH) {
+             cs->exception_index = EXCCODE_PIF;
+         }
+-        env->CSR_TLBRERA = FIELD_DP64(env->CSR_TLBRERA, CSR_TLBRERA, ISTLBR, 1);
++        sys->CSR_TLBRERA = FIELD_DP64(sys->CSR_TLBRERA, CSR_TLBRERA, ISTLBR, 1);
+         break;
+     case TLBRET_INVALID:
+         /* TLB match with no valid bit */
+@@ -93,19 +96,19 @@ static void raise_mmu_exception(CPULoongArchState *env, vaddr address,
+     }
+ 
+     if (tlb_error == TLBRET_NOMATCH) {
+-        env->CSR_TLBRBADV = address;
++        sys->CSR_TLBRBADV = address;
+         if (is_la64(env)) {
+-            env->CSR_TLBREHI = FIELD_DP64(env->CSR_TLBREHI, CSR_TLBREHI_64,
++            sys->CSR_TLBREHI = FIELD_DP64(sys->CSR_TLBREHI, CSR_TLBREHI_64,
+                                         VPPN, extract64(address, 13, 35));
+         } else {
+-            env->CSR_TLBREHI = FIELD_DP64(env->CSR_TLBREHI, CSR_TLBREHI_32,
++            sys->CSR_TLBREHI = FIELD_DP64(sys->CSR_TLBREHI, CSR_TLBREHI_32,
+                                         VPPN, extract64(address, 13, 19));
+         }
+     } else {
+-        if (!FIELD_EX64(env->CSR_DBG, CSR_DBG, DST)) {
+-            env->CSR_BADV = address;
++        if (!FIELD_EX64(sys->CSR_DBG, CSR_DBG, DST)) {
++            sys->CSR_BADV = address;
+         }
+-        env->CSR_TLBEHI = address & (TARGET_PAGE_MASK << 1);
++        sys->CSR_TLBEHI = address & (TARGET_PAGE_MASK << 1);
+    }
+ }
+ 
+@@ -142,8 +145,9 @@ static void invalidate_tlb(CPULoongArchState *env, int index)
+     LoongArchTLB *tlb;
+     uint16_t csr_asid, tlb_asid, tlb_g;
+     uint8_t tlb_e;
++    CPUSysState *sys = env_sys(env);
+ 
+-    csr_asid = FIELD_EX64(env->CSR_ASID, CSR_ASID, ASID);
++    csr_asid = FIELD_EX64(sys->CSR_ASID, CSR_ASID, ASID);
+     tlb = &env->tlb[index];
+     tlb_e = FIELD_EX64(tlb->tlb_misc, TLB_MISC, E);
+     if (!tlb_e) {
+@@ -165,25 +169,26 @@ static void sptw_prepare_context(CPULoongArchState *env, MMUContext *context)
+ {
+     uint64_t lo0, lo1, csr_vppn;
+     uint8_t csr_ps;
++    CPUSysState *sys = env_sys(env);
+ 
+-    if (FIELD_EX64(env->CSR_TLBRERA, CSR_TLBRERA, ISTLBR)) {
+-        csr_ps = FIELD_EX64(env->CSR_TLBREHI, CSR_TLBREHI, PS);
++    if (FIELD_EX64(sys->CSR_TLBRERA, CSR_TLBRERA, ISTLBR)) {
++        csr_ps = FIELD_EX64(sys->CSR_TLBREHI, CSR_TLBREHI, PS);
+         if (is_la64(env)) {
+-            csr_vppn = FIELD_EX64(env->CSR_TLBREHI, CSR_TLBREHI_64, VPPN);
++            csr_vppn = FIELD_EX64(sys->CSR_TLBREHI, CSR_TLBREHI_64, VPPN);
+         } else {
+-            csr_vppn = FIELD_EX64(env->CSR_TLBREHI, CSR_TLBREHI_32, VPPN);
++            csr_vppn = FIELD_EX64(sys->CSR_TLBREHI, CSR_TLBREHI_32, VPPN);
+         }
+-        lo0 = env->CSR_TLBRELO0;
+-        lo1 = env->CSR_TLBRELO1;
++        lo0 = sys->CSR_TLBRELO0;
++        lo1 = sys->CSR_TLBRELO1;
+     } else {
+-        csr_ps = FIELD_EX64(env->CSR_TLBIDX, CSR_TLBIDX, PS);
++        csr_ps = FIELD_EX64(sys->CSR_TLBIDX, CSR_TLBIDX, PS);
+         if (is_la64(env)) {
+-            csr_vppn = FIELD_EX64(env->CSR_TLBEHI, CSR_TLBEHI_64, VPPN);
++            csr_vppn = FIELD_EX64(sys->CSR_TLBEHI, CSR_TLBEHI_64, VPPN);
+         } else {
+-            csr_vppn = FIELD_EX64(env->CSR_TLBEHI, CSR_TLBEHI_32, VPPN);
++            csr_vppn = FIELD_EX64(sys->CSR_TLBEHI, CSR_TLBEHI_32, VPPN);
+         }
+-        lo0 = env->CSR_TLBELO0;
+-        lo1 = env->CSR_TLBELO1;
++        lo0 = sys->CSR_TLBELO0;
++        lo1 = sys->CSR_TLBELO1;
+     }
+ 
+     context->ps = csr_ps;
+@@ -198,6 +203,7 @@ static void fill_tlb_entry(CPULoongArchState *env, LoongArchTLB *tlb,
+     uint64_t lo0, lo1, csr_vppn;
+     uint16_t csr_asid;
+     uint8_t csr_ps;
++    CPUSysState *sys = env_sys(env);
+ 
+     csr_vppn = context->addr >> R_TLB_MISC_VPPN_SHIFT;
+     csr_ps   = context->ps;
+@@ -208,7 +214,7 @@ static void fill_tlb_entry(CPULoongArchState *env, LoongArchTLB *tlb,
+     tlb->tlb_misc = FIELD_DP64(tlb->tlb_misc, TLB_MISC, PS, csr_ps);
+     tlb->tlb_misc = FIELD_DP64(tlb->tlb_misc, TLB_MISC, VPPN, csr_vppn);
+     tlb->tlb_misc = FIELD_DP64(tlb->tlb_misc, TLB_MISC, E, 1);
+-    csr_asid = FIELD_EX64(env->CSR_ASID, CSR_ASID, ASID);
++    csr_asid = FIELD_EX64(sys->CSR_ASID, CSR_ASID, ASID);
+     tlb->tlb_misc = FIELD_DP64(tlb->tlb_misc, TLB_MISC, ASID, csr_asid);
+ 
+     tlb->tlb_entry0 = lo0;
+@@ -241,8 +247,9 @@ static LoongArchTLB *loongarch_tlb_search_cb(CPULoongArchState *env,
+     bool tlb_g;
+     int i, compare_shift;
+     uint64_t vpn, tlb_vppn;
++    CPUSysState *sys = env_sys(env);
+ 
+-    stlb_ps = FIELD_EX64(env->CSR_STLBPS, CSR_STLBPS, PS);
++    stlb_ps = FIELD_EX64(sys->CSR_STLBPS, CSR_STLBPS, PS);
+     vpn = (vaddr & TARGET_VIRT_MASK) >> (stlb_ps + 1);
+     stlb_idx = vpn & 0xff; /* VA[25:15] <==> TLBIDX.index for 16KiB Page */
+     compare_shift = stlb_ps + 1 - R_TLB_MISC_VPPN_SHIFT;
+@@ -289,9 +296,10 @@ static bool loongarch_tlb_search(CPULoongArchState *env, vaddr vaddr,
+     int csr_asid;
+     tlb_match func;
+     LoongArchTLB *tlb;
++    CPUSysState *sys = env_sys(env);
+ 
+     func = tlb_match_any;
+-    csr_asid = FIELD_EX64(env->CSR_ASID, CSR_ASID, ASID);
++    csr_asid = FIELD_EX64(sys->CSR_ASID, CSR_ASID, ASID);
+     tlb = loongarch_tlb_search_cb(env, vaddr, csr_asid, func);
+     if (tlb) {
+         *index = tlb - env->tlb;
+@@ -304,20 +312,21 @@ static bool loongarch_tlb_search(CPULoongArchState *env, vaddr vaddr,
+ void helper_tlbsrch(CPULoongArchState *env)
+ {
+     int index, match;
++    CPUSysState *sys = env_sys(env);
+ 
+-    if (FIELD_EX64(env->CSR_TLBRERA, CSR_TLBRERA, ISTLBR)) {
+-        match = loongarch_tlb_search(env, env->CSR_TLBREHI, &index);
++    if (FIELD_EX64(sys->CSR_TLBRERA, CSR_TLBRERA, ISTLBR)) {
++        match = loongarch_tlb_search(env, sys->CSR_TLBREHI, &index);
+     } else {
+-        match = loongarch_tlb_search(env, env->CSR_TLBEHI, &index);
++        match = loongarch_tlb_search(env, sys->CSR_TLBEHI, &index);
+     }
+ 
+     if (match) {
+-        env->CSR_TLBIDX = FIELD_DP64(env->CSR_TLBIDX, CSR_TLBIDX, INDEX, index);
+-        env->CSR_TLBIDX = FIELD_DP64(env->CSR_TLBIDX, CSR_TLBIDX, NE, 0);
++        sys->CSR_TLBIDX = FIELD_DP64(sys->CSR_TLBIDX, CSR_TLBIDX, INDEX, index);
++        sys->CSR_TLBIDX = FIELD_DP64(sys->CSR_TLBIDX, CSR_TLBIDX, NE, 0);
+         return;
+     }
+ 
+-    env->CSR_TLBIDX = FIELD_DP64(env->CSR_TLBIDX, CSR_TLBIDX, NE, 1);
++    sys->CSR_TLBIDX = FIELD_DP64(sys->CSR_TLBIDX, CSR_TLBIDX, NE, 1);
+ }
+ 
+ void helper_tlbrd(CPULoongArchState *env)
+@@ -325,29 +334,30 @@ void helper_tlbrd(CPULoongArchState *env)
+     LoongArchTLB *tlb;
+     int index;
+     uint8_t tlb_ps, tlb_e;
++    CPUSysState *sys = env_sys(env);
+ 
+-    index = FIELD_EX64(env->CSR_TLBIDX, CSR_TLBIDX, INDEX);
++    index = FIELD_EX64(sys->CSR_TLBIDX, CSR_TLBIDX, INDEX);
+     tlb = &env->tlb[index];
+     tlb_ps = FIELD_EX64(tlb->tlb_misc, TLB_MISC, PS);
+     tlb_e = FIELD_EX64(tlb->tlb_misc, TLB_MISC, E);
+ 
+     if (!tlb_e) {
+         /* Invalid TLB entry */
+-        env->CSR_TLBIDX = FIELD_DP64(env->CSR_TLBIDX, CSR_TLBIDX, NE, 1);
+-        env->CSR_ASID  = FIELD_DP64(env->CSR_ASID, CSR_ASID, ASID, 0);
+-        env->CSR_TLBEHI = 0;
+-        env->CSR_TLBELO0 = 0;
+-        env->CSR_TLBELO1 = 0;
+-        env->CSR_TLBIDX = FIELD_DP64(env->CSR_TLBIDX, CSR_TLBIDX, PS, 0);
++        sys->CSR_TLBIDX = FIELD_DP64(sys->CSR_TLBIDX, CSR_TLBIDX, NE, 1);
++        sys->CSR_ASID  = FIELD_DP64(sys->CSR_ASID, CSR_ASID, ASID, 0);
++        sys->CSR_TLBEHI = 0;
++        sys->CSR_TLBELO0 = 0;
++        sys->CSR_TLBELO1 = 0;
++        sys->CSR_TLBIDX = FIELD_DP64(sys->CSR_TLBIDX, CSR_TLBIDX, PS, 0);
+     } else {
+         /* Valid TLB entry */
+-        env->CSR_TLBIDX = FIELD_DP64(env->CSR_TLBIDX, CSR_TLBIDX, NE, 0);
+-        env->CSR_TLBIDX = FIELD_DP64(env->CSR_TLBIDX, CSR_TLBIDX,
++        sys->CSR_TLBIDX = FIELD_DP64(sys->CSR_TLBIDX, CSR_TLBIDX, NE, 0);
++        sys->CSR_TLBIDX = FIELD_DP64(sys->CSR_TLBIDX, CSR_TLBIDX,
+                                      PS, (tlb_ps & 0x3f));
+-        env->CSR_TLBEHI = FIELD_EX64(tlb->tlb_misc, TLB_MISC, VPPN) <<
++        sys->CSR_TLBEHI = FIELD_EX64(tlb->tlb_misc, TLB_MISC, VPPN) <<
+                                      R_TLB_MISC_VPPN_SHIFT;
+-        env->CSR_TLBELO0 = tlb->tlb_entry0;
+-        env->CSR_TLBELO1 = tlb->tlb_entry1;
++        sys->CSR_TLBELO0 = tlb->tlb_entry0;
++        sys->CSR_TLBELO1 = tlb->tlb_entry1;
+     }
+ }
+ 
+@@ -380,10 +390,11 @@ static void update_tlb_index(CPULoongArchState *env, MMUContext *context,
+ 
+ void helper_tlbwr(CPULoongArchState *env)
+ {
+-    int index = FIELD_EX64(env->CSR_TLBIDX, CSR_TLBIDX, INDEX);
++    CPUSysState *sys = env_sys(env);
++    int index = FIELD_EX64(sys->CSR_TLBIDX, CSR_TLBIDX, INDEX);
+     MMUContext context;
+ 
+-    if (FIELD_EX64(env->CSR_TLBIDX, CSR_TLBIDX, NE)) {
++    if (FIELD_EX64(sys->CSR_TLBIDX, CSR_TLBIDX, NE)) {
+         invalidate_tlb(env, index);
+         return;
+     }
+@@ -400,10 +411,11 @@ static int get_tlb_random_index(CPULoongArchState *env, vaddr addr,
+     uint16_t asid, tlb_asid, stlb_ps;
+     LoongArchTLB *tlb;
+     uint8_t tlb_e, tlb_g;
++    CPUSysState *sys = env_sys(env);
+ 
+     /* Validity of stlb_ps is checked in helper_csrwr_stlbps() */
+-    stlb_ps = FIELD_EX64(env->CSR_STLBPS, CSR_STLBPS, PS);
+-    asid = FIELD_EX64(env->CSR_ASID, CSR_ASID, ASID);
++    stlb_ps = FIELD_EX64(sys->CSR_STLBPS, CSR_STLBPS, PS);
++    asid = FIELD_EX64(sys->CSR_ASID, CSR_ASID, ASID);
+     if (pagesize == stlb_ps) {
+         /* Only write into STLB bits [47:13] */
+         address = addr & ~MAKE_64BIT_MASK(0, R_CSR_TLBEHI_64_VPPN_SHIFT);
+@@ -461,15 +473,16 @@ void helper_tlbfill(CPULoongArchState *env)
+     vaddr entryhi;
+     int index, pagesize;
+     MMUContext context;
++    CPUSysState *sys = env_sys(env);
+ 
+-    if (FIELD_EX64(env->CSR_TLBRERA, CSR_TLBRERA, ISTLBR)) {
+-        entryhi = env->CSR_TLBREHI;
++    if (FIELD_EX64(sys->CSR_TLBRERA, CSR_TLBRERA, ISTLBR)) {
++        entryhi = sys->CSR_TLBREHI;
+         /* Validity of pagesize is checked in helper_ldpte() */
+-        pagesize = FIELD_EX64(env->CSR_TLBREHI, CSR_TLBREHI, PS);
++        pagesize = FIELD_EX64(sys->CSR_TLBREHI, CSR_TLBREHI, PS);
+     } else {
+-        entryhi = env->CSR_TLBEHI;
++        entryhi = sys->CSR_TLBEHI;
+         /* Validity of pagesize is checked in helper_tlbrd() */
+-        pagesize = FIELD_EX64(env->CSR_TLBIDX, CSR_TLBIDX, PS);
++        pagesize = FIELD_EX64(sys->CSR_TLBIDX, CSR_TLBIDX, PS);
+     }
+ 
+     sptw_prepare_context(env, &context);
+@@ -483,9 +496,10 @@ void helper_tlbclr(CPULoongArchState *env)
+     LoongArchTLB *tlb;
+     int i, index;
+     uint16_t csr_asid, tlb_asid, tlb_g;
++    CPUSysState *sys = env_sys(env);
+ 
+-    csr_asid = FIELD_EX64(env->CSR_ASID, CSR_ASID, ASID);
+-    index = FIELD_EX64(env->CSR_TLBIDX, CSR_TLBIDX, INDEX);
++    csr_asid = FIELD_EX64(sys->CSR_ASID, CSR_ASID, ASID);
++    index = FIELD_EX64(sys->CSR_TLBIDX, CSR_TLBIDX, INDEX);
+ 
+     if (index < LOONGARCH_STLB) {
+         /* STLB. One line per operation */
+@@ -515,8 +529,9 @@ void helper_tlbclr(CPULoongArchState *env)
+ void helper_tlbflush(CPULoongArchState *env)
+ {
+     int i, index;
++    CPUSysState *sys = env_sys(env);
+ 
+-    index = FIELD_EX64(env->CSR_TLBIDX, CSR_TLBIDX, INDEX);
++    index = FIELD_EX64(sys->CSR_TLBIDX, CSR_TLBIDX, INDEX);
+ 
+     if (index < LOONGARCH_STLB) {
+         /* STLB. One line per operation */
+@@ -711,6 +726,7 @@ target_ulong helper_lddir(CPULoongArchState *env, target_ulong base,
+     uint64_t palen_mask = loongarch_palen_mask(env);
+     uint64_t dir_base, dir_width;
+     uint64_t val;
++    CPUSysState *sys = env_sys(env);
+ 
+     if (unlikely((level == 0) || (level > 4))) {
+         qemu_log_mask(LOG_GUEST_ERROR,
+@@ -732,7 +748,7 @@ target_ulong helper_lddir(CPULoongArchState *env, target_ulong base,
+         }
+     }
+ 
+-    badvaddr = env->CSR_TLBRBADV;
++    badvaddr = sys->CSR_TLBRBADV;
+     base = base & palen_mask;
+     get_dir_base_width(env, &dir_base, &dir_width, level);
+     index = (badvaddr >> dir_base) & ((1 << dir_width) - 1);
+@@ -747,10 +763,11 @@ void helper_ldpte(CPULoongArchState *env, target_ulong base, target_ulong odd,
+ {
+     CPUState *cs = env_cpu(env);
+     hwaddr phys, tmp0, ptindex, ptoffset0, ptoffset1;
++    CPUSysState *sys = env_sys(env);
+     uint64_t pte_raw;
+     uint64_t badv;
+-    uint64_t ptbase = FIELD_EX64(env->CSR_PWCL, CSR_PWCL, PTBASE);
+-    uint64_t ptwidth = FIELD_EX64(env->CSR_PWCL, CSR_PWCL, PTWIDTH);
++    uint64_t ptbase = FIELD_EX64(sys->CSR_PWCL, CSR_PWCL, PTBASE);
++    uint64_t ptwidth = FIELD_EX64(sys->CSR_PWCL, CSR_PWCL, PTWIDTH);
+     uint64_t palen_mask = loongarch_palen_mask(env);
+     uint64_t dir_base, dir_width;
+     uint8_t  ps;
+@@ -796,7 +813,7 @@ void helper_ldpte(CPULoongArchState *env, target_ulong base, target_ulong odd,
+             return;
+         }
+     } else {
+-        badv = env->CSR_TLBRBADV;
++        badv = sys->CSR_TLBRBADV;
+ 
+         base = base & palen_mask;
+ 
+@@ -812,11 +829,11 @@ void helper_ldpte(CPULoongArchState *env, target_ulong base, target_ulong odd,
+     }
+ 
+     if (odd) {
+-        env->CSR_TLBRELO1 = tmp0;
++        sys->CSR_TLBRELO1 = tmp0;
+     } else {
+-        env->CSR_TLBRELO0 = tmp0;
++        sys->CSR_TLBRELO0 = tmp0;
+     }
+-    env->CSR_TLBREHI = FIELD_DP64(env->CSR_TLBREHI, CSR_TLBREHI, PS, ps);
++    sys->CSR_TLBREHI = FIELD_DP64(sys->CSR_TLBREHI, CSR_TLBREHI, PS, ps);
+ }
+ 
+ static TLBRet loongarch_map_tlb_entry(CPULoongArchState *env,
 -- 
 2.39.3
 
