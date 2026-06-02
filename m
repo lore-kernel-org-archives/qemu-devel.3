@@ -4,45 +4,45 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 45112CD5BD1
-	for <qemu-devel@archiver.kernel.org>; Tue,  2 Jun 2026 13:39:21 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0A52BCD5BD1
+	for <qemu-devel@archiver.kernel.org>; Tue,  2 Jun 2026 13:42:07 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wUPKg-0001YP-LR; Tue, 02 Jun 2026 09:39:02 -0400
+	id 1wUPNF-0002X1-BJ; Tue, 02 Jun 2026 09:41:41 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <david@kernel.org>) id 1wUPKf-0001XW-5g
- for qemu-devel@nongnu.org; Tue, 02 Jun 2026 09:39:01 -0400
-Received: from tor.source.kernel.org ([2600:3c04:e001:324:0:1991:8:25])
+ (Exim 4.90_1) (envelope-from <david@kernel.org>) id 1wUPN9-0002U6-Sv
+ for qemu-devel@nongnu.org; Tue, 02 Jun 2026 09:41:35 -0400
+Received: from tor.source.kernel.org ([172.105.4.254])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <david@kernel.org>) id 1wUPKd-0000WA-Mv
- for qemu-devel@nongnu.org; Tue, 02 Jun 2026 09:39:00 -0400
+ (Exim 4.90_1) (envelope-from <david@kernel.org>) id 1wUPN7-00035Q-QL
+ for qemu-devel@nongnu.org; Tue, 02 Jun 2026 09:41:35 -0400
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
- by tor.source.kernel.org (Postfix) with ESMTP id 97B9260123;
- Tue,  2 Jun 2026 13:38:58 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CAD991F00893;
- Tue,  2 Jun 2026 13:38:57 +0000 (UTC)
+ by tor.source.kernel.org (Postfix) with ESMTP id 6541860141;
+ Tue,  2 Jun 2026 13:41:32 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 97F5C1F00893;
+ Tue,  2 Jun 2026 13:41:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
- s=k20260515; t=1780407538;
- bh=Q/DoEzwuBCP51eSLGrp7xZSb6NVTcbF3zeDjyz5/7N8=;
+ s=k20260515; t=1780407692;
+ bh=I9h6qlFftwMxRVTrg7Pw17FbeCgSGIMujvYhhGJGCi0=;
  h=Date:Subject:To:References:From:In-Reply-To;
- b=UXMMoIKW/ps7J0rFQ2Zv8oQ487kY6WZGf4FtvjE+ttI3JYiidkUkCnydhKySUuvnH
- thAsg3cjkyttIwM2CJsF+1uB2A3dZbALxguia37DB4ZBXcpjlYpMwGP6uY499oW/u5
- B+uqIZxR1hJWzcHZ/kH7oo+lHf65+2eME0lSnGZRK9RQD1+s+vIAtLX//yO2Up4Ps/
- IT3hAarOIvN5JT0/O7ZTkn414KvcphgXDec7PCh/5NuhyroAIfOuUFknPXsI1W+M4i
- aQO/hVWIJLO6OHQwdSeiGiB83k07PxDYu5njf2PdPQlJQMoIrkijxEkY9ce0wvxj8y
- eYIvaTwKnq1Fw==
-Message-ID: <935f5316-5e35-4f8b-a4a8-7a2648b457cc@kernel.org>
-Date: Tue, 2 Jun 2026 15:38:56 +0200
+ b=VBhT7ezP235uleYFWsNwBUQmbWm/hxrSqssn+N91pV/dVeRJGGFS6JCPdFzOlSJ0p
+ OtPOO6fd++CEe29HYCQynxg3HYeHFslJVg7U8B0qDizQg5zNPrMreaAqMlSfXxlVrG
+ +Vnjxa+fdL3M/QHcQ/Z0860VmZjx0rF+Ab8K1Gollcv6fFXkM7/y5bQ7uqgQNKV6uN
+ oFxytWB0pAiPiSuY7d/vxIN/qtZcLa9cXEkrw21gmgGgsltjEdu2JgkMepmFRVd73G
+ 2TgHPAlCLDAKDS7CxMamXUXwKZmOyaiJQJpWv+zC6l+z94+bsw9TXBRnHI2X8HKN+C
+ dceMNL7pgSUhQ==
+Message-ID: <8730307e-44f3-4318-942e-5ae21dc59716@kernel.org>
+Date: Tue, 2 Jun 2026 15:41:30 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v4 05/13] virtio-mem: remove
- replay_populated/replay_discarded implementation
+Subject: Re: [PATCH v4 06/13] system/ram-discard-manager: drop replay from
+ source interface
 To: =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>,
  qemu-devel@nongnu.org
 References: <20260504-rdm5-v4-0-bdf61e57c1e1@redhat.com>
- <20260504-rdm5-v4-5-bdf61e57c1e1@redhat.com>
+ <20260504-rdm5-v4-6-bdf61e57c1e1@redhat.com>
 From: "David Hildenbrand (Arm)" <david@kernel.org>
 Content-Language: en-US
 Autocrypt: addr=david@kernel.org; keydata=
@@ -89,11 +89,11 @@ Autocrypt: addr=david@kernel.org; keydata=
  3iyY2Nsd7JxfKu1PRhCGwXzRw5TlfEsoRI7V9A8isUCoqE2Dzh3FvYHVeX4Us+bRL/oqareJ
  CIFqgYMyvHj7Q06kTKmauOe4Nf0l0qEkIuIzfoLJ3qr5UyXc2hLtWyT9Ir+lYlX9efqh7mOY
  qIws/H2t
-In-Reply-To: <20260504-rdm5-v4-5-bdf61e57c1e1@redhat.com>
+In-Reply-To: <20260504-rdm5-v4-6-bdf61e57c1e1@redhat.com>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2600:3c04:e001:324:0:1991:8:25;
- envelope-from=david@kernel.org; helo=tor.source.kernel.org
+Received-SPF: pass client-ip=172.105.4.254; envelope-from=david@kernel.org;
+ helo=tor.source.kernel.org
 X-Spam_score_int: -24
 X-Spam_score: -2.5
 X-Spam_bar: --
@@ -116,21 +116,16 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On 5/4/26 14:30, Marc-André Lureau wrote:
-> The replay iteration logic has been moved into the RamDiscardManager,
-> which now iterates at source granularity using is_populated(). The
-> source-level replay_populated/replay_discarded methods and their
-> helpers are no longer called.
+> Remove replay_populated and replay_discarded from RamDiscardSourceClass
+> now that the RamDiscardManager handles replay iteration internally via
+> is_populated.
 > 
-> Remove the now-dead replay methods, the VirtIOMEMReplayData struct,
-> the virtio_mem_for_each_plugged/unplugged_section() helpers (only used
-> by the replay methods), and the virtio_mem_section_cb typedef.
+> Remove the now-dead replay methods, helpers, and
+> for_each_populated/discarded_section() from ram-block-attributes, which
+> was the last source still carrying this code.
 > 
 > Signed-off-by: Marc-André Lureau <marcandre.lureau@redhat.com>
 > ---
-
-As raised, I wonder what the cost of that will be for large (e.g., 1 TiB?) devices.
-
-Time will tell whether you'll have to fix a regression :P
 
 Acked-by: David Hildenbrand <david@kernel.org>
 
