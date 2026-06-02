@@ -4,150 +4,116 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A78A2CD6E60
-	for <qemu-devel@archiver.kernel.org>; Tue,  2 Jun 2026 21:08:35 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E1310CD6E60
+	for <qemu-devel@archiver.kernel.org>; Tue,  2 Jun 2026 22:04:03 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wUWKw-0006ff-5l; Tue, 02 Jun 2026 17:07:46 -0400
+	id 1wUXCf-0007Vs-Hf; Tue, 02 Jun 2026 18:03:18 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <brian.cain@oss.qualcomm.com>)
- id 1wUWKu-0006fQ-NU
- for qemu-devel@nongnu.org; Tue, 02 Jun 2026 17:07:44 -0400
-Received: from mx0a-0031df01.pphosted.com ([205.220.168.131])
+ (Exim 4.90_1) (envelope-from <Michael.Roth@amd.com>)
+ id 1wUXCc-0007VT-RB
+ for qemu-devel@nongnu.org; Tue, 02 Jun 2026 18:03:15 -0400
+Received: from mail-southcentralusazlp170110003.outbound.protection.outlook.com
+ ([2a01:111:f403:c10d::3] helo=SN4PR0501CU005.outbound.protection.outlook.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <brian.cain@oss.qualcomm.com>)
- id 1wUWKt-0001bV-7p
- for qemu-devel@nongnu.org; Tue, 02 Jun 2026 17:07:44 -0400
-Received: from pps.filterd (m0279867.ppops.net [127.0.0.1])
- by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 652JqWEN2767170
- for <qemu-devel@nongnu.org>; Tue, 2 Jun 2026 21:07:38 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
- cc:content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
- 4iHHYoXpjE8fJ1gc39/cFxirDyVTsG4njdNuPZRnSZI=; b=L6auDpVZprZ7kV2r
- d7odZNC+QvAIUSkNfuAyNF63pPA5IwADY9xFoCA4vJivOdz4cxQSW5GhyeQu46uN
- KqeoqrBqMxmn/deiq74+zmtcS0jweX4xfBpOjI00JpNd5nAWgTat31++JEQFZb/x
- QJ9bAZ+iA417XZW3S17tR+7OW2AlhjN8JxNlSdKnNCIvlCQF/4jS6oXRlUwfM0Fw
- 3Fa1GlD8o6qnyceQM8SABTs4/nd6dtsoNWCn45v7wEjJaVedhdBmxYYHUTHx8leG
- GClglY8UvQ9qrh0VT1InDkMR/pL9AbZsbgJyOnKCN4DEDrh/gR6C0J299ouW2s3n
- PkWKTA==
-Received: from mail-dl1-f72.google.com (mail-dl1-f72.google.com [74.125.82.72])
- by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4ehsus3n8g-1
- (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
- for <qemu-devel@nongnu.org>; Tue, 02 Jun 2026 21:07:38 +0000 (GMT)
-Received: by mail-dl1-f72.google.com with SMTP id
- a92af1059eb24-13709ab38a8so12782915c88.0
- for <qemu-devel@nongnu.org>; Tue, 02 Jun 2026 14:07:38 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1780434458; cv=none;
- d=google.com; s=arc-20240605;
- b=XkBgOS2XJjVeh3HA5Y+5NGYUhByOfLoEyiWDVxyCZDB+5K3T9tOIOhK0X3LH5lk/u8
- 0hp8bmM1fn22k5+OiaDb3npnm1YaHFRNUE8+ti+tAqzkwWO0uZElixFBFrnEMBS9sLXU
- Da4+irJQLAWz+Y73wtEkS8Ov8h6GxeRliD02je2QegEKz7ya4uo99LaaKdJP616Sq4f3
- Yr6CVfY5iRn45Hbm1MMc2HetY8AP1kyQtqGyQnIIrnFAKG/O37pYTbteOFDtzmE3dYmO
- ivyhALDuG0ChsA52obzb4BBBR2H/LHDije3vAjtAQyZWmvDDriaqqR/+Y09luQcqYsQ6
- fAGg==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
- s=arc-20240605; 
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:dkim-signature;
- bh=4iHHYoXpjE8fJ1gc39/cFxirDyVTsG4njdNuPZRnSZI=;
- fh=qJ2GJ/9ZOcr5aToxR7EVoH6AYu+fsmuCJ3dJL0eO2kM=;
- b=GcB6un6Ap4+tmwMp/bTsNow8ZhoGQ9waz5V74lsJi6FWFd+b8decIgkctBrgNH+l0K
- 5hvZ0fn4Ji/D3kMYYDIOpMur7z0ZzO4QY6nsYkqg21lx7kYlHIN5m7Gh/rFMkKTurp6F
- YI3TLFTki2OO00DNOCwUdm4nsWyOtncCysjGOAbOuwR/r8YGVbJDQZEv40zQ68eh3BNx
- 8RAD2Q1gzqrVOmM94HkkciVwvGlFJNp4rkuo6oZvfeqnxoV2ANxnDborY15Pf0WjRQyt
- 9WbU35X6ZbT8bkoqqro86L3DAVgD2pEF7F6qEu9mi31+75edqWD+giMVAmk4k9HAFFfW
- 9J4w==; darn=nongnu.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=oss.qualcomm.com; s=google; t=1780434458; x=1781039258; darn=nongnu.org;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:from:to:cc:subject:date
- :message-id:reply-to;
- bh=4iHHYoXpjE8fJ1gc39/cFxirDyVTsG4njdNuPZRnSZI=;
- b=fgJ0RRIOqm+Qgze2nPewKp/a714CRBsfR0/N4seN5vU6SG817Ii7fIAIEt6USxotze
- 9ogJc8qph7OKzqhQ0tYCQK3GbpLKZf2UiVBqkuleTtpRlXQmndMwREeOucNZ1X0zRT6X
- ZYc48fMrkQuNM+cQ2WhbqqzxrVHhz4snC3sJoczAdT4pEajtOuZdpbNK6EXu8q96a4a8
- n9lRY7g8QhG+YhgjS4FiirPOlHuOm1m8iXETHsBGjSxpELOHc6xYJG14AZojA70jDp9N
- 63eSVvPk6REwLvJECzhZLKR23Vc0kAOANFI9S6GgA1sDmAMLfmAFZA+uGL2iwvUp9h7X
- 1vRA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1780434458; x=1781039258;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to;
- bh=4iHHYoXpjE8fJ1gc39/cFxirDyVTsG4njdNuPZRnSZI=;
- b=SrAzIrUHn8beG/gOUt5t8lt9VbyhCrw0ve4ABJbB6+UhMPndcRr0KYDoj2x9ZpHE2+
- zZ+9HCLzzono7/tbE6JmgLSR95nn/8sruRLuZwMaBwG30cCnsY4DU+9rpYEKQ2+BAvnz
- uEWfdt+wwnOmwNBTH4qNlhb81T6Q5nb4Kt0nDvbkud7oyEgZoDibU91f78wQKChe0ljw
- HoZPh42UfAvKT3LHpYNOJpYDoF5Vr8sh4QusjVbv+Bnsohfpcl+/2QUKdBqQ9jCO4MOy
- E9aJ6h8axlumgGVerj41Bmum+I50k5cASEthbSpdcQWYhFB2lc/bVcQ2bcbzkRRWtWE8
- qXDQ==
-X-Gm-Message-State: AOJu0Yw5qFsxQfjBNvyiH7ctNxH9uKa6gT7rDT7C0LB0ESQSaE3pEolz
- kqS+d62VxirDQogV3+6uyHTYkWiewrJNUlWhq+hiUl9DzWbAVBGzvQEoAHIeNNjxBv9PNkiRpx1
- m5Bf7mL5Nnk07Tlvkr/ByNYHQ2V1fboFk4DA94YYfNuaJwrjGUwPb4gtK0+GK3ACHZzAhHAU+6i
- PUdvgWrhHQebXkCvEDTxsAJ0O4IFRwsu1l
-X-Gm-Gg: Acq92OF8Rn03roB/bwRZLKF3a7Z4joUKu0XKzumKX2io51rBxpZCpjk9WwybOf+3wut
- 8EfDWooeUbRVfM4cUQIj3ZRqK/DCc5aUlT0WxhCoDYVY3DBbIpUGvlr6VyGZFKJBv/EfABmPu4u
- md/he/ONayQItq4d7l3JwAw8tQeZhKKuU1YR2jce8u6KX+0TiQQL77KAVXgOjThLYw8kb85mgBL
- sN7LQ1BDpumavZvYw==
-X-Received: by 2002:a05:7022:b8a:b0:137:6781:7dba with SMTP id
- a92af1059eb24-137f6c0afd0mr177831c88.23.1780434457755; 
- Tue, 02 Jun 2026 14:07:37 -0700 (PDT)
-X-Received: by 2002:a05:7022:b8a:b0:137:6781:7dba with SMTP id
- a92af1059eb24-137f6c0afd0mr177786c88.23.1780434457205; Tue, 02 Jun 2026
- 14:07:37 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <Michael.Roth@amd.com>)
+ id 1wUXCa-0006yp-NH
+ for qemu-devel@nongnu.org; Tue, 02 Jun 2026 18:03:14 -0400
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=J3QbXnKtME9tlMMw8123b89p7fTBoK9CHN7rlTvdr1SKbswhMVFapBgFt7JadoWV0bakD5z5GsNoDle5O82EaqTg3QKgcUeBgn3Y0vN36M/4fZIXNRacId3hMsKXN5INMwGt/1viNmyP4CLSAQ2wyD7szivazpU654RPvRSN58t6Z/59ILZWaFU+4dDTxfiBd2mDNGYmsHxmrRW3YzhXpZ3nKtcKu5hPyv129LasMGmM8LHdOG3ovQVE5Y4vO0wmFSk331h5jzUna4wAYeCdkDMkrXdZln89rtoBno6FboEY1uw2kSeVuJldwlWQcY6qNWFZ0kf48ppk14rqW8CtaA==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=Nw6JoYBKK4DBGh6tQkpKreExTHCG4NgM0cm96pzV3+4=;
+ b=t958mbYi2LY2hn6Dh+4aSkIKlnOI7oMgeq5PJYUEOW+rd0Lu8XDbqT/6A9wV6IUx57myI+q1rwSmQ749tfpGRKgPp1zWu82b7ff95dxbLyoE66EJOgGqSFI1kkwGxIUJijMEp3EHG3CtedDZ0ZrqLkcI0E11fiNcI9P6OI7OPT0JiEHwWwBXJE7/xEI1SqFjuVdUtQja+SbPHm+V0ZMSMgk1weLENvzA7B/nHVhiaMLSZ4zebev1NbYmGrgTCyaHg8AekPYqpc1L2z5Bs8rwXBD7ADQ/RfpRzwLjGWrakdRtOYDcB6t5uPjzLQsokxg0Mn9SiMx6ZTAoFIG4n5fkNA==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass (sender ip is
+ 165.204.84.17) smtp.rcpttodomain=redhat.com smtp.mailfrom=amd.com; dmarc=pass
+ (p=quarantine sp=quarantine pct=100) action=none header.from=amd.com;
+ dkim=none (message not signed); arc=none (0)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=amd.com; s=selector1; 
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=Nw6JoYBKK4DBGh6tQkpKreExTHCG4NgM0cm96pzV3+4=;
+ b=BIdXEfzDHx3fOYNwU3eQYq3419qSZQLJ5HL3Jdxn4t4k1VY/mfcfZq5AtHmv7kN+UQoah18bl1wvhVDhPNF5ty8ptfMV36VtytBm3x/Fx54L+s0YZ2K2qZozpvvrVVEDOKeg6MrzeqaJecuosXx6FwoGJCv7zrR12BkI8DkYOag=
+Received: from BY5PR04CA0015.namprd04.prod.outlook.com (2603:10b6:a03:1d0::25)
+ by DM6PR12MB4330.namprd12.prod.outlook.com (2603:10b6:5:21d::20) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.71.16; Tue, 2 Jun 2026
+ 22:03:03 +0000
+Received: from SJ1PEPF000026C5.namprd04.prod.outlook.com
+ (2603:10b6:a03:1d0:cafe::68) by BY5PR04CA0015.outlook.office365.com
+ (2603:10b6:a03:1d0::25) with Microsoft SMTP Server (version=TLS1_3,
+ cipher=TLS_AES_256_GCM_SHA384) id 15.21.92.7 via Frontend Transport; Tue, 2
+ Jun 2026 22:03:03 +0000
+X-MS-Exchange-Authentication-Results: spf=pass (sender IP is 165.204.84.17)
+ smtp.mailfrom=amd.com; dkim=none (message not signed)
+ header.d=none;dmarc=pass action=none header.from=amd.com;
+Received-SPF: Pass (protection.outlook.com: domain of amd.com designates
+ 165.204.84.17 as permitted sender) receiver=protection.outlook.com;
+ client-ip=165.204.84.17; helo=satlexmb07.amd.com; pr=C
+Received: from satlexmb07.amd.com (165.204.84.17) by
+ SJ1PEPF000026C5.mail.protection.outlook.com (10.167.244.102) with Microsoft
+ SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.21.92.5 via Frontend Transport; Tue, 2 Jun 2026 22:03:03 +0000
+Received: from localhost (10.180.168.240) by satlexmb07.amd.com
+ (10.181.42.216) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.2562.41; Tue, 2 Jun
+ 2026 17:03:03 -0500
+Date: Tue, 2 Jun 2026 13:56:58 -0500
+From: Michael Roth <michael.roth@amd.com>
+To: Peter Xu <peterx@redhat.com>
+CC: <qemu-devel@nongnu.org>, Juraj Marcin <jmarcin@redhat.com>, "David
+ Hildenbrand" <david@kernel.org>, Paolo Bonzini <pbonzini@redhat.com>, "Chenyi
+ Qiang" <chenyi.qiang@intel.com>, Fabiano Rosas <farosas@suse.de>, "Alexey
+ Kardashevskiy" <aik@amd.com>, Li Xiaoyao <xiaoyao.li@intel.com>
+Subject: Re: [PATCH v3 07/12] hostmem: Rename guest_memfd to
+ guest_memfd_private
+Message-ID: <ndwoq5egngr6dcqmtxtaancpha6kyd3b4gxtzwaivxuttxhyyy@pcv35majwrt7>
+References: <20251215205203.1185099-1-peterx@redhat.com>
+ <20251215205203.1185099-8-peterx@redhat.com>
 MIME-Version: 1.0
-References: <20260529215554.606133-1-brian.cain@oss.qualcomm.com>
- <20260529215554.606133-36-brian.cain@oss.qualcomm.com>
- <b9a9fe50-ca85-47cd-9672-c56f2d51f3ec@linaro.org>
-In-Reply-To: <b9a9fe50-ca85-47cd-9672-c56f2d51f3ec@linaro.org>
-From: Brian Cain <brian.cain@oss.qualcomm.com>
-Date: Tue, 2 Jun 2026 16:07:20 -0500
-X-Gm-Features: AVHnY4Ll8r-kMwIv3y624O1gDYHpNjhL63l2zkwp8ZSjjPksU6LGFCqsVNSbOSA
-Message-ID: <CAEqNhNbeLv3QhbhUTSvYTO3aDBT+bsb3DRFm7Bmoj3jWJmbNFA@mail.gmail.com>
-Subject: Re: [PATCH v7 35/38] target/hexagon: Define MMU_INDEX TB_FLAGS field
-To: =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>
-Cc: qemu-devel@nongnu.org, matheus.bernardino@oss.qualcomm.com,
- pierrick.bouvier@oss.qualcomm.com, ltaylorsimpson@gmail.com
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-X-Proofpoint-ORIG-GUID: y3hNJ05eHcfPRuY3-9ZgI5zd8Q4w0A5i
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNjAyMDIwNSBTYWx0ZWRfX70UKmdmkwCho
- mwUIB2T9hZqvqjcoB+GmLNRn0qJvnxK127G9EYOuHmDW+DebCbrm88uw8f/ZDhjI7YKZojOM2fQ
- uoeiFybGiHs6+rUldGIo33wtFhxRnrHYmqq4UB835bjoK3R3JvUIOdkilWo3LSI+lUWW3XnNBId
- jTLh94cqZE45ubp3wOLBpdu/pTuv4u31Fx0jH6taU7P4wZmrGEPkzpu9je60+1Xwt67qn9cxVm4
- DYcUXYn9kqcGyXLc/+j6/z8vs8uEwD1Qk0ioSGE9B71lxaU5J+F5pGwtBs5bW38fp8+5lajeZex
- jIWz8Aua8hoL1iu//R3Pirm7h5w3W5QsGzOrPzK9smJEWz5h0fBEr9eCDEjjo+mo9+UtfhLs6ZC
- oChmcpyzswVR3P1G6L4V2MQVtt6nVPMqSB1b5e7fp/4SzKVYjNIclXnXoBC2or2vK2YaFrZy7kP
- cpVyjyyW+rltweuArRQ==
-X-Authority-Analysis: v=2.4 cv=ZYAt8MVA c=1 sm=1 tr=0 ts=6a1f461a cx=c_pps
- a=bS7HVuBVfinNPG3f6cIo3Q==:117 a=IkcTkHD0fZMA:10 a=FelO9ux0wxsA:10
- a=s4-Qcg_JpJYA:10 a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22
- a=eoimf2acIAo5FJnRuUoq:22 a=KKAkSRfTAAAA:8 a=EUspDBNiAAAA:8
- a=Jk1Mq3RG9Jm1FU1F0FcA:9 a=QEXdDO2ut3YA:10 a=vBUdepa8ALXHeOFLBtFW:22
- a=cvBusfyB2V15izCimMoJ:22
-X-Proofpoint-GUID: y3hNJ05eHcfPRuY3-9ZgI5zd8Q4w0A5i
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.125,FMLib:17.12.100.49
- definitions=2026-06-02_04,2026-05-28_03,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- bulkscore=0 priorityscore=1501 clxscore=1015 adultscore=0 impostorscore=0
- spamscore=0 phishscore=0 suspectscore=0 malwarescore=0 lowpriorityscore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2605210000 definitions=main-2606020205
-Received-SPF: pass client-ip=205.220.168.131;
- envelope-from=brian.cain@oss.qualcomm.com; helo=mx0a-0031df01.pphosted.com
-X-Spam_score_int: -27
-X-Spam_score: -2.8
-X-Spam_bar: --
-X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Type: text/plain; charset="us-ascii"
+Content-Disposition: inline
+In-Reply-To: <20251215205203.1185099-8-peterx@redhat.com>
+X-Originating-IP: [10.180.168.240]
+X-ClientProxiedBy: satlexmb08.amd.com (10.181.42.217) To satlexmb07.amd.com
+ (10.181.42.216)
+X-EOPAttributedMessage: 0
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: SJ1PEPF000026C5:EE_|DM6PR12MB4330:EE_
+X-MS-Office365-Filtering-Correlation-Id: 609b8a48-21e4-4a6d-e899-08dec0f2b7ff
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam: BCL:0;
+ ARA:13230040|82310400026|1800799024|376014|36860700016|22082099003|18002099003|6133799003|56012099006|11063799006|4143699003|5023799004;
+X-Microsoft-Antispam-Message-Info: SM4CTfmIIbC9ulCzFrRfIl1eYKQrtFLEdyh7qGslVM8gatBArL/LXv+091ZWpe9H+xj89brZ9Cv6rHLB/MiGxWv4NOMSoiE+w0C7ZoMUAo+NOBwSCgispc9rqXGVdANHnxjSytsi4bHbPC7KJpn3d5iKUgmmcmc3RtD4/cwWz8/eS9/k9B4DMQpHT3vaASycHBVxjvz49dKv5znHPHF5hqlDX0L8ecvOyyM1q4t2cIZ0tNC8owPRVBbCvHtTFoS9mTJk9Tha88HDFAQYk8e9lY0ZuvMDRV6we5hIjL1Gqr58om7lrP2RaikLK/CrrI8ibumxDGQPkiGez6s9i2jvcLm23GPOcVbKhLcWN1VB/5YSXZq3hDpBBeEStk8gWgkgiNMJpmdWBmLjLwD/B33znTBAdEthJwh02f+zH2TQt6v51gpLBO8psGikUciYUBm1qMXFG1Eucc3OG55Iu33MXncQ0/elLYgmuYgHNdPU7xP9qQS4OyLmIcebY5lHVrbw+6GQ/QVUOdws/dkc8qNr6Ho3PnRoA8mGGre0kIr04ZJiVsVx68+TgNsIHBqaqEMjPuIPJGXbnLv702FSbv5nO3ombiGAwScgi2MBx3YQ5H/3MveTxt0yCoocewlsUPRcNi/PxSaD79CSrC3dUrguMpN2PTx/z1LO1oJETJVxfcZBHPQAHTYQl+Voqw4LqW21yWc55OhSZvO67xwZ3vkyrfPGOaglyHUzFzu45yj6E3U=
+X-Forefront-Antispam-Report: CIP:165.204.84.17; CTRY:US; LANG:en; SCL:1; SRV:;
+ IPV:NLI; SFV:NSPM; H:satlexmb07.amd.com; PTR:InfoDomainNonexistent; CAT:NONE;
+ SFS:(13230040)(82310400026)(1800799024)(376014)(36860700016)(22082099003)(18002099003)(6133799003)(56012099006)(11063799006)(4143699003)(5023799004);
+ DIR:OUT; SFP:1101; 
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0: VDfMLYhG87k6QJFZMoQGzewH2BO7KIlxj7TXSriv3OByZ5pZxqcXgFe43aK4UDnLmWTnwJCUoUvqGPufb10rSjmt1Cc7xyHczTEHBAtlIieSdgsIVzWjcLTe09YDDFD6qdJAWOCKZku1IqEzLzLvLVKqyNRNs2jUWP2HkNZlxOI0bmbDlIPusvoWroyrxy+ZTJDSV6O2PU57lNcO2xTXoFsI/VR7P+RDfLhTEGsiXkTqzB88MPtaZPfFT88mB9xRCgNcsQ8PE7fRXJr4Kj58cf0WZQtre6t5TPp7Zxn5FXzpffI6DJT7UKV0+G/w2xBHhySJEX9635ggmaAnDYOm3omE/2nukHoVZ9nwWR5rj1c4LnMUDU/0cTpInN7/0nkR/fU3GKSr7hjiTZmzUjF1bAmBjc4Ql+nItlz8TrIQu/uYKwy91gqoPTDEvDehmD/f
+X-OriginatorOrg: amd.com
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 02 Jun 2026 22:03:03.3700 (UTC)
+X-MS-Exchange-CrossTenant-Network-Message-Id: 609b8a48-21e4-4a6d-e899-08dec0f2b7ff
+X-MS-Exchange-CrossTenant-Id: 3dd8961f-e488-4e60-8e11-a82d994e183d
+X-MS-Exchange-CrossTenant-OriginalAttributedTenantConnectingIp: TenantId=3dd8961f-e488-4e60-8e11-a82d994e183d; Ip=[165.204.84.17];
+ Helo=[satlexmb07.amd.com]
+X-MS-Exchange-CrossTenant-AuthSource: SJ1PEPF000026C5.namprd04.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Anonymous
+X-MS-Exchange-CrossTenant-FromEntityHeader: HybridOnPrem
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: DM6PR12MB4330
+Received-SPF: permerror client-ip=2a01:111:f403:c10d::3;
+ envelope-from=Michael.Roth@amd.com;
+ helo=SN4PR0501CU005.outbound.protection.outlook.com
+X-Spam_score_int: -9
+X-Spam_score: -1.0
+X-Spam_bar: -
+X-Spam_report: (-1.0 / 5.0 requ) BAYES_00=-1.9, DATE_IN_PAST_03_06=1.592,
+ DKIMWL_WL_HIGH=-0.445, DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1,
+ DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -163,20 +129,105 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Sun, May 31, 2026 at 4:33=E2=80=AFPM Philippe Mathieu-Daud=C3=A9
-<philmd@linaro.org> wrote:
->
-> On 29/5/26 23:55, Brian Cain wrote:
-> > Declare the MMU_INDEX field in TB_FLAGS and use it to extract
-> > the mmu index in translate.c initialization.
-> >
-> > Signed-off-by: Brian Cain <brian.cain@oss.qualcomm.com>
-> > ---
-> >   target/hexagon/cpu.h       | 1 +
-> >   target/hexagon/translate.c | 2 +-
-> >   2 files changed, 2 insertions(+), 1 deletion(-)
->
-> Squash with patch #33?
+On Mon, Dec 15, 2025 at 03:51:58PM -0500, Peter Xu wrote:
+> Rename the HostMemoryBackend.guest_memfd field to reflect what it really
+> means, on whether it needs guest_memfd to back its private portion of
+> mapping.  This will help on clearance when we introduce in-place
+> guest_memfd for hostmem.
+> 
+> Signed-off-by: Peter Xu <peterx@redhat.com>
 
-Will do
+Reviewed-by: Michael Roth <michael.roth@amd.com>
+
+> ---
+>  include/system/hostmem.h | 2 +-
+>  backends/hostmem-file.c  | 2 +-
+>  backends/hostmem-memfd.c | 2 +-
+>  backends/hostmem-ram.c   | 2 +-
+>  backends/hostmem-shm.c   | 2 +-
+>  backends/hostmem.c       | 2 +-
+>  6 files changed, 6 insertions(+), 6 deletions(-)
+> 
+> diff --git a/include/system/hostmem.h b/include/system/hostmem.h
+> index 88fa791ac7..dcbf81aeae 100644
+> --- a/include/system/hostmem.h
+> +++ b/include/system/hostmem.h
+> @@ -76,7 +76,7 @@ struct HostMemoryBackend {
+>      uint64_t size;
+>      bool merge, dump, use_canonical_path;
+>      bool prealloc, is_mapped, share, reserve;
+> -    bool guest_memfd, aligned;
+> +    bool guest_memfd_private, aligned;
+>      uint32_t prealloc_threads;
+>      ThreadContext *prealloc_context;
+>      DECLARE_BITMAP(host_nodes, MAX_NODES + 1);
+> diff --git a/backends/hostmem-file.c b/backends/hostmem-file.c
+> index 1f20cd8fd6..0e4cfd6dc6 100644
+> --- a/backends/hostmem-file.c
+> +++ b/backends/hostmem-file.c
+> @@ -86,7 +86,7 @@ file_backend_memory_alloc(HostMemoryBackend *backend, Error **errp)
+>      ram_flags |= fb->readonly ? RAM_READONLY_FD : 0;
+>      ram_flags |= fb->rom == ON_OFF_AUTO_ON ? RAM_READONLY : 0;
+>      ram_flags |= backend->reserve ? 0 : RAM_NORESERVE;
+> -    ram_flags |= backend->guest_memfd ? RAM_GUEST_MEMFD_PRIVATE : 0;
+> +    ram_flags |= backend->guest_memfd_private ? RAM_GUEST_MEMFD_PRIVATE : 0;
+>      ram_flags |= fb->is_pmem ? RAM_PMEM : 0;
+>      ram_flags |= RAM_NAMED_FILE;
+>      return memory_region_init_ram_from_file(&backend->mr, OBJECT(backend), name,
+> diff --git a/backends/hostmem-memfd.c b/backends/hostmem-memfd.c
+> index 3f3e485709..ea93f034e4 100644
+> --- a/backends/hostmem-memfd.c
+> +++ b/backends/hostmem-memfd.c
+> @@ -60,7 +60,7 @@ have_fd:
+>      backend->aligned = true;
+>      ram_flags = backend->share ? RAM_SHARED : RAM_PRIVATE;
+>      ram_flags |= backend->reserve ? 0 : RAM_NORESERVE;
+> -    ram_flags |= backend->guest_memfd ? RAM_GUEST_MEMFD_PRIVATE : 0;
+> +    ram_flags |= backend->guest_memfd_private ? RAM_GUEST_MEMFD_PRIVATE : 0;
+>      return memory_region_init_ram_from_fd(&backend->mr, OBJECT(backend), name,
+>                                            backend->size, ram_flags, fd, 0, errp);
+>  }
+> diff --git a/backends/hostmem-ram.c b/backends/hostmem-ram.c
+> index 96ad29112d..6a507fad77 100644
+> --- a/backends/hostmem-ram.c
+> +++ b/backends/hostmem-ram.c
+> @@ -30,7 +30,7 @@ ram_backend_memory_alloc(HostMemoryBackend *backend, Error **errp)
+>      name = host_memory_backend_get_name(backend);
+>      ram_flags = backend->share ? RAM_SHARED : RAM_PRIVATE;
+>      ram_flags |= backend->reserve ? 0 : RAM_NORESERVE;
+> -    ram_flags |= backend->guest_memfd ? RAM_GUEST_MEMFD_PRIVATE : 0;
+> +    ram_flags |= backend->guest_memfd_private ? RAM_GUEST_MEMFD_PRIVATE : 0;
+>      return memory_region_init_ram_flags_nomigrate(&backend->mr, OBJECT(backend),
+>                                                    name, backend->size,
+>                                                    ram_flags, errp);
+> diff --git a/backends/hostmem-shm.c b/backends/hostmem-shm.c
+> index e86fb2e0aa..4766db6aad 100644
+> --- a/backends/hostmem-shm.c
+> +++ b/backends/hostmem-shm.c
+> @@ -54,7 +54,7 @@ have_fd:
+>      /* Let's do the same as memory-backend-ram,share=on would do. */
+>      ram_flags = RAM_SHARED;
+>      ram_flags |= backend->reserve ? 0 : RAM_NORESERVE;
+> -    ram_flags |= backend->guest_memfd ? RAM_GUEST_MEMFD_PRIVATE : 0;
+> +    ram_flags |= backend->guest_memfd_private ? RAM_GUEST_MEMFD_PRIVATE : 0;
+>  
+>      return memory_region_init_ram_from_fd(&backend->mr, OBJECT(backend),
+>                                                backend_name, backend->size,
+> diff --git a/backends/hostmem.c b/backends/hostmem.c
+> index 35734d6f4d..70450733db 100644
+> --- a/backends/hostmem.c
+> +++ b/backends/hostmem.c
+> @@ -288,7 +288,7 @@ static void host_memory_backend_init(Object *obj)
+>      /* TODO: convert access to globals to compat properties */
+>      backend->merge = machine_mem_merge(machine);
+>      backend->dump = machine_dump_guest_core(machine);
+> -    backend->guest_memfd = machine_require_guest_memfd(machine);
+> +    backend->guest_memfd_private = machine_require_guest_memfd(machine);
+>      backend->reserve = true;
+>      backend->prealloc_threads = machine->smp.cpus;
+>  }
+> -- 
+> 2.50.1
+> 
+> 
 
