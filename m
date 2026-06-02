@@ -4,45 +4,82 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id CF130CD6E55
-	for <qemu-devel@archiver.kernel.org>; Tue,  2 Jun 2026 02:03:38 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B1AC1CD6E56
+	for <qemu-devel@archiver.kernel.org>; Tue,  2 Jun 2026 02:22:24 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wUETG-0005yx-Sj; Mon, 01 Jun 2026 22:03:11 -0400
+	id 1wUEl4-0008TH-1z; Mon, 01 Jun 2026 22:21:36 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <prcups@krgm.moe>) id 1wUETE-0005yp-ID
- for qemu-devel@nongnu.org; Mon, 01 Jun 2026 22:03:08 -0400
-Received: from [2400:e920:0:e::2c] (helo=krgm.moe)
- by eggs.gnu.org with esmtp (Exim 4.90_1)
- (envelope-from <prcups@krgm.moe>) id 1wUETC-0000ND-KP
- for qemu-devel@nongnu.org; Mon, 01 Jun 2026 22:03:08 -0400
-Received: from yuno-loong.localnet (unknown [IPv6:2400:e920:0:e::2c])
- by krgm.moe (Postfix) with ESMTPSA id 120C2240AE8F;
- Tue, 02 Jun 2026 10:02:51 +0800 (CST)
-From: SignKirigami <prcups@krgm.moe>
-To: Bibo Mao <maobibo@loongson.cn>
-Cc: qemu-devel@nongnu.org, Hengyu Yu <yuhengyu25@mails.ucas.ac.cn>
-Subject: Re: [PATCH 00/12] target/loongarch: Move CSR registers to struct
- CPUSysState
-Date: Tue, 02 Jun 2026 10:02:52 +0800
-Message-ID: <lOb30Y5VTVyDy4BxZJsUCg@krgm.moe>
-In-Reply-To: <b1872865-1748-e89b-f6ad-2f3104496563@loongson.cn>
-References: <20260526065023.1639371-1-maobibo@loongson.cn>
- <e922a116-ae19-bb16-8dbb-5ad276430e5b@loongson.cn>
- <b1872865-1748-e89b-f6ad-2f3104496563@loongson.cn>
+ (Exim 4.90_1) (envelope-from <anderson@allelesecurity.com>)
+ id 1wUEkq-0008Sk-TC
+ for qemu-devel@nongnu.org; Mon, 01 Jun 2026 22:21:21 -0400
+Received: from mail-vs1-xe33.google.com ([2607:f8b0:4864:20::e33])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <anderson@allelesecurity.com>)
+ id 1wUEko-0006bS-9a
+ for qemu-devel@nongnu.org; Mon, 01 Jun 2026 22:21:19 -0400
+Received: by mail-vs1-xe33.google.com with SMTP id
+ ada2fe7eead31-6c50579dc4aso1023728137.0
+ for <qemu-devel@nongnu.org>; Mon, 01 Jun 2026 19:21:17 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=allelesecurity.com; s=google; t=1780366876; x=1780971676; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:from:to:cc:subject:date:message-id:reply-to;
+ bh=oqSK6KHimFMn/wufhN+V/HaPMlQTvUnD2P67uwmnzDE=;
+ b=h/AUDKw+cMpvgXkh7s/NJTw8NOV/qhhysf/cjXdy+8DvIOoY97e41AbS7wYPXF4IAL
+ bZqyqTr3uD2I/2ZosJQD9L5iS2A2D6V3inWX7YKJDVItzUf3liV08OPJ/7L0UjwM5evj
+ TyhS+ifYILwOG+s4i1K3wz+dwHZAmJe/tVeKo=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1780366876; x=1780971676;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=oqSK6KHimFMn/wufhN+V/HaPMlQTvUnD2P67uwmnzDE=;
+ b=N8HZWM6QsACzm4dgUbyE7jBcoL/i+HUm+OqtptWSisuD5Qxa7klFT0X8A8r75Iyo/c
+ Z44/iSByMUFZQKY8L5mUissWoEEfs6s3XMY2kNu8UCG05RvpS99I9ejopvr6kqnrSWB1
+ xW7PrA//CwAsGKWw/ycjiSnqsX9sarosXFzIWXZFPazYvtJb9ysYmBYqgIpU9MJmDeXm
+ n6GWMaGLX6VuFe8coCwZn3WQmwH6fjjgUgojbxmz3x4ZVH0N0q3t4ZUHQswrFPRySM7F
+ eXIvy0Yw5cFysLLEcBvwrYqxaAvrfNbDYrVAYNrfkZXYdgZPhJcCGGOmbPHKdEWLn5VS
+ VTQA==
+X-Gm-Message-State: AOJu0Yx6KVztWcMRoNZiwDmtK4Mvk+oAOreJ7sjct01qsqL9Tg3s8wxF
+ mqfn102BdSNEEInVbLQIfO3DByXRZj7yjjknv2DWAcPRPr6TRBO4ZNVrPZj/xmo8/BRcx8NCyqW
+ R1hLlZ9s=
+X-Gm-Gg: Acq92OGYabNl2xh2/S+8tUaGxnhl0EO1aOmXjUWc7Ioa+1riUEJHsxr/glnw43u+Bqs
+ e3ND6/GVi3QRbG4Magrvq+kMmV5Wn4oS/ykjgHc2NM5hr9rnuPQi5go5b7gqRNXlj75fOS7DtcU
+ qRpkjpev44vyIgI5BoaxtKNNSJ8lEro1ruVmugfppwlWMi/BZoQGmrlPOpQR9OcgsTRIitssNEl
+ IdOlCxwOHRreMsrToALQ2Cyuqj5VnRKNIVzfRLw8DHGxBBYAfS15nL5iL5oYh4J6Cll76N+mT/6
+ p6u069vhtpj8IbIk27EzfDaxMAg1qyiSso2mhWvTA1verg5tCOf7NkiTbWVgLqv4XWuPZV/NBO9
+ SfSEFvyvxFQ/syn+786216XmDkJcsoTEL9ykgjQOyzJASvVWEN+xXJ07azHyiAueTjpuvJgws8Q
+ UbW8nkoCCcFAkGy2vMs53ykl8d30ylNWpusbtwQg==
+X-Received: by 2002:a05:6102:4a93:b0:643:80f1:33d8 with SMTP id
+ ada2fe7eead31-6c694f50a1dmr5989468137.4.1780366876493; 
+ Mon, 01 Jun 2026 19:21:16 -0700 (PDT)
+Received: from tarski ([179.105.152.38]) by smtp.gmail.com with ESMTPSA id
+ 71dfb90a1353d-5a1c3c784a2sm3648243e0c.15.2026.06.01.19.21.13
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Mon, 01 Jun 2026 19:21:16 -0700 (PDT)
+From: Anderson Nascimento <anderson@allelesecurity.com>
+To: qemu-devel@nongnu.org, kvm@vger.kernel.org, pbonzini@redhat.com,
+ zhao1.liu@intel.com, mtosatti@redhat.com
+Cc: Anderson Nascimento <anderson@allelesecurity.com>
+Subject: [RFC PATCH 0/1] target/i386: Add support for KVM APERF/MPERF
+ passthrough
+Date: Mon,  1 Jun 2026 23:20:47 -0300
+Message-ID: <20260602022048.752453-1-anderson@allelesecurity.com>
+X-Mailer: git-send-email 2.54.0
 MIME-Version: 1.0
-Content-Transfer-Encoding: quoted-printable
-Content-Type: text/plain; charset="utf-8"
-X-Host-Lookup-Failed: Reverse DNS lookup failed for 2400:e920:0:e::2c (failed)
-Received-SPF: pass client-ip=2400:e920:0:e::2c; envelope-from=prcups@krgm.moe;
- helo=krgm.moe
-X-Spam_score_int: -10
-X-Spam_score: -1.1
-X-Spam_bar: -
-X-Spam_report: (-1.1 / 5.0 requ) BAYES_00=-1.9, RDNS_NONE=0.793,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::e33;
+ envelope-from=anderson@allelesecurity.com; helo=mail-vs1-xe33.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -58,84 +95,59 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 2026=E5=B9=B45=E6=9C=8826=E6=97=A5=E6=98=9F=E6=9C=9F=E4=BA=8C =E4=B8=AD=
-=E5=9B=BD=E6=A0=87=E5=87=86=E6=97=B6=E9=97=B4 16:28:28=EF=BC=8CBibo Mao wro=
-te=EF=BC=9A
->=20
-> On 2026/5/26 =E4=B8=8B=E5=8D=883:48, gaosong wrote:
-> > =E5=9C=A8 2026/5/26 =E4=B8=8B=E5=8D=882:50, Bibo Mao =E5=86=99=E9=81=93:
-> >> Here new structure CPUSysState is added in CPULoongArchState, CSR
-> >> registers are move in CPUSysState. In later with LVZ supported, there=
-=20
-> >> will
-> >> be two copied of CSR registers, so it is simply to add CPUSysState arr=
-ay.
-> >>
-> >> Also new field curState is added which points to CPUSysState at
-> >> beginning, and it can be changed during VM exit/enter entry. There is =
-no
-> >> function change, all is code movement or variable rename.
-> >>
-> >> Bibo Mao (12):
-> >>    target/loongarch: Add new field curState in CPULoongArchState
-> >>    target/loongarch: Use curState in cpu.c when accessing CSR registers
-> >>    target/loongarch: Use curState in cpu_helper.c when accessing CSR
-> >>      registers
-> >>    target/loongarch: Use curState in file arch_dump.c when accessing C=
-SR
-> >>      registers
-> >>    target/loongarch: Use curState in kvm.c when accessing CSR registers
-> >>    target/loongarch: Use curState in tlb_helper.c when accessing CSR
-> >>      registers
-> >>    target/loongarch: Use curState in tcg_cpu.c when accessing CSR
-> >>      registers
-> >>    target/loongarch: Use curState in csr_helper.c when accessing CSR
-> >>      registers
-> >>    target/loongarch: Use curState in op_helper.c when accessing CSR
-> >>      registers
-> >>    target/loongarch: Add default CSRFL_BASIC info with flags field
-> >>    target/loongarch: Add wrapper function get_csr_offset()
-> >>    target/loongarch: Add new structure CPUSysState
-> >>
-> >>   hw/intc/loongarch_dintc.c                     |   4 +-
-> >>   target/loongarch/arch_dump.c                  |   5 +-
-> >>   target/loongarch/cpu-mmu.h                    |   4 +-
-> >>   target/loongarch/cpu.c                        | 120 ++++-----
-> >>   target/loongarch/cpu.h                        |  49 ++--
-> >>   target/loongarch/cpu_helper.c                 |  41 ++--
-> >>   target/loongarch/csr.c                        |  10 +-
-> >>   target/loongarch/csr.h                        |   5 +
-> >>   target/loongarch/gdbstub.c                    |   3 +-
-> >>   target/loongarch/kvm/kvm.c                    | 228 +++++++++-------=
-=2D-
-> >>   target/loongarch/machine.c                    | 116 ++++-----
-> >>   target/loongarch/tcg/constant_timer.c         |  10 +-
-> >>   target/loongarch/tcg/csr_helper.c             |  55 +++--
-> >>   .../tcg/insn_trans/trans_extra.c.inc          |  11 +-
-> >>   .../tcg/insn_trans/trans_privileged.c.inc     |  16 +-
-> >>   target/loongarch/tcg/op_helper.c              |  45 ++--
-> >>   target/loongarch/tcg/tcg_cpu.c                | 107 ++++----
-> >>   target/loongarch/tcg/tlb_helper.c             | 137 ++++++-----
-> >>   18 files changed, 531 insertions(+), 435 deletions(-)
-> >>
-> > Hi,
-> > The files in linux-user/loongarch64/* also need to be modified.
-> oops, loongarch-linux-user is missing here. Thanks for the reporting.
-> Will add and test this target.
->=20
-> Regards
-> Bibo Mao
-This patch looks good to me. Should I continue lvz support after this
-patch is merged?
+Hello,
 
-> >=20
-> > Thanks.
-> > Song Gao
-> >> base-commit: cbf877d67a812be17a9ce404a589e1bdf722c1f6
->=20
->=20
+I have implemented support for exposing and enabling APERF/MPERF 
+MSR passthrough for x86 QEMU guests when running on KVM.
 
+As of last year, the Linux kernel supports providing a capability 
+to disable APERF/MPERF read intercepts [1]. However, there is 
+currently no native way in QEMU to instruct KVM to activate this 
+capability or expose the feature bit cleanly via CPUID.
 
+My patch introduces the `aperfmperf` feature flag via `FEAT_6_ECX` 
+(CPUID.06H:ECX[bit 0]). It ties into the existing power management 
+framework, so when a user enables power management via 
+`-overcommit cpu-pm=on` and passes `+aperfmperf` to the CPU, QEMU 
+requests KVM to drop the MSR intercepts.
 
+For testing, I passed the feature via Libvirt XML like so:
+
+    <qemu:arg value="-overcommit"/>
+    <qemu:arg value="cpu-pm=on"/>
+    <qemu:arg value="-cpu"/>
+    <qemu:arg value="+aperfmperf,+invtsc"/>
+
+A FreeBSD 16 guest is successfully able to read the changing 
+values of the MSRs directly without exiting to the hypervisor:
+
+root@freebsd16development:/home/user # cpucontrol -i 6 /dev/cpuctl0
+cpuid level 0x6: 0x00000004 0x00000000 0x00000001 0x00000000
+root@freebsd16development:/home/user # cpucontrol -m 0xe7 /dev/cpuctl0
+MSR 0xe7: 0x00007fdf 0x22480f90
+root@freebsd16development:/home/user # cpucontrol -m 0xe7 /dev/cpuctl0
+MSR 0xe7: 0x00007fdf 0x2b8b48b0
+root@freebsd16development:/home/user # cpucontrol -m 0xe8 /dev/cpuctl0
+MSR 0xe8: 0x000050de 0x49270831
+root@freebsd16development:/home/user # cpucontrol -m 0xe8 /dev/cpuctl0
+MSR 0xe8: 0x000050de 0x4ad66ae6
+root@freebsd16development:/home/user # 
+
+I am looking for feedback on the approach, specifically if tying 
+this directly into `cpu-pm` makes the most sense to the 
+maintainers.
+
+Based-on: QEMU v11.0.50 (commit 5611a9268d)
+
+Anderson Nascimento (1):
+  target/i386: Add support for KVM APERF/MPERF passthrough
+
+ target/i386/cpu.c     | 17 ++++++++++++++++-
+ target/i386/cpu.h     |  2 ++
+ target/i386/kvm/kvm.c |  5 ++++-
+ 3 files changed, 22 insertions(+), 2 deletions(-)
+
+-- 
+2.54.0
 
 
