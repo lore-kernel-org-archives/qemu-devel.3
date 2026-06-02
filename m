@@ -4,87 +4,111 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2B7CFCD6E57
-	for <qemu-devel@archiver.kernel.org>; Tue,  2 Jun 2026 14:40:23 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 78965CD6E60
+	for <qemu-devel@archiver.kernel.org>; Tue,  2 Jun 2026 14:55:01 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wUQHU-00044B-RW; Tue, 02 Jun 2026 10:39:48 -0400
+	id 1wUQVV-0006x2-Mr; Tue, 02 Jun 2026 10:54:17 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <prvs=4613c7fe8e=mnissler@meta.com>)
- id 1wUPKP-0001E6-6L
- for qemu-devel@nongnu.org; Tue, 02 Jun 2026 09:38:47 -0400
-Received: from mx0a-00082601.pphosted.com ([67.231.145.42])
+ (Exim 4.90_1) (envelope-from <imammedo@redhat.com>)
+ id 1wUQVS-0006vv-2v
+ for qemu-devel@nongnu.org; Tue, 02 Jun 2026 10:54:14 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <prvs=4613c7fe8e=mnissler@meta.com>)
- id 1wUPKN-0000LH-4h
- for qemu-devel@nongnu.org; Tue, 02 Jun 2026 09:38:44 -0400
-Received: from pps.filterd (m0528009.ppops.net [127.0.0.1])
- by mx0a-00082601.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 651K2Vcn1621208; Tue, 2 Jun 2026 06:38:38 -0700
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=meta.com; h=cc
- :content-transfer-encoding:content-type:date:from:message-id
- :mime-version:subject:to; s=s2048-2025-q2; bh=gYagSwz16GrA6Sm165
- brLVtxDNJo/MGlmgsaUncimgk=; b=h4rShyrIhDu+FuwyOUoxbuN6xdV19eujfc
- iu1PdbIzRfGVRJPrY7+WbUQWrY8bKsoBmzAqs1YVp1fXqn2/zTopH6vFB7Y7tO7h
- CFTCifEsFjAriAq0BawuJnv881EqxCmg5+ZfKIC5oPHS/wohDGFW0x+bwRURc0Is
- aOBXqNNOnSPfjA5z0TuWqq1AHK0rR6A7ii5Th1bsSJoiGcQBRBlcJ7h8PTbomISp
- FS7Iwrwx8yQ+YmQE5EDD0cZf7OnOWzbfZJ5EJK90BpkailzgT/sR/UGmhY3IMvHn
- /T1MKp98FgYKgavUuLb+G8UMN1/Wlh1DZKJ8yQHWdmE+Qo6+P9kQ==
-Received: from maileast.thefacebook.com ([163.114.135.16])
- by mx0a-00082601.pphosted.com (PPS) with ESMTPS id 4eghn5dbqc-3
- (version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT);
- Tue, 02 Jun 2026 06:38:37 -0700 (PDT)
-Received: from localhost (2620:10d:c0a8:1c::11) by mail.thefacebook.com
- (2620:10d:c0a9:6f::237c) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id 15.2.2562.41; Tue, 2 Jun
- 2026 13:38:36 +0000
-From: Mattias Nissler <mnissler@meta.com>
-To: <qemu-devel@nongnu.org>
-CC: Thanos Makatos <thanos.makatos@nutanix.com>,
- =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>, Pierrick Bouvier
- <pierrick.bouvier@oss.qualcomm.com>,
- John Levon <john.levon@nutanix.com>, <mnissler@meta.com>
-Subject: [PATCH] docs: Update vfio-user spec to describe DMA access mode bits
-Date: Tue, 2 Jun 2026 06:38:29 -0700
-Message-ID: <20260602133829.305842-1-mnissler@meta.com>
-X-Mailer: git-send-email 2.52.0
+ (Exim 4.90_1) (envelope-from <imammedo@redhat.com>)
+ id 1wUQVQ-0001Qp-1R
+ for qemu-devel@nongnu.org; Tue, 02 Jun 2026 10:54:13 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1780412050;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=Mf+srgazukN0W7EULQMT8jH2Ug1Hrj0u2E6Ql06yqRY=;
+ b=iQLaHxlgcfIim/nXaxFjE+37hFggyyCqPvt0hwRPd/9Ycq6DWRuiXfOFZD73Vt8G26PeEY
+ 7qc44wm1XaVAZ5uKUkYeo2DuiSC2ClX2GhSG9Z15N0ICHQbrljnYJkM8WkjY1L4c5jxalB
+ QdCd851QigO4u7M8175nDPOElDZtGqw=
+Received: from mail-wr1-f69.google.com (mail-wr1-f69.google.com
+ [209.85.221.69]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-668-TFyQG74GPg-AJBEdx8WpGA-1; Tue, 02 Jun 2026 10:54:09 -0400
+X-MC-Unique: TFyQG74GPg-AJBEdx8WpGA-1
+X-Mimecast-MFC-AGG-ID: TFyQG74GPg-AJBEdx8WpGA_1780412048
+Received: by mail-wr1-f69.google.com with SMTP id
+ ffacd0b85a97d-45eee3f9f03so4786000f8f.1
+ for <qemu-devel@nongnu.org>; Tue, 02 Jun 2026 07:54:08 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=redhat.com; s=google; t=1780412048; x=1781016848; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:subject:cc:to:from:date:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=Mf+srgazukN0W7EULQMT8jH2Ug1Hrj0u2E6Ql06yqRY=;
+ b=PHRfRl2/E3ForihEk5RY/Wqs5IfCcN+eT/Pr/K5IJm8/e0i83jeGtBQUj/TzZ1J0gI
+ spRCVDmSuqXYY1nTdk6vtwXmjbwHsnuHA1nskb5Tq0+sq+r9MAVF29+ZCtocRm7LtgY3
+ X4EsHesdtRWJqzYqsmQAU1dvq6ekPPHgvwK3eWzvzIfs2e++sDMdWGL45smLOes03xSR
+ iE9s/LhdjY8gzJJcSCMioNdRlow7fNlTVC1EbCv1a6TM9yDSe76XVrQ6OSrDQ9wivlvt
+ Wc2jcuYsPEIhenO0VfiHIGH4ZYlG0T4Etn47g8d4zPsCG01ompUGHcPY6Ty4vVj5r9J9
+ Q5cQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1780412048; x=1781016848;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=Mf+srgazukN0W7EULQMT8jH2Ug1Hrj0u2E6Ql06yqRY=;
+ b=DfZGUr9YqVK1/J7MvHhCDlxshzg1xh/YbRFSjdtT6kQyc2naRoPfGnegpySxXbvui5
+ sLB1Q+wsJF8IuYPJ3D0m4aYV3wvB//sm1YTcW7A+lGzuI9cQH9jCiiYpvAiajsBOdjyy
+ ZcCsxHLLaaR5nRPtAAog63dl13YzNIaPMYppzwG/cs9peNN2k6Apx0zw4FWPiRwEnCJ6
+ 0ZzDDJz9OQ2rkJKfTUiuDsvZb2u6c8ppsasWiPG9tzSrLk1xksNzoTVUPj1ubEH8TwWO
+ fKLKt8e3EbUiyd7oCwhMBggC95u4k8gxwGXR//j4IC4QTczBWEkzPs6fAmJ8jGlzNna+
+ gixA==
+X-Forwarded-Encrypted: i=1;
+ AFNElJ9qUhWpJWWPDKXmbDr4jVhyNYNVFcSllP4EFiZyLcGHntH74rzqTChHHh2md6E4loDNCwsdBAsvutX2@nongnu.org
+X-Gm-Message-State: AOJu0Yw5a2Jrs9T0rWxmEVKr6RIF+G/BOLWQRXRul9aV4uM0IpC582jg
+ cCUMynF2hgPYP1F/EIR7njoR/WiY4x0dTMItf2Fov2/zv9VKmjdTkAbzB5+DeTqJPTKJxkmAtwB
+ Yz8jjqrk2SaLMIl9i2Y4Hb2UGeB3vQkQ8rwH1npPO1WQTe3Q2mwcn1s9P
+X-Gm-Gg: Acq92OG2dIRuXGuyoEoQ4y9TNdgMGb0ieX4sViIFWsejKhkoN108irZZ51aZbOUIyIC
+ GaM/4rdFyTuzCEsUnAnOUdpTR6wEd17x+eAY0S8D+tyrEXg7yUyC9QTfcMTxVyTDFrEkIrs24DI
+ Opg30dE+CLF3NOh06e3zwpi4P+PPVdtRCartVOz4jOWYQyRbrGylsrdX/Ey72/ynl5zQrKUrNUX
+ C+JzzAt5DolBim9lz/TbdYS/gyradlzi4I3D+vrl2wUpqE7wE/Yeaw5W9DTWNXYy5jxXQI+X/Ex
+ cvIqPaxxZnXXPYaN9RS/cHTOfmsBTqj5/Tlb9g9ParqzdbFfhzP9qhBgLsaCh0wPHoq8Z6MwIST
+ zuJoONELtD1Dwz8m9
+X-Received: by 2002:adf:f611:0:b0:45e:f228:830d with SMTP id
+ ffacd0b85a97d-45ef6b55ce3mr21835046f8f.23.1780412047847; 
+ Tue, 02 Jun 2026 07:54:07 -0700 (PDT)
+X-Received: by 2002:adf:f611:0:b0:45e:f228:830d with SMTP id
+ ffacd0b85a97d-45ef6b55ce3mr21834998f8f.23.1780412047362; 
+ Tue, 02 Jun 2026 07:54:07 -0700 (PDT)
+Received: from imammedo ([213.175.37.14]) by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-45ef34bd320sm32567500f8f.13.2026.06.02.07.54.06
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Tue, 02 Jun 2026 07:54:06 -0700 (PDT)
+Date: Tue, 2 Jun 2026 16:54:04 +0200
+From: Igor Mammedov <imammedo@redhat.com>
+To: Sebastian Ott <sebott@redhat.com>
+Cc: Peter Maydell <peter.maydell@linaro.org>, mst@redhat.com, Eric Auger
+ <eauger@redhat.com>, qemu-arm@nongnu.org, qemu-devel@nongnu.org
+Subject: Re: [PATCH] hw/arm/virt: preserve config for ACPI PCI hotplug
+Message-ID: <20260602165404.3a8c8fc8@imammedo>
+In-Reply-To: <48595a74-78b5-6136-8752-0a73501b9531@redhat.com>
+References: <0de640a2-8807-69cf-4429-672263e3e759@redhat.com>
+ <CAFEAcA-PkO3aeGoaAzpbJGrrE-_-RjJy9Q4D4MnQ=9W61--3hA@mail.gmail.com>
+ <48595a74-78b5-6136-8752-0a73501b9531@redhat.com>
+X-Mailer: Claws Mail 4.4.0 (GTK 3.24.52; x86_64-redhat-linux-gnu)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Content-Type: text/plain
-X-Originating-IP: [2620:10d:c0a8:1c::11]
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNjAyMDEzMCBTYWx0ZWRfX+xVrrE3ERCQT
- UAzcdK7UOgxmO9ixgGpETEyNfmExQg6lWyDR1wSaTGqOA/6jqVCf4m7nbMUje2rSa2l1nRvss6k
- A1lKOVOgbfMdMvN7bPcYPIilCXrNGEpp0IiHnbDbvTYo1dnMSrH5eWyx01A6nek8likLjE9geIQ
- BolmRvUJbIF4gYcM0BPnL60S6MYManrAshoAzT7QeTUyzqiy6gXCg7l8XdFywcI4hm7ZymIGgJJ
- y2S1gAsajb7Wx6ThLvfAj5Rs1iTUSX7FwjGejTiLiXCsTM4iSRynyXf7QgP2F+C9G2j10ica10U
- LV+vP+Kwx+ubaDmS0ZtHOPwHI4E6DuZplT95OtA6MWba0nManDwDvU596OEMnU/hthg8Pg2rgae
- HkodUKMgLvejUicuMUWIgff1imdtaiTIHlfAASEZgMQIoJA6/7DIFcvIHECmanl7dsM7Sadk9HO
- 0dHZ1Rljr7kPj362UgQ==
-X-Proofpoint-GUID: nzez_HIbkGXqRC1wpj15cVdQ0huMNUpx
-X-Authority-Analysis: v=2.4 cv=HrZG3UTS c=1 sm=1 tr=0 ts=6a1edcdd cx=c_pps
- a=MfjaFnPeirRr97d5FC5oHw==:117 a=MfjaFnPeirRr97d5FC5oHw==:17
- a=FelO9ux0wxsA:10 a=VkNPw1HP01LnGYTKEx00:22 a=7x6HtfJdh03M6CCDgxCd:22
- a=U_y8lYiYyhHBU5rMqhb2:22 a=VabnemYjAAAA:8 a=qN4U-Vrk9NcT6eTNmKQA:9
- a=gKebqoRLp9LExxC7YDUY:22
-X-Proofpoint-ORIG-GUID: nzez_HIbkGXqRC1wpj15cVdQ0huMNUpx
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.125,FMLib:17.12.100.49
- definitions=2026-06-02_02,2026-05-28_03,2025-10-01_01
-Received-SPF: pass client-ip=67.231.145.42;
- envelope-from=prvs=4613c7fe8e=mnissler@meta.com;
- helo=mx0a-00082601.pphosted.com
-X-Spam_score_int: -27
-X-Spam_score: -2.8
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=imammedo@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -24
+X-Spam_score: -2.5
 X-Spam_bar: --
-X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- TVD_PH_SUBJ_META1=0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.445,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
-X-Mailman-Approved-At: Tue, 02 Jun 2026 10:39:47 -0400
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -99,124 +123,76 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-This makes the intended access mode explicit when registering DMA
-regions with the server. A new "file I/O" access mode is defined, which
-can be used if the file descriptor provided by the client doesn't
-support `mmap()`.
+On Fri, 29 May 2026 15:03:46 +0200 (CEST)
+Sebastian Ott <sebott@redhat.com> wrote:
 
-Signed-off-by: Mattias Nissler <mnissler@meta.com>
----
- docs/interop/vfio-user.rst | 82 ++++++++++++++++++++++++--------------
- 1 file changed, 51 insertions(+), 31 deletions(-)
+> On Thu, 28 May 2026, Peter Maydell wrote:
+> > On Thu, 28 May 2026 at 10:23, Sebastian Ott <sebott@redhat.com> wrote:  
+> >>
+> >> ACPI PCI hotplug of a PCI device using a bar > 2M fails on ARM
+> >> with a resource allocation failure in the guest kernel (Linux):
+> >>
+> >> qemu-system-aarch64 [..] -device pcie-root-port,id=rp1,bus=pcie.0 \
+> >>                     -global acpi-ged.acpi-pci-hotplug-with-bridge-support=on \
+> >>                     -pflash /usr/share/edk2/aarch64/QEMU_EFI-silent-pflash.qcow2
+> >>
+> >> (qemu) device_add pci-testdev,bus=rp1,membar=4M
+> >>
+> >> [   55.106283] pci 0000:01:00.0: [1b36:0005] type 00 class 0x00ff00 conventional PCI endpoint
+> >> [   55.107627] pci 0000:01:00.0: BAR 0 [mem 0x00000000-0x00000fff]
+> >> [   55.107864] pci 0000:01:00.0: BAR 1 [io  0x0000-0x00ff]
+> >> [   55.108015] pci 0000:01:00.0: BAR 2 [mem 0x00000000-0x003fffff 64bit pref]
+> >> [   55.118609] pci 0000:01:00.0: BAR 2 [mem size 0x00400000 64bit pref]: can't assign; no space
+> >> [   55.118653] pci 0000:01:00.0: BAR 2 [mem size 0x00400000 64bit pref]: failed to assign
+> >> [   55.118671] pci 0000:01:00.0: BAR 0 [mem 0x10000000-0x10000fff]: assigned
+> >> [   55.122828] pci 0000:01:00.0: BAR 1 [io  0x1000-0x10ff]: assigned
+> >> [   55.127090] pci 0000:01:00.0: BAR 0 [mem 0x10000000-0x10000fff]: releasing
+> >> [   55.127098] pci 0000:01:00.0: BAR 2 [mem size 0x00400000 64bit pref]: can't assign; no space
+> >> [   55.127102] pci 0000:01:00.0: BAR 2 [mem size 0x00400000 64bit pref]: failed to assign
+> >> [   55.127106] pci 0000:01:00.0: BAR 0 [mem 0x10000000-0x10000fff]: assigned
+> >>
+> >> This behavior is exactly the same on x86 - except the busses are created
+> >> with a default window size of 256M there. If the PCI devices being
+> >> hotplugged use a bar > 256M you get the same failure like on ARM.
+> >>
+> >> The workaround on x86 is to specify "pref64-reserve=" for the PCIe
+> >> root-port. On ARM this is currently ignored.  
+> >
+> > From the perspective of somebody who doesn't know much about
+> > ACPI or PCI, this commit message doesn't really tell me why
+> > QEMU needs to change. The above reads like "this is a kernel
+> > problem" to me. Why is the kernel unable to allocate this BAR?  
+> 
+> Lack of resources on the parent bus/bridge device - the bridge windows are
+> 2M per default on ARM. The native PCIe hotplug controller would add the
+> additional resources to the parent bridge and retry allocation. The
+> ACPI PCI hotplug controller does not do that. I'm curently playing with
+> a hack that adds this to acpiphp.
 
-diff --git a/docs/interop/vfio-user.rst b/docs/interop/vfio-user.rst
-index 12deb25102..1c92f442d2 100644
---- a/docs/interop/vfio-user.rst
-+++ b/docs/interop/vfio-user.rst
-@@ -604,27 +604,31 @@ Request
- 
- The request payload for this message is a structure of the following format:
- 
--+-------------+--------+-------------+
--| Name        | Offset | Size        |
--+=============+========+=============+
--| argsz       | 0      | 4           |
--+-------------+--------+-------------+
--| flags       | 4      | 4           |
--+-------------+--------+-------------+
--|             | +-----+------------+ |
--|             | | Bit | Definition | |
--|             | +=====+============+ |
--|             | | 0   | readable   | |
--|             | +-----+------------+ |
--|             | | 1   | writeable  | |
--|             | +-----+------------+ |
--+-------------+--------+-------------+
--| offset      | 8      | 8           |
--+-------------+--------+-------------+
--| address     | 16     | 8           |
--+-------------+--------+-------------+
--| size        | 24     | 8           |
--+-------------+--------+-------------+
-++-------------+--------+------------------------+
-+| Name        | Offset | Size                   |
-++=============+========+========================+
-+| argsz       | 0      | 4                      |
-++-------------+--------+------------------------+
-+| flags       | 4      | 4                      |
-++-------------+--------+------------------------+
-+|             | +-----+-----------------------+ |
-+|             | | Bit | Definition            | |
-+|             | +=====+=======================+ |
-+|             | | 0   | readable              | |
-+|             | +-----+-----------------------+ |
-+|             | | 1   | writeable             | |
-+|             | +-----+-----------------------+ |
-+|             | | 2   | access mode: mmap     | |
-+|             | +-----+-----------------------+ |
-+|             | | 3   | access mode: file I/O | |
-+|             | +-----+-----------------------+ |
-++-------------+--------+------------------------+
-+| offset      | 8      | 8                      |
-++-------------+--------+------------------------+
-+| address     | 16     | 8                      |
-++-------------+--------+------------------------+
-+| size        | 24     | 8                      |
-++-------------+--------+------------------------+
- 
- * *argsz* is the size of the above structure. Note there is no reply payload,
-   so this field differs from other message types.
-@@ -634,6 +638,8 @@ The request payload for this message is a structure of the following format:
- 
-   * *writeable* indicates that the region can be written to.
- 
-+  * *access mode* bits indicate how the region is to be accessed by the server.
-+
- * *offset* is the file offset of the region with respect to the associated file
-   descriptor, or zero if the region is not mappable
- * *address* is the base DMA address of the region.
-@@ -641,16 +647,30 @@ The request payload for this message is a structure of the following format:
- 
- This structure is 32 bytes in size, so the message size is 16 + 32 bytes.
- 
--If the DMA region being added can be directly mapped by the server, a file
--descriptor must be sent as part of the message meta-data. The region can be
--mapped via the mmap() system call. On ``AF_UNIX`` sockets, the file descriptor
--must be passed as ``SCM_RIGHTS`` type ancillary data.  Otherwise, if the DMA
--region cannot be directly mapped by the server, no file descriptor must be sent
--as part of the message meta-data and the DMA region can be accessed by the
--server using ``VFIO_USER_DMA_READ`` and ``VFIO_USER_DMA_WRITE`` messages,
--explained in `Read and Write Operations`_. A command to map over an existing
--region must be failed by the server with ``EEXIST`` set in error field in the
--reply.
-+There are several alternative access modes for the server to use when accessing
-+the region:
-+
-+* ``VFIO_USER_DMA_READ`` and ``VFIO_USER_DMA_WRITE`` messages, explained in
-+  `Read and Write Operations`_.
-+
-+* ``mmap()`` a client-provided file descriptor, then perform direct accesses to
-+  the underlying memory.
-+
-+* File I/O system calls (such as ``pread()`` / ``pwrite()``) against a
-+  client-provided file descriptor.
-+
-+The access mode bits in the flags field indicate which access mode to use. If
-+an access mode requiring a file descriptor is specified, but the client does
-+not provide a file descriptor, the server must fail the request with
-+``EINVAL``. If no access mode flag bit is set, the server should use ``mmap()``
-+based access if the client provided a file descriptor and message-based access
-+otherwise.
-+
-+On ``AF_UNIX`` sockets, the file descriptor must be passed as ``SCM_RIGHTS``
-+type ancillary data.
-+
-+A command to map over an existing region must be failed by the server with
-+``EEXIST`` set in the error field in the reply.
- 
- Reply
- ^^^^^
--- 
-2.52.0
+some history:
+ACPI PCIHP in kernel doesn't support bridge window resizing, and my attempt to
+make it support bridge window resize like native PCIHP, didn't pan out as that
+caused a regression. PCI resource assignment/enumeration in kernel is quite
+a mess and when device enumerates in a few different ways, it's hard to
+figure out edge cases. (I never had time to followup with  the case that got
+patch reverted)
+
+On Windows (past Vista) bridge window realloc worked fine for me
+(Though I can't remember out if that applied to ACPI PCIHP or just native pcihp)
+
+Now back to the issue at hand, the best would be (in case of ACPI PCIHP):
+  * make ARM version of firmware do what x86 does (it had the same problems). 
+  * make pref64-reserve= work for ARM as well, it's just a hint for firmware
+    but mgmt to plan ahead and create a bridge with larger window
+    assuming it knows what it's going to hotplug later.
+
+but really if you don't need ACPI specific features (acpi-index, faster plug/unplug,
+hotplug on older Windows versions that didn't have native PCIHP), then stick
+with native pcihp.
+
+> 
+> Sebastian
+> 
+> 
 
 
