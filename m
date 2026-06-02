@@ -4,116 +4,112 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6D060CD6E56
-	for <qemu-devel@archiver.kernel.org>; Tue,  2 Jun 2026 01:46:16 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B2BF5CD6E55
+	for <qemu-devel@archiver.kernel.org>; Tue,  2 Jun 2026 01:55:40 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wUECi-0003P6-RY; Mon, 01 Jun 2026 21:46:04 -0400
+	id 1wUELO-0004bJ-FH; Mon, 01 Jun 2026 21:55:02 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <Michael.Roth@amd.com>)
- id 1wUECh-0003Ox-JP
- for qemu-devel@nongnu.org; Mon, 01 Jun 2026 21:46:03 -0400
-Received: from mail-northcentralusazon11013070.outbound.protection.outlook.com
- ([40.107.201.70] helo=CH4PR04CU002.outbound.protection.outlook.com)
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <Michael.Roth@amd.com>)
- id 1wUECf-0002kP-QR
- for qemu-devel@nongnu.org; Mon, 01 Jun 2026 21:46:03 -0400
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=yTYU2XveSUxE71LwTW8jCnNKynOhdMoghIX5IrXqHCZSgCSZ0s5+uVqb2/94KQ1MJJ7euzOS3SSVcu7Hcqd3Iv9/gdFAZvm0QRF+F5kECtMUjinHKt0Onga5nzYmw0GG5KPcAhEyHHFVY0cM84Fsk9JvHlbvrRiErOg8c5M3PBPDmiQT+rBtDHONrwoyy4AkEqMfsg0MHsSOcU7HJGa1tBC/ZVnBPhckfLOXFFF7PHaUcHdtEMMt8BGe5izBYGUbu16+AzQH2Bv79wLbF5ML+XHHcn+ugbFerJ6tLyPyMvbkMsKMLW2D1OHJgXcT+axuNcaY7h9RPLptCIGlN2ovdg==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=vGFIECxN/0hiiUkZtghF34P4jFyxMYa7inIHQQabiZ8=;
- b=RtavG39GFGosE2RFUJkhYJqyG9l4s1J+sl1qZitWPn/Be9itIrHrxNRimJsj5biSiSo6myegsFtC8AcHjAoOKIjPo0i5KmVYEZ1KUUbfD+0GdmVgR8PCtBKj1O67qwKj3+W7GZ70THPkd+HAIkWCRW1F9yiZSnCr2GcOngoygaxzpUlUuq0VCgoTsVcLDUOoJbnz3vXJnxWOWtGWZ2Kzf2eg70zeBI0LB6gGA6mMIBOk9dvfZtVxtMNNRuXoCvmqiZ4wPs+ol8UO2SvDlB42YuM9O+4LG6aucbMHVykFFm61gTfpDAy/Iic/cyBi7yzG/2p0secOKD93F5nE8o/1xw==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass (sender ip is
- 165.204.84.17) smtp.rcpttodomain=redhat.com smtp.mailfrom=amd.com; dmarc=pass
- (p=quarantine sp=quarantine pct=100) action=none header.from=amd.com;
- dkim=none (message not signed); arc=none (0)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=amd.com; s=selector1; 
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=vGFIECxN/0hiiUkZtghF34P4jFyxMYa7inIHQQabiZ8=;
- b=Ca8KozX6hiU5tSrprcX14exJK1o5r2zPpcaW75TycY8iRtcIb/toiY0EpsQUNaTmiXcK4t9oSaIrZXJSipvN0N4FsE0dlwJ361GUS69zRrcgjciNS71lt/wQhbTsiTQorqxnBMtlfY/7bqKL7vYAQuOgMS/e+yR4iIW9JFiQg4o=
-Received: from SN7PR04CA0236.namprd04.prod.outlook.com (2603:10b6:806:127::31)
- by IA1PR12MB7733.namprd12.prod.outlook.com (2603:10b6:208:423::17)
- with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.71.16; Tue, 2 Jun 2026
- 01:40:54 +0000
-Received: from SN1PEPF00036F42.namprd05.prod.outlook.com
- (2603:10b6:806:127:cafe::37) by SN7PR04CA0236.outlook.office365.com
- (2603:10b6:806:127::31) with Microsoft SMTP Server (version=TLS1_3,
- cipher=TLS_AES_256_GCM_SHA384) id 15.21.71.16 via Frontend Transport; Tue, 2
- Jun 2026 01:40:54 +0000
-X-MS-Exchange-Authentication-Results: spf=pass (sender IP is 165.204.84.17)
- smtp.mailfrom=amd.com; dkim=none (message not signed)
- header.d=none;dmarc=pass action=none header.from=amd.com;
-Received-SPF: Pass (protection.outlook.com: domain of amd.com designates
- 165.204.84.17 as permitted sender) receiver=protection.outlook.com;
- client-ip=165.204.84.17; helo=satlexmb07.amd.com; pr=C
-Received: from satlexmb07.amd.com (165.204.84.17) by
- SN1PEPF00036F42.mail.protection.outlook.com (10.167.248.26) with Microsoft
- SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.21.92.5 via Frontend Transport; Tue, 2 Jun 2026 01:40:53 +0000
-Received: from localhost (10.180.168.240) by satlexmb07.amd.com
- (10.181.42.216) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.2562.41; Mon, 1 Jun
- 2026 20:40:53 -0500
-Date: Mon, 1 Jun 2026 20:10:51 -0500
-From: Michael Roth <michael.roth@amd.com>
-To: Peter Xu <peterx@redhat.com>
-CC: <qemu-devel@nongnu.org>, Juraj Marcin <jmarcin@redhat.com>, "David
- Hildenbrand" <david@kernel.org>, Paolo Bonzini <pbonzini@redhat.com>, "Chenyi
- Qiang" <chenyi.qiang@intel.com>, Fabiano Rosas <farosas@suse.de>, "Alexey
- Kardashevskiy" <aik@amd.com>, Li Xiaoyao <xiaoyao.li@intel.com>
-Subject: Re: [PATCH v3 01/12] kvm: Decouple memory attribute check from
- kvm_guest_memfd_supported
-Message-ID: <yfvgjtob2xbldl6avdcay6lzbjo435bqhvhazqeekn6tombyqx@c66atubduqm3>
-References: <20251215205203.1185099-1-peterx@redhat.com>
- <20251215205203.1185099-2-peterx@redhat.com>
+ (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
+ id 1wUELJ-0004aO-Pz
+ for qemu-devel@nongnu.org; Mon, 01 Jun 2026 21:54:58 -0400
+Received: from mail-ej1-x634.google.com ([2a00:1450:4864:20::634])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
+ id 1wUELI-0005qy-5o
+ for qemu-devel@nongnu.org; Mon, 01 Jun 2026 21:54:57 -0400
+Received: by mail-ej1-x634.google.com with SMTP id
+ a640c23a62f3a-bec354815b9so190034766b.3
+ for <qemu-devel@nongnu.org>; Mon, 01 Jun 2026 18:54:55 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1780365294; cv=none;
+ d=google.com; s=arc-20240605;
+ b=VBHjocZRu2I0P9P1JNo+JehFXJFicx2QbSostzcXutXSQfGd0s4l8uhj3cXIMZiSkN
+ TTbecl8HuMja033UX2mnGs1iAHPe1sMlfpqIXkUVDg7FSpHOmqvGkCX92nTFLbsQrl3J
+ caKK+tHpmRpuQRzaCnkSljmREaOxC9zd6xXqTCsqa17z8ffTh79jBEZFtKQE+LG19qMs
+ T0TUWnGI+U1kS7p9T7hdojg+BD1nTmAXGx/zuzr0EKcZGCHi1b0E/jjEvmNtATl320L0
+ dF6I83WNUqBH61LAjIfH+p3NA9KivUJEhR/T8BA5V/4mTrMGdEJAHXHKOUq6aIBKaUIv
+ 4iNw==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
+ s=arc-20240605; 
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:dkim-signature;
+ bh=GsT/zJJT04FSJ3qQSZawD94yLTY70A7Cy3wojYqgmWA=;
+ fh=oXbwLIQ6D7eZBIAfdMwTNx3JbGXBw4Kr6QcethzQnTk=;
+ b=UEi+825WAyV1SMYhQljpLznpaB5ZZG2v0GL9LxuhfGRjGtP25eRuXWAb3hmN31Y+o8
+ qxOXrgwkQhtHeCmjMS+7HEPGIUqCPHHubSM/2raTSxHK1VSGPJLhntPDYGgsIGK6CSFm
+ zQX5S2Ioc7/rlo3Q27sfJ9X98Ni02Pc9zqj6xtO7V5OhVkudZ/wFXhLrNVUeAiF1f5eO
+ VFjkQdf+7qdjA+7vv0I/H+3b3WmBp5g0/eLpCjlJiShRqiqeJkXgRnsT5hNomFfu7m+H
+ oQ1WzFe3T/1Nmrn9F5TMdMkZIyoD2GmbcrKoDoB2KjiWSHJjF9b91O8hG8F86IRXTKor
+ AQFA==; darn=nongnu.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=gmail.com; s=20251104; t=1780365294; x=1780970094; darn=nongnu.org;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=GsT/zJJT04FSJ3qQSZawD94yLTY70A7Cy3wojYqgmWA=;
+ b=cy4G1/feU6NQ+T+1tafOmhQMoB+O0eEMdXE9mN62LslQgn45mADvIzc1aH6Wnav/Jz
+ GCKvKXb4kLl6m+PzA+T3X618j/u3UdUydjqWJJHqwyhhfEWGkX7TMMhJtf7ZjEsD9l6Q
+ myaCN5b807VZjp4G5pp4bXMnuYZEwfHO/r8n6HYpai05Y/pW1C9RBuv4SPfz8ToJJZ5e
+ l0cul748R/w/hDdyDOf0S/liGyzuo7SqlK/k/16oEIsWQ2BWYETA6f5GdkFFzEQP29iY
+ sOEqDnYmxaAjI37UB5o50SsqdEzCBiWjmUmeQSMHh4ofQLZdSX6X2vkJQuTfSqmX9T6x
+ 7eHg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1780365294; x=1780970094;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=GsT/zJJT04FSJ3qQSZawD94yLTY70A7Cy3wojYqgmWA=;
+ b=c1JYcr9bLpfTW0eG10nMcePtYWJpQmvOwqfjU9/fzI5tJpYda874frg8oOB8Xg6BbI
+ AaA5pyJmPUmCMp1qI/TCmChbESCxaI6JoFevmNXDKSnBn/ke9itM3la04HJd9kf4gdN6
+ 1lxltRJWY6Rzusd+C6LDb4UieTOs7zMfw1X5oGmaxKcdfc4J78ld9BWkwFE73ESKv4Yz
+ ExouoiKB0VOfUzom6SBAdK5Okvok9fipbbeH3jaB/xbJ7ys21QWpWHiFvdxDmMUp6xMz
+ yhI+SuMVZvl8HYlJXBRZM+IL0WumDpe0Ee5XlpMQ7AHCmth+vcEmGoT8IfFom6OtWG5e
+ zOWg==
+X-Gm-Message-State: AOJu0YzFaoV6SSQvJOHM9K1ahpr4b9Bkr2KwPFz3dMaWWa+I/s2zvKWs
+ vq0EU9eRzMpVXCpgPo85nE7O5QWNs8Kcie2cOVbz04RgAEEQPHdNMkJRSUDqjY1vfsVmUSep0I5
+ MyPQKJY2WK0abTiv7Rj3EyQZQIZmPPAA=
+X-Gm-Gg: Acq92OGLl/l+WKMNDfAt+2wG0Ma5XnyF9t6kw5fv8Af1gHPHSlaDF4h/LFmI3L4HUC6
+ 0MhUXB52hVNwxcS7jROKqJP001YSTgiPEQWCDHLFX4LNaRJlMMFkYzR9ZyUBsOpKaoISGtI2ao+
+ 00lJhJHuecL5Fx0Kee5uGjHgLTXDzDAuEegNLtOZmr3REz7sUvk3jXmM2rHCRP3Stb0f1LZ5rEg
+ Vi3+wgm9TrG/qbdF1UKXZ516WrMgKb8mDnYHwW5TpIIMtRWkZIssPoRCsTLOPntQHL8SAPgGjuh
+ VtWn+Jd2EOsbLFlgbaz6Z1l2gDZwNgnVE6y0y2R3gi3RyY+l
+X-Received: by 2002:a17:907:1c8f:b0:bc2:70ca:c41e with SMTP id
+ a640c23a62f3a-beab6bc5386mr740979066b.25.1780365293292; Mon, 01 Jun 2026
+ 18:54:53 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset="us-ascii"
-Content-Disposition: inline
-In-Reply-To: <20251215205203.1185099-2-peterx@redhat.com>
-X-Originating-IP: [10.180.168.240]
-X-ClientProxiedBy: satlexmb08.amd.com (10.181.42.217) To satlexmb07.amd.com
- (10.181.42.216)
-X-EOPAttributedMessage: 0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: SN1PEPF00036F42:EE_|IA1PR12MB7733:EE_
-X-MS-Office365-Filtering-Correlation-Id: b4050bc5-a52e-41ce-57a3-08dec047fc35
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam: BCL:0;
- ARA:13230040|376014|1800799024|82310400026|36860700016|22082099003|18002099003|4143699003|56012099006|11063799006;
-X-Microsoft-Antispam-Message-Info: yDfoeBwUrIlm3yU4934e9Ick3GUzA/LolJMNCPIdc/AaA0o8Os5TdcG7KdIAXCN87dFRWmOIYLknExnc7VyjZxlF/fn7r0DasrS9EzgaOwKDAficLf3jgdZl730C4nu6XS68NHOLcdEA7rOLJeBaR3+LhPWWmZN8MrLn6/g3DTk4cmBhhSkYsa6OZluDUIwh1WbHLX1crkqDsk3EVQkQNVy/ujUQUnNbNdr8R17VBLpo7AVVO4pcrCfdmOBNSYLn/MPME3x7XSVlHLyn4lBzZoSXE8/6SHHtMu5iEEJkaSRXvF6P12EtwfAA91ppRMTnaVoHyR6Ek0IV79cHfU2CkPfZlLKrjptL2cqtWORrv3gfkP6i3XP9i8KqlNM9/yw0qnBhb5jkRDkic1w0/eLF/+EQXeocacrfdJUQsYY6LewZK2geAeeEHJBdnPrlSOrOmEX1b3P3D0/aEd9qX+ravxzP3JDKbBaaLb1RtXk5Hpxx1m0myi0wmAPHYAuZ4PwpgLb8wi4b5SGdqiuqOEKHXCZh8siyKCEgOa/DyaZb0l3bscaZMhQGE7tw8rAPVEN8A6uQE2e+z09Rj3bk4fVf7CxF/5YBsA4EXzvdfNf1PB+G7FMJ+rr7aEe5k/MSNOS8PwsHVuzTUfWzp6JoS+vra/buigSWNwcaH+B4RrSH2VgZgLB3DEE/5c4nXyHNcvIrG3LCkWkWRnUQi47ud1pBO5ZOJY0k1pg6AwR8pWpS+1c=
-X-Forefront-Antispam-Report: CIP:165.204.84.17; CTRY:US; LANG:en; SCL:1; SRV:;
- IPV:NLI; SFV:NSPM; H:satlexmb07.amd.com; PTR:InfoDomainNonexistent; CAT:NONE;
- SFS:(13230040)(376014)(1800799024)(82310400026)(36860700016)(22082099003)(18002099003)(4143699003)(56012099006)(11063799006);
- DIR:OUT; SFP:1101; 
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0: w3yPX39FkaV2BY8cn/oie3OXPnYRc7vIJg6eNG0ZICE3HZ00zt5nGnugRf/knrHQs2boVubGqI2w2RVuEj3sUzV64LoixanLOHy67QFbr3BF0a7GW1YOutNrdlsHFXlEeU7FXLUPSIGElF9NGNjL/mv4/0BH2Mnu4Hm14pxIWgbSQlMhipp2ljfrS/8w2EnZIsPTMWpLjIBrqBgH4wQ8wZiiljGjHNesIxtjX4vj2wY2H+zfUaJ7lHiImj+n6TyIY2qCff5oBUdlNay1yacsfE6MDP0wZdh33f1p9vcP137hH4kAjl5370vLmkYRPMsbrCaz9pAY676UqrQYFw5PEYnH0QFhBzanwzxyoGSIaDyg1YDyrh302dMC1MPet4sTYY+kYqYNBeSEFqp0tZgIG2As2PL3hAScqalhr8lbzowI9H5BGlXjUOHks2obuGoa
-X-OriginatorOrg: amd.com
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 02 Jun 2026 01:40:53.9439 (UTC)
-X-MS-Exchange-CrossTenant-Network-Message-Id: b4050bc5-a52e-41ce-57a3-08dec047fc35
-X-MS-Exchange-CrossTenant-Id: 3dd8961f-e488-4e60-8e11-a82d994e183d
-X-MS-Exchange-CrossTenant-OriginalAttributedTenantConnectingIp: TenantId=3dd8961f-e488-4e60-8e11-a82d994e183d; Ip=[165.204.84.17];
- Helo=[satlexmb07.amd.com]
-X-MS-Exchange-CrossTenant-AuthSource: SN1PEPF00036F42.namprd05.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Anonymous
-X-MS-Exchange-CrossTenant-FromEntityHeader: HybridOnPrem
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: IA1PR12MB7733
-Received-SPF: permerror client-ip=40.107.201.70;
- envelope-from=Michael.Roth@amd.com;
- helo=CH4PR04CU002.outbound.protection.outlook.com
-X-Spam_score_int: -24
-X-Spam_score: -2.5
-X-Spam_bar: --
-X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.445,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001, SPF_HELO_PASS=-0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+References: <20260527201348.29511-1-philmd@linaro.org>
+In-Reply-To: <20260527201348.29511-1-philmd@linaro.org>
+From: Alistair Francis <alistair23@gmail.com>
+Date: Tue, 2 Jun 2026 11:54:26 +1000
+X-Gm-Features: AVHnY4KdbUpeQHRHHIagqkU6Omh4yKouC1cZ9AO-wzbepkcWIap8pGwqvr3Ubb4
+Message-ID: <CAKmqyKMt8GEzXTyVGnTvr4zOkkpS8S3Bep3QD4KFzy1FEH_6eA@mail.gmail.com>
+Subject: Re: [PATCH v11 00/12] Add RISC-V big-endian target support
+To: =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>
+Cc: qemu-devel@nongnu.org, 
+ Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>, qemu-riscv@nongnu.org, 
+ Djordje Todorovic <Djordje.Todorovic@htecgroup.com>,
+ Anton Johansson <anjo@rev.ng>, 
+ Weiwei Li <liwei1518@gmail.com>, Liu Zhiwei <zhiwei_liu@linux.alibaba.com>, 
+ Chao Liu <chao.liu.zevorn@gmail.com>, 
+ Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>,
+ Palmer Dabbelt <palmer@dabbelt.com>, 
+ Alistair Francis <alistair.francis@wdc.com>,
+ Christoph Muellner <christoph.muellner@vrull.eu>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2a00:1450:4864:20::634;
+ envelope-from=alistair23@gmail.com; helo=mail-ej1-x634.google.com
+X-Spam_score_int: -17
+X-Spam_score: -1.8
+X-Spam_bar: -
+X-Spam_report: (-1.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -129,105 +125,81 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Mon, Dec 15, 2025 at 03:51:52PM -0500, Peter Xu wrote:
-> From: Xiaoyao Li <xiaoyao.li@intel.com>
-> 
-> With the mmap support of guest memfd, KVM allows usersapce to create
-> guest memfd serving as normal non-private memory for X86 DEFEAULT VM.
-> However, KVM doesn't support private memory attriute for X86 DEFAULT
-> VM.
-> 
-> Make kvm_guest_memfd_supported not rely on KVM_MEMORY_ATTRIBUTE_PRIVATE
-> and check KVM_MEMORY_ATTRIBUTE_PRIVATE separately when the machine
-> requires guest_memfd to serve as private memory.
-> 
-> This allows QMEU to create guest memfd with mmap to serve as the memory
-> backend for X86 DEFAULT VM.
-> 
-> Signed-off-by: Xiaoyao Li <xiaoyao.li@intel.com>
-> Signed-off-by: Peter Xu <peterx@redhat.com>
+On Thu, May 28, 2026 at 6:14=E2=80=AFAM Philippe Mathieu-Daud=C3=A9
+<philmd@linaro.org> wrote:
+>
+> v11:
+> - rewrite some patches while reviewing for mainstream integration
+>
+> v10 cover from Djordje:
+>
+> Hi all,
+>
+> This series adds big-endian data support for RISC-V system emulation.
+>
+> Following the discussion on previous versions, this series models
+> fixed-endian harts, not a mixed-endian implementation where software can
+> toggle MBE/SBE/UBE at runtime. The reset value of MBE/SBE/UBE is selected
+> from the CPU configuration. These bits remain outside the
+> mstatus/mstatush/sstatus writable masks, so they are effectively hardwire=
+d
+> to 0 for the default little-endian CPUs and to 1 when `big-endian=3Don`.
+>
+> The user-visible `big-endian` CPU property is exposed only after the data
+> path, boot path, and page-table walk support are in place, so the series
+> remains bisectable.
+>
+> Djordje Todorovic (6):
+>   target/riscv: Implement runtime data endianness via MSTATUS bits
+>   target/riscv: Fix page table walk endianness for big-endian harts
+>   target/riscv: Add big-endian CPU configuration field and reset logic
+>   hw/riscv/boot: Honour data endianness
+>   target/riscv: Expose and document the CPU 'big-endian' property
+>   tests/functional: Add RISC-V endianness test
+>
+> Philippe Mathieu-Daud=C3=A9 (6):
+>   target/riscv: Initialize DisasContext::mo_endian once
+>   target/riscv: Assert PTE.N/PBMT bits are not expected on RV32
+>   target/riscv: De-indent some code in get_physical_address()
+>   target/riscv: Remove target_ulong use in get_physical_address()
+>   hw/riscv/boot: Rewrite setup_rom_reset_vec() using load/store API
+>   hw/riscv/boot: Replace cpu_to_le32() -> const_le32()
 
-Reviewed-by: Michael Roth <michael.roth@amd.com>
+Thanks!
 
-> ---
->  include/system/kvm.h   | 1 +
->  accel/kvm/kvm-all.c    | 8 ++++++--
->  accel/stubs/kvm-stub.c | 5 +++++
->  system/physmem.c       | 8 ++++++++
->  4 files changed, 20 insertions(+), 2 deletions(-)
-> 
-> diff --git a/include/system/kvm.h b/include/system/kvm.h
-> index 8f9eecf044..b5811c90f1 100644
-> --- a/include/system/kvm.h
-> +++ b/include/system/kvm.h
-> @@ -561,6 +561,7 @@ int kvm_create_guest_memfd(uint64_t size, uint64_t flags, Error **errp);
->  
->  int kvm_set_memory_attributes_private(hwaddr start, uint64_t size);
->  int kvm_set_memory_attributes_shared(hwaddr start, uint64_t size);
-> +bool kvm_private_memory_attribute_supported(void);
->  
->  int kvm_convert_memory(hwaddr start, hwaddr size, bool to_private);
->  
-> diff --git a/accel/kvm/kvm-all.c b/accel/kvm/kvm-all.c
-> index 28006d73c5..59836ebdff 100644
-> --- a/accel/kvm/kvm-all.c
-> +++ b/accel/kvm/kvm-all.c
-> @@ -1501,6 +1501,11 @@ int kvm_set_memory_attributes_shared(hwaddr start, uint64_t size)
->      return kvm_set_memory_attributes(start, size, 0);
->  }
->  
-> +bool kvm_private_memory_attribute_supported(void)
-> +{
-> +    return !!(kvm_supported_memory_attributes & KVM_MEMORY_ATTRIBUTE_PRIVATE);
-> +}
-> +
->  /* Called with KVMMemoryListener.slots_lock held */
->  static void kvm_set_phys_mem(KVMMemoryListener *kml,
->                               MemoryRegionSection *section, bool add)
-> @@ -2781,8 +2786,7 @@ static int kvm_init(AccelState *as, MachineState *ms)
->      kvm_supported_memory_attributes = kvm_vm_check_extension(s, KVM_CAP_MEMORY_ATTRIBUTES);
->      kvm_guest_memfd_supported =
->          kvm_vm_check_extension(s, KVM_CAP_GUEST_MEMFD) &&
-> -        kvm_vm_check_extension(s, KVM_CAP_USER_MEMORY2) &&
-> -        (kvm_supported_memory_attributes & KVM_MEMORY_ATTRIBUTE_PRIVATE);
-> +        kvm_vm_check_extension(s, KVM_CAP_USER_MEMORY2);
->      kvm_pre_fault_memory_supported = kvm_vm_check_extension(s, KVM_CAP_PRE_FAULT_MEMORY);
->  
->      if (s->kernel_irqchip_split == ON_OFF_AUTO_AUTO) {
-> diff --git a/accel/stubs/kvm-stub.c b/accel/stubs/kvm-stub.c
-> index 68cd33ba97..73f04eb589 100644
-> --- a/accel/stubs/kvm-stub.c
-> +++ b/accel/stubs/kvm-stub.c
-> @@ -125,3 +125,8 @@ int kvm_create_guest_memfd(uint64_t size, uint64_t flags, Error **errp)
->  {
->      return -ENOSYS;
->  }
-> +
-> +bool kvm_private_memory_attribute_supported(void)
-> +{
-> +    return false;
-> +}
-> diff --git a/system/physmem.c b/system/physmem.c
-> index c9869e4049..3555d2f6f7 100644
-> --- a/system/physmem.c
-> +++ b/system/physmem.c
-> @@ -2211,6 +2211,14 @@ static void ram_block_add(RAMBlock *new_block, Error **errp)
->                         object_get_typename(OBJECT(current_machine->cgs)));
->              goto out_free;
->          }
-> +
-> +        if (!kvm_private_memory_attribute_supported()) {
-> +            error_setg(errp, "cannot set up private guest memory for %s: "
-> +                       " KVM does not support private memory attribute",
-> +                       object_get_typename(OBJECT(current_machine->cgs)));
-> +            goto out_free;
-> +        }
-> +
->          assert(new_block->guest_memfd < 0);
->  
->          ret = ram_block_coordinated_discard_require(true);
-> -- 
-> 2.50.1
-> 
-> 
+Applied to riscv-to-apply.next with patch 3 dropped
+
+Alistair
+
+>
+>  docs/system/target-riscv.rst                  | 29 ++++++
+>  target/riscv/cpu.h                            |  1 +
+>  target/riscv/internals.h                      | 29 ++++--
+>  target/riscv/cpu_cfg_fields.h.inc             |  1 +
+>  hw/riscv/boot.c                               | 93 ++++++++++---------
+>  target/riscv/cpu.c                            | 15 ++-
+>  target/riscv/cpu_helper.c                     | 44 +++++----
+>  target/riscv/tcg/tcg-cpu.c                    |  2 +
+>  target/riscv/translate.c                      | 22 ++---
+>  target/riscv/insn_trans/trans_rva.c.inc       |  4 +-
+>  target/riscv/insn_trans/trans_rvd.c.inc       |  4 +-
+>  target/riscv/insn_trans/trans_rvf.c.inc       |  4 +-
+>  target/riscv/insn_trans/trans_rvi.c.inc       |  8 +-
+>  target/riscv/insn_trans/trans_rvzacas.c.inc   |  4 +-
+>  target/riscv/insn_trans/trans_rvzalasr.c.inc  |  4 +-
+>  target/riscv/insn_trans/trans_rvzce.c.inc     |  4 +-
+>  target/riscv/insn_trans/trans_rvzfh.c.inc     |  4 +-
+>  target/riscv/insn_trans/trans_rvzicfiss.c.inc |  4 +-
+>  target/riscv/insn_trans/trans_xmips.c.inc     |  8 +-
+>  target/riscv/insn_trans/trans_xthead.c.inc    | 16 ++--
+>  target/riscv/insn_trans/trans_zilsd.c.inc     |  4 +-
+>  tests/functional/riscv64/meson.build          |  1 +
+>  tests/functional/riscv64/test_endianness.py   | 57 ++++++++++++
+>  23 files changed, 240 insertions(+), 122 deletions(-)
+>  create mode 100644 tests/functional/riscv64/test_endianness.py
+>
+> --
+> 2.53.0
+>
+>
 
