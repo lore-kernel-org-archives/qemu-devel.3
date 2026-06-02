@@ -4,48 +4,44 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id CB0C0CD5BD1
-	for <qemu-devel@archiver.kernel.org>; Tue,  2 Jun 2026 13:51:00 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7F66FCD5BD1
+	for <qemu-devel@archiver.kernel.org>; Tue,  2 Jun 2026 13:55:03 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wUPVg-0004r5-Px; Tue, 02 Jun 2026 09:50:24 -0400
+	id 1wUPZX-00085e-C5; Tue, 02 Jun 2026 09:54:23 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <david@kernel.org>) id 1wUPVf-0004q1-3d
- for qemu-devel@nongnu.org; Tue, 02 Jun 2026 09:50:23 -0400
-Received: from sea.source.kernel.org ([2600:3c0a:e001:78e:0:1991:8:25])
+ (Exim 4.90_1) (envelope-from <david@kernel.org>) id 1wUPZQ-0007z4-S6
+ for qemu-devel@nongnu.org; Tue, 02 Jun 2026 09:54:19 -0400
+Received: from tor.source.kernel.org ([2600:3c04:e001:324:0:1991:8:25])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <david@kernel.org>) id 1wUPVd-000276-Ha
- for qemu-devel@nongnu.org; Tue, 02 Jun 2026 09:50:22 -0400
+ (Exim 4.90_1) (envelope-from <david@kernel.org>) id 1wUPZE-0004LT-MS
+ for qemu-devel@nongnu.org; Tue, 02 Jun 2026 09:54:11 -0400
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
- by sea.source.kernel.org (Postfix) with ESMTP id 4BFDD42D8C;
- Tue,  2 Jun 2026 13:50:19 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C79C41F00893;
- Tue,  2 Jun 2026 13:50:17 +0000 (UTC)
+ by tor.source.kernel.org (Postfix) with ESMTP id 2984560126;
+ Tue,  2 Jun 2026 13:54:03 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5AD041F00893;
+ Tue,  2 Jun 2026 13:54:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
- s=k20260515; t=1780408219;
- bh=bV7rV7BK0HMldHfMhj27JmrouMcOwS6Q2QJsS2yxgBY=;
- h=Date:Subject:To:Cc:References:From:In-Reply-To;
- b=G3GG0XVdUGbF8HE+Vd/Pn0n6+Kq52pHwMnyroOTbKWhEUPMO7ijYgLjArqNbJYLkr
- o4QrNiWVmeWWbaPvMJ4RGflP3hQfMiBsMOqEtipEeF0U5fy0dXsO+1UGZywR1u6x//
- LGL3S88YSZgn6p2MYVxs6be8EKerJLE3z2f2efvwLx/d9cFDU9cbXp2wcM3lY3FZex
- b2FHGam5kW+NQ6dEbipJvubErs/HaVgwdWrhvW1cuSK3UKe8dz5oqbFvKmRfVlw3op
- naowhOY57LMpe23vK1hizxIUa8unWpTcLPiRWrgYbnBL/KrbhJAZFpt2wAWLe3EOLV
- GQKVNjSferTuQ==
-Message-ID: <d8cbf284-7f42-4892-b50d-b21bbe91b874@kernel.org>
-Date: Tue, 2 Jun 2026 15:50:16 +0200
+ s=k20260515; t=1780408442;
+ bh=HZ9zV3KFmdiEyTRdusMda56o8Y/Xc+chLdyxGJQMjtM=;
+ h=Date:Subject:To:References:From:In-Reply-To;
+ b=oQILxPpyKEnTsLhotQ2JnlYSvwS37z929UB5NFkLXI88cViNZoUhoaxL4mKITNB+E
+ ZaBatjvFp9DWqjz4NvpAWS5nYQgUezJHYkbH9Vj3DL0G0FUKtr8t1KVEGHoMjQPSgp
+ cWH41igSLSwu7QzaXTdBzxlD0MRIOuMSpxaEvAavs8bLRzUd2+QxVZFsyzQGa1dFDj
+ CoU6pvhmrp2q9xXq3lCmi8LOPVY+DAVSNpNACcdnuyzeX5lwPzJeuvni8Ewf1s5Efp
+ YoILUG/NULF8K20tPKDy+gd/OvDV1V1t9+9Z9BmJQbSpLsfa7SbSzlaHdxPvXP2Mr0
+ 22dKnyI6AuBNQ==
+Message-ID: <33d4e111-51b3-40ec-b681-bb95e6bf0c2f@kernel.org>
+Date: Tue, 2 Jun 2026 15:54:00 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v4 13/13] RFC: hw/virtio: start virtio-mem guest_memfd
- regions as shared
-To: Xiaoyao Li <xiaoyao.li@intel.com>, Peter Xu <peterx@redhat.com>,
- =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>
-Cc: qemu-devel@nongnu.org, Paolo Bonzini <pbonzini@redhat.com>,
- Chenyi Qiang <chenyi.qiang@intel.com>
+Subject: Re: [PATCH v4 12/13] monitor: add 'info ramblock-attributes' command
+To: =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>,
+ qemu-devel@nongnu.org
 References: <20260504-rdm5-v4-0-bdf61e57c1e1@redhat.com>
- <20260504-rdm5-v4-13-bdf61e57c1e1@redhat.com> <agTjb3M8ElUAlfp1@x1.local>
- <7a9fe710-679e-4366-9eeb-3aba148773d7@intel.com>
+ <20260504-rdm5-v4-12-bdf61e57c1e1@redhat.com>
 From: "David Hildenbrand (Arm)" <david@kernel.org>
 Content-Language: en-US
 Autocrypt: addr=david@kernel.org; keydata=
@@ -92,11 +88,11 @@ Autocrypt: addr=david@kernel.org; keydata=
  3iyY2Nsd7JxfKu1PRhCGwXzRw5TlfEsoRI7V9A8isUCoqE2Dzh3FvYHVeX4Us+bRL/oqareJ
  CIFqgYMyvHj7Q06kTKmauOe4Nf0l0qEkIuIzfoLJ3qr5UyXc2hLtWyT9Ir+lYlX9efqh7mOY
  qIws/H2t
-In-Reply-To: <7a9fe710-679e-4366-9eeb-3aba148773d7@intel.com>
+In-Reply-To: <20260504-rdm5-v4-12-bdf61e57c1e1@redhat.com>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2600:3c0a:e001:78e:0:1991:8:25;
- envelope-from=david@kernel.org; helo=sea.source.kernel.org
+Received-SPF: pass client-ip=2600:3c04:e001:324:0:1991:8:25;
+ envelope-from=david@kernel.org; helo=tor.source.kernel.org
 X-Spam_score_int: -24
 X-Spam_score: -2.5
 X-Spam_bar: --
@@ -118,53 +114,13 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 5/27/26 11:48, Xiaoyao Li wrote:
-> On 5/14/2026 4:47 AM, Peter Xu wrote:
->> On Mon, May 04, 2026 at 04:30:19PM +0400, Marc-André Lureau wrote:
->>> In TDX guests, virtio-mem plug/unplug/re-plug fails because
->>> kvm_set_phys_mem() unconditionally sets KVM memory attributes to
->>> PRIVATE for all guest_memfd regions. On re-plug, the PRIVATE->PRIVATE
->>> transition is a no-op, so KVM doesn't re-AUG pages and the guest's
->>> TDG.MEM.PAGE.ACCEPT fails.
->>
->> Know little on TDX, please bare with me..
->>
->> I saw KVM does a seamcall to ADD or AUG whenever a new EPT pte is set, via
->> this path:
->>
->>          __tdp_mmu_set_spte_atomic
->>          set_external_spte_present
->>          tdx_sept_set_private_spte <------
->>
->> On unplug, I'm expecting with your prior patches, gmem pages will be
->> truncated properly, so they'll be all gone.
->>
->> Then, qemu does replug -> guest gets that event, start access page -> EPT
->> violation, KVM resolving page fault with __tdp_mmu_set_spte_atomic() (per
->> above) and a new page -> triggering AUG (not ADD, since it's post-boot).
->>
->> Could you elaborate here why AUG is missing in the first place?
-> 
-> Peter, you analysis is correct.
-> 
-> The reason why plug -> unplug -> re-plug fails, is QEMU fails to discard the
-> private memory so that KVM doesn't zap the private mapping. When re-plug and
-> guest re-accepts, KVM doesn't get involved. Not discard the private memory on
-> unplug leads to another issue that the private memory is still accessible to the
-> guest.
-> 
-> But patch 11 fixes this. Patch 11 should be enough and we don't need this patch.
-> For guest kernel side, we need to ensure the guest kernel accepts the new
-> plugged memory, and no "start-shared" trick is required.
-> 
-> BTW, "start-shared" memory for coco is not something good. It violates the
-> contract that all the memory for Coco VM is initial private (accepted or
-> unaccepted) from EFI spec. We probably should avoid introducing exception unless
-> we have to.
-> 
+On 5/4/26 14:30, Marc-André Lureau wrote:
+> Add a new 'info ramblock-attributes' HMP command and the corresponding
+> 'x-query-ramblock-attributes' QMP command to display the shared/private
+> memory attributes for ram blocks.
 
-Sorry, I have to double check: you are saying we do not need this patch, and
-instead the guest has to do the right thing after plugging memory?
+Can we abstract the "ramblock" stuff somehow, and refer to it as
+(hypervisor-specific) memory attributs somehow?
 
 -- 
 Cheers,
