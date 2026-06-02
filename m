@@ -4,122 +4,108 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 02F16CD6E4A
-	for <qemu-devel@archiver.kernel.org>; Tue,  2 Jun 2026 06:34:30 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id BF633C5DF71
+	for <qemu-devel@archiver.kernel.org>; Tue,  2 Jun 2026 06:34:45 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wUIhQ-0005eX-9v; Tue, 02 Jun 2026 02:34:04 -0400
+	id 1wUIhX-0005hO-GF; Tue, 02 Jun 2026 02:34:13 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@kaod.org>) id 1wUIhO-0005dT-FI
- for qemu-devel@nongnu.org; Tue, 02 Jun 2026 02:34:02 -0400
-Received: from smtpout9.mo537.mail-out.ovh.net ([51.210.91.28])
+ (Exim 4.90_1) (envelope-from <kchiu@axiado.com>) id 1wUIhR-0005fg-IP
+ for qemu-devel@nongnu.org; Tue, 02 Jun 2026 02:34:05 -0400
+Received: from mail-westusazlp170120002.outbound.protection.outlook.com
+ ([2a01:111:f403:c001::2] helo=SJ2PR03CU001.outbound.protection.outlook.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@kaod.org>) id 1wUIhM-0004bU-JQ
- for qemu-devel@nongnu.org; Tue, 02 Jun 2026 02:34:01 -0400
-Received: from director5.derp.mail-out.ovh.net
- (director5.derp.mail-out.ovh.net [51.68.94.138])
- by mo537.mail-out.ovh.net (Postfix) with ESMTPS id 4gV1J40G06z3wx7;
- Tue,  2 Jun 2026 06:33:56 +0000 (UTC)
-Received: from director5.derp.mail-out.ovh.net
- (director5.derp.mail-out.ovh.net. [127.0.0.1])
- by director5.derp.mail-out.ovh.net (inspect_sender_mail_agent) with SMTP
- for <jamin_lin@aspeedtech.com>; Tue,  2 Jun 2026 06:33:55 +0000 (UTC)
-Received: from mta11.priv.ovhmail-u2.ea.mail.ovh.net (unknown [10.110.58.226])
- by director5.derp.mail-out.ovh.net (Postfix) with ESMTPS id
- 4gV1J351Klz7vRS; Tue,  2 Jun 2026 06:33:55 +0000 (UTC)
-Received: from kaod.org (unknown [10.1.6.5])
- (Authenticated sender: clg@kaod.org)
- by mta11.priv.ovhmail-u2.ea.mail.ovh.net (Postfix) with ESMTPSA id
- 487DA240305F; Tue,  2 Jun 2026 06:33:54 +0000 (UTC)
-Authentication-Results: garm.ovh; auth=pass
- (GARM-99G00390792dc9-3525-4b48-9998-1c4f937cbf95,
- E738715FB773EF828F8B902CE3F45C10C1B236B1) smtp.auth=clg@kaod.org
-X-OVh-ClientIp: 82.64.250.170
-Message-ID: <554cdfc3-13b0-48c9-83e0-b5e43461f7f7@kaod.org>
-Date: Tue, 2 Jun 2026 08:33:53 +0200
+ (Exim 4.90_1) (envelope-from <kchiu@axiado.com>) id 1wUIhO-0004bt-At
+ for qemu-devel@nongnu.org; Tue, 02 Jun 2026 02:34:05 -0400
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=CyEE4AWP/lUPjgfXce0l9lK6DQAK0WSu9l25HJT7KCkPcCNZTgWl+AHC0U7OShZxrj/uw1cFRofiJZQs2c6a32+ktaNdFvWytUhNpX97it2guwBycopu1IIkfJcmfWy8YwdtM8WIOz6sRdV1nmShCRdQ/rEWmJ+EoYSDMrrnl7M3n0z0zIFEiBnHeihvc1Ec56iolhgHfqKTaPD1KwlVsSC7cxHRivq+Fcv9ZJbkGLHuEgRZyingA+jusSxzpTRU0YRjNBU4zYVD7Gj7vrPTeMR8V2or12CI0+dYp+HYtxM+ljdf331jXZFvNSFFH3bBRVfJz7SHOg/nngrcpjPyrQ==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=NX0EPeMPqRpvn7bbq9ArpShILkpLrhyBVR8hikhMdf8=;
+ b=csXSU/nGgbcvraLqgAABTe0Ee9biawf2au7PZzlGMWs7KMbOUCEB8XxWn+dAzN1yqscGheAs6R2KOV/ykQFFuxB2lQdhobzTgsn3upRnmQfcxXiLpdiKayWNQf7WximSdwJmwDJqMSl5ZH2ynzmQ76OK0XN4Aevi5tPVcbFmmB/F3gEM12vyT/uIv6t4KaUb3/xJB0uytlYpF27kDj9oHb/WFdTlr7HI3pElSBr1tLLJZpxBUZK/qEUX+kEHTbUKMxkNf5X3BeZesUu1TW78uep1Gv17xhoKctyUap2c9K5wA2qsgJaIPJrF6k6sTGY4+JZgVgBG8Z7gwKwxbuG8aw==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=fail (sender ip is
+ 64.62.143.114) smtp.rcpttodomain=axiado.com smtp.mailfrom=axiado.com;
+ dmarc=none action=none header.from=axiado.com; dkim=none (message not
+ signed); arc=none (0)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=axiado.com;
+ s=selector1;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=NX0EPeMPqRpvn7bbq9ArpShILkpLrhyBVR8hikhMdf8=;
+ b=PYG2OFrJxut7uwyxhCkc0P5zCIHsFDpw+fvHtzwlciccHx1ISK9WQyuTgV7phj2ZR2eQwzQqCBk2XnT32MhkkencQdUkXFJrAYDxnemSzv0x7H29nFBq0xw1bPuBEKZO2eV96xREH1mfs5o65x5LiPD2JGMd9BPU4KGvNew2IkRtsg6bqt0aX/XbbT+1SJ+WsQQpc4RBuNPXtGGLu/rmLsoEm01oCcP5L4Noe/7J9VmgDBn79ghpAfNaR562CsxAbm0GZ8CGLNqbcLpzJwLkv7MOkqSU4v6x0bVhNO2PwSCY1PeCrD7GRlScTzwSn9lH/vkQX3GpO4w27Ou9poJ2uQ==
+Received: from MN2PR06CA0027.namprd06.prod.outlook.com (2603:10b6:208:23d::32)
+ by CO6PR18MB3987.namprd18.prod.outlook.com (2603:10b6:5:34e::24) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.92.7; Tue, 2 Jun 2026
+ 06:33:57 +0000
+Received: from BL6PEPF00020E65.namprd04.prod.outlook.com
+ (2603:10b6:208:23d:cafe::66) by MN2PR06CA0027.outlook.office365.com
+ (2603:10b6:208:23d::32) with Microsoft SMTP Server (version=TLS1_3,
+ cipher=TLS_AES_256_GCM_SHA384) id 15.21.71.16 via Frontend Transport; Tue, 2
+ Jun 2026 06:33:56 +0000
+X-MS-Exchange-Authentication-Results: spf=fail (sender IP is 64.62.143.114)
+ smtp.mailfrom=axiado.com; dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=axiado.com;
+Received-SPF: Fail (protection.outlook.com: domain of axiado.com does not
+ designate 64.62.143.114 as permitted sender) receiver=protection.outlook.com; 
+ client-ip=64.62.143.114; helo=smtp.corp.axiado.com;
+Received: from smtp.corp.axiado.com (64.62.143.114) by
+ BL6PEPF00020E65.mail.protection.outlook.com (10.167.249.26) with Microsoft
+ SMTP Server (version=TLS1_3, cipher=TLS_AES_256_GCM_SHA384) id 15.21.92.5 via
+ Frontend Transport; Tue, 2 Jun 2026 06:33:56 +0000
+Received: from axiado.com (vm-swbuild01.axiadoRD [10.4.1.181])
+ by smtp.corp.axiado.com (Postfix) with ESMTP id 9A51E4186B5D;
+ Mon,  1 Jun 2026 23:31:31 -0700 (PDT)
+From: Kuan-Jui Chiu <kchiu@axiado.com>
+To: qemu-devel@nongnu.org,
+	peter.maydell@linaro.org
+Cc: Kuan-Jui Chiu <kchiu@axiado.com>
+Subject: [PATCH v3 4/6] hw/arm: Add Axiado EVK SCM3003
+Date: Mon,  1 Jun 2026 23:33:48 -0700
+Message-Id: <20260602063350.3623723-5-kchiu@axiado.com>
+X-Mailer: git-send-email 2.34.1
+In-Reply-To: <20260602063350.3623723-1-kchiu@axiado.com>
+References: <20260602063350.3623723-1-kchiu@axiado.com>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 08/10] hw/arm/aspeed_ast1040: Introduce I2C support
-To: Jamin Lin <jamin_lin@aspeedtech.com>,
- Peter Maydell <peter.maydell@linaro.org>,
- Steven Lee <steven_lee@aspeedtech.com>, Troy Lee <leetroy@gmail.com>,
- Kane Chen <kane_chen@aspeedtech.com>,
- Andrew Jeffery <andrew@codeconstruct.com.au>, Joel Stanley <joel@jms.id.au>,
- "open list:ASPEED BMCs" <qemu-arm@nongnu.org>,
- "open list:All patches CC here" <qemu-devel@nongnu.org>
-Cc: Troy Lee <troy_lee@aspeedtech.com>
-References: <20260602052827.1535299-1-jamin_lin@aspeedtech.com>
- <20260602052827.1535299-9-jamin_lin@aspeedtech.com>
-Content-Language: en-US, fr
-From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>
-Autocrypt: addr=clg@kaod.org; keydata=
- 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
-In-Reply-To: <20260602052827.1535299-9-jamin_lin@aspeedtech.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-x-ovh-tracer-id: 8742331303049800715
-X-VR-SPAMSTATE: OK
-X-VR-SPAMSCORE: -100
-X-VR-SPAMCAUSE: dmFkZTGsdPbpdtqZW4s89iWVZu3Ln7hX5wgdMUkm8ksNwJNSyvQ9eP4CiyJPRR3HzmYHQrlWv5OW6708iwfqMB5mzlqAyBjH1INkxeT9H/75a0OaoI2txS5E9lUl4a9ukv+utztcGWqpbZh6ZpujD/WHavp+7DqobRB4v4o2Pkk2RL2VHNhDuD4JPydPRQWfW+8BF1lVEdGWcv4PxJKZVLR/QeQ5/JhQFAzUK3141cl6rbpnBcVrrcAX3nDl+m7hcfLsuNBdun1W3bMEYiwnw1/FThwDMElrsyEAVHIxHkdDW5ZlyKaN8O5s2QOZ0Eens4KVCtwoB8+vOvf/mQxOFVCR/RLdnfhX8EuhgR+02BV2/FQvfy67WNJUGSVwoRLoCLdRrLK5H+i/Kj1SgQQRcJKxvGw4K7Ijd96RSqBOX6ZcpD0N3h+P3nN3mZsJDPsnKhbwJ09DT4wNpmidg9jxvauDViouSciSeHjWPoqzYSXxUp5KcYYzrnmeKj+bzG1+CGt+9hm7Cc5IoBFQE4vVnOv+kXh8TvTlFQuZ8fuj6XtIXoGbXfDV8ATAb1azmf7yGusXDXXFx/BElRmUditPEdD3IwKdWAWcKhYgs/FuVi1zI8ga3aHNQzHoxaaSy8GHkb+yZ0T0nMUrXxWlO1K/DN2BrpqUDc2E5LLM0LB0o4Fnq3TejA
-DKIM-Signature: a=rsa-sha256; bh=lyhO2gm0RxoCJRj8ffOvC2KxMO8e2tm4Cm+d/g+ijgU=; 
- c=relaxed/relaxed; d=kaod.org; h=From; s=ovhmo393970-selector1;
- t=1780382037; v=1;
- b=LHXhcqvWVToE1kSA5IKsRo7r9WhlJteB3ryVKx48GZGH6EuTeF906kOuItSfAmb6fG3VLwvn
- GMer72rZ0IRfsd6k65leXcZv8LhsIxV+xQlzkkPmGrnb+P7N2CX0kQl8aw4b6UQWuAtSr4RvHy+
- hcthM9uZ6DHGFnUT9mho4ExFDiFT2iu/I3+Y330AduBF+Iau8qGniT0hdAfKhbFI3kprR2Hfmsz
- Vh8fUY4DB/nRmL/g2OGK/09jJDkAG3QFsaqootd4/suBUKkmdrQ7mqKLSomjRBJSNRp8M+e/8A8
- jNs2ioXz9/LR++1gf7Ij10cs1oGx8dwEGx8pRlFc5nTsw==
-Received-SPF: pass client-ip=51.210.91.28; envelope-from=clg@kaod.org;
- helo=smtpout9.mo537.mail-out.ovh.net
+Content-Transfer-Encoding: 8bit
+X-EOPAttributedMessage: 0
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: BL6PEPF00020E65:EE_|CO6PR18MB3987:EE_
+Content-Type: text/plain
+X-MS-Office365-Filtering-Correlation-Id: 2cf339d8-6c31-480c-e804-08dec070ec43
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam: BCL:0;
+ ARA:13230040|36860700016|34020700016|82310400026|1800799024|376014|56012099006|18002099003|22082099003;
+X-Microsoft-Antispam-Message-Info: kz6r7TsqihqxQYltZMQTy0ghs3hExkEBUBXEksh/9hZm/gwkfVhpMEoXOQvEZgUZCv/d8z6hoPQ3yl1UcJWmx0hh9cI4TJV7rnlpJaQTOLGRuFxKKSobQLgsKcyxx2TAjp+fMMv+0FQCZvVilqG5/OUxjUiWJAsrUcfr8imsCbhk/zC3+wQGxLcsUTJIRMrzEKVy63pdN0W8igQWyuFjURkByvXZpm8i2P5gk8v1PpRn6b5Fk5RWy/3Kg+1c2e8a/2PejvxkFcd3jBw4k1Ikf39L+VoFfu/zNzaDzdsWM1nXDvVtch4thKEmK/fPZmWtGlAwfnBR1H1kUPBmI/zze8xcpTTti6oqBdCu5qRyVGPIZEF/fKs7lPg9YrnQmcaa9XwAS36gC9BW62iDxW60VxXnGYAfN4Cv0FtFhiwCnDp10sL0g8tPPkQ8WgfGZAsXdXNmZCJAwmWVyh8fHbvC/oSemIBbEti+wISnjvb8S0gD0+JyYdvrb+aqiWtAlG5e+9EnpFER7Ba3sSkdl5s9NlainLLBvdVfGZOjfZPgAuusQ3Ynfw1RqQsbtkTHPQoVsf1UjfAnYaHf2YRZRZARC+KGFxIjNWkce+snXofwR7I0+9THgljCsLldEdDgW+7qjCVZy+UJWFu8cwy2bPXMYhTNnkRNMlFgJ+sBxmupk1s7RF9qmZi/VIEFksYNZ14rxQUSj6ir53ugiy5J/jFasZ38uy5kb25v71AwdA3r/cY=
+X-Forefront-Antispam-Report: CIP:64.62.143.114; CTRY:US; LANG:en; SCL:1; SRV:;
+ IPV:NLI; SFV:NSPM; H:smtp.corp.axiado.com; PTR:InfoDomainNonexistent; CAT:NONE;
+ SFS:(13230040)(36860700016)(34020700016)(82310400026)(1800799024)(376014)(56012099006)(18002099003)(22082099003);
+ DIR:OUT; SFP:1102; 
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0: Y8IabIAehZN80OFWbldU+jgOgyX+q3DZCquNI2B9P8aYruA4rmcdmyqanYAhO3JA+UMMNrGGCPGhquUwNId2Nmhs+F2ThHk/uNLLoYCeIZxkHzsE87sl0m8VIRIWiNxsmhGXSfRQP48vSphkofENLNBtlv5lj4hUa8oroVYaIRNRp2CEmTPAj2KpPmpZ4o/yF+k1LsUvkx2pHwqXr46nrmq+0rgu4uqxS/3eh106j7lkRZUTOuZWqWWLfq18Rc0JZ3ZzuD1BNXw4SkPKQ9xmQkEiEU168dpEVxPwe4cyoO3XS++auMB4UctKSuiAlDy3uoJSnpOFgU0SiAMcxN6ZdSAc/C6S7yqRsb1r27/O/zhiXcV0XR93MX/eceMmi8tWvc5uOEcLbX+FosHvBWjnPUCd3SjzN0d0jfAcpQJRd9sOmAT0Qv3aN4GDY/jIh8X/
+X-OriginatorOrg: axiado.com
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 02 Jun 2026 06:33:56.4197 (UTC)
+X-MS-Exchange-CrossTenant-Network-Message-Id: 2cf339d8-6c31-480c-e804-08dec070ec43
+X-MS-Exchange-CrossTenant-Id: ff2db17c-4338-408e-9036-2dee8e3e17d7
+X-MS-Exchange-CrossTenant-OriginalAttributedTenantConnectingIp: TenantId=ff2db17c-4338-408e-9036-2dee8e3e17d7; Ip=[64.62.143.114];
+ Helo=[smtp.corp.axiado.com]
+X-MS-Exchange-CrossTenant-AuthSource: BL6PEPF00020E65.namprd04.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Anonymous
+X-MS-Exchange-CrossTenant-FromEntityHeader: HybridOnPrem
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: CO6PR18MB3987
+Received-SPF: pass client-ip=2a01:111:f403:c001::2;
+ envelope-from=kchiu@axiado.com;
+ helo=SJ2PR03CU001.outbound.protection.outlook.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_PASS=-0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -135,59 +121,168 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 6/2/26 07:28, Jamin Lin wrote:
-> Introduce I2C controller support for the AST1040 SoC model.
-> 
-> The I2C model type is selected from the SoC type name, allowing the AST1040
-> SoC to use the corresponding aspeed.i2c-ast1040 model.
-> 
-> The I2C controller is mapped at 0x74C0F000 and uses IRQs
-> 64 - 77, with one IRQ assigned per I2C bus.
+Add EVK axiado-scm3003 built with AX3000 SoC
 
-64 - 79. The irqmap array needs a change too.
+Signed-off-by: Kuan-Jui Chiu <kchiu@axiado.com>
+---
+ hw/arm/Kconfig                 |  5 ++++
+ hw/arm/ax3000-boards.c         | 47 ++++++++++++++++++++++++++++++++++
+ hw/arm/ax3000-evk.c            | 27 +++++++++++++++++++
+ hw/arm/meson.build             |  3 +++
+ include/hw/arm/ax3000-boards.h | 28 ++++++++++++++++++++
+ 5 files changed, 110 insertions(+)
+ create mode 100644 hw/arm/ax3000-boards.c
+ create mode 100644 hw/arm/ax3000-evk.c
+ create mode 100644 include/hw/arm/ax3000-boards.h
 
-> 
-> The controller DRAM link is connected to SRAM1 (HyperRAM)
-> for DMA support.
-> 
-> Signed-off-by: Jamin Lin <jamin_lin@aspeedtech.com>
-> ---
->   hw/arm/aspeed_ast1040.c | 16 ++++++++++++++++
->   1 file changed, 16 insertions(+)
-> 
-> diff --git a/hw/arm/aspeed_ast1040.c b/hw/arm/aspeed_ast1040.c
-> index 77211ce1f3..6d1cb9b102 100644
-> --- a/hw/arm/aspeed_ast1040.c
-> +++ b/hw/arm/aspeed_ast1040.c
-> @@ -117,6 +117,7 @@ static void aspeed_soc_ast1040_init(Object *obj)
->           object_initialize_child(obj, "sgpio[*]", &s->sgpiom[i],
->                                   "aspeed.sgpio-ast2700");
->       }
-> +    object_initialize_child(obj, "i2c", &s->i2c, TYPE_ASPEED_1040_I2C);
->   
->       object_initialize_child(obj, "pwm", &s->pwm, TYPE_UNIMPLEMENTED_DEVICE);
->       object_initialize_child(obj, "espi", &s->espi, TYPE_UNIMPLEMENTED_DEVICE);
-> @@ -233,6 +234,21 @@ static void aspeed_soc_ast1040_realize(DeviceState *dev_soc, Error **errp)
->                          aspeed_soc_ast1040_get_irq(s, ASPEED_DEV_SGPIOM0 + i));
->       }
->   
-> +    /* I2C */
-> +    object_property_set_link(OBJECT(&s->i2c), "dram", OBJECT(&s->sram[1]),
-> +                             &error_abort);
-> +    if (!sysbus_realize(SYS_BUS_DEVICE(&s->i2c), errp)) {
-> +        return;
-> +    }
-> +    aspeed_mmio_map(s->memory, SYS_BUS_DEVICE(&s->i2c), 0,
-> +                    sc->memmap[ASPEED_DEV_I2C]);
-> +    for (i = 0; i < ASPEED_I2C_GET_CLASS(&s->i2c)->num_busses; i++) {
-> +        qemu_irq irq = qdev_get_gpio_in(DEVICE(&a->armv7m),
-> +                                        sc->irqmap[ASPEED_DEV_I2C] + i);
-> +        /* The AST1040 I2C controller has one IRQ per bus. */
-> +        sysbus_connect_irq(SYS_BUS_DEVICE(&s->i2c.busses[i]), 0, irq);
-> +    }
-> +
->       /* Unimplemented peripherals */
->       aspeed_mmio_map_unimplemented(s->memory, SYS_BUS_DEVICE(&s->pwm),
->                                     "aspeed.pwm",
+diff --git a/hw/arm/Kconfig b/hw/arm/Kconfig
+index 5b9cf25dd31..175e6c7985b 100644
+--- a/hw/arm/Kconfig
++++ b/hw/arm/Kconfig
+@@ -724,3 +724,8 @@ config AXIADO_SOC
+     select CADENCE # UART
+     select AXIADO_SDHCI
+     select UNIMP
++
++config AXIADO_EVK
++    bool
++    default y
++    select AXIADO_SOC
+diff --git a/hw/arm/ax3000-boards.c b/hw/arm/ax3000-boards.c
+new file mode 100644
+index 00000000000..ad3dd963656
+--- /dev/null
++++ b/hw/arm/ax3000-boards.c
+@@ -0,0 +1,47 @@
++/*
++ * Axiado Boards
++ *
++ * Author: Kuan-Jui Chiu <kchiu@axiado.com>
++ *
++ * SPDX-License-Identifier: GPL-2.0-or-later
++ */
++
++#include "qemu/osdep.h"
++#include "hw/arm/ax3000-boards.h"
++#include "hw/arm/machines-qom.h"
++#include "qemu/error-report.h"
++#include "qom/object.h"
++
++static void ax3000_machine_init(MachineState *machine)
++{
++    Ax3000MachineState *ams = AX3000_MACHINE(machine);
++
++    ams->soc = AX3000_SOC(object_new(TYPE_AX3000_SOC));
++    object_property_add_child(OBJECT(machine), "soc", OBJECT(ams->soc));
++    sysbus_realize_and_unref(SYS_BUS_DEVICE(ams->soc), &error_fatal);
++}
++
++static void ax3000_machine_class_init(ObjectClass *oc, const void *data)
++{
++    MachineClass *mc = MACHINE_CLASS(oc);
++
++    mc->init = ax3000_machine_init;
++    mc->default_cpus = AX3000_NUM_CPUS;
++    mc->min_cpus = AX3000_NUM_CPUS;
++    mc->max_cpus = AX3000_NUM_CPUS;
++    mc->default_cpu_type = ARM_CPU_TYPE_NAME("cortex-a53");
++}
++
++static const TypeInfo ax3000_machine_types[] = {
++    {
++        .name          = TYPE_AX3000_MACHINE,
++        .parent        = TYPE_MACHINE,
++        .instance_size = sizeof(Ax3000MachineState),
++        .class_size    = sizeof(Ax3000MachineClass),
++        .class_init    = ax3000_machine_class_init,
++        .interfaces    = aarch64_machine_interfaces,
++        .abstract      = true,
++    }
++};
++
++DEFINE_TYPES(ax3000_machine_types)
+diff --git a/hw/arm/ax3000-evk.c b/hw/arm/ax3000-evk.c
+new file mode 100644
+index 00000000000..a1708488710
+--- /dev/null
++++ b/hw/arm/ax3000-evk.c
+@@ -0,0 +1,27 @@
++/*
++ * Axiado Evaluation Kit Emulation
++ *
++ * Author: Kuan-Jui Chiu <kchiu@axiado.com>
++ *
++ * SPDX-License-Identifier: GPL-2.0-or-later
++ */
++
++#include "qemu/osdep.h"
++#include "hw/arm/ax3000-boards.h"
++
++static void axiado_scm3003_class_init(ObjectClass *oc, const void *data)
++{
++    MachineClass *mc = MACHINE_CLASS(oc);
++
++    mc->desc = "Axiado SCM3003 EVK Board";
++}
++
++static const TypeInfo ax3000_evk_types[] = {
++    {
++        .name          = MACHINE_TYPE_NAME("axiado-scm3003"),
++        .parent        = TYPE_AX3000_MACHINE,
++        .class_init    = axiado_scm3003_class_init,
++    }
++};
++
++DEFINE_TYPES(ax3000_evk_types)
+diff --git a/hw/arm/meson.build b/hw/arm/meson.build
+index 772ae5211dc..61358dd4c8f 100644
+--- a/hw/arm/meson.build
++++ b/hw/arm/meson.build
+@@ -105,6 +105,9 @@ arm_common_ss.add(when: 'CONFIG_VEXPRESS', if_true: files('vexpress.c'))
+ 
+ arm_common_ss.add(when: ['CONFIG_AXIADO_SOC', 'TARGET_AARCH64'], if_true: files(
+   'ax3000-soc.c'))
++arm_common_ss.add(when: ['CONFIG_AXIADO_EVK', 'TARGET_AARCH64'], if_true: files(
++  'ax3000-boards.c',
++  'ax3000-evk.c'))
+ 
+ arm_common_ss.add(files('boot.c'))
+ 
+diff --git a/include/hw/arm/ax3000-boards.h b/include/hw/arm/ax3000-boards.h
+new file mode 100644
+index 00000000000..4a632661e1e
+--- /dev/null
++++ b/include/hw/arm/ax3000-boards.h
+@@ -0,0 +1,28 @@
++/*
++ * Axiado Boards
++ *
++ * Author: Kuan-Jui Chiu <kchiu@axiado.com>
++ *
++ * SPDX-License-Identifier: GPL-2.0-or-later
++ */
++
++#ifndef AXIADO_BOARD_H
++#define AXIADO_BOARD_H
++
++#include "hw/core/boards.h"
++#include "hw/arm/ax3000-soc.h"
++
++#define TYPE_AX3000_MACHINE       MACHINE_TYPE_NAME("ax3000")
++OBJECT_DECLARE_TYPE(Ax3000MachineState, Ax3000MachineClass, AX3000_MACHINE)
++
++typedef struct Ax3000MachineState {
++    MachineState parent;
++
++    Ax3000SoCState *soc;
++} Ax3000MachineState;
++
++typedef struct Ax3000MachineClass {
++    MachineClass parent;
++
++} Ax3000MachineClass;
++#endif
+-- 
+2.34.1
 
 
