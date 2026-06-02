@@ -4,54 +4,58 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B9009CD6E61
-	for <qemu-devel@archiver.kernel.org>; Tue,  2 Jun 2026 07:16:19 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 919B7CD6E4A
+	for <qemu-devel@archiver.kernel.org>; Tue,  2 Jun 2026 07:35:37 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wUJLm-0000P7-0n; Tue, 02 Jun 2026 03:15:46 -0400
+	id 1wUJeP-0003Ir-W7; Tue, 02 Jun 2026 03:35:02 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <naveen@kernel.org>) id 1wUJLk-0000OZ-3M
- for qemu-devel@nongnu.org; Tue, 02 Jun 2026 03:15:44 -0400
-Received: from sea.source.kernel.org ([172.234.252.31])
+ (Exim 4.90_1) (envelope-from <naveen@kernel.org>) id 1wUJeN-0003IN-PW
+ for qemu-devel@nongnu.org; Tue, 02 Jun 2026 03:34:59 -0400
+Received: from tor.source.kernel.org ([2600:3c04:e001:324:0:1991:8:25])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <naveen@kernel.org>) id 1wUJLh-0005Dp-U3
- for qemu-devel@nongnu.org; Tue, 02 Jun 2026 03:15:43 -0400
+ (Exim 4.90_1) (envelope-from <naveen@kernel.org>) id 1wUJeL-0001ZX-Jk
+ for qemu-devel@nongnu.org; Tue, 02 Jun 2026 03:34:59 -0400
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
- by sea.source.kernel.org (Postfix) with ESMTP id 3582E4373A;
- Tue,  2 Jun 2026 07:15:33 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 02ACC1F00893;
- Tue,  2 Jun 2026 07:15:31 +0000 (UTC)
+ by tor.source.kernel.org (Postfix) with ESMTP id A21776012A;
+ Tue,  2 Jun 2026 07:34:55 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C35AB1F00893;
+ Tue,  2 Jun 2026 07:34:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
- s=k20260515; t=1780384533;
- bh=ZhVVDTgnchGyrV3WSdc01U1Ne0/Vtdh8/NXOHYYb3xU=;
- h=From:To:Cc:Subject:Date;
- b=mE82YREeUkaAfXpqfHFsUFeFOtSrrPtaxSzKDCfr/Dzuq6wNopXYf2ZauS0oJNgRq
- VhFQ6v8xCudi6c87iy+c9BFovyxU/nKamN6t2t+8ZeCVDAJYcKaq+0YvavUhJ2Kxwp
- QIXQB2kvUYnmPmBr/YAVKUwJpXFFfqdwF9+GG+TcRTmBE+Lk21Y2eg5dtBAsFWA1MV
- V1gr69/bRIAOGCsueKULEyX7z1rMOygu9uC7olcl/wAVhXAiCUMOLDYIsTbuP3sOO1
- iN6p/2PlnUCbmFc9JbENPDst2Aa4HsN5Q94fiSn+vG/r7Y9o5HbkMEdHcZUz5dULiX
- WJUioK4SwYLlw==
-From: "Naveen N Rao (AMD)" <naveen@kernel.org>
-To: Paolo Bonzini <pbonzini@redhat.com>,
-	qemu-devel <qemu-devel@nongnu.org>
-Cc: =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
- Eduardo Habkost <eduardo@habkost.net>, Eric Blake <eblake@redhat.com>,
- Markus Armbruster <armbru@redhat.com>,
- Marcelo Tosatti <mtosatti@redhat.com>, Zhao Liu <zhao1.liu@intel.com>,
- Nikunj A Dadhania <nikunj@amd.com>, Tom Lendacky <thomas.lendacky@amd.com>,
- Michael Roth <michael.roth@amd.com>,
- Roy Hopkins <roy.hopkins@randomman.co.uk>,
- Srikanth Aithal <srikanth.aithal@amd.com>, Joerg Roedel <joro@8bytes.org>
-Subject: [RFC PATCH] target/i386: SEV: Allow pflash devices with SEV-ES guests
-Date: Tue,  2 Jun 2026 12:42:13 +0530
-Message-ID: <20260602071213.2084388-1-naveen@kernel.org>
-X-Mailer: git-send-email 2.54.0
+ s=k20260515; t=1780385695;
+ bh=qLUTIacaSY6vW3UxMAEl8VYLmiP2dKv8+kxwnN0f2io=;
+ h=Date:From:To:Cc:Subject:References:In-Reply-To;
+ b=KS27rJH9DWqAFQdGsngC2aAYuSkJWE0zbNCLq+L+b3Q0xa/nXQNIjmMxkXsfC6Wfh
+ LnKXSBac88al29xEuPSUagSUCRKogzBQ0hPEC15PmZEW3mdG+onSd7iW8OC13UO2qS
+ RUdIUhWW2y+S15ZHjJihpaneBUKGDeSHUYpsSZcArh2yirD8lDHPhWq5FX0WYDb7KQ
+ 9GeK4I1jciIJDw86PgXTU+OjhboyzJhDJp/E3alRDFwITVZb0rtIR49+piroueDiuk
+ KkZ0Y2zGc4BGzh1y8WUYBmDIgF4kVGC260x7nZD736ZpJC3UpGVx8tsFSStaL/w9re
+ dpfZMd5uRyqCA==
+Date: Tue, 2 Jun 2026 12:56:06 +0530
+From: Naveen N Rao <naveen@kernel.org>
+To: Markus Armbruster <armbru@redhat.com>
+Cc: Paolo Bonzini <pbonzini@redhat.com>, qemu-devel <qemu-devel@nongnu.org>,
+ Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>, 
+ Eduardo Habkost <eduardo@habkost.net>, Eric Blake <eblake@redhat.com>, 
+ Marcelo Tosatti <mtosatti@redhat.com>, Zhao Liu <zhao1.liu@intel.com>, 
+ Nikunj A Dadhania <nikunj@amd.com>, Tom Lendacky <thomas.lendacky@amd.com>, 
+ Michael Roth <michael.roth@amd.com>, Roy Hopkins <roy.hopkins@randomman.co.uk>,
+ Srikanth Aithal <srikanth.aithal@amd.com>, Kim Phillips <kim.phillips@amd.com>,
+ Joerg Roedel <joro@8bytes.org>
+Subject: Re: [PATCH v4 6/9] target/i386: SEV: Add support for enabling
+ debug-swap SEV feature
+Message-ID: <ah6DmNziGeeh9RZZ@blrnaveerao1>
+References: <cover.1779281646.git.naveen@kernel.org>
+ <416e7b156e49f95958f8c5c8549b48a88c1995fc.1779281646.git.naveen@kernel.org>
+ <87v7c27a1r.fsf@pond.sub.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=172.234.252.31; envelope-from=naveen@kernel.org;
- helo=sea.source.kernel.org
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <87v7c27a1r.fsf@pond.sub.org>
+Received-SPF: pass client-ip=2600:3c04:e001:324:0:1991:8:25;
+ envelope-from=naveen@kernel.org; helo=tor.source.kernel.org
 X-Spam_score_int: -24
 X-Spam_score: -2.5
 X-Spam_bar: --
@@ -73,271 +77,185 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-KVM commit 66155de93bcf ("KVM: x86: Disallow read-only memslots for
-SEV-ES and SEV-SNP (and TDX)"), and the subsequent commit d30d9ee94cc0
-("KVM: x86: Only advertise KVM_CAP_READONLY_MEM when supported by VM")
-stopped advertising KVM_CAP_READONLY_MEM support for encrypted guests
-(KVM_X86_SEV_ES_VM and KVM_X86_SNP_VM), but not for KVM_X86_DEFAULT_VM
-type SEV-ES guests. As a result of this, it is no longer possible to
-start SEV-ES guests with any SEV feature enabled (in particular,
-debug-swap) with pflash devices.
+On Mon, Jun 01, 2026 at 01:52:00PM +0200, Markus Armbruster wrote:
+> "Naveen N Rao (AMD)" <naveen@kernel.org> writes:
+> 
+> > Add support for enabling debug-swap VMSA SEV feature in SEV-ES and
+> > SEV-SNP guests through a new "debug-swap" boolean property on SEV guest
+> > objects. Though the boolean property is available for plain SEV guests,
+> > check_sev_features() has a check that rejects attempts to enable any SEV
+> > feature for a plain SEV guest.
+> 
+> Why does it make sense to add the property to objects where it's not
+> supported?
 
-This is an issue since SEV-ES guests have historically used pflash
-devices for OVMF. Guests on older KVM+Qemu are able to enable debug-swap
-while using pflash devices, so work around the KVM limitation by
-switching to using a VMA-based write protection. This allows
-well-behaved SEV-ES guests to continue to work with pflash devices and
-enable debug-swap. Mis-behaving guests trying to write to the protected
-OVMF area will be killed.
+Primarily to minimize changes. The restriction is only until the 
+workaround is implemented for which I have posted a patch just now:
+https://lore.kernel.org/qemu-devel/20260602071213.2084388-1-naveen@kernel.org/T/#u
 
-Enable VMA protection and set the memory to be RO when adding the KVM
-memory slot. Because pflash devices support command-mode, change VMA
-protection to RW when tearing down the KVM memory slot. KVM
-SEV_LAUNCH_UPDATE also requires memory to be RW, so disable the
-protection when calling that.
+I didn't want to move the property to sev-snp-object only to move it 
+back again subsequently.
 
-Print a warning when switching to VMA-based protection so that it is
-clear that KVM itself isn't supporting readonly memory, and that a
-workaround is in place. Users can plan on switching to using '-bios'.
+> 
+> > Though this SEV feature is called "Debug virtualization" in the APM, KVM
+> > calls this "debug swap" so use the same name for consistency.
+> 
+> Thanks for explaining this.
+> 
+> > Sample command-line:
+> >   -machine q35,confidential-guest-support=sev0 \
+> >   -object sev-snp-guest,id=sev0,cbitpos=51,reduced-phys-bits=1,debug-swap=on
+> >
+> > Restrict debug-swap to SEV-SNP guests at this time due to a
+> > compatibility issue with SEV-ES pflash devices.
+> 
+> What are these issues?
 
-Finally, drop the check rejecting SEV-ES guests with SEV features so 
-that debug-swap can be enabled.
+Explained in the patch I posted today (please see above for the link).
 
+> 
+> > Signed-off-by: Naveen N Rao (AMD) <naveen@kernel.org>
+> > ---
+> >  target/i386/sev.h |  1 +
+> >  target/i386/sev.c | 26 ++++++++++++++++++++++++++
+> >  qapi/qom.json     |  7 ++++++-
+> >  3 files changed, 33 insertions(+), 1 deletion(-)
+> >
+> > diff --git a/target/i386/sev.h b/target/i386/sev.h
+> > index b84ca3ce0b67..d19a39669747 100644
+> > --- a/target/i386/sev.h
+> > +++ b/target/i386/sev.h
+> > @@ -47,6 +47,7 @@ bool sev_snp_enabled(void);
+> >  #define SEV_SNP_POLICY_DBG      0x80000
+> >  
+> >  #define SVM_SEV_FEAT_SNP_ACTIVE     BIT(0)
+> > +#define SVM_SEV_FEAT_DEBUG_SWAP     BIT(5)
+> >  
+> >  typedef struct SevKernelLoaderContext {
+> >      char *setup_data;
+> > diff --git a/target/i386/sev.c b/target/i386/sev.c
+> > index 4553fe4d6e4a..4532b1b6a484 100644
+> > --- a/target/i386/sev.c
+> > +++ b/target/i386/sev.c
+> > @@ -328,6 +328,11 @@ sev_set_guest_state(SevCommonState *sev_common, SevState new_state)
+> >      sev_common->state = new_state;
+> >  }
+> >  
+> > +static bool is_sev_feature_set(SevCommonState *sev_common, uint64_t feature)
+> > +{
+> > +    return !!(sev_common->sev_features & feature);
+> > +}
+> > +
+> >  static void sev_set_feature(SevCommonState *sev_common, uint64_t feature, bool set)
+> >  {
+> >      if (set) {
+> > @@ -527,6 +532,12 @@ static int check_sev_features(SevCommonState *sev_common, uint64_t sev_features,
+> >              __func__);
+> >          return -1;
+> >      }
+> > +    if (sev_features && sev_es_enabled() && !sev_snp_enabled()) {
+> > +        error_setg(errp,
+> > +                   "%s: SEV features are not supported with SEV-ES at this time",
+> > +                   __func__);
+> 
+> Once again, I'm confused about SEV.  Remind me: what kinds of SEV guests
+> exist?  The commit message suggests "plain", "ES", "SNP".  What do
+> sev_es_enabled() and sev_snp_enabled() return for each of these?
 
-Signed-off-by: Naveen N Rao (AMD) <naveen@kernel.org>
----
-Background discussion on this issue:
-http://lore.kernel.org/r/aUq9_cUDWeEW_qli@google.com
+Right, SEV (plain) is encrypted-memory guests, SEV-ES is SEV with 
+Encrypted register State, SEV-SNP is SEV-ES with Secure Nested Paging.
 
-This series depends on VMSA features support:
-http://lore.kernel.org/r/cover.1779281646.git.naveen@kernel.org
+sev_es_enabled() returns true for SEV-ES and SEV-SNP guests.
+
+> 
+> What are the "SEV features"?  Can we expect users to know?  I suspect
+> they need to know to fix the problem!
+> 
+> Are they exactly debug-swap?
+
+Yes, users should know that since they need to enable those explicitly.  
+Guests will need to support those features too.
+
+Debug-swap is one, Secure-TSC is another (support for which is also 
+added in this series), then there is Secure-AVIC and many others 
+(documented in AMD APM).
+
+> 
+> __func__ in an error message meant for users is an anti-pattern.  Not an
+> objection to this patch; it matches existing errors around here.
+> 
+> > +        return -1;
+> > +    }
+> >      if (sev_features && !sev_es_enabled()) {
+> >          error_setg(errp,
+> >                     "%s: SEV features require either SEV-ES or SEV-SNP to be enabled",
+> > @@ -2800,6 +2811,16 @@ static int cgs_set_guest_policy(ConfidentialGuestPolicyType policy_type,
+> >      return 0;
+> >  }
+> >  
+> > +static bool sev_common_get_debug_swap(Object *obj, Error **errp)
+> > +{
+> > +    return is_sev_feature_set(SEV_COMMON(obj), SVM_SEV_FEAT_DEBUG_SWAP);
+> > +}
+> > +
+> > +static void sev_common_set_debug_swap(Object *obj, bool value, Error **errp)
+> > +{
+> > +    sev_set_feature(SEV_COMMON(obj), SVM_SEV_FEAT_DEBUG_SWAP, value);
+> > +}
+> > +
+> >  static void
+> >  sev_common_class_init(ObjectClass *oc, const void *data)
+> >  {
+> > @@ -2825,6 +2846,11 @@ sev_common_class_init(ObjectClass *oc, const void *data)
+> >                                     sev_common_set_kernel_hashes);
+> >      object_class_property_set_description(oc, "kernel-hashes",
+> >              "add kernel hashes to guest firmware for measured Linux boot");
+> > +    object_class_property_add_bool(oc, "debug-swap",
+> > +                                   sev_common_get_debug_swap,
+> > +                                   sev_common_set_debug_swap);
+> > +    object_class_property_set_description(oc, "debug-swap",
+> > +            "enable virtualization of debug registers");
+> >  }
+> >  
+> >  static void
+> > diff --git a/qapi/qom.json b/qapi/qom.json
+> > index dd45ac1087c3..e2bb716b603e 100644
+> > --- a/qapi/qom.json
+> > +++ b/qapi/qom.json
+> > @@ -1017,6 +1017,10 @@
+> >  #     designated guest firmware page for measured boot with -kernel
+> >  #     (default: false) (since 6.2)
+> >  #
+> > +# @debug-swap: enable virtualization of debug registers,
+> > +#     only supported on SEV-ES and SEV-SNP guests
+> > +#     (default: false) (since 11.1)
+> > +#
+> >  # Features:
+> >  #
+> >  # @confidential-guest-reset: If present, the hypervisor supports
+> > @@ -1028,7 +1032,8 @@
+> >    'data': { '*sev-device': 'str',
+> >              '*cbitpos': 'uint32',
+> >              'reduced-phys-bits': 'uint32',
+> > -            '*kernel-hashes': 'bool' },
+> > +            '*kernel-hashes': 'bool',
+> > +            '*debug-swap': 'bool' },
+> >    'features': ['confidential-guest-reset']}
+> >  
+> >  ##
+> 
+> This is SevCommonProperties, the common base type of SevGuestProperties
+> (configuration for sev-guest QOM objects) and SevSnpGuestProperties
+> (sev-snp-guest objects).
+> 
+> So, all SEV objects have property @debug-swap.  I figure the check you
+> add to check_sev_features() rejects it for certain SEV objects.  I don't
+> quite understand for which ones.
+
+The check above rejects it for SEV-ES guests. There is a generic check 
+added in patch 4/9 which rejects any and add SEV features for plain SEV 
+guests.
 
 
 - Naveen
-
-
- include/system/kvm.h     |  5 ++++
- include/system/kvm_int.h |  1 +
- accel/kvm/kvm-all.c      | 52 +++++++++++++++++++++++++++++++++++++++-
- hw/i386/pc_sysfw.c       | 19 +++++++++------
- target/i386/sev.c        | 21 +++++++++++-----
- 5 files changed, 84 insertions(+), 14 deletions(-)
-
-diff --git a/include/system/kvm.h b/include/system/kvm.h
-index 5fa33eddda38..585058bd6f1c 100644
---- a/include/system/kvm.h
-+++ b/include/system/kvm.h
-@@ -555,6 +555,8 @@ uint32_t kvm_dirty_ring_size(void);
- 
- void kvm_mark_guest_state_protected(void);
- 
-+void kvm_enable_ro_mem_vma_protection(void);
-+
- /**
-  * kvm_hwpoisoned_mem - indicate if there is any hwpoisoned page
-  * reported for the VM.
-@@ -568,6 +570,9 @@ int kvm_set_memory_attributes_shared(hwaddr start, uint64_t size);
- 
- int kvm_convert_memory(hwaddr start, hwaddr size, bool to_private);
- 
-+void kvm_set_memory_readonly(void *addr, size_t len);
-+void kvm_set_memory_readwrite(void *addr, size_t len);
-+
- /* argument to vmfd change notifier */
- typedef struct VmfdChangeNotifier {
-     int vmfd;
-diff --git a/include/system/kvm_int.h b/include/system/kvm_int.h
-index 0876aac938d3..0e083a56ce2a 100644
---- a/include/system/kvm_int.h
-+++ b/include/system/kvm_int.h
-@@ -123,6 +123,7 @@ struct KVMState
-     OnOffAuto kernel_irqchip_split;
-     bool sync_mmu;
-     bool guest_state_protected;
-+    bool guest_wants_ro_mem_vma_protection;
-     uint64_t manual_dirty_log_protect;
-     /*
-      * Older POSIX says that ioctl numbers are signed int, but in
-diff --git a/accel/kvm/kvm-all.c b/accel/kvm/kvm-all.c
-index 96f90ebb240f..4208df5b25ac 100644
---- a/accel/kvm/kvm-all.c
-+++ b/accel/kvm/kvm-all.c
-@@ -1629,6 +1629,42 @@ int kvm_set_memory_attributes_shared(hwaddr start, uint64_t size)
-     return kvm_set_memory_attributes(start, size, 0);
- }
- 
-+static void kvm_set_memory_flags(void *addr, size_t len, int flags)
-+{
-+    if (mprotect(addr, len, flags)) {
-+        error_report("failed to apply memory protection "
-+                     "(0x%" HWADDR_PRIx "+0x%" PRIx64 ") error '%s'",
-+                     (hwaddr)addr, len, strerror(errno));
-+        exit(1);
-+    }
-+}
-+
-+void kvm_set_memory_readonly(void *addr, size_t len)
-+{
-+    if (kvm_state->guest_wants_ro_mem_vma_protection) {
-+        kvm_set_memory_flags(addr, len, PROT_READ);
-+    }
-+}
-+
-+void kvm_set_memory_readwrite(void *addr, size_t len)
-+{
-+    if (kvm_state->guest_wants_ro_mem_vma_protection) {
-+        kvm_set_memory_flags(addr, len, PROT_READ | PROT_WRITE);
-+    }
-+}
-+
-+static bool kvm_mem_wants_vma_protection(MemoryRegion *mr)
-+{
-+    if (!memory_region_is_ram(mr) &&
-+        (mr->readonly || mr->rom_device) &&
-+        !kvm_readonly_mem_allowed &&
-+        kvm_state->guest_wants_ro_mem_vma_protection) {
-+            return true;
-+    }
-+
-+    return false;
-+}
-+
- /* Called with KVMMemoryListener.slots_lock held */
- static void kvm_set_phys_mem(KVMMemoryListener *kml,
-                              MemoryRegionSection *section, bool add)
-@@ -1642,7 +1678,8 @@ static void kvm_set_phys_mem(KVMMemoryListener *kml,
-     void *ram;
- 
-     if (!memory_region_is_ram(mr)) {
--        if (writable || !kvm_readonly_mem_allowed) {
-+        if (writable || (!kvm_readonly_mem_allowed &&
-+                         !kvm_state->guest_wants_ro_mem_vma_protection)) {
-             return;
-         } else if (!mr->romd_mode) {
-             /* If the memory device is not in romd_mode, then we actually want
-@@ -1697,6 +1734,10 @@ static void kvm_set_phys_mem(KVMMemoryListener *kml,
-                 kvm_slot_sync_dirty_pages(mem);
-             }
- 
-+            if (kvm_mem_wants_vma_protection(mr)) {
-+                kvm_set_memory_readwrite(mem->ram, mem->memory_size);
-+            }
-+
-             /* unregister the slot */
-             g_free(mem->dirty_bmap);
-             mem->dirty_bmap = NULL;
-@@ -1746,6 +1787,10 @@ static void kvm_set_phys_mem(KVMMemoryListener *kml,
-             }
-         }
- 
-+        if (kvm_mem_wants_vma_protection(mr)) {
-+            kvm_set_memory_readonly(mem->ram, mem->memory_size);
-+        }
-+
-         start_addr += slot_size;
-         ram_start_offset += slot_size;
-         ram += slot_size;
-@@ -4771,6 +4816,11 @@ void kvm_mark_guest_state_protected(void)
-     kvm_state->guest_state_protected = true;
- }
- 
-+void kvm_enable_ro_mem_vma_protection(void)
-+{
-+    kvm_state->guest_wants_ro_mem_vma_protection = true;
-+}
-+
- int kvm_create_guest_memfd(uint64_t size, uint64_t flags, Error **errp)
- {
-     int fd;
-diff --git a/hw/i386/pc_sysfw.c b/hw/i386/pc_sysfw.c
-index 1a41a5972bd0..9590458e00c5 100644
---- a/hw/i386/pc_sysfw.c
-+++ b/hw/i386/pc_sysfw.c
-@@ -254,13 +254,18 @@ void pc_system_firmware_init(PCMachineState *pcms,
-         }
-     } else {
-         if (kvm_enabled() && !kvm_readonly_mem_enabled()) {
--            /*
--             * Older KVM cannot execute from device memory. So, flash
--             * memory cannot be used unless the readonly memory kvm
--             * capability is present.
--             */
--            error_report("pflash with kvm requires KVM readonly memory support");
--            exit(1);
-+            if (sev_es_enabled() && !sev_snp_enabled()) {
-+                warn_report("pflash not supported with SEV-ES guests, "
-+                            "attempting VMA based protection");
-+            } else {
-+                /*
-+                 * Older KVM cannot execute from device memory. So, flash
-+                 * memory cannot be used unless the readonly memory kvm
-+                 * capability is present.
-+                 */
-+                error_report("pflash with kvm requires KVM readonly memory support");
-+                exit(1);
-+            }
-         }
- 
-         pc_system_flash_map(pcms, rom_memory);
-diff --git a/target/i386/sev.c b/target/i386/sev.c
-index f04ae4e91f3e..82cf2c562729 100644
---- a/target/i386/sev.c
-+++ b/target/i386/sev.c
-@@ -550,12 +550,6 @@ static int check_sev_features(SevCommonState *sev_common, uint64_t sev_features,
-             return -1;
-         }
-     } else {
--        if (sev_features && sev_es_enabled()) {
--            error_setg(errp,
--                       "%s: SEV features are not supported with SEV-ES at this time",
--                       __func__);
--            return -1;
--        }
-         if (sev_features & SVM_SEV_FEAT_SNP_ACTIVE) {
-             error_setg(errp,
-                        "%s: SEV_SNP is not enabled but is enabled in VMSA sev_features",
-@@ -2024,6 +2018,15 @@ static int sev_kvm_init(ConfidentialGuestSupport *cgs, Error **errp)
-         return -1;
-     }
- 
-+    /*
-+     * Use VMA-based protection for SEV-ES guests that enable any
-+     * SEV feature, since KVM does not advertise readonly memory
-+     * support for non-default type SEV guests.
-+     */
-+    if (sev_es_enabled() && SEV_COMMON(cgs)->sev_features) {
-+        kvm_enable_ro_mem_vma_protection();
-+    }
-+
-     if (!cgs->ready) {
-         /*
-          * SEV uses these notifiers to register/pin pages prior to guest use,
-@@ -2111,7 +2114,13 @@ sev_encrypt_flash(hwaddr gpa, uint8_t *ptr, uint64_t len, Error **errp)
-     if (sev_check_state(sev_common, SEV_STATE_LAUNCH_UPDATE)) {
-         int ret;
- 
-+        /*
-+         * KVM requires these pages to be RW, so remove VMA RO protection
-+         * for the duration of SEV_LAUNCH_UPDATE if using SEV features.
-+         */
-+        kvm_set_memory_readwrite(ptr, len);
-         ret = klass->launch_update_data(sev_common, gpa, ptr, len, errp);
-+        kvm_set_memory_readonly(ptr, len);
-         if (ret < 0) {
-             return ret;
-         }
-
-base-commit: 5611a9268dae7b7ff99d478ed134052a9fc7e9f7
-prerequisite-patch-id: dc27ad6297d47d063b04fa797c1b8203ee97d9c8
-prerequisite-patch-id: 603eff49233c4b0483e7c405754b95aa455dd38c
-prerequisite-patch-id: d4085e72ecfb0fbf977f7358d1edd29951b93784
-prerequisite-patch-id: f6f201825b1e56f89a87a26bc457b3e6018aee49
-prerequisite-patch-id: 08d79cec4c3f117178be8f6c866ff1be08e971f3
-prerequisite-patch-id: c112bccab9ab9cee2d0227516fc857590b99a75b
-prerequisite-patch-id: f42fd829d0ea4909537e722477057a4013a247ab
-prerequisite-patch-id: 67136368ed1d2fa0ae55fee4368a7bd1fe394368
-prerequisite-patch-id: 08349bb1e0e11ee1518a9041771302c97866b5cd
--- 
-2.54.0
-
 
