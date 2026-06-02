@@ -4,61 +4,103 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 002FBCD6E4A
-	for <qemu-devel@archiver.kernel.org>; Tue,  2 Jun 2026 13:25:08 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 64719CD6E4A
+	for <qemu-devel@archiver.kernel.org>; Tue,  2 Jun 2026 13:32:14 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wUP7B-0003zn-7d; Tue, 02 Jun 2026 09:25:05 -0400
+	id 1wUPDL-0005id-MC; Tue, 02 Jun 2026 09:31:27 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <magnuskulke@linux.microsoft.com>)
- id 1wUP6s-0003iB-V6; Tue, 02 Jun 2026 09:24:48 -0400
-Received: from linux.microsoft.com ([13.77.154.182])
- by eggs.gnu.org with esmtp (Exim 4.90_1)
- (envelope-from <magnuskulke@linux.microsoft.com>)
- id 1wUP6r-00012L-1f; Tue, 02 Jun 2026 09:24:46 -0400
-Received: from example.com (unknown [167.220.208.33])
- by linux.microsoft.com (Postfix) with ESMTPSA id EDCB320B7167;
- Tue,  2 Jun 2026 06:24:24 -0700 (PDT)
-DKIM-Filter: OpenDKIM Filter v2.11.0 linux.microsoft.com EDCB320B7167
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linux.microsoft.com;
- s=default; t=1780406668;
- bh=LCOwzis7g194ZBNNfE6h7mPzrsYvjco0QzpQSBmnjkg=;
- h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
- b=YaHEezITzNoC7Q2rATMpRImS9cXDTSoaOAUFGQmVBOvlGAovO1ksXCjbVq6Mhcv6p
- K7V5Nwb+XxhCjvCY+ZgP3neRhlBem9mwHaH82QQvzw1TnRS2OnDJRuM9OkLOoIHOS+
- DrfpBrszGhyeAW0AYjzzRXQwlv5LKZYLADWngBrE=
-Date: Tue, 2 Jun 2026 15:24:35 +0200
-From: Magnus Kulke <magnuskulke@linux.microsoft.com>
-To: Aastha Rawat <aastharawat@linux.microsoft.com>
-Cc: qemu-devel@nongnu.org, Wei Liu <wei.liu@kernel.org>,
- Paolo Bonzini <pbonzini@redhat.com>,
- =?iso-8859-1?Q?Marc-Andr=E9?= Lureau <marcandre.lureau@redhat.com>,
- Daniel =?iso-8859-1?Q?P=2E_Berrang=E9?= <berrange@redhat.com>,
- Philippe =?iso-8859-1?Q?Mathieu-Daud=E9?= <philmd@linaro.org>,
- Peter Maydell <peter.maydell@linaro.org>,
- Anirudh Rayabharam <anirudh@anirudhrb.com>, qemu-arm@nongnu.org,
- Alexander Graf <agraf@csgraf.de>, Pedro Barbuda <pbarbuda@microsoft.com>,
- Mohamed Mediouni <mohamed@unpredictable.fr>,
- Doru =?iso-8859-1?Q?Bl=E2nzeanu?= <dblanzeanu@linux.microsoft.com>,
- Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
-Subject: Re: [PATCH v4 10/15] accel/mshv: implement cpu_thread_is_idle() hook
-Message-ID: <ah7ZkxbmEMOgQw+5@example.com>
-References: <20260527-mshv_accel_arm64_supp-v4-0-66d871dcdc53@linux.microsoft.com>
- <20260527-mshv_accel_arm64_supp-v4-10-66d871dcdc53@linux.microsoft.com>
+ (Exim 4.90_1) (envelope-from <david@kernel.org>) id 1wUPDG-0005cB-Fh
+ for qemu-devel@nongnu.org; Tue, 02 Jun 2026 09:31:24 -0400
+Received: from tor.source.kernel.org ([2600:3c04:e001:324:0:1991:8:25])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <david@kernel.org>) id 1wUPDD-00052V-GE
+ for qemu-devel@nongnu.org; Tue, 02 Jun 2026 09:31:20 -0400
+Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
+ by tor.source.kernel.org (Postfix) with ESMTP id 0C1006012B;
+ Tue,  2 Jun 2026 13:31:17 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 16C3C1F00898;
+ Tue,  2 Jun 2026 13:31:15 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
+ s=k20260515; t=1780407076;
+ bh=59F3fbGuHbfP3EH1sBX0qtoeu2ThgEWb3aoEp2JAcMg=;
+ h=Date:Subject:To:References:From:Cc:In-Reply-To;
+ b=jpkjhDyMAIAh9MxdNlu9jc5Vfrsc4/V1h6wjitSkSgJLC0vflEIKmi43JRNdbZ2e9
+ 3e4nT870XZao/F3OGS8UlQs64U0wtRvjW3GwO/JFAKF3lX/dgtoHpoHjyeoySUA99C
+ B+ukkp95/3ZUPrSIRVAh+hDHc/moLJO6ntxGTu0hWlESVuVZDm/Hm0hUq8X/Or4CBM
+ TYiek0TbDZVDJEY60Lv06ztNJ3haDv5Uy7ZPHIpQ+P5ar9/44sQQKOMkq/dXdqlCtF
+ /PP6n2jMxkljzu0hSRrZm1jPC9OzFFaaZbR3BbVfioJ9Somg1ZA5Jqa0LhKA1gkHb6
+ DoSMgcC9taq5A==
+Message-ID: <71143df5-0fca-4a58-9090-bc834d941459@kernel.org>
+Date: Tue, 2 Jun 2026 15:31:14 +0200
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20260527-mshv_accel_arm64_supp-v4-10-66d871dcdc53@linux.microsoft.com>
-Received-SPF: pass client-ip=13.77.154.182;
- envelope-from=magnuskulke@linux.microsoft.com; helo=linux.microsoft.com
-X-Spam_score_int: -19
-X-Spam_score: -2.0
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v4 01/13] system/memory: split RamDiscardManager into
+ source and manager
+To: qemu-devel@nongnu.org
+References: <20260504-rdm5-v4-0-bdf61e57c1e1@redhat.com>
+ <20260504-rdm5-v4-1-bdf61e57c1e1@redhat.com>
+From: "David Hildenbrand (Arm)" <david@kernel.org>
+Content-Language: en-US
+Cc: Peter Xu <peterx@redhat.com>,
+ =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>
+Autocrypt: addr=david@kernel.org; keydata=
+ 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
+ qIws/H2t
+In-Reply-To: <20260504-rdm5-v4-1-bdf61e57c1e1@redhat.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2600:3c04:e001:324:0:1991:8:25;
+ envelope-from=david@kernel.org; helo=tor.source.kernel.org
+X-Spam_score_int: -24
+X-Spam_score: -2.5
 X-Spam_bar: --
-X-Spam_report: (-2.0 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, SPF_HELO_PASS=-0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.445,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -74,56 +116,68 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, May 27, 2026 at 05:00:46AM +0000, Aastha Rawat wrote:
-> From: Magnus Kulke <magnuskulke@linux.microsoft.com>
+On 5/4/26 14:30, Marc-André Lureau wrote:
+> Refactor the RamDiscardManager interface into two distinct components:
+> - RamDiscardSource: An interface that state providers (virtio-mem,
+>   RamBlockAttributes) implement to provide discard state information
+>   (granularity, populated/discarded ranges, replay callbacks).
+> - RamDiscardManager: A concrete QOM object that wraps a source, owns
+>   the listener list, and handles listener registration/unregistration
+>   and notifications.
 > 
-> In MSHV the hypervisor APIC is always used, so we to implement this hook
-> to make sure the AP's vcpu thread is not blocked waiting for an INIT SIPI
-> by the BSP. Without this change soft reboots with -smp cpus>=2 will
-> hang.
+> This separation moves the listener management logic from individual
+> source implementations into the central RamDiscardManager, reducing
+> code duplication between virtio-mem and RamBlockAttributes.
 > 
-> Signed-off-by: Magnus Kulke <magnuskulke@linux.microsoft.com>
-> Reviewed-by: Mohamed Mediouni <mohamed@unpredictable.fr>
-> Signed-off-by: Aastha Rawat <aastharawat@linux.microsoft.com>
+> The change prepares for future work where a RamDiscardManager could
+> aggregate multiple sources.
+> 
+> Note, the original virtio-mem code had conditions before discard:
+>   if (vmem->size) {
+>       rdl->notify_discard(rdl, rdl->section);
+>   }
+> however, the new code calls discard unconditionally. This is considered
+> safe, since the populate/discard of sections are already asymmetrical
+> (unplug & unregister all listener section unconditionally).
+> 
+> Reviewed-by: Peter Xu <peterx@redhat.com>
+> Signed-off-by: Marc-André Lureau <marcandre.lureau@redhat.com>
 > ---
->  accel/mshv/mshv-all.c | 12 ++++++++++++
->  1 file changed, 12 insertions(+)
-> 
-> diff --git a/accel/mshv/mshv-all.c b/accel/mshv/mshv-all.c
-> index 927e1b39bb..61a9d58546 100644
-> --- a/accel/mshv/mshv-all.c
-> +++ b/accel/mshv/mshv-all.c
-> @@ -719,11 +719,23 @@ static const TypeInfo mshv_accel_type = {
->      .instance_size = sizeof(MshvState),
->  };
+
+[...]
+
 >  
-> +/*
-> + * Haulted vCPUs must still enter mshv_cpu_exec() so that MSHV_RUN_VP
-> + * is called and the hypervisor can wake them (via SIPI on x86 or
-> + * PSCI on ARM64).
-> + */
+>  /* @offset: the offset within the RAMBlock */
 > +
-> +static bool mshv_vcpu_thread_is_idle(CPUState *cpu)
-> +{
-> +    return false;
-> +}
-> +
->  static void mshv_accel_ops_class_init(ObjectClass *oc, const void *data)
->  {
->      AccelOpsClass *ops = ACCEL_OPS_CLASS(oc);
+
+Unrelated?
+
+>  int ram_block_discard_range(RAMBlock *rb, uint64_t offset, size_t length);
+>  /* @offset: the offset within the RAMBlock */
+>  int ram_block_discard_guest_memfd_range(RAMBlock *rb, uint64_t offset,
+> diff --git a/hw/virtio/virtio-mem.c b/hw/virtio/virtio-mem.c
+> index a4b71974a1c..be149ee9441 100644
+> --- a/hw/virtio/virtio-mem.c
+> +++ b/hw/virtio/virtio-mem.c
+> @@ -16,6 +16,7 @@
+>  #include "qemu/error-report.h"
+>  #include "qemu/units.h"
+>  #include "qemu/target-info-qapi.h"
+> +#include "system/memory.h"
+>  #include "system/numa.h"
+>  #include "system/system.h"
+>  #include "system/ramblock.h"
+> @@ -324,74 +325,31 @@ static int virtio_mem_for_each_unplugged_section(const VirtIOMEM *vmem,
+>      return ret;
+>  }
 >  
->      ops->create_vcpu_thread = mshv_start_vcpu_thread;
-> +    ops->cpu_thread_is_idle = mshv_vcpu_thread_is_idle;
->      ops->synchronize_post_init = mshv_cpu_synchronize_post_init;
->      ops->synchronize_post_reset = mshv_cpu_synchronize_post_reset;
->      ops->synchronize_state = mshv_cpu_synchronize;
-> 
-> -- 
-> 2.45.4
 
-this has been merged independently since: dbfb680772d5184544f7c0a8bba96bec229c96e6
+LGTM
 
-best,
+Acked-by: David Hildenbrand <david@kernel.org>
 
-magnus
+-- 
+Cheers,
+
+David
 
