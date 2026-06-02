@@ -4,71 +4,53 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C75ECCD6E4A
-	for <qemu-devel@archiver.kernel.org>; Tue,  2 Jun 2026 08:35:35 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 40998CD6E4A
+	for <qemu-devel@archiver.kernel.org>; Tue,  2 Jun 2026 08:42:33 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wUKaM-0000gD-12; Tue, 02 Jun 2026 04:34:54 -0400
+	id 1wUKgq-0001rY-8M; Tue, 02 Jun 2026 04:41:37 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1wUKaK-0000fz-69
- for qemu-devel@nongnu.org; Tue, 02 Jun 2026 04:34:52 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <f.ebner@proxmox.com>)
+ id 1wUKgm-0001qW-DQ; Tue, 02 Jun 2026 04:41:32 -0400
+Received: from proxmox-new.maurer-it.com ([94.136.29.106])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1wUKaI-0000hj-HO
- for qemu-devel@nongnu.org; Tue, 02 Jun 2026 04:34:51 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1780389288;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=5pFa0FIkeV6ihl8xHC3tS17xLByKCnrUJUUSb9/GhuQ=;
- b=RUfFoCdoGwwOJjqfCCXGLxv1BMbRWj1VQsrIoHCVh/azHCfd9XE96k6b0oGVBZPLDOOeYK
- jPb+dewz+Ehb7KEYuzxlTngs4owjNLaTrKjCXIIgkiui4kA83Byq2DvBMdDsthAdreHdCw
- tVqVRTmeYWvXmLmwiogYkJNwqKE3bLk=
-Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-350-s7nbmAShM1icTDM7q_GDWg-1; Tue,
- 02 Jun 2026 04:34:47 -0400
-X-MC-Unique: s7nbmAShM1icTDM7q_GDWg-1
-X-Mimecast-MFC-AGG-ID: s7nbmAShM1icTDM7q_GDWg_1780389286
-Received: from mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.93])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 33CB91956095; Tue,  2 Jun 2026 08:34:46 +0000 (UTC)
-Received: from blackfin.pond.sub.org (unknown [10.44.22.2])
- by mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id CEFF118004A3; Tue,  2 Jun 2026 08:34:45 +0000 (UTC)
-Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
- id 5849621E6A01; Tue, 02 Jun 2026 10:34:43 +0200 (CEST)
-From: Markus Armbruster <armbru@redhat.com>
-To: Bin Guo <guobin@linux.alibaba.com>
-Cc: qemu-devel@nongnu.org
-Subject: Re: [PATCH] qobject/json-writer: preallocate output buffer
-In-Reply-To: <20260529023426.54680-1-guobin@linux.alibaba.com> (Bin Guo's
- message of "Fri, 29 May 2026 10:34:26 +0800")
-References: <20260529023426.54680-1-guobin@linux.alibaba.com>
-Date: Tue, 02 Jun 2026 10:34:43 +0200
-Message-ID: <87ldcx5oik.fsf@pond.sub.org>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+ (Exim 4.90_1) (envelope-from <f.ebner@proxmox.com>)
+ id 1wUKgk-0002sp-4x; Tue, 02 Jun 2026 04:41:32 -0400
+Received: from proxmox-new.maurer-it.com (localhost.localdomain [127.0.0.1])
+ by proxmox-new.maurer-it.com (Proxmox) with ESMTP id 9BB9244D6B;
+ Tue, 02 Jun 2026 10:41:17 +0200 (CEST)
+Message-ID: <ddaae8e8-cfd5-4fdc-8ada-014258c2d9d6@proxmox.com>
+Date: Tue, 2 Jun 2026 10:41:11 +0200
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.93
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=armbru@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: 8
-X-Spam_score: 0.8
-X-Spam_bar: /
-X-Spam_report: (0.8 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.445,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_SBL_CSS=3.335, SPF_HELO_PASS=-0.001,
- SPF_PASS=-0.001 autolearn=no autolearn_force=no
+User-Agent: Mozilla Thunderbird
+Subject: Re: Excessive IO PSI for iothread when using io_uring since QEMU 10.2
+To: Stefan Hajnoczi <stefanha@redhat.com>
+Cc: "open list:Network Block Dev..." <qemu-block@nongnu.org>,
+ QEMU Developers <qemu-devel@nongnu.org>, Fam Zheng <fam@euphon.net>,
+ Hanna Czenczek <hreitz@redhat.com>, Kevin Wolf <kwolf@redhat.com>,
+ Thomas Lamprecht <t.lamprecht@proxmox.com>, Jens Axboe <axboe@kernel.dk>
+References: <017dc767-90e3-4983-8417-e541b3fb04f6@proxmox.com>
+ <20260427191343.GD218226@fedora>
+ <317ab384-f8c2-49af-89c4-407bb2f5617c@proxmox.com>
+ <20260428161927.GB278591@fedora>
+ <9b11dec1-f27c-4c69-8dfc-34ef0bdc7e8f@proxmox.com>
+ <20260601172043.GB458909@fedora>
+Content-Language: en-US
+From: Fiona Ebner <f.ebner@proxmox.com>
+In-Reply-To: <20260601172043.GB458909@fedora>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-Bm-Milter-Handled: 55990f41-d878-4baa-be0a-ee34c49e34d2
+X-Bm-Transport-Timestamp: 1780389641710
+Received-SPF: pass client-ip=94.136.29.106; envelope-from=f.ebner@proxmox.com;
+ helo=proxmox-new.maurer-it.com
+X-Spam_score_int: -18
+X-Spam_score: -1.9
+X-Spam_bar: -
+X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -84,63 +66,90 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Bin Guo <guobin@linux.alibaba.com> writes:
+Am 01.06.26 um 7:20 PM schrieb Stefan Hajnoczi:
+> On Wed, Apr 29, 2026 at 10:00:34AM +0200, Fiona Ebner wrote:
+>> Am 28.04.26 um 6:18 PM schrieb Stefan Hajnoczi:
+>>> On Tue, Apr 28, 2026 at 02:10:02PM +0200, Fiona Ebner wrote:
+>>>> Hi Stefan,
+>>>>
+>>>> Am 27.04.26 um 9:12 PM schrieb Stefan Hajnoczi:
+>>>>> On Fri, Apr 24, 2026 at 12:25:41PM +0200, Fiona Ebner wrote:
+>>>>>> Dear maintainers,
+>>>>>>
+>>>>>> since QEMU 10.2, if io_uring is enabled, it will be used for the event
+>>>>>> loop of iothreads and this causes an IO pressure stall value of nearly
+>>>>>> 100 when idle.
+>>>>>>
+>>>>>> The issue was also reported on the kernel mailing list [0]. The
+>>>>>> suggestion from Jens Axboe was to just turn off the iowait accounting
+>>>>>> completely. But since (for block/file-posix.c), there is actual IO
+>>>>>> submitted via the same ring, I wasn't sure if that is the right approach.
+>>>>>>
+>>>>>> So the idea was to keep track of whether the event loop is otherwise
+>>>>>> idle and only use the IORING_ENTER_NO_IOWAIT flag in that case [1].
+>>>>>>
+>>>>>> However, doing so would only help for block/file-posix.c, which submits
+>>>>>> IO via luring_co_submit() -> fdmon_io_uring_add_sqe(). For example, for
+>>>>>> block/rbd.c, only a poll SQE for the AioHandler node's fd is used. When
+>>>>>> submitting that poll SQE in the iothread, we would need to be able to
+>>>>>> know if IO for RBD is currently in-flight or not to be able to decide
+>>>>>> whether to use the IORING_ENTER_NO_IOWAIT flag or not. Is there a good
+>>>>>> way to do this (in a general way)?
+>>>>>>
+>>>>>> Or should the flag really always be used (if supported by the kernel)?
+>>>>>> Is there a way to tell io_uring/kernel that we are an event loop and our
+>>>>>> waiting should only be accounted for when there is actual IO in-flight?
+>>>>>>
+>>>>>> Happy to hear your opinions and suggestions!
+>>>>>>
+>>>>>> [0]:
+>>>>>> https://lore.kernel.org/io-uring/14bc6266-5bc9-4454-9518-d1016bfe417b@proxmox.com/T/
+>>>>>
+>>>>> Hi Fiona,
+>>>>> Jens replied yesterday confirmed your suspicion that the number of
+>>>>> inflight requests is not being tracked correctly.
+>>>>>
+>>>>> Is there still a problem after fixing the kernel's inflight counting? If
+>>>>> not, then no QEMU change is necessary and that seems like the cleanest
+>>>>> solution anyway. The kernel should know whether there is I/O in flight
+>>>>> and so it doesn't seem right that userspace needs to hint this.
+>>>>
+>>>>
+>>>> unfortunately, yes. Even with the kernel fix [2], the real problem with
+>>>> poll SQEs described above remains. I'm still seeing high IO pressure
+>>>> stall values when using QEMU. In add_poll_add_sqe(), QEMU submits poll
+>>>> SQEs for the AioHandler node fd, and that does count as pending IO. A
+>>>> small reproducer modeling this [3].
+>>>
+>>> Does the kernel account POLL_ADD SQEs as blocking I/O activity?
+>>
+>> Apparently yes. See the C program below [3].
+>>
+>>> That behavior is inconsistent if select(2)/poll(2)/epoll_wait(2)
+>>> syscalls do not count as blocking I/O activity. The kernel io_uring code
+>>> should account them correctly and not rely on a userspace hint.
+>>
+>> @Jens Axboe: should there be a separate internal counter for
+>> poll/timeout SQEs and have them not count towards IO wait by default?
+> 
+> Hi Fiona,
+> Any update on this issue? Was it resolved in io_uring or is a QEMU patch
+> still needed?
 
-> json_writer_new() creates the output GString with g_string_new(NULL),
-> which starts at the GLib default of 64 bytes.  Serializing typical
-> QMP responses then requires multiple reallocations as the buffer
-> grows -- for query-qmp-schema the GString is reallocated 12+ times.
+Hi Stefan,
 
-That's an extreme case.  Most responses are *much* smaller.  Still,
-starting with a larger buffer makes sense.
+I did not proceed with the above, since I did not get an ack from Jens
+regarding the suggested approach.
 
-> Preallocate JSON_WRITER_INITIAL_SIZE (4096) bytes.  This covers
-> most QMP responses without any reallocation.  4096 is one page on
-> most systems, which is efficient for the allocator.
+We needed to go ahead with a release downstream, so for the meantime, we
+applied a workaround by Thomas with setting the IORING_ENTER_NO_IOWAIT
+flag when there is no actual IO in-flight [0]. Should it be submitted to
+qemu-devel too?
 
-I doubt "one page" matters.  How many QMP commands get executed in
-practice?  A couple of hundred during startup, then tens per second?
-Probably less than that.
+[0]:
+https://git.proxmox.com/?p=pve-qemu.git;a=commitdiff;h=775e41b890a645db75119233fe2b21f139bf8e4f
 
->                                                      The JSONWriter
-> is a short-lived object so the preallocation does not accumulate.
->
-> Signed-off-by: Bin Guo <guobin@linux.alibaba.com>
-> ---
->  qobject/json-writer.c | 5 ++++-
->  1 file changed, 4 insertions(+), 1 deletion(-)
->
-> diff --git a/qobject/json-writer.c b/qobject/json-writer.c
-> index aac2c6ab71..fb3f3f3e3c 100644
-> --- a/qobject/json-writer.c
-> +++ b/qobject/json-writer.c
-> @@ -24,13 +24,16 @@ struct JSONWriter {
->      GByteArray *container_is_array;
->  };
->  
-> +/* Covers most QMP responses without reallocation (one page) */
-
-Covering most responses matters, one page does not.  Suggest
-
-   /* Should cover most QMP responses without reallocation */
-
-> +#define JSON_WRITER_INITIAL_SIZE  4096
-> +
->  JSONWriter *json_writer_new(bool pretty)
->  {
->      JSONWriter *writer = g_new(JSONWriter, 1);
->  
->      writer->pretty = pretty;
->      writer->need_comma = false;
-> -    writer->contents = g_string_new(NULL);
-> +    writer->contents = g_string_sized_new(JSON_WRITER_INITIAL_SIZE);
->      writer->container_is_array = g_byte_array_new();
->      return writer;
->  }
-
-Consider tweaking the commit message and the comment to address my
-remarks.
-
-Reviewed-by: Markus Armbruster <armbru@redhat.com>
+Best Regards,
+Fiona
 
 
