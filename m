@@ -4,48 +4,48 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B05CBCD6E56
-	for <qemu-devel@archiver.kernel.org>; Tue,  2 Jun 2026 01:43:05 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6D060CD6E56
+	for <qemu-devel@archiver.kernel.org>; Tue,  2 Jun 2026 01:46:16 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wUE9Z-0002QI-UY; Mon, 01 Jun 2026 21:42:49 -0400
+	id 1wUECi-0003P6-RY; Mon, 01 Jun 2026 21:46:04 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <Michael.Roth@amd.com>)
- id 1wUE9Y-0002K2-Ap
- for qemu-devel@nongnu.org; Mon, 01 Jun 2026 21:42:48 -0400
-Received: from mail-westusazlp170120002.outbound.protection.outlook.com
- ([2a01:111:f403:c001::2] helo=SJ2PR03CU001.outbound.protection.outlook.com)
+ id 1wUECh-0003Ox-JP
+ for qemu-devel@nongnu.org; Mon, 01 Jun 2026 21:46:03 -0400
+Received: from mail-northcentralusazon11013070.outbound.protection.outlook.com
+ ([40.107.201.70] helo=CH4PR04CU002.outbound.protection.outlook.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <Michael.Roth@amd.com>)
- id 1wUE9W-0001j0-8R
- for qemu-devel@nongnu.org; Mon, 01 Jun 2026 21:42:47 -0400
+ id 1wUECf-0002kP-QR
+ for qemu-devel@nongnu.org; Mon, 01 Jun 2026 21:46:03 -0400
 ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=rbeBMBY4TW2olEdWKex74soIOTccxYbb0vDsXomj9xDalCJ6VV5Ljs+gkFKrbbzE4f415p3Y11qBkNZa4f5cNv9qySARYwqxZanhQhDFFPTijK+r3V2w1oKqgrMLmIJTz+5VN9dq6RxmFZoO+OasUnIQX30Q4E9Yuj8XwBYERmK5NN/+SZwXvtMOTpZcaG/fosrpvn+H+cv2z4miEddXntDnBrsEqW8xGbfpy/b3EWiOMLWLKgVRnDNz3kMbEwcAGUPqjB6hqzwhAu+TgSLCd1O1supyxKOhkJ35FykXTLbHg+F6s4vd7WA7CUqe5waHwd4UV/G23YhrAB/Lg+pwHA==
+ b=yTYU2XveSUxE71LwTW8jCnNKynOhdMoghIX5IrXqHCZSgCSZ0s5+uVqb2/94KQ1MJJ7euzOS3SSVcu7Hcqd3Iv9/gdFAZvm0QRF+F5kECtMUjinHKt0Onga5nzYmw0GG5KPcAhEyHHFVY0cM84Fsk9JvHlbvrRiErOg8c5M3PBPDmiQT+rBtDHONrwoyy4AkEqMfsg0MHsSOcU7HJGa1tBC/ZVnBPhckfLOXFFF7PHaUcHdtEMMt8BGe5izBYGUbu16+AzQH2Bv79wLbF5ML+XHHcn+ugbFerJ6tLyPyMvbkMsKMLW2D1OHJgXcT+axuNcaY7h9RPLptCIGlN2ovdg==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
  s=arcselector10001;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=kyRzP44qOxrLO6Udo18NHrYY5pnThxy+9lySaYEJkVI=;
- b=JI3KDQ/XLZlxwSwWuuNhGIWSA2qL6FWNNFoWbBt8Px4DJ4N+oO3sAlFAzH7viMR5fEzrOdvGtGUZiyzG8Rr7GwmFEYD06EOXl9rGX70GAcqqweHUEj/SmZfIYiYVztjbaHXeGv/1lNqSmEsR8X3Jtd3NSA8iLk7cYGDumC4VLccZ64HgBvAr+TfM5aDvHWhCe3gauwqVB373w8rsiivLV5FQJBqj5ZpfzT73ThUSvbhHpEoC7Ip7Ky+2CatNCorZZO9SdOkebSnaXv/+VfA2cR+2JfphVs+FRVn/kZ9I0ITGBiHdvMg1juNvMO/dhTHFrJgBQ49bhk5dU+uMFbajog==
+ bh=vGFIECxN/0hiiUkZtghF34P4jFyxMYa7inIHQQabiZ8=;
+ b=RtavG39GFGosE2RFUJkhYJqyG9l4s1J+sl1qZitWPn/Be9itIrHrxNRimJsj5biSiSo6myegsFtC8AcHjAoOKIjPo0i5KmVYEZ1KUUbfD+0GdmVgR8PCtBKj1O67qwKj3+W7GZ70THPkd+HAIkWCRW1F9yiZSnCr2GcOngoygaxzpUlUuq0VCgoTsVcLDUOoJbnz3vXJnxWOWtGWZ2Kzf2eg70zeBI0LB6gGA6mMIBOk9dvfZtVxtMNNRuXoCvmqiZ4wPs+ol8UO2SvDlB42YuM9O+4LG6aucbMHVykFFm61gTfpDAy/Iic/cyBi7yzG/2p0secOKD93F5nE8o/1xw==
 ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass (sender ip is
  165.204.84.17) smtp.rcpttodomain=redhat.com smtp.mailfrom=amd.com; dmarc=pass
  (p=quarantine sp=quarantine pct=100) action=none header.from=amd.com;
  dkim=none (message not signed); arc=none (0)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=amd.com; s=selector1; 
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=kyRzP44qOxrLO6Udo18NHrYY5pnThxy+9lySaYEJkVI=;
- b=n5M6dyw8Reb+BU0IQJVpuf4di4leslHkAmyJHSpBsPCm1qxW6JCgAe+TBo5iUZ/ROJK3Zfaw23lAJuC4V+HPgRjUf8l/mRGwwO9+XDvyl52t95VNAXDpPxV/Ak9rzzqbFqedijXSi0iP4NgkSsHCeClh41+yvADuEJs5M6SE3N8=
-Received: from PH7P222CA0017.NAMP222.PROD.OUTLOOK.COM (2603:10b6:510:33a::20)
- by PH8PR12MB6673.namprd12.prod.outlook.com (2603:10b6:510:1c0::20)
+ bh=vGFIECxN/0hiiUkZtghF34P4jFyxMYa7inIHQQabiZ8=;
+ b=Ca8KozX6hiU5tSrprcX14exJK1o5r2zPpcaW75TycY8iRtcIb/toiY0EpsQUNaTmiXcK4t9oSaIrZXJSipvN0N4FsE0dlwJ361GUS69zRrcgjciNS71lt/wQhbTsiTQorqxnBMtlfY/7bqKL7vYAQuOgMS/e+yR4iIW9JFiQg4o=
+Received: from SN7PR04CA0236.namprd04.prod.outlook.com (2603:10b6:806:127::31)
+ by IA1PR12MB7733.namprd12.prod.outlook.com (2603:10b6:208:423::17)
  with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.71.15; Tue, 2 Jun 2026
- 01:42:37 +0000
-Received: from SN1PEPF00036F43.namprd05.prod.outlook.com
- (2603:10b6:510:33a:cafe::7) by PH7P222CA0017.outlook.office365.com
- (2603:10b6:510:33a::20) with Microsoft SMTP Server (version=TLS1_3,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.71.16; Tue, 2 Jun 2026
+ 01:40:54 +0000
+Received: from SN1PEPF00036F42.namprd05.prod.outlook.com
+ (2603:10b6:806:127:cafe::37) by SN7PR04CA0236.outlook.office365.com
+ (2603:10b6:806:127::31) with Microsoft SMTP Server (version=TLS1_3,
  cipher=TLS_AES_256_GCM_SHA384) id 15.21.71.16 via Frontend Transport; Tue, 2
- Jun 2026 01:42:37 +0000
+ Jun 2026 01:40:54 +0000
 X-MS-Exchange-Authentication-Results: spf=pass (sender IP is 165.204.84.17)
  smtp.mailfrom=amd.com; dkim=none (message not signed)
  header.d=none;dmarc=pass action=none header.from=amd.com;
@@ -53,66 +53,66 @@ Received-SPF: Pass (protection.outlook.com: domain of amd.com designates
  165.204.84.17 as permitted sender) receiver=protection.outlook.com;
  client-ip=165.204.84.17; helo=satlexmb07.amd.com; pr=C
 Received: from satlexmb07.amd.com (165.204.84.17) by
- SN1PEPF00036F43.mail.protection.outlook.com (10.167.248.27) with Microsoft
+ SN1PEPF00036F42.mail.protection.outlook.com (10.167.248.26) with Microsoft
  SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.21.92.5 via Frontend Transport; Tue, 2 Jun 2026 01:42:36 +0000
+ 15.21.92.5 via Frontend Transport; Tue, 2 Jun 2026 01:40:53 +0000
 Received: from localhost (10.180.168.240) by satlexmb07.amd.com
  (10.181.42.216) with Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.2562.41; Mon, 1 Jun
- 2026 20:42:36 -0500
-Date: Mon, 1 Jun 2026 20:40:16 -0500
+ 2026 20:40:53 -0500
+Date: Mon, 1 Jun 2026 20:10:51 -0500
 From: Michael Roth <michael.roth@amd.com>
 To: Peter Xu <peterx@redhat.com>
 CC: <qemu-devel@nongnu.org>, Juraj Marcin <jmarcin@redhat.com>, "David
  Hildenbrand" <david@kernel.org>, Paolo Bonzini <pbonzini@redhat.com>, "Chenyi
  Qiang" <chenyi.qiang@intel.com>, Fabiano Rosas <farosas@suse.de>, "Alexey
  Kardashevskiy" <aik@amd.com>, Li Xiaoyao <xiaoyao.li@intel.com>
-Subject: Re: [PATCH v3 06/12] memory: Rename memory_region_has_guest_memfd()
- to *_private()
-Message-ID: <jmdeh7omharcpgvyi6sivvwuhxlsswkizfnu7r4x73n3q5izz5@kgslhh7pw7nb>
+Subject: Re: [PATCH v3 01/12] kvm: Decouple memory attribute check from
+ kvm_guest_memfd_supported
+Message-ID: <yfvgjtob2xbldl6avdcay6lzbjo435bqhvhazqeekn6tombyqx@c66atubduqm3>
 References: <20251215205203.1185099-1-peterx@redhat.com>
- <20251215205203.1185099-7-peterx@redhat.com>
+ <20251215205203.1185099-2-peterx@redhat.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="us-ascii"
 Content-Disposition: inline
-In-Reply-To: <20251215205203.1185099-7-peterx@redhat.com>
+In-Reply-To: <20251215205203.1185099-2-peterx@redhat.com>
 X-Originating-IP: [10.180.168.240]
 X-ClientProxiedBy: satlexmb08.amd.com (10.181.42.217) To satlexmb07.amd.com
  (10.181.42.216)
 X-EOPAttributedMessage: 0
 X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: SN1PEPF00036F43:EE_|PH8PR12MB6673:EE_
-X-MS-Office365-Filtering-Correlation-Id: d121cafd-96c6-4f70-39a2-08dec04839a2
+X-MS-TrafficTypeDiagnostic: SN1PEPF00036F42:EE_|IA1PR12MB7733:EE_
+X-MS-Office365-Filtering-Correlation-Id: b4050bc5-a52e-41ce-57a3-08dec047fc35
 X-MS-Exchange-SenderADCheck: 1
 X-MS-Exchange-AntiSpam-Relay: 0
 X-Microsoft-Antispam: BCL:0;
- ARA:13230040|82310400026|376014|1800799024|36860700016|22082099003|18002099003|56012099006|4143699003|11063799006;
-X-Microsoft-Antispam-Message-Info: IeGQirjkGtVqdgoVE5Is7DHCFwZg+9DmUoysIt4/u51nFIJ7NdxpqzkDC75Y7KcUiT99J2FYlNC3kI2jeUZM4ntka62yqEvSVEqwYemefNlCiw6otrK13CDmKGBxF2jFJ7NBSadWmTfbXO9ujdJ9H0+buiAoxz1lG+1Ye9fvi3mIxjd995bdpoveIfLHeo0QOGdTMi5lweJ5E5IArExCtqTrCOGNF6DBlA2HQjOSQw3Udrp7bcLweE+FtaGWbGZMskrl23EyixVmWeW6R8DfpaNGgzCWmU0TZ99SO+JJyIWmVdEMa2ZwFsTc/+7C1IixK+g4t/Y3N5dt1DO3s7bf61ZzI2rxr4HEzdc+Wuu4yXp4OwII+fYOYPPM9psl8qDp0F2RxJe9Qmj98HyHPZ5Zx92wTa+VY9LhSsz13Z1zAd/TAnZMc8rU7jYRYLVFuTEKB2V+og2issnUNGvO5uo3PD7fZBL8S36ZZPggMucRiHdXFMVAMuXgH/ZRJzcvVe3VQDmpcOh2ATnyD4NbTKSJLGKh6qNTigSZOrA8wDCsHrZau74FkAQfdQgQCXykgArygsbhf1Gp6mVR1Pg2RcDX1gpHK/f4VaK2VaOeIaQrun3ZFAoythMY69dsZgy44G/ep480TDVtigy9uAPBis2NO1e/c4qarsiLmCGA9iqhUgSWzvG/AVOLI1jTMdY+vVd070wb7SiwxAtNUg0Jwcwh/NpnQxHyyuCUUkcgzbUfKEg=
+ ARA:13230040|376014|1800799024|82310400026|36860700016|22082099003|18002099003|4143699003|56012099006|11063799006;
+X-Microsoft-Antispam-Message-Info: yDfoeBwUrIlm3yU4934e9Ick3GUzA/LolJMNCPIdc/AaA0o8Os5TdcG7KdIAXCN87dFRWmOIYLknExnc7VyjZxlF/fn7r0DasrS9EzgaOwKDAficLf3jgdZl730C4nu6XS68NHOLcdEA7rOLJeBaR3+LhPWWmZN8MrLn6/g3DTk4cmBhhSkYsa6OZluDUIwh1WbHLX1crkqDsk3EVQkQNVy/ujUQUnNbNdr8R17VBLpo7AVVO4pcrCfdmOBNSYLn/MPME3x7XSVlHLyn4lBzZoSXE8/6SHHtMu5iEEJkaSRXvF6P12EtwfAA91ppRMTnaVoHyR6Ek0IV79cHfU2CkPfZlLKrjptL2cqtWORrv3gfkP6i3XP9i8KqlNM9/yw0qnBhb5jkRDkic1w0/eLF/+EQXeocacrfdJUQsYY6LewZK2geAeeEHJBdnPrlSOrOmEX1b3P3D0/aEd9qX+ravxzP3JDKbBaaLb1RtXk5Hpxx1m0myi0wmAPHYAuZ4PwpgLb8wi4b5SGdqiuqOEKHXCZh8siyKCEgOa/DyaZb0l3bscaZMhQGE7tw8rAPVEN8A6uQE2e+z09Rj3bk4fVf7CxF/5YBsA4EXzvdfNf1PB+G7FMJ+rr7aEe5k/MSNOS8PwsHVuzTUfWzp6JoS+vra/buigSWNwcaH+B4RrSH2VgZgLB3DEE/5c4nXyHNcvIrG3LCkWkWRnUQi47ud1pBO5ZOJY0k1pg6AwR8pWpS+1c=
 X-Forefront-Antispam-Report: CIP:165.204.84.17; CTRY:US; LANG:en; SCL:1; SRV:;
  IPV:NLI; SFV:NSPM; H:satlexmb07.amd.com; PTR:InfoDomainNonexistent; CAT:NONE;
- SFS:(13230040)(82310400026)(376014)(1800799024)(36860700016)(22082099003)(18002099003)(56012099006)(4143699003)(11063799006);
+ SFS:(13230040)(376014)(1800799024)(82310400026)(36860700016)(22082099003)(18002099003)(4143699003)(56012099006)(11063799006);
  DIR:OUT; SFP:1101; 
 X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0: b9vOAt4Ya9MoOX7Cz5E8MXBaepCuvRjoY66AOXvcCvsffAP9WfV6IPxM7+fmlOIbT1b0I9vcFmG+AmltJ+TyA5YbSMu0DSDZTAusFuQ5rr0MkaBCkOVSQix2DlW3gTcBVVM2APV7RF6wW1Rh+uIeImbpMCboLHOStqAFSIdcj0BGkFCHuoiT56vcBbwuKzF15bhF2jCmJHTr9ojT8Oolombqvplk/Nuv2Z15IrQiJrGmGkNZzh19YlMmWNst+aEkU825j9uuxMV0iVmJTM+ySZUXdjbgDqFHwGgLyBgW0dIS8PkLVBvzb9hL22D1MKGgBK22iB94Vfgf9tUskoXIxC3Ma7jc/10455UTDcnBeQgRWuNgb4QzYiDYdocR2HDEi9EfSm/NSq/qE+dl3/5ST6ohDuzM+nqwO6WBmDZ98fYWKwq3l5S5mMAIOuxMHf1r
+X-MS-Exchange-AntiSpam-MessageData-0: w3yPX39FkaV2BY8cn/oie3OXPnYRc7vIJg6eNG0ZICE3HZ00zt5nGnugRf/knrHQs2boVubGqI2w2RVuEj3sUzV64LoixanLOHy67QFbr3BF0a7GW1YOutNrdlsHFXlEeU7FXLUPSIGElF9NGNjL/mv4/0BH2Mnu4Hm14pxIWgbSQlMhipp2ljfrS/8w2EnZIsPTMWpLjIBrqBgH4wQ8wZiiljGjHNesIxtjX4vj2wY2H+zfUaJ7lHiImj+n6TyIY2qCff5oBUdlNay1yacsfE6MDP0wZdh33f1p9vcP137hH4kAjl5370vLmkYRPMsbrCaz9pAY676UqrQYFw5PEYnH0QFhBzanwzxyoGSIaDyg1YDyrh302dMC1MPet4sTYY+kYqYNBeSEFqp0tZgIG2As2PL3hAScqalhr8lbzowI9H5BGlXjUOHks2obuGoa
 X-OriginatorOrg: amd.com
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 02 Jun 2026 01:42:36.9682 (UTC)
-X-MS-Exchange-CrossTenant-Network-Message-Id: d121cafd-96c6-4f70-39a2-08dec04839a2
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 02 Jun 2026 01:40:53.9439 (UTC)
+X-MS-Exchange-CrossTenant-Network-Message-Id: b4050bc5-a52e-41ce-57a3-08dec047fc35
 X-MS-Exchange-CrossTenant-Id: 3dd8961f-e488-4e60-8e11-a82d994e183d
 X-MS-Exchange-CrossTenant-OriginalAttributedTenantConnectingIp: TenantId=3dd8961f-e488-4e60-8e11-a82d994e183d; Ip=[165.204.84.17];
  Helo=[satlexmb07.amd.com]
-X-MS-Exchange-CrossTenant-AuthSource: SN1PEPF00036F43.namprd05.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthSource: SN1PEPF00036F42.namprd05.prod.outlook.com
 X-MS-Exchange-CrossTenant-AuthAs: Anonymous
 X-MS-Exchange-CrossTenant-FromEntityHeader: HybridOnPrem
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: PH8PR12MB6673
-Received-SPF: permerror client-ip=2a01:111:f403:c001::2;
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: IA1PR12MB7733
+Received-SPF: permerror client-ip=40.107.201.70;
  envelope-from=Michael.Roth@amd.com;
- helo=SJ2PR03CU001.outbound.protection.outlook.com
+ helo=CH4PR04CU002.outbound.protection.outlook.com
 X-Spam_score_int: -24
 X-Spam_score: -2.5
 X-Spam_bar: --
 X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.445,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_PASS=-0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001, SPF_HELO_PASS=-0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -129,88 +129,103 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Mon, Dec 15, 2025 at 03:51:57PM -0500, Peter Xu wrote:
-> Rename the function with "_private" suffix, to show that it returns true
-> only if it has an internal guest-memfd to back private pages (rather than
-> fully shared guest-memfd).
+On Mon, Dec 15, 2025 at 03:51:52PM -0500, Peter Xu wrote:
+> From: Xiaoyao Li <xiaoyao.li@intel.com>
 > 
-> Reviewed-by: Xiaoyao Li <xiaoyao.li@intel.com>
+> With the mmap support of guest memfd, KVM allows usersapce to create
+> guest memfd serving as normal non-private memory for X86 DEFEAULT VM.
+> However, KVM doesn't support private memory attriute for X86 DEFAULT
+> VM.
+> 
+> Make kvm_guest_memfd_supported not rely on KVM_MEMORY_ATTRIBUTE_PRIVATE
+> and check KVM_MEMORY_ATTRIBUTE_PRIVATE separately when the machine
+> requires guest_memfd to serve as private memory.
+> 
+> This allows QMEU to create guest memfd with mmap to serve as the memory
+> backend for X86 DEFAULT VM.
+> 
+> Signed-off-by: Xiaoyao Li <xiaoyao.li@intel.com>
 > Signed-off-by: Peter Xu <peterx@redhat.com>
 
 Reviewed-by: Michael Roth <michael.roth@amd.com>
 
 > ---
->  include/system/memory.h | 4 ++--
->  accel/kvm/kvm-all.c     | 6 +++---
->  system/memory.c         | 2 +-
->  3 files changed, 6 insertions(+), 6 deletions(-)
+>  include/system/kvm.h   | 1 +
+>  accel/kvm/kvm-all.c    | 8 ++++++--
+>  accel/stubs/kvm-stub.c | 5 +++++
+>  system/physmem.c       | 8 ++++++++
+>  4 files changed, 20 insertions(+), 2 deletions(-)
 > 
-> diff --git a/include/system/memory.h b/include/system/memory.h
-> index 1f49f9a0ff..9b58303bb8 100644
-> --- a/include/system/memory.h
-> +++ b/include/system/memory.h
-> @@ -1823,7 +1823,7 @@ static inline bool memory_region_is_romd(MemoryRegion *mr)
->  bool memory_region_is_protected(MemoryRegion *mr);
+> diff --git a/include/system/kvm.h b/include/system/kvm.h
+> index 8f9eecf044..b5811c90f1 100644
+> --- a/include/system/kvm.h
+> +++ b/include/system/kvm.h
+> @@ -561,6 +561,7 @@ int kvm_create_guest_memfd(uint64_t size, uint64_t flags, Error **errp);
 >  
->  /**
-> - * memory_region_has_guest_memfd: check whether a memory region has
-> + * memory_region_has_guest_memfd_private: check whether a memory region has
->   *     guest_memfd_private associated
->   *
->   * Returns %true if a memory region's ram_block has guest_memfd_private
-> @@ -1831,7 +1831,7 @@ bool memory_region_is_protected(MemoryRegion *mr);
->   *
->   * @mr: the memory region being queried
->   */
-> -bool memory_region_has_guest_memfd(MemoryRegion *mr);
-> +bool memory_region_has_guest_memfd_private(MemoryRegion *mr);
+>  int kvm_set_memory_attributes_private(hwaddr start, uint64_t size);
+>  int kvm_set_memory_attributes_shared(hwaddr start, uint64_t size);
+> +bool kvm_private_memory_attribute_supported(void);
 >  
->  /**
->   * memory_region_get_iommu: check whether a memory region is an iommu
+>  int kvm_convert_memory(hwaddr start, hwaddr size, bool to_private);
+>  
 > diff --git a/accel/kvm/kvm-all.c b/accel/kvm/kvm-all.c
-> index 1126b6f477..0b7ce5a9dd 100644
+> index 28006d73c5..59836ebdff 100644
 > --- a/accel/kvm/kvm-all.c
 > +++ b/accel/kvm/kvm-all.c
-> @@ -666,7 +666,7 @@ static int kvm_mem_flags(MemoryRegion *mr)
->      if (readonly && kvm_readonly_mem_allowed) {
->          flags |= KVM_MEM_READONLY;
->      }
-> -    if (memory_region_has_guest_memfd(mr)) {
-> +    if (memory_region_has_guest_memfd_private(mr)) {
->          assert(kvm_guest_memfd_supported);
->          flags |= KVM_MEM_GUEST_MEMFD;
->      }
-> @@ -1615,7 +1615,7 @@ static void kvm_set_phys_mem(KVMMemoryListener *kml,
->              abort();
->          }
->  
-> -        if (memory_region_has_guest_memfd(mr)) {
-> +        if (memory_region_has_guest_memfd_private(mr)) {
->              err = kvm_set_memory_attributes_private(start_addr, slot_size);
->              if (err) {
->                  error_report("%s: failed to set memory attribute private: %s",
-> @@ -3101,7 +3101,7 @@ int kvm_convert_memory(hwaddr start, hwaddr size, bool to_private)
->          return ret;
->      }
->  
-> -    if (!memory_region_has_guest_memfd(mr)) {
-> +    if (!memory_region_has_guest_memfd_private(mr)) {
->          /*
->           * Because vMMIO region must be shared, guest TD may convert vMMIO
->           * region to shared explicitly.  Don't complain such case.  See
-> diff --git a/system/memory.c b/system/memory.c
-> index e8c6d484e6..d70968c966 100644
-> --- a/system/memory.c
-> +++ b/system/memory.c
-> @@ -1897,7 +1897,7 @@ bool memory_region_is_protected(MemoryRegion *mr)
->      return mr->ram && (mr->ram_block->flags & RAM_PROTECTED);
+> @@ -1501,6 +1501,11 @@ int kvm_set_memory_attributes_shared(hwaddr start, uint64_t size)
+>      return kvm_set_memory_attributes(start, size, 0);
 >  }
 >  
-> -bool memory_region_has_guest_memfd(MemoryRegion *mr)
-> +bool memory_region_has_guest_memfd_private(MemoryRegion *mr)
+> +bool kvm_private_memory_attribute_supported(void)
+> +{
+> +    return !!(kvm_supported_memory_attributes & KVM_MEMORY_ATTRIBUTE_PRIVATE);
+> +}
+> +
+>  /* Called with KVMMemoryListener.slots_lock held */
+>  static void kvm_set_phys_mem(KVMMemoryListener *kml,
+>                               MemoryRegionSection *section, bool add)
+> @@ -2781,8 +2786,7 @@ static int kvm_init(AccelState *as, MachineState *ms)
+>      kvm_supported_memory_attributes = kvm_vm_check_extension(s, KVM_CAP_MEMORY_ATTRIBUTES);
+>      kvm_guest_memfd_supported =
+>          kvm_vm_check_extension(s, KVM_CAP_GUEST_MEMFD) &&
+> -        kvm_vm_check_extension(s, KVM_CAP_USER_MEMORY2) &&
+> -        (kvm_supported_memory_attributes & KVM_MEMORY_ATTRIBUTE_PRIVATE);
+> +        kvm_vm_check_extension(s, KVM_CAP_USER_MEMORY2);
+>      kvm_pre_fault_memory_supported = kvm_vm_check_extension(s, KVM_CAP_PRE_FAULT_MEMORY);
+>  
+>      if (s->kernel_irqchip_split == ON_OFF_AUTO_AUTO) {
+> diff --git a/accel/stubs/kvm-stub.c b/accel/stubs/kvm-stub.c
+> index 68cd33ba97..73f04eb589 100644
+> --- a/accel/stubs/kvm-stub.c
+> +++ b/accel/stubs/kvm-stub.c
+> @@ -125,3 +125,8 @@ int kvm_create_guest_memfd(uint64_t size, uint64_t flags, Error **errp)
 >  {
->      return mr->ram_block && mr->ram_block->guest_memfd_private >= 0;
+>      return -ENOSYS;
 >  }
+> +
+> +bool kvm_private_memory_attribute_supported(void)
+> +{
+> +    return false;
+> +}
+> diff --git a/system/physmem.c b/system/physmem.c
+> index c9869e4049..3555d2f6f7 100644
+> --- a/system/physmem.c
+> +++ b/system/physmem.c
+> @@ -2211,6 +2211,14 @@ static void ram_block_add(RAMBlock *new_block, Error **errp)
+>                         object_get_typename(OBJECT(current_machine->cgs)));
+>              goto out_free;
+>          }
+> +
+> +        if (!kvm_private_memory_attribute_supported()) {
+> +            error_setg(errp, "cannot set up private guest memory for %s: "
+> +                       " KVM does not support private memory attribute",
+> +                       object_get_typename(OBJECT(current_machine->cgs)));
+> +            goto out_free;
+> +        }
+> +
+>          assert(new_block->guest_memfd < 0);
+>  
+>          ret = ram_block_coordinated_discard_require(true);
 > -- 
 > 2.50.1
 > 
