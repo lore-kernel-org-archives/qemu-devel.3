@@ -4,97 +4,78 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 06C08CD6E60
-	for <qemu-devel@archiver.kernel.org>; Tue,  2 Jun 2026 17:14:41 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id EE340CD5BD1
+	for <qemu-devel@archiver.kernel.org>; Tue,  2 Jun 2026 17:21:13 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wUSh7-0002YO-Ks; Tue, 02 Jun 2026 13:14:26 -0400
+	id 1wUSnC-000442-Ob; Tue, 02 Jun 2026 13:20:43 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <noreply@launchpad.net>)
- id 1wUSgz-0002Wp-Gu
- for qemu-devel@nongnu.org; Tue, 02 Jun 2026 13:14:19 -0400
-Received: from smtp-relay-services-0.canonical.com ([185.125.188.250])
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1wUSn5-00041U-Ug
+ for qemu-devel@nongnu.org; Tue, 02 Jun 2026 13:20:36 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <noreply@launchpad.net>)
- id 1wUSgw-00084r-5U
- for qemu-devel@nongnu.org; Tue, 02 Jun 2026 13:14:16 -0400
-Received: from scripts.lp.internal (scripts.lp.internal [10.131.215.246])
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1wUSn3-0001i2-Rk
+ for qemu-devel@nongnu.org; Tue, 02 Jun 2026 13:20:35 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1780420832;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=AGhIokLdRYVFShtHrr2Fv/XnMC0ZwKaQJwK47KxQXZY=;
+ b=g74LXX9LDvPrbWghLaZ28F2ydw/lNC9hR95V3KK2Wfb6zd1KYe61EQ/uLpmCfAAFNqp4La
+ To2CLQzQA/WWE/AIh+QBfmKjGHP1b5OJvLYFkRLY7+7HR3eZBFEbtVX3iCAoXaIuwMr/No
+ oKkqiVFNQ1kPFgkZBogbquj0VuIuA4I=
+Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-173-lsdeNT4dO8qVHr2JyjQC2A-1; Tue,
+ 02 Jun 2026 13:20:28 -0400
+X-MC-Unique: lsdeNT4dO8qVHr2JyjQC2A-1
+X-Mimecast-MFC-AGG-ID: lsdeNT4dO8qVHr2JyjQC2A_1780420827
+Received: from mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.93])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by smtp-relay-services-0.canonical.com (Postfix) with ESMTPSA id 4FD263F07F
- for <qemu-devel@nongnu.org>; Tue,  2 Jun 2026 17:00:49 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=launchpad.net;
- s=20210803; t=1780419649;
- bh=ScWFvaRzQiryMTxlTpqpmd/Gs3wI+wznF49BFYg5758=;
- h=MIME-Version:Content-Type:Date:From:To:Reply-To:References:
- Message-Id:Subject;
- b=pASZ4U6X80KJxp1pMTvKtj0l85hvSacDRohelzlCVso5N7/dIZo6fJ0M09TaMzj94
- EM1eP5t9qDPgKT2JJmKwKjswtl+oVsgFuEYY+gxfJaTdz/6XCFPtN54e/LGEVZaqfS
- vLEF8gM5nViDHqb8IfKRdiALSSvSA88auDZGmRX/Gv6gXCOme+ib+2GlVQBAfXP0ub
- rQaQCVvwKHrISB5bvRZ+pjbnrmmkcsOAfo7iKvGkphFC1IxQ5fCeLHwYXf9NozKHCw
- 9UyO8jpPO2Dn5NiD3RQZdByO1WdRF64C7TeeHrnDDGrgsBUXHQQBuwGI2XgtgFJRtJ
- jbWE00bUQqtFA==
-Received: from scripts.lp.internal (localhost [127.0.0.1])
- by scripts.lp.internal (Postfix) with ESMTP id 7B25E7E588
- for <qemu-devel@nongnu.org>; Tue,  2 Jun 2026 17:00:48 +0000 (UTC)
+ by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 84A4E18005BA; Tue,  2 Jun 2026 17:20:27 +0000 (UTC)
+Received: from blackfin.pond.sub.org (unknown [10.44.22.2])
+ by mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id F198318004A3; Tue,  2 Jun 2026 17:20:26 +0000 (UTC)
+Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
+ id 8A33F21E6A01; Tue, 02 Jun 2026 19:20:24 +0200 (CEST)
+From: Markus Armbruster <armbru@redhat.com>
+To: Zhang Chen <zhangckid@gmail.com>
+Cc: qemu-devel <qemu-devel@nongnu.org>,  "Dr . David Alan Gilbert"
+ <dave@treblig.org>,  Eric Blake <eblake@redhat.com>,  "Michael S .
+ Tsirkin" <mst@redhat.com>,  Stefan Hajnoczi <stefanha@redhat.com>
+Subject: Re: [PATCH V8 07/15] monitor: Update tracking iothread users with
+ holder
+In-Reply-To: <20260529213321.96271-8-zhangckid@gmail.com> (Zhang Chen's
+ message of "Sat, 30 May 2026 05:33:13 +0800")
+References: <20260529213321.96271-1-zhangckid@gmail.com>
+ <20260529213321.96271-8-zhangckid@gmail.com>
+Date: Tue, 02 Jun 2026 19:20:24 +0200
+Message-ID: <87qzmorh9j.fsf@pond.sub.org>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: quoted-printable
-Date: Tue, 02 Jun 2026 16:55:27 -0000
-From: Lena Voytek <2133804@bugs.launchpad.net>
-To: qemu-devel@nongnu.org
-X-Launchpad-Notification-Type: bug
-X-Launchpad-Bug: product=qemu; status=Fix Released; importance=Unknown;
- assignee=None; 
-X-Launchpad-Bug: distribution=ubuntu; sourcepackage=qemu; component=main;
- milestone=ubuntu-26.04; status=Fix Released; importance=High;
- assignee=hector.cao@canonical.com; 
-X-Launchpad-Bug: distribution=ubuntu; distroseries=jammy; sourcepackage=qemu;
- component=main; status=Confirmed; importance=Medium;
- assignee=hector.cao@canonical.com; 
-X-Launchpad-Bug: distribution=ubuntu; distroseries=noble; sourcepackage=qemu;
- component=main; milestone=ubuntu-24.04.4; status=Incomplete; importance=Medium;
- assignee=hector.cao@canonical.com; 
-X-Launchpad-Bug: distribution=ubuntu; distroseries=plucky; sourcepackage=qemu;
- component=main; status=Won't Fix; importance=Medium; assignee=None; 
-X-Launchpad-Bug: distribution=ubuntu; distroseries=questing; sourcepackage=qemu;
- component=main; status=Fix Committed; importance=Medium;
- assignee=hector.cao@canonical.com; 
-X-Launchpad-Bug: distribution=ubuntu; distroseries=resolute; sourcepackage=qemu;
- component=main; milestone=ubuntu-26.04; status=Fix Released; importance=High;
- assignee=hector.cao@canonical.com; 
-X-Launchpad-Bug-Tags: server-todo verification-done-questing
-X-Launchpad-Bug-Information-Type: Public
-X-Launchpad-Bug-Private: no
-X-Launchpad-Bug-Security-Vulnerability: no
-X-Launchpad-Bug-Commenters: ahasenack hectorcao janitor lvoytek
- mjt+launchpad-tls paelzer ubuntu-sru-bot utkarsh xypron
-X-Launchpad-Bug-Reporter: Heinrich Schuchardt (xypron)
-X-Launchpad-Bug-Modifier: Lena Voytek (lvoytek)
-References: <176477927666.3767208.4954653462090539439.malonedeb@juju-98d295-prod-launchpad-3>
-Message-Id: <178041932764.114150.245951446108713678.malone@juju-98d295-prod-launchpad-56>
-Subject: [Bug 2133804] Re: QEMU does not emulate IOCTL TCGETS2
-X-Launchpad-Message-Rationale: Subscriber (QEMU) @qemu-devel-ml
-X-Launchpad-Message-For: qemu-devel-ml
-Precedence: bulk
-X-Generated-By: Launchpad (canonical.com);
- Revision="e655887187b0b1e1a70625cd2d210bb3cf47cd14";
- Instance="launchpad-scripts"
-X-Launchpad-Hash: 78ba22446af142c85c23d82f89398036f67231a0
-Received-SPF: pass client-ip=185.125.188.250;
- envelope-from=noreply@launchpad.net; helo=smtp-relay-services-0.canonical.com
-X-Spam_score_int: -42
-X-Spam_score: -4.3
-X-Spam_bar: ----
-X-Spam_report: (-4.3 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_MED=-2.3,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Type: text/plain
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.93
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=armbru@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -24
+X-Spam_score: -2.5
+X-Spam_bar: --
+X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.445,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
+Precedence: list
 List-Id: qemu development <qemu-devel.nongnu.org>
 List-Unsubscribe: <https://lists.nongnu.org/mailman/options/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=unsubscribe>
@@ -103,134 +84,118 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-To: Bug 2133804 <2133804@bugs.launchpad.net>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Reuploaded for noble
+Zhang Chen <zhangckid@gmail.com> writes:
 
---=20
-You received this bug notification because you are a member of qemu-
-devel-ml, which is subscribed to QEMU.
-https://bugs.launchpad.net/bugs/2133804
+> Based on monitor ID tracking iothread users with holder.
+> Introduce the AioContext in the Monitor struct to avoid repeated calls to
+> iothread_get_aio_context()
 
-Title:
-  QEMU does not emulate IOCTL TCGETS2
+iothread_get_aio_context(iothread) returns iothread->ctx.  I doubt
+avoiding the call is worth the complexity yet another variable adds.
 
-Status in QEMU:
-  Fix Released
-Status in qemu package in Ubuntu:
-  Fix Released
-Status in qemu source package in Jammy:
-  Confirmed
-Status in qemu source package in Noble:
-  Incomplete
-Status in qemu source package in Plucky:
-  Won't Fix
-Status in qemu source package in Questing:
-  Fix Committed
-Status in qemu source package in Resolute:
-  Fix Released
+>                            and ensure symmetrical ref/unref during
+> monitor lifecycle.
 
-Bug description:
-  [ Impact ]
+What do you mean by that?
 
-  - Terminal prompt is missing for multiarch containers with qemu-user
+> Signed-off-by: Zhang Chen <zhangckid@gmail.com>
+> ---
+>  monitor/monitor-internal.h |  3 +++
+>  monitor/monitor.c          | 20 ++++++++++++++++++--
+>  monitor/qmp.c              |  3 ++-
+>  3 files changed, 23 insertions(+), 3 deletions(-)
+>
+> diff --git a/monitor/monitor-internal.h b/monitor/monitor-internal.h
+> index 2060311b03..92d7630921 100644
+> --- a/monitor/monitor-internal.h
+> +++ b/monitor/monitor-internal.h
+> @@ -127,6 +127,9 @@ struct Monitor {
+>      guint out_watch;
+>      int mux_out;
+>      int reset_seen;
+> +
+> +    /* iothread context */
+> +    AioContext *ctx;
+>  };
+>  
+>  struct MonitorHMP {
+> diff --git a/monitor/monitor.c b/monitor/monitor.c
+> index dafb4ad8b0..7eec6f967d 100644
+> --- a/monitor/monitor.c
+> +++ b/monitor/monitor.c
+> @@ -529,7 +529,7 @@ int monitor_suspend(Monitor *mon)
+>           * Kick I/O thread to make sure this takes effect.  It'll be
+>           * evaluated again in prepare() of the watch object.
+>           */
+> -        aio_notify(iothread_get_aio_context(mon_iothread));
+> +        aio_notify(mon->ctx);
+>      }
+>  
+>      trace_monitor_suspend(mon, 1);
+> @@ -564,7 +564,7 @@ void monitor_resume(Monitor *mon)
+>          AioContext *ctx;
+>  
+>          if (mon->use_io_thread) {
+> -            ctx = iothread_get_aio_context(mon_iothread);
+> +            ctx = mon->ctx;
+>          } else {
+>              ctx = qemu_get_aio_context();
+>          }
+> @@ -612,6 +612,12 @@ void monitor_data_init(Monitor *mon, bool is_qmp, bool skip_flush,
+>  {
+>      if (use_io_thread && !mon_iothread) {
+>          monitor_iothread_init();
+> +
+> +        IOThreadHolder holder = {
+> +            .type = IO_THREAD_HOLDER_KIND_MONITOR_NAME,
+> +            .u.monitor_name.monitor_name = (char *)mon->id,
+> +        };
+> +        mon->ctx = iothread_ref_and_get_aio_context(mon_iothread, &holder);
+>      }
+>      qemu_mutex_init(&mon->mon_lock);
+>      mon->is_qmp = is_qmp;
+> @@ -631,6 +637,16 @@ void monitor_data_destroy(Monitor *mon)
+>      }
+>      g_string_free(mon->outbuf, true);
+>      qemu_mutex_destroy(&mon->mon_lock);
+> +
+> +    if (mon->ctx && mon_iothread) {
+> +        IOThreadHolder holder = {
+> +            .type = IO_THREAD_HOLDER_KIND_MONITOR_NAME,
+> +            .u.monitor_name.monitor_name = (char *)mon->id,
+> +        };
+> +
+> +        iothread_put_aio_context(mon_iothread, &holder);
+> +        mon->ctx = NULL;
+> +    }
+>  }
+>  
+>  void monitor_cleanup(void)
+> diff --git a/monitor/qmp.c b/monitor/qmp.c
+> index b210850a15..b67674aef3 100644
+> --- a/monitor/qmp.c
+> +++ b/monitor/qmp.c
+> @@ -565,7 +565,8 @@ void monitor_init_qmp(Chardev *chr, bool pretty, const char *id, Error **errp)
+>           * since chardev might be running in the monitor I/O
+>           * thread.  Schedule a bottom half.
+>           */
+> -        aio_bh_schedule_oneshot(iothread_get_aio_context(mon_iothread),
+> +        Monitor *mon_p = &mon->common;
+> +        aio_bh_schedule_oneshot(mon_p->ctx,
+>                                  monitor_qmp_setup_handlers_bh, mon);
+>          /* The bottom half will add @mon to @mon_list */
+>      } else {
 
-  - Users cannot see the prompt but still can type the commands
-  =C2=A0=C2=A0However the absence of the prompt can be misleading and make =
-users think that the container hangs.
+The patch does two things:
 
-  - this fix implements the missing ioctl TERMIOS2
+(1) Replace iothread_get_aio_context(mon_iothread) by mon->ctx.
 
-  [ Test Plan ]
+(2) Call iothread_ref_and_get_aio_context() / iothread_put_aio_context().
 
-  On an amd64 host
-
-  $ sudo apt install -y docker.io qemu-user-static
-  $ sudo usermod -aG docker ubuntu
-  $ newgrp docker
-  $ docker run --platform=3Dlinux/arm64 -it ubuntu:26.04 bash
-  =C2=A0(this runs on AMD64 host, if you are runnig on ARM64, use -platform=
-=3Dlinux/riscv64 instead)
-
-  After docker pulls the image and run the container, you cannot see the
-  prompt
-
-  ...
-  Status: Downloaded newer image for ubuntu:26.04
-  ...
-
-  $ docker run --platform=3Dlinux/arm64 -it ubuntu:24.04 bash
-
-  Doing the same for Ubuntu Noble image works.
-
-  $ docker run --platform=3Dlinux/arm64 -it ubuntu:24.04 bash
-  Unable to find image 'ubuntu:24.04' locally
-  24.04: Pulling from library/ubuntu
-  818154cda96d: Pull complete
-  352b2c3faa58: Download complete
-  Digest: sha256:c4a8d5503dfb2a3eb8ab5f807da5bc69a85730fb49b5cfca2330194ebc=
-c41c7b
-  Status: Downloaded newer image for ubuntu:24.04
-  root@bf8124075385:/#
-
-  With this fix, the users should see the prompt when they run bash
-  interactively in the container:
-
-  $ docker run --platform=3Dlinux/arm64 -it ubuntu:26.04 bash
-  root@bf8124075385:/#
-
-  [ Where problems could occur ]
-
-  The fix is around the termios managament so regressions can happen there.
-  There might be regressions on the prompt display.
-
-  The prompt display is widely used so potential regressions should be
-  visible quickly.
-
-  [ Other Info ]
-
-  None
-
-  -- Original bug report ---
-
-  In Ubuntu 25.10 we moved to glibc 2.42. Here glibc has changed the
-  implementation of isatty(). It now uses IOCTL TCGETS2 instead of
-  TCGETS. TCGETS2 is not emulated by static QEMU (qemu-riscv64, qemu-
-  arm64, ...).
-
-  This leads to failures in containers for foreign architectures. E.g. no c=
-onsole prompt is displayed.
-  A detailed analysis is contained in LP #2133188.
-
-  A proper implementation of the missing IOCTLs will include:
-
-  Functions:
-
-  in linux-user/syscall.c:
-  host_to_target_termios2()
-  target_to_host_termios2()
-  print_termios2()
-
-  Definitions:
-
-  in linux-user/syscall.c
-  #define termios2 host_termios2
-
-  in linux-user/syscall_types.h
-  STRUCT_SPECIAL(termios2)
-
-  in linux-user/ioctls.h:
-  IOCTL(TCGETS2, IOC_R, MK_PTR(MK_STRUCT(STRUCT_termios2)))
-  IOCTL(TCSETS2, IOC_W, MK_PTR(MK_STRUCT(STRUCT_termios2)))
-  IOCTL(TCSETSF2, IOC_W, MK_PTR(MK_STRUCT(STRUCT_termios2)))
-  IOCTL(TCSETSW2, IOC_W, MK_PTR(MK_STRUCT(STRUCT_termios2)))
-
-  in linux-user/user-internals.h:
-  void print_termios2(void *arg);
-
-To manage notifications about this bug go to:
-https://bugs.launchpad.net/qemu/+bug/2133804/+subscriptions
+I challenged (1).  If we decide we want it, I'll ask you to split the
+patch.
 
 
