@@ -4,136 +4,77 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id F0CC9C5DF71
-	for <qemu-devel@archiver.kernel.org>; Tue,  2 Jun 2026 08:10:24 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 56374CD6E61
+	for <qemu-devel@archiver.kernel.org>; Tue,  2 Jun 2026 08:22:49 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wUKCK-0003u5-9c; Tue, 02 Jun 2026 04:10:04 -0400
+	id 1wUKOB-0006ZE-9F; Tue, 02 Jun 2026 04:22:19 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <paolo.bonzini@gmail.com>)
- id 1wUKCI-0003tl-Ef
- for qemu-devel@nongnu.org; Tue, 02 Jun 2026 04:10:02 -0400
-Received: from mail-wm1-x330.google.com ([2a00:1450:4864:20::330])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <paolo.bonzini@gmail.com>)
- id 1wUKCG-0002ZW-Rt
- for qemu-devel@nongnu.org; Tue, 02 Jun 2026 04:10:02 -0400
-Received: by mail-wm1-x330.google.com with SMTP id
- 5b1f17b1804b1-49041fb8c23so83649335e9.0
- for <qemu-devel@nongnu.org>; Tue, 02 Jun 2026 01:09:59 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1780387798; x=1780992598; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:autocrypt:from
- :content-language:references:cc:to:subject:user-agent:mime-version
- :date:message-id:sender:from:to:cc:subject:date:message-id:reply-to;
- bh=1StUh7JbBAg2/PaMLZfTADpssQinVdArm8pijSahYNI=;
- b=QJvH3oes709jncBl7POoY+CSKN/E8CXG6+3DTamgqcIfZXtMaSvqUFqXAqEV0hreQd
- oBjkGew7H5HKc9I+oZ4JM3N5y5rARFc6PN4zjINiXvMUMNN56hXASkih6LFQWvzmV82v
- v9TfezXRVNVTH319J0HuTQRgZ2tNeZPTUFy/IPizBVK8/BA04kHTc7i+qlkJWqJAyqtI
- O/gpfusoCKCm3MmxkFJxH8Ibp03q4gq+NdcR52LLTWOQiqLmaPfyl3Xj0gObA99gsNZt
- FTNkqkn6bX24DAZAxlMsNW3oUtzs6tnGbNZFWGuv+W1QPyu9DbdOG5f9ahZiGk7cvpT2
- 5pbg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1780387798; x=1780992598;
- h=content-transfer-encoding:in-reply-to:autocrypt:from
- :content-language:references:cc:to:subject:user-agent:mime-version
- :date:message-id:sender:x-gm-gg:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=1StUh7JbBAg2/PaMLZfTADpssQinVdArm8pijSahYNI=;
- b=a3P5F7efnNpONWLq7UPV7eR7HMUctTmfj9yKoCQCUDwBdYiuZL2X4OGehlQde0W4A/
- ubZjJzTZwqBm2XpF7rBitnAXnDOp/rHAxlTDelc23xg1ANnj0Nh41Hc4o6BVZTiMFQvj
- zDukCOBes+FrLC/mxyW7HoLQl7jP7RiHVyEzwSL5YMk5kgGU81Tz7SkJJ29iC5v4HatJ
- mVC7dcH4Tp592/8CUgf2029umQN02x68gWIAMtb/uaOloXiLvOVc041YUy7GMwTCmf6C
- 3jMv2g82XigwJlazCrrJM9fsvu5t/DrU35+s66x3bFLKlu74To2ZjVp02Rso1laT56/2
- VAbA==
-X-Forwarded-Encrypted: i=1;
- AFNElJ+Rd9oYbTXZ2iIOg7F/PzeoMR03L6ZjVE9uapQa9W1lSWhqoWNthgjbC25yGA5vnLQJtn9d5fzyDjEI@nongnu.org
-X-Gm-Message-State: AOJu0Yy1gGoAtRcvpOCuFzgbrxUtba3UMR0b6sjrXjly5/ApBGmo+ovp
- G/M5vq0LISHcDZWJ8amHJhVK+eSee1ir3sJffXh2dhQMW5mq8QeuhyMV
-X-Gm-Gg: Acq92OE+81XXFR34oXmg+kF73hM0jRMeNYuzOdD7mkC/iNNprS+ClEbWF0T5q9ylnwI
- +PhXXsGcdS3hRJzB5seWs98BeQQayFthHjg0gDhcmHz+GtRd6x53hxQ7xCl0a5uRP6cs2yKrEkF
- KpQlxv2J2E3dVqKZomItUWc92x6wT6T71EcLiw6jc91Irf2McL+nVT60jvS5ectpugSuZ+5Ue1F
- GHNBrD2WBRP5TXxz7USSguqP2WvnV/VrY/xBtYq2WfZEUIu9GirxXzvZabSJnQTk1Ba+JnMG0K3
- BgPIABiphPOA+VJvocsf9n2ZTz32xtEvAabuD8Xglbkt7yTyY0AKfFU9cDlnxTpbJ71ql1Ar1Oq
- mMR8WC1VB8yvYsXB6IndFGR+YAJvBSjIGEv/xaHGytmP27EpVAGk+CdsoRdowu7z/Ux3PzdgvzE
- Ylu2YkJSpTCtpN1lyO5jGpkifwqRqauZOiK57KrvQcWnd1
-X-Received: by 2002:a05:600c:6287:b0:490:a1a6:6f24 with SMTP id
- 5b1f17b1804b1-490a29338a8mr262796955e9.15.1780387797792; 
- Tue, 02 Jun 2026 01:09:57 -0700 (PDT)
-Received: from [192.168.10.48] ([151.49.251.208])
- by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-490b09ba7easm16681415e9.8.2026.06.02.01.09.56
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 02 Jun 2026 01:09:57 -0700 (PDT)
-Message-ID: <ff08c5dc-f55d-464d-9401-719b1e833acd@gnu.org>
-Date: Tue, 2 Jun 2026 10:09:54 +0200
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1wUKOA-0006Yx-2Z
+ for qemu-devel@nongnu.org; Tue, 02 Jun 2026 04:22:18 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1wUKO7-00061G-EC
+ for qemu-devel@nongnu.org; Tue, 02 Jun 2026 04:22:17 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1780388533;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=YVaJ28YncjhCLTaSyTtA/MThSayBHlneCG9Gaac4gfA=;
+ b=BmP1Pcw0Dtz0b10A1bmKQOZtrTl2rMoiy7dNvKHvEP3tFRiKcmJAE8jY9ZvCAsFWAjI4ML
+ lf69GeFj6xjx9VyyuKsDVGs6dSdfgHua7m4/WajH/6sKAFyS/THPU9zFSL6qtSmfgzJdSe
+ TAYL/WMB3hOxApzItdh5+3u9ZMyE+rU=
+Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-154-SkdbMs3PMu2HihVbiuwNMQ-1; Tue,
+ 02 Jun 2026 04:22:06 -0400
+X-MC-Unique: SkdbMs3PMu2HihVbiuwNMQ-1
+X-Mimecast-MFC-AGG-ID: SkdbMs3PMu2HihVbiuwNMQ_1780388525
+Received: from mx-prod-int-10.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-10.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.95])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 73B8018005B8; Tue,  2 Jun 2026 08:22:04 +0000 (UTC)
+Received: from blackfin.pond.sub.org (unknown [10.44.22.2])
+ by mx-prod-int-10.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 8A71C1681; Tue,  2 Jun 2026 08:22:03 +0000 (UTC)
+Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
+ id 16CE721E6A01; Tue, 02 Jun 2026 10:22:01 +0200 (CEST)
+From: Markus Armbruster <armbru@redhat.com>
+To: Michael Roth <michael.roth@amd.com>
+Cc: <qemu-devel@nongnu.org>,  <kvm@vger.kernel.org>,  <pbonzini@redhat.com>,
+ <berrange@redhat.com>,  <pankaj.gupta@amd.com>,
+ <isaku.yamahata@intel.com>,  <xiaoyao.li@intel.com>,
+ <chao.p.peng@linux.intel.com>,  <david@kernel.org>,
+ <ashish.kalra@amd.com>,  <ackerleytng@google.com>
+Subject: Re: [PATCH RFC 02/12] hostmem: Introduce dedicated memory backend
+ for guest_memfd
+In-Reply-To: <20260528000416.8161-3-michael.roth@amd.com> (Michael Roth's
+ message of "Wed, 27 May 2026 19:03:27 -0500")
+References: <20260528000416.8161-1-michael.roth@amd.com>
+ <20260528000416.8161-3-michael.roth@amd.com>
+Date: Tue, 02 Jun 2026 10:22:01 +0200
+Message-ID: <871pep73o6.fsf@pond.sub.org>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2] docs/devel: relax policy on AI-generated contributions
-To: "Michael S. Tsirkin" <mst@redhat.com>,
- Peter Maydell <peter.maydell@linaro.org>
-Cc: Paolo Bonzini <pbonzini@redhat.com>, qemu-devel@nongnu.org,
- =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
- Alistair Francis <alistair.francis@wdc.com>,
- BALATON Zoltan <balaton@eik.bme.hu>, =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?=
- <berrange@redhat.com>, Fabiano Rosas <farosas@suse.de>,
- Kevin Wolf <kwolf@redhat.com>, Warner Losh <imp@bsdimp.com>,
- =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-References: <20260529094619.1034458-1-pbonzini@redhat.com>
- <CAFEAcA_EWR_MjH1arCdi2y0saZ-Hc7zRAK97YTeEcesVRb9Rtg@mail.gmail.com>
- <20260602033118-mutt-send-email-mst@kernel.org>
-Content-Language: en-US
-From: Paolo Bonzini <bonzini@gnu.org>
-Autocrypt: addr=bonzini@gnu.org; keydata=
- xsEhBFRCcBIBDqDGsz4K0zZun3jh+U6Z9wNGLKQ0kSFyjN38gMqU1SfP+TUNQepFHb/Gc0E2
- CxXPkIBTvYY+ZPkoTh5xF9oS1jqI8iRLzouzF8yXs3QjQIZ2SfuCxSVwlV65jotcjD2FTN04
- hVopm9llFijNZpVIOGUTqzM4U55sdsCcZUluWM6x4HSOdw5F5Utxfp1wOjD/v92Lrax0hjiX
- DResHSt48q+8FrZzY+AUbkUS+Jm34qjswdrgsC5uxeVcLkBgWLmov2kMaMROT0YmFY6A3m1S
- P/kXmHDXxhe23gKb3dgwxUTpENDBGcfEzrzilWueOeUWiOcWuFOed/C3SyijBx3Av/lbCsHU
- Vx6pMycNTdzU1BuAroB+Y3mNEuW56Yd44jlInzG2UOwt9XjjdKkJZ1g0P9dwptwLEgTEd3Fo
- UdhAQyRXGYO8oROiuh+RZ1lXp6AQ4ZjoyH8WLfTLf5g1EKCTc4C1sy1vQSdzIRu3rBIjAvnC
- tGZADei1IExLqB3uzXKzZ1BZ+Z8hnt2og9hb7H0y8diYfEk2w3R7wEr+Ehk5NQsT2MPI2QBd
- wEv1/Aj1DgUHZAHzG1QN9S8wNWQ6K9DqHZTBnI1hUlkp22zCSHK/6FwUCuYp1zcAEQEAAc0f
- UGFvbG8gQm9uemluaSA8Ym9uemluaUBnbnUub3JnPsLBTQQTAQIAIwUCVEJ7AwIbAwcLCQgH
- AwIBBhUIAgkKCwQWAgMBAh4BAheAAAoJEH4VEAzNNmmxNcwOniaZVLsuy1lW/ntYCA0Caz0i
- sHpmecK8aWlvL9wpQCk4GlOX9L1emyYXZPmzIYB0IRqmSzAlZxi+A2qm9XOxs5gJ2xqMEXX5
- FMtUH3kpkWWJeLqe7z0EoQdUI4EG988uv/tdZyqjUn2XJE+K01x7r3MkUSFz/HZKZiCvYuze
- VlS0NTYdUt5jBXualvAwNKfxEkrxeHjxgdFHjYWhjflahY7TNRmuqPM/Lx7wAuyoDjlYNE40
- Z+Kun4/KjMbjgpcF4Nf3PJQR8qXI6p3so2qsSn91tY7DFSJO6v2HwFJkC2jU95wxfNmTEUZc
- znXahYbVOwCDJRuPrE5GKFd/XJU9u5hNtr/uYipHij01WXal2cce1S5mn1/HuM1yo1u8xdHy
- IupCd57EWI948e8BlhpujUCU2tzOb2iYS0kpmJ9/oLVZrOcSZCcCl2P0AaCAsj59z2kwQS9D
- du0WxUs8waso0Qq6tDEHo8yLCOJDzSz4oojTtWe4zsulVnWV+wu70AioemAT8S6JOtlu60C5
- dHgQUD1Tp+ReXpDKXmjbASJx4otvW0qah3o6JaqO79tbDqIvncu3tewwp6c85uZd48JnIOh3
- utBAu684nJakbbvZUGikJfxd887ATQRUQnHuAQgAx4dxXO6/Zun0eVYOnr5GRl76+2UrAAem
- Vv9Yfn2PbDIbxXqLff7oyVJIkw4WdhQIIvvtu5zH24iYjmdfbg8iWpP7NqxUQRUZJEWbx2CR
- wkMHtOmzQiQ2tSLjKh/cHeyFH68xjeLcinR7jXMrHQK+UCEw6jqi1oeZzGvfmxarUmS0uRuf
- fAb589AJW50kkQK9VD/9QC2FJISSUDnRC0PawGSZDXhmvITJMdD4TjYrePYhSY4uuIV02v02
- 8TVAaYbIhxvDY0hUQE4r8ZbGRLn52bEzaIPgl1p/adKfeOUeMReg/CkyzQpmyB1TSk8lDMxQ
- zCYHXAzwnGi8WU9iuE1P0wARAQABwsEzBBgBAgAJBQJUQnHuAhsMAAoJEH4VEAzNNmmxp1EO
- oJy0uZggJm7gZKeJ7iUpeX4eqUtqelUw6gU2daz2hE/jsxsTbC/w5piHmk1H1VWDKEM4bQBT
- uiJ0bfo55SWsUNN+c9hhIX+Y8LEe22izK3w7mRpvGcg+/ZRG4DEMHLP6JVsv5GMpoYwYOmHn
- plOzCXHvmdlW0i6SrMsBDl9rw4AtIa6bRwWLim1lQ6EM3PWifPrWSUPrPcw4OLSwFk0CPqC4
- HYv/7ZnASVkR5EERFF3+6iaaVi5OgBd81F1TCvCX2BEyIDRZLJNvX3TOd5FEN+lIrl26xecz
- 876SvcOb5SL5SKg9/rCBufdPSjojkGFWGziHiFaYhbuI2E+NfWLJtd+ZvWAAV+O0d8vFFSvr
- iy9enJ8kxJwhC0ECbSKFY+W1eTIhMD3aeAKY90drozWEyHhENf4l/V+Ja5vOnW+gCDQkGt2Y
- 1lJAPPSIqZKvHzGShdh8DduC0U3xYkfbGAUvbxeepjgzp0uEnBXfPTy09JGpgWbg0w91GyfT
- /ujKaGd4vxG2Ei+MMNDmS1SMx7wu0evvQ5kT9NPzyq8R2GIhVSiAd2jioGuTjX6AZCFv3ToO
- 53DliFMkVTecLptsXaesuUHgL9dKIfvpm+rNXRn9wAwGjk0X/A==
-In-Reply-To: <20260602033118-mutt-send-email-mst@kernel.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::330;
- envelope-from=paolo.bonzini@gmail.com; helo=mail-wm1-x330.google.com
-X-Spam_score_int: -16
-X-Spam_score: -1.7
-X-Spam_bar: -
-X-Spam_report: (-1.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FORGED_FROMDOMAIN=0.001,
- FREEMAIL_FROM=0.001, HEADER_FROM_DIFFERENT_DOMAINS=0.249,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=no autolearn_force=no
+Content-Type: text/plain
+X-Scanned-By: MIMEDefang 3.6 on 10.30.177.95
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=armbru@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -24
+X-Spam_score: -2.5
+X-Spam_bar: --
+X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.445,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ PDS_LTC_HUSH=0.001, RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001,
+ RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_PASS=-0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -149,23 +90,129 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 6/2/26 09:38, Michael S. Tsirkin wrote:
->> But if as a project we want to limit the
->> blast-radius if we find we have to rip out a hypothetical tainted
->> contribution, shouldn't that mean that we hold that as a project-wide
->> line, rather than leaving it up to the opinion of the individual
->> maintainer ?
-> 
-> It's not clear it's practical anyway. So we limit contributions to 20+
-> lines, so what did we achieve? They accumulate over time.
-For small contributions it's more likely that there's essentially one 
-way to do them, therefore any copyright violation accusations would be 
-more easily defensible.  Also it's not like you'd rip out *all* small 
-contributions at once, so it doesn't matter if they accumulate.
+Michael Roth <michael.roth@amd.com> writes:
 
-But yeah, it's possible to game the system by having many small 
-contributions, which is why the policy tells you to contact the 
-maintainer prior to sending many small fixes.
+> In the initial implementation of guest_memfd in the linux kernel, it
+> was not possible to map memory into userspace for direct access; instead
+> the memory provided by the memory backend would be used for cases where
+> a confidential VM wants to access normal/unprotected/unencrypted memory
+> that can be used for shared memory use cases, and for access to private
+> memory a guest_memfd could be associated with the same memslot. A memory
+> 'private' attribute set via KVM_SET_MEMORY_ATTRIBUTES could then be used
+> to have KVM route to the approprate backing memory.
+>
+> In that model, it didn't make sense to introduce a specific backend for
+> guest_memfd, since there was always a generally need to have a separate
 
-Paolo
+a general need?
+
+> backend type to handle shared memory access/allocation. Instead, QEMU
+> configures the guest_memfd support for the associated memslots
+> internally for cases where it is running a confidential VM.
+>
+> However, with recent changes in guest_memfd kernel support, it is now
+> possible to mmap() a guest_memfd FD into userspace and use it for shared
+> memory, as well as continue to use the same physical pages for the same
+> GPA ranges after they are converted to private ("in-place conversion").
+>
+> To enable the use of this mmap()-able/guest_memfd-provided memory to be
+> used for normal/shared memory instead of just for private memory,
+> introduce a dedicated guest_memfd memory backend that can be used both
+> for confidential VMs that wish to make use of in-place conversion, as
+> well as for non-confidential VMs that just want to make use of
+> guest_memfd for normal memory (which can be useful both for testing as
+> well as a stepping stone to things like software-protected VMs where the
+> host can be trusted to provided some additional degree of isolation for
+> the VM independently of hardware support).
+>
+> Signed-off-by: Michael Roth <michael.roth@amd.com>
+
+[...]
+
+> diff --git a/qapi/qom.json b/qapi/qom.json
+> index dd45ac1087..502fafeb15 100644
+> --- a/qapi/qom.json
+> +++ b/qapi/qom.json
+> @@ -661,7 +661,8 @@
+>  # @share: if false, the memory is private to QEMU; if true, it is
+>  #     shared (default false for backends memory-backend-file and
+>  #     memory-backend-ram, true for backends memory-backend-epc,
+> -#     memory-backend-memfd, and memory-backend-shm)
+> +#     memory-backend-memfd, memory-backend-shm, and
+> +#     memory-backend-guest-memfd)
+>  #
+>  # @reserve: if true, reserve swap space (or huge pages) if applicable
+>  #     (default: true) (since 6.1)
+> @@ -780,6 +781,18 @@
+>              '*seal': 'bool' },
+>    'if': 'CONFIG_LINUX' }
+>  
+> +##
+> +# @MemoryBackendGuestMemfdProperties:
+> +#
+> +# Properties for memory-backend-guest-memfd objects.
+> +#
+> +# Since: 11.1
+> +##
+> +{ 'struct': 'MemoryBackendGuestMemfdProperties',
+> +  'base': 'MemoryBackendProperties',
+> +  'data': {},
+> +  'if': 'CONFIG_LINUX' }
+> +
+
+Identical to MemoryBackendProperties so far.
+
+>  ##
+>  # @MemoryBackendShmProperties:
+>  #
+> @@ -1234,6 +1247,8 @@
+>      'memory-backend-file',
+>      { 'name': 'memory-backend-memfd',
+>        'if': 'CONFIG_LINUX' },
+> +    { 'name': 'memory-backend-guest-memfd',
+> +      'if': 'CONFIG_LINUX' },
+>      'memory-backend-ram',
+>      { 'name': 'memory-backend-shm',
+>        'if': 'CONFIG_POSIX' },
+> @@ -1312,6 +1327,8 @@
+>        'memory-backend-file':        'MemoryBackendFileProperties',
+>        'memory-backend-memfd':       { 'type': 'MemoryBackendMemfdProperties',
+>                                        'if': 'CONFIG_LINUX' },
+> +      'memory-backend-guest-memfd': { 'type': 'MemoryBackendGuestMemfdProperties',
+> +                                      'if': 'CONFIG_LINUX' },
+
+You could use MemoryBackendProperties here, and drop
+MemoryBackendGuestMemfdProperties, similar to how memory-backend-ram
+is done.
+
+>        'memory-backend-ram':         'MemoryBackendProperties',
+>        'memory-backend-shm':         { 'type': 'MemoryBackendShmProperties',
+>                                        'if': 'CONFIG_POSIX' },
+
+Should we provide guidance on when to use which memory backend?  The
+commit message provides some clues...
+
+> diff --git a/qemu-options.hx b/qemu-options.hx
+> index 96ae41f787..3c754c149f 100644
+> --- a/qemu-options.hx
+> +++ b/qemu-options.hx
+> @@ -5858,6 +5858,11 @@ SRST
+>          off will cause a failure during allocation because it is not supported
+>          by this backend.
+>  
+> +    ``-object memory-backend-guest-memfd,id=id,prealloc=on|off,size=size,host-nodes=host-nodes,policy=default|preferred|bind|interleave``
+> +        Creates an anonymous memory file backend object that has similar
+> +        semantics to memfd, but is also usable as private memory when
+> +        running as a confidential VM. (Linux only)
+
+There is no object type "memfd".  Do you mean "memory-backend-memfd"?
+
+If yes, that one has additional properties @hugetlb, @hugetlbsize, and
+@seal.  Why are they not needed for memory-backend-guest-memfd?
+
+> +
+>      ``-object iommufd,id=id[,fd=fd]``
+>          Creates an iommufd backend which allows control of DMA mapping
+>          through the ``/dev/iommu`` device.
+
 
