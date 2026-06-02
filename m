@@ -4,71 +4,94 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 10B1ACD6E60
-	for <qemu-devel@archiver.kernel.org>; Tue,  2 Jun 2026 12:48:16 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 23C3ECD6E60
+	for <qemu-devel@archiver.kernel.org>; Tue,  2 Jun 2026 13:02:36 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wUOX1-0004yv-Rb; Tue, 02 Jun 2026 08:47:43 -0400
+	id 1wUOkc-0007Ii-1U; Tue, 02 Jun 2026 09:01:46 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <vsementsov@yandex-team.ru>)
- id 1wUOWp-0004xO-Kg
- for qemu-devel@nongnu.org; Tue, 02 Jun 2026 08:47:32 -0400
-Received: from forwardcorp1b.mail.yandex.net
- ([2a02:6b8:c02:900:1:45:d181:df01])
+ (Exim 4.90_1) (envelope-from <noreply@launchpad.net>)
+ id 1wUOkW-0007Ho-Je
+ for qemu-devel@nongnu.org; Tue, 02 Jun 2026 09:01:40 -0400
+Received: from smtp-relay-services-0.canonical.com ([185.125.188.250])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <vsementsov@yandex-team.ru>)
- id 1wUOWl-0004z3-MM
- for qemu-devel@nongnu.org; Tue, 02 Jun 2026 08:47:31 -0400
-Received: from mail-nwsmtp-smtp-corp-canary-81.sas.yp-c.yandex.net
- (mail-nwsmtp-smtp-corp-canary-81.sas.yp-c.yandex.net
- [IPv6:2a02:6b8:c1b:16:0:640:bc52:0])
- by forwardcorp1b.mail.yandex.net (Yandex) with ESMTPS id 422188083B;
- Tue, 02 Jun 2026 15:47:22 +0300 (MSK)
-Received: from [IPV6:2a02:6bf:8011:f00:9a19:8d4f:85d6:2048] (unknown
- [2a02:6bf:8011:f00:9a19:8d4f:85d6:2048])
- by mail-nwsmtp-smtp-corp-canary-81.sas.yp-c.yandex.net (smtpcorp) with ESMTPSA
- id JleKY30gCeA0-esghAQbM; Tue, 02 Jun 2026 15:47:21 +0300
-Precedence: bulk
-X-Yandex-Fwd: 1
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yandex-team.ru;
- s=default; t=1780404441;
- bh=jxQqCcUbJ0Kznn1N/Oetz3B0MCM8h9Dfw1Odre+uyqk=;
- h=From:In-Reply-To:Cc:Date:References:To:Subject:Message-ID;
- b=xdosy96ECZhBehAy2NSbU3SKHFFmQE3xTtOIoU1Lb6gvXEa1AWx5Bp7KNmbgM8Ghg
- jgFEyWWbaLDC0qUAp4BhzvsZlMq3a8iYtI66AAuNY3ZGKV9tRDAgWput3c4HIbvwvL
- U0QVkQDR+4ly5Bgtu1yZDoEohQ38HlgOK+1q+jNU=
-Authentication-Results: mail-nwsmtp-smtp-corp-canary-81.sas.yp-c.yandex.net;
- dkim=pass header.i=@yandex-team.ru
-Message-ID: <2e44a425-4f04-4ed3-9c7e-ea649ab64300@yandex-team.ru>
-Date: Tue, 2 Jun 2026 15:47:19 +0300
+ (Exim 4.90_1) (envelope-from <noreply@launchpad.net>)
+ id 1wUOkU-0004hB-7c
+ for qemu-devel@nongnu.org; Tue, 02 Jun 2026 09:01:40 -0400
+Received: from scripts.lp.internal (scripts.lp.internal [10.131.215.246])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by smtp-relay-services-0.canonical.com (Postfix) with ESMTPSA id 4D55842FFF
+ for <qemu-devel@nongnu.org>; Tue,  2 Jun 2026 13:01:33 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=launchpad.net;
+ s=20210803; t=1780405293;
+ bh=gXwlzwjPOwjbHl4qQIEOw9l8JamRJFhqggyJ5xcn8fQ=;
+ h=MIME-Version:Content-Type:Date:From:To:Reply-To:References:
+ Message-Id:Subject;
+ b=rhden5gyDK1zqyVg/Qi2CZ2MXKuR43qQEqTSoZopW3Qv/oDjxCHjUGJCCNG+wH6CA
+ GUwOChDjt0QBfPba4d2PSubPQanpStCSwTygIOKGXrScW3Kbw5NNT1IwuXFWINgeUG
+ Zcf5ZuaocMcabMyFrteHjCiipfVi/DDiT7gavjDb1Lci31MiIbD/GW5847I9Y/QHwF
+ o6HPYTSZUrrBITeKFaJDFfmOWUOp5YByZpeIVQw5Qiq/yJYzHLqGb7v+kX6yfwRW+z
+ 7v4AfAsW2FUryanpGCZhlh/rbYuwj0pIYCJ/ZU5KdMn5NyMFWojesiG5ZKlF8+iFoW
+ KRKH9w3NuJEMw==
+Received: from scripts.lp.internal (localhost [127.0.0.1])
+ by scripts.lp.internal (Postfix) with ESMTP id 373E87E521
+ for <qemu-devel@nongnu.org>; Tue,  2 Jun 2026 13:01:33 +0000 (UTC)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v17 08/10] net/tap: support local migration with virtio-net
-To: Markus Armbruster <armbru@redhat.com>
-Cc: jasowang@redhat.com, mst@redhat.com, peterx@redhat.com, farosas@suse.de,
- raphael.s.norwitz@gmail.com, bchaney@akamai.com, qemu-devel@nongnu.org,
- berrange@redhat.com, pbonzini@redhat.com, yc-core@yandex-team.ru,
- mark.caveayland@nutanix.com, =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?=
- <philmd@linaro.org>, Zhao Liu <zhao1.liu@intel.com>,
- Eric Blake <eblake@redhat.com>, John Snow <jsnow@redhat.com>
-References: <20260527191150.250333-1-vsementsov@yandex-team.ru>
- <20260527191150.250333-9-vsementsov@yandex-team.ru>
- <877boh74kf.fsf@pond.sub.org>
-Content-Language: en-US
-From: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
-In-Reply-To: <877boh74kf.fsf@pond.sub.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2a02:6b8:c02:900:1:45:d181:df01;
- envelope-from=vsementsov@yandex-team.ru; helo=forwardcorp1b.mail.yandex.net
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: quoted-printable
+Date: Tue, 02 Jun 2026 12:51:05 -0000
+From: Hector CAO <2133804@bugs.launchpad.net>
+To: qemu-devel@nongnu.org
+X-Launchpad-Notification-Type: bug
+X-Launchpad-Bug: product=qemu; status=Fix Released; importance=Unknown;
+ assignee=None; 
+X-Launchpad-Bug: distribution=ubuntu; sourcepackage=qemu; component=main;
+ milestone=ubuntu-26.04; status=Fix Released; importance=High;
+ assignee=hector.cao@canonical.com; 
+X-Launchpad-Bug: distribution=ubuntu; distroseries=jammy; sourcepackage=qemu;
+ component=main; status=Confirmed; importance=Medium;
+ assignee=hector.cao@canonical.com; 
+X-Launchpad-Bug: distribution=ubuntu; distroseries=noble; sourcepackage=qemu;
+ component=main; milestone=ubuntu-24.04.4; status=Incomplete; importance=Medium;
+ assignee=hector.cao@canonical.com; 
+X-Launchpad-Bug: distribution=ubuntu; distroseries=plucky; sourcepackage=qemu;
+ component=main; status=Won't Fix; importance=Medium; assignee=None; 
+X-Launchpad-Bug: distribution=ubuntu; distroseries=questing; sourcepackage=qemu;
+ component=main; status=Fix Committed; importance=Medium;
+ assignee=hector.cao@canonical.com; 
+X-Launchpad-Bug: distribution=ubuntu; distroseries=resolute; sourcepackage=qemu;
+ component=main; milestone=ubuntu-26.04; status=Fix Released; importance=High;
+ assignee=hector.cao@canonical.com; 
+X-Launchpad-Bug-Tags: server-todo verification-done-questing
+X-Launchpad-Bug-Information-Type: Public
+X-Launchpad-Bug-Private: no
+X-Launchpad-Bug-Security-Vulnerability: no
+X-Launchpad-Bug-Commenters: ahasenack hectorcao janitor mjt+launchpad-tls
+ paelzer ubuntu-sru-bot utkarsh xypron
+X-Launchpad-Bug-Reporter: Heinrich Schuchardt (xypron)
+X-Launchpad-Bug-Modifier: Hector CAO (hectorcao)
+References: <176477927666.3767208.4954653462090539439.malonedeb@juju-98d295-prod-launchpad-3>
+Message-Id: <178040466566.4076047.3020706805407635139.malone@juju-98d295-prod-launchpad-56>
+Subject: [Bug 2133804] Re: QEMU does not emulate IOCTL TCGETS2
+X-Launchpad-Message-Rationale: Subscriber (QEMU) @qemu-devel-ml
+X-Launchpad-Message-For: qemu-devel-ml
+Precedence: bulk
+X-Generated-By: Launchpad (canonical.com);
+ Revision="e655887187b0b1e1a70625cd2d210bb3cf47cd14";
+ Instance="launchpad-scripts"
+X-Launchpad-Hash: d026f91166a187869d784122e1038099316c0c49
+Received-SPF: pass client-ip=185.125.188.250;
+ envelope-from=noreply@launchpad.net; helo=smtp-relay-services-0.canonical.com
+X-Spam_score_int: -42
+X-Spam_score: -4.3
+X-Spam_bar: ----
+X-Spam_report: (-4.3 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_MED=-2.3,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -80,243 +103,146 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-To: Bug 2133804 <2133804@bugs.launchpad.net>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 02.06.26 11:02, Markus Armbruster wrote:
-> [Cc: John Snow for advice on cross-references (search for "John?")]
-> 
-> Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru> writes:
-> 
->> Support transferring of TAP state (including open fd).
->>
->> Add new property "local-migration-supported", which defines,
->> is local-migration is actually supported for this TAP device.
-> 
-> which defines whether
-> 
->> Starting from 11.1 MT it's enabled by default.
-> 
-> What does "MT" mean?
+I did the verification for Ubuntu Questing,
 
-Machine Type I mean
+I install the package from -proposed and
 
-> 
->>
->> Note, that local-migration (including migrating opened FDs
->> through migration channel, which must be UNIX socket), is
->> enabled by global "local" migration parameters. But individual
->> devices may have additional options to enable/disable it
->> personally.
-> 
-> per device
-> 
->>
->> Add new option "incoming-fds", which should be set to true on
->> target for incoming migration work. It says "do not open any
->> files, but instead wait for FDs coming from migration stream".
->> "local-migration-supported" option is not enough, as it work in pair
->> with migration parameter "local", and intialization process
->> of TAP device should not depend on migration parameters.
->>
->> For new option require explicitly unset script and downscript,
->> to keep possibility of implementing support for them in the
->> future.
-> 
-> Why explicitly unset?  Do we have to override a default script?
+$ docker run --platform=3Dlinux/riscv64 -it ubuntu:26.04 bash
 
-Current version doesn't support having any scripts, as we should
-also transfer a responsiblity for calling downscript to the target
-(but what if migration failed, transfer it back?).
+I gets the prompt
 
-Still, several version ago Ben asked to keep a possibility to support
-scripts in future. So, current version requires script=no and
-downscript=no. In future we may implement support for scripts together
-with fd-migration, and drop this restriction.
+root@570d30c6da95:/#
 
-(Hope I answered the question)
 
-> 
->> Note disabling read polling on source stop for TAP migration:
-> 
-> I don't understand this sentence.
+** Tags removed: verification-needed-questing
+** Tags added: verification-done-questing
 
-That's a realization detail. I've added it, because it was a fix, appeared
-several version ago. It may be dropped from commit message.
+--=20
+You received this bug notification because you are a member of qemu-
+devel-ml, which is subscribed to QEMU.
+https://bugs.launchpad.net/bugs/2133804
 
-The sentence is about tap_vm_state_change() function, which disables
-polling the TAP device.
+Title:
+  QEMU does not emulate IOCTL TCGETS2
 
-> 
->> otherwise, source process may steal packages from TAP fd even
->> after source vm STOP.
->>
->> Signed-off-by: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
-> 
-> [...]
-> 
->> diff --git a/qapi/net.json b/qapi/net.json
->> index 1a6382825c5..c5d87ba308b 100644
->> --- a/qapi/net.json
->> +++ b/qapi/net.json
->> @@ -425,6 +425,22 @@
->     ##
->     # @NetdevTapOptions:
->     #
->     # Used to configure a host TAP network interface backend.
->     #
->     # @ifname: interface name
->     #
->     # @fd: file descriptor of an already opened tap
->     #
->     # @fds: multiple file descriptors of already opened multiqueue capable
->     #     tap
->     #
->     # @script: script to initialize the interface
->     #
->     # @downscript: script to shut down the interface
->     #
->     # @br: bridge name (since 2.8)
->     #
->     # @helper: command to execute to configure bridge
->     #
->     # @sndbuf: send buffer limit.  Understands [TGMKkb] suffixes.
->     #
->     # @vnet_hdr: enable the IFF_VNET_HDR flag on the tap interface
->     #
->     # @vhost: enable vhost-net network accelerator
->     #
->     # @vhostfd: file descriptor of an already opened vhost net device
->     #
->     # @vhostfds: file descriptors of multiple already opened vhost net
->     #     devices
->     #
->     # @vhostforce: vhost on for non-MSIX virtio guests
->     #
->     # @queues: number of queues to be created for multiqueue capable tap
->     #
->>   # @poll-us: maximum number of microseconds that could be spent on busy
->>   #     polling for tap (since 2.7)
->>   #
->> +# @incoming-fds: do not open or create any TAP devices.  Prepare for
->> +#     getting TAP file descriptors from incoming migration stream.
->> +#     The option is incompatible with any of @fd, @fds, @helper, @br,
->> +#     @ifname, @sndbuf and @vnet_hdr options, and requires @script and
->> +#     @downscript be explicitly set to nothing (empty string or "no"),
-> 
-> WAT?!?
-> 
-> Special value "no" is not documented in the QAPI schema, see the
-> descriptions of @script and @downscript above.
-> 
-> It is documented for -netdev tap in qemu-options.hx:
-> 
->      ``-netdev tap,id=id[,fd=h][,ifname=name][,script=file][,downscript=dfile][,br=bridge][,helper=helper]``
->          Configure a host TAP network backend with ID id.
-> 
->          Use the network script file to configure it and the network script
->          dfile to deconfigure it. If name is not provided, the OS
->          automatically provides one. The default network configure script is
->          ``/etc/qemu-ifup`` and the default network deconfigure script is
->          ``/etc/qemu-ifdown``. Use ``script=no`` or ``downscript=no`` to
->          disable script execution.
-> 
-> Special value "" is okay: you can't name have a script named "".
-> 
-> Special value "no" isn't: you can have a script named "no", but if you
-> try to use it, it's silently ignored.  Yes, it's a silly name, but it's
-> also a silly interface.
-> 
-> I think we should document "no" properly, and also deprecate it.
+Status in QEMU:
+  Fix Released
+Status in qemu package in Ubuntu:
+  Fix Released
+Status in qemu source package in Jammy:
+  Confirmed
+Status in qemu source package in Noble:
+  Incomplete
+Status in qemu source package in Plucky:
+  Won't Fix
+Status in qemu source package in Questing:
+  Fix Committed
+Status in qemu source package in Resolute:
+  Fix Released
 
-I can make a patch, but that's actually not about this series, "no" is
-preexisting.
+Bug description:
+  [ Impact ]
 
-Hmm, may be also deprecate using default scripts, when script options are
-not set by user?
+  - Terminal prompt is missing for multiarch containers with qemu-user
 
-This way I can drop script=no & downscript=no requirements. And make
-absent script option mean "no scripts" for "incoming-fds" from the start.
-(or, I can do it even without deprecation, but that creates an inconsistency
-in the common interface)
+  - Users cannot see the prompt but still can type the commands
+  =C2=A0=C2=A0However the absence of the prompt can be misleading and make =
+users think that the container hangs.
 
-> 
->> +#     and requires also @local-migration-supported to be true, "local"
->> +#     migration parameter be set as well, and QEMU being in incoming
->> +#     migration state.  (Since 11.1)
-> 
-> This sentence is rather long and hard to parse.  Here's my attempt:
-> 
->     #     The option is incompatible with any of @fd, @fds, @helper, @br,
->     #     @ifname, @sndbuf and @vnet_hdr options.  @script and @downscript
->     #     must be explicitly disabled (empty string or "no"), and
->     #     @local-migration-supported must be true.  Additionally,
->     #     migration parameter @local must be set, and QEMU mist be in
->     #     incoming migration state.  (Since 11.1)
+  - this fix implements the missing ioctl TERMIOS2
 
-Sounds good, thanks!
+  [ Test Plan ]
 
-> 
-> Ideally, "migration parameter @local" would link to its description, but
-> I can't tell you offhand whether we can do that and how.  John?
-> 
->> +#
->> +# @local-migration-supported: enable local migration for this TAP
->> +#     backend.  When set, local migration is enabled/disabled by
->> +#     "local" migration parameter for this TAP backend.  When unset,
-> 
-> migration parameter @local
-> 
->> +#     "local" migration parameter is ignored for this TAP backend.
->> +#     (Since 11.1.  Defaults to true for MT >= 11.1, and to false for
->> +#     MT < 11.1)
-> 
-> What's "MT"?
+  On an amd64 host
 
-Machine Type
+  $ sudo apt install -y docker.io qemu-user-static
+  $ sudo usermod -aG docker ubuntu
+  $ newgrp docker
+  $ docker run --platform=3Dlinux/arm64 -it ubuntu:26.04 bash
+  =C2=A0(this runs on AMD64 host, if you are runnig on ARM64, use -platform=
+=3Dlinux/riscv64 instead)
 
-> 
->> +#
->>   # Since: 1.2
->>   ##
->>   { 'struct': 'NetdevTapOptions',
->> @@ -443,7 +459,9 @@
->>       '*vhostfds':   'str',
->>       '*vhostforce': 'bool',
->>       '*queues':     'uint32',
->> -    '*poll-us':    'uint32'} }
->> +    '*poll-us':    'uint32',
->> +    '*incoming-fds': 'bool',
->> +    '*local-migration-supported': 'bool' } }
->>   
->>   ##
->>   # @NetdevSocketOptions:
-> 
-> Two bools mean four cases.  @incoming-fd's description excludes the case
-> "incoming-fd": true, "local-migration-supported": false.  Awkward.  Does
-> case ""incoming-fd": false, "local-migration-supported": true make sense
-> and why?
-> 
+  After docker pulls the image and run the container, you cannot see the
+  prompt
 
-Yes, as local-migration-supported enables the whole feature, and it will
-be set by default starting from 11.1 machine type (read, starting from
-11.1 QEMU, if not use older machine type).
+  ...
+  Status: Downloaded newer image for ubuntu:26.04
+  ...
 
-"local-migration-supported" makes sense both for source and target,
-"incoming-fds" only for target.
+  $ docker run --platform=3Dlinux/arm64 -it ubuntu:24.04 bash
 
-I describe, whey we can't live with only one boolean here:
+  Doing the same for Ubuntu Noble image works.
 
-    https://lore.kernel.org/qemu-devel/a572dadb-6ea6-48f2-a77c-3a4531dbad49@yandex-team.ru/
+  $ docker run --platform=3Dlinux/arm64 -it ubuntu:24.04 bash
+  Unable to find image 'ubuntu:24.04' locally
+  24.04: Pulling from library/ubuntu
+  818154cda96d: Pull complete
+  352b2c3faa58: Download complete
+  Digest: sha256:c4a8d5503dfb2a3eb8ab5f807da5bc69a85730fb49b5cfca2330194ebc=
+c41c7b
+  Status: Downloaded newer image for ubuntu:24.04
+  root@bf8124075385:/#
 
-and it's also a start of discussion for alternative interface (which makes possible to
-realy on "local" migration parameter instead of having extra "incoming-fds").
+  With this fix, the users should see the prompt when they run bash
+  interactively in the container:
 
-And here further RFC from Peter: https://lore.kernel.org/qemu-devel/20260528212947.368132-1-peterx@redhat.com/
+  $ docker run --platform=3Dlinux/arm64 -it ubuntu:26.04 bash
+  root@bf8124075385:/#
 
-Finally, that's all why "incoming-fds" is unstable (see squash-in in parallel reply)
+  [ Where problems could occur ]
 
--- 
-Best regards,
-Vladimir
+  The fix is around the termios managament so regressions can happen there.
+  There might be regressions on the prompt display.
+
+  The prompt display is widely used so potential regressions should be
+  visible quickly.
+
+  [ Other Info ]
+
+  None
+
+  -- Original bug report ---
+
+  In Ubuntu 25.10 we moved to glibc 2.42. Here glibc has changed the
+  implementation of isatty(). It now uses IOCTL TCGETS2 instead of
+  TCGETS. TCGETS2 is not emulated by static QEMU (qemu-riscv64, qemu-
+  arm64, ...).
+
+  This leads to failures in containers for foreign architectures. E.g. no c=
+onsole prompt is displayed.
+  A detailed analysis is contained in LP #2133188.
+
+  A proper implementation of the missing IOCTLs will include:
+
+  Functions:
+
+  in linux-user/syscall.c:
+  host_to_target_termios2()
+  target_to_host_termios2()
+  print_termios2()
+
+  Definitions:
+
+  in linux-user/syscall.c
+  #define termios2 host_termios2
+
+  in linux-user/syscall_types.h
+  STRUCT_SPECIAL(termios2)
+
+  in linux-user/ioctls.h:
+  IOCTL(TCGETS2, IOC_R, MK_PTR(MK_STRUCT(STRUCT_termios2)))
+  IOCTL(TCSETS2, IOC_W, MK_PTR(MK_STRUCT(STRUCT_termios2)))
+  IOCTL(TCSETSF2, IOC_W, MK_PTR(MK_STRUCT(STRUCT_termios2)))
+  IOCTL(TCSETSW2, IOC_W, MK_PTR(MK_STRUCT(STRUCT_termios2)))
+
+  in linux-user/user-internals.h:
+  void print_termios2(void *arg);
+
+To manage notifications about this bug go to:
+https://bugs.launchpad.net/qemu/+bug/2133804/+subscriptions
+
 
