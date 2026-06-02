@@ -4,87 +4,138 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E2824CD6E4A
-	for <qemu-devel@archiver.kernel.org>; Tue,  2 Jun 2026 13:17:28 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 057D9CD6E60
+	for <qemu-devel@archiver.kernel.org>; Tue,  2 Jun 2026 13:24:24 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wUOz6-0001RA-FU; Tue, 02 Jun 2026 09:16:44 -0400
+	id 1wUP6A-000344-7o; Tue, 02 Jun 2026 09:24:02 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <chao.liu.zevorn@gmail.com>)
- id 1wUOyq-0001Pw-1z
- for qemu-devel@nongnu.org; Tue, 02 Jun 2026 09:16:41 -0400
-Received: from mail-dl1-x1243.google.com ([2607:f8b0:4864:20::1243])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <chao.liu.zevorn@gmail.com>)
- id 1wUOyo-0005zG-FD
- for qemu-devel@nongnu.org; Tue, 02 Jun 2026 09:16:27 -0400
-Received: by mail-dl1-x1243.google.com with SMTP id
- a92af1059eb24-137bd9ed2b1so218043c88.1
- for <qemu-devel@nongnu.org>; Tue, 02 Jun 2026 06:16:25 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1780406184; x=1781010984; darn=nongnu.org;
- h=in-reply-to:content-transfer-encoding:content-disposition
- :mime-version:references:message-id:subject:cc:to:from:date:from:to
- :cc:subject:date:message-id:reply-to;
- bh=midalEksGCotZz6tug4q9vOoYlUZpRvvMwbzAJGb6lI=;
- b=cAfE0ijgnPPn1LV1UWWzstGSEp5KTzZ5Tdr0277jhFhtJI5P0owcm6B8lxMz68t1ln
- BvrgUNn+r4kaQ6uJX6o6XirMeD70T13Ci+GfesLir4QWOfS9Je6vF6omX0y85vWm4P97
- z3yAa7CPUP8/nYdegJeZeZj+2WfMHbQPJwlmT/09eOAJc34r71dBMD8E+R5NspoAgTs2
- A5VW3vHVFEcAVlWAQSmcxD6LF//A7qsRZexcbwm/XKwDF6lE0mxr5epUnyukiR/1y/R+
- 2vQUL810jWvzlkK/vAJp3D3MaTwlw7578ZrzYuhGxUPSQHQIXtcdwNFlYwYdFBm0hVyz
- D1eQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1780406184; x=1781010984;
- h=in-reply-to:content-transfer-encoding:content-disposition
- :mime-version:references:message-id:subject:cc:to:from:date:x-gm-gg
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=midalEksGCotZz6tug4q9vOoYlUZpRvvMwbzAJGb6lI=;
- b=BvMcZ1i27dq5qyiVCHRwOq/78vTonzY2Ji7D9taBKsTl4jpBtRDme4dwko1u4i8L7q
- 9xTTuQW0I9mJ+0FA/UV0PRYMkOVftDFmAX5iIVp5k4jkA//RJbPKCjYPBgKrhEQr+6mK
- 9rMRg18ByRbspsyXBNqOK5dU5N5nsvUpgDLOq38Gyvu77bb8JJEkFxQvZGa0dE2o58XY
- yNak4jMqe0jPB7NbEZzAqyvxYvTEWb4h8qjTRMxl10sQtyS02X/yXPm4JHilxSote1Wn
- EAi3Fq+vjFhL8KCyN+5bWldCFLXEcwRjK3d+gVSgHgs9vSIXFaC2pAEfJtFuvKNRHBwA
- KwEg==
-X-Gm-Message-State: AOJu0Yww+OgH8OXZbGnZ5CkoZOQpRl0z+uSnVVIk8zsy/TrowX7Zq6Z2
- fG5wP5X4FGfkT4cWQOobJ5THxU65x2ELX06defefxamgj/mp7iv+aEoM
-X-Gm-Gg: Acq92OFXEvxg9VYTfqHIbKQXVgVjU6UjzRz9HB13yS/76ExOAICL75Wx6+A3ZCKAN/f
- +tj/ZEafBUMiRwZZkKwJvuM5kt5rxgCdLLNna73OvfPYD7X0kultgPfA5Fa1kq7sXK14m45h/Ba
- uVX8Z54nCfrsrEIxLvLALv5o6JiJ0J59Twq+O4i+YGupnfUG3eqVtKD4GLFnHTvkfVcLtTZMkuH
- VdkcGh1cdanL36pLZwJNTjQ2kqBI74L1yFVvCeQFmbeKMB76xmGEd5GuqfDfM9F2vKfeKpBPKK4
- NbcPg3gpsnuYUM5IUDoJBNnyLy5FTjtzlzIB6TcAr85TgNYLpbfAXwtxJq+QTveN6H5lEYuz1DG
- 6u4f3N1NdhoDFTuef5gkx2luLzVktl0ytqz8RGASdJ+x/BBYODM0fTRfx66j/WLflaOXOjC9K/H
- zuV+u72QGQEL+u/YU/KmEjD0CXknhEaVnvCFPLBzDr+4W+JwjVek+7XIpJ6CPJR71iK+cshg==
-X-Received: by 2002:a05:7022:e982:b0:12d:de3e:cbfe with SMTP id
- a92af1059eb24-137d4280b1emr6837248c88.37.1780406183886; 
- Tue, 02 Jun 2026 06:16:23 -0700 (PDT)
-Received: from localhost ([64.186.250.142]) by smtp.gmail.com with ESMTPSA id
- a92af1059eb24-137b36c6eabsm9131399c88.7.2026.06.02.06.16.22
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 02 Jun 2026 06:16:23 -0700 (PDT)
-Date: Tue, 2 Jun 2026 21:16:20 +0800
-From: Chao Liu <chao.liu.zevorn@gmail.com>
-To: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
-Cc: qemu-devel@nongnu.org
-Subject: Re: [PATCH] checkpatch: calculate UTF-8 characters correctly
-Message-ID: <ah7TydWv9e9hRNFO@ChaodeMacBook-Pro.local>
-References: <20260601171008.159147-1-vsementsov@yandex-team.ru>
+ (Exim 4.90_1) (envelope-from <andriy.shevchenko@linux.intel.com>)
+ id 1wUNHA-0006tt-Nq
+ for qemu-devel@nongnu.org; Tue, 02 Jun 2026 07:27:17 -0400
+Received: from mgamail.intel.com ([198.175.65.15])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <andriy.shevchenko@linux.intel.com>)
+ id 1wUNH8-0005sG-9e
+ for qemu-devel@nongnu.org; Tue, 02 Jun 2026 07:27:16 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+ d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+ t=1780399634; x=1811935634;
+ h=date:from:to:cc:subject:message-id:references:
+ mime-version:in-reply-to;
+ bh=vFe0YHJbZeLES+sUauMUh5hZ46dD8ew9Ej6lDFLoT9Q=;
+ b=gNuzrgBUdLVsiR0/V8cqwB0xcmNqp6PPtYnEsfNj+/zuUMhu7TY3ykxb
+ XB6SYVPANIwy/tAQBML2N2RgtTq16RmgI9cCZUFCODvOCCl74bwkjmRTt
+ FRw0k0dEJTsfm7CoUFb7IGNpRptvVyKpMLWGEO6l+rBmpCkeN2qXfgM43
+ AqjQ49V6z+KFGEHiUfxG7ZVqyhrWxH7U4qv2vtZXu6uT6ttqHHc3nc8Ub
+ kddF31RuqMWNXsv4RXrVyQwP/lJrDD5OoedS8Bgd2kFyaDIhJYrHF7IoT
+ jqUohJ0pL7XFeTPxZpk6FmDjYrrooYtlwq6w7gks5onRfESHxu2z/KgSE A==;
+X-CSE-ConnectionGUID: u5Q6Y+fDS4u7QV7xlGKHPQ==
+X-CSE-MsgGUID: nqYCOQUbRty4FtMXNH+kcQ==
+X-IronPort-AV: E=McAfee;i="6800,10657,11804"; a="84805008"
+X-IronPort-AV: E=Sophos;i="6.24,183,1774335600"; d="scan'208";a="84805008"
+Received: from fmviesa007.fm.intel.com ([10.60.135.147])
+ by orvoesa107.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 02 Jun 2026 04:27:08 -0700
+X-CSE-ConnectionGUID: 57WJuzJhQk+bJIT4F8AZnw==
+X-CSE-MsgGUID: InV+5AxmRSKrEz4WoNh7bQ==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.24,183,1774335600"; d="scan'208";a="240879149"
+Received: from mkosciow-mobl1.ger.corp.intel.com (HELO localhost)
+ ([10.245.245.229])
+ by fmviesa007-auth.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 02 Jun 2026 04:26:48 -0700
+Date: Tue, 2 Jun 2026 14:26:46 +0300
+From: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
+To: Kees Cook <kees@kernel.org>
+Cc: Luis Chamberlain <mcgrof@kernel.org>,
+ Pengpeng Hou <pengpeng@iscas.ac.cn>, stable@vger.kernel.org,
+ Petr Pavlu <petr.pavlu@suse.com>, Richard Weinberger <richard@nod.at>,
+ Anton Ivanov <anton.ivanov@cambridgegreys.com>,
+ Johannes Berg <johannes@sipsolutions.net>,
+ "Rafael J. Wysocki" <rafael@kernel.org>,
+ Len Brown <lenb@kernel.org>, Corey Minyard <corey@minyard.net>,
+ Gabriel Somlo <somlo@cmu.edu>, "Michael S. Tsirkin" <mst@redhat.com>,
+ Jani Nikula <jani.nikula@linux.intel.com>,
+ Joonas Lahtinen <joonas.lahtinen@linux.intel.com>,
+ Rodrigo Vivi <rodrigo.vivi@intel.com>,
+ Tvrtko Ursulin <tursulin@ursulin.net>,
+ David Airlie <airlied@gmail.com>, Simona Vetter <simona@ffwll.ch>,
+ Bart Van Assche <bvanassche@acm.org>,
+ Jason Gunthorpe <jgg@ziepe.ca>, Leon Romanovsky <leon@kernel.org>,
+ Laurent Pinchart <laurent.pinchart@ideasonboard.com>,
+ Hans de Goede <hansg@kernel.org>,
+ Mauro Carvalho Chehab <mchehab@kernel.org>,
+ Bjorn Helgaas <bhelgaas@google.com>, Hannes Reinecke <hare@suse.de>,
+ "James E.J. Bottomley" <James.Bottomley@hansenpartnership.com>,
+ "Martin K. Petersen" <martin.petersen@oracle.com>,
+ Daniel Lezcano <daniel.lezcano@kernel.org>,
+ Zhang Rui <rui.zhang@intel.com>, Lukasz Luba <lukasz.luba@arm.com>,
+ Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+ Jiri Slaby <jirislaby@kernel.org>, Alan Stern <stern@rowland.harvard.edu>,
+ Jason Wang <jasowang@redhat.com>, Xuan Zhuo <xuanzhuo@linux.alibaba.com>,
+ Eugenio =?iso-8859-1?Q?P=E9rez?= <eperezma@redhat.com>,
+ Jason Baron <jbaron@akamai.com>, Jim Cromie <jim.cromie@gmail.com>,
+ Tiwei Bie <tiwei.btw@antgroup.com>,
+ Benjamin Berg <benjamin.berg@intel.com>,
+ Ilpo =?iso-8859-1?Q?J=E4rvinen?= <ilpo.jarvinen@linux.intel.com>,
+ "David E. Box" <david.e.box@linux.intel.com>,
+ "Maciej W. Rozycki" <macro@orcam.me.uk>,
+ Srinivas Pandruvada <srinivas.pandruvada@linux.intel.com>,
+ Peter Zijlstra <peterz@infradead.org>, Heiko Carstens <hca@linux.ibm.com>,
+ Vasily Gorbik <gor@linux.ibm.com>, Sean Christopherson <seanjc@google.com>,
+ Paolo Bonzini <pbonzini@redhat.com>,
+ Thomas Gleixner <tglx@kernel.org>, Ingo Molnar <mingo@redhat.com>,
+ Borislav Petkov <bp@alien8.de>,
+ Dave Hansen <dave.hansen@linux.intel.com>, x86@kernel.org,
+ "H. Peter Anvin" <hpa@zytor.com>, Vinod Koul <vkoul@kernel.org>,
+ Frank Li <Frank.Li@kernel.org>, Daniel Gomez <da.gomez@kernel.org>,
+ Sami Tolvanen <samitolvanen@google.com>,
+ Aaron Tomlin <atomlin@atomlin.com>,
+ Alexander Potapenko <glider@google.com>,
+ Marco Elver <elver@google.com>, Dmitry Vyukov <dvyukov@google.com>,
+ Andrew Morton <akpm@linux-foundation.org>,
+ John Johansen <john.johansen@canonical.com>,
+ Paul Moore <paul@paul-moore.com>, James Morris <jmorris@namei.org>,
+ "Serge E. Hallyn" <serge@hallyn.com>,
+ Georgia Garcia <georgia.garcia@canonical.com>, kvm@vger.kernel.org,
+ dmaengine@vger.kernel.org, linux-modules@vger.kernel.org,
+ kasan-dev@googlegroups.com, linux-mm@kvack.org,
+ apparmor@lists.ubuntu.com, linux-security-module@vger.kernel.org,
+ linux-um@lists.infradead.org, linux-acpi@vger.kernel.org,
+ openipmi-developer@lists.sourceforge.net, qemu-devel@nongnu.org,
+ intel-gfx@lists.freedesktop.org, dri-devel@lists.freedesktop.org,
+ linux-rdma@vger.kernel.org, linux-media@vger.kernel.org,
+ linux-pci@vger.kernel.org, linux-scsi@vger.kernel.org,
+ linux-pm@vger.kernel.org, linuxppc-dev@lists.ozlabs.org,
+ linux-serial@vger.kernel.org, linux-usb@vger.kernel.org,
+ usb-storage@lists.one-eyed-alien.net,
+ virtualization@lists.linux.dev, linux-kernel@vger.kernel.org,
+ linux-arch@vger.kernel.org, netdev@vger.kernel.org,
+ linux-fsdevel@vger.kernel.org, linux-hardening@vger.kernel.org
+Subject: Re: [PATCH 01/11] params: bound array element output to the caller's
+ page buffer
+Message-ID: <ah699hwLxIIOZ0-7@ashevche-desk.local>
+References: <20260521133315.work.845-kees@kernel.org>
+ <20260521133326.2465264-1-kees@kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <20260601171008.159147-1-vsementsov@yandex-team.ru>
-Received-SPF: pass client-ip=2607:f8b0:4864:20::1243;
- envelope-from=chao.liu.zevorn@gmail.com; helo=mail-dl1-x1243.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+In-Reply-To: <20260521133326.2465264-1-kees@kernel.org>
+Organization: Intel Finland Oy - BIC 0357606-4 - c/o Alberga Business Park, 6
+ krs, Bertel Jungin Aukio 5, 02600 Espoo
+Received-SPF: pass client-ip=198.175.65.15;
+ envelope-from=andriy.shevchenko@linux.intel.com; helo=mgamail.intel.com
+X-Spam_score_int: -46
+X-Spam_score: -4.7
+X-Spam_bar: ----
+X-Spam_report: (-4.7 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.445,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_MED=-2.3,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
+X-Mailman-Approved-At: Tue, 02 Jun 2026 09:23:59 -0400
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -99,74 +150,68 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Mon, Jun 01, 2026 at 08:10:08PM +0800, Vladimir Sementsov-Ogievskiy wrote:
-> We do check UTF-8 correctness in checkpatch.pl (search for "patch and
-> commit message should be encoded in UTF-8"), but we count bytes, not
-> symbols when limiting line-length. Let's be consistent.
+On Thu, May 21, 2026 at 06:33:14AM -0700, Kees Cook wrote:
 > 
-> Signed-off-by: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
-> ---
->  scripts/checkpatch.pl | 7 ++++++-
->  1 file changed, 6 insertions(+), 1 deletion(-)
+> param_array_get() appends each element's string representation into the
+> shared sysfs page buffer by passing buffer + off to the element getter.
 > 
-> diff --git a/scripts/checkpatch.pl b/scripts/checkpatch.pl
-> index 2189db19f54..711539bdd7c 100755
-> --- a/scripts/checkpatch.pl
-> +++ b/scripts/checkpatch.pl
-> @@ -7,6 +7,7 @@
->  
->  use strict;
->  use warnings;
-> +use Encode qw(decode);
->  use Term::ANSIColor qw(:constants);
->  
->  my $P = $0;
-> @@ -596,7 +597,11 @@ sub line_stats {
->  	# Pick the indent from the front of the line.
->  	my ($white) = ($line =~ /^(\s*)/);
-line_stats() still expands tabs before decoding UTF-8, so tab stops are
-computed from UTF-8 bytes rather than decoded characters. 
-
-For example, `é<TAB>X` is counted as length 8 with the current order, but
-length 9 if decoded before tab expansion. This is mostly hidden for C
-files because tabs are rejected, but `.s`/`.S` files may contain tabs.
-
-Since this patch aims to make `line_stats()` use character semantics, it
-should decode before expanding tabs, or make `expand_tabs()` operate on a
-decoded string.
-
-You could implement it like this:
-
-```
-   @@ -588,8 +589,9 @@ sub line_stats {
-    sub line_stats {
-       my ($line) = @_;
-
-   -   # Drop the diff line leader and expand tabs
-   +   # Drop the diff line leader, decode UTF-8, and expand tabs.
-       $line =~ s/^.//;
-   +   $line = decode('UTF-8', $line, Encode::FB_DEFAULT);
-       $line = expand_tabs($line);
-
-       # Pick the indent from the front of the line.
-```
->  
-> -	return (length($line), length($white));
-With that change, the original `return (length($line), length($white));`
-can be kept; the extra `decode()` calls and new return below are not needed.
-
-Thanks,
-Chao
-
-> +	# Use character count (not byte count) so multi-byte UTF-8 characters
-> +	# are counted as single characters.
-> +	my $line_chars  = length(decode('UTF-8', $line,  Encode::FB_DEFAULT));
-> +	my $white_chars = length(decode('UTF-8', $white, Encode::FB_DEFAULT));
-> +	return ($line_chars, $white_chars);
->  }
->  
->  my $sanitise_quote = '';
-> -- 
-> 2.52.0
+> That works for getters that only write a small bounded string, but
+> param_get_charp() and similar helpers format against PAGE_SIZE from the
+> pointer they receive. Once off is non-zero, an element getter can
+> therefore write past the end of the original sysfs page buffer.
 > 
+> Collect each element into a temporary PAGE_SIZE buffer first and then
+> copy only the remaining space into the caller's page buffer.
+
+...
+
+> +	elem_buf = kmalloc(PAGE_SIZE, GFP_KERNEL);
+
+get_free_page() (or how it is called)?
+
+> +	if (!elem_buf)
+> +		return -ENOMEM;
+> +
+>  	for (i = off = 0; i < (arr->num ? *arr->num : arr->max); i++) {
+> -		/* Replace \n with comma */
+> -		if (i)
+> -			buffer[off - 1] = ',';
+>  		p.arg = arr->elem + arr->elemsize * i;
+>  		check_kparam_locked(p.mod);
+> -		ret = arr->ops->get(buffer + off, &p);
+> +		ret = arr->ops->get(elem_buf, &p);
+>  		if (ret < 0)
+> -			return ret;
+> +			goto out;
+> +		ret = min(ret, (int)(PAGE_SIZE - 1 - off));
+
+It's usually discouraged to use castings in min/max/clamp. Can we make ret long
+or do something different here?
+
+> +		if (!ret)
+> +			break;
+
+> +		/* Replace the previous element's trailing newline with a comma. */
+> +		if (i)
+> +			buffer[off - 1] = ',';
+
+Can't we do this after with help of strreplace()?
+
+> +		memcpy(buffer + off, elem_buf, ret);
+>  		off += ret;
+> +		if (off == PAGE_SIZE - 1)
+> +			break;
+>  	}
+>  	buffer[off] = '\0';
+> -	return off;
+> +	ret = off;
+> +out:
+> +	kfree(elem_buf);
+> +	return ret;
+
+-- 
+With Best Regards,
+Andy Shevchenko
+
+
 
