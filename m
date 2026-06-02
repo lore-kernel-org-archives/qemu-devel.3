@@ -4,101 +4,82 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7F66FCD5BD1
-	for <qemu-devel@archiver.kernel.org>; Tue,  2 Jun 2026 13:55:03 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id BB555CD6E60
+	for <qemu-devel@archiver.kernel.org>; Tue,  2 Jun 2026 14:05:33 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wUPZX-00085e-C5; Tue, 02 Jun 2026 09:54:23 -0400
+	id 1wUPji-0003a2-Ah; Tue, 02 Jun 2026 10:04:54 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <david@kernel.org>) id 1wUPZQ-0007z4-S6
- for qemu-devel@nongnu.org; Tue, 02 Jun 2026 09:54:19 -0400
-Received: from tor.source.kernel.org ([2600:3c04:e001:324:0:1991:8:25])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <david@kernel.org>) id 1wUPZE-0004LT-MS
- for qemu-devel@nongnu.org; Tue, 02 Jun 2026 09:54:11 -0400
-Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
- by tor.source.kernel.org (Postfix) with ESMTP id 2984560126;
- Tue,  2 Jun 2026 13:54:03 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5AD041F00893;
- Tue,  2 Jun 2026 13:54:02 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
- s=k20260515; t=1780408442;
- bh=HZ9zV3KFmdiEyTRdusMda56o8Y/Xc+chLdyxGJQMjtM=;
- h=Date:Subject:To:References:From:In-Reply-To;
- b=oQILxPpyKEnTsLhotQ2JnlYSvwS37z929UB5NFkLXI88cViNZoUhoaxL4mKITNB+E
- ZaBatjvFp9DWqjz4NvpAWS5nYQgUezJHYkbH9Vj3DL0G0FUKtr8t1KVEGHoMjQPSgp
- cWH41igSLSwu7QzaXTdBzxlD0MRIOuMSpxaEvAavs8bLRzUd2+QxVZFsyzQGa1dFDj
- CoU6pvhmrp2q9xXq3lCmi8LOPVY+DAVSNpNACcdnuyzeX5lwPzJeuvni8Ewf1s5Efp
- YoILUG/NULF8K20tPKDy+gd/OvDV1V1t9+9Z9BmJQbSpLsfa7SbSzlaHdxPvXP2Mr0
- 22dKnyI6AuBNQ==
-Message-ID: <33d4e111-51b3-40ec-b681-bb95e6bf0c2f@kernel.org>
-Date: Tue, 2 Jun 2026 15:54:00 +0200
+ (Exim 4.90_1) (envelope-from <anderson@allelesecurity.com>)
+ id 1wUPjh-0003Zu-Ix
+ for qemu-devel@nongnu.org; Tue, 02 Jun 2026 10:04:53 -0400
+Received: from mail-vs1-xe31.google.com ([2607:f8b0:4864:20::e31])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <anderson@allelesecurity.com>)
+ id 1wUPjf-0002HE-Uj
+ for qemu-devel@nongnu.org; Tue, 02 Jun 2026 10:04:53 -0400
+Received: by mail-vs1-xe31.google.com with SMTP id
+ ada2fe7eead31-6c5ac3fa819so1143574137.0
+ for <qemu-devel@nongnu.org>; Tue, 02 Jun 2026 07:04:51 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=allelesecurity.com; s=google; t=1780409090; x=1781013890; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:from:to:cc:subject:date:message-id:reply-to;
+ bh=ujK4eFBt2CiUF6UNRnobhV7dIbSUH85qOD9fCMSIzOE=;
+ b=OYlxLd2XEvk8ouV+DDpOXxCfp3rlvzOKamQiyfEXGIbJHNfACTqt3WfL/JZeQKTK7r
+ knly8SPX320ld6BhYZUb0nak7oIYllLLT8/fDKT8b1b2HeyF9XoWZdbKoXfQ72K4APnc
+ V/42aZLRrTo4BMSCI2GLNEjVNgoC0YY4RxgXM=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1780409090; x=1781013890;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=ujK4eFBt2CiUF6UNRnobhV7dIbSUH85qOD9fCMSIzOE=;
+ b=ocusUh5IVHwnMmKqE0QSpzPPIy4d673aqCcVX+dZv84VKQ/i37PyQ5SEwbH2N9sQ+4
+ z1mHWaBj2343ldOEyOeLsuCMFwGv1LIMbhMDmHjnkuel5fCa/5peb3my0c86oNf5eBow
+ aU5+KBi7FssEpj/W6e9au4Z+T8DZSKdb2B7vqlUnJI4ouVDwsF5JldW9TrG58SxJEn5q
+ j3Xb80NfrkN9FzOb187WCM2UOR3hHe0nusXeyfq+sFrdP6GibQX8M8l9SeM2H8/4r7AA
+ RaVoe7paVkYnAyGHG5xZZUJ7S9+Z3lK2mxUknpwRA4mO55CwupsnQAlaE53cjEoKxLrV
+ e8OA==
+X-Gm-Message-State: AOJu0Yz6QJhhFg8GmzynMyBATs0FFLztFk4+Cz61X2iR3066kdeaSsEE
+ EXNXSaLYpGxWrDy7uKUm5IAQycLK6RsYPteJs52dU1WXBNuyFvCBuf5B9+qeYd2rWvEvBdl0BOi
+ Kcv+iCHg=
+X-Gm-Gg: Acq92OE6Pck2Xv6XZnrgMc8J17Rb95WRDW7syfVwI47UA6VmJzmGFMhnP9ngbbaUXv8
+ DuxloKuuuE6GifLTK9JTtcceFash11Nt5JGuYU8B6v88HFECKvu6dJfGm5HuMqpeB8xo8aJ8k8W
+ 5IoaG9cMprv0ney3/tzejyQkYmiHZQuY4JgD961pJ+pbwILeKz8ADomY+d+5FTAoZCX1/99DTVk
+ 8dFXVRXUxgh/2lcPsBfSHy7Gxb1Ko0DYblY+WRFeU0ELHThllFaJYafxDy/OWvMDRtgwDCbpH8M
+ kcbICVgAUTdO0rIZf+veM7VehIYZ3ZV7f5uk+3xuOlyRo7aiMrtHEC3Tdv2NiDqhFRSOt8QkwzM
+ jxUiB6F3xX+kI8/RA7ff6MlG89W0Y219D92Q9xdiuW0n5upbEGQwVvCH968wA8i4nUoTFRfROlE
+ 1tzQ+nwibDoHFfEzt2Z8rjsAo7c8vGSCq8aTPdYg==
+X-Received: by 2002:a05:6102:61d1:b0:634:420a:ab1b with SMTP id
+ ada2fe7eead31-6c69b82c136mr3593702137.18.1780409090446; 
+ Tue, 02 Jun 2026 07:04:50 -0700 (PDT)
+Received: from tarski ([179.105.152.38]) by smtp.gmail.com with ESMTPSA id
+ ada2fe7eead31-6d1ff3909b3sm6097602137.6.2026.06.02.07.04.47
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Tue, 02 Jun 2026 07:04:50 -0700 (PDT)
+From: Anderson Nascimento <anderson@allelesecurity.com>
+To: qemu-devel@nongnu.org, kvm@vger.kernel.org, pbonzini@redhat.com,
+ zhao1.liu@intel.com, mtosatti@redhat.com
+Cc: Anderson Nascimento <anderson@allelesecurity.com>
+Subject: [PATCH v2 0/1] target/i386: Add support for KVM APERF/MPERF
+ passthrough
+Date: Tue,  2 Jun 2026 11:03:46 -0300
+Message-ID: <20260602140348.774203-1-anderson@allelesecurity.com>
+X-Mailer: git-send-email 2.54.0
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v4 12/13] monitor: add 'info ramblock-attributes' command
-To: =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>,
- qemu-devel@nongnu.org
-References: <20260504-rdm5-v4-0-bdf61e57c1e1@redhat.com>
- <20260504-rdm5-v4-12-bdf61e57c1e1@redhat.com>
-From: "David Hildenbrand (Arm)" <david@kernel.org>
-Content-Language: en-US
-Autocrypt: addr=david@kernel.org; keydata=
- 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
- qIws/H2t
-In-Reply-To: <20260504-rdm5-v4-12-bdf61e57c1e1@redhat.com>
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2600:3c04:e001:324:0:1991:8:25;
- envelope-from=david@kernel.org; helo=tor.source.kernel.org
-X-Spam_score_int: -24
-X-Spam_score: -2.5
+Received-SPF: pass client-ip=2607:f8b0:4864:20::e31;
+ envelope-from=anderson@allelesecurity.com; helo=mail-vs1-xe31.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.445,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -114,16 +95,58 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 5/4/26 14:30, Marc-André Lureau wrote:
-> Add a new 'info ramblock-attributes' HMP command and the corresponding
-> 'x-query-ramblock-attributes' QMP command to display the shared/private
-> memory attributes for ram blocks.
+Hello,
 
-Can we abstract the "ramblock" stuff somehow, and refer to it as
-(hypervisor-specific) memory attributs somehow?
+I have implemented support for exposing and enabling APERF/MPERF
+MSR passthrough for x86 QEMU guests when running on KVM.
+
+As of last year, the Linux kernel supports providing a capability
+to disable APERF/MPERF read intercepts [1]. However, there is
+currently no native way in QEMU to instruct KVM to activate this
+capability or expose the feature bit cleanly via CPUID.
+
+My patch introduces the `aperfmperf` feature flag via `FEAT_6_ECX`
+(CPUID.06H:ECX[bit 0]). It ties into the existing power management
+framework, so when a user enables power management via
+`-overcommit cpu-pm=on` and passes `+aperfmperf` to the CPU, QEMU
+requests KVM to drop the MSR intercepts.
+
+For testing, I passed the feature via Libvirt XML like so:
+
+    <qemu:arg value="-overcommit"/>
+    <qemu:arg value="cpu-pm=on"/>
+    <qemu:arg value="-cpu"/>
+    <qemu:arg value="host,+aperfmperf,+invtsc"/>
+
+A FreeBSD 16 guest is successfully able to read the changing
+values of the MSRs directly without exiting to the hypervisor:
+
+root@freebsd16development:/home/user # cpucontrol -i 6 /dev/cpuctl0
+cpuid level 0x6: 0x00000004 0x00000000 0x00000001 0x00000000
+root@freebsd16development:/home/user # cpucontrol -m 0xe7 /dev/cpuctl0
+MSR 0xe7: 0x00007fdf 0x22480f90
+root@freebsd16development:/home/user # cpucontrol -m 0xe7 /dev/cpuctl0
+MSR 0xe7: 0x00007fdf 0x2b8b48b0
+root@freebsd16development:/home/user # cpucontrol -m 0xe8 /dev/cpuctl0
+MSR 0xe8: 0x000050de 0x49270831
+root@freebsd16development:/home/user # cpucontrol -m 0xe8 /dev/cpuctl0
+MSR 0xe8: 0x000050de 0x4ad66ae6
+root@freebsd16development:/home/user #
+
+Based-on: QEMU v11.0.50 (commit 5611a9268d)
+
+v1 -> v2 changelog:
+  - Add migration flags
+
+Anderson Nascimento (1):
+  target/i386: Add support for KVM APERF/MPERF passthrough
+
+ target/i386/cpu.c     | 18 +++++++++++++++++-
+ target/i386/cpu.h     |  2 ++
+ target/i386/kvm/kvm.c |  5 ++++-
+ 3 files changed, 23 insertions(+), 2 deletions(-)
 
 -- 
-Cheers,
+2.54.0
 
-David
 
