@@ -4,141 +4,145 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C3FABCD6E57
-	for <qemu-devel@archiver.kernel.org>; Tue,  2 Jun 2026 10:39:30 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C6509CD6E57
+	for <qemu-devel@archiver.kernel.org>; Tue,  2 Jun 2026 10:41:11 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wUMWQ-0007Jr-Te; Tue, 02 Jun 2026 06:38:58 -0400
+	id 1wUMXq-0007qD-PV; Tue, 02 Jun 2026 06:40:26 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <dbassey@redhat.com>)
- id 1wUMWL-0007JE-6t
- for qemu-devel@nongnu.org; Tue, 02 Jun 2026 06:38:53 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <skolothumtho@nvidia.com>)
+ id 1wUMXp-0007pm-7Y; Tue, 02 Jun 2026 06:40:25 -0400
+Received: from mail-westus2azlp170120002.outbound.protection.outlook.com
+ ([2a01:111:f403:c007::2] helo=MW6PR02CU001.outbound.protection.outlook.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <dbassey@redhat.com>)
- id 1wUMWG-0006P1-9z
- for qemu-devel@nongnu.org; Tue, 02 Jun 2026 06:38:51 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1780396724;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=aC5iz3Aggjpr7ZdA5MsghxISg6TzADWIgnpOE51+5e8=;
- b=BmZ6YsSM5rc5RLwKtyQPCE5ILakrHokdk2NSWVzubuydsyZULXQCyGiSIAQU3h2f2awKVs
- 9I6SOO1NXhW4Lb6kHTMAHAeAaAl9isT8vgsZvTssErqGoVM2Ppls6I+EheTmi+SYEca4f1
- IiyD5c2nOY+WLm5wTPGSp0t/WYSm+Gk=
-Received: from mail-oa1-f70.google.com (mail-oa1-f70.google.com
- [209.85.160.70]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-3-NC6BygYeOAOFlJADfD2jvQ-1; Tue, 02 Jun 2026 06:38:43 -0400
-X-MC-Unique: NC6BygYeOAOFlJADfD2jvQ-1
-X-Mimecast-MFC-AGG-ID: NC6BygYeOAOFlJADfD2jvQ_1780396722
-Received: by mail-oa1-f70.google.com with SMTP id
- 586e51a60fabf-43d1e4bca47so1170637fac.3
- for <qemu-devel@nongnu.org>; Tue, 02 Jun 2026 03:38:43 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1780396722; cv=none;
- d=google.com; s=arc-20240605;
- b=I6avg83ZdgaQ+p0FYryx1q0057728vAfT0eePnQLBt5ffYR03NUdCJBypvxizDlZuQ
- cCR0u9hHr3DiG6iUy10jqLg5ZvboDAHfLFM6jgWwfmcJzeTpJYkO5WtWJI3UaTxMUGqJ
- qLhwUCEugNGHIcUxJCY1XlPvHdeVFr50bXs0FkE8rDavcd8GRmvIWa8iO2XTRH/BM/qP
- RQ6layV06matjPjNe1PNLfwK+T17YCgBGz/clK3hMZRvpIiME5/kD/+7FDCrRJlG9wCa
- GPKSG8kneshCftm2EMeNS35J/wO9V4YwpFDJIjnuCAccf/R5MRgtO67TM3h/CM3OaBmc
- xP3w==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
- s=arc-20240605; 
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:dkim-signature;
- bh=aC5iz3Aggjpr7ZdA5MsghxISg6TzADWIgnpOE51+5e8=;
- fh=FA2YfaZEdis3oYPuZNwyxgugqwWNzI/0BmXJWsvyUf8=;
- b=F8Yh5SSGoQnU+LOvL+u+L3P5eEyc4uIgh65f1uFzfThLwhz2fZWZkH63KclKIewc02
- xRARDdYBCZLwy7mILddJX/xkcGDFcxvF0UgWXaD8Gy/abNbxtJjfyuXEav/OOaD3j+k9
- kjY9pjAXFdtjYLkoPmM39Z1ExaADyCNMR+0TbZIAOrTsOoKCgiFSWCzSWvHHUizwnta+
- O7lhDar5YYakm7Z+feEa0bMhRZppMHdjwpIHiSi+/BVinJDuMs3Pdytu+5qDq4Xp5J/H
- DIgWnRFzrdSlZ8tp+XFcVSpHaF+ZqJo3eTUID3iLcJGXpDnpwosZeezmxazUjHMFsULT
- /CAA==; darn=nongnu.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1780396722; x=1781001522; darn=nongnu.org;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=aC5iz3Aggjpr7ZdA5MsghxISg6TzADWIgnpOE51+5e8=;
- b=ZoClcWvkUgTgaPbfnQqNdWHcbteNmkEtw5kQb1DJ8Mwy8RSx/hZ9g13Z/qkwknlKXg
- ymZWXYO1stC+EgRM067/K5vZDvRqbFlZbzPo+e58VoLSEhlGvCTKc5WDH/6webrFltkI
- hV8nc2UE4FHnO+oPOuZGJumcY57476P4b+MKZYx9hXVNmWWRnE9SEoFCO6fSA9dJ4XLk
- oLijNH+eW3OoIn6eP7H8Om0k5BDcmHVvCbqNnuJ1/pCyD2SHG2VjzkHRpIG/H4HDk+Bl
- yZ0KkTnN4RQchbeHEO8n8mUNKV4YyDqXhQuMCzvE8j8QZJVQldOAhH7Ab+w1RbXjQuDn
- Z/1w==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1780396722; x=1781001522;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=aC5iz3Aggjpr7ZdA5MsghxISg6TzADWIgnpOE51+5e8=;
- b=dZOsEgYK8KNfgDegNtF7FbdFdq4OwcCcic6to5hGY+3/7ry9ZnaNIWUQmbF1XMqtrW
- 4+v1QipW9me5JSnTngspPg9B0ZNyI/O+BQLqxV5m8hukhAExScAvXW3ALMlfgFap2x4O
- NAV8mqyRKWWsh6NE8ONwCXOWmANlc2GVIjkV+TNHnY9nMTqfV+tX6VBquZJTOem7oAai
- vZMr9l+7Pn0GDLvTjT/XhndwS5XMFuFrzQ+M2tyS7YTBvVX67U5zEZBch3UYqE8HTo1/
- 0n7milFYCJi5sYAXlkZRTF61/S9QR0VxyMIpNR3ZDcDzDjtnpOVm0Yfg7vHdhXL8kQtC
- TJ0Q==
-X-Forwarded-Encrypted: i=1;
- AFNElJ+Iwdeg5r7JGw598oxiOsrDWXu+FaMSw+3WGJSQ/lA8aFRXK1Q+tyFv1jb8SWVjgxD4G08SR8m702Na@nongnu.org
-X-Gm-Message-State: AOJu0Yw901wptPHpPlnM7kC6697yQCWteV0uGjAyassDiOw9+c9/aZgz
- UQGIHDN2se+tmZean3ez5FdqAf6084YF1OL1eFnoMuSwTRrMpW/EFiCdvLIZmrPKxMncjTlSh76
- ApKsvOMRHhG/BDYl6CAUrYLpa976JkpfGi0KXIUvYUakxkQKEnzSDMw6gn3BUmR18aEJ0aP5ab/
- smFDNrE4SEoHpBVPe8sGdeu6p2HydJNCQ=
-X-Gm-Gg: Acq92OGouCKqlhOo4JTawqde3lZoo8UDWDSv9ufHeixkiHctnRSKfsLBnPCDnKLbhC3
- C/9MBU9K/PSZZs12nIAsgDzt3h2x/eaLhRlUPzrNV8I5ZJG1p/NejfRlR138tv/niwDqnToL02U
- 2ugbEv31DpPg75FTdH6Yz0armzRLj62t1AVbelBD8tms/6KY8qFQbW86MSJ49sRojwsFPaYU1Q/
- HWGy6lno/8uivAu
-X-Received: by 2002:a05:6820:3409:10b0:69e:2bf1:764e with SMTP id
- 006d021491bc7-69e2bf18005mr2353150eaf.44.1780396722197; 
- Tue, 02 Jun 2026 03:38:42 -0700 (PDT)
-X-Received: by 2002:a05:6820:3409:10b0:69e:2bf1:764e with SMTP id
- 006d021491bc7-69e2bf18005mr2353124eaf.44.1780396721589; Tue, 02 Jun 2026
- 03:38:41 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <skolothumtho@nvidia.com>)
+ id 1wUMXn-0006wP-DW; Tue, 02 Jun 2026 06:40:24 -0400
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=Kg/BVSDM06gl/VWtwBflStip8eh9SbhIGNDdo2cWJww5dvn68aHs/qvJWtFNtEC5ek+C/4c2+bhy+9dI7RrnXKuZFfGt1MYfptq+CN7loKbq3vjfsGqBSJM8VX8O+GHu82dr0ausGKVJ5H47QSODJ8ZxTVMMU0eCtJKzgyiF9FcYI+BKQnLx3yJBk3XXALJcNK+hBUoBvdZ+onZ+y6LHxvGoXiiYshqG9VvwCLIRP7HZQzrnDD7SwBLj5Ji1DxC1PXcGdayYIE34ktfCTl9scaAsYLtXg6rWRpGkSejUgYoiomz1OGb0hkZ549uGrsla/cYUVEPL2lEheQn2Lnll2Q==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=a16/qaFdGNEBYcdBj6drxtGAJCxX9Z69sglkYjOtSTY=;
+ b=yy5weSXw+79fnehSWwaHwr18mfA0AMFPF0jHeSWDIL0o4NY0r8Y12ePcvRRg0ATMb34esgK2ZsTiFGvQ3kTQbZu+6Hnp+IFMCWxZaNFtxL1Omq32q1EY5kjrheTWPhHFxZcL2UBXzCUCSqoHD68p+G1/Wf4RSVUIp3X13PXnLqWBMNcDdZxpSQWAlqIh9crY3iqqbBpRIJcwhMtBn74IHSMw9hFJbKpmboyfX3OvEPuu/7GcFPg9Z0Gv5T4YdX6yEoBrMdEaoM5j5eU8c3/x1W77NxDFlmvk/O0BYWf+BrQ1gcxS8AeAensaZgsbNwkrbXodeIupFO3by7I8c96QIg==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=nvidia.com; dmarc=pass action=none header.from=nvidia.com;
+ dkim=pass header.d=nvidia.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=Nvidia.com;
+ s=selector2;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=a16/qaFdGNEBYcdBj6drxtGAJCxX9Z69sglkYjOtSTY=;
+ b=jn5sYJDq1el8F/J1UOL7ZhoTfsnq+MT8pXHsf9Rkf6wYi/HEMTUhNFv6/gN+kf1gUIa6INUQK5ES+8IuJRNLFVmFsF1w6UL/rqwfKqkBBmjc90oS9IONfDdgAwEOiscQYz0Dq3A4JnP2/X+imhDqeUJNYY14u9LvdmDDU1wuJSEQ6J4wlxEgGoX7xnpjypL1/XRiPxIzjifZqTdaDu6/qfPKmI1nv3ooNpHXrSnaKdq8MK4jnRtdoLll8pZndXYUvbglQeFrEwtG5KZ1lxSFmXR0caxG+evGGmQx+wic9MTvoi5OyH+SZH0SgLgWrY2BOeUybpTvjVYQ5F1S3lpDYQ==
+Received: from IA0PR12MB7555.namprd12.prod.outlook.com (2603:10b6:208:43d::5)
+ by MN0PR12MB5954.namprd12.prod.outlook.com (2603:10b6:208:37d::15)
+ with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.71.15; Tue, 2 Jun 2026
+ 10:40:14 +0000
+Received: from IA0PR12MB7555.namprd12.prod.outlook.com
+ ([fe80::5a27:a8d9:43b7:3b8d]) by IA0PR12MB7555.namprd12.prod.outlook.com
+ ([fe80::5a27:a8d9:43b7:3b8d%3]) with mapi id 15.21.0071.014; Tue, 2 Jun 2026
+ 10:40:14 +0000
+From: Shameer Kolothum Thodi <skolothumtho@nvidia.com>
+To: Manish Honap <mhonap@nvidia.com>, Jonathan Cameron <jic23@kernel.org>
+CC: Alex Williamson <alwilliamson@nvidia.com>, Ankit Agrawal
+ <ankita@nvidia.com>, "mst@redhat.com" <mst@redhat.com>, "imammedo@redhat.com"
+ <imammedo@redhat.com>, "anisinha@redhat.com" <anisinha@redhat.com>,
+ "eric.auger@redhat.com" <eric.auger@redhat.com>, "peter.maydell@linaro.org"
+ <peter.maydell@linaro.org>, "shannon.zhaosl@gmail.com"
+ <shannon.zhaosl@gmail.com>, "jonathan.cameron@huawei.com"
+ <jonathan.cameron@huawei.com>, "fan.ni@samsung.com" <fan.ni@samsung.com>,
+ "pbonzini@redhat.com" <pbonzini@redhat.com>, "richard.henderson@linaro.org"
+ <richard.henderson@linaro.org>, "marcel.apfelbaum@gmail.com"
+ <marcel.apfelbaum@gmail.com>, "clg@redhat.com" <clg@redhat.com>,
+ "cohuck@redhat.com" <cohuck@redhat.com>, "dave.jiang@intel.com"
+ <dave.jiang@intel.com>, "alejandro.lucero-palau@amd.com"
+ <alejandro.lucero-palau@amd.com>, Vikram Sethi <vsethi@nvidia.com>, Neo Jia
+ <cjia@nvidia.com>, "Tarun Gupta (SW-GPU)" <targupta@nvidia.com>, Zhi Wang
+ <zhiw@nvidia.com>, Krishnakant Jaju <kjaju@nvidia.com>,
+ "linux-cxl@vger.kernel.org" <linux-cxl@vger.kernel.org>,
+ "kvm@vger.kernel.org" <kvm@vger.kernel.org>, "qemu-devel@nongnu.org"
+ <qemu-devel@nongnu.org>, "qemu-arm@nongnu.org" <qemu-arm@nongnu.org>
+Subject: RE: [RFC 0/9] QEMU: CXL Type-2 device passthrough via vfio-pci
+Thread-Topic: [RFC 0/9] QEMU: CXL Type-2 device passthrough via vfio-pci
+Thread-Index: AQHc1nGWvPFiki6WBEiAZDHEC2g8trYVdZwAgBQVvoCAAbph0A==
+Date: Tue, 2 Jun 2026 10:40:13 +0000
+Message-ID: <IA0PR12MB75555B8E9FDD4546F383663AAB122@IA0PR12MB7555.namprd12.prod.outlook.com>
+References: <20260427181235.3003865-1-mhonap@nvidia.com>
+ <20260519141314.3eda68bc@jic23-huawei>
+ <IA1PR12MB90303161DD09A1E248852728BD152@IA1PR12MB9030.namprd12.prod.outlook.com>
+In-Reply-To: <IA1PR12MB90303161DD09A1E248852728BD152@IA1PR12MB9030.namprd12.prod.outlook.com>
+Accept-Language: en-US, en-GB
+Content-Language: en-US
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+authentication-results: dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=nvidia.com;
+x-ms-publictraffictype: Email
+x-ms-traffictypediagnostic: IA0PR12MB7555:EE_|MN0PR12MB5954:EE_
+x-ms-office365-filtering-correlation-id: bba82ade-0aa1-448d-505a-08dec093544d
+x-ms-exchange-senderadcheck: 1
+x-ms-exchange-antispam-relay: 0
+x-microsoft-antispam: BCL:0;
+ ARA:13230040|376014|366016|7416014|1800799024|38070700021|18002099003|22082099003|6133799003|56012099006|11063799006|4143699003;
+x-microsoft-antispam-message-info: pEqqWMbz2kfUBIsW8Nn5h/0kK6Uxfj6Cpbj4YwOk70teO/fTzrbJ/ADCgPoSsByz7xBLAibcNjcG3YO1VqRi3+4VNBq/C+VIdcTc0PxHUrjMjFxF2TapaM6K73gNpsJ1i8JQni4NNXkwnjLJzk8B86kxYwElxiAFfg71mBT4o9XRJpZpXFveePi7TZBmAkYqsNgqL7M0+J8CoZ5mMOmTjpUYu6UBbKrikTq1bUoMV+fhwE4R9/kU00m2wPUoXyjPdux1Zfdn2AVAmJmkJsiXwaGFLZXeRzof2AoUOW/5omh1UmDeaM1s1k1SYIn52lMBiuNbvCRvDXbM93PUli7rP/7aKnCuIL3KojyUe7pqSQpW6eu9SeTjGfX0rxhItSKPxf63vX8AKWkRzuTj7xMq64puQPC3GijKxAgTXDocwA6z2MOgSYPoUsnloxDz9oMlW4l6UVSxW/oWfNhsLsXA335iZGFTvcW3+y71QEDtvK263cO2CmA+xt3kAoG8DTwU415bVdzkTovcMPotO2FO64zQaoXtaM6tsS5rk78p+zexYQpTYBEOrCEH3a+Kfq5GVAoJ0sZJYw0iULtFWcjdoriYKRqd5IVGkaR04aGYzbFNkvKK1/Zl4ngVmUEiURFyamOFH1Ov+/xKUYCU7PWkS2JLzIwiFyoF1ZMSMR0hM0gfwo1Zmz8lDElQCmzlTPpKGAkZX9ohwisQ9SKlF6w3Sp5LIMOppAwJbi0EhR+xCdoLuExMdj2Szen6BfMC90Qv
+x-forefront-antispam-report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
+ IPV:NLI; SFV:NSPM; H:IA0PR12MB7555.namprd12.prod.outlook.com; PTR:; CAT:NONE;
+ SFS:(13230040)(376014)(366016)(7416014)(1800799024)(38070700021)(18002099003)(22082099003)(6133799003)(56012099006)(11063799006)(4143699003);
+ DIR:OUT; SFP:1101; 
+x-ms-exchange-antispam-messagedata-chunkcount: 1
+x-ms-exchange-antispam-messagedata-0: =?us-ascii?Q?7umbB1NJdFQ/rEcx+tGS3mMijJNhu/xDJdEHzHQTd1JKRiAzL0VrJhRcDKcq?=
+ =?us-ascii?Q?y288whtEE77NYZC56TncDLSczdIAp8zoePrsC2N7HOCdiC14h6yuncLYknEP?=
+ =?us-ascii?Q?3fM3PjDkfDBNoGBlQjI5q9bdN0/lU6aIZ9OonlJR6NDJwS/MpwSvpugOUCf+?=
+ =?us-ascii?Q?YdO2KN4M2qJczrD4NxG7FOgFRhX7b983byNVuP07tNAM8MoUmZWjxNtScBJL?=
+ =?us-ascii?Q?79KqE5/n2YvSUukfRC4vEyJl+DX3WiusWprIgBYiq3BsZP7H9Cp3/7ruiuIe?=
+ =?us-ascii?Q?B68h9xdPUo/pue2i8YK2vkWHLGcFe1SDE0BhybASZaIQ5gsilragE2NKDKrk?=
+ =?us-ascii?Q?NU2u/eS6oWD0r4Lv58WBTJ2tdGZUS+P/uVKuhQTPh5BSo0DZVllEQyb3WnRe?=
+ =?us-ascii?Q?1v0Wez2Oir71mLoABaIXBTQtUwp10pRMhqE+otxEGxft0dQmPes1Z8J8+wz+?=
+ =?us-ascii?Q?XppFjXSTdky7f1NA4MxgRmWFsfJuzr5A/b3K06E1v3iZqrtxBv+WYxsuEJnx?=
+ =?us-ascii?Q?J8bqB2y9nMMsFmLY5VYK1n1H4a/x5qBUgkgXXHfpbei/pB+CwyfL3BZi6+hx?=
+ =?us-ascii?Q?/BVAFZdCoAabtVepzULA3AObCqSsBUTgx4a0sCTsNHyMGuiiJtZEYjfvYpfU?=
+ =?us-ascii?Q?tCI4WPxL2KBzXUet3JTV732iPej4gTDeIb8R/Tl/qNFgMTSyqlQuaIOk75s0?=
+ =?us-ascii?Q?BsWf43/vI2FxzV3wp3c3IeSob3Ad+2fhpPUprsGvT3ic0pOQyfFCX/W8qDyL?=
+ =?us-ascii?Q?MXNM7XkKzgVMY/+GE1VoTbil2jThiPv/alcxen7OCpo3ZszRz5V5vW0yI15g?=
+ =?us-ascii?Q?KYR3WkNVOqpirPqCLQLzptsB44GBbnCiy/yy3jkSatOkjM55yanICV+CHxVH?=
+ =?us-ascii?Q?dE3m63YovZfkwckt6lCG148UQMcurqLfReOz9YE0PMNJEhV/ZkvCHZwMaN+Z?=
+ =?us-ascii?Q?viyL28cED5dcACCbK8lMYmoEo+0ZzCOcrHyLTTp0p5gVcbZtBxyrSSaMWaEn?=
+ =?us-ascii?Q?gkYzQ/XABP/2oliTdccP7I8l8lAgDTr2kazeeGnAPiN3sA2unD6yI7gQVyMl?=
+ =?us-ascii?Q?w+blF+ElsmRLGUi0rEm5Zdq0/UfUJZfvY7x8mKF3lZDU5SM04Ig6lJqmiuyu?=
+ =?us-ascii?Q?Wj14RGzzUa96AbHcoVSYOt6wSZRpPcyYcTPo+xw/j+324jmDI2SGtf3rVJiy?=
+ =?us-ascii?Q?VmD4spMQzYHgtXjLZgISajmToHuMZJ8TXRZRs8bLS9EVawZsWZ9v7RiU+pW9?=
+ =?us-ascii?Q?vIcaKvfqg1ojmXwn6RjvygEJLw2qKapkcvv3FbnSxTnyMg4g5ivoca8tSsh6?=
+ =?us-ascii?Q?FsRCpF+MSTmhSWfva/ScUk+WKvDp59Q3rWxdS3V7m/7K6OrKHny2Wexdm2V7?=
+ =?us-ascii?Q?HDebaL187LcQU3Sm8AT0dItE413nN4kGaFDMFr7eTPsO+2Vsjt5pkJsYVWH2?=
+ =?us-ascii?Q?wzAwKLkI9eNxzPiJuciE1cPbeRsrwyS+KZ609xNMdvAkwbqkQRbiQ/LEOKdU?=
+ =?us-ascii?Q?cIO8d/juLYge7WKgmdOiJ3rNuDU3UZaX5LkYzPRfMcfMBU8FYONITrg01G+W?=
+ =?us-ascii?Q?Q99D4cOODw0BHlw+N58x+t2qDv4WfcY40T+8ERXuBHsFXVVkjcju1i7f1ScK?=
+ =?us-ascii?Q?kqZF95zExeT9e+m2ezGUvLiKIjTLBgYHOE0JPWXOhdQsattlTL/lq8wLuJGq?=
+ =?us-ascii?Q?zU8rk1JrpgtiWG4iKht1xhrTFwCCtLF5x9ZMmd/lLIpKdX75L3QRXINNkclU?=
+ =?us-ascii?Q?YnjP+xxe4Q=3D=3D?=
+Content-Type: text/plain; charset="us-ascii"
+Content-Transfer-Encoding: quoted-printable
 MIME-Version: 1.0
-References: <874ijtz038.fsf@draig.linaro.org>
- <CADSE00+RdBUhFVBDSXtVd1J5SaccqWy+RBxqnxuLKUYcitFMPw@mail.gmail.com>
- <20260601083628-mutt-send-email-mst@kernel.org>
- <CADSE00+kRnEC08LLVu6H065u2KaxBm-KnSN_8y6+964-FLbJMA@mail.gmail.com>
- <20260601090953-mutt-send-email-mst@kernel.org>
- <CAJSP0QV4W=5MJsSGggACv-tqxDtiieKc0YzEn8t-R=RD94KJaQ@mail.gmail.com>
- <CADSE00+ziHc8W2FqNT-aJU0Lt4sZ=NfQLc65m16vpT++pZM+xQ@mail.gmail.com>
- <20260601151815.GC411459@fedora>
- <20260601160352-mutt-send-email-mst@kernel.org>
-In-Reply-To: <20260601160352-mutt-send-email-mst@kernel.org>
-From: Dorinda Bassey <dbassey@redhat.com>
-Date: Tue, 2 Jun 2026 12:38:27 +0200
-X-Gm-Features: AVHnY4LwCPFkOEUqnK9xhjnkZufXzEPxXFeGjqHBNfHWEOFKaTSPvElmkH6Bxhc
-Message-ID: <CACzuRyxedVMHNGkRf7AVyPWUTMgBMa6_DBnSHn+V6H7wN7XzWw@mail.gmail.com>
-Subject: Re: Where should the vhost-user specification live?
-To: "Michael S. Tsirkin" <mst@redhat.com>
-Cc: Stefan Hajnoczi <stefanha@redhat.com>, Albert Esteve <aesteve@redhat.com>, 
- Stefan Hajnoczi <stefanha@gmail.com>,
- =?UTF-8?B?QWxleCBCZW5uw6ll?= <alex.bennee@linaro.org>, 
- qemu-devel <qemu-devel@nongnu.org>, virtio-comment@lists.linux.dev, 
- dev@lists.cloudhypervisor.org, rust-vmm@lists.opendev.org, 
- Stefano Garzarella <sgarzare@redhat.com>,
- Manos Pitsidianakis <manos.pitsidianakis@linaro.org>, 
- Demi Marie Obenour <demi@invisiblethingslab.com>, Alyssa Ross <hi@alyssa.is>, 
- Mark Burton <MBURTON@qti.qualcomm.com>, Matti Moell <matti@qti.qualcomm.com>, 
- Viresh Kumar <viresh.kumar@linaro.org>, Sergio Lopez <slp@redhat.com>, 
- Vishwanath Seshagiri <vishs@meta.com>, Rob Bradford <rbradford@meta.com>, 
- Zhengyu Zhao <zhaozhengyu@bytedance.com>,
- "Jorge E. Moreira" <jemoreira@google.com>
-Content-Type: multipart/alternative; boundary="00000000000026eab7065342ea29"
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=dbassey@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
+X-OriginatorOrg: Nvidia.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-AuthSource: IA0PR12MB7555.namprd12.prod.outlook.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: bba82ade-0aa1-448d-505a-08dec093544d
+X-MS-Exchange-CrossTenant-originalarrivaltime: 02 Jun 2026 10:40:14.0226 (UTC)
+X-MS-Exchange-CrossTenant-fromentityheader: Hosted
+X-MS-Exchange-CrossTenant-id: 43083d15-7273-40c1-b7db-39efd9ccc17a
+X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
+X-MS-Exchange-CrossTenant-userprincipalname: FSkgvHjLVswkYWMcc79FzmyF/WsWYirHwXgjNw7e2zyDOFUkxicqVyAu2uHrH63mul6RdNvhU2HREmKE+rDLlg==
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: MN0PR12MB5954
+Received-SPF: permerror client-ip=2a01:111:f403:c007::2;
+ envelope-from=skolothumtho@nvidia.com;
+ helo=MW6PR02CU001.outbound.protection.outlook.com
 X-Spam_score_int: -24
 X-Spam_score: -2.5
 X-Spam_bar: --
 X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.445,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- HTML_MESSAGE=0.001, RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001,
- RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_PASS=-0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_HELO_NONE=0.001, SPF_NONE=0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -154,441 +158,51 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
---00000000000026eab7065342ea29
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-
-Hi All,
-
-Following up on this discussion: Albert, Stefano and I are organizing
-a BoF session on vhost-user for Linux Plumbers Conference, so this
-thread is very timely.
-
-> I get a sense that this is about politics in the end. Do people feel
-> they are not represented and would like to have more influence in the
-> vhost-user spec?
-
-I think the core issue is that vhost-user has grown beyond just QEMU.
-The spec is now implemented by rust-vmm, cloud-hypervisor, crosvm,
-libkrun, and others. All of these projects depend on the spec as their
-source of truth for interoperability.
-There are also concrete technical friction points. Let me share some
-examples from rust-vmm:
-
-rust-vmm SHMEM PR https://github.com/rust-vmm/vhost/pull/251
-We had to wait for QEMU spec acceptance before merging the
-implementation. The spec update was delayed with the comment
-"should get picked for the next round" after QEMU freeze.
-
-rust-vmm PR https://github.com/rust-vmm/vhost/pull/339 : was
-kept as draft "waiting for QEMU spec changes to be finalized."
-It was eventually merged when they decided the spec was
-"stable enough" even though QEMU hadn't finalized it yet,
-which felt awkward.
-
-When multiple independent implementations wait on one
-project's release cycles, it raises the question of whether the
-governance model matches the ecosystem reality.
-
-> Why is the current system not neutral and how will the new system solve
-> that?
-
-For example the virtio-spec has OASIS governance where changes
-are proposed and merged independently of any implementation's release
-cycle. Whether that's the right model for vhost-user is worth discussing.
-
-> You bring up project neutrality and a model where Michael is no longer
-> the sole maintainer. It will be necessary to propose a concrete roadmap
-> and also to explain the concerns about neutrality more so it's clear
-> they won't be an issue anymore in the future system.
-
-You're right that we need a concrete roadmap before making changes.
-More reason to discuss in the BoF - to work this out with the people
-actually doing the work: you, Michael, Albert, and others who've been
-deeply involved. Maybe in the end the solution might be to "improve
-QEMU's process" (like Michael's submodule suggestion) rather than
-"move the spec." or something else? that's what we need to figure out
-together.
-
-Would folks here be interested in joining the discussion at Plumbers?
-
-BR,
-Dorinda.
 
 
-On Mon, Jun 1, 2026 at 10:05=E2=80=AFPM Michael S. Tsirkin <mst@redhat.com>=
- wrote:
+> -----Original Message-----
+> From: Manish Honap <mhonap@nvidia.com>
+> Sent: 01 June 2026 08:56
+> To: Jonathan Cameron <jic23@kernel.org>
+> Cc: Alex Williamson <alwilliamson@nvidia.com>; Shameer Kolothum Thodi
+> <skolothumtho@nvidia.com>; Ankit Agrawal <ankita@nvidia.com>;
+> mst@redhat.com; imammedo@redhat.com; anisinha@redhat.com;
+> eric.auger@redhat.com; peter.maydell@linaro.org;
+> shannon.zhaosl@gmail.com; jonathan.cameron@huawei.com;
+> fan.ni@samsung.com; pbonzini@redhat.com; richard.henderson@linaro.org;
+> marcel.apfelbaum@gmail.com; clg@redhat.com; cohuck@redhat.com;
+> dave.jiang@intel.com; alejandro.lucero-palau@amd.com; Vikram Sethi
+> <vsethi@nvidia.com>; Neo Jia <cjia@nvidia.com>; Tarun Gupta (SW-GPU)
+> <targupta@nvidia.com>; Zhi Wang <zhiw@nvidia.com>; Krishnakant Jaju
+> <kjaju@nvidia.com>; linux-cxl@vger.kernel.org; kvm@vger.kernel.org; qemu-
+> devel@nongnu.org; qemu-arm@nongnu.org; Manish Honap
+> <mhonap@nvidia.com>
+> Subject: RE: [RFC 0/9] QEMU: CXL Type-2 device passthrough via vfio-pci
+>=20
 
-> On Mon, Jun 01, 2026 at 11:18:15AM -0400, Stefan Hajnoczi wrote:
-> > On Mon, Jun 01, 2026 at 04:27:46PM +0200, Albert Esteve wrote:
-> > > On Mon, Jun 1, 2026 at 3:51=E2=80=AFPM Stefan Hajnoczi <stefanha@gmai=
-l.com>
-> wrote:
-> > > >
-> > > > On Mon, Jun 1, 2026 at 9:12=E2=80=AFAM Michael S. Tsirkin <mst@redh=
-at.com>
-> wrote:
-> > > > >
-> > > > > On Mon, Jun 01, 2026 at 03:05:50PM +0200, Albert Esteve wrote:
-> > > > > > On Mon, Jun 1, 2026 at 2:39=E2=80=AFPM Michael S. Tsirkin <
-> mst@redhat.com> wrote:
-> > > > > > >
-> > > > > > > On Mon, Jun 01, 2026 at 02:32:11PM +0200, Albert Esteve wrote=
-:
-> > > > > > > >  But also because, in my opinion, separating
-> > > > > > > > the specification would improve development agility by
-> decoupling
-> > > > > > > > specification development from QEMU's review and release
-> cycles.
-> > > > > > >
-> > > > > > > Generally for QEMU this will be less agility, unless I
-> misunderstand
-> > > > > > > what is proposed)
-> > > > > > >
-> > > > > > > Because presumably there will need to be spec releases then?
-> > > > > > >
-> > > > > > > So
-> > > > > > >         new feature -> spec tree -> spec release -> qemu
-> implementation -> qemu release
-> > > > > > >
-> > > > > > > is surely longer that what we have now.
-> > > > > >
-> > > > > > I see your point.
-> > > > > >
-> > > > > > However, we do not really need to introduce a heavy release
-> management
-> > > > > > layer. We could just operate it as a living document, where the
-> main
-> > > > > > branch is the authoritative source of truth.
-> > > > > >
-> > > > > > For the workflow, development doesn't have to be strictly
-> sequential
-> > > > > > either. A contributor can propose the spec update while working
-> on the
-> > > > > > implementation, much like we do for VirtIO updates. Actually,
-> this way
-> > > > > > one update/change supports the other.
-> > > > > >
-> > > > > > I guess my point is that a dedicated repository could lower the
-> > > > > > barrier for new changes AND keep QEMU's own development speed
-> mostly
-> > > > > > unaffected.
-> > > > > >
-> > > > > > BR,
-> > > > > > Albert
-> > > > >
-> > > > > Something something submodule? Possibly. If you want to make
-> progress
-> > > > > on this, pls think of the process, try it out.
-> > > >
-> > > > If I understand correctly, the motivation for moving the spec
-> > > > somewhere else is to replace the email patch review process with a
-> git
-> > > > forge review process?
-> > > >
-> > > > This seems like a superficial change and is not worth in my opinion
-> if
-> > > > you consider we'll have to redirect from the old spec location and
-> > > > move the community over to the new repo.
-> > >
-> > > The core issue from my perspective is project neutrality and
-> > > decoupling lifecycles.
-> > >
-> > > Currently, protocol updates are tied to QEMU's tree rules and release
-> > > freezes for example. Since these changes also affect other projects
-> > > (like rust-vmm, crosvm, DPDK, etc.), separating them may make sense
-> > > and could streamline the process.
+[...]
+
+> > > pxb-cxl bridges had no _DSM method. Without _DSM function 5 the OS
+> > > defaults to treating PCI configuration as reassignable.
 > >
-> > I don't see a reason to block vhost-user.rst changes during QEMU's
-> > freeze. If Michael sent a vhost-user spec pull request during freeze I
-> > would merge it.
-> >
-> > > >We could actually lose spec
-> > > > change reviewers in the process either because they don't know what=
-'s
-> > > > going on or decide that they prefer to spend time elsewhere when
-> faced
-> > > > with switching processes (the people who review and participate in
-> > > > discussion do so out of personal interest and as far as I'm aware n=
-o
-> > > > one is employed to work on vhost-user as their #1 priority).
-> > >
-> > > This is a fair concern. I hope we maintain reviewer engagement. But i=
-t
-> > > could also be argued that contributors from other communities may be
-> > > more comfortable with a dedicated project-neutral home. It could well
-> > > go both ways, but it also represents an opportunity to grow.
-> > >
-> > > >
-> > > > Having said that, here is what I imagine it would involve:
-> > > >
-> > > > 1. Michael creates a new repo on a git forge (if he wants it to be
-> > > > under the GitLab qemu-project organization I can help with creating
-> > > > the repo, otherwise he creates a new organization and repo).
-> > > > 2. Discussion happens in Issues.
-> > > > 3. Spec changes are proposed in Merge Requests. Michael merges them
-> > > > once consensus has been reached.
-> > >
-> > > Mostly yes, though we wouldn't necessarily need Michael as the sole
-> > > gatekeeper. We could invite co-maintainers from other key projects to
-> > > share the reviewer load.
-> > >
-> > > Also I'd want to clarify that although I am advocating for this
-> > > change, I do not claim to have the definitive roadmap. I am just
-> > > sharing my view on why this could be a positive evolution. Consensus
-> > > may end up being to remain with the current status quo, or any of the
-> > > other options proposed by Alex.
-> >
-> > I get a sense that this is about politics in the end. Do people feel
-> > they are not represented and would like to have more influence in the
-> > vhost-user spec?
-> >
-> > You bring up project neutrality and a model where Michael is no longer
-> > the sole maintainer. It will be necessary to propose a concrete roadmap
-> > and also to explain the concerns about neutrality more so it's clear
-> > they won't be an issue anymore in the future system.
-> >
-> > Why is the current system not neutral and how will the new system solve
-> > that?
-> >
-> > Who should be a co-maintainer?
-> >
-> > Stefan
->
-> And also, qemu currently acts like a reference implementation.
-> Which is something.
->
-> --
-> MST
->
->
+> > That one is annoyingly controversial. I see you have Shameer's patch
+> > so he can go into history of why. I tried to land that in the past and
+> > I was far from the first.
+>=20
+> okay, I will check this part for additional details.
 
---00000000000026eab7065342ea29
-Content-Type: text/html; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+I guess the concern here is the QEMU regression reported with certain
+devices with legacy IO port BARs having issues on arm64 when _DSM #5 is
+specified:
+https://lore.kernel.org/all/20210724185234.GA2265457@roeck-us.net/
 
-<div dir=3D"ltr">Hi All,<br><br>Following up on this discussion: Albert, St=
-efano and I are organizing<br>a BoF session on vhost-user for Linux Plumber=
-s Conference, so this<br>thread is very timely.<br><br>&gt; I get a sense t=
-hat this is about politics in the end. Do people feel<br>&gt; they are not =
-represented and would like to have more influence in the<br>&gt; vhost-user=
- spec?<br><br>I think the core issue is that vhost-user has grown beyond ju=
-st QEMU.<br>The spec is now implemented by rust-vmm, cloud-hypervisor, cros=
-vm,<br>libkrun, and others. All of these projects depend on the spec as the=
-ir<br>source of truth for interoperability.<br>There are also concrete tech=
-nical friction points. Let me share some<br>examples from rust-vmm:<br><br>=
-rust-vmm SHMEM PR <a href=3D"https://github.com/rust-vmm/vhost/pull/251">ht=
-tps://github.com/rust-vmm/vhost/pull/251</a><br>We had to wait for QEMU spe=
-c acceptance before merging the<br>implementation. The spec update was dela=
-yed with the comment<br>&quot;should get picked for the next round&quot; af=
-ter QEMU freeze.<br><br>rust-vmm PR <a href=3D"https://github.com/rust-vmm/=
-vhost/pull/339">https://github.com/rust-vmm/vhost/pull/339</a> : was<br>kep=
-t as draft &quot;waiting for QEMU spec changes to be finalized.&quot; <br>I=
-t was eventually merged when they decided the spec was<br>&quot;stable enou=
-gh&quot; even though QEMU hadn&#39;t finalized it yet,<br>which felt awkwar=
-d.<br><br>When multiple independent implementations wait on one<br>project&=
-#39;s release cycles, it raises the question of whether the<br>governance m=
-odel matches the ecosystem reality.<br><br>&gt; Why is the current system n=
-ot neutral and how will the new system solve<br>&gt; that?<br><br>For examp=
-le the virtio-spec has OASIS governance where changes<br>are proposed and m=
-erged independently of any implementation&#39;s release<br>cycle. Whether t=
-hat&#39;s the right model for vhost-user is worth discussing.<br><br>&gt; Y=
-ou bring up project neutrality and a model where Michael is no longer<br>&g=
-t; the sole maintainer. It will be necessary to propose a concrete roadmap<=
-br>&gt; and also to explain the concerns about neutrality more so it&#39;s =
-clear<br>&gt; they won&#39;t be an issue anymore in the future system.<br><=
-br>You&#39;re right that we need a concrete roadmap before making changes.<=
-br>More reason to discuss in the BoF - to work this out with the people<br>=
-actually doing the work: you, Michael, Albert, and others who&#39;ve been<b=
-r>deeply involved. Maybe in the end the solution might be to &quot;improve<=
-br>QEMU&#39;s process&quot; (like Michael&#39;s submodule suggestion) rathe=
-r than <br><div>&quot;move the spec.&quot; or something else? that&#39;s wh=
-at we need to figure out</div><div>together.</div><br><div>Would folks here=
- be interested in joining the discussion at Plumbers?</div><div><br></div><=
-div>BR,</div><div>Dorinda.</div></div><br><br><div class=3D"gmail_quote gma=
-il_quote_container"><div dir=3D"ltr" class=3D"gmail_attr">On Mon, Jun 1, 20=
-26 at 10:05=E2=80=AFPM Michael S. Tsirkin &lt;<a href=3D"mailto:mst@redhat.=
-com">mst@redhat.com</a>&gt; wrote:<br></div><blockquote class=3D"gmail_quot=
-e" style=3D"margin:0px 0px 0px 0.8ex;border-left:1px solid rgb(204,204,204)=
-;padding-left:1ex">On Mon, Jun 01, 2026 at 11:18:15AM -0400, Stefan Hajnocz=
-i wrote:<br>
-&gt; On Mon, Jun 01, 2026 at 04:27:46PM +0200, Albert Esteve wrote:<br>
-&gt; &gt; On Mon, Jun 1, 2026 at 3:51=E2=80=AFPM Stefan Hajnoczi &lt;<a hre=
-f=3D"mailto:stefanha@gmail.com" target=3D"_blank">stefanha@gmail.com</a>&gt=
-; wrote:<br>
-&gt; &gt; &gt;<br>
-&gt; &gt; &gt; On Mon, Jun 1, 2026 at 9:12=E2=80=AFAM Michael S. Tsirkin &l=
-t;<a href=3D"mailto:mst@redhat.com" target=3D"_blank">mst@redhat.com</a>&gt=
-; wrote:<br>
-&gt; &gt; &gt; &gt;<br>
-&gt; &gt; &gt; &gt; On Mon, Jun 01, 2026 at 03:05:50PM +0200, Albert Esteve=
- wrote:<br>
-&gt; &gt; &gt; &gt; &gt; On Mon, Jun 1, 2026 at 2:39=E2=80=AFPM Michael S. =
-Tsirkin &lt;<a href=3D"mailto:mst@redhat.com" target=3D"_blank">mst@redhat.=
-com</a>&gt; wrote:<br>
-&gt; &gt; &gt; &gt; &gt; &gt;<br>
-&gt; &gt; &gt; &gt; &gt; &gt; On Mon, Jun 01, 2026 at 02:32:11PM +0200, Alb=
-ert Esteve wrote:<br>
-&gt; &gt; &gt; &gt; &gt; &gt; &gt;=C2=A0 But also because, in my opinion, s=
-eparating<br>
-&gt; &gt; &gt; &gt; &gt; &gt; &gt; the specification would improve developm=
-ent agility by decoupling<br>
-&gt; &gt; &gt; &gt; &gt; &gt; &gt; specification development from QEMU&#39;=
-s review and release cycles.<br>
-&gt; &gt; &gt; &gt; &gt; &gt;<br>
-&gt; &gt; &gt; &gt; &gt; &gt; Generally for QEMU this will be less agility,=
- unless I misunderstand<br>
-&gt; &gt; &gt; &gt; &gt; &gt; what is proposed)<br>
-&gt; &gt; &gt; &gt; &gt; &gt;<br>
-&gt; &gt; &gt; &gt; &gt; &gt; Because presumably there will need to be spec=
- releases then?<br>
-&gt; &gt; &gt; &gt; &gt; &gt;<br>
-&gt; &gt; &gt; &gt; &gt; &gt; So<br>
-&gt; &gt; &gt; &gt; &gt; &gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0new feature =
--&gt; spec tree -&gt; spec release -&gt; qemu implementation -&gt; qemu rel=
-ease<br>
-&gt; &gt; &gt; &gt; &gt; &gt;<br>
-&gt; &gt; &gt; &gt; &gt; &gt; is surely longer that what we have now.<br>
-&gt; &gt; &gt; &gt; &gt;<br>
-&gt; &gt; &gt; &gt; &gt; I see your point.<br>
-&gt; &gt; &gt; &gt; &gt;<br>
-&gt; &gt; &gt; &gt; &gt; However, we do not really need to introduce a heav=
-y release management<br>
-&gt; &gt; &gt; &gt; &gt; layer. We could just operate it as a living docume=
-nt, where the main<br>
-&gt; &gt; &gt; &gt; &gt; branch is the authoritative source of truth.<br>
-&gt; &gt; &gt; &gt; &gt;<br>
-&gt; &gt; &gt; &gt; &gt; For the workflow, development doesn&#39;t have to =
-be strictly sequential<br>
-&gt; &gt; &gt; &gt; &gt; either. A contributor can propose the spec update =
-while working on the<br>
-&gt; &gt; &gt; &gt; &gt; implementation, much like we do for VirtIO updates=
-. Actually, this way<br>
-&gt; &gt; &gt; &gt; &gt; one update/change supports the other.<br>
-&gt; &gt; &gt; &gt; &gt;<br>
-&gt; &gt; &gt; &gt; &gt; I guess my point is that a dedicated repository co=
-uld lower the<br>
-&gt; &gt; &gt; &gt; &gt; barrier for new changes AND keep QEMU&#39;s own de=
-velopment speed mostly<br>
-&gt; &gt; &gt; &gt; &gt; unaffected.<br>
-&gt; &gt; &gt; &gt; &gt;<br>
-&gt; &gt; &gt; &gt; &gt; BR,<br>
-&gt; &gt; &gt; &gt; &gt; Albert<br>
-&gt; &gt; &gt; &gt;<br>
-&gt; &gt; &gt; &gt; Something something submodule? Possibly. If you want to=
- make progress<br>
-&gt; &gt; &gt; &gt; on this, pls think of the process, try it out.<br>
-&gt; &gt; &gt;<br>
-&gt; &gt; &gt; If I understand correctly, the motivation for moving the spe=
-c<br>
-&gt; &gt; &gt; somewhere else is to replace the email patch review process =
-with a git<br>
-&gt; &gt; &gt; forge review process?<br>
-&gt; &gt; &gt;<br>
-&gt; &gt; &gt; This seems like a superficial change and is not worth in my =
-opinion if<br>
-&gt; &gt; &gt; you consider we&#39;ll have to redirect from the old spec lo=
-cation and<br>
-&gt; &gt; &gt; move the community over to the new repo.<br>
-&gt; &gt; <br>
-&gt; &gt; The core issue from my perspective is project neutrality and<br>
-&gt; &gt; decoupling lifecycles.<br>
-&gt; &gt;<br>
-&gt; &gt; Currently, protocol updates are tied to QEMU&#39;s tree rules and=
- release<br>
-&gt; &gt; freezes for example. Since these changes also affect other projec=
-ts<br>
-&gt; &gt; (like rust-vmm, crosvm, DPDK, etc.), separating them may make sen=
-se<br>
-&gt; &gt; and could streamline the process.<br>
-&gt; <br>
-&gt; I don&#39;t see a reason to block vhost-user.rst changes during QEMU&#=
-39;s<br>
-&gt; freeze. If Michael sent a vhost-user spec pull request during freeze I=
-<br>
-&gt; would merge it.<br>
-&gt; <br>
-&gt; &gt; &gt;We could actually lose spec<br>
-&gt; &gt; &gt; change reviewers in the process either because they don&#39;=
-t know what&#39;s<br>
-&gt; &gt; &gt; going on or decide that they prefer to spend time elsewhere =
-when faced<br>
-&gt; &gt; &gt; with switching processes (the people who review and particip=
-ate in<br>
-&gt; &gt; &gt; discussion do so out of personal interest and as far as I&#3=
-9;m aware no<br>
-&gt; &gt; &gt; one is employed to work on vhost-user as their #1 priority).=
-<br>
-&gt; &gt; <br>
-&gt; &gt; This is a fair concern. I hope we maintain reviewer engagement. B=
-ut it<br>
-&gt; &gt; could also be argued that contributors from other communities may=
- be<br>
-&gt; &gt; more comfortable with a dedicated project-neutral home. It could =
-well<br>
-&gt; &gt; go both ways, but it also represents an opportunity to grow.<br>
-&gt; &gt; <br>
-&gt; &gt; &gt;<br>
-&gt; &gt; &gt; Having said that, here is what I imagine it would involve:<b=
-r>
-&gt; &gt; &gt;<br>
-&gt; &gt; &gt; 1. Michael creates a new repo on a git forge (if he wants it=
- to be<br>
-&gt; &gt; &gt; under the GitLab qemu-project organization I can help with c=
-reating<br>
-&gt; &gt; &gt; the repo, otherwise he creates a new organization and repo).=
-<br>
-&gt; &gt; &gt; 2. Discussion happens in Issues.<br>
-&gt; &gt; &gt; 3. Spec changes are proposed in Merge Requests. Michael merg=
-es them<br>
-&gt; &gt; &gt; once consensus has been reached.<br>
-&gt; &gt; <br>
-&gt; &gt; Mostly yes, though we wouldn&#39;t necessarily need Michael as th=
-e sole<br>
-&gt; &gt; gatekeeper. We could invite co-maintainers from other key project=
-s to<br>
-&gt; &gt; share the reviewer load.<br>
-&gt; &gt;<br>
-&gt; &gt; Also I&#39;d want to clarify that although I am advocating for th=
-is<br>
-&gt; &gt; change, I do not claim to have the definitive roadmap. I am just<=
-br>
-&gt; &gt; sharing my view on why this could be a positive evolution. Consen=
-sus<br>
-&gt; &gt; may end up being to remain with the current status quo, or any of=
- the<br>
-&gt; &gt; other options proposed by Alex.<br>
-&gt; <br>
-&gt; I get a sense that this is about politics in the end. Do people feel<b=
-r>
-&gt; they are not represented and would like to have more influence in the<=
-br>
-&gt; vhost-user spec?<br>
-&gt; <br>
-&gt; You bring up project neutrality and a model where Michael is no longer=
-<br>
-&gt; the sole maintainer. It will be necessary to propose a concrete roadma=
-p<br>
-&gt; and also to explain the concerns about neutrality more so it&#39;s cle=
-ar<br>
-&gt; they won&#39;t be an issue anymore in the future system.<br>
-&gt; <br>
-&gt; Why is the current system not neutral and how will the new system solv=
-e<br>
-&gt; that?<br>
-&gt; <br>
-&gt; Who should be a co-maintainer?<br>
-&gt; <br>
-&gt; Stefan<br>
-<br>
-And also, qemu currently acts like a reference implementation.<br>
-Which is something.<br>
-<br>
--- <br>
-MST<br>
-<br>
-</blockquote></div>
+For accel SMMUv3 this is fine as we restrict the devices to vfio-pci only.
+One option, until there is a proper fix in the Linux kernel or EDK2, might
+be to maintain a checklist so that devices known to have issues are not
+attached when _DSM #5 is advertised.
 
---00000000000026eab7065342ea29--
+Thanks,
+Shameer
+
 
 
