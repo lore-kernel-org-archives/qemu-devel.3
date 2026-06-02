@@ -4,85 +4,78 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8C33ACD5BD1
-	for <qemu-devel@archiver.kernel.org>; Tue,  2 Jun 2026 14:05:36 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 62053CD6E57
+	for <qemu-devel@archiver.kernel.org>; Tue,  2 Jun 2026 14:30:55 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wUPju-0003eO-DP; Tue, 02 Jun 2026 10:05:06 -0400
+	id 1wUQ86-0001vP-K2; Tue, 02 Jun 2026 10:30:06 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <anderson@allelesecurity.com>)
- id 1wUPjs-0003dc-9F
- for qemu-devel@nongnu.org; Tue, 02 Jun 2026 10:05:04 -0400
-Received: from mail-vs1-xe31.google.com ([2607:f8b0:4864:20::e31])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <anderson@allelesecurity.com>)
- id 1wUPjq-0002Ob-2K
- for qemu-devel@nongnu.org; Tue, 02 Jun 2026 10:05:03 -0400
-Received: by mail-vs1-xe31.google.com with SMTP id
- ada2fe7eead31-6cfdce656bfso968693137.3
- for <qemu-devel@nongnu.org>; Tue, 02 Jun 2026 07:05:01 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=allelesecurity.com; s=google; t=1780409101; x=1781013901; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=CmSaH4fUuZZEN3sgO5R99mha2OHiYvLyU1oJPcEKSh4=;
- b=ngQ2hmpkXFCSXbHeABz5Rm+30292kSoBpOpYAe4IGKvhg2A92HJxnum21YQx4BuDZB
- 0Tdw1M+cwIdxVOZHy25i6PPJ/4QmuTpmRkMHbCAQh04wZqiCyJe/PgKBnxZld7ORJF1v
- VtkUXtKp/VK/x0lOYSMETgJgpI+s/eOmQoeXM=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1780409101; x=1781013901;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to;
- bh=CmSaH4fUuZZEN3sgO5R99mha2OHiYvLyU1oJPcEKSh4=;
- b=QcEYWpkdK++tIF0xmOUY2XlKe2WYhM4CaXAv2D9JmJptPW5HyKwYfjC3JvrBohfVzY
- JRVrbsiBuJazeKtI4629xPkqpxp+Z0cLmEM/QNSO+RepvmcSwYlRDPZDY5++a3iG3qTs
- 6uX4PkyN3mRZBdzcHSvyokSxjNRr3Iujgj/fuH58Dp2+AfH4UeV+1ZplGqnLSB0nnVXZ
- TvIM5wrsUQUyqmnAkYHogYBrLH8ZmuWdfYm/ZjeuEaQSpqZNPXPWwx+gbJx2ljwcOce+
- C7VCDGGyJAcNYEXo/cVNMd0hkKJh1g/pF9qvZ80Hd1b04pwxu9PCfRMcTEu0tm3UKWtF
- nX+Q==
-X-Gm-Message-State: AOJu0YwdPqWIc5eGxy8XYVMiskO1DIoNVDSkeARnVEA6xJacOCNq0L1E
- SoK3pXWwEnVPXAGxy748ZGPZciMo6kEBnjxXapWjAL1jhZ4jY2fyJePBG5fEKiX8FVvgLO70lSJ
- neswerYM=
-X-Gm-Gg: Acq92OFppU8XsiBKo0fi8WM1fv3c5CWMX22MGJIakB8c9f4HU9P1mJqctRtl0X6iUL+
- EoKPjXYB1Wa6/BQKfNwfIyZT5fGCi6ShVAZUcpGLAGwHTnlVVx7oAmR9qXfL7oWMTYL4r05x4Ow
- e+qohsjeZfmXB0W8M3YAUoGpy366GzXHP93aYAQdvI/zgQfBlnlGYcrwDS9PY58rIuvfFduEVSB
- IcK/K3jRSPDnYVN3mk244cSe82n+7xKirVTJoYMo8h+ogAOhGh092Q0DJIWixjogdPgjBFvkZBH
- zUhe5us1Fqqx+5cGQQMHKzMRBFclyuuJbRD5d9H8pJPhONsf64j9WGj+l5UTio2T2/n6//V933C
- nWzvRc1gqsQgsoXewRtejktqkc/xPaepFSmXa/zVNPEnYqROLFo+/qKaMdJR5qBNkDcm1hVURhE
- IoFPNxqQ/Xp6OCoj/iB0Gf2XR6JShCaq6+gojXBA==
-X-Received: by 2002:a05:6102:1526:b0:602:a9f3:74d8 with SMTP id
- ada2fe7eead31-6c69806f3bamr6319981137.25.1780409100964; 
- Tue, 02 Jun 2026 07:05:00 -0700 (PDT)
-Received: from tarski ([179.105.152.38]) by smtp.gmail.com with ESMTPSA id
- ada2fe7eead31-6d1ff3909b3sm6097602137.6.2026.06.02.07.04.58
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 02 Jun 2026 07:05:00 -0700 (PDT)
-From: Anderson Nascimento <anderson@allelesecurity.com>
-To: qemu-devel@nongnu.org, kvm@vger.kernel.org, pbonzini@redhat.com,
- zhao1.liu@intel.com, mtosatti@redhat.com
-Cc: Anderson Nascimento <anderson@allelesecurity.com>
-Subject: [PATCH v2 1/1] target/i386: Add support for KVM APERF/MPERF
- passthrough
-Date: Tue,  2 Jun 2026 11:03:47 -0300
-Message-ID: <20260602140348.774203-2-anderson@allelesecurity.com>
-X-Mailer: git-send-email 2.54.0
-In-Reply-To: <20260602140348.774203-1-anderson@allelesecurity.com>
-References: <20260602140348.774203-1-anderson@allelesecurity.com>
+ (Exim 4.90_1) (envelope-from <xiaoyao.li@intel.com>)
+ id 1wUQ83-0001uy-EV
+ for qemu-devel@nongnu.org; Tue, 02 Jun 2026 10:30:03 -0400
+Received: from mgamail.intel.com ([192.198.163.15])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <xiaoyao.li@intel.com>)
+ id 1wUQ80-00086R-Ut
+ for qemu-devel@nongnu.org; Tue, 02 Jun 2026 10:30:03 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+ d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+ t=1780410601; x=1811946601;
+ h=message-id:date:mime-version:subject:to:cc:references:
+ from:in-reply-to:content-transfer-encoding;
+ bh=L8YvFqkbXkY7MI1XsMXx3zHKnn1Htm+nUPc96z5Ivj8=;
+ b=bz8wtDT38zrZXqqnB9dDsme/wwPWsJewu8aCTeNkOQbKrM6UlmsisflV
+ H3rOz9HrwMuxEycbUUCYLnMRYhq3xty1tA+ViCruc77NP/AGVuEeeimZx
+ ZPeoGOazbHfOGcVt+AT7NqqtUQ2Z9yOpANcvMJ8Scq07YhnYTqz/7foPF
+ Gw5xQsLm5/3LibQKpvPD0sa6NdKRVH/u1/5MpaoKSRwRKD1ZtNhSV/clz
+ FcxcursOWCgmA68kkhvkVcZyObIloedWOmrRaV5j0OoTDbMPsdSivqexj
+ IUz+5I5S0qq6tcsmHM18/R3dVrL1TP1UV8tAi7u0hY8lhnzgRyx4lFbZy A==;
+X-CSE-ConnectionGUID: gJKI7wwoT0CH+21NSCFADQ==
+X-CSE-MsgGUID: gbXzF2vjRFqkYBqSalXFxQ==
+X-IronPort-AV: E=McAfee;i="6800,10657,11805"; a="81322085"
+X-IronPort-AV: E=Sophos;i="6.24,183,1774335600"; d="scan'208";a="81322085"
+Received: from fmviesa001.fm.intel.com ([10.60.135.141])
+ by fmvoesa109.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 02 Jun 2026 07:29:57 -0700
+X-CSE-ConnectionGUID: khykwD04Th2ct3q+BmLO7w==
+X-CSE-MsgGUID: KGffe6TNR02l2X7RYGAPvQ==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.24,183,1774335600"; d="scan'208";a="267789128"
+Received: from xiaoyaol-hp-g830.ccr.corp.intel.com (HELO [10.124.240.18])
+ ([10.124.240.18])
+ by smtpauth.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 02 Jun 2026 07:29:55 -0700
+Message-ID: <9133b329-fdee-45f6-b3c8-53d764e6e7fd@intel.com>
+Date: Tue, 2 Jun 2026 22:29:52 +0800
 MIME-Version: 1.0
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v4 13/13] RFC: hw/virtio: start virtio-mem guest_memfd
+ regions as shared
+To: "David Hildenbrand (Arm)" <david@kernel.org>, Peter Xu
+ <peterx@redhat.com>, =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?=
+ <marcandre.lureau@redhat.com>
+Cc: qemu-devel@nongnu.org, Paolo Bonzini <pbonzini@redhat.com>,
+ Chenyi Qiang <chenyi.qiang@intel.com>
+References: <20260504-rdm5-v4-0-bdf61e57c1e1@redhat.com>
+ <20260504-rdm5-v4-13-bdf61e57c1e1@redhat.com> <agTjb3M8ElUAlfp1@x1.local>
+ <7a9fe710-679e-4366-9eeb-3aba148773d7@intel.com>
+ <d8cbf284-7f42-4892-b50d-b21bbe91b874@kernel.org>
+Content-Language: en-US
+From: Xiaoyao Li <xiaoyao.li@intel.com>
+In-Reply-To: <d8cbf284-7f42-4892-b50d-b21bbe91b874@kernel.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::e31;
- envelope-from=anderson@allelesecurity.com; helo=mail-vs1-xe31.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+Received-SPF: pass client-ip=192.198.163.15; envelope-from=xiaoyao.li@intel.com;
+ helo=mgamail.intel.com
+X-Spam_score_int: -27
+X-Spam_score: -2.8
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.445,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ HK_RANDOM_ENVFROM=0.999, HK_RANDOM_FROM=0.999, RCVD_IN_DNSWL_MED=-2.3,
+ SPF_HELO_NONE=0.001, SPF_NONE=0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -98,119 +91,66 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Introduce support for exposing and enabling APERF/MPERF MSR passthrough
-for x86 QEMU guests when running under KVM.
+On 6/2/2026 9:50 PM, David Hildenbrand (Arm) wrote:
+> On 5/27/26 11:48, Xiaoyao Li wrote:
+>> On 5/14/2026 4:47 AM, Peter Xu wrote:
+>>> On Mon, May 04, 2026 at 04:30:19PM +0400, Marc-André Lureau wrote:
+>>>> In TDX guests, virtio-mem plug/unplug/re-plug fails because
+>>>> kvm_set_phys_mem() unconditionally sets KVM memory attributes to
+>>>> PRIVATE for all guest_memfd regions. On re-plug, the PRIVATE->PRIVATE
+>>>> transition is a no-op, so KVM doesn't re-AUG pages and the guest's
+>>>> TDG.MEM.PAGE.ACCEPT fails.
+>>>
+>>> Know little on TDX, please bare with me..
+>>>
+>>> I saw KVM does a seamcall to ADD or AUG whenever a new EPT pte is set, via
+>>> this path:
+>>>
+>>>           __tdp_mmu_set_spte_atomic
+>>>           set_external_spte_present
+>>>           tdx_sept_set_private_spte <------
+>>>
+>>> On unplug, I'm expecting with your prior patches, gmem pages will be
+>>> truncated properly, so they'll be all gone.
+>>>
+>>> Then, qemu does replug -> guest gets that event, start access page -> EPT
+>>> violation, KVM resolving page fault with __tdp_mmu_set_spte_atomic() (per
+>>> above) and a new page -> triggering AUG (not ADD, since it's post-boot).
+>>>
+>>> Could you elaborate here why AUG is missing in the first place?
+>>
+>> Peter, you analysis is correct.
+>>
+>> The reason why plug -> unplug -> re-plug fails, is QEMU fails to discard the
+>> private memory so that KVM doesn't zap the private mapping. When re-plug and
+>> guest re-accepts, KVM doesn't get involved. Not discard the private memory on
+>> unplug leads to another issue that the private memory is still accessible to the
+>> guest.
+>>
+>> But patch 11 fixes this. Patch 11 should be enough and we don't need this patch.
+>> For guest kernel side, we need to ensure the guest kernel accepts the new
+>> plugged memory, and no "start-shared" trick is required.
+>>
+>> BTW, "start-shared" memory for coco is not something good. It violates the
+>> contract that all the memory for Coco VM is initial private (accepted or
+>> unaccepted) from EFI spec. We probably should avoid introducing exception unless
+>> we have to.
+>>
+> 
+> Sorry, I have to double check: you are saying we do not need this patch, and
+> instead the guest has to do the right thing after plugging memory?
 
-The Linux kernel supports a KVM capability allowing the hypervisor to
-disable read intercepts on the IA32_APERF and IA32_MPERF MSRs, enabling
-guests to track effective frequency directly without VM-exits. QEMU
-currently lacks a native way to request this capability or expose the
-corresponding feature bit to the guest.
+right, that's what I meant.
 
-This patch adds the `aperfmperf` feature flag via `FEAT_6_ECX`
-(CPUID.06H:ECX[bit 0]). To ensure safe tracking across power states,
-the flag ties into QEMU's existing host power management framework.
-When host CPU power management is explicitly requested by the user
-(via `-overcommit cpu-pm=on`) and the `+aperfmperf` flag is provided
-to the CPU, QEMU will invoke the KVM ioctl to drop the APERF/MPERF
-MSR read intercepts.
+Whether the initial state of the (re-)hotplugged virtio-mem is shared or 
+private doesn't matter. Guest has to try to accept it before using it as 
+private memory. If guest hits the re-accept error, which means the 
+memory has not been taken off at the previous unplug and means the 
+memory is actually always available to the guest.
 
-This implementation allows guest operating systems (such as FreeBSD
-or Linux) to dynamically calculate CPU utilization and turbo-boost
-metrics without incurring performance overhead from hypervisor trap-and-
-emulate loops.
+What matters is the host VMM needs to ensure the memory is actually 
+unplug'ed on the unplug operation, which is achieved by the patch 11 in 
+this series.
 
-Signed-off-by: Anderson Nascimento <anderson@allelesecurity.com>
----
-Changes in v2
-- Added migration flags
-- Link to v1: https://lore.kernel.org/all/20260602022048.752453-1-anderson@allelesecurity.com/
-
- target/i386/cpu.c     | 18 +++++++++++++++++-
- target/i386/cpu.h     |  2 ++
- target/i386/kvm/kvm.c |  5 ++++-
- 3 files changed, 23 insertions(+), 2 deletions(-)
-
-diff --git a/target/i386/cpu.c b/target/i386/cpu.c
-index 8929a75c7c..544738d406 100644
---- a/target/i386/cpu.c
-+++ b/target/i386/cpu.c
-@@ -1544,6 +1544,22 @@ FeatureWordInfo feature_word_info[FEATURE_WORDS] = {
-         .cpuid = { .eax = 6, .reg = R_EAX, },
-         .tcg_features = TCG_6_EAX_FEATURES,
-     },
-+    [FEAT_6_ECX] = {
-+        .type = CPUID_FEATURE_WORD,
-+        .feat_names = {
-+            "aperfmperf", NULL, NULL, NULL,
-+            NULL, NULL, NULL, NULL,
-+            NULL, NULL, NULL, NULL,
-+            NULL, NULL, NULL, NULL,
-+            NULL, NULL, NULL, NULL,
-+            NULL, NULL, NULL, NULL,
-+            NULL, NULL, NULL, NULL,
-+            NULL, NULL, NULL, NULL,
-+        },
-+        .cpuid = { .eax = 6, .reg = R_ECX, },
-+        .tcg_features = 0,
-+        .unmigratable_flags = CPUID_6_ECX_APERFMPERF,
-+    },
-     [FEAT_XSAVE_XCR0_LO] = {
-         .type = CPUID_FEATURE_WORD,
-         .cpuid = {
-@@ -8770,7 +8786,7 @@ void cpu_x86_cpuid(CPUX86State *env, uint32_t index, uint32_t count,
-         /* Thermal and Power Leaf */
-         *eax = env->features[FEAT_6_EAX];
-         *ebx = 0;
--        *ecx = 0;
-+        *ecx = env->features[FEAT_6_ECX];
-         *edx = 0;
-         break;
-     case 7:
-diff --git a/target/i386/cpu.h b/target/i386/cpu.h
-index 67e2ecf325..87864969c7 100644
---- a/target/i386/cpu.h
-+++ b/target/i386/cpu.h
-@@ -700,6 +700,7 @@ typedef enum FeatureWord {
-     FEAT_SVM,           /* CPUID[8000_000A].EDX */
-     FEAT_XSAVE,         /* CPUID[EAX=0xd,ECX=1].EAX */
-     FEAT_6_EAX,         /* CPUID[6].EAX */
-+    FEAT_6_ECX,         /* CPUID[6].ECX */
-     FEAT_XSAVE_XCR0_LO, /* CPUID[EAX=0xd,ECX=0].EAX */
-     FEAT_XSAVE_XCR0_HI, /* CPUID[EAX=0xd,ECX=0].EDX */
-     FEAT_ARCH_CAPABILITIES,
-@@ -1232,6 +1233,7 @@ uint64_t x86_cpu_get_supported_feature_word(X86CPU *cpu, FeatureWord w);
- #define CPUID_XSAVE_XFD        (1U << 4)
- 
- #define CPUID_6_EAX_ARAT       (1U << 2)
-+#define CPUID_6_ECX_APERFMPERF (1U << 0)
- 
- /* CPUID[0x80000007].EDX flags: */
- #define CPUID_APM_INVTSC       (1U << 8)
-diff --git a/target/i386/kvm/kvm.c b/target/i386/kvm/kvm.c
-index 9e352882c8..ca722ff9e9 100644
---- a/target/i386/kvm/kvm.c
-+++ b/target/i386/kvm/kvm.c
-@@ -498,6 +498,8 @@ uint32_t kvm_arch_get_supported_cpuid(KVMState *s, uint32_t function,
-         }
-     } else if (function == 6 && reg == R_EAX) {
-         ret |= CPUID_6_EAX_ARAT; /* safe to allow because of emulated APIC */
-+    } else if (function == 6 && reg == R_ECX) {
-+        ret |= CPUID_6_ECX_APERFMPERF;
-     } else if (function == 7 && index == 0 && reg == R_EBX) {
-         /* Not new instructions, just an optimization.  */
-         uint32_t ebx;
-@@ -3291,7 +3293,8 @@ static int kvm_vm_enable_disable_exits(KVMState *s)
-         disable_exits &= (KVM_X86_DISABLE_EXITS_MWAIT |
-                           KVM_X86_DISABLE_EXITS_HLT |
-                           KVM_X86_DISABLE_EXITS_PAUSE |
--                          KVM_X86_DISABLE_EXITS_CSTATE);
-+                          KVM_X86_DISABLE_EXITS_CSTATE |
-+                          KVM_X86_DISABLE_EXITS_APERFMPERF);
-     }
- 
-     return kvm_vm_enable_cap(s, KVM_CAP_X86_DISABLE_EXITS, 0,
--- 
-2.54.0
 
 
