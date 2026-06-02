@@ -4,145 +4,75 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C6509CD6E57
-	for <qemu-devel@archiver.kernel.org>; Tue,  2 Jun 2026 10:41:11 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B7DCCCD6E4A
+	for <qemu-devel@archiver.kernel.org>; Tue,  2 Jun 2026 11:30:15 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wUMXq-0007qD-PV; Tue, 02 Jun 2026 06:40:26 -0400
+	id 1wUNJL-00075r-DB; Tue, 02 Jun 2026 07:29:31 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <skolothumtho@nvidia.com>)
- id 1wUMXp-0007pm-7Y; Tue, 02 Jun 2026 06:40:25 -0400
-Received: from mail-westus2azlp170120002.outbound.protection.outlook.com
- ([2a01:111:f403:c007::2] helo=MW6PR02CU001.outbound.protection.outlook.com)
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1wUNJJ-00075b-M8
+ for qemu-devel@nongnu.org; Tue, 02 Jun 2026 07:29:29 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <skolothumtho@nvidia.com>)
- id 1wUMXn-0006wP-DW; Tue, 02 Jun 2026 06:40:24 -0400
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=Kg/BVSDM06gl/VWtwBflStip8eh9SbhIGNDdo2cWJww5dvn68aHs/qvJWtFNtEC5ek+C/4c2+bhy+9dI7RrnXKuZFfGt1MYfptq+CN7loKbq3vjfsGqBSJM8VX8O+GHu82dr0ausGKVJ5H47QSODJ8ZxTVMMU0eCtJKzgyiF9FcYI+BKQnLx3yJBk3XXALJcNK+hBUoBvdZ+onZ+y6LHxvGoXiiYshqG9VvwCLIRP7HZQzrnDD7SwBLj5Ji1DxC1PXcGdayYIE34ktfCTl9scaAsYLtXg6rWRpGkSejUgYoiomz1OGb0hkZ549uGrsla/cYUVEPL2lEheQn2Lnll2Q==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=a16/qaFdGNEBYcdBj6drxtGAJCxX9Z69sglkYjOtSTY=;
- b=yy5weSXw+79fnehSWwaHwr18mfA0AMFPF0jHeSWDIL0o4NY0r8Y12ePcvRRg0ATMb34esgK2ZsTiFGvQ3kTQbZu+6Hnp+IFMCWxZaNFtxL1Omq32q1EY5kjrheTWPhHFxZcL2UBXzCUCSqoHD68p+G1/Wf4RSVUIp3X13PXnLqWBMNcDdZxpSQWAlqIh9crY3iqqbBpRIJcwhMtBn74IHSMw9hFJbKpmboyfX3OvEPuu/7GcFPg9Z0Gv5T4YdX6yEoBrMdEaoM5j5eU8c3/x1W77NxDFlmvk/O0BYWf+BrQ1gcxS8AeAensaZgsbNwkrbXodeIupFO3by7I8c96QIg==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=nvidia.com; dmarc=pass action=none header.from=nvidia.com;
- dkim=pass header.d=nvidia.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=Nvidia.com;
- s=selector2;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=a16/qaFdGNEBYcdBj6drxtGAJCxX9Z69sglkYjOtSTY=;
- b=jn5sYJDq1el8F/J1UOL7ZhoTfsnq+MT8pXHsf9Rkf6wYi/HEMTUhNFv6/gN+kf1gUIa6INUQK5ES+8IuJRNLFVmFsF1w6UL/rqwfKqkBBmjc90oS9IONfDdgAwEOiscQYz0Dq3A4JnP2/X+imhDqeUJNYY14u9LvdmDDU1wuJSEQ6J4wlxEgGoX7xnpjypL1/XRiPxIzjifZqTdaDu6/qfPKmI1nv3ooNpHXrSnaKdq8MK4jnRtdoLll8pZndXYUvbglQeFrEwtG5KZ1lxSFmXR0caxG+evGGmQx+wic9MTvoi5OyH+SZH0SgLgWrY2BOeUybpTvjVYQ5F1S3lpDYQ==
-Received: from IA0PR12MB7555.namprd12.prod.outlook.com (2603:10b6:208:43d::5)
- by MN0PR12MB5954.namprd12.prod.outlook.com (2603:10b6:208:37d::15)
- with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.71.15; Tue, 2 Jun 2026
- 10:40:14 +0000
-Received: from IA0PR12MB7555.namprd12.prod.outlook.com
- ([fe80::5a27:a8d9:43b7:3b8d]) by IA0PR12MB7555.namprd12.prod.outlook.com
- ([fe80::5a27:a8d9:43b7:3b8d%3]) with mapi id 15.21.0071.014; Tue, 2 Jun 2026
- 10:40:14 +0000
-From: Shameer Kolothum Thodi <skolothumtho@nvidia.com>
-To: Manish Honap <mhonap@nvidia.com>, Jonathan Cameron <jic23@kernel.org>
-CC: Alex Williamson <alwilliamson@nvidia.com>, Ankit Agrawal
- <ankita@nvidia.com>, "mst@redhat.com" <mst@redhat.com>, "imammedo@redhat.com"
- <imammedo@redhat.com>, "anisinha@redhat.com" <anisinha@redhat.com>,
- "eric.auger@redhat.com" <eric.auger@redhat.com>, "peter.maydell@linaro.org"
- <peter.maydell@linaro.org>, "shannon.zhaosl@gmail.com"
- <shannon.zhaosl@gmail.com>, "jonathan.cameron@huawei.com"
- <jonathan.cameron@huawei.com>, "fan.ni@samsung.com" <fan.ni@samsung.com>,
- "pbonzini@redhat.com" <pbonzini@redhat.com>, "richard.henderson@linaro.org"
- <richard.henderson@linaro.org>, "marcel.apfelbaum@gmail.com"
- <marcel.apfelbaum@gmail.com>, "clg@redhat.com" <clg@redhat.com>,
- "cohuck@redhat.com" <cohuck@redhat.com>, "dave.jiang@intel.com"
- <dave.jiang@intel.com>, "alejandro.lucero-palau@amd.com"
- <alejandro.lucero-palau@amd.com>, Vikram Sethi <vsethi@nvidia.com>, Neo Jia
- <cjia@nvidia.com>, "Tarun Gupta (SW-GPU)" <targupta@nvidia.com>, Zhi Wang
- <zhiw@nvidia.com>, Krishnakant Jaju <kjaju@nvidia.com>,
- "linux-cxl@vger.kernel.org" <linux-cxl@vger.kernel.org>,
- "kvm@vger.kernel.org" <kvm@vger.kernel.org>, "qemu-devel@nongnu.org"
- <qemu-devel@nongnu.org>, "qemu-arm@nongnu.org" <qemu-arm@nongnu.org>
-Subject: RE: [RFC 0/9] QEMU: CXL Type-2 device passthrough via vfio-pci
-Thread-Topic: [RFC 0/9] QEMU: CXL Type-2 device passthrough via vfio-pci
-Thread-Index: AQHc1nGWvPFiki6WBEiAZDHEC2g8trYVdZwAgBQVvoCAAbph0A==
-Date: Tue, 2 Jun 2026 10:40:13 +0000
-Message-ID: <IA0PR12MB75555B8E9FDD4546F383663AAB122@IA0PR12MB7555.namprd12.prod.outlook.com>
-References: <20260427181235.3003865-1-mhonap@nvidia.com>
- <20260519141314.3eda68bc@jic23-huawei>
- <IA1PR12MB90303161DD09A1E248852728BD152@IA1PR12MB9030.namprd12.prod.outlook.com>
-In-Reply-To: <IA1PR12MB90303161DD09A1E248852728BD152@IA1PR12MB9030.namprd12.prod.outlook.com>
-Accept-Language: en-US, en-GB
-Content-Language: en-US
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-authentication-results: dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=nvidia.com;
-x-ms-publictraffictype: Email
-x-ms-traffictypediagnostic: IA0PR12MB7555:EE_|MN0PR12MB5954:EE_
-x-ms-office365-filtering-correlation-id: bba82ade-0aa1-448d-505a-08dec093544d
-x-ms-exchange-senderadcheck: 1
-x-ms-exchange-antispam-relay: 0
-x-microsoft-antispam: BCL:0;
- ARA:13230040|376014|366016|7416014|1800799024|38070700021|18002099003|22082099003|6133799003|56012099006|11063799006|4143699003;
-x-microsoft-antispam-message-info: pEqqWMbz2kfUBIsW8Nn5h/0kK6Uxfj6Cpbj4YwOk70teO/fTzrbJ/ADCgPoSsByz7xBLAibcNjcG3YO1VqRi3+4VNBq/C+VIdcTc0PxHUrjMjFxF2TapaM6K73gNpsJ1i8JQni4NNXkwnjLJzk8B86kxYwElxiAFfg71mBT4o9XRJpZpXFveePi7TZBmAkYqsNgqL7M0+J8CoZ5mMOmTjpUYu6UBbKrikTq1bUoMV+fhwE4R9/kU00m2wPUoXyjPdux1Zfdn2AVAmJmkJsiXwaGFLZXeRzof2AoUOW/5omh1UmDeaM1s1k1SYIn52lMBiuNbvCRvDXbM93PUli7rP/7aKnCuIL3KojyUe7pqSQpW6eu9SeTjGfX0rxhItSKPxf63vX8AKWkRzuTj7xMq64puQPC3GijKxAgTXDocwA6z2MOgSYPoUsnloxDz9oMlW4l6UVSxW/oWfNhsLsXA335iZGFTvcW3+y71QEDtvK263cO2CmA+xt3kAoG8DTwU415bVdzkTovcMPotO2FO64zQaoXtaM6tsS5rk78p+zexYQpTYBEOrCEH3a+Kfq5GVAoJ0sZJYw0iULtFWcjdoriYKRqd5IVGkaR04aGYzbFNkvKK1/Zl4ngVmUEiURFyamOFH1Ov+/xKUYCU7PWkS2JLzIwiFyoF1ZMSMR0hM0gfwo1Zmz8lDElQCmzlTPpKGAkZX9ohwisQ9SKlF6w3Sp5LIMOppAwJbi0EhR+xCdoLuExMdj2Szen6BfMC90Qv
-x-forefront-antispam-report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
- IPV:NLI; SFV:NSPM; H:IA0PR12MB7555.namprd12.prod.outlook.com; PTR:; CAT:NONE;
- SFS:(13230040)(376014)(366016)(7416014)(1800799024)(38070700021)(18002099003)(22082099003)(6133799003)(56012099006)(11063799006)(4143699003);
- DIR:OUT; SFP:1101; 
-x-ms-exchange-antispam-messagedata-chunkcount: 1
-x-ms-exchange-antispam-messagedata-0: =?us-ascii?Q?7umbB1NJdFQ/rEcx+tGS3mMijJNhu/xDJdEHzHQTd1JKRiAzL0VrJhRcDKcq?=
- =?us-ascii?Q?y288whtEE77NYZC56TncDLSczdIAp8zoePrsC2N7HOCdiC14h6yuncLYknEP?=
- =?us-ascii?Q?3fM3PjDkfDBNoGBlQjI5q9bdN0/lU6aIZ9OonlJR6NDJwS/MpwSvpugOUCf+?=
- =?us-ascii?Q?YdO2KN4M2qJczrD4NxG7FOgFRhX7b983byNVuP07tNAM8MoUmZWjxNtScBJL?=
- =?us-ascii?Q?79KqE5/n2YvSUukfRC4vEyJl+DX3WiusWprIgBYiq3BsZP7H9Cp3/7ruiuIe?=
- =?us-ascii?Q?B68h9xdPUo/pue2i8YK2vkWHLGcFe1SDE0BhybASZaIQ5gsilragE2NKDKrk?=
- =?us-ascii?Q?NU2u/eS6oWD0r4Lv58WBTJ2tdGZUS+P/uVKuhQTPh5BSo0DZVllEQyb3WnRe?=
- =?us-ascii?Q?1v0Wez2Oir71mLoABaIXBTQtUwp10pRMhqE+otxEGxft0dQmPes1Z8J8+wz+?=
- =?us-ascii?Q?XppFjXSTdky7f1NA4MxgRmWFsfJuzr5A/b3K06E1v3iZqrtxBv+WYxsuEJnx?=
- =?us-ascii?Q?J8bqB2y9nMMsFmLY5VYK1n1H4a/x5qBUgkgXXHfpbei/pB+CwyfL3BZi6+hx?=
- =?us-ascii?Q?/BVAFZdCoAabtVepzULA3AObCqSsBUTgx4a0sCTsNHyMGuiiJtZEYjfvYpfU?=
- =?us-ascii?Q?tCI4WPxL2KBzXUet3JTV732iPej4gTDeIb8R/Tl/qNFgMTSyqlQuaIOk75s0?=
- =?us-ascii?Q?BsWf43/vI2FxzV3wp3c3IeSob3Ad+2fhpPUprsGvT3ic0pOQyfFCX/W8qDyL?=
- =?us-ascii?Q?MXNM7XkKzgVMY/+GE1VoTbil2jThiPv/alcxen7OCpo3ZszRz5V5vW0yI15g?=
- =?us-ascii?Q?KYR3WkNVOqpirPqCLQLzptsB44GBbnCiy/yy3jkSatOkjM55yanICV+CHxVH?=
- =?us-ascii?Q?dE3m63YovZfkwckt6lCG148UQMcurqLfReOz9YE0PMNJEhV/ZkvCHZwMaN+Z?=
- =?us-ascii?Q?viyL28cED5dcACCbK8lMYmoEo+0ZzCOcrHyLTTp0p5gVcbZtBxyrSSaMWaEn?=
- =?us-ascii?Q?gkYzQ/XABP/2oliTdccP7I8l8lAgDTr2kazeeGnAPiN3sA2unD6yI7gQVyMl?=
- =?us-ascii?Q?w+blF+ElsmRLGUi0rEm5Zdq0/UfUJZfvY7x8mKF3lZDU5SM04Ig6lJqmiuyu?=
- =?us-ascii?Q?Wj14RGzzUa96AbHcoVSYOt6wSZRpPcyYcTPo+xw/j+324jmDI2SGtf3rVJiy?=
- =?us-ascii?Q?VmD4spMQzYHgtXjLZgISajmToHuMZJ8TXRZRs8bLS9EVawZsWZ9v7RiU+pW9?=
- =?us-ascii?Q?vIcaKvfqg1ojmXwn6RjvygEJLw2qKapkcvv3FbnSxTnyMg4g5ivoca8tSsh6?=
- =?us-ascii?Q?FsRCpF+MSTmhSWfva/ScUk+WKvDp59Q3rWxdS3V7m/7K6OrKHny2Wexdm2V7?=
- =?us-ascii?Q?HDebaL187LcQU3Sm8AT0dItE413nN4kGaFDMFr7eTPsO+2Vsjt5pkJsYVWH2?=
- =?us-ascii?Q?wzAwKLkI9eNxzPiJuciE1cPbeRsrwyS+KZ609xNMdvAkwbqkQRbiQ/LEOKdU?=
- =?us-ascii?Q?cIO8d/juLYge7WKgmdOiJ3rNuDU3UZaX5LkYzPRfMcfMBU8FYONITrg01G+W?=
- =?us-ascii?Q?Q99D4cOODw0BHlw+N58x+t2qDv4WfcY40T+8ERXuBHsFXVVkjcju1i7f1ScK?=
- =?us-ascii?Q?kqZF95zExeT9e+m2ezGUvLiKIjTLBgYHOE0JPWXOhdQsattlTL/lq8wLuJGq?=
- =?us-ascii?Q?zU8rk1JrpgtiWG4iKht1xhrTFwCCtLF5x9ZMmd/lLIpKdX75L3QRXINNkclU?=
- =?us-ascii?Q?YnjP+xxe4Q=3D=3D?=
-Content-Type: text/plain; charset="us-ascii"
-Content-Transfer-Encoding: quoted-printable
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1wUNJH-0006oU-Kg
+ for qemu-devel@nongnu.org; Tue, 02 Jun 2026 07:29:29 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1780399765;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=HFFNqVI0xx0YjPZMcRanRS9Sr9Q0CDAJLAv9+v8Tmmk=;
+ b=WJYfaPbLAzlWPC5PEPU9C9KLj2qZZgisFA7AdLC3SQmTn4ORQQMQUlFyxBMQKU2jONDggR
+ SSNnsbkw50l3PvXasbkYOOtDzRuHY6YkKG5+jZmHTNpVHSgKFkg334b547UVGS7nLfIt65
+ TFlzyb7w4IpcDKmAqg/dv8S4ptxeem0=
+Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-447-pdLoYHvFNeqR06E7baSU4g-1; Tue,
+ 02 Jun 2026 07:29:24 -0400
+X-MC-Unique: pdLoYHvFNeqR06E7baSU4g-1
+X-Mimecast-MFC-AGG-ID: pdLoYHvFNeqR06E7baSU4g_1780399763
+Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 17C7C1800367; Tue,  2 Jun 2026 11:29:23 +0000 (UTC)
+Received: from blackfin.pond.sub.org (unknown [10.44.22.2])
+ by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 175BE30002DD; Tue,  2 Jun 2026 11:29:22 +0000 (UTC)
+Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
+ id A261821E6A01; Tue, 02 Jun 2026 13:29:19 +0200 (CEST)
+From: Markus Armbruster <armbru@redhat.com>
+To: Zhang Chen <zhangckid@gmail.com>
+Cc: qemu-devel <qemu-devel@nongnu.org>,  "Dr . David Alan Gilbert"
+ <dave@treblig.org>,  Eric Blake <eblake@redhat.com>,  Markus Armbruster
+ <armbru@redhat.com>,  "Michael S . Tsirkin" <mst@redhat.com>,  Stefan
+ Hajnoczi <stefanha@redhat.com>
+Subject: Re: [PATCH V8 02/15] iothread: introduce iothread_ref/unref to
+ track attached devices
+In-Reply-To: <20260529213321.96271-3-zhangckid@gmail.com> (Zhang Chen's
+ message of "Sat, 30 May 2026 05:33:08 +0800")
+References: <20260529213321.96271-1-zhangckid@gmail.com>
+ <20260529213321.96271-3-zhangckid@gmail.com>
+Date: Tue, 02 Jun 2026 13:29:19 +0200
+Message-ID: <87tsrl2nao.fsf@pond.sub.org>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 MIME-Version: 1.0
-X-OriginatorOrg: Nvidia.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-AuthSource: IA0PR12MB7555.namprd12.prod.outlook.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: bba82ade-0aa1-448d-505a-08dec093544d
-X-MS-Exchange-CrossTenant-originalarrivaltime: 02 Jun 2026 10:40:14.0226 (UTC)
-X-MS-Exchange-CrossTenant-fromentityheader: Hosted
-X-MS-Exchange-CrossTenant-id: 43083d15-7273-40c1-b7db-39efd9ccc17a
-X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
-X-MS-Exchange-CrossTenant-userprincipalname: FSkgvHjLVswkYWMcc79FzmyF/WsWYirHwXgjNw7e2zyDOFUkxicqVyAu2uHrH63mul6RdNvhU2HREmKE+rDLlg==
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: MN0PR12MB5954
-Received-SPF: permerror client-ip=2a01:111:f403:c007::2;
- envelope-from=skolothumtho@nvidia.com;
- helo=MW6PR02CU001.outbound.protection.outlook.com
+Content-Type: text/plain
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=armbru@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -24
 X-Spam_score: -2.5
 X-Spam_bar: --
 X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.445,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- SPF_HELO_NONE=0.001, SPF_NONE=0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -158,51 +88,313 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+Zhang Chen <zhangckid@gmail.com> writes:
 
+> Currently, IOThreads do not maintain a record of which devices are
+> associated with them. This makes it difficult to monitor the
+> workload distribution of IOThreads, especially in complex
+> hotplug scenarios involving multiple virtio-blk or virtio-scsi devices.
+>
+> This patch introduces a reference counting and tracking mechanism
+> within the IOThread object:
+>
+> - iothread_ref(): Prepends the device's IOThreadHolder to a list.
+> - iothread_unref(): Searches for the IOThreadHolder using a custom
+>   string comparison (g_strcmp0), releases the associated memory
+>   upon a successful match.
+> - holders: A GList storing the IOThreadHolder of attached devices
+>   for runtime introspection.
+>
+> A later commit will add QMP commands to let management applications
+> query the attachment status of IOThreads.
+>
+> Signed-off-by: Zhang Chen <zhangckid@gmail.com>
+> ---
+>  include/system/iothread.h |  5 +++
+>  iothread.c                | 94 +++++++++++++++++++++++++++++++++++++++
+>  qapi/misc.json            | 61 +++++++++++++++++++++++++
+>  3 files changed, 160 insertions(+)
+>
+> diff --git a/include/system/iothread.h b/include/system/iothread.h
+> index a1ef7696cb..b9207ad829 100644
+> --- a/include/system/iothread.h
+> +++ b/include/system/iothread.h
+> @@ -50,6 +50,11 @@ struct IOThread {
+>      bool stopping;              /* has iothread_stop() been called? */
+>      bool running;               /* should iothread_run() continue? */
+>      int thread_id;
+> +    /*
+> +     * The list elements are of type IOThreadHolder, which can
+> +     * represent either a QOM path or a block node name.
 
-> -----Original Message-----
-> From: Manish Honap <mhonap@nvidia.com>
-> Sent: 01 June 2026 08:56
-> To: Jonathan Cameron <jic23@kernel.org>
-> Cc: Alex Williamson <alwilliamson@nvidia.com>; Shameer Kolothum Thodi
-> <skolothumtho@nvidia.com>; Ankit Agrawal <ankita@nvidia.com>;
-> mst@redhat.com; imammedo@redhat.com; anisinha@redhat.com;
-> eric.auger@redhat.com; peter.maydell@linaro.org;
-> shannon.zhaosl@gmail.com; jonathan.cameron@huawei.com;
-> fan.ni@samsung.com; pbonzini@redhat.com; richard.henderson@linaro.org;
-> marcel.apfelbaum@gmail.com; clg@redhat.com; cohuck@redhat.com;
-> dave.jiang@intel.com; alejandro.lucero-palau@amd.com; Vikram Sethi
-> <vsethi@nvidia.com>; Neo Jia <cjia@nvidia.com>; Tarun Gupta (SW-GPU)
-> <targupta@nvidia.com>; Zhi Wang <zhiw@nvidia.com>; Krishnakant Jaju
-> <kjaju@nvidia.com>; linux-cxl@vger.kernel.org; kvm@vger.kernel.org; qemu-
-> devel@nongnu.org; qemu-arm@nongnu.org; Manish Honap
-> <mhonap@nvidia.com>
-> Subject: RE: [RFC 0/9] QEMU: CXL Type-2 device passthrough via vfio-pci
->=20
+You forgot monitors.
 
-[...]
+Suggest "which can either be a QOM object, a block node, or a monitor."
 
-> > > pxb-cxl bridges had no _DSM method. Without _DSM function 5 the OS
-> > > defaults to treating PCI configuration as reassignable.
-> >
-> > That one is annoyingly controversial. I see you have Shameer's patch
-> > so he can go into history of why. I tried to land that in the past and
-> > I was far from the first.
->=20
-> okay, I will check this part for additional details.
+> +     */
+> +    GList *holders;
+>  
+>      /* AioContext poll parameters */
+>      int64_t poll_max_ns;
+> diff --git a/iothread.c b/iothread.c
+> index 3558535b40..3301b8d495 100644
+> --- a/iothread.c
+> +++ b/iothread.c
+> @@ -25,6 +25,92 @@
+>  #include "qemu/rcu.h"
+>  #include "qemu/main-loop.h"
+>  
+> +/*
+> + * iothread_ref:
+> + * @iothread: the iothread to track
+> + * @holder: the IOThreadHolder object initialized by the caller
+> + *
+> + * Add the @holder to the iothread's tracking list.
+> + */
+> +static void iothread_ref(IOThread *iothread, const IOThreadHolder *holder)
 
-I guess the concern here is the QEMU regression reported with certain
-devices with legacy IO port BARs having issues on arm64 when _DSM #5 is
-specified:
-https://lore.kernel.org/all/20210724185234.GA2265457@roeck-us.net/
+Yes, this is the interface I want :)
 
-For accel SMMUv3 this is fine as we restrict the devices to vfio-pci only.
-One option, until there is a proper fix in the Linux kernel or EDK2, might
-be to maintain a checklist so that devices known to have issues are not
-attached when _DSM #5 is advertised.
+> +{
+> +    assert(holder);
+> +    IOThreadHolder *h = g_new0(IOThreadHolder, 1);
+> +
+> +    h->type = holder->type;
+> +    switch (holder->type) {
+> +    case IO_THREAD_HOLDER_KIND_QOM_OBJECT:
+> +        h->u.qom_object.qom_path = g_strdup(holder->u.qom_object.qom_path);
+> +        break;
+> +    case IO_THREAD_HOLDER_KIND_BLOCK_NODE:
+> +        h->u.block_node.node_name =
+> +            g_strdup(holder->u.block_node.node_name);
+> +        break;
+> +    case IO_THREAD_HOLDER_KIND_MONITOR_NAME:
+> +        h->u.monitor_name.monitor_name =
+> +            g_strdup(holder->u.monitor_name.monitor_name);
+> +        break;
+> +    default:
+> +        g_assert_not_reached();
+> +    }
 
-Thanks,
-Shameer
+This makes @h a deep copy of @holder.  Try
 
+    IOThreadHolder *h = QAPI_CLONE(IOThreadHolder, holder);
+
+instead.
+
+Instead of making a copy, the function could take ownership of @holder,
+and require @holder's members to be dynamically allocated.  More
+efficient, but complicates the callers somewhat.  Not worthwhile, I
+guess.
+
+> +
+> +    iothread->holders = g_list_prepend(iothread->holders, h);
+> +}
+> +
+> +static int iothread_holder_compare(gconstpointer a, gconstpointer b)
+> +{
+> +    const IOThreadHolder *holder_a = a;
+> +    const IOThreadHolder *holder_b = b;
+> +    const char *name_a, *name_b;
+> +
+> +    if (holder_a->type != holder_b->type) {
+> +        return -1;
+
+Please use
+
+           return holder_b->type - holder_a->type;
+
+Why?  By convention, an int-valued function fn() comparing A to B
+returns less than 0 when A<B, 0 when A == B, and greater than 0 when
+A>B.  Anything else needs a prominent comment.  Best to stick to the
+convention whenever practical.
+
+Since A < B iff B > A, we want fn(A, B) == -fn(B, A).
+
+Your function does not satisfy that!  Harmless for now, because you only
+ever pass it to g_list_find_custom(), which treats all non-zero values
+the same.  But if anyone passes it to something like qsort() in the
+future, they can look forward to some debugging "fun".
+
+> +    }
+> +
+> +    switch (holder_a->type) {
+> +    case IO_THREAD_HOLDER_KIND_QOM_OBJECT:
+> +        name_a = holder_a->u.qom_object.qom_path;
+> +        name_b = holder_b->u.qom_object.qom_path;
+> +        break;
+> +    case IO_THREAD_HOLDER_KIND_BLOCK_NODE:
+> +        name_a = holder_a->u.block_node.node_name;
+> +        name_b = holder_b->u.block_node.node_name;
+> +        break;
+> +    case IO_THREAD_HOLDER_KIND_MONITOR_NAME:
+> +        name_a = holder_a->u.monitor_name.monitor_name;
+> +        name_b = holder_b->u.monitor_name.monitor_name;
+> +        break;
+> +    default:
+> +       /*
+> +        * This should not happen. If it does, name_a/b remains
+> +        * NULL and g_strcmp0 will handle it safely.
+> +        */
+> +        name_a = NULL;
+> +        name_b = NULL;
+
+Replace this by
+
+           g_assert_not_reached();
+
+Then neither @name_a nor @name_b can be null, because a non-optional
+QAPI str is never null.  Simply use strcmp().
+
+> +    }
+> +
+> +    return g_strcmp0(name_a, name_b);
+> +}
+> +
+> +/*
+> + * This function removes the @holder from the @iothread's tracking list.
+> + * The @holder must match the one used previously in iothread_ref().
+> + * It is a programming error to call this with a @holder that is not
+> + * currently associated with the @iothread.
+> + */
+> +static void iothread_unref(IOThread *iothread, const IOThreadHolder *holder)
+> +{
+> +    assert(holder);
+> +    GList *link = g_list_find_custom(iothread->holders, holder,
+> +                                     (GCompareFunc)iothread_holder_compare);
+> +
+> +    assert(link);
+> +
+> +    IOThreadHolder *h = (IOThreadHolder *)link->data;
+> +    qapi_free_IOThreadHolder(h);
+> +    iothread->holders = g_list_delete_link(iothread->holders, link);
+
+Removing @link from the list before freeing link->data would be more
+obviously correct, wouldn't it?
+
+> +}
+> +
+>  static void *iothread_run(void *opaque)
+>  {
+>      IOThread *iothread = opaque;
+> @@ -356,6 +442,14 @@ char *iothread_get_id(IOThread *iothread)
+>  
+>  AioContext *iothread_get_aio_context(IOThread *iothread)
+>  {
+> +    /* Remove in next patch for build */
+> +    IOThreadHolder holder = {
+> +        .type = IO_THREAD_HOLDER_KIND_QOM_OBJECT,
+> +        .u.qom_object.qom_path = (char *)"tmp_path",
+> +    };
+> +    iothread_ref(iothread, &holder);
+> +    iothread_unref(iothread, &holder);
+> +
+
+Is this really needed to make this patch work?
+
+>      return iothread->ctx;
+>  }
+>  
+> diff --git a/qapi/misc.json b/qapi/misc.json
+> index c71a5fe657..d9f82f0922 100644
+> --- a/qapi/misc.json
+> +++ b/qapi/misc.json
+> @@ -67,6 +67,67 @@
+>  ##
+>  { 'command': 'query-name', 'returns': 'NameInfo', 'allow-preconfig': true }
+>  
+> +
+> +##
+> +# @IOThreadHolderBlockNode:
+> +#
+> +# @node-name: A block node.
+
+Let's use
+
+   # @node-name: Name of the block node
+
+to make it more similar to node-name descriptions elsewhere.
+
+> +#
+> +# Since: 11.1
+> +#
+> +##
+> +{ 'struct': 'IOThreadHolderBlockNode',
+> +  'data': { 'node-name': 'str' } }
+> +
+> +##
+> +# @IOThreadHolderQomObject:
+> +#
+> +# @qom-path: A QOM Object.
+
+Likewise, let's use
+
+  # @qom-path: Path to the object in the QOM tree
+
+> +#
+> +# Since: 11.1
+> +#
+> +##
+> +{ 'struct': 'IOThreadHolderQomObject',
+> +  'data': { 'qom-path': 'str' } }
+> +
+> +##
+> +# @IOThreadHolderMonitor:
+> +#
+
+Let's use
+
+   # @monitor-name: Name of the HMP/QMP monitor
+
+> +# @monitor-name: A HMP/QMP monitor.
+> +#
+> +# Since: 11.1
+> +#
+> +##
+> +{ 'struct': 'IOThreadHolderMonitor',
+> +  'data': { 'monitor-name': 'str' } }
+> +
+> +##
+> +# @IOThreadHolderKind:
+> +#
+> +# @block-node: A block node.
+> +# @qom-object: A QOM Object.
+> +# @monitor-name: A HMP/QMP monitor.
+
+Rename to @monitor for consistency with the other two.
+
+Remark, not a request to change anything in your patch: kind monitor
+will become obsolete when monitors become QOM objects.  Doing that
+before we release this interface is desirable.
+
+> +#
+> +# Since: 11.1
+> +##
+> +{ 'enum': 'IOThreadHolderKind',
+> +  'data': [ 'block-node', 'qom-object', 'monitor-name' ] }
+> +
+> +##
+> +# @IOThreadHolder:
+> +#
+
+Let's add a short description:
+
+   # The block node, QOM object, or monitor holding the I/O thread.
+
+> +# @type: the kind of I/O thread holder.
+> +#
+> +# Since: 11.1
+> +##
+> +{ 'union': 'IOThreadHolder',
+> +  'base': { 'type': 'IOThreadHolderKind' },
+> +  'discriminator': 'type',
+> +  'data': {
+> +    'block-node': 'IOThreadHolderBlockNode',
+> +    'qom-object': 'IOThreadHolderQomObject',
+> +    'monitor-name': 'IOThreadHolderMonitor' } }
+> +
+>  ##
+>  # @IOThreadInfo:
+>  #
 
 
