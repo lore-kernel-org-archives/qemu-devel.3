@@ -4,48 +4,48 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 482DACD6E4A
-	for <qemu-devel@archiver.kernel.org>; Tue,  2 Jun 2026 08:46:34 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 484FDC5DF71
+	for <qemu-devel@archiver.kernel.org>; Tue,  2 Jun 2026 08:47:01 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wUKlF-00038l-II; Tue, 02 Jun 2026 04:46:09 -0400
+	id 1wUKlI-00039N-64; Tue, 02 Jun 2026 04:46:12 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <FangSheng.Huang@amd.com>)
- id 1wUKlD-00037Z-Mm
+ id 1wUKlD-00037a-Mw
  for qemu-devel@nongnu.org; Tue, 02 Jun 2026 04:46:07 -0400
-Received: from mail-westus3azlp170110003.outbound.protection.outlook.com
- ([2a01:111:f403:c107::3] helo=PH0PR06CU001.outbound.protection.outlook.com)
+Received: from mail-southcentralusazlp170110003.outbound.protection.outlook.com
+ ([2a01:111:f403:c10d::3] helo=SN4PR0501CU005.outbound.protection.outlook.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <FangSheng.Huang@amd.com>)
- id 1wUKl8-0004P4-LJ
- for qemu-devel@nongnu.org; Tue, 02 Jun 2026 04:46:06 -0400
+ id 1wUKlA-0004PP-Ox
+ for qemu-devel@nongnu.org; Tue, 02 Jun 2026 04:46:07 -0400
 ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=NPIpHoZGTRa20xyccPAX+UejdYB11HFsl87k17RLDOUD5crgGO56zjKDqkB2TgAnZsQmtV+rNjGyXnc4oUixrKV8nBhuTzIUGhf6Jd9uZCStYXL0uDf/DXJVIMumRyiypqk/aar+or5eD30zY/TDB3wzFP1EgmDB2lxIDmWp1ZHWn2ltdbZWfK0pbLlBl6BkhmcZb27Ft6zgub634CHbspOn94HWIIcegYykT3tVSZmu1XgHfz8hHud1xMbeWz4NboKlXDvNLa/S+oKFlQoSTIkNhAMZZDBYrhTLxU8g4EMuMsWlrKuz5jby8U64hEEZIN87ItgQYMoe2LDTGluTUg==
+ b=xpgi5uzwsygKAz7un1s+HSdDXCL0DvmngLjTExZLx7N5xgEC8MlIZhBvpNp+e4XcTw69KI8kFdZaqgj0ZgQ1/b0086Zx0wOolIgKleIC79DmGzZsqkieyu4BLh/PRz6+PIktCgE03O0HzYy/Y0jXEKjRAJPQWGEcqfe67AP+9VEBXhey9lmJFZrzOAPSYXkhB3c8dKLBFK9SwfG+JSoPkIFpv7+0hyT6hGjnaX0uEYXA5PNjrcay7R3XVCQlTGLH/h8eo8IZWHc2o479q04vrP9pEmdHUFi6W19KYHsD0To04g01XMk/gjI72TPUYkaNh5rhPOlds79/X2OetKc13w==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
  s=arcselector10001;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=NiHfKO1EzROq2cGVjN/AEvULKHJcjaKm4u9uTgX2dHE=;
- b=k7ezij6NEu5JIsmLclTQ0Fy4wnt3CzI5+CIY4j/HDj2JuHApqlYm8mFhbBkEWPJgxAHZq+bXn72kHojbG3Bemt/2N3YL5gai9ntJAMTRcCTApFnbK7RiXi9rHrVwUK8uFCdY16+bliEkWs7y8CCTXjhlviiySh1NUCndloMnKhwF1JtMkMa9SsENL37q4BuLY305t8b7dLDyS4Qgvu9uddKygvGhCS8YJMrClG9Y4JmzFTObZ6lfag2UtN5Rsb0s5tIykALw1RxqYKY417KUONqoJ+4TmI5h3R7gHx0rs+d83OHvgMTEElrH57ys+UFnGb53tUXLtKDjkUM+r6EZCQ==
+ bh=g2lc5FhLKbu/2VxPAZyW9yLxXpW9Yfxv4ezY11W468g=;
+ b=UHzt3/h3uwY4agLgvx7SeqbtAGqH4qgIu3ur2uV2gLjKv8M2+rKWtEUF8US9Dbz8CuQ6ulFeZUYcqSPoqoSjyCVRohdwUtL+6X50/Bq+ZYffF6Yy8RQp299EJo+E7JmE3HKAy6nTNv8IFsj2sM9zo+ilPeI7OI5R6VGJ8L+jrWmPv/Bgp4ndfE4LMB4CVXr6g2A/X7scVAHZM/0IQGscZm4HSKopovcavcNfmK921C2pdkaE1qudu3BwoRjQvJ/lw81mWRZULT70ieg2G4B2JD4SYfpFmKTUzuCBXjQGWdgaenhPABPJy45GepQnqjdl45RFJhNRxdV7/KinTznfrA==
 ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass (sender ip is
  165.204.84.17) smtp.rcpttodomain=nongnu.org smtp.mailfrom=amd.com; dmarc=pass
  (p=quarantine sp=quarantine pct=100) action=none header.from=amd.com;
  dkim=none (message not signed); arc=none (0)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=amd.com; s=selector1; 
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=NiHfKO1EzROq2cGVjN/AEvULKHJcjaKm4u9uTgX2dHE=;
- b=nhoOc1k1XbWspraeXLHE/lrtKFq5FlpImIQhbozTJ9cMTIPxfjz9ivsr5c5jalzbplwORIBbs772NdrYgrt7+YGkykdV8fC4ir3mjZurUNdRhnL+nkIzuL1IOy6LZfY+9z/Jjh+y7t3lIr5gBIz3y0iDrbrQUcAP7Ibz/WcQZo8=
-Received: from DS7PR05CA0052.namprd05.prod.outlook.com (2603:10b6:8:2f::30) by
- IA1PR12MB6044.namprd12.prod.outlook.com (2603:10b6:208:3d4::20) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.71.15; Tue, 2 Jun 2026
- 08:45:53 +0000
+ bh=g2lc5FhLKbu/2VxPAZyW9yLxXpW9Yfxv4ezY11W468g=;
+ b=fp9gD/vzV4XM3a4topaofVT7q9er4hsR0wxdF5x3CEvq0d2utEmm1CTu1GqQ2X9dTxMwXw2kU7/Ew+zvFA2vAA3xCyfuh2oo6dz9DJ7t+dIGTnGku+TmSJzQYNwdFnyccZ2FeMFhjQ9pWAeLfYkBUeP26xYIdzCbDmr0z2sFifk=
+Received: from DS7PR05CA0055.namprd05.prod.outlook.com (2603:10b6:8:2f::15) by
+ CH0PR12MB8506.namprd12.prod.outlook.com (2603:10b6:610:18a::6) with
+ Microsoft
+ SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.21.71.12; Tue, 2 Jun 2026 08:45:55 +0000
 Received: from DM2PEPF00003FC3.namprd04.prod.outlook.com
- (2603:10b6:8:2f:cafe::41) by DS7PR05CA0052.outlook.office365.com
- (2603:10b6:8:2f::30) with Microsoft SMTP Server (version=TLS1_3,
+ (2603:10b6:8:2f:cafe::b) by DS7PR05CA0055.outlook.office365.com
+ (2603:10b6:8:2f::15) with Microsoft SMTP Server (version=TLS1_3,
  cipher=TLS_AES_256_GCM_SHA384) id 15.21.92.7 via Frontend Transport; Tue, 2
- Jun 2026 08:45:53 +0000
+ Jun 2026 08:45:55 +0000
 X-MS-Exchange-Authentication-Results: spf=pass (sender IP is 165.204.84.17)
  smtp.mailfrom=amd.com; dkim=none (message not signed)
  header.d=none;dmarc=pass action=none header.from=amd.com;
@@ -55,20 +55,20 @@ Received-SPF: Pass (protection.outlook.com: domain of amd.com designates
 Received: from satlexmb07.amd.com (165.204.84.17) by
  DM2PEPF00003FC3.mail.protection.outlook.com (10.167.23.21) with Microsoft
  SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.21.92.5 via Frontend Transport; Tue, 2 Jun 2026 08:45:53 +0000
+ 15.21.92.5 via Frontend Transport; Tue, 2 Jun 2026 08:45:55 +0000
 Received: from k-Super-Server.amd.com (10.180.168.240) by satlexmb07.amd.com
  (10.181.42.216) with Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.2562.41; Tue, 2 Jun
- 2026 03:45:50 -0500
+ 2026 03:45:52 -0500
 From: fanhuang <FangSheng.Huang@amd.com>
 To: <qemu-devel@nongnu.org>, <imammedo@redhat.com>, <david@kernel.org>,
  <gourry@gourry.net>
 CC: <Zhigang.Luo@amd.com>, <Lianjie.Shi@amd.com>, fanhuang
  <FangSheng.Huang@amd.com>
-Subject: [PATCH v9 2/4] i386/acpi-build: partition device_memory SRAT umbrella
- for SPM
-Date: Tue, 2 Jun 2026 16:44:45 +0800
-Message-ID: <20260602084447.1100554-3-FangSheng.Huang@amd.com>
+Subject: [PATCH v9 3/4] hw/i386: integrate spm-memory into the pc machine plug
+ path
+Date: Tue, 2 Jun 2026 16:44:46 +0800
+Message-ID: <20260602084447.1100554-4-FangSheng.Huang@amd.com>
 X-Mailer: git-send-email 2.34.1
 In-Reply-To: <20260602084447.1100554-1-FangSheng.Huang@amd.com>
 References: <20260602084447.1100554-1-FangSheng.Huang@amd.com>
@@ -80,32 +80,32 @@ X-ClientProxiedBy: satlexmb07.amd.com (10.181.42.216) To satlexmb07.amd.com
  (10.181.42.216)
 X-EOPAttributedMessage: 0
 X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: DM2PEPF00003FC3:EE_|IA1PR12MB6044:EE_
-X-MS-Office365-Filtering-Correlation-Id: f7cd31f5-b0f9-4b0f-c2a4-08dec0835ae6
+X-MS-TrafficTypeDiagnostic: DM2PEPF00003FC3:EE_|CH0PR12MB8506:EE_
+X-MS-Office365-Filtering-Correlation-Id: 8eafd943-92e0-433d-1af0-08dec0835c37
 X-MS-Exchange-SenderADCheck: 1
 X-MS-Exchange-AntiSpam-Relay: 0
 X-Microsoft-Antispam: BCL:0;
- ARA:13230040|376014|36860700016|82310400026|1800799024|6133799003|11063799006|3023799007|18002099003|56012099006|22082099003|43062017;
-X-Microsoft-Antispam-Message-Info: EecWunHazcWQCHSfxJJXfX4eBlBct8r7nkhxQeYbgP4hsaZXb+QorXMRiXk1W0aJbIUfe+9IWLxH+kxlqV2wMpvLhyqMTQu8cCi0cAkF4sHToYWBbeKr5xmyltcuGD/Srq6HW6Es551/I9cwK+CWXceGNELehMakZ8SJgtRFN3nzVOhg8Sf8/geVQdus4pyw91q3PY6j3QXE+xEZfI1NoNW62XU4e16x0uKrl45jNL/hvJdbrsxRH+IT8imMUywe2QGRiylnZduCxZkg68fmypIQy6TatHFFXQAI4chuaelnlQW7H1/An+mixAQMxSpoGlt69XG1Nbl83F7qrGU5txUR5PmPMrQFsTQzMJsrmWBKdPp8a3RMRcWueLhJu1yOVNFx7IFkDc1ABLNWnlF/dySeVqyakwrkWHjqaBaEDe51op4b7gEkDVGCTgOdCndtyESbjBSqFmk7QRqWvMPKw08HgKXGFztaA2R0g4G9zi3oJQiWqwMMd1NwWeuQpKhD0dxBoii2FIP73GTUmFr3NYbZk0PHp2r5RNNH94ehrsLt/HvtnXnPWtSzXvFjB9uZy6T6Tv5+sWGk2aHaHIhsHt6qLQH94BzEJIa7ywYWse1aH3Jhs/l9lCBM33bea6pce+Oo7I6qp/Xms8K00nMxG3WjfjzcxDwwsnUP4BePORc+V25X0Kxqv1XY/eDUUcuo+IJTZvzRGUhtinMf8nsWw/gKKgPm4l/bwax3lcxe/zEvbvpcRnpY/D7+H1mUESNHfRTFLxBY6fC1npwlXoT4sur3jZlxi391C0z3LPMixIc=
+ ARA:13230040|1800799024|376014|36860700016|82310400026|18002099003|22082099003|11063799006|56012099006|43062017;
+X-Microsoft-Antispam-Message-Info: Nz5lllfTVkKHqITcrmsN0SXXK4JxlTvMQZHavCXaMmuEZsbDMAkoD1yS7z4aAXVlJGhvGSr5wowNQu+TrYmB/hb3SMbgN9URaSZ8pXnUy9tcpS3hs9LMPo+KlZIWoBOFAFBblCvnmiEQ8P7ULGfOsOxC9kxP2+O7Mn90ccAcluAR6DY4gY5BnSKIJylEsVGXizVMD2B1FanrQ4dd9Jem3HLywXrf0IySlIGdONyJ1INafsK0Gj/5IejsG5MHJ6V1VTB/lMr5THDym81SX8MXDvCTJn6bgINWT/Vu7kZCXFzv/N9DAQ0SezZXncyapR2h88fomaDTNR/AS8KuhmyD6mkO+C1l9fdfhtZo4BkOWosUsOLFe/HLyw68zIZKpSqUyOHJl+BRxJ9iV9iWiayDXsjyL1kXNONb/Gky4S0bFUFyPjsf5Q9udkioZxQ+sLmHJBTLkY9KgBBe/b26F9RxpPJYUvPXs7wT2NMNytCx2Z2l6gd2elxIfPzO6P4XhrA6jSHRsphIJlKHWjh519s8mIFuxuLmj7iPy/tzikymLJ/uL5vX49Ex5amUMMtPoJpyGmIeKFwNEjDx0xgxrnPFM4R5kdybL8EE1yWGcl94R8Lkgg/WTCLUIeGjefSMjH9wlpUS0mt6iskcg1HVc3P49Ru0f3pm8iYpFxAFG5BkogQUNg6fdRiTP+QaL9L9LT+DubmYGP+B/x+Vkx7SO1dkKinfHDITjJEfJMrCo4VAmFtajcsP14YdpBrtbr5TMJYKa0A3Kdi4DzQE6qpnpfeAhw==
 X-Forefront-Antispam-Report: CIP:165.204.84.17; CTRY:US; LANG:en; SCL:1; SRV:;
  IPV:NLI; SFV:NSPM; H:satlexmb07.amd.com; PTR:InfoDomainNonexistent; CAT:NONE;
- SFS:(13230040)(376014)(36860700016)(82310400026)(1800799024)(6133799003)(11063799006)(3023799007)(18002099003)(56012099006)(22082099003)(43062017);
+ SFS:(13230040)(1800799024)(376014)(36860700016)(82310400026)(18002099003)(22082099003)(11063799006)(56012099006)(43062017);
  DIR:OUT; SFP:1101; 
 X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0: o1JvQ3+edxyyBhMCIOZLwntKOFLwq6wH9HbpWl0FQ06y5ZJT1tCewZbgNqVyMah/T1xyvGD+jFgfip1qGhvWi3IpfB8f+OWGWPqD9hR0ttbEFlvLMmyoZtf1VsZKWVQq1ISqSYF5/R2g0nfHAv6U/8UfoQp0dDsfBORrVmMuRSj3mySJGFTYOakXzXKYpf4zV1G9zXnH0c6cADkKoPnPmxR+w/9dcENKfqTD5S5In82rlEqwWcp3sikN/Ca7jhWmt0Wr+LEPzopX3VQYsduUkQYRDUnAYObuHGO2MQhpj8Tsd+M2L/rArvjec3NGiRf9UTtAkblsuqmKw5TqIl/ydScXUYF4aewyMytkHZlMk23MGB3HBeL1Spd4A4THR2suUNn9k8XdeNdi9g9uYko5LRTqF4m3yZEbV0LuWf98A2gvUbPpvHYxmAHjnRyDOwFH
+X-MS-Exchange-AntiSpam-MessageData-0: NGeISX7WhQT9sHvTDtapH/vbH2Hsu2u7oMQvD0yn+vUg3wwGAxU6TH3c3Bjlv3SBMKJSVmMcIMz4aF3GUEyOT4wHLj0R95/TGY2iueEpG1v2C5BrT6dLU1P5hnhLdFK4tp6o6vzP3xNSFdnkT5uR5Z3Eh8VZHwSs582VHcpdUV2TiX+nYfhKcUn4KwAkgLwatxwOAF0Aej75QQvG1uY7zzx1/JLImS6yWVTjwrWPefqc0X6MoOsYTmBp1MtFFjghyVotEkWe7b23/KbYBFehae4aDEdFZZ8pp0S6zEOO6CMAXyuIFGKNYeYA93gnOyXA/amU3x/pgh3LDdkSb06qPbhXTn+I840v1fYLOvi/nX8DW8P5j86TzIM8Td/nPhk9O3DT+YAOZxXzdMZH6VX/gQ0PxnoAPsxf6k7cFg+Ca+H+vdioGL++/mCV/XAk/g7O
 X-OriginatorOrg: amd.com
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 02 Jun 2026 08:45:53.0746 (UTC)
-X-MS-Exchange-CrossTenant-Network-Message-Id: f7cd31f5-b0f9-4b0f-c2a4-08dec0835ae6
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 02 Jun 2026 08:45:55.2804 (UTC)
+X-MS-Exchange-CrossTenant-Network-Message-Id: 8eafd943-92e0-433d-1af0-08dec0835c37
 X-MS-Exchange-CrossTenant-Id: 3dd8961f-e488-4e60-8e11-a82d994e183d
 X-MS-Exchange-CrossTenant-OriginalAttributedTenantConnectingIp: TenantId=3dd8961f-e488-4e60-8e11-a82d994e183d; Ip=[165.204.84.17];
  Helo=[satlexmb07.amd.com]
 X-MS-Exchange-CrossTenant-AuthSource: DM2PEPF00003FC3.namprd04.prod.outlook.com
 X-MS-Exchange-CrossTenant-AuthAs: Anonymous
 X-MS-Exchange-CrossTenant-FromEntityHeader: HybridOnPrem
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: IA1PR12MB6044
-Received-SPF: permerror client-ip=2a01:111:f403:c107::3;
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: CH0PR12MB8506
+Received-SPF: permerror client-ip=2a01:111:f403:c10d::3;
  envelope-from=FangSheng.Huang@amd.com;
- helo=PH0PR06CU001.outbound.protection.outlook.com
+ helo=SN4PR0501CU005.outbound.protection.outlook.com
 X-Spam_score_int: -24
 X-Spam_score: -2.5
 X-Spam_bar: --
@@ -127,140 +127,110 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Restructure the device_memory SRAT umbrella entry into a per-kind
-partition: each TYPE_SPM_MEMORY device gets an ENABLED entry at its
-own proximity_domain; the remaining sub-ranges get HOTPLUGGABLE |
-ENABLED placeholders at the highest PXM, preserving the upstream
-convention required by Windows hotplug and Linux SWIOTLB.
+Add the pc machine hookup for TYPE_SPM_MEMORY so each spm-memory
+instance is placed by the memory-device framework and reported to
+the guest as E820_SOFT_RESERVED.
 
 Signed-off-by: FangSheng Huang <FangSheng.Huang@amd.com>
 ---
- hw/i386/acpi-build.c | 98 +++++++++++++++++++++++++++++++++++++++++---
- 1 file changed, 92 insertions(+), 6 deletions(-)
+ hw/i386/e820_memory_layout.h | 11 ++++++-----
+ hw/i386/pc.c                 | 35 +++++++++++++++++++++++++++++++++++
+ 2 files changed, 41 insertions(+), 5 deletions(-)
 
-diff --git a/hw/i386/acpi-build.c b/hw/i386/acpi-build.c
-index 0d7c83d5e9..17de9768a1 100644
---- a/hw/i386/acpi-build.c
-+++ b/hw/i386/acpi-build.c
-@@ -52,6 +52,7 @@
- #include "migration/vmstate.h"
- #include "hw/mem/memory-device.h"
- #include "hw/mem/nvdimm.h"
-+#include "hw/mem/spm-memory.h"
- #include "system/numa.h"
- #include "system/reset.h"
- #include "hw/hyperv/vmbus-bridge.h"
-@@ -1346,6 +1347,96 @@ build_tpm_tcpa(GArray *table_data, BIOSLinker *linker, GArray *tcpalog,
- }
- #endif
+diff --git a/hw/i386/e820_memory_layout.h b/hw/i386/e820_memory_layout.h
+index b50acfa201..6ef169db9c 100644
+--- a/hw/i386/e820_memory_layout.h
++++ b/hw/i386/e820_memory_layout.h
+@@ -10,11 +10,12 @@
+ #define HW_I386_E820_MEMORY_LAYOUT_H
  
-+typedef struct {
-+    uint64_t addr;
-+    uint64_t size;
-+    uint32_t node;
-+} SpmRange;
-+
-+static int collect_spm_ranges_cb(Object *obj, void *opaque)
+ /* e820 types */
+-#define E820_RAM        1
+-#define E820_RESERVED   2
+-#define E820_ACPI       3
+-#define E820_NVS        4
+-#define E820_UNUSABLE   5
++#define E820_RAM           1
++#define E820_RESERVED      2
++#define E820_ACPI          3
++#define E820_NVS           4
++#define E820_UNUSABLE      5
++#define E820_SOFT_RESERVED 0xefffffff
+ 
+ struct e820_entry {
+     uint64_t address;
+diff --git a/hw/i386/pc.c b/hw/i386/pc.c
+index 2ecad3c503..66d8a684c2 100644
+--- a/hw/i386/pc.c
++++ b/hw/i386/pc.c
+@@ -63,6 +63,7 @@
+ #include "hw/i386/kvm/xen_gnttab.h"
+ #include "hw/i386/kvm/xen_xenstore.h"
+ #include "hw/mem/memory-device.h"
++#include "hw/mem/spm-memory.h"
+ #include "e820_memory_layout.h"
+ #include "trace.h"
+ #include "sev.h"
+@@ -1283,11 +1284,42 @@ static void pc_hv_balloon_plug(HotplugHandler *hotplug_dev,
+     memory_device_plug(MEMORY_DEVICE(dev), MACHINE(hotplug_dev));
+ }
+ 
++static void pc_spm_memory_pre_plug(HotplugHandler *hotplug_dev,
++                                   DeviceState *dev, Error **errp)
 +{
-+    GArray *ranges = opaque;
-+    SpmMemoryDevice *spm;
-+    MemoryDeviceClass *mdc;
-+    SpmRange r;
++    SpmMemoryDevice *spm = SPM_MEMORY(dev);
 +
-+    if (!object_dynamic_cast(obj, TYPE_SPM_MEMORY)) {
-+        return 0;
-+    }
-+    spm = SPM_MEMORY(obj);
-+    mdc = MEMORY_DEVICE_GET_CLASS(MEMORY_DEVICE(spm));
-+    r.addr = mdc->get_addr(MEMORY_DEVICE(spm));
-+    r.size = memory_region_size(
-+                 host_memory_backend_get_memory(spm->hostmem));
-+    r.node = spm->node;
-+    g_array_append_val(ranges, r);
-+    return 0;
-+}
-+
-+static gint spm_range_compare(gconstpointer a, gconstpointer b)
-+{
-+    const SpmRange *range_a = a;
-+    const SpmRange *range_b = b;
-+
-+    if (range_a->addr < range_b->addr) {
-+        return -1;
-+    }
-+    if (range_a->addr > range_b->addr) {
-+        return 1;
-+    }
-+    return 0;
-+}
-+
-+/*
-+ * Emit SRAT memory-affinity entries covering the device_memory region.
-+ *
-+ * For each plugged TYPE_SPM_MEMORY device, emit an ENABLED entry at the
-+ * device's own proximity_domain.  All remaining sub-ranges (gaps between
-+ * SPM devices, leading and trailing padding, ranges occupied by non-SPM
-+ * memory devices) are covered by HOTPLUGGABLE|ENABLED placeholder entries
-+ * at PXM = nb_numa_nodes - 1.
-+ */
-+static void build_srat_device_memory(GArray *table_data, MachineState *ms)
-+{
-+    g_autoptr(GArray) ranges = g_array_new(FALSE, TRUE, sizeof(SpmRange));
-+    uint64_t cursor, end;
-+    int nb_nodes = ms->numa_state ? ms->numa_state->num_nodes : 0;
-+    uint32_t hotplug_pxm = nb_nodes > 0 ? nb_nodes - 1 : 0;
-+    guint i;
-+
-+    if (!ms->device_memory) {
++    if (host_memory_backend_is_mapped(spm->hostmem)) {
++        error_setg(errp, "memory backend '%s' is already in use",
++                   object_get_canonical_path_component(OBJECT(spm->hostmem)));
 +        return;
 +    }
-+
-+    cursor = ms->device_memory->base;
-+    end = cursor + memory_region_size(&ms->device_memory->mr);
-+
-+    object_child_foreach_recursive(qdev_get_machine(),
-+                                   collect_spm_ranges_cb, ranges);
-+    g_array_sort(ranges, spm_range_compare);
-+
-+    for (i = 0; i < ranges->len; i++) {
-+        SpmRange *r = &g_array_index(ranges, SpmRange, i);
-+
-+        if (cursor < r->addr) {
-+            build_srat_memory(table_data, cursor, r->addr - cursor,
-+                              hotplug_pxm,
-+                              MEM_AFFINITY_HOTPLUGGABLE |
-+                              MEM_AFFINITY_ENABLED);
-+        }
-+        build_srat_memory(table_data, r->addr, r->size, r->node,
-+                          MEM_AFFINITY_ENABLED);
-+        cursor = r->addr + r->size;
-+    }
-+
-+    if (cursor < end) {
-+        build_srat_memory(table_data, cursor, end - cursor,
-+                          hotplug_pxm,
-+                          MEM_AFFINITY_HOTPLUGGABLE |
-+                          MEM_AFFINITY_ENABLED);
-+    }
++    memory_device_pre_plug(MEMORY_DEVICE(dev), MACHINE(hotplug_dev),
++                           errp);
 +}
 +
- #define HOLE_640K_START  (640 * KiB)
- #define HOLE_640K_END   (1 * MiB)
- 
-@@ -1481,12 +1572,7 @@ build_srat(GArray *table_data, BIOSLinker *linker, MachineState *machine)
-      * Memory devices may override proximity set by this entry,
-      * providing _PXM method if necessary.
-      */
--    if (machine->device_memory) {
--        build_srat_memory(table_data, machine->device_memory->base,
--                          memory_region_size(&machine->device_memory->mr),
--                          nb_numa_nodes - 1,
--                          MEM_AFFINITY_HOTPLUGGABLE | MEM_AFFINITY_ENABLED);
--    }
-+    build_srat_device_memory(table_data, machine);
- 
-     acpi_table_end(linker, &table);
- }
++static void pc_spm_memory_plug(HotplugHandler *hotplug_dev,
++                               DeviceState *dev, Error **errp)
++{
++    SpmMemoryDevice *spm = SPM_MEMORY(dev);
++    MemoryDeviceClass *mdc = MEMORY_DEVICE_GET_CLASS(MEMORY_DEVICE(dev));
++    uint64_t addr, size;
++
++    host_memory_backend_set_mapped(spm->hostmem, true);
++    memory_device_plug(MEMORY_DEVICE(dev), MACHINE(hotplug_dev));
++
++    addr = mdc->get_addr(MEMORY_DEVICE(dev));
++    size = memory_region_size(host_memory_backend_get_memory(spm->hostmem));
++    e820_add_entry(addr, size, E820_SOFT_RESERVED);
++}
++
+ static void pc_machine_device_pre_plug_cb(HotplugHandler *hotplug_dev,
+                                           DeviceState *dev, Error **errp)
+ {
+     if (object_dynamic_cast(OBJECT(dev), TYPE_PC_DIMM)) {
+         pc_memory_pre_plug(hotplug_dev, dev, errp);
++    } else if (object_dynamic_cast(OBJECT(dev), TYPE_SPM_MEMORY)) {
++        pc_spm_memory_pre_plug(hotplug_dev, dev, errp);
+     } else if (object_dynamic_cast(OBJECT(dev), TYPE_CPU)) {
+         x86_cpu_pre_plug(hotplug_dev, dev, errp);
+     } else if (object_dynamic_cast(OBJECT(dev), TYPE_VIRTIO_MD_PCI)) {
+@@ -1324,6 +1356,8 @@ static void pc_machine_device_plug_cb(HotplugHandler *hotplug_dev,
+ {
+     if (object_dynamic_cast(OBJECT(dev), TYPE_PC_DIMM)) {
+         pc_memory_plug(hotplug_dev, dev, errp);
++    } else if (object_dynamic_cast(OBJECT(dev), TYPE_SPM_MEMORY)) {
++        pc_spm_memory_plug(hotplug_dev, dev, errp);
+     } else if (object_dynamic_cast(OBJECT(dev), TYPE_CPU)) {
+         x86_cpu_plug(hotplug_dev, dev, errp);
+     } else if (object_dynamic_cast(OBJECT(dev), TYPE_VIRTIO_MD_PCI)) {
+@@ -1368,6 +1402,7 @@ static HotplugHandler *pc_get_hotplug_handler(MachineState *machine,
+                                              DeviceState *dev)
+ {
+     if (object_dynamic_cast(OBJECT(dev), TYPE_PC_DIMM) ||
++        object_dynamic_cast(OBJECT(dev), TYPE_SPM_MEMORY) ||
+         object_dynamic_cast(OBJECT(dev), TYPE_CPU) ||
+         object_dynamic_cast(OBJECT(dev), TYPE_VIRTIO_MD_PCI) ||
+         object_dynamic_cast(OBJECT(dev), TYPE_VIRTIO_IOMMU_PCI) ||
 -- 
 2.34.1
 
