@@ -4,75 +4,80 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B7DCCCD6E4A
-	for <qemu-devel@archiver.kernel.org>; Tue,  2 Jun 2026 11:30:15 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2462BCD6E60
+	for <qemu-devel@archiver.kernel.org>; Tue,  2 Jun 2026 12:09:55 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wUNJL-00075r-DB; Tue, 02 Jun 2026 07:29:31 -0400
+	id 1wUNvw-00050a-3r; Tue, 02 Jun 2026 08:09:26 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1wUNJJ-00075b-M8
- for qemu-devel@nongnu.org; Tue, 02 Jun 2026 07:29:29 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <stefanha@redhat.com>)
+ id 1wUNvh-0004yA-Ft
+ for qemu-devel@nongnu.org; Tue, 02 Jun 2026 08:09:10 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1wUNJH-0006oU-Kg
- for qemu-devel@nongnu.org; Tue, 02 Jun 2026 07:29:29 -0400
+ (Exim 4.90_1) (envelope-from <stefanha@redhat.com>)
+ id 1wUNvf-0005MR-9o
+ for qemu-devel@nongnu.org; Tue, 02 Jun 2026 08:09:09 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1780399765;
+ s=mimecast20190719; t=1780402144;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  in-reply-to:in-reply-to:references:references;
- bh=HFFNqVI0xx0YjPZMcRanRS9Sr9Q0CDAJLAv9+v8Tmmk=;
- b=WJYfaPbLAzlWPC5PEPU9C9KLj2qZZgisFA7AdLC3SQmTn4ORQQMQUlFyxBMQKU2jONDggR
- SSNnsbkw50l3PvXasbkYOOtDzRuHY6YkKG5+jZmHTNpVHSgKFkg334b547UVGS7nLfIt65
- TFlzyb7w4IpcDKmAqg/dv8S4ptxeem0=
+ bh=ZXirT6D+twMqikisX0u2ln/KMF/8TWJBgh3wzw8SNHA=;
+ b=L3JQSToRkckCP3e5xPL0R0qok59LJhOy6gT3GwEXglO6FVFOvMQB/I5tQhQIZQoV0QJdQk
+ yahH7OPlEdfGqW2coL9EgvDCLPQ2k7NHtEtuZitn28jP45H0oZjND2NBMMkn9XRETvmCrd
+ hh0ao2+Qwbkkvtr/5Xpowbbt/n52eK8=
 Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-447-pdLoYHvFNeqR06E7baSU4g-1; Tue,
- 02 Jun 2026 07:29:24 -0400
-X-MC-Unique: pdLoYHvFNeqR06E7baSU4g-1
-X-Mimecast-MFC-AGG-ID: pdLoYHvFNeqR06E7baSU4g_1780399763
-Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-558-MULYT-PrO9q8Pmct9ZFTQw-1; Tue,
+ 02 Jun 2026 08:09:00 -0400
+X-MC-Unique: MULYT-PrO9q8Pmct9ZFTQw-1
+X-Mimecast-MFC-AGG-ID: MULYT-PrO9q8Pmct9ZFTQw_1780402139
+Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
  by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 17C7C1800367; Tue,  2 Jun 2026 11:29:23 +0000 (UTC)
-Received: from blackfin.pond.sub.org (unknown [10.44.22.2])
- by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 175BE30002DD; Tue,  2 Jun 2026 11:29:22 +0000 (UTC)
-Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
- id A261821E6A01; Tue, 02 Jun 2026 13:29:19 +0200 (CEST)
-From: Markus Armbruster <armbru@redhat.com>
-To: Zhang Chen <zhangckid@gmail.com>
-Cc: qemu-devel <qemu-devel@nongnu.org>,  "Dr . David Alan Gilbert"
- <dave@treblig.org>,  Eric Blake <eblake@redhat.com>,  Markus Armbruster
- <armbru@redhat.com>,  "Michael S . Tsirkin" <mst@redhat.com>,  Stefan
- Hajnoczi <stefanha@redhat.com>
-Subject: Re: [PATCH V8 02/15] iothread: introduce iothread_ref/unref to
- track attached devices
-In-Reply-To: <20260529213321.96271-3-zhangckid@gmail.com> (Zhang Chen's
- message of "Sat, 30 May 2026 05:33:08 +0800")
-References: <20260529213321.96271-1-zhangckid@gmail.com>
- <20260529213321.96271-3-zhangckid@gmail.com>
-Date: Tue, 02 Jun 2026 13:29:19 +0200
-Message-ID: <87tsrl2nao.fsf@pond.sub.org>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+ id CEC9C18002C8; Tue,  2 Jun 2026 12:08:57 +0000 (UTC)
+Received: from localhost (unknown [10.2.16.102])
+ by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id D649719560A7; Tue,  2 Jun 2026 12:08:56 +0000 (UTC)
+Date: Tue, 2 Jun 2026 08:08:55 -0400
+From: Stefan Hajnoczi <stefanha@redhat.com>
+To: Jens Axboe <axboe@kernel.dk>
+Cc: "open list:Network Block Dev..." <qemu-block@nongnu.org>,
+ QEMU Developers <qemu-devel@nongnu.org>, Fam Zheng <fam@euphon.net>,
+ Hanna Czenczek <hreitz@redhat.com>, Kevin Wolf <kwolf@redhat.com>,
+ Thomas Lamprecht <t.lamprecht@proxmox.com>,
+ Fiona Ebner <f.ebner@proxmox.com>
+Subject: Re: Excessive IO PSI for iothread when using io_uring since QEMU 10.2
+Message-ID: <20260602120855.GA548610@fedora>
+References: <017dc767-90e3-4983-8417-e541b3fb04f6@proxmox.com>
+ <20260427191343.GD218226@fedora>
+ <317ab384-f8c2-49af-89c4-407bb2f5617c@proxmox.com>
+ <20260428161927.GB278591@fedora>
+ <9b11dec1-f27c-4c69-8dfc-34ef0bdc7e8f@proxmox.com>
+ <20260601172043.GB458909@fedora>
+ <ddaae8e8-cfd5-4fdc-8ada-014258c2d9d6@proxmox.com>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=armbru@redhat.com;
+Content-Type: multipart/signed; micalg=pgp-sha512;
+ protocol="application/pgp-signature"; boundary="z3qcwLbu62f33Z35"
+Content-Disposition: inline
+In-Reply-To: <ddaae8e8-cfd5-4fdc-8ada-014258c2d9d6@proxmox.com>
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.12
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=stefanha@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -24
 X-Spam_score: -2.5
 X-Spam_bar: --
 X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.445,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -88,313 +93,146 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Zhang Chen <zhangckid@gmail.com> writes:
 
-> Currently, IOThreads do not maintain a record of which devices are
-> associated with them. This makes it difficult to monitor the
-> workload distribution of IOThreads, especially in complex
-> hotplug scenarios involving multiple virtio-blk or virtio-scsi devices.
->
-> This patch introduces a reference counting and tracking mechanism
-> within the IOThread object:
->
-> - iothread_ref(): Prepends the device's IOThreadHolder to a list.
-> - iothread_unref(): Searches for the IOThreadHolder using a custom
->   string comparison (g_strcmp0), releases the associated memory
->   upon a successful match.
-> - holders: A GList storing the IOThreadHolder of attached devices
->   for runtime introspection.
->
-> A later commit will add QMP commands to let management applications
-> query the attachment status of IOThreads.
->
-> Signed-off-by: Zhang Chen <zhangckid@gmail.com>
-> ---
->  include/system/iothread.h |  5 +++
->  iothread.c                | 94 +++++++++++++++++++++++++++++++++++++++
->  qapi/misc.json            | 61 +++++++++++++++++++++++++
->  3 files changed, 160 insertions(+)
->
-> diff --git a/include/system/iothread.h b/include/system/iothread.h
-> index a1ef7696cb..b9207ad829 100644
-> --- a/include/system/iothread.h
-> +++ b/include/system/iothread.h
-> @@ -50,6 +50,11 @@ struct IOThread {
->      bool stopping;              /* has iothread_stop() been called? */
->      bool running;               /* should iothread_run() continue? */
->      int thread_id;
-> +    /*
-> +     * The list elements are of type IOThreadHolder, which can
-> +     * represent either a QOM path or a block node name.
+--z3qcwLbu62f33Z35
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-You forgot monitors.
+On Tue, Jun 02, 2026 at 10:41:11AM +0200, Fiona Ebner wrote:
+> Am 01.06.26 um 7:20 PM schrieb Stefan Hajnoczi:
+> > On Wed, Apr 29, 2026 at 10:00:34AM +0200, Fiona Ebner wrote:
+> >> Am 28.04.26 um 6:18 PM schrieb Stefan Hajnoczi:
+> >>> On Tue, Apr 28, 2026 at 02:10:02PM +0200, Fiona Ebner wrote:
+> >>>> Hi Stefan,
+> >>>>
+> >>>> Am 27.04.26 um 9:12 PM schrieb Stefan Hajnoczi:
+> >>>>> On Fri, Apr 24, 2026 at 12:25:41PM +0200, Fiona Ebner wrote:
+> >>>>>> Dear maintainers,
+> >>>>>>
+> >>>>>> since QEMU 10.2, if io_uring is enabled, it will be used for the e=
+vent
+> >>>>>> loop of iothreads and this causes an IO pressure stall value of ne=
+arly
+> >>>>>> 100 when idle.
+> >>>>>>
+> >>>>>> The issue was also reported on the kernel mailing list [0]. The
+> >>>>>> suggestion from Jens Axboe was to just turn off the iowait account=
+ing
+> >>>>>> completely. But since (for block/file-posix.c), there is actual IO
+> >>>>>> submitted via the same ring, I wasn't sure if that is the right ap=
+proach.
+> >>>>>>
+> >>>>>> So the idea was to keep track of whether the event loop is otherwi=
+se
+> >>>>>> idle and only use the IORING_ENTER_NO_IOWAIT flag in that case [1].
+> >>>>>>
+> >>>>>> However, doing so would only help for block/file-posix.c, which su=
+bmits
+> >>>>>> IO via luring_co_submit() -> fdmon_io_uring_add_sqe(). For example=
+, for
+> >>>>>> block/rbd.c, only a poll SQE for the AioHandler node's fd is used.=
+ When
+> >>>>>> submitting that poll SQE in the iothread, we would need to be able=
+ to
+> >>>>>> know if IO for RBD is currently in-flight or not to be able to dec=
+ide
+> >>>>>> whether to use the IORING_ENTER_NO_IOWAIT flag or not. Is there a =
+good
+> >>>>>> way to do this (in a general way)?
+> >>>>>>
+> >>>>>> Or should the flag really always be used (if supported by the kern=
+el)?
+> >>>>>> Is there a way to tell io_uring/kernel that we are an event loop a=
+nd our
+> >>>>>> waiting should only be accounted for when there is actual IO in-fl=
+ight?
+> >>>>>>
+> >>>>>> Happy to hear your opinions and suggestions!
+> >>>>>>
+> >>>>>> [0]:
+> >>>>>> https://lore.kernel.org/io-uring/14bc6266-5bc9-4454-9518-d1016bfe4=
+17b@proxmox.com/T/
+> >>>>>
+> >>>>> Hi Fiona,
+> >>>>> Jens replied yesterday confirmed your suspicion that the number of
+> >>>>> inflight requests is not being tracked correctly.
+> >>>>>
+> >>>>> Is there still a problem after fixing the kernel's inflight countin=
+g? If
+> >>>>> not, then no QEMU change is necessary and that seems like the clean=
+est
+> >>>>> solution anyway. The kernel should know whether there is I/O in fli=
+ght
+> >>>>> and so it doesn't seem right that userspace needs to hint this.
+> >>>>
+> >>>>
+> >>>> unfortunately, yes. Even with the kernel fix [2], the real problem w=
+ith
+> >>>> poll SQEs described above remains. I'm still seeing high IO pressure
+> >>>> stall values when using QEMU. In add_poll_add_sqe(), QEMU submits po=
+ll
+> >>>> SQEs for the AioHandler node fd, and that does count as pending IO. A
+> >>>> small reproducer modeling this [3].
+> >>>
+> >>> Does the kernel account POLL_ADD SQEs as blocking I/O activity?
+> >>
+> >> Apparently yes. See the C program below [3].
+> >>
+> >>> That behavior is inconsistent if select(2)/poll(2)/epoll_wait(2)
+> >>> syscalls do not count as blocking I/O activity. The kernel io_uring c=
+ode
+> >>> should account them correctly and not rely on a userspace hint.
+> >>
+> >> @Jens Axboe: should there be a separate internal counter for
+> >> poll/timeout SQEs and have them not count towards IO wait by default?
+> >=20
+> > Hi Fiona,
+> > Any update on this issue? Was it resolved in io_uring or is a QEMU patch
+> > still needed?
+>=20
+> Hi Stefan,
+>=20
+> I did not proceed with the above, since I did not get an ack from Jens
+> regarding the suggested approach.
+>=20
+> We needed to go ahead with a release downstream, so for the meantime, we
+> applied a workaround by Thomas with setting the IORING_ENTER_NO_IOWAIT
+> flag when there is no actual IO in-flight [0]. Should it be submitted to
+> qemu-devel too?
 
-Suggest "which can either be a QOM object, a block node, or a monitor."
+Pinging Jens: io_uring accounts POLL_ADD SQEs as blocking I/O activity
+whereas select(2)/poll(2)/epoll_wait(2) do not. Would it make sense to
+follow the same accounting as the syscalls for this operation since that
+is probably expected?
 
-> +     */
-> +    GList *holders;
->  
->      /* AioContext poll parameters */
->      int64_t poll_max_ns;
-> diff --git a/iothread.c b/iothread.c
-> index 3558535b40..3301b8d495 100644
-> --- a/iothread.c
-> +++ b/iothread.c
-> @@ -25,6 +25,92 @@
->  #include "qemu/rcu.h"
->  #include "qemu/main-loop.h"
->  
-> +/*
-> + * iothread_ref:
-> + * @iothread: the iothread to track
-> + * @holder: the IOThreadHolder object initialized by the caller
-> + *
-> + * Add the @holder to the iothread's tracking list.
-> + */
-> +static void iothread_ref(IOThread *iothread, const IOThreadHolder *holder)
+Thanks,
+Stefan
 
-Yes, this is the interface I want :)
+>=20
+> [0]:
+> https://git.proxmox.com/?p=3Dpve-qemu.git;a=3Dcommitdiff;h=3D775e41b890a6=
+45db75119233fe2b21f139bf8e4f
+>=20
+> Best Regards,
+> Fiona
+>=20
 
-> +{
-> +    assert(holder);
-> +    IOThreadHolder *h = g_new0(IOThreadHolder, 1);
-> +
-> +    h->type = holder->type;
-> +    switch (holder->type) {
-> +    case IO_THREAD_HOLDER_KIND_QOM_OBJECT:
-> +        h->u.qom_object.qom_path = g_strdup(holder->u.qom_object.qom_path);
-> +        break;
-> +    case IO_THREAD_HOLDER_KIND_BLOCK_NODE:
-> +        h->u.block_node.node_name =
-> +            g_strdup(holder->u.block_node.node_name);
-> +        break;
-> +    case IO_THREAD_HOLDER_KIND_MONITOR_NAME:
-> +        h->u.monitor_name.monitor_name =
-> +            g_strdup(holder->u.monitor_name.monitor_name);
-> +        break;
-> +    default:
-> +        g_assert_not_reached();
-> +    }
+--z3qcwLbu62f33Z35
+Content-Type: application/pgp-signature; name=signature.asc
 
-This makes @h a deep copy of @holder.  Try
+-----BEGIN PGP SIGNATURE-----
 
-    IOThreadHolder *h = QAPI_CLONE(IOThreadHolder, holder);
+iQEzBAEBCgAdFiEEhpWov9P5fNqsNXdanKSrs4Grc8gFAmoex9cACgkQnKSrs4Gr
+c8jQ5ggAg8w1XzxNxVJXZjzAh/UHlkDQFO+aSnsutJdWLMmf1EtteRzXrPVafKeI
+r/c2qAHlK4khJgVhWjH5/50EF4XlQk1PMQv3IZGU7tcYB02R2pqZLoeM/PNndDw3
+WWJZeD9SpFBqqsDGa/dNB7bJr5APiG6mU46+h67fsiiH2qSQEwL2QKX7YoZ/4+pP
+t9uNgNeVAui3x1HVhDqpvZ67Xqu5TVQ29/xAQ6IBjgdK2g7ztUzXtLD6BiojGqB4
+LKemJnKU3aPyhsKi3t27kSm9rRgVdzfngr3XZDgx1N0KDlUOWV/sFoorDifhkC7p
+N07p9LoAFv5zLQNHyXJjb3C5LzB1kQ==
+=oVRB
+-----END PGP SIGNATURE-----
 
-instead.
-
-Instead of making a copy, the function could take ownership of @holder,
-and require @holder's members to be dynamically allocated.  More
-efficient, but complicates the callers somewhat.  Not worthwhile, I
-guess.
-
-> +
-> +    iothread->holders = g_list_prepend(iothread->holders, h);
-> +}
-> +
-> +static int iothread_holder_compare(gconstpointer a, gconstpointer b)
-> +{
-> +    const IOThreadHolder *holder_a = a;
-> +    const IOThreadHolder *holder_b = b;
-> +    const char *name_a, *name_b;
-> +
-> +    if (holder_a->type != holder_b->type) {
-> +        return -1;
-
-Please use
-
-           return holder_b->type - holder_a->type;
-
-Why?  By convention, an int-valued function fn() comparing A to B
-returns less than 0 when A<B, 0 when A == B, and greater than 0 when
-A>B.  Anything else needs a prominent comment.  Best to stick to the
-convention whenever practical.
-
-Since A < B iff B > A, we want fn(A, B) == -fn(B, A).
-
-Your function does not satisfy that!  Harmless for now, because you only
-ever pass it to g_list_find_custom(), which treats all non-zero values
-the same.  But if anyone passes it to something like qsort() in the
-future, they can look forward to some debugging "fun".
-
-> +    }
-> +
-> +    switch (holder_a->type) {
-> +    case IO_THREAD_HOLDER_KIND_QOM_OBJECT:
-> +        name_a = holder_a->u.qom_object.qom_path;
-> +        name_b = holder_b->u.qom_object.qom_path;
-> +        break;
-> +    case IO_THREAD_HOLDER_KIND_BLOCK_NODE:
-> +        name_a = holder_a->u.block_node.node_name;
-> +        name_b = holder_b->u.block_node.node_name;
-> +        break;
-> +    case IO_THREAD_HOLDER_KIND_MONITOR_NAME:
-> +        name_a = holder_a->u.monitor_name.monitor_name;
-> +        name_b = holder_b->u.monitor_name.monitor_name;
-> +        break;
-> +    default:
-> +       /*
-> +        * This should not happen. If it does, name_a/b remains
-> +        * NULL and g_strcmp0 will handle it safely.
-> +        */
-> +        name_a = NULL;
-> +        name_b = NULL;
-
-Replace this by
-
-           g_assert_not_reached();
-
-Then neither @name_a nor @name_b can be null, because a non-optional
-QAPI str is never null.  Simply use strcmp().
-
-> +    }
-> +
-> +    return g_strcmp0(name_a, name_b);
-> +}
-> +
-> +/*
-> + * This function removes the @holder from the @iothread's tracking list.
-> + * The @holder must match the one used previously in iothread_ref().
-> + * It is a programming error to call this with a @holder that is not
-> + * currently associated with the @iothread.
-> + */
-> +static void iothread_unref(IOThread *iothread, const IOThreadHolder *holder)
-> +{
-> +    assert(holder);
-> +    GList *link = g_list_find_custom(iothread->holders, holder,
-> +                                     (GCompareFunc)iothread_holder_compare);
-> +
-> +    assert(link);
-> +
-> +    IOThreadHolder *h = (IOThreadHolder *)link->data;
-> +    qapi_free_IOThreadHolder(h);
-> +    iothread->holders = g_list_delete_link(iothread->holders, link);
-
-Removing @link from the list before freeing link->data would be more
-obviously correct, wouldn't it?
-
-> +}
-> +
->  static void *iothread_run(void *opaque)
->  {
->      IOThread *iothread = opaque;
-> @@ -356,6 +442,14 @@ char *iothread_get_id(IOThread *iothread)
->  
->  AioContext *iothread_get_aio_context(IOThread *iothread)
->  {
-> +    /* Remove in next patch for build */
-> +    IOThreadHolder holder = {
-> +        .type = IO_THREAD_HOLDER_KIND_QOM_OBJECT,
-> +        .u.qom_object.qom_path = (char *)"tmp_path",
-> +    };
-> +    iothread_ref(iothread, &holder);
-> +    iothread_unref(iothread, &holder);
-> +
-
-Is this really needed to make this patch work?
-
->      return iothread->ctx;
->  }
->  
-> diff --git a/qapi/misc.json b/qapi/misc.json
-> index c71a5fe657..d9f82f0922 100644
-> --- a/qapi/misc.json
-> +++ b/qapi/misc.json
-> @@ -67,6 +67,67 @@
->  ##
->  { 'command': 'query-name', 'returns': 'NameInfo', 'allow-preconfig': true }
->  
-> +
-> +##
-> +# @IOThreadHolderBlockNode:
-> +#
-> +# @node-name: A block node.
-
-Let's use
-
-   # @node-name: Name of the block node
-
-to make it more similar to node-name descriptions elsewhere.
-
-> +#
-> +# Since: 11.1
-> +#
-> +##
-> +{ 'struct': 'IOThreadHolderBlockNode',
-> +  'data': { 'node-name': 'str' } }
-> +
-> +##
-> +# @IOThreadHolderQomObject:
-> +#
-> +# @qom-path: A QOM Object.
-
-Likewise, let's use
-
-  # @qom-path: Path to the object in the QOM tree
-
-> +#
-> +# Since: 11.1
-> +#
-> +##
-> +{ 'struct': 'IOThreadHolderQomObject',
-> +  'data': { 'qom-path': 'str' } }
-> +
-> +##
-> +# @IOThreadHolderMonitor:
-> +#
-
-Let's use
-
-   # @monitor-name: Name of the HMP/QMP monitor
-
-> +# @monitor-name: A HMP/QMP monitor.
-> +#
-> +# Since: 11.1
-> +#
-> +##
-> +{ 'struct': 'IOThreadHolderMonitor',
-> +  'data': { 'monitor-name': 'str' } }
-> +
-> +##
-> +# @IOThreadHolderKind:
-> +#
-> +# @block-node: A block node.
-> +# @qom-object: A QOM Object.
-> +# @monitor-name: A HMP/QMP monitor.
-
-Rename to @monitor for consistency with the other two.
-
-Remark, not a request to change anything in your patch: kind monitor
-will become obsolete when monitors become QOM objects.  Doing that
-before we release this interface is desirable.
-
-> +#
-> +# Since: 11.1
-> +##
-> +{ 'enum': 'IOThreadHolderKind',
-> +  'data': [ 'block-node', 'qom-object', 'monitor-name' ] }
-> +
-> +##
-> +# @IOThreadHolder:
-> +#
-
-Let's add a short description:
-
-   # The block node, QOM object, or monitor holding the I/O thread.
-
-> +# @type: the kind of I/O thread holder.
-> +#
-> +# Since: 11.1
-> +##
-> +{ 'union': 'IOThreadHolder',
-> +  'base': { 'type': 'IOThreadHolderKind' },
-> +  'discriminator': 'type',
-> +  'data': {
-> +    'block-node': 'IOThreadHolderBlockNode',
-> +    'qom-object': 'IOThreadHolderQomObject',
-> +    'monitor-name': 'IOThreadHolderMonitor' } }
-> +
->  ##
->  # @IOThreadInfo:
->  #
+--z3qcwLbu62f33Z35--
 
 
