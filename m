@@ -4,85 +4,71 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5887ACD6E55
-	for <qemu-devel@archiver.kernel.org>; Tue,  2 Jun 2026 02:22:25 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 05A59CD6E55
+	for <qemu-devel@archiver.kernel.org>; Tue,  2 Jun 2026 02:25:57 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wUEl7-0008Tx-Jm; Mon, 01 Jun 2026 22:21:37 -0400
+	id 1wUEor-0001DF-Rz; Mon, 01 Jun 2026 22:25:30 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <anderson@allelesecurity.com>)
- id 1wUEkx-0008T0-Qh
- for qemu-devel@nongnu.org; Mon, 01 Jun 2026 22:21:28 -0400
-Received: from mail-vk1-xa2f.google.com ([2607:f8b0:4864:20::a2f])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <anderson@allelesecurity.com>)
- id 1wUEku-0006c6-Re
- for qemu-devel@nongnu.org; Mon, 01 Jun 2026 22:21:27 -0400
-Received: by mail-vk1-xa2f.google.com with SMTP id
- 71dfb90a1353d-59ccf81e74bso865447e0c.3
- for <qemu-devel@nongnu.org>; Mon, 01 Jun 2026 19:21:24 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=allelesecurity.com; s=google; t=1780366883; x=1780971683; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=RQDD5JDYiOKnudM+NIwg1Mg02MK+DhBWU+mqdr1mSng=;
- b=a1QGNPEys2shqu3YldKw2kjPvNix+JMg+ipZrE8CfFltJATWqJiDDEFrspyXDenOUi
- 5VUv7V+vLURZ7J6X+LGB59yDImAeU7hMEYVvShcC7ULush0hFUqklVwwdJB5+c3CdcXT
- vdQy8WkTgSMhvyAatdW+mMlE3OTa8UHUNdzOc=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1780366883; x=1780971683;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to;
- bh=RQDD5JDYiOKnudM+NIwg1Mg02MK+DhBWU+mqdr1mSng=;
- b=s6YFydVw9AlsM+RnKzD2g4Spj3zan/SzM5OHugMt084l3kfXuN8jcrJ9mZi5jZzpv/
- 3srYtOjyG0MuV+S1VgMohbbY+A05pp1Lyg8iQBOhueXgsjOlZA22zBnM9eqhH4g8vWm7
- +pzIffXrj9AbrHzOwar4o5nmksk3gLNJrj2a2Gcmy62obs6nCbTix22OPAe6YOaKiLUD
- sQ1IWsXpfbo5ALdC/kjSWGRXekI6lAO1uEq/rP/xs0WME3Q7k3PDBBps0Hkgh+3kEsWM
- 4pJ+gRlu5gK6StQggc0WbCoArDEWlzTiVH2ItYOiZbXYnGIMW6lxrHnN8Cupfyt/PSgM
- JS0g==
-X-Gm-Message-State: AOJu0YwkR4SjOXTfuc5+9sE9s14CEXZIr8JosbA0EZq//5WK5Cm0Le4w
- ocHLIiWLqAWXI3NYZJ+GZi9MdRz4d4EG15Dha9TDquKyClD17NfulTbXLr4vFjFA1VP4R3sit6F
- ITe0z37Q=
-X-Gm-Gg: Acq92OG8mC2mgQub2pwLUQgepB9kz2DmCcwTMKp1Lc90iCv8W1LvFiqF04px1IGuGlu
- 0+4kic6P33U1kvqaoKwgkcSnAg7vOBRBtTv+dSLaPQEeAeGuZTEnV+6wEdtOOLy2/CGXo1IwUIz
- Xj4SWstrAyUKj8iTyd0oODJaw2LWqAz/Z5UDECuZuqHVzFKR+DX2D0XIIV0Y2H+oARmcwCjRVXY
- w1GXY/3i8LTNttoP+ZoeYpPs3Q7aaHZAGzYYpjQEneUFun/AOzFPPB6pqk+ys64aD46+CKF2Jjc
- SKmg2xrsXKQOms4678zUgrBEUPQcKqQ15DHgtIMyPKjiva64dM3vNd0Y3FJvLSvVYVsxrLyUbsT
- XnHCuMpxa38qh1+QHkthdwxUkxXnKtNPCBCWGU2fSx/QmOfzXHXwiOBGs7I5hfkeiLoEiYuZ6rg
- JIJ04jLu2jm2XGG2PXotmbSGG6DIaXdLDU47W/Ow==
-X-Received: by 2002:a05:6122:4f91:b0:56f:6cc0:681e with SMTP id
- 71dfb90a1353d-59bee971799mr7376380e0c.1.1780366883051; 
- Mon, 01 Jun 2026 19:21:23 -0700 (PDT)
-Received: from tarski ([179.105.152.38]) by smtp.gmail.com with ESMTPSA id
- 71dfb90a1353d-5a1c3c784a2sm3648243e0c.15.2026.06.01.19.21.20
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 01 Jun 2026 19:21:22 -0700 (PDT)
-From: Anderson Nascimento <anderson@allelesecurity.com>
-To: qemu-devel@nongnu.org, kvm@vger.kernel.org, pbonzini@redhat.com,
- zhao1.liu@intel.com, mtosatti@redhat.com
-Cc: Anderson Nascimento <anderson@allelesecurity.com>
-Subject: [RFC PATCH 1/1] target/i386: Add support for KVM APERF/MPERF
- passthrough
-Date: Mon,  1 Jun 2026 23:20:48 -0300
-Message-ID: <20260602022048.752453-2-anderson@allelesecurity.com>
-X-Mailer: git-send-email 2.54.0
-In-Reply-To: <20260602022048.752453-1-anderson@allelesecurity.com>
-References: <20260602022048.752453-1-anderson@allelesecurity.com>
+ (Exim 4.90_1) (envelope-from <maobibo@loongson.cn>)
+ id 1wUEok-0001Cg-QT
+ for qemu-devel@nongnu.org; Mon, 01 Jun 2026 22:25:23 -0400
+Received: from mail.loongson.cn ([114.242.206.163])
+ by eggs.gnu.org with esmtp (Exim 4.90_1)
+ (envelope-from <maobibo@loongson.cn>) id 1wUEoh-0007wm-Vd
+ for qemu-devel@nongnu.org; Mon, 01 Jun 2026 22:25:22 -0400
+Received: from loongson.cn (unknown [10.20.42.62])
+ by gateway (Coremail) with SMTP id _____8Cx4eoFPx5qMZMPAA--.43649S3;
+ Tue, 02 Jun 2026 10:25:09 +0800 (CST)
+Received: from [10.20.42.62] (unknown [10.20.42.62])
+ by front1 (Coremail) with SMTP id qMiowJCxWeACPx5qZNKYAA--.27958S3;
+ Tue, 02 Jun 2026 10:25:09 +0800 (CST)
+Subject: Re: [PATCH 00/12] target/loongarch: Move CSR registers to struct
+ CPUSysState
+To: SignKirigami <prcups@krgm.moe>
+Cc: qemu-devel@nongnu.org, Hengyu Yu <yuhengyu25@mails.ucas.ac.cn>
+References: <20260526065023.1639371-1-maobibo@loongson.cn>
+ <e922a116-ae19-bb16-8dbb-5ad276430e5b@loongson.cn>
+ <b1872865-1748-e89b-f6ad-2f3104496563@loongson.cn>
+ <lOb30Y5VTVyDy4BxZJsUCg@krgm.moe>
+From: Bibo Mao <maobibo@loongson.cn>
+Message-ID: <0427a7d9-7e3f-8938-e06c-2de6ffc333b4@loongson.cn>
+Date: Tue, 2 Jun 2026 10:22:02 +0800
+User-Agent: Mozilla/5.0 (X11; Linux loongarch64; rv:68.0) Gecko/20100101
+ Thunderbird/68.7.0
 MIME-Version: 1.0
+In-Reply-To: <lOb30Y5VTVyDy4BxZJsUCg@krgm.moe>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: en-US
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::a2f;
- envelope-from=anderson@allelesecurity.com; helo=mail-vk1-xa2f.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-CM-TRANSID: qMiowJCxWeACPx5qZNKYAA--.27958S3
+X-CM-SenderInfo: xpdruxter6z05rqj20fqof0/
+X-Coremail-Antispam: 1Uk129KBj93XoWxAFW3Gw1fGw4fZr43XrWkGrX_yoW5ur43p3
+ yxZF1rK3yktFZxJFs2qa45X3Wqqw17Gr47X3Z3try8ua90yryxWF48J3929F1DZ34UWryj
+ qF1rC34UZFW0vabCm3ZEXasCq-sJn29KB7ZKAUJUUUU8529EdanIXcx71UUUUU7KY7ZEXa
+ sCq-sGcSsGvfJ3Ic02F40EFcxC0VAKzVAqx4xG6I80ebIjqfuFe4nvWSU5nxnvy29KBjDU
+ 0xBIdaVrnRJUUU92b4IE77IF4wAFF20E14v26r1j6r4UM7CY07I20VC2zVCF04k26cxKx2
+ IYs7xG6rWj6s0DM7CIcVAFz4kK6r1Y6r17M28lY4IEw2IIxxk0rwA2F7IY1VAKz4vEj48v
+ e4kI8wA2z4x0Y4vE2Ix0cI8IcVAFwI0_Jr0_JF4l84ACjcxK6xIIjxv20xvEc7CjxVAFwI
+ 0_Jr0_Gr1l84ACjcxK6I8E87Iv67AKxVW8JVWxJwA2z4x0Y4vEx4A2jsIEc7CjxVAFwI0_
+ Gr0_Gr1UM2AIxVAIcxkEcVAq07x20xvEncxIr21l57IF6xkI12xvs2x26I8E6xACxx1l5I
+ 8CrVACY4xI64kE6c02F40Ex7xfMcIj6xIIjxv20xvE14v26r1j6r18McIj6I8E87Iv67AK
+ xVWUJVW8JwAm72CE4IkC6x0Yz7v_Jr0_Gr1lF7xvr2IY64vIr41lc7I2V7IY0VAS07AlzV
+ AYIcxG8wCF04k20xvY0x0EwIxGrwCFx2IqxVCFs4IE7xkEbVWUJVW8JwCFI7km07C267AK
+ xVWUXVWUAwC20s026c02F40E14v26r1j6r18MI8I3I0E7480Y4vE14v26r106r1rMI8E67
+ AF67kF1VAFwI0_Jrv_JF1lIxkGc2Ij64vIr41lIxAIcVC0I7IYx2IY67AKxVWUJVWUCwCI
+ 42IY6xIIjxv20xvEc7CjxVAFwI0_Jr0_Gr1lIxAIcVCF04k26cxKx2IYs7xG6r1j6r1xMI
+ IF0xvEx4A2jsIE14v26r1j6r4UMIIF0xvEx4A2jsIEc7CjxVAFwI0_Gr0_Gr1UYxBIdaVF
+ xhVjvjDU0xZFpf9x07j0FALUUUUU=
+Received-SPF: pass client-ip=114.242.206.163; envelope-from=maobibo@loongson.cn;
+ helo=mail.loongson.cn
+X-Spam_score_int: -48
+X-Spam_score: -4.9
+X-Spam_bar: ----
+X-Spam_report: (-4.9 / 5.0 requ) BAYES_00=-1.9, NICE_REPLY_A=-2.97,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -98,114 +84,88 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Introduce support for exposing and enabling APERF/MPERF MSR passthrough
-for x86 QEMU guests when running under KVM.
 
-The Linux kernel supports a KVM capability allowing the hypervisor to
-disable read intercepts on the IA32_APERF and IA32_MPERF MSRs, enabling
-guests to track effective frequency directly without VM-exits. QEMU
-currently lacks a native way to request this capability or expose the
-corresponding feature bit to the guest.
 
-This patch adds the `aperfmperf` feature flag via `FEAT_6_ECX`
-(CPUID.06H:ECX[bit 0]). To ensure safe tracking across power states,
-the flag ties into QEMU's existing host power management framework.
-When host CPU power management is explicitly requested by the user
-(via `-overcommit cpu-pm=on`) and the `+aperfmperf` flag is provided
-to the CPU, QEMU will invoke the KVM ioctl to drop the APERF/MPERF
-MSR read intercepts.
+On 2026/6/2 上午10:02, SignKirigami wrote:
+> On 2026年5月26日星期二 中国标准时间 16:28:28，Bibo Mao wrote：
+>>
+>> On 2026/5/26 下午3:48, gaosong wrote:
+>>> 在 2026/5/26 下午2:50, Bibo Mao 写道:
+>>>> Here new structure CPUSysState is added in CPULoongArchState, CSR
+>>>> registers are move in CPUSysState. In later with LVZ supported, there
+>>>> will
+>>>> be two copied of CSR registers, so it is simply to add CPUSysState array.
+>>>>
+>>>> Also new field curState is added which points to CPUSysState at
+>>>> beginning, and it can be changed during VM exit/enter entry. There is no
+>>>> function change, all is code movement or variable rename.
+>>>>
+>>>> Bibo Mao (12):
+>>>>     target/loongarch: Add new field curState in CPULoongArchState
+>>>>     target/loongarch: Use curState in cpu.c when accessing CSR registers
+>>>>     target/loongarch: Use curState in cpu_helper.c when accessing CSR
+>>>>       registers
+>>>>     target/loongarch: Use curState in file arch_dump.c when accessing CSR
+>>>>       registers
+>>>>     target/loongarch: Use curState in kvm.c when accessing CSR registers
+>>>>     target/loongarch: Use curState in tlb_helper.c when accessing CSR
+>>>>       registers
+>>>>     target/loongarch: Use curState in tcg_cpu.c when accessing CSR
+>>>>       registers
+>>>>     target/loongarch: Use curState in csr_helper.c when accessing CSR
+>>>>       registers
+>>>>     target/loongarch: Use curState in op_helper.c when accessing CSR
+>>>>       registers
+>>>>     target/loongarch: Add default CSRFL_BASIC info with flags field
+>>>>     target/loongarch: Add wrapper function get_csr_offset()
+>>>>     target/loongarch: Add new structure CPUSysState
+>>>>
+>>>>    hw/intc/loongarch_dintc.c                     |   4 +-
+>>>>    target/loongarch/arch_dump.c                  |   5 +-
+>>>>    target/loongarch/cpu-mmu.h                    |   4 +-
+>>>>    target/loongarch/cpu.c                        | 120 ++++-----
+>>>>    target/loongarch/cpu.h                        |  49 ++--
+>>>>    target/loongarch/cpu_helper.c                 |  41 ++--
+>>>>    target/loongarch/csr.c                        |  10 +-
+>>>>    target/loongarch/csr.h                        |   5 +
+>>>>    target/loongarch/gdbstub.c                    |   3 +-
+>>>>    target/loongarch/kvm/kvm.c                    | 228 +++++++++---------
+>>>>    target/loongarch/machine.c                    | 116 ++++-----
+>>>>    target/loongarch/tcg/constant_timer.c         |  10 +-
+>>>>    target/loongarch/tcg/csr_helper.c             |  55 +++--
+>>>>    .../tcg/insn_trans/trans_extra.c.inc          |  11 +-
+>>>>    .../tcg/insn_trans/trans_privileged.c.inc     |  16 +-
+>>>>    target/loongarch/tcg/op_helper.c              |  45 ++--
+>>>>    target/loongarch/tcg/tcg_cpu.c                | 107 ++++----
+>>>>    target/loongarch/tcg/tlb_helper.c             | 137 ++++++-----
+>>>>    18 files changed, 531 insertions(+), 435 deletions(-)
+>>>>
+>>> Hi,
+>>> The files in linux-user/loongarch64/* also need to be modified.
+>> oops, loongarch-linux-user is missing here. Thanks for the reporting.
+>> Will add and test this target.
+>>
+>> Regards
+>> Bibo Mao
+> This patch looks good to me. Should I continue lvz support after this
+> patch is merged?
+Both are ok. You can post it based on existing master baseline rather 
+than after this patch is merged. I think you can split LVZ patch into 
+more smaller ones, currently I am reviewing MMU virtualization part at 
+the same time.
 
-This implementation allows guest operating systems (such as FreeBSD
-or Linux) to dynamically calculate CPU utilization and turbo-boost
-metrics without incurring performance overhead from hypervisor trap-and-
-emulate loops.
-
-Signed-off-by: Anderson Nascimento <anderson@allelesecurity.com>
----
- target/i386/cpu.c     | 17 ++++++++++++++++-
- target/i386/cpu.h     |  2 ++
- target/i386/kvm/kvm.c |  5 ++++-
- 3 files changed, 22 insertions(+), 2 deletions(-)
-
-diff --git a/target/i386/cpu.c b/target/i386/cpu.c
-index 8929a75c7c..bd9131dade 100644
---- a/target/i386/cpu.c
-+++ b/target/i386/cpu.c
-@@ -1544,6 +1544,21 @@ FeatureWordInfo feature_word_info[FEATURE_WORDS] = {
-         .cpuid = { .eax = 6, .reg = R_EAX, },
-         .tcg_features = TCG_6_EAX_FEATURES,
-     },
-+    [FEAT_6_ECX] = {
-+        .type = CPUID_FEATURE_WORD,
-+        .feat_names = {
-+            "aperfmperf", NULL, NULL, NULL,
-+            NULL, NULL, NULL, NULL,
-+            NULL, NULL, NULL, NULL,
-+            NULL, NULL, NULL, NULL,
-+            NULL, NULL, NULL, NULL,
-+            NULL, NULL, NULL, NULL,
-+            NULL, NULL, NULL, NULL,
-+            NULL, NULL, NULL, NULL,
-+        },
-+        .cpuid = { .eax = 6, .reg = R_ECX, },
-+        .tcg_features = 0,
-+    },
-     [FEAT_XSAVE_XCR0_LO] = {
-         .type = CPUID_FEATURE_WORD,
-         .cpuid = {
-@@ -8770,7 +8785,7 @@ void cpu_x86_cpuid(CPUX86State *env, uint32_t index, uint32_t count,
-         /* Thermal and Power Leaf */
-         *eax = env->features[FEAT_6_EAX];
-         *ebx = 0;
--        *ecx = 0;
-+        *ecx = env->features[FEAT_6_ECX];
-         *edx = 0;
-         break;
-     case 7:
-diff --git a/target/i386/cpu.h b/target/i386/cpu.h
-index 67e2ecf325..87864969c7 100644
---- a/target/i386/cpu.h
-+++ b/target/i386/cpu.h
-@@ -700,6 +700,7 @@ typedef enum FeatureWord {
-     FEAT_SVM,           /* CPUID[8000_000A].EDX */
-     FEAT_XSAVE,         /* CPUID[EAX=0xd,ECX=1].EAX */
-     FEAT_6_EAX,         /* CPUID[6].EAX */
-+    FEAT_6_ECX,         /* CPUID[6].ECX */
-     FEAT_XSAVE_XCR0_LO, /* CPUID[EAX=0xd,ECX=0].EAX */
-     FEAT_XSAVE_XCR0_HI, /* CPUID[EAX=0xd,ECX=0].EDX */
-     FEAT_ARCH_CAPABILITIES,
-@@ -1232,6 +1233,7 @@ uint64_t x86_cpu_get_supported_feature_word(X86CPU *cpu, FeatureWord w);
- #define CPUID_XSAVE_XFD        (1U << 4)
- 
- #define CPUID_6_EAX_ARAT       (1U << 2)
-+#define CPUID_6_ECX_APERFMPERF (1U << 0)
- 
- /* CPUID[0x80000007].EDX flags: */
- #define CPUID_APM_INVTSC       (1U << 8)
-diff --git a/target/i386/kvm/kvm.c b/target/i386/kvm/kvm.c
-index 9e352882c8..ca722ff9e9 100644
---- a/target/i386/kvm/kvm.c
-+++ b/target/i386/kvm/kvm.c
-@@ -498,6 +498,8 @@ uint32_t kvm_arch_get_supported_cpuid(KVMState *s, uint32_t function,
-         }
-     } else if (function == 6 && reg == R_EAX) {
-         ret |= CPUID_6_EAX_ARAT; /* safe to allow because of emulated APIC */
-+    } else if (function == 6 && reg == R_ECX) {
-+        ret |= CPUID_6_ECX_APERFMPERF;
-     } else if (function == 7 && index == 0 && reg == R_EBX) {
-         /* Not new instructions, just an optimization.  */
-         uint32_t ebx;
-@@ -3291,7 +3293,8 @@ static int kvm_vm_enable_disable_exits(KVMState *s)
-         disable_exits &= (KVM_X86_DISABLE_EXITS_MWAIT |
-                           KVM_X86_DISABLE_EXITS_HLT |
-                           KVM_X86_DISABLE_EXITS_PAUSE |
--                          KVM_X86_DISABLE_EXITS_CSTATE);
-+                          KVM_X86_DISABLE_EXITS_CSTATE |
-+                          KVM_X86_DISABLE_EXITS_APERFMPERF);
-     }
- 
-     return kvm_vm_enable_cap(s, KVM_CAP_X86_DISABLE_EXITS, 0,
--- 
-2.54.0
+Regards
+Bibo Mao
+> 
+>>>
+>>> Thanks.
+>>> Song Gao
+>>>> base-commit: cbf877d67a812be17a9ce404a589e1bdf722c1f6
+>>
+>>
+> 
+> 
+> 
+> 
 
 
