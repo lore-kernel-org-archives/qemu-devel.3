@@ -4,97 +4,145 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E7FB0CD6E68
-	for <qemu-devel@archiver.kernel.org>; Tue,  2 Jun 2026 16:46:17 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2616DCD6E60
+	for <qemu-devel@archiver.kernel.org>; Tue,  2 Jun 2026 16:46:43 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wUSFK-0004Bb-Pm; Tue, 02 Jun 2026 12:45:43 -0400
+	id 1wUSGE-0004LQ-91; Tue, 02 Jun 2026 12:46:38 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <noreply@launchpad.net>)
- id 1wUSFI-0004BJ-6b
- for qemu-devel@nongnu.org; Tue, 02 Jun 2026 12:45:40 -0400
-Received: from smtp-relay-services-1.canonical.com ([185.125.188.251])
+ (Exim 4.90_1) (envelope-from <pierrick.bouvier@oss.qualcomm.com>)
+ id 1wUSFe-0004DT-7a
+ for qemu-devel@nongnu.org; Tue, 02 Jun 2026 12:46:12 -0400
+Received: from mx0b-0031df01.pphosted.com ([205.220.180.131])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <noreply@launchpad.net>)
- id 1wUSFF-0000wk-Jf
- for qemu-devel@nongnu.org; Tue, 02 Jun 2026 12:45:39 -0400
-Received: from scripts.lp.internal (scripts.lp.internal [10.131.215.246])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by smtp-relay-services-1.canonical.com (Postfix) with ESMTPSA id BDF573FF2B
- for <qemu-devel@nongnu.org>; Tue,  2 Jun 2026 16:45:34 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=launchpad.net;
- s=20210803; t=1780418734;
- bh=6Yc4IhglV+WKTxc7ImOYv+r3Xhce0TG089u1FTxvMsk=;
- h=MIME-Version:Content-Type:Date:From:To:Reply-To:References:
- Message-Id:Subject;
- b=qydZ47nHzTEl/kZH88UcLcLpCXoyXjoHv1jj7W0hv7ijngQz5Lah6T3iCN8Lr5YDl
- 8k3pTaTieN1Pb+gi0PkebBlwTeo+1FCeO5JPADPQl3SvZAdjSalpp3HA7XwPhE1DLd
- uP1PH0WX4fCG3NzJ8nt+Fkt71XVwiohOkYpyfldVNUfBV3ln6znZ7QrTmzmFJTa/7h
- 8haGVAJ7zAPGCgMTLetQvxXJ9+ao2v4vBkAllVaLrOoO6EzSME3sP2VkIokxpqfoSV
- aQI9bvJNfoydBH/UZp4BZtKtAOCSCu+Et2dBRbkVVOzkiu9pGcF4Rp405nz/cCfvd0
- NmfkGEBgeFbuw==
-Received: from scripts.lp.internal (localhost [127.0.0.1])
- by scripts.lp.internal (Postfix) with ESMTP id 77AE57E532
- for <qemu-devel@nongnu.org>; Tue,  2 Jun 2026 16:45:34 +0000 (UTC)
+ (Exim 4.90_1) (envelope-from <pierrick.bouvier@oss.qualcomm.com>)
+ id 1wUSFc-00013h-A7
+ for qemu-devel@nongnu.org; Tue, 02 Jun 2026 12:46:01 -0400
+Received: from pps.filterd (m0279872.ppops.net [127.0.0.1])
+ by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
+ 652EDEJE3302641
+ for <qemu-devel@nongnu.org>; Tue, 2 Jun 2026 16:45:58 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+ cc:content-transfer-encoding:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+ VOKmFV9X6id2xOdU33l1JoJTU1UJ2bydrV7ScMIOQ10=; b=RGEa/yPNAdCzzO3S
+ uIqq56f7lEUKRo1iURzRgyYDKmX/LYBx7Q0TVdSEWJAnQ7ARKW/oynb7MK2oq9cO
+ K4hOy53nBaHo3bppCfoc1rYMCI9KTVtPl37E/9jXLnbX0T9fSeNeaZpEdZ/xQddz
+ wuFceLaWJwi+0YJDCqTxuTVZYZnQMcC3WF52DcNDdvqCdL3PSH6WvQ6/7VIiQL+t
+ DrphjIOATD/ZUyursTfyah+YG1ndu5jnkMZA9Iq3hQFsrdD0mCTdrvDBtNoRDj7G
+ Dtrk1gwjyn5cyjEg+2w2uwTwqfakOBK4c08YWTo6XxjiTERZoW3vyuHxq+2zQAL6
+ 1c2A0A==
+Received: from mail-dl1-f72.google.com (mail-dl1-f72.google.com [74.125.82.72])
+ by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4ehu18j8rg-1
+ (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
+ for <qemu-devel@nongnu.org>; Tue, 02 Jun 2026 16:45:58 +0000 (GMT)
+Received: by mail-dl1-f72.google.com with SMTP id
+ a92af1059eb24-137dd516985so4584634c88.1
+ for <qemu-devel@nongnu.org>; Tue, 02 Jun 2026 09:45:58 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=oss.qualcomm.com; s=google; t=1780418758; x=1781023558; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:content-language:from
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=VOKmFV9X6id2xOdU33l1JoJTU1UJ2bydrV7ScMIOQ10=;
+ b=h20LPgSAA1hK/cSrHebkDN6cMlgh5YIwn2OzXuPLKSL+V3Gn1gKjCJ6dqDUd/5D4yA
+ 6axUMZVMzFydT1QROUcsPvtuvc4NFiDKjP7+N8uR6wqQdwKvbDfenTnxqbwaYaR9/cJc
+ HNuof7MDsDm/y+6bVOC3XqBwu8Tym44e8CNLQDtexlhmA66MY/KR5a3R1maCGBY6g0LT
+ yra0TlIOzXpqjl9h5uxdDQ/mcrdrS5QlHlhHSMbBGMKzxPLOR/wQOIMS8KXbGDf9PzLW
+ hZ0bTlXSbT5qnYYGCSRbnE5EjqT1MGyy0U+UBkrn1g12f4ldH/1ZVfdXS1beCnDJWoce
+ smkA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1780418758; x=1781023558;
+ h=content-transfer-encoding:in-reply-to:content-language:from
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=VOKmFV9X6id2xOdU33l1JoJTU1UJ2bydrV7ScMIOQ10=;
+ b=F3UTy4M9ewsSZ+pFxBoxKB42ztiE3kLpa9cPSg7QqA9esU9nXJCW7zSxITqoNsL0tZ
+ ll63zDJ+qLIKTpbPSiRYRJUPget39RGtaEp0zI96NVw7OCnkj8taGT1HCu3gAlNa4Qgu
+ 2OZVDnmNSRtHYaLWlnSm/NDfBGIr1b6kyGehWTbxFrdOcfFxgecgxOsh0uwVxNJvVQhh
+ J4NDA0YNmG+GJfq4cMFjrhoQFZUIIx+Na0vErUvuVwQypgmS3+sekujwQm8muGTCCnVK
+ 9+3v5xKsmZuVm1Sma9rXjpqM54rdUp8Ddq96LZPf76g2fH9Xwvfj9jdJ/aCW61CfdWQq
+ gm3w==
+X-Forwarded-Encrypted: i=1;
+ AFNElJ/XbhDAINbUgM/oTxjUTcay2ax+MDuqYZhJ1WJMHcrdaOiXGASMg1jNUXXaMdh/us5BezsacW5Qj64l@nongnu.org
+X-Gm-Message-State: AOJu0YycezgshjvR/aLmG3OFG/yO8vcFRiafOVXPcxKVNpFvDRd9wHjx
+ eLYBUdYMQCBc/7fliPS5sz1MNs3O00CFdz3im3zCC9b859KI5ntBAStOIFcA71j9lXudVcNfG+b
+ +QPLxvv9Wc3rF1L+Gy6Y4njay9hUYw7GPntSUWDeFoLr5WrTR15j+nEvKTg==
+X-Gm-Gg: Acq92OE6sN44VFdrCS5rLRDzEU/OgIrRxYn6f14u7ss4CN7cx8TFX1miHUq5lD/ZaX2
+ GSB7TQWWW1q8qkQKaMwVPGH0zLvRc2KYZRt6kGdhVHmeNod+QilJwugDP8R684P2yZtu78zW3gw
+ uA3V2E1pVYafUTn919avL2qX+5on8VKZWsC2BkZdO7tDvvT6V9EqSxtlM/QfcP++oxbnByIDzo7
+ xE6NBqezrn+he64kJrJiQ7/bR5IYkunyZ/zHBl3EaEixiXcufm+qjnWGG6A5JVeeGehnT1xq3X1
+ J3paTvJD1bPs0Lh5apzEJa9cliTzpsJYPMqP0bI5mGoUOixyEvLvbA/t+hgE6nHL85ZHfxl2mOC
+ kzAAlul5NhQNqxnJfwTSCXYFJFsApZ8R5GijoelWc+a8rp3FzBX899/23soLFjmoK9PwNTfHooo
+ V4iA8PvvVQGBIVjxXcDqc+85gH
+X-Received: by 2002:a05:7022:6ba4:b0:137:eac4:82e4 with SMTP id
+ a92af1059eb24-137eac4897amr3490513c88.17.1780418757588; 
+ Tue, 02 Jun 2026 09:45:57 -0700 (PDT)
+X-Received: by 2002:a05:7022:6ba4:b0:137:eac4:82e4 with SMTP id
+ a92af1059eb24-137eac4897amr3490445c88.17.1780418756474; 
+ Tue, 02 Jun 2026 09:45:56 -0700 (PDT)
+Received: from [192.168.1.170] (216-71-219-44.dyn.novuscom.net.
+ [216.71.219.44]) by smtp.gmail.com with ESMTPSA id
+ a92af1059eb24-137f556049csm156786c88.15.2026.06.02.09.45.55
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Tue, 02 Jun 2026 09:45:56 -0700 (PDT)
+Message-ID: <4aa3a806-4f3f-4e51-8999-b7efb529ce06@oss.qualcomm.com>
+Date: Tue, 2 Jun 2026 09:45:54 -0700
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: quoted-printable
-Date: Tue, 02 Jun 2026 16:36:34 -0000
-From: Andreas Hasenack <2133804@bugs.launchpad.net>
-To: qemu-devel@nongnu.org
-X-Launchpad-Notification-Type: bug
-X-Launchpad-Bug: product=qemu; status=Fix Released; importance=Unknown;
- assignee=None; 
-X-Launchpad-Bug: distribution=ubuntu; sourcepackage=qemu; component=main;
- milestone=ubuntu-26.04; status=Fix Released; importance=High;
- assignee=hector.cao@canonical.com; 
-X-Launchpad-Bug: distribution=ubuntu; distroseries=jammy; sourcepackage=qemu;
- component=main; status=Confirmed; importance=Medium;
- assignee=hector.cao@canonical.com; 
-X-Launchpad-Bug: distribution=ubuntu; distroseries=noble; sourcepackage=qemu;
- component=main; milestone=ubuntu-24.04.4; status=Incomplete; importance=Medium;
- assignee=hector.cao@canonical.com; 
-X-Launchpad-Bug: distribution=ubuntu; distroseries=plucky; sourcepackage=qemu;
- component=main; status=Won't Fix; importance=Medium; assignee=None; 
-X-Launchpad-Bug: distribution=ubuntu; distroseries=questing; sourcepackage=qemu;
- component=main; status=Fix Committed; importance=Medium;
- assignee=hector.cao@canonical.com; 
-X-Launchpad-Bug: distribution=ubuntu; distroseries=resolute; sourcepackage=qemu;
- component=main; milestone=ubuntu-26.04; status=Fix Released; importance=High;
- assignee=hector.cao@canonical.com; 
-X-Launchpad-Bug-Tags: server-todo verification-done-questing
-X-Launchpad-Bug-Information-Type: Public
-X-Launchpad-Bug-Private: no
-X-Launchpad-Bug-Security-Vulnerability: no
-X-Launchpad-Bug-Commenters: ahasenack hectorcao janitor lvoytek
- mjt+launchpad-tls paelzer ubuntu-sru-bot utkarsh xypron
-X-Launchpad-Bug-Reporter: Heinrich Schuchardt (xypron)
-X-Launchpad-Bug-Modifier: Andreas Hasenack (ahasenack)
-References: <176477927666.3767208.4954653462090539439.malonedeb@juju-98d295-prod-launchpad-3>
-Message-Id: <178041819451.1268211.2977171297717887072.malone@juju-98d295-prod-launchpad-53>
-Subject: [Bug 2133804] Proposed package upload rejected
-X-Launchpad-Message-Rationale: Subscriber (QEMU) @qemu-devel-ml
-X-Launchpad-Message-For: qemu-devel-ml
-Precedence: bulk
-X-Generated-By: Launchpad (canonical.com);
- Revision="e655887187b0b1e1a70625cd2d210bb3cf47cd14";
- Instance="launchpad-scripts"
-X-Launchpad-Hash: 496e96f35d2629ecc8158dbb5f24bc1069340a03
-Received-SPF: pass client-ip=185.125.188.251;
- envelope-from=noreply@launchpad.net; helo=smtp-relay-services-1.canonical.com
-X-Spam_score_int: -42
-X-Spam_score: -4.3
-X-Spam_bar: ----
-X-Spam_report: (-4.3 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_MED=-2.3,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 2/3] lcitool: remove Cirrus CI support
+To: Stefan Hajnoczi <stefanha@redhat.com>, qemu-devel@nongnu.org
+Cc: =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ Li-Wen Hsu <lwhsu@freebsd.org>, =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?=
+ <philmd@mailo.com>, Warner Losh <imp@bsdimp.com>
+References: <20260602162457.828969-1-stefanha@redhat.com>
+ <20260602162457.828969-3-stefanha@redhat.com>
+From: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
+Content-Language: en-US
+In-Reply-To: <20260602162457.828969-3-stefanha@redhat.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-Authority-Analysis: v=2.4 cv=POA/P/qC c=1 sm=1 tr=0 ts=6a1f08c6 cx=c_pps
+ a=bS7HVuBVfinNPG3f6cIo3Q==:117 a=iLqgmErQAxjCjdq5jj1Aqg==:17
+ a=IkcTkHD0fZMA:10 a=FelO9ux0wxsA:10 a=s4-Qcg_JpJYA:10
+ a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=yx91gb_oNiZeI1HMLzn7:22
+ a=20KFwNOVAAAA:8 a=EUspDBNiAAAA:8 a=x5SdGgq81RCrRPtamrUA:9 a=QEXdDO2ut3YA:10
+ a=vBUdepa8ALXHeOFLBtFW:22
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNjAyMDE2MSBTYWx0ZWRfX8w8tAyjkp74f
+ NXns3HUvoTaVHL2gfvn0jWeX+IcRVQU2tuCJP760133Cimaq+SH7qupIz4MKtpiGeii8Z1D4MgV
+ AauaGLs9ULNO0uxszICGVMMrBntbzrKjBsqoN+oRFyJwNxZOnWrnAZfftEsx45Z61JGtr9LaqAd
+ 9sL+VquYI5d1byufqli7LnQQ8Rv6W1Dpfw9wP4w4yy/TYcsqEoW9QCDiPDOAfl8se9xtnc9uXrc
+ Lp85YPDhgvjFYhPLW7/vsYuVaKH7gySvRtEbwbb1+r2zeeGLZFc4PXoq6uAH/Ra7KA2vK/9pQ9n
+ RlCyDTrDDVD5eqr2+VJVJWl1aqzApKpuevWQ0hPV+JzGArQLMxzVpLfin5Nb5NkFGMTwtPVr4JT
+ lmrk87nAAoA6SDQRqqZE5e5LupwNP16H7Qf6teevuTqX6c2xbo1BfrjT/KMDwbFZp6b5bm2Upod
+ cWuVwFMKxXVDCC4Xp9w==
+X-Proofpoint-GUID: uf110TZ3yOLQbxoIs1gBuQkkRzz6KjUW
+X-Proofpoint-ORIG-GUID: uf110TZ3yOLQbxoIs1gBuQkkRzz6KjUW
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.125,FMLib:17.12.100.49
+ definitions=2026-06-02_02,2026-05-28_03,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ malwarescore=0 lowpriorityscore=0 priorityscore=1501 spamscore=0 bulkscore=0
+ adultscore=0 phishscore=0 impostorscore=0 clxscore=1015 suspectscore=0
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.22.0-2605210000 definitions=main-2606020161
+Received-SPF: pass client-ip=205.220.180.131;
+ envelope-from=pierrick.bouvier@oss.qualcomm.com;
+ helo=mx0b-0031df01.pphosted.com
+X-Spam_score_int: -27
+X-Spam_score: -2.8
+X-Spam_bar: --
+X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
+Precedence: list
 List-Id: qemu development <qemu-devel.nongnu.org>
 List-Unsubscribe: <https://lists.nongnu.org/mailman/options/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=unsubscribe>
@@ -103,136 +151,28 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-To: Bug 2133804 <2133804@bugs.launchpad.net>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-An upload of qemu to noble-proposed has been rejected from the upload
-queue for the following reason: "Rejected per
-https://bugs.launchpad.net/ubuntu/+source/qemu/+bug/2133804/comments/20".
+On 6/2/2026 9:24 AM, Stefan Hajnoczi wrote:
+> Remove GitLab CI integration for Cirrus CI now that nothing uses it
+> anymore.
+> 
+> Signed-off-by: Stefan Hajnoczi <stefanha@redhat.com>
+> ---
+>  .gitlab-ci.d/cirrus/README.rst     | 54 ------------------------------
+>  docs/devel/testing/main.rst        |  4 +--
+>  .gitlab-ci.d/base.yml              |  4 ---
+>  .gitlab-ci.d/cirrus.yml            | 32 ------------------
+>  .gitlab-ci.d/cirrus/build.yml      | 42 -----------------------
+>  .gitlab-ci.d/qemu-project.yml      |  1 -
+>  docs/devel/testing/ci-jobs.rst.inc |  6 ----
+>  tests/lcitool/refresh              |  6 ----
+>  8 files changed, 2 insertions(+), 147 deletions(-)
+>  delete mode 100644 .gitlab-ci.d/cirrus/README.rst
+>  delete mode 100644 .gitlab-ci.d/cirrus.yml
+>  delete mode 100644 .gitlab-ci.d/cirrus/build.yml
+> 
 
---=20
-You received this bug notification because you are a member of qemu-
-devel-ml, which is subscribed to QEMU.
-https://bugs.launchpad.net/bugs/2133804
-
-Title:
-  QEMU does not emulate IOCTL TCGETS2
-
-Status in QEMU:
-  Fix Released
-Status in qemu package in Ubuntu:
-  Fix Released
-Status in qemu source package in Jammy:
-  Confirmed
-Status in qemu source package in Noble:
-  Incomplete
-Status in qemu source package in Plucky:
-  Won't Fix
-Status in qemu source package in Questing:
-  Fix Committed
-Status in qemu source package in Resolute:
-  Fix Released
-
-Bug description:
-  [ Impact ]
-
-  - Terminal prompt is missing for multiarch containers with qemu-user
-
-  - Users cannot see the prompt but still can type the commands
-  =C2=A0=C2=A0However the absence of the prompt can be misleading and make =
-users think that the container hangs.
-
-  - this fix implements the missing ioctl TERMIOS2
-
-  [ Test Plan ]
-
-  On an amd64 host
-
-  $ sudo apt install -y docker.io qemu-user-static
-  $ sudo usermod -aG docker ubuntu
-  $ newgrp docker
-  $ docker run --platform=3Dlinux/arm64 -it ubuntu:26.04 bash
-  =C2=A0(this runs on AMD64 host, if you are runnig on ARM64, use -platform=
-=3Dlinux/riscv64 instead)
-
-  After docker pulls the image and run the container, you cannot see the
-  prompt
-
-  ...
-  Status: Downloaded newer image for ubuntu:26.04
-  ...
-
-  $ docker run --platform=3Dlinux/arm64 -it ubuntu:24.04 bash
-
-  Doing the same for Ubuntu Noble image works.
-
-  $ docker run --platform=3Dlinux/arm64 -it ubuntu:24.04 bash
-  Unable to find image 'ubuntu:24.04' locally
-  24.04: Pulling from library/ubuntu
-  818154cda96d: Pull complete
-  352b2c3faa58: Download complete
-  Digest: sha256:c4a8d5503dfb2a3eb8ab5f807da5bc69a85730fb49b5cfca2330194ebc=
-c41c7b
-  Status: Downloaded newer image for ubuntu:24.04
-  root@bf8124075385:/#
-
-  With this fix, the users should see the prompt when they run bash
-  interactively in the container:
-
-  $ docker run --platform=3Dlinux/arm64 -it ubuntu:26.04 bash
-  root@bf8124075385:/#
-
-  [ Where problems could occur ]
-
-  The fix is around the termios managament so regressions can happen there.
-  There might be regressions on the prompt display.
-
-  The prompt display is widely used so potential regressions should be
-  visible quickly.
-
-  [ Other Info ]
-
-  None
-
-  -- Original bug report ---
-
-  In Ubuntu 25.10 we moved to glibc 2.42. Here glibc has changed the
-  implementation of isatty(). It now uses IOCTL TCGETS2 instead of
-  TCGETS. TCGETS2 is not emulated by static QEMU (qemu-riscv64, qemu-
-  arm64, ...).
-
-  This leads to failures in containers for foreign architectures. E.g. no c=
-onsole prompt is displayed.
-  A detailed analysis is contained in LP #2133188.
-
-  A proper implementation of the missing IOCTLs will include:
-
-  Functions:
-
-  in linux-user/syscall.c:
-  host_to_target_termios2()
-  target_to_host_termios2()
-  print_termios2()
-
-  Definitions:
-
-  in linux-user/syscall.c
-  #define termios2 host_termios2
-
-  in linux-user/syscall_types.h
-  STRUCT_SPECIAL(termios2)
-
-  in linux-user/ioctls.h:
-  IOCTL(TCGETS2, IOC_R, MK_PTR(MK_STRUCT(STRUCT_termios2)))
-  IOCTL(TCSETS2, IOC_W, MK_PTR(MK_STRUCT(STRUCT_termios2)))
-  IOCTL(TCSETSF2, IOC_W, MK_PTR(MK_STRUCT(STRUCT_termios2)))
-  IOCTL(TCSETSW2, IOC_W, MK_PTR(MK_STRUCT(STRUCT_termios2)))
-
-  in linux-user/user-internals.h:
-  void print_termios2(void *arg);
-
-To manage notifications about this bug go to:
-https://bugs.launchpad.net/qemu/+bug/2133804/+subscriptions
-
+Reviewed-by: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
 
