@@ -4,156 +4,117 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id DAB20CD6E4A
-	for <qemu-devel@archiver.kernel.org>; Tue,  2 Jun 2026 12:34:23 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 21AC3CD6E60
+	for <qemu-devel@archiver.kernel.org>; Tue,  2 Jun 2026 12:42:16 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wUOJb-0002RN-BB; Tue, 02 Jun 2026 08:33:51 -0400
+	id 1wUOQx-0003b9-QY; Tue, 02 Jun 2026 08:41:27 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jgg@ziepe.ca>) id 1wUOJZ-0002RA-Sv
- for qemu-devel@nongnu.org; Tue, 02 Jun 2026 08:33:49 -0400
-Received: from mail-qt1-x82b.google.com ([2607:f8b0:4864:20::82b])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <jgg@ziepe.ca>) id 1wUOJY-00036S-1B
- for qemu-devel@nongnu.org; Tue, 02 Jun 2026 08:33:49 -0400
-Received: by mail-qt1-x82b.google.com with SMTP id
- d75a77b69052e-5174a34800fso26645831cf.3
- for <qemu-devel@nongnu.org>; Tue, 02 Jun 2026 05:33:47 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <imammedo@redhat.com>)
+ id 1wUOQs-0003aZ-Rb
+ for qemu-devel@nongnu.org; Tue, 02 Jun 2026 08:41:24 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <imammedo@redhat.com>)
+ id 1wUOQq-0001V2-3V
+ for qemu-devel@nongnu.org; Tue, 02 Jun 2026 08:41:22 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1780404073;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=EUVqvPaTxP9t/OuQxpBY8J6nr/flMfuWVpMZBOXFiJw=;
+ b=Zv8Qb0D1u32xR8WFt7jdQUH4JfCkdpcUa1S97hdW6OIQYoH1zlOOYRbitQK1m/mCYke5sI
+ EHrKh87cJY9JHgyrffeSw7tGICZnnHfmUUy4UcncVqi0MKKDQthK75ULFpiIzVZl2WbbsY
+ cEEOgE0p9NJ7KbcPqLBKjP+bTGnp4R0=
+Received: from mail-wm1-f72.google.com (mail-wm1-f72.google.com
+ [209.85.128.72]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-42-FY4P1nT-PmOArsPgjWdwDQ-1; Tue, 02 Jun 2026 08:41:12 -0400
+X-MC-Unique: FY4P1nT-PmOArsPgjWdwDQ-1
+X-Mimecast-MFC-AGG-ID: FY4P1nT-PmOArsPgjWdwDQ_1780404071
+Received: by mail-wm1-f72.google.com with SMTP id
+ 5b1f17b1804b1-49045243094so137206985e9.2
+ for <qemu-devel@nongnu.org>; Tue, 02 Jun 2026 05:41:11 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=ziepe.ca; s=google; t=1780403626; x=1781008426; darn=nongnu.org;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
- bh=3fuMy8ZTlB4sZmM4SRNfS45Rtpr0e2y/Uhs3uZMD108=;
- b=duNeyrBF6PY9NXDfPsjOVI+MpxCyjzgrxZyHQ7dUh5p7tplADBG1RRszIyTr37QXNp
- 5HjRa2uZxFWX++KJM4ZrJeofK1TOmxk9l0NB3iBatYbnD6G754Gk7rZOFcQuWnsVC8B/
- seacEiklp5hfsoiyNoUPRAf3lxZ95qbirVcPjL1zAFcxlA3xAX3UDCa7ToBRSUhWC+Oc
- bBPAznzjn/FI+Lr/OdjoNikBRm8Ok3TePxY7VWXr8h2J2sKOKowvnF82MhCcaKn92s9C
- 3KMPkL+RpuJ8QYIoxA5jcH45fm9zNPAxboGYUlOjWIlai7v1F0nhnKDWPfS4dzqq5a7B
- bSYg==
+ d=redhat.com; s=google; t=1780404071; x=1781008871; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:subject:cc:to:from:date:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=EUVqvPaTxP9t/OuQxpBY8J6nr/flMfuWVpMZBOXFiJw=;
+ b=nEycVYbNHSDyY74kImbmbULuizfIQ9hcx8XsLbcNtyEYgQLDVW5dYeRg0cXDvUxakh
+ rRLZVIaCFAhKTnpxRXgOl7KSsFBUt06io2aK/330fCxyhaeeh/Er5c8eR2yuu7S9EnQF
+ 3PfsmPbPXXae0egCAUy40TPoYd3ilu37dA2E8QJvRbfspBbLmfhRxavUjq98sUgvwcar
+ dwkLYMtyVhB0fL5gkyXoQa1ldLs03MBeREFZAey8tFDOCaMnXNhSG/BHVQp0jkCmKZfT
+ J5khU9bLL7C361c5jkqymEiOxtp5dam3xhwdhWKkIit32hxGcpifmxbsNoHj5hlVt7j4
+ YwCw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1780403626; x=1781008426;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=3fuMy8ZTlB4sZmM4SRNfS45Rtpr0e2y/Uhs3uZMD108=;
- b=MM3mUYK3mDIvjopTmxOmGrKZCO8ZrxF49ZoQkO90W+tAFMZuDvfKl7yUmMvgTJnyq9
- 2Egiz0auWF1Pgv02vyoBD7eC6snvigCgVb3mG0d5mL1Kyo8RYqHPAnFUY+2bSEeN2ZBa
- NFYWP5W+Wh6aof97073/xFyaeDtYaVrwZEuFD00/NweNetDZmzFwnVvNhP0k6CxJxPuY
- zTveJt7HzHmNef1N/kBJ/FDc5qOmSodkf58xNcHKVyQACTSFK2U3IlFj7i9G/CaeAAxY
- 3qQa4WEUDa+wmhlQ6kkkT4Gpy7yxXRReEQN+6ucaD4mWyS+ZyA7LVkMpVH5tLO3vheSy
- ZC3g==
-X-Forwarded-Encrypted: i=1;
- AFNElJ+tzIUKPj/feqRke38k88CqHiaB2kh4e4fSF7QoAviAhfZpHDK8xbCU8Xq3nCc3li+DRAqYlqlh0BQE@nongnu.org
-X-Gm-Message-State: AOJu0YxUz1CRsIZYrbQIOw51FVadzFvCm8M/DW+cgfru1h2ohhE7bGL+
- PlMXWgzHWxAzDbZkQbD9UKYveBOpdRUK5WKlXUXC6B9waO/DluQs5PVzcyUaEcZPUbA=
-X-Gm-Gg: Acq92OEulgo3hiNG6dOkfnv5oIEr4JY64FnCSSjOvJzGv8o27banuer2nWaWz9FoiqW
- EQayjE/Tmn6ObZwv+AIQupUOLH+Il3JnnunPHknB3PZF/s0sCX+MoX/zQJgS3FO4G2TCR05QSSv
- p3rWzznCZh2vBOgMPstW+vGH2WtJwceDZc60napxizKLbnpHEbmNDLx4O+9J1dm7cEGU2ubbO78
- E2J+qUoeX/fH2GbQA0S0nlIjjiwEfGF0rl/B6+e9PcwCgqEaA/wsmnR42cS8yon9dcfa/oeL+A5
- g5+31xSGFSHIqfm+9lPcAnsJUDFrIf4+pYIpThg6L9oKpNFj/IIIP1o1wMP/+Eiv9zSK7cuY8U0
- rlG8x1TSBiHDuAgi1uT058qbAS3g6g9P8HQEZpdOOlioMIaJHyi4xVBiinqSEh87i8be9WzN+fS
- J9ve29uhA7tn2xvwidbNv4vWMAQRg7AnwZAbP78YTy+Y8rbGfyZHEDBmeN/d1QUm9zwcPYfBqZE
- +YXIjwL29V84rh2
-X-Received: by 2002:a05:622a:190a:b0:509:2527:d789 with SMTP id
- d75a77b69052e-5173a5c05ecmr228232631cf.6.1780403625864; 
- Tue, 02 Jun 2026 05:33:45 -0700 (PDT)
-Received: from ziepe.ca
- (crbknf0213w-47-54-130-67.pppoe-dynamic.high-speed.nl.bellaliant.net.
- [47.54.130.67]) by smtp.gmail.com with ESMTPSA id
- d75a77b69052e-51741d6a240sm78686221cf.18.2026.06.02.05.33.45
+ d=1e100.net; s=20251104; t=1780404071; x=1781008871;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=EUVqvPaTxP9t/OuQxpBY8J6nr/flMfuWVpMZBOXFiJw=;
+ b=FErqRAnLOjAU71Yly86ZDRW/ISoikMlmxkLJHU21/gjco9KCTam7vte/0GUjSxK47u
+ A8/VR/F2osDdm7fqVBuWtET/uAiRQGtcKTDQfp6w83MSVaoDe0Ew2zmzxxXLlgC0G9DV
+ NJtzm0I64JeYeI2hAj9PdunaMQD8sgkfaoPVAGAtm5yuNsXz6m64VgFlhIVYkjt5KNif
+ Os21jiv8Tp+qG1k4FufyAJa9GN2DDzE2u8xyrf5VU8X2WqzF5Ac/MR5+jE/wAaXsQlpV
+ K+GHJEdJRVWzKvZliazmwveLWxeA9Ikcr3ELUbezZtAX1lwNTJRMGBD7qA6xhxeH9agV
+ XhXQ==
+X-Gm-Message-State: AOJu0YxuuxRt2Hw7X113a4CSGgK80mIBxbNKtN15+r6/ez2jpNp/yrje
+ VfGU23xu32A4D5GyjyWixJXDje7fTCdFt6/Y4igmMsOISZLHN0B3J7F47zXrDahymIJtrTZ5Cge
+ qhQHaFhDLAko+M8nThBnNOrRA/1Mkn1Y/d/CnIyds+LgLcMwLEuX9Q5BJ
+X-Gm-Gg: Acq92OGP5lOaGmciJaKMB6ZpP4SgH7jbYTB4SnNTukenwxnZTv+CmcIxyUgrmK6aSGY
+ Ghu1czV3BqR5b957pAcYJtl9NnDXo7nCIneFgPmugCC9g9qe5eu80rZfII5UgA92VFrGFe5JXKm
+ v3Md30SjCZhjk8xF4W8r1e0Y+SIqa8jrasy4nmBXqsFUMqKRDnEoc6/Cp/K8rVqXa+y69ggQSVO
+ +gDNcS7iGOq5dy+9WlyqqRRdqTWeEvh8J2N3d6fUCNBmDmKYzech1iff8A0KJa1aJUS81V+hlk9
+ Sn3cHiXhs0Empw4Aku072uuDiSTrC5oTztfQtM2iHkqZFvtuKAvNJSfQcO8TWcPQg23hVOp66Dk
+ 06FKrIkOd/2VGicjJ
+X-Received: by 2002:a05:600c:4e13:b0:490:b11f:2560 with SMTP id
+ 5b1f17b1804b1-490b11f272dmr65367635e9.9.1780404070713; 
+ Tue, 02 Jun 2026 05:41:10 -0700 (PDT)
+X-Received: by 2002:a05:600c:4e13:b0:490:b11f:2560 with SMTP id
+ 5b1f17b1804b1-490b11f272dmr65366575e9.9.1780404070029; 
+ Tue, 02 Jun 2026 05:41:10 -0700 (PDT)
+Received: from imammedo ([213.175.46.86]) by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-46018c87803sm5589952f8f.30.2026.06.02.05.41.08
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 02 Jun 2026 05:33:45 -0700 (PDT)
-Received: from jgg by wakko with local (Exim 4.97)
- (envelope-from <jgg@ziepe.ca>) id 1wUOJU-00000003m5x-3DKO;
- Tue, 02 Jun 2026 09:33:44 -0300
-Date: Tue, 2 Jun 2026 09:33:44 -0300
-From: Jason Gunthorpe <jgg@ziepe.ca>
-To: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
-Cc: Kees Cook <kees@kernel.org>, Luis Chamberlain <mcgrof@kernel.org>,
- Pengpeng Hou <pengpeng@iscas.ac.cn>, stable@vger.kernel.org,
- Petr Pavlu <petr.pavlu@suse.com>, Richard Weinberger <richard@nod.at>,
- Anton Ivanov <anton.ivanov@cambridgegreys.com>,
- Johannes Berg <johannes@sipsolutions.net>,
- "Rafael J. Wysocki" <rafael@kernel.org>,
- Len Brown <lenb@kernel.org>, Corey Minyard <corey@minyard.net>,
- Gabriel Somlo <somlo@cmu.edu>, "Michael S. Tsirkin" <mst@redhat.com>,
- Jani Nikula <jani.nikula@linux.intel.com>,
- Joonas Lahtinen <joonas.lahtinen@linux.intel.com>,
- Rodrigo Vivi <rodrigo.vivi@intel.com>,
- Tvrtko Ursulin <tursulin@ursulin.net>,
- David Airlie <airlied@gmail.com>, Simona Vetter <simona@ffwll.ch>,
- Bart Van Assche <bvanassche@acm.org>, Leon Romanovsky <leon@kernel.org>,
- Laurent Pinchart <laurent.pinchart@ideasonboard.com>,
- Hans de Goede <hansg@kernel.org>,
- Mauro Carvalho Chehab <mchehab@kernel.org>,
- Bjorn Helgaas <bhelgaas@google.com>, Hannes Reinecke <hare@suse.de>,
- "James E.J. Bottomley" <James.Bottomley@hansenpartnership.com>,
- "Martin K. Petersen" <martin.petersen@oracle.com>,
- Daniel Lezcano <daniel.lezcano@kernel.org>,
- Zhang Rui <rui.zhang@intel.com>, Lukasz Luba <lukasz.luba@arm.com>,
- Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
- Jiri Slaby <jirislaby@kernel.org>, Alan Stern <stern@rowland.harvard.edu>,
- Jason Wang <jasowang@redhat.com>, Xuan Zhuo <xuanzhuo@linux.alibaba.com>,
- Eugenio =?utf-8?B?UMOpcmV6?= <eperezma@redhat.com>,
- Jason Baron <jbaron@akamai.com>, Jim Cromie <jim.cromie@gmail.com>,
- Tiwei Bie <tiwei.btw@antgroup.com>,
- Benjamin Berg <benjamin.berg@intel.com>,
- Ilpo =?utf-8?B?SsOkcnZpbmVu?= <ilpo.jarvinen@linux.intel.com>,
- "David E. Box" <david.e.box@linux.intel.com>,
- "Maciej W. Rozycki" <macro@orcam.me.uk>,
- Srinivas Pandruvada <srinivas.pandruvada@linux.intel.com>,
- Peter Zijlstra <peterz@infradead.org>, Heiko Carstens <hca@linux.ibm.com>,
- Vasily Gorbik <gor@linux.ibm.com>, Sean Christopherson <seanjc@google.com>,
- Paolo Bonzini <pbonzini@redhat.com>,
- Thomas Gleixner <tglx@kernel.org>, Ingo Molnar <mingo@redhat.com>,
- Borislav Petkov <bp@alien8.de>,
- Dave Hansen <dave.hansen@linux.intel.com>, x86@kernel.org,
- "H. Peter Anvin" <hpa@zytor.com>, Vinod Koul <vkoul@kernel.org>,
- Frank Li <Frank.Li@kernel.org>, Daniel Gomez <da.gomez@kernel.org>,
- Sami Tolvanen <samitolvanen@google.com>,
- Aaron Tomlin <atomlin@atomlin.com>,
- Alexander Potapenko <glider@google.com>,
- Marco Elver <elver@google.com>, Dmitry Vyukov <dvyukov@google.com>,
- Andrew Morton <akpm@linux-foundation.org>,
- John Johansen <john.johansen@canonical.com>,
- Paul Moore <paul@paul-moore.com>, James Morris <jmorris@namei.org>,
- "Serge E. Hallyn" <serge@hallyn.com>,
- Georgia Garcia <georgia.garcia@canonical.com>, kvm@vger.kernel.org,
- dmaengine@vger.kernel.org, linux-modules@vger.kernel.org,
- kasan-dev@googlegroups.com, linux-mm@kvack.org,
- apparmor@lists.ubuntu.com, linux-security-module@vger.kernel.org,
- linux-um@lists.infradead.org, linux-acpi@vger.kernel.org,
- openipmi-developer@lists.sourceforge.net, qemu-devel@nongnu.org,
- intel-gfx@lists.freedesktop.org, dri-devel@lists.freedesktop.org,
- linux-rdma@vger.kernel.org, linux-media@vger.kernel.org,
- linux-pci@vger.kernel.org, linux-scsi@vger.kernel.org,
- linux-pm@vger.kernel.org, linuxppc-dev@lists.ozlabs.org,
- linux-serial@vger.kernel.org, linux-usb@vger.kernel.org,
- usb-storage@lists.one-eyed-alien.net,
- virtualization@lists.linux.dev, linux-kernel@vger.kernel.org,
- linux-arch@vger.kernel.org, netdev@vger.kernel.org,
- linux-fsdevel@vger.kernel.org, linux-hardening@vger.kernel.org
-Subject: Re: [PATCH 01/11] params: bound array element output to the caller's
- page buffer
-Message-ID: <20260602123344.GG2487554@ziepe.ca>
-References: <20260521133315.work.845-kees@kernel.org>
- <20260521133326.2465264-1-kees@kernel.org>
- <ah699hwLxIIOZ0-7@ashevche-desk.local>
+ Tue, 02 Jun 2026 05:41:09 -0700 (PDT)
+Date: Tue, 2 Jun 2026 14:41:08 +0200
+From: Igor Mammedov <imammedo@redhat.com>
+To: Eric Auger <eauger@redhat.com>
+Cc: qemu-devel@nongnu.org, mst@redhat.com, anisinha@redhat.com,
+ pbonzini@redhat.com, peter.maydell@linaro.org, shannon.zhaosl@gmail.com,
+ philmd@linaro.org, zhao1.liu@intel.com, rad@semihalf.com,
+ leif.lindholm@oss.qualcomm.com, qemu-arm@nongnu.org, "Daniel P.
+ =?UTF-8?B?QmVycmFuZ8Op?=" <berrange@redhat.com>, Markus Armbruster
+ <armbru@redhat.com>
+Subject: Re: [PATCH v2 09/21] arm: virt: create sbsa_gwdt watchdog
+Message-ID: <20260602144108.0d2d6384@imammedo>
+In-Reply-To: <01f82785-b6c0-4436-ad93-251c837a5cdc@redhat.com>
+References: <20260303092532.2410177-1-imammedo@redhat.com>
+ <20260303092532.2410177-10-imammedo@redhat.com>
+ <4cdd38f4-4efc-48c5-a236-a40449ad8e85@redhat.com>
+ <20260527144955.64eff309@imammedo>
+ <affe914f-157f-4125-93c5-abb94df3ab5b@redhat.com>
+ <b6895403-e294-44de-b77d-511cddadb567@redhat.com>
+ <20260528163714.7efb851e@imammedo>
+ <01f82785-b6c0-4436-ad93-251c837a5cdc@redhat.com>
+X-Mailer: Claws Mail 4.4.0 (GTK 3.24.52; x86_64-redhat-linux-gnu)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <ah699hwLxIIOZ0-7@ashevche-desk.local>
-Received-SPF: pass client-ip=2607:f8b0:4864:20::82b; envelope-from=jgg@ziepe.ca;
- helo=mail-qt1-x82b.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=imammedo@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -24
+X-Spam_score: -2.5
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.445,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -169,28 +130,366 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, Jun 02, 2026 at 02:26:46PM +0300, Andy Shevchenko wrote:
-> On Thu, May 21, 2026 at 06:33:14AM -0700, Kees Cook wrote:
-> > 
-> > param_array_get() appends each element's string representation into the
-> > shared sysfs page buffer by passing buffer + off to the element getter.
-> > 
-> > That works for getters that only write a small bounded string, but
-> > param_get_charp() and similar helpers format against PAGE_SIZE from the
-> > pointer they receive. Once off is non-zero, an element getter can
-> > therefore write past the end of the original sysfs page buffer.
-> > 
-> > Collect each element into a temporary PAGE_SIZE buffer first and then
-> > copy only the remaining space into the caller's page buffer.
-> 
-> ...
-> 
-> > +	elem_buf = kmalloc(PAGE_SIZE, GFP_KERNEL);
-> 
-> get_free_page() (or how it is called)?
+On Mon, 1 Jun 2026 18:37:05 +0200
+Eric Auger <eauger@redhat.com> wrote:
 
-I thought modern mm guidance was to use kmalloc whenever possible and
-not use get_free_page() unless you intend to use the struct page bits?
+> Hi Igor,
+> 
+> On 5/28/26 4:37 PM, Igor Mammedov wrote:
+> > On Thu, 28 May 2026 11:59:06 +0200
+> > Eric Auger <eauger@redhat.com> wrote:
+> >   
+> >> Hi,
+> >>
+> >> On 5/28/26 11:04 AM, Eric Auger wrote:  
+> >>> Hi Igor,
+> >>>
+> >>> On 5/27/26 2:49 PM, Igor Mammedov wrote:    
+> >>>> On Tue, 26 May 2026 15:58:08 +0200
+> >>>> Eric Auger <eauger@redhat.com> wrote:
+> >>>>    
+> >>>>> Hi Igor,
+> >>>>>
+> >>>>> On 3/3/26 10:25 AM, Igor Mammedov wrote:    
+> >>>>>> Allow to use SBSA generic watchdog with virt machine type.
+> >>>>>> (includes conditional generation of corresponding FDT and
+> >>>>>> ACPI GTDT descriptors)
+> >>>>>>
+> >>>>>> Use '-device sbsa_gwdt' to command line to enable it.      
+> >>>>> I thank that in general Peter is not a big fan of dynamic instantiation
+> >>>>> of sysbus devices. Don't you have means to instantiate it statically in
+> >>>>> arm virt memory map?    
+> > 
+> > On Peter's part, there weren't any objection to the idea using -device.
+> > (neither in v1 nor in this revision).
+> > 
+> >   
+> >>>> /me neither
+> >>>>
+> >>>> in previous version there was a machine option to enable the feature
+> >>>> to that was rejected in favor of device.
+> >>>>
+> >>>> in this case for platform  -device of sysbus based device, I don't think
+> >>>> we can do better that dynamic sysbus.     
+> >>>
+> >>> sorry I may have missed some previous discussion details. As far as I
+> >>> can read, I understand you could instantiate the wdt in a free MMIO
+> >>> slot, unconfitionnaly just as it is done in hw/arm/sbsa-ref.c. Maybe add
+> >>> a compat to avoid having it by default on older machine types. Then
+> >>> about the type of the integration gtdt or wat, can't you have a device
+> >>> compat?    
+> >> After further reading of the previous version thread, I wonder if you
+> >> shouldn't always instantiate the watchdog in the machine instead.
+> >>
+> >> Add a device property allowing to switch between GWDT or WDAT version.
+> >>
+> >> In arm virt,
+> >>
+> >> 1) if you discover the GWDT version is selected (default) you generate
+> >> both dt and GTDT ACPI table
+> >> 2) if you discover the WDAT version is selected, you only generate WDAT
+> >> ACPI description and you output an error in case of DT boot.
+> >>
+> >> You may add a machine no_wdt flag to handle compats for older machine
+> >> types if needed.  
+> > 
+> > rereading v1 thread it seems that there weren't much objection to adding
+> > a dedicated virt machine property to enable 'wdat' [1] /like what is done to q35/.
+> > 
+> > problem was in conflating too generic whatchdog=none/auto/native/acpi into
+> > one knob and discussion quickly went down rabbit hole of semantics.
+> > 
+> > For Q35, we don't really have a choice as it's already builtin device,
+> > but for arm/virt we can do better than a bunch of compats and proxy
+> > properties. (as Markus noted in v1 review, we've done that/still do
+> > but it doesn't scale well)
+> > 
+> > I can go old route and revert to simplified v1 that would:
+> >   * make gwdt builtin device on arm/virt board
+> >     (i.e. default to SBSA native watchdog with GTDT ACPI table
+> >      and relevant FDT entries)  
+> would make sense to me.
 
-Jason
+forgot about why it's not default ATM,
+the reason being that native/default GWDT causes issues on Windows
+(only WDAT variant works).
+the last 2 patches trying to do some damage control,
+but what we can do on qemu side is limited.
+
+and builtin gwdt we would end up with a mess of gwdt=on|of and wdat=o|n,
+
+So I'd rather have watchdog as an optional device included to VM
+when asked by user.
+With side benefit reducing attack surface when device is not
+needed compared to built-in by default variant.
+ 
+
+> >   * add a machine.gwdt-wdat=on|off property
+> >      1. that will make gwdt to use 1KHz frequency
+> >      2. enable WDAT ACPI table
+> >      3. disable GTDT ACPI table and relevant FDT entries
+> >         as they are mutually exclusive with #1 point 
+> >   * add a compat knob to disable gwdt on old machine types.  
+> Either that or device prop setting as we have for ACPI PCI HP (technique
+> you advocated at some point).
+
+that was for symmetry with existing acpi pci hp feature on x86 if I recall
+correctly. There is no much options for builtin devices, we either
+ * use -global to tweak them  (historical variant)
+ * more recent trend is proxy property in -machine
+both not great variants, I've tried in v1 to propose generic
+-machine watchdog=foo to at least limit a zoo of options, but that was rejected.
+ 
+
+> > 
+> > Re-spinning that wouldn't take much effort, all the code already exist,
+> > just needs mostly reshuffling. 
+> > 
+> > 1) I think Daniel was ok having something like gwdt-wdat=on|off
+> >    from libvirt pov.
+> > 
+> > That said,
+> > Having watchdog as an optional -device is much cleaner compared to
+> > adding knobs to machine (both internal compats and external to enable
+> > specific watchdog).  
+> I am OK with that too. However in general I think Peter prefers having
+> them statically instantiated if possible. All the more so I think that
+> having a watchdog, always instantiated, in its GTDT/FDT form (not WDAT
+> ACPI only) in machvirt would make sense in general and does not make
+> much trouble in terms of MMIO layout.
+
+If there is no objections, lets go with -device variant
+
+If dynamic sysbus resources is of concern, I probably can pin/make them
+static, using device plug handler (virt_machine_device_plug_cb).
+Let me try and see what could be done wrt static resources.
+
+At this point series needs a rebase, due to conflicts.
+So I'll respin it with staic variant if it works out or as it's now.
+
+But while I'm at it, pls review the remaining not reviewed yet patches,
+as they aren't likely to change. Especially generic GWDT fixes 18-21/21. 
+
+> Good (well bad actualy) example
+> of compats/props is set of
+> > ITS ones, one eventually can untangle what depends on what
+> > and how that works together, but I'd rather avoid doing that. 
+> > 
+> > Perhaps I went overboard with move to -device.
+> > Anyways, all I can do is suggest in my opinion a better way,
+> > but it's upto arm folks to pick a preferred approach.
+> >   
+> >> Would that make sense?
+> >>
+> >> Otherwise, can you point me the msgid where the -device was prefered?  
+> > Sorry, rereading v1 thread, -device was just an idea to try
+> > (but by no means a preferred/consensus one).  
+> This is what I understood too.
+> 
+> Thanks
+> 
+> Eric
+> >   
+> >>
+> >> Thanks
+> >>
+> >> Eric  
+> >>>
+> >>> Thanks
+> >>>
+> >>> Eric
+> >>>     
+> >>>>
+> >>>>      
+> >>>>>
+> >>>>> Eric    
+> >>>>>>
+> >>>>>> Tested with Fedora 43:
+> >>>>>>   FDT: -M virt,acpi=off -device sbsa_gwdt
+> >>>>>>   ACPI: -M virt -device sbsa_gwdt
+> >>>>>>
+> >>>>>> Signed-off-by: Igor Mammedov <imammedo@redhat.com>
+> >>>>>> ---
+> >>>>>>  hw/arm/Kconfig           |  1 +
+> >>>>>>  hw/arm/virt-acpi-build.c | 33 +++++++++++++++++++++++++++++++--
+> >>>>>>  hw/arm/virt.c            |  2 ++
+> >>>>>>  hw/core/sysbus-fdt.c     | 32 ++++++++++++++++++++++++++++++++
+> >>>>>>  hw/watchdog/sbsa_gwdt.c  |  1 +
+> >>>>>>  5 files changed, 67 insertions(+), 2 deletions(-)
+> >>>>>>
+> >>>>>> diff --git a/hw/arm/Kconfig b/hw/arm/Kconfig
+> >>>>>> index c66c452737..1222efadd1 100644
+> >>>>>> --- a/hw/arm/Kconfig
+> >>>>>> +++ b/hw/arm/Kconfig
+> >>>>>> @@ -36,6 +36,7 @@ config ARM_VIRT
+> >>>>>>      select VIRTIO_MEM_SUPPORTED
+> >>>>>>      select ACPI_CXL
+> >>>>>>      select ACPI_HMAT
+> >>>>>> +    select WDT_SBSA
+> >>>>>>  
+> >>>>>>  config CUBIEBOARD
+> >>>>>>      bool
+> >>>>>> diff --git a/hw/arm/virt-acpi-build.c b/hw/arm/virt-acpi-build.c
+> >>>>>> index 719d2f994e..9c14b1d4d5 100644
+> >>>>>> --- a/hw/arm/virt-acpi-build.c
+> >>>>>> +++ b/hw/arm/virt-acpi-build.c
+> >>>>>> @@ -64,6 +64,7 @@
+> >>>>>>  #include "hw/virtio/virtio-acpi.h"
+> >>>>>>  #include "target/arm/cpu.h"
+> >>>>>>  #include "target/arm/multiprocessing.h"
+> >>>>>> +#include "hw/watchdog/sbsa_gwdt.h"
+> >>>>>>  
+> >>>>>>  #define ARM_SPI_BASE 32
+> >>>>>>  
+> >>>>>> @@ -863,6 +864,8 @@ build_gtdt(GArray *table_data, BIOSLinker *linker, VirtMachineState *vms)
+> >>>>>>      const uint32_t irqflags = 0;  /* Interrupt is Level triggered  */
+> >>>>>>      AcpiTable table = { .sig = "GTDT", .rev = 3, .oem_id = vms->oem_id,
+> >>>>>>                          .oem_table_id = vms->oem_table_id };
+> >>>>>> +    uint32_t gtdt_start = table_data->len;
+> >>>>>> +    Object *wdt = object_resolve_type_unambiguous(TYPE_WDT_SBSA, NULL);
+> >>>>>>  
+> >>>>>>      acpi_table_begin(&table, table_data);
+> >>>>>>  
+> >>>>>> @@ -893,10 +896,15 @@ build_gtdt(GArray *table_data, BIOSLinker *linker, VirtMachineState *vms)
+> >>>>>>      build_append_int_noprefix(table_data, irqflags, 4);
+> >>>>>>      /* CntReadBase Physical address */
+> >>>>>>      build_append_int_noprefix(table_data, 0xFFFFFFFFFFFFFFFF, 8);
+> >>>>>> +
+> >>>>>>      /* Platform Timer Count */
+> >>>>>> -    build_append_int_noprefix(table_data, 0, 4);
+> >>>>>> +    build_append_int_noprefix(table_data,  wdt ? 1 : 0, 4);
+> >>>>>>      /* Platform Timer Offset */
+> >>>>>> -    build_append_int_noprefix(table_data, 0, 4);
+> >>>>>> +    build_append_int_noprefix(table_data,
+> >>>>>> +        wdt ? (table_data->len - gtdt_start) +
+> >>>>>> +              4 + 4 + 4 /* len of this & following 2 fields to skip */
+> >>>>>> +            : 0, 4);
+> >>>>>> +
+> >>>>>>      if (vms->ns_el2_virt_timer_irq) {
+> >>>>>>          /* Virtual EL2 Timer GSIV */
+> >>>>>>          build_append_int_noprefix(table_data, ARCH_TIMER_NS_EL2_VIRT_IRQ, 4);
+> >>>>>> @@ -906,6 +914,27 @@ build_gtdt(GArray *table_data, BIOSLinker *linker, VirtMachineState *vms)
+> >>>>>>          build_append_int_noprefix(table_data, 0, 4);
+> >>>>>>          build_append_int_noprefix(table_data, 0, 4);
+> >>>>>>      }
+> >>>>>> +
+> >>>>>> +    /* ACPI 6.5 spec: 5.2.25.2 ARM Generic Watchdog Structure (Table 5-124) */
+> >>>>>> +    if (wdt) {
+> >>>>>> +        PlatformBusDevice *pbus = PLATFORM_BUS_DEVICE(vms->platform_bus_dev);
+> >>>>>> +        SysBusDevice *sd = SYS_BUS_DEVICE(wdt);
+> >>>>>> +        hwaddr mmio_base = vms->memmap[VIRT_PLATFORM_BUS].base;
+> >>>>>> +        hwaddr rbase = mmio_base + platform_bus_get_mmio_addr(pbus, sd, 0);
+> >>>>>> +        hwaddr cbase = mmio_base + platform_bus_get_mmio_addr(pbus, sd, 1);
+> >>>>>> +        int irq = ARM_SPI_BASE + vms->irqmap[VIRT_PLATFORM_BUS] +
+> >>>>>> +                  platform_bus_get_irqn(pbus, sd, 0);
+> >>>>>> +
+> >>>>>> +        build_append_int_noprefix(table_data, 1 /* Type: Watchdog GT */, 1);
+> >>>>>> +        build_append_int_noprefix(table_data, 28 /* Length */, 2);
+> >>>>>> +        build_append_int_noprefix(table_data, 0, 1);  /* Reserved */
+> >>>>>> +        /* RefreshFrame Physical Address */
+> >>>>>> +        build_append_int_noprefix(table_data, rbase, 8);
+> >>>>>> +        /* WatchdogControlFrame Physical Address */
+> >>>>>> +        build_append_int_noprefix(table_data, cbase, 8);
+> >>>>>> +        build_append_int_noprefix(table_data, irq, 4); /* Watchdog Timer GSIV */
+> >>>>>> +        build_append_int_noprefix(table_data, 0, 4); /* Watchdog Timer Flags */
+> >>>>>> +    }
+> >>>>>>      acpi_table_end(linker, &table);
+> >>>>>>  }
+> >>>>>>  
+> >>>>>> diff --git a/hw/arm/virt.c b/hw/arm/virt.c
+> >>>>>> index cab2e21e8a..a87991b591 100644
+> >>>>>> --- a/hw/arm/virt.c
+> >>>>>> +++ b/hw/arm/virt.c
+> >>>>>> @@ -95,6 +95,7 @@
+> >>>>>>  #include "hw/cxl/cxl.h"
+> >>>>>>  #include "hw/cxl/cxl_host.h"
+> >>>>>>  #include "qemu/guest-random.h"
+> >>>>>> +#include "hw/watchdog/sbsa_gwdt.h"
+> >>>>>>  
+> >>>>>>  static GlobalProperty arm_virt_compat_defaults[] = {
+> >>>>>>      { TYPE_VIRTIO_IOMMU_PCI, "aw-bits", "48" },
+> >>>>>> @@ -3474,6 +3475,7 @@ static void virt_machine_class_init(ObjectClass *oc, const void *data)
+> >>>>>>      machine_class_allow_dynamic_sysbus_dev(mc, TYPE_RAMFB_DEVICE);
+> >>>>>>      machine_class_allow_dynamic_sysbus_dev(mc, TYPE_UEFI_VARS_SYSBUS);
+> >>>>>>      machine_class_allow_dynamic_sysbus_dev(mc, TYPE_ARM_SMMUV3);
+> >>>>>> +    machine_class_allow_dynamic_sysbus_dev(mc, TYPE_WDT_SBSA);
+> >>>>>>  #ifdef CONFIG_TPM
+> >>>>>>      machine_class_allow_dynamic_sysbus_dev(mc, TYPE_TPM_TIS_SYSBUS);
+> >>>>>>  #endif
+> >>>>>> diff --git a/hw/core/sysbus-fdt.c b/hw/core/sysbus-fdt.c
+> >>>>>> index 89d0c46445..76aa1bc579 100644
+> >>>>>> --- a/hw/core/sysbus-fdt.c
+> >>>>>> +++ b/hw/core/sysbus-fdt.c
+> >>>>>> @@ -36,6 +36,7 @@
+> >>>>>>  #include "hw/display/ramfb.h"
+> >>>>>>  #include "hw/uefi/var-service-api.h"
+> >>>>>>  #include "hw/arm/fdt.h"
+> >>>>>> +#include "hw/watchdog/sbsa_gwdt.h"
+> >>>>>>  
+> >>>>>>  /*
+> >>>>>>   * internal struct that contains the information to create dynamic
+> >>>>>> @@ -118,6 +119,36 @@ static int add_uefi_vars_node(SysBusDevice *sbdev, void *opaque)
+> >>>>>>      return 0;
+> >>>>>>  }
+> >>>>>>  
+> >>>>>> +static int add_sbsa_gwdt_node(SysBusDevice *sbdev, void *opaque)
+> >>>>>> +{
+> >>>>>> +    PlatformBusFDTData *data = opaque;
+> >>>>>> +    PlatformBusDevice *pbus = data->pbus;
+> >>>>>> +    const char *parent_node = data->pbus_node_name;
+> >>>>>> +    void *fdt = data->fdt;
+> >>>>>> +    uint64_t cbase, rbase;
+> >>>>>> +    char *nodename;
+> >>>>>> +    int irq;
+> >>>>>> +
+> >>>>>> +    cbase = platform_bus_get_mmio_addr(pbus, sbdev, 1);  /* control frame */
+> >>>>>> +    rbase = platform_bus_get_mmio_addr(pbus, sbdev, 0);  /* refresh frame */
+> >>>>>> +    irq = platform_bus_get_irqn(pbus, sbdev, 0);
+> >>>>>> +
+> >>>>>> +    nodename = g_strdup_printf("%s/watchdog@%" PRIx64, parent_node, cbase);
+> >>>>>> +    qemu_fdt_add_subnode(fdt, nodename);
+> >>>>>> +
+> >>>>>> +    qemu_fdt_setprop_string(fdt, nodename, "compatible", "arm,sbsa-gwdt");
+> >>>>>> +    qemu_fdt_setprop_cells(fdt, nodename, "reg",
+> >>>>>> +                           cbase, SBSA_GWDT_CMMIO_SIZE,
+> >>>>>> +                           rbase, SBSA_GWDT_RMMIO_SIZE);
+> >>>>>> +    qemu_fdt_setprop_cells(fdt, nodename, "interrupts",
+> >>>>>> +                           GIC_FDT_IRQ_TYPE_SPI, data->irq_start + irq,
+> >>>>>> +                           GIC_FDT_IRQ_FLAGS_LEVEL_HI);
+> >>>>>> +    qemu_fdt_setprop_cell(fdt, nodename, "timeout-sec", 30);
+> >>>>>> +
+> >>>>>> +    g_free(nodename);
+> >>>>>> +    return 0;
+> >>>>>> +}
+> >>>>>> +
+> >>>>>>  static int no_fdt_node(SysBusDevice *sbdev, void *opaque)
+> >>>>>>  {
+> >>>>>>      return 0;
+> >>>>>> @@ -140,6 +171,7 @@ static const BindingEntry bindings[] = {
+> >>>>>>      TYPE_BINDING(TYPE_ARM_SMMUV3, no_fdt_node),
+> >>>>>>      TYPE_BINDING(TYPE_RAMFB_DEVICE, no_fdt_node),
+> >>>>>>      TYPE_BINDING(TYPE_UEFI_VARS_SYSBUS, add_uefi_vars_node),
+> >>>>>> +    TYPE_BINDING(TYPE_WDT_SBSA, add_sbsa_gwdt_node),
+> >>>>>>      TYPE_BINDING("", NULL), /* last element */
+> >>>>>>  };
+> >>>>>>  
+> >>>>>> diff --git a/hw/watchdog/sbsa_gwdt.c b/hw/watchdog/sbsa_gwdt.c
+> >>>>>> index acb970e8b3..c4dd8005b7 100644
+> >>>>>> --- a/hw/watchdog/sbsa_gwdt.c
+> >>>>>> +++ b/hw/watchdog/sbsa_gwdt.c
+> >>>>>> @@ -285,6 +285,7 @@ static void wdt_sbsa_gwdt_class_init(ObjectClass *klass, const void *data)
+> >>>>>>      dc->realize = wdt_sbsa_gwdt_realize;
+> >>>>>>      device_class_set_legacy_reset(dc, wdt_sbsa_gwdt_reset);
+> >>>>>>      dc->hotpluggable = false;
+> >>>>>> +    dc->user_creatable = true;
+> >>>>>>      set_bit(DEVICE_CATEGORY_WATCHDOG, dc->categories);
+> >>>>>>      dc->vmsd = &vmstate_sbsa_gwdt;
+> >>>>>>      dc->desc = "SBSA-compliant generic watchdog device";      
+> >>>>>    
+> >>>>    
+> >>>     
+> >>  
+> >   
+> 
+
 
