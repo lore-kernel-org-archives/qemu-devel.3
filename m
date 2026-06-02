@@ -4,143 +4,78 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 343DFCD5BD1
-	for <qemu-devel@archiver.kernel.org>; Tue,  2 Jun 2026 16:46:45 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0B792CD6E60
+	for <qemu-devel@archiver.kernel.org>; Tue,  2 Jun 2026 17:10:12 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wUSGE-0004PB-Ak; Tue, 02 Jun 2026 12:46:38 -0400
+	id 1wUScX-0000XU-U5; Tue, 02 Jun 2026 13:09:41 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pierrick.bouvier@oss.qualcomm.com>)
- id 1wUSFj-0004Dd-CX
- for qemu-devel@nongnu.org; Tue, 02 Jun 2026 12:46:12 -0400
-Received: from mx0a-0031df01.pphosted.com ([205.220.168.131])
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1wUSbs-0000QU-U9
+ for qemu-devel@nongnu.org; Tue, 02 Jun 2026 13:09:08 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pierrick.bouvier@oss.qualcomm.com>)
- id 1wUSFg-00017A-Ho
- for qemu-devel@nongnu.org; Tue, 02 Jun 2026 12:46:05 -0400
-Received: from pps.filterd (m0279864.ppops.net [127.0.0.1])
- by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 652GgoSA2691969
- for <qemu-devel@nongnu.org>; Tue, 2 Jun 2026 16:46:03 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
- cc:content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
- 57o9Yb68BwtqoKYvW6vtM1uCXyhVWj3ykLsRZG+HF14=; b=NPMCcbCNjriC9c3u
- 7BNkHPxK+518Q2gKCKvZlkjxGew+HMcExC/Df2ITJH8YAWR0Kl45fiLjKgcwe3Ug
- 0eOYzVGy0HR7soyDGdnh21R3FUD23xs+0E5tB+hdhF92KVCC6JHEC5tyuQbXd+yZ
- E++V2QFsAgVGlIPwr8Fu5O2c+YtyO5tN4rpCcYyBc3u+w/KxgArHP0dw30LZZJ5D
- fqGjr8GWRYFA02AnkT9hLipFD+3x1pyqamcg16W96PSQiOOcLCjNvu4h6Vh7H27Y
- vPGz46XD42uUAEwolJnWBDdgLyHBuoOX8npS8YnDALzDRAmr0Hujvn6T8UVPScO3
- DNRcHA==
-Received: from mail-dy1-f200.google.com (mail-dy1-f200.google.com
- [74.125.82.200])
- by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4ehqumk308-1
- (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
- for <qemu-devel@nongnu.org>; Tue, 02 Jun 2026 16:46:03 +0000 (GMT)
-Received: by mail-dy1-f200.google.com with SMTP id
- 5a478bee46e88-304ea42b025so2121481eec.0
- for <qemu-devel@nongnu.org>; Tue, 02 Jun 2026 09:46:02 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=oss.qualcomm.com; s=google; t=1780418762; x=1781023562; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:content-language:from
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=57o9Yb68BwtqoKYvW6vtM1uCXyhVWj3ykLsRZG+HF14=;
- b=NsnvFBBg+zalG9zp+KLQS8NjDmOqYeVwcLwPVts6eIK9tS7qfvUxm5u7Hk9nvV3aB9
- Dpn0enf16EuV1xGH0o4Hi+LHJaApaAynGMlMLbPvmxLAJRRY/eH7jICINlNXZK6fQk+W
- Si47Fy4IuXgd/dGT9aDhdzHn3ZOz51gxCGX13t9u6QDrQVR/oCxynKCOkblmgMLGgNrP
- ya98uuYECiXgSuUumBAPYuG0PlLhh6WwcTHTH1TNUw17xdg2hb5KIQ0xhK8rrOyhFiBx
- aUNMXPaIIlGOOCOMhNZyTc3OOD/0PsHIKxQfpow0+1QEGu2N7ueMHwiDlyG3lf6ppe+Q
- qKJg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1780418762; x=1781023562;
- h=content-transfer-encoding:in-reply-to:content-language:from
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=57o9Yb68BwtqoKYvW6vtM1uCXyhVWj3ykLsRZG+HF14=;
- b=kld9EkFD9XxhiFZ3Fjn0EwG+GO9PIOip2pXskAcwnP/DjRD2p+RzbBUrScOxhKYJ4j
- p30jkbV/W4dR5qqu+LpTVAgCBHw17haAfOJUjC7zXa1oYJfTtyzefvJmfbrTWA2BH0zd
- r7hcNwLqHqvhyFe0XeOT2conHtGqu3QQ0vFceWwlgnfJu0Gff7Oq7GP4hX5PrZUDqwNT
- GAgW+fssJQ5i7q16CHxRKzlkxqQdda0wZWRLB1LOdzXSZVJq1sxRmJk8CKXm/BQ0qKFm
- +zx9XfYMnyNTaxT3kjjP6gfukREVBx7yiXoUBEjsIiZdDMyS1ZCe+bRmU2VeePbctBcT
- S/xA==
-X-Forwarded-Encrypted: i=1;
- AFNElJ/FQEtBmapporUGeiTOHDPT7eeYUl2vYQSH42HboLiMXNGkQqmxXzbYsdSGdmmn8xzko1Cr5c6khyzY@nongnu.org
-X-Gm-Message-State: AOJu0YyCeo7c5W2FEWa+jnVBAGKRzDPUZnt+hg+fvBCX/7uLEFGVWk84
- sVHpJwOwQQbQcGW9SDf6ioA7IxwFgqDtlzOGCxYDUwLNF069h/0lT0bT6GGBf7b2iJm0B8lOzZq
- EAWz8AWmudPZVyN81qORxA8jUwxhZi2fVepQzm3RmDZYiZLcWdG2J/CNY9Q==
-X-Gm-Gg: Acq92OEh6MUmVpIxCvCKNrlft3ssGdfhbm1mpvyluWGpeOY2UKYxNC7v3VuFcCfCuzM
- KMt+m+pNdUkwjwCU1Tan+9YroJ/y3I4ZhDn3FMm0ZEO6LWoaaJsxv7mcYIk4DPxDalFyymbtmbK
- RTkUnAjlUIVD0Z0YqhdGz7dHrMn24XuLoG2syqlJwX4RNCEonfHP7nnFJNewT0wYByNpT5ZuFmX
- NDjDXr4VvQkbetsOWdZpoJ8vHEJ5dGxzZJvkZqCAzoJMbp/GnjnTRGd8GnMIjKCaMV39pQbknET
- GekG9T7N6NcQYTuKCnBg6ZMDuOvHAbI3aJ7O8s3Y6P30AeKekeJthX0/Ayn1m8QzhCG9RRXqXFk
- yGf+s5xgj4Nbkk7zqbGIJTUguNs5GFgMAlbppkWZuMqBSRUI82qVAcsLlqzITSa8Rvrd50rs0k5
- kVq5c/SuIx3Et+cv/ayzqA7G2z
-X-Received: by 2002:a05:693c:2294:b0:304:81b6:fd51 with SMTP id
- 5a478bee46e88-30734a8b867mr2444988eec.6.1780418762260; 
- Tue, 02 Jun 2026 09:46:02 -0700 (PDT)
-X-Received: by 2002:a05:693c:2294:b0:304:81b6:fd51 with SMTP id
- 5a478bee46e88-30734a8b867mr2444971eec.6.1780418761765; 
- Tue, 02 Jun 2026 09:46:01 -0700 (PDT)
-Received: from [192.168.1.170] (216-71-219-44.dyn.novuscom.net.
- [216.71.219.44]) by smtp.gmail.com with ESMTPSA id
- a92af1059eb24-137f556049csm156786c88.15.2026.06.02.09.46.00
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 02 Jun 2026 09:46:01 -0700 (PDT)
-Message-ID: <73aec634-11af-49b6-92b0-2a5355590eba@oss.qualcomm.com>
-Date: Tue, 2 Jun 2026 09:46:00 -0700
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1wUSbV-0006Ka-0U
+ for qemu-devel@nongnu.org; Tue, 02 Jun 2026 13:08:59 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1780420114;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=bFRu6l3tw5DhwdOltUx6UhUe3gy5CY+EDWbFTOV/MEk=;
+ b=K56J1KIj+VRi/cBXGQ3SfIpOW5j9qj/GfzDshYDwSzwTwwbtJhtxWScc1+afzesnpBRpwP
+ XMANP01wp+S6vzg7vnPzw/+8TF8iirjJZFHpGH0hZ93aW11PUxdj95oEPyS+pUeqmD5my8
+ 8001d7QaM4FSGvOPYoveTEuUt3EE4K4=
+Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-460-s1KEaGM3N2e8Wen-eetg9w-1; Tue,
+ 02 Jun 2026 13:08:30 -0400
+X-MC-Unique: s1KEaGM3N2e8Wen-eetg9w-1
+X-Mimecast-MFC-AGG-ID: s1KEaGM3N2e8Wen-eetg9w_1780420109
+Received: from mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.111])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id B0F3618002C8; Tue,  2 Jun 2026 17:08:29 +0000 (UTC)
+Received: from blackfin.pond.sub.org (unknown [10.44.22.2])
+ by mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 52A921800465; Tue,  2 Jun 2026 17:08:29 +0000 (UTC)
+Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
+ id 0252521E6A01; Tue, 02 Jun 2026 19:08:27 +0200 (CEST)
+From: Markus Armbruster <armbru@redhat.com>
+To: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
+Cc: qemu-devel@nongnu.org,  philmd@linaro.org,  John Snow
+ <jsnow@redhat.com>,  Cleber Rosa <cleber@redhat.com>
+Subject: Re: [PATCH 00/39] MAINTAINERS: Fix F: lines
+In-Reply-To: <35c9d179-821a-48e5-8c71-22236053d67c@oss.qualcomm.com> (Pierrick
+ Bouvier's message of "Tue, 2 Jun 2026 08:35:21 -0700")
+References: <20260521080511.999266-1-armbru@redhat.com>
+ <d52c0fca-3a8a-4d4f-abff-f772605512b8@oss.qualcomm.com>
+ <87y0gy8thg.fsf@pond.sub.org>
+ <c7cc0040-872d-425c-827f-c57db87ee12c@oss.qualcomm.com>
+ <87wlwh77gv.fsf@pond.sub.org>
+ <35c9d179-821a-48e5-8c71-22236053d67c@oss.qualcomm.com>
+Date: Tue, 02 Jun 2026 19:08:26 +0200
+Message-ID: <874ijkswdx.fsf@pond.sub.org>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 3/3] MAINTAINERS: remove stale Cirrus macOS build job path
-To: Stefan Hajnoczi <stefanha@redhat.com>, qemu-devel@nongnu.org
-Cc: =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
- Li-Wen Hsu <lwhsu@freebsd.org>, =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?=
- <philmd@mailo.com>, Warner Losh <imp@bsdimp.com>
-References: <20260602162457.828969-1-stefanha@redhat.com>
- <20260602162457.828969-4-stefanha@redhat.com>
-From: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
-Content-Language: en-US
-In-Reply-To: <20260602162457.828969-4-stefanha@redhat.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNjAyMDE2MSBTYWx0ZWRfX8+j2z/Xt0XXJ
- JuWjQMQ//S0+tt2ylGA1Gnwyw+VOZbOvha+Tr+qBBnXnTUO2iEp3BgLb9bTdMvdQf35vHMDIp63
- LV33RKvTzMSjxNqqXtlmhLW5SwYsEk36bHcS/O5edbeI5y5hWZJxdUiQbFoPw/HpfMFZHt5QBvF
- ZfO4e8/jZ3MFjT+fIUVqR4f3ZZtLF9E3lbP8rSey9OXZgyNjhGAFz/t4EY+vNQpqrEHgCxBhLRE
- Pry/N5qdwQHLRPa8uuG3XccfT/ZqAVWiyv55odsq++KUMghJYbUXMUmsOjzwv2CDggJ+TYMaoh2
- eDYHKQfufTK9Qchjc6RdHAPxekfAMD/gD0TGRZQEi4KKEGZRBwZ1raMkfO4hvJgxaRTbmX0iUSu
- yBzUEZgvHy6/ZXtAs6EAeWQGNXN8gAltMQtyKdKNgaqJ6xRjnavesMsOE8So4awgZ3Q83iU77nc
- hsgZOmjVZnD5EPenLmA==
-X-Proofpoint-ORIG-GUID: 0eIL9GZd0m1r9fgHx0ioHWJpMcjtqKDm
-X-Proofpoint-GUID: 0eIL9GZd0m1r9fgHx0ioHWJpMcjtqKDm
-X-Authority-Analysis: v=2.4 cv=Rrv16imK c=1 sm=1 tr=0 ts=6a1f08cb cx=c_pps
- a=PfFC4Oe2JQzmKTvty2cRDw==:117 a=iLqgmErQAxjCjdq5jj1Aqg==:17
- a=IkcTkHD0fZMA:10 a=FelO9ux0wxsA:10 a=s4-Qcg_JpJYA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=DJpcGTmdVt4CTyJn9g5Z:22
- a=KKAkSRfTAAAA:8 a=20KFwNOVAAAA:8 a=EUspDBNiAAAA:8 a=ttX-DzhIOh4QrhBK5IwA:9
- a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10 a=6Ab_bkdmUrQuMsNx7PHu:22
- a=cvBusfyB2V15izCimMoJ:22
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.125,FMLib:17.12.100.49
- definitions=2026-06-02_02,2026-05-28_03,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- malwarescore=0 adultscore=0 lowpriorityscore=0 clxscore=1015 spamscore=0
- suspectscore=0 impostorscore=0 phishscore=0 priorityscore=1501 bulkscore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2605210000 definitions=main-2606020161
-Received-SPF: pass client-ip=205.220.168.131;
- envelope-from=pierrick.bouvier@oss.qualcomm.com;
- helo=mx0a-0031df01.pphosted.com
-X-Spam_score_int: -27
-X-Spam_score: -2.8
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.111
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=armbru@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -24
+X-Spam_score: -2.5
 X-Spam_bar: --
-X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.445,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -156,17 +91,77 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 6/2/2026 9:24 AM, Stefan Hajnoczi wrote:
-> Commit 984b192bdf37 ("ci: drop cirrus MacOS build") removed the Cirrus
-> macOS build job. The MAINTAINERS file now contains a stale path that
-> should be removed.
-> 
-> Cc: Alex Bennée <alex.bennee@linaro.org>
-> Signed-off-by: Stefan Hajnoczi <stefanha@redhat.com>
-> ---
->  MAINTAINERS | 1 -
->  1 file changed, 1 deletion(-)
-> 
+Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com> writes:
 
-Reviewed-by: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
+> On 6/2/2026 12:00 AM, Markus Armbruster wrote:
+>> Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com> writes:
+>>=20
+>>> On 6/1/2026 3:06 AM, Markus Armbruster wrote:
+>>>> Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com> writes:
+>>>>
+>>>>> Hi Markus,
+>>>>>
+>>>>> On 5/21/2026 1:04 AM, Markus Armbruster wrote:
+>>>>>> Quite a few F: lines don't match any files.  The quick & dirty check
+>>>>>>
+>>>>>>     $ ls `sed -n 's/^F: *//p' MAINTAINERS ` >/dev/null
+>>>>>>
+>>>>>> finds about fifty.
+>>>>>>
+>>>>>> Philippe Mathieu-Daud=C3=A9 recently posted a few fixes:
+>>>>>>
+>>>>>>   MAINTAINERS: Fix docker/dockerfiles/debian-hexagon-cross.docker pa=
+th
+>>>>>>   MAINTAINERS: Cover debian-loongarch-cross.docker with LoongArch se=
+ction
+>>>>>>   MAINTAINERS: Cover debian-xtensa-cross.docker with Xtensa section
+>>>>>>   MAINTAINERS: Cover debian-tricore-cross.docker with TriCore section
+>>>>>>   MAINTAINERS: Cover python.docker with Python library section
+>>>>>>   MAINTAINERS: Fix s390x storage key/attribute device paths
+>>>>>>   MAINTAINERS: Fix tcg/s390x/ path
+>>>>>>   MAINTAINERS: Correct scripts/coverity-model.c path
+>>>>>>   MAINTAINERS: Fix hexagon-linux-user.mak path
+
+[...]
+
+>>>> I'm afraid this matches files not in git, just like my quick & dirty
+>>>> one-liner.  Shouldn't we match against contents of HEAD, say output of
+>>>> "git-ls-tree -r --name-only @"?
+>>>>
+>>>
+>>> I don't think it's needed to restrict to git ls-tree. The only risk is
+>>> that people have a local file they forgot (or didn't want) to add in
+>>> git. It will be caught by CI that won't have such a file, so we're safe.
+>>>
+>>> What do you think?
+>>=20
+>> Yes, we're safe, but the earlier we catch mistakes, the better.  Now,
+>> the juice isn't always worth the squeeze.  How hard would we have to
+>> squeeze here?  We could use fnmatch.filter(names, pat) to test whether
+>> @pat matches anything in @names, where @names is from git-ls-tree.
+>>
+>
+> "the earlier we catch mistakes, the better" is a good paradigm, but I
+> don't think we should project that to developer machine. The only thing
+> we need to keep "green" are our upstream branches.
+>
+> I like the simplicity of current script, only dealing with file paths,
+> instead of having to do string regexp compare with git ls-files output,
+> but it's just a matter of personal taste and choosing the easiest
+> solution for a given problem.
+>
+> That said, if filtering through git ls-files is a strong requirement, I
+> would be happy to implement it. Only thing that matters is that we have
+> something catching mistakes.
+
+It's what I would do, but that does *not* make it a requirement, let
+alone a strong one.  I'm not the maintainer here.  You, however, are the
+patch's author :)
+
+If you want simple, consider
+
+    $ ls `sed -n 's/^F: *//p' MAINTAINERS ` >/dev/null
+
+[...]
+
 
