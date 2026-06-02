@@ -4,101 +4,141 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3DEBECD6E57
-	for <qemu-devel@archiver.kernel.org>; Tue,  2 Jun 2026 15:21:13 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id EA966CD6E60
+	for <qemu-devel@archiver.kernel.org>; Tue,  2 Jun 2026 15:36:20 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wUQuT-00049x-RD; Tue, 02 Jun 2026 11:20:05 -0400
+	id 1wUR9c-0007PL-5A; Tue, 02 Jun 2026 11:35:45 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <elbeheri95@gmail.com>)
- id 1wUQtv-0003zr-CW
- for qemu-devel@nongnu.org; Tue, 02 Jun 2026 11:19:33 -0400
-Received: from mail-ed1-x536.google.com ([2a00:1450:4864:20::536])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <elbeheri95@gmail.com>)
- id 1wUQtq-0002kr-Ld
- for qemu-devel@nongnu.org; Tue, 02 Jun 2026 11:19:30 -0400
-Received: by mail-ed1-x536.google.com with SMTP id
- 4fb4d7f45d1cf-68d233bf083so4257992a12.1
- for <qemu-devel@nongnu.org>; Tue, 02 Jun 2026 08:19:25 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1780413564; cv=none;
- d=google.com; s=arc-20240605;
- b=gB2Tbv2TqgtqafSFDvVDJENGEBd0MmK+3PB1vqxzGXwu0fRQQMXeJc81ID4EFUWR7k
- 7sPiTbXHCrQfA/ma1aTKB6rX3G+Q4KFfyzuANAxu02KMs7K4Ass68IHTMfq9Zdxj4AOR
- D1JmtCP0Jk0Bdwpwq121RLvze9ks1AGidmXw2ehVdhPwG4E91Bm04XPWzXsHbm/Cd4dl
- tjzQGi/8J23M+SDsqtWR6133jHEB00CMrX5/Ox4KoXspUBM7gZP3mAslLarkx5/7Uffy
- q5HTnioJvcGn0LSb13CH7U4qWdIqjDc1Vq0hU9pp5R2G5qcFsq3BAbCEIXhOtwX2u0F1
- jeRQ==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
- s=arc-20240605; 
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:dkim-signature;
- bh=yufCkPiCNTuH2zYreZ7eB68NsfeiXbKHNGfTTy+Jv/k=;
- fh=kcNJKrmYDcBWFsQjc/jfNTVf50XvfSHEyaGn6RGzQuw=;
- b=bR8Zm7GELavKUTJj8IVLcC1Qs/elVPYFHm5Yv9CH00rM06xWGMIvO2pyoTpFyAA6/X
- 1vvrYYj37LsxjQa5PMgo/ENKwJ5IeMvfXiopB2TfmFd4h/gWxvluneO9/XSlrl3/2hBY
- VQqOTWnT2g7z0qCQV+TZkJr9/z2MSyGmoTAYjVqARUVoEV9tirfvX/1xI85Nfj78ZCxU
- Jh8JFoiVXNBbRIKMBf0LdEg5ULkLavzaYxasMb3/lWCUp+IyLQL84EAWVvSnaAi1Qr7u
- s7TKPHT4IJFmSyi3aOJpa+TEEDEEsu46eR1vi3OySoMZDtXmrMRiJXgRfj3jRKLh3TTH
- 1hzg==; darn=nongnu.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
+ (Exim 4.90_1) (envelope-from <pierrick.bouvier@oss.qualcomm.com>)
+ id 1wUR9T-0007P1-H1
+ for qemu-devel@nongnu.org; Tue, 02 Jun 2026 11:35:36 -0400
+Received: from mx0a-0031df01.pphosted.com ([205.220.168.131])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <pierrick.bouvier@oss.qualcomm.com>)
+ id 1wUR9R-0008Op-03
+ for qemu-devel@nongnu.org; Tue, 02 Jun 2026 11:35:35 -0400
+Received: from pps.filterd (m0279867.ppops.net [127.0.0.1])
+ by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
+ 652Catcx2767170
+ for <qemu-devel@nongnu.org>; Tue, 2 Jun 2026 15:35:28 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+ cc:content-transfer-encoding:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+ 5gv+u3Wg42FWBcGluoVyuAOB5EBfTd1okya7jGyBDQQ=; b=HJ+Ds3hx10tgTRuL
+ sqCjaDhJqiKqKAYfqGMNubBnB4grQs7MgBcty1GrXT5zmWjXgsCGtz1iOu68tDlD
+ z/BQZ2IDbkVj90hRed4xf/Dv0IYJ8W9NGhBnh/+KLuiEWEQT4GcpVphsg0l76YlA
+ sjRzbPamV+vrWiIwoqRkkAARw434+1zqwazcPElGro9Yj824BOFzkTPKYLK573OH
+ ki83gpz/Nm+wC3NBMV5aErEFJ4NlpiH1sGEHraYpW5lj1KjQNrsonaIFhGsD4Q/b
+ YDEwcB/+lUdjfmk1Q4ODKWBaFBJ55BE6I7lA3US8jTw9gjnUP9JoI/Zsz2dSblem
+ hE7L7A==
+Received: from mail-dl1-f71.google.com (mail-dl1-f71.google.com [74.125.82.71])
+ by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4ehsus2839-1
+ (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
+ for <qemu-devel@nongnu.org>; Tue, 02 Jun 2026 15:35:28 +0000 (GMT)
+Received: by mail-dl1-f71.google.com with SMTP id
+ a92af1059eb24-137d003cf09so9071953c88.1
+ for <qemu-devel@nongnu.org>; Tue, 02 Jun 2026 08:35:28 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1780413564; x=1781018364; darn=nongnu.org;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=yufCkPiCNTuH2zYreZ7eB68NsfeiXbKHNGfTTy+Jv/k=;
- b=DG2+9/KSqvbLL6m+69wa2gxW2h4Kox8sTsSbqHOg0dumdHQEfZ11fDOgJ8AEt0/INp
- 6/yjWpy8g4BB9MKlDt59jMhFwvUIffR7zYx3Oouub4Perq4C+hpBBi4dolhDaIaHMyiF
- 8DsyqZOP4sO6Dx/eXayWiT5YQYPekvGspivJDkXXTInHpHJJbgYLsDbMv6mnrRcmA+cA
- FbIZQ49AE655KoXTOcIiJa3PsKGNRwfULntnuY0jUJ9ezzvalnQO4lrF928Tchfm84hg
- pC5bCOVjbbo/um29yCSqsAc73BG3y6kQDk3FZT6nQEHz6sSHMYqOtjiK7JH9cUjQ0iEL
- 4OKA==
+ d=oss.qualcomm.com; s=google; t=1780414528; x=1781019328; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:content-language:from
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=5gv+u3Wg42FWBcGluoVyuAOB5EBfTd1okya7jGyBDQQ=;
+ b=EIwjOTkPh72FqbqUWDcqY2SFfNiMRI+Zkcz5ZdB/vr31TxpGJb8SWUf/l8dFt+hhhY
+ Pk5SUSAhNKGbco2AcOLXAdpzJgv+Efn601TkOetuL6Kw1ebG0WwjW7+nkecqVd+GaQD2
+ 4IKhQhJtooPH7lWKE3nf1xBr/Tf2GhSRnU7a2s19wCf06CdOqLSQN0PqD9rPAp16EJ0a
+ PzMAVEL4wJ+zefSwqg1+GNQZpsh+p3hbKkbum5kt8Q591jAB7oWcgr52ku8X+DBsgPk6
+ 2AeP81J8YBFBFrDbNGF75j9WkKmBnLFOZQEF27ZHxwxDUfoBfkACRqM8hO+ci75LHXxR
+ bjqQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1780413564; x=1781018364;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=yufCkPiCNTuH2zYreZ7eB68NsfeiXbKHNGfTTy+Jv/k=;
- b=YBDZPPgYD44zZTsqrhEusLREUy+y/ddt8+lZW6ZDMcKd5YnPb+A71FTHOzqj/vTvO5
- 5FsHOZsg1O143yPj/2D54w6J7EsgJt3XDRg3wJxfAIttDlVTDunf5xYg8fIk5evkY3cy
- TUZggzNAAKHZElSAvoRzwdXziegDiZc6g9q1OryTThQSfUj3aKkpqBrN4H5Qwy4neIpI
- cdjzGCwCYnsVzXx8r5bxvwoEj51Y3ap0WjqG3QM6/Ab97N6vL8QO/YA+iNJ3y/iRTSYV
- Txk/5Q7oyUzm4fO6QWdki0wuCe4ibl9Va2palT9vi5KsArIa585fqOwO2wogb3H78yNx
- PU4A==
-X-Gm-Message-State: AOJu0YytyQLm53cxlJ6WH8G6+d46ASpGaVvz7/VdP5iRAcy0w2A9QcWC
- AmgoPzhxF1ZwAR1/dsGOJ8JZZWDQt0c/E0hGaLyZ7iIC5jTNWluIxc0S7famrNGOBZr+ALhLEnM
- 08zfpn7CCc1ZGkcdQ5u9EQ+BLBQMW/5bIGA==
-X-Gm-Gg: Acq92OHxSTH0ap3TXw7LY3GX/S6A9fBH0sg8AoWzxHH+vZHJ92WpZv3dceLjOmCx19p
- HQ0zu10R19wL+tENscXbcma2cEEHPna5L1ix2CuLfwUfguQWZBfe+neU2OotnWweVLV4580mhhZ
- uZGssJV8vK+5gIFYvp79uX5DAW0kDlWc+60712A2XFHlLdQnQI/VdG/+swwKHFVvToRoY/feUCj
- Qr2ONXGqLW4cEfBj8qScmtFuC5w95FQJFjJxkQfDGE0vp0Whh8A59+bb+ZnrHK5FRjN/Ez6lQ/K
- wBsVRVbjgIwFmX6dOp8ndJY3nu1QqJJa/gxeUnTS6iNbGUNiYgY=
-X-Received: by 2002:a17:907:c006:b0:bea:5ce6:4267 with SMTP id
- a640c23a62f3a-beab71afd63mr950424866b.35.1780413563253; Tue, 02 Jun 2026
- 08:19:23 -0700 (PDT)
+ d=1e100.net; s=20251104; t=1780414528; x=1781019328;
+ h=content-transfer-encoding:in-reply-to:content-language:from
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=5gv+u3Wg42FWBcGluoVyuAOB5EBfTd1okya7jGyBDQQ=;
+ b=YL+fjM25B/jeUPzT7YY9GaFJWK0pEbR5ZlMmI/Hb3hxwruHBXHqPGDXu4WQfla3TnT
+ 2JwCPJhd+1eGx+hU1FwlHOBVIuORZHAZMBb1QNv+dJknZGHbpq19L1uthlLzLGH+pQFx
+ aSDPJsQC766hKxC8PTnhNHoUOJ9yMYbiPZ38MFaD8BFK2UpfORj9noZYPrPI12zNU6ID
+ /QKuReI+6r/HcNNNXuPZCJI0dIWkN1jzVvyluIUgYKSRWC/OxroupPh/kM0L/4XLcgcI
+ A1mLXPjOLxCyl4iPVkvnlOo8X91tHvm2dF1T2uhxft9LxinzFVjzxL1SAbVtpa9zhRQg
+ 3d8g==
+X-Gm-Message-State: AOJu0Yw0aDa5N7CMvI05a4CImIbt4xxHTuHWJbe/ngM5WJ31+oM5sRMq
+ Ih6BqjPGSSrNaDE7Ued1giiQIqvFdDXWv+Kkt9z3WeyGwGt+1AYt9BXKbsFWXM6oTX9xEWE7LiI
+ xroc5U/IfXTamVXIXI9erSz9uJyKw3BzMF4lPUwp7pa59Rob+iwYcYg05jg==
+X-Gm-Gg: Acq92OEkwzuwOK+VYyr27Mgt5h09igVNOolA8z19DvDNU7V/OMjMcO7ucdyHKq7cBDV
+ VHma9MTCLaNcWkO4reblMY9+Af5LlqUyLXm+MBkxeFAcSoOp+0WwJk5jYJ4m1/YUfe26pLlwo5k
+ I1CkXfhN/Lc4EOBNLWBotdjBbSk1U70gTikq4kDz4QhEkJZSgmKNTEuXVIvwyrx60sLwQDjG/MQ
+ M2Fl4g/WsC5b52Vo8LNI6RSwcG1VuUtsmcDVA9rjfFsBZA9jrqEIPKMnCmz/EHM08CHxVyxc3zX
+ KihBdry+PNanPL2uZV9NSbgIAlfVvo8M9ronsxSRGkvHTCUZarQyeZJOFXF4GYoaoTTiXefpLCG
+ z7B6Hhdio/uLsIzKvYzO0B/QdnkuMKTDo4R91sNyE5+A3vD73HIhQ82ulVz1eYo+CxZsnny4TqG
+ VFM/OcyloORLCO1FPsH0FoHviP
+X-Received: by 2002:a05:7022:6192:b0:134:fc89:40c5 with SMTP id
+ a92af1059eb24-137d401c3a1mr6747048c88.10.1780414527341; 
+ Tue, 02 Jun 2026 08:35:27 -0700 (PDT)
+X-Received: by 2002:a05:7022:6192:b0:134:fc89:40c5 with SMTP id
+ a92af1059eb24-137d401c3a1mr6747026c88.10.1780414526321; 
+ Tue, 02 Jun 2026 08:35:26 -0700 (PDT)
+Received: from [192.168.1.170] (216-71-219-44.dyn.novuscom.net.
+ [216.71.219.44]) by smtp.gmail.com with ESMTPSA id
+ 5a478bee46e88-304ee0dd6fdsm11200692eec.23.2026.06.02.08.35.22
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Tue, 02 Jun 2026 08:35:22 -0700 (PDT)
+Message-ID: <35c9d179-821a-48e5-8c71-22236053d67c@oss.qualcomm.com>
+Date: Tue, 2 Jun 2026 08:35:21 -0700
 MIME-Version: 1.0
-References: <20260518-enhance_arm_gdb_get_sysreg_performance-v1-1-f0a5b22003c0@gmail.com>
-In-Reply-To: <20260518-enhance_arm_gdb_get_sysreg_performance-v1-1-f0a5b22003c0@gmail.com>
-From: abdelrahman elbehery <elbeheri95@gmail.com>
-Date: Tue, 2 Jun 2026 18:19:11 +0300
-X-Gm-Features: AVHnY4JtI9UBrwDFxUF3gFzrTRmQH-SX1GgAjzi3AlEzWJQ_k80SyAymLKQBjF4
-Message-ID: <CAN1cRoPWtbqKgxKPT54=qF6p4Au1y2Hd8-9xEQ+CBSHffEMMVg@mail.gmail.com>
-Subject: Re: [PATCH] target/arm: replace cp_regs hashtable lookup with direct
- array index
-To: qemu-devel@nongnu.org
-Cc: Peter Maydell <peter.maydell@linaro.org>, qemu-arm@nongnu.org
-Content-Type: multipart/alternative; boundary="000000000000fdb58e065346d5be"
-Received-SPF: pass client-ip=2a00:1450:4864:20::536;
- envelope-from=elbeheri95@gmail.com; helo=mail-ed1-x536.google.com
-X-Spam_score_int: -17
-X-Spam_score: -1.8
-X-Spam_bar: -
-X-Spam_report: (-1.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 00/39] MAINTAINERS: Fix F: lines
+To: Markus Armbruster <armbru@redhat.com>
+Cc: qemu-devel@nongnu.org, philmd@linaro.org, John Snow <jsnow@redhat.com>,
+ Cleber Rosa <cleber@redhat.com>
+References: <20260521080511.999266-1-armbru@redhat.com>
+ <d52c0fca-3a8a-4d4f-abff-f772605512b8@oss.qualcomm.com>
+ <87y0gy8thg.fsf@pond.sub.org>
+ <c7cc0040-872d-425c-827f-c57db87ee12c@oss.qualcomm.com>
+ <87wlwh77gv.fsf@pond.sub.org>
+From: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
+Content-Language: en-US
+In-Reply-To: <87wlwh77gv.fsf@pond.sub.org>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+X-Proofpoint-ORIG-GUID: jnhDEvT2omFBG4DocFz3E3h-ZmjT8WGZ
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNjAyMDE1MCBTYWx0ZWRfXw8kuCL7CpoyU
+ mXihJe2s+EMwHh/HJL8aPFS2Z/eE+yUUqUbBOavEc6x97DWMPBR/XND1joFoVBECBOvb/ArMsim
+ 1N0g4p3z8jX5A3+x4e7jTKqUIP1DoeenquhlnD2asXjaFRBsr5oHa5siRmLOj66vPRmCOqOGMMX
+ bc7rRYyGIDZ4yC53mE6VKTaUbiY46FfVEfoJo+yfQxMDRMJaMieqEfaCCFvXcVfIQvdZ5/tLeTm
+ Ct4MPs0FqzJvaVTy0FWLAg8T1MlNEQWqaML9xM4g3XzxJlrXNbVOYpKS9HjQ+VSEm2mJaV5MFfB
+ OUaRlRIUoeOjYx6kvUOQDF0FCzlnStEa2Zd3AW9iKOdTSjqCtEr1w5FtunYn1SOdfmQQUMWUIHM
+ O1ridUbugF3ivwe92d8eHMkPROjK24A8PLcDBByaGIJZb51+jCjeUOOCc8p4tc0qd7pQgWQeWRy
+ 5M3XXlaE9diikj2Ma4Q==
+X-Authority-Analysis: v=2.4 cv=ZYAt8MVA c=1 sm=1 tr=0 ts=6a1ef840 cx=c_pps
+ a=JYo30EpNSr/tUYqK9jHPoA==:117 a=iLqgmErQAxjCjdq5jj1Aqg==:17
+ a=IkcTkHD0fZMA:10 a=FelO9ux0wxsA:10 a=s4-Qcg_JpJYA:10
+ a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=eoimf2acIAo5FJnRuUoq:22
+ a=ukH1R-b_AAAA:8 a=EUspDBNiAAAA:8 a=20KFwNOVAAAA:8 a=Z5DR0hOY1AJPjyUOk9AA:9
+ a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10 a=Fk4IpSoW4aLDllm1B1p-:22
+ a=zUGFzhdS3I8ccRoxxLmr:22
+X-Proofpoint-GUID: jnhDEvT2omFBG4DocFz3E3h-ZmjT8WGZ
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.125,FMLib:17.12.100.49
+ definitions=2026-06-02_02,2026-05-28_03,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ bulkscore=0 priorityscore=1501 clxscore=1015 adultscore=0 impostorscore=0
+ spamscore=0 phishscore=0 suspectscore=0 malwarescore=0 lowpriorityscore=0
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.22.0-2605210000 definitions=main-2606020150
+Received-SPF: pass client-ip=205.220.168.131;
+ envelope-from=pierrick.bouvier@oss.qualcomm.com;
+ helo=mx0a-0031df01.pphosted.com
+X-Spam_score_int: -27
+X-Spam_score: -2.8
+X-Spam_bar: --
+X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001, HTML_MESSAGE=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -115,445 +155,299 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
---000000000000fdb58e065346d5be
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+On 6/2/2026 12:00 AM, Markus Armbruster wrote:
+> Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com> writes:
+> 
+>> On 6/1/2026 3:06 AM, Markus Armbruster wrote:
+>>> Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com> writes:
+>>>
+>>>> Hi Markus,
+>>>>
+>>>> On 5/21/2026 1:04 AM, Markus Armbruster wrote:
+>>>>> Quite a few F: lines don't match any files.  The quick & dirty check
+>>>>>
+>>>>>     $ ls `sed -n 's/^F: *//p' MAINTAINERS ` >/dev/null
+>>>>>
+>>>>> finds about fifty.
+>>>>>
+>>>>> Philippe Mathieu-Daudé recently posted a few fixes:
+>>>>>
+>>>>>   MAINTAINERS: Fix docker/dockerfiles/debian-hexagon-cross.docker path
+>>>>>   MAINTAINERS: Cover debian-loongarch-cross.docker with LoongArch section
+>>>>>   MAINTAINERS: Cover debian-xtensa-cross.docker with Xtensa section
+>>>>>   MAINTAINERS: Cover debian-tricore-cross.docker with TriCore section
+>>>>>   MAINTAINERS: Cover python.docker with Python library section
+>>>>>   MAINTAINERS: Fix s390x storage key/attribute device paths
+>>>>>   MAINTAINERS: Fix tcg/s390x/ path
+>>>>>   MAINTAINERS: Correct scripts/coverity-model.c path
+>>>>>   MAINTAINERS: Fix hexagon-linux-user.mak path
+> 
+> [...]
+> 
+>>>> In addition, see the patch attached to this email.
+>>>> It integrates checking this directly at configure time, so we never run
+>>>> into any missing entry again in the future.
+>>>>
+>>>> I share this here not for a review, but simply to avoid a duplicated
+>>>> effort, and make sure people know it will be sent after this series.
+>>>>
+>>>> I don't believe in adding this in checkpatch, because it's not enforced
+>>>> systematically unfortunately. Breaking the meson configuration is a good
+>>>> way to make sure it's enforced by design.
+>>>
+>>> No objection.
+>>>
+>>>> With your series applied, the left entries are:
+>>>
+>>> Most of these are fixed in Philippe's patches mentioned above.
+>>>
+>>
+>> 👍
+>>
+>>>> No matching files for /usr2/pbouvier/.work/qemu/MAINTAINERS +258:
+>>>> configs/targets/hexagon-linux-user/default.mak
+>>>
+>>> MAINTAINERS: Fix hexagon-linux-user.mak path
+>>>
+>>>> No matching files for /usr2/pbouvier/.work/qemu/MAINTAINERS +259:
+>>>> docker/dockerfiles/debian-hexagon-cross.docker
+>>>
+>>> MAINTAINERS: Fix docker/dockerfiles/debian-hexagon-cross.docker path
+>>>
+>>>> No matching files for /usr2/pbouvier/.work/qemu/MAINTAINERS +2956:
+>>>> hw/s390x/storage-keys.h
+>>>> No matching files for /usr2/pbouvier/.work/qemu/MAINTAINERS +2965:
+>>>> hw/s390x/storage-attributes.h
+>>>
+>>> MAINTAINERS: Fix s390x storage key/attribute device paths
+>>>
+>>>> No matching files for /usr2/pbouvier/.work/qemu/MAINTAINERS +3241:
+>>>> scripts/coverity-model.c
+>>>
+>>> MAINTAINERS: Correct scripts/coverity-model.c path
+>>>
+>>>> No matching files for /usr2/pbouvier/.work/qemu/MAINTAINERS +3468:
+>>>> tests/*.py
+>>>
+>>> This is the exception I mentioned above.
+>>>
+>>> The intent is to match *.py below tests/.  It actually matches only in
+>>> tests/, not in its subdirectories.
+>>>
+>>> Here's a dumb fix:
+>>>
+>>>     F: tests/*.py
+>>>     F: tests/*/*.py
+>>>     F: tests/*/*/*.py
+>>>     F: tests/*/*/*/*.py
+>>>
+>>
+>> It's acceptable, and nice because it's not ambiguous.
+>> Also, it shows us the first line is not a correct entry (there is no
+>> tests/*.py).
+> 
+> It's also brittle: breaks when we add the first .py at level.
+> 
+>>> for however many levels we have.  Same for the scripts/ line next to it.
+>>> Blech.
+>>>
+>>> The smart fix might be to port N: from the kernel.
+>>>
+>>> 	N: Files and directories *Regex* patterns.
+>>> 	   N:	[^a-z]tegra	all files whose path contains tegra
+>>> 	                        (not including files like integrator)
+>>> 	   One pattern per line.  Multiple N: lines acceptable.
+>>> 	   scripts/get_maintainer.pl has different behavior for files that
+>>> 	   match F: pattern and matches of N: patterns.  By default,
+>>> 	   get_maintainer will not look at git log history when an F: pattern
+>>> 	   match occurs.  When an N: match occurs, git log history is used
+>>> 	   to also notify the people that have git commit signatures.
+>>>
+>>> But I wonder: is this section useful at all?
+>>
+>> I would prefer to use the manual entries approach above, especially if
+>> there is only folder that is concerned.
+>> When we'll have two different use case, maybe we can consider a more
+>> generic approach.
+> 
+> I'm aware of just two:
+> 
+>     Python scripts
+>     M: John Snow <jsnow@redhat.com>
+>     M: Cleber Rosa <crosa@redhat.com>
+>     S: Odd Fixes
+>     F: scripts/*.py
+>     F: tests/*.py
+> 
+> The section was added almost a decade ago (commit ad904f6689f), and
+> never worked as intended.  I asked John Snow about deleting it to
+> unblock your work.  He told me he'd be fine with that.  Could add it
+> back later fixed.
+> 
+>>>> No matching files for /usr2/pbouvier/.work/qemu/MAINTAINERS +4149:
+>>>> tcg/s390/
+>>>
+>>> MAINTAINERS: Fix tcg/s390x/ path
+>>>
+>>>> Once your current series is pulled, I'll fix the remaining and send the
+>>>> attached patch. Or feel free to do it directly if you like the idea :)
+>>>>
+>>>> Regards,
+>>>> Pierrick
+>>>
+>>> Two remarks inline.
+>>>
+>>>> From 6c9b49ac7ec06c0159d2b4ba9c9d1081e02ef765 Mon Sep 17 00:00:00 2001
+>>>> From: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
+>>>> Date: Fri, 22 May 2026 12:23:17 -0700
+>>>> Subject: [PATCH] meson.build: check MAINTAINERS file is consistent with source
+>>>>  tree
+>>>>
+>>>> We add a new script: scripts/check-maintainers-file.py, that will run at
+>>>> configuration time (and not at build time), to not hurt build time.
+>>>> This script runs in 0.2s on my dev VM, which has an old cpu.
+>>>>
+>>>> We can expect things to be mostly in sync since adding or removing a
+>>>> source or test file will trigger a configure step.
+>>>> For the rest, like docs, tcg tests, or remaining files, GitLab CI will
+>>>> build things from scratch and always run the configure step.
+>>>>
+>>>> With this, it should be impossible by design to have an upstream
+>>>> MAINTAINERS file with non existing file entries.
+>>>>
+>>>> Signed-off-by: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
+>>>> ---
+>>>>  meson.build                       |  5 +++
+>>>>  scripts/check-maintainers-file.py | 53 +++++++++++++++++++++++++++++++
+>>>>  2 files changed, 58 insertions(+)
+>>>>  create mode 100755 scripts/check-maintainers-file.py
+>>>>
+>>>> diff --git a/meson.build b/meson.build
+>>>> index eeb096c1487..ddfb0b90ca6 100644
+>>>> --- a/meson.build
+>>>> +++ b/meson.build
+>>>> @@ -18,6 +18,11 @@ add_test_setup('thorough',
+>>>>  
+>>>>  meson.add_postconf_script(find_program('scripts/symlink-install-tree.py'))
+>>>>  
+>>>> +# check our MAINTAINERS file is consistent
+>>>> +check_maintainers = find_program('scripts/check-maintainers-file.py')
+>>>> +maintainers_file = files('MAINTAINERS')
+>>>> +run_command([check_maintainers, maintainers_file], check: true, console: true)
+>>>
+>>> My version of meson (1.8.5) chokes on console: true.  According to
+>>> https://mesonbuild.com/Reference-manual_functions_run_command.html#run_command_console
+>>> it's new in 1.11.0.
+>>>
+>>
+>> Our configure script creates a venv with an updated version of meson,
+>> which is 1.11.1 at the moment.
+>> If you called meson directly (which uses your host meson), it's not how
+>> we're supposed to build QEMU.
+>> How did you try this?
+> 
+> I ran make :)
+> 
+>>> I tested with it deleted.
+>>>
+>>>> +
+>>>>  ####################
+>>>>  # Global variables #
+>>>>  ####################
+>>>> diff --git a/scripts/check-maintainers-file.py b/scripts/check-maintainers-file.py
+>>>> new file mode 100755
+>>>> index 00000000000..b001816a401
+>>>> --- /dev/null
+>>>> +++ b/scripts/check-maintainers-file.py
+>>>> @@ -0,0 +1,53 @@
+>>>> +#! /usr/bin/env python3
+>>>> +
+>>>> +# Check incorrect file entries in MAINTAINERS
+>>>> +#
+>>>> +# Author: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
+>>>> +#
+>>>> +# SPDX-License-Identifier: GPL-2.0-or-later
+>>>> +
+>>>> +import argparse
+>>>> +import glob
+>>>> +import sys
+>>>> +
+>>>> +
+>>>> +def check_one_entry(line) -> bool:
+>>>> +    return True
+>>>> +
+>>>> +
+>>>> +def main() -> None:
+>>>> +    parser = argparse.ArgumentParser(description="Check MAINTAINERS file")
+>>>> +    parser.add_argument("maintainers", help="Path to MAINTAINERS file")
+>>>> +    args = parser.parse_args()
+>>>> +
+>>>> +    found_file_entry = False
+>>>> +    found_incorrect_entries = False
+>>>> +    line_counter = 0
+>>>> +
+>>>> +    with open(args.maintainers) as file:
+>>>> +        for entry in file:
+>>>> +            line_counter += 1
+>>>> +
+>>>> +            if not entry.startswith("F:"):
+>>>> +                continue
+>>>> +            entry = entry[2:].strip()
+>>>> +            found_file_entry = True
+>>>> +
+>>>> +            file_exists = len(glob.glob(entry, recursive=True)) > 0
+>>>
+>>> I'm afraid this matches files not in git, just like my quick & dirty
+>>> one-liner.  Shouldn't we match against contents of HEAD, say output of
+>>> "git-ls-tree -r --name-only @"?
+>>>
+>>
+>> I don't think it's needed to restrict to git ls-tree. The only risk is
+>> that people have a local file they forgot (or didn't want) to add in
+>> git. It will be caught by CI that won't have such a file, so we're safe.
+>>
+>> What do you think?
+> 
+> Yes, we're safe, but the earlier we catch mistakes, the better.  Now,
+> the juice isn't always worth the squeeze.  How hard would we have to
+> squeeze here?  We could use fnmatch.filter(names, pat) to test whether
+> @pat matches anything in @names, where @names is from git-ls-tree.
+>
 
-Ping
+"the earlier we catch mistakes, the better" is a good paradigm, but I
+don't think we should project that to developer machine. The only thing
+we need to keep "green" are our upstream branches.
 
-On Mon, 18 May 2026, 12:58=E2=80=AFpm Abdelrahman Elbehery, <elbeheri95@gma=
-il.com>
-wrote:
+I like the simplicity of current script, only dealing with file paths,
+instead of having to do string regexp compare with git ls-files output,
+but it's just a matter of personal taste and choosing the easiest
+solution for a given problem.
 
-> Profiling showed g_hash_table_lookup as a hot spot when running TCG
-> plugins that log all CPU registers (e.g. execlog with reg=3D*).
-> Replace it with a direct array index to avoid lookup overhead.
->
-> Signed-off-by: Abdelrahman Elbehery <elbeheri95@gmail.com>
-> ---
-> While profiling (via callgrind) a TCG plugin that logs all the CPU
-> registers
-> (very identical to execlog with reg=3D*) i noticed that arm_gdb_get_sysre=
-g
-> is a hot spot,
-> mostly while calling g_hash_table_lookup. Probably this is due to some
-> hashtable collision
-> that is handleded by glib internally.
->
-> Currently each DynamicGDBFeatureInfo item holds keys for cp_regs, and the
-> keys are always
-> used to retrieve the ARMCPRegInfo pointer.
->
-> By replacing the keys array with a GPtrArray, we now just access reg info
-> directly from
-> the given index.
->
-> The benchmarking was done on c2d-highcpu-16 (16 vCPUs, 32 GB memory) GCP
->
-> Setup was to run qemu-system-aarch64 against a buildroot kernel and rootf=
-s
-> with and without the patch mostly using:
->     --plugin contrib/plugins/libstoptrigger.so,icount=3D2000000
->     --plugin contrib/plugins/libexeclog.so,reg=3D*
->     -M virt -cpu cortex-a710 -smp 1
->
-> Benchmark showed ~15% performance gain when hashtable is not used.
-> For benchmarking, i used hyperfine with 3 warmup rounds and 10 iterations
-> each.
-> ---
->  target/arm/cpu.h     |  6 +++---
->  target/arm/gdbstub.c | 28 ++++++++++++++++------------
->  2 files changed, 19 insertions(+), 15 deletions(-)
->
-> diff --git a/target/arm/cpu.h b/target/arm/cpu.h
-> index
-> 15a13b929276dad161032b61ba51ebbce7eeebc6..8816e94e3f8271ad403e77f6182fdb8=
-cee31c527
-> 100644
-> --- a/target/arm/cpu.h
-> +++ b/target/arm/cpu.h
-> @@ -121,15 +121,15 @@
->   * DynamicGDBFeatureInfo:
->   * @desc: Contains the feature descriptions.
->   * @data: A union with data specific to the set of registers
-> - *    @cpregs_keys: Array that contains the corresponding Key of
-> - *                  a given cpreg with the same order of the cpreg
-> + *    @cpregs_regs: Array that contains the corresponding Register info
-> pointer
-> + *                  of a given cpreg with the same order of the cpreg
->   *                  in the XML description.
->   */
->  typedef struct DynamicGDBFeatureInfo {
->      GDBFeature desc;
->      union {
->          struct {
-> -            uint32_t *keys;
-> +            GPtrArray *regs;
->          } cpregs;
->      } data;
->  } DynamicGDBFeatureInfo;
-> diff --git a/target/arm/gdbstub.c b/target/arm/gdbstub.c
-> index
-> d6e29c4cf46745dc7851bc5f8339c8d7c6857b8c..e66af8207b436fe8f1dd27441a587b1=
-eb52ff928
-> 100644
-> --- a/target/arm/gdbstub.c
-> +++ b/target/arm/gdbstub.c
-> @@ -238,19 +238,23 @@ static int arm_gdb_get_sysreg(CPUState *cs,
-> GByteArray *buf, int reg)
->      ARMCPU *cpu =3D ARM_CPU(cs);
->      CPUARMState *env =3D &cpu->env;
->      const ARMCPRegInfo *ri;
-> -    uint32_t key;
->
-> -    key =3D cpu->dyn_sysreg_feature.data.cpregs.keys[reg];
-> -    ri =3D get_arm_cp_reginfo(cpu->cp_regs, key);
-> +    ri =3D g_ptr_array_index(cpu->dyn_sysreg_feature.data.cpregs.regs, r=
-eg);
->      if (ri) {
->          switch (cpreg_field_type(ri)) {
->          case MO_64:
->              if (ri->vhe_redir_to_el2 &&
->                  (arm_hcr_el2_eff(env) & HCR_E2H) &&
->                  arm_current_el(env) =3D=3D 2) {
-> -                ri =3D get_arm_cp_reginfo(cpu->cp_regs,
-> ri->vhe_redir_to_el2);
-> +                ri =3D g_ptr_array_index(
-> +                    cpu->dyn_sysreg_feature.data.cpregs.regs,
-> +                    ri->vhe_redir_to_el2
-> +                );
->              } else if (ri->vhe_redir_to_el01) {
-> -                ri =3D get_arm_cp_reginfo(cpu->cp_regs,
-> ri->vhe_redir_to_el01);
-> +                ri =3D g_ptr_array_index(
-> +                    cpu->dyn_sysreg_feature.data.cpregs.regs,
-> +                    ri->vhe_redir_to_el01
-> +                );
->              }
->              return gdb_get_reg64(buf, (uint64_t)read_raw_cp_reg(env, ri)=
-);
->          case MO_32:
-> @@ -269,19 +273,18 @@ static int arm_gdb_set_sysreg(CPUState *cs, uint8_t
-> *buf, int reg)
->
->  static void arm_gen_one_feature_sysreg(GDBFeatureBuilder *builder,
->                                         DynamicGDBFeatureInfo *dyn_featur=
-e,
-> -                                       ARMCPRegInfo *ri, uint32_t ri_key=
-,
-> +                                       ARMCPRegInfo *ri,
->                                         int bitsize, int n)
->  {
->      gdb_feature_builder_append_reg(builder, ri->name, bitsize, n,
->                                     "int", "cp_regs");
->
-> -    dyn_feature->data.cpregs.keys[n] =3D ri_key;
-> +    g_ptr_array_index(dyn_feature->data.cpregs.regs, n) =3D ri;
->  }
->
->  static void arm_register_sysreg_for_feature(gpointer key, gpointer value=
-,
->                                              gpointer p)
->  {
-> -    uint32_t ri_key =3D (uintptr_t)key;
->      ARMCPRegInfo *ri =3D value;
->      RegisterSysregFeatureParam *param =3D p;
->      ARMCPU *cpu =3D ARM_CPU(param->cs);
-> @@ -292,7 +295,7 @@ static void arm_register_sysreg_for_feature(gpointer
-> key, gpointer value,
->          if (arm_feature(env, ARM_FEATURE_AARCH64)) {
->              if (ri->state =3D=3D ARM_CP_STATE_AA64) {
->                  arm_gen_one_feature_sysreg(&param->builder, dyn_feature,
-> -                                           ri, ri_key, 64, param->n++);
-> +                                           ri, 64, param->n++);
->              }
->          } else {
->              if (ri->state =3D=3D ARM_CP_STATE_AA32) {
-> @@ -302,10 +305,10 @@ static void arm_register_sysreg_for_feature(gpointe=
-r
-> key, gpointer value,
->                  }
->                  if (ri->type & ARM_CP_64BIT) {
->                      arm_gen_one_feature_sysreg(&param->builder,
-> dyn_feature,
-> -                                               ri, ri_key, 64,
-> param->n++);
-> +                                               ri, 64, param->n++);
->                  } else {
->                      arm_gen_one_feature_sysreg(&param->builder,
-> dyn_feature,
-> -                                               ri, ri_key, 32,
-> param->n++);
-> +                                               ri, 32, param->n++);
->                  }
->              }
->          }
-> @@ -323,7 +326,8 @@ static GDBFeature
-> *arm_gen_dynamic_sysreg_feature(CPUState *cs, int base_reg)
->                               "org.qemu.gdb.arm.sys.regs",
->                               "system-registers.xml",
->                               base_reg);
-> -    cpu->dyn_sysreg_feature.data.cpregs.keys =3D g_new(uint32_t, num_reg=
-s);
-> +    cpu->dyn_sysreg_feature.data.cpregs.regs =3D g_ptr_array_new();
-> +    g_ptr_array_set_size(cpu->dyn_sysreg_feature.data.cpregs.regs,
-> num_regs);
->      g_hash_table_foreach(cpu->cp_regs, arm_register_sysreg_for_feature,
-> &param);
->      gdb_feature_builder_end(&param.builder);
->      return &cpu->dyn_sysreg_feature.desc;
->
-> ---
-> base-commit: ac6721b88df944ade0048822b2b74210f543d656
-> change-id: 20260518-enhance_arm_gdb_get_sysreg_performance-4288474401d6
->
-> Best regards,
-> --
-> Abdelrahman Elbehery <elbeheri95@gmail.com>
->
->
+That said, if filtering through git ls-files is a strong requirement, I
+would be happy to implement it. Only thing that matters is that we have
+something catching mistakes.
 
---000000000000fdb58e065346d5be
-Content-Type: text/html; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+>>>> +            if file_exists:
+>>>> +                continue
+>>>> +
+>>>> +            found_incorrect_entries = True
+>>>> +            print(
+>>>> +                f"No matching files for {args.maintainers} +{line_counter}: {entry}",
+>>>> +                file=sys.stderr,
+>>>> +            )
+>>>> +
+>>>> +    if not found_file_entry:
+>>>> +        raise Exception("no file entry found - is MAINTAINERS path correct?")
+>>>> +    if found_incorrect_entries:
+>>>> +        raise Exception(f"incorrect entries found in {args.maintainers}")
+>>>> +
+>>>> +
+>>>> +if __name__ == "__main__":
+>>>> +    main()
+>>>
+>>
+>> Regards,
+>> Pierrick
+> 
 
-<div dir=3D"auto">Ping</div><br><div class=3D"gmail_quote gmail_quote_conta=
-iner"><div dir=3D"ltr" class=3D"gmail_attr">On Mon, 18 May 2026, 12:58=E2=
-=80=AFpm Abdelrahman Elbehery, &lt;<a href=3D"mailto:elbeheri95@gmail.com">=
-elbeheri95@gmail.com</a>&gt; wrote:<br></div><blockquote class=3D"gmail_quo=
-te" style=3D"margin:0 0 0 .8ex;border-left:1px #ccc solid;padding-left:1ex"=
->Profiling showed g_hash_table_lookup as a hot spot when running TCG<br>
-plugins that log all CPU registers (e.g. execlog with reg=3D*).<br>
-Replace it with a direct array index to avoid lookup overhead.<br>
-<br>
-Signed-off-by: Abdelrahman Elbehery &lt;<a href=3D"mailto:elbeheri95@gmail.=
-com" target=3D"_blank" rel=3D"noreferrer">elbeheri95@gmail.com</a>&gt;<br>
----<br>
-While profiling (via callgrind) a TCG plugin that logs all the CPU register=
-s<br>
-(very identical to execlog with reg=3D*) i noticed that arm_gdb_get_sysreg =
-is a hot spot,<br>
-mostly while calling g_hash_table_lookup. Probably this is due to some hash=
-table collision<br>
-that is handleded by glib internally.<br>
-<br>
-Currently each DynamicGDBFeatureInfo item holds keys for cp_regs, and the k=
-eys are always<br>
-used to retrieve the ARMCPRegInfo pointer.<br>
-<br>
-By replacing the keys array with a GPtrArray, we now just access reg info d=
-irectly from<br>
-the given index.<br>
-<br>
-The benchmarking was done on c2d-highcpu-16 (16 vCPUs, 32 GB memory) GCP<br=
->
-<br>
-Setup was to run qemu-system-aarch64 against a buildroot kernel and rootfs<=
-br>
-with and without the patch mostly using:<br>
-=C2=A0 =C2=A0 --plugin contrib/plugins/libstoptrigger.so,icount=3D2000000<b=
-r>
-=C2=A0 =C2=A0 --plugin contrib/plugins/libexeclog.so,reg=3D*<br>
-=C2=A0 =C2=A0 -M virt -cpu cortex-a710 -smp 1<br>
-<br>
-Benchmark showed ~15% performance gain when hashtable is not used.<br>
-For benchmarking, i used hyperfine with 3 warmup rounds and 10 iterations e=
-ach.<br>
----<br>
-=C2=A0target/arm/cpu.h=C2=A0 =C2=A0 =C2=A0|=C2=A0 6 +++---<br>
-=C2=A0target/arm/gdbstub.c | 28 ++++++++++++++++------------<br>
-=C2=A02 files changed, 19 insertions(+), 15 deletions(-)<br>
-<br>
-diff --git a/target/arm/cpu.h b/target/arm/cpu.h<br>
-index 15a13b929276dad161032b61ba51ebbce7eeebc6..8816e94e3f8271ad403e77f6182=
-fdb8cee31c527 100644<br>
---- a/target/arm/cpu.h<br>
-+++ b/target/arm/cpu.h<br>
-@@ -121,15 +121,15 @@<br>
-=C2=A0 * DynamicGDBFeatureInfo:<br>
-=C2=A0 * @desc: Contains the feature descriptions.<br>
-=C2=A0 * @data: A union with data specific to the set of registers<br>
-- *=C2=A0 =C2=A0 @cpregs_keys: Array that contains the corresponding Key of=
-<br>
-- *=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 a given c=
-preg with the same order of the cpreg<br>
-+ *=C2=A0 =C2=A0 @cpregs_regs: Array that contains the corresponding Regist=
-er info pointer<br>
-+ *=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 of a give=
-n cpreg with the same order of the cpreg<br>
-=C2=A0 *=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 in t=
-he XML description.<br>
-=C2=A0 */<br>
-=C2=A0typedef struct DynamicGDBFeatureInfo {<br>
-=C2=A0 =C2=A0 =C2=A0GDBFeature desc;<br>
-=C2=A0 =C2=A0 =C2=A0union {<br>
-=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0struct {<br>
--=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 uint32_t *keys;<br>
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 GPtrArray *regs;<br>
-=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0} cpregs;<br>
-=C2=A0 =C2=A0 =C2=A0} data;<br>
-=C2=A0} DynamicGDBFeatureInfo;<br>
-diff --git a/target/arm/gdbstub.c b/target/arm/gdbstub.c<br>
-index d6e29c4cf46745dc7851bc5f8339c8d7c6857b8c..e66af8207b436fe8f1dd27441a5=
-87b1eb52ff928 100644<br>
---- a/target/arm/gdbstub.c<br>
-+++ b/target/arm/gdbstub.c<br>
-@@ -238,19 +238,23 @@ static int arm_gdb_get_sysreg(CPUState *cs, GByteArra=
-y *buf, int reg)<br>
-=C2=A0 =C2=A0 =C2=A0ARMCPU *cpu =3D ARM_CPU(cs);<br>
-=C2=A0 =C2=A0 =C2=A0CPUARMState *env =3D &amp;cpu-&gt;env;<br>
-=C2=A0 =C2=A0 =C2=A0const ARMCPRegInfo *ri;<br>
--=C2=A0 =C2=A0 uint32_t key;<br>
-<br>
--=C2=A0 =C2=A0 key =3D cpu-&gt;dyn_sysreg_feature.data.cpregs.keys[reg];<br=
->
--=C2=A0 =C2=A0 ri =3D get_arm_cp_reginfo(cpu-&gt;cp_regs, key);<br>
-+=C2=A0 =C2=A0 ri =3D g_ptr_array_index(cpu-&gt;dyn_sysreg_feature.data.cpr=
-egs.regs, reg);<br>
-=C2=A0 =C2=A0 =C2=A0if (ri) {<br>
-=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0switch (cpreg_field_type(ri)) {<br>
-=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0case MO_64:<br>
-=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0if (ri-&gt;vhe_redir_to_el2=
- &amp;&amp;<br>
-=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0(arm_hcr_el2_=
-eff(env) &amp; HCR_E2H) &amp;&amp;<br>
-=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0arm_current_e=
-l(env) =3D=3D 2) {<br>
--=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 ri =3D get_arm_cp_=
-reginfo(cpu-&gt;cp_regs, ri-&gt;vhe_redir_to_el2);<br>
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 ri =3D g_ptr_array=
-_index(<br>
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 cpu-=
-&gt;dyn_sysreg_feature.data.cpregs.regs,<br>
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 ri-&=
-gt;vhe_redir_to_el2<br>
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 );<br>
-=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0} else if (ri-&gt;vhe_redir=
-_to_el01) {<br>
--=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 ri =3D get_arm_cp_=
-reginfo(cpu-&gt;cp_regs, ri-&gt;vhe_redir_to_el01);<br>
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 ri =3D g_ptr_array=
-_index(<br>
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 cpu-=
-&gt;dyn_sysreg_feature.data.cpregs.regs,<br>
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 ri-&=
-gt;vhe_redir_to_el01<br>
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 );<br>
-=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0}<br>
-=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0return gdb_get_reg64(buf, (=
-uint64_t)read_raw_cp_reg(env, ri));<br>
-=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0case MO_32:<br>
-@@ -269,19 +273,18 @@ static int arm_gdb_set_sysreg(CPUState *cs, uint8_t *=
-buf, int reg)<br>
-<br>
-=C2=A0static void arm_gen_one_feature_sysreg(GDBFeatureBuilder *builder,<br=
->
-=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
-=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 DynamicG=
-DBFeatureInfo *dyn_feature,<br>
--=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
-=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0ARMCPRegI=
-nfo *ri, uint32_t ri_key,<br>
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
-=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0ARMCPRegI=
-nfo *ri,<br>
-=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
-=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 int bits=
-ize, int n)<br>
-=C2=A0{<br>
-=C2=A0 =C2=A0 =C2=A0gdb_feature_builder_append_reg(builder, ri-&gt;name, bi=
-tsize, n,<br>
-=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
-=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 &quot;int&quot;, &quot=
-;cp_regs&quot;);<br>
-<br>
--=C2=A0 =C2=A0 dyn_feature-&gt;data.cpregs.keys[n] =3D ri_key;<br>
-+=C2=A0 =C2=A0 g_ptr_array_index(dyn_feature-&gt;data.cpregs.regs, n) =3D r=
-i;<br>
-=C2=A0}<br>
-<br>
-=C2=A0static void arm_register_sysreg_for_feature(gpointer key, gpointer va=
-lue,<br>
-=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
-=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =
-=C2=A0 =C2=A0gpointer p)<br>
-=C2=A0{<br>
--=C2=A0 =C2=A0 uint32_t ri_key =3D (uintptr_t)key;<br>
-=C2=A0 =C2=A0 =C2=A0ARMCPRegInfo *ri =3D value;<br>
-=C2=A0 =C2=A0 =C2=A0RegisterSysregFeatureParam *param =3D p;<br>
-=C2=A0 =C2=A0 =C2=A0ARMCPU *cpu =3D ARM_CPU(param-&gt;cs);<br>
-@@ -292,7 +295,7 @@ static void arm_register_sysreg_for_feature(gpointer ke=
-y, gpointer value,<br>
-=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0if (arm_feature(env, ARM_FEATURE_AARCH64)=
-) {<br>
-=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0if (ri-&gt;state =3D=3D ARM=
-_CP_STATE_AA64) {<br>
-=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0arm_gen_one_f=
-eature_sysreg(&amp;param-&gt;builder, dyn_feature,<br>
--=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
-=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =
-=C2=A0ri, ri_key, 64, param-&gt;n++);<br>
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
-=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =
-=C2=A0ri, 64, param-&gt;n++);<br>
-=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0}<br>
-=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0} else {<br>
-=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0if (ri-&gt;state =3D=3D ARM=
-_CP_STATE_AA32) {<br>
-@@ -302,10 +305,10 @@ static void arm_register_sysreg_for_feature(gpointer =
-key, gpointer value,<br>
-=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0}<br>
-=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0if (ri-&gt;ty=
-pe &amp; ARM_CP_64BIT) {<br>
-=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
-=A0arm_gen_one_feature_sysreg(&amp;param-&gt;builder, dyn_feature,<br>
--=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
-=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =
-=C2=A0 =C2=A0 =C2=A0ri, ri_key, 64, param-&gt;n++);<br>
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
-=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =
-=C2=A0 =C2=A0 =C2=A0ri, 64, param-&gt;n++);<br>
-=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0} else {<br>
-=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
-=A0arm_gen_one_feature_sysreg(&amp;param-&gt;builder, dyn_feature,<br>
--=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
-=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =
-=C2=A0 =C2=A0 =C2=A0ri, ri_key, 32, param-&gt;n++);<br>
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
-=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =
-=C2=A0 =C2=A0 =C2=A0ri, 32, param-&gt;n++);<br>
-=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0}<br>
-=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0}<br>
-=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0}<br>
-@@ -323,7 +326,8 @@ static GDBFeature *arm_gen_dynamic_sysreg_feature(CPUSt=
-ate *cs, int base_reg)<br>
-=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
-=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 &quot;org.qemu.gdb.arm.sys.regs&quot;,<br>
-=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
-=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 &quot;system-registers.xml&quot;,<br>
-=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
-=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 base_reg);<br>
--=C2=A0 =C2=A0 cpu-&gt;dyn_sysreg_feature.data.cpregs.keys =3D g_new(uint32=
-_t, num_regs);<br>
-+=C2=A0 =C2=A0 cpu-&gt;dyn_sysreg_feature.data.cpregs.regs =3D g_ptr_array_=
-new();<br>
-+=C2=A0 =C2=A0 g_ptr_array_set_size(cpu-&gt;dyn_sysreg_feature.data.cpregs.=
-regs, num_regs);<br>
-=C2=A0 =C2=A0 =C2=A0g_hash_table_foreach(cpu-&gt;cp_regs, arm_register_sysr=
-eg_for_feature, &amp;param);<br>
-=C2=A0 =C2=A0 =C2=A0gdb_feature_builder_end(&amp;param.builder);<br>
-=C2=A0 =C2=A0 =C2=A0return &amp;cpu-&gt;dyn_sysreg_feature.desc;<br>
-<br>
----<br>
-base-commit: ac6721b88df944ade0048822b2b74210f543d656<br>
-change-id: 20260518-enhance_arm_gdb_get_sysreg_performance-4288474401d6<br>
-<br>
-Best regards,<br>
--- <br>
-Abdelrahman Elbehery &lt;<a href=3D"mailto:elbeheri95@gmail.com" target=3D"=
-_blank" rel=3D"noreferrer">elbeheri95@gmail.com</a>&gt;<br>
-<br>
-</blockquote></div>
-
---000000000000fdb58e065346d5be--
 
