@@ -4,43 +4,43 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id EC5D5CD6E56
-	for <qemu-devel@archiver.kernel.org>; Tue,  2 Jun 2026 03:02:31 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 57702CD6E56
+	for <qemu-devel@archiver.kernel.org>; Tue,  2 Jun 2026 03:02:36 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wUFMv-0005hy-2z; Mon, 01 Jun 2026 23:00:41 -0400
+	id 1wUFN3-0005lM-Iq; Mon, 01 Jun 2026 23:00:49 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <maobibo@loongson.cn>)
- id 1wUFMt-0005hF-9k
- for qemu-devel@nongnu.org; Mon, 01 Jun 2026 23:00:39 -0400
+ id 1wUFMz-0005jt-Ey
+ for qemu-devel@nongnu.org; Mon, 01 Jun 2026 23:00:45 -0400
 Received: from mail.loongson.cn ([114.242.206.163])
  by eggs.gnu.org with esmtp (Exim 4.90_1)
- (envelope-from <maobibo@loongson.cn>) id 1wUFMq-0002GS-Jp
- for qemu-devel@nongnu.org; Mon, 01 Jun 2026 23:00:39 -0400
+ (envelope-from <maobibo@loongson.cn>) id 1wUFMv-0002Ic-TY
+ for qemu-devel@nongnu.org; Mon, 01 Jun 2026 23:00:45 -0400
 Received: from loongson.cn (unknown [10.2.5.213])
- by gateway (Coremail) with SMTP id _____8AxX+tPRx5qfJUPAA--.43337S3;
- Tue, 02 Jun 2026 11:00:31 +0800 (CST)
+ by gateway (Coremail) with SMTP id _____8DxLupXRx5qmZUPAA--.43165S3;
+ Tue, 02 Jun 2026 11:00:39 +0800 (CST)
 Received: from localhost.localdomain (unknown [10.2.5.213])
- by front1 (Coremail) with SMTP id qMiowJBxacFNRx5q5tqYAA--.13886S3;
- Tue, 02 Jun 2026 11:00:30 +0800 (CST)
+ by front1 (Coremail) with SMTP id qMiowJDxzsJWRx5q7dqYAA--.27658S4;
+ Tue, 02 Jun 2026 11:00:39 +0800 (CST)
 From: Bibo Mao <maobibo@loongson.cn>
 To: Song Gao <gaosong@loongson.cn>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  Richard Henderson <richard.henderson@linaro.org>
 Cc: qemu-devel@nongnu.org, SignKirigami <prcups@krgm.moe>,
  Hengyu Yu <yuhengyu25@mails.ucas.ac.cn>
-Subject: [PATCH v2 01/13] target/loongarch: Add new field curState in
- CPULoongArchState
-Date: Tue,  2 Jun 2026 11:00:17 +0800
-Message-Id: <20260602030029.1476299-2-maobibo@loongson.cn>
+Subject: [PATCH v2 08/13] target/loongarch: Use sys_state in csr_helper.c when
+ accessing CSR registers
+Date: Tue,  2 Jun 2026 11:00:24 +0800
+Message-Id: <20260602030029.1476299-9-maobibo@loongson.cn>
 X-Mailer: git-send-email 2.39.3
 In-Reply-To: <20260602030029.1476299-1-maobibo@loongson.cn>
 References: <20260602030029.1476299-1-maobibo@loongson.cn>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-X-CM-TRANSID: qMiowJBxacFNRx5q5tqYAA--.13886S3
+X-CM-TRANSID: qMiowJDxzsJWRx5q7dqYAA--.27658S4
 X-CM-SenderInfo: xpdruxter6z05rqj20fqof0/
 X-Coremail-Antispam: 1Uk129KBjDUn29KB7ZKAUJUUUUU529EdanIXcx71UUUUU7KY7
  ZEXasCq-sGcSsGvfJ3UbIjqfuFe4nvWSU5nxnvy29KBjDU0xBIdaVrnUUvcSsGvfC2Kfnx
@@ -67,73 +67,172 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-New field sys_state is added in structure CPULoongArchState, it points
-to CPULoongArchState itself now.
+When accessing CSR registers in file csr_helper.c, use sys_state rather
+than env. There is no function change.
 
 Signed-off-by: Bibo Mao <maobibo@loongson.cn>
 ---
- target/loongarch/cpu.c |  2 ++
- target/loongarch/cpu.h | 13 +++++++++++++
- 2 files changed, 15 insertions(+)
+ target/loongarch/tcg/csr_helper.c | 55 ++++++++++++++++++-------------
+ 1 file changed, 32 insertions(+), 23 deletions(-)
 
-diff --git a/target/loongarch/cpu.c b/target/loongarch/cpu.c
-index 8f277f7696..13de1722de 100644
---- a/target/loongarch/cpu.c
-+++ b/target/loongarch/cpu.c
-@@ -278,6 +278,7 @@ static void loongarch_la464_initfn(Object *obj)
-     uint32_t data = 0, field;
-     int i;
+diff --git a/target/loongarch/tcg/csr_helper.c b/target/loongarch/tcg/csr_helper.c
+index cd35ca93c7..7dc33bc180 100644
+--- a/target/loongarch/tcg/csr_helper.c
++++ b/target/loongarch/tcg/csr_helper.c
+@@ -20,7 +20,8 @@
  
-+    set_sys_state(env, env);
-     for (i = 0; i < 21; i++) {
-         env->cpucfg[i] = 0x0;
-     }
-@@ -406,6 +407,7 @@ static void loongarch_la132_initfn(Object *obj)
-     uint32_t data = 0;
-     int i;
- 
-+    set_sys_state(env, env);
-     for (i = 0; i < 21; i++) {
-         env->cpucfg[i] = 0x0;
-     }
-diff --git a/target/loongarch/cpu.h b/target/loongarch/cpu.h
-index 096d778928..b087548295 100644
---- a/target/loongarch/cpu.h
-+++ b/target/loongarch/cpu.h
-@@ -317,6 +317,8 @@ typedef struct  LoongArchBT {
- #define CPU_VENDOR_LOONGSON   "Loongson"
- #define CPU_MODEL_3A5000      "3A5000"
- #define CPU_MODEL_1C101       "1C101"
-+struct CPUArchState;
-+typedef struct CPUArchState CPUSysState;
- 
- typedef struct CPUArchState {
-     uint64_t gpr[32];
-@@ -415,6 +417,7 @@ typedef struct CPUArchState {
-     AddressSpace *address_space_iocsr;
-     uint32_t mp_state;
- #endif
-+    CPUSysState *sys_state;
- } CPULoongArchState;
- 
- typedef struct LoongArchCPUTopo {
-@@ -481,6 +484,16 @@ struct LoongArchCPUClass {
- #define MMU_USER_IDX     MMU_PLV_USER
- #define MMU_DA_IDX       4
- 
-+static inline CPUSysState *env_sys(CPULoongArchState *env)
-+{
-+    return env->sys_state;
-+}
-+
-+static inline void set_sys_state(CPULoongArchState *env, CPUSysState *sys)
-+{
-+    env->sys_state = sys;
-+}
-+
- static inline bool is_la64(CPULoongArchState *env)
+ target_ulong helper_csrwr_stlbps(CPULoongArchState *env, target_ulong val)
  {
-     return FIELD_EX32(env->cpucfg[1], CPUCFG1, ARCH) == CPUCFG1_ARCH_LA64;
+-    int64_t old_v = env->CSR_STLBPS;
++    CPUSysState *sys = env_sys(env);
++    int64_t old_v = sys->CSR_STLBPS;
+ 
+     /*
+      * The real hardware only supports the min tlb_ps is 12
+@@ -33,7 +34,7 @@ target_ulong helper_csrwr_stlbps(CPULoongArchState *env, target_ulong val)
+     } else {
+         /* Only update PS field, reserved bit keeps zero */
+         val = FIELD_DP64(val, CSR_STLBPS, RESERVE, 0);
+-        env->CSR_STLBPS = val;
++        sys->CSR_STLBPS = val;
+     }
+ 
+     return old_v;
+@@ -42,17 +43,18 @@ target_ulong helper_csrwr_stlbps(CPULoongArchState *env, target_ulong val)
+ target_ulong helper_csrrd_pgd(CPULoongArchState *env)
+ {
+     int64_t v;
++    CPUSysState *sys = env_sys(env);
+ 
+-    if (env->CSR_TLBRERA & 0x1) {
+-        v = env->CSR_TLBRBADV;
++    if (sys->CSR_TLBRERA & 0x1) {
++        v = sys->CSR_TLBRBADV;
+     } else {
+-        v = env->CSR_BADV;
++        v = sys->CSR_BADV;
+     }
+ 
+     if ((v >> 63) & 0x1) {
+-        v = env->CSR_PGDH;
++        v = sys->CSR_PGDH;
+     } else {
+-        v = env->CSR_PGDL;
++        v = sys->CSR_PGDL;
+     }
+ 
+     return v;
+@@ -61,10 +63,11 @@ target_ulong helper_csrrd_pgd(CPULoongArchState *env)
+ target_ulong helper_csrrd_cpuid(CPULoongArchState *env)
+ {
+     LoongArchCPU *lac = env_archcpu(env);
++    CPUSysState *sys = env_sys(env);
+ 
+-    env->CSR_CPUID = CPU(lac)->cpu_index;
++    sys->CSR_CPUID = CPU(lac)->cpu_index;
+ 
+-    return env->CSR_CPUID;
++    return sys->CSR_CPUID;
+ }
+ 
+ target_ulong helper_csrrd_tval(CPULoongArchState *env)
+@@ -77,16 +80,17 @@ target_ulong helper_csrrd_tval(CPULoongArchState *env)
+ target_ulong helper_csrrd_msgir(CPULoongArchState *env)
+ {
+     int irq, new;
++    CPUSysState *sys = env_sys(env);
+ 
+-    irq = find_first_bit((unsigned long *)env->CSR_MSGIS, 256);
++    irq = find_first_bit((unsigned long *)sys->CSR_MSGIS, 256);
+     if (irq < 256) {
+-        clear_bit(irq, (unsigned long *)env->CSR_MSGIS);
+-        new = find_first_bit((unsigned long *)env->CSR_MSGIS, 256);
++        clear_bit(irq, (unsigned long *)sys->CSR_MSGIS);
++        new = find_first_bit((unsigned long *)sys->CSR_MSGIS, 256);
+         if (new < 256) {
+             return irq;
+         }
+ 
+-        env->CSR_ESTAT = FIELD_DP64(env->CSR_ESTAT, CSR_ESTAT, MSGINT, 0);
++        sys->CSR_ESTAT = FIELD_DP64(sys->CSR_ESTAT, CSR_ESTAT, MSGINT, 0);
+     } else {
+         /* bit 31 set 1 for no invalid irq */
+         irq = BIT(31);
+@@ -97,21 +101,23 @@ target_ulong helper_csrrd_msgir(CPULoongArchState *env)
+ 
+ target_ulong helper_csrwr_estat(CPULoongArchState *env, target_ulong val)
+ {
+-    int64_t old_v = env->CSR_ESTAT;
++    CPUSysState *sys = env_sys(env);
++    int64_t old_v = sys->CSR_ESTAT;
+ 
+     /* Only IS[1:0] can be written */
+-    env->CSR_ESTAT = deposit64(env->CSR_ESTAT, 0, 2, val);
++    sys->CSR_ESTAT = deposit64(sys->CSR_ESTAT, 0, 2, val);
+ 
+     return old_v;
+ }
+ 
+ target_ulong helper_csrwr_asid(CPULoongArchState *env, target_ulong val)
+ {
+-    int64_t old_v = env->CSR_ASID;
++    CPUSysState *sys = env_sys(env);
++    int64_t old_v = sys->CSR_ASID;
+ 
+     /* Only ASID filed of CSR_ASID can be written */
+-    env->CSR_ASID = deposit64(env->CSR_ASID, 0, 10, val);
+-    if (old_v != env->CSR_ASID) {
++    sys->CSR_ASID = deposit64(sys->CSR_ASID, 0, 10, val);
++    if (old_v != sys->CSR_ASID) {
+         tlb_flush(env_cpu(env));
+     }
+     return old_v;
+@@ -120,7 +126,8 @@ target_ulong helper_csrwr_asid(CPULoongArchState *env, target_ulong val)
+ target_ulong helper_csrwr_tcfg(CPULoongArchState *env, target_ulong val)
+ {
+     LoongArchCPU *cpu = env_archcpu(env);
+-    int64_t old_v = env->CSR_TCFG;
++    CPUSysState *sys = env_sys(env);
++    int64_t old_v = sys->CSR_TCFG;
+ 
+     cpu_loongarch_store_constant_timer_config(cpu, val);
+ 
+@@ -143,7 +150,8 @@ target_ulong helper_csrwr_ticlr(CPULoongArchState *env, target_ulong val)
+ target_ulong helper_csrwr_pwcl(CPULoongArchState *env, target_ulong val)
+ {
+     uint8_t shift, ptbase;
+-    int64_t old_v = env->CSR_PWCL;
++    CPUSysState *sys = env_sys(env);
++    int64_t old_v = sys->CSR_PWCL;
+ 
+     /*
+      * The real hardware only supports 64bit PTE width now, 128bit or others
+@@ -160,14 +168,15 @@ target_ulong helper_csrwr_pwcl(CPULoongArchState *env, target_ulong val)
+          qemu_log_mask(LOG_GUEST_ERROR,
+                       "Attempted set ptbase 2^%d\n", ptbase);
+     }
+-    env->CSR_PWCL = val;
++    sys->CSR_PWCL = val;
+     return old_v;
+ }
+ 
+ target_ulong helper_csrwr_pwch(CPULoongArchState *env, target_ulong val)
+ {
+     uint8_t has_ptw;
+-    int64_t old_v = env->CSR_PWCH;
++    CPUSysState *sys = env_sys(env);
++    int64_t old_v = sys->CSR_PWCH;
+ 
+     val = FIELD_DP64(val, CSR_PWCH, RESERVE, 0);
+     has_ptw = FIELD_EX32(env->cpucfg[2], CPUCFG2, HPTW);
+@@ -175,6 +184,6 @@ target_ulong helper_csrwr_pwch(CPULoongArchState *env, target_ulong val)
+         val = FIELD_DP64(val, CSR_PWCH, HPTW_EN, 0);
+     }
+ 
+-    env->CSR_PWCH = val;
++    sys->CSR_PWCH = val;
+     return old_v;
+  }
 -- 
 2.39.3
 
