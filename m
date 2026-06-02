@@ -4,71 +4,71 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5B13CCD6E4A
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 78F94CD6E61
 	for <qemu-devel@archiver.kernel.org>; Tue,  2 Jun 2026 09:27:38 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wULOt-0005qk-47; Tue, 02 Jun 2026 05:27:07 -0400
+	id 1wULP0-0005rt-B2; Tue, 02 Jun 2026 05:27:14 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <avihaih@nvidia.com>)
- id 1wULOq-0005qZ-6T
- for qemu-devel@nongnu.org; Tue, 02 Jun 2026 05:27:04 -0400
-Received: from mail-westus3azlp170110003.outbound.protection.outlook.com
- ([2a01:111:f403:c107::3] helo=PH0PR06CU001.outbound.protection.outlook.com)
+ id 1wULOy-0005rO-RB
+ for qemu-devel@nongnu.org; Tue, 02 Jun 2026 05:27:12 -0400
+Received: from mail-centralusazlp170110009.outbound.protection.outlook.com
+ ([2a01:111:f403:c111::9] helo=DM5PR21CU001.outbound.protection.outlook.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <avihaih@nvidia.com>)
- id 1wULOo-0003yq-Kf
- for qemu-devel@nongnu.org; Tue, 02 Jun 2026 05:27:03 -0400
+ id 1wULOw-00041N-Nc
+ for qemu-devel@nongnu.org; Tue, 02 Jun 2026 05:27:12 -0400
 ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=cswFY0AsTWo/s0EWQpVFdXlNl1j0g7t+KJOS40GG1FMyHdtWrzP+q2nOhaiqi5J/cNaZHyZLEoJzS4dfsvAQDCMrFiil7/FfPECfCN50cft7uucsTdRn1/dLEcWFXqI1DBDR5pL1rR+azWEUrH21zCcWLjUNDpGwneZxQ0BuZo3q1AZ5oysh8Je/J++ZSEC0rSaQRNminyBEG+A1H2WzqKPPvFbUBbU92B4CD68tsyadBzCyWIrpfdN3ekh4lT8ZN6Yq34PRbI32547coxXfcWeF+bst7B7liYut+mQz1kMGpFDVEyR7LXar17TBU1/Vmwpmx80+56V3g0lpR/xEhg==
+ b=c0XIcC7IAO1mGIjIZ7+nLTd+sNJN8PoumOtRgjUuld8Smp06xHS/gs4qQzTd9iL3zcdsR1b22C0AmfmiKb0jBaSBnYWFuUaTU2FeDOp9YHOnR8vT8j+1iVwqugk6u6rZw9TSX4G4MBogvzkT9MWSi6tDLIZpijyINbKGoDL23R4LtXrAa2fhoyeEioXNT5gO7v/mnhGekF3ZoaBbImgjen4NH6tiFp7hmMsd2qD38pQPq5LcrvRqS9isLfgZ62dBYYDIBXHA6Vt8VnCO3WdEwfOxA1cypM12OcOgSPtcvtzPYwwCfXO8mLJ5SZbeFoXZlDDmcl/ZlIsH2leIQ8w1Fw==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
  s=arcselector10001;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=cxOLli5hATDfFw0edNBnF9MskuVfcm1vtBR85JdTAYM=;
- b=IMUjqRFv2LU+9rcK7xjFUnEaYmDY/GoUkWjGceJZixDscDDEvt4lqjOza95hz/Ykvw1EM7PobolS48HedHsLPFxz7Jx1MFVBrL7pn/575FB9khBJhaeTqJEGvqj6eCnNRQWPEhC+/5fPrrZHxGWFn0gilmoMyyRTlwUjkP4PjhKz92AoyXPS4sDxoW0M+FnNbhTlY3OAExqZc4eOCzBN9eJDLP1skPigDRvw+i3XLrCgPTh82nubtGiJ590rgmVG7GbIRIj7NRCG7aQWTXFIsO1YN0pgczNOZ+n8FtkMyGP1WayoBNX/uGUWeVzl8uza/d84zjNzZ8CWt59iyugiBg==
+ bh=KwRXWXQThKiP1E2K10xzkOuF2awOCZv8PDIiP3uGgW4=;
+ b=P2CHfIWb/haYURlRvTgvewbuVUR1znYIdZ8o+csv015MRmGqUPl6PaLIjAp5JelDCEvwU6NfOCIYZ12c3ZegpLd9oilOoeoGLecePXykwks+yFlklVdxvHNONqeCGvIqrJnYi2GGS/o9hJNuqYXCDPCL6Vk5ZnjWx/05s7jYY44TNsCQzxlk8fTSHKxf0T0jHIcZqxFcRPh4CBt3K0AB7g2Slgc3lSMmo9lLcA3ccgvpWlxK7rBaU0otnfRVudsfhoLjB5lThDFTOu2jnXdwjl4SqChpj8opPSSywsBP+FvxBfysCgG3HUqbh2JS+KqUlX4CrhR49hk5Q8MofMEm4A==
 ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass (sender ip is
- 216.228.117.160) smtp.rcpttodomain=nongnu.org smtp.mailfrom=nvidia.com;
+ 216.228.117.161) smtp.rcpttodomain=nongnu.org smtp.mailfrom=nvidia.com;
  dmarc=pass (p=reject sp=reject pct=100) action=none header.from=nvidia.com;
  dkim=none (message not signed); arc=none (0)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=Nvidia.com;
  s=selector2;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=cxOLli5hATDfFw0edNBnF9MskuVfcm1vtBR85JdTAYM=;
- b=quKCS1SBfJH8vXsjaVTfkVXK8FgxgeZrkx6D9yEyS/qpR288graNPYIXn//sltO1xOU2PCaL+YRX5hWb4fqDBA0Lx3D6xb9PFkDwM6Khyy7v/7apPxx53F4FISkk1zM1i7xIaATGZCaPBD06eOP/1UlPGr2YDDF8R/aYfzf+8oB2avTsWPcKyDcm7cu4gprawI+4keFIHDrb1eAxykzbq+xnT3ffL8qgtM3lJ/1wtlCfIVqiOK7OesNBbiTVu6j1VSrBGR4Bvuv/NQW2adMyL102ZdbN70zBU5E41Z3a46GdFtbN1/Awom5fOWa9FGjjK2A29LGNXNkhpxqs32FaOg==
-Received: from CH2PR18CA0012.namprd18.prod.outlook.com (2603:10b6:610:4f::22)
- by CH3PR12MB9078.namprd12.prod.outlook.com (2603:10b6:610:196::11)
+ bh=KwRXWXQThKiP1E2K10xzkOuF2awOCZv8PDIiP3uGgW4=;
+ b=SjkdFN/tq44WPyexRNWgex3upIPIobxVxhvq5gkdj3c8YRFrYO7M9Tun6iEQ7zZyY0ep2qLFgw+qfrimJ99bB2Alt82Go1o6G6UbvZvgiLyF5yKaWeT08D8etGkBZKzt62s0YeqmBv6HpwBanWnhsFPKF3CbVLDDZSyMK6+/Yc2qPnIxgs5zM/F+cE+pcywHpoJOdZLRb9X9oz7IQ47R98ccGKtb1xAerX8EDIAGWf0fM79ux6G+Nd1xSnQyi2b20gS+yo0YWlBSjwrccaYkTZCzC+HSrfUYjzvqtuGSZaBVN2Jl03tRN1lb6FaHH+MbZEIh+ZNNoHC2vSruvIpmnw==
+Received: from SA0PR12CA0012.namprd12.prod.outlook.com (2603:10b6:806:6f::17)
+ by IA1PR12MB6211.namprd12.prod.outlook.com (2603:10b6:208:3e5::5)
  with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.71.16; Tue, 2 Jun 2026
- 09:26:53 +0000
-Received: from CH2PEPF0000013F.namprd02.prod.outlook.com
- (2603:10b6:610:4f:cafe::72) by CH2PR18CA0012.outlook.office365.com
- (2603:10b6:610:4f::22) with Microsoft SMTP Server (version=TLS1_3,
- cipher=TLS_AES_256_GCM_SHA384) id 15.21.71.17 via Frontend Transport; Tue, 2
- Jun 2026 09:26:53 +0000
-X-MS-Exchange-Authentication-Results: spf=pass (sender IP is 216.228.117.160)
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.92.7; Tue, 2 Jun 2026
+ 09:27:01 +0000
+Received: from SN1PEPF0002636D.namprd02.prod.outlook.com
+ (2603:10b6:806:6f:cafe::7f) by SA0PR12CA0012.outlook.office365.com
+ (2603:10b6:806:6f::17) with Microsoft SMTP Server (version=TLS1_3,
+ cipher=TLS_AES_256_GCM_SHA384) id 15.21.71.15 via Frontend Transport; Tue, 2
+ Jun 2026 09:27:00 +0000
+X-MS-Exchange-Authentication-Results: spf=pass (sender IP is 216.228.117.161)
  smtp.mailfrom=nvidia.com;
  dkim=none (message not signed)
  header.d=none;dmarc=pass action=none header.from=nvidia.com;
 Received-SPF: Pass (protection.outlook.com: domain of nvidia.com designates
- 216.228.117.160 as permitted sender) receiver=protection.outlook.com;
- client-ip=216.228.117.160; helo=mail.nvidia.com; pr=C
-Received: from mail.nvidia.com (216.228.117.160) by
- CH2PEPF0000013F.mail.protection.outlook.com (10.167.244.71) with Microsoft
+ 216.228.117.161 as permitted sender) receiver=protection.outlook.com;
+ client-ip=216.228.117.161; helo=mail.nvidia.com; pr=C
+Received: from mail.nvidia.com (216.228.117.161) by
+ SN1PEPF0002636D.mail.protection.outlook.com (10.167.241.138) with Microsoft
  SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.21.92.5 via Frontend Transport; Tue, 2 Jun 2026 09:26:53 +0000
-Received: from rnnvmail201.nvidia.com (10.129.68.8) by mail.nvidia.com
- (10.129.200.66) with Microsoft SMTP Server (version=TLS1_2,
+ 15.21.92.5 via Frontend Transport; Tue, 2 Jun 2026 09:27:00 +0000
+Received: from rnnvmail202.nvidia.com (10.129.68.7) by mail.nvidia.com
+ (10.129.200.67) with Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.2562.20; Tue, 2 Jun
- 2026 02:26:35 -0700
-Received: from rnnvmail203.nvidia.com (10.129.68.9) by rnnvmail201.nvidia.com
- (10.129.68.8) with Microsoft SMTP Server (version=TLS1_2,
+ 2026 02:26:41 -0700
+Received: from rnnvmail203.nvidia.com (10.129.68.9) by rnnvmail202.nvidia.com
+ (10.129.68.7) with Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.2562.20; Tue, 2 Jun
- 2026 02:26:34 -0700
+ 2026 02:26:41 -0700
 Received: from vdi.nvidia.com (10.127.8.9) by mail.nvidia.com (10.129.68.9)
  with Microsoft SMTP Server id 15.2.2562.20 via Frontend Transport; Tue, 2 Jun
- 2026 02:26:29 -0700
+ 2026 02:26:35 -0700
 From: Avihai Horon <avihaih@nvidia.com>
 To: <qemu-devel@nongnu.org>
 CC: Alex Williamson <alex@shazbot.org>, =?UTF-8?q?C=C3=A9dric=20Le=20Goater?=
@@ -84,10 +84,9 @@ CC: Alex Williamson <alex@shazbot.org>, =?UTF-8?q?C=C3=A9dric=20Le=20Goater?=
  "Vladimir Sementsov-Ogievskiy" <vsementsov@yandex-team.ru>, John Snow
  <jsnow@redhat.com>, Markus Armbruster <armbru@redhat.com>, Maor Gottlieb
  <maorg@nvidia.com>, Avihai Horon <avihaih@nvidia.com>
-Subject: [PATCH v2 01/13] migration: Propagate errors in
- migration_completion_precopy()
-Date: Tue, 2 Jun 2026 12:26:09 +0300
-Message-ID: <20260602092621.382-2-avihaih@nvidia.com>
+Subject: [PATCH v2 02/13] migration: Run final save_query_pending at switchover
+Date: Tue, 2 Jun 2026 12:26:10 +0300
+Message-ID: <20260602092621.382-3-avihaih@nvidia.com>
 X-Mailer: git-send-email 2.21.3
 In-Reply-To: <20260602092621.382-1-avihaih@nvidia.com>
 References: <20260602092621.382-1-avihaih@nvidia.com>
@@ -97,38 +96,39 @@ Content-Type: text/plain
 X-NV-OnPremToCloud: ExternallySecured
 X-EOPAttributedMessage: 0
 X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: CH2PEPF0000013F:EE_|CH3PR12MB9078:EE_
-X-MS-Office365-Filtering-Correlation-Id: 7902df4b-f992-4ca8-aa44-08dec089156e
+X-MS-TrafficTypeDiagnostic: SN1PEPF0002636D:EE_|IA1PR12MB6211:EE_
+X-MS-Office365-Filtering-Correlation-Id: af7d2936-509c-489d-3970-08dec0891963
 X-MS-Exchange-SenderADCheck: 1
 X-MS-Exchange-AntiSpam-Relay: 0
 X-Microsoft-Antispam: BCL:0;
- ARA:13230040|82310400026|376014|7416014|1800799024|36860700016|22082099003|18002099003|56012099006|11063799006;
-X-Microsoft-Antispam-Message-Info: E9eeSsK4gPETRgd4zRWZA1UyhDkNtcvyZvVEIpaKAP36+FudkEyb8LHYRP3vx+IKyvqOZVKuGwe8ciQ94LeYQl/mLIBlugZUqGyJK7K6+wU3reLegtgg6OJK4O7GLaV42jjrNSSywzXR3pUbtaPDINSJBZ+4X5gw8UsB3VSiBDBndQqnixs61e//7VbADKVdr97H6Sr0ex7vsR/i5XORzLwBpReBhUpGztJPSruyGks6F8q/vnT+pehtPzC7wkWW5p6N3izI2wYUt0PjTV+WyS5l6BgvGnXfNmeAvRwRkEzZkX5e2Kgd3AvQyYz5YFydPFKqNU4TqTiRYg+Wwsz8WHWSbt9rWm9rMk0WAFVVQlI6Uaq0XAwi3mPepLYpKjpnqJ3OWqP2ieqtBdxK1o7RoMiAycCMKJ4QcUDQddle2e1TcPEk3EN2isTD8YF/m9bd487SzrOIljP9KD6T4LuS4HcbMe6Kenqdq9IKoSQV2IYCkl9oUQAdmR7klMA46kvglyg63uHk34lPUuCTDm4X4JSDJg98hpUqlyba8N2CyiTAAmLJ4qI/KtDCYj28V3HYEvQnfrDppEpLSGDRq1tZ65VXxrxBXqGl1vhrvztfuJozv8KHmBvK+MdLhggQwzxXW+iffdvZt2HTwtiedJjfWkqezrlFDfihns0KOEKK9Ltv7Qpl9gvajso5GG9BS2yN+VfQHI5cZ51yKZYi1+BW6mRxceuORipKdyzYyWyA1U4=
-X-Forefront-Antispam-Report: CIP:216.228.117.160; CTRY:US; LANG:en; SCL:1; SRV:;
- IPV:NLI; SFV:NSPM; H:mail.nvidia.com; PTR:dc6edge1.nvidia.com; CAT:NONE;
- SFS:(13230040)(82310400026)(376014)(7416014)(1800799024)(36860700016)(22082099003)(18002099003)(56012099006)(11063799006);
+ ARA:13230040|82310400026|36860700016|376014|7416014|1800799024|56012099006|11063799006|5023799004|6133799003|18002099003|22082099003;
+X-Microsoft-Antispam-Message-Info: 935l/d2F1Le2qno8JJroKN+FHU3zKjOA8KQELeEjqgq4J+F+XuM6NfD9EwdyLEltdTMYgqPciWRVvremsfwaRXBXdT3E06qnLHAQQiWfVT7QMdzwfy6bamGROBuL9RmoZvDgNE3bF24ZMK+NAhSzKTVAIygmMqTz0ab5eTN7St0k/jbmG1Oi0xHp9HEEswlXobQHxGyH5NjE4VMYW15YE2onULAJ3ZjW4hfoYn+NaWql+rFAFVe1h/Ftc2pqOtk6FdHJ9SkHfxnYNgMTPlObhIhexPORWlP27bWLRKaBo2xtCKyU24JwSWb/QE9diwC1lQSoaFC7zB9DdYZCR6ewm/aYaNAWuFgzkabyE0RCyS6NCsS+EjHBGowPjqfxvxr9fdwKZb/gjav4Zhbx+SJZF99+Co8kWWNABkF3hSKqL5JcpA5wKfDXVY1lQ+Tbs2pmRN3FA/DJDwor9nv72yEADLtngKXmds2372qBCif7HscTTsULE4+LOyGw1+fOfiJ4YBQxRKJgxSxVCKqW+GdRC58wgX3WSq75jhLu0esx7uAdSPWXo1cnV/xnP72arvdYyEMO5HQCvjs/g/N1pQ9YGnOEdxLTlCW0IHkd1A82e0KxP3aHfoS+plQQbzYBhsGU+jYJlkcUthnbCncS03nKYDrh7oZtbp/n1zUiGfEgYm88qJ5sqlXag/ybdKMnIlrjWIoYWGaa/PGCo+J6NDh4auWrsWreKwLtu/Pjk/ALPAg=
+X-Forefront-Antispam-Report: CIP:216.228.117.161; CTRY:US; LANG:en; SCL:1; SRV:;
+ IPV:NLI; SFV:NSPM; H:mail.nvidia.com; PTR:dc6edge2.nvidia.com; CAT:NONE;
+ SFS:(13230040)(82310400026)(36860700016)(376014)(7416014)(1800799024)(56012099006)(11063799006)(5023799004)(6133799003)(18002099003)(22082099003);
  DIR:OUT; SFP:1101; 
 X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0: h6PCj5s1LPPlXGvEz/d/jMgEp6Tb0oaA1U2iM5AhhuduEuDleUTp5bJqLqc/qcrB7YO2h7zxodiHyso8u/XnMR7E6lpqnBDngonZIF1WpM5gf7G2lwKWVVkpw3oLtETLJkTTMSCtnpdEQONnTDcCsQ0eSCk2uwCybhithd29U/V0SOQn92EqCJmKxGv6IDJseSgt7J9LSxzk+S9ZjwXFWXTeP7NVf5+c/7kDnFJp9bmmbOcS27Vii1cIB6fi32gaw4L3DVBDutvrlLJWj8blnX+FczQo6lCu00gEcp69Scp+8yVYcRW0t65NRUXb18rcxsBmjqdQDX0mzhXgPf8nemZ9qD8dUm+x7rCVtxbZ++Xn/Ac3Tj7uoaOkXxhv59qaT5+YxzTDnMyNNZ2ORdWQeBdPv1ZEiyzTzN42dGbyA2j9GF1PnBFxzEag/9TbK8TF
+X-MS-Exchange-AntiSpam-MessageData-0: CcUwI3fBJhu2EyLsuefaPHLn/Xz/bPfx2p6Ao50h3Or+BolkWHKnc39SUXvd1E7YqESHkcLsQBd+34jhg2YZx6bn8fDlvDUbV7cVIashs6zZRDXtEwbZfrYuHzD8xrQOL5/F4mgIfmfSPQFrBQqVXYxgOdU44xTPaDu+bell9IN5VfKvMAKewrd0UwYVaBRRtMiocFf1Eii61U3im3lYS43wyxQq2YiOgux0HCBfVSpLgXjxsWE2GikhBmgaKcPL8hqkMT+lt0BoeKX1HK8HcYWuDvwSFRAm5CIiYdqUSVBSum59FI2I0vBkNaRcVpXD7dygBxig2de8VBmVKAH7RTgKFpkkj6VNy5mRngKBx3hZuAMhiZw8AI+js4k8FeSOlGjRT2Hcxso0UKkcXxzR7loUpkEqjeSN0xOf2lBY/ztIcoXDF/D3IEWJ9khWy08p
 X-OriginatorOrg: Nvidia.com
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 02 Jun 2026 09:26:53.4285 (UTC)
-X-MS-Exchange-CrossTenant-Network-Message-Id: 7902df4b-f992-4ca8-aa44-08dec089156e
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 02 Jun 2026 09:27:00.0691 (UTC)
+X-MS-Exchange-CrossTenant-Network-Message-Id: af7d2936-509c-489d-3970-08dec0891963
 X-MS-Exchange-CrossTenant-Id: 43083d15-7273-40c1-b7db-39efd9ccc17a
-X-MS-Exchange-CrossTenant-OriginalAttributedTenantConnectingIp: TenantId=43083d15-7273-40c1-b7db-39efd9ccc17a; Ip=[216.228.117.160];
+X-MS-Exchange-CrossTenant-OriginalAttributedTenantConnectingIp: TenantId=43083d15-7273-40c1-b7db-39efd9ccc17a; Ip=[216.228.117.161];
  Helo=[mail.nvidia.com]
-X-MS-Exchange-CrossTenant-AuthSource: CH2PEPF0000013F.namprd02.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthSource: SN1PEPF0002636D.namprd02.prod.outlook.com
 X-MS-Exchange-CrossTenant-AuthAs: Anonymous
 X-MS-Exchange-CrossTenant-FromEntityHeader: HybridOnPrem
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: CH3PR12MB9078
-Received-SPF: permerror client-ip=2a01:111:f403:c107::3;
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: IA1PR12MB6211
+Received-SPF: permerror client-ip=2a01:111:f403:c111::9;
  envelope-from=avihaih@nvidia.com;
- helo=PH0PR06CU001.outbound.protection.outlook.com
-X-Spam_score_int: -24
-X-Spam_score: -2.5
-X-Spam_bar: --
-X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.445,
+ helo=DM5PR21CU001.outbound.protection.outlook.com
+X-Spam_score_int: -14
+X-Spam_score: -1.5
+X-Spam_bar: -
+X-Spam_report: (-1.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.445,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- SPF_HELO_NONE=0.001, SPF_NONE=0.001 autolearn=ham autolearn_force=no
+ FORGED_SPF_HELO=1, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_PASS=-0.001,
+ SPF_NONE=0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -144,66 +144,350 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-migration_completion_precopy() doesn't propagate errors to migration
-core which leads to error information loss. Fix that.
+Before switchover, the source needs one last exact pending query so
+modules can flush dirty state. This is currently done ad hoc in modules
+handlers. For example, RAM syncs its dirty bitmap in its save_complete
+handler.
 
-This prepares for a follow-up where migration_switchover_start() can
-fail on switchover-ack and still report a useful error. Errors from
-qemu_savevm_state_complete_precopy() are not propagated yet as it
-requires more plumbing.
+This should be a general concept relevant for any module, so extract it
+to migration core instead by running a final save_query_pending before
+switchover.
+
+The final query requires special handling by modules (e.g., it's called
+with BQL locked, during VM stop), so extend save_query_pending
+SaveVMHandlers callback and qemu_savevm_query_pending() with a "final"
+flag so migration modules can tell the last pending query during
+switchover from periodic iteration queries.
+
+Not all modules need the final query; skip it for those who don't need.
 
 Signed-off-by: Avihai Horon <avihaih@nvidia.com>
 ---
- migration/migration.c | 11 +++++++----
- 1 file changed, 7 insertions(+), 4 deletions(-)
+ include/migration/register.h   | 41 ++++++++++++++++++----------------
+ migration/savevm.h             |  3 ++-
+ hw/s390x/s390-stattrib.c       |  9 ++++++--
+ hw/vfio/migration.c            |  6 ++++-
+ migration/block-dirty-bitmap.c |  6 ++++-
+ migration/migration.c          |  7 ++++--
+ migration/ram.c                | 37 ++++++++++++++++++------------
+ migration/savevm.c             | 27 +++++++++++++++++-----
+ migration/trace-events         |  2 +-
+ 9 files changed, 91 insertions(+), 47 deletions(-)
 
-diff --git a/migration/migration.c b/migration/migration.c
-index 074d3f2c69..7488a94206 100644
---- a/migration/migration.c
-+++ b/migration/migration.c
-@@ -2814,7 +2814,7 @@ static bool migration_switchover_start(MigrationState *s, Error **errp)
-     return true;
+diff --git a/include/migration/register.h b/include/migration/register.h
+index 5e5e0ee432..6f632123f1 100644
+--- a/include/migration/register.h
++++ b/include/migration/register.h
+@@ -171,6 +171,28 @@ typedef struct SaveVMHandlers {
+      */
+     bool (*is_active_iterate)(void *opaque);
+ 
++    /**
++     * @save_query_pending
++     *
++     * This estimates the remaining data to transfer on the source side.
++     *
++     * When @exact is true, a module must report accurate results.  When
++     * @exact is false, a module may report estimates.
++     *
++     * It's highly recommended that modules implement a faster version of
++     * the query path (for example, by proper caching on the counters) if
++     * an accurate query will be time-consuming.
++     *
++     * @opaque: data pointer passed to register_savevm_live()
++     * @pending: pointer to a MigPendingData struct
++     * @exact: set to true for an accurate (slow) query
++     * @final: set to true for the final query during switchover. When final is
++     * true, the query is called with BQL locked. Otherwise, it's called with
++     * BQL unlocked.
++     */
++    void (*save_query_pending)(void *opaque, MigPendingData *pending,
++                               bool exact, bool final);
++
+     /* This runs outside the BQL in the migration case, and
+      * within the lock in the savevm case.  The callback had better only
+      * use data that is local to the migration thread or protected
+@@ -210,25 +232,6 @@ typedef struct SaveVMHandlers {
+      */
+     bool (*save_postcopy_prepare)(QEMUFile *f, void *opaque, Error **errp);
+ 
+-    /**
+-     * @save_query_pending
+-     *
+-     * This estimates the remaining data to transfer on the source side.
+-     *
+-     * When @exact is true, a module must report accurate results.  When
+-     * @exact is false, a module may report estimates.
+-     *
+-     * It's highly recommended that modules implement a faster version of
+-     * the query path (for example, by proper caching on the counters) if
+-     * an accurate query will be time-consuming.
+-     *
+-     * @opaque: data pointer passed to register_savevm_live()
+-     * @pending: pointer to a MigPendingData struct
+-     * @exact: set to true for an accurate (slow) query
+-     */
+-    void (*save_query_pending)(void *opaque, MigPendingData *pending,
+-                               bool exact);
+-
+     /**
+      * @load_state
+      *
+diff --git a/migration/savevm.h b/migration/savevm.h
+index 96fdf96d4e..10b3d78a5f 100644
+--- a/migration/savevm.h
++++ b/migration/savevm.h
+@@ -45,7 +45,8 @@ int qemu_savevm_state_iterate(QEMUFile *f, bool postcopy);
+ void qemu_savevm_state_cleanup(void);
+ void qemu_savevm_state_complete_postcopy(QEMUFile *f);
+ int qemu_savevm_state_complete_precopy(MigrationState *s);
+-void qemu_savevm_query_pending(MigPendingData *pending, bool exact);
++void qemu_savevm_query_pending_iter(MigPendingData *pending, bool exact);
++void qemu_savevm_query_pending_final(MigPendingData *pending);
+ int qemu_savevm_state_complete_precopy_iterable(QEMUFile *f, bool in_postcopy);
+ bool qemu_savevm_state_postcopy_prepare(QEMUFile *f, Error **errp);
+ void qemu_savevm_state_end(QEMUFile *f);
+diff --git a/hw/s390x/s390-stattrib.c b/hw/s390x/s390-stattrib.c
+index c334714b31..aed0c6844d 100644
+--- a/hw/s390x/s390-stattrib.c
++++ b/hw/s390x/s390-stattrib.c
+@@ -190,12 +190,17 @@ static int cmma_save_setup(QEMUFile *f, void *opaque, Error **errp)
  }
  
--static int migration_completion_precopy(MigrationState *s)
-+static int migration_completion_precopy(MigrationState *s, Error **errp)
+ static void cmma_state_pending(void *opaque, MigPendingData *pending,
+-                               bool exact)
++                               bool exact, bool final)
  {
-     int ret;
+     S390StAttribState *sas = S390_STATTRIB(opaque);
+     S390StAttribClass *sac = S390_STATTRIB_GET_CLASS(sas);
+-    long long res = sac->get_dirtycount(sas);
++    long long res;
  
-@@ -2823,11 +2823,12 @@ static int migration_completion_precopy(MigrationState *s)
-     if (!migrate_mode_is_cpr()) {
-         ret = migration_stop_vm(s, RUN_STATE_FINISH_MIGRATE);
++    if (final) {
++        return;
++    }
++
++    res = sac->get_dirtycount(sas);
+     if (res >= 0) {
+         pending->precopy_bytes += res;
+     }
+diff --git a/hw/vfio/migration.c b/hw/vfio/migration.c
+index fb12b9717f..95072d6664 100644
+--- a/hw/vfio/migration.c
++++ b/hw/vfio/migration.c
+@@ -622,12 +622,16 @@ static void vfio_state_pending_sync(VFIODevice *vbasedev)
+ }
+ 
+ static void vfio_state_pending(void *opaque, MigPendingData *pending,
+-                               bool exact)
++                               bool exact, bool final)
+ {
+     VFIODevice *vbasedev = opaque;
+     VFIOMigration *migration = vbasedev->migration;
+     uint64_t precopy_size, stopcopy_size;
+ 
++    if (final) {
++        return;
++    }
++
+     if (exact) {
+         vfio_state_pending_sync(vbasedev);
+     }
+diff --git a/migration/block-dirty-bitmap.c b/migration/block-dirty-bitmap.c
+index 7ef3759e53..66ed91de03 100644
+--- a/migration/block-dirty-bitmap.c
++++ b/migration/block-dirty-bitmap.c
+@@ -767,12 +767,16 @@ static int dirty_bitmap_save_complete(QEMUFile *f, void *opaque)
+ }
+ 
+ static void dirty_bitmap_state_pending(void *opaque, MigPendingData *data,
+-                                       bool exact)
++                                       bool exact, bool final)
+ {
+     DBMSaveState *s = &((DBMState *)opaque)->save;
+     SaveBitmapState *dbms;
+     uint64_t pending = 0;
+ 
++    if (final) {
++        return;
++    }
++
+     bql_lock();
+ 
+     QSIMPLEQ_FOREACH(dbms, &s->dbms_list, entry) {
+diff --git a/migration/migration.c b/migration/migration.c
+index 7488a94206..df8ed3a9fd 100644
+--- a/migration/migration.c
++++ b/migration/migration.c
+@@ -2787,12 +2787,15 @@ static bool migration_switchover_prepare(MigrationState *s)
+ static bool migration_switchover_start(MigrationState *s, Error **errp)
+ {
+     ERRP_GUARD();
++    MigPendingData pending = {};
+ 
+     if (!migration_switchover_prepare(s)) {
+         error_setg(errp, "Switchover is interrupted");
+         return false;
+     }
+ 
++    qemu_savevm_query_pending_final(&pending);
++
+     /* Inactivate disks except in COLO */
+     if (!migrate_colo()) {
+         /*
+@@ -3285,7 +3288,7 @@ static void migration_iteration_go_next(MigPendingData *pending)
+     /*
+      * Do a slow sync first before boosting the iteration count.
+      */
+-    qemu_savevm_query_pending(pending, true);
++    qemu_savevm_query_pending_iter(pending, true);
+ 
+     /*
+      * Update the dirty information for the whole system for this
+@@ -3336,7 +3339,7 @@ static MigIterateState migration_iteration_run(MigrationState *s)
+     bool complete_ready;
+ 
+     /* Fast path - get the estimated amount of pending data */
+-    qemu_savevm_query_pending(&pending, false);
++    qemu_savevm_query_pending_iter(&pending, false);
+ 
+     if (in_postcopy) {
+         /*
+diff --git a/migration/ram.c b/migration/ram.c
+index fc38ffbf8a..4e3f442593 100644
+--- a/migration/ram.c
++++ b/migration/ram.c
+@@ -3376,10 +3376,6 @@ static int ram_save_complete(QEMUFile *f, void *opaque)
+     rs->last_stage = !migration_in_colo_state();
+ 
+     WITH_RCU_READ_LOCK_GUARD() {
+-        if (!migration_in_postcopy()) {
+-            migration_bitmap_sync_precopy(true);
+-        }
+-
+         ret = rdma_registration_start(f, RAM_CONTROL_FINISH);
          if (ret < 0) {
-+            error_setg_errno(errp, -ret, "Failed to stop the VM");
-             goto out_unlock;
+             qemu_file_set_error(f, ret);
+@@ -3442,25 +3438,38 @@ static int ram_save_complete(QEMUFile *f, void *opaque)
+     return qemu_fflush(f);
+ }
+ 
+-static void ram_state_pending(void *opaque, MigPendingData *pending,
+-                              bool exact)
++static void ram_state_pending_sync(bool exact, bool final)
+ {
+-    RAMState **temp = opaque;
+-    RAMState *rs = *temp;
+-    uint64_t remaining_size;
+-
+     /*
+      * Sync is not needed either with: (1) a fast query, or (2) after
+      * postcopy has started (no new dirty will generate anymore).
+      */
+-    if (exact && !migration_in_postcopy()) {
++    if (!exact || migration_in_postcopy()) {
++        return;
++    }
++
++    /* Final pending query is called with BQL locked */
++    if (!final) {
+         bql_lock();
+-        WITH_RCU_READ_LOCK_GUARD() {
+-            migration_bitmap_sync_precopy(false);
+-        }
++    }
++
++    WITH_RCU_READ_LOCK_GUARD() {
++        migration_bitmap_sync_precopy(final);
++    }
++
++    if (!final) {
+         bql_unlock();
+     }
++}
++
++static void ram_state_pending(void *opaque, MigPendingData *pending,
++                              bool exact, bool final)
++{
++    RAMState **temp = opaque;
++    RAMState *rs = *temp;
++    uint64_t remaining_size;
+ 
++    ram_state_pending_sync(exact, final);
+     remaining_size = rs->migration_dirty_pages * TARGET_PAGE_SIZE;
+ 
+     if (migrate_postcopy_ram()) {
+diff --git a/migration/savevm.c b/migration/savevm.c
+index 23adaf9dd9..22cb6a15c6 100644
+--- a/migration/savevm.c
++++ b/migration/savevm.c
+@@ -1795,7 +1795,8 @@ int qemu_savevm_state_complete_precopy(MigrationState *s)
+     return qemu_fflush(f);
+ }
+ 
+-void qemu_savevm_query_pending(MigPendingData *pending, bool exact)
++static void qemu_savevm_query_pending(MigPendingData *pending, bool exact,
++                                      bool final)
+ {
+     SaveStateEntry *se;
+ 
+@@ -1808,7 +1809,7 @@ void qemu_savevm_query_pending(MigPendingData *pending, bool exact)
+         if (!qemu_savevm_state_active(se)) {
+             continue;
          }
+-        se->ops->save_query_pending(se->opaque, pending, exact);
++        se->ops->save_query_pending(se->opaque, pending, exact, final);
      }
  
--    if (!migration_switchover_start(s, NULL)) {
-+    if (!migration_switchover_start(s, errp)) {
-         ret = -EFAULT;
-         goto out_unlock;
-     }
-@@ -2869,7 +2870,7 @@ static void migration_completion(MigrationState *s)
-     Error *local_err = NULL;
+     pending->total_bytes = pending->precopy_bytes +
+@@ -1817,16 +1818,30 @@ void qemu_savevm_query_pending(MigPendingData *pending, bool exact)
+     /*
+      * Update system remaining dirty bytes whenever QEMU queries.  It will
+      * make the value to be not as accurate, but should still be pretty
+-     * close to reality when this got invoked frequently while iterating.
++     * close to reality when this got invoked frequently while iterating.  Don't
++     * update in final query as some modules may skip it if not needed.
+      */
+-    mig_stats.dirty_bytes_total = pending->total_bytes;
+-
+-    trace_qemu_savevm_query_pending(exact, pending->precopy_bytes,
++    if (!final) {
++        mig_stats.dirty_bytes_total = pending->total_bytes;
++    }
++    trace_qemu_savevm_query_pending(exact, final, pending->precopy_bytes,
+                                     pending->stopcopy_bytes,
+                                     pending->postcopy_bytes,
+                                     pending->total_bytes);
+ }
  
-     if (s->state == MIGRATION_STATUS_ACTIVE) {
--        ret = migration_completion_precopy(s);
-+        ret = migration_completion_precopy(s, &local_err);
-     } else if (s->state == MIGRATION_STATUS_POSTCOPY_ACTIVE) {
-         migration_completion_postcopy(s);
-     } else {
-@@ -2900,7 +2901,9 @@ static void migration_completion(MigrationState *s)
-     return;
- 
- fail:
--    if (qemu_file_get_error_obj(s->to_dst_file, &local_err)) {
-+    if (local_err) {
-+        migrate_error_propagate(s, local_err);
-+    } else if (qemu_file_get_error_obj(s->to_dst_file, &local_err)) {
-         migrate_error_propagate(s, local_err);
-     } else if (ret) {
-         error_setg_errno(&local_err, -ret, "Error in migration completion");
++void qemu_savevm_query_pending_iter(MigPendingData *pending, bool exact)
++{
++    qemu_savevm_query_pending(pending, exact, false);
++}
++
++void qemu_savevm_query_pending_final(MigPendingData *pending)
++{
++    g_assert(bql_locked());
++
++    qemu_savevm_query_pending(pending, true, true);
++}
++
+ void qemu_savevm_state_cleanup(void)
+ {
+     SaveStateEntry *se;
+diff --git a/migration/trace-events b/migration/trace-events
+index de99d976ab..1c9212d3e2 100644
+--- a/migration/trace-events
++++ b/migration/trace-events
+@@ -7,7 +7,7 @@ qemu_loadvm_state_section_partend(uint32_t section_id) "%u"
+ qemu_loadvm_state_post_main(int ret) "%d"
+ qemu_loadvm_state_section_startfull(uint32_t section_id, const char *idstr, uint32_t instance_id, uint32_t version_id) "%u(%s) %u %u"
+ qemu_savevm_send_packaged(void) ""
+-qemu_savevm_query_pending(bool exact, uint64_t precopy, uint64_t stopcopy, uint64_t postcopy, uint64_t total) "exact=%d, precopy=%"PRIu64", stopcopy=%"PRIu64", postcopy=%"PRIu64", total=%"PRIu64
++qemu_savevm_query_pending(bool exact, bool final, uint64_t precopy, uint64_t stopcopy, uint64_t postcopy, uint64_t total) "exact=%d, final=%d, precopy=%"PRIu64", stopcopy=%"PRIu64", postcopy=%"PRIu64", total=%"PRIu64
+ loadvm_state_switchover_ack_needed(unsigned int switchover_ack_pending_num) "Switchover ack pending num=%u"
+ loadvm_state_setup(void) ""
+ loadvm_state_cleanup(void) ""
 -- 
 2.40.1
 
