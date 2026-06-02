@@ -4,104 +4,145 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4AA4FC5DF71
-	for <qemu-devel@archiver.kernel.org>; Tue,  2 Jun 2026 07:38:59 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7FF82C5DF71
+	for <qemu-devel@archiver.kernel.org>; Tue,  2 Jun 2026 07:43:12 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wUJhn-0003xZ-6z; Tue, 02 Jun 2026 03:38:31 -0400
+	id 1wUJlv-0004jq-MT; Tue, 02 Jun 2026 03:42:47 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1wUJhg-0003xJ-Es
- for qemu-devel@nongnu.org; Tue, 02 Jun 2026 03:38:25 -0400
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1wUJls-0004jI-1i
+ for qemu-devel@nongnu.org; Tue, 02 Jun 2026 03:42:44 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1wUJhd-0002KB-Kv
- for qemu-devel@nongnu.org; Tue, 02 Jun 2026 03:38:23 -0400
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1wUJlo-0003N4-I6
+ for qemu-devel@nongnu.org; Tue, 02 Jun 2026 03:42:43 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1780385900;
+ s=mimecast20190719; t=1780386159;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=iqYjzpa2kvnJhq8SYlevgwmN+qvYj78/06ktmNrSLLc=;
- b=gSSmJooXsHJQtERx47cvnE+Orpvx8sjowoy3NkXiR+oHBEh1IMxsw+mrP7lJ8BM6/SuLSt
- CpGoAjN8C3Ylb/SkNqWrNeMk1hf13TtC4dZ9Y13nSpxd3RJWCwN9hD6oEAFEv6qSNDtK6S
- xyGuqfqAsC47vRvButi8T4X+z4ifYUM=
-Received: from mail-wr1-f69.google.com (mail-wr1-f69.google.com
- [209.85.221.69]) by relay.mimecast.com with ESMTP with STARTTLS
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
+ bh=V+Q217Pbo05hCLvQUW0Kp8q4OJXVUZgq9M8a0NMgfMc=;
+ b=dvdGXQe5pqWGgmZdovGsQ/TJip8GWquLFxthKRFiacXrkwSf7h47xvMl+xBydQy6Lcoz2w
+ UiJuIHtVN3wqPfgP3hirlpyAFx9TL17QiUb0EgvrGf5EpPYUBXPbpoiyNCrlQ/EVRnsuwt
+ YCkCnAkR+zU2suP1sXkc379ncmmHj7U=
+Received: from mail-wr1-f72.google.com (mail-wr1-f72.google.com
+ [209.85.221.72]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-62-UP2yl1_kOgOtg12RHFXJ7g-1; Tue, 02 Jun 2026 03:38:19 -0400
-X-MC-Unique: UP2yl1_kOgOtg12RHFXJ7g-1
-X-Mimecast-MFC-AGG-ID: UP2yl1_kOgOtg12RHFXJ7g_1780385898
-Received: by mail-wr1-f69.google.com with SMTP id
- ffacd0b85a97d-45ef9437b7aso1813045f8f.0
- for <qemu-devel@nongnu.org>; Tue, 02 Jun 2026 00:38:18 -0700 (PDT)
+ us-mta-680-ETipnGpZPf2jYPn0ztEALA-1; Tue, 02 Jun 2026 03:42:38 -0400
+X-MC-Unique: ETipnGpZPf2jYPn0ztEALA-1
+X-Mimecast-MFC-AGG-ID: ETipnGpZPf2jYPn0ztEALA_1780386157
+Received: by mail-wr1-f72.google.com with SMTP id
+ ffacd0b85a97d-45f3d008865so1816196f8f.0
+ for <qemu-devel@nongnu.org>; Tue, 02 Jun 2026 00:42:37 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1780385898; x=1780990698; darn=nongnu.org;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
- bh=iqYjzpa2kvnJhq8SYlevgwmN+qvYj78/06ktmNrSLLc=;
- b=tLjyhCZqSx5mCgm0m5gBV9etC6fgeQwZ0Jld7EplqeNMlbZ1NW610d6iybEcB4vNOj
- UAosFpz+dSJ6lh1KWu+uRiw3HxI8THwmAU+kYmDJsmrlRK52S460ixhNOxdeAA8YLLv6
- 6pTbjWWRQ1iy0zvLEYjmTfjS1jMx2jU4FvTx5C1J8q1rD7DbXqGvtSmos8DrVt3xTpru
- R3Tbw3U56zob5NYH+er6gylFxMlKaX9UWteSL7kXET8mkxwMIWoE23QtgMxfMMUUFr7k
- VcFFMqpF9ctYjZxveeI4uGlL2q90fb0k0m8sJ4uduYsO6sv4x2cqRI7m8x0Xru2uEJlm
- vFvw==
+ d=redhat.com; s=google; t=1780386157; x=1780990957; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:autocrypt:from
+ :content-language:references:cc:to:subject:user-agent:mime-version
+ :date:message-id:from:to:cc:subject:date:message-id:reply-to;
+ bh=V+Q217Pbo05hCLvQUW0Kp8q4OJXVUZgq9M8a0NMgfMc=;
+ b=PQomeHonOKcyOsyUYJJD3+O1ncXkka2JCPV1e7U7H0OVyoezuj6mGjFDe94aDgd7ss
+ ZA1uHkTQVnvNkRS99AuzeNlZYB7+s6IJM0Bha5BcaCjEN5CK5+miBjQjj3fVxfrGiXOy
+ 7YxzG5SciJ5gEJPhlepQ7TVY0k9tvJlpG7fjYy7yvi5aXprYc3ZBxSkVH75s5T0rGsA5
+ 0phW9ERCWnAFwku/X7u2YHlhMzOGohg7NOMzEkrY7fx522zWscJt5v65F/htkMKOTv3+
+ 5NnJGvlerImlxhkDR5NHI9gaBw1Vogk08EWJl2uRiuvzplB31yGho5fhSLbnn7QgzH9M
+ ALBw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1780385898; x=1780990698;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=iqYjzpa2kvnJhq8SYlevgwmN+qvYj78/06ktmNrSLLc=;
- b=dfH1EE/VrowtkNAizbPwVFA5mCUo3uoJCbeoISjA+lJ7Yw2oRddNrcb8dtQGwxYJ5q
- dI9p3xs6Vx0CXEdQqlw4VphZ/Xeu3N28RDt/zvm7baCtOeA3CjaUCWb6SOEW1TPkmUy0
- iXILCFBqgh9fN6mSYUhBkfdaowbsxpwj/NtujEiAQfBky+uqZeXZDttuap0gZ6Fw55YP
- N+MF2OvIneM2kIJWrk160p+yAuKmupH5lvtxTX+4yzevmz9/Y72H0vJboV6r/pX2eVFu
- YyF5Pnz6+hfxYR1NBA9LdZ6YYefmVHoKIdiMc9IUqiNCn4H31zWoJmZ/1t+xiYCtsiva
- aVgg==
+ d=1e100.net; s=20251104; t=1780386157; x=1780990957;
+ h=content-transfer-encoding:in-reply-to:autocrypt:from
+ :content-language:references:cc:to:subject:user-agent:mime-version
+ :date:message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=V+Q217Pbo05hCLvQUW0Kp8q4OJXVUZgq9M8a0NMgfMc=;
+ b=tEujv34LMUaeRinjilAxYxK2k6rVzpENBQBw9h3fx2vtGyMLKIuAXC+PG48Rjh8L52
+ R0eZWxU6vQ9tN4mlNhpOmG1XmC1mDvtiMhEFLBIX6z2i0ggkVD0MjCGvv2oako7oejJY
+ wdpm9cMwazIrZaF3wc4EkuwZCmwA5UFqPlZh5M+EWGl3gyDTW/y+m2Y9A0B1pwSp0Zlt
+ P7wv/P2QmK71W+u3KLUxo9OGdL4dFSvb8jmm16Y24t2108Zd1qnaXbeU1ChT7eYv+Zqo
+ EppDQcpzdURUvVu6r8a7oA62QO3Y7tEzqRuS8p5AwcpJLB9bwW3zFVS1zAG4Cp+AstEh
+ GN+g==
 X-Forwarded-Encrypted: i=1;
- AFNElJ8A+m9kw8iMcrXtXFojxOKdEJF3KzvX2+dAl4MIq7v/JDPjy8WfpGJ4JtXrGOuFjsrkH8qxzw6SfWqj@nongnu.org
-X-Gm-Message-State: AOJu0YzZhxUOWFvGuyXKJiS8IpKYhQO0uNQnnDbIDRiGsPzAvZxCq4CY
- csafhnSIQ7PmvnWZ26fHCGfUre4rF4s/UH1a4FHKB1zOEx7vCLcBEjlP1UARaBDH2PdzAmTW6LS
- jS1xdyHtOzy8XTwLE31dNFYAg9CXw1nt9GQ2fs37aDsNcl/AWFD/E7omU
-X-Gm-Gg: Acq92OH5NpQ5wusuy5Ax9MVqHittnKossd647KRru+WRXZUEQWlIY4OqBHFIscJC6GT
- IP8HylBXv+hh5flElcHuAz9uVc+m8/grkvgEsibhqKmL/pxSE6a6SwZVN0aCQF7/YSIIZxlMJFp
- ndHkqX9+sQiQX6xAIBeSEfzxP1QlFB82M9yMKNofMyhb3oVtmSGgxYhrRHH3m/PywInI9Lz0B49
- EcQfWgDPYXuVcqgGnSW7z670B+8jGjjPUpueFSicj6p3Gx/295adFvvfP7qXB2B+CKpsaj0wA4X
- fPAtbrj0PLhOPz3Qo9LsgFJgtb9vTPOXxR2pEht00qrjhUjAShISPtNzQNCZqHb3xxCB052j3Xw
- CJb/C6+i9I3nTJf8TjWDC0VXcb99CCP0o+dDfjM+0Dd/5/Z7C55FqIw==
-X-Received: by 2002:a05:600c:1d07:b0:490:44eb:c1ea with SMTP id
- 5b1f17b1804b1-490a294e7d4mr250273795e9.24.1780385897601; 
- Tue, 02 Jun 2026 00:38:17 -0700 (PDT)
-X-Received: by 2002:a05:600c:1d07:b0:490:44eb:c1ea with SMTP id
- 5b1f17b1804b1-490a294e7d4mr250273235e9.24.1780385897009; 
- Tue, 02 Jun 2026 00:38:17 -0700 (PDT)
-Received: from redhat.com (IGLD-80-230-25-45.inter.net.il. [80.230.25.45])
+ AFNElJ8i0Gpa1VHJBrWmsPwIhffHyCvS3SZDUDlQZxxHqbpHCJoIp8HCaxIX1cOAXFjkK5U4pIxWgjrAHK8r@nongnu.org
+X-Gm-Message-State: AOJu0YxW0tkQow/MBJB4t5DNimpB4C07NDMOOF9/F4/GMuS5dthtL3rZ
+ XavPobAiEdzpWtHg/FVOe3MfmAxIE0Cd91VMSbI1Edfu4PGmhIRDrzroRYt6sRhcSa3uTgtdwia
+ +EBOVyheW7VKz2ZrG9YuCrsQXFmf6AAzfNcCgqfnHfxdDIefQsNotOxBI
+X-Gm-Gg: Acq92OHVjZDoypQPbRFiHiEseLpGXvtd7aJLiJOnIloLD/MgdPehCqEmRiuZsGexKkt
+ 7vH7DCqgLpQdlYQk5kGtOCiWuCVZEo5h78lwmwott7b2UrZMrAtOi0ds7g+mP3t0LSoiMy8wAeD
+ uQrWWRL5XYsOwz0Cal6QdlvnOsubPncQDd2v25aB4UcLXZfAsWs5egTzJFTcEUZLORhkYwtn74s
+ I728Br3St8BSFpkL+FZttz6M/a/dQzP71BkqwG/WI20P64EBdbkk9get5l6q6WXpdMd4TwVyv/p
+ W1Qshz4S9K5YrpcuuvJjNKYgyxPj6AViagDGmDPLt2WYNIpNvc3s7Zo86kje2rE8BGGNWwjby8N
+ 4MN1adUSF0xQMT9ijIZzPKI1zbBK5icZ65mT/jMpXGcfpcXno3S495H2D4IjNjdg+WA0xAEI=
+X-Received: by 2002:a05:6000:18a6:b0:460:11bd:3fde with SMTP id
+ ffacd0b85a97d-46018d22a15mr5064866f8f.13.1780386156695; 
+ Tue, 02 Jun 2026 00:42:36 -0700 (PDT)
+X-Received: by 2002:a05:6000:18a6:b0:460:11bd:3fde with SMTP id
+ ffacd0b85a97d-46018d22a15mr5064807f8f.13.1780386156250; 
+ Tue, 02 Jun 2026 00:42:36 -0700 (PDT)
+Received: from ?IPV6:2a01:e0a:280:24f0:9db0:474c:ff43:9f5c?
+ ([2a01:e0a:280:24f0:9db0:474c:ff43:9f5c])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-45ef34bcc30sm30919271f8f.12.2026.06.02.00.38.15
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 02 Jun 2026 00:38:16 -0700 (PDT)
-Date: Tue, 2 Jun 2026 03:38:13 -0400
-From: "Michael S. Tsirkin" <mst@redhat.com>
-To: Peter Maydell <peter.maydell@linaro.org>
-Cc: Paolo Bonzini <pbonzini@redhat.com>, qemu-devel@nongnu.org,
- Alex =?iso-8859-1?Q?Benn=E9e?= <alex.bennee@linaro.org>,
- Alistair Francis <alistair.francis@wdc.com>,
- BALATON Zoltan <balaton@eik.bme.hu>,
- Daniel =?iso-8859-1?Q?P=2E_Berrang=E9?= <berrange@redhat.com>,
- Fabiano Rosas <farosas@suse.de>, Kevin Wolf <kwolf@redhat.com>,
- Warner Losh <imp@bsdimp.com>,
- Philippe =?iso-8859-1?Q?Mathieu-Daud=E9?= <philmd@linaro.org>,
- Paolo Bonzini <bonzini@gnu.org>
-Subject: Re: [PATCH v2] docs/devel: relax policy on AI-generated contributions
-Message-ID: <20260602033118-mutt-send-email-mst@kernel.org>
-References: <20260529094619.1034458-1-pbonzini@redhat.com>
- <CAFEAcA_EWR_MjH1arCdi2y0saZ-Hc7zRAK97YTeEcesVRb9Rtg@mail.gmail.com>
+ ffacd0b85a97d-45ef354cd7csm30877334f8f.18.2026.06.02.00.42.35
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Tue, 02 Jun 2026 00:42:35 -0700 (PDT)
+Message-ID: <f2c3718c-0366-4a3a-8373-2e74e3569e06@redhat.com>
+Date: Tue, 2 Jun 2026 09:42:35 +0200
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <CAFEAcA_EWR_MjH1arCdi2y0saZ-Hc7zRAK97YTeEcesVRb9Rtg@mail.gmail.com>
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=mst@redhat.com;
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v2] vfio/pci: Initialize rom_read_failed in
+ vfio_pci_load_rom()
+To: Mario Casquero <mcasquer@redhat.com>, qemu-devel@nongnu.org
+Cc: alex@shazbot.org
+References: <20260602070857.356526-1-mcasquer@redhat.com>
+Content-Language: en-US, fr
+From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>
+Autocrypt: addr=clg@redhat.com; keydata=
+ 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
+ uVKe8BVz4atMOoktmt0GWTOC8P4=
+In-Reply-To: <20260602070857.356526-1-mcasquer@redhat.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=clg@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -24
 X-Spam_score: -2.5
@@ -109,7 +150,7 @@ X-Spam_bar: --
 X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.445,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -125,96 +166,81 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Fri, May 29, 2026 at 04:34:45PM +0100, Peter Maydell wrote:
-> On Fri, 29 May 2026 at 10:46, Paolo Bonzini <pbonzini@redhat.com> wrote:
-> >
-> > Until now QEMU's code provenance policy declined any contribution
-> > believed to include or derive from AI-generated content.  A blanket ban
-> > was easy to maintain while LLM output was rarely usable on its own, but
-> > as the tools improved an absolute prohibition has become harder to
-> > justify.
-> >
-> > The concern that motivated the policy is unchanged, and it is worth stating
-> > precisely: the DCO is about whether the submitter has the legal right to
-> > contribute the code, not about "creative expression".  While the status of
-> > LLM output seems to be converging towards non-copyrightability, questions
-> > around unintentional reproduction of copyrighted code are still open.
-> > What has shifted is the balance of risk:
-> >
-> > - projects accepting AI-assisted content have not run into serious
-> >   legal trouble so far, which suggests the probability of the risk
-> >   materializing is not high;
-> >
-> > - other organizations, such as Red Hat[1], have assessed the risk as
-> >   acceptable -- though a community of individual developers does not
-> >   have the legal backing of a company, and even an unfounded dispute
-> >   would be a long-lasting distraction from work on QEMU.
-> >
-> > Nevertheless, even Red Hat mentions that "the possibility of occasional
-> > replication cannot be ignored".  In QEMU's view, attentiveness and
-> > oversight are not a practical way to address this; yet as a copyleft
-> > project, copyright and code provenance are of utmost importance to us.
-> > Therefore, it remains prudent to only permit AI assistance where the
-> > ramifications of copyright violations are at least easy to revert and
-> > unlikely to spread: tests, documentation, mechanical changes, and small
-> > bug fixes.  Core code that other things depend on, and that cannot
-> > simply be thrown away once a problem is noticed long after the fact,
-> > stays off-limits without prior agreement from a maintainer.
+On 6/2/26 09:08, Mario Casquero wrote:
+> When vfio_device_get_region_info() fails in vfio_pci_load_rom(),
+> the function returns without setting vdev->rom_read_failed to true,
+> and without allocating vdev->rom. This leaves vdev->rom as NULL.
 > 
-> This all makes sense to me, except for the part where we allow
-> a maintainer to say "actually it's OK". Where our justification
-> for not wanting AI contributions rests on "it's too much burden
-> on maintainers to have to deal with and review it", allowing an
-> individual maintainer to say "I'm OK with that burden in this case
-> or for this particular contribution" logically follows as a
-> possible relaxation. But if as a project we want to limit the
-> blast-radius if we find we have to rip out a hypothetical tainted
-> contribution, shouldn't that mean that we hold that as a project-wide
-> line, rather than leaving it up to the opinion of the individual
-> maintainer ?
-
-It's not clear it's practical anyway. So we limit contributions to 20+
-lines, so what did we achieve? They accumulate over time.
+> Signed-off-by: Mario Casquero <mcasquer@redhat.com>
+> Reviewed-by: Cédric Le Goater <clg@redhat.com>
+> ---
+>   hw/vfio/pci.c | 11 ++++++-----
+>   1 file changed, 6 insertions(+), 5 deletions(-)
 
 
-> > Related to this, and already visible in the incredible uptick in
-> > security reports, is the question of maintainer burnout and the shift in
-> > effort from the author to the reviewer of the code.  AI lowers the cost of
-> > producing a patch but does nothing to lower the cost of understanding and
-> > reviewing one; if anything it raises it, since a reviewer can no longer
-> > assume that the submitter has reasoned through every line.  The limits
-> > above work just as much to keep the volume of review work sustainable.
-> >
-> > Revise the policy according to the above considerations, and introduce the
-> > "AI-used-for:" trailer as a record of where AI was used.  The standard is
-> > slightly different from the more usual "Assisted-by"; the intention is for
-> > the metadata to provide more information for reviewers to judge the result.
-> >
-> > In any case, use of AI does not relax any other contribution requirement:
-> > authors still comply with the DCO and take responsibility for the whole
-> > patch via Signed-off-by.
-> >
-> > [Commit message largely based on
-> >  https://lore.kernel.org/qemu-devel/ahXbxzB4C_lr6b0N@redhat.com/, by
-> >  Kevin Wolf. - Paolo]
+Applied to
+
+     https://github.com/legoater/qemu vfio-next
+
+Thanks,
+
+C.
+
+
 > 
-> > +**Documentation and code comments**
-> > +  While AI can help draft text, it still requires significant human
-> > +  oversight.  Pay attention to the organization and flow of the generated
-> > +  text, and strictly fact-check all technical details as LLMs are prone
-> > +  to being confidently wrong.
-> 
-> I think the application to documentation and comments is the part
-> I'm least enthusiastic about here. For changes to code, we have at
-> least some guardrails on the AI output, in the fact that it has to
-> compile and to pass tests. For changes to documentation, the
-> only guardrails are human eyeballs.
-> 
-> Also both comments and documentation ideally are a record of
-> what we intended the behaviour to be. If an LLM is effectively
-> autogenerating something documentation-shaped from the code we
-> lose that.
-> 
-> -- PMM
+> diff --git a/hw/vfio/pci.c b/hw/vfio/pci.c
+> index 9c06b25e63..9df04fa2d7 100644
+> --- a/hw/vfio/pci.c
+> +++ b/hw/vfio/pci.c
+> @@ -1027,7 +1027,7 @@ static void vfio_update_msi(VFIOPCIDevice *vdev)
+>       }
+>   }
+>   
+> -static void vfio_pci_load_rom(VFIOPCIDevice *vdev)
+> +static bool vfio_pci_load_rom(VFIOPCIDevice *vdev)
+>   {
+>       VFIODevice *vbasedev = &vdev->vbasedev;
+>       struct vfio_region_info *reg_info = NULL;
+> @@ -1041,7 +1041,7 @@ static void vfio_pci_load_rom(VFIOPCIDevice *vdev)
+>   
+>       if (ret != 0) {
+>           error_report("vfio: Error getting ROM info: %s", strerror(-ret));
+> -        return;
+> +        return false;
+>       }
+>   
+>       trace_vfio_pci_load_rom(vbasedev->name, (unsigned long)reg_info->size,
+> @@ -1052,12 +1052,11 @@ static void vfio_pci_load_rom(VFIOPCIDevice *vdev)
+>       vdev->rom_offset = reg_info->offset;
+>   
+>       if (!vdev->rom_size) {
+> -        vdev->rom_read_failed = true;
+>           error_report("vfio-pci: Cannot read device rom at %s", vbasedev->name);
+>           error_printf("Device option ROM contents are probably invalid "
+>                       "(check dmesg).\nSkip option ROM probe with rombar=0, "
+>                       "or load from file with romfile=\n");
+> -        return;
+> +        return false;
+>       }
+>   
+>       vdev->rom = g_malloc(size);
+> @@ -1113,6 +1112,8 @@ static void vfio_pci_load_rom(VFIOPCIDevice *vdev)
+>               data[6] = -csum;
+>           }
+>       }
+> +
+> +    return true;
+>   }
+>   
+>   /* "Raw" read of underlying config space. */
+> @@ -1146,7 +1147,7 @@ static uint64_t vfio_rom_read(void *opaque, hwaddr addr, unsigned size)
+>   
+>       /* Load the ROM lazily when the guest tries to read it */
+>       if (unlikely(!vdev->rom && !vdev->rom_read_failed)) {
+> -        vfio_pci_load_rom(vdev);
+> +        vdev->rom_read_failed = !vfio_pci_load_rom(vdev);
+>       }
+>   
+>       memcpy(&val, vdev->rom + addr,
 
 
