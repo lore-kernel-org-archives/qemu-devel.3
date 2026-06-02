@@ -4,86 +4,86 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id ABFB9CD6E57
-	for <qemu-devel@archiver.kernel.org>; Tue,  2 Jun 2026 18:37:39 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A400BCD6E5D
+	for <qemu-devel@archiver.kernel.org>; Tue,  2 Jun 2026 18:38:06 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wUTz6-0005as-Cq; Tue, 02 Jun 2026 14:37:04 -0400
+	id 1wUTzl-0005gm-Fx; Tue, 02 Jun 2026 14:37:45 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1wUTz4-0005ah-Tk
- for qemu-devel@nongnu.org; Tue, 02 Jun 2026 14:37:02 -0400
-Received: from mail-wm1-x32d.google.com ([2a00:1450:4864:20::32d])
+ id 1wUTzh-0005gY-VB
+ for qemu-devel@nongnu.org; Tue, 02 Jun 2026 14:37:41 -0400
+Received: from mail-wm1-x32f.google.com ([2a00:1450:4864:20::32f])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1wUTz3-0006fe-D8
- for qemu-devel@nongnu.org; Tue, 02 Jun 2026 14:37:02 -0400
-Received: by mail-wm1-x32d.google.com with SMTP id
- 5b1f17b1804b1-490686877a1so71740475e9.0
- for <qemu-devel@nongnu.org>; Tue, 02 Jun 2026 11:37:00 -0700 (PDT)
+ id 1wUTzf-0006li-V7
+ for qemu-devel@nongnu.org; Tue, 02 Jun 2026 14:37:41 -0400
+Received: by mail-wm1-x32f.google.com with SMTP id
+ 5b1f17b1804b1-490b1bbcf3aso10186615e9.1
+ for <qemu-devel@nongnu.org>; Tue, 02 Jun 2026 11:37:39 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1780425419; x=1781030219; darn=nongnu.org;
+ d=linaro.org; s=google; t=1780425458; x=1781030258; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:message-id:date:user-agent
  :references:in-reply-to:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=4kxF4A+GXKZmqgJ9pZmjzQvPsjyAQj4zfGvX9UoeWl8=;
- b=JQLEg6EP/WguAtlPfU9UYCJuieTvg1fuJoJRihV8vTr/klDwfIGRxbyZ2Ap/suFJBx
- ZV/l3a3ozrokwHDuqBAtfMVs9BhRv6D2yCYKeEgFwdhlI3Fhn9Vvm9apRc6i0qcDXd2s
- ct8TEASQsjkKVbJ00l+RwHYUAqz0xj7fFJkkowMnzu6WuHgj2IFb4tEpuTN6FG8SVdWr
- 4L9ERlrKwxEo1pzjh1bAqTkosxfa8dJx+WUbsvc8dNlcCHyggmBW9xN/wHYTZh95OGEU
- v925yqDe96op/e99J7Zs4RNgaPrCfz6AqRS/MY2XugA7G+X13FMyKuPiPbxjc14KL648
- 37TA==
+ bh=W5C5XqSBwJNVPfqoMYAK09se0L2oDeo3kuqNcbA9DMQ=;
+ b=G3QcQG6eYB7azxI60pLSdavX4NSy8bRe6Bc7Ak5eWaf/snBSFFTfse3fmT7zI3xnUC
+ KrZKHUfZHJ28J8/yMPbO9MS3nZoIb3pAIahj/IwtPomUH0IfLUOP1TpuNjtWcqyhKfUB
+ k6itA7RcAjKOWxghLX4yh0dbFALrk2GFj6+IK3N+dNfQBk608cuiPtLfcstWueurIUwN
+ kve8+p6rwb3lefwQzN2sTJGPUggiR+6vjOh00oQMVeWZuXZAa9Qo9n45cMpWO3VwQLXH
+ X7Od8zd4DNWhDZG+vs2eRXGANKLRLgbLcN1VoP/Skhvj30v7A2Np9aErbTfPlQmnl4uI
+ VawA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1780425419; x=1781030219;
+ d=1e100.net; s=20251104; t=1780425458; x=1781030258;
  h=content-transfer-encoding:mime-version:message-id:date:user-agent
  :references:in-reply-to:subject:cc:to:from:x-gm-gg
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=4kxF4A+GXKZmqgJ9pZmjzQvPsjyAQj4zfGvX9UoeWl8=;
- b=pBW07l/qnI2ZWSHo3GqAOWyBtaG6TRzj45e20Qs8eopK9V7TAH9moYuvrMUyiDc/4F
- JXQqOx3CSd3vk0IhPT66zwb0IGEJJZ8Ky09aNuEfh0Uh+KuEl3dtpRpqBYymX3P9Vj4a
- pYNSg0L28pkdaJxtRYRkXeeSyMMCksNdGJPvF+hEL66YzQh316X2IYGHC7Y6Ew70MQN9
- 1n5coOtv1Um8dNu4ax49PmwN7gqL6TPNEWZe1NoHVj3TBSbewW/BdUkXsgcSbd9y43Kq
- 2QiL/gj2Q8SMzOPmOlLnQB4hLbLkAz9y2TpCtdAkf0mpzBIdOMKThaiX1D3biX0I7f1u
- v5TA==
-X-Gm-Message-State: AOJu0YyXjSnVmB1Dfiq4pHmqSO4pu9jaSbR1+jorBXdP8flSTzUY5JWA
- cEpf7geAQmodErIe4z+Fr6It8iFZlytGpPr/4Lyl5WLHDtmiDnVpo2CyYmgi5Q/sPcI=
-X-Gm-Gg: Acq92OEUJXg3TKDV7K3sIi8H9jZr6PdaIKttuoq9aHU8uiZ6xYTVqFk5bC2aOhrNYte
- nla+7UKowaDyuBI4s2pAkxBXV7b1tQaJ0M3scKhylQaWP6xIg3pfrbjsHe1lSMUmUQb0o26WnTQ
- DBtT+zn6a/XwgYmzeUIojGX375lu4+9FynvRHI7NP2skT+FKyeLyFv22l97bKN3N/7+8+Y08OZN
- GhWVVJF8pZ+CBLs8r5L18S3d42omEU8zjFTjQMKpmXoTD/EKndgu6QktUd8kisZ1sHUXuG5WIu8
- s1IcaUquZP15S+z8gpDfllsh8AG3MrFGHKr35IaPsi5xpMA3QGgqC7X1208upaa3FMaghy8Vv5s
- /YC3mhaJEXlLmhlWP9ouWh4GXYok3d0Mzn68REFmRoobzN21xyUfYm6T3SwkC+H9zg2F3h5pTZf
- CSwUcON4jWfAhidzhNFnm+2OJDDH2wilLeLA==
-X-Received: by 2002:a05:600c:6290:b0:490:ad1e:1846 with SMTP id
- 5b1f17b1804b1-490b575348cmr6136995e9.9.1780425418875; 
- Tue, 02 Jun 2026 11:36:58 -0700 (PDT)
+ bh=W5C5XqSBwJNVPfqoMYAK09se0L2oDeo3kuqNcbA9DMQ=;
+ b=hINxVPfdx8wg7TW1tsN/0TOw/5cfJI3lXVFcR34KOgpR5D1BP3EOVP12Co6pPNlPi4
+ mpx9e/DFYYfOdL0PypAUthZ93LPEndQRUrYv8nAd1wOEQy2a0O9VNwYEOWWt5STHwKEJ
+ zkNNUb+6lITBufzn5x7JwXH0+SAJaJIm+aUGMA2A6z1J16H5C0k3NSgKuETOcR3iXnmQ
+ NpT7V9ElWtBSTlqV2+1aMMWjJh/Fni3p7jXenJrH12wOSAWW2K1wzjragg+A8GvUshrt
+ 8bW/lSnFoWQgOCFm1a4PESoPtOmj9l2RfFfOSknVGXmx7hw0g2bDW8I+UJKsWhqXZ5bq
+ bSgw==
+X-Gm-Message-State: AOJu0YxTw0faBeAt0fMpB+VADbLhC0d+mVFBK8uC1ADQ1VBKsoALL6sF
+ K0HX1BtgxA6QUJHKTCUCxiqo5poG4Pqc9zDK4CbL8lwrYI+chtE6h5arYZ0r2Ml+CwE=
+X-Gm-Gg: Acq92OF8bp813NZoxpBzkp2MU7TqxLGNohKhTu4xYkLzvbVG7CDQvbJTT6P2ksjTV1O
+ oiAbusTRXbx2bO6v3Iccho8rXbelVKtBosVMCEGdzD2pRPLX7jm0/z84bX4QDQQ3kWVGZQ0lonb
+ D9OEX+Y2BKNfBhHpJ3rGayD/ybv5gF+eIR0Y4OBMxEPFTtVI4C22tOBj6KXIzOwYsM7H4c38bCe
+ PcuU99JSilITL9uCZpJ0sy8rXgBbLvLrzDMHWfQWRs/Jjev3bKqU6seWvbJd0xZBrszTePFh7I5
+ C88djC3vPmhLOE235EHhy9D8u/cqXE3jEoSZ0la9kHlIAmwuTxNrRM2tc9cK8MLAD+pqQg4N1Vp
+ 1eJVkdOYZ/i9AZYqWNyBNtsjomvgwnLYC1d19OJhQqsGFUARLc4pVpYu0SP73IC+sNkGxk5ZQWz
+ Cu88XMGFVcjUv/Q++GRY/DorU/ywJiP+aroA==
+X-Received: by 2002:a05:600c:5288:b0:490:5191:6e26 with SMTP id
+ 5b1f17b1804b1-490b5ecbd41mr230935e9.18.1780425458375; 
+ Tue, 02 Jun 2026 11:37:38 -0700 (PDT)
 Received: from draig.lan ([185.124.0.195]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-490b575ad77sm1678015e9.17.2026.06.02.11.36.57
+ ffacd0b85a97d-4601f2dcad5sm1250397f8f.5.2026.06.02.11.37.37
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 02 Jun 2026 11:36:57 -0700 (PDT)
+ Tue, 02 Jun 2026 11:37:37 -0700 (PDT)
 Received: from draig (localhost [IPv6:::1])
- by draig.lan (Postfix) with ESMTP id 9F7E55F7F7;
- Tue, 02 Jun 2026 19:36:56 +0100 (BST)
+ by draig.lan (Postfix) with ESMTP id BE7345F7F7;
+ Tue, 02 Jun 2026 19:37:36 +0100 (BST)
 From: =?utf-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
 To: Stefan Hajnoczi <stefanha@redhat.com>
 Cc: qemu-devel@nongnu.org,  Li-Wen Hsu <lwhsu@freebsd.org>,  Pierrick
  Bouvier <pierrick.bouvier@oss.qualcomm.com>,  Philippe =?utf-8?Q?Mathieu-?=
  =?utf-8?Q?Daud=C3=A9?= <philmd@mailo.com>,  Warner Losh <imp@bsdimp.com>
-Subject: Re: [PATCH 3/3] MAINTAINERS: remove stale Cirrus macOS build job path
-In-Reply-To: <20260602162457.828969-4-stefanha@redhat.com> (Stefan Hajnoczi's
- message of "Tue, 2 Jun 2026 12:24:56 -0400")
+Subject: Re: [PATCH 2/3] lcitool: remove Cirrus CI support
+In-Reply-To: <20260602162457.828969-3-stefanha@redhat.com> (Stefan Hajnoczi's
+ message of "Tue, 2 Jun 2026 12:24:55 -0400")
 References: <20260602162457.828969-1-stefanha@redhat.com>
- <20260602162457.828969-4-stefanha@redhat.com>
+ <20260602162457.828969-3-stefanha@redhat.com>
 User-Agent: mu4e 1.14.1; emacs 30.1
-Date: Tue, 02 Jun 2026 19:36:56 +0100
-Message-ID: <87ik80vlfb.fsf@draig.linaro.org>
+Date: Tue, 02 Jun 2026 19:37:36 +0100
+Message-ID: <87cxy8vle7.fsf@draig.linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::32d;
- envelope-from=alex.bennee@linaro.org; helo=mail-wm1-x32d.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::32f;
+ envelope-from=alex.bennee@linaro.org; helo=mail-wm1-x32f.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -108,30 +108,12 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 Stefan Hajnoczi <stefanha@redhat.com> writes:
 
-> Commit 984b192bdf37 ("ci: drop cirrus MacOS build") removed the Cirrus
-> macOS build job. The MAINTAINERS file now contains a stale path that
-> should be removed.
+> Remove GitLab CI integration for Cirrus CI now that nothing uses it
+> anymore.
 >
-> Cc: Alex Benn=C3=A9e <alex.bennee@linaro.org>
 > Signed-off-by: Stefan Hajnoczi <stefanha@redhat.com>
 
 Reviewed-by: Alex Benn=C3=A9e <alex.bennee@linaro.org>
-
-> ---
->  MAINTAINERS | 1 -
->  1 file changed, 1 deletion(-)
->
-> diff --git a/MAINTAINERS b/MAINTAINERS
-> index 4ff33eb630..0c0c8c0a37 100644
-> --- a/MAINTAINERS
-> +++ b/MAINTAINERS
-> @@ -701,7 +701,6 @@ F: scripts/nsis.py
->  Darwin (macOS, iOS)
->  M: Philippe Mathieu-Daud=C3=A9 <philmd@mailo.com>
->  S: Odd Fixes
-> -F: .gitlab-ci.d/cirrus/macos-*
->  F: */*.m
->  F: scripts/entitlement.sh
 
 --=20
 Alex Benn=C3=A9e
