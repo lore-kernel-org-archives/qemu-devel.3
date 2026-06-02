@@ -4,141 +4,109 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id EA966CD6E60
-	for <qemu-devel@archiver.kernel.org>; Tue,  2 Jun 2026 15:36:20 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 00F32CD6E57
+	for <qemu-devel@archiver.kernel.org>; Tue,  2 Jun 2026 15:54:31 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wUR9c-0007PL-5A; Tue, 02 Jun 2026 11:35:45 -0400
+	id 1wURRG-00033J-Gi; Tue, 02 Jun 2026 11:53:58 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pierrick.bouvier@oss.qualcomm.com>)
- id 1wUR9T-0007P1-H1
- for qemu-devel@nongnu.org; Tue, 02 Jun 2026 11:35:36 -0400
-Received: from mx0a-0031df01.pphosted.com ([205.220.168.131])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pierrick.bouvier@oss.qualcomm.com>)
- id 1wUR9R-0008Op-03
- for qemu-devel@nongnu.org; Tue, 02 Jun 2026 11:35:35 -0400
-Received: from pps.filterd (m0279867.ppops.net [127.0.0.1])
- by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 652Catcx2767170
- for <qemu-devel@nongnu.org>; Tue, 2 Jun 2026 15:35:28 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
- cc:content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
- 5gv+u3Wg42FWBcGluoVyuAOB5EBfTd1okya7jGyBDQQ=; b=HJ+Ds3hx10tgTRuL
- sqCjaDhJqiKqKAYfqGMNubBnB4grQs7MgBcty1GrXT5zmWjXgsCGtz1iOu68tDlD
- z/BQZ2IDbkVj90hRed4xf/Dv0IYJ8W9NGhBnh/+KLuiEWEQT4GcpVphsg0l76YlA
- sjRzbPamV+vrWiIwoqRkkAARw434+1zqwazcPElGro9Yj824BOFzkTPKYLK573OH
- ki83gpz/Nm+wC3NBMV5aErEFJ4NlpiH1sGEHraYpW5lj1KjQNrsonaIFhGsD4Q/b
- YDEwcB/+lUdjfmk1Q4ODKWBaFBJ55BE6I7lA3US8jTw9gjnUP9JoI/Zsz2dSblem
- hE7L7A==
-Received: from mail-dl1-f71.google.com (mail-dl1-f71.google.com [74.125.82.71])
- by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4ehsus2839-1
- (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
- for <qemu-devel@nongnu.org>; Tue, 02 Jun 2026 15:35:28 +0000 (GMT)
-Received: by mail-dl1-f71.google.com with SMTP id
- a92af1059eb24-137d003cf09so9071953c88.1
- for <qemu-devel@nongnu.org>; Tue, 02 Jun 2026 08:35:28 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <stefanha@gmail.com>)
+ id 1wURRE-00033A-Oi
+ for qemu-devel@nongnu.org; Tue, 02 Jun 2026 11:53:56 -0400
+Received: from mail-ed1-x52c.google.com ([2a00:1450:4864:20::52c])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <stefanha@gmail.com>)
+ id 1wURRC-0006q7-55
+ for qemu-devel@nongnu.org; Tue, 02 Jun 2026 11:53:56 -0400
+Received: by mail-ed1-x52c.google.com with SMTP id
+ 4fb4d7f45d1cf-68d2342c5e6so4055798a12.3
+ for <qemu-devel@nongnu.org>; Tue, 02 Jun 2026 08:53:53 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1780415632; cv=none;
+ d=google.com; s=arc-20240605;
+ b=bBPwqKd92ES/RcUABcR410ZPcNu1kF/0XGIzMoBYmz4/0o11rQEUsTK6nd11FcLTQZ
+ rn6/vZMkKTg2DEFsSuQq/FXb9NncrGMx0T5MS9jTuAv+Khv+rPj71mZ0uKtV+POsZscS
+ 4s6mgvmm4i0yaNfl21jnnOVLR0xD1QBAYFtinFRADjkgjLt0KEHqGsziRBQLiz5LzQ9K
+ Gq4E2zFURGYI1C4tgS6bI8eYFB8NTYCj7nVMX1z6LW0HFzlG4NS/xHwyv/0Gp/EfYJPF
+ Zus4aQJlnU0JdEIw6lOvxOdOMskcUHgbYzVux95C4Ygwawc38lKUpRFh2ng1hGIabG0h
+ y11g==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
+ s=arc-20240605; 
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:dkim-signature;
+ bh=XwfZHYmAvlNIf4vrCXOg9Ak0OB+Omfsb7o2bWstHKto=;
+ fh=01/dSCvQlBbxzlxhwDdQw24l/G6oZBcCNz4wC7cjpow=;
+ b=h4BLbGnvio/9cuo8TUIU6Cl6XqFbswwHVeSnyX83qESZt3atukqoKOvn02BOTwZerR
+ OIhyWdBEq9KYu6NvyhhSqzrwRqD3DEuULYRLridAdCWVNqx7I4ax8rx6hoynN3G/rGSB
+ eDQ2zFh5rxyd8Awo4vVHQy4bTWsEBEpdA9jcd7kWkaXRhUjJL4y47MyHmPKWLUKoR9VZ
+ TPgHRipykoau7XlSgbMtFn8np4LwVG3vpqIYjvldNgu7cY9JPDbxjEY8/VYsPHkP83zp
+ To6TDXm/O6giNOy6olK5AdRXSyP1oO/7fsXoufWdrlYdpjqLoQj4yQCbdCyL6+6vDSvd
+ 9MNA==; darn=nongnu.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=oss.qualcomm.com; s=google; t=1780414528; x=1781019328; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:content-language:from
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=5gv+u3Wg42FWBcGluoVyuAOB5EBfTd1okya7jGyBDQQ=;
- b=EIwjOTkPh72FqbqUWDcqY2SFfNiMRI+Zkcz5ZdB/vr31TxpGJb8SWUf/l8dFt+hhhY
- Pk5SUSAhNKGbco2AcOLXAdpzJgv+Efn601TkOetuL6Kw1ebG0WwjW7+nkecqVd+GaQD2
- 4IKhQhJtooPH7lWKE3nf1xBr/Tf2GhSRnU7a2s19wCf06CdOqLSQN0PqD9rPAp16EJ0a
- PzMAVEL4wJ+zefSwqg1+GNQZpsh+p3hbKkbum5kt8Q591jAB7oWcgr52ku8X+DBsgPk6
- 2AeP81J8YBFBFrDbNGF75j9WkKmBnLFOZQEF27ZHxwxDUfoBfkACRqM8hO+ci75LHXxR
- bjqQ==
+ d=gmail.com; s=20251104; t=1780415632; x=1781020432; darn=nongnu.org;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=XwfZHYmAvlNIf4vrCXOg9Ak0OB+Omfsb7o2bWstHKto=;
+ b=dlj2csSL719Nst1MMJQFCKz3/sqC8/Ogq5fS+R5+Ap4KRXJ4oe3iVhWiKNy7WWLEEZ
+ mAfIBFVGDqPBLiEUM8cd6FiAT1rTelCkbi74nKH8fp4HPE6HZqnG66DKXDBAx1k76rVa
+ ZsJeHesBiE9HeWkh1sZYlm6wZskyYs+atgUWIUw7HYl6s3mX6DjMRcSS8g+fAe9nXY0G
+ roMRHtC2YOHuWjVBpBZrk12e8Z+GU6JIqTiMmkSd9RLqVIbxcRwzn301o62W0lYPIVS1
+ 2P5ByoMDHn+8TvJgLlH9gy780P/xL1M9tlMJDSehYQ92nrOqvJQ/OMQO7IwwgHZ66F+Q
+ xyXw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1780414528; x=1781019328;
- h=content-transfer-encoding:in-reply-to:content-language:from
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=5gv+u3Wg42FWBcGluoVyuAOB5EBfTd1okya7jGyBDQQ=;
- b=YL+fjM25B/jeUPzT7YY9GaFJWK0pEbR5ZlMmI/Hb3hxwruHBXHqPGDXu4WQfla3TnT
- 2JwCPJhd+1eGx+hU1FwlHOBVIuORZHAZMBb1QNv+dJknZGHbpq19L1uthlLzLGH+pQFx
- aSDPJsQC766hKxC8PTnhNHoUOJ9yMYbiPZ38MFaD8BFK2UpfORj9noZYPrPI12zNU6ID
- /QKuReI+6r/HcNNNXuPZCJI0dIWkN1jzVvyluIUgYKSRWC/OxroupPh/kM0L/4XLcgcI
- A1mLXPjOLxCyl4iPVkvnlOo8X91tHvm2dF1T2uhxft9LxinzFVjzxL1SAbVtpa9zhRQg
- 3d8g==
-X-Gm-Message-State: AOJu0Yw0aDa5N7CMvI05a4CImIbt4xxHTuHWJbe/ngM5WJ31+oM5sRMq
- Ih6BqjPGSSrNaDE7Ued1giiQIqvFdDXWv+Kkt9z3WeyGwGt+1AYt9BXKbsFWXM6oTX9xEWE7LiI
- xroc5U/IfXTamVXIXI9erSz9uJyKw3BzMF4lPUwp7pa59Rob+iwYcYg05jg==
-X-Gm-Gg: Acq92OEkwzuwOK+VYyr27Mgt5h09igVNOolA8z19DvDNU7V/OMjMcO7ucdyHKq7cBDV
- VHma9MTCLaNcWkO4reblMY9+Af5LlqUyLXm+MBkxeFAcSoOp+0WwJk5jYJ4m1/YUfe26pLlwo5k
- I1CkXfhN/Lc4EOBNLWBotdjBbSk1U70gTikq4kDz4QhEkJZSgmKNTEuXVIvwyrx60sLwQDjG/MQ
- M2Fl4g/WsC5b52Vo8LNI6RSwcG1VuUtsmcDVA9rjfFsBZA9jrqEIPKMnCmz/EHM08CHxVyxc3zX
- KihBdry+PNanPL2uZV9NSbgIAlfVvo8M9ronsxSRGkvHTCUZarQyeZJOFXF4GYoaoTTiXefpLCG
- z7B6Hhdio/uLsIzKvYzO0B/QdnkuMKTDo4R91sNyE5+A3vD73HIhQ82ulVz1eYo+CxZsnny4TqG
- VFM/OcyloORLCO1FPsH0FoHviP
-X-Received: by 2002:a05:7022:6192:b0:134:fc89:40c5 with SMTP id
- a92af1059eb24-137d401c3a1mr6747048c88.10.1780414527341; 
- Tue, 02 Jun 2026 08:35:27 -0700 (PDT)
-X-Received: by 2002:a05:7022:6192:b0:134:fc89:40c5 with SMTP id
- a92af1059eb24-137d401c3a1mr6747026c88.10.1780414526321; 
- Tue, 02 Jun 2026 08:35:26 -0700 (PDT)
-Received: from [192.168.1.170] (216-71-219-44.dyn.novuscom.net.
- [216.71.219.44]) by smtp.gmail.com with ESMTPSA id
- 5a478bee46e88-304ee0dd6fdsm11200692eec.23.2026.06.02.08.35.22
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 02 Jun 2026 08:35:22 -0700 (PDT)
-Message-ID: <35c9d179-821a-48e5-8c71-22236053d67c@oss.qualcomm.com>
-Date: Tue, 2 Jun 2026 08:35:21 -0700
+ d=1e100.net; s=20251104; t=1780415632; x=1781020432;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=XwfZHYmAvlNIf4vrCXOg9Ak0OB+Omfsb7o2bWstHKto=;
+ b=jFNf49DE1itGcH4LnxSkcl8/qYUX7bj1+epcl+/GPhKJ/O+dveTR3Cez+sVybVQpKq
+ Qayh0GwHhFkocqI5K7P+uRy8eNIRPBYUT5ItYhMjQFJOHJJquiiThUvjvj2WP6KRtLwU
+ 2/re6XtV22TYUfACrwh3XJO4ZCYmyZaR+O/XLeodNUb6UinjSB4E7KCEsCI/o1X+Dsru
+ 2PGvkrbMtS5TgEduSbPk9kWdzAeQv0zWaq1GW319A3K+a7FNh8aAQ22fPLjmPYDvc0x2
+ kitXBNEb6yZx2fZvLrnz/EYu6FpYbckxIjTSC0kzcpBROaKnxueA7Q2GleEDuA0ZwJZy
+ KtyQ==
+X-Gm-Message-State: AOJu0YzYl7DD8aaK+hOUG9K3CQXS+enm6HwovyIsrfQ+q0ce4Ye/LinS
+ pbw4bEpdDOIzgy8n5s/6SyEFSYp9o+8j1zP5fcWglhvOCCm2ZT+TpMOkEI/Oe631Rs4HChdX5hz
+ ZxgdcmYqBppTMavb0xb8cvwSyFofMv1o=
+X-Gm-Gg: Acq92OGBioHw/o8sqd2+MidbTSvtj0LFYvC9C1Ckavf1YVbBXldAMV51rDb3wztnMmS
+ vYw87b7FLJMYPTV2BQRhboleDfo6zebeDJ+ohIloAEz+t61e8rcJ0RpPNRlF3cmSeo0dzgfaMn1
+ EfwMjlieyd7Mc4eNcN8FBm0eyfzQo+J6beBo6MXP4TY/fpqhS2ibCSeQzAuSn5K0vxId7P/vk8F
+ 3zxI0vKfCzVEAwLgJWsD/RTN0vvHH8tJe5SSYag3Y5nZLG5Ua4d59tHHvQ285ChehyZFXF2nr08
+ rDuXx8QqWfwbshVXUoB3tR50egh4dFTGkCemHwa73BLfOQIQUKt0
+X-Received: by 2002:a05:6402:3052:10b0:66f:9f63:e537 with SMTP id
+ 4fb4d7f45d1cf-68e5dd55622mr154451a12.19.1780415632020; Tue, 02 Jun 2026
+ 08:53:52 -0700 (PDT)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 00/39] MAINTAINERS: Fix F: lines
-To: Markus Armbruster <armbru@redhat.com>
-Cc: qemu-devel@nongnu.org, philmd@linaro.org, John Snow <jsnow@redhat.com>,
- Cleber Rosa <cleber@redhat.com>
-References: <20260521080511.999266-1-armbru@redhat.com>
- <d52c0fca-3a8a-4d4f-abff-f772605512b8@oss.qualcomm.com>
- <87y0gy8thg.fsf@pond.sub.org>
- <c7cc0040-872d-425c-827f-c57db87ee12c@oss.qualcomm.com>
- <87wlwh77gv.fsf@pond.sub.org>
-From: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
-Content-Language: en-US
-In-Reply-To: <87wlwh77gv.fsf@pond.sub.org>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-X-Proofpoint-ORIG-GUID: jnhDEvT2omFBG4DocFz3E3h-ZmjT8WGZ
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNjAyMDE1MCBTYWx0ZWRfXw8kuCL7CpoyU
- mXihJe2s+EMwHh/HJL8aPFS2Z/eE+yUUqUbBOavEc6x97DWMPBR/XND1joFoVBECBOvb/ArMsim
- 1N0g4p3z8jX5A3+x4e7jTKqUIP1DoeenquhlnD2asXjaFRBsr5oHa5siRmLOj66vPRmCOqOGMMX
- bc7rRYyGIDZ4yC53mE6VKTaUbiY46FfVEfoJo+yfQxMDRMJaMieqEfaCCFvXcVfIQvdZ5/tLeTm
- Ct4MPs0FqzJvaVTy0FWLAg8T1MlNEQWqaML9xM4g3XzxJlrXNbVOYpKS9HjQ+VSEm2mJaV5MFfB
- OUaRlRIUoeOjYx6kvUOQDF0FCzlnStEa2Zd3AW9iKOdTSjqCtEr1w5FtunYn1SOdfmQQUMWUIHM
- O1ridUbugF3ivwe92d8eHMkPROjK24A8PLcDBByaGIJZb51+jCjeUOOCc8p4tc0qd7pQgWQeWRy
- 5M3XXlaE9diikj2Ma4Q==
-X-Authority-Analysis: v=2.4 cv=ZYAt8MVA c=1 sm=1 tr=0 ts=6a1ef840 cx=c_pps
- a=JYo30EpNSr/tUYqK9jHPoA==:117 a=iLqgmErQAxjCjdq5jj1Aqg==:17
- a=IkcTkHD0fZMA:10 a=FelO9ux0wxsA:10 a=s4-Qcg_JpJYA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=eoimf2acIAo5FJnRuUoq:22
- a=ukH1R-b_AAAA:8 a=EUspDBNiAAAA:8 a=20KFwNOVAAAA:8 a=Z5DR0hOY1AJPjyUOk9AA:9
- a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10 a=Fk4IpSoW4aLDllm1B1p-:22
- a=zUGFzhdS3I8ccRoxxLmr:22
-X-Proofpoint-GUID: jnhDEvT2omFBG4DocFz3E3h-ZmjT8WGZ
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.125,FMLib:17.12.100.49
- definitions=2026-06-02_02,2026-05-28_03,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- bulkscore=0 priorityscore=1501 clxscore=1015 adultscore=0 impostorscore=0
- spamscore=0 phishscore=0 suspectscore=0 malwarescore=0 lowpriorityscore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2605210000 definitions=main-2606020150
-Received-SPF: pass client-ip=205.220.168.131;
- envelope-from=pierrick.bouvier@oss.qualcomm.com;
- helo=mx0a-0031df01.pphosted.com
-X-Spam_score_int: -27
-X-Spam_score: -2.8
+References: <20260529094619.1034458-1-pbonzini@redhat.com>
+In-Reply-To: <20260529094619.1034458-1-pbonzini@redhat.com>
+From: Stefan Hajnoczi <stefanha@gmail.com>
+Date: Tue, 2 Jun 2026 11:53:39 -0400
+X-Gm-Features: AVHnY4L4Nlb_eO8Jpf22VdZolLdlNaU4GyRC3MX28ddPVgucwFQ-pNVJadFrn8s
+Message-ID: <CAJSP0QW3Qg261XVNdq0T-J63LzRG4xCiWRQ2-U0QgqdtaPCyQg@mail.gmail.com>
+Subject: Re: [PATCH v2] docs/devel: relax policy on AI-generated contributions
+To: Paolo Bonzini <pbonzini@redhat.com>
+Cc: qemu-devel@nongnu.org, "Michael S. Tsirkin" <mst@redhat.com>, 
+ =?UTF-8?B?QWxleCBCZW5uw6ll?= <alex.bennee@linaro.org>, 
+ Alistair Francis <alistair.francis@wdc.com>,
+ BALATON Zoltan <balaton@eik.bme.hu>, 
+ =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>, 
+ Fabiano Rosas <farosas@suse.de>, Kevin Wolf <kwolf@redhat.com>, 
+ Peter Maydell <peter.maydell@linaro.org>, Warner Losh <imp@bsdimp.com>, 
+ =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>, 
+ Paolo Bonzini <bonzini@gnu.org>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2a00:1450:4864:20::52c;
+ envelope-from=stefanha@gmail.com; helo=mail-ed1-x52c.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001,
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -155,299 +123,313 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 6/2/2026 12:00 AM, Markus Armbruster wrote:
-> Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com> writes:
-> 
->> On 6/1/2026 3:06 AM, Markus Armbruster wrote:
->>> Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com> writes:
->>>
->>>> Hi Markus,
->>>>
->>>> On 5/21/2026 1:04 AM, Markus Armbruster wrote:
->>>>> Quite a few F: lines don't match any files.  The quick & dirty check
->>>>>
->>>>>     $ ls `sed -n 's/^F: *//p' MAINTAINERS ` >/dev/null
->>>>>
->>>>> finds about fifty.
->>>>>
->>>>> Philippe Mathieu-Daudé recently posted a few fixes:
->>>>>
->>>>>   MAINTAINERS: Fix docker/dockerfiles/debian-hexagon-cross.docker path
->>>>>   MAINTAINERS: Cover debian-loongarch-cross.docker with LoongArch section
->>>>>   MAINTAINERS: Cover debian-xtensa-cross.docker with Xtensa section
->>>>>   MAINTAINERS: Cover debian-tricore-cross.docker with TriCore section
->>>>>   MAINTAINERS: Cover python.docker with Python library section
->>>>>   MAINTAINERS: Fix s390x storage key/attribute device paths
->>>>>   MAINTAINERS: Fix tcg/s390x/ path
->>>>>   MAINTAINERS: Correct scripts/coverity-model.c path
->>>>>   MAINTAINERS: Fix hexagon-linux-user.mak path
-> 
-> [...]
-> 
->>>> In addition, see the patch attached to this email.
->>>> It integrates checking this directly at configure time, so we never run
->>>> into any missing entry again in the future.
->>>>
->>>> I share this here not for a review, but simply to avoid a duplicated
->>>> effort, and make sure people know it will be sent after this series.
->>>>
->>>> I don't believe in adding this in checkpatch, because it's not enforced
->>>> systematically unfortunately. Breaking the meson configuration is a good
->>>> way to make sure it's enforced by design.
->>>
->>> No objection.
->>>
->>>> With your series applied, the left entries are:
->>>
->>> Most of these are fixed in Philippe's patches mentioned above.
->>>
->>
->> 👍
->>
->>>> No matching files for /usr2/pbouvier/.work/qemu/MAINTAINERS +258:
->>>> configs/targets/hexagon-linux-user/default.mak
->>>
->>> MAINTAINERS: Fix hexagon-linux-user.mak path
->>>
->>>> No matching files for /usr2/pbouvier/.work/qemu/MAINTAINERS +259:
->>>> docker/dockerfiles/debian-hexagon-cross.docker
->>>
->>> MAINTAINERS: Fix docker/dockerfiles/debian-hexagon-cross.docker path
->>>
->>>> No matching files for /usr2/pbouvier/.work/qemu/MAINTAINERS +2956:
->>>> hw/s390x/storage-keys.h
->>>> No matching files for /usr2/pbouvier/.work/qemu/MAINTAINERS +2965:
->>>> hw/s390x/storage-attributes.h
->>>
->>> MAINTAINERS: Fix s390x storage key/attribute device paths
->>>
->>>> No matching files for /usr2/pbouvier/.work/qemu/MAINTAINERS +3241:
->>>> scripts/coverity-model.c
->>>
->>> MAINTAINERS: Correct scripts/coverity-model.c path
->>>
->>>> No matching files for /usr2/pbouvier/.work/qemu/MAINTAINERS +3468:
->>>> tests/*.py
->>>
->>> This is the exception I mentioned above.
->>>
->>> The intent is to match *.py below tests/.  It actually matches only in
->>> tests/, not in its subdirectories.
->>>
->>> Here's a dumb fix:
->>>
->>>     F: tests/*.py
->>>     F: tests/*/*.py
->>>     F: tests/*/*/*.py
->>>     F: tests/*/*/*/*.py
->>>
->>
->> It's acceptable, and nice because it's not ambiguous.
->> Also, it shows us the first line is not a correct entry (there is no
->> tests/*.py).
-> 
-> It's also brittle: breaks when we add the first .py at level.
-> 
->>> for however many levels we have.  Same for the scripts/ line next to it.
->>> Blech.
->>>
->>> The smart fix might be to port N: from the kernel.
->>>
->>> 	N: Files and directories *Regex* patterns.
->>> 	   N:	[^a-z]tegra	all files whose path contains tegra
->>> 	                        (not including files like integrator)
->>> 	   One pattern per line.  Multiple N: lines acceptable.
->>> 	   scripts/get_maintainer.pl has different behavior for files that
->>> 	   match F: pattern and matches of N: patterns.  By default,
->>> 	   get_maintainer will not look at git log history when an F: pattern
->>> 	   match occurs.  When an N: match occurs, git log history is used
->>> 	   to also notify the people that have git commit signatures.
->>>
->>> But I wonder: is this section useful at all?
->>
->> I would prefer to use the manual entries approach above, especially if
->> there is only folder that is concerned.
->> When we'll have two different use case, maybe we can consider a more
->> generic approach.
-> 
-> I'm aware of just two:
-> 
->     Python scripts
->     M: John Snow <jsnow@redhat.com>
->     M: Cleber Rosa <crosa@redhat.com>
->     S: Odd Fixes
->     F: scripts/*.py
->     F: tests/*.py
-> 
-> The section was added almost a decade ago (commit ad904f6689f), and
-> never worked as intended.  I asked John Snow about deleting it to
-> unblock your work.  He told me he'd be fine with that.  Could add it
-> back later fixed.
-> 
->>>> No matching files for /usr2/pbouvier/.work/qemu/MAINTAINERS +4149:
->>>> tcg/s390/
->>>
->>> MAINTAINERS: Fix tcg/s390x/ path
->>>
->>>> Once your current series is pulled, I'll fix the remaining and send the
->>>> attached patch. Or feel free to do it directly if you like the idea :)
->>>>
->>>> Regards,
->>>> Pierrick
->>>
->>> Two remarks inline.
->>>
->>>> From 6c9b49ac7ec06c0159d2b4ba9c9d1081e02ef765 Mon Sep 17 00:00:00 2001
->>>> From: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
->>>> Date: Fri, 22 May 2026 12:23:17 -0700
->>>> Subject: [PATCH] meson.build: check MAINTAINERS file is consistent with source
->>>>  tree
->>>>
->>>> We add a new script: scripts/check-maintainers-file.py, that will run at
->>>> configuration time (and not at build time), to not hurt build time.
->>>> This script runs in 0.2s on my dev VM, which has an old cpu.
->>>>
->>>> We can expect things to be mostly in sync since adding or removing a
->>>> source or test file will trigger a configure step.
->>>> For the rest, like docs, tcg tests, or remaining files, GitLab CI will
->>>> build things from scratch and always run the configure step.
->>>>
->>>> With this, it should be impossible by design to have an upstream
->>>> MAINTAINERS file with non existing file entries.
->>>>
->>>> Signed-off-by: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
->>>> ---
->>>>  meson.build                       |  5 +++
->>>>  scripts/check-maintainers-file.py | 53 +++++++++++++++++++++++++++++++
->>>>  2 files changed, 58 insertions(+)
->>>>  create mode 100755 scripts/check-maintainers-file.py
->>>>
->>>> diff --git a/meson.build b/meson.build
->>>> index eeb096c1487..ddfb0b90ca6 100644
->>>> --- a/meson.build
->>>> +++ b/meson.build
->>>> @@ -18,6 +18,11 @@ add_test_setup('thorough',
->>>>  
->>>>  meson.add_postconf_script(find_program('scripts/symlink-install-tree.py'))
->>>>  
->>>> +# check our MAINTAINERS file is consistent
->>>> +check_maintainers = find_program('scripts/check-maintainers-file.py')
->>>> +maintainers_file = files('MAINTAINERS')
->>>> +run_command([check_maintainers, maintainers_file], check: true, console: true)
->>>
->>> My version of meson (1.8.5) chokes on console: true.  According to
->>> https://mesonbuild.com/Reference-manual_functions_run_command.html#run_command_console
->>> it's new in 1.11.0.
->>>
->>
->> Our configure script creates a venv with an updated version of meson,
->> which is 1.11.1 at the moment.
->> If you called meson directly (which uses your host meson), it's not how
->> we're supposed to build QEMU.
->> How did you try this?
-> 
-> I ran make :)
-> 
->>> I tested with it deleted.
->>>
->>>> +
->>>>  ####################
->>>>  # Global variables #
->>>>  ####################
->>>> diff --git a/scripts/check-maintainers-file.py b/scripts/check-maintainers-file.py
->>>> new file mode 100755
->>>> index 00000000000..b001816a401
->>>> --- /dev/null
->>>> +++ b/scripts/check-maintainers-file.py
->>>> @@ -0,0 +1,53 @@
->>>> +#! /usr/bin/env python3
->>>> +
->>>> +# Check incorrect file entries in MAINTAINERS
->>>> +#
->>>> +# Author: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
->>>> +#
->>>> +# SPDX-License-Identifier: GPL-2.0-or-later
->>>> +
->>>> +import argparse
->>>> +import glob
->>>> +import sys
->>>> +
->>>> +
->>>> +def check_one_entry(line) -> bool:
->>>> +    return True
->>>> +
->>>> +
->>>> +def main() -> None:
->>>> +    parser = argparse.ArgumentParser(description="Check MAINTAINERS file")
->>>> +    parser.add_argument("maintainers", help="Path to MAINTAINERS file")
->>>> +    args = parser.parse_args()
->>>> +
->>>> +    found_file_entry = False
->>>> +    found_incorrect_entries = False
->>>> +    line_counter = 0
->>>> +
->>>> +    with open(args.maintainers) as file:
->>>> +        for entry in file:
->>>> +            line_counter += 1
->>>> +
->>>> +            if not entry.startswith("F:"):
->>>> +                continue
->>>> +            entry = entry[2:].strip()
->>>> +            found_file_entry = True
->>>> +
->>>> +            file_exists = len(glob.glob(entry, recursive=True)) > 0
->>>
->>> I'm afraid this matches files not in git, just like my quick & dirty
->>> one-liner.  Shouldn't we match against contents of HEAD, say output of
->>> "git-ls-tree -r --name-only @"?
->>>
->>
->> I don't think it's needed to restrict to git ls-tree. The only risk is
->> that people have a local file they forgot (or didn't want) to add in
->> git. It will be caught by CI that won't have such a file, so we're safe.
->>
->> What do you think?
-> 
-> Yes, we're safe, but the earlier we catch mistakes, the better.  Now,
-> the juice isn't always worth the squeeze.  How hard would we have to
-> squeeze here?  We could use fnmatch.filter(names, pat) to test whether
-> @pat matches anything in @names, where @names is from git-ls-tree.
+On Fri, May 29, 2026 at 5:47=E2=80=AFAM Paolo Bonzini <pbonzini@redhat.com>=
+ wrote:
 >
+> Until now QEMU's code provenance policy declined any contribution
+> believed to include or derive from AI-generated content.  A blanket ban
+> was easy to maintain while LLM output was rarely usable on its own, but
+> as the tools improved an absolute prohibition has become harder to
+> justify.
+>
+> The concern that motivated the policy is unchanged, and it is worth stati=
+ng
+> precisely: the DCO is about whether the submitter has the legal right to
+> contribute the code, not about "creative expression".  While the status o=
+f
+> LLM output seems to be converging towards non-copyrightability, questions
+> around unintentional reproduction of copyrighted code are still open.
+> What has shifted is the balance of risk:
+>
+> - projects accepting AI-assisted content have not run into serious
+>   legal trouble so far, which suggests the probability of the risk
+>   materializing is not high;
+>
+> - other organizations, such as Red Hat[1], have assessed the risk as
+>   acceptable -- though a community of individual developers does not
+>   have the legal backing of a company, and even an unfounded dispute
+>   would be a long-lasting distraction from work on QEMU.
+>
+> Nevertheless, even Red Hat mentions that "the possibility of occasional
+> replication cannot be ignored".  In QEMU's view, attentiveness and
+> oversight are not a practical way to address this; yet as a copyleft
+> project, copyright and code provenance are of utmost importance to us.
+> Therefore, it remains prudent to only permit AI assistance where the
+> ramifications of copyright violations are at least easy to revert and
+> unlikely to spread: tests, documentation, mechanical changes, and small
+> bug fixes.  Core code that other things depend on, and that cannot
+> simply be thrown away once a problem is noticed long after the fact,
+> stays off-limits without prior agreement from a maintainer.
+>
+> Related to this, and already visible in the incredible uptick in
+> security reports, is the question of maintainer burnout and the shift in
+> effort from the author to the reviewer of the code.  AI lowers the cost o=
+f
+> producing a patch but does nothing to lower the cost of understanding and
+> reviewing one; if anything it raises it, since a reviewer can no longer
+> assume that the submitter has reasoned through every line.  The limits
 
-"the earlier we catch mistakes, the better" is a good paradigm, but I
-don't think we should project that to developer machine. The only thing
-we need to keep "green" are our upstream branches.
+Can you rephrase this sentence? I'm afraid that taken out of context
+it looks like you're saying reviewers no longer need to understand the
+patches they are submitting. That is a possible direction to head in
+and would allow fully agentic workflows without close human
+supervision or understanding of the code, but I think the policy is
+not trying to go there.
 
-I like the simplicity of current script, only dealing with file paths,
-instead of having to do string regexp compare with git ls-files output,
-but it's just a matter of personal taste and choosing the easiest
-solution for a given problem.
+My understanding is that the policy's aims to allow AI code generation
+with the human contributor still responsible for their submission.
+Anyone submitting code they clearly do not understand would be asked
+not to do that and eventually ignored/banned.
 
-That said, if filtering through git ls-files is a strong requirement, I
-would be happy to implement it. Only thing that matters is that we have
-something catching mistakes.
+Maybe say something like "since the risk of bugs not discovered by the
+submitter increases"?
 
->>>> +            if file_exists:
->>>> +                continue
->>>> +
->>>> +            found_incorrect_entries = True
->>>> +            print(
->>>> +                f"No matching files for {args.maintainers} +{line_counter}: {entry}",
->>>> +                file=sys.stderr,
->>>> +            )
->>>> +
->>>> +    if not found_file_entry:
->>>> +        raise Exception("no file entry found - is MAINTAINERS path correct?")
->>>> +    if found_incorrect_entries:
->>>> +        raise Exception(f"incorrect entries found in {args.maintainers}")
->>>> +
->>>> +
->>>> +if __name__ == "__main__":
->>>> +    main()
->>>
->>
->> Regards,
->> Pierrick
-> 
+> above work just as much to keep the volume of review work sustainable.
+>
+> Revise the policy according to the above considerations, and introduce th=
+e
+> "AI-used-for:" trailer as a record of where AI was used.  The standard is
+> slightly different from the more usual "Assisted-by"; the intention is fo=
+r
+> the metadata to provide more information for reviewers to judge the resul=
+t.
+>
+> In any case, use of AI does not relax any other contribution requirement:
+> authors still comply with the DCO and take responsibility for the whole
+> patch via Signed-off-by.
+>
+> [Commit message largely based on
+>  https://lore.kernel.org/qemu-devel/ahXbxzB4C_lr6b0N@redhat.com/, by
+>  Kevin Wolf. - Paolo]
+>
+> [1] https://www.redhat.com/en/blog/ai-assisted-development-and-open-sourc=
+e-navigating-legal-issues
+> Acked-by: Michael S. Tsirkin <mst@redhat.com>
+> Cc: Alex Benn=C3=A9e <alex.bennee@linaro.org>
+> Cc: Alistair Francis <alistair.francis@wdc.com>
+> Cc: BALATON Zoltan <balaton@eik.bme.hu>
+> Cc: Daniel P. Berrang=C3=A9 <berrange@redhat.com>
+> Cc: Fabiano Rosas <farosas@suse.de>
+> Cc: Kevin Wolf <kwolf@redhat.com>
+> Cc: Peter Maydell <peter.maydell@linaro.org>
+> Cc: Warner Losh <imp@bsdimp.com>
+> Reviewed-by: Philippe Mathieu-Daud=C3=A9 <philmd@linaro.org>
+> Link: https://lore.kernel.org/qemu-devel/20260524083329-mutt-send-email-m=
+st@kernel.org/T/
+> Signed-off-by: Paolo Bonzini <bonzini@gnu.org>
+> ---
+>  docs/devel/code-provenance.rst | 142 ++++++++++++++++++++++-----------
+>  1 file changed, 94 insertions(+), 48 deletions(-)
+>
+> diff --git a/docs/devel/code-provenance.rst b/docs/devel/code-provenance.=
+rst
+> index 65b8f232a08..857588c43ba 100644
+> --- a/docs/devel/code-provenance.rst
+> +++ b/docs/devel/code-provenance.rst
+> @@ -1,7 +1,7 @@
+>  .. _code-provenance:
+>
+> -Code provenance
+> -=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
+> +Code provenance and AI usage
+> +=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D
+>
+>  Certifying patch submissions
+>  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+> @@ -288,62 +288,108 @@ content generators below.
+>  Use of AI-generated content
+>  ~~~~~~~~~~~~~~~~~~~~~~~~~~~
+>
+> -TL;DR:
+> +.. warning::
+>
+> -  **Current QEMU project policy is to DECLINE any contributions which ar=
+e
+> -  believed to include or derive from AI generated content. This includes
+> -  ChatGPT, Claude, Copilot, Llama and similar tools.**
+> +   Please read the below policy before using AI to contribute code or
+> +   documentation to QEMU.  This applies to ChatGPT, Claude, Copilot,
+> +   Llama, and similar tools.**
 
+Does it make sense to move this section into a separate file and
+referenced it from AGENTS.md so that AI operating on the codebase is
+aware of the policy? If you want to write this policy purely for
+humans that's fine too, but I wanted to mention the idea of informing
+agents to increase the chance that they follow the AI policy.
+
+In other words:
+
+  Agents must refuse tasks that are not in accordance with this policy.
+
+>
+> -  **This policy does not apply to other uses of AI, such as researching =
+APIs
+> -  or algorithms, static analysis, or debugging, provided their output is=
+ not
+> -  included in contributions.**
+> +The increasing prevalence of AI-assisted software development,
+> +and especially the use of content generated by `Large Language Models
+> +<https://en.wikipedia.org/wiki/Large_language_model>`__ (LLMs),
+> +poses a number of difficult questions.
+>
+> -The increasing prevalence of AI-assisted software development results in=
+ a
+> -number of difficult legal questions and risks for software projects, inc=
+luding
+> -QEMU.  Of particular concern is content generated by `Large Language Mod=
+els
+> -<https://en.wikipedia.org/wiki/Large_language_model>`__ (LLMs).
+> +Risks to open source projects include maintainer burnout from an
+> +increased number of contributions, as well as the risk to the project
+> +from unintentional inclusion of copyrighted material in the LLM's output=
+.
+> +In order to mitigate these risks, the QEMU project currently allows
+> +using AI/LLM tools to produce patches in a limited set of scenarios:
+>
+> -The QEMU community requires that contributors certify their patch submis=
+sions
+> -are made in accordance with the rules of the `Developer's Certificate of
+> -Origin (DCO) <dco>`.
+> +**Mechanical changes**
+> +  If you can use a deterministic tool, it is preferred that you use it
+> +  and not replace it with AI. If you don't know how to do the change
+> +  deterministically, you can ask the AI for help.
+>
+> -To satisfy the DCO, the patch contributor has to fully understand the
+> -copyright and license status of content they are contributing to QEMU. W=
+ith AI
+> -content generators, the copyright and license status of the output is
+> -ill-defined with no generally accepted, settled legal foundation.
+> +**Small bug fixes**
+> +  These should be limited to 20 lines of code or less, not including
+> +  tests.  You are still expected to :ref:`understand and explain your ch=
+anges
+> +  <write_a_meaningful_commit_message>` and the rationale behind them.
+>
+> -Where the training material is known, it is common for it to include lar=
+ge
+> -volumes of material under restrictive licensing/copyright terms. Even wh=
+ere
+> -the training material is all known to be under open source licenses, it =
+is
+> -likely to be under a variety of terms, not all of which will be compatib=
+le
+> -with QEMU's licensing requirements.
+> +**Documentation and code comments**
+> +  While AI can help draft text, it still requires significant human
+> +  oversight.  Pay attention to the organization and flow of the generate=
+d
+> +  text, and strictly fact-check all technical details as LLMs are prone
+> +  to being confidently wrong.
+>
+> -How contributors could comply with DCO terms (b) or (c) for the output o=
+f AI
+> -content generators commonly available today is unclear.  The QEMU projec=
+t is
+> -not willing or able to accept the legal risks of non-compliance.
+> +**Tests**
+> +  Note that you must still confirm that each test actually exercises
+> +  the intended behavior including, for regression tests, that it
+> +  fails without the code under test and passes for the right reason.
+>
+> -The QEMU project thus requires that contributors refrain from using AI c=
+ontent
+> -generators on patches intended to be submitted to the project, and will
+> -decline any contribution if use of AI is either known or suspected.
+> +These boundaries do not apply to other uses of AI, such as researching
+> +APIs or algorithms, static analysis, or debugging, provided the model's
+> +output is not included in contributions.
+>
+> -Examples of tools impacted by this policy includes GitHub's CoPilot, Ope=
+nAI's
+> -ChatGPT, Anthropic's Claude, and Meta's Code Llama, and code/content
+> -generation agents which are built on top of such tools.
+> +If you wish to send large amounts of AI-generated changes, or any other
+> +contribution not in the above categories, please get in touch with the
+> +maintainer beforehand.  These can be treated as experiments, at the
+> +discretion of the maintainer and the community, with no obligation
+> +to accept them.
+>
+> -This policy may evolve as AI tools mature and the legal situation is
+> -clarified.
+> +**Use of AI does not remove the need for authors to comply with all
+> +other requirements for contribution.**  In particular, the
+> +``Signed-off-by`` label in a patch submission is a statement that
+> +the author takes responsibility for the entire contents of the patch,
+> +certifying that their patch submission is made in accordance with the
+> +rules of the `Developer's Certificate of Origin (DCO) <dco>`.
+>
+> -Exceptions
+> -^^^^^^^^^^
+> +Commit messages for AI-assisted changes
+> +^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+>
+> -The QEMU project welcomes discussion on any exceptions to this policy,
+> -or more general revisions. This can be done by contacting the qemu-devel
+> -mailing list with details of a proposed tool, model, usage scenario, etc=
+.
+> -that is beneficial to QEMU, while still mitigating issues around complia=
+nce
+> -with the DCO.  After discussion, any exception will be listed below.
+> +When AI/LLM tools produce or substantively shape your patch, add an
+> +``AI-used-for:`` line before ``Signed-off-by``, as a reminder of your
+> +DCO obligations and a guide to reviewers.  The text is one or more of
+> +``code``, ``tests``, ``docs``, ``research``, possibly followed by an
+> +explanation in parentheses:
+>
+> -Exceptions do not remove the need for authors to comply with all other
+> -requirements for contribution.  In particular, the "Signed-off-by"
+> -label in a patch submission is a statement that the author takes
+> -responsibility for the entire contents of the patch, including any parts
+> -that were generated or assisted by AI tools or other tools.
+> +.. code-block:: none
+> +
+> +     AI-used-for: tests, docs
+> +     AI-used-for: code
+> +     AI-used-for: code (refactoring)
+> +     AI-used-for: code (prototype)
+> +     AI-used-for: research
+> +
+> +``AI-used-for`` should not be included for "background" usage such as
+> +autocomplete or obtaining a pre-review of the patch.
+> +
+> +There is no requirement to include your prompts or summarize the
+> +conversation in the commit message or cover letter, but you may do so
+> +if you think it helps a reviewer judge the result.  For example:
+> +
+> +**Helpful prompts**
+> +  These describe concrete constraints or instructions, making it easy fo=
+r a
+> +  reviewer to see how the tool's output was guided:
+> +
+> +  * "move field ``foo`` from ``struct aa`` to ``struct bb``.  If a
+> +    function already has a local variable or parameter of type ``struct
+> +    bb``, use it instead of accessing ``aa.bb``"
+> +
+> +  * "add an implementation of the trait for ``Mutex<T: MyTrait>``; it
+> +    takes the lock around the calls and forwards to ``T``"
+> +
+> +**Unhelpful prompts**
+> +  These are too generic to provide meaningful context.  You can of cours=
+e
+> +  use them in the context of a complex interaction with the LLM, but the=
+y
+> +  should not be included in the commit message:
+> +
+> +  * "write user-facing documentation for the new tool"
+> +
+> +  * "write testcases for the new functions"
+> +
+> +QEMU does *not* use ``Assisted-by``, ``Co-authored-by`` or ``Generated-b=
+y``
+> +trailers to indicate AI usage.  In particular, it is not necessary to
+> +specify the exact AI model or tool used to create the commit.
+> +
+> +Deterministic tooling (sed, coccinelle, formatters) is out of scope for
+> +the trailer, but should be mentioned in the commit message.
+> --
+> 2.54.0
+>
+>
 
