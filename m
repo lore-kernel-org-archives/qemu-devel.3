@@ -4,46 +4,46 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id BF552CD6E4A
-	for <qemu-devel@archiver.kernel.org>; Tue,  2 Jun 2026 13:33:29 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7EEE5CD6E57
+	for <qemu-devel@archiver.kernel.org>; Tue,  2 Jun 2026 13:33:59 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wUPF6-0006dm-LZ; Tue, 02 Jun 2026 09:33:16 -0400
+	id 1wUPFg-0006yz-6f; Tue, 02 Jun 2026 09:33:52 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <david@kernel.org>) id 1wUPF5-0006de-Jh
- for qemu-devel@nongnu.org; Tue, 02 Jun 2026 09:33:15 -0400
-Received: from tor.source.kernel.org ([2600:3c04:e001:324:0:1991:8:25])
+ (Exim 4.90_1) (envelope-from <david@kernel.org>) id 1wUPFc-0006x8-KU
+ for qemu-devel@nongnu.org; Tue, 02 Jun 2026 09:33:49 -0400
+Received: from sea.source.kernel.org ([2600:3c0a:e001:78e:0:1991:8:25])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <david@kernel.org>) id 1wUPF4-0005m2-6G
- for qemu-devel@nongnu.org; Tue, 02 Jun 2026 09:33:15 -0400
+ (Exim 4.90_1) (envelope-from <david@kernel.org>) id 1wUPFb-00060W-8m
+ for qemu-devel@nongnu.org; Tue, 02 Jun 2026 09:33:48 -0400
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
- by tor.source.kernel.org (Postfix) with ESMTP id 578F760123;
- Tue,  2 Jun 2026 13:33:13 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 638001F00893;
- Tue,  2 Jun 2026 13:33:12 +0000 (UTC)
+ by sea.source.kernel.org (Postfix) with ESMTP id B330843C55;
+ Tue,  2 Jun 2026 13:33:45 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B81C81F00893;
+ Tue,  2 Jun 2026 13:33:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
- s=k20260515; t=1780407193;
- bh=fuQsMJ75qOhbyJt4ThLec/ATzVd/DbI5reV1ubTQ1QE=;
+ s=k20260515; t=1780407225;
+ bh=h4mGtMQvpZ7LJ6Z0oH2E/GpoRMFbuxOIrFPzBvosdos=;
  h=Date:Subject:To:Cc:References:From:In-Reply-To;
- b=ifs9QJBD17Ym/6g10w5jPMZJL02y9HSRNUwqSBENYpiUsk+aPgB7CTAHbuiRoxxW9
- 3A0gB502iZ1B3bKSK4q4P3jGpOgu87Rih2AIrqIE48d+zR8YxPFaD0/iyrcUj8I1fY
- JgopedArDA+yGedKjOojZtd/0HZC2hYs5pNh+xBxU1cBUIKMNwsvEQ9a7ZahZywIXO
- iLJs5uDW1YgiDPUfAB7PGoeHtoclSaySzd6Ncuh/SAB7D1J/JOeXxfW4+ZYoDWic0V
- f9a3foPWwHQglz4O/0fHmOcb1SH9q0R2pNnb6vNB+dnhNvwYiBwelKlsTxH9SmCGf8
- 8MCP5DOxvUl0Q==
-Message-ID: <3eda9a87-3426-42c7-b38e-55d764c68de3@kernel.org>
-Date: Tue, 2 Jun 2026 15:33:11 +0200
+ b=lt/htXqPa+Lv3oVi2AWZ8JbIo9Hqdmen1hjZHVOojpOxu6MnwMWozkGmESjxnejhs
+ 0xFRjhloz8B+70uzjYBHyD6ll4efigR119Yz7wDp7KWspkAStSxsdEB1Qtv/RK93MY
+ w/IpDayJVPLy+fBpA6c5/y9948h5Kh2WBN1N9pdTLCfbxvua4FPXePw+JDVBMeSzAD
+ GLVEDzY+jFNMf5ALCJXM6YTnZNvQ6XmcN4ELz5DK35D76awYjCzsIkf26fahXDFSya
+ VveDY7rL4vXinNB/3uRqM9RzrXUFU9XQEHLuF87KYXag5KGxPOpqXLDuit4IlGQkmU
+ TUBxuPFuTHKIA==
+Message-ID: <a6b6d530-a9af-4364-9341-ada79d3dc275@kernel.org>
+Date: Tue, 2 Jun 2026 15:33:43 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v4 02/13] system/memory: move RamDiscardManager to
- separate compilation unit
+Subject: Re: [PATCH v4 03/13] system/memory: constify section arguments
 To: =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>,
  qemu-devel@nongnu.org
-Cc: Peter Xu <peterx@redhat.com>
+Cc: Peter Xu <peterx@redhat.com>, =?UTF-8?Q?C=C3=A9dric_Le_Goater?=
+ <clg@redhat.com>
 References: <20260504-rdm5-v4-0-bdf61e57c1e1@redhat.com>
- <20260504-rdm5-v4-2-bdf61e57c1e1@redhat.com>
+ <20260504-rdm5-v4-3-bdf61e57c1e1@redhat.com>
 From: "David Hildenbrand (Arm)" <david@kernel.org>
 Content-Language: en-US
 Autocrypt: addr=david@kernel.org; keydata=
@@ -90,11 +90,11 @@ Autocrypt: addr=david@kernel.org; keydata=
  3iyY2Nsd7JxfKu1PRhCGwXzRw5TlfEsoRI7V9A8isUCoqE2Dzh3FvYHVeX4Us+bRL/oqareJ
  CIFqgYMyvHj7Q06kTKmauOe4Nf0l0qEkIuIzfoLJ3qr5UyXc2hLtWyT9Ir+lYlX9efqh7mOY
  qIws/H2t
-In-Reply-To: <20260504-rdm5-v4-2-bdf61e57c1e1@redhat.com>
+In-Reply-To: <20260504-rdm5-v4-3-bdf61e57c1e1@redhat.com>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2600:3c04:e001:324:0:1991:8:25;
- envelope-from=david@kernel.org; helo=tor.source.kernel.org
+Received-SPF: pass client-ip=2600:3c0a:e001:78e:0:1991:8:25;
+ envelope-from=david@kernel.org; helo=sea.source.kernel.org
 X-Spam_score_int: -24
 X-Spam_score: -2.5
 X-Spam_bar: --
@@ -117,39 +117,14 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On 5/4/26 14:30, Marc-André Lureau wrote:
-> Extract RamDiscardManager and RamDiscardSource from system/memory.c into
-> dedicated a unit.
-> 
-> This reduces coupling and allows code that only needs the
-> RamDiscardManager interface to avoid pulling in all of memory.h
-> dependencies.
+> The sections shouldn't be modified.
 > 
 > Reviewed-by: Peter Xu <peterx@redhat.com>
+> Reviewed-by: Cédric Le Goater <clg@redhat.com>
 > Signed-off-by: Marc-André Lureau <marcandre.lureau@redhat.com>
 > ---
 
-[...]
-
-> +
-> +type_init(ram_discard_manager_register_types)
-> diff --git a/rust/bindings/system-sys/lib.rs b/rust/bindings/system-sys/lib.rs
-> index 022fe65dd83..30adf683c35 100644
-> --- a/rust/bindings/system-sys/lib.rs
-> +++ b/rust/bindings/system-sys/lib.rs
-> @@ -20,7 +20,7 @@
->  
->  use common::Zeroable;
->  use hwcore_sys::{qemu_irq, DeviceClass, DeviceState};
-> -use qom_sys::{InterfaceClass, Object, ObjectClass};
-> +use qom_sys::{Object, ObjectClass};
->  use util_sys::{Error, EventNotifier, QEMUBH};
-
-Why does that belong here? If it actually belongs here, spell it out in the
-patch description, please.
-
-LGTM
-
-Acked-by: David Hildenbrand <david@kernel.org>
+Reviewed-by: David Hildenbrand <david@kernel.org>
 
 -- 
 Cheers,
