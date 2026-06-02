@@ -4,168 +4,76 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 21D33CD6E57
-	for <qemu-devel@archiver.kernel.org>; Tue,  2 Jun 2026 06:54:39 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 86303CD6E4A
+	for <qemu-devel@archiver.kernel.org>; Tue,  2 Jun 2026 07:01:17 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wUJ0h-0004He-GH; Tue, 02 Jun 2026 02:54:00 -0400
+	id 1wUJ6x-0006Su-L7; Tue, 02 Jun 2026 03:00:27 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clement.mathieu--drif@bull.com>)
- id 1wUJ0d-0004H4-Jd
- for qemu-devel@nongnu.org; Tue, 02 Jun 2026 02:53:55 -0400
-Received: from smarthost1.eviden.com ([80.78.11.82])
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1wUJ6n-0006S6-V3
+ for qemu-devel@nongnu.org; Tue, 02 Jun 2026 03:00:19 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clement.mathieu--drif@bull.com>)
- id 1wUJ0b-0000rC-6a
- for qemu-devel@nongnu.org; Tue, 02 Jun 2026 02:53:55 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
- d=bull.com; i=@bull.com; q=dns/txt; s=mail;
- t=1780383233; x=1811919233;
- h=from:to:cc:subject:date:message-id:references:
- in-reply-to:content-id:content-transfer-encoding: mime-version;
- bh=b71IcyyIylw44PjX/BhkrWJQhnpMBK7QLAlRBYpPeFc=;
- b=O7BDKR+lI0tTwj37ahq5bqVL7yjNGamY/B3knVK8wZmOxiv8YbbaekON
- Y7En1BgYyfhgfkNuiea8DR9SWo27i4OccRG2u9Gn8CSVqyGujrBmPaM+d
- 92XdJ7xqGM8Ml2poQUmmR2ffyhTBPNXQyW1YRrOL3d4AcY/DQWKysM/+Z
- BekAzhU6WDsW7rpxxYrRz4MznrLLQXUBpJq3du4aRNdj5KAgj40q9BHZK
- s4HTW5+/RYjAvBtT2BARDAQfKmVASenreQxKLMip9xrZAn+OVFU2DTbWN
- smUU1wGSJcMkGQevq/7huAAgKhDClOm+qT6oIrmp1qhdhWL6S/Tk0au5N w==;
-X-CSE-ConnectionGUID: RNlP+EgTThipDUjT2ZCHzQ==
-X-CSE-MsgGUID: f6322AdZQxi4U1ONqekWMA==
-IronPort-SDR: 6a1e7dfd_8l8UGaEs2SvI4CrPmhuxSkyP8o0PieDrg/nWco2rQccDQBU
- E/CzM+brMJ/Ofr2KgD0FnmZXGUWgAkizAcI18kQ==
-X-IronPort-AV: E=Sophos;i="6.24,182,1774306800"; d="scan'208";a="48152355"
-X-MGA-submission: =?us-ascii?q?MDEeafyFPw6xd23nxQZX7kaR85RHjt4MGbVKWc?=
- =?us-ascii?q?j+Gz7KtFXG87iddLk6Y2QsL1Ij95HMcFbddFHLoYPhUwFu+YUzI8L5hk?=
- =?us-ascii?q?hWojmIzXhwwL4cbKxdmQ0wp2pJmvYpu5nG6whpBcbSW+M1NePqab5oYQ?=
- =?us-ascii?q?oXEGr1uE4sgLZtZh5XFuBPjQ=3D=3D?=
-Received: from mail-swedencentralazon11013050.outbound.protection.outlook.com
- (HELO GVXPR05CU001.outbound.protection.outlook.com) ([52.101.83.50])
- by smarthost1.eviden.com with ESMTP/TLS/TLS_AES_256_GCM_SHA384;
- 02 Jun 2026 08:53:48 +0200
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=Q70PtZHBNBePTBoYRA6wcDI5gLxcPfYVP7x3t82lA+JRXArncrQptg831/X9KYM0Epy0kcYd0pueDnT9p+K39oT++3YNcyQqoqz71ztfhEh1tPvqwEBba8MlX5Y5O5t0elKYI86tepepiNRySSJRCJCam9GYgT0ZQr5TN15mc9MRZsu47iXCOb3tdn+1R3TgaFT3sxK204mehZ/9Xg+/l9OUq7lhhGSPXP7f0jQVoESKwWaH7aWdWLhghwWs+zXbiNZcyX5er40ngoFWAPYsOzkoJOa8OXigQnvNvdrNTWT4qZNnVuEA4xsNGNP51JI+/1VQO9oOKhl5oLxWpLVECQ==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=b71IcyyIylw44PjX/BhkrWJQhnpMBK7QLAlRBYpPeFc=;
- b=pgfTaUd8cUBKkEqdPIkq478WvVffM/rHvES3KixV2uOhMQEv8Vpww9La56suV27tWtEqFSeNmR48Fk14aLDpmqg44WSxQNrqi7gaTa5d+vYg2LjyT5XvgULRwXW2NOEapy2pbE5Ws5apHJJ/elgl9SdL2H/mHM+6apGF7oHHerGcffijI/sISTzh8UVcE4yO2KRQjMyuJkdbnoQHW+s6mhMXa7/nAkObOBlmMmwEW17CQ+iZjsHGuogDpjFnVbtfOIFZs8rcUhen2hrKz1aOaMBIEBg60Y5KLHsBjT8/IqiKnJmBUj/r50jW8pc8XvAyXKNr43C23CitWl8rZB9czw==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=bull.com; dmarc=pass action=none header.from=bull.com;
- dkim=pass header.d=bull.com; arc=none
-Received: from AM8PR07MB7602.eurprd07.prod.outlook.com (2603:10a6:20b:24b::7)
- by FRWPR07MB10787.eurprd07.prod.outlook.com (2603:10a6:d10:188::5)
- with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.71.13; Tue, 2 Jun 2026
- 06:53:47 +0000
-Received: from AM8PR07MB7602.eurprd07.prod.outlook.com
- ([fe80::4b08:9add:5e19:eaaf]) by AM8PR07MB7602.eurprd07.prod.outlook.com
- ([fe80::4b08:9add:5e19:eaaf%6]) with mapi id 15.21.0071.014; Tue, 2 Jun 2026
- 06:53:47 +0000
-From: =?utf-8?B?Q2zDqW1lbnQgTUFUSElFVS0tRFJJRg==?=
- <clement.mathieu--drif@bull.com>
-To: Zhenzhong Duan <zhenzhong.duan@intel.com>, "qemu-devel@nongnu.org"
- <qemu-devel@nongnu.org>
-CC: "alex@shazbot.org" <alex@shazbot.org>, "clg@redhat.com" <clg@redhat.com>, 
- "eric.auger@redhat.com" <eric.auger@redhat.com>, "mst@redhat.com"
- <mst@redhat.com>, "jasowang@redhat.com" <jasowang@redhat.com>,
- "jgg@nvidia.com" <jgg@nvidia.com>, "nicolinc@nvidia.com"
- <nicolinc@nvidia.com>, "skolothumtho@nvidia.com" <skolothumtho@nvidia.com>,
- "joao.m.martins@oracle.com" <joao.m.martins@oracle.com>,
- "kevin.tian@intel.com" <kevin.tian@intel.com>, "yi.l.liu@intel.com"
- <yi.l.liu@intel.com>, "xudong.hao@intel.com" <xudong.hao@intel.com>
-Subject: Re: [PATCH v6 06/17] intel_iommu: make vtd_dev_get_pe_from_pasid()
- more generic
-Thread-Topic: [PATCH v6 06/17] intel_iommu: make vtd_dev_get_pe_from_pasid()
- more generic
-Thread-Index: AQHc7Zxh6jGvSLBa6U2es4eZYUJOXbYq3ayA
-Date: Tue, 2 Jun 2026 06:53:47 +0000
-Message-ID: <91635e557417bbe97f81cf551057f1aac4b38aac.camel@bull.com>
-References: <20260527054658.1021096-1-zhenzhong.duan@intel.com>
- <20260527054658.1021096-7-zhenzhong.duan@intel.com>
-In-Reply-To: <20260527054658.1021096-7-zhenzhong.duan@intel.com>
-Accept-Language: en-GB, fr-FR, en-US
-Content-Language: en-US
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-x-ms-publictraffictype: Email
-x-ms-traffictypediagnostic: AM8PR07MB7602:EE_|FRWPR07MB10787:EE_
-x-ms-office365-filtering-correlation-id: 32c8ec68-c9e1-465e-4949-08dec073b209
-x-ms-exchange-senderadcheck: 1
-x-ms-exchange-antispam-relay: 0
-x-microsoft-antispam: BCL:0;
- ARA:13230040|1800799024|376014|7416014|366016|38070700021|4143699003|56012099006|3023799007|11063799006|22082099003|18002099003;
-x-microsoft-antispam-message-info: xdwjuK5Br/XnJdglqAoWvnQntYypo7aWfr3Ggft4V5mK1la96JDYiqQnwj2cgH+Htt+87jWFLb2GRrChIPNXJxQkfBpP+c+8ojdEtzS5ZdWWwLhq9MxHfxEOhL3ZrWSkq28+A3jZCrRHgchEWghM7/8+Dz3wZtpA0JxKIsk6bMfkOUOereU1DhXN4MnuxdOw5UY8mCYDLG6ZYTsfdDPBQ/EGdNNcdBGF8s8GOQHF/csGJBKDAdDkPi8zhjvhk+/eSbmo3Iz0hDWb6Uz3WX0lgkFSl8CDO5m/F8WlXTMnyhRPkOuiBwfJ20lCMpTsWg2zU+z4S0G+rDkJclbJLesDA0vjyJ9xnXcsawvrZBkAUcX5zf54i4bHFpeMiT8mR7BAxyjPQJ3asJ1/XETtPU64RfBUJS9jpEen/mXdoA/hzLYYWU1ThMNpVxE6Wu349gt1JBShEFD0XEYgevFTrgf4ut9047IrKv+ogOrL6mkyHhS3T6RNGZATFwbc5KwahF9QTE8Yecl5h4q1VqEMIvNXDRsZf5UBKMEgQ8wdp6wl9G6cnMwrLE3f7+XBHIQtYhcBNzCQx375t8dgBpKWSNYeCrU9RvmMNgsLyFfWVvwSSdTT1uzMeRBb4TLnnkRPKhfHib4CZQak0v6bdm20PAGp+y8DMdYgP8WjEvx/ob/XAUuCbF6DPfPvIWw1dQMA+38oHMPmymBOalzHxbyAdorbXhKTdh7YFZzBfy5Qq7fiZRKFkGOSJUjxYt4I/BD6LGi9
-x-forefront-antispam-report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
- IPV:NLI; SFV:NSPM; H:AM8PR07MB7602.eurprd07.prod.outlook.com; PTR:; CAT:NONE;
- SFS:(13230040)(1800799024)(376014)(7416014)(366016)(38070700021)(4143699003)(56012099006)(3023799007)(11063799006)(22082099003)(18002099003);
- DIR:OUT; SFP:1101; 
-x-ms-exchange-antispam-messagedata-chunkcount: 1
-x-ms-exchange-antispam-messagedata-0: =?utf-8?B?YTBuZDZRVk9Gd0ZXVTU4THF5YmJiRnJpa3dzdkMxcEhvcjNuNEpNbnAvaXRt?=
- =?utf-8?B?L0ExUXpZcUR3QU9WRzBiTEQvZ3p5dGhUN1FkS0NLcVA1VTM5b05YV0l1c1hv?=
- =?utf-8?B?alVmc1JtN2E1UmRvOHpCcHR1aFFucURBN3dtc2hwTHpqVFdnWUk0L3ZvNnc1?=
- =?utf-8?B?Yk9XNURzeVVJVXFnc0wyRHAwMkU3cldCZ1I2Z0gwTVhnMnpKbGV1b2hkKy9m?=
- =?utf-8?B?cFVJRTh2V2FwWjFONjg0bjkxbFZWcTh4ZS9RdFVqUnBJR3JxbE42WkEyem0x?=
- =?utf-8?B?SnBrN3lmYTRJUDR1dkQvWGNrR2RWSnhrbUJUVHI4MDhnTTBjNHRtbEovQVNy?=
- =?utf-8?B?cEE3aWxZUGlVTEpydkFVZS9DU0xkWXhvNjlLbDMxcU53ekZqMjg2Z01laG0r?=
- =?utf-8?B?RTE4YkIvUndQNWhzWDhQN2VJQnM5ZkFoU1RRRWt1eEJVUERqT1oyYnhIRHRk?=
- =?utf-8?B?MThRNFZqUU9wR2o0bVFjUU51MTNiN0lNZ2lWaGlUcmszVUoydHhMODhKMGxF?=
- =?utf-8?B?Y1lDWVRaRWR3c0JzdlpQUEZpWHlhaHMwMEpHbEJYWU5IWHJVOFBiUS9teVhL?=
- =?utf-8?B?U2NnazBFVTNLN2Q1d0tMZXM3N1IySzdHMUVKbXNWdXBjWmRLTTlNZjlQM25M?=
- =?utf-8?B?clJuaHpUaW9QS3dzdy9CeWtYc0JJcW43SjJCd3l4RDkvMVViMElWMEtzcDFT?=
- =?utf-8?B?RG93QUwyWm5uY1lLSXRXU2JLVFU3TWtsc29DSjN2TlFES1ZIbno0UTZnVTcw?=
- =?utf-8?B?TkhpdXBsZmhqc3h4dmJqTVhqVTBPSkFjbVdSbVJQY25qeTl4RDVEemI5WS9w?=
- =?utf-8?B?b25TYTNwajVQM09qSTd1dmJPYjdvVDF2S0JQRnZnZFJab0JyR3Y1SG5mQnVW?=
- =?utf-8?B?TVgvQ3VNaUh1V1NkNVRvaFVldk05aU5Xc2gyMjN2NTh3UUxlRkdkWnBoTDhV?=
- =?utf-8?B?aDdGV2l2YjZIWVlGWS9KaTdtY2tMSXhvWWVZOE0zOHVlODMrL0hsR1ErbGxT?=
- =?utf-8?B?bll4bXphTjBNQXlOTXZjWjkzOTdkdmhnbWpqZGE2T3NoVnlDK1lXWTZPMUZC?=
- =?utf-8?B?V0U5a2lDRnIzbndoczkxL3pVTkVaNW5hTEwyVU9USFYzZHJuN1JjNkRQeDR4?=
- =?utf-8?B?USt5cnJsaXg4UDNUQU1jL1Q3czI0eUorcmpUMkxBd2tuTjJYRUpmT01sR3Bm?=
- =?utf-8?B?QXNmZ09HbWZ0aU42UG9iYktlV3Zzbit6ekh1QUdscGMzV3h1eEpZcVBnWDZq?=
- =?utf-8?B?VnpBR0RLTUZER1pBdXFWSXFTUy9QSnc2bHlyYlBpTW1icWdBQmxyODA1YUJZ?=
- =?utf-8?B?cjVsR3hrOTFGUjdheUIxc3I5RVV2dEVQd1BLcHkvNS8yQ01HTlNjc0JLY0Fa?=
- =?utf-8?B?YytXSEUwOWNRV1lGRFV1ckdoaWVnU3UzYVdjSGV1YTRUeUdjNUthRDVvK0Ux?=
- =?utf-8?B?MXlBOTcrbEY5c05QZjdUMEZCSXVVYlRBajI1SVB2OXM1a3dhQW1CWitQb05L?=
- =?utf-8?B?N3RSZnl2U0UzSkczRWQ4bFh5aldLL041T2dQcUxLeWVRMllqK1ZaTUVzY0pD?=
- =?utf-8?B?a0dNcFVNRzBSY1NGZmtRNExNYUpSUkd5VWxhMXBxbTM2djR1M3RSQTVKV3U0?=
- =?utf-8?B?NUkwSDFvYWR4UjBIcllwM1RxTm1FaEZyaFJ6Rk5SNXVyUHBnREFxRzNZZEdP?=
- =?utf-8?B?VXBUbmxjeDNoeFZISXI1R2hYQzlIcnJmRFVQMVVDM09POVlESU5WTjROVFFj?=
- =?utf-8?B?a2tGVjRBdE1RK3BnU09uT0dJRXpBQ1dvOEhEVXJIdUgwZDJVVHFlOEtxdGNi?=
- =?utf-8?B?T3B2cUJ6a0NFV1JJNVA1WFkyUU5HSkpSRWhTcEFIRHpSbEl4S2w1eVFFdWJG?=
- =?utf-8?B?NUMyUzMxYjZJbkF1YlJnOTZ3YmU3b1RtaFlKc0tJYldVcVV5TWJ1OFhOaE1G?=
- =?utf-8?B?NHZkMTBOdXdjZXpLM1YxaVU1SVVEb2lNUFY3TmxzcHIwSG5yb2VtT01neGVW?=
- =?utf-8?B?bCtwalo1Lzg5bnMzb2FEd1Rjb3FaakEwbXVWTTVoNU5QRVhXc1RoRCtlSC9P?=
- =?utf-8?B?cnkvbkxzL2JSb2VTZU1oMUhYVDErZy94ZGZJbzcwbEdQQ1VhbXB3RnRYeE0w?=
- =?utf-8?B?R05EbFQvNHlLMEU3dDlzaW45MWl0UmdzZ016VDJocWNhV3EvVDFsOUFIdFBD?=
- =?utf-8?B?amdJYWM5cUJrMlF0cE1reFdkTTZ5WVp4ek5rTEFYa3BZNW1XZGg2c3dMdE93?=
- =?utf-8?B?aHdFYzNnelVzbHpDRXpTQ3ZmTm9ZaU9pL0JvNDdUZDlIZjVWVkx5SG5pMnhi?=
- =?utf-8?B?K3RyRG5zaFltSTNkdGkyWUR5clVuTnJQNDdPZ3VuVW1BcHBVUkd3L24yeE90?=
- =?utf-8?Q?bagVT/uyLo8wvb+o=3D?=
-Content-Type: text/plain; charset="utf-8"
-Content-ID: <E6079CC1DB6F734EA9D6A4107BE994E5@eurprd07.prod.outlook.com>
-Content-Transfer-Encoding: base64
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1wUJ6h-00020f-RA
+ for qemu-devel@nongnu.org; Tue, 02 Jun 2026 03:00:13 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1780383608;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=+TVsXtVMZ8rV5wQemwgJHTieiteqYEbIHXxXuSg1md4=;
+ b=etA0czVxv9pwIQfeKNJQLvnSCE3K1L/TKsfFBceqG1rnLjjdHt++TDAJIVk8BOUeRlXONf
+ lNN/BeUlgoF1nyAkfOmDlSK+92bRM9wvquenZiLDXkW2Spu1vFphvEQ5jjKeLon9kU7luu
+ 32MHTwugr4/hvk5Msj8m/TNOv8l46Rw=
+Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-408-dcr3KtctMH-PJjs0e3xCmQ-1; Tue,
+ 02 Jun 2026 03:00:04 -0400
+X-MC-Unique: dcr3KtctMH-PJjs0e3xCmQ-1
+X-Mimecast-MFC-AGG-ID: dcr3KtctMH-PJjs0e3xCmQ_1780383604
+Received: from mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.17])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id B855F1800372; Tue,  2 Jun 2026 07:00:03 +0000 (UTC)
+Received: from blackfin.pond.sub.org (unknown [10.44.22.2])
+ by mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 1D95E1956095; Tue,  2 Jun 2026 07:00:03 +0000 (UTC)
+Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
+ id A76BB21E6A01; Tue, 02 Jun 2026 09:00:00 +0200 (CEST)
+From: Markus Armbruster <armbru@redhat.com>
+To: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
+Cc: qemu-devel@nongnu.org,  philmd@linaro.org,  John Snow
+ <jsnow@redhat.com>,  Cleber Rosa <cleber@redhat.com>
+Subject: Re: [PATCH 00/39] MAINTAINERS: Fix F: lines
+In-Reply-To: <c7cc0040-872d-425c-827f-c57db87ee12c@oss.qualcomm.com> (Pierrick
+ Bouvier's message of "Mon, 1 Jun 2026 12:03:30 -0700")
+References: <20260521080511.999266-1-armbru@redhat.com>
+ <d52c0fca-3a8a-4d4f-abff-f772605512b8@oss.qualcomm.com>
+ <87y0gy8thg.fsf@pond.sub.org>
+ <c7cc0040-872d-425c-827f-c57db87ee12c@oss.qualcomm.com>
+Date: Tue, 02 Jun 2026 09:00:00 +0200
+Message-ID: <87wlwh77gv.fsf@pond.sub.org>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 MIME-Version: 1.0
-X-Exchange-RoutingPolicyChecked: MAmdhzPEV2LKzeKcSGq9SBGpe817OfHI8c/UPMCs8Ui02rKWNLpH6IMh7DHPHDKFEdrjQNvCgupPmYnHRUz68db5jFaq8r1NfbwIGceLDoqW1hCHk/4fzxXmVq8ixUtCw09dbsRHhS9i27LI3j37KzEcqbO7+GUIU2gROD5i+v3jW/sfeAJyjoOQgWvFUOj9jFGFipUtK5Pnz+VdkP5l27YtiAmUcwZfY6fIkC3sDgpQi+hYgTq7WT1AIOSym/yZI5WZAJiTSkZSEN2wL9Fum/hG+a5OwTRtDORMv/pdjsPtstyEQj+xtjX4erX+1df3wk2FOaL4dKAYJhsLFgDQyQ==
-X-OriginatorOrg: bull.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-AuthSource: AM8PR07MB7602.eurprd07.prod.outlook.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 32c8ec68-c9e1-465e-4949-08dec073b209
-X-MS-Exchange-CrossTenant-originalarrivaltime: 02 Jun 2026 06:53:47.3892 (UTC)
-X-MS-Exchange-CrossTenant-fromentityheader: Hosted
-X-MS-Exchange-CrossTenant-id: 7d1c7785-2d8a-437d-b842-1ed5d8fbe00a
-X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
-X-MS-Exchange-CrossTenant-userprincipalname: Cm9VY5oh/Nt2tSWwfLUlyBIRQpDKjCkqoO7MYve2O6nxYm1KwVoAzv2OaGgQH7Fr8aD2aHeH+MGxDejnA4j5jBPrs9bRXliPxD/II7LLX6U=
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: FRWPR07MB10787
-Received-SPF: pass client-ip=80.78.11.82;
- envelope-from=clement.mathieu--drif@bull.com; helo=smarthost1.eviden.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.17
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=armbru@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -24
+X-Spam_score: -2.5
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_PASS=-0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.445,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -181,59 +89,294 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-SGkgWmhlbnpob25nLAoKUmV2aWV3ZWQtYnk6IENsZW1lbnQgTWF0aGlldS0tRHJpZiA8Y2xlbWVu
-dC5tYXRoaWV1LS1kcmlmQGJ1bGwuY29tPgoKT24gV2VkLCAyMDI2LTA1LTI3IGF0IDAxOjQ2IC0w
-NDAwLCBaaGVuemhvbmcgRHVhbiB3cm90ZToKPiBDYXV0aW9uOiBFeHRlcm5hbCBlbWFpbC4gRG8g
-bm90IG9wZW4gYXR0YWNobWVudHMgb3IgY2xpY2sgbGlua3MsIHVubGVzcyB0aGlzIGVtYWlsIGNv
-bWVzIGZyb20gYSBrbm93biBzZW5kZXIgYW5kIHlvdSBrbm93IHRoZSBjb250ZW50IGlzIHNhZmUu
-Cj4gCj4gCj4gUmVmYWN0b3IgdnRkX2Rldl9nZXRfcGVfZnJvbV9wYXNpZCgpIHRvIHRha2UgaW5k
-aXZpZHVhbCBwYXJhbWV0ZXJzICAKPiAoSW50ZWxJT01NVVN0YXRlLCBQQ0lCdXMsIGRldmZuLCBw
-YXNpZCkgaW5zdGVhZCBvZiBWVERBZGRyZXNzU3BhY2UuCj4gCj4gVGhpcyBtYWtlcyB0aGUgZnVu
-Y3Rpb24gbW9yZSByZXVzYWJsZSBhbmQgcHJlcGFyZXMgaXQgZm9yIGV4cG9ydCB0byBiZSAgCj4g
-dXNlZCBpbiB0aGUgYWNjZWxlcmF0aW9uIHBhdGguIFJlbW92ZSBpbmxpbmUgcXVhbGlmaWVyIGFz
-IHRoZSBmdW5jdGlvbiAgCj4gd2lsbCBiZSBleHBvcnRlZCBpbiBhIHN1YnNlcXVlbnQgcGF0Y2gu
-Cj4gCj4gTm8gZnVuY3Rpb25hbCBjaGFuZ2VzIGludGVuZGVkLgo+IAo+IFN1Z2dlc3RlZC1ieTog
-WWkgTGl1IDxbeWkubC5saXVAaW50ZWwuY29tXShtYWlsdG86eWkubC5saXVAaW50ZWwuY29tKT4g
-IAo+IFNpZ25lZC1vZmYtYnk6IFpoZW56aG9uZyBEdWFuIDxbemhlbnpob25nLmR1YW5AaW50ZWwu
-Y29tXShtYWlsdG86emhlbnpob25nLmR1YW5AaW50ZWwuY29tKT4gIAo+IC0tLSAgCj4gwqBody9p
-Mzg2L2ludGVsX2lvbW11LmMgfCAxNCArKysrKysrLS0tLS0tLSAgCj4gwqAxIGZpbGUgY2hhbmdl
-ZCwgNyBpbnNlcnRpb25zKCspLCA3IGRlbGV0aW9ucygtKQo+IAo+IGRpZmYgLS1naXQgYS9ody9p
-Mzg2L2ludGVsX2lvbW11LmMgYi9ody9pMzg2L2ludGVsX2lvbW11LmMgIAo+IGluZGV4IGNmMjc1
-YjQ5NmUuLmFhMjcxODdlMDIgMTAwNjQ0ICAKPiAtLS0gYS9ody9pMzg2L2ludGVsX2lvbW11LmMg
-IAo+ICsrKyBiL2h3L2kzODYvaW50ZWxfaW9tbXUuYyAgCj4gQEAgLTMxMTMsMTAgKzMxMTMsMTAg
-QEAgc3RhdGljIGJvb2wgdnRkX3Byb2Nlc3NfcGlvdGxiX2Rlc2MoSW50ZWxJT01NVVN0YXRlICpz
-LCAgCj4gwqDCoMKgwqAgcmV0dXJuIHRydWU7ICAKPiDCoH0KPiAKPiAtc3RhdGljIGlubGluZSBp
-bnQgdnRkX2Rldl9nZXRfcGVfZnJvbV9wYXNpZChWVERBZGRyZXNzU3BhY2UgKnZ0ZF9hcywgIAo+
-IC3CoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDC
-oMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoCBWVERQQVNJREVudHJ5ICpwZSkgIAo+ICtz
-dGF0aWMgaW50IHZ0ZF9kZXZfZ2V0X3BlX2Zyb21fcGFzaWQoSW50ZWxJT01NVVN0YXRlICpzLCBQ
-Q0lCdXMgKmJ1cywgIAo+ICvCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKg
-wqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqAgdWludDhfdCBkZXZmbiwgdWludDMyX3Qg
-cGFzaWQsICAKPiArwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDC
-oMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgIFZURFBBU0lERW50cnkgKnBlKSAgCj4gwqB7ICAK
-PiAtwqDCoMKgIEludGVsSU9NTVVTdGF0ZSAqcyA9IHZ0ZF9hcy0+aW9tbXVfc3RhdGU7ICAKPiDC
-oMKgwqDCoCBWVERDb250ZXh0RW50cnkgY2U7ICAKPiDCoMKgwqDCoCBpbnQgcmV0Owo+IAo+IEBA
-IC0zMTI0LDEzICszMTI0LDEyIEBAIHN0YXRpYyBpbmxpbmUgaW50IHZ0ZF9kZXZfZ2V0X3BlX2Zy
-b21fcGFzaWQoVlREQWRkcmVzc1NwYWNlICp2dGRfYXMsICAKPiDCoMKgwqDCoMKgwqDCoMKgIHJl
-dHVybiAtVlREX0ZSX1JUQUREUl9JTlZfVFRNOyAgCj4gwqDCoMKgwqAgfQo+IAo+IC3CoMKgwqAg
-cmV0ID0gdnRkX2Rldl90b19jb250ZXh0X2VudHJ5KHMsIHBjaV9idXNfbnVtKHZ0ZF9hcy0+YnVz
-KSwgdnRkX2FzLT5kZXZmbiwgIAo+IC3CoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKg
-wqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoCAmY2UpOyAgCj4gK8KgwqDCoCByZXQg
-PSB2dGRfZGV2X3RvX2NvbnRleHRfZW50cnkocywgcGNpX2J1c19udW0oYnVzKSwgZGV2Zm4sICZj
-ZSk7ICAKPiDCoMKgwqDCoCBpZiAocmV0KSB7ICAKPiDCoMKgwqDCoMKgwqDCoMKgIHJldHVybiBy
-ZXQ7ICAKPiDCoMKgwqDCoCB9Cj4gCj4gLcKgwqDCoCByZXR1cm4gdnRkX2NlX2dldF9wYXNpZF9l
-bnRyeShzLCAmY2UsIHBlLCB2dGRfYXMtPnBhc2lkKTsgIAo+ICvCoMKgwqAgcmV0dXJuIHZ0ZF9j
-ZV9nZXRfcGFzaWRfZW50cnkocywgJmNlLCBwZSwgcGFzaWQpOyAgCj4gwqB9Cj4gCj4gwqBzdGF0
-aWMgaW50IHZ0ZF9wYXNpZF9lbnRyeV9jb21wYXJlKFZURFBBU0lERW50cnkgKnAxLCBWVERQQVNJ
-REVudHJ5ICpwMikgIAo+IEBAIC0zMTUxLDcgKzMxNTAsOCBAQCBzdGF0aWMgdm9pZCB2dGRfcGFz
-aWRfY2FjaGVfc3luY19sb2NrZWQoZ3BvaW50ZXIga2V5LCBncG9pbnRlciB2YWx1ZSwgIAo+IMKg
-wqDCoMKgIGNvbnN0IGNoYXIgKmVycl9wcmVmaXggPSAiQXR0YWNoaW5nIHRvIEhXUFQgZmFpbGVk
-OiAiOyAgCj4gwqDCoMKgwqAgRXJyb3IgKmxvY2FsX2VyciA9IE5VTEw7Cj4gCj4gLcKgwqDCoCBp
-ZiAodnRkX2Rldl9nZXRfcGVfZnJvbV9wYXNpZCh2dGRfYXMsICZwZSkpIHsgIAo+ICvCoMKgwqAg
-aWYgKHZ0ZF9kZXZfZ2V0X3BlX2Zyb21fcGFzaWQodnRkX2FzLT5pb21tdV9zdGF0ZSwgdnRkX2Fz
-LT5idXMsICAKPiArwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDC
-oMKgwqDCoMKgwqDCoMKgwqDCoMKgIHZ0ZF9hcy0+ZGV2Zm4sIHZ0ZF9hcy0+cGFzaWQsICZwZSkp
-IHsgIAo+IMKgwqDCoMKgwqDCoMKgwqAgaWYgKCFwY19lbnRyeS0+dmFsaWQpIHsgIAo+IMKgwqDC
-oMKgwqDCoMKgwqDCoMKgwqDCoCByZXR1cm47ICAKPiDCoMKgwqDCoMKgwqDCoMKgIH0gIAo+IC0t
-ICAKPiAyLjQ3LjMKPiAK
+Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com> writes:
+
+> On 6/1/2026 3:06 AM, Markus Armbruster wrote:
+>> Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com> writes:
+>>=20
+>>> Hi Markus,
+>>>
+>>> On 5/21/2026 1:04 AM, Markus Armbruster wrote:
+>>>> Quite a few F: lines don't match any files.  The quick & dirty check
+>>>>
+>>>>     $ ls `sed -n 's/^F: *//p' MAINTAINERS ` >/dev/null
+>>>>
+>>>> finds about fifty.
+>>>>
+>>>> Philippe Mathieu-Daud=C3=A9 recently posted a few fixes:
+>>>>
+>>>>   MAINTAINERS: Fix docker/dockerfiles/debian-hexagon-cross.docker path
+>>>>   MAINTAINERS: Cover debian-loongarch-cross.docker with LoongArch sect=
+ion
+>>>>   MAINTAINERS: Cover debian-xtensa-cross.docker with Xtensa section
+>>>>   MAINTAINERS: Cover debian-tricore-cross.docker with TriCore section
+>>>>   MAINTAINERS: Cover python.docker with Python library section
+>>>>   MAINTAINERS: Fix s390x storage key/attribute device paths
+>>>>   MAINTAINERS: Fix tcg/s390x/ path
+>>>>   MAINTAINERS: Correct scripts/coverity-model.c path
+>>>>   MAINTAINERS: Fix hexagon-linux-user.mak path
+
+[...]
+
+>>> In addition, see the patch attached to this email.
+>>> It integrates checking this directly at configure time, so we never run
+>>> into any missing entry again in the future.
+>>>
+>>> I share this here not for a review, but simply to avoid a duplicated
+>>> effort, and make sure people know it will be sent after this series.
+>>>
+>>> I don't believe in adding this in checkpatch, because it's not enforced
+>>> systematically unfortunately. Breaking the meson configuration is a good
+>>> way to make sure it's enforced by design.
+>>=20
+>> No objection.
+>>=20
+>>> With your series applied, the left entries are:
+>>=20
+>> Most of these are fixed in Philippe's patches mentioned above.
+>>
+>
+> =F0=9F=91=8D
+>
+>>> No matching files for /usr2/pbouvier/.work/qemu/MAINTAINERS +258:
+>>> configs/targets/hexagon-linux-user/default.mak
+>>=20
+>> MAINTAINERS: Fix hexagon-linux-user.mak path
+>>=20
+>>> No matching files for /usr2/pbouvier/.work/qemu/MAINTAINERS +259:
+>>> docker/dockerfiles/debian-hexagon-cross.docker
+>>=20
+>> MAINTAINERS: Fix docker/dockerfiles/debian-hexagon-cross.docker path
+>>=20
+>>> No matching files for /usr2/pbouvier/.work/qemu/MAINTAINERS +2956:
+>>> hw/s390x/storage-keys.h
+>>> No matching files for /usr2/pbouvier/.work/qemu/MAINTAINERS +2965:
+>>> hw/s390x/storage-attributes.h
+>>=20
+>> MAINTAINERS: Fix s390x storage key/attribute device paths
+>>=20
+>>> No matching files for /usr2/pbouvier/.work/qemu/MAINTAINERS +3241:
+>>> scripts/coverity-model.c
+>>=20
+>> MAINTAINERS: Correct scripts/coverity-model.c path
+>>=20
+>>> No matching files for /usr2/pbouvier/.work/qemu/MAINTAINERS +3468:
+>>> tests/*.py
+>>=20
+>> This is the exception I mentioned above.
+>>=20
+>> The intent is to match *.py below tests/.  It actually matches only in
+>> tests/, not in its subdirectories.
+>>=20
+>> Here's a dumb fix:
+>>=20
+>>     F: tests/*.py
+>>     F: tests/*/*.py
+>>     F: tests/*/*/*.py
+>>     F: tests/*/*/*/*.py
+>>=20
+>
+> It's acceptable, and nice because it's not ambiguous.
+> Also, it shows us the first line is not a correct entry (there is no
+> tests/*.py).
+
+It's also brittle: breaks when we add the first .py at level.
+
+>> for however many levels we have.  Same for the scripts/ line next to it.
+>> Blech.
+>>=20
+>> The smart fix might be to port N: from the kernel.
+>>=20
+>> 	N: Files and directories *Regex* patterns.
+>> 	   N:	[^a-z]tegra	all files whose path contains tegra
+>> 	                        (not including files like integrator)
+>> 	   One pattern per line.  Multiple N: lines acceptable.
+>> 	   scripts/get_maintainer.pl has different behavior for files that
+>> 	   match F: pattern and matches of N: patterns.  By default,
+>> 	   get_maintainer will not look at git log history when an F: pattern
+>> 	   match occurs.  When an N: match occurs, git log history is used
+>> 	   to also notify the people that have git commit signatures.
+>>=20
+>> But I wonder: is this section useful at all?
+>
+> I would prefer to use the manual entries approach above, especially if
+> there is only folder that is concerned.
+> When we'll have two different use case, maybe we can consider a more
+> generic approach.
+
+I'm aware of just two:
+
+    Python scripts
+    M: John Snow <jsnow@redhat.com>
+    M: Cleber Rosa <crosa@redhat.com>
+    S: Odd Fixes
+    F: scripts/*.py
+    F: tests/*.py
+
+The section was added almost a decade ago (commit ad904f6689f), and
+never worked as intended.  I asked John Snow about deleting it to
+unblock your work.  He told me he'd be fine with that.  Could add it
+back later fixed.
+
+>>> No matching files for /usr2/pbouvier/.work/qemu/MAINTAINERS +4149:
+>>> tcg/s390/
+>>=20
+>> MAINTAINERS: Fix tcg/s390x/ path
+>>=20
+>>> Once your current series is pulled, I'll fix the remaining and send the
+>>> attached patch. Or feel free to do it directly if you like the idea :)
+>>>
+>>> Regards,
+>>> Pierrick
+>>=20
+>> Two remarks inline.
+>>=20
+>>> From 6c9b49ac7ec06c0159d2b4ba9c9d1081e02ef765 Mon Sep 17 00:00:00 2001
+>>> From: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
+>>> Date: Fri, 22 May 2026 12:23:17 -0700
+>>> Subject: [PATCH] meson.build: check MAINTAINERS file is consistent with=
+ source
+>>>  tree
+>>>
+>>> We add a new script: scripts/check-maintainers-file.py, that will run at
+>>> configuration time (and not at build time), to not hurt build time.
+>>> This script runs in 0.2s on my dev VM, which has an old cpu.
+>>>
+>>> We can expect things to be mostly in sync since adding or removing a
+>>> source or test file will trigger a configure step.
+>>> For the rest, like docs, tcg tests, or remaining files, GitLab CI will
+>>> build things from scratch and always run the configure step.
+>>>
+>>> With this, it should be impossible by design to have an upstream
+>>> MAINTAINERS file with non existing file entries.
+>>>
+>>> Signed-off-by: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
+>>> ---
+>>>  meson.build                       |  5 +++
+>>>  scripts/check-maintainers-file.py | 53 +++++++++++++++++++++++++++++++
+>>>  2 files changed, 58 insertions(+)
+>>>  create mode 100755 scripts/check-maintainers-file.py
+>>>
+>>> diff --git a/meson.build b/meson.build
+>>> index eeb096c1487..ddfb0b90ca6 100644
+>>> --- a/meson.build
+>>> +++ b/meson.build
+>>> @@ -18,6 +18,11 @@ add_test_setup('thorough',
+>>>=20=20
+>>>  meson.add_postconf_script(find_program('scripts/symlink-install-tree.p=
+y'))
+>>>=20=20
+>>> +# check our MAINTAINERS file is consistent
+>>> +check_maintainers =3D find_program('scripts/check-maintainers-file.py')
+>>> +maintainers_file =3D files('MAINTAINERS')
+>>> +run_command([check_maintainers, maintainers_file], check: true, consol=
+e: true)
+>>=20
+>> My version of meson (1.8.5) chokes on console: true.  According to
+>> https://mesonbuild.com/Reference-manual_functions_run_command.html#run_c=
+ommand_console
+>> it's new in 1.11.0.
+>>
+>
+> Our configure script creates a venv with an updated version of meson,
+> which is 1.11.1 at the moment.
+> If you called meson directly (which uses your host meson), it's not how
+> we're supposed to build QEMU.
+> How did you try this?
+
+I ran make :)
+
+>> I tested with it deleted.
+>>=20
+>>> +
+>>>  ####################
+>>>  # Global variables #
+>>>  ####################
+>>> diff --git a/scripts/check-maintainers-file.py b/scripts/check-maintain=
+ers-file.py
+>>> new file mode 100755
+>>> index 00000000000..b001816a401
+>>> --- /dev/null
+>>> +++ b/scripts/check-maintainers-file.py
+>>> @@ -0,0 +1,53 @@
+>>> +#! /usr/bin/env python3
+>>> +
+>>> +# Check incorrect file entries in MAINTAINERS
+>>> +#
+>>> +# Author: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
+>>> +#
+>>> +# SPDX-License-Identifier: GPL-2.0-or-later
+>>> +
+>>> +import argparse
+>>> +import glob
+>>> +import sys
+>>> +
+>>> +
+>>> +def check_one_entry(line) -> bool:
+>>> +    return True
+>>> +
+>>> +
+>>> +def main() -> None:
+>>> +    parser =3D argparse.ArgumentParser(description=3D"Check MAINTAINER=
+S file")
+>>> +    parser.add_argument("maintainers", help=3D"Path to MAINTAINERS fil=
+e")
+>>> +    args =3D parser.parse_args()
+>>> +
+>>> +    found_file_entry =3D False
+>>> +    found_incorrect_entries =3D False
+>>> +    line_counter =3D 0
+>>> +
+>>> +    with open(args.maintainers) as file:
+>>> +        for entry in file:
+>>> +            line_counter +=3D 1
+>>> +
+>>> +            if not entry.startswith("F:"):
+>>> +                continue
+>>> +            entry =3D entry[2:].strip()
+>>> +            found_file_entry =3D True
+>>> +
+>>> +            file_exists =3D len(glob.glob(entry, recursive=3DTrue)) > 0
+>>=20
+>> I'm afraid this matches files not in git, just like my quick & dirty
+>> one-liner.  Shouldn't we match against contents of HEAD, say output of
+>> "git-ls-tree -r --name-only @"?
+>>
+>
+> I don't think it's needed to restrict to git ls-tree. The only risk is
+> that people have a local file they forgot (or didn't want) to add in
+> git. It will be caught by CI that won't have such a file, so we're safe.
+>
+> What do you think?
+
+Yes, we're safe, but the earlier we catch mistakes, the better.  Now,
+the juice isn't always worth the squeeze.  How hard would we have to
+squeeze here?  We could use fnmatch.filter(names, pat) to test whether
+@pat matches anything in @names, where @names is from git-ls-tree.
+
+>>> +            if file_exists:
+>>> +                continue
+>>> +
+>>> +            found_incorrect_entries =3D True
+>>> +            print(
+>>> +                f"No matching files for {args.maintainers} +{line_coun=
+ter}: {entry}",
+>>> +                file=3Dsys.stderr,
+>>> +            )
+>>> +
+>>> +    if not found_file_entry:
+>>> +        raise Exception("no file entry found - is MAINTAINERS path cor=
+rect?")
+>>> +    if found_incorrect_entries:
+>>> +        raise Exception(f"incorrect entries found in {args.maintainers=
+}")
+>>> +
+>>> +
+>>> +if __name__ =3D=3D "__main__":
+>>> +    main()
+>>=20
+>
+> Regards,
+> Pierrick
+
 
