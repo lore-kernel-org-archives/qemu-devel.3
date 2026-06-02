@@ -4,65 +4,65 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7730BCD6E5D
-	for <qemu-devel@archiver.kernel.org>; Tue,  2 Jun 2026 23:19:47 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E834ACD5BD1
+	for <qemu-devel@archiver.kernel.org>; Tue,  2 Jun 2026 23:20:02 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wUYNs-00035B-E6; Tue, 02 Jun 2026 19:18:56 -0400
+	id 1wUYNr-000351-07; Tue, 02 Jun 2026 19:18:55 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <dave@stgolabs.net>) id 1wUYNq-00034f-KM
- for qemu-devel@nongnu.org; Tue, 02 Jun 2026 19:18:54 -0400
+ (Exim 4.90_1) (envelope-from <dave@stgolabs.net>) id 1wUYNo-000340-U8
+ for qemu-devel@nongnu.org; Tue, 02 Jun 2026 19:18:52 -0400
 Received: from iguana.tulip.relay.mailchannels.net ([23.83.218.253])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <dave@stgolabs.net>) id 1wUYNp-0008MX-5h
- for qemu-devel@nongnu.org; Tue, 02 Jun 2026 19:18:54 -0400
+ (Exim 4.90_1) (envelope-from <dave@stgolabs.net>) id 1wUYNn-0008MI-BL
+ for qemu-devel@nongnu.org; Tue, 02 Jun 2026 19:18:52 -0400
 X-Sender-Id: dreamhost|x-authsender|dave@stgolabs.net
 Received: from relay.mailchannels.net (localhost [127.0.0.1])
- by relay.mailchannels.net (Postfix) with ESMTP id 54A0462F2F;
- Tue, 02 Jun 2026 23:18:51 +0000 (UTC)
+ by relay.mailchannels.net (Postfix) with ESMTP id AFC4C721ED6;
+ Tue, 02 Jun 2026 23:18:49 +0000 (UTC)
 Received: from pdx1-sub0-mail-a251.dreamhost.com
- (100-101-141-32.trex-nlb.outbound.svc.cluster.local [100.101.141.32])
+ (100-109-199-18.trex-nlb.outbound.svc.cluster.local [100.109.199.18])
  (Authenticated sender: dreamhost)
- by relay.mailchannels.net (Postfix) with ESMTPA id 0982B62B1F;
- Tue, 02 Jun 2026 23:18:51 +0000 (UTC)
+ by relay.mailchannels.net (Postfix) with ESMTPA id 2DD507208C6;
+ Tue, 02 Jun 2026 23:18:49 +0000 (UTC)
 X-Sender-Id: dreamhost|x-authsender|dave@stgolabs.net
 X-MC-Relay: Neutral
 X-MailChannels-SenderId: dreamhost|x-authsender|dave@stgolabs.net
 X-MailChannels-Auth-Id: dreamhost
-X-Plucky-Spot: 2b67ec0f0938dd5a_1780442331265_451508995
-X-MC-Loop-Signature: 1780442331265:3454953683
-X-MC-Ingress-Time: 1780442331265
+X-Ski-Bored: 3126b925763d1e9f_1780442329622_3306041104
+X-MC-Loop-Signature: 1780442329622:256772112
+X-MC-Ingress-Time: 1780442329621
 Received: from pdx1-sub0-mail-a251.dreamhost.com (pop.dreamhost.com
  [64.90.62.162]) (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384)
- by 100.101.141.32 (trex/7.1.5); Tue, 02 Jun 2026 23:18:51 +0000
+ by 100.109.199.18 (trex/7.1.5); Tue, 02 Jun 2026 23:18:49 +0000
 Received: from localhost.localdomain (unknown [181.212.92.203])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
  (Authenticated sender: dave@stgolabs.net)
- by pdx1-sub0-mail-a251.dreamhost.com (Postfix) with ESMTPSA id 4gVRbY3GnCz107p;
- Tue,  2 Jun 2026 16:18:49 -0700 (PDT)
+ by pdx1-sub0-mail-a251.dreamhost.com (Postfix) with ESMTPSA id 4gVRbW4jzTz107X;
+ Tue,  2 Jun 2026 16:18:47 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=stgolabs.net;
- s=dreamhost; t=1780442330;
- bh=2mGLD0wl25r1asFKim0hraTc613N8Kw+BsTweRKBvoo=;
+ s=dreamhost; t=1780442329;
+ bh=EUCYD7G0hS4r9cU0to/bYQKfqUIG9pVGYsJSpBxIsk8=;
  h=From:To:Cc:Subject:Date:Content-Transfer-Encoding;
- b=FcJjX5X0SEZ34VRIKdic6J42a6aneyxDPcWIZuLrLcfLOu9x2HqxZp735KAVX1GaB
- zZ9jKZFtCLKYNWTuocCA4ckI/26B+JMuBi2JTfbMEWuGrNlhAIjNOBNuWa40tR6/oV
- Lf+kGtwQVi7LS6zrnaF0BQzUiVccy4kBILbyXGwxbiZzSJn3arl+J/eFU2RDE4NbqT
- yyIZPZsmf+CCjhzTWuCbIg1h4CAGcFHauOpz+PKB4iVTjM0XMNwYxUVRst2qClwb1g
- WDs5feDAUep6J84V18zL8spNw1pWqbCrr47BfKrd1hxU/Jlc6VY/pdRWe/Cj0JIlzf
- 6WeHI0Lgnw54w==
+ b=Qsm48XZINYSgLbaLokaL/Wyj6m/ApOOvZssuEmoSBw2jF8zMhy56SZZRYg8BxGqxt
+ 3p2kHGoGp1t2r3vGkWzyV08xSGxNcpLGYXeF2+RMiJK+PaZqsggAGLoVdahBTjs/GL
+ BiVrh4VN962urZ/lfrOyHiUeuE0I2f7NVsoq4/b1GJo8HZfNTt3p6w35JvrRp5wYHE
+ UwrW1iGJBbFdhD4fBESi3u037hCw2MJ17Y57SLfWYlPQ8RRHNH0UHhflC1GS5PePMO
+ vYe+F0+VSqNG8H6LUBYFEEwbYWvu6dAomrw4Lv/1iLJSfRLxAPQLFwuQQBb/eHjGIo
+ 6JY9EEzm20i/w==
 From: Davidlohr Bueso <dave@stgolabs.net>
 To: jic23@kernel.org
 Cc: linux-cxl@vger.kernel.org,
 	qemu-devel@nongnu.org,
 	dave@stgolabs.net
-Subject: [PATCH 3/4] tests/acpi/cxl: Update CEDT.cxl for host-only default
+Subject: [PATCH 2/4] hw/cxl: Use host-only coherency for default CFMW
  restrictions
-Date: Tue,  2 Jun 2026 16:18:05 -0700
-Message-Id: <20260602231806.2469011-4-dave@stgolabs.net>
+Date: Tue,  2 Jun 2026 16:18:04 -0700
+Message-Id: <20260602231806.2469011-3-dave@stgolabs.net>
 X-Mailer: git-send-email 2.39.5
 In-Reply-To: <20260602231806.2469011-1-dave@stgolabs.net>
 References: <20260602231806.2469011-1-dave@stgolabs.net>
@@ -92,46 +92,32 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-With the default CXL Fixed Memory Window restrictions changed to
-host-only coherency, update the expected CEDT to drop Device Coherent
-and Back Invalidate from the advertised CFMWS restrictions.
+Change the default CXL Fixed Memory Window restrictions from 0x2f to
+0xe, dropping Device Coherent and Back-Invalidate.
 
-[064h 0100 001h]               Subtable Type : 01 [CXL Fixed Memory Window Structure]
-[065h 0101 001h]                    Reserved : 00
-[066h 0102 002h]                      Length : 0028
-[068h 0104 004h]                    Reserved : 00000000
-[06Ch 0108 008h]         Window base address : 0000000110000000
-[074h 0116 008h]                 Window size : 0000000100000000
-[07Ch 0124 001h]          Interleave Members : 00
-[07Dh 0125 001h]       Interleave Arithmetic : 00
-[07Eh 0126 002h]                    Reserved : 0000
-[080h 0128 004h]                 Granularity : 00000005
-[084h 0132 002h]                Restrictions : 000E # Changed from 002F
-[086h 0134 002h]                       QtgId : 0000
-[088h 0136 004h]                First Target : 0000000C
+host-only coherent combined with Back-Invalidate is undefined behavior.
+Device Coherent alongside host-only coherent is permitted by the spec
+(multiple restriction bits may be set) but advertises conflicting
+coherency modes; neither belongs in the host-only default.
 
 Signed-off-by: Davidlohr Bueso <dave@stgolabs.net>
 ---
- tests/data/acpi/x86/q35/CEDT.cxl            | Bin 184 -> 184 bytes
- tests/qtest/bios-tables-test-allowed-diff.h |   1 -
- 2 files changed, 1 deletion(-)
+ hw/acpi/cxl.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/tests/data/acpi/x86/q35/CEDT.cxl b/tests/data/acpi/x86/q35/CEDT.cxl
-index c35f3882eee67aa5613af427234d1ccd196aa249..15e30750b4d963eeced503204a5213f755892b77 100644
-GIT binary patch
-delta 36
-ncmdnNxPy_)+0`Xv2Ll5G<L8N7Rg8QSTh)2^fLtCRz6ZnrtV9Q{
-
-delta 36
-ncmdnNxPy_)+0`Xv2Ll5G<Hm_xRgC%*Th)2=fm|LSz6Znrs#OQB
-
-diff --git a/tests/qtest/bios-tables-test-allowed-diff.h b/tests/qtest/bios-tables-test-allowed-diff.h
-index b4646b5b3147..dfb8523c8bf4 100644
---- a/tests/qtest/bios-tables-test-allowed-diff.h
-+++ b/tests/qtest/bios-tables-test-allowed-diff.h
-@@ -1,2 +1 @@
- /* List of comma-separated changed AML files to ignore */
--"tests/data/acpi/x86/q35/CEDT.cxl",
+diff --git a/hw/acpi/cxl.c b/hw/acpi/cxl.c
+index f92f7fa3d558..5ce5e8e083ba 100644
+--- a/hw/acpi/cxl.c
++++ b/hw/acpi/cxl.c
+@@ -172,7 +172,7 @@ static void cedt_build_cfmws(CXLFixedWindow *fw, Aml *cedt)
+     build_append_int_noprefix(table_data, fw->enc_int_gran, 4);
+ 
+     /* Window Restrictions */
+-    build_append_int_noprefix(table_data, 0x2f, 2);
++    build_append_int_noprefix(table_data, 0xe, 2);
+ 
+     /* QTG ID */
+     build_append_int_noprefix(table_data, 0, 2);
 -- 
 2.39.5
 
