@@ -4,43 +4,43 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B08C8CD6E55
-	for <qemu-devel@archiver.kernel.org>; Tue,  2 Jun 2026 03:01:16 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9B56CCD6E55
+	for <qemu-devel@archiver.kernel.org>; Tue,  2 Jun 2026 03:01:25 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wUFNF-0005ne-6B; Mon, 01 Jun 2026 23:01:01 -0400
+	id 1wUFN0-0005kZ-FU; Mon, 01 Jun 2026 23:00:46 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <maobibo@loongson.cn>)
- id 1wUFNB-0005md-B4
- for qemu-devel@nongnu.org; Mon, 01 Jun 2026 23:00:57 -0400
+ id 1wUFMx-0005jV-Vs
+ for qemu-devel@nongnu.org; Mon, 01 Jun 2026 23:00:44 -0400
 Received: from mail.loongson.cn ([114.242.206.163])
  by eggs.gnu.org with esmtp (Exim 4.90_1)
- (envelope-from <maobibo@loongson.cn>) id 1wUFN9-0002JS-5L
- for qemu-devel@nongnu.org; Mon, 01 Jun 2026 23:00:57 -0400
+ (envelope-from <maobibo@loongson.cn>) id 1wUFMv-0002IX-E3
+ for qemu-devel@nongnu.org; Mon, 01 Jun 2026 23:00:43 -0400
 Received: from loongson.cn (unknown [10.2.5.213])
- by gateway (Coremail) with SMTP id _____8AxX+tbRx5qqpUPAA--.43338S3;
- Tue, 02 Jun 2026 11:00:43 +0800 (CST)
+ by gateway (Coremail) with SMTP id _____8AxFelXRx5qlZUPAA--.37476S3;
+ Tue, 02 Jun 2026 11:00:39 +0800 (CST)
 Received: from localhost.localdomain (unknown [10.2.5.213])
- by front1 (Coremail) with SMTP id qMiowJCx_8JaRx5q8NqYAA--.27121S2;
- Tue, 02 Jun 2026 11:00:42 +0800 (CST)
+ by front1 (Coremail) with SMTP id qMiowJDxzsJWRx5q7dqYAA--.27658S3;
+ Tue, 02 Jun 2026 11:00:38 +0800 (CST)
 From: Bibo Mao <maobibo@loongson.cn>
 To: Song Gao <gaosong@loongson.cn>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  Richard Henderson <richard.henderson@linaro.org>
 Cc: qemu-devel@nongnu.org, SignKirigami <prcups@krgm.moe>,
  Hengyu Yu <yuhengyu25@mails.ucas.ac.cn>
-Subject: [PATCH v2 12/13] target/loongarch: Add wrapper function
- get_csr_offset()
-Date: Tue,  2 Jun 2026 11:00:28 +0800
-Message-Id: <20260602030029.1476299-13-maobibo@loongson.cn>
+Subject: [PATCH v2 07/13] target/loongarch: Use sys_state in tcg_cpu.c when
+ accessing CSR registers
+Date: Tue,  2 Jun 2026 11:00:23 +0800
+Message-Id: <20260602030029.1476299-8-maobibo@loongson.cn>
 X-Mailer: git-send-email 2.39.3
 In-Reply-To: <20260602030029.1476299-1-maobibo@loongson.cn>
 References: <20260602030029.1476299-1-maobibo@loongson.cn>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-X-CM-TRANSID: qMiowJCx_8JaRx5q8NqYAA--.27121S2
+X-CM-TRANSID: qMiowJDxzsJWRx5q7dqYAA--.27658S3
 X-CM-SenderInfo: xpdruxter6z05rqj20fqof0/
 X-Coremail-Antispam: 1Uk129KBjDUn29KB7ZKAUJUUUUU529EdanIXcx71UUUUU7KY7
  ZEXasCq-sGcSsGvfJ3UbIjqfuFe4nvWSU5nxnvy29KBjDU0xBIdaVrnUUvcSsGvfC2Kfnx
@@ -67,121 +67,236 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Add wrapper function get_csr_offset(), it is to get offset from structure
-CPULoongArchState. There is no function change, and it is used for future
-LVZ feature.
+When accessing CSR registers in file tcg_cpu.c, use sys_state rather
+than env. There is no function change.
 
 Signed-off-by: Bibo Mao <maobibo@loongson.cn>
 ---
- target/loongarch/cpu.c                           |  4 ++--
- target/loongarch/csr.h                           |  4 ++++
- .../tcg/insn_trans/trans_privileged.c.inc        | 16 +++++++++++-----
- 3 files changed, 17 insertions(+), 7 deletions(-)
+ target/loongarch/tcg/tcg_cpu.c | 107 +++++++++++++++++----------------
+ 1 file changed, 56 insertions(+), 51 deletions(-)
 
-diff --git a/target/loongarch/cpu.c b/target/loongarch/cpu.c
-index 8424f185f2..a8e51d977c 100644
---- a/target/loongarch/cpu.c
-+++ b/target/loongarch/cpu.c
-@@ -761,7 +761,7 @@ static void loongarch_cpu_dump_csr(CPUState *cs, FILE *f)
+diff --git a/target/loongarch/tcg/tcg_cpu.c b/target/loongarch/tcg/tcg_cpu.c
+index 31d3db6e8e..66b3f45807 100644
+--- a/target/loongarch/tcg/tcg_cpu.c
++++ b/target/loongarch/tcg/tcg_cpu.c
+@@ -77,34 +77,35 @@ void G_NORETURN do_raise_exception(CPULoongArchState *env,
+ static void loongarch_cpu_do_interrupt(CPUState *cs)
  {
- #ifndef CONFIG_USER_ONLY
      CPULoongArchState *env = cpu_env(cs);
--    CSRInfo *csr_info;
-+    const CSRInfo *csr_info;
-     int64_t *addr;
-     int i, j, len, col = 0;
++    CPUSysState *sys = env_sys(env);
+     bool update_badinstr = 1;
+     int cause = -1;
+-    bool tlbfill = FIELD_EX64(env->CSR_TLBRERA, CSR_TLBRERA, ISTLBR);
+-    uint32_t vec_size = FIELD_EX64(env->CSR_ECFG, CSR_ECFG, VS);
++    bool tlbfill = FIELD_EX64(sys->CSR_TLBRERA, CSR_TLBRERA, ISTLBR);
++    uint32_t vec_size = FIELD_EX64(sys->CSR_ECFG, CSR_ECFG, VS);
+     uint64_t last_pc = env->pc;
  
-@@ -783,7 +783,7 @@ static void loongarch_cpu_dump_csr(CPUState *cs, FILE *f)
-             qemu_fprintf(f, " CSR%03d:", col);
+     if (cs->exception_index != EXCCODE_INT) {
+         qemu_log_mask(CPU_LOG_INT,
+                      "%s enter: pc " TARGET_FMT_lx " ERA " TARGET_FMT_lx
+                      " TLBRERA " TARGET_FMT_lx " exception: %d (%s)\n",
+-                     __func__, env->pc, env->CSR_ERA, env->CSR_TLBRERA,
++                     __func__, env->pc, sys->CSR_ERA, sys->CSR_TLBRERA,
+                      cs->exception_index,
+                      loongarch_exception_name(cs->exception_index));
+     }
+ 
+     switch (cs->exception_index) {
+     case EXCCODE_DBP:
+-        env->CSR_DBG = FIELD_DP64(env->CSR_DBG, CSR_DBG, DCL, 1);
+-        env->CSR_DBG = FIELD_DP64(env->CSR_DBG, CSR_DBG, ECODE, 0xC);
++        sys->CSR_DBG = FIELD_DP64(sys->CSR_DBG, CSR_DBG, DCL, 1);
++        sys->CSR_DBG = FIELD_DP64(sys->CSR_DBG, CSR_DBG, ECODE, 0xC);
+         goto set_DERA;
+     set_DERA:
+-        env->CSR_DERA = env->pc;
+-        env->CSR_DBG = FIELD_DP64(env->CSR_DBG, CSR_DBG, DST, 1);
+-        set_pc(env, env->CSR_EENTRY + 0x480);
++        sys->CSR_DERA = env->pc;
++        sys->CSR_DBG = FIELD_DP64(sys->CSR_DBG, CSR_DBG, DST, 1);
++        set_pc(env, sys->CSR_EENTRY + 0x480);
+         break;
+     case EXCCODE_INT:
+-        if (FIELD_EX64(env->CSR_DBG, CSR_DBG, DST)) {
+-            env->CSR_DBG = FIELD_DP64(env->CSR_DBG, CSR_DBG, DEI, 1);
++        if (FIELD_EX64(sys->CSR_DBG, CSR_DBG, DST)) {
++            sys->CSR_DBG = FIELD_DP64(sys->CSR_DBG, CSR_DBG, DEI, 1);
+             goto set_DERA;
          }
+         QEMU_FALLTHROUGH;
+@@ -115,7 +116,7 @@ static void loongarch_cpu_do_interrupt(CPUState *cs)
+         update_badinstr = 0;
+         break;
+     case EXCCODE_BCE:
+-        env->CSR_BADV = env->pc;
++        sys->CSR_BADV = env->pc;
+         QEMU_FALLTHROUGH;
+     case EXCCODE_SYS:
+     case EXCCODE_BRK:
+@@ -142,35 +143,35 @@ static void loongarch_cpu_do_interrupt(CPUState *cs)
+     if (update_badinstr) {
+         MemOpIdx oi = make_memop_idx(MO_LEUL, cpu_mmu_index(cs, true));
  
--        addr = (void *)env + csr_info->offset;
-+        addr = (void *)env + get_csr_offset(csr_info, 0);
-         qemu_fprintf(f, " %s ", csr_info->name);
-         len = strlen(csr_info->name);
-         for (; len < 6; len++) {
-diff --git a/target/loongarch/csr.h b/target/loongarch/csr.h
-index 508a3214fc..ed7c603a0b 100644
---- a/target/loongarch/csr.h
-+++ b/target/loongarch/csr.h
-@@ -27,4 +27,8 @@ typedef struct {
+-        env->CSR_BADI = cpu_ldl_code_mmu(env, env->pc, oi, 0);
++        sys->CSR_BADI = cpu_ldl_code_mmu(env, env->pc, oi, 0);
+     }
  
- CSRInfo *get_csr(unsigned int csr_num);
- bool set_csr_flag(unsigned int csr_num, int flag);
-+static inline int get_csr_offset(const CSRInfo *csr, int vm_level)
-+{
-+    return csr->offset;
-+}
- #endif /* TARGET_LOONGARCH_CSR_H */
-diff --git a/target/loongarch/tcg/insn_trans/trans_privileged.c.inc b/target/loongarch/tcg/insn_trans/trans_privileged.c.inc
-index 2094d182ac..6728ce5ec9 100644
---- a/target/loongarch/tcg/insn_trans/trans_privileged.c.inc
-+++ b/target/loongarch/tcg/insn_trans/trans_privileged.c.inc
-@@ -106,6 +106,7 @@ static bool trans_csrrd(DisasContext *ctx, arg_csrrd *a)
-     TCGv dest;
-     const CSRInfo *csr;
-     GenCSRRead readfn;
-+    tcg_target_long offset;
+     /* Save PLV and IE */
+     if (tlbfill) {
+-        env->CSR_TLBRPRMD = FIELD_DP64(env->CSR_TLBRPRMD, CSR_TLBRPRMD, PPLV,
+-                                       FIELD_EX64(env->CSR_CRMD,
++        sys->CSR_TLBRPRMD = FIELD_DP64(sys->CSR_TLBRPRMD, CSR_TLBRPRMD, PPLV,
++                                       FIELD_EX64(sys->CSR_CRMD,
+                                        CSR_CRMD, PLV));
+-        env->CSR_TLBRPRMD = FIELD_DP64(env->CSR_TLBRPRMD, CSR_TLBRPRMD, PIE,
+-                                       FIELD_EX64(env->CSR_CRMD, CSR_CRMD, IE));
++        sys->CSR_TLBRPRMD = FIELD_DP64(sys->CSR_TLBRPRMD, CSR_TLBRPRMD, PIE,
++                                       FIELD_EX64(sys->CSR_CRMD, CSR_CRMD, IE));
+         /* set the DA mode */
+-        env->CSR_CRMD = FIELD_DP64(env->CSR_CRMD, CSR_CRMD, DA, 1);
+-        env->CSR_CRMD = FIELD_DP64(env->CSR_CRMD, CSR_CRMD, PG, 0);
+-        env->CSR_TLBRERA = FIELD_DP64(env->CSR_TLBRERA, CSR_TLBRERA,
++        sys->CSR_CRMD = FIELD_DP64(sys->CSR_CRMD, CSR_CRMD, DA, 1);
++        sys->CSR_CRMD = FIELD_DP64(sys->CSR_CRMD, CSR_CRMD, PG, 0);
++        sys->CSR_TLBRERA = FIELD_DP64(sys->CSR_TLBRERA, CSR_TLBRERA,
+                                       PC, (env->pc >> 2));
+     } else {
+-        env->CSR_ESTAT = FIELD_DP64(env->CSR_ESTAT, CSR_ESTAT, ECODE,
++        sys->CSR_ESTAT = FIELD_DP64(sys->CSR_ESTAT, CSR_ESTAT, ECODE,
+                                     EXCODE_MCODE(cause));
+-        env->CSR_ESTAT = FIELD_DP64(env->CSR_ESTAT, CSR_ESTAT, ESUBCODE,
++        sys->CSR_ESTAT = FIELD_DP64(sys->CSR_ESTAT, CSR_ESTAT, ESUBCODE,
+                                     EXCODE_SUBCODE(cause));
+-        env->CSR_PRMD = FIELD_DP64(env->CSR_PRMD, CSR_PRMD, PPLV,
+-                                   FIELD_EX64(env->CSR_CRMD, CSR_CRMD, PLV));
+-        env->CSR_PRMD = FIELD_DP64(env->CSR_PRMD, CSR_PRMD, PIE,
+-                                   FIELD_EX64(env->CSR_CRMD, CSR_CRMD, IE));
+-        env->CSR_ERA = env->pc;
++        sys->CSR_PRMD = FIELD_DP64(sys->CSR_PRMD, CSR_PRMD, PPLV,
++                                   FIELD_EX64(sys->CSR_CRMD, CSR_CRMD, PLV));
++        sys->CSR_PRMD = FIELD_DP64(sys->CSR_PRMD, CSR_PRMD, PIE,
++                                   FIELD_EX64(sys->CSR_CRMD, CSR_CRMD, IE));
++        sys->CSR_ERA = env->pc;
+     }
  
-     if (check_plv(ctx)) {
-         return false;
-@@ -121,7 +122,8 @@ static bool trans_csrrd(DisasContext *ctx, arg_csrrd *a)
-         if (readfn) {
-             readfn(dest, tcg_env);
+-    env->CSR_CRMD = FIELD_DP64(env->CSR_CRMD, CSR_CRMD, PLV, 0);
+-    env->CSR_CRMD = FIELD_DP64(env->CSR_CRMD, CSR_CRMD, IE, 0);
++    sys->CSR_CRMD = FIELD_DP64(sys->CSR_CRMD, CSR_CRMD, PLV, 0);
++    sys->CSR_CRMD = FIELD_DP64(sys->CSR_CRMD, CSR_CRMD, IE, 0);
+ 
+     if (vec_size) {
+         vec_size = (1 << vec_size) * 4;
+@@ -179,27 +180,27 @@ static void loongarch_cpu_do_interrupt(CPUState *cs)
+     if  (cs->exception_index == EXCCODE_INT) {
+         /* Interrupt */
+         uint32_t vector = 0;
+-        uint32_t pending = FIELD_EX64(env->CSR_ESTAT, CSR_ESTAT, IS);
+-        pending &= FIELD_EX64(env->CSR_ECFG, CSR_ECFG, LIE);
++        uint32_t pending = FIELD_EX64(sys->CSR_ESTAT, CSR_ESTAT, IS);
++        pending &= FIELD_EX64(sys->CSR_ECFG, CSR_ECFG, LIE);
+ 
+         /* Find the highest-priority interrupt. */
+         vector = 31 - clz32(pending);
+-        set_pc(env, env->CSR_EENTRY + \
++        set_pc(env, sys->CSR_EENTRY + \
+                (EXCCODE_EXTERNAL_INT + vector) * vec_size);
+         qemu_log_mask(CPU_LOG_INT,
+                       "%s: PC " TARGET_FMT_lx " ERA " TARGET_FMT_lx
+                       " cause %d\n" "    A " TARGET_FMT_lx " D "
+                       TARGET_FMT_lx " vector = %d ExC " TARGET_FMT_lx "ExS"
+                       TARGET_FMT_lx "\n",
+-                      __func__, env->pc, env->CSR_ERA,
+-                      cause, env->CSR_BADV, env->CSR_DERA, vector,
+-                      env->CSR_ECFG, env->CSR_ESTAT);
++                      __func__, env->pc, sys->CSR_ERA,
++                      cause, sys->CSR_BADV, sys->CSR_DERA, vector,
++                      sys->CSR_ECFG, sys->CSR_ESTAT);
+         qemu_plugin_vcpu_interrupt_cb(cs, last_pc);
+     } else {
+         if (tlbfill) {
+-            set_pc(env, env->CSR_TLBRENTRY);
++            set_pc(env, sys->CSR_TLBRENTRY);
          } else {
--            tcg_gen_ld_tl(dest, tcg_env, csr->offset);
-+            offset = get_csr_offset(csr, 0);
-+            tcg_gen_ld_tl(dest, tcg_env, offset);
+-            set_pc(env, env->CSR_EENTRY + EXCODE_MCODE(cause) * vec_size);
++            set_pc(env, sys->CSR_EENTRY + EXCODE_MCODE(cause) * vec_size);
          }
+         qemu_log_mask(CPU_LOG_INT,
+                       "%s: PC " TARGET_FMT_lx " ERA " TARGET_FMT_lx
+@@ -207,12 +208,12 @@ static void loongarch_cpu_do_interrupt(CPUState *cs)
+                       " EXCFG " TARGET_FMT_lx " BADVA " TARGET_FMT_lx
+                       "BADI " TARGET_FMT_lx " SYS_NUM " TARGET_FMT_lu
+                       " cpu %d asid " TARGET_FMT_lx "\n", __func__, env->pc,
+-                      tlbfill ? env->CSR_TLBRERA : env->CSR_ERA,
+-                      cause, tlbfill ? "(refill)" : "", env->CSR_ESTAT,
+-                      env->CSR_ECFG,
+-                      tlbfill ? env->CSR_TLBRBADV : env->CSR_BADV,
+-                      env->CSR_BADI, env->gpr[11], cs->cpu_index,
+-                      env->CSR_ASID);
++                      tlbfill ? sys->CSR_TLBRERA : sys->CSR_ERA,
++                      cause, tlbfill ? "(refill)" : "", sys->CSR_ESTAT,
++                      sys->CSR_ECFG,
++                      tlbfill ? sys->CSR_TLBRBADV : sys->CSR_BADV,
++                      sys->CSR_BADI, env->gpr[11], cs->cpu_index,
++                      sys->CSR_ASID);
+         qemu_plugin_vcpu_exception_cb(cs, last_pc);
      }
-     gen_set_gpr(a->rd, dest, EXT_NONE);
-@@ -133,6 +135,7 @@ static bool trans_csrwr(DisasContext *ctx, arg_csrwr *a)
-     TCGv dest, src1;
-     const CSRInfo *csr;
-     GenCSRWrite writefn;
-+    tcg_target_long offset;
+     cs->exception_index = -1;
+@@ -226,8 +227,9 @@ static void loongarch_cpu_do_transaction_failed(CPUState *cs, hwaddr physaddr,
+                                                 uintptr_t retaddr)
+ {
+     CPULoongArchState *env = cpu_env(cs);
++    CPUSysState *sys = env_sys(env);
  
-     if (check_plv(ctx)) {
-         return false;
-@@ -154,8 +157,9 @@ static bool trans_csrwr(DisasContext *ctx, arg_csrwr *a)
-         writefn(dest, tcg_env, src1);
+-    env->CSR_BADV = addr;
++    sys->CSR_BADV = addr;
+     if (access_type == MMU_INST_FETCH) {
+         do_raise_exception(env, EXCCODE_ADEF, retaddr);
      } else {
-         dest = tcg_temp_new();
--        tcg_gen_ld_tl(dest, tcg_env, csr->offset);
--        tcg_gen_st_tl(src1, tcg_env, csr->offset);
-+        offset = get_csr_offset(csr, 0);
-+        tcg_gen_ld_tl(dest, tcg_env, offset);
-+        tcg_gen_st_tl(src1, tcg_env, offset);
-     }
-     gen_set_gpr(a->rd, dest, EXT_NONE);
-     return true;
-@@ -166,6 +170,7 @@ static bool trans_csrxchg(DisasContext *ctx, arg_csrxchg *a)
-     TCGv src1, mask, oldv, newv, temp;
-     const CSRInfo *csr;
-     GenCSRWrite writefn;
-+    tcg_target_long offset;
+@@ -238,9 +240,10 @@ static void loongarch_cpu_do_transaction_failed(CPUState *cs, hwaddr physaddr,
+ static inline bool cpu_loongarch_hw_interrupts_enabled(CPULoongArchState *env)
+ {
+     bool ret = 0;
++    CPUSysState *sys = env_sys(env);
  
-     if (check_plv(ctx)) {
-         return false;
-@@ -191,7 +196,8 @@ static bool trans_csrxchg(DisasContext *ctx, arg_csrxchg *a)
-     newv = tcg_temp_new();
-     temp = tcg_temp_new();
+-    ret = (FIELD_EX64(env->CSR_CRMD, CSR_CRMD, IE) &&
+-          !(FIELD_EX64(env->CSR_DBG, CSR_DBG, DST)));
++    ret = (FIELD_EX64(sys->CSR_CRMD, CSR_CRMD, IE) &&
++          !(FIELD_EX64(sys->CSR_DBG, CSR_DBG, DST)));
  
--    tcg_gen_ld_tl(oldv, tcg_env, csr->offset);
-+    offset = get_csr_offset(csr, 0);
-+    tcg_gen_ld_tl(oldv, tcg_env, offset);
-     tcg_gen_and_tl(newv, src1, mask);
-     tcg_gen_andc_tl(temp, oldv, mask);
-     tcg_gen_or_tl(newv, newv, temp);
-@@ -200,7 +206,7 @@ static bool trans_csrxchg(DisasContext *ctx, arg_csrxchg *a)
-     if (writefn) {
-         writefn(oldv, tcg_env, newv);
-     } else {
--        tcg_gen_st_tl(newv, tcg_env, csr->offset);
-+        tcg_gen_st_tl(newv, tcg_env, offset);
+     return ret;
+ }
+@@ -271,12 +274,13 @@ static vaddr loongarch_pointer_wrap(CPUState *cs, int mmu_idx,
+ static TCGTBCPUState loongarch_get_tb_cpu_state(CPUState *cs)
+ {
+     CPULoongArchState *env = cpu_env(cs);
++    CPUSysState *sys = env_sys(env);
+     uint32_t flags;
+ 
+-    flags = env->CSR_CRMD & (R_CSR_CRMD_PLV_MASK | R_CSR_CRMD_PG_MASK);
+-    flags |= FIELD_EX64(env->CSR_EUEN, CSR_EUEN, FPE) * HW_FLAGS_EUEN_FPE;
+-    flags |= FIELD_EX64(env->CSR_EUEN, CSR_EUEN, SXE) * HW_FLAGS_EUEN_SXE;
+-    flags |= FIELD_EX64(env->CSR_EUEN, CSR_EUEN, ASXE) * HW_FLAGS_EUEN_ASXE;
++    flags = sys->CSR_CRMD & (R_CSR_CRMD_PLV_MASK | R_CSR_CRMD_PG_MASK);
++    flags |= FIELD_EX64(sys->CSR_EUEN, CSR_EUEN, FPE) * HW_FLAGS_EUEN_FPE;
++    flags |= FIELD_EX64(sys->CSR_EUEN, CSR_EUEN, SXE) * HW_FLAGS_EUEN_SXE;
++    flags |= FIELD_EX64(sys->CSR_EUEN, CSR_EUEN, ASXE) * HW_FLAGS_EUEN_ASXE;
+     flags |= is_va32(env) * HW_FLAGS_VA32;
+ 
+     return (TCGTBCPUState){ .pc = env->pc, .flags = flags };
+@@ -299,9 +303,10 @@ static void loongarch_restore_state_to_opc(CPUState *cs,
+ static int loongarch_cpu_mmu_index(CPUState *cs, bool ifetch)
+ {
+     CPULoongArchState *env = cpu_env(cs);
++    CPUSysState *sys = env_sys(env);
+ 
+-    if (FIELD_EX64(env->CSR_CRMD, CSR_CRMD, PG)) {
+-        return FIELD_EX64(env->CSR_CRMD, CSR_CRMD, PLV);
++    if (FIELD_EX64(sys->CSR_CRMD, CSR_CRMD, PG)) {
++        return FIELD_EX64(sys->CSR_CRMD, CSR_CRMD, PLV);
      }
-     gen_set_gpr(a->rd, oldv, EXT_NONE);
-     return true;
+     return MMU_DA_IDX;
+ }
 -- 
 2.39.3
 
