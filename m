@@ -4,92 +4,131 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 59B43CD6E57
-	for <qemu-devel@archiver.kernel.org>; Tue,  2 Jun 2026 09:20:43 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5B13CCD6E4A
+	for <qemu-devel@archiver.kernel.org>; Tue,  2 Jun 2026 09:27:38 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wULH5-0000vw-HM; Tue, 02 Jun 2026 05:19:03 -0400
+	id 1wULOt-0005qk-47; Tue, 02 Jun 2026 05:27:07 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <fritchleybohrer@gmail.com>)
- id 1wULGu-0000cY-Kk
- for qemu-devel@nongnu.org; Tue, 02 Jun 2026 05:18:54 -0400
-Received: from mail-dy1-x1341.google.com ([2607:f8b0:4864:20::1341])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <fritchleybohrer@gmail.com>)
- id 1wULGp-0007k3-UQ
- for qemu-devel@nongnu.org; Tue, 02 Jun 2026 05:18:51 -0400
-Received: by mail-dy1-x1341.google.com with SMTP id
- 5a478bee46e88-304e83724bfso5376192eec.0
- for <qemu-devel@nongnu.org>; Tue, 02 Jun 2026 02:18:47 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1780391926; x=1780996726; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=HcOVA7z761sRU6mzSlK4g0qMB5qPdXRWmaIP73uflqw=;
- b=V1N7agQXjFvn7TxbMUM5oQwRRdCuJ13e2gYM36xkXCT1moUR8wwatkwUs6h7KwzTr5
- x55pUPtzJcxeC3BLotT0cJvWW3pbTnCyR3vg6tsPHmj6OmMVhEP9Sh3izmCbTocl42HD
- 36vD72V+EiYd8XoMwiJZVbjU65mbyQ7x0Pn6Nu/Ly0HB779y9kuv/Be0CwH3K8JB43Lm
- McQeame5kzwDC2Wml5ZIifSkF5a3vM5oP0JZw9aJ5dH/BYe0ph1eRHz3nC9QBH+mNbEm
- fEG8gjOIAAyA4mwr+BZOkNgHfXOpUFKf6EVnHLjrgjn+w5itQQo31aVTQiVXDCKnuAsO
- Un5g==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1780391926; x=1780996726;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to;
- bh=HcOVA7z761sRU6mzSlK4g0qMB5qPdXRWmaIP73uflqw=;
- b=X2RXld0AxK24cfAjXUyeiFd5zUwHf78Ncb1r5YRPr6dIqSwYl5wO0dTaOC81UuUPcK
- ymweAXyWbIz6MJL3oLIpF3nJggIuTcvQo3jYhLnIupoppIyEmE5urL2Z4IAWZlRUyQr6
- oWJNbhSKzgV30khmktYqiyQQUarpX8HFxYtnbTWMMPcr4n8uih3cA4V9UAJCt5eOLI7V
- tjCbnn7ue6piU465rBKhfD9bh+A3d6kuV9nlGksUTQzl95h/dyMsCx2s3Qt1Kynte9nW
- kwbqG2DlUFV2nNXLNmmDshTBV5Rxw5fPNC7ZFwgLfbBeOztH7fZIyx+50UNXpWYOdbDv
- v2iw==
-X-Gm-Message-State: AOJu0Yx2L11zYF03k/K/1cOzqLHWToYB9vtgYA0QBfv0pCCDfWbXhaIp
- Etf5QeswGvQi6oX+kV/GLnViHIKkxydI0OxpCbyobWSuHsge4TIUsV5rj+kTkRzK15D3zw==
-X-Gm-Gg: Acq92OFIPOY3Nyu9i8WIkntATLCgZez21HXw1p5YUWtBX9/mIB98y4OG7NDYfQzINj9
- inbv8wKYYOpS/nFdQEEuUH3kZsYKdCmlrsuU3PEfaRDkCJHd+TUwfoxvxdMKtWv1fieJGnMhxva
- QIAFR50/bWTqFUUYMIZ9hUgc7+PMupuQykLEwX76KJ4sv3fHA5hD8OCZMwZg1mELxkJyKLfcTPk
- iEIIppLlY+bxEvh7isN3o/FkprFaq/5MLxpc3EeZ0RcIjYAZCzZLzWf2NsgQNMxQmUyt3XhWgWK
- AmWGD17KGVeNcWPm4mNNGFHtr2eKb9O73A45x1ea0h3+GKAqG0yGr/6yQ5+fo6C8EFPT2CQcFB+
- 5Mdgpv3jZSpvOKPVvwTx8Y4H9lpK2coHzSlzcySBSKPK7DsmDDP8YZN/WxCDAJ5pAcegC0cXmBl
- u+KaMrtEQ/LDcjLxCblUMc6xRDk806BFMIz4a+QfTUHBNiaqU8HFmLLa8kgfu4DzT1fiAWKZVe/
- hdtEUJwuYURZvZHc/9V06y1F8w=
-X-Received: by 2002:a05:7300:6c84:b0:2ea:ed70:3ea8 with SMTP id
- 5a478bee46e88-304fa6939demr7209201eec.29.1780391926221; 
- Tue, 02 Jun 2026 02:18:46 -0700 (PDT)
-Received: from openkylin..
- (ec2-54-176-108-193.us-west-1.compute.amazonaws.com. [54.176.108.193])
- by smtp.gmail.com with ESMTPSA id
- 5a478bee46e88-304ed2c3121sm11419146eec.5.2026.06.02.02.18.42
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 02 Jun 2026 02:18:45 -0700 (PDT)
-From: Zephyr Li <fritchleybohrer@gmail.com>
-To: qemu-devel@nongnu.org
-Cc: qemu-riscv@nongnu.org, palmer@dabbelt.com, alistair.francis@wdc.com,
- liwei1518@gmail.com, daniel.barboza@oss.qualcomm.com,
- zhiwei_liu@linux.alibaba.com, chao.liu.zevorn@gmail.com,
- alex.bennee@linaro.org, pierrick.bouvier@oss.qualcomm.com,
- philmd@linaro.org, Zephyr Li <fritchleybohrer@gmail.com>
-Subject: [PATCH v3 5/6] target/riscv: build TCG-only sources only with TCG
-Date: Tue,  2 Jun 2026 17:17:52 +0800
-Message-ID: <20260602091753.3209261-6-fritchleybohrer@gmail.com>
-X-Mailer: git-send-email 2.43.0
-In-Reply-To: <20260602091753.3209261-1-fritchleybohrer@gmail.com>
-References: <20260602091753.3209261-1-fritchleybohrer@gmail.com>
+ (Exim 4.90_1) (envelope-from <avihaih@nvidia.com>)
+ id 1wULOq-0005qZ-6T
+ for qemu-devel@nongnu.org; Tue, 02 Jun 2026 05:27:04 -0400
+Received: from mail-westus3azlp170110003.outbound.protection.outlook.com
+ ([2a01:111:f403:c107::3] helo=PH0PR06CU001.outbound.protection.outlook.com)
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <avihaih@nvidia.com>)
+ id 1wULOo-0003yq-Kf
+ for qemu-devel@nongnu.org; Tue, 02 Jun 2026 05:27:03 -0400
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=cswFY0AsTWo/s0EWQpVFdXlNl1j0g7t+KJOS40GG1FMyHdtWrzP+q2nOhaiqi5J/cNaZHyZLEoJzS4dfsvAQDCMrFiil7/FfPECfCN50cft7uucsTdRn1/dLEcWFXqI1DBDR5pL1rR+azWEUrH21zCcWLjUNDpGwneZxQ0BuZo3q1AZ5oysh8Je/J++ZSEC0rSaQRNminyBEG+A1H2WzqKPPvFbUBbU92B4CD68tsyadBzCyWIrpfdN3ekh4lT8ZN6Yq34PRbI32547coxXfcWeF+bst7B7liYut+mQz1kMGpFDVEyR7LXar17TBU1/Vmwpmx80+56V3g0lpR/xEhg==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=cxOLli5hATDfFw0edNBnF9MskuVfcm1vtBR85JdTAYM=;
+ b=IMUjqRFv2LU+9rcK7xjFUnEaYmDY/GoUkWjGceJZixDscDDEvt4lqjOza95hz/Ykvw1EM7PobolS48HedHsLPFxz7Jx1MFVBrL7pn/575FB9khBJhaeTqJEGvqj6eCnNRQWPEhC+/5fPrrZHxGWFn0gilmoMyyRTlwUjkP4PjhKz92AoyXPS4sDxoW0M+FnNbhTlY3OAExqZc4eOCzBN9eJDLP1skPigDRvw+i3XLrCgPTh82nubtGiJ590rgmVG7GbIRIj7NRCG7aQWTXFIsO1YN0pgczNOZ+n8FtkMyGP1WayoBNX/uGUWeVzl8uza/d84zjNzZ8CWt59iyugiBg==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass (sender ip is
+ 216.228.117.160) smtp.rcpttodomain=nongnu.org smtp.mailfrom=nvidia.com;
+ dmarc=pass (p=reject sp=reject pct=100) action=none header.from=nvidia.com;
+ dkim=none (message not signed); arc=none (0)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=Nvidia.com;
+ s=selector2;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=cxOLli5hATDfFw0edNBnF9MskuVfcm1vtBR85JdTAYM=;
+ b=quKCS1SBfJH8vXsjaVTfkVXK8FgxgeZrkx6D9yEyS/qpR288graNPYIXn//sltO1xOU2PCaL+YRX5hWb4fqDBA0Lx3D6xb9PFkDwM6Khyy7v/7apPxx53F4FISkk1zM1i7xIaATGZCaPBD06eOP/1UlPGr2YDDF8R/aYfzf+8oB2avTsWPcKyDcm7cu4gprawI+4keFIHDrb1eAxykzbq+xnT3ffL8qgtM3lJ/1wtlCfIVqiOK7OesNBbiTVu6j1VSrBGR4Bvuv/NQW2adMyL102ZdbN70zBU5E41Z3a46GdFtbN1/Awom5fOWa9FGjjK2A29LGNXNkhpxqs32FaOg==
+Received: from CH2PR18CA0012.namprd18.prod.outlook.com (2603:10b6:610:4f::22)
+ by CH3PR12MB9078.namprd12.prod.outlook.com (2603:10b6:610:196::11)
+ with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.71.16; Tue, 2 Jun 2026
+ 09:26:53 +0000
+Received: from CH2PEPF0000013F.namprd02.prod.outlook.com
+ (2603:10b6:610:4f:cafe::72) by CH2PR18CA0012.outlook.office365.com
+ (2603:10b6:610:4f::22) with Microsoft SMTP Server (version=TLS1_3,
+ cipher=TLS_AES_256_GCM_SHA384) id 15.21.71.17 via Frontend Transport; Tue, 2
+ Jun 2026 09:26:53 +0000
+X-MS-Exchange-Authentication-Results: spf=pass (sender IP is 216.228.117.160)
+ smtp.mailfrom=nvidia.com;
+ dkim=none (message not signed)
+ header.d=none;dmarc=pass action=none header.from=nvidia.com;
+Received-SPF: Pass (protection.outlook.com: domain of nvidia.com designates
+ 216.228.117.160 as permitted sender) receiver=protection.outlook.com;
+ client-ip=216.228.117.160; helo=mail.nvidia.com; pr=C
+Received: from mail.nvidia.com (216.228.117.160) by
+ CH2PEPF0000013F.mail.protection.outlook.com (10.167.244.71) with Microsoft
+ SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.21.92.5 via Frontend Transport; Tue, 2 Jun 2026 09:26:53 +0000
+Received: from rnnvmail201.nvidia.com (10.129.68.8) by mail.nvidia.com
+ (10.129.200.66) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.2562.20; Tue, 2 Jun
+ 2026 02:26:35 -0700
+Received: from rnnvmail203.nvidia.com (10.129.68.9) by rnnvmail201.nvidia.com
+ (10.129.68.8) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.2562.20; Tue, 2 Jun
+ 2026 02:26:34 -0700
+Received: from vdi.nvidia.com (10.127.8.9) by mail.nvidia.com (10.129.68.9)
+ with Microsoft SMTP Server id 15.2.2562.20 via Frontend Transport; Tue, 2 Jun
+ 2026 02:26:29 -0700
+From: Avihai Horon <avihaih@nvidia.com>
+To: <qemu-devel@nongnu.org>
+CC: Alex Williamson <alex@shazbot.org>, =?UTF-8?q?C=C3=A9dric=20Le=20Goater?=
+ <clg@redhat.com>, Peter Xu <peterx@redhat.com>, Fabiano Rosas
+ <farosas@suse.de>, Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>, Zhao Liu
+ <zhao1.liu@intel.com>, Halil Pasic <pasic@linux.ibm.com>, "Christian
+ Borntraeger" <borntraeger@linux.ibm.com>, Jason Herne
+ <jjherne@linux.ibm.com>, Richard Henderson <richard.henderson@linaro.org>,
+ Ilya Leoshkevich <iii@linux.ibm.com>, David Hildenbrand <david@kernel.org>,
+ Eric Farman <farman@linux.ibm.com>, Matthew Rosato <mjrosato@linux.ibm.com>,
+ "Cornelia Huck" <cohuck@redhat.com>, Eric Blake <eblake@redhat.com>,
+ "Vladimir Sementsov-Ogievskiy" <vsementsov@yandex-team.ru>, John Snow
+ <jsnow@redhat.com>, Markus Armbruster <armbru@redhat.com>, Maor Gottlieb
+ <maorg@nvidia.com>, Avihai Horon <avihaih@nvidia.com>
+Subject: [PATCH v2 01/13] migration: Propagate errors in
+ migration_completion_precopy()
+Date: Tue, 2 Jun 2026 12:26:09 +0300
+Message-ID: <20260602092621.382-2-avihaih@nvidia.com>
+X-Mailer: git-send-email 2.21.3
+In-Reply-To: <20260602092621.382-1-avihaih@nvidia.com>
+References: <20260602092621.382-1-avihaih@nvidia.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::1341;
- envelope-from=fritchleybohrer@gmail.com; helo=mail-dy1-x1341.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+Content-Type: text/plain
+X-NV-OnPremToCloud: ExternallySecured
+X-EOPAttributedMessage: 0
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: CH2PEPF0000013F:EE_|CH3PR12MB9078:EE_
+X-MS-Office365-Filtering-Correlation-Id: 7902df4b-f992-4ca8-aa44-08dec089156e
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam: BCL:0;
+ ARA:13230040|82310400026|376014|7416014|1800799024|36860700016|22082099003|18002099003|56012099006|11063799006;
+X-Microsoft-Antispam-Message-Info: E9eeSsK4gPETRgd4zRWZA1UyhDkNtcvyZvVEIpaKAP36+FudkEyb8LHYRP3vx+IKyvqOZVKuGwe8ciQ94LeYQl/mLIBlugZUqGyJK7K6+wU3reLegtgg6OJK4O7GLaV42jjrNSSywzXR3pUbtaPDINSJBZ+4X5gw8UsB3VSiBDBndQqnixs61e//7VbADKVdr97H6Sr0ex7vsR/i5XORzLwBpReBhUpGztJPSruyGks6F8q/vnT+pehtPzC7wkWW5p6N3izI2wYUt0PjTV+WyS5l6BgvGnXfNmeAvRwRkEzZkX5e2Kgd3AvQyYz5YFydPFKqNU4TqTiRYg+Wwsz8WHWSbt9rWm9rMk0WAFVVQlI6Uaq0XAwi3mPepLYpKjpnqJ3OWqP2ieqtBdxK1o7RoMiAycCMKJ4QcUDQddle2e1TcPEk3EN2isTD8YF/m9bd487SzrOIljP9KD6T4LuS4HcbMe6Kenqdq9IKoSQV2IYCkl9oUQAdmR7klMA46kvglyg63uHk34lPUuCTDm4X4JSDJg98hpUqlyba8N2CyiTAAmLJ4qI/KtDCYj28V3HYEvQnfrDppEpLSGDRq1tZ65VXxrxBXqGl1vhrvztfuJozv8KHmBvK+MdLhggQwzxXW+iffdvZt2HTwtiedJjfWkqezrlFDfihns0KOEKK9Ltv7Qpl9gvajso5GG9BS2yN+VfQHI5cZ51yKZYi1+BW6mRxceuORipKdyzYyWyA1U4=
+X-Forefront-Antispam-Report: CIP:216.228.117.160; CTRY:US; LANG:en; SCL:1; SRV:;
+ IPV:NLI; SFV:NSPM; H:mail.nvidia.com; PTR:dc6edge1.nvidia.com; CAT:NONE;
+ SFS:(13230040)(82310400026)(376014)(7416014)(1800799024)(36860700016)(22082099003)(18002099003)(56012099006)(11063799006);
+ DIR:OUT; SFP:1101; 
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0: h6PCj5s1LPPlXGvEz/d/jMgEp6Tb0oaA1U2iM5AhhuduEuDleUTp5bJqLqc/qcrB7YO2h7zxodiHyso8u/XnMR7E6lpqnBDngonZIF1WpM5gf7G2lwKWVVkpw3oLtETLJkTTMSCtnpdEQONnTDcCsQ0eSCk2uwCybhithd29U/V0SOQn92EqCJmKxGv6IDJseSgt7J9LSxzk+S9ZjwXFWXTeP7NVf5+c/7kDnFJp9bmmbOcS27Vii1cIB6fi32gaw4L3DVBDutvrlLJWj8blnX+FczQo6lCu00gEcp69Scp+8yVYcRW0t65NRUXb18rcxsBmjqdQDX0mzhXgPf8nemZ9qD8dUm+x7rCVtxbZ++Xn/Ac3Tj7uoaOkXxhv59qaT5+YxzTDnMyNNZ2ORdWQeBdPv1ZEiyzTzN42dGbyA2j9GF1PnBFxzEag/9TbK8TF
+X-OriginatorOrg: Nvidia.com
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 02 Jun 2026 09:26:53.4285 (UTC)
+X-MS-Exchange-CrossTenant-Network-Message-Id: 7902df4b-f992-4ca8-aa44-08dec089156e
+X-MS-Exchange-CrossTenant-Id: 43083d15-7273-40c1-b7db-39efd9ccc17a
+X-MS-Exchange-CrossTenant-OriginalAttributedTenantConnectingIp: TenantId=43083d15-7273-40c1-b7db-39efd9ccc17a; Ip=[216.228.117.160];
+ Helo=[mail.nvidia.com]
+X-MS-Exchange-CrossTenant-AuthSource: CH2PEPF0000013F.namprd02.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Anonymous
+X-MS-Exchange-CrossTenant-FromEntityHeader: HybridOnPrem
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: CH3PR12MB9078
+Received-SPF: permerror client-ip=2a01:111:f403:c107::3;
+ envelope-from=avihaih@nvidia.com;
+ helo=PH0PR06CU001.outbound.protection.outlook.com
+X-Spam_score_int: -24
+X-Spam_score: -2.5
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.445,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ SPF_HELO_NONE=0.001, SPF_NONE=0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -105,146 +144,67 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Several RISC-V source files contain translated-code helpers, decoders, or
-TCG-only instruction implementations, but are currently part of the common
-RISC-V source set. This breaks --disable-tcg builds once TCG headers and
-helpers are unavailable.
+migration_completion_precopy() doesn't propagate errors to migration
+core which leads to error information loss. Fix that.
 
-After moving common helpers out of TCG-only files, build the remaining
-TCG-only RISC-V sources only when CONFIG_TCG is enabled. Keep common CSR
-misa handling from relying on TCG unwind state in no-TCG builds by falling
-back to env->pc.
+This prepares for a follow-up where migration_switchover_start() can
+fail on switchover-ack and still report a useful error. Errors from
+qemu_savevm_state_complete_precopy() are not propagated yet as it
+requires more plumbing.
 
-Drop the stale tcg/tcg.h include from common CPU code so no-TCG builds do
-not include a TCG-private header.
-
-Signed-off-by: Zephyr Li <fritchleybohrer@gmail.com>
+Signed-off-by: Avihai Horon <avihaih@nvidia.com>
 ---
- target/riscv/cpu.c        |  1 -
- target/riscv/cpu_helper.c |  6 ++++++
- target/riscv/csr.c        | 11 +++++++++--
- target/riscv/meson.build  |  9 ++++++---
- 4 files changed, 21 insertions(+), 6 deletions(-)
+ migration/migration.c | 11 +++++++----
+ 1 file changed, 7 insertions(+), 4 deletions(-)
 
-diff --git a/target/riscv/cpu.c b/target/riscv/cpu.c
-index 8ef72a88b1..459e32f4ac 100644
---- a/target/riscv/cpu.c
-+++ b/target/riscv/cpu.c
-@@ -36,7 +36,6 @@
- #include "system/tcg.h"
- #include "kvm/kvm_riscv.h"
- #include "tcg/tcg-cpu.h"
--#include "tcg/tcg.h"
- 
- /* RISC-V CPU definitions */
- static const char riscv_single_letter_exts[] = "IEMAFDQCBPVH";
-diff --git a/target/riscv/cpu_helper.c b/target/riscv/cpu_helper.c
-index 752752d520..e53a5d567d 100644
---- a/target/riscv/cpu_helper.c
-+++ b/target/riscv/cpu_helper.c
-@@ -29,8 +29,10 @@
- #include "exec/target_page.h"
- #include "system/memory.h"
- #include "instmap.h"
-+#ifdef CONFIG_TCG
- #include "tcg/tcg-op.h"
- #include "accel/tcg/cpu-ops.h"
-+#endif
- #include "trace.h"
- #include "semihosting/common-semi.h"
- #include "exec/icount.h"
-@@ -1714,6 +1716,7 @@ static int get_physical_address(CPURISCVState *env, hwaddr *physical,
-     return TRANSLATE_SUCCESS;
- }
- 
-+#ifdef CONFIG_TCG
- static void raise_mmu_exception(CPURISCVState *env, target_ulong address,
-                                 MMUAccessType access_type, bool pmp_violation,
-                                 bool first_stage, bool two_stage,
-@@ -1756,6 +1759,7 @@ static void raise_mmu_exception(CPURISCVState *env, target_ulong address,
-     env->two_stage_lookup = two_stage;
-     env->two_stage_indirect_lookup = two_stage_indirect;
- }
-+#endif
- 
- hwaddr riscv_cpu_get_phys_addr_debug(CPUState *cs, vaddr addr)
- {
-@@ -1780,6 +1784,7 @@ hwaddr riscv_cpu_get_phys_addr_debug(CPUState *cs, vaddr addr)
-     return phys_addr;
- }
- 
-+#ifdef CONFIG_TCG
- void riscv_cpu_do_transaction_failed(CPUState *cs, hwaddr physaddr,
-                                      vaddr addr, unsigned size,
-                                      MMUAccessType access_type,
-@@ -2004,6 +2009,7 @@ bool riscv_cpu_tlb_fill(CPUState *cs, vaddr address, int size,
- 
+diff --git a/migration/migration.c b/migration/migration.c
+index 074d3f2c69..7488a94206 100644
+--- a/migration/migration.c
++++ b/migration/migration.c
+@@ -2814,7 +2814,7 @@ static bool migration_switchover_start(MigrationState *s, Error **errp)
      return true;
  }
-+#endif
  
- static target_ulong riscv_transformed_insn(CPURISCVState *env,
-                                            target_ulong insn,
-diff --git a/target/riscv/csr.c b/target/riscv/csr.c
-index 186d32fca8..9a9a148bfe 100644
---- a/target/riscv/csr.c
-+++ b/target/riscv/csr.c
-@@ -2134,15 +2134,22 @@ static RISCVException read_misa(CPURISCVState *env, int csrno,
- 
- static target_ulong get_next_pc(CPURISCVState *env, uintptr_t ra)
+-static int migration_completion_precopy(MigrationState *s)
++static int migration_completion_precopy(MigrationState *s, Error **errp)
  {
-+    /* Outside of a running cpu, env contains the next pc. */
-+    if (ra == 0) {
-+        return env->pc;
-+    }
-+#ifdef CONFIG_TCG
-     uint64_t data[INSN_START_WORDS];
+     int ret;
  
--    /* Outside of a running cpu, env contains the next pc. */
--    if (ra == 0 || !cpu_unwind_state_data(env_cpu(env), ra, data)) {
-+    if (!cpu_unwind_state_data(env_cpu(env), ra, data)) {
-         return env->pc;
+@@ -2823,11 +2823,12 @@ static int migration_completion_precopy(MigrationState *s)
+     if (!migrate_mode_is_cpr()) {
+         ret = migration_stop_vm(s, RUN_STATE_FINISH_MIGRATE);
+         if (ret < 0) {
++            error_setg_errno(errp, -ret, "Failed to stop the VM");
+             goto out_unlock;
+         }
      }
  
-     /* Within unwind data, [0] is pc and [1] is the opcode. */
-     return data[0] + insn_len(data[1]);
-+#else
-+    return env->pc;
-+#endif
- }
+-    if (!migration_switchover_start(s, NULL)) {
++    if (!migration_switchover_start(s, errp)) {
+         ret = -EFAULT;
+         goto out_unlock;
+     }
+@@ -2869,7 +2870,7 @@ static void migration_completion(MigrationState *s)
+     Error *local_err = NULL;
  
- static RISCVException write_misa(CPURISCVState *env, int csrno,
-diff --git a/target/riscv/meson.build b/target/riscv/meson.build
-index 4c99f2b802..2f86dbd5bf 100644
---- a/target/riscv/meson.build
-+++ b/target/riscv/meson.build
-@@ -9,7 +9,7 @@ gen = [
- ]
+     if (s->state == MIGRATION_STATUS_ACTIVE) {
+-        ret = migration_completion_precopy(s);
++        ret = migration_completion_precopy(s, &local_err);
+     } else if (s->state == MIGRATION_STATUS_POSTCOPY_ACTIVE) {
+         migration_completion_postcopy(s);
+     } else {
+@@ -2900,7 +2901,9 @@ static void migration_completion(MigrationState *s)
+     return;
  
- riscv_ss = ss.source_set()
--riscv_ss.add(gen)
-+riscv_ss.add(when: 'CONFIG_TCG', if_true: gen)
- 
- riscv_ss.add(when: 'CONFIG_ARM_COMPATIBLE_SEMIHOSTING',
- 		     if_true: files('common-semi-target.c'))
-@@ -19,11 +19,14 @@ riscv_ss.add(files(
-   'cpu-validate.c',
-   'cpu_helper.c',
-   'csr.c',
--  'fpu_helper.c',
-   'gdbstub.c',
-+  'vector_internals.c',
-+))
-+
-+riscv_ss.add(when: 'CONFIG_TCG', if_true: files(
-+  'fpu_helper.c',
-   'op_helper.c',
-   'vector_helper.c',
--  'vector_internals.c',
-   'bitmanip_helper.c',
-   'translate.c',
-   'm128_helper.c',
+ fail:
+-    if (qemu_file_get_error_obj(s->to_dst_file, &local_err)) {
++    if (local_err) {
++        migrate_error_propagate(s, local_err);
++    } else if (qemu_file_get_error_obj(s->to_dst_file, &local_err)) {
+         migrate_error_propagate(s, local_err);
+     } else if (ret) {
+         error_setg_errno(&local_err, -ret, "Error in migration completion");
 -- 
-2.43.0
+2.40.1
 
 
