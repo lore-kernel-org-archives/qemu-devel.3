@@ -4,62 +4,77 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 25090C5DF71
-	for <qemu-devel@archiver.kernel.org>; Tue,  2 Jun 2026 04:26:07 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 766CFCD6E4A
+	for <qemu-devel@archiver.kernel.org>; Tue,  2 Jun 2026 04:31:29 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wUGgu-0004JZ-12; Tue, 02 Jun 2026 00:25:24 -0400
+	id 1wUGmI-0005Bg-P0; Tue, 02 Jun 2026 00:30:58 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <odaki@rsg.ci.i.u-tokyo.ac.jp>)
- id 1wUGgr-0004JE-AQ
- for qemu-devel@nongnu.org; Tue, 02 Jun 2026 00:25:21 -0400
-Received: from www3579.sakura.ne.jp ([49.212.243.89])
+ (Exim 4.90_1) (envelope-from <dave@stgolabs.net>) id 1wUGmG-0005BN-Gj
+ for qemu-devel@nongnu.org; Tue, 02 Jun 2026 00:30:57 -0400
+Received: from shrimp.cherry.relay.mailchannels.net ([23.83.223.164])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <odaki@rsg.ci.i.u-tokyo.ac.jp>)
- id 1wUGgo-0002tQ-Bi
- for qemu-devel@nongnu.org; Tue, 02 Jun 2026 00:25:21 -0400
-Received: from [192.168.10.145] (p865013-ipoe.ipoe.ocn.ne.jp [153.242.222.12])
- (authenticated bits=0)
- by www3579.sakura.ne.jp (8.16.1/8.16.1) with ESMTPSA id 6524P28r074678
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NO);
- Tue, 2 Jun 2026 13:25:02 +0900 (JST)
- (envelope-from odaki@rsg.ci.i.u-tokyo.ac.jp)
-DKIM-Signature: a=rsa-sha256; bh=NiJGMNP40JNhpqQB5jT0tmZrJArwTTXRTnTiP8Gd7Mc=; 
- c=relaxed/relaxed; d=rsg.ci.i.u-tokyo.ac.jp;
- h=From:Message-ID:To:Subject:Date;
- s=rs20250326; t=1780374302; v=1;
- b=g5nmjE7MJ0NSGRZanSUpmFeiTkr0pZoOgjsPjjhiS+DlxIT5aDe3k5mDnjpQMsUg
- c1BWBLp9Y4+pQESuCfgyn02upBugPTCr6A/Qp4Pkcqhdy2Byq6i72v6HyHkGZQ+6
- EFd4tPJlQHSJhHInnVVQwkiwAkfVGkILBdbPsgOnW+f+h8/GniWc/5QR5BRxWLSk
- PHcNxl0FRpRsBnWM844/RKff0SMUMYsvEb/7ZtEdKWcZzazw4YT0x/vl6+e+cxXW
- E3bvC/Y6Oq4hy+X57fzqyFd7DZS2xYRCeyHgQAv9EmebiAEr5lH8/P1Rd4KMCAJV
- /MeVOC9CBHaYxYCbDGaHPQ==
-Message-ID: <36749195-2c49-4f9c-8445-2e67b2097676@rsg.ci.i.u-tokyo.ac.jp>
-Date: Tue, 2 Jun 2026 13:25:02 +0900
+ (Exim 4.90_1) (envelope-from <dave@stgolabs.net>) id 1wUGmE-0004KH-SR
+ for qemu-devel@nongnu.org; Tue, 02 Jun 2026 00:30:56 -0400
+X-Sender-Id: dreamhost|x-authsender|dave@stgolabs.net
+Received: from relay.mailchannels.net (localhost [127.0.0.1])
+ by relay.mailchannels.net (Postfix) with ESMTP id 827074027C;
+ Tue, 02 Jun 2026 04:30:51 +0000 (UTC)
+Received: from pdx1-sub0-mail-a207.dreamhost.com
+ (trex-green-2.trex.outbound.svc.cluster.local [100.109.200.72])
+ (Authenticated sender: dreamhost)
+ by relay.mailchannels.net (Postfix) with ESMTPA id E2D8C41AE4;
+ Tue, 02 Jun 2026 04:30:50 +0000 (UTC)
+X-Sender-Id: dreamhost|x-authsender|dave@stgolabs.net
+X-MC-Relay: Neutral
+X-MailChannels-SenderId: dreamhost|x-authsender|dave@stgolabs.net
+X-MailChannels-Auth-Id: dreamhost
+X-Skirt-Society: 3daaed3a31903071_1780374651354_34399279
+X-MC-Loop-Signature: 1780374651354:361391816
+X-MC-Ingress-Time: 1780374651353
+Received: from pdx1-sub0-mail-a207.dreamhost.com (pop.dreamhost.com
+ [64.90.62.162]) (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384)
+ by 100.109.200.72 (trex/7.1.5); Tue, 02 Jun 2026 04:30:51 +0000
+Received: from localhost.localdomain (unknown [181.212.92.203])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ (Authenticated sender: dave@stgolabs.net)
+ by pdx1-sub0-mail-a207.dreamhost.com (Postfix) with ESMTPSA id 4gTyZ13Yllz18l; 
+ Mon,  1 Jun 2026 21:30:49 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=stgolabs.net;
+ s=dreamhost; t=1780374650;
+ bh=B3WfiMD2XseJxICu1hT/rD9vHKRHNKodtQMwLZ2U56M=;
+ h=From:To:Cc:Subject:Date:Content-Transfer-Encoding;
+ b=olgfPA0x0R+jfcs9qqBn1mkgyUtEA39D4DeNgirTi9y5UyGmlxPciFK4xIgzjQ4+Q
+ pNmLZlpFReBcoPI7RGkb48k73iQPdZw/byf6v1BoQNETCDLizmG/A8VMdaKqslC2Sw
+ PoeM7m1vBPVoM1eUmK8UtC+yiXb1XTwK4I/zy7te66/d/xWkkQ7Gz0g4Qzdke6zBRB
+ NtDLrEvxWfZSzBOmqa3ai7jSMUNO7ezijqJS1BZQ+zV+bzeETp5DWWKPn8pX+apOyi
+ U+iIv4XEG4S5FGfQRpamMApIpAM4jXhuA8625ZjDoZibjXJsesc+VAmPZ3rKLXAugR
+ X8ahA65sqE+RQ==
+From: Davidlohr Bueso <dave@stgolabs.net>
+To: jic23@kernel.org
+Cc: linux-cxl@vger.kernel.org,
+	qemu-devel@nongnu.org,
+	dave@stgolabs.net
+Subject: [PATCH -qemu] hw/cxl: Use host-only coherency for default CFMW
+ restrictions
+Date: Mon,  1 Jun 2026 21:30:29 -0700
+Message-Id: <20260602043029.2341246-1-dave@stgolabs.net>
+X-Mailer: git-send-email 2.39.5
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] memory/ramblock: Fix clear of mru_block on possible race
- condition
-To: Peter Xu <peterx@redhat.com>, qemu-devel@nongnu.org
-Cc: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@mailo.com>,
- Fabiano Rosas <farosas@suse.de>, Paolo Bonzini <pbonzini@redhat.com>,
- =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
-References: <20260601205900.1067714-1-peterx@redhat.com>
-Content-Language: en-US
-From: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
-In-Reply-To: <20260601205900.1067714-1-peterx@redhat.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=49.212.243.89;
- envelope-from=odaki@rsg.ci.i.u-tokyo.ac.jp; helo=www3579.sakura.ne.jp
-X-Spam_score_int: -16
-X-Spam_score: -1.7
+Received-SPF: softfail client-ip=23.83.223.164; envelope-from=dave@stgolabs.net;
+ helo=shrimp.cherry.relay.mailchannels.net
+X-Spam_score_int: -13
+X-Spam_score: -1.4
 X-Spam_bar: -
-X-Spam_report: (-1.7 / 5.0 requ) BAYES_00=-1.9, DKIM_INVALID=0.1,
- DKIM_SIGNED=0.1, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=no autolearn_force=no
+X-Spam_report: (-1.4 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_NONE=0.001, SPF_SOFTFAIL=0.665 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -75,115 +90,71 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 2026/06/02 5:59, Peter Xu wrote:
-> The race condition was not reported in any real bug, but I found it while
-> reviewing some relevant chnages from Akihiko [1].  It's not clear if
-> there's any way to reproduce it, so far it's only theoretical.  Hence
-> there's also no Fixes tag attached.  There's also no need to copy stable
-> until we have a solid reproducer.
-> 
-> Currently, mru_block might still points to ramblocks that are removed if
-> below race condition happens:
-> 
->    Reader A                              Writer
->    --------                              ------
->    rcu_read_lock()
->    walk list, find block X
->                                          QLIST_REMOVE_RCU(X)
->                                          qatomic_set(&mru_block, NULL)
->                                          call_rcu(X, reclaim_ramblock)
->    qatomic_set(&mru_block, X)  <----------- overwrites NULL
->    rcu_read_unlock()
->                                          grace period ends, X freed
-> 
->    Reader C
->    --------
->    rcu_read_lock()
->    qatomic_rcu_read(&mru_block) -> X
->    Read X's block->offset ...  <----------- UAF
-> 
-> To fix it, we can introduce a nested RCU free for reset of the mru_block
-> field, and only free the ramblock until the 2nd RCU call.
-> 
-> Since QEMU always: (1) dequeue the RCU node before invoking the
-> function, (2) reset all fields in rcu_head in the call_rcu1() call, nested
-> RCU will work all fine like what's used in this patch.
-> 
-> [1] https://lore.kernel.org/r/5fd9e540-cf13-45f5-ba9a-c7faf364035b@rsg.ci.i.u-tokyo.ac.jp
-> 
-> Cc: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
-> Signed-off-by: Peter Xu <peterx@redhat.com>
-> ---
-> 
-> Based-on: <5fd9e540-cf13-45f5-ba9a-c7faf364035b@rsg.ci.i.u-tokyo.ac.jp>
-> 
-> Since there's no reproducer, I didn't verify the problem as-is.  What I did
-> is I ran this through some high concurrency "make check -jN" (8 processes
-> with 4 cores pinned, hence 8*N make-check threads running concurrently on 4
-> physical cores), I didn't see any regression.
-> ---
->   system/physmem.c | 18 +++++++++++++++++-
->   1 file changed, 17 insertions(+), 1 deletion(-)
-> 
-> diff --git a/system/physmem.c b/system/physmem.c
-> index 9e1ac13e82..1697568fa7 100644
-> --- a/system/physmem.c
-> +++ b/system/physmem.c
-> @@ -2590,6 +2590,21 @@ static void reclaim_ramblock(RAMBlock *block)
->       g_free(block);
->   }
->   
-> +static void reclaim_ramblock_prepare(RAMBlock *block)
-> +{
-> +    /*
-> +     * 1st round rcu free guarantees the last reader that can access this
-> +     * ramblock is gone.  Reset this field making sure it will never point
-> +     * to the ramblock being freed.
+Change the default CXL Fixed Memory Window restrictions from
+0x2f to 0xe, dropping Device Coherent and Back-Invalidate,
+which are considered spec violations when using in combination
+with host-only.
 
-Somewhat nitpicking, but I would call this the first grace period rather 
-than “rcu free”. call_rcu() itself does not free anything; it schedules 
-a callback to run after a grace period, which is what matters here.
+For HDM-D and HDM-DB models, the user will need to explicitly
+pass the correct restrictions bitmask.
 
-> +     */
-> +    qatomic_set(&ram_list.mru_block, NULL);
-> +    /*
-> +     * Note: this is an intended nested use of rcu_head.  If needed, we can
-> +     * provide two rcu_heads for ramblock.
-> +     */
-> +    call_rcu(block, reclaim_ramblock, rcu);
-> +}
-> +
->   void qemu_ram_free(RAMBlock *block)
->   {
->       g_autofree char *name = NULL;
-> @@ -2607,10 +2622,11 @@ void qemu_ram_free(RAMBlock *block)
->       name = cpr_name(block->mr);
->       cpr_delete_fd(name, 0);
->       QLIST_REMOVE_RCU(block, next);
-> +    /* First attempt of reset, see reclaim_ramblock_prepare() for the 2nd */
->       qatomic_set(&ram_list.mru_block, NULL);
+Signed-off-by: Davidlohr Bueso <dave@stgolabs.net>
+---
+ docs/system/devices/cxl.rst | 5 +++--
+ hw/cxl/cxl-host.c           | 2 +-
+ qapi/machine.json           | 2 +-
+ 3 files changed, 5 insertions(+), 4 deletions(-)
 
-I think it would be better to remove this for simplicity.
-
-mru_block is cleared later anyway, so this does not affect correctness. 
-The only practical effect is that qemu_get_ram_block() may be slower 
-during the first grace period.
-
-Conceptually, it is simpler to describe the two grace periods as serving 
-two distinct purposes, rather than as two attempts to clear mru_block. 
-With the early clear removed, readers do not first need to understand 
-that the first grace period leaves the first clear ineffective; they can 
-instead focus on how it makes the later clear effective.
-
-Regars,
-Akihiko Odaki
-
->       /* Write list before version */
->       qatomic_store_release(&ram_list.version, ram_list.version + 1);
-> -    call_rcu(block, reclaim_ramblock, rcu);
-> +    call_rcu(block, reclaim_ramblock_prepare, rcu);
->       qemu_mutex_unlock_ramlist();
->   }
->   
+diff --git a/docs/system/devices/cxl.rst b/docs/system/devices/cxl.rst
+index 32b1b5d7733b..079f65660dc3 100644
+--- a/docs/system/devices/cxl.rst
++++ b/docs/system/devices/cxl.rst
+@@ -385,7 +385,8 @@ An example of 4 devices below a switch suitable for 1, 2 or 4 way interleave::
+   -M cxl-fmw.0.targets.0=cxl.1,cxl-fmw.0.size=4G,cxl-fmw.0.interleave-granularity=4k
+ 
+ An example of 4 type3 devices with volatile memory below a switch. Two of the devices
+-use HDM-DB for coherence, which requires operating in Flit mode::
++use HDM-DB for coherence, which requires operating in Flit mode with the CXL Window
++configured with Back-Invalidate restrictions::
+ 
+   qemu-system-x86_64 -M q35,cxl=on -m 4G,maxmem=8G,slots=8 -smp 4 \
+   ...
+@@ -405,7 +406,7 @@ use HDM-DB for coherence, which requires operating in Flit mode::
+   -device cxl-type3,bus=swport2,volatile-memdev=cxl-mem2,id=cxl-mem2,sn=0x3 \
+   -device cxl-downstream,port=3,bus=us0,id=swport3,chassis=0,slot=7 \
+   -device cxl-type3,bus=swport3,volatile-memdev=cxl-mem3,id=cxl-mem3,sn=0x4 \
+-  -M cxl-fmw.0.targets.0=cxl.1,cxl-fmw.0.size=4G,cxl-fmw.0.interleave-granularity=4k
++  -M cxl-fmw.0.targets.0=cxl.1,cxl-fmw.0.size=4G,cxl-fmw.0.interleave-granularity=4k,cxl-fmw.0.restrictions=0x2d
+ 
+ A simple arm/virt example featuring a single direct connected CXL Type 3
+ Volatile Memory device::
+diff --git a/hw/cxl/cxl-host.c b/hw/cxl/cxl-host.c
+index 11a455b28ab8..a2595633ff0c 100644
+--- a/hw/cxl/cxl-host.c
++++ b/hw/cxl/cxl-host.c
+@@ -64,7 +64,7 @@ static void cxl_fixed_memory_window_config(CXLFixedMemoryWindowOptions *object,
+     if (object->has_restrictions) {
+         fw->restrictions = object->restrictions;
+     } else {
+-        fw->restrictions = 0x2f; /* No restrictions */
++        fw->restrictions = 0xe; /* host-only coherent, volatile, pmem */
+     }
+ 
+     fw->targets = g_malloc0_n(fw->num_targets, sizeof(*fw->targets));
+diff --git a/qapi/machine.json b/qapi/machine.json
+index 11ce0457d2f1..f832f0b84a53 100644
+--- a/qapi/machine.json
++++ b/qapi/machine.json
+@@ -558,7 +558,7 @@
+ #     BIT(3) - Persistent
+ #     BIT(4) - Fixed Device Config
+ #     BIT(5) - BI
+-#     Default is 0x2F
++#     Default is 0xE
+ #
+ # @targets: Target root bridge IDs from -device ...,id=<ID> for each
+ #     root bridge.
+-- 
+2.39.5
 
 
