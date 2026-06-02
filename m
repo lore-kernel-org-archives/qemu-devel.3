@@ -4,135 +4,136 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 70E28CD6E56
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2122ACD6E55
 	for <qemu-devel@archiver.kernel.org>; Tue,  2 Jun 2026 03:21:21 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wUFgP-0004Jb-5M; Mon, 01 Jun 2026 23:20:49 -0400
+	id 1wUFgU-0004KO-Ay; Mon, 01 Jun 2026 23:20:54 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <kchiu@axiado.com>) id 1wUFgN-0004JS-7H
- for qemu-devel@nongnu.org; Mon, 01 Jun 2026 23:20:47 -0400
-Received: from mail-westus3azlp170120001.outbound.protection.outlook.com
- ([2a01:111:f403:c107::1] helo=PH8PR06CU001.outbound.protection.outlook.com)
+ (Exim 4.90_1) (envelope-from <kchiu@axiado.com>) id 1wUFgT-0004KG-4p
+ for qemu-devel@nongnu.org; Mon, 01 Jun 2026 23:20:53 -0400
+Received: from mail-centralusazlp170110009.outbound.protection.outlook.com
+ ([2a01:111:f403:c111::9] helo=DM5PR21CU001.outbound.protection.outlook.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <kchiu@axiado.com>) id 1wUFgJ-00081W-20
- for qemu-devel@nongnu.org; Mon, 01 Jun 2026 23:20:44 -0400
+ (Exim 4.90_1) (envelope-from <kchiu@axiado.com>) id 1wUFgR-00084I-DG
+ for qemu-devel@nongnu.org; Mon, 01 Jun 2026 23:20:52 -0400
 ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=v6ZmbOEs7jA6StECnfSTHAxEvd7WszdLbDOs25sf59Z0BGYW+5//Q8YXQqhy7lZGlKMSrE3Vk0POO0unRzEXgJNFn1+UNygxgkYlh/PT6VSnmXxM5xb2o1wVd+huUDScebSjWtSKmO/sYLRpyR4pOadCULuq2WQzHePmzog2bT8Pu1D+eDkVJZ11gJAbW5VxJSvImfaPn+xnVBZLC/gCGAHJM9C3PCg33tBqBCvPZy2YmPgxNUbcxDq7XhmhA/cqNTUt8nbN9boAb3xzQGqKPJI8CnY7JnyeZSMYy3ajUfYrCWIbPkEOjM1VlPaiiMApQfPQh2TVKk6T40nyxY33dw==
+ b=TBFDbN8tBtMIvt1/U3Kj31QbrSGBWXwZPUZcupwUGLtMteNBzEaiA1VQHL1QP+Xvw8HSvYbnLxlrD6lOfeq/XpJ5UjyKmnX9wlwGncLDAwWdoC3HS8OHMwDxHsm9z6tJab35Jxf6kDRSA7CkL3QJdHWCcPvLceHLwzW70oxHYGv0FG+AK2Rmj6GF0lljE280TOhHTlDx2Ks8kb3kA7Edx86hs4SXzlHYNzAnPAMkelOa8eRqf2RuAhJaKVUUThZmCoRki4aV2dE6Kq1Ch6Jh5+l88LYHZDa+Zk9k24T9rEPnWq1t0be4r+LFkfrGfga21lavuV8D6ruK/4vgthvbew==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
  s=arcselector10001;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=ipRnVyhGiTWTM7N2erWAzn5M8dDT6QMqUJB+LZVfZpQ=;
- b=X8ANXJ9zVGeVuSU0EW+t5hMPneQBf34Ebr7nSW3OgsezHnvpSPVZhNlRymcLiFktiVhHHa1fFx6KPeWvAh9n7tJM8oET4AMeNfld7w9lOKTxzUUaWEcO/EmcyerNIuJ2IleeLu+6M3jDO6zeVxRAVU6MBK5A7i7C8OHJCak38NYhnpc2q+LozL4jO8i9Sjr3NH0y/1oi7j7SN/lCjLFGu42r2EAOnQPP7Fv8HPxA4hlVNUWPZFtTo8PT9GY7OBYoWD5UI3J9d5oC3f4wmc/wFv/cfMpXA5Ka/H+Z97e8d+wLfWHruzWTXHhW+tfPORGB2PnZlMaIV5OZ2T+YT6caWA==
+ bh=CywddgZQNTwLHb/cvZmvOS3fEeObdggtlnF2qn4YkMY=;
+ b=AIQ+7jOQLhWKbHPjMhTxKN9x9lL3Bq1e3UzBsLNl75SyJW+hpwDlumujcQbUBGSRDVZ2RSxTvKUl4coWz+UNBkoKvYopMZH4A4pMhSJ28V55hfbLyBRVVcB6b/YBFje396Orgk3awVVm77At/AHvgMnklL/MP9PXYb5WV3v4/ppcqdZZAL5s6BznMwn5xEM0Xa1ZH+/u7KiKU3Qvj4BHxwV33GNHrm26r/JRWzDLGHiBttq0TA1IN+tzot9P3/i4G61pPPtdOzwi+xBJ+80DqbP4Vdxb6xdBkfLuvh4WkU+NRkEy5/YQN0GEgHk/+smr61tKmxF7mQPPaPAWBGyDNw==
 ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
  smtp.mailfrom=axiado.com; dmarc=pass action=none header.from=axiado.com;
  dkim=pass header.d=axiado.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=axiado.com;
  s=selector1;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=ipRnVyhGiTWTM7N2erWAzn5M8dDT6QMqUJB+LZVfZpQ=;
- b=PN9/9TieL5hLm6Z1zA1mapv6O4NECHnMSBJocYOoAqMpkeG0pOgm0UO2HSXJ8PnYK+zcrPjfiuOMc/N1Vzx0+3WP7p2xBog2rS2g4lC52S30fOTK11z+nlUkIYQVqfZmFWYCg/5+XaAKBp7jxp0OH/DtDzpJcgbHFF0iEDRy75gypbIAv1zfLwYW5nBCNevOIPZm2GI6uOtG6y6Cr3igvA60MOTG4rfXfnGXjKwioAmvl/7eTcEHaITILLpb49xMR7vzkt9dBV3Ny37yBR6bPqdijg+BZbM3S0fjI2gfWZQ3AvwWxVxQrTGW4bgv/Fcp6JRSMvG3CYfGI6jtWA2RMw==
+ bh=CywddgZQNTwLHb/cvZmvOS3fEeObdggtlnF2qn4YkMY=;
+ b=WbTYI9uwUfBwFGfiXajqUo1nlhQ++y30DDkCMXCyi5keTfP8wc4DNkzgrTwydaM+c1/UyX5Dfg+K4S+HhZI/uDlVkkOUG5PeHynXy690oMAtEgsInGbYGpxDLV/JauCnPezj74AHJNiNOlVUevhYLGYuobK50YDlDsPWCfQbEqrsWadCVGpEnAS7R4X/1T1ugLXNmnlNG1GcaH2+1Z2pk7Vp/3yFdqeSeSk/CJKy8pUUL1VB/CYHxX66e5RMjxsXY5fkdkv123JcfXKtNeBas9tEPrHdhUg/F+cObtC0MUFSQ7Zrc+BDGbrXfjBIWABYYTltEUj7ggMxTpFD8IFicg==
 Authentication-Results: dkim=none (message not signed)
  header.d=none;dmarc=none action=none header.from=axiado.com;
 Received: from SJ0PR18MB4479.namprd18.prod.outlook.com (2603:10b6:a03:37f::19)
  by SA1PR18MB5718.namprd18.prod.outlook.com (2603:10b6:806:3ad::7)
  with Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.71.12; Tue, 2 Jun 2026
- 03:20:38 +0000
+ 03:20:48 +0000
 Received: from SJ0PR18MB4479.namprd18.prod.outlook.com
  ([fe80::eaf4:3aec:73e:d5ba]) by SJ0PR18MB4479.namprd18.prod.outlook.com
  ([fe80::eaf4:3aec:73e:d5ba%3]) with mapi id 15.21.0071.014; Tue, 2 Jun 2026
- 03:20:37 +0000
-Message-ID: <c597c9d6-1155-491d-b85b-e49b7a58c13e@axiado.com>
-Date: Tue, 2 Jun 2026 11:20:35 +0800
+ 03:20:48 +0000
+Message-ID: <7da37165-ab8d-4594-9375-f94fe9bb09e5@axiado.com>
+Date: Tue, 2 Jun 2026 11:20:44 +0800
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 3/4] hw/gpio: Add Cadence GPIO controller
+Subject: Re: [PATCH v2 2/4] hw/arm: Add Axiado EVK SCM3003
 To: Peter Maydell <peter.maydell@linaro.org>
 Cc: qemu-devel@nongnu.org
 References: <20260430091832.1846637-1-kchiu@axiado.com>
- <20260430091832.1846637-4-kchiu@axiado.com>
- <CAFEAcA8a6iSeqOf_PsMSEV_PaNm8NoBrH7DpOYFK+K=UjtiD-w@mail.gmail.com>
+ <20260430091832.1846637-3-kchiu@axiado.com>
+ <CAFEAcA9qQt+HVqZGtH4mjP0sBv9Jxrs3JS+gBHaMevTdYFq+ow@mail.gmail.com>
 Content-Language: en-US
 From: Kuan-Jui Chiu <kchiu@axiado.com>
-In-Reply-To: <CAFEAcA8a6iSeqOf_PsMSEV_PaNm8NoBrH7DpOYFK+K=UjtiD-w@mail.gmail.com>
+In-Reply-To: <CAFEAcA9qQt+HVqZGtH4mjP0sBv9Jxrs3JS+gBHaMevTdYFq+ow@mail.gmail.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-X-ClientProxiedBy: TP0P295CA0007.TWNP295.PROD.OUTLOOK.COM (2603:1096:910:2::7)
+X-ClientProxiedBy: TP0P295CA0005.TWNP295.PROD.OUTLOOK.COM (2603:1096:910:2::8)
  To SJ0PR18MB4479.namprd18.prod.outlook.com
  (2603:10b6:a03:37f::19)
 MIME-Version: 1.0
 X-MS-PublicTrafficType: Email
 X-MS-TrafficTypeDiagnostic: SJ0PR18MB4479:EE_|SA1PR18MB5718:EE_
-X-MS-Office365-Filtering-Correlation-Id: 3b0c341f-1aa1-4324-d21c-08dec055ea9e
+X-MS-Office365-Filtering-Correlation-Id: 943ec9e1-a8b1-4c29-4e8d-08dec055f100
 X-MS-Exchange-SenderADCheck: 1
 X-MS-Exchange-AntiSpam-Relay: 0
 X-Microsoft-Antispam: BCL:0;
- ARA:13230040|366016|1800799024|376014|6133799003|56012099006|22082099003|18002099003|4143699003;
-X-Microsoft-Antispam-Message-Info: lKnNY2qiBUnbTATsmCLj8uF/CTztyBCZGnyLR6y12HnOy/fc7V+WlUXfQ48Rf6k8hHMNIvTNEd3MDMUwlvpjw4DlLruik7loBfIwihJKCuMarsvO2sxoUgNHL6RLq/CddEePFLVHEWcrqMibX6CjuWp/w2lKfcOXQvIGQzExZql/DiOaz9P/Csc/auQm5BPTIfoYL9QeAol1mY+IMM88nqa11CmcthjxiWQIZLrLkXZBezDwoOwZPahGafu874ks1MDyWGrpcAoGOkQQRz3Fp8PaStnj7M+rr9tJ8SETd+hDo9bLtL6x85RjdBGEnC/R385RIKD/xXSWomorgtUHAvrNz5nHqS5YPs92UyaQjNMGbY5n1DxuF8iqLyR+Q3cXihDOLKYXSBWsiM9w7SslhN8ooYsBO6jSuoCIvzSNQN1X3ZNg8mKRxRk/pVbeXcSvmkS/l6JzJotIWnd+yCwMcpx533PfKNX+Rx4ZEvfeSHT28HNnjH24TPQXL0q+fS9tq/aOTUEsAvD61Lv20IH7A5WN9JsPi55Mv6VB6dDuNct8404nGZk3/DCnmp8SWvT2TiO2KAF/WvpTa7IFQzVxXjM/FcCoKHrz/J6Z7+kCEqR+MUgiNSK7baL41tqS+qR/4c93hDy47aqnfXh6aZHc4qUnXMVCfIYkEnDHjMTZIBcufYvaAN8RHA0OTQKKajBl
+ ARA:13230040|366016|1800799024|376014|56012099006|22082099003|18002099003|5023799004|4143699003;
+X-Microsoft-Antispam-Message-Info: n3kjEzZVd4W0d0GqY7wlUzUDiK+f7mpf82bVv1ZUGQrr0mxYTPbZ5tWeyllC5C33ySf+APNsZ23cWH9dXfOH64dCcSRikcijy+ltmrCyKXINCYn6ccqY2kcIAiw29lpwLxKeIiFpgKeWj7FS3xbxrP5BKWN4x6yHt9lNLj6kIjoUbc9x43Ux7XXFc6HP96f/e/GBOFXYmnETZYJDgq5jTW81wR1E40tNgme1OkPlfnlb+FqfhttGz/GBrYXwJopS/yC5x7XXjTlgCjSmlfP25ObfgFMsW2JgC1OONyfvFyYOXNGM3GF2KS5JhaOEu6Ka/vKAQ9Xlu/cQzbSubqI8x2TGowc5JowawnVlkUzDYJs0fcigUNRAbOKx3mmc6j04/3LqJmSd2VNBdLZy4G1XAuN41zPE9H9ggvtMuah/1vMVTdxmR/3kmBymB3geWEuySAdVMimQpcxcNt6SaAK25GKVvqu3avmaBwW5U/nhTD0kwLDUtZvz6TG1OWSA7DOI1eXEDZljDGxM9YUGXaKC4Ey9M3bTKlx0LB6v55S1H+aEySXW6Cm5PtGrj5r7Ceepg1vEbAzj3ydaFXwWmj/jMBeKmmEzcoK8J10JgX3mgVbjBRe4hfEvcwXNU0H2GBGEGsdEeSdUR4tbMCEcoI05E5XNc3DJdDrYm+JnyadEBNCj5Xpv2ANQ38BHe1GGy6/+
 X-Forefront-Antispam-Report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
  IPV:NLI; SFV:NSPM; H:SJ0PR18MB4479.namprd18.prod.outlook.com; PTR:; CAT:NONE;
- SFS:(13230040)(366016)(1800799024)(376014)(6133799003)(56012099006)(22082099003)(18002099003)(4143699003);
+ SFS:(13230040)(366016)(1800799024)(376014)(56012099006)(22082099003)(18002099003)(5023799004)(4143699003);
  DIR:OUT; SFP:1102; 
 X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0: =?utf-8?B?U3pUclhFN0NCcUhoUEFmdFRIWExMTkh3QmdrS1N3Y2NBL05HMnZjNldaeWpj?=
- =?utf-8?B?T0xxVE9yenFTRU02VVMzdGlXYWc1OS9teG1NQllwci8rTHdGMWdVVEVyMVZ1?=
- =?utf-8?B?NTRabDRJT2l3ZlpCU0tjRzYveEM2YnFuSE80eFJuOTA4K0NKdjhnbC9Jd0NN?=
- =?utf-8?B?VnRJY1d0ZXBWVzk1bXY2UXVhNzF6VWFxRVJlOUFSSXBUVGlxRzcwdjQ1d093?=
- =?utf-8?B?a3Iyd0pJSjUxc3BnZ2FpZ1RRNVgwWjFFSTZGN3o3a0Q4aytGL2J5cDVVR2dP?=
- =?utf-8?B?WVpWY3J2NnA1U3ZXVlpCL3BaUkFaSGZjTEV3L3Z3dTFieFhqVVNmOEZjSHkx?=
- =?utf-8?B?YTRVNjQvNzJnQ2xCWE5tc2hWZFV3dG9WMS9VZXFGWjVRMXRlU1pYOGI0MG9a?=
- =?utf-8?B?K3lreTNGWlA3R29nbWJwTkdCTk92YkN5Mk9MRXdqR2tVNDM2RkNkMzJjV2dD?=
- =?utf-8?B?d2hsdGpRT2drU2p1RnBsUzJDNVk0RzRZdzdxaHBaOWlrTGZKSlhnT01RNktT?=
- =?utf-8?B?Umlham1nT0tneFNCOG5NbVpWb3Z2Sm1Sd3YybmhkZituYnZCMy9kQ0xvVDZS?=
- =?utf-8?B?RG9mc1dKNm1WckwxZ3NaNTlrM3EwTVJuTFNSdFRsSjFuck9pMmloL2M4T2VE?=
- =?utf-8?B?VC9qM3pJd2ZRZU0ya2lCVktYRkx5UjFiQ0Izc1BGYndpdTNaVmJPLzY2MkIx?=
- =?utf-8?B?R25DWkkrUFRaN0N1YlIwZ2x6TGVuVENuTmE5UTR3a1QraW96SWV6YzJyams4?=
- =?utf-8?B?aTJCWDBaQytndC9qbU4vMjlPRkI4TXhUWll4NFMwUEpjNmdicWM1SFdlZjFI?=
- =?utf-8?B?ZnZwUFpvVnY4ZkRvV3VGZ2YyNk53RFcyNWJEbEFaR2lTRGg2K0FoNEM3UjVq?=
- =?utf-8?B?TjR5QmVKZGlsV3N3OTQvSGlZZ25McHg0K1VFdDJoY2k3aEtsUFNmcEhYa1Ew?=
- =?utf-8?B?WnpRUW1PS0xrVzRhWWltalVwVWhHeTBmYThOQ3JuR1ppQVRmb0pPOUFPYlhn?=
- =?utf-8?B?N2lNTmloc2g2eUhYMzJ1N25yeGc1U3hvVXVTbFF0N2FqSEF3WmtBdmJqZ0k2?=
- =?utf-8?B?QXpCLzVCT0tqQzV3M0NnbmlKczA3WTRIWFp6TUcyVkcyYVRob1crZ3UxN0Fm?=
- =?utf-8?B?WFgrbTJRREZ5UzhETmtML2NsdE1XY0h1eW9qUmNpeU51eFpPVkpEVUt1Wk00?=
- =?utf-8?B?UVgvaUJrVnZCVDQrVHY1bXFCVjBhbFBTemRscUo2czdFY24zQW9yWjg3c1lO?=
- =?utf-8?B?WWtqUGhEOUNaZklncXBlOWlKZjE4Y0gwYkZtdkVwbDJTU1ZVZ3lNczBrQTF0?=
- =?utf-8?B?QTB6RUV3RFdxVGNkOUVXUzNtdkYwdHIxMGpETmVuNkNUWldYSnVCL3ZtSzEy?=
- =?utf-8?B?bjlzZnVEZWVXSVJIRFFTS3ltWFgzK0dGbm0rdk05ak1HTWN4eTkyYnA1N1RH?=
- =?utf-8?B?UkgzQ2o1WkJhdWR4bGJBRk5IeFVmOG1jUm4wUFl2c0IrQmZVeFRzY1lKWERI?=
- =?utf-8?B?dDZtSmVwaUR2ZHpjc1B4TEFqcnFqNHJlblVXeVN4WDArb1h4TEVjbnljTmV3?=
- =?utf-8?B?Rk03TEJyOEtoMjFDaGVYazV3MTd0Ylg2cVRnNjFRZFRBVG93T3pSUU41d1dm?=
- =?utf-8?B?ZUdmOG5KY2tBeGJmRXJiTGJwSHhpMDR0V1gwVmF3VzNwb3NTYklQODFLTkxD?=
- =?utf-8?B?cWlENVJZUktoWTlwTDI0aUw5WmRuMXk0dWZ4RVlyYXNDdmVRWjBkUmwvZU1K?=
- =?utf-8?B?Y0craTV0dFd3T3RkYTNNbzcwenVNU0Zobm00Z0hYcEJwOXhYemF6c1ZoWTc3?=
- =?utf-8?B?cENQcWxwOVBYRHhwd1ZnMG1tR0V1S2FGUTd1eWJITlVOclF5M3JnOWdvUHNh?=
- =?utf-8?B?c3ltaW85OENDS3pZRGdPNlRRNHRoYk5sVDI2WnpqWnJGalZrQ2pQMEFNSUZB?=
- =?utf-8?B?dXc0MXp4cTFQYUdkM2hjak0xY1VSU3VQdUxEOTI2NnZDaG1IeVY3d2x0S1NP?=
- =?utf-8?B?ejJFY1JUV3hsZFBGRGN1OG5CSXBVajBTN083RTB0M3R2bmdYY29lTCtoN3g1?=
- =?utf-8?B?Si8xSXRjZWt1QXRyVW9HWGpMd0k1SGtyOHA0Mm9sSTh3WnpPWnp5dys4WC9E?=
- =?utf-8?B?S29lNlZ6YmRJTU55MlBOZmszSE85MUNJZDVFWjAyK3krYTdCWGdQdEs0RTF5?=
- =?utf-8?B?VmI3YjRLdlJ1aDhkcTJnWG5VN0ZaNy8vcUppUGJCOTl1UWY1NnBBUGNFWXNv?=
- =?utf-8?B?bnhxK3M5bERNQ0h0NGlvQW9IN3hueXc2QldVeDNlOEJPK0JscHJlMXE1QUdr?=
- =?utf-8?B?MVJITWNyZmdqckJJdXE5ODdrcjRLREhlTGQ4L2dOVnRkYTJ0dU42UT09?=
+X-MS-Exchange-AntiSpam-MessageData-0: =?utf-8?B?b2NSMEJTbU5aSFI3eHczdld3b3Z6em5sbG5rbmIzTStNeTJkQlJZNXdXWUFa?=
+ =?utf-8?B?Q2hzSExPUldHMUwrSDFXeHJhMG82RUo3RExpV3hYRDg5ZjFsRlZpTGtwYWUy?=
+ =?utf-8?B?VFVHZmt0S0wrMVY5RG9JYmM4TlJ5bks4dk5YZ2o1eHc0UU1FZ0RYcEZ6OTc3?=
+ =?utf-8?B?YUpiVWwwa1krNXFPZE52ZUVhUTNtektPUlNmS1VIQ0h3NUpTVWxwSEVHRzhY?=
+ =?utf-8?B?MnhQeC9xMzFRL2RLVkdtS0IrTW9WTUkxRk92b1VPSitwL0dhcFVLVEh1dGE3?=
+ =?utf-8?B?QjdJK2pibWRsUUpsLzhqQkVXbUludXIvdXRlTDZ5Szhia2NZWWkvY1NmMHd3?=
+ =?utf-8?B?SllHQ1lNR1Y3UWNscGtWOE5nRG5KTHY2RFRPd2xPRncrZ2N1RkpHK3lSa2N3?=
+ =?utf-8?B?QjVHQmF5aDYrcm50QUtUcHIwd1VRRjd0VnpvVEh0VjBvL2o0bk8zdVphcmpT?=
+ =?utf-8?B?WUlOM2wxcGR3dlVueGNXcHdpZ09mWUZtRkpOQ1VuaUd1RlFlQ29Yc0tFZUIz?=
+ =?utf-8?B?V0lSWDRsUW5Vb0F6dU9wd0RQVVUwM29seGd1aGhHNDV2TVA0ME40Z0ZldzhG?=
+ =?utf-8?B?OGpxdHQwbGJNeDAxRXNpM2JvL2ZsL1FheHhjTlRrVWlURUVWaUxnYStXSDFh?=
+ =?utf-8?B?dUxrYzRxM2x2VTh1bFc0Y3dlOWFEYjJBcVR3VGpFREFwTGU5ZHBNMlVvRU1m?=
+ =?utf-8?B?dFVPSG1neWFIVk1SY3FxWSthMFVBS3Q4ZG1xL3laL1JEaFliRVVnakZCTEFz?=
+ =?utf-8?B?ZmVKVEpDVk1naTQzMGlSaHFBdWI2RU5CS1NaRy9iSmw5dnZnRDdIM1loc0li?=
+ =?utf-8?B?TGM4TThxSkdvN2F1K2t3ckx1RjVaRGZUdFg5cUNoSWVKVFNsUDNXRjIveGp5?=
+ =?utf-8?B?aXMwOEhyZEdpNTlja3dpblV4d0pvaXBiMlJwYjM3TlkxdkJqWmZaaGRCOVRq?=
+ =?utf-8?B?Z3pDeC9KRnQ1dEF0cC91ZDgwR0x0QWVSS2dNcFNPYnR4VzRxREJTNHRBaStR?=
+ =?utf-8?B?citCb08xMFd5bFF0TW9YdTBkbGczNDFvMmtPQnVUQXNpeWkwcU4wNlFhUVFk?=
+ =?utf-8?B?MWNGUTlPWGVYUVVNaHBoOU5RaXBSUGxVYXR0ZlRybmFvSE9vTDhENEJxWUNV?=
+ =?utf-8?B?MkJtMlpNK2RlUytmSGpTOWx3QTlsM0tpMTFrQ1hjMDJhUHd1VGs5NVVXRjZV?=
+ =?utf-8?B?bGVLOFA2Z2tTaFBxM3ZPY2picG5nT3hML29yZlFNYUFEQnl0QWlqVU5VSFhm?=
+ =?utf-8?B?V1B6d2Q0OG9IVUlZMFRYdFBLNEpMV2xyN1E3YlJVV25oOC9xM25qYkpmaWNi?=
+ =?utf-8?B?ZFpzY1FDMmxZLzJaRE5qSmtKQ2FaeGF5MHJTcjRpT3hxVHBoK1NZMnpYWkZo?=
+ =?utf-8?B?SkNMazljZEMrNEQvdzkyU29na21HS0Q4U3h6cUx3WEk0ekFFM3lFcW9ZRjh3?=
+ =?utf-8?B?Rjlia1pZUExKZ3lsdXhWaFVUMWh3VDl4RG50aGRSTTAxdXZTV2lXSFRPY0JO?=
+ =?utf-8?B?aEdxUzZsN2R3ZzloODU1dzNEMFZ0cUFxYU00a0hyeE05VWNpUm9CdFBqWmQ1?=
+ =?utf-8?B?aHpYL3ZpdE9LSU5WM0pGOXdFK1hBazZ6ZExhYzR2NlQrSzlYRVUyYko4cDZj?=
+ =?utf-8?B?U1JNczNaWmFWVkowOHNCS0V4RVJWN2FhNjRwUGxOVThpRUcxcmVrM0NmN2do?=
+ =?utf-8?B?SE9ZU2xnQ0RabU9HOFVZTUJReGpMTzgxc3U4eEJxU1hvTVR5TFpJYS9MOEhT?=
+ =?utf-8?B?WEdzSGdOcWRKalRhK3M3dHBwM0RJR2FRUVBGZi9RZWpHN05PUHgzK1l2UC9O?=
+ =?utf-8?B?eGl2RDNXeHRueHRxajIrQjAraEt5dmZ5UVpGcVltVDNZVUZqM3NLbmtFZ2Zk?=
+ =?utf-8?B?UjQzb3NIb3N1ZEJQRDNJY245dTd2TG12ekNtREU5ZmlwUFVXOTY0ZEhuam9B?=
+ =?utf-8?B?VjRzZEZRR3dYQys4Q0lyVW5nOHpPZlErbGtaQ0IycTNuRVY5TVRHUWxySXpr?=
+ =?utf-8?B?a0ZCK0lqTXU3R2hhb012aC84WlFscnRDcXdvYUFyWGtCRWlrNFdGYkZEWm5r?=
+ =?utf-8?B?cjRiWU05UE9rcXNiVFNSWlVXdDUrQjV6TG9NRXFCcE8xMUhBMnNndThUWVUv?=
+ =?utf-8?B?c3RGM3NHWkM1MENPMnlYVERkdzRWNUhNN292YmthMGNJYTcvcENMWGRac2tv?=
+ =?utf-8?B?NUJHK3dGdXdtTi83NGFLLytqbXlIazZHdUJ1SVhVWndNRmZ5TVhQdkxIQVRV?=
+ =?utf-8?B?Tnl4QjA5SnUvVDVOdENvUU5lcEpaSnJIaGFCbE5uMlliWm1NTk0xV0JPS2VW?=
+ =?utf-8?B?aC9mVnVEVHNYVVVuRlJyNno1VXAwaU4zbGFRZFlnRnZlang4ekVRZz09?=
 X-OriginatorOrg: axiado.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 3b0c341f-1aa1-4324-d21c-08dec055ea9e
+X-MS-Exchange-CrossTenant-Network-Message-Id: 943ec9e1-a8b1-4c29-4e8d-08dec055f100
 X-MS-Exchange-CrossTenant-AuthSource: SJ0PR18MB4479.namprd18.prod.outlook.com
 X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 02 Jun 2026 03:20:37.6638 (UTC)
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 02 Jun 2026 03:20:48.2825 (UTC)
 X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
 X-MS-Exchange-CrossTenant-Id: ff2db17c-4338-408e-9036-2dee8e3e17d7
 X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: CZUD+1/FEu+D4KROXRnDQAgd/jY6TVaccMr9xG3ERJUxZhSgOgdunt9PYRNk4mYBqO5QqwZS+BIF0ymMeXnN9Q==
+X-MS-Exchange-CrossTenant-UserPrincipalName: bXjGmzC9IeV3DzXPJaDOxv5HETz/NvLM9KqKyxEu7tEdlDJsjWvr8RqXnjP/MIHsOeQBKVbD62vk1mHPpSAqow==
 X-MS-Exchange-Transport-CrossTenantHeadersStamped: SA1PR18MB5718
-Received-SPF: pass client-ip=2a01:111:f403:c107::1;
+Received-SPF: pass client-ip=2a01:111:f403:c111::9;
  envelope-from=kchiu@axiado.com;
- helo=PH8PR06CU001.outbound.protection.outlook.com
+ helo=DM5PR21CU001.outbound.protection.outlook.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_PASS=-0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -150,63 +151,139 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 
-Peter Maydell 於 2026/5/26 下午 10:18 寫道:
+Peter Maydell 於 2026/5/26 下午 10:12 寫道:
 > CAUTION: This email originated from outside of the organization. Do not click links or open attachments unless you recognize the sender and know the content is safe.
 >
 >
 > On Thu, 30 Apr 2026 at 10:19, Kuan-Jui Chiu <kchiu@axiado.com> wrote:
->> This patch add a new model for Cadence GPIO controller which
->> supports 32 pins and interrupts for level-triggered/edge-triggered type on
->> input pins.
->>
->> Also define new trace functions for analysis purpose and new configuration to
->> enable this model.
+>> Add EVK axiado-scm3003 built with AX3000 SoC
 >>
 >> Signed-off-by: Kuan-Jui Chiu <kchiu@axiado.com>
 >> ---
->>   hw/gpio/Kconfig                |   3 +
->>   hw/gpio/cadence_gpio.c         | 301 +++++++++++++++++++++++++++++++++
->>   hw/gpio/meson.build            |   1 +
->>   hw/gpio/trace-events           |   5 +
->>   include/hw/gpio/cadence_gpio.h |  55 ++++++
->>   5 files changed, 365 insertions(+)
->>   create mode 100644 hw/gpio/cadence_gpio.c
->>   create mode 100644 include/hw/gpio/cadence_gpio.h
+>>   hw/arm/Kconfig                 |  5 ++++
+>>   hw/arm/ax3000-boards.c         | 52 ++++++++++++++++++++++++++++++++++
+>>   hw/arm/ax3000-evk.c            | 27 ++++++++++++++++++
+>>   hw/arm/meson.build             |  3 ++
+>>   include/hw/arm/ax3000-boards.h | 28 ++++++++++++++++++
+>>   5 files changed, 115 insertions(+)
+>>   create mode 100644 hw/arm/ax3000-boards.c
+>>   create mode 100644 hw/arm/ax3000-evk.c
+>>   create mode 100644 include/hw/arm/ax3000-boards.h
 >>
->> diff --git a/hw/gpio/Kconfig b/hw/gpio/Kconfig
->> index a209294c20..fcc7c70bd5 100644
->> --- a/hw/gpio/Kconfig
->> +++ b/hw/gpio/Kconfig
->> @@ -30,3 +30,6 @@ config PCF8574
->>
->>   config ZAURUS_SCOOP
->>       bool
+>> diff --git a/hw/arm/Kconfig b/hw/arm/Kconfig
+>> index 4fb23122fd..e569d8ee9e 100644
+>> --- a/hw/arm/Kconfig
+>> +++ b/hw/arm/Kconfig
+>> @@ -699,3 +699,8 @@ config AXIADO_SOC
+>>       select CADENCE # UART
+>>       select AXIADO_SDHCI
+>>       select UNIMP
 >> +
->> +config CADENCE_GPIO
+>> +config AXIADO_EVK
 >> +    bool
->> diff --git a/hw/gpio/cadence_gpio.c b/hw/gpio/cadence_gpio.c
+>> +    default y
+>> +    select AXIADO_SOC
+>> diff --git a/hw/arm/ax3000-boards.c b/hw/arm/ax3000-boards.c
 >> new file mode 100644
->> index 0000000000..2410753abc
+>> index 0000000000..cadbac8edc
 >> --- /dev/null
->> +++ b/hw/gpio/cadence_gpio.c
->> @@ -0,0 +1,301 @@
+>> +++ b/hw/arm/ax3000-boards.c
+>> @@ -0,0 +1,52 @@
 >> +/*
->> + * Cadence GPIO emulation.
+>> + * Axiado Boards
 >> + *
 >> + * Author: Kuan-Jui Chiu <kchiu@axiado.com>
 >> + *
 >> + * SPDX-License-Identifier: GPL-2.0-or-later
-> Is there an available data sheet for this device?
->
-> What is the actual device model name? "Cadence GPIO" is
-> extremely vague...
+>> + */
+>> +
+>> +#include "qemu/osdep.h"
+>> +#include "hw/arm/ax3000-boards.h"
+>> +#include "hw/arm/machines-qom.h"
+>> +#include "qemu/error-report.h"
+>> +#include "qom/object.h"
+>> +
+>> +static const char *ax3000_machine_get_default_cpu_type(const MachineState *ms)
+>> +{
+>> +    return ARM_CPU_TYPE_NAME("cortex-a53");
+> There's no point in having a function just for this; you can use
+>    mc->default_cpu_type = ARM_CPU_TYPE_NAME("cortex-a35");
+> without the indirection.
 
 
-Axiado SoC is using Cadence IP for GPIO controller
-I am afraid of that I can't share the data sheet publicly
-Here is the link to Cadence official website
-Artisan Foundation and Mixed‑Signal IP | Cadence 
-<https://www.cadence.com/en_US/home/tools/silicon-solutions/artisan-ip.html#gpio>
+Understood.
+I will remove this function and assign directly
+
+>> +}
+>> +
+>> +static void ax3000_machine_init(MachineState *machine)
+>> +{
+>> +    Ax3000MachineState *ams = AX3000_MACHINE(machine);
+>> +
+>> +    ams->soc = AX3000_SOC(object_new(TYPE_AX3000_SOC));
+>> +    object_property_add_child(OBJECT(machine), "soc", OBJECT(ams->soc));
+>> +    sysbus_realize_and_unref(SYS_BUS_DEVICE(ams->soc), &error_fatal);
+> The machine init function for an Arm board always needs to end
+> by calling arm_load_kernel(). As well as implementing the handling
+> for the -kernel "load this kernel/image file" option, it also
+> sets up some things like getting CPU reset to work correctly.
+
+
+For ax3000 SoC, we assumed that the kernel image,which is stored in an 
+eMMC device, would be loaded into a specific DDR address by u-boot then 
+start booting
+
+So I do not expect that user should use "-kernel" argument to pass the 
+kernel image to QEMU for AX3000 SoC
+This is what the command I used to launch axiado-scm3003 machine in QEMU
+
+
+./qemu-system-aarch64 \
+     -m 4G \
+     -machine axiado-scm3003 \
+     -device loader,file=u-boot.bin,addr=0x3C000000,cpu-num=0 \
+     -nographic \
+     -serial null \
+     -serial null \
+     -serial null \
+     -serial mon:stdio \
+     -drive if=sd,file=obmc-phosphor-image-evk-axiado-qemu.wic,format=raw
+
+>> +}
+>> +
+>> +static void ax3000_machine_class_init(ObjectClass *oc, const void *data)
+>> +{
+>> +    MachineClass *mc = MACHINE_CLASS(oc);
+>> +
+>> +    mc->init = ax3000_machine_init;
+>> +    mc->default_cpus = AX3000_NUM_CPUS;
+>> +    mc->min_cpus = AX3000_NUM_CPUS;
+>> +    mc->max_cpus = AX3000_NUM_CPUS;
+>> +    mc->get_default_cpu_type = ax3000_machine_get_default_cpu_type;
+>> +}
+>> +
+>> +static const TypeInfo ax3000_machine_types[] = {
+>> +    {
+>> +        .name          = TYPE_AX3000_MACHINE,
+>> +        .parent        = TYPE_MACHINE,
+>> +        .instance_size = sizeof(Ax3000MachineState),
+>> +        .class_size    = sizeof(Ax3000MachineClass),
+>> +        .class_init    = ax3000_machine_class_init,
+>> +        .interfaces    = aarch64_machine_interfaces,
+>> +        .abstract      = true,
+>> +    }
+> Do you really expect to have a lot of boards which are
+> all different subclasses of AX3000? Unless you really
+> need this, better to do the simple thing and implement
+> the MACHINE_TYPE_NAME("axiado-scm3003") without the extra
+> layer of class structure which is doing nothing at all.
+
+
+I will introduce another machine "axiado-scm3002" in future for sensors 
+implementation
+
+Both of scm3002 and scm3003 are built with AX3000 SoC and they are the 
+different EVK boards
 
 > thanks
 > -- PMM
