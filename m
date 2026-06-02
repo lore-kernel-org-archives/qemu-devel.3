@@ -4,110 +4,106 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id AECF4CD6E4A
-	for <qemu-devel@archiver.kernel.org>; Tue,  2 Jun 2026 06:35:25 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id EA8CACD6E4A
+	for <qemu-devel@archiver.kernel.org>; Tue,  2 Jun 2026 06:35:31 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wUIi3-00060O-Bh; Tue, 02 Jun 2026 02:34:44 -0400
+	id 1wUIhR-0005fJ-3B; Tue, 02 Jun 2026 02:34:05 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <adityag@linux.ibm.com>)
- id 1wUIhW-0005hP-7E; Tue, 02 Jun 2026 02:34:11 -0400
-Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
+ (Exim 4.90_1) (envelope-from <kchiu@axiado.com>) id 1wUIhQ-0005eT-6J
+ for qemu-devel@nongnu.org; Tue, 02 Jun 2026 02:34:04 -0400
+Received: from mail-westus3azlp170100009.outbound.protection.outlook.com
+ ([2a01:111:f403:c107::9] helo=PH7PR06CU001.outbound.protection.outlook.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <adityag@linux.ibm.com>)
- id 1wUIhU-0004d0-0N; Tue, 02 Jun 2026 02:34:09 -0400
-Received: from pps.filterd (m0360072.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 651HeKIm2242832; Tue, 2 Jun 2026 06:34:04 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
- :content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=pp1; bh=iRfhCz
- hzJsflV+KNA4eZG62H4QjSDmf+whkdXyxZ8XQ=; b=JDYwzKIE1zizV229RPOW1z
- uMaPUbE6PD2A/ixzIH9v5KMSvZ5lXM1UBBWFmBKq5UPqzXD3agy+mhfSb3/HjN7R
- X37D7rK/pqmn/jvYY1+FrR8cSnnWnSZLBKh4GyjKcrcA8pg5KBbWhQexB7VclFYV
- Jj2k4aj6yMmN8/JkcQpXyrap6Qzb85hke6MEnj1XBgTyoanvsnCub76ANtuJR5OI
- 9O9IgYke23NXeM2PqRP3cE8JUdaaPIJydwxHigsooyTsUTM/t/kSBZkHltQ9ZVHO
- uJ4KNYmd0YXx1DZhvpLCF73L4U9qc2KLqvzO1umPht27e3nG+QROhBFyLEY6+KJA
- ==
-Received: from ppma13.dal12v.mail.ibm.com
- (dd.9e.1632.ip4.static.sl-reverse.com [50.22.158.221])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4efqht4301-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Tue, 02 Jun 2026 06:34:03 +0000 (GMT)
-Received: from pps.filterd (ppma13.dal12v.mail.ibm.com [127.0.0.1])
- by ppma13.dal12v.mail.ibm.com (8.18.1.7/8.18.1.7) with ESMTP id 6526OAlm031407;
- Tue, 2 Jun 2026 06:34:03 GMT
-Received: from smtprelay04.fra02v.mail.ibm.com ([9.218.2.228])
- by ppma13.dal12v.mail.ibm.com (PPS) with ESMTPS id 4egceghntf-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Tue, 02 Jun 2026 06:34:02 +0000 (GMT)
-Received: from smtpav06.fra02v.mail.ibm.com (smtpav06.fra02v.mail.ibm.com
- [10.20.54.105])
- by smtprelay04.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 6526Xx5h14418352
- (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Tue, 2 Jun 2026 06:33:59 GMT
-Received: from smtpav06.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 5B63C20040;
- Tue,  2 Jun 2026 06:33:59 +0000 (GMT)
-Received: from smtpav06.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 4025C20049;
- Tue,  2 Jun 2026 06:33:57 +0000 (GMT)
-Received: from [9.123.10.203] (unknown [9.123.10.203])
- by smtpav06.fra02v.mail.ibm.com (Postfix) with ESMTP;
- Tue,  2 Jun 2026 06:33:57 +0000 (GMT)
-Message-ID: <86373bf5-15d0-437b-820f-c4f1ac72a2db@linux.ibm.com>
-Date: Tue, 2 Jun 2026 12:03:55 +0530
+ (Exim 4.90_1) (envelope-from <kchiu@axiado.com>) id 1wUIhN-0004bq-Ni
+ for qemu-devel@nongnu.org; Tue, 02 Jun 2026 02:34:03 -0400
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=EezmFBNFuUhhs0c5OmjW082KVOsqP4aZkBQjb9QfmWFUPQ1+LN4nWSA5expp/Uy+P88ER+IJMPlbSKhnkbQ2Z6leXK3/wmaZTd+PyBIkXaYNS9lGyk/UCaJdUjp/7jxubEFAfd5E5skrdYiRip7NN08pF/W/G/heuVKQvefJuM63EJgC4zAG9ecek/sQEciu9J223fEJwxhXdi57B8whQDmCGX/djF3fjrYpaS8AhlX/txuB+1DuJanzsrEx8eEu29Zri6UYst70sN+SH8G0f3qQ+93z8W8H4ymoMG7VRvNwhCZbRPdVydxBB6qDCa6WMgX66NGrP5CxtRU90a896Q==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=5i++P1WeTSff2Wd3mJRaaTQ5SXXN+Yy4VHduISAx1Xs=;
+ b=SLTWQJN5vZ1HXR9wSP1ZlIf1TfNSJ2YFFnEZbgnRe/7E20H6vH1goix0wjhiQw0dzD8pCsX2Z7GsyBNg94+HPAMqjLl+Cf9klg+q0cM8qGk7WzkPocVOjbBxo6yYdKvFfrjBWcsvik0tLmqW3BQ6nU7ybZDN/1YwZC/H4msXlXNI/yXo0y78wEqnfUgsQIlYnN3em3TQqOSEOnJAr9r3N6R6jLLA6A1aWo6w5ybrt0bNxZAE9Qt98d/k1vNeH03BwhwPFbQuXVtPWfrq7XbfJAF6jVwQeug9qEieKCAZaxRtr8h7O5lpViv6MIi8nx53uC6SIPZ1P5RoQMAdL8rjhQ==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=fail (sender ip is
+ 64.62.143.114) smtp.rcpttodomain=axiado.com smtp.mailfrom=axiado.com;
+ dmarc=none action=none header.from=axiado.com; dkim=none (message not
+ signed); arc=none (0)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=axiado.com;
+ s=selector1;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=5i++P1WeTSff2Wd3mJRaaTQ5SXXN+Yy4VHduISAx1Xs=;
+ b=e5OlYPluzgLnZt1YH0DU7gtkr7bISvL4dB4zZ/FEsLBIMLkVKbZDVId/OfEujaLTfLNIJK8+ERpOFKnW6duMXv1G/MLuC6X3jurndS8xmglbJhyalcJO/e+Wx0IAqCVaZbtEejYOT7L8lKbfegpPKeNIYxac5zjjlQRDtaiB4iIzOa9W2fDLVU6BxDwAHyMPUbgZIZTkwnD39nTupZs0Oa03vuwhxH4A3C9OLXGvK+Tzb1jkXDsn8RbPeCABB0M7lXMt9I/WzJfQgr8gLC5gXiQwCqpzbvTEoR4jN5b4hcRP2o4SeiGolrpXk6ZHofjIG1FbWC3suF+pmKh3BJ+AAQ==
+Received: from MN2PR16CA0040.namprd16.prod.outlook.com (2603:10b6:208:234::9)
+ by SJ0PR18MB4413.namprd18.prod.outlook.com (2603:10b6:a03:3ad::22)
+ with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.71.16; Tue, 2 Jun 2026
+ 06:33:56 +0000
+Received: from BL02EPF0001A0FD.namprd03.prod.outlook.com
+ (2603:10b6:208:234:cafe::7) by MN2PR16CA0040.outlook.office365.com
+ (2603:10b6:208:234::9) with Microsoft SMTP Server (version=TLS1_3,
+ cipher=TLS_AES_256_GCM_SHA384) id 15.21.71.16 via Frontend Transport; Tue, 2
+ Jun 2026 06:33:56 +0000
+X-MS-Exchange-Authentication-Results: spf=fail (sender IP is 64.62.143.114)
+ smtp.mailfrom=axiado.com; dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=axiado.com;
+Received-SPF: Fail (protection.outlook.com: domain of axiado.com does not
+ designate 64.62.143.114 as permitted sender) receiver=protection.outlook.com; 
+ client-ip=64.62.143.114; helo=smtp.corp.axiado.com;
+Received: from smtp.corp.axiado.com (64.62.143.114) by
+ BL02EPF0001A0FD.mail.protection.outlook.com (10.167.242.104) with Microsoft
+ SMTP Server (version=TLS1_3, cipher=TLS_AES_256_GCM_SHA384) id 15.21.92.5 via
+ Frontend Transport; Tue, 2 Jun 2026 06:33:56 +0000
+Received: from axiado.com (vm-swbuild01.axiadoRD [10.4.1.181])
+ by smtp.corp.axiado.com (Postfix) with ESMTP id 8CAA74186B5B;
+ Mon,  1 Jun 2026 23:31:31 -0700 (PDT)
+From: Kuan-Jui Chiu <kchiu@axiado.com>
+To: qemu-devel@nongnu.org,
+	peter.maydell@linaro.org
+Cc: Kuan-Jui Chiu <kchiu@axiado.com>
+Subject: [PATCH v3 3/6] hw/arm: ax3000-soc: Enable Axiado SD host controller
+Date: Mon,  1 Jun 2026 23:33:47 -0700
+Message-Id: <20260602063350.3623723-4-kchiu@axiado.com>
+X-Mailer: git-send-email 2.34.1
+In-Reply-To: <20260602063350.3623723-1-kchiu@axiado.com>
+References: <20260602063350.3623723-1-kchiu@axiado.com>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] hw/pci-host: Split PowerNV PHB5 code from PHB4 files
-To: Jishnu Warrier <jishnuvw@linux.ibm.com>, qemu-devel@nongnu.org,
- qemu-ppc@nongnu.org
-Cc: Nicholas Piggin <npiggin@gmail.com>,
- Harsh Prateek Bora <harshpb@linux.ibm.com>,
- Glenn Miles <milesg@linux.ibm.com>,
- Mahesh Salgaonkar <mahesh@linux.ibm.com>
-References: <20260601161802.202512-1-jishnuvw@linux.ibm.com>
-Content-Language: en-US
-From: Aditya Gupta <adityag@linux.ibm.com>
-In-Reply-To: <20260601161802.202512-1-jishnuvw@linux.ibm.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-X-TM-AS-GCONF: 00
-X-Proofpoint-Reinject: loops=2 maxloops=12
-X-Proofpoint-GUID: eMj3-wxtRCmBrKiwBu8ESndrRB61kCYk
-X-Authority-Analysis: v=2.4 cv=fv/sol4f c=1 sm=1 tr=0 ts=6a1e795c cx=c_pps
- a=AfN7/Ok6k8XGzOShvHwTGQ==:117 a=AfN7/Ok6k8XGzOShvHwTGQ==:17
- a=IkcTkHD0fZMA:10 a=FelO9ux0wxsA:10 a=VkNPw1HP01LnGYTKEx00:22
- a=RnoormkPH1_aCDwRdu11:22 a=RzCfie-kr_QcCd8fBx8p:22 a=VnNF1IyMAAAA:8
- a=IOlkZWXo4gXxfCjJdxkA:9 a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNjAyMDA1NCBTYWx0ZWRfX2TBJobt3/3qG
- v4YoElYLkujO8sTrvbXkMDE8kpd6tnAUeVacCMLlKoFk0gXAKFE0mgvEC5leLkN1XJZ0ZOf24gz
- GtjPADURnVTbz6BB68bWvH/FYYfHZih6wNwyrRAfIiR5InokH7Ane8ztKSCErm3/rkgmOGbcD3G
- TbELC2qf9OeYstfABURkk9yIeWjUQFY70uaMkDYueDTfCLXttQcpzHdZzPKdRMexEm/uVbSBpXs
- swVjyXFnVGUD0rBx+zrkB65XG84OempCkZ0TSWwDwIlE2aPpti33jSDeLLZ3BW760e37H3FYc7l
- /Ij1aPac+dpeaXOxXQiuMyeNSX/GHxTC7GqwCnq/bB/TOTd8ibRfig5gp8t6ZhvVBIKbTYoo4m2
- 7pYqKv46e0WHE5GTE4nGln0drpVZg9q1YNgijWMSLLhwZPE3DSmqlBTJvu3DO2AfiKapkqc0Q+F
- n3UaGtUUpbNx8cZXvdA==
-X-Proofpoint-ORIG-GUID: ZE-QPzwvbB9mWZv1vChwPhJtbjFJ5u6K
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.125,FMLib:17.12.100.49
- definitions=2026-06-01_07,2026-05-28_03,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- adultscore=0 priorityscore=1501 spamscore=0 phishscore=0 clxscore=1015
- impostorscore=0 suspectscore=0 bulkscore=0 lowpriorityscore=0 malwarescore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2605210000 definitions=main-2606020054
-Received-SPF: pass client-ip=148.163.158.5; envelope-from=adityag@linux.ibm.com;
- helo=mx0b-001b2d01.pphosted.com
-X-Spam_score_int: -26
-X-Spam_score: -2.7
+X-EOPAttributedMessage: 0
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: BL02EPF0001A0FD:EE_|SJ0PR18MB4413:EE_
+Content-Type: text/plain
+X-MS-Office365-Filtering-Correlation-Id: 3e6c9474-1d7c-4b97-2923-08dec070ec3d
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam: BCL:0;
+ ARA:13230040|1800799024|36860700016|82310400026|376014|34020700016|22082099003|18002099003|56012099006;
+X-Microsoft-Antispam-Message-Info: fs+jtroeySDaRk0sZtTizctF8+9N6UIxR7G1iIhYcm9xCLPeHDLC7UDX7XZEkucYMJrnnVnFIjOnNGRgxk1b7PhdhFbZG4NGuG/96l7yTEBZkt0Pipqr0kys53b9K05cN2rLmahptvYwrRWCTiWql1Bme67Z8/75Cs029+rVgc1V2ACn4mynmpklSOpiQ/NvswnZdf4JJ50BLzNCENdvIFqy+WO6oy34nqe4q8M70nQ0TqwA0BXkeXqODciok71XCm9CQ1XiydNz2ifmYPN4vhSpJ7oHbo9uP5Yt5n6fChtx7tFBxYYRDcd7LQzTLXTkxK7PWzXzPjGfW/brcFuaLJU0LuSh536vaqHbP/y1Hi19zoY1tR4XZk/EXnlp/tjLsVn1KZH4NLwq8uMHgwyKnOPtq/THpAkRLgfUT3fydtVJ9O2H35rSmMK2U6Jd4PkC9ZNZfuNA3JsaNcyF3RURLouJ7HOy0C0xc/XVbyQ9ZFXhooKx3+VYnEqsmUYPNGI5b3fkGDI51brDwBCDJ1keah7x8CP7tPIGywEDF8628Qs3HYDbWuGzJBYY5kv2fRXT2rX6dxBNB64ZJlI0ZLqSyj9cXDl6wTD44g3vbwHzmRErUIDRgtlnujeLOZSYPdiQOW5Pl/dUYnlIV3KIGeHhqkAGSeYB3CE2fMLavpqaeYEFpoGWdzo8fkHSWzp1kRGoA++fp1e/eqn+AOBaTSlsfkceYd9MMKtJBNpN2GfNcpI=
+X-Forefront-Antispam-Report: CIP:64.62.143.114; CTRY:US; LANG:en; SCL:1; SRV:;
+ IPV:NLI; SFV:NSPM; H:smtp.corp.axiado.com; PTR:InfoDomainNonexistent; CAT:NONE;
+ SFS:(13230040)(1800799024)(36860700016)(82310400026)(376014)(34020700016)(22082099003)(18002099003)(56012099006);
+ DIR:OUT; SFP:1102; 
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0: SKzcJbNgBQQHqm2gO3wYpvKqXjNyP+ZS49wu9QWEq9d36GwUnhVsao3fYu0cIatXLSr1zM1amCpOrYRl5ErqPCVKqLSzUSIXv37b31a83VBsXQwgBGcJbiu4sTpGBLxXzfaBWf6lAtCkYTuZueN2jQihSNIO73TIt6puUnMZza/advO5A4Vp2itte91rdqBVJxUFiCNxqALnm5XFN7fYp9FusW9QmhrDRByCvCrFq9NebLeChWafyrud3M8jad12jgX0AQb3wNCDngdF6Y1inz33/BrMmjUARLYjl/KBc0Ry6JNuvuubA2Yn2Xp+YGr+YGiY4O3RCPLXFzxHcioBEmCjqwkOM3XyTpbbykOztCZQ7iO2/fefq7P44MySDWy68CGwbNzWx3Yw6XSq0zckMXrzvPOUWMduHXHAAvmulMQmAT5B/CX/JcxeciOiMk7q
+X-OriginatorOrg: axiado.com
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 02 Jun 2026 06:33:56.3751 (UTC)
+X-MS-Exchange-CrossTenant-Network-Message-Id: 3e6c9474-1d7c-4b97-2923-08dec070ec3d
+X-MS-Exchange-CrossTenant-Id: ff2db17c-4338-408e-9036-2dee8e3e17d7
+X-MS-Exchange-CrossTenant-OriginalAttributedTenantConnectingIp: TenantId=ff2db17c-4338-408e-9036-2dee8e3e17d7; Ip=[64.62.143.114];
+ Helo=[smtp.corp.axiado.com]
+X-MS-Exchange-CrossTenant-AuthSource: BL02EPF0001A0FD.namprd03.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Anonymous
+X-MS-Exchange-CrossTenant-FromEntityHeader: HybridOnPrem
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: SJ0PR18MB4413
+Received-SPF: pass client-ip=2a01:111:f403:c107::9;
+ envelope-from=kchiu@axiado.com;
+ helo=PH7PR06CU001.outbound.protection.outlook.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
- RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -124,85 +120,103 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Thanks for this patch jishnu
+Enable SD host controller into Axiado AX3000 SoC to load kernel and rootfs
+from eMMC.
 
-On 01/06/26 21:48, Jishnu Warrier wrote:
-> Separate Power10/11 PHB5 implementation from Power9 PHB4 code for
-> better maintainability and clarity. This is a pure code movement
-> with no functional changes.
->
-> Signed-off-by: Jishnu Warrier <jishnuvw@linux.ibm.com>
-> <...snip...>
->
-> +/*
-> + * SPDX-License-Identifier: GPL-2.0-or-later
-> + *
-> + * QEMU PowerPC PowerNV (POWER10) PHB5 model
-> + *
-> + * Copyright (c) 2018-2026, IBM Corporation.
-> + */
-minor nit: generally the file description is at the top, SPDX line can 
-go at the end of comment
-> +#include "qemu/osdep.h"
-> +#include "hw/pci-host/pnv_phb4.h"
-> +#include "qom/object.h"
-> +
-> +static const TypeInfo pnv_phb5_type_info = {
-> +    .name          = TYPE_PNV_PHB5,
-> +    .parent        = TYPE_PNV_PHB4,
-> +    .instance_size = sizeof(PnvPHB4),
-> +};
-> +
-> +static void pnv_phb5_register_types(void)
-> +{
-> +    type_register_static(&pnv_phb5_type_info);
-> +}
-> +
-> +type_init(pnv_phb5_register_types);
-> diff --git a/hw/pci-host/pnv_phb5_pec.c b/hw/pci-host/pnv_phb5_pec.c
-> new file mode 100644
-> index 0000000000..d48bc09b8b
-> --- /dev/null
-> +++ b/hw/pci-host/pnv_phb5_pec.c
-> @@ -0,0 +1,89 @@
-> +/*
-> + * SPDX-License-Identifier: GPL-2.0-or-later
-> + *
-> + * QEMU PowerPC PowerNV (POWER10) PHB5 PEC model
-> + *
-> + * Copyright (c) 2018-2026, IBM Corporation.
-> + */
-> +#include "qemu/osdep.h"
-> +#include "qapi/error.h"
-> +#include "qemu/log.h"
-> +#include "target/ppc/cpu.h"
-> +#include "hw/ppc/fdt.h"
-> +#include "hw/pci-host/pnv_phb4_regs.h"
-> +#include "hw/pci-host/pnv_phb4.h"
-> +#include "hw/ppc/pnv_xscom.h"
-> +#include "hw/pci/pci_bridge.h"
-> +#include "hw/pci/pci_bus.h"
-> +#include "hw/ppc/pnv.h"
-> +#include "hw/ppc/pnv_chip.h"
-> +#include "hw/core/qdev-properties.h"
-> +#include "system/system.h"
-> +
-> +#include <libfdt.h>
+Signed-off-by: Kuan-Jui Chiu <kchiu@axiado.com>
+---
+ hw/arm/Kconfig              |  1 +
+ hw/arm/ax3000-soc.c         | 19 +++++++++++++++++++
+ include/hw/arm/ax3000-soc.h |  7 +++++++
+ 3 files changed, 27 insertions(+)
 
-nit: fdt related and other headers are not required, for me, below 
-includes look enough:
-
-     #include "qemu/osdep.h"
-     #include "hw/pci-host/pnv_phb4.h"
-     #include "hw/ppc/pnv_xscom.h"
-
-similarly qom/object.h isn't required in pnv_phb5.c
-
-rest of the code looks good to me.
-
-
-Thanks,
-
-- Aditya G
+diff --git a/hw/arm/Kconfig b/hw/arm/Kconfig
+index 39f0b652a0f..5b9cf25dd31 100644
+--- a/hw/arm/Kconfig
++++ b/hw/arm/Kconfig
+@@ -722,4 +722,5 @@ config AXIADO_SOC
+     depends on ARM
+     select ARM_GIC
+     select CADENCE # UART
++    select AXIADO_SDHCI
+     select UNIMP
+diff --git a/hw/arm/ax3000-soc.c b/hw/arm/ax3000-soc.c
+index 517cc6f52d5..fd8c2f977e7 100644
+--- a/hw/arm/ax3000-soc.c
++++ b/hw/arm/ax3000-soc.c
+@@ -63,6 +63,8 @@ static void ax3000_init(Object *obj)
+         g_autofree char *name = g_strdup_printf("uart%d", i);
+         object_initialize_child(obj, name, &s->uart[i], TYPE_CADENCE_UART);
+     }
++
++    object_initialize_child(obj, "sdhci0", &s->sdhci0, TYPE_AXIADO_SDHCI);
+ }
+ 
+ static void ax3000_realize(DeviceState *dev, Error **errp)
+@@ -193,6 +195,23 @@ static void ax3000_realize(DeviceState *dev, Error **errp)
+                           "ax3000.pllctrl", 32);
+     memory_region_add_subregion(get_system_memory(), AX3000_PLL_BASE,
+                                 &s->pll_ctrl);
++
++    /* SDHCI */
++    sdhci0_sbd = SYS_BUS_DEVICE(&s->sdhci0);
++    if (!sysbus_realize(sdhci0_sbd, errp)) {
++        return;
++    }
++
++    sysbus_mmio_map(sdhci0_sbd, 0, AX3000_SDHCI0_BASE);
++    sysbus_mmio_map(sdhci0_sbd, 1, AX3000_EMMC_PHY_BASE);
++    sysbus_connect_irq(sdhci0_sbd, 0,
++                       qdev_get_gpio_in(gic_dev, AX3000_SDHCI0_IRQ));
++
++    card = qdev_new(TYPE_SD_CARD);
++    qdev_prop_set_drive_err(card, "drive",
++                            blk_by_legacy_dinfo((drive_get(IF_SD, 0, 0))),
++                            &error_fatal);
++    qdev_realize_and_unref(card, s->sdhci0.sd_bus, &error_fatal);
+ }
+ 
+ static void ax3000_class_init(ObjectClass *oc, const void *data)
+diff --git a/include/hw/arm/ax3000-soc.h b/include/hw/arm/ax3000-soc.h
+index 6e3b5f51d30..763866ce6e2 100644
+--- a/include/hw/arm/ax3000-soc.h
++++ b/include/hw/arm/ax3000-soc.h
+@@ -12,6 +12,7 @@
+ #include "cpu.h"
+ #include "hw/intc/arm_gicv3_common.h"
+ #include "hw/char/cadence_uart.h"
++#include "hw/sd/axiado_sdhci.h"
+ #include "hw/core/sysbus.h"
+ #include "qemu/units.h"
+ 
+@@ -33,6 +34,9 @@ OBJECT_DECLARE_TYPE(Ax3000SoCState, Ax3000SoCClass, AX3000_SOC)
+ #define AX3000_UART2_BASE       0x80620000
+ #define AX3000_UART3_BASE       0x80520800
+ 
++#define AX3000_SDHCI0_BASE      0x86000000
++#define AX3000_EMMC_PHY_BASE    0x80801C00
++
+ #define AX3000_TIMER_CTRL       0x8A020000
+ #define AX3000_PLL_BASE         0x80000000
+ #define CLKRST_CPU_PLL_POSTDIV_OFFSET   0x0C
+@@ -53,6 +57,7 @@ typedef struct Ax3000SoCState {
+     MemoryRegion        dram[AX3000_NUM_BANKS];
+     MemoryRegion        pll_ctrl;
+     CadenceUARTState    uart[AX3000_NUM_UARTS];
++    AxiadoSDHCIState    sdhci0;
+ } Ax3000SoCState;
+ 
+ typedef struct Ax3000SoCClass {
+@@ -66,6 +71,8 @@ enum Ax3000Irqs {
+     AX3000_UART1_IRQ    = 113,
+     AX3000_UART2_IRQ    = 114,
+     AX3000_UART3_IRQ    = 170,
++
++    AX3000_SDHCI0_IRQ   = 123,
+ };
+ 
+ #endif /* AXIADO_AX3000_H */
+-- 
+2.34.1
 
 
