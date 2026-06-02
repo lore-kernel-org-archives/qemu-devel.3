@@ -4,136 +4,79 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 47F1EC5DF71
-	for <qemu-devel@archiver.kernel.org>; Tue,  2 Jun 2026 05:31:31 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3F081C5DF71
+	for <qemu-devel@archiver.kernel.org>; Tue,  2 Jun 2026 05:50:46 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wUHgI-0003ww-4j; Tue, 02 Jun 2026 01:28:50 -0400
+	id 1wUI0l-0002tZ-7T; Tue, 02 Jun 2026 01:49:59 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jamin_lin@aspeedtech.com>)
- id 1wUHgG-0003w0-BJ; Tue, 02 Jun 2026 01:28:48 -0400
-Received: from mail-japaneastazlp170130007.outbound.protection.outlook.com
- ([2a01:111:f403:c405::7] helo=TYDPR03CU002.outbound.protection.outlook.com)
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1wUI0j-0002t4-1z
+ for qemu-devel@nongnu.org; Tue, 02 Jun 2026 01:49:57 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jamin_lin@aspeedtech.com>)
- id 1wUHgC-0002gD-Ua; Tue, 02 Jun 2026 01:28:47 -0400
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=xdH8eRauh27mqIIskwNYQzyK3660lOdDb8pWTLn5PxvZEw2Wi7wE4dGjX57QrhN+DwDRsDUpVQ0zMDNuBhtQcGKw9BIw6nKzvaMo2xfUulZGo7CfIW1DxordM+QLTltAnWtkAKI13K63VHJMZMYcWRd2cyHHZru3ik+gE8WAHPfDcc6+neeyNPQX9/QD0u3FdaRlCGcOu2eH83ym6JBYYCItE51bIArtOtDtOM+OiQCZ3HSdVZOIPKu5wkwK9SeuYLekfP4SVhhOAUaZPLQ49OAfiZzPVXA2vjYnmPB93eib3e6uPKzdHCNdPM6LuVg3MT24/Ce5leLFdMLBBN/MYw==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=5dkBRuDh3Q0xUeKqDfKX/28puNKG0/vbDS3aJweapr4=;
- b=H6+ky4G7AiJvivMvZ7/iQqvnExzrITGw86JAGDK292YpxUUMoslUXH2rVDPKevmRDZXge8LqOrrH6p6srdAN1XKJcooJVYGu2HqLc9tA8c1a96cpEon9FvZAymRI1YsP03KL+sswUznkQBSY1NZFsenqmzMAXnDwP5CNofGLNkrUKU3M2WQeHJxh2SGMZcgrY5kVIbFfev+t145Kl5n0ZdnhDFaT4hLAauc5UikhTO3bfBVERV/tN/s2TOJX+4akyF1PJ38gfYamt26mK/xz2DAKzAElYC2tN/CHaOM1qf553RPmYsd6YM2qX5jxX0av/FJ8m9g6Gmvyb2ocox9ezg==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=aspeedtech.com; dmarc=pass action=none
- header.from=aspeedtech.com; dkim=pass header.d=aspeedtech.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=aspeedtech.com;
- s=selector1;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=5dkBRuDh3Q0xUeKqDfKX/28puNKG0/vbDS3aJweapr4=;
- b=F9FY5qfms6nhmbJ5qz2yXVW3gJa3v35rS5pk9v8nwMSwi9qHCrCcTEphFmEDPubfce9XeIRUi6grc2So26dXqXeKSEyXHEWK2UNY9eGmEz7PuIMWk0GZrB0UCkwD+tf3gD53b1zvoGx20HlFS7xltrO5r+RlKp/wq8jxqpb1W0vgxSZtXfUnNWx3z1RJ0IjyUEE5U3m/MWX8LrGSFFT8PZDE4SpA+8gc611+dIOuawOiFgd3MOjgMzHt/va85dR8EG+RsaxQz0ToO+Edz8BP38i4fAeysRNyWFEqhLtSHSOJdcE7dSw+OvSeCbx33979wnx89DKHHXHsS5b6BYlQYQ==
-Received: from TYZPR06MB4980.apcprd06.prod.outlook.com (2603:1096:400:1cc::10)
- by SI2PR06MB5411.apcprd06.prod.outlook.com (2603:1096:4:1ee::13) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.92.7; Tue, 2 Jun 2026
- 05:28:30 +0000
-Received: from TYZPR06MB4980.apcprd06.prod.outlook.com
- ([fe80::ea8a:7cb7:4822:2fb3]) by TYZPR06MB4980.apcprd06.prod.outlook.com
- ([fe80::ea8a:7cb7:4822:2fb3%5]) with mapi id 15.21.0071.015; Tue, 2 Jun 2026
- 05:28:29 +0000
-From: Jamin Lin <jamin_lin@aspeedtech.com>
-To: =?iso-8859-1?Q?C=E9dric_Le_Goater?= <clg@kaod.org>, Peter Maydell
- <peter.maydell@linaro.org>, Steven Lee <steven_lee@aspeedtech.com>, Troy Lee
- <leetroy@gmail.com>, Kane Chen <kane_chen@aspeedtech.com>, Andrew Jeffery
- <andrew@codeconstruct.com.au>, Joel Stanley <joel@jms.id.au>, "open
- list:ASPEED BMCs" <qemu-arm@nongnu.org>, "open list:All patches CC here"
- <qemu-devel@nongnu.org>
-CC: Jamin Lin <jamin_lin@aspeedtech.com>, Troy Lee <troy_lee@aspeedtech.com>
-Subject: [PATCH v2 01/10] hw/i2c/aspeed_i2c: Introduce dma_addr_lo_mask to
- unify DMA address handling
-Thread-Topic: [PATCH v2 01/10] hw/i2c/aspeed_i2c: Introduce dma_addr_lo_mask
- to unify DMA address handling
-Thread-Index: AQHc8lClc/pwAK0NSE21bh5LfoHzoQ==
-Date: Tue, 2 Jun 2026 05:28:29 +0000
-Message-ID: <20260602052827.1535299-2-jamin_lin@aspeedtech.com>
-References: <20260602052827.1535299-1-jamin_lin@aspeedtech.com>
-In-Reply-To: <20260602052827.1535299-1-jamin_lin@aspeedtech.com>
-Accept-Language: zh-TW, en-US
-Content-Language: en-US
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-authentication-results: dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=aspeedtech.com;
-x-ms-publictraffictype: Email
-x-ms-traffictypediagnostic: TYZPR06MB4980:EE_|SI2PR06MB5411:EE_
-x-ms-office365-filtering-correlation-id: 525038bd-fc05-4e99-3d6c-08dec067c7c5
-x-ms-exchange-senderadcheck: 1
-x-ms-exchange-antispam-relay: 0
-x-microsoft-antispam: BCL:0;
- ARA:13230040|376014|366016|1800799024|56012099006|18002099003|22082099003|38070700021;
-x-microsoft-antispam-message-info: 1bono6VzOFNt/5Fhp54OV8Z6y0WxcKHFPP2inxOV3vVVdTJhgwdIrOOpt6VzKiv/Z4RwSfM1xIdNIv+9NlQdR79/xa8GKo0GY6quOTdAGeZZjq0mTFdCxBtwyRafqkyq/BjdffVmnoUhrUn7d1kAaWNeMVY6oQC438wia9FqncuC2rbHG9I2gI9IpkVOVnmhGlrEg3aIuPXs3cKcV8IlRSyph6jndHHL8NQs/yvcnNMcZJXyZMdKdticZJ+eB1j3697VPIxtt8WOwcx+Qex7cqh51GcZmVxo19wAIFvwsERRa+lhm4wK613V4JUZrmrqfTcJDgtcoOBpBstEPouh2dfcZgbOghREZeKRudr/3vCjAzfnjO+vtSfTJj10YoWoRO5avvIxUai/oxsIIoXAPsoGttYw+/mtl8bkfxVezv29q+guSp3JKjF0m55BGuziR2UAHX82KsD/MCyBVpkz8RCCNXAwWZvXHS2vIvecRprQLTVcqiVnZkPgsLytbsh+54qDMp2juHn4Upc4UgZxFuDthwDlCEHIpogXeaEhB6SFA2IS5SAJi2PREEMAutRWHSL6gpDDzJyI38nHUkfrjJuxpo5YmFb9E2xeh7lNEzqZua7yumlG20hES/JwCZTbykg8ngw8MmkMiYgkmsKWt2pTu7+f6WqxM8iG1+fPAFS9Ooq/iQlNJnTog0zkI4jKKKpLUFFMY8wPRGLKZSUVl2xbS10dFs1ft0uIwH/Dbxk/qfN9pMlBlE5V9FqWNakW
-x-forefront-antispam-report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
- IPV:NLI; SFV:NSPM; H:TYZPR06MB4980.apcprd06.prod.outlook.com; PTR:; CAT:NONE;
- SFS:(13230040)(376014)(366016)(1800799024)(56012099006)(18002099003)(22082099003)(38070700021);
- DIR:OUT; SFP:1102; 
-x-ms-exchange-antispam-messagedata-chunkcount: 1
-x-ms-exchange-antispam-messagedata-0: =?iso-8859-1?Q?ZFcu2fJFnyQA2pV07lHw7UQVrfL7rcXAM2nx2kjGOI24QaVzTqpwTA8fFJ?=
- =?iso-8859-1?Q?sEb3gy6QzPY2MNcHSaegiOCxO8Pig5U1184eIJjCxIijPE3rgr4Zg5LkFb?=
- =?iso-8859-1?Q?xpynCMFTJs7L17+9gEQrRuOjBv8wsDm07DrgQhMsohEkSYXlUxnfExKj5M?=
- =?iso-8859-1?Q?PssAFWg26M5dFpWST+DYbSZ+zcVfWGDwdpJ+oUW4HN4Sh5wK0Bt0lHnfyI?=
- =?iso-8859-1?Q?TTzedbLEfrvmjZyMCTCtfLktN0COPHjnwnhj98Lk1qEddWSPcCaoO5b4+g?=
- =?iso-8859-1?Q?3CJBM0PlWOP93ByakvjKN/ibpBUA9UCbxCvMdi9RNa0ExxJqzGxagKwIH/?=
- =?iso-8859-1?Q?bvxvxWRJyFq9G0f2AlAx9V+V+wtzUmvWByyccKO1DZ8oIk6ZW2X+jwFa2/?=
- =?iso-8859-1?Q?0lLgpB8ThF2ra4B+noAYX0cJXZmgPZJvf8qyuKwzkJeJk3dD+/wx5epKVQ?=
- =?iso-8859-1?Q?BURNySJPIcIH4sfWdBKoYQgKwQBC2QU3Re8lPHzzzdZFESl0XJqVhfcB5z?=
- =?iso-8859-1?Q?qT7eOX3LIon0mnLbUSqc/FFkYlFS12V5yAZSJMHrHef8aFg86sEp3NxKwU?=
- =?iso-8859-1?Q?LYLaTNIjhOGygeaDqdgYiLPLy09CPE5HBaOId7cwaqPRotwzR1TVLnQptI?=
- =?iso-8859-1?Q?Rt8AEVCDiQjNM7zKN9Q9YcH1u+HpSyMKCxG8sE686GAOFAXj9dLXupOvax?=
- =?iso-8859-1?Q?MUpobdQTteyibU7Vn5oR0vL8ZARvyEuCCUQqgt7aNM9K9VHaneuVVb/zk0?=
- =?iso-8859-1?Q?L3GLcvm0sgDlhuFX3StdEVgeYi4KX8oeuZeAjk6D6ZH8tjK4E7+qtmGNok?=
- =?iso-8859-1?Q?Pb+Yq3L1F+0Do7yutEJDa/o1BHb2eBybzz38nLLyahBfaXg2MDUd66eeVJ?=
- =?iso-8859-1?Q?Y7xtxxkjksCDmKkc33Q7oLPxwHCpkn2ORqWZ7ioTN4CkqNDCqgWCr1swz7?=
- =?iso-8859-1?Q?8EhsGJnAP2BDd5RawtywaNZoNKfJReammULjtPW9sfbppBXjgZxSAzKkf9?=
- =?iso-8859-1?Q?GwHULZNl0FvexV2PvY3ot6NdKHzoZ21jjKMm/HqGKhT+8fItAXVaVYNbkQ?=
- =?iso-8859-1?Q?7DgSusc5LcmDf8lSi/RlJON79uXJT/dBH86LL6LGVh3cUGtvhf457I0QFa?=
- =?iso-8859-1?Q?efw7dF2QocCP7jyu9GHd1mpgI3EgVn44xhW5vSv2kA/+mWDsaeNw6w31Gc?=
- =?iso-8859-1?Q?M9nt18D4rP/9C3xjUldldkQDN8HzttbAwyrJOQ1bxLqYO0cVYbi1R/xkDb?=
- =?iso-8859-1?Q?bKz+K1DRMYDoAQzIrANLiDabxS79xmfIksESEtSAiNtu0JGbEshInIxVyj?=
- =?iso-8859-1?Q?DvzCcPP2s1HA2UQmJ9NTtCphsTJJR8gOEVf+WwqhUvV2aoL2uLB1EbHoNv?=
- =?iso-8859-1?Q?gvXFLjZ8itn0dQxiXdhOxbQrTAFcw2l1f3LyoxK9ZQ5nCtKYC8BGZNm6Z8?=
- =?iso-8859-1?Q?AqgTVhELqoMabZwPFEDTGpvvJPDHzL97Gr82WByPGtXdzp+mt15axEkk47?=
- =?iso-8859-1?Q?wDKLX2hBd5LJMu+7ScGEv8Wm8B6J+ZmlX1haHOG7AfeS1me8aLco1isxn2?=
- =?iso-8859-1?Q?r+hPtWB7RGqm3KxnVUzVyH0rMnTckapl/x0wvX2KTUx0a6gOC2GR+BlY4t?=
- =?iso-8859-1?Q?SjwWtYRJg7e4QlHoKTCNksPXuWAWhzVOculoM3Ctso5uk+iawy2wJFdeup?=
- =?iso-8859-1?Q?kIPRiPKMO+rJCzsYS4ujCZrBc4BS32KXwJ7Se4M7CCTlNw7/2et18cFLCm?=
- =?iso-8859-1?Q?816dl2L9a9Bxigj1/+ETZZQSoMhP0l5xlM5uxxQPbQcCg761CJLXTRQuxc?=
- =?iso-8859-1?Q?dI4qfkWbxA=3D=3D?=
-Content-Type: text/plain; charset="iso-8859-1"
-Content-Transfer-Encoding: quoted-printable
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1wUI0f-00089s-PL
+ for qemu-devel@nongnu.org; Tue, 02 Jun 2026 01:49:56 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1780379389;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=YicdZ+7VcJPGsXcIq3ARCeTEZ+88Rn1BIP5t3vU6DOw=;
+ b=VbQwvopXoRyTZh8A9EUm4WWiAwaClz0hGguDD4NIZ3uf6M42ngxypJcnHcYUpOUBuwThND
+ vUoG9/7cXn/3RCCWS8nYoOWIvXVgTK6rAwiW332YJYi7P6zD5a4Nyp9kWY5NCKG9kBn0pY
+ vvyY3g8wg1TtZ+VrN4NqPeEuToMi5Vs=
+Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-586-JuXAGZGwMJ2Gva9EdS4waA-1; Tue,
+ 02 Jun 2026 01:49:45 -0400
+X-MC-Unique: JuXAGZGwMJ2Gva9EdS4waA-1
+X-Mimecast-MFC-AGG-ID: JuXAGZGwMJ2Gva9EdS4waA_1780379384
+Received: from mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.111])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id A2E9C1800451; Tue,  2 Jun 2026 05:49:44 +0000 (UTC)
+Received: from blackfin.pond.sub.org (unknown [10.44.22.2])
+ by mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id E25E41800286; Tue,  2 Jun 2026 05:49:43 +0000 (UTC)
+Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
+ id 5C1F521E6A01; Tue, 02 Jun 2026 07:49:41 +0200 (CEST)
+From: Markus Armbruster <armbru@redhat.com>
+To: Leonid Bloch <lb.workbox@gmail.com>
+Cc: "Michael S . Tsirkin" <mst@redhat.com>,  Igor Mammedov
+ <imammedo@redhat.com>,  Ani Sinha <anisinha@redhat.com>,  Paolo Bonzini
+ <pbonzini@redhat.com>,  Richard Henderson <richard.henderson@linaro.org>,
+ Eduardo Habkost <ehabkost@redhat.com>,  Eric Blake <eblake@redhat.com>,
+ Markus Armbruster <armbru@redhat.com>,  Marcel Apfelbaum
+ <marcel.apfelbaum@gmail.com>,  Dmitry Fleytman
+ <dmitry.fleytman@gmail.com>,  qemu-devel@nongnu.org
+Subject: Re: [PATCH v4 3/8] hw/acpi: Introduce the QEMU Battery
+In-Reply-To: <20260526042928.9203-4-lb.workbox@gmail.com> (Leonid Bloch's
+ message of "Tue, 26 May 2026 07:29:22 +0300")
+References: <20260526042928.9203-1-lb.workbox@gmail.com>
+ <20260526042928.9203-4-lb.workbox@gmail.com>
+Date: Tue, 02 Jun 2026 07:49:41 +0200
+Message-ID: <87a4td8pai.fsf@pond.sub.org>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 MIME-Version: 1.0
-X-Exchange-RoutingPolicyChecked: UdpFaIaBA7xJI58keZdqMDRXLqnxpCs39Gbc0S0mg6F34edoOj4LqEEOIjDidnBaj6Zc+Vd5Ily9nkA7IJkC3PVxIyo8CJk1lLte3R+1XrQoH5RYfm5XBUZj52BBcJeLbjZHNgppAwYaCE7npI74m4W3JhUsqQ8Ie6T10R1RbMsLdMGAFLS90n5TjMeREKWBGrDIUAy9jz9QfZfmUR0rI2bRNvFiskNQXIimCSa1DqbZIh4sHZSJhrRz2vcS0gLlTu1Tvep4OlfUCE8qoUea/9PL9HidOEmddZvt/Nu2vxnpsRqa2QrRy0yS2Qirxjixy7F9f8zyvOacK8OubugKoA==
-X-OriginatorOrg: aspeedtech.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-AuthSource: TYZPR06MB4980.apcprd06.prod.outlook.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 525038bd-fc05-4e99-3d6c-08dec067c7c5
-X-MS-Exchange-CrossTenant-originalarrivaltime: 02 Jun 2026 05:28:29.8389 (UTC)
-X-MS-Exchange-CrossTenant-fromentityheader: Hosted
-X-MS-Exchange-CrossTenant-id: 43d4aa98-e35b-4575-8939-080e90d5a249
-X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
-X-MS-Exchange-CrossTenant-userprincipalname: euTbJA1bOCPnJztMC6YuWFQZRuwv+6/6jbO9syQSVxrL2QdVJHvfMYDaxQgM+k4aPSbP/jAUrbxjifBmwoyyUzBRSSlEMkBRkARqnv4IfzQ=
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: SI2PR06MB5411
-Received-SPF: pass client-ip=2a01:111:f403:c405::7;
- envelope-from=jamin_lin@aspeedtech.com;
- helo=TYDPR03CU002.outbound.protection.outlook.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.111
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=armbru@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -24
+X-Spam_score: -2.5
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.445,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -149,189 +92,748 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The Aspeed I2C controller has two register layouts.=0A=
-=0A=
-The AST2500 uses the old mode with a single DMA address register (I2CD_DMA_=
-ADDR)=0A=
-where the address is 4-byte aligned and masked to 0x3ffffffc.=0A=
-=0A=
-From AST2600 onwards, the new mode provides separate master TX/RX and slave=
- RX DMA=0A=
-address registers (I2CM_DMA_TX_ADDR, I2CM_DMA_RX_ADDR, I2CS_DMA_RX_ADDR)=0A=
-with different address widths per SoC:=0A=
-  AST2600 (new mode): 0x7fffffff  - bits[30:0]=0A=
-  AST1030 (new mode): 0x7fffffff  - bits[30:0]=0A=
-  AST1060 (new mode): 0x7fffffff  - bits[30:0]=0A=
-  AST2700 (new mode): 0xffffffff  - bits[31:0]=0A=
-=0A=
-Introduce dma_addr_lo_mask as a per-class attribute and apply it=0A=
-uniformly when storing DMA address register writes and when loading=0A=
-the address into dma_dram_offset for both master and slave paths.=0A=
-This replaces the previous FIELD_EX32 extractions (which incorrectly=0A=
-stripped bit 31 on AST2700) and the hardcoded 0x3ffffffc literal in=0A=
-the old-mode path.=0A=
-=0A=
-Fixes: 1809ab6a67359e0876981cd05d2a50b2843eabad ("hw/i2c/aspeed: Add AST270=
-0 support")=0A=
-Signed-off-by: Jamin Lin <jamin_lin@aspeedtech.com>=0A=
----=0A=
- include/hw/i2c/aspeed_i2c.h |  5 +----=0A=
- hw/i2c/aspeed_i2c.c         | 22 +++++++++++++---------=0A=
- 2 files changed, 14 insertions(+), 13 deletions(-)=0A=
-=0A=
-diff --git a/include/hw/i2c/aspeed_i2c.h b/include/hw/i2c/aspeed_i2c.h=0A=
-index d42cb4865a..1fc229f699 100644=0A=
---- a/include/hw/i2c/aspeed_i2c.h=0A=
-+++ b/include/hw/i2c/aspeed_i2c.h=0A=
-@@ -209,13 +209,9 @@ REG32(I2CS_DMA_LEN, 0x2c)=0A=
-     FIELD(I2CS_DMA_LEN, TX_BUF_LEN_W1T, 15, 1)=0A=
-     FIELD(I2CS_DMA_LEN, TX_BUF_LEN, 0, 11)=0A=
- REG32(I2CM_DMA_TX_ADDR, 0x30)=0A=
--    FIELD(I2CM_DMA_TX_ADDR, ADDR, 0, 31)=0A=
- REG32(I2CM_DMA_RX_ADDR, 0x34)=0A=
--    FIELD(I2CM_DMA_RX_ADDR, ADDR, 0, 31)=0A=
- REG32(I2CS_DMA_TX_ADDR, 0x38)=0A=
--    FIELD(I2CS_DMA_TX_ADDR, ADDR, 0, 31)=0A=
- REG32(I2CS_DMA_RX_ADDR, 0x3c)=0A=
--    FIELD(I2CS_DMA_RX_ADDR, ADDR, 0, 31)=0A=
- REG32(I2CS_DEV_ADDR, 0x40)=0A=
- REG32(I2CM_DMA_LEN_STS, 0x48)=0A=
-     FIELD(I2CM_DMA_LEN_STS, RX_LEN, 16, 13)=0A=
-@@ -303,6 +299,7 @@ struct AspeedI2CClass {=0A=
-     bool has_share_pool;=0A=
-     uint64_t mem_size;=0A=
-     bool has_dma64;=0A=
-+    uint32_t dma_addr_lo_mask;=0A=
- };=0A=
- =0A=
- static inline bool aspeed_i2c_is_new_mode(AspeedI2CState *s)=0A=
-diff --git a/hw/i2c/aspeed_i2c.c b/hw/i2c/aspeed_i2c.c=0A=
-index 4a6732a185..a6b44174f5 100644=0A=
---- a/hw/i2c/aspeed_i2c.c=0A=
-+++ b/hw/i2c/aspeed_i2c.c=0A=
-@@ -236,7 +236,7 @@ static void aspeed_i2c_set_tx_dma_dram_offset(AspeedI2C=
-Bus *bus)=0A=
-         value =3D bus->regs[R_I2CM_DMA_TX_ADDR];=0A=
-         bus->dma_dram_offset =3D=0A=
-             deposit64(bus->dma_dram_offset, 0, 32,=0A=
--                      FIELD_EX32(value, I2CM_DMA_TX_ADDR, ADDR));=0A=
-+                      value & aic->dma_addr_lo_mask);=0A=
-         if (aic->has_dma64) {=0A=
-             value =3D bus->regs[R_I2CM_DMA_TX_ADDR_HI];=0A=
-             bus->dma_dram_offset =3D=0A=
-@@ -246,7 +246,7 @@ static void aspeed_i2c_set_tx_dma_dram_offset(AspeedI2C=
-Bus *bus)=0A=
-     } else {=0A=
-         value =3D bus->regs[R_I2CD_DMA_ADDR];=0A=
-         bus->dma_dram_offset =3D deposit64(bus->dma_dram_offset, 0, 32,=0A=
--                                         value & 0x3ffffffc);=0A=
-+                                         value & aic->dma_addr_lo_mask);=
-=0A=
-     }=0A=
- }=0A=
- =0A=
-@@ -261,7 +261,7 @@ static void aspeed_i2c_set_rx_dma_dram_offset(AspeedI2C=
-Bus *bus)=0A=
-         value =3D bus->regs[R_I2CM_DMA_RX_ADDR];=0A=
-         bus->dma_dram_offset =3D=0A=
-             deposit64(bus->dma_dram_offset, 0, 32,=0A=
--                      FIELD_EX32(value, I2CM_DMA_RX_ADDR, ADDR));=0A=
-+                      value & aic->dma_addr_lo_mask);=0A=
-         if (aic->has_dma64) {=0A=
-             value =3D bus->regs[R_I2CM_DMA_RX_ADDR_HI];=0A=
-             bus->dma_dram_offset =3D=0A=
-@@ -271,7 +271,7 @@ static void aspeed_i2c_set_rx_dma_dram_offset(AspeedI2C=
-Bus *bus)=0A=
-     } else {=0A=
-         value =3D bus->regs[R_I2CD_DMA_ADDR];=0A=
-         bus->dma_dram_offset =3D deposit64(bus->dma_dram_offset, 0, 32,=0A=
--                                         value & 0x3ffffffc);=0A=
-+                                         value & aic->dma_addr_lo_mask);=
-=0A=
-     }=0A=
- }=0A=
- =0A=
-@@ -735,12 +735,10 @@ static void aspeed_i2c_bus_new_write(AspeedI2CBus *bu=
-s, hwaddr offset,=0A=
-         aspeed_i2c_bus_raise_interrupt(bus);=0A=
-         break;=0A=
-     case A_I2CM_DMA_TX_ADDR:=0A=
--        bus->regs[R_I2CM_DMA_TX_ADDR] =3D FIELD_EX32(value, I2CM_DMA_TX_AD=
-DR,=0A=
--                                                   ADDR);=0A=
-+        bus->regs[R_I2CM_DMA_TX_ADDR] =3D value & aic->dma_addr_lo_mask;=
-=0A=
-         break;=0A=
-     case A_I2CM_DMA_RX_ADDR:=0A=
--        bus->regs[R_I2CM_DMA_RX_ADDR] =3D FIELD_EX32(value, I2CM_DMA_RX_AD=
-DR,=0A=
--                                                   ADDR);=0A=
-+        bus->regs[R_I2CM_DMA_RX_ADDR] =3D value & aic->dma_addr_lo_mask;=
-=0A=
-         break;=0A=
-     case A_I2CM_DMA_LEN:=0A=
-         w1t =3D FIELD_EX32(value, I2CM_DMA_LEN, RX_BUF_LEN_W1T) ||=0A=
-@@ -1375,6 +1373,8 @@ static void aspeed_i2c_class_init(ObjectClass *klass,=
- const void *data)=0A=
- static int aspeed_i2c_bus_new_slave_event(AspeedI2CBus *bus,=0A=
-                                           enum i2c_event event)=0A=
- {=0A=
-+    AspeedI2CClass *aic =3D ASPEED_I2C_GET_CLASS(bus->controller);=0A=
-+=0A=
-     switch (event) {=0A=
-     case I2C_START_SEND_ASYNC:=0A=
-         if (!SHARED_ARRAY_FIELD_EX32(bus->regs, R_I2CS_CMD, RX_DMA_EN)) {=
-=0A=
-@@ -1385,7 +1385,7 @@ static int aspeed_i2c_bus_new_slave_event(AspeedI2CBu=
-s *bus,=0A=
-         ARRAY_FIELD_DP32(bus->regs, I2CS_DMA_LEN_STS, RX_LEN, 0);=0A=
-         bus->dma_dram_offset =3D=0A=
-             deposit64(bus->dma_dram_offset, 0, 32,=0A=
--                      ARRAY_FIELD_EX32(bus->regs, I2CS_DMA_RX_ADDR, ADDR))=
-;=0A=
-+                      bus->regs[R_I2CS_DMA_RX_ADDR] & aic->dma_addr_lo_mas=
-k);=0A=
-         bus->regs[R_I2CC_DMA_LEN] =3D=0A=
-             ARRAY_FIELD_EX32(bus->regs, I2CS_DMA_LEN, RX_BUF_LEN) + 1;=0A=
-         i2c_ack(bus->bus);=0A=
-@@ -1608,6 +1608,7 @@ static void aspeed_2500_i2c_class_init(ObjectClass *k=
-lass, const void *data)=0A=
-     aic->check_sram =3D true;=0A=
-     aic->has_dma =3D true;=0A=
-     aic->mem_size =3D 0x1000;=0A=
-+    aic->dma_addr_lo_mask =3D 0x3ffffffc;=0A=
- }=0A=
- =0A=
- static qemu_irq aspeed_2600_i2c_bus_get_irq(AspeedI2CBus *bus)=0A=
-@@ -1631,6 +1632,7 @@ static void aspeed_2600_i2c_class_init(ObjectClass *k=
-lass, const void *data)=0A=
-     aic->bus_pool_base =3D aspeed_2500_i2c_bus_pool_base;=0A=
-     aic->has_dma =3D true;=0A=
-     aic->mem_size =3D 0x1000;=0A=
-+    aic->dma_addr_lo_mask =3D 0x7fffffff;=0A=
- }=0A=
- =0A=
- static void aspeed_1030_i2c_class_init(ObjectClass *klass, const void *dat=
-a)=0A=
-@@ -1649,6 +1651,7 @@ static void aspeed_1030_i2c_class_init(ObjectClass *k=
-lass, const void *data)=0A=
-     aic->bus_pool_base =3D aspeed_2500_i2c_bus_pool_base;=0A=
-     aic->has_dma =3D true;=0A=
-     aic->mem_size =3D 0x10000;=0A=
-+    aic->dma_addr_lo_mask =3D 0x7fffffff;=0A=
- }=0A=
- =0A=
- static void aspeed_2700_i2c_class_init(ObjectClass *klass, const void *dat=
-a)=0A=
-@@ -1670,6 +1673,7 @@ static void aspeed_2700_i2c_class_init(ObjectClass *k=
-lass, const void *data)=0A=
-     aic->has_dma =3D true;=0A=
-     aic->mem_size =3D 0x2000;=0A=
-     aic->has_dma64 =3D true;=0A=
-+    aic->dma_addr_lo_mask =3D 0xffffffff;=0A=
- }=0A=
- =0A=
- static const TypeInfo aspeed_i2c_types[] =3D {=0A=
--- =0A=
-2.43.0=0A=
+Leonid Bloch <lb.workbox@gmail.com> writes:
+
+> The battery device communicates battery state to the guest via ACPI.
+> Battery state is controlled programmatically via QMP commands, making
+> the device deterministic and migration-safe.
+>
+> Properties:
+> - 'ioport': I/O port base address (default: 0x530)
+>
+> The device implements the ACPI_DEV_AML_IF interface to generate its
+> own AML code, placing the BAT0 device directly under \_SB scope as
+> per ACPI specification.
+>
+> QMP commands:
+> - battery-set-state: Set battery state (present, charging, capacity, rate)
+> - query-battery: Query current battery state
+
+Could we have one patch adding the device, and a second one adding the
+QMP commands?
+
+>
+> This provides a stable interface for virtualization management systems.
+>
+> Signed-off-by: Leonid Bloch <lb.workbox@gmail.com>
+> Signed-off-by: Marcel Apfelbaum <marcel.apfelbaum@gmail.com>
+> ---
+>  MAINTAINERS                          |   2 +
+>  hw/acpi/Kconfig                      |   4 +
+>  hw/acpi/battery-stub.c               |  20 ++
+>  hw/acpi/battery.c                    | 364 +++++++++++++++++++++++++++
+>  hw/acpi/meson.build                  |   2 +
+>  hw/acpi/trace-events                 |   4 +
+>  hw/i386/Kconfig                      |   1 +
+>  include/hw/acpi/acpi_dev_interface.h |   1 +
+>  include/hw/acpi/battery.h            |  32 +++
+>  qapi/acpi.json                       |  71 ++++++
+>  10 files changed, 501 insertions(+)
+>  create mode 100644 hw/acpi/battery-stub.c
+>  create mode 100644 hw/acpi/battery.c
+>  create mode 100644 include/hw/acpi/battery.h
+>
+> diff --git a/MAINTAINERS b/MAINTAINERS
+> index e356f46a58..ce50329f48 100644
+> --- a/MAINTAINERS
+> +++ b/MAINTAINERS
+> @@ -3040,6 +3040,8 @@ Battery
+>  M: Leonid Bloch <lb.workbox@gmail.com>
+>  S: Maintained
+>  F: docs/specs/battery.rst
+> +F: hw/acpi/battery*
+> +F: include/hw/acpi/battery.h
+>=20=20
+>  Subsystems
+>  ----------
+> diff --git a/hw/acpi/Kconfig b/hw/acpi/Kconfig
+> index daabbe6cd1..6b2c46d37a 100644
+> --- a/hw/acpi/Kconfig
+> +++ b/hw/acpi/Kconfig
+> @@ -88,3 +88,7 @@ config ACPI_ERST
+>  config ACPI_CXL
+>      bool
+>      depends on ACPI
+> +
+> +config BATTERY
+> +    bool
+> +    depends on ACPI
+> diff --git a/hw/acpi/battery-stub.c b/hw/acpi/battery-stub.c
+> new file mode 100644
+> index 0000000000..d2f13b51c1
+> --- /dev/null
+> +++ b/hw/acpi/battery-stub.c
+> @@ -0,0 +1,20 @@
+> +/*
+> + * QEMU emulated battery device - QMP stubs.
+> + *
+> + * SPDX-License-Identifier: GPL-2.0-or-later
+> + */
+> +
+> +#include "qemu/osdep.h"
+> +#include "qapi/error.h"
+> +#include "qapi/qapi-commands-acpi.h"
+> +
+> +void qmp_battery_set_state(BatteryInfo *state, Error **errp)
+> +{
+> +    error_setg(errp, "No battery device found");
+> +}
+> +
+> +BatteryInfo *qmp_query_battery(Error **errp)
+> +{
+> +    error_setg(errp, "No battery device found");
+> +    return NULL;
+> +}
+> diff --git a/hw/acpi/battery.c b/hw/acpi/battery.c
+> new file mode 100644
+> index 0000000000..35b81ad486
+> --- /dev/null
+> +++ b/hw/acpi/battery.c
+> @@ -0,0 +1,364 @@
+> +/*
+> + * QEMU emulated battery device.
+> + *
+> + * Copyright (c) 2019-2026 Janus Technologies, Inc. (http://janustech.co=
+m)
+> + *
+> + * Authors:
+> + *     Leonid Bloch <lb.workbox@gmail.com>
+> + *     Marcel Apfelbaum <marcel.apfelbaum@gmail.com>
+> + *     Dmitry Fleytman <dmitry.fleytman@gmail.com>
+> + *
+> + * SPDX-License-Identifier: GPL-2.0-or-later
+> + *
+> + */
+> +
+> +#include "qemu/osdep.h"
+> +#include "trace.h"
+> +#include "hw/isa/isa.h"
+> +#include "hw/acpi/acpi.h"
+> +#include "qapi/error.h"
+> +#include "hw/core/qdev-properties.h"
+> +#include "migration/vmstate.h"
+> +#include "hw/acpi/acpi_aml_interface.h"
+> +#include "qapi/qapi-commands-acpi.h"
+> +
+> +#include "hw/acpi/battery.h"
+> +
+> +#define BATTERY_DEVICE(obj) OBJECT_CHECK(BatteryState, (obj), TYPE_BATTE=
+RY)
+> +
+> +#define BATTERY_DISCHARGING  0x01  /* ACPI _BST bit 0 */
+> +#define BATTERY_CHARGING     0x02  /* ACPI _BST bit 1 */
+> +#define BATTERY_CRITICAL     0x04  /* ACPI _BST bit 2 */
+> +#define BATTERY_PRESENT      0x10  /* ACPI _STA bit 4 */
+> +
+> +typedef struct BatteryState {
+> +    ISADevice dev;
+> +    MemoryRegion io;
+> +    uint16_t ioport;
+> +    uint32_t state;
+> +    uint32_t rate;
+> +    uint32_t charge;
+> +    bool qmp_present;
+> +    bool qmp_charging;
+> +    bool qmp_discharging;
+> +    int32_t qmp_charge_percent;
+> +    int32_t qmp_rate;
+> +} BatteryState;
+> +
+> +enum {
+> +    BSTA_ADDR =3D 0,
+> +    BRTE_ADDR =3D 4,
+> +    BCRG_ADDR =3D 8,
+> +};
+> +
+> +static void battery_get_dynamic_status(BatteryState *s)
+> +{
+> +    s->state =3D 0;
+> +    if (s->qmp_present) {
+> +        s->state |=3D BATTERY_PRESENT;
+> +        if (s->qmp_charging) {
+> +            s->state |=3D BATTERY_CHARGING;
+> +        }
+> +        if (s->qmp_discharging) {
+> +            s->state |=3D BATTERY_DISCHARGING;
+> +        }
+> +    }
+> +    s->rate =3D s->qmp_rate;
+> +    s->charge =3D (s->qmp_charge_percent * BATTERY_FULL_CAP) / 100;
+> +
+> +    trace_battery_get_dynamic_status(s->state, s->rate, s->charge);
+> +}
+> +
+> +static void battery_realize(DeviceState *dev, Error **errp)
+> +{
+> +    ISADevice *d =3D ISA_DEVICE(dev);
+> +    BatteryState *s =3D BATTERY_DEVICE(dev);
+> +    bool ambiguous;
+> +
+> +    trace_battery_realize();
+> +
+> +    object_resolve_path_type("", TYPE_BATTERY, &ambiguous);
+> +    if (ambiguous) {
+> +        error_setg(errp, "at most one %s device is permitted", TYPE_BATT=
+ERY);
+> +        return;
+> +    }
+> +
+> +    /* Initialize QMP state to sensible defaults */
+> +    s->qmp_present =3D true;
+> +    s->qmp_charging =3D false;
+> +    s->qmp_discharging =3D true;
+> +    s->qmp_charge_percent =3D 50;
+> +    s->qmp_rate =3D 1000;  /* 1000 mW discharge rate */
+> +
+> +    isa_register_ioport(d, &s->io, s->ioport);
+> +}
+> +
+> +static const Property battery_device_properties[] =3D {
+> +    DEFINE_PROP_UINT16(BATTERY_IOPORT_PROP, BatteryState, ioport, 0x530),
+> +};
+> +
+> +static const VMStateDescription battery_vmstate =3D {
+> +    .name =3D "battery",
+> +    .version_id =3D 1,
+> +    .minimum_version_id =3D 1,
+> +    .fields =3D (VMStateField[]) {
+> +        VMSTATE_BOOL(qmp_present, BatteryState),
+> +        VMSTATE_BOOL(qmp_charging, BatteryState),
+> +        VMSTATE_BOOL(qmp_discharging, BatteryState),
+> +        VMSTATE_INT32(qmp_charge_percent, BatteryState),
+> +        VMSTATE_INT32(qmp_rate, BatteryState),
+> +        VMSTATE_END_OF_LIST()
+> +    }
+> +};
+> +
+> +static void build_battery_aml(AcpiDevAmlIf *adev, Aml *scope)
+> +{
+> +    Aml *dev, *field, *method, *pkg;
+> +    Aml *bat_state, *bat_rate, *bat_charge;
+> +    Aml *sb_scope;
+> +    BatteryState *s =3D BATTERY_DEVICE(adev);
+> +
+> +    bat_state  =3D aml_local(0);
+> +    bat_rate   =3D aml_local(1);
+> +    bat_charge =3D aml_local(2);
+> +
+> +    sb_scope =3D aml_scope("\\_SB");
+> +    dev =3D aml_device("BAT0");
+> +    aml_append(dev, aml_name_decl("_HID", aml_eisaid("PNP0C0A")));
+> +
+> +    aml_append(dev, aml_operation_region("DBST", AML_SYSTEM_IO,
+> +                                         aml_int(s->ioport),
+> +                                         BATTERY_LEN));
+> +    field =3D aml_field("DBST", AML_DWORD_ACC, AML_NOLOCK, AML_PRESERVE);
+> +    aml_append(field, aml_named_field("BSTA", 32));
+> +    aml_append(field, aml_named_field("BRTE", 32));
+> +    aml_append(field, aml_named_field("BCRG", 32));
+> +    aml_append(dev, field);
+> +
+> +    method =3D aml_method("_STA", 0, AML_NOTSERIALIZED);
+> +    aml_append(method, aml_return(aml_or(aml_int(0x0F),
+> +                                         aml_and(aml_name("BSTA"),
+> +                                                 aml_int(0x10), NULL),
+> +                                         NULL)));
+> +    aml_append(dev, method);
+> +
+> +    method =3D aml_method("_BIF", 0, AML_NOTSERIALIZED);
+> +    pkg =3D aml_package(13);
+> +    /* Power Unit */
+> +    aml_append(pkg, aml_int(0));             /* mW */
+> +    /* Design Capacity */
+> +    aml_append(pkg, aml_int(BATTERY_FULL_CAP));
+> +    /* Last Full Charge Capacity */
+> +    aml_append(pkg, aml_int(BATTERY_FULL_CAP));
+> +    /* Battery Technology */
+> +    aml_append(pkg, aml_int(1));             /* Secondary */
+> +    /* Design Voltage */
+> +    aml_append(pkg, aml_int(BATTERY_DESIGN_VOLTAGE));
+> +    /* Design Capacity of Warning */
+> +    aml_append(pkg, aml_int(BATTERY_CAPACITY_OF_WARNING));
+> +    /* Design Capacity of Low */
+> +    aml_append(pkg, aml_int(BATTERY_CAPACITY_OF_LOW));
+> +    /* Battery Capacity Granularity 1 */
+> +    aml_append(pkg, aml_int(BATTERY_CAPACITY_GRANULARITY));
+> +    /* Battery Capacity Granularity 2 */
+> +    aml_append(pkg, aml_int(BATTERY_CAPACITY_GRANULARITY));
+> +    /* Model Number */
+> +    aml_append(pkg, aml_string("QBAT001"));  /* Model Number */
+> +    /* Serial Number */
+> +    aml_append(pkg, aml_string("SN00000"));  /* Serial Number */
+> +    /* Battery Type */
+> +    aml_append(pkg, aml_string("Virtual"));  /* Battery Type */
+> +    /* OEM Information */
+> +    aml_append(pkg, aml_string("QEMU"));     /* OEM Information */
+> +    aml_append(method, aml_return(pkg));
+> +    aml_append(dev, method);
+> +
+> +    pkg =3D aml_package(4);
+> +    /* Battery State */
+> +    aml_append(pkg, aml_int(0));
+> +    /* Battery Present Rate */
+> +    aml_append(pkg, aml_int(BATTERY_VAL_UNKNOWN));
+> +    /* Battery Remaining Capacity */
+> +    aml_append(pkg, aml_int(BATTERY_VAL_UNKNOWN));
+> +    /* Battery Present Voltage */
+> +    aml_append(pkg, aml_int(BATTERY_DESIGN_VOLTAGE));
+> +    aml_append(dev, aml_name_decl("DBPR", pkg));
+> +
+> +    method =3D aml_method("_BST", 0, AML_NOTSERIALIZED);
+> +    aml_append(method, aml_store(aml_and(aml_name("BSTA"), aml_int(0x0F),
+> +                                         NULL),
+> +                                 bat_state));
+> +    aml_append(method, aml_store(aml_name("BRTE"), bat_rate));
+> +    aml_append(method, aml_store(aml_name("BCRG"), bat_charge));
+> +    aml_append(method, aml_store(bat_state,
+> +                                 aml_index(aml_name("DBPR"), aml_int(0))=
+));
+> +    aml_append(method, aml_store(bat_rate,
+> +                                 aml_index(aml_name("DBPR"), aml_int(1))=
+));
+> +    aml_append(method, aml_store(bat_charge,
+> +                                 aml_index(aml_name("DBPR"), aml_int(2))=
+));
+> +    aml_append(method, aml_return(aml_name("DBPR")));
+> +    aml_append(dev, method);
+> +
+> +    aml_append(sb_scope, dev);
+> +    aml_append(scope, sb_scope);
+> +
+> +    /* Status Change */
+> +    method =3D aml_method("\\_GPE._E08", 0, AML_NOTSERIALIZED);
+> +    aml_append(method, aml_notify(aml_name("\\_SB.BAT0"), aml_int(0x80))=
+);
+> +    aml_append(scope, method);
+> +}
+> +
+> +static void battery_class_init(ObjectClass *class, const void *data)
+> +{
+> +    DeviceClass *dc =3D DEVICE_CLASS(class);
+> +    AcpiDevAmlIfClass *adevc =3D ACPI_DEV_AML_IF_CLASS(class);
+> +
+> +    dc->realize =3D battery_realize;
+> +    dc->hotpluggable =3D false;
+> +    device_class_set_props(dc, battery_device_properties);
+> +    dc->vmsd =3D &battery_vmstate;
+> +    adevc->build_dev_aml =3D build_battery_aml;
+> +}
+> +
+> +static uint64_t battery_ioport_read(void *opaque, hwaddr addr, unsigned =
+size)
+> +{
+> +    BatteryState *s =3D opaque;
+> +
+> +    battery_get_dynamic_status(s);
+> +
+> +    switch (addr) {
+> +    case BSTA_ADDR:
+> +        return s->state;
+> +    case BRTE_ADDR:
+> +        return s->rate;
+> +    case BCRG_ADDR:
+> +        return s->charge;
+> +    default:
+> +        g_assert_not_reached();
+> +    }
+> +}
+> +
+> +static const MemoryRegionOps battery_ops =3D {
+> +    .read =3D battery_ioport_read,
+> +    .endianness =3D DEVICE_LITTLE_ENDIAN,
+> +    .valid =3D {
+> +        .min_access_size =3D 4,
+> +        .max_access_size =3D 4,
+> +    },
+> +    .impl =3D {
+> +        .min_access_size =3D 4,
+> +        .max_access_size =3D 4,
+> +    },
+> +};
+> +
+> +static void battery_instance_init(Object *obj)
+> +{
+> +    BatteryState *s =3D BATTERY_DEVICE(obj);
+> +
+> +    memory_region_init_io(&s->io, obj, &battery_ops, s, "battery",
+> +                          BATTERY_LEN);
+> +}
+> +
+> +static const TypeInfo battery_info =3D {
+> +    .name          =3D TYPE_BATTERY,
+> +    .parent        =3D TYPE_ISA_DEVICE,
+> +    .instance_size =3D sizeof(BatteryState),
+> +    .class_init    =3D battery_class_init,
+> +    .instance_init =3D battery_instance_init,
+> +    .interfaces =3D (InterfaceInfo[]) {
+> +        { TYPE_ACPI_DEV_AML_IF },
+> +        { },
+> +    },
+> +};
+> +
+> +static BatteryState *find_battery_device(Error **errp)
+> +{
+> +    bool ambiguous;
+> +    Object *o =3D object_resolve_path_type("", TYPE_BATTERY, &ambiguous);
+> +
+> +    if (!o) {
+> +        error_setg(errp, "No battery device found");
+> +        return NULL;
+> +    }
+> +    if (ambiguous) {
+> +        error_setg(errp, "More than one battery device present");
+
+How can we reach this error?  battery_realize() refuses to realize more
+than one.
+
+> +        return NULL;
+> +    }
+> +    return BATTERY_DEVICE(o);
+> +}
+> +
+> +void qmp_battery_set_state(BatteryInfo *state, Error **errp)
+> +{
+> +    BatteryState *s =3D find_battery_device(errp);
+> +    Object *obj;
+> +
+> +    if (!s) {
+> +        return;
+> +    }
+> +
+> +    if (state->charging && state->discharging) {
+> +        error_setg(errp,
+> +                   "'charging' and 'discharging' are mutually exclusive"=
+);
+> +        return;
+> +    }
+> +    if (!state->present && (state->charging || state->discharging)) {
+> +        error_setg(errp,
+> +                   "'charging'/'discharging' require 'present' to be tru=
+e");
+> +        return;
+> +    }
+> +    if (state->charge_percent < 0 || state->charge_percent > 100) {
+> +        error_setg(errp, "'charge-percent' must be in the range 0..100");
+> +        return;
+> +    }
+> +    if (state->has_rate && (state->rate < 0 || state->rate > INT32_MAX))=
+ {
+> +        error_setg(errp, "'rate' must be in the range 0..0x%" PRIX32,
+> +                   (uint32_t)INT32_MAX);
+> +        return;
+> +    }
+
+I feel some of these error messages need work, but let's nail down the
+interface first.
+
+> +
+> +    s->qmp_present =3D state->present;
+> +    s->qmp_charging =3D state->charging;
+> +    s->qmp_discharging =3D state->discharging;
+> +    s->qmp_charge_percent =3D state->charge_percent;
+> +
+> +    if (state->has_rate) {
+> +        s->qmp_rate =3D state->rate;
+> +    }
+> +
+> +    obj =3D object_resolve_path_type("", TYPE_ACPI_DEVICE_IF, NULL);
+> +    if (obj) {
+> +        acpi_send_event(DEVICE(obj), ACPI_BATTERY_CHANGE_STATUS);
+> +    }
+> +}
+> +
+> +BatteryInfo *qmp_query_battery(Error **errp)
+> +{
+> +    BatteryState *s =3D find_battery_device(errp);
+> +    BatteryInfo *ret;
+> +
+> +    if (!s) {
+> +        return NULL;
+> +    }
+> +
+> +    ret =3D g_new0(BatteryInfo, 1);
+> +
+> +    ret->present =3D s->qmp_present;
+> +    ret->charging =3D s->qmp_charging;
+> +    ret->discharging =3D s->qmp_discharging;
+> +    ret->charge_percent =3D s->qmp_charge_percent;
+> +    ret->has_rate =3D true;
+> +    ret->rate =3D s->qmp_rate;
+> +
+> +    ret->has_remaining_capacity =3D false;
+> +    ret->has_design_capacity =3D true;
+> +    ret->design_capacity =3D BATTERY_FULL_CAP;
+> +
+> +    return ret;
+> +}
+> +
+> +static void battery_register_types(void)
+> +{
+> +    type_register_static(&battery_info);
+> +}
+> +
+> +type_init(battery_register_types)
+> diff --git a/hw/acpi/meson.build b/hw/acpi/meson.build
+> index 1c5251909b..e6bc78274e 100644
+> --- a/hw/acpi/meson.build
+> +++ b/hw/acpi/meson.build
+> @@ -35,6 +35,8 @@ if have_tpm
+>  endif
+>  stub_ss.add(files('acpi-stub.c', 'aml-build-stub.c', 'ghes-stub.c'))
+>  stub_ss.add(files('pci-bridge-stub.c'))
+> +acpi_ss.add(when: 'CONFIG_BATTERY', if_true: files('battery.c'))
+> +stub_ss.add(files('battery-stub.c'))
+>  system_ss.add_all(when: 'CONFIG_ACPI', if_true: acpi_ss)
+>  system_ss.add(when: 'CONFIG_GHES_CPER', if_true: files('ghes_cper.c'))
+>  stub_ss.add(files('ghes_cper_stub.c'))
+> diff --git a/hw/acpi/trace-events b/hw/acpi/trace-events
+> index edc93e703c..8a6ab91a13 100644
+> --- a/hw/acpi/trace-events
+> +++ b/hw/acpi/trace-events
+> @@ -87,3 +87,7 @@ acpi_nvdimm_read_io_port(void) "Alert: we never read _D=
+SM IO Port"
+>  acpi_nvdimm_dsm_mem_addr(uint64_t dsm_mem_addr) "dsm memory address 0x%"=
+ PRIx64
+>  acpi_nvdimm_dsm_info(uint32_t revision, uint32_t handle, uint32_t functi=
+on) "Revision 0x%" PRIx32 " Handle 0x%" PRIx32 " Function 0x%" PRIx32
+>  acpi_nvdimm_invalid_revision(uint32_t revision) "Revision 0x%" PRIx32 " =
+is not supported, expect 0x1"
+> +
+> +# battery.c
+> +battery_realize(void) "Battery device realize entry"
+> +battery_get_dynamic_status(uint32_t state, uint32_t rate, uint32_t charg=
+e) "Battery read state: 0x%"PRIx32", rate: %"PRIu32", charge: %"PRIu32
+> diff --git a/hw/i386/Kconfig b/hw/i386/Kconfig
+> index 12473acaa7..94004ffeb2 100644
+> --- a/hw/i386/Kconfig
+> +++ b/hw/i386/Kconfig
+> @@ -39,6 +39,7 @@ config PC
+>      imply VIRTIO_VGA
+>      imply NVDIMM
+>      imply FDC_ISA
+> +    imply BATTERY
+>      select I8259
+>      select I8254
+>      select PCKBD
+> diff --git a/include/hw/acpi/acpi_dev_interface.h b/include/hw/acpi/acpi_=
+dev_interface.h
+> index 65debb90a8..a6f9022c0b 100644
+> --- a/include/hw/acpi/acpi_dev_interface.h
+> +++ b/include/hw/acpi/acpi_dev_interface.h
+> @@ -14,6 +14,7 @@ typedef enum {
+>      ACPI_VMGENID_CHANGE_STATUS =3D 32,
+>      ACPI_POWER_DOWN_STATUS =3D 64,
+>      ACPI_GENERIC_ERROR =3D 128,
+> +    ACPI_BATTERY_CHANGE_STATUS =3D 256,
+>  } AcpiEventStatusBits;
+>=20=20
+>  #define TYPE_ACPI_DEVICE_IF "acpi-device-interface"
+> diff --git a/include/hw/acpi/battery.h b/include/hw/acpi/battery.h
+> new file mode 100644
+> index 0000000000..eaff760db9
+> --- /dev/null
+> +++ b/include/hw/acpi/battery.h
+> @@ -0,0 +1,32 @@
+> +/*
+> + * QEMU emulated battery device.
+> + *
+> + * Copyright (c) 2019-2026 Janus Technologies, Inc. (http://janustech.co=
+m)
+> + *
+> + * Authors:
+> + *     Leonid Bloch <lb.workbox@gmail.com>
+> + *     Marcel Apfelbaum <marcel.apfelbaum@gmail.com>
+> + *     Dmitry Fleytman <dmitry.fleytman@gmail.com>
+> + *
+> + * SPDX-License-Identifier: GPL-2.0-or-later
+> + *
+> + */
+> +
+> +#ifndef HW_ACPI_BATTERY_H
+> +#define HW_ACPI_BATTERY_H
+> +
+> +#define TYPE_BATTERY                  "battery"
+> +#define BATTERY_IOPORT_PROP           "ioport"
+> +
+> +#define BATTERY_FULL_CAP        10000  /* mWh */
+> +#define BATTERY_DESIGN_VOLTAGE  12000  /* mV */
+> +
+> +#define BATTERY_CAPACITY_OF_WARNING   (BATTERY_FULL_CAP /  10)  /* 10% */
+> +#define BATTERY_CAPACITY_OF_LOW       (BATTERY_FULL_CAP /  25)  /* 4%  */
+> +#define BATTERY_CAPACITY_GRANULARITY  (BATTERY_FULL_CAP / 100)  /* 1%  */
+> +
+> +#define BATTERY_VAL_UNKNOWN  0xFFFFFFFF
+> +
+> +#define BATTERY_LEN          0x0C
+> +
+> +#endif
+> diff --git a/qapi/acpi.json b/qapi/acpi.json
+> index 906b3687a5..4711a05614 100644
+> --- a/qapi/acpi.json
+> +++ b/qapi/acpi.json
+> @@ -142,3 +142,74 @@
+>  ##
+>  { 'event': 'ACPI_DEVICE_OST',
+>       'data': { 'info': 'ACPIOSTInfo' } }
+> +
+> +##
+> +# @BatteryInfo:
+> +#
+> +# Battery state information
+> +#
+> +# @present: whether the battery is present
+
+Peeking at the C code...  there is a difference between "have no
+TYPE_BATTERY device" and "have one, but not present".  What does the
+latter mean?  The machine has a battery device, but the actual battery
+pack is not connected?
+
+> +#
+> +# @charging: whether the battery is charging
+> +#
+> +# @discharging: whether the battery is discharging
+
+Peeking at the C code...  looks like @charging is initialized to false,
+@discharging to true, battery-set-state doesn't let you set both to
+true, and there is no other way to change them.  Correct?
+
+If yes, you're encoding a tri-state (charging, discharging, neither) as
+two bools.  Hmm.
+
+Peeking at the C code some more...  looks like there's more
+entanglement: @charging and @discharging must be false when @present is
+false.
+
+Let's go through the cases:
+
+    present  charging  discharging  meaning
+    false    false     false        battery pack missing
+    true     false     true         battery charging
+    true     true      false        battery discharging
+    true     false     false        ???
+
+Please complete / correct column meaning.
+
+Are there missing rows?
+
+> +#
+> +# @charge-percent: battery charge percentage (0-100)
+> +#
+> +# @rate: charge/discharge rate in mW (optional)
+
+Drop the (optional), please.  As is, the description gets rendered like
+
+    =E2=80=A2 rate (int, optional) =E2=80=93 charge/discharge rate in mW (o=
+ptional)
+
+What does absent mean?  Hmm, the type is both ther argument of
+battery-set-state and the return value of query-battery.  Let's discuss
+there.
+
+> +#
+> +# @remaining-capacity: remaining capacity in mWh (optional)
+
+Likewise.
+
+> +#
+> +# @design-capacity: design capacity in mWh (optional)
+
+Likewise.
+
+> +#
+> +# Since: 11.1
+> +##
+> +{ 'struct': 'BatteryInfo',
+> +  'data': { 'present': 'bool',
+> +            'charging': 'bool',
+> +            'discharging': 'bool',
+> +            'charge-percent': 'int',
+> +            '*rate': 'int',
+> +            '*remaining-capacity': 'int',
+> +            '*design-capacity': 'int' } }
+> +
+> +##
+> +# @battery-set-state:
+> +#
+> +# Set the state of the emulated battery device
+> +#
+> +# @state: new battery state
+> +#
+> +# Since: 11.1
+> +#
+> +# .. qmp-example::
+> +#
+> +#     -> { "execute": "battery-set-state",
+> +#          "arguments": { "state": { "present": true,
+> +#                                    "charging": true,
+> +#                                    "discharging": false,
+> +#                                    "charge-percent": 85 } } }
+> +#     <- { "return": {} }
+> +##
+> +{ 'command': 'battery-set-state',
+> +  'data': { 'state': 'BatteryInfo' } }
+
+This interface fundamentally assumes there is at most one battery.  Is
+that what we want?  Forever and ever?
+
+Let's avoid the silly "state": { ... }:
+
+   { 'command': 'battery-set-state', 'boxed': true,
+     'data': 'BatteryInfo' }
+
+Peeking at the command handler code...  the command fails when there is
+no TYPE_BATTERY device or more than one.
+
+Members @charging, @discharging, @charge-percent are mandatory.  They
+must be present even with "present": false.  Do they make any sense
+then?
+
+Should we document the command fails when there is no battery device?
+
+> +
+> +##
+> +# @query-battery:
+> +#
+> +# Query the current state of the emulated battery device
+> +#
+> +# Returns: current battery state
+
+This gets rendered like
+
+ Command query-battery (Since: 11.1)
+
+    Query the current state of the emulated battery device
+
+    Return:
+
+        BatteryInfo =E2=80=93 current battery state
+
+If you simply omit the Returns: line, it'll be
+
+ Command query-battery (Since: 11.1)
+
+    Query the current state of the emulated battery device
+
+    Return:
+
+        BatteryInfo
+
+Choice is up to you.
+
+Should we document the command fails when there is no battery device?
+
+> +#
+> +# Since: 11.1
+> +#
+> +# .. qmp-example::
+> +#
+> +#     -> { "execute": "query-battery" }
+> +#     <- { "return": { "present": true,
+> +#                      "charging": true,
+> +#                      "discharging": false,
+> +#                      "charge-percent": 85 } }
+> +##
+> +{ 'command': 'query-battery',
+> +  'returns': 'BatteryInfo' }
+
 
