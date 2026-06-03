@@ -4,70 +4,71 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1E948CD6E57
-	for <qemu-devel@archiver.kernel.org>; Wed,  3 Jun 2026 15:37:40 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8BE2ACD6E55
+	for <qemu-devel@archiver.kernel.org>; Wed,  3 Jun 2026 15:42:33 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wUneb-00039o-2W; Wed, 03 Jun 2026 11:37:15 -0400
+	id 1wUnjC-0005JB-E0; Wed, 03 Jun 2026 11:41:58 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mark.caveayland@nutanix.com>)
- id 1wUneG-00033p-7k
- for qemu-devel@nongnu.org; Wed, 03 Jun 2026 11:36:52 -0400
-Received: from mx0b-002c1b01.pphosted.com ([148.163.155.12])
+ id 1wUnj5-0005Iv-4t
+ for qemu-devel@nongnu.org; Wed, 03 Jun 2026 11:41:51 -0400
+Received: from mx0a-002c1b01.pphosted.com ([148.163.151.68])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mark.caveayland@nutanix.com>)
- id 1wUneC-0001Mm-Sf
- for qemu-devel@nongnu.org; Wed, 03 Jun 2026 11:36:51 -0400
-Received: from pps.filterd (m0127843.ppops.net [127.0.0.1])
- by mx0b-002c1b01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 653EDBhR3777781; Wed, 3 Jun 2026 08:36:45 -0700
+ id 1wUnix-0003T5-Ud
+ for qemu-devel@nongnu.org; Wed, 03 Jun 2026 11:41:47 -0400
+Received: from pps.filterd (m0127838.ppops.net [127.0.0.1])
+ by mx0a-002c1b01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
+ 653EGBf94090399; Wed, 3 Jun 2026 08:41:40 -0700
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=nutanix.com; h=
  cc:content-transfer-encoding:content-type:date:from:in-reply-to
  :message-id:mime-version:references:subject:to; s=
- proofpoint20171006; bh=yh+LmgGKlNU+aFjl73jMFt+IN7d6aKc7YWf+zpVEP
- lA=; b=URgBhhyVlCo985jm5Ril3uqPeG0AMlyAHKZFSxEvBn/BJOuTqXVR7Kmo8
- w48sTJIiZHEesognCq7mcS9J5QFFg6kkh7ae0Fctbg3E39D8+qyLZJup5TOo0Nae
- yyQHv1FDWanCf7Xj2b3n5E2qZ3UySBVwiDRA1C2dICHH8ziH6UxEQ13SzCmzNw5r
- 0vlRESzxmrS6jblsVMUdITSggfYkAFyNswcJKyEZD6N3lPPVh50ZrOZnA7I3W9/6
- KrXf3Ko1lv5KuKnxJUdmhbFBcWLIsozwTx1Y6uSKYaxF708owiuG62VgwPtXIs+0
- BokGxFLmpH61d3jNGzkGsJtVW3e2g==
-Received: from sj2pr03cu001.outbound.protection.outlook.com
- (mail-westusazon11022115.outbound.protection.outlook.com [52.101.43.115])
- by mx0b-002c1b01.pphosted.com (PPS) with ESMTPS id 4ejg2492pe-1
+ proofpoint20171006; bh=TK/dqjpfIDyECLfzmprkEQdFE/61Etv7qO+y7QISq
+ 30=; b=TlFb6addNBd0uzUR6Eij2q6yrUGyf7XS1ja2Cm5E4u6afmHrIhwoL5pv4
+ D1v2z7qZxZg0esDxhWJDjcKmZi5G9dZfC1I3uugk2r1bkyussk8+cXmVlDeWOma1
+ j4Qte3X0bJVpsP9cIAELuucdZxFxlCcT2l82KYWN5BH0gorMcZ7qmEHBSPe26yFf
+ /narCemAPtW+VzGKnS5TMY+gGvHoMDQSEiLb2xzAxcSYndIDAVbAPEF1pNQ+pXro
+ tKwbRdphtpz2mpZUxNVxEsqdy7kjk1kZ6ssETBHh7w9aYTce+nSpFCTJW9OgukAy
+ 9+d3thF81H/pNVwbFbOPnMI7LR1LQ==
+Received: from ch5pr02cu005.outbound.protection.outlook.com
+ (mail-northcentralusazon11022074.outbound.protection.outlook.com
+ [40.107.200.74])
+ by mx0a-002c1b01.pphosted.com (PPS) with ESMTPS id 4ej5a2age6-1
  (version=TLSv1.3 cipher=TLS_AES_256_GCM_SHA384 bits=256 verify=NOT);
- Wed, 03 Jun 2026 08:36:44 -0700 (PDT)
+ Wed, 03 Jun 2026 08:41:40 -0700 (PDT)
 ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=wUKkCCoZTxUmDMBkx+tLfUgGJVqRwsE7yod1FTgbl6K6hvc1QQamDswYsOyOLdEwsG/x2y71A0WCnrHFatoTbCpgs5GPoY+vpBscJOfs+bpc6IpuSED9+hKjS6vDq4bKcJzSxnj97OGoiweDQ58Ebq9u4RNvMic2CEAwqjvd/419XdRFagBa8z0tJhjwhc3eLbBOUcv+vsiJ9jYSJ5s/cJJmoc75ml8hUHa3KWOY6u54hOoosagtoNechamzE3SHFQaFxKTxyEvXzTQqBtA2XyuzchflLMjvwwJDovU8TrUIrLjlzJ8Jx+vWG7g+rkH1SuRYb9G4L9k3Km1ryluLTA==
+ b=N6fB2sQML3uOFYTRFRiiLriH/nEBNtmLqTWjiMPIix0sGeAmMWXzqBk9mIvwowY4bN60aM1jbG85WoMenv9w4zGJiw/XOJFztRU7LF8ZuUTwz/MMIkYuMn8dQRrbQmcE0kW1dCFRgZP56i5Ycb0ob2SH7G8iLBcIHRit2n3dYMdsJ9D5iBIqNga14wZzYpQt3ukupwETnkeU6LkPRbS+8nqvCidUOg9ZFv3wHjNqhJR2lCoskwuvL4UHzBGRgv2LyWEn+HuCgXRxETEP7nqAYC0iRwHHjar5zEenC+6hcLQmyN7LCQAf9FHOQiNWAa5Fg9M+Ayt9zJKb5Dl+eqW7fg==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
  s=arcselector10001;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=yh+LmgGKlNU+aFjl73jMFt+IN7d6aKc7YWf+zpVEPlA=;
- b=IpUMboZwOXE5lmtKydbzU9VAxfWMgaH/5/mi3Co5829hlHen9LWoQvDIb6o29FJUt4G84Rwnc211Bp+JIkjRwqCORq4PV0QTdqQgQk/bI7IgzwfXKM4OYVlLhimONvJnScp2cGjuEnPuxBMUn/iW3tnzIDbEnTxijk5MzI/kFyjyDzRfwDpDjswOPIyYfH2RbotET3N5AENsJmNC47SStD7QjQm2sp15EqIX/s7JFCztrXlhaLWby/rnbKSeVtXCYQaT2ciwGFWghcQDDnYRkDPMqAQZwiInrlEMUz0xrffP/Clvs+gxgD8BvLHV4hXN9qfsSjFlfIeMzcxUiDrFDw==
+ bh=TK/dqjpfIDyECLfzmprkEQdFE/61Etv7qO+y7QISq30=;
+ b=L7nSOkeYVpBynPXah4IjUD5CKM30AJUhCBbsZElvaPCwGjY1wt4xLRpSQSRFqiU02DbsQjw7+sr0b+K85JYoAu5gmtfB+BtNSaYhHiTObeVqAnCuP12is9SGGNFeZuNQQY0pDyxdt7wn4dmNdmI/FqDNOwJsMOonqo/1oYRX+NvwtyvZoQy+Y4anx+KDm7+RQZMgl0t4rSzViOaAG+M7n2Dw0G8f4l+q6tfDiMwTfsYyVZoyG/4WBECv//SyHt7m2KqsKIgsVH/2LPrGzxi2RbXtbfcKA/vpOIxTewoibFWorwiePiuQ1RMCxQydyZ5ry3t4QO9OoT3DnaoMD2n6gg==
 ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
  smtp.mailfrom=nutanix.com; dmarc=pass action=none header.from=nutanix.com;
  dkim=pass header.d=nutanix.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=nutanix.com;
  s=selector1;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=yh+LmgGKlNU+aFjl73jMFt+IN7d6aKc7YWf+zpVEPlA=;
- b=Tanx+nvG4npMfSZ2V3k9aTnuaTdg0ZSYRm6MW1dQKtrrnhypgidrlWzm7I3NvGoPNJmkPY8vHq2QPQ0e8D9C88l/scKIZbDAzIZSvjEc3nlPNsqyIAO8pw9v7TTA1n6XK44y3xxA4kgVpuXMmObD+F4vIgecxyHCmyKnKH6AQA34MGFwDKIu41vhKVU3Dq9gsMwSjjCSmbKTkXBmshsirGF2OalMNprsW03XVj7sTN541uY7aoNMc5kAscx/ZtqPZP7MYYUQw8QWwGWDz79mFWQW6ht0Yy3UZfCyU4UohJoe/S9uS/smhbIeb6Kv9/M7DUJgBtL4ekqf4QInEQt94g==
+ bh=TK/dqjpfIDyECLfzmprkEQdFE/61Etv7qO+y7QISq30=;
+ b=jeMeUaExV+njp695Nucq8ttnhkZHZSgG2BnGkfo2M44g8mR+RAR7q1IBsvy7UH1JqKUAFBHVG+Ji9RHvlu6EYB692qwoMUoNwPhrYRf2RX+4tjN4f227LgRZ70TRCgiz+gCSb1BXUfGsTotL6rUCOZ1fKLkxZQYemMXmL7ZsE4g7ld3YHBGqzygRekRIyWaJBDbDI2f4b+XQv4b8tkyWU5GphpPYJYq5mYcLt3jGDKhMIZZKTw2c48foFbfa5qlrUnOZq8fYWaSVenkBzwh1pP/ylrqvbSqlB50ITmDWi+ydGiHyJf17hIHl+bQCt0mFYz8W9D/Ko3ABiu/S2LwMyg==
 Received: from PH0PR02MB7159.namprd02.prod.outlook.com (2603:10b6:510:16::8)
- by SJ0PR02MB7343.namprd02.prod.outlook.com (2603:10b6:a03:29c::12) with
+ by DM6PR02MB6541.namprd02.prod.outlook.com (2603:10b6:5:20b::10) with
  Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.71.15; Wed, 3 Jun 2026
- 15:36:42 +0000
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.92.7; Wed, 3 Jun 2026
+ 15:41:37 +0000
 Received: from PH0PR02MB7159.namprd02.prod.outlook.com
  ([fe80::8e97:bc32:822c:b250]) by PH0PR02MB7159.namprd02.prod.outlook.com
  ([fe80::8e97:bc32:822c:b250%3]) with mapi id 15.21.0092.006; Wed, 3 Jun 2026
- 15:36:42 +0000
-Message-ID: <12cf9760-831a-410c-b8dd-a9bc6befbae3@nutanix.com>
-Date: Wed, 3 Jun 2026 16:36:37 +0100
+ 15:41:36 +0000
+Message-ID: <283f85de-92b0-4c62-94ed-631221b62c07@nutanix.com>
+Date: Wed, 3 Jun 2026 16:41:31 +0100
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH RFC 1/2] migration/vl: Allow set parameters with -incoming
- config:*
-To: Fabiano Rosas <farosas@suse.de>, Peter Xu <peterx@redhat.com>
+Subject: Re: [PATCH RFC 0/2] migration/vl: new -incoming config:* for early
+ migration parameters
+To: Peter Xu <peterx@redhat.com>, Fabiano Rosas <farosas@suse.de>
 Cc: qemu-devel@nongnu.org, Paolo Bonzini <pbonzini@redhat.com>,
  Mark Kanda <mark.kanda@oracle.com>, "Michael S . Tsirkin" <mst@redhat.com>,
  Markus Armbruster <armbru@redhat.com>, Eric Blake <eblake@redhat.com>,
@@ -75,105 +76,104 @@ Cc: qemu-devel@nongnu.org, Paolo Bonzini <pbonzini@redhat.com>,
  Jason Wang <jasowang@redhat.com>, Ben Chaney <bchaney@akamai.com>,
  Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
 References: <20260528212947.368132-1-peterx@redhat.com>
- <20260528212947.368132-2-peterx@redhat.com> <87pl2ftc12.fsf@suse.de>
- <ahmrcVkOWW5iwozk@x1.local> <87cxyetbc4.fsf@suse.de>
- <ah36ZhBP2TweYhg0@x1.local> <87zf1d6p24.fsf@suse.de>
+ <87se7btcq9.fsf@suse.de> <ahmfh2s7CLFLoZKN@x1.local>
 Content-Language: en-US
 From: Mark Cave-Ayland <mark.caveayland@nutanix.com>
-In-Reply-To: <87zf1d6p24.fsf@suse.de>
+In-Reply-To: <ahmfh2s7CLFLoZKN@x1.local>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-X-ClientProxiedBy: CYZPR10CA0009.namprd10.prod.outlook.com
- (2603:10b6:930:8a::13) To PH0PR02MB7159.namprd02.prod.outlook.com
+X-ClientProxiedBy: CY5PR15CA0062.namprd15.prod.outlook.com
+ (2603:10b6:930:18::25) To PH0PR02MB7159.namprd02.prod.outlook.com
  (2603:10b6:510:16::8)
 MIME-Version: 1.0
 X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: PH0PR02MB7159:EE_|SJ0PR02MB7343:EE_
-X-MS-Office365-Filtering-Correlation-Id: 0365a5a6-eba0-4a4b-3764-08dec185e998
+X-MS-TrafficTypeDiagnostic: PH0PR02MB7159:EE_|DM6PR02MB6541:EE_
+X-MS-Office365-Filtering-Correlation-Id: c99fd295-e76d-476a-4848-08dec1869885
 x-proofpoint-crosstenant: true
 X-MS-Exchange-SenderADCheck: 1
 X-MS-Exchange-AntiSpam-Relay: 0
 X-Microsoft-Antispam: BCL:0;
- ARA:13230040|366016|7416014|1800799024|376014|18002099003|22082099003|4143699003|5023799004|6133799003|56012099006|3023799007|4133799003;
-X-Microsoft-Antispam-Message-Info: 7i+thvW0YXh74aHWjfNWXKTwJV5YQtc6ylTEPhC9cbYvz2O7L+DeV94ebf3aB/AaW+0J4/EER+ogQ4b5Vxc+YmhGct2cE1Vr9ym+U8rr/8ZEmtRyYEBSjeRYPtEvHfBA6jmfx2PmEAD3lu/21FRW/AWKseld/aweMFoBUfP7XdAf9C3/BeiQWxxzUwIiZ8TPiVJGJyzbRt+2d9pHTogcRnhDKR7rn+hd3yhhkAdGjlrfbDrkpf+R7mHpDHCFWrzqmL0cHoBw5HNsSW6p1KiUlenyyb/PGoOyYzR5IUXbYvxXuv12gtK+ODSNbhgzy6YlnOSPalXAAd+panFZ/DirN1ajVcEp9YldLgYLORkQagH8MvTkwATBNvyuym5DxiSO6P6TMmQw1k4/skovClOxI7wOLQ4A9KkI9keoEaKEbFHeZ4iQjiumclH+9ZuepnRENEsY45oqXtJS5aMBlELY6eJ3DhUAG0WNGnVzvUffYespHGovW6F/uJQwQrfm7Eq+EfGtlOGAJ2sNmwVVdx7weF8M3+3YrB//NXP7ECn9e4t66LgnvresDkNHMnwnpypjSx7rSZd9mefhyzg6ghzvxTYrFGEKZ2ZEs6Z+tArRskP+5n0vaEmBPD4Q25u8TyVPu+Cx/Oeb1nBlBy0/wL+K5xKA1ij1UVDOS8FVdK7vv9M08DqJSHJMMU+O6LJj+m8gT3bcj3yqWhypyP+8Iscd1g==
+ ARA:13230040|366016|376014|7416014|1800799024|18002099003|22082099003|4143699003|56012099006|3023799007|4133799003|6133799003;
+X-Microsoft-Antispam-Message-Info: +b1ly/M83dtyfDUjljOe6AjEx9aOEugLKrrMuyv6tCu8EScEsQ9eA3drRYWMbhy1kj01+2PFHpbXL49Ts4btik4RPs0B0FNLcr+nKiio0yAT9JzdGS2YfwT0Ep36bgT8CjWRUH4Z6xWE7v44D8WZX+7k/MOW9s8uUNZoMMG4zdecWB4JrBbXVmC0zKj2xzECGIVWglI8PxylDbuyASVSj81MJvQzAjXDo7XNsacMEtIF/Qsu8nhfmPsd5KFKxyJRzGNP0iMfWnMyy40Yql8arjC1i8uU/sZJYh+VJFTgSoJLJ1uZ+FwcVgFny649zAR8fmnPZq6M4x8Pq7FiAtbPKSTr+5mjGyaS6YZauajPLCbHwjc6AS3+9E7rh92bRQh+3uee0whJfbwqB1ANMYOmeCWDWEaYvlvcesbCvvxOZ64DVuCa/F4tHgMCaVyRcF3TKcycBOR4WNibtqNDfmtSaKdd8EWC2tuheDi7EkGxxjDtLWTu2OEgTNUiNxskMkxPJbELaPn1kGRLBpoc+FsPeoYK3+0FZeyd+LhFg2QxSd25pec0hTIH5PHjLqZ0suHSl9c+n8QpUB/QmfyjqxgUlRkaz0mmhFfpAdxGaTbHMIBuHYn2ltP0LowyK8BZLRK65k9pzWwKNKDFedQEvzbQqG/+uPIWw9pLiDJBVwLiikGD9ktbLhUyisG40f3DBukI/lJR4nQuXINHISwj5hiCJQ==
 X-Forefront-Antispam-Report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
  IPV:NLI; SFV:NSPM; H:PH0PR02MB7159.namprd02.prod.outlook.com; PTR:; CAT:NONE;
- SFS:(13230040)(366016)(7416014)(1800799024)(376014)(18002099003)(22082099003)(4143699003)(5023799004)(6133799003)(56012099006)(3023799007)(4133799003);
+ SFS:(13230040)(366016)(376014)(7416014)(1800799024)(18002099003)(22082099003)(4143699003)(56012099006)(3023799007)(4133799003)(6133799003);
  DIR:OUT; SFP:1102; 
 X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0: =?utf-8?B?aTV4TE9HT0VHWWRHRUVjNnB6REJTYVE3R3U0OWNXMzB5bktISDdSM2ltd25C?=
- =?utf-8?B?T1lpYmN0azNXUmp0TlAzYUlEdGVuQk9lWEROUVFmVkgxRGRidHAyS3N0T1cz?=
- =?utf-8?B?OGJIRHdZbXhpZFRYZVJYNHhWMjNFaTNyOWkrTDNFRFFrU01KMHh1RWVKOHVX?=
- =?utf-8?B?aG9UM3puT3BjKzh0KzBYMGRHQ0tGR2swNkZVdTVIaVEyeFM2TmM0UlRDSjdH?=
- =?utf-8?B?SEUzNWIxQnpPdC9McTVKRUNSdlFIQ0tucEpKWDVmbUxzTUliWUlXcEdSdlJ1?=
- =?utf-8?B?b2V0bEVib2FWak1qS2crNHRMZEhsT3l4S3hmWFptR2g2MHNHRVRtTEh2eHR6?=
- =?utf-8?B?MENaUFRKNVRuOUxoSUo2K3pnekJzbTg5ci9KWjVoUFBkc1F4Q2d6WWFlZVAw?=
- =?utf-8?B?WTZSb1p3bFdmNGRveEJlQktHWHpzd1BhYUhhVnVCVFRPVkRxRWhobjZhQWZl?=
- =?utf-8?B?aXkyTXp5QUpFY005ZUpuNWR1eUlmTWxRZ2ErZGhwdEhuMUZKa3FJVzFXZVkx?=
- =?utf-8?B?R1Y1WlhOQ2JYc3p4THllMEhwM0VSRnNWZXNHMDlOSnQ1Rmc5bHJyYUN6K2N6?=
- =?utf-8?B?RytGeUZaNU44dkVFZmRqVm5YaWJ4VWZ3ay85RVBoQUJtQTdOUU5DWU94dGZR?=
- =?utf-8?B?bk5VTVdDajcrSW52V1FVcUZoZlpLYUFCVkovZFhybkZWamZLeHFVS1VQaE1x?=
- =?utf-8?B?RmlFVnM0d1VNSzBTc0Nxd0hXeTBHM2RZZzVkQ1lpTzBmaDJSM2lKT214aE5z?=
- =?utf-8?B?dXExSXcvcEFaZXZ4MWtRY1h2SnB1T3RmV25jbzNmWHJnaHVlNDI2bmxqNHhU?=
- =?utf-8?B?QmpVOUE3SkJiYUVXRWpzVDJLZUVuZC8rdzRYMEVQVU5mU1VKT1c1OEhSUGRi?=
- =?utf-8?B?Q0s2TWZrVWhTUjBicVFTd0IybjZiVGxoREdNSGE2ZmNnT3I4RVpEZ1FzVDBn?=
- =?utf-8?B?KzFsYlR5MGhydGJITm5MTXJaT1ZTbmNJdmtJcmlOdUpQTEg0a0x1SXcwT2xK?=
- =?utf-8?B?OEd3NWU2N3B5cU9hemN6OHFmUm8vY1R4WDlXWnd1OFNVU3Y2bEF5dXNObHRT?=
- =?utf-8?B?bUNHY2RCZnNUakVtYTBXc2xWdFlFdHJaWlBwUUdHTkx5OVlMMlh4aEpVTUly?=
- =?utf-8?B?bUkwaVp6bTV2M2o1SEl0bStPQ1BMQ0FoTXY5dU9qVUd1Zlc5UU1wYURXOWZh?=
- =?utf-8?B?d3Y2d3dvbUtPclNYZFRXSUhFTTUwakNra1JtVjMzSDhUajFucGcwU2cvelMx?=
- =?utf-8?B?b2ZZVjh0UE5nb3dIU0I3VEJhZ3VhQmwrV1VFQmhqc2kxQXFuUUZNQ2pWaWZl?=
- =?utf-8?B?OVh2NUFQTVdxT3B4WHM5TWhLdjJDb0ZJakhUWm5FK1E4RVo4dVMzVTFjUXAx?=
- =?utf-8?B?VXlVRm1ZcUJXbi9mWW90Z2tyRVlLdFJQV1BwYjMwakRTa3VtYW4wSU1mWHJl?=
- =?utf-8?B?RVZsMmdyMjh4TUlDMS9LaGtMUkJmTXYwRXZMazFTZFBYamNyRzFFempIYWIr?=
- =?utf-8?B?K3RCNG15VytabG0xNUp1ajNrdnZ1Vm05MkZvR1oyWVhnNUlUZ3BUT3BqdzM3?=
- =?utf-8?B?L3FxSHVKM0tIcDZ1Qms1QmFKbHJQMW41RzlPQWhaYlpBSUdEWDlnR01kOHVt?=
- =?utf-8?B?Q2JjODJXa1o1aEEwZXFMY3diY2VLYjYycFl0WXFQelh1UlN2R0hSU1p6czVC?=
- =?utf-8?B?Q3Z3d3o0NUJvd3Zzb3pkVWsvNkRHOTVIZ0YyK3dvbDNzTyttcTI1TjY2d29N?=
- =?utf-8?B?Q0lFQkJTY0dmUDdxTDl4clZNUkZOdS9YZmJTNnNSNVc5WjJBdjZXdmNaVjBj?=
- =?utf-8?B?cjkvbGNrYktjMEU0aUlVUHhFbTJGSmlCR2UzTkpGeUdFWXRtYnRqK3hHNlNa?=
- =?utf-8?B?Y3hQZ3ViT0QyaDZHZC9GckZidXhKMEpzeGdaUHllNDlQbEtqTUhuVGhqU1hR?=
- =?utf-8?B?aTRVR2N0UFcwRmtvZFF6eUt4NDExTDhsVVU3VU5kdURYc1R1NUkzUWZ1dmFw?=
- =?utf-8?B?TE5HbUlKMkxRN21SZGZydW94cXA3d1NjTDJ6OFhyL1k5d1M4bmMzQVlLNjd3?=
- =?utf-8?B?cVhoOGg4Q3NLTGp6aFgwdEpNaVZsa0M5NEVESXBzVzgrKzRVdDdCUWovbGlG?=
- =?utf-8?B?Wm5NeDJBdm91WUlzUnNsUW5iUGhpcXFRSTFqemVCMDh1YUVURHZWQkVDRmUy?=
- =?utf-8?B?K3dTMmUzOEtkeGVod0orOWZwVG5Ec3lCZFUzMXlCWHdtTlh0enlZQThZUWdw?=
- =?utf-8?B?RTZmOG1Jbjl2d1lJbmFzV2FBQk5IWEpMQmFPQWxBQXkwY2NIcytIVlA4ajFF?=
- =?utf-8?B?bXB2UXR4M1AyaUJNMFVDeWZsRUxkVzl1UktRY1BnbWd6WWF5Nm5LZVpuZm5K?=
- =?utf-8?Q?4JK29aUKVRUkvb1o=3D?=
-X-Exchange-RoutingPolicyChecked: cMZ15H0FjF/GZkwLdgQIZ3cOjSbu82+BMe8kSyHBUUwYIOD6SXZS0Wf53IXUkBajZEV2fIhuWYI4R12R2EC0TOdz8vWDTjUgxi4ioevwToXMqCP+A0woxYtJw5Cpvz72cGWEdxFDI5IXRF5Yau/z/M/YiHuoWrzBqudpOWYkIjt8yGyBw+nw5ak3pVH2tV5hi6dAPuFz2ozAWb1s5BQBNtkR1xhmod916SEO04QOgHP/RCi+3aKfeCj/0Ljf07EMka7xTcwQ4uNkPErmEi69g+A9TNh3jtyeuxk4aV27n3RbMwJxDJSieySD/sfyFYg+C1WgzCk95s/0kTYWlKmF3A==
+X-MS-Exchange-AntiSpam-MessageData-0: =?utf-8?B?a0ZHMVFzbG4zOWR2TDIrR044K2pRUDBYa1ZrUmNrb3lCSnpKbFV5K3M1WlN4?=
+ =?utf-8?B?c0FyVDBKUjYxaXVRVG1uVXNjT3FoYWhKZU9tcTRZQ0UyTjl3RmVnbjNhUGdQ?=
+ =?utf-8?B?NUhsYmNmVjgyUEtiKzExazE1VkNPZWJDYXBZeU1scDY2U21XTWN4QUhLZ1I4?=
+ =?utf-8?B?c1NsSy91aEZzRWNCT2IvYnZ5K0FmaEl3NW9WSW5tYlB2cHc1Zk5YQkVGdzM1?=
+ =?utf-8?B?dVVJOFpLU2VBRkZwSFRGMWFKcDhkeGpLL0xDVFBXOHF0Nkljd2R0UjZ2Njdv?=
+ =?utf-8?B?TzNCWTFMRUdrYVFNclc3UmtEQnZRS3FSWlpnQ1NGWFVaRFp2MHVEcFA4K2JF?=
+ =?utf-8?B?UFY0TWtnSFBxOGFDa3JFbDJHMVdZQU0rdnNVQjhWRCtIVy9iVG1VYnQzZTFh?=
+ =?utf-8?B?bXJYSXM1L1Z6VUVTWGdQNzlDVHI5Q3V1aWR4MFZWUXZiMUFpckNYeGhMay9h?=
+ =?utf-8?B?Y1lGZy8xRkFuUnNiYWNqeE1ZVE55M3M5WjdqbzYwc0g1MUhIY0ZRc21abFQ0?=
+ =?utf-8?B?Y1NYM3h1Nzl5dVk3M3ZMRDZKa1RzZW1CbUpNMG0rZkxnVURNeTFSLzZUTXZQ?=
+ =?utf-8?B?Wk9rVER2cWVseWVJRHRNSU42U0NXT3hpWXEyY1gwNzJIVDcvdk5rTVZ1blJR?=
+ =?utf-8?B?eXhMdVB0RmZySk5oVzdjYkJYM2NWcXZUTE43WXBvS0hhMDVxUE1IdHlkNmR5?=
+ =?utf-8?B?dXNXRldsdGV4TzJGV1hscE1XajhsZ2taYUx1bjF2ZHo0T3FRaXBvcEFmWkEy?=
+ =?utf-8?B?bGJDcGQrZDhzQ3p6dzBnTzFtWUkwRlBNL3cxc3g5aFhYcDFBeDdOY25SN1Rl?=
+ =?utf-8?B?aWVWalJhRjFIb3RxZ2JhVU9iSEMzQjR1dzlnalJETDJpd1JWVEEycXh0NnFT?=
+ =?utf-8?B?bitlV1dtTmlobG9zTWFSQURnU1JNYTViUkpXdkkwSk9TQTVlYldURGZmQVE2?=
+ =?utf-8?B?SHhnODBpQkdjZlRQNTUwVFRpK1dCSVhoR09aMFZjaVBsVDNlQUp0RWx6NVB3?=
+ =?utf-8?B?bnZlVENyWDdMK3RFTlNWRFh5a2hFZC9xajJLWXVGZGkzTmJZcHJhaVA4VnBu?=
+ =?utf-8?B?aFpYUkRtTG9qazZTdE8yczRQR08rNEhuaWNzN1BkYmdrUmpJWWE5UXVjVDll?=
+ =?utf-8?B?czZPbFAzZzMyazR5MkFIRyt6eUU3cy8yVmhVcjkxVlZ3N1MzSWRSTVp0N0dn?=
+ =?utf-8?B?M2YzdFRzMWY3YnduZytzYXZjS1ZCQVNTVEl5Z1l4OER0MnFIL01OYmlHbXc2?=
+ =?utf-8?B?TlYyZlhldHNEdTB6NzJ5eVJCVm51RVFFZlllUkxDMlV6eHE0bDNTa3JycUJW?=
+ =?utf-8?B?cXVYV3N6ZWdoZU4xcFpiY05HTVh4eUJLVUx3WEwvK1IyeGVpcURzaU9YajZN?=
+ =?utf-8?B?V0dUaWkyUzJzaUN4RjBnWDRobnloZ05TYXo2bnFtOEJhVnZRQUNXK1NObDF1?=
+ =?utf-8?B?SjJvTktuYWRnNzhtV1dwdG96YUpDUkdZdTM5TUNUb3l1cXBHZ3hjMTArOUx0?=
+ =?utf-8?B?ZzY3YVJUYnJMOHlHUEV3dnJwSGs5TSsrSzR1YnBFNmxoYjFVTTRNK0hhWE15?=
+ =?utf-8?B?Zm9JaFF6WWdXQXk4UWxHcGNuRXlMK3JPSWdxWGFYYzB3bnZJcmYva3NqS1dZ?=
+ =?utf-8?B?cktpTGxBMEs5NkVXcDNZR1hEY3Y5bnFCQlBiWHNjL3NMVHlldUZwYU1raTNh?=
+ =?utf-8?B?aWtZVDYrd04zRUNZNXJ1K0FqSXlncCtHVmpiQnhsMjJOZ2JoWUZUU0sxc1I0?=
+ =?utf-8?B?UG9RZVlVazBVZkJqbzFVZlhFRXJXSzNnYUxOL0dZaEFLazZJZmRUenNGakZK?=
+ =?utf-8?B?NWd1bW9KMHpnQ2g0bGJJQkt1Z2hEL2VxV243MDRRbFVCSnNlS1oxbWtFNUtm?=
+ =?utf-8?B?MnJTdGJSMWo1K1BSYzhRakxOTThiK1NiOUZJZmpKdHJVZEk3U3ovUmEvQWVv?=
+ =?utf-8?B?Y2I4YSt2dGtsMUVaaE5RQzZDNnlXc3F2MEVmV3BneVZQcUlRbUN2bDQyY1Bx?=
+ =?utf-8?B?NHRMdjExVXZiTEUwdUoxeW04U3BJRzJMak04RlVtS1ZoR1RWN05rMmtSM20r?=
+ =?utf-8?B?TWo1TmxjdW1JTlJEVHZFNENPMnZNK2RGclJDUXBuL3FFWWJzeVRQTmc5ZmYv?=
+ =?utf-8?B?ZFM0ajlWSXhzaFFSa3JhSnhxdUo4Wm9Bc29XblpxUzVWUjY2TTFnU0x6VWN1?=
+ =?utf-8?B?RUl0QzJWdVBMN2UxZFd2Q296NjJwN0w0cDdRb1F1LzVsbDBnemhiMGJXeW9t?=
+ =?utf-8?B?aittQjUrdVlyWXNOckZ3c3h1OUJqSGFHTWVNWjRONC9NRCtjcVF3QUJlWVRt?=
+ =?utf-8?B?bHlVOGdvdFIxdTY1c3pGeStxcEczbG5EYWpNdlJHQ1hCbXhiaEVxWGJqY1g2?=
+ =?utf-8?Q?fZM+xrZL5XqQLnaQ=3D?=
+X-Exchange-RoutingPolicyChecked: NvsUFj9/39Yuqhma68x6KlOyqn4oxrcluntq1EPdxpltvTgRqjWCUHNbl+qpG5INLj/9H54sXMpFyv1NHrlh+H1KJC0qzh62fUrO0mb5b8BxIFEptQQvMzSzrZ3/VWTI41MvILSQQZXuTOcxgIRbavOIue1fai6Tz3bBLpvIZRgMfRqvTpufSdryvl1Cwf5n4d8a/oIf90rJGwBxDHivPrKCyG8sRKmjiQ7BKHleNbk3cIXnChbAg3qMBi8d2VJI+wyY57b1N5coMM69OMfYqz0FWZpTfhATo7u+PpG9sJgTHRolvAyWZ5G6d7pDqwht2v7oO0lYsMk3ZtV2sfDxOQ==
 X-OriginatorOrg: nutanix.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 0365a5a6-eba0-4a4b-3764-08dec185e998
+X-MS-Exchange-CrossTenant-Network-Message-Id: c99fd295-e76d-476a-4848-08dec1869885
 X-MS-Exchange-CrossTenant-AuthSource: PH0PR02MB7159.namprd02.prod.outlook.com
 X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 03 Jun 2026 15:36:42.8153 (UTC)
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 03 Jun 2026 15:41:36.2585 (UTC)
 X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
 X-MS-Exchange-CrossTenant-Id: bb047546-786f-4de1-bd75-24e5b6f79043
 X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: S5HfFxUIlRH5eS/1dCvWj0YyE3mICik394LUDSMvz73mozjPpavmxrBkbc6h4j9TD02T/pitGYflkTtppH/RbIHWTDrZqmqgwxmSmpeIkxo=
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: SJ0PR02MB7343
-X-Authority-Analysis: v=2.4 cv=T968ifKQ c=1 sm=1 tr=0 ts=6a204a0c cx=c_pps
- a=Ta6zJQCUzi71fP58ADEmYA==:117 a=6eWqkTHjU83fiwn7nKZWdM+Sl24=:19
+X-MS-Exchange-CrossTenant-UserPrincipalName: TrQnFs927XJj3/uCZ9ozgzDbqvaOob4P+bvqmlCpwz+fhR4EO+0FXgfNx0b8VevQRSAAbRd+5pvMQKMdWnrb0hwVxFxJvSoJCFr6WfE/Ut8=
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: DM6PR02MB6541
+X-Authority-Analysis: v=2.4 cv=Mq5iLWae c=1 sm=1 tr=0 ts=6a204b34 cx=c_pps
+ a=yafsvPyTBqI1YZ6v0bsx/A==:117 a=6eWqkTHjU83fiwn7nKZWdM+Sl24=:19
  a=z/mQ4Ysz8XfWz/Q5cLBRGdckG28=:19 a=lCpzRmAYbLLaTzLvsPZ7Mbvzbb8=:19
  a=xqWC_Br6kY4A:10 a=IkcTkHD0fZMA:10 a=FelO9ux0wxsA:10 a=0kUYKlekyDsA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=VofLwUrZ8Iiv6rRUPXIb:22 a=dEe9Ve2bX-KnNSUMM2s9:22
- a=VwQbUJbxAAAA:8 a=20KFwNOVAAAA:8 a=EBArqqBVCR-gLu5wRrEA:9 a=QEXdDO2ut3YA:10
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNjAzMDE1MSBTYWx0ZWRfXzhz3nBN/WDPr
- 81HCT3oIiaMGd1agrYCBhiZcthZjP77AURscEXgLt+8eYpxdMnv8bfFSkOdhalES/7kLKOWHO99
- 7Ucdr7270Ol39Ysc9NbMbim52uPk72EALDKpGRQlf9EHJIDipKrZFMZ3tCMGIWNwxlOjaZ3bteg
- cXJ2OfSd9sCdAow0PXeyTOc+qqo2H8T1jqhIc28m1jYMmREzPQFC02peXFP0MW4Sw6M5QC4Oz7R
- 9YtCGMvtl/slgGk6a2OQGPKu5c4Shb7BcJrkYf32qLQPFuGPJQf1ODmZZmbhSY8aBUEg3T7ADmF
- fdFaOHD3y02fxkXKeBYICpgXMVEs/iFD2vCETAwYCG2bfoK48kU0pJBBjpQoIy+F2p3BrSgA+OB
- DrbWXlp54VB7d8/PO2F61Uvxd2iY3hVJFreQPmCL3mF6KWI+5rL8YUrXNfSaZkqHNJCiK/9msU/
- 9iYuYVH49aW0HEmuMKA==
-X-Proofpoint-GUID: OBxZ8Y4GfhXUuTpAKDtXdEP3Dm7PAeST
-X-Proofpoint-ORIG-GUID: OBxZ8Y4GfhXUuTpAKDtXdEP3Dm7PAeST
+ a=VkNPw1HP01LnGYTKEx00:22 a=VofLwUrZ8Iiv6rRUPXIb:22 a=1L6crL_YRTbalZ11mEUO:22
+ a=p0WdMEafAAAA:8 a=VwQbUJbxAAAA:8 a=6R7veym_AAAA:8 a=20KFwNOVAAAA:8
+ a=j6gpQQwHwN5ZeBaIkFAA:9 a=QEXdDO2ut3YA:10 a=ILCOIF4F_8SzUMnO7jNM:22
+X-Proofpoint-ORIG-GUID: JdftxWEW66-pzGB8fe3gEN3vDH3JJTYz
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNjAzMDE1MSBTYWx0ZWRfX41ebKHxHLsLt
+ 2B9buFeRkApYDGv+217R2o7VALbJXOOSL0Yz4zOhJD/Am7Ln6u2O3XwN9TwUjNNhYrQRcLMjAZp
+ V5bcM8L1cnLpzvh9ite6aKi09l5i7lu202kvKGdqmJNpIKXcNMyLA/HPZJcs4gZTV5cLSZLOpYE
+ rYGXV+AwED7KWKJFFt3bA4rE+nVULFZX3kxG+jMkvLtBeOKy1Nx5Z8szN8kNT63zUbsKQnFhl99
+ 9hwLNu4YAyhbMlk9Mww+HtkMT1T+acWgGl1fF0Kl1GrlRRP2dKSow17SCraJLiYzgc/wG1KGYeV
+ tlBd4v6/YXDMGqcqysL1gUpAck5iNZgjSCfydhGV0QMDMJ9MfXXsPJ8B/yiN0pnn/NdgsPmVSy0
+ Y9kRabgm1XU/lPji6EebJ2xkri+W7X9OwrXy8J1ZdBfrt5osAQWbtK90CfFBK8WrpCNz8D/W7Bm
+ 7ho8R5K02fgc6yhLhag==
+X-Proofpoint-GUID: JdftxWEW66-pzGB8fe3gEN3vDH3JJTYz
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.125,FMLib:17.12.100.49
  definitions=2026-06-03_05,2026-05-28_03,2025-10-01_01
 X-Proofpoint-Spam-Reason: safe
-Received-SPF: pass client-ip=148.163.155.12;
- envelope-from=mark.caveayland@nutanix.com; helo=mx0b-002c1b01.pphosted.com
+Received-SPF: pass client-ip=148.163.151.68;
+ envelope-from=mark.caveayland@nutanix.com; helo=mx0a-002c1b01.pphosted.com
 X-Spam_score_int: -31
 X-Spam_score: -3.2
 X-Spam_bar: ---
@@ -196,360 +196,115 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 02/06/2026 14:37, Fabiano Rosas wrote:
+On 29/05/2026 15:15, Peter Xu wrote:
 
-> Peter Xu <peterx@redhat.com> writes:
-> 
->> On Fri, May 29, 2026 at 01:44:11PM -0300, Fabiano Rosas wrote:
->>> Peter Xu <peterx@redhat.com> writes:
->>>
->>>> On Thu, May 28, 2026 at 07:16:57PM -0300, Fabiano Rosas wrote:
->>>>> Peter Xu <peterx@redhat.com> writes:
->>>>>
->>>>>> QEMU doesn't yet have a good way to specify migration parameters so that
->>>>>> they can be available even during early stage of QEMU boots.  It is because
->>>>>> the migration object (who owns the migration parameters) will only be
->>>>>> created after PHASE_LATE_BACKENDS_CREATED.  It means anything before it
->>>>>> reading migration parameters is illegal.
->>>>>>
->>>>>> However, QEMU does have special use cases for such, namely only-migratable
->>>>>> flag, and cpr-transfer. Recently, we have one more possible user to read a
->>>>>> to-be-introduced new migration parameters during backend initialization
->>>>>> phase.  We can introduce yet another global variable (or per-device
->>>>>> parameter) to bypass this limitation, but we can also seek for a generic
->>>>>> solution that we can setup migration parameters very early, even during
->>>>>> backend initializations.
->>>>>>
->>>>>> See this discussion for more details on the context of the problem:
->>>>>>
->>>>>>    https://urldefense.proofpoint.com/v2/url?u=https-3A__lore.kernel.org_r_ahdI7Vl5KraK566D-40x1.local&d=DwIBAg&c=s883GpUCOChKOHiocYtGcg&r=c23RpsaH4D2MKyD3EPJTDa0BAxz6tV8aUJqVSoytEiY&m=RMJscC71rPIaZcWE2xNWeuHeK0qmTkT4jnKXp0AVp4SEa7jlKxLNal50vCx6VIAo&s=MNLWQVZxg7cOInvRx6FinI_ACIiZdt8KJfho82JzKEg&e=
->>>>>>
->>>>>> This patch wants to take the latter approach.
->>>>>>
->>>>>> As a start, introduce a new way to specify migration parameters in QEMU
->>>>>> boot commandline, as proposed in the above discussion:
->>>>>>
->>>>>>    -incoming config:key1=value1,key2=value2,...
->>>>>>
->>>>>> When specified, QEMU will parse a string formatted MigrationParameters and
->>>>>> keep it.  When migration object is created, it will apply all the settings
->>>>>> as initial value.
->>>>>>
->>>>>> Since the application of boot parameters will be after object_new()
->>>>>> completes, it means it happens after all machine compat properties or
->>>>>> -global settings (which should be done during instance_post_init()).
->>>>>>
->>>>>> So far, it's still only a way to specify parameters.  All parameters are
->>>>>> not visible before migration object created, like before.  Any parameter
->>>>>> that needs to be visible during boot will need to opt-in this feature.
->>>>>> Follow up patches will switch the current users to use this model.
->>>>>>
->>>>>> Signed-off-by: Peter Xu <peterx@redhat.com>
->>>>>> ---
->>>>>>   include/migration/misc.h |  5 ++++
->>>>>>   migration/migration.c    | 54 ++++++++++++++++++++++++++++++++++++++++
->>>>>>   system/vl.c              |  7 ++++++
->>>>>>   qemu-options.hx          | 18 ++++++++++++--
->>>>>>   4 files changed, 82 insertions(+), 2 deletions(-)
->>>>>>
->>>>>> diff --git a/include/migration/misc.h b/include/migration/misc.h
->>>>>> index 3159a5e53c..aff79b1380 100644
->>>>>> --- a/include/migration/misc.h
->>>>>> +++ b/include/migration/misc.h
->>>>>> @@ -133,6 +133,11 @@ bool migrate_is_uri(const char *uri);
->>>>>>   /* Parse @uri and return @channel, returning true on success */
->>>>>>   bool migrate_uri_parse(const char *uri, MigrationChannel **channel,
->>>>>>                          Error **errp);
->>>>>> +/*
->>>>>> + * Parse @config_str in form of "config:key1=value1,..." to initialize
->>>>>> + * migration parameters.
->>>>>> + */
->>>>>> +bool migration_parameters_boot_parse(const char *config_str, Error **errp);
->>>>>>   
->>>>>
->>>>> 'boot' is not the right word. Maybe 'early'?
->>>>
->>>> I am ok to switch to "early".  Another option is.. "cmdline"?
->>>>
->>>
->>> Either is fine.
->>>
->>>>>
->>>>>>   /* migration/multifd-device-state.c */
->>>>>>   typedef struct SaveCompletePrecopyThreadData {
->>>>>> diff --git a/migration/migration.c b/migration/migration.c
->>>>>> index 074d3f2c69..d918be7a44 100644
->>>>>> --- a/migration/migration.c
->>>>>> +++ b/migration/migration.c
->>>>>> @@ -41,6 +41,7 @@
->>>>>>   #include "qapi/qapi-commands-migration.h"
->>>>>>   #include "qapi/qapi-events-migration.h"
->>>>>>   #include "qapi/qmp/qerror.h"
->>>>>> +#include "qapi/qobject-input-visitor.h"
->>>>>>   #include "qobject/qnull.h"
->>>>>>   #include "qemu/rcu.h"
->>>>>>   #include "postcopy-ram.h"
->>>>>> @@ -94,6 +95,9 @@ enum mig_rp_message_type {
->>>>>>   static MigrationState *current_migration;
->>>>>>   static MigrationIncomingState *current_incoming;
->>>>>>   
->>>>>> +/* Only used during boot, destroyed after migration object initialized */
->>>>>> +static MigrationParameters *mig_boot_params;
->>>>>> +
->>>>>>   static GSList *migration_blockers[MIG_MODE__MAX];
->>>>>>   
->>>>>>   static bool migration_object_check(MigrationState *ms, Error **errp);
->>>>>> @@ -102,6 +106,45 @@ static bool stop_return_path_thread_on_source(MigrationState *s);
->>>>>>   static void migration_release_dst_files(MigrationState *ms);
->>>>>>   static void migration_completion_end(MigrationState *s);
->>>>>>   
->>>>>> +bool migration_parameters_boot_parse(const char *config_str, Error **errp)
->>>>>> +{
->>>>>> +    Visitor *v;
->>>>>> +
->>>>>> +    if (mig_boot_params) {
->>>>>> +        error_setg(errp, "Only one -incoming config:* is allowed.");
->>>>>> +        return false;
->>>>>> +    }
->>>>>> +
->>>>>> +    v = qobject_input_visitor_new_str(config_str, NULL, errp);
->>>>>> +    if (!v) {
->>>>>> +        goto fail;
->>>>>> +    }
->>>>>> +
->>>>>> +    if (!visit_type_MigrationParameters(v, NULL, &mig_boot_params, errp)) {
->>>>>> +        goto fail;
->>>>>> +    }
->>>>>> +
->>>>>> +    visit_free(v);
->>>>>> +    return true;
->>>>>> +
->>>>>> +fail:
->>>>>> +    visit_free(v);
->>>>>> +    return false;
->>>>>> +}
->>>>>> +
->>>>>> +static void migration_parameters_boot_apply(void)
->>>>>> +{
->>>>>> +    if (mig_boot_params) {
->>>>>> +        /*
->>>>>> +         * This can fail, because qobject visitor doesn't do sanity check
->>>>>> +         * on values while parsing.  It's not too late; we're still in boot
->>>>>> +         * phase.
->>>>>> +         */
->>>>>> +        qmp_migrate_set_parameters(mig_boot_params, &error_abort);
->>>>>> +        g_clear_pointer(&mig_boot_params, qapi_free_MigrationParameters);
->>>>>> +    }
->>>>>> +}
->>>>>> +
->>>>>>   static void migration_downtime_start(MigrationState *s)
->>>>>>   {
->>>>>>       trace_vmstate_downtime_checkpoint("src-downtime-start");
->>>>>> @@ -322,6 +365,17 @@ void migration_object_init(void)
->>>>>>   
->>>>>>       current_incoming->exit_on_error = INMIGRATE_DEFAULT_EXIT_ON_ERROR;
->>>>>>   
->>>>>> +    /*
->>>>>> +     * Apply boot migration parameters in case the user specified some via
->>>>>> +     * command line "-incoming config:*". NOTE: this will overwrite machine
->>>>>> +     * type compat properties and -global settings!
->>>>>> +     */
->>>>>
->>>>> Hmm, but then it's exactly the same as -global migration.* ? Why do we
->>>>> need to extend -incoming?
->>>>>
->>>>> Also, I don't see how qmp_migrate_set_parameters can overwrite compat
->>>>> properties. They're not part of MigrationParameters.
->>>>
->>>> Some of this should have been mentioned in my other replies, let me know if
->>>> there's still concern over there after reading those.
->>>>
->>>
->>> The question about -global is non-sensical, forget about it.
->>>
->>>> In this case, after we set current_migration pointer compat properties are
->>>> applied, due to instance_post_init() happening within object_new().
->>>>
->>>
->>> Yes, but migration_properties has two distinct sets of Properties, one
->>> contains only compat properties that match machine.c properties and the
->>> other has properties that go into MigrationParameters. I was under the
->>> impression that we never tied compat to parameters.
->>>
->>> The only machine compat property that is also a migration parameter I
->>> see is zero-page-detection. Maybe we shouldn't have done that. Now we
->>> can't decouple MigrationParameters from -global. Unless, of course we
->>> declare that from now on compat needs to be done with a new property
->>> that's not part of MigrationParameters; and duplicate
->>> zero-page-detection.
+> On Thu, May 28, 2026 at 07:01:50PM -0300, Fabiano Rosas wrote:
+>> Peter Xu <peterx@redhat.com> writes:
 >>
->> I always treated migration parameters to be a subset of what we can apply
->> to compat properties in the past.
+>>> CI: https://urldefense.proofpoint.com/v2/url?u=https-3A__gitlab.com_peterx_qemu_-2D_pipelines_2560168907&d=DwIBaQ&c=s883GpUCOChKOHiocYtGcg&r=c23RpsaH4D2MKyD3EPJTDa0BAxz6tV8aUJqVSoytEiY&m=UheDdoNwrmPPc3shvbHQ-dAHk7N6GGtWRAbXjZasaJCgV123Fp6foXXlMUC1mXjb&s=KXo-AcgkWswgIUOgetjfuqaSAGVBUC-c78vno6rnNV0&e=
+>>>
+>>> This series introduces a generic way to specify migration parameters that
+>>> can be used even during the early boot phase of QEMU.
+>>>
+>>> One example use case that already existed is CPR-transfer / CPR-exec.
+>>> currently QEMU has a temporary global variable (incoming_mode) to achieve
+>>> this, but it's hard to understand and this hack bleeded into quite a few
+>>> places that we could have avoided.  The lines in patch 2 touched may
+>>> provide some idea.
+>>>
+>>> With a generic approach of setting migration parameters with cmdlines, we
+>>> can remove this hack meanwhile QEMU should be able to keep the CPR behavior
+>>> as before.  To CPR maintainers and reviewers: please have a closer look,
+>>> even better if it can be smoke tested, to see if this works for Oracle's
+>>> environment, TIA.
+>>>
+>>> The 1st patch implemented that new semantics.  It is straightforward: now
+>>> we can setup any migration parameter using an extra line of:
+>>>
+>>>    -incoming config:key1=value1,key2=value2,...
 >>
+>> Just merge my code mate.
+>> https://urldefense.proofpoint.com/v2/url?u=https-3A__lore.kernel.org_r_20251215220041.12657-2D25-2Dfarosas-40suse.de&d=DwIBaQ&c=s883GpUCOChKOHiocYtGcg&r=c23RpsaH4D2MKyD3EPJTDa0BAxz6tV8aUJqVSoytEiY&m=UheDdoNwrmPPc3shvbHQ-dAHk7N6GGtWRAbXjZasaJCgV123Fp6foXXlMUC1mXjb&s=jaAeqTGqX39wQ3zMnICUZhIcIJl6a0lCALABkjC-HxI&e=
 > 
-> Good to know.
+> Heh, I apologize. I totally forgot it even if I seem to have read it..
 > 
->> For example, -global almost works the same as compat properties and also at
->> the same time, currently both done in device_post_init().
->>
->> In the future, if your series to convert caps to parameters work, then I
->> also want to add even more "parameters" (which used to be caps, like
->> postcopy preempt mode) into lists of machine compat properties, so e.g. we
->> can enable preempt mode by default.
->>
->> I hope that makes it useful, but if you still see some benefits of
->> splitting the two things (compat properties / parameters), let me know.  I
->> may not have fully caught what you're visioning.
->>
-> 
-> The problem I see is a long-standing one: MigrationParameters needs to
-> be embedded into MigrationState because of -global (as both compat and
-> debug feature). As long as that holds, we'll need workarounds such as
-> having this extra early state.
-> 
-> But let's not make this a problem to be solved in this series, please
-> disconsider this discussion.
-> 
-> Just to wrap my thoughts, for reference:
-> 
-> What I want is a migration-owned MigrationParameters that we can do
-> anything with, decoupled from whatever is needed to expose compat
-> properties. There's two ways to achieve this: One is to declare
-> parameters are separate from compat and drop the debug usage (what I
-> suggested in my previous email). The other is to make MigrationState
-> stop being a QOM object and instead make MigrationParameters itself be a
-> QOM object. Then we could reference its members directly from qdev.
+> The goal is differnent, though, which is to make it available before
+> migration object initialization.  Say, I wished -global would work too but
+> it doesn't, and it just can't.  So it's not "something good to have"
+> anymore, but functionally required for either CPR and TAP in the future if
+> we adopt this, they'll all read them early.
 
-Is the longer-term goal here to allow machine-versioned usage of all 
-migration parameters supplied via -incoming via -global?
+One of the reasons CPR requires a separate channel is because it needs 
+to access the stream before the devices are created. Is this part of the 
+same problem in that the migration object needs to be created much 
+earlier than it is currently? And could doing this potentially remove 
+the need for a separate CPR channel?
 
-> 
->>>
->>>>>
->>>>>> +    migration_parameters_boot_apply();
->>>>>> +
->>>>>> +    /*
->>>>>> +     * The boot parameters should have been verified already, but leave it
->>>>>> +     * after applying boot parameters to do one check for everything.
->>>>>> +     */
->>>>>
->>>>> Will it get expensive? We do that for every QEMU start.
->>>>
->>>> Checking caps and parameters?  Why expensive?
->>>>
->>>
->>> Just because we're putting more migration code in QEMU's startup
->>> path. Most QEMU invocations don't care about migration. Eventually,
->>> checking every parameter twice might have an impact.
+>> A couple of differences from my patch:
 >>
->> I would expect most QEMU invocations should care about migration, but
->> irrelevant of that.. I never expected these checks to be expensive.
+>> - old-style keyval vs. json;
 >>
+>> Isn't json preferred nowadays?
 > 
-> Well, only a small subset of invocations will actually result in a
-> migration. There's many uses of QEMU that don't require, or even cannot
-> migrate.
+> I didn't mention it in doc, but yeah this series also supports JSON due to
+> the same qapi helper used.  I don't suggest json though for this entry (and
+> that's also why I didn't mention it..) because 99% of migration parameters
+> are scalars and I don't see why we should use JSON here.. the only one not
+> scalar is block-bitmap-mapping but it's not intended to be used in
+> -incoming at all (even if it'll work..).
 > 
->> postcopy_ram_supported_by_host() might be the heaviest, but it's
->> conditional and I still don't see it an issue. We also don't run any loop.
 >>
->> What made you worry on this?
+>> - using "config:"
 >>
+>> This makes it non-uniform with uri and channels which don't have a
+>> keyword in front of them. I guess I could live with it, but it seems
+>> odd. I see that it makes parsing way easier.
 > 
-> I don't know. The voices in my head.
+> Yeah, having some identifier would be nice.  I wished channels also have
+> identifiers if we don't need to keep compatibility.
 > 
+>>
 >>>
->>>> Here I should have mentioned we must do one shot check here, because
->>>> sometimes there're illegal mixtures of "-incoming config*" and default
->>>> values only after they merged together.  I'll update the comment for it,
->>>> IOW we must check here anyway.
->>>>
+>>> So far only one such instance is allowed for simplicity, but it should be
+>>> enough.  We still allow multiple -incoming for specifying channels, used
+>>> together with one "-incoming config:*".
 >>>
->>> Right.
+>>> Then parameters set this way will be visible almost anytime for QEMU, for
+>>> example, during initialization of device backends (which is before
+>>> migration object created).
 >>>
->>>>>
->>>>>>       migration_object_check(current_migration, &error_fatal);
->>>>>>   
->>>>>>       ram_mig_init();
->>>>>> diff --git a/system/vl.c b/system/vl.c
->>>>>> index da36b2c6e1..49f5fa0c7b 100644
->>>>>> --- a/system/vl.c
->>>>>> +++ b/system/vl.c
->>>>>> @@ -1838,6 +1838,13 @@ static void incoming_option_parse(const char *str)
->>>>>>   
->>>>>>       if (!strcmp(str, "defer")) {
->>>>>>           channel = NULL;
->>>>>> +    } else if (!strncmp(str, "config:", 7)) {
->>>>>> +        /*
->>>>>> +         * This is not a channel setup, but configuration to incoming
->>>>>> +         * migration parameters to make them available during early boot.
->>>>>> +         */
->>>>>> +        migration_parameters_boot_parse(str + 7, &error_fatal);
->>>>>> +        return;
->>>>>>       } else if (migrate_is_uri(str)) {
->>>>>>           migrate_uri_parse(str, &channel, &error_fatal);
->>>>>>       } else {
->>>>>> diff --git a/qemu-options.hx b/qemu-options.hx
->>>>>> index 96ae41f787..1fc92a409a 100644
->>>>>> --- a/qemu-options.hx
->>>>>> +++ b/qemu-options.hx
->>>>>> @@ -5366,11 +5366,15 @@ DEF("incoming", HAS_ARG, QEMU_OPTION_incoming, \
->>>>>>       "-incoming <channel>\n" \
->>>>>>       "                accept incoming migration on the migration channel\n" \
->>>>>>       "-incoming defer\n" \
->>>>>> -    "                wait for the URI to be specified via migrate_incoming\n",
->>>>>> +    "                wait for the URI to be specified via migrate_incoming\n"
->>>>>> +    "-incoming config:key1=value1,key2=value2,...\n" \
->>>>>> +    "                specify migration parameters valid even during boot\n",
->>>>>>       QEMU_ARCH_ALL)
->>>>>>   SRST
->>>>>> +
->>>>>>   The -incoming option specifies the migration channel for an incoming
->>>>>> -migration.  It may be used multiple times to specify multiple
->>>>>> +migration, or can also be used to setup migration parameters for the
->>>>>> +incoming migration.  It may be used multiple times to specify multiple
->>>>>>   migration channel types.  The channel type is specified in <channel>,
->>>>>>   or is 'main' for all other forms of -incoming.  If multiple -incoming
->>>>>>   options are specified for a channel type, the last one takes precedence.
->>>>>> @@ -5411,6 +5415,16 @@ options are specified for a channel type, the last one takes precedence.
->>>>>>       Wait for the URI to be specified via migrate\_incoming. The monitor
->>>>>>       can be used to change settings (such as migration parameters) prior
->>>>>>       to issuing the migrate\_incoming to allow the migration to begin.
->>>>>> +
->>>>>> +``-incoming config:key1=value1[,key2=value2,...]``
->>>>>> +
->>>>>> +    Specify migration parameters in QEMU commandlines, so that these
->>>>>
->>>>> command line
->>>>
->>>> Fixed.
->>>>
->>>>>
->>>>>> +    parameters will be available even during very early boot of QEMU.
->>>>>> +    They will be applied properly after QEMU boots and when the migration
->>>>>
->>>>> The "applied properly" part is implementation detail.
->>>>
->>>> True, I simplified it:
->>>>
->>>> ``-incoming config:key1=value1[,key2=value2,...]``
->>>>
->>>>      Specify migration parameters in QEMU command line, so that these
->>>>      parameters will be available even during very early boot of QEMU.  It
->>>>      has similar effect as setting these parameters using QMP command
->>>>      ``migrate-set-parameters`` or HMP command ``migrate_set_parameter``.
->>>>
+>>> I posted this series majorly because I want to see if this will make a
+>>> possible new user for the new "local" migration parameter proposed in
+>>> Vladimir's series:
 >>>
->>> ack.
+>>>    https://urldefense.proofpoint.com/v2/url?u=https-3A__lore.kernel.org_r_20260522120534.77653-2D1-2Dvsementsov-40yandex-2Dteam.ru&d=DwIBaQ&c=s883GpUCOChKOHiocYtGcg&r=c23RpsaH4D2MKyD3EPJTDa0BAxz6tV8aUJqVSoytEiY&m=UheDdoNwrmPPc3shvbHQ-dAHk7N6GGtWRAbXjZasaJCgV123Fp6foXXlMUC1mXjb&s=T6LBhQkrn3e5gBGAQuTCshuzq04UbUaFAO1OaFnRAhY&e=
 >>>
->>>>>
->>>>>> +    core is initialized.  From that POV, it has similar effect as setting
->>>>>> +    these parameters using QMP command ``migrate-set-parameters`` or HMP
->>>>>> +    command ``migrate_set_parameter``.
->>>>>> +
->>>>>>   ERST
->>>>>>   
->>>>>>   DEF("only-migratable", 0, QEMU_OPTION_only_migratable, \
+>>> Especially, there're some context on this idea too in this email:
+>>>
+>>>    https://urldefense.proofpoint.com/v2/url?u=https-3A__lore.kernel.org_all_ahdI7Vl5KraK566D-40x1.local_&d=DwIBaQ&c=s883GpUCOChKOHiocYtGcg&r=c23RpsaH4D2MKyD3EPJTDa0BAxz6tV8aUJqVSoytEiY&m=UheDdoNwrmPPc3shvbHQ-dAHk7N6GGtWRAbXjZasaJCgV123Fp6foXXlMUC1mXjb&s=Ix4yc95OzsoKMBcFrEc51cVrtKzUZKarzIBlN-IeYaI&e=
+>>>
+>>
+>> I like the idea overall.
+>>
+>>> With this series, we should be able to drop "incoming-fds" TAP property
+>>> from the other series, instead relying on the existing "local" parameters
+>>> both in migration core and in TAP's property should suffice.
+>>>
+>>> One thing to mention is I didn't further make only-migratable into a
+>>> migration parameter.  Logically it will also work now with only-migratable,
+>>> but it then also means I'll need to convert it to a parameter, which will
+>>> be mutable even after VM started.  It will change how only-migratable used
+>>> to work, hence I skipped.
+>>>
+>>> After this, we also almost have no reason to use -global for migration
+>>> parameters.  Capabilities are still not supported in -incoming cmdline,
+>>> though.
+>>>
+>>
+>> Will we still merge capabilities and parameters? Then it would be a free
+>> upgrade.
+> 
+> Yes!  /me waiting for your patches.
 
 
 ATB,
