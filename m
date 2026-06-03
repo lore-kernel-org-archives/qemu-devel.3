@@ -4,116 +4,104 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C26A5CD6E55
-	for <qemu-devel@archiver.kernel.org>; Wed,  3 Jun 2026 20:48:14 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 651B4CD6E57
+	for <qemu-devel@archiver.kernel.org>; Wed,  3 Jun 2026 20:49:14 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wUsUm-0005Tl-5d; Wed, 03 Jun 2026 16:47:24 -0400
+	id 1wUsWJ-0006Ta-Ia; Wed, 03 Jun 2026 16:48:59 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1wUsUk-0005TM-Ji
- for qemu-devel@nongnu.org; Wed, 03 Jun 2026 16:47:22 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1wUsUi-0002ie-Oy
- for qemu-devel@nongnu.org; Wed, 03 Jun 2026 16:47:22 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1780519639;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=CDR5+lYyk3z/GesgUC/50RweQqLYHp/PxYmcD9eHnJs=;
- b=CDLnxipmJLPHcXeG9bxana5m7UEAbCfPwbqlWUe+kKxXx2Kvays/FJTqraWQ/8VZzRkjdq
- dXoTPOqCRUZ4daDmeHNVIAou0bm/JGmR0DaBcgR+GGuT3jPYywL1Ivz1Xu0wZ09kiH/oBO
- 05dtNvL959m89+WEE51HOiKwkiFZ6Co=
-Received: from mail-qt1-f199.google.com (mail-qt1-f199.google.com
- [209.85.160.199]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-616-RWxDXR9lNTqq-W3h5tVhlA-1; Wed, 03 Jun 2026 16:47:18 -0400
-X-MC-Unique: RWxDXR9lNTqq-W3h5tVhlA-1
-X-Mimecast-MFC-AGG-ID: RWxDXR9lNTqq-W3h5tVhlA_1780519638
-Received: by mail-qt1-f199.google.com with SMTP id
- d75a77b69052e-5177f07ea82so25224251cf.3
- for <qemu-devel@nongnu.org>; Wed, 03 Jun 2026 13:47:18 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <stefanha@gmail.com>)
+ id 1wUsWF-0006TI-Pb
+ for qemu-devel@nongnu.org; Wed, 03 Jun 2026 16:48:55 -0400
+Received: from mail-ed1-x533.google.com ([2a00:1450:4864:20::533])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <stefanha@gmail.com>)
+ id 1wUsWE-00038v-8H
+ for qemu-devel@nongnu.org; Wed, 03 Jun 2026 16:48:55 -0400
+Received: by mail-ed1-x533.google.com with SMTP id
+ 4fb4d7f45d1cf-68ad1e513d3so11375055a12.0
+ for <qemu-devel@nongnu.org>; Wed, 03 Jun 2026 13:48:53 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1780519732; cv=none;
+ d=google.com; s=arc-20240605;
+ b=Ms28Lj2DAw2eSQPDgAe1pEEB5hfLmnrlb913Y/4tjH2pCqg4un0Q/0QTFOAFQLgoKx
+ q1Cc9vh6j5xYZh35QCg5vC+rHDMlx3eGGDwoDNKeIJ3twJpgaTFTOdOUZu4BayxCEz8D
+ Qwg1GNCmNfoGuLGCNTy+9jaw78PfHg078p4GsNVrUR4DSRDH0a3TJpdUSw/letAt7LK7
+ F4AwJxe1oQN+Pzf92jRV6VhbvA/hp7RKSvYjO9LUwlYrDqpSpGJfL+EDXzTKWjPwVC6m
+ ndV9t5qdEUk8fVo7N3R6tgiBNa+eouAI9gk4gwSc81QnAtlPALFMNhnnzs9kYos0tM6u
+ EB9A==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
+ s=arc-20240605; 
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:dkim-signature;
+ bh=B1hRzIwbw6umXYoi4Z9yNSpbx0uoevh2QaSDpvdqXU4=;
+ fh=XVN1mmQlwmC7aCY31oVKufP+AuL5701qY9osQkmPEMk=;
+ b=HZOt5YXs2fotKTkOtclHkcZIKbGd9OklhMpZgdZHji3ew+LbYTvJe9WxzS8h5YI2YO
+ 28CemCWlTVn5t7N9+5kXRz2BGoh5QGBe8209Fj4GCx0yGwcDsJ/Waz8ssGR2kXcgQNgd
+ FmfwXWnojgm6fMUWCoPG6rNbmg31fSm99s4+CPAO7g/GdcMEvlwr1VyUgI897La+BPG9
+ qsT5znHgkz2eeSUMKvcRso4naTPWWxNjlrYM2Zg8mcVGh29wMELRhkbbIY7GNXHHSFGK
+ qlZrIpoTBHAGoqfRSQ1fWy6O/bcirvYVHHDWkPFosNHzz5ZLpLmq2IjLnEdAkJ8Z9HLl
+ U6MQ==; darn=nongnu.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1780519638; x=1781124438; darn=nongnu.org;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
- bh=CDR5+lYyk3z/GesgUC/50RweQqLYHp/PxYmcD9eHnJs=;
- b=ArCkbbSaM0gtahiQD9AXQLeilOCBe2XrKbvkkAFSNl/MMaLqNBu6FCXWI+uys767uZ
- D2MO6l0G5VATRrIRLW0JpX1VeUpDihmBoo8vhGPQ6pa7wgPVU9JGK5IlYIabnGoSqOyY
- uRcs03OCHk/Q6ydvkQ80KWXCrgD00wJRxqgQ7tyk1/WDCxMRufN9lQavOQEzStwWEVCG
- nn5E68NZg6esvATFcxpFKC6wSK6XwXSASLxUipxdYnybTVf27MV4AgwcXz8Ndww6kyGA
- XPugMiHT0Y/623S4g25lCMrJnQ5v7LvQe5ZYCRB8BkTm9ifmJRSiVCVlZq0hSfC/PYrf
- zCCA==
+ d=gmail.com; s=20251104; t=1780519732; x=1781124532; darn=nongnu.org;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=B1hRzIwbw6umXYoi4Z9yNSpbx0uoevh2QaSDpvdqXU4=;
+ b=PgluSUfZIsg9hLIEpJyh4gBFvPoQBPb1eTZwYjj6B/KDPWNHD+g8ojqx4JXpaq0216
+ n64902XX8kXUu/7CxSknWbMqun3tT9MdUFoPFeDi7zXw8y0SsTRRPoJkj8q69aYkHLr9
+ wViyDXzSlsDUyrEytO/RTgwLyqnxL5Tu3PgcuaiOp7JyP7MimH4Y9l1Qd8B4DCdiEggk
+ ofTAIyQXbIQw5/fbW+uZR6lvt7pPcypaJrVRdd7viMb6SnFik6sNWYRY4CapD76So7K+
+ ooq2lRhPJyD4V2HgXIkiUlwH5/fdYVblARLRmOr/Xcic449kybjV4AerWYW4CgvI+ary
+ DU0w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1780519638; x=1781124438;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=CDR5+lYyk3z/GesgUC/50RweQqLYHp/PxYmcD9eHnJs=;
- b=MI1ecQMESCuWX/ayxmZkzB4wAK9LTdfNBPiaH+bTgiliJGeMSsOlqHIE7CqWJ2uxl2
- jrLwoFK0eYjpZto0GFzKq5TuPpozXvbJ3B8h2zMoQ/ikZ5d7sYelM/+5rVCwRd2SzSte
- hWoRtIgSmxD4fruoyys1pX10dCGmlmp200AHZ8SzKZX7ahO53pGjg2YVMNvrtzc0d8qg
- m0NPE8Wxrx447niy0wMUQALkPqXdfE/Dnxgb8L5Xa0q7ZnfG7KKjP5Qc9lLYlkDVRjHA
- izAk7nvwaX091ZGQWBfesurO3uEUt6DwIAL2cpI0iCuITGQbJOZBYixhfzbZBK0PH/Ny
- 1MMg==
-X-Gm-Message-State: AOJu0YyErEC0ERzQKfJlZSkSVC7cPpmgVrGr0xO1lN5FC0QCkX0TLukN
- ZK2BOZHYBzjjyLykAZdvXaMvkPSYsDigYl5cnEHybw8NqrVA7merwW7M904PuRCi6gVL9n0/Cun
- wcDI4ZUo83UTQQrw4rLkcrZ8YxMiDUMhyPjD6BaSSRNrFQJMu7kaWqFma
-X-Gm-Gg: Acq92OHCsEQv1FlBKJZVLZCwTOPUDd3MPuoqvbFBb1N+umXrn0GXaw29zMznRR8sTgX
- Px6tINIUIpprR+7xH8OgaSmvEcd1EaSBXAtAAyKkjJ3lTNL7lmCx/3XJXMa+eO9biOEGdfDI31i
- Oyux7mYiowZE01CycAh9GKzPOxZMhj2mHH0PCcH0lWu31gnTIwEy6DV2U3l/3fRwWFHzTzAiWnf
- ShWhRX8499kXXVQZTFbI6k25ft0UTlitUqj/DqNIwH6x+q+lrsV/PlzXLh/rUbsDGrDRghX5mQ0
- 3pwRwHFPXFFj1JgZzmEQqN2gXitJh1MGM/lihwyaBVmiidG6IFm9O6l4i1Cmt1JqSOIfkJlMQz+
- 3pQ3j2+1zZbKanp8SZiogLU+eUQ==
-X-Received: by 2002:ac8:6f13:0:b0:517:61d5:2f7b with SMTP id
- d75a77b69052e-517787a16eamr71890731cf.56.1780519637944; 
- Wed, 03 Jun 2026 13:47:17 -0700 (PDT)
-X-Received: by 2002:ac8:6f13:0:b0:517:61d5:2f7b with SMTP id
- d75a77b69052e-517787a16eamr71890261cf.56.1780519637394; 
- Wed, 03 Jun 2026 13:47:17 -0700 (PDT)
-Received: from x1.local ([142.189.10.167]) by smtp.gmail.com with ESMTPSA id
- d75a77b69052e-51775c29360sm32909031cf.7.2026.06.03.13.47.15
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 03 Jun 2026 13:47:16 -0700 (PDT)
-Date: Wed, 3 Jun 2026 16:47:14 -0400
-From: Peter Xu <peterx@redhat.com>
-To: Avihai Horon <avihaih@nvidia.com>
-Cc: qemu-devel@nongnu.org, Alex Williamson <alex@shazbot.org>,
- =?utf-8?Q?C=C3=A9dric?= Le Goater <clg@redhat.com>,
- Fabiano Rosas <farosas@suse.de>,
- Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
- Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Zhao Liu <zhao1.liu@intel.com>, Halil Pasic <pasic@linux.ibm.com>,
- Christian Borntraeger <borntraeger@linux.ibm.com>,
- Jason Herne <jjherne@linux.ibm.com>,
- Richard Henderson <richard.henderson@linaro.org>,
- Ilya Leoshkevich <iii@linux.ibm.com>, David Hildenbrand <david@kernel.org>,
- Eric Farman <farman@linux.ibm.com>,
- Matthew Rosato <mjrosato@linux.ibm.com>,
- Cornelia Huck <cohuck@redhat.com>, Eric Blake <eblake@redhat.com>,
- Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>,
- John Snow <jsnow@redhat.com>, Markus Armbruster <armbru@redhat.com>,
- Maor Gottlieb <maorg@nvidia.com>
-Subject: Re: [PATCH v2 10/13] vfio/migration: Add new switchover-ack mechanism
-Message-ID: <aiCS0jK314MXWRuN@x1.local>
-References: <20260602092621.382-1-avihaih@nvidia.com>
- <20260602092621.382-11-avihaih@nvidia.com>
+ d=1e100.net; s=20251104; t=1780519732; x=1781124532;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=B1hRzIwbw6umXYoi4Z9yNSpbx0uoevh2QaSDpvdqXU4=;
+ b=ioJH45/R4/nuP/ekVCuzCkhGej+wRbLG+O/44cW+wZmv4fVov2QKIMRhzm/FmyAgni
+ mOEhJVC5TPoTp/5HNQ0XHYcebZafM6qEvHSYKfiAXd5lKtkH3dBad2Jd2ANMVbGSKiF/
+ JGWlAXnXa7QB4az+xB5s91gPl4vK+pCo7yqEdf4FR48aGeoSbObCbxg9kvKIEvjpuhB0
+ 1GhJ4mR/rCOtjV4ZkciGnzZyx627csCQfeGkG3p0bmnzV5OanBMkpZwyBc0+vOHFKX1c
+ zzqhFfeyTp58VfFmKa0tH0rh36h1AIb8Je0thxTp7l1Sf7owLGj8kaTwjWHDUtWx9UtG
+ DRoQ==
+X-Gm-Message-State: AOJu0YwFcFtdMA89LcMvNvF2ZN5i+HIHMpaipff7dVr8UDTGPD4deLrz
+ IZ751m8c9KsDSjqrKUXfCGKIe9XeJumrBM4f0Fa9VvnBjpxUI+B09d8n/V3tw8kgHWhH08mBmZ4
+ QaQSvDCV1mF2MdhPkfplprPwTI/PfdGQ=
+X-Gm-Gg: Acq92OGCUaCP8O9GqYt0HANNr18kwDOsMAdDNHz/Wv/0j8kj4HfuhZspko3Gh/f9IRU
+ aU83kBPO2qMW+KuUPfj3/4U27w2OJb3nCC+W7N9JGbWy3OVzHp/m/5+Kx++D4Txn+61uY1kixqD
+ 9YuU7cNOlIGIXNfysEZpQ9X2pH+FnxCOE1T86JFU0w4ZuLWivUjCTgjDAhlMlPZ8AGWAHapDUMo
+ secjypi1MHHo6tbv42MR1l9Ofe5MjKqjjDvSUETqqPdJv4LBzhimQWFPndqmK8wqoHPKsJXgtxo
+ SSMdnLEM4JGFwXR0DbQqqR04Aa76SgKS8D0+N3cQvYHUfZ37Mls3
+X-Received: by 2002:a05:6402:ea2:b0:687:285d:44a3 with SMTP id
+ 4fb4d7f45d1cf-68e710eb761mr2581081a12.15.1780519732379; Wed, 03 Jun 2026
+ 13:48:52 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <20260602092621.382-11-avihaih@nvidia.com>
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=peterx@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -24
-X-Spam_score: -2.5
+References: <20260603193813.2327596-1-farosas@suse.de>
+In-Reply-To: <20260603193813.2327596-1-farosas@suse.de>
+From: Stefan Hajnoczi <stefanha@gmail.com>
+Date: Wed, 3 Jun 2026 16:48:38 -0400
+X-Gm-Features: AVHnY4K6SvHrcL6Uiho8lDaKfrddmoRPLEU-wrxzL4mNHgJIYS4vIhrPLngzSOw
+Message-ID: <CAJSP0QU+6yU+dwEdeei5nqTBMmBD0b4QJ+y-jeNNrmXzu8ChvQ@mail.gmail.com>
+Subject: Re: [PATCH v2] qed: Don't try to flush during incoming migration
+To: Fabiano Rosas <farosas@suse.de>
+Cc: qemu-devel@nongnu.org, berrange@redhat.com, 
+ Stefan Hajnoczi <stefanha@redhat.com>, Kevin Wolf <kwolf@redhat.com>,
+ Hanna Reitz <hreitz@redhat.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2a00:1450:4864:20::533;
+ envelope-from=stefanha@gmail.com; helo=mail-ed1-x533.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.445,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -129,21 +117,43 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, Jun 02, 2026 at 12:26:18PM +0300, Avihai Horon wrote:
-> Add support for the new switchover-ack mechanism. This includes
-> requesting a switchover ACK on the first save_query_pending call (with
-> exact=false) if VFIO precopy is supported.
-> 
-> This achieves the same functionality of legacy switchover-ack but with
-> the new switchover-ack mechanism.
-> 
-> Keep legacy switchover-ack functionality for backward compatibility.
-> 
-> Signed-off-by: Avihai Horon <avihaih@nvidia.com>
+On Wed, Jun 3, 2026 at 3:39=E2=80=AFPM Fabiano Rosas <farosas@suse.de> wrot=
+e:
+>
+> It's not possible to access the image file while there is an incoming
+> migration in progress, the QEMU process doesn't hold any locks to the
+> storage at this point so nodes are inactive. Attempting to flush leads
+> to an assert at bdrv_co_write_req_prepare():
+>
+>    assert(!(bs->open_flags & BDRV_O_INACTIVE))
+>
+> The issue is reproducible by running iotest 181 on a host under cpu
+> load. The migration must coincide with the header already containing
+> the QED_F_NEED_CHECK flag.
+>
+> The sequence of events is as follows, with the respective call stacks
+> referenced below:
+>
+> During block device init, bdrv_qed_attach_aio_context() starts the
+> 'need_check' timer. The timer will not fire during incoming migration
+> as it uses QEMU_CLOCK_VIRTUAL (to avoid this very issue, as the code
+> comment indicates).                                                   (0)
+>
+> However, there's still bdrv_qed_drain_begin() which uses the fact that
+> the timer is live to decide whether to start the
+> qed_need_check_timer_entry() directly.                                (1)
+>
+> The qed_need_check_timer_entry() eventually calls into
+> qed_write_header() -> bdrv_co_pwrite() leading to the assert.         (2)
+>
+> Skip creating the 'need_check' timer whenever the image is inactive.
 
-Reviewed-by: Peter Xu <peterx@redhat.com>
+I was concerned that some parts of the code might call
+qed_start_need_check_timer() or qed_cancel_need_check_timer() without
+checking s->need_check_timer !=3D NULL. However, it only happens in the
+write code path, which is not taken when BDRV_O_INACTIVE is set (see
+bdrv_co_write_req_prepare()'s assert(!(bs->open_flags &
+BDRV_O_INACTIVE))). So this patch looks good.
 
--- 
-Peter Xu
-
+Reviewed-by: Stefan Hajnoczi <stefanha@redhat.com>
 
