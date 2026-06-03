@@ -4,81 +4,78 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id CAE9CCD6E57
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id DF4CACD6E72
 	for <qemu-devel@archiver.kernel.org>; Wed,  3 Jun 2026 22:47:43 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wUuMX-0002MG-7v; Wed, 03 Jun 2026 18:47:01 -0400
+	id 1wUuMa-0002Mg-Au; Wed, 03 Jun 2026 18:47:04 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <connorkite@gmail.com>)
- id 1wUuAt-0000Gk-TT
- for qemu-devel@nongnu.org; Wed, 03 Jun 2026 18:34:59 -0400
-Received: from mail-dl1-x1233.google.com ([2607:f8b0:4864:20::1233])
+ id 1wUuAp-0000Dw-6u
+ for qemu-devel@nongnu.org; Wed, 03 Jun 2026 18:34:55 -0400
+Received: from mail-dl1-x1232.google.com ([2607:f8b0:4864:20::1232])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <connorkite@gmail.com>)
- id 1wUuAr-00077O-SK
- for qemu-devel@nongnu.org; Wed, 03 Jun 2026 18:34:59 -0400
-Received: by mail-dl1-x1233.google.com with SMTP id
- a92af1059eb24-1370417c01cso71308c88.1
- for <qemu-devel@nongnu.org>; Wed, 03 Jun 2026 15:34:57 -0700 (PDT)
+ id 1wUuAn-00076T-K0
+ for qemu-devel@nongnu.org; Wed, 03 Jun 2026 18:34:54 -0400
+Received: by mail-dl1-x1232.google.com with SMTP id
+ a92af1059eb24-137f27712fdso163199c88.0
+ for <qemu-devel@nongnu.org>; Wed, 03 Jun 2026 15:34:53 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1780526096; x=1781130896; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=Y4hH/Thy1WXYsnNwkP96gh2PbXzlmRplzMWu7Xzp3fk=;
- b=nN9h7IVXtlWoPx1USav/VPMKDK1lGTTEOj9VSVwCWL6XatXMeQEYCAN5hu/jmwFJfI
- WgauWzYWEF4wNxKnf8nFKXqTNgUtHvXtYSUSPAgHzvR9GjhzwLtcoSxX5Z5B8jp3lX04
- B9ul+6yYjKlCCDt8/AnScjIdaRhFLmp6cjWD/PGN5Xl8Q/d9V9q61uizwj3VVBJUQver
- 2s0djhUIrm18UBZCb8cHxey/SzGs7MgEWjN4/wR9NWG86nmT9gIBajQmxWuP7l2X3AJx
- 8LshwI0nsNYCKpQ6WYZagFaWnQhu6UyDNuaj+QAW2FXmoXEGZScs1z/6kARhxyMm3x8f
- ZpQg==
+ d=gmail.com; s=20251104; t=1780526092; x=1781130892; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:from:to:cc:subject:date:message-id:reply-to;
+ bh=NT5ISx0OJZ4QZioJHUQSAXiJTtn6plUf2GAQuBMTKsU=;
+ b=ShKEgYhyJvjH8TVumATE6Y1t0cljRmDmcUljcQU9M+09YWNhD84yGkUGfiuQT3IvXL
+ W/8VXlMOZr8RrdTm/I/pK9ucZLEV5zxHkCEaOuEGPGBOVFjCWwgOLcXf4EEh80v+rF/3
+ OJY/6sI08cj6j+eEhs+sSyY2qz9FU+E1gBvXnISRC2krcZ1dSnPXoooPY8pDnEmB0LTT
+ 7smtSVZMLC9cQVmKj6a77kcGAKw3SkLKYPBWdczW10yeCwVjbfRjM0HjZB4NkeGFHZtx
+ KXjMpdsvEFra6yv1FmGBpor+lcHhigB82hdNZ2eeEapi/zaJDnwcfNkoJTZHWsBJQFUd
+ /nEg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1780526096; x=1781130896;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to;
- bh=Y4hH/Thy1WXYsnNwkP96gh2PbXzlmRplzMWu7Xzp3fk=;
- b=Y9wd8f9HohYRQz5Wk6Z6kthqZQp1rQ2sTGsAVFHgKWuhZHIks0JQ4va9K9ngcZBTRc
- G30WEzeGAtF1yRG+cXnqJTS16Z/mLC2vCk+OrosTQIDKnOIV08BH6DlIrqtsc6JJX1cR
- nC/RdzMAMTWzyIlwiWz8Gm7JaWv/4H/GNOVw7KZQZDgQ9AE2qsbjB1A9VOvlSm6AaJ1z
- fkQ0myXzyTGVZJTzTl5PdmTYZFAbXNx45sh8681gf9qof0lNy8wQRFX0/wUbm0TTl1G2
- 2NpEYnIoBkYNdw+v97Mj2IvIP8KQ1E4vx1uRr7UuLMOiFRCi6SIbRgyIZJUX7k0cCdZy
- mNkg==
-X-Gm-Message-State: AOJu0YyBQevsJUsQ7dYincOQePaWEzWcZpwgbAm7vtMwfigDf+jlyhEZ
- XKSWUFk/+2GrelTGp8JSp19lMJdA1wfu6yUUSRyiW1P/t99A6jUKeINumqpq3ojv
-X-Gm-Gg: Acq92OF3uqLokyOtagUzwIGQU+FucEX51LFVi4vuEAYlDOztPxIAMvXzUwWsWgKQXkB
- kBBjXlY8yDWKrr5iqYAzeX1L72tLLUFimSWDBVkZuAdecjCuSSKVMoaRmgmDEZD1avD7x5gGKGV
- kjXTAMfAhbXcT+3JDpUgNSeXdEMZjWeBen7DwvQdqKOcRh4AjVfAurXKfRiDEqs+9i/UA4KmCHl
- p45DYG5V9d17lX7gYQJCCyKokwgJgvtDZ3PzlQNb1eO2EEdWjyHFMyERD9QoQqMewU1VSsw3BFQ
- rp24vhpGF8tI5H74wexHxF16wHIHmv2YeeJlBK7ErdDkhNLXMSi2rXJ7s13B3xdWqlsIR8kQ2fx
- GGdZI9lFJ6UK4IDCcfZ2i22MZIf42DPZdBb/EIesTb5m3T8lt2L0APfzG2VmruiDHP/fhWYWjCU
- WWwHSNcET+05FYeFW8ua43BBwBMno7qcqFb2HM+yLQUIDz6ozbt4ofMi9igT0=
-X-Received: by 2002:a05:7301:4592:b0:304:d788:ac5 with SMTP id
- 5a478bee46e88-3074fcb2470mr2864813eec.35.1780526096089; 
- Wed, 03 Jun 2026 15:34:56 -0700 (PDT)
+ d=1e100.net; s=20251104; t=1780526092; x=1781130892;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=NT5ISx0OJZ4QZioJHUQSAXiJTtn6plUf2GAQuBMTKsU=;
+ b=RigpYoE7IwhqhCV07vEAAC3iD7PLT9NhTjdHMLBOmETt1tTmEDNw/fQ6QJWLJp/of1
+ l6UX8QvsNUc03MnHPHTSLCCeHrca/pcfjzq+8janT3qA8B8BwOrPJi0N2j7UDDZUKk1U
+ noqqgrfVswMTfEYiJkDHAjujolcnv/l5FP0FMux4Za/FBrh07gTbW4OcS5S6WKIusXJ6
+ DRq1d4gawTM+bTTCRkB2+umZi5aRThsekwDV7IpC73TYgS35bkBA0OVMhRQJIQC0HXxR
+ XVuoA5dHGEy0Xifv7EVcb2OO0lBWKjo3NtnJBWmacASfFQjAPd6puAWLlSZju+j4KWt8
+ f0VA==
+X-Gm-Message-State: AOJu0YxMVo3YoNS1zVqFwhvpkjBn8eB/VyAh18BB3zOINyfaAW1UhdTP
+ 5Pz/h6zuKJ7JXsWouAqmASZeADB55r/R72axyUmfHIQIC5I0BJ1PHRnODRoCU1Yg
+X-Gm-Gg: Acq92OF1pMzhzLdiHUUHiiHeFLjOfrXjanuTmn7id6qeWRcG33lDT1LWHHdngK5Gfl6
+ jUHATB9G8m/ljNROM05SY7obxavI5hyt65HWC3D6NKzJtj9zh29dBTtB5SrGhTV+gw1EPVsO6c6
+ YHHMNT30IaDXnMDpuaykiVfXjPdty2gI5u0KS9zs6ebwUkiaiIXRW5cZ76NDCjsWtpDohrRgcoj
+ p4uAAGDFzWpj5mmApxyHNen7YJAuPXyZd1aWGXV/1v4yEq5l3/yq/EPUV+EGq/6FF3lhD4Eb4Fs
+ f88X6bBl/W0frgYCVvSpKw27q+D37+TgTTQoDJr0Qw2KWzMrgVUyIkEPQOYrgVLGls8P1nbo91E
+ Y14wVHsIMNrlD4D9nPWgr0vMlhXFzeL4JAJbw/AuTBklRxfx9dCQ5vba5TMmp15ec0rsdS/+acq
+ b9sJXk5CKXcG05MvsZFZTFO84q+uTLewUehXc99trZ7ojUeEz4
+X-Received: by 2002:a05:7300:7483:b0:304:eaa8:11ea with SMTP id
+ 5a478bee46e88-3074fcaa2bcmr3133043eec.34.1780526091889; 
+ Wed, 03 Jun 2026 15:34:51 -0700 (PDT)
 Received: from MacLin.attlocal.net ([2600:1700:e140:14d0:fad:648b:d3db:b403])
  by smtp.gmail.com with ESMTPSA id
- 5a478bee46e88-3074df349d8sm3492027eec.22.2026.06.03.15.34.55
+ 5a478bee46e88-3074df349d8sm3492027eec.22.2026.06.03.15.34.50
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 03 Jun 2026 15:34:55 -0700 (PDT)
+ Wed, 03 Jun 2026 15:34:51 -0700 (PDT)
 From: ConKite <connorkite@gmail.com>
 To: qemu-devel@nongnu.org
 Cc: stefanha@gmail.com,
 	hreitz@redhat.com,
 	ConKite <connorkite@gmail.com>
-Subject: [PATCH 1/2] vhost-user: Consolidate chardev property definitions
-Date: Wed,  3 Jun 2026 15:33:54 -0700
-Message-ID: <20260603223430.3311916-2-connorkite@gmail.com>
+Subject: [PATCH 0/2] vhost-user: Add and consolidate qdev properties
+Date: Wed,  3 Jun 2026 15:33:53 -0700
+Message-ID: <20260603223430.3311916-1-connorkite@gmail.com>
 X-Mailer: git-send-email 2.43.0
-In-Reply-To: <20260603223430.3311916-1-connorkite@gmail.com>
-References: <20260603223430.3311916-1-connorkite@gmail.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::1233;
- envelope-from=connorkite@gmail.com; helo=mail-dl1-x1233.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::1232;
+ envelope-from=connorkite@gmail.com; helo=mail-dl1-x1232.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -102,214 +99,49 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Move chardev qdev property definitions from children into
-VHostUserBase. This reduces code duplication and allows children
-to simply inherit the property during initialization.
+[1/2] Consolidate chardev qdev property definitions in the
+VHostUserBase family of devices.  Now, the definition only takes place
+within VHostUserBase initialization and is inherited by children.
+
+[2/2] In support of future work to add a memory isolation mode to vhost-user
+devices, a qdev property, "memory-isolation", is added to all vhost-user
+devices.  This is simply a bool representing whether the mode is active
+or not.
+
+These patches are grouped together as they both touch on qdev properties
+held in common by all vhost-user devices.  Taken together, these patches
+ensure that commmon properties are defined in the same location and way.
 
 Signed-off-by: Connor Kite <connorkite@gmail.com>
-
 ---
- hw/virtio/vhost-user-base.c        | 9 +++++++++
- hw/virtio/vhost-user-gpio.c        | 4 ----
- hw/virtio/vhost-user-i2c.c         | 5 -----
- hw/virtio/vhost-user-input.c       | 5 -----
- hw/virtio/vhost-user-rng.c         | 5 -----
- hw/virtio/vhost-user-rtc.c         | 4 ----
- hw/virtio/vhost-user-snd.c         | 1 -
- hw/virtio/vhost-user-spi.c         | 5 -----
- hw/virtio/vhost-user-test-device.c | 1 -
- 9 files changed, 9 insertions(+), 30 deletions(-)
+ConKite (2):
+  vhost-user: Consolidate chardev property definitions
+  vhost-user: Add memory-isolation qdev property to vhost-user devices
 
-diff --git a/hw/virtio/vhost-user-base.c b/hw/virtio/vhost-user-base.c
-index 01ab9ca56b..a3d5a9cd99 100644
---- a/hw/virtio/vhost-user-base.c
-+++ b/hw/virtio/vhost-user-base.c
-@@ -353,9 +353,16 @@ static void vub_device_unrealize(DeviceState *dev)
-     do_vhost_user_cleanup(vdev, vub);
- }
- 
-+/*Define common qdev properties.  Inherited by all children*/
-+static const Property vub_properties[] = {
-+    DEFINE_PROP_CHR("chardev", VHostUserBase, chardev)
-+};
-+
-+
- static void vub_class_init(ObjectClass *klass, const void *data)
- {
-     VirtioDeviceClass *vdc = VIRTIO_DEVICE_CLASS(klass);
-+    DeviceClass *dc = DEVICE_CLASS(klass);
- 
-     vdc->realize = vub_device_realize;
-     vdc->unrealize = vub_device_unrealize;
-@@ -363,6 +370,8 @@ static void vub_class_init(ObjectClass *klass, const void *data)
-     vdc->get_config = vub_get_config;
-     vdc->set_config = vub_set_config;
-     vdc->set_status = vub_set_status;
-+
-+    device_class_set_props(dc, vub_properties);
- }
- 
- static const TypeInfo vub_types[] = {
-diff --git a/hw/virtio/vhost-user-gpio.c b/hw/virtio/vhost-user-gpio.c
-index d473f87077..33b8752282 100644
---- a/hw/virtio/vhost-user-gpio.c
-+++ b/hw/virtio/vhost-user-gpio.c
-@@ -14,9 +14,6 @@
- #include "standard-headers/linux/virtio_ids.h"
- #include "standard-headers/linux/virtio_gpio.h"
- 
--static const Property vgpio_properties[] = {
--    DEFINE_PROP_CHR("chardev", VHostUserBase, chardev),
--};
- 
- static void vgpio_realize(DeviceState *dev, Error **errp)
- {
-@@ -42,7 +39,6 @@ static void vu_gpio_class_init(ObjectClass *klass, const void *data)
-     VHostUserBaseClass *vubc = VHOST_USER_BASE_CLASS(klass);
- 
-     dc->vmsd = &vu_gpio_vmstate;
--    device_class_set_props(dc, vgpio_properties);
-     device_class_set_parent_realize(dc, vgpio_realize,
-                                     &vubc->parent_realize);
-     set_bit(DEVICE_CATEGORY_INPUT, dc->categories);
-diff --git a/hw/virtio/vhost-user-i2c.c b/hw/virtio/vhost-user-i2c.c
-index 152b1f6740..3f5427b5b2 100644
---- a/hw/virtio/vhost-user-i2c.c
-+++ b/hw/virtio/vhost-user-i2c.c
-@@ -14,10 +14,6 @@
- #include "qemu/error-report.h"
- #include "standard-headers/linux/virtio_ids.h"
- 
--static const Property vi2c_properties[] = {
--    DEFINE_PROP_CHR("chardev", VHostUserBase, chardev),
--};
--
- static void vi2c_realize(DeviceState *dev, Error **errp)
- {
-     VHostUserBase *vub = VHOST_USER_BASE(dev);
-@@ -42,7 +38,6 @@ static void vu_i2c_class_init(ObjectClass *klass, const void *data)
-     VHostUserBaseClass *vubc = VHOST_USER_BASE_CLASS(klass);
- 
-     dc->vmsd = &vu_i2c_vmstate;
--    device_class_set_props(dc, vi2c_properties);
-     device_class_set_parent_realize(dc, vi2c_realize,
-                                     &vubc->parent_realize);
-     set_bit(DEVICE_CATEGORY_INPUT, dc->categories);
-diff --git a/hw/virtio/vhost-user-input.c b/hw/virtio/vhost-user-input.c
-index 5cfc5bbb56..8fe6349ffc 100644
---- a/hw/virtio/vhost-user-input.c
-+++ b/hw/virtio/vhost-user-input.c
-@@ -7,10 +7,6 @@
- #include "qemu/osdep.h"
- #include "hw/virtio/virtio-input.h"
- 
--static const Property vinput_properties[] = {
--    DEFINE_PROP_CHR("chardev", VHostUserBase, chardev),
--};
--
- static void vinput_realize(DeviceState *dev, Error **errp)
- {
-     VHostUserBase *vub = VHOST_USER_BASE(dev);
-@@ -36,7 +32,6 @@ static void vhost_input_class_init(ObjectClass *klass, const void *data)
-     DeviceClass *dc = DEVICE_CLASS(klass);
- 
-     dc->vmsd = &vmstate_vhost_input;
--    device_class_set_props(dc, vinput_properties);
-     device_class_set_parent_realize(dc, vinput_realize,
-                                     &vubc->parent_realize);
-     set_bit(DEVICE_CATEGORY_INPUT, dc->categories);
-diff --git a/hw/virtio/vhost-user-rng.c b/hw/virtio/vhost-user-rng.c
-index 106c8f211a..664aee403d 100644
---- a/hw/virtio/vhost-user-rng.c
-+++ b/hw/virtio/vhost-user-rng.c
-@@ -20,10 +20,6 @@ static const VMStateDescription vu_rng_vmstate = {
-     .unmigratable = 1,
- };
- 
--static const Property vrng_properties[] = {
--    DEFINE_PROP_CHR("chardev", VHostUserBase, chardev),
--};
--
- static void vu_rng_base_realize(DeviceState *dev, Error **errp)
- {
-     VHostUserBase *vub = VHOST_USER_BASE(dev);
-@@ -43,7 +39,6 @@ static void vu_rng_class_init(ObjectClass *klass, const void *data)
-     VHostUserBaseClass *vubc = VHOST_USER_BASE_CLASS(klass);
- 
-     dc->vmsd = &vu_rng_vmstate;
--    device_class_set_props(dc, vrng_properties);
-     device_class_set_parent_realize(dc, vu_rng_base_realize,
-                                     &vubc->parent_realize);
- 
-diff --git a/hw/virtio/vhost-user-rtc.c b/hw/virtio/vhost-user-rtc.c
-index 88b0c70b90..6d80cb6263 100644
---- a/hw/virtio/vhost-user-rtc.c
-+++ b/hw/virtio/vhost-user-rtc.c
-@@ -19,9 +19,6 @@ static const VMStateDescription vu_rtc_vmstate = {
-     .unmigratable = 1,
- };
- 
--static const Property vrtc_properties[] = {
--    DEFINE_PROP_CHR("chardev", VHostUserBase, chardev),
--};
- 
- static void vu_rtc_base_realize(DeviceState *dev, Error **errp)
- {
-@@ -42,7 +39,6 @@ static void vu_rtc_class_init(ObjectClass *klass, const void *data)
-     VHostUserBaseClass *vubc = VHOST_USER_BASE_CLASS(klass);
- 
-     dc->vmsd = &vu_rtc_vmstate;
--    device_class_set_props(dc, vrtc_properties);
-     device_class_set_parent_realize(dc, vu_rtc_base_realize,
-                                     &vubc->parent_realize);
- 
-diff --git a/hw/virtio/vhost-user-snd.c b/hw/virtio/vhost-user-snd.c
-index 7129b77d9c..3663450aed 100644
---- a/hw/virtio/vhost-user-snd.c
-+++ b/hw/virtio/vhost-user-snd.c
-@@ -34,7 +34,6 @@ static const VMStateDescription vu_snd_vmstate = {
- };
- 
- static const Property vsnd_properties[] = {
--    DEFINE_PROP_CHR("chardev", VHostUserBase, chardev),
-     DEFINE_PROP_BIT64("controls", VHostUserBase,
-                       parent_obj.host_features, VIRTIO_SND_F_CTLS, false),
- };
-diff --git a/hw/virtio/vhost-user-spi.c b/hw/virtio/vhost-user-spi.c
-index 707f96c250..fb6168d391 100644
---- a/hw/virtio/vhost-user-spi.c
-+++ b/hw/virtio/vhost-user-spi.c
-@@ -15,10 +15,6 @@
- #include "standard-headers/linux/virtio_ids.h"
- #include "standard-headers/linux/virtio_spi.h"
- 
--static const Property vspi_properties[] = {
--    DEFINE_PROP_CHR("chardev", VHostUserBase, chardev),
--};
--
- static void vspi_realize(DeviceState *dev, Error **errp)
- {
-     VHostUserBase *vub = VHOST_USER_BASE(dev);
-@@ -44,7 +40,6 @@ static void vu_spi_class_init(ObjectClass *klass, const void *data)
-     VHostUserBaseClass *vubc = VHOST_USER_BASE_CLASS(klass);
- 
-     dc->vmsd = &vu_spi_vmstate;
--    device_class_set_props(dc, vspi_properties);
-     device_class_set_parent_realize(dc, vspi_realize,
-                                     &vubc->parent_realize);
-     set_bit(DEVICE_CATEGORY_INPUT, dc->categories);
-diff --git a/hw/virtio/vhost-user-test-device.c b/hw/virtio/vhost-user-test-device.c
-index a2f963fdf6..91e23bf07a 100644
---- a/hw/virtio/vhost-user-test-device.c
-+++ b/hw/virtio/vhost-user-test-device.c
-@@ -30,7 +30,6 @@ static const VMStateDescription vud_vmstate = {
- };
- 
- static const Property vud_properties[] = {
--    DEFINE_PROP_CHR("chardev", VHostUserBase, chardev),
-     DEFINE_PROP_UINT16("virtio-id", VHostUserBase, virtio_id, 0),
-     DEFINE_PROP_UINT32("vq_size", VHostUserBase, vq_size, 64),
-     DEFINE_PROP_UINT32("num_vqs", VHostUserBase, num_vqs, 1),
+ hw/block/vhost-user-blk.c            |  1 +
+ hw/display/vhost-user-gpu.c          |  1 +
+ hw/scsi/vhost-user-scsi.c            |  1 +
+ hw/virtio/vhost-user-base.c          | 10 ++++++++++
+ hw/virtio/vhost-user-fs.c            |  1 +
+ hw/virtio/vhost-user-gpio.c          |  4 ----
+ hw/virtio/vhost-user-i2c.c           |  5 -----
+ hw/virtio/vhost-user-input.c         |  5 -----
+ hw/virtio/vhost-user-rng.c           |  5 -----
+ hw/virtio/vhost-user-rtc.c           |  4 ----
+ hw/virtio/vhost-user-scmi.c          |  1 +
+ hw/virtio/vhost-user-snd.c           |  1 -
+ hw/virtio/vhost-user-spi.c           |  5 -----
+ hw/virtio/vhost-user-test-device.c   |  1 -
+ hw/virtio/vhost-user-vsock.c         |  1 +
+ include/hw/virtio/vhost-user-base.h  |  1 +
+ include/hw/virtio/vhost-user-blk.h   |  1 +
+ include/hw/virtio/vhost-user-fs.h    |  1 +
+ include/hw/virtio/vhost-user-scmi.h  |  1 +
+ include/hw/virtio/vhost-user-vsock.h |  1 +
+ include/hw/virtio/virtio-gpu.h       |  1 +
+ include/hw/virtio/virtio-scsi.h      |  1 +
+ 22 files changed, 23 insertions(+), 30 deletions(-)
+
 -- 
 2.43.0
 
