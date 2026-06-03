@@ -4,84 +4,88 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 763C7CD6E57
-	for <qemu-devel@archiver.kernel.org>; Wed,  3 Jun 2026 18:20:57 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 81022CD6E55
+	for <qemu-devel@archiver.kernel.org>; Wed,  3 Jun 2026 18:27:19 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wUqCc-0007Wq-IW; Wed, 03 Jun 2026 14:20:31 -0400
+	id 1wUqIZ-0000bC-BY; Wed, 03 Jun 2026 14:26:39 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1wUqCb-0007WW-1g
- for qemu-devel@nongnu.org; Wed, 03 Jun 2026 14:20:29 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1wUqCX-0001Qd-Iz
- for qemu-devel@nongnu.org; Wed, 03 Jun 2026 14:20:28 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1780510823;
- h=from:from:reply-to:reply-to:subject:subject:date:date:
- message-id:message-id:to:to:cc:cc:mime-version:mime-version:
- content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=Ui9NxO5znevr+y/u0aTqbxx6mp2u8nFEjfFxViXE8BQ=;
- b=gnF6Jt04S4yzDa//MaVxBNoyqQw44p9SCXhwwNh4wwkiz7eSNr/giK/Z20p2wlTWVrzgmA
- UrXHEan9cHc6nLWaSbY9f61j6VBtew64e8sg1XHb/WLyAWyYIjvTDKF9UTi7TvCT7V6g6g
- d4vQLqdhJyGk57AFiUPwzccoMnfG5s0=
-Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-467-gPjQ4mMWOA-xu2kPCQit4w-1; Wed,
- 03 Jun 2026 14:20:19 -0400
-X-MC-Unique: gPjQ4mMWOA-xu2kPCQit4w-1
-X-Mimecast-MFC-AGG-ID: gPjQ4mMWOA-xu2kPCQit4w_1780510817
-Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 944DB195608D; Wed,  3 Jun 2026 18:20:17 +0000 (UTC)
-Received: from redhat.com (unknown [10.44.50.34])
- by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id BCCC919560AD; Wed,  3 Jun 2026 18:20:12 +0000 (UTC)
-Date: Wed, 3 Jun 2026 19:20:08 +0100
-From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
-To: Alex =?utf-8?Q?Benn=C3=A9e?= <alex.bennee@linaro.org>
-Cc: Paolo Bonzini <pbonzini@redhat.com>, qemu-devel@nongnu.org,
- "Michael S. Tsirkin" <mst@redhat.com>,
- Alistair Francis <alistair.francis@wdc.com>,
- BALATON Zoltan <balaton@eik.bme.hu>,
- Fabiano Rosas <farosas@suse.de>, Kevin Wolf <kwolf@redhat.com>,
- Peter Maydell <peter.maydell@linaro.org>, Warner Losh <imp@bsdimp.com>,
- Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Paolo Bonzini <bonzini@gnu.org>
-Subject: Re: [PATCH v2] docs/devel: relax policy on AI-generated contributions
-Message-ID: <aiBwWH8iirdw9kw7@redhat.com>
-References: <20260529094619.1034458-1-pbonzini@redhat.com>
- <aiBBV48wyDF57vUi@redhat.com>
- <CABgObfZNX2rLnB=FosVopFmLB_S_5V48UPLjNTTtn543d9RfHg@mail.gmail.com>
- <8733z3trth.fsf@draig.linaro.org>
+ (Exim 4.90_1) (envelope-from <jim.macarthur@linaro.org>)
+ id 1wUqIQ-0000XU-W6
+ for qemu-devel@nongnu.org; Wed, 03 Jun 2026 14:26:31 -0400
+Received: from mail-wm1-x335.google.com ([2a00:1450:4864:20::335])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <jim.macarthur@linaro.org>)
+ id 1wUqIP-0003Yi-24
+ for qemu-devel@nongnu.org; Wed, 03 Jun 2026 14:26:30 -0400
+Received: by mail-wm1-x335.google.com with SMTP id
+ 5b1f17b1804b1-490ae94a89eso30736535e9.1
+ for <qemu-devel@nongnu.org>; Wed, 03 Jun 2026 11:26:27 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1780511186; x=1781115986; darn=nongnu.org;
+ h=cc:to:content-transfer-encoding:mime-version:message-id:date
+ :subject:from:from:to:cc:subject:date:message-id:reply-to;
+ bh=6RwiudhEWA7LbPZR+jTN6zMMB0hfCg8/CZoYlqSchzk=;
+ b=Je7R8ZiNyVrp+ENH6TzEzcfamivmY33DqK8GsIur/o56m6IImFt2J2XuuEmxd1LS1b
+ DGQ51WL7xShg1I34IsY7Fx+NQZuw1n8+GNj2fh1oeo+7ilTQ7Unrhp9SpLqSf5jg6/bH
+ 5LD2lNeOX/3xFu+jkHvWuIDCHelsneS8YlevSTyiMQep0OxYVjSgBfbBmA2eJsft0DKK
+ QmrhC5pSGQqQpTiuKvpR6C+wOrkPdj9EH0CfyvigjgkBPng8U0xIddfR7wUdqrvzqEhm
+ DExqiSL0jCxYr0oDrptnHR7GY18R9sCHTU6H2wrR934lX2pXuU3zudDtA/X3mmA9S1up
+ zYnw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1780511186; x=1781115986;
+ h=cc:to:content-transfer-encoding:mime-version:message-id:date
+ :subject:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=6RwiudhEWA7LbPZR+jTN6zMMB0hfCg8/CZoYlqSchzk=;
+ b=pl3W8mqNSrgR7PDHV/qWjkwc+B8nIAH4ehLc01MMgpACZEQZrofOJbSyPTXP4WXPn1
+ 0qAzyC2i8BxjEsEGn4fQTKE6ZB67CxuY8QLtqiyIoNAWGQ4TaNuZtC8Nzu2+3D8I8Ke9
+ USXqpPA1mV410/lzn5YAYBdSKhnD34Z06fZvFhE/kNCYknDbgPyNHjgGrUyE5aDi1tLn
+ PHlVTdmoBF0DaLkjF+dF1oSEGRgQPmb9xTDnLP+WIOvTQzPiP8t3Fmmy2ka25uwP2GEL
+ dfNS4nfj5Qe+trfmBd4Scz5n4d0YSVjfrXCr5uaojDFMCP5JNwrz5OanjB7uJSUxmPRn
+ 8eNg==
+X-Gm-Message-State: AOJu0Yz0WShvJU4zHhXIuFZhdUH2VXUG66v/YA5/9RxGeDuw3CkMwM+W
+ 2pY4JpaWYuZvmsJKbwQEKdmNzbq9rnRGuiiW78KQ6iLpMhPDHDAEUBfPnn0yY8f9lz4=
+X-Gm-Gg: Acq92OFyx7wOKVPu3PaeLbm7nWWr55OIls4xzAw6medQNu+GaeTZNKEg0UA9bAqPWPj
+ 4zxfkvBIithGecR3tS1tOOdPyOPXyVE+XrRemzHJ6mNyOdSM4GTio53t13Nkpdgcge9zGkj4OLO
+ h8ZGa9/ov5FxyYVUtbl4vmGweR/LBojH3Y9Xc7i/+QyhXqXU93G7HfxD/PJ3P/D8xEEDHyzwbnY
+ OFw5XD1sv/m7HtEnQnbNT+EgeA9SEX5qeFnOUXfxGXDt3a5ScsggDIOBPqLo27oX2dscx2lmFwx
+ c98DYSCgr1U4GGG3LeSZuPz3+3i+3Hg6jyhX9FSiyGAXVeR6zGHCy2Hsgthdn8LGX4Kz/KzIz13
+ qXcRBLRJJz8antOQ4gZuRbtd/UO7ZDYj2iZoNXCVDd6p3dIaFUjr7VVNUqNoGBafciiqOQjRHz6
+ T6JWMg0zqZjKbo6OBPjh5Fq4MSGX3rZHL3f8q29Q==
+X-Received: by 2002:a05:600c:c84:b0:490:389:7644 with SMTP id
+ 5b1f17b1804b1-490b5fe0e36mr76438755e9.17.1780511185963; 
+ Wed, 03 Jun 2026 11:26:25 -0700 (PDT)
+Received: from [127.0.1.1] ([2a10:d582:31e:0:d530:6a6b:58a7:e220])
+ by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-4601f2ed944sm9793127f8f.13.2026.06.03.11.26.25
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Wed, 03 Jun 2026 11:26:25 -0700 (PDT)
+From: Jim MacArthur <jim.macarthur@linaro.org>
+Subject: [PATCH v2 0/6] target/arm: Add aarch64 GPC3 bypass windows
+Date: Wed, 03 Jun 2026 19:26:19 +0100
+Message-Id: <20260603-jmac-gpc3b-v2-0-115c51936962@linaro.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <8733z3trth.fsf@draig.linaro.org>
-User-Agent: Mutt/2.3.1 (2026-03-20)
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.12
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=berrange@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: 8
-X-Spam_score: 0.8
-X-Spam_bar: /
-X-Spam_report: (0.8 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.445,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_SBL_CSS=3.335, SPF_HELO_PASS=-0.001,
- SPF_PASS=-0.001 autolearn=no autolearn_force=no
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+X-B4-Tracking: v=1; b=H4sIAMxxIGoC/23MSw7CIBSF4a00dywGaEsfI/dhOkBevUahAUM0D
+ XsXO3b4n+R8OyQT0SSYmx2iyZgw+Br81IBapXeGoK4NnHJBez6S+1Mq4jbV3ggbBzvpQVmqNdT
+ DFo3F94Fdl9orpleIn8PO7Lf+ZTIjlOi2U51QPRWTvTzQyxjOITpYSilfR9nlxKUAAAA=
+To: qemu-devel@nongnu.org
+Cc: Peter Maydell <peter.maydell@linaro.org>, qemu-arm@nongnu.org, 
+ Jim MacArthur <jim.macarthur@linaro.org>
+X-Mailer: b4 0.13.0
+Received-SPF: pass client-ip=2a00:1450:4864:20::335;
+ envelope-from=jim.macarthur@linaro.org; helo=mail-wm1-x335.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -94,41 +98,54 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, Jun 03, 2026 at 07:14:02PM +0100, Alex Bennée wrote:
-> Paolo Bonzini <pbonzini@redhat.com> writes:
-> 
-> > Hi Daniel,
-> >
-> > Thanks for the review. It will take a while to incorporate everything
-> > and I'll wait for more feedback, in the meantime just a couple things
-> > I can confirm or add...
-> 
-> I mean you could just let the LLM handle it ;-)
-> 
-> AI-used-for: collecting comments and updating patch
-> Signed-off-by: Alex Bennée <alex.bennee@linaro.org>
-> 
-> I only include this by way of an experiment. I think the new text does
-> cover the discussion although I think it has taken a fair amount of
-> verbatim text from the source messages that were commentary rather than
-> suggestions.
+Adds the GPC bypass windows defined in D9.2 of the Arm ARM. D9.8 (the 
+APAS instruction) is not implemented yet.
 
-Most importantly it has applied no critical thought to the review
-comments, seemingly treated them all as mostly equally important
-and incorporated them. The resulting text is more volumous than
-Paolo's, has poor structure and in places is verging on what I'd
-class as slop.  
+A large part of this is testing. To test GPC effectively, we need to
+check that memory accesses are causing exceptions, or not causing exceptions
+as appropriate. For some tests, boot.S is altered to record certain
+exceptions and continue executing the test. An alternative would be
+to use gdbstub to break on locations inside the vector table and continue,
+but this requires significant coordination between the C test binary and
+Python test driver, so has been avoided for now.
 
+Signed-off-by: Jim MacArthur <jim.macarthur@linaro.org>
+---
+Changes in v2:
+- ptw.c changes have been rewritten after a number of faults were found
+- boot.S: Align exception_log to page
+- target/arm/helper.c: flush all caches and remove redundant mask
+- Switch on of GPC3 moved after feature implementation
+- Link to v1: https://lore.kernel.org/qemu-devel/20260528-jmac-gpc3b-v1-0-d34c46c5069f@linaro.org
 
-With regards,
-Daniel
+---
+Jim MacArthur (6):
+      target/arm/tcg/cpu64.c: Extra test for GPC3.
+      target/arm: Setup new registers for GPC3
+      target/arm/ptw.c: Add Granule Bypass Windows
+      target/arm/cpu-features.h: x-rme now means GPC3
+      tests/tcg/aarch64/system: Alternative boot object for exception logging
+      tests/tcg/aarch64/system/gpc-test.c: Basic test for granule protection check
+
+ target/arm/cpu-features.h                 |   5 +
+ target/arm/cpu.h                          |   7 ++
+ target/arm/helper.c                       |  19 ++++
+ target/arm/ptw.c                          |  81 +++++++++++++++
+ target/arm/tcg/cpu64.c                    |   4 +-
+ tests/tcg/aarch64/Makefile.softmmu-target |  22 +++-
+ tests/tcg/aarch64/system/boot.S           |  62 +++++++++++
+ tests/tcg/aarch64/system/boot.h           |  14 +++
+ tests/tcg/aarch64/system/gpc-test.c       | 165 ++++++++++++++++++++++++++++++
+ 9 files changed, 372 insertions(+), 7 deletions(-)
+---
+base-commit: 405c32d2b18a683ba36301351af75125d9afda08
+change-id: 20260528-jmac-gpc3b-187f9d7cf0dd
+
+Best regards,
 -- 
-|: https://berrange.com       ~~        https://hachyderm.io/@berrange :|
-|: https://libvirt.org          ~~          https://entangle-photo.org :|
-|: https://pixelfed.art/berrange   ~~    https://fstop138.berrange.com :|
+Jim MacArthur <jim.macarthur@linaro.org>
 
 
