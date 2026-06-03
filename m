@@ -4,81 +4,81 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 81022CD6E55
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8400DCD6E6B
 	for <qemu-devel@archiver.kernel.org>; Wed,  3 Jun 2026 18:27:19 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wUqIZ-0000bC-BY; Wed, 03 Jun 2026 14:26:39 -0400
+	id 1wUqIb-0000bg-RJ; Wed, 03 Jun 2026 14:26:41 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <jim.macarthur@linaro.org>)
- id 1wUqIQ-0000XU-W6
- for qemu-devel@nongnu.org; Wed, 03 Jun 2026 14:26:31 -0400
-Received: from mail-wm1-x335.google.com ([2a00:1450:4864:20::335])
+ id 1wUqIV-0000YN-27
+ for qemu-devel@nongnu.org; Wed, 03 Jun 2026 14:26:36 -0400
+Received: from mail-wr1-x42b.google.com ([2a00:1450:4864:20::42b])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <jim.macarthur@linaro.org>)
- id 1wUqIP-0003Yi-24
- for qemu-devel@nongnu.org; Wed, 03 Jun 2026 14:26:30 -0400
-Received: by mail-wm1-x335.google.com with SMTP id
- 5b1f17b1804b1-490ae94a89eso30736535e9.1
- for <qemu-devel@nongnu.org>; Wed, 03 Jun 2026 11:26:27 -0700 (PDT)
+ id 1wUqIR-0003aM-6E
+ for qemu-devel@nongnu.org; Wed, 03 Jun 2026 14:26:34 -0400
+Received: by mail-wr1-x42b.google.com with SMTP id
+ ffacd0b85a97d-45ef29c5561so3330836f8f.0
+ for <qemu-devel@nongnu.org>; Wed, 03 Jun 2026 11:26:30 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1780511186; x=1781115986; darn=nongnu.org;
- h=cc:to:content-transfer-encoding:mime-version:message-id:date
- :subject:from:from:to:cc:subject:date:message-id:reply-to;
- bh=6RwiudhEWA7LbPZR+jTN6zMMB0hfCg8/CZoYlqSchzk=;
- b=Je7R8ZiNyVrp+ENH6TzEzcfamivmY33DqK8GsIur/o56m6IImFt2J2XuuEmxd1LS1b
- DGQ51WL7xShg1I34IsY7Fx+NQZuw1n8+GNj2fh1oeo+7ilTQ7Unrhp9SpLqSf5jg6/bH
- 5LD2lNeOX/3xFu+jkHvWuIDCHelsneS8YlevSTyiMQep0OxYVjSgBfbBmA2eJsft0DKK
- QmrhC5pSGQqQpTiuKvpR6C+wOrkPdj9EH0CfyvigjgkBPng8U0xIddfR7wUdqrvzqEhm
- DExqiSL0jCxYr0oDrptnHR7GY18R9sCHTU6H2wrR934lX2pXuU3zudDtA/X3mmA9S1up
- zYnw==
+ d=linaro.org; s=google; t=1780511189; x=1781115989; darn=nongnu.org;
+ h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
+ :mime-version:subject:date:from:from:to:cc:subject:date:message-id
+ :reply-to; bh=JCOFwbtmACj5KLqY5uWhFxRDRINL6yEo/buAYwIBFpo=;
+ b=w4ox6v6MiUUfabuSRGYj/ek7i1gSDSGBlrsv9ZN1ZrMoRawQFA4CCbE0tZST5acIfA
+ sPW6LZ5LEOaxgBUMSefDO/vfQUynTutCzg6UoGEEMcCsAZtGHYSo8vDW4fMlU8Jg1hEj
+ Jd06g6wViW5G7jTkVg7tFBMgmZUV8C9/RRH5XkrJkCJ1Cp69C6/qbkjklhwqRvD8WJAX
+ E21Wm7GhgmT8pKWRn/hYgT7ZnAtGT19qx/38tS1pQmNfKsiqfir1FkjS6t81q2geYlH1
+ KxEpv3PMu55KsLdUFci6MnfxWphG2lEghmLbMhwoxoQsh95U946uRTjo7ycndrMATMXE
+ DviA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1780511186; x=1781115986;
- h=cc:to:content-transfer-encoding:mime-version:message-id:date
- :subject:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=6RwiudhEWA7LbPZR+jTN6zMMB0hfCg8/CZoYlqSchzk=;
- b=pl3W8mqNSrgR7PDHV/qWjkwc+B8nIAH4ehLc01MMgpACZEQZrofOJbSyPTXP4WXPn1
- 0qAzyC2i8BxjEsEGn4fQTKE6ZB67CxuY8QLtqiyIoNAWGQ4TaNuZtC8Nzu2+3D8I8Ke9
- USXqpPA1mV410/lzn5YAYBdSKhnD34Z06fZvFhE/kNCYknDbgPyNHjgGrUyE5aDi1tLn
- PHlVTdmoBF0DaLkjF+dF1oSEGRgQPmb9xTDnLP+WIOvTQzPiP8t3Fmmy2ka25uwP2GEL
- dfNS4nfj5Qe+trfmBd4Scz5n4d0YSVjfrXCr5uaojDFMCP5JNwrz5OanjB7uJSUxmPRn
- 8eNg==
-X-Gm-Message-State: AOJu0Yz0WShvJU4zHhXIuFZhdUH2VXUG66v/YA5/9RxGeDuw3CkMwM+W
- 2pY4JpaWYuZvmsJKbwQEKdmNzbq9rnRGuiiW78KQ6iLpMhPDHDAEUBfPnn0yY8f9lz4=
-X-Gm-Gg: Acq92OFyx7wOKVPu3PaeLbm7nWWr55OIls4xzAw6medQNu+GaeTZNKEg0UA9bAqPWPj
- 4zxfkvBIithGecR3tS1tOOdPyOPXyVE+XrRemzHJ6mNyOdSM4GTio53t13Nkpdgcge9zGkj4OLO
- h8ZGa9/ov5FxyYVUtbl4vmGweR/LBojH3Y9Xc7i/+QyhXqXU93G7HfxD/PJ3P/D8xEEDHyzwbnY
- OFw5XD1sv/m7HtEnQnbNT+EgeA9SEX5qeFnOUXfxGXDt3a5ScsggDIOBPqLo27oX2dscx2lmFwx
- c98DYSCgr1U4GGG3LeSZuPz3+3i+3Hg6jyhX9FSiyGAXVeR6zGHCy2Hsgthdn8LGX4Kz/KzIz13
- qXcRBLRJJz8antOQ4gZuRbtd/UO7ZDYj2iZoNXCVDd6p3dIaFUjr7VVNUqNoGBafciiqOQjRHz6
- T6JWMg0zqZjKbo6OBPjh5Fq4MSGX3rZHL3f8q29Q==
-X-Received: by 2002:a05:600c:c84:b0:490:389:7644 with SMTP id
- 5b1f17b1804b1-490b5fe0e36mr76438755e9.17.1780511185963; 
- Wed, 03 Jun 2026 11:26:25 -0700 (PDT)
+ d=1e100.net; s=20251104; t=1780511189; x=1781115989;
+ h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
+ :mime-version:subject:date:from:x-gm-gg:x-gm-message-state:from:to
+ :cc:subject:date:message-id:reply-to;
+ bh=JCOFwbtmACj5KLqY5uWhFxRDRINL6yEo/buAYwIBFpo=;
+ b=fH1Dkoh8PJ4nJdL8fh/yCjf/2WmZt8J2n8+Xzo24p3PLcsyIb/UVkg1pvNaT/E5UfZ
+ XV8fsTZzx5UwWNGd74NvlU92DcuY65YwAeiaLmuPyAacjNJZTAj3tiAbtHMuSC3xb9Bn
+ xlnIbwmmxgrbW00/VfT5t4eGNQ61X3pFGDoboO1rsxsT3RhNIsQi5Hf9rSd2Vci6J8HK
+ KoVWtD/D134A6MJcHX8ozjenxdp41vKRAa0ArIY8lKYEQXxXTFmLuzTrOAxWcdHNnuS6
+ V5x6WC3cJZ5EBpTp8vie42eC4XaoOTjnN/9zj5y2R3yAyQ1n70Rnq6tP4UlSy7dttDBy
+ AX5Q==
+X-Gm-Message-State: AOJu0Yy41bYF0fV+XjCiJWDGyFfURLBognWBUW9scVzg1iU2Is8b6eTx
+ c3JbjDVCdxy/odDpCiOj4n3OOR5K2l3wGO5SXG8GWLr4coi+4aFc1Dk4vqFn6lLJvZ8=
+X-Gm-Gg: Acq92OEq0yeaDY4YsHxq19IoCLzYr0nydfgMMPrdufICXpCeVEub4Hj05iU0FTrqG3v
+ XxrRFkxSI+DHwDoL+L+EFY1g59PSL+cFav1U38adbzNBxUkh8TshYjo8I2IBotOy+zaTgqOGdLP
+ gOfmIzROrYzs7m19Uwqmc6IGp3Q63SZ9JDjFR+gKM9gWKjXmJYGQwWmwOVjr5uK3SnljQx4TJgZ
+ LJa+jIO1IubLYvxPZFQ3HxF1dDv+e6/Tr5xYCanfxIt/1eDhfV+T8nHYEgiOe5SrXFnEv4VjQe+
+ 2TrvJOwBpvvrhsnOplc9hLRMwGPAQFccnw1mqzjZic6yaJgix9U0wDkpyy62N19c0IJDbAXSUiR
+ Iqs1aHYGL55Yx8L+9wXvSCk6la6wVLu208nANy9Miz+3GiKYn/vGWqUTgvLOrt4LLSRGmz40LiH
+ o2M80SKcid0+reLSXX5wYuiqLXiW2Xs9ZfXEly+A==
+X-Received: by 2002:a05:6000:4b0b:b0:45e:f68d:e791 with SMTP id
+ ffacd0b85a97d-46021615d47mr7464882f8f.0.1780511189508; 
+ Wed, 03 Jun 2026 11:26:29 -0700 (PDT)
 Received: from [127.0.1.1] ([2a10:d582:31e:0:d530:6a6b:58a7:e220])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-4601f2ed944sm9793127f8f.13.2026.06.03.11.26.25
+ ffacd0b85a97d-4601f2ed944sm9793127f8f.13.2026.06.03.11.26.28
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 03 Jun 2026 11:26:25 -0700 (PDT)
+ Wed, 03 Jun 2026 11:26:29 -0700 (PDT)
 From: Jim MacArthur <jim.macarthur@linaro.org>
-Subject: [PATCH v2 0/6] target/arm: Add aarch64 GPC3 bypass windows
-Date: Wed, 03 Jun 2026 19:26:19 +0100
-Message-Id: <20260603-jmac-gpc3b-v2-0-115c51936962@linaro.org>
+Date: Wed, 03 Jun 2026 19:26:24 +0100
+Subject: [PATCH v2 5/6] tests/tcg/aarch64/system: Alternative boot object
+ for exception logging
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-X-B4-Tracking: v=1; b=H4sIAMxxIGoC/23MSw7CIBSF4a00dywGaEsfI/dhOkBevUahAUM0D
- XsXO3b4n+R8OyQT0SSYmx2iyZgw+Br81IBapXeGoK4NnHJBez6S+1Mq4jbV3ggbBzvpQVmqNdT
- DFo3F94Fdl9orpleIn8PO7Lf+ZTIjlOi2U51QPRWTvTzQyxjOITpYSilfR9nlxKUAAAA=
+Message-Id: <20260603-jmac-gpc3b-v2-5-115c51936962@linaro.org>
+References: <20260603-jmac-gpc3b-v2-0-115c51936962@linaro.org>
+In-Reply-To: <20260603-jmac-gpc3b-v2-0-115c51936962@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: Peter Maydell <peter.maydell@linaro.org>, qemu-arm@nongnu.org, 
  Jim MacArthur <jim.macarthur@linaro.org>
 X-Mailer: b4 0.13.0
-Received-SPF: pass client-ip=2a00:1450:4864:20::335;
- envelope-from=jim.macarthur@linaro.org; helo=mail-wm1-x335.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::42b;
+ envelope-from=jim.macarthur@linaro.org; helo=mail-wr1-x42b.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -101,51 +101,176 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Adds the GPC bypass windows defined in D9.2 of the Arm ARM. D9.8 (the 
-APAS instruction) is not implemented yet.
+This allows us to record information about exceptions using a small
+area of memory, and continue with the test so it can verify exceptions
+have been taken where expected.
 
-A large part of this is testing. To test GPC effectively, we need to
-check that memory accesses are causing exceptions, or not causing exceptions
-as appropriate. For some tests, boot.S is altered to record certain
-exceptions and continue executing the test. An alternative would be
-to use gdbstub to break on locations inside the vector table and continue,
-but this requires significant coordination between the C test binary and
-Python test driver, so has been avoided for now.
+ALT_VECTOR_TABLE is added to switch this on, and altboot.o
+is built from boot.S with this flag. Since boot.o is created for multiple
+test targets, we have to build a separate object and selectively link this
+new altboot.o into particular test binaries.
 
 Signed-off-by: Jim MacArthur <jim.macarthur@linaro.org>
 ---
-Changes in v2:
-- ptw.c changes have been rewritten after a number of faults were found
-- boot.S: Align exception_log to page
-- target/arm/helper.c: flush all caches and remove redundant mask
-- Switch on of GPC3 moved after feature implementation
-- Link to v1: https://lore.kernel.org/qemu-devel/20260528-jmac-gpc3b-v1-0-d34c46c5069f@linaro.org
+ tests/tcg/aarch64/Makefile.softmmu-target | 11 ++++--
+ tests/tcg/aarch64/system/boot.S           | 62 +++++++++++++++++++++++++++++++
+ tests/tcg/aarch64/system/boot.h           | 14 +++++++
+ 3 files changed, 83 insertions(+), 4 deletions(-)
 
----
-Jim MacArthur (6):
-      target/arm/tcg/cpu64.c: Extra test for GPC3.
-      target/arm: Setup new registers for GPC3
-      target/arm/ptw.c: Add Granule Bypass Windows
-      target/arm/cpu-features.h: x-rme now means GPC3
-      tests/tcg/aarch64/system: Alternative boot object for exception logging
-      tests/tcg/aarch64/system/gpc-test.c: Basic test for granule protection check
+diff --git a/tests/tcg/aarch64/Makefile.softmmu-target b/tests/tcg/aarch64/Makefile.softmmu-target
+index f7a7d2b800..47b32968fb 100644
+--- a/tests/tcg/aarch64/Makefile.softmmu-target
++++ b/tests/tcg/aarch64/Makefile.softmmu-target
+@@ -25,7 +25,7 @@ LDFLAGS=-Wl,-T$(LINK_SCRIPT)
+ TESTS+=$(AARCH64_TESTS) $(MULTIARCH_TESTS)
+ EXTRA_RUNS+=$(MULTIARCH_RUNS)
+ CFLAGS+=-nostdlib -ggdb -O0 $(MINILIB_INC)
+-LDFLAGS+=-static -nostdlib $(CRT_OBJS) $(MINILIB_OBJS) -lgcc
++LDFLAGS+=-static -nostdlib $(MINILIB_OBJS) -lgcc
+ 
+ config-cc.mak: Makefile
+ 	$(quiet-@)( \
+@@ -36,17 +36,20 @@ config-cc.mak: Makefile
+ # building head blobs
+ .PRECIOUS: $(CRT_OBJS)
+ 
++altboot.o: $(CRT_PATH)/boot.S
++	$(CC) $(CFLAGS) $(EXTRA_CFLAGS) -DALT_VECTOR_TABLE -x assembler-with-cpp -Wa,--noexecstack -c $< -o $@
++
+ %.o: $(CRT_PATH)/%.S
+ 	$(CC) $(CFLAGS) $(EXTRA_CFLAGS) -x assembler-with-cpp -Wa,--noexecstack -c $< -o $@
+ 
+ # Build and link the tests
+ %: %.c $(LINK_SCRIPT) $(CRT_OBJS) $(MINILIB_OBJS)
+-	$(CC) $(CFLAGS) $(EXTRA_CFLAGS) $< -o $@ $(LDFLAGS)
++	$(CC) $(CFLAGS) $(EXTRA_CFLAGS) $< -o $@ $(LDFLAGS) boot.o
+ 
+ memory: CFLAGS+=-DCHECK_UNALIGNED=1
+ 
+ memory-sve: memory.c $(LINK_SCRIPT) $(CRT_OBJS) $(MINILIB_OBJS)
+-	$(CC) $(CFLAGS) $(EXTRA_CFLAGS) $< -o $@ $(LDFLAGS)
++	$(CC) $(CFLAGS) $(EXTRA_CFLAGS) $< -o $@ $(LDFLAGS) boot.o
+ 
+ memory-sve: CFLAGS+=-DCHECK_UNALIGNED=1 -march=armv8.1-a+sve -O3
+ 
+@@ -107,7 +110,7 @@ QEMU_MTE_ENABLED_MACHINE=-M virt,mte=on -cpu max -display none
+ QEMU_OPTS_WITH_MTE_ON = $(QEMU_MTE_ENABLED_MACHINE) $(QEMU_BASE_ARGS) -kernel
+ mte: CFLAGS+=-march=armv8.5-a+memtag
+ mte: mte.S $(LINK_SCRIPT) $(CRT_OBJS) $(MINILIB_OBJS)
+-	$(CC) $(CFLAGS) $(EXTRA_CFLAGS) $< -o $@ $(LDFLAGS)
++	$(CC) $(CFLAGS) $(EXTRA_CFLAGS) $< -o $@ $(LDFLAGS) boot.o
+ 
+ run-mte: QEMU_OPTS=$(QEMU_OPTS_WITH_MTE_ON)
+ run-mte: mte
+diff --git a/tests/tcg/aarch64/system/boot.S b/tests/tcg/aarch64/system/boot.S
+index 8bfa4e4efc..57bddda976 100644
+--- a/tests/tcg/aarch64/system/boot.S
++++ b/tests/tcg/aarch64/system/boot.S
+@@ -60,6 +60,40 @@ curr_sp0_irq:
+ curr_sp0_fiq:
+ curr_sp0_serror:
+ curr_spx_sync:
++#ifdef ALT_VECTOR_TABLE
++	sub     sp, sp, #16
++	stp     x0, x1, [sp, #0]
++	mrs     x0, ESR_EL3
++	lsr 	x0, x0, #26
++	and 	x0, x0, #0x3f
++	cmp 	x0, #37
++	beq 	data_fault
++	cmp 	x0, #30
++	beq 	gpc_fault
++	b       generic_exception
++
++data_fault:
++	mrs     x0, FAR_EL3
++	adrp    x1, exception_log
++	str     x0, [x1]
++	ldr     x0, =0x1001
++	str     x0, [x1, #8]
++	b       skip_return
++gpc_fault:
++	mrs     x0, FAR_EL3
++	adrp    x1, exception_log
++	str     x0, [x1]
++	ldr     x0, =0x1002
++	str     x0, [x1, #8]
++	/* Fall through */
++skip_return:
++	mrs     x0, ELR_EL3
++	add     x0, x0, #4 /* Skip faulting instruction */
++	msr     ELR_EL3, x0
++	ldp     x0, x1, [sp, #0]
++	add     sp, sp, #16
++	eret
++#endif
+ curr_spx_irq:
+ curr_spx_fiq:
+ curr_spx_serror:
+@@ -71,6 +105,7 @@ lower_a32_sync:
+ lower_a32_irq:
+ lower_a32_fiq:
+ lower_a32_serror:
++generic_exception:
+ 	adr	x1, .unexp_excp
+ exit_msg:
+ 	mov	x0, SYS_WRITE0
+@@ -404,6 +439,33 @@ ttb_stage2:
+ 	.space	4096, 0
+ 
+ 	.align	12
++	.global realms_gpt0
++	/* GPT stage 0 table */
++realms_gpt0:
++	.space 4096, 0
++	.align 17
++	.global realms_gpt1
++	/* GPT stage 1 table, initialised to all 0xFF (full access) */
++realms_gpt1:
++	.space 524288, 0xFF
++#ifdef ALT_VECTOR_TABLE
++	.align 12
++	.global exception_log
++	.global exception_fault_address
++	.global exception_type_code
++exception_log:
++	/*
++	 *These fields record details of the last exception, if ALT_VECTOR_TABLE
++	 * is defined.
++	 */
++exception_fault_address:
++	/* The contents of FAR_EL3 when an exception is taken. */
++	.space 8, 0
++exception_type_code:
++	/* A generic code indicating what type of exception occurred. */
++	.space 8, 0
++#endif
++	.align 12
+ system_stack:
+ 	.space 4096, 0
+ system_stack_end:
+diff --git a/tests/tcg/aarch64/system/boot.h b/tests/tcg/aarch64/system/boot.h
+new file mode 100644
+index 0000000000..cb9ab6c1b9
+--- /dev/null
++++ b/tests/tcg/aarch64/system/boot.h
+@@ -0,0 +1,14 @@
++/* SPDX-License-Identifier: GPL-2.0-or-later */
++/*
++ *
++ *
++ * Copyright (c) 2026 Linaro Ltd
++ *
++ */
++
++
++/* Global variables exported in boot.S */
++extern volatile uint64_t exception_fault_address; /* Updated by ISR */
++extern volatile uint64_t exception_type_code; /* Updated by ISR */
++extern uint64_t realms_gpt0[];
++extern uint64_t realms_gpt1[];
 
- target/arm/cpu-features.h                 |   5 +
- target/arm/cpu.h                          |   7 ++
- target/arm/helper.c                       |  19 ++++
- target/arm/ptw.c                          |  81 +++++++++++++++
- target/arm/tcg/cpu64.c                    |   4 +-
- tests/tcg/aarch64/Makefile.softmmu-target |  22 +++-
- tests/tcg/aarch64/system/boot.S           |  62 +++++++++++
- tests/tcg/aarch64/system/boot.h           |  14 +++
- tests/tcg/aarch64/system/gpc-test.c       | 165 ++++++++++++++++++++++++++++++
- 9 files changed, 372 insertions(+), 7 deletions(-)
----
-base-commit: 405c32d2b18a683ba36301351af75125d9afda08
-change-id: 20260528-jmac-gpc3b-187f9d7cf0dd
-
-Best regards,
 -- 
-Jim MacArthur <jim.macarthur@linaro.org>
+2.43.0
 
 
