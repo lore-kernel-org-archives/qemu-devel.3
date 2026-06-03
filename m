@@ -4,134 +4,161 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id CCF71CD6E55
-	for <qemu-devel@archiver.kernel.org>; Wed,  3 Jun 2026 20:57:40 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1EF8ACD6E55
+	for <qemu-devel@archiver.kernel.org>; Wed,  3 Jun 2026 21:03:58 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wUseY-0000gt-3m; Wed, 03 Jun 2026 16:57:30 -0400
+	id 1wUskQ-0002Sk-KP; Wed, 03 Jun 2026 17:03:34 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <daniel.barboza@oss.qualcomm.com>)
- id 1wUseW-0000gK-B0
- for qemu-devel@nongnu.org; Wed, 03 Jun 2026 16:57:28 -0400
+ (Exim 4.90_1) (envelope-from <pierrick.bouvier@oss.qualcomm.com>)
+ id 1wUskM-0002RS-MD
+ for qemu-devel@nongnu.org; Wed, 03 Jun 2026 17:03:32 -0400
 Received: from mx0a-0031df01.pphosted.com ([205.220.168.131])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <daniel.barboza@oss.qualcomm.com>)
- id 1wUseT-0005ZD-VI
- for qemu-devel@nongnu.org; Wed, 03 Jun 2026 16:57:28 -0400
-Received: from pps.filterd (m0279863.ppops.net [127.0.0.1])
+ (Exim 4.90_1) (envelope-from <pierrick.bouvier@oss.qualcomm.com>)
+ id 1wUskJ-0007Hw-Pi
+ for qemu-devel@nongnu.org; Wed, 03 Jun 2026 17:03:29 -0400
+Received: from pps.filterd (m0279865.ppops.net [127.0.0.1])
  by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 653Ebl0K1476841
- for <qemu-devel@nongnu.org>; Wed, 3 Jun 2026 20:57:24 GMT
+ 653JZ5kp1039436
+ for <qemu-devel@nongnu.org>; Wed, 3 Jun 2026 21:03:26 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
  cc:content-transfer-encoding:content-type:date:from:in-reply-to
  :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
- PdIYZae1tWvrkLxF4yMuTamUIik0PoI9G5/U2jO3iNM=; b=B00rR9lRLRTm1CiW
- lcPjfJBuAbteTyVlltZ/sk/7oqBYh3IY5jhjHsqjjMjfk0v6GLfb+k4MsQWVHI82
- XuGxjEcqdp34NjD8yt+g7mEgd7nTt1HQfhUw2q9sSgzR9K96BzPF8Yy311TN6GCx
- V1OCWaFTMWg6R66xbeuEoRpZyYdwP2QXje7FaTLabiPSCr+CEHbf51gJHfBqdj3H
- sTfBCFjCRp+gqn3NAOfkzS5jPPdxDsupQ/3wY0GTk4LdEgLhgSydADZGzsvdTBCp
- MeMZnA3mWnq0lgYZBAlmpXdkl76bPif49dOL1ogqoJgfHUH+eK96X0BftiOvGlU7
- s4wi9g==
-Received: from mail-vk1-f197.google.com (mail-vk1-f197.google.com
- [209.85.221.197])
- by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4ejp6nsngs-1
+ YOyiiGvLyzJ5lPW+qRIUgntNvI5whldcE4+IuyfOcm4=; b=JFufnc6lL2fn8Tgf
+ 4XSW4TAi4I3T2t3L2EwnGcbwBqHKeMLE+Jbv7oFeBN+SAkCDRl8rNliWJusCawlx
+ cxLensJj07FpCQ3NWzAOEUNzZ2gm7ggBse/ioSZKRnUbFCQifT+LMAeWAt1WUiaJ
+ Td8N15W2OvoQleV2kA7A5m4HZV/n9ksfkm9MkvZD0bqEzAUScwRWXqouxFfo0YmH
+ qFUwds3fVY2Fy+9N+39HmtmqRhs596/tgACn1ISGmyIpbMHjXVs0o4RTzDMxgHj2
+ YVJBpxNjK6GXLOmj53dXPVcVSttF5orVazuJ/OkrJ3BA7nIIzReGGxiGJRIoKbb/
+ vbKijA==
+Received: from mail-dy1-f197.google.com (mail-dy1-f197.google.com
+ [74.125.82.197])
+ by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4ejtj8ga2j-1
  (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
- for <qemu-devel@nongnu.org>; Wed, 03 Jun 2026 20:57:24 +0000 (GMT)
-Received: by mail-vk1-f197.google.com with SMTP id
- 71dfb90a1353d-59eb9191180so2543162e0c.1
- for <qemu-devel@nongnu.org>; Wed, 03 Jun 2026 13:57:24 -0700 (PDT)
+ for <qemu-devel@nongnu.org>; Wed, 03 Jun 2026 21:03:25 +0000 (GMT)
+Received: by mail-dy1-f197.google.com with SMTP id
+ 5a478bee46e88-304dd917645so6285048eec.1
+ for <qemu-devel@nongnu.org>; Wed, 03 Jun 2026 14:03:25 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=oss.qualcomm.com; s=google; t=1780520243; x=1781125043; darn=nongnu.org;
+ d=oss.qualcomm.com; s=google; t=1780520605; x=1781125405; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:content-language:from
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=PdIYZae1tWvrkLxF4yMuTamUIik0PoI9G5/U2jO3iNM=;
- b=X1G6xCPElYnaFwwxDFKbfxGCRBL40sTj1+n5XLal8rSugFATU0QL1GK4ditZDnlRfi
- t7BgU+0otPU50cvKKpuIkh/KgoqOQqQ1yiAF6gBiThfBQX4crUwNLhikhSi6Y3A8RGaW
- pPIgl0QgDyBQkZJ2x22fsgMHqCGLHm+UiGzHLVV7RkPRJIHPW90xnqvntXcszLLcZ9F+
- pjveta54WgyOkq4LAMSi28CABiNg17rcpu7AVx/UB1FvdFksYgFWf5wVUyAOko0/C4EI
- PtA3lL2GUP0yIDOopbq3j6tTm/tZGXiU6DlMZ2m7R8BFx/Sjqfz5zg9QG22fSiY9t+oT
- A5Hg==
+ bh=YOyiiGvLyzJ5lPW+qRIUgntNvI5whldcE4+IuyfOcm4=;
+ b=IyXnz2Ez7EqiDNWvYuYc/hGgVed/ZQkcO1RNglMA0TOL5pF+31BXMlIBVQO5zT0h8X
+ /QTNwuMLRVH7byel4ect3JJtjRbhLl7QvDJLiD//au/5w7SgYcjEYkIxF8YTfQPw5alp
+ hQT3sFluTtIWee7uRPxuY6cGgjSsYCmPcce3FiW5KlOhzsLHKsaz2J8YLNAFFmuC78rM
+ G6rV0iP5tHzxf16DyEUCNHIzf2EX/iK/E4VaVVy+ZIGnvnP+gPYXyM5fK+z8ywNRkAx4
+ gprZtM6nM90Jrs5rGMJ456RVzcZzc476tuarNVB7Nwg8zJXoYEjkaHBDhyUtXvt7udQD
+ lW1w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1780520243; x=1781125043;
+ d=1e100.net; s=20251104; t=1780520605; x=1781125405;
  h=content-transfer-encoding:in-reply-to:content-language:from
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=PdIYZae1tWvrkLxF4yMuTamUIik0PoI9G5/U2jO3iNM=;
- b=HnTvYIUgRVSt0V7iUKCkI5CBUyERX3pQ/mGTghjgSy8YUxKWuJJ6cbv28KBA24CK1K
- ohDVpNUP0HJwT9gG7eB/D6XSdyx0+a5+avAdHwtxD15ZYg9mkM+M6BACOn6wXj1egJIm
- ZolvdpOOdE/0TP2x36AuYldbkgHo0P7cTeClR9arzelhuczqsAzv4eqz48b7I+nxBtOj
- UsWU3mkFda+uRtR0Lqjv9bWwyvhcrOCihe29OlkxLgnOqeqiTc1ipSdM3e9pfCyMO8Ve
- qBhoSPLkOqlDbtuILg+fvPi+vFGJjvSmz1J0lwf/judK+2y8u1SZWu4ZszflPz8X0Ufr
- OUyQ==
-X-Gm-Message-State: AOJu0YyBBGE7LX0TkoU45yAuPppXugNjl8WZ7GFKYXO7Q4dn+cH1BhGi
- G7K6W6r1iuECagzNKKRaf0ZmDG5vL/fEaJMW8/SyrSw/ykCeasiNGb+frgxZ1S4l3Ez4ipoHqw4
- QzFroN15MTKVfWIGPO7wKkz1WacwZSatjcij9F/N9eDHGpppBVdJAq6lxzA==
-X-Gm-Gg: Acq92OGZUZgFxw2jQb447MDBC8efqh9RtFJCQZ5V/wZTaFlok2vL5dSCcFIRtJmSymY
- tjKYKuC/ij05gF8zYONUbawprkUiRSAaZCqNGWqjwaR9K6fTV6w3FziPSgIBd+9plSSPLXFg+vz
- O6JEC1ajlQqbdZXhPNktIspn99gSWpCg1pWqngv9N5MbVmqRXyGbc3aInlyEVSByjwXqQVFffz6
- heoXuvE4F1QsCOgisMfXzYUpe2qPEtCyHjuqithuwFHQWGQgpIcqiizm5aOza6vkaDYQhL65OKn
- xKQA05EvtK/+NNqR/qOEB9M8BWrobk/s3mrpeeuqdS7zXvg1NrjCMTLF/IbqABbPHjQOAGQhSdt
- WIzuIa3sZO/Z1sAePGLisyo33iGIeheZ79Bd4qEJvUy37pzWFaGblN8A+THWBlOOvKrB6
-X-Received: by 2002:a05:6102:1487:b0:632:88f6:d6ae with SMTP id
- ada2fe7eead31-6ec460be024mr2688551137.22.1780520242804; 
- Wed, 03 Jun 2026 13:57:22 -0700 (PDT)
-X-Received: by 2002:a05:6102:1487:b0:632:88f6:d6ae with SMTP id
- ada2fe7eead31-6ec460be024mr2688526137.22.1780520241048; 
- Wed, 03 Jun 2026 13:57:21 -0700 (PDT)
-Received: from [192.168.68.106] ([177.170.117.62])
- by smtp.gmail.com with ESMTPSA id
- a1e0cc1a2514c-96414113f10sm2868309241.10.2026.06.03.13.57.18
+ bh=YOyiiGvLyzJ5lPW+qRIUgntNvI5whldcE4+IuyfOcm4=;
+ b=CYwm04/EmvliXmC6a+9S4T/OjNqGas3xK15XYSgHGatWiSVrRRsqq9/rbzXIIq0fEs
+ 38FpuSyRYKSs2PrsHV6xCq27FEE/4DNuNExIhCG4ytsIuV7gDI6tRMdtj41atWKM0dRk
+ 7+kKVo1M8h4RudNw8BsE80dPtRUKPx4UiI9wMXsZrCuTqglebKkx+hvEJkinaC1WDJQU
+ pTvUs9KO2XYYL5oatvDF7mI0Jc3rje7euOZgUKTujmgIDyW7sGKErT1KywCmCI/xDoTr
+ Gn3NHcnbSoO/UFmBGOPPPEWSU1KqhZvYrd4I4VkqBI8FkXeoPK1VHvr8cbcZim57lm1g
+ eutw==
+X-Gm-Message-State: AOJu0YyFip4J+bKg6t9725+807icCVqEllL34v/h1rZXEuAsIUQHY5qu
+ a2juf7dgIUMZxqr/7ED5y/EP9Bu/EO3Gy0QAwljtDbwAHF+a04q0oJWA8YPq5mUYQPRi2Gcvnl/
+ ILSywGS840Sc+RhJITfu16sGJfvoGCXXOdT7JfXx9mIBZKt2oZQ+Cmxe5FQ==
+X-Gm-Gg: Acq92OHmA5oaBolL725hobca1wmV1/wiCpEV5bhfN/Zk77ifUUikPVsrywbYu3+RK91
+ e/QLG4JiQP3g47zT/hzJlxViaJEdu3FXRULqS8r8V4JB9uWd1BmoD7YIUraIevlwbAaiUIWJHH5
+ 3PlwSuJREnuRMAc8FwXR5uk8xDuKXC1pZiPdIwdNaA/iAhqYiEYe2+2TR7RTv8+FePMQLE3t/Kg
+ 5hyWhsdYBL/+BJB2DEK64S+cVZS9seq4T1JeXtUVlSNMPAj2Wfk+w5mxMaOZsGRt7IPTpKXUYwG
+ ggapewl73lXyyo6nDvM6WN3IcRy35ZpvkLR6gXK5XVDhqDbqX2sqy3BSJi7oeEsZ519dXyb1AI6
+ nwFgNrO8ZLy05PBcKA9AbYqWJdNCd0tF94gwWEKvbg1uN2NScpUDtaPTCQTRWTSDbO7skocAZwt
+ 8yfj58EnlGFM26aFZV9/a+TX79
+X-Received: by 2002:a05:7300:6ca1:b0:304:835e:fd25 with SMTP id
+ 5a478bee46e88-3074fa571ddmr2880218eec.4.1780520604957; 
+ Wed, 03 Jun 2026 14:03:24 -0700 (PDT)
+X-Received: by 2002:a05:7300:6ca1:b0:304:835e:fd25 with SMTP id
+ 5a478bee46e88-3074fa571ddmr2880184eec.4.1780520603964; 
+ Wed, 03 Jun 2026 14:03:23 -0700 (PDT)
+Received: from [192.168.1.170] (216-71-219-44.dyn.novuscom.net.
+ [216.71.219.44]) by smtp.gmail.com with ESMTPSA id
+ 5a478bee46e88-3074db55f60sm4341750eec.6.2026.06.03.14.03.21
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 03 Jun 2026 13:57:20 -0700 (PDT)
-Message-ID: <b063eb61-a246-4f10-bac2-ee9272afcd2f@oss.qualcomm.com>
-Date: Wed, 3 Jun 2026 17:57:15 -0300
+ Wed, 03 Jun 2026 14:03:23 -0700 (PDT)
+Message-ID: <bab26b3e-58c2-4009-b230-4cf54b620a49@oss.qualcomm.com>
+Date: Wed, 3 Jun 2026 14:03:21 -0700
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3 1/1] target/riscv: deprecate 'debug' CPU property and
- Debug 0.13
-To: Chao Liu <chao.liu.zevorn@gmail.com>
-Cc: qemu-devel@nongnu.org, qemu-riscv@nongnu.org, alistair.francis@wdc.com,
- liwei1518@gmail.com, zhiwei_liu@linux.alibaba.com,
- Tao Tang <tangtao1634@phytium.com.cn>
-References: <20260528131214.2251075-1-daniel.barboza@oss.qualcomm.com>
- <20260528131214.2251075-2-daniel.barboza@oss.qualcomm.com>
- <ahz7-1OomsZTMIz2@ChaodeMacBook-Pro.local>
-From: Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>
+Subject: Re: [PATCH v2 03/16] tests/Makefile.include: add binary dependency to
+ run-tcg-tests-% rules
+To: =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
+Cc: qemu-devel@nongnu.org, Peter Xu <peterx@redhat.com>,
+ =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>,
+ Thomas Huth <th.huth+qemu@posteo.eu>, Song Gao <gaosong@loongson.cn>,
+ John Snow <jsnow@redhat.com>, =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?=
+ <philmd@linaro.org>, Kyle Evans <kevans@freebsd.org>,
+ Pierrick Bouvier <pierrick.bouvier@linaro.org>,
+ Cleber Rosa <crosa@redhat.com>, Warner Losh <imp@bsdimp.com>,
+ Brad Smith <brad@comstyle.com>, Thomas Huth <thuth@redhat.com>,
+ Paolo Bonzini <pbonzini@redhat.com>, Max Filippov <jcmvbkbc@gmail.com>,
+ Brian Cain <brian.cain@oss.qualcomm.com>, Fabiano Rosas <farosas@suse.de>,
+ Peter Maydell <peter.maydell@linaro.org>,
+ Richard Henderson <richard.henderson@linaro.org>, qemu-arm@nongnu.org
+References: <20260521131739.540157-1-alex.bennee@linaro.org>
+ <20260521131739.540157-4-alex.bennee@linaro.org>
+ <74e8bc86-cd81-43f9-b5cb-7e3de3bcd3d0@oss.qualcomm.com>
+ <87tsrzl138.fsf@draig.linaro.org>
+ <093614fb-ced1-4b15-b1e1-5da755f87237@oss.qualcomm.com>
+ <87cxymec7b.fsf@draig.linaro.org>
+ <5bd51a1a-4079-4073-bbd8-f0206a1ad458@oss.qualcomm.com>
+ <0f73d717-1621-4c3f-9c5e-9bfdfaffb0b8@oss.qualcomm.com>
+ <877bor9vor.fsf@draig.linaro.org>
+ <7d58926d-a36d-430f-828e-7ebdd9cc4eb5@oss.qualcomm.com>
+ <87qzmyzbut.fsf@draig.linaro.org>
+ <06092208-1b56-4fea-8d92-bf035fbd0fa3@oss.qualcomm.com>
+ <87fr3eyrvp.fsf@draig.linaro.org>
+ <8a878679-733c-451c-8053-663a74f8d4a7@oss.qualcomm.com>
+ <87a4tlz897.fsf@draig.linaro.org>
+ <86385e93-5425-4145-8a9f-0f72ed5de022@oss.qualcomm.com>
+ <87o6hzx2np.fsf@draig.linaro.org>
+ <5a4eedbb-483c-40ea-a4dd-b34a4b7d7b6e@oss.qualcomm.com>
+ <87wlwfsay4.fsf@draig.linaro.org>
+From: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
 Content-Language: en-US
-In-Reply-To: <ahz7-1OomsZTMIz2@ChaodeMacBook-Pro.local>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Proofpoint-GUID: 9A4uGEs9pW8LyCwc8v0tGZlewPu2sC20
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNjAzMDIwMyBTYWx0ZWRfX+Gq0nIuR+v4M
- 5kpTmxhIexWx1WQxlNJXrtw9v0U0DW6yyiYQ8OSpy1GOQ2rO0pFd40rBueYEGz87oSmL9ILiKRT
- tfV0xqHZIOV9eB4BWfx0VUdRu4E2TUU2ElMabx1ExCi+rnk0mRbsVsnCms1KG6An5x/ahyPHU6g
- Qjw20Qz2TOVeTgEPGOT7q0iSRDNXcbJsPKZPThyTX02ncORBtinsptbGiarib3anUeLj/nfLEa+
- MLK19CAQ/Ip/ZjNFtRaI6o1XZYWFnLzJZl0s+zaJZGOE9koIkz3or5dGFPIEZFCbXlbCajbAE85
- Ig1I1JNXVzeoEFRfETRhrFG+KYyhbQf1AJ7AHDHFY6SZQPV/qpAbvGy5GvQ3XuhiDz6pxUoWehn
- NRLMZMpoTcdyx/d0nog9vqSyGZw+6/vYF5ST4XQ+utOW2zLNkE5d5hftsm0I48SO4pP1OTRJwgz
- oYbcBw9ltTjKzLQTbMA==
-X-Authority-Analysis: v=2.4 cv=DbcnbPtW c=1 sm=1 tr=0 ts=6a209534 cx=c_pps
- a=JIY1xp/sjQ9K5JH4t62bdg==:117 a=gdiugJE53z4H+vvYeRBHqw==:17
+In-Reply-To: <87wlwfsay4.fsf@draig.linaro.org>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+X-Proofpoint-ORIG-GUID: t_wTmALW9ryG2my-NFYhFnYrZ1Kiflv3
+X-Proofpoint-GUID: t_wTmALW9ryG2my-NFYhFnYrZ1Kiflv3
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNjAzMDIwMyBTYWx0ZWRfX61BnInl4NYLF
+ bDfkiJz+zFB/Q7lCmYXwM9oBQeMGGtRmM3NpyuxlYWR5O26GtmUVD0Fa7l/8PLvHcXECjPHpdHG
+ cEOyLJHnTPZZ3hXeDGn2+Z53Anjdjjbkubte+te2lKTOCDEB+siW8gpE4qN606uuDGzASIT2K7B
+ bOR2OUgYjIsFKUKnBi4k9Sa4D7rJJW516UWHGqucsgksjX8123NWvKINiJY5dY4zrlL7tqYcVSN
+ zYunhvecExmLHQgiGg3kK+XEGVtDaohS9UUwr+I8lOoK7qe64/dnZd7lnFd2q6oqxoaX5P2v9Fg
+ vKqCaE6w4heF+hGWxLq6W5ctZGAm/lKzbVxEXGYZstvBN0vWwaahMfa9YHTQlBtikweqn4JV6d2
+ VTJjGufsCAFRrAy6F7Cz4co6c3PYeagm3PdMfbcY/OteD0Zq1q+/fWQ+u6GOYZ0dx3pZ6tWAxfm
+ Q2tZff4caGa/xj10xvw==
+X-Authority-Analysis: v=2.4 cv=f4p4wuyM c=1 sm=1 tr=0 ts=6a20969d cx=c_pps
+ a=Uww141gWH0fZj/3QKPojxA==:117 a=iLqgmErQAxjCjdq5jj1Aqg==:17
  a=IkcTkHD0fZMA:10 a=FelO9ux0wxsA:10 a=s4-Qcg_JpJYA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=yOCtJkima9RkubShWh1s:22
- a=VwQbUJbxAAAA:8 a=pGLkceISAAAA:8 a=EUspDBNiAAAA:8 a=fgrLqfBXAAAA:8
- a=eZogcxxPpfSTaTVD1l0A:9 a=QEXdDO2ut3YA:10 a=tNoRWFLymzeba-QzToBc:22
- a=_Ge82aPy-h_wFa7gWU4u:22
-X-Proofpoint-ORIG-GUID: 9A4uGEs9pW8LyCwc8v0tGZlewPu2sC20
+ a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=Um2Pa8k9VHT-vaBCBUpS:22
+ a=EUspDBNiAAAA:8 a=wXoOh2Y6ts7LvPVPfYkA:9 a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
+ a=PxkB5W3o20Ba91AHUih5:22
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.125,FMLib:17.12.100.49
  definitions=2026-06-03_06,2026-05-28_03,2025-10-01_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- priorityscore=1501 malwarescore=0 adultscore=0 spamscore=0 phishscore=0
- bulkscore=0 lowpriorityscore=0 clxscore=1015 impostorscore=0 suspectscore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2605210000 definitions=main-2606030203
+ spamscore=0 suspectscore=0 phishscore=0 bulkscore=0 clxscore=1015
+ adultscore=0 priorityscore=1501 impostorscore=0 malwarescore=0
+ lowpriorityscore=0 classifier=typeunknown authscore=0 authtc= authcc=
+ route=outbound adjust=0 reason=mlx scancount=1 engine=8.22.0-2605210000
+ definitions=main-2606030203
 Received-SPF: pass client-ip=205.220.168.131;
- envelope-from=daniel.barboza@oss.qualcomm.com; helo=mx0a-0031df01.pphosted.com
+ envelope-from=pierrick.bouvier@oss.qualcomm.com;
+ helo=mx0a-0031df01.pphosted.com
 X-Spam_score_int: -27
 X-Spam_score: -2.8
 X-Spam_bar: --
@@ -154,336 +181,161 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-
-
-On 6/1/2026 1:04 AM, Chao Liu wrote:
-> Hi Daniel,
+On 6/3/2026 12:03 PM, Alex Bennée wrote:
+> Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com> writes:
 > 
-> On Thu, May 28, 2026 at 10:12:14AM +0800, Daniel Henrique Barboza wrote:
->> Starting on commit f31ba686a9 ("target/riscv/cpu.c: add 'sdtrig' in
->> riscv,isa') the 'debug' flag has been used as an alias for 'sdtrig' that
->> is, for now, compliant with Debug 0.13 that was ratified 8 years go.
+>> On 5/28/2026 3:13 AM, Alex Bennée wrote:
+>>> Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com> writes:
+>>>
+>>>> On 5/26/2026 11:17 PM, Alex Bennée wrote:
+>>>>> Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com> writes:
+>>>>>
+>>> <snip>
+>>>>>
+>>>>> What do you mean? I run check-tcg all the time.
+>>>>>
+>>>>> Which containers fail to build for you? The main cross-compiler one
+>>>>> (debian-all-test-cross) is built all the time.
+>>>>>
+>>>>
+>>>> Build is working out of the box now.
+>>>> However, it seems that only tests for aarch64, arm and x86_64 are run
+>>>> when using containers without having installed cross compilers.
+>>>> Maybe it's another carefully handcrafted feature of tcg Makefiles?
+>>>
+>>> Works for me over here. Do you have podman or docker installed?
+>>>
+>>> It's true the Makefile has to jump through some hoops to compute
+>>> TCG_TESTS_TARGETS from TCG_TESTS_WITH_COMPILERS (config-host.mak) and
+>>> CONFIGURED_TCG_TARGETS (via $(wildcard *-config-target.h)). Is that
+>>> where it fails?
+>>>
 >>
->> We're going to add more debug trigger extensions, e.g. 'sdext' [1].
->> Thing is that 'sdext' and all other extensions that will follow are now
->> adherent to Debug 1.0, ratified Dec 2022.  And so it happens that Debug
->> 1.0 and 0.13 are not compatible with each other.  This makes support new
->> Debug 1.0 extensions like 'sdext' harder because we would need two
->> independent code bases for each.
+>> Maybe, I reproduced that on two different machines, with different
+>> architectures. As you know, Makefiles are complex to debug, which is one
+>> of the reason I would like to get rid of it completely.
 >>
->> We consider that most of the RVI ecosystem already moved on to Debug
->> 1.0 and is now going towards the extended Debug 1.0 extensions, and we
->> should follow suit.  And the best way to do that is to leave Debug 0.13
->> behind, by deprecating its 'debug' flag and making it an alias for
->> 'sdtrig' that will eventually move on to Debug 1.0.
+>> I prefer to spend time replacing this, instead of investigating N days
+>> to understand why a dependency is missing (similar to the current patch)
+>> and solve it by adding new cryptic lines in an existing Makefile.
 >>
->> The following changes are made:
+>>> As I've said before I'm not wedded to Makefiles, in fact I would look
+>>> forward to a world when I can run an individual test directly from
+>>> meson. However I'm not prepared to throw away functionality, especially
+>>> the ability of new developers/testers to build the tests without having
+>>> to install cross-compilers. That would take us back to the *before
+>>> times* when TCG tests where hardly ever run and tended to bitrot.
+>>>
 >>
->> - 'ext_sdtrig' flag was added in cpu->cfg. 'debug' flag was removed from
->>    cpu->cfg;
->> - All occurrences of cpu->cfg.debug were replaced to 'ext_sdtrig';
->> - Two explicit getters and setters for the 'debug' property were added.
->>    The property will simply get/set ext_sdtrig;
->> - vmstate_debug was renamed to vmstate_sdtrig. We're aware that this
->>    will impact migration between QEMU 10.2 to newer versions, but we're
->>    still in a point where the migration break cost isn't big enough to
->>    justify adding migration compatibility scaffolding.
+>> Sure, I agree with you. The transition should not change anything,
+>> except how to run a single test. We can easily replicate the container
+>> functionality in meson I think.
 >>
->> Finally, deprecated.rst was updated to deprecate 'debug' and inform that
->> it will be now interpreted as an alias of 'sdtrig', which is now going
->> to be compliant with Debug 1.0.
+>> I just had the impression, previously in this thread, that instead of
+>> saying "Sounds good, let's explore the meson approach", the tone was
+>> more "this is wrong and this can't work, please don't touch this". Maybe
+>> it's just a communication issue.
 >>
+>> I made the effort to show a minimal example to prove you can compile
+>> stuff without having to declare a toolchain in meson, which was the
+>> "blocker" you mentioned. The rest, multi files tests and using a
+>> container instead of an installed cross compiler, are just small
+>> details. The key is "we can build a custom binary using a custom command
+>> with meson", and that's all we need to move forward.
+>>
+>>>>>> But well, if the cross-container thing is *really* a blocker, we can
+>>>>>> just wrap build and run in a script per cross compiler, that does
+>>>>>> docker/podman build && docker/podman run and call that.
+>>>>>
+>>>>> We still have the remnants of that in the docker.py script although for
+>>>>> most containers we moved to invoking docker (or podman) directly.
+>>>>>
+>>>>
+>>>> Maybe that's why I encountered issues in the past, and now it works out
+>>>> of the box.
+>>>
+>>> The original script attempted to deal with caching layers and the
+>>> consequences of custom USER/UID on local machines. Nowadays it is mostly
+>>> used as a basic wrapper around "probe" for the runtime and is still used
+>>> by the binfmt_misc and toolchain wrappers.
+>>>
+>>> For porting to meson it might be worth just having a minimal wrapper
+>>> just for building rather than mess with it.
+>>>
+>>
+>> Yep.
+>>
+>>>>> Also bear in mind the containers are also used to cross build QEMU
+>>>>> itself. 
+>>>>>
+>>>>>>
+>>>>>> Now we solved the problem with system tests, and cross compilers, is
+>>>>>> there another thing that is absolutely needed from Makefiles?
+>>>>>>
+>>>>>>>> If it's not the case, then we should definitely move into the direction
+>>>>>>>> of migrating all this to meson, and rely on meson tests infrastructure.
+>>>>>>>>
+>>>>
+>>>> To add on top of this, I would be happy to help with the transition, but
+>>>> I want to make sure you'll accept it first, with a list of
+>>>> requirements.
+>>>
+>>> For check-tcg the requirements are simple:
+>>>
+>>
+>> Thanks for listing them. We can have specific test suites to address the
+>> categorization. For the rest, there is nothing custom targets won't be
+>> able to solve.
+>>>   - support building tests with containers
+>>>   - handle all existing tests
+>>>     - per-arch *-user and *-softmmu
+>>>       - including post test validation checks (conditional-diff-out, validate-memory-counts.py, etc...)
+>>>       - per-target overrides (some targets are broken for some tests)
+>>>       - custom QEMU_OPTS for some tests
+>>>       - including sub-arch tests (e.g. x86_64 includes i386, mips64el includes mips64 etc...)
+>>>     - multiarch tests for all *-user targets
+>>>     - multiarch tests for all *-softmmu targets with boot.S
+>>>     - gdbstub tests
+>>>       - don't forget gdb feature probing for arch and arch features (e.g. GDB_HAS_SME_TILES)
+>>>     - record/replay tests
+>>>     - tcg plugin tests
+>>>       - modulate plugins over tests to avoid combinatorial explosion
+>>>       - filter some plugins from general testing (e.g. patch)
+>>>       - filter some plugins based on mode (e.g. syscall)
+>>>       - specific plugins with specific tests (e.g. patch, memory)
+>>>     - support build variations
+>>>       - compiler feature probing to gate tests
+>>>       - custom cflags for some tests
+>>>       - alternate cflag builds for some tests (e.g. sha512-[vector|sse|mvx|...])
+>>>       - build scripts (e.g. test-mmx.py)
+>>
+>> I have a proposal: How about I give it a try with a specific target
+>> (let's say aarch64?), to try to cover user, system, and multi arch
+>> tests, without the cross container as a first step.
+>>
+>> This way, we can focus on testing part, agree on what works, what
+>> doesn't, and iterate until having something nice.
+>> Then, we can add cross container support, and finally add the rest of
+>> targets. Once all of them are implemented, we can migrate check-tcg
+>> command to this.
 > 
-> This patch conflicts with Alistair's riscv-to-apply.next branch.
+> I think that's a reasonable plan. We can certainly test and review
+> patches as we try different things out. aarch64 is a good first target
+> as it has user, softmmu and plugin specific tests.
+>
+
+Yes, this should give us a good taste of what it will look like.
+
+> What we can't do is merge piecemeal so I'd want a complete conversion
+> before we merge so we don't end up with a half-functional port to meson
+> in the tree (the bane of QEMU's API conversions).
+>
+
+100% agree. Even if it's a slow development over months, we'll replace
+Makefiles only once all the features are properly covered.
+ > <snip>
 > 
-> f71708fedf target/riscv/tcg: disable svnapot if satp_mode < sv39
 
-Based on recent discussions with Alistair (check the "QEMU RISC-V Call" thread)
-seems like we're postponing this change because there seems to be interest
-in keeping the 'debug' flag around, together with the 'sdtrig' extension that
-we need for your 'sdext' extension (and for the riscv-server-ref board).  Seems
-like someone is going to send patches making it possible.
-
-We still have a month left before freeze so hopefully we can get all this merged
-for 11.1.  For now we'll have to wait ...
-
-
-Daniel
-
-> 
-> ```
->     <<<<<<< HEAD
->     static const VMStateDescription vmstate_debug = {
->         .name = "cpu/debug",
->         .version_id = 3,
->         .minimum_version_id = 3,
->         .needed = debug_needed,
->         .post_load = debug_post_load,
->     =======
->     static const VMStateDescription vmstate_sdtrig = {
->         .name = "cpu/sdtrig",
->         .version_id = 1,
->         .minimum_version_id = 1,
->         .needed = sdtrig_needed,
->         .post_load = sdtrig_post_load,
->     >>>>>>> target/riscv: deprecate 'debug' CPU property and Debug 0.13
-> ```
-> 
-> You probably need to rebase onto and fix it.
-> 
-> Thanks,
-> Chao
-> 
->> [1] https://lore.kernel.org/qemu-devel/cover.1768622881.git.chao.liu.zevorn@gmail.com/
->>
->> Signed-off-by: Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>
->> Reviewed-by: Chao Liu <chao.liu.zevorn@gmail.com>
->> Tested-by: Tao Tang <tangtao1634@phytium.com.cn>
->> ---
->>   docs/about/deprecated.rst         | 19 ++++++++++++
->>   target/riscv/cpu.c                | 50 ++++++++++++++++++++++++++++---
->>   target/riscv/cpu_cfg_fields.h.inc |  2 +-
->>   target/riscv/csr.c                |  2 +-
->>   target/riscv/machine.c            | 24 +++++++--------
->>   target/riscv/tcg/tcg-cpu.c        |  2 +-
->>   6 files changed, 80 insertions(+), 19 deletions(-)
->>
->> diff --git a/docs/about/deprecated.rst b/docs/about/deprecated.rst
->> index 97750f5edc..bc872e50ba 100644
->> --- a/docs/about/deprecated.rst
->> +++ b/docs/about/deprecated.rst
->> @@ -417,6 +417,25 @@ ABI is long-obsolete. We are therefore deprecating both OABI support
->>   and NWFPE emulation, and they will be removed in a future QEMU
->>   release.
->>   
->> +``debug=true|false`` on RISC-V CPUs (since 11.1)
->> +^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
->> +
->> +When first introduced this flag enabled/disabled support for the RISC-V
->> +Debug spec version 0.13.  Then, since QEMU 10.1, it became instead an
->> +alias to the ``sdtrig`` extension that still adheres to Debug 0.13.
->> +
->> +We're moving to the new ratified 1.0 Debug spec that will be maintained
->> +long term by RISC-V International, but this new ratified version is not
->> +backward compatible with 0.13.  This means that keeping both implementations
->> +is a maintainership hurdle that impacts the development of new Debug 1.0
->> +extensions like ``sdext``.  And most of the RISC-V ecosystem already
->> +moved on to Debug 1.0.
->> +
->> +For all these reasons, starting on 11.1, QEMU is moving away from Debug
->> +0.13 by deprecating the ``debug`` flag.  Setting it, from now on, will be
->> +be the same as setting ``sdtrig`` version 1.0.  Users that are still using
->> +Debug 0.13 will need to update their software to use Debug 1.0 or use QEMU
->> +11.0 and older.
->>   
->>   Backwards compatibility
->>   -----------------------
->> diff --git a/target/riscv/cpu.c b/target/riscv/cpu.c
->> index 862834b480..54e8f78a4d 100644
->> --- a/target/riscv/cpu.c
->> +++ b/target/riscv/cpu.c
->> @@ -226,7 +226,7 @@ const RISCVIsaExtData isa_edata_arr[] = {
->>       ISA_EXT_DATA_ENTRY(zvkt, PRIV_VERSION_1_12_0, ext_zvkt),
->>       ISA_EXT_DATA_ENTRY(zhinx, PRIV_VERSION_1_12_0, ext_zhinx),
->>       ISA_EXT_DATA_ENTRY(zhinxmin, PRIV_VERSION_1_12_0, ext_zhinxmin),
->> -    ISA_EXT_DATA_ENTRY(sdtrig, PRIV_VERSION_1_12_0, debug),
->> +    ISA_EXT_DATA_ENTRY(sdtrig, PRIV_VERSION_1_12_0, ext_sdtrig),
->>       ISA_INTERNAL_EXT_DATA_ENTRY(shcounterenw, PRIV_VERSION_1_12_0,
->>                                   has_priv_1_12),
->>       ISA_INTERNAL_EXT_DATA_ENTRY(sha, PRIV_VERSION_1_12_0, ext_sha),
->> @@ -807,7 +807,7 @@ static void riscv_cpu_reset_hold(Object *obj, ResetType type)
->>       env->vill = true;
->>   
->>   #ifndef CONFIG_USER_ONLY
->> -    if (cpu->cfg.debug) {
->> +    if (cpu->cfg.ext_sdtrig) {
->>           riscv_trigger_reset_hold(env);
->>       }
->>   
->> @@ -971,7 +971,7 @@ static void riscv_cpu_realize(DeviceState *dev, Error **errp)
->>       riscv_cpu_register_gdb_regs_for_features(cs);
->>   
->>   #ifndef CONFIG_USER_ONLY
->> -    if (cpu->cfg.debug) {
->> +    if (cpu->cfg.ext_sdtrig) {
->>           riscv_trigger_realize(&cpu->env);
->>       }
->>   #endif
->> @@ -1150,6 +1150,14 @@ static void riscv_cpu_init(Object *obj)
->>       cpu->env.vext_ver = VEXT_VERSION_1_00_0;
->>       cpu->cfg.max_satp_mode = -1;
->>   
->> +    /*
->> +     * 'debug' started being deprecated in 11.0, been just a proxy
->> +     * to set ext_sdtrig ever since. It has been enabled by default
->> +     * for a long time though, so we're stuck with setting set 'strig'
->> +     * by default too. At least for now ...
->> +     */
->> +    cpu->cfg.ext_sdtrig = true;
->> +
->>       if (mcc->def->profile) {
->>           mcc->def->profile->enabled = true;
->>       }
->> @@ -2514,8 +2522,42 @@ RISCVCPUImpliedExtsRule *riscv_multi_ext_implied_rules[] = {
->>       NULL
->>   };
->>   
->> +/*
->> + * DEPRECATED_11.0: just a proxy for ext_sdtrig.
->> + */
->> +static void prop_debug_get(Object *obj, Visitor *v, const char *name,
->> +                         void *opaque, Error **errp)
->> +{
->> +    bool value = RISCV_CPU(obj)->cfg.ext_sdtrig;
->> +
->> +    visit_type_bool(v, name, &value, errp);
->> +}
->> +
->> +/*
->> + * DEPRECATED_11.0: just a proxy for ext_sdtrig.
->> + */
->> +static void prop_debug_set(Object *obj, Visitor *v, const char *name,
->> +                         void *opaque, Error **errp)
->> +{
->> +    RISCVCPU *cpu = RISCV_CPU(obj);
->> +    bool value;
->> +
->> +    visit_type_bool(v, name, &value, errp);
->> +    cpu->cfg.ext_sdtrig = value;
->> +}
->> +
->> +/*
->> + * DEPRECATED_11.0: just a proxy for ext_sdtrig.
->> + */
->> +static const PropertyInfo prop_debug = {
->> +    .type = "bool",
->> +    .description = "DEPRECATED: use 'sdtrig' instead.",
->> +    .get = prop_debug_get,
->> +    .set = prop_debug_set,
->> +};
->> +
->>   static const Property riscv_cpu_properties[] = {
->> -    DEFINE_PROP_BOOL("debug", RISCVCPU, cfg.debug, true),
->> +    {.name = "debug", .info = &prop_debug},
->>   
->>       {.name = "pmu-mask", .info = &prop_pmu_mask},
->>       {.name = "pmu-num", .info = &prop_pmu_num}, /* Deprecated */
->> diff --git a/target/riscv/cpu_cfg_fields.h.inc b/target/riscv/cpu_cfg_fields.h.inc
->> index 734fa079f2..44235bfaa1 100644
->> --- a/target/riscv/cpu_cfg_fields.h.inc
->> +++ b/target/riscv/cpu_cfg_fields.h.inc
->> @@ -46,6 +46,7 @@ BOOL_FIELD(ext_zilsd)
->>   BOOL_FIELD(ext_zimop)
->>   BOOL_FIELD(ext_zcmop)
->>   BOOL_FIELD(ext_ztso)
->> +BOOL_FIELD(ext_sdtrig)
->>   BOOL_FIELD(ext_smstateen)
->>   BOOL_FIELD(ext_sstc)
->>   BOOL_FIELD(ext_smcdeleg)
->> @@ -159,7 +160,6 @@ BOOL_FIELD(ext_xlrbr)
->>   
->>   BOOL_FIELD(mmu)
->>   BOOL_FIELD(pmp)
->> -BOOL_FIELD(debug)
->>   BOOL_FIELD(misa_w)
->>   
->>   BOOL_FIELD(short_isa_string)
->> diff --git a/target/riscv/csr.c b/target/riscv/csr.c
->> index 5514e0f455..17992715ff 100644
->> --- a/target/riscv/csr.c
->> +++ b/target/riscv/csr.c
->> @@ -796,7 +796,7 @@ static RISCVException have_mseccfg(CPURISCVState *env, int csrno)
->>   
->>   static RISCVException debug(CPURISCVState *env, int csrno)
->>   {
->> -    if (riscv_cpu_cfg(env)->debug) {
->> +    if (riscv_cpu_cfg(env)->ext_sdtrig) {
->>           return RISCV_EXCP_NONE;
->>       }
->>   
->> diff --git a/target/riscv/machine.c b/target/riscv/machine.c
->> index 6776e7bf5a..4ca5c9c8d7 100644
->> --- a/target/riscv/machine.c
->> +++ b/target/riscv/machine.c
->> @@ -218,14 +218,14 @@ static const VMStateDescription vmstate_kvmtimer = {
->>   };
->>   #endif
->>   
->> -static bool debug_needed(void *opaque)
->> +static bool sdtrig_needed(void *opaque)
->>   {
->>       RISCVCPU *cpu = opaque;
->>   
->> -    return cpu->cfg.debug;
->> +    return cpu->cfg.ext_sdtrig;
->>   }
->>   
->> -static int debug_post_load(void *opaque, int version_id)
->> +static int sdtrig_post_load(void *opaque, int version_id)
->>   {
->>       RISCVCPU *cpu = opaque;
->>       CPURISCVState *env = &cpu->env;
->> @@ -237,12 +237,12 @@ static int debug_post_load(void *opaque, int version_id)
->>       return 0;
->>   }
->>   
->> -static const VMStateDescription vmstate_debug = {
->> -    .name = "cpu/debug",
->> -    .version_id = 2,
->> -    .minimum_version_id = 2,
->> -    .needed = debug_needed,
->> -    .post_load = debug_post_load,
->> +static const VMStateDescription vmstate_sdtrig = {
->> +    .name = "cpu/sdtrig",
->> +    .version_id = 1,
->> +    .minimum_version_id = 1,
->> +    .needed = sdtrig_needed,
->> +    .post_load = sdtrig_post_load,
->>       .fields = (const VMStateField[]) {
->>           VMSTATE_UINTTL(env.trigger_cur, RISCVCPU),
->>           VMSTATE_UINTTL_ARRAY(env.tdata1, RISCVCPU, RV_MAX_TRIGGERS),
->> @@ -444,8 +444,8 @@ static const VMStateDescription vmstate_mseccfg = {
->>   
->>   const VMStateDescription vmstate_riscv_cpu = {
->>       .name = "cpu",
->> -    .version_id = 11,
->> -    .minimum_version_id = 11,
->> +    .version_id = 12,
->> +    .minimum_version_id = 12,
->>       .post_load = riscv_cpu_post_load,
->>       .fields = (const VMStateField[]) {
->>           VMSTATE_UINTTL_ARRAY(env.gpr, RISCVCPU, 32),
->> @@ -511,7 +511,6 @@ const VMStateDescription vmstate_riscv_cpu = {
->>           &vmstate_kvmtimer,
->>   #endif
->>           &vmstate_envcfg,
->> -        &vmstate_debug,
->>           &vmstate_smstateen,
->>           &vmstate_jvt,
->>           &vmstate_elp,
->> @@ -519,6 +518,7 @@ const VMStateDescription vmstate_riscv_cpu = {
->>           &vmstate_ctr,
->>           &vmstate_sstc,
->>           &vmstate_mseccfg,
->> +        &vmstate_sdtrig,
->>           NULL
->>       }
->>   };
->> diff --git a/target/riscv/tcg/tcg-cpu.c b/target/riscv/tcg/tcg-cpu.c
->> index 3e22e7ed53..a6dd864264 100644
->> --- a/target/riscv/tcg/tcg-cpu.c
->> +++ b/target/riscv/tcg/tcg-cpu.c
->> @@ -180,7 +180,7 @@ static TCGTBCPUState riscv_get_tb_cpu_state(CPUState *cs)
->>                ? EXT_STATUS_DIRTY : EXT_STATUS_DISABLED;
->>       }
->>   
->> -    if (cpu->cfg.debug && !icount_enabled()) {
->> +    if (cpu->cfg.ext_sdtrig && !icount_enabled()) {
->>           flags = FIELD_DP32(flags, TB_FLAGS, ITRIGGER, env->itrigger_enabled);
->>       }
->>   #endif
->> -- 
->> 2.43.0
->>
-
+Regards,
+Pierrick
 
