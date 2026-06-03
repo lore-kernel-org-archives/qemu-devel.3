@@ -4,115 +4,88 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 512B8CD6E57
-	for <qemu-devel@archiver.kernel.org>; Wed,  3 Jun 2026 18:50:34 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7DE0ACD6E57
+	for <qemu-devel@archiver.kernel.org>; Wed,  3 Jun 2026 18:52:36 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wUqfS-0001vu-EZ; Wed, 03 Jun 2026 14:50:18 -0400
+	id 1wUqhH-0002XQ-Iy; Wed, 03 Jun 2026 14:52:11 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <farman@linux.ibm.com>)
- id 1wUqfM-0001uf-LX; Wed, 03 Jun 2026 14:50:12 -0400
-Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <farman@linux.ibm.com>)
- id 1wUqfK-0003IG-0C; Wed, 03 Jun 2026 14:50:12 -0400
-Received: from pps.filterd (m0353725.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 653IEku12403947; Wed, 3 Jun 2026 18:50:05 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
- :content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=pp1; bh=3RJjzH
- quuhB1LLqv+sdkfE+SLvuNJeMxjghEqBGyioQ=; b=iyE3AxnnvIGiFbuuyH1+Na
- QU4WqQSh6uw799nIj5TNoqSqOdyHDzsFMWIoFroUoVM5L/++N+3r4kalrRHGjXK1
- csH0pcxfL5KHWfyy8xNJJueOjHlSyzNqNlfXmV5NwbdAUDbG7smTz4s164U+wHH2
- s3oPSspaxuRGGfmOu+EmKPh0PScqwQqUV/H2GQa6xOVKhYx91yeORHHrkiWhTWTA
- CsuQRMHTOHwZymAwU35oOK8PEuez5w6zC4TdAN0Lfc0wtmfBvcVqsbgz5Tj2qbhQ
- GvlNz5F67sKaDl4K5tPJydZbDZpT/fdWKJAliy8mFjWS7eTxpvQXcTTAG5V6u/1A
- ==
-Received: from ppma22.wdc07v.mail.ibm.com
- (5c.69.3da9.ip4.static.sl-reverse.com [169.61.105.92])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4efpaec060-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Wed, 03 Jun 2026 18:50:04 +0000 (GMT)
-Received: from pps.filterd (ppma22.wdc07v.mail.ibm.com [127.0.0.1])
- by ppma22.wdc07v.mail.ibm.com (8.18.1.7/8.18.1.7) with ESMTP id 653Id7Mj006268;
- Wed, 3 Jun 2026 18:50:04 GMT
-Received: from smtprelay01.wdc07v.mail.ibm.com ([172.16.1.68])
- by ppma22.wdc07v.mail.ibm.com (PPS) with ESMTPS id 4egakw1rw1-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Wed, 03 Jun 2026 18:50:04 +0000 (GMT)
-Received: from smtpav05.wdc07v.mail.ibm.com (smtpav05.wdc07v.mail.ibm.com
- [10.39.53.232])
- by smtprelay01.wdc07v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 653Io3102294730
- (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Wed, 3 Jun 2026 18:50:03 GMT
-Received: from smtpav05.wdc07v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id DD7AB58043;
- Wed,  3 Jun 2026 18:50:02 +0000 (GMT)
-Received: from smtpav05.wdc07v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id BAE1F58066;
- Wed,  3 Jun 2026 18:50:00 +0000 (GMT)
-Received: from li-479af74c-31f9-11b2-a85c-e4ddee11713b.ibm.com (unknown
- [9.61.143.205]) by smtpav05.wdc07v.mail.ibm.com (Postfix) with ESMTP;
- Wed,  3 Jun 2026 18:50:00 +0000 (GMT)
-Message-ID: <ba1b75db4c3c110a7edae5a1753c32e5854a3ee5.camel@linux.ibm.com>
-Subject: Re: [PATCH v11 30/32] tests/functional/s390x: Add secure IPL
- functional test
-From: Eric Farman <farman@linux.ibm.com>
-To: Zhuoying Cai <zycai@linux.ibm.com>, qemu-s390x@nongnu.org,
- qemu-devel@nongnu.org
-Cc: jrossi@linux.ibm.com, cohuck@redhat.com, berrange@redhat.com,
- richard.henderson@linaro.org, david@kernel.org, walling@linux.ibm.com,
- jjherne@linux.ibm.com, pasic@linux.ibm.com, borntraeger@linux.ibm.com,
- mjrosato@linux.ibm.com, iii@linux.ibm.com, eblake@redhat.com,
- armbru@redhat.com, alifm@linux.ibm.com, brueckner@linux.ibm.com,
- pierrick.bouvier@oss.qualcomm.com, jdaley@linux.ibm.com
-Date: Wed, 03 Jun 2026 14:50:00 -0400
-In-Reply-To: <20260505201905.997996-31-zycai@linux.ibm.com>
-References: <20260505201905.997996-1-zycai@linux.ibm.com>
- <20260505201905.997996-31-zycai@linux.ibm.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-User-Agent: Evolution 3.58.3 (3.58.3-1.fc43) 
+ (Exim 4.90_1) (envelope-from <connorkite@gmail.com>)
+ id 1wUpT7-0003NF-Cn
+ for qemu-devel@nongnu.org; Wed, 03 Jun 2026 13:33:29 -0400
+Received: from mail-dl1-x1233.google.com ([2607:f8b0:4864:20::1233])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <connorkite@gmail.com>)
+ id 1wUpT4-0002yy-Fw
+ for qemu-devel@nongnu.org; Wed, 03 Jun 2026 13:33:28 -0400
+Received: by mail-dl1-x1233.google.com with SMTP id
+ a92af1059eb24-137335bc3caso11857825c88.0
+ for <qemu-devel@nongnu.org>; Wed, 03 Jun 2026 10:33:24 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=gmail.com; s=20251104; t=1780508003; x=1781112803; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:from:to:cc:subject:date:message-id:reply-to;
+ bh=bcibRKnRKqw8l+rOuwRQfsaHQlskfBWkaslXsjpLrvg=;
+ b=Wo6XciYslUY5bzn54RfrVUlWrxMgcDKd9L6Y8Vn47CObxkijOwUgfksFDbWnwh+mT0
+ R4Qfe79MdCGgYZhJ6hIePsNAl/UEvbmsgBD0RmnjyQ6E53UEGAzg8/m2aRqys/SeAW2S
+ kiX3vH68woq3awjPvz/lQbKpTPl9jJkdljmDQuur1lxYrU9q1sQucZjMP8Mmk1IFTFcB
+ X4FlMs7OtVEsr3FCxUm0kJIacwUmQMb4cfEW7Kztlsdb62/h5jbNOxNtVF3QNoGvthgI
+ ESTi/BSxQN4P28JxLuYxUAwoaMHHZHuK+xeANTDuwfXhn1vf42G2rDJzaDzstE6uXven
+ 3D6Q==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1780508003; x=1781112803;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=bcibRKnRKqw8l+rOuwRQfsaHQlskfBWkaslXsjpLrvg=;
+ b=MU7hvBhDXvsHTONzQouT4BzkogkH/CD2m1REYo+bLKhk7bINtDIxrKTBfm6RZ29e3g
+ 4tiv+i8Bw7r1m90Quizoc30elmnipXr/4MHgEkZUnKo5slQ8gNDG58s9c1ms6E9lYFAp
+ 7Y74MN05jACk9KHGt//yMlKr17QBKMkCJft9YlIjU/m4YMe+YsCGWDfISimRmKv9Naec
+ Fe+gROISAnlhEqS8giZLSG9ljBcIi0GZALOtOkJaWzxrD1M0Q4XIwtPA4xhZPJQ8pgwH
+ MTUw76Ed23C9eeEI2I/G+0sfazteHsiHiqeVFqTvMv5lYE3eWPRQkXQ3vYoD4dgc7YWL
+ DcDQ==
+X-Gm-Message-State: AOJu0YynvYFq8gq3lW0dUZfxsYl1Qw61z2dzM7wEt/PuYTePxCI/BFC1
+ XJLXvS6X/5QViHrsgmMWAVBENB36jdeSaDxo2Oddz0GQ7w5iWyPG1w85wHoj0g==
+X-Gm-Gg: Acq92OGY1T8JBpfz06W3+KOsyOCXNmuTc+5BnBH14MaDwMJJxqDV9q1dkc9Ib5NDSu2
+ FJYQt4JB15gED4C6jAGEbJdChFhlK3vNf+xYLT9mfXtWALsUf+Gw+tBlF7E20OZ+syGjb847754
+ EQE3xmKkO8pMTT/rY40VREut+gZwYbDS8zW94pmd+7F/3qWNUoRT4SbFikUiBDZSYHcBWJ/6KaF
+ HXFNV1b7uvzcd1G1hKGPPw2mbmKcG4wOGJG3h9eTncIQ0z+cO+maXf4kwIjxkKgOrKytJExQip3
+ VnKuUdm65el4hEfO1yZ0fkulY9EG6/2LSIRalNXuTEIUtRnQ6/AGAlIf0XEDUpmd7EBLg/kyVT3
+ MvJMJFxiS3T8VmnVSa/JX5gta5Z4MeB08HWo/VJjFdFj5Uq+pEf3MFhyllrc+tiKP3pb+3GpPQQ
+ ww4maBXCeslvQVjUKoboBEW54bHhkZ0qI50PbeyK0rCFID2VEYlH93fpwu/rGd
+X-Received: by 2002:a05:7022:ec07:b0:136:5c88:d917 with SMTP id
+ a92af1059eb24-137f6a4b1a0mr1593499c88.2.1780508002907; 
+ Wed, 03 Jun 2026 10:33:22 -0700 (PDT)
+Received: from MacLin.attlocal.net ([2600:1700:e140:14d0:82a0:9743:8a0a:4598])
+ by smtp.gmail.com with ESMTPSA id
+ a92af1059eb24-137f53f06c4sm2290008c88.0.2026.06.03.10.33.21
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Wed, 03 Jun 2026 10:33:22 -0700 (PDT)
+From: ConKite <connorkite@gmail.com>
+To: qemu-devel@nongnu.org
+Cc: stefanha@gmail.com,
+	hreitz@redhat.com,
+	ConKite <connorkite@gmail.com>
+Subject: [RFC] vhost-user: Add memoryIsolation qdev property to vhost-user
+ devices
+Date: Wed,  3 Jun 2026 10:32:28 -0700
+Message-ID: <20260603173239.3189102-1-connorkite@gmail.com>
+X-Mailer: git-send-email 2.43.0
 MIME-Version: 1.0
-X-TM-AS-GCONF: 00
-X-Authority-Analysis: v=2.4 cv=Zt3d7d7G c=1 sm=1 tr=0 ts=6a20775c cx=c_pps
- a=5BHTudwdYE3Te8bg5FgnPg==:117 a=5BHTudwdYE3Te8bg5FgnPg==:17
- a=IkcTkHD0fZMA:10 a=FelO9ux0wxsA:10 a=VkNPw1HP01LnGYTKEx00:22
- a=RnoormkPH1_aCDwRdu11:22 a=V8glGbnc2Ofi9Qvn3v5h:22 a=vTr9H3xdAAAA:8
- a=VnNF1IyMAAAA:8 a=WP5zsaevAAAA:8 a=UkDPGh-J0cAZ0a7bUPkA:9 a=QEXdDO2ut3YA:10
- a=t8Kx07QrZZTALmIZmm-o:22
-X-Proofpoint-GUID: F-DKLg1KHiq5iH_jkrq90VsLL4d5JcvF
-X-Proofpoint-ORIG-GUID: F-DKLg1KHiq5iH_jkrq90VsLL4d5JcvF
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNjAzMDE4MCBTYWx0ZWRfX7OQvEyEUUlYo
- 98sEFqAgvH8XM4LGvVXKtbbpg1Sg3yn47K2A5gDycrVqV9vhzGxe1P1BxXnQek679puRKYfrjpP
- 8CmbiFavo/sBG/XTQFuPyNRIfLHBYd1x0LouPx0CgWliLPAeuRwtAHrKGQtVmQJlpv1zMLIwFhP
- jZAo6QmEtEzRfhzScMVlevDfxHPUNjLQ+wzF4xNIaLl7x3Nl9qjCHYVfYeN83ZFj149vsY7miTD
- QCA3VS/qXNXPsiL2DWQdX0xfXFTboNxAX4RJCZ/+JwL1WwkgOLV9zcW2v2KqwWNCNotWGiQ+tZS
- NMhb6mq+QAlSb0X/ILNp4uQUemenb8n6tTPdmwEeaxfQ6Q6DiYlJbE8l8ruzoGb8Mt4StnJpPlS
- HJqJZ5AhHzOFpOtPqI/vI2GYq/08jtFpGBarzIMhpie6qtyyhpBVxkjiOz2Uk/RO3M+ks+I+GSJ
- j37X5MU1GX/kFtFeFFw==
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.125,FMLib:17.12.100.49
- definitions=2026-06-03_05,2026-05-28_03,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- impostorscore=0 suspectscore=0 priorityscore=1501 bulkscore=0 clxscore=1011
- phishscore=0 spamscore=0 malwarescore=0 adultscore=0 lowpriorityscore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2605210000 definitions=main-2606030180
-Received-SPF: pass client-ip=148.163.158.5; envelope-from=farman@linux.ibm.com;
- helo=mx0b-001b2d01.pphosted.com
-X-Spam_score_int: -26
-X-Spam_score: -2.7
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::1233;
+ envelope-from=connorkite@gmail.com; helo=mail-dl1-x1233.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
- RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
+X-Mailman-Approved-At: Wed, 03 Jun 2026 14:52:10 -0400
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -127,264 +100,387 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, 2026-05-05 at 16:19 -0400, Zhuoying Cai wrote:
-> Add functional test for secure IPL.
->=20
-> Signed-off-by: Zhuoying Cai <zycai@linux.ibm.com>
-> ---
->  tests/functional/s390x/meson.build        |   2 +
->  tests/functional/s390x/test_secure_ipl.py | 148 ++++++++++++++++++++++
->  2 files changed, 150 insertions(+)
->  create mode 100755 tests/functional/s390x/test_secure_ipl.py
->=20
-> diff --git a/tests/functional/s390x/meson.build b/tests/functional/s390x/=
-meson.build
-> index b065b666bc..01cb2d1d4c 100644
-> --- a/tests/functional/s390x/meson.build
-> +++ b/tests/functional/s390x/meson.build
-> @@ -2,6 +2,7 @@
-> =20
->  test_s390x_timeouts =3D {
->    'ccw_virtio' : 420,
-> +  'secure_ipl' : 280,
+In support of future work to add a memory isolation mode to vhost-user devices, a
+qdev property, "memory-isolation", is added to all vhost-user devices.  This is
+simply a bool representing whether the mode is active or not.
 
-How'd you come up with this value?
+Additionally, common property definitions for all children of vhost-user-base are
+consolidated. Those property definitions now occur when VHostUserBase is initialized
 
->  }
-> =20
->  tests_s390x_system_quick =3D [
-> @@ -14,6 +15,7 @@ tests_s390x_system_thorough =3D [
->    'ccw_virtio',
->    'pxelinux',
->    'replay',
-> +  'secure_ipl',
->    'topology',
->    'tuxrun',
->  ]
-> diff --git a/tests/functional/s390x/test_secure_ipl.py b/tests/functional=
-/s390x/test_secure_ipl.py
-> new file mode 100755
-> index 0000000000..0980daace1
-> --- /dev/null
-> +++ b/tests/functional/s390x/test_secure_ipl.py
-> @@ -0,0 +1,148 @@
-> +#!/usr/bin/env python3
-> +#
-> +# s390x Secure IPL functional test: validates secure-boot verification r=
-esults
-> +#
-> +# SPDX-License-Identifier: GPL-2.0-or-later
+Signed-off-by: Connor Kite <connorkite@gmail.com>
+---
+ hw/block/vhost-user-blk.c            |  1 +
+ hw/display/vhost-user-gpu.c          |  1 +
+ hw/scsi/vhost-user-scsi.c            |  1 +
+ hw/virtio/vhost-user-base.c          | 10 ++++++++++
+ hw/virtio/vhost-user-fs.c            |  1 +
+ hw/virtio/vhost-user-gpio.c          |  4 ----
+ hw/virtio/vhost-user-i2c.c           |  5 -----
+ hw/virtio/vhost-user-input.c         |  5 -----
+ hw/virtio/vhost-user-rng.c           |  5 -----
+ hw/virtio/vhost-user-rtc.c           |  4 ----
+ hw/virtio/vhost-user-scmi.c          |  1 +
+ hw/virtio/vhost-user-snd.c           |  1 -
+ hw/virtio/vhost-user-spi.c           |  5 -----
+ hw/virtio/vhost-user-test-device.c   |  1 -
+ hw/virtio/vhost-user-vsock.c         |  1 +
+ include/hw/virtio/vhost-user-base.h  |  1 +
+ include/hw/virtio/vhost-user-blk.h   |  1 +
+ include/hw/virtio/vhost-user-fs.h    |  1 +
+ include/hw/virtio/vhost-user-scmi.h  |  1 +
+ include/hw/virtio/vhost-user-vsock.h |  1 +
+ include/hw/virtio/virtio-gpu.h       |  1 +
+ include/hw/virtio/virtio-scsi.h      |  1 +
+ 22 files changed, 23 insertions(+), 30 deletions(-)
 
-A general comment, you'll need some form of docstring for the entire file, =
-and any classes/methods
-defined later on.
+diff --git a/hw/block/vhost-user-blk.c b/hw/block/vhost-user-blk.c
+index c151e83677..849f437d9e 100644
+--- a/hw/block/vhost-user-blk.c
++++ b/hw/block/vhost-user-blk.c
+@@ -605,6 +605,7 @@ static const VMStateDescription vmstate_vhost_user_blk = {
+ 
+ static const Property vhost_user_blk_properties[] = {
+     DEFINE_PROP_CHR("chardev", VHostUserBlk, chardev),
++    DEFINE_PROP_BOOL("memory-isolation", VHostUserBlk, memoryIsolation, false),
+     DEFINE_PROP_UINT16("num-queues", VHostUserBlk, num_queues,
+                        VHOST_USER_BLK_AUTO_NUM_QUEUES),
+     DEFINE_PROP_UINT32("queue-size", VHostUserBlk, queue_size, 128),
+diff --git a/hw/display/vhost-user-gpu.c b/hw/display/vhost-user-gpu.c
+index 6e5e6540a4..d7a94fc856 100644
+--- a/hw/display/vhost-user-gpu.c
++++ b/hw/display/vhost-user-gpu.c
+@@ -664,6 +664,7 @@ static struct vhost_dev *vhost_user_gpu_get_vhost(VirtIODevice *vdev)
+ 
+ static const Property vhost_user_gpu_properties[] = {
+     VIRTIO_GPU_BASE_PROPERTIES(VhostUserGPU, parent_obj.conf),
++    DEFINE_PROP_BOOL("memory-isolation", VhostUserGPU, memoryIsolation, false),
+ };
+ 
+ static void
+diff --git a/hw/scsi/vhost-user-scsi.c b/hw/scsi/vhost-user-scsi.c
+index 3612897d4b..6ec5236b1d 100644
+--- a/hw/scsi/vhost-user-scsi.c
++++ b/hw/scsi/vhost-user-scsi.c
+@@ -347,6 +347,7 @@ static void vhost_user_scsi_unrealize(DeviceState *dev)
+ 
+ static const Property vhost_user_scsi_properties[] = {
+     DEFINE_PROP_CHR("chardev", VirtIOSCSICommon, conf.chardev),
++    DEFINE_PROP_BOOL("memory-isolation", VirtIOSCSICommon, conf.memoryIsolation, false),
+     DEFINE_PROP_UINT32("boot_tpgt", VirtIOSCSICommon, conf.boot_tpgt, 0),
+     DEFINE_PROP_UINT32("num_queues", VirtIOSCSICommon, conf.num_queues,
+                        VIRTIO_SCSI_AUTO_NUM_QUEUES),
+diff --git a/hw/virtio/vhost-user-base.c b/hw/virtio/vhost-user-base.c
+index 01ab9ca56b..cbc5792ac7 100644
+--- a/hw/virtio/vhost-user-base.c
++++ b/hw/virtio/vhost-user-base.c
+@@ -353,9 +353,17 @@ static void vub_device_unrealize(DeviceState *dev)
+     do_vhost_user_cleanup(vdev, vub);
+ }
+ 
++//Define common properties
++static const Property vub_properties[] = {
++    DEFINE_PROP_BOOL("memory-isolation", VHostUserBase, memoryIsolation, false),
++    DEFINE_PROP_CHR("chardev", VHostUserBase, chardev)
++};
++
++
+ static void vub_class_init(ObjectClass *klass, const void *data)
+ {
+     VirtioDeviceClass *vdc = VIRTIO_DEVICE_CLASS(klass);
++    DeviceClass *dc = DEVICE_CLASS(klass);
+ 
+     vdc->realize = vub_device_realize;
+     vdc->unrealize = vub_device_unrealize;
+@@ -363,6 +371,8 @@ static void vub_class_init(ObjectClass *klass, const void *data)
+     vdc->get_config = vub_get_config;
+     vdc->set_config = vub_set_config;
+     vdc->set_status = vub_set_status;
++
++    device_class_set_props(dc, vub_properties);
+ }
+ 
+ static const TypeInfo vub_types[] = {
+diff --git a/hw/virtio/vhost-user-fs.c b/hw/virtio/vhost-user-fs.c
+index ad6fcacf06..df2dd5e775 100644
+--- a/hw/virtio/vhost-user-fs.c
++++ b/hw/virtio/vhost-user-fs.c
+@@ -409,6 +409,7 @@ static const VMStateDescription vuf_backend_vmstate = {
+ 
+ static const Property vuf_properties[] = {
+     DEFINE_PROP_CHR("chardev", VHostUserFS, conf.chardev),
++    DEFINE_PROP_BOOL("memory-isolation", VHostUserFS, conf.memoryIsolation, false),
+     DEFINE_PROP_STRING("tag", VHostUserFS, conf.tag),
+     DEFINE_PROP_UINT16("num-request-queues", VHostUserFS,
+                        conf.num_request_queues, 1),
+diff --git a/hw/virtio/vhost-user-gpio.c b/hw/virtio/vhost-user-gpio.c
+index d473f87077..33b8752282 100644
+--- a/hw/virtio/vhost-user-gpio.c
++++ b/hw/virtio/vhost-user-gpio.c
+@@ -14,9 +14,6 @@
+ #include "standard-headers/linux/virtio_ids.h"
+ #include "standard-headers/linux/virtio_gpio.h"
+ 
+-static const Property vgpio_properties[] = {
+-    DEFINE_PROP_CHR("chardev", VHostUserBase, chardev),
+-};
+ 
+ static void vgpio_realize(DeviceState *dev, Error **errp)
+ {
+@@ -42,7 +39,6 @@ static void vu_gpio_class_init(ObjectClass *klass, const void *data)
+     VHostUserBaseClass *vubc = VHOST_USER_BASE_CLASS(klass);
+ 
+     dc->vmsd = &vu_gpio_vmstate;
+-    device_class_set_props(dc, vgpio_properties);
+     device_class_set_parent_realize(dc, vgpio_realize,
+                                     &vubc->parent_realize);
+     set_bit(DEVICE_CATEGORY_INPUT, dc->categories);
+diff --git a/hw/virtio/vhost-user-i2c.c b/hw/virtio/vhost-user-i2c.c
+index 152b1f6740..3f5427b5b2 100644
+--- a/hw/virtio/vhost-user-i2c.c
++++ b/hw/virtio/vhost-user-i2c.c
+@@ -14,10 +14,6 @@
+ #include "qemu/error-report.h"
+ #include "standard-headers/linux/virtio_ids.h"
+ 
+-static const Property vi2c_properties[] = {
+-    DEFINE_PROP_CHR("chardev", VHostUserBase, chardev),
+-};
+-
+ static void vi2c_realize(DeviceState *dev, Error **errp)
+ {
+     VHostUserBase *vub = VHOST_USER_BASE(dev);
+@@ -42,7 +38,6 @@ static void vu_i2c_class_init(ObjectClass *klass, const void *data)
+     VHostUserBaseClass *vubc = VHOST_USER_BASE_CLASS(klass);
+ 
+     dc->vmsd = &vu_i2c_vmstate;
+-    device_class_set_props(dc, vi2c_properties);
+     device_class_set_parent_realize(dc, vi2c_realize,
+                                     &vubc->parent_realize);
+     set_bit(DEVICE_CATEGORY_INPUT, dc->categories);
+diff --git a/hw/virtio/vhost-user-input.c b/hw/virtio/vhost-user-input.c
+index 5cfc5bbb56..8fe6349ffc 100644
+--- a/hw/virtio/vhost-user-input.c
++++ b/hw/virtio/vhost-user-input.c
+@@ -7,10 +7,6 @@
+ #include "qemu/osdep.h"
+ #include "hw/virtio/virtio-input.h"
+ 
+-static const Property vinput_properties[] = {
+-    DEFINE_PROP_CHR("chardev", VHostUserBase, chardev),
+-};
+-
+ static void vinput_realize(DeviceState *dev, Error **errp)
+ {
+     VHostUserBase *vub = VHOST_USER_BASE(dev);
+@@ -36,7 +32,6 @@ static void vhost_input_class_init(ObjectClass *klass, const void *data)
+     DeviceClass *dc = DEVICE_CLASS(klass);
+ 
+     dc->vmsd = &vmstate_vhost_input;
+-    device_class_set_props(dc, vinput_properties);
+     device_class_set_parent_realize(dc, vinput_realize,
+                                     &vubc->parent_realize);
+     set_bit(DEVICE_CATEGORY_INPUT, dc->categories);
+diff --git a/hw/virtio/vhost-user-rng.c b/hw/virtio/vhost-user-rng.c
+index 106c8f211a..664aee403d 100644
+--- a/hw/virtio/vhost-user-rng.c
++++ b/hw/virtio/vhost-user-rng.c
+@@ -20,10 +20,6 @@ static const VMStateDescription vu_rng_vmstate = {
+     .unmigratable = 1,
+ };
+ 
+-static const Property vrng_properties[] = {
+-    DEFINE_PROP_CHR("chardev", VHostUserBase, chardev),
+-};
+-
+ static void vu_rng_base_realize(DeviceState *dev, Error **errp)
+ {
+     VHostUserBase *vub = VHOST_USER_BASE(dev);
+@@ -43,7 +39,6 @@ static void vu_rng_class_init(ObjectClass *klass, const void *data)
+     VHostUserBaseClass *vubc = VHOST_USER_BASE_CLASS(klass);
+ 
+     dc->vmsd = &vu_rng_vmstate;
+-    device_class_set_props(dc, vrng_properties);
+     device_class_set_parent_realize(dc, vu_rng_base_realize,
+                                     &vubc->parent_realize);
+ 
+diff --git a/hw/virtio/vhost-user-rtc.c b/hw/virtio/vhost-user-rtc.c
+index 88b0c70b90..6d80cb6263 100644
+--- a/hw/virtio/vhost-user-rtc.c
++++ b/hw/virtio/vhost-user-rtc.c
+@@ -19,9 +19,6 @@ static const VMStateDescription vu_rtc_vmstate = {
+     .unmigratable = 1,
+ };
+ 
+-static const Property vrtc_properties[] = {
+-    DEFINE_PROP_CHR("chardev", VHostUserBase, chardev),
+-};
+ 
+ static void vu_rtc_base_realize(DeviceState *dev, Error **errp)
+ {
+@@ -42,7 +39,6 @@ static void vu_rtc_class_init(ObjectClass *klass, const void *data)
+     VHostUserBaseClass *vubc = VHOST_USER_BASE_CLASS(klass);
+ 
+     dc->vmsd = &vu_rtc_vmstate;
+-    device_class_set_props(dc, vrtc_properties);
+     device_class_set_parent_realize(dc, vu_rtc_base_realize,
+                                     &vubc->parent_realize);
+ 
+diff --git a/hw/virtio/vhost-user-scmi.c b/hw/virtio/vhost-user-scmi.c
+index f9264c4374..0f586adfb1 100644
+--- a/hw/virtio/vhost-user-scmi.c
++++ b/hw/virtio/vhost-user-scmi.c
+@@ -282,6 +282,7 @@ static const VMStateDescription vu_scmi_vmstate = {
+ 
+ static const Property vu_scmi_properties[] = {
+     DEFINE_PROP_CHR("chardev", VHostUserSCMI, chardev),
++    DEFINE_PROP_BOOL("memory-isolation", VHostUserSCMI, memoryIsolation, false),
+ };
+ 
+ static void vu_scmi_class_init(ObjectClass *klass, const void *data)
+diff --git a/hw/virtio/vhost-user-snd.c b/hw/virtio/vhost-user-snd.c
+index 7129b77d9c..3663450aed 100644
+--- a/hw/virtio/vhost-user-snd.c
++++ b/hw/virtio/vhost-user-snd.c
+@@ -34,7 +34,6 @@ static const VMStateDescription vu_snd_vmstate = {
+ };
+ 
+ static const Property vsnd_properties[] = {
+-    DEFINE_PROP_CHR("chardev", VHostUserBase, chardev),
+     DEFINE_PROP_BIT64("controls", VHostUserBase,
+                       parent_obj.host_features, VIRTIO_SND_F_CTLS, false),
+ };
+diff --git a/hw/virtio/vhost-user-spi.c b/hw/virtio/vhost-user-spi.c
+index 707f96c250..fb6168d391 100644
+--- a/hw/virtio/vhost-user-spi.c
++++ b/hw/virtio/vhost-user-spi.c
+@@ -15,10 +15,6 @@
+ #include "standard-headers/linux/virtio_ids.h"
+ #include "standard-headers/linux/virtio_spi.h"
+ 
+-static const Property vspi_properties[] = {
+-    DEFINE_PROP_CHR("chardev", VHostUserBase, chardev),
+-};
+-
+ static void vspi_realize(DeviceState *dev, Error **errp)
+ {
+     VHostUserBase *vub = VHOST_USER_BASE(dev);
+@@ -44,7 +40,6 @@ static void vu_spi_class_init(ObjectClass *klass, const void *data)
+     VHostUserBaseClass *vubc = VHOST_USER_BASE_CLASS(klass);
+ 
+     dc->vmsd = &vu_spi_vmstate;
+-    device_class_set_props(dc, vspi_properties);
+     device_class_set_parent_realize(dc, vspi_realize,
+                                     &vubc->parent_realize);
+     set_bit(DEVICE_CATEGORY_INPUT, dc->categories);
+diff --git a/hw/virtio/vhost-user-test-device.c b/hw/virtio/vhost-user-test-device.c
+index a2f963fdf6..91e23bf07a 100644
+--- a/hw/virtio/vhost-user-test-device.c
++++ b/hw/virtio/vhost-user-test-device.c
+@@ -30,7 +30,6 @@ static const VMStateDescription vud_vmstate = {
+ };
+ 
+ static const Property vud_properties[] = {
+-    DEFINE_PROP_CHR("chardev", VHostUserBase, chardev),
+     DEFINE_PROP_UINT16("virtio-id", VHostUserBase, virtio_id, 0),
+     DEFINE_PROP_UINT32("vq_size", VHostUserBase, vq_size, 64),
+     DEFINE_PROP_UINT32("num_vqs", VHostUserBase, num_vqs, 1),
+diff --git a/hw/virtio/vhost-user-vsock.c b/hw/virtio/vhost-user-vsock.c
+index c2cd376e73..8170b12ae9 100644
+--- a/hw/virtio/vhost-user-vsock.c
++++ b/hw/virtio/vhost-user-vsock.c
+@@ -154,6 +154,7 @@ static void vuv_device_unrealize(DeviceState *dev)
+ 
+ static const Property vuv_properties[] = {
+     DEFINE_PROP_CHR("chardev", VHostUserVSock, conf.chardev),
++    DEFINE_PROP_BOOL("memory-isolation", VHostUserVSock, conf.memoryIsolation, false),
+ };
+ 
+ static void vuv_class_init(ObjectClass *klass, const void *data)
+diff --git a/include/hw/virtio/vhost-user-base.h b/include/hw/virtio/vhost-user-base.h
+index d5d2f081ae..23dc667d05 100644
+--- a/include/hw/virtio/vhost-user-base.h
++++ b/include/hw/virtio/vhost-user-base.h
+@@ -25,6 +25,7 @@ struct VHostUserBase {
+     uint32_t num_vqs;
+     uint32_t vq_size; /* can't exceed VIRTIO_QUEUE_MAX */
+     uint32_t config_size;
++    bool memoryIsolation;
+     /* State tracking */
+     VhostUserState vhost_user;
+     struct vhost_virtqueue *vhost_vq;
+diff --git a/include/hw/virtio/vhost-user-blk.h b/include/hw/virtio/vhost-user-blk.h
+index 1e41a2bcdf..d4dfce824e 100644
+--- a/include/hw/virtio/vhost-user-blk.h
++++ b/include/hw/virtio/vhost-user-blk.h
+@@ -30,6 +30,7 @@ OBJECT_DECLARE_SIMPLE_TYPE(VHostUserBlk, VHOST_USER_BLK)
+ struct VHostUserBlk {
+     VirtIODevice parent_obj;
+     CharFrontend chardev;
++    bool memoryIsolation;
+     int32_t bootindex;
+     struct virtio_blk_config blkcfg;
+     uint16_t num_queues;
+diff --git a/include/hw/virtio/vhost-user-fs.h b/include/hw/virtio/vhost-user-fs.h
+index 5699ea03a1..47e253db07 100644
+--- a/include/hw/virtio/vhost-user-fs.h
++++ b/include/hw/virtio/vhost-user-fs.h
+@@ -28,6 +28,7 @@ typedef struct {
+     char *tag;
+     uint16_t num_request_queues;
+     uint16_t queue_size;
++    bool memoryIsolation;
+ } VHostUserFSConf;
+ 
+ struct VHostUserFS {
+diff --git a/include/hw/virtio/vhost-user-scmi.h b/include/hw/virtio/vhost-user-scmi.h
+index 30ab0d7ab7..ad91216ac6 100644
+--- a/include/hw/virtio/vhost-user-scmi.h
++++ b/include/hw/virtio/vhost-user-scmi.h
+@@ -19,6 +19,7 @@ OBJECT_DECLARE_SIMPLE_TYPE(VHostUserSCMI, VHOST_USER_SCMI);
+ struct VHostUserSCMI {
+     VirtIODevice parent;
+     CharFrontend chardev;
++    bool memoryIsolation;
+     struct vhost_virtqueue *vhost_vqs;
+     struct vhost_dev vhost_dev;
+     VhostUserState vhost_user;
+diff --git a/include/hw/virtio/vhost-user-vsock.h b/include/hw/virtio/vhost-user-vsock.h
+index 5db6938b8b..2f455bc1dc 100644
+--- a/include/hw/virtio/vhost-user-vsock.h
++++ b/include/hw/virtio/vhost-user-vsock.h
+@@ -21,6 +21,7 @@ OBJECT_DECLARE_SIMPLE_TYPE(VHostUserVSock, VHOST_USER_VSOCK)
+ 
+ typedef struct {
+     CharFrontend chardev;
++    bool memoryIsolation;
+ } VHostUserVSockConf;
+ 
+ struct VHostUserVSock {
+diff --git a/include/hw/virtio/virtio-gpu.h b/include/hw/virtio/virtio-gpu.h
+index f69fc19462..1d02e106c0 100644
+--- a/include/hw/virtio/virtio-gpu.h
++++ b/include/hw/virtio/virtio-gpu.h
+@@ -276,6 +276,7 @@ struct VhostUserGPU {
+     CharFrontend vhost_chr;
+     QemuDmaBuf *dmabuf[VIRTIO_GPU_MAX_SCANOUTS];
+     bool backend_blocked;
++    bool memoryIsolation;
+ };
+ 
+ #define MAX_SLOTS 4096
+diff --git a/include/hw/virtio/virtio-scsi.h b/include/hw/virtio/virtio-scsi.h
+index b6028bb5cd..afe02f8d21 100644
+--- a/include/hw/virtio/virtio-scsi.h
++++ b/include/hw/virtio/virtio-scsi.h
+@@ -59,6 +59,7 @@ struct VirtIOSCSIConf {
+     char *vhostfd;
+     char *wwpn;
+     CharFrontend chardev;
++    bool memoryIsolation;
+     uint32_t boot_tpgt;
+     IOThread *iothread;
+     IOThreadVirtQueueMappingList *iothread_vq_mapping_list;
+-- 
+2.43.0
 
-> +
-> +from subprocess import check_call, DEVNULL
-> +
-> +from qemu_test import QemuSystemTest, Asset, get_qemu_img
-> +from qemu_test import exec_command_and_wait_for_pattern, exec_command
-> +from qemu_test import wait_for_console_pattern, skipBigDataTest
-> +
-> +class S390xSecureIpl(QemuSystemTest):
-> +    ASSET_F40_QCOW2 =3D Asset(
-> +        ('https://archives.fedoraproject.org/pub/archive/'
-> +         'fedora-secondary/releases/40/Server/s390x/images/'
-> +         'Fedora-Server-KVM-40-1.14.s390x.qcow2'),
-> +        '091c232a7301be14e19c76ce9a0c1cbd2be2c4157884a731e1fc4f89e7455a5=
-f')
-> +
-> +    def __init__(self, *args, **kwargs):
-> +        super().__init__(*args, **kwargs)
-> +        self.root_password =3D None
-> +        self.qcow2_path =3D None
-> +        self.cert_path =3D None
-> +        self.prompt =3D None
-> +
-> +    # Boot a temporary VM to set up secure IPL image:
-> +    # - Create certificate
-> +    # - Sign stage3 binary and kernel
-> +    # - Run zipl
-> +    # - Extract certificate
-
-Can we break out those four chunks into standalone routines, so that we can=
- identify them
-individually rather than as part of the novella that follows?
-
-> +    def setup_s390x_secure_ipl(self):
-> +        temp_vm =3D self.get_vm(name=3D'sipl_setup')
-> +        temp_vm.set_machine('s390-ccw-virtio')
-> +
-> +        asset_path =3D self.ASSET_F40_QCOW2.fetch()
-> +        self.qcow2_path =3D self.scratch_file('f40.qcow2')
-> +        qemu_img =3D get_qemu_img(self)
-> +        check_call([qemu_img, 'create', '-f', 'qcow2', '-b', asset_path,
-> +                    '-F', 'qcow2', self.qcow2_path], stdout=3DDEVNULL, s=
-tderr=3DDEVNULL)
-> +
-> +        temp_vm.set_console()
-> +        temp_vm.add_args('-nographic',
-> +                         '-accel', 'kvm',
-> +                         '-m', '1024',
-> +                         '-drive',
-> +                         f'id=3Ddrive0,if=3Dnone,format=3Dqcow2,file=3D{=
-self.qcow2_path}',
-> +                         '-device', 'virtio-blk-ccw,drive=3Ddrive0,booti=
-ndex=3D1')
-> +        temp_vm.launch()
-> +
-> +        # Initial root account setup (Fedora first boot screen)
-> +        self.root_password =3D 'fedora40password'
-> +        wait_for_console_pattern(self, 'Please make a selection from the=
- above',
-> +                                 vm=3Dtemp_vm)
-> +        exec_command_and_wait_for_pattern(self, '4', 'Password:', vm=3Dt=
-emp_vm)
-> +        exec_command_and_wait_for_pattern(self, self.root_password,
-> +                                          'Password (confirm):', vm=3Dte=
-mp_vm)
-> +        exec_command_and_wait_for_pattern(self, self.root_password,
-> +                                    'Please make a selection from the ab=
-ove',
-> +                                    vm=3Dtemp_vm)
-> +
-> +        # Login as root
-> +        self.prompt =3D '[root@localhost ~]#'
-> +        exec_command_and_wait_for_pattern(self, 'c', 'localhost login:',=
- vm=3Dtemp_vm)
-> +        exec_command_and_wait_for_pattern(self, 'root', 'Password:', vm=
-=3Dtemp_vm)
-> +        exec_command_and_wait_for_pattern(self, self.root_password, self=
-.prompt,
-> +                                          vm=3Dtemp_vm)
-> +
-> +        # Certificate generation
-> +        exec_command_and_wait_for_pattern(self,
-> +                                          'openssl version', 'OpenSSL 3.=
-2.1 30',
-> +                                          vm=3Dtemp_vm)
-> +        exec_command_and_wait_for_pattern(self,
-> +                            'openssl req -new -x509 -newkey rsa:2048 '
-> +                            '-keyout mykey.pem -outform PEM -out mycert.=
-pem '
-> +                            '-days 36500 -subj "/CN=3DMy Name/" -nodes -=
-verbose',
-> +                            'Writing private key to \'mykey.pem\'', vm=
-=3Dtemp_vm)
-> +
-> +        # Install kernel-devel (needed for sign-file)
-> +        exec_command_and_wait_for_pattern(self,
-> +                                'sudo dnf install kernel-devel-$(uname -=
-r) -y',
-> +                                'Complete!', vm=3Dtemp_vm)
-
-This is the last thing I see in base.log when running this test on my syste=
-m. Looking at console
-log, this errors out:
-
-2026-06-03 20:08:33,829: ^[[?2004h[root@localhost ~]# sudo dnf install kern=
-el-devel-$(uname -r) -y
-2026-06-03 20:08:34,147: ^[[?2004l^MFedora 40 - s390x        [=3D=3D=3D    =
-             ] ---  B/s |   0=20
-B     --:-- ETA^MFedora 40 - s390x                               0.0  B/s |=
-   0  B     00:00
-2026-06-03 20:08:34,147: Errors during downloading metadata for repository =
-'fedora':
-2026-06-03 20:08:34,147: - Curl error (6): Couldn't resolve host name for
-https://mirrors.fedoraproject.org/metalink?repo=3Dfedora-40&arch=3Ds390x [C=
-ould not resolve host:
-mirrors.fedoraproject.org]
-2026-06-03 20:08:34,207: Error: Failed to download metadata for repo 'fedor=
-a': Cannot prepare
-internal mirrorlist: Curl error (6): Couldn't resolve host name for
-https://mirrors.fedoraproject.org/metalink?repo=3Dfedora-40&arch=3Ds390x [C=
-ould not resolve host:
-mirrors.fedoraproject.org]
-
-
-Surrounding this, I'm noting that this is surrounded by messages from Netwo=
-rkManager waiting for it
-to come online, so maybe there needs to be a check that there's actually a =
-network here, so we can
-bail out rather than timeout.
-
-> +        wait_for_console_pattern(self, self.prompt, vm=3Dtemp_vm)
-> +        exec_command_and_wait_for_pattern(self,
-> +                                    'ls /usr/src/kernels/$(uname -r)/scr=
-ipts/',
-> +                                    'sign-file', vm=3Dtemp_vm)
-> +
-> +        # Sign stage3 binary and kernel
-> +        exec_command(self, '/usr/src/kernels/$(uname -r)/scripts/sign-fi=
-le '
-> +                    'sha256 mykey.pem mycert.pem /lib/s390-tools/stage3.=
-bin',
-> +                    vm=3Dtemp_vm)
-> +        wait_for_console_pattern(self, self.prompt, vm=3Dtemp_vm)
-> +        exec_command(self, '/usr/src/kernels/$(uname -r)/scripts/sign-fi=
-le '
-> +                    'sha256 mykey.pem mycert.pem /boot/vmlinuz-$(uname -=
-r)',
-> +                    vm=3Dtemp_vm)
-> +        wait_for_console_pattern(self, self.prompt, vm=3Dtemp_vm)
-> +
-> +        # Run zipl to prepare for secure boot
-> +        exec_command_and_wait_for_pattern(self, 'zipl --secure 1 -VV', '=
-Done.',
-> +                                          vm=3Dtemp_vm)
-> +
-> +        # Extract certificate to host
-> +        out =3D exec_command_and_wait_for_pattern(self, 'cat mycert.pem'=
-,
-> +                                                '-----END CERTIFICATE---=
---',
-> +                                                vm=3Dtemp_vm)
-> +        # strip first line to avoid console echo artifacts
-> +        cert =3D "\n".join(out.decode("utf-8").splitlines()[1:])
-> +        self.log.info("%s", cert)
-> +
-> +        self.cert_path =3D self.scratch_file("mycert.pem")
-> +
-> +        with open(self.cert_path, 'w', encoding=3D"utf-8") as file_objec=
-t:
-> +            file_object.write(cert)
-> +
-> +        # Shutdown temp vm
-> +        temp_vm.shutdown()
-> +
-> +    @skipBigDataTest()
-> +    def test_s390x_secure_ipl(self):
-> +        self.require_accelerator('kvm')
-> +        self.setup_s390x_secure_ipl()
-> +
-> +        self.set_machine('s390-ccw-virtio')
-> +
-> +        self.vm.set_console()
-> +        self.vm.add_args('-nographic',
-> +                         '-machine', 's390-ccw-virtio,secure-boot=3Don,'
-> +                         f'boot-certs.0.path=3D{self.cert_path}',
-> +                         '-accel', 'kvm',
-> +                         '-m', '1024',
-> +                         '-drive',
-> +                         f'id=3Ddrive1,if=3Dnone,format=3Dqcow2,file=3D{=
-self.qcow2_path}',
-> +                         '-device', 'virtio-blk-ccw,drive=3Ddrive1,booti=
-ndex=3D1')
-> +        self.vm.launch()
-> +
-> +        # Expect two verified components
-> +        verified_output =3D "Verified component"
-> +        wait_for_console_pattern(self, verified_output)
-> +        wait_for_console_pattern(self, verified_output)
-> +
-> +        # Login and verify the vm is booted using secure boot
-> +        wait_for_console_pattern(self, 'localhost login:')
-> +        exec_command_and_wait_for_pattern(self, 'root', 'Password:')
-> +        exec_command_and_wait_for_pattern(self, self.root_password, self=
-.prompt)
-> +        exec_command_and_wait_for_pattern(self, 'cat /sys/firmware/ipl/s=
-ecure', '1')
-> +
-> +if __name__ =3D=3D '__main__':
-> +    QemuSystemTest.main()
 
