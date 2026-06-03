@@ -4,75 +4,77 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 089D1CD6E57
-	for <qemu-devel@archiver.kernel.org>; Wed,  3 Jun 2026 16:51:42 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 27D25CD6E55
+	for <qemu-devel@archiver.kernel.org>; Wed,  3 Jun 2026 16:51:44 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wUooM-0003NU-IS; Wed, 03 Jun 2026 12:51:26 -0400
+	id 1wUoob-0003RX-OF; Wed, 03 Jun 2026 12:51:37 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <vsementsov@yandex-team.ru>)
- id 1wUoo9-0003J9-Kq
- for qemu-devel@nongnu.org; Wed, 03 Jun 2026 12:51:10 -0400
-Received: from forwardcorp1b.mail.yandex.net ([178.154.239.136])
+ (Exim 4.90_1) (envelope-from <stefanha@redhat.com>)
+ id 1wUooC-0003KS-5I
+ for qemu-devel@nongnu.org; Wed, 03 Jun 2026 12:51:12 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <vsementsov@yandex-team.ru>)
- id 1wUoo5-0006kq-9E
- for qemu-devel@nongnu.org; Wed, 03 Jun 2026 12:51:09 -0400
-Received: from mail-nwsmtp-smtp-corp-main-66.iva.yp-c.yandex.net
- (mail-nwsmtp-smtp-corp-main-66.iva.yp-c.yandex.net
- [IPv6:2a02:6b8:c0c:bf1f:0:640:c739:0])
- by forwardcorp1b.mail.yandex.net (Yandex) with ESMTPS id 69B0D80839;
- Wed, 03 Jun 2026 19:51:00 +0300 (MSK)
-Received: from [IPV6:2a02:6bf:8080:76a::1:36] (unknown
- [2a02:6bf:8080:76a::1:36])
- by mail-nwsmtp-smtp-corp-main-66.iva.yp-c.yandex.net (smtpcorp) with ESMTPSA
- id vojZ6o2aIiE0-ydSVhvXe; Wed, 03 Jun 2026 19:50:59 +0300
-Precedence: bulk
-X-Yandex-Fwd: 1
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yandex-team.ru;
- s=default; t=1780505459;
- bh=8xnyUIYEXihRpk80ztpnw+FYcnnKQuujk0rsGq2iyqs=;
- h=From:In-Reply-To:Cc:Date:References:To:Subject:Message-ID;
- b=aw9ZBohj1yR4AdrL9sR1ZItV5iJXTKK2bO8by6WLVxmtixi/ZlKbS/+k5oLrw4JQQ
- IyIoyZGcuCEcbY4ySpZFn6fEkuCUJwHjsISyUjEeDWPnvPzE3RjaJ5b+S/6xNUA4de
- nrj1RJrTYx5xPvFXBkbAnqmcrrtB0rb8KsrDA2hw=
-Authentication-Results: mail-nwsmtp-smtp-corp-main-66.iva.yp-c.yandex.net;
- dkim=pass header.i=@yandex-team.ru
-Message-ID: <dd60fb31-3055-490e-9e75-e4976e524a83@yandex-team.ru>
-Date: Wed, 3 Jun 2026 19:50:57 +0300
+ (Exim 4.90_1) (envelope-from <stefanha@redhat.com>)
+ id 1wUooA-0006ms-Jv
+ for qemu-devel@nongnu.org; Wed, 03 Jun 2026 12:51:11 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1780505469;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=K5C3O4XMGh3GV4eFm7SD1CCeGdG1Mywb1rSG48u/vzY=;
+ b=hKKL/taIIHRvCQcZi2iZj+EMyVMGRrw+YeYpzCudYZrQ1uMCqSwJ15+AIJYXbMQUMTu7ga
+ Jdp3IADucM3VHUW1oPrOtPfEHtzrhMmVseLRanl0m7uSbI2DTkn1RySIAeD1U5OE5VLIht
+ ygBNGLoukmJ3mzOR8GwhjqH2KwSIa3c=
+Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-282-VgJgyRe8MPKbeOAk3PHmmQ-1; Wed,
+ 03 Jun 2026 12:51:06 -0400
+X-MC-Unique: VgJgyRe8MPKbeOAk3PHmmQ-1
+X-Mimecast-MFC-AGG-ID: VgJgyRe8MPKbeOAk3PHmmQ_1780505465
+Received: from mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.111])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 5F44319560AA; Wed,  3 Jun 2026 16:51:05 +0000 (UTC)
+Received: from localhost (unknown [10.2.16.110])
+ by mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id B5220180049F; Wed,  3 Jun 2026 16:51:04 +0000 (UTC)
+Date: Wed, 3 Jun 2026 12:51:02 -0400
+From: Stefan Hajnoczi <stefanha@redhat.com>
+To: "Denis V. Lunev" <den@virtuozzo.com>
+Cc: "Denis V. Lunev" <den@openvz.org>, qemu-devel@nongnu.org,
+ Markus Armbruster <armbru@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>
+Subject: Re: [PATCH 0/2] util/envlist: fix prefix-match in name lookup
+Message-ID: <20260603165102.GD59214@fedora>
+References: <20260520212628.479772-1-den@openvz.org>
+ <266801b3-c127-422b-be48-d898a944deca@virtuozzo.com>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v17 08/10] net/tap: support local migration with virtio-net
-To: Markus Armbruster <armbru@redhat.com>
-Cc: jasowang@redhat.com, mst@redhat.com, peterx@redhat.com, farosas@suse.de,
- raphael.s.norwitz@gmail.com, bchaney@akamai.com, qemu-devel@nongnu.org,
- berrange@redhat.com, pbonzini@redhat.com, yc-core@yandex-team.ru,
- mark.caveayland@nutanix.com, =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?=
- <philmd@linaro.org>, Zhao Liu <zhao1.liu@intel.com>,
- Eric Blake <eblake@redhat.com>, John Snow <jsnow@redhat.com>
-References: <20260527191150.250333-1-vsementsov@yandex-team.ru>
- <20260527191150.250333-9-vsementsov@yandex-team.ru>
- <877boh74kf.fsf@pond.sub.org>
- <2e44a425-4f04-4ed3-9c7e-ea649ab64300@yandex-team.ru>
- <87jysgm0ho.fsf@pond.sub.org>
-Content-Language: en-US
-From: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
-In-Reply-To: <87jysgm0ho.fsf@pond.sub.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=178.154.239.136;
- envelope-from=vsementsov@yandex-team.ru; helo=forwardcorp1b.mail.yandex.net
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Type: multipart/signed; micalg=pgp-sha512;
+ protocol="application/pgp-signature"; boundary="MyyNPsY09yT+3MMR"
+Content-Disposition: inline
+In-Reply-To: <266801b3-c127-422b-be48-d898a944deca@virtuozzo.com>
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.111
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=stefanha@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: 8
+X-Spam_score: 0.8
+X-Spam_bar: /
+X-Spam_report: (0.8 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.445,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_SBL_CSS=3.335, SPF_HELO_PASS=-0.001,
+ SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
+Precedence: list
 List-Id: qemu development <qemu-devel.nongnu.org>
 List-Unsubscribe: <https://lists.nongnu.org/mailman/options/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=unsubscribe>
@@ -84,362 +86,74 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 03.06.26 12:33, Markus Armbruster wrote:
-> Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru> writes:
-> 
->> On 02.06.26 11:02, Markus Armbruster wrote:
->>> [Cc: John Snow for advice on cross-references (search for "John?")]
->>>
->>> Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru> writes:
->>>
->>>> Support transferring of TAP state (including open fd).
->>>>
->>>> Add new property "local-migration-supported", which defines,
->>>> is local-migration is actually supported for this TAP device.
->>>
->>> which defines whether
->>>
->>>> Starting from 11.1 MT it's enabled by default.
->>>
->>> What does "MT" mean?
->>
->> Machine Type I mean
-> 
-> Got it.  Please don't abbreviate it here.
-> 
->>
->>>
->>>>
->>>> Note, that local-migration (including migrating opened FDs
->>>> through migration channel, which must be UNIX socket), is
->>>> enabled by global "local" migration parameters. But individual
->>>> devices may have additional options to enable/disable it
->>>> personally.
->>>
->>> per device
->>>
->>>>
->>>> Add new option "incoming-fds", which should be set to true on
->>>> target for incoming migration work. It says "do not open any
->>>> files, but instead wait for FDs coming from migration stream".
->>>> "local-migration-supported" option is not enough, as it work in pair
->>>> with migration parameter "local", and intialization process
->>>> of TAP device should not depend on migration parameters.
->>>>
->>>> For new option require explicitly unset script and downscript,
->>>> to keep possibility of implementing support for them in the
->>>> future.
->>>
->>> Why explicitly unset?  Do we have to override a default script?
->>
->> Current version doesn't support having any scripts, as we should
->> also transfer a responsiblity for calling downscript to the target
->> (but what if migration failed, transfer it back?).
->>
->> Still, several version ago Ben asked to keep a possibility to support
->> scripts in future. So, current version requires script=no and
->> downscript=no. In future we may implement support for scripts together
->> with fd-migration, and drop this restriction.
->>
->> (Hope I answered the question)
-> 
-> I understand we can't run scripts specified with @script and @downscript
-> when @incoming-fds is enabled.  We might be able to run them in the
-> future.
-> 
-> We obviously should reject user requests for scripts we don't run.
-> Thus, user specifying scripts together with @incoming-fds should be an
-> error.  I understand it is in your code.
-> 
-> User specifying "no script" is obviously fine then.
-> 
-> Left: defaults.  The doc comment doesn't tell what they are.  That's a
-> defect in need of a fix.  Peeking at the code...  Looks like @script and
-> @downscript default to qemu-ifup and qemu-ifdown, respectively, both in
-> CONFIG_SYSCONFDIR.  Correct?
-> 
-> If yes, two options:
-> 
-> (1) Require the user to specify "no scripts", overriding the defaults.
-> Simple semantics.  Might be mildly annoying for human users.  Management
-> applications won't care.  I understand this is what your code does.
-> 
-> (2) Make the defaults depend on @incoming-fds: none if on, qemu-ifup and
-> qemu-ifdown if off.  Acceptable if documented.
 
-This seems inconsistent. If we are not going to deprecate current defaults,
-no reason to create different ones.
+--MyyNPsY09yT+3MMR
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-> 
-> I think I prefer (1).
+On Thu, May 28, 2026 at 11:24:48AM +0200, Denis V. Lunev wrote:
+> On 5/20/26 23:26, Denis V. Lunev wrote:
+> > A bug report against our downstream tree turned out to have its root
+> > cause in plain mainstream code: envlist_unsetenv() does a prefix-match
+> > lookup that drops the wrong entry when one stored name happens to be a
+> > prefix of another. The downstream symptom is specific to our setup and
+> > isn't interesting here -- the underlying lookup mistake is the part
+> > worth fixing, and it is reachable from a normal qemu-user invocation
+> > through the -U command-line option, so the fix belongs upstream.
+> >
+> > Patch 1 fixes the lookup: each entry now stores its name length at
+> > insertion time, and a tiny helper compares with explicit length
+> > equality plus memcmp. envlist_setenv()'s self-search was accidentally
+> > safe (it included the '=3D' byte in its strncmp window and that '=3D'
+> > served as a boundary) but is converted to the same helper so the name
+> > boundary becomes a structural property of the entry rather than a
+> > property of its byte layout. Without that, the two sites can easily
+> > drift apart again.
+> >
+> > Patch 2 backfils test coverage for util/envlist -- there was none --
+> > in tests/unit/test-envlist. I verified that the regression case
+> > (envlist_unsetenv("FOO") vs. a stored "FOOBAR=3D...") fails against the
+> > pre-fix code and passes after the fix.
+> >
+> > Signed-off-by: Denis V. Lunev <den@openvz.org>
+> > Cc: Stefan Hajnoczi <stefanha@redhat.com>
+> > Cc: Markus Armbruster <armbru@redhat.com>
+> > Cc: Paolo Bonzini <pbonzini@redhat.com>
+> >
+> > Denis V. Lunev (2):
+> >   util/envlist: fix prefix-match in envlist_unsetenv() name lookup
+> >   tests/unit: add test-envlist covering setenv/unsetenv name matching
+> >
+> >  tests/unit/meson.build    |   1 +
+> >  tests/unit/test-envlist.c | 196 ++++++++++++++++++++++++++++++++++++++
+> >  util/envlist.c            |  19 +++-
+> >  3 files changed, 212 insertions(+), 4 deletions(-)
+> >  create mode 100644 tests/unit/test-envlist.c
+> >
+> ping
+>=20
 
-That's what I do in the series
+Thanks, applied to staging:
+https://gitlab.com/qemu-project/qemu/commits/staging
 
-> 
-> Please consider working some of this into your commit message.
+Stefan
 
-Ok. I think, actually adding a preparing patch, documenting current behavior
-will make things a lot more clear.
+--MyyNPsY09yT+3MMR
+Content-Type: application/pgp-signature; name=signature.asc
 
-> 
->>>> Note disabling read polling on source stop for TAP migration:
->>>
->>> I don't understand this sentence.
->>
->> That's a realization detail. I've added it, because it was a fix, appeared
->> several version ago. It may be dropped from commit message.
->>
->> The sentence is about tap_vm_state_change() function, which disables
->> polling the TAP device.
-> 
-> Should it be a separate patch?
+-----BEGIN PGP SIGNATURE-----
 
-Agree, that seems a good idea. Will try to split.
+iQEzBAEBCgAdFiEEhpWov9P5fNqsNXdanKSrs4Grc8gFAmogW3YACgkQnKSrs4Gr
+c8iY9wf9EPRnd4QCbfCUmq8ETlnTj+gDiSde2zDIyiwFtTbUOaOwUxsiGdYbDFsq
+E1afI64ivf5gG4gn3xYIDV4BwWP72g4zDA0GvxolCy1wWn8dWummElhUQ+afzfyR
+z0i6mEdOReFgXXoHy212OFiDVo5EOwUtqR2OwiAfoOWuBJ2cyqIHEOvPlUOlnVdC
+co/091P9hA3PqJCJmTHoQBcQcp6ZNzd7Dh0UybDNyeSWegmaUZzVCTKuvwCXPhln
+oiSHZ2naYSP8cYtREPw6JpHxmplSyyv8tpks8cW9lKeRCfp/FPsfytPWxFQrhfjM
+FiHAW2/NlGctaUfVBDN5dQgQpdcFaw==
+=ygW4
+-----END PGP SIGNATURE-----
 
-> 
->>>> otherwise, source process may steal packages from TAP fd even
->>>> after source vm STOP.
->>>>
->>>> Signed-off-by: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
->>>
->>> [...]
->>>
->>>> diff --git a/qapi/net.json b/qapi/net.json
->>>> index 1a6382825c5..c5d87ba308b 100644
->>>> --- a/qapi/net.json
->>>> +++ b/qapi/net.json
->>>> @@ -425,6 +425,22 @@
->>>>   ##
->>>>   # @NetdevTapOptions:
->>>>   #
->>>>   # Used to configure a host TAP network interface backend.
->>>>   #
->>>>   # @ifname: interface name
->>>>   #
->>>>   # @fd: file descriptor of an already opened tap
->>>>   #
->>>>   # @fds: multiple file descriptors of already opened multiqueue capable
->>>>   #     tap
->>>>   #
->>>>   # @script: script to initialize the interface
->>>>   #
->>>>   # @downscript: script to shut down the interface
->>>>   #
->>>>   # @br: bridge name (since 2.8)
->>>>   #
->>>>   # @helper: command to execute to configure bridge
->>>>   #
->>>>   # @sndbuf: send buffer limit.  Understands [TGMKkb] suffixes.
->>>>   #
->>>>   # @vnet_hdr: enable the IFF_VNET_HDR flag on the tap interface
->>>>   #
->>>>   # @vhost: enable vhost-net network accelerator
->>>>   #
->>>>   # @vhostfd: file descriptor of an already opened vhost net device
->>>>   #
->>>>   # @vhostfds: file descriptors of multiple already opened vhost net
->>>>   #     devices
->>>>   #
->>>>   # @vhostforce: vhost on for non-MSIX virtio guests
->>>>   #
->>>>   # @queues: number of queues to be created for multiqueue capable tap
->>>>   #
->>>>   # @poll-us: maximum number of microseconds that could be spent on busy
->>>>   #     polling for tap (since 2.7)
->>>>   #
->>>> +# @incoming-fds: do not open or create any TAP devices.  Prepare for
->>>> +#     getting TAP file descriptors from incoming migration stream.
->>>> +#     The option is incompatible with any of @fd, @fds, @helper, @br,
->>>> +#     @ifname, @sndbuf and @vnet_hdr options, and requires @script and
->>>> +#     @downscript be explicitly set to nothing (empty string or "no"),
->>>
->>> WAT?!?
->>>
->>> Special value "no" is not documented in the QAPI schema, see the
->>> descriptions of @script and @downscript above.
->>>
->>> It is documented for -netdev tap in qemu-options.hx:
->>>
->>>       ``-netdev tap,id=id[,fd=h][,ifname=name][,script=file][,downscript=dfile][,br=bridge][,helper=helper]``
->>>           Configure a host TAP network backend with ID id.
->>>
->>>           Use the network script file to configure it and the network script
->>>           dfile to deconfigure it. If name is not provided, the OS
->>>           automatically provides one. The default network configure script is
->>>           ``/etc/qemu-ifup`` and the default network deconfigure script is
->>>           ``/etc/qemu-ifdown``. Use ``script=no`` or ``downscript=no`` to
->>>           disable script execution.
->>>
->>> Special value "" is okay: you can't name have a script named "".
->>>
->>> Special value "no" isn't: you can have a script named "no", but if you
->>> try to use it, it's silently ignored.  Yes, it's a silly name, but it's
->>> also a silly interface.
->>>
->>> I think we should document "no" properly, and also deprecate it.
->>
->> I can make a patch, but that's actually not about this series, "no" is
->> preexisting.
-> 
-> Yes, it is.  Keeping the deprecation patch separate is fine.
-> 
->> Hmm, may be also deprecate using default scripts, when script options are
->> not set by user?
->>
->> This way I can drop script=no & downscript=no requirements. And make
->> absent script option mean "no scripts" for "incoming-fds" from the start.
->> (or, I can do it even without deprecation, but that creates an inconsistency
->> in the common interface)
-> 
-> Changing defaults is often awkward.
-> 
-> Changing the meaning of "@script absent" from qemu-ifup to no script is
-> a compatibility break.
-> 
-> We can deprecate "@script absent".  This pushes users to specify
-> @script, which is probably a good idea for management applications
-> anyway.  It may be annoying for humans.
-> 
-> After the deprecation grace period, we can change the default and
-> undeprecate.  Trap for management applications that somehow missed it
-> during the grace period (skipped too many QEMU versions?).  Not sure
-> that's how our deprecation process wants to be used.
+--MyyNPsY09yT+3MMR--
 
-I'm afraid, skipping too many QEMU versions is existing practice
-for some downstream vendors :(
-
-> 
-> We could make @script mandatory instead.  Avoids the trap.
-> 
-> Same for @downscript.
-> 
-> Thoughts?
-
-I don't think that making "unused" options mandatory is much
-better than having unobvious defaults. So, we'll get yet
-another "not ideal" interface, and additional headache for
-those who used this default.
-
-
-I think, I'd keep things as is, just add documentation. And probably
-deprecate "no" in favor of "".
-
-> 
->>>> +#     and requires also @local-migration-supported to be true, "local"
->>>> +#     migration parameter be set as well, and QEMU being in incoming
->>>> +#     migration state.  (Since 11.1)
->>>
->>> This sentence is rather long and hard to parse.  Here's my attempt:
->>>
->>>    #     The option is incompatible with any of @fd, @fds, @helper, @br,
->>>    #     @ifname, @sndbuf and @vnet_hdr options.  @script and @downscript
->>>    #     must be explicitly disabled (empty string or "no"), and
->>>    #     @local-migration-supported must be true.  Additionally,
->>>    #     migration parameter @local must be set, and QEMU mist be in
->>>    #     incoming migration state.  (Since 11.1)
->>
->> Sounds good, thanks!
->>
->>>
->>> Ideally, "migration parameter @local" would link to its description, but
->>> I can't tell you offhand whether we can do that and how.  John?
->>>
->>>> +#
->>>> +# @local-migration-supported: enable local migration for this TAP
->>>> +#     backend.  When set, local migration is enabled/disabled by
->>>> +#     "local" migration parameter for this TAP backend.  When unset,
->>>
->>> migration parameter @local
->>>
->>>> +#     "local" migration parameter is ignored for this TAP backend.
->>>> +#     (Since 11.1.  Defaults to true for MT >= 11.1, and to false for
->>>> +#     MT < 11.1)
->>>
->>> What's "MT"?
->>
->> Machine Type
-> 
-> Got it.  Please don't abbreviate it here.
-> 
->>>> +#
->>>>   # Since: 1.2
->>>>   ##
->>>>   { 'struct': 'NetdevTapOptions',
->>>> @@ -443,7 +459,9 @@
->>>>       '*vhostfds':   'str',
->>>>       '*vhostforce': 'bool',
->>>>       '*queues':     'uint32',
->>>> -    '*poll-us':    'uint32'} }
->>>> +    '*poll-us':    'uint32',
->>>> +    '*incoming-fds': 'bool',
->>>> +    '*local-migration-supported': 'bool' } }
->>>>    
->>>>   ##
->>>>   # @NetdevSocketOptions:
->>>
->>> Two bools mean four cases.  @incoming-fd's description excludes the case
->>> "incoming-fd": true, "local-migration-supported": false.  Awkward.  Does
->>> case ""incoming-fd": false, "local-migration-supported": true make sense
->>> and why?
->>>
->>
->> Yes, as local-migration-supported enables the whole feature, and it will
->> be set by default starting from 11.1 machine type (read, starting from
->> 11.1 QEMU, if not use older machine type).
-> 
-> What are the use cases for the three valid combinations?
-> 
-> * "incoming-fd": false, "local-migration-supported": false
-
-Old Machine Type, the feature is disabled.
-
-> 
-> * "incoming-fd": false, "local-migration-supported": true
-
-New Machine type, the feature is enabled generally. But for current incoming
-migration it's disabled, for example because it's a remote migration (so, we can't
-migrate FDs through UNIX socket, and we don't set "local" migration parameter
-of course).
-
-Or, it's not an incoming migration, but a "first cold start" of the VM,
-of course "incoming-fd" is false, to open real files/sockets, but we
-are prepared for future local migrations (live-updates) with new feature
-enabled.
-
-> 
-> * "incoming-fd": true, "local-migration-supported": true
-
-New Machine type, the feature is enabled generally. And it is enabled for
-current incoming migration. "local" migration parameter should be set too, and
-UNIX socket should be used for migration channel.
-
-> 
->> "local-migration-supported" makes sense both for source and target,
->> "incoming-fds" only for target.
->>
->> I describe, whey we can't live with only one boolean here:
->>
->>      https://lore.kernel.org/qemu-devel/a572dadb-6ea6-48f2-a77c-3a4531dbad49@yandex-team.ru/
->>
->> and it's also a start of discussion for alternative interface (which makes possible to
->> realy on "local" migration parameter instead of having extra "incoming-fds").
->>
->> And here further RFC from Peter: https://lore.kernel.org/qemu-devel/20260528212947.368132-1-peterx@redhat.com/
->>
->> Finally, that's all why "incoming-fds" is unstable (see squash-in in parallel reply)
-> 
-> Should @local-migration-supported also be unstable?
-> 
-
-"incoming-fds" in unstable, as it may be removed in favor of local-migration-suppoerted && local,
-if "local" becomes available earlier as suggested by Peter's RFC.
-
-local-migration-supported will stay as is, even if RFC applied.
-
-Still, I agree, if part of new (quite complicated) interface is unstable, the whole
-interface is risky. No problem to keep all new options "unstable" for a while.
-
--- 
-Best regards,
-Vladimir
 
