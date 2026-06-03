@@ -4,71 +4,106 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id CC897CD6E55
-	for <qemu-devel@archiver.kernel.org>; Wed,  3 Jun 2026 06:47:53 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0F3D9CD6E55
+	for <qemu-devel@archiver.kernel.org>; Wed,  3 Jun 2026 06:58:22 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wUfHu-0003sv-3E; Wed, 03 Jun 2026 02:41:14 -0400
+	id 1wUfXk-0003Nn-TJ; Wed, 03 Jun 2026 02:57:36 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1wUfHW-0003QF-LR
- for qemu-devel@nongnu.org; Wed, 03 Jun 2026 02:40:52 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <vaibhav@linux.ibm.com>)
+ id 1wUfXj-0003NV-8U; Wed, 03 Jun 2026 02:57:35 -0400
+Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1wUfHR-0000pf-J8
- for qemu-devel@nongnu.org; Wed, 03 Jun 2026 02:40:48 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1780468844;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=5UtufhFZcbSj7LNXZ3yCoBHjlBRBm7Sn6jAQc6n8NhY=;
- b=QZtLVw8wcV4BwfaGErapwanNp2afFjNDouuwwElB/E/JL4LnkQIXVZKaZDzCkuRhW4jkzE
- 8GC6N48I3hEWIGPVYwAGNcPkUBnU/5ERlbMAGu3x+uFOwiFjPNCNcFXHw2+iI4e8qzWg1r
- Tb1cF3lPSnnxGEZMB8NZhn8jiKWozcM=
-Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-564-NSqO5_C_O3i_kyIzQi7kVw-1; Wed,
- 03 Jun 2026 02:40:39 -0400
-X-MC-Unique: NSqO5_C_O3i_kyIzQi7kVw-1
-X-Mimecast-MFC-AGG-ID: NSqO5_C_O3i_kyIzQi7kVw_1780468838
-Received: from mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.111])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 9F93C1800366; Wed,  3 Jun 2026 06:40:38 +0000 (UTC)
-Received: from blackfin.pond.sub.org (unknown [10.44.22.2])
- by mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 28CED180049F; Wed,  3 Jun 2026 06:40:38 +0000 (UTC)
-Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
- id 62EF721E6A36; Wed, 03 Jun 2026 08:40:32 +0200 (CEST)
-From: Markus Armbruster <armbru@redhat.com>
-To: qemu-devel@nongnu.org
-Cc: philmd@mailo.com, pierrick.bouvier@oss.qualcomm.com,
- Peter Maydell <peter.maydell@linaro.org>,
- Strahinja Jankovic <strahinja.p.jankovic@gmail.com>, qemu-arm@nongnu.org
-Subject: [PATCH v2 12/38] MAINTAINERS: Fix F: in "Allwinner-a10"
-Date: Wed,  3 Jun 2026 08:40:06 +0200
-Message-ID: <20260603064032.3733394-13-armbru@redhat.com>
-In-Reply-To: <20260603064032.3733394-1-armbru@redhat.com>
-References: <20260603064032.3733394-1-armbru@redhat.com>
+ (Exim 4.90_1) (envelope-from <vaibhav@linux.ibm.com>)
+ id 1wUfXh-0005M5-Di; Wed, 03 Jun 2026 02:57:34 -0400
+Received: from pps.filterd (m0356516.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
+ 652NqeGS3717409; Wed, 3 Jun 2026 06:57:30 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
+ :content-type:date:from:in-reply-to:message-id:mime-version
+ :references:subject:to; s=pp1; bh=GJc1mhyrvjSX4Pjyw7X2uVEJodBfjE
+ FeEiHnuFDRX1c=; b=F33dQrAzzPBkREEYyn0JhVWzRVFBE5X00uj+fr6gTaDAqW
+ KUdHbo9JVtb/XtDUVovb6zKb/Ye4PEDH0ciup1BOBaLnb+OlkcwxjiT36c8p3fUZ
+ wfFxXQaYHI15cnvdxCMS8Im7xKxREbJbwCgwcEcbClbwUSbpdQHaAAjPX32ow1m9
+ TTtqZx9CwOxkXdin5R+Zqt/bgGG4z+V5ZGtOx5n8vd3BDjTHMcBK1Xvuz+KeI13F
+ kUGRWfCKl/363iyywQQXeZYfm5FZtepRSY7DCmiu1FJOYXv2rGZyHzZDoDYHzBmJ
+ mv54B7HlrcZJ7f2HjL9UvSH6GZFa+1zyhNG9rJvw==
+Received: from ppma21.wdc07v.mail.ibm.com
+ (5b.69.3da9.ip4.static.sl-reverse.com [169.61.105.91])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4efnahs9rk-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Wed, 03 Jun 2026 06:57:30 +0000 (GMT)
+Received: from pps.filterd (ppma21.wdc07v.mail.ibm.com [127.0.0.1])
+ by ppma21.wdc07v.mail.ibm.com (8.18.1.7/8.18.1.7) with ESMTP id 6536d5ps003040;
+ Wed, 3 Jun 2026 06:57:29 GMT
+Received: from smtprelay06.wdc07v.mail.ibm.com ([172.16.1.73])
+ by ppma21.wdc07v.mail.ibm.com (PPS) with ESMTPS id 4egb7k70nd-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Wed, 03 Jun 2026 06:57:29 +0000 (GMT)
+Received: from smtpav06.wdc07v.mail.ibm.com (smtpav06.wdc07v.mail.ibm.com
+ [10.39.53.233])
+ by smtprelay06.wdc07v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 6536vSIp28312224
+ (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Wed, 3 Jun 2026 06:57:28 GMT
+Received: from smtpav06.wdc07v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 7CD6858055;
+ Wed,  3 Jun 2026 06:57:28 +0000 (GMT)
+Received: from smtpav06.wdc07v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 1A73A5804E;
+ Wed,  3 Jun 2026 06:57:25 +0000 (GMT)
+Received: from vaibhav?linux.ibm.com (unknown [9.39.22.158])
+ by smtpav06.wdc07v.mail.ibm.com (Postfix) with SMTP;
+ Wed,  3 Jun 2026 06:57:24 +0000 (GMT)
+Received: by vaibhav@linux.ibm.com (sSMTP sendmail emulation);
+ Wed, 03 Jun 2026 12:27:23 +0530
+From: Vaibhav Jain <vaibhav@linux.ibm.com>
+To: Amit Machhiwal <amachhiw@linux.ibm.com>
+Cc: qemu-ppc@nongnu.org, Harsh Prateek Bora <harshpb@linux.ibm.com>,
+ qemu-devel@nongnu.org, Nicholas Piggin <npiggin@gmail.com>
+Subject: Re: [PATCH v2 1/3] hw/ppc/spapr: Do not fallback to raw mode when
+ KVM rejects compat
+In-Reply-To: <20260502140021.69712-2-amachhiw@linux.ibm.com>
+References: <20260502140021.69712-2-amachhiw@linux.ibm.com>
+Date: Wed, 03 Jun 2026 12:27:23 +0530
+Message-ID: <87h5nkyuuk.fsf@vajain21.in.ibm.com>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.111
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=armbru@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -24
-X-Spam_score: -2.5
+Content-Type: text/plain
+X-TM-AS-GCONF: 00
+X-Proofpoint-Reinject: loops=2 maxloops=12
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNjAzMDA2MSBTYWx0ZWRfX8h+QY09DUj5v
+ pxBb2UOzm03jOGrdZfR6hhABAFtyRyhGjxoCba/3Nds/8hHOUZ2RwQsfHThTODWI9kFc5+DURzt
+ gz5pYGX/gTZPL00wiOjTsxSNqDGMC6bSirMnImX498U9dtrKoB4ZrkuB6XFxx6YN/+bUWFLKSVv
+ 2TpOeQRX14d5jD7k/8xS/k4/ZfAgL+BpLm5ADKP6XE7FOC10UDcn6ENUHazVIUrJzZ7wN4tfacl
+ moQv6VgzUZMb3DWYnHgH3iAgIAXDuAzxvBr+h6eEWdWTVrdanSNu/YT7zRpViLYu6x+O0gPQr6o
+ L9+BhMQQuOc9/6TY2KGVKaK7aTSTwnGrmWru5CNC7jW8tebw3xpBMvmf/9Gpw4DOFhsTcGOms2G
+ QIDqAXMxUeTRdDHCh6luzysUmfkiDjb2dJ6vC3X2iL9pyAaoeTOyPtGKSpfqXqoqW6wL9zX+ZIu
+ HxIyFySuSApYREYhT8g==
+X-Proofpoint-ORIG-GUID: gqYaQuh-rY_oDD0nqXyFlQGw2eQbRYrh
+X-Authority-Analysis: v=2.4 cv=cOzQdFeN c=1 sm=1 tr=0 ts=6a1fd05a cx=c_pps
+ a=GFwsV6G8L6GxiO2Y/PsHdQ==:117 a=GFwsV6G8L6GxiO2Y/PsHdQ==:17
+ a=FelO9ux0wxsA:10 a=VkNPw1HP01LnGYTKEx00:22 a=RnoormkPH1_aCDwRdu11:22
+ a=Y2IxJ9c9Rs8Kov3niI8_:22 a=VnNF1IyMAAAA:8 a=g2RU9dtdpAGrWBBcRgkA:9
+X-Proofpoint-GUID: aOxK6qr9nQOE_3xUWBci4HIREgER9xE8
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.125,FMLib:17.12.100.49
+ definitions=2026-06-03_02,2026-05-28_03,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ clxscore=1015 impostorscore=0 lowpriorityscore=0 spamscore=0 bulkscore=0
+ malwarescore=0 phishscore=0 suspectscore=0 priorityscore=1501 adultscore=0
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.22.0-2605210000 definitions=main-2606030061
+Received-SPF: pass client-ip=148.163.158.5; envelope-from=vaibhav@linux.ibm.com;
+ helo=mx0b-001b2d01.pphosted.com
+X-Spam_score_int: -26
+X-Spam_score: -2.7
 X-Spam_bar: --
-X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.445,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
+ RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -84,32 +119,79 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-We neglected to update MAINTAINERS when we renamed axp209.c to
-axp22x.c.  Update it now.
+Hi Amit,
 
-Fixes: a954543092 (hw/misc: Rename axp209 to axp22x and add support AXP221 PMU, 2023-06-06)
-Cc: Peter Maydell <peter.maydell@linaro.org>
-Cc: Strahinja Jankovic <strahinja.p.jankovic@gmail.com>
-Cc: qemu-arm@nongnu.org
-Signed-off-by: Markus Armbruster <armbru@redhat.com>
----
- MAINTAINERS | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+Thanks for the patch. My review comments inline below:
 
-diff --git a/MAINTAINERS b/MAINTAINERS
-index c80c868526..b1dcd3a596 100644
---- a/MAINTAINERS
-+++ b/MAINTAINERS
-@@ -727,7 +727,7 @@ F: hw/ide/ahci-allwinner.c
- F: include/hw/*/allwinner*
- F: hw/arm/cubieboard.c
- F: docs/system/arm/cubieboard.rst
--F: hw/misc/axp209.c
-+F: hw/misc/axp2xx.c
- F: tests/functional/arm/test_cubieboard.py
- 
- Allwinner-h3
+Amit Machhiwal <amachhiw@linux.ibm.com> writes:
+
+> During H_CLIENT_ARCHITECTURE_SUPPORT, QEMU attempts to set the requested
+> CPU compatibility mode via ppc_set_compat_all(). If this fails, the
+> existing code may fall back to raw mode when supported by the guest.
+>
+> The current logic treats all failures uniformly and tried to fall back
+> to raw mode whenever possible. As a result, errors from KVM (e.g.
+> kvmppc_set_compat() returning -EINVAL) are silently masked, making
+> debugging difficult and allowing the guest to proceed with an
+> unsupported or incompatible configuration.
+>
+> When running with KVM, such failures indicate that the requested
+> compatibility level is not supported by the host. Do not fallback in
+> this case; instead, report the error and fail the CAS negotiation.
+>
+> This makes the failure visible to the user and ensures that invalid
+> compatibility requests are rejected early rather than being hidden by
+> fallback behavior. For example, the following error is now reported:
+>
+>   qemu-system-ppc64: Unable to set CPU compatibility mode in KVM: Invalid argument
+>
+> Fixes: cc7b35b169e9 ("spapr: fallback to raw mode if best compat mode cannot be set during CAS")
+> Signed-off-by: Amit Machhiwal <amachhiw@linux.ibm.com>
+> Tested-by: Anushree Mathur <anushree.mathur@linux.ibm.com>
+> ---
+>  hw/ppc/spapr_hcall.c | 9 +++++++++
+>  1 file changed, 9 insertions(+)
+>
+> diff --git a/hw/ppc/spapr_hcall.c b/hw/ppc/spapr_hcall.c
+> index 032805a8d0db..de2ea6f5e579 100644
+> --- a/hw/ppc/spapr_hcall.c
+> +++ b/hw/ppc/spapr_hcall.c
+> @@ -1204,6 +1204,15 @@ target_ulong do_client_architecture_support(PowerPCCPU *cpu,
+>          Error *local_err = NULL;
+>  
+>          if (ppc_set_compat_all(cas_pvr, &local_err) < 0) {
+> +            /*
+> +             * If KVM rejected the compat mode, do not fallback. This indicates
+> +             * the host cannot support the requested level.
+> +             */
+> +            if (kvm_enabled()) {
+> +                error_report_err(local_err);
+> +                return H_HARDWARE;
+> +            }
+> +
+
+NAK on this change.
+
+As per PAPR whether the guest can run in RAW mode needs to be negotiated
+between Guest and VMM. The existing code path via cas_check_pvr() and
+'raw_mode_supported' already handles this case.
+
+So I dont see a reason for this KVM specific changes needed. Can you
+please elaborate a bit more on the issue that gets fixed by this change.
+
+If this change is related to your Linux kernel patch series titled
+"KVM: PPC: Handle CPU compatibility mode for nested guests" then the
+ideal place to put compat check would be in ppc_check_compat() and not in
+do_client_architecture_support()
+
+>              /* We fail to set compat mode (likely because running with KVM PR),
+>               * but maybe we can fallback to raw mode if the guest supports it.
+>               */
+> -- 
+> 2.50.1 (Apple Git-155)
+>
+
 -- 
-2.54.0
-
+Cheers
+~ Vaibhav
 
