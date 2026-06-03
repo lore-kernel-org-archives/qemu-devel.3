@@ -4,72 +4,73 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 65F40CD6E55
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 68936CD6E4A
 	for <qemu-devel@archiver.kernel.org>; Wed,  3 Jun 2026 06:45:01 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wUfHs-0003jR-1O; Wed, 03 Jun 2026 02:41:12 -0400
+	id 1wUfIX-000538-CS; Wed, 03 Jun 2026 02:41:53 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1wUfHP-0003N7-4o
- for qemu-devel@nongnu.org; Wed, 03 Jun 2026 02:40:44 -0400
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1wUfHa-0003T8-Tt
+ for qemu-devel@nongnu.org; Wed, 03 Jun 2026 02:41:00 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1wUfHN-0000kD-GU
- for qemu-devel@nongnu.org; Wed, 03 Jun 2026 02:40:42 -0400
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1wUfHW-0000sM-BJ
+ for qemu-devel@nongnu.org; Wed, 03 Jun 2026 02:40:54 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1780468840;
+ s=mimecast20190719; t=1780468848;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ to:to:cc:cc:mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=6kV9xhiw4F1+mJAuKbG/PY2fygqVoidKT4Dms1NFffs=;
- b=BMbMG4uPxFAtPJB6AKhNgDM9LlFrDagJGL2QyU155CVlaJvPY3AkMjmvZ0cjlVuk5UH8i2
- gxqxFPUiNSTmoNtDOc+yrUl64tV5zU8ScFdm4SePPQCQdXRGnYfe03Rjqg6gnD1Rqwd7ol
- 5UapsjVE+rkR50/UBDroe2eR0kKdT5Y=
-Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
+ bh=5bUQavGf4cWD7K1JmwJG4Cn4oA0SSKdTvDN6XUZ135c=;
+ b=auHh/+AoOCQSMaqT5wVxmi76iLuJQt1MUF3Vps7X6wqoNWGmqKdydcjl09tLWmqhnj1l4i
+ VtaEN5p4MjEs+w0IoR6xD6bRQyzJintG/Cs34L4lcvkaknJf2RnzMqqNuO5b1hEKOoCEg7
+ 3SskRAZE+B5xKRSAvOk/ix8I6GPG9GU=
+Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-556-rSVKgbmfNA2bv5bddck7Ew-1; Wed,
- 03 Jun 2026 02:40:36 -0400
-X-MC-Unique: rSVKgbmfNA2bv5bddck7Ew-1
-X-Mimecast-MFC-AGG-ID: rSVKgbmfNA2bv5bddck7Ew_1780468835
-Received: from mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.93])
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-376-8z0rzwwuOPSfr0_PauqpRQ-1; Wed,
+ 03 Jun 2026 02:40:42 -0400
+X-MC-Unique: 8z0rzwwuOPSfr0_PauqpRQ-1
+X-Mimecast-MFC-AGG-ID: 8z0rzwwuOPSfr0_PauqpRQ_1780468841
+Received: from mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.111])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 47FE91800349; Wed,  3 Jun 2026 06:40:35 +0000 (UTC)
+ by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 615241956088; Wed,  3 Jun 2026 06:40:41 +0000 (UTC)
 Received: from blackfin.pond.sub.org (unknown [10.44.22.2])
- by mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id A95F6180049F; Wed,  3 Jun 2026 06:40:34 +0000 (UTC)
+ by mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 0C75E1800361; Wed,  3 Jun 2026 06:40:41 +0000 (UTC)
 Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
- id 39D7A21E6A03; Wed, 03 Jun 2026 08:40:32 +0200 (CEST)
+ id 736AB21E6881; Wed, 03 Jun 2026 08:40:32 +0200 (CEST)
 From: Markus Armbruster <armbru@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: philmd@mailo.com, pierrick.bouvier@oss.qualcomm.com,
- =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>
-Subject: [PATCH v2 02/38] MAINTAINERS: Delete trailing colons in section
- headlines
-Date: Wed,  3 Jun 2026 08:39:56 +0200
-Message-ID: <20260603064032.3733394-3-armbru@redhat.com>
+ Nicholas Piggin <npiggin@gmail.com>,
+ Harsh Prateek Bora <harshpb@linux.ibm.com>, qemu-ppc@nongnu.org,
+ Amit Machhiwal <amachhiw@linux.ibm.com>
+Subject: [PATCH v2 16/38] MAINTAINERS: Drop stale F: from "sPAPR (pseries)"
+Date: Wed,  3 Jun 2026 08:40:10 +0200
+Message-ID: <20260603064032.3733394-17-armbru@redhat.com>
 In-Reply-To: <20260603064032.3733394-1-armbru@redhat.com>
 References: <20260603064032.3733394-1-armbru@redhat.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.93
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.111
 Received-SPF: pass client-ip=170.10.133.124; envelope-from=armbru@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -24
-X-Spam_score: -2.5
-X-Spam_bar: --
-X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.445,
+X-Spam_score_int: 8
+X-Spam_score: 0.8
+X-Spam_bar: /
+X-Spam_report: (0.8 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.445,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_SBL_CSS=3.335, SPF_HELO_PASS=-0.001,
+ SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -85,46 +86,32 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-These are harmless as far as I can tell, so this is just for
-consistency.
+We neglected to update MAINTAINERS when we deleted
+include/hw/ppc/pef.h.  Update it now.
 
+Fixes: 00a238b1a8 (ppc/pef: switch to use confidential_guest_kvm_init/reset(), 2024-02-29)
+Cc: Nicholas Piggin <npiggin@gmail.com>
+Cc: Harsh Prateek Bora <harshpb@linux.ibm.com>
+Cc: qemu-ppc@nongnu.org
 Signed-off-by: Markus Armbruster <armbru@redhat.com>
-Reviewed-by: Alex Bennée <alex.bennee@linaro.org>
+Reviewed-by: Harsh Prateek Bora <harshpb@linux.ibm.com>
+Reviewed-by: Amit Machhiwal <amachhiw@linux.ibm.com>
 ---
- MAINTAINERS | 6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ MAINTAINERS | 1 -
+ 1 file changed, 1 deletion(-)
 
 diff --git a/MAINTAINERS b/MAINTAINERS
-index 3637b4a235..2c7f2985ff 100644
+index 9f45d7fa8d..f7e449c124 100644
 --- a/MAINTAINERS
 +++ b/MAINTAINERS
-@@ -2837,7 +2837,7 @@ F: docs/interop/vhost-user-gpu.rst
- F: contrib/vhost-user-gpu
- F: hw/display/vhost-user-*
- 
--qemu-vnc:
-+qemu-vnc
- M: Marc-André Lureau <marcandre.lureau@redhat.com>
- S: Maintained
- F: tools/qemu-vnc
-@@ -4462,7 +4462,7 @@ F: include/hw/remote/iommu.h
- F: tests/functional/multiprocess.py
- F: tests/functional/*/*multiprocess.py
- 
--VFIO-USER:
-+VFIO-USER
- M: John Levon <john.levon@nutanix.com>
- M: Thanos Makatos <thanos.makatos@nutanix.com>
- M: Cédric Le Goater <clg@redhat.com>
-@@ -4474,7 +4474,7 @@ F: include/hw/vfio-user/*
- F: subprojects/libvfio-user
- F: tests/functional/x86_64/test_vfio_user_client.py
- 
--EBPF:
-+EBPF
- M: Jason Wang <jasowang@redhat.com>
- R: Andrew Melnychenko <andrew@daynix.com>
- R: Yuri Benditovich <yuri.benditovich@daynix.com>
+@@ -1630,7 +1630,6 @@ F: hw/*/xics*
+ F: include/hw/*/xics*
+ F: include/hw/ppc/fdt.h
+ F: hw/ppc/fdt.c
+-F: include/hw/ppc/pef.h
+ F: hw/ppc/pef.c
+ F: pc-bios/slof.bin
+ F: docs/system/ppc/pseries.rst
 -- 
 2.54.0
 
