@@ -4,46 +4,47 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C0C49CD6E5D
-	for <qemu-devel@archiver.kernel.org>; Wed,  3 Jun 2026 03:22:41 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A08E2CD6E5D
+	for <qemu-devel@archiver.kernel.org>; Wed,  3 Jun 2026 03:22:53 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wUcBV-000098-O3; Tue, 02 Jun 2026 23:22:25 -0400
+	id 1wUcBb-0000Aq-4f; Tue, 02 Jun 2026 23:22:31 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1wUcBT-00008h-Iv
- for qemu-devel@nongnu.org; Tue, 02 Jun 2026 23:22:23 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1wUcBY-0000AB-9f
+ for qemu-devel@nongnu.org; Tue, 02 Jun 2026 23:22:28 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1wUcBR-0002MI-DQ
- for qemu-devel@nongnu.org; Tue, 02 Jun 2026 23:22:23 -0400
+ (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1wUcBW-0002Ok-PO
+ for qemu-devel@nongnu.org; Tue, 02 Jun 2026 23:22:28 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1780456934;
+ s=mimecast20190719; t=1780456945;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding;
- bh=so3jSTembzNsOuKeK8c2QkxeTNOxuho6aLvudNKLKS4=;
- b=Rm8kXHNCWT1Tjnb7AUfwH6yMze4mFCawLKlYHsDMSem474D/4NduzQUq/LyHEeLQ6gNuUM
- tUhjcLHofQM8d/0Lgk3dXjxMbMGQqEfSzqZ31GBDxlJFYyPheVOMoH08pRICCHNNlFbf/h
- PBmO+g52cN/lTNw0Q+cYyuCdxvlrkVA=
-Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
+ to:to:cc:cc:mime-version:mime-version:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=d+ZrUF5QiDAqJMi43LG3mwd5iMGaAwMF/E106IU4/XI=;
+ b=Pl4iGAhdvuZh4XakKOUhu0bDaXQ7NMXwvQbjd2hhBPtS/tRpv6dyCgw6Tk0JspQ4/d4gFk
+ jtv6fJ7fsz0vsWuRIJLO5KTHawK1ofcaEXpe7o1rYZ3HaxG3OgQaCtyIyfSfCvUEwiyEZ0
+ n4X6QfPBkyN0+ukXgSkifKKEHJ4TsVU=
+Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-304-NE9FmolGP6i3ZjEKw4nlAg-1; Tue,
- 02 Jun 2026 23:22:10 -0400
-X-MC-Unique: NE9FmolGP6i3ZjEKw4nlAg-1
-X-Mimecast-MFC-AGG-ID: NE9FmolGP6i3ZjEKw4nlAg_1780456929
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-645-UBn-pHWAPqWBHeXNS6Jk5g-1; Tue,
+ 02 Jun 2026 23:22:21 -0400
+X-MC-Unique: UBn-pHWAPqWBHeXNS6Jk5g-1
+X-Mimecast-MFC-AGG-ID: UBn-pHWAPqWBHeXNS6Jk5g_1780456940
 Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id D39AA1800663; Wed,  3 Jun 2026 03:22:08 +0000 (UTC)
+ by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 0144918011FF; Wed,  3 Jun 2026 03:22:20 +0000 (UTC)
 Received: from jsnow-thinkpadp16vgen1.westford.csb (unknown [10.22.64.74])
  by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id C2A0730001A1; Wed,  3 Jun 2026 03:22:03 +0000 (UTC)
+ id 6ED5730001A1; Wed,  3 Jun 2026 03:22:16 +0000 (UTC)
 From: John Snow <jsnow@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: Ani Sinha <anisinha@redhat.com>, Michael Roth <michael.roth@amd.com>,
@@ -60,21 +61,22 @@ Cc: Ani Sinha <anisinha@redhat.com>, Michael Roth <michael.roth@amd.com>,
  Gerd Hoffmann <kraxel@redhat.com>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  linux-edac@vger.kernel.org, Cleber Rosa <crosa@redhat.com>
-Subject: [PATCH v3 00/16] qapi: add formal "intro" section
-Date: Tue,  2 Jun 2026 23:21:45 -0400
-Message-ID: <20260603032201.993015-1-jsnow@redhat.com>
-Content-Type: text/plain; charset="utf-8"
+Subject: [PATCH v3 03/16] qapi/docs: remove unused QAPIDoc subsection members
+Date: Tue,  2 Jun 2026 23:21:48 -0400
+Message-ID: <20260603032201.993015-4-jsnow@redhat.com>
+In-Reply-To: <20260603032201.993015-1-jsnow@redhat.com>
+References: <20260603032201.993015-1-jsnow@redhat.com>
 MIME-Version: 1.0
-Content-Transfer-Encoding: quoted-printable
+Content-Transfer-Encoding: 8bit
 X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=jsnow@redhat.com;
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=jsnow@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -24
 X-Spam_score: -2.5
 X-Spam_bar: --
 X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.445,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
  SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -91,65 +93,55 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hiya, this is a series that explores a potential syntax for a=0D
-designated "Intro" section. Markus knows why I want this, but for=0D
-everyone else: a designated "Introduction" section is useful for the=0D
-desired "inliner" feature for the new QAPI doc system. Commits explain=0D
-a bit more. This is prep work and doesn't really change anything=0D
-tangibly except source code syntax for the QAPI docs.=0D
-=0D
-It is designed so that this conversion can happen incrementally with=0D
-no actual difference to the rendered manuals, so each QAPI module can=0D
-be converted one at a time for easier review and merging in an=0D
-arbitrary order.=0D
-=0D
-This series demonstrates conversion of just four modules; if I'm given=0D
-a thumbs up, I will convert the rest of QAPI, one module (or=0D
-maintainer stanza) per patch like how I handled adding=0D
-cross-references.=0D
-=0D
-**=0D
-=0D
-V3: changed intro section syntax, made various fixes and changes; I'm=0D
-going to be honest Markus I did not keep a strict account this time=0D
-;_;=0D
-=0D
-V2: punt intro sections to the subsequent line and adjust the parser=0D
-accordingly. Left as an RFC patch that undoes some things this series=0D
-does instead of properly factoring into the series.=0D
-=0D
-John Snow (16):=0D
-  python: temporarily restrict max mypy version=0D
-  tests/qapi: generate output in source order=0D
-  qapi/docs: remove unused QAPIDoc subsection members=0D
-  qapi/docs: add has_features property=0D
-  qapi/docs: make remaining subsection members "private"=0D
-  qapi/docs: fix comment phrasing=0D
-  qapi/docs: add "Intro" section=0D
-  qapi/parser: move _insert_near_kind() method=0D
-  qapi/docs: adjust stub member insertion algorithm=0D
-  qapi/docs: remove implicit Plain section=0D
-  qapi/docs: add rendering for INTRO sections=0D
-  qapi/docs: add "Intro" section parsing=0D
-  qapi: convert intro sections for accelerator.json=0D
-  qapi: convert intro sections for acpi-hest.json=0D
-  qapi: convert intro sections for acpi.json=0D
-  qapi: convert intro sections for audio.json=0D
-=0D
- docs/devel/qapi-code-gen.rst   |  16 ++--=0D
- docs/sphinx/qapidoc.py         |  59 +++++++-----=0D
- qapi/accelerator.json          |  18 ++--=0D
- qapi/acpi-hest.json            |   4 +-=0D
- qapi/acpi.json                 |  18 ++--=0D
- qapi/audio.json                |  88 +++++++-----------=0D
- python/setup.cfg               |   3 +-=0D
- scripts/qapi/parser.py         | 162 +++++++++++++++++++--------------=0D
- tests/qapi-schema/doc-good.out |  86 ++++++++---------=0D
- tests/qapi-schema/test-qapi.py |  14 +--=0D
- 10 files changed, 236 insertions(+), 232 deletions(-)=0D
-=0D
--- =0D
-2.54.0=0D
-=0D
+All users of the QAPIDoc object should be iterating over all_sections
+and not grabbing arbitrary subsections, if possible. Remove the 'body'
+and 'sections' members, as they are no longer used.
+
+Signed-off-by: John Snow <jsnow@redhat.com>
+Reviewed-by: Markus Armbruster <armbru@redhat.com>
+---
+ scripts/qapi/parser.py | 6 ------
+ 1 file changed, 6 deletions(-)
+
+diff --git a/scripts/qapi/parser.py b/scripts/qapi/parser.py
+index c3cf33904ef..b33edbba74f 100644
+--- a/scripts/qapi/parser.py
++++ b/scripts/qapi/parser.py
+@@ -732,8 +732,6 @@ def __init__(self, info: QAPISourceInfo, symbol: Optional[str] = None):
+         self.all_sections: List[QAPIDoc.Section] = [
+             QAPIDoc.Section(info, QAPIDoc.Kind.PLAIN)
+         ]
+-        # the body section
+-        self.body: Optional[QAPIDoc.Section] = self.all_sections[0]
+         # dicts mapping parameter/feature names to their description
+         self.args: Dict[str, QAPIDoc.ArgSection] = {}
+         self.features: Dict[str, QAPIDoc.ArgSection] = {}
+@@ -742,8 +740,6 @@ def __init__(self, info: QAPISourceInfo, symbol: Optional[str] = None):
+         self.errors: Optional[QAPIDoc.Section] = None
+         # "Since" section
+         self.since: Optional[QAPIDoc.Section] = None
+-        # sections other than .body, .args, .features
+-        self.sections: List[QAPIDoc.Section] = []
+ 
+     def end(self) -> None:
+         for section in self.all_sections:
+@@ -766,7 +762,6 @@ def ensure_untagged_section(self, info: QAPISourceInfo) -> None:
+ 
+         # start new section
+         section = self.Section(info, kind)
+-        self.sections.append(section)
+         self.all_sections.append(section)
+ 
+     def new_tagged_section(
+@@ -790,7 +785,6 @@ def new_tagged_section(
+                 raise QAPISemError(
+                     info, "duplicated '%s' section" % kind)
+             self.since = section
+-        self.sections.append(section)
+         self.all_sections.append(section)
+ 
+     def _new_description(
+-- 
+2.54.0
 
 
