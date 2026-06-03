@@ -4,61 +4,66 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 32F5DCD6E55
-	for <qemu-devel@archiver.kernel.org>; Wed,  3 Jun 2026 06:47:23 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id DD609CD6E55
+	for <qemu-devel@archiver.kernel.org>; Wed,  3 Jun 2026 06:47:27 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wUfHj-0003d6-K1; Wed, 03 Jun 2026 02:41:03 -0400
+	id 1wUfHq-0003h4-5a; Wed, 03 Jun 2026 02:41:10 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1wUfHU-0003Or-A0
- for qemu-devel@nongnu.org; Wed, 03 Jun 2026 02:40:48 -0400
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1wUfHa-0003RV-Bg
+ for qemu-devel@nongnu.org; Wed, 03 Jun 2026 02:40:58 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1wUfHQ-0000ox-PU
- for qemu-devel@nongnu.org; Wed, 03 Jun 2026 02:40:47 -0400
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1wUfHT-0000qG-5g
+ for qemu-devel@nongnu.org; Wed, 03 Jun 2026 02:40:50 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1780468844;
+ s=mimecast20190719; t=1780468846;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=UnYyAtP/8Jo791LpWUt84mqQJECS03xOFfAbryKPIA8=;
- b=E02j5IV6PeoagGcVZxcX6yEQZW7tliuK7pS/9a7DmY8TMdT5IJqZzrGFE+K+O761MpVNnc
- hTGkoKYYGwg7q0yDmDO39gcxba7RtcsvqkjrZOp+z5GpfkKRaPJki+kUEAx+OTfFKqcbMw
- x+rfWA+CiKEhinHn+tNJzmPCIWwB+Qg=
+ bh=oa17dXBtWKf6TKqHMiKNgmJkBJ5DdZzAOg3BlAMcjSk=;
+ b=fOStZo4XarW7K7TZkgoo+sdXvMqyNiK6lpUsyxPLeYDbAfcq6/yuOoC6vYXU8LN6VVxsoX
+ 2i5EquTQxCI5L7xMIuFt+cFO1yvBx78HRerFyhm0e8pUU5CzpmeYqN2v8Q6TMXnjVM8tT8
+ vMtCTTC02dbi1xa7VfDjB+wxgL2rcs8=
 Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-459-eHE5bWLgOoKbyOWWB6NXKA-1; Wed,
- 03 Jun 2026 02:40:39 -0400
-X-MC-Unique: eHE5bWLgOoKbyOWWB6NXKA-1
-X-Mimecast-MFC-AGG-ID: eHE5bWLgOoKbyOWWB6NXKA_1780468838
-Received: from mx-prod-int-10.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-10.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.95])
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-589-L5-hc_3bMGu1-MK0qFW4mw-1; Wed,
+ 03 Jun 2026 02:40:42 -0400
+X-MC-Unique: L5-hc_3bMGu1-MK0qFW4mw-1
+X-Mimecast-MFC-AGG-ID: L5-hc_3bMGu1-MK0qFW4mw_1780468841
+Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
  by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 7202B19560AA; Wed,  3 Jun 2026 06:40:38 +0000 (UTC)
+ id 94F5A1956059; Wed,  3 Jun 2026 06:40:41 +0000 (UTC)
 Received: from blackfin.pond.sub.org (unknown [10.44.22.2])
- by mx-prod-int-10.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 28DAE765; Wed,  3 Jun 2026 06:40:38 +0000 (UTC)
+ by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 1460F195E486; Wed,  3 Jun 2026 06:40:41 +0000 (UTC)
 Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
- id 4E34E21E6A0A; Wed, 03 Jun 2026 08:40:32 +0200 (CEST)
+ id 942A121E656B; Wed, 03 Jun 2026 08:40:32 +0200 (CEST)
 From: Markus Armbruster <armbru@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: philmd@mailo.com, pierrick.bouvier@oss.qualcomm.com,
- "Michael S. Tsirkin" <mst@redhat.com>
-Subject: [PATCH v2 07/38] MAINTAINERS: Drop stale F: from "virtio"
-Date: Wed,  3 Jun 2026 08:40:01 +0200
-Message-ID: <20260603064032.3733394-8-armbru@redhat.com>
+ Gerd Hoffmann <kraxel@redhat.com>,
+ Manos Pitsidianakis <manos.pitsidianakis@linaro.org>,
+ =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>,
+ Dmitry Osipenko <dmitry.osipenko@collabora.com>
+Subject: [PATCH v2 24/38] MAINTAINERS: Fix F: in "virtio-snd" and "virtio-gpu"
+Date: Wed,  3 Jun 2026 08:40:18 +0200
+Message-ID: <20260603064032.3733394-25-armbru@redhat.com>
 In-Reply-To: <20260603064032.3733394-1-armbru@redhat.com>
 References: <20260603064032.3733394-1-armbru@redhat.com>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 3.6 on 10.30.177.95
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.12
 Received-SPF: pass client-ip=170.10.129.124; envelope-from=armbru@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: 8
@@ -84,28 +89,48 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-We neglected to update MAINTAINERS when we deleted makefiles.  Update
-it now.
+We neglected to update MAINTAINERS when we moved
+docs/system/devices/virtio-snd.rst and
+docs/system/devices/virtio-gpu.rst to docs/system/devices/virtio/.
+Update it now.
 
-Fixes: be786d2f4a (meson: convert hw/virtio, 2019-08-15)
-Cc: Michael S. Tsirkin <mst@redhat.com>
+Fixes: 487ce6ce99 (docs/system: split VirtIO devices from the rest, 2025-10-16)
+Cc: Gerd Hoffmann <kraxel@redhat.com>
+Cc: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
+Cc: Alex Bennée <alex.bennee@linaro.org>
+Cc: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
+Cc: Dmitry Osipenko <dmitry.osipenko@collabora.com>
 Signed-off-by: Markus Armbruster <armbru@redhat.com>
+Reviewed-by: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
+Reviewed-by: Alex Bennée <alex.bennee@linaro.org>
+Reviewed-by: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
+Reviewed-by: Dmitry Osipenko <dmitry.osipenko@collabora.com>
 ---
- MAINTAINERS | 1 -
- 1 file changed, 1 deletion(-)
+ MAINTAINERS | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
 diff --git a/MAINTAINERS b/MAINTAINERS
-index 2dc53c7e2e..26feb68c0c 100644
+index 9596788433..a3a233e6b6 100644
 --- a/MAINTAINERS
 +++ b/MAINTAINERS
-@@ -2423,7 +2423,6 @@ virtio
- M: Michael S. Tsirkin <mst@redhat.com>
- S: Supported
- F: hw/*/virtio*
--F: hw/virtio/Makefile.objs
- F: hw/virtio/trace-events
- F: qapi/virtio.json
- F: net/vhost-user.c
+@@ -2609,7 +2609,7 @@ S: Supported
+ F: hw/audio/virtio-snd.c
+ F: hw/audio/virtio-snd-pci.c
+ F: include/hw/audio/virtio-snd.h
+-F: docs/system/devices/virtio-snd.rst
++F: docs/system/devices/virtio/virtio-snd.rst
+ 
+ nvme
+ M: Keith Busch <kbusch@kernel.org>
+@@ -2798,7 +2798,7 @@ S: Odd Fixes
+ F: hw/display/virtio-gpu*
+ F: hw/display/virtio-vga.*
+ F: include/hw/virtio/virtio-gpu.h
+-F: docs/system/devices/virtio-gpu.rst
++F: docs/system/devices/virtio/virtio-gpu.rst
+ F: tests/functional/aarch64/test_virt_gpu.py
+ F: tests/functional/x86_64/test_virtio_gpu.py
+ 
 -- 
 2.54.0
 
