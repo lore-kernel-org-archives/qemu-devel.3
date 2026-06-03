@@ -4,82 +4,109 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B7447CD6E55
-	for <qemu-devel@archiver.kernel.org>; Wed,  3 Jun 2026 17:17:00 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C7A18CD6E57
+	for <qemu-devel@archiver.kernel.org>; Wed,  3 Jun 2026 17:33:44 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wUpCV-00005W-1n; Wed, 03 Jun 2026 13:16:19 -0400
+	id 1wUpSh-0003L7-3j; Wed, 03 Jun 2026 13:33:03 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1wUpCR-0008W4-MA
- for qemu-devel@nongnu.org; Wed, 03 Jun 2026 13:16:17 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1wUpCP-0006Bm-4h
- for qemu-devel@nongnu.org; Wed, 03 Jun 2026 13:16:15 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1780506971;
- h=from:from:reply-to:reply-to:subject:subject:date:date:
- message-id:message-id:to:to:cc:cc:mime-version:mime-version:
- content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=n+bq0CaMYt7tHmdYI9bIrzKoRjv74q4Q1koF9CvivuU=;
- b=FwEc6bIdV7Qg49WVipN8wY5USr7ykIS+8/FUioDzUbZWqTgVslhwqQRSX9f8zMGd4fqo+O
- Cb3jXAI9bHtVyFJBIfM3L5EPXUg4bVInghdUPZo4hQ8r5C7KWYjMFVC0JN5WgazBj7agXU
- ccPHadcHOogZ9DS8NgTu6dJrsbPpLk0=
-Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-679-jc_0t80CMb2XowCdWLp6KQ-1; Wed,
- 03 Jun 2026 13:16:07 -0400
-X-MC-Unique: jc_0t80CMb2XowCdWLp6KQ-1
-X-Mimecast-MFC-AGG-ID: jc_0t80CMb2XowCdWLp6KQ_1780506966
-Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1wUpSg-0003Kr-3S
+ for qemu-devel@nongnu.org; Wed, 03 Jun 2026 13:33:02 -0400
+Received: from smtp-out1.suse.de ([2a07:de40:b251:101:10:150:64:1])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1wUpSe-0002rA-CJ
+ for qemu-devel@nongnu.org; Wed, 03 Jun 2026 13:33:01 -0400
+Received: from imap1.dmz-prg2.suse.org (unknown [10.150.64.97])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 074771800345; Wed,  3 Jun 2026 17:16:06 +0000 (UTC)
-Received: from redhat.com (unknown [10.44.50.34])
- by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 9087E30001A1; Wed,  3 Jun 2026 17:16:01 +0000 (UTC)
-Date: Wed, 3 Jun 2026 18:15:57 +0100
-From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
-To: Peter Xu <peterx@redhat.com>
-Cc: Fabiano Rosas <farosas@suse.de>, qemu-devel@nongnu.org,
- Paolo Bonzini <pbonzini@redhat.com>, Mark Kanda <mark.kanda@oracle.com>,
- "Michael S . Tsirkin" <mst@redhat.com>,
- Markus Armbruster <armbru@redhat.com>, Eric Blake <eblake@redhat.com>,
- "Maciej S. Szmigiero" <maciej.szmigiero@oracle.com>,
- Jason Wang <jasowang@redhat.com>, Ben Chaney <bchaney@akamai.com>,
- Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
+ by smtp-out1.suse.de (Postfix) with ESMTPS id 06C076AD79;
+ Wed,  3 Jun 2026 17:32:58 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
+ t=1780507978; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=RwlB57GarVaQuFijV91gpUruWafSHy9HvKq1bHIOGKg=;
+ b=zuFtdE0LX26/h9x6E8N8qm5kQbSWLarb/CNxlwDRVku9QVJFD0owa0FfCQe1X1Gmbe9NgD
+ hOs9Sw1Es+rUUSlxFlIc03TtO4aQ3VUP0/Wz5mw0ne1HVYSEVLZ5h+UnbH4tr1D6UXNCkY
+ z9D8OgkLKeu/kh8Q0fqd201X0eCrBu4=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
+ s=susede2_ed25519; t=1780507978;
+ h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=RwlB57GarVaQuFijV91gpUruWafSHy9HvKq1bHIOGKg=;
+ b=7nnJ4TmCXDUupnSVhtvMNxZw3tIx/E7ocPbIYgHQgC+zbbLSw2MDNVS5a9wl9YNre5cyLx
+ 8ugmmC177rBPjvDQ==
+Authentication-Results: smtp-out1.suse.de;
+	none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
+ t=1780507978; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=RwlB57GarVaQuFijV91gpUruWafSHy9HvKq1bHIOGKg=;
+ b=zuFtdE0LX26/h9x6E8N8qm5kQbSWLarb/CNxlwDRVku9QVJFD0owa0FfCQe1X1Gmbe9NgD
+ hOs9Sw1Es+rUUSlxFlIc03TtO4aQ3VUP0/Wz5mw0ne1HVYSEVLZ5h+UnbH4tr1D6UXNCkY
+ z9D8OgkLKeu/kh8Q0fqd201X0eCrBu4=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
+ s=susede2_ed25519; t=1780507978;
+ h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=RwlB57GarVaQuFijV91gpUruWafSHy9HvKq1bHIOGKg=;
+ b=7nnJ4TmCXDUupnSVhtvMNxZw3tIx/E7ocPbIYgHQgC+zbbLSw2MDNVS5a9wl9YNre5cyLx
+ 8ugmmC177rBPjvDQ==
+Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+ (No client certificate requested)
+ by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id 9219D779A7;
+ Wed,  3 Jun 2026 17:32:57 +0000 (UTC)
+Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
+ by imap1.dmz-prg2.suse.org with ESMTPSA id kEPZGEllIGqMLgAAD6G6ig
+ (envelope-from <farosas@suse.de>); Wed, 03 Jun 2026 17:32:57 +0000
+From: Fabiano Rosas <farosas@suse.de>
+To: Mark Cave-Ayland <mark.caveayland@nutanix.com>, Peter Xu
+ <peterx@redhat.com>
+Cc: qemu-devel@nongnu.org, Paolo Bonzini <pbonzini@redhat.com>, Mark Kanda
+ <mark.kanda@oracle.com>, "Michael S . Tsirkin" <mst@redhat.com>, Markus
+ Armbruster <armbru@redhat.com>, Eric Blake <eblake@redhat.com>, "Maciej S.
+ Szmigiero" <maciej.szmigiero@oracle.com>, Jason Wang
+ <jasowang@redhat.com>, Ben Chaney <bchaney@akamai.com>, Vladimir
+ Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
 Subject: Re: [PATCH RFC 0/2] migration/vl: new -incoming config:* for early
  migration parameters
-Message-ID: <aiBhTTqSctU9lFsS@redhat.com>
+In-Reply-To: <10e159ec-3ead-4297-a24a-8e6f6029afb6@nutanix.com>
 References: <20260528212947.368132-1-peterx@redhat.com>
  <87se7btcq9.fsf@suse.de> <ahmfh2s7CLFLoZKN@x1.local>
- <ah_4hixGcNv-CLfv@redhat.com> <aiBNXUU0xcT_UbKO@x1.local>
+ <10e159ec-3ead-4297-a24a-8e6f6029afb6@nutanix.com>
+Date: Wed, 03 Jun 2026 14:32:51 -0300
+Message-ID: <87qzmn7cn0.fsf@suse.de>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <aiBNXUU0xcT_UbKO@x1.local>
-User-Agent: Mutt/2.3.1 (2026-03-20)
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=berrange@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -24
-X-Spam_score: -2.5
+Content-Type: text/plain
+X-Spamd-Result: default: False [-4.30 / 50.00]; BAYES_HAM(-3.00)[99.99%];
+ NEURAL_HAM_LONG(-1.00)[-1.000];
+ NEURAL_HAM_SHORT(-0.20)[-1.000]; MIME_GOOD(-0.10)[text/plain];
+ ARC_NA(0.00)[]; MISSING_XM_UA(0.00)[]; RCVD_TLS_ALL(0.00)[];
+ MIME_TRACE(0.00)[0:+]; RCVD_VIA_SMTP_AUTH(0.00)[];
+ RCPT_COUNT_TWELVE(0.00)[12];
+ FUZZY_RATELIMITED(0.00)[rspamd.com];
+ MID_RHS_MATCH_FROM(0.00)[];
+ DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
+ FROM_HAS_DN(0.00)[]; TO_DN_SOME(0.00)[];
+ FROM_EQ_ENVFROM(0.00)[]; TO_MATCH_ENVRCPT_ALL(0.00)[];
+ RCVD_COUNT_TWO(0.00)[2];
+ DBL_BLOCKED_OPENRESOLVER(0.00)[imap1.dmz-prg2.suse.org:helo,suse.de:mid]
+Received-SPF: pass client-ip=2a07:de40:b251:101:10:150:64:1;
+ envelope-from=farosas@suse.de; helo=smtp-out1.suse.de
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.445,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -92,98 +119,54 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, Jun 03, 2026 at 11:50:53AM -0400, Peter Xu wrote:
-> On Wed, Jun 03, 2026 at 10:48:54AM +0100, Daniel P. Berrangé wrote:
-> > On Fri, May 29, 2026 at 10:15:35AM -0400, Peter Xu wrote:
-> > > On Thu, May 28, 2026 at 07:01:50PM -0300, Fabiano Rosas wrote:
-> > > > Peter Xu <peterx@redhat.com> writes:
-> > > > 
-> > > > > CI: https://gitlab.com/peterx/qemu/-/pipelines/2560168907
-> > > > >
-> > > > > This series introduces a generic way to specify migration parameters that
-> > > > > can be used even during the early boot phase of QEMU.
-> > > > >
-> > > > > One example use case that already existed is CPR-transfer / CPR-exec.
-> > > > > currently QEMU has a temporary global variable (incoming_mode) to achieve
-> > > > > this, but it's hard to understand and this hack bleeded into quite a few
-> > > > > places that we could have avoided.  The lines in patch 2 touched may
-> > > > > provide some idea.
-> > > > >
-> > > > > With a generic approach of setting migration parameters with cmdlines, we
-> > > > > can remove this hack meanwhile QEMU should be able to keep the CPR behavior
-> > > > > as before.  To CPR maintainers and reviewers: please have a closer look,
-> > > > > even better if it can be smoke tested, to see if this works for Oracle's
-> > > > > environment, TIA.
-> > > > >
-> > > > > The 1st patch implemented that new semantics.  It is straightforward: now
-> > > > > we can setup any migration parameter using an extra line of:
-> > > > >
-> > > > >   -incoming config:key1=value1,key2=value2,...
+Mark Cave-Ayland <mark.caveayland@nutanix.com> writes:
 
-snip
+> On 29/05/2026 15:15, Peter Xu wrote:
+>
+> (cut)
+>
+>>> I like the idea overall.
+>>>
+>>>> With this series, we should be able to drop "incoming-fds" TAP property
+>>>> from the other series, instead relying on the existing "local" parameters
+>>>> both in migration core and in TAP's property should suffice.
+>>>>
+>>>> One thing to mention is I didn't further make only-migratable into a
+>>>> migration parameter.  Logically it will also work now with only-migratable,
+>>>> but it then also means I'll need to convert it to a parameter, which will
+>>>> be mutable even after VM started.  It will change how only-migratable used
+>>>> to work, hence I skipped.
+>>>>
+>>>> After this, we also almost have no reason to use -global for migration
+>>>> parameters.  Capabilities are still not supported in -incoming cmdline,
+>>>> though.
+>>>>
+>>>
+>>> Will we still merge capabilities and parameters? Then it would be a free
+>>> upgrade.
+>> 
+>> Yes!  /me waiting for your patches.
+>
+> Is this related to the series posted at 
+> https://patchew.org/QEMU/20251215220041.12657-1-farosas@suse.de/? What's 
+> the current status with this work?
+>
 
-> > > > - using "config:"
-> > > > 
-> > > > This makes it non-uniform with uri and channels which don't have a
-> > > > keyword in front of them. I guess I could live with it, but it seems
-> > > > odd. I see that it makes parsing way easier.
-> > > 
-> > > Yeah, having some identifier would be nice.  I wished channels also have
-> > > identifiers if we don't need to keep compatibility.
-> > 
-> > IMHO having a magic "config:" prefix is an anti-pattern because it
-> > involves custom command line parsing logic.
-> 
-> Yes, it's not elegant.  I wished we had something like this though when
-> introducing the cpr channels; right now anything wasn't "defer" or URI
-> implies it's a "channel"..
-> 
-> I also wanted to avoid introducing new cmdline parameters, so migration
-> incoming cmdlines can stick with the same option.  If there's better
-> suggestion please shoot.
-> 
-> > 
-> > Does "-incoming config" imply '-incoming defer' semantics or is it
-> > independent ?  
-> 
-> They're independent.  Examples:
-> 
->  a) "-incoming config:* -incoming tcp:*", setup parameters for TCP incoming
->     migration without further deferral
-> 
->  b) "-incoming config:*" only, setup global parameters for a possible
->     upcoming outgoing migration
+Yes, the plan is still to merge parameters and capabilities into a
+single 'options' term. This is largely about internal abstractions. I
+plan to get back to that part of the work as soon as I find some cycles.
 
-In that case they should definitely be independent command line
-options. The old "-incoming" design is already broken / limited
-in the non-'defer' case because it is hardcoded to use URI syntax
-which can't express all the address formats we accept in QAPI
-syntax. Adding more special cases onto -incoming just makes the
-bad situation even worse and is not a forward looking design.
+The further changes involving deprecations and adding the 'config'
+parameter to migration commands have encountered some push-back, so I
+don't think we'll get back to them at least before the above is all
+finished. I still think those changes are worthwhile, but we need to
+find consensus.
 
-If we need the ability to specify migration parameters on the
-CLI, then as a starting point for the design, we should assume that
--incoming does not exist, and design a complete solution from scratch
-that uses QAPI exclusively, both for addresses and configuration.
-
-As discussed before, IMHO the "migrate" and "migrate-incoming"
-commands need to accept both the address(s) and parameters/capabilities
-as inline data items rather than relying on pre-configured global state
-from the 'migrate-parameter' / 'migrate-capability' commands.
-
-If we did that modelling for 'migrate-incoming' then that modelling of
-command parmaeters could map directly to a new '-migrate-incoming'
-command line argument that accepted exactly the same data model.
-
-With regards,
-Daniel
--- 
-|: https://berrange.com       ~~        https://hachyderm.io/@berrange :|
-|: https://libvirt.org          ~~          https://entangle-photo.org :|
-|: https://pixelfed.art/berrange   ~~    https://fstop138.berrange.com :|
-
+>
+> ATB,
+>
+> Mark.
 
