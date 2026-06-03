@@ -4,147 +4,56 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A8E46CD6E4A
-	for <qemu-devel@archiver.kernel.org>; Wed,  3 Jun 2026 02:59:47 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6C845CD6E4A
+	for <qemu-devel@archiver.kernel.org>; Wed,  3 Jun 2026 03:17:17 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wUboy-0005E0-Sw; Tue, 02 Jun 2026 22:59:08 -0400
+	id 1wUc5z-0007h3-R3; Tue, 02 Jun 2026 23:16:43 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jamin_lin@aspeedtech.com>)
- id 1wUbow-0005Da-W8; Tue, 02 Jun 2026 22:59:07 -0400
-Received: from mail-japaneastazlp170130007.outbound.protection.outlook.com
- ([2a01:111:f403:c405::7] helo=TYDPR03CU002.outbound.protection.outlook.com)
+ (Exim 4.90_1) (envelope-from <guobin@linux.alibaba.com>)
+ id 1wUc5v-0007gf-P1
+ for qemu-devel@nongnu.org; Tue, 02 Jun 2026 23:16:39 -0400
+Received: from [115.124.30.132] (helo=out30-132.freemail.mail.aliyun.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jamin_lin@aspeedtech.com>)
- id 1wUbot-0005dz-Mn; Tue, 02 Jun 2026 22:59:06 -0400
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=WE02Ke1LDXHbirJYX+Mhvo5TusNHLyz1p57IMW/RBKam0MNsgUyNgZdW6cBeqK42gcVIk5q8byhFV2hpXoIY4vKpdLAjUgvh9+wcgk7hNbV+8oe9kJUmHSQjdhwRfNjs5Yr8FD5Nq1/XD6Qqek6MJOCfpBd5Zays1gt8JWEnzybRwf9cxMB0skzUiU4C1ioF6Y7W+0QzmlmCOsKbfBTEiNn+RiSUAj/3tn49AF9ia/JAZC8CJ/VHcbQujiuH89Nl5AYHd8UFgCtuZbwEMPZ92rY8HSVYls0ENtErrcPKh35DzWusTbulbRHC4SZgP9SVtlooa5EAzao2TFpz947pgA==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=ssMottBjShW2j65bssVJEm948fjSxmME3bZ/4HqA9wE=;
- b=s69RoDT091IjRv4I0WYNI4klWn/qi0O/mXblW0SkBP7o+f9w1fNhMd1VdSn/86VTmitRQlws38AvM5PDbUhfRYbZpwLZR0k2F+b3YXNPQkm3qOQjsRWob+askO9eN7x3/XB2KnTSJoruOMhiaiLRCwT9QzpOv6dteGbJ5yCAefB5rH16bLNIDUqYCBkcpP1rx4dXXi1AitoJYohW93Y2QxjnmcrRcFm7snCHimXhRdn3Jk8AlmkW97UYUjoreO163IB0irQO0YN1uGSnjz6XmWJQvPdj/b5yEBeQnx9V6PGt0vtgKe0PP+Kff1i6RAzALBPsVX4WDoLwqUFxVa49ew==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=aspeedtech.com; dmarc=pass action=none
- header.from=aspeedtech.com; dkim=pass header.d=aspeedtech.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=aspeedtech.com;
- s=selector1;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=ssMottBjShW2j65bssVJEm948fjSxmME3bZ/4HqA9wE=;
- b=fC23N4LTKHjTw9ybNjfqq4lUSc84yrdl6u7oNPlg/8/FUyDnS/QmUSghKubTkmUoLlH7d+uQEmAVpctALMjPOyQTsrvY+2UcrDXewb9O+4jozLSMOo+cC1DgKfBWnh0qcaRlYbVg5dOcSLRUxMifx9YvY1OmDj1k9gsobWbqfOA0PVLqbuI6miea6Cak+nfmqRdWMlbpQ024YwMwyv8Bk8x31KcATl4ibBavQ2K96jpThpyGmOVv6k2BEbZFqGFnZtKsacntLzffJ28FRdtrC4mhnqIiPN+2CEK0CtWfhtLAlHB3qmm0fW7br4oc+nFeapthAZLcKGRwzsuP0eznqQ==
-Received: from TYZPR06MB4980.apcprd06.prod.outlook.com (2603:1096:400:1cc::10)
- by TY0PR06MB5833.apcprd06.prod.outlook.com (2603:1096:400:32d::8)
- with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.92.7; Wed, 3 Jun 2026
- 02:58:49 +0000
-Received: from TYZPR06MB4980.apcprd06.prod.outlook.com
- ([fe80::ea8a:7cb7:4822:2fb3]) by TYZPR06MB4980.apcprd06.prod.outlook.com
- ([fe80::ea8a:7cb7:4822:2fb3%5]) with mapi id 15.21.0092.006; Wed, 3 Jun 2026
- 02:58:49 +0000
-From: Jamin Lin <jamin_lin@aspeedtech.com>
-To: =?utf-8?B?Q8OpZHJpYyBMZSBHb2F0ZXI=?= <clg@kaod.org>, Peter Maydell
- <peter.maydell@linaro.org>, Steven Lee <steven_lee@aspeedtech.com>, Troy Lee
- <leetroy@gmail.com>, Kane Chen <kane_chen@aspeedtech.com>, Andrew Jeffery
- <andrew@codeconstruct.com.au>, Joel Stanley <joel@jms.id.au>, "open
- list:ASPEED BMCs" <qemu-arm@nongnu.org>, "open list:All patches CC here"
- <qemu-devel@nongnu.org>
-CC: Troy Lee <troy_lee@aspeedtech.com>
-Subject: RE: [PATCH v2 01/10] hw/i2c/aspeed_i2c: Introduce dma_addr_lo_mask to
- unify DMA address handling
-Thread-Topic: [PATCH v2 01/10] hw/i2c/aspeed_i2c: Introduce dma_addr_lo_mask
- to unify DMA address handling
-Thread-Index: AQHc8lClc/pwAK0NSE21bh5LfoHzobYqzO+AgAFTJrA=
-Date: Wed, 3 Jun 2026 02:58:49 +0000
-Message-ID: <TYZPR06MB498059E024C27C780C4144CEFC132@TYZPR06MB4980.apcprd06.prod.outlook.com>
-References: <20260602052827.1535299-1-jamin_lin@aspeedtech.com>
- <20260602052827.1535299-2-jamin_lin@aspeedtech.com>
- <29a404a8-690e-4457-b7f5-352ebce5724a@kaod.org>
-In-Reply-To: <29a404a8-690e-4457-b7f5-352ebce5724a@kaod.org>
-Accept-Language: zh-TW, en-US
-Content-Language: zh-TW
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-authentication-results: dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=aspeedtech.com;
-x-ms-publictraffictype: Email
-x-ms-traffictypediagnostic: TYZPR06MB4980:EE_|TY0PR06MB5833:EE_
-x-ms-office365-filtering-correlation-id: 3176bc88-1a29-4776-d7e0-08dec11c0959
-x-ms-exchange-senderadcheck: 1
-x-ms-exchange-antispam-relay: 0
-x-microsoft-antispam: BCL:0;
- ARA:13230040|1800799024|366016|376014|4143699003|18002099003|22082099003|56012099006|38070700021;
-x-microsoft-antispam-message-info: Btyc9V00albx0kxUNH4KtJuL+G//OQuOW2yEfZ8In0YAiJGfZy4BQnrjKhXxhS4eC8dQt6TmjQGhZGRAPhjvoCi0PdMSqTWJ6szQPzVVpumfkBgIDER22U12uQbZoJ4l+1y7RIHuG4XFtMClu1ya5NgJvMW5tWeAljvW2XBTDqGJxAiP746Q8FOdL0erCuZLiTgPo2GOWcAm29g/mR1Idfs5I7jHuv7s5ihG8zHMybzq09IgIYO/J3v6GEMCato0DemwBz8+llVq4ZBVQGS3Dq+SBpNyfOTpBA/HBO1gJYkMyoATeR9efFTZucQIw2sjNbFA+f1ThlOJ+MYH5jlaNUw/lbiIeSjI7jwmQeMbUX1whlAMl2OWv9kPTFHl+XjH7x3BoRSqyvelhdRC4BlHKrDK0y4Asn4aqlXVRmzF9vXd8rmRkpHC2Y0E8jPtdMMVHlMffuLt0mm5CSH38yCsndQQBKKeDE1BKB0deRwbU6KZMbqBi+cgo0cvsOvctTZWwJCYHl8+bRZBSam+n1ITduYBvdpEcz2s0pYsvwMIk6Kz0tzTKUL6WccB9AXKy6eHIa4uPVzOkeJjgRZY+Bv0fpR3JGPcE6+eJe2Z/20JS4Fs0o3fgoQ2dCcYhdwnzDwXYOfD+MTkN1U+FkD3ctZe1O3rOln33d6M97W4e1VF9rv3wDSd85lAr6DWlEt4VjbJ2xtPY2Mqwn1QF/7m+zedQ01G9Z8x0XOaMyKBlkKzQAB/2qHP6I4GJoIOdqUVLd9T
-x-forefront-antispam-report: CIP:255.255.255.255; CTRY:; LANG:zh-tw; SCL:1;
- SRV:; IPV:NLI; SFV:NSPM; H:TYZPR06MB4980.apcprd06.prod.outlook.com; PTR:;
- CAT:NONE;
- SFS:(13230040)(1800799024)(366016)(376014)(4143699003)(18002099003)(22082099003)(56012099006)(38070700021);
- DIR:OUT; SFP:1102; 
-x-ms-exchange-antispam-messagedata-chunkcount: 1
-x-ms-exchange-antispam-messagedata-0: =?utf-8?B?SGRnaDlHUVVDR0poUFltdFRWQ0FPSTVkUFU0L0hacVVSM1JZVHc0c1BTT2Zi?=
- =?utf-8?B?T3llbDdSTVY0bUpGb1Y1TTVLT3FZMkJoNllXODFHMmxRd0RGRytKSkVEc3hR?=
- =?utf-8?B?ajB4K1p2Tk1UQ1l2dWVnSmVSdnZtTFlpM2ZJRlpDYTJxOEJJaHNUeGNYOGdv?=
- =?utf-8?B?YytJWmNMUlYybEw5VjZxYVN4K3pVSnB0bWxRWUxzVjFWNEloRHNXaW11UC9U?=
- =?utf-8?B?NjIxMlNrVkgwM08yamNOUDAvNFFmdHROd3BuZWJndjR4TlNpaEMwbTFmQnlC?=
- =?utf-8?B?L1RKTmFEdHpiNE4wc21PYU5XRFdsQ3RKbmppamdsYUN4ZWNKNGlMaVFNRVp5?=
- =?utf-8?B?ZnlZSzdkcWt0cG9ZK2NNUlRVYVNPUnpzZHUxc0lIaTBpY3RacHE3NWttQ2k4?=
- =?utf-8?B?OWZjb212amI1NHZSbS9aenlkS2VQazZKdmZwYjJTMm14a3lGbEFHQW1RRFNO?=
- =?utf-8?B?VE0rN3BYT3J1VzMwajh2cEJiZUg4bUsxMllRRnlHNWVRWHVlRFh0N2RmVFFk?=
- =?utf-8?B?M1JZcEY5N2NiVWlaN1VmMDRpa2hyMkxGRCtwSlEvL1c0SmNUanBMRkhMM3VW?=
- =?utf-8?B?bG01blpvRktsSHVoUDFTZmkyVU1ZdnlFNS9qZUk3MFdmV2QxdVNqRXpWOSt1?=
- =?utf-8?B?c2NvcEx2N3pjUW5OWmpXZ1hEMzVIYVZ3WkdkWVBmdXFnUU5HenprOUNzWU9B?=
- =?utf-8?B?d0FmeVdzTFRadXk4eGxQRGFnenhmVnhaRDNEd1QrbjVjTVhDUW5ZeUZ1Mzdv?=
- =?utf-8?B?b2JTb2FIalQrRlRibkxtaEJsZmtucWwzNTV4bGIvU3p1RkM0QXFmUkJhRzVi?=
- =?utf-8?B?UnZUL1B3M1pScmtuZmh6WWk0dUhaSndpNks5eXpqbjFkZmNrOUpUZVQ3QTJj?=
- =?utf-8?B?dVdMd2N1WitETXNqNXp6LzhsMzA3S05CeGFzc0QzVzlOM0lyZ3M0cTJrNW5h?=
- =?utf-8?B?dXk5cEYvMkdTL0JjY1cxU3h4Q1RLTHBXMTNVeHNvcTJ1aUZGaHUvNVN2bzZF?=
- =?utf-8?B?VU9VUEFqRGJhNzNmTnBodHJ5N2lDUndnUmVITXNrbFBIdWZyVWJmc2tvSFRH?=
- =?utf-8?B?c0l4NnJUOTE3TTVyaTIrc2ZzcElXbXdzcG5aT3hTNHl1TmtoUGxKNGx3bzJS?=
- =?utf-8?B?Z21oUGdnaCt1R3RYUmFQajArZVVldVV5a3piNTloMzVBREZmYjlURk5GVE5E?=
- =?utf-8?B?N09qbVhMK3RaRU5kOW9NMWRkN3o1emtHM3NiUzIzOU1UWHVMeWpFdFExS3U4?=
- =?utf-8?B?dllzSm9JVXhobkY4M1QzZTBLK1p6THlHYUhwVVJTQmVFcDErMk5lTzNVSkI3?=
- =?utf-8?B?N1NydnZQdndqUFhQa1lwNjUvZWI5REFVRW42djdiZWEvWXQ5cjN6UjFGaGg0?=
- =?utf-8?B?RWFjM0g1Sm9kODJ4bFpTVUMzeGdKaXYyMFlIUWkvTHdwbys1NmxqWUJ5YjJL?=
- =?utf-8?B?bXNvNXZnaEsyQk01TGJzZmpBSEV4aGc3OHpJNmZRaDBRaUJ0YVM0SGlpdERV?=
- =?utf-8?B?a2NiTDlobGtKVktCK3NJcGNIalFJMCtPR29RanpyeVYvbGwreURmWmNzaVl1?=
- =?utf-8?B?NWtnUnFHRko0RlY1OVIxendxRjArQ2g5dUJXWVcxeERLR3AxWWo3WHRqQ0tl?=
- =?utf-8?B?Q2N2Skh3dWJ2cWJnMWQyekJKMCswVHF2aU5vT0FuYjZEVDdpcGlGRVU5MURW?=
- =?utf-8?B?cmZya3hRdThEME9ZVVFuZ0plcENkR01HQXEveVYrOFJnRTM0RzI0dmQ4U1dt?=
- =?utf-8?B?Q3UvWkxWcERZNVlnQ3RvSHRKZE1wTFIzNVU2bmY4eGxFbGJnOEhndjJCb1Vu?=
- =?utf-8?B?SzVDTVBFcXBmNTdOTDUwQXZHSVViSWp1bkFWQlpqeUg1NDdLVDlSME96eXpW?=
- =?utf-8?B?NVJ0UVZTZFRISjNaQWFvSTQybTFFZ0h4b296dXRnK1Q2bDdnZlU0Tnk1U2ph?=
- =?utf-8?B?eXp6ZFhSVkh3dzdEL1UvZ2ZMeU1Wemx2cXkybFFnSGN5REg4S2lqSXNIeDVs?=
- =?utf-8?B?UWlRaTJzbEJOZEpKUlhmMnJJQmpRT2l2QjRJZmdNbGIrRWVKMVBtMTBPclBO?=
- =?utf-8?B?L1RncVhFT3AxU25hem1GQlg5cnplUHhkQVM5Z2RZNEVDTUQ1UTF0Yk8xMEJU?=
- =?utf-8?B?dkJUL3pFU0cwVTN3ZTdEcFhnbWhlUGlWK1R0akQ0eU8wWlVPNEdyRzBGOTlZ?=
- =?utf-8?B?UnRqM3RIL3RJb0xYckZkL00wWlpQT24vYjRNa2crRkhBbm1QY0Nwc3hacTFi?=
- =?utf-8?B?WGhXNThTRXVGcTIzUWhMVmJPdUNGcy84b1d5cUdXL1pIdm91eW5QVUVNbkk1?=
- =?utf-8?B?Q3FJR0ZEQlpjaVgxU2RkU0I4M28xMmpxZjRpWFZhdlp0MVBNbDN5QT09?=
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: base64
+ (Exim 4.90_1) (envelope-from <guobin@linux.alibaba.com>)
+ id 1wUc5n-0001An-Sj
+ for qemu-devel@nongnu.org; Tue, 02 Jun 2026 23:16:39 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linux.alibaba.com; s=default;
+ t=1780456576; h=From:To:Subject:Date:Message-ID:MIME-Version;
+ bh=S8+whb8iQxpiI4kt7qxVYrj0vle2FdLheLHeHgN9f6A=;
+ b=Doj48sYWVqfDJpR3xZ0hIZbPchA767ZZ5ygEXOELjUIGlK986+qelQvHHjrlW/kbLtFJWagEdP+3fBhux89WQ/oSy8kInAoTvbM3azWUOpsDm032vWXsgLVoljK6mkh7hRalbYHarXuem0C8eDNnGMzOiWw7movbFeWnWNOGXyA=
+X-Alimail-AntiSpam: AC=PASS; BC=-1|-1; BR=01201311R391e4; CH=green; DM=||false|;
+ DS=||; FP=0|-1|-1|-1|0|-1|-1|-1; HT=maildocker-contentspam033045133197;
+ MF=guobin@linux.alibaba.com; NM=1; PH=DS; RN=4; SR=0;
+ TI=SMTPD_---0X461xZP_1780456573; 
+Received: from localhost(mailfrom:guobin@linux.alibaba.com
+ fp:SMTPD_---0X461xZP_1780456573 cluster:ay36) by smtp.aliyun-inc.com;
+ Wed, 03 Jun 2026 11:16:13 +0800
+From: Bin Guo <guobin@linux.alibaba.com>
+To: qemu-devel@nongnu.org
+Cc: pbonzini@redhat.com,
+	infra.ai.cloud@bitdeer.com,
+	kvm@vger.kernel.org
+Subject: [PATCH] accel/kvm: event-driven wakeup for dirty ring reaper thread
+Date: Wed,  3 Jun 2026 11:16:12 +0800
+Message-ID: <20260603031612.6173-1-guobin@linux.alibaba.com>
+X-Mailer: git-send-email 2.50.1
 MIME-Version: 1.0
-X-Exchange-RoutingPolicyChecked: lqqVScAx9+zFvfp7MkSe6JePfLnOBzHKYxiGEzORVMuRTUd9yeKGhsN449uSCKk+qS/6QxDad9OP/fsW8h4Vc1TUIOV6jvysbb9KL75wtV6n82C71uYmRjCdlIAQrvj8gitZQNvBNr38IxjaNW2xITHnYUEdHoG1TyROTdLjR/zGq3C+VOJtGhbmmqVL896q5AODHwss/MPqpYL74/eaVwhWPfVpWfcdQN4GAmfrrA1M87xtp+6JY9/MnT4nc5DKg2rq9BNarUHjcJez7ah43dL6FAfFwYS+3/finU/z64E/9uj+719P7uYcdxnmwQe4/HcBBBtXToStekGITviQFg==
-X-OriginatorOrg: aspeedtech.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-AuthSource: TYZPR06MB4980.apcprd06.prod.outlook.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 3176bc88-1a29-4776-d7e0-08dec11c0959
-X-MS-Exchange-CrossTenant-originalarrivaltime: 03 Jun 2026 02:58:49.2890 (UTC)
-X-MS-Exchange-CrossTenant-fromentityheader: Hosted
-X-MS-Exchange-CrossTenant-id: 43d4aa98-e35b-4575-8939-080e90d5a249
-X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
-X-MS-Exchange-CrossTenant-userprincipalname: QX55oIMONj5LeZzGULf3Hb2o0LxyJ0UGh9SbYsuEynkFlJAUrSAONt+cCZey19z+AnAoR2tNXgZSXmX6PNiuNFwQADS5pL3hRNWXot2t8nU=
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: TY0PR06MB5833
-Received-SPF: pass client-ip=2a01:111:f403:c405::7;
- envelope-from=jamin_lin@aspeedtech.com;
- helo=TYDPR03CU002.outbound.protection.outlook.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Transfer-Encoding: 8bit
+X-Host-Lookup-Failed: Reverse DNS lookup failed for 115.124.30.132 (deferred)
+Received-SPF: pass client-ip=115.124.30.132;
+ envelope-from=guobin@linux.alibaba.com;
+ helo=out30-132.freemail.mail.aliyun.com
+X-Spam_score_int: -88
+X-Spam_score: -8.9
+X-Spam_bar: --------
+X-Spam_report: (-8.9 / 5.0 requ) BAYES_00=-1.9, DKIM_INVALID=0.1,
+ DKIM_SIGNED=0.1, ENV_AND_HDR_SPF_MATCH=-0.5, RCVD_IN_DNSWL_NONE=-0.0001,
+ RDNS_NONE=0.793, SPF_HELO_NONE=0.001, SPF_PASS=-0.001, UNPARSEABLE_RELAY=0.001,
+ USER_IN_DEF_SPF_WL=-7.5 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -160,150 +69,234 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-DQpIaSBDw6lkcmljDQoNCj4gU3ViamVjdDogUmU6IFtQQVRDSCB2MiAwMS8xMF0gaHcvaTJjL2Fz
-cGVlZF9pMmM6IEludHJvZHVjZQ0KPiBkbWFfYWRkcl9sb19tYXNrIHRvIHVuaWZ5IERNQSBhZGRy
-ZXNzIGhhbmRsaW5nDQo+IA0KPiBPbiA2LzIvMjYgMDc6MjgsIEphbWluIExpbiB3cm90ZToNCj4g
-PiBUaGUgQXNwZWVkIEkyQyBjb250cm9sbGVyIGhhcyB0d28gcmVnaXN0ZXIgbGF5b3V0cy4NCj4g
-Pg0KPiA+IFRoZSBBU1QyNTAwIHVzZXMgdGhlIG9sZCBtb2RlIHdpdGggYSBzaW5nbGUgRE1BIGFk
-ZHJlc3MgcmVnaXN0ZXINCj4gPiAoSTJDRF9ETUFfQUREUikgd2hlcmUgdGhlIGFkZHJlc3MgaXMg
-NC1ieXRlIGFsaWduZWQgYW5kIG1hc2tlZCB0bw0KPiAweDNmZmZmZmZjLg0KPiA+DQo+ID4gIEZy
-b20gQVNUMjYwMCBvbndhcmRzLCB0aGUgbmV3IG1vZGUgcHJvdmlkZXMgc2VwYXJhdGUgbWFzdGVy
-IFRYL1JYDQo+IGFuZA0KPiA+IHNsYXZlIFJYIERNQSBhZGRyZXNzIHJlZ2lzdGVycyAoSTJDTV9E
-TUFfVFhfQUREUiwNCj4gSTJDTV9ETUFfUlhfQUREUiwNCj4gPiBJMkNTX0RNQV9SWF9BRERSKSB3
-aXRoIGRpZmZlcmVudCBhZGRyZXNzIHdpZHRocyBwZXIgU29DOg0KPiA+ICAgIEFTVDI2MDAgKG5l
-dyBtb2RlKTogMHg3ZmZmZmZmZiAgLSBiaXRzWzMwOjBdDQo+ID4gICAgQVNUMTAzMCAobmV3IG1v
-ZGUpOiAweDdmZmZmZmZmICAtIGJpdHNbMzA6MF0NCj4gPiAgICBBU1QxMDYwIChuZXcgbW9kZSk6
-IDB4N2ZmZmZmZmYgIC0gYml0c1szMDowXQ0KPiA+ICAgIEFTVDI3MDAgKG5ldyBtb2RlKTogMHhm
-ZmZmZmZmZiAgLSBiaXRzWzMxOjBdDQo+ID4NCj4gPiBJbnRyb2R1Y2UgZG1hX2FkZHJfbG9fbWFz
-ayBhcyBhIHBlci1jbGFzcyBhdHRyaWJ1dGUgYW5kIGFwcGx5IGl0DQo+ID4gdW5pZm9ybWx5IHdo
-ZW4gc3RvcmluZyBETUEgYWRkcmVzcyByZWdpc3RlciB3cml0ZXMgYW5kIHdoZW4gbG9hZGluZw0K
-PiA+IHRoZSBhZGRyZXNzIGludG8gZG1hX2RyYW1fb2Zmc2V0IGZvciBib3RoIG1hc3RlciBhbmQg
-c2xhdmUgcGF0aHMuDQo+ID4gVGhpcyByZXBsYWNlcyB0aGUgcHJldmlvdXMgRklFTERfRVgzMiBl
-eHRyYWN0aW9ucyAod2hpY2ggaW5jb3JyZWN0bHkNCj4gPiBzdHJpcHBlZCBiaXQgMzEgb24gQVNU
-MjcwMCkgYW5kIHRoZSBoYXJkY29kZWQgMHgzZmZmZmZmYyBsaXRlcmFsIGluDQo+ID4gdGhlIG9s
-ZC1tb2RlIHBhdGguDQo+ID4NCj4gPiBGaXhlczogMTgwOWFiNmE2NzM1OWUwODc2OTgxY2QwNWQy
-YTUwYjI4NDNlYWJhZCAoImh3L2kyYy9hc3BlZWQ6DQo+IEFkZA0KPiA+IEFTVDI3MDAgc3VwcG9y
-dCIpDQo+ID4gU2lnbmVkLW9mZi1ieTogSmFtaW4gTGluIDxqYW1pbl9saW5AYXNwZWVkdGVjaC5j
-b20+DQo+ID4gLS0tDQo+ID4gICBpbmNsdWRlL2h3L2kyYy9hc3BlZWRfaTJjLmggfCAgNSArLS0t
-LQ0KPiA+ICAgaHcvaTJjL2FzcGVlZF9pMmMuYyAgICAgICAgIHwgMjIgKysrKysrKysrKysrKy0t
-LS0tLS0tLQ0KPiA+ICAgMiBmaWxlcyBjaGFuZ2VkLCAxNCBpbnNlcnRpb25zKCspLCAxMyBkZWxl
-dGlvbnMoLSkNCj4gDQo+IGFzcGVlZF9pMmNfYnVzX25ld193cml0ZSgpIHN0aWxsIGhhcyA6DQo+
-IA0KPiAgICAgIGNhc2UgQV9JMkNTX0RNQV9SWF9BRERSOg0KPiAgICAgICAgICBidXMtPnJlZ3Nb
-Ul9JMkNTX0RNQV9SWF9BRERSXSA9IHZhbHVlOw0KPiANCj4gSXMgdGhhdCBvayA/DQo+IA0KVGhh
-bmtzIGZvciB0aGUgcmV2aWV3IGFuZCBzdWdnZXN0aW9uLg0KV2lsbCBhZGQuDQpKYW1pbg0KPiBU
-aGFua3MsDQo+IA0KPiBDLg0KPiANCj4gDQo+ID4NCj4gPiBkaWZmIC0tZ2l0IGEvaW5jbHVkZS9o
-dy9pMmMvYXNwZWVkX2kyYy5oIGIvaW5jbHVkZS9ody9pMmMvYXNwZWVkX2kyYy5oDQo+ID4gaW5k
-ZXggZDQyY2I0ODY1YS4uMWZjMjI5ZjY5OSAxMDA2NDQNCj4gPiAtLS0gYS9pbmNsdWRlL2h3L2ky
-Yy9hc3BlZWRfaTJjLmgNCj4gPiArKysgYi9pbmNsdWRlL2h3L2kyYy9hc3BlZWRfaTJjLmgNCj4g
-PiBAQCAtMjA5LDEzICsyMDksOSBAQCBSRUczMihJMkNTX0RNQV9MRU4sIDB4MmMpDQo+ID4gICAg
-ICAgRklFTEQoSTJDU19ETUFfTEVOLCBUWF9CVUZfTEVOX1cxVCwgMTUsIDEpDQo+ID4gICAgICAg
-RklFTEQoSTJDU19ETUFfTEVOLCBUWF9CVUZfTEVOLCAwLCAxMSkNCj4gPiAgIFJFRzMyKEkyQ01f
-RE1BX1RYX0FERFIsIDB4MzApDQo+ID4gLSAgICBGSUVMRChJMkNNX0RNQV9UWF9BRERSLCBBRERS
-LCAwLCAzMSkNCj4gPiAgIFJFRzMyKEkyQ01fRE1BX1JYX0FERFIsIDB4MzQpDQo+ID4gLSAgICBG
-SUVMRChJMkNNX0RNQV9SWF9BRERSLCBBRERSLCAwLCAzMSkNCj4gPiAgIFJFRzMyKEkyQ1NfRE1B
-X1RYX0FERFIsIDB4MzgpDQo+ID4gLSAgICBGSUVMRChJMkNTX0RNQV9UWF9BRERSLCBBRERSLCAw
-LCAzMSkNCj4gPiAgIFJFRzMyKEkyQ1NfRE1BX1JYX0FERFIsIDB4M2MpDQo+ID4gLSAgICBGSUVM
-RChJMkNTX0RNQV9SWF9BRERSLCBBRERSLCAwLCAzMSkNCj4gPiAgIFJFRzMyKEkyQ1NfREVWX0FE
-RFIsIDB4NDApDQo+ID4gICBSRUczMihJMkNNX0RNQV9MRU5fU1RTLCAweDQ4KQ0KPiA+ICAgICAg
-IEZJRUxEKEkyQ01fRE1BX0xFTl9TVFMsIFJYX0xFTiwgMTYsIDEzKSBAQCAtMzAzLDYgKzI5OSw3
-IEBADQo+ID4gc3RydWN0IEFzcGVlZEkyQ0NsYXNzIHsNCj4gPiAgICAgICBib29sIGhhc19zaGFy
-ZV9wb29sOw0KPiA+ICAgICAgIHVpbnQ2NF90IG1lbV9zaXplOw0KPiA+ICAgICAgIGJvb2wgaGFz
-X2RtYTY0Ow0KPiA+ICsgICAgdWludDMyX3QgZG1hX2FkZHJfbG9fbWFzazsNCj4gPiAgIH07DQo+
-ID4NCj4gPiAgIHN0YXRpYyBpbmxpbmUgYm9vbCBhc3BlZWRfaTJjX2lzX25ld19tb2RlKEFzcGVl
-ZEkyQ1N0YXRlICpzKSBkaWZmDQo+ID4gLS1naXQgYS9ody9pMmMvYXNwZWVkX2kyYy5jIGIvaHcv
-aTJjL2FzcGVlZF9pMmMuYyBpbmRleA0KPiA+IDRhNjczMmExODUuLmE2YjQ0MTc0ZjUgMTAwNjQ0
-DQo+ID4gLS0tIGEvaHcvaTJjL2FzcGVlZF9pMmMuYw0KPiA+ICsrKyBiL2h3L2kyYy9hc3BlZWRf
-aTJjLmMNCj4gPiBAQCAtMjM2LDcgKzIzNiw3IEBAIHN0YXRpYyB2b2lkDQo+IGFzcGVlZF9pMmNf
-c2V0X3R4X2RtYV9kcmFtX29mZnNldChBc3BlZWRJMkNCdXMgKmJ1cykNCj4gPiAgICAgICAgICAg
-dmFsdWUgPSBidXMtPnJlZ3NbUl9JMkNNX0RNQV9UWF9BRERSXTsNCj4gPiAgICAgICAgICAgYnVz
-LT5kbWFfZHJhbV9vZmZzZXQgPQ0KPiA+ICAgICAgICAgICAgICAgZGVwb3NpdDY0KGJ1cy0+ZG1h
-X2RyYW1fb2Zmc2V0LCAwLCAzMiwNCj4gPiAtICAgICAgICAgICAgICAgICAgICAgIEZJRUxEX0VY
-MzIodmFsdWUsIEkyQ01fRE1BX1RYX0FERFIsDQo+IEFERFIpKTsNCj4gPiArICAgICAgICAgICAg
-ICAgICAgICAgIHZhbHVlICYgYWljLT5kbWFfYWRkcl9sb19tYXNrKTsNCj4gPiAgICAgICAgICAg
-aWYgKGFpYy0+aGFzX2RtYTY0KSB7DQo+ID4gICAgICAgICAgICAgICB2YWx1ZSA9IGJ1cy0+cmVn
-c1tSX0kyQ01fRE1BX1RYX0FERFJfSEldOw0KPiA+ICAgICAgICAgICAgICAgYnVzLT5kbWFfZHJh
-bV9vZmZzZXQgPQ0KPiA+IEBAIC0yNDYsNyArMjQ2LDcgQEAgc3RhdGljIHZvaWQNCj4gYXNwZWVk
-X2kyY19zZXRfdHhfZG1hX2RyYW1fb2Zmc2V0KEFzcGVlZEkyQ0J1cyAqYnVzKQ0KPiA+ICAgICAg
-IH0gZWxzZSB7DQo+ID4gICAgICAgICAgIHZhbHVlID0gYnVzLT5yZWdzW1JfSTJDRF9ETUFfQURE
-Ul07DQo+ID4gICAgICAgICAgIGJ1cy0+ZG1hX2RyYW1fb2Zmc2V0ID0gZGVwb3NpdDY0KGJ1cy0+
-ZG1hX2RyYW1fb2Zmc2V0LCAwLA0KPiAzMiwNCj4gPiAtICAgICAgICAgICAgICAgICAgICAgICAg
-ICAgICAgICAgICAgICAgICB2YWx1ZSAmIDB4M2ZmZmZmZmMpOw0KPiA+ICsgICAgICAgICAgICAg
-ICAgICAgICAgICAgICAgICAgICAgICAgICAgIHZhbHVlICYNCj4gPiArIGFpYy0+ZG1hX2FkZHJf
-bG9fbWFzayk7DQo+ID4gICAgICAgfQ0KPiA+ICAgfQ0KPiA+DQo+ID4gQEAgLTI2MSw3ICsyNjEs
-NyBAQCBzdGF0aWMgdm9pZA0KPiBhc3BlZWRfaTJjX3NldF9yeF9kbWFfZHJhbV9vZmZzZXQoQXNw
-ZWVkSTJDQnVzICpidXMpDQo+ID4gICAgICAgICAgIHZhbHVlID0gYnVzLT5yZWdzW1JfSTJDTV9E
-TUFfUlhfQUREUl07DQo+ID4gICAgICAgICAgIGJ1cy0+ZG1hX2RyYW1fb2Zmc2V0ID0NCj4gPiAg
-ICAgICAgICAgICAgIGRlcG9zaXQ2NChidXMtPmRtYV9kcmFtX29mZnNldCwgMCwgMzIsDQo+ID4g
-LSAgICAgICAgICAgICAgICAgICAgICBGSUVMRF9FWDMyKHZhbHVlLCBJMkNNX0RNQV9SWF9BRERS
-LA0KPiBBRERSKSk7DQo+ID4gKyAgICAgICAgICAgICAgICAgICAgICB2YWx1ZSAmIGFpYy0+ZG1h
-X2FkZHJfbG9fbWFzayk7DQo+ID4gICAgICAgICAgIGlmIChhaWMtPmhhc19kbWE2NCkgew0KPiA+
-ICAgICAgICAgICAgICAgdmFsdWUgPSBidXMtPnJlZ3NbUl9JMkNNX0RNQV9SWF9BRERSX0hJXTsN
-Cj4gPiAgICAgICAgICAgICAgIGJ1cy0+ZG1hX2RyYW1fb2Zmc2V0ID0NCj4gPiBAQCAtMjcxLDcg
-KzI3MSw3IEBAIHN0YXRpYyB2b2lkDQo+IGFzcGVlZF9pMmNfc2V0X3J4X2RtYV9kcmFtX29mZnNl
-dChBc3BlZWRJMkNCdXMgKmJ1cykNCj4gPiAgICAgICB9IGVsc2Ugew0KPiA+ICAgICAgICAgICB2
-YWx1ZSA9IGJ1cy0+cmVnc1tSX0kyQ0RfRE1BX0FERFJdOw0KPiA+ICAgICAgICAgICBidXMtPmRt
-YV9kcmFtX29mZnNldCA9IGRlcG9zaXQ2NChidXMtPmRtYV9kcmFtX29mZnNldCwgMCwNCj4gMzIs
-DQo+ID4gLSAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgdmFsdWUgJiAw
-eDNmZmZmZmZjKTsNCj4gPiArICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAg
-ICB2YWx1ZSAmDQo+ID4gKyBhaWMtPmRtYV9hZGRyX2xvX21hc2spOw0KPiA+ICAgICAgIH0NCj4g
-PiAgIH0NCj4gPg0KPiA+IEBAIC03MzUsMTIgKzczNSwxMCBAQCBzdGF0aWMgdm9pZA0KPiBhc3Bl
-ZWRfaTJjX2J1c19uZXdfd3JpdGUoQXNwZWVkSTJDQnVzICpidXMsIGh3YWRkciBvZmZzZXQsDQo+
-ID4gICAgICAgICAgIGFzcGVlZF9pMmNfYnVzX3JhaXNlX2ludGVycnVwdChidXMpOw0KPiA+ICAg
-ICAgICAgICBicmVhazsNCj4gPiAgICAgICBjYXNlIEFfSTJDTV9ETUFfVFhfQUREUjoNCj4gPiAt
-ICAgICAgICBidXMtPnJlZ3NbUl9JMkNNX0RNQV9UWF9BRERSXSA9IEZJRUxEX0VYMzIodmFsdWUs
-DQo+IEkyQ01fRE1BX1RYX0FERFIsDQo+ID4gLSAgICAgICAgICAgICAgICAgICAgICAgICAgICAg
-ICAgICAgICAgICAgICAgICAgICAgIEFERFIpOw0KPiA+ICsgICAgICAgIGJ1cy0+cmVnc1tSX0ky
-Q01fRE1BX1RYX0FERFJdID0gdmFsdWUgJg0KPiA+ICsgYWljLT5kbWFfYWRkcl9sb19tYXNrOw0K
-PiA+ICAgICAgICAgICBicmVhazsNCj4gPiAgICAgICBjYXNlIEFfSTJDTV9ETUFfUlhfQUREUjoN
-Cj4gPiAtICAgICAgICBidXMtPnJlZ3NbUl9JMkNNX0RNQV9SWF9BRERSXSA9IEZJRUxEX0VYMzIo
-dmFsdWUsDQo+IEkyQ01fRE1BX1JYX0FERFIsDQo+ID4gLSAgICAgICAgICAgICAgICAgICAgICAg
-ICAgICAgICAgICAgICAgICAgICAgICAgICAgIEFERFIpOw0KPiA+ICsgICAgICAgIGJ1cy0+cmVn
-c1tSX0kyQ01fRE1BX1JYX0FERFJdID0gdmFsdWUgJg0KPiA+ICsgYWljLT5kbWFfYWRkcl9sb19t
-YXNrOw0KPiA+ICAgICAgICAgICBicmVhazsNCj4gPiAgICAgICBjYXNlIEFfSTJDTV9ETUFfTEVO
-Og0KPiA+ICAgICAgICAgICB3MXQgPSBGSUVMRF9FWDMyKHZhbHVlLCBJMkNNX0RNQV9MRU4sIFJY
-X0JVRl9MRU5fVzFUKQ0KPiB8fCBAQA0KPiA+IC0xMzc1LDYgKzEzNzMsOCBAQCBzdGF0aWMgdm9p
-ZCBhc3BlZWRfaTJjX2NsYXNzX2luaXQoT2JqZWN0Q2xhc3MgKmtsYXNzLA0KPiBjb25zdCB2b2lk
-ICpkYXRhKQ0KPiA+ICAgc3RhdGljIGludCBhc3BlZWRfaTJjX2J1c19uZXdfc2xhdmVfZXZlbnQo
-QXNwZWVkSTJDQnVzICpidXMsDQo+ID4gICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAg
-ICAgICAgICAgICBlbnVtIGkyY19ldmVudA0KPiBldmVudCkNCj4gPiAgIHsNCj4gPiArICAgIEFz
-cGVlZEkyQ0NsYXNzICphaWMgPSBBU1BFRURfSTJDX0dFVF9DTEFTUyhidXMtPmNvbnRyb2xsZXIp
-Ow0KPiA+ICsNCj4gPiAgICAgICBzd2l0Y2ggKGV2ZW50KSB7DQo+ID4gICAgICAgY2FzZSBJMkNf
-U1RBUlRfU0VORF9BU1lOQzoNCj4gPiAgICAgICAgICAgaWYgKCFTSEFSRURfQVJSQVlfRklFTERf
-RVgzMihidXMtPnJlZ3MsIFJfSTJDU19DTUQsDQo+ID4gUlhfRE1BX0VOKSkgeyBAQCAtMTM4NSw3
-ICsxMzg1LDcgQEAgc3RhdGljIGludA0KPiBhc3BlZWRfaTJjX2J1c19uZXdfc2xhdmVfZXZlbnQo
-QXNwZWVkSTJDQnVzICpidXMsDQo+ID4gICAgICAgICAgIEFSUkFZX0ZJRUxEX0RQMzIoYnVzLT5y
-ZWdzLCBJMkNTX0RNQV9MRU5fU1RTLCBSWF9MRU4sDQo+IDApOw0KPiA+ICAgICAgICAgICBidXMt
-PmRtYV9kcmFtX29mZnNldCA9DQo+ID4gICAgICAgICAgICAgICBkZXBvc2l0NjQoYnVzLT5kbWFf
-ZHJhbV9vZmZzZXQsIDAsIDMyLA0KPiA+IC0gICAgICAgICAgICAgICAgICAgICAgQVJSQVlfRklF
-TERfRVgzMihidXMtPnJlZ3MsDQo+IEkyQ1NfRE1BX1JYX0FERFIsIEFERFIpKTsNCj4gPiArICAg
-ICAgICAgICAgICAgICAgICAgIGJ1cy0+cmVnc1tSX0kyQ1NfRE1BX1JYX0FERFJdICYNCj4gPiAr
-IGFpYy0+ZG1hX2FkZHJfbG9fbWFzayk7DQo+ID4gICAgICAgICAgIGJ1cy0+cmVnc1tSX0kyQ0Nf
-RE1BX0xFTl0gPQ0KPiA+ICAgICAgICAgICAgICAgQVJSQVlfRklFTERfRVgzMihidXMtPnJlZ3Ms
-IEkyQ1NfRE1BX0xFTiwNCj4gUlhfQlVGX0xFTikgKyAxOw0KPiA+ICAgICAgICAgICBpMmNfYWNr
-KGJ1cy0+YnVzKTsNCj4gPiBAQCAtMTYwOCw2ICsxNjA4LDcgQEAgc3RhdGljIHZvaWQNCj4gYXNw
-ZWVkXzI1MDBfaTJjX2NsYXNzX2luaXQoT2JqZWN0Q2xhc3MgKmtsYXNzLCBjb25zdCB2b2lkICpk
-YXRhKQ0KPiA+ICAgICAgIGFpYy0+Y2hlY2tfc3JhbSA9IHRydWU7DQo+ID4gICAgICAgYWljLT5o
-YXNfZG1hID0gdHJ1ZTsNCj4gPiAgICAgICBhaWMtPm1lbV9zaXplID0gMHgxMDAwOw0KPiA+ICsg
-ICAgYWljLT5kbWFfYWRkcl9sb19tYXNrID0gMHgzZmZmZmZmYzsNCj4gPiAgIH0NCj4gPg0KPiA+
-ICAgc3RhdGljIHFlbXVfaXJxIGFzcGVlZF8yNjAwX2kyY19idXNfZ2V0X2lycShBc3BlZWRJMkNC
-dXMgKmJ1cykgQEANCj4gPiAtMTYzMSw2ICsxNjMyLDcgQEAgc3RhdGljIHZvaWQgYXNwZWVkXzI2
-MDBfaTJjX2NsYXNzX2luaXQoT2JqZWN0Q2xhc3MNCj4gKmtsYXNzLCBjb25zdCB2b2lkICpkYXRh
-KQ0KPiA+ICAgICAgIGFpYy0+YnVzX3Bvb2xfYmFzZSA9IGFzcGVlZF8yNTAwX2kyY19idXNfcG9v
-bF9iYXNlOw0KPiA+ICAgICAgIGFpYy0+aGFzX2RtYSA9IHRydWU7DQo+ID4gICAgICAgYWljLT5t
-ZW1fc2l6ZSA9IDB4MTAwMDsNCj4gPiArICAgIGFpYy0+ZG1hX2FkZHJfbG9fbWFzayA9IDB4N2Zm
-ZmZmZmY7DQo+ID4gICB9DQo+ID4NCj4gPiAgIHN0YXRpYyB2b2lkIGFzcGVlZF8xMDMwX2kyY19j
-bGFzc19pbml0KE9iamVjdENsYXNzICprbGFzcywgY29uc3QNCj4gPiB2b2lkICpkYXRhKSBAQCAt
-MTY0OSw2ICsxNjUxLDcgQEAgc3RhdGljIHZvaWQNCj4gYXNwZWVkXzEwMzBfaTJjX2NsYXNzX2lu
-aXQoT2JqZWN0Q2xhc3MgKmtsYXNzLCBjb25zdCB2b2lkICpkYXRhKQ0KPiA+ICAgICAgIGFpYy0+
-YnVzX3Bvb2xfYmFzZSA9IGFzcGVlZF8yNTAwX2kyY19idXNfcG9vbF9iYXNlOw0KPiA+ICAgICAg
-IGFpYy0+aGFzX2RtYSA9IHRydWU7DQo+ID4gICAgICAgYWljLT5tZW1fc2l6ZSA9IDB4MTAwMDA7
-DQo+ID4gKyAgICBhaWMtPmRtYV9hZGRyX2xvX21hc2sgPSAweDdmZmZmZmZmOw0KPiA+ICAgfQ0K
-PiA+DQo+ID4gICBzdGF0aWMgdm9pZCBhc3BlZWRfMjcwMF9pMmNfY2xhc3NfaW5pdChPYmplY3RD
-bGFzcyAqa2xhc3MsIGNvbnN0DQo+ID4gdm9pZCAqZGF0YSkgQEAgLTE2NzAsNiArMTY3Myw3IEBA
-IHN0YXRpYyB2b2lkDQo+IGFzcGVlZF8yNzAwX2kyY19jbGFzc19pbml0KE9iamVjdENsYXNzICpr
-bGFzcywgY29uc3Qgdm9pZCAqZGF0YSkNCj4gPiAgICAgICBhaWMtPmhhc19kbWEgPSB0cnVlOw0K
-PiA+ICAgICAgIGFpYy0+bWVtX3NpemUgPSAweDIwMDA7DQo+ID4gICAgICAgYWljLT5oYXNfZG1h
-NjQgPSB0cnVlOw0KPiA+ICsgICAgYWljLT5kbWFfYWRkcl9sb19tYXNrID0gMHhmZmZmZmZmZjsN
-Cj4gPiAgIH0NCj4gPg0KPiA+ICAgc3RhdGljIGNvbnN0IFR5cGVJbmZvIGFzcGVlZF9pMmNfdHlw
-ZXNbXSA9IHsNCg0K
+The dirty ring reaper thread polls with a fixed sleep(1), which the
+code itself flags with a TODO for a smarter timeout.  Events that
+would benefit from a prompt reap must wait up to one full sleep tick
+before the reaper notices them.
+
+Replace the polling loop with an EventNotifier-based wait via
+qemu_poll_ns(), kicked by paths that have first-hand evidence that
+a reap is desirable.  A 1s fallback timeout is retained as a
+defensive backstop.
+
+Two kick sites are wired up:
+
+  * dirtylimit_change(false) -- when dirty-limit is cancelled, kick
+    the reaper so it resumes real reaping immediately instead of
+    waiting for the next sleep tick.
+
+    Measured with strace on the reaper TID (20 set/cancel cycles
+    against a stress-ng dirty-page workload), latency from the
+    cancel-vcpu-dirty-limit QMP ack to the reaper actually waking:
+
+        before: median 530ms, max 937ms
+        after:  median <1ms,  max <1ms
+
+  * kvm_cpu_exec() KVM_EXIT_DIRTY_RING_FULL handler -- the handler
+    already reaps the exiting vCPU synchronously; the kick hints the
+    reaper to also check other vCPUs whose rings are likely filling
+    concurrently.
+
+kvm_dirty_ring_reaper_kick() is exposed as a public API; multiple
+kicks collapse into a single wake via the eventfd counter.
+kvm_dirty_ring_reaper_init() now returns int again (it was made void
+in commit 43a5e377f4) to propagate event_notifier_init() failure.
+A stub is added for non-KVM builds.
+
+Signed-off-by: Bin Guo <guobin@linux.alibaba.com>
+---
+ accel/kvm/kvm-all.c      | 62 +++++++++++++++++++++++++++++++++++++---
+ accel/stubs/kvm-stub.c   |  4 +++
+ include/system/kvm.h     |  9 ++++++
+ include/system/kvm_int.h |  3 ++
+ system/dirtylimit.c      |  6 ++++
+ 5 files changed, 80 insertions(+), 4 deletions(-)
+
+diff --git a/accel/kvm/kvm-all.c b/accel/kvm/kvm-all.c
+index 96f90ebb24..f964102f09 100644
+--- a/accel/kvm/kvm-all.c
++++ b/accel/kvm/kvm-all.c
+@@ -1754,6 +1754,9 @@ static void kvm_set_phys_mem(KVMMemoryListener *kml,
+     } while (size);
+ }
+ 
++/* Fallback liveness timeout for the dirty ring reaper, in nanoseconds. */
++#define KVM_DIRTY_RING_REAPER_FALLBACK_NS  (1 * NANOSECONDS_PER_SECOND)
++
+ static void *kvm_dirty_ring_reaper_thread(void *data)
+ {
+     KVMState *s = data;
+@@ -1764,12 +1767,30 @@ static void *kvm_dirty_ring_reaper_thread(void *data)
+     trace_kvm_dirty_ring_reaper("init");
+ 
+     while (true) {
++        GPollFD pfd = {
++            .fd = event_notifier_get_fd(&r->reaper_notifier),
++            .events = G_IO_IN,
++        };
++
+         r->reaper_state = KVM_DIRTY_RING_REAPER_WAIT;
+         trace_kvm_dirty_ring_reaper("wait");
++
+         /*
+-         * TODO: provide a smarter timeout rather than a constant?
++         * Event-driven wait: sleep until something kicks the reaper
++         * (vCPU ring-full exit, dirtylimit disabled, ...) or until the
++         * fallback timeout fires.  The fallback preserves the original
++         * sleep(1) worst-case behaviour as a liveness backstop in case
++         * a kick site is ever missed.
+          */
+-        sleep(1);
++        qemu_poll_ns(&pfd, 1, KVM_DIRTY_RING_REAPER_FALLBACK_NS);
++
++        /*
++         * Drain the notifier whether or not the wakeup came from it --
++         * any pending kick is satisfied by the reap we are about to
++         * perform, so we must not leave a stale event behind that would
++         * cause the next iteration to spin without sleeping.
++         */
++        event_notifier_test_and_clear(&r->reaper_notifier);
+ 
+         /* keep sleeping so that dirtylimit not be interfered by reaper */
+         if (dirtylimit_in_service()) {
+@@ -1789,13 +1810,39 @@ static void *kvm_dirty_ring_reaper_thread(void *data)
+     g_assert_not_reached();
+ }
+ 
+-static void kvm_dirty_ring_reaper_init(KVMState *s)
++static int kvm_dirty_ring_reaper_init(KVMState *s, Error **errp)
+ {
+     struct KVMDirtyRingReaper *r = &s->reaper;
++    int ret;
++
++    ret = event_notifier_init(&r->reaper_notifier, 0);
++    if (ret < 0) {
++        error_setg_errno(errp, -ret,
++                         "Failed to initialize dirty ring reaper notifier");
++        return ret;
++    }
+ 
+     qemu_thread_create(&r->reaper_thr, "kvm-reaper",
+                        kvm_dirty_ring_reaper_thread,
+                        s, QEMU_THREAD_JOINABLE);
++    return 0;
++}
++
++/*
++ * Wake the dirty ring reaper thread so it performs a reap as soon as
++ * possible.  Safe to call from any thread; safe to call even when the
++ * dirty ring is not enabled (no-op in that case).  Coalescing is
++ * provided by the eventfd counter -- multiple kicks before the reaper
++ * runs collapse into a single wakeup.
++ */
++void kvm_dirty_ring_reaper_kick(void)
++{
++    KVMState *s = kvm_state;
++
++    if (!s || !s->kvm_dirty_ring_size) {
++        return;
++    }
++    event_notifier_set(&s->reaper.reaper_notifier);
+ }
+ 
+ static int kvm_dirty_ring_init(KVMState *s)
+@@ -3097,7 +3144,9 @@ static int kvm_init(AccelState *as, MachineState *ms)
+     }
+ 
+     if (s->kvm_dirty_ring_size) {
+-        kvm_dirty_ring_reaper_init(s);
++        if (kvm_dirty_ring_reaper_init(s, errp) < 0) {
++            goto err;
++        }
+     }
+ 
+     if (kvm_check_extension(kvm_state, KVM_CAP_BINARY_STATS_FD)) {
+@@ -3571,6 +3620,11 @@ int kvm_cpu_exec(CPUState *cpu)
+                 kvm_dirty_ring_reap(kvm_state, NULL);
+             }
+             bql_unlock();
++            /*
++             * Ring-full pressure is the strongest signal that background
++             * reaping should stay hot; wake the reaper unconditionally.
++             */
++            kvm_dirty_ring_reaper_kick();
+             dirtylimit_vcpu_execute(cpu);
+             ret = 0;
+             break;
+diff --git a/accel/stubs/kvm-stub.c b/accel/stubs/kvm-stub.c
+index c4617caac6..b878598552 100644
+--- a/accel/stubs/kvm-stub.c
++++ b/accel/stubs/kvm-stub.c
+@@ -134,6 +134,10 @@ uint32_t kvm_dirty_ring_size(void)
+     return 0;
+ }
+ 
++void kvm_dirty_ring_reaper_kick(void)
++{
++}
++
+ bool kvm_hwpoisoned_mem(void)
+ {
+     return false;
+diff --git a/include/system/kvm.h b/include/system/kvm.h
+index 5fa33eddda..c42c8e0b74 100644
+--- a/include/system/kvm.h
++++ b/include/system/kvm.h
+@@ -553,6 +553,15 @@ bool kvm_dirty_ring_enabled(void);
+ 
+ uint32_t kvm_dirty_ring_size(void);
+ 
++/**
++ * kvm_dirty_ring_reaper_kick - wake the background dirty ring reaper.
++ *
++ * Hint that an immediate reap is desirable (e.g. ring-full pressure
++ * detected, dirtylimit disabled).  Coalesced via eventfd.  No-op when
++ * the dirty ring feature is not in use.
++ */
++void kvm_dirty_ring_reaper_kick(void);
++
+ void kvm_mark_guest_state_protected(void);
+ 
+ /**
+diff --git a/include/system/kvm_int.h b/include/system/kvm_int.h
+index 0876aac938..08e28d075a 100644
+--- a/include/system/kvm_int.h
++++ b/include/system/kvm_int.h
+@@ -12,6 +12,7 @@
+ #include "system/memory.h"
+ #include "qapi/qapi-types-common.h"
+ #include "qemu/accel.h"
++#include "qemu/event_notifier.h"
+ #include "qemu/queue.h"
+ #include "system/kvm.h"
+ #include "accel/accel-ops.h"
+@@ -100,6 +101,8 @@ struct KVMDirtyRingReaper {
+     QemuThread reaper_thr;
+     volatile uint64_t reaper_iteration; /* iteration number of reaper thr */
+     volatile enum KVMDirtyRingReaperState reaper_state; /* reap thr state */
++    /* Wakeup channel: kicked by ring-full vCPU exits, dirtylimit toggle, ... */
++    EventNotifier reaper_notifier;
+ };
+ struct KVMState
+ {
+diff --git a/system/dirtylimit.c b/system/dirtylimit.c
+index c934ceb0de..3ee9c58479 100644
+--- a/system/dirtylimit.c
++++ b/system/dirtylimit.c
+@@ -393,6 +393,12 @@ void dirtylimit_change(bool start)
+         qatomic_set(&dirtylimit_quit, 0);
+     } else {
+         qatomic_set(&dirtylimit_quit, 1);
++        /*
++         * The reaper has been short-circuiting via the
++         * dirtylimit_in_service() branch.  Kick it so it picks up the
++         * policy change immediately instead of after the next 1s tick.
++         */
++        kvm_dirty_ring_reaper_kick();
+     }
+ }
+ 
+-- 
+2.50.1 (Apple Git-155)
+
 
