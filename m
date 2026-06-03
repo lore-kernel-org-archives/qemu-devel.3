@@ -4,95 +4,108 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B86A1CD6E60
-	for <qemu-devel@archiver.kernel.org>; Wed,  3 Jun 2026 14:31:01 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 211E9CD6E57
+	for <qemu-devel@archiver.kernel.org>; Wed,  3 Jun 2026 14:52:10 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wUmbu-0003EP-24; Wed, 03 Jun 2026 10:30:22 -0400
+	id 1wUmwL-0008Az-Bo; Wed, 03 Jun 2026 10:51:29 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1wUmbo-0003Bl-9F
- for qemu-devel@nongnu.org; Wed, 03 Jun 2026 10:30:20 -0400
-Received: from mail-pj1-x1033.google.com ([2607:f8b0:4864:20::1033])
+ (Exim 4.90_1) (envelope-from <stefanha@gmail.com>)
+ id 1wUmwG-0008Ap-1y
+ for qemu-devel@nongnu.org; Wed, 03 Jun 2026 10:51:24 -0400
+Received: from mail-ej1-x62b.google.com ([2a00:1450:4864:20::62b])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1wUmbk-0005d1-9W
- for qemu-devel@nongnu.org; Wed, 03 Jun 2026 10:30:15 -0400
-Received: by mail-pj1-x1033.google.com with SMTP id
- 98e67ed59e1d1-36baec934b6so454965a91.0
- for <qemu-devel@nongnu.org>; Wed, 03 Jun 2026 07:30:11 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <stefanha@gmail.com>)
+ id 1wUmwE-0002zt-Ah
+ for qemu-devel@nongnu.org; Wed, 03 Jun 2026 10:51:23 -0400
+Received: by mail-ej1-x62b.google.com with SMTP id
+ a640c23a62f3a-bf046d4da1fso152313266b.3
+ for <qemu-devel@nongnu.org>; Wed, 03 Jun 2026 07:51:21 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1780498280; cv=none;
+ d=google.com; s=arc-20240605;
+ b=bubUiwocU+XzzYIyqCZG7NXd2V7peKOR3TThuGUB5tYgrJ42ICmRKI0l0SbbwGtBfo
+ sCk3anRWxDhRHqNnLTU3je50FvJbk/TKHyq6gKyzui2Fdo7vCJ8UMi7XJ7iqXbM50lMw
+ mHyq3UtO2r+JvcsyBYhu/IKzwEZukrDO+zTnk/UZEODtJ9xoSZyey5h7EbEg6DlglNKz
+ 9jcHVHgkuj8F49Q/ZBI1EVkmNmHMdVzAcFlfI0770rV54eYP9YCO1jyzIBvF/Uj+53Mx
+ AdaxGnYarAClHaTInmWjebTmlJ7FrdPJCkRN3CaV6zzilhx9QCkO0zbgtm3AlOVF1Zxw
+ gbrQ==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
+ s=arc-20240605; 
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:dkim-signature;
+ bh=qZ+CSaMdJj5Ziz/UABtI6gZbghEhLa2A7I9bTo0n6eQ=;
+ fh=jLOYD3FirvnRX49lPiVx6PZReYR15m+gPuAeFKi2agU=;
+ b=MIfBwY5sf8acbRIMZW8JRPWSdiN/k0iBPc9ZUsuWSy0hooxx2XOWHb3SNvZ61Fm34z
+ OXu5BxprTykH5awd4AOMT5nfQajRWb7wnudsp6Cauh7FnXxWp289CEGil3xcFQcAi2pT
+ XDrwtazdpAIyzaRKCz6dtKFr33u9mRkmHIDj5ehrWpo6tv6z5vniJNPg3dfhZXEpOkWL
+ 6BRt1UJr6rlSp3bwvV3A/d7m/a+ARI+/d5Lus+j4LdTfTchLHKdY6GOiGFaLPF/7oEo7
+ o4vTT0UyByUzYG3LDGzpsfhsFV9KuH/4lEbReH2LVegoZPH6OzZ/a8qmYRd5Xw0SwJkk
+ kitw==; darn=nongnu.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1780497010; x=1781101810; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:content-language:from
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=vyWwOo++YFOGVv4/g8nFv0rfbKSqy+6XKmAPVCL3/x8=;
- b=Jd4/NbDfRRehYChM3UAZXfyB3mqllxvaEL0k5LjELg3+EvbnNPmPddZ048euaeo63d
- Ix7v+/+4tMwlUtaWu8eob101/N3i/scue3/wIz3hn3KxAbfPwqe36wLO5bqhEs+2XG1I
- vBETLhReKxXmfw6TqcGg8xws8J4CQz7jipe7uxmo8gZx5nirGEYXqJwQeAQ+phc3Lu/p
- 4/+9H8kQmKid6aEqgTvw3NV6m4uZS2+epAqgVjHQ6hTb0xXoFfigLmAZAZy9l1zLXtTW
- qZTvpCBxrwnjNhu0fgrxJ1tHgfO+dyIndgMeT7Qt8b6x6WwpXh0VNhtPPBT9uWc/x0+E
- VspQ==
+ d=gmail.com; s=20251104; t=1780498280; x=1781103080; darn=nongnu.org;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=qZ+CSaMdJj5Ziz/UABtI6gZbghEhLa2A7I9bTo0n6eQ=;
+ b=N5Ns3pF96zJCuzxaN0giZRSa+kEUfXXGHVLwCPtr/MZfARI15qfYn8CCeVmNbzd6fi
+ M/f8Ut09S/j5RmrMirJqyl8qg1aWhoRC4kVwvEHLWssk98JAUYaTqlfBLlyfrXZUdJdM
+ QLlsflQjjmCOGGL5xg/EHb7d4hW7ftum2qdHffES50pbW0Vx+h3sRZYkw9xYY+DoQTH+
+ jPaE3+bSpMVC5qqX3WzAYla34tAJO8JW90zvsTKDSH4XFLVEIPBp75sOFW74M2wOmZvn
+ /56EIHzuBoJbDVjqDVOU9HxUVw8apabuJtnWdJR/TpNpvQCRmh5WLdqtto0q7liEP8a/
+ 9Cww==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1780497010; x=1781101810;
- h=content-transfer-encoding:in-reply-to:content-language:from
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=vyWwOo++YFOGVv4/g8nFv0rfbKSqy+6XKmAPVCL3/x8=;
- b=ih0tt2siDUvUVl3laVRYvaamNepLVIgmkhNuB3a152p5VB6gMcW65+t9GPuXrkA+rq
- GF4pLlWgxwApH4vDOXc4fjDiJ6geacXd+wlPNkMnSNjxILX75zzQ+TRM3+lDUD5TsQPu
- +9Q89xQV64CjkF9AR9BTDN808aXWWC8LRzczPrhjnlpTRBLJwubvcfbrlL4yWfMF8YXq
- OQIhgLgnldazS+MQbJ96LDWuG4zQrLEBwO7+vceNes0hE74p7evtp8vFb03KntszQjhU
- Zqa//P2kyb47O/x+mPdT1UtuMOzWJpp7xXGXXfwxyjkE6emaatA4ddYfkUzykQIeT6za
- 6Llg==
+ d=1e100.net; s=20251104; t=1780498280; x=1781103080;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=qZ+CSaMdJj5Ziz/UABtI6gZbghEhLa2A7I9bTo0n6eQ=;
+ b=BgIJS+AJbvDnHooTFWWSYd8eKZwnt/XkpB4PyapprdCQy/10TEk15EfNtwE/4Rwws/
+ qJgPuqkvgQA3ec+QbiuYNH0wv7xNrG4XO7nbnEogbD84GEKQdZ9i9S79klbWWS1WlDHV
+ Zn4Ux4ImbQJE5pA6d/k+ivoluQZKlT9HvyNKNmokd5tLXqc9gTzcsYtf+CiVwwcrioDb
+ iDYKswsGwX0RIgYu9mKPIsGfKIklryDiBxkDaPlmcn5kdCDBCytWQZP1rDSS2/72C9ei
+ eStOIYqH1ACkNM7/ibSwj5B8vCIe4JkwvjXus7FoxpJK9srT1MUwVxlyIbALdbMzxrEm
+ LAoA==
 X-Forwarded-Encrypted: i=1;
- AFNElJ8nst5ivQ94HRx+RzCTZSy2VwY0eTVcSniCZBEt/h97ZWVcDV6HYZE1fXLQrXLlfYaCgCu2IAVfevLU@nongnu.org
-X-Gm-Message-State: AOJu0YzvIZN4Ay/8qccjvDRt6vjirrmLCNfJAMIIHzJAIG+9R6EjgG/f
- oJn+KIwrMSarwWCv9mh3sfK+NNMLCotmbXRZU6g/i3W14sd9podqQYWo8fvTwT7fpik=
-X-Gm-Gg: Acq92OFVpV48BUh/hjT288JLV/ySJyzR2yVBrGzjYYmzJrqtsZExxP2FtQosaGJQWQ5
- +alzJi9j+iF6wMmC5ZICwYW3LBr854Qsf08051tdzlPYlgTHm+Eoq65eJ4WWLvACmT+XXDFBUWJ
- rhWT1sh2MI8auiQ9wUevj33dWJy9e0e/R2RwWjYxNKuuJWnH+kNVLc8gqKkgAVq2LxRtDfWR9EV
- n/x81nhaK9LTlCiVRgYByzc857Cql0cjRFnbqF/F2P+B441lFJ7gxRyHFI040hxQNU1sFDRb3Ut
- pKPYQEZQHsTVye2W9/xy8+KOQBBZAaacsEBK4cHLsZLf+ZKKDL06BrXWlakre5HNEUlK0VB3RbZ
- sROmKmh86nWwNbb8DoXnH9oW8pKqd/BidVwFiqnIQvyDonF3CN7uXI7ucrm2b6DKqCcjZtk6fNr
- K2W5ag1DVj3dObtCuRpAVlQzhW/FK0WNLlLITSHwO5aCeHxcU=
-X-Received: by 2002:a17:90b:4c0c:b0:36d:86a5:5b8 with SMTP id
- 98e67ed59e1d1-36e3af6d8c6mr2607250a91.11.1780497010080; 
- Wed, 03 Jun 2026 07:30:10 -0700 (PDT)
-Received: from [192.168.0.4] ([71.212.142.33])
- by smtp.gmail.com with ESMTPSA id
- 98e67ed59e1d1-36e0a144605sm4324900a91.1.2026.06.03.07.30.09
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 03 Jun 2026 07:30:09 -0700 (PDT)
-Message-ID: <846d7958-6515-4e4e-8c15-513e282aaaa3@linaro.org>
-Date: Wed, 3 Jun 2026 07:30:07 -0700
+ AFNElJ8LVUZXo84S1ERjs+WXC9e5/I46+B390k0KOL6WuOHboucSWIpEl+TqZX0QRZW6uoDoqVU83yohjjPT@nongnu.org
+X-Gm-Message-State: AOJu0YwpkfK4j2YA0IXX66f/ujeYQNjst9pJyN85qZiZDTRX3amNk6Hg
+ 4U1LthlrKSTF4+0TrxVPMdh3dtgEYqdQ0MUP4eWUyNlabN78LrtolXrBUQGPYmtGo8ftgW7Yaws
+ t2pDRmTPoBbAvRnKS+BgDZLL9ujcVBQY=
+X-Gm-Gg: Acq92OFpJELfJ+PiLspKZRMVFqBQh7O56G/EVWpv+bugD6OsOt64Vho0JBszkvfqdMP
+ Hxxl+XZQ22DlAEHja97FLgBv4BGJnhVpDg3f7nsxbEueaiD1rUKS+6167giDWt5ZbyaoQIvMxyb
+ fM1pooGOrzYIHwXSP0emsQdviTf29lnX3PkuwWhyUUlnVzILik8IHiQkii6AmWIFzFwsU2OqfsN
+ NlHWM8Du1P7K2u6fJAQCMdjKeCwDs1AhEYlf0sRRk/ZzEp3sv6FcfuXmX0eLoo3vqpH28c6WtW1
+ EyqjnRJywCCOKqcAow2KQ9LOJUmIW/VnIKHfgqlc3WFT5jsip5SA
+X-Received: by 2002:a17:906:9c90:b0:bce:a1fc:6877 with SMTP id
+ a640c23a62f3a-bf0ae3fefabmr213308866b.24.1780498280189; Wed, 03 Jun 2026
+ 07:51:20 -0700 (PDT)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [RFC PATCH 00/28] target/ppc: Moving instructions to decodetree
- specification
-To: Chinmay Rath <rathc@linux.ibm.com>, qemu-devel@nongnu.org,
- qemu-ppc@nongnu.org, npiggin@gmail.com, harshpb@linux.ibm.com,
- peter.maydell@linaro.org, stefanha@redhat.com
-Cc: milesg@linux.ibm.com, vishalc@linux.ibm.com, tshah@linux.ibm.com,
- shivangu@linux.ibm.com, ojaswin@linux.ibm.com, aboorvad@linux.ibm.com,
- amachhiw@linux.ibm.com, sv@linux.ibm.com, shivani@linux.ibm.com,
- mkchauras@gmail.com, uverma@linux.ibm.com, nikhilks@linux.ibm.com
-References: <20260520160728.2283628-1-rathc@linux.ibm.com>
-From: Richard Henderson <richard.henderson@linaro.org>
-Content-Language: en-US
-In-Reply-To: <20260520160728.2283628-1-rathc@linux.ibm.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::1033;
- envelope-from=richard.henderson@linaro.org; helo=mail-pj1-x1033.google.com
+References: <20260602162457.828969-1-stefanha@redhat.com>
+ <20260602162457.828969-2-stefanha@redhat.com>
+ <b3e40f92-6544-40ba-ab18-9171b6318ca1@mailo.com>
+In-Reply-To: <b3e40f92-6544-40ba-ab18-9171b6318ca1@mailo.com>
+From: Stefan Hajnoczi <stefanha@gmail.com>
+Date: Wed, 3 Jun 2026 10:51:07 -0400
+X-Gm-Features: AVHnY4LAaptl-I6VSOW8Df8W0Mev2slbesV7bXLaJuoVNwt3CMLiX8Gj-62UHhs
+Message-ID: <CAJSP0QUW_-dhyVN8Q6mTK=hqJ=_8rxL3-ygNxyjSGYX-MqPWXQ@mail.gmail.com>
+Subject: Re: [PATCH 1/3] gitlab: remove x64-freebsd-14-build Cirrus job
+To: =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@mailo.com>
+Cc: Stefan Hajnoczi <stefanha@redhat.com>, qemu-devel@nongnu.org, 
+ =?UTF-8?B?QWxleCBCZW5uw6ll?= <alex.bennee@linaro.org>, 
+ Li-Wen Hsu <lwhsu@freebsd.org>,
+ Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>, 
+ Warner Losh <imp@bsdimp.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2a00:1450:4864:20::62b;
+ envelope-from=stefanha@gmail.com; helo=mail-ej1-x62b.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -110,17 +123,41 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 5/20/26 09:07, Chinmay Rath wrote:
-> static bool trans_LDAT(DisasContext *ctx, arg_LDAT *a)
->                                                      ^
-> I see this happening in the last pointer argument in function
-> definitions after macros (like TRANS(..) in this case).
-> 
-> Richard, Peter, Stefan,
-> Could you please advise if it would be okay to have the above false
-> positive in the patches ?
+On Wed, Jun 3, 2026 at 3:09=E2=80=AFAM Philippe Mathieu-Daud=C3=A9 <philmd@=
+mailo.com> wrote:
+>
+> On 2/6/26 18:24, Stefan Hajnoczi wrote:
+> > Cirrus has shut down and the x64-freebsd-14-build is failing:
+> > https://gitlab.com/qemu-project/qemu/-/jobs/14656732122
+> >
+> > Remove the x64-freebsd-14-build job to get the CI pipeline passing
+> > again. The next commit will be to remove Cirrus integration from the
+> > GitLab YAML and lcitool since it is no longer used.
+> >
+> > Signed-off-by: Stefan Hajnoczi <stefanha@redhat.com>
+> > ---
+> >   MAINTAINERS                         |  2 --
+> >   .gitlab-ci.d/cirrus.yml             | 14 --------------
+> >   .gitlab-ci.d/cirrus/freebsd-14.vars | 16 ----------------
+> >   tests/lcitool/refresh               |  5 -----
+> >   4 files changed, 37 deletions(-)
+> >   delete mode 100644 .gitlab-ci.d/cirrus/freebsd-14.vars
+> >
+> > diff --git a/MAINTAINERS b/MAINTAINERS
+> > index 7752917d8c..4ff33eb630 100644
+> > --- a/MAINTAINERS
+> > +++ b/MAINTAINERS
+> > @@ -4511,9 +4511,7 @@ W: https://travis-ci.org/qemu/qemu
+> >   FreeBSD Hosted Continuous Integration
+> >   M: Li-Wen Hsu <lwhsu@freebsd.org>
+> >   S: Maintained
+>
+> This raise the question, is it still maintained?
 
-Just ignore those.
+I left this section because Warner is working on bringing up a FreeBSD
+build VM and corresponding a GitLab CI YAML file in qemu.git to run
+builds. Warner can add the path to the new YAML file and add himself
+as a maintainer in his patch series.
 
-r~
+Stefan
 
