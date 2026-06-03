@@ -4,109 +4,61 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 93E6BCD6E6B
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7C174CD6E57
 	for <qemu-devel@archiver.kernel.org>; Wed,  3 Jun 2026 19:48:05 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wUrYe-0002gJ-If; Wed, 03 Jun 2026 15:47:20 -0400
+	id 1wUrZ6-0002kK-C6; Wed, 03 Jun 2026 15:47:48 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1wUrYb-0002fc-49
- for qemu-devel@nongnu.org; Wed, 03 Jun 2026 15:47:17 -0400
+ (Exim 4.90_1) (envelope-from <stefanha@redhat.com>)
+ id 1wUrZ2-0002in-Ay
+ for qemu-devel@nongnu.org; Wed, 03 Jun 2026 15:47:45 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1wUrYW-00085T-6y
- for qemu-devel@nongnu.org; Wed, 03 Jun 2026 15:47:14 -0400
+ (Exim 4.90_1) (envelope-from <stefanha@redhat.com>)
+ id 1wUrYz-0008EV-Fn
+ for qemu-devel@nongnu.org; Wed, 03 Jun 2026 15:47:44 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1780516029;
+ s=mimecast20190719; t=1780516059;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=F8trTXXgB97EY4CXfA74sUVI3qFg76/J/Z4vUaouXpI=;
- b=Um6UAuFgoPz8HDTnCTl6uYJ7nZWTsi0UmNyUvZigLP0BohZQoLHsyC5PvXMuQpvJmD7u7K
- lkdgeCjsEVAF29gDD5qgTcsU/Oqp1aXArkr9MDanj5bzcHohp7hR67QBuId7j4KfKDvqxf
- PFygjQ9ZBl3GcKaSZrkwlu79+2X621A=
-Received: from mail-qv1-f70.google.com (mail-qv1-f70.google.com
- [209.85.219.70]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-589-4mMPJXwlMne2rjahVBEf6A-1; Wed, 03 Jun 2026 15:47:08 -0400
-X-MC-Unique: 4mMPJXwlMne2rjahVBEf6A-1
-X-Mimecast-MFC-AGG-ID: 4mMPJXwlMne2rjahVBEf6A_1780516028
-Received: by mail-qv1-f70.google.com with SMTP id
- 6a1803df08f44-8ceba6ec0ccso15274026d6.1
- for <qemu-devel@nongnu.org>; Wed, 03 Jun 2026 12:47:08 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1780516028; x=1781120828; darn=nongnu.org;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
- bh=F8trTXXgB97EY4CXfA74sUVI3qFg76/J/Z4vUaouXpI=;
- b=rTzFUqd59tGxLoQ7xmFNnGKZPVDqkJxF2ZS7RmaOPQxdio0JrnVxdFxBTZwVTWCMbl
- wzTiIB7pbku26A3Kd2uZLhAnyQyWvoMBR0i4BHmaKsxgjtE5zFQWXWkrQrqsms/tJx/P
- 3g8cGcZP9k3EgE4Xn73u4+JsW+qMdOh802iEbkefHgu1nJcbPKJBOCWI16w4C+UiHdMc
- tvhe9zK+Rs5/2LW/Sxhidv18lridurZ3U65v50jMS/RjgZPd0vXhcegAMCg4YC3LG7iz
- 5lJkI+UnyNzxo9o0wRH1TkuLd4Kzlnm9738sl9658pFY6c0n9JBiPmNp5pru/gNNH5JZ
- gbpw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1780516028; x=1781120828;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=F8trTXXgB97EY4CXfA74sUVI3qFg76/J/Z4vUaouXpI=;
- b=kwnLsLyXXiIYOPuabqqJDOyKLt4536Ms8x9p5LE0uj+8G04IFsFlzusxm2zxIOrnfq
- KcwH5jLwUkH4Vu14wTOvBVBmoIyWTyXVrkZJfmHUyNJqk/D0zHZuMNz5xo6j+1sXHjzw
- /OWLgeBCCi6tBpK4+uwOgOkIZD6SOycrrr3k++lL10/ut12+RcrdvA89mE2XjPR0jEtx
- eLnMu4/XDKpoVDUm5l18SHyrqorA8GFkNKdmFgG4+OgB+OJga8VRQPw2O5/z91DsAPJr
- OyFJOe0rOHT+yQQUgUVjqrPKWLq1vZ8k2kwhIUfVq2cbpN9GI2Gdef06wllMW35Mk47t
- tjmg==
-X-Gm-Message-State: AOJu0YxasiF9mMpYOJOreK4+o4E2qkXYA/KigYsbmNRLIYt7Pftwzk/Z
- 72n4QzC4NDHeG7hxnQwCeSgR9KZcd0s0pseGV04LREOi2CfAkJSUtYlj8si52e9fseGA92FZqem
- AwJw86n/GsyPD3S8KbiwtlM/y7PQxXwjhS4gQePkLs50GwofDoAbMIWHW
-X-Gm-Gg: Acq92OGYSy5pO6En+LGmgkG0gNdUtyTRgHt+4R8lZzTlu1HBzjSEz+6rS4e70Z4edDh
- 3ShFiiZi3S5mdPLWA42uAsrjSS0SsW5IjcF4CUho8fa8AddVMfqZ9sfSPdu3H1yb9WPf35eDV8c
- sEdOleUF2yVMVpR3wEzPMIvQ2Un22peiOWiHAsWPnebn8KLcAD5+AkWOGXvqxCjR78rvmeGJ/Wd
- ufZ5P3oQ9r6XUwwUZtHckXLBuWmpbrwpdinjO1JGaTPJdSTV0R73ynW/0MDal2Oqo1ffRMlc34r
- gEJ96RqCiIbLMZuVTnY9eB2gmzea1iDHnsQrWS1jR3Xm+jcX1Lsoy6ruWiApVgxLh9Lv3UYet/C
- v46zXi4Uf8pZwTRMZka0t5BRbzQ==
-X-Received: by 2002:a05:6214:1bcc:b0:8cc:dddb:eeaf with SMTP id
- 6a1803df08f44-8cece16b555mr74744616d6.40.1780516027874; 
- Wed, 03 Jun 2026 12:47:07 -0700 (PDT)
-X-Received: by 2002:a05:6214:1bcc:b0:8cc:dddb:eeaf with SMTP id
- 6a1803df08f44-8cece16b555mr74743906d6.40.1780516027245; 
- Wed, 03 Jun 2026 12:47:07 -0700 (PDT)
-Received: from x1.local ([142.189.10.167]) by smtp.gmail.com with ESMTPSA id
- 6a1803df08f44-8cecd0556c0sm29308636d6.25.2026.06.03.12.47.05
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 03 Jun 2026 12:47:06 -0700 (PDT)
-Date: Wed, 3 Jun 2026 15:47:04 -0400
-From: Peter Xu <peterx@redhat.com>
-To: Avihai Horon <avihaih@nvidia.com>
-Cc: qemu-devel@nongnu.org, Alex Williamson <alex@shazbot.org>,
- =?utf-8?Q?C=C3=A9dric?= Le Goater <clg@redhat.com>,
- Fabiano Rosas <farosas@suse.de>,
- Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
- Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Zhao Liu <zhao1.liu@intel.com>, Halil Pasic <pasic@linux.ibm.com>,
- Christian Borntraeger <borntraeger@linux.ibm.com>,
- Jason Herne <jjherne@linux.ibm.com>,
- Richard Henderson <richard.henderson@linaro.org>,
- Ilya Leoshkevich <iii@linux.ibm.com>, David Hildenbrand <david@kernel.org>,
- Eric Farman <farman@linux.ibm.com>,
- Matthew Rosato <mjrosato@linux.ibm.com>,
- Cornelia Huck <cohuck@redhat.com>, Eric Blake <eblake@redhat.com>,
- Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>,
- John Snow <jsnow@redhat.com>, Markus Armbruster <armbru@redhat.com>,
- Maor Gottlieb <maorg@nvidia.com>
-Subject: Re: [PATCH v2 01/13] migration: Propagate errors in
- migration_completion_precopy()
-Message-ID: <aiCEuAmX3qpWDS5n@x1.local>
-References: <20260602092621.382-1-avihaih@nvidia.com>
- <20260602092621.382-2-avihaih@nvidia.com>
+ to:to:cc:cc:mime-version:mime-version:
+ content-transfer-encoding:content-transfer-encoding;
+ bh=q4c50VxFLunjzBAz60yWm9x1V6nAZDQgFB5mtEwHVUs=;
+ b=UrSCUSuheCfT487gm+3SqZEqwXcFr8JE2qlDUz2xfsHxcOoQDXpAv7hfRLXm8OKCyNM1Tc
+ KMYvJXJOgrH7QU/DV5JBTTUFS/oznnFf9NyP4qfQuHVt5KAMIYHXXI+gTG61Dp107CKA3I
+ UOjXP9XWRvVnk28UASBXzgYbNlRBTmA=
+Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-395-mzO32bZYPpijcTjFWcQItA-1; Wed,
+ 03 Jun 2026 15:47:37 -0400
+X-MC-Unique: mzO32bZYPpijcTjFWcQItA-1
+X-Mimecast-MFC-AGG-ID: mzO32bZYPpijcTjFWcQItA_1780516056
+Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id AF7EB1800366
+ for <qemu-devel@nongnu.org>; Wed,  3 Jun 2026 19:47:36 +0000 (UTC)
+Received: from localhost (unknown [10.2.16.110])
+ by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id 401F319560AD; Wed,  3 Jun 2026 19:47:35 +0000 (UTC)
+From: Stefan Hajnoczi <stefanha@redhat.com>
+To: qemu-devel@nongnu.org
+Cc: Stefan Hajnoczi <stefanha@redhat.com>,
+ Markus Armbruster <armbru@redhat.com>,
+ Stefano Garzarella <sgarzare@redhat.com>
+Subject: [PATCH] MAINTAINERS: remove Julia Suvorova from Linux io_uring
+Date: Wed,  3 Jun 2026 15:47:32 -0400
+Message-ID: <20260603194732.79041-1-stefanha@redhat.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <20260602092621.382-2-avihaih@nvidia.com>
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=peterx@redhat.com;
+Content-Transfer-Encoding: 8bit
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.12
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=stefanha@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -24
 X-Spam_score: -2.5
@@ -130,82 +82,30 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, Jun 02, 2026 at 12:26:09PM +0300, Avihai Horon wrote:
-> migration_completion_precopy() doesn't propagate errors to migration
-> core which leads to error information loss. Fix that.
-> 
-> This prepares for a follow-up where migration_switchover_start() can
-> fail on switchover-ack and still report a useful error. Errors from
-> qemu_savevm_state_complete_precopy() are not propagated yet as it
-> requires more plumbing.
-> 
-> Signed-off-by: Avihai Horon <avihaih@nvidia.com>
-> ---
->  migration/migration.c | 11 +++++++----
->  1 file changed, 7 insertions(+), 4 deletions(-)
-> 
-> diff --git a/migration/migration.c b/migration/migration.c
-> index 074d3f2c69..7488a94206 100644
-> --- a/migration/migration.c
-> +++ b/migration/migration.c
-> @@ -2814,7 +2814,7 @@ static bool migration_switchover_start(MigrationState *s, Error **errp)
->      return true;
->  }
->  
-> -static int migration_completion_precopy(MigrationState *s)
-> +static int migration_completion_precopy(MigrationState *s, Error **errp)
->  {
->      int ret;
->  
-> @@ -2823,11 +2823,12 @@ static int migration_completion_precopy(MigrationState *s)
->      if (!migrate_mode_is_cpr()) {
->          ret = migration_stop_vm(s, RUN_STATE_FINISH_MIGRATE);
->          if (ret < 0) {
-> +            error_setg_errno(errp, -ret, "Failed to stop the VM");
->              goto out_unlock;
->          }
->      }
->  
-> -    if (!migration_switchover_start(s, NULL)) {
-> +    if (!migration_switchover_start(s, errp)) {
->          ret = -EFAULT;
->          goto out_unlock;
->      }
+Julia's email is bouncing because she no longer works for Red Hat. She
+has not responded to when asked whether she wishes to update her email
+address. Remove her old email address for now.
 
-IIUC this patch overlooked the follow up call:
+Cc: Markus Armbruster <armbru@redhat.com>
+Cc: Stefano Garzarella <sgarzare@redhat.com>
+Signed-off-by: Stefan Hajnoczi <stefanha@redhat.com>
+---
+ MAINTAINERS | 1 -
+ 1 file changed, 1 deletion(-)
 
-    ret = qemu_savevm_state_complete_precopy(s);
-
-We should make sure ret!=0 will always set Error*.  Better pass Error**
-into qemu_savevm_state_complete_precopy() too.
-
-Thanks,
-
-> @@ -2869,7 +2870,7 @@ static void migration_completion(MigrationState *s)
->      Error *local_err = NULL;
->  
->      if (s->state == MIGRATION_STATUS_ACTIVE) {
-> -        ret = migration_completion_precopy(s);
-> +        ret = migration_completion_precopy(s, &local_err);
->      } else if (s->state == MIGRATION_STATUS_POSTCOPY_ACTIVE) {
->          migration_completion_postcopy(s);
->      } else {
-> @@ -2900,7 +2901,9 @@ static void migration_completion(MigrationState *s)
->      return;
->  
->  fail:
-> -    if (qemu_file_get_error_obj(s->to_dst_file, &local_err)) {
-> +    if (local_err) {
-> +        migrate_error_propagate(s, local_err);
-> +    } else if (qemu_file_get_error_obj(s->to_dst_file, &local_err)) {
->          migrate_error_propagate(s, local_err);
->      } else if (ret) {
->          error_setg_errno(&local_err, -ret, "Error in migration completion");
-> -- 
-> 2.40.1
-> 
-
+diff --git a/MAINTAINERS b/MAINTAINERS
+index 7752917d8c..738d084b1a 100644
+--- a/MAINTAINERS
++++ b/MAINTAINERS
+@@ -4346,7 +4346,6 @@ F: block/file-win32.c
+ F: block/win32-aio.c
+ 
+ Linux io_uring
+-M: Julia Suvorova <jusual@redhat.com>
+ M: Stefan Hajnoczi <stefanha@redhat.com>
+ R: Stefano Garzarella <sgarzare@redhat.com>
+ L: qemu-block@nongnu.org
 -- 
-Peter Xu
+2.54.0
 
 
