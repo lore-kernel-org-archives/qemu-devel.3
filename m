@@ -4,106 +4,104 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 687FACD6E56
-	for <qemu-devel@archiver.kernel.org>; Wed,  3 Jun 2026 11:42:47 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id EE9A8CD6E6F
+	for <qemu-devel@archiver.kernel.org>; Wed,  3 Jun 2026 12:18:06 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wUjyy-0004vT-Hc; Wed, 03 Jun 2026 07:42:00 -0400
+	id 1wUkXL-0003Ds-El; Wed, 03 Jun 2026 08:17:31 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <rathc@linux.ibm.com>)
- id 1wUjys-0004uT-5l; Wed, 03 Jun 2026 07:41:55 -0400
+ (Exim 4.90_1) (envelope-from <amachhiw@linux.ibm.com>)
+ id 1wUkXI-0003Cc-VX; Wed, 03 Jun 2026 08:17:30 -0400
 Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <rathc@linux.ibm.com>)
- id 1wUjyp-0004w7-Ur; Wed, 03 Jun 2026 07:41:53 -0400
-Received: from pps.filterd (m0360083.ppops.net [127.0.0.1])
+ (Exim 4.90_1) (envelope-from <amachhiw@linux.ibm.com>)
+ id 1wUkXG-0003DU-MK; Wed, 03 Jun 2026 08:17:28 -0400
+Received: from pps.filterd (m0356517.ppops.net [127.0.0.1])
  by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 65385KxW2915774; Wed, 3 Jun 2026 11:41:43 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
- :content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=pp1; bh=NbUreS
- SuPQuDNNpxQQ98+BHiEWnwj9quqxozkYxYJg8=; b=IKSHOwZ5NLrRy/9CqxamWh
- E4ie7LwpzUSVr9LeaRbp9aqJu3nHGTpzP9s+rMzLS4WSVF/np2DInH57OOHu7RC1
- VFPrIGLcvpXKAldlLXGKcgfjy6bxY4aFj/ji/uxWczFP4gULJlnlf6CWuRlXFQXK
- O+8n00nm98D8sO9aoHBZcXQtBDVDK4Y7WF5ocLreA1WJ1dxyYU7yRXAlzn/hdR87
- rczVM5kxN7SGIsEGBYjOsnPfY6mhVbgQdihT7AQSqHturpeAM+HlR/aY1d5wcGvY
- 90sjpjPWB6zlBYtwONqPFXc6xSma9Jqm3rVlOQR3Qo3aUhk5h7trTeNvcvEUpPag
- ==
-Received: from ppma21.wdc07v.mail.ibm.com
- (5b.69.3da9.ip4.static.sl-reverse.com [169.61.105.91])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4efqd4apqj-1
+ 6537Fx3W1957774; Wed, 3 Jun 2026 12:17:24 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=
+ content-type:date:from:in-reply-to:message-id:mime-version
+ :references:subject:to; s=pp1; bh=/aPNsM/ZlRkoonfMvfAStwqW9wLoF5
+ JoZCPyB04N3qM=; b=Np4/rJ40A5uZqm+6y433YWFYVuv9TKt0Ox+wFWLcmTZIix
+ gVGA4HxyRqIqkffVT7hju3XMsmMaCUmjUUbeI15eNIavvFLpJ4XfvKfspcIXTZzb
+ Lh2ih1ivlifQhvBcCnrmZ6i2/m+XWnCixJ/9xwQttFpsFUd5rsGqR0+egCaVFBco
+ DH/d8kiunDk7IDsTDAQGPJTS39frl0ofPay7Z4ScvgzNj07pIihlQNz+HDZ240wr
+ w8XEZ8z5X6cval5elwRq6eRdyPn53Is9p+7XkL7uB0YefVeBqyczQECD5wIr8iqe
+ GGVmjYa7bO659TQsnCujiXqY3b8Yh5OmuP1ZAKeA==
+Received: from ppma12.dal12v.mail.ibm.com
+ (dc.9e.1632.ip4.static.sl-reverse.com [50.22.158.220])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4efqm52qwx-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Wed, 03 Jun 2026 11:41:42 +0000 (GMT)
-Received: from pps.filterd (ppma21.wdc07v.mail.ibm.com [127.0.0.1])
- by ppma21.wdc07v.mail.ibm.com (8.18.1.7/8.18.1.7) with ESMTP id 653Bd7il029798;
- Wed, 3 Jun 2026 11:41:41 GMT
-Received: from smtprelay05.wdc07v.mail.ibm.com ([172.16.1.72])
- by ppma21.wdc07v.mail.ibm.com (PPS) with ESMTPS id 4egb7k7y9n-1
+ Wed, 03 Jun 2026 12:17:23 +0000 (GMT)
+Received: from pps.filterd (ppma12.dal12v.mail.ibm.com [127.0.0.1])
+ by ppma12.dal12v.mail.ibm.com (8.18.1.7/8.18.1.7) with ESMTP id 653C99F0027529;
+ Wed, 3 Jun 2026 12:17:23 GMT
+Received: from smtprelay05.fra02v.mail.ibm.com ([9.218.2.225])
+ by ppma12.dal12v.mail.ibm.com (PPS) with ESMTPS id 4ega7qg8np-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Wed, 03 Jun 2026 11:41:41 +0000 (GMT)
-Received: from smtpav01.wdc07v.mail.ibm.com (smtpav01.wdc07v.mail.ibm.com
- [10.39.53.228])
- by smtprelay05.wdc07v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 653BfePr33423928
+ Wed, 03 Jun 2026 12:17:22 +0000 (GMT)
+Received: from smtpav06.fra02v.mail.ibm.com (smtpav06.fra02v.mail.ibm.com
+ [10.20.54.105])
+ by smtprelay05.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 653CHJqi47055190
  (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Wed, 3 Jun 2026 11:41:40 GMT
-Received: from smtpav01.wdc07v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 8767358055;
- Wed,  3 Jun 2026 11:41:40 +0000 (GMT)
-Received: from smtpav01.wdc07v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 3AB5658059;
- Wed,  3 Jun 2026 11:41:32 +0000 (GMT)
-Received: from [9.124.223.250] (unknown [9.124.223.250])
- by smtpav01.wdc07v.mail.ibm.com (Postfix) with ESMTPS;
- Wed,  3 Jun 2026 11:41:31 +0000 (GMT)
-Message-ID: <285fdd30-f22d-4d4b-b8ee-5f04fccfca6d@linux.ibm.com>
-Date: Wed, 3 Jun 2026 17:09:57 +0530
+ Wed, 3 Jun 2026 12:17:19 GMT
+Received: from smtpav06.fra02v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 7593A2004B;
+ Wed,  3 Jun 2026 12:17:19 +0000 (GMT)
+Received: from smtpav06.fra02v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 590FF20049;
+ Wed,  3 Jun 2026 12:17:18 +0000 (GMT)
+Received: from fedora (unknown [9.5.7.39])
+ by smtpav06.fra02v.mail.ibm.com (Postfix) with ESMTPS;
+ Wed,  3 Jun 2026 12:17:18 +0000 (GMT)
+Date: Wed, 3 Jun 2026 17:47:13 +0530
+From: Amit Machhiwal <amachhiw@linux.ibm.com>
+To: Vaibhav Jain <vaibhav@linux.ibm.com>, qemu-ppc@nongnu.org,
+ Harsh Prateek Bora <harshpb@linux.ibm.com>, qemu-devel@nongnu.org,
+ Nicholas Piggin <npiggin@gmail.com>
+Subject: Re: [PATCH v2 1/3] hw/ppc/spapr: Do not fallback to raw mode when
+ KVM rejects compat
+Message-ID: <20260603174422.3bb8b5fc-64-amachhiw@linux.ibm.com>
+Mail-Followup-To: Vaibhav Jain <vaibhav@linux.ibm.com>, 
+ qemu-ppc@nongnu.org, Harsh Prateek Bora <harshpb@linux.ibm.com>, 
+ qemu-devel@nongnu.org, Nicholas Piggin <npiggin@gmail.com>
+References: <20260502140021.69712-2-amachhiw@linux.ibm.com>
+ <87h5nkyuuk.fsf@vajain21.in.ibm.com>
+ <20260603135251.3afb2400-31-amachhiw@linux.ibm.com>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [RFC PATCH 00/28] target/ppc: Moving instructions to decodetree
- specification
-To: qemu-devel@nongnu.org, qemu-ppc@nongnu.org, npiggin@gmail.com,
- harshpb@linux.ibm.com, richard.henderson@linaro.org,
- peter.maydell@linaro.org, stefanha@redhat.com
-Cc: milesg@linux.ibm.com, vishalc@linux.ibm.com, tshah@linux.ibm.com,
- shivangu@linux.ibm.com, ojaswin@linux.ibm.com, aboorvad@linux.ibm.com,
- amachhiw@linux.ibm.com, sv@linux.ibm.com, shivani@linux.ibm.com,
- mkchauras@gmail.com, uverma@linux.ibm.com, nikhilks@linux.ibm.com
-References: <20260520160728.2283628-1-rathc@linux.ibm.com>
-Content-Language: en-US
-From: Chinmay Rath <rathc@linux.ibm.com>
-In-Reply-To: <20260520160728.2283628-1-rathc@linux.ibm.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20260603135251.3afb2400-31-amachhiw@linux.ibm.com>
 X-TM-AS-GCONF: 00
 X-Proofpoint-Reinject: loops=2 maxloops=12
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNjAzMDExMSBTYWx0ZWRfX46KoaX2xwqjo
- 6w+RdVMhy63pAs4d/mirZqoDEeSa7iElWj0d7MNqlWDfGlPa1QZn7UD1LD9/B2NX2g0maBzu25R
- 1ctTv6i3wQcC1QmF42ov6zYNRMd54OPwe/E5bZdQ5dlbvo9rHWyPQ+Y8PhxOik97QnlhY/A04Nz
- nS4oR87v1TKgBKb/TmQS5U2Iow0NNs/xxCX7/TXj/1N6BpF6vpv8ebdhMhfdsd8FXaEaF3a80W/
- 1pwe+4BYFwkdJdl3c1nJW8pJgSHe5G4SU9kcEBp0bXB0D9iVDGPQ8GXYbkXdwoWt9zk8pMiS/cV
- Tm7qI4y9dDKsXeDaJTHtBOaqurKj5TJqlQJwrEkWIPe9QvRCYZjNL0MCT0A6lfISpw9PC3Imj50
- ER+efncQ150exx0FssA3j2NQMb1ROmP9BCD/9KzmNjAFh4EjqOAof3DgzZr7gKp+rl6RN72s6Td
- qTU2c8qoS492y/LVdAw==
-X-Proofpoint-GUID: CJlC5dhijTvIsvGPpVtara6NXqmRIpbp
-X-Proofpoint-ORIG-GUID: PH6VcVIWhzsDgRJJGh2qfVEv01KAxK0B
-X-Authority-Analysis: v=2.4 cv=DZknbPtW c=1 sm=1 tr=0 ts=6a2012f7 cx=c_pps
- a=GFwsV6G8L6GxiO2Y/PsHdQ==:117 a=GFwsV6G8L6GxiO2Y/PsHdQ==:17
- a=IkcTkHD0fZMA:10 a=FelO9ux0wxsA:10 a=VkNPw1HP01LnGYTKEx00:22
- a=RnoormkPH1_aCDwRdu11:22 a=iQ6ETzBq9ecOQQE5vZCe:22 a=p0WdMEafAAAA:8
- a=h1SniR8Z0XukoVBHosoA:9 a=QEXdDO2ut3YA:10
+X-Proofpoint-GUID: 1iLV0MOZBPqMGRu8FpeLr6YmVxpzw87F
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNjAzMDExNiBTYWx0ZWRfXyiHS2Pt6zbUf
+ 8+yLQ5N5PkES4+1+GHDd5mZdj+ChmNQs8B/53eOE0YAfA4r1g5XKf8rzjkgeYx/qJu6ezJFCySA
+ n5jAAI6FH2Zp+wc1AR5CF2kaCHCN5xKLrq5kWfHZVY/8z0CWKp/+vU1/2OtOSeuNune9RVkbei/
+ ZdWOt5WDOQRLOz7dZrNNLQzkkJEa5KFM29SJ6ACH4sYLGHbsonWJf+i4A6exXIY16Ig2cwWZIbF
+ UQS5vVoRUKt99QQQAcxpnNTsbnwx+yD+JT+zXUdDVt8eWeLkdB8uqouKOYMdCzWtAL+rYiaWQDL
+ LeYYpwi+El+X19Prtnj7g+vRSTvZPWLe3feY503eTNfBMPIhB37vklWrvwK6Nx4Y1JlOy6Ax6bC
+ Ehc3scm/7V6ER1MUVQqCZdG8KB/C90k8x9JlnDZeNJp4qtIEJRGlqPdOvwTRlbOqhuJctSE7Qfd
+ 8r6nJlh35ujwQQIw7EA==
+X-Proofpoint-ORIG-GUID: w1PEAtcVwJwUw9J4a5kgI9S-z7ATpUhz
+X-Authority-Analysis: v=2.4 cv=Vf3H+lp9 c=1 sm=1 tr=0 ts=6a201b54 cx=c_pps
+ a=bLidbwmWQ0KltjZqbj+ezA==:117 a=bLidbwmWQ0KltjZqbj+ezA==:17
+ a=kj9zAlcOel0A:10 a=FelO9ux0wxsA:10 a=VkNPw1HP01LnGYTKEx00:22
+ a=RnoormkPH1_aCDwRdu11:22 a=U7nrCbtTmkRpXpFmAIza:22 a=VnNF1IyMAAAA:8
+ a=q2KB2iBLz62b_LAmraIA:9 a=CjuIK1q_8ugA:10
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.125,FMLib:17.12.100.49
  definitions=2026-06-03_04,2026-05-28_03,2025-10-01_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- spamscore=0 clxscore=1015 suspectscore=0 impostorscore=0 lowpriorityscore=0
- phishscore=0 malwarescore=0 priorityscore=1501 bulkscore=0 adultscore=0
+ priorityscore=1501 suspectscore=0 adultscore=0 bulkscore=0 impostorscore=0
+ phishscore=0 lowpriorityscore=0 malwarescore=0 clxscore=1015 spamscore=0
  classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2605210000 definitions=main-2606030111
-Received-SPF: pass client-ip=148.163.156.1; envelope-from=rathc@linux.ibm.com;
- helo=mx0a-001b2d01.pphosted.com
+ reason=mlx scancount=1 engine=8.22.0-2605210000 definitions=main-2606030116
+Received-SPF: pass client-ip=148.163.156.1;
+ envelope-from=amachhiw@linux.ibm.com; helo=mx0a-001b2d01.pphosted.com
 X-Spam_score_int: -26
 X-Spam_score: -2.7
 X-Spam_bar: --
@@ -126,107 +124,103 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+On 2026/06/03 02:02 PM, Amit Machhiwal wrote:
+> Hi Vaibhav,
+> 
+> Thanks for taking a look at this patch. My response is inline:
+> 
+> On 2026/06/03 12:27 PM, Vaibhav Jain wrote:
+> > Hi Amit,
+> > 
+> > Thanks for the patch. My review comments inline below:
+> > 
+> > Amit Machhiwal <amachhiw@linux.ibm.com> writes:
+> > 
+> > > During H_CLIENT_ARCHITECTURE_SUPPORT, QEMU attempts to set the requested
+> > > CPU compatibility mode via ppc_set_compat_all(). If this fails, the
+> > > existing code may fall back to raw mode when supported by the guest.
+> > >
+> > > The current logic treats all failures uniformly and tried to fall back
+> > > to raw mode whenever possible. As a result, errors from KVM (e.g.
+> > > kvmppc_set_compat() returning -EINVAL) are silently masked, making
+> > > debugging difficult and allowing the guest to proceed with an
+> > > unsupported or incompatible configuration.
+> > >
+> > > When running with KVM, such failures indicate that the requested
+> > > compatibility level is not supported by the host. Do not fallback in
+> > > this case; instead, report the error and fail the CAS negotiation.
+> > >
+> > > This makes the failure visible to the user and ensures that invalid
+> > > compatibility requests are rejected early rather than being hidden by
+> > > fallback behavior. For example, the following error is now reported:
+> > >
+> > >   qemu-system-ppc64: Unable to set CPU compatibility mode in KVM: Invalid argument
+> > >
+> > > Fixes: cc7b35b169e9 ("spapr: fallback to raw mode if best compat mode cannot be set during CAS")
+> > > Signed-off-by: Amit Machhiwal <amachhiw@linux.ibm.com>
+> > > Tested-by: Anushree Mathur <anushree.mathur@linux.ibm.com>
+> > > ---
+> > >  hw/ppc/spapr_hcall.c | 9 +++++++++
+> > >  1 file changed, 9 insertions(+)
+> > >
+> > > diff --git a/hw/ppc/spapr_hcall.c b/hw/ppc/spapr_hcall.c
+> > > index 032805a8d0db..de2ea6f5e579 100644
+> > > --- a/hw/ppc/spapr_hcall.c
+> > > +++ b/hw/ppc/spapr_hcall.c
+> > > @@ -1204,6 +1204,15 @@ target_ulong do_client_architecture_support(PowerPCCPU *cpu,
+> > >          Error *local_err = NULL;
+> > >  
+> > >          if (ppc_set_compat_all(cas_pvr, &local_err) < 0) {
+> > > +            /*
+> > > +             * If KVM rejected the compat mode, do not fallback. This indicates
+> > > +             * the host cannot support the requested level.
+> > > +             */
+> > > +            if (kvm_enabled()) {
+> > > +                error_report_err(local_err);
+> > > +                return H_HARDWARE;
+> > > +            }
+> > > +
+> > 
+> > NAK on this change.
+> > 
+> > As per PAPR whether the guest can run in RAW mode needs to be negotiated
+> > between Guest and VMM. The existing code path via cas_check_pvr() and
+> > 'raw_mode_supported' already handles this case.
+> > 
+> > So I dont see a reason for this KVM specific changes needed. Can you
+> > please elaborate a bit more on the issue that gets fixed by this change.
+> 
+> I have mentioned the reason in the commit message. I'm quoting the part
+> of it below:
+> 
+>   The current logic treats all failures uniformly and tried to fall back
+>   to raw mode whenever possible. As a result, errors from KVM (e.g.
+>   kvmppc_set_compat() returning -EINVAL) are silently masked, making
+>   debugging difficult and allowing the guest to proceed with an
+>   unsupported or incompatible configuration.
+> 
+> The currently call chain is as below:
+> 
+>  do_client_architecture_support()
+>    -> ppc_set_compat_all()
+>      -> run_on_cpu()
+>        -> do_run_on_cpu()
+>          -> do_set_compat()
+>            -> ppc_set_compat()
+>              -> kvmppc_set_compat()  // returns error
+> 
+> Now when an error is returned via kvmppc_set_comapt(), its just ignored
+> in the current situation silently in do_client_architecture_support(),
+> while the caller is supposed to handle the error returned in an errp
+> object. This would make the guest try to continue with a raw mode when
+> the host was actually booted in a compatibility mode, while it shouldn't
+> be doing that.
 
-On 5/20/26 21:37, Chinmay Rath wrote:
-> We recently had a QEMU decodetree hackathon at our org focusing on moving
-> instructions to decodetree specification. I have consolidated the patches
-> generated out of this effort in this series. Though I have done a round
-> of review on all of them, might share some more review comments later.
->
-> The checkpatch.pl script emits false error for a couple of patches which
-> are of the following nature :
->
-> TRANS(STWAT, do_st_atomic, DEF_MEMOP(MO_UL))
->
-> static bool trans_LDAT(DisasContext *ctx, arg_LDAT *a)
->                                                      ^
-> I see this happening in the last pointer argument in function
-> definitions after macros (like TRANS(..) in this case).
->
-> Richard, Peter, Stefan,
-> Could you please advise if it would be okay to have the above false
-> positive in the patches ?
-Hi Chao,
-I was wondering if you would be able to advise a way forward for this 
-checkpatch issue ? TIA.
-> Gitlab CI: https://gitlab.com/rathc/qemu/-/pipelines/2540725424
-> Please note that check-python-tox and migration-compat-aarch64 from CI
-> fails in the upstream master branch as seen in the following:
-> https://gitlab.com/rathc/qemu/-/pipelines/2537246569
->
-> Thanks,
-> Chinmay
-Hi Glenn,
-If possible, would you like to have a look at this series when you get a 
-chance ? TIA.
+Based on an off-mailing list discussion, I'll be working on discussed
+alternate approach for this. Will post next version based on how that
+goes. Thanks for the discussion, Vaibhav.
 
 Thanks,
-Chinmay
-> Aboorva Devarajan (3):
->    target/ppc: Move vector merge instructions to decodetree
->    target/ppc: Move vector pack instructions to decodetree
->    target/ppc: Move GPR atomic load/store instructions to decodetree
->
-> Amit Machhiwal (2):
->    target/ppc: Move fixed-point Shift insns to decodetree
->    target/ppc: Move fixed-point byte-reversal store insns to decodetree
->
-> Mukesh Kumar Chaurasiya (IBM) (2):
->    target/ppc: convert slw,srw instruction via decode spec
->    target/ppc: convert sraw[i] instruction via decode spec
->
-> Nikhil Kumar Singh (3):
->    target/ppc: Migrate extswsli to decodetree
->    target/ppc: Migrate atomic loads to decodetree
->    target/ppc: Convert cache instructions to decodetree
->
-> Ojaswin Mujoo (7):
->    target/ppc: Move isync instruction to decodetree.
->    target/ppc: Convert b{a, l, la} to decode tree
->    target/ppc: move various conditional branch insns to decodetree
->    target/ppc: Fix TRANS* macro variadic arguments handling
->    target/ppc: Move wait instruction to decodetree
->    target/ppc: Move sleep & friends to decodetree
->    target/ppc: Refactor sleep and its variants to use a common helper
->
-> Shivang Upadhyay (4):
->    target/ppc: Move Condition Register access instructions to decodetree.
->    target/ppc: Move Condition Register logical instructions to
->      decodetree.
->    target/ppc: Move Fixed-Point Load/Store String instructions to
->      decodetree.
->    target/ppc: Move VMX integer arithmetic and BCD instructions to
->      decodetree.
->
-> Shivani Nittor (1):
->    target/ppc : Convert mcrf to decode tree
->
-> Tanushree Shah (2):
->    target/ppc: Move rlwimi, rlwinm instructions to decodetree
->    target/ppc: Move lmw, stmw instructions to decodetree
->
-> Utkarsh Verma (1):
->    target/ppc: Move st{b, h, w, d, q}cx instructions to decodetree
->
-> Vishal Chourasia (3):
->    target/ppc: Move mfmsr, mtmsr[d] instructions to decodetree
->    target/ppc: Move byte-reverse instructions to decodetree
->    target/ppc: Move system call and rfi instructions to decodetree
->
->   target/ppc/helper.h                           |  100 +-
->   target/ppc/insn32.decode                      |  244 ++
->   target/ppc/int_helper.c                       |   76 +-
->   target/ppc/internal.h                         |    7 -
->   target/ppc/mem_helper.c                       |   18 +-
->   target/ppc/tcg-excp_helper.c                  |   10 +-
->   target/ppc/translate.c                        | 2592 ++++-------------
->   target/ppc/translate/branch-impl.c.inc        |  181 ++
->   target/ppc/translate/fixedpoint-impl.c.inc    |  936 ++++++
->   target/ppc/translate/misc-impl.c.inc          |  175 ++
->   .../ppc/translate/processor-ctrl-impl.c.inc   |   30 +
->   target/ppc/translate/storage-ctrl-impl.c.inc  |  117 +
->   target/ppc/translate/vmx-impl.c.inc           |  360 +--
->   target/ppc/translate/vmx-ops.c.inc            |   41 -
->   14 files changed, 2529 insertions(+), 2358 deletions(-)
->
+Amit
+
 
