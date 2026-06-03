@@ -4,111 +4,104 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9218ECD6E69
-	for <qemu-devel@archiver.kernel.org>; Wed,  3 Jun 2026 08:33:15 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5645FCD6E55
+	for <qemu-devel@archiver.kernel.org>; Wed,  3 Jun 2026 08:37:42 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wUh1t-0005S6-Pg; Wed, 03 Jun 2026 04:32:49 -0400
+	id 1wUh67-00068w-Pd; Wed, 03 Jun 2026 04:37:11 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <amachhiw@linux.ibm.com>)
- id 1wUh1s-0005RK-2C; Wed, 03 Jun 2026 04:32:48 -0400
-Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <amachhiw@linux.ibm.com>)
- id 1wUh1q-0005KV-Cj; Wed, 03 Jun 2026 04:32:47 -0400
-Received: from pps.filterd (m0360072.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 6538D3s22665536; Wed, 3 Jun 2026 08:32:44 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
- :content-type:date:from:in-reply-to:message-id:mime-version
- :references:subject:to; s=pp1; bh=aWeOdXte+7V4UGQNzVktrfC4+JG0Kk
- v/R+yRalWMpbI=; b=nef+FZD+0nC3TldrXAFX+UOUoWT1chv4SiztNjj9zANlHh
- 4UT7m2+6X3LjCj9sDyY3WxDPZvmKaR5uc+yGm1PwIZc2zQFr71DBZbrtWJKE6qxx
- XR3yi+W7LTy0+YppLML14TdK+tm0KLlMGze6wxWwQIeEZRF7SvdBihSSE4C36dLp
- 6LJVjQV57aPOlslLITqQamhxsCHXqlfqMij3rBi70KjvDNo4rd+LBjQ/6iYemFJ5
- k3VvpzJyV3XHYfmWjPsV+QyhdtBZC1PnPInhqx5s28KPEnJnkLCEMRp7GGPAkDDV
- wxXHGUKtUVEDQ3RUgXg5japKcN2DcQzcGToOxo6A==
-Received: from ppma21.wdc07v.mail.ibm.com
- (5b.69.3da9.ip4.static.sl-reverse.com [169.61.105.91])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4efqht9d01-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Wed, 03 Jun 2026 08:32:44 +0000 (GMT)
-Received: from pps.filterd (ppma21.wdc07v.mail.ibm.com [127.0.0.1])
- by ppma21.wdc07v.mail.ibm.com (8.18.1.7/8.18.1.7) with ESMTP id 6538OAGo018790;
- Wed, 3 Jun 2026 08:32:43 GMT
-Received: from smtprelay05.fra02v.mail.ibm.com ([9.218.2.225])
- by ppma21.wdc07v.mail.ibm.com (PPS) with ESMTPS id 4egb7k7b6d-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Wed, 03 Jun 2026 08:32:43 +0000 (GMT)
-Received: from smtpav04.fra02v.mail.ibm.com (smtpav04.fra02v.mail.ibm.com
- [10.20.54.103])
- by smtprelay05.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 6538WdCr45941032
- (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Wed, 3 Jun 2026 08:32:39 GMT
-Received: from smtpav04.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 8194A20043;
- Wed,  3 Jun 2026 08:32:39 +0000 (GMT)
-Received: from smtpav04.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 439522004B;
- Wed,  3 Jun 2026 08:32:38 +0000 (GMT)
-Received: from fedora (unknown [9.5.7.39])
- by smtpav04.fra02v.mail.ibm.com (Postfix) with ESMTPS;
- Wed,  3 Jun 2026 08:32:38 +0000 (GMT)
-Date: Wed, 3 Jun 2026 14:02:36 +0530
-From: Amit Machhiwal <amachhiw@linux.ibm.com>
-To: Vaibhav Jain <vaibhav@linux.ibm.com>
-Cc: Amit Machhiwal <amachhiw@linux.ibm.com>, qemu-ppc@nongnu.org,
- Harsh Prateek Bora <harshpb@linux.ibm.com>, qemu-devel@nongnu.org,
- Nicholas Piggin <npiggin@gmail.com>
-Subject: Re: [PATCH v2 1/3] hw/ppc/spapr: Do not fallback to raw mode when
- KVM rejects compat
-Message-ID: <20260603135251.3afb2400-31-amachhiw@linux.ibm.com>
-Mail-Followup-To: Vaibhav Jain <vaibhav@linux.ibm.com>, 
- qemu-ppc@nongnu.org, Harsh Prateek Bora <harshpb@linux.ibm.com>, 
- qemu-devel@nongnu.org, Nicholas Piggin <npiggin@gmail.com>
-References: <20260502140021.69712-2-amachhiw@linux.ibm.com>
- <87h5nkyuuk.fsf@vajain21.in.ibm.com>
+ (Exim 4.90_1) (envelope-from <marcandre.lureau@gmail.com>)
+ id 1wUh66-00068c-1A
+ for qemu-devel@nongnu.org; Wed, 03 Jun 2026 04:37:10 -0400
+Received: from mail-dy1-x1332.google.com ([2607:f8b0:4864:20::1332])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <marcandre.lureau@gmail.com>)
+ id 1wUh64-0006sA-DC
+ for qemu-devel@nongnu.org; Wed, 03 Jun 2026 04:37:09 -0400
+Received: by mail-dy1-x1332.google.com with SMTP id
+ 5a478bee46e88-3075afe5247so27906eec.0
+ for <qemu-devel@nongnu.org>; Wed, 03 Jun 2026 01:37:07 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1780475826; cv=none;
+ d=google.com; s=arc-20240605;
+ b=CG3rj9Ty3kGpM5bySIe+jbiLYCtwHJ3CywltYRqzh/sTYgeCzlSrTeG+7/hu76zKm3
+ 5I38NBDi5b9NqqopbhFLnA1JBb55ksttdWLWpbDLI+iZ0x9brRd2+F3rQPjd0aPeYf7y
+ sJIUs8fGxVBn/s1Vl9tcig1Kp3+LKlPP66MLvVKnA3BwlVWDONa1B8frYHs1GWG9c/4y
+ 7Le5o4QBDvWOYEJYstaCNvup+DjpJ3olqS48Cm8aUzlHTKqGrLOtgeHhaUxitePsdnid
+ tuDOqMWZYt5/oBosxkXaphzBtRY9A5x2x4V1w9fYHfy5hJuum7CsX9IxooOM93ccA+aX
+ AkYg==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
+ s=arc-20240605; 
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:dkim-signature;
+ bh=OvZJrmEy64tq3WyQB3acgCZUJZT0YGXjdNcY6sseLf0=;
+ fh=sE2OBjZdF8PLYicXFyUM4w7ozjweWx0plNt+fUrokJ8=;
+ b=CyS/k5u+4ABioUv5dJJkOhDeNibOlFmP8QmLn1GEKSG5deeDWOnTkMITh47qVcCSFp
+ 6SkLQaTKCVJHi5pVOtqDihi1bkxqbRP5HgQn9Bda4DNSSQ7SuZqUwA0QWVKryT2iLBoy
+ 3lwYswdnY3MGSDkUfgJUEjFeYEZKEdxuXQzid6kQtRT8rr2ipdoV5nj1AO6zJCQIQPSz
+ HhhcwQ8nj0z6RsHw4h8xLCaerjJVEe+ID2hueniaLulL01ldnbnc2FCzFJkrg/1b7irW
+ qZcoMnczofNzGs0O1dLzS+5A9Q4t43SDv3e2+T9QfhFoXveyVRDV7P8aGokwPcGP9XX1
+ 6FsA==; darn=nongnu.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=redhat.com; s=google; t=1780475826; x=1781080626; darn=nongnu.org;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=OvZJrmEy64tq3WyQB3acgCZUJZT0YGXjdNcY6sseLf0=;
+ b=haskS+8K/SPULcGBJsE1ZStfp10Xvr+/2zws7gc8rZHSsHyZ6+Gh0rmksYaw5a78ru
+ /WrJNT1cLpxZS7UsZKUEtJlI7JIL1MSu+iCzQurZjVw1srqo6K337xnV4JbzR3/owIDW
+ 6IzFqATiIE+CU2dgJxJgccyQUpiLjPoIiQuClXFdlWjaFhTst7P7cWM1PhAmY8phLVVA
+ WAFS491ktFnXbKSrvckLTWfBPI2E4G9kNKjrq9eXr35+0LQgpCT9FXdpOpjp3Yq95hSD
+ QNLJkJQyujoGKF4ScF4MyYreegX5JslGr3d1heGBx6Fb00kZpfVXAc6RI/vOVKrS50KF
+ 9Cew==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1780475826; x=1781080626;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=OvZJrmEy64tq3WyQB3acgCZUJZT0YGXjdNcY6sseLf0=;
+ b=YZYeFGmTpCm8V2Z6k8ODn1HQ0KNXsEneIrCQsRd6iafco+bMbxPPFkdDIJHXqkWBVp
+ Q2pBXLrVdTGHTt2IP8dP+VYA8iCnt+scVst1jEWLu1BJR0kukKAJU2g5oK7L+bOyQcwZ
+ Z9B6puh3kiuHpuv0C/Xyqt7WZhqATduS45f3RyZ3kQkSp7ZQjJGvecka5Enrg028qb0j
+ MB3sBvuuQ3bgOrjG1C6JsvewFwdNvkXQLo5g79dHhc7/fN+y9YXnqLPFPfNAukuyD+8g
+ EyGFowD4cOirb9lETsPZ3dkYcBrHmN9BAoGCsUwdULGQVH+URxy5RfdDBZWWCAhZmepu
+ +ntA==
+X-Gm-Message-State: AOJu0YxsrPaFg+D/i63W1mDWvTjT51CMiJsyS48h4Annjid2eDuPGKy8
+ LxM5jjhgtDILM8dggWjhlaRK9DBaQinAc1Z7BgOTMWw++lU402BwvZ5Js2lAQj271vKw2kbd/bL
+ x5UXxW+f/VYSwX40/0XGA35rnC5bKvgA=
+X-Gm-Gg: Acq92OGmuis885jijEQXsfLXjwankrH8v3bUBOraXsTs0d9TQfvTU34fKAaogKPv1xe
+ EwGO4O0TrGBcdOxG0jGtr+/SGHp4lPTwIadpRCnjA9bx4o2zR6P5BEaXDDk8lQLULoQdw3YaDlB
+ sv2IHnJntnZlrGEzVRUMbnGEvuhu6cHqVzbjJ68UHQQDObsPl5k8aCicdJ2P3YPZdx9BIBYAPD7
+ UodsWctxsL/sA1BIM8nFQAcJtIOQFG0WOspbi+bDG4MOlL18FEOMKzZRjZ0deejJXA/j9Vr5vRF
+ fWDbXhEFKR+XQiNn82APfzc3mv48bPr1t7/WDBjpKT+XqpSI6Q==
+X-Received: by 2002:a05:7300:df4a:b0:2ed:e16:6b4a with SMTP id
+ 5a478bee46e88-3074fc4eb73mr1223503eec.32.1780475826203; Wed, 03 Jun 2026
+ 01:37:06 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <87h5nkyuuk.fsf@vajain21.in.ibm.com>
-X-TM-AS-GCONF: 00
-X-Proofpoint-Reinject: loops=2 maxloops=12
-X-Proofpoint-GUID: loMO82FXeE-yoZyDOyxYTWa15XNMSrle
-X-Authority-Analysis: v=2.4 cv=fv/sol4f c=1 sm=1 tr=0 ts=6a1fe6ac cx=c_pps
- a=GFwsV6G8L6GxiO2Y/PsHdQ==:117 a=GFwsV6G8L6GxiO2Y/PsHdQ==:17
- a=kj9zAlcOel0A:10 a=FelO9ux0wxsA:10 a=VkNPw1HP01LnGYTKEx00:22
- a=RnoormkPH1_aCDwRdu11:22 a=RzCfie-kr_QcCd8fBx8p:22 a=VnNF1IyMAAAA:8
- a=YO5uScavU021D0lB2Q4A:9 a=CjuIK1q_8ugA:10
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNjAzMDA3NiBTYWx0ZWRfX64pBAM/x+gLd
- r9y84eM1NuXfVFZChpGDlnuApkyM8ZmdoAUZuiumPhTBWe/Fbxd8LQFwjUvI+Ln2vzbAndmpXM6
- 35O3Ji59SLzxWS5GGyXBIrsVoy07mtSrGeMrW5O7UfrksbUR2oSQsqriMdOlztQCzcYRYXMbTJt
- FrRUTJ8FQBwN1nV+Zv6hvMdVOWYCHu4z66RoqRQH8pzco5H9jsb4zl2ftiAwd7iyjlYvit7UfzA
- HXx/bLcvOVR/8CQ3aDxmkctjl03FyggWceI+k9RbcSJmxezoF0CLZnU2sF1Us15jYjl4VTdWKl6
- crr+5cJJLJVrPr/dwjDgTjA/YyR6jv/8ypyemiuFcfNVLWhrAUppRGpKPYhz6Lw//V8xu7KmR6P
- m3IPCFTBP3pqrh14qzLIQXmoBR62QbuXHiY2VbMLzAZazwLmMRorexOV/oCgXwWUJ4RpMzgQePF
- C32mJtwbUeFjmRrDoAQ==
-X-Proofpoint-ORIG-GUID: rlTRTWyLURacScKP6BhZCa1cZaIhKKMj
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.125,FMLib:17.12.100.49
- definitions=2026-06-03_03,2026-05-28_03,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- adultscore=0 priorityscore=1501 spamscore=0 phishscore=0 clxscore=1015
- impostorscore=0 suspectscore=0 bulkscore=0 lowpriorityscore=0 malwarescore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2605210000 definitions=main-2606030076
-Received-SPF: pass client-ip=148.163.158.5;
- envelope-from=amachhiw@linux.ibm.com; helo=mx0b-001b2d01.pphosted.com
-X-Spam_score_int: -26
-X-Spam_score: -2.7
-X-Spam_bar: --
-X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
- RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+References: <20260108131043.490084-1-pbonzini@redhat.com>
+ <20260108131043.490084-17-pbonzini@redhat.com>
+In-Reply-To: <20260108131043.490084-17-pbonzini@redhat.com>
+From: =?UTF-8?B?TWFyYy1BbmRyw6kgTHVyZWF1?= <marcandre.lureau@redhat.com>
+Date: Wed, 3 Jun 2026 12:36:53 +0400
+X-Gm-Features: AVHnY4IMV2tonU5IL68xxsIVKeMJFh68kMYU8BSz3Le0qc-8aWYPStTgUWt2BtE
+Message-ID: <CAJ+F1CLTM64zfr4e6b9X1zAqs_+=rRZ27KCEQLG_Fxj7ybQWaQ@mail.gmail.com>
+Subject: Re: [PATCH v2 16/16] rust/tests: QAPI integration tests
+To: Paolo Bonzini <pbonzini@redhat.com>
+Cc: qemu-devel@nongnu.org, armbru@redhat.com, qemu-rust@nongnu.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2607:f8b0:4864:20::1332;
+ envelope-from=marcandre.lureau@gmail.com; helo=mail-dy1-x1332.google.com
+X-Spam_score_int: -16
+X-Spam_score: -1.7
+X-Spam_bar: -
+X-Spam_report: (-1.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, FREEMAIL_FORGED_FROMDOMAIN=0.001,
+ FREEMAIL_FROM=0.001, HEADER_FROM_DIFFERENT_DOMAINS=0.249,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -124,117 +117,57 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi Vaibhav,
+Hi
 
-Thanks for taking a look at this patch. My response is inline:
+On Thu, Jan 8, 2026 at 5:13=E2=80=AFPM Paolo Bonzini <pbonzini@redhat.com> =
+wrote:
+>
+> From: Marc-Andr=C3=A9 Lureau <marcandre.lureau@redhat.com>
+>
+> Signed-off-by: Marc-Andr=C3=A9 Lureau <marcandre.lureau@redhat.com>
+> Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
+> ---
+>  rust/tests/meson.build          |  21 +-
+>  rust/tests/tests/integration.rs |   2 +
+>  rust/tests/tests/qapi.rs        | 444 ++++++++++++++++++++++++++++++++
+>  3 files changed, 464 insertions(+), 3 deletions(-)
+>  create mode 100644 rust/tests/tests/integration.rs
+>  create mode 100644 rust/tests/tests/qapi.rs
+>
+...
+> +    let qsa =3D to_qobject(&expected).unwrap();
+> +    let json =3D qsa.to_json();
+> +    assert_eq!(
+> +        json,
+> +        "{\"port\": \"port-val\", \"keep_alive_idle\": 42, \"host\": \"h=
+ost-val\"}"
+> +    );
 
-On 2026/06/03 12:27 PM, Vaibhav Jain wrote:
-> Hi Amit,
-> 
-> Thanks for the patch. My review comments inline below:
-> 
-> Amit Machhiwal <amachhiw@linux.ibm.com> writes:
-> 
-> > During H_CLIENT_ARCHITECTURE_SUPPORT, QEMU attempts to set the requested
-> > CPU compatibility mode via ppc_set_compat_all(). If this fails, the
-> > existing code may fall back to raw mode when supported by the guest.
-> >
-> > The current logic treats all failures uniformly and tried to fall back
-> > to raw mode whenever possible. As a result, errors from KVM (e.g.
-> > kvmppc_set_compat() returning -EINVAL) are silently masked, making
-> > debugging difficult and allowing the guest to proceed with an
-> > unsupported or incompatible configuration.
-> >
-> > When running with KVM, such failures indicate that the requested
-> > compatibility level is not supported by the host. Do not fallback in
-> > this case; instead, report the error and fail the CAS negotiation.
-> >
-> > This makes the failure visible to the user and ensures that invalid
-> > compatibility requests are rejected early rather than being hidden by
-> > fallback behavior. For example, the following error is now reported:
-> >
-> >   qemu-system-ppc64: Unable to set CPU compatibility mode in KVM: Invalid argument
-> >
-> > Fixes: cc7b35b169e9 ("spapr: fallback to raw mode if best compat mode cannot be set during CAS")
-> > Signed-off-by: Amit Machhiwal <amachhiw@linux.ibm.com>
-> > Tested-by: Anushree Mathur <anushree.mathur@linux.ibm.com>
-> > ---
-> >  hw/ppc/spapr_hcall.c | 9 +++++++++
-> >  1 file changed, 9 insertions(+)
-> >
-> > diff --git a/hw/ppc/spapr_hcall.c b/hw/ppc/spapr_hcall.c
-> > index 032805a8d0db..de2ea6f5e579 100644
-> > --- a/hw/ppc/spapr_hcall.c
-> > +++ b/hw/ppc/spapr_hcall.c
-> > @@ -1204,6 +1204,15 @@ target_ulong do_client_architecture_support(PowerPCCPU *cpu,
-> >          Error *local_err = NULL;
-> >  
-> >          if (ppc_set_compat_all(cas_pvr, &local_err) < 0) {
-> > +            /*
-> > +             * If KVM rejected the compat mode, do not fallback. This indicates
-> > +             * the host cannot support the requested level.
-> > +             */
-> > +            if (kvm_enabled()) {
-> > +                error_report_err(local_err);
-> > +                return H_HARDWARE;
-> > +            }
-> > +
-> 
-> NAK on this change.
-> 
-> As per PAPR whether the guest can run in RAW mode needs to be negotiated
-> between Guest and VMM. The existing code path via cas_check_pvr() and
-> 'raw_mode_supported' already handles this case.
-> 
-> So I dont see a reason for this KVM specific changes needed. Can you
-> please elaborate a bit more on the issue that gets fixed by this change.
+We need to fix the field names to produce the correct wire format:
 
-I have mentioned the reason in the commit message. I'm quoting the part
-of it below:
-
-  The current logic treats all failures uniformly and tried to fall back
-  to raw mode whenever possible. As a result, errors from KVM (e.g.
-  kvmppc_set_compat() returning -EINVAL) are silently masked, making
-  debugging difficult and allowing the guest to proceed with an
-  unsupported or incompatible configuration.
-
-The currently call chain is as below:
-
- do_client_architecture_support()
-   -> ppc_set_compat_all()
-     -> run_on_cpu()
-       -> do_run_on_cpu()
-         -> do_set_compat()
-           -> ppc_set_compat()
-             -> kvmppc_set_compat()  // returns error
-
-Now when an error is returned via kvmppc_set_comapt(), its just ignored
-in the current situation silently in do_client_architecture_support(),
-while the caller is supposed to handle the error returned in an errp
-object. This would make the guest try to continue with a raw mode when
-the host was actually booted in a compatibility mode, while it shouldn't
-be doing that.
-
-Please let me know your further views on this.
-
-Thanks,
-Amit
-
-> 
-> If this change is related to your Linux kernel patch series titled
-> "KVM: PPC: Handle CPU compatibility mode for nested guests" then the
-> ideal place to put compat check would be in ppc_check_compat() and not in
-> do_client_architecture_support()
-> 
-> >              /* We fail to set compat mode (likely because running with KVM PR),
-> >               * but maybe we can fallback to raw mode if the guest supports it.
-> >               */
-> > -- 
-> > 2.50.1 (Apple Git-155)
-> >
-> 
-> -- 
-> Cheers
-> ~ Vaibhav
-> 
+index 41ed83c381d..3e0bd237d8c 100644
+--- a/scripts/qapi/rs_types.py
++++ b/scripts/qapi/rs_types.py
+@@ -163,15 +163,21 @@ def gen_struct_members(members:
+List[QAPISchemaObjectTypeMember],
+             typ =3D 'Box<%s>' % typ
+         if memb.optional:
+             typ =3D 'Option<%s>' % typ
++        field_name =3D rs_name(camel_to_lower(memb.name))
++        serde_rename =3D ''
++        if field_name.removeprefix('r#') !=3D memb.name:
++            serde_rename =3D '#[serde(rename =3D "%s")]' % memb.name
+         ret.append(mcgen('''
+ %(cfg)s''', '''
+ %(skip_if)s''', '''
++%(serde_rename)s''', '''
+     pub %(rs_name)s: %(rs_type)s,
+ ''',
+                          cfg=3Dmemb.ifcond.rsgen(),
+                          skip_if=3DSERDE_SKIP_NONE if memb.optional else '=
+',
++                         serde_rename=3Dserde_rename,
+                          rs_type=3Dtyp,
+-                         rs_name=3Drs_name(camel_to_lower(memb.name))))
++                         rs_name=3Dfield_name))
 
