@@ -4,69 +4,69 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9C802CD6E55
-	for <qemu-devel@archiver.kernel.org>; Wed,  3 Jun 2026 07:01:49 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1768FCD6E55
+	for <qemu-devel@archiver.kernel.org>; Wed,  3 Jun 2026 07:01:53 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wUfaC-0004YY-Tj; Wed, 03 Jun 2026 03:00:09 -0400
+	id 1wUfaa-0005GB-QU; Wed, 03 Jun 2026 03:00:32 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <joel.stan@gmail.com>)
- id 1wUfa9-0004To-LA
- for qemu-devel@nongnu.org; Wed, 03 Jun 2026 03:00:05 -0400
-Received: from mail-pg1-x52b.google.com ([2607:f8b0:4864:20::52b])
+ id 1wUfaU-00056o-Iz
+ for qemu-devel@nongnu.org; Wed, 03 Jun 2026 03:00:28 -0400
+Received: from mail-pj1-x1030.google.com ([2607:f8b0:4864:20::1030])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <joel.stan@gmail.com>)
- id 1wUfa7-0006Mq-Ex
- for qemu-devel@nongnu.org; Wed, 03 Jun 2026 03:00:05 -0400
-Received: by mail-pg1-x52b.google.com with SMTP id
- 41be03b00d2f7-c8588ec1b44so2933875a12.1
- for <qemu-devel@nongnu.org>; Wed, 03 Jun 2026 00:00:02 -0700 (PDT)
+ id 1wUfaQ-0006hK-LP
+ for qemu-devel@nongnu.org; Wed, 03 Jun 2026 03:00:25 -0400
+Received: by mail-pj1-x1030.google.com with SMTP id
+ 98e67ed59e1d1-36dac5d5d05so1491689a91.2
+ for <qemu-devel@nongnu.org>; Wed, 03 Jun 2026 00:00:20 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1780470002; x=1781074802; darn=nongnu.org;
+ d=gmail.com; s=20251104; t=1780470020; x=1781074820; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:sender:from:to:cc:subject:date
  :message-id:reply-to;
- bh=mdktWbjeb6VlessgA96IHNIsEfmQLs2g6k25G78KNk4=;
- b=IjKzLlk5RSDVcfCuzSKChmK1SEM9X4ghJT+IFv+vM4KwoBK4RhxYNaR4GN7U6lB1Pv
- vZbbllwTMYrXPAa+jbBBUBn/FacoR/dBY9IrXErYQP5Hj5K8oGLG7mQnlE8IYTJ4aO9f
- CffseybB9duibaA/Q9ln28bDpV8Itx/iWvLGUaZ1BddAnN1AFZxuiZIwKOneLl65fYoF
- bIlz0uOqY+w8QtvFWRWwUkBqFclt+I7odVR4rnFBPr5c9R6HhqUO+eMpdEFLlmjQ7lQp
- jqj+hucfX+ENhRGb3cqLC31cjTk+atwM/1lW0oQCXPLlDDvBj6rr3YrQRIaK6WB6wCNs
- hGMA==
+ bh=1Ao+oazFExSoDtdt9k3pepZ6wp9rhNY0/mLOZwCYpF8=;
+ b=baxOukm+Bcvp1LJDJPcETkC4bUTdzjL44vxhfzIB5eUWkOauAwNlPaUa9aPimtoMue
+ /gLfTWjzTK6nCl2A5DiRRW1DOdJ4O8wBK+ccthjyfMtTtgLH61v6vFtgclwpnPHy/bnF
+ eCoTA2fROs7tSJZKaEyQjikBvku9W4zMuUOxBbMZkKXrReXmYLmNQ2oldu3I3H+bOjQW
+ hSNH4HLsmcAoRCdSnUT7DtvQYRE1pzgaXANnDrTTAnyFObNp61IZdw21Lf+ZGxp6O0Tm
+ 0eIxHTiHUU+dGp2LbP4J2tfpVqaSHKiCVnVp2pp4gMiAlRqeucqndZ0jiekYacLNNEUg
+ XMYA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1780470002; x=1781074802;
+ d=1e100.net; s=20251104; t=1780470020; x=1781074820;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:sender:x-gm-gg
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=mdktWbjeb6VlessgA96IHNIsEfmQLs2g6k25G78KNk4=;
- b=XkQSoyFH8c5lNet4IVcpcvIwQcKKH0SBc0e7gZu7ffIKiUc1BMtiNZUBgRjn4zsxJ5
- xawS687Ap+wHynrCGZpp7PWdEmnpbP3pvTTj+Mg9he4yMLd+RIW6DTyJKI3Akdy9mpdI
- meCe/szCY6QK5CTfthcrcaABIruqiPjCJHD1/+b6t/W0enDdOAs4nEpJM5mXSr5GxOKJ
- vkRtNMElKf0goYA/GewN5vyTJsyVBgUPXfHc4zBwLeua1evNyk9BoAVoU71Im7RyBIIj
- C0bYYBG3bZ24YUSjitTRChDFc0afs4qSCdpwQcKEXFii2xkyi8xwsbLmu3/nfRg1Y8gx
- /Djw==
+ bh=1Ao+oazFExSoDtdt9k3pepZ6wp9rhNY0/mLOZwCYpF8=;
+ b=eOM60EySxk9irTbYxNWSepzpeslYF5oLU6Duq7KgWr84crL8uCb4GBLzswZa//2AKz
+ ECZ044kaMzDtBaBW0RTH2oJJyMFXbuMPHRIHgebZeTtU5dmmB+tNDAtLUyNBJgeGY9Qc
+ C1uAIuMKgk1t83GpuqLjthlwVvVC/C9uVH/SUdFo2UTvwRxc6h13r4rTHVGgCM26h/8O
+ FE36hzpWO4iYvB0P4M7TGYVUcI/SpXxjsORQ124XDdMcSAcXYMkOvvzqO1lbI+H2a+YM
+ GAUdPGGoUpk3BHtGSxYWDMDOeqtYu4WZmRcr0Dx7sxzo6Yv1W1GEQsJl8XXReVcHYNtn
+ 7SDg==
 X-Forwarded-Encrypted: i=1;
- AFNElJ8aYMqmQih32/KC9ZLPoPzwHSyR4qhP9MgcGJX318GWxgJy+rUsJbDsw2sTyL+yxaNKNfYwrHkwPSZD@nongnu.org
-X-Gm-Message-State: AOJu0Yz4kZ9EjqpGtCYQ3xYBBplD29LEOgft0ZwsSDhQL2Ti16dX9jHd
- IM6e1dkfEwWuvQozJDkb6c9wRg+4o96M7bmDHJSUfpXr3+KD68vMdcoN
-X-Gm-Gg: Acq92OEZCxID2UiY4a28hajMEvlPy3INiqLhEP75JWvPhzKqh0ig3djYUGzhgWDIJxK
- ghM+aspuHOdGili5SwLlbafUwPgPw6urn7ZXM2mnZhP+/9iY2M2wSi3zTgrcv9Mt71Sp6334hZ9
- wKBhCVvTHsDCTCaRdUu2zcDYFn5aGQqeWQ+NmdOtULXljvOqwgwp/EthYwHfQwCi/JjfATygCG2
- SaulrniUL2TYW6c/i0tydsaEWXMctPNoucwbk6sRDGjDcFOGf80cTLMtIfkXCgFUu/79lp+nbYm
- oiZeRCSsAxKc0IACH2HIYPw7HMNOIHmmOTWuvLoNbkqyA583ty8NqyA2SkoJ/koRr6ho5em0xC0
- qDz3eGBllqihsLJor71TpURl0yXchJFm6J1ul3eY9Piu/DDRWFc8ivIpA/KokCCsqptyD0z24a4
- gQXox0qzWxRJpFsalJkuXJ8z3cqxF2iDykEIynLsHl1OY6RiXWif+tBEAJl8y+cP9ZzNCCiciay
- s971zp+ahr5Uy4RCIJUFojMpkV0pTif75Jp4/2FgavO8+WHRAjXf52Jmr9Sgk8A
-X-Received: by 2002:a05:6a20:9185:b0:3b4:640c:7225 with SMTP id
- adf61e73a8af0-3b49798adadmr2433945637.46.1780470001872; 
- Wed, 03 Jun 2026 00:00:01 -0700 (PDT)
+ AFNElJ/im5y/KMawj9l1SbNht0No4wg6choIAp2/f7/0E9uVHpKvLSsoGiRCV2E71A04FpvtXoUOKL3l4sHB@nongnu.org
+X-Gm-Message-State: AOJu0YzaA20LrSGkkaBUVgi7h+L75CzkqpkYmBgMkooIfoPb6L3ZSf57
+ iNwVpu/pCImHh2yRMbxK5TgD3v6ePUvA9dfkFlpo7FEwTXQjVO2hDSGA
+X-Gm-Gg: Acq92OGx6fA5cf1rNpnmK0t7ymZnG/JLirE8QFWgRDNWUV7DFD1LVVaRw2YyFRDzCK6
+ QlCmC4sEkiQAlIs9p6Yi9QTgIQgyhy+mzxcaPmLj72Go5UXh4jWfSVurUHNjVgOAI8Z1tjg/lVa
+ zfw+RIrD06MVzuzxyjW/rNXMocmd5jdDFXip9eTbbZKKJAceAoafS1nCa/47BdwldkdF0U+cgoQ
+ /SuKUWfrinlRQn+gLoDaRRThejwZ+/CUhILDrDRMkxbSDu51jcJ853NL7xjtnguGCiZIiBSWEx2
+ xSz3vsYZIUSSIX0B2ZeaaDX8twHu1acqUeghMYYIbtiZoxX407bxLNSZS7Cr1FuB6WUZJ4SHDUh
+ WTOysRtUGxIUjcap5fF9GZ/qIsRv6Zfrreudc3aWYDHjyaVjvL8cPkQNQ0lmixrW4SIcieT0RU7
+ mEqh7yNwY0VT7sT570dP1lgow135Xs5t/4Wc/XemeC7BJ1JlPmmTNp6gvqhksEVsjYd+Jbkem+/
+ l2CmmJdyUZf/tSRLXCRZLhadLt7JiSzOCDDAq2i1+TizXfAoZpu1pM5fJfhnOaX
+X-Received: by 2002:a17:90b:5289:b0:36a:7c8f:1423 with SMTP id
+ 98e67ed59e1d1-36e30e14912mr2034897a91.9.1780470019339; 
+ Wed, 03 Jun 2026 00:00:19 -0700 (PDT)
 Received: from donnager-debian.. ([45.124.203.15])
  by smtp.gmail.com with ESMTPSA id
- 41be03b00d2f7-c85df033887sm1283261a12.2.2026.06.02.23.59.57
+ 41be03b00d2f7-c85df033887sm1283261a12.2.2026.06.03.00.00.14
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 03 Jun 2026 00:00:01 -0700 (PDT)
+ Wed, 03 Jun 2026 00:00:18 -0700 (PDT)
 From: Joel Stanley <joel@jms.id.au>
 To: Alistair Francis <alistair.francis@wdc.com>
 Cc: Nicholas Piggin <npiggin@gmail.com>,
@@ -78,17 +78,17 @@ Cc: Nicholas Piggin <npiggin@gmail.com>,
  Portia Stephens <portias@oss.tenstorrent.com>, qemu-riscv@nongnu.org,
  qemu-devel@nongnu.org,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: [PATCH v8 09/12] tests/functional/riscv64: Add tt-atlantis tests
-Date: Wed,  3 Jun 2026 16:28:53 +0930
-Message-ID: <20260603065859.592063-10-joel@jms.id.au>
+Subject: [PATCH v8 12/12] hw/riscv/atlantis: Add some i2c peripherals
+Date: Wed,  3 Jun 2026 16:28:56 +0930
+Message-ID: <20260603065859.592063-13-joel@jms.id.au>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <20260603065859.592063-1-joel@jms.id.au>
 References: <20260603065859.592063-1-joel@jms.id.au>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::52b;
- envelope-from=joel.stan@gmail.com; helo=mail-pg1-x52b.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::1030;
+ envelope-from=joel.stan@gmail.com; helo=mail-pj1-x1030.google.com
 X-Spam_score_int: -16
 X-Spam_score: -1.7
 X-Spam_bar: -
@@ -112,123 +112,95 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Nicholas Piggin <npiggin@gmail.com>
+Add an I2C RTC device and a temperature sensor. These are not present
+on the board but help for testing.
 
-Add OpenSBI and Linux boot tests for the tt-atlantis machine. Based on
-tests/functional/riscv64/test_sifive_u.py.
+The tmp105 is a lm75 compatible temperature sensor used by the
+SENSORS_LM75 Linux kernel driver.
+
+The ds1338 is a RTC device that is used by the RTC_DRV_DS1307 Linux
+kernel driver.
 
 Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 Signed-off-by: Nicholas Piggin <npiggin@gmail.com>
 Signed-off-by: Joel Stanley <joel@jms.id.au>
 ---
- MAINTAINERS                                  |  1 +
- tests/functional/riscv64/meson.build         |  1 +
- tests/functional/riscv64/test_opensbi.py     |  4 ++
- tests/functional/riscv64/test_tt_atlantis.py | 57 ++++++++++++++++++++
- 4 files changed, 63 insertions(+)
- create mode 100755 tests/functional/riscv64/test_tt_atlantis.py
+ hw/riscv/tt_atlantis.c | 27 +++++++++++++++++++++++++++
+ hw/riscv/Kconfig       |  2 ++
+ 2 files changed, 29 insertions(+)
 
-diff --git a/MAINTAINERS b/MAINTAINERS
-index e52aa769c9ae..f4b7e7fd43a6 100644
---- a/MAINTAINERS
-+++ b/MAINTAINERS
-@@ -1793,6 +1793,7 @@ S: Supported
- F: docs/system/riscv/tt_*.rst
- F: hw/riscv/tt_*.c
- F: include/hw/riscv/tt_*.h
-+F: tests/functional/riscv64/test_tt_*.py
+diff --git a/hw/riscv/tt_atlantis.c b/hw/riscv/tt_atlantis.c
+index b1ff0cbe2f61..5434650dd41e 100644
+--- a/hw/riscv/tt_atlantis.c
++++ b/hw/riscv/tt_atlantis.c
+@@ -63,6 +63,13 @@ static const MemMapEntry tt_atlantis_memmap[] = {
+     [TT_ATL_DDR_HI] =          { 0x100000000,  0x1000000000 },
+ };
  
- AMD Microblaze-V Generic Board
- M: Sai Pavan Boddu <sai.pavan.boddu@amd.com>
-diff --git a/tests/functional/riscv64/meson.build b/tests/functional/riscv64/meson.build
-index b996c89d7df9..c4456fabd757 100644
---- a/tests/functional/riscv64/meson.build
-+++ b/tests/functional/riscv64/meson.build
-@@ -13,5 +13,6 @@ tests_riscv64_system_quick = [
- tests_riscv64_system_thorough = [
-   'boston',
-   'sifive_u',
-+  'tt_atlantis',
-   'tuxrun',
- ]
-diff --git a/tests/functional/riscv64/test_opensbi.py b/tests/functional/riscv64/test_opensbi.py
-index d077e40f4278..0f8beb7e7a8c 100755
---- a/tests/functional/riscv64/test_opensbi.py
-+++ b/tests/functional/riscv64/test_opensbi.py
-@@ -28,6 +28,10 @@ def test_riscv_sifive_u(self):
-         self.set_machine('sifive_u')
-         self.boot_opensbi()
++static I2CBus *i2c_get_bus(TTAtlantisState *s, unsigned busnr)
++{
++    assert(busnr < TT_ATL_NUM_I2C);
++
++    return s->i2c[busnr].bus;
++}
++
+ static uint32_t next_phandle(void)
+ {
+     static uint32_t phandle = 1;
+@@ -367,6 +374,19 @@ static void create_fdt_i2c(void *fdt, const MemMapEntry *mem, uint32_t irq,
+     qemu_fdt_setprop_cell(fdt, name, "#size-cells", 0);
+ }
  
-+    def test_riscv_tt_atlantis(self):
-+        self.set_machine('tt-atlantis')
-+        self.boot_opensbi()
++static void create_fdt_i2c_device(TTAtlantisState *s, int bus,
++                                  const char *compat, int addr)
++{
++    void *fdt = MACHINE(s)->fdt;
++    hwaddr base = s->memmap[TT_ATL_I2C0 + bus].base;
++    g_autofree char *name = g_strdup_printf("/soc/i2c@%"HWADDR_PRIX"/sensor@%x",
++                                            base, addr);
 +
-     def test_riscv_virt(self):
-         self.set_machine('virt')
-         self.boot_opensbi()
-diff --git a/tests/functional/riscv64/test_tt_atlantis.py b/tests/functional/riscv64/test_tt_atlantis.py
-new file mode 100755
-index 000000000000..48abd5cd27c2
---- /dev/null
-+++ b/tests/functional/riscv64/test_tt_atlantis.py
-@@ -0,0 +1,57 @@
-+#!/usr/bin/env python3
-+#
-+# Functional test that boots a Linux kernel on a Tenstorrent Atlantis machine
-+# and checks the console
-+#
-+# Copyright (c) Linaro Ltd.
-+# Copyright 2026 Tenstorrent
-+#
-+# SPDX-License-Identifier: GPL-2.0-or-later
++    qemu_fdt_add_subnode(fdt, name);
++    qemu_fdt_setprop_string(fdt, name, "compatible", compat);
++    qemu_fdt_setprop_cell(fdt, name, "reg", addr);
++}
 +
-+from qemu_test import Asset, LinuxKernelTest
+ static void finalize_fdt(TTAtlantisState *s)
+ {
+     uint32_t aplic_s_phandle = next_phandle();
+@@ -394,6 +414,9 @@ static void finalize_fdt(TTAtlantisState *s)
+                        TT_ATL_I2C0_IRQ + i,
+                        aplic_s_phandle, periph_clk_phandle);
+     }
 +
++    create_fdt_i2c_device(s, 0, "dallas,ds1338", 0x6f);
++    create_fdt_i2c_device(s, 4, "ti,tmp105", 0x48);
+ }
+ 
+ static void create_fdt(TTAtlantisState *s)
+@@ -640,6 +663,10 @@ static void tt_atlantis_machine_init(MachineState *machine)
+                            qdev_get_gpio_in(s->irqchip, TT_ATL_I2C0_IRQ + i));
+     }
+ 
++    /* I2C peripherals: qemu specific */
++    i2c_slave_create_simple(i2c_get_bus(s, 0), "ds1338", 0x6f);
++    i2c_slave_create_simple(i2c_get_bus(s, 4), "tmp105", 0x48);
 +
-+class TTAtlantis(LinuxKernelTest):
-+
-+    ASSET_KERNEL = Asset(
-+        'https://storage.tuxboot.com/kernels/6.11.9/riscv64/Image',
-+        '174f8bb87f08961e54fa3fcd954a8e31f4645f6d6af4dd43983d5e9841490fb0')
-+    ASSET_ROOTFS = Asset(
-+        ('https://github.com/groeck/linux-build-test/raw/'
-+         '9819da19e6eef291686fdd7b029ea00e764dc62f/rootfs/riscv64/'
-+         'rootfs.ext2.gz'),
-+        'b6ed95610310b7956f9bf20c4c9c0c05fea647900df441da9dfe767d24e8b28b')
-+
-+    def do_test_riscv64_tt_atlantis(self, connect_disk):
-+        self.set_machine('tt-atlantis')
-+        kernel_path = self.ASSET_KERNEL.fetch()
-+        rootfs_path = self.uncompress(self.ASSET_ROOTFS)
-+
-+        self.vm.set_console()
-+        kernel_command_line = self.KERNEL_COMMON_COMMAND_LINE + 'earlycon=sbi '
-+
-+        if connect_disk:
-+            kernel_command_line += 'root=/dev/vda panic=-1 noreboot rootwait '
-+            self.vm.add_args('-device',
-+                             'virtio-blk,drive=drive0,serial=0x1234,bus=pcie.0')
-+            self.vm.add_args('-drive',
-+                             f'file={rootfs_path},if=none,id=drive0,format=raw')
-+            pattern = 'Boot successful.'
-+        else:
-+            kernel_command_line += 'panic=0 noreboot '
-+            pattern = 'Cannot open root device'
-+
-+        self.vm.add_args('-kernel', kernel_path,
-+                         '-append', kernel_command_line,
-+                         '-no-reboot')
-+
-+        self.vm.launch()
-+        self.wait_for_console_pattern(pattern)
-+
-+    def test_riscv64_tt_atlantis(self):
-+        # tt-atlantis machine has no PCI host yet, so no disk
-+        self.do_test_riscv64_tt_atlantis(False)
-+
-+
-+if __name__ == '__main__':
-+    LinuxKernelTest.main()
+     /* Load or create device tree */
+     if (machine->dtb) {
+         load_fdt(s);
+diff --git a/hw/riscv/Kconfig b/hw/riscv/Kconfig
+index 38180a903fbf..ff2d250ee439 100644
+--- a/hw/riscv/Kconfig
++++ b/hw/riscv/Kconfig
+@@ -130,6 +130,8 @@ config TENSTORRENT
+     select SERIAL_MM
+     select DEVICE_TREE
+     select DESIGNWARE_I2C
++    select DS1338
++    select TMP105
+ 
+ config XIANGSHAN_KUNMINGHU
+     bool
 -- 
 2.47.3
 
