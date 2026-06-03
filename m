@@ -4,113 +4,82 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7DA7ACD6E57
-	for <qemu-devel@archiver.kernel.org>; Wed,  3 Jun 2026 19:04:43 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D2B1BCD6E57
+	for <qemu-devel@archiver.kernel.org>; Wed,  3 Jun 2026 19:05:26 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wUqsf-000502-5B; Wed, 03 Jun 2026 15:03:57 -0400
+	id 1wUqtf-0005X6-Q0; Wed, 03 Jun 2026 15:04:59 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1wUqsc-0004zK-IG
- for qemu-devel@nongnu.org; Wed, 03 Jun 2026 15:03:54 -0400
-Received: from mail-wr1-x436.google.com ([2a00:1450:4864:20::436])
+ (Exim 4.90_1) (envelope-from <christian.barry@usp.br>)
+ id 1wUqtd-0005WJ-E0
+ for qemu-devel@nongnu.org; Wed, 03 Jun 2026 15:04:57 -0400
+Received: from mail-vs1-xe41.google.com ([2607:f8b0:4864:20::e41])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1wUqsZ-00019n-Vp
- for qemu-devel@nongnu.org; Wed, 03 Jun 2026 15:03:54 -0400
-Received: by mail-wr1-x436.google.com with SMTP id
- ffacd0b85a97d-45ef4223be7so3453410f8f.2
- for <qemu-devel@nongnu.org>; Wed, 03 Jun 2026 12:03:51 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <christian.barry@usp.br>)
+ id 1wUqta-0001Qe-TK
+ for qemu-devel@nongnu.org; Wed, 03 Jun 2026 15:04:57 -0400
+Received: by mail-vs1-xe41.google.com with SMTP id
+ ada2fe7eead31-6efdb57db0cso329396137.2
+ for <qemu-devel@nongnu.org>; Wed, 03 Jun 2026 12:04:52 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1780513429; x=1781118229; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:user-agent
- :references:in-reply-to:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=Z3tTP/3rn1VEmYyj2nYZ/Q9SjzetXAgzeur6yd+pltA=;
- b=h07q3/OOaCPmk1vw+KpHyMnNQCHCITYPr0Fc/fKPksBfMZuM89NhrVpfyB6xYXeT2G
- vJvwnBd/6S1tdXRA/mDX8j/xlPgKxrva+ICWaIZUTddieLY1nZWHYnnGfjHyQgTESTjT
- 3UwoANYFFa19Ol35kjDYb8NwRMDtsefwRAueXC6Zktqqp5uyHkmUMhym/2pjWbk1tSmn
- ezOSjw7D78HU5VfHLnLda4m7/seqr2mvVr31z78MyivZDmIEWimX/3PshT6zV27FQxx3
- fqtNwelHj2q9OV/F1IOvqBMByR0j2QfDmiP+F82O1p9P4IjvNEKpX/935JKf2WaIqENI
- ejUw==
+ d=usp.br; s=usp-google; t=1780513492; x=1781118292; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:from:to:cc:subject:date:message-id:reply-to;
+ bh=6/G/uqHfwL0zUCXsViLqL5ougH2I2Vk7WD45s454m9g=;
+ b=B7wO5S3+YUpBXsZxsGJ5tAGkA1epFeMlf1AGSVoXvIOoxWNndWSvMZAh9KniwPxCcF
+ rx+P9A8JCqJqsirPMvIR+ny7alrvHfBzzZkBdfueolTElXiiUfcWsYpi8YzbHPpyTM7c
+ IXMu2v1CG/fIjIWUOqC56ErV7scHXLSjTm0NGqCBPzK5zjwZ4pHH8Ovdg+bXVPgDNOdW
+ LE7wI/UaA1XmLz1rNgG0IqaPIKzkiJVfMlAvW9v1TqzaFGaq/vpib/XBZ982sHZI+T+a
+ xWnP1q8IjplX5M+baIUaCa/sv1dCdQ2XcvCoNPd1AuwW8I38BobFO7PBqLp7iwKuXXyx
+ hgaA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1780513429; x=1781118229;
- h=content-transfer-encoding:mime-version:message-id:date:user-agent
- :references:in-reply-to:subject:cc:to:from:x-gm-gg
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=Z3tTP/3rn1VEmYyj2nYZ/Q9SjzetXAgzeur6yd+pltA=;
- b=bNE3knteL37fT3RyTabAP/4r4cwMvdReGD/zl76PWieCeXfYaiUsa3tSulNKGY5Edi
- unv0VIzJ3JkV1G2UBzuS4GJhH8SjjlMKBtFiox5HM/iACpS/pN/mNk09VjXxyc7PeB1T
- 1OFjYCQmISQknvNXRsuP4+xCtGf8u/g+g+mf6edbB2zip5kiFQT7xMZekQRuvfvOLNV7
- jxfcBfs5ATOaDR6TI7AsI/lcYr3hQj4I5993Dy/OHJpa/lfG6TfHmnirMp09LA71Sztg
- +NZ490wwGhnsbD2gcl90VLg2SuzUeTp4iCElHPvwVAwLMsbSIx0zvgQ+YQrCxFyeLm8c
- TcOg==
-X-Gm-Message-State: AOJu0YwnnkRxMhVCnajFMLoYSPZkdl0tQe8qoNh96stKMRcetI0whf2H
- 8vHyNldxp0HqNKWOzNDW3pxFypjC8InSQMGpTiKkbmKWiZSuEcSlpS7lYBcBdXgmsJ4=
-X-Gm-Gg: Acq92OF77NOq++cdylk2cI3kT/5QGLhZvf2HOm12wKy86YRZXptlTPgZarE8mPVmU9G
- Js2GkcCBNaezekjVb7QJKsUm/Y+QgK4e0CqdjmhOfOWAXIiB9a7tCaaZXc8UGna+7tpmLMdZYn7
- OphB2fr61/mvKSwRdak9DJLgvz+zNTtRUr25PEkDfG700IxPU3EBmlj6ut1rziMNnK6I0ZhLHSr
- BBeTy7KR43kjmXnYULjjhpaKD+dIdXTtoXA1OUekwE3/x9s+vWwUZAkJYnx6vm1VPl4qCpPQwQY
- cngu2NolvQH7QkzaepHTW8EAnTUGXcZMidHDNqVLtSq95CJ+yKTaxIW4n2lpZ2hsuFd1iJ2QF/H
- 8eZrGrA9SAl7ml6owqhml3+VR+kJ7rvdHgng8KpnUid9dd8ntlQVEhdcMgVE2je52Qb1CGNseY2
- A3b2AVZMJSp+eKWEr7xgVwfaVc5R1ngLmmsw==
-X-Received: by 2002:a5d:550d:0:b0:45e:f631:2c73 with SMTP id
- ffacd0b85a97d-4602179271cmr5096416f8f.9.1780513429422; 
- Wed, 03 Jun 2026 12:03:49 -0700 (PDT)
-Received: from draig.lan ([185.124.0.195]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-4601f35133csm9050847f8f.25.2026.06.03.12.03.48
+ d=1e100.net; s=20251104; t=1780513492; x=1781118292;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=6/G/uqHfwL0zUCXsViLqL5ougH2I2Vk7WD45s454m9g=;
+ b=TneDqy1rQjrbCEnt3etMQ+4CUUVvdzY6zwZjSvb8JtoKzUY/VQaBlQoiMVGwjTZW2x
+ zb96h+Nh7r83RHNf9rjgfbKkbWTkOnrUHuodEL4TkLspz6Oo9EtDtK1bv4ZHKaeA1YyI
+ yIa8oTElbto84C0Guy2UgvAA41euhvgvazl3QKt+EwBlVIfaVlvvV1RNGPPREYElTPd0
+ DNdx2O3feH4ekMGYayzdGbLO93bVkn8ZikQdsQZPjv0kH65DABUktrk++eAr8pmJlYfN
+ r/6Eu10ot7MNmZKkDdmbey8ZCtTna+HZ6GyMENu/KGzjC6uivWsDoqURWaMTkryUS5ma
+ NHBw==
+X-Gm-Message-State: AOJu0Yyi7m1CHpac6NASM4nM8PwHrJS2dW3Z6tddin4WEmsMZyHeQXoc
+ qbEEp+FTi3KQdshSt0T4nJESWSPJ+4nu/3QafVQ6TEYgzILI5JqL/6b4dJtjC3xsFfNxXh0Xcy0
+ TOuYY2gU=
+X-Gm-Gg: Acq92OFA/ByEPQbjal/qYB3Z++mBUW5vuLT5mTQK+1Y/YhVOSnoe8Qcr20NX56ilABI
+ oVR/C78GxnMaE1DNVSFX6gXDAigGZcwOcR+urbTHFXXaz0AlKJgu+PyMTQzxkzXc7y6f6EXTLQa
+ /pyiLt8x/Y4c94mjmjZyf6Lc9JULV3sfO9NrS0k4MjpDD9aCKLsuGIqCFrqeW/mhNhgYJwb7/K0
+ UA72jMRb4GtRPr1eogTiLRvFKD4C4+Tqm2v/fRI+NeuGokfemqghI1Vf47gv16AMJq4qVQePaRu
+ HLAY5RABi8zvOYVUDRaF1B9qaqVU/L7al8kc8g7NvBL69/pZAGdKdyc1NDejMPUmweSBj8VKXaA
+ OsT24zqYPgDO3nJ6eAPMc0m9Hk/Oi+Vcudgj3qO7Q3sKhbH8zMEhRel5cg+lFShJ8UxFUwnwYYh
+ KP79MtmoMohHDmrFQpiPMLqRHCO9WR2ljhQ79nJeK3ZN12+sNKsWAXSMhpqxb9sO4Mj5yX97fP
+X-Received: by 2002:a05:6102:41a4:b0:607:5cd7:d7c0 with SMTP id
+ ada2fe7eead31-6ec460bc68emr3093161137.19.1780513492027; 
+ Wed, 03 Jun 2026 12:04:52 -0700 (PDT)
+Received: from christian-barry-IdeaPad-Gaming-3-15IHU6.semfio.usp.br
+ (nat.ime.usp.br. [143.107.45.1]) by smtp.gmail.com with ESMTPSA id
+ ada2fe7eead31-6eb649b54e0sm3100574137.9.2026.06.03.12.04.48
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 03 Jun 2026 12:03:48 -0700 (PDT)
-Received: from draig (localhost [IPv6:::1])
- by draig.lan (Postfix) with ESMTP id 966E15F8A6;
- Wed, 03 Jun 2026 20:03:47 +0100 (BST)
-From: =?utf-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
-To: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
-Cc: qemu-devel@nongnu.org,  Peter Xu <peterx@redhat.com>,  Daniel P.
- =?utf-8?Q?Berrang=C3=A9?= <berrange@redhat.com>,  Thomas Huth
- <th.huth+qemu@posteo.eu>,
- Song Gao <gaosong@loongson.cn>,  John Snow <jsnow@redhat.com>,  Philippe
- =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>,  Kyle Evans
- <kevans@freebsd.org>,
- Pierrick Bouvier <pierrick.bouvier@linaro.org>,  Cleber Rosa
- <crosa@redhat.com>,  Warner Losh <imp@bsdimp.com>,  Brad Smith
- <brad@comstyle.com>,  Thomas Huth <thuth@redhat.com>,  Paolo Bonzini
- <pbonzini@redhat.com>,  Max Filippov <jcmvbkbc@gmail.com>,  Brian Cain
- <brian.cain@oss.qualcomm.com>,  Fabiano Rosas <farosas@suse.de>,  Peter
- Maydell <peter.maydell@linaro.org>,  Richard Henderson
- <richard.henderson@linaro.org>,  qemu-arm@nongnu.org
-Subject: Re: [PATCH v2 03/16] tests/Makefile.include: add binary dependency
- to run-tcg-tests-% rules
-In-Reply-To: <5a4eedbb-483c-40ea-a4dd-b34a4b7d7b6e@oss.qualcomm.com> (Pierrick
- Bouvier's message of "Thu, 28 May 2026 09:41:40 -0700")
-References: <20260521131739.540157-1-alex.bennee@linaro.org>
- <20260521131739.540157-4-alex.bennee@linaro.org>
- <74e8bc86-cd81-43f9-b5cb-7e3de3bcd3d0@oss.qualcomm.com>
- <87tsrzl138.fsf@draig.linaro.org>
- <093614fb-ced1-4b15-b1e1-5da755f87237@oss.qualcomm.com>
- <87cxymec7b.fsf@draig.linaro.org>
- <5bd51a1a-4079-4073-bbd8-f0206a1ad458@oss.qualcomm.com>
- <0f73d717-1621-4c3f-9c5e-9bfdfaffb0b8@oss.qualcomm.com>
- <877bor9vor.fsf@draig.linaro.org>
- <7d58926d-a36d-430f-828e-7ebdd9cc4eb5@oss.qualcomm.com>
- <87qzmyzbut.fsf@draig.linaro.org>
- <06092208-1b56-4fea-8d92-bf035fbd0fa3@oss.qualcomm.com>
- <87fr3eyrvp.fsf@draig.linaro.org>
- <8a878679-733c-451c-8053-663a74f8d4a7@oss.qualcomm.com>
- <87a4tlz897.fsf@draig.linaro.org>
- <86385e93-5425-4145-8a9f-0f72ed5de022@oss.qualcomm.com>
- <87o6hzx2np.fsf@draig.linaro.org>
- <5a4eedbb-483c-40ea-a4dd-b34a4b7d7b6e@oss.qualcomm.com>
-User-Agent: mu4e 1.14.1; emacs 30.1
-Date: Wed, 03 Jun 2026 20:03:47 +0100
-Message-ID: <87wlwfsay4.fsf@draig.linaro.org>
+ Wed, 03 Jun 2026 12:04:51 -0700 (PDT)
+From: Christian Barry <christian.barry@usp.br>
+X-Google-Original-From: Christian Barry
+To: qemu-devel@nongnu.org
+Cc: Artyom Tarasenko <atar4qemu@gmail.com>,
+ Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>, qemu-trivial@nongnu.org,
+ Christian Barry <christian.barry@usp.br>,
+ Eduardo Augusto Cavalcanti <eduardoaugustoabc@ime.usp.br>
+Subject: [PATCH v2] disas: sparc: Fix integer overflow in compare_opcodes()
+ for loop
+Date: Wed,  3 Jun 2026 16:04:46 -0300
+Message-ID: <20260603190446.10319-1-christian.barry@usp.br>
+X-Mailer: git-send-email 2.43.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::436;
- envelope-from=alex.bennee@linaro.org; helo=mail-wr1-x436.google.com
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::e41;
+ envelope-from=christian.barry@usp.br; helo=mail-vs1-xe41.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -133,160 +102,42 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com> writes:
+From: Christian Barry <christian.barry@usp.br>
 
-> On 5/28/2026 3:13 AM, Alex Benn=C3=A9e wrote:
->> Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com> writes:
->>=20
->>> On 5/26/2026 11:17 PM, Alex Benn=C3=A9e wrote:
->>>> Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com> writes:
->>>>
->> <snip>
->>>>
->>>> What do you mean? I run check-tcg all the time.
->>>>
->>>> Which containers fail to build for you? The main cross-compiler one
->>>> (debian-all-test-cross) is built all the time.
->>>>
->>>
->>> Build is working out of the box now.
->>> However, it seems that only tests for aarch64, arm and x86_64 are run
->>> when using containers without having installed cross compilers.
->>> Maybe it's another carefully handcrafted feature of tcg Makefiles?
->>=20
->> Works for me over here. Do you have podman or docker installed?
->>=20
->> It's true the Makefile has to jump through some hoops to compute
->> TCG_TESTS_TARGETS from TCG_TESTS_WITH_COMPILERS (config-host.mak) and
->> CONFIGURED_TCG_TARGETS (via $(wildcard *-config-target.h)). Is that
->> where it fails?
->>
->
-> Maybe, I reproduced that on two different machines, with different
-> architectures. As you know, Makefiles are complex to debug, which is one
-> of the reason I would like to get rid of it completely.
->
-> I prefer to spend time replacing this, instead of investigating N days
-> to understand why a dependency is missing (similar to the current patch)
-> and solve it by adding new cryptic lines in an existing Makefile.
->
->> As I've said before I'm not wedded to Makefiles, in fact I would look
->> forward to a world when I can run an individual test directly from
->> meson. However I'm not prepared to throw away functionality, especially
->> the ability of new developers/testers to build the tests without having
->> to install cross-compilers. That would take us back to the *before
->> times* when TCG tests where hardly ever run and tended to bitrot.
->>
->
-> Sure, I agree with you. The transition should not change anything,
-> except how to run a single test. We can easily replicate the container
-> functionality in meson I think.
->
-> I just had the impression, previously in this thread, that instead of
-> saying "Sounds good, let's explore the meson approach", the tone was
-> more "this is wrong and this can't work, please don't touch this". Maybe
-> it's just a communication issue.
->
-> I made the effort to show a minimal example to prove you can compile
-> stuff without having to declare a toolchain in meson, which was the
-> "blocker" you mentioned. The rest, multi files tests and using a
-> container instead of an installed cross compiler, are just small
-> details. The key is "we can build a custom binary using a custom command
-> with meson", and that's all we need to move forward.
->
->>>>> But well, if the cross-container thing is *really* a blocker, we can
->>>>> just wrap build and run in a script per cross compiler, that does
->>>>> docker/podman build && docker/podman run and call that.
->>>>
->>>> We still have the remnants of that in the docker.py script although for
->>>> most containers we moved to invoking docker (or podman) directly.
->>>>
->>>
->>> Maybe that's why I encountered issues in the past, and now it works out
->>> of the box.
->>=20
->> The original script attempted to deal with caching layers and the
->> consequences of custom USER/UID on local machines. Nowadays it is mostly
->> used as a basic wrapper around "probe" for the runtime and is still used
->> by the binfmt_misc and toolchain wrappers.
->>=20
->> For porting to meson it might be worth just having a minimal wrapper
->> just for building rather than mess with it.
->>
->
-> Yep.
->
->>>> Also bear in mind the containers are also used to cross build QEMU
->>>> itself.=20
->>>>
->>>>>
->>>>> Now we solved the problem with system tests, and cross compilers, is
->>>>> there another thing that is absolutely needed from Makefiles?
->>>>>
->>>>>>> If it's not the case, then we should definitely move into the direc=
-tion
->>>>>>> of migrating all this to meson, and rely on meson tests infrastruct=
-ure.
->>>>>>>
->>>
->>> To add on top of this, I would be happy to help with the transition, but
->>> I want to make sure you'll accept it first, with a list of
->>> requirements.
->>=20
->> For check-tcg the requirements are simple:
->>
->
-> Thanks for listing them. We can have specific test suites to address the
-> categorization. For the rest, there is nothing custom targets won't be
-> able to solve.
->>   - support building tests with containers
->>   - handle all existing tests
->>     - per-arch *-user and *-softmmu
->>       - including post test validation checks (conditional-diff-out, val=
-idate-memory-counts.py, etc...)
->>       - per-target overrides (some targets are broken for some tests)
->>       - custom QEMU_OPTS for some tests
->>       - including sub-arch tests (e.g. x86_64 includes i386, mips64el in=
-cludes mips64 etc...)
->>     - multiarch tests for all *-user targets
->>     - multiarch tests for all *-softmmu targets with boot.S
->>     - gdbstub tests
->>       - don't forget gdb feature probing for arch and arch features (e.g=
-. GDB_HAS_SME_TILES)
->>     - record/replay tests
->>     - tcg plugin tests
->>       - modulate plugins over tests to avoid combinatorial explosion
->>       - filter some plugins from general testing (e.g. patch)
->>       - filter some plugins based on mode (e.g. syscall)
->>       - specific plugins with specific tests (e.g. patch, memory)
->>     - support build variations
->>       - compiler feature probing to gate tests
->>       - custom cflags for some tests
->>       - alternate cflag builds for some tests (e.g. sha512-[vector|sse|m=
-vx|...])
->>       - build scripts (e.g. test-mmx.py)
->
-> I have a proposal: How about I give it a try with a specific target
-> (let's say aarch64?), to try to cover user, system, and multi arch
-> tests, without the cross container as a first step.
->
-> This way, we can focus on testing part, agree on what works, what
-> doesn't, and iterate until having something nice.
-> Then, we can add cross container support, and finally add the rest of
-> targets. Once all of them are implemented, we can migrate check-tcg
-> command to this.
+Replaced left-shift of a literal 1 by i inside of two for loops in compare_opcodes() with 1ul type qualifier. This makes it so 1 is explicitly interpreted as an unsigned long int, preventing overflows.
 
-I think that's a reasonable plan. We can certainly test and review
-patches as we try different things out. aarch64 is a good first target
-as it has user, softmmu and plugin specific tests.
+Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/2618
 
-What we can't do is merge piecemeal so I'd want a complete conversion
-before we merge so we don't end up with a half-functional port to meson
-in the tree (the bane of QEMU's API conversions).
+Signed-off-by: Christian Barry <christian.barry@usp.br>
+Co-developed-by: Eduardo Augusto Cavalcanti <eduardoaugustoabc@ime.usp.br>
+Signed-off-by: Eduardo Augusto Cavalcanti <eduardoaugustoabc@ime.usp.br>
+---
+ disas/sparc.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-<snip>
+diff --git a/disas/sparc.c b/disas/sparc.c
+index 5689533ce1..40c1164554 100644
+--- a/disas/sparc.c
++++ b/disas/sparc.c
+@@ -2515,7 +2515,7 @@ compare_opcodes (const void * a, const void * b)
+      another, it is important to order the opcodes in the right order.  */
+   for (i = 0; i < 32; ++i)
+     {
+-      unsigned long int x = 1 << i;
++      unsigned long int x = 1ul << i;
+       int x0 = (match0 & x) != 0;
+       int x1 = (match1 & x) != 0;
+ 
+@@ -2525,7 +2525,7 @@ compare_opcodes (const void * a, const void * b)
+ 
+   for (i = 0; i < 32; ++i)
+     {
+-      unsigned long int x = 1 << i;
++      unsigned long int x = 1ul << i;
+       int x0 = (lose0 & x) != 0;
+       int x1 = (lose1 & x) != 0;
+ 
+-- 
+2.43.0
 
---=20
-Alex Benn=C3=A9e
-Virtualisation Tech Lead @ Linaro
 
