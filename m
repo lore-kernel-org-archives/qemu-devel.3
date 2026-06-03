@@ -4,78 +4,94 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8DC7DCD6E4A
-	for <qemu-devel@archiver.kernel.org>; Wed,  3 Jun 2026 07:38:25 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 37D8BCD6E55
+	for <qemu-devel@archiver.kernel.org>; Wed,  3 Jun 2026 08:02:01 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wUgAU-0002VV-Os; Wed, 03 Jun 2026 03:37:38 -0400
+	id 1wUgXQ-0005hS-CM; Wed, 03 Jun 2026 04:01:20 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1wUgAU-0002VB-59
- for qemu-devel@nongnu.org; Wed, 03 Jun 2026 03:37:38 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1wUgAS-0003O8-Rs
- for qemu-devel@nongnu.org; Wed, 03 Jun 2026 03:37:37 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1780472255;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=Svvl6w4y0Q5ehUzuJDTREjPmgczAjddPeRIQT/rZ/NI=;
- b=FLgIWlq/19sTWQyjJ0Yx9XPWBkOvaQxwfd9mww0nZG0+7SZRaKsoSPFIPr/BDC08P7pj5p
- JuwvIKKWUeFMPx+tSgdTVUqmuCVtue0sAW/zJMOGpj9qPtu2fCMw92bQPHH7SaS08lsGwU
- qtw5VxGdXd4xWuYAaCMF1/WFCRd+gx8=
-Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-563-3ftJidGgPBuMixfgsl9H2g-1; Wed,
- 03 Jun 2026 03:37:34 -0400
-X-MC-Unique: 3ftJidGgPBuMixfgsl9H2g-1
-X-Mimecast-MFC-AGG-ID: 3ftJidGgPBuMixfgsl9H2g_1780472253
-Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id ABCCE19560AA; Wed,  3 Jun 2026 07:37:32 +0000 (UTC)
-Received: from blackfin.pond.sub.org (unknown [10.44.22.2])
- by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id E537330001A1; Wed,  3 Jun 2026 07:37:31 +0000 (UTC)
-Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
- id 8C57521E6A01; Wed, 03 Jun 2026 09:37:29 +0200 (CEST)
-From: Markus Armbruster <armbru@redhat.com>
-To: Sam Li <faithilikerun@gmail.com>
-Cc: qemu-devel@nongnu.org,  qemu-block@nongnu.org,  Eric Blake
- <eblake@redhat.com>,  Stefan Hajnoczi <stefanha@redhat.com>,  Pierrick
- Bouvier <pierrick.bouvier@oss.qualcomm.com>,  dmitry.fomichev@wdc.com,
- Hanna Reitz <hreitz@redhat.com>,  hare@suse.de,  "Michael S. Tsirkin"
- <mst@redhat.com>,  Kevin Wolf <kwolf@redhat.com>,  cassel@kernel.org,
- dlemoal@kernel.org
-Subject: Re: [PATCH v11 2/5] qcow2: add configurations for zoned format
- extension
-In-Reply-To: <20260601214405.252818-3-faithilikerun@gmail.com> (Sam Li's
- message of "Mon, 1 Jun 2026 23:44:02 +0200")
-References: <20260601214405.252818-1-faithilikerun@gmail.com>
- <20260601214405.252818-3-faithilikerun@gmail.com>
-Date: Wed, 03 Jun 2026 09:37:29 +0200
-Message-ID: <87wlwgcbwm.fsf@pond.sub.org>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+ (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
+ id 1wUgXF-0005gw-Du
+ for qemu-devel@nongnu.org; Wed, 03 Jun 2026 04:01:14 -0400
+Received: from mail-wm1-x32b.google.com ([2a00:1450:4864:20::32b])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
+ id 1wUgXC-0003Lm-6M
+ for qemu-devel@nongnu.org; Wed, 03 Jun 2026 04:01:08 -0400
+Received: by mail-wm1-x32b.google.com with SMTP id
+ 5b1f17b1804b1-490acbb0f89so15931965e9.0
+ for <qemu-devel@nongnu.org>; Wed, 03 Jun 2026 01:01:05 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1780473664; x=1781078464; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:user-agent
+ :references:in-reply-to:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=5o8jccpqzHoAZLu8hqR6tBvp7dftuQUcL1/tQRxvLLo=;
+ b=PMd7UkS8vLYWxJTA4lUrcaX/TOjZD/qhFIUs9e4XbHy619y71qvbYjVhK9KyxKfkew
+ 4FI5ENVWEx45XUamy0s5VgVrfduRPOBoXEnAldVRAuPdnBBdXpKf2+dVszxA4pDKlp1h
+ x8ik01M1LhfnQRa6+W9s4nt83y3Ej03j593F/29m/cQyJiqDpIjiMzv7Bg8xjiZe7kgq
+ JMjcfyC5B8Rv3rJGJRnDdPpMD26erdM4jfgd5YA9mGdqxX0++iMZ7nOL5s6I5YsJ9gu8
+ JiPyyriMXBdqwkk8DvmptJ/gs+mk8mSfd8jLbuQIGBhSKDoxixFoJ/eX8VHXHCMSYpVo
+ DVgg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1780473664; x=1781078464;
+ h=content-transfer-encoding:mime-version:message-id:date:user-agent
+ :references:in-reply-to:subject:cc:to:from:x-gm-gg
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=5o8jccpqzHoAZLu8hqR6tBvp7dftuQUcL1/tQRxvLLo=;
+ b=JNrtaWO1J2n/ACjBMgbTvy0YFW9/6wKbvOTuvWh+25pi/XV2XrcC1Rb/4hdNNID01x
+ 7C7uybVko7qjVSKFt4zH808p+CuSoZwZxfd2c/S7Q//ByrBF6qghiR0Eiy9U9++rNR7u
+ M4xoeWgJAlOhTUeFnC8emSPPqlgfcNh6IvRK21Wt1N0XIkcxVcsNWuZYC7VnQSD3Ej29
+ 9Wh9ekJiiANG1ywR69ydBs+nW37k7/1dxQVz+R1hresD28LcZnSY9lmUZIILsmOEssaB
+ alCFfuiJORCZrZdPjghGywo1yf6cHHfWqZImHefMwV2dEqNzKGgaglU802H9Qn+Reo4u
+ /6VA==
+X-Gm-Message-State: AOJu0Yyb4v2TdCDTL0rGPgaSwBaoplXobeRMwbvLxSOBbT0oYHuCm/so
+ 2Ad1FiPprIO5i8jfKy1vEX30/mE8sRk72SCq+oM8DxQ8dJan0T4VqLN2ZWWclOY4Yy1BnrUERKO
+ gFIrS
+X-Gm-Gg: Acq92OFET9nwGUMI/t0H2/6am+ePqbXdblZlgL2Dhttm8zMbXEhp/eiWkjrqUguh7m5
+ LZrKFkOWMQjTXGWBP6o0VIi2dbabvm181HjmOpD14O0D449GLEtxNGwcG/dsUGMr/O5emGWABbD
+ TFpYJNUvkMuFVYQBkZY9Awq1paNAE7dNvyZG6eYIuAly3GPDVrc2MGbEF8NsPYHItI1ABIoYlUz
+ nMvNq0RSGgSa/iT55XjN9BR261V6n+uTvaZ6j3v/HCy8GmiQKU0ooxE10TXYsh/qA2bLKqwLE0L
+ mxvgvv28mOPvsOPHDkJjegzT1vO2mu4ZD/fdkLg3LO7QDX62RXjJazxTOgeGRue9fQ5HbCycryQ
+ xEGvKOEvJRYBtEHTzAsZvfI0NBUpoa8lvYrO4ukuhi/9YHf05OSzdNpfK/956O+3QsWmLTXZBwR
+ +CSMJmCmtxNO1fu7u1OElGWvUSKjt84x0K4H6fxac4W87K
+X-Received: by 2002:a05:600c:1e0f:b0:490:3ff5:737f with SMTP id
+ 5b1f17b1804b1-490b5ed6353mr31077755e9.18.1780473662338; 
+ Wed, 03 Jun 2026 01:01:02 -0700 (PDT)
+Received: from draig.lan ([185.124.0.195]) by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-490b7d6b990sm14862605e9.2.2026.06.03.01.00.58
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Wed, 03 Jun 2026 01:01:00 -0700 (PDT)
+Received: from draig (localhost [IPv6:::1])
+ by draig.lan (Postfix) with ESMTP id A8D4F5F7F0;
+ Wed, 03 Jun 2026 09:00:57 +0100 (BST)
+From: =?utf-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
+To: Richard Henderson <richard.henderson@linaro.org>
+Cc: qemu-devel@nongnu.org
+Subject: Re: [PATCH] target/arm: replace cp_regs hashtable lookup with
+ direct array index
+In-Reply-To: <fff37ec8-1242-4c45-b2bb-d17c672757db@linaro.org> (Richard
+ Henderson's message of "Tue, 2 Jun 2026 15:18:05 -0700")
+References: <20260518-enhance_arm_gdb_get_sysreg_performance-v1-1-f0a5b22003c0@gmail.com>
+ <CAN1cRoPWtbqKgxKPT54=qF6p4Au1y2Hd8-9xEQ+CBSHffEMMVg@mail.gmail.com>
+ <fff37ec8-1242-4c45-b2bb-d17c672757db@linaro.org>
+User-Agent: mu4e 1.14.1; emacs 30.1
+Date: Wed, 03 Jun 2026 09:00:57 +0100
+Message-ID: <877boguk7a.fsf@draig.linaro.org>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=armbru@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: 8
-X-Spam_score: 0.8
-X-Spam_bar: /
-X-Spam_report: (0.8 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.445,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_SBL_CSS=3.335, SPF_HELO_PASS=-0.001,
- SPF_PASS=-0.001 autolearn=no autolearn_force=no
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2a00:1450:4864:20::32b;
+ envelope-from=alex.bennee@linaro.org; helo=mail-wm1-x32b.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -91,23 +107,82 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Sam Li <faithilikerun@gmail.com> writes:
+Richard Henderson <richard.henderson@linaro.org> writes:
 
-> To configure the zoned format feature on the qcow2 driver, it
-> requires settings as: the device size, zone model, zone size,
-> zone capacity, number of conventional zones, limits on zone
-> resources (max append bytes, max open zones, and max_active_zones).
+> On 6/2/26 08:19, abdelrahman elbehery wrote:
+>> Ping
+>> On Mon, 18 May 2026, 12:58=E2=80=AFpm Abdelrahman Elbehery,
+>> <elbeheri95@gmail.com <mailto:elbeheri95@gmail.com>> wrote:
+>>     Profiling showed g_hash_table_lookup as a hot spot when running
+>> TCG
+>>     plugins that log all CPU registers (e.g. execlog with reg=3D*).
+>>     Replace it with a direct array index to avoid lookup overhead.
+>>     Signed-off-by: Abdelrahman Elbehery <elbeheri95@gmail.com
+>> <mailto:elbeheri95@gmail.com>>
+>>     ---
+>>     While profiling (via callgrind) a TCG plugin that logs all the CPU r=
+egisters
+>>     (very identical to execlog with reg=3D*) i noticed that arm_gdb_get_=
+sysreg is a hot spot,
+>>     mostly while calling g_hash_table_lookup. Probably this is due to so=
+me hashtable collision
+>>     that is handleded by glib internally.
+>>     Currently each DynamicGDBFeatureInfo item holds keys for
+>> cp_regs, and the keys are always
+>>     used to retrieve the ARMCPRegInfo pointer.
+>>     By replacing the keys array with a GPtrArray, we now just access
+>> reg info directly from
+>>     the given index.
+>>     The benchmarking was done on c2d-highcpu-16 (16 vCPUs, 32 GB
+>> memory) GCP
+>>     Setup was to run qemu-system-aarch64 against a buildroot kernel
+>> and rootfs
+>>     with and without the patch mostly using:
+>>      =C2=A0 =C2=A0 --plugin contrib/plugins/libstoptrigger.so,icount=3D2=
+000000
+>>      =C2=A0 =C2=A0 --plugin contrib/plugins/libexeclog.so,reg=3D*
+>>      =C2=A0 =C2=A0 -M virt -cpu cortex-a710 -smp 1
+>>     Benchmark showed ~15% performance gain when hashtable is not
+>> used.
+>>     For benchmarking, i used hyperfine with 3 warmup rounds and 10 itera=
+tions each.
+>>     ---
+>>      =C2=A0target/arm/cpu.h=C2=A0 =C2=A0 =C2=A0|=C2=A0 6 +++---
+>>      =C2=A0target/arm/gdbstub.c | 28 ++++++++++++++++------------
+>>      =C2=A02 files changed, 19 insertions(+), 15 deletions(-)
+>>     diff --git a/target/arm/cpu.h b/target/arm/cpu.h
+>>     index
+>>     15a13b929276dad161032b61ba51ebbce7eeebc6..8816e94e3f8271ad403e77f618=
+2fdb8cee31c527 100644
+>>     --- a/target/arm/cpu.h
+>>     +++ b/target/arm/cpu.h
+>>     @@ -121,15 +121,15 @@
+>>      =C2=A0 * DynamicGDBFeatureInfo:
+>>      =C2=A0 * @desc: Contains the feature descriptions.
+>>      =C2=A0 * @data: A union with data specific to the set of registers
+>>     - *=C2=A0 =C2=A0 @cpregs_keys: Array that contains the corresponding=
+ Key of
+>>     - *=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 a =
+given cpreg with the same order of the cpreg
+>>     + *=C2=A0 =C2=A0 @cpregs_regs: Array that contains the corresponding=
+ Register info pointer
+>>     + *=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 of=
+ a given cpreg with the same order of the cpreg
+>>      =C2=A0 *=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
+=A0 in the XML description.
 >
-> To create a qcow2 image with zoned format feature, use command like
-> this:
-> qemu-img create -f qcow2 zbc.qcow2 -o size=768M \
-> -o zone.size=64M -o zone.capacity=64M -o zone.conventional_zones=0 \
-> -o zone.max_append_bytes=4096 -o zone.max_open_zones=6 \
-> -o zone.max_active_zones=8 -o zone.mode=host-managed
+> This will not work, because each ARMCPU has separate cpreg info
+> structures, and these structures only have the lifetime of the ARMCPU
+> struct.  We create and destroy these at runtime, so at some point you
+> may end up with pointers to freed memory.
+
+Shouldn't it be the same set for each CPU though?
+
 >
-> Signed-off-by: Sam Li <faithilikerun@gmail.com>
+>
+> r~
 
-QAPI schema
-Acked-by: Markus Armbruster <armbru@redhat.com>
-
+--=20
+Alex Benn=C3=A9e
+Virtualisation Tech Lead @ Linaro
 
