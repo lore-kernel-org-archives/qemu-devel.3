@@ -4,120 +4,137 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A619FCD6E55
-	for <qemu-devel@archiver.kernel.org>; Wed,  3 Jun 2026 06:32:15 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 74028CD6E55
+	for <qemu-devel@archiver.kernel.org>; Wed,  3 Jun 2026 06:39:07 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wUf8S-0006Y2-Ai; Wed, 03 Jun 2026 02:31:28 -0400
+	id 1wUfF4-00009V-Uz; Wed, 03 Jun 2026 02:38:18 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@kaod.org>) id 1wUf8R-0006Xu-9W
- for qemu-devel@nongnu.org; Wed, 03 Jun 2026 02:31:27 -0400
-Received: from smtpout3.mo540.mail-out.ovh.net ([51.210.91.52])
+ (Exim 4.90_1) (envelope-from <steven_lee@aspeedtech.com>)
+ id 1wUfF1-00006o-Ou; Wed, 03 Jun 2026 02:38:15 -0400
+Received: from mail-koreacentralazlp170130006.outbound.protection.outlook.com
+ ([2a01:111:f403:c40f::6] helo=SEYPR02CU001.outbound.protection.outlook.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@kaod.org>) id 1wUf8P-00068z-Gc
- for qemu-devel@nongnu.org; Wed, 03 Jun 2026 02:31:26 -0400
-Received: from director4.derp.mail-out.ovh.net
- (director4.derp.mail-out.ovh.net [79.137.60.37])
- by mo540.mail-out.ovh.net (Postfix) with ESMTPS id 4gVdBT6vNfz4PwS;
- Wed,  3 Jun 2026 06:31:13 +0000 (UTC)
-Received: from director4.derp.mail-out.ovh.net
- (director4.derp.mail-out.ovh.net. [127.0.0.1])
- by director4.derp.mail-out.ovh.net (inspect_sender_mail_agent) with SMTP
- for <jamin_lin@aspeedtech.com>; Wed,  3 Jun 2026 06:31:13 +0000 (UTC)
-Received: from mta11.priv.ovhmail-u2.ea.mail.ovh.net (unknown [10.110.37.96])
- by director4.derp.mail-out.ovh.net (Postfix) with ESMTPS id
- 4gVdBT1yLvz1xpD; Wed,  3 Jun 2026 06:31:13 +0000 (UTC)
-Received: from kaod.org (unknown [10.1.6.5])
- (Authenticated sender: clg@kaod.org)
- by mta11.priv.ovhmail-u2.ea.mail.ovh.net (Postfix) with ESMTPSA id
- 2D458240306A; Wed,  3 Jun 2026 06:31:12 +0000 (UTC)
-Authentication-Results: garm.ovh; auth=pass
- (GARM-104R0055e5032cd-eeac-4152-b026-7defa558cd84,
- 5CFAFB9919344B1C1428CC102C89BC7CB8215022) smtp.auth=clg@kaod.org
-X-OVh-ClientIp: 82.64.250.170
-Message-ID: <23f1f0b1-bf57-4698-9080-5df3f032a2ed@kaod.org>
-Date: Wed, 3 Jun 2026 08:31:11 +0200
+ (Exim 4.90_1) (envelope-from <steven_lee@aspeedtech.com>)
+ id 1wUfEz-0008Ja-Ka; Wed, 03 Jun 2026 02:38:15 -0400
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=ktejWSfrNXvdnfs011KD7Qq/KkPpVuT7R7LLywHmHXsVaQS0JskP8YOrj3X9NY0dtQmRUTZymzo4xOJIFYISJt6Tb1d2ArTNmUdkTuzoKRMD2umxvmfifkq7i8hHH2caQTM/97UGW9RgM33rEQXLVXPjlis329KLposHECvVbbyC5nN0vl2RCu7YgGs5Dgb9pcWaFPWi13+APePlTVx37avdoR4JCE6zs/VQgSiuT5r85vok4bv5WoNF+Ui4LkwYAvHcbNEikR2oItsjd1qcm0NDRAwK0U3Qkg0udhpaW7/g0swrJk3FbOoePB7W2RGCkRzZ/OERbBYitVIJ+JnTxw==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=hugjYfbVn3TZzHsqf6p+fWyxF7mOkdc/9kgjdKtWAeM=;
+ b=XoUHNDZtPfbdB6lkuWzhBpSakAEErixxnZW8cDsE2oxiEDIMiTUvvuUN0ULPjFgJUkaLnL8nAWAtUu8buqXWpyZq1nPs2/VUNMgZWwGUKH9xZptaEb1OAZE107O1ZKLPNhPE43VD8MSOBFNOuHfBEq5Aoc7Ikhl5fUMKLE+DVFE5d9VxAjmXAbHRTOCeZDTcNXupeHVl2XUpmlxmcqeicsGill2JgkPUXD1WJfjN916f+hrujAStcfW3usKUHgSr/YEYMimWtUVONZkf/D8DNKB8TK6BWnfY23qm6i8HJLLU16CIj4hemI8I7WatsrN3K0f0QHMAONX9N8W7BTSLzw==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=aspeedtech.com; dmarc=pass action=none
+ header.from=aspeedtech.com; dkim=pass header.d=aspeedtech.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=aspeedtech.com;
+ s=selector1;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=hugjYfbVn3TZzHsqf6p+fWyxF7mOkdc/9kgjdKtWAeM=;
+ b=dwR8HkpC7VXS5URQoZ/gwksSFeqqluJO+IhXi3NoQsfFEIieOxxQdlHHd7SGUqTUuMJHcK7tqqoacFk+8xrIoHiIWyHi4HnIfHQFYh520MwVEUzJuGN49s67EzST1G+T/Wb2il+KegQSy0V9WtZqLxQUT2HcjvhVtZ5iIQmYATgqma709me9P4JvE9+HqPmk03ynGaFGkAyRD+VQNc2iXKK45IGdaUxvEaZYCnfI1nYzTddon5e/godRhNOZJ3yP+x4gZ1A2PjsIauV2XJwnzlUeKSS/T0KgWgjvm/MRc/whymM7FBBS4EJZ5rLrLj5pCp47b26UEgRBpFBQmhasNQ==
+Received: from TYZPR06MB4746.apcprd06.prod.outlook.com (2603:1096:400:129::9)
+ by TYNPR06MB8525.apcprd06.prod.outlook.com (2603:1096:405:3d0::17)
+ with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.92.7; Wed, 3 Jun 2026
+ 06:38:04 +0000
+Received: from TYZPR06MB4746.apcprd06.prod.outlook.com
+ ([fe80::b6d5:b318:c4a6:d995]) by TYZPR06MB4746.apcprd06.prod.outlook.com
+ ([fe80::b6d5:b318:c4a6:d995%6]) with mapi id 15.21.0092.006; Wed, 3 Jun 2026
+ 06:38:04 +0000
+From: Steven Lee <steven_lee@aspeedtech.com>
+To: =?iso-8859-1?Q?C=E9dric_Le_Goater?= <clg@kaod.org>, Peter Maydell
+ <peter.maydell@linaro.org>, Steven Lee <steven_lee@aspeedtech.com>, Troy Lee
+ <leetroy@gmail.com>, Jamin Lin <jamin_lin@aspeedtech.com>, Kane Chen
+ <kane_chen@aspeedtech.com>, Andrew Jeffery <andrew@codeconstruct.com.au>,
+ Joel Stanley <joel@jms.id.au>, Pierrick Bouvier
+ <pierrick.bouvier@oss.qualcomm.com>, Fabiano Rosas <farosas@suse.de>, Laurent
+ Vivier <lvivier@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>, "open
+ list:All patches CC here" <qemu-devel@nongnu.org>, "open list:ASPEED BMCs"
+ <qemu-arm@nongnu.org>
+CC: Troy Lee <troy_lee@aspeedtech.com>, "longzl2@lenovo.com"
+ <longzl2@lenovo.com>, Yunlin Tang <yunlin.tang@aspeedtech.com>
+Subject: [RESEND PATCH 4/6] hw/arm/aspeed_ast1040: Wire Caliptra mailbox
+Thread-Topic: [RESEND PATCH 4/6] hw/arm/aspeed_ast1040: Wire Caliptra mailbox
+Thread-Index: AQHc8yOHJFB0imqHzkmuJPy6oLm/Gg==
+Date: Wed, 3 Jun 2026 06:38:03 +0000
+Message-ID: <20260603063756.1481524-5-steven_lee@aspeedtech.com>
+References: <20260603063756.1481524-1-steven_lee@aspeedtech.com>
+In-Reply-To: <20260603063756.1481524-1-steven_lee@aspeedtech.com>
+Accept-Language: zh-TW, en-US
+Content-Language: en-US
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+authentication-results: dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=aspeedtech.com;
+x-ms-publictraffictype: Email
+x-ms-traffictypediagnostic: TYZPR06MB4746:EE_|TYNPR06MB8525:EE_
+x-ms-office365-filtering-correlation-id: bfe60f29-d599-4322-5d17-08dec13aaa26
+x-ms-exchange-senderadcheck: 1
+x-ms-exchange-antispam-relay: 0
+x-microsoft-antispam: BCL:0;
+ ARA:13230040|1800799024|366016|376014|7416014|921020|6133799003|18002099003|22082099003|56012099006|38070700021;
+x-microsoft-antispam-message-info: wEMavIjegsJ0QmLB+hZZQixRk5DwewQ70lZ5SfoVuXlPE0ADuUBZmNEoA9RIrUs6a5Ys5I6Xw6aaKvn8wlwAn2iYwRXNUxOJN8ZQi9ys46kpmzZVXd9YR+mvynHbRHzEWG60L2yujdQ3RtlieqDhKf56LFKv7EpQAF62Cb+/Gx1ALANtkwry3lhoeIThKRFQJftDq51Cd/Nt6NPRsqHOA0YXv8jiQqeOgGSm/OcJYv+tURJl17igvick5/yc3LrT8zyMW05031XWzMduMmBNULlu4NaVLHx/DFLwSZismBy8GpB5uTODWHfL7euJ4Aeo/ddaUbkrysPk23yDjOS50tjgZpzWX4/Ph5ByjWdAgIqmkaHnU3DJ01L3vvnByfsN3kNDR4RNqVNDLchfJdNg+/UeD4liGN4I1VLUgD2mJDqmEhAbtBO6B3SpqFA/vUKhqIT7l8IJaohDCfc2mzFiQsLKLI7VKzLsVXh/lFQqe3BNygs0o2uAFK5hA41w2nzjTOLeVhdiFrCCkEO6n/Id7+6TDts9viuBVgG5KbjP9ccgw6UqSq3HU0I84YHkymktaLbu5nsvSsO/UouGihXEu2A+Vr2G/HIic5K/mZTg6sckIzYC3x2656j5eBpHSUfOiv+HsnWn5/1Cj9SL4AU1s4o0dDXeoUIgL2wNXpgyLqUo/G1KG5vMEUmS3siOdgiEMPEhZaTGQ+s/xNYVDCJ3X+zTqV8FGSOB5rAcdLbnzD/KFiDuyQjTXmc/uICRGNI91lVvUiXd1nd0YKk/U2gt3w==
+x-forefront-antispam-report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
+ IPV:NLI; SFV:NSPM; H:TYZPR06MB4746.apcprd06.prod.outlook.com; PTR:; CAT:NONE;
+ SFS:(13230040)(1800799024)(366016)(376014)(7416014)(921020)(6133799003)(18002099003)(22082099003)(56012099006)(38070700021);
+ DIR:OUT; SFP:1102; 
+x-ms-exchange-antispam-messagedata-chunkcount: 1
+x-ms-exchange-antispam-messagedata-0: =?iso-8859-1?Q?mG3GQR82KVncjgvEMP4zAcdqvxw7p5/ZTNbDev85V5zDgFX5lgz6NIbu+W?=
+ =?iso-8859-1?Q?anOx1d/41vTVzzJbW1ctZEOdyxwQfIbuMSUpiozWLt1dMvt9tB9q+W2Lyk?=
+ =?iso-8859-1?Q?skmJ67WPPfW6gK5rcaBZBUaZ4z5PK37ZhnGLzeM+mPk9aD8k0/oBUXL+FT?=
+ =?iso-8859-1?Q?ovk4cE0TOBBcWWEXvEhlfwwKllOwqQUqhqCKjfzkHuXN36GZfWrAUrIBm0?=
+ =?iso-8859-1?Q?RYFPS6H48b9BxTq7R1YD11Mb9h4zqjjmMMLVqeBeAN1Sbcc12uORTL3+2t?=
+ =?iso-8859-1?Q?exk9RdgL2wx1FBhJPd16VBkIcjola8gDnkp5HbAI/XuWQ/A20AlQ3HSl38?=
+ =?iso-8859-1?Q?oMJVCnOoU8GHJ7pn07+nUEEpzO9yz75iPTBIiIZtsoR8Na59ih7DDKsxAx?=
+ =?iso-8859-1?Q?9ZHWrsNnv0yNBf7LqZRSNf6BTD9cHVRNyI/NPAS6uuhKO1Fb3gpA6mSRYw?=
+ =?iso-8859-1?Q?EuMkZINbN3aAC3KjObHUig4GKkKeZj1Qla7vSgP6bkaRRbn9JoVsaUloVN?=
+ =?iso-8859-1?Q?3QX5NHJ9TxRTSVpV1CVkY7NnDCpj7B5riOg4gh1HnhOoTptAG7/ajpS3m9?=
+ =?iso-8859-1?Q?pkvDgLIVg6Rs2gUUIQN+uQYobz73buwafmPjBrAhO+wahyJzhLXbUKhlo+?=
+ =?iso-8859-1?Q?wrl02ns7E2xnfWmtF/iDI6TNiaaini69vKE1xo9g8pCpaBR2OYwQa+JIAX?=
+ =?iso-8859-1?Q?n8MciOeyVbVBKrMaILkAZGu8kSxkB6C49QFnTweEsx8qOIHeeRcbMnf44I?=
+ =?iso-8859-1?Q?wiRZ6mmBE6/EeTa8eDzUbuvx9gcqXBvLIs0oqaXqce+aIkjhYDjrecY64m?=
+ =?iso-8859-1?Q?KpMq1nVgVDUxiQjgQrKxVCJgB00EnbKh4OOtemWDjjx/2VK+Ng0TUgaMQO?=
+ =?iso-8859-1?Q?Onw2ULSLM+8TqRF/DwqscVOPFbo4f6iS6wJ6fkIPw1bawWwt3CvjL2r+Q4?=
+ =?iso-8859-1?Q?KtIl+DOe31upg8EAV/NCL+qfuv+/IKPP6x9fhHiMofjs1pYFLomZfpoNp9?=
+ =?iso-8859-1?Q?WT6omJ1iE1mW1bgD0sEuh7O/ln0pbhRgLQefCvu1s3Q2hpjqvGZ53znkY8?=
+ =?iso-8859-1?Q?DF7GghLyIH78WNoqyFs8ldoTAyjZJRLl0aqgTO+jMQMPlMMyS/3ZrUQi62?=
+ =?iso-8859-1?Q?7IQp0SfMQpvKJzAaI65znJI2ljxe1IozWAis0ofK9j8+kR0wi2+apOJ6d9?=
+ =?iso-8859-1?Q?RP+OXP0nRZCckT8lMm6hOPGoHs74AhiwlfM2flFXGklMtT7AKwM1BoNFgn?=
+ =?iso-8859-1?Q?GQdR/9B901TwWbLulqe2i4GHaNfRQbXpOsl03zhvQSHKo/TNa4fbelMSAw?=
+ =?iso-8859-1?Q?IUW6oSn3ZGA/LONX1WiolnItrFMNYvaWAO70VbWSrbBPuJy4n0qi85PjUt?=
+ =?iso-8859-1?Q?rWztkTh80Hc/MGnGdjpBICtkTtKlP60GujIFb04tLPLnapIucItJqiSDcS?=
+ =?iso-8859-1?Q?e22IMyNGiWEyoP4cLZIgJVxyOL7Oj2h+1P0Tqzv3DgxdjzhpLoLJgzTNPH?=
+ =?iso-8859-1?Q?wahJroY9a0FLJyVeIcdAv0aZJiLie0v9iK9NdpG6Aye/a67eUXlNlCT0OP?=
+ =?iso-8859-1?Q?Frx3TE6/2By/r8fmlpePVBfBt/IR/bExBH8clDf2UppPy/xTHysGTCa1aF?=
+ =?iso-8859-1?Q?PMlcw1J23qscgCHciqwESOncSCH4ySgcAwsqXSjJz34rzR4M5YfJI23sIs?=
+ =?iso-8859-1?Q?LjniL9NR5nByLtfxNWd72NDuUPATJgH4kki2EXO4bt7SyluI9RVJRo2cXk?=
+ =?iso-8859-1?Q?C9ALRPV+TtC1mEy60+WUot0pfHu5K3C6fEGqOLi3p6tUHxdIPOBNPUuTlJ?=
+ =?iso-8859-1?Q?du5k1mlOFA=3D=3D?=
+Content-Type: text/plain; charset="iso-8859-1"
+Content-Transfer-Encoding: quoted-printable
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3 00/10] hw/arm/aspeed: Add AST1040 peripheral support
-To: Jamin Lin <jamin_lin@aspeedtech.com>,
- Peter Maydell <peter.maydell@linaro.org>,
- Steven Lee <steven_lee@aspeedtech.com>, Troy Lee <leetroy@gmail.com>,
- Kane Chen <kane_chen@aspeedtech.com>,
- Andrew Jeffery <andrew@codeconstruct.com.au>, Joel Stanley <joel@jms.id.au>,
- "open list:ASPEED BMCs" <qemu-arm@nongnu.org>,
- "open list:All patches CC here" <qemu-devel@nongnu.org>
-Cc: Troy Lee <troy_lee@aspeedtech.com>
-References: <20260603040027.938816-1-jamin_lin@aspeedtech.com>
-Content-Language: en-US, fr
-From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>
-Autocrypt: addr=clg@kaod.org; keydata=
- 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
-In-Reply-To: <20260603040027.938816-1-jamin_lin@aspeedtech.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-x-ovh-tracer-id: 14569426272735046667
-X-VR-SPAMSTATE: OK
-X-VR-SPAMSCORE: -100
-X-VR-SPAMCAUSE: dmFkZTFwrRqCKDh+q+o5iXEncbbuBB5GVMgbSVw4R1AgmWNjUnaU+FgHJJzYajXYXxIc+XpvTosR6C3o0ZR4UE/2A3cmCz2/iRGv1FQQSAb8CaP7b+UczBHFdN+h7XUOGjqRDnMJUaSs5KhwAn+MRVGNgNOE3SMZet0aBz3c+exYnmh3uEuLcBzC3rbbu02/BDOh5Sjqm7LLzINPB6vLq5Ed1rtJB3U9RswueQjllPszMuXIzl/sJ9WXoNzlTt9f/lFmr+c8UaP/FuG8pzppaCCDFN0dNfeJ2W5vwlmAnKp572z6SJ/aJVsEWFShka0fKIUs6l1WrXYdAwaBhTZRty8TdLgkH8jCffFOV0mp4/5n0q7ROd4GcngsuBSAXDnwOcdtqILsxSrDJssNZgXXaqLnxsrc8JRuObscKeaAOKSse8vVQixd3YDuQZtAOmBNwZm/bEgb+WEqEN5bGWtC72fTUkk05iy6Rh6dvbes1Hdl6uTe4k7NCbTYAuU8bq0c7EvNE8jQuQt7zRvjVxUTC730wBhV+RH5I3P3a0rhTBU+S/t//ye8NsNtEzwkZnTmupP9bo+c2W9kYfOPkmMrqfy4EB1AZhCkqR2NcXfwlQbj3oN1LMGSYpK4oVgn0ZaIrcTshvL8HbX+/cr1PlKl8dQE61LZZqmALu+JHbDYbnWxf5tH6Q
-DKIM-Signature: a=rsa-sha256; bh=7cm9pIzhnwOwO6HaIfcO7ag1HjxCg873CDEbg0MM1HE=; 
- c=relaxed/relaxed; d=kaod.org; h=From; s=ovhmo393970-selector1;
- t=1780468275; v=1;
- b=KIxdCBsckYKk3TSzofnIkjfPgcGCfOwPdQuNqGaRSIj2UnZXG3FM984AcOkP8+IKZSf/qL4L
- IqBIFfn9ILAGB5ty/GpGqEHwtqYtxk+EZ8NdtpAEJY3wSle+xCLWfswpDut9IGydGqD573jc7Ii
- rcvXWqX7fQSbi/PNr/AZbHv0QXX/MVo2rCfwKPzBD9jmNMRQ1ibpY3zbNoYVxtZcMJw9NvTHqjL
- ggJpIOl7E07hWsrax/H4aXSLBDa/nqVXCTpdjpyeuDYWvIvfQkeRfpyqjLCD31PiMaC0BoAXsJR
- LXhevTvKNEBOZaH+aKJVdVrk92rrLL4iGr3sO+rR4qT/w==
-Received-SPF: pass client-ip=51.210.91.52; envelope-from=clg@kaod.org;
- helo=smtpout3.mo540.mail-out.ovh.net
+X-Exchange-RoutingPolicyChecked: g6rif89+FQ9EFTVlpDKgLQZ/XJ0XFrBemako076uWPrRuVGSvWS6J1D/P/eyWTxZDKVHyx+UV+7uwpyuuDtHnUnSozLQRZ5TtsGpIeFtDMiXa/q/zfr1yprk3PWsQUx+VC/AWPYPoYE7xMUcg/wmT2gOB9b8o4Aoan/qyi8OWkLpyipthVtUqUXmFuYbQDZ9v7U4T/X8Gq8EFQbrvZl0kW7GVbkkMdHOvJ+Uf9S0bkaWkGKykNP32FXreR2gYyhCqorFwWLyELdIL44Dz9/ZgdRCeUjuhKeRQArpGi5RnHkzhSUG2nxX9qM0C9qOZOmx2q49ISlgqZiPxyGyB5KmkA==
+X-OriginatorOrg: aspeedtech.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-AuthSource: TYZPR06MB4746.apcprd06.prod.outlook.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: bfe60f29-d599-4322-5d17-08dec13aaa26
+X-MS-Exchange-CrossTenant-originalarrivaltime: 03 Jun 2026 06:38:03.9464 (UTC)
+X-MS-Exchange-CrossTenant-fromentityheader: Hosted
+X-MS-Exchange-CrossTenant-id: 43d4aa98-e35b-4575-8939-080e90d5a249
+X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
+X-MS-Exchange-CrossTenant-userprincipalname: q3EDG31K91eqjbdsUce6gfhun026XGNcOJFZo/gq7AnHX9z6QnSucx0zxZwjxWfMZV5Ukh4C2zqE/wB02MnAQ0R8+Mdw5kbCG1Y45bmLnCM=
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: TYNPR06MB8525
+Received-SPF: pass client-ip=2a01:111:f403:c40f::6;
+ envelope-from=steven_lee@aspeedtech.com;
+ helo=SEYPR02CU001.outbound.protection.outlook.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_PASS=-0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -133,56 +150,312 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 6/3/26 06:00, Jamin Lin wrote:
-> This series extends the AST1040 SoC model by adding support for several
-> peripherals that are compatible with existing AST2700 controller models.
-> 
-> The AST1040 shares a number of peripheral IP blocks with the AST2700,
-> allowing the existing QEMU models to be reused with minimal changes.
-> This series adds support for ADC, PECI, GPIO, SGPIO, I2C, and watchdog
-> controllers, and updates the AST1040 EVB machine to instantiate onboard
-> I2C devices for validation.
-> 
-> For I2C support, a new AST1040 I2C type is introduced. The model
-> inherits the AST2700 I2C architecture, including DMA support and
-> 64-bit DMA address registers, while constraining DMA accesses to the
-> 16 MiB HyperRAM address space available on AST1040.
-> 
-> Depends on:
->    https://github.com/legoater/qemu.git (branch: aspeed-next)
-> 
-> v1:
->    1. Support ADC, GPIO, SGPIO, I2C and PECI
-> 
-> v2:
->    1. Address review feedback.
->    2. Fix issues reported during review.
->    3. Update i2c bus number to 14.
-> 
-> Jamin Lin (10):
->    hw/i2c/aspeed_i2c: Introduce dma_addr_lo_mask to unify DMA address
->      handling
->    hw/i2c/aspeed_i2c: Increase AST2700 buffer mode size and adjust offset
->    hw/arm/aspeed_ast1040: Reuse AST2700 ADC model
->    hw/arm/aspeed_ast1040: Introduce PECI support
->    hw/arm/aspeed_ast1040: Reuse AST2700 GPIO controller model
->    hw/arm/aspeed_ast1040: Add SGPIO controller support
->    hw/i2c/aspeed_i2c: Introduce AST1040 I2C model
->    hw/arm/aspeed_ast1040: Introduce I2C support
->    hw/arm/aspeed_ast1040_evb: Introduce onboard I2C device
->    hw/arm/aspeed_ast1040: Reuse AST2700 watchdog models
-> 
->   include/hw/i2c/aspeed_i2c.h |   8 ++-
->   hw/arm/aspeed_ast1040.c     |  97 ++++++++++++++++++++++++++++-----
->   hw/arm/aspeed_ast1040_evb.c |  15 ++++++
->   hw/i2c/aspeed_i2c.c         | 103 ++++++++++++++++++++++++------------
->   4 files changed, 173 insertions(+), 50 deletions(-)
-> 
-
-Reviewed-by: Cédric Le Goater <clg@redhat.com>
-
-Thanks,
-
-C.
-
+Instantiate the Caliptra mailbox in the AST1040 SoC and map its SRAM and CS=
+R windows at the guest-visible MCI addresses.=0A=
+=0A=
+Add the 4 KiB MCI aperture controlled by the AST1040 SCU CPTRA page registe=
+r, switch the SoC to the AST1040 SCU model, and expose a machine option tha=
+t links an external mailbox peer after machine initialization.=0A=
+=0A=
+Signed-off-by: Steven Lee <steven_lee@aspeedtech.com>=0A=
+---=0A=
+ include/hw/arm/aspeed_soc.h | 11 ++++++=0A=
+ hw/arm/aspeed_ast1040.c     | 60 ++++++++++++++++++++++++++++--=0A=
+ hw/arm/aspeed_ast1040_evb.c | 74 ++++++++++++++++++++++++++++++++++++-=0A=
+ 3 files changed, 140 insertions(+), 5 deletions(-)=0A=
+=0A=
+diff --git a/include/hw/arm/aspeed_soc.h b/include/hw/arm/aspeed_soc.h=0A=
+index 3aac144cd4..9fad3bc082 100644=0A=
+--- a/include/hw/arm/aspeed_soc.h=0A=
++++ b/include/hw/arm/aspeed_soc.h=0A=
+@@ -46,6 +46,7 @@=0A=
+ #include "hw/intc/arm_gicv3.h"=0A=
+ #include "hw/misc/aspeed_ltpi.h"=0A=
+ #include "hw/arm/aspeed_ast1700.h"=0A=
++#include "hw/misc/aspeed_cptra_mbox.h"=0A=
+ =0A=
+ #define VBOOTROM_FILE_NAME  "ast27x0_bootrom.bin"=0A=
+ =0A=
+@@ -165,6 +166,16 @@ struct Aspeed10x0SoCState {=0A=
+ #define TYPE_ASPEED10X0_SOC "aspeed10x0-soc"=0A=
+ OBJECT_DECLARE_SIMPLE_TYPE(Aspeed10x0SoCState, ASPEED10X0_SOC)=0A=
+ =0A=
++struct Aspeed1040SoCState {=0A=
++    Aspeed10x0SoCState parent;=0A=
++=0A=
++    AspeedCptraMboxState cptra_mbox;=0A=
++    MemoryRegion cptra_mci_window;=0A=
++};=0A=
++=0A=
++#define TYPE_ASPEED1040_SOC "ast1040-a0"=0A=
++OBJECT_DECLARE_SIMPLE_TYPE(Aspeed1040SoCState, ASPEED1040_SOC)=0A=
++=0A=
+ struct AspeedSoCClass {=0A=
+     DeviceClass parent_class;=0A=
+ =0A=
+diff --git a/hw/arm/aspeed_ast1040.c b/hw/arm/aspeed_ast1040.c=0A=
+index 8efcdad8f6..c597982bc5 100644=0A=
+--- a/hw/arm/aspeed_ast1040.c=0A=
++++ b/hw/arm/aspeed_ast1040.c=0A=
+@@ -8,12 +8,17 @@=0A=
+ =0A=
+ #include "qemu/osdep.h"=0A=
+ #include "qapi/error.h"=0A=
+-#include "system/address-spaces.h"=0A=
+ #include "system/system.h"=0A=
+ #include "hw/core/qdev-clock.h"=0A=
+ #include "hw/misc/unimp.h"=0A=
++#include "hw/misc/aspeed_cptra_mbox.h"=0A=
+ #include "hw/arm/aspeed_soc.h"=0A=
+ =0A=
++#define AST1040_CPTRA_MCI_WINDOW_BASE 0x74200000=0A=
++#define AST1040_CPTRA_MCI_WINDOW_SIZE 0x1000=0A=
++#define AST1040_CPTRA_MBOX_SRAM_BASE  0x21400000=0A=
++#define AST1040_CPTRA_MBOX_CSR_BASE   0x21600000=0A=
++=0A=
+ static const hwaddr aspeed_soc_ast1040_memmap[] =3D {=0A=
+     [ASPEED_DEV_SRAM1]     =3D 0x00000000, /* Hyper RAM */=0A=
+     [ASPEED_DEV_FMC]       =3D 0x74000000,=0A=
+@@ -88,6 +93,7 @@ static qemu_irq aspeed_soc_ast1040_get_irq(AspeedSoCState=
+ *s, int dev)=0A=
+ =0A=
+ static void aspeed_soc_ast1040_init(Object *obj)=0A=
+ {=0A=
++    Aspeed1040SoCState *a1040 =3D ASPEED1040_SOC(obj);=0A=
+     Aspeed10x0SoCState *a =3D ASPEED10X0_SOC(obj);=0A=
+     AspeedSoCState *s =3D ASPEED_SOC(obj);=0A=
+     AspeedSoCClass *sc =3D ASPEED_SOC_GET_CLASS(s);=0A=
+@@ -96,12 +102,13 @@ static void aspeed_soc_ast1040_init(Object *obj)=0A=
+ =0A=
+     s->sysclk =3D qdev_init_clock_in(DEVICE(s), "sysclk", NULL, NULL, 0);=
+=0A=
+ =0A=
+-    /* AST1040 uses the AST2700 SCUIO model */=0A=
+-    object_initialize_child(obj, "scu", &s->scu, TYPE_ASPEED_2700_SCUIO);=
+=0A=
++    object_initialize_child(obj, "scu", &s->scu, TYPE_ASPEED_1040_SCU);=0A=
+     qdev_prop_set_uint32(DEVICE(&s->scu), "silicon-rev", sc->silicon_rev);=
+=0A=
+ =0A=
+     object_property_add_alias(obj, "hw-strap1", OBJECT(&s->scu), "hw-strap=
+1");=0A=
+     object_property_add_alias(obj, "hw-strap2", OBJECT(&s->scu), "hw-strap=
+2");=0A=
++    object_initialize_child(obj, "cptra-mbox", &a1040->cptra_mbox,=0A=
++                            TYPE_ASPEED_CPTRA_MBOX);=0A=
+ =0A=
+     for (i =3D 0; i < sc->uarts_num; i++) {=0A=
+         object_initialize_child(obj, "uart[*]", &s->uart[i], TYPE_SERIAL_M=
+M);=0A=
+@@ -120,8 +127,31 @@ static void aspeed_soc_ast1040_init(Object *obj)=0A=
+                             TYPE_UNIMPLEMENTED_DEVICE);=0A=
+ }=0A=
+ =0A=
++static bool aspeed_soc_ast1040_realize_cptra_mbox(Aspeed1040SoCState *a104=
+0,=0A=
++                                                  Error **errp)=0A=
++{=0A=
++    AspeedSoCState *s =3D ASPEED_SOC(a1040);=0A=
++    DeviceState *mbox =3D DEVICE(&a1040->cptra_mbox);=0A=
++=0A=
++    /*=0A=
++     * Caliptra is an AST1040 integrated RoT IP. The external peer is=0A=
++     * optional; without a peer, the mailbox registers remain present and=
+=0A=
++     * EXECUTE completes with CMD_FAILURE.=0A=
++     */=0A=
++    if (!sysbus_realize(SYS_BUS_DEVICE(mbox), errp)) {=0A=
++        return false;=0A=
++    }=0A=
++=0A=
++    aspeed_mmio_map(s->memory, SYS_BUS_DEVICE(mbox), 0,=0A=
++                    AST1040_CPTRA_MBOX_SRAM_BASE);=0A=
++    aspeed_mmio_map(s->memory, SYS_BUS_DEVICE(mbox), 1,=0A=
++                    AST1040_CPTRA_MBOX_CSR_BASE);=0A=
++    return true;=0A=
++}=0A=
++=0A=
+ static void aspeed_soc_ast1040_realize(DeviceState *dev_soc, Error **errp)=
+=0A=
+ {=0A=
++    Aspeed1040SoCState *a1040 =3D ASPEED1040_SOC(dev_soc);=0A=
+     Aspeed10x0SoCState *a =3D ASPEED10X0_SOC(dev_soc);=0A=
+     AspeedSoCState *s =3D ASPEED_SOC(dev_soc);=0A=
+     AspeedSoCClass *sc =3D ASPEED_SOC_GET_CLASS(s);=0A=
+@@ -171,6 +201,27 @@ static void aspeed_soc_ast1040_realize(DeviceState *de=
+v_soc, Error **errp)=0A=
+     memory_region_add_subregion(s->memory, sc->memmap[ASPEED_DEV_SRAM1],=
+=0A=
+                                 &s->sram[1]);=0A=
+ =0A=
++    if (!aspeed_soc_ast1040_realize_cptra_mbox(a1040, errp)) {=0A=
++        return;=0A=
++    }=0A=
++=0A=
++    /*=0A=
++     * The Caliptra MCI aperture is a 4 KiB alias whose target is selected=
+ by=0A=
++     * AST1040_SCU_CPTRA_PAGE_REG0. Firmware commonly switches it between=
+=0A=
++     * mailbox SRAM (0x21400000) and mailbox CSR (0x21600000), then access=
+es=0A=
++     * the selected page through 0x74200000.=0A=
++     */=0A=
++    memory_region_init_alias(&a1040->cptra_mci_window, OBJECT(s),=0A=
++                             "aspeed.ast1040.cptra-mci-window", s->memory,=
+=0A=
++                             0, AST1040_CPTRA_MCI_WINDOW_SIZE);=0A=
++    memory_region_add_subregion(s->memory, AST1040_CPTRA_MCI_WINDOW_BASE,=
+=0A=
++                                &a1040->cptra_mci_window);=0A=
++    /* The SCU drives the aperture's target offset via SCU_CPTRA_PAGE_REG0=
+. */=0A=
++    object_property_set_link(OBJECT(&s->scu), "cptra-page-window",=0A=
++                             OBJECT(&a1040->cptra_mci_window), &error_abor=
+t);=0A=
++    object_property_set_uint(OBJECT(&s->scu), "cptra-page-window-base",=0A=
++                             AST1040_CPTRA_MCI_WINDOW_BASE, &error_abort);=
+=0A=
++=0A=
+     /* SCU */=0A=
+     if (!sysbus_realize(SYS_BUS_DEVICE(&s->scu), errp)) {=0A=
+         return;=0A=
+@@ -244,8 +295,9 @@ static void aspeed_soc_ast1040_class_init(ObjectClass *=
+klass, const void *data)=0A=
+ =0A=
+ static const TypeInfo aspeed_soc_ast1040_types[] =3D {=0A=
+     {=0A=
+-        .name           =3D "ast1040-a0",=0A=
++        .name           =3D TYPE_ASPEED1040_SOC,=0A=
+         .parent         =3D TYPE_ASPEED10X0_SOC,=0A=
++        .instance_size  =3D sizeof(Aspeed1040SoCState),=0A=
+         .instance_init  =3D aspeed_soc_ast1040_init,=0A=
+         .class_init     =3D aspeed_soc_ast1040_class_init,=0A=
+     }=0A=
+diff --git a/hw/arm/aspeed_ast1040_evb.c b/hw/arm/aspeed_ast1040_evb.c=0A=
+index 1d9b55247f..eb325a1095 100644=0A=
+--- a/hw/arm/aspeed_ast1040_evb.c=0A=
++++ b/hw/arm/aspeed_ast1040_evb.c=0A=
+@@ -8,17 +8,59 @@=0A=
+ =0A=
+ #include "qemu/osdep.h"=0A=
+ #include "qapi/error.h"=0A=
++#include "qemu/error-report.h"=0A=
+ #include "hw/arm/boot.h"=0A=
+ #include "hw/arm/machines-qom.h"=0A=
+ #include "hw/arm/aspeed.h"=0A=
+ #include "hw/arm/aspeed_soc.h"=0A=
+ #include "hw/core/qdev-clock.h"=0A=
++#include "hw/misc/aspeed_cptra_mbox.h"=0A=
+ #include "system/system.h"=0A=
+ =0A=
+ #define AST1040_INTERNAL_FLASH_SIZE (4 * MiB)=0A=
+ /* Main SYSCLK frequency in Hz (400MHz) */=0A=
+ #define SYSCLK_FRQ 400000000ULL=0A=
+ =0A=
++#define TYPE_AST1040_EVB_MACHINE MACHINE_TYPE_NAME("ast1040-evb")=0A=
++OBJECT_DECLARE_SIMPLE_TYPE(Ast1040EvbMachineState, AST1040_EVB_MACHINE)=0A=
++=0A=
++struct Ast1040EvbMachineState {=0A=
++    AspeedMachineState parent_obj;=0A=
++=0A=
++    char *cptra_peer;=0A=
++    Notifier machine_done;=0A=
++};=0A=
++=0A=
++static void aspeed_bic_machine_done(Notifier *notifier, void *data)=0A=
++{=0A=
++    Ast1040EvbMachineState *m =3D container_of(notifier,=0A=
++                                             Ast1040EvbMachineState,=0A=
++                                             machine_done);=0A=
++    AspeedMachineState *bmc =3D ASPEED_MACHINE(m);=0A=
++    Aspeed1040SoCState *a1040 =3D ASPEED1040_SOC(bmc->soc);=0A=
++    bool ambiguous =3D false;=0A=
++    Object *peer;=0A=
++    Error *err =3D NULL;=0A=
++=0A=
++    if (!m->cptra_peer) {=0A=
++        return;=0A=
++    }=0A=
++=0A=
++    peer =3D object_resolve_path_type(m->cptra_peer, TYPE_CPTRA_MBOX_PEER,=
+=0A=
++                                    &ambiguous);=0A=
++    if (!peer || ambiguous) {=0A=
++        error_report("cptra-peer: peer '%s' not found%s",=0A=
++                     m->cptra_peer, ambiguous ? " (ambiguous)" : "");=0A=
++        exit(1);=0A=
++    }=0A=
++=0A=
++    if (!aspeed_cptra_mbox_set_peer(&a1040->cptra_mbox,=0A=
++                                    CPTRA_MBOX_PEER(peer), &err)) {=0A=
++        error_report_err(err);=0A=
++        exit(1);=0A=
++    }=0A=
++}=0A=
++=0A=
+ static void aspeed_bic_machine_init(MachineState *machine)=0A=
+ {=0A=
+     AspeedMachineState *bmc =3D ASPEED_MACHINE(machine);=0A=
+@@ -38,12 +80,35 @@ static void aspeed_bic_machine_init(MachineState *machi=
+ne)=0A=
+     aspeed_connect_serial_hds_to_uarts(bmc);=0A=
+     qdev_realize(DEVICE(bmc->soc), NULL, &error_abort);=0A=
+ =0A=
++    if (AST1040_EVB_MACHINE(machine)->cptra_peer) {=0A=
++        AST1040_EVB_MACHINE(machine)->machine_done.notify =3D=0A=
++            aspeed_bic_machine_done;=0A=
++        qemu_add_machine_init_done_notifier(=0A=
++            &AST1040_EVB_MACHINE(machine)->machine_done);=0A=
++    }=0A=
++=0A=
+     armv7m_load_kernel(ARM_CPU(first_cpu),=0A=
+                        machine->kernel_filename,=0A=
+                        0,=0A=
+                        AST1040_INTERNAL_FLASH_SIZE);=0A=
+ }=0A=
+ =0A=
++static char *aspeed_bic_get_cptra_peer(Object *obj, Error **errp)=0A=
++{=0A=
++    Ast1040EvbMachineState *m =3D AST1040_EVB_MACHINE(obj);=0A=
++=0A=
++    return g_strdup(m->cptra_peer);=0A=
++}=0A=
++=0A=
++static void aspeed_bic_set_cptra_peer(Object *obj, const char *value,=0A=
++                                      Error **errp)=0A=
++{=0A=
++    Ast1040EvbMachineState *m =3D AST1040_EVB_MACHINE(obj);=0A=
++=0A=
++    g_free(m->cptra_peer);=0A=
++    m->cptra_peer =3D g_strdup(value);=0A=
++}=0A=
++=0A=
+ static void aspeed_machine_ast1040_evb_class_init(ObjectClass *oc,=0A=
+                                                   const void *data)=0A=
+ {=0A=
+@@ -59,12 +124,19 @@ static void aspeed_machine_ast1040_evb_class_init(Obje=
+ctClass *oc,=0A=
+     amc->macs_mask =3D 0;=0A=
+     amc->uart_default =3D ASPEED_DEV_UART12;=0A=
+     aspeed_machine_class_init_cpus_defaults(mc);=0A=
++=0A=
++    object_class_property_add_str(oc, "cptra-peer",=0A=
++                                  aspeed_bic_get_cptra_peer,=0A=
++                                  aspeed_bic_set_cptra_peer);=0A=
++    object_class_property_set_description(oc, "cptra-peer",=0A=
++        "Caliptra mailbox peer object id");=0A=
+ }=0A=
+ =0A=
+ static const TypeInfo aspeed_ast1040_evb_types[] =3D {=0A=
+     {=0A=
+-        .name           =3D MACHINE_TYPE_NAME("ast1040-evb"),=0A=
++        .name           =3D TYPE_AST1040_EVB_MACHINE,=0A=
+         .parent         =3D TYPE_ASPEED_MACHINE,=0A=
++        .instance_size  =3D sizeof(Ast1040EvbMachineState),=0A=
+         .class_init     =3D aspeed_machine_ast1040_evb_class_init,=0A=
+         .interfaces     =3D arm_machine_interfaces,=0A=
+     }=0A=
+-- =0A=
+2.43.0=
 
