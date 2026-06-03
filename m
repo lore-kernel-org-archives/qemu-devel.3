@@ -4,95 +4,82 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5564BCD6E55
-	for <qemu-devel@archiver.kernel.org>; Wed,  3 Jun 2026 16:57:47 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B7447CD6E55
+	for <qemu-devel@archiver.kernel.org>; Wed,  3 Jun 2026 17:17:00 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wUotv-0005PC-Lz; Wed, 03 Jun 2026 12:57:07 -0400
+	id 1wUpCV-00005W-1n; Wed, 03 Jun 2026 13:16:19 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1wUott-0005Ob-Ke
- for qemu-devel@nongnu.org; Wed, 03 Jun 2026 12:57:05 -0400
-Received: from mail-pj1-x1033.google.com ([2607:f8b0:4864:20::1033])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1wUots-0000KG-2Z
- for qemu-devel@nongnu.org; Wed, 03 Jun 2026 12:57:05 -0400
-Received: by mail-pj1-x1033.google.com with SMTP id
- 98e67ed59e1d1-36ab8816a35so6555873a91.1
- for <qemu-devel@nongnu.org>; Wed, 03 Jun 2026 09:57:03 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1780505822; x=1781110622; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:content-language:from
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=Hq7Tld+xP5icwAA24A27Ss+Gqa4T9WXi2AioM6zG01E=;
- b=P76dAzr9GdCmjECLni+jyTqlvT148KsuV11eRgI5JgAG/9j8WCrNHpfzVUN7QzsprY
- C9+6T3cE4A4zgBUyJubctzj7RI1K7PLQ66h7bmeOj/+0imYE20WXPx2dsz8za3GvlXxV
- rBBvhB6oE2JKoJ/hqbcZWwzETm3i7iObzGeLpyzs9bm3RrX+VKPD1OMmE0hJQjYc5n8D
- LPfLOFzhxuzgA5RYiwZnu5GD1vcq09lc1EMoYMEcChg0+5dQFHxzj39MEK85jQDiqcec
- rTCKfuqXoUUO2HGFXdBN1wuefTbLGLIsMTR0eDGtrpbB2jHRyOICJmXfdWCDFVkKeQ3Q
- tmnQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1780505822; x=1781110622;
- h=content-transfer-encoding:in-reply-to:content-language:from
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=Hq7Tld+xP5icwAA24A27Ss+Gqa4T9WXi2AioM6zG01E=;
- b=qMYRsPguOXvst0JipPUNbp6wQ5iHqWTnp0IHAK99cj0yZQcmksjV5g4/lYmgHV2jXM
- esTNGyyhOSVnmb7XTEY3FLOrbilc55Zm1mb+XDUsJTM4ZB03dDH2CHHurvhuXeUpT0rJ
- B5XXAaCjKJhS8CNhNYW6taAdKbgXfbm5OrMdT8XeCaXk+kqlbvZQTc29Q1amDkOot9PL
- 51RKlByyEbK+DruR8dxCn9dF6w3OWe+GIMEIPOBLClniFBCcDUCUqbOzRAIUiJCT/A2X
- kIXJcjA04XL7WFZyOIxXNxjOSDJ3i9TIjX2uv797BWgwHsvWN9Ol1jDRmnwx3K4kkqX9
- NCMQ==
-X-Forwarded-Encrypted: i=1;
- AFNElJ+oQJemkGcJdDNe7J2HlBTQ4ztLHzRU73ST920lW9ZjHIYylyxWfMgN09fEtczEZDC3Eu0TYh9Bjl3J@nongnu.org
-X-Gm-Message-State: AOJu0YwH7iP5sR6tgKWKtNEqD1DrvPwZ0zlCga5p04UhoyGOSOS/o89C
- Z4adnanYCQYOmAEPrOTqEvUGc2TlgAf4E/JN9JoAmyQE4vi1bn0EbvwtgEbLyumvbTa3VzoFUtF
- pmYWxY6M=
-X-Gm-Gg: Acq92OF5soJgpUJR0X335gb7kXlhWaldkKEx2rFroser46Bqz87iy9fOnWAyN1z9XS8
- FQTIIVQwLm8EHoZP7/+weGAHP4cE0s0stceDCqxL23UbIHzzr2jBW6LYzo5YtU4PNzL5F7rWjYs
- +2f2k6LyYYOyBursSLpueTK/N+5oOOgp1/kioKQobITTfwQItJaFpu0EZXA+ASLk6pH7RqF3VUW
- puRB7UOVDV9PgNUJlfnS+U+Ty3pqI1l5/P6oPTleWju88CAUxuxuC5+PVrdznpWfv4+EgvZlm1B
- Ge6IwsGrtGnuSBKSocMRFIOqc0ROh5lh/mTTZzJUsPPi9N/9llcbIPf1S679RRSBOTvLbIEIEUb
- KO9opYjOfugQNgWGK4JL+taXsJI6gAGLkqJmmfnaOVbMLPVoQjLnERo3yxrOkNHffiOV7b1x0xO
- GQIYp+PK1kD6F83wUqND//Do9clNpHyT5yf214zRbDAQjUJr4=
-X-Received: by 2002:a17:90b:5488:b0:365:3154:7b1 with SMTP id
- 98e67ed59e1d1-36e335db2f6mr4522303a91.26.1780505822037; 
- Wed, 03 Jun 2026 09:57:02 -0700 (PDT)
-Received: from [192.168.0.4] ([71.212.142.33])
- by smtp.gmail.com with ESMTPSA id
- 98e67ed59e1d1-36f68bf99dcsm247714a91.0.2026.06.03.09.57.01
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 03 Jun 2026 09:57:01 -0700 (PDT)
-Message-ID: <9c453509-7887-47fc-aaad-1cbee06a2208@linaro.org>
-Date: Wed, 3 Jun 2026 09:57:00 -0700
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1wUpCR-0008W4-MA
+ for qemu-devel@nongnu.org; Wed, 03 Jun 2026 13:16:17 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1wUpCP-0006Bm-4h
+ for qemu-devel@nongnu.org; Wed, 03 Jun 2026 13:16:15 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1780506971;
+ h=from:from:reply-to:reply-to:subject:subject:date:date:
+ message-id:message-id:to:to:cc:cc:mime-version:mime-version:
+ content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=n+bq0CaMYt7tHmdYI9bIrzKoRjv74q4Q1koF9CvivuU=;
+ b=FwEc6bIdV7Qg49WVipN8wY5USr7ykIS+8/FUioDzUbZWqTgVslhwqQRSX9f8zMGd4fqo+O
+ Cb3jXAI9bHtVyFJBIfM3L5EPXUg4bVInghdUPZo4hQ8r5C7KWYjMFVC0JN5WgazBj7agXU
+ ccPHadcHOogZ9DS8NgTu6dJrsbPpLk0=
+Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-679-jc_0t80CMb2XowCdWLp6KQ-1; Wed,
+ 03 Jun 2026 13:16:07 -0400
+X-MC-Unique: jc_0t80CMb2XowCdWLp6KQ-1
+X-Mimecast-MFC-AGG-ID: jc_0t80CMb2XowCdWLp6KQ_1780506966
+Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 074771800345; Wed,  3 Jun 2026 17:16:06 +0000 (UTC)
+Received: from redhat.com (unknown [10.44.50.34])
+ by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 9087E30001A1; Wed,  3 Jun 2026 17:16:01 +0000 (UTC)
+Date: Wed, 3 Jun 2026 18:15:57 +0100
+From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
+To: Peter Xu <peterx@redhat.com>
+Cc: Fabiano Rosas <farosas@suse.de>, qemu-devel@nongnu.org,
+ Paolo Bonzini <pbonzini@redhat.com>, Mark Kanda <mark.kanda@oracle.com>,
+ "Michael S . Tsirkin" <mst@redhat.com>,
+ Markus Armbruster <armbru@redhat.com>, Eric Blake <eblake@redhat.com>,
+ "Maciej S. Szmigiero" <maciej.szmigiero@oracle.com>,
+ Jason Wang <jasowang@redhat.com>, Ben Chaney <bchaney@akamai.com>,
+ Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
+Subject: Re: [PATCH RFC 0/2] migration/vl: new -incoming config:* for early
+ migration parameters
+Message-ID: <aiBhTTqSctU9lFsS@redhat.com>
+References: <20260528212947.368132-1-peterx@redhat.com>
+ <87se7btcq9.fsf@suse.de> <ahmfh2s7CLFLoZKN@x1.local>
+ <ah_4hixGcNv-CLfv@redhat.com> <aiBNXUU0xcT_UbKO@x1.local>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 4/4] linux-user/sparc: flush register windows before core
- dump
-To: Matt Turner <mattst88@gmail.com>, qemu-devel@nongnu.org
-Cc: Laurent Vivier <laurent@vivier.eu>, Helge Deller <deller@gmx.de>,
- Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
-References: <20260603161852.1831864-1-mattst88@gmail.com>
- <20260603161852.1831864-4-mattst88@gmail.com>
-From: Richard Henderson <richard.henderson@linaro.org>
-Content-Language: en-US
-In-Reply-To: <20260603161852.1831864-4-mattst88@gmail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::1033;
- envelope-from=richard.henderson@linaro.org; helo=mail-pj1-x1033.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <aiBNXUU0xcT_UbKO@x1.local>
+User-Agent: Mutt/2.3.1 (2026-03-20)
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=berrange@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -24
+X-Spam_score: -2.5
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.445,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -105,54 +92,98 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 6/3/26 09:18, Matt Turner wrote:
-> @@ -502,6 +502,14 @@ void target_to_host_siginfo(siginfo_t *info, const target_siginfo_t *tinfo)
->       info->si_value.sival_ptr = (void *)(long)sival_ptr;
->   }
->   
-> +/*
-> + * Weak arch hook: flush all register windows to the guest stack before
-> + * writing a core dump.  Required on SPARC where the register file holds
-> + * multiple call-frames that have not been spilled to memory yet.
-> + * Architectures without register windows leave this as a no-op.
-> + */
-> +void __attribute__((weak)) target_flush_windows(CPUArchState *env) {}
-> +
->   /* returns 1 if given signal should dump core if not handled */
->   static int core_dump_signal(int sig)
->   {
-> @@ -828,6 +836,7 @@ void dump_core_and_abort(CPUArchState *env, int target_sig)
->   
->       /* dump core if supported by target binary format */
->       if (core_dump_signal(target_sig) && (ts->bprm->core_dump != NULL)) {
-> +        target_flush_windows(env);
->           stop_all_tasks();
->           core_dumped =
->               ((*ts->bprm->core_dump)(target_sig, env) == 0);
+On Wed, Jun 03, 2026 at 11:50:53AM -0400, Peter Xu wrote:
+> On Wed, Jun 03, 2026 at 10:48:54AM +0100, Daniel P. Berrangé wrote:
+> > On Fri, May 29, 2026 at 10:15:35AM -0400, Peter Xu wrote:
+> > > On Thu, May 28, 2026 at 07:01:50PM -0300, Fabiano Rosas wrote:
+> > > > Peter Xu <peterx@redhat.com> writes:
+> > > > 
+> > > > > CI: https://gitlab.com/peterx/qemu/-/pipelines/2560168907
+> > > > >
+> > > > > This series introduces a generic way to specify migration parameters that
+> > > > > can be used even during the early boot phase of QEMU.
+> > > > >
+> > > > > One example use case that already existed is CPR-transfer / CPR-exec.
+> > > > > currently QEMU has a temporary global variable (incoming_mode) to achieve
+> > > > > this, but it's hard to understand and this hack bleeded into quite a few
+> > > > > places that we could have avoided.  The lines in patch 2 touched may
+> > > > > provide some idea.
+> > > > >
+> > > > > With a generic approach of setting migration parameters with cmdlines, we
+> > > > > can remove this hack meanwhile QEMU should be able to keep the CPR behavior
+> > > > > as before.  To CPR maintainers and reviewers: please have a closer look,
+> > > > > even better if it can be smoke tested, to see if this works for Oracle's
+> > > > > environment, TIA.
+> > > > >
+> > > > > The 1st patch implemented that new semantics.  It is straightforward: now
+> > > > > we can setup any migration parameter using an extra line of:
+> > > > >
+> > > > >   -incoming config:key1=value1,key2=value2,...
 
-Not a fan of the weak symbol.
+snip
 
-I'm pretty sure you need this flush for all threads, so probably has to happen after 
-stop_all_tasks.  Probably via one of the CPU_FOREACH in elf_core_dump.
+> > > > - using "config:"
+> > > > 
+> > > > This makes it non-uniform with uri and channels which don't have a
+> > > > keyword in front of them. I guess I could live with it, but it seems
+> > > > odd. I see that it makes parsing way easier.
+> > > 
+> > > Yeah, having some identifier would be nice.  I wished channels also have
+> > > identifiers if we don't need to keep compatibility.
+> > 
+> > IMHO having a magic "config:" prefix is an anti-pattern because it
+> > involves custom command line parsing logic.
+> 
+> Yes, it's not elegant.  I wished we had something like this though when
+> introducing the cpr channels; right now anything wasn't "defer" or URI
+> implies it's a "channel"..
+> 
+> I also wanted to avoid introducing new cmdline parameters, so migration
+> incoming cmdlines can stick with the same option.  If there's better
+> suggestion please shoot.
+> 
+> > 
+> > Does "-incoming config" imply '-incoming defer' semantics or is it
+> > independent ?  
+> 
+> They're independent.  Examples:
+> 
+>  a) "-incoming config:* -incoming tcp:*", setup parameters for TCP incoming
+>     migration without further deferral
+> 
+>  b) "-incoming config:*" only, setup global parameters for a possible
+>     upcoming outgoing migration
 
-We're not quite to the state where there are no TARGET_FOO ifdefs in elfload.c.
-I think we can stand a TARGET_SPARC ifdef in elf_core_dump.
+In that case they should definitely be independent command line
+options. The old "-incoming" design is already broken / limited
+in the non-'defer' case because it is hardcoded to use URI syntax
+which can't express all the address formats we accept in QAPI
+syntax. Adding more special cases onto -incoming just makes the
+bad situation even worse and is not a forward looking design.
 
-> +/* Override the weak hook in linux-user/signal.c to flush all SPARC register
-> + * windows to the guest stack before a core dump is written.  Without this,
-> + * only the active window (captured in NT_PRSTATUS) ends up in memory; all
-> + * deeper call frames remain in the register file and are absent from the
-> + * core's memory segments, breaking stack unwind beyond one frame. */
-> +void target_flush_windows(CPUArchState *env)
-> +{
-> +    flush_windows((CPUSPARCState *)env);
-> +}
+If we need the ability to specify migration parameters on the
+CLI, then as a starting point for the design, we should assume that
+-incoming does not exist, and design a complete solution from scratch
+that uses QAPI exclusively, both for addresses and configuration.
 
-Cast not required -- the two names are typedefs of each other.
+As discussed before, IMHO the "migrate" and "migrate-incoming"
+commands need to accept both the address(s) and parameters/capabilities
+as inline data items rather than relying on pre-configured global state
+from the 'migrate-parameter' / 'migrate-capability' commands.
 
+If we did that modelling for 'migrate-incoming' then that modelling of
+command parmaeters could map directly to a new '-migrate-incoming'
+command line argument that accepted exactly the same data model.
 
-r~
+With regards,
+Daniel
+-- 
+|: https://berrange.com       ~~        https://hachyderm.io/@berrange :|
+|: https://libvirt.org          ~~          https://entangle-photo.org :|
+|: https://pixelfed.art/berrange   ~~    https://fstop138.berrange.com :|
+
 
