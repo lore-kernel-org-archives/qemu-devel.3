@@ -4,70 +4,69 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 80ECBCD6E55
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8E81DCD6E6A
 	for <qemu-devel@archiver.kernel.org>; Wed,  3 Jun 2026 06:44:36 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wUfHt-0003qg-IJ; Wed, 03 Jun 2026 02:41:13 -0400
+	id 1wUfHv-0003yP-3O; Wed, 03 Jun 2026 02:41:15 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1wUfHb-0003TC-ON
- for qemu-devel@nongnu.org; Wed, 03 Jun 2026 02:41:00 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1wUfHW-0003QH-MJ
+ for qemu-devel@nongnu.org; Wed, 03 Jun 2026 02:40:52 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1wUfHW-0000sD-D7
- for qemu-devel@nongnu.org; Wed, 03 Jun 2026 02:40:55 -0400
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1wUfHT-0000pn-3P
+ for qemu-devel@nongnu.org; Wed, 03 Jun 2026 02:40:49 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1780468848;
+ s=mimecast20190719; t=1780468845;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=cJF5ehaTgp2Z80HInJ7Z7JZ8h8VHcdmzeU6f4Wf3shk=;
- b=comdGrw2r/WU73xRvdly7sL1mIr4n1KjkNj7w7r8VPIrggrPoWVY4p+Oc6dWVlV/Z67Va5
- R9BL+9eqjbkT5B6hmAv8g/sF93D+SzRSzMDv8kKgX1y5Nx7TsvByCABbT8fVz+kAp4IdIl
- NXke1q5NoXZIOKcx+TEFIBvV93HMM0I=
+ bh=fnMqniHIVXbdjx0293YKQzUZ7DKlr4aC8Ubl+elBA00=;
+ b=fMJ+FXPgxCsTaqh66kvZNYgOIzfsUKV7DDY1ndBE+A1cyZsBe7zUc/b37oK0634AAytu/F
+ +YQi9kWMUf/vVmLhOwxAXBT9wG2VC0/a/VnIH2szVpz+YkreaALAzih4lHawsCdKlVixbx
+ 5KaY9k8HpmrQ+QblqgP5C+i+zX+AyrE=
 Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-438-G27W3grGPK6Q1GovGuykJA-1; Wed,
- 03 Jun 2026 02:40:42 -0400
-X-MC-Unique: G27W3grGPK6Q1GovGuykJA-1
-X-Mimecast-MFC-AGG-ID: G27W3grGPK6Q1GovGuykJA_1780468841
-Received: from mx-prod-int-10.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-10.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.95])
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-435-HsDT4hAPN6G68B2FlZ2ntw-1; Wed,
+ 03 Jun 2026 02:40:39 -0400
+X-MC-Unique: HsDT4hAPN6G68B2FlZ2ntw-1
+X-Mimecast-MFC-AGG-ID: HsDT4hAPN6G68B2FlZ2ntw_1780468838
+Received: from mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.93])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
  by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 7DFA41956089; Wed,  3 Jun 2026 06:40:41 +0000 (UTC)
+ id 7806E1956089; Wed,  3 Jun 2026 06:40:38 +0000 (UTC)
 Received: from blackfin.pond.sub.org (unknown [10.44.22.2])
- by mx-prod-int-10.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 36E471624; Wed,  3 Jun 2026 06:40:41 +0000 (UTC)
+ by mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 11ED4180049F; Wed,  3 Jun 2026 06:40:38 +0000 (UTC)
 Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
- id 9C68E21E6499; Wed, 03 Jun 2026 08:40:32 +0200 (CEST)
+ id 5EB2221E6A35; Wed, 03 Jun 2026 08:40:32 +0200 (CEST)
 From: Markus Armbruster <armbru@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: philmd@mailo.com, pierrick.bouvier@oss.qualcomm.com,
- Stefan Hajnoczi <stefanha@redhat.com>, Fam Zheng <fam@euphon.net>,
- qemu-block@nongnu.org
-Subject: [PATCH v2 26/38] MAINTAINERS: Drop stale F: from "Block I/O path"
-Date: Wed,  3 Jun 2026 08:40:20 +0200
-Message-ID: <20260603064032.3733394-27-armbru@redhat.com>
+ Kohei Tokunaga <ktokunaga.mail@gmail.com>
+Subject: [PATCH v2 11/38] MAINTAINERS: Fix F: in "WebAssembly"
+Date: Wed,  3 Jun 2026 08:40:05 +0200
+Message-ID: <20260603064032.3733394-12-armbru@redhat.com>
 In-Reply-To: <20260603064032.3733394-1-armbru@redhat.com>
 References: <20260603064032.3733394-1-armbru@redhat.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 3.6 on 10.30.177.95
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=armbru@redhat.com;
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.93
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=armbru@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: 8
 X-Spam_score: 0.8
 X-Spam_bar: /
 X-Spam_report: (0.8 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.445,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_SBL_CSS=3.335, SPF_HELO_PASS=-0.001,
  SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
@@ -85,31 +84,30 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-We neglected to update MAINTAINERS when we deleted
-tests/unit/test-fdmon-epoll.c.  Update it now.
+We neglected to update MAINTAINERS when we renamed
+emsdk-wasm-cross.docker to emsdk-wasm64-cross.docker.  Update it now.
 
-Fixes: 60f782b6b7 (aio: remove aio_disable_external() API, 2023-05-16)
-Cc: Stefan Hajnoczi <stefanha@redhat.com>
-Cc: Fam Zheng <fam@euphon.net>
-Cc: qemu-block@nongnu.org
+Fixes: 792d94406a (tests/docker: rename wasm cross container, 2026-01-28)
+Cc: Kohei Tokunaga <ktokunaga.mail@gmail.com>
 Signed-off-by: Markus Armbruster <armbru@redhat.com>
-Reviewed-by: Stefan Hajnoczi <stefanha@redhat.com>
+Reviewed-by: Kohei Tokunaga <ktokunaga.mail@gmail.com>
 ---
- MAINTAINERS | 1 -
- 1 file changed, 1 deletion(-)
+ MAINTAINERS | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
 diff --git a/MAINTAINERS b/MAINTAINERS
-index 743da50c9d..9617a57e04 100644
+index 2bf421c659..c80c868526 100644
 --- a/MAINTAINERS
 +++ b/MAINTAINERS
-@@ -3136,7 +3136,6 @@ F: include/qemu/aio.h
- F: include/qemu/aio-wait.h
- F: include/qemu/defer-call.h
- F: scripts/qemugdb/aio.py
--F: tests/unit/test-fdmon-epoll.c
- T: git https://github.com/stefanha/qemu.git block
+@@ -703,7 +703,7 @@ F: include/system/os-wasm.h
+ F: os-wasm.c
+ F: util/coroutine-wasm.c
+ F: configs/meson/emscripten.txt
+-F: tests/docker/dockerfiles/emsdk-wasm-cross.docker
++F: tests/docker/dockerfiles/emsdk-wasm64-cross.docker
  
- Block SCSI subsystem
+ Alpha Machines
+ --------------
 -- 
 2.54.0
 
