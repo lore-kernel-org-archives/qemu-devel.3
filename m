@@ -4,101 +4,99 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 53CDBCD6E5D
-	for <qemu-devel@archiver.kernel.org>; Wed,  3 Jun 2026 01:08:42 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1DD6BCD6E5D
+	for <qemu-devel@archiver.kernel.org>; Wed,  3 Jun 2026 01:09:52 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wUa5o-0007kX-J3; Tue, 02 Jun 2026 21:08:24 -0400
+	id 1wUa73-0008Mk-5S; Tue, 02 Jun 2026 21:09:41 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1wUa5g-0007jc-0a
- for qemu-devel@nongnu.org; Tue, 02 Jun 2026 21:08:17 -0400
-Received: from mail-ej1-x632.google.com ([2a00:1450:4864:20::632])
+ id 1wUa70-0008Ll-M1
+ for qemu-devel@nongnu.org; Tue, 02 Jun 2026 21:09:39 -0400
+Received: from mail-ed1-x533.google.com ([2a00:1450:4864:20::533])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1wUa5d-0001ON-3i
- for qemu-devel@nongnu.org; Tue, 02 Jun 2026 21:08:14 -0400
-Received: by mail-ej1-x632.google.com with SMTP id
- a640c23a62f3a-beb8a08a6c8so536690466b.2
- for <qemu-devel@nongnu.org>; Tue, 02 Jun 2026 18:08:12 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1780448891; cv=none;
+ id 1wUa6y-0001pV-QI
+ for qemu-devel@nongnu.org; Tue, 02 Jun 2026 21:09:38 -0400
+Received: by mail-ed1-x533.google.com with SMTP id
+ 4fb4d7f45d1cf-68c76fb8009so6141368a12.0
+ for <qemu-devel@nongnu.org>; Tue, 02 Jun 2026 18:09:36 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1780448975; cv=none;
  d=google.com; s=arc-20240605;
- b=IQgj/aTUoCePTkEdEXX3rD3hnRAqEI3jItHxAq1IAouyLEWsGs+6/tmOUudKZWRG2h
- 2yZdNKXF7s2yV9KPWV4wWffXNtzMoOgLHYdv/tM7Ty9+ekiPvgQ8H1AaN2UcsK1VJt7v
- TdPD9is++Er2NCSPDId4qGHa9dVV4bcwn9bXIScdenl1WsjXTkO4Q9kgIdjf70BuhkU4
- 7tHw6JXw1n07BiA0P3dlp6zP09jzHdB+daDOLY6otTxPLsyg4ceamDT8A6SxQMMR+pME
- aUGUBfVIN+vh3wcKtLFzo+Vrxr4+/Rqjn40XWDVWm8CrlL4yz6wr/MwSoVMmbYW/Zsg3
- I9Wg==
+ b=PZOjIvzup1FDlyIKvz/A11y1i8eBC/Ow0naa86MEo2vLQQm2krCnwXL3sbat5XidpU
+ 3t+mG6bXPQdUK4jgMbu14+O+oJtOTs+r3n41EbLXpV8tzfqAyC7P48vQKDjckyKjjZ+3
+ AnU6JcfBp1Uggb/9tyPuPjus/HNofLP5tec4yjshRZZSUH5o/zpN2an5jv9d8QODtOWT
+ 2GrdZf7hNKyJCvasB0yItAEpQv1jvEcz35aHFnkdRikwsPaO1fqDQeyUesXlpYWv2wUF
+ tVqZgVogeU4n5Mr+WoxQIHb+og4ikyL3AqiFZ0QA8ddlIDyWbGExEUZvApKl6X6ao4z2
+ XuwQ==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
  s=arc-20240605; 
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:dkim-signature;
- bh=/A0gDiDTrxy+ELN91nEDe4UfA59Q+zNnrMTKM/ccYRE=;
- fh=fx/r/twi0lR0VsLAVqPkirIE7VN6h63K7UWTunhhuts=;
- b=Nx6JROWlagbFUVz6GLgCeA5iROq9Z716Dsy71o3H5bnDrIuTReC98HgpgzUHtEmjoK
- SK4BkOnYPB7J4i3U7guUCqOI/UvajMQW7WwUL14L+bSGIlPCIL3fF8UHYjmTZ2Nu5GuN
- 4XOT0JspRnkjjNgcHG1agcOxzVryHAlAS2GsMfeABsGkVMiRRra+ttMOxuuQ7NC0mQRE
- kmC2cbyWZklGfBqhmnhfh04nO5pkWC3I4JFg4LjmOtz+w9rk29YGjY2a1ntP9ab7MvKB
- S5HEGSph6v8NNKd2goNL1rQmVkljt6f1EqBzRPAKXDWB0GDdjcDQ9/L2RQdafabeHWmE
- tr5Q==; darn=nongnu.org
+ bh=asX/jlK2MpSy5TTgDNXQTB+D6EQc+kkLKSHrwBhWD4M=;
+ fh=k3Oi1QkC/LYAWO4sYyWsSJqpucM7NqN2w32n6uOa00I=;
+ b=G/XLrzIElJi1pWAIsPmveqaYtF35vdqUvkYwBOWRqsG0gC/9sSsIiOSs5Kv7Bn5xAw
+ yiTpnu08j4xA7whIJz6Y3OhPO0rtqYRpukkgDW+U5b4mG37H0U/+fTdYNzDGPApi78+L
+ auWV3jTScdP8UulleIQtYV51U6voNqBGiBkzl79Xp6a6ND4oKDNNH6Dm8yOAJt+Hxg+J
+ IWWMqU8ovp335gMZOKQ5QOB481cj71ukCW0zR2QEUNHCMXBwuS2O6XRTi7+vUaIV2bqT
+ wAZ2bcFegaMytMh0qdj87bsNo+qO0DfiyEIk3qt2Ll7hGXv0yj7+a7PHymavWlnP7MMg
+ eunA==; darn=nongnu.org
 ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1780448891; x=1781053691; darn=nongnu.org;
+ d=gmail.com; s=20251104; t=1780448975; x=1781053775; darn=nongnu.org;
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:from:to:cc:subject:date
  :message-id:reply-to;
- bh=/A0gDiDTrxy+ELN91nEDe4UfA59Q+zNnrMTKM/ccYRE=;
- b=eLqIU8Rm/hIpK9ebW//4LbI0BfJmmpETmh9k0x3HFAnAOG7r7zpOLxoCwEWHybeJ8D
- uarnM7uE+LuNDcT93iYEOM0TgO/TswcAso+rWB7SPutJWqeaySjWja8Z+BLpuDyZY9Cx
- 09RqEZdbHmkHA6vwOTFBXNnkKa61P2DhjFll6GKzSHgyGVoVs72ExhvnBpcg2eLxxjnd
- Atwt1sLLNyMKTsovDnekvxIKpu/dHoJhGw3Cgn8A6RnBU43gnVI/ktzPZCVoxl79nktA
- FjmpxVcdlKIopF6EOIlHfYcL3ZoRkirIfePc8bpL+n+DiXyBOnbprvW89JasodLdrYIA
- do4Q==
+ bh=asX/jlK2MpSy5TTgDNXQTB+D6EQc+kkLKSHrwBhWD4M=;
+ b=MJ1HLA0VXEa05zqWW6KRUcyY/4t3AnT+lj2SMtVEThZvVIe/NGkb/z+YO2CKpXoRmQ
+ cO8H6HQogeqIfBdrFEoI07qCb8JWsYd8EDkYtgcr4JW7iFlD5VO/Ar5ReQKatr9cscEO
+ XwtU+55DJszguHmNhypJNRv7QVq/dfAqucANbczNfn8Kq/aFW9K90YlTjuJNBeQiZYb+
+ chWL86i5cPBLEUoSdXMJocFogG50UuL4cOrdUvaNb7E2GOkOemCSJ868ZoroMWIH/Wmr
+ /Mi8m9PrJSvcmhoInU48yrONsSVfINyyxtZ4Thv6I93m+vaVBeGuBp6fHWDlfY/rCXoK
+ VPKw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1780448891; x=1781053691;
+ d=1e100.net; s=20251104; t=1780448975; x=1781053775;
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to;
- bh=/A0gDiDTrxy+ELN91nEDe4UfA59Q+zNnrMTKM/ccYRE=;
- b=sBy7L38QP0LjG/+EkDv2KrOTk8eecYQHNPFeQo2u7CKDr+ACXRFJEkasJx+QZD/nmn
- vdIIqEU00M6adezjKzE+bHBWvFc5k5WDCsGtDcQkDPEpH2LP3uX2u3BSJtuQ4SW99S75
- jN+lV+/B19KavWXGS8dVKUIc8ywF24lOhOqTRgYjrYnWTfY6e63dew0RgFQjQs1EqLEu
- j89FQj+Nv1RJrWTmUL03Ko+G5zTFWFN2r2VKFibHesweMOS5/6FlQp5Db4DxxUwYuYWS
- PDrh5mx1OzHRx6YY5bLmWm6YtJxaaui3ilWd+eW1TYGtHdAT45C33+fHf1Y8L6Q8PZ9C
- 8vlA==
-X-Gm-Message-State: AOJu0YxY9be0jK4jg+K2+akzPBaq8YBvV/nE7XZYd+GKNG96QTQC32Y0
- G48QXsk4YoNZ4wdpWVxBuH/2/TG5TuZQsAi3c9UiMSHURpYdhF58Y6SXgvPkXzZXrN+uz2vzBtr
- 4eXXkpTXXsdxP/M9wUxf60O+01ncpzkM=
-X-Gm-Gg: Acq92OH5eYfjb3/Npi7Xb6HYHzM/GGaRgtBv34rKC/2pNKiguPgUrX1O/4GusN5iAlz
- jUh6sjlGfe+To8xOv3hWrdGf7c1h9IkTxDchYyk+fTv+dufmJAzfW9VVJ4pmsV3zNxZ3eSXWK00
- Nh29cCWcjS3dHs5HQnzyu979oOYi6zQHlF5ZYMRWr6pZV/k2LRDscnCO9PY4AJZw2WIzUN2uKpm
- AmVESNia9y/kmEM/rkF5nYdqCOiQQBfepiYstZ/nHsgEte9NeglDj9a/sdkm8u6Mv60/kV6rrzJ
- bABJrY4R3QGVz8yh4R2UjW3S55SVhtZ+NhB/Fhb/VcOrym0JbdoCMIEdKeA=
-X-Received: by 2002:a17:907:c817:b0:bdd:45d9:8e15 with SMTP id
- a640c23a62f3a-bf0b11db134mr39472166b.15.1780448891164; Tue, 02 Jun 2026
- 18:08:11 -0700 (PDT)
+ bh=asX/jlK2MpSy5TTgDNXQTB+D6EQc+kkLKSHrwBhWD4M=;
+ b=DarFTTTHCw5lCx0FGBJJsI+PNLpMrhfmWrbcqs/wUedmOwlFFQbHsuMNH7JcFvdAwB
+ E7FYNNQdlwgtG570XWU1oSTvtWjIkWfUbbMLWxVa21D3sCfaFuafKT8bZag7rSNTGlim
+ SNSNkEX2kHKUgcDZREdjuTY6Zn23MVqRH/gorO2RrzRV5JB7NXjHZntAQno737tK0Icc
+ iQ6nuRqtTlR5sH4tHs8sEN64Z4O3jFrryAFdtXlt/oVNvAdU60bs/XNcU3lcujqBnKHL
+ +Er5ejToA9+xnM0DJOqWiKvlOqzrs64rl3jLf8nmvg0Vg9TnnY7Ax4/9C4uptGrPpdxU
+ iKNQ==
+X-Forwarded-Encrypted: i=1;
+ AFNElJ8L/5iwwONGnPURLzItB3iIBKJHHAONzYFKCAm0147Icesg+s8LG03pjni1GzX1rDU/a2B7RdFAQWJ5@nongnu.org
+X-Gm-Message-State: AOJu0YzOp5qWx2DjGp5RWK8HjFI0Ce/k4moQCHC7rvlUjju40lfwCk1m
+ GhFLCVj1Xh0dAs8ptG3cqgM3BwFpyZmiVNOnic+t9givrXWWpzFIK5d1mkMaw2yOlOCxmyj91O+
+ zmy4BUZ/5EfBRtckbMufOnxqSZy+GN4o=
+X-Gm-Gg: Acq92OEsfZWdEetkELqBA6esnmQylIo04Z+owGlp3vb9iqvvHUiId/u1rZusXWW2rWA
+ SBm4dPRRsJhR87mwuRRn8eZrmhipsfP7XaleTfmPfmYWR8tXkyFFBMcFQpiilZ620I6+rF37iVm
+ 6DpGbfJ4TlaIs9LLaKsC/IpcGMNig+ZWyUQkA4pDmyXI2N83OnJi82Ueb3l3D3K7iuvhYEZUo7F
+ xtODIqIGLOqgk+imSzJIejo2lk9uWJuE/Im5ySBPzof5LU5mEWNitu4Drf/MmJcd7yi8F7ZDOq3
+ IKq2GXkbI5N13DrMQ9ciXj37u7nzIDop/uJXff/TRMUqScxTlN7tSiIlWNM=
+X-Received: by 2002:a17:907:c289:b0:bee:19d0:dba0 with SMTP id
+ a640c23a62f3a-bf0af9fcd20mr34074466b.48.1780448974845; Tue, 02 Jun 2026
+ 18:09:34 -0700 (PDT)
 MIME-Version: 1.0
-References: <20260528060007.717307-1-frank.chang@sifive.com>
-In-Reply-To: <20260528060007.717307-1-frank.chang@sifive.com>
+References: <20260529181848378wiq8pXCmbwAZR5_-wZFJd@zte.com.cn>
+In-Reply-To: <20260529181848378wiq8pXCmbwAZR5_-wZFJd@zte.com.cn>
 From: Alistair Francis <alistair23@gmail.com>
-Date: Wed, 3 Jun 2026 11:07:44 +1000
-X-Gm-Features: AVHnY4Id9ajuVJ-Y1HF3dLhkuxHo0F6t0WT71060Br0CTNOIVDd8frotZI-PIHo
-Message-ID: <CAKmqyKMuG69C_nT2euOc4rWp85pbgzyxjwEh+c1DRmYBgSvgJQ@mail.gmail.com>
-Subject: Re: [PATCH] target/riscv: Reorder Smrnmi CPU fields above CPU reset
- line
-To: frank.chang@sifive.com
-Cc: qemu-devel@nongnu.org, Palmer Dabbelt <palmer@dabbelt.com>, 
- Alistair Francis <alistair.francis@wdc.com>, Weiwei Li <liwei1518@gmail.com>, 
- Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>,
- Liu Zhiwei <zhiwei_liu@linux.alibaba.com>, 
- Chao Liu <chao.liu.zevorn@gmail.com>, 
- "open list:RISC-V TCG CPUs" <qemu-riscv@nongnu.org>
+Date: Wed, 3 Jun 2026 11:09:08 +1000
+X-Gm-Features: AVHnY4Io5xrVgkyHpA6D0d47Ye-m3XMTu9rBJ8oZEHP6VsrR057aT7_qFOhzez4
+Message-ID: <CAKmqyKPY6Q6J62jfv-CG6yPFysCHU7Ds1gYCGW0z0GUKPuJAjA@mail.gmail.com>
+Subject: Re: [PATCH] hw/riscv/numa.c: Supplement cpu topology arguments
+To: liu.xuemei1@zte.com.cn
+Cc: palmer@dabbelt.com, alistair.francis@wdc.com, liwei1518@gmail.com, 
+ daniel.barboza@oss.qualcomm.com, zhiwei_liu@linux.alibaba.com, 
+ chao.liu.zevorn@gmail.com, qemu-riscv@nongnu.org, qemu-devel@nongnu.org
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::632;
- envelope-from=alistair23@gmail.com; helo=mail-ej1-x632.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::533;
+ envelope-from=alistair23@gmail.com; helo=mail-ed1-x533.google.com
 X-Spam_score_int: -17
 X-Spam_score: -1.8
 X-Spam_bar: -
@@ -122,16 +120,14 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, May 28, 2026 at 4:01=E2=80=AFPM <frank.chang@sifive.com> wrote:
+On Fri, May 29, 2026 at 8:19=E2=80=AFPM <liu.xuemei1@zte.com.cn> wrote:
 >
-> From: Frank Chang <frank.chang@sifive.com>
+> From: Xuemei Liu <liu.xuemei1@zte.com.cn>
 >
-> Smrnmi CPU fields introduced by commit: #5db557f should be reset when
-> the CPU resets, so move these fields above the CPU reset line.
+> Supplement RISC-V cpu topology arguments, including support socket
+> cluster and threads per core.
 >
-> Signed-off-by: Frank Chang <frank.chang@sifive.com>
-
-Fixes: 5db557f82bff ("target/riscv: Add Smrnmi CSRs")
+> Signed-off-by: Xuemei Liu <liu.xuemei1@zte.com.cn>
 
 Thanks!
 
@@ -140,47 +136,35 @@ Applied to riscv-to-apply.next
 Alistair
 
 > ---
->  target/riscv/cpu.h | 18 +++++++++---------
->  1 file changed, 9 insertions(+), 9 deletions(-)
+>  hw/riscv/numa.c | 12 +++++++++++-
+>  1 file changed, 11 insertions(+), 1 deletion(-)
 >
-> diff --git a/target/riscv/cpu.h b/target/riscv/cpu.h
-> index d9c1e000cb2..682c6e752cc 100644
-> --- a/target/riscv/cpu.h
-> +++ b/target/riscv/cpu.h
-> @@ -491,6 +491,15 @@ struct CPUArchState {
->      uint64_t hstateen[SMSTATEEN_MAX_COUNT];
->      uint64_t sstateen[SMSTATEEN_MAX_COUNT];
->      uint64_t henvcfg;
-> +
-> +    /* RNMI */
-> +    uint64_t mnscratch;
-> +    uint64_t mnepc;
-> +    uint64_t mncause; /* mncause without bit XLEN-1 set to 1 */
-> +    uint64_t mnstatus;
-> +    uint64_t rnmip;
-> +    uint64_t rnmi_irqvec;
-> +    uint64_t rnmi_excpvec;
->  #endif
+> diff --git a/hw/riscv/numa.c b/hw/riscv/numa.c
+> index 24a803f7fa..8a144925c1 100644
+> --- a/hw/riscv/numa.c
+> +++ b/hw/riscv/numa.c
+> @@ -239,8 +239,18 @@ const CPUArchIdList *riscv_numa_possible_cpu_arch_id=
+s(MachineState *ms)
+>      for (n =3D 0; n < ms->possible_cpus->len; n++) {
+>          ms->possible_cpus->cpus[n].type =3D ms->cpu_type;
+>          ms->possible_cpus->cpus[n].arch_id =3D n;
+> +        ms->possible_cpus->cpus[n].props.has_socket_id =3D true;
+> +        ms->possible_cpus->cpus[n].props.socket_id =3D
+> +            n / (ms->smp.clusters * ms->smp.cores * ms->smp.threads);
+> +        ms->possible_cpus->cpus[n].props.has_cluster_id =3D true;
+> +        ms->possible_cpus->cpus[n].props.cluster_id =3D
+> +            (n / (ms->smp.cores * ms->smp.threads)) % ms->smp.clusters;
+>          ms->possible_cpus->cpus[n].props.has_core_id =3D true;
+> -        ms->possible_cpus->cpus[n].props.core_id =3D n;
+> +        ms->possible_cpus->cpus[n].props.core_id =3D
+> +            (n / ms->smp.threads) % ms->smp.cores;
+> +        ms->possible_cpus->cpus[n].props.has_thread_id =3D true;
+> +        ms->possible_cpus->cpus[n].props.thread_id =3D
+> +            n % ms->smp.threads;
+>      }
 >
->      /* Fields from here on are preserved across CPU reset. */
-> @@ -509,15 +518,6 @@ struct CPUArchState {
->      uint64_t kvm_timer_state;
->      uint64_t kvm_timer_frequency;
->  #endif /* CONFIG_KVM */
-> -
-> -    /* RNMI */
-> -    uint64_t mnscratch;
-> -    uint64_t mnepc;
-> -    uint64_t mncause; /* mncause without bit XLEN-1 set to 1 */
-> -    uint64_t mnstatus;
-> -    uint64_t rnmip;
-> -    uint64_t rnmi_irqvec;
-> -    uint64_t rnmi_excpvec;
->  };
->
->  /*
+>      return ms->possible_cpus;
 > --
-> 2.43.0
->
+> 2.27.0
 >
 
