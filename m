@@ -4,83 +4,83 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 68ACBCD6E55
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0CAD6CD6E57
 	for <qemu-devel@archiver.kernel.org>; Wed,  3 Jun 2026 16:19:44 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wUoJG-0000wI-67; Wed, 03 Jun 2026 12:19:14 -0400
+	id 1wUoJI-0000x4-Th; Wed, 03 Jun 2026 12:19:16 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mattst88@gmail.com>)
- id 1wUoJE-0000vy-G1
- for qemu-devel@nongnu.org; Wed, 03 Jun 2026 12:19:12 -0400
-Received: from mail-yw1-x112c.google.com ([2607:f8b0:4864:20::112c])
+ id 1wUoJH-0000wg-AM
+ for qemu-devel@nongnu.org; Wed, 03 Jun 2026 12:19:15 -0400
+Received: from mail-yw1-x112d.google.com ([2607:f8b0:4864:20::112d])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <mattst88@gmail.com>)
- id 1wUoJD-0001WS-3n
- for qemu-devel@nongnu.org; Wed, 03 Jun 2026 12:19:12 -0400
-Received: by mail-yw1-x112c.google.com with SMTP id
- 00721157ae682-7dd5a8dc8a2so37970187b3.0
- for <qemu-devel@nongnu.org>; Wed, 03 Jun 2026 09:19:10 -0700 (PDT)
+ id 1wUoJF-0001Wu-O9
+ for qemu-devel@nongnu.org; Wed, 03 Jun 2026 12:19:15 -0400
+Received: by mail-yw1-x112d.google.com with SMTP id
+ 00721157ae682-7e0fc8ead7eso55993987b3.2
+ for <qemu-devel@nongnu.org>; Wed, 03 Jun 2026 09:19:13 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1780503550; x=1781108350; darn=nongnu.org;
+ d=gmail.com; s=20251104; t=1780503552; x=1781108352; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=t9JrjbSVaI7WkfN8SQ+OIoaLMzAQFuQ2UT0Ps1OLSfc=;
- b=NOqLGorc8gkoifSw9YzPssAcXIM4gLe3rgk71qbnU3yg4HlH8THp4Nk0VeqiHCbjuh
- 4871NJNjjs5qOAXA9hiBE+yTXyaCnmD4jXcqaygKlGbG53/EaLj88pKeqMiMpYSCTJ7r
- q0ObqIOI/g+WQ238vuopECcN1VXboFpr6HCLScAu91gn6ATNQ2WGnHMx69jyRKF7nUpy
- Wn7QvnId5pjFCI/loO6p0yk+Tw+3VIyvcQ35iqJa62YZRO8/fxShYgt3lX9HWp/4FRC/
- tqwfiZcD7LAf3eewi9KjFsLA30HOkxmJlK/qw4zRnWs+fjluNCS8vTdWVN23T9uic0gk
- 4f0w==
+ bh=KVMvmK00Q9xMsDeutOKpOcwG6QqzsW3i/Df16sz/VME=;
+ b=HsB1SFmQckZMFn/4sBoxXXQaU6tHtM9fYYJ6UpCqMayhl1tPnGeWvs6EqPmRMk4FKx
+ hhiAnA/QBowj1F0TgK5iVa4MdgkPDXMxbFgnJj8nT12rRf2vtrRMpI+R1nzuSl4xAEzM
+ rEeLsV467n7uONkKrmYe+QhKMKm/to6trEfHr6fpcOHWhcUJNlqZFtYSg9yq0lAlgrQs
+ MF3hSQJVnHDzOhYmqzDvyom66EDaQq1BKTzV66A2K2LQkunNf5524la8BL5NQLvQu6Em
+ dqEMMPboIqaAIgguwQNPnijc+/iHLgVcmRGgyLOVcEip/M7widWZSMpBQ4rxahpoNgQ0
+ dxDQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1780503550; x=1781108350;
+ d=1e100.net; s=20251104; t=1780503552; x=1781108352;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to;
- bh=t9JrjbSVaI7WkfN8SQ+OIoaLMzAQFuQ2UT0Ps1OLSfc=;
- b=qFyzhhpePdykgDsVJ9jDH/kXUdMGQdPbueglE1MPzHIrCo/95ssbK6jMRM0eLRwPEs
- QnlgwwtN9flmy4h89GCkxZHiKxXovyVWCdvXMINfalGUsGiOyZy+KkhYYTMzY8vEzzPk
- bWYgnKRJxOgLCItlZIk+2bcEpHB9NtVRG4O2ExRCeBy20mtw6YH33r1QKgjOIMDT2Bzm
- eYfmB8yezUidnLqHssdXmTOBIme+aLRYnkJLpymYcb1ohPzO5xbvl2rc83InIYLMy16d
- xjNBKYIzS1dNwPBgr+nuP4zj6RkDAVJT+lPvCTq21agcBUcvZeKydKM4o/i8l1KzkpuJ
- gFmw==
-X-Gm-Message-State: AOJu0YxSPzg/s47/tlyJtc7trcSRbCmzDM1yDzZ5z1rGVC1E+rIs/qnV
- Vsv+6hBBGIkDYHMQWfSe6G1vuBZIOd+aZ4nVeYd4sC4Cnx2DQyFMBf5hIi3f9OskRYM=
-X-Gm-Gg: Acq92OElMPPwHDWqpIgzQH+AHflsyYlUT1isdIQE9OCJ8cbIePn5/bb7NwBfXKA5ewp
- cN3Hz1kFqFAOl5IJPiewyp1pRsDVaPqsDu8XiiUV3630+Qz697kTnM5/eaMOdbTe+b2Dbno3Nvd
- 9zlEx6POLudQYV5/uTidrDp0nfo0TxjcdqJd85GaXnodHSqeoflKsrA1vma+vTU+p4Kg8yuB7/S
- 2n5y+VmlLUC51MXshJXMrnlA9IsZxBgOkgqkG7QyWv0/xAJaZlKxepLtmJg5CnNSdHw0yuWJpZw
- XUdOEdeeXFqi2IhjRtYCvXQ8v1WFz6kx8+mmiMUSO+AsRsV2EFdYdb+ekB0hKYzt/cSQyy+v03z
- 2ZoKbzkQP9TWCLO2AVvF1TuvsGaDZZLHCtMHPZCGciVoIP/L7wy4cEAv4ZcthWdJ+G17OXZobee
- Sg8YdbY1ey57TS6jsa/wHPyAwnnZpVJE+NWA==
-X-Received: by 2002:a05:690c:600f:b0:7ba:f690:70be with SMTP id
- 00721157ae682-7ea49872b63mr39036507b3.7.1780503549811; 
- Wed, 03 Jun 2026 09:19:09 -0700 (PDT)
+ bh=KVMvmK00Q9xMsDeutOKpOcwG6QqzsW3i/Df16sz/VME=;
+ b=FDxXckRGe1Nm+IL8rkWaEp8qCBGsKDb2sxVJHeGWqKCmtnsGv2cYbZoleDKuv9AqVV
+ uoRpWOhfK5gnF23iZSs5Adj5Dqy3IIPpaeaR2F8s3eM+c7GkKr+1zsp8tWqWYTKouPs5
+ kJzaqClvKnlfCgPFSbxMRVlpf25VwVA9jEBTG7NXHXJ2rJ3DSRxy7XFironVo0iv7xvd
+ xPuRTNYbTRWFg5H0A6TWL6Lkt/YVcfjY0qlAMRX8BueAXyj6J/jCbBMSmVxlVnPEQnos
+ OTMOgAnWh04lDo/vcKGXDZ6aQFWkc7I0rSKiccUhCRtVExBj8gwZUS2KrlZ/26AfKL0j
+ dZmw==
+X-Gm-Message-State: AOJu0Yx1dL/fJNs16isZ0qp/qfvOTaNDFgpLnMLXPAAuKyWQSsOBd439
+ nz1dgWHiDuOa057dECYxjGyQc3Qz9D/DmlRwMQcR8aNFJzbwh44yyP0mvc+tboCPZTk=
+X-Gm-Gg: Acq92OEphPjvdPVGFrXxLnavC/M2uu+YClhl6ccSpdUy4bBymb7otIR43X/K5aXW07e
+ WBIjTCUDBlT0DCcqOFaiFu4kKCDdXxb+zg07vv202fJ9pPZ38r2HSWhtBPhFBz+9UF2smwkgVDM
+ k+4Hgy5KUhkmsOdmPljVZtAKpuoJ31dTGeCykJLtL1w8ooGmz6ytgS5cf+6jEs5ojEaZIbRTJtl
+ zQ777pSK6cibRI6r91C00Y0wva1nt4YIRJ5Yo/lub3VyAQy5F96HkdLnmPNq5TfUxZWBL5mLY/1
+ pr5GqigMkO/Paq5GXa1JZdUZVWRZEzy8eERlzrQhpKkx9FwzWb9C+PbGbFjV1HWMjl2GtLi5lHq
+ sYRgVNaECQ7FVq+5/YLtRt9hPIUQ88lZKgKEmCVkrOV0zJDhKsFz4+IeYxaInRMmfJY57kkdQyz
+ 18E7n5Bxn/xkC0qQIytpMc9Tq/iSaV9t5C4w==
+X-Received: by 2002:a05:690c:7202:b0:7bd:a4dc:c245 with SMTP id
+ 00721157ae682-7ea49d64503mr39418817b3.29.1780503552396; 
+ Wed, 03 Jun 2026 09:19:12 -0700 (PDT)
 Received: from localhost ([2600:1702:7a90:6f9f:8bc4:8aec:108d:7a04])
  by smtp.gmail.com with ESMTPSA id
- 00721157ae682-7ea23591b26sm19017787b3.31.2026.06.03.09.19.08
+ 00721157ae682-7ea24098d1csm19406007b3.46.2026.06.03.09.19.11
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 03 Jun 2026 09:19:08 -0700 (PDT)
+ Wed, 03 Jun 2026 09:19:11 -0700 (PDT)
 From: Matt Turner <mattst88@gmail.com>
 To: qemu-devel@nongnu.org
 Cc: Laurent Vivier <laurent@vivier.eu>, Helge Deller <deller@gmx.de>,
  Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
  Richard Henderson <richard.henderson@linaro.org>,
  Matt Turner <mattst88@gmail.com>
-Subject: [PATCH 2/4] linux-user/sparc: restore L/I registers from RSA in
- sparc64_set_context
-Date: Wed,  3 Jun 2026 12:18:50 -0400
-Message-ID: <20260603161852.1831864-2-mattst88@gmail.com>
+Subject: [PATCH 3/4] linux-user/sparc: call block_signals() before
+ set_sigmask() in setcontext
+Date: Wed,  3 Jun 2026 12:18:51 -0400
+Message-ID: <20260603161852.1831864-3-mattst88@gmail.com>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260603161852.1831864-1-mattst88@gmail.com>
 References: <20260603161852.1831864-1-mattst88@gmail.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::112c;
- envelope-from=mattst88@gmail.com; helo=mail-yw1-x112c.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::112d;
+ envelope-from=mattst88@gmail.com; helo=mail-yw1-x112d.google.com
 X-Spam_score_int: -17
 X-Spam_score: -1.8
 X-Spam_bar: -
@@ -104,45 +104,73 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The kernel's do_rt_sigreturn loads L and I registers from the register
-save area (RSA) at the restored O6+STACK_BIAS.  QEMU lacks the kernel's
-window-fill path, so restore L0-L7 and I0-I5 explicitly from the RSA.
-I6 and I7 are already restored from mc_fp/mc_i7.
+sparc64_set_context() emulates the kernel's `ta 0x6f` trap by calling
+set_sigmask() to install the mask supplied via the user's ucontext_t.
+The contract of set_sigmask() (see its comment in linux-user/signal.c)
+is that the caller must have first called block_signals(), which sets
+TaskState::signal_pending.
+
+Without block_signals(), if a guest signal is pending-and-blocked at
+the time setcontext is invoked and the new mask unblocks it,
+signal_pending stays 0 and the post-trap process_pending_signals()
+call in linux-user/sparc/cpu_loop.c never enters its while loop, so
+the now-deliverable signal is left undelivered indefinitely.
+
+This affects programs that use getcontext/setcontext to swap signal
+masks, including libunwind's unw_resume() out of a signal handler:
+without this fix, the test program below loops forever printing
+"calling setcontext" instead of delivering the pending SIGUSR2.
+
+  #define _GNU_SOURCE
+  #include <ucontext.h>
+  #include <signal.h>
+  #include <stdio.h>
+  #include <unistd.h>
+  static int got;
+  static void h(int s) { got = 1; }
+  int main(void) {
+      signal(SIGUSR2, h);
+      sigset_t m; sigemptyset(&m); sigaddset(&m, SIGUSR2);
+      sigprocmask(SIG_BLOCK, &m, NULL);
+      kill(getpid(), SIGUSR2);
+      ucontext_t uc;
+      getcontext(&uc);
+      if (got) return 0;
+      uc.uc_sigmask.__val[0] = 0;
+      setcontext(&uc);
+      return 1;
+  }
+
+The 32-bit sparc do_sigreturn / do_rt_sigreturn paths already get
+block_signals() from the rt_sigreturn syscall wrapper in
+linux-user/syscall.c, so only sparc64_set_context (invoked directly
+from cpu_loop) needs the addition.
 
 Signed-off-by: Matt Turner <mattst88@gmail.com>
 ---
- linux-user/sparc/signal.c | 18 ++++++++++++++++++
- 1 file changed, 18 insertions(+)
+ linux-user/sparc/signal.c | 9 +++++++++
+ 1 file changed, 9 insertions(+)
 
 diff --git ./linux-user/sparc/signal.c ./linux-user/sparc/signal.c
-index d339f89928..fda5508c48 100644
+index fda5508c48..ba692c3123 100644
 --- ./linux-user/sparc/signal.c
 +++ ./linux-user/sparc/signal.c
-@@ -656,6 +656,24 @@ void sparc64_set_context(CPUSPARCState *env)
-     __get_user(env->regwptr[WREG_FP], &(ucp->tuc_mcontext.mc_fp));
-     __get_user(env->regwptr[WREG_I7], &(ucp->tuc_mcontext.mc_i7));
- 
-+    /*
-+     * The kernel's do_rt_sigreturn loads L and I registers from the
-+     * register save area (RSA) at the new O6+STACK_BIAS.  Unlike the
-+     * kernel, QEMU has no kernel-mode path that triggers a window fill,
-+     * so we must do it explicitly here.  I6 and I7 are already restored
-+     * from mc_fp and mc_i7 above; restore L0-L7 and I0-I5 from the RSA.
-+     */
-+    {
-+        abi_ulong sp_ptr = env->regwptr[WREG_O6];
-+        /* LP64 O6 is biased (8-byte-aligned - 2047); low bit set. ILP32 O6 is 4-byte-aligned. */
-+        if (sp_ptr & 3)
-+            sp_ptr += TARGET_STACK_BIAS;
-+        for (i = 0; i < 8; i++)
-+            get_user_ual(env->regwptr[WREG_L0 + i], sp_ptr + i * 8);
-+        for (i = 0; i < 6; i++)  /* I0-I5; I6=FP and I7 already restored */
-+            get_user_ual(env->regwptr[WREG_I0 + i], sp_ptr + 64 + i * 8);
-+    }
-+
-     fpup = &ucp->tuc_mcontext.mc_fpregs;
- 
-     __get_user(fenab, &(fpup->mcfpu_enab));
+@@ -619,6 +619,15 @@ void sparc64_set_context(CPUSPARCState *env)
+             }
+         }
+         target_to_host_sigset_internal(&set, &target_set);
++        /*
++         * set_sigmask() requires the caller to have first called
++         * block_signals() so that process_pending_signals() is guaranteed
++         * to run after the mask change.  Without this, a guest signal that
++         * is pending-and-blocked at setcontext time is left undelivered
++         * even after its mask bit is cleared, because signal_pending stays
++         * 0 and the post-trap process_pending_signals() loop never enters.
++         */
++        block_signals();
+         set_sigmask(&set);
+     }
+     env->pc = pc;
 -- 
 2.53.0
 
