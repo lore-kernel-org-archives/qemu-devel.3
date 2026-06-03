@@ -4,75 +4,105 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5F3E5CD6E64
-	for <qemu-devel@archiver.kernel.org>; Wed,  3 Jun 2026 10:25:16 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 74DF0CD6E64
+	for <qemu-devel@archiver.kernel.org>; Wed,  3 Jun 2026 10:29:15 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wUim0-0000BB-4m; Wed, 03 Jun 2026 06:24:32 -0400
+	id 1wUiqK-0001Nw-SY; Wed, 03 Jun 2026 06:29:00 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1wUilw-0000AW-Df
- for qemu-devel@nongnu.org; Wed, 03 Jun 2026 06:24:28 -0400
+ (Exim 4.90_1) (envelope-from <sgarzare@redhat.com>)
+ id 1wUiqH-0001NU-Dd
+ for qemu-devel@nongnu.org; Wed, 03 Jun 2026 06:28:57 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1wUilu-0006jF-SS
- for qemu-devel@nongnu.org; Wed, 03 Jun 2026 06:24:28 -0400
+ (Exim 4.90_1) (envelope-from <sgarzare@redhat.com>)
+ id 1wUiqF-0000ea-PQ
+ for qemu-devel@nongnu.org; Wed, 03 Jun 2026 06:28:57 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1780482265;
+ s=mimecast20190719; t=1780482534;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=H6nHcwHbFEgFNU9EyDFxom5nyPaw7sIvXcWBeVhgwqU=;
- b=DCe+iTj6g/pkCwYAQ6SAEYh37qBFNHJp5yziiZvAj3mD5JyuE2Tf8BuSBwXemDvWOhInkq
- z7uuipNITYr/z4Y/em9+HWnjPA6I2PheJo+ZgJsgItBUaz4oPrDloiZ/5m/gBRiMWIjRII
- w888SUJPKGCVH+m+8Q6ksmht5mpQ4hQ=
-Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-439-m8OMIHYYOAS6WUyNAAWYtg-1; Wed,
- 03 Jun 2026 06:24:11 -0400
-X-MC-Unique: m8OMIHYYOAS6WUyNAAWYtg-1
-X-Mimecast-MFC-AGG-ID: m8OMIHYYOAS6WUyNAAWYtg_1780482251
-Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 7137E19560A5; Wed,  3 Jun 2026 10:24:10 +0000 (UTC)
-Received: from blackfin.pond.sub.org (unknown [10.44.22.2])
- by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 1629630001A1; Wed,  3 Jun 2026 10:24:09 +0000 (UTC)
-Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
- id 70FCA21E6A01; Wed, 03 Jun 2026 12:24:07 +0200 (CEST)
-From: Markus Armbruster <armbru@redhat.com>
-To: Daniel P. =?utf-8?Q?Berrang=C3=A9?= <berrange@redhat.com>
-Cc: Bin Guo <guobin@linux.alibaba.com>,  qemu-devel@nongnu.org
-Subject: Re: [PATCH] qobject/json-writer: preallocate output buffer
-In-Reply-To: <ah_5WNdgge7hXXDW@redhat.com> ("Daniel P. =?utf-8?Q?Berrang?=
- =?utf-8?Q?=C3=A9=22's?= message of
- "Wed, 3 Jun 2026 10:52:24 +0100")
-References: <20260529023426.54680-1-guobin@linux.alibaba.com>
- <87ldcx5oik.fsf@pond.sub.org> <ah_5WNdgge7hXXDW@redhat.com>
-Date: Wed, 03 Jun 2026 12:24:07 +0200
-Message-ID: <878q8vly60.fsf@pond.sub.org>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+ bh=QuSZf5jDoUi8hZM6Ed6bmlnVNhA/knGzl3cxv/wfe0A=;
+ b=JYhR2ZESCXDU7AkWZN2KwQKpTk9DDWK2HNc/8R8+0v2xJ1W51SzxsoCoHS0CZdxIy3UVyX
+ 48Eujbm3a0yYFxnE37qrIK5iBebmJHsegnRYiC5nNAW0BHCLm8t4sbI9kvn6za58iMWHXu
+ Scf7Y8FmGtG8XIqSz6ywtaPKyi183f8=
+Received: from mail-wm1-f70.google.com (mail-wm1-f70.google.com
+ [209.85.128.70]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-527-srs-tNtvM-eE3jg0sxmmyw-1; Wed, 03 Jun 2026 06:28:52 -0400
+X-MC-Unique: srs-tNtvM-eE3jg0sxmmyw-1
+X-Mimecast-MFC-AGG-ID: srs-tNtvM-eE3jg0sxmmyw_1780482531
+Received: by mail-wm1-f70.google.com with SMTP id
+ 5b1f17b1804b1-490aadb1386so2724025e9.0
+ for <qemu-devel@nongnu.org>; Wed, 03 Jun 2026 03:28:52 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=redhat.com; s=google; t=1780482531; x=1781087331; darn=nongnu.org;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+ bh=QuSZf5jDoUi8hZM6Ed6bmlnVNhA/knGzl3cxv/wfe0A=;
+ b=DDEnuRmDXk28qs+JLP1mmhZxiDi+B1nMfZYaXFOrXq8cBBOCh0rva+RgTc7sVQ1Qf1
+ 4lfljrNP5XkSJL0tx3MBYYinspvDSVfCoigNZmFpHyAP1ClvEn6USRopFdNKjkNIO+rp
+ o+84O3VWDVf2P1eyunYN2ierm1Ut4W44w2g0w5RxLFom+wCJhYyrr/jN5wMijwU2J7We
+ 2tX/Uy/YcxOI8JPKHIGI4Skjw4IFjWQEpigVb3WVW4jFrFt0PVOS2kBG3P9ByjKO8heD
+ CocuzEn8SpWcACkJ6Dus0npDM/qc41UWqrJ8NttvnNVCAJ8Huzj0z/lWRlTyaqMQqa+c
+ 9pZQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1780482531; x=1781087331;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=QuSZf5jDoUi8hZM6Ed6bmlnVNhA/knGzl3cxv/wfe0A=;
+ b=c9Vo0oQFPWzo1h/vOCYP2pmT5M+e5YIytuLXsltTWB+Ev9K6SFSbp8xzXvo7yJ9Hgp
+ 4tzxg0hzV+DdojgVy9Bf2QuFtdLxdueXu6qoaf+7C4hK9UKHC1MrwQTB2sB7BJ09x7EZ
+ qV3K8cijr57jpDyVWAFpf0LSRUWAtSm2WmcIk5om2O8Xm1dcz4mBUTrZ01y8t3L+D/HW
+ A7rYysM5cCAOiM3AtTEDlVAglUBFioPebuSdjnDGDTS/4nqJ0SS2ysvARpCvj33WAaiS
+ O2BSMHK9spy+Nr1SrnqHMgI0z0fJNlJU9WpWP3Q34DJ+yotH8imy0WrM8GCX+zOG2zlp
+ vYmQ==
+X-Gm-Message-State: AOJu0YwpOX7vmStphVcfZGXip/XsetOFLgt7+/QdUzv1v+r+8pH3PmKc
+ eSAJr8xcsq9s3DSY5cUXw7N9JSC+DM170UPQMI6+kP02QfmBSeKNgxAIZFfu5QkhUu4preAFhIK
+ Sfu4xZUPYPmawALq/E7pQWFPrTKXI2TexwmIdtTg1u4OO3hIY0dMQAw+C
+X-Gm-Gg: Acq92OGx8+mn7RMa8GAgZDs882F+z2iuIoZmdC5Fwevd3d7XRKR8baw8q2v+LD+08K/
+ kLndH+IPQnI7pzzVrhcRXyYYXf4bq9qUYdsVhyVjDKpYwAz9hdBROuvxYU3uITHoDvjbJ/cdDn3
+ s+8KPsS21Az1GOwda66+PiB0nGOToiq6wS0ASbHFaxeoJi+nwzU/ALqfMLyNLepZHZfjpDD2Xgo
+ t6XUZObYXhKwvAV/t2lAGnUkTMG51tP1nT52fUiIMmaCJ6al78VU+2nqrnVOCTpNKd6VSLp3gZ4
+ r2sANxe6wupMyfSvADFVbJK9ZKYgYc06vDznLxXVIfJftkButlErIdzvoaTt84lsLH1lrMa+ZEP
+ PyhblkDeVZjFgrnOn5olzzfwc8tZgsB5M+qCd5Eowm1oLdrY6viJwtlZ7U0/Oea25QBh4nIrS9G
+ cYGy4oyw==
+X-Received: by 2002:a05:600c:468d:b0:488:7d01:f67b with SMTP id
+ 5b1f17b1804b1-490b611af3bmr44592735e9.6.1780482531419; 
+ Wed, 03 Jun 2026 03:28:51 -0700 (PDT)
+X-Received: by 2002:a05:600c:468d:b0:488:7d01:f67b with SMTP id
+ 5b1f17b1804b1-490b611af3bmr44592185e9.6.1780482530914; 
+ Wed, 03 Jun 2026 03:28:50 -0700 (PDT)
+Received: from sgarzare-redhat (host-82-53-135-12.retail.telecomitalia.it.
+ [82.53.135.12]) by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-4601f2ed944sm6705078f8f.13.2026.06.03.03.28.49
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Wed, 03 Jun 2026 03:28:50 -0700 (PDT)
+Date: Wed, 3 Jun 2026 12:28:42 +0200
+From: Stefano Garzarella <sgarzare@redhat.com>
+To: Luigi Leonardi <leonardi@redhat.com>
+Cc: qemu-devel@nongnu.org, Gerd Hoffmann <kraxel@redhat.com>, 
+ Ani Sinha <anisinha@redhat.com>, Oliver Steffen <osteffen@redhat.com>
+Subject: Re: [PATCH] igvm: replace raw uint32_t with igvm library types
+Message-ID: <aiAA40HG1Ydtw3UU@sgarzare-redhat>
+References: <20260525-igvm_types-v1-1-df2907c1815a@redhat.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=armbru@redhat.com;
+Content-Type: text/plain; charset=us-ascii; format=flowed
+Content-Disposition: inline
+In-Reply-To: <20260525-igvm_types-v1-1-df2907c1815a@redhat.com>
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=sgarzare@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: 8
-X-Spam_score: 0.8
-X-Spam_bar: /
-X-Spam_report: (0.8 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.445,
+X-Spam_score_int: -24
+X-Spam_score: -2.5
+X-Spam_bar: --
+X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.445,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_SBL_CSS=3.335, SPF_HELO_PASS=-0.001,
- SPF_PASS=-0.001 autolearn=no autolearn_force=no
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -88,38 +118,58 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Daniel P. Berrang=C3=A9 <berrange@redhat.com> writes:
-
-> On Tue, Jun 02, 2026 at 10:34:43AM +0200, Markus Armbruster wrote:
->> Bin Guo <guobin@linux.alibaba.com> writes:
->>=20
->> > json_writer_new() creates the output GString with g_string_new(NULL),
->> > which starts at the GLib default of 64 bytes.  Serializing typical
->> > QMP responses then requires multiple reallocations as the buffer
->> > grows -- for query-qmp-schema the GString is reallocated 12+ times.
->>=20
->> That's an extreme case.  Most responses are *much* smaller.  Still,
->> starting with a larger buffer makes sense.
->>=20
->> > Preallocate JSON_WRITER_INITIAL_SIZE (4096) bytes.  This covers
->> > most QMP responses without any reallocation.  4096 is one page on
->> > most systems, which is efficient for the allocator.
->>=20
->> I doubt "one page" matters.  How many QMP commands get executed in
->> practice?  A couple of hundred during startup, then tens per second?
->> Probably less than that.
+On Mon, May 25, 2026 at 01:56:57PM +0200, Luigi Leonardi wrote:
+>Use IgvmVariableHeaderType and IgvmHeaderSection in QIGVMHandler and
+>qigvm_handler() instead of plain uint32_t, so that each field's purpose
+>is clear from its type.
 >
-> NB tens per second, repeated across possibly 100's or even 1000's of
-> VMs on the single host though.
+>Signed-off-by: Luigi Leonardi <leonardi@redhat.com>
+>---
+> backends/igvm.c | 6 +++---
+> 1 file changed, 3 insertions(+), 3 deletions(-)
 >
-> If we want an arbitrary moderately size buffer, one page feels like
-> a reasonable place to aim for
+>diff --git a/backends/igvm.c b/backends/igvm.c
+>index c347d0c17e..8bb5750768 100644
+>--- a/backends/igvm.c
+>+++ b/backends/igvm.c
+>@@ -102,8 +102,8 @@ static int qigvm_initialization_guest_policy(QIgvm *ctx,
+>                                        Error **errp);
+>
+> struct QIGVMHandler {
+>-    uint32_t type;
+>-    uint32_t section;
+>+    IgvmVariableHeaderType type;
+>+    IgvmHeaderSection section;
+>     int (*handler)(QIgvm *ctx, const uint8_t *header_data, Error **errp);
+> };
+>
+>@@ -132,7 +132,7 @@ static struct QIGVMHandler handlers[] = {
+>       qigvm_directive_madt },
+> };
+>
+>-static int qigvm_handler(QIgvm *ctx, uint32_t type, Error **errp)
+>+static int qigvm_handler(QIgvm *ctx, IgvmVariableHeaderType type, Error **errp)
 
-I think 4KiB is a reasonable initial size regardless of the host's page
-size.  That was my argument.
+Pre-existing, but since I was looking at the code. In all the place 
+where we call qigvm_handler() we get `type` calling 
+igvm_get_header_type() which returns int32_t (< 0 is an error IIUC). We 
+convert to uint32_t without checking errors, maybe we can improve it.
 
-If we care, we can instrument QEMU to gather response size statistics.
+That said, this patch LGTM:
 
-[...]
+Reviewed-by: Stefano Garzarella <sgarzare@redhat.com>
+
+> {
+>     size_t handler;
+>     IgvmHandle header_handle;
+>
+>---
+>base-commit: cbf877d67a812be17a9ce404a589e1bdf722c1f6
+>change-id: 20260525-igvm_types-4b24d233e6bb
+>
+>Best regards,
+>-- 
+>Luigi Leonardi <leonardi@redhat.com>
+>
 
 
