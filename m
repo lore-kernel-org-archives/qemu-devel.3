@@ -4,46 +4,48 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 71429CD6E64
-	for <qemu-devel@archiver.kernel.org>; Wed,  3 Jun 2026 08:26:35 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9316ACD6E64
+	for <qemu-devel@archiver.kernel.org>; Wed,  3 Jun 2026 08:26:40 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wUgvC-00006p-Iu; Wed, 03 Jun 2026 04:25:54 -0400
+	id 1wUgv9-0008Pz-60; Wed, 03 Jun 2026 04:25:51 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@mailo.com>) id 1wUgv5-0008OL-Ue
- for qemu-devel@nongnu.org; Wed, 03 Jun 2026 04:25:49 -0400
-Received: from msg-4.mailo.com ([213.182.54.15] helo=mailo.com)
+ (Exim 4.90_1) (envelope-from <philmd@mailo.com>)
+ id 1wUguw-0008Ft-UM; Wed, 03 Jun 2026 04:25:39 -0400
+Received: from msg-2.mailo.com ([213.182.54.12] helo=mailo.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@mailo.com>) id 1wUgv4-00039e-KF
- for qemu-devel@nongnu.org; Wed, 03 Jun 2026 04:25:47 -0400
+ (Exim 4.90_1) (envelope-from <philmd@mailo.com>)
+ id 1wUguu-00037s-U3; Wed, 03 Jun 2026 04:25:38 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=mailo.com; s=mailo;
- t=1780472110; bh=p+uy/Eujucjg3y77FSha12xXkS+okVSfpHvSHEDcR08=;
+ t=1780472049; bh=IyKmmrjRSTjCqBDoc+8xadhMTG5L1N02ixZuIixlXx4=;
  h=X-EA-Auth:Message-ID:Date:MIME-Version:Subject:To:Cc:References:
  From:In-Reply-To:Content-Type:Content-Transfer-Encoding;
- b=Fgi/x5IS/uR4wJn/papH11vDCbArgwTsHJDQnVvG3UlZvB+Wk61/UrUhjogLTpNge
- 41jdpQovLM7tVtktQHEjGyRNe+oQSb/hhE30jGmx34hUjg3vserPgf47Kj2zn++zEK
- kbGtXa+nfAoE1p9NhxelH+TebAaX6kfy9JG1PXUw=
-Received: by be1-8.in.mailobj.net [192.168.91.18] with ESMTP
+ b=YeSOi6Xqw7Yfd/346AHn6217vygwFhzGF86Bt62i2cBhw9GByiQ9EOnq+J26wS7DU
+ d4MiIlx1sQHmTdl9a1AWBD9mcfW6lRx6HN/gzvhLENaVlHSy1zZekHRm1u50ptEiwp
+ tjUjB5m/Lj1CBmFxF7BCNiwxxdzzewT/0ewtRbE4=
+Received: by be1-3.in.mailobj.net [192.168.91.13] with ESMTP
  via ip-20.mailobj.net [213.182.54.20]
- Wed,  3 Jun 2026 09:34:39 +0200 (CEST)
-X-EA-Auth: Ig5FpojLrH4QwoJf2thmOiDqaIUNds7z9Ym4+hvoNB+bEf8VOWzxbFViHcewQxpVJj+Cm822lPHh5Mw8HQ4g3mQh9f2fyIvk
-Message-ID: <18f2bcbe-3158-4111-b3e4-37af85580a23@mailo.com>
-Date: Wed, 3 Jun 2026 09:34:38 +0200
+ Wed,  3 Jun 2026 09:33:16 +0200 (CEST)
+X-EA-Auth: M/fRqN/leJFbwiNTuUieuG/HxgMTHxj/Wl4kZgVxu5tyooH2zG2a/HNeBF6Ktipcw51Y6KXHf2sAqMKjlXRVpLHJDb6o5q+C
+Message-ID: <1d838357-b2f2-4967-8401-a6d95cc337cb@mailo.com>
+Date: Wed, 3 Jun 2026 09:33:15 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 30/38] MAINTAINERS: Fix F: in "QMP"
+Subject: Re: [PATCH v2 15/38] MAINTAINERS: Drop stale F: from "New World
+ (mac99)"
 Content-Language: en-US
 To: Markus Armbruster <armbru@redhat.com>, qemu-devel@nongnu.org
-Cc: pierrick.bouvier@oss.qualcomm.com
+Cc: pierrick.bouvier@oss.qualcomm.com,
+ Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>, qemu-ppc@nongnu.org
 References: <20260603064032.3733394-1-armbru@redhat.com>
- <20260603064032.3733394-31-armbru@redhat.com>
+ <20260603064032.3733394-16-armbru@redhat.com>
 From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@mailo.com>
-In-Reply-To: <20260603064032.3733394-31-armbru@redhat.com>
+In-Reply-To: <20260603064032.3733394-16-armbru@redhat.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=213.182.54.15; envelope-from=philmd@mailo.com;
+Received-SPF: pass client-ip=213.182.54.12; envelope-from=philmd@mailo.com;
  helo=mailo.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
@@ -67,17 +69,16 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On 3/6/26 08:40, Markus Armbruster wrote:
-> We neglected to update MAINTAINERS when we renamed
-> docs/devel/writing-monitor-commands.rst, and when we renamed
-> monitor/misc.c.  The latter file no longer exists, so simply drop the
-> line.  Update the other one.
+> We neglected to update MAINTAINERS when we deleted
+> hw/pci-bridge/dec.[hc].  Update it now.
 > 
-> Fixes: 0e33e3d2c4 (docs/devel: rename file for writing monitor commands, 2021-09-09)
-> Fixes: 864a3fa439 (monitor: Rename misc.c to hmp-target.c, 2023-01-24)
+> Fixes: b1fbf24259 (remove DEC 21154 PCI bridge, 2022-11-29)
+> Cc: Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>
+> Cc: qemu-ppc@nongnu.org
 > Signed-off-by: Markus Armbruster <armbru@redhat.com>
 > ---
->   MAINTAINERS | 3 +--
->   1 file changed, 1 insertion(+), 2 deletions(-)
+>   MAINTAINERS | 1 -
+>   1 file changed, 1 deletion(-)
 
 Reviewed-by: Philippe Mathieu-Daudé <philmd@mailo.com>
 
