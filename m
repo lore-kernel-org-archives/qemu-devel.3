@@ -4,37 +4,37 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C7876CD6E4A
-	for <qemu-devel@archiver.kernel.org>; Wed,  3 Jun 2026 07:08:31 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E0A19CD6E6A
+	for <qemu-devel@archiver.kernel.org>; Wed,  3 Jun 2026 07:08:33 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wUfhu-0002S8-Ca; Wed, 03 Jun 2026 03:08:06 -0400
+	id 1wUfi9-0002Tg-1H; Wed, 03 Jun 2026 03:08:21 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@mailo.com>) id 1wUfhs-0002S0-A1
- for qemu-devel@nongnu.org; Wed, 03 Jun 2026 03:08:04 -0400
-Received: from msg-3.mailo.com ([213.182.54.8] helo=mailo.com)
+ (Exim 4.90_1) (envelope-from <philmd@mailo.com>) id 1wUfi3-0002TM-L2
+ for qemu-devel@nongnu.org; Wed, 03 Jun 2026 03:08:16 -0400
+Received: from msg-2.mailo.com ([213.182.54.12] helo=mailo.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@mailo.com>) id 1wUfhq-00008z-Ff
- for qemu-devel@nongnu.org; Wed, 03 Jun 2026 03:08:04 -0400
+ (Exim 4.90_1) (envelope-from <philmd@mailo.com>) id 1wUfi2-0000B7-3B
+ for qemu-devel@nongnu.org; Wed, 03 Jun 2026 03:08:15 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=mailo.com; s=mailo;
- t=1780470192; bh=yt8J1rwxZAUmrZtiYCQ1hzYzZju2UL20sBs8Al7tqFA=;
+ t=1780469589; bh=YQOilt3Vbcv4maJqUFiqg83iwTiJ4UUCxy4SV7Tsnec=;
  h=X-EA-Auth:Message-ID:Date:MIME-Version:Subject:To:Cc:References:
  From:In-Reply-To:Content-Type:Content-Transfer-Encoding;
- b=c9RDhYwG/gPLgNW327xwYm5nC7ZOLNfzUEzaGyoW6saq7G5Fn1pyzKbvrXjxBSym1
- /iGR0xcj4NK97uhs8ddh2kXg6MrT9/3BWKXD0LGguD8lLBloBtpA0COskpZtfXTQb1
- 8+40YrDNwp1scMjsawObbN1m9HTtag4RQSqd37iQ=
-Received: by be1-2.in.mailobj.net [192.168.91.12] with ESMTP
+ b=XvhZig/Bsfhkz732w0fOqHaYi7LYb39PUneW960RGaWjhae2ngrcFvQulBGgYjBhr
+ GVz+510gmfrNjR6YAu6kNp6iPMAI007YJrCS+C+34neDYd0y5deVMS4nY/keDYXrHO
+ fnuLw0paJLXnRaR9EMH8+jL3zQXPEo6gSW7Hiw6k=
+Received: by be1-8.in.mailobj.net [192.168.91.18] with ESMTP
  via ip-20.mailobj.net [213.182.54.20]
- Wed,  3 Jun 2026 09:03:08 +0200 (CEST)
-X-EA-Auth: 4Nw0URQj7uPkczvBXVqvHNNkx3xc4E9leBket7ns3si5A4JDRle7F/xVrIls7rY36YuSgD5VbuHUAvm5ZvL3pxgtxZFSWUCR
-Message-ID: <931c8511-8c13-4134-b562-d4766d1a101c@mailo.com>
-Date: Wed, 3 Jun 2026 09:03:06 +0200
+ Wed,  3 Jun 2026 08:52:25 +0200 (CEST)
+X-EA-Auth: PiGWVAyV0mShbThfLjqbO9kxbT9FH6KBSOlwLFz3R6CbiWy/3YOZuVMATuQCPhitbnhzH0ipm9IsBuZodG+jLPO6I+/3z9pt
+Message-ID: <d6f30fab-eb87-45e7-bc5b-bd1f97afead8@mailo.com>
+Date: Wed, 3 Jun 2026 08:52:23 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 1/5] docs/specs/fw_cfg: Document all architecture register
- layouts
+Subject: Re: [PATCH 3/5] hw/nvram/fw_cfg: Enforce standard layout for x86
+ fw_cfg I/O ports
 Content-Language: en-US
 To: Peter Maydell <peter.maydell@linaro.org>, qemu-devel@nongnu.org
 Cc: Gerd Hoffmann <kraxel@redhat.com>,
@@ -49,12 +49,12 @@ Cc: Gerd Hoffmann <kraxel@redhat.com>,
  Liu Zhiwei <zhiwei_liu@linux.alibaba.com>,
  Chao Liu <chao.liu.zevorn@gmail.com>
 References: <20260529174639.451353-1-peter.maydell@linaro.org>
- <20260529174639.451353-2-peter.maydell@linaro.org>
+ <20260529174639.451353-4-peter.maydell@linaro.org>
 From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@mailo.com>
-In-Reply-To: <20260529174639.451353-2-peter.maydell@linaro.org>
+In-Reply-To: <20260529174639.451353-4-peter.maydell@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=213.182.54.8; envelope-from=philmd@mailo.com;
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=213.182.54.12; envelope-from=philmd@mailo.com;
  helo=mailo.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
@@ -77,47 +77,61 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi Peter,
-
 On 29/5/26 19:46, Peter Maydell wrote:
-> We implement the fw_cfg device for more architectures and machines
-> that we let on about in our documentation.  Luckily most of the new
-> ones (notably riscv and loongarch) have followed the straightforward
-> layout that the Arm virt board picked.
+> The fw_cfg_init_io_dma() function allows the caller to specify the
+> base port number of the selector/data register and the base port
+> number of the DMA address register separately. No caller actually
+> uses this: they all pass in base + 4 for the dma_iobase.
 > 
-> Restructure the documentation to present this as the "standard"
-> layout, followed by the other layouts used by various other boards
-> for historical reasons.  This adds PA-RISC, SPARC, PPC and MIPS.
+> To reduce the risk of unnecessary variation in what different x86
+> machine types use as their fw_cfg register layout, remove the
+> dma_iobase argument from fw_cfg_init_io_dma(), and have the function
+> always use the same "DMA port is base port + 4" layout.
 > 
 > Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
 > ---
->   docs/specs/fw_cfg.rst | 28 ++++++++++++++++++++++++----
->   1 file changed, 24 insertions(+), 4 deletions(-)
-> 
-> diff --git a/docs/specs/fw_cfg.rst b/docs/specs/fw_cfg.rst
-> index 31ae31576b..7e2fe0851d 100644
-> --- a/docs/specs/fw_cfg.rst
-> +++ b/docs/specs/fw_cfg.rst
-> @@ -84,15 +84,35 @@ increasing address order, similar to memcpy().
->   Register Locations
->   ------------------
->   
-> +For a memory-mapped fw_cfg device, the standard register layout is:
-> +
-> +    * base address : Data Register (64 bit)
-> +    * base address + 8 : Selector Register (16 bit)
-> +    * base address + 16 : DMA Address Register (64 bit)
-> +
-> +Some architectures or machines have a different layout for historical reasons:
-> +
->   x86, x86_64
->       * Selector Register IOport: 0x510
->       * Data Register IOport:     0x511
->       * DMA Address IOport:       0x514
-> +64-bit SPARC:
-> +    * base address : Selector Register (16 bit)
-> +    * base address + 1 : Data Register (8 bit)
+>   hw/i386/fw_cfg.c          |  3 +--
+>   hw/i386/microvm.c         |  3 +--
+>   hw/i386/pc.c              |  3 +--
+>   hw/nvram/fw_cfg.c         |  8 ++++----
+>   include/hw/nvram/fw_cfg.h | 17 +++++++++++++++--
+>   5 files changed, 22 insertions(+), 12 deletions(-)
 
-IIUC they have both the same base address.
+
+> diff --git a/include/hw/nvram/fw_cfg.h b/include/hw/nvram/fw_cfg.h
+> index 45a3747908..be3fb5f8aa 100644
+> --- a/include/hw/nvram/fw_cfg.h
+> +++ b/include/hw/nvram/fw_cfg.h
+> @@ -305,8 +305,21 @@ bool fw_cfg_add_file_from_generator(FWCfgState *s,
+>                                       Object *parent, const char *part,
+>                                       const char *filename, Error **errp);
+>   
+> -FWCfgState *fw_cfg_init_io_dma(uint32_t iobase, uint32_t dma_iobase,
+> -                                AddressSpace *dma_as);
+> +/**
+> + * fw_cfg_init_io_dma:
+> + * @iobase: x86 port number which is the base of the fw_cfg port range
+
+s/x86/ISA/?
+
+Anyway,
+Reviewed-by: Philippe Mathieu-Daudé <philmd@mailo.com>
+
+> + * @dma_as: the device will do DMA to/from this AddressSpace
+> + *
+> + * Create a fw_cfg device and map it into the specified I/O port range.
+> + *
+> + * This creates a device with the x86 PC standard port I/O layout:
+> + * - Selector Register IOport: @iobase
+> + * - Data Register IOport:     @iobase + 1
+> + * - DMA Address IOport:       @iobase + 4
+> + *
+> + * Returns the device object.
+> + */
+> +FWCfgState *fw_cfg_init_io_dma(uint32_t iobase, AddressSpace *dma_as);
+>   FWCfgState *fw_cfg_init_mem_nodma(hwaddr ctl_addr, hwaddr data_addr,
+>                                     unsigned data_width);
+>   /**
+
 
 
