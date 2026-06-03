@@ -4,106 +4,114 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8727BCD6E55
-	for <qemu-devel@archiver.kernel.org>; Wed,  3 Jun 2026 17:38:09 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id DD8FACD6E57
+	for <qemu-devel@archiver.kernel.org>; Wed,  3 Jun 2026 17:47:13 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wUpXY-0007FX-TP; Wed, 03 Jun 2026 13:38:05 -0400
+	id 1wUpfP-0000Rx-KO; Wed, 03 Jun 2026 13:46:11 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <eric.auger@redhat.com>)
- id 1wUpXV-0007F1-FC
- for qemu-devel@nongnu.org; Wed, 03 Jun 2026 13:38:01 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1wUpev-0000GF-2U
+ for qemu-devel@nongnu.org; Wed, 03 Jun 2026 13:45:50 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <eric.auger@redhat.com>)
- id 1wUpXR-0004iK-Uv
- for qemu-devel@nongnu.org; Wed, 03 Jun 2026 13:38:01 -0400
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1wUpep-0007Zk-KV
+ for qemu-devel@nongnu.org; Wed, 03 Jun 2026 13:45:39 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1780508276;
- h=from:from:reply-to:reply-to:subject:subject:date:date:
- message-id:message-id:to:to:cc:cc:mime-version:mime-version:
- content-type:content-type:
+ s=mimecast20190719; t=1780508731;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=VTmWWkeh45oeFhSgljjk9+ifKjz8zWh8059zVQaYBK4=;
- b=OhplZkcgXldDPsjDPu9X7UH0eO0EltpobWTIHx8L6fS9d6kgG40BQAeySYwa5uyKjkWpcK
- 1GUlw4VfEUX8clv2PRaXCaMEdgEmy659wcBSDK/FAlNnei58O60lWkY3fi7kptAwAbBouJ
- BoSauo/FY70Pj4r0krjk6AesSq8YEC8=
-Received: from mail-wr1-f69.google.com (mail-wr1-f69.google.com
- [209.85.221.69]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=q+C/9lPFJiMDATa0qbUxq/FzdWUtrCiAGlU4f6y5iIc=;
+ b=BX6563M2tYUrhuCLBp4a9rp8DFrbRSQHtpyqBRL5xwqN8FNibH9ts8uMDPuNizqP0AGZXm
+ 2sgxi9TpyPFOO36lSbdY8vzMs0BNo2OkA4Mi9mWGGnuh+JLhc6tuABrRyZkcKS+Rrm8usp
+ u4PTVASvkzohXbXkfKjlqWOMOmP0S+s=
+Received: from mail-qv1-f71.google.com (mail-qv1-f71.google.com
+ [209.85.219.71]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-499-DIN3Y9N5P6mjbBlY-7X2jA-1; Wed, 03 Jun 2026 13:37:55 -0400
-X-MC-Unique: DIN3Y9N5P6mjbBlY-7X2jA-1
-X-Mimecast-MFC-AGG-ID: DIN3Y9N5P6mjbBlY-7X2jA_1780508274
-Received: by mail-wr1-f69.google.com with SMTP id
- ffacd0b85a97d-45efa12a788so2945872f8f.2
- for <qemu-devel@nongnu.org>; Wed, 03 Jun 2026 10:37:55 -0700 (PDT)
+ us-mta-260-Kvc_fLBUPXSEWsUcHWtYHQ-1; Wed, 03 Jun 2026 13:45:28 -0400
+X-MC-Unique: Kvc_fLBUPXSEWsUcHWtYHQ-1
+X-Mimecast-MFC-AGG-ID: Kvc_fLBUPXSEWsUcHWtYHQ_1780508728
+Received: by mail-qv1-f71.google.com with SMTP id
+ 6a1803df08f44-8cce4f4634fso111125016d6.1
+ for <qemu-devel@nongnu.org>; Wed, 03 Jun 2026 10:45:28 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=redhat.com; s=google; t=1780508728; x=1781113528; darn=nongnu.org;
+ h=in-reply-to:content-transfer-encoding:content-disposition
+ :mime-version:references:message-id:subject:cc:to:from:date:from:to
+ :cc:subject:date:message-id:reply-to;
+ bh=q+C/9lPFJiMDATa0qbUxq/FzdWUtrCiAGlU4f6y5iIc=;
+ b=GjjEtf8pzxPLLq+H3efAmLsgZ/0ibfDCT5ZH1bHIt9SzEbWpPf/4BlunlNZ1r990ix
+ naqW+Hi0G9r0cQds/jks6teagsJOM6Yym4lXcu5iNTyiO6All3Is86xOxoY+q7TO2rbB
+ aybyIKt8JkzjewO56w8LhcxUZqiRGq/pyd+ZcvTzOocq9DV3wLdJzgltBU3wIcv0hrNA
+ eq7mEHCN+SHKG60eWzBmxGUopoRIaqR1oJBH+SMuTxYncRIdOub/Z7hmsBBqnpNo4PA4
+ 2ndGBnuQEtBjR+Pb8ml7ryuGsR9T6RQMOwUz+NuFn1C9aLxBlFh2MdW+42DaZ/KjVt8v
+ IvFQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1780508274; x=1781113074;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:reply-to:user-agent:mime-version:date
- :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=VTmWWkeh45oeFhSgljjk9+ifKjz8zWh8059zVQaYBK4=;
- b=NejfiorIF3O/GsppOdOfgfFSdNVq++BAwLCvHaohQr7g27dXyhJ6fsO8UGJzl6urkr
- 3t/hM/FPzVwuPI3jbVAa7bdYhq8Fmri1P+o8tk0yU3J0c6n/TRqq1FDgkr4/MDlh6lRJ
- Ys5hjdoHNNBZu7L35bGGY5ipMvnc+oZTUxVKGjnKVbDE8NCZSEVkawa3YH9T7DeojOH5
- 7zKrVfzlT29ch8J9blw7fR4gQ4j+dzQpWLgevm+f8Oxlzw0gufIle1MknsEt5JdMDZ/H
- acoXEPwF0wivqty1BXPo1EozpOGGbBmKYbatli7tTmlbiRzwNvtu+7w2pSeyczke86o4
- 9AaQ==
+ d=1e100.net; s=20251104; t=1780508728; x=1781113528;
+ h=in-reply-to:content-transfer-encoding:content-disposition
+ :mime-version:references:message-id:subject:cc:to:from:date:x-gm-gg
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=q+C/9lPFJiMDATa0qbUxq/FzdWUtrCiAGlU4f6y5iIc=;
+ b=XT34Ojmo1RnJnHNrhrlK5hIrLKUULtGZhfhNxpx9xDXcTFx1EoPZCzGMXoQBmdcc0z
+ bJOw/jcDKaBJKCYIur03Oz2q+0AvdnjhuszmOCnSnpXU5e8NrTmtny85T20YdfDaLVgn
+ ekmsolrZG3KbehxbhIePb0nexC8eZFWld9m1O6Fdx6bOiKUGbaNICbBuiucpYyJ/tzf0
+ cNKUpF2LQICdaFwLZQJDNGxln60Nys2hvHw6FENJpB6OTbUgwOC/bpvXkAH3G2NnVHS6
+ WMOV/HW/hdwIj8Cr2zemwXhXaJg5CSTzB7d00RU96M/C2TykcKFudMobT7S1dzVu+2zd
+ iBgw==
 X-Forwarded-Encrypted: i=1;
- AFNElJ+JtAhKNyybuJGolkZZJj0udhrFTuaf7GMpre+Ws3D45AvK8owb5H+4Ng6V8q+jKhggokfZC7Jwd2Vx@nongnu.org
-X-Gm-Message-State: AOJu0Yy1eqknqJCJQMgu503bgrnSRE+Dz2BzJwqqxIx0Gb4rm7I0Hny7
- ksei6h7A6FE7G0CqQ9S1QOKIyZh+oMXG2d486S4ERA1XOXTn4LQ6Di6xiYsuZPwf/3WxKeiKoPB
- MjVQUVwq+KIU88uSe3+I91SabVabF2lGgDo+FDGpn+AzHhxkQE77u8i/W
-X-Gm-Gg: Acq92OGDSSdA6AnCSrYrOj9atWjNPHTkcZSlPYIHfZ1qqRn01ehTG5J6PGjOSMHZ8MI
- uBpG2d7/4t8dm2oSefaNCgNlzKweAducUqLQxo6H2qvQoxuz55s0FEZX0pYimXd2wOC1j2AqKKf
- T55Q6ft9RG+rVDtPClw0JrPrdy6EjeMAn9VYv0PufRBiLbUZHdZz0oLLIXG2wljZ0S4dAg7YxWZ
- YOYYDWVuF2GiyCxgWJUvOv8AjCub32q2ctUjuBUVtMBcxNOS9gb2TrLPc53B/PWUm2UXwq7ne09
- jbaXpqo/Lq5GZ9btBD22TGwGYwMkkZP+K3dTpVVSj5zKQXLPLSP9/gLPXnAZ3Ja9ENO3YUUiCZ9
- rlZCsg+pDIYZDw+pFlTp3IkF2HE3C98DMm8nErw26185NU8lMyImSnJP47XMf0EGX4aBwSI4oJG
- r/BoRk
-X-Received: by 2002:a05:6000:2a0e:b0:441:1c18:f779 with SMTP id
- ffacd0b85a97d-46021875a1dmr4698106f8f.37.1780508274230; 
- Wed, 03 Jun 2026 10:37:54 -0700 (PDT)
-X-Received: by 2002:a05:6000:2a0e:b0:441:1c18:f779 with SMTP id
- ffacd0b85a97d-46021875a1dmr4698074f8f.37.1780508273771; 
- Wed, 03 Jun 2026 10:37:53 -0700 (PDT)
-Received: from ?IPV6:2a01:e0a:f0e:9070:527b:9dff:feef:3874?
- ([2a01:e0a:f0e:9070:527b:9dff:feef:3874])
- by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-4601f2dcb13sm8436282f8f.2.2026.06.03.10.37.52
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 03 Jun 2026 10:37:53 -0700 (PDT)
-Message-ID: <f47a2f68-9bf1-4f6f-ae44-0b937f65e9ee@redhat.com>
-Date: Wed, 3 Jun 2026 19:37:51 +0200
+ AFNElJ8TPXxtDnXaWvuziZcIhhEpbIJvYcy+9p1aU1CFaAqUhm/JH4P2UbYiXGq/hRnteMJ1GEdX7ysZLs2z@nongnu.org
+X-Gm-Message-State: AOJu0YynzMDLtWgsE+XpOt8rbj2u8yljZY7/CQwZVv6IzPE3yoeiY0AN
+ H7zdVSfomLy2hcYfkjnLfcxG6eREUfhqLHZaXBA86gAJ9TV0zoT8PfofQmvTVSLTm4jpctfHbEp
+ UxTlEr/+oORScSHWj0ExyrRWR2gm+VPAY3jd7tyVHHFR451gzDC7tKFlK
+X-Gm-Gg: Acq92OER0ma+LTJdiozNRks4ac2Vhk2T4+UCQBCoaHStndDggJdr8+YviCm9lCy7ncR
+ mOi+zZLwTLrz/pM2hJgjiIDPjFRjEvFmpVy2qIlmOuPzirpGIrbQMZJT0EycHq9IAjpGbInagJN
+ fqa1OlTeA5a4WzZN82DQbCzSJgQjr9L71YOH+03tthEynLqeuVROjy7Rmt1bk6kvD1zJKkHf8NN
+ w6tgEkwf7Gym2SQB5XlWDV97Zz9aydhKl6ey2Ww0//jWiZ7b9vvS1QUEwwBZSzkSTZtZzVcYWBc
+ 4HnLGZ9bnqwUfq6CBk5HIxRe4Qgm8YIT9cZfunYR6cAKlgfqdsV2PLrbLCPgihvIDRFY2V0OuOa
+ qB09Xy2khRCjBVZPKq5BuZGhI1w==
+X-Received: by 2002:ad4:4e09:0:b0:8ce:af02:fc78 with SMTP id
+ 6a1803df08f44-8cece030faamr48256096d6.37.1780508727603; 
+ Wed, 03 Jun 2026 10:45:27 -0700 (PDT)
+X-Received: by 2002:ad4:4e09:0:b0:8ce:af02:fc78 with SMTP id
+ 6a1803df08f44-8cece030faamr48255396d6.37.1780508727043; 
+ Wed, 03 Jun 2026 10:45:27 -0700 (PDT)
+Received: from x1.local ([142.189.10.167]) by smtp.gmail.com with ESMTPSA id
+ 6a1803df08f44-8cecd0521f2sm26230176d6.31.2026.06.03.10.45.25
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Wed, 03 Jun 2026 10:45:26 -0700 (PDT)
+Date: Wed, 3 Jun 2026 13:45:24 -0400
+From: Peter Xu <peterx@redhat.com>
+To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
+Cc: Fabiano Rosas <farosas@suse.de>, qemu-devel@nongnu.org,
+ Paolo Bonzini <pbonzini@redhat.com>, Mark Kanda <mark.kanda@oracle.com>,
+ "Michael S . Tsirkin" <mst@redhat.com>,
+ Markus Armbruster <armbru@redhat.com>, Eric Blake <eblake@redhat.com>,
+ "Maciej S. Szmigiero" <maciej.szmigiero@oracle.com>,
+ Jason Wang <jasowang@redhat.com>, Ben Chaney <bchaney@akamai.com>,
+ Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
+Subject: Re: [PATCH RFC 0/2] migration/vl: new -incoming config:* for early
+ migration parameters
+Message-ID: <aiBoNIIF5Ofi7NcK@x1.local>
+References: <20260528212947.368132-1-peterx@redhat.com>
+ <87se7btcq9.fsf@suse.de> <ahmfh2s7CLFLoZKN@x1.local>
+ <ah_4hixGcNv-CLfv@redhat.com> <aiBNXUU0xcT_UbKO@x1.local>
+ <aiBhTTqSctU9lFsS@redhat.com>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v6 16/31] hw/arm/tegra241-cmdqv: Emulate VCMDQ register
- writes
-Content-Language: en-US
-To: Shameer Kolothum <skolothumtho@nvidia.com>, qemu-arm@nongnu.org,
- qemu-devel@nongnu.org
-Cc: peter.maydell@linaro.org, clg@redhat.com, alex@shazbot.org,
- nicolinc@nvidia.com, nathanc@nvidia.com, mochs@nvidia.com, jan@nvidia.com,
- jgg@nvidia.com, zhenzhong.duan@intel.com, kjaju@nvidia.com,
- phrdina@redhat.com
-References: <20260601114221.457995-1-skolothumtho@nvidia.com>
- <20260601114221.457995-17-skolothumtho@nvidia.com>
-From: Eric Auger <eric.auger@redhat.com>
-In-Reply-To: <20260601114221.457995-17-skolothumtho@nvidia.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=170.10.129.124;
- envelope-from=eric.auger@redhat.com; helo=us-smtp-delivery-124.mimecast.com
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <aiBhTTqSctU9lFsS@redhat.com>
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=peterx@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -24
 X-Spam_score: -2.5
 X-Spam_bar: --
 X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.445,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
  SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -117,255 +125,118 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-To: eric.auger@redhat.com
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+On Wed, Jun 03, 2026 at 06:15:57PM +0100, Daniel P. Berrangé wrote:
+> On Wed, Jun 03, 2026 at 11:50:53AM -0400, Peter Xu wrote:
+> > On Wed, Jun 03, 2026 at 10:48:54AM +0100, Daniel P. Berrangé wrote:
+> > > On Fri, May 29, 2026 at 10:15:35AM -0400, Peter Xu wrote:
+> > > > On Thu, May 28, 2026 at 07:01:50PM -0300, Fabiano Rosas wrote:
+> > > > > Peter Xu <peterx@redhat.com> writes:
+> > > > > 
+> > > > > > CI: https://gitlab.com/peterx/qemu/-/pipelines/2560168907
+> > > > > >
+> > > > > > This series introduces a generic way to specify migration parameters that
+> > > > > > can be used even during the early boot phase of QEMU.
+> > > > > >
+> > > > > > One example use case that already existed is CPR-transfer / CPR-exec.
+> > > > > > currently QEMU has a temporary global variable (incoming_mode) to achieve
+> > > > > > this, but it's hard to understand and this hack bleeded into quite a few
+> > > > > > places that we could have avoided.  The lines in patch 2 touched may
+> > > > > > provide some idea.
+> > > > > >
+> > > > > > With a generic approach of setting migration parameters with cmdlines, we
+> > > > > > can remove this hack meanwhile QEMU should be able to keep the CPR behavior
+> > > > > > as before.  To CPR maintainers and reviewers: please have a closer look,
+> > > > > > even better if it can be smoke tested, to see if this works for Oracle's
+> > > > > > environment, TIA.
+> > > > > >
+> > > > > > The 1st patch implemented that new semantics.  It is straightforward: now
+> > > > > > we can setup any migration parameter using an extra line of:
+> > > > > >
+> > > > > >   -incoming config:key1=value1,key2=value2,...
+> 
+> snip
+> 
+> > > > > - using "config:"
+> > > > > 
+> > > > > This makes it non-uniform with uri and channels which don't have a
+> > > > > keyword in front of them. I guess I could live with it, but it seems
+> > > > > odd. I see that it makes parsing way easier.
+> > > > 
+> > > > Yeah, having some identifier would be nice.  I wished channels also have
+> > > > identifiers if we don't need to keep compatibility.
+> > > 
+> > > IMHO having a magic "config:" prefix is an anti-pattern because it
+> > > involves custom command line parsing logic.
+> > 
+> > Yes, it's not elegant.  I wished we had something like this though when
+> > introducing the cpr channels; right now anything wasn't "defer" or URI
+> > implies it's a "channel"..
+> > 
+> > I also wanted to avoid introducing new cmdline parameters, so migration
+> > incoming cmdlines can stick with the same option.  If there's better
+> > suggestion please shoot.
+> > 
+> > > 
+> > > Does "-incoming config" imply '-incoming defer' semantics or is it
+> > > independent ?  
+> > 
+> > They're independent.  Examples:
+> > 
+> >  a) "-incoming config:* -incoming tcp:*", setup parameters for TCP incoming
+> >     migration without further deferral
+> > 
+> >  b) "-incoming config:*" only, setup global parameters for a possible
+> >     upcoming outgoing migration
+> 
+> In that case they should definitely be independent command line
+> options. The old "-incoming" design is already broken / limited
+> in the non-'defer' case because it is hardcoded to use URI syntax
+> which can't express all the address formats we accept in QAPI
+> syntax. Adding more special cases onto -incoming just makes the
+> bad situation even worse and is not a forward looking design.
+> 
+> If we need the ability to specify migration parameters on the
+> CLI, then as a starting point for the design, we should assume that
+> -incoming does not exist, and design a complete solution from scratch
+> that uses QAPI exclusively, both for addresses and configuration.
 
+Do we want to obsolete -incoming?
 
-On 6/1/26 1:42 PM, Shameer Kolothum wrote:
-> From: Nicolin Chen <nicolinc@nvidia.com>
->
-> This is the write side counterpart of the VCMDQ read emulation. Add
-> write handling for both the direct VCMDQ aperture and the VINTF
-> logical aperture using the same index decoding and VINTF-to-VCMDQ
-> translation logic as the read path.
->
-> VINTF aperture writes are translated to their direct-aperture
-> equivalent and update the same cached state. Page 1 registers
-> (BASE, CONS_INDX_BASE) always update the cache.
->
-> Per the CMDQV architecture, a VCMDQ must be allocated to a Virtual
-> Interface before it is used to send commands to the SMMU. Until
-> that allocation happens, MMIO writes only update cached register
-> state - no command consumption, error handling, or interrupt
-> activity is driven from these writes. Subsequent patches wire up
-> IOMMU_HW_QUEUE_ALLOC, mmap the host VINTF Page 0, and install it
-> into guest MMIO; after that, Page 0 writes from either aperture
-> reach the hardware-backed mmap'd page instead of just the cache.
->
-> Signed-off-by: Nicolin Chen <nicolinc@nvidia.com>
-> Co-developed-by: Shameer Kolothum <skolothumtho@nvidia.com>
-> Signed-off-by: Shameer Kolothum <skolothumtho@nvidia.com>
-Reviewed-by: Eric Auger <eric.auger@redhat.com>
+> 
+> As discussed before, IMHO the "migrate" and "migrate-incoming"
+> commands need to accept both the address(s) and parameters/capabilities
+> as inline data items rather than relying on pre-configured global state
+> from the 'migrate-parameter' / 'migrate-capability' commands.
 
-Thanks
+This is one example that "relying only on migrate/migrate-incoming to
+specify parameters" won't work.
 
-Eric
-> ---
->  hw/arm/tegra241-cmdqv.c | 159 +++++++++++++++++++++++++++++++++++++++-
->  hw/arm/trace-events     |   2 +
->  2 files changed, 159 insertions(+), 2 deletions(-)
->
-> diff --git a/hw/arm/tegra241-cmdqv.c b/hw/arm/tegra241-cmdqv.c
-> index ff150fe0f3..3cb1b45575 100644
-> --- a/hw/arm/tegra241-cmdqv.c
-> +++ b/hw/arm/tegra241-cmdqv.c
-> @@ -120,6 +120,104 @@ static uint64_t tegra241_cmdqv_config_vintf_read(Tegra241CMDQV *cmdqv,
->      }
->  }
->  
-> +/*
-> + * Write a VCMDQ Page 0 register (control/status) using VCMDQ0_* offsets.
-> + *
-> + * The caller normalizes the MMIO offset such that @offset0 always refers
-> + * to a VCMDQ0_* register, while @index selects the VCMDQ instance.
-> + *
-> + * Page 0 registers are all 32-bit; this helper is only called for 4-byte
-> + * writes.
-> + */
-> +static void tegra241_cmdqv_write_vcmdq_page0(Tegra241CMDQV *cmdqv,
-> +                                             hwaddr offset0, int index,
-> +                                             uint32_t value, bool direct)
-> +{
-> +    switch (offset0) {
-> +    case A_VCMDQ0_CONS_INDX:
-> +        cmdqv->vcmdq_cons_indx[index] = value;
-> +        break;
-> +    case A_VCMDQ0_PROD_INDX:
-> +        /* VCMDQ is functional only once allocated to a VINTF; cache only. */
-> +        cmdqv->vcmdq_prod_indx[index] = value;
-> +        break;
-> +    case A_VCMDQ0_CONFIG:
-> +        if (value & R_VCMDQ0_CONFIG_CMDQ_EN_MASK) {
-> +            cmdqv->vcmdq_status[index] |= R_VCMDQ0_STATUS_CMDQ_EN_OK_MASK;
-> +        } else {
-> +            cmdqv->vcmdq_status[index] &= ~R_VCMDQ0_STATUS_CMDQ_EN_OK_MASK;
-> +        }
-> +        cmdqv->vcmdq_config[index] = value;
-> +        break;
-> +    case A_VCMDQ0_GERRORN:
-> +        /* VCMDQ is functional only once allocated to a VINTF; cache only. */
-> +        cmdqv->vcmdq_gerrorn[index] = value;
-> +        break;
-> +    default:
-> +        qemu_log_mask(LOG_UNIMP,
-> +                      "%s unhandled write access at 0x%" PRIx64 "\n",
-> +                      __func__, offset0);
-> +    }
-> +    trace_tegra241_cmdqv_write_vcmdq_page0(index, direct ? "direct" : "vi",
-> +                                           offset0, value);
-> +}
-> +
-> +/*
-> + * Write a VCMDQ Page 1 register (base / DRAM address) - 4-byte access.
-> + */
-> +static void tegra241_cmdqv_write_vcmdq_page1(Tegra241CMDQV *cmdqv,
-> +                                             hwaddr offset0, int index,
-> +                                             uint32_t value, bool direct)
-> +{
-> +    switch (offset0) {
-> +    case A_VCMDQ0_BASE_L:
-> +        cmdqv->vcmdq_base[index] =
-> +            deposit64(cmdqv->vcmdq_base[index], 0, 32, value);
-> +        break;
-> +    case A_VCMDQ0_BASE_H:
-> +        cmdqv->vcmdq_base[index] =
-> +            deposit64(cmdqv->vcmdq_base[index], 32, 32, value);
-> +        break;
-> +    case A_VCMDQ0_CONS_INDX_BASE_DRAM_L:
-> +        cmdqv->vcmdq_cons_indx_base[index] =
-> +            deposit64(cmdqv->vcmdq_cons_indx_base[index], 0, 32, value);
-> +        break;
-> +    case A_VCMDQ0_CONS_INDX_BASE_DRAM_H:
-> +        cmdqv->vcmdq_cons_indx_base[index] =
-> +            deposit64(cmdqv->vcmdq_cons_indx_base[index], 32, 32, value);
-> +        break;
-> +    default:
-> +        qemu_log_mask(LOG_UNIMP,
-> +                      "%s unhandled write access at 0x%" PRIx64 "\n",
-> +                      __func__, offset0);
-> +    }
-> +    trace_tegra241_cmdqv_write_vcmdq_page1(index, direct ? "direct" : "vi",
-> +                                           offset0, value);
-> +}
-> +
-> +/*
-> + * Write a VCMDQ Page 1 register - 8-byte access at BASE_L or DRAM_L.
-> + */
-> +static void tegra241_cmdqv_write_vcmdq_page1_64(Tegra241CMDQV *cmdqv,
-> +                                                hwaddr offset0, int index,
-> +                                                uint64_t value, bool direct)
-> +{
-> +    switch (offset0) {
-> +    case A_VCMDQ0_BASE_L:
-> +        cmdqv->vcmdq_base[index] = value;
-> +        break;
-> +    case A_VCMDQ0_CONS_INDX_BASE_DRAM_L:
-> +        cmdqv->vcmdq_cons_indx_base[index] = value;
-> +        break;
-> +    default:
-> +        qemu_log_mask(LOG_UNIMP,
-> +                      "%s unhandled 64-bit write at 0x%" PRIx64 "\n",
-> +                      __func__, offset0);
-> +    }
-> +    trace_tegra241_cmdqv_write_vcmdq_page1(index, direct ? "direct" : "vi",
-> +                                           offset0, value);
-> +}
-> +
->  static void tegra241_cmdqv_config_vintf_write(Tegra241CMDQV *cmdqv,
->                                                hwaddr offset, uint64_t value)
->  {
-> @@ -243,6 +341,8 @@ out:
->  static void tegra241_cmdqv_writel_mmio(Tegra241CMDQV *cmdqv, hwaddr offset,
->                                         uint32_t value)
->  {
-> +    int index;
-> +
->      switch (offset) {
->      case A_CONFIG:
->          cmdqv->config = value;
-> @@ -261,6 +361,39 @@ static void tegra241_cmdqv_writel_mmio(Tegra241CMDQV *cmdqv, hwaddr offset,
->      case A_VINTF0_CONFIG ... A_VINTF0_LVCMDQ_ERR_MAP_3:
->          tegra241_cmdqv_config_vintf_write(cmdqv, offset, value);
->          break;
-> +    case A_VI_VCMDQ0_CONS_INDX ... A_VI_VCMDQ1_GERRORN:
-> +        /*
-> +         * VINTF Page0 registers are hardware aliases of VCMDQ Page0 registers.
-> +         * Translate the VINTF aperture offset to its VCMDQ Page0 equivalent
-> +         * before dispatching to the Page 0 helper.
-> +         */
-> +        offset -= CMDQV_VINTF_PAGE0_BASE - CMDQV_VCMDQ_PAGE0_BASE;
-> +        index = (offset - CMDQV_VCMDQ_PAGE0_BASE) / CMDQV_VCMDQ_STRIDE;
-> +        tegra241_cmdqv_write_vcmdq_page0(cmdqv,
-> +                offset - index * CMDQV_VCMDQ_STRIDE, index, value, false);
-> +        break;
-> +    case A_VCMDQ0_CONS_INDX ... A_VCMDQ1_GERRORN:
-> +        /*
-> +         * Decode a per-VCMDQ Page 0 access. Each VCMDQ occupies a
-> +         * CMDQV_VCMDQ_STRIDE-byte window; extract the index and normalize
-> +         * to the VCMDQ0_* offset before calling the Page 0 helper.
-> +         */
-> +        index = (offset - CMDQV_VCMDQ_PAGE0_BASE) / CMDQV_VCMDQ_STRIDE;
-> +        tegra241_cmdqv_write_vcmdq_page0(cmdqv,
-> +                offset - index * CMDQV_VCMDQ_STRIDE, index, value, true);
-> +        break;
-> +    case A_VI_VCMDQ0_BASE_L ... A_VI_VCMDQ1_CONS_INDX_BASE_DRAM_H:
-> +        /* Same VINTF-to-VCMDQ translation as VINTF Page0 case above. */
-> +        offset -= CMDQV_VINTF_PAGE1_BASE - CMDQV_VCMDQ_PAGE1_BASE;
-> +        index = (offset - CMDQV_VCMDQ_PAGE1_BASE) / CMDQV_VCMDQ_STRIDE;
-> +        tegra241_cmdqv_write_vcmdq_page1(cmdqv,
-> +                offset - index * CMDQV_VCMDQ_STRIDE, index, value, false);
-> +        break;
-> +    case A_VCMDQ0_BASE_L ... A_VCMDQ1_CONS_INDX_BASE_DRAM_H:
-> +        index = (offset - CMDQV_VCMDQ_PAGE1_BASE) / CMDQV_VCMDQ_STRIDE;
-> +        tegra241_cmdqv_write_vcmdq_page1(cmdqv,
-> +                offset - index * CMDQV_VCMDQ_STRIDE, index, value, true);
-> +        break;
->      default:
->          qemu_log_mask(LOG_UNIMP, "%s unhandled write access at 0x%" PRIx64 "\n",
->                        __func__, offset);
-> @@ -268,14 +401,36 @@ static void tegra241_cmdqv_writel_mmio(Tegra241CMDQV *cmdqv, hwaddr offset,
->  }
->  
->  /*
-> - * 8-byte MMIO write handler.
-> + * 8-byte MMIO write handler. Only Page 1 BASE / CONS_INDX_BASE_DRAM accept
-> + * full 64-bit writes; other offsets are write-ignored.
->   */
->  static void tegra241_cmdqv_writell_mmio(Tegra241CMDQV *cmdqv, hwaddr offset,
->                                          uint64_t value)
->  {
-> -    qemu_log_mask(LOG_UNIMP,
-> +    int index;
-> +
-> +    switch (offset) {
-> +    case A_VI_VCMDQ0_BASE_L ... A_VI_VCMDQ1_CONS_INDX_BASE_DRAM_H:
-> +        /*
-> +         * VINTF Page1 registers are hardware aliases of VCMDQ Page1 registers.
-> +         * Translate the VINTF aperture offset to its VCMDQ Page1 equivalent
-> +         * before dispatching to the Page 1 helper.
-> +         */
-> +        offset -= CMDQV_VINTF_PAGE1_BASE - CMDQV_VCMDQ_PAGE1_BASE;
-> +        index = (offset - CMDQV_VCMDQ_PAGE1_BASE) / CMDQV_VCMDQ_STRIDE;
-> +        tegra241_cmdqv_write_vcmdq_page1_64(cmdqv,
-> +                offset - index * CMDQV_VCMDQ_STRIDE, index, value, false);
-> +        break;
-> +    case A_VCMDQ0_BASE_L ... A_VCMDQ1_CONS_INDX_BASE_DRAM_H:
-> +        index = (offset - CMDQV_VCMDQ_PAGE1_BASE) / CMDQV_VCMDQ_STRIDE;
-> +        tegra241_cmdqv_write_vcmdq_page1_64(cmdqv,
-> +                offset - index * CMDQV_VCMDQ_STRIDE, index, value, true);
-> +        break;
-> +    default:
-> +        qemu_log_mask(LOG_UNIMP,
->                        "%s unhandled 64-bit write at 0x%" PRIx64 " (WI)\n",
->                        __func__, offset);
-> +    }
->  }
->  
->  static void tegra241_cmdqv_write_mmio(void *opaque, hwaddr offset,
-> diff --git a/hw/arm/trace-events b/hw/arm/trace-events
-> index 4392135fa2..d76f408d8a 100644
-> --- a/hw/arm/trace-events
-> +++ b/hw/arm/trace-events
-> @@ -77,6 +77,8 @@ tegra241_cmdqv_read_mmio(uint64_t offset, uint64_t val, unsigned size) "offset:
->  tegra241_cmdqv_write_mmio(uint64_t offset, uint64_t val, unsigned size) "offset: 0x%"PRIx64" val: 0x%"PRIx64" size: 0x%x"
->  tegra241_cmdqv_read_vcmdq_page0(int index, const char *aperture, uint64_t offset0, uint64_t val) "vcmdq[%d] %s page0 offset0: 0x%"PRIx64" val: 0x%"PRIx64
->  tegra241_cmdqv_read_vcmdq_page1(int index, const char *aperture, uint64_t offset0, uint64_t val) "vcmdq[%d] %s page1 offset0: 0x%"PRIx64" val: 0x%"PRIx64
-> +tegra241_cmdqv_write_vcmdq_page0(int index, const char *aperture, uint64_t offset0, uint64_t val) "vcmdq[%d] %s page0 offset0: 0x%"PRIx64" val: 0x%"PRIx64
-> +tegra241_cmdqv_write_vcmdq_page1(int index, const char *aperture, uint64_t offset0, uint64_t val) "vcmdq[%d] %s page1 offset0: 0x%"PRIx64" val: 0x%"PRIx64
->  
->  # strongarm.c
->  strongarm_uart_update_parameters(const char *label, int speed, char parity, int data_bits, int stop_bits) "%s speed=%d parity=%c data=%d stop=%d"
+Essentially parameters like CPR's and the new "local" parameter wants to be
+global so that it will be visible and will have an impact on how other QEMU
+modules behave.  Here for TAP when "local" is globally on we may want to
+initialize the device differently from the default operations.  That will
+need to happen before any QMP commands.
+
+> 
+> If we did that modelling for 'migrate-incoming' then that modelling of
+> command parmaeters could map directly to a new '-migrate-incoming'
+> command line argument that accepted exactly the same data model.
+
+This is true.  Then we will make this series to depend on Fabiano's
+previous work (to be posted; per we talked yesterday).
+
+I wanted to see if we can reduce the impact to minimum, -incoming is indeed
+not well designed, but in real life we have control over what can happen
+with URIs and the current "config:" won't conflict with any of them.
+
+But if we strongly wish to obsolete -incoming completely, I'm OK too.
+
+Thanks,
+
+-- 
+Peter Xu
 
 
