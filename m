@@ -4,49 +4,49 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9B3FCCD6E6B
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 90408CD6E6A
 	for <qemu-devel@archiver.kernel.org>; Wed,  3 Jun 2026 07:09:06 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wUfic-0003Vi-M5; Wed, 03 Jun 2026 03:08:50 -0400
+	id 1wUfiQ-0002qf-Uh; Wed, 03 Jun 2026 03:08:38 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@mailo.com>) id 1wUfiZ-0003IK-1j
- for qemu-devel@nongnu.org; Wed, 03 Jun 2026 03:08:47 -0400
-Received: from msg-4.mailo.com ([213.182.54.15] helo=mailo.com)
+ (Exim 4.90_1) (envelope-from <philmd@mailo.com>) id 1wUfiN-0002id-CL
+ for qemu-devel@nongnu.org; Wed, 03 Jun 2026 03:08:35 -0400
+Received: from msg-3.mailo.com ([213.182.54.8] helo=mailo.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@mailo.com>) id 1wUfiX-0000G4-CP
- for qemu-devel@nongnu.org; Wed, 03 Jun 2026 03:08:46 -0400
+ (Exim 4.90_1) (envelope-from <philmd@mailo.com>) id 1wUfiL-0000EY-OJ
+ for qemu-devel@nongnu.org; Wed, 03 Jun 2026 03:08:35 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=mailo.com; s=mailo;
- t=1780468089; bh=q0rOyd42dOJeNZTM2pfYFXxRZVHHACeCOdb7GqQeu4c=;
+ t=1780469049; bh=3L9ee2dKWYaxt0pfBtX+efH/JSKvT17EPaAHu2ACHaY=;
  h=X-EA-Auth:Message-ID:Date:MIME-Version:Subject:To:Cc:References:
  From:In-Reply-To:Content-Type:Content-Transfer-Encoding;
- b=HOhpPx93PVeanJeBGKuBF16L0uL2GmUjORfPzr58C0sgMC0yoaldNDRfAjiHY63of
- PcKI5xPuU1KsMOnh9RgGjeAn8+PrrXlSXkS7c9dFKqRlzBuQxSVyhLRXN/EJOTAPDL
- YJBeV7ICTp232xNjP0SY4BtuhlL1ORv6LR/N65VY=
-Received: by be1-7.in.mailobj.net [192.168.91.17] with ESMTP
+ b=j84VzZozA9g2fH9kp7FQZ+T2X4TW3YEqeq/4S+Q3OfSeNN73peQcPvLe2MZJXPPSY
+ 4zAFepPGxvNuKiFoRv1gEMNXWtd1IzsLuJHjTtWsvQHGzBGxvbc6csjjYE58MqdnYh
+ KXIb/Tkh1JA7U2saJMfovN/9BPyt+cYYqsWeyX/c=
+Received: by be1-8.in.mailobj.net [192.168.91.18] with ESMTP
  via ip-20.mailobj.net [213.182.54.20]
- Wed,  3 Jun 2026 08:28:06 +0200 (CEST)
-X-EA-Auth: kNi0qp2PjjpCgzmdaJlUrqmODfFzXL0piSFO+uOh4Eh1a/Jif3As6QRe+82dcig2lP0zetV44Ib0wW0T8rjsgKm+ErYA4ADN
-Message-ID: <ffe79444-5032-4541-92ed-2877ae41529c@mailo.com>
-Date: Wed, 3 Jun 2026 08:28:04 +0200
+ Wed,  3 Jun 2026 08:43:33 +0200 (CEST)
+X-EA-Auth: bLH+M3CLRZnHGis5Ht2Cry2RVDNZ+8i8NHPnCI4YUYdwPHTFhw7uasxEsvkP8mEiqRf8NYQ1Y6MJVLGO3G/Pgnv4oAaXL9/5
+Message-ID: <52cc9b38-e1e8-46ef-aaaf-41b33200188f@mailo.com>
+Date: Wed, 3 Jun 2026 08:43:32 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 3/3] MAINTAINERS: remove stale Cirrus macOS build job path
+Subject: Re: [PATCH v2 13/13] target/loongarch: Add new structure CPUSysState
 Content-Language: en-US
-To: Stefan Hajnoczi <stefanha@redhat.com>, qemu-devel@nongnu.org
-Cc: =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
- Li-Wen Hsu <lwhsu@freebsd.org>,
- Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
- Warner Losh <imp@bsdimp.com>
-References: <20260602162457.828969-1-stefanha@redhat.com>
- <20260602162457.828969-4-stefanha@redhat.com>
+To: Bibo Mao <maobibo@loongson.cn>, Song Gao <gaosong@loongson.cn>,
+ =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Richard Henderson <richard.henderson@linaro.org>
+Cc: qemu-devel@nongnu.org, SignKirigami <prcups@krgm.moe>,
+ Hengyu Yu <yuhengyu25@mails.ucas.ac.cn>
+References: <20260602030029.1476299-1-maobibo@loongson.cn>
+ <20260602030029.1476299-14-maobibo@loongson.cn>
 From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@mailo.com>
-In-Reply-To: <20260602162457.828969-4-stefanha@redhat.com>
+In-Reply-To: <20260602030029.1476299-14-maobibo@loongson.cn>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=213.182.54.15; envelope-from=philmd@mailo.com;
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=213.182.54.8; envelope-from=philmd@mailo.com;
  helo=mailo.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
@@ -69,17 +69,88 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 2/6/26 18:24, Stefan Hajnoczi wrote:
-> Commit 984b192bdf37 ("ci: drop cirrus MacOS build") removed the Cirrus
-> macOS build job. The MAINTAINERS file now contains a stale path that
-> should be removed.
+On 2/6/26 05:00, Bibo Mao wrote:
+> New structure CPUSysState is added here, it contains CSR registers
+> now, in future TLB and timer can be moved to this structure also.
 > 
-> Cc: Alex Bennée <alex.bennee@linaro.org>
-> Signed-off-by: Stefan Hajnoczi <stefanha@redhat.com>
+> It is only code movement, no function change.
+> 
+> Signed-off-by: Bibo Mao <maobibo@loongson.cn>
 > ---
->   MAINTAINERS | 1 -
->   1 file changed, 1 deletion(-)
+>   target/loongarch/cpu.c                        |   4 +-
+>   target/loongarch/cpu.h                        |  35 +++---
+>   target/loongarch/csr.c                        |   4 +-
+>   target/loongarch/csr.h                        |   2 +-
+>   target/loongarch/machine.c                    | 118 +++++++++---------
+>   .../tcg/insn_trans/trans_extra.c.inc          |   4 +-
+>   6 files changed, 86 insertions(+), 81 deletions(-)
 
-Reviewed-by: Philippe Mathieu-Daudé <philmd@mailo.com>
+
+> diff --git a/target/loongarch/csr.h b/target/loongarch/csr.h
+> index ed7c603a0b..ef71cdf30f 100644
+> --- a/target/loongarch/csr.h
+> +++ b/target/loongarch/csr.h
+> @@ -29,6 +29,6 @@ CSRInfo *get_csr(unsigned int csr_num);
+>   bool set_csr_flag(unsigned int csr_num, int flag);
+>   static inline int get_csr_offset(const CSRInfo *csr, int vm_level)
+>   {
+> -    return csr->offset;
+> +    return csr->offset + offsetof(CPULoongArchState, sys_states[vm_level]);
+>   }
+>   #endif /* TARGET_LOONGARCH_CSR_H */
+> diff --git a/target/loongarch/machine.c b/target/loongarch/machine.c
+> index 4db53fec26..931a5ca5ba 100644
+> --- a/target/loongarch/machine.c
+> +++ b/target/loongarch/machine.c
+> @@ -58,9 +58,9 @@ static const VMStateDescription vmstate_msgint = {
+>       .minimum_version_id = 1,
+>       .needed = msgint_needed,
+>       .fields = (const VMStateField[]) {
+> -        VMSTATE_UINT64_ARRAY(env.CSR_MSGIS, LoongArchCPU, N_MSGIS),
+> -        VMSTATE_UINT64(env.CSR_MSGIR, LoongArchCPU),
+> -        VMSTATE_UINT64(env.CSR_MSGIE, LoongArchCPU),
+> +        VMSTATE_UINT64_ARRAY(env.sys_states[0].CSR_MSGIS, LoongArchCPU, N_MSGIS),
+> +        VMSTATE_UINT64(env.sys_states[0].CSR_MSGIR, LoongArchCPU),
+> +        VMSTATE_UINT64(env.sys_states[0].CSR_MSGIE, LoongArchCPU),
+
+No impact right now, but all the migration stream will be broken when
+you add more sys_states.
+
+Will sys_states number be static or dynamic?
+
+>           VMSTATE_END_OF_LIST()
+>       },
+>   };
+
+
+> diff --git a/target/loongarch/tcg/insn_trans/trans_extra.c.inc b/target/loongarch/tcg/insn_trans/trans_extra.c.inc
+> index 298a80cff5..838ac7e6b4 100644
+> --- a/target/loongarch/tcg/insn_trans/trans_extra.c.inc
+> +++ b/target/loongarch/tcg/insn_trans/trans_extra.c.inc
+> @@ -46,13 +46,15 @@ static bool gen_rdtime(DisasContext *ctx, arg_rr *a,
+>   {
+>       TCGv dst1 = gpr_dst(ctx, a->rd, EXT_NONE);
+>       TCGv dst2 = gpr_dst(ctx, a->rj, EXT_NONE);
+> +    tcg_target_long offset;
+>   
+>       translator_io_start(&ctx->base);
+>       gen_helper_rdtime_d(dst1, tcg_env);
+>       if (word) {
+>           tcg_gen_sextract_tl(dst1, dst1, high ? 32 : 0, 32);
+>       }
+> -    tcg_gen_ld_i64(dst2, tcg_env, offsetof(CPULoongArchState, CSR_TID));
+> +    offset = offsetof(CPUSysState, CSR_TID) + offsetof(CPULoongArchState, sys_states[0]);
+
+This seems fragile. Could you move as a preliminary patch change?
+Also write it reversed:
+
+   offsetof(CPULoongArchState, sys_states[0]) + offsetof(CPUSysState, 
+CSR_TID)
+
+> +    tcg_gen_ld_i64(dst2, tcg_env, offset);
+>   
+>       return true;
+>   }
+
 
 
