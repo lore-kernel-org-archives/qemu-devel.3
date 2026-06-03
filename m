@@ -4,114 +4,118 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 186F6CD6E55
-	for <qemu-devel@archiver.kernel.org>; Wed,  3 Jun 2026 15:51:28 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E58F5CD6E55
+	for <qemu-devel@archiver.kernel.org>; Wed,  3 Jun 2026 15:55:37 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wUns4-0007CM-45; Wed, 03 Jun 2026 11:51:08 -0400
+	id 1wUnw2-0000dV-Df; Wed, 03 Jun 2026 11:55:14 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1wUns0-0007Bx-1F
- for qemu-devel@nongnu.org; Wed, 03 Jun 2026 11:51:04 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1wUnrx-0007Bv-1z
- for qemu-devel@nongnu.org; Wed, 03 Jun 2026 11:51:03 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1780501859;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1wUnw0-0000cK-M6
+ for qemu-devel@nongnu.org; Wed, 03 Jun 2026 11:55:12 -0400
+Received: from smtp-out1.suse.de ([195.135.223.130])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1wUnvx-0000dJ-47
+ for qemu-devel@nongnu.org; Wed, 03 Jun 2026 11:55:12 -0400
+Received: from imap1.dmz-prg2.suse.org (imap1.dmz-prg2.suse.org
+ [IPv6:2a07:de40:b281:104:10:150:64:97])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+ (No client certificate requested)
+ by smtp-out1.suse.de (Postfix) with ESMTPS id 3F4166A94A;
+ Wed,  3 Jun 2026 15:55:07 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
+ t=1780502107; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=2Of2zTFukBbedDiNTomV6vy9vrpz8rZJq6eeMxaWRkg=;
- b=RFs9eRCA50WHxfSQVMGz7II0ExOnvGv449pOt4nCRy6dtUdLGnsKxLSejEdWqyywJOEAek
- JHCLO60WioonjwJkkUo5Yt3ehL/dMvhBd7uWGknn/UtZ6/Iq2vWlh/pzIDvuwfO4/Smzcf
- ErBwgcJq52WJzPkxys4A9++Dx+vRgQw=
-Received: from mail-qt1-f198.google.com (mail-qt1-f198.google.com
- [209.85.160.198]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-568-21AeQRiHMJCVAZM43MPniw-1; Wed, 03 Jun 2026 11:50:56 -0400
-X-MC-Unique: 21AeQRiHMJCVAZM43MPniw-1
-X-Mimecast-MFC-AGG-ID: 21AeQRiHMJCVAZM43MPniw_1780501855
-Received: by mail-qt1-f198.google.com with SMTP id
- d75a77b69052e-5176cc5bf2aso27938621cf.1
- for <qemu-devel@nongnu.org>; Wed, 03 Jun 2026 08:50:56 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1780501855; x=1781106655; darn=nongnu.org;
- h=in-reply-to:content-transfer-encoding:content-disposition
- :mime-version:references:message-id:subject:cc:to:from:date:from:to
- :cc:subject:date:message-id:reply-to;
- bh=2Of2zTFukBbedDiNTomV6vy9vrpz8rZJq6eeMxaWRkg=;
- b=ieOyMM3QJJi8pVxNomc61y31d/cUW4YnUPMU5xGZ8pfTNjSvbeRIbzF5zQ3bjAU8BN
- mUCQi9mmTHbSYAOZYgidrAieRfUdbFUs+rEWteCoOj+7Gqrec0/YHD4jZPK4nPxltup6
- +V5ha7ScwUAG31se7HULORs/eEvh8LpEKaF1MhqSTPYOwK1T1R3uZq9V9ho9BkdV6Qee
- ZJ1B9kPbOHAn+fHmAiKE6bgQQl2iH3QvwZ/16TCyETzdH4wjWmdL0LW088EJMnJIrIAi
- l0WLpj7GgCY4IBNfofOILRdijbhH0EEco5ZkvfKoO+xZKygIgZPxWV5VWaIKP4Q2+Mxk
- mNZw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1780501855; x=1781106655;
- h=in-reply-to:content-transfer-encoding:content-disposition
- :mime-version:references:message-id:subject:cc:to:from:date:x-gm-gg
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=2Of2zTFukBbedDiNTomV6vy9vrpz8rZJq6eeMxaWRkg=;
- b=hK7P4iaOVRBrkkOOl4a/zkekgCbDBZQBPMfv7wCvVolHlQIZv3a4OCPlR1RXngJaND
- ZP9lm/+coUhOwBjRJMd6dkgbd5m+/I+ipTjgdfv9nM8p+Ggmv/RtEV47xsI1URc15xH4
- 74i8NvnViSCwHJsXGPoH/+qCDUAUXBXFzWzxq3CbyXV/f9whCXagiWGUJS74I6YbeLAt
- SwIG5Bc+RV4bDO8K1/CjR8MrYM/YyF38pAmlCWJC0EerfPlJ/b371cnBR8aZSYlpn8Hp
- wIPdBb3Q/x3Gl0Fy1IcQW1aGNjc8cKAEULy8Q8KweW7hRmhLY++UUFVAeyLQ2YYX9ZA0
- JlmA==
-X-Forwarded-Encrypted: i=1;
- AFNElJ++dT3936CWAMK6hyIwILOdpB+B9rWKa0GGkmpEt+oakR3L5trOeXCb/iusylQmEk21Xnt8HZtRdcGs@nongnu.org
-X-Gm-Message-State: AOJu0Yy7wJgWMNvGld5wVv3wjV7ues28atJ6orTFwsbR8F66CIXHo3WE
- srN55tTI368sO10ywGC6LjSjFfsnlnGGaRbH1rEFR2hCpOwR0Bjj2c0ZCRQNYwRcVY0MTRZrlFE
- ikRfqPNNmfksTg60j43FQQGE0eM3ZS6IlpJevRiNIkvD/Zhnp0fNmZQ+2
-X-Gm-Gg: Acq92OGgQ7MfCQirvEYbLFebMkjgytDMU2pZTEIjQ9Y985FvxvfD8YvUEVVWipUR4Yz
- awIU0zFodbfA3emMcsfGdDOFQTHFjpTXLbRnkBl/8WTufTl08X+yS3lGK+IjQ1Z3el69yhiU47T
- Ecio7VmKs45+CpyYlUeoZDhxnqTbnR167gVcA/2aa3nyhGzAbax7EVXCeSGKpN6V0bBYzupgVgO
- NhNJYd9M6Dm1frqZbmEJVADceELr99Lcz5ndgdAHVgmKz0nMy7omUF05Gf7iGww6MUnF2s6li+9
- zNfXT6pi1Kvp7TrqSDlUjJRgezR6YArXnHRxLovds7cYrErI/9RIP6epOBEU3L3kR68VKJQ0Wwk
- S/hrTJn/UZp7WHmqUZb+7r4VRSA==
-X-Received: by 2002:a05:622a:652:b0:50d:a987:89b2 with SMTP id
- d75a77b69052e-517786d588amr56761571cf.31.1780501855459; 
- Wed, 03 Jun 2026 08:50:55 -0700 (PDT)
-X-Received: by 2002:a05:622a:652:b0:50d:a987:89b2 with SMTP id
- d75a77b69052e-517786d588amr56761021cf.31.1780501854906; 
- Wed, 03 Jun 2026 08:50:54 -0700 (PDT)
-Received: from x1.local ([142.189.10.167]) by smtp.gmail.com with ESMTPSA id
- d75a77b69052e-51775dbd2c9sm27190241cf.23.2026.06.03.08.50.53
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 03 Jun 2026 08:50:54 -0700 (PDT)
-Date: Wed, 3 Jun 2026 11:50:53 -0400
-From: Peter Xu <peterx@redhat.com>
-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
-Cc: Fabiano Rosas <farosas@suse.de>, qemu-devel@nongnu.org,
- Paolo Bonzini <pbonzini@redhat.com>, Mark Kanda <mark.kanda@oracle.com>,
- "Michael S . Tsirkin" <mst@redhat.com>,
- Markus Armbruster <armbru@redhat.com>, Eric Blake <eblake@redhat.com>,
- "Maciej S. Szmigiero" <maciej.szmigiero@oracle.com>,
- Jason Wang <jasowang@redhat.com>, Ben Chaney <bchaney@akamai.com>,
- Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
-Subject: Re: [PATCH RFC 0/2] migration/vl: new -incoming config:* for early
- migration parameters
-Message-ID: <aiBNXUU0xcT_UbKO@x1.local>
-References: <20260528212947.368132-1-peterx@redhat.com>
- <87se7btcq9.fsf@suse.de> <ahmfh2s7CLFLoZKN@x1.local>
- <ah_4hixGcNv-CLfv@redhat.com>
+ bh=iUd5D9UzfrzB7oiBYYYk2EZg4Z6Zg+qTE47rjbkErLU=;
+ b=d+r52eWM2lZpxBFFLxChJd5A6Cy88gsd14q2efmFtCv3oyKOlWvBprllx4YS8LrcTWTNRA
+ rg4f43LqHjyyHf6ueDKI1h77jLbDB9aictxaggVXlRllF/Hgfvauh1U6J5f3tcHvMr8ebQ
+ 41inD7EsRAbWJOG2jdurL0BaNMy39+U=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
+ s=susede2_ed25519; t=1780502107;
+ h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=iUd5D9UzfrzB7oiBYYYk2EZg4Z6Zg+qTE47rjbkErLU=;
+ b=+qdgqxFZlBtuxfUyMnm1LUht9Zbxbj0lje7rHdVuyoT9IimJMGhGJ3VUoOrizJtLeNamyI
+ HMpoCQqrmbPPLpAw==
+Authentication-Results: smtp-out1.suse.de;
+ dkim=pass header.d=suse.de header.s=susede2_rsa header.b=d+r52eWM;
+ dkim=pass header.d=suse.de header.s=susede2_ed25519 header.b=+qdgqxFZ
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
+ t=1780502107; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=iUd5D9UzfrzB7oiBYYYk2EZg4Z6Zg+qTE47rjbkErLU=;
+ b=d+r52eWM2lZpxBFFLxChJd5A6Cy88gsd14q2efmFtCv3oyKOlWvBprllx4YS8LrcTWTNRA
+ rg4f43LqHjyyHf6ueDKI1h77jLbDB9aictxaggVXlRllF/Hgfvauh1U6J5f3tcHvMr8ebQ
+ 41inD7EsRAbWJOG2jdurL0BaNMy39+U=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
+ s=susede2_ed25519; t=1780502107;
+ h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=iUd5D9UzfrzB7oiBYYYk2EZg4Z6Zg+qTE47rjbkErLU=;
+ b=+qdgqxFZlBtuxfUyMnm1LUht9Zbxbj0lje7rHdVuyoT9IimJMGhGJ3VUoOrizJtLeNamyI
+ HMpoCQqrmbPPLpAw==
+Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+ (No client certificate requested)
+ by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id D5B70779A7;
+ Wed,  3 Jun 2026 15:55:06 +0000 (UTC)
+Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
+ by imap1.dmz-prg2.suse.org with ESMTPSA id +RxaKVpOIGr8UAAAD6G6ig
+ (envelope-from <farosas@suse.de>); Wed, 03 Jun 2026 15:55:06 +0000
+From: Fabiano Rosas <farosas@suse.de>
+To: =?utf-8?Q?Marc-Andr=C3=A9?= Lureau <marcandre.lureau@redhat.com>
+Cc: qemu-devel@nongnu.org, qemu-stable@nongnu.org, Paolo Bonzini
+ <pbonzini@redhat.com>
+Subject: Re: [PATCH] chardev: Don't unregister yank upon async path
+ connection failure
+In-Reply-To: <CAMxuvazV+hebpeerp=95K6MnvLuywyzZMnc7TUhZzeYmt7+ZpA@mail.gmail.com>
+References: <20260603141137.1108963-1-farosas@suse.de>
+ <CAMxuvazV+hebpeerp=95K6MnvLuywyzZMnc7TUhZzeYmt7+ZpA@mail.gmail.com>
+Date: Wed, 03 Jun 2026 12:55:00 -0300
+Message-ID: <87v7bz7h63.fsf@suse.de>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <ah_4hixGcNv-CLfv@redhat.com>
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=peterx@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -24
-X-Spam_score: -2.5
-X-Spam_bar: --
-X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.445,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Transfer-Encoding: quoted-printable
+X-Rspamd-Action: no action
+X-Spamd-Result: default: False [-4.51 / 50.00]; BAYES_HAM(-3.00)[99.99%];
+ NEURAL_HAM_LONG(-1.00)[-1.000];
+ R_DKIM_ALLOW(-0.20)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
+ NEURAL_HAM_SHORT(-0.20)[-1.000]; MIME_GOOD(-0.10)[text/plain];
+ MX_GOOD(-0.01)[];
+ RBL_SPAMHAUS_BLOCKED_OPENRESOLVER(0.00)[2a07:de40:b281:104:10:150:64:97:from]; 
+ RCVD_VIA_SMTP_AUTH(0.00)[]; ARC_NA(0.00)[]; TO_DN_SOME(0.00)[];
+ RECEIVED_SPAMHAUS_BLOCKED_OPENRESOLVER(0.00)[2a07:de40:b281:106:10:150:64:167:received];
+ MIME_TRACE(0.00)[0:+]; MISSING_XM_UA(0.00)[];
+ RCVD_TLS_ALL(0.00)[]; MID_RHS_MATCH_FROM(0.00)[];
+ DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
+ FUZZY_RATELIMITED(0.00)[rspamd.com]; FROM_EQ_ENVFROM(0.00)[];
+ FROM_HAS_DN(0.00)[]; RCPT_COUNT_THREE(0.00)[4];
+ RCVD_COUNT_TWO(0.00)[2]; TO_MATCH_ENVRCPT_ALL(0.00)[];
+ DBL_BLOCKED_OPENRESOLVER(0.00)[gitlab.com:url,suse.de:email,suse.de:dkim,suse.de:mid,imap1.dmz-prg2.suse.org:helo,imap1.dmz-prg2.suse.org:rdns];
+ DNSWL_BLOCKED(0.00)[2a07:de40:b281:106:10:150:64:167:received,2a07:de40:b281:104:10:150:64:97:from];
+ DKIM_TRACE(0.00)[suse.de:+]
+X-Rspamd-Server: rspamd2.dmz-prg2.suse.org
+X-Rspamd-Queue-Id: 3F4166A94A
+Received-SPF: pass client-ip=195.135.223.130; envelope-from=farosas@suse.de;
+ helo=smtp-out1.suse.de
+X-Spam_score_int: -43
+X-Spam_score: -4.4
+X-Spam_bar: ----
+X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_MED=-2.3, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -127,104 +131,53 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, Jun 03, 2026 at 10:48:54AM +0100, Daniel P. Berrangé wrote:
-> On Fri, May 29, 2026 at 10:15:35AM -0400, Peter Xu wrote:
-> > On Thu, May 28, 2026 at 07:01:50PM -0300, Fabiano Rosas wrote:
-> > > Peter Xu <peterx@redhat.com> writes:
-> > > 
-> > > > CI: https://gitlab.com/peterx/qemu/-/pipelines/2560168907
-> > > >
-> > > > This series introduces a generic way to specify migration parameters that
-> > > > can be used even during the early boot phase of QEMU.
-> > > >
-> > > > One example use case that already existed is CPR-transfer / CPR-exec.
-> > > > currently QEMU has a temporary global variable (incoming_mode) to achieve
-> > > > this, but it's hard to understand and this hack bleeded into quite a few
-> > > > places that we could have avoided.  The lines in patch 2 touched may
-> > > > provide some idea.
-> > > >
-> > > > With a generic approach of setting migration parameters with cmdlines, we
-> > > > can remove this hack meanwhile QEMU should be able to keep the CPR behavior
-> > > > as before.  To CPR maintainers and reviewers: please have a closer look,
-> > > > even better if it can be smoke tested, to see if this works for Oracle's
-> > > > environment, TIA.
-> > > >
-> > > > The 1st patch implemented that new semantics.  It is straightforward: now
-> > > > we can setup any migration parameter using an extra line of:
-> > > >
-> > > >   -incoming config:key1=value1,key2=value2,...
-> > > 
-> > > Just merge my code mate.
-> > > https://lore.kernel.org/r/20251215220041.12657-25-farosas@suse.de
-> > 
-> > Heh, I apologize. I totally forgot it even if I seem to have read it..
-> > 
-> > The goal is differnent, though, which is to make it available before
-> > migration object initialization.  Say, I wished -global would work too but
-> > it doesn't, and it just can't.  So it's not "something good to have"
-> > anymore, but functionally required for either CPR and TAP in the future if
-> > we adopt this, they'll all read them early.
-> > 
-> > > 
-> > > A couple of differences from my patch:
-> > > 
-> > > - old-style keyval vs. json;
-> > > 
-> > > Isn't json preferred nowadays?
-> > 
-> > I didn't mention it in doc, but yeah this series also supports JSON due to
-> > the same qapi helper used.  I don't suggest json though for this entry (and
-> > that's also why I didn't mention it..) because 99% of migration parameters
-> > are scalars and I don't see why we should use JSON here.. the only one not
-> > scalar is block-bitmap-mapping but it's not intended to be used in
-> > -incoming at all (even if it'll work..).
-> 
-> 99% of **todays** parameters are scalars.
-> 
-> The reason we are actively moving to CLI args which are modelled with QAPI
-> and expressable using JSON is because that future proofs the command line
-> for any kind of parameters we might need.
-> 
-> We should actively document and promote the use of JSON.
+Marc-Andr=C3=A9 Lureau <marcandre.lureau@redhat.com> writes:
 
-Ah OK, sure, will do when respin.
+> On Wed, Jun 3, 2026 at 6:11=E2=80=AFPM Fabiano Rosas <farosas@suse.de> wr=
+ote:
+>>
+>> Commit 5c102ac9 ("chardev: Consolidate yank registration") has moved
+>> yank registration in the tcp_chr_connect_client_async() path to after
+>> the connection is successful. If qio_channel_socket_connect_sync()
+>> fails early, there will be no yank registered to be unregistered in
+>> the error path, leading to assert.
+>>
+>> Remove the now-extraneous unregister.
+>>
+>> Cc: qemu-stable@nongnu.org
+>> Fixes: 5c102ac9 ("chardev: Consolidate yank registration")
+>> Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/3528
+>> Signed-off-by: Fabiano Rosas <farosas@suse.de>
+>> ---
+>>  chardev/char-socket.c | 5 -----
+>>  1 file changed, 5 deletions(-)
+>>
+>> diff --git a/chardev/char-socket.c b/chardev/char-socket.c
+>> index e064b105c5..99e01a4875 100644
+>> --- a/chardev/char-socket.c
+>> +++ b/chardev/char-socket.c
+>> @@ -1128,11 +1128,6 @@ static void qemu_chr_socket_connected(QIOTask *ta=
+sk, void *opaque)
+>>
+>>      if (qio_task_propagate_error(task, &err)) {
+>>          tcp_chr_change_state(s, TCP_CHARDEV_STATE_DISCONNECTED);
+>> -        if (s->registered_yank) {
+>
+> Is "registered_yank" stalled too? shouldn't be set to false to avoid
+> that path and possibly others?
+>
 
-> 
-> > > - using "config:"
-> > > 
-> > > This makes it non-uniform with uri and channels which don't have a
-> > > keyword in front of them. I guess I could live with it, but it seems
-> > > odd. I see that it makes parsing way easier.
-> > 
-> > Yeah, having some identifier would be nice.  I wished channels also have
-> > identifiers if we don't need to keep compatibility.
-> 
-> IMHO having a magic "config:" prefix is an anti-pattern because it
-> involves custom command line parsing logic.
+No because registered_yank is about the YankInstance. There's no actual
+tracking of the individual YankFns.
 
-Yes, it's not elegant.  I wished we had something like this though when
-introducing the cpr channels; right now anything wasn't "defer" or URI
-implies it's a "channel"..
-
-I also wanted to avoid introducing new cmdline parameters, so migration
-incoming cmdlines can stick with the same option.  If there's better
-suggestion please shoot.
-
-> 
-> Does "-incoming config" imply '-incoming defer' semantics or is it
-> independent ?  
-
-They're independent.  Examples:
-
- a) "-incoming config:* -incoming tcp:*", setup parameters for TCP incoming
-    migration without further deferral
-
- b) "-incoming config:*" only, setup global parameters for a possible
-    upcoming outgoing migration
-
-Thanks,
-
--- 
-Peter Xu
-
+>> -            yank_unregister_function(CHARDEV_YANK_INSTANCE(chr->label),
+>> -                                     char_socket_yank_iochannel,
+>> -                                     QIO_CHANNEL(sioc));
+>> -        }
+>>          check_report_connect_error(chr, err);
+>>          goto cleanup;
+>>      }
+>> --
+>> 2.53.0
+>>
 
