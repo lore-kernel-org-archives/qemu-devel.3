@@ -4,152 +4,113 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 62D16CD6E55
-	for <qemu-devel@archiver.kernel.org>; Wed,  3 Jun 2026 14:01:06 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3FD68CD6E57
+	for <qemu-devel@archiver.kernel.org>; Wed,  3 Jun 2026 14:11:10 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wUm92-0004iy-Rs; Wed, 03 Jun 2026 10:00:32 -0400
+	id 1wUmId-000750-J7; Wed, 03 Jun 2026 10:10:27 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <brian.cain@oss.qualcomm.com>)
- id 1wUm8y-0004Zt-S9
- for qemu-devel@nongnu.org; Wed, 03 Jun 2026 10:00:29 -0400
-Received: from mx0b-0031df01.pphosted.com ([205.220.180.131])
+ (Exim 4.90_1) (envelope-from <milesg@linux.ibm.com>)
+ id 1wUmIb-00074C-4R; Wed, 03 Jun 2026 10:10:25 -0400
+Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <brian.cain@oss.qualcomm.com>)
- id 1wUm8x-000521-5z
- for qemu-devel@nongnu.org; Wed, 03 Jun 2026 10:00:28 -0400
-Received: from pps.filterd (m0279869.ppops.net [127.0.0.1])
- by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 65395rwi780725
- for <qemu-devel@nongnu.org>; Wed, 3 Jun 2026 14:00:25 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
- cc:content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
- 8bnmGZyWJ0KwfaHPl6kROxzZYUn/dytGYxQqo+Z7O4Q=; b=CFMd00czIOBgVFPJ
- NSwPH85RRsGo7RVCCW7uNrCzefh56QQIuoBBS6W0rfLkGF01o4EsI1csLS07QPoU
- G8cRwVfirzhbatdaNVmo6rs0AgnUKLolXoCxMMYhzqJuWMOUlVwYg//gCb92LFqE
- Z1afC/deREaL5reC+iWgY+mopeyYW2H38sMaHBWjO3zIks+kVXcuALbrOo+GIP97
- bz5PsBSioTrINV41g2OuaTABi03pWFnNGJSV5zo9ZBADFuYVOOlSJmLWW5DwdPP5
- PQsG6lCJKeny6bD0ODbhxdbDPW6sNjZL3otlIzhNkmmtOeVYcETLYuezBJobW3Bz
- AhN4yw==
-Received: from mail-dl1-f70.google.com (mail-dl1-f70.google.com [74.125.82.70])
- by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4ejhbb13g4-1
- (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
- for <qemu-devel@nongnu.org>; Wed, 03 Jun 2026 14:00:24 +0000 (GMT)
-Received: by mail-dl1-f70.google.com with SMTP id
- a92af1059eb24-135916eefa0so25154174c88.1
- for <qemu-devel@nongnu.org>; Wed, 03 Jun 2026 07:00:24 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1780495224; cv=none;
- d=google.com; s=arc-20240605;
- b=bJbuCqU4KHBmFzkHubIyrRj3YGSMaW/5rEJBJTASqMksX+zj/ozvbyOT5kHN7r3lrA
- shYkqiVPDnsp4s2Iz/yvOoqkjylaH/WvjZ4mj1ziVp1MzaDkp/xRzCTQ1YLZEqU7qxiP
- Gy5pZzUL97ckOwxepxjh8qUXFjyviTI/Dv3C7A8rPgYz+M8yM24JVt/BRbJvc3iKAgdr
- JHKN4k8I19nNu8v0EEbfVoJ928BiEDPdRhpTJrrDFWZn5iB/AT1ZBnFR56gHBEPIdbKd
- 74GHvZmxuCESOHd6+FZkwLDchslcqa1IxsAbBN74IyA7hW4RwLqdwggWrPtTp1e2cKV2
- 4I1A==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
- s=arc-20240605; 
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:dkim-signature;
- bh=8bnmGZyWJ0KwfaHPl6kROxzZYUn/dytGYxQqo+Z7O4Q=;
- fh=0ypY2+DMo+Tn9hZjyTqCFH3+Pqo5vdiQUJhoWYhFOwc=;
- b=SUlT+0RWWPw7adC/muao6ijdFBBs9CQudz7fpy6PO0uKOD2TYziUw9A+DsvbXFovWz
- hCYwxeK9xv/90CR+KIT/Le0Q3x+N+1W8XC3sgyE7LqNHWOhmoK7gxFV+JCLnoHE8UlWx
- M14GepduqT6qWaxFYZ0dBg1Ucl/sYQx3CfCofjgfX3N1PiXikmprhwp+LSad++8Sy4Fk
- Lb+ACdvCmwmfG8ytaGWgl5CpUZCytLTy1BX5vHnRhKNvdxOLTU1osalMen1zmiDx8EqE
- 29ccpVFnu2QbBbSYlPeXeFM9+r/euyQ44iC4qkPBwbjSgF7Fn6CvA5011FrOtV3Ocd8p
- 0Kcg==; darn=nongnu.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=oss.qualcomm.com; s=google; t=1780495224; x=1781100024; darn=nongnu.org;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:from:to:cc:subject:date
- :message-id:reply-to;
- bh=8bnmGZyWJ0KwfaHPl6kROxzZYUn/dytGYxQqo+Z7O4Q=;
- b=C+yNg9yPHg/yxChU9O5XaNhZn+mgsJIBfwPtVpiJ4TKE9gSzgLu88L79mzPEA2Fjdu
- Ku1jaFzBQlyexea/sW1EpXd5/kDy8R5B/34+QItrlAg1T0VKoQyM6XqXTjynHLcGMhVR
- qLOWX6zASzdrjz4T88YkAy8KPFWNsQMsQFU62sxwuTlo0uk07sL/YMrKgx61xgiJqHBo
- fgpBGcRWVINZ22HXx664oRvX5WxrlfJ4ZZtmEg6j9xcCsPeALgyBEg46DhgC9PULZpuv
- yylTaEdnqMKr04G6hp+GbKRJBa1OPK3edYFOyUp5KTL4Wue/JFMG8tAVmIDvGQPr3Cxk
- cMeg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1780495224; x=1781100024;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to;
- bh=8bnmGZyWJ0KwfaHPl6kROxzZYUn/dytGYxQqo+Z7O4Q=;
- b=RUjU5mvG3nahi8kkGHU8U6oYljUAJcHagLJaxepcTmsqXuLkvqJMlN2N6v11UFOdrm
- WqSA9VSZZGJlb+hg11+Ox/2jrgciApVEtoGhecKTGvwsayiMhzGwy2yv0GYwaFErL9CH
- vPeMGjBOy+2sqgkkv0vZ4jhPiSid/neANzbJSQMcohmTvR95GznClckIraH/ImZdCSSz
- mQrMgCjBolW/LL6d3W9rDyyBcLRIswFxcEOsbNIg2aVHCJa7ZLhFwUPzlCiavK9xNu0v
- TwHGTAOE3b0lYw+EW8pODYmZNNYmtqhzv7d7i8grt9Z37UgwHPkv1c/GdS9bffR+qp4m
- y3ZA==
-X-Gm-Message-State: AOJu0YwgTnEaEToaelvD/z/1M1dB1LPQ03D5sfqbxjQlM2Fr9S1g+tHb
- nDpHgCu2Z6txKjJv7kpw2INUhTf0sWL+lvJKGLozotiaPa3PivbWGDMpiUP3W+Egmbw/rTKLMEa
- LN/92w6s2g1iiLMdJ8Fq2X+zpWugQ7RYi5H0XIoZTfdHCO4lc0cF7aOSqOOOb500t6cfzJmxUu2
- rovvedAhTxfG1FTLGVIMZc25QwzVSun5+T
-X-Gm-Gg: Acq92OE5e6QUCzrcymahlALdsGkovCwQ6d9qm8UGYCD/KDgefwWnBmRtJrbIMMxLkXr
- 1+aqD3OfjKfkmPl7slKAihwbl4L33Y16BimGX0t9Qfj6e1b3jojuUt30WhInSo7nelzv3h4g6iX
- g2aulpFWwxs1k5zZJPgOlrPnWNI3oj67VYbhZeYCzNPduntcpVspnn3CtVCzSBtc3NU8v+Z5UQr
- e+VR9Cab1fsCkLUOw==
-X-Received: by 2002:a05:701b:2706:b0:128:ce44:be8f with SMTP id
- a92af1059eb24-137f694475dmr848738c88.2.1780495223718; 
- Wed, 03 Jun 2026 07:00:23 -0700 (PDT)
-X-Received: by 2002:a05:701b:2706:b0:128:ce44:be8f with SMTP id
- a92af1059eb24-137f694475dmr848703c88.2.1780495222461; Wed, 03 Jun 2026
- 07:00:22 -0700 (PDT)
-MIME-Version: 1.0
-References: <20260529215554.606133-1-brian.cain@oss.qualcomm.com>
- <20260529215554.606133-39-brian.cain@oss.qualcomm.com>
- <c71f8159-5c3d-4e02-aa08-7d979f5454ab@linaro.org>
-In-Reply-To: <c71f8159-5c3d-4e02-aa08-7d979f5454ab@linaro.org>
-From: Brian Cain <brian.cain@oss.qualcomm.com>
-Date: Wed, 3 Jun 2026 09:00:05 -0500
-X-Gm-Features: AVHnY4K9gXMuMsZNcOT8mugm6MjB34A_EVImdYKu4FqgyONgZToAftFjIRJdeL4
-Message-ID: <CAEqNhNaJx6_KPW8dxsoN3WdoVLAxhVQKKD=2S92ya9KONMdboA@mail.gmail.com>
-Subject: Re: [PATCH v7 38/38] target/hexagon: Add hex_interrupts support
-To: =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>
-Cc: qemu-devel@nongnu.org, matheus.bernardino@oss.qualcomm.com,
- pierrick.bouvier@oss.qualcomm.com, ltaylorsimpson@gmail.com,
- Brian Cain <bcain@quicinc.com>, Sid Manning <sidneym@quicinc.com>,
- Michael Lambert <mlambert@quicinc.com>
+ (Exim 4.90_1) (envelope-from <milesg@linux.ibm.com>)
+ id 1wUmIY-0002jX-EO; Wed, 03 Jun 2026 10:10:24 -0400
+Received: from pps.filterd (m0353729.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
+ 6537ULCq845711; Wed, 3 Jun 2026 14:10:18 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
+ :content-transfer-encoding:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:reply-to:subject:to; s=pp1;
+ bh=6i3KBi5vT+X+VjCYkmC8zFhUYK60oD2wtcF+Gz1hqno=; b=d0Uhw/z8jPo4
+ tZ3jnbMqkxIIfM0x4syI8WvcJHG5lbh84SsNMZpgykOqoXN54Io+puqsEa9MBU4R
+ h86yjCZPVG9+vZOaeuC3J51KYpWGYbHrbGJ8m/WwRESTVCHmNh7VvKBlyhElhYN6
+ rof7bpXZdBn9dEvjIdSzr2l1+x1OjasWiIiT1+JD6r6Gb8ddqaAHQfvjyYv1cdmw
+ 7UzynaBSnN0LFoJx8lKxX3c+IjVKkM2B4L2o7VJqkjPwZOCqy6v7JvajNoL2nonD
+ STOU1kom3PdMiExNWH4v2egGWQMipsUCSRjsyRakqVNAwoZY/akq0iJKrq3bChBu
+ G3U5sFSQVQ==
+Received: from ppma11.dal12v.mail.ibm.com
+ (db.9e.1632.ip4.static.sl-reverse.com [50.22.158.219])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4efqjqb8js-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Wed, 03 Jun 2026 14:10:17 +0000 (GMT)
+Received: from pps.filterd (ppma11.dal12v.mail.ibm.com [127.0.0.1])
+ by ppma11.dal12v.mail.ibm.com (8.18.1.7/8.18.1.7) with ESMTP id 653E97HB016309;
+ Wed, 3 Jun 2026 14:10:16 GMT
+Received: from smtprelay05.wdc07v.mail.ibm.com ([172.16.1.72])
+ by ppma11.dal12v.mail.ibm.com (PPS) with ESMTPS id 4egcwyg6hd-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Wed, 03 Jun 2026 14:10:16 +0000 (GMT)
+Received: from smtpav03.dal12v.mail.ibm.com (smtpav03.dal12v.mail.ibm.com
+ [10.241.53.102])
+ by smtprelay05.wdc07v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 653EAFS633555118
+ (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Wed, 3 Jun 2026 14:10:15 GMT
+Received: from smtpav03.dal12v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 0791858056;
+ Wed,  3 Jun 2026 14:10:15 +0000 (GMT)
+Received: from smtpav03.dal12v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 24A305803F;
+ Wed,  3 Jun 2026 14:10:14 +0000 (GMT)
+Received: from mambor8.rchland.ibm.com (unknown [9.10.239.198])
+ by smtpav03.dal12v.mail.ibm.com (Postfix) with ESMTP;
+ Wed,  3 Jun 2026 14:10:14 +0000 (GMT)
+Message-ID: <4ef1791085a32802185b2c68686aab273f4dfcbd.camel@linux.ibm.com>
+Subject: Re: [RFC PATCH 00/28] target/ppc: Moving instructions to decodetree
+ specification
+From: Miles Glenn <milesg@linux.ibm.com>
+To: Chinmay Rath <rathc@linux.ibm.com>, qemu-devel@nongnu.org,
+ qemu-ppc@nongnu.org, npiggin@gmail.com, harshpb@linux.ibm.com,
+ richard.henderson@linaro.org, peter.maydell@linaro.org, stefanha@redhat.com
+Cc: vishalc@linux.ibm.com, tshah@linux.ibm.com, shivangu@linux.ibm.com,
+ ojaswin@linux.ibm.com, aboorvad@linux.ibm.com, amachhiw@linux.ibm.com,
+ sv@linux.ibm.com, shivani@linux.ibm.com, mkchauras@gmail.com,
+ uverma@linux.ibm.com, nikhilks@linux.ibm.com
+Date: Wed, 03 Jun 2026 09:10:13 -0500
+In-Reply-To: <285fdd30-f22d-4d4b-b8ee-5f04fccfca6d@linux.ibm.com>
+References: <20260520160728.2283628-1-rathc@linux.ibm.com>
+ <285fdd30-f22d-4d4b-b8ee-5f04fccfca6d@linux.ibm.com>
+Organization: IBM
 Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-X-Proofpoint-GUID: PfAA7uam_BLsQc2y75qVit2aJmAzf-Gt
-X-Authority-Analysis: v=2.4 cv=R74z39RX c=1 sm=1 tr=0 ts=6a203378 cx=c_pps
- a=SvEPeNj+VMjHSW//kvnxuw==:117 a=IkcTkHD0fZMA:10 a=FelO9ux0wxsA:10
- a=s4-Qcg_JpJYA:10 a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22
- a=_glEPmIy2e8OvE2BGh3C:22 a=KKAkSRfTAAAA:8 a=COk6AnOGAAAA:8 a=pGLkceISAAAA:8
- a=EUspDBNiAAAA:8 a=Jk1Mq3RG9Jm1FU1F0FcA:9 a=QEXdDO2ut3YA:10
- a=Kq8ClHjjuc5pcCNDwlU0:22 a=cvBusfyB2V15izCimMoJ:22 a=TjNXssC_j7lpFel5tvFf:22
-X-Proofpoint-ORIG-GUID: PfAA7uam_BLsQc2y75qVit2aJmAzf-Gt
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNjAzMDEzNCBTYWx0ZWRfX2imOArqZH5z4
- dkbxblq9+FTIV6pFOk4XOrblV3y2e/NaxBFssaBDzKUVLEuYA7hgd6KJV9vze3jEojJA6CalPr1
- yJPO/LI1iEmD3lFu75nnf8RwGB49oAri5OAlZM6Q7rgO7QWl+k4+iHjNv2JBtBEFAiA8PpODmYq
- WeA0FnXUQWshr5R/v2thMvxCZ+IjD7Pn0kYiG1jSa1YT4gt65wNtcAyTxw/eMkpDTWOOFumyGKM
- fG3X7kXRMKZrE0p8+4DSwom+S8/LMRCLNHPlbnheWZI/L8j+0nX4JMWMJajEGwsG0XYPgjzV3+m
- OSjfNqldRAPypLx8Xwehp30El0nIGvokMza0/X8miczSV5R/MB/raLRKGNMQ1JiX9WUKHYdZg/C
- xTcHJYEEPlnwn9+M99aYQpHF2ROR4JTqxIfckqoVVVaCoyhmIi7Ul9T5/mfOlw/uemqOu9BYl5q
- nZquii1utPVvbqiCp9g==
+X-Mailer: Evolution 3.28.5 (3.28.5-27.el8_10) 
+Mime-Version: 1.0
+Content-Transfer-Encoding: 7bit
+X-TM-AS-GCONF: 00
+X-Proofpoint-Reinject: loops=2 maxloops=12
+X-Proofpoint-ORIG-GUID: SFR488TzoPLzdHBDJehIPFR-PtqYhmC4
+X-Proofpoint-GUID: cesJ9MNOEKpHjcXGw6DZk5rtCXWEyGJ_
+X-Authority-Analysis: v=2.4 cv=bcVbluPB c=1 sm=1 tr=0 ts=6a2035ca cx=c_pps
+ a=aDMHemPKRhS1OARIsFnwRA==:117 a=aDMHemPKRhS1OARIsFnwRA==:17
+ a=IkcTkHD0fZMA:10 a=FelO9ux0wxsA:10 a=VkNPw1HP01LnGYTKEx00:22
+ a=RnoormkPH1_aCDwRdu11:22 a=uAbxVGIbfxUO_5tXvNgY:22 a=p0WdMEafAAAA:8
+ a=nEv_iNHVDJmhEehG0_IA:9 a=QEXdDO2ut3YA:10
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNjAzMDEzNiBTYWx0ZWRfXz8B3iT41av3L
+ sDPXAaG2pcEB7aETlxXk4Fskm04VpPOUXyKzs9y7zLxZ0kp2mZ3NcwfR0XSZclapv5vNbahZieW
+ XtB8OSSbSRjIZaIjEmnZwJD0OODmu7obqUuIsUYRcFYmCcWO5yFxI3D13SKWobgiKd24q5b8gQT
+ hIPMHAhg7w481I9KBuRiyDZLeC2/l8HL9CE1ecYR8nsRoUPQ1xDdVO+ar6kZF8jhAsNDlbUIuE7
+ kPBF+9fXEBDALCgfxogrlRZ0UWN4KwA3lerRZSJ4TKtedpXSYzlnQpkrTVBaPYNU1lv1HJFqGzZ
+ y04yg6omWry/dP3Sd1vr9oqt6KScBJvW7l4bwECRZbZ//dFXNVWQzrD4u9IAlRnDTsNpnUizH8g
+ 3bIS3Z8NSoOXNA4S4GW4xbmN4EBemFQBoaeyoLDY9aWRK23G45AXGTZdf67gzLUViO5k02AcBlB
+ teCDWBELTcyDFckvYxQ==
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.125,FMLib:17.12.100.49
  definitions=2026-06-03_04,2026-05-28_03,2025-10-01_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- suspectscore=0 clxscore=1015 lowpriorityscore=0 impostorscore=0
- priorityscore=1501 malwarescore=0 adultscore=0 phishscore=0 bulkscore=0
- spamscore=0 classifier=typeunknown authscore=0 authtc= authcc= route=outbound
- adjust=0 reason=mlx scancount=1 engine=8.22.0-2605210000
- definitions=main-2606030134
-Received-SPF: pass client-ip=205.220.180.131;
- envelope-from=brian.cain@oss.qualcomm.com; helo=mx0b-0031df01.pphosted.com
-X-Spam_score_int: -27
-X-Spam_score: -2.8
+ impostorscore=0 clxscore=1011 adultscore=0 priorityscore=1501 phishscore=0
+ lowpriorityscore=0 bulkscore=0 malwarescore=0 spamscore=0 suspectscore=0
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.22.0-2605210000 definitions=main-2606030136
+Received-SPF: pass client-ip=148.163.156.1; envelope-from=milesg@linux.ibm.com;
+ helo=mx0a-001b2d01.pphosted.com
+X-Spam_score_int: -26
+X-Spam_score: -2.7
 X-Spam_bar: --
-X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001,
+X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
+ RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -163,31 +124,126 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-To: milesg@linux.ibm.com
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Sun, May 31, 2026 at 4:31=E2=80=AFPM Philippe Mathieu-Daud=C3=A9
-<philmd@linaro.org> wrote:
->
-> On 29/5/26 23:55, Brian Cain wrote:
-> > From: Brian Cain <bcain@quicinc.com>
-> >
-> > Co-authored-by: Taylor Simpson <ltaylorsimpson@gmail.com>
-> > Co-authored-by: Sid Manning <sidneym@quicinc.com>
-> > Co-authored-by: Michael Lambert <mlambert@quicinc.com>
-> > Signed-off-by: Brian Cain <brian.cain@oss.qualcomm.com>
-> > ---
-> >   target/hexagon/cpu.h            |   2 +
-> >   target/hexagon/hex_interrupts.h |  15 ++
-> >   target/hexagon/cpu.c            |   4 +
-> >   target/hexagon/hex_interrupts.c | 371 +++++++++++++++++++++++++++++++=
-+
-> >   4 files changed, 392 insertions(+)
-> >   create mode 100644 target/hexagon/hex_interrupts.h
-> >   create mode 100644 target/hexagon/hex_interrupts.c
->
-> Patch #28 mentions NMI, how is it handled?
+On Wed, 2026-06-03 at 17:09 +0530, Chinmay Rath wrote:
+> On 5/20/26 21:37, Chinmay Rath wrote:
+> > We recently had a QEMU decodetree hackathon at our org focusing on moving
+> > instructions to decodetree specification. I have consolidated the patches
+> > generated out of this effort in this series. Though I have done a round
+> > of review on all of them, might share some more review comments later.
+> > 
+> > The checkpatch.pl script emits false error for a couple of patches which
+> > are of the following nature :
+> > 
+> > TRANS(STWAT, do_st_atomic, DEF_MEMOP(MO_UL))
+> > 
+> > static bool trans_LDAT(DisasContext *ctx, arg_LDAT *a)
+> >                                                      ^
+> > I see this happening in the last pointer argument in function
+> > definitions after macros (like TRANS(..) in this case).
+> > 
+> > Richard, Peter, Stefan,
+> > Could you please advise if it would be okay to have the above false
+> > positive in the patches ?
+> Hi Chao,
+> I was wondering if you would be able to advise a way forward for this 
+> checkpatch issue ? TIA.
+> > Gitlab CI: https://gitlab.com/rathc/qemu/-/pipelines/2540725424
+> > Please note that check-python-tox and migration-compat-aarch64 from CI
+> > fails in the upstream master branch as seen in the following:
+> > https://gitlab.com/rathc/qemu/-/pipelines/2537246569
+> > 
+> > Thanks,
+> > Chinmay
+> Hi Glenn,
+> If possible, would you like to have a look at this series when you get a 
+> chance ? TIA.
 
-In these three patchsets, the nmi remains unimplemented.  Would you
-prefer I include the nmi implementation?
+Hi Chinmay,
+
+First, I'd like to thank you and everyone that worked on this for their
+efforts!  This seems like one of those tasks that everyone knows is
+needed but everyone would rather work on other more interesting things
+(myself included).  I would like to take a look at this series when I
+get the chance.  I do have a lot on my plate right now, but hopefully I
+can get to it in the next week or so.
+
+Thanks,
+
+Glenn
+
+> 
+> Thanks,
+> Chinmay
+> > Aboorva Devarajan (3):
+> >    target/ppc: Move vector merge instructions to decodetree
+> >    target/ppc: Move vector pack instructions to decodetree
+> >    target/ppc: Move GPR atomic load/store instructions to decodetree
+> > 
+> > Amit Machhiwal (2):
+> >    target/ppc: Move fixed-point Shift insns to decodetree
+> >    target/ppc: Move fixed-point byte-reversal store insns to decodetree
+> > 
+> > Mukesh Kumar Chaurasiya (IBM) (2):
+> >    target/ppc: convert slw,srw instruction via decode spec
+> >    target/ppc: convert sraw[i] instruction via decode spec
+> > 
+> > Nikhil Kumar Singh (3):
+> >    target/ppc: Migrate extswsli to decodetree
+> >    target/ppc: Migrate atomic loads to decodetree
+> >    target/ppc: Convert cache instructions to decodetree
+> > 
+> > Ojaswin Mujoo (7):
+> >    target/ppc: Move isync instruction to decodetree.
+> >    target/ppc: Convert b{a, l, la} to decode tree
+> >    target/ppc: move various conditional branch insns to decodetree
+> >    target/ppc: Fix TRANS* macro variadic arguments handling
+> >    target/ppc: Move wait instruction to decodetree
+> >    target/ppc: Move sleep & friends to decodetree
+> >    target/ppc: Refactor sleep and its variants to use a common helper
+> > 
+> > Shivang Upadhyay (4):
+> >    target/ppc: Move Condition Register access instructions to decodetree.
+> >    target/ppc: Move Condition Register logical instructions to
+> >      decodetree.
+> >    target/ppc: Move Fixed-Point Load/Store String instructions to
+> >      decodetree.
+> >    target/ppc: Move VMX integer arithmetic and BCD instructions to
+> >      decodetree.
+> > 
+> > Shivani Nittor (1):
+> >    target/ppc : Convert mcrf to decode tree
+> > 
+> > Tanushree Shah (2):
+> >    target/ppc: Move rlwimi, rlwinm instructions to decodetree
+> >    target/ppc: Move lmw, stmw instructions to decodetree
+> > 
+> > Utkarsh Verma (1):
+> >    target/ppc: Move st{b, h, w, d, q}cx instructions to decodetree
+> > 
+> > Vishal Chourasia (3):
+> >    target/ppc: Move mfmsr, mtmsr[d] instructions to decodetree
+> >    target/ppc: Move byte-reverse instructions to decodetree
+> >    target/ppc: Move system call and rfi instructions to decodetree
+> > 
+> >   target/ppc/helper.h                           |  100 +-
+> >   target/ppc/insn32.decode                      |  244 ++
+> >   target/ppc/int_helper.c                       |   76 +-
+> >   target/ppc/internal.h                         |    7 -
+> >   target/ppc/mem_helper.c                       |   18 +-
+> >   target/ppc/tcg-excp_helper.c                  |   10 +-
+> >   target/ppc/translate.c                        | 2592 ++++-------------
+> >   target/ppc/translate/branch-impl.c.inc        |  181 ++
+> >   target/ppc/translate/fixedpoint-impl.c.inc    |  936 ++++++
+> >   target/ppc/translate/misc-impl.c.inc          |  175 ++
+> >   .../ppc/translate/processor-ctrl-impl.c.inc   |   30 +
+> >   target/ppc/translate/storage-ctrl-impl.c.inc  |  117 +
+> >   target/ppc/translate/vmx-impl.c.inc           |  360 +--
+> >   target/ppc/translate/vmx-ops.c.inc            |   41 -
+> >   14 files changed, 2529 insertions(+), 2358 deletions(-)
+> > 
+
 
