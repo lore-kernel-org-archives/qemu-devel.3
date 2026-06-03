@@ -4,56 +4,85 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 16B4ACD6E55
-	for <qemu-devel@archiver.kernel.org>; Wed,  3 Jun 2026 07:09:18 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 982ACCD6E55
+	for <qemu-devel@archiver.kernel.org>; Wed,  3 Jun 2026 07:19:00 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wUfig-0003xg-3L; Wed, 03 Jun 2026 03:08:54 -0400
+	id 1wUfre-0006zy-BJ; Wed, 03 Jun 2026 03:18:10 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@mailo.com>) id 1wUfic-0003Sm-0r
- for qemu-devel@nongnu.org; Wed, 03 Jun 2026 03:08:50 -0400
-Received: from msg-2.mailo.com ([213.182.54.12] helo=mailo.com)
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1wUfrc-0006zn-J3
+ for qemu-devel@nongnu.org; Wed, 03 Jun 2026 03:18:08 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@mailo.com>) id 1wUfia-0000JI-B8
- for qemu-devel@nongnu.org; Wed, 03 Jun 2026 03:08:49 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=mailo.com; s=mailo;
- t=1780467909; bh=GRYMYGzGLB2Ip9vA8SoMln+tp1NtsuOPY7MvnxUXcQ8=;
- h=X-EA-Auth:Message-ID:Date:MIME-Version:Subject:To:Cc:References:
- From:In-Reply-To:Content-Type:Content-Transfer-Encoding;
- b=Bx5lKwYwAf1N34dre6NbRV/Vhwmf7FBvREd/d3tSOgOh2OHkpAvOvYwY3s1IzkfjD
- 7g7SY25R4YERtMvbtqgxdumE0n/8eB+45TgsJTQyq0UOZFTmaEKr+xe371zyZAj46N
- HCq1Qag1JJwLqRBkwPCA70Yo4dWS3g5PKYot4YA0=
-Received: by be1-4.in.mailobj.net [192.168.91.14] with ESMTP
- via ip-20.mailobj.net [213.182.54.20]
- Wed,  3 Jun 2026 08:24:24 +0200 (CEST)
-X-EA-Auth: 168vOUyfsMiaC+TBxUMKGX4bvdqk76emKAHlxVnSsnHDKpT7/N31VG411+zxfxl6yl5sXev6Syfc22pUd0mNaMuslo3AWE8H
-Message-ID: <f5e72a9f-ad15-42a5-a816-19b1adbd0812@mailo.com>
-Date: Wed, 3 Jun 2026 08:24:22 +0200
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1wUfra-00048A-VL
+ for qemu-devel@nongnu.org; Wed, 03 Jun 2026 03:18:08 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1780471086;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=G82L+hetmUzI98eNYYIwBWjDCylufVY+cHK5tuKhKWo=;
+ b=KrTlinNyxrWyvK1mRjumfhi4hIA76JoHa7aehuZVYVaCvQjEwUwmtrAMDBridHrKY9G4sp
+ ZMUH/59L3sWCOjK1LIDs42SOBBSWylp+kvNLFeWMSY/LmZJCsclK/SCGhMEUJS1gxEKR/t
+ 82za6jZUbs07uc++k2lhXOLmNKgqmCs=
+Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-685-3ME-d_BoN4uIpGQarvjSpA-1; Wed,
+ 03 Jun 2026 03:18:02 -0400
+X-MC-Unique: 3ME-d_BoN4uIpGQarvjSpA-1
+X-Mimecast-MFC-AGG-ID: 3ME-d_BoN4uIpGQarvjSpA_1780471080
+Received: from mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.17])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id AE2AA195608F; Wed,  3 Jun 2026 07:17:59 +0000 (UTC)
+Received: from blackfin.pond.sub.org (unknown [10.44.22.2])
+ by mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id A22D71956095; Wed,  3 Jun 2026 07:17:58 +0000 (UTC)
+Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
+ id 2EA1C21E6A01; Wed, 03 Jun 2026 09:17:56 +0200 (CEST)
+From: Markus Armbruster <armbru@redhat.com>
+To: Avihai Horon <avihaih@nvidia.com>
+Cc: <qemu-devel@nongnu.org>,  Alex Williamson <alex@shazbot.org>,
+ =?utf-8?Q?C=C3=A9dric?= Le
+ Goater <clg@redhat.com>,  Peter Xu <peterx@redhat.com>,  Fabiano Rosas
+ <farosas@suse.de>,  Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
+ Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>,  Zhao Liu
+ <zhao1.liu@intel.com>,  Halil Pasic <pasic@linux.ibm.com>,  "Christian
+ Borntraeger" <borntraeger@linux.ibm.com>,  Jason Herne
+ <jjherne@linux.ibm.com>,  Richard Henderson
+ <richard.henderson@linaro.org>,  Ilya Leoshkevich <iii@linux.ibm.com>,
+ David Hildenbrand <david@kernel.org>,  Eric Farman
+ <farman@linux.ibm.com>,  Matthew Rosato <mjrosato@linux.ibm.com>,
+ "Cornelia Huck" <cohuck@redhat.com>,  Eric Blake <eblake@redhat.com>,
+ "Vladimir Sementsov-Ogievskiy" <vsementsov@yandex-team.ru>,  John Snow
+ <jsnow@redhat.com>,  Maor Gottlieb <maorg@nvidia.com>
+Subject: Re: [PATCH v2 06/13] migration: Make switchover-ack re-usable
+In-Reply-To: <20260602092621.382-7-avihaih@nvidia.com> (Avihai Horon's message
+ of "Tue, 2 Jun 2026 12:26:14 +0300")
+References: <20260602092621.382-1-avihaih@nvidia.com>
+ <20260602092621.382-7-avihaih@nvidia.com>
+Date: Wed, 03 Jun 2026 09:17:56 +0200
+Message-ID: <877bogdrdn.fsf@pond.sub.org>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 2/2] memory.c: read memory_region_access_valid() err
- reason in memory_region_dispatch_*
-Content-Language: en-US
-To: Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>,
- qemu-devel@nongnu.org
-Cc: peter.maydell@linaro.org, richard.henderson@linaro.org,
- Paolo Bonzini <pbonzini@redhat.com>, Peter Xu <peterx@redhat.com>
-References: <20260602190857.1506939-1-daniel.barboza@oss.qualcomm.com>
- <20260602190857.1506939-3-daniel.barboza@oss.qualcomm.com>
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@mailo.com>
-In-Reply-To: <20260602190857.1506939-3-daniel.barboza@oss.qualcomm.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=213.182.54.12; envelope-from=philmd@mailo.com;
- helo=mailo.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_PASS=-0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Type: text/plain
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.17
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=armbru@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: 8
+X-Spam_score: 0.8
+X-Spam_bar: /
+X-Spam_report: (0.8 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.445,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_SBL_CSS=3.335, SPF_HELO_PASS=-0.001,
+ SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -69,44 +98,106 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 2/6/26 21:08, Daniel Henrique Barboza wrote:
-> memory_region_dispatch_read|write, when dealing with an invalid memory
-> region, default to MEMTX_DECODE_ERROR error code.  This happens because
-> memory_region_access_valid() until recently would just report true/false
-> and nothing else.
-> 
-> We now have access to the internal reason why memory_region_access_valid()
-> would fail.  In particular, we can now receive a MEMTX_ACCESS_ERROR when
-> the mr->ops->valid.accepts() callback fails.
-> 
-> Make both functions return the actual error reason in case
-> memory_region_access_valid fails, allowing more precise error handling
-> throughout the code.
-> 
-> Signed-off-by: Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>
+Avihai Horon <avihaih@nvidia.com> writes:
+
+> Switchover-ack is a mechanism to synchronize between source and
+> destination QEMU during migration to prevent the source from switching
+> over prematurely.
+>
+> VFIO uses switchover-ack to ensure switchover happens only after
+> destination side has loaded the precopy initial bytes. This is important
+> for VFIO, as otherwise downtime could be impacted and be higher.
+>
+> In its current state, switchover-ack is a one-time mechanism, meaning
+> that switchover is acked only once and past that another ACK cannot be
+> requested again. This was sufficient until now, as VFIO precopy initial
+> bytes was defined to be monotonically decreasing. Thus, when precopy
+> initial bytes reached zero for all VFIO devices, a single ACK would be
+> sent and its validity would hold.
+>
+> However, now the new VFIO_PRECOPY_INFO_REINIT feature allows precopy
+> initial bytes to be re-initialized during precopy. Specifically, it
+> means that initial bytes can grow after reaching zero, which would
+> invalidate a previously sent switchover ACK.
+>
+> To solve this, make switchover-ack reusable and allow devices to request
+> switchover ACKs when needed via the save_query_pending SaveVMHandler.
+>
+> Since now switchover ACK can be requested for a specific device and in
+> different times, make switchover ACK per-device (instead of a single ACK
+> for all devices) and let source side do the pending ACKs accounting.
+>
+> Keep the legacy switchover-ack mechanism for backward compatibility and
+> turn it on by a compatibility property for older machines. Enable the
+> property until VFIO implements the new switchover-ack.
+
+I figure this is about the transmission of ACKs via the return path.  If
+both source and destination understand the new per-device ACK, they use
+it.  Else, they use old one.  Correct?
+
+This is not visible to the management application.  It may use migration
+capability @switchover-ack to enable just as before.  Correct?
+
+Can you think of a reason why management applications might need to know
+whether a certain qemu-system-FOO supports per-device ACKs?
+
+> Signed-off-by: Avihai Horon <avihaih@nvidia.com>
 > ---
->   system/memory.c | 9 +++++----
->   1 file changed, 5 insertions(+), 4 deletions(-)
-> 
-> diff --git a/system/memory.c b/system/memory.c
-> index 48348edb96..7d38b9774e 100644
-> --- a/system/memory.c
-> +++ b/system/memory.c
-> @@ -1492,9 +1492,9 @@ MemTxResult memory_region_dispatch_read(MemoryRegion *mr,
->                                              mr->alias_offset + addr,
->                                              pval, op, attrs);
->       }
-> -    if (!memory_region_access_valid(mr, addr, size, false, attrs, NULL)) {
-> +    if (!memory_region_access_valid(mr, addr, size, false, attrs, &r)) {
+>  qapi/migration.json                | 16 ++++-----
+>  include/migration/client-options.h |  1 +
+>  include/migration/register.h       |  2 ++
+>  migration/migration.h              | 32 ++++++++++++++++--
+>  migration/savevm.h                 |  6 ++--
+>  hw/core/machine.c                  |  1 +
+>  migration/migration.c              | 37 ++++++++++++++-------
+>  migration/options.c                | 10 ++++++
+>  migration/savevm.c                 | 53 +++++++++++++++++++++++-------
+>  migration/trace-events             |  5 +--
+>  10 files changed, 125 insertions(+), 38 deletions(-)
+>
+> diff --git a/qapi/migration.json b/qapi/migration.json
+> index 27a7970556..550cb77762 100644
+> --- a/qapi/migration.json
+> +++ b/qapi/migration.json
+> @@ -507,15 +507,13 @@
+>  #     and should not affect the correctness of postcopy migration.
+>  #     (since 7.1)
+>  #
+> -# @switchover-ack: If enabled, migration will not stop the source VM
+> -#     and complete the migration until an ACK is received from the
+> -#     destination that it's OK to do so.  Exactly when this ACK is
+> -#     sent depends on the migrated devices that use this feature.  For
+> -#     example, a device can use it to make sure some of its data is
+> -#     sent and loaded in the destination before doing switchover.
+> -#     This can reduce downtime if devices that support this capability
+> -#     are present.  'return-path' capability must be enabled to use
+> -#     it.  (since 8.1)
+> +# @switchover-ack: If enabled, migration will rely on destination side
+> +#     to acknowledge the source's switchover decision.  The
+> +#     acknowledgement may depend, for example, on some device's data
+> +#     being loaded in the destination before doing switchover.  This
+> +#     can reduce downtime if devices that support this capability are
+> +#     present.  'return-path' capability must be enabled to use it.
 
-Now I see you propagate MemTxResult (my comment from previous patch).
+Please use the opportunity to fix markup: @return-path.
+docs/devel/qapi-code-gen.rst:
 
-Maybe clearer is 1st patch add the MemTxResult argument keeping current
-behavior and 2nd patch update to your current patch #1 change?
+    Use @foo to reference a member description within the current
+    definition.  This is an rST extension.  It is currently rendered the
+    same way as ````foo````, but carries additional meaning.
 
->           *pval = unassigned_mem_read(mr, addr, size);
-> -        return MEMTX_DECODE_ERROR;
-> +        return r;
->       }
+Suggest "Capability @return-path must be ..."
+
+The old text is concrete: "will not stop the source VM ... until".  The
+new text is vague "will rely on destination side to acknowledge".  What
+does that mean exactly?  How does it impact behavior the user /
+management application cares about?
+
+> +#     (since 8.1)
+>  #
+>  # @dirty-limit: If enabled, migration will throttle vCPUs as needed to
+>  #     keep their dirty page rate within @vcpu-dirty-limit.  This can
+
+[...]
 
 
