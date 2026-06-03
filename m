@@ -4,111 +4,112 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 54033CD6E57
-	for <qemu-devel@archiver.kernel.org>; Wed,  3 Jun 2026 14:54:13 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6AE7DCD6E55
+	for <qemu-devel@archiver.kernel.org>; Wed,  3 Jun 2026 14:56:32 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wUmyq-0000pu-F3; Wed, 03 Jun 2026 10:54:04 -0400
+	id 1wUn18-0001hl-QJ; Wed, 03 Jun 2026 10:56:27 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <stefanha@gmail.com>)
- id 1wUmyo-0000pa-Tx
- for qemu-devel@nongnu.org; Wed, 03 Jun 2026 10:54:03 -0400
-Received: from mail-ed1-x52c.google.com ([2a00:1450:4864:20::52c])
+ id 1wUn0x-0001cw-Cl
+ for qemu-devel@nongnu.org; Wed, 03 Jun 2026 10:56:16 -0400
+Received: from mail-ed1-x52f.google.com ([2a00:1450:4864:20::52f])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <stefanha@gmail.com>)
- id 1wUmyn-0004ME-Fz
- for qemu-devel@nongnu.org; Wed, 03 Jun 2026 10:54:02 -0400
-Received: by mail-ed1-x52c.google.com with SMTP id
- 4fb4d7f45d1cf-68d232ed3f9so5706539a12.0
- for <qemu-devel@nongnu.org>; Wed, 03 Jun 2026 07:54:01 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1780498440; cv=none;
+ id 1wUn0q-0005N2-5U
+ for qemu-devel@nongnu.org; Wed, 03 Jun 2026 10:56:14 -0400
+Received: by mail-ed1-x52f.google.com with SMTP id
+ 4fb4d7f45d1cf-68d233bf083so6234302a12.1
+ for <qemu-devel@nongnu.org>; Wed, 03 Jun 2026 07:56:03 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1780498562; cv=none;
  d=google.com; s=arc-20240605;
- b=YuZOZuaTWYzDx9K/3qa1fC486JFPYeBDkEuw0ffBz/2xba4lz+D5EjBbacX3UA4UBu
- VU40P/cb4QA8JonjJplpVO2wSazo04GQ1nWrI6BNqUHHGNODz0AMM1TzU4tePrpC6TtD
- iiYorgtvGnqsMa2gyaYs1v9M8QP2uHdGaw+ksrX0+kjwIvD1K+0HYCrAsQI/A5NxKy9x
- AiqGwSXlctOEA5lzxHdCi4x2hXqeZxD+jqQ7cJRgmtWeSzhOrIwPA70+8PYzK79L1J1N
- w0PzhBUJauAfr+LiMm3F8RyZVl++aQFevy+j3ZSSg9E/GsMPtq6VY6CLUnm71AvfvNSh
- Mmwg==
+ b=UMMgfoiSn/Dni3YBmUtlIz9L7AVm2V1WYcztrJM63Pd3p6n50P9w24hlcJsKirLW5R
+ Vf+FXTj8JWnXdFKec11u8T2T0ntd6HmhmiZ/5AKx9up/2hb5ZhGx3X634/bTQVOaab+y
+ JxFB6upXd/nMGqWVVxQdBdIwAlDWAkJyIn3hRfFcE1fveWc2flseRBindsoBqGkYzxAM
+ 47gRI9lWgLK9dzVuGAFdN0igWLsAeMuj8xvjHhpxKkqwLLXklP+bIFE8hWGd2A1MtYoP
+ ES33ZbLOvsjcBp2Bx4wa601bV8QjtxOjNaacN4+eBiMLttZpg1ZniTyb6vONhw+eNUnS
+ Sc8Q==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
  s=arc-20240605; 
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:dkim-signature;
- bh=CcAil5XNg7ZGpEtXIynu9OSocdkAwXt37xUP9Wd1/vY=;
- fh=5V3hMYH+Zd3jcS+n3RYyHyQSkZNj7y4hRHBPhccdWp0=;
- b=k3+ipfH+1woPuIp7Om7YoP6wBe1dZQOW965gPKZO58YQvd+IlKcteHzrHJvc2Ib8Xw
- feQ9PjwuD97nzRo93Gxh18GQht/GfBt9IU4k3Wj+4aLCGks5xwccwXdGevPAjzvdKBN5
- BsKICW7E6FDuMutUU5nuklXlWXexhOg19C3dG03xhoQ2rgORLlRZ/j0g+KCUe/2WAns4
- sEScY0Mfdmti/AZvwuRIF2PNbtks6ozZXBcMEd9EEdIAdPR9fFs9Cvzpn09vHqmCvFyh
- Kv5CKqVZuMjyxtd3vvyS6LsHPEp17QY+VYsfVXsxb3rmnNm78P0dKBK31ITmXCb3Eum7
- MDYQ==; darn=nongnu.org
+ bh=kngxHtyAW8op42IQBbu+VIrnAtAexnw0h+78Q0qyiNI=;
+ fh=01/dSCvQlBbxzlxhwDdQw24l/G6oZBcCNz4wC7cjpow=;
+ b=bpErv5C65QHoiwMQ1KSBT2OGretkfI8k3ggF3e4Tt9rR2iXk5ncCpIs+GVMS3wOw68
+ K4xkt42CiO4nXf8KLEGwVtPoW974l7F1Cew5eAXqw8EGS1faha6+i6Pni5Qxbm9G4JbO
+ DaZrAdJYA6F4tfFQMySQ828MsdivnP/jS9MXUrV5nlGTA95I+7jaHfRYRZZSQE/VkZ7z
+ PD9x6wK9SMMRPEiQAw6ZLkN8rBbw9s3gk8QTXskFxyfQr1bmHa8EIhOJlFXHl63gFeXZ
+ J97LqSSW9TR6AOk6ObBDZdSPFiwxwPLdHBv8X+J4K55Rsd0zg4jx00kOHtEcgRiF3JkC
+ 4X0Q==; darn=nongnu.org
 ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1780498440; x=1781103240; darn=nongnu.org;
+ d=gmail.com; s=20251104; t=1780498562; x=1781103362; darn=nongnu.org;
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:from:to:cc:subject:date
  :message-id:reply-to;
- bh=CcAil5XNg7ZGpEtXIynu9OSocdkAwXt37xUP9Wd1/vY=;
- b=e00yUJbR0nzb06FSz5w3GrP5VqJ8jbJY/V/kfEuPuGLcTPrvX0qOrlJ+7Z385JRBz/
- XoqrVUkGKybqDCBtavEPjXvaqojyfCEAKvtkll/vxtJ+AvPs5SrJ7K6vYE79EUgaT9RL
- vxrJP4IvEZJXGqCAnlTv9Q1WXDsofe7lRPoPNYU/Y8ZcFdaAqtqUmLoZABWQkoQq5pjE
- IwdbLuxOMFzIIgea/7yXSfOneKWVivBJthRrcVRyTZzx+FA0NvF0e82RNZQqDDLN7ACV
- HsLOV1UWH4OQMocmfvXoYZmyX61lord8kjB93fb2TutUB/VMvIZ4gHaeDSRgHmwnw5i1
- e61w==
+ bh=kngxHtyAW8op42IQBbu+VIrnAtAexnw0h+78Q0qyiNI=;
+ b=s1e4Myewx4AFfLqKuuBkvLZCJq+6U2MQNMN2IXRSn6L6OcSC4QlWfot0sstFYdQR45
+ slR+ggFY5HttKH6zA+ve5SSzHwCRJc44w+iQxrR4wahgrSoIjSCQX9f5bhaAITcwgByk
+ /PzjtNsQNZfNEZdmypxyR+UWcJvS1+Yl7WYlC/SeU5pOB3axe/UwmmtlgWaAHELRRL38
+ m+xDL92fC2aV83dy+pK0mqXHWBjKIOK3XxJrmTLe7/b/cwiPCU8/qe6fWAt3B4sgA7vn
+ A7w2P+jXyBt8L4EsHo1MdEci7QgBEMvmmY7/o4G/8LwiV+wiiHuz6h5tPFDTWh9CTtny
+ Xq4w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1780498440; x=1781103240;
+ d=1e100.net; s=20251104; t=1780498562; x=1781103362;
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to;
- bh=CcAil5XNg7ZGpEtXIynu9OSocdkAwXt37xUP9Wd1/vY=;
- b=elhMEKMrzyXS65ZL6Uyy6vNg9cNNuBoPazgo4Z7mq6k9AVXe6XOB9JXLDc11j+8KlP
- rtZxJpMF/sHahzrwXfEkY1SyN/syBnDfgK8Zsmu10l427RabuJMk8OrP0h+Y1bicek7u
- 2C0YaG5p0yNxiQXV/QoC30LEfp2HQURZRdnxZhzVYC3TAZKlPeyF5x2AvvGLYGYGAAEG
- yLuvQiO7sxoOULfUuygupCpKO3oFicQwaDu4p6Qz9Dlr7xynrybQUdjnjea08YhY8eiL
- JyLybr7l3j1tjQ0lAvv8vucdjNAX2Oq9Q7jreDoAbwES4t1c7q4bqqGiB0ClO7l5yV6z
- sggQ==
-X-Forwarded-Encrypted: i=1;
- AFNElJ9nWruGQrjPVtNtV8anaV8QAdnc69Qxs/1Ra8hox/8UhiBYNLCEh1doauuI+d7PdwMiwOJp2qgTDE8t@nongnu.org
-X-Gm-Message-State: AOJu0Yy65J6cxJH+8FLrdkZsyNmc0297FWzuMbK84xNkr4oG8vu1FspK
- ZgieXygE081f+sCrUKgHR0pG/3rJvqx3YchAK6tB2E3sIyqcHVx7e4I4F9PQESBzFfoA3snxk5M
- 3MGWbEZeQaym1fbrG8F4Rt65VvLw3+fE=
-X-Gm-Gg: Acq92OGOvnKYHHXED1JwDcwKuMVyQ0LunJhwjJhvbzcU8kEk29MARa97nj3sMvOOj3t
- 4GpN+oTo/WRFTtRHBQ3afZ+Q2828GfV/29UiOkZh6LmoWadI3uV5om7DP3X15H1x2edQ7H0+O9W
- DSMUBi/2hrA0RqxFrnXDymXBZgD3tgKFWfJdh5cPBdvkhzDFaqAtgl+7NA5y4/eB2UItHoT0W1A
- ft8raVbvtn/LjkIFLDFBx8jS0J4m7YvsfepGi2MrllAfP2cNRP95F+GNfpfEqfpXQ4cs5ePIxYY
- akyE5Og2AewpWIpv0sOZFvDrMY/F7QAmZfZ78KxPtRAlWauoVKNw
-X-Received: by 2002:a05:6402:35cd:b0:684:70a:4506 with SMTP id
- 4fb4d7f45d1cf-68e714d8db1mr2055329a12.15.1780498439610; Wed, 03 Jun 2026
- 07:53:59 -0700 (PDT)
+ bh=kngxHtyAW8op42IQBbu+VIrnAtAexnw0h+78Q0qyiNI=;
+ b=OinYYy0NkO3M6GC4jTYqHF793ITaQu0r2LAMQnltLYIK+bRSVZ+q4SourEdLaP4aeW
+ 5841DG6QglSqsI7ZhDmSUI7IiXDEXZ37Ol75HsUPzl7CfYzd/PqG4djyShKs8FWpag2m
+ IZZXOU7qRjP5ZvthJP+zWdb1p7alF4iOLm1EL2bvKMWte05ju/Xknjp9pB4t3v1magVk
+ inPkRWl8oiLAEjgpnYLGkYMI/xU17HS8JzbuCKcNrGWh+AN7S3LPPlnbZxrqOJdVlfij
+ 3Et8VZ/M8iy70EH+lkAzJ/+oa244k2dWUrRDgIFq50pxMdrwW0oDkDUAZlYwQp54D4oo
+ U2iw==
+X-Gm-Message-State: AOJu0YxIiArIatB3KJ/zBDblWxRRKg49W8EO1aZfQwA4xUveK4JwfLFn
+ Zi6vM05GgZwdijFtFIwHi/bfUKrwokNFhvzDslb64HMN4SByIooUuK7OK7zODyJfV886DWU9tLw
+ uXgCES4YI8soJhOnEN67LtgtyK5btZV+60A==
+X-Gm-Gg: Acq92OF3hbMonMAzPSafzqVeQpm0EGiYrv3oNJgF+ZHkiUqanJstM6odOCijlsA5VLG
+ Uo1MPYwypfxFSRd0FRV1hFab0prQweSnZgXJrr/DVAVdiBUMOMesnS+njeLBLAUB+u2d05Ha8+O
+ YB9OJiq2CznoXTWRnb/J183ICiOvLniTFWihN27m/Js+D2wwAuGKIhHi+3UEp3eUYLJ0/nEaRz/
+ 5FKboeS2pB/sVYvMrK7WsiPRr6iLLk5l89GZ/Zq7aaRmRPeSgSGdKSPq2EEkARqHq3Uv2SRAo5c
+ atgEn8cRKgI2L2ZcTvDOhXSqN9dammzKKLfUi8roj69aMVOLKqIO
+X-Received: by 2002:a05:6402:320c:b0:67d:a63a:deb2 with SMTP id
+ 4fb4d7f45d1cf-68e6e647e9dmr1815895a12.5.1780498551801; Wed, 03 Jun 2026
+ 07:55:51 -0700 (PDT)
 MIME-Version: 1.0
-References: <20260602162457.828969-1-stefanha@redhat.com>
- <20260602162457.828969-4-stefanha@redhat.com>
- <87mrxckl3m.fsf@pond.sub.org>
-In-Reply-To: <87mrxckl3m.fsf@pond.sub.org>
+References: <20260529094619.1034458-1-pbonzini@redhat.com>
+ <CAJSP0QW3Qg261XVNdq0T-J63LzRG4xCiWRQ2-U0QgqdtaPCyQg@mail.gmail.com>
+ <c82fa01c-2630-49c3-ad02-e9a330ed94a4@redhat.com>
+In-Reply-To: <c82fa01c-2630-49c3-ad02-e9a330ed94a4@redhat.com>
 From: Stefan Hajnoczi <stefanha@gmail.com>
-Date: Wed, 3 Jun 2026 10:53:47 -0400
-X-Gm-Features: AVHnY4KBvdhe5JPTtbxMkhhN8zTe0zdBbYIVLrWUVi16qVPnaI8MQe3gUBGlN_A
-Message-ID: <CAJSP0QXMJhJ1US4UrCa_HjfFNFvN6Os-iBipFn_g6K8J2rMvrQ@mail.gmail.com>
-Subject: Re: [PATCH 3/3] MAINTAINERS: remove stale Cirrus macOS build job path
-To: Markus Armbruster <armbru@redhat.com>
-Cc: Stefan Hajnoczi <stefanha@redhat.com>, qemu-devel@nongnu.org, 
+Date: Wed, 3 Jun 2026 10:55:37 -0400
+X-Gm-Features: AVHnY4IKwqZhptrcWwC_7fxYFK2LtHLipFZ-8cTDvlClneWtB1d-aHWoXKVHsio
+Message-ID: <CAJSP0QXJW1VkUYz=QOSUaE6vMWPvWj2u34F-4MhMGbUdnxy0sQ@mail.gmail.com>
+Subject: Re: [PATCH v2] docs/devel: relax policy on AI-generated contributions
+To: Paolo Bonzini <pbonzini@redhat.com>
+Cc: qemu-devel@nongnu.org, "Michael S. Tsirkin" <mst@redhat.com>, 
  =?UTF-8?B?QWxleCBCZW5uw6ll?= <alex.bennee@linaro.org>, 
- Li-Wen Hsu <lwhsu@freebsd.org>,
- Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>, 
- =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@mailo.com>, 
- Warner Losh <imp@bsdimp.com>
+ Alistair Francis <alistair.francis@wdc.com>,
+ BALATON Zoltan <balaton@eik.bme.hu>, 
+ =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>, 
+ Fabiano Rosas <farosas@suse.de>, Kevin Wolf <kwolf@redhat.com>, 
+ Peter Maydell <peter.maydell@linaro.org>, Warner Losh <imp@bsdimp.com>, 
+ =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>, 
+ Paolo Bonzini <bonzini@gnu.org>
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::52c;
- envelope-from=stefanha@gmail.com; helo=mail-ed1-x52c.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::52f;
+ envelope-from=stefanha@gmail.com; helo=mail-ed1-x52f.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -124,50 +125,78 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, Jun 3, 2026 at 5:52=E2=80=AFAM Markus Armbruster <armbru@redhat.com=
-> wrote:
+On Wed, Jun 3, 2026 at 7:36=E2=80=AFAM Paolo Bonzini <pbonzini@redhat.com> =
+wrote:
 >
-> Stefan Hajnoczi <stefanha@redhat.com> writes:
->
-> > Commit 984b192bdf37 ("ci: drop cirrus MacOS build") removed the Cirrus
-> > macOS build job. The MAINTAINERS file now contains a stale path that
-> > should be removed.
+> On 6/2/26 17:53, Stefan Hajnoczi wrote:
+> >> Related to this, and already visible in the incredible uptick in
+> >> security reports, is the question of maintainer burnout and the shift =
+in
+> >> effort from the author to the reviewer of the code.  AI lowers the cos=
+t of
+> >> producing a patch but does nothing to lower the cost of understanding =
+and
+> >> reviewing one; if anything it raises it, since a reviewer can no longe=
+r
+> >> assume that the submitter has reasoned through every line.  The limits
 > >
-> > Cc: Alex Benn=C3=A9e <alex.bennee@linaro.org>
-> > Signed-off-by: Stefan Hajnoczi <stefanha@redhat.com>
-> > ---
-> >  MAINTAINERS | 1 -
-> >  1 file changed, 1 deletion(-)
-> >
-> > diff --git a/MAINTAINERS b/MAINTAINERS
-> > index 4ff33eb630..0c0c8c0a37 100644
-> > --- a/MAINTAINERS
-> > +++ b/MAINTAINERS
-> > @@ -701,7 +701,6 @@ F: scripts/nsis.py
-> >  Darwin (macOS, iOS)
-> >  M: Philippe Mathieu-Daud=C3=A9 <philmd@mailo.com>
-> >  S: Odd Fixes
-> > -F: .gitlab-ci.d/cirrus/macos-*
+> > Can you rephrase this sentence? I'm afraid that taken out of context
+> > it looks like you're saying reviewers no longer need to understand the
+>                                ^^^^^^^^^
 >
-> We also need
->
->   +F: .gitlab-ci.d/macos*
->
-> >  F: */*.m
-> >  F: scripts/entitlement.sh
->
-> I posted this as
->
->     Subject: [PATCH v2 10/38] MAINTAINERS: Fix F: in "Darwin (macOS, iOS)=
-"
->     Date: Wed, 3 Jun 2026 08:40:04 +0200
->     Message-ID: <20260603064032.3733394-11-armbru@redhat.com>
->
-> I wasn't aware of your patch until Philippe pointed it out to me in his
-> review of mine.
+> I guess you mean authors?
 
-Your patch is better, thanks. I request that the .gitlab-ci.d/
-maintainers drop this patch from my series when merging.
+Yes.
+
+> > patches they are submitting.
+> >
+> > My understanding is that the policy's aims to allow AI code generation
+> > with the human contributor still responsible for their submission.
+> > Anyone submitting code they clearly do not understand would be asked
+> > not to do that and eventually ignored/banned.
+>
+> True, but somebody needs to find out first. :)  This paragraph is just
+> an observation of the state of affairs with LLMs, even if they're not
+> allowed.
+>
+> > Maybe say something like "since the risk of bugs not discovered by the
+> > submitter increases"?
+>
+> That's a good replacement but it then leaves unanswered the question of
+> why that can happen more easily...
+>
+> The point is that it's much easier to submit code way beyond your
+> understanding, and not realizing that in good faith.  I understand why
+> you don't like the original phrasing though.
+>
+> Maybe "despite requiring the submitter to understand the code they're
+> sending".
+
+That's fine too, thanks!
+
+> >> -  **Current QEMU project policy is to DECLINE any contributions which=
+ are
+> >> -  believed to include or derive from AI generated content. This inclu=
+des
+> >> -  ChatGPT, Claude, Copilot, Llama and similar tools.**
+> >> +   Please read the below policy before using AI to contribute code or
+> >> +   documentation to QEMU.  This applies to ChatGPT, Claude, Copilot,
+> >> +   Llama, and similar tools.**
+> >
+> > Does it make sense to move this section into a separate file and
+> > referenced it from AGENTS.md so that AI operating on the codebase is
+> > aware of the policy? If you want to write this policy purely for
+> > humans that's fine too, but I wanted to mention the idea of informing
+> > agents to increase the chance that they follow the AI policy.
+> >
+> > In other words:
+> >
+> >    Agents must refuse tasks that are not in accordance with this policy=
+.
+>
+> I think Alex was considering that, so I left it as a next step.
+
+Okay.
 
 Stefan
 
