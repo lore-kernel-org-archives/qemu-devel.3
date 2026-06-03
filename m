@@ -4,81 +4,81 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9CEA6CD6E57
-	for <qemu-devel@archiver.kernel.org>; Wed,  3 Jun 2026 20:43:01 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3E624CD6E55
+	for <qemu-devel@archiver.kernel.org>; Wed,  3 Jun 2026 20:44:18 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wUsQO-0003vk-SO; Wed, 03 Jun 2026 16:42:52 -0400
+	id 1wUsRW-0004ez-Fq; Wed, 03 Jun 2026 16:44:02 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1wUsQL-0003v3-W6
- for qemu-devel@nongnu.org; Wed, 03 Jun 2026 16:42:50 -0400
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1wUsRV-0004eL-2m
+ for qemu-devel@nongnu.org; Wed, 03 Jun 2026 16:44:01 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1wUsQK-0001UB-DB
- for qemu-devel@nongnu.org; Wed, 03 Jun 2026 16:42:49 -0400
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1wUsRT-0001lb-N0
+ for qemu-devel@nongnu.org; Wed, 03 Jun 2026 16:44:00 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1780519367;
+ s=mimecast20190719; t=1780519439;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  in-reply-to:in-reply-to:references:references;
- bh=/qiLXrv+EHVZiaiNusE/0qerEn7/xVuPpn64bFCYX+w=;
- b=fHA59PE8x+26kYaqCjmz87GgJL12zcOiYFbqnW+fAl1NTT065lL5A7yimDqqHHUjdKyxap
- 0eUQiuMZDJVgw1/KW16uOVoDn42zYsowheigVuK0r8JdlvA8upreVjlSKrih4G2ICaPBSq
- mHp6uf/8bGTbTPLDCLxLA6x1ZYIT/v0=
-Received: from mail-qv1-f71.google.com (mail-qv1-f71.google.com
- [209.85.219.71]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=h/xWtDVMBiyJH3ztiHsIIzZrewI7GtYY5JHgIXAK6lM=;
+ b=YcNy6o/6ro4A5eDC5Hsl/4GkRaPFqwOAexTxpiBn1nFR7s4psLKz/PMeoT0lMykXri8lB5
+ O2dg9R0zLRt17ayrccjQtii7hysTIF2GmXv5PdVwTPERqK8pjN7BdbWPdhYwkyJaaSlvTy
+ V02IZbDVVKEBxlsLKLPJBSCq+Hy3UFI=
+Received: from mail-qv1-f69.google.com (mail-qv1-f69.google.com
+ [209.85.219.69]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-232-Z83yfcQAMWu74jcg6BQ0jg-1; Wed, 03 Jun 2026 16:42:46 -0400
-X-MC-Unique: Z83yfcQAMWu74jcg6BQ0jg-1
-X-Mimecast-MFC-AGG-ID: Z83yfcQAMWu74jcg6BQ0jg_1780519366
-Received: by mail-qv1-f71.google.com with SMTP id
- 6a1803df08f44-8ccd83d58d9so109764836d6.0
- for <qemu-devel@nongnu.org>; Wed, 03 Jun 2026 13:42:46 -0700 (PDT)
+ us-mta-590-hgtV-d2rP9yzvhA4PiL21g-1; Wed, 03 Jun 2026 16:43:57 -0400
+X-MC-Unique: hgtV-d2rP9yzvhA4PiL21g-1
+X-Mimecast-MFC-AGG-ID: hgtV-d2rP9yzvhA4PiL21g_1780519437
+Received: by mail-qv1-f69.google.com with SMTP id
+ 6a1803df08f44-8ce9df49c6bso60051196d6.1
+ for <qemu-devel@nongnu.org>; Wed, 03 Jun 2026 13:43:57 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1780519366; x=1781124166; darn=nongnu.org;
+ d=redhat.com; s=google; t=1780519437; x=1781124237; darn=nongnu.org;
  h=in-reply-to:content-disposition:mime-version:references:message-id
  :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
- bh=/qiLXrv+EHVZiaiNusE/0qerEn7/xVuPpn64bFCYX+w=;
- b=DYDDUAjGuzW539BiooIT3ugf39EYFkH6wn4JA99rWRaXOzQiNoVTkJ6y1St/ZsKrpk
- ZhkS/REOUpJ3WZopLeOHt1qeAszojP4KJVTelGR9nWBurQcFoABj+JdLpFktG/fMyEi6
- P2uOYR4kj+YiXTqrroZpmjMzDJKUgbx5CnvTvpTOVTOIEMVFVw8AfQB9cwpS+Xwl4wut
- Q1CYLWCTRmIYDn3a3gHiAbz/C9CKVNtoPUH5SLBOF0nhdAE8goLMwAxHlti+GNGtjipj
- xS/n+9JQuptEMm/B8Grmx8dUs0S6cg21OLM+oUd7bA4UBCzQJrd4lTvVpPSGvo3xFSaa
- qpAQ==
+ bh=h/xWtDVMBiyJH3ztiHsIIzZrewI7GtYY5JHgIXAK6lM=;
+ b=qrgnV5R2oWYotcoY9IryAFSbLMD39TTQshMZ6U+BWNnkohDbX3XqPMoRIjFNBBzVPe
+ Ofq+vsoNhFoF2JQmtJF8ZZhLxS0T/Fx9b5Uq+iySsYOo6Pio7mbplvfqN4vwp2pEJMwr
+ h2qXJs3hDZsjOwUUWqBEfGriywjD1hDQ2aZxRUgCwjJZTpvly5y71jc/iO4vurocXmWN
+ wsLG9AerogiLvhInHQOpQJgYgM243DsL/JPsOUWzjKu0D43aF4kfbr9HpKXwK8zh8/bI
+ mKBSLa3OZom1J0E9p+CgZ35FDBGlot6knm0Xqbs3aKJJLWgJDhP+BIt0taN5uFlm65Iz
+ Wo9Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1780519366; x=1781124166;
+ d=1e100.net; s=20251104; t=1780519437; x=1781124237;
  h=in-reply-to:content-disposition:mime-version:references:message-id
  :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=/qiLXrv+EHVZiaiNusE/0qerEn7/xVuPpn64bFCYX+w=;
- b=fLyJPAfH/PPDL5TkYXARw+AHd8iM9N1XBNJkhPklhjsOMC7sCD57aIyC0yn+w9eiIN
- yqcd/44l5WNkTwrnAH00qzriu0Sn4uIdT3PQ+OYEhNlOEqnFNuCzxgK9oHx2zC30qV7a
- O81rMC4wlak9AupG+uerRW+JQTrGlJgZA6BXUb16fRnrtllgJksxVRXNldHttQz9MvfS
- KRn3J3C9aBBw+DCN+M62hCUPgir/FO38mwqluUMbZpEqhwlW4pF+5JMHe5Ntj2PLIIez
- kXcSjZoAOtufjiYC4rrlwTGgQWn4mTynoxiBY8ZsQdM6GQQ1GbOGVawJ/ZmDLevTS8zj
- 6sLA==
-X-Gm-Message-State: AOJu0YwjSzzS2k6N3tS/4yAOxUvdMsqlx1eR62qvfA96OUKClBCuLj5z
- eqRD7Lr8dpxgaoVcmjNctQlw9/nHgzvfgtZu3lSkur+hMVNUxM1q3PH/KUnpB/0wRDyWUC03wB/
- WT8MpGAj1RX+X02e+D1Gm0GpDttA6HQYVhzq1PeEa/Vy3OFtiU+vmaDZD
-X-Gm-Gg: Acq92OGbzIxQcHjKAhM5SVjSAh2SykeFzSoUxnHcY2mTlVMfCo58UMpOrFdgKEi5pzD
- Xv9taxQ/NXkReq1+nr3hgIB+ebpVoMtf6YOuEC52lM+tdMaLhFW5QAilK/wYCgG3YINQ7iJfLpB
- MmoPWqjCv7wCeIpUHfIh7qDDeSKyau245ZAe7tQ55PDu9TGGNrMD9+3wb1rklTu2aqi8Lyedqmm
- 8clYA8NcwnfSbHuR5eMCyQtuarlO+2rTBnawn5FtKMMxxo5lOSdci/e/W0LgMnoZybmDaGZLG/p
- 2mIZqRy7JL49+S2MiJnOieYGGl+jxwm2kdeURVFxSuPexCxqGMNu5Ip7J1doaU0NF5NDWm/6Fjf
- 9Ia00B4y6z+FJRiAX6bEiQN5sfg==
-X-Received: by 2002:a0c:fac2:0:b0:8cc:ebc0:6ec7 with SMTP id
- 6a1803df08f44-8cece034148mr53913886d6.38.1780519365512; 
- Wed, 03 Jun 2026 13:42:45 -0700 (PDT)
-X-Received: by 2002:a0c:fac2:0:b0:8cc:ebc0:6ec7 with SMTP id
- 6a1803df08f44-8cece034148mr53913256d6.38.1780519364914; 
- Wed, 03 Jun 2026 13:42:44 -0700 (PDT)
+ bh=h/xWtDVMBiyJH3ztiHsIIzZrewI7GtYY5JHgIXAK6lM=;
+ b=njtGS7y2ndmmnqS8Gt2Q8LR4EKLyadXt7d4bea1ax0SykkRHn/lxkPnUmwkrA0+UsO
+ wd12WdW2txBWJKq4BIkY0zDBHwT+hUxCqfoBgn0eBKaNo3L7Yg2cqPgd2qUf40f93yPO
+ ZEgxJ/jPnSsTQdqsG7er2qBg8Dx9P+bch+ZqtJDMKZ6inCARU44vh7v2s8ISHb2qat4z
+ ugEKETT44Tn+CbiT30AE2YmELWgl+faQgi0WEa1fCPhrgOV//l+Qm1HIgrgzNBa659KC
+ Od/TfgHirpjgGLGV3+WRYOGJsoTF//0ApjhwcqqFQHdu6oRlqXlS/9XnlNrAdGrXszyr
+ JdRQ==
+X-Gm-Message-State: AOJu0YwkH0+Tsh81yHuZyjMeKoX5Z+t+/HvmjliC+ELNuOXsE3E83J+2
+ jvH4y+o02vBeoy7QT4YCHggDn/A7OmnfJ4bSz2zCatY5FWIi8CQnQMgSZgkOWET4a/aV5AJvdaT
+ O9IrxEBHL/1hxsnqpcxujwuY3iLpw386Sxmjs1QQb9lZHJ/B292m9gDgu
+X-Gm-Gg: Acq92OHMSVcrMghG4IDMOaFX52gGVVsWeR9Wn8Herfuzeg8WNuTydKf+jyIraJm2vvA
+ /SjRm++TuBlvxyJOzk2ICrosWzuXoKUtWH0q5NXJ6vuaNmgQRJ3ytsSRNhf09zLSrH6bE2+nT4W
+ lQh6fAWFcPMhFEuA9xWmQVjW+Oc9fFNApqxc4h6Fuyn/a6PYted/cY1I6Aa01oaTcHPcPe46qev
+ y8Up2S9bPxmyNJublI06PdpMgRMXQf4GvPM6E23MAxHbiuDRVbu3W/dCI1Fyrntk5hEBwvv2/cR
+ viWFYRLHmtCRNMRnfDab6pwO8lhsDPbiL0QvNB8EidZXMnwqw6lkU/jYn+3cAsIGMaVw4mq/Q6w
+ hf+y9L8+FPke4BPXHd72PZJf/2Q==
+X-Received: by 2002:a05:6214:2c08:b0:8ca:1d2d:4a3b with SMTP id
+ 6a1803df08f44-8cecdc2fa4bmr85667246d6.19.1780519437243; 
+ Wed, 03 Jun 2026 13:43:57 -0700 (PDT)
+X-Received: by 2002:a05:6214:2c08:b0:8ca:1d2d:4a3b with SMTP id
+ 6a1803df08f44-8cecdc2fa4bmr85666716d6.19.1780519436799; 
+ Wed, 03 Jun 2026 13:43:56 -0700 (PDT)
 Received: from x1.local ([142.189.10.167]) by smtp.gmail.com with ESMTPSA id
- 6a1803df08f44-8cecd26b3b9sm30982826d6.45.2026.06.03.13.42.43
+ 6a1803df08f44-8ceccdcb3c5sm31976176d6.21.2026.06.03.13.43.54
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 03 Jun 2026 13:42:44 -0700 (PDT)
-Date: Wed, 3 Jun 2026 16:42:42 -0400
+ Wed, 03 Jun 2026 13:43:55 -0700 (PDT)
+Date: Wed, 3 Jun 2026 16:43:54 -0400
 From: Peter Xu <peterx@redhat.com>
 To: Avihai Horon <avihaih@nvidia.com>
 Cc: qemu-devel@nongnu.org, Alex Williamson <alex@shazbot.org>,
@@ -97,15 +97,15 @@ Cc: qemu-devel@nongnu.org, Alex Williamson <alex@shazbot.org>,
  Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>,
  John Snow <jsnow@redhat.com>, Markus Armbruster <armbru@redhat.com>,
  Maor Gottlieb <maorg@nvidia.com>
-Subject: Re: [PATCH v2 07/13] migration: Fail migration if switchover-ack is
- requested after switchover decision
-Message-ID: <aiCRwvoVl_Z7J3bL@x1.local>
+Subject: Re: [PATCH v2 08/13] vfio/migration: Extract
+ VFIO_MIG_FLAG_DEV_INIT_DATA_SENT sending to helper
+Message-ID: <aiCSClMLsN01vqxF@x1.local>
 References: <20260602092621.382-1-avihaih@nvidia.com>
- <20260602092621.382-8-avihaih@nvidia.com>
+ <20260602092621.382-9-avihaih@nvidia.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <20260602092621.382-8-avihaih@nvidia.com>
+In-Reply-To: <20260602092621.382-9-avihaih@nvidia.com>
 Received-SPF: pass client-ip=170.10.133.124; envelope-from=peterx@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -24
@@ -130,90 +130,14 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, Jun 02, 2026 at 12:26:15PM +0300, Avihai Horon wrote:
-> Switchover ACK is checked only during precopy while the guest is still
-> running. The last migration_can_switchover() decision and guest stop are
-> not atomic, so a device may want to request another switchover ACK in
-> the gap after switchover decision has been made but before the guest is
-> stopped. Migration would then miss that request, which can increase
-> downtime.
-> 
-> Cover this case by failing the migration if a switchover-ack was
-> requested during that time.
-> 
-> Ideally, precopy iterations should be resumed in this case, however,
-> VFIO doesn't support going back to precopy after being stopped, so
-> implementing such logic would require non-trivial changes to the guest
-> start/stop flow. Given the above and that this case should be rare,
-> failing the migration seems reasonable.
+On Tue, Jun 02, 2026 at 12:26:16PM +0300, Avihai Horon wrote:
+> Extract the VFIO_MIG_FLAG_DEV_INIT_DATA_SENT flag sending logic from
+> vfio_save_iterate() into vfio_send_init_data_flag() for clarity. Also
+> add a trace while at it.
 > 
 > Signed-off-by: Avihai Horon <avihaih@nvidia.com>
 
 Reviewed-by: Peter Xu <peterx@redhat.com>
-
-One nit:
-
-> ---
->  migration/migration.c | 30 ++++++++++++++++++++++++++++++
->  1 file changed, 30 insertions(+)
-> 
-> diff --git a/migration/migration.c b/migration/migration.c
-> index 4bb649a467..6ee1c795ff 100644
-> --- a/migration/migration.c
-> +++ b/migration/migration.c
-> @@ -2810,6 +2810,27 @@ static bool migration_switchover_prepare(MigrationState *s)
->      return s->state == MIGRATION_STATUS_DEVICE;
->  }
->  
-> +static bool migration_switchover_check_switchover_ack_pending(MigrationState *s,
-
-The name is slightly confusing.  It says "check if there is pending ack"
-but then it returns true if there's no pending ACK..
-
-Maybe migration_switchover_is_acknowledged()?
-
-> +                                                              Error **errp)
-> +{
-> +    uint32_t pending_num;
-> +
-> +    if (!migrate_switchover_ack() || migrate_switchover_ack_legacy()) {
-> +        return true;
-> +    }
-> +
-> +    pending_num = qatomic_read(&s->switchover_ack_pending_num);
-> +    if (pending_num > 0) {
-> +        error_setg(errp,
-> +                   "Switchover ACK was requested by %" PRIu32
-> +                   " devices during switchover",
-> +                   pending_num);
-> +        return false;
-> +    }
-> +
-> +    return true;
-> +}
-> +
->  static bool migration_switchover_start(MigrationState *s, Error **errp)
->  {
->      ERRP_GUARD();
-> @@ -2822,6 +2843,15 @@ static bool migration_switchover_start(MigrationState *s, Error **errp)
->  
->      qemu_savevm_query_pending_final(s, &pending);
->  
-> +    /*
-> +     * Switchover-ack requests done after switchover decision, are not allowed.
-> +     * Fail the migration in this case since we currently don't support going
-> +     * back to precopy.
-> +     */
-> +    if (!migration_switchover_check_switchover_ack_pending(s, errp)) {
-> +        return false;
-> +    }
-> +
->      /* Inactivate disks except in COLO */
->      if (!migrate_colo()) {
->          /*
-> -- 
-> 2.40.1
-> 
 
 -- 
 Peter Xu
