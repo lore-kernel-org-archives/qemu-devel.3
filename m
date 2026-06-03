@@ -4,113 +4,96 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3FD68CD6E57
-	for <qemu-devel@archiver.kernel.org>; Wed,  3 Jun 2026 14:11:10 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C9978CD6E57
+	for <qemu-devel@archiver.kernel.org>; Wed,  3 Jun 2026 14:12:30 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wUmId-000750-J7; Wed, 03 Jun 2026 10:10:27 -0400
+	id 1wUmK5-0007bi-5G; Wed, 03 Jun 2026 10:11:57 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <milesg@linux.ibm.com>)
- id 1wUmIb-00074C-4R; Wed, 03 Jun 2026 10:10:25 -0400
-Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <milesg@linux.ibm.com>)
- id 1wUmIY-0002jX-EO; Wed, 03 Jun 2026 10:10:24 -0400
-Received: from pps.filterd (m0353729.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 6537ULCq845711; Wed, 3 Jun 2026 14:10:18 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
- :content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:reply-to:subject:to; s=pp1;
- bh=6i3KBi5vT+X+VjCYkmC8zFhUYK60oD2wtcF+Gz1hqno=; b=d0Uhw/z8jPo4
- tZ3jnbMqkxIIfM0x4syI8WvcJHG5lbh84SsNMZpgykOqoXN54Io+puqsEa9MBU4R
- h86yjCZPVG9+vZOaeuC3J51KYpWGYbHrbGJ8m/WwRESTVCHmNh7VvKBlyhElhYN6
- rof7bpXZdBn9dEvjIdSzr2l1+x1OjasWiIiT1+JD6r6Gb8ddqaAHQfvjyYv1cdmw
- 7UzynaBSnN0LFoJx8lKxX3c+IjVKkM2B4L2o7VJqkjPwZOCqy6v7JvajNoL2nonD
- STOU1kom3PdMiExNWH4v2egGWQMipsUCSRjsyRakqVNAwoZY/akq0iJKrq3bChBu
- G3U5sFSQVQ==
-Received: from ppma11.dal12v.mail.ibm.com
- (db.9e.1632.ip4.static.sl-reverse.com [50.22.158.219])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4efqjqb8js-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Wed, 03 Jun 2026 14:10:17 +0000 (GMT)
-Received: from pps.filterd (ppma11.dal12v.mail.ibm.com [127.0.0.1])
- by ppma11.dal12v.mail.ibm.com (8.18.1.7/8.18.1.7) with ESMTP id 653E97HB016309;
- Wed, 3 Jun 2026 14:10:16 GMT
-Received: from smtprelay05.wdc07v.mail.ibm.com ([172.16.1.72])
- by ppma11.dal12v.mail.ibm.com (PPS) with ESMTPS id 4egcwyg6hd-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Wed, 03 Jun 2026 14:10:16 +0000 (GMT)
-Received: from smtpav03.dal12v.mail.ibm.com (smtpav03.dal12v.mail.ibm.com
- [10.241.53.102])
- by smtprelay05.wdc07v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 653EAFS633555118
- (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Wed, 3 Jun 2026 14:10:15 GMT
-Received: from smtpav03.dal12v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 0791858056;
- Wed,  3 Jun 2026 14:10:15 +0000 (GMT)
-Received: from smtpav03.dal12v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 24A305803F;
- Wed,  3 Jun 2026 14:10:14 +0000 (GMT)
-Received: from mambor8.rchland.ibm.com (unknown [9.10.239.198])
- by smtpav03.dal12v.mail.ibm.com (Postfix) with ESMTP;
- Wed,  3 Jun 2026 14:10:14 +0000 (GMT)
-Message-ID: <4ef1791085a32802185b2c68686aab273f4dfcbd.camel@linux.ibm.com>
-Subject: Re: [RFC PATCH 00/28] target/ppc: Moving instructions to decodetree
- specification
-From: Miles Glenn <milesg@linux.ibm.com>
-To: Chinmay Rath <rathc@linux.ibm.com>, qemu-devel@nongnu.org,
- qemu-ppc@nongnu.org, npiggin@gmail.com, harshpb@linux.ibm.com,
- richard.henderson@linaro.org, peter.maydell@linaro.org, stefanha@redhat.com
-Cc: vishalc@linux.ibm.com, tshah@linux.ibm.com, shivangu@linux.ibm.com,
- ojaswin@linux.ibm.com, aboorvad@linux.ibm.com, amachhiw@linux.ibm.com,
- sv@linux.ibm.com, shivani@linux.ibm.com, mkchauras@gmail.com,
- uverma@linux.ibm.com, nikhilks@linux.ibm.com
-Date: Wed, 03 Jun 2026 09:10:13 -0500
-In-Reply-To: <285fdd30-f22d-4d4b-b8ee-5f04fccfca6d@linux.ibm.com>
-References: <20260520160728.2283628-1-rathc@linux.ibm.com>
- <285fdd30-f22d-4d4b-b8ee-5f04fccfca6d@linux.ibm.com>
-Organization: IBM
-Content-Type: text/plain; charset="UTF-8"
-X-Mailer: Evolution 3.28.5 (3.28.5-27.el8_10) 
-Mime-Version: 1.0
-Content-Transfer-Encoding: 7bit
-X-TM-AS-GCONF: 00
-X-Proofpoint-Reinject: loops=2 maxloops=12
-X-Proofpoint-ORIG-GUID: SFR488TzoPLzdHBDJehIPFR-PtqYhmC4
-X-Proofpoint-GUID: cesJ9MNOEKpHjcXGw6DZk5rtCXWEyGJ_
-X-Authority-Analysis: v=2.4 cv=bcVbluPB c=1 sm=1 tr=0 ts=6a2035ca cx=c_pps
- a=aDMHemPKRhS1OARIsFnwRA==:117 a=aDMHemPKRhS1OARIsFnwRA==:17
- a=IkcTkHD0fZMA:10 a=FelO9ux0wxsA:10 a=VkNPw1HP01LnGYTKEx00:22
- a=RnoormkPH1_aCDwRdu11:22 a=uAbxVGIbfxUO_5tXvNgY:22 a=p0WdMEafAAAA:8
- a=nEv_iNHVDJmhEehG0_IA:9 a=QEXdDO2ut3YA:10
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNjAzMDEzNiBTYWx0ZWRfXz8B3iT41av3L
- sDPXAaG2pcEB7aETlxXk4Fskm04VpPOUXyKzs9y7zLxZ0kp2mZ3NcwfR0XSZclapv5vNbahZieW
- XtB8OSSbSRjIZaIjEmnZwJD0OODmu7obqUuIsUYRcFYmCcWO5yFxI3D13SKWobgiKd24q5b8gQT
- hIPMHAhg7w481I9KBuRiyDZLeC2/l8HL9CE1ecYR8nsRoUPQ1xDdVO+ar6kZF8jhAsNDlbUIuE7
- kPBF+9fXEBDALCgfxogrlRZ0UWN4KwA3lerRZSJ4TKtedpXSYzlnQpkrTVBaPYNU1lv1HJFqGzZ
- y04yg6omWry/dP3Sd1vr9oqt6KScBJvW7l4bwECRZbZ//dFXNVWQzrD4u9IAlRnDTsNpnUizH8g
- 3bIS3Z8NSoOXNA4S4GW4xbmN4EBemFQBoaeyoLDY9aWRK23G45AXGTZdf67gzLUViO5k02AcBlB
- teCDWBELTcyDFckvYxQ==
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.125,FMLib:17.12.100.49
- definitions=2026-06-03_04,2026-05-28_03,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- impostorscore=0 clxscore=1011 adultscore=0 priorityscore=1501 phishscore=0
- lowpriorityscore=0 bulkscore=0 malwarescore=0 spamscore=0 suspectscore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2605210000 definitions=main-2606030136
-Received-SPF: pass client-ip=148.163.156.1; envelope-from=milesg@linux.ibm.com;
- helo=mx0a-001b2d01.pphosted.com
-X-Spam_score_int: -26
-X-Spam_score: -2.7
-X-Spam_bar: --
-X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
- RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1wUmJw-0007ZM-UM
+ for qemu-devel@nongnu.org; Wed, 03 Jun 2026 10:11:48 -0400
+Received: from smtp-out2.suse.de ([195.135.223.131])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1wUmJv-0003rk-67
+ for qemu-devel@nongnu.org; Wed, 03 Jun 2026 10:11:48 -0400
+Received: from imap1.dmz-prg2.suse.org (unknown [10.150.64.97])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+ (No client certificate requested)
+ by smtp-out2.suse.de (Postfix) with ESMTPS id 8662F6763E;
+ Wed,  3 Jun 2026 14:11:44 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
+ t=1780495904; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version: content-transfer-encoding:content-transfer-encoding;
+ bh=/2k/sg3jnaTZ3XEHiBDENqOY1G5vJxTu+cUtaqBs5O4=;
+ b=1a78WbXlMi7y67aKwwSn6nCGB/9l0MdqJIaP3r51OztEBMzUPuxWZSar14UvZEeHRR9fQv
+ H16j6HzH5Ox/3qnvaaefqL4ERbQmGz5yXDbzg3uSK8br0mTSClBP2BTQIndl4W8zZt6aiz
+ m3nhfhbGe4trULSTgFnvWpgXAcuh7SA=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
+ s=susede2_ed25519; t=1780495904;
+ h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version: content-transfer-encoding:content-transfer-encoding;
+ bh=/2k/sg3jnaTZ3XEHiBDENqOY1G5vJxTu+cUtaqBs5O4=;
+ b=kZgISGW1/KvRO1FvB4FZRIoXOC5zkabhuf2l/6FNhhFI0xNj8I8PRq2GXaVZtH1ihIvqn9
+ 17c4sn6uwgd5ZDBQ==
+Authentication-Results: smtp-out2.suse.de;
+	none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
+ t=1780495904; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version: content-transfer-encoding:content-transfer-encoding;
+ bh=/2k/sg3jnaTZ3XEHiBDENqOY1G5vJxTu+cUtaqBs5O4=;
+ b=1a78WbXlMi7y67aKwwSn6nCGB/9l0MdqJIaP3r51OztEBMzUPuxWZSar14UvZEeHRR9fQv
+ H16j6HzH5Ox/3qnvaaefqL4ERbQmGz5yXDbzg3uSK8br0mTSClBP2BTQIndl4W8zZt6aiz
+ m3nhfhbGe4trULSTgFnvWpgXAcuh7SA=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
+ s=susede2_ed25519; t=1780495904;
+ h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version: content-transfer-encoding:content-transfer-encoding;
+ bh=/2k/sg3jnaTZ3XEHiBDENqOY1G5vJxTu+cUtaqBs5O4=;
+ b=kZgISGW1/KvRO1FvB4FZRIoXOC5zkabhuf2l/6FNhhFI0xNj8I8PRq2GXaVZtH1ihIvqn9
+ 17c4sn6uwgd5ZDBQ==
+Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+ (No client certificate requested)
+ by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id 6B8CE779A7;
+ Wed,  3 Jun 2026 14:11:43 +0000 (UTC)
+Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
+ by imap1.dmz-prg2.suse.org with ESMTPSA id ey9oDx82IGoDbQAAD6G6ig
+ (envelope-from <farosas@suse.de>); Wed, 03 Jun 2026 14:11:43 +0000
+From: Fabiano Rosas <farosas@suse.de>
+To: qemu-devel@nongnu.org
+Cc: qemu-stable@nongnu.org,
+ =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
+ Paolo Bonzini <pbonzini@redhat.com>
+Subject: [PATCH] chardev: Don't unregister yank upon async path connection
+ failure
+Date: Wed,  3 Jun 2026 11:11:37 -0300
+Message-ID: <20260603141137.1108963-1-farosas@suse.de>
+X-Mailer: git-send-email 2.53.0
+MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
+X-Spamd-Result: default: False [-2.80 / 50.00]; BAYES_HAM(-3.00)[99.99%];
+ MID_CONTAINS_FROM(1.00)[]; NEURAL_HAM_LONG(-1.00)[-1.000];
+ R_MISSING_CHARSET(0.50)[]; NEURAL_HAM_SHORT(-0.20)[-0.998];
+ MIME_GOOD(-0.10)[text/plain]; TO_MATCH_ENVRCPT_ALL(0.00)[];
+ FROM_HAS_DN(0.00)[]; ARC_NA(0.00)[]; MIME_TRACE(0.00)[0:+];
+ TO_DN_SOME(0.00)[];
+ DBL_BLOCKED_OPENRESOLVER(0.00)[gitlab.com:url,imap1.dmz-prg2.suse.org:helo,suse.de:email,suse.de:mid];
+ RCVD_VIA_SMTP_AUTH(0.00)[]; FROM_EQ_ENVFROM(0.00)[];
+ RCVD_COUNT_TWO(0.00)[2]; FUZZY_RATELIMITED(0.00)[rspamd.com];
+ DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
+ RCPT_COUNT_THREE(0.00)[4]; RCVD_TLS_ALL(0.00)[]
+Received-SPF: pass client-ip=195.135.223.131; envelope-from=farosas@suse.de;
+ helo=smtp-out2.suse.de
+X-Spam_score_int: -43
+X-Spam_score: -4.4
+X-Spam_bar: ----
+X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_MED=-2.3, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -124,126 +107,42 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-To: milesg@linux.ibm.com
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, 2026-06-03 at 17:09 +0530, Chinmay Rath wrote:
-> On 5/20/26 21:37, Chinmay Rath wrote:
-> > We recently had a QEMU decodetree hackathon at our org focusing on moving
-> > instructions to decodetree specification. I have consolidated the patches
-> > generated out of this effort in this series. Though I have done a round
-> > of review on all of them, might share some more review comments later.
-> > 
-> > The checkpatch.pl script emits false error for a couple of patches which
-> > are of the following nature :
-> > 
-> > TRANS(STWAT, do_st_atomic, DEF_MEMOP(MO_UL))
-> > 
-> > static bool trans_LDAT(DisasContext *ctx, arg_LDAT *a)
-> >                                                      ^
-> > I see this happening in the last pointer argument in function
-> > definitions after macros (like TRANS(..) in this case).
-> > 
-> > Richard, Peter, Stefan,
-> > Could you please advise if it would be okay to have the above false
-> > positive in the patches ?
-> Hi Chao,
-> I was wondering if you would be able to advise a way forward for this 
-> checkpatch issue ? TIA.
-> > Gitlab CI: https://gitlab.com/rathc/qemu/-/pipelines/2540725424
-> > Please note that check-python-tox and migration-compat-aarch64 from CI
-> > fails in the upstream master branch as seen in the following:
-> > https://gitlab.com/rathc/qemu/-/pipelines/2537246569
-> > 
-> > Thanks,
-> > Chinmay
-> Hi Glenn,
-> If possible, would you like to have a look at this series when you get a 
-> chance ? TIA.
+Commit 5c102ac9 ("chardev: Consolidate yank registration") has moved
+yank registration in the tcp_chr_connect_client_async() path to after
+the connection is successful. If qio_channel_socket_connect_sync()
+fails early, there will be no yank registered to be unregistered in
+the error path, leading to assert.
 
-Hi Chinmay,
+Remove the now-extraneous unregister.
 
-First, I'd like to thank you and everyone that worked on this for their
-efforts!  This seems like one of those tasks that everyone knows is
-needed but everyone would rather work on other more interesting things
-(myself included).  I would like to take a look at this series when I
-get the chance.  I do have a lot on my plate right now, but hopefully I
-can get to it in the next week or so.
+Cc: qemu-stable@nongnu.org
+Fixes: 5c102ac9 ("chardev: Consolidate yank registration")
+Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/3528
+Signed-off-by: Fabiano Rosas <farosas@suse.de>
+---
+ chardev/char-socket.c | 5 -----
+ 1 file changed, 5 deletions(-)
 
-Thanks,
-
-Glenn
-
-> 
-> Thanks,
-> Chinmay
-> > Aboorva Devarajan (3):
-> >    target/ppc: Move vector merge instructions to decodetree
-> >    target/ppc: Move vector pack instructions to decodetree
-> >    target/ppc: Move GPR atomic load/store instructions to decodetree
-> > 
-> > Amit Machhiwal (2):
-> >    target/ppc: Move fixed-point Shift insns to decodetree
-> >    target/ppc: Move fixed-point byte-reversal store insns to decodetree
-> > 
-> > Mukesh Kumar Chaurasiya (IBM) (2):
-> >    target/ppc: convert slw,srw instruction via decode spec
-> >    target/ppc: convert sraw[i] instruction via decode spec
-> > 
-> > Nikhil Kumar Singh (3):
-> >    target/ppc: Migrate extswsli to decodetree
-> >    target/ppc: Migrate atomic loads to decodetree
-> >    target/ppc: Convert cache instructions to decodetree
-> > 
-> > Ojaswin Mujoo (7):
-> >    target/ppc: Move isync instruction to decodetree.
-> >    target/ppc: Convert b{a, l, la} to decode tree
-> >    target/ppc: move various conditional branch insns to decodetree
-> >    target/ppc: Fix TRANS* macro variadic arguments handling
-> >    target/ppc: Move wait instruction to decodetree
-> >    target/ppc: Move sleep & friends to decodetree
-> >    target/ppc: Refactor sleep and its variants to use a common helper
-> > 
-> > Shivang Upadhyay (4):
-> >    target/ppc: Move Condition Register access instructions to decodetree.
-> >    target/ppc: Move Condition Register logical instructions to
-> >      decodetree.
-> >    target/ppc: Move Fixed-Point Load/Store String instructions to
-> >      decodetree.
-> >    target/ppc: Move VMX integer arithmetic and BCD instructions to
-> >      decodetree.
-> > 
-> > Shivani Nittor (1):
-> >    target/ppc : Convert mcrf to decode tree
-> > 
-> > Tanushree Shah (2):
-> >    target/ppc: Move rlwimi, rlwinm instructions to decodetree
-> >    target/ppc: Move lmw, stmw instructions to decodetree
-> > 
-> > Utkarsh Verma (1):
-> >    target/ppc: Move st{b, h, w, d, q}cx instructions to decodetree
-> > 
-> > Vishal Chourasia (3):
-> >    target/ppc: Move mfmsr, mtmsr[d] instructions to decodetree
-> >    target/ppc: Move byte-reverse instructions to decodetree
-> >    target/ppc: Move system call and rfi instructions to decodetree
-> > 
-> >   target/ppc/helper.h                           |  100 +-
-> >   target/ppc/insn32.decode                      |  244 ++
-> >   target/ppc/int_helper.c                       |   76 +-
-> >   target/ppc/internal.h                         |    7 -
-> >   target/ppc/mem_helper.c                       |   18 +-
-> >   target/ppc/tcg-excp_helper.c                  |   10 +-
-> >   target/ppc/translate.c                        | 2592 ++++-------------
-> >   target/ppc/translate/branch-impl.c.inc        |  181 ++
-> >   target/ppc/translate/fixedpoint-impl.c.inc    |  936 ++++++
-> >   target/ppc/translate/misc-impl.c.inc          |  175 ++
-> >   .../ppc/translate/processor-ctrl-impl.c.inc   |   30 +
-> >   target/ppc/translate/storage-ctrl-impl.c.inc  |  117 +
-> >   target/ppc/translate/vmx-impl.c.inc           |  360 +--
-> >   target/ppc/translate/vmx-ops.c.inc            |   41 -
-> >   14 files changed, 2529 insertions(+), 2358 deletions(-)
-> > 
+diff --git a/chardev/char-socket.c b/chardev/char-socket.c
+index e064b105c5..99e01a4875 100644
+--- a/chardev/char-socket.c
++++ b/chardev/char-socket.c
+@@ -1128,11 +1128,6 @@ static void qemu_chr_socket_connected(QIOTask *task, void *opaque)
+ 
+     if (qio_task_propagate_error(task, &err)) {
+         tcp_chr_change_state(s, TCP_CHARDEV_STATE_DISCONNECTED);
+-        if (s->registered_yank) {
+-            yank_unregister_function(CHARDEV_YANK_INSTANCE(chr->label),
+-                                     char_socket_yank_iochannel,
+-                                     QIO_CHANNEL(sioc));
+-        }
+         check_report_connect_error(chr, err);
+         goto cleanup;
+     }
+-- 
+2.53.0
 
 
