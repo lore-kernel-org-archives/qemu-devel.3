@@ -4,97 +4,97 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6B635CD6E64
-	for <qemu-devel@archiver.kernel.org>; Wed,  3 Jun 2026 09:05:31 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id CF4BCCD6E64
+	for <qemu-devel@archiver.kernel.org>; Wed,  3 Jun 2026 09:14:26 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wUhX0-0001sX-EK; Wed, 03 Jun 2026 05:04:58 -0400
+	id 1wUhfd-0003Uw-Ax; Wed, 03 Jun 2026 05:13:53 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <sgarzare@redhat.com>)
- id 1wUhWw-0001sF-Mc
- for qemu-devel@nongnu.org; Wed, 03 Jun 2026 05:04:56 -0400
+ id 1wUhfZ-0003UM-4k
+ for qemu-devel@nongnu.org; Wed, 03 Jun 2026 05:13:50 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <sgarzare@redhat.com>)
- id 1wUhWu-0005s4-UR
- for qemu-devel@nongnu.org; Wed, 03 Jun 2026 05:04:54 -0400
+ id 1wUhfX-0001R4-NO
+ for qemu-devel@nongnu.org; Wed, 03 Jun 2026 05:13:48 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1780477492;
+ s=mimecast20190719; t=1780478026;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  in-reply-to:in-reply-to:references:references;
- bh=JAaJMLzG2mctD1z2/ag4tmcQSgff6KP9uCpYi97ZxsU=;
- b=W4GqJ6XdcsbPBWLJYIYCSqiQHkZdkmr44P88OD7a7ftmZBGK7xOhMeGt84mbcTW2Ccs/rX
- cjgiwI8hkXaSOOc3KJTGR57P2SoTShCpYew8ZZogau2NBV8NgmqiJ5VWndrojTLRtyWmXd
- YF/E0cU0PVnbAk8kCzWLPaVjC4PBvfk=
-Received: from mail-wr1-f70.google.com (mail-wr1-f70.google.com
- [209.85.221.70]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=n/NJPOPb3Oxf4n/3fP7l0ZxBRWPofSYLWXdyN4NZErI=;
+ b=D+C31zKkTyG546700KFVOd4JVcFEhTYWRw6v2jIfn5RJloOOM5RzrLigHgboHrVy7nVdco
+ 0E0Djmc4eESPZbAjXizu3T/dN4Ii2nYCl9iBs40ntZlsDd6EPS3PM5e5kVW573JVoA2jxI
+ Pk1uBAu9oTtSaI5R87qLQ+tr43WKLac=
+Received: from mail-wr1-f71.google.com (mail-wr1-f71.google.com
+ [209.85.221.71]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-149-4cGplEf6PAunCEt48JridQ-1; Wed, 03 Jun 2026 05:04:50 -0400
-X-MC-Unique: 4cGplEf6PAunCEt48JridQ-1
-X-Mimecast-MFC-AGG-ID: 4cGplEf6PAunCEt48JridQ_1780477489
-Received: by mail-wr1-f70.google.com with SMTP id
- ffacd0b85a97d-45ef3aeeb41so3017961f8f.1
- for <qemu-devel@nongnu.org>; Wed, 03 Jun 2026 02:04:50 -0700 (PDT)
+ us-mta-669-QdNcL45mN6eLW1vtiBFeTA-1; Wed, 03 Jun 2026 05:13:43 -0400
+X-MC-Unique: QdNcL45mN6eLW1vtiBFeTA-1
+X-Mimecast-MFC-AGG-ID: QdNcL45mN6eLW1vtiBFeTA_1780478022
+Received: by mail-wr1-f71.google.com with SMTP id
+ ffacd0b85a97d-45ef93c359fso3383256f8f.0
+ for <qemu-devel@nongnu.org>; Wed, 03 Jun 2026 02:13:43 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1780477489; x=1781082289; darn=nongnu.org;
+ d=redhat.com; s=google; t=1780478022; x=1781082822; darn=nongnu.org;
  h=in-reply-to:content-disposition:mime-version:references:message-id
  :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
- bh=JAaJMLzG2mctD1z2/ag4tmcQSgff6KP9uCpYi97ZxsU=;
- b=nQN5FW7ZKoEW+HXj3fYXIAeeSRaj8XQy68WI5/O5bszdVPFt02wIxz6YcQFSBy2hQD
- lJnV9beNskMzk4Mke4YJij+MPFOVGYOc9ztr+HPUyC10xwpcDi5I/cmyh9qqL+gojkod
- UO8MiIZy8S0AbzG/uVELf1pC/zZNO9ETbhbi7YijlpuhLIJ9K7KGjHdf0ciMve8xDi3A
- cpkt6N7SLWQNVLGrFfs2OWTzYh4ytJ86QeQIwvGOeJ1Afks90krngyRZw/Vk733Cl36F
- l9dkOAu88Lerbrxje0oIEyrIHBukDgFDWW85OvfbSo9TXt42HwCNFZipcgdgVzqnM9N3
- e6zQ==
+ bh=n/NJPOPb3Oxf4n/3fP7l0ZxBRWPofSYLWXdyN4NZErI=;
+ b=FcW4GCdXtgfhieECztkaLnpay/vD5RXIUra4JAuVI7YCB2sjHjyOOXuuwytx9wlxV6
+ faa/sorczsTR1DvUtnItg3aWH7CMYGZnumSkByPGLMvkgclSjBWV2g9246rgzbu689Hm
+ v+6zt4hCAzP/FY04LLrlkErG6IEUWCi8RIAbP0SdxvELiFjS6PsgbKgx5ISwieQheyyI
+ bWNx3cgp/QZ0pkYGpH7ND/FqP9tsrYwpoo22Jo9eFhkLFM4WaoAnH4cP8qevag0v2wl9
+ Z+4LjaK9c//NRu3TscEn2v8ke9zXQQ54kLgM6LMag88jyOr/zdYltilLlepa6J2gL0no
+ CXzA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1780477489; x=1781082289;
+ d=1e100.net; s=20251104; t=1780478022; x=1781082822;
  h=in-reply-to:content-disposition:mime-version:references:message-id
  :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=JAaJMLzG2mctD1z2/ag4tmcQSgff6KP9uCpYi97ZxsU=;
- b=dcKI6NQpsQU5nz9n6eLfnQQQG7KKYpY/a4VOXrgEtPHnb0eZIeKD8dJ2MVq/EvZ0fW
- 2PI5vvCG04rTG/qQgjpsQG63OV/wwxREeeT3CrEoOQGrMqyo/M4G7OD0lU+WVb+C2MvF
- lNuU3bC39K+GkMGOwCKxmN5pP/GTwKAJYn5m1qhSX4/rxwE2ipXYC3dXa84MJ+vgBulB
- t5Y7bHMthTPx+ZoNfTohXsk6qj/IcQgF7ero2G+OxFWdidDaJiE/bYocEKlltNdALkfa
- oJFvcow4/RIvGrD1gaeoqqur2lml++9t7RjRoeR7y7netxKaWmVFEkp9KeriIUynQjcF
- bWvA==
-X-Gm-Message-State: AOJu0YxuMPRwozuhpGZfFhKii9P4JzHpBH0VjlD+zrSjBw2964E5JRoM
- sUFZI81PoI0EPwgeZz5pRLOSaowqEOVbrmH63bRbLtpLO8KiMXoGGtLiBA26e+NV3upDYAUtJlg
- J/KDfugDWaOjCngEdM5gd9If0j0RJ26zHK/Lz8thmhiTxSbdn3Jmd7TKx
-X-Gm-Gg: Acq92OF58sW2sEiEADz5bswkXOptOn6tSKTg3u0vbGv81hf+UXh2coZLnh3GaSUGE1p
- odNQI/2ob16QSxZJWwKI+FY0Ea3SmftkeOENWdQ/lLmcN8PEbkwIjdzcG4EwBiAwsQKq1oLKRJ/
- sveKR7+0G8/lSmFcfSpN9aY3ohVBlrQiSxOptc+3nm78+IXOsinBEAtuBpnV1vZy29k3DeeayS0
- tRPveLi9Jng6gvo5VAngMSuOPCSXqYX765mX3ZXOMLIQU0y8kt3GXvS9GKhKvVQu+nN2sixo1BT
- 5lBcE1kA0mCT6LJa9/TJ5a7VmI/HXrDQTb4dnt/GDY711c8NGuZDq17NWeal/+d4xdrV5x59PNN
- NW5wD7JQ6fXZ2WJhaOE4z2q4L8rarPU0i+E05pQ==
-X-Received: by 2002:a05:600c:871a:b0:48a:54fd:54ea with SMTP id
- 5b1f17b1804b1-490b5d3fd8amr41710425e9.12.1780477489504; 
- Wed, 03 Jun 2026 02:04:49 -0700 (PDT)
-X-Received: by 2002:a05:600c:871a:b0:48a:54fd:54ea with SMTP id
- 5b1f17b1804b1-490b5d3fd8amr41709685e9.12.1780477489011; 
- Wed, 03 Jun 2026 02:04:49 -0700 (PDT)
+ bh=n/NJPOPb3Oxf4n/3fP7l0ZxBRWPofSYLWXdyN4NZErI=;
+ b=NscLr9rKvexZqcTQit4VZ+bT++anqsUjybvGtIhk5nYZ/tUwNMnSdX3y/kowDQguKz
+ 5t2P6Cdp36L31+VRZu26qvP1Rf7lNkHtWVIbxHVPp8qxUuwiwD6M/qHHO+GJ1EeNaU9s
+ fdU1Uf6weezkQPWBYF29fXkr/3xGBQqnyj519HGsWDN9DMzWAeNjK5M7K/3VwX7vlY7O
+ o9pRE42crq8ZxSSvULVH1aR5RSK06egF1BHfm4SiG6+4AZQ6h8wv0n/2/Ig555OMQcCV
+ 4q5W27i13BQ3C032W/U+ij1vDNur6ZKTeFtwwl1iMhJPkLdKavpVUECR7wJhEaMJ5hf0
+ Kn+w==
+X-Gm-Message-State: AOJu0YxqFQ1PVwPnZJPwN78gf1Z//L6QplCiZg7grXuoty3nHeQqQKD2
+ 3iYpJcd3Jg2oZXTzLTjnHrz3nV9XU+KGtuVPK2nXQuhjvMrrD+Fq0PLJVwixmbzJS/trjnyRtCg
+ d9eVTCv4mb/zhVQA+iC6G2oXMzAMyufjqfrIo3iO0SWGqTCTkfRGHo/8t
+X-Gm-Gg: Acq92OFvpKPdhVP5H8V6QWo/SI28m/zf5QuxsTr4u5MyB4sLJdkJR57DqpPCI2j8TUA
+ fOjNQXpqGl7frbLcKQHQ0AfkZWI8q3OTDpRuoIiVeajKyy1T/R5TkQ10ee/NN7HkpdYQ+tu6MDG
+ rll1ZGB67jCld5SVFJN88hLZs7z8J99iaksMkYEvB3CaYDFCMMDzwUhlo2qFUwfIIn5//0caBU8
+ mqpzoSyUTtQvGboCOQhap5sOnJZTGxSzeqWiFkLjbgYY8qq5DTbvdLo87dBET99lWXUsVmXfsHB
+ Q0kidOohy4IhrHNDm5IYtT05zzC0LPdSZ9mdFaysRoj6Z9ItrAArDV50PwBGIyglc9s90MiAm4Y
+ 6WQ8k7x4lv6kNrF/IxYgUy1PZ0RN2YWIab6gvSg==
+X-Received: by 2002:a05:600c:a307:b0:490:b7e6:bd1d with SMTP id
+ 5b1f17b1804b1-490b7e6bfa0mr21935145e9.16.1780478022268; 
+ Wed, 03 Jun 2026 02:13:42 -0700 (PDT)
+X-Received: by 2002:a05:600c:a307:b0:490:b7e6:bd1d with SMTP id
+ 5b1f17b1804b1-490b7e6bfa0mr21934785e9.16.1780478021739; 
+ Wed, 03 Jun 2026 02:13:41 -0700 (PDT)
 Received: from sgarzare-redhat ([193.207.118.98])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-490b7a273e3sm21745225e9.0.2026.06.03.02.04.47
+ 5b1f17b1804b1-490b6d16f0csm43144955e9.15.2026.06.03.02.13.38
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 03 Jun 2026 02:04:48 -0700 (PDT)
-Date: Wed, 3 Jun 2026 11:04:42 +0200
+ Wed, 03 Jun 2026 02:13:41 -0700 (PDT)
+Date: Wed, 3 Jun 2026 11:13:36 +0200
 From: Stefano Garzarella <sgarzare@redhat.com>
 To: Stefan Hajnoczi <stefanha@redhat.com>
 Cc: qemu-devel@nongnu.org, "Michael S. Tsirkin" <mst@redhat.com>, 
  hreitz@redhat.com, Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>, 
- gmaglione@redhat.com, Jorge Moreira <jemoreira@google.com>
-Subject: Re: [PATCH v2 1/3] vhost-user.rst: clarify when rings are started
-Message-ID: <ah_t8NHf4pYDPO9c@sgarzare-redhat>
+ gmaglione@redhat.com
+Subject: Re: [PATCH v2 3/3] vhost-user: inject kick after SET_VRING_KICK
+Message-ID: <ah_wMkIxfzNorE-X@sgarzare-redhat>
 References: <20260519191548.335082-1-stefanha@redhat.com>
- <20260519191548.335082-2-stefanha@redhat.com>
+ <20260519191548.335082-4-stefanha@redhat.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii; format=flowed
 Content-Disposition: inline
-In-Reply-To: <20260519191548.335082-2-stefanha@redhat.com>
+In-Reply-To: <20260519191548.335082-4-stefanha@redhat.com>
 Received-SPF: pass client-ip=170.10.129.124; envelope-from=sgarzare@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -24
@@ -119,43 +119,22 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, May 19, 2026 at 03:15:46PM -0400, Stefan Hajnoczi wrote:
->Jorge Moreira <jemoreira@google.com> pointed out that the ring state
->machine is underspecified. In the discussion that followed, we
->discovered that the spec says one thing and implementations do something
->else. This patch updates the spec to reflect how things are actually
->implemented across widely-used front-ends and back-ends including QEMU,
->crosvm, rust-vmm, and DPDK. Do this while taking care not to make any
->other existing implementations non-compliant by changing the sepc.
-
-s/sepc/spec
-
+On Tue, May 19, 2026 at 03:15:48PM -0400, Stefan Hajnoczi wrote:
+>The vhost-user specification was updated to say that front-ends should
+>inject a kick after SET_VRING_KICK in case the back-end implements the
+>old spec wording which said vrings start when a kick is received. Do
+>this in QEMU's front-end.
 >
->The spec says rings are started when a kick is received but the
->implementations actually start rings when VHOST_USER_SET_VRING_KICK is
->received.
+>An example scenario where this behavior helps: the back-end fails to
+>check if the vring has available buffers when SET_VRING_KICK is received
+>and the front-end stopped and then restarted the vring. In the case the
+>back-end may not notice the available buffers unless the front-end
+>injects a kick.
 >
->Reconcile this as follows:
->- Clarify that a ring can be stopped and then started again. The
->  back-end must resume processing available requests when the ring is
->  restarted.
->- Update the spec to say rings are started when
->  VHOST_USER_SET_VRING_KICK is received.
->- Ensure compatibility by saying front-ends SHOULD inject a kick in case
->  the back-end strictly implemented the old spec.
->- Avoid future back-end dependencies on injected kicks by saying that
->  back-ends SHOULD NOT expect a kick to start rings.
->
->This way implementors have clarity on how things work while still
->allowing compatibility for existing implementations.
->
->Reported-by: Jorge Moreira <jemoreira@google.com>
->Cc: "Michael S . Tsirkin" <mst@redhat.com>
->Cc: Stefano Garzarella <sgarzare@redhat.com>
 >Signed-off-by: Stefan Hajnoczi <stefanha@redhat.com>
 >---
-> docs/interop/vhost-user.rst | 26 ++++++++++++++++++++------
-> 1 file changed, 20 insertions(+), 6 deletions(-)
+> hw/virtio/vhost-user.c | 24 +++++++++++++++++++++++-
+> 1 file changed, 23 insertions(+), 1 deletion(-)
 
 Reviewed-by: Stefano Garzarella <sgarzare@redhat.com>
 
