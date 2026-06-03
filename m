@@ -4,88 +4,88 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5FEB7CD6E71
-	for <qemu-devel@archiver.kernel.org>; Wed,  3 Jun 2026 20:54:29 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B0988CD6E55
+	for <qemu-devel@archiver.kernel.org>; Wed,  3 Jun 2026 20:54:32 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wUsZf-00083I-He; Wed, 03 Jun 2026 16:52:28 -0400
+	id 1wUsaf-0000aG-6z; Wed, 03 Jun 2026 16:53:29 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pierrick.bouvier@oss.qualcomm.com>)
- id 1wUsZP-0007x5-F1
- for qemu-devel@nongnu.org; Wed, 03 Jun 2026 16:52:12 -0400
-Received: from mx0b-0031df01.pphosted.com ([205.220.180.131])
+ id 1wUsZj-000854-1Y
+ for qemu-devel@nongnu.org; Wed, 03 Jun 2026 16:52:31 -0400
+Received: from mx0a-0031df01.pphosted.com ([205.220.168.131])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pierrick.bouvier@oss.qualcomm.com>)
- id 1wUsZL-0004C0-OZ
- for qemu-devel@nongnu.org; Wed, 03 Jun 2026 16:52:09 -0400
-Received: from pps.filterd (m0279871.ppops.net [127.0.0.1])
+ id 1wUsZY-0004Fx-B4
+ for qemu-devel@nongnu.org; Wed, 03 Jun 2026 16:52:26 -0400
+Received: from pps.filterd (m0279865.ppops.net [127.0.0.1])
  by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 653HA3mf2651282
- for <qemu-devel@nongnu.org>; Wed, 3 Jun 2026 20:52:05 GMT
+ 653JZejZ1039943
+ for <qemu-devel@nongnu.org>; Wed, 3 Jun 2026 20:52:17 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
  cc:content-transfer-encoding:date:from:in-reply-to:message-id
- :mime-version:references:subject:to; s=qcppdkim1; bh=4vJKa5FfzO6
- wDkm27O18xdmld0GrhQ8bYsHnUHwAZVQ=; b=WeUefxmFIjgH4EBsxCsbQUIpUuG
- KMM5z0AYkg5/87DyqXv8Hl9OtUjJEMJ4REdlJ8UPQLxSb4AxOvgPWKnMcr6/jBtn
- UocEghCXefI2Qq1ZpJ3cVRVvpDeOwfn4rY+NfypSfFfejPI13TY0fF0RabGtPG7A
- eV9gUmXoY03wtPep/24mA59pRTEsPYpZGttzY2c9vKRjIWLWyCeqF8AtV6s0ryQC
- YUJVojQJMUoI3IbqWy9x7iDQjCvhK010p+lBzLRka8kUZjlSpWIaBhpsvtsD5XNN
- gWYJdd4DUQUW4kCZZ23yqJtw01m0bSdJTzYfBALPNPKD8RlqAutVGFcSQFw==
-Received: from mail-dy1-f200.google.com (mail-dy1-f200.google.com
- [74.125.82.200])
- by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4ejre9gvfn-1
+ :mime-version:references:subject:to; s=qcppdkim1; bh=je3MUD6keVA
+ fPWR8DdS5aO6YgwljUqYzUOpTW+/1Ems=; b=EW0NDc8K8EYuU6BXWBxf3b+3dgi
+ U11cDvmqRMg33h22LtL76rwXE2h9gG0AMT0qiyB5IIXmhY1Y9x1lGsyYcOn4x7Qo
+ mfJCEjuWsL4a2ZCt6TM1JrLPNa+7155HIeay+AsdH6jyacXnw1YCuLnteeCFzIj7
+ Zjy/h4kWiuMSKe/178/joVYAUENH5GvbYn7K6nFLuDQbVD/fwcnJx4ExM6kWW0GE
+ zqhwoXaBjZp8yIMNEQ3mvlTLdQzm/eMOtd9s/hmhgOrS0bVFXLMLKM3upEDY5iZw
+ +b9YtFm2zLTf6+7QRPlZoDRZs4jTJjwNVyaXsPtVZlMMvvwb314lzfJtsAA==
+Received: from mail-dy1-f199.google.com (mail-dy1-f199.google.com
+ [74.125.82.199])
+ by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4ejtj8g8q8-1
  (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
- for <qemu-devel@nongnu.org>; Wed, 03 Jun 2026 20:52:05 +0000 (GMT)
-Received: by mail-dy1-f200.google.com with SMTP id
- 5a478bee46e88-3074d4102a9so756467eec.0
- for <qemu-devel@nongnu.org>; Wed, 03 Jun 2026 13:52:04 -0700 (PDT)
+ for <qemu-devel@nongnu.org>; Wed, 03 Jun 2026 20:52:17 +0000 (GMT)
+Received: by mail-dy1-f199.google.com with SMTP id
+ 5a478bee46e88-304d8613efbso7411093eec.1
+ for <qemu-devel@nongnu.org>; Wed, 03 Jun 2026 13:52:17 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=oss.qualcomm.com; s=google; t=1780519924; x=1781124724; darn=nongnu.org;
+ d=oss.qualcomm.com; s=google; t=1780519937; x=1781124737; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=4vJKa5FfzO6wDkm27O18xdmld0GrhQ8bYsHnUHwAZVQ=;
- b=Qei4fCt1MmR8f1gP74UOVX1Ah+SuNXnlkmNfixU7KjE9BqZBJhwiq+VutCfrPWK2PC
- cBXq/wLkjafvFQZAweZe+Z1vYZ7hD6D7JgVUHcHMAr+U0eua4AP/aWw+xEsML7gNi9ZT
- e34AkQfgP1RpFzy2GDzcCmkfIzS4Y60pC6+6cvrDdYyPpWJs2j9Q4/NQBt0cis86jiNp
- Sl0Zop2/07kDxNnDg0Dwh7tSWKpTTWklFDmb6sINV6UJcO/BuEHKLzB1GeaEB1VzPa9v
- AlAMkLJVe4OpxISq6vqamy2Ksa11TVlUj0b2uwSj0BiKk4ixzX56APcqMtm99/ynhA6i
- XIvA==
+ bh=je3MUD6keVAfPWR8DdS5aO6YgwljUqYzUOpTW+/1Ems=;
+ b=Bcqj35sfPeEMkNRZ3npsSzrE/EtQW91o+UMdGZ08c2eOLf/RPwzOusf4el3Wb1DNN4
+ 28DGfiHEtDVdXQtuq8041qtc9YO8Regu2yho+Gj+RnGF6x/ykfdVMu1aSxY5sEozOxDL
+ rP3vFYw148prtOSHwPqK9MZTg/TOYUngPu8/M0f0wVRaJoSN0eisR02VXQTJwQoUXgNj
+ 3fBkv2ml2JuDbtvvw7E+1FRo+axNwFK6VyiHA7Pk3ixERu1dQKh3Fo5MXXCGY1+n4YuZ
+ lDMLsv0UlH0G3SJuzhozsQSb46ZfEXVroYZyB6Kd++jIks6Jx3sGnxV72GY9yW4X0l4I
+ zHbQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1780519924; x=1781124724;
+ d=1e100.net; s=20251104; t=1780519937; x=1781124737;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to;
- bh=4vJKa5FfzO6wDkm27O18xdmld0GrhQ8bYsHnUHwAZVQ=;
- b=BqN2RantS7LhcutBrfbteKCCme5SGFsiWnY43WgtI2F+UecXpzxLgXzQ2yojFBQ29C
- 3wiCkacIB+MBtiT6vwC8ZaJASfLnNSS7F2ajmbG0hNOQx+KkmE7ISxVjVVTVvCk4QEnC
- RKaOTASQ7feNOr6qhtxpxSG7Fp6zX1UsU4Vw20tlDKOjLnpiH6oFgoc4dJHhkQ4SBeAC
- RhTgf1Ha6jL0IEOUhPnTinZxRHLjnPZiL5M11wyTox6WyRBgOTD4Ce84vFdxyZ/O7ruh
- 8IJcll3qAGJ8TesONb7eDTOytwPJpE9N5li1MZav/6iqDGmrzpimuDgFG+CVhE78o+fG
- I1Tg==
-X-Gm-Message-State: AOJu0Yza39LurVO/wTRU1PBZGa2m1uFMhnU6GQb6kVdcl/OiAvqJuROo
- JLzOuyoVYMyaTB90IBMvQVK15YJmyszZjOd12O2RO4JeHLX7Erqr78+Ny4glbCuWdMg9Mq53rwe
- y66uSJ7NQe9a5HXn7L1kfyDSPSkmmt2Ljk+oHHCpWWpSbhm1evB2Ofl1MoP2C6REwNvHx
-X-Gm-Gg: Acq92OGnWbFEKfRLFOXFQygtRXf/NWnIxdnM54ssFOfIr+sawZ8x58tk1dwINV2LtG4
- YYsF4cf3pCHgbf2HZ5sSiT3LjOs165eibr5+mw2rZGGgRQszCi3ubGMu6MlDWHWUMG4Q1s8ied8
- mH98sC/JjGah0ziSnf9EY751u04xxt++wJNYvKOvFVC6zgXlCZuFwLXsCl0iAeGOUuGeo5PzHJO
- Nb831kj1lW0vONmmxUO9Js1vlqgbAkB0dlAy+5/j9+6C197kWy1dN2wpd2UztgY/AxJA4ND51TN
- u8rFa4XM7W9FCdECKXjpBevdAdQaZo039rGB94AyHvlzxyCU7MPYZZ0IKaMSguWW1kOKQd3Phs0
- DqJnFUT7R4odeNU2GbPJ+hWgujCkWR3IcbXpR9ilb5ssQQXLyKG/A/W6W8OEmgmuKIzVll98AGZ
- kCtvrPTh3gwkqV6otW
-X-Received: by 2002:a05:7300:a498:b0:2f5:5dd3:1fd8 with SMTP id
- 5a478bee46e88-3074fa7ddcdmr2878859eec.8.1780519923978; 
- Wed, 03 Jun 2026 13:52:03 -0700 (PDT)
-X-Received: by 2002:a05:7300:a498:b0:2f5:5dd3:1fd8 with SMTP id
- 5a478bee46e88-3074fa7ddcdmr2878837eec.8.1780519923334; 
- Wed, 03 Jun 2026 13:52:03 -0700 (PDT)
+ bh=je3MUD6keVAfPWR8DdS5aO6YgwljUqYzUOpTW+/1Ems=;
+ b=d4Bkjoo6ZWzOCmDmNs20RjH6wZAyTccK+8XJv7ShxJHPHl9HDHHaih5peP768Ar0hT
+ yVG47b2VadpLLnj/eyUgIbB8CuvH8dK1Nlj/PTwbEZsMP+3w8BA7VbLE5/kDK0dByWBJ
+ gpRFH6HmYaDI3grSImRX0JddubvI/dnv27prZu313RTCieO9al3IVA5tnGcDeKLmSmO7
+ Hr46UldUKGL/9bMUEVAhgYZX7F1yMK0EkEzz1hCHh0gzQ4ST446AxYgEgmGMLAq+Kj/l
+ QkDxzCMjzYFi0KBzEz033PFYWak/c1NI3eE7k0fGWWSaf3RLYAUS1hpqGj9LR6IailkQ
+ 9nNA==
+X-Gm-Message-State: AOJu0YyTbHqHLXlt8u9Wk8rOPcPlJfbaWQPKklQFAD6Vh27DoSwPUWQ6
+ 7dO2XP3htcGmi52ecjsEhIeri8EbTgvpzVNaHMi7ho65sh6WDjeVYL7uRaQ/alT0qni8K1Nuqwv
+ XfoVimntiDXEcMySKFt3MSfOXnR2s540LnBEKEEGFktgcI4JmW//qSutpUUl1icRoBFTi
+X-Gm-Gg: Acq92OG1PDZozZ70efkWDYNuzORXGMajqy/CmYEg2yrt06EclbTzijURIsCJJe1Q+Ri
+ cbVU5BONCIw2rUw/SRRmIvPWvukYWSBMzvyPUW3+BToGePOUonvHNslRBQnPRViPBsDodESsvA9
+ y2j1ryoIDIiUhZLg+bcUcB4dB6hZ5WmUG6dzYJ0bore/3vdlr6xg8z8dwZEfcRjw5prCZ0gaOVy
+ 0839WQI2qy4bkz97ljDbKYhXxBq/U8VMgv3kPoABFGWJujIH3OJNNyZL3RJeu+bJtOwneVCduml
+ 93OORO6g85kvtn9zl/T7t7VjyE8FUtj/EI3Lk1NjGviaCELkzKP8ALavfHT0uaVct1MfktP61fJ
+ eRi3XiDzxu4F/LTQGayNVdm6GmnLh4cHjWabZ4UvwlGk/rlVHLLSj06zxgc1mmfILv2SxPsde1r
+ YvrY9D/6vmTEKy9l2T
+X-Received: by 2002:a05:7300:c88:b0:2f2:c336:7736 with SMTP id
+ 5a478bee46e88-3074fbd9d26mr2493112eec.29.1780519936666; 
+ Wed, 03 Jun 2026 13:52:16 -0700 (PDT)
+X-Received: by 2002:a05:7300:c88:b0:2f2:c336:7736 with SMTP id
+ 5a478bee46e88-3074fbd9d26mr2493090eec.29.1780519936175; 
+ Wed, 03 Jun 2026 13:52:16 -0700 (PDT)
 Received: from hu-pbouvier-lv.qualcomm.com (Global_NAT1.qualcomm.com.
  [129.46.96.20]) by smtp.gmail.com with ESMTPSA id
- 5a478bee46e88-3074db85f60sm4586333eec.8.2026.06.03.13.52.02
+ 5a478bee46e88-3074db85f60sm4586333eec.8.2026.06.03.13.52.14
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 03 Jun 2026 13:52:02 -0700 (PDT)
+ Wed, 03 Jun 2026 13:52:15 -0700 (PDT)
 From: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
 To: qemu-devel@nongnu.org
 Cc: Chao Liu <chao.liu.zevorn@gmail.com>,
@@ -95,41 +95,42 @@ Cc: Chao Liu <chao.liu.zevorn@gmail.com>,
  =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
  Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
  Alexandre Iooss <erdnaxe@crans.org>
-Subject: [PATCH 02/25] plugins: add userdata for qemu_plugin_{uninstall, reset}
-Date: Wed,  3 Jun 2026 13:51:29 -0700
-Message-ID: <20260603205152.1440291-3-pierrick.bouvier@oss.qualcomm.com>
+Subject: [PATCH 13/25] plugins: add userdata to
+ qemu_plugin_register_vcpu_discon_cb
+Date: Wed,  3 Jun 2026 13:51:40 -0700
+Message-ID: <20260603205152.1440291-14-pierrick.bouvier@oss.qualcomm.com>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20260603205152.1440291-1-pierrick.bouvier@oss.qualcomm.com>
 References: <20260603205152.1440291-1-pierrick.bouvier@oss.qualcomm.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-X-Proofpoint-ORIG-GUID: 3BKg9wWvKB8bAQREkolwaqVbK3-iVaa_
-X-Proofpoint-GUID: 3BKg9wWvKB8bAQREkolwaqVbK3-iVaa_
-X-Authority-Analysis: v=2.4 cv=KoF9H2WN c=1 sm=1 tr=0 ts=6a2093f5 cx=c_pps
- a=PfFC4Oe2JQzmKTvty2cRDw==:117 a=ouPCqIW2jiPt+lZRy3xVPw==:17
+X-Proofpoint-ORIG-GUID: XoylCkEsUmyKM1tCPhF6GiS56fhE6diY
+X-Proofpoint-GUID: XoylCkEsUmyKM1tCPhF6GiS56fhE6diY
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNjAzMDIwMyBTYWx0ZWRfXxpWnRPql45Vb
+ cvpeq7CdSVy1K1NMA4O5IjsBIn6wsjAj/D2R8BiEaQsKCduLMw80aMSTaYFFGeBqrkrLVDpeh3j
+ jm+rFgbVzIvYxU7LRNh1UItha2OxX2X+kmfU3vEdgYr6Xq9Jx2/fCTx7R5NvOkobt8hNA/3YIRr
+ +D9w8hpr0xvLiFp+VZPqQQp+ussNUv4/cF/3ovm1prN8erEJ5OnyFgVCQXFWMcUUqiKB/kvd9nX
+ FNUPLR04CARYCCZqWW5yR4PS/ppft0UbUaBhZaXy7QcSAlKnQnfsIjYGaHIMMiETv2yf0X0RJyb
+ mI8EStpCcarZrbH8Su2woiy94VsRg+ToBx4N6KyLr7YGgZOPawqc71vmWwlwStbIryd03EXI4nC
+ 1ltWjoteDGn1HiiuFTHmtDFZG6O4OWldDgZkT6y8ra4XEuSnkol1PXEud5pQnFim431GXSY5nRO
+ AIrUX0nq1vZ4WjP436Q==
+X-Authority-Analysis: v=2.4 cv=f4p4wuyM c=1 sm=1 tr=0 ts=6a209401 cx=c_pps
+ a=cFYjgdjTJScbgFmBucgdfQ==:117 a=ouPCqIW2jiPt+lZRy3xVPw==:17
  a=FelO9ux0wxsA:10 a=s4-Qcg_JpJYA:10 a=VkNPw1HP01LnGYTKEx00:22
- a=u7WPNUs3qKkmUXheDGA7:22 a=3WHJM1ZQz_JShphwDgj5:22 a=EUspDBNiAAAA:8
- a=_u34yJfUH-Co13bc16MA:9 a=O8hF6Hzn-FEA:10 a=6Ab_bkdmUrQuMsNx7PHu:22
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNjAzMDIwMyBTYWx0ZWRfXzAOuHXU8NUPN
- ryOzV51esEPMJhu5YoDOPpKXO3AOW02M1lg1VYr8xQLI8PtcxYDuxC5kKHJOvD2dnhe4POPNYgK
- yLnR/aVHL0kbSTiLZCZYpv8OE3bOD0oL9xwhYB+mPIeX8Ol8AjsmRJtVx2KM6JALpUAtOVW8FIo
- gw8OtR1kcxKYS6KDlBzlJXPg0XLvj8nssK4yRb3tSHtxG+SKZJsamlLEsERF3iFH6zhF89sWjLp
- HIjVWkqPJbMJZNlhVYvzqZgeq+lL/j54+WFfaoQvQzZUfkv2bzxWYPgEXenFMXkzBCT3Q2POET/
- vDRW3B+CNO+EVAffKzEKeEMZyzlwmrhmQwXZcabH0M55VE4PTesFwRFjRwKSMa/dcParf2V7F5l
- +VE9Er8E9Wggf9KGcl5+KUKss7j9fZQq7arRrA1F9yOImP/jpR0EjvD8u3if2nKXKipkj8FzzYQ
- N84qu/5mS3UUIPjOvSQ==
+ a=u7WPNUs3qKkmUXheDGA7:22 a=Um2Pa8k9VHT-vaBCBUpS:22 a=EUspDBNiAAAA:8
+ a=UCrIKau3vUVB3JaL4XcA:9 a=scEy_gLbYbu1JhEsrz4S:22
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.125,FMLib:17.12.100.49
  definitions=2026-06-03_06,2026-05-28_03,2025-10-01_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- malwarescore=0 spamscore=0 clxscore=1015 bulkscore=0 suspectscore=0
- priorityscore=1501 adultscore=0 phishscore=0 impostorscore=0
+ spamscore=0 suspectscore=0 phishscore=0 bulkscore=0 clxscore=1015
+ adultscore=0 priorityscore=1501 impostorscore=0 malwarescore=0
  lowpriorityscore=0 classifier=typeunknown authscore=0 authtc= authcc=
  route=outbound adjust=0 reason=mlx scancount=1 engine=8.22.0-2605210000
  definitions=main-2606030203
-Received-SPF: pass client-ip=205.220.180.131;
+Received-SPF: pass client-ip=205.220.168.131;
  envelope-from=pierrick.bouvier@oss.qualcomm.com;
- helo=mx0b-0031df01.pphosted.com
+ helo=mx0a-0031df01.pphosted.com
 X-Spam_score_int: -27
 X-Spam_score: -2.8
 X-Spam_bar: --
@@ -152,244 +153,135 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-We do both at the same time because they internally use the same
-implementation.
-
 Signed-off-by: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
 ---
- contrib/plugins/lockstep.c    | 10 +++++-----
+ contrib/plugins/traps.c       |  5 +++--
  include/plugins/qemu-plugin.h |  8 ++++++--
- plugins/api.c                 | 10 ++++++----
- plugins/loader.c              | 13 ++++++++-----
- plugins/plugin.h              |  3 ++-
- tests/tcg/plugins/reset.c     |  8 ++++----
- 6 files changed, 31 insertions(+), 21 deletions(-)
+ plugins/core.c                | 12 ++++++------
+ tests/tcg/plugins/discons.c   |  4 ++--
+ 4 files changed, 17 insertions(+), 12 deletions(-)
 
-diff --git a/contrib/plugins/lockstep.c b/contrib/plugins/lockstep.c
-index 62981d4e098..36b003ead2d 100644
---- a/contrib/plugins/lockstep.c
-+++ b/contrib/plugins/lockstep.c
-@@ -77,7 +77,7 @@ static char *path_to_unlink;
+diff --git a/contrib/plugins/traps.c b/contrib/plugins/traps.c
+index 4b879a8212a..4d59aa3c09d 100644
+--- a/contrib/plugins/traps.c
++++ b/contrib/plugins/traps.c
+@@ -25,7 +25,7 @@ static struct qemu_plugin_scoreboard *traps;
  
- static bool verbose;
- 
--static void plugin_cleanup(qemu_plugin_id_t id)
-+static void plugin_cleanup(qemu_plugin_id_t id, void *userdata)
+ static void vcpu_discon(qemu_plugin_id_t id, unsigned int vcpu_index,
+                         enum qemu_plugin_discon_type type, uint64_t from_pc,
+-                        uint64_t to_pc)
++                        uint64_t to_pc, void *userdata)
  {
-     /* Free our block data */
-     g_slist_free_full(blocks, &g_free);
-@@ -98,7 +98,7 @@ static void plugin_exit(qemu_plugin_id_t id, void *p)
-     g_string_append_printf(out, "Executed ~%ld instructions\n", insn_count);
-     qemu_plugin_outs(out->str);
+     TrapCounters *rec = qemu_plugin_scoreboard_find(traps, vcpu_index);
+     switch (type) {
+@@ -75,7 +75,8 @@ int qemu_plugin_install(qemu_plugin_id_t id, const qemu_info_t *info,
+     traps = qemu_plugin_scoreboard_new(sizeof(TrapCounters));
  
--    plugin_cleanup(id);
-+    plugin_cleanup(id, NULL);
- }
+     qemu_plugin_register_vcpu_discon_cb(id, QEMU_PLUGIN_DISCON_ALL,
+-                                        vcpu_discon);
++                                        vcpu_discon,
++                                        NULL);
  
- /*
-@@ -189,7 +189,7 @@ static void report_divergance(ExecState *us, ExecState *them)
-         }
-         qemu_plugin_outs(out->str);
-         qemu_plugin_outs("giving up\n");
--        qemu_plugin_uninstall(our_id, plugin_cleanup);
-+        qemu_plugin_uninstall(our_id, plugin_cleanup, NULL);
-     }
- }
- 
-@@ -212,7 +212,7 @@ static void vcpu_tb_exec(unsigned int cpu_index, void *udata)
-         qemu_plugin_outs(bytes < 0 ?
-                          "problem writing to socket" :
-                          "wrote less than expected to socket");
--        qemu_plugin_uninstall(our_id, plugin_cleanup);
-+        qemu_plugin_uninstall(our_id, plugin_cleanup, NULL);
-         return;
-     }
- 
-@@ -225,7 +225,7 @@ static void vcpu_tb_exec(unsigned int cpu_index, void *udata)
-         qemu_plugin_outs(bytes < 0 ?
-                          "problem reading from socket" :
-                          "read less than expected");
--        qemu_plugin_uninstall(our_id, plugin_cleanup);
-+        qemu_plugin_uninstall(our_id, plugin_cleanup, NULL);
-         return;
-     }
+     qemu_plugin_register_atexit_cb(id, plugin_exit, NULL);
  
 diff --git a/include/plugins/qemu-plugin.h b/include/plugins/qemu-plugin.h
-index 435a14f5a00..11213c2ca3f 100644
+index cf937c60ee7..03e7b2b1fb8 100644
 --- a/include/plugins/qemu-plugin.h
 +++ b/include/plugins/qemu-plugin.h
-@@ -221,6 +221,7 @@ typedef void (*qemu_plugin_vcpu_discon_cb_t)(qemu_plugin_id_t id,
+@@ -186,6 +186,7 @@ enum qemu_plugin_discon_type {
+  * @from_pc: the source of the discontinuity, e.g. the PC before the
+  *           transition
+  * @to_pc: the PC pointing to the next instruction to be executed
++ * @userdata: any plugin data to pass to the @cb
+  *
+  * The exact semantics of @from_pc depends on the @type of discontinuity. For
+  * interrupts, @from_pc will point to the next instruction which would have
+@@ -198,7 +199,8 @@ enum qemu_plugin_discon_type {
+ typedef void (*qemu_plugin_vcpu_discon_cb_t)(qemu_plugin_id_t id,
+                                              unsigned int vcpu_index,
+                                              enum qemu_plugin_discon_type type,
+-                                             uint64_t from_pc, uint64_t to_pc);
++                                             uint64_t from_pc, uint64_t to_pc,
++                                             void *userdata);
+ 
+ /**
   * qemu_plugin_uninstall() - Uninstall a plugin
-  * @id: this plugin's opaque ID
-  * @cb: callback to be called once the plugin has been removed
+@@ -293,6 +295,7 @@ void qemu_plugin_register_vcpu_resume_cb(qemu_plugin_id_t id,
+  * @id: plugin ID
+  * @type: types of discontinuities for which to call the callback
+  * @cb: callback function
 + * @userdata: any plugin data to pass to the @cb
   *
-  * Do NOT assume that the plugin has been uninstalled once this function
-  * returns. Plugins are uninstalled asynchronously, and therefore the given
-@@ -229,12 +230,14 @@ typedef void (*qemu_plugin_vcpu_discon_cb_t)(qemu_plugin_id_t id,
-  * Note: Calling this function from qemu_plugin_install() is a bug.
-  */
+  * The @cb function is called every time a vCPU receives a discontinuity event
+  * of the specified type(s), after the vCPU was prepared to handle the event.
+@@ -302,7 +305,8 @@ void qemu_plugin_register_vcpu_resume_cb(qemu_plugin_id_t id,
  QEMU_PLUGIN_API
--void qemu_plugin_uninstall(qemu_plugin_id_t id, qemu_plugin_simple_cb_t cb);
-+void qemu_plugin_uninstall(qemu_plugin_id_t id, qemu_plugin_udata_cb_t cb,
-+                           void *userdata);
+ void qemu_plugin_register_vcpu_discon_cb(qemu_plugin_id_t id,
+                                          enum qemu_plugin_discon_type type,
+-                                         qemu_plugin_vcpu_discon_cb_t cb);
++                                         qemu_plugin_vcpu_discon_cb_t cb,
++                                         void *userdata);
  
- /**
-  * qemu_plugin_reset() - Reset a plugin
-  * @id: this plugin's opaque ID
-  * @cb: callback to be called once the plugin has been reset
-+ * @userdata: any plugin data to pass to the @cb
-  *
-  * Unregisters all callbacks for the plugin given by @id.
-  *
-@@ -243,7 +246,8 @@ void qemu_plugin_uninstall(qemu_plugin_id_t id, qemu_plugin_simple_cb_t cb);
-  * callbacks until @cb is called.
-  */
- QEMU_PLUGIN_API
--void qemu_plugin_reset(qemu_plugin_id_t id, qemu_plugin_simple_cb_t cb);
-+void qemu_plugin_reset(qemu_plugin_id_t id, qemu_plugin_udata_cb_t cb,
-+                       void *userdata);
- 
- /**
-  * qemu_plugin_register_vcpu_init_cb() - register a vCPU initialization callback
-diff --git a/plugins/api.c b/plugins/api.c
-index 2d5fe9327f7..91c9a24a6b2 100644
---- a/plugins/api.c
-+++ b/plugins/api.c
-@@ -51,14 +51,16 @@
- 
- /* Uninstall and Reset handlers */
- 
--void qemu_plugin_uninstall(qemu_plugin_id_t id, qemu_plugin_simple_cb_t cb)
-+void qemu_plugin_uninstall(qemu_plugin_id_t id, qemu_plugin_udata_cb_t cb,
-+                           void *userdata)
- {
--    plugin_reset_uninstall(id, cb, false);
-+    plugin_reset_uninstall(id, cb, userdata, false);
- }
- 
--void qemu_plugin_reset(qemu_plugin_id_t id, qemu_plugin_simple_cb_t cb)
-+void qemu_plugin_reset(qemu_plugin_id_t id, qemu_plugin_udata_cb_t cb,
-+                       void *userdata)
- {
--    plugin_reset_uninstall(id, cb, true);
-+    plugin_reset_uninstall(id, cb, userdata, true);
- }
- 
- /*
-diff --git a/plugins/loader.c b/plugins/loader.c
-index 0dbe7bea263..0d587c344c4 100644
---- a/plugins/loader.c
-+++ b/plugins/loader.c
-@@ -253,7 +253,7 @@ static int plugin_load(struct qemu_plugin_desc *desc, const qemu_info_t *info, E
-          * call a full uninstall if the plugin did not yet call it.
-          */
-         if (!ctx->uninstalling) {
--            plugin_reset_uninstall(ctx->id, NULL, false);
-+            plugin_reset_uninstall(ctx->id, NULL, NULL, false);
+ /** struct qemu_plugin_tb - Opaque handle for a translation block */
+ struct qemu_plugin_tb;
+diff --git a/plugins/core.c b/plugins/core.c
+index a5aac1062aa..54ab3bdbedc 100644
+--- a/plugins/core.c
++++ b/plugins/core.c
+@@ -122,8 +122,7 @@ static void plugin_vcpu_cb__discon(CPUState *cpu,
+         /* iterate safely; plugins might uninstall themselves at any time */
+         QLIST_FOREACH_SAFE_RCU(cb, &plugin.cb_lists[ev], entry, next) {
+             qemu_plugin_vcpu_discon_cb_t func = cb->f.vcpu_discon;
+-
+-            func(cb->ctx->id, cpu->cpu_index, type, from, to);
++            func(cb->ctx->id, cpu->cpu_index, type, from, to, cb->udata);
          }
      }
+     qemu_plugin_set_cb_flags(cpu, QEMU_PLUGIN_CB_NO_REGS);
+@@ -655,16 +654,17 @@ void qemu_plugin_register_vcpu_resume_cb(qemu_plugin_id_t id,
  
-@@ -314,7 +314,8 @@ int qemu_plugin_load_list(QemuPluginList *head, Error **errp)
- 
- struct qemu_plugin_reset_data {
-     struct qemu_plugin_ctx *ctx;
--    qemu_plugin_simple_cb_t cb;
-+    qemu_plugin_udata_cb_t cb;
-+    void *userdata;
-     bool reset;
- };
- 
-@@ -338,7 +339,7 @@ static void plugin_reset_destroy__locked(struct qemu_plugin_reset_data *data)
-     if (data->reset) {
-         g_assert(ctx->resetting);
-         if (data->cb) {
--            data->cb(ctx->id);
-+            data->cb(ctx->id, data->userdata);
-         }
-         ctx->resetting = false;
-         g_free(data);
-@@ -357,7 +358,7 @@ static void plugin_reset_destroy__locked(struct qemu_plugin_reset_data *data)
-     g_assert(success);
-     QTAILQ_REMOVE(&plugin.ctxs, ctx, entry);
-     if (data->cb) {
--        data->cb(ctx->id);
-+        data->cb(ctx->id, data->userdata);
+ void qemu_plugin_register_vcpu_discon_cb(qemu_plugin_id_t id,
+                                          enum qemu_plugin_discon_type type,
+-                                         qemu_plugin_vcpu_discon_cb_t cb)
++                                         qemu_plugin_vcpu_discon_cb_t cb,
++                                         void *userdata)
+ {
+     if (type & QEMU_PLUGIN_DISCON_INTERRUPT) {
+-        plugin_register_cb(id, QEMU_PLUGIN_EV_VCPU_INTERRUPT, cb);
++        plugin_register_cb_udata(id, QEMU_PLUGIN_EV_VCPU_INTERRUPT, cb, userdata);
      }
-     if (!g_module_close(ctx->handle)) {
-         warn_report("%s: %s", __func__, g_module_error());
-@@ -383,7 +384,8 @@ static void plugin_flush_destroy(CPUState *cpu, run_on_cpu_data arg)
+     if (type & QEMU_PLUGIN_DISCON_EXCEPTION) {
+-        plugin_register_cb(id, QEMU_PLUGIN_EV_VCPU_EXCEPTION, cb);
++        plugin_register_cb_udata(id, QEMU_PLUGIN_EV_VCPU_EXCEPTION, cb, userdata);
+     }
+     if (type & QEMU_PLUGIN_DISCON_HOSTCALL) {
+-        plugin_register_cb(id, QEMU_PLUGIN_EV_VCPU_HOSTCALL, cb);
++        plugin_register_cb_udata(id, QEMU_PLUGIN_EV_VCPU_HOSTCALL, cb, userdata);
+     }
  }
  
- void plugin_reset_uninstall(qemu_plugin_id_t id,
--                            qemu_plugin_simple_cb_t cb,
-+                            qemu_plugin_udata_cb_t cb,
-+                            void *userdata,
-                             bool reset)
+diff --git a/tests/tcg/plugins/discons.c b/tests/tcg/plugins/discons.c
+index 2e0e664e823..22114830fdc 100644
+--- a/tests/tcg/plugins/discons.c
++++ b/tests/tcg/plugins/discons.c
+@@ -98,7 +98,7 @@ static void report_mismatch(const char *pc_name, unsigned int vcpu_index,
+ 
+ static void vcpu_discon(qemu_plugin_id_t id, unsigned int vcpu_index,
+                         enum qemu_plugin_discon_type type, uint64_t from_pc,
+-                        uint64_t to_pc)
++                        uint64_t to_pc, void *userdata)
  {
-     struct qemu_plugin_reset_data *data;
-@@ -401,6 +403,7 @@ void plugin_reset_uninstall(qemu_plugin_id_t id,
-     data = g_new(struct qemu_plugin_reset_data, 1);
-     data->ctx = ctx;
-     data->cb = cb;
-+    data->userdata = userdata;
-     data->reset = reset;
-     /*
-      * Only flush the code cache if the vCPUs have been created. If so,
-diff --git a/plugins/plugin.h b/plugins/plugin.h
-index 9179da43851..c901016b8c1 100644
---- a/plugins/plugin.h
-+++ b/plugins/plugin.h
-@@ -76,7 +76,8 @@ void plugin_register_inline_op_on_entry(GArray **arr,
-                                         uint64_t imm);
+     struct cpu_state *state = qemu_plugin_scoreboard_find(states, vcpu_index);
  
- void plugin_reset_uninstall(qemu_plugin_id_t id,
--                            qemu_plugin_simple_cb_t cb,
-+                            qemu_plugin_udata_cb_t cb,
-+                            void *userdata,
-                             bool reset);
+@@ -214,7 +214,7 @@ QEMU_PLUGIN_EXPORT int qemu_plugin_install(qemu_plugin_id_t id,
+                                                     has_from);
  
- void plugin_register_cb(qemu_plugin_id_t id, enum qemu_plugin_event ev,
-diff --git a/tests/tcg/plugins/reset.c b/tests/tcg/plugins/reset.c
-index 1be8be2a4b2..6ea675b8095 100644
---- a/tests/tcg/plugins/reset.c
-+++ b/tests/tcg/plugins/reset.c
-@@ -14,7 +14,7 @@ static qemu_plugin_id_t plugin_id;
- static bool was_reset;
- static bool was_uninstalled;
+     qemu_plugin_register_vcpu_discon_cb(id, QEMU_PLUGIN_DISCON_ALL,
+-                                        vcpu_discon);
++                                        vcpu_discon, NULL);
+     qemu_plugin_register_vcpu_tb_trans_cb(id, vcpu_tb_trans);
  
--static void after_uninstall(qemu_plugin_id_t id)
-+static void after_uninstall(qemu_plugin_id_t id, void *userdata)
- {
-     g_assert(was_reset && !was_uninstalled);
-     qemu_plugin_outs("uninstall done\n");
-@@ -24,7 +24,7 @@ static void after_uninstall(qemu_plugin_id_t id)
- static void tb_exec_after_reset(unsigned int vcpu_index, void *userdata)
- {
-     g_assert(was_reset && !was_uninstalled);
--    qemu_plugin_uninstall(plugin_id, after_uninstall);
-+    qemu_plugin_uninstall(plugin_id, after_uninstall, NULL);
- }
- 
- static void tb_trans_after_reset(qemu_plugin_id_t id, struct qemu_plugin_tb *tb)
-@@ -34,7 +34,7 @@ static void tb_trans_after_reset(qemu_plugin_id_t id, struct qemu_plugin_tb *tb)
-                                          QEMU_PLUGIN_CB_NO_REGS, NULL);
- }
- 
--static void after_reset(qemu_plugin_id_t id)
-+static void after_reset(qemu_plugin_id_t id, void *userdata)
- {
-     g_assert(!was_reset && !was_uninstalled);
-     qemu_plugin_outs("reset done\n");
-@@ -45,7 +45,7 @@ static void after_reset(qemu_plugin_id_t id)
- static void tb_exec_before_reset(unsigned int vcpu_index, void *userdata)
- {
-     g_assert(!was_reset && !was_uninstalled);
--    qemu_plugin_reset(plugin_id, after_reset);
-+    qemu_plugin_reset(plugin_id, after_reset, NULL);
- }
- 
- static void tb_trans_before_reset(qemu_plugin_id_t id, struct qemu_plugin_tb *tb)
+     return 0;
 -- 
 2.43.0
 
