@@ -4,88 +4,88 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9ACD1CD6E55
-	for <qemu-devel@archiver.kernel.org>; Wed,  3 Jun 2026 20:53:34 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 65F9FCD6E57
+	for <qemu-devel@archiver.kernel.org>; Wed,  3 Jun 2026 20:53:38 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wUsZX-0007z3-3j; Wed, 03 Jun 2026 16:52:19 -0400
+	id 1wUsZy-0008Bz-Pi; Wed, 03 Jun 2026 16:52:48 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pierrick.bouvier@oss.qualcomm.com>)
- id 1wUsZR-0007xh-Ak
- for qemu-devel@nongnu.org; Wed, 03 Jun 2026 16:52:13 -0400
+ id 1wUsZY-000804-IU
+ for qemu-devel@nongnu.org; Wed, 03 Jun 2026 16:52:20 -0400
 Received: from mx0b-0031df01.pphosted.com ([205.220.180.131])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pierrick.bouvier@oss.qualcomm.com>)
- id 1wUsZM-0004CX-Jz
- for qemu-devel@nongnu.org; Wed, 03 Jun 2026 16:52:11 -0400
-Received: from pps.filterd (m0279872.ppops.net [127.0.0.1])
+ id 1wUsZS-0004Ep-QL
+ for qemu-devel@nongnu.org; Wed, 03 Jun 2026 16:52:17 -0400
+Received: from pps.filterd (m0279873.ppops.net [127.0.0.1])
  by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 653K6eVu2076419
- for <qemu-devel@nongnu.org>; Wed, 3 Jun 2026 20:52:07 GMT
+ 653HvwOe3233934
+ for <qemu-devel@nongnu.org>; Wed, 3 Jun 2026 20:52:13 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
  cc:content-transfer-encoding:date:from:in-reply-to:message-id
- :mime-version:references:subject:to; s=qcppdkim1; bh=t5D9fCZRFja
- Zo3dxmMgfect8txWU4hAoTsxjlMPqDAA=; b=frOaEuFRH8TeiLlYu1I7DTRAcrW
- JwEZQD3G1zZGvT2M3x++cNSUZuPLdmiVM5USIdX3zwILGFH/s6wXl36V70AFCR+5
- F6Eoc26T8hpjq5yh8hXN+10SVp05rPfLmZmjKRsSgBSAirSskFwcHLCOFQQPRL+y
- Jvk6dVfY6YNmh7UE4GP5IpnIVzgDCT1RIjHIaX+ClQu/S19HQ67c1HROirocTx/9
- 3eN/PqQ8/7VvP8vF5Eeh71O/ek0Ro/DJv+1YJNqWCoOkNv2HMawHd726yRJ1T95q
- 6m+B5WCbcYL1b3y2zP0aTA3Fx+OXjrfWEqRuCIub/E0JLI02BoXzphcviKA==
-Received: from mail-dy1-f200.google.com (mail-dy1-f200.google.com
- [74.125.82.200])
- by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4ejev1bmmr-1
+ :mime-version:references:subject:to; s=qcppdkim1; bh=bNzpG63Yigt
+ 97XcfKyuqNMGgW8/n53Gf74/534GXLd0=; b=nprlaFcWQ44mxif7Nz3LWb57CNX
+ 1w79DqpZ0RLfBVT3EQlm0/lYU7vyRtKtimezVMJJngSMD+33W/LLoMMahQk46g4d
+ wW1Yen4bt9QiWsr4vk8kgdNt+tZE5/08/0hejPJGMu01Zy5WXWP9LM3YXQNHTAxT
+ Xcz/jFGJjSrTOtNyphdb8MoXRTRS39lUXBQiC5owIUbsM/UgMQ6En8vqo1kiDcsC
+ hJjV0mIZWXkMdKIXucuFvli/ocSpjb5AtMng+Qf03D8BPdUxq/B2p2TBscRRxKUv
+ 3kLmSTcIIOHbXX9HTrlvuFAP+MT843zGg5DBfCRkTp7z2SHy24WPeUc7TQQ==
+Received: from mail-dy1-f197.google.com (mail-dy1-f197.google.com
+ [74.125.82.197])
+ by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4ejs4s0nbu-1
  (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
- for <qemu-devel@nongnu.org>; Wed, 03 Jun 2026 20:52:07 +0000 (GMT)
-Received: by mail-dy1-f200.google.com with SMTP id
- 5a478bee46e88-30761ab3483so1304736eec.0
- for <qemu-devel@nongnu.org>; Wed, 03 Jun 2026 13:52:07 -0700 (PDT)
+ for <qemu-devel@nongnu.org>; Wed, 03 Jun 2026 20:52:12 +0000 (GMT)
+Received: by mail-dy1-f197.google.com with SMTP id
+ 5a478bee46e88-307625ee07fso1179922eec.1
+ for <qemu-devel@nongnu.org>; Wed, 03 Jun 2026 13:52:12 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=oss.qualcomm.com; s=google; t=1780519926; x=1781124726; darn=nongnu.org;
+ d=oss.qualcomm.com; s=google; t=1780519932; x=1781124732; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=t5D9fCZRFjaZo3dxmMgfect8txWU4hAoTsxjlMPqDAA=;
- b=IspPV1UaU1edFogbxWYMpTpoHsXxYAlOvdsaPaoQnkwDg7uc374EgXjCvgkbCbqf/b
- dz9JOUOpoC2kbFSMVz3tbFtphTzSQhQiAUW5iE16V0ckBgqc6BMlJrskEo6SNufH5gSp
- BofYGhUhaFqlKJqNQ4bU8V8CEmKVxgGk3wPU7+q6mLf+n6mts6DFakF0d9sTGEIsPoNe
- j+X0nb9G7+0mpEWMqE9Yq7blZfCDmjWHnkDX+w785du84icsksr5GvlF2TxJwpj8qgdS
- UN7DaeGlvYeCG3hs4HdsMdvVwHxY1EjMqTZno0sRThEZTym/21LEbTCxitaYwoIP6gFH
- c4QA==
+ bh=bNzpG63Yigt97XcfKyuqNMGgW8/n53Gf74/534GXLd0=;
+ b=cTNGchQg0sybTsVilELzCYQCDQon15ePS18efYzm2M8JJQUc+fz7ype9Jy1LVvAmMT
+ CK6tlgM8pHgTYm6z6t2PYGfedfcQoJwzf/6gGI6by97vQofq4d8qkPl3pEbG3BFgGhnH
+ OzprusssUXxaqV9pT55BvIZ9MUtDwj3OczfU0ujhyXH2JVzuq2OSI54+w6kUevibfsFK
+ GyNnxiTfOVrpbBqnCikTIhTQKclEQ/gaGRqWqHsbyf3I6WfpXVonYmN3NVmmKUGaJvgc
+ eHE7g/iquZ17XQBhHEN7lVWU2e7n4Sx4Qy7Yy2pftHbkX2JyXWpo7BSKVLWzQVFz/JYl
+ 2vAw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1780519926; x=1781124726;
+ d=1e100.net; s=20251104; t=1780519932; x=1781124732;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to;
- bh=t5D9fCZRFjaZo3dxmMgfect8txWU4hAoTsxjlMPqDAA=;
- b=BUk/8EjqGQOilBJb9H2+/Nzjcpyuzo3ZVG1uEN16aVYNDC0aCLiQneLzLkZtLWaSqA
- vhwVR+yhqDLFHLLv8+0OeWKmx1Bi1oNqYLd8fog++TNXHYsQUonvNXD9s18V0kspAZ28
- AHq6I96fXbXPlsNqmnt5pHPXMO+R/boYt+p9R4nSnF6rb2gxlJ8QySzR1Dpt/kEJxGFv
- dj67pGHYhEnDzDLadCaTH346/PvHGnu7X6v7+44FVfhYfzxYkaeFjQ3T2e+CSo/A4nK3
- TdpuQpgk8V9sYiuV8O5qB+Wgu6EVMmrdiiF2TL0C+vou+j/zxi12sYNCQD0V9PSZrlTI
- jtgg==
-X-Gm-Message-State: AOJu0YzYg+XTgbCdZwLrucjC+f07jQE1wLdN7Z6Tz3BWbSDg3/EdRTDj
- BNzOG1+ode1bt1kGgY5W6iOGPJCP3DN6IN4wJ/8LuNiBVEFKS8n7m/HL0LwpN+Kh+LcMsNlIHfI
- 4qqdcOOyN/q7fR8Mboc5euFAY8mKruv+PvWvMeeX+4sqMf65gTlJjXfnB36cqEIWekh/l
-X-Gm-Gg: Acq92OG4ITxMzTFMdHEtHFpQFK90d87wxAc5VXtGlCxsaHEYnFr7WPpRsm+TynSUFfL
- crhq7qkPL54rTTwNM13XYQ8VuktcEdOv0oKSHEpYSKuds6UfDOF6IkY2hMAPCYSDxoFxXaVERWS
- nkkaSpAPGFGd4P9kBeY4PigJUAWyIm6Ftg+ZUzlkdgea9gPr3RH4gBLYRF63AG/rHO5cultwu9z
- eZJi6tsFNlIQ5L0+O4xvDF+vD5uzboCRRkNLiH5rOqKAdzd7M41f4RBlxnQ9Z1Qn+CRVLLGFTWF
- OYJBphSb9EPtsM+CKykLPaKRIyf0d9C9LbkKigtqC7BLMw1dNONqfo42XQbG4k4pVHho2g2JE29
- qRkKM1EMAIyK2LpR5l4VVXIy0QTNMbosgk4DlyFZ3lizAK46MQFdyeoIYe2vi2gnD8VnwrSOkAT
- vi8ToOs/hton+UP1xh
-X-Received: by 2002:a05:7301:128b:b0:2ea:b7a9:580d with SMTP id
- 5a478bee46e88-3074fa80739mr2651141eec.9.1780519926340; 
- Wed, 03 Jun 2026 13:52:06 -0700 (PDT)
-X-Received: by 2002:a05:7301:128b:b0:2ea:b7a9:580d with SMTP id
- 5a478bee46e88-3074fa80739mr2651131eec.9.1780519925828; 
- Wed, 03 Jun 2026 13:52:05 -0700 (PDT)
+ bh=bNzpG63Yigt97XcfKyuqNMGgW8/n53Gf74/534GXLd0=;
+ b=WjtaV4qX06a5J0IM5jGBE0aB+ddLotuUhrHgASnK7bjoOW1m9/SLhOBwdyMmrI10sH
+ M/DEGUdgIhAyxTR5zo7M+Ootx+T7L0LncCVN3fkvR8QK/CLpwh3+AcCu4BP5yDvr/G+/
+ D5ma1s/q/Y7pxiCzGeGJae4a5F/n9T4AyuV/PodHInnFHKNWEici8+DzbrtMHxXTro0z
+ s0orRkdrzBn0sx2ZZXxErTk7GZnQLDMQv0ra7twyCxLbTBzdzs7wGooiP9mbY6OcTy5g
+ wGvvdWx9RBTu7WGAq9Qc9ZlN35+bwNYjRAsGCLgais4/u/oCR9iDa9Rb4IWoHACg7R1X
+ biGw==
+X-Gm-Message-State: AOJu0YxZVvypThTf1YIkK2dEpjN1CdOq8m5kEiMpr2KhB+XJ+mX3v/u3
+ FX9IiWr8oF3IXDLXxn3DtPrI/VyP7X4WTfPZ+tzIIK8/6oEyTeKFKjVgG7Q0WGHd9oEiBqv3ept
+ H2fnvVQ7zexa38Y5B+DGvpcDu8MN/gOh+EDvv2Q2B5kkEw8+wKQ8yAOf6ijSHpMGlcuCq
+X-Gm-Gg: Acq92OG+16iX63M3dZPPhcCo6y22FvqcEBCo8iEzMSWliZD2ShydmVQNWUmvn/P5M5X
+ QsVXl7Np25inG7GbUtpsPzfutH93i81cPGweQuG5LZwOip2W/oVoWAhHF0ZTCyv3yZcwSB8kH2b
+ jxFvu9AI20erzdMDeZoVWkzHIcH8Rop6mpBy/90TpvX1/Fb8ARIoc5iCsopWnKuzimnwcKT9FgL
+ 8mo2/mAGeDzrYBmGLJy9epm/HySX3UeJ30FibuKL1blv0zfsEs6yo8Laz8SVHaNMV4y8Gra6EYs
+ 3OJTX4Gqu65axYbMWUhPJ5+jdlHmge7yUhCIk59T31FGO5fHyldc3NgpvLmLrA+lJaAqrB4Uj2c
+ cg80zJKP2+wOGQfBkqGjHtAWuUDE9r5Nlouli9PVCLVtMzECqGuv8IFBjeI/GS4OOxlmnmJadX9
+ 8D/6IgS/2gTRDa0mEl
+X-Received: by 2002:a05:7300:4347:b0:2d1:d434:cfe3 with SMTP id
+ 5a478bee46e88-3074f840d0amr2872226eec.0.1780519931960; 
+ Wed, 03 Jun 2026 13:52:11 -0700 (PDT)
+X-Received: by 2002:a05:7300:4347:b0:2d1:d434:cfe3 with SMTP id
+ 5a478bee46e88-3074f840d0amr2872210eec.0.1780519931431; 
+ Wed, 03 Jun 2026 13:52:11 -0700 (PDT)
 Received: from hu-pbouvier-lv.qualcomm.com (Global_NAT1.qualcomm.com.
  [129.46.96.20]) by smtp.gmail.com with ESMTPSA id
- 5a478bee46e88-3074db85f60sm4586333eec.8.2026.06.03.13.52.05
+ 5a478bee46e88-3074db85f60sm4586333eec.8.2026.06.03.13.52.10
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 03 Jun 2026 13:52:05 -0700 (PDT)
+ Wed, 03 Jun 2026 13:52:10 -0700 (PDT)
 From: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
 To: qemu-devel@nongnu.org
 Cc: Chao Liu <chao.liu.zevorn@gmail.com>,
@@ -95,38 +95,38 @@ Cc: Chao Liu <chao.liu.zevorn@gmail.com>,
  =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
  Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
  Alexandre Iooss <erdnaxe@crans.org>
-Subject: [PATCH 04/25] plugins: remove type qemu_plugin_simple_cb_t
-Date: Wed,  3 Jun 2026 13:51:31 -0700
-Message-ID: <20260603205152.1440291-5-pierrick.bouvier@oss.qualcomm.com>
+Subject: [PATCH 09/25] plugins: add userdata to
+ qemu_plugin_register_vcpu_idle_cb
+Date: Wed,  3 Jun 2026 13:51:36 -0700
+Message-ID: <20260603205152.1440291-10-pierrick.bouvier@oss.qualcomm.com>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20260603205152.1440291-1-pierrick.bouvier@oss.qualcomm.com>
 References: <20260603205152.1440291-1-pierrick.bouvier@oss.qualcomm.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-X-Proofpoint-ORIG-GUID: 8Bm-LBU-LiKWR59c1TvJTcwJHLyae0G-
-X-Authority-Analysis: v=2.4 cv=PNE/P/qC c=1 sm=1 tr=0 ts=6a2093f7 cx=c_pps
- a=PfFC4Oe2JQzmKTvty2cRDw==:117 a=ouPCqIW2jiPt+lZRy3xVPw==:17
+X-Proofpoint-ORIG-GUID: dQPv5LdN95TVuT2CUjw6YsfXosfcGsO1
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNjAzMDIwMyBTYWx0ZWRfX2hIyqIfRilxU
+ cP7EpRk72T7XE9REMjJcaHTovMB35aJ0dVWAw4kfl3WJEYIKTSMhDXhkbC4Qbd9JST9R0rpxadZ
+ SJLMthk6r2NBRGF4283JxJ3Qz2Qz5PCGE+MsE/eL56A0bomApLr55aLFI5UUnsddgouOgYDr5DL
+ 0P8QeDQFqLkS8xDvpJIEMMAsGv1b+ZCWK0SkXxJ5AqS776Rzvu2pMcMTU7G6CMp28Z5ZA+0rfBl
+ Dm3lMHKNULSNXT+TCdSgtONXNGSFmNrFBiwFupilfGnPtVReiKMVKh4PM86sPS4bzZz21Xj7EYY
+ ylOux5HsCkOh19BXwjtoYLaLtrmh6b50eqnLF/zAm4L9ARn12r+TnCoeIxj6WdRvYWmaz+1sM2y
+ L6hS9EEiLVbzWgjV+bGVWUWoahz11dPPpz9f6PsLMzD2ywNlwsYppZ0jw6efel9lF1kqV01Ndli
+ X29G1t4gtP/duJ4sLcw==
+X-Authority-Analysis: v=2.4 cv=afRRWxot c=1 sm=1 tr=0 ts=6a2093fc cx=c_pps
+ a=Uww141gWH0fZj/3QKPojxA==:117 a=ouPCqIW2jiPt+lZRy3xVPw==:17
  a=FelO9ux0wxsA:10 a=s4-Qcg_JpJYA:10 a=VkNPw1HP01LnGYTKEx00:22
- a=u7WPNUs3qKkmUXheDGA7:22 a=yx91gb_oNiZeI1HMLzn7:22 a=EUspDBNiAAAA:8
- a=v0NQEDj6idUmN-g72lQA:9 a=6Ab_bkdmUrQuMsNx7PHu:22
-X-Proofpoint-GUID: 8Bm-LBU-LiKWR59c1TvJTcwJHLyae0G-
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNjAzMDIwMyBTYWx0ZWRfXzaAMtw5qHU9A
- YfTIoqfnmkTfNIW1fejEQLzQQwmmd959w9LgF4I9DCgsrUgIgURWAg/cotyzlD4USCHqfM5SYRW
- u0E11DqBuUhzlx4LlL9p4axnil1vaOOMufuD9pdINLqEVVMyvXlpVSO3TfxwTyKxnPEc+Xjj5Q+
- ZdDzOMIoPekwYwECpDxxccS07vxxELz+uX4YDJbtyhvZndAKX1DEho5DIqPSMic4smR12Ae1CgV
- ICuNvo4YlEtI85QDNOHphGVyCDEvsQxdxCi028LZijDOavXl99eckbAUBbL+fQHrik9gGM0kOBk
- RfKO4etrPVSvX1aVcz3cB9PIdXDOsnAXtFfjmH5kD0AlICyVgQUplDsbcpbwjiomxp6msyAYcHj
- +OtZM+JDjWj0yu5SI4NehkT6eybftU2mDUbxoJ66l1t5dYoRPgW/evm+s9q+yj1rFVhtKnumANP
- G1ryPtayIktQLe92b4w==
+ a=u7WPNUs3qKkmUXheDGA7:22 a=rJkE3RaqiGZ5pbrm-msn:22 a=EUspDBNiAAAA:8
+ a=1QjUMDCEHWFJ5QTWXisA:9 a=PxkB5W3o20Ba91AHUih5:22
+X-Proofpoint-GUID: dQPv5LdN95TVuT2CUjw6YsfXosfcGsO1
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.125,FMLib:17.12.100.49
  definitions=2026-06-03_06,2026-05-28_03,2025-10-01_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- phishscore=0 bulkscore=0 clxscore=1015 malwarescore=0 spamscore=0
- adultscore=0 impostorscore=0 suspectscore=0 priorityscore=1501
- lowpriorityscore=0 classifier=typeunknown authscore=0 authtc= authcc=
- route=outbound adjust=0 reason=mlx scancount=1 engine=8.22.0-2605210000
- definitions=main-2606030203
+ priorityscore=1501 suspectscore=0 bulkscore=0 phishscore=0 clxscore=1015
+ adultscore=0 lowpriorityscore=0 spamscore=0 impostorscore=0 malwarescore=0
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.22.0-2605210000 definitions=main-2606030203
 Received-SPF: pass client-ip=205.220.180.131;
  envelope-from=pierrick.bouvier@oss.qualcomm.com;
  helo=mx0b-0031df01.pphosted.com
@@ -152,45 +152,97 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-We removed all usage of this type, it can now be removed.
-
 Signed-off-by: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
 ---
- include/plugins/qemu-plugin.h | 8 --------
- include/qemu/plugin.h         | 1 -
- 2 files changed, 9 deletions(-)
+ include/plugins/qemu-plugin.h | 4 +++-
+ plugins/core.c                | 9 +++++----
+ tests/tcg/plugins/bb.c        | 4 ++--
+ 3 files changed, 10 insertions(+), 7 deletions(-)
 
 diff --git a/include/plugins/qemu-plugin.h b/include/plugins/qemu-plugin.h
-index 499441bde23..3c6f32bacfe 100644
+index d4f8a99027e..75d2a69a3bd 100644
 --- a/include/plugins/qemu-plugin.h
 +++ b/include/plugins/qemu-plugin.h
-@@ -140,14 +140,6 @@ QEMU_PLUGIN_EXPORT int qemu_plugin_install(qemu_plugin_id_t id,
-                                            const qemu_info_t *info,
-                                            int argc, char **argv);
+@@ -272,12 +272,14 @@ void qemu_plugin_register_vcpu_exit_cb(qemu_plugin_id_t id,
+  * qemu_plugin_register_vcpu_idle_cb() - register a vCPU idle callback
+  * @id: plugin ID
+  * @cb: callback function
++ * @userdata: any plugin data to pass to the @cb
+  *
+  * The @cb function is called every time a vCPU idles.
+  */
+ QEMU_PLUGIN_API
+ void qemu_plugin_register_vcpu_idle_cb(qemu_plugin_id_t id,
+-                                       qemu_plugin_vcpu_simple_cb_t cb);
++                                       qemu_plugin_vcpu_udata_cb_t cb,
++                                       void *userdata);
  
--/**
-- * typedef qemu_plugin_simple_cb_t - simple callback
-- * @id: the unique qemu_plugin_id_t
-- *
-- * This callback passes no information aside from the unique @id.
-- */
--typedef void (*qemu_plugin_simple_cb_t)(qemu_plugin_id_t id);
--
  /**
-  * typedef qemu_plugin_udata_cb_t - callback with user data
-  * @id: the unique qemu_plugin_id_t
-diff --git a/include/qemu/plugin.h b/include/qemu/plugin.h
-index ddd77bd82c9..dac08cdc60c 100644
---- a/include/qemu/plugin.h
-+++ b/include/qemu/plugin.h
-@@ -55,7 +55,6 @@ void qemu_plugin_opt_parse(const char *optstr, QemuPluginList *head);
- int qemu_plugin_load_list(QemuPluginList *head, Error **errp);
+  * qemu_plugin_register_vcpu_resume_cb() - register a vCPU resume callback
+diff --git a/plugins/core.c b/plugins/core.c
+index 15fb548f68c..111ceeea285 100644
+--- a/plugins/core.c
++++ b/plugins/core.c
+@@ -89,7 +89,6 @@ static void plugin_vcpu_cb__simple(CPUState *cpu, enum qemu_plugin_event ev)
+     struct qemu_plugin_cb *cb, *next;
  
- union qemu_plugin_cb_sig {
--    qemu_plugin_simple_cb_t              simple;
-     qemu_plugin_udata_cb_t               udata;
-     qemu_plugin_vcpu_simple_cb_t         vcpu_simple;
-     qemu_plugin_vcpu_udata_cb_t          vcpu_udata;
+     switch (ev) {
+-    case QEMU_PLUGIN_EV_VCPU_IDLE:
+     case QEMU_PLUGIN_EV_VCPU_RESUME:
+         /* iterate safely; plugins might uninstall themselves at any time */
+         QLIST_FOREACH_SAFE_RCU(cb, &plugin.cb_lists[ev], entry, next) {
+@@ -114,6 +113,7 @@ static void plugin_vcpu_cb__udata(CPUState *cpu, enum qemu_plugin_event ev)
+ 
+     switch (ev) {
+     case QEMU_PLUGIN_EV_VCPU_INIT:
++    case QEMU_PLUGIN_EV_VCPU_IDLE:
+     case QEMU_PLUGIN_EV_VCPU_EXIT:
+         QLIST_FOREACH_SAFE_RCU(cb, &plugin.cb_lists[ev], entry, next) {
+             qemu_plugin_vcpu_udata_cb_t func = cb->f.vcpu_udata;
+@@ -626,7 +626,7 @@ void qemu_plugin_vcpu_idle_cb(CPUState *cpu)
+     /* idle and resume cb may be called before init, ignore in this case */
+     if (cpu->cpu_index < plugin.num_vcpus) {
+         qemu_plugin_set_cb_flags(cpu, QEMU_PLUGIN_CB_RW_REGS_PC);
+-        plugin_vcpu_cb__simple(cpu, QEMU_PLUGIN_EV_VCPU_IDLE);
++        plugin_vcpu_cb__udata(cpu, QEMU_PLUGIN_EV_VCPU_IDLE);
+         qemu_plugin_set_cb_flags(cpu, QEMU_PLUGIN_CB_NO_REGS);
+     }
+ }
+@@ -659,9 +659,10 @@ void qemu_plugin_vcpu_hostcall_cb(CPUState *cpu, uint64_t from)
+ }
+ 
+ void qemu_plugin_register_vcpu_idle_cb(qemu_plugin_id_t id,
+-                                       qemu_plugin_vcpu_simple_cb_t cb)
++                                       qemu_plugin_vcpu_udata_cb_t cb,
++                                       void *userdata)
+ {
+-    plugin_register_cb(id, QEMU_PLUGIN_EV_VCPU_IDLE, cb);
++    plugin_register_cb_udata(id, QEMU_PLUGIN_EV_VCPU_IDLE, cb, userdata);
+ }
+ 
+ void qemu_plugin_register_vcpu_resume_cb(qemu_plugin_id_t id,
+diff --git a/tests/tcg/plugins/bb.c b/tests/tcg/plugins/bb.c
+index f29b466dab2..ba605246eb0 100644
+--- a/tests/tcg/plugins/bb.c
++++ b/tests/tcg/plugins/bb.c
+@@ -56,7 +56,7 @@ static void plugin_exit(void *p)
+     qemu_plugin_scoreboard_free(counts);
+ }
+ 
+-static void vcpu_idle(unsigned int cpu_index)
++static void vcpu_idle(unsigned int cpu_index, void *userdata)
+ {
+     CPUCount *count = qemu_plugin_scoreboard_find(counts, cpu_index);
+     g_autoptr(GString) report = g_string_new("");
+@@ -124,7 +124,7 @@ QEMU_PLUGIN_EXPORT int qemu_plugin_install(qemu_plugin_id_t id,
+         counts, CPUCount, insn_count);
+ 
+     if (idle_report) {
+-        qemu_plugin_register_vcpu_idle_cb(id, vcpu_idle);
++        qemu_plugin_register_vcpu_idle_cb(id, vcpu_idle, NULL);
+     }
+ 
+     qemu_plugin_register_vcpu_tb_trans_cb(id, vcpu_tb_trans);
 -- 
 2.43.0
 
