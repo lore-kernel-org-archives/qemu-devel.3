@@ -4,117 +4,138 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 19368CD6E57
-	for <qemu-devel@archiver.kernel.org>; Wed,  3 Jun 2026 20:50:15 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id BF10ECD6E57
+	for <qemu-devel@archiver.kernel.org>; Wed,  3 Jun 2026 20:52:22 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wUsXE-0006tT-Cu; Wed, 03 Jun 2026 16:49:56 -0400
+	id 1wUsZR-0007xb-Nk; Wed, 03 Jun 2026 16:52:13 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1wUsX6-0006pv-OD
- for qemu-devel@nongnu.org; Wed, 03 Jun 2026 16:49:51 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <pierrick.bouvier@oss.qualcomm.com>)
+ id 1wUsZO-0007wp-8r
+ for qemu-devel@nongnu.org; Wed, 03 Jun 2026 16:52:10 -0400
+Received: from mx0b-0031df01.pphosted.com ([205.220.180.131])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1wUsX5-0003MC-62
- for qemu-devel@nongnu.org; Wed, 03 Jun 2026 16:49:48 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1780519784;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=CslwtjtZL1TZl0Wovmj9ybAydPIyg4oN0jWiRyjeC8g=;
- b=jIG0C4t19hTN0HT9lGjK1A4hrnPXg7hr+DP5jAAiZdvxrrpFTZ0OWlU7lmHwVD4iAxCWul
- 1VRhwZBx45Cw1Jvme+49FB+DO4EyCU4zt6Du8Zn+so1NJz6Q7f5P1+VtYPHcx8kxcVxVNB
- DrA6LPxFgY+gDqrWeXgu07rkNSY/VoM=
-Received: from mail-qv1-f72.google.com (mail-qv1-f72.google.com
- [209.85.219.72]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-654-_S-JCh7sNRiZYAqg9MneOA-1; Wed, 03 Jun 2026 16:49:39 -0400
-X-MC-Unique: _S-JCh7sNRiZYAqg9MneOA-1
-X-Mimecast-MFC-AGG-ID: _S-JCh7sNRiZYAqg9MneOA_1780519779
-Received: by mail-qv1-f72.google.com with SMTP id
- 6a1803df08f44-8cce1c3c26bso131111616d6.2
- for <qemu-devel@nongnu.org>; Wed, 03 Jun 2026 13:49:39 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <pierrick.bouvier@oss.qualcomm.com>)
+ id 1wUsZK-0004Bo-RM
+ for qemu-devel@nongnu.org; Wed, 03 Jun 2026 16:52:08 -0400
+Received: from pps.filterd (m0279868.ppops.net [127.0.0.1])
+ by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
+ 653H7WgW2368054
+ for <qemu-devel@nongnu.org>; Wed, 3 Jun 2026 20:52:03 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+ cc:content-transfer-encoding:content-type:date:from:message-id
+ :mime-version:subject:to; s=qcppdkim1; bh=3pivOVjZs/kADk43DEzQzC
+ oE7MxVZ4PmMHBuQdGn/8I=; b=bC4HtqTSmrZBpHcddtx60Oxki37+WR0aUIWx36
+ YWG5WuA6HTpPxUEJ1L8mLcQotpi15AhOvAdDbjHX0ZvBpsfYPyRDQ+p2ABKHjfbS
+ 2i/rQbdEY3ZohcE5HkpuWwKYAaXoX4ZKLD4wyTFM6UJSgonBBOQ2817o84K9u3sA
+ H3DeqBo6Qn9XBKBajMgmjPVdsirzXXzk1xzkVJeenNtkWs4+jXJRgFD2AWkjVfQf
+ 4gqmpsuQObVV0tanGz1Z3R6tfomnk+6lRRmBQLMuPzY2BnOwBaVrbGmwwIythja5
+ 4aozTKlRjg/jlzabocGk8tZDH/B+diuUQxwzbDKjD+uRcCmg==
+Received: from mail-dy1-f199.google.com (mail-dy1-f199.google.com
+ [74.125.82.199])
+ by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4ejj3gjnce-1
+ (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
+ for <qemu-devel@nongnu.org>; Wed, 03 Jun 2026 20:52:03 +0000 (GMT)
+Received: by mail-dy1-f199.google.com with SMTP id
+ 5a478bee46e88-307625ee07fso1179267eec.1
+ for <qemu-devel@nongnu.org>; Wed, 03 Jun 2026 13:52:03 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1780519779; x=1781124579; darn=nongnu.org;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
- bh=CslwtjtZL1TZl0Wovmj9ybAydPIyg4oN0jWiRyjeC8g=;
- b=ftGV7AN6/ofF86Ey8y78ZECkGVzZ0ZqUBb9qBmv2v4G3FhgYdaLBNvMBfsMJR4bk+7
- erOFgUhrRXEWIyH8sktgZffLMUzWg9yCLmwkbx9QAfehb6ostie9R0h1wJ2kChQHJ179
- J0v2hiIuuKWYha0vPVOZdXhr936CJMBVDybubL9UgKSOdiO/kmngrn7mc8uDgLDHxoxx
- gF5F7SJ5ELMl18+vIuCtEkco17QzgdVsj8lywWgvuan/SFsSowDcDW31qwDKFjpEfckA
- ooPGcrGBla8BC4aSJ2rplZECfb/n2rVtouMk6FhwIPAKxk51U7HeXe04oTaFW7IY3lYG
- 6JVw==
+ d=oss.qualcomm.com; s=google; t=1780519922; x=1781124722; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:from:to:cc:subject:date:message-id:reply-to;
+ bh=3pivOVjZs/kADk43DEzQzCoE7MxVZ4PmMHBuQdGn/8I=;
+ b=SlN6qY1ur7oCoq5KCOByeRLR5PhvSD3rgpxUhqdCh1WDq4SqEjPHZh4zSBWi6pUk+f
+ /ko2CCH0Z2a34VFVQStJxTk9XbV4RBKTW3nFIYfGwmantm+kjS9+YSIJzNPHWxfpWcbV
+ Qcu+lxW05cxzGCUHYfX/RADqRXtdree+cru0wJrYrtZ8QuuLPJ8vhdpp4AddpHmOuIXh
+ Hp66OKrwFEf712V2F90J9E6whQv94cJqQ2rwXX93s69bIa1QOvQpiENeyTvq31USnn53
+ u7FSEKddurgMmj7N03s9IIilwVy6qdKxoTFVNsCCyxpxV9M+JmsNxrwlHMVFrQhb/KJY
+ QF3A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1780519779; x=1781124579;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=CslwtjtZL1TZl0Wovmj9ybAydPIyg4oN0jWiRyjeC8g=;
- b=ZbwyU5oJ2sQehpe5yvgdPhQ3528pmOILX6oMZo6SpQbomjzwPxR+C6cCLAmsaNk9/K
- qlKeLom+J1h1SK5ssEKFthBAjI763CPYz/Yf5gny3dieXoZnIRi3iUE4b0vQOCMReNw0
- bf4NMniqj/9iQsoIvgGjWQx1ek7O1DgtCPDut+v51pjWEnQlniKY5cjQNngCl2QgEqQx
- V8yWnhjwD6t2Pt59gEkAcRfG9DRH91WBaZWgol4iGbG/i2p9FN5sq/L/dionaVJOFLRy
- /RyjUOVhGIHpFjSqnqBF0qsI49476oX9T12tVqiLy2SxZjKbpfsMPqS3g7QrIOU7pSjy
- QtsA==
-X-Gm-Message-State: AOJu0YyIJ5dajDMA7LzLfJU/fuXtinSW7xb7JJQUugaQq2rgCBnT2W3e
- XBRUj9YjWd8KV6421F3YjF///CVHgDWubBNgdWxTAgjoDDS8KvN3gw7MYTiLNjx6k8vVNG2wN91
- TZh8Zo4igG6NGxhcGitBQPmUWUDkAKAYQ8jabNBQauKSDInsn7/t/cv3e
-X-Gm-Gg: Acq92OGhGTIdlzpRZEqAOPcdzuVkSij7UHVl/aZbvAAsHq97pnpOc80EmWkj/9ERD2M
- lGtO9kvMt50a8YbvusFa1jo17PRm2rkHpQrLTgKDX6X+QoDjOQV2DqvQ2su3U1abnm+EPFRL4YO
- YcHv/vjrJT+uifozigce/MI2TZZU/lEUFKZbXmwBaBp7rWiCFhYu169YQxCsuaQ/2wWgyIR7FuU
- QvcGSHjXgf20fUJr/UB/8ayzSqisa+4kfawcirjUrT43T/Y1Mfgxa4APlvBFKF7T1Lmc90WvctF
- yYZF2VEknjldOuhG8MDEeNNda7FudGSHTbxYsYYYvtHJpvRDt94+d4Gk+52CXaQmD2AtPigDJAr
- MfIPrlZbaQg49xGmTvEBz5vfVvw==
-X-Received: by 2002:a05:620a:6908:b0:912:c0b3:7d99 with SMTP id
- af79cd13be357-9158a674e2fmr865919985a.2.1780519779108; 
- Wed, 03 Jun 2026 13:49:39 -0700 (PDT)
-X-Received: by 2002:a05:620a:6908:b0:912:c0b3:7d99 with SMTP id
- af79cd13be357-9158a674e2fmr865915185a.2.1780519778587; 
- Wed, 03 Jun 2026 13:49:38 -0700 (PDT)
-Received: from x1.local ([142.189.10.167]) by smtp.gmail.com with ESMTPSA id
- af79cd13be357-9158a3e35dbsm351132085a.42.2026.06.03.13.49.36
+ d=1e100.net; s=20251104; t=1780519922; x=1781124722;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=3pivOVjZs/kADk43DEzQzCoE7MxVZ4PmMHBuQdGn/8I=;
+ b=IrK9rXcUKuLzuTJ0Kf6uPmWhjPv9pLEGdHgRc/mrmeLnlQbDTPfvKSw6wplKI/oqIt
+ 2U3ZL+6VtDeS5OgsXNbPtvYkHPqJXp15yAeC6O4Q9tIHMBDaXBhZQGupSKdw5YNXBuY0
+ Sgs5A9AAmP1NbHar5P/RL9GXEbI6LZJBwBMtCTgJKtX6yQqIN6gMgoXPopE95ysWAKPQ
+ mfFRpRXfWfJYxnWRgBUXIhIVBnDRSkRIQMDKg8QtoBlYq47Wi51hHz0PXAip+8JRTcYj
+ JC8UAu+vfZ+AEdxXQ0hbAG+WKz1kFuheG0b2aI9OWItNWxI8S45P+Avw5BejdtdIAic2
+ r+sw==
+X-Gm-Message-State: AOJu0YwCz+4YQoZtqtmRoHrie+Jm1CW6QoREhdVOKDjFuME6gcGSYlvm
+ ZK9d7vAK5qDXQsvqRvvD/Sx8wU0BhCSowzrbVVjz/+snXgPi1McS6zLmegWmg1ysqxJ1Eg8Uf8r
+ 0eXOCXogUqUjeoRX+y0mwNeEGFqJ/+ms5vbae2V5I/ZjiDnXMo7hPtOZRhZGkY2MjKsmH
+X-Gm-Gg: Acq92OEecHzqMsK+CMXSkHvvG4P2amMo+Um5YNEGBSuwdYCZ6j7cQt65dqY4zUJ/Yh8
+ kunmzTpkAxpmFf2HvvkZEkGq9hfmvBasKvzLqJiSFQ3b0mmXSYcm6rUBx+zFN1CjvAnRWqXyq0m
+ VhtyiY8SxMW1it53ntA5cFCAeU6GEyatitI9wo3dGmm9rJweeuRWYFNeYBHSIwhG8YNh8YweM2B
+ saRWPvRES71L5Y8KRm56J/F+bik70QPGnS8aL69b3n3wp+cWVPr4hOfFUYeDJHgA5s4OyyVRiMV
+ 4lKHXIRQ0c53biM5q8YMhzemfNDkYh55BO2X+Xci52pOYNwwCIdovv8ehDXI2nvGahYs1os6Enx
+ NEa+YdN6EwO0g4kqijeSvzzzKgo9yElW9JAeyKvpzk80JQHD8nn3jRSb43LFmxxWEn9VrZ9tjLV
+ yiGhWoym+P5vCMXE/x
+X-Received: by 2002:a05:7301:100e:b0:307:2e1c:17f1 with SMTP id
+ 5a478bee46e88-3074fbca1afmr2461985eec.25.1780519922439; 
+ Wed, 03 Jun 2026 13:52:02 -0700 (PDT)
+X-Received: by 2002:a05:7301:100e:b0:307:2e1c:17f1 with SMTP id
+ 5a478bee46e88-3074fbca1afmr2461960eec.25.1780519921841; 
+ Wed, 03 Jun 2026 13:52:01 -0700 (PDT)
+Received: from hu-pbouvier-lv.qualcomm.com (Global_NAT1.qualcomm.com.
+ [129.46.96.20]) by smtp.gmail.com with ESMTPSA id
+ 5a478bee46e88-3074db85f60sm4586333eec.8.2026.06.03.13.52.01
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 03 Jun 2026 13:49:37 -0700 (PDT)
-Date: Wed, 3 Jun 2026 16:49:36 -0400
-From: Peter Xu <peterx@redhat.com>
-To: Avihai Horon <avihaih@nvidia.com>
-Cc: qemu-devel@nongnu.org, Alex Williamson <alex@shazbot.org>,
- =?utf-8?Q?C=C3=A9dric?= Le Goater <clg@redhat.com>,
- Fabiano Rosas <farosas@suse.de>,
- Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
- Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Zhao Liu <zhao1.liu@intel.com>, Halil Pasic <pasic@linux.ibm.com>,
- Christian Borntraeger <borntraeger@linux.ibm.com>,
- Jason Herne <jjherne@linux.ibm.com>,
+ Wed, 03 Jun 2026 13:52:01 -0700 (PDT)
+From: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
+To: qemu-devel@nongnu.org
+Cc: Chao Liu <chao.liu.zevorn@gmail.com>,
  Richard Henderson <richard.henderson@linaro.org>,
- Ilya Leoshkevich <iii@linux.ibm.com>, David Hildenbrand <david@kernel.org>,
- Eric Farman <farman@linux.ibm.com>,
- Matthew Rosato <mjrosato@linux.ibm.com>,
- Cornelia Huck <cohuck@redhat.com>, Eric Blake <eblake@redhat.com>,
- Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>,
- John Snow <jsnow@redhat.com>, Markus Armbruster <armbru@redhat.com>,
- Maor Gottlieb <maorg@nvidia.com>
-Subject: Re: [PATCH v2 11/13] vfio/migration: Implement
- VFIO_PRECOPY_INFO_REINIT feature
-Message-ID: <aiCTYBDbpx_og9Ug@x1.local>
-References: <20260602092621.382-1-avihaih@nvidia.com>
- <20260602092621.382-12-avihaih@nvidia.com>
+ Brian Cain <brian.cain@oss.qualcomm.com>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
+ Alexandre Iooss <erdnaxe@crans.org>
+Subject: [PATCH 00/25] plugins: refactor API to maintain state through
+ callbacks chain
+Date: Wed,  3 Jun 2026 13:51:27 -0700
+Message-ID: <20260603205152.1440291-1-pierrick.bouvier@oss.qualcomm.com>
+X-Mailer: git-send-email 2.43.0
+Content-Type: text/plain; charset="utf-8"
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <20260602092621.382-12-avihaih@nvidia.com>
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=peterx@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -24
-X-Spam_score: -2.5
+Content-Transfer-Encoding: 8bit
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNjAzMDIwMyBTYWx0ZWRfX5jNDj/KooJWx
+ 73YN4dMO7ISq3JdPc9B04CI1+z0RE4whNuWLVT6oT8xkYp4/SMpZlO3JHCEO/50BLuREu5ed2Po
+ vLXuGCoZ5SeqFvOqqcr9iWlUOFeLVOfyrwhXTQMv/ZZzivbnGm/tQPttOEbzSLxLxrbU8m4kz3B
+ u8lH0c6gLO1JO/duRkt9KXl23o52FdozeFieXEHowMEjqEW6pa8ybJCJou3Tb4CKq0lV4XnaGkk
+ 4Vjv/0jeYr8BEXHhAJycfM19cx/D6TPxdaIP7EdZoucq0/nx5CeJhzK90YXLT639ylmlaRqRRpP
+ /HKg1FTATF5RuhSNK0l9PhJYxxumcSnJYUfNuWRk4fX0NSb28a7FDAi8LodsFMdZf1SNalMgRug
+ FpNUelUVmDsxPA1slC/DTxae8ZcSpstNx92/rmsOdy8R9ka4t2ob8MQbvm8Kwf+0Ib/3zRgIozQ
+ P8fT0hXRPV70VfhlI0w==
+X-Proofpoint-GUID: 3VUFx1b6zCn4xA-gX59M_UpEFzv9Vdzb
+X-Proofpoint-ORIG-GUID: 3VUFx1b6zCn4xA-gX59M_UpEFzv9Vdzb
+X-Authority-Analysis: v=2.4 cv=UvhT8ewB c=1 sm=1 tr=0 ts=6a2093f3 cx=c_pps
+ a=cFYjgdjTJScbgFmBucgdfQ==:117 a=ouPCqIW2jiPt+lZRy3xVPw==:17
+ a=IkcTkHD0fZMA:10 a=FelO9ux0wxsA:10 a=s4-Qcg_JpJYA:10
+ a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=ZpdpYltYx_vBUK5n70dp:22
+ a=NoHjUO1RaDQpt3zLnNsA:9 a=QEXdDO2ut3YA:10 a=scEy_gLbYbu1JhEsrz4S:22
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.125,FMLib:17.12.100.49
+ definitions=2026-06-03_06,2026-05-28_03,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ priorityscore=1501 phishscore=0 malwarescore=0 lowpriorityscore=0
+ clxscore=1015 suspectscore=0 spamscore=0 impostorscore=0 adultscore=0
+ bulkscore=0 classifier=typeunknown authscore=0 authtc= authcc= route=outbound
+ adjust=0 reason=mlx scancount=1 engine=8.22.0-2605210000
+ definitions=main-2606030203
+Received-SPF: pass client-ip=205.220.180.131;
+ envelope-from=pierrick.bouvier@oss.qualcomm.com;
+ helo=mx0b-0031df01.pphosted.com
+X-Spam_score_int: -27
+X-Spam_score: -2.8
 X-Spam_bar: --
-X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.445,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -130,31 +151,93 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, Jun 02, 2026 at 12:26:19PM +0300, Avihai Horon wrote:
-> According to VFIO uAPI, precopy initial_bytes is considered as critical
-> data that should be transferred and loaded prior to moving to STOP_COPY
-> state to ensure precopy phase would be effective.
-> 
-> As currently defined, initial_bytes can only decrease as it's being read
-> from the data fd. However, there are cases where a new chunk of
-> initial_bytes should be transferred during precopy.
-> 
-> The new VFIO_PRECOPY_INFO_REINIT feature addresses this and allows
-> reporting a new value for initial_bytes regardless of any previously
-> reported values.
-> 
-> Implement VFIO_PRECOPY_INFO_REINIT feature:
-> 1. Opt-in for VFIO_DEVICE_FEATURE_MIG_PRECOPY_INFOv2 to make
->    VFIO_PRECOPY_INFO_REINIT available.
-> 2. Request a new switchover ACK if initial_bytes increases post of a
->    previous switchover ACK. This ensures the device is not moved to
->    STOP_COPY before initial_bytes has reached zero again.
-> 
-> Signed-off-by: Avihai Horon <avihaih@nvidia.com>
+A coworker recently wrote a C++ plugin, and noticed interesting limitations of
+current API. Basically, the biggest issue is that the only way to maintain state
+in a plugin is by using global variables. The root cause is that some
+callback types can't transfer user data.
 
-Acked-by: Peter Xu <peterx@redhat.com>
+Also, he asked why some callbacks have a qemu_plugin_id_t, and some other don't.
+This excellent question exposed that we don't need this most of the time. And if
+needed, we can rely on user data instead.
+
+For functional programmers here, it allows to have something similar to
+continuation-passing style, with all callbacks carrying data to next one.
+
+This series modifies our callback types to make sure they all have a userdata,
+and none have a qemu_plugin_id. Existing C plugins don't need to change, and
+global variables can still exist.
+
+After all those changes, we can finally implement a C++ plugin without any
+static variable (well, out of qemu_plugin_version), using an object and
+lambdas. This act as a demonstration of how we could write future plugins, and
+also, how we are finally on the edge to offer a proper native interface
+in Rust using closures.
+
+Pierrick Bouvier (25):
+  plugins: bump version
+  plugins: add userdata for qemu_plugin_{uninstall, reset}
+  plugins: add userdata to qemu_plugin_register_flush_cb
+  plugins: remove type qemu_plugin_simple_cb_t
+  plugins: remove qemu_plugin_id_t from qemu_plugin_udata_cb_t
+  plugins: remove qemu_plugin_id_t from qemu_plugin_vcpu_simple_cb_t
+  plugins: add userdata to qemu_plugin_register_vcpu_init_cb
+  plugins: add userdata to qemu_plugin_register_vcpu_exit_cb
+  plugins: add userdata to qemu_plugin_register_vcpu_idle_cb
+  plugins: add userdata to qemu_plugin_register_vcpu_resume_cb
+  plugins: add userdata to qemu_plugin_vcpu_for_each
+  plugins: remove type qemu_plugin_vcpu_simple_cb_t
+  plugins: add userdata to qemu_plugin_register_vcpu_discon_cb
+  plugins: remove qemu_plugin_id from qemu_plugin_vcpu_discon_cb_t
+  plugins: remove qemu_plugin_id from qemu_plugin_vcpu_tb_trans_cb_t
+  plugins: add userdata to qemu_plugin_vcpu_tb_trans_cb_t
+  plugins: remove qemu_plugin_id from qemu_plugin_vcpu_syscall_cb_t
+  plugins: add userdata to qemu_plugin_register_vcpu_syscall_cb
+  plugins: remove qemu_plugin_id from
+    qemu_plugin_vcpu_syscall_filter_cb_t
+  plugins: add userdata to qemu_plugin_register_vcpu_syscall_filter_cb
+  plugins: remove qemu_plugin_id from qemu_plugin_vcpu_syscall_ret_cb_t
+  plugins: add userdata to qemu_plugin_register_vcpu_syscall_ret_cb
+  scripts/checkpatch: ignore spaces required around some operators in
+    C++
+  scripts/checkpatch: remove check on forbidden space before '[' in C++
+  plugins/cpp: register callbacks using captureless lambda
+
+ contrib/plugins/bbv.c         |  10 +--
+ contrib/plugins/cache.c       |   6 +-
+ contrib/plugins/cflow.c       |   6 +-
+ contrib/plugins/cpp.cpp       |  89 +++++++++++++++++++++++++-
+ contrib/plugins/drcov.c       |   6 +-
+ contrib/plugins/execlog.c     |  10 +--
+ contrib/plugins/hotblocks.c   |   6 +-
+ contrib/plugins/hotpages.c    |   6 +-
+ contrib/plugins/howvec.c      |   6 +-
+ contrib/plugins/hwprofile.c   |   6 +-
+ contrib/plugins/ips.c         |  14 ++---
+ contrib/plugins/lockstep.c    |  18 +++---
+ contrib/plugins/stoptrigger.c |   6 +-
+ contrib/plugins/traps.c       |   9 +--
+ contrib/plugins/uftrace.c     |  10 +--
+ include/plugins/qemu-plugin.h | 114 +++++++++++++++++++---------------
+ include/qemu/plugin.h         |   2 -
+ plugins/api.c                 |  40 +++++++-----
+ plugins/core.c                |  94 +++++++++++-----------------
+ plugins/loader.c              |  13 ++--
+ plugins/plugin.h              |   5 +-
+ scripts/checkpatch.pl         |  20 +++++-
+ tests/tcg/plugins/bb.c        |  10 +--
+ tests/tcg/plugins/discons.c   |  10 +--
+ tests/tcg/plugins/empty.c     |   4 +-
+ tests/tcg/plugins/inline.c    |   6 +-
+ tests/tcg/plugins/insn.c      |  10 +--
+ tests/tcg/plugins/mem.c       |   6 +-
+ tests/tcg/plugins/patch.c     |   4 +-
+ tests/tcg/plugins/registers.c |   4 +-
+ tests/tcg/plugins/reset.c     |  17 ++---
+ tests/tcg/plugins/setpc.c     |  10 +--
+ tests/tcg/plugins/syscall.c   |  22 ++++---
+ 33 files changed, 354 insertions(+), 245 deletions(-)
 
 -- 
-Peter Xu
+2.43.0
 
 
