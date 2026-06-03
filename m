@@ -4,83 +4,123 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3C62DCD6E57
-	for <qemu-devel@archiver.kernel.org>; Wed,  3 Jun 2026 17:55:05 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C9E30CD6E57
+	for <qemu-devel@archiver.kernel.org>; Wed,  3 Jun 2026 17:57:16 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wUpnj-0002Os-Oy; Wed, 03 Jun 2026 13:54:47 -0400
+	id 1wUppl-00035q-Q5; Wed, 03 Jun 2026 13:56:53 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1wUpnh-0002ON-An
- for qemu-devel@nongnu.org; Wed, 03 Jun 2026 13:54:45 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1wUpnc-0001yu-PO
- for qemu-devel@nongnu.org; Wed, 03 Jun 2026 13:54:45 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1780509276;
- h=from:from:reply-to:reply-to:subject:subject:date:date:
- message-id:message-id:to:to:cc:cc:mime-version:mime-version:
- content-type:content-type:
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1wUppj-00035a-PH
+ for qemu-devel@nongnu.org; Wed, 03 Jun 2026 13:56:51 -0400
+Received: from smtp-out1.suse.de ([2a07:de40:b251:101:10:150:64:1])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1wUpph-0002lB-NJ
+ for qemu-devel@nongnu.org; Wed, 03 Jun 2026 13:56:51 -0400
+Received: from imap1.dmz-prg2.suse.org (imap1.dmz-prg2.suse.org
+ [IPv6:2a07:de40:b281:104:10:150:64:97])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+ (No client certificate requested)
+ by smtp-out1.suse.de (Postfix) with ESMTPS id D08986AF09;
+ Wed,  3 Jun 2026 17:56:43 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
+ t=1780509407; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=BYPCX2FLto2Q3H30MLxyYmAT35LNA15/Lxx09rlDSPo=;
- b=eOqelNTuoWJ9wsjf0hzaCcjyzr16SBNVFef2biTZyXAvWFmlQuCm4UeidCG6xWGZ8t2yNd
- +rXHdAZ6h+1f+39Doo4e5lOdWNviORHB5tbFVzwtRwtcZo7uNVBT9N7FQ5QGnT9ZQbjhaH
- Wy8Q+uZN13sp5ltTmp6HS5HK5qB4WkI=
-Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-278-XH9LCuk-MUKTAQqx3B8Dww-1; Wed,
- 03 Jun 2026 13:54:32 -0400
-X-MC-Unique: XH9LCuk-MUKTAQqx3B8Dww-1
-X-Mimecast-MFC-AGG-ID: XH9LCuk-MUKTAQqx3B8Dww_1780509271
-Received: from mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.17])
+ bh=mvk8xG/qPyQLkMfLLwCBTmIOp56ESWzSb5KwPkup8SE=;
+ b=pBF8zP9E1Akwc7bZyWEopTZBxzjhIw3W+dUlFSZ6c3liTbm0hzQFUrfP43oNfYatq72/nl
+ 9GUHImGs7g0thDx3A3p9K/P9Bhr2PZtbJvX5apTVJNC1oDTca05I+9mtuQC+7iwzKUQ6pi
+ uhSOa9V9iuAI7UQIjQKOcGbyKCDZsJM=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
+ s=susede2_ed25519; t=1780509407;
+ h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=mvk8xG/qPyQLkMfLLwCBTmIOp56ESWzSb5KwPkup8SE=;
+ b=y1QvQJfauno5xPqgkTSQ3tPPOA2suO8ax8ztMMxvk14dVcB0P+bY/RH57R8bb2rHpdZmvQ
+ AjMAuWF9kgjwTQCg==
+Authentication-Results: smtp-out1.suse.de;
+ dkim=pass header.d=suse.de header.s=susede2_rsa header.b=f3i8oQoi;
+ dkim=pass header.d=suse.de header.s=susede2_ed25519 header.b=PAeWY2ab
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
+ t=1780509403; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=mvk8xG/qPyQLkMfLLwCBTmIOp56ESWzSb5KwPkup8SE=;
+ b=f3i8oQoix0xo3SeOw6HtkNQVhV7+yPpVC4qbmyWqxSvb1Uy+YueU+KYiWUU+gJTRnX9xUw
+ FNFfQDzPe/hK1vIB5YMnM8iDXBFUTUmaHxIpaGfqzxyo980/Qj7DigZzH3A6Gv2BTHHbF/
+ TCMyjmc9QXRUCrtJvigMrZ7QafZ1y0s=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
+ s=susede2_ed25519; t=1780509403;
+ h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=mvk8xG/qPyQLkMfLLwCBTmIOp56ESWzSb5KwPkup8SE=;
+ b=PAeWY2abqSdcb1O+wmKdQIzy8pnENszFNVX2lhDB9RNzeAvIqgi/T7HLrbhloZiqiJbEz5
+ ex2h0KLB7gWv38Ag==
+Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id B6C881956050; Wed,  3 Jun 2026 17:54:30 +0000 (UTC)
-Received: from redhat.com (unknown [10.44.50.34])
- by mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 5557E1956095; Wed,  3 Jun 2026 17:54:26 +0000 (UTC)
-Date: Wed, 3 Jun 2026 18:54:23 +0100
-From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
-To: Paolo Bonzini <pbonzini@redhat.com>
-Cc: qemu-devel@nongnu.org, "Michael S. Tsirkin" <mst@redhat.com>,
- Alex =?utf-8?Q?Benn=C3=A9e?= <alex.bennee@linaro.org>,
- Alistair Francis <alistair.francis@wdc.com>,
- BALATON Zoltan <balaton@eik.bme.hu>,
- Fabiano Rosas <farosas@suse.de>, Kevin Wolf <kwolf@redhat.com>,
- Peter Maydell <peter.maydell@linaro.org>, Warner Losh <imp@bsdimp.com>,
- Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Paolo Bonzini <bonzini@gnu.org>
-Subject: Re: [PATCH v2] docs/devel: relax policy on AI-generated contributions
-Message-ID: <aiBqT1KfI-qowr4L@redhat.com>
-References: <20260529094619.1034458-1-pbonzini@redhat.com>
- <aiBBV48wyDF57vUi@redhat.com>
- <CABgObfZNX2rLnB=FosVopFmLB_S_5V48UPLjNTTtn543d9RfHg@mail.gmail.com>
+ by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id 72A18779A7;
+ Wed,  3 Jun 2026 17:56:43 +0000 (UTC)
+Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
+ by imap1.dmz-prg2.suse.org with ESMTPSA id bzMvEdtqIGqvRAAAD6G6ig
+ (envelope-from <farosas@suse.de>); Wed, 03 Jun 2026 17:56:43 +0000
+From: Fabiano Rosas <farosas@suse.de>
+To: Peter Xu <peterx@redhat.com>, =?utf-8?Q?Daniel_P=2E_Berrang=C3=A9?=
+ <berrange@redhat.com>
+Cc: qemu-devel@nongnu.org, Paolo Bonzini <pbonzini@redhat.com>, Mark Kanda
+ <mark.kanda@oracle.com>, "Michael S . Tsirkin" <mst@redhat.com>, Markus
+ Armbruster <armbru@redhat.com>, Eric Blake <eblake@redhat.com>, "Maciej S.
+ Szmigiero" <maciej.szmigiero@oracle.com>, Jason Wang
+ <jasowang@redhat.com>, Ben Chaney <bchaney@akamai.com>, Vladimir
+ Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
+Subject: Re: [PATCH RFC 0/2] migration/vl: new -incoming config:* for early
+ migration parameters
+In-Reply-To: <aiBoNIIF5Ofi7NcK@x1.local>
+References: <20260528212947.368132-1-peterx@redhat.com>
+ <87se7btcq9.fsf@suse.de> <ahmfh2s7CLFLoZKN@x1.local>
+ <ah_4hixGcNv-CLfv@redhat.com> <aiBNXUU0xcT_UbKO@x1.local>
+ <aiBhTTqSctU9lFsS@redhat.com> <aiBoNIIF5Ofi7NcK@x1.local>
+Date: Wed, 03 Jun 2026 14:56:41 -0300
+Message-ID: <87ldcv7bja.fsf@suse.de>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <CABgObfZNX2rLnB=FosVopFmLB_S_5V48UPLjNTTtn543d9RfHg@mail.gmail.com>
-User-Agent: Mutt/2.3.1 (2026-03-20)
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.17
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=berrange@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: 8
-X-Spam_score: 0.8
-X-Spam_bar: /
-X-Spam_report: (0.8 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.445,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_SBL_CSS=3.335, SPF_HELO_PASS=-0.001,
- SPF_PASS=-0.001 autolearn=no autolearn_force=no
+Content-Transfer-Encoding: quoted-printable
+X-Rspamd-Action: no action
+X-Rspamd-Queue-Id: D08986AF09
+X-Spamd-Result: default: False [-4.51 / 50.00]; BAYES_HAM(-3.00)[100.00%];
+ NEURAL_HAM_LONG(-1.00)[-1.000];
+ R_DKIM_ALLOW(-0.20)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
+ NEURAL_HAM_SHORT(-0.20)[-1.000]; MIME_GOOD(-0.10)[text/plain];
+ MX_GOOD(-0.01)[]; ARC_NA(0.00)[]; RCVD_VIA_SMTP_AUTH(0.00)[];
+ RCVD_TLS_ALL(0.00)[]; MISSING_XM_UA(0.00)[];
+ RCPT_COUNT_TWELVE(0.00)[12]; MIME_TRACE(0.00)[0:+];
+ TO_DN_SOME(0.00)[]; FUZZY_RATELIMITED(0.00)[rspamd.com];
+ MID_RHS_MATCH_FROM(0.00)[];
+ RBL_SPAMHAUS_BLOCKED_OPENRESOLVER(0.00)[2a07:de40:b281:104:10:150:64:97:from]; 
+ FROM_EQ_ENVFROM(0.00)[]; FROM_HAS_DN(0.00)[];
+ RECEIVED_SPAMHAUS_BLOCKED_OPENRESOLVER(0.00)[2a07:de40:b281:106:10:150:64:167:received];
+ RCVD_COUNT_TWO(0.00)[2]; TO_MATCH_ENVRCPT_ALL(0.00)[];
+ DBL_BLOCKED_OPENRESOLVER(0.00)[imap1.dmz-prg2.suse.org:rdns,imap1.dmz-prg2.suse.org:helo,gitlab.com:url,suse.de:mid,suse.de:dkim];
+ DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
+ DKIM_TRACE(0.00)[suse.de:+]
+X-Rspamd-Server: rspamd1.dmz-prg2.suse.org
+Received-SPF: pass client-ip=2a07:de40:b251:101:10:150:64:1;
+ envelope-from=farosas@suse.de; helo=smtp-out1.suse.de
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -93,224 +133,139 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, Jun 03, 2026 at 05:35:46PM +0200, Paolo Bonzini wrote:
-> On Wed, Jun 3, 2026 at 4:59 PM Daniel P. Berrangé <berrange@redhat.com> wrote:
-> > > @@ -288,62 +288,108 @@ content generators below.
-> > >  Use of AI-generated content
-> > >  ~~~~~~~~~~~~~~~~~~~~~~~~~~~
-> >
-> > > +Risks to open source projects include maintainer burnout from an
-> > > +increased number of contributions, as well as the risk to the project
-> > > +from unintentional inclusion of copyrighted material in the LLM's output.
-> > > +In order to mitigate these risks, the QEMU project currently allows
-> > > +using AI/LLM tools to produce patches in a limited set of scenarios:
-> >
-> > If we're opening the door to AI assisted contribution, then IMHO we
-> > need to write about both the social and technical expectations.
-> >
-> > Admittedly that will expand the scope of your proposal here, but
-> > IMHO that's somewhat unavoidable. A significant part of the downsides
-> > of AI-assisted contributions comes from bad social practices, rather
-> > than merely bad technical practices.
-> >
-> > As a general theme, I would like us to emphasize at the start that the
-> > act of collaboration & contribution in QEMU is about the interaction,
-> > trust and relationships between humans, not bots.
-> 
-> I agree that it needs to be there somewhere.  On the other hand I'm a
-> bit worried about having a treatise that no one will read -- at least
-> with stuff like "writing a commit message" we can point people to it.
+Peter Xu <peterx@redhat.com> writes:
 
-It doesn't have to be an especially long introduction in the context
-of the AI policy doc. If we want something more verbose that could
-fit elsewhere in our contribution docs. The AI policy should just
-make a point that we expect to be communicating with people not
-bots pretending to be people.
+> On Wed, Jun 03, 2026 at 06:15:57PM +0100, Daniel P. Berrang=C3=A9 wrote:
+>> On Wed, Jun 03, 2026 at 11:50:53AM -0400, Peter Xu wrote:
+>> > On Wed, Jun 03, 2026 at 10:48:54AM +0100, Daniel P. Berrang=C3=A9 wrot=
+e:
+>> > > On Fri, May 29, 2026 at 10:15:35AM -0400, Peter Xu wrote:
+>> > > > On Thu, May 28, 2026 at 07:01:50PM -0300, Fabiano Rosas wrote:
+>> > > > > Peter Xu <peterx@redhat.com> writes:
+>> > > > >=20
+>> > > > > > CI: https://gitlab.com/peterx/qemu/-/pipelines/2560168907
+>> > > > > >
+>> > > > > > This series introduces a generic way to specify migration para=
+meters that
+>> > > > > > can be used even during the early boot phase of QEMU.
+>> > > > > >
+>> > > > > > One example use case that already existed is CPR-transfer / CP=
+R-exec.
+>> > > > > > currently QEMU has a temporary global variable (incoming_mode)=
+ to achieve
+>> > > > > > this, but it's hard to understand and this hack bleeded into q=
+uite a few
+>> > > > > > places that we could have avoided.  The lines in patch 2 touch=
+ed may
+>> > > > > > provide some idea.
+>> > > > > >
+>> > > > > > With a generic approach of setting migration parameters with c=
+mdlines, we
+>> > > > > > can remove this hack meanwhile QEMU should be able to keep the=
+ CPR behavior
+>> > > > > > as before.  To CPR maintainers and reviewers: please have a cl=
+oser look,
+>> > > > > > even better if it can be smoke tested, to see if this works fo=
+r Oracle's
+>> > > > > > environment, TIA.
+>> > > > > >
+>> > > > > > The 1st patch implemented that new semantics.  It is straightf=
+orward: now
+>> > > > > > we can setup any migration parameter using an extra line of:
+>> > > > > >
+>> > > > > >   -incoming config:key1=3Dvalue1,key2=3Dvalue2,...
+>>=20
+>> snip
+>>=20
+>> > > > > - using "config:"
+>> > > > >=20
+>> > > > > This makes it non-uniform with uri and channels which don't have=
+ a
+>> > > > > keyword in front of them. I guess I could live with it, but it s=
+eems
+>> > > > > odd. I see that it makes parsing way easier.
+>> > > >=20
+>> > > > Yeah, having some identifier would be nice.  I wished channels als=
+o have
+>> > > > identifiers if we don't need to keep compatibility.
+>> > >=20
+>> > > IMHO having a magic "config:" prefix is an anti-pattern because it
+>> > > involves custom command line parsing logic.
+>> >=20
+>> > Yes, it's not elegant.  I wished we had something like this though when
+>> > introducing the cpr channels; right now anything wasn't "defer" or URI
+>> > implies it's a "channel"..
+>> >=20
+>> > I also wanted to avoid introducing new cmdline parameters, so migration
+>> > incoming cmdlines can stick with the same option.  If there's better
+>> > suggestion please shoot.
+>> >=20
+>> > >=20
+>> > > Does "-incoming config" imply '-incoming defer' semantics or is it
+>> > > independent ?=20=20
+>> >=20
+>> > They're independent.  Examples:
+>> >=20
+>> >  a) "-incoming config:* -incoming tcp:*", setup parameters for TCP inc=
+oming
+>> >     migration without further deferral
+>> >=20
+>> >  b) "-incoming config:*" only, setup global parameters for a possible
+>> >     upcoming outgoing migration
+>>=20
+>> In that case they should definitely be independent command line
+>> options. The old "-incoming" design is already broken / limited
+>> in the non-'defer' case because it is hardcoded to use URI syntax
+>> which can't express all the address formats we accept in QAPI
+>> syntax. Adding more special cases onto -incoming just makes the
+>> bad situation even worse and is not a forward looking design.
+>>=20
+>> If we need the ability to specify migration parameters on the
+>> CLI, then as a starting point for the design, we should assume that
+>> -incoming does not exist, and design a complete solution from scratch
+>> that uses QAPI exclusively, both for addresses and configuration.
+>
+> Do we want to obsolete -incoming?
+>
+>>=20
+>> As discussed before, IMHO the "migrate" and "migrate-incoming"
+>> commands need to accept both the address(s) and parameters/capabilities
+>> as inline data items rather than relying on pre-configured global state
+>> from the 'migrate-parameter' / 'migrate-capability' commands.
+>
+> This is one example that "relying only on migrate/migrate-incoming to
+> specify parameters" won't work.
+>
+> Essentially parameters like CPR's and the new "local" parameter wants to =
+be
+> global so that it will be visible and will have an impact on how other QE=
+MU
+> modules behave.  Here for TAP when "local" is globally on we may want to
+> initialize the device differently from the default operations.  That will
+> need to happen before any QMP commands.
+>
+>>=20
+>> If we did that modelling for 'migrate-incoming' then that modelling of
+>> command parmaeters could map directly to a new '-migrate-incoming'
+>> command line argument that accepted exactly the same data model.
+>
+> This is true.  Then we will make this series to depend on Fabiano's
+> previous work (to be posted; per we talked yesterday).
+>
 
-> > > +**Small bug fixes**
-> > > +  These should be limited to 20 lines of code or less, not including
-> > > +  tests.  You are still expected to :ref:`understand and explain your changes
-> > > +  <write_a_meaningful_commit_message>` and the rationale behind them.
-> >
-> > I think the "20 lines or less" is not going a good job at expressing
-> > the intent behind this point. I'd like us to emphasize between the
-> > "why" of this point, as that helps contributors & reviewers make a
-> > decision of whether a change is "within the spirit" or the rule of
-> > not.
-> 
-> True but we also need a rule. The spirit is better explained elsewhere
-> (and also, building consensus on spirit vs. a rule are two different
-> things).
+I don't see the dependency. Take the 'config' out from this series and
+pass a JSON into -incoming. It can be parsed into MigrationParameters
+all the same.
 
-Do we have a better elsewhere in this case ?  It is a point specifically
-about intent of the AI policy rule. 
-
-
-> > Docs is an area I'm more wary of from the social expectation side rather
-> > than the technical or legal side.  I don't feeel like "pay attention to
-> > the organization and flow" really mitigates to the tendancy to production
-> > of vast reams of convincing sounding slop.
-> 
-> Reviewers have no obligation to review.  The good thing about slop is
-> that saying no takes about the same effort as the author put into the
-> creation of the change.
-
-That is true, but at the same time even if you merely say "no", being on
-the receiving end of it drains you mental energy, as you still have to
-pay some attention in order to decide whether to say no or not. I'm
-pretty wary at a policy that is liable to unleash volumuous docs
-submissions on maintainers.
-
-Can we do this more incrementally and have a more tightly constrained
-guide for docs initially and review it again at a later date if we
-feel it is worth relaxing further.
-
-> > IMHO it should not be at the discretion of individual maintainers to
-> > accept large-scale AI authored changes outside these guidelines. To
-> > quote the commit message rationale
-> >
-> >    "Therefore, it remains prudent to only permit AI assistance where
-> >     the ramifications of copyright violations are at least easy to
-> >     revert and unlikely to spread"
-> >
-> > that does not suggest we should leave it to the discretion of maintainers
-> > to override the guidelines.
-> 
-> See my reply to Peter elsewhere in the thread. I agree with your
-> concerns for both docs and discretion, but I had specific uses in mind
-> that I'd like to allow.
-> 
-> For docs:
-> - create tutorials and/or feature documentation based on functional tests
-
-That doesn't sound too appealing to me. Reverse engineering docs
-or tutorials from our functional tests is exactly the kind of
-thing that feels likely to result in volumous text of marginal
-value which will have a large burden on reviewers.
-
-> - create function comments (including Rust doctests) based on a
-> high-level, human-written description of the module
-
-This feels interesting to trial.
-
-The key difference with function comments is that you don't really
-have any of the trouble with document structure & coherence. The
-API docs should be comparatively smaller & easier to read & digest
-and give feedback on accuracy of.
-
-> For maintainer discretion:
-> - updating patches for changes to kernel APIs, before the kernel side
-> is ready for inclusion
-> - creation of parsing code for Rust procedural macros based on code
-> examples and/or a human-written description of the macro
-> - creation of boilerplate code similar to hw/core/hotplug.c
-> 
-> I think all of these are potentially compelling and I would like
-> people to be allowed to experiment with them or similar cases.
-
-Those are largely in direct conflict with the intent behind only
-allowing "small bug fixes". Either we accept broad contributions
-like this as a project, or we don't - I don't see that as something
-that is suitable for per-maintainer discretion. If it will not be
-intended for merge, then the policy is irrelevant and people can
-just experiment out of tree at will.
-
-> The idea of contacting maintainers beforehand comes from the policy
-> currently under discussion in the Rust project.
-
-I presume you're looking at
-
-  https://github.com/rust-lang/rust-forge/pull/1040/changes
-
-What I find interesting there is that their rule that is comparable
-to your "small bug fixes" rule, emphasizes it is about allowing
-"trivial" chances and specifically references the idea of a threshold
-for originality / copyrightability. I find that more satisfying than
-talking about lines of code and bug fixes.
-
-The talk about experimenting with LLMS for larger changes emphasizes
-experimentation  and use of PRs in order to trigger the run of tools
-from their review pipeline.   
-
-That doesn't explicitly say whether such "experiments" are permissible
-to be merged though. I don't know if the Rust project has specific
-terminology here, but my reading of that was that people can agree
-to collaborate publically on LLM work, but that does not appear to give
-individual maintainers permission to waive the LLM policy rules to
-merge arbitrary LLM code in the way this QEMU proposal suggests.
-
-
-> > > +There is no requirement to include your prompts or summarize the
-> > > +conversation in the commit message or cover letter, but you may do so
-> > > +if you think it helps a reviewer judge the result.  For example:
-> >
-> > IMHO we should actively discourage the inclusion of prompts
-> > entirely as it is the wrong information to provide.
-> 
-> Why? I think it helps especially in the case where we're asking for
-> maintainers to apply their discretion, and for reproducibility. It may
-> not be always applicable, but it can also help.
-> 
-> > > +**Helpful prompts**
-> > > +  These describe concrete constraints or instructions, making it easy for a
-> > > +  reviewer to see how the tool's output was guided:
-> > > +
-> > > +  * "move field ``foo`` from ``struct aa`` to ``struct bb``.  If a
-> > > +    function already has a local variable or parameter of type ``struct
-> > > +    bb``, use it instead of accessing ``aa.bb``"
-> > > +
-> > > +  * "add an implementation of the trait for ``Mutex<T: MyTrait>``; it
-> > > +    takes the lock around the calls and forwards to ``T``"
-> >
-> > These examples prompts are just expressing an aspect that should
-> > already have been described in prose in the commit message. We
-> > don't need to classify them as "ai prompts" in a a commit message,
-> > we just need the author to write a useful commit message.
-> 
-> The commit message does not have to contain this information. For
-> example, commit 44a9d1b86c0 does not explain that it implements the
-> ToMigrationState{,Shared} traits for Mutex. The commit message could
-> say something like
-> 
-> "The implementation of the traits for types ... were created with AI.
-> The prompt was: "add a simple forwarding implementation of the traits
-> in rust/migration/src/migratable.rs for the array type [T; N] and for
-> the interior mutable types Mutex<T> and BqlRefCell<T>. Note that
-> interior mutable types only need T: ToMigrationState in order to
-> implement ToMigrationStateShared".
-
-If that is relevant info for reviewers then regardless of whether
-it was written by an LLM or a human, that should have been added
-to the commit message.
-
- "This commit adds a simple forwarding implementation of the traits
-  in rust/migration/src/migratable.rs for the array type [T; N] and for
-  the interior mutable types Mutex<T> and BqlRefCell<T>. Note that
-  interior mutable types only need T: ToMigrationState in order to
-  implement ToMigrationStateShared".
-
-there is no reason to call out the inclusion of "LLM prompts" as
-a concept here. We should be emphasizing that commit messages
-should explain their intent in all cases, not something specific
-to AI authored code.
-
-> I agree that this is not a typical part of a commit message. On the
-> other hand we do mention occasionally how a commit was automated, and
-> this falls under that case, sort of? See for example commit
-> 324b2298fea ("docs/system: convert Texinfo documentation to rST",
-> 2020-03-06).
-
-
-
-With regards,
-Daniel
--- 
-|: https://berrange.com       ~~        https://hachyderm.io/@berrange :|
-|: https://libvirt.org          ~~          https://entangle-photo.org :|
-|: https://pixelfed.art/berrange   ~~    https://fstop138.berrange.com :|
-
+> I wanted to see if we can reduce the impact to minimum, -incoming is inde=
+ed
+> not well designed, but in real life we have control over what can happen
+> with URIs and the current "config:" won't conflict with any of them.
+>
+> But if we strongly wish to obsolete -incoming completely, I'm OK too.
+>
+> Thanks,
 
