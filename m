@@ -4,103 +4,100 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id BE7C3CD6E55
-	for <qemu-devel@archiver.kernel.org>; Wed,  3 Jun 2026 17:36:19 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8727BCD6E55
+	for <qemu-devel@archiver.kernel.org>; Wed,  3 Jun 2026 17:38:09 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wUpVc-0006VT-Vp; Wed, 03 Jun 2026 13:36:05 -0400
+	id 1wUpXY-0007FX-TP; Wed, 03 Jun 2026 13:38:05 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1wUpVb-0006Uy-Lk
- for qemu-devel@nongnu.org; Wed, 03 Jun 2026 13:36:03 -0400
+ (Exim 4.90_1) (envelope-from <eric.auger@redhat.com>)
+ id 1wUpXV-0007F1-FC
+ for qemu-devel@nongnu.org; Wed, 03 Jun 2026 13:38:01 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1wUpVZ-000427-Cp
- for qemu-devel@nongnu.org; Wed, 03 Jun 2026 13:36:03 -0400
+ (Exim 4.90_1) (envelope-from <eric.auger@redhat.com>)
+ id 1wUpXR-0004iK-Uv
+ for qemu-devel@nongnu.org; Wed, 03 Jun 2026 13:38:01 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1780508159;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ s=mimecast20190719; t=1780508276;
+ h=from:from:reply-to:reply-to:subject:subject:date:date:
+ message-id:message-id:to:to:cc:cc:mime-version:mime-version:
+ content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=I+ibRdpFYFzTK5fhN9MaBvTU5pp3AENTai6lzmzbH3o=;
- b=PrYplhl600I/UI1rrxmvNFG8Vy0rTRY53GuBOnKH8c5GFNsThWXJeig/Fusv9JqYeBf+QP
- TkmOdR0NWnVVQW4iMsE6FZLZMP5UxP0q4fzDeiSVMWpC69vcTDLAWwpuhaXKI+Lfpopq5+
- XOKbdTw/y9lNNrk+GtpHO3f0VUTw1sQ=
-Received: from mail-qt1-f200.google.com (mail-qt1-f200.google.com
- [209.85.160.200]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=VTmWWkeh45oeFhSgljjk9+ifKjz8zWh8059zVQaYBK4=;
+ b=OhplZkcgXldDPsjDPu9X7UH0eO0EltpobWTIHx8L6fS9d6kgG40BQAeySYwa5uyKjkWpcK
+ 1GUlw4VfEUX8clv2PRaXCaMEdgEmy659wcBSDK/FAlNnei58O60lWkY3fi7kptAwAbBouJ
+ BoSauo/FY70Pj4r0krjk6AesSq8YEC8=
+Received: from mail-wr1-f69.google.com (mail-wr1-f69.google.com
+ [209.85.221.69]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-501-2WDkGOlzMuabV9i-Aytu9g-1; Wed, 03 Jun 2026 13:35:58 -0400
-X-MC-Unique: 2WDkGOlzMuabV9i-Aytu9g-1
-X-Mimecast-MFC-AGG-ID: 2WDkGOlzMuabV9i-Aytu9g_1780508157
-Received: by mail-qt1-f200.google.com with SMTP id
- d75a77b69052e-5174a236220so84939511cf.3
- for <qemu-devel@nongnu.org>; Wed, 03 Jun 2026 10:35:58 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1780508157; x=1781112957; darn=nongnu.org;
- h=in-reply-to:content-transfer-encoding:content-disposition
- :mime-version:references:message-id:subject:cc:to:from:date:from:to
- :cc:subject:date:message-id:reply-to;
- bh=I+ibRdpFYFzTK5fhN9MaBvTU5pp3AENTai6lzmzbH3o=;
- b=ISUD/ILiHAcw8Z4D+EXYjsIu/+mtemEh0jYBCqVOU0KMjieDyxpkg4tRzE9/4ISVPp
- 95S2CQHowB6lX1cLdUZDmZe52JytUGz0vx2YCJtklpuX4Zopg37BEHSjRrUFOtVYhrJ7
- b3WCuF+nI1rqhFMitDotSUFKsfnGvevmo6UA+HpOcU3W4fOdVSGRyM6pKMbZIm42n1hP
- JxZU/Hm4Ylaq8vr2tefxCRedQ1+ffXpz8cd5CvHdPYVB0mD0Qh9VtS/vEhTJzHuqAqu3
- 5DfieWJqkLRRcv8EMQGLReaEezKbqiNgT6KY2hSkIIyu53vnEuJrF01lw2S/x9BKunU6
- 79qA==
+ us-mta-499-DIN3Y9N5P6mjbBlY-7X2jA-1; Wed, 03 Jun 2026 13:37:55 -0400
+X-MC-Unique: DIN3Y9N5P6mjbBlY-7X2jA-1
+X-Mimecast-MFC-AGG-ID: DIN3Y9N5P6mjbBlY-7X2jA_1780508274
+Received: by mail-wr1-f69.google.com with SMTP id
+ ffacd0b85a97d-45efa12a788so2945872f8f.2
+ for <qemu-devel@nongnu.org>; Wed, 03 Jun 2026 10:37:55 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1780508157; x=1781112957;
- h=in-reply-to:content-transfer-encoding:content-disposition
- :mime-version:references:message-id:subject:cc:to:from:date:x-gm-gg
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=I+ibRdpFYFzTK5fhN9MaBvTU5pp3AENTai6lzmzbH3o=;
- b=E1sInEc2o5gGZZeQsGabd90/TbjPoKhCpdOCGdOWCN4RZuLqw3Gs7plazEDH80i2ZN
- HWY28La1YXC8CFbnuLdktMv6O8kKvKJdTSxAKlX2GeohQU4YVqXFgdf8Q6FULS0jfKJL
- tz+F7WbafZye2OKQHylG9H9wP0iIj2AovBjadNKqvbkCnkFU53RAndwdUo5gV4cQ0MjU
- 7AA8tSNxc8/zO+2p2WSxPeD590+W2HP/EHd5HSXvRmtS0yvH7SYCz9T8zAvNiazvyL36
- Ekdaslwd4jdFHtMHmFsfueO6XiYJhj3PPEDxEr/22Y8ylJL5h96rY/w2e/vXJWfVx6OK
- YwtA==
-X-Gm-Message-State: AOJu0YzlSNjAxz6fBRRZGcTEbG5ZiKWwIAsoD69I1lClKeD6M0AHA0kQ
- HPovisVEwizyXaGir5dex+QeQY5z3dhres7nPzhNMp+dL36ZYlwUd+kTWy4BO99rra3lvgqdmoC
- WqjgQBqIsZSv84mOnL1Af2PBj9I4AChn2LDIoS/ZugNI7Y2Rfu91ttc4V
-X-Gm-Gg: Acq92OEuVGPCl9ZHOGQIa00T1J5R3zRFxgs+ITE7Kfu6DMRZNq9m44XK1j5pHgTMyb1
- WgcVcUvnQZvVJv5jlCHgYvVrRqpIY7AiN42XYR1vCOD17p/RkV93lsucKBFBGslhODt2ikA1ZJR
- VHjbPPf+c0NiLR1A5DiyN+xRN+sUdozgedKitSgA5oF34zUiYbLGOUu1J84VzJ4LA5bGoGEv5Ia
- A2U8Bxkgr1n2e2YegO0EzE4GCme3XG+GaD04rNxZu2z9fdQqSR9UvP+n5V1dtN/rIN2D3gHnEuG
- k2MOqkUXCozyHTQP92sksL1QA1qMITCLawK9+e6byi8DlU+0viD5nHc9YsuPtcShCXt46MDWGPi
- AXUL+V3Wyk1NQmiJjg5N3qV9CUg==
-X-Received: by 2002:a05:622a:110a:b0:517:8242:5bc1 with SMTP id
- d75a77b69052e-517824265f6mr31181611cf.15.1780508157208; 
- Wed, 03 Jun 2026 10:35:57 -0700 (PDT)
-X-Received: by 2002:a05:622a:110a:b0:517:8242:5bc1 with SMTP id
- d75a77b69052e-517824265f6mr31180961cf.15.1780508156531; 
- Wed, 03 Jun 2026 10:35:56 -0700 (PDT)
-Received: from x1.local ([142.189.10.167]) by smtp.gmail.com with ESMTPSA id
- d75a77b69052e-51775c07c29sm30254101cf.1.2026.06.03.10.35.55
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 03 Jun 2026 10:35:55 -0700 (PDT)
-Date: Wed, 3 Jun 2026 13:35:54 -0400
-From: Peter Xu <peterx@redhat.com>
-To: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
-Cc: qemu-devel@nongnu.org,
- Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@mailo.com>,
- Fabiano Rosas <farosas@suse.de>, Paolo Bonzini <pbonzini@redhat.com>,
- Alex =?utf-8?Q?Benn=C3=A9e?= <alex.bennee@linaro.org>
-Subject: Re: [PATCH] memory/ramblock: Fix clear of mru_block on possible race
- condition
-Message-ID: <aiBl-hXpmXc8ULSJ@x1.local>
-References: <20260601205900.1067714-1-peterx@redhat.com>
- <36749195-2c49-4f9c-8445-2e67b2097676@rsg.ci.i.u-tokyo.ac.jp>
- <ah80T6aIns82fspH@x1.local>
- <622da0a8-8101-4816-bf20-b5c3c9547a5f@rsg.ci.i.u-tokyo.ac.jp>
+ d=1e100.net; s=20251104; t=1780508274; x=1781113074;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:reply-to:user-agent:mime-version:date
+ :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=VTmWWkeh45oeFhSgljjk9+ifKjz8zWh8059zVQaYBK4=;
+ b=NejfiorIF3O/GsppOdOfgfFSdNVq++BAwLCvHaohQr7g27dXyhJ6fsO8UGJzl6urkr
+ 3t/hM/FPzVwuPI3jbVAa7bdYhq8Fmri1P+o8tk0yU3J0c6n/TRqq1FDgkr4/MDlh6lRJ
+ Ys5hjdoHNNBZu7L35bGGY5ipMvnc+oZTUxVKGjnKVbDE8NCZSEVkawa3YH9T7DeojOH5
+ 7zKrVfzlT29ch8J9blw7fR4gQ4j+dzQpWLgevm+f8Oxlzw0gufIle1MknsEt5JdMDZ/H
+ acoXEPwF0wivqty1BXPo1EozpOGGbBmKYbatli7tTmlbiRzwNvtu+7w2pSeyczke86o4
+ 9AaQ==
+X-Forwarded-Encrypted: i=1;
+ AFNElJ+JtAhKNyybuJGolkZZJj0udhrFTuaf7GMpre+Ws3D45AvK8owb5H+4Ng6V8q+jKhggokfZC7Jwd2Vx@nongnu.org
+X-Gm-Message-State: AOJu0Yy1eqknqJCJQMgu503bgrnSRE+Dz2BzJwqqxIx0Gb4rm7I0Hny7
+ ksei6h7A6FE7G0CqQ9S1QOKIyZh+oMXG2d486S4ERA1XOXTn4LQ6Di6xiYsuZPwf/3WxKeiKoPB
+ MjVQUVwq+KIU88uSe3+I91SabVabF2lGgDo+FDGpn+AzHhxkQE77u8i/W
+X-Gm-Gg: Acq92OGDSSdA6AnCSrYrOj9atWjNPHTkcZSlPYIHfZ1qqRn01ehTG5J6PGjOSMHZ8MI
+ uBpG2d7/4t8dm2oSefaNCgNlzKweAducUqLQxo6H2qvQoxuz55s0FEZX0pYimXd2wOC1j2AqKKf
+ T55Q6ft9RG+rVDtPClw0JrPrdy6EjeMAn9VYv0PufRBiLbUZHdZz0oLLIXG2wljZ0S4dAg7YxWZ
+ YOYYDWVuF2GiyCxgWJUvOv8AjCub32q2ctUjuBUVtMBcxNOS9gb2TrLPc53B/PWUm2UXwq7ne09
+ jbaXpqo/Lq5GZ9btBD22TGwGYwMkkZP+K3dTpVVSj5zKQXLPLSP9/gLPXnAZ3Ja9ENO3YUUiCZ9
+ rlZCsg+pDIYZDw+pFlTp3IkF2HE3C98DMm8nErw26185NU8lMyImSnJP47XMf0EGX4aBwSI4oJG
+ r/BoRk
+X-Received: by 2002:a05:6000:2a0e:b0:441:1c18:f779 with SMTP id
+ ffacd0b85a97d-46021875a1dmr4698106f8f.37.1780508274230; 
+ Wed, 03 Jun 2026 10:37:54 -0700 (PDT)
+X-Received: by 2002:a05:6000:2a0e:b0:441:1c18:f779 with SMTP id
+ ffacd0b85a97d-46021875a1dmr4698074f8f.37.1780508273771; 
+ Wed, 03 Jun 2026 10:37:53 -0700 (PDT)
+Received: from ?IPV6:2a01:e0a:f0e:9070:527b:9dff:feef:3874?
+ ([2a01:e0a:f0e:9070:527b:9dff:feef:3874])
+ by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-4601f2dcb13sm8436282f8f.2.2026.06.03.10.37.52
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Wed, 03 Jun 2026 10:37:53 -0700 (PDT)
+Message-ID: <f47a2f68-9bf1-4f6f-ae44-0b937f65e9ee@redhat.com>
+Date: Wed, 3 Jun 2026 19:37:51 +0200
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <622da0a8-8101-4816-bf20-b5c3c9547a5f@rsg.ci.i.u-tokyo.ac.jp>
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=peterx@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v6 16/31] hw/arm/tegra241-cmdqv: Emulate VCMDQ register
+ writes
+Content-Language: en-US
+To: Shameer Kolothum <skolothumtho@nvidia.com>, qemu-arm@nongnu.org,
+ qemu-devel@nongnu.org
+Cc: peter.maydell@linaro.org, clg@redhat.com, alex@shazbot.org,
+ nicolinc@nvidia.com, nathanc@nvidia.com, mochs@nvidia.com, jan@nvidia.com,
+ jgg@nvidia.com, zhenzhong.duan@intel.com, kjaju@nvidia.com,
+ phrdina@redhat.com
+References: <20260601114221.457995-1-skolothumtho@nvidia.com>
+ <20260601114221.457995-17-skolothumtho@nvidia.com>
+From: Eric Auger <eric.auger@redhat.com>
+In-Reply-To: <20260601114221.457995-17-skolothumtho@nvidia.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=170.10.129.124;
+ envelope-from=eric.auger@redhat.com; helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -24
 X-Spam_score: -2.5
 X-Spam_bar: --
@@ -120,161 +117,255 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-To: eric.auger@redhat.com
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, Jun 03, 2026 at 02:11:44PM +0900, Akihiko Odaki wrote:
-> qemu_get_ram_block() may set mru_block during the grace period. Once
-> mru_block is set, RCU readers can still access the ramblock, even if the
-> block is no longer visible in ram_list.
-
-True..
-
-> 
-> When enriching the comment in reclaim_ramblock_prepare(), I think the phrase
-> “the last reader that can access this ramblock is gone” could be improved.
-> What matters here is that the last reader that could find the block in
-> ram_list is gone. The block is no longer visible in ram_list to any later
-> reader, and clearing the cache at that point ensures that it is no longer
-> visible through an mru_block cache hit either.
-
-Yes that's ambiguous.
-
-I updated comments in this patch, removed the 1st reset of mru_block, and
-when at it also touched up the comment in qemu_get_ram_block(), let me know
-if there's further comments before repost.
-
-Thanks,
-
-===8<===
-From 18789a1136c753a6cdce1ea698cf4c1871121cc9 Mon Sep 17 00:00:00 2001
-From: Peter Xu <peterx@redhat.com>
-Date: Fri, 29 May 2026 12:05:15 -0400
-Subject: [PATCH] memory/ramblock: Fix clear of mru_block on possible race
- condition
-
-The race condition was not reported in any real bug, but I found it while
-reviewing some relevant chnages from Akihiko [1].  It's not clear if
-there's any way to reproduce it, so far it's only theoretical.  Hence
-there's also no Fixes tag attached.  There's also no need to copy stable
-until we have a solid reproducer.
-
-Currently, mru_block might still points to ramblocks that are removed if
-below race condition happens:
-
-  Reader A                              Writer
-  --------                              ------
-  rcu_read_lock()
-  walk list, find block X
-                                        QLIST_REMOVE_RCU(X)
-                                        qatomic_set(&mru_block, NULL)
-                                        call_rcu(X, reclaim_ramblock)
-  qatomic_set(&mru_block, X)  <----------- overwrites NULL
-  rcu_read_unlock()
-                                        grace period ends, X freed
-
-  Reader C
-  --------
-  rcu_read_lock()
-  qatomic_rcu_read(&mru_block) -> X
-  Read X's block->offset ...  <----------- UAF
-
-To fix it, we can introduce a nested RCU free for reset of the mru_block
-field, and only free the ramblock until the 2nd RCU call.
-
-Since QEMU always: (1) dequeue the RCU node before invoking the
-function, (2) reset all fields in rcu_head in the call_rcu1() call, nested
-RCU will work all fine like what's used in this patch.
-
-[1] https://lore.kernel.org/r/5fd9e540-cf13-45f5-ba9a-c7faf364035b@rsg.ci.i.u-tokyo.ac.jp
-
-Cc: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
-Signed-off-by: Peter Xu <peterx@redhat.com>
----
-Based-on: <5fd9e540-cf13-45f5-ba9a-c7faf364035b@rsg.ci.i.u-tokyo.ac.jp>
----
- system/physmem.c | 46 ++++++++++++++++++++++++++++++----------------
- 1 file changed, 30 insertions(+), 16 deletions(-)
-
-diff --git a/system/physmem.c b/system/physmem.c
-index 9e1ac13e82..c9e5696d6a 100644
---- a/system/physmem.c
-+++ b/system/physmem.c
-@@ -836,21 +836,14 @@ static RAMBlock *qemu_get_ram_block(ram_addr_t addr)
-     abort();
- 
- found:
--    /* It is safe to write mru_block outside the BQL.  This
--     * is what happens:
--     *
--     *     qatomic_set(&mru_block, xxx)
--     *     rcu_read_unlock()
--     *                                        xxx removed from list
--     *                  rcu_read_lock()
--     *                  read mru_block
--     *                                        qatomic_set(&mru_block, NULL);
--     *                                        call_rcu(reclaim_ramblock, xxx);
--     *                  rcu_read_unlock()
-+    /*
-+     * It is safe to write mru_block outside the BQL, the writer (e.g. when
-+     * QEMU frees a ramblock) is designed to be thread-safe with readers
-+     * updating this field concurrently.  See reclaim_ramblock_prepare().
-      *
--     * qatomic_rcu_set is not needed here.  The block was already published
--     * when it was placed into the list.  Here we're just making an extra
--     * copy of the pointer.
-+     * qatomic_rcu_set() is not needed here, because the block was already
-+     * published when it was placed into the list.  Here we're just making
-+     * an extra copy of the pointer.
-      */
-     qatomic_set(&ram_list.mru_block, block);
-     return block;
-@@ -2590,6 +2583,23 @@ static void reclaim_ramblock(RAMBlock *block)
-     g_free(block);
- }
- 
-+static void reclaim_ramblock_prepare(RAMBlock *block)
-+{
-+    /*
-+     * After one round of grace period, no more reader can see this
-+     * ramblock via ram_list.  Reset this field making sure it will never
-+     * point to the ramblock being freed.
-+     */
-+    qatomic_set(&ram_list.mru_block, NULL);
-+    /*
-+     * Wait for a second round of grace period to make sure whoever
-+     * accessed the ramblock previously via mru_block has finished using
-+     * it.  Note: this is an intended nested use of rcu_head.  If needed,
-+     * we can provide two rcu_heads for ramblock.
-+     */
-+    call_rcu(block, reclaim_ramblock, rcu);
-+}
-+
- void qemu_ram_free(RAMBlock *block)
- {
-     g_autofree char *name = NULL;
-@@ -2607,10 +2617,14 @@ void qemu_ram_free(RAMBlock *block)
-     name = cpr_name(block->mr);
-     cpr_delete_fd(name, 0);
-     QLIST_REMOVE_RCU(block, next);
--    qatomic_set(&ram_list.mru_block, NULL);
-     /* Write list before version */
-     qatomic_store_release(&ram_list.version, ram_list.version + 1);
--    call_rcu(block, reclaim_ramblock, rcu);
-+    /*
-+     * Wait for a grace period to make sure no reader can see this ramblock
-+     * via ram_list anymore.  Note that readers can still see and access
-+     * the ramblock via mru_block, so we can't free it yet.
-+     */
-+    call_rcu(block, reclaim_ramblock_prepare, rcu);
-     qemu_mutex_unlock_ramlist();
- }
- 
--- 
-2.53.0
 
 
--- 
-Peter Xu
+On 6/1/26 1:42 PM, Shameer Kolothum wrote:
+> From: Nicolin Chen <nicolinc@nvidia.com>
+>
+> This is the write side counterpart of the VCMDQ read emulation. Add
+> write handling for both the direct VCMDQ aperture and the VINTF
+> logical aperture using the same index decoding and VINTF-to-VCMDQ
+> translation logic as the read path.
+>
+> VINTF aperture writes are translated to their direct-aperture
+> equivalent and update the same cached state. Page 1 registers
+> (BASE, CONS_INDX_BASE) always update the cache.
+>
+> Per the CMDQV architecture, a VCMDQ must be allocated to a Virtual
+> Interface before it is used to send commands to the SMMU. Until
+> that allocation happens, MMIO writes only update cached register
+> state - no command consumption, error handling, or interrupt
+> activity is driven from these writes. Subsequent patches wire up
+> IOMMU_HW_QUEUE_ALLOC, mmap the host VINTF Page 0, and install it
+> into guest MMIO; after that, Page 0 writes from either aperture
+> reach the hardware-backed mmap'd page instead of just the cache.
+>
+> Signed-off-by: Nicolin Chen <nicolinc@nvidia.com>
+> Co-developed-by: Shameer Kolothum <skolothumtho@nvidia.com>
+> Signed-off-by: Shameer Kolothum <skolothumtho@nvidia.com>
+Reviewed-by: Eric Auger <eric.auger@redhat.com>
+
+Thanks
+
+Eric
+> ---
+>  hw/arm/tegra241-cmdqv.c | 159 +++++++++++++++++++++++++++++++++++++++-
+>  hw/arm/trace-events     |   2 +
+>  2 files changed, 159 insertions(+), 2 deletions(-)
+>
+> diff --git a/hw/arm/tegra241-cmdqv.c b/hw/arm/tegra241-cmdqv.c
+> index ff150fe0f3..3cb1b45575 100644
+> --- a/hw/arm/tegra241-cmdqv.c
+> +++ b/hw/arm/tegra241-cmdqv.c
+> @@ -120,6 +120,104 @@ static uint64_t tegra241_cmdqv_config_vintf_read(Tegra241CMDQV *cmdqv,
+>      }
+>  }
+>  
+> +/*
+> + * Write a VCMDQ Page 0 register (control/status) using VCMDQ0_* offsets.
+> + *
+> + * The caller normalizes the MMIO offset such that @offset0 always refers
+> + * to a VCMDQ0_* register, while @index selects the VCMDQ instance.
+> + *
+> + * Page 0 registers are all 32-bit; this helper is only called for 4-byte
+> + * writes.
+> + */
+> +static void tegra241_cmdqv_write_vcmdq_page0(Tegra241CMDQV *cmdqv,
+> +                                             hwaddr offset0, int index,
+> +                                             uint32_t value, bool direct)
+> +{
+> +    switch (offset0) {
+> +    case A_VCMDQ0_CONS_INDX:
+> +        cmdqv->vcmdq_cons_indx[index] = value;
+> +        break;
+> +    case A_VCMDQ0_PROD_INDX:
+> +        /* VCMDQ is functional only once allocated to a VINTF; cache only. */
+> +        cmdqv->vcmdq_prod_indx[index] = value;
+> +        break;
+> +    case A_VCMDQ0_CONFIG:
+> +        if (value & R_VCMDQ0_CONFIG_CMDQ_EN_MASK) {
+> +            cmdqv->vcmdq_status[index] |= R_VCMDQ0_STATUS_CMDQ_EN_OK_MASK;
+> +        } else {
+> +            cmdqv->vcmdq_status[index] &= ~R_VCMDQ0_STATUS_CMDQ_EN_OK_MASK;
+> +        }
+> +        cmdqv->vcmdq_config[index] = value;
+> +        break;
+> +    case A_VCMDQ0_GERRORN:
+> +        /* VCMDQ is functional only once allocated to a VINTF; cache only. */
+> +        cmdqv->vcmdq_gerrorn[index] = value;
+> +        break;
+> +    default:
+> +        qemu_log_mask(LOG_UNIMP,
+> +                      "%s unhandled write access at 0x%" PRIx64 "\n",
+> +                      __func__, offset0);
+> +    }
+> +    trace_tegra241_cmdqv_write_vcmdq_page0(index, direct ? "direct" : "vi",
+> +                                           offset0, value);
+> +}
+> +
+> +/*
+> + * Write a VCMDQ Page 1 register (base / DRAM address) - 4-byte access.
+> + */
+> +static void tegra241_cmdqv_write_vcmdq_page1(Tegra241CMDQV *cmdqv,
+> +                                             hwaddr offset0, int index,
+> +                                             uint32_t value, bool direct)
+> +{
+> +    switch (offset0) {
+> +    case A_VCMDQ0_BASE_L:
+> +        cmdqv->vcmdq_base[index] =
+> +            deposit64(cmdqv->vcmdq_base[index], 0, 32, value);
+> +        break;
+> +    case A_VCMDQ0_BASE_H:
+> +        cmdqv->vcmdq_base[index] =
+> +            deposit64(cmdqv->vcmdq_base[index], 32, 32, value);
+> +        break;
+> +    case A_VCMDQ0_CONS_INDX_BASE_DRAM_L:
+> +        cmdqv->vcmdq_cons_indx_base[index] =
+> +            deposit64(cmdqv->vcmdq_cons_indx_base[index], 0, 32, value);
+> +        break;
+> +    case A_VCMDQ0_CONS_INDX_BASE_DRAM_H:
+> +        cmdqv->vcmdq_cons_indx_base[index] =
+> +            deposit64(cmdqv->vcmdq_cons_indx_base[index], 32, 32, value);
+> +        break;
+> +    default:
+> +        qemu_log_mask(LOG_UNIMP,
+> +                      "%s unhandled write access at 0x%" PRIx64 "\n",
+> +                      __func__, offset0);
+> +    }
+> +    trace_tegra241_cmdqv_write_vcmdq_page1(index, direct ? "direct" : "vi",
+> +                                           offset0, value);
+> +}
+> +
+> +/*
+> + * Write a VCMDQ Page 1 register - 8-byte access at BASE_L or DRAM_L.
+> + */
+> +static void tegra241_cmdqv_write_vcmdq_page1_64(Tegra241CMDQV *cmdqv,
+> +                                                hwaddr offset0, int index,
+> +                                                uint64_t value, bool direct)
+> +{
+> +    switch (offset0) {
+> +    case A_VCMDQ0_BASE_L:
+> +        cmdqv->vcmdq_base[index] = value;
+> +        break;
+> +    case A_VCMDQ0_CONS_INDX_BASE_DRAM_L:
+> +        cmdqv->vcmdq_cons_indx_base[index] = value;
+> +        break;
+> +    default:
+> +        qemu_log_mask(LOG_UNIMP,
+> +                      "%s unhandled 64-bit write at 0x%" PRIx64 "\n",
+> +                      __func__, offset0);
+> +    }
+> +    trace_tegra241_cmdqv_write_vcmdq_page1(index, direct ? "direct" : "vi",
+> +                                           offset0, value);
+> +}
+> +
+>  static void tegra241_cmdqv_config_vintf_write(Tegra241CMDQV *cmdqv,
+>                                                hwaddr offset, uint64_t value)
+>  {
+> @@ -243,6 +341,8 @@ out:
+>  static void tegra241_cmdqv_writel_mmio(Tegra241CMDQV *cmdqv, hwaddr offset,
+>                                         uint32_t value)
+>  {
+> +    int index;
+> +
+>      switch (offset) {
+>      case A_CONFIG:
+>          cmdqv->config = value;
+> @@ -261,6 +361,39 @@ static void tegra241_cmdqv_writel_mmio(Tegra241CMDQV *cmdqv, hwaddr offset,
+>      case A_VINTF0_CONFIG ... A_VINTF0_LVCMDQ_ERR_MAP_3:
+>          tegra241_cmdqv_config_vintf_write(cmdqv, offset, value);
+>          break;
+> +    case A_VI_VCMDQ0_CONS_INDX ... A_VI_VCMDQ1_GERRORN:
+> +        /*
+> +         * VINTF Page0 registers are hardware aliases of VCMDQ Page0 registers.
+> +         * Translate the VINTF aperture offset to its VCMDQ Page0 equivalent
+> +         * before dispatching to the Page 0 helper.
+> +         */
+> +        offset -= CMDQV_VINTF_PAGE0_BASE - CMDQV_VCMDQ_PAGE0_BASE;
+> +        index = (offset - CMDQV_VCMDQ_PAGE0_BASE) / CMDQV_VCMDQ_STRIDE;
+> +        tegra241_cmdqv_write_vcmdq_page0(cmdqv,
+> +                offset - index * CMDQV_VCMDQ_STRIDE, index, value, false);
+> +        break;
+> +    case A_VCMDQ0_CONS_INDX ... A_VCMDQ1_GERRORN:
+> +        /*
+> +         * Decode a per-VCMDQ Page 0 access. Each VCMDQ occupies a
+> +         * CMDQV_VCMDQ_STRIDE-byte window; extract the index and normalize
+> +         * to the VCMDQ0_* offset before calling the Page 0 helper.
+> +         */
+> +        index = (offset - CMDQV_VCMDQ_PAGE0_BASE) / CMDQV_VCMDQ_STRIDE;
+> +        tegra241_cmdqv_write_vcmdq_page0(cmdqv,
+> +                offset - index * CMDQV_VCMDQ_STRIDE, index, value, true);
+> +        break;
+> +    case A_VI_VCMDQ0_BASE_L ... A_VI_VCMDQ1_CONS_INDX_BASE_DRAM_H:
+> +        /* Same VINTF-to-VCMDQ translation as VINTF Page0 case above. */
+> +        offset -= CMDQV_VINTF_PAGE1_BASE - CMDQV_VCMDQ_PAGE1_BASE;
+> +        index = (offset - CMDQV_VCMDQ_PAGE1_BASE) / CMDQV_VCMDQ_STRIDE;
+> +        tegra241_cmdqv_write_vcmdq_page1(cmdqv,
+> +                offset - index * CMDQV_VCMDQ_STRIDE, index, value, false);
+> +        break;
+> +    case A_VCMDQ0_BASE_L ... A_VCMDQ1_CONS_INDX_BASE_DRAM_H:
+> +        index = (offset - CMDQV_VCMDQ_PAGE1_BASE) / CMDQV_VCMDQ_STRIDE;
+> +        tegra241_cmdqv_write_vcmdq_page1(cmdqv,
+> +                offset - index * CMDQV_VCMDQ_STRIDE, index, value, true);
+> +        break;
+>      default:
+>          qemu_log_mask(LOG_UNIMP, "%s unhandled write access at 0x%" PRIx64 "\n",
+>                        __func__, offset);
+> @@ -268,14 +401,36 @@ static void tegra241_cmdqv_writel_mmio(Tegra241CMDQV *cmdqv, hwaddr offset,
+>  }
+>  
+>  /*
+> - * 8-byte MMIO write handler.
+> + * 8-byte MMIO write handler. Only Page 1 BASE / CONS_INDX_BASE_DRAM accept
+> + * full 64-bit writes; other offsets are write-ignored.
+>   */
+>  static void tegra241_cmdqv_writell_mmio(Tegra241CMDQV *cmdqv, hwaddr offset,
+>                                          uint64_t value)
+>  {
+> -    qemu_log_mask(LOG_UNIMP,
+> +    int index;
+> +
+> +    switch (offset) {
+> +    case A_VI_VCMDQ0_BASE_L ... A_VI_VCMDQ1_CONS_INDX_BASE_DRAM_H:
+> +        /*
+> +         * VINTF Page1 registers are hardware aliases of VCMDQ Page1 registers.
+> +         * Translate the VINTF aperture offset to its VCMDQ Page1 equivalent
+> +         * before dispatching to the Page 1 helper.
+> +         */
+> +        offset -= CMDQV_VINTF_PAGE1_BASE - CMDQV_VCMDQ_PAGE1_BASE;
+> +        index = (offset - CMDQV_VCMDQ_PAGE1_BASE) / CMDQV_VCMDQ_STRIDE;
+> +        tegra241_cmdqv_write_vcmdq_page1_64(cmdqv,
+> +                offset - index * CMDQV_VCMDQ_STRIDE, index, value, false);
+> +        break;
+> +    case A_VCMDQ0_BASE_L ... A_VCMDQ1_CONS_INDX_BASE_DRAM_H:
+> +        index = (offset - CMDQV_VCMDQ_PAGE1_BASE) / CMDQV_VCMDQ_STRIDE;
+> +        tegra241_cmdqv_write_vcmdq_page1_64(cmdqv,
+> +                offset - index * CMDQV_VCMDQ_STRIDE, index, value, true);
+> +        break;
+> +    default:
+> +        qemu_log_mask(LOG_UNIMP,
+>                        "%s unhandled 64-bit write at 0x%" PRIx64 " (WI)\n",
+>                        __func__, offset);
+> +    }
+>  }
+>  
+>  static void tegra241_cmdqv_write_mmio(void *opaque, hwaddr offset,
+> diff --git a/hw/arm/trace-events b/hw/arm/trace-events
+> index 4392135fa2..d76f408d8a 100644
+> --- a/hw/arm/trace-events
+> +++ b/hw/arm/trace-events
+> @@ -77,6 +77,8 @@ tegra241_cmdqv_read_mmio(uint64_t offset, uint64_t val, unsigned size) "offset:
+>  tegra241_cmdqv_write_mmio(uint64_t offset, uint64_t val, unsigned size) "offset: 0x%"PRIx64" val: 0x%"PRIx64" size: 0x%x"
+>  tegra241_cmdqv_read_vcmdq_page0(int index, const char *aperture, uint64_t offset0, uint64_t val) "vcmdq[%d] %s page0 offset0: 0x%"PRIx64" val: 0x%"PRIx64
+>  tegra241_cmdqv_read_vcmdq_page1(int index, const char *aperture, uint64_t offset0, uint64_t val) "vcmdq[%d] %s page1 offset0: 0x%"PRIx64" val: 0x%"PRIx64
+> +tegra241_cmdqv_write_vcmdq_page0(int index, const char *aperture, uint64_t offset0, uint64_t val) "vcmdq[%d] %s page0 offset0: 0x%"PRIx64" val: 0x%"PRIx64
+> +tegra241_cmdqv_write_vcmdq_page1(int index, const char *aperture, uint64_t offset0, uint64_t val) "vcmdq[%d] %s page1 offset0: 0x%"PRIx64" val: 0x%"PRIx64
+>  
+>  # strongarm.c
+>  strongarm_uart_update_parameters(const char *label, int speed, char parity, int data_bits, int stop_bits) "%s speed=%d parity=%c data=%d stop=%d"
 
 
