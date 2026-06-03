@@ -4,62 +4,61 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8CB53CD6E55
-	for <qemu-devel@archiver.kernel.org>; Wed,  3 Jun 2026 06:46:43 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6A5B3CD6E4A
+	for <qemu-devel@archiver.kernel.org>; Wed,  3 Jun 2026 06:46:45 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wUfHs-0003jU-4s; Wed, 03 Jun 2026 02:41:12 -0400
+	id 1wUfHr-0003jF-JD; Wed, 03 Jun 2026 02:41:11 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1wUfHb-0003TB-LT
- for qemu-devel@nongnu.org; Wed, 03 Jun 2026 02:41:00 -0400
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1wUfHT-0003Oj-Lk
+ for qemu-devel@nongnu.org; Wed, 03 Jun 2026 02:40:48 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1wUfHW-0000sr-CC
- for qemu-devel@nongnu.org; Wed, 03 Jun 2026 02:40:55 -0400
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1wUfHQ-0000oi-IU
+ for qemu-devel@nongnu.org; Wed, 03 Jun 2026 02:40:45 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1780468849;
+ s=mimecast20190719; t=1780468843;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=8TFPyIxFyQt17aker64szLEViVP2c8QTG6cJlyXNFmU=;
- b=iKQDg/eg4aaNZidoyGwNEeDPYoTdgMu3UiZJOm8wz00suu6bVDxb4ux7kVf7gBuQQeDztW
- J1AzmHpuw2PEuRMdL//Gcm9XcQ26j7gHl+KUOqLXKfXHDeYCcRzLBVEoAKlOdwnZxcYlQD
- lwowkXtyEbA812SnOMNh0brt6+WErh4=
+ bh=R2CH5WK4VSpXrbSHQf8WSbkXHpMlFwqjY0hs4G1p7FE=;
+ b=DLcrIY4v7ri4kPXTjQpPFsSpL+XlB2aHamY8V8NQR1q367xrPMmrAIbwsSXMCYs1ZAjyRV
+ m9TrZMPRnG54dtKNsw3GAC9vf9JvmuIMVl3dh1AkxZGL6Xd2TJhBmVuQsE8+BNFYqutnQN
+ F1Wu8t5M8rQYAa/CBN4lz8uWcvs+jFw=
 Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-68-0WW9TJrNM2aeu2RKvNXx3w-1; Wed,
- 03 Jun 2026 02:40:45 -0400
-X-MC-Unique: 0WW9TJrNM2aeu2RKvNXx3w-1
-X-Mimecast-MFC-AGG-ID: 0WW9TJrNM2aeu2RKvNXx3w_1780468844
-Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-460-StcTsfgSOvK5xFFQqsBelw-1; Wed,
+ 03 Jun 2026 02:40:40 -0400
+X-MC-Unique: StcTsfgSOvK5xFFQqsBelw-1
+X-Mimecast-MFC-AGG-ID: StcTsfgSOvK5xFFQqsBelw_1780468839
+Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
  by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 3735F195608C; Wed,  3 Jun 2026 06:40:44 +0000 (UTC)
+ id D0132195608C; Wed,  3 Jun 2026 06:40:38 +0000 (UTC)
 Received: from blackfin.pond.sub.org (unknown [10.44.22.2])
- by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id E5CC63000203; Wed,  3 Jun 2026 06:40:43 +0000 (UTC)
+ by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 61202195E483; Wed,  3 Jun 2026 06:40:38 +0000 (UTC)
 Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
- id CE48221E64AD; Wed, 03 Jun 2026 08:40:32 +0200 (CEST)
+ id 524BF21E6A23; Wed, 03 Jun 2026 08:40:32 +0200 (CEST)
 From: Markus Armbruster <armbru@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: philmd@mailo.com, pierrick.bouvier@oss.qualcomm.com,
- Manos Pitsidianakis <manos.pitsidianakis@linaro.org>, qemu-rust@nongnu.org
-Subject: [PATCH v2 38/38] MAINTAINERS: Fix F: in "Rust build system
- integration"
-Date: Wed,  3 Jun 2026 08:40:32 +0200
-Message-ID: <20260603064032.3733394-39-armbru@redhat.com>
+ Alexander Graf <agraf@csgraf.de>
+Subject: [PATCH v2 08/38] MAINTAINERS: Fix F: in "Apple Silicon HVF CPUs"
+Date: Wed,  3 Jun 2026 08:40:02 +0200
+Message-ID: <20260603064032.3733394-9-armbru@redhat.com>
 In-Reply-To: <20260603064032.3733394-1-armbru@redhat.com>
 References: <20260603064032.3733394-1-armbru@redhat.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.12
 Received-SPF: pass client-ip=170.10.133.124; envelope-from=armbru@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: 8
@@ -85,31 +84,28 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-We neglected to update MAINTAINERS when we moved rust/wrapper.h, and
-again when we split it up.  Update it now.
+We neglected to update MAINTAINERS when we deleted
+target/arm/hvf-stub.c.  Update it now.
 
-Cc: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
-Cc: qemu-rust@nongnu.org
-Fixes: 1ae4ca0463 (rust: move rust.bindgen to qemu-api crate, 2025-06-13)
+Fixes: 293984563e (hw/arm, accel/hvf, whpx: unify get_physical_address_range between WHPX and HVF, 2026-02-10)
+Cc: Alexander Graf <agraf@csgraf.de>
 Signed-off-by: Markus Armbruster <armbru@redhat.com>
-Reviewed-by: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
 ---
- MAINTAINERS | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ MAINTAINERS | 1 -
+ 1 file changed, 1 deletion(-)
 
 diff --git a/MAINTAINERS b/MAINTAINERS
-index 2743faa1ea..a94096428f 100644
+index 26feb68c0c..269c26196d 100644
 --- a/MAINTAINERS
 +++ b/MAINTAINERS
-@@ -4611,7 +4611,7 @@ F: scripts/rust/
- F: rust/.gitignore
- F: rust/Kconfig
- F: rust/meson.build
--F: rust/wrapper.h
-+F: rust/bindings/*/wrapper.h
+@@ -550,7 +550,6 @@ Apple Silicon HVF CPUs
+ M: Alexander Graf <agraf@csgraf.de>
+ S: Maintained
+ F: target/arm/hvf/
+-F: target/arm/hvf-stub.c
  
- Miscellaneous
- -------------
+ X86 HVF CPUs
+ M: Roman Bolshakov <rbolshakov@ddn.com>
 -- 
 2.54.0
 
