@@ -4,97 +4,101 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9612DCD6E57
-	for <qemu-devel@archiver.kernel.org>; Wed,  3 Jun 2026 01:03:33 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8B650CD6E5D
+	for <qemu-devel@archiver.kernel.org>; Wed,  3 Jun 2026 01:04:17 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wUa0m-0006MN-LV; Tue, 02 Jun 2026 21:03:12 -0400
+	id 1wUa1N-0006js-AT; Tue, 02 Jun 2026 21:03:49 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1wUa0m-0006ME-2I
- for qemu-devel@nongnu.org; Tue, 02 Jun 2026 21:03:12 -0400
-Received: from mail-ej1-x62b.google.com ([2a00:1450:4864:20::62b])
+ id 1wUa1M-0006jJ-0A
+ for qemu-devel@nongnu.org; Tue, 02 Jun 2026 21:03:48 -0400
+Received: from mail-ej1-x633.google.com ([2a00:1450:4864:20::633])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1wUa0k-0000Ce-B9
- for qemu-devel@nongnu.org; Tue, 02 Jun 2026 21:03:11 -0400
-Received: by mail-ej1-x62b.google.com with SMTP id
- a640c23a62f3a-bed4f2f0898so401062166b.3
- for <qemu-devel@nongnu.org>; Tue, 02 Jun 2026 18:03:09 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1780448589; cv=none;
+ id 1wUa1K-0000Jn-IS
+ for qemu-devel@nongnu.org; Tue, 02 Jun 2026 21:03:47 -0400
+Received: by mail-ej1-x633.google.com with SMTP id
+ a640c23a62f3a-befee9e5ef7so124071766b.0
+ for <qemu-devel@nongnu.org>; Tue, 02 Jun 2026 18:03:46 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1780448625; cv=none;
  d=google.com; s=arc-20240605;
- b=U5CJuXJ7JRTl+uIUBpVCNlpqmr7r3Fe3BQiVganx3ZJzMpcght54pyc8C7iyTNv+Ch
- HVVTWdwDD3n00Bo8rBhsu27Wz8MDQjfQfAb3rWe04DXEDvO1Gr4pv0zYSlfOfTV9xCyn
- lveNDNmMu9HsLaIliP+1gMIspHFsWYUBNbm0LCRbESeupUbsR7zcjuS5gMvy630a/2Ig
- EyiHcILm4G5B9X3Bt2UmUPRMlcD2wTlg/gdQb5w6VJb3Z5YH+fW8gegxX0IubCYCePul
- un4644k8dWs+MpwW9Z+gHUxGES75v5KmHyFadCxRFmUarKGxCTb4mPS50yS7pU/Z/kEc
- sSJQ==
+ b=CmICJlfDDKnawb5sz3yydbMyRHjVenrM6WskEgtzHdi90SUUamastcJIkAYazy3g+r
+ jKcbJZNZvmhACN+XSOKNMSNsKgSntoPUiyGTfMIMulj5+RaDFlhwPvEmjKckNXoa2J8w
+ MH+PjHOct3qUtElsBv2CcESjbb3yVVpfC5G3125rvuY+ZruJdzlV0eRPSnSmTAAW3fEz
+ MizmM4lrB6OZ86O992L6jVLyL8yr1vz5s9YtNAZu1q6gT6xAUJhTmdDraxW4EA0XPMr8
+ rN9BIGUwKcDJ4tvICYUjOovV8Cy6CuzFFVUGzUtW1gMVNtr8U9pI9RvgtR/i9EcyVhgO
+ lG3g==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
  s=arc-20240605; 
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:dkim-signature;
- bh=DeNsMlFJgHWj8+szJl9uInk9VdUkbLTv+vjTd07Ap50=;
- fh=+1firF9KONN4Yc1L4UE+f7hjZIqv5yKMPW+CbJoXUyw=;
- b=gx4mEmCWKIgXzwOZyFsXt+JpnDpmE4dpkygtlpGzs68GSMhAGkLkEL+cqaIcCDZQM/
- Pw+zhBc0q8Hc7i4taVhPKNSwUN+i1Emzir3qeZwTP9Hss5KC1h0TzUukeylT/r5dwxni
- 7jzANBijk3Y/djFirSx0b6IvUJSbuE20jAMICO2YpfOPXU+uE04HAZM4WTELclN/wuJJ
- wo674dNrvuxGO3qimnuBS0SVPyQgWVHFU4qFPfsPc76+OxlDCGrxKOBUwJ5RieejQ4ln
- S3o8XIQZu4IjXEc11aLgYxMLLvjIIiVHGP6Im6Zt0xT8TNk+V/aeY9pa3WnyouRYbEdL
- hvEw==; darn=nongnu.org
+ bh=AGKgT1ADvc73GkcOLam8AhKgJtIO4uzN1w6zJXvZOAU=;
+ fh=fx/r/twi0lR0VsLAVqPkirIE7VN6h63K7UWTunhhuts=;
+ b=Sg+bhw/++tvEVphzwZ5Jw+aGn1XMyEibwaYHOhqE9jTlNZuJow95zi1SBUKCYwCo4z
+ MnY+cbnGI7UPiDmpR9vIz+G4c+95FKdeGxOUXvcUHPNmaDfDsiZztmv1uyLm3ZGNUPUY
+ u70eInwsKOqx1/ChGNTZWlLGcf2gwzkL7xv62b3ylSKNOIpxfEb/Kmbw9OGT2ZAyjPDx
+ HvT9Z7ZHmEL9qbW7Epxf6QbP8KTVUwAmU2+SnO16FANdjJJtj+xMW4Ark9Y3AH3e+kCR
+ +zetOwmXABr98vRzn14aCvcqI7kCSdBg+z38Mc/6eQzQGcWq5ENG0UzxvPFe7CcAwk0T
+ 2Wnw==; darn=nongnu.org
 ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1780448589; x=1781053389; darn=nongnu.org;
+ d=gmail.com; s=20251104; t=1780448625; x=1781053425; darn=nongnu.org;
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:from:to:cc:subject:date
  :message-id:reply-to;
- bh=DeNsMlFJgHWj8+szJl9uInk9VdUkbLTv+vjTd07Ap50=;
- b=Ykxkydff3/ipXGMWd7iFPi9RTcanzEhInpOhrADbjKtOX/fwJuttF0EB/9/ORSWFrU
- sxcLw6+/uu8ZLiOgB28//yjHDgm+Skfp0rwqcf6rfkgmlZyO3hEztXg/Wiihj/CS6lJ+
- 7pF1pWEMA/Ct4D6ZVcvuEoDtltQS9vy0UJkV3Uj7AOT6LyRuwKta1QTBL5WULZiuE3iS
- df0Adfr70ksVoVMCFpJmMF5cBzm0zymzaeyZ+mhZ8DQGGoL3Lb6F50jgVQ4PiEyk1nWS
- zIP6XzHql8/F88SYq4IozOHuGrwS/YmRklcbYY86apkkQvKvGKgevKhTs6b/jvdDqRVm
- 01hw==
+ bh=AGKgT1ADvc73GkcOLam8AhKgJtIO4uzN1w6zJXvZOAU=;
+ b=HjclmfKixGUSu0q2+7h6aRClq+RvyaqOqG82NDpcx+wWDGWbT62fJS13AGtIS6Beuo
+ OdXHGqAlRXi7CF+NbmVQUHUjnSeH4R0TaGcpjQgEUYQ1bvOkCKsYLtcRhtx3kiedq0W6
+ K+q1ORsccHlWgFVAvpCDJOpJ516w/s3dtF5VHAvScgKTGwko4009HlKZ8xo7Vxt8NnUp
+ KQbuW4UTUSarPQk0hoZ8vsvguRf5OyBl7ZI83lFN1Oq5AmOYtaTt9WW3NzU9KbqxCM1l
+ QFwm5Dw520S1iKzdFkK1q65++AhZHE1OmqI+DY1SJMJX6dv24bpTUdmnWh0sweWG82ud
+ Jqtg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1780448589; x=1781053389;
+ d=1e100.net; s=20251104; t=1780448625; x=1781053425;
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to;
- bh=DeNsMlFJgHWj8+szJl9uInk9VdUkbLTv+vjTd07Ap50=;
- b=m+Nx/PBbBdWpmAbrKhZp6ErljkMJhvYpRNkHNCmwHOtbVT13GilZGNCaLRpmkzxxzQ
- +XHzgt4Iz5v9b/wwsy/Pyf6LK/bKfuwL8MevoPY+7EnYCoiuXpz03bpl/oDVk3QNYUfq
- 5Bw/MPxpuSmxTJcloKU0qdJJiTgcN8dB5rLZ+A7ldEi05OHLWijInBfH1wpalGQdhlvh
- Q0ruQyAjMVs2aLtnIn8rYe2ZI456z1jSJp4MfPB2kvIUV0nVtZvtnEnUGvSxdmy9fcF0
- 7F4OOB4Pmrm8SMezdNbGGJkThCHQ6LAavDag7UMPQFX0p2mGr2bIieoGyBbhbW0UjXsv
- a+8w==
-X-Gm-Message-State: AOJu0YzPrF4Loomz8d5BdK6Vh2QKUQYWhcPtAmbiitVAVUlA++ZcrmZG
- ZxmzQ1vLcdAVW6bgHk+AdFMdjOssA+p63yyQDtZvImXDRa5KkQFAnV8agfwnD9Hl9kMDB+qoAto
- Huzfg8l2fePw7ae7YKHVzN8MHPQLIQ1E=
-X-Gm-Gg: Acq92OFdTs6Jx3SQsk8GFAWWynrwndvcj8LFkM38Do9f/UYqM8dvfvaSWzHEjWOeQGl
- 6IOKfz3A9UVb1iZJsyLai/y9VO6jn0U1TNT3mJJMQuXmUDeIBTPzrKeWYErfpWlD4vO26Ob65D3
- C8hgoz9Hr6Ino6NwuaDOeU1YjZJlxl67CyK09Uxqb4mHYK2x4dqbM6ftutqYSQ1nLhTNNq1dogg
- FxhQYdbqvy4Fu6WjaBGog+dVLDfTu+fqpE5lZ6Ty1q7k8orOCA2qE+Q4TH5Y03V0+mcvDEinkfs
- LEfsen+3PZEdQ/VFSZnwcdpybsLM6mX+1HvYNjejcN67zT/0a9/10/ldNfw=
-X-Received: by 2002:a17:906:5a5c:b0:bee:215e:5486 with SMTP id
- a640c23a62f3a-bf0b3aaceacmr20946966b.36.1780448588705; Tue, 02 Jun 2026
- 18:03:08 -0700 (PDT)
+ bh=AGKgT1ADvc73GkcOLam8AhKgJtIO4uzN1w6zJXvZOAU=;
+ b=mDTednmEzJ1vgi4VvGrtaaFA0+BeNzIJ/okxBGtBuzomd/88eLhobEQXPA6sdhLNkB
+ /7CNsWoF+Vtvy75uu+G32uSBSfo+IfHcsA5URGBjL0NretgtIQqRj50c65YWzS14epzk
+ T6vg/WSTasmiWmDwlkYGEKHZ8JF/dES+XUulo+Sh1MdakZAKn6byEfuYa+KXtGI5aru+
+ 8UErJIdKhVNn4oPg5oiGx0CNUbkwNGBcAVZKKJa8Q12FKeqH65rvjc2E29HAgUrbm+Y5
+ 9qJxR5FggmGao8l0cwrmIjrmT7a0nrJ5/QccPRDr1FNy2ReFyTw70HrQgPcdLA+pTQG0
+ VWZQ==
+X-Gm-Message-State: AOJu0Yw3bq1uHKG2zcXozzMM0I7OqYvhNTSLgz9kjQv5eSJ/lYIXXJkb
+ JCypFa3GZmeI43vjRQBt/6o7N8hnj4reTdOs80iJZmXCn5AMQSbpMQZAQpTFFGRf7nResUQ/D1I
+ 7Zgnm9vmV/JGW1YI0OVF443bBjdZ+6Lc=
+X-Gm-Gg: Acq92OGvmPTTsNc+6zd3Hv/49lQaaFiVsQiqb2yxeXBEqZYvIUYSO6yOHtZDDcKk60D
+ q19zRr3Z0cnFUL/Z0sSnQlAoTBBbFnmKz/v0LlUpygIepPzlsHIM+wgCBIrSITLa29vOA6NomjK
+ hi0ncLMvPBoH+3jBYhlEvD2Ym2wuHredkrb972G0ShYVQKx/s40ovdslEgHnfy+iMEEBWe7nI/8
+ JQvyTCgqhs1vo2XiNSHl2fzwkkyUgY0cgAy8Z3FZV6GEW3ODkaV1DYb7YlExhvqt2zg3Y3rlwkw
+ aQe7UCndOSKOV2sepgXgU9Xb1YP6tDJxF6BfAEv7TViDlXy3
+X-Received: by 2002:a17:907:c499:b0:bed:afd6:9e07 with SMTP id
+ a640c23a62f3a-bf0a883b8e4mr39586866b.14.1780448624638; Tue, 02 Jun 2026
+ 18:03:44 -0700 (PDT)
 MIME-Version: 1.0
-References: <20260516-qom-tests-v3-0-3f20c3a029a7@redhat.com>
- <20260516-qom-tests-v3-22-3f20c3a029a7@redhat.com>
-In-Reply-To: <20260516-qom-tests-v3-22-3f20c3a029a7@redhat.com>
+References: <20260528060007.717307-1-frank.chang@sifive.com>
+In-Reply-To: <20260528060007.717307-1-frank.chang@sifive.com>
 From: Alistair Francis <alistair23@gmail.com>
-Date: Wed, 3 Jun 2026 11:02:42 +1000
-X-Gm-Features: AVHnY4JZr5MZYF0uKqcxJlGqun3klwecM7wXu3IvQwX4JgzE0s9IEKuYahX0LF0
-Message-ID: <CAKmqyKOhH5rd9N9yO_kjGo-Fq5pn4sZ4DEBCz6gQu48EUQT4qQ@mail.gmail.com>
-Subject: Re: [PATCH v3 22/24] target/riscv: use hash table as set for
- user_options
-To: =?UTF-8?B?TWFyYy1BbmRyw6kgTHVyZWF1?= <marcandre.lureau@redhat.com>
-Cc: qemu-devel@nongnu.org, armbru@redhat.com
+Date: Wed, 3 Jun 2026 11:03:17 +1000
+X-Gm-Features: AVHnY4Istv7XTsP9Es_L2fLY6aEnr5LBncXIUD7-12KrDuE-vZgm8LRyJcw7aRs
+Message-ID: <CAKmqyKMaodduh8Ea4AM92tZFaA_h6hyJzBi6Ge1mueydN+TR+Q@mail.gmail.com>
+Subject: Re: [PATCH] target/riscv: Reorder Smrnmi CPU fields above CPU reset
+ line
+To: frank.chang@sifive.com
+Cc: qemu-devel@nongnu.org, Palmer Dabbelt <palmer@dabbelt.com>, 
+ Alistair Francis <alistair.francis@wdc.com>, Weiwei Li <liwei1518@gmail.com>, 
+ Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>,
+ Liu Zhiwei <zhiwei_liu@linux.alibaba.com>, 
+ Chao Liu <chao.liu.zevorn@gmail.com>, 
+ "open list:RISC-V TCG CPUs" <qemu-riscv@nongnu.org>
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::62b;
- envelope-from=alistair23@gmail.com; helo=mail-ej1-x62b.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::633;
+ envelope-from=alistair23@gmail.com; helo=mail-ej1-x633.google.com
 X-Spam_score_int: -17
 X-Spam_score: -1.8
 X-Spam_bar: -
@@ -118,176 +122,61 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Sat, May 16, 2026 at 6:02=E2=80=AFPM Marc-Andr=C3=A9 Lureau
-<marcandre.lureau@redhat.com> wrote:
+On Thu, May 28, 2026 at 4:01=E2=80=AFPM <frank.chang@sifive.com> wrote:
 >
-> The values stored in user_options are never retrieved, only key
-> presence is checked. Use g_hash_table_add() instead of
-> g_hash_table_insert() and drop the unused value parameter.
+> From: Frank Chang <frank.chang@sifive.com>
 >
-> Signed-off-by: Marc-Andr=C3=A9 Lureau <marcandre.lureau@redhat.com>
+> Smrnmi CPU fields introduced by commit: #5db557f should be reset when
+> the CPU resets, so move these fields above the CPU reset line.
+>
+> Signed-off-by: Frank Chang <frank.chang@sifive.com>
 
 Reviewed-by: Alistair Francis <alistair.francis@wdc.com>
 
 Alistair
 
 > ---
->  target/riscv/cpu.c | 32 +++++++++++++++-----------------
->  1 file changed, 15 insertions(+), 17 deletions(-)
+>  target/riscv/cpu.h | 18 +++++++++---------
+>  1 file changed, 9 insertions(+), 9 deletions(-)
 >
-> diff --git a/target/riscv/cpu.c b/target/riscv/cpu.c
-> index bbdc9d8f5de..6adba597969 100644
-> --- a/target/riscv/cpu.c
-> +++ b/target/riscv/cpu.c
-> @@ -60,11 +60,9 @@ bool riscv_cpu_is_32bit(RISCVCPU *cpu)
->      return riscv_cpu_mxl(&cpu->env) =3D=3D MXL_RV32;
->  }
+> diff --git a/target/riscv/cpu.h b/target/riscv/cpu.h
+> index d9c1e000cb2..682c6e752cc 100644
+> --- a/target/riscv/cpu.h
+> +++ b/target/riscv/cpu.h
+> @@ -491,6 +491,15 @@ struct CPUArchState {
+>      uint64_t hstateen[SMSTATEEN_MAX_COUNT];
+>      uint64_t sstateen[SMSTATEEN_MAX_COUNT];
+>      uint64_t henvcfg;
+> +
+> +    /* RNMI */
+> +    uint64_t mnscratch;
+> +    uint64_t mnepc;
+> +    uint64_t mncause; /* mncause without bit XLEN-1 set to 1 */
+> +    uint64_t mnstatus;
+> +    uint64_t rnmip;
+> +    uint64_t rnmi_irqvec;
+> +    uint64_t rnmi_excpvec;
+>  #endif
 >
-> -static void cpu_option_add_user_setting(RISCVCPU *cpu, const char *optna=
-me,
-> -                                        uint32_t value)
-> +static void cpu_option_add_user_setting(RISCVCPU *cpu, const char *optna=
-me)
->  {
-> -    g_hash_table_insert(cpu->user_options, (gpointer)optname,
-> -                        GUINT_TO_POINTER(value));
-> +    g_hash_table_add(cpu->user_options, (gpointer)optname);
->  }
+>      /* Fields from here on are preserved across CPU reset. */
+> @@ -509,15 +518,6 @@ struct CPUArchState {
+>      uint64_t kvm_timer_state;
+>      uint64_t kvm_timer_frequency;
+>  #endif /* CONFIG_KVM */
+> -
+> -    /* RNMI */
+> -    uint64_t mnscratch;
+> -    uint64_t mnepc;
+> -    uint64_t mncause; /* mncause without bit XLEN-1 set to 1 */
+> -    uint64_t mnstatus;
+> -    uint64_t rnmip;
+> -    uint64_t rnmi_irqvec;
+> -    uint64_t rnmi_excpvec;
+>  };
 >
->  bool riscv_cpu_option_set(RISCVCPU *cpu, const char *optname)
-> @@ -1452,7 +1450,7 @@ static void prop_pmu_num_set(Object *obj, Visitor *=
-v, const char *name,
->
->      warn_report("\"pmu-num\" property is deprecated; use \"pmu-mask\"");
->      cpu->cfg.pmu_mask =3D pmu_mask;
-> -    cpu_option_add_user_setting(cpu, "pmu-mask", pmu_mask);
-> +    cpu_option_add_user_setting(cpu, "pmu-mask");
->  }
->
->  static void prop_pmu_num_get(Object *obj, Visitor *v, const char *name,
-> @@ -1494,7 +1492,7 @@ static void prop_pmu_mask_set(Object *obj, Visitor =
-*v, const char *name,
->          return;
->      }
->
-> -    cpu_option_add_user_setting(cpu, name, value);
-> +    cpu_option_add_user_setting(cpu, name);
->      cpu->cfg.pmu_mask =3D value;
->  }
->
-> @@ -1526,7 +1524,7 @@ static void prop_mmu_set(Object *obj, Visitor *v, c=
-onst char *name,
->          return;
->      }
->
-> -    cpu_option_add_user_setting(cpu, name, value);
-> +    cpu_option_add_user_setting(cpu, name);
->      cpu->cfg.mmu =3D value;
->  }
->
-> @@ -1558,7 +1556,7 @@ static void prop_pmp_set(Object *obj, Visitor *v, c=
-onst char *name,
->          return;
->      }
->
-> -    cpu_option_add_user_setting(cpu, name, value);
-> +    cpu_option_add_user_setting(cpu, name);
->      cpu->cfg.pmp =3D value;
->  }
->
-> @@ -1598,7 +1596,7 @@ static void prop_num_pmp_regions_set(Object *obj, V=
-isitor *v, const char *name,
->          return;
->      }
->
-> -    cpu_option_add_user_setting(cpu, name, value);
-> +    cpu_option_add_user_setting(cpu, name);
->      cpu->cfg.pmp_regions =3D value;
->  }
->
-> @@ -1636,7 +1634,7 @@ static void prop_pmp_granularity_set(Object *obj, V=
-isitor *v, const char *name,
->          return;
->      }
->
-> -    cpu_option_add_user_setting(cpu, name, value);
-> +    cpu_option_add_user_setting(cpu, name);
->      cpu->cfg.pmp_granularity =3D value;
->  }
->
-> @@ -1709,7 +1707,7 @@ static void prop_priv_spec_set(Object *obj, Visitor=
- *v, const char *name,
->          return;
->      }
->
-> -    cpu_option_add_user_setting(cpu, name, priv_version);
-> +    cpu_option_add_user_setting(cpu, name);
->      cpu->env.priv_ver =3D priv_version;
->  }
->
-> @@ -1743,7 +1741,7 @@ static void prop_vext_spec_set(Object *obj, Visitor=
- *v, const char *name,
->          return;
->      }
->
-> -    cpu_option_add_user_setting(cpu, name, VEXT_VERSION_1_00_0);
-> +    cpu_option_add_user_setting(cpu, name);
->      cpu->env.vext_ver =3D VEXT_VERSION_1_00_0;
->  }
->
-> @@ -1786,7 +1784,7 @@ static void prop_vlen_set(Object *obj, Visitor *v, =
-const char *name,
->          return;
->      }
->
-> -    cpu_option_add_user_setting(cpu, name, value);
-> +    cpu_option_add_user_setting(cpu, name);
->      cpu->cfg.vlenb =3D value >> 3;
->  }
->
-> @@ -1827,7 +1825,7 @@ static void prop_elen_set(Object *obj, Visitor *v, =
-const char *name,
->          return;
->      }
->
-> -    cpu_option_add_user_setting(cpu, name, value);
-> +    cpu_option_add_user_setting(cpu, name);
->      cpu->cfg.elen =3D value;
->  }
->
-> @@ -1863,7 +1861,7 @@ static void prop_cbom_blksize_set(Object *obj, Visi=
-tor *v, const char *name,
->          return;
->      }
->
-> -    cpu_option_add_user_setting(cpu, name, value);
-> +    cpu_option_add_user_setting(cpu, name);
->      cpu->cfg.cbom_blocksize =3D value;
->  }
->
-> @@ -1899,7 +1897,7 @@ static void prop_cbop_blksize_set(Object *obj, Visi=
-tor *v, const char *name,
->          return;
->      }
->
-> -    cpu_option_add_user_setting(cpu, name, value);
-> +    cpu_option_add_user_setting(cpu, name);
->      cpu->cfg.cbop_blocksize =3D value;
->  }
->
-> @@ -1935,7 +1933,7 @@ static void prop_cboz_blksize_set(Object *obj, Visi=
-tor *v, const char *name,
->          return;
->      }
->
-> -    cpu_option_add_user_setting(cpu, name, value);
-> +    cpu_option_add_user_setting(cpu, name);
->      cpu->cfg.cboz_blocksize =3D value;
->  }
->
->
+>  /*
 > --
-> 2.54.0
+> 2.43.0
 >
 >
 
