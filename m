@@ -4,103 +4,100 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 211E9CD6E57
-	for <qemu-devel@archiver.kernel.org>; Wed,  3 Jun 2026 14:52:10 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0A11ECD6E57
+	for <qemu-devel@archiver.kernel.org>; Wed,  3 Jun 2026 14:52:51 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wUmwL-0008Az-Bo; Wed, 03 Jun 2026 10:51:29 -0400
+	id 1wUmxH-0008PZ-CM; Wed, 03 Jun 2026 10:52:27 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <stefanha@gmail.com>)
- id 1wUmwG-0008Ap-1y
- for qemu-devel@nongnu.org; Wed, 03 Jun 2026 10:51:24 -0400
-Received: from mail-ej1-x62b.google.com ([2a00:1450:4864:20::62b])
+ id 1wUmxF-0008PB-Tc
+ for qemu-devel@nongnu.org; Wed, 03 Jun 2026 10:52:25 -0400
+Received: from mail-ej1-x62f.google.com ([2a00:1450:4864:20::62f])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <stefanha@gmail.com>)
- id 1wUmwE-0002zt-Ah
- for qemu-devel@nongnu.org; Wed, 03 Jun 2026 10:51:23 -0400
-Received: by mail-ej1-x62b.google.com with SMTP id
- a640c23a62f3a-bf046d4da1fso152313266b.3
- for <qemu-devel@nongnu.org>; Wed, 03 Jun 2026 07:51:21 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1780498280; cv=none;
+ id 1wUmxE-0003qu-FB
+ for qemu-devel@nongnu.org; Wed, 03 Jun 2026 10:52:25 -0400
+Received: by mail-ej1-x62f.google.com with SMTP id
+ a640c23a62f3a-bec43ee8ff0so130800866b.1
+ for <qemu-devel@nongnu.org>; Wed, 03 Jun 2026 07:52:24 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1780498343; cv=none;
  d=google.com; s=arc-20240605;
- b=bubUiwocU+XzzYIyqCZG7NXd2V7peKOR3TThuGUB5tYgrJ42ICmRKI0l0SbbwGtBfo
- sCk3anRWxDhRHqNnLTU3je50FvJbk/TKHyq6gKyzui2Fdo7vCJ8UMi7XJ7iqXbM50lMw
- mHyq3UtO2r+JvcsyBYhu/IKzwEZukrDO+zTnk/UZEODtJ9xoSZyey5h7EbEg6DlglNKz
- 9jcHVHgkuj8F49Q/ZBI1EVkmNmHMdVzAcFlfI0770rV54eYP9YCO1jyzIBvF/Uj+53Mx
- AdaxGnYarAClHaTInmWjebTmlJ7FrdPJCkRN3CaV6zzilhx9QCkO0zbgtm3AlOVF1Zxw
- gbrQ==
+ b=JLgVnbjnGvbMal3HNo8tgAMX+7yWDzC5cudEB/S3J/J86PiiON7oNOEaVbllPU0HBu
+ B4QiqK7nAsboonBPbPTvo9SjhTvv5R/TtwWiPnd7eYMAVxPxEBEir+YOgUpeCljtRhxT
+ b7UIE0mFTEmsvw+GgbjD+6fGN6mYp/GJc4R8iPSq1UD5YjUcosQHqymwJRWtKC6cUi3X
+ xdgPbsB7ZvEVNqdTpooxOBZpuC1U5JHOtTf3vBt31tc14Plnnxi4zeujJ+L0msiax8FK
+ fRfGHwtRXDd4fB5MtMe14b5LgcjWmKICNagKvT1aabxClxJaD/ynUsgCwCVGACv5Sm+7
+ 1odw==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
  s=arc-20240605; 
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:dkim-signature;
- bh=qZ+CSaMdJj5Ziz/UABtI6gZbghEhLa2A7I9bTo0n6eQ=;
- fh=jLOYD3FirvnRX49lPiVx6PZReYR15m+gPuAeFKi2agU=;
- b=MIfBwY5sf8acbRIMZW8JRPWSdiN/k0iBPc9ZUsuWSy0hooxx2XOWHb3SNvZ61Fm34z
- OXu5BxprTykH5awd4AOMT5nfQajRWb7wnudsp6Cauh7FnXxWp289CEGil3xcFQcAi2pT
- XDrwtazdpAIyzaRKCz6dtKFr33u9mRkmHIDj5ehrWpo6tv6z5vniJNPg3dfhZXEpOkWL
- 6BRt1UJr6rlSp3bwvV3A/d7m/a+ARI+/d5Lus+j4LdTfTchLHKdY6GOiGFaLPF/7oEo7
- o4vTT0UyByUzYG3LDGzpsfhsFV9KuH/4lEbReH2LVegoZPH6OzZ/a8qmYRd5Xw0SwJkk
- kitw==; darn=nongnu.org
+ bh=nLG6IExvoYypSUdeswPJF1E/o1Oi8dN4I6U8eFs8XKk=;
+ fh=622OFClSuCoV+wH+xYe7ZMTvouo00wZVM68ZfKBPg6k=;
+ b=NXtHbr8kvcuAUjdKb6fhO2ZpHfXgKVt7S5bPhd+upr417Pjkx26bayPI1nhkLoNDNB
+ ttrF/OLRhsd4PkZGkar6l6xA0nvlN+g7ruicMla5IxTXV1iTdWWueKobHcbQU/K4B20c
+ oii/WTkyqIXtOPlf4zarkJpmn7XMl17D/GEIqifMktKFXNYj/lnw2K/+qORjNwCl8Ic7
+ OMZ5Q7hLt4SJljWkFjw16ME2knVG1kRv2xzDgqeQK0QegKT4bphd+neaXSH1G3vMXGTn
+ Ldp/DlW+LuKgrRoJAG0axqs1g6Zg2hGNWK5hWvuzQUW5YRkDzsf7q16heTj/nhhbofj5
+ joCA==; darn=nongnu.org
 ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1780498280; x=1781103080; darn=nongnu.org;
+ d=gmail.com; s=20251104; t=1780498343; x=1781103143; darn=nongnu.org;
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:from:to:cc:subject:date
  :message-id:reply-to;
- bh=qZ+CSaMdJj5Ziz/UABtI6gZbghEhLa2A7I9bTo0n6eQ=;
- b=N5Ns3pF96zJCuzxaN0giZRSa+kEUfXXGHVLwCPtr/MZfARI15qfYn8CCeVmNbzd6fi
- M/f8Ut09S/j5RmrMirJqyl8qg1aWhoRC4kVwvEHLWssk98JAUYaTqlfBLlyfrXZUdJdM
- QLlsflQjjmCOGGL5xg/EHb7d4hW7ftum2qdHffES50pbW0Vx+h3sRZYkw9xYY+DoQTH+
- jPaE3+bSpMVC5qqX3WzAYla34tAJO8JW90zvsTKDSH4XFLVEIPBp75sOFW74M2wOmZvn
- /56EIHzuBoJbDVjqDVOU9HxUVw8apabuJtnWdJR/TpNpvQCRmh5WLdqtto0q7liEP8a/
- 9Cww==
+ bh=nLG6IExvoYypSUdeswPJF1E/o1Oi8dN4I6U8eFs8XKk=;
+ b=U7/N4EFm7GGkC6O1raqcQIC8vonIfAF5uhdsiyrJnt6nPHLp6xutvbrOTeYIYpw428
+ setiADBCIl0MSrgAukCSXyT5gsGQXcIJ+L6Eom6oDpzcKJjigX8zvO2d9MieJew92/8T
+ fjFq67AHx2zm9OG5VANhRLvXVNT54HE95HZUaXD+DHAwPHqoZ8lixtl3hiczDp1y/P5V
+ kJ7PXzQLCfw1jrDulIXcdpMGABO51TjMPSCwFu3yqV5kKiJEUyBLK99hwcRzHZutyGJY
+ n6/0U/xwTYj7y0eEHSa01/iQgnHApfDuX2BcHTxsO41XNB7gAHPfSSARuKyXsqmRXfQJ
+ iJ0Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1780498280; x=1781103080;
+ d=1e100.net; s=20251104; t=1780498343; x=1781103143;
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to;
- bh=qZ+CSaMdJj5Ziz/UABtI6gZbghEhLa2A7I9bTo0n6eQ=;
- b=BgIJS+AJbvDnHooTFWWSYd8eKZwnt/XkpB4PyapprdCQy/10TEk15EfNtwE/4Rwws/
- qJgPuqkvgQA3ec+QbiuYNH0wv7xNrG4XO7nbnEogbD84GEKQdZ9i9S79klbWWS1WlDHV
- Zn4Ux4ImbQJE5pA6d/k+ivoluQZKlT9HvyNKNmokd5tLXqc9gTzcsYtf+CiVwwcrioDb
- iDYKswsGwX0RIgYu9mKPIsGfKIklryDiBxkDaPlmcn5kdCDBCytWQZP1rDSS2/72C9ei
- eStOIYqH1ACkNM7/ibSwj5B8vCIe4JkwvjXus7FoxpJK9srT1MUwVxlyIbALdbMzxrEm
- LAoA==
+ bh=nLG6IExvoYypSUdeswPJF1E/o1Oi8dN4I6U8eFs8XKk=;
+ b=HCgQE3+KaLLeAnaoP2L9hTx+HykMv+Nf2wDujoDRWQ6urvzrEadlRt7Njh1li3Mlf7
+ iElHBSs0mHTyGkL95VyDqohDMb1HDiLhykANZ1y1TXZ7Q+wju8tmMsO58w1wSkc82iaY
+ v8jsBRWUs60YeJQawxul3/AWo5pfqTZn2H8L2v77d9Jf8C8BhJsUwNrJkexF1U4AUzZW
+ aU6umtk6hL/a7i9H8Q/rOycvvXDepE7ZjqOexEd2Bf1wxyiv2JOSmKskiLGCIkiiKhl/
+ M+Cze/bkvL3p7Ah7JaGdd++4/Hp80hrGvQW+AkXJtMXkEEINu6ZTWJQaILG7TWUspaJH
+ WIPg==
 X-Forwarded-Encrypted: i=1;
- AFNElJ8LVUZXo84S1ERjs+WXC9e5/I46+B390k0KOL6WuOHboucSWIpEl+TqZX0QRZW6uoDoqVU83yohjjPT@nongnu.org
-X-Gm-Message-State: AOJu0YwpkfK4j2YA0IXX66f/ujeYQNjst9pJyN85qZiZDTRX3amNk6Hg
- 4U1LthlrKSTF4+0TrxVPMdh3dtgEYqdQ0MUP4eWUyNlabN78LrtolXrBUQGPYmtGo8ftgW7Yaws
- t2pDRmTPoBbAvRnKS+BgDZLL9ujcVBQY=
-X-Gm-Gg: Acq92OFpJELfJ+PiLspKZRMVFqBQh7O56G/EVWpv+bugD6OsOt64Vho0JBszkvfqdMP
- Hxxl+XZQ22DlAEHja97FLgBv4BGJnhVpDg3f7nsxbEueaiD1rUKS+6167giDWt5ZbyaoQIvMxyb
- fM1pooGOrzYIHwXSP0emsQdviTf29lnX3PkuwWhyUUlnVzILik8IHiQkii6AmWIFzFwsU2OqfsN
- NlHWM8Du1P7K2u6fJAQCMdjKeCwDs1AhEYlf0sRRk/ZzEp3sv6FcfuXmX0eLoo3vqpH28c6WtW1
- EyqjnRJywCCOKqcAow2KQ9LOJUmIW/VnIKHfgqlc3WFT5jsip5SA
-X-Received: by 2002:a17:906:9c90:b0:bce:a1fc:6877 with SMTP id
- a640c23a62f3a-bf0ae3fefabmr213308866b.24.1780498280189; Wed, 03 Jun 2026
- 07:51:20 -0700 (PDT)
+ AFNElJ99OOgVpWr9XVM4ABvUsWwZuoefQlPd7mCD+T8V1V7Pd874Y1IP4BaAgBZGgL9ZH90lWcSIo6ijbdO9@nongnu.org
+X-Gm-Message-State: AOJu0YwR/fsBa7tOHqmk0kF5lfc1Axs9Jsf/+DbGVYQEYxnxLqZWkykH
+ gJkFPPOkqG/dxs8JnB4BUYGrEy+MEQG/3vc3hw76AGBKb+OXne7LJx83lADVi4u0jMe/zHqq/vy
+ L+pzxImXF9+mrQiUzMlzfNVxVRCnrdgE=
+X-Gm-Gg: Acq92OECsv7tO/wlERkTky1aMV64o3fyqxnAbAezR6IDUnlNCA79h2I66tYEG0UrJZb
+ 8sHljnOTRwuK1BoRTBRsJdiETHvf9sDYocAaBrOKqft88l7MQycUpQm1jPkeUAZQvW9VGUrCoom
+ PLBiuU1eqNxMNFFl/epIELyDXNc+lmLInPmHVGIEQUtvzbsbMiWgUG0c29q0E9lNNJ2NMZJZ6bK
+ 8xk0/YsTKLrFi9miRinNNLORCV2wNR1NQDtxs+M3ryx88g+ob83v9vhvW21kI/pZvlsuYkemBBR
+ dpL3lA8JRCGMOdUD5DYGRxfnyOl4N4qGxMcCe8JpKvsUwSz9TvOL
+X-Received: by 2002:a17:907:3f10:b0:bd8:bc4e:fb8c with SMTP id
+ a640c23a62f3a-bf09c6ac386mr187331766b.4.1780498342646; Wed, 03 Jun 2026
+ 07:52:22 -0700 (PDT)
 MIME-Version: 1.0
-References: <20260602162457.828969-1-stefanha@redhat.com>
- <20260602162457.828969-2-stefanha@redhat.com>
- <b3e40f92-6544-40ba-ab18-9171b6318ca1@mailo.com>
-In-Reply-To: <b3e40f92-6544-40ba-ab18-9171b6318ca1@mailo.com>
+References: <20260603064032.3733394-1-armbru@redhat.com>
+ <20260603064032.3733394-11-armbru@redhat.com>
+ <ff2c3cd4-4457-4f55-bdd7-9aa2d7f2bbfd@mailo.com>
+In-Reply-To: <ff2c3cd4-4457-4f55-bdd7-9aa2d7f2bbfd@mailo.com>
 From: Stefan Hajnoczi <stefanha@gmail.com>
-Date: Wed, 3 Jun 2026 10:51:07 -0400
-X-Gm-Features: AVHnY4LAaptl-I6VSOW8Df8W0Mev2slbesV7bXLaJuoVNwt3CMLiX8Gj-62UHhs
-Message-ID: <CAJSP0QUW_-dhyVN8Q6mTK=hqJ=_8rxL3-ygNxyjSGYX-MqPWXQ@mail.gmail.com>
-Subject: Re: [PATCH 1/3] gitlab: remove x64-freebsd-14-build Cirrus job
+Date: Wed, 3 Jun 2026 10:52:09 -0400
+X-Gm-Features: AVHnY4Les6FcZRBGin2IYgROz_lEJoi_Ktd1h1sWEGgUzFoWhVyTsy_kqPTJ_2E
+Message-ID: <CAJSP0QX55BtJt9hz1xMc_VZagFxtmt5SvVWGjcwqoKbgD_7K5w@mail.gmail.com>
+Subject: Re: [PATCH v2 10/38] MAINTAINERS: Fix F: in "Darwin (macOS, iOS)"
 To: =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@mailo.com>
-Cc: Stefan Hajnoczi <stefanha@redhat.com>, qemu-devel@nongnu.org, 
- =?UTF-8?B?QWxleCBCZW5uw6ll?= <alex.bennee@linaro.org>, 
- Li-Wen Hsu <lwhsu@freebsd.org>,
- Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>, 
- Warner Losh <imp@bsdimp.com>
+Cc: Markus Armbruster <armbru@redhat.com>, qemu-devel@nongnu.org, 
+ pierrick.bouvier@oss.qualcomm.com, Stefan Hajnoczi <stefanha@redhat.com>
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::62b;
- envelope-from=stefanha@gmail.com; helo=mail-ej1-x62b.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::62f;
+ envelope-from=stefanha@gmail.com; helo=mail-ej1-x62f.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -123,41 +120,40 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, Jun 3, 2026 at 3:09=E2=80=AFAM Philippe Mathieu-Daud=C3=A9 <philmd@=
+On Wed, Jun 3, 2026 at 4:26=E2=80=AFAM Philippe Mathieu-Daud=C3=A9 <philmd@=
 mailo.com> wrote:
 >
-> On 2/6/26 18:24, Stefan Hajnoczi wrote:
-> > Cirrus has shut down and the x64-freebsd-14-build is failing:
-> > https://gitlab.com/qemu-project/qemu/-/jobs/14656732122
+> On 3/6/26 08:40, Markus Armbruster wrote:
+> > We neglected to update MAINTAINERS when we deleted
+> > .gitlab-ci.d/cirrus/macos-14.vars, and when we added
+> > .gitlab-ci.d/macos*.  Update it now.
 > >
-> > Remove the x64-freebsd-14-build job to get the CI pipeline passing
-> > again. The next commit will be to remove Cirrus integration from the
-> > GitLab YAML and lcitool since it is no longer used.
-> >
-> > Signed-off-by: Stefan Hajnoczi <stefanha@redhat.com>
+> > Fixes: 984b192bdf (ci: drop cirrus MacOS build, 2026-05-26)
+> > Fixes: 7684e78132 (gitlab: add initial MacOS 15 on gitlab runner, 2026-=
+05-26)
+> > Cc: Philippe Mathieu-Daud=C3=A9 <philmd@mailo.com>
+> > Signed-off-by: Markus Armbruster <armbru@redhat.com>
 > > ---
-> >   MAINTAINERS                         |  2 --
-> >   .gitlab-ci.d/cirrus.yml             | 14 --------------
-> >   .gitlab-ci.d/cirrus/freebsd-14.vars | 16 ----------------
-> >   tests/lcitool/refresh               |  5 -----
-> >   4 files changed, 37 deletions(-)
-> >   delete mode 100644 .gitlab-ci.d/cirrus/freebsd-14.vars
+> >   MAINTAINERS | 2 +-
+> >   1 file changed, 1 insertion(+), 1 deletion(-)
 > >
 > > diff --git a/MAINTAINERS b/MAINTAINERS
-> > index 7752917d8c..4ff33eb630 100644
+> > index 3a99c84839..2bf421c659 100644
 > > --- a/MAINTAINERS
 > > +++ b/MAINTAINERS
-> > @@ -4511,9 +4511,7 @@ W: https://travis-ci.org/qemu/qemu
-> >   FreeBSD Hosted Continuous Integration
-> >   M: Li-Wen Hsu <lwhsu@freebsd.org>
-> >   S: Maintained
+> > @@ -692,7 +692,7 @@ F: scripts/nsis.py
+> >   Darwin (macOS, iOS)
+> >   M: Philippe Mathieu-Daud=C3=A9 <philmd@mailo.com>
+> >   S: Odd Fixes
+> > -F: .gitlab-ci.d/cirrus/macos-*
+> > +F: .gitlab-ci.d/macos*
 >
-> This raise the question, is it still maintained?
+> Ah, slighly better than 20260602162457.828969-4-stefanha@redhat.com.
+>
+> Reviewed-by: Philippe Mathieu-Daud=C3=A9 <philmd@mailo.com>
 
-I left this section because Warner is working on bringing up a FreeBSD
-build VM and corresponding a GitLab CI YAML file in qemu.git to run
-builds. Warner can add the path to the new YAML file and add himself
-as a maintainer in his patch series.
+Yes, please take Markus' patch instead of mine since it includes the new fi=
+les.
 
 Stefan
 
