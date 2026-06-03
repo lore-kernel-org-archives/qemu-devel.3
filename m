@@ -4,61 +4,64 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6A5B3CD6E4A
-	for <qemu-devel@archiver.kernel.org>; Wed,  3 Jun 2026 06:46:45 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7FBDBCD6E55
+	for <qemu-devel@archiver.kernel.org>; Wed,  3 Jun 2026 06:47:02 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wUfHr-0003jF-JD; Wed, 03 Jun 2026 02:41:11 -0400
+	id 1wUfHq-0003iZ-UG; Wed, 03 Jun 2026 02:41:10 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1wUfHT-0003Oj-Lk
- for qemu-devel@nongnu.org; Wed, 03 Jun 2026 02:40:48 -0400
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1wUfHa-0003Re-Ii
+ for qemu-devel@nongnu.org; Wed, 03 Jun 2026 02:41:00 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1wUfHQ-0000oi-IU
- for qemu-devel@nongnu.org; Wed, 03 Jun 2026 02:40:45 -0400
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1wUfHU-0000rw-91
+ for qemu-devel@nongnu.org; Wed, 03 Jun 2026 02:40:54 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1780468843;
+ s=mimecast20190719; t=1780468847;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=R2CH5WK4VSpXrbSHQf8WSbkXHpMlFwqjY0hs4G1p7FE=;
- b=DLcrIY4v7ri4kPXTjQpPFsSpL+XlB2aHamY8V8NQR1q367xrPMmrAIbwsSXMCYs1ZAjyRV
- m9TrZMPRnG54dtKNsw3GAC9vf9JvmuIMVl3dh1AkxZGL6Xd2TJhBmVuQsE8+BNFYqutnQN
- F1Wu8t5M8rQYAa/CBN4lz8uWcvs+jFw=
-Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
+ bh=HgRc5ZiKo5KrRN1pz1zGlwtgwCkwIFqQADneOrZir6w=;
+ b=PNTUnIKViECnuM0o3EMWFaMyYJjYg+r2tK3Bkf3GEDJZb3ADKhyYBT7hVo+WHt3ET7KKyH
+ xpbhFvT2U1qmhovvKflJNWJ0L6PH5Xsx4YwBQmHt2dh0i8n/ljovdHcIWtwsvNBlSfIqJr
+ uEjPu02BchQzS1OGtPB5q9Yn1J8vejQ=
+Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-460-StcTsfgSOvK5xFFQqsBelw-1; Wed,
- 03 Jun 2026 02:40:40 -0400
-X-MC-Unique: StcTsfgSOvK5xFFQqsBelw-1
-X-Mimecast-MFC-AGG-ID: StcTsfgSOvK5xFFQqsBelw_1780468839
-Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-644-7I6rB-NXP6Sv8ZOMkTwkYA-1; Wed,
+ 03 Jun 2026 02:40:45 -0400
+X-MC-Unique: 7I6rB-NXP6Sv8ZOMkTwkYA-1
+X-Mimecast-MFC-AGG-ID: 7I6rB-NXP6Sv8ZOMkTwkYA_1780468844
+Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id D0132195608C; Wed,  3 Jun 2026 06:40:38 +0000 (UTC)
+ by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 2D1F319560A1; Wed,  3 Jun 2026 06:40:44 +0000 (UTC)
 Received: from blackfin.pond.sub.org (unknown [10.44.22.2])
- by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 61202195E483; Wed,  3 Jun 2026 06:40:38 +0000 (UTC)
+ by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id D078430001A1; Wed,  3 Jun 2026 06:40:43 +0000 (UTC)
 Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
- id 524BF21E6A23; Wed, 03 Jun 2026 08:40:32 +0200 (CEST)
+ id C1C8821E64AA; Wed, 03 Jun 2026 08:40:32 +0200 (CEST)
 From: Markus Armbruster <armbru@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: philmd@mailo.com, pierrick.bouvier@oss.qualcomm.com,
- Alexander Graf <agraf@csgraf.de>
-Subject: [PATCH v2 08/38] MAINTAINERS: Fix F: in "Apple Silicon HVF CPUs"
-Date: Wed,  3 Jun 2026 08:40:02 +0200
-Message-ID: <20260603064032.3733394-9-armbru@redhat.com>
+ John Levon <john.levon@nutanix.com>,
+ Thanos Makatos <thanos.makatos@nutanix.com>,
+ =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>
+Subject: [PATCH v2 35/38] MAINTAINERS: Fix F: in "VFIO-USER"
+Date: Wed,  3 Jun 2026 08:40:29 +0200
+Message-ID: <20260603064032.3733394-36-armbru@redhat.com>
 In-Reply-To: <20260603064032.3733394-1-armbru@redhat.com>
 References: <20260603064032.3733394-1-armbru@redhat.com>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.12
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
 Received-SPF: pass client-ip=170.10.133.124; envelope-from=armbru@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: 8
@@ -84,28 +87,36 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-We neglected to update MAINTAINERS when we deleted
-target/arm/hvf-stub.c.  Update it now.
+The commit adding the section added two bad F: lines:
+include/hw/vfio-user/ never existed, and subprojects/libvfio-user had
+long been replaced by subprojects/libvfio.wrap.  Drop the former, and
+correct the latter.
 
-Fixes: 293984563e (hw/arm, accel/hvf, whpx: unify get_physical_address_range between WHPX and HVF, 2026-02-10)
-Cc: Alexander Graf <agraf@csgraf.de>
+Fixes: 9fca2b7d70 (vfio-user: add vfio-user class and container, 2025-06-25)
+Cc: John Levon <john.levon@nutanix.com>
+Cc: Thanos Makatos <thanos.makatos@nutanix.com>
+Cc: Cédric Le Goater <clg@redhat.com>
 Signed-off-by: Markus Armbruster <armbru@redhat.com>
+Reviewed-by: Cédric Le Goater <clg@redhat.com>
+Reviewed-by: John Levon <john.levon@nutanix.com>
 ---
- MAINTAINERS | 1 -
- 1 file changed, 1 deletion(-)
+ MAINTAINERS | 3 +--
+ 1 file changed, 1 insertion(+), 2 deletions(-)
 
 diff --git a/MAINTAINERS b/MAINTAINERS
-index 26feb68c0c..269c26196d 100644
+index c5b6985767..0a0e9a736d 100644
 --- a/MAINTAINERS
 +++ b/MAINTAINERS
-@@ -550,7 +550,6 @@ Apple Silicon HVF CPUs
- M: Alexander Graf <agraf@csgraf.de>
- S: Maintained
- F: target/arm/hvf/
--F: target/arm/hvf-stub.c
+@@ -4450,8 +4450,7 @@ S: Supported
+ F: docs/interop/vfio-user.rst
+ F: docs/system/devices/vfio-user.rst
+ F: hw/vfio-user/*
+-F: include/hw/vfio-user/*
+-F: subprojects/libvfio-user
++F: subprojects/libvfio-user.wrap
+ F: tests/functional/x86_64/test_vfio_user_client.py
  
- X86 HVF CPUs
- M: Roman Bolshakov <rbolshakov@ddn.com>
+ EBPF
 -- 
 2.54.0
 
