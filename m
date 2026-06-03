@@ -4,62 +4,46 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 47FA6CD6E55
-	for <qemu-devel@archiver.kernel.org>; Wed,  3 Jun 2026 12:26:00 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id EB652CD6E55
+	for <qemu-devel@archiver.kernel.org>; Wed,  3 Jun 2026 12:26:06 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wUkeg-0004Dj-4k; Wed, 03 Jun 2026 08:25:08 -0400
+	id 1wUkev-0004FN-C4; Wed, 03 Jun 2026 08:25:22 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@mailo.com>) id 1wUkeM-0004C4-F8
- for qemu-devel@nongnu.org; Wed, 03 Jun 2026 08:24:50 -0400
-Received: from msg-3.mailo.com ([213.182.54.8] helo=mailo.com)
+ (Exim 4.90_1) (envelope-from <anjo@rev.ng>)
+ id 1wUkem-0004EV-7o; Wed, 03 Jun 2026 08:25:14 -0400
+Received: from rev.ng ([94.130.142.21])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@mailo.com>) id 1wUke0-0005sU-T2
- for qemu-devel@nongnu.org; Wed, 03 Jun 2026 08:24:38 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=mailo.com; s=mailo;
- t=1780486749; bh=MERbtZScp6ESI5UIVej1gX6ZW7skJf1XAH5lmBf2miU=;
- h=X-EA-Auth:Message-ID:Date:MIME-Version:Subject:To:Cc:References:
- From:In-Reply-To:Content-Type:Content-Transfer-Encoding;
- b=hX57/RHYwHExCu31m8fbJouDgDG7ovTWQvAjP/TKf7OfgDBx5qKADqzT+r2PJ4MbC
- NTV85te6/FAlJb/KJ0/sCSnZvJ8Ydhbuye7qQVyifjkmdlJOdHSMvmGSVxOhzfT2Wn
- z1f5ZB9J/nTgmn+yT/3bp6I/sN5uscX45zPLDqvw=
-Received: by be1-1.in.mailobj.net [192.168.91.11] with ESMTP
- via ip-20.mailobj.net [213.182.54.20]
- Wed,  3 Jun 2026 13:39:00 +0200 (CEST)
-X-EA-Auth: kCVNMpfcfKsdlm9ORFgWlUHkclNroIYXe0lAFu1a1G48gmK3bxwbjR/LY0QQ5QlEg50+jAWd9aYuO8I8D6L+684HPNV5WZFq
-Message-ID: <708d5809-89f3-418c-8bd1-4ec7f9ebdaf7@mailo.com>
-Date: Wed, 3 Jun 2026 13:38:59 +0200
+ (Exim 4.90_1) (envelope-from <anjo@rev.ng>)
+ id 1wUkei-00068M-Ep; Wed, 03 Jun 2026 08:25:10 -0400
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=rev.ng;
+ s=dkim; h=In-Reply-To:Content-Type:MIME-Version:References:Message-ID:Subject
+ :Cc:To:From:Date:Sender:Reply-To:Content-Transfer-Encoding:Content-ID:
+ Content-Description:Resent-Date:Resent-From:Resent-Sender:Resent-To:Resent-Cc
+ :Resent-Message-ID:List-Id:List-Help:List-Unsubscribe:List-Subscribe:
+ List-Post:List-Owner:List-Archive:List-Unsubscribe:List-Unsubscribe-Post:
+ List-Help; bh=06jH7QzqsjfGzbGz1KK21cLGlrppB9DN3Y1prrw788U=; b=KOcYnL1snN3JxTn
+ LAEjUJ5tHRek6554KbvqheeLvupRruObns4a6xZntfZRunTqM7nV9PGO3RSB3RFJGLrToktmDSE6k
+ qZZus0NAlPFwiotZczeS7P7l2nzY/oXS5MOzK6cDbMRPlZp3z7G/79A+dPa28iRJn2UkwTTaXJRtC
+ w8=;
+Date: Wed, 3 Jun 2026 14:29:51 +0200
+To: Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>
+Cc: qemu-devel@nongnu.org, qemu-riscv@nongnu.org, 
+ pierrick.bouvier@linaro.org, philmd@linaro.org, alistair.francis@wdc.com
+Subject: Re: [PATCH v7 15/27] target/riscv: Fix arguments to board IMSIC
+ emulation callbacks
+Message-ID: <aiAc8ZZtYhJ5hJ-7@hive.localdomain>
+References: <20260520125406.28693-1-anjo@rev.ng>
+ <20260520125406.28693-16-anjo@rev.ng>
+ <6633f78c-2291-4f6e-9ef0-9d3198cd30a6@oss.qualcomm.com>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 09/13] vfio/migration: Add Error ** parameter to
- vfio_migration_init()
-Content-Language: en-US
-To: Avihai Horon <avihaih@nvidia.com>, qemu-devel@nongnu.org
-Cc: Alex Williamson <alex@shazbot.org>, =?UTF-8?Q?C=C3=A9dric_Le_Goater?=
- <clg@redhat.com>, Peter Xu <peterx@redhat.com>,
- Fabiano Rosas <farosas@suse.de>,
- Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
- =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Zhao Liu <zhao1.liu@intel.com>, Halil Pasic <pasic@linux.ibm.com>,
- Christian Borntraeger <borntraeger@linux.ibm.com>,
- Jason Herne <jjherne@linux.ibm.com>,
- Richard Henderson <richard.henderson@linaro.org>,
- Ilya Leoshkevich <iii@linux.ibm.com>, David Hildenbrand <david@kernel.org>,
- Eric Farman <farman@linux.ibm.com>, Matthew Rosato <mjrosato@linux.ibm.com>,
- Cornelia Huck <cohuck@redhat.com>, Eric Blake <eblake@redhat.com>,
- Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>,
- John Snow <jsnow@redhat.com>, Markus Armbruster <armbru@redhat.com>,
- Maor Gottlieb <maorg@nvidia.com>
-References: <20260602092621.382-1-avihaih@nvidia.com>
- <20260602092621.382-10-avihaih@nvidia.com>
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@mailo.com>
-In-Reply-To: <20260602092621.382-10-avihaih@nvidia.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=213.182.54.8; envelope-from=philmd@mailo.com;
- helo=mailo.com
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <6633f78c-2291-4f6e-9ef0-9d3198cd30a6@oss.qualcomm.com>
+Received-SPF: pass client-ip=94.130.142.21; envelope-from=anjo@rev.ng;
+ helo=rev.ng
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -78,93 +62,321 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-to:  Anton Johansson <anjo@rev.ng>
+From:  Anton Johansson via qemu development <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi Avihai,
-
-On 2/6/26 11:26, Avihai Horon wrote:
-> vfio_migration_init() already has many failure points and a new one will
-> be added in next patch.
+On 03/06/26, Daniel Henrique Barboza wrote:
+> Hi,
 > 
-> Add Error ** parameter to vfio_migration_init() to report a detailed
-> error message through it.
+> This patch is causing a seg fault in rmw_xireg_aia():
 > 
-> Signed-off-by: Avihai Horon <avihaih@nvidia.com>
-> ---
->   hw/vfio/migration.c | 25 +++++++++++++------------
->   1 file changed, 13 insertions(+), 12 deletions(-)
 > 
-> diff --git a/hw/vfio/migration.c b/hw/vfio/migration.c
-> index a15e877fd3..02ef216712 100644
-> --- a/hw/vfio/migration.c
-> +++ b/hw/vfio/migration.c
-> @@ -1055,7 +1055,7 @@ static bool vfio_dma_logging_supported(VFIODevice *vbasedev)
->       return !ioctl(vbasedev->fd, VFIO_DEVICE_FEATURE, feature);
->   }
->   
-> -static int vfio_migration_init(VFIODevice *vbasedev)
-> +static int vfio_migration_init(VFIODevice *vbasedev, Error **errp)
->   {
->       int ret;
->       Object *obj;
-> @@ -1066,21 +1066,31 @@ static int vfio_migration_init(VFIODevice *vbasedev)
->       VMChangeStateHandler *prepare_cb;
->   
->       if (!vbasedev->ops->vfio_get_object) {
-> +        error_setg(errp, "no vfio_get_object handler");
->           return -EINVAL;
->       }
->   
->       obj = vbasedev->ops->vfio_get_object(vbasedev);
->       if (!obj) {
-> +        error_setg(errp, "failed to get object");
->           return -EINVAL;
->       }
->   
->       ret = vfio_migration_query_flags(vbasedev, &mig_flags);
->       if (ret) {
-> +        if (ret == -ENOTTY) {
-> +            error_setg_errno(errp, -ret,
-> +                             "migration is not supported in kernel");
-> +        } else {
-> +            error_setg_errno(errp, -ret, "failed to query migration flags");
-> +        }
-> +
->           return ret;
->       }
->   
->       /* Basic migration functionality must be supported */
->       if (!(mig_flags & VFIO_MIGRATION_STOP_COPY)) {
-> +        error_setg(errp, "VFIO_MIGRATION_STOP_COPY is not supported");
->           return -EOPNOTSUPP;
->       }
->   
-> @@ -1278,18 +1288,9 @@ bool vfio_migration_realize(VFIODevice *vbasedev, Error **errp)
->           return !vfio_block_migration(vbasedev, err, errp);
->       }
->   
-> -    ret = vfio_migration_init(vbasedev);
-> +    ret = vfio_migration_init(vbasedev, &err);
->       if (ret) {
+> $ gdb --args ./build/qemu-system-riscv64 -M riscv-server-ref --nographic
+> 
+> 
+> (gdb) bt
+> #0  0x0000aaaaab3bda20 in rmw_xireg_aia
+>     (env=0xaaaaac194d80, csrno=849, isel=114, val=0x0, new_val=0, wr_mask=18446744073709551615)
+>     at ../target/riscv/csr.c:2735
+> #1  0x0000aaaaab3be320 in rmw_xireg (env=0xaaaaac194d80, csrno=849, val=0x0, new_val=0, wr_mask=18446744073709551615)
+>     at ../target/riscv/csr.c:2950
+> #2  0x0000aaaaab3c5628 in riscv_csrrw_do64
+>     (env=0xaaaaac194d80, csrno=849, ret_value=0x0, new_value=0, write_mask=18446744073709551615, ra=281472560986724)
+>     at ../target/riscv/csr.c:5813
+> #3  0x0000aaaaab3c5884 in riscv_csrrw
+>     (env=0xaaaaac194d80, csrno=849, ret_value=0x0, new_value=0, write_mask=18446744073709551615, ra=281472560986724)
+>     at ../target/riscv/csr.c:5871
+> #4  0x0000aaaaab3cb670 in helper_csrw (env=0xaaaaac194d80, csr=849, src=0) at ../target/riscv/op_helper.c:75
+> 
+> 
+> Down there:
+> 
+> 
+> 
+> On 5/20/2026 9:53 AM, Anton Johansson via qemu development wrote:
+> > In hw/ the relevant RISCVIMSICState fields
+> > eidelivery, eithreshold, eistate are uint32_t.
+> > 
+> > Signed-off-by: Anton Johansson <anjo@rev.ng>
+> > Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+> > Acked-by: Alistair Francis <alistair.francis@wdc.com>
+> > ---
+> >   target/riscv/cpu.h        | 42 ++++++++++++++++++++-------------------
+> >   hw/intc/riscv_imsic.c     | 34 +++++++++++++++----------------
+> >   target/riscv/cpu_helper.c | 12 ++++-------
+> >   target/riscv/csr.c        | 24 ++++++++++++----------
+> >   4 files changed, 57 insertions(+), 55 deletions(-)
+> > 
+> > diff --git a/target/riscv/cpu.h b/target/riscv/cpu.h
+> > index 10afc617f8..9823d7d581 100644
+> > --- a/target/riscv/cpu.h
+> > +++ b/target/riscv/cpu.h
+> > @@ -200,6 +200,24 @@ FIELD(VTYPE, VMA, 7, 1)
+> >   FIELD(VTYPE, ALTFMT, 8, 1)
+> >   FIELD(VTYPE, RESERVED, 9, sizeof(uint64_t) * 8 - 10)
+> > +#ifndef CONFIG_USER_ONLY
+> > +/* machine specific AIA ireg read-modify-write callback */
+> > +#define AIA_MAKE_IREG(__isel, __priv, __virt, __vgein, __xlen)                 \
+> > +    ((uint32_t)((((__xlen) & 0xff) << 24) |                                    \
+> > +                (((__vgein) & 0x3f) << 20) |                                   \
+> > +                (((__virt) & 0x1) << 18) |                                     \
+> > +                (((__priv) & 0x3) << 16) |                                     \
+> > +                  (__isel & 0xffff)))
+> > +#define AIA_IREG_ISEL(__ireg) ((__ireg) & 0xffff)
+> > +#define AIA_IREG_PRIV(__ireg) (((__ireg) >> 16) & 0x3)
+> > +#define AIA_IREG_VIRT(__ireg) (((__ireg) >> 18) & 0x1)
+> > +#define AIA_IREG_VGEIN(__ireg) (((__ireg) >> 20) & 0x3f)
+> > +#define AIA_IREG_XLEN(__ireg) (((__ireg) >> 24) & 0xff)
+> > +
+> > +typedef int (*aia_ireg_rmw_fn)(void *arg, uint32_t reg, uint64_t *val,
+> > +                               uint64_t new_val, uint64_t write_mask);
+> > +#endif
+> > +
+> >   typedef struct PMUCTRState {
+> >       /* Current value of a counter */
+> >       uint64_t mhpmcounter_val;
+> > @@ -465,20 +483,8 @@ struct CPUArchState {
+> >       void *rdtime_fn_arg;
+> >       /* machine specific AIA ireg read-modify-write callback */
+> > -#define AIA_MAKE_IREG(__isel, __priv, __virt, __vgein, __xlen) \
+> > -    ((((__xlen) & 0xff) << 24) | \
+> > -     (((__vgein) & 0x3f) << 20) | \
+> > -     (((__virt) & 0x1) << 18) | \
+> > -     (((__priv) & 0x3) << 16) | \
+> > -     (__isel & 0xffff))
+> > -#define AIA_IREG_ISEL(__ireg)                  ((__ireg) & 0xffff)
+> > -#define AIA_IREG_PRIV(__ireg)                  (((__ireg) >> 16) & 0x3)
+> > -#define AIA_IREG_VIRT(__ireg)                  (((__ireg) >> 18) & 0x1)
+> > -#define AIA_IREG_VGEIN(__ireg)                 (((__ireg) >> 20) & 0x3f)
+> > -#define AIA_IREG_XLEN(__ireg)                  (((__ireg) >> 24) & 0xff)
+> > -    int (*aia_ireg_rmw_fn[4])(void *arg, target_ulong reg,
+> > -        target_ulong *val, target_ulong new_val, target_ulong write_mask);
+> > -    void *aia_ireg_rmw_fn_arg[4];
+> > +    aia_ireg_rmw_fn aia_ireg_rmw_cb[4];
+> > +    void *aia_ireg_rmw_cb_arg[4];
+> >       /* True if in debugger mode.  */
+> >       bool debugger;
+> > @@ -646,12 +652,8 @@ void riscv_cpu_interrupt(CPURISCVState *env);
+> >   #define BOOL_TO_MASK(x) (-!!(x)) /* helper for riscv_cpu_update_mip value */
+> >   void riscv_cpu_set_rdtime_fn(CPURISCVState *env, uint64_t (*fn)(void *),
+> >                                void *arg);
+> > -void riscv_cpu_set_aia_ireg_rmw_fn(CPURISCVState *env, privilege_mode_t priv,
+> > -                                   int (*rmw_fn)(void *arg,
+> > -                                                 target_ulong reg,
+> > -                                                 target_ulong *val,
+> > -                                                 target_ulong new_val,
+> > -                                                 target_ulong write_mask),
+> > +void riscv_cpu_set_aia_ireg_rmw_cb(CPURISCVState *env, privilege_mode_t priv,
+> > +                                   aia_ireg_rmw_fn rmw_fn,
+> >                                      void *rmw_fn_arg);
+> >   RISCVException smstateen_acc_ok(CPURISCVState *env, int index, uint64_t bit);
+> > diff --git a/hw/intc/riscv_imsic.c b/hw/intc/riscv_imsic.c
+> > index 7c9a012033..3ce9f146c0 100644
+> > --- a/hw/intc/riscv_imsic.c
+> > +++ b/hw/intc/riscv_imsic.c
+> > @@ -88,11 +88,11 @@ static void riscv_imsic_update(RISCVIMSICState *imsic, uint32_t page)
+> >   }
+> >   static int riscv_imsic_eidelivery_rmw(RISCVIMSICState *imsic, uint32_t page,
+> > -                                      target_ulong *val,
+> > -                                      target_ulong new_val,
+> > -                                      target_ulong wr_mask)
+> > +                                      uint64_t *val,
+> > +                                      uint64_t new_val,
+> > +                                      uint64_t wr_mask)
+> >   {
+> > -    target_ulong old_val = imsic->eidelivery[page];
+> > +    uint32_t old_val = imsic->eidelivery[page];
+> >       if (val) {
+> >           *val = old_val;
+> > @@ -106,11 +106,11 @@ static int riscv_imsic_eidelivery_rmw(RISCVIMSICState *imsic, uint32_t page,
+> >   }
+> >   static int riscv_imsic_eithreshold_rmw(RISCVIMSICState *imsic, uint32_t page,
+> > -                                      target_ulong *val,
+> > -                                      target_ulong new_val,
+> > -                                      target_ulong wr_mask)
+> > +                                      uint64_t *val,
+> > +                                      uint64_t new_val,
+> > +                                      uint64_t wr_mask)
+> >   {
+> > -    target_ulong old_val = imsic->eithreshold[page];
+> > +    uint32_t old_val = imsic->eithreshold[page];
+> >       if (val) {
+> >           *val = old_val;
+> > @@ -124,8 +124,8 @@ static int riscv_imsic_eithreshold_rmw(RISCVIMSICState *imsic, uint32_t page,
+> >   }
+> >   static int riscv_imsic_topei_rmw(RISCVIMSICState *imsic, uint32_t page,
+> > -                                 target_ulong *val, target_ulong new_val,
+> > -                                 target_ulong wr_mask)
+> > +                                 uint64_t *val, uint64_t new_val,
+> > +                                 uint64_t wr_mask)
+> >   {
+> >       uint32_t base, topei = riscv_imsic_topei(imsic, page);
+> > @@ -149,11 +149,11 @@ static int riscv_imsic_topei_rmw(RISCVIMSICState *imsic, uint32_t page,
+> >   static int riscv_imsic_eix_rmw(RISCVIMSICState *imsic,
+> >                                  uint32_t xlen, uint32_t page,
+> > -                               uint32_t num, bool pend, target_ulong *val,
+> > -                               target_ulong new_val, target_ulong wr_mask)
+> > +                               uint32_t num, bool pend, uint64_t *val,
+> > +                               uint64_t new_val, uint64_t wr_mask)
+> >   {
+> >       uint32_t i, base, prev;
+> > -    target_ulong mask;
+> > +    uint64_t mask;
+> >       uint32_t state = (pend) ? IMSIC_EISTATE_PENDING : IMSIC_EISTATE_ENABLED;
+> >       if (xlen != 32) {
+> > @@ -178,7 +178,7 @@ static int riscv_imsic_eix_rmw(RISCVIMSICState *imsic,
+> >               continue;
+> >           }
+> > -        mask = (target_ulong)1 << i;
+> > +        mask = 1ull << i;
+> >           if (wr_mask & mask) {
+> >               if (new_val & mask) {
+> >                   prev = qatomic_fetch_or(&imsic->eistate[base + i], state);
+> > @@ -197,8 +197,8 @@ static int riscv_imsic_eix_rmw(RISCVIMSICState *imsic,
+> >       return 0;
+> >   }
+> > -static int riscv_imsic_rmw(void *arg, target_ulong reg, target_ulong *val,
+> > -                           target_ulong new_val, target_ulong wr_mask)
+> > +static int riscv_imsic_rmw(void *arg, uint32_t reg, uint64_t *val,
+> > +                           uint64_t new_val, uint64_t wr_mask)
+> >   {
+> >       RISCVIMSICState *imsic = arg;
+> >       uint32_t isel, priv, virt, vgein, xlen, page;
+> > @@ -383,7 +383,7 @@ static void riscv_imsic_realize(DeviceState *dev, Error **errp)
+> >           }
+> >           if (!kvm_irqchip_in_kernel()) {
+> > -            riscv_cpu_set_aia_ireg_rmw_fn(env, (imsic->mmode) ? PRV_M : PRV_S,
+> > +            riscv_cpu_set_aia_ireg_rmw_cb(env, (imsic->mmode) ? PRV_M : PRV_S,
+> >                                             riscv_imsic_rmw, imsic);
+> >           }
+> >       }
+> > diff --git a/target/riscv/cpu_helper.c b/target/riscv/cpu_helper.c
+> > index e7c0ff49d0..90c126fdc2 100644
+> > --- a/target/riscv/cpu_helper.c
+> > +++ b/target/riscv/cpu_helper.c
+> > @@ -816,17 +816,13 @@ void riscv_cpu_set_rdtime_fn(CPURISCVState *env, uint64_t (*fn)(void *),
+> >       env->rdtime_fn_arg = arg;
+> >   }
+> > -void riscv_cpu_set_aia_ireg_rmw_fn(CPURISCVState *env, privilege_mode_t priv,
+> > -                                   int (*rmw_fn)(void *arg,
+> > -                                                 target_ulong reg,
+> > -                                                 target_ulong *val,
+> > -                                                 target_ulong new_val,
+> > -                                                 target_ulong write_mask),
+> > +void riscv_cpu_set_aia_ireg_rmw_cb(CPURISCVState *env, privilege_mode_t priv,
+> > +                                   aia_ireg_rmw_fn rmw_fn,
+> >                                      void *rmw_fn_arg)
+> >   {
+> >       if (priv <= PRV_M) {
+> > -        env->aia_ireg_rmw_fn[priv] = rmw_fn;
+> > -        env->aia_ireg_rmw_fn_arg[priv] = rmw_fn_arg;
+> > +        env->aia_ireg_rmw_cb[priv] = rmw_fn;
+> > +        env->aia_ireg_rmw_cb_arg[priv] = rmw_fn_arg;
+> >       }
+> >   }
+> > diff --git a/target/riscv/csr.c b/target/riscv/csr.c
+> > index 4bab7ec29f..837212b55f 100644
+> > --- a/target/riscv/csr.c
+> > +++ b/target/riscv/csr.c
+> > @@ -2655,6 +2655,7 @@ static RISCVException rmw_xireg_aia(CPURISCVState *env, int csrno,
+> >       uint8_t *iprio;
+> >       privilege_mode_t priv;
+> >       uint32_t vgein;
+> > +    uint64_t wide_val;
+> >       /* VS-mode CSR number passed in has already been translated */
+> >       switch (csrno) {
+> > @@ -2699,16 +2700,17 @@ static RISCVException rmw_xireg_aia(CPURISCVState *env, int csrno,
+> >           }
+> >       } else if (ISELECT_IMSIC_FIRST <= isel && isel <= ISELECT_IMSIC_LAST) {
+> >           /* IMSIC registers only available when machine implements it. */
+> > -        if (env->aia_ireg_rmw_fn[priv]) {
+> > +        if (env->aia_ireg_rmw_cb[priv]) {
+> >               /* Selected guest interrupt file should not be zero */
+> >               if (virt && (!vgein || env->geilen < vgein)) {
+> >                   goto done;
+> >               }
+> >               /* Call machine specific IMSIC register emulation */
+> > -            ret = env->aia_ireg_rmw_fn[priv](env->aia_ireg_rmw_fn_arg[priv],
+> > +            ret = env->aia_ireg_rmw_cb[priv](env->aia_ireg_rmw_cb_arg[priv],
+> >                                       AIA_MAKE_IREG(isel, priv, virt, vgein,
+> >                                                     riscv_cpu_mxl_bits(env)),
+> > -                                    val, new_val, wr_mask);
+> > +                                    &wide_val, new_val, wr_mask);
+> > +            *val = wide_val;
+> 
+> Here.  We can't just do *val = wide_val because there's no guarantee that *val,
+> i.e. the 'ret_value' of riscv_csr_op_fn(), is not NULL:
+> 
+> typedef RISCVException (*riscv_csr_op_fn)(CPURISCVState *env, int csrno,
+>                                           target_ulong *ret_value,  <--------
+>                                           target_ulong new_value,
+>                                           target_ulong write_mask);
+> 
+> This fixes it:
+> 
+>    if (val) {
+>        *val = wide_val;
+>    }
+> 
+> 
+> Note that this is the same pattern used in other predicates.  E.g
+> rmw_xiselect() does:
+> 
+> 
+>     if (val) {
+>         *val = *iselect;
+>     }
+> 
+> 
+> 
+> rmw_xtopei down there needs the same:
+> 
+> >           }
+> >       } else {
+> >           isel_reserved = true;
+> > @@ -2941,6 +2943,7 @@ static RISCVException rmw_xtopei(CPURISCVState *env, int csrno,
+> >       int ret = -EINVAL;
+> >       privilege_mode_t priv;
+> >       uint32_t vgein;
+> > +    uint64_t wide_val;
+> >       /* Translate CSR number for VS-mode */
+> >       csrno = aia_xlate_vs_csrno(env, csrno);
+> > @@ -2966,7 +2969,7 @@ static RISCVException rmw_xtopei(CPURISCVState *env, int csrno,
+> >       };
+> >       /* IMSIC CSRs only available when machine implements IMSIC. */
+> > -    if (!env->aia_ireg_rmw_fn[priv]) {
+> > +    if (!env->aia_ireg_rmw_cb[priv]) {
+> >           goto done;
+> >       }
+> > @@ -2979,10 +2982,11 @@ static RISCVException rmw_xtopei(CPURISCVState *env, int csrno,
+> >       }
+> >       /* Call machine specific IMSIC register emulation for TOPEI */
+> > -    ret = env->aia_ireg_rmw_fn[priv](env->aia_ireg_rmw_fn_arg[priv],
+> > +    ret = env->aia_ireg_rmw_cb[priv](env->aia_ireg_rmw_cb_arg[priv],
+> >                       AIA_MAKE_IREG(ISELECT_IMSIC_TOPEI, priv, virt, vgein,
+> >                                     riscv_cpu_mxl_bits(env)),
+> > -                    val, new_val, wr_mask);
+> > +                    &wide_val, new_val, wr_mask);
+> > +    *val = wide_val;
+> 
+> This needs to be:
+> 
+>     if (val) {
+>         *val = wide_val;
+>     }
+> 
+> 
+> 
+> Thanks,
+> Daniel
 
-Only 'ret' boolean part is used now, have the method return a boolean
-instead, like other methods with Error **errp last param?
+Agh, good catch and thank you Daniel! I'll address this in a v8.
+Alistair, if it's easier for you to do this change on your end, feel
+free to do so and ignore my v8. Unsure of the praxis in this situation.
 
-> -        if (ret == -ENOTTY) {
-> -            error_setg(&err, "%s: VFIO migration is not supported in kernel",
-> -                       vbasedev->name);
-> -        } else {
-> -            error_setg(&err,
-> -                       "%s: Migration couldn't be initialized for VFIO device, "
-> -                       "err: %d (%s)",
-> -                       vbasedev->name, ret, strerror(-ret));
-> -        }
-> -
-> +        error_prepend(&err, "%s: VFIO migration init failed: ", vbasedev->name);
->           return !vfio_block_migration(vbasedev, err, errp);
->       }
->   
-
-
+-- 
+Anton Johansson
+rev.ng Labs Srl.
 
