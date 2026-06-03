@@ -4,140 +4,104 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 459CECD6E55
-	for <qemu-devel@archiver.kernel.org>; Wed,  3 Jun 2026 09:53:48 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 48ED6CD6E69
+	for <qemu-devel@archiver.kernel.org>; Wed,  3 Jun 2026 09:57:28 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wUiI6-0002vQ-En; Wed, 03 Jun 2026 05:53:38 -0400
+	id 1wUiKT-0003hS-Th; Wed, 03 Jun 2026 05:56:06 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <daniel.barboza@oss.qualcomm.com>)
- id 1wUiI5-0002vI-Mc
- for qemu-devel@nongnu.org; Wed, 03 Jun 2026 05:53:37 -0400
-Received: from mx0b-0031df01.pphosted.com ([205.220.180.131])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <daniel.barboza@oss.qualcomm.com>)
- id 1wUiI3-0000nn-CH
- for qemu-devel@nongnu.org; Wed, 03 Jun 2026 05:53:37 -0400
-Received: from pps.filterd (m0279868.ppops.net [127.0.0.1])
- by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 6536RKqO1887344
- for <qemu-devel@nongnu.org>; Wed, 3 Jun 2026 09:53:33 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
- cc:content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
- KpgpF7A16AAQFzB9hYeS2UN2mJRYNAL4rsBg1DNRLk4=; b=c7NKmB1HwYR/9o8S
- 89B+PgN+cLxpxm8/nFJhkZMFyrdPe2p4wwld3P2lxOpSStKb294XoIoKtaWlHUFU
- IBZdYXtkk8AMurBEML6b42NBiWGOWIP+2BaInZ+vPZ1ErkEDZYYzxJEy3TtYPx8r
- i0TMfMQYlF6gOmr8WzKZnnKSzC6FRputO005aIUANrYArSTT0tvHFw/CkOlZHpWU
- PgcMJGZLeqYzUBMQapRTNIcESOqoipygsYELdzsG/6cGgrcuwRvmKdl1gZRzpKha
- yQQ90iibUHAFp0HeWfH6javRDwg4t9KWtDR/HgrzmxR0RB0XHYhCWKBLYsANJbET
- QJbLMQ==
-Received: from mail-yw1-f199.google.com (mail-yw1-f199.google.com
- [209.85.128.199])
- by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4ehvkxdfar-1
- (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
- for <qemu-devel@nongnu.org>; Wed, 03 Jun 2026 09:53:33 +0000 (GMT)
-Received: by mail-yw1-f199.google.com with SMTP id
- 00721157ae682-7e90f879daaso30580407b3.3
- for <qemu-devel@nongnu.org>; Wed, 03 Jun 2026 02:53:33 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <elbeheri95@gmail.com>)
+ id 1wUiKS-0003h0-KO
+ for qemu-devel@nongnu.org; Wed, 03 Jun 2026 05:56:04 -0400
+Received: from mail-ej1-x633.google.com ([2a00:1450:4864:20::633])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <elbeheri95@gmail.com>)
+ id 1wUiKP-0002B0-TB
+ for qemu-devel@nongnu.org; Wed, 03 Jun 2026 05:56:04 -0400
+Received: by mail-ej1-x633.google.com with SMTP id
+ a640c23a62f3a-bed2195323cso494551966b.1
+ for <qemu-devel@nongnu.org>; Wed, 03 Jun 2026 02:56:01 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1780480560; cv=none;
+ d=google.com; s=arc-20240605;
+ b=BUf4E15YCnt5YLKAY6eGW0N7gwX+6Hbq0ACbOn6kdaJ3zSPuZo5QdgdahpbzJc3O8o
+ Jk8d85IwGp1d3kIUMF808vserUqgx8k+vq1YV1PsBxIdw6DS7F3eJSXzd43WLadE28Wg
+ zzXGeElT5J74byF0tW54cEqZ9Zonv9VKQ70wtrfWJyLATL7LbD8LXioOgLO2tKVse1Xk
+ BbRYb6XORuxQJbUBAJksjshd/sxrPwQP1tFx0q9NkDbJTukB6/YBWJIa7scxpbJmWVXw
+ HNCGXRKNK0mlrkvxvg5aR9RETwC/YCN7Ya2eXKp7dfMFrOgUMPjx46a2CVWr+VdS458x
+ Bezg==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
+ s=arc-20240605; 
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:dkim-signature;
+ bh=3wV6twA4OCb95UQgBelEdlWkyfr83KjFZrbYjSJx1pM=;
+ fh=tm7M0awJ36HtpmhaqhDMca9gbT9+S/B/kw2LO+6jHfg=;
+ b=DNgMQJfq9P0DQGdMLIoo+E3EzfBBwrWq0d4UtnL/0n/uqc0ipMCcRIhVB+SfVUivde
+ BsIlEAPC4nYKTq/FryKauF68K4zApnhDHbTAyhtdK1MaJnRm9CZo0TA1h0k/jXWd1tn+
+ YJbh/+C0U6mRXfQ0l1WBgdW8+N2vFzTWmN1hiopNrgLsPHqiq0zNq0OcT+tRWaKC8dSH
+ bsmmMdh95XQ6qoboXSYlFC1ghDDx5MMLs6zjeJ5WFlGUEGlQ9DnZOUGW+aIHYsW7d6nm
+ 46/h5BpQ+S5nYRWosl+MxF2rFI6GJbiXtxWs7ABYr+E7jyjJOArAOVMn9feiZhKBV/o6
+ c4JA==; darn=nongnu.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=oss.qualcomm.com; s=google; t=1780480413; x=1781085213; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:content-language:from
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=KpgpF7A16AAQFzB9hYeS2UN2mJRYNAL4rsBg1DNRLk4=;
- b=dv7O31KV4UeFUDfcLNkfpc7rYlfNDJjrpGKhrSQbxL0FZD3y9SIeNFiIX1pMEh4Xt4
- kLXt4ENxDYMRLpRW8zKLuvRIHXz3YT6C6QfVWx/FBFwrEHzrxrHbQ3FfjA2UJdWVgXgu
- t/p6i9wcZsRPb3N7EONWqpjhc7t5hVt72TFeAAXVA3XSrFq9SL+4l85tyzURmskko/vV
- 97pPkHKsw6dlAcZTLP1ku65GFR7+rkgdL7rFlFSDSjt3fzxYomO1MBkzKUTyq6dWEcbb
- j8tA92T2Lu01s7s92Ute0XY80dntp33k+eVQEOqyhMsfp7amfck8aDfOJcYqm1OKycFm
- 4TZA==
+ d=gmail.com; s=20251104; t=1780480560; x=1781085360; darn=nongnu.org;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:from:to:cc:subject:date:message-id:reply-to;
+ bh=3wV6twA4OCb95UQgBelEdlWkyfr83KjFZrbYjSJx1pM=;
+ b=iq3V4sxrFCFtU2wlAZl2SG98Z4ov+pJv0iKW5j3xXxL7vIOr20e00NdQRyVYOa/YQY
+ AzFIWaO7WE2dtyNxwgSdTOElQN9NXw5LpjIsfXZxRSWX7f1+DQ5KDIO99BNPQErJJnJb
+ z6fncHq9Kpqlgrdt9hE0aN0i98cQOza5uPkdrFunuCC4ijE6LoYpwry5fSDAS++mWrCE
+ jcY5NDNeBnvmVU0P+mdukZOiKSd0GAJ/Uz7DOrWHrS+1DjASQNE/qjU/avzstEfeQsOl
+ LuMVL7tLI4ThYtYXwGgtJ/EQc69bG6CYQtGa0nTp/JE6coruPKAg+s2kxTNync0kwa7P
+ zWjw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1780480413; x=1781085213;
- h=content-transfer-encoding:in-reply-to:content-language:from
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=KpgpF7A16AAQFzB9hYeS2UN2mJRYNAL4rsBg1DNRLk4=;
- b=oE1zJRRyf8heeFhsysoSsL0dnGtb4zg6ztE2B91huID1jdX4koW7oHCpenP2ywzq83
- 8apVp2dtUZXioMN4h2+6Q9EP6SneZXr6pFG37D2t38xEjkunJCSx1XrMppFVZ+B0+rN0
- SVBJLSH6y4tCRE1SpO7a93YHzBt7nVd3JayMG1D+lryx75YM/iMjY5e1LWp+qx3jHxKy
- X+RIz92IRmWtBedKECQYQFaCM8/T2qLl81HK6F0nlMCAOQnEHs7TiJ1JlSl/jf4LZf5c
- 8n5OSHhnGkkjJ651oI+EmCncWbX5kddNmfXykC35Un5RZCYeVFVr6Xk2tbOEU0WatAfY
- z88w==
-X-Forwarded-Encrypted: i=1;
- AFNElJ8odYClF5pFsgpbYzXzATgjwoo0Kdz0V+0+YcCkA+yULlj3aNzK4gklQSY0KCFlxZs1iMwRf8vHjF7S@nongnu.org
-X-Gm-Message-State: AOJu0YwtatByXk9O0mLQhY0tqoaB+DZC0LFXwhRd34exZ3rOGA27KNfi
- zQR2R94FKrbJra+L72FJRXtxba3wCsVScNYbUWQ9bPwa3WIOfJVc88/J4SnFK2lXi80iRS0sqZ5
- P2lhmlStUt5E1CAGA3ioiKCnhxzYTlNjlyhDxX4AS81XZdUs54cGjdSuEaw==
-X-Gm-Gg: Acq92OFYChtZ1iLDarW5yvIbq0miQFf3kcmNgs2ed4QuPSe6gI930FlPIC/+4VtAsFU
- nYkrc/EBYrPdQ2mSbqEfwH8C1bUpOenxBwmPRn713kJmHg9Dfv7Ga2iRDvwtCzSYdMuGlhpzOuz
- heF66py5WvkQAD26M61JOTTTo+ALycdxX5dutu+tsH4S4rLqP/q9ydxQHO4eDHngzc03kJMtihU
- jI1kPtl8hhoUeqOGzYZOaL45rt5UNHBfcV41v11lvQbm6eeUMvx6r1oM2ILVzKfTaObAiOrPxEq
- wb6/3icUHQH/+NhVon9b96C/RcAMBZWf4uJu0AHzqssj3s7HI2NcL8GXIGCUx5DDwwKojnCIDCs
- kFBXFPlHAppSMQXefUsASFHydZQE4JMKjXyLFSkcHBO72QyETs7HtHyh7NGZK068MYQJH
-X-Received: by 2002:a05:690c:b10:b0:7dc:1d92:180a with SMTP id
- 00721157ae682-7ea4db5d23emr23185037b3.50.1780480412841; 
- Wed, 03 Jun 2026 02:53:32 -0700 (PDT)
-X-Received: by 2002:a05:690c:b10:b0:7dc:1d92:180a with SMTP id
- 00721157ae682-7ea4db5d23emr23184897b3.50.1780480412360; 
- Wed, 03 Jun 2026 02:53:32 -0700 (PDT)
-Received: from [192.168.68.106] ([177.170.117.62])
- by smtp.gmail.com with ESMTPSA id
- 00721157ae682-7ea23b9b4d7sm13013607b3.42.2026.06.03.02.53.29
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 03 Jun 2026 02:53:31 -0700 (PDT)
-Message-ID: <6633f78c-2291-4f6e-9ef0-9d3198cd30a6@oss.qualcomm.com>
-Date: Wed, 3 Jun 2026 06:53:28 -0300
+ d=1e100.net; s=20251104; t=1780480560; x=1781085360;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=3wV6twA4OCb95UQgBelEdlWkyfr83KjFZrbYjSJx1pM=;
+ b=A+5GvMzzomtGs580JS1IKwu2gr2UzNK2zV0fRfi0TY02n2DXEoqGR6e0nM88oGYbTU
+ nydQhN+wk/3CmMbZ3oJx63Q97f4I4v4fd8A5HpTeHuvgpEM4OqqL3IMOahwKTGA5l4Sh
+ RGUxO2PMTVyCnYh1xre+j7zO7JTWYbPiOwhxHROwGujqEnoPxuUoyJKGnN+oYK5OSfwx
+ O7WfBPl2aAys9vyfVRNX2/ifdvolgo9sHiOVWEYlwSNOjJRjwxqtDKUjMEnGbC7EuJ0I
+ GXmaoac5QAWjFnn8N4GXjscxIATDMYrj3un8Tr9N//8T04PLP9LO731+j4FnjUttmOaI
+ swxA==
+X-Gm-Message-State: AOJu0Ywaw1heB/RsVY6Q2Ki35pWgnB260AhLF9hu85d/1d/ZZLMSkKo3
+ VQoRS2hpaoaSaZ3g9KdQef7785uRkdYJZyFeF5bn3q3HwZl34ZYbXEm2YBhjuIALsyYBr8C0uKG
+ 3acEkPlrO5cIZb/l7SFfldGV60nt3sns=
+X-Gm-Gg: Acq92OGqfhCw31kfJyWTrfLs2P9iqn3PZtiJMbwpRDJFaVZ45YXbwt2P6n9LcklKdgl
+ XM/ZENeRWhV0ko0LEfNiiokQHooTllCyCB0vJtLiXOSJRHBk5zFDewTEgOvM23fuGQK1wLyhr+M
+ dkKQCkefvOrHtru9tTqBVpAchWMY3VOiEvZCkQAPk1tj23MCBBYId7WmLQtf1RQRDUogvzIUnLN
+ ygeAfcQiPh/4/18lp8KwxvOh2OMClOTVvEAr4qhp7hFemz90daG+1f4x7TPTF7TzAEHd5sjK6E8
+ M/w4Zim1PTsm69bfYX1q9KFcxlLChbzNZDVndR0RdpgSL/05c64=
+X-Received: by 2002:a17:906:c108:b0:bef:7481:8a34 with SMTP id
+ a640c23a62f3a-bf0acf0f963mr123813066b.12.1780480559847; Wed, 03 Jun 2026
+ 02:55:59 -0700 (PDT)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v7 15/27] target/riscv: Fix arguments to board IMSIC
- emulation callbacks
-To: Anton Johansson <anjo@rev.ng>, qemu-devel@nongnu.org
-Cc: qemu-riscv@nongnu.org, pierrick.bouvier@linaro.org, philmd@linaro.org,
- alistair.francis@wdc.com
-References: <20260520125406.28693-1-anjo@rev.ng>
- <20260520125406.28693-16-anjo@rev.ng>
-From: Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>
-Content-Language: en-US
-In-Reply-To: <20260520125406.28693-16-anjo@rev.ng>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Proofpoint-ORIG-GUID: 2dJMl4lMTe6EmFGtm4IDX0xumxTS2cHO
-X-Authority-Analysis: v=2.4 cv=GYknWwXL c=1 sm=1 tr=0 ts=6a1ff99d cx=c_pps
- a=72HoHk1woDtn7btP4rdmlg==:117 a=gdiugJE53z4H+vvYeRBHqw==:17
- a=IkcTkHD0fZMA:10 a=FelO9ux0wxsA:10 a=s4-Qcg_JpJYA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=ZpdpYltYx_vBUK5n70dp:22
- a=KKAkSRfTAAAA:8 a=JF9118EUAAAA:8 a=nrPx4w6NPzF0ZZKuB-IA:9 a=QEXdDO2ut3YA:10
- a=kA6IBgd4cpdPkAWqgNAz:22 a=cvBusfyB2V15izCimMoJ:22 a=xVlTc564ipvMDusKsbsT:22
-X-Proofpoint-GUID: 2dJMl4lMTe6EmFGtm4IDX0xumxTS2cHO
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNjAzMDA5NCBTYWx0ZWRfX1efHBJnV85S3
- 3CIx9wmdoO6eTyHnw89hb8kSHY/ZR0wxzhvnrfRpjAPiV2nfuUQZ8NMUqLr8vAxegf/84cdOn00
- V6Tn5pDokUHjJUfUh+BtMovlx/WOGejSpTpzLQ8XjfBz1iwnIFp6fz1Up91JA8NeLwBsQazY5on
- XSHS+BAKa2vy8Fp3IZu/d2QGLkvLVpJXSzynmg6GbAtljb9xqG/UCpNqcNU8Rpwz2YQhALFIub4
- xER9ma2LWvAMs3Q4VDDpA3ty+gWh3E0ggTZtTXTfldqp1sFgcNqkjJ15Ryq+pj8XlgpZP41BaEA
- tWmWaQKLAIpx1Nq2MT9lyqlCvXpR8BRZsnsVwS2jB3RwVPJRCZRDFq9Aeuhmsoudidd6ae+EC1z
- EEFAO7GFasfQBN5v8pZhSdl8PTz1EQiC5qS0A65/gzJKfcyjKAS0HzaIzQeWl8YPwwamwQ1zwYH
- 5hjC1NGkVA3KpU1+YqA==
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.125,FMLib:17.12.100.49
- definitions=2026-06-03_03,2026-05-28_03,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- adultscore=0 impostorscore=0 spamscore=0 bulkscore=0 phishscore=0
- lowpriorityscore=0 clxscore=1015 suspectscore=0 priorityscore=1501
- malwarescore=0 classifier=typeunknown authscore=0 authtc= authcc=
- route=outbound adjust=0 reason=mlx scancount=1 engine=8.22.0-2605210000
- definitions=main-2606030094
-Received-SPF: pass client-ip=205.220.180.131;
- envelope-from=daniel.barboza@oss.qualcomm.com; helo=mx0b-0031df01.pphosted.com
-X-Spam_score_int: -27
-X-Spam_score: -2.8
-X-Spam_bar: --
-X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+References: <20260518-enhance_arm_gdb_get_sysreg_performance-v1-1-f0a5b22003c0@gmail.com>
+ <87qzmovrda.fsf@draig.linaro.org>
+In-Reply-To: <87qzmovrda.fsf@draig.linaro.org>
+From: abdelrahman elbehery <elbeheri95@gmail.com>
+Date: Wed, 3 Jun 2026 12:55:47 +0300
+X-Gm-Features: AVHnY4LC8AdouVdG5tBGga3mdrtijL-voLmUpiIkUv_XsXqWYcczRaW5FjbL0aA
+Message-ID: <CAN1cRoO1HV-BU1bizHgaHpBBNGb7W_o-EOTDna_fWL6-8e-Vfw@mail.gmail.com>
+Subject: Re: [PATCH] target/arm: replace cp_regs hashtable lookup with direct
+ array index
+To: =?UTF-8?B?QWxleCBCZW5uw6ll?= <alex.bennee@linaro.org>, 
+ richard.henderson@linaro.org
+Cc: qemu-devel@nongnu.org, Peter Maydell <peter.maydell@linaro.org>,
+ qemu-arm@nongnu.org
+Content-Type: multipart/alternative; boundary="0000000000004c9d080653566fcd"
+Received-SPF: pass client-ip=2a00:1450:4864:20::633;
+ envelope-from=elbeheri95@gmail.com; helo=mail-ej1-x633.google.com
+X-Spam_score_int: -17
+X-Spam_score: -1.8
+X-Spam_bar: -
+X-Spam_report: (-1.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001,
+ FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001, HTML_MESSAGE=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -154,360 +118,519 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi,
+--0000000000004c9d080653566fcd
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-This patch is causing a seg fault in rmw_xireg_aia():
+Thanks so much for pointing that out.
 
+I am not aware if GDBFeatureBuilder shares the same lifetime as ARMCPU
+struct or not. But noticed that builder object keeps a copy of register
+object name pointer.
 
-$ gdb --args ./build/qemu-system-riscv64 -M riscv-server-ref --nographic
+E.g. gdb_feature_builder_append_reg does
 
+   builder->regs->pdata[regnum] =3D (gpointer *)name;
 
-(gdb) bt
-#0  0x0000aaaaab3bda20 in rmw_xireg_aia
-     (env=0xaaaaac194d80, csrno=849, isel=114, val=0x0, new_val=0, wr_mask=18446744073709551615)
-     at ../target/riscv/csr.c:2735
-#1  0x0000aaaaab3be320 in rmw_xireg (env=0xaaaaac194d80, csrno=849, val=0x0, new_val=0, wr_mask=18446744073709551615)
-     at ../target/riscv/csr.c:2950
-#2  0x0000aaaaab3c5628 in riscv_csrrw_do64
-     (env=0xaaaaac194d80, csrno=849, ret_value=0x0, new_value=0, write_mask=18446744073709551615, ra=281472560986724)
-     at ../target/riscv/csr.c:5813
-#3  0x0000aaaaab3c5884 in riscv_csrrw
-     (env=0xaaaaac194d80, csrno=849, ret_value=0x0, new_value=0, write_mask=18446744073709551615, ra=281472560986724)
-     at ../target/riscv/csr.c:5871
-#4  0x0000aaaaab3cb670 in helper_csrw (env=0xaaaaac194d80, csr=849, src=0) at ../target/riscv/op_helper.c:75
+I guess if GDBFeatureBuilder is not destructed per core, won't this imply
+we have a similar stale pointer issue (ri->name referenced at
+builder->regs->pdata, and ri is freed) in the use case you mentioned?
 
+But if it has the same lifetime as ARMCPU, won't this also imply we need to
+call again the GDBFeatureBuilder append_reg method?
 
-Down there:
+I will try to read the docs/tests or try any examples that do this struct
+re-creation at run-time and test the above ri->name scenario.
 
-
-
-On 5/20/2026 9:53 AM, Anton Johansson via qemu development wrote:
-> In hw/ the relevant RISCVIMSICState fields
-> eidelivery, eithreshold, eistate are uint32_t.
-> 
-> Signed-off-by: Anton Johansson <anjo@rev.ng>
-> Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-> Acked-by: Alistair Francis <alistair.francis@wdc.com>
-> ---
->   target/riscv/cpu.h        | 42 ++++++++++++++++++++-------------------
->   hw/intc/riscv_imsic.c     | 34 +++++++++++++++----------------
->   target/riscv/cpu_helper.c | 12 ++++-------
->   target/riscv/csr.c        | 24 ++++++++++++----------
->   4 files changed, 57 insertions(+), 55 deletions(-)
-> 
-> diff --git a/target/riscv/cpu.h b/target/riscv/cpu.h
-> index 10afc617f8..9823d7d581 100644
-> --- a/target/riscv/cpu.h
-> +++ b/target/riscv/cpu.h
-> @@ -200,6 +200,24 @@ FIELD(VTYPE, VMA, 7, 1)
->   FIELD(VTYPE, ALTFMT, 8, 1)
->   FIELD(VTYPE, RESERVED, 9, sizeof(uint64_t) * 8 - 10)
->   
-> +#ifndef CONFIG_USER_ONLY
-> +/* machine specific AIA ireg read-modify-write callback */
-> +#define AIA_MAKE_IREG(__isel, __priv, __virt, __vgein, __xlen)                 \
-> +    ((uint32_t)((((__xlen) & 0xff) << 24) |                                    \
-> +                (((__vgein) & 0x3f) << 20) |                                   \
-> +                (((__virt) & 0x1) << 18) |                                     \
-> +                (((__priv) & 0x3) << 16) |                                     \
-> +                  (__isel & 0xffff)))
-> +#define AIA_IREG_ISEL(__ireg) ((__ireg) & 0xffff)
-> +#define AIA_IREG_PRIV(__ireg) (((__ireg) >> 16) & 0x3)
-> +#define AIA_IREG_VIRT(__ireg) (((__ireg) >> 18) & 0x1)
-> +#define AIA_IREG_VGEIN(__ireg) (((__ireg) >> 20) & 0x3f)
-> +#define AIA_IREG_XLEN(__ireg) (((__ireg) >> 24) & 0xff)
-> +
-> +typedef int (*aia_ireg_rmw_fn)(void *arg, uint32_t reg, uint64_t *val,
-> +                               uint64_t new_val, uint64_t write_mask);
-> +#endif
-> +
->   typedef struct PMUCTRState {
->       /* Current value of a counter */
->       uint64_t mhpmcounter_val;
-> @@ -465,20 +483,8 @@ struct CPUArchState {
->       void *rdtime_fn_arg;
->   
->       /* machine specific AIA ireg read-modify-write callback */
-> -#define AIA_MAKE_IREG(__isel, __priv, __virt, __vgein, __xlen) \
-> -    ((((__xlen) & 0xff) << 24) | \
-> -     (((__vgein) & 0x3f) << 20) | \
-> -     (((__virt) & 0x1) << 18) | \
-> -     (((__priv) & 0x3) << 16) | \
-> -     (__isel & 0xffff))
-> -#define AIA_IREG_ISEL(__ireg)                  ((__ireg) & 0xffff)
-> -#define AIA_IREG_PRIV(__ireg)                  (((__ireg) >> 16) & 0x3)
-> -#define AIA_IREG_VIRT(__ireg)                  (((__ireg) >> 18) & 0x1)
-> -#define AIA_IREG_VGEIN(__ireg)                 (((__ireg) >> 20) & 0x3f)
-> -#define AIA_IREG_XLEN(__ireg)                  (((__ireg) >> 24) & 0xff)
-> -    int (*aia_ireg_rmw_fn[4])(void *arg, target_ulong reg,
-> -        target_ulong *val, target_ulong new_val, target_ulong write_mask);
-> -    void *aia_ireg_rmw_fn_arg[4];
-> +    aia_ireg_rmw_fn aia_ireg_rmw_cb[4];
-> +    void *aia_ireg_rmw_cb_arg[4];
->   
->       /* True if in debugger mode.  */
->       bool debugger;
-> @@ -646,12 +652,8 @@ void riscv_cpu_interrupt(CPURISCVState *env);
->   #define BOOL_TO_MASK(x) (-!!(x)) /* helper for riscv_cpu_update_mip value */
->   void riscv_cpu_set_rdtime_fn(CPURISCVState *env, uint64_t (*fn)(void *),
->                                void *arg);
-> -void riscv_cpu_set_aia_ireg_rmw_fn(CPURISCVState *env, privilege_mode_t priv,
-> -                                   int (*rmw_fn)(void *arg,
-> -                                                 target_ulong reg,
-> -                                                 target_ulong *val,
-> -                                                 target_ulong new_val,
-> -                                                 target_ulong write_mask),
-> +void riscv_cpu_set_aia_ireg_rmw_cb(CPURISCVState *env, privilege_mode_t priv,
-> +                                   aia_ireg_rmw_fn rmw_fn,
->                                      void *rmw_fn_arg);
->   
->   RISCVException smstateen_acc_ok(CPURISCVState *env, int index, uint64_t bit);
-> diff --git a/hw/intc/riscv_imsic.c b/hw/intc/riscv_imsic.c
-> index 7c9a012033..3ce9f146c0 100644
-> --- a/hw/intc/riscv_imsic.c
-> +++ b/hw/intc/riscv_imsic.c
-> @@ -88,11 +88,11 @@ static void riscv_imsic_update(RISCVIMSICState *imsic, uint32_t page)
->   }
->   
->   static int riscv_imsic_eidelivery_rmw(RISCVIMSICState *imsic, uint32_t page,
-> -                                      target_ulong *val,
-> -                                      target_ulong new_val,
-> -                                      target_ulong wr_mask)
-> +                                      uint64_t *val,
-> +                                      uint64_t new_val,
-> +                                      uint64_t wr_mask)
->   {
-> -    target_ulong old_val = imsic->eidelivery[page];
-> +    uint32_t old_val = imsic->eidelivery[page];
->   
->       if (val) {
->           *val = old_val;
-> @@ -106,11 +106,11 @@ static int riscv_imsic_eidelivery_rmw(RISCVIMSICState *imsic, uint32_t page,
->   }
->   
->   static int riscv_imsic_eithreshold_rmw(RISCVIMSICState *imsic, uint32_t page,
-> -                                      target_ulong *val,
-> -                                      target_ulong new_val,
-> -                                      target_ulong wr_mask)
-> +                                      uint64_t *val,
-> +                                      uint64_t new_val,
-> +                                      uint64_t wr_mask)
->   {
-> -    target_ulong old_val = imsic->eithreshold[page];
-> +    uint32_t old_val = imsic->eithreshold[page];
->   
->       if (val) {
->           *val = old_val;
-> @@ -124,8 +124,8 @@ static int riscv_imsic_eithreshold_rmw(RISCVIMSICState *imsic, uint32_t page,
->   }
->   
->   static int riscv_imsic_topei_rmw(RISCVIMSICState *imsic, uint32_t page,
-> -                                 target_ulong *val, target_ulong new_val,
-> -                                 target_ulong wr_mask)
-> +                                 uint64_t *val, uint64_t new_val,
-> +                                 uint64_t wr_mask)
->   {
->       uint32_t base, topei = riscv_imsic_topei(imsic, page);
->   
-> @@ -149,11 +149,11 @@ static int riscv_imsic_topei_rmw(RISCVIMSICState *imsic, uint32_t page,
->   
->   static int riscv_imsic_eix_rmw(RISCVIMSICState *imsic,
->                                  uint32_t xlen, uint32_t page,
-> -                               uint32_t num, bool pend, target_ulong *val,
-> -                               target_ulong new_val, target_ulong wr_mask)
-> +                               uint32_t num, bool pend, uint64_t *val,
-> +                               uint64_t new_val, uint64_t wr_mask)
->   {
->       uint32_t i, base, prev;
-> -    target_ulong mask;
-> +    uint64_t mask;
->       uint32_t state = (pend) ? IMSIC_EISTATE_PENDING : IMSIC_EISTATE_ENABLED;
->   
->       if (xlen != 32) {
-> @@ -178,7 +178,7 @@ static int riscv_imsic_eix_rmw(RISCVIMSICState *imsic,
->               continue;
->           }
->   
-> -        mask = (target_ulong)1 << i;
-> +        mask = 1ull << i;
->           if (wr_mask & mask) {
->               if (new_val & mask) {
->                   prev = qatomic_fetch_or(&imsic->eistate[base + i], state);
-> @@ -197,8 +197,8 @@ static int riscv_imsic_eix_rmw(RISCVIMSICState *imsic,
->       return 0;
->   }
->   
-> -static int riscv_imsic_rmw(void *arg, target_ulong reg, target_ulong *val,
-> -                           target_ulong new_val, target_ulong wr_mask)
-> +static int riscv_imsic_rmw(void *arg, uint32_t reg, uint64_t *val,
-> +                           uint64_t new_val, uint64_t wr_mask)
->   {
->       RISCVIMSICState *imsic = arg;
->       uint32_t isel, priv, virt, vgein, xlen, page;
-> @@ -383,7 +383,7 @@ static void riscv_imsic_realize(DeviceState *dev, Error **errp)
->           }
->   
->           if (!kvm_irqchip_in_kernel()) {
-> -            riscv_cpu_set_aia_ireg_rmw_fn(env, (imsic->mmode) ? PRV_M : PRV_S,
-> +            riscv_cpu_set_aia_ireg_rmw_cb(env, (imsic->mmode) ? PRV_M : PRV_S,
->                                             riscv_imsic_rmw, imsic);
->           }
->       }
-> diff --git a/target/riscv/cpu_helper.c b/target/riscv/cpu_helper.c
-> index e7c0ff49d0..90c126fdc2 100644
-> --- a/target/riscv/cpu_helper.c
-> +++ b/target/riscv/cpu_helper.c
-> @@ -816,17 +816,13 @@ void riscv_cpu_set_rdtime_fn(CPURISCVState *env, uint64_t (*fn)(void *),
->       env->rdtime_fn_arg = arg;
->   }
->   
-> -void riscv_cpu_set_aia_ireg_rmw_fn(CPURISCVState *env, privilege_mode_t priv,
-> -                                   int (*rmw_fn)(void *arg,
-> -                                                 target_ulong reg,
-> -                                                 target_ulong *val,
-> -                                                 target_ulong new_val,
-> -                                                 target_ulong write_mask),
-> +void riscv_cpu_set_aia_ireg_rmw_cb(CPURISCVState *env, privilege_mode_t priv,
-> +                                   aia_ireg_rmw_fn rmw_fn,
->                                      void *rmw_fn_arg)
->   {
->       if (priv <= PRV_M) {
-> -        env->aia_ireg_rmw_fn[priv] = rmw_fn;
-> -        env->aia_ireg_rmw_fn_arg[priv] = rmw_fn_arg;
-> +        env->aia_ireg_rmw_cb[priv] = rmw_fn;
-> +        env->aia_ireg_rmw_cb_arg[priv] = rmw_fn_arg;
->       }
->   }
->   
-> diff --git a/target/riscv/csr.c b/target/riscv/csr.c
-> index 4bab7ec29f..837212b55f 100644
-> --- a/target/riscv/csr.c
-> +++ b/target/riscv/csr.c
-> @@ -2655,6 +2655,7 @@ static RISCVException rmw_xireg_aia(CPURISCVState *env, int csrno,
->       uint8_t *iprio;
->       privilege_mode_t priv;
->       uint32_t vgein;
-> +    uint64_t wide_val;
->   
->       /* VS-mode CSR number passed in has already been translated */
->       switch (csrno) {
-> @@ -2699,16 +2700,17 @@ static RISCVException rmw_xireg_aia(CPURISCVState *env, int csrno,
->           }
->       } else if (ISELECT_IMSIC_FIRST <= isel && isel <= ISELECT_IMSIC_LAST) {
->           /* IMSIC registers only available when machine implements it. */
-> -        if (env->aia_ireg_rmw_fn[priv]) {
-> +        if (env->aia_ireg_rmw_cb[priv]) {
->               /* Selected guest interrupt file should not be zero */
->               if (virt && (!vgein || env->geilen < vgein)) {
->                   goto done;
->               }
->               /* Call machine specific IMSIC register emulation */
-> -            ret = env->aia_ireg_rmw_fn[priv](env->aia_ireg_rmw_fn_arg[priv],
-> +            ret = env->aia_ireg_rmw_cb[priv](env->aia_ireg_rmw_cb_arg[priv],
->                                       AIA_MAKE_IREG(isel, priv, virt, vgein,
->                                                     riscv_cpu_mxl_bits(env)),
-> -                                    val, new_val, wr_mask);
-> +                                    &wide_val, new_val, wr_mask);
-> +            *val = wide_val;
-
-Here.  We can't just do *val = wide_val because there's no guarantee that *val,
-i.e. the 'ret_value' of riscv_csr_op_fn(), is not NULL:
-
-typedef RISCVException (*riscv_csr_op_fn)(CPURISCVState *env, int csrno,
-                                           target_ulong *ret_value,  <--------
-                                           target_ulong new_value,
-                                           target_ulong write_mask);
-
-This fixes it:
-
-    if (val) {
-        *val = wide_val;
-    }
+Thank you
 
 
-Note that this is the same pattern used in other predicates.  E.g
-rmw_xiselect() does:
+On Tue, Jun 2, 2026 at 7:28=E2=80=AFPM Alex Benn=C3=A9e <alex.bennee@linaro=
+.org> wrote:
 
+> Abdelrahman Elbehery <elbeheri95@gmail.com> writes:
+>
+> > Profiling showed g_hash_table_lookup as a hot spot when running TCG
+> > plugins that log all CPU registers (e.g. execlog with reg=3D*).
+> > Replace it with a direct array index to avoid lookup overhead.
+> >
+> > Signed-off-by: Abdelrahman Elbehery <elbeheri95@gmail.com>
+> > ---
+> > While profiling (via callgrind) a TCG plugin that logs all the CPU
+> registers
+> > (very identical to execlog with reg=3D*) i noticed that arm_gdb_get_sys=
+reg
+> is a hot spot,
+> > mostly while calling g_hash_table_lookup. Probably this is due to some
+> hashtable collision
+> > that is handleded by glib internally.
+> >
+> > Currently each DynamicGDBFeatureInfo item holds keys for cp_regs, and
+> the keys are always
+> > used to retrieve the ARMCPRegInfo pointer.
+> >
+> > By replacing the keys array with a GPtrArray, we now just access reg
+> info directly from
+> > the given index.
+> >
+> > The benchmarking was done on c2d-highcpu-16 (16 vCPUs, 32 GB memory) GC=
+P
+> >
+> > Setup was to run qemu-system-aarch64 against a buildroot kernel and
+> rootfs
+> > with and without the patch mostly using:
+> >     --plugin contrib/plugins/libstoptrigger.so,icount=3D2000000
+> >     --plugin contrib/plugins/libexeclog.so,reg=3D*
+> >     -M virt -cpu cortex-a710 -smp 1
+> >
+> > Benchmark showed ~15% performance gain when hashtable is not used.
+> > For benchmarking, i used hyperfine with 3 warmup rounds and 10
+> iterations each.
+> > ---
+> >  target/arm/cpu.h     |  6 +++---
+> >  target/arm/gdbstub.c | 28 ++++++++++++++++------------
+> >  2 files changed, 19 insertions(+), 15 deletions(-)
+> >
+> > diff --git a/target/arm/cpu.h b/target/arm/cpu.h
+> > index
+> 15a13b929276dad161032b61ba51ebbce7eeebc6..8816e94e3f8271ad403e77f6182fdb8=
+cee31c527
+> 100644
+> > --- a/target/arm/cpu.h
+> > +++ b/target/arm/cpu.h
+> > @@ -121,15 +121,15 @@
+> >   * DynamicGDBFeatureInfo:
+> >   * @desc: Contains the feature descriptions.
+> >   * @data: A union with data specific to the set of registers
+> > - *    @cpregs_keys: Array that contains the corresponding Key of
+> > - *                  a given cpreg with the same order of the cpreg
+> > + *    @cpregs_regs: Array that contains the corresponding Register inf=
+o
+> pointer
+> > + *                  of a given cpreg with the same order of the cpreg
+> >   *                  in the XML description.
+> >   */
+> >  typedef struct DynamicGDBFeatureInfo {
+> >      GDBFeature desc;
+> >      union {
+> >          struct {
+> > -            uint32_t *keys;
+> > +            GPtrArray *regs;
+> >          } cpregs;
+> >      } data;
+> >  } DynamicGDBFeatureInfo;
+> > diff --git a/target/arm/gdbstub.c b/target/arm/gdbstub.c
+> > index
+> d6e29c4cf46745dc7851bc5f8339c8d7c6857b8c..e66af8207b436fe8f1dd27441a587b1=
+eb52ff928
+> 100644
+> > --- a/target/arm/gdbstub.c
+> > +++ b/target/arm/gdbstub.c
+> > @@ -238,19 +238,23 @@ static int arm_gdb_get_sysreg(CPUState *cs,
+> GByteArray *buf, int reg)
+> >      ARMCPU *cpu =3D ARM_CPU(cs);
+> >      CPUARMState *env =3D &cpu->env;
+> >      const ARMCPRegInfo *ri;
+> > -    uint32_t key;
+> >
+> > -    key =3D cpu->dyn_sysreg_feature.data.cpregs.keys[reg];
+> > -    ri =3D get_arm_cp_reginfo(cpu->cp_regs, key);
+> > +    ri =3D g_ptr_array_index(cpu->dyn_sysreg_feature.data.cpregs.regs,
+> > reg);
+>
+> I was only re-using key because we still use get_arm_cp_reginfo but I
+> have no objection to making the access faster for plugins given the
+> system registers don't change after CPU reset.
+>
+>
+> Tested-by: Alex Benn=C3=A9e <alex.bennee@linaro.org>
+> Reviewed-by: Alex Benn=C3=A9e <alex.bennee@linaro.org>
+>
+>
+> >      if (ri) {
+> >          switch (cpreg_field_type(ri)) {
+> >          case MO_64:
+> >              if (ri->vhe_redir_to_el2 &&
+> >                  (arm_hcr_el2_eff(env) & HCR_E2H) &&
+> >                  arm_current_el(env) =3D=3D 2) {
+> > -                ri =3D get_arm_cp_reginfo(cpu->cp_regs,
+> ri->vhe_redir_to_el2);
+> > +                ri =3D g_ptr_array_index(
+> > +                    cpu->dyn_sysreg_feature.data.cpregs.regs,
+> > +                    ri->vhe_redir_to_el2
+> > +                );
+> >              } else if (ri->vhe_redir_to_el01) {
+> > -                ri =3D get_arm_cp_reginfo(cpu->cp_regs,
+> ri->vhe_redir_to_el01);
+> > +                ri =3D g_ptr_array_index(
+> > +                    cpu->dyn_sysreg_feature.data.cpregs.regs,
+> > +                    ri->vhe_redir_to_el01
+> > +                );
+> >              }
+> >              return gdb_get_reg64(buf, (uint64_t)read_raw_cp_reg(env,
+> ri));
+> >          case MO_32:
+> > @@ -269,19 +273,18 @@ static int arm_gdb_set_sysreg(CPUState *cs,
+> uint8_t *buf, int reg)
+> >
+> >  static void arm_gen_one_feature_sysreg(GDBFeatureBuilder *builder,
+> >                                         DynamicGDBFeatureInfo
+> *dyn_feature,
+> > -                                       ARMCPRegInfo *ri, uint32_t
+> ri_key,
+> > +                                       ARMCPRegInfo *ri,
+> >                                         int bitsize, int n)
+> >  {
+> >      gdb_feature_builder_append_reg(builder, ri->name, bitsize, n,
+> >                                     "int", "cp_regs");
+> >
+> > -    dyn_feature->data.cpregs.keys[n] =3D ri_key;
+> > +    g_ptr_array_index(dyn_feature->data.cpregs.regs, n) =3D ri;
+> >  }
+> >
+> >  static void arm_register_sysreg_for_feature(gpointer key, gpointer
+> value,
+> >                                              gpointer p)
+> >  {
+> > -    uint32_t ri_key =3D (uintptr_t)key;
+> >      ARMCPRegInfo *ri =3D value;
+> >      RegisterSysregFeatureParam *param =3D p;
+> >      ARMCPU *cpu =3D ARM_CPU(param->cs);
+> > @@ -292,7 +295,7 @@ static void arm_register_sysreg_for_feature(gpointe=
+r
+> key, gpointer value,
+> >          if (arm_feature(env, ARM_FEATURE_AARCH64)) {
+> >              if (ri->state =3D=3D ARM_CP_STATE_AA64) {
+> >                  arm_gen_one_feature_sysreg(&param->builder, dyn_featur=
+e,
+> > -                                           ri, ri_key, 64, param->n++)=
+;
+> > +                                           ri, 64, param->n++);
+> >              }
+> >          } else {
+> >              if (ri->state =3D=3D ARM_CP_STATE_AA32) {
+> > @@ -302,10 +305,10 @@ static void
+> arm_register_sysreg_for_feature(gpointer key, gpointer value,
+> >                  }
+> >                  if (ri->type & ARM_CP_64BIT) {
+> >                      arm_gen_one_feature_sysreg(&param->builder,
+> dyn_feature,
+> > -                                               ri, ri_key, 64,
+> param->n++);
+> > +                                               ri, 64, param->n++);
+> >                  } else {
+> >                      arm_gen_one_feature_sysreg(&param->builder,
+> dyn_feature,
+> > -                                               ri, ri_key, 32,
+> param->n++);
+> > +                                               ri, 32, param->n++);
+> >                  }
+> >              }
+> >          }
+> > @@ -323,7 +326,8 @@ static GDBFeature
+> *arm_gen_dynamic_sysreg_feature(CPUState *cs, int base_reg)
+> >                               "org.qemu.gdb.arm.sys.regs",
+> >                               "system-registers.xml",
+> >                               base_reg);
+> > -    cpu->dyn_sysreg_feature.data.cpregs.keys =3D g_new(uint32_t,
+> num_regs);
+> > +    cpu->dyn_sysreg_feature.data.cpregs.regs =3D g_ptr_array_new();
+> > +    g_ptr_array_set_size(cpu->dyn_sysreg_feature.data.cpregs.regs,
+> num_regs);
+> >      g_hash_table_foreach(cpu->cp_regs, arm_register_sysreg_for_feature=
+,
+> &param);
+> >      gdb_feature_builder_end(&param.builder);
+> >      return &cpu->dyn_sysreg_feature.desc;
+> >
+> > ---
+> > base-commit: ac6721b88df944ade0048822b2b74210f543d656
+> > change-id: 20260518-enhance_arm_gdb_get_sysreg_performance-4288474401d6
+> >
+> > Best regards,
+>
+> --
+> Alex Benn=C3=A9e
+> Virtualisation Tech Lead @ Linaro
+>
 
-     if (val) {
-         *val = *iselect;
-     }
+--0000000000004c9d080653566fcd
+Content-Type: text/html; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
+<div dir=3D"ltr">Thanks so much for pointing that out.<div><br></div><div>I=
+ am not aware if GDBFeatureBuilder=C2=A0shares the same lifetime as ARMCPU =
+struct or not. But noticed that builder object keeps a copy of register obj=
+ect name pointer.</div><div><br></div><div>E.g. gdb_feature_builder_append_=
+reg does</div><div><br></div><div>=C2=A0 =C2=A0builder-&gt;regs-&gt;pdata[r=
+egnum] =3D (gpointer *)name;</div><div><br></div><div>I guess if=C2=A0GDBFe=
+atureBuilder is not destructed per core, won&#39;t this imply we have a sim=
+ilar stale pointer issue (ri-&gt;name referenced at builder-&gt;regs-&gt;pd=
+ata, and ri is freed) in the use case you mentioned?</div><div><br></div><d=
+iv>But if it has the same lifetime as ARMCPU, won&#39;t this also imply we =
+need to call again the GDBFeatureBuilder append_reg method?</div><div><br><=
+/div><div>I will try to read the docs/tests or try any examples that do thi=
+s struct re-creation at run-time and test the above ri-&gt;name scenario.</=
+div><div><br></div><div>Thank you</div><div><br></div></div><br><div class=
+=3D"gmail_quote gmail_quote_container"><div dir=3D"ltr" class=3D"gmail_attr=
+">On Tue, Jun 2, 2026 at 7:28=E2=80=AFPM Alex Benn=C3=A9e &lt;<a href=3D"ma=
+ilto:alex.bennee@linaro.org">alex.bennee@linaro.org</a>&gt; wrote:<br></div=
+><blockquote class=3D"gmail_quote" style=3D"margin:0px 0px 0px 0.8ex;border=
+-left:1px solid rgb(204,204,204);padding-left:1ex">Abdelrahman Elbehery &lt=
+;<a href=3D"mailto:elbeheri95@gmail.com" target=3D"_blank">elbeheri95@gmail=
+.com</a>&gt; writes:<br>
+<br>
+&gt; Profiling showed g_hash_table_lookup as a hot spot when running TCG<br=
+>
+&gt; plugins that log all CPU registers (e.g. execlog with reg=3D*).<br>
+&gt; Replace it with a direct array index to avoid lookup overhead.<br>
+&gt;<br>
+&gt; Signed-off-by: Abdelrahman Elbehery &lt;<a href=3D"mailto:elbeheri95@g=
+mail.com" target=3D"_blank">elbeheri95@gmail.com</a>&gt;<br>
+&gt; ---<br>
+&gt; While profiling (via callgrind) a TCG plugin that logs all the CPU reg=
+isters<br>
+&gt; (very identical to execlog with reg=3D*) i noticed that arm_gdb_get_sy=
+sreg is a hot spot,<br>
+&gt; mostly while calling g_hash_table_lookup. Probably this is due to some=
+ hashtable collision<br>
+&gt; that is handleded by glib internally.<br>
+&gt;<br>
+&gt; Currently each DynamicGDBFeatureInfo item holds keys for cp_regs, and =
+the keys are always<br>
+&gt; used to retrieve the ARMCPRegInfo pointer.<br>
+&gt;<br>
+&gt; By replacing the keys array with a GPtrArray, we now just access reg i=
+nfo directly from<br>
+&gt; the given index.<br>
+&gt;<br>
+&gt; The benchmarking was done on c2d-highcpu-16 (16 vCPUs, 32 GB memory) G=
+CP<br>
+&gt;<br>
+&gt; Setup was to run qemu-system-aarch64 against a buildroot kernel and ro=
+otfs<br>
+&gt; with and without the patch mostly using:<br>
+&gt;=C2=A0 =C2=A0 =C2=A0--plugin contrib/plugins/libstoptrigger.so,icount=
+=3D2000000<br>
+&gt;=C2=A0 =C2=A0 =C2=A0--plugin contrib/plugins/libexeclog.so,reg=3D*<br>
+&gt;=C2=A0 =C2=A0 =C2=A0-M virt -cpu cortex-a710 -smp 1<br>
+&gt;<br>
+&gt; Benchmark showed ~15% performance gain when hashtable is not used.<br>
+&gt; For benchmarking, i used hyperfine with 3 warmup rounds and 10 iterati=
+ons each.<br>
+&gt; ---<br>
+&gt;=C2=A0 target/arm/cpu.h=C2=A0 =C2=A0 =C2=A0|=C2=A0 6 +++---<br>
+&gt;=C2=A0 target/arm/gdbstub.c | 28 ++++++++++++++++------------<br>
+&gt;=C2=A0 2 files changed, 19 insertions(+), 15 deletions(-)<br>
+&gt;<br>
+&gt; diff --git a/target/arm/cpu.h b/target/arm/cpu.h<br>
+&gt; index 15a13b929276dad161032b61ba51ebbce7eeebc6..8816e94e3f8271ad403e77=
+f6182fdb8cee31c527 100644<br>
+&gt; --- a/target/arm/cpu.h<br>
+&gt; +++ b/target/arm/cpu.h<br>
+&gt; @@ -121,15 +121,15 @@<br>
+&gt;=C2=A0 =C2=A0* DynamicGDBFeatureInfo:<br>
+&gt;=C2=A0 =C2=A0* @desc: Contains the feature descriptions.<br>
+&gt;=C2=A0 =C2=A0* @data: A union with data specific to the set of register=
+s<br>
+&gt; - *=C2=A0 =C2=A0 @cpregs_keys: Array that contains the corresponding K=
+ey of<br>
+&gt; - *=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 a gi=
+ven cpreg with the same order of the cpreg<br>
+&gt; + *=C2=A0 =C2=A0 @cpregs_regs: Array that contains the corresponding R=
+egister info pointer<br>
+&gt; + *=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 of a=
+ given cpreg with the same order of the cpreg<br>
+&gt;=C2=A0 =C2=A0*=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =
+=C2=A0 in the XML description.<br>
+&gt;=C2=A0 =C2=A0*/<br>
+&gt;=C2=A0 typedef struct DynamicGDBFeatureInfo {<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 GDBFeature desc;<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 union {<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 struct {<br>
+&gt; -=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 uint32_t *keys;<br>
+&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 GPtrArray *regs;<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 } cpregs;<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 } data;<br>
+&gt;=C2=A0 } DynamicGDBFeatureInfo;<br>
+&gt; diff --git a/target/arm/gdbstub.c b/target/arm/gdbstub.c<br>
+&gt; index d6e29c4cf46745dc7851bc5f8339c8d7c6857b8c..e66af8207b436fe8f1dd27=
+441a587b1eb52ff928 100644<br>
+&gt; --- a/target/arm/gdbstub.c<br>
+&gt; +++ b/target/arm/gdbstub.c<br>
+&gt; @@ -238,19 +238,23 @@ static int arm_gdb_get_sysreg(CPUState *cs, GByt=
+eArray *buf, int reg)<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 ARMCPU *cpu =3D ARM_CPU(cs);<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 CPUARMState *env =3D &amp;cpu-&gt;env;<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 const ARMCPRegInfo *ri;<br>
+&gt; -=C2=A0 =C2=A0 uint32_t key;<br>
+&gt;=C2=A0 <br>
+&gt; -=C2=A0 =C2=A0 key =3D cpu-&gt;dyn_sysreg_feature.data.cpregs.keys[reg=
+];<br>
+&gt; -=C2=A0 =C2=A0 ri =3D get_arm_cp_reginfo(cpu-&gt;cp_regs, key);<br>
+&gt; +=C2=A0 =C2=A0 ri =3D g_ptr_array_index(cpu-&gt;dyn_sysreg_feature.dat=
+a.cpregs.regs,<br>
+&gt; reg);<br>
+<br>
+I was only re-using key because we still use get_arm_cp_reginfo but I<br>
+have no objection to making the access faster for plugins given the<br>
+system registers don&#39;t change after CPU reset.<br>
+<br>
+<br>
+Tested-by: Alex Benn=C3=A9e &lt;<a href=3D"mailto:alex.bennee@linaro.org" t=
+arget=3D"_blank">alex.bennee@linaro.org</a>&gt;<br>
+Reviewed-by: Alex Benn=C3=A9e &lt;<a href=3D"mailto:alex.bennee@linaro.org"=
+ target=3D"_blank">alex.bennee@linaro.org</a>&gt;<br>
+<br>
+<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 if (ri) {<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 switch (cpreg_field_type(ri)) {<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 case MO_64:<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 if (ri-&gt;vhe_redir_t=
+o_el2 &amp;&amp;<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 (arm_hcr=
+_el2_eff(env) &amp; HCR_E2H) &amp;&amp;<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 arm_curr=
+ent_el(env) =3D=3D 2) {<br>
+&gt; -=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 ri =3D get_ar=
+m_cp_reginfo(cpu-&gt;cp_regs, ri-&gt;vhe_redir_to_el2);<br>
+&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 ri =3D g_ptr_=
+array_index(<br>
+&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0=
+ cpu-&gt;dyn_sysreg_feature.data.cpregs.regs,<br>
+&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0=
+ ri-&gt;vhe_redir_to_el2<br>
+&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 );<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 } else if (ri-&gt;vhe_=
+redir_to_el01) {<br>
+&gt; -=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 ri =3D get_ar=
+m_cp_reginfo(cpu-&gt;cp_regs, ri-&gt;vhe_redir_to_el01);<br>
+&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 ri =3D g_ptr_=
+array_index(<br>
+&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0=
+ cpu-&gt;dyn_sysreg_feature.data.cpregs.regs,<br>
+&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0=
+ ri-&gt;vhe_redir_to_el01<br>
+&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 );<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 }<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 return gdb_get_reg64(b=
+uf, (uint64_t)read_raw_cp_reg(env, ri));<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 case MO_32:<br>
+&gt; @@ -269,19 +273,18 @@ static int arm_gdb_set_sysreg(CPUState *cs, uint=
+8_t *buf, int reg)<br>
+&gt;=C2=A0 <br>
+&gt;=C2=A0 static void arm_gen_one_feature_sysreg(GDBFeatureBuilder *builde=
+r,<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =
+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
+=A0DynamicGDBFeatureInfo *dyn_feature,<br>
+&gt; -=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0=
+ =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0ARMCP=
+RegInfo *ri, uint32_t ri_key,<br>
+&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0=
+ =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0ARMCP=
+RegInfo *ri,<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =
+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
+=A0int bitsize, int n)<br>
+&gt;=C2=A0 {<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 gdb_feature_builder_append_reg(builder, ri-&gt;nam=
+e, bitsize, n,<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =
+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0&quot;int&quo=
+t;, &quot;cp_regs&quot;);<br>
+&gt;=C2=A0 <br>
+&gt; -=C2=A0 =C2=A0 dyn_feature-&gt;data.cpregs.keys[n] =3D ri_key;<br>
+&gt; +=C2=A0 =C2=A0 g_ptr_array_index(dyn_feature-&gt;data.cpregs.regs, n) =
+=3D ri;<br>
+&gt;=C2=A0 }<br>
+&gt;=C2=A0 <br>
+&gt;=C2=A0 static void arm_register_sysreg_for_feature(gpointer key, gpoint=
+er value,<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =
+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
+=A0 =C2=A0 =C2=A0 gpointer p)<br>
+&gt;=C2=A0 {<br>
+&gt; -=C2=A0 =C2=A0 uint32_t ri_key =3D (uintptr_t)key;<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 ARMCPRegInfo *ri =3D value;<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 RegisterSysregFeatureParam *param =3D p;<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 ARMCPU *cpu =3D ARM_CPU(param-&gt;cs);<br>
+&gt; @@ -292,7 +295,7 @@ static void arm_register_sysreg_for_feature(gpoint=
+er key, gpointer value,<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 if (arm_feature(env, ARM_FEATURE_AAR=
+CH64)) {<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 if (ri-&gt;state =3D=
+=3D ARM_CP_STATE_AA64) {<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 arm_gen_=
+one_feature_sysreg(&amp;param-&gt;builder, dyn_feature,<br>
+&gt; -=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0=
+ =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
+=A0 =C2=A0ri, ri_key, 64, param-&gt;n++);<br>
+&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0=
+ =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
+=A0 =C2=A0ri, 64, param-&gt;n++);<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 }<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 } else {<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 if (ri-&gt;state =3D=
+=3D ARM_CP_STATE_AA32) {<br>
+&gt; @@ -302,10 +305,10 @@ static void arm_register_sysreg_for_feature(gpoi=
+nter key, gpointer value,<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 }<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 if (ri-&=
+gt;type &amp; ARM_CP_64BIT) {<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =
+=C2=A0 arm_gen_one_feature_sysreg(&amp;param-&gt;builder, dyn_feature,<br>
+&gt; -=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0=
+ =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
+=A0 =C2=A0 =C2=A0 =C2=A0ri, ri_key, 64, param-&gt;n++);<br>
+&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0=
+ =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
+=A0 =C2=A0 =C2=A0 =C2=A0ri, 64, param-&gt;n++);<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 } else {=
+<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =
+=C2=A0 arm_gen_one_feature_sysreg(&amp;param-&gt;builder, dyn_feature,<br>
+&gt; -=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0=
+ =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
+=A0 =C2=A0 =C2=A0 =C2=A0ri, ri_key, 32, param-&gt;n++);<br>
+&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0=
+ =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
+=A0 =C2=A0 =C2=A0 =C2=A0ri, 32, param-&gt;n++);<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 }<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 }<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 }<br>
+&gt; @@ -323,7 +326,8 @@ static GDBFeature *arm_gen_dynamic_sysreg_feature(=
+CPUState *cs, int base_reg)<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =
+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0&quot;org.qemu.gdb.arm.sys.regs&qu=
+ot;,<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =
+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0&quot;system-registers.xml&quot;,<=
+br>
+&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =
+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0base_reg);<br>
+&gt; -=C2=A0 =C2=A0 cpu-&gt;dyn_sysreg_feature.data.cpregs.keys =3D g_new(u=
+int32_t, num_regs);<br>
+&gt; +=C2=A0 =C2=A0 cpu-&gt;dyn_sysreg_feature.data.cpregs.regs =3D g_ptr_a=
+rray_new();<br>
+&gt; +=C2=A0 =C2=A0 g_ptr_array_set_size(cpu-&gt;dyn_sysreg_feature.data.cp=
+regs.regs, num_regs);<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 g_hash_table_foreach(cpu-&gt;cp_regs, arm_register=
+_sysreg_for_feature, &amp;param);<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 gdb_feature_builder_end(&amp;param.builder);<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 return &amp;cpu-&gt;dyn_sysreg_feature.desc;<br>
+&gt;<br>
+&gt; ---<br>
+&gt; base-commit: ac6721b88df944ade0048822b2b74210f543d656<br>
+&gt; change-id: 20260518-enhance_arm_gdb_get_sysreg_performance-4288474401d=
+6<br>
+&gt;<br>
+&gt; Best regards,<br>
+<br>
+-- <br>
+Alex Benn=C3=A9e<br>
+Virtualisation Tech Lead @ Linaro<br>
+</blockquote></div>
 
-
-rmw_xtopei down there needs the same:
-
->           }
->       } else {
->           isel_reserved = true;
-> @@ -2941,6 +2943,7 @@ static RISCVException rmw_xtopei(CPURISCVState *env, int csrno,
->       int ret = -EINVAL;
->       privilege_mode_t priv;
->       uint32_t vgein;
-> +    uint64_t wide_val;
->   
->       /* Translate CSR number for VS-mode */
->       csrno = aia_xlate_vs_csrno(env, csrno);
-> @@ -2966,7 +2969,7 @@ static RISCVException rmw_xtopei(CPURISCVState *env, int csrno,
->       };
->   
->       /* IMSIC CSRs only available when machine implements IMSIC. */
-> -    if (!env->aia_ireg_rmw_fn[priv]) {
-> +    if (!env->aia_ireg_rmw_cb[priv]) {
->           goto done;
->       }
->   
-> @@ -2979,10 +2982,11 @@ static RISCVException rmw_xtopei(CPURISCVState *env, int csrno,
->       }
->   
->       /* Call machine specific IMSIC register emulation for TOPEI */
-> -    ret = env->aia_ireg_rmw_fn[priv](env->aia_ireg_rmw_fn_arg[priv],
-> +    ret = env->aia_ireg_rmw_cb[priv](env->aia_ireg_rmw_cb_arg[priv],
->                       AIA_MAKE_IREG(ISELECT_IMSIC_TOPEI, priv, virt, vgein,
->                                     riscv_cpu_mxl_bits(env)),
-> -                    val, new_val, wr_mask);
-> +                    &wide_val, new_val, wr_mask);
-> +    *val = wide_val;
-
-This needs to be:
-
-     if (val) {
-         *val = wide_val;
-     }
-
-
-
-Thanks,
-Daniel
-
->   
->   done:
->       if (ret) {
-> @@ -4486,7 +4490,7 @@ static RISCVException read_vstopi(CPURISCVState *env, int csrno,
->                                     target_ulong *val)
->   {
->       int irq, ret;
-> -    target_ulong topei;
-> +    uint64_t topei = 0;
->       uint64_t vseip, vsgein;
->       uint32_t iid, iprio, hviid, hviprio, gein;
->       uint32_t s, scount = 0, siid[VSTOPI_NUM_SRCS], siprio[VSTOPI_NUM_SRCS];
-> @@ -4501,13 +4505,13 @@ static RISCVException read_vstopi(CPURISCVState *env, int csrno,
->           if (gein <= env->geilen && vseip) {
->               siid[scount] = IRQ_S_EXT;
->               siprio[scount] = IPRIO_MMAXIPRIO + 1;
-> -            if (env->aia_ireg_rmw_fn[PRV_S]) {
-> +            if (env->aia_ireg_rmw_cb[PRV_S]) {
->                   /*
->                    * Call machine specific IMSIC register emulation for
->                    * reading TOPEI.
->                    */
-> -                ret = env->aia_ireg_rmw_fn[PRV_S](
-> -                        env->aia_ireg_rmw_fn_arg[PRV_S],
-> +                ret = env->aia_ireg_rmw_cb[PRV_S](
-> +                        env->aia_ireg_rmw_cb_arg[PRV_S],
->                           AIA_MAKE_IREG(ISELECT_IMSIC_TOPEI, PRV_S, true, gein,
->                                         riscv_cpu_mxl_bits(env)),
->                           &topei, 0, 0);
-
+--0000000000004c9d080653566fcd--
 
