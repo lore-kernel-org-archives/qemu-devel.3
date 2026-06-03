@@ -4,73 +4,95 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 27D25CD6E55
-	for <qemu-devel@archiver.kernel.org>; Wed,  3 Jun 2026 16:51:44 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5564BCD6E55
+	for <qemu-devel@archiver.kernel.org>; Wed,  3 Jun 2026 16:57:47 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wUoob-0003RX-OF; Wed, 03 Jun 2026 12:51:37 -0400
+	id 1wUotv-0005PC-Lz; Wed, 03 Jun 2026 12:57:07 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <stefanha@redhat.com>)
- id 1wUooC-0003KS-5I
- for qemu-devel@nongnu.org; Wed, 03 Jun 2026 12:51:12 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <stefanha@redhat.com>)
- id 1wUooA-0006ms-Jv
- for qemu-devel@nongnu.org; Wed, 03 Jun 2026 12:51:11 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1780505469;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=K5C3O4XMGh3GV4eFm7SD1CCeGdG1Mywb1rSG48u/vzY=;
- b=hKKL/taIIHRvCQcZi2iZj+EMyVMGRrw+YeYpzCudYZrQ1uMCqSwJ15+AIJYXbMQUMTu7ga
- Jdp3IADucM3VHUW1oPrOtPfEHtzrhMmVseLRanl0m7uSbI2DTkn1RySIAeD1U5OE5VLIht
- ygBNGLoukmJ3mzOR8GwhjqH2KwSIa3c=
-Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-282-VgJgyRe8MPKbeOAk3PHmmQ-1; Wed,
- 03 Jun 2026 12:51:06 -0400
-X-MC-Unique: VgJgyRe8MPKbeOAk3PHmmQ-1
-X-Mimecast-MFC-AGG-ID: VgJgyRe8MPKbeOAk3PHmmQ_1780505465
-Received: from mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.111])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 5F44319560AA; Wed,  3 Jun 2026 16:51:05 +0000 (UTC)
-Received: from localhost (unknown [10.2.16.110])
- by mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id B5220180049F; Wed,  3 Jun 2026 16:51:04 +0000 (UTC)
-Date: Wed, 3 Jun 2026 12:51:02 -0400
-From: Stefan Hajnoczi <stefanha@redhat.com>
-To: "Denis V. Lunev" <den@virtuozzo.com>
-Cc: "Denis V. Lunev" <den@openvz.org>, qemu-devel@nongnu.org,
- Markus Armbruster <armbru@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>
-Subject: Re: [PATCH 0/2] util/envlist: fix prefix-match in name lookup
-Message-ID: <20260603165102.GD59214@fedora>
-References: <20260520212628.479772-1-den@openvz.org>
- <266801b3-c127-422b-be48-d898a944deca@virtuozzo.com>
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1wUott-0005Ob-Ke
+ for qemu-devel@nongnu.org; Wed, 03 Jun 2026 12:57:05 -0400
+Received: from mail-pj1-x1033.google.com ([2607:f8b0:4864:20::1033])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1wUots-0000KG-2Z
+ for qemu-devel@nongnu.org; Wed, 03 Jun 2026 12:57:05 -0400
+Received: by mail-pj1-x1033.google.com with SMTP id
+ 98e67ed59e1d1-36ab8816a35so6555873a91.1
+ for <qemu-devel@nongnu.org>; Wed, 03 Jun 2026 09:57:03 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1780505822; x=1781110622; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:content-language:from
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=Hq7Tld+xP5icwAA24A27Ss+Gqa4T9WXi2AioM6zG01E=;
+ b=P76dAzr9GdCmjECLni+jyTqlvT148KsuV11eRgI5JgAG/9j8WCrNHpfzVUN7QzsprY
+ C9+6T3cE4A4zgBUyJubctzj7RI1K7PLQ66h7bmeOj/+0imYE20WXPx2dsz8za3GvlXxV
+ rBBvhB6oE2JKoJ/hqbcZWwzETm3i7iObzGeLpyzs9bm3RrX+VKPD1OMmE0hJQjYc5n8D
+ LPfLOFzhxuzgA5RYiwZnu5GD1vcq09lc1EMoYMEcChg0+5dQFHxzj39MEK85jQDiqcec
+ rTCKfuqXoUUO2HGFXdBN1wuefTbLGLIsMTR0eDGtrpbB2jHRyOICJmXfdWCDFVkKeQ3Q
+ tmnQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1780505822; x=1781110622;
+ h=content-transfer-encoding:in-reply-to:content-language:from
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=Hq7Tld+xP5icwAA24A27Ss+Gqa4T9WXi2AioM6zG01E=;
+ b=qMYRsPguOXvst0JipPUNbp6wQ5iHqWTnp0IHAK99cj0yZQcmksjV5g4/lYmgHV2jXM
+ esTNGyyhOSVnmb7XTEY3FLOrbilc55Zm1mb+XDUsJTM4ZB03dDH2CHHurvhuXeUpT0rJ
+ B5XXAaCjKJhS8CNhNYW6taAdKbgXfbm5OrMdT8XeCaXk+kqlbvZQTc29Q1amDkOot9PL
+ 51RKlByyEbK+DruR8dxCn9dF6w3OWe+GIMEIPOBLClniFBCcDUCUqbOzRAIUiJCT/A2X
+ kIXJcjA04XL7WFZyOIxXNxjOSDJ3i9TIjX2uv797BWgwHsvWN9Ol1jDRmnwx3K4kkqX9
+ NCMQ==
+X-Forwarded-Encrypted: i=1;
+ AFNElJ+oQJemkGcJdDNe7J2HlBTQ4ztLHzRU73ST920lW9ZjHIYylyxWfMgN09fEtczEZDC3Eu0TYh9Bjl3J@nongnu.org
+X-Gm-Message-State: AOJu0YwH7iP5sR6tgKWKtNEqD1DrvPwZ0zlCga5p04UhoyGOSOS/o89C
+ Z4adnanYCQYOmAEPrOTqEvUGc2TlgAf4E/JN9JoAmyQE4vi1bn0EbvwtgEbLyumvbTa3VzoFUtF
+ pmYWxY6M=
+X-Gm-Gg: Acq92OF5soJgpUJR0X335gb7kXlhWaldkKEx2rFroser46Bqz87iy9fOnWAyN1z9XS8
+ FQTIIVQwLm8EHoZP7/+weGAHP4cE0s0stceDCqxL23UbIHzzr2jBW6LYzo5YtU4PNzL5F7rWjYs
+ +2f2k6LyYYOyBursSLpueTK/N+5oOOgp1/kioKQobITTfwQItJaFpu0EZXA+ASLk6pH7RqF3VUW
+ puRB7UOVDV9PgNUJlfnS+U+Ty3pqI1l5/P6oPTleWju88CAUxuxuC5+PVrdznpWfv4+EgvZlm1B
+ Ge6IwsGrtGnuSBKSocMRFIOqc0ROh5lh/mTTZzJUsPPi9N/9llcbIPf1S679RRSBOTvLbIEIEUb
+ KO9opYjOfugQNgWGK4JL+taXsJI6gAGLkqJmmfnaOVbMLPVoQjLnERo3yxrOkNHffiOV7b1x0xO
+ GQIYp+PK1kD6F83wUqND//Do9clNpHyT5yf214zRbDAQjUJr4=
+X-Received: by 2002:a17:90b:5488:b0:365:3154:7b1 with SMTP id
+ 98e67ed59e1d1-36e335db2f6mr4522303a91.26.1780505822037; 
+ Wed, 03 Jun 2026 09:57:02 -0700 (PDT)
+Received: from [192.168.0.4] ([71.212.142.33])
+ by smtp.gmail.com with ESMTPSA id
+ 98e67ed59e1d1-36f68bf99dcsm247714a91.0.2026.06.03.09.57.01
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Wed, 03 Jun 2026 09:57:01 -0700 (PDT)
+Message-ID: <9c453509-7887-47fc-aaad-1cbee06a2208@linaro.org>
+Date: Wed, 3 Jun 2026 09:57:00 -0700
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
- protocol="application/pgp-signature"; boundary="MyyNPsY09yT+3MMR"
-Content-Disposition: inline
-In-Reply-To: <266801b3-c127-422b-be48-d898a944deca@virtuozzo.com>
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.111
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=stefanha@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: 8
-X-Spam_score: 0.8
-X-Spam_bar: /
-X-Spam_report: (0.8 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.445,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_SBL_CSS=3.335, SPF_HELO_PASS=-0.001,
- SPF_PASS=-0.001 autolearn=no autolearn_force=no
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 4/4] linux-user/sparc: flush register windows before core
+ dump
+To: Matt Turner <mattst88@gmail.com>, qemu-devel@nongnu.org
+Cc: Laurent Vivier <laurent@vivier.eu>, Helge Deller <deller@gmx.de>,
+ Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
+References: <20260603161852.1831864-1-mattst88@gmail.com>
+ <20260603161852.1831864-4-mattst88@gmail.com>
+From: Richard Henderson <richard.henderson@linaro.org>
+Content-Language: en-US
+In-Reply-To: <20260603161852.1831864-4-mattst88@gmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::1033;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pj1-x1033.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -86,74 +108,51 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+On 6/3/26 09:18, Matt Turner wrote:
+> @@ -502,6 +502,14 @@ void target_to_host_siginfo(siginfo_t *info, const target_siginfo_t *tinfo)
+>       info->si_value.sival_ptr = (void *)(long)sival_ptr;
+>   }
+>   
+> +/*
+> + * Weak arch hook: flush all register windows to the guest stack before
+> + * writing a core dump.  Required on SPARC where the register file holds
+> + * multiple call-frames that have not been spilled to memory yet.
+> + * Architectures without register windows leave this as a no-op.
+> + */
+> +void __attribute__((weak)) target_flush_windows(CPUArchState *env) {}
+> +
+>   /* returns 1 if given signal should dump core if not handled */
+>   static int core_dump_signal(int sig)
+>   {
+> @@ -828,6 +836,7 @@ void dump_core_and_abort(CPUArchState *env, int target_sig)
+>   
+>       /* dump core if supported by target binary format */
+>       if (core_dump_signal(target_sig) && (ts->bprm->core_dump != NULL)) {
+> +        target_flush_windows(env);
+>           stop_all_tasks();
+>           core_dumped =
+>               ((*ts->bprm->core_dump)(target_sig, env) == 0);
 
---MyyNPsY09yT+3MMR
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+Not a fan of the weak symbol.
 
-On Thu, May 28, 2026 at 11:24:48AM +0200, Denis V. Lunev wrote:
-> On 5/20/26 23:26, Denis V. Lunev wrote:
-> > A bug report against our downstream tree turned out to have its root
-> > cause in plain mainstream code: envlist_unsetenv() does a prefix-match
-> > lookup that drops the wrong entry when one stored name happens to be a
-> > prefix of another. The downstream symptom is specific to our setup and
-> > isn't interesting here -- the underlying lookup mistake is the part
-> > worth fixing, and it is reachable from a normal qemu-user invocation
-> > through the -U command-line option, so the fix belongs upstream.
-> >
-> > Patch 1 fixes the lookup: each entry now stores its name length at
-> > insertion time, and a tiny helper compares with explicit length
-> > equality plus memcmp. envlist_setenv()'s self-search was accidentally
-> > safe (it included the '=3D' byte in its strncmp window and that '=3D'
-> > served as a boundary) but is converted to the same helper so the name
-> > boundary becomes a structural property of the entry rather than a
-> > property of its byte layout. Without that, the two sites can easily
-> > drift apart again.
-> >
-> > Patch 2 backfils test coverage for util/envlist -- there was none --
-> > in tests/unit/test-envlist. I verified that the regression case
-> > (envlist_unsetenv("FOO") vs. a stored "FOOBAR=3D...") fails against the
-> > pre-fix code and passes after the fix.
-> >
-> > Signed-off-by: Denis V. Lunev <den@openvz.org>
-> > Cc: Stefan Hajnoczi <stefanha@redhat.com>
-> > Cc: Markus Armbruster <armbru@redhat.com>
-> > Cc: Paolo Bonzini <pbonzini@redhat.com>
-> >
-> > Denis V. Lunev (2):
-> >   util/envlist: fix prefix-match in envlist_unsetenv() name lookup
-> >   tests/unit: add test-envlist covering setenv/unsetenv name matching
-> >
-> >  tests/unit/meson.build    |   1 +
-> >  tests/unit/test-envlist.c | 196 ++++++++++++++++++++++++++++++++++++++
-> >  util/envlist.c            |  19 +++-
-> >  3 files changed, 212 insertions(+), 4 deletions(-)
-> >  create mode 100644 tests/unit/test-envlist.c
-> >
-> ping
->=20
+I'm pretty sure you need this flush for all threads, so probably has to happen after 
+stop_all_tasks.  Probably via one of the CPU_FOREACH in elf_core_dump.
 
-Thanks, applied to staging:
-https://gitlab.com/qemu-project/qemu/commits/staging
+We're not quite to the state where there are no TARGET_FOO ifdefs in elfload.c.
+I think we can stand a TARGET_SPARC ifdef in elf_core_dump.
 
-Stefan
+> +/* Override the weak hook in linux-user/signal.c to flush all SPARC register
+> + * windows to the guest stack before a core dump is written.  Without this,
+> + * only the active window (captured in NT_PRSTATUS) ends up in memory; all
+> + * deeper call frames remain in the register file and are absent from the
+> + * core's memory segments, breaking stack unwind beyond one frame. */
+> +void target_flush_windows(CPUArchState *env)
+> +{
+> +    flush_windows((CPUSPARCState *)env);
+> +}
 
---MyyNPsY09yT+3MMR
-Content-Type: application/pgp-signature; name=signature.asc
+Cast not required -- the two names are typedefs of each other.
 
------BEGIN PGP SIGNATURE-----
 
-iQEzBAEBCgAdFiEEhpWov9P5fNqsNXdanKSrs4Grc8gFAmogW3YACgkQnKSrs4Gr
-c8iY9wf9EPRnd4QCbfCUmq8ETlnTj+gDiSde2zDIyiwFtTbUOaOwUxsiGdYbDFsq
-E1afI64ivf5gG4gn3xYIDV4BwWP72g4zDA0GvxolCy1wWn8dWummElhUQ+afzfyR
-z0i6mEdOReFgXXoHy212OFiDVo5EOwUtqR2OwiAfoOWuBJ2cyqIHEOvPlUOlnVdC
-co/091P9hA3PqJCJmTHoQBcQcp6ZNzd7Dh0UybDNyeSWegmaUZzVCTKuvwCXPhln
-oiSHZ2naYSP8cYtREPw6JpHxmplSyyv8tpks8cW9lKeRCfp/FPsfytPWxFQrhfjM
-FiHAW2/NlGctaUfVBDN5dQgQpdcFaw==
-=ygW4
------END PGP SIGNATURE-----
-
---MyyNPsY09yT+3MMR--
-
+r~
 
