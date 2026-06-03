@@ -4,108 +4,69 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A674ECD6E55
-	for <qemu-devel@archiver.kernel.org>; Wed,  3 Jun 2026 20:22:44 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 84A33CD6E57
+	for <qemu-devel@archiver.kernel.org>; Wed,  3 Jun 2026 20:42:56 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wUs6A-0007fc-Rm; Wed, 03 Jun 2026 16:21:58 -0400
+	id 1wUsPb-0003nE-2B; Wed, 03 Jun 2026 16:42:03 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1wUs66-0007cp-Aa
- for qemu-devel@nongnu.org; Wed, 03 Jun 2026 16:21:54 -0400
+ (Exim 4.90_1) (envelope-from <stefanha@redhat.com>)
+ id 1wUsPZ-0003mf-4f
+ for qemu-devel@nongnu.org; Wed, 03 Jun 2026 16:42:01 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1wUs64-0003t2-BG
- for qemu-devel@nongnu.org; Wed, 03 Jun 2026 16:21:54 -0400
+ (Exim 4.90_1) (envelope-from <stefanha@redhat.com>)
+ id 1wUsPX-0001HK-GO
+ for qemu-devel@nongnu.org; Wed, 03 Jun 2026 16:42:00 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1780518110;
+ s=mimecast20190719; t=1780519317;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  in-reply-to:in-reply-to:references:references;
- bh=2VE9RfFrGr3dKzA3Ney43Im7Xhco0+/7Fa1HB+5hOHE=;
- b=HKI9cie6lC7IfC8kRxI6Bc0DCs1hsxcShTnQqRwePzSlVz7x2C7qzF6YIyj248Xe8la1Kk
- 6evwqS/YfEbymZCib3G8gYIaLKJAslMS+ug/fLRLRiQvIuTxeDm8LGtrikr5EzBEusGsNE
- mKC2iJhkgunfnZ3aYSj1ErFTmOvmY0o=
-Received: from mail-qk1-f198.google.com (mail-qk1-f198.google.com
- [209.85.222.198]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-131-hk40jnUNMPSKRC-osl6scw-1; Wed, 03 Jun 2026 16:21:49 -0400
-X-MC-Unique: hk40jnUNMPSKRC-osl6scw-1
-X-Mimecast-MFC-AGG-ID: hk40jnUNMPSKRC-osl6scw_1780518109
-Received: by mail-qk1-f198.google.com with SMTP id
- af79cd13be357-9156cb14b1cso966985a.1
- for <qemu-devel@nongnu.org>; Wed, 03 Jun 2026 13:21:49 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1780518109; x=1781122909; darn=nongnu.org;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
- bh=2VE9RfFrGr3dKzA3Ney43Im7Xhco0+/7Fa1HB+5hOHE=;
- b=qM/ixhoop8+2CsD64a4HJAsa5pdc0O+JIRJmOlr6VgaBdvoM16vKfqsW65GmyVw1y+
- qxoB52z4pJghN4336J1tKSiUFfZyDWj8Acmu2eDFUiC/E9rIgET+qPA+2ZWHXX+18XNE
- svXBGmr2rUHZT0+B20tqlYHbFRKn8+i075H1HG1nElQDTdy92u513cCHHVKOEOG32ns0
- Rx9wYh5h3KXgc/Noc2dMOdq1BiJZy/jMCkoiP2F4stXb6LkmMlHlA1sLRJsgqNJuX5es
- 6Ip8JMgWnWzB+P1g2oBUbn0etG8AxmCjr7RQfrHVAO45vOIVJczdkagZQ7/d71JAkJaD
- kUGg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1780518109; x=1781122909;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=2VE9RfFrGr3dKzA3Ney43Im7Xhco0+/7Fa1HB+5hOHE=;
- b=lzgOiVWQNf9ppq6MQSstN26n50aeFetY3jMxQC9sTGi1ik1oPmGbeT3P4BWsZQm5p+
- rIlOeo4qS5gj0e1/a5VhkhVmHdrN4lAhV0FsE98Y8KkkoGMPWowNmOWMIDqciM3tRTmd
- bBDEnATIwJdja81bLsB4k1/IRARI0MYNOgrgoJkk4oR5OUvPFW4iZ51tq8Q1k8cXFIxr
- tjlyvn+VJhCYTVm9zYz3UVFvv8q1nLScEvLv/At4Of/9zqakS6AQiYvxboB6mqibSvVE
- emJnrq4ZH8fDVoIWe9lrGXUP/iOLnHG4FPvo3OS9i2G8ZpSsFGUXx+fdPxF3A+gzDczc
- adGQ==
-X-Gm-Message-State: AOJu0Yxt0eW2uNYNKNNQRmt1UJ0mBNC2VRzkfZGAIm2rFwCPmLLy59l7
- VN/r9VAj1O2xgSHtE8Dtb256dSfTjvWzIPrONZ6ArRkQ7upm/SGTJrUx1/uOCqWaZuPGnK6fW2S
- C6fuaSavo2egSkKR95bBIjL5kAPyCJPZNOONiwUd2F2DW4AsHhflUvTPT
-X-Gm-Gg: Acq92OFgep7UxGVJL9f0Sc4ycR2sKHzcwmdPHYCiopFSuxwnrl8dY57Hth7ZiJsUycr
- LqI80pTrGc2YYLzi6fy+QkIZ004OR5MN2QQpF7KhWHqAuyAroow3iwOrSlIzi/VkPQkkiLPx92X
- 61NbS6Ye5XMlzaAVdhFCi+tEfKwFHf/hSBQ2CWnp96MBG2qnSayCH3Fim73RkSKaI68vQiceFSf
- 3FW5SWDZxq94v73eCaOmmtSNoBvDxV35E+h/+ZQoNsr98hJpIrsSqOrAlV4fK3BMw9raBMzv4D/
- qv1UVR1tVb7OFow3E4UvVZKKzw+h92fPppDM0J5YdxDnQcXcsSLAqjhR09kyQF5IwrIGUA7zmEh
- fTJoWEBcPOJgs38MvZPvgj+gp3w==
-X-Received: by 2002:a05:620a:1d0b:b0:915:8f76:8005 with SMTP id
- af79cd13be357-9158f768440mr654048385a.47.1780518108999; 
- Wed, 03 Jun 2026 13:21:48 -0700 (PDT)
-X-Received: by 2002:a05:620a:1d0b:b0:915:8f76:8005 with SMTP id
- af79cd13be357-9158f768440mr654041285a.47.1780518108511; 
- Wed, 03 Jun 2026 13:21:48 -0700 (PDT)
-Received: from x1.local ([142.189.10.167]) by smtp.gmail.com with ESMTPSA id
- af79cd13be357-9158a3c2492sm363719685a.34.2026.06.03.13.21.45
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 03 Jun 2026 13:21:46 -0700 (PDT)
-Date: Wed, 3 Jun 2026 16:21:45 -0400
-From: Peter Xu <peterx@redhat.com>
-To: Avihai Horon <avihaih@nvidia.com>
-Cc: qemu-devel@nongnu.org, Alex Williamson <alex@shazbot.org>,
- =?utf-8?Q?C=C3=A9dric?= Le Goater <clg@redhat.com>,
- Fabiano Rosas <farosas@suse.de>,
+ bh=fMojmsEs3FWvBuI5y49zumJBFe5MQLFHwXU0olbsL3Q=;
+ b=Wz22OUl8pl7yAVtXfGbdav1W4sTqmrJ570PBgn84AmV5eDLvbG5RlKfsea2e+IICLNHv55
+ ga3jLuNegFN5MCCvwL0aw/ePHYT8iNaORzq/uQQ9LmWM260rbqs0CrguP100tjDXpo1cuR
+ eD4iF6FV1YrdUry+kAgj0t/TUQZNQDY=
+Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-19-i8CgcpNzNIGsaHqoedUIsw-1; Wed,
+ 03 Jun 2026 16:41:54 -0400
+X-MC-Unique: i8CgcpNzNIGsaHqoedUIsw-1
+X-Mimecast-MFC-AGG-ID: i8CgcpNzNIGsaHqoedUIsw_1780519312
+Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 72E991800365; Wed,  3 Jun 2026 20:41:52 +0000 (UTC)
+Received: from localhost (unknown [10.2.16.110])
+ by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id 65E2C30001A1; Wed,  3 Jun 2026 20:41:51 +0000 (UTC)
+Date: Wed, 3 Jun 2026 16:41:50 -0400
+From: Stefan Hajnoczi <stefanha@redhat.com>
+To: Sam Li <faithilikerun@gmail.com>
+Cc: qemu-devel@nongnu.org, Markus Armbruster <armbru@redhat.com>,
+ qemu-block@nongnu.org, Eric Blake <eblake@redhat.com>,
  Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
- Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Zhao Liu <zhao1.liu@intel.com>, Halil Pasic <pasic@linux.ibm.com>,
- Christian Borntraeger <borntraeger@linux.ibm.com>,
- Jason Herne <jjherne@linux.ibm.com>,
- Richard Henderson <richard.henderson@linaro.org>,
- Ilya Leoshkevich <iii@linux.ibm.com>, David Hildenbrand <david@kernel.org>,
- Eric Farman <farman@linux.ibm.com>,
- Matthew Rosato <mjrosato@linux.ibm.com>,
- Cornelia Huck <cohuck@redhat.com>, Eric Blake <eblake@redhat.com>,
- Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>,
- John Snow <jsnow@redhat.com>, Markus Armbruster <armbru@redhat.com>,
- Maor Gottlieb <maorg@nvidia.com>
-Subject: Re: [PATCH v2 05/13] migration: Rename switchover-ack code to legacy
-Message-ID: <aiCM2Y8KCl-7UAYt@x1.local>
-References: <20260602092621.382-1-avihaih@nvidia.com>
- <20260602092621.382-6-avihaih@nvidia.com>
+ dmitry.fomichev@wdc.com, Hanna Reitz <hreitz@redhat.com>,
+ hare@suse.de, "Michael S. Tsirkin" <mst@redhat.com>,
+ Kevin Wolf <kwolf@redhat.com>, cassel@kernel.org, dlemoal@kernel.org
+Subject: Re: [PATCH v11 3/5] virtio-blk: do not merge writes across a zone
+ boundary
+Message-ID: <20260603204150.GD78072@fedora>
+References: <20260601214405.252818-1-faithilikerun@gmail.com>
+ <20260601214405.252818-4-faithilikerun@gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: multipart/signed; micalg=pgp-sha512;
+ protocol="application/pgp-signature"; boundary="BU0uSookOQjYFqvt"
 Content-Disposition: inline
-In-Reply-To: <20260602092621.382-6-avihaih@nvidia.com>
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=peterx@redhat.com;
+In-Reply-To: <20260601214405.252818-4-faithilikerun@gmail.com>
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=stefanha@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -24
 X-Spam_score: -2.5
@@ -129,23 +90,64 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, Jun 02, 2026 at 12:26:13PM +0300, Avihai Horon wrote:
-> A new switchover-ack mechanism will be added in the following patches.
-> However, the old mechanism must still be kept for backward
-> compatibility.
-> 
-> Rename existing code that will be used only for old switchover-ack
-> mechanism as legacy. This will help to distinguish legacy code from new
-> code and make it more readable and easier for removal later when no
-> longer needed.
-> 
-> No functional change intended.
-> 
-> Signed-off-by: Avihai Horon <avihaih@nvidia.com>
 
-Reviewed-by: Peter Xu <peterx@redhat.com>
+--BU0uSookOQjYFqvt
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
--- 
-Peter Xu
+On Mon, Jun 01, 2026 at 11:44:03PM +0200, Sam Li wrote:
+> diff --git a/hw/block/virtio-blk.c b/hw/block/virtio-blk.c
+> index 9cb9f1fb2b..285db19ac7 100644
+> --- a/hw/block/virtio-blk.c
+> +++ b/hw/block/virtio-blk.c
+> @@ -288,6 +288,9 @@ static void virtio_blk_submit_multireq(VirtIOBlock *s=
+, MultiReqBuffer *mrb)
+>      int i =3D 0, start =3D 0, num_reqs =3D 0, niov =3D 0, nb_sectors =3D=
+ 0;
+>      uint32_t max_transfer;
+>      int64_t sector_num =3D 0;
+> +    BlockDriverState *bs =3D blk_bs(s->blk);
+
+Please add a blk_get_zone_size() API in block-backend.c along the lines
+of the other accessor APIs (blk_get_request_alignment(), etc) instead of
+using bs directly.
+
+> +    bool zone_cross;
+> +    int64_t zone_sector, end_sector;
+> =20
+>      if (mrb->num_reqs =3D=3D 1) {
+>          submit_requests(s, mrb, 0, 1, -1);
+> @@ -303,17 +306,34 @@ static void virtio_blk_submit_multireq(VirtIOBlock =
+*s, MultiReqBuffer *mrb)
+>      for (i =3D 0; i < mrb->num_reqs; i++) {
+>          VirtIOBlockReq *req =3D mrb->reqs[i];
+>          if (num_reqs > 0) {
+> +            zone_cross =3D false;
+> +
+> +            /*
+> +             * On zoned backends, a single backend write must not span a=
+ zone
+
+This code handles both reads and writes but the comment only mentions
+writes. I think reads are allowed to span zones, so should there be a
+check that mrb->is_write?
+
+--BU0uSookOQjYFqvt
+Content-Type: application/pgp-signature; name=signature.asc
+
+-----BEGIN PGP SIGNATURE-----
+
+iQEzBAEBCgAdFiEEhpWov9P5fNqsNXdanKSrs4Grc8gFAmogkY4ACgkQnKSrs4Gr
+c8iV8Qf/Yp6Nxf8oMamuTKuBIZQx6Zl9rWSVGp9U3DoyCaPW+P1yZPLXSaVSPPao
+JxwOfWUVtq4TGXtyFWolXzxz1N67dWv/2qmXgTKr9Wv3m5IJ9EDE2qlB7pr9O/n9
+Ys3VSvipNNRCK3EY8aOonIGG4uFdQzC1riACg8TVs+AHWRMBG/v8T5cfXYw8hEoa
+aJVH6TkHafogGhD3BFTZW6mQQ+V46XeNXTbfgd9vd/4eIyvBdlcfiyIhyIDSs3BC
+UsUNgiuvaHAEEiQqJQYwTTC4/ok4ylWOoQwsxEXTT7anTezDbJMRPcseEzYtN/i5
+S1jd98RWn8c79ufAL8nIGhxoubaLlg==
+=fmSb
+-----END PGP SIGNATURE-----
+
+--BU0uSookOQjYFqvt--
 
 
