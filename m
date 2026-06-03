@@ -4,45 +4,45 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 60299CD6E4A
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6E73CCD6E56
 	for <qemu-devel@archiver.kernel.org>; Wed,  3 Jun 2026 04:01:58 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wUcnJ-0003d0-DW; Wed, 03 Jun 2026 00:01:29 -0400
+	id 1wUcmo-0003Vo-Oq; Wed, 03 Jun 2026 00:01:00 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <jamin_lin@aspeedtech.com>)
- id 1wUcmh-0003UE-BL; Wed, 03 Jun 2026 00:00:52 -0400
+ id 1wUcma-0003TM-IY; Wed, 03 Jun 2026 00:00:49 -0400
 Received: from mail-japaneastazlp170120005.outbound.protection.outlook.com
  ([2a01:111:f403:c405::5] helo=TYPPR03CU001.outbound.protection.outlook.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <jamin_lin@aspeedtech.com>)
- id 1wUcmf-0002OB-Cr; Wed, 03 Jun 2026 00:00:51 -0400
+ id 1wUcmW-0002QB-JF; Wed, 03 Jun 2026 00:00:43 -0400
 ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=vXInN2fV8NUcb8M4dpYXq1qaz2vcuMTFajDP3ci6NHifw7SzPJDdVdNUBVfJlg4n7l8VAMq+WTLXfpkNcINQOznE7rqhTUY0NQ3di7sh3Ab9waqkYqruyHSVnqq2aAh86iTz+3aLTfFPVkxamav5wXZiL+Ma76EV5URFP9JWw0tZXB4B6al8mKrp7YVSPeRzmADAQmX/Z3SHW5dTV4l+in2mii8fXstVZnkrW91a27Ym+7nd4zL5IT/iqLAc/bAzILYiUKvMkzeuaf7+opsIRxRpMUW/kr2vWMJnJLo6sdwLbHHDAXIjcw33iLPAa4cVaZyLTlOvZ3xmLGkif1Rf+g==
+ b=Rv1bKe7UuXzY3GcD+van0TFiUg4KX5u4S0bMvEl62D9KrgcPnotUPPEs8cc2/XH9lEsn3Gme7RdeZpgOcB+8eBroJ7H6JwABTwrp+Mxo0z5mkTXJuTMWC9dgpyMRSt7lX4uRmTq6m3g4etPKmFWW0+bEMZ8cmXfMzmbWTg1+pQJE2PmRGp7nTAfXRNndwZGG+mc2TAd32LJKjPDePjvqqKFPGPQzeZzkPBi61HfKjAj8cS9fj7Q/4L6POPHiaqgr/2uIoHnoZaH5xM/+uH4WYNAnQQ2jL26LVqEkY1Uxea63/LxMhjTrDZveNMHKz3cvdDRoxYdPbUz2E7l9wzWobA==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
  s=arcselector10001;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=DwqQTMcIbbeGHj4DzMKq3QP8GMmsA7i24EFJRkLzc1I=;
- b=P+nVQWU+IBicnhB3/ZgH8Be9uWYIPhD9of5J6ylNr48xXjeV/X/4HvmUto21PisDj1kSvX7vY6F3bMq3NotYImdSbAf8oBRThWAz9yXK5Ogr9/5iQmLjRRDq/cTLnfZla1BZCWiZfCLi27lFFg1pCEoG17TuKc1h8E94lnYt+hsfb/UkR38GLCKnvylLDxM6hJjt6E5NYfKJoCboOGRjL9O+zRwbwGOK24DIgShOpLkusnftri1d4v9pdey6JuNOSdsNlRew8n+xGEyJzAGeVncAyoHiYh1aGmXWctO5kbJjS/Q5QPGxVNwFl1VBIjIN3ZPOBOrbWrsF0SA4mb3OsQ==
+ bh=Vcw+OCaWjlS94VeEpOQL0QCFpkLSIQmZiDUlXQsfais=;
+ b=NAfduYwQftahiBPlYSeMYnGqpGffcGwNIn4Tn0WbLhB/kXsgWAjiBweowpm63FZULJDj9yYNt4NaUQu0MkvBR9+eAYqXKPONvBtBMbIgl+pPqg8xXw1NODzcVizaj1yRBVUGqUeDyrjJh+t7NhTQsqVz8g98dRtDnvZeJJKNj3IF2RGCeHjQPizpJ1Mq+YLGNJdIZ3ACrKB4qOakvyTbEchjOQFVl88oV9anCfsHgQnpVG/Nz9x3SrOH1vLWhncqhyZK3kclICjPjGnIVkju6E3Ct2jVit+DT8+GqmDauLAkfNDphbbYaU+OMjfYXY/6oSOs2PweSd/9Z9PE6st26w==
 ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
  smtp.mailfrom=aspeedtech.com; dmarc=pass action=none
  header.from=aspeedtech.com; dkim=pass header.d=aspeedtech.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=aspeedtech.com;
  s=selector1;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=DwqQTMcIbbeGHj4DzMKq3QP8GMmsA7i24EFJRkLzc1I=;
- b=WQkOGz/VOqkDWCVwQlnmWiuqnTSt0rHqyGaWPFoq/Z0OjS/b7CbD/9MFMZ2U9QBKwW9dBVoQ0oKpriqxkZ64V1i+Xq6W1SrpzhlGGfKH9t5sO3ybO4QN0cn33qveIwac0DkXi6G3va7Wepr+MkZ9bvTgQ+H3ulcvzIcQBb3MtdUmHd969BWltyZLJUZBfcDNsw8uCKMYE0woN+t05P6h/clelOEKw2pYOyos4KeiZoP317zoQ+0YHvbKtvwgSBYYq36WfOQvsRyydHVHx2qeG8Wfe5hWmwmZ8jx4p4RNqPMhx2GqDWuyZ+T5kUG3hfi5W+6cSmQ9b1mP5ZLwDzuRvg==
+ bh=Vcw+OCaWjlS94VeEpOQL0QCFpkLSIQmZiDUlXQsfais=;
+ b=nGS62Ex6pk9TLkriNcJvgpw2LzMx5/wrqFH2DI87KlF7FjBKWO617IKPgQgZ/z/7J+z83a85IOEU5CXsk7Ww9v93BHht+EbE7MioUBkLZ5g7cyJOnbqk9eYl8Nt0sK9incpuneErESzH48Yc1WXqmlVS6IZfJUd31R3rpfvRCJc3M959HD+UkXLs2+nrLiNr0YUfYCUutYI4gEP9x62Pm7djhmOpRyJx93iKwhEk1kVlNfMo0JRQGrVNdDRJbffE+iDbsraTMSDJuGUqTOHEXOcgp1nK64eFGrEMMOp2pX1kXMZYFr3eRkwLoxwKx/NTGPvfd5dqIeuiVkkSKCEkVg==
 Received: from TYZPR06MB4980.apcprd06.prod.outlook.com (2603:1096:400:1cc::10)
  by TYSPR06MB6921.apcprd06.prod.outlook.com (2603:1096:400:468::6)
  with Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.92.7; Wed, 3 Jun 2026
- 04:00:34 +0000
+ 04:00:29 +0000
 Received: from TYZPR06MB4980.apcprd06.prod.outlook.com
  ([fe80::ea8a:7cb7:4822:2fb3]) by TYZPR06MB4980.apcprd06.prod.outlook.com
  ([fe80::ea8a:7cb7:4822:2fb3%5]) with mapi id 15.21.0092.006; Wed, 3 Jun 2026
- 04:00:34 +0000
+ 04:00:29 +0000
 From: Jamin Lin <jamin_lin@aspeedtech.com>
 To: =?iso-8859-1?Q?C=E9dric_Le_Goater?= <clg@kaod.org>, Peter Maydell
  <peter.maydell@linaro.org>, Steven Lee <steven_lee@aspeedtech.com>, Troy Lee
@@ -50,15 +50,14 @@ To: =?iso-8859-1?Q?C=E9dric_Le_Goater?= <clg@kaod.org>, Peter Maydell
  <andrew@codeconstruct.com.au>, Joel Stanley <joel@jms.id.au>, "open
  list:ASPEED BMCs" <qemu-arm@nongnu.org>, "open list:All patches CC here"
  <qemu-devel@nongnu.org>
-CC: Jamin Lin <jamin_lin@aspeedtech.com>, Troy Lee <troy_lee@aspeedtech.com>, 
- =?iso-8859-1?Q?C=E9dric_Le_Goater?= <clg@redhat.com>
-Subject: [PATCH v3 05/10] hw/arm/aspeed_ast1040: Reuse AST2700 GPIO controller
- model
-Thread-Topic: [PATCH v3 05/10] hw/arm/aspeed_ast1040: Reuse AST2700 GPIO
- controller model
-Thread-Index: AQHc8w2H/mIBz3J2DkafZ/uzeIRRcQ==
-Date: Wed, 3 Jun 2026 04:00:34 +0000
-Message-ID: <20260603040027.938816-6-jamin_lin@aspeedtech.com>
+CC: Jamin Lin <jamin_lin@aspeedtech.com>, Troy Lee <troy_lee@aspeedtech.com>
+Subject: [PATCH v3 01/10] hw/i2c/aspeed_i2c: Introduce dma_addr_lo_mask to
+ unify DMA address handling
+Thread-Topic: [PATCH v3 01/10] hw/i2c/aspeed_i2c: Introduce dma_addr_lo_mask
+ to unify DMA address handling
+Thread-Index: AQHc8w2E8LG9mTwF50q43NKlevPhtg==
+Date: Wed, 3 Jun 2026 04:00:29 +0000
+Message-ID: <20260603040027.938816-2-jamin_lin@aspeedtech.com>
 References: <20260603040027.938816-1-jamin_lin@aspeedtech.com>
 In-Reply-To: <20260603040027.938816-1-jamin_lin@aspeedtech.com>
 Accept-Language: zh-TW, en-US
@@ -69,61 +68,61 @@ authentication-results: dkim=none (message not signed)
  header.d=none;dmarc=none action=none header.from=aspeedtech.com;
 x-ms-publictraffictype: Email
 x-ms-traffictypediagnostic: TYZPR06MB4980:EE_|TYSPR06MB6921:EE_
-x-ms-office365-filtering-correlation-id: 1cf63e56-e8e2-4131-8962-08dec124a9d8
+x-ms-office365-filtering-correlation-id: 84178ad2-4847-490f-58f9-08dec124a706
 x-ms-exchange-senderadcheck: 1
 x-ms-exchange-antispam-relay: 0
 x-microsoft-antispam: BCL:0;
- ARA:13230040|1800799024|366016|376014|38070700021|22082099003|6133799003|18002099003|56012099006;
-x-microsoft-antispam-message-info: zNocqC1+9u/h2FQfPzt4tk4DT757J8AajntWwwc+DJgcL1y3rCvv90a3EGntMSJmxoDehQxFmGljRfBOCXVbzPRgwdSqfLvvKh7xhgr7Sm0F1poyiRCG6S3Znz1qQskOedtoigjW9A1ViTsEuV+QvEUFN6J4s9iznlYxqgRJZkA4KFil5RfF9Jfr6DtS+z01R/S/qTUHAdx6B7BKEGPA5HBCPn7m6mNZvHSmVz24RWOaAgq2eMX82XXAi+XaRpkGOVWerALEX+zLiuuZ1vGMzSAPP27yzjtg3yKoKCUNXZwPLIyJGGcj+F1j15rmWVwINx5369XZnAdintGwpNGej2T9jVj6BpDUhBWU8MeiR5oGAkMmNVoedUCuSmuO3GdlUXDNgKC+YMXhblZY77t6xCJLKAqQW0BBvY7visGvmizOS9DSpvKRRPjezlRr/L2T5Y7Sz4vxTjCuhkxs+xJMDJs0vkAfBxsH4mwu64+3bFiSo1uWp9fchiXEgFTrW4z4MdAd+OyONWx+z1WnKofe5PuqCo37p5WFqRnIIMKqsP6WEUEr1U7SLB+X7Hb2vgKk97nHbQAWh8Xb+diHvb6x7jJf9/hWgKYJ4Be4t0CzwHVg6/+qqJJTLSBUzqwSHL2ctnf6RYi9CYRDIYpKnPfkOqVVkrVPNgB9/6XzHHt1/QHKZoDVrhWYqalob4suc4qJhnu3pYm+CUt4Cn685DA79ziVDHjbIO6Pg/CiekgGmiEqxDfyL8AAGnh73C5zGe7V
+ ARA:13230040|1800799024|366016|376014|38070700021|22082099003|18002099003|56012099006;
+x-microsoft-antispam-message-info: K2/DKgO5Nx9Zk4dW7fDXnIYWS9mqHFIfm4oJcFWTbbjzJFrAjZuwb7T5pUQH5ErULbxFYqOYNTxyS5cX6YdOeytuyIHBu2pEWEPVcvofz+AHhoukTJJ+pdvj+bX8lIo07IhIoNu8bHHbkDY0i2lAUk1BPnt/ASMXzSz55p1W5VA8NTsfaaxYnoEnK4NOiHChdTyBDHRShR1skdtqT3NUgfO+n/pivuvscz/u7VwduPVYc9q9Q/TIELjbJhxIpKhf/6/SY+1nxqBwp1sHGDzgx7MPMBxtz8x9z9ubmKEWbVuYdojU5UV+s1qD/ZNzBIRvyxaCEdr5TJ35PQWWk/DeYFquvA1DI1Uw8xeA2Gb9I4JVvnxV3gI2PUkbX33J0xkftxsGFcPA/srney9PHWSNQwEEg/sTafXMjwzJOCBSP5cnba98Eqml9eF+iYyXma6zjHMoO+OxG2ZoBDd+ddflrx+7O8iQlw8rqMTWyg/B/zI8wr4oF+++10S3hAytLxUVbMX/US4uw5qDzzCzQ0/CZgeDySml51t5bgmX+iS7+hziXnidpR526ILU5DsfXXJ8qzBaeq/BzejcAEQE5/QwuI+yZqiTpQuzhNgpSz6pSSW/HTywODN5CYghkkj3s8+XIsnEDRD/pGCiA2X/nyIGeZEczy1l9l6D6hbqa0xWyYk5FvamPhUOqwEooqssjWBCrw/OBs+/JuGS0b08NpFonrvENK4gOxGQZWNHkZHtTNCXpCgZa5a2DCcILCR5XRoe
 x-forefront-antispam-report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
  IPV:NLI; SFV:NSPM; H:TYZPR06MB4980.apcprd06.prod.outlook.com; PTR:; CAT:NONE;
- SFS:(13230040)(1800799024)(366016)(376014)(38070700021)(22082099003)(6133799003)(18002099003)(56012099006);
+ SFS:(13230040)(1800799024)(366016)(376014)(38070700021)(22082099003)(18002099003)(56012099006);
  DIR:OUT; SFP:1102; 
 x-ms-exchange-antispam-messagedata-chunkcount: 1
-x-ms-exchange-antispam-messagedata-0: =?iso-8859-1?Q?bqhcEutB9k/XWG1b/m3TjZA2Es71A5ZSu1st60J/05U7F7emnvrAm3Me2U?=
- =?iso-8859-1?Q?fpHFd8aZ+kvy2zqePO6b89Mkfctosuxg8U5+TByJ0poYxizG+pdxWtEgYF?=
- =?iso-8859-1?Q?tA5+2f9ErTC3KyFEPUq09HZKeiT4QOr2qD0oSg/Ja3GLriiqUvTXSJ5bLP?=
- =?iso-8859-1?Q?tR8tOMRF7KLZMIsknjgP8MeSC9qrOHxu1fDOzhRDUfnRfNOzj0N2TUJk+4?=
- =?iso-8859-1?Q?QR46RZ52G69sgufe3/YFNXUjuYuZzegi8v8uo2IA135Bu9U19PkydVqJDn?=
- =?iso-8859-1?Q?OP1SP1CPQI5HDnEeV7hy7R8caoZp8sNnmK1byve7rUiAW6BdCKHsWEI4/c?=
- =?iso-8859-1?Q?rxJfmlJWOwLmIMOcqaDBm9dhTRlhASPoeKukg7GEQUBEPCJA/dIO6Ls4K7?=
- =?iso-8859-1?Q?zo4AH9w+ebL0OJ3jIAjmQIvw9gyyoXrE6QpgBwJgf+xZbU0wS8hoj4OBau?=
- =?iso-8859-1?Q?fbluds7Hboxd02b6aNSisV252EF2HldEMXAMSg1c1+2NFiTI76TERPbX9K?=
- =?iso-8859-1?Q?EsV4/vNSaLy2+8f/eRxLtOy8Vpn80SxBLs19re/HdH42TcbNf20aEduRY/?=
- =?iso-8859-1?Q?4GdmTuHIMfaIQQZmvONvnieVo4n8047hICgTonXwGdlKIq2lRjhTj2CS7x?=
- =?iso-8859-1?Q?NSmwZVm1SEHBlSFNKmQI47Se2z4KDbuwPwXjOoUcoaCPao0d3+L6w22YPP?=
- =?iso-8859-1?Q?TjYm837ur1xxv3C616klWrimuTae93zRIsjrMy88yPJLopy4UkXrb6rkl6?=
- =?iso-8859-1?Q?7SJsOWw1CB6TnLo2E8M9j8fOHPWJddk92a8rpBaHbNJqQuyvxst7i6J37S?=
- =?iso-8859-1?Q?PCKTMvENEpqi5sUgjh1SMNPscNADbcHuz9XsS/Emz3zrJlcH5Ydep2TuaW?=
- =?iso-8859-1?Q?zny7X68u0pIQMUhKxryfJ550aNKK9mpwhtH93rJRNGNo/gTaEnQA1iBIwN?=
- =?iso-8859-1?Q?DY50Sp0XaHnkFGJUu8FTYq5RXz/WBhk5qm6dVWJvITxMCjRmou1ZxfzyEf?=
- =?iso-8859-1?Q?DkWynczLFvieupmVHmafTdeQ1akfpPL2Q1a6Q80AqT6SAnId1xqpo2v1kt?=
- =?iso-8859-1?Q?tIMRPyL/SCqUiloeYba8xgr0kyG+aVXmsRYZZfMM0Fr93nfbHzm8VS115w?=
- =?iso-8859-1?Q?5Uzq+SYLjwWVOrjXOZw6/9ZPg7tIqpMbjk+RVqmULd/WRR88voqp5dAa2T?=
- =?iso-8859-1?Q?87JPI05Ba0RZzyuMhwP4KS9ppiasF6skoQE1CMSVs4MUB9VHEm51sG/JEh?=
- =?iso-8859-1?Q?NheAo4x9eXSi+wT71M6TNo5Q8FYUPWKl0CgN07AL/lX119j2RgYvSHErZU?=
- =?iso-8859-1?Q?DIK1mML3kvbL0lbBxerKqKYin5whpBxDcVuGNGMjn0VSfrmSrlCE7m5i1E?=
- =?iso-8859-1?Q?xkO+1Vt/24jIoQ/0exZl2apxaapE8gg7J6I21o3gGPnvh/ZJD3IRod1XOM?=
- =?iso-8859-1?Q?GMXILuDTzc465sLxucGXPIczmmj7iAG/W+c/ZIWGTc4n49l2W3eNU6j1c1?=
- =?iso-8859-1?Q?KVxkwCXkbHX9O0YDtvI+dtzMi8NBJRmSxYZpLl7TcDWoL9dQE2Aa2sFBXZ?=
- =?iso-8859-1?Q?WYAmYS87pHVTDDRVCK7FmY8pbvogWYcYqXiisyemcx40X2+uuilQ7/ItA2?=
- =?iso-8859-1?Q?0CB4jiY7ErpvMBK+nhKInwhXeOIZ0U51vPUyiHwfYi3FOew6vR8V/v1UnI?=
- =?iso-8859-1?Q?HcJZpPyeLiuSXa4/vO3bwh7zmSSe04ykqwqJkRbCxRcm2Yabej2chjISgS?=
- =?iso-8859-1?Q?O7ShfTXTcGiV+oawZs3NWb2qWusCPkVFgrAeaR4/4EVmiiLqBHVsQihGs8?=
- =?iso-8859-1?Q?/Zg+XYIP6A=3D=3D?=
+x-ms-exchange-antispam-messagedata-0: =?iso-8859-1?Q?1aOhYNOzkxBnVPpJ0JKpycXdow+Bks5953gyuScdxV4ME2WLQcdILqMBVo?=
+ =?iso-8859-1?Q?/xkTXGhb28nRHvO7i/X0OLdXLK6QuXeQkRohwEQ21MojhQnd9PEIOcc3g/?=
+ =?iso-8859-1?Q?26+e2SCjwPY15fg7PeIGXTT+n5P0zrIAdE86eIFBt+xWM8sI6i/uO9vSUp?=
+ =?iso-8859-1?Q?mwJWfbSKdCDwpv7lgFlNiQZzrS7EhpQZSPlz2Ey4Pvmyhv9sNk2w1EZrZC?=
+ =?iso-8859-1?Q?By6GF4YZI/QAD7vMaoCYa/E6dUnnqcYSmqROH0XdJt0IqKebymm+7GglYi?=
+ =?iso-8859-1?Q?y8whGf0OyhYwPlSw9HfDT6d/8AibuBbp/hTrVoHOGDq5A9UqCkZRzv11rc?=
+ =?iso-8859-1?Q?g49OHui8iT8zqOgfpRXKxBsGXktdIDvG747bo1stXSDKeyhd24jI4mfs5A?=
+ =?iso-8859-1?Q?OgfWlpHNUAiGwMwYkxU2i9C3Zo2O8b2v99El7z+6MrqZll4tawQ+cfisin?=
+ =?iso-8859-1?Q?z4iSdVLpiIw8mFA5ztaoEZ1uNwZHRdD0tQ9lELIyZZmxWdxgCsbE47MEQl?=
+ =?iso-8859-1?Q?ebXJ8zNXlq6UD8oT8pkivbtxPKPMRu1kY9g6aB/1f/vlMbbidjHzWvJ6WF?=
+ =?iso-8859-1?Q?T7MX7wGuXG2oC2cyiupquOjsp/UF9G4yGuEj+hIhpmnPfAmPfFreK3NWTi?=
+ =?iso-8859-1?Q?9eTgI+IutVEVq+8DzChgAxnEEodChTPpyM2M7y9iiqS1LEkdnCt/lDrO/+?=
+ =?iso-8859-1?Q?gIdVQrzja/sbll9Ln07CCp3glT4JksgIYkTeg4gp3yEDdemIhJLEzY6gsq?=
+ =?iso-8859-1?Q?6Nu0EIOxJSUmRdMT3m8s+aKBcHEFwJx8QSsC2TQoA/fSZEG9Dz2lzHrzWo?=
+ =?iso-8859-1?Q?YMm9WKJTyu0AmFJGqSENLweZKGB3OYZJitlVUVIx4pZIXAREAsEigjW3+C?=
+ =?iso-8859-1?Q?mRQqMP9ALfEsKIL2cWTwjNgCbhXAyqb0NbRXlVgqvb0qwzX7eN/9rGyNR5?=
+ =?iso-8859-1?Q?x2RWK188+LmCaQFP3xUZi6oemRRI76+GuV8evUzNrObSrWqbJT2s8eQ8YH?=
+ =?iso-8859-1?Q?dXXkq4b16LRjJiE39qSI8ORwLB68q+tsSIzozgudmbCQkP0WtRGwxNjXqW?=
+ =?iso-8859-1?Q?GetV96+6lx32QTXm4liD0CXfrQSoM30CZe85ixcSuBppZjUjsYnTfwcdJS?=
+ =?iso-8859-1?Q?Q+o1FFX5ab/GNGJgpbXO2ElVvuU/KHrWqwTPeQXe7B6sZziaGssuRvWzFB?=
+ =?iso-8859-1?Q?1XcEq6IGjr7OEkR5XXd8Y1eGysnWOXUC7tS812TnSNSATpIBOXc1eVYWgW?=
+ =?iso-8859-1?Q?7V49qAW8wRzXDalXADlFTwOZG11eF8rVBtAIb9mgiqEieOtycsSWo1O0Oj?=
+ =?iso-8859-1?Q?kkxBDCwyZVd2bt/LeumBDXwmWN9nTypUiqWERzc3q/MMWY7ABmBkLBDQFH?=
+ =?iso-8859-1?Q?8sf605QotAbx+hiBL04e0DOknPHbR4EYUnyJj8TwiDgR3EjLK1HWrqyWpQ?=
+ =?iso-8859-1?Q?TqHrJ6/SZSlqZCti+Cr2OFc3Gd4fMoi6Wiq7ijBb+0IEneHlxfdXmZipwS?=
+ =?iso-8859-1?Q?K8kWncE3uJKjF0ZxD2OoImU5rAVQFUI5U6vHHDPcBuaqCm4aaMawnU/B71?=
+ =?iso-8859-1?Q?0xxLADYM44g87J1AhB7jQzPNVwKqFGe+luw6zJlISMCQvhIMe2OxJ7Di9B?=
+ =?iso-8859-1?Q?BGn7GgQAE6DjaLERtCAzhqF2M/pEzhtDSI7G7UPpR/h0xtTuHS/u499ts3?=
+ =?iso-8859-1?Q?EarI9S2DH/aM+H3nrRQVEijinYin+vsNzVom4l8FgAgYP5jHtRoIPGeQj3?=
+ =?iso-8859-1?Q?YqoNw/k77GUJn0Zd+FSSqq1FjizmNdhwz1tyLlOtBEeunU4EOM83BrOsOm?=
+ =?iso-8859-1?Q?+HthJMhjKg=3D=3D?=
 Content-Type: text/plain; charset="iso-8859-1"
 Content-Transfer-Encoding: quoted-printable
 MIME-Version: 1.0
-X-Exchange-RoutingPolicyChecked: CpvSHxQR9GQFq1AfcsZvz2OYkfoEXadODUhd8UhXXrIAf14OQslCTbTMsFFaT+tc8CK+YHPm5v8+hWV69DjChjtv0JTlillkuqcoqsbHQMaLtbg79LVgGIAaDvGugA0orbW6G5j27B1+d+lsjg3TFPkad72CFRx++3lXj6+kvEMlwyzDR0P4y5Eb+SX4qrxF7/O/CjG2bVZwGIZ8VxRbebDYUHCZVyE3cm+EZI5sKM9RVWarEEdI9XIwpM/r5TstvyeDC558s5/fP6v5CeSOml/LiydxUDnorfgGzeJPHZv/AzJqFj1GQOGchzhNEc0lc0AhTP5oFJD0nc6WnVHSIQ==
+X-Exchange-RoutingPolicyChecked: RjixkL+9FRLR+8dR5GW2a/jkuf4qsP6oLLJ5uayP28dt4WnUqmqPmg17QjcARQg3J7UEVHNTAooFOYO19dl3KCWc2tXZhasfIPGUlaEYC/cHK+b6mKiAYaOz3jlCnT8yBUqsPU2PqB6stlE0slAesJloWlW4hpozgQPWdGLb9JWOHTuTSrcMU+ecM5i2ddqP32jk7+tL4HdW3R6rXcA/q0z8oLJ8bUh4ZcWhZ3FPABLngRFGyrArb8nvleoL6ZhqzmCyH7XcEf9znnb1hYzJ/3BqheNioiftWnwXlm3be41kr+KjAH/IXJlmWZDUXt5ESBrAjbsjNBE9/lOX7HFTkw==
 X-OriginatorOrg: aspeedtech.com
 X-MS-Exchange-CrossTenant-AuthAs: Internal
 X-MS-Exchange-CrossTenant-AuthSource: TYZPR06MB4980.apcprd06.prod.outlook.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 1cf63e56-e8e2-4131-8962-08dec124a9d8
-X-MS-Exchange-CrossTenant-originalarrivaltime: 03 Jun 2026 04:00:34.5392 (UTC)
+X-MS-Exchange-CrossTenant-Network-Message-Id: 84178ad2-4847-490f-58f9-08dec124a706
+X-MS-Exchange-CrossTenant-originalarrivaltime: 03 Jun 2026 04:00:29.7740 (UTC)
 X-MS-Exchange-CrossTenant-fromentityheader: Hosted
 X-MS-Exchange-CrossTenant-id: 43d4aa98-e35b-4575-8939-080e90d5a249
 X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
-X-MS-Exchange-CrossTenant-userprincipalname: n2Wwox0Thf+grvTNGonIKqbDz5cmeK7YoRhsT8McpIGWR1l08TuC+i5rFtY0vcUuh2NIS2NYKioxeze4K/G9dCctNx9N4URqcHIvZ8WFwKg=
+X-MS-Exchange-CrossTenant-userprincipalname: Si+/QUGq7i1F2jswpgPZZ3UhPslhzgKBeov+LXpHxbuRjdm3iy+ZcNCbKaNI8HBnUWi8SJ7Ghr8sSVNuBiWZBYI4NJIxwE+kAtF1G7luZmo=
 X-MS-Exchange-Transport-CrossTenantHeadersStamped: TYSPR06MB6921
 Received-SPF: pass client-ip=2a01:111:f403:c405::5;
  envelope-from=jamin_lin@aspeedtech.com;
@@ -150,53 +149,200 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The AST1040 GPIO controller is compatible with the AST2700 GPIO=0A=
-controller implementation.=0A=
+The Aspeed I2C controller has two register layouts.=0A=
 =0A=
-Reuse the existing "aspeed.gpio-ast2700" device model for AST1040=0A=
-instead of introducing a separate implementation.=0A=
+The AST2500 uses the old mode with a single DMA address register (I2CD_DMA_=
+ADDR)=0A=
+where the address is 4-byte aligned and masked to 0x3ffffffc.=0A=
 =0A=
-Add the GPIO device initialization, MMIO mapping, and IRQ wiring=0A=
-for the AST1040 SoC model.=0A=
+From AST2600 onwards, the new mode provides separate master TX/RX and slave=
+ RX DMA=0A=
+address registers (I2CM_DMA_TX_ADDR, I2CM_DMA_RX_ADDR, I2CS_DMA_RX_ADDR)=0A=
+with different address widths per SoC:=0A=
+  AST2600 (new mode): 0x7fffffff  - bits[30:0]=0A=
+  AST1030 (new mode): 0x7fffffff  - bits[30:0]=0A=
+  AST1060 (new mode): 0x7fffffff  - bits[30:0]=0A=
+  AST2700 (new mode): 0xffffffff  - bits[31:0]=0A=
 =0A=
+Introduce dma_addr_lo_mask as a per-class attribute and apply it=0A=
+uniformly when storing DMA address register writes and when loading=0A=
+the address into dma_dram_offset for both master and slave paths.=0A=
+This replaces the previous FIELD_EX32 extractions (which incorrectly=0A=
+stripped bit 31 on AST2700) and the hardcoded 0x3ffffffc literal in=0A=
+the old-mode path.=0A=
+=0A=
+Fixes: 1809ab6a67359e0876981cd05d2a50b2843eabad ("hw/i2c/aspeed: Add AST270=
+0 support")=0A=
 Signed-off-by: Jamin Lin <jamin_lin@aspeedtech.com>=0A=
-Reviewed-by: C=E9dric Le Goater <clg@redhat.com>=0A=
 ---=0A=
- hw/arm/aspeed_ast1040.c | 10 ++++++++++=0A=
- 1 file changed, 10 insertions(+)=0A=
+ include/hw/i2c/aspeed_i2c.h |  5 +----=0A=
+ hw/i2c/aspeed_i2c.c         | 24 ++++++++++++++----------=0A=
+ 2 files changed, 15 insertions(+), 14 deletions(-)=0A=
 =0A=
-diff --git a/hw/arm/aspeed_ast1040.c b/hw/arm/aspeed_ast1040.c=0A=
-index 9ae0a0e7a4..c6b22186ce 100644=0A=
---- a/hw/arm/aspeed_ast1040.c=0A=
-+++ b/hw/arm/aspeed_ast1040.c=0A=
-@@ -111,6 +111,7 @@ static void aspeed_soc_ast1040_init(Object *obj)=0A=
+diff --git a/include/hw/i2c/aspeed_i2c.h b/include/hw/i2c/aspeed_i2c.h=0A=
+index d42cb4865a..1fc229f699 100644=0A=
+--- a/include/hw/i2c/aspeed_i2c.h=0A=
++++ b/include/hw/i2c/aspeed_i2c.h=0A=
+@@ -209,13 +209,9 @@ REG32(I2CS_DMA_LEN, 0x2c)=0A=
+     FIELD(I2CS_DMA_LEN, TX_BUF_LEN_W1T, 15, 1)=0A=
+     FIELD(I2CS_DMA_LEN, TX_BUF_LEN, 0, 11)=0A=
+ REG32(I2CM_DMA_TX_ADDR, 0x30)=0A=
+-    FIELD(I2CM_DMA_TX_ADDR, ADDR, 0, 31)=0A=
+ REG32(I2CM_DMA_RX_ADDR, 0x34)=0A=
+-    FIELD(I2CM_DMA_RX_ADDR, ADDR, 0, 31)=0A=
+ REG32(I2CS_DMA_TX_ADDR, 0x38)=0A=
+-    FIELD(I2CS_DMA_TX_ADDR, ADDR, 0, 31)=0A=
+ REG32(I2CS_DMA_RX_ADDR, 0x3c)=0A=
+-    FIELD(I2CS_DMA_RX_ADDR, ADDR, 0, 31)=0A=
+ REG32(I2CS_DEV_ADDR, 0x40)=0A=
+ REG32(I2CM_DMA_LEN_STS, 0x48)=0A=
+     FIELD(I2CM_DMA_LEN_STS, RX_LEN, 16, 13)=0A=
+@@ -303,6 +299,7 @@ struct AspeedI2CClass {=0A=
+     bool has_share_pool;=0A=
+     uint64_t mem_size;=0A=
+     bool has_dma64;=0A=
++    uint32_t dma_addr_lo_mask;=0A=
+ };=0A=
  =0A=
-     object_initialize_child(obj, "adc", &s->adc, TYPE_ASPEED_2700_ADC);=0A=
-     object_initialize_child(obj, "peci", &s->peci, TYPE_ASPEED_PECI);=0A=
-+    object_initialize_child(obj, "gpio", &s->gpio, "aspeed.gpio-ast2700");=
+ static inline bool aspeed_i2c_is_new_mode(AspeedI2CState *s)=0A=
+diff --git a/hw/i2c/aspeed_i2c.c b/hw/i2c/aspeed_i2c.c=0A=
+index 4a6732a185..9d4e72c858 100644=0A=
+--- a/hw/i2c/aspeed_i2c.c=0A=
++++ b/hw/i2c/aspeed_i2c.c=0A=
+@@ -236,7 +236,7 @@ static void aspeed_i2c_set_tx_dma_dram_offset(AspeedI2C=
+Bus *bus)=0A=
+         value =3D bus->regs[R_I2CM_DMA_TX_ADDR];=0A=
+         bus->dma_dram_offset =3D=0A=
+             deposit64(bus->dma_dram_offset, 0, 32,=0A=
+-                      FIELD_EX32(value, I2CM_DMA_TX_ADDR, ADDR));=0A=
++                      value & aic->dma_addr_lo_mask);=0A=
+         if (aic->has_dma64) {=0A=
+             value =3D bus->regs[R_I2CM_DMA_TX_ADDR_HI];=0A=
+             bus->dma_dram_offset =3D=0A=
+@@ -246,7 +246,7 @@ static void aspeed_i2c_set_tx_dma_dram_offset(AspeedI2C=
+Bus *bus)=0A=
+     } else {=0A=
+         value =3D bus->regs[R_I2CD_DMA_ADDR];=0A=
+         bus->dma_dram_offset =3D deposit64(bus->dma_dram_offset, 0, 32,=0A=
+-                                         value & 0x3ffffffc);=0A=
++                                         value & aic->dma_addr_lo_mask);=
 =0A=
+     }=0A=
+ }=0A=
  =0A=
-     object_initialize_child(obj, "pwm", &s->pwm, TYPE_UNIMPLEMENTED_DEVICE=
-);=0A=
-     object_initialize_child(obj, "espi", &s->espi, TYPE_UNIMPLEMENTED_DEVI=
-CE);=0A=
-@@ -211,6 +212,15 @@ static void aspeed_soc_ast1040_realize(DeviceState *de=
-v_soc, Error **errp)=0A=
-     sysbus_connect_irq(SYS_BUS_DEVICE(&s->peci), 0,=0A=
-                        aspeed_soc_ast1040_get_irq(s, ASPEED_DEV_PECI));=0A=
+@@ -261,7 +261,7 @@ static void aspeed_i2c_set_rx_dma_dram_offset(AspeedI2C=
+Bus *bus)=0A=
+         value =3D bus->regs[R_I2CM_DMA_RX_ADDR];=0A=
+         bus->dma_dram_offset =3D=0A=
+             deposit64(bus->dma_dram_offset, 0, 32,=0A=
+-                      FIELD_EX32(value, I2CM_DMA_RX_ADDR, ADDR));=0A=
++                      value & aic->dma_addr_lo_mask);=0A=
+         if (aic->has_dma64) {=0A=
+             value =3D bus->regs[R_I2CM_DMA_RX_ADDR_HI];=0A=
+             bus->dma_dram_offset =3D=0A=
+@@ -271,7 +271,7 @@ static void aspeed_i2c_set_rx_dma_dram_offset(AspeedI2C=
+Bus *bus)=0A=
+     } else {=0A=
+         value =3D bus->regs[R_I2CD_DMA_ADDR];=0A=
+         bus->dma_dram_offset =3D deposit64(bus->dma_dram_offset, 0, 32,=0A=
+-                                         value & 0x3ffffffc);=0A=
++                                         value & aic->dma_addr_lo_mask);=
+=0A=
+     }=0A=
+ }=0A=
  =0A=
-+    /* GPIO */=0A=
-+    if (!sysbus_realize(SYS_BUS_DEVICE(&s->gpio), errp)) {=0A=
-+        return;=0A=
-+    }=0A=
-+    aspeed_mmio_map(s->memory, SYS_BUS_DEVICE(&s->gpio), 0,=0A=
-+                    sc->memmap[ASPEED_DEV_GPIO]);=0A=
-+    sysbus_connect_irq(SYS_BUS_DEVICE(&s->gpio), 0,=0A=
-+                       aspeed_soc_ast1040_get_irq(s, ASPEED_DEV_GPIO));=0A=
+@@ -735,12 +735,10 @@ static void aspeed_i2c_bus_new_write(AspeedI2CBus *bu=
+s, hwaddr offset,=0A=
+         aspeed_i2c_bus_raise_interrupt(bus);=0A=
+         break;=0A=
+     case A_I2CM_DMA_TX_ADDR:=0A=
+-        bus->regs[R_I2CM_DMA_TX_ADDR] =3D FIELD_EX32(value, I2CM_DMA_TX_AD=
+DR,=0A=
+-                                                   ADDR);=0A=
++        bus->regs[R_I2CM_DMA_TX_ADDR] =3D value & aic->dma_addr_lo_mask;=
+=0A=
+         break;=0A=
+     case A_I2CM_DMA_RX_ADDR:=0A=
+-        bus->regs[R_I2CM_DMA_RX_ADDR] =3D FIELD_EX32(value, I2CM_DMA_RX_AD=
+DR,=0A=
+-                                                   ADDR);=0A=
++        bus->regs[R_I2CM_DMA_RX_ADDR] =3D value & aic->dma_addr_lo_mask;=
+=0A=
+         break;=0A=
+     case A_I2CM_DMA_LEN:=0A=
+         w1t =3D FIELD_EX32(value, I2CM_DMA_LEN, RX_BUF_LEN_W1T) ||=0A=
+@@ -777,7 +775,7 @@ static void aspeed_i2c_bus_new_write(AspeedI2CBus *bus,=
+ hwaddr offset,=0A=
+         bus->regs[R_I2CS_DEV_ADDR] =3D value;=0A=
+         break;=0A=
+     case A_I2CS_DMA_RX_ADDR:=0A=
+-        bus->regs[R_I2CS_DMA_RX_ADDR] =3D value;=0A=
++        bus->regs[R_I2CS_DMA_RX_ADDR] =3D value & aic->dma_addr_lo_mask;=
+=0A=
+         break;=0A=
+     case A_I2CS_DMA_LEN:=0A=
+         if (FIELD_EX32(value, I2CS_DMA_LEN, RX_BUF_LEN_W1T)) {=0A=
+@@ -1375,6 +1373,8 @@ static void aspeed_i2c_class_init(ObjectClass *klass,=
+ const void *data)=0A=
+ static int aspeed_i2c_bus_new_slave_event(AspeedI2CBus *bus,=0A=
+                                           enum i2c_event event)=0A=
+ {=0A=
++    AspeedI2CClass *aic =3D ASPEED_I2C_GET_CLASS(bus->controller);=0A=
 +=0A=
-     /* Unimplemented peripherals */=0A=
-     aspeed_mmio_map_unimplemented(s->memory, SYS_BUS_DEVICE(&s->pwm),=0A=
-                                   "aspeed.pwm",=0A=
+     switch (event) {=0A=
+     case I2C_START_SEND_ASYNC:=0A=
+         if (!SHARED_ARRAY_FIELD_EX32(bus->regs, R_I2CS_CMD, RX_DMA_EN)) {=
+=0A=
+@@ -1385,7 +1385,7 @@ static int aspeed_i2c_bus_new_slave_event(AspeedI2CBu=
+s *bus,=0A=
+         ARRAY_FIELD_DP32(bus->regs, I2CS_DMA_LEN_STS, RX_LEN, 0);=0A=
+         bus->dma_dram_offset =3D=0A=
+             deposit64(bus->dma_dram_offset, 0, 32,=0A=
+-                      ARRAY_FIELD_EX32(bus->regs, I2CS_DMA_RX_ADDR, ADDR))=
+;=0A=
++                      bus->regs[R_I2CS_DMA_RX_ADDR] & aic->dma_addr_lo_mas=
+k);=0A=
+         bus->regs[R_I2CC_DMA_LEN] =3D=0A=
+             ARRAY_FIELD_EX32(bus->regs, I2CS_DMA_LEN, RX_BUF_LEN) + 1;=0A=
+         i2c_ack(bus->bus);=0A=
+@@ -1608,6 +1608,7 @@ static void aspeed_2500_i2c_class_init(ObjectClass *k=
+lass, const void *data)=0A=
+     aic->check_sram =3D true;=0A=
+     aic->has_dma =3D true;=0A=
+     aic->mem_size =3D 0x1000;=0A=
++    aic->dma_addr_lo_mask =3D 0x3ffffffc;=0A=
+ }=0A=
+ =0A=
+ static qemu_irq aspeed_2600_i2c_bus_get_irq(AspeedI2CBus *bus)=0A=
+@@ -1631,6 +1632,7 @@ static void aspeed_2600_i2c_class_init(ObjectClass *k=
+lass, const void *data)=0A=
+     aic->bus_pool_base =3D aspeed_2500_i2c_bus_pool_base;=0A=
+     aic->has_dma =3D true;=0A=
+     aic->mem_size =3D 0x1000;=0A=
++    aic->dma_addr_lo_mask =3D 0x7fffffff;=0A=
+ }=0A=
+ =0A=
+ static void aspeed_1030_i2c_class_init(ObjectClass *klass, const void *dat=
+a)=0A=
+@@ -1649,6 +1651,7 @@ static void aspeed_1030_i2c_class_init(ObjectClass *k=
+lass, const void *data)=0A=
+     aic->bus_pool_base =3D aspeed_2500_i2c_bus_pool_base;=0A=
+     aic->has_dma =3D true;=0A=
+     aic->mem_size =3D 0x10000;=0A=
++    aic->dma_addr_lo_mask =3D 0x7fffffff;=0A=
+ }=0A=
+ =0A=
+ static void aspeed_2700_i2c_class_init(ObjectClass *klass, const void *dat=
+a)=0A=
+@@ -1670,6 +1673,7 @@ static void aspeed_2700_i2c_class_init(ObjectClass *k=
+lass, const void *data)=0A=
+     aic->has_dma =3D true;=0A=
+     aic->mem_size =3D 0x2000;=0A=
+     aic->has_dma64 =3D true;=0A=
++    aic->dma_addr_lo_mask =3D 0xffffffff;=0A=
+ }=0A=
+ =0A=
+ static const TypeInfo aspeed_i2c_types[] =3D {=0A=
 -- =0A=
 2.43.0=0A=
 
