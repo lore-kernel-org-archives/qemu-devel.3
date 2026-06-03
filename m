@@ -4,104 +4,107 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5645FCD6E55
-	for <qemu-devel@archiver.kernel.org>; Wed,  3 Jun 2026 08:37:42 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A790BCD6E64
+	for <qemu-devel@archiver.kernel.org>; Wed,  3 Jun 2026 09:04:23 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wUh67-00068w-Pd; Wed, 03 Jun 2026 04:37:11 -0400
+	id 1wUhVg-0001UI-8s; Wed, 03 Jun 2026 05:03:36 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <marcandre.lureau@gmail.com>)
- id 1wUh66-00068c-1A
- for qemu-devel@nongnu.org; Wed, 03 Jun 2026 04:37:10 -0400
-Received: from mail-dy1-x1332.google.com ([2607:f8b0:4864:20::1332])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <marcandre.lureau@gmail.com>)
- id 1wUh64-0006sA-DC
- for qemu-devel@nongnu.org; Wed, 03 Jun 2026 04:37:09 -0400
-Received: by mail-dy1-x1332.google.com with SMTP id
- 5a478bee46e88-3075afe5247so27906eec.0
- for <qemu-devel@nongnu.org>; Wed, 03 Jun 2026 01:37:07 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1780475826; cv=none;
- d=google.com; s=arc-20240605;
- b=CG3rj9Ty3kGpM5bySIe+jbiLYCtwHJ3CywltYRqzh/sTYgeCzlSrTeG+7/hu76zKm3
- 5I38NBDi5b9NqqopbhFLnA1JBb55ksttdWLWpbDLI+iZ0x9brRd2+F3rQPjd0aPeYf7y
- sJIUs8fGxVBn/s1Vl9tcig1Kp3+LKlPP66MLvVKnA3BwlVWDONa1B8frYHs1GWG9c/4y
- 7Le5o4QBDvWOYEJYstaCNvup+DjpJ3olqS48Cm8aUzlHTKqGrLOtgeHhaUxitePsdnid
- tuDOqMWZYt5/oBosxkXaphzBtRY9A5x2x4V1w9fYHfy5hJuum7CsX9IxooOM93ccA+aX
- AkYg==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
- s=arc-20240605; 
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:dkim-signature;
- bh=OvZJrmEy64tq3WyQB3acgCZUJZT0YGXjdNcY6sseLf0=;
- fh=sE2OBjZdF8PLYicXFyUM4w7ozjweWx0plNt+fUrokJ8=;
- b=CyS/k5u+4ABioUv5dJJkOhDeNibOlFmP8QmLn1GEKSG5deeDWOnTkMITh47qVcCSFp
- 6SkLQaTKCVJHi5pVOtqDihi1bkxqbRP5HgQn9Bda4DNSSQ7SuZqUwA0QWVKryT2iLBoy
- 3lwYswdnY3MGSDkUfgJUEjFeYEZKEdxuXQzid6kQtRT8rr2ipdoV5nj1AO6zJCQIQPSz
- HhhcwQ8nj0z6RsHw4h8xLCaerjJVEe+ID2hueniaLulL01ldnbnc2FCzFJkrg/1b7irW
- qZcoMnczofNzGs0O1dLzS+5A9Q4t43SDv3e2+T9QfhFoXveyVRDV7P8aGokwPcGP9XX1
- 6FsA==; darn=nongnu.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
+ (Exim 4.90_1) (envelope-from <sgarzare@redhat.com>)
+ id 1wUhVe-0001U4-PT
+ for qemu-devel@nongnu.org; Wed, 03 Jun 2026 05:03:35 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <sgarzare@redhat.com>)
+ id 1wUhVd-0005QA-8l
+ for qemu-devel@nongnu.org; Wed, 03 Jun 2026 05:03:34 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1780477411;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=cSie2qWTr6EJsqNxweSQ9tti5cQY+Q8+DjGHW5Y8U+o=;
+ b=bZE64ZwjyQsSHmxY6XefpsHfvQNjh5MWJLfZ/rb5v6TI+Fb2hr0/hpYxvFH4rn1Bpl/Fku
+ BNDoDFgla4HQH13RgFz+wU1Gol/p/MwDFEQzXHo6cs5jhaJQWHaJq9gOxoWemWw511rAWb
+ jyTH6lmfGvJh2Zm8m45UQCXazSyyT/s=
+Received: from mail-wm1-f70.google.com (mail-wm1-f70.google.com
+ [209.85.128.70]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-594-Nq7f-FqDNLqOnn3F1IyN_Q-1; Wed, 03 Jun 2026 05:03:30 -0400
+X-MC-Unique: Nq7f-FqDNLqOnn3F1IyN_Q-1
+X-Mimecast-MFC-AGG-ID: Nq7f-FqDNLqOnn3F1IyN_Q_1780477409
+Received: by mail-wm1-f70.google.com with SMTP id
+ 5b1f17b1804b1-490b37e1f47so12817355e9.0
+ for <qemu-devel@nongnu.org>; Wed, 03 Jun 2026 02:03:29 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1780475826; x=1781080626; darn=nongnu.org;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:from:to:cc:subject:date
- :message-id:reply-to;
- bh=OvZJrmEy64tq3WyQB3acgCZUJZT0YGXjdNcY6sseLf0=;
- b=haskS+8K/SPULcGBJsE1ZStfp10Xvr+/2zws7gc8rZHSsHyZ6+Gh0rmksYaw5a78ru
- /WrJNT1cLpxZS7UsZKUEtJlI7JIL1MSu+iCzQurZjVw1srqo6K337xnV4JbzR3/owIDW
- 6IzFqATiIE+CU2dgJxJgccyQUpiLjPoIiQuClXFdlWjaFhTst7P7cWM1PhAmY8phLVVA
- WAFS491ktFnXbKSrvckLTWfBPI2E4G9kNKjrq9eXr35+0LQgpCT9FXdpOpjp3Yq95hSD
- QNLJkJQyujoGKF4ScF4MyYreegX5JslGr3d1heGBx6Fb00kZpfVXAc6RI/vOVKrS50KF
- 9Cew==
+ d=redhat.com; s=google; t=1780477409; x=1781082209; darn=nongnu.org;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+ bh=cSie2qWTr6EJsqNxweSQ9tti5cQY+Q8+DjGHW5Y8U+o=;
+ b=nrt+WRAkEYBMm6KQzCM9z6FrxltptP5QJMKvSRw+04VJ2ipbZPlvRnds02A3NZJRmB
+ Imgp+94r0aBvX4/RAA3kT49WCTIpGMYMCPpd7yWv1FeEQxNMFqhPT31uMlMdl7PnwNXY
+ O8ksbSvJZ4DKE/1j6Ivkk9TOO1b9QbMDsBMH5Z0CE57NZzFWsDbNT4fUlx3OpQINct8E
+ vZE5kiUiCTGjjdv/6oBVAKTZdtcMVUmRaBve8bOWC5fLSSJ552Y80zjn22ExLpx9Tzb/
+ ac+pHP5DDK1mYs3L6laSBiI1d1AlZtXNscI4x3WrPS7gf24vHPBpaSkHnO9nR7MJeHTN
+ oFvA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1780475826; x=1781080626;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to;
- bh=OvZJrmEy64tq3WyQB3acgCZUJZT0YGXjdNcY6sseLf0=;
- b=YZYeFGmTpCm8V2Z6k8ODn1HQ0KNXsEneIrCQsRd6iafco+bMbxPPFkdDIJHXqkWBVp
- Q2pBXLrVdTGHTt2IP8dP+VYA8iCnt+scVst1jEWLu1BJR0kukKAJU2g5oK7L+bOyQcwZ
- Z9B6puh3kiuHpuv0C/Xyqt7WZhqATduS45f3RyZ3kQkSp7ZQjJGvecka5Enrg028qb0j
- MB3sBvuuQ3bgOrjG1C6JsvewFwdNvkXQLo5g79dHhc7/fN+y9YXnqLPFPfNAukuyD+8g
- EyGFowD4cOirb9lETsPZ3dkYcBrHmN9BAoGCsUwdULGQVH+URxy5RfdDBZWWCAhZmepu
- +ntA==
-X-Gm-Message-State: AOJu0YxsrPaFg+D/i63W1mDWvTjT51CMiJsyS48h4Annjid2eDuPGKy8
- LxM5jjhgtDILM8dggWjhlaRK9DBaQinAc1Z7BgOTMWw++lU402BwvZ5Js2lAQj271vKw2kbd/bL
- x5UXxW+f/VYSwX40/0XGA35rnC5bKvgA=
-X-Gm-Gg: Acq92OGmuis885jijEQXsfLXjwankrH8v3bUBOraXsTs0d9TQfvTU34fKAaogKPv1xe
- EwGO4O0TrGBcdOxG0jGtr+/SGHp4lPTwIadpRCnjA9bx4o2zR6P5BEaXDDk8lQLULoQdw3YaDlB
- sv2IHnJntnZlrGEzVRUMbnGEvuhu6cHqVzbjJ68UHQQDObsPl5k8aCicdJ2P3YPZdx9BIBYAPD7
- UodsWctxsL/sA1BIM8nFQAcJtIOQFG0WOspbi+bDG4MOlL18FEOMKzZRjZ0deejJXA/j9Vr5vRF
- fWDbXhEFKR+XQiNn82APfzc3mv48bPr1t7/WDBjpKT+XqpSI6Q==
-X-Received: by 2002:a05:7300:df4a:b0:2ed:e16:6b4a with SMTP id
- 5a478bee46e88-3074fc4eb73mr1223503eec.32.1780475826203; Wed, 03 Jun 2026
- 01:37:06 -0700 (PDT)
+ d=1e100.net; s=20251104; t=1780477409; x=1781082209;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=cSie2qWTr6EJsqNxweSQ9tti5cQY+Q8+DjGHW5Y8U+o=;
+ b=B7lCgISq5TUvtKzicjt+fykze/DqyiTAsgrXyf/GV7Z2m0VfE2btSMYTTPs9jrf31p
+ A+jaOTse1xlmFC2LQ7KmQqSo9BKUWw1ip2C0SFLEyWS2mNIydymeBLcqQ07aw291iEtP
+ PUdgDHMrGWKtpkjTOMVIjDRU3IRIFsRkMI+xqnd1JD2s/wPf0iFK/MvE/RGUX7iEq2gc
+ PD/zx8EJKb/12Y5CXZnvSk2Xd+uj6Zw96MNNiLftn66pcdtPRjjk31guKdIimeCRyTjC
+ hZug0P8OdQ0yaUFav0PQRLy+wkk2PkkJ1uLUMlB8s4qJOnN7EU/IlcXd3SB5gGyT3Nez
+ S3kg==
+X-Gm-Message-State: AOJu0YzPqBnj4U19k7S55P9qEbph2J5PtHognQu6OKaEZYBqs63FGCAJ
+ fueYgXw1Jr2hMq2YGZsW4s+c9anPN13uRoTkpAhFhvavD2rugu1XZqO98dhVXv4+yQLBrZ1f9OW
+ 7Nq+OmOuKTyRkSvM/nPG9kO0q8C1mhtnQssmHSJ67Dg61mKaTNmgOPk5M
+X-Gm-Gg: Acq92OFMp2KkS0VRui+zZ8UeIb9ypK/ip16VxGArT+rpdbyYsjJ0tmKAiACr9w/USjr
+ OlykGhc8nf0/AQMrCp4ZiYqPbAxtdZCmatgjrGJOmoE987ip8fRXzrfeHhA8G5qLRdmbEP1PG+Q
+ fj8FwITlFxB92YRLt2pFKrBOETBtNuZriR1QljtDwDp4Gfebms/GUvxwQPJUbtAPYV31WikE+UH
+ EI7YlAVSNpLGL4QHKdPwpmLUWna0dEHNzoKzGoD9wdv7wixQOu+yNTxldOgdPvIXJKDHUh/eCVK
+ 10AtD1+D09xTywcGFq04oN6Jj4yMhq63CMQ085GTIQFvMRhvC+q+AwqcDJcs8KzvH6gVtfj1snr
+ 6nPMfPLP/6uRl+Abzey8dVn+D1g4zKnC+ht27Ww==
+X-Received: by 2002:a05:600c:4fcc:b0:48a:8b02:ae91 with SMTP id
+ 5b1f17b1804b1-490b5eaab2dmr41268395e9.11.1780477408849; 
+ Wed, 03 Jun 2026 02:03:28 -0700 (PDT)
+X-Received: by 2002:a05:600c:4fcc:b0:48a:8b02:ae91 with SMTP id
+ 5b1f17b1804b1-490b5eaab2dmr41267455e9.11.1780477408293; 
+ Wed, 03 Jun 2026 02:03:28 -0700 (PDT)
+Received: from sgarzare-redhat ([193.207.118.98])
+ by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-490b615fb2bsm45834035e9.5.2026.06.03.02.03.25
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Wed, 03 Jun 2026 02:03:27 -0700 (PDT)
+Date: Wed, 3 Jun 2026 11:03:18 +0200
+From: Stefano Garzarella <sgarzare@redhat.com>
+To: Stefan Hajnoczi <stefanha@redhat.com>
+Cc: qemu-devel@nongnu.org, "Michael S. Tsirkin" <mst@redhat.com>, 
+ hreitz@redhat.com, Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>, 
+ gmaglione@redhat.com
+Subject: Re: [PATCH v2 2/3] libvhost-user: look for available vq buffers upon
+ SET_VRING_KICK
+Message-ID: <ah_rtghBvzQgN8fy@sgarzare-redhat>
+References: <20260519191548.335082-1-stefanha@redhat.com>
+ <20260519191548.335082-3-stefanha@redhat.com>
 MIME-Version: 1.0
-References: <20260108131043.490084-1-pbonzini@redhat.com>
- <20260108131043.490084-17-pbonzini@redhat.com>
-In-Reply-To: <20260108131043.490084-17-pbonzini@redhat.com>
-From: =?UTF-8?B?TWFyYy1BbmRyw6kgTHVyZWF1?= <marcandre.lureau@redhat.com>
-Date: Wed, 3 Jun 2026 12:36:53 +0400
-X-Gm-Features: AVHnY4IMV2tonU5IL68xxsIVKeMJFh68kMYU8BSz3Le0qc-8aWYPStTgUWt2BtE
-Message-ID: <CAJ+F1CLTM64zfr4e6b9X1zAqs_+=rRZ27KCEQLG_Fxj7ybQWaQ@mail.gmail.com>
-Subject: Re: [PATCH v2 16/16] rust/tests: QAPI integration tests
-To: Paolo Bonzini <pbonzini@redhat.com>
-Cc: qemu-devel@nongnu.org, armbru@redhat.com, qemu-rust@nongnu.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2607:f8b0:4864:20::1332;
- envelope-from=marcandre.lureau@gmail.com; helo=mail-dy1-x1332.google.com
-X-Spam_score_int: -16
-X-Spam_score: -1.7
-X-Spam_bar: -
-X-Spam_report: (-1.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, FREEMAIL_FORGED_FROMDOMAIN=0.001,
- FREEMAIL_FROM=0.001, HEADER_FROM_DIFFERENT_DOMAINS=0.249,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=no autolearn_force=no
+Content-Type: text/plain; charset=us-ascii; format=flowed
+Content-Disposition: inline
+In-Reply-To: <20260519191548.335082-3-stefanha@redhat.com>
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=sgarzare@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -24
+X-Spam_score: -2.5
+X-Spam_bar: --
+X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.445,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -117,57 +120,61 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi
-
-On Thu, Jan 8, 2026 at 5:13=E2=80=AFPM Paolo Bonzini <pbonzini@redhat.com> =
-wrote:
+On Tue, May 19, 2026 at 03:15:47PM -0400, Stefan Hajnoczi wrote:
+>When a vring is started the back-end must look for available vq buffers
+>and process them. This scenario can happen if the back-end is stopped
+>with unprocessed available buffers and then started again.
 >
-> From: Marc-Andr=C3=A9 Lureau <marcandre.lureau@redhat.com>
+>The inflight I/O tracking code already did this, but it should also be
+>done when inflight I/O tracking is not enabled. Move the code.
 >
-> Signed-off-by: Marc-Andr=C3=A9 Lureau <marcandre.lureau@redhat.com>
-> Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
-> ---
->  rust/tests/meson.build          |  21 +-
->  rust/tests/tests/integration.rs |   2 +
->  rust/tests/tests/qapi.rs        | 444 ++++++++++++++++++++++++++++++++
->  3 files changed, 464 insertions(+), 3 deletions(-)
->  create mode 100644 rust/tests/tests/integration.rs
->  create mode 100644 rust/tests/tests/qapi.rs
+>Signed-off-by: Stefan Hajnoczi <stefanha@redhat.com>
+>---
+> subprojects/libvhost-user/libvhost-user.c | 10 +++++-----
+> 1 file changed, 5 insertions(+), 5 deletions(-)
 >
-...
-> +    let qsa =3D to_qobject(&expected).unwrap();
-> +    let json =3D qsa.to_json();
-> +    assert_eq!(
-> +        json,
-> +        "{\"port\": \"port-val\", \"keep_alive_idle\": 42, \"host\": \"h=
-ost-val\"}"
-> +    );
+>diff --git a/subprojects/libvhost-user/libvhost-user.c b/subprojects/libvhost-user/libvhost-user.c
+>index 9c630c2170..2e286ea6d9 100644
+>--- a/subprojects/libvhost-user/libvhost-user.c
+>+++ b/subprojects/libvhost-user/libvhost-user.c
+>@@ -1390,11 +1390,6 @@ vu_check_queue_inflights(VuDev *dev, VuVirtq *vq)
+>         vq->counter = vq->resubmit_list[0].counter + 1;
+>     }
+>
+>-    /* in case of I/O hang after reconnecting */
+>-    if (eventfd_write(vq->kick_fd, 1)) {
+>-        return -1;
+>-    }
+>-
+>     return 0;
+> }
+>
+>@@ -1436,6 +1431,11 @@ vu_set_vring_kick_exec(VuDev *dev, VhostUserMsg *vmsg)
+>         vu_panic(dev, "Failed to check inflights for vq: %d\n", index);
+>     }
+>
+>+    /* Inject a kick to look for available vq buffers */
+>+    if (eventfd_write(dev->vq[index].kick_fd, 1)) {
 
-We need to fix the field names to produce the correct wire format:
+Should we check if kick_fd is not -1 like we already do in other places 
+in this function? (mainly when `nofd` is true)
 
-index 41ed83c381d..3e0bd237d8c 100644
---- a/scripts/qapi/rs_types.py
-+++ b/scripts/qapi/rs_types.py
-@@ -163,15 +163,21 @@ def gen_struct_members(members:
-List[QAPISchemaObjectTypeMember],
-             typ =3D 'Box<%s>' % typ
-         if memb.optional:
-             typ =3D 'Option<%s>' % typ
-+        field_name =3D rs_name(camel_to_lower(memb.name))
-+        serde_rename =3D ''
-+        if field_name.removeprefix('r#') !=3D memb.name:
-+            serde_rename =3D '#[serde(rename =3D "%s")]' % memb.name
-         ret.append(mcgen('''
- %(cfg)s''', '''
- %(skip_if)s''', '''
-+%(serde_rename)s''', '''
-     pub %(rs_name)s: %(rs_type)s,
- ''',
-                          cfg=3Dmemb.ifcond.rsgen(),
-                          skip_if=3DSERDE_SKIP_NONE if memb.optional else '=
-',
-+                         serde_rename=3Dserde_rename,
-                          rs_type=3Dtyp,
--                         rs_name=3Drs_name(camel_to_lower(memb.name))))
-+                         rs_name=3Dfield_name))
+>+        return -1;
+
+This function returns boolean, -1 is `true` and IIUC means that we ask 
+for a reply which is not the case here. We should fix it.
+
+Thanks,
+Stefano
+
+>+    }
+>+
+
+>     return false;
+> }
+>
+>-- 
+>2.54.0
+>
+
 
