@@ -4,49 +4,45 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 46CA1CD6E64
-	for <qemu-devel@archiver.kernel.org>; Wed,  3 Jun 2026 08:27:05 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6C05BCD6E55
+	for <qemu-devel@archiver.kernel.org>; Wed,  3 Jun 2026 08:27:06 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wUgv8-0008Oz-4Q; Wed, 03 Jun 2026 04:25:50 -0400
+	id 1wUgvI-0000Ks-8s; Wed, 03 Jun 2026 04:26:00 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@mailo.com>) id 1wUgur-0008F3-Bi
- for qemu-devel@nongnu.org; Wed, 03 Jun 2026 04:25:33 -0400
-Received: from msg-1.mailo.com ([213.182.54.11] helo=mailo.com)
+ (Exim 4.90_1) (envelope-from <philmd@mailo.com>) id 1wUgvD-00009R-S6
+ for qemu-devel@nongnu.org; Wed, 03 Jun 2026 04:25:55 -0400
+Received: from msg-4.mailo.com ([213.182.54.15] helo=mailo.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@mailo.com>) id 1wUgup-00034I-Mx
- for qemu-devel@nongnu.org; Wed, 03 Jun 2026 04:25:32 -0400
+ (Exim 4.90_1) (envelope-from <philmd@mailo.com>) id 1wUgvB-0003AO-SQ
+ for qemu-devel@nongnu.org; Wed, 03 Jun 2026 04:25:55 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=mailo.com; s=mailo;
- t=1780471989; bh=fH3fFr69+5oTs14WJ3zPYqys5LqxJ0B3cLAFgnotpjI=;
+ t=1780471749; bh=Exw/MqzmmMd1Vbtrx2I9Z7Pz45FCEjQ4uro/dQQu2U8=;
  h=X-EA-Auth:Message-ID:Date:MIME-Version:Subject:To:Cc:References:
  From:In-Reply-To:Content-Type:Content-Transfer-Encoding;
- b=O2VxdaS1WyDDlGevoY2Cdlc4Qj1c0bBAa3YNOSGW5oBvwYNCZ1lVut2XP2Uy10PSe
- thOfKBBuN1Fs5xAG52JBu2NU4U+x1LRrAueGbrv9ToweQYQdqKxHtgMV0DAQ2fq0bG
- i7MPE+Kf3GVp+OEdKQwZm1qEXnuf9mMjQXhA/NLM=
-Received: by be1-1.in.mailobj.net [192.168.91.11] with ESMTP
+ b=VeBf8sYQJZVsSapbK83zx8jVoiu8J+uEsUUUpO4Mq2U7mXqzjzb9hEhj1FLFt2Isb
+ uv5TzVp/fztTCgR0jxq9cIK+KtQme2QawTyHq0h6nomu0bVv97W72/1+o+U0ko/e2v
+ vwJUnUm8OHG5jrhHtVySlDqHAU7kHsrCiNurxLko=
+Received: by be1-8.in.mailobj.net [192.168.91.18] with ESMTP
  via ip-20.mailobj.net [213.182.54.20]
- Wed,  3 Jun 2026 09:32:23 +0200 (CEST)
-X-EA-Auth: vQV4oBK53Q0tYH4+r+JhY2WJHq2ba0kCEmK4JPwEYkqh7m+952a5fW8BLpN7eg9dMRwx8qFz/5yaI2HJ8EYcZPXOo571rZ4a
-Message-ID: <a7341ab4-4556-4113-98ef-1438b5f91016@mailo.com>
-Date: Wed, 3 Jun 2026 09:32:22 +0200
+ Wed,  3 Jun 2026 09:28:54 +0200 (CEST)
+X-EA-Auth: UIZLls9CKpkNWx0GA6B/5B6fzGetvWBWvOycgnZrns88AkZJO7Trghzn56CodaVdL7H3+2gRgXXuqdOdgaFPRR8yituLizIl
+Message-ID: <41ef9019-99f2-48d3-bc9e-8739f95865fc@mailo.com>
+Date: Wed, 3 Jun 2026 09:28:54 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 06/38] MAINTAINERS: Drop stale F: from "Overall CPUs
- other accelerators"
+Subject: Re: [PATCH v2 00/38] MAINTAINERS: Fix F: lines
 Content-Language: en-US
 To: Markus Armbruster <armbru@redhat.com>, qemu-devel@nongnu.org
-Cc: pierrick.bouvier@oss.qualcomm.com,
- Richard Henderson <richard.henderson@linaro.org>,
- Paolo Bonzini <pbonzini@redhat.com>
+Cc: pierrick.bouvier@oss.qualcomm.com
 References: <20260603064032.3733394-1-armbru@redhat.com>
- <20260603064032.3733394-7-armbru@redhat.com>
 From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@mailo.com>
-In-Reply-To: <20260603064032.3733394-7-armbru@redhat.com>
+In-Reply-To: <20260603064032.3733394-1-armbru@redhat.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=213.182.54.11; envelope-from=philmd@mailo.com;
+Received-SPF: pass client-ip=213.182.54.15; envelope-from=philmd@mailo.com;
  helo=mailo.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
@@ -69,39 +65,65 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 3/6/26 08:40, Markus Armbruster wrote:
-> We neglected to update MAINTAINERS when we deleted makefiles.  Update
-> it now.
+Hi Markus,
+
+On 3/6/26 08:39, Markus Armbruster wrote:
+> Quite a few F: lines don't match any files.  The quick & dirty check
 > 
-> Fixes: 1a82878a08 (meson: accel, 2019-08-18)
-> Cc: Richard Henderson <richard.henderson@linaro.org>
-> Cc: Paolo Bonzini <pbonzini@redhat.com>
-> Cc: Philippe Mathieu-Daudé <philmd@mailo.com>
-> Signed-off-by: Markus Armbruster <armbru@redhat.com>
-> ---
->   MAINTAINERS | 2 --
->   1 file changed, 2 deletions(-)
+>      $ ls `sed -n 's/^F: *//p' MAINTAINERS ` >/dev/null
 > 
-> diff --git a/MAINTAINERS b/MAINTAINERS
-> index 15793b088e..2dc53c7e2e 100644
-> --- a/MAINTAINERS
-> +++ b/MAINTAINERS
-> @@ -541,8 +541,6 @@ F: include/system/cpus.h
->   F: include/accel/accel-*.h
->   F: accel/accel-*.?
->   F: accel/dummy-cpus.?
-> -F: accel/Makefile.objs
-> -F: accel/stubs/Makefile.objs
+> finds about fifty.
+> 
+> Philippe Mathieu-Daudé recently posted a few fixes:
+> 
+>    MAINTAINERS: Fix docker/dockerfiles/debian-hexagon-cross.docker path
+>    MAINTAINERS: Cover debian-loongarch-cross.docker with LoongArch section
+>    MAINTAINERS: Cover debian-xtensa-cross.docker with Xtensa section
+>    MAINTAINERS: Cover debian-tricore-cross.docker with TriCore section
+>    MAINTAINERS: Cover python.docker with Python library section
+>    MAINTAINERS: Fix s390x storage key/attribute device paths
+>    MAINTAINERS: Fix tcg/s390x/ path
+>    MAINTAINERS: Correct scripts/coverity-model.c path
+>    MAINTAINERS: Fix RISCV related paths
+>    MAINTAINERS: Fix hexagon-linux-user.mak path
+> 
+> These are in
+> 
+>     Subject: [PATCH 0/7] docker: Remove LegacyKeyValueFormat warnings
+>     Date: Mon, 18 May 2026 12:22:15 +0200
+>     Message-ID: <20260518102222.80735-1-philmd@linaro.org>
+> 
+>     Subject: [PATCH v2 0/4] buildsys: Stop checking for ESA/390 host
+>     Date: Tue, 19 May 2026 19:12:36 +0200
+>     Message-ID: <20260519171240.97420-1-philmd@linaro.org>
+> 
+>     Subject: [PATCH] MAINTAINERS: Correct scripts/coverity-model.c path
+>     Date: Tue, 19 May 2026 19:19:26 +0200
+>     Message-ID: <20260519171926.98099-1-philmd@linaro.org>
+> 
+>     Subject: [PATCH] MAINTAINERS: Fix RISCV related paths
+>     Date: Tue, 19 May 2026 19:26:21 +0200
+>     Message-ID: <20260519172621.98469-1-philmd@linaro.org>
+> 
+>     Subject: [PATCH] MAINTAINERS: Fix hexagon-linux-user.mak path
+>     Date: Wed, 20 May 2026 14:39:47 +0200
+>     Message-ID: <20260520123947.12711-1-philmd@linaro.org>
+> 
+> This series takes care of the remainder, except for one discussed
+> next.  It applies cleanly with and without Philippe's patches.
 
-Adding:
+Not sure if you are expecting something from me here, I dropped
+these thinking you'd include them in your cleanup series or in
+a PR.
 
-   +F: accel/meson.build
+Friendly recommendation: merge what is already review and repost
+what is not in 1 week, do not wait for all the 38 patches to be
+reviewed before posting your PR, that'd be exhausting. Or even,
+do not repost in 1 week, directly send your PR; these patches
+have been long enough on the list.
 
-Reviewed-by: Philippe Mathieu-Daudé <philmd@mailo.com>
+Regards,
 
->   F: cpu-common.c
->   F: cpu-target.c
->   F: qapi/accelerator.json
-
+Phil.
 
 
