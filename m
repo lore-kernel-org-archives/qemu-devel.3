@@ -4,102 +4,93 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D84DBCD6E55
-	for <qemu-devel@archiver.kernel.org>; Wed,  3 Jun 2026 19:33:34 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id DE5BACD6E57
+	for <qemu-devel@archiver.kernel.org>; Wed,  3 Jun 2026 19:39:07 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wUrKZ-0006Fp-DD; Wed, 03 Jun 2026 15:32:47 -0400
+	id 1wUrQB-0000U3-Tu; Wed, 03 Jun 2026 15:38:36 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <stefanha@gmail.com>)
- id 1wUrKW-0006FC-9i
- for qemu-devel@nongnu.org; Wed, 03 Jun 2026 15:32:44 -0400
-Received: from mail-ed1-x52e.google.com ([2a00:1450:4864:20::52e])
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1wUrQ6-0000Sx-DP
+ for qemu-devel@nongnu.org; Wed, 03 Jun 2026 15:38:31 -0400
+Received: from smtp-out2.suse.de ([2a07:de40:b251:101:10:150:64:2])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <stefanha@gmail.com>)
- id 1wUrKU-0002tJ-P3
- for qemu-devel@nongnu.org; Wed, 03 Jun 2026 15:32:44 -0400
-Received: by mail-ed1-x52e.google.com with SMTP id
- 4fb4d7f45d1cf-68be16c61d1so11687380a12.2
- for <qemu-devel@nongnu.org>; Wed, 03 Jun 2026 12:32:41 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1780515160; cv=none;
- d=google.com; s=arc-20240605;
- b=P4ipBYabuZ0UlCiEiV8tKuLl3iSRJifi8thl97gb82Q+Jgk1Ddfvb++RzwWXINcv8L
- 3JiN5rsJvrEy6kz0YTJ6Pkr1mzxvwxPg9LhMAWmVatAhGw+BAWdrZzY885iUoDabfZgW
- YIVvQ+QcRUuMtkgR4zDIWlQl9k7MqP+389pQe9nmvr+wcxPqqkQBlwYd8K63dsMVkzVd
- defNeIv1OwOCWjNh5ZzZjscBqwlGlAptQ52D9kgtFZz5/5dIyy67rnRzoXLFluomfb4U
- aaJynd0S7RD3kJkdzDhZD4xP80ZZP5I1OFd9H4OdwOewsLgXEOfdkt1CsRTLTvUmDEs3
- 1hzg==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
- s=arc-20240605; 
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:dkim-signature;
- bh=MiLDmCKfkJ9J4tVABJDyJ7TDyjFkSVo3cc24YELnkjk=;
- fh=I4bPGmFuSJAUDPPBcEbiWZt2Bp8JKDYHn7NU1zWWO5c=;
- b=hmgrxWb0UdLaNRy6Zy68SUVXkFvfEs72EtaooakOT22/T9B/FYEP/HNfFt/7AGnDY+
- eSjRiWs0xicdu6PBBDFid36YXhHW/SBvH/uq0qWy2QMuNOJcCt/Nfnw0wZh+Bt9qAh2M
- 3cMsh5RnodhlJPCtDHUA4RRNN8wq+oRWkcdv43EIp0gidAa3uQEaqe1hk/Q/DoCmqQl0
- 9t9gZn/cgSujaK+5L1TXcSNCeyEtoFSAPRuylZKjnhtblnKDGrQPj7GUK8DbCfjYJ/Zc
- gchz/aOjwek6m/xrEKd3hL8gVufLMzlNVgmSzuuCWNtcRcChHk30Cd8RFhJiUdy5tW0H
- 3/Pw==; darn=nongnu.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1780515160; x=1781119960; darn=nongnu.org;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:from:to:cc:subject:date
- :message-id:reply-to;
- bh=MiLDmCKfkJ9J4tVABJDyJ7TDyjFkSVo3cc24YELnkjk=;
- b=TFY6gGZ7hyMn+1BeAUKSzsxJ4wIjc6jg3e/zTuqYhJECIqOEo8xslpjYHDIH8unaVe
- dTZeV+lfWnUzlIR38MVEpBUA4SkDsBwYpjaBS02nO5xOT6719S/VTmEXJmUy+2hbyC/r
- 3IIwbjsZfhszaV55v9XJEtVqc6lqK1AidK1PvisKdSnJ63QQSf4/G2igSimBVTyu1ytI
- PsfetaeLTe93UbJSHSW2ZJYBIryUyBvIJWuyu9P4O7SZYmIr3APhqIJmVbWxUxkAwOij
- N/SJi8jkxy5VbFK2ZpBxduCZeETK3Pe/Re+cT2ozwHd9r7g+lnwEoArU65R9SXFCnPNv
- uNLw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1780515160; x=1781119960;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to;
- bh=MiLDmCKfkJ9J4tVABJDyJ7TDyjFkSVo3cc24YELnkjk=;
- b=HqhPYk6wLVgWeTmdbE7wyZfSN8fC1PwFFSNuGbN9JxYbo+tzmhkiJ/09PNU2pZzqao
- mGEebPVkXv3/8hPivc1MbcZ1Nvmb8pn9NQcp8pyT0fahGXDlBXBSi5C5vfcW8YWxdqAm
- uf2Na0qaR4v9Ak70Ld+dhVO3KZ9j2ivxrm+GldR/kVN5gECWW3yvPI0BE305lC509T3p
- HCvcGx8vfNY2z+FQtdnE7nTYjapakk+/RKyN78zwgU6Zrc/vZ2Lvm1jv26fVNyVLrf8g
- +FtRtwNnF7OGWEWMpNDN36KHqYb6d1VdkE4fRobEKyiqwJFNWwbRN85FwGBogkRoFiP/
- oafQ==
-X-Gm-Message-State: AOJu0YxOR/JpGngD9yAFLYNvYy2h4qE3IrIKS4mmIcv+9vmnjmekQY8F
- IedO8XID15d834Ft8L9alQtcZcExLTH2pnoFb2S2D/Zq5xoruQ/FZVhsj1ybrltTEbVY3yfejjq
- hcuGksx2+JGGrFWVs2Ytw+C6mhf5hQlg=
-X-Gm-Gg: Acq92OGwFVXdx59NGdNLVAJe6YUJo16MDkaNJSTwzffjekHHK23FJ4DGXiFIjojtT6D
- 3YEZ+12MKP1kRn6sQWOMjPndYeUoTQ73aZcpxZJdHxIdJ+lAOiYUioAeIwbIhU2SjDg1OA8QalA
- 8tBSQpoPYU4v7i5qb1LVu0BvAqreGChxQorc1dkkfDz1hw/ZLdzKbgvgwLcLNp1UtOi3UBk6KDv
- RYdn7xZ7qRS7JK+5wUWQ4Ptx3rm073vLE8dfB7yqGsAqyYu5TSuB1Dmi72N1r4x/Xi8TR5dcC5f
- Tw9RyKE8phB3KO+R4GiuJZGWVsUl0k2kCjlIevmroZC1MQu4xULq
-X-Received: by 2002:a05:6402:5018:b0:67b:4e46:f12f with SMTP id
- 4fb4d7f45d1cf-68e714dbf07mr2524578a12.25.1780515160399; Wed, 03 Jun 2026
- 12:32:40 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1wUrQ4-0004qs-Cs
+ for qemu-devel@nongnu.org; Wed, 03 Jun 2026 15:38:30 -0400
+Received: from imap1.dmz-prg2.suse.org (unknown [10.150.64.97])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+ (No client certificate requested)
+ by smtp-out2.suse.de (Postfix) with ESMTPS id B50D366FBF;
+ Wed,  3 Jun 2026 19:38:24 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
+ t=1780515504; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version: content-transfer-encoding:content-transfer-encoding;
+ bh=1C4SKFyQBkevxlPgedOhnJW2W3kZvgJlggR1G0IOrbo=;
+ b=EQId56QCJ2IbRj7X5dDpHuEz6s6n4sZBYWVQiyb/AXbZEecNjTE/PizPOlgUMmfTEQbj+x
+ iSPzAF4KVl8INIfIntBoX6WxeI+2RlT8SOKXdIVU6yYOsdyGjI6JJKNxFqXwUISf7cl0p6
+ CdK2zpfcJxMguYwLkMHEL3w3qai5ppo=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
+ s=susede2_ed25519; t=1780515504;
+ h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version: content-transfer-encoding:content-transfer-encoding;
+ bh=1C4SKFyQBkevxlPgedOhnJW2W3kZvgJlggR1G0IOrbo=;
+ b=OOgz58ZhuOck1XshKqilTAKpeQ/s5EmdQoNXEDgej8XfcMMKXu5yryk3LotpsopYOm+NHm
+ YH3pTgcwBHaEvGBQ==
+Authentication-Results: smtp-out2.suse.de;
+	none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
+ t=1780515504; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version: content-transfer-encoding:content-transfer-encoding;
+ bh=1C4SKFyQBkevxlPgedOhnJW2W3kZvgJlggR1G0IOrbo=;
+ b=EQId56QCJ2IbRj7X5dDpHuEz6s6n4sZBYWVQiyb/AXbZEecNjTE/PizPOlgUMmfTEQbj+x
+ iSPzAF4KVl8INIfIntBoX6WxeI+2RlT8SOKXdIVU6yYOsdyGjI6JJKNxFqXwUISf7cl0p6
+ CdK2zpfcJxMguYwLkMHEL3w3qai5ppo=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
+ s=susede2_ed25519; t=1780515504;
+ h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version: content-transfer-encoding:content-transfer-encoding;
+ bh=1C4SKFyQBkevxlPgedOhnJW2W3kZvgJlggR1G0IOrbo=;
+ b=OOgz58ZhuOck1XshKqilTAKpeQ/s5EmdQoNXEDgej8XfcMMKXu5yryk3LotpsopYOm+NHm
+ YH3pTgcwBHaEvGBQ==
+Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+ (No client certificate requested)
+ by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id 6E194779A7;
+ Wed,  3 Jun 2026 19:38:23 +0000 (UTC)
+Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
+ by imap1.dmz-prg2.suse.org with ESMTPSA id N9EEEK+CIGpAJAAAD6G6ig
+ (envelope-from <farosas@suse.de>); Wed, 03 Jun 2026 19:38:23 +0000
+From: Fabiano Rosas <farosas@suse.de>
+To: qemu-devel@nongnu.org
+Cc: berrange@redhat.com, Stefan Hajnoczi <stefanha@redhat.com>,
+ Kevin Wolf <kwolf@redhat.com>, Hanna Reitz <hreitz@redhat.com>
+Subject: [PATCH v2] qed: Don't try to flush during incoming migration
+Date: Wed,  3 Jun 2026 16:38:13 -0300
+Message-ID: <20260603193813.2327596-1-farosas@suse.de>
+X-Mailer: git-send-email 2.53.0
 MIME-Version: 1.0
-References: <20260603173239.3189102-1-connorkite@gmail.com>
-In-Reply-To: <20260603173239.3189102-1-connorkite@gmail.com>
-From: Stefan Hajnoczi <stefanha@gmail.com>
-Date: Wed, 3 Jun 2026 15:32:26 -0400
-X-Gm-Features: AVHnY4ILFxQf-lOnRxA7QyQV9iwiOx0GcTBIOiO-V9IubAe_jtsZ4Md6akgj4C4
-Message-ID: <CAJSP0QVU=aU_QY8jjEAoeXhEwkbeREMV8gmQwuzNh1PSANwRPQ@mail.gmail.com>
-Subject: Re: [RFC] vhost-user: Add memoryIsolation qdev property to vhost-user
- devices
-To: ConKite <connorkite@gmail.com>
-Cc: qemu-devel@nongnu.org, hreitz@redhat.com
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::52e;
- envelope-from=stefanha@gmail.com; helo=mail-ed1-x52e.google.com
+Content-Transfer-Encoding: 8bit
+X-Spamd-Result: default: False [-2.80 / 50.00]; BAYES_HAM(-3.00)[100.00%];
+ MID_CONTAINS_FROM(1.00)[]; NEURAL_HAM_LONG(-1.00)[-1.000];
+ R_MISSING_CHARSET(0.50)[]; NEURAL_HAM_SHORT(-0.20)[-1.000];
+ MIME_GOOD(-0.10)[text/plain]; TO_MATCH_ENVRCPT_ALL(0.00)[];
+ FROM_HAS_DN(0.00)[]; ARC_NA(0.00)[]; MIME_TRACE(0.00)[0:+];
+ TO_DN_SOME(0.00)[];
+ DBL_BLOCKED_OPENRESOLVER(0.00)[imap1.dmz-prg2.suse.org:helo,suse.de:email,suse.de:mid,gitlab.com:url];
+ RCVD_VIA_SMTP_AUTH(0.00)[]; FROM_EQ_ENVFROM(0.00)[];
+ RCVD_COUNT_TWO(0.00)[2]; FUZZY_RATELIMITED(0.00)[rspamd.com];
+ DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
+ RCPT_COUNT_FIVE(0.00)[5]; RCVD_TLS_ALL(0.00)[]
+Received-SPF: pass client-ip=2a07:de40:b251:101:10:150:64:2;
+ envelope-from=farosas@suse.de; helo=smtp-out2.suse.de
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -116,65 +107,143 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, Jun 3, 2026 at 1:33=E2=80=AFPM ConKite <connorkite@gmail.com> wrote=
-:
-> diff --git a/hw/virtio/vhost-user-base.c b/hw/virtio/vhost-user-base.c
-> index 01ab9ca56b..cbc5792ac7 100644
-> --- a/hw/virtio/vhost-user-base.c
-> +++ b/hw/virtio/vhost-user-base.c
-> @@ -353,9 +353,17 @@ static void vub_device_unrealize(DeviceState *dev)
->      do_vhost_user_cleanup(vdev, vub);
->  }
->
-> +//Define common properties
-> +static const Property vub_properties[] =3D {
-> +    DEFINE_PROP_BOOL("memory-isolation", VHostUserBase, memoryIsolation,=
- false),
+It's not possible to access the image file while there is an incoming
+migration in progress, the QEMU process doesn't hold any locks to the
+storage at this point so nodes are inactive. Attempting to flush leads
+to an assert at bdrv_co_write_req_prepare():
 
-From docs/devel/style.rst:
+   assert(!(bs->open_flags & BDRV_O_INACTIVE))
 
-- "We use traditional C-style /``*`` ``*``/ comments and avoid // comments.=
-"
-- "Variables are lower_case_with_underscores". memoryIsolation ->
-memory_isolation.
+The issue is reproducible by running iotest 181 on a host under cpu
+load. The migration must coincide with the header already containing
+the QED_F_NEED_CHECK flag.
 
-You can run scripts/checkpatch.pl to catch many coding style issues.
-Here is a git-hook to automatically do that when you commit:
-https://blog.vmsplice.net/2011/03/how-to-automatically-run-checkpatchpl.htm=
-l
+The sequence of events is as follows, with the respective call stacks
+referenced below:
 
-> diff --git a/hw/virtio/vhost-user-gpio.c b/hw/virtio/vhost-user-gpio.c
-> index d473f87077..33b8752282 100644
-> --- a/hw/virtio/vhost-user-gpio.c
-> +++ b/hw/virtio/vhost-user-gpio.c
-> @@ -14,9 +14,6 @@
->  #include "standard-headers/linux/virtio_ids.h"
->  #include "standard-headers/linux/virtio_gpio.h"
->
-> -static const Property vgpio_properties[] =3D {
-> -    DEFINE_PROP_CHR("chardev", VHostUserBase, chardev),
-> -};
->
->  static void vgpio_realize(DeviceState *dev, Error **errp)
->  {
-> @@ -42,7 +39,6 @@ static void vu_gpio_class_init(ObjectClass *klass, cons=
-t void *data)
->      VHostUserBaseClass *vubc =3D VHOST_USER_BASE_CLASS(klass);
->
->      dc->vmsd =3D &vu_gpio_vmstate;
-> -    device_class_set_props(dc, vgpio_properties);
->      device_class_set_parent_realize(dc, vgpio_realize,
->                                      &vubc->parent_realize);
->      set_bit(DEVICE_CATEGORY_INPUT, dc->categories);
+During block device init, bdrv_qed_attach_aio_context() starts the
+'need_check' timer. The timer will not fire during incoming migration
+as it uses QEMU_CLOCK_VIRTUAL (to avoid this very issue, as the code
+comment indicates).                                                   (0)
 
-Moving chardev into the base class is a nice refactoring in itself and
-its independent of introducing the memory-isolation property.
-Separating self-contained changes into their own commits makes it
-easier for reviewers to understand your patch series and it helps with
-backporting and bisection (e.g. which change caused the breakage:
-introducing memory-isolation or moving chardev?).
+However, there's still bdrv_qed_drain_begin() which uses the fact that
+the timer is live to decide whether to start the
+qed_need_check_timer_entry() directly.                                (1)
 
-I suggest splitting this commit into two commits:
-1. Move chardev into the base class.
-2. Add the memory-isolation property.
+The qed_need_check_timer_entry() eventually calls into
+qed_write_header() -> bdrv_co_pwrite() leading to the assert.         (2)
+
+Skip creating the 'need_check' timer whenever the image is inactive.
+
+The stacks:
+
+(0) == issues timer_mod ==
+ #6  in qed_start_need_check_timer       at ../block/qed.c:340
+ #7  in bdrv_qed_attach_aio_context      at ../block/qed.c:373
+ #8  in bdrv_qed_do_open                 at ../block/qed.c:556
+ #9  in bdrv_qed_open_entry              at ../block/qed.c:582
+ #10 in coroutine_trampoline             at ../util/coroutine-ucontext.c:175
+ #0  in qemu_coroutine_switch<+120>      at ../util/coroutine-ucontext.c:321
+ #1  in qemu_aio_coroutine_enter<+356>   at ../util/qemu-coroutine.c:293
+ #2  in aio_co_enter<+179>               at ../util/async.c:710
+ #3  in aio_co_wake<+53>                 at ../util/async.c:695
+ #4  in thread_pool_co_cb<+47>           at ../util/thread-pool.c:283
+ #5  in thread_pool_completion_bh<+241>  at ../util/thread-pool.c:202
+ #6  in aio_bh_call<+109>                at ../util/async.c:173
+ #7  in aio_bh_poll<+299>                at ../util/async.c:220
+ #8  in aio_poll<+690>                   at ../util/aio-posix.c:745
+ #9  in bdrv_qed_open<+392>              at ../block/qed.c:607
+ #10 in bdrv_open_driver<+327>           at ../block.c:1678
+ #11 in bdrv_open_common<+1619>          at ../block.c:2008
+ #12 in bdrv_open_inherit<+2556>         at ../block.c:4191
+ #13 in bdrv_open<+118>                  at ../block.c:4286
+ #14 in blk_new_open<+199>               at ../block/block-backend.c:458
+ #15 in blockdev_init<+2011>             at ../blockdev.c:612
+ #16 in drive_new<+3008>                 at ../blockdev.c:1008
+ #17 in drive_init_func<+51>             at ../system/vl.c:662
+ #18 in qemu_opts_foreach<+227>          at ../util/qemu-option.c:1148
+ #19 in configure_blockdev<+350>         at ../system/vl.c:721
+ #20 in qemu_create_early_backends<+343> at ../system/vl.c:2076
+ #21 in qemu_init<+12483>                at ../system/vl.c:3778
+ #22 in main<+46>                        at ../system/main.c:71
+
+(1) == sees timer_pending ==
+ #6  in bdrv_qed_drain_begin             at ../block/qed.c:391
+ #7  in bdrv_do_drained_begin            at ../block/io.c:366
+ #8  in bdrv_do_drained_begin_quiesce    at ../block/io.c:386
+ #9  in bdrv_child_cb_drained_begin      at ../block.c:1207
+ #10 in bdrv_parent_drained_begin_single at ../block/io.c:133
+ #11 in bdrv_parent_drained_begin        at ../block/io.c:64
+ #12 in bdrv_do_drained_begin            at ../block/io.c:364
+ #13 in bdrv_drained_begin               at ../block/io.c:393
+ #14 in blk_drain                        at ../block/block-backend.c:2101
+ #15 in blk_unref                        at ../block/block-backend.c:544
+ #16 in bdrv_open_inherit                at ../block.c:4197
+ #17 in bdrv_open                        at ../block.c:4286
+ #18 in blk_new_open                     at ../block/block-backend.c:458
+ #19 in blockdev_init                    at ../blockdev.c:612
+ #20 in drive_new                        at ../blockdev.c:1008
+ #21 in drive_init_func                  at ../system/vl.c:662
+ #22 in qemu_opts_foreach                at ../util/qemu-option.c:1148
+ #23 in configure_blockdev               at ../system/vl.c:721
+ #24 in qemu_create_early_backends       at ../system/vl.c:2076
+ #25 in qemu_init                        at ../system/vl.c:3778
+ #26 in main                             at ../system/main.c:71
+
+(2) == crashes ==
+ #5  in __assert_fail (assertion="!(bs->open_flags & BDRV_O_INACTIVE)", file="../block/io.c", line=1977
+ #6  in bdrv_co_write_req_prepare  at ../block/io.c:1977
+ #7  in bdrv_aligned_pwritev       at ../block/io.c:2099
+ #8  in bdrv_co_pwritev_part       at ../block/io.c:2316
+ #9  in bdrv_co_pwritev            at ../block/io.c:2233
+ #10 in bdrv_co_pwrite             at ../include/block/block_int-io.h:77
+ #11 in qed_write_header           at ../block/qed.c:128
+ #12 in qed_need_check_timer       at ../block/qed.c:305
+ #13 in qed_need_check_timer_entry at ../block/qed.c:319
+
+Note that this issue is not exactly the same as what's been reported
+in Gitlab, but given how easily this reproduces, I imagine it has to
+be happening in that setup as well.
+
+Link: https://gitlab.com/qemu-project/qemu/-/work_items/3515
+Signed-off-by: Fabiano Rosas <farosas@suse.de>
+---
+ block/qed.c | 16 +++++++++++-----
+ 1 file changed, 11 insertions(+), 5 deletions(-)
+
+diff --git a/block/qed.c b/block/qed.c
+index da23a83d62..0eccfa21c9 100644
+--- a/block/qed.c
++++ b/block/qed.c
+@@ -351,16 +351,22 @@ static void bdrv_qed_detach_aio_context(BlockDriverState *bs)
+ {
+     BDRVQEDState *s = bs->opaque;
+ 
+-    qed_cancel_need_check_timer(s);
+-    timer_free(s->need_check_timer);
+-    s->need_check_timer = NULL;
++    if (s->need_check_timer) {
++        qed_cancel_need_check_timer(s);
++        timer_free(s->need_check_timer);
++        s->need_check_timer = NULL;
++    }
+ }
+ 
+-static void bdrv_qed_attach_aio_context(BlockDriverState *bs,
+-                                        AioContext *new_context)
++static void GRAPH_RDLOCK bdrv_qed_attach_aio_context(BlockDriverState *bs,
++                                                     AioContext *new_context)
+ {
+     BDRVQEDState *s = bs->opaque;
+ 
++    if (bdrv_is_inactive(bs)) {
++        return;
++    }
++
+     s->need_check_timer = aio_timer_new(new_context,
+                                         QEMU_CLOCK_VIRTUAL, SCALE_NS,
+                                         qed_need_check_timer_cb, s);
+-- 
+2.53.0
+
 
