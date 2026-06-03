@@ -4,47 +4,47 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1B30DCD6E4A
-	for <qemu-devel@archiver.kernel.org>; Wed,  3 Jun 2026 03:24:09 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 55973CD6E5D
+	for <qemu-devel@archiver.kernel.org>; Wed,  3 Jun 2026 03:24:24 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wUcBW-00009c-GC; Tue, 02 Jun 2026 23:22:26 -0400
+	id 1wUcBX-00009t-9B; Tue, 02 Jun 2026 23:22:27 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1wUcBU-000091-O5
- for qemu-devel@nongnu.org; Tue, 02 Jun 2026 23:22:24 -0400
+ (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1wUcBV-000099-5P
+ for qemu-devel@nongnu.org; Tue, 02 Jun 2026 23:22:25 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1wUcBR-0002MQ-JA
+ (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1wUcBS-0002Mt-6e
  for qemu-devel@nongnu.org; Tue, 02 Jun 2026 23:22:24 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1780456936;
+ s=mimecast20190719; t=1780456941;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=8D57LdqxPoD4a9j6wePWb8wwo2KDSwcsiMBMUdPpIx8=;
- b=KOu8z5CvYoeYVMo3Ap7/U9Q66gxXaqetmPbnsUmJWL/LoRsI1MFo/0DpRtJOjAarzbMGgU
- 13kaJ0rTkaJr4maoUi1Lr2JysJpcZnCbgnOAXtV7qwMqK4K00v4zAr1kbPbrVs7tR4vlmw
- oYP+xALuw917zrnmOLk5wFbx7D/MOgI=
-Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
+ bh=D39Y81M9rFkACn/NQlcX7QZiwh/aJXxhvafRYIbxpe8=;
+ b=ZI/KilbeW6RZy9WO2Qm6eL/2Z4LulNZcLDA3VnpLnI6ZAGVev3qags1Nc9RuGltKaEIEAG
+ Vy3vXCbkO3AiLEnl5oUZhbSbhOM13OhZpSlv9SGvCklRjkPCisH6zoz9oIRQxpwbJENT7v
+ XrcEwf2r2DxPNIeJh9N11k6jNuPLOTI=
+Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-39-OjFNwjwaOg-Fpby1I_pYfA-1; Tue,
- 02 Jun 2026 23:22:14 -0400
-X-MC-Unique: OjFNwjwaOg-Fpby1I_pYfA-1
-X-Mimecast-MFC-AGG-ID: OjFNwjwaOg-Fpby1I_pYfA_1780456933
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-141-W9w6AD-iN_6FkoJoulkQ3Q-1; Tue,
+ 02 Jun 2026 23:22:18 -0400
+X-MC-Unique: W9w6AD-iN_6FkoJoulkQ3Q-1
+X-Mimecast-MFC-AGG-ID: W9w6AD-iN_6FkoJoulkQ3Q_1780456936
 Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id ECD36180123B; Wed,  3 Jun 2026 03:22:12 +0000 (UTC)
+ by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 3C09519560B7; Wed,  3 Jun 2026 03:22:16 +0000 (UTC)
 Received: from jsnow-thinkpadp16vgen1.westford.csb (unknown [10.22.64.74])
  by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 335353000203; Wed,  3 Jun 2026 03:22:08 +0000 (UTC)
+ id 47DD7300022D; Wed,  3 Jun 2026 03:22:13 +0000 (UTC)
 From: John Snow <jsnow@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: Ani Sinha <anisinha@redhat.com>, Michael Roth <michael.roth@amd.com>,
@@ -61,9 +61,9 @@ Cc: Ani Sinha <anisinha@redhat.com>, Michael Roth <michael.roth@amd.com>,
  Gerd Hoffmann <kraxel@redhat.com>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  linux-edac@vger.kernel.org, Cleber Rosa <crosa@redhat.com>
-Subject: [PATCH v3 01/16] python: temporarily restrict max mypy version
-Date: Tue,  2 Jun 2026 23:21:46 -0400
-Message-ID: <20260603032201.993015-2-jsnow@redhat.com>
+Subject: [PATCH v3 02/16] tests/qapi: generate output in source order
+Date: Tue,  2 Jun 2026 23:21:47 -0400
+Message-ID: <20260603032201.993015-3-jsnow@redhat.com>
 In-Reply-To: <20260603032201.993015-1-jsnow@redhat.com>
 References: <20260603032201.993015-1-jsnow@redhat.com>
 MIME-Version: 1.0
@@ -71,13 +71,14 @@ Content-Transfer-Encoding: 8bit
 X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
 Received-SPF: pass client-ip=170.10.129.124; envelope-from=jsnow@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -24
-X-Spam_score: -2.5
-X-Spam_bar: --
-X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.445,
+X-Spam_score_int: 8
+X-Spam_score: 0.8
+X-Spam_bar: /
+X-Spam_report: (0.8 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.445,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_SBL_CSS=3.335, SPF_HELO_PASS=-0.001,
+ SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -93,29 +94,229 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The newest versions of mypy do not support targeting Python 3.9, which
-we still support. I want to address that soon, but in the meantime
-it's nice if the tests pass.
+Rewrite the test doc generator to produce output in source order instead
+of arbitrarily by section name.
+
+This patch removes our last use of the "body" field, which has an
+effect on how the sections of each test documention block are
+printed. We now print the name of the section followed by the section
+text for all sections except Members and Features, which are printed
+as "Member=%s" or "Feature=%s" followed by the section text,
+respectively.
+
+This patch is motivated by a desire to move the QAPIDoc API away from
+named fields for specific sections in a bid to force all users to simply
+iterate through all_sections in order, instead - and to remove the named
+subsections.
 
 Signed-off-by: John Snow <jsnow@redhat.com>
 ---
- python/setup.cfg | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ tests/qapi-schema/doc-good.out | 82 +++++++++++++++++-----------------
+ tests/qapi-schema/test-qapi.py | 14 +++---
+ 2 files changed, 48 insertions(+), 48 deletions(-)
 
-diff --git a/python/setup.cfg b/python/setup.cfg
-index 80975933971..ad4121a58d8 100644
---- a/python/setup.cfg
-+++ b/python/setup.cfg
-@@ -40,7 +40,8 @@ devel =
-     flake8 >= 5.0.4
-     fusepy >= 2.0.4
-     isort >= 5.6.0
--    mypy >= 1.4.0
-+    # Max ver is temporary until we drop 3.9
-+    mypy >= 1.4.0, <2.0.0
-     pylint >= 2.17.3
-     pylint != 3.2.4; python_version<"3.9"
-     pytest >= 6.0.2
+diff --git a/tests/qapi-schema/doc-good.out b/tests/qapi-schema/doc-good.out
+index 04a55072646..b9829e2f841 100644
+--- a/tests/qapi-schema/doc-good.out
++++ b/tests/qapi-schema/doc-good.out
+@@ -54,15 +54,15 @@ event EVT_BOXED Object
+     boxed=True
+     feature feat3
+ doc freeform
+-    body=
++    Plain
+ *******
+ Section
+ *******
+ doc freeform
+-    body=
++    Plain
+ Just text, no heading.
+ doc freeform
+-    body=
++    Plain
+ Subsection
+ ==========
+ 
+@@ -106,84 +106,84 @@ Examples:
+ - *verbatim*
+ - {braces}
+ doc symbol=Enum
+-    body=
++    Plain
+ 
+-    arg=one
++    Member=one
+ The _one_ {and only}, description on the same line
+-    arg=two
++    Member=two
+ 
+-    feature=enum-feat
++    Feature=enum-feat
+ Also _one_ {and only}
+-    feature=enum-member-feat
++    Feature=enum-member-feat
+ a member feature
+-    section=Plain
++    Plain
+ @two is undocumented
+ doc symbol=Base
+-    body=
++    Plain
+ 
+-    arg=base1
++    Member=base1
+  description starts on a new line,
+  minimally indented
+ doc symbol=Variant1
+-    body=
++    Plain
+ A paragraph
+ 
+ Another paragraph
+ 
+ @var1 is undocumented
+-    arg=var1
++    Member=var1
+ 
+-    feature=variant1-feat
++    Feature=variant1-feat
+ a feature
+-    feature=member-feat
++    Feature=member-feat
+ a member feature
+ doc symbol=Variant2
+-    body=
++    Plain
+ 
+ doc symbol=Object
+-    body=
++    Plain
+ 
+-    feature=union-feat1
++    Feature=union-feat1
+ a feature
+ doc symbol=Alternate
+-    body=
++    Plain
+ 
+-    arg=i
++    Member=i
+ description starts on the same line
+     remainder indented the same
+     @b is undocumented
+-    arg=b
++    Member=b
+ 
+-    feature=alt-feat
++    Feature=alt-feat
+ a feature
+ doc freeform
+-    body=
++    Plain
+ Another subsection
+ ==================
+ doc symbol=cmd
+-    body=
++    Plain
+ 
+-    arg=arg1
++    Member=arg1
+     description starts on a new line,
+     indented
+-    arg=arg2
++    Member=arg2
+ description starts on the same line
+     remainder indented differently
+-    arg=arg3
++    Member=arg3
+ 
+-    feature=cmd-feat1
++    Feature=cmd-feat1
+ a feature
+-    feature=cmd-feat2
++    Feature=cmd-feat2
+ another feature
+-    section=Plain
++    Plain
+ .. note:: @arg3 is undocumented
+-    section=Returns
++    Returns
+ @Object
+-    section=Errors
++    Errors
+ some
+-    section=Todo
++    Todo
+ frobnicate
+-    section=Plain
++    Plain
+ .. admonition:: Notes
+ 
+  - Lorem ipsum dolor sit amet
+@@ -207,23 +207,23 @@ Examples::
+ 
+ Note::
+     Ceci n'est pas une note
+-    section=Since
++    Since
+ 2.10
+ doc symbol=cmd-boxed
+-    body=
++    Plain
+ If you're bored enough to read this, go see a video of boxed cats
+-    feature=cmd-feat1
++    Feature=cmd-feat1
+ a feature
+-    feature=cmd-feat2
++    Feature=cmd-feat2
+ another feature
+-    section=Plain
++    Plain
+ .. qmp-example::
+ 
+    -> "this example"
+ 
+    <- ... has no title ...
+ doc symbol=EVT_BOXED
+-    body=
++    Plain
+ 
+-    feature=feat3
++    Feature=feat3
+ a feature
+diff --git a/tests/qapi-schema/test-qapi.py b/tests/qapi-schema/test-qapi.py
+index cf7fb8a6df5..5beb96e894f 100755
+--- a/tests/qapi-schema/test-qapi.py
++++ b/tests/qapi-schema/test-qapi.py
+@@ -19,6 +19,7 @@
+ from io import StringIO
+ 
+ from qapi.error import QAPIError
++from qapi.parser import QAPIDoc
+ from qapi.schema import QAPISchema, QAPISchemaVisitor
+ 
+ 
+@@ -116,13 +117,12 @@ def test_frontend(fname):
+             print('doc symbol=%s' % doc.symbol)
+         else:
+             print('doc freeform')
+-        print('    body=\n%s' % doc.body.text)
+-        for arg, section in doc.args.items():
+-            print('    arg=%s\n%s' % (arg, section.text))
+-        for feat, section in doc.features.items():
+-            print('    feature=%s\n%s' % (feat, section.text))
+-        for section in doc.sections:
+-            print('    section=%s\n%s' % (section.kind, section.text))
++        for section in doc.all_sections:
++            if isinstance(section, QAPIDoc.ArgSection):
++                print('    %s=%s' % (section.kind, section.name))
++            else:
++                print('    %s' % section.kind)
++            print(section.text)
+ 
+ 
+ def open_test_result(dir_name, file_name, update):
 -- 
 2.54.0
 
