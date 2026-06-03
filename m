@@ -4,45 +4,45 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 74028CD6E55
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 74067CD6E69
 	for <qemu-devel@archiver.kernel.org>; Wed,  3 Jun 2026 06:39:07 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wUfF4-00009V-Uz; Wed, 03 Jun 2026 02:38:18 -0400
+	id 1wUfF1-00006l-JH; Wed, 03 Jun 2026 02:38:15 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <steven_lee@aspeedtech.com>)
- id 1wUfF1-00006o-Ou; Wed, 03 Jun 2026 02:38:15 -0400
-Received: from mail-koreacentralazlp170130006.outbound.protection.outlook.com
- ([2a01:111:f403:c40f::6] helo=SEYPR02CU001.outbound.protection.outlook.com)
+ id 1wUfEz-000069-Hv; Wed, 03 Jun 2026 02:38:13 -0400
+Received: from mail-japanwestazlp170120003.outbound.protection.outlook.com
+ ([2a01:111:f403:c406::3] helo=OS8PR02CU002.outbound.protection.outlook.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <steven_lee@aspeedtech.com>)
- id 1wUfEz-0008Ja-Ka; Wed, 03 Jun 2026 02:38:15 -0400
+ id 1wUfEx-0008HM-7i; Wed, 03 Jun 2026 02:38:13 -0400
 ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=ktejWSfrNXvdnfs011KD7Qq/KkPpVuT7R7LLywHmHXsVaQS0JskP8YOrj3X9NY0dtQmRUTZymzo4xOJIFYISJt6Tb1d2ArTNmUdkTuzoKRMD2umxvmfifkq7i8hHH2caQTM/97UGW9RgM33rEQXLVXPjlis329KLposHECvVbbyC5nN0vl2RCu7YgGs5Dgb9pcWaFPWi13+APePlTVx37avdoR4JCE6zs/VQgSiuT5r85vok4bv5WoNF+Ui4LkwYAvHcbNEikR2oItsjd1qcm0NDRAwK0U3Qkg0udhpaW7/g0swrJk3FbOoePB7W2RGCkRzZ/OERbBYitVIJ+JnTxw==
+ b=tHdGrw3uXXcC7KQKN3QcY/h4ddxSIY61wRPwEw1ChRP+as6snCjsiGCSuCbD6gXkYH2ggNfxBKEOwv+qSzsOD7Lg8QFeatjGf1/wqq2Fk3vzs6+9wbwyjOGp9j4yxDIio3nNE+/Z0AM1iCUTS1drLQQlipamO5f8nndGUBIQl9h6AbDMquhAdivf0yvm3ZqCpJ6BNlfjTSbvMAVfn6m8CV/VfkxdbCCOrJRMNHrV1sIpBnv1B03FKeSj9UbrzJs44Pmda0hOle9yHSx1UuksI1uyOquOLwQBgtPht/ZRX1umiZgrdD3lATdpiH94xP3iERwsXQUIIaI3nLRTc0o+Nw==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
  s=arcselector10001;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=hugjYfbVn3TZzHsqf6p+fWyxF7mOkdc/9kgjdKtWAeM=;
- b=XoUHNDZtPfbdB6lkuWzhBpSakAEErixxnZW8cDsE2oxiEDIMiTUvvuUN0ULPjFgJUkaLnL8nAWAtUu8buqXWpyZq1nPs2/VUNMgZWwGUKH9xZptaEb1OAZE107O1ZKLPNhPE43VD8MSOBFNOuHfBEq5Aoc7Ikhl5fUMKLE+DVFE5d9VxAjmXAbHRTOCeZDTcNXupeHVl2XUpmlxmcqeicsGill2JgkPUXD1WJfjN916f+hrujAStcfW3usKUHgSr/YEYMimWtUVONZkf/D8DNKB8TK6BWnfY23qm6i8HJLLU16CIj4hemI8I7WatsrN3K0f0QHMAONX9N8W7BTSLzw==
+ bh=0GzQITYdSQ4PHvEFsqv3NmxgB55AenqB8H6OKIA9d80=;
+ b=wSj4OkJ3eVANmk0mlsL8GfFm2AhBGct4WbKIXNsj7x4Ukm+bSruNMxIYPIHdBwCweEps0CTjeqhSSJMOmu9FzbOve5neJPCkP1bl7witabidgtg6u9Ki0aJmeOreXrU1zqjGreIEyVvsA9JiupjdT6zvcI2z6y9sqeRB1nkKWT6o1wNxw+1WHlh2K+tNotkPAVn8qAKz6eRipiGBGJx3luCKF52s3e9/ibZgdjERsJIeDulceP+Xn68pZSRUcOr3qx9cpNLzKcwjpr6UZuJsZhu0j2Glyw+b1FLRQGahNKtx7QQQ40yeE4xRGsIpHwx2R/shOQfQnC/qLjgKTa2IWg==
 ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
  smtp.mailfrom=aspeedtech.com; dmarc=pass action=none
  header.from=aspeedtech.com; dkim=pass header.d=aspeedtech.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=aspeedtech.com;
  s=selector1;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=hugjYfbVn3TZzHsqf6p+fWyxF7mOkdc/9kgjdKtWAeM=;
- b=dwR8HkpC7VXS5URQoZ/gwksSFeqqluJO+IhXi3NoQsfFEIieOxxQdlHHd7SGUqTUuMJHcK7tqqoacFk+8xrIoHiIWyHi4HnIfHQFYh520MwVEUzJuGN49s67EzST1G+T/Wb2il+KegQSy0V9WtZqLxQUT2HcjvhVtZ5iIQmYATgqma709me9P4JvE9+HqPmk03ynGaFGkAyRD+VQNc2iXKK45IGdaUxvEaZYCnfI1nYzTddon5e/godRhNOZJ3yP+x4gZ1A2PjsIauV2XJwnzlUeKSS/T0KgWgjvm/MRc/whymM7FBBS4EJZ5rLrLj5pCp47b26UEgRBpFBQmhasNQ==
+ bh=0GzQITYdSQ4PHvEFsqv3NmxgB55AenqB8H6OKIA9d80=;
+ b=knH64CXodu9Iam92hszB3tOuwIpCfJMfWJqRyms2KrevnKHPswWdqrzDNotgLGPBV8T9Cy4s2v1paRB29OdPjz8L3lJ+tphxjXxnBnB1t9+6mubA1W8YXrTqJN1XcK1Vjqg7fjpBvL/VygoBI+bcDRrZAKcb+NPH+RI+ErvttyxBOOw6/5XHk53FUdD9dTWnR51HgZzfZOeAVMBXrIFqTSypfVnw6ZCM3aJDjjnaYyPa0+q9LFKAHNdzrA8WuzeWGVeUzHCOuYRf9F2yleckg34nBY2nX8JlFNkwNLYijChMVmoEksMFkN8feP0Ht+IEJWLQHpHEVEaHX8M8zg8SJg==
 Received: from TYZPR06MB4746.apcprd06.prod.outlook.com (2603:1096:400:129::9)
- by TYNPR06MB8525.apcprd06.prod.outlook.com (2603:1096:405:3d0::17)
- with Microsoft SMTP Server (version=TLS1_2,
+ by SEYPR06MB5859.apcprd06.prod.outlook.com (2603:1096:101:c0::7) with
+ Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.92.7; Wed, 3 Jun 2026
- 06:38:04 +0000
+ 06:37:59 +0000
 Received: from TYZPR06MB4746.apcprd06.prod.outlook.com
  ([fe80::b6d5:b318:c4a6:d995]) by TYZPR06MB4746.apcprd06.prod.outlook.com
  ([fe80::b6d5:b318:c4a6:d995%6]) with mapi id 15.21.0092.006; Wed, 3 Jun 2026
- 06:38:04 +0000
+ 06:37:59 +0000
 From: Steven Lee <steven_lee@aspeedtech.com>
 To: =?iso-8859-1?Q?C=E9dric_Le_Goater?= <clg@kaod.org>, Peter Maydell
  <peter.maydell@linaro.org>, Steven Lee <steven_lee@aspeedtech.com>, Troy Lee
@@ -55,11 +55,11 @@ To: =?iso-8859-1?Q?C=E9dric_Le_Goater?= <clg@kaod.org>, Peter Maydell
  <qemu-arm@nongnu.org>
 CC: Troy Lee <troy_lee@aspeedtech.com>, "longzl2@lenovo.com"
  <longzl2@lenovo.com>, Yunlin Tang <yunlin.tang@aspeedtech.com>
-Subject: [RESEND PATCH 4/6] hw/arm/aspeed_ast1040: Wire Caliptra mailbox
-Thread-Topic: [RESEND PATCH 4/6] hw/arm/aspeed_ast1040: Wire Caliptra mailbox
-Thread-Index: AQHc8yOHJFB0imqHzkmuJPy6oLm/Gg==
-Date: Wed, 3 Jun 2026 06:38:03 +0000
-Message-ID: <20260603063756.1481524-5-steven_lee@aspeedtech.com>
+Subject: [RESEND PATCH 1/6] hw/misc/aspeed_scu: Add AST1040 SCU model
+Thread-Topic: [RESEND PATCH 1/6] hw/misc/aspeed_scu: Add AST1040 SCU model
+Thread-Index: AQHc8yOEJotrwQ0ri0q1fUaX2ZNe6Q==
+Date: Wed, 3 Jun 2026 06:37:59 +0000
+Message-ID: <20260603063756.1481524-2-steven_lee@aspeedtech.com>
 References: <20260603063756.1481524-1-steven_lee@aspeedtech.com>
 In-Reply-To: <20260603063756.1481524-1-steven_lee@aspeedtech.com>
 Accept-Language: zh-TW, en-US
@@ -69,71 +69,71 @@ X-MS-TNEF-Correlator:
 authentication-results: dkim=none (message not signed)
  header.d=none;dmarc=none action=none header.from=aspeedtech.com;
 x-ms-publictraffictype: Email
-x-ms-traffictypediagnostic: TYZPR06MB4746:EE_|TYNPR06MB8525:EE_
-x-ms-office365-filtering-correlation-id: bfe60f29-d599-4322-5d17-08dec13aaa26
+x-ms-traffictypediagnostic: TYZPR06MB4746:EE_|SEYPR06MB5859:EE_
+x-ms-office365-filtering-correlation-id: 0149c426-6f34-4c27-fe87-08dec13aa772
 x-ms-exchange-senderadcheck: 1
 x-ms-exchange-antispam-relay: 0
 x-microsoft-antispam: BCL:0;
  ARA:13230040|1800799024|366016|376014|7416014|921020|6133799003|18002099003|22082099003|56012099006|38070700021;
-x-microsoft-antispam-message-info: wEMavIjegsJ0QmLB+hZZQixRk5DwewQ70lZ5SfoVuXlPE0ADuUBZmNEoA9RIrUs6a5Ys5I6Xw6aaKvn8wlwAn2iYwRXNUxOJN8ZQi9ys46kpmzZVXd9YR+mvynHbRHzEWG60L2yujdQ3RtlieqDhKf56LFKv7EpQAF62Cb+/Gx1ALANtkwry3lhoeIThKRFQJftDq51Cd/Nt6NPRsqHOA0YXv8jiQqeOgGSm/OcJYv+tURJl17igvick5/yc3LrT8zyMW05031XWzMduMmBNULlu4NaVLHx/DFLwSZismBy8GpB5uTODWHfL7euJ4Aeo/ddaUbkrysPk23yDjOS50tjgZpzWX4/Ph5ByjWdAgIqmkaHnU3DJ01L3vvnByfsN3kNDR4RNqVNDLchfJdNg+/UeD4liGN4I1VLUgD2mJDqmEhAbtBO6B3SpqFA/vUKhqIT7l8IJaohDCfc2mzFiQsLKLI7VKzLsVXh/lFQqe3BNygs0o2uAFK5hA41w2nzjTOLeVhdiFrCCkEO6n/Id7+6TDts9viuBVgG5KbjP9ccgw6UqSq3HU0I84YHkymktaLbu5nsvSsO/UouGihXEu2A+Vr2G/HIic5K/mZTg6sckIzYC3x2656j5eBpHSUfOiv+HsnWn5/1Cj9SL4AU1s4o0dDXeoUIgL2wNXpgyLqUo/G1KG5vMEUmS3siOdgiEMPEhZaTGQ+s/xNYVDCJ3X+zTqV8FGSOB5rAcdLbnzD/KFiDuyQjTXmc/uICRGNI91lVvUiXd1nd0YKk/U2gt3w==
+x-microsoft-antispam-message-info: yyiHvfnVdBvLXPQnuOKO3/nsRpxDzZpRF+FPAxqT2j7UzDAFsoRYOod+s8vYVH8DIdHCs5JOmSzVevcn9xe5QkRJnPz9XGC8h8ZnYKZg0qyDXCMKUP81aQfD9jqPTAnLuON+CikLnNqdvQpZXAyiT1novJHbSxRI3weVWrExmfJmRAIQ/0putwnyA4I2nln+7m9eNcCzZEUHMQ76lg0oipweyAX0dGZU2oVW8jAE7PT5MZjdNC6V3FQX/OZLIoO1ogaHdLrBRknWGULtaVk0ru1THnsQAQhAI6eiw0MOd0zasfjCd4FmtzP/4jDJTv474hPYcpYzOuQhE/9CL0PxcDKGmq4wnaNX2bWGOsKS43wqRa0Dh0oskcvvoNYG7lcuywJio5zTTzp8NJOZ9teaSK4KMfBoUDvSNG/Xznxh2BleFnNHNjFjsRqz+Qs9MpBAbwpjAb9f7ngTMuuNAf1tZ0CXSlHp6HPFR4AqQY/pAAFXGyhTb/n7t9d0RvP3vZr3XzeEce2BT4PcIKCHCdKcc5FVE1ThSqQuN86Gzk4254Et0mZfzgTk1lc7EmOsuJDFsWaic1Y0aSGX/BJVvFHZPKfCUqHiTLE6TZ+eIjRh6MIv3V+TQQGwvNMTYvsb3HKaPwyh4K/c7lRSTZT3xcWEMBCcq2s0VRq/9KOuGsbc0Lm5lQ9+xYVYx5C3ROeuNo/ya5cGyjIdDSj6PYbSPM3toIk35u4Ko/vMZXqGfl8RcL8BY/t/1lB+QmCJ9dv4OjrDZa7zXG0zfiqtS4jLNTHpfQ==
 x-forefront-antispam-report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
  IPV:NLI; SFV:NSPM; H:TYZPR06MB4746.apcprd06.prod.outlook.com; PTR:; CAT:NONE;
  SFS:(13230040)(1800799024)(366016)(376014)(7416014)(921020)(6133799003)(18002099003)(22082099003)(56012099006)(38070700021);
  DIR:OUT; SFP:1102; 
 x-ms-exchange-antispam-messagedata-chunkcount: 1
-x-ms-exchange-antispam-messagedata-0: =?iso-8859-1?Q?mG3GQR82KVncjgvEMP4zAcdqvxw7p5/ZTNbDev85V5zDgFX5lgz6NIbu+W?=
- =?iso-8859-1?Q?anOx1d/41vTVzzJbW1ctZEOdyxwQfIbuMSUpiozWLt1dMvt9tB9q+W2Lyk?=
- =?iso-8859-1?Q?skmJ67WPPfW6gK5rcaBZBUaZ4z5PK37ZhnGLzeM+mPk9aD8k0/oBUXL+FT?=
- =?iso-8859-1?Q?ovk4cE0TOBBcWWEXvEhlfwwKllOwqQUqhqCKjfzkHuXN36GZfWrAUrIBm0?=
- =?iso-8859-1?Q?RYFPS6H48b9BxTq7R1YD11Mb9h4zqjjmMMLVqeBeAN1Sbcc12uORTL3+2t?=
- =?iso-8859-1?Q?exk9RdgL2wx1FBhJPd16VBkIcjola8gDnkp5HbAI/XuWQ/A20AlQ3HSl38?=
- =?iso-8859-1?Q?oMJVCnOoU8GHJ7pn07+nUEEpzO9yz75iPTBIiIZtsoR8Na59ih7DDKsxAx?=
- =?iso-8859-1?Q?9ZHWrsNnv0yNBf7LqZRSNf6BTD9cHVRNyI/NPAS6uuhKO1Fb3gpA6mSRYw?=
- =?iso-8859-1?Q?EuMkZINbN3aAC3KjObHUig4GKkKeZj1Qla7vSgP6bkaRRbn9JoVsaUloVN?=
- =?iso-8859-1?Q?3QX5NHJ9TxRTSVpV1CVkY7NnDCpj7B5riOg4gh1HnhOoTptAG7/ajpS3m9?=
- =?iso-8859-1?Q?pkvDgLIVg6Rs2gUUIQN+uQYobz73buwafmPjBrAhO+wahyJzhLXbUKhlo+?=
- =?iso-8859-1?Q?wrl02ns7E2xnfWmtF/iDI6TNiaaini69vKE1xo9g8pCpaBR2OYwQa+JIAX?=
- =?iso-8859-1?Q?n8MciOeyVbVBKrMaILkAZGu8kSxkB6C49QFnTweEsx8qOIHeeRcbMnf44I?=
- =?iso-8859-1?Q?wiRZ6mmBE6/EeTa8eDzUbuvx9gcqXBvLIs0oqaXqce+aIkjhYDjrecY64m?=
- =?iso-8859-1?Q?KpMq1nVgVDUxiQjgQrKxVCJgB00EnbKh4OOtemWDjjx/2VK+Ng0TUgaMQO?=
- =?iso-8859-1?Q?Onw2ULSLM+8TqRF/DwqscVOPFbo4f6iS6wJ6fkIPw1bawWwt3CvjL2r+Q4?=
- =?iso-8859-1?Q?KtIl+DOe31upg8EAV/NCL+qfuv+/IKPP6x9fhHiMofjs1pYFLomZfpoNp9?=
- =?iso-8859-1?Q?WT6omJ1iE1mW1bgD0sEuh7O/ln0pbhRgLQefCvu1s3Q2hpjqvGZ53znkY8?=
- =?iso-8859-1?Q?DF7GghLyIH78WNoqyFs8ldoTAyjZJRLl0aqgTO+jMQMPlMMyS/3ZrUQi62?=
- =?iso-8859-1?Q?7IQp0SfMQpvKJzAaI65znJI2ljxe1IozWAis0ofK9j8+kR0wi2+apOJ6d9?=
- =?iso-8859-1?Q?RP+OXP0nRZCckT8lMm6hOPGoHs74AhiwlfM2flFXGklMtT7AKwM1BoNFgn?=
- =?iso-8859-1?Q?GQdR/9B901TwWbLulqe2i4GHaNfRQbXpOsl03zhvQSHKo/TNa4fbelMSAw?=
- =?iso-8859-1?Q?IUW6oSn3ZGA/LONX1WiolnItrFMNYvaWAO70VbWSrbBPuJy4n0qi85PjUt?=
- =?iso-8859-1?Q?rWztkTh80Hc/MGnGdjpBICtkTtKlP60GujIFb04tLPLnapIucItJqiSDcS?=
- =?iso-8859-1?Q?e22IMyNGiWEyoP4cLZIgJVxyOL7Oj2h+1P0Tqzv3DgxdjzhpLoLJgzTNPH?=
- =?iso-8859-1?Q?wahJroY9a0FLJyVeIcdAv0aZJiLie0v9iK9NdpG6Aye/a67eUXlNlCT0OP?=
- =?iso-8859-1?Q?Frx3TE6/2By/r8fmlpePVBfBt/IR/bExBH8clDf2UppPy/xTHysGTCa1aF?=
- =?iso-8859-1?Q?PMlcw1J23qscgCHciqwESOncSCH4ySgcAwsqXSjJz34rzR4M5YfJI23sIs?=
- =?iso-8859-1?Q?LjniL9NR5nByLtfxNWd72NDuUPATJgH4kki2EXO4bt7SyluI9RVJRo2cXk?=
- =?iso-8859-1?Q?C9ALRPV+TtC1mEy60+WUot0pfHu5K3C6fEGqOLi3p6tUHxdIPOBNPUuTlJ?=
- =?iso-8859-1?Q?du5k1mlOFA=3D=3D?=
+x-ms-exchange-antispam-messagedata-0: =?iso-8859-1?Q?rpgjyTwppcSfahNEcPJHnFYcQbtrdsC7aEsr35aIil2FE7x8jK5Q0Bc3t8?=
+ =?iso-8859-1?Q?kwYoFsjaE9zPYD9vJvI3Px1FvvwCRDKeyzZ4JxkzLxC1pEH8ItAc7+fbSJ?=
+ =?iso-8859-1?Q?qItzAeWcBAQ0H3nYXbbA7YPuLEvgc17lcqf2lrgvcsd0iUFVYe6RcF41h1?=
+ =?iso-8859-1?Q?i/UJN67G0LQi+nhXHoSOfoL/oEz9f9HZKkHLEBkCTsknimgRzSY3qSgxaX?=
+ =?iso-8859-1?Q?v8Kwn8JKXBbSivWV5KDNwEf6ivXAOoZIiwOrlcznXmIKc8dTdS9wTGUD/s?=
+ =?iso-8859-1?Q?Y2FiGnseCO2C7b4LmMKSQjIS14JUyXj9nE90ggJENBkhbuuc0dFwjDzep8?=
+ =?iso-8859-1?Q?rMWqX+rZ9qGRoiebvi0wxgoy1OLTGljy73xjUA9yaJ4c+1AfGXzx35rxJ1?=
+ =?iso-8859-1?Q?Blfurl7m6/az4tJLveFTpfXPo16fsz+wURjz6rmA/69fmTfphWEJyXlOoU?=
+ =?iso-8859-1?Q?Y5uKW2EHn/we+GCYqUbzLm2+/MsAkyl93Z2oGuK3lif2qEwCEeuKANbcyD?=
+ =?iso-8859-1?Q?ibd4elwllfl47Liwrrhu/4u6KdML6dOIu5wmZOlFkLEcaL8mCzPEF9S1Qp?=
+ =?iso-8859-1?Q?RLgS1sdPwo/oBjiLqMELVQagMSS2me7WP2CXi4vq//08Z/7EYAsCavfW0r?=
+ =?iso-8859-1?Q?vndvgEnZhjF0UwlOUxbK4puL/Qac7kQCgbgm1t3f5VNWXwT54sKar2Q3SH?=
+ =?iso-8859-1?Q?rMoWUFwrfQHW4WTzLyg3TyckJS/XjK1/GHAV6BTnnJwsKc7GQ+CShyokwI?=
+ =?iso-8859-1?Q?sRwZ7wCpJyyow20D0Vx1Z30mXxrTFUTodhls+dLMo4Q9uNZxPQHsqk++lS?=
+ =?iso-8859-1?Q?6Hr9eHXu4mIYr7NcED0o7gPfPuopkt+Yzky78z0u5pYhL/p3qhaokku2Ag?=
+ =?iso-8859-1?Q?Ch4ttNXyXpS9yO/qEaSFkb/KP8DECveDKp8VHXO6Xk/ET1GoC54WzG2iUQ?=
+ =?iso-8859-1?Q?vnCIzrR1pwDeV+h4ZNjG7FJn77KwOwB/oUiLeaNY30jt50k9p3W1xe6sso?=
+ =?iso-8859-1?Q?6QKLgKnokHou0AfU0+D7UKLkHXoMkOGOeNWaWs1QziATQNWMHXbjuhA4YI?=
+ =?iso-8859-1?Q?Z+1UwR69plxNLmXKvtTzaoJhRil5kbFFk7MTJ/v/x3yW2Yj9m+09eM3DOi?=
+ =?iso-8859-1?Q?OXfI3zgFeFeIBysj+gjgM9Nvhz6zW6qUBS1TER6uVw5Vbc+24PTGQfD/Oi?=
+ =?iso-8859-1?Q?JJHlHsENOI0R4XbId6ztGeFDnmPaPRuQY04EwCJ4AcevazTXRoT5tmNwQV?=
+ =?iso-8859-1?Q?PJGSf7DlPjfRaLVFsirtLuyg+8pSHKVkFfFERbzgektA8yKTp5xeGDydGb?=
+ =?iso-8859-1?Q?F/9bK558rnhhBizhOyxgTT70OGHYxRFzvVBxHkiYsiqQ6niEzbWhXCv5FI?=
+ =?iso-8859-1?Q?7n94swG6oRIp0yH5yjx9guGFUGHVdCithUGlNxjdIT/Qw1UrocHTFzWwe2?=
+ =?iso-8859-1?Q?5XE162zJ8cFoHHl+k9ncLZHTpd6cUKrsZg3LYTVzKmmMp1ppXc+nocSW8f?=
+ =?iso-8859-1?Q?bYb5Z/gy2G7/Be/670QsP7Oy7mvJa4Ak+8bqAAOKowq3/CN0Q5Zl/1tYYY?=
+ =?iso-8859-1?Q?ZVqzFA2M33NIIpIii3MKWcwgBuEazBHi0/GT+MhiHn3oS8KyRPmHuXRoOF?=
+ =?iso-8859-1?Q?pmk0QjsHNkRz0Au1LmTydFN/NY78pA0Sd4d9lZtQj1VbYedB69Pz3jLhqx?=
+ =?iso-8859-1?Q?2syczkl/lQsgcqLad3/spK1ZSeoiwXMITUQ2Hv1pcQJxfLbMnX6RLzld0K?=
+ =?iso-8859-1?Q?cHCbJjte65c1LumuNe1SfnnYmXKm75UAy/dogFVKf2KLU4xgE5jiTK2E8y?=
+ =?iso-8859-1?Q?4CTj9/deYg=3D=3D?=
 Content-Type: text/plain; charset="iso-8859-1"
 Content-Transfer-Encoding: quoted-printable
 MIME-Version: 1.0
-X-Exchange-RoutingPolicyChecked: g6rif89+FQ9EFTVlpDKgLQZ/XJ0XFrBemako076uWPrRuVGSvWS6J1D/P/eyWTxZDKVHyx+UV+7uwpyuuDtHnUnSozLQRZ5TtsGpIeFtDMiXa/q/zfr1yprk3PWsQUx+VC/AWPYPoYE7xMUcg/wmT2gOB9b8o4Aoan/qyi8OWkLpyipthVtUqUXmFuYbQDZ9v7U4T/X8Gq8EFQbrvZl0kW7GVbkkMdHOvJ+Uf9S0bkaWkGKykNP32FXreR2gYyhCqorFwWLyELdIL44Dz9/ZgdRCeUjuhKeRQArpGi5RnHkzhSUG2nxX9qM0C9qOZOmx2q49ISlgqZiPxyGyB5KmkA==
+X-Exchange-RoutingPolicyChecked: qpVYv4JkwBq0frSMefLVssxbXzsUP1ifQG+h99hW8XaBgT/fChataiopnAfSZpY/7mMqNnPK6JY5adO+kLw4ED/zBsHgEtsKILgz9it0Fcx+OOs2AiWp0gqPCdMhwEiCvn26OkROEHz8sC9OnvgKyQhTHQifh70oDPGVDnt5e12I5wdzkveSSfx+fNnW8s2IGI6J00HOVxAifiGhp6nIUfhD0v9wDJNGHdWpND/b1L08s31mLq+B2oR/jvPNIPwrYTnB1eachzMklalUByy69qIZJ5owKt4EQiQ7vcs+xcBFqkeWeoPNnnPHww26XhDbQbsAkqVrf869LCyDzS0ZDw==
 X-OriginatorOrg: aspeedtech.com
 X-MS-Exchange-CrossTenant-AuthAs: Internal
 X-MS-Exchange-CrossTenant-AuthSource: TYZPR06MB4746.apcprd06.prod.outlook.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: bfe60f29-d599-4322-5d17-08dec13aaa26
-X-MS-Exchange-CrossTenant-originalarrivaltime: 03 Jun 2026 06:38:03.9464 (UTC)
+X-MS-Exchange-CrossTenant-Network-Message-Id: 0149c426-6f34-4c27-fe87-08dec13aa772
+X-MS-Exchange-CrossTenant-originalarrivaltime: 03 Jun 2026 06:37:59.4251 (UTC)
 X-MS-Exchange-CrossTenant-fromentityheader: Hosted
 X-MS-Exchange-CrossTenant-id: 43d4aa98-e35b-4575-8939-080e90d5a249
 X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
-X-MS-Exchange-CrossTenant-userprincipalname: q3EDG31K91eqjbdsUce6gfhun026XGNcOJFZo/gq7AnHX9z6QnSucx0zxZwjxWfMZV5Ukh4C2zqE/wB02MnAQ0R8+Mdw5kbCG1Y45bmLnCM=
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: TYNPR06MB8525
-Received-SPF: pass client-ip=2a01:111:f403:c40f::6;
+X-MS-Exchange-CrossTenant-userprincipalname: WE0LYihy180sopmegy9meClOFza7EPgYkrvigc8KCDCbsFE3d+p3Ddo/OpQkcsEAqlRgqbRojpP++R2aZdkSfRDiDpfftBkSjNijSoToIMw=
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: SEYPR06MB5859
+Received-SPF: pass client-ip=2a01:111:f403:c406::3;
  envelope-from=steven_lee@aspeedtech.com;
- helo=SEYPR02CU001.outbound.protection.outlook.com
+ helo=OS8PR02CU002.outbound.protection.outlook.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_PASS=-0.001,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -150,312 +150,365 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Instantiate the Caliptra mailbox in the AST1040 SoC and map its SRAM and CS=
-R windows at the guest-visible MCI addresses.=0A=
+Add an AST1040 variant of the ASPEED SCU with reset values, APB clock calcu=
+lation, clock-stop handling, and CPTRA page-select registers.=0A=
 =0A=
-Add the 4 KiB MCI aperture controlled by the AST1040 SCU CPTRA page registe=
-r, switch the SoC to the AST1040 SCU model, and expose a machine option tha=
-t links an external mailbox peer after machine initialization.=0A=
+Expose the Caliptra page aperture as a QOM link so the SoC model can wire t=
+he remap window without callbacks.=0A=
 =0A=
 Signed-off-by: Steven Lee <steven_lee@aspeedtech.com>=0A=
 ---=0A=
- include/hw/arm/aspeed_soc.h | 11 ++++++=0A=
- hw/arm/aspeed_ast1040.c     | 60 ++++++++++++++++++++++++++++--=0A=
- hw/arm/aspeed_ast1040_evb.c | 74 ++++++++++++++++++++++++++++++++++++-=0A=
- 3 files changed, 140 insertions(+), 5 deletions(-)=0A=
+ include/hw/misc/aspeed_scu.h |  10 ++=0A=
+ hw/misc/aspeed_scu.c         | 251 +++++++++++++++++++++++++++++++++++=0A=
+ hw/misc/trace-events         |   2 +=0A=
+ 3 files changed, 263 insertions(+)=0A=
 =0A=
-diff --git a/include/hw/arm/aspeed_soc.h b/include/hw/arm/aspeed_soc.h=0A=
-index 3aac144cd4..9fad3bc082 100644=0A=
---- a/include/hw/arm/aspeed_soc.h=0A=
-+++ b/include/hw/arm/aspeed_soc.h=0A=
-@@ -46,6 +46,7 @@=0A=
- #include "hw/intc/arm_gicv3.h"=0A=
- #include "hw/misc/aspeed_ltpi.h"=0A=
- #include "hw/arm/aspeed_ast1700.h"=0A=
-+#include "hw/misc/aspeed_cptra_mbox.h"=0A=
+diff --git a/include/hw/misc/aspeed_scu.h b/include/hw/misc/aspeed_scu.h=0A=
+index c30940ab76..6445ae5cf4 100644=0A=
+--- a/include/hw/misc/aspeed_scu.h=0A=
++++ b/include/hw/misc/aspeed_scu.h=0A=
+@@ -22,6 +22,7 @@ OBJECT_DECLARE_TYPE(AspeedSCUState, AspeedSCUClass, ASPEE=
+D_SCU)=0A=
+ #define TYPE_ASPEED_2700_SCU TYPE_ASPEED_SCU "-ast2700"=0A=
+ #define TYPE_ASPEED_2700_SCUIO TYPE_ASPEED_SCU "io" "-ast2700"=0A=
+ #define TYPE_ASPEED_1030_SCU TYPE_ASPEED_SCU "-ast1030"=0A=
++#define TYPE_ASPEED_1040_SCU TYPE_ASPEED_SCU "-ast1040"=0A=
  =0A=
- #define VBOOTROM_FILE_NAME  "ast27x0_bootrom.bin"=0A=
- =0A=
-@@ -165,6 +166,16 @@ struct Aspeed10x0SoCState {=0A=
- #define TYPE_ASPEED10X0_SOC "aspeed10x0-soc"=0A=
- OBJECT_DECLARE_SIMPLE_TYPE(Aspeed10x0SoCState, ASPEED10X0_SOC)=0A=
- =0A=
-+struct Aspeed1040SoCState {=0A=
-+    Aspeed10x0SoCState parent;=0A=
-+=0A=
-+    AspeedCptraMboxState cptra_mbox;=0A=
-+    MemoryRegion cptra_mci_window;=0A=
-+};=0A=
-+=0A=
-+#define TYPE_ASPEED1040_SOC "ast1040-a0"=0A=
-+OBJECT_DECLARE_SIMPLE_TYPE(Aspeed1040SoCState, ASPEED1040_SOC)=0A=
-+=0A=
- struct AspeedSoCClass {=0A=
-     DeviceClass parent_class;=0A=
- =0A=
-diff --git a/hw/arm/aspeed_ast1040.c b/hw/arm/aspeed_ast1040.c=0A=
-index 8efcdad8f6..c597982bc5 100644=0A=
---- a/hw/arm/aspeed_ast1040.c=0A=
-+++ b/hw/arm/aspeed_ast1040.c=0A=
-@@ -8,12 +8,17 @@=0A=
- =0A=
- #include "qemu/osdep.h"=0A=
- #include "qapi/error.h"=0A=
--#include "system/address-spaces.h"=0A=
- #include "system/system.h"=0A=
- #include "hw/core/qdev-clock.h"=0A=
- #include "hw/misc/unimp.h"=0A=
-+#include "hw/misc/aspeed_cptra_mbox.h"=0A=
- #include "hw/arm/aspeed_soc.h"=0A=
- =0A=
-+#define AST1040_CPTRA_MCI_WINDOW_BASE 0x74200000=0A=
-+#define AST1040_CPTRA_MCI_WINDOW_SIZE 0x1000=0A=
-+#define AST1040_CPTRA_MBOX_SRAM_BASE  0x21400000=0A=
-+#define AST1040_CPTRA_MBOX_CSR_BASE   0x21600000=0A=
-+=0A=
- static const hwaddr aspeed_soc_ast1040_memmap[] =3D {=0A=
-     [ASPEED_DEV_SRAM1]     =3D 0x00000000, /* Hyper RAM */=0A=
-     [ASPEED_DEV_FMC]       =3D 0x74000000,=0A=
-@@ -88,6 +93,7 @@ static qemu_irq aspeed_soc_ast1040_get_irq(AspeedSoCState=
- *s, int dev)=0A=
- =0A=
- static void aspeed_soc_ast1040_init(Object *obj)=0A=
- {=0A=
-+    Aspeed1040SoCState *a1040 =3D ASPEED1040_SOC(obj);=0A=
-     Aspeed10x0SoCState *a =3D ASPEED10X0_SOC(obj);=0A=
-     AspeedSoCState *s =3D ASPEED_SOC(obj);=0A=
-     AspeedSoCClass *sc =3D ASPEED_SOC_GET_CLASS(s);=0A=
-@@ -96,12 +102,13 @@ static void aspeed_soc_ast1040_init(Object *obj)=0A=
- =0A=
-     s->sysclk =3D qdev_init_clock_in(DEVICE(s), "sysclk", NULL, NULL, 0);=
-=0A=
- =0A=
--    /* AST1040 uses the AST2700 SCUIO model */=0A=
--    object_initialize_child(obj, "scu", &s->scu, TYPE_ASPEED_2700_SCUIO);=
-=0A=
-+    object_initialize_child(obj, "scu", &s->scu, TYPE_ASPEED_1040_SCU);=0A=
-     qdev_prop_set_uint32(DEVICE(&s->scu), "silicon-rev", sc->silicon_rev);=
-=0A=
- =0A=
-     object_property_add_alias(obj, "hw-strap1", OBJECT(&s->scu), "hw-strap=
-1");=0A=
-     object_property_add_alias(obj, "hw-strap2", OBJECT(&s->scu), "hw-strap=
-2");=0A=
-+    object_initialize_child(obj, "cptra-mbox", &a1040->cptra_mbox,=0A=
-+                            TYPE_ASPEED_CPTRA_MBOX);=0A=
- =0A=
-     for (i =3D 0; i < sc->uarts_num; i++) {=0A=
-         object_initialize_child(obj, "uart[*]", &s->uart[i], TYPE_SERIAL_M=
-M);=0A=
-@@ -120,8 +127,31 @@ static void aspeed_soc_ast1040_init(Object *obj)=0A=
-                             TYPE_UNIMPLEMENTED_DEVICE);=0A=
- }=0A=
- =0A=
-+static bool aspeed_soc_ast1040_realize_cptra_mbox(Aspeed1040SoCState *a104=
-0,=0A=
-+                                                  Error **errp)=0A=
-+{=0A=
-+    AspeedSoCState *s =3D ASPEED_SOC(a1040);=0A=
-+    DeviceState *mbox =3D DEVICE(&a1040->cptra_mbox);=0A=
+ #define ASPEED_SCU_NR_REGS (0x1A8 >> 2)=0A=
+ #define ASPEED_AST2600_SCU_NR_REGS (0xE20 >> 2)=0A=
+@@ -39,6 +40,15 @@ struct AspeedSCUState {=0A=
+     uint32_t hw_strap1;=0A=
+     uint32_t hw_strap2;=0A=
+     uint32_t hw_prot_key;=0A=
 +=0A=
 +    /*=0A=
-+     * Caliptra is an AST1040 integrated RoT IP. The external peer is=0A=
-+     * optional; without a peer, the mailbox registers remain present and=
++     * AST1040 only: alias region (the Caliptra MCI page aperture) whose=
 =0A=
-+     * EXECUTE completes with CMD_FAILURE.=0A=
++     * target offset is selected by SCU_CPTRA_PAGE_REG0, linked in by the =
+SoC.=0A=
++     * cptra_page_window_base is its base in the address map, used to reje=
+ct a=0A=
++     * self-referential remap.=0A=
 +     */=0A=
-+    if (!sysbus_realize(SYS_BUS_DEVICE(mbox), errp)) {=0A=
-+        return false;=0A=
-+    }=0A=
-+=0A=
-+    aspeed_mmio_map(s->memory, SYS_BUS_DEVICE(mbox), 0,=0A=
-+                    AST1040_CPTRA_MBOX_SRAM_BASE);=0A=
-+    aspeed_mmio_map(s->memory, SYS_BUS_DEVICE(mbox), 1,=0A=
-+                    AST1040_CPTRA_MBOX_CSR_BASE);=0A=
-+    return true;=0A=
-+}=0A=
-+=0A=
- static void aspeed_soc_ast1040_realize(DeviceState *dev_soc, Error **errp)=
-=0A=
- {=0A=
-+    Aspeed1040SoCState *a1040 =3D ASPEED1040_SOC(dev_soc);=0A=
-     Aspeed10x0SoCState *a =3D ASPEED10X0_SOC(dev_soc);=0A=
-     AspeedSoCState *s =3D ASPEED_SOC(dev_soc);=0A=
-     AspeedSoCClass *sc =3D ASPEED_SOC_GET_CLASS(s);=0A=
-@@ -171,6 +201,27 @@ static void aspeed_soc_ast1040_realize(DeviceState *de=
-v_soc, Error **errp)=0A=
-     memory_region_add_subregion(s->memory, sc->memmap[ASPEED_DEV_SRAM1],=
-=0A=
-                                 &s->sram[1]);=0A=
++    MemoryRegion *cptra_page_window;=0A=
++    uint64_t cptra_page_window_base;=0A=
+ };=0A=
  =0A=
-+    if (!aspeed_soc_ast1040_realize_cptra_mbox(a1040, errp)) {=0A=
+ #define AST2400_A1_SILICON_REV   0x02010303U=0A=
+diff --git a/hw/misc/aspeed_scu.c b/hw/misc/aspeed_scu.c=0A=
+index 19da6c075f..028677880f 100644=0A=
+--- a/hw/misc/aspeed_scu.c=0A=
++++ b/hw/misc/aspeed_scu.c=0A=
+@@ -17,6 +17,7 @@=0A=
+ #include "qapi/visitor.h"=0A=
+ #include "qemu/bitops.h"=0A=
+ #include "qemu/log.h"=0A=
++#include "qemu/range.h"=0A=
+ #include "qemu/guest-random.h"=0A=
+ #include "qemu/module.h"=0A=
+ #include "trace.h"=0A=
+@@ -179,6 +180,41 @@=0A=
+ #define AST2700_SCUIO_CLK_DUTY_MEAS_RST TO_REG(0x388)=0A=
+ #define AST2700_SCUIO_FREQ_CNT_CTL      TO_REG(0x3A0)=0A=
+ =0A=
++/* AST1040 SCU */=0A=
++#define AST1040_SILICON_REV              TO_REG(0x00)=0A=
++#define AST1040_HW_STRAP1                TO_REG(0x10)=0A=
++#define AST1040_HW_STRAP1_CLR            TO_REG(0x14)=0A=
++#define AST1040_HW_STRAP1_LOCK           TO_REG(0x20)=0A=
++#define AST1040_HW_STRAP1_SEC1           TO_REG(0x24)=0A=
++#define AST1040_SCU_CPTRA_PAGE_REG0      TO_REG(0x120)=0A=
++#define AST1040_SCU_CPTRA_PAGE_REG1      TO_REG(0x124)=0A=
++#define AST1040_SCU_CPTRA_PAGE_REG2      TO_REG(0x128)=0A=
++#define AST1040_SCU_CPTRA_PAGE_REG3      TO_REG(0x12C)=0A=
++#define AST1040_SCU_CPTRA_PAGE_REG4      TO_REG(0x130)=0A=
++#define AST1040_SCU_CPTRA_PAGE_REG5      TO_REG(0x134)=0A=
++#define AST1040_SCU_CLK_STOP_CTL_1       TO_REG(0x240)=0A=
++#define AST1040_SCU_CLK_STOP_CLR_1       TO_REG(0x244)=0A=
++#define AST1040_SCU_CLK_STOP_CTL_2       TO_REG(0x260)=0A=
++#define AST1040_SCU_CLK_STOP_CLR_2       TO_REG(0x264)=0A=
++#define AST1040_SCU_CLK_SEL_1            TO_REG(0x280)=0A=
++#define AST1040_SCU_CLK_SEL_2            TO_REG(0x284)=0A=
++#define AST1040_SCU_HPLL_PARAM           TO_REG(0x300)=0A=
++#define AST1040_SCU_HPLL_EXT_PARAM       TO_REG(0x304)=0A=
++#define AST1040_SCU_APLL_PARAM           TO_REG(0x310)=0A=
++#define AST1040_SCU_APLL_EXT_PARAM       TO_REG(0x314)=0A=
++#define AST1040_SCU_DPLL_PARAM           TO_REG(0x320)=0A=
++#define AST1040_SCU_DPLL_EXT_PARAM       TO_REG(0x324)=0A=
++#define AST1040_SCU_DPLL_PARAM_READ      TO_REG(0x328)=0A=
++#define AST1040_SCU_DPLL_EXT_PARAM_READ  TO_REG(0x32c)=0A=
++#define AST1040_SCU_UARTCLK_GEN          TO_REG(0x330)=0A=
++#define AST1040_SCU_HUARTCLK_GEN         TO_REG(0x334)=0A=
++#define AST1040_SCU_CLK_DUTY_MEAS_RST    TO_REG(0x388)=0A=
++#define AST1040_SCU_FREQ_CNT_CTL         TO_REG(0x3A0)=0A=
++#define AST1040_SCU_CLK_GET_PCLK_DIV(x) (((x) >> 18) & 0x7)=0A=
++=0A=
++#define ASPEED_AST1040_SCU_NR_REGS       (0xE20 >> 2)=0A=
++#define AST1040_SCU_CPTRA_PAGE_SIZE      0x1000=0A=
++=0A=
+ #define SCU_IO_REGION_SIZE 0x1000=0A=
+ =0A=
+ static const uint32_t ast2400_a0_resets[ASPEED_SCU_NR_REGS] =3D {=0A=
+@@ -1165,6 +1201,220 @@ static const TypeInfo aspeed_1030_scu_info =3D {=0A=
+     .class_init =3D aspeed_1030_scu_class_init,=0A=
+ };=0A=
+ =0A=
++/* AST1040 SCU */=0A=
++=0A=
++static void aspeed_ast1040_scu_update_cptra_page(AspeedSCUState *s)=0A=
++{=0A=
++    hwaddr page_base =3D s->regs[AST1040_SCU_CPTRA_PAGE_REG0] &=0A=
++                       ~(hwaddr)(AST1040_SCU_CPTRA_PAGE_SIZE - 1);=0A=
++=0A=
++    if (!s->cptra_page_window) {=0A=
 +        return;=0A=
 +    }=0A=
 +=0A=
-+    /*=0A=
-+     * The Caliptra MCI aperture is a 4 KiB alias whose target is selected=
- by=0A=
-+     * AST1040_SCU_CPTRA_PAGE_REG0. Firmware commonly switches it between=
-=0A=
-+     * mailbox SRAM (0x21400000) and mailbox CSR (0x21600000), then access=
-es=0A=
-+     * the selected page through 0x74200000.=0A=
-+     */=0A=
-+    memory_region_init_alias(&a1040->cptra_mci_window, OBJECT(s),=0A=
-+                             "aspeed.ast1040.cptra-mci-window", s->memory,=
-=0A=
-+                             0, AST1040_CPTRA_MCI_WINDOW_SIZE);=0A=
-+    memory_region_add_subregion(s->memory, AST1040_CPTRA_MCI_WINDOW_BASE,=
-=0A=
-+                                &a1040->cptra_mci_window);=0A=
-+    /* The SCU drives the aperture's target offset via SCU_CPTRA_PAGE_REG0=
-. */=0A=
-+    object_property_set_link(OBJECT(&s->scu), "cptra-page-window",=0A=
-+                             OBJECT(&a1040->cptra_mci_window), &error_abor=
-t);=0A=
-+    object_property_set_uint(OBJECT(&s->scu), "cptra-page-window-base",=0A=
-+                             AST1040_CPTRA_MCI_WINDOW_BASE, &error_abort);=
-=0A=
-+=0A=
-     /* SCU */=0A=
-     if (!sysbus_realize(SYS_BUS_DEVICE(&s->scu), errp)) {=0A=
-         return;=0A=
-@@ -244,8 +295,9 @@ static void aspeed_soc_ast1040_class_init(ObjectClass *=
-klass, const void *data)=0A=
- =0A=
- static const TypeInfo aspeed_soc_ast1040_types[] =3D {=0A=
-     {=0A=
--        .name           =3D "ast1040-a0",=0A=
-+        .name           =3D TYPE_ASPEED1040_SOC,=0A=
-         .parent         =3D TYPE_ASPEED10X0_SOC,=0A=
-+        .instance_size  =3D sizeof(Aspeed1040SoCState),=0A=
-         .instance_init  =3D aspeed_soc_ast1040_init,=0A=
-         .class_init     =3D aspeed_soc_ast1040_class_init,=0A=
-     }=0A=
-diff --git a/hw/arm/aspeed_ast1040_evb.c b/hw/arm/aspeed_ast1040_evb.c=0A=
-index 1d9b55247f..eb325a1095 100644=0A=
---- a/hw/arm/aspeed_ast1040_evb.c=0A=
-+++ b/hw/arm/aspeed_ast1040_evb.c=0A=
-@@ -8,17 +8,59 @@=0A=
- =0A=
- #include "qemu/osdep.h"=0A=
- #include "qapi/error.h"=0A=
-+#include "qemu/error-report.h"=0A=
- #include "hw/arm/boot.h"=0A=
- #include "hw/arm/machines-qom.h"=0A=
- #include "hw/arm/aspeed.h"=0A=
- #include "hw/arm/aspeed_soc.h"=0A=
- #include "hw/core/qdev-clock.h"=0A=
-+#include "hw/misc/aspeed_cptra_mbox.h"=0A=
- #include "system/system.h"=0A=
- =0A=
- #define AST1040_INTERNAL_FLASH_SIZE (4 * MiB)=0A=
- /* Main SYSCLK frequency in Hz (400MHz) */=0A=
- #define SYSCLK_FRQ 400000000ULL=0A=
- =0A=
-+#define TYPE_AST1040_EVB_MACHINE MACHINE_TYPE_NAME("ast1040-evb")=0A=
-+OBJECT_DECLARE_SIMPLE_TYPE(Ast1040EvbMachineState, AST1040_EVB_MACHINE)=0A=
-+=0A=
-+struct Ast1040EvbMachineState {=0A=
-+    AspeedMachineState parent_obj;=0A=
-+=0A=
-+    char *cptra_peer;=0A=
-+    Notifier machine_done;=0A=
-+};=0A=
-+=0A=
-+static void aspeed_bic_machine_done(Notifier *notifier, void *data)=0A=
-+{=0A=
-+    Ast1040EvbMachineState *m =3D container_of(notifier,=0A=
-+                                             Ast1040EvbMachineState,=0A=
-+                                             machine_done);=0A=
-+    AspeedMachineState *bmc =3D ASPEED_MACHINE(m);=0A=
-+    Aspeed1040SoCState *a1040 =3D ASPEED1040_SOC(bmc->soc);=0A=
-+    bool ambiguous =3D false;=0A=
-+    Object *peer;=0A=
-+    Error *err =3D NULL;=0A=
-+=0A=
-+    if (!m->cptra_peer) {=0A=
++    if (ranges_overlap(page_base, AST1040_SCU_CPTRA_PAGE_SIZE,=0A=
++                       s->cptra_page_window_base,=0A=
++                       AST1040_SCU_CPTRA_PAGE_SIZE)) {=0A=
++        qemu_log_mask(LOG_GUEST_ERROR,=0A=
++                      "%s: refusing self-referential remap to 0x%" HWADDR_=
+PRIx=0A=
++                      "\n", __func__, page_base);=0A=
++        memory_region_set_enabled(s->cptra_page_window, false);=0A=
 +        return;=0A=
 +    }=0A=
 +=0A=
-+    peer =3D object_resolve_path_type(m->cptra_peer, TYPE_CPTRA_MBOX_PEER,=
++    memory_region_set_alias_offset(s->cptra_page_window, page_base);=0A=
++    memory_region_set_enabled(s->cptra_page_window, true);=0A=
++}=0A=
++=0A=
++static uint64_t aspeed_ast1040_scu_read(void *opaque, hwaddr offset,=0A=
++                                        unsigned size)=0A=
++{=0A=
++    AspeedSCUState *s =3D ASPEED_SCU(opaque);=0A=
++    int reg =3D TO_REG(offset);=0A=
++=0A=
++    if (reg >=3D ASPEED_AST1040_SCU_NR_REGS) {=0A=
++        qemu_log_mask(LOG_GUEST_ERROR,=0A=
++                      "%s: Out-of-bounds read at offset 0x%" HWADDR_PRIx "=
+\n",=0A=
++                      __func__, offset);=0A=
++        return 0;=0A=
++    }=0A=
++=0A=
++    trace_aspeed_ast1040_scu_read(offset, size, s->regs[reg]);=0A=
++    return s->regs[reg];=0A=
++}=0A=
++=0A=
++static void aspeed_ast1040_scu_write(void *opaque, hwaddr offset,=0A=
++                                     uint64_t data64, unsigned size)=0A=
++{=0A=
++    AspeedSCUState *s =3D ASPEED_SCU(opaque);=0A=
++    int reg =3D TO_REG(offset);=0A=
++    uint32_t data =3D data64;=0A=
++    bool updated =3D false;=0A=
++=0A=
++    if (reg >=3D ASPEED_AST1040_SCU_NR_REGS) {=0A=
++        qemu_log_mask(LOG_GUEST_ERROR,=0A=
++                      "%s: Out-of-bounds write at offset 0x%" HWADDR_PRIx =
+"\n",=0A=
++                      __func__, offset);=0A=
++        return;=0A=
++    }=0A=
++=0A=
++    trace_aspeed_ast1040_scu_write(offset, size, data);=0A=
++=0A=
++    switch (reg) {=0A=
++    case AST1040_SCU_CLK_STOP_CTL_1:=0A=
++    case AST1040_SCU_CLK_STOP_CTL_2:=0A=
++        s->regs[reg] |=3D data;=0A=
++        updated =3D true;=0A=
++        break;=0A=
++    case AST1040_SCU_CLK_STOP_CLR_1:=0A=
++    case AST1040_SCU_CLK_STOP_CLR_2:=0A=
++        s->regs[reg - 1] &=3D ~data;=0A=
++        updated =3D true;=0A=
++        break;=0A=
++    case AST1040_SCU_FREQ_CNT_CTL:=0A=
++        s->regs[reg] =3D deposit32(s->regs[reg], 6, 1, !!(data & BIT(1)));=
 =0A=
-+                                    &ambiguous);=0A=
-+    if (!peer || ambiguous) {=0A=
-+        error_report("cptra-peer: peer '%s' not found%s",=0A=
-+                     m->cptra_peer, ambiguous ? " (ambiguous)" : "");=0A=
-+        exit(1);=0A=
++        updated =3D true;=0A=
++        break;=0A=
++    case AST1040_SCU_CPTRA_PAGE_REG0:=0A=
++        s->regs[reg] =3D data;=0A=
++        aspeed_ast1040_scu_update_cptra_page(s);=0A=
++        updated =3D true;=0A=
++        break;=0A=
++    case AST1040_SCU_CPTRA_PAGE_REG1:=0A=
++    case AST1040_SCU_CPTRA_PAGE_REG2:=0A=
++    case AST1040_SCU_CPTRA_PAGE_REG3:=0A=
++    case AST1040_SCU_CPTRA_PAGE_REG4:=0A=
++    case AST1040_SCU_CPTRA_PAGE_REG5:=0A=
++        s->regs[reg] =3D data;=0A=
++        updated =3D true;=0A=
++        break;=0A=
++    default:=0A=
++        qemu_log_mask(LOG_GUEST_ERROR,=0A=
++                      "%s: Unhandled write at offset 0x%" HWADDR_PRIx "\n"=
+,=0A=
++                      __func__, offset);=0A=
++        break;=0A=
 +    }=0A=
 +=0A=
-+    if (!aspeed_cptra_mbox_set_peer(&a1040->cptra_mbox,=0A=
-+                                    CPTRA_MBOX_PEER(peer), &err)) {=0A=
-+        error_report_err(err);=0A=
-+        exit(1);=0A=
++    if (!updated) {=0A=
++        s->regs[reg] =3D data;=0A=
 +    }=0A=
 +}=0A=
 +=0A=
- static void aspeed_bic_machine_init(MachineState *machine)=0A=
- {=0A=
-     AspeedMachineState *bmc =3D ASPEED_MACHINE(machine);=0A=
-@@ -38,12 +80,35 @@ static void aspeed_bic_machine_init(MachineState *machi=
-ne)=0A=
-     aspeed_connect_serial_hds_to_uarts(bmc);=0A=
-     qdev_realize(DEVICE(bmc->soc), NULL, &error_abort);=0A=
- =0A=
-+    if (AST1040_EVB_MACHINE(machine)->cptra_peer) {=0A=
-+        AST1040_EVB_MACHINE(machine)->machine_done.notify =3D=0A=
-+            aspeed_bic_machine_done;=0A=
-+        qemu_add_machine_init_done_notifier(=0A=
-+            &AST1040_EVB_MACHINE(machine)->machine_done);=0A=
++static const MemoryRegionOps aspeed_ast1040_scu_ops =3D {=0A=
++    .read       =3D aspeed_ast1040_scu_read,=0A=
++    .write      =3D aspeed_ast1040_scu_write,=0A=
++    .endianness =3D DEVICE_LITTLE_ENDIAN,=0A=
++    .impl.min_access_size =3D 4,=0A=
++    .impl.max_access_size =3D 4,=0A=
++    .valid.min_access_size =3D 1,=0A=
++    .valid.max_access_size =3D 8,=0A=
++    .valid.unaligned =3D false,=0A=
++};=0A=
++=0A=
++static uint32_t aspeed_1040_scu_calc_hpll(AspeedSCUState *s, uint32_t hpll=
+_reg)=0A=
++{=0A=
++    uint32_t multiplier =3D 1;=0A=
++    uint32_t clkin =3D aspeed_scu_get_clkin(s);=0A=
++=0A=
++    if (hpll_reg & SCU_AST2600_H_PLL_OFF) {=0A=
++        return 0;=0A=
 +    }=0A=
 +=0A=
-     armv7m_load_kernel(ARM_CPU(first_cpu),=0A=
-                        machine->kernel_filename,=0A=
-                        0,=0A=
-                        AST1040_INTERNAL_FLASH_SIZE);=0A=
++    if (!(hpll_reg & SCU_AST2600_H_PLL_BYPASS_EN)) {=0A=
++        uint32_t p =3D (hpll_reg >> 19) & 0xf;=0A=
++        uint32_t n =3D (hpll_reg >> 13) & 0x3f;=0A=
++        uint32_t m =3D hpll_reg & 0x1fff;=0A=
++=0A=
++        multiplier =3D ((m + 1) / (n + 1)) / (p + 1);=0A=
++    }=0A=
++=0A=
++    return clkin * multiplier;=0A=
++}=0A=
++=0A=
++static uint32_t aspeed_1040_scu_get_apb_freq(AspeedSCUState *s)=0A=
++{=0A=
++    AspeedSCUClass *asc =3D ASPEED_SCU_GET_CLASS(s);=0A=
++    uint32_t hpll =3D asc->calc_hpll(s, s->regs[AST1040_SCU_HPLL_PARAM]);=
+=0A=
++=0A=
++    return hpll /=0A=
++        (AST1040_SCU_CLK_GET_PCLK_DIV(s->regs[AST1040_SCU_CLK_SEL_1]) + 1)=
+=0A=
++        / asc->apb_divider;=0A=
++}=0A=
++=0A=
++static void aspeed_ast1040_scu_reset_hold(Object *obj, ResetType type)=0A=
++{=0A=
++    AspeedSCUState *s =3D ASPEED_SCU(obj);=0A=
++    AspeedSCUClass *asc =3D ASPEED_SCU_GET_CLASS(obj);=0A=
++=0A=
++    memcpy(s->regs, asc->resets, asc->nr_regs * 4);=0A=
++    s->regs[AST1040_SILICON_REV] =3D s->silicon_rev;=0A=
++    s->regs[AST1040_HW_STRAP1]   =3D s->hw_strap1;=0A=
++    aspeed_ast1040_scu_update_cptra_page(s);=0A=
++}=0A=
++=0A=
++static const uint32_t ast1040_a0_scu_resets[ASPEED_AST1040_SCU_NR_REGS] =
+=3D {=0A=
++    [AST1040_HW_STRAP1_CLR]             =3D 0xFFF0FFF0,=0A=
++    [AST1040_HW_STRAP1_LOCK]            =3D 0x00000FFF,=0A=
++    [AST1040_HW_STRAP1_SEC1]            =3D 0x000000FF,=0A=
++    [AST1040_SCU_CLK_STOP_CTL_1]        =3D 0xffff8400,=0A=
++    [AST1040_SCU_CLK_STOP_CTL_2]        =3D 0x00005f30,=0A=
++    [AST1040_SCU_CLK_SEL_1]             =3D 0x86900000,=0A=
++    [AST1040_SCU_CLK_SEL_2]             =3D 0x00400000,=0A=
++    [AST1040_SCU_HPLL_PARAM]            =3D 0x10000027,=0A=
++    [AST1040_SCU_HPLL_EXT_PARAM]        =3D 0x80000014,=0A=
++    [AST1040_SCU_APLL_PARAM]            =3D 0x1000001f,=0A=
++    [AST1040_SCU_APLL_EXT_PARAM]        =3D 0x8000000f,=0A=
++    [AST1040_SCU_DPLL_PARAM]            =3D 0x106e42ce,=0A=
++    [AST1040_SCU_DPLL_EXT_PARAM]        =3D 0x80000167,=0A=
++    [AST1040_SCU_DPLL_PARAM_READ]       =3D 0x106e42ce,=0A=
++    [AST1040_SCU_DPLL_EXT_PARAM_READ]   =3D 0x80000167,=0A=
++    [AST1040_SCU_UARTCLK_GEN]           =3D 0x00014506,=0A=
++    [AST1040_SCU_HUARTCLK_GEN]          =3D 0x000145c0,=0A=
++    [AST1040_SCU_CLK_DUTY_MEAS_RST]     =3D 0x0c9100d2,=0A=
++    [AST1040_SCU_FREQ_CNT_CTL]          =3D 0x00000080,=0A=
++};=0A=
++=0A=
++static const Property aspeed_1040_scu_props[] =3D {=0A=
++    DEFINE_PROP_UINT64("cptra-page-window-base", AspeedSCUState,=0A=
++                       cptra_page_window_base, 0),=0A=
++};=0A=
++=0A=
++static void aspeed_1040_scu_init(Object *obj)=0A=
++{=0A=
++    AspeedSCUState *s =3D ASPEED_SCU(obj);=0A=
++=0A=
++    object_property_add_link(obj, "cptra-page-window", TYPE_MEMORY_REGION,=
+=0A=
++                             (Object **)&s->cptra_page_window,=0A=
++                             qdev_prop_allow_set_link_before_realize,=0A=
++                             OBJ_PROP_LINK_STRONG);=0A=
++}=0A=
++=0A=
++static void aspeed_1040_scu_class_init(ObjectClass *klass, const void *dat=
+a)=0A=
++{=0A=
++    DeviceClass *dc =3D DEVICE_CLASS(klass);=0A=
++    ResettableClass *rc =3D RESETTABLE_CLASS(klass);=0A=
++    AspeedSCUClass *asc =3D ASPEED_SCU_CLASS(klass);=0A=
++=0A=
++    dc->desc =3D "ASPEED 1040 System Control Unit";=0A=
++    rc->phases.hold =3D aspeed_ast1040_scu_reset_hold;=0A=
++    device_class_set_props(dc, aspeed_1040_scu_props);=0A=
++    asc->resets =3D ast1040_a0_scu_resets;=0A=
++    asc->calc_hpll =3D aspeed_1040_scu_calc_hpll;=0A=
++    asc->get_apb =3D aspeed_1040_scu_get_apb_freq;=0A=
++    asc->apb_divider =3D 2;=0A=
++    asc->nr_regs =3D ASPEED_AST1040_SCU_NR_REGS;=0A=
++    asc->clkin_25Mhz =3D true;=0A=
++    asc->ops =3D &aspeed_ast1040_scu_ops;=0A=
++}=0A=
++=0A=
++static const TypeInfo aspeed_1040_scu_info =3D {=0A=
++    .name =3D TYPE_ASPEED_1040_SCU,=0A=
++    .parent =3D TYPE_ASPEED_SCU,=0A=
++    .instance_size =3D sizeof(AspeedSCUState),=0A=
++    .instance_init =3D aspeed_1040_scu_init,=0A=
++    .class_init =3D aspeed_1040_scu_class_init,=0A=
++};=0A=
++=0A=
+ static void aspeed_scu_register_types(void)=0A=
+ {=0A=
+     type_register_static(&aspeed_scu_info);=0A=
+@@ -1174,6 +1424,7 @@ static void aspeed_scu_register_types(void)=0A=
+     type_register_static(&aspeed_1030_scu_info);=0A=
+     type_register_static(&aspeed_2700_scu_info);=0A=
+     type_register_static(&aspeed_2700_scuio_info);=0A=
++    type_register_static(&aspeed_1040_scu_info);=0A=
  }=0A=
  =0A=
-+static char *aspeed_bic_get_cptra_peer(Object *obj, Error **errp)=0A=
-+{=0A=
-+    Ast1040EvbMachineState *m =3D AST1040_EVB_MACHINE(obj);=0A=
-+=0A=
-+    return g_strdup(m->cptra_peer);=0A=
-+}=0A=
-+=0A=
-+static void aspeed_bic_set_cptra_peer(Object *obj, const char *value,=0A=
-+                                      Error **errp)=0A=
-+{=0A=
-+    Ast1040EvbMachineState *m =3D AST1040_EVB_MACHINE(obj);=0A=
-+=0A=
-+    g_free(m->cptra_peer);=0A=
-+    m->cptra_peer =3D g_strdup(value);=0A=
-+}=0A=
-+=0A=
- static void aspeed_machine_ast1040_evb_class_init(ObjectClass *oc,=0A=
-                                                   const void *data)=0A=
- {=0A=
-@@ -59,12 +124,19 @@ static void aspeed_machine_ast1040_evb_class_init(Obje=
-ctClass *oc,=0A=
-     amc->macs_mask =3D 0;=0A=
-     amc->uart_default =3D ASPEED_DEV_UART12;=0A=
-     aspeed_machine_class_init_cpus_defaults(mc);=0A=
-+=0A=
-+    object_class_property_add_str(oc, "cptra-peer",=0A=
-+                                  aspeed_bic_get_cptra_peer,=0A=
-+                                  aspeed_bic_set_cptra_peer);=0A=
-+    object_class_property_set_description(oc, "cptra-peer",=0A=
-+        "Caliptra mailbox peer object id");=0A=
- }=0A=
+ type_init(aspeed_scu_register_types);=0A=
+diff --git a/hw/misc/trace-events b/hw/misc/trace-events=0A=
+index b88accc437..82ddbf4d15 100644=0A=
+--- a/hw/misc/trace-events=0A=
++++ b/hw/misc/trace-events=0A=
+@@ -103,6 +103,8 @@ aspeed_ast2700_scu_write(uint64_t offset, unsigned size=
+, uint32_t data) "To 0x%"=0A=
+ aspeed_ast2700_scu_read(uint64_t offset, unsigned size, uint32_t data) "To=
+ 0x%" PRIx64 " of size %u: 0x%" PRIx32=0A=
+ aspeed_ast2700_scuio_write(uint64_t offset, unsigned size, uint32_t data) =
+"To 0x%" PRIx64 " of size %u: 0x%" PRIx32=0A=
+ aspeed_ast2700_scuio_read(uint64_t offset, unsigned size, uint32_t data) "=
+To 0x%" PRIx64 " of size %u: 0x%" PRIx32=0A=
++aspeed_ast1040_scu_write(uint64_t offset, unsigned size, uint32_t data) "T=
+o 0x%" PRIx64 " of size %u: 0x%" PRIx32=0A=
++aspeed_ast1040_scu_read(uint64_t offset, unsigned size, uint32_t data) "To=
+ 0x%" PRIx64 " of size %u: 0x%" PRIx32=0A=
  =0A=
- static const TypeInfo aspeed_ast1040_evb_types[] =3D {=0A=
-     {=0A=
--        .name           =3D MACHINE_TYPE_NAME("ast1040-evb"),=0A=
-+        .name           =3D TYPE_AST1040_EVB_MACHINE,=0A=
-         .parent         =3D TYPE_ASPEED_MACHINE,=0A=
-+        .instance_size  =3D sizeof(Ast1040EvbMachineState),=0A=
-         .class_init     =3D aspeed_machine_ast1040_evb_class_init,=0A=
-         .interfaces     =3D arm_machine_interfaces,=0A=
-     }=0A=
+ # mps2-scc.c=0A=
+ mps2_scc_read(uint64_t offset, uint64_t data, unsigned size) "MPS2 SCC rea=
+d: offset 0x%" PRIx64 " data 0x%" PRIx64 " size %u"=0A=
 -- =0A=
 2.43.0=
 
