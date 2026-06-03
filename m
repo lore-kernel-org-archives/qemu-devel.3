@@ -4,83 +4,83 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D373ECD6E55
-	for <qemu-devel@archiver.kernel.org>; Wed,  3 Jun 2026 15:56:17 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4B801CD6E55
+	for <qemu-devel@archiver.kernel.org>; Wed,  3 Jun 2026 16:00:12 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wUnwl-0001RA-5k; Wed, 03 Jun 2026 11:55:59 -0400
+	id 1wUo0T-0002EZ-TS; Wed, 03 Jun 2026 11:59:49 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1wUnwj-0001P3-Mv
- for qemu-devel@nongnu.org; Wed, 03 Jun 2026 11:55:57 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1wUo0S-0002E3-D1
+ for qemu-devel@nongnu.org; Wed, 03 Jun 2026 11:59:48 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1wUnwh-0001Ks-GJ
- for qemu-devel@nongnu.org; Wed, 03 Jun 2026 11:55:57 -0400
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1wUo0Q-0002Tl-RJ
+ for qemu-devel@nongnu.org; Wed, 03 Jun 2026 11:59:48 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1780502153;
+ s=mimecast20190719; t=1780502385;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  in-reply-to:in-reply-to:references:references;
- bh=En83FSP12+T4wVjlIj9J6aqoQBCNBaC1yETUkdIdu0w=;
- b=NM2NjuJ5LsPQkVox5ekDng/qrZc25vejZZFykzh9vjBeFEcRhslWaKuFkRa1paI66hHNOP
- j1vXzZ7jB2vYOauP6wxkJDrbCrsodG4jKqSmI4i+6/Bsr4EcNBzo58D9hOlIzX03/d2zoj
- FWqKYRmETGyrJO0r6W15ZsjdWnXyiP0=
-Received: from mail-pj1-f69.google.com (mail-pj1-f69.google.com
- [209.85.216.69]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=/oG8hHrEtqUDuQR7JXO6q9EAanXp+RTIcWxlxAVIGXo=;
+ b=KJUKhVPmaEPvKQ0NDx6AGeFKrxCyAoMKFg+D+4ZNhm34HrOArV/8DlB5qCl7QN/RacAZCI
+ 9ZXw9VOy7D1vUOL6853Myhq0AVkxu8K46JyiL5sapY+QUjaOW9AfN6tYnBpMMHtKbCKbSX
+ lYW0oqEmhDMwSqhodZasnsaPwZvrsx8=
+Received: from mail-qv1-f69.google.com (mail-qv1-f69.google.com
+ [209.85.219.69]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-93--CYTmt2KPhC9mxrWpi3Mmw-1; Wed, 03 Jun 2026 11:55:52 -0400
-X-MC-Unique: -CYTmt2KPhC9mxrWpi3Mmw-1
-X-Mimecast-MFC-AGG-ID: -CYTmt2KPhC9mxrWpi3Mmw_1780502151
-Received: by mail-pj1-f69.google.com with SMTP id
- 98e67ed59e1d1-36bb6c41341so7077570a91.3
- for <qemu-devel@nongnu.org>; Wed, 03 Jun 2026 08:55:52 -0700 (PDT)
+ us-mta-458-8Wm8lpu7PQGC_-jW6NE9iQ-1; Wed, 03 Jun 2026 11:59:41 -0400
+X-MC-Unique: 8Wm8lpu7PQGC_-jW6NE9iQ-1
+X-Mimecast-MFC-AGG-ID: 8Wm8lpu7PQGC_-jW6NE9iQ_1780502381
+Received: by mail-qv1-f69.google.com with SMTP id
+ 6a1803df08f44-8cce4f4634fso107859876d6.1
+ for <qemu-devel@nongnu.org>; Wed, 03 Jun 2026 08:59:41 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1780502151; x=1781106951; darn=nongnu.org;
+ d=redhat.com; s=google; t=1780502381; x=1781107181; darn=nongnu.org;
  h=in-reply-to:content-disposition:mime-version:references:message-id
  :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
- bh=En83FSP12+T4wVjlIj9J6aqoQBCNBaC1yETUkdIdu0w=;
- b=mDoJaySZN1IcdEtUT8VdNVLX8Mb+zGzvVNea6SNGjb1B5uKad8T8MSjFGtjl8lYffx
- Lr/e9jKFVU8gzMbg/Y/i58ILJvkdjdrWUpZ86P/Y8C0QYYD9MX8dhpgVzyfK3fR8qRkD
- Dyuly1fBCKdlccTCdxXICSRobtpvIheq9RujaE+sjuegr+rgD32WJ1XokZXqpOAsv0PF
- RRsNN7qf6oy3IGgnJor8I+WKoBoDAucaIDTAz0KTtoR7ItpJG3PwmK3uzU+Xtx0cnJGp
- s8VdoVohl0AM/DtHc8fC6Nf59yTdxZSFwGVgWsrnuCRC6iptudQWkebAQ2csaT+R4l+t
- MlJw==
+ bh=/oG8hHrEtqUDuQR7JXO6q9EAanXp+RTIcWxlxAVIGXo=;
+ b=VYdWByvbYYTLc8VBmsmz7VXQ3I8M9F7GorqQQ7fbpU257ZUfB5Qb4m0xTEnxbG23rq
+ KPbgctgOkpsT4aLqyVEyxN++zwlkZ8pNrfogHtE7uB5LqpQ5gCcCns5d797+eQ+lILIS
+ VmNSIbnz/iuoDq9+rnWLUutDwQmu7yOY2spAetxNmbUCFLGlxwc2z7cYLD36CQejFSva
+ Wk23Zzb0UuZCAczDdA8HqkUk0f2zZaIFR/rEK2CxlmdT0elssqc3rC3+oDzkFy4sG2+t
+ NXVnQDtLjDlescBf0RcQX3ohJNcxvglCtuJhgZmhIT9Jwe30S8TFy7RMLqCoWTjS7jXd
+ rWfQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1780502151; x=1781106951;
+ d=1e100.net; s=20251104; t=1780502381; x=1781107181;
  h=in-reply-to:content-disposition:mime-version:references:message-id
  :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=En83FSP12+T4wVjlIj9J6aqoQBCNBaC1yETUkdIdu0w=;
- b=DG7GyYxWrMoUkRGQna19bNbQDGYRq3iLIJknEnk+47Lx5ERFhOYUMPtzB4YhbF07LC
- NQ3/TcGREdXgASWYmqCQmMhv/yToehQvOG5kt+P3lPVbHrZX91JIYaKxxUzKKDBmMGxg
- zudj7kixJu4vCrBRtk+eQDFbsEM0qcdZUqaIzhYmduyP3W7F/o63jlmNxX7CgibAWesb
- KgNtFJN8y7keYNNVISa67UEpJnH0olm6GC/26OkUX4byQ7HO+xY1MzvPB9vB5oDvddHs
- /8DUxnT+yyTmQmLixfcGAbQhjYThOWo26cFSKUj/PUZfnWqnmHbwjL6VgmVd10pGKKg2
- f7Ww==
+ bh=/oG8hHrEtqUDuQR7JXO6q9EAanXp+RTIcWxlxAVIGXo=;
+ b=NvbmBM2dZafzBk6QS/dTy7TV8EcCn4Ivz8FA6NGGXjBowDKRHsKKoroA4Wt5gOBpQf
+ ct4g3drUki5YQVMaENPBoPdXHkwyc5IcDkcC/mPn05tD5KJRxeJjSfgF3GHUxEuMEQJf
+ 6Mul2ITMjznYU8c351uLNHSxgwx/bhegfQcOZVOKnGuUGply5lEqBJ4jt14x5pShyYaC
+ 9ZR2OylrSo6YlAPh+6KeHfsIgQ+C1JJcMfifGXi65NEf/LtFOnmch7vwEVJq5L6mEFEL
+ GYQTf1re59RdH3NSMI8pqZEGIgmAr4C1hBtVDORyVoN3t7EDKuFvcbwq4v8EN4f4mtRS
+ U6bA==
 X-Forwarded-Encrypted: i=1;
- AFNElJ+D6EAgZRA6aPdRFRku16lf9lwyqF19Mx0yR3vE3kSQ4sjpnI5q6mjkZayO80suEy+mjGuge/Y+EQFd@nongnu.org
-X-Gm-Message-State: AOJu0YwMQAEsNZkztX2Vlj1wdybTnydt/r2A2kHsGWkElliE8eAu3Mps
- IyU5zPZ5eS670/g02LEaByHAYhhNzPkX0QbY3QdqyoSM8QyZ5+eDtLnwPGMwC+pSgYcdNJ9RgmU
- VWl3eaiaDr1NbU866sIrZPUkZmJ+R7V6tdtyWbC+4ShbJcGC4mrV23Zyx
-X-Gm-Gg: Acq92OFEdQYcCt706En0VM9cxM3CHlEbacTAn8DUHMofKc5VM5lJURwB6/SPdXYDcWY
- zHs1eZiKNdtJvI4r4fd/zFr+tODRH4xdj2vVQJoOWwz5xtPqr2QhMRwVcB6prfAItL782gUUHZp
- WoIVU+97W5EQ891qaq9HWL7uSzNGxfVW3N5asBEqTTEH+bSgKcBec4A2zNXj/681fY5g3s530XS
- n8Y6LSX4FgdMvtjlzrkhRPFhqAkF/MZLvAZ0r6UQq9z32mNHlFRorbRyxVQdm7vRYzCsIdAHxVS
- OKMzgfdn4Sapy1t+neWed9jr/7pxKnITgKPLi3dU6fhJjSRiN+nH8kjOIXLgfq9835s5t3V4ACl
- Vu2JYmH5AbaqDu9e1abzBYmiSfw==
-X-Received: by 2002:a17:90b:4ac7:b0:36d:df4f:ab2 with SMTP id
- 98e67ed59e1d1-36e30a298b5mr3971966a91.13.1780502151079; 
- Wed, 03 Jun 2026 08:55:51 -0700 (PDT)
-X-Received: by 2002:a17:90b:4ac7:b0:36d:df4f:ab2 with SMTP id
- 98e67ed59e1d1-36e30a298b5mr3971937a91.13.1780502150536; 
- Wed, 03 Jun 2026 08:55:50 -0700 (PDT)
+ AFNElJ8H2uGwfkHDi4RlXRtrm6Q2rGAxCBDBydQ1pCbHGUr17I6wZcP+xRF9dduxj68KkXaI/JApX1cpxSp4@nongnu.org
+X-Gm-Message-State: AOJu0YyykKocFCc5GRKwqoO5+bVkVmVjeYFyESVdxEe+982vO6rDqMxQ
+ VnF8iWegDrRwjVvtL7ll0m9hICd+1rg7r/rqhV9GuQXShVDvgz4OR+aMvuoO56L2504/9qR2ham
+ faKQtoAsc+61Fcpfoa+hgxzrTkRh3yHFje8ugVDJafgTPonwvkIiv02tx
+X-Gm-Gg: Acq92OEEMGZ8hdBPTXcmzacrLv86NRg8OW5Jb0nxz1gG3d7T4faXM/BYXWJ5ynoU5Sg
+ 37/6ySzgXjBZ79AuJts0E6G2SPbxI3xHjJVRZ2EfwWSIBTGFJ8AdEu7cfqvYi3qqveF4BvASmAr
+ c6WOb0eQsJ7UA4MhvCh0cIfNCsMCS5sDOMIUQA1qUZhIOckBKjLcaUSKNb1p6dJjc1y2rCc0eGm
+ dI8VtGsmr6Ohk4de6S3gaABrwdYzS2QxHCF0p8XT7MztJ7HcqPp7fyCeAzC7R3jSLz9bMnEUGxi
+ pXi5jHac9HrSYpEyBxUMSdjqI4xA7jl7uLxs6H/TVv8kTEOxYItx1r6BpaY7DNdF7D6LOhbiQ/2
+ My+f61y9JY49F5/PHH5FZaUnFxA==
+X-Received: by 2002:a05:6214:328e:b0:8ce:aace:eaf7 with SMTP id
+ 6a1803df08f44-8cece15026cmr51808486d6.39.1780502380666; 
+ Wed, 03 Jun 2026 08:59:40 -0700 (PDT)
+X-Received: by 2002:a05:6214:328e:b0:8ce:aace:eaf7 with SMTP id
+ 6a1803df08f44-8cece15026cmr51808186d6.39.1780502380221; 
+ Wed, 03 Jun 2026 08:59:40 -0700 (PDT)
 Received: from x1.local ([142.189.10.167]) by smtp.gmail.com with ESMTPSA id
- 98e67ed59e1d1-36f714e26afsm45854a91.17.2026.06.03.08.55.48
+ 6a1803df08f44-8ceccd9dfc1sm23794066d6.4.2026.06.03.08.59.38
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 03 Jun 2026 08:55:50 -0700 (PDT)
-Date: Wed, 3 Jun 2026 11:55:47 -0400
+ Wed, 03 Jun 2026 08:59:39 -0700 (PDT)
+Date: Wed, 3 Jun 2026 11:59:38 -0400
 From: Peter Xu <peterx@redhat.com>
 To: Mark Cave-Ayland <mark.caveayland@nutanix.com>
 Cc: Fabiano Rosas <farosas@suse.de>, qemu-devel@nongnu.org,
@@ -90,27 +90,24 @@ Cc: Fabiano Rosas <farosas@suse.de>, qemu-devel@nongnu.org,
  "Maciej S. Szmigiero" <maciej.szmigiero@oracle.com>,
  Jason Wang <jasowang@redhat.com>, Ben Chaney <bchaney@akamai.com>,
  Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
-Subject: Re: [PATCH RFC 1/2] migration/vl: Allow set parameters with
- -incoming config:*
-Message-ID: <aiBOg66Txxwv6w3I@x1.local>
+Subject: Re: [PATCH RFC 0/2] migration/vl: new -incoming config:* for early
+ migration parameters
+Message-ID: <aiBPakzg8080IOfo@x1.local>
 References: <20260528212947.368132-1-peterx@redhat.com>
- <20260528212947.368132-2-peterx@redhat.com>
- <87pl2ftc12.fsf@suse.de> <ahmrcVkOWW5iwozk@x1.local>
- <87cxyetbc4.fsf@suse.de> <ah36ZhBP2TweYhg0@x1.local>
- <87zf1d6p24.fsf@suse.de>
- <12cf9760-831a-410c-b8dd-a9bc6befbae3@nutanix.com>
+ <87se7btcq9.fsf@suse.de> <ahmfh2s7CLFLoZKN@x1.local>
+ <283f85de-92b0-4c62-94ed-631221b62c07@nutanix.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <12cf9760-831a-410c-b8dd-a9bc6befbae3@nutanix.com>
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=peterx@redhat.com;
+In-Reply-To: <283f85de-92b0-4c62-94ed-631221b62c07@nutanix.com>
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=peterx@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -24
 X-Spam_score: -2.5
 X-Spam_bar: --
 X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.445,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
  SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -127,19 +124,21 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, Jun 03, 2026 at 04:36:37PM +0100, Mark Cave-Ayland wrote:
-> Is the longer-term goal here to allow machine-versioned usage of all
-> migration parameters supplied via -incoming via -global?
+On Wed, Jun 03, 2026 at 04:41:31PM +0100, Mark Cave-Ayland wrote:
+> One of the reasons CPR requires a separate channel is because it needs to
+> access the stream before the devices are created.
 
-Nop.
+Yes.
 
-Machine compat properties sticks with machines, they'll be applied properly
-to migration objects at some point (needs to happen after machine object is
-initialized).  It'll keep working, no plan to change that.
+> Is this part of the same problem in that the migration object needs to be
+> created much earlier than it is currently? And could doing this
+> potentially remove the need for a separate CPR channel?
 
-This series is only about exposing a new API to setup migration parameters
-so that modules (like TAP as backends) can query at very early stage of
-QEMU boot.
+The problem is the migration object can't yet be created too early, due to
+the fact it needs to apply compat properties.  That's why this series used
+another approach to have a temporary early MigrationParameters object to
+keep things until migration object is initialized (during which the temp
+object will be destroyed).
 
 Thanks,
 
