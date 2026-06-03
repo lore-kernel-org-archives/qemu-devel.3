@@ -4,135 +4,63 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5DD3ECD6E4A
-	for <qemu-devel@archiver.kernel.org>; Wed,  3 Jun 2026 04:04:41 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2AFC9CD6E55
+	for <qemu-devel@archiver.kernel.org>; Wed,  3 Jun 2026 04:39:51 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wUcnH-0003cH-JH; Wed, 03 Jun 2026 00:01:28 -0400
+	id 1wUdNi-0003gn-Ph; Wed, 03 Jun 2026 00:39:06 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jamin_lin@aspeedtech.com>)
- id 1wUcmi-0003Uw-Pq; Wed, 03 Jun 2026 00:00:54 -0400
-Received: from mail-japanwestazlp170120003.outbound.protection.outlook.com
- ([2a01:111:f403:c406::3] helo=OS8PR02CU002.outbound.protection.outlook.com)
+ (Exim 4.90_1) (envelope-from <naveen@kernel.org>) id 1wUdNg-0003gG-T5
+ for qemu-devel@nongnu.org; Wed, 03 Jun 2026 00:39:04 -0400
+Received: from sea.source.kernel.org ([2600:3c0a:e001:78e:0:1991:8:25])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jamin_lin@aspeedtech.com>)
- id 1wUcmh-0002TF-1c; Wed, 03 Jun 2026 00:00:52 -0400
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=l6RFtM+NVcMHsNP4W781MPFxfYKMrx6AeThilA+1uDMH+/CPNu0be39Z9ljIfnRWfIvsX8REIpdzHmc6XaDk2IgYjYXXzNQNZhRe+XLk78vVKmuogVNIhc22BDUeSFS9NEwU+2T1im/50Eb3p/PAnY/3DQyFxhNmcHH2icIusdGOigTk2n1BcphHFWKQcp2HyUABYcC0nIFV185ven33ax60gUkbxNIdP4/HgYv5sOGxHOy5C/P90LEiH9eGs+HEzwmOdRghOkx9LUVSXI0h6V0tkQuIGF84psam1inheojWQldg3cjqgT3dlm8aLzOueYDT0RRbXe2pUaFEuqAkbw==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=dEabOOpmy7KfIDUNwx/GfjFQSAwECGx002H4pMACHmU=;
- b=buOebZq3DQfnpkC9vkJOphvwoehwodI9E6cJXKT/g/R7bUW2n8WA0VCuOA5HF2kugUmjwT32wZtTtPBje0ms/1zf9NoJKwxIKWgZYwhr4ggWYmOQCTftC1ZOcabPOFVNPPQ4OT/KbH0aI0rPH0eNCEOMOt1RI8Ekd4fawsWFqdBfUmIrMt1Fi8gGPgr6mihlhKaUdnYqcSey3FFwsjLuHruRhcle97Ilou7fte8GTI1+ej+onGy0u55R9N+20F8Dmg76UpJUaywMyoCayNA/A2NDh38lxJxrq4YxtVYFY2T4m5Y+nv002/+aRNBf6kc1+J2yGiA5QAn74M1ObcWFdA==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=aspeedtech.com; dmarc=pass action=none
- header.from=aspeedtech.com; dkim=pass header.d=aspeedtech.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=aspeedtech.com;
- s=selector1;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=dEabOOpmy7KfIDUNwx/GfjFQSAwECGx002H4pMACHmU=;
- b=ZtIXYYYh9GCU8v9vsbOWg5MfjhRNTI3b604yarOQw4aqd519eJvXfpf7aOm6BO5jUze2N40MAnKj4bGXMggYBaTUz52Gn3VOIRogpXR3h7V0pjP5nYKCT/NhMSlkPESQCsL8M/6t5odFCP0jZpTTVCcm0LKC/uPpur3einMilkda+5DQazK6t/gePFenlWESzgtbE84nQXDX8Z/Xx+Daqjt/cdq2gpK7PgyOrBFunayCxzZ7/wCxIWW5d2yDKeUeTzLpNh82sb8snLQ0w2WB1mCzWBsG0sJD2z91ny8ogKljhVkEKmYbHfGV860bAYQPRocq84+RzTwCkR9PXiap5Q==
-Received: from TYZPR06MB4980.apcprd06.prod.outlook.com (2603:1096:400:1cc::10)
- by KL1PR06MB6623.apcprd06.prod.outlook.com (2603:1096:820:f9::9) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.92.7; Wed, 3 Jun 2026
- 04:00:39 +0000
-Received: from TYZPR06MB4980.apcprd06.prod.outlook.com
- ([fe80::ea8a:7cb7:4822:2fb3]) by TYZPR06MB4980.apcprd06.prod.outlook.com
- ([fe80::ea8a:7cb7:4822:2fb3%5]) with mapi id 15.21.0092.006; Wed, 3 Jun 2026
- 04:00:39 +0000
-From: Jamin Lin <jamin_lin@aspeedtech.com>
-To: =?iso-8859-1?Q?C=E9dric_Le_Goater?= <clg@kaod.org>, Peter Maydell
- <peter.maydell@linaro.org>, Steven Lee <steven_lee@aspeedtech.com>, Troy Lee
- <leetroy@gmail.com>, Kane Chen <kane_chen@aspeedtech.com>, Andrew Jeffery
- <andrew@codeconstruct.com.au>, Joel Stanley <joel@jms.id.au>, "open
- list:ASPEED BMCs" <qemu-arm@nongnu.org>, "open list:All patches CC here"
- <qemu-devel@nongnu.org>
-CC: Jamin Lin <jamin_lin@aspeedtech.com>, Troy Lee <troy_lee@aspeedtech.com>
-Subject: [PATCH v3 09/10] hw/arm/aspeed_ast1040_evb: Introduce onboard I2C
- device
-Thread-Topic: [PATCH v3 09/10] hw/arm/aspeed_ast1040_evb: Introduce onboard
- I2C device
-Thread-Index: AQHc8w2KuYdW52pHfEOixv6RcigWkQ==
-Date: Wed, 3 Jun 2026 04:00:39 +0000
-Message-ID: <20260603040027.938816-10-jamin_lin@aspeedtech.com>
-References: <20260603040027.938816-1-jamin_lin@aspeedtech.com>
-In-Reply-To: <20260603040027.938816-1-jamin_lin@aspeedtech.com>
-Accept-Language: zh-TW, en-US
-Content-Language: en-US
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-authentication-results: dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=aspeedtech.com;
-x-ms-publictraffictype: Email
-x-ms-traffictypediagnostic: TYZPR06MB4980:EE_|KL1PR06MB6623:EE_
-x-ms-office365-filtering-correlation-id: 9775ee7e-2bf1-44e9-8ee0-08dec124acad
-x-ms-exchange-senderadcheck: 1
-x-ms-exchange-antispam-relay: 0
-x-microsoft-antispam: BCL:0;
- ARA:13230040|366016|1800799024|376014|56012099006|22082099003|38070700021|6133799003|18002099003;
-x-microsoft-antispam-message-info: +Kvw4TY+QsEhdygKnuqjHzpboAOOhuwI8MVBJXyJ5lIbCl/ZIRIFu7j1796qX9yEEnoPyQnF8Hwe2KzfbaQOz1aLTYBX9HuiMqM+wNEizbAJC6+7ASP0D+QotQBBLlvU0IIdOGQ3d08XcatGmMMXqwDRpffZWoJquX6iyuZyC3u2/rIsj5alfcrWUQos+MrAfx/wQuLGHRzKPoMFMcflt3IROknSNWO1IdLuDOcbU8Rox6PGnstNirNJZ05DygYpOkrIwEDf4IjjcPaw3kMGvH3IeCHl/7bSO5rZfq4vNyFEYnwIw/V2QJp3ClGj/CFLak+rJ/lExvfyCNO2oTfrIhUu5k5cFgLh8xvbsjRaMuxVmbFAarkwYsq675gBQPFYy1v8Cn+3FBZ2r/MG48miPsPnspGbryJcl00X4T63Z1Pii0LILZClYlrA+yt/9gF+3F6IyiJNxE7AITlMjWcW/7lSTVfLNAjtAXJhexRaezdu4TbDlZe7ZQ3uTERsvkHXJmHsnol2kfv9lo1zVKBUM4WsBXJus2jRtMpAmdTqCcWAiRnZ++fWbNkfQAt3KCffvfyQjKbOPLFjyUCLJCLunaIfUU2/Exx16/e+eWUowYolu07JX8omDv7tiVfzaMTdG+10qWx1c0TfzOUCy4GLKXguojc4HFjT4J2BEYK7D+yXf6iQHSzuB7xP5MamAAlyxuiJmm1Qy/SqU9lmcTijqPF5pGKcF2kgLAagg6w81n8II2bS0hdqSKdSPaB1MQ3U
-x-forefront-antispam-report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
- IPV:NLI; SFV:NSPM; H:TYZPR06MB4980.apcprd06.prod.outlook.com; PTR:; CAT:NONE;
- SFS:(13230040)(366016)(1800799024)(376014)(56012099006)(22082099003)(38070700021)(6133799003)(18002099003);
- DIR:OUT; SFP:1102; 
-x-ms-exchange-antispam-messagedata-chunkcount: 1
-x-ms-exchange-antispam-messagedata-0: =?iso-8859-1?Q?QKFqC4RxaVvHdS/jHiYPdTL8Mi1XUCOaVIbVyyo1JseWhP57erZ1p79shx?=
- =?iso-8859-1?Q?YlXds1dliGgZ2owZ1LdDtyrhM7DNtRDNzge5nkZOKMP//TVo3tdUP4BhPA?=
- =?iso-8859-1?Q?vpiS7HpwHS16aAINvLsBAABmhQ6SIR58E61rfg7nMkSoWk6O11dn8JEejY?=
- =?iso-8859-1?Q?1aHA7xSS2mWbmH1c0mCkstblRUKmpRCvbiYugDzOutdM5qCiewRYxXBk9E?=
- =?iso-8859-1?Q?Rrt7neqziYW9BjQ8Zw/KadrbiaNYLBAiwpmAnnX5cGharaNJA/oQimpMWR?=
- =?iso-8859-1?Q?cBsJqy1quLYpfEx+6U6/pysTa4zI/+OATXpFDi7ppnwebSSrgFxdLYwXVL?=
- =?iso-8859-1?Q?+m4L4kw+eD8IuLP06tYtyriud197i2WoGFJPKJjMl+eOzT6xZI+6avgyca?=
- =?iso-8859-1?Q?aFSeHxayzPJmHIy2Ielu3Zp81ZwtIdKIvjgx0psSSug7JvDo69uJrfz+Kk?=
- =?iso-8859-1?Q?1T0l338YXN+3LA5EZFiajwtjtaGE2QQV+UV5IFP4Mwu3A8NP/maSzcHCKI?=
- =?iso-8859-1?Q?XW5Ii98jVyHnogTbjHoz95SY6FoKs3p1yJPhrx+G9TmWQM1UazExrS6JYL?=
- =?iso-8859-1?Q?P+nW2/o9dj/glsYSWOsLbc1ez3fL6fSF05C4bbbCmT/gkGpaK2lnpiuxFE?=
- =?iso-8859-1?Q?VmUt+J8lqT7+txTXWEzuOnRIENW9FGoZsDy4e9H8zgsevyZ1MjqzvgOQ6Y?=
- =?iso-8859-1?Q?6ZWRUXUWNYDDn0nKLsuGveIaPohGTIHhduFvXr8jzL0G1ljRvApuFekQ1f?=
- =?iso-8859-1?Q?PeEhb4PXHEvI3gklaR2PVMTx0+PyboOF1IIPYXzxHd2k7fagRjr97dpe7P?=
- =?iso-8859-1?Q?Whv69iA2DQALsSEWZskDfD3BQy6gyM1zJeyzF6IOvIoKQJvgAZQkhv/290?=
- =?iso-8859-1?Q?aOpLXGWAHWGDpLYzfj2lMZ+sAJnMVn5PAiQpzM7ijQ6U21+B7+2fMdcP9b?=
- =?iso-8859-1?Q?pgzXWgF9VTvceqfdOnMx9uIlg658pwXGX2h2rqniK/NXgWjt9PYy3DciJX?=
- =?iso-8859-1?Q?TeWvWlMMmYMMBnk5BGqQj0KJ8CapE9k4g2eEmr8Y6+YyI0niJWX/Fzse/x?=
- =?iso-8859-1?Q?7exxt2uusfxnbS+uqpHqGK3aFQKz5zHk8Ccy03eQSH3GozGY5ZVrlxcsho?=
- =?iso-8859-1?Q?hcNQsDU5A/8RDm0QFuOa74+0p9ma6P7l8I2R4n5q8W0ESSLB/EU7+GAzTM?=
- =?iso-8859-1?Q?/ojnoX47M1hcELtpMzBGSgtmN1gFPUUraYA0+BYibhpa5mguTeRFBrW1OM?=
- =?iso-8859-1?Q?UxbW+6bBhVwkSpzOoh92qwFIRO5H0da44KGhUutr84bQ7Serz4TyN96F3Y?=
- =?iso-8859-1?Q?tO2NkJvk+gC5EvrPB2aiWLUtHYrZjKtf5vqinlNuUnxgs134RO25/hr2bw?=
- =?iso-8859-1?Q?402b41BDrXc3zxCZQmlg2cule8J1SCdMr8kw2Uzc2c/kTKHmvCYIMgv4kM?=
- =?iso-8859-1?Q?OS/gMKpb+S9Rn6rKgDK0xwhDzZ4+Go27aquSnc7h8AYnsCjNCM21LUOLwA?=
- =?iso-8859-1?Q?DhIngfc//zm5ih3SLW7xNFsWwWErRG8oD4/AXNjLaqw4LNhRWlZxteoAQY?=
- =?iso-8859-1?Q?knPQWM9y26zxc74zfeEoho2suGELsw8b9qob/ksUgcG11fpVfyJeWuJwVx?=
- =?iso-8859-1?Q?SQ05GlUtQZ9Ik7sSSkyLtRhxuQ1LR+jqbHcl0Ne4Rqo6lAydaldPl5kSQV?=
- =?iso-8859-1?Q?L9+2I+88spH+8YiK47AAxHLP6oiAuePaOl24iV5G2dIqqt6azvhFclaJGK?=
- =?iso-8859-1?Q?Jy/3kQaIEsGefb4Gvdv+O6ZD+LYCcvtkO+yQojUOS8WCgB+2fpsUP/ynRf?=
- =?iso-8859-1?Q?EtS0NkzBdg=3D=3D?=
-Content-Type: text/plain; charset="iso-8859-1"
-Content-Transfer-Encoding: quoted-printable
+ (Exim 4.90_1) (envelope-from <naveen@kernel.org>) id 1wUdNe-0001l6-PN
+ for qemu-devel@nongnu.org; Wed, 03 Jun 2026 00:39:04 -0400
+Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
+ by sea.source.kernel.org (Postfix) with ESMTP id 865BD44611;
+ Wed,  3 Jun 2026 04:39:00 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3580F1F00893;
+ Wed,  3 Jun 2026 04:38:59 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
+ s=k20260515; t=1780461540;
+ bh=Tgc/mBwwWLf0yTSd7ryI7LY/lT7cZticZ4+48xKlahk=;
+ h=Date:From:To:Cc:Subject:References:In-Reply-To;
+ b=dmXopBRDIItTLCEyP4JGn4QYkDJtdSQZhG2wNRlL1brdDiBerICVAsVVTweDMR7gR
+ ldxpXV6G4SWOFXRx/3yWX5LT6eCaQEp3D+rLTTxeASwo8sktJIJ36ffFgTsqzNiieK
+ PQhERG7OgOHMblnZr/dj39kAed6MIaNvPbe6Je67t0hbzJEJS1KE7yijpvSgE2Zp4J
+ +aWWLaO3z/4NWSuybggboZ4cXn0kmB05P0+lPDf07ttqjeltlgHDgYSbdgxI35Nc1k
+ WHUXr2GRjJdNHH4L/eWDcOs0EANeXmZlGF8biDxdDv+GjKUeJwzP8rDBQZcJ56pnm2
+ /QZme+qpmexpg==
+Date: Wed, 3 Jun 2026 10:02:37 +0530
+From: Naveen N Rao <naveen@kernel.org>
+To: Paolo Bonzini <pbonzini@redhat.com>, 
+	qemu-devel <qemu-devel@nongnu.org>
+Cc: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>, 
+ Eduardo Habkost <eduardo@habkost.net>, Eric Blake <eblake@redhat.com>, 
+ Markus Armbruster <armbru@redhat.com>, Marcelo Tosatti <mtosatti@redhat.com>, 
+ Zhao Liu <zhao1.liu@intel.com>, Nikunj A Dadhania <nikunj@amd.com>, 
+ Tom Lendacky <thomas.lendacky@amd.com>, Michael Roth <michael.roth@amd.com>, 
+ Roy Hopkins <roy.hopkins@randomman.co.uk>,
+ Srikanth Aithal <srikanth.aithal@amd.com>, 
+ Joerg Roedel <joro@8bytes.org>, Manali Shukla <manali.shukla@amd.com>
+Subject: Re: [RFC PATCH] target/i386: SEV: Allow pflash devices with SEV-ES
+ guests
+Message-ID: <ah-sVzEY5npAf5Y_@blrnaveerao1>
+References: <20260602071213.2084388-1-naveen@kernel.org>
 MIME-Version: 1.0
-X-Exchange-RoutingPolicyChecked: fxUYN3k65eHFiDNISI5zCxsPW8LqRU6Z+AlvtiThm+kbQmXFjIiPemWtK5iLQjWbhTuUDGtecTA4v0hJ6lIJne/SAFeHaWPbMpC2PYFOR2sj5uydBPo8E7WnVcT0/EoiiAq6ZCOcKweemRrQ71uNIBArxqtBP7BH+4F1vt/zzm06C5GlCalvfLtNLJVf+E4Hh4V0pQ2XdA6IY9AjgBE+GUY+0hxZcCuUQk39LehRN3h+hEoYKcmlVNlsnJefeROzdYvi13AZ+OHha97y4NaR8lsD7em6Sh+dLvGYwWLw4C+Cge/vvJWKt12LI6YMqVku6UmqnW/cMmUn3TEBi+q9uQ==
-X-OriginatorOrg: aspeedtech.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-AuthSource: TYZPR06MB4980.apcprd06.prod.outlook.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 9775ee7e-2bf1-44e9-8ee0-08dec124acad
-X-MS-Exchange-CrossTenant-originalarrivaltime: 03 Jun 2026 04:00:39.3071 (UTC)
-X-MS-Exchange-CrossTenant-fromentityheader: Hosted
-X-MS-Exchange-CrossTenant-id: 43d4aa98-e35b-4575-8939-080e90d5a249
-X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
-X-MS-Exchange-CrossTenant-userprincipalname: J12Q3TTZUvivltxMaEWBZziWzaHTqPMAc38IblExC3bcNyfKpJfrE5MXlFiKc/RYpE/1ZoJe2MiN5QKah4kBiKUFAz3ir/m9Ebgge2GoOgc=
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: KL1PR06MB6623
-Received-SPF: pass client-ip=2a01:111:f403:c406::3;
- envelope-from=jamin_lin@aspeedtech.com;
- helo=OS8PR02CU002.outbound.protection.outlook.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20260602071213.2084388-1-naveen@kernel.org>
+Received-SPF: pass client-ip=2600:3c0a:e001:78e:0:1991:8:25;
+ envelope-from=naveen@kernel.org; helo=sea.source.kernel.org
+X-Spam_score_int: -24
+X-Spam_score: -2.5
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.445,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -148,68 +76,158 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Introduce onboard I2C device initialization for the AST1040=0A=
-EVB model.=0A=
-=0A=
-Instantiate:=0A=
- - A 24C08-compatible EEPROM at address 0x50 on I2C bus 0=0A=
- - A TMP105 temperature sensor at address 0x4d on I2C bus 1=0A=
-=0A=
-Signed-off-by: Jamin Lin <jamin_lin@aspeedtech.com>=0A=
----=0A=
- hw/arm/aspeed_ast1040_evb.c | 15 +++++++++++++++=0A=
- 1 file changed, 15 insertions(+)=0A=
-=0A=
-diff --git a/hw/arm/aspeed_ast1040_evb.c b/hw/arm/aspeed_ast1040_evb.c=0A=
-index 1d9b55247f..2b93d4dfbc 100644=0A=
---- a/hw/arm/aspeed_ast1040_evb.c=0A=
-+++ b/hw/arm/aspeed_ast1040_evb.c=0A=
-@@ -14,6 +14,7 @@=0A=
- #include "hw/arm/aspeed_soc.h"=0A=
- #include "hw/core/qdev-clock.h"=0A=
- #include "system/system.h"=0A=
-+#include "hw/i2c/smbus_eeprom.h"=0A=
- =0A=
- #define AST1040_INTERNAL_FLASH_SIZE (4 * MiB)=0A=
- /* Main SYSCLK frequency in Hz (400MHz) */=0A=
-@@ -38,12 +39,25 @@ static void aspeed_bic_machine_init(MachineState *machi=
-ne)=0A=
-     aspeed_connect_serial_hds_to_uarts(bmc);=0A=
-     qdev_realize(DEVICE(bmc->soc), NULL, &error_abort);=0A=
- =0A=
-+    if (amc->i2c_init) {=0A=
-+        amc->i2c_init(bmc);=0A=
-+    }=0A=
-+=0A=
-     armv7m_load_kernel(ARM_CPU(first_cpu),=0A=
-                        machine->kernel_filename,=0A=
-                        0,=0A=
-                        AST1040_INTERNAL_FLASH_SIZE);=0A=
- }=0A=
- =0A=
-+static void ast1040_evb_i2c_init(AspeedMachineState *bmc)=0A=
-+{=0A=
-+    AspeedSoCState *soc =3D bmc->soc;=0A=
-+    uint8_t *eeprom_buf =3D g_malloc0(256);=0A=
-+=0A=
-+    smbus_eeprom_init_one(aspeed_i2c_get_bus(&soc->i2c, 0), 0x50, eeprom_b=
-uf);=0A=
-+    i2c_slave_create_simple(aspeed_i2c_get_bus(&soc->i2c, 1), "tmp105", 0x=
-4d);=0A=
-+}=0A=
-+=0A=
- static void aspeed_machine_ast1040_evb_class_init(ObjectClass *oc,=0A=
-                                                   const void *data)=0A=
- {=0A=
-@@ -55,6 +69,7 @@ static void aspeed_machine_ast1040_evb_class_init(ObjectC=
-lass *oc,=0A=
-     amc->hw_strap1 =3D 0;=0A=
-     amc->hw_strap2 =3D 0;=0A=
-     mc->init =3D aspeed_bic_machine_init;=0A=
-+    amc->i2c_init =3D ast1040_evb_i2c_init;=0A=
-     mc->default_ram_size =3D 0;=0A=
-     amc->macs_mask =3D 0;=0A=
-     amc->uart_default =3D ASPEED_DEV_UART12;=0A=
--- =0A=
-2.43.0=0A=
+On Tue, Jun 02, 2026 at 12:42:13PM +0530, Naveen N Rao (AMD) wrote:
+> KVM commit 66155de93bcf ("KVM: x86: Disallow read-only memslots for
+> SEV-ES and SEV-SNP (and TDX)"), and the subsequent commit d30d9ee94cc0
+> ("KVM: x86: Only advertise KVM_CAP_READONLY_MEM when supported by VM")
+> stopped advertising KVM_CAP_READONLY_MEM support for encrypted guests
+> (KVM_X86_SEV_ES_VM and KVM_X86_SNP_VM), but not for KVM_X86_DEFAULT_VM
+> type SEV-ES guests. As a result of this, it is no longer possible to
+> start SEV-ES guests with any SEV feature enabled (in particular,
+> debug-swap) with pflash devices.
+> 
+> This is an issue since SEV-ES guests have historically used pflash
+> devices for OVMF. Guests on older KVM+Qemu are able to enable debug-swap
+> while using pflash devices, so work around the KVM limitation by
+> switching to using a VMA-based write protection. This allows
+> well-behaved SEV-ES guests to continue to work with pflash devices and
+> enable debug-swap. Mis-behaving guests trying to write to the protected
+> OVMF area will be killed.
+> 
+> Enable VMA protection and set the memory to be RO when adding the KVM
+> memory slot. Because pflash devices support command-mode, change VMA
+> protection to RW when tearing down the KVM memory slot. KVM
+> SEV_LAUNCH_UPDATE also requires memory to be RW, so disable the
+> protection when calling that.
+> 
+> Print a warning when switching to VMA-based protection so that it is
+> clear that KVM itself isn't supporting readonly memory, and that a
+> workaround is in place. Users can plan on switching to using '-bios'.
+> 
+> Finally, drop the check rejecting SEV-ES guests with SEV features so 
+> that debug-swap can be enabled.
+> 
+> 
+> Signed-off-by: Naveen N Rao (AMD) <naveen@kernel.org>
+> ---
+> Background discussion on this issue:
+> http://lore.kernel.org/r/aUq9_cUDWeEW_qli@google.com
+> 
+> This series depends on VMSA features support:
+> http://lore.kernel.org/r/cover.1779281646.git.naveen@kernel.org
+> 
+
+...
+
+> @@ -2024,6 +2018,15 @@ static int 
+> sev_kvm_init(ConfidentialGuestSupport *cgs, Error **errp)
+>          return -1;
+>      }
+>  
+> +    /*
+> +     * Use VMA-based protection for SEV-ES guests that enable any
+> +     * SEV feature, since KVM does not advertise readonly memory
+> +     * support for non-default type SEV guests.
+> +     */
+> +    if (sev_es_enabled() && SEV_COMMON(cgs)->sev_features) {
+> +        kvm_enable_ro_mem_vma_protection();
+> +    }
+> +
+
+Manali reported that -bios no longer works due to this change. That's 
+because we enable protection for all SEV-ES guests here. A simple fix is 
+to move this to where we throw the warning for pflash today (diff 
+below).
+
+It looks like we will need an additional change for kernel-hashes since 
+that also calls into sev_encrypt_flash(), so we need to move calls to 
+mprotect to the OVMF caller.  The diff below also addresses that.
+
+I will wait for some feedback on this patch/approach before posting the 
+next version.
+
+
+- Naveen
+
+---
+ hw/i386/pc_sysfw.c      |  1 +
+ hw/i386/pc_sysfw_ovmf.c |  8 ++++++++
+ target/i386/sev.c       | 15 ---------------
+ 3 files changed, 9 insertions(+), 15 deletions(-)
+
+diff --git a/hw/i386/pc_sysfw.c b/hw/i386/pc_sysfw.c
+index 9590458e00c5..41da3685b98f 100644
+--- a/hw/i386/pc_sysfw.c
++++ b/hw/i386/pc_sysfw.c
+@@ -257,6 +257,7 @@ void pc_system_firmware_init(PCMachineState *pcms,
+             if (sev_es_enabled() && !sev_snp_enabled()) {
+                 warn_report("pflash not supported with SEV-ES guests, "
+                             "attempting VMA based protection");
++                kvm_enable_ro_mem_vma_protection();
+             } else {
+                 /*
+                  * Older KVM cannot execute from device memory. So, flash
+diff --git a/hw/i386/pc_sysfw_ovmf.c b/hw/i386/pc_sysfw_ovmf.c
+index 2f7d15c9f3eb..d7a2e36aa736 100644
+--- a/hw/i386/pc_sysfw_ovmf.c
++++ b/hw/i386/pc_sysfw_ovmf.c
+@@ -30,6 +30,7 @@
+ #include "cpu.h"
+ #include "target/i386/sev.h"
+ #include "kvm/tdx.h"
++#include "system/kvm.h"
+ 
+ #define OVMF_TABLE_FOOTER_GUID "96b582de-1fb2-45f7-baea-a366c55a082d"
+ 
+@@ -184,7 +185,14 @@ void x86_firmware_configure(hwaddr gpa, void *ptr, int size)
+             exit(1);
+         }
+ 
++        /*
++         * KVM requires these pages to be RW for SEV_LAUNCH_UPDATE_DATA,
++         * so remove VMA RO protection if any, for the duration of
++         * sev_encrypt_flash().
++         */
++        kvm_set_memory_readwrite(ptr, size);
+         sev_encrypt_flash(gpa, ptr, size, &error_fatal);
++        kvm_set_memory_readonly(ptr, size);
+     } else if (is_tdx_vm()) {
+         ret = tdx_parse_tdvf(ptr, size);
+         if (ret) {
+diff --git a/target/i386/sev.c b/target/i386/sev.c
+index 0876e7c1fa1e..dc8851a12927 100644
+--- a/target/i386/sev.c
++++ b/target/i386/sev.c
+@@ -2018,15 +2018,6 @@ static int sev_kvm_init(ConfidentialGuestSupport *cgs, Error **errp)
+         return -1;
+     }
+ 
+-    /*
+-     * Use VMA-based protection for SEV-ES guests that enable any
+-     * SEV feature, since KVM does not advertise readonly memory
+-     * support for non-default type SEV guests.
+-     */
+-    if (sev_es_enabled() && SEV_COMMON(cgs)->sev_features) {
+-        kvm_enable_ro_mem_vma_protection();
+-    }
+-
+     if (!cgs->ready) {
+         /*
+          * SEV uses these notifiers to register/pin pages prior to guest use,
+@@ -2114,13 +2105,7 @@ sev_encrypt_flash(hwaddr gpa, uint8_t *ptr, uint64_t len, Error **errp)
+     if (sev_check_state(sev_common, SEV_STATE_LAUNCH_UPDATE)) {
+         int ret;
+ 
+-        /*
+-         * KVM requires these pages to be RW, so remove VMA RO protection
+-         * for the duration of SEV_LAUNCH_UPDATE if using SEV features.
+-         */
+-        kvm_set_memory_readwrite(ptr, len);
+         ret = klass->launch_update_data(sev_common, gpa, ptr, len, errp);
+-        kvm_set_memory_readonly(ptr, len);
+         if (ret < 0) {
+             return ret;
+         }
+-- 
+
 
