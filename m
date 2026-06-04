@@ -4,137 +4,130 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id CBAC2CD6E6D
-	for <qemu-devel@archiver.kernel.org>; Thu,  4 Jun 2026 15:40:26 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 28F2FCD6E6D
+	for <qemu-devel@archiver.kernel.org>; Thu,  4 Jun 2026 15:42:58 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wVAAx-00018N-73; Thu, 04 Jun 2026 11:40:07 -0400
+	id 1wVADO-0002CX-MT; Thu, 04 Jun 2026 11:42:39 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jithu.joseph@oss.qualcomm.com>)
- id 1wVAAr-00015R-1o
- for qemu-devel@nongnu.org; Thu, 04 Jun 2026 11:40:03 -0400
+ (Exim 4.90_1) (envelope-from <pierrick.bouvier@oss.qualcomm.com>)
+ id 1wVAD1-00028n-7h
+ for qemu-devel@nongnu.org; Thu, 04 Jun 2026 11:42:20 -0400
 Received: from mx0b-0031df01.pphosted.com ([205.220.180.131])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jithu.joseph@oss.qualcomm.com>)
- id 1wVAAo-0008OE-9j
- for qemu-devel@nongnu.org; Thu, 04 Jun 2026 11:39:59 -0400
-Received: from pps.filterd (m0279870.ppops.net [127.0.0.1])
+ (Exim 4.90_1) (envelope-from <pierrick.bouvier@oss.qualcomm.com>)
+ id 1wVACt-00010L-Nv
+ for qemu-devel@nongnu.org; Thu, 04 Jun 2026 11:42:12 -0400
+Received: from pps.filterd (m0279868.ppops.net [127.0.0.1])
  by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 654E0GXh141860
- for <qemu-devel@nongnu.org>; Thu, 4 Jun 2026 15:39:56 GMT
+ 654EKxMK1132273
+ for <qemu-devel@nongnu.org>; Thu, 4 Jun 2026 15:42:05 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
- cc:content-transfer-encoding:content-type:date:from:in-reply-to
+ content-transfer-encoding:content-type:date:from:in-reply-to
  :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
- Ng/HlOfLezmtpGsLViei8P9NLX/8Ld0UaP334CUhozs=; b=CusH90UjUiat8XUg
- zAsQan2Nk6lEncnm2ee1+YOnj2zhMuSBR6TQ8Y/yYEZ66YGFbaV72qhnKVBp2k1H
- ivLFiVGBunyEsQUTbwrHuYCgI6E09vMvnOETj4EhQ+v+7N4TXqVFm0nNeu0aytkb
- w4RxdIk2HgN0zQg7sJltqbqFpt7mKBOWrpZFRUEXUB1a3Soim7fWlIyFiPFP+tdH
- Z55hxvmAfnmJ7JOQ/Xisoc0iRUOh85mHZosZLssv4FIRrW6erqVUfz229KeklnBt
- fxLCFThircErQHlfUNkMiATJh4h/EMhb4HaoNn7VDs4nvAhBc28bIRgnMyhXl4px
- HZDS5w==
-Received: from mail-dy1-f197.google.com (mail-dy1-f197.google.com
- [74.125.82.197])
- by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4ejyenb6cc-1
+ nSFqugc2F6N8zifcZkRgjBjpnBuCUNKoDdInHEvKzEk=; b=kfc4X59gp80ekHw/
+ l+El8YbQD9u5KvEZhrC8W/OSQB1rC99PTrqTQ4bMIB+slkGgMwCCD5KufzHk53wH
+ rMjYnExXtO2prWot2CHRbeTBYgPfBgR5tYDl+Jw7d4dSGcdRmokpJLVy/nM8ou0x
+ f7tCESb+tBldLc6ewS/DdsX0RdvvwsQ0bu1PUTeHP+sDOv3I32LEZEokTHZTbUU+
+ B3/njSkeucGY7gZmeRIUdPgcmJq39wV7ol0lyLm3Djba6AkcjO2f1e8VTgKJ0gV/
+ ox+tU5iVD+hLRcIEpZZUPEFvzlQ8HHuqA6+lMqfVQE49fkO2lSsjGgD8LluPk+D0
+ nwaSJg==
+Received: from mail-dl1-f69.google.com (mail-dl1-f69.google.com [74.125.82.69])
+ by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4ek5wshrhv-1
  (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
- for <qemu-devel@nongnu.org>; Thu, 04 Jun 2026 15:39:56 +0000 (GMT)
-Received: by mail-dy1-f197.google.com with SMTP id
- 5a478bee46e88-304f1820babso1012441eec.1
- for <qemu-devel@nongnu.org>; Thu, 04 Jun 2026 08:39:56 -0700 (PDT)
+ for <qemu-devel@nongnu.org>; Thu, 04 Jun 2026 15:42:05 +0000 (GMT)
+Received: by mail-dl1-f69.google.com with SMTP id
+ a92af1059eb24-137f304f564so1563242c88.0
+ for <qemu-devel@nongnu.org>; Thu, 04 Jun 2026 08:42:05 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=oss.qualcomm.com; s=google; t=1780587595; x=1781192395; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=Ng/HlOfLezmtpGsLViei8P9NLX/8Ld0UaP334CUhozs=;
- b=JpAfiXu4c/P1ETSzXuW2fv3KrsoN0tVYGe9D8Ho8E5ak/Klz/PYFJuJx0JXyl7tN1I
- ek7Pq7DOo4sFTzas0pGlnsawZZyHpK8qecjgR7OMwzuGW7Hiindjb3E9McARC17EixKE
- 9mhi83BSy9kv8gJMGJ/rlG+9CJc0Urv4sB81eZHvAbfNvPaxaFVzqB8LX1H/pdEnY3UA
- Y0MCEobuay54AoEVpsffRfq6BgBt4RVOX6pRp0L1fdGJGqRP5Dt1rc3Pn4CnOKJhpAz9
- jv3RNhwo070BAcujN4I8jd3ARcJqtzjPr3JGNBWRIb3uijCQUXwRdNF5pL+ENwL8R53g
- +dcA==
+ d=oss.qualcomm.com; s=google; t=1780587725; x=1781192525; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:content-language:from
+ :references:to:subject:user-agent:mime-version:date:message-id:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=nSFqugc2F6N8zifcZkRgjBjpnBuCUNKoDdInHEvKzEk=;
+ b=eUDx/AYFUjBocn5tIk7sZr7ImsBkPJcEzTMzhi9ZFQ/2WM/Y5A4Qn7TEF3leVIt0O/
+ Qu5qBndnRZfCtASyed3zFz9nRxab19+j42YlAvJLiaR4lMD4MAkx3EYtrFOhqqe3HgUj
+ QcABxaJCz0YAlvuzEHK+DbMuv4Ckus/N/8PFS+JTETSpG6p/RTOvGUonfEMxNRa5Oax8
+ 38ZpEYb2Jd5mKrrz64/p8soeKi6BGESvGtUdPcBLYorKUxaKQOoPRkBpkzNgIAv5W78f
+ QZuVEtiK1i/4/i6YglUgj/+nmKbcFsIJnF0Ktw1ZfE3lVFrY78fDLziBerth0aT7dfA9
+ Iwiw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1780587595; x=1781192395;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
+ d=1e100.net; s=20251104; t=1780587725; x=1781192525;
+ h=content-transfer-encoding:in-reply-to:content-language:from
+ :references:to:subject:user-agent:mime-version:date:message-id
  :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=Ng/HlOfLezmtpGsLViei8P9NLX/8Ld0UaP334CUhozs=;
- b=XpBIXK4ndI4Cfmnx9mFhXpPm0LkDhaf5PpsBHx4aSIqnIFNTLmLTJnfARs9qgWNw+/
- 26eFGJxKZpUpF7VH11hl6Wbu2BgYP6hVJBQuer1iKfybIM8N0AIMEIdYH/sXuqmkK/mj
- 6JS91MQDgl5VKXBWxfMMVd8n/7c+siXuh85M5mdaFDpV+hW7rOgEYrCg4OgQwH1bs3jh
- RP7PG/Ggc0eqggNk7fxl5+9NhYDb5JdThkAVa6UbfC+dXXf3pKp++kDhNpucyqloSXCX
- 1HzUeNW0b4osbXY9LyQxvvvGLZLqtTNfhBV/8sukfvGevaCwIrubFeNp7j9rx4vLmPv+
- Aung==
+ bh=nSFqugc2F6N8zifcZkRgjBjpnBuCUNKoDdInHEvKzEk=;
+ b=nvj9rIbqHSJ2Lt2GDsh7dF7CTU5gQckGa9bKmO1z60+ADgC+7zJzfamcMC4WvKAPnM
+ ntfHQ9ZhPRVaBkHYXtyphYboVwrNYHb13okBhBP9l114fgbZSNIb2ZjetWP7Ei4ztFEL
+ EkU4SGpQXn1BRD+aKfXs5ZAyXqShSsejgZN/3LznK750AE1grNlq/DoGnpN4IBtXfJn+
+ TT2HpUlrJ9AkXNLJmY4sQjF70BnOHuau8yVhKSVEihHO2+waGt65NjrQt+t0wr2uU76/
+ T2h8ZjOegMeC5UHHWIJkHz9cnesSoTT5RwXPWSSm6h3eNjl74IEumuOPdLlWg8kCKLca
+ zCPw==
 X-Forwarded-Encrypted: i=1;
- AFNElJ++PLEaFajGh3ComQwCmg2oODf2xcx4fnpWCufCL33kZIMOu4bYIrpYKL16Ks9M2+kldANfgQzdEHlj@nongnu.org
-X-Gm-Message-State: AOJu0YwoVOteJtSQ61WLT3/2auqiryAkAfavvSOGI1Az6Hjj5C6ONA0j
- oFJYVxGxuzVdfxFJhhiO/78Ixj4b+JjIveyOneNvU/wEhNwF9WGPYnVtxRK7LFYwM/jFv+BzShO
- aaHZCdvLnGUj4msKltz9rvhyci8pkm21RfdTUUHQru3sFZEmGOuc+8qFCWA==
-X-Gm-Gg: Acq92OFvy9qNJSOemBp0DqTrVBYmRGByP1w/xL0uNFYm0T6Tltx6jYVOlE7FRDsxN1Q
- Y8Mt/MEsN2z+XObBE1siIEHR9BQsr8pNVy4gmHLVz9PW6/s7gl6A4V//geFPfdE4cvL29HdfMut
- UBC4KsU2Sa5JZDjiT+Tx7WZWSy4UlD8lU1c8GzOWtyfK5RM/8tXheALLj6MKAiGU0Yn0Dt8iSxp
- T8BICTioFwWTrFDuww0Fllx/qPS5A357F6YQlYAhjVm5YvbYdHA4Dv8asdCrt4eTQ/AoZlvl/AE
- Gi8KbHXksXvmM3/OrpZaYJsTs38tsqKu09xlaNpWMDMAO1BWpe4RQWxYSL1jyiVYF4ntwahf6vf
- 9NIvd/p4ZdbyPWHoe/uNhYYwc+Qd/sLuKnMS6u7bTClqiLTcF7uAre+1OytfxodvLJrnVMbNQgJ
- jyF6Le//mJNWjIwg==
-X-Received: by 2002:a05:7300:2391:b0:2f2:6dde:df50 with SMTP id
- 5a478bee46e88-3074fbc7eb5mr4704143eec.17.1780587595373; 
- Thu, 04 Jun 2026 08:39:55 -0700 (PDT)
-X-Received: by 2002:a05:7300:2391:b0:2f2:6dde:df50 with SMTP id
- 5a478bee46e88-3074fbc7eb5mr4704124eec.17.1780587594802; 
- Thu, 04 Jun 2026 08:39:54 -0700 (PDT)
-Received: from [10.110.73.124] (i-global254.qualcomm.com. [199.106.103.254])
- by smtp.gmail.com with ESMTPSA id
- 5a478bee46e88-3074df805d1sm4831358eec.28.2026.06.04.08.39.53
+ AFNElJ/6fRMgLvasucmKDhYt+QZQCjagnxjwALNtw5248Ag281WIP0etT6OcXewbAvMF6SfiT4Lr3/5dK8OD@nongnu.org
+X-Gm-Message-State: AOJu0YzjR34qpcGx3HAkjKqZxq+M5GK9Dgeh2CxW/blLEG3ExN3nzPDe
+ DPJbNWcTC/NFvQ/bVD3MklcvZu2AYqW7qhcatBtiHi32hUUSzOywS/NaHY+2zJav221+dCiTRDc
+ GUL6uc6JRfXZ/6MI4bWvCXw2z8YfFWD4iYNqN+YCSXr2uQZom/pdhauYjB24RjMM/xiJV
+X-Gm-Gg: Acq92OFVwpPomBsg2GxLwGBqe4ACdqUynH0QLzPrrrK4GorzreYetZWtW6LhbqRWAzM
+ Xr17oZQ+VD9EJpau1QtIYLmdCXcgYgss9Cc0yahzdZJDFV08ZgIA6Ht4yPSNRSC3xEYd6l1BbOV
+ WI9wzE5FzBn1OtntuwnlT3rmdBET6oKHjXmfw4S2Vi5Z5zQQEa+kwBbz5Ek9h+QVZWcHwBdxBuK
+ sXXGDZq5TLiRzCI3KsASzhaH/hI3Ts79E9/tYS/2pLjke9ZF4qk0LykccXSlOm5m+LPnz5LrH0c
+ dPiQugmmUZ0Yf2IPklmmmOZEql/jaf4wXS8UErhVhX/gAP6M+uP+amuzIpNNiuBJHXB9FvnsGHI
+ aw/Ry1Wzp3X+u1e+skQf0x6pgARK5i/M3LIF8LS6wjJ3kQ9ox8GfHg/Bcj9Nxq9XgXJd9BSlLdR
+ Fae3S9Hk1giv8G7oh26qD9MptE
+X-Received: by 2002:a05:7301:5f85:b0:304:4f23:68d3 with SMTP id
+ 5a478bee46e88-3074fbc6042mr4645393eec.18.1780587724590; 
+ Thu, 04 Jun 2026 08:42:04 -0700 (PDT)
+X-Received: by 2002:a05:7301:5f85:b0:304:4f23:68d3 with SMTP id
+ 5a478bee46e88-3074fbc6042mr4645370eec.18.1780587724061; 
+ Thu, 04 Jun 2026 08:42:04 -0700 (PDT)
+Received: from [192.168.1.170] (216-71-219-44.dyn.novuscom.net.
+ [216.71.219.44]) by smtp.gmail.com with ESMTPSA id
+ 5a478bee46e88-3074df191d0sm7869720eec.21.2026.06.04.08.42.03
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 04 Jun 2026 08:39:54 -0700 (PDT)
-Message-ID: <2c79c0cb-e989-4c06-9fb7-9fa49b30940b@oss.qualcomm.com>
-Date: Thu, 4 Jun 2026 08:39:52 -0700
+ Thu, 04 Jun 2026 08:42:03 -0700 (PDT)
+Message-ID: <03666c35-83f9-44ea-b31b-07bc75b0e5e7@oss.qualcomm.com>
+Date: Thu, 4 Jun 2026 08:42:02 -0700
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 0/3] hw/i3c: fix DW-I3C FIFO depth advertisement
-To: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>, jamin_lin@aspeedtech.com,
- komlodi@google.com
-Cc: nabihestefan@google.com, philmd@linaro.org, qemu-devel@nongnu.org
-References: <20260529014034.864722-1-jithu.joseph@oss.qualcomm.com>
- <20260604000734.1094382-1-jithu.joseph@oss.qualcomm.com>
- <4696cf03-08ad-4de4-b782-4d5c253b2cef@kaod.org>
- <3a076897-ee9f-4422-8daf-ea44223eab59@oss.qualcomm.com>
- <6b932f59-7d34-4931-a68d-56e96030e67d@kaod.org>
+Subject: Re: [PATCH] add a note on -shim to direct kernel boot docs
+To: Gerd Hoffmann <kraxel@redhat.com>, qemu-devel@nongnu.org
+References: <20260604134422.359214-1-kraxel@redhat.com>
+From: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
 Content-Language: en-US
-From: Jithu Joseph <jithu.joseph@oss.qualcomm.com>
-In-Reply-To: <6b932f59-7d34-4931-a68d-56e96030e67d@kaod.org>
+In-Reply-To: <20260604134422.359214-1-kraxel@redhat.com>
 Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-X-Authority-Analysis: v=2.4 cv=JaSMa0KV c=1 sm=1 tr=0 ts=6a219c4c cx=c_pps
- a=Uww141gWH0fZj/3QKPojxA==:117 a=JYp8KDb2vCoCEuGobkYCKw==:17
- a=IkcTkHD0fZMA:10 a=FelO9ux0wxsA:10 a=s4-Qcg_JpJYA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=gowsoOTTUOVcmtlkKump:22
- a=VwQbUJbxAAAA:8 a=EUspDBNiAAAA:8 a=NEAV23lmAAAA:8 a=aEx-WPjuRe2x_90x2xgA:9
- a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10 a=PxkB5W3o20Ba91AHUih5:22
-X-Proofpoint-ORIG-GUID: hdkwkYii0TdyUP30esBquIkTCayxR8tv
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNjA0MDE1MiBTYWx0ZWRfXxk2iGmSqh6h2
- w9MHo7QZuj64EmqdWavbnA9Y9pZmCfNolwX3LcWpYmzxK83pfpdFelxWtZqXRJMXvp6eLWb3oIg
- AxUecSRjjPLTKl6TUAcY1b3OjWiCSuz645umpeWNBD5KZwfO4Ys63kd5+a1Ev40o95J96ucK3Io
- dq2PA+W548mCbAeQnyxu7fTsXeApRK0kMSYjHx64dVWKd3GBz+o6fEb3JZgBcPxBeTAlvbmr0bz
- b4x1dvXoAtpspcqjKCp10zFIKaaeswm2aLB+b2JfZOBX5CkASsyXCUq6rmtLy98AuQES96wGxyy
- PEfh/EXZ4Savq+S35yByzpjOU5wsWTN2sDoHczxBHuZPzpU3Ue57AgUCFR2SmG6Vms4ZfJ9ZX+b
- Lx7L+VTiwOTjiCvtfzlqdo9zBzjsb8hWzj+2qaTw3Xr5VYPcfmfLgJcgJAGRyc9yI8jsjAHwUDr
- r7+MTfsdJuNTqoVUXeA==
-X-Proofpoint-GUID: hdkwkYii0TdyUP30esBquIkTCayxR8tv
+Content-Transfer-Encoding: 7bit
+X-Proofpoint-GUID: NyPt-ARlGk8B6xabfwAmNQdimiTcPfAj
+X-Proofpoint-ORIG-GUID: NyPt-ARlGk8B6xabfwAmNQdimiTcPfAj
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNjA0MDE1MyBTYWx0ZWRfX3uvnTWpAGvDx
+ xEh22Q1vlSs98eoV6ZftD3H8OOKURjTQgUhzBpvtut+iE6vq+VuCgXE9Sjo5Gq/HQ+oYoxmpZNt
+ RFq56/S3chSsvAZFvFNIQvGdmfTHYvBtDb4tNvRWiDShAjEdEP55LbiqLVMUZuuOTKKf2sedLEK
+ oE7d4eH3XGYlouxd8qHSO+D1koBeHmXZdfgDqyA/KLOaD6/018raTsqDIiDFl7zBeXQbO7ZVL5q
+ 6D+b9nThMHocpyDr8wL3WPP261CK6G0/p5PWzctQ+TyfIKWanRsEDevWV7kiH9dJdbPRVXEIc/v
+ jmEW7KBWgIUEzPT67skhq/SCvbbEHnMvdN2D3+y2tCCXfx5wlzhT/Xsjw29aUi9xg8bRGhglkp/
+ ebwOZQ0q/vbBtuW2AFLSPs1yFcbzjHL2saZ6Ov6KdvQ93S7AmP39b45VumlZ9WliVWHYzXcHgwK
+ LG6f65Pu0/8pGjiJePA==
+X-Authority-Analysis: v=2.4 cv=POc/P/qC c=1 sm=1 tr=0 ts=6a219ccd cx=c_pps
+ a=kVLUcbK0zfr7ocalXnG1qA==:117 a=iLqgmErQAxjCjdq5jj1Aqg==:17
+ a=wLZQiVpf1cABdgcX:21 a=IkcTkHD0fZMA:10 a=FelO9ux0wxsA:10 a=s4-Qcg_JpJYA:10
+ a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=ZpdpYltYx_vBUK5n70dp:22
+ a=20KFwNOVAAAA:8 a=SEeG0rePwgFbj1vdvacA:9 a=QEXdDO2ut3YA:10
+ a=vr4QvYf-bLy2KjpDp97w:22
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.125,FMLib:17.12.100.49
  definitions=2026-06-04_04,2026-05-28_03,2025-10-01_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- spamscore=0 phishscore=0 bulkscore=0 adultscore=0 lowpriorityscore=0
- suspectscore=0 clxscore=1015 malwarescore=0 priorityscore=1501
- impostorscore=0 classifier=typeunknown authscore=0 authtc= authcc=
- route=outbound adjust=0 reason=mlx scancount=1 engine=8.22.0-2605210000
- definitions=main-2606040152
+ lowpriorityscore=0 phishscore=0 malwarescore=0 clxscore=1015 bulkscore=0
+ impostorscore=0 priorityscore=1501 spamscore=0 adultscore=0 suspectscore=0
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.22.0-2605210000 definitions=main-2606040153
 Received-SPF: pass client-ip=205.220.180.131;
- envelope-from=jithu.joseph@oss.qualcomm.com; helo=mx0b-0031df01.pphosted.com
+ envelope-from=pierrick.bouvier@oss.qualcomm.com;
+ helo=mx0b-0031df01.pphosted.com
 X-Spam_score_int: -27
 X-Spam_score: -2.8
 X-Spam_bar: --
@@ -157,58 +150,38 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 6/4/2026 8:33 AM, Cédric Le Goater wrote:
-> On 6/4/26 17:24, Jithu Joseph wrote:
->> On 6/4/2026 1:28 AM, Cédric Le Goater wrote:
->>> On 6/4/26 02:07, Jithu Joseph wrote:
->>>> This series corrects the DesignWare I3C controller's advertised CMD/data
->>>> FIFO depths and cleans up the misleading queue-capacity field names that
->>>> made the bug easy to overlook.
->>>>
->>
->> ...
->>>
->>>
->>> Jithu,
->>>
->>> When you sent this v2, you did as a thread reply to :
->>>
->>>    https://lore.kernel.org/qemu-devel/20260529014034.864722-1-jithu.joseph@oss.qualcomm.com/
->>>
->>> This confuses the b4 tool and, in consequence, Jamin's Reviewed-by
->>> is not collected it seems.
->>
->> Sorry Cédric that it broke your MAINTAINER flow ...
+Hi Gerd,
+
+On 6/4/2026 6:44 AM, Gerd Hoffmann wrote:
+> Signed-off-by: Gerd Hoffmann <kraxel@redhat.com>
+> ---
+>  docs/system/linuxboot.rst | 9 +++++++++
+>  1 file changed, 9 insertions(+)
 > 
-> Well b4 isn't smart enough to grab the trailers on v2. Try it.
->
+> diff --git a/docs/system/linuxboot.rst b/docs/system/linuxboot.rst
+> index f7573ab80aa2..72af18ce1b5e 100644
+> --- a/docs/system/linuxboot.rst
+> +++ b/docs/system/linuxboot.rst
+> @@ -17,6 +17,15 @@ Use ``-kernel`` to provide the Linux kernel image and ``-append`` to
+>  give the kernel command line arguments. The ``-initrd`` option can be
+>  used to provide an INITRD image.
+>  
+> +The ``-shim`` option specifies the shim.efi binary.  This is needed
+> +when using direct kernel boot with UEFI secure boot enabled.  The
+> +verification chain used by linux distros requires shim.efi.  Typically
+> +shim.efi is signed by micsosoft and verified by the firmware.  The
+> +linux kernel is signed by the distro and is verified by shim.efi.  So
+> +without shim.efi in the loop secure boot verification will not work.
+> +Usually you can find shim.efi as ``EFI/BOOT/BOOT{X64,AA64}.EFI`` on
+> +distro install media.
+> +
+>  If you do not need graphical output, you can disable it and redirect the
+>  virtual serial port and the QEMU monitor to the console with the
+>  ``-nographic`` option. The typical command line is:
 
-Yes I tried it, and I could see that b4 didn't pick the tags
- 
+Are the double space before sentences expected, or just a broken formatting?
+Also, s/micsosoft/microsoft.
 
->> (I used to follow similar threading while sending newer revisions in LKML a while back)
-> 
-> I would recommend  to start a new email thread for each respin else
-> the newer version of a series is "hidden" under the previous thread.
-> 
-
-Noted will follow this for future patches
-
->>>
->>> Can you please resend as new thread ? If you can can collect Jamin's
->>> Reviewed-by trailers it would be nice.
->>
->> I just sent out v3 with Jaimin's tag here
->> https://lore.kernel.org/qemu-devel/20260604142207.2118098-1-jithu.joseph@oss.qualcomm.com/
-> 
-> 
-> Applied to
-> 
->     https://github.com/legoater/qemu aspeed-next
-
-Thanks
-
-Jithu
-
-
+Regards,
+Pierrick
 
