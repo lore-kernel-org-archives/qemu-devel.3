@@ -4,88 +4,89 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id AD98BCD6E77
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A0A16CD6E75
 	for <qemu-devel@archiver.kernel.org>; Thu,  4 Jun 2026 21:52:40 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wVFz9-0006tP-Jr; Thu, 04 Jun 2026 17:52:19 -0400
+	id 1wVFz3-0006rc-0k; Thu, 04 Jun 2026 17:52:13 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pierrick.bouvier@oss.qualcomm.com>)
- id 1wVFz6-0006sK-5Q
- for qemu-devel@nongnu.org; Thu, 04 Jun 2026 17:52:16 -0400
+ id 1wVFyz-0006rF-Of
+ for qemu-devel@nongnu.org; Thu, 04 Jun 2026 17:52:10 -0400
 Received: from mx0a-0031df01.pphosted.com ([205.220.168.131])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pierrick.bouvier@oss.qualcomm.com>)
- id 1wVFyy-0006jH-G4
- for qemu-devel@nongnu.org; Thu, 04 Jun 2026 17:52:10 -0400
+ id 1wVFyx-0006i3-Qp
+ for qemu-devel@nongnu.org; Thu, 04 Jun 2026 17:52:09 -0400
 Received: from pps.filterd (m0279866.ppops.net [127.0.0.1])
  by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 654HI9x9944656
- for <qemu-devel@nongnu.org>; Thu, 4 Jun 2026 21:52:07 GMT
+ 654HNpN8944431
+ for <qemu-devel@nongnu.org>; Thu, 4 Jun 2026 21:52:04 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
- cc:content-transfer-encoding:date:from:in-reply-to:message-id
- :mime-version:references:subject:to; s=qcppdkim1; bh=UfSys8tl/sT
- oUCQhziPapOsI9PNLbBW4EAri1zKwNdA=; b=X1sQqIseZgMsaMQSc59aqDAnx+4
- CbrowjYmLyItwQc7bO6Yb7U5jGSxKSQCVTzznzQ5KX6sXvyz6b/VD4Dte6NznEL+
- M6QQRh8XNMn+V2gmzOmA9tllVb6NcxhFW3iwB1N6bKkKa30+43R09Jd/jGnXzlHX
- nntQpL45iC9Hp9mro3lA0ZlUUxDi5Mna6Mx/kDl6RJPnLcA5S0WmV7H9GU454OIX
- d8uMDfIHQPUFKjOPkgeN0WJv1ln1jkFlRi+IHQr4zTRLxKyXBj/1qHvPTOtHTkUd
- 0xlI7KsJgTQP57d+hof0bM+nAuB/VT9G8O2mV0+F9jPPrFBhvI+vKSt1xzg==
+ cc:content-transfer-encoding:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+ 81gSMsjHz7u/XT/45GCehHPFwYouwBtX864P/FusbOw=; b=lX7SiMJrvOPUWyb7
+ PNYPeRp9zdnnyN/UdjuwbsAiku3U+EYSdfNoDN0kYfroeOh2JPOGQZxbLu5/aAoE
+ EXeEZvd0UVyUg9Omv++AS4Rc0LJ84t/QCVXqi/T+BwYVTsXvu10zNFfBX5B9B3EU
+ nIO1gFTuju+slLYlKk/zhRCOBjhXTtdz2Y5qata0pG+f9pwdCadfWWcx1WHj0PWu
+ TElTdlTK7TtO/CjNHLI01UGxBqw1w5Pb4MZ8RcJxfKhszNJoK+d2s8UXbHe3COJP
+ EV5wegUrBiSHaok3kkS3rkYu4mrhODV6KquuVRc03t45eh0IrGFpmxPp153dEZsH
+ UY/+dA==
 Received: from mail-dy1-f197.google.com (mail-dy1-f197.google.com
  [74.125.82.197])
- by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4ek8d52u3m-1
+ by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4ek8d52u38-1
  (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
- for <qemu-devel@nongnu.org>; Thu, 04 Jun 2026 21:52:07 +0000 (GMT)
+ for <qemu-devel@nongnu.org>; Thu, 04 Jun 2026 21:52:04 +0000 (GMT)
 Received: by mail-dy1-f197.google.com with SMTP id
- 5a478bee46e88-304dd917645so1119496eec.1
- for <qemu-devel@nongnu.org>; Thu, 04 Jun 2026 14:52:07 -0700 (PDT)
+ 5a478bee46e88-3074797dfa9so1670800eec.1
+ for <qemu-devel@nongnu.org>; Thu, 04 Jun 2026 14:52:04 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=oss.qualcomm.com; s=google; t=1780609926; x=1781214726; darn=nongnu.org;
+ d=oss.qualcomm.com; s=google; t=1780609924; x=1781214724; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=UfSys8tl/sToUCQhziPapOsI9PNLbBW4EAri1zKwNdA=;
- b=iejJN6NDVyObU/3C/j4sR1lKfQ9euBUKbCx0ZsyIFqKUtI0M2owPgKHbeczu20h5dz
- HEwmQq9ElROR+qDkRNkNYkjprL3TrEpbL+mdln7SMZTmUvWkdV54e/xibaAs8e/jzsVp
- h2VOlMXx73j2FsvLL1nq4qCSYMnGaQOeXT5Wr2rwEDz5Q0KnqjZAS8Og1D/1VEVIIrBh
- J5UITnzIqjVBNdSuc1sZnyzPKVxYLlbQBapcBXiycirW5gZf4d0pKRB4QoZl/HSvSYgj
- t01evfDZXGi1P2jUEyf1B4H8iuBZvLbInd5nIOnwEz4iVO3QJOf6sbvEAQRQlcR8lovg
- ypcQ==
+ bh=81gSMsjHz7u/XT/45GCehHPFwYouwBtX864P/FusbOw=;
+ b=WhcAH/HcxAonyeQw6R4C7Q374HO1xrOyx8DULx7X9MsBkZHW2OlZJFUYeqEVTA0BjS
+ Nb+7sDaNhtOaR5GD9EEBiXqT/HxF52SuGasmMvquFrIoChteZ5f8sZV6PmLJvsAU/s2T
+ PP+ZNxYiUpbYdRepCKLtTAN6baqxL+g61afbNGOzRSDXdVcyOd6awhV/QwEm9WtKaDDc
+ Ldmdch50KhlB+eLZCq6PZ05ClWW7NZ0VcdL8WrCD128D8UiWAS1OEhU0j4VZk4oH0Jvo
+ IKyGF3RgyUOiDhrBwV0I4BO9rcDDZJmRgiDS0kTK+TZZy6X+HW0XEpEsm+dsEMglIF85
+ fPkA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1780609926; x=1781214726;
+ d=1e100.net; s=20251104; t=1780609924; x=1781214724;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to;
- bh=UfSys8tl/sToUCQhziPapOsI9PNLbBW4EAri1zKwNdA=;
- b=WXMHdFFQshUV0+lwsx2WGD3un0PcxWIvzqFCZwZotWcoVMVFbOVHQikQrqzqtjaYaK
- 3LcBRTOJwrcMWB7Z1IAGyPS3IQ3OZo/xG4iGzou5qfWU7vOaktvxCHHT7LCDWcAOb7RJ
- rVru+7wEa67KXZgTdHEDOYgZZKKjGVwzKCFoON10Q4B/Q0msGZ3a+pkQtjW38XWdt4Tf
- WFSCeG/0HVFzlPdfPGl8u57u009isRyQpPqNTj71Yywytcoy7rK0PXnubDnZfU6KRmVD
- z3LpLf6LJWbUFR2lyZ3XM3XcCbE3XrS4tXrNbTJkRYeNmL8krm8xvvCZnURCn2KSwkSs
- vpkA==
-X-Gm-Message-State: AOJu0YyDN3JGx8gHdxIpcohyUU9g4Vpiew7KjKjRgPSloR9N6FpqdgZD
- hPlA7gMv35y1hF+u5t7Xg4A7v8eMkXZdOFLcUfCfWNPwFzZ/ucKhs0SVh2ysvjalN/dM0Tkcosb
- SdQoVa3QTMzQlaobbygVqXnnvNOmzP6ipFO9OmYhovvkxIgfkuH5B7mvo55akcfxX2UzG
-X-Gm-Gg: Acq92OFXRFUOhmYH9yMME798L94UgqpAwFQh1MsJWow1/yPBqzHF/c7BsjybTdW98Bo
- OzycTa3Xq0Lc+UTBMlg5nskWx0C7YnbTOvE/VsKGrijCbLNjeGZ7unwrWtCxqgHPU7+fLY1DrT8
- mdA6WHaz7W/Ul7+7gJEHwj4VdVkOLlmbfEOmTLn+g4QBGdj0AAcC2Sl2AecYyeEg+sB40gq6yO8
- SwJaDmNLIHnl3c1wnxjXfMbE7mdTJXByB00JoEOyhNcqrXSmuIjwSrfNM2JrXAo39Pq0+dh+oj/
- bfQzpps9k4QvDUdE6g7rUFP0ZGSkmI3/exSa3f4nsVqYUatkf4e2toliIJ/bMpvIB1hOMHTWQqR
- rOT1It4D7JftS3igqufeT9r9RtXsavmh1YOPBp33YZaPDOptxZXB+NaJtNFsMK3RfS5oqZrvUxQ
- Ft0qQGbyNGutxKTn9f
-X-Received: by 2002:a05:7300:8ca0:b0:2ea:b85c:153d with SMTP id
- 5a478bee46e88-3077b285d5bmr325179eec.27.1780609926332; 
- Thu, 04 Jun 2026 14:52:06 -0700 (PDT)
-X-Received: by 2002:a05:7300:8ca0:b0:2ea:b85c:153d with SMTP id
- 5a478bee46e88-3077b285d5bmr325163eec.27.1780609925889; 
- Thu, 04 Jun 2026 14:52:05 -0700 (PDT)
+ bh=81gSMsjHz7u/XT/45GCehHPFwYouwBtX864P/FusbOw=;
+ b=hhmkOyqbzXQs5ecUMw5Jz7l92QKv+zq5zm5NK+V9y3ozOmen8sj6gIJUvbtg6fKd1A
+ Gik2E1ntmcesno8LLWE3/B0A6Hz9e+9l6oLg+/FRBjdIP6bGmBmHlp0iNrq7EkTYtFke
+ R3qoIXz9KlQoJq/JErTwBf1+2HBHCSRtBhhGS+mLIsE+6pmNdXbMDBUA1NfRy7CMINuJ
+ SGWNqrrRrqi90rXXCVnu2kw8foqNVwZasElsn7zxuHxePp3ttEiFAt7bjDQOLuB3W1dX
+ 2FFmCtRyCaGGIUlmgt1kYd/2w4vAfJlWZ5GJx4YJcIG/G8jgOwTlu8XQJfbBeSfa4e04
+ i5bA==
+X-Gm-Message-State: AOJu0YxwyXmgWlAf1gsd99reHWOH3331nqIRWenbBDZV7ya2wqvOvktW
+ +tBKX3Erc/8A22vXND3LIcyBxm5bTXhNuB/iy1qvv8shldJ6j+KX/SorkBOROqIly3EJgSSXtOm
+ Eog3SIHT5k7bP7YFl+jgk6wDrVvEGNnd8HAZ6VoGlb8GoBEt4LOqNYqgrAe+KEhBmrLQZ
+X-Gm-Gg: Acq92OGlnGxdpkP7krfEQ5W4fseY9lQ0nBp8wHqMREfWWzrPq725hGA4SUTvmn+2Cp/
+ 7Ndt59B4+eydPc8YKD+stFNCwiHBdqhw8SxVRNEqQMYsfQ0PJ5/qWAwCB4rXlfKYumHMPBYuBA4
+ QKq2HTcQspD1C3aiiwAQ8SUO/Jc6lPksvWuUXp+eRTRS+85cjneBlXKrCRe48Cpvk7dj2lOpmn7
+ QJzAgxry5TN3HDcCIw9mZ/aIulcExbZ7tkiSfpIiMWzvRx5NwAQxtUHbF9qxg0omYgeU3e214eJ
+ v0fQyof/R6wFM6kv4bz0EzWW0l9eg49K5Ak/fdKrYaoSOUpxjaFqHc5rNaPQWNXG6uxC/21DFGf
+ RItpRoGXkIHCnwE3Ef1HFLB+bZ0R194VgFAYkng6hpXuKd6jVQX49z4gp00u4mBA1x/ZDokgoA/
+ W1MyX/q1P/BHY8Qb6Y
+X-Received: by 2002:a05:7300:1352:b0:2d9:5cd9:b8ff with SMTP id
+ 5a478bee46e88-3077ae86decmr295134eec.6.1780609924024; 
+ Thu, 04 Jun 2026 14:52:04 -0700 (PDT)
+X-Received: by 2002:a05:7300:1352:b0:2d9:5cd9:b8ff with SMTP id
+ 5a478bee46e88-3077ae86decmr295123eec.6.1780609923522; 
+ Thu, 04 Jun 2026 14:52:03 -0700 (PDT)
 Received: from hu-pbouvier-lv.qualcomm.com (Global_NAT1.qualcomm.com.
  [129.46.96.20]) by smtp.gmail.com with ESMTPSA id
- 5a478bee46e88-3074df64eb9sm5270115eec.25.2026.06.04.14.52.05
+ 5a478bee46e88-3074df64eb9sm5270115eec.25.2026.06.04.14.52.02
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 04 Jun 2026 14:52:05 -0700 (PDT)
+ Thu, 04 Jun 2026 14:52:03 -0700 (PDT)
 From: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
 To: qemu-devel@nongnu.org
 Cc: Stefan Hajnoczi <stefanha@redhat.com>, Jason Wang <jasowang@redhat.com>,
@@ -95,29 +96,32 @@ Cc: Stefan Hajnoczi <stefanha@redhat.com>, Jason Wang <jasowang@redhat.com>,
  Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
  Thomas Huth <thuth@redhat.com>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: [PATCH 4/5] ci: update to ubuntu2404
-Date: Thu,  4 Jun 2026 14:51:46 -0700
-Message-ID: <20260604215148.3769627-5-pierrick.bouvier@oss.qualcomm.com>
+Subject: [PATCH 1/5] net/af-xdp.c: maybe-uninitialized warning with gcov build
+ on ubuntu2404
+Date: Thu,  4 Jun 2026 14:51:43 -0700
+Message-ID: <20260604215148.3769627-2-pierrick.bouvier@oss.qualcomm.com>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20260604215148.3769627-1-pierrick.bouvier@oss.qualcomm.com>
 References: <20260604215148.3769627-1-pierrick.bouvier@oss.qualcomm.com>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-X-Proofpoint-ORIG-GUID: NW7v7YxWOlJGChxVL-ZplI_KVUntvsmt
-X-Authority-Analysis: v=2.4 cv=IZG3n2qa c=1 sm=1 tr=0 ts=6a21f387 cx=c_pps
+X-Proofpoint-ORIG-GUID: xoUTqrjx0ozu7Fg7k18wGV5HaOzXAZyb
+X-Authority-Analysis: v=2.4 cv=IZG3n2qa c=1 sm=1 tr=0 ts=6a21f384 cx=c_pps
  a=Uww141gWH0fZj/3QKPojxA==:117 a=ouPCqIW2jiPt+lZRy3xVPw==:17
- a=FelO9ux0wxsA:10 a=s4-Qcg_JpJYA:10 a=VkNPw1HP01LnGYTKEx00:22
- a=u7WPNUs3qKkmUXheDGA7:22 a=YMgV9FUhrdKAYTUUvYB2:22 a=EUspDBNiAAAA:8
- a=jLLu7jlssiS7FhGicJIA:9 a=PxkB5W3o20Ba91AHUih5:22
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNjA0MDIxNCBTYWx0ZWRfX9qSJCXspOKWx
- Sxm+IauT9hRiklIqHwDrNFqsJhSSKupgjFlcImrTeQn2giD8k5FdfUB23fBbwsVln7Tc5QHysvr
- +iLTdZmVPtSEIYNjrAAHeCEP689tXn3dwBnU7DGjLNfxWDr03Q7HxGUXJWGd2XSCul5fx0pYoxH
- Sc8I6ZPUhlzNP34JR4knXpQf4blXCdOO5xN6R6DPNiwMvJsTnC8Wuuf3CNWhzqd4o9EQAyvy8CR
- MQUCUq6Ef8ED7PptEdJXXRsPydEitSz/1EqsutuOHE5E8VW6Vv8lO0yR2jKevpm/aAEkw401qTH
- eKeG9FnRU0+qowfdxCOTYySV2Nsev8dnJT4dTPUHx8d+FNmBMsjPSrpJF95Si5HXd6WKuxOOe3J
- Oa/ESrJOnO7hQZGrfCMokc2quFEXKqMcmPvPFBNa7ToPUnatQeDsAonS5pQutZqlxhVBM5ZryZG
- AtG0AxdASNGamgaPWyg==
-X-Proofpoint-GUID: NW7v7YxWOlJGChxVL-ZplI_KVUntvsmt
+ a=IkcTkHD0fZMA:10 a=FelO9ux0wxsA:10 a=s4-Qcg_JpJYA:10
+ a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=YMgV9FUhrdKAYTUUvYB2:22
+ a=EUspDBNiAAAA:8 a=VTEhrdiSVsHaVhHLs3AA:9 a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
+ a=PxkB5W3o20Ba91AHUih5:22
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNjA0MDIxNCBTYWx0ZWRfXzpCECoW5QTsp
+ 4R/d3dlKHNPkArHWQ/StJIlrXDzxzwUQb0RkzzUaZpXhxHcnOlhBLi+uf7Den3CeLwl5wMGg3pm
+ pthMoXyNOLmpINELBQS72EeC9MwnNFUwLMrJ7jKj17ViUk6lp5Solq4Dw5EvBPI1oJsUJcvOo/w
+ a2aSxmrcz2TWoVAyMub7JTSN+4I3ELYJNy62/zWx/1zw+7PMIilYrwqTJ1069m2vjsOc4PzpEQ8
+ TGUo6xqsaNU+i2uZmlWvCYtY5A8h4qrSpi5mh8v/OsfHOt7e9xblNkM7z/BrgYJL0UjxZee/ch0
+ 7i65eCkpqkg9vhQfCFKntG7s30eUlOZaREkWmx31TKBslxBYlRY9F0skIdXIlSBuQnqdY/L9CGE
+ 22b4tCHIAVWuqpC6975sZ0pZJn4shtCBI8dWZXxvCL+MiW6wRrF/GRKgL3K4YrvTKcTOk17Ze77
+ SrZevGYQDrE4LgadP+A==
+X-Proofpoint-GUID: xoUTqrjx0ozu7Fg7k18wGV5HaOzXAZyb
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.125,FMLib:17.12.100.49
  definitions=2026-06-04_06,2026-05-28_03,2025-10-01_01
@@ -152,97 +156,37 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+Seems like a false positive, easily fix by explicitly initializing
+variable to NULL.
+
+In function ‘af_xdp_read_poll’,
+    inlined from ‘net_init_af_xdp’ at ../net/af-xdp.c:546:5:
+../net/af-xdp.c:78:10: error: ‘s’ may be used uninitialized [-Werror=maybe-uninitialized]
+   78 |     if (s->read_poll != enable) {
+      |         ~^~~~~~~~~~~
+../net/af-xdp.c: In function ‘net_init_af_xdp’:
+../net/af-xdp.c:461:17: note: ‘s’ was declared here
+  461 |     AFXDPState *s;
+      |
+
 Signed-off-by: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
 ---
- .gitlab-ci.d/buildtest.yml  | 16 ++++++++--------
- .gitlab-ci.d/containers.yml |  6 +++---
- 2 files changed, 11 insertions(+), 11 deletions(-)
+ net/af-xdp.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/.gitlab-ci.d/buildtest.yml b/.gitlab-ci.d/buildtest.yml
-index d0543490309..e2553e7326f 100644
---- a/.gitlab-ci.d/buildtest.yml
-+++ b/.gitlab-ci.d/buildtest.yml
-@@ -36,9 +36,9 @@ build-system-ubuntu:
-     - .native_build_job_template
-     - .native_build_artifact_template
-   needs:
--    - job: amd64-ubuntu2204-container
-+    - job: amd64-ubuntu2404-container
-   variables:
--    IMAGE: ubuntu2204
-+    IMAGE: ubuntu2404
-     CONFIGURE_ARGS: --enable-docs --enable-rust
-     TARGETS: alpha-softmmu microblaze-softmmu mips64el-softmmu
-     MAKE_CHECK_ARGS: check-build
-@@ -49,7 +49,7 @@ check-system-ubuntu:
-     - job: build-system-ubuntu
-       artifacts: true
-   variables:
--    IMAGE: ubuntu2204
-+    IMAGE: ubuntu2404
-     MAKE_CHECK_ARGS: check
+diff --git a/net/af-xdp.c b/net/af-xdp.c
+index 1ffd6363a8c..72d75748c6d 100644
+--- a/net/af-xdp.c
++++ b/net/af-xdp.c
+@@ -458,7 +458,7 @@ int net_init_af_xdp(const Netdev *netdev,
+     g_autofree int *sock_fds = NULL;
+     int i, queues;
+     Error *err = NULL;
+-    AFXDPState *s;
++    AFXDPState *s = NULL;
+     bool inhibit;
  
- functional-system-ubuntu:
-@@ -58,7 +58,7 @@ functional-system-ubuntu:
-     - job: build-system-ubuntu
-       artifacts: true
-   variables:
--    IMAGE: ubuntu2204
-+    IMAGE: ubuntu2404
-     MAKE_CHECK_ARGS: check-functional
- 
- build-system-debian:
-@@ -577,9 +577,9 @@ functional-cfi-x86_64:
- tsan-build:
-   extends: .native_build_job_template
-   needs:
--    - job: amd64-ubuntu2204-container
-+    - job: amd64-ubuntu2404-container
-   variables:
--    IMAGE: ubuntu2204
-+    IMAGE: ubuntu2404
-     CONFIGURE_ARGS: --enable-tsan --cc=clang --cxx=clang++
-           --enable-trace-backends=ust --disable-slirp
-     TARGETS: x86_64-softmmu ppc64-softmmu riscv64-softmmu x86_64-linux-user
-@@ -591,10 +591,10 @@ tsan-build:
- gcov:
-   extends: .native_build_job_template
-   needs:
--    - job: amd64-ubuntu2204-container
-+    - job: amd64-ubuntu2404-container
-   timeout: 80m
-   variables:
--    IMAGE: ubuntu2204
-+    IMAGE: ubuntu2404
-     CONFIGURE_ARGS: --enable-gcov
-     TARGETS: aarch64-softmmu ppc64-softmmu s390x-softmmu x86_64-softmmu
-     MAKE_CHECK_ARGS: check-unit check-softfloat
-diff --git a/.gitlab-ci.d/containers.yml b/.gitlab-ci.d/containers.yml
-index 515e7382f26..87c20094d22 100644
---- a/.gitlab-ci.d/containers.yml
-+++ b/.gitlab-ci.d/containers.yml
-@@ -13,10 +13,10 @@ amd64-debian-container:
-   variables:
-     NAME: debian
- 
--amd64-ubuntu2204-container:
-+amd64-ubuntu2404-container:
-   extends: .container_job_template
-   variables:
--    NAME: ubuntu2204
-+    NAME: ubuntu2404
- 
- amd64-opensuse-leap-container:
-   extends: .container_job_template
-@@ -58,7 +58,7 @@ weekly-container-builds:
-     # containers
-     - amd64-alpine-container
-     - amd64-debian-container
--    - amd64-ubuntu2204-container
-+    - amd64-ubuntu2404-container
-     - amd64-opensuse-leap-container
-     - python-container
-     - amd64-fedora-rust-nightly-container
+     ifindex = if_nametoindex(opts->ifname);
 -- 
 2.43.0
 
