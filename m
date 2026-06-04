@@ -4,72 +4,56 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A2F53CD6E4A
-	for <qemu-devel@archiver.kernel.org>; Thu,  4 Jun 2026 06:44:10 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D51B2CD6E68
+	for <qemu-devel@archiver.kernel.org>; Thu,  4 Jun 2026 07:02:19 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wV1ng-0006XH-Dz; Thu, 04 Jun 2026 02:43:34 -0400
+	id 1wV24v-0002JW-CC; Thu, 04 Jun 2026 03:01:22 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <odaki@rsg.ci.i.u-tokyo.ac.jp>)
- id 1wV1ne-0006X8-0l
- for qemu-devel@nongnu.org; Thu, 04 Jun 2026 02:43:30 -0400
-Received: from www3579.sakura.ne.jp ([49.212.243.89])
+ (Exim 4.90_1) (envelope-from <guobin@linux.alibaba.com>)
+ id 1wV24i-0002HV-3A
+ for qemu-devel@nongnu.org; Thu, 04 Jun 2026 03:01:10 -0400
+Received: from [115.124.30.99] (helo=out30-99.freemail.mail.aliyun.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <odaki@rsg.ci.i.u-tokyo.ac.jp>)
- id 1wV1na-0007JG-Ji
- for qemu-devel@nongnu.org; Thu, 04 Jun 2026 02:43:29 -0400
-Received: from h183.csg.ci.i.u-tokyo.ac.jp (h183.csg.ci.i.u-tokyo.ac.jp
- [133.11.54.183]) (authenticated bits=0)
- by www3579.sakura.ne.jp (8.16.1/8.16.1) with ESMTPSA id 6546h03f047185
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NO);
- Thu, 4 Jun 2026 15:43:12 +0900 (JST)
- (envelope-from odaki@rsg.ci.i.u-tokyo.ac.jp)
-DKIM-Signature: a=rsa-sha256; bh=nMQzw+CgMK7MS3MPiZFgTDFS2ZlLnoQarKQ/wPen1/A=; 
- c=relaxed/relaxed; d=rsg.ci.i.u-tokyo.ac.jp;
- h=From:Message-Id:To:Subject:Date;
- s=rs20250326; t=1780555392; v=1;
- b=NYqXTdTnT27bmNWJVMijUaihghhgnO3lM3H9L4uY5MwV6ZcZU0cxo6kL60QY7HL1
- /CEY2xXYv39H5s9q2HHaWa2k5giZPjrEMy9QLMnizH9fPzqt74XGKpqvaBn7bI99
- Uct7lmGpugptNRYVIWQSrIaiUD1ifksrX55v23BXefFyq3jJOityEzWK56hEdbZS
- HxrAVfFsNzaWvFN+qPAHnmZpRQxNRUCWiX55cxjyhx6JEw6CRJy2D8lgUr36cF0z
- 3yXaN3ocNctmOac4fY074zbxLofRNkSJQ9+Kf6PuaG+dmmRDcqAoROlElGSyhdsf
- EwioCCDIvTQ06gUf4hq6iQ==
-From: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
-Date: Thu, 04 Jun 2026 15:39:32 +0900
-Subject: [PATCH v3] ui/cocoa: Use qemu_input_map_osx_to_linux
+ (Exim 4.90_1) (envelope-from <guobin@linux.alibaba.com>)
+ id 1wV24Y-0005SX-Ga
+ for qemu-devel@nongnu.org; Thu, 04 Jun 2026 03:01:07 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linux.alibaba.com; s=default;
+ t=1780556431; h=From:To:Subject:Date:Message-ID:MIME-Version;
+ bh=N/wmenlWZj0voABROW3OovXPJqUV5xK6krbUpzP9YSY=;
+ b=W3z133pDJqawZW3zKE6qVhqCdy7+m3Ps1/RQLzLYgZxgc8mTQBCdBZsbQESwiHLg0sKX6Vb2XQvH8ImtmK8gcDC/8bsrmLJj5e/r/P6g8clji5h2r2tKlVQbwm61syuJ8ItDmLMTCWRquUJpSA6ZoRfTcVP58XAK1JF9ZQgmHLk=
+X-Alimail-AntiSpam: AC=PASS; BC=-1|-1; BR=01201311R201e4; CH=green; DM=||false|;
+ DS=||; FP=0|-1|-1|-1|0|-1|-1|-1; HT=maildocker-contentspam011083073210;
+ MF=guobin@linux.alibaba.com; NM=1; PH=DS; RN=4; SR=0;
+ TI=SMTPD_---0X49Tjcr_1780556430; 
+Received: from localhost(mailfrom:guobin@linux.alibaba.com
+ fp:SMTPD_---0X49Tjcr_1780556430 cluster:ay36) by smtp.aliyun-inc.com;
+ Thu, 04 Jun 2026 15:00:31 +0800
+From: Bin Guo <guobin@linux.alibaba.com>
+To: Paolo Bonzini <pbonzini@redhat.com>,
+ Hyman Huang <infra.ai.cloud@bitdeer.com>
+Cc: kvm@vger.kernel.org,
+	qemu-devel@nongnu.org
+Subject: [PATCH v2] accel/kvm: event-driven wakeup for dirty ring reaper thread
+Date: Thu,  4 Jun 2026 15:00:29 +0800
+Message-ID: <20260604070029.34982-1-guobin@linux.alibaba.com>
+X-Mailer: git-send-email 2.50.1
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-Id: <20260604-osx-v3-1-453b4ee0e072@rsg.ci.i.u-tokyo.ac.jp>
-X-B4-Tracking: v=1; b=H4sIAAAAAAAC/zWMSw4CIRAFrzLptRgaJI6uvIeZBfJxeiEYMITJh
- LuLJC7r5VXtkF0il+E67ZBcoUwxdJCHCcyqw9Mxsp1BcKE4IrKYK+M4S2e8Esg99Oc7OU91VO5
- L55XyJ6ZtRIv4rX9fDb8Ihkwb+ZCzvSCeTzert0D1aOILltbaF4h2YlCXAAAA
-X-Change-ID: 20250111-osx-0183ecf5210f
-To: Gerd Hoffmann <kraxel@redhat.com>,
- Peter Maydell <peter.maydell@linaro.org>,
- =?utf-8?q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>,
- =?utf-8?q?Philippe_Mathieu-Daud=C3=A9?= <philmd@mailo.com>
-Cc: qemu-devel@nongnu.org, Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
-X-Mailer: b4 0.16-dev-16047
-X-Developer-Signature: v=1; a=openpgp-sha256; l=6819;
- i=odaki@rsg.ci.i.u-tokyo.ac.jp; h=from:subject:message-id;
- bh=QKyBFJQFMyW9TtSZpljtNTCytut5HjQMPY8SgHuVDWg=;
- b=owGbwMvMwCWmMbc20y1CyJDxtFoSQ5aiXN2H4t2KTcJrTy8V0AnyOJQRGZJYySpVI1oZanpoa
- fzMwyUdpSwMYlwMsmKKLClFu7k1oms/FSbEt8DMYWUCGcLAxSkAExE7xPA/5oNp37RewUf+D6Yf
- u9ex71517/E/q199z3Kd2Xzn0NSjQgz/zF+Hu5/Rib4QHrrq+OkC95rtjeLyr/wPn7qbk3LiRdo
- LDgA=
-X-Developer-Key: i=odaki@rsg.ci.i.u-tokyo.ac.jp; a=openpgp;
- fpr=AEDC03C9AF734F2EC26A7BFFA4BAEAA73536753C
-Received-SPF: pass client-ip=49.212.243.89;
- envelope-from=odaki@rsg.ci.i.u-tokyo.ac.jp; helo=www3579.sakura.ne.jp
-X-Spam_score_int: -16
-X-Spam_score: -1.7
-X-Spam_bar: -
-X-Spam_report: (-1.7 / 5.0 requ) BAYES_00=-1.9, DKIM_INVALID=0.1,
- DKIM_SIGNED=0.1, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=no autolearn_force=no
+Content-Transfer-Encoding: 8bit
+X-Host-Lookup-Failed: Reverse DNS lookup failed for 115.124.30.99 (deferred)
+Received-SPF: pass client-ip=115.124.30.99;
+ envelope-from=guobin@linux.alibaba.com; helo=out30-99.freemail.mail.aliyun.com
+X-Spam_score_int: -166
+X-Spam_score: -16.7
+X-Spam_bar: ----------------
+X-Spam_report: (-16.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, ENV_AND_HDR_SPF_MATCH=-0.5,
+ RCVD_IN_DNSWL_NONE=-0.0001, RDNS_NONE=0.793, SPF_PASS=-0.001,
+ T_SPF_HELO_TEMPERROR=0.01, UNPARSEABLE_RELAY=0.001, USER_IN_DEF_DKIM_WL=-7.5,
+ USER_IN_DEF_SPF_WL=-7.5 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -85,199 +69,195 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-ui/cocoa used to have a conversion table from macOS keycode to Linux
-key code. It is an unnecessary redundancy as ui/input-keymap.c already
-has such a table. Worse, I added an incorrect mapping of kVK_JIS_Eisu and
-kVK_JIS_Kana with commit 708b72557ff5 ("ui/cocoa: Support unique keys of
-JIS keyboards").
+The reaper polls with sleep(1) (TODO in the code) and only notices
+dirty-limit teardown at the next 1s tick.
 
-According to the following documentations, the definitions in
-ui/keycodemapdb/keymaps.csv, which ui/input-keymap.c uses, are correct:
-https://developer.apple.com/documentation/uikit/uikeyboardhidusage/uikeyboardhidusagekeyboardlang1?language=objc
-https://developer.apple.com/documentation/uikit/uikeyboardhidusage/uikeyboardhidusagekeyboardlang2?language=objc
-https://docs.microsoft.com/en-us/windows-hardware/design/component-guidelines/keyboard-japan-ime
+Replace the sleep with qemu_poll_ns() on an EventNotifier, kicked
+from dirtylimit_state_finalize() after dirtylimit_state has been
+cleared.  The kick must follow the NULL assignment: kicking earlier
+wakes the reaper while dirtylimit_in_service() still returns true,
+so it just loops back to wait.  A 1s fallback timeout remains as a
+liveness backstop.
 
-Use qemu_input_map_osx_to_linux to eliminate the redundancy and
-incorrect mappings.
+20 set-/cancel-vcpu-dirty-limit cycles via QMP, |reaper-wake -
+cancel-ack| measured with strace on the reaper TID:
 
-Fixes: 708b72557ff5 ("ui/cocoa: Support unique keys of JIS keyboards")
-Signed-off-by: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
+    before: median 255 ms, max 502 ms
+    after:  median 0.6 ms, max  27 ms
+
+kvm_dirty_ring_reaper_init() returns int again (was made void in
+commit 43a5e377f4) to propagate event_notifier_init() failure.
+
+Signed-off-by: Bin Guo <guobin@linux.alibaba.com>
 ---
-ui/cocoa used to have a conversion table from macOS keycode to Linux
-key code. It is an unnecessary redundancy as ui/input-keymap.c already
-has such a table. Worse, I added an incorrect mapping of kVK_JIS_Eisu and
-kVK_JIS_Kana with commit 708b72557ff5 ("ui/cocoa: Support unique keys of
-JIS keyboards").
+Changes in v2:
+- Fix compilation error: kvm_init() has no Error **errp parameter, so
+  kvm_dirty_ring_reaper_init() now uses error_report() directly and
+  no longer accepts an errp argument.
+- Remove the kick from kvm_cpu_exec() KVM_EXIT_DIRTY_RING_FULL handler:
+  it already reaps synchronously (all vCPUs or the ring-full one), so
+  a background reaper kick would only be redundant or a no-op.
+- Move kick site from dirtylimit_change(false) to
+  dirtylimit_state_finalize() after dirtylimit_state = NULL, ensuring
+  the reaper actually proceeds past the dirtylimit_in_service() check.
 
-According to the following documentations, the definitions in
-ui/keycodemapdb/keymaps.csv, which ui/input-keymap.c uses, are correct:
-https://developer.apple.com/documentation/uikit/uikeyboardhidusage/uikeyboardhidusagekeyboardlang1?language=objc
-https://developer.apple.com/documentation/uikit/uikeyboardhidusage/uikeyboardhidusagekeyboardlang2?language=objc
-https://docs.microsoft.com/en-us/windows-hardware/design/component-guidelines/keyboard-japan-ime
+ accel/kvm/kvm-all.c      | 42 ++++++++++++++++++++++++++++++++++------
+ accel/stubs/kvm-stub.c   |  4 ++++
+ include/system/kvm.h     |  7 +++++++
+ include/system/kvm_int.h |  3 +++
+ system/dirtylimit.c      |  2 ++
+ 5 files changed, 52 insertions(+), 6 deletions(-)
 
-Use qemu_input_map_osx_to_linux to eliminate the redundancy and
-incorrect mappings.
----
-Changes in v3:
-- Rebased.
-- Link to v2: https://lore.kernel.org/r/20250115-osx-v2-1-ac3b38d91174@daynix.com
----
- ui/cocoa.m | 131 ++-----------------------------------------------------------
- 1 file changed, 3 insertions(+), 128 deletions(-)
-
-diff --git a/ui/cocoa.m b/ui/cocoa.m
-index c5e639ab98d6..e157ad01d851 100644
---- a/ui/cocoa.m
-+++ b/ui/cocoa.m
-@@ -141,138 +141,13 @@ static bool bool_with_bql(BoolCodeBlock block)
-     return val;
+diff --git a/accel/kvm/kvm-all.c b/accel/kvm/kvm-all.c
+index 96f90ebb24..be005832bc 100644
+--- a/accel/kvm/kvm-all.c
++++ b/accel/kvm/kvm-all.c
+@@ -1754,6 +1754,8 @@ static void kvm_set_phys_mem(KVMMemoryListener *kml,
+     } while (size);
  }
  
--// Mac to Linux conversion
--static const unsigned int mac_to_linux_map[] = {
--    [kVK_ANSI_A] = KEY_A,
--    [kVK_ANSI_B] = KEY_B,
--    [kVK_ANSI_C] = KEY_C,
--    [kVK_ANSI_D] = KEY_D,
--    [kVK_ANSI_E] = KEY_E,
--    [kVK_ANSI_F] = KEY_F,
--    [kVK_ANSI_G] = KEY_G,
--    [kVK_ANSI_H] = KEY_H,
--    [kVK_ANSI_I] = KEY_I,
--    [kVK_ANSI_J] = KEY_J,
--    [kVK_ANSI_K] = KEY_K,
--    [kVK_ANSI_L] = KEY_L,
--    [kVK_ANSI_M] = KEY_M,
--    [kVK_ANSI_N] = KEY_N,
--    [kVK_ANSI_O] = KEY_O,
--    [kVK_ANSI_P] = KEY_P,
--    [kVK_ANSI_Q] = KEY_Q,
--    [kVK_ANSI_R] = KEY_R,
--    [kVK_ANSI_S] = KEY_S,
--    [kVK_ANSI_T] = KEY_T,
--    [kVK_ANSI_U] = KEY_U,
--    [kVK_ANSI_V] = KEY_V,
--    [kVK_ANSI_W] = KEY_W,
--    [kVK_ANSI_X] = KEY_X,
--    [kVK_ANSI_Y] = KEY_Y,
--    [kVK_ANSI_Z] = KEY_Z,
--
--    [kVK_ANSI_0] = KEY_0,
--    [kVK_ANSI_1] = KEY_1,
--    [kVK_ANSI_2] = KEY_2,
--    [kVK_ANSI_3] = KEY_3,
--    [kVK_ANSI_4] = KEY_4,
--    [kVK_ANSI_5] = KEY_5,
--    [kVK_ANSI_6] = KEY_6,
--    [kVK_ANSI_7] = KEY_7,
--    [kVK_ANSI_8] = KEY_8,
--    [kVK_ANSI_9] = KEY_9,
--
--    [kVK_ANSI_Grave] = KEY_GRAVE,
--    [kVK_ANSI_Minus] = KEY_MINUS,
--    [kVK_ANSI_Equal] = KEY_EQUAL,
--    [kVK_Delete] = KEY_BACKSPACE,
--    [kVK_CapsLock] = KEY_CAPSLOCK,
--    [kVK_Tab] = KEY_TAB,
--    [kVK_Return] = KEY_ENTER,
--    [kVK_ANSI_LeftBracket] = KEY_LEFTBRACE,
--    [kVK_ANSI_RightBracket] = KEY_RIGHTBRACE,
--    [kVK_ANSI_Backslash] = KEY_BACKSLASH,
--    [kVK_ANSI_Semicolon] = KEY_SEMICOLON,
--    [kVK_ANSI_Quote] = KEY_APOSTROPHE,
--    [kVK_ANSI_Comma] = KEY_COMMA,
--    [kVK_ANSI_Period] = KEY_DOT,
--    [kVK_ANSI_Slash] = KEY_SLASH,
--    [kVK_Space] = KEY_SPACE,
--
--    [kVK_ANSI_Keypad0] = KEY_KP0,
--    [kVK_ANSI_Keypad1] = KEY_KP1,
--    [kVK_ANSI_Keypad2] = KEY_KP2,
--    [kVK_ANSI_Keypad3] = KEY_KP3,
--    [kVK_ANSI_Keypad4] = KEY_KP4,
--    [kVK_ANSI_Keypad5] = KEY_KP5,
--    [kVK_ANSI_Keypad6] = KEY_KP6,
--    [kVK_ANSI_Keypad7] = KEY_KP7,
--    [kVK_ANSI_Keypad8] = KEY_KP8,
--    [kVK_ANSI_Keypad9] = KEY_KP9,
--    [kVK_ANSI_KeypadDecimal] = KEY_KPDOT,
--    [kVK_ANSI_KeypadEnter] = KEY_KPENTER,
--    [kVK_ANSI_KeypadPlus] = KEY_KPPLUS,
--    [kVK_ANSI_KeypadMinus] = KEY_KPMINUS,
--    [kVK_ANSI_KeypadMultiply] = KEY_KPASTERISK,
--    [kVK_ANSI_KeypadDivide] = KEY_KPSLASH,
--    [kVK_ANSI_KeypadEquals] = KEY_KPEQUAL,
--    [kVK_ANSI_KeypadClear] = KEY_NUMLOCK,
--
--    [kVK_UpArrow] = KEY_UP,
--    [kVK_DownArrow] = KEY_DOWN,
--    [kVK_LeftArrow] = KEY_LEFT,
--    [kVK_RightArrow] = KEY_RIGHT,
--
--    [kVK_Help] = KEY_INSERT,
--    [kVK_Home] = KEY_HOME,
--    [kVK_PageUp] = KEY_PAGEUP,
--    [kVK_PageDown] = KEY_PAGEDOWN,
--    [kVK_End] = KEY_END,
--    [kVK_ForwardDelete] = KEY_DELETE,
--
--    [kVK_Escape] = KEY_ESC,
--
--    /* The Power key can't be used directly because the operating system uses
--     * it. This key can be emulated by using it in place of another key such as
--     * F1. Don't forget to disable the real key binding.
--     */
--    /* [kVK_F1] = KEY_POWER, */
--
--    [kVK_F1] = KEY_F1,
--    [kVK_F2] = KEY_F2,
--    [kVK_F3] = KEY_F3,
--    [kVK_F4] = KEY_F4,
--    [kVK_F5] = KEY_F5,
--    [kVK_F6] = KEY_F6,
--    [kVK_F7] = KEY_F7,
--    [kVK_F8] = KEY_F8,
--    [kVK_F9] = KEY_F9,
--    [kVK_F10] = KEY_F10,
--    [kVK_F11] = KEY_F11,
--    [kVK_F12] = KEY_F12,
--    [kVK_F13] = KEY_SYSRQ,
--    [kVK_F14] = KEY_SCROLLLOCK,
--    [kVK_F15] = KEY_PAUSE,
--
--    // JIS keyboards only
--    [kVK_JIS_Yen] = KEY_YEN,
--    [kVK_JIS_Underscore] = KEY_RO,
--    [kVK_JIS_KeypadComma] = KEY_KPCOMMA,
--    [kVK_JIS_Eisu] = KEY_MUHENKAN,
--    [kVK_JIS_Kana] = KEY_HENKAN,
--
--    /*
--     * The eject and volume keys can't be used here because they are handled at
--     * a lower level than what an Application can see.
--     */
--};
--
--static unsigned int cocoa_keycode_to_linux(int keycode)
-+static int cocoa_keycode_to_linux(int keycode)
++#define KVM_DIRTY_RING_REAPER_FALLBACK_NS  (1 * NANOSECONDS_PER_SECOND)
++
+ static void *kvm_dirty_ring_reaper_thread(void *data)
  {
--    if (ARRAY_SIZE(mac_to_linux_map) <= keycode) {
-+    if (qemu_input_map_osx_to_linux_len <= keycode) {
-         error_report("(cocoa) warning unknown keycode 0x%x", keycode);
-         return 0;
-     }
--    return mac_to_linux_map[keycode];
-+    return qemu_input_map_osx_to_linux[keycode];
+     KVMState *s = data;
+@@ -1764,12 +1766,18 @@ static void *kvm_dirty_ring_reaper_thread(void *data)
+     trace_kvm_dirty_ring_reaper("init");
+ 
+     while (true) {
++        GPollFD pfd = {
++            .fd = event_notifier_get_fd(&r->reaper_notifier),
++            .events = G_IO_IN,
++        };
++
+         r->reaper_state = KVM_DIRTY_RING_REAPER_WAIT;
+         trace_kvm_dirty_ring_reaper("wait");
+-        /*
+-         * TODO: provide a smarter timeout rather than a constant?
+-         */
+-        sleep(1);
++
++        qemu_poll_ns(&pfd, 1, KVM_DIRTY_RING_REAPER_FALLBACK_NS);
++
++        /* Drain unconditionally so a stale event can't spin the next loop. */
++        event_notifier_test_and_clear(&r->reaper_notifier);
+ 
+         /* keep sleeping so that dirtylimit not be interfered by reaper */
+         if (dirtylimit_in_service()) {
+@@ -1789,13 +1797,32 @@ static void *kvm_dirty_ring_reaper_thread(void *data)
+     g_assert_not_reached();
  }
  
- /* Displays an alert dialog box with the specified message */
-
----
-base-commit: 2db91528542672cf0db78b3f2cc0e22b36302b38
-change-id: 20250111-osx-0183ecf5210f
-
-Best regards,
---  
-Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
+-static void kvm_dirty_ring_reaper_init(KVMState *s)
++static int kvm_dirty_ring_reaper_init(KVMState *s)
+ {
+     struct KVMDirtyRingReaper *r = &s->reaper;
++    int ret;
++
++    ret = event_notifier_init(&r->reaper_notifier, 0);
++    if (ret < 0) {
++        error_report("Failed to initialize dirty ring reaper notifier: %s",
++                     strerror(-ret));
++        return ret;
++    }
+ 
+     qemu_thread_create(&r->reaper_thr, "kvm-reaper",
+                        kvm_dirty_ring_reaper_thread,
+                        s, QEMU_THREAD_JOINABLE);
++    return 0;
++}
++
++void kvm_dirty_ring_reaper_kick(void)
++{
++    KVMState *s = kvm_state;
++
++    if (!s || !s->kvm_dirty_ring_size) {
++        return;
++    }
++    event_notifier_set(&s->reaper.reaper_notifier);
+ }
+ 
+ static int kvm_dirty_ring_init(KVMState *s)
+@@ -3097,7 +3124,10 @@ static int kvm_init(AccelState *as, MachineState *ms)
+     }
+ 
+     if (s->kvm_dirty_ring_size) {
+-        kvm_dirty_ring_reaper_init(s);
++        ret = kvm_dirty_ring_reaper_init(s);
++        if (ret < 0) {
++            goto err;
++        }
+     }
+ 
+     if (kvm_check_extension(kvm_state, KVM_CAP_BINARY_STATS_FD)) {
+diff --git a/accel/stubs/kvm-stub.c b/accel/stubs/kvm-stub.c
+index c4617caac6..b878598552 100644
+--- a/accel/stubs/kvm-stub.c
++++ b/accel/stubs/kvm-stub.c
+@@ -134,6 +134,10 @@ uint32_t kvm_dirty_ring_size(void)
+     return 0;
+ }
+ 
++void kvm_dirty_ring_reaper_kick(void)
++{
++}
++
+ bool kvm_hwpoisoned_mem(void)
+ {
+     return false;
+diff --git a/include/system/kvm.h b/include/system/kvm.h
+index 5fa33eddda..e127a5eb37 100644
+--- a/include/system/kvm.h
++++ b/include/system/kvm.h
+@@ -553,6 +553,13 @@ bool kvm_dirty_ring_enabled(void);
+ 
+ uint32_t kvm_dirty_ring_size(void);
+ 
++/**
++ * kvm_dirty_ring_reaper_kick - wake the background dirty ring reaper.
++ *
++ * Safe from any thread; no-op when the dirty ring is not in use.
++ */
++void kvm_dirty_ring_reaper_kick(void);
++
+ void kvm_mark_guest_state_protected(void);
+ 
+ /**
+diff --git a/include/system/kvm_int.h b/include/system/kvm_int.h
+index 0876aac938..c14ebc927f 100644
+--- a/include/system/kvm_int.h
++++ b/include/system/kvm_int.h
+@@ -12,6 +12,7 @@
+ #include "system/memory.h"
+ #include "qapi/qapi-types-common.h"
+ #include "qemu/accel.h"
++#include "qemu/event_notifier.h"
+ #include "qemu/queue.h"
+ #include "system/kvm.h"
+ #include "accel/accel-ops.h"
+@@ -100,6 +101,8 @@ struct KVMDirtyRingReaper {
+     QemuThread reaper_thr;
+     volatile uint64_t reaper_iteration; /* iteration number of reaper thr */
+     volatile enum KVMDirtyRingReaperState reaper_state; /* reap thr state */
++    /* Wakeup channel: kicked when dirty-limit is torn down. */
++    EventNotifier reaper_notifier;
+ };
+ struct KVMState
+ {
+diff --git a/system/dirtylimit.c b/system/dirtylimit.c
+index c934ceb0de..a33256ade7 100644
+--- a/system/dirtylimit.c
++++ b/system/dirtylimit.c
+@@ -239,6 +239,8 @@ void dirtylimit_state_finalize(void)
+     g_free(dirtylimit_state);
+     dirtylimit_state = NULL;
+ 
++    kvm_dirty_ring_reaper_kick();
++
+     trace_dirtylimit_state_finalize();
+ }
+ 
+-- 
+2.50.1 (Apple Git-155)
 
 
