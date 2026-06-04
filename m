@@ -4,49 +4,49 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5F9C5CD6E77
-	for <qemu-devel@archiver.kernel.org>; Thu,  4 Jun 2026 16:51:44 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3B8ABCD6E75
+	for <qemu-devel@archiver.kernel.org>; Thu,  4 Jun 2026 16:51:46 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wVBHh-0004H3-KI; Thu, 04 Jun 2026 12:51:09 -0400
+	id 1wVBHh-0004Gu-8z; Thu, 04 Jun 2026 12:51:09 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1wVBHf-0004GB-Oh
+ id 1wVBHf-0004Fl-0O
  for qemu-devel@nongnu.org; Thu, 04 Jun 2026 12:51:07 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1wVBHd-0000kK-SJ
- for qemu-devel@nongnu.org; Thu, 04 Jun 2026 12:51:07 -0400
+ id 1wVBHd-0000kM-Fx
+ for qemu-devel@nongnu.org; Thu, 04 Jun 2026 12:51:06 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
  s=mimecast20190719; t=1780591864;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=STby0QuBkc+Vmuw0G5a4XWwhUsqCQeSe1oJbAwCl8wc=;
- b=GnzL9yQ3QEE6fQje/TtEQ7lOLbTgNn+39QuJAwGgpPdQUVoGfvv/ZlGAgZk38NaMAFbvDt
- pJcLg087TNfKGRT5UEco7hYw2geEIQ8JU3vmwamC38L+jueKQ5zjYBFdliRtrL4bJf+bR5
- UGMIkd5Cw1Cl2b3LBxXwMVYal/yEsE4=
-Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
+ bh=Ebl35FduHXhLh9NYVF+j7leo99iIfdp+GRTNaB9dtgY=;
+ b=H2LBgwwfTM9GowOWKArS3veFlM7DLbnqVqhqW8uANVgjnBfsW1cfd+/fsEcGGgZ6KeQ4NH
+ pJQmKp5BRuAMhMr0+Ct5pzQYzuMAjhSCQhQkJDyotl2/3k55UX/ubaOFt1ukFixUarecNH
+ tgPo9I8mhOTTeWQes4gIeNETdjvlM1s=
+Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-686-0v5h212KMuWl99eaDMpwaA-1; Thu,
- 04 Jun 2026 12:51:01 -0400
-X-MC-Unique: 0v5h212KMuWl99eaDMpwaA-1
-X-Mimecast-MFC-AGG-ID: 0v5h212KMuWl99eaDMpwaA_1780591859
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-146-iLHV5CX5NnaWylhnJLgHIw-1; Thu,
+ 04 Jun 2026 12:51:03 -0400
+X-MC-Unique: iLHV5CX5NnaWylhnJLgHIw-1
+X-Mimecast-MFC-AGG-ID: iLHV5CX5NnaWylhnJLgHIw_1780591862
 Received: from mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.93])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id E9E1E195608B; Thu,  4 Jun 2026 16:50:58 +0000 (UTC)
+ by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 39CAF1944B03; Thu,  4 Jun 2026 16:51:02 +0000 (UTC)
 Received: from berrange.com (unknown [10.44.50.34])
  by mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 259B1180049F; Thu,  4 Jun 2026 16:50:55 +0000 (UTC)
+ id 6D8851800480; Thu,  4 Jun 2026 16:50:59 +0000 (UTC)
 From: =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
@@ -55,10 +55,10 @@ Cc: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
  Mauro Matteo Cascella <mcascell@redhat.com>,
  Paolo Bonzini <pbonzini@redhat.com>, Thomas Huth <thuth@redhat.com>,
  =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>
-Subject: [qemu-web RFC 1/3] contribute: reformat/restructure bug report
- guidance
-Date: Thu,  4 Jun 2026 17:50:46 +0100
-Message-ID: <20260604165048.457860-2-berrange@redhat.com>
+Subject: [qemu-web RFC 2/3] contribute: add automate tool disclosure to bug
+ reporting
+Date: Thu,  4 Jun 2026 17:50:47 +0100
+Message-ID: <20260604165048.457860-3-berrange@redhat.com>
 In-Reply-To: <20260604165048.457860-1-berrange@redhat.com>
 References: <20260604165048.457860-1-berrange@redhat.com>
 MIME-Version: 1.0
@@ -90,83 +90,36 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The current bug report bullet points are duplicating an
-arbitrary subset of what is already requested in the gitlab
-issue template. Rewrite the guidance such that it refers to
-the issue template fields being required, where applicable.
-Restructure the text in general so that it is all a bullet
-point list rather than a strange mix of list items and
-separate paragraphs.
+A while back we added a requirement to declare the use of any
+automated tooling used in discover of security issues, and set
+a rule that the reporter must perform triage before submission
+rather than blindly reporting issues. This applies equally
+well to normal issue reporting, so copy it over from the
+security process guidance.
 
 Signed-off-by: Daniel P. Berrangé <berrange@redhat.com>
 ---
- contribute/report-a-bug.md | 55 +++++++++++++++++++++++---------------
- 1 file changed, 33 insertions(+), 22 deletions(-)
+ contribute/report-a-bug.md | 7 +++++++
+ 1 file changed, 7 insertions(+)
 
 diff --git a/contribute/report-a-bug.md b/contribute/report-a-bug.md
-index 8a7c782..6071837 100644
+index 6071837..fd3bc6b 100644
 --- a/contribute/report-a-bug.md
 +++ b/contribute/report-a-bug.md
-@@ -3,26 +3,37 @@ title: Reporting a bug
- permalink: /contribute/report-a-bug/
- ---
+@@ -20,6 +20,13 @@ on GitLab, taking into account the following guidance.
+   to the vendor's own bug tracker instead, or reproduced with
+   an upstream QEMU build prior to submission.
  
--Bugs can be filed at our
-+Bugs affecting upstream QEMU releases should be filed at our
- [bug tracker](https://gitlab.com/qemu-project/qemu/-/issues), which is hosted
--on GitLab. Note: If you've got a problem with how your Linux distribution
--packages QEMU, please use the bug tracker from your distro instead.
--
--When submitting a bug report, please try to do the following:
--
--* Include the QEMU release version or the git commit hash into the description, so that it is later still clear in which version you have found the bug.  Reports against the [latest release](/download/#source) or even the latest development tree are usually acted upon faster.
--
--* Include the full command line used to launch the QEMU guest.
--
--* Reproduce the problem directly with a QEMU command-line.  Avoid frontends and management stacks, to ensure that the bug is in QEMU itself and not in a frontend.
--
--* Include information about the host and guest (operating system, version, 32/64-bit).
--
--QEMU does not use GitLab merge requests; patches are sent to the mailing list according to QEMU's [patch submissions guidelines](../submit-a-patch/).
--
--Do NOT report security issues (or other bugs, too) as "confidential" bugs in the
--bug tracker.  QEMU has a [security process](../security-process) for issues
--that should be reported in a non-public way instead.
--
--For problems with KVM in the kernel, use the kernel bug tracker instead;
--the [KVM wiki](https://www.linux-kvm.org/page/Bugs) has the details.
-+on GitLab, taking into account the following guidance.
++* If any automated tools (AI/LLM based, traditional static
++  analysis, or fuzzers) were used to discover the issue, the
++  reporter is required to declare this at the start of the
++  bug report. Users of such tools are required to perform
++  triage of their output to validate all findings and reproducer
++  scenarios prior to submitting a bug report.
 +
-+* Use the provided GitLab issue template, filling in all
-+  requested pieces of information that are relevant to the
-+  discovered bug.
-+
-+* Reproduce the problem with the latest upstream QEMU release.
-+  Reports against older versions may not be acted upon with
-+  with the same priority.
-+
-+* Problems that have only been demonstrated with an release
-+  packaged by an OS distribution vendor must be either reported
-+  to the vendor's own bug tracker instead, or reproduced with
-+  an upstream QEMU build prior to submission.
-+
-+* Reproduce the problem directly with a QEMU command-line. Avoid
-+  frontends and management stacks, to ensure that the bug is in
-+  QEMU itself and not in a frontend and make it easier for
-+  maintainers to understand the problematic scenario.
-+
-+* If patches are available for an issue, they should be sent to
-+  the mailing list according to QEMU's [patch submissions
-+  guidelines](../submit-a-patch/). QEMU does not use a merge
-+  request workflow for contribution.
-+
-+* Do NOT report security issues (or other bugs, too) as "confidential"
-+  bugs in the bug tracker.  QEMU has a [security process](../security-process)
-+  for issues that should be reported in a non-public way instead.
-+
-+* If the problem is believed to lie in the KVM kernel module,
-+  following the [KVM wiki bug report](https://www.linux-kvm.org/page/Bugs)
-+  guidance to submit an issue to the kernel bug tracker.
+ * Reproduce the problem directly with a QEMU command-line. Avoid
+   frontends and management stacks, to ensure that the bug is in
+   QEMU itself and not in a frontend and make it easier for
 -- 
 2.54.0
 
