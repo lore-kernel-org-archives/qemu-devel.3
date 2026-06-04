@@ -4,102 +4,107 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 846A4CD6E57
-	for <qemu-devel@archiver.kernel.org>; Thu,  4 Jun 2026 10:04:55 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8A718CD6E57
+	for <qemu-devel@archiver.kernel.org>; Thu,  4 Jun 2026 10:07:28 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wV4wK-00038u-TU; Thu, 04 Jun 2026 06:04:40 -0400
+	id 1wV4yI-0004PI-Sz; Thu, 04 Jun 2026 06:06:42 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1wV4wG-000354-N7
- for qemu-devel@nongnu.org; Thu, 04 Jun 2026 06:04:36 -0400
-Received: from mail-wr1-x42a.google.com ([2a00:1450:4864:20::42a])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1wV4wC-0008OL-Fa
- for qemu-devel@nongnu.org; Thu, 04 Jun 2026 06:04:36 -0400
-Received: by mail-wr1-x42a.google.com with SMTP id
- ffacd0b85a97d-4600cbb06deso279830f8f.1
- for <qemu-devel@nongnu.org>; Thu, 04 Jun 2026 03:04:28 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1780567467; x=1781172267; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:user-agent
- :references:in-reply-to:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=1pcyfwWAQ195fcsoV5aCRWDTgnIrAgj+fIth5172GJ8=;
- b=SzMON1EueFhiqoRtXPNRfD4km2pnfPkGPp17Q36SkxFDVcltt7KF8tq3VXU/QzKn8a
- c32bhNCjr0lGvPeOFGnqWLai+6J4BMhjeIH0QYRQvDTC80Ieq8QWFrm9dUeYCx6k6LSv
- rtWOuegVaLwBLbWy/3weklY5fi0a0kMewT0ZE3WxlzEP55Ux9ERwAERp/WVLnJ73oYeT
- K3EyQ097k95eELA7wZTvt4Lkv6fXtOAm9PBe+CabBkWE4iuT6Yu0wnWKKMeaKt105xQq
- QNGLAlDHgJ64mZdmDX+TxcMBxaZM4YCzCv5ZhD7zgelAEzumPOa2yaRspxs70QQ2Chbo
- npGQ==
+ (Exim 4.90_1) (envelope-from <eric.auger@redhat.com>)
+ id 1wV4yH-0004Oh-Gp
+ for qemu-devel@nongnu.org; Thu, 04 Jun 2026 06:06:41 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <eric.auger@redhat.com>)
+ id 1wV4yF-0000qG-8B
+ for qemu-devel@nongnu.org; Thu, 04 Jun 2026 06:06:41 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1780567597;
+ h=from:from:reply-to:reply-to:subject:subject:date:date:
+ message-id:message-id:to:to:cc:cc:mime-version:mime-version:
+ content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=T3zH3TjmLzMxUJqyBdnhBWUE1GArYhlyaLnRetGQ/sQ=;
+ b=cTDXsuTbNia754Z9UAc+GoC8DGAtDII5mdfTEsVM1XFCDAM6PQLOKMNisAwcLeXUyHT1Uv
+ GX0ajVAFYQNJXRNpdQBs4V722G7MWf9NRWesZVelpCEdT3RPRIylr/I3Rpd/peFy3onju4
+ 4NoC/C+3NGPtDna2pfEoumROi1DT6dM=
+Received: from mail-wr1-f71.google.com (mail-wr1-f71.google.com
+ [209.85.221.71]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-376-5GaVRTjjNnmtSQGm_PsPtg-1; Thu, 04 Jun 2026 06:06:36 -0400
+X-MC-Unique: 5GaVRTjjNnmtSQGm_PsPtg-1
+X-Mimecast-MFC-AGG-ID: 5GaVRTjjNnmtSQGm_PsPtg_1780567595
+Received: by mail-wr1-f71.google.com with SMTP id
+ ffacd0b85a97d-45ef3aeeb41so372620f8f.1
+ for <qemu-devel@nongnu.org>; Thu, 04 Jun 2026 03:06:35 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1780567467; x=1781172267;
- h=content-transfer-encoding:mime-version:message-id:date:user-agent
- :references:in-reply-to:subject:cc:to:from:x-gm-gg
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=1pcyfwWAQ195fcsoV5aCRWDTgnIrAgj+fIth5172GJ8=;
- b=KimlxhIA3DBycH1b+OcOBTu3WtaWT2PxXLyGwLoS9QI9SZQ/AyDYdU2ms94a5K5pkf
- od0M0PLkCvbEVG/EdutNAHXonLb1F9jZ8M9jbcqC1ex7f0HunABo/rS1V2ZtHD7IOko0
- ApzZDRhH87MWBKuV69MfvGvqdubfat77R9OtkDjmPPpE5PmIG9+z9W57HEF9hxCkzHcm
- jQq7CQukNLBeHXzMp4HP3X89lDmnog4G8gKvphiLGPcuZs+hpThs4ufD/9sbe0eZXNiu
- m8ZVCj7GW9t34OmyFGoVso16CnWG/w373sHrB9edil2XzRi/hOc47/jeYkuTMuLpwmDJ
- d7tQ==
+ d=1e100.net; s=20251104; t=1780567595; x=1781172395;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:reply-to:user-agent:mime-version:date
+ :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=T3zH3TjmLzMxUJqyBdnhBWUE1GArYhlyaLnRetGQ/sQ=;
+ b=BozzB+HOPlOUcF6BTQPDgidGL4MnqwSE3Ak2pnnp+01lHEpqVaeyRmFC1fRA5CvmIR
+ He/vPnB/d6zpI/CG1FC/tlTwXUi1FD2am1QXXUwcLwqB1WxVgUVUHXHTfoREbCzaqaDQ
+ 9tvxwz/KplZ1w4jakF9jleRbordg45J86B4jXvHOJrp79snZiavEMierzsDa/GY1b9y+
+ DUGRnvdxP1+Fa5WwNB9jwDIug16fNVnHZzBqbAZ7yLTeCMZi985fkm+op8fSjyDZM/3L
+ 8BTkzjSnInV/dDBnk9Fj8OglpsoU5GKSNq/++NdqTSxBx92EFbNoMwG7RBUjO7uazl68
+ VfEQ==
 X-Forwarded-Encrypted: i=1;
- AFNElJ8S8F7CKINFv4gvx1al6FM1a8f6pKYVduqTO+Su2qWBsz7O+L0SPcasSkcS2oMlHBfHEHh4mi4uz6fs@nongnu.org
-X-Gm-Message-State: AOJu0Yxy1l8n7o9oN4NcAX+JpuEG3BQcGPGhiEmHpSAvvRNAkQL9OCRk
- FWIdAie8GRSNJLPW6pAti1qCFigQIlmUPnVZpEAO5tyqKn/3GRAw4RPn35s2nGIrtgU=
-X-Gm-Gg: Acq92OHA53W40mUW68CRwP7kBF0x0VQiEkEc1XhCrhLDaRUPccai15rRtyIQVZrRboA
- 53uiujiXq36mtCF2gLkB+Y+zsG92l1NhQLotkLtUOpGxejy74aP+iXAYx2L8nmS4zZDq4iIX45s
- W7K9rMJMxE1492hq2HLDRBD7zVdG8UbVKk3eftlW84Po+qqd/5OHnnuZdpqtLttS87SKdnjn67M
- IJReMPl9B/jqFEMDfxdsevhWgYrXn/mu8SKp8qzfarsZvNF/C3Gon33A02Ppe8q+g/rlbj7C9VR
- /t4Mt1PMvARKGF20Vt/2+Qe5m40v2m3RbxSbO+pwH6zUWun/2JgWuYRTK+0seLFdi1tLJgCBsiK
- DdNqOAvHrHynf9MU4FO8/XxqFbVKkGctEcqRlZxMjqn9O9pEpkdqIa8mZw8sspzp55sZia2gE5E
- RU37X46tKOIWavIL0So/pLGfTLz/yIpWry3w==
-X-Received: by 2002:a5d:49c1:0:b0:460:11bd:3fde with SMTP id
- ffacd0b85a97d-4602733b2a7mr3655158f8f.13.1780567467479; 
- Thu, 04 Jun 2026 03:04:27 -0700 (PDT)
-Received: from draig.lan ([185.124.0.195]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-4601f3446aesm18014261f8f.24.2026.06.04.03.04.26
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 04 Jun 2026 03:04:26 -0700 (PDT)
-Received: from draig (localhost [IPv6:::1])
- by draig.lan (Postfix) with ESMTP id A00ED5F864;
- Thu, 04 Jun 2026 11:04:25 +0100 (BST)
-From: =?utf-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
-To: Daniel P. =?utf-8?Q?Berrang=C3=A9?= <berrange@redhat.com>
-Cc: Paolo Bonzini <pbonzini@redhat.com>,  qemu-devel@nongnu.org,  "Michael
- S. Tsirkin" <mst@redhat.com>,  Alistair Francis
- <alistair.francis@wdc.com>,  BALATON Zoltan <balaton@eik.bme.hu>,  Fabiano
- Rosas <farosas@suse.de>,  Kevin Wolf <kwolf@redhat.com>,  Peter Maydell
- <peter.maydell@linaro.org>,  Warner Losh <imp@bsdimp.com>,  Philippe
- =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>,  Paolo Bonzini
- <bonzini@gnu.org>
-Subject: Re: [PATCH v2] docs/devel: relax policy on AI-generated contributions
-In-Reply-To: <aiBwWH8iirdw9kw7@redhat.com> ("Daniel P. =?utf-8?Q?Berrang?=
- =?utf-8?Q?=C3=A9=22's?= message of
- "Wed, 3 Jun 2026 19:20:08 +0100")
-References: <20260529094619.1034458-1-pbonzini@redhat.com>
- <aiBBV48wyDF57vUi@redhat.com>
- <CABgObfZNX2rLnB=FosVopFmLB_S_5V48UPLjNTTtn543d9RfHg@mail.gmail.com>
- <8733z3trth.fsf@draig.linaro.org> <aiBwWH8iirdw9kw7@redhat.com>
-User-Agent: mu4e 1.14.1; emacs 30.1
-Date: Thu, 04 Jun 2026 11:04:25 +0100
-Message-ID: <87qzmmsjti.fsf@draig.linaro.org>
+ AFNElJ/NfDd3WlziOsHHBlpqavYLZO1yHMRC8N4jdyLlMNqj+e7xcUQjy+7LX0nYkC3mJ9o8cDld7p/2ucaK@nongnu.org
+X-Gm-Message-State: AOJu0YyDFIM20WuKdsvgSk05oO0wy6XZntcWYqSZzJZ+Tlyio1flNZCg
+ ow1DLkUlc6WyEQZHjG09bhl6CdPLTwOdd8fRZmQZ7lyAc+qhk8SNdhV5oc8jHHE+jDKERzrLWtY
+ tFWGdRM5fdqDp2syBwCA4ksH66VtMlUDKGhSd1/gbzsOto2wS8Dgt+NrO
+X-Gm-Gg: Acq92OFeAUS2VJA/yPShgtWEmfd78/djuKhfnWo5lnS6I6yA7EcjtvIg3NtpW/cBKRt
+ jXPIDVtaLlzoSvL8L0/1eaCyZu2s1R7aA7vj8WM2pWa+B8YtqT08I85+vbl+f8QeJIHhSe/eITY
+ lnImi96cKMXDKqMUsNxivg44K65B47GNT4WykCKNjQ1s3RSQTVgCzN21wdcEDJYTuSqr74xYfCr
+ v8t7RzeI2+fkRkYjrhWObPwX/HchkZojlbcNtwtguO82lnHcizHj+9AL/jlXJ8TopBHl5kO05cm
+ d723BFzu3NHp/JGCbO3mim8tJI7qDvj5GJ80CyU+nWhYFeNfmrc1WDNVodT92S5JMLCCrhhBOjY
+ JPZ6D55tm2EnPOYqVMp7OSKpz/C1rYcoJcQNwDE6oiAN/THmuDHT6tfHsXadyQpeKxfwD9h08th
+ jxRpVy
+X-Received: by 2002:a05:6000:180a:b0:45e:d6b2:e6a5 with SMTP id
+ ffacd0b85a97d-460218654afmr8464617f8f.34.1780567594753; 
+ Thu, 04 Jun 2026 03:06:34 -0700 (PDT)
+X-Received: by 2002:a05:6000:180a:b0:45e:d6b2:e6a5 with SMTP id
+ ffacd0b85a97d-460218654afmr8464572f8f.34.1780567594356; 
+ Thu, 04 Jun 2026 03:06:34 -0700 (PDT)
+Received: from ?IPV6:2a01:e0a:f0e:9070:527b:9dff:feef:3874?
+ ([2a01:e0a:f0e:9070:527b:9dff:feef:3874])
+ by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-4601f351ac0sm24939717f8f.27.2026.06.04.03.06.33
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Thu, 04 Jun 2026 03:06:33 -0700 (PDT)
+Message-ID: <aa1ce930-5ce9-48b5-9ece-6569b3d61f19@redhat.com>
+Date: Thu, 4 Jun 2026 12:06:32 +0200
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::42a;
- envelope-from=alex.bennee@linaro.org; helo=mail-wr1-x42a.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v6 21/31] hw/arm/tegra241-cmdqv: Map VINTF page0 into
+ guest MMIO space
+Content-Language: en-US
+To: Shameer Kolothum <skolothumtho@nvidia.com>, qemu-arm@nongnu.org,
+ qemu-devel@nongnu.org
+Cc: peter.maydell@linaro.org, clg@redhat.com, alex@shazbot.org,
+ nicolinc@nvidia.com, nathanc@nvidia.com, mochs@nvidia.com, jan@nvidia.com,
+ jgg@nvidia.com, zhenzhong.duan@intel.com, kjaju@nvidia.com,
+ phrdina@redhat.com
+References: <20260601114221.457995-1-skolothumtho@nvidia.com>
+ <20260601114221.457995-22-skolothumtho@nvidia.com>
+From: Eric Auger <eric.auger@redhat.com>
+In-Reply-To: <20260601114221.457995-22-skolothumtho@nvidia.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=170.10.133.124;
+ envelope-from=eric.auger@redhat.com; helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -24
+X-Spam_score: -2.5
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.445,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -112,55 +117,120 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-To: eric.auger@redhat.com
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Daniel P. Berrang=C3=A9 <berrange@redhat.com> writes:
+Hi Shammer,
 
-> On Wed, Jun 03, 2026 at 07:14:02PM +0100, Alex Benn=C3=A9e wrote:
->> Paolo Bonzini <pbonzini@redhat.com> writes:
->>=20
->> > Hi Daniel,
->> >
->> > Thanks for the review. It will take a while to incorporate everything
->> > and I'll wait for more feedback, in the meantime just a couple things
->> > I can confirm or add...
->>=20
->> I mean you could just let the LLM handle it ;-)
->>=20
->> AI-used-for: collecting comments and updating patch
->> Signed-off-by: Alex Benn=C3=A9e <alex.bennee@linaro.org>
->>=20
->> I only include this by way of an experiment. I think the new text does
->> cover the discussion although I think it has taken a fair amount of
->> verbatim text from the source messages that were commentary rather than
->> suggestions.
+On 6/1/26 1:42 PM, Shameer Kolothum wrote:
+> From: Nicolin Chen <nicolinc@nvidia.com>
+I would disambiguate the title a little bit:
+Use mmap'd host VINTF page0 for virtual VINTF page0
+
+Also in previous patch titles you could emphase the mmap'd page is the
+host one in a similar way.
 >
-> Most importantly it has applied no critical thought to the review
-> comments, seemingly treated them all as mostly equally important
-> and incorporated them. The resulting text is more volumous than
-> Paolo's, has poor structure and in places is verging on what I'd
-> class as slop.
-
-Well there is no "thought", although its pretty good at text extraction
-from the mailing thread. I guess that's the "attention" part of the
-model.
-
-It wasn't helped by the fact there was a full lift and shift of the AI
-section to a new document. In my other experiments with documentation
-I've let the model do the changes and then I can review each hunk and
-reword as I go.
-
-For code changes I've found it pretty good - enough so that it might
-replace my hand-rolled mechanism for saving review comments:
-https://github.com/stsquad/my-emacs-stuff/blob/master/my-org.el#L176
-
+> Install the mmap'd vintf_page0 region as a RAM-device MemoryRegion at
+> guest MMIO offset 0x30000 (the VINTF Page 0 aperture) when VINTF is
+> enabled, and remove it on VINTF disable. This eliminates QEMU
+> trapping for hot-path CONS/PROD index updates via the VINTF aperture.
 >
+> After this patch, the two VCMDQ Page 0 apertures use different
+> access paths: the direct aperture (0x10000) remains QEMU-trapped,
+> while the VINTF aperture (0x30000) is a guest-direct RAM mapping.
 >
-> With regards,
-> Daniel
+> The direct aperture is intentionally kept trapped (not aliased to
+> the VINTF mmap) so that writes to an unallocated VCMDQ remain
+> well-defined. The CMDQV architecture allows software to program a
+> VCMDQ through the direct aperture without first allocating it to a
+> VINTF; aliasing would route those writes to unallocated logical
+> slots in the VINTF page, where the hardware silently drops them.
+>
+> Signed-off-by: Nicolin Chen <nicolinc@nvidia.com>
+> Co-developed-by: Shameer Kolothum <skolothumtho@nvidia.com>
+> Signed-off-by: Shameer Kolothum <skolothumtho@nvidia.com>
+> ---
+>  hw/arm/tegra241-cmdqv.h |  1 +
+>  hw/arm/tegra241-cmdqv.c | 36 ++++++++++++++++++++++++++++++++++++
+>  2 files changed, 37 insertions(+)
+>
+> diff --git a/hw/arm/tegra241-cmdqv.h b/hw/arm/tegra241-cmdqv.h
+> index 84499b840d..01cd6af97d 100644
+> --- a/hw/arm/tegra241-cmdqv.h
+> +++ b/hw/arm/tegra241-cmdqv.h
+> @@ -49,6 +49,7 @@ typedef struct Tegra241CMDQV {
+>      IOMMUFDVeventq *veventq;
+>      IOMMUFDHWqueue *vcmdq[TEGRA241_CMDQV_MAX_CMDQ];
+>      void *vintf_page0;
+> +    MemoryRegion *mr_vintf_page0;
+>  
+>      /* CMDQ-V Config page register cache */
+>      uint32_t config;
+> diff --git a/hw/arm/tegra241-cmdqv.c b/hw/arm/tegra241-cmdqv.c
+> index dce7089697..cdd4fa4f1a 100644
+> --- a/hw/arm/tegra241-cmdqv.c
+> +++ b/hw/arm/tegra241-cmdqv.c
+> @@ -18,6 +18,40 @@
+>  #include "tegra241-cmdqv.h"
+>  #include "trace.h"
+>  
+> +static void tegra241_cmdqv_guest_unmap_vintf_page0(Tegra241CMDQV *cmdqv)
+> +{
+> +    if (!cmdqv->mr_vintf_page0) {
+> +        return;
+> +    }
+> +
+> +    memory_region_del_subregion(&cmdqv->mmio_cmdqv, cmdqv->mr_vintf_page0);
+> +    object_unparent(OBJECT(cmdqv->mr_vintf_page0));
+> +    g_free(cmdqv->mr_vintf_page0);
+> +    cmdqv->mr_vintf_page0 = NULL;
+> +}
+> +
+> +static void tegra241_cmdqv_guest_map_vintf_page0(Tegra241CMDQV *cmdqv)
+> +{
+> +    char *name;
+> +
+> +    if (cmdqv->mr_vintf_page0) {
+> +        return;
+> +    }
+> +
+> +    name = g_strdup_printf("%s vintf-page0",
+> +                           memory_region_name(&cmdqv->mmio_cmdqv));
+> +    cmdqv->mr_vintf_page0 = g_malloc0(sizeof(*cmdqv->mr_vintf_page0));
+> +    memory_region_init_ram_device_ptr(cmdqv->mr_vintf_page0,
+> +                                      memory_region_owner(&cmdqv->mmio_cmdqv),
+> +                                      name, VINTF_PAGE_SIZE,
+> +                                      cmdqv->vintf_page0);
+> +    memory_region_set_skip_iommu_map(cmdqv->mr_vintf_page0, true);
+> +    memory_region_add_subregion_overlap(&cmdqv->mmio_cmdqv,
+> +                                        CMDQV_VINTF_PAGE0_BASE,
+> +                                        cmdqv->mr_vintf_page0, 1);
+> +    g_free(name);
+> +}
+> +
+>  static void tegra241_cmdqv_free_vcmdq(Tegra241CMDQV *cmdqv, int index)
+>  {
+>      IOMMUFDViommu *viommu = cmdqv->s_accel->viommu;
+> @@ -445,6 +479,7 @@ static void tegra241_cmdqv_config_vintf_write(Tegra241CMDQV *cmdqv,
+>          if (value & R_VINTF0_CONFIG_ENABLE_MASK) {
+>              if (tegra241_cmdqv_mmap_vintf_page0(cmdqv, errp)) {
+>                  cmdqv->vintf_status |= R_VINTF0_STATUS_ENABLE_OK_MASK;
+> +                tegra241_cmdqv_guest_map_vintf_page0(cmdqv);
+don't you want to do that only after the tegra241_cmdqv_setup_all_vcmdq()?
+>                  /*
+>                   * VCMDQs whose BASE was programmed before VINTF was
+>                   * enabled need their hw_queue allocated now.
+> @@ -452,6 +487,7 @@ static void tegra241_cmdqv_config_vintf_write(Tegra241CMDQV *cmdqv,
+>                  tegra241_cmdqv_setup_all_vcmdq(cmdqv, errp);
+>              }
+>          } else {
+> +            tegra241_cmdqv_guest_unmap_vintf_page0(cmdqv);
+>              tegra241_cmdqv_free_all_vcmdq(cmdqv);
+>              tegra241_cmdqv_munmap_vintf_page0(cmdqv, errp);
+>              cmdqv->vintf_status &= ~R_VINTF0_STATUS_ENABLE_OK_MASK;
+Thanks
 
---=20
-Alex Benn=C3=A9e
-Virtualisation Tech Lead @ Linaro
+Eric
+
 
