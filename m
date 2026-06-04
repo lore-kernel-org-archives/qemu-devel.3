@@ -4,75 +4,74 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4BBF7CD6E6D
-	for <qemu-devel@archiver.kernel.org>; Thu,  4 Jun 2026 16:02:58 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 152C4CD6E4A
+	for <qemu-devel@archiver.kernel.org>; Thu,  4 Jun 2026 16:04:07 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wVAWn-0000H5-8r; Thu, 04 Jun 2026 12:02:42 -0400
+	id 1wVAY4-00015z-Rw; Thu, 04 Jun 2026 12:04:00 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1wVAWU-00008R-8B
- for qemu-devel@nongnu.org; Thu, 04 Jun 2026 12:02:25 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ id 1wVAXy-0000zI-9X
+ for qemu-devel@nongnu.org; Thu, 04 Jun 2026 12:03:54 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1wVAWP-0008T0-9f
- for qemu-devel@nongnu.org; Thu, 04 Jun 2026 12:02:19 -0400
+ id 1wVAXv-0000V6-Ul
+ for qemu-devel@nongnu.org; Thu, 04 Jun 2026 12:03:53 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1780588935;
+ s=mimecast20190719; t=1780589030;
  h=from:from:reply-to:reply-to:subject:subject:date:date:
  message-id:message-id:to:to:cc:cc:mime-version:mime-version:
  content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=uE10Y/FibPbOJZNVRGgFUPXXtP+hROQmRBpNfw+4XzI=;
- b=YMsSpR3NinhteX9e0/NVUkl4P5EJgPqVkz2chjU8cTCG095jLzUn6vR93TgPaKHszguefW
- jcRbdo51egJBJdM/lUL9XVqyNQe2BlXa5P/Sy6Qzp+OtSdKEVYslBQUnXXLeXJR+/ZL/dE
- eLT1F0EG2BdxX6LWrfKUiaXuJ6T02YI=
-Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
+ bh=6vCsYIBWE5ZTyOxeeNhhVKXumzsmdNXg4OR0kOO6Zng=;
+ b=KMmf7+3ZwcdEtcQede/mW/hgw1bFJMP2rwzOsI/SMi6uavAAMO5vfyK99ru/G3Gvz8/Z3s
+ ecvjg8F8005c9dIoJr0UeHRXOLRgc50/9eU8Vhhi5iPN/QPfiqEW/GT8/hl20vm5S/Fl1c
+ 6JhFNVZ+Ilmo9wpiO3DPQW7pe7nx9i4=
+Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-636-RHuKuK0OMwSxO_7Ld-skPg-1; Thu,
- 04 Jun 2026 12:02:13 -0400
-X-MC-Unique: RHuKuK0OMwSxO_7Ld-skPg-1
-X-Mimecast-MFC-AGG-ID: RHuKuK0OMwSxO_7Ld-skPg_1780588933
-Received: from mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.17])
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-275-WNAAQTdCOoaWvI3VR_voUA-1; Thu,
+ 04 Jun 2026 12:03:49 -0400
+X-MC-Unique: WNAAQTdCOoaWvI3VR_voUA-1
+X-Mimecast-MFC-AGG-ID: WNAAQTdCOoaWvI3VR_voUA_1780589028
+Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id E686A19560B1
- for <qemu-devel@nongnu.org>; Thu,  4 Jun 2026 16:02:12 +0000 (UTC)
+ by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id E37471944B07
+ for <qemu-devel@nongnu.org>; Thu,  4 Jun 2026 16:03:47 +0000 (UTC)
 Received: from redhat.com (unknown [10.44.50.34])
- by mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 82F57195608E; Thu,  4 Jun 2026 16:02:11 +0000 (UTC)
-Date: Thu, 4 Jun 2026 17:02:07 +0100
+ by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 7F0DB3000232; Thu,  4 Jun 2026 16:03:46 +0000 (UTC)
+Date: Thu, 4 Jun 2026 17:03:10 +0100
 From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 To: =?utf-8?Q?Marc-Andr=C3=A9?= Lureau <marcandre.lureau@redhat.com>
 Cc: qemu-devel@nongnu.org, armbru@redhat.com
-Subject: Re: [PATCH v3 08/24] hw/xlnx_dp: reject NULL 'dpdma' property rather
- than crash
-Message-ID: <aiGhf6DWnh8mWuYu@redhat.com>
+Subject: Re: [PATCH v3 09/24] hw/intc/apic: move checks to realize()
+Message-ID: <aiGhvvNQ6rMazGYt@redhat.com>
 References: <20260516-qom-tests-v3-0-3f20c3a029a7@redhat.com>
- <20260516-qom-tests-v3-8-3f20c3a029a7@redhat.com>
+ <20260516-qom-tests-v3-9-3f20c3a029a7@redhat.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <20260516-qom-tests-v3-8-3f20c3a029a7@redhat.com>
+In-Reply-To: <20260516-qom-tests-v3-9-3f20c3a029a7@redhat.com>
 User-Agent: Mutt/2.3.1 (2026-03-20)
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.17
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=berrange@redhat.com;
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=berrange@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: 8
 X-Spam_score: 0.8
 X-Spam_bar: /
 X-Spam_report: (0.8 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.445,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_SBL_CSS=3.335, SPF_HELO_PASS=-0.001,
  SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
@@ -91,11 +90,20 @@ Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Sat, May 16, 2026 at 11:59:07AM +0400, Marc-André Lureau wrote:
+On Sat, May 16, 2026 at 11:59:08AM +0400, Marc-André Lureau wrote:
+> apic_common_set_id() dereferences s->cpu to check for x2APIC support
+> when the APIC ID is >= 255. On a standalone APIC object that has not
+> been attached to a CPU, s->cpu is NULL, causing a segfault.
+> 
+> To solve this, move validation during realize().
+> 
+> Fixes: b5ee0468e9d2 ("apic: add support for x2APIC mode")
 > Signed-off-by: Marc-André Lureau <marcandre.lureau@redhat.com>
 > ---
->  hw/display/xlnx_dp.c | 6 ++++++
->  1 file changed, 6 insertions(+)
+>  hw/intc/apic_common.c  | 23 +++++++++++++----------
+>  target/i386/cpu-apic.c |  6 +-----
+>  2 files changed, 14 insertions(+), 15 deletions(-)
+>
 
 Reviewed-by: Daniel P. Berrangé <berrange@redhat.com>
 
