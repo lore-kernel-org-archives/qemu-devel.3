@@ -4,69 +4,72 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2B421CD6E4A
-	for <qemu-devel@archiver.kernel.org>; Thu,  4 Jun 2026 06:33:55 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A2F53CD6E4A
+	for <qemu-devel@archiver.kernel.org>; Thu,  4 Jun 2026 06:44:10 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wV1dd-0004bk-9F; Thu, 04 Jun 2026 02:33:09 -0400
+	id 1wV1ng-0006XH-Dz; Thu, 04 Jun 2026 02:43:34 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <yangjinqian1@huawei.com>)
- id 1wV1dc-0004bR-55; Thu, 04 Jun 2026 02:33:08 -0400
-Received: from canpmsgout12.his.huawei.com ([113.46.200.227])
+ (Exim 4.90_1) (envelope-from <odaki@rsg.ci.i.u-tokyo.ac.jp>)
+ id 1wV1ne-0006X8-0l
+ for qemu-devel@nongnu.org; Thu, 04 Jun 2026 02:43:30 -0400
+Received: from www3579.sakura.ne.jp ([49.212.243.89])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <yangjinqian1@huawei.com>)
- id 1wV1dW-0002vM-BF; Thu, 04 Jun 2026 02:33:07 -0400
-dkim-signature: v=1; a=rsa-sha256; d=huawei.com; s=dkim;
- c=relaxed/relaxed; q=dns/txt; h=From;
- bh=lICtzYs1mFPyTgDgLvlv3mIWdxDor5vCLT7iU63YAAc=;
- b=g6RQT3LhK2h92E7yJwV+wcxrBQ2eQAWlJrEFlg0oES1pxDgS5G6hPMIJYuv5moi1X+1tnt3OR
- 9N+PeUbz9SIKdISPFPLDcgEOfoPFqdYwtWnAARtSId1UU3Gp7KRSwv6+9/uONgLCBLIEf6aM+GH
- N8rpWDbU8ykaaQryh4ddzKU=
-Received: from mail.maildlp.com (unknown [172.19.163.163])
- by canpmsgout12.his.huawei.com (SkyGuard) with ESMTPS id 4gWF0l4hK4znTVh;
- Thu,  4 Jun 2026 14:24:55 +0800 (CST)
-Received: from dggpemf500013.china.huawei.com (unknown [7.185.36.188])
- by mail.maildlp.com (Postfix) with ESMTPS id 486344048B;
- Thu,  4 Jun 2026 14:32:48 +0800 (CST)
-Received: from [10.67.121.183] (10.67.121.183) by
- dggpemf500013.china.huawei.com (7.185.36.188) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.1544.11; Thu, 4 Jun 2026 14:32:47 +0800
-Message-ID: <1bdf5296-874b-488e-8a34-d6f8d23ddcae@huawei.com>
-Date: Thu, 4 Jun 2026 14:32:46 +0800
+ (Exim 4.90_1) (envelope-from <odaki@rsg.ci.i.u-tokyo.ac.jp>)
+ id 1wV1na-0007JG-Ji
+ for qemu-devel@nongnu.org; Thu, 04 Jun 2026 02:43:29 -0400
+Received: from h183.csg.ci.i.u-tokyo.ac.jp (h183.csg.ci.i.u-tokyo.ac.jp
+ [133.11.54.183]) (authenticated bits=0)
+ by www3579.sakura.ne.jp (8.16.1/8.16.1) with ESMTPSA id 6546h03f047185
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NO);
+ Thu, 4 Jun 2026 15:43:12 +0900 (JST)
+ (envelope-from odaki@rsg.ci.i.u-tokyo.ac.jp)
+DKIM-Signature: a=rsa-sha256; bh=nMQzw+CgMK7MS3MPiZFgTDFS2ZlLnoQarKQ/wPen1/A=; 
+ c=relaxed/relaxed; d=rsg.ci.i.u-tokyo.ac.jp;
+ h=From:Message-Id:To:Subject:Date;
+ s=rs20250326; t=1780555392; v=1;
+ b=NYqXTdTnT27bmNWJVMijUaihghhgnO3lM3H9L4uY5MwV6ZcZU0cxo6kL60QY7HL1
+ /CEY2xXYv39H5s9q2HHaWa2k5giZPjrEMy9QLMnizH9fPzqt74XGKpqvaBn7bI99
+ Uct7lmGpugptNRYVIWQSrIaiUD1ifksrX55v23BXefFyq3jJOityEzWK56hEdbZS
+ HxrAVfFsNzaWvFN+qPAHnmZpRQxNRUCWiX55cxjyhx6JEw6CRJy2D8lgUr36cF0z
+ 3yXaN3ocNctmOac4fY074zbxLofRNkSJQ9+Kf6PuaG+dmmRDcqAoROlElGSyhdsf
+ EwioCCDIvTQ06gUf4hq6iQ==
+From: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
+Date: Thu, 04 Jun 2026 15:39:32 +0900
+Subject: [PATCH v3] ui/cocoa: Use qemu_input_map_osx_to_linux
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v5 00/18] kvm/arm: Introduce a customizable aarch64 KVM
- host model
-To: Eric Auger <eric.auger@redhat.com>, <eric.auger.pro@gmail.com>,
- <qemu-devel@nongnu.org>, <qemu-arm@nongnu.org>, <kvmarm@lists.linux.dev>,
- <peter.maydell@linaro.org>, <shaju.abraham@nutanix.com>,
- <khushit.shah@nutanix.com>, <cohuck@redhat.com>,
- <richard.henderson@linaro.org>, <sebott@redhat.com>,
- <skolothumtho@nvidia.com>, <philmd@linaro.org>
-CC: <maz@kernel.org>, <oliver.upton@linux.dev>, <pbonzini@redhat.com>,
- <armbru@redhat.com>, <berrange@redhat.com>, <abologna@redhat.com>,
- <jdenemar@redhat.com>
-References: <20260519132905.145643-1-eric.auger@redhat.com>
- <5a533932-06fe-4401-abfe-66546c15c4ec@huawei.com>
-From: Jinqian Yang <yangjinqian1@huawei.com>
-In-Reply-To: <5a533932-06fe-4401-abfe-66546c15c4ec@huawei.com>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 8bit
-X-Originating-IP: [10.67.121.183]
-X-ClientProxiedBy: kwepems500001.china.huawei.com (7.221.188.70) To
- dggpemf500013.china.huawei.com (7.185.36.188)
-Received-SPF: pass client-ip=113.46.200.227;
- envelope-from=yangjinqian1@huawei.com; helo=canpmsgout12.his.huawei.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_MSPIKE_H2=0.001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+Message-Id: <20260604-osx-v3-1-453b4ee0e072@rsg.ci.i.u-tokyo.ac.jp>
+X-B4-Tracking: v=1; b=H4sIAAAAAAAC/zWMSw4CIRAFrzLptRgaJI6uvIeZBfJxeiEYMITJh
+ LuLJC7r5VXtkF0il+E67ZBcoUwxdJCHCcyqw9Mxsp1BcKE4IrKYK+M4S2e8Esg99Oc7OU91VO5
+ L55XyJ6ZtRIv4rX9fDb8Ihkwb+ZCzvSCeTzert0D1aOILltbaF4h2YlCXAAAA
+X-Change-ID: 20250111-osx-0183ecf5210f
+To: Gerd Hoffmann <kraxel@redhat.com>,
+ Peter Maydell <peter.maydell@linaro.org>,
+ =?utf-8?q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>,
+ =?utf-8?q?Philippe_Mathieu-Daud=C3=A9?= <philmd@mailo.com>
+Cc: qemu-devel@nongnu.org, Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
+X-Mailer: b4 0.16-dev-16047
+X-Developer-Signature: v=1; a=openpgp-sha256; l=6819;
+ i=odaki@rsg.ci.i.u-tokyo.ac.jp; h=from:subject:message-id;
+ bh=QKyBFJQFMyW9TtSZpljtNTCytut5HjQMPY8SgHuVDWg=;
+ b=owGbwMvMwCWmMbc20y1CyJDxtFoSQ5aiXN2H4t2KTcJrTy8V0AnyOJQRGZJYySpVI1oZanpoa
+ fzMwyUdpSwMYlwMsmKKLClFu7k1oms/FSbEt8DMYWUCGcLAxSkAExE7xPA/5oNp37RewUf+D6Yf
+ u9ex71517/E/q199z3Kd2Xzn0NSjQgz/zF+Hu5/Rib4QHrrq+OkC95rtjeLyr/wPn7qbk3LiRdo
+ LDgA=
+X-Developer-Key: i=odaki@rsg.ci.i.u-tokyo.ac.jp; a=openpgp;
+ fpr=AEDC03C9AF734F2EC26A7BFFA4BAEAA73536753C
+Received-SPF: pass client-ip=49.212.243.89;
+ envelope-from=odaki@rsg.ci.i.u-tokyo.ac.jp; helo=www3579.sakura.ne.jp
+X-Spam_score_int: -16
+X-Spam_score: -1.7
+X-Spam_bar: -
+X-Spam_report: (-1.7 / 5.0 requ) BAYES_00=-1.9, DKIM_INVALID=0.1,
+ DKIM_SIGNED=0.1, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -82,149 +85,199 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+ui/cocoa used to have a conversion table from macOS keycode to Linux
+key code. It is an unnecessary redundancy as ui/input-keymap.c already
+has such a table. Worse, I added an incorrect mapping of kVK_JIS_Eisu and
+kVK_JIS_Kana with commit 708b72557ff5 ("ui/cocoa: Support unique keys of
+JIS keyboards").
 
+According to the following documentations, the definitions in
+ui/keycodemapdb/keymaps.csv, which ui/input-keymap.c uses, are correct:
+https://developer.apple.com/documentation/uikit/uikeyboardhidusage/uikeyboardhidusagekeyboardlang1?language=objc
+https://developer.apple.com/documentation/uikit/uikeyboardhidusage/uikeyboardhidusagekeyboardlang2?language=objc
+https://docs.microsoft.com/en-us/windows-hardware/design/component-guidelines/keyboard-japan-ime
 
-On 2026/6/4 14:08, Jinqian Yang wrote:
-> 
-> 
-> On 2026/5/19 21:27, Eric Auger wrote:
->> This series enhances the current host KVM model with capability to
->> set writable ID reg fields.
->>
->> Since v6.7 kernel, KVM/arm allows the userspace to overwrite the values
->> of a subset of ID regs. The list of writable fields continues to grow.
->> The feature ID range is defined as the AArch64 System register space
->> with op0==3, op1=={0, 1, 3}, CRn==0, CRm=={0-7}, op2=={0-7}.
->>
->> The end goal is to get more flexibility when migrating guests
->> between different host hardware.
->>
->> QEMU retrieves the writable ID fields from KVM UAPI [1] and
->> match them against a generated description of ID regs and their
->> named fields that stem from AARCHMRS Registers.json file.
->> Current description is based on latest 2026-03 edition.
->> The content of the generated files was compared against kernel
->> linux/arch/arm64/tools/sysreg file. It is not straightforward
->> to have unit tests for python scripts as there are many cases for
->> field extraction.
->>
->> For each writable named field a uint64 property is created
->> following the "SYSREG_<REG>_<FIELD>" naming convention. REG and
->> FIELD names are those described in ARM ARM Reference manual.
->>
->> The list of SYSREG_ID properties can be retrieved through the qmp
->> monitor using query-cpu-model-expansion [2].
->>
->> Connie & Eric
->>
->> This series can be found at:
->> https://github.com/eauger/qemu/tree/arm-cpu-model-v5
->>
->> History:
->> --------
->>
->> v4 -> v5:
->> - generate target/arm/cpu-idregs.h.inc that look similar to
->>    the format used in [RFC PATCH v1 02/13] target/arm:
->>    named_cpu_model: Add ID Register Fields without the
->>    description of the value values nor safe policy/value.
->>    I guess valid values could be generated from the Registers.json
->>    file too. Safe policy/values cannot.
->>    I reused one patch from the above series.
->>    Let's see how both series can progress/coexist without any
->>    anticipated bias.
->> - Addressed all comments from Shameer on v4
->> - Addressed 2 comments from v4 that were missed including the
->>    issue of IDreg visibility affected by some other settings.
->>    Unfortunately I was not able to test it.
->> - Further look at overrides between low level id reg field
->>    properties versus legacy CPU options. I have the feeling they
->>    can coexist as long as we document the hierarchy between them:
->>    host kvm default -> ID reg field props -> legacy CPU options
->> - Noticed more writable fields that are RES0/RAZ
->> - Improved commit messages in general
->>
->> References:
->> -----------
->>
->> [1]
->> KVM_CAP_ARM_SUPPORTED_REG_MASK_RANGES
->> KVM_ARM_GET_REG_WRITABLE_MASKS
->> Documentation/virt/kvm/api.rst
->>
->> [2]
->> qemu-system-aarch64 -qmp unix:/home/augere/TEST/QEMU/qmp- 
->> sock,server,nowait -M virt --enable-kvm -cpu custom
->> sudo build/run qmp-shell /home/augere/TEST/QEMU/qmp-sock
->> Welcome to the QMP low-level shell!
->> Connected to QEMU 11.0.50
->> (QEMU) query-cpu-model-expansion type=full model={"name":"host"}
->>
->>
->> Cornelia Huck (3):
->>    target/arm/kvm: Introduce kvm_get_writable_id_regs
->>    arm-qmp-cmds: introspection for ID register props
->>    arm/cpu-features: document ID reg properties
->>
->> Eric Auger (14):
->>    scripts: introduce scripts/update-aarch64-cpu-sysregs-header.py
->>    target/arm/cpu-sysregs.h.inc: Sort by name alphabetical order
->>    target/arm/cpu-sysregs.h.inc: Update with automatic generation
->>    arm/cpu: Add infra to handle generated ID register definitions
->>    scripts: Introduce scripts/aarch64_sysreg_helpers module
->>    scripts: Introduce scripts/update-aarch64-cpu-sysreg-properties.py
->>    target/arm/cpu-idregs.h.inc: generate with script
->>    target/arm/cpu64: Retrieve writable ID reg map in
->>      aarch64_host_initfn()
->>    arm/kvm: Initialize all writable ID registers from host
->>    arm/kvm: write back modified ID regs to KVM
->>    target/arm/kvm: Introduce kvm_arm_expose_idreg_properties
->>    target/arm/kvm: Special case REVIDR_EL1 and AIDR_EL1
->>    target/arm/kvm: Ignore some writable bits that shouldn't be
->>    target/arm/cpu: Expose writable ID reg field properties on the kvm
->>      host vcpu model
->>
->> Shaju Abraham (1):
->>    target/arm/cpu_idregs: generate tables for Arm64 ID registers and
->>      fields
->>
->>   docs/system/arm/cpu-features.rst              | 106 ++-
->>   scripts/aarch64_sysreg_helpers.py             | 109 ++++
->>   .../update-aarch64-cpu-sysreg-properties.py   | 168 +++++
->>   scripts/update-aarch64-cpu-sysregs-header.py  |  51 ++
->>   target/arm/arm-qmp-cmds.c                     |  19 +
->>   target/arm/cpu-idregs.c                       |  50 ++
->>   target/arm/cpu-idregs.h                       |  33 +
->>   target/arm/cpu-idregs.h.inc                   | 617 ++++++++++++++++++
->>   target/arm/cpu-sysregs.h.inc                  |  57 +-
->>   target/arm/cpu.h                              |   3 +
->>   target/arm/cpu64.c                            |  14 +
->>   target/arm/kvm-stub.c                         |   5 +
->>   target/arm/kvm.c                              | 320 ++++++++-
->>   target/arm/kvm_arm.h                          |  12 +
->>   target/arm/meson.build                        |   1 +
->>   target/arm/trace-events                       |   6 +
->>   16 files changed, 1539 insertions(+), 32 deletions(-)
->>   create mode 100644 scripts/aarch64_sysreg_helpers.py
->>   create mode 100644 scripts/update-aarch64-cpu-sysreg-properties.py
->>   create mode 100755 scripts/update-aarch64-cpu-sysregs-header.py
->>   create mode 100644 target/arm/cpu-idregs.c
->>   create mode 100644 target/arm/cpu-idregs.h
->>   create mode 100644 target/arm/cpu-idregs.h.inc
->>
-> 
-> Thanks for the patch series. I tested it, and it works as expected.
-> After configuring the QEMU command, it was able to successfully migrate
-> on Hisilicon KunPeng HIP09 and HIP12 chips.
-> 
-> Tested-by: Jinqian Yang <yangjinqian1@huawei.com>
-> 
-> Thanks,
-> Shameer
-> 
+Use qemu_input_map_osx_to_linux to eliminate the redundancy and
+incorrect mappings.
 
-Sorry, I forgot to update the salutation name at the end.
+Fixes: 708b72557ff5 ("ui/cocoa: Support unique keys of JIS keyboards")
+Signed-off-by: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
+---
+ui/cocoa used to have a conversion table from macOS keycode to Linux
+key code. It is an unnecessary redundancy as ui/input-keymap.c already
+has such a table. Worse, I added an incorrect mapping of kVK_JIS_Eisu and
+kVK_JIS_Kana with commit 708b72557ff5 ("ui/cocoa: Support unique keys of
+JIS keyboards").
 
-Thanks,
-Jinqian
+According to the following documentations, the definitions in
+ui/keycodemapdb/keymaps.csv, which ui/input-keymap.c uses, are correct:
+https://developer.apple.com/documentation/uikit/uikeyboardhidusage/uikeyboardhidusagekeyboardlang1?language=objc
+https://developer.apple.com/documentation/uikit/uikeyboardhidusage/uikeyboardhidusagekeyboardlang2?language=objc
+https://docs.microsoft.com/en-us/windows-hardware/design/component-guidelines/keyboard-japan-ime
+
+Use qemu_input_map_osx_to_linux to eliminate the redundancy and
+incorrect mappings.
+---
+Changes in v3:
+- Rebased.
+- Link to v2: https://lore.kernel.org/r/20250115-osx-v2-1-ac3b38d91174@daynix.com
+---
+ ui/cocoa.m | 131 ++-----------------------------------------------------------
+ 1 file changed, 3 insertions(+), 128 deletions(-)
+
+diff --git a/ui/cocoa.m b/ui/cocoa.m
+index c5e639ab98d6..e157ad01d851 100644
+--- a/ui/cocoa.m
++++ b/ui/cocoa.m
+@@ -141,138 +141,13 @@ static bool bool_with_bql(BoolCodeBlock block)
+     return val;
+ }
+ 
+-// Mac to Linux conversion
+-static const unsigned int mac_to_linux_map[] = {
+-    [kVK_ANSI_A] = KEY_A,
+-    [kVK_ANSI_B] = KEY_B,
+-    [kVK_ANSI_C] = KEY_C,
+-    [kVK_ANSI_D] = KEY_D,
+-    [kVK_ANSI_E] = KEY_E,
+-    [kVK_ANSI_F] = KEY_F,
+-    [kVK_ANSI_G] = KEY_G,
+-    [kVK_ANSI_H] = KEY_H,
+-    [kVK_ANSI_I] = KEY_I,
+-    [kVK_ANSI_J] = KEY_J,
+-    [kVK_ANSI_K] = KEY_K,
+-    [kVK_ANSI_L] = KEY_L,
+-    [kVK_ANSI_M] = KEY_M,
+-    [kVK_ANSI_N] = KEY_N,
+-    [kVK_ANSI_O] = KEY_O,
+-    [kVK_ANSI_P] = KEY_P,
+-    [kVK_ANSI_Q] = KEY_Q,
+-    [kVK_ANSI_R] = KEY_R,
+-    [kVK_ANSI_S] = KEY_S,
+-    [kVK_ANSI_T] = KEY_T,
+-    [kVK_ANSI_U] = KEY_U,
+-    [kVK_ANSI_V] = KEY_V,
+-    [kVK_ANSI_W] = KEY_W,
+-    [kVK_ANSI_X] = KEY_X,
+-    [kVK_ANSI_Y] = KEY_Y,
+-    [kVK_ANSI_Z] = KEY_Z,
+-
+-    [kVK_ANSI_0] = KEY_0,
+-    [kVK_ANSI_1] = KEY_1,
+-    [kVK_ANSI_2] = KEY_2,
+-    [kVK_ANSI_3] = KEY_3,
+-    [kVK_ANSI_4] = KEY_4,
+-    [kVK_ANSI_5] = KEY_5,
+-    [kVK_ANSI_6] = KEY_6,
+-    [kVK_ANSI_7] = KEY_7,
+-    [kVK_ANSI_8] = KEY_8,
+-    [kVK_ANSI_9] = KEY_9,
+-
+-    [kVK_ANSI_Grave] = KEY_GRAVE,
+-    [kVK_ANSI_Minus] = KEY_MINUS,
+-    [kVK_ANSI_Equal] = KEY_EQUAL,
+-    [kVK_Delete] = KEY_BACKSPACE,
+-    [kVK_CapsLock] = KEY_CAPSLOCK,
+-    [kVK_Tab] = KEY_TAB,
+-    [kVK_Return] = KEY_ENTER,
+-    [kVK_ANSI_LeftBracket] = KEY_LEFTBRACE,
+-    [kVK_ANSI_RightBracket] = KEY_RIGHTBRACE,
+-    [kVK_ANSI_Backslash] = KEY_BACKSLASH,
+-    [kVK_ANSI_Semicolon] = KEY_SEMICOLON,
+-    [kVK_ANSI_Quote] = KEY_APOSTROPHE,
+-    [kVK_ANSI_Comma] = KEY_COMMA,
+-    [kVK_ANSI_Period] = KEY_DOT,
+-    [kVK_ANSI_Slash] = KEY_SLASH,
+-    [kVK_Space] = KEY_SPACE,
+-
+-    [kVK_ANSI_Keypad0] = KEY_KP0,
+-    [kVK_ANSI_Keypad1] = KEY_KP1,
+-    [kVK_ANSI_Keypad2] = KEY_KP2,
+-    [kVK_ANSI_Keypad3] = KEY_KP3,
+-    [kVK_ANSI_Keypad4] = KEY_KP4,
+-    [kVK_ANSI_Keypad5] = KEY_KP5,
+-    [kVK_ANSI_Keypad6] = KEY_KP6,
+-    [kVK_ANSI_Keypad7] = KEY_KP7,
+-    [kVK_ANSI_Keypad8] = KEY_KP8,
+-    [kVK_ANSI_Keypad9] = KEY_KP9,
+-    [kVK_ANSI_KeypadDecimal] = KEY_KPDOT,
+-    [kVK_ANSI_KeypadEnter] = KEY_KPENTER,
+-    [kVK_ANSI_KeypadPlus] = KEY_KPPLUS,
+-    [kVK_ANSI_KeypadMinus] = KEY_KPMINUS,
+-    [kVK_ANSI_KeypadMultiply] = KEY_KPASTERISK,
+-    [kVK_ANSI_KeypadDivide] = KEY_KPSLASH,
+-    [kVK_ANSI_KeypadEquals] = KEY_KPEQUAL,
+-    [kVK_ANSI_KeypadClear] = KEY_NUMLOCK,
+-
+-    [kVK_UpArrow] = KEY_UP,
+-    [kVK_DownArrow] = KEY_DOWN,
+-    [kVK_LeftArrow] = KEY_LEFT,
+-    [kVK_RightArrow] = KEY_RIGHT,
+-
+-    [kVK_Help] = KEY_INSERT,
+-    [kVK_Home] = KEY_HOME,
+-    [kVK_PageUp] = KEY_PAGEUP,
+-    [kVK_PageDown] = KEY_PAGEDOWN,
+-    [kVK_End] = KEY_END,
+-    [kVK_ForwardDelete] = KEY_DELETE,
+-
+-    [kVK_Escape] = KEY_ESC,
+-
+-    /* The Power key can't be used directly because the operating system uses
+-     * it. This key can be emulated by using it in place of another key such as
+-     * F1. Don't forget to disable the real key binding.
+-     */
+-    /* [kVK_F1] = KEY_POWER, */
+-
+-    [kVK_F1] = KEY_F1,
+-    [kVK_F2] = KEY_F2,
+-    [kVK_F3] = KEY_F3,
+-    [kVK_F4] = KEY_F4,
+-    [kVK_F5] = KEY_F5,
+-    [kVK_F6] = KEY_F6,
+-    [kVK_F7] = KEY_F7,
+-    [kVK_F8] = KEY_F8,
+-    [kVK_F9] = KEY_F9,
+-    [kVK_F10] = KEY_F10,
+-    [kVK_F11] = KEY_F11,
+-    [kVK_F12] = KEY_F12,
+-    [kVK_F13] = KEY_SYSRQ,
+-    [kVK_F14] = KEY_SCROLLLOCK,
+-    [kVK_F15] = KEY_PAUSE,
+-
+-    // JIS keyboards only
+-    [kVK_JIS_Yen] = KEY_YEN,
+-    [kVK_JIS_Underscore] = KEY_RO,
+-    [kVK_JIS_KeypadComma] = KEY_KPCOMMA,
+-    [kVK_JIS_Eisu] = KEY_MUHENKAN,
+-    [kVK_JIS_Kana] = KEY_HENKAN,
+-
+-    /*
+-     * The eject and volume keys can't be used here because they are handled at
+-     * a lower level than what an Application can see.
+-     */
+-};
+-
+-static unsigned int cocoa_keycode_to_linux(int keycode)
++static int cocoa_keycode_to_linux(int keycode)
+ {
+-    if (ARRAY_SIZE(mac_to_linux_map) <= keycode) {
++    if (qemu_input_map_osx_to_linux_len <= keycode) {
+         error_report("(cocoa) warning unknown keycode 0x%x", keycode);
+         return 0;
+     }
+-    return mac_to_linux_map[keycode];
++    return qemu_input_map_osx_to_linux[keycode];
+ }
+ 
+ /* Displays an alert dialog box with the specified message */
+
+---
+base-commit: 2db91528542672cf0db78b3f2cc0e22b36302b38
+change-id: 20250111-osx-0183ecf5210f
+
+Best regards,
+--  
+Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
+
 
