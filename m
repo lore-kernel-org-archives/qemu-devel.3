@@ -4,128 +4,129 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E925ACD6E71
-	for <qemu-devel@archiver.kernel.org>; Thu,  4 Jun 2026 00:08:22 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7AC48CD6E60
+	for <qemu-devel@archiver.kernel.org>; Thu,  4 Jun 2026 00:08:38 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wUvcg-0001rH-U4; Wed, 03 Jun 2026 20:07:46 -0400
+	id 1wUvch-0001rL-1t; Wed, 03 Jun 2026 20:07:47 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <jithu.joseph@oss.qualcomm.com>)
- id 1wUvcf-0001qM-IH
+ id 1wUvcf-0001qN-K1
  for qemu-devel@nongnu.org; Wed, 03 Jun 2026 20:07:45 -0400
-Received: from mx0b-0031df01.pphosted.com ([205.220.180.131])
+Received: from mx0a-0031df01.pphosted.com ([205.220.168.131])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <jithu.joseph@oss.qualcomm.com>)
- id 1wUvcc-0006Y8-EL
+ id 1wUvcb-0006YQ-Qg
  for qemu-devel@nongnu.org; Wed, 03 Jun 2026 20:07:45 -0400
-Received: from pps.filterd (m0279872.ppops.net [127.0.0.1])
+Received: from pps.filterd (m0279864.ppops.net [127.0.0.1])
  by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 653K6elF2076419
- for <qemu-devel@nongnu.org>; Thu, 4 Jun 2026 00:07:38 GMT
+ 653L1b9H1947093
+ for <qemu-devel@nongnu.org>; Thu, 4 Jun 2026 00:07:40 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
  cc:content-transfer-encoding:date:from:in-reply-to:message-id
- :mime-version:references:subject:to; s=qcppdkim1; bh=EtyexG+nQsF
- Hervoia4GntLrrrmor65HgX7z2gKHgdQ=; b=IkUpwunUEh5nHlDQOCQ8S3tuxHA
- 52WT9KaY4OtVNNmlUZbU2XsKmdYsTel6/faGP7WL83KLEeDfHrkw1x7IlES5/EVO
- czzPHMYqbK2zU4zLVbwJaMyvyT2G3VXLbRw+zIU+wIbu0NyKxFMnLw0tjRFFMNX4
- iT/hytcVWkgGGlGuzabHwhu3/zD9uW//nJIFoFRnPHud8RR1kChDl484UQsvuXct
- fi92/ZuZE3Ikk+5D4aETEyc/8AGVZDXVIX+eVAzQgJYfa8Yhq2r2zwpOQ0ZysuQD
- Bj8nJ9jw/RexwFILaVpUdBWBM8LmWjdKS6yxjg41GpuPdwJTs7XHFH5WjtQ==
-Received: from mail-dy1-f198.google.com (mail-dy1-f198.google.com
- [74.125.82.198])
- by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4ejev1c67u-1
+ :mime-version:references:subject:to; s=qcppdkim1; bh=jcweNIUM6t+
+ 6hjcfD8RzLfViWzwnEXy7lBw9Fk6zniI=; b=azVHYlWWTXKH+fNEQVRC+82Gmqs
+ DbESNnFZkxRVL538QUBqKSQ6MGA5YPQv97W1VJ1YXW0ag9Vn0qb8AkTv589UO2ZB
+ XLXe6IQv4bc9iEj+Oq8C8OxQKdn39llXA1toYuqIKD8ldYd27cindm6+4bsEUNml
+ Q0XKvFpyJ2c+4gy4QNt4FX8xMUP3bY3vSx5bZ7foa0Naz18/F+OoIN8BjrhTBv7E
+ yLdD9oDUgZXu3pnS9X/g6EdU9bc4FO7u7YpWplKglvzUcVKoXctVV5LT27ScZpn0
+ hHya4LW1rvg2pKmPlZZWc+Cszb/5SEJfDfFIU2iluC7OaYP3k5o36jekxPg==
+Received: from mail-dy1-f199.google.com (mail-dy1-f199.google.com
+ [74.125.82.199])
+ by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4ejabgn3rv-1
  (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
- for <qemu-devel@nongnu.org>; Thu, 04 Jun 2026 00:07:37 +0000 (GMT)
-Received: by mail-dy1-f198.google.com with SMTP id
- 5a478bee46e88-3075fa5a407so275002eec.1
- for <qemu-devel@nongnu.org>; Wed, 03 Jun 2026 17:07:37 -0700 (PDT)
+ for <qemu-devel@nongnu.org>; Thu, 04 Jun 2026 00:07:39 +0000 (GMT)
+Received: by mail-dy1-f199.google.com with SMTP id
+ 5a478bee46e88-304ec73b015so173351eec.1
+ for <qemu-devel@nongnu.org>; Wed, 03 Jun 2026 17:07:39 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=oss.qualcomm.com; s=google; t=1780531657; x=1781136457; darn=nongnu.org;
+ d=oss.qualcomm.com; s=google; t=1780531659; x=1781136459; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=EtyexG+nQsFHervoia4GntLrrrmor65HgX7z2gKHgdQ=;
- b=c9tKmy48E9xlNctimlZ496w1+R9QpaN5jpb0kuobZ10NayQY4Tdy2FBKA3ousrEF43
- IpGOLe9AYf66qPnA9v7ttcQhcaWPThBG3zySvJdSkEjHXlzIRWIVHPNIRq1WZLEMS1Ug
- nT4DaKb+fTGhlCnpPfXIwMCAkuhjo7+dOU5AWdDKyxWmcFCakFh46x7NtM9XuvQc8eda
- v7bRqRIrDjmZF7+j7XxNGCgmWhn62UUda09FNh2GUQ233rskxMmxf7kGtrTmRtEiKtF2
- 2kqqjxgcDI6tL8kxMQrIGi6aOImwXDwYds02MIFIFGqfehGenjik6i0/O5Rl6HR8cdzV
- DVKQ==
+ bh=jcweNIUM6t+6hjcfD8RzLfViWzwnEXy7lBw9Fk6zniI=;
+ b=Nsas7arOxH8CbUVh77yx/5xkTHwgdsxm1VJyyrzYIDVkbX6rB9jtyokFqxrSo4C6Lm
+ /NpmbnYCnHU3ex8QR/jgB/v0JDxX61QUTbhUSTWxRGSh4V4llYIDzJE26OFEX8yZHwYc
+ k9OWyg+vVIvBkkkO6xpTuMq3y2/yfagfDYpnVmy8PZjUC+NGhHJ2OCBg2do7SYg6BFBn
+ jVSpO1Yq+2LsBVd6KR+f0NqY6eBAwhZG1afj2zy0MXE24cJgue1aMMqOHOhLyaCXxk5j
+ TqD049kWt0oWBSYTbRCP3N5Ix5sQSamP11mK6zWUzr1Ir2PibjfQSvjdgAyLoIVyxtJc
+ 8H6A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1780531657; x=1781136457;
+ d=1e100.net; s=20251104; t=1780531659; x=1781136459;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to;
- bh=EtyexG+nQsFHervoia4GntLrrrmor65HgX7z2gKHgdQ=;
- b=V40maEuSS3kERy3RD3QR5KNo7ETINbrIqmZwPTidG0aXbIM/FcSq5p0/itnZoamOsE
- eK3QapW3qCa51Dei1lWt1Ai5ljNRLxxT0k4N0FsCvxSrt8D0MnIt8LOhnboR03Z3Kq9I
- astzVxLHqAugWgFYfCdeStYEX60x/5kglqog5drw98eVZAWvLDckszoMeeYHQORuC2/u
- aEhpCt7Ab+NoMFLbrswSOgBggSxdzaYVygBS9RVxB1nzw6ZmBBWI4iFt4zykrghI800O
- ZmwiGpGlRF74LgAlXat0EWu4E+A6zxIWYjNE6Ofl981eVp5ctXtYigGskp19X1LUQG1o
- eSBw==
+ bh=jcweNIUM6t+6hjcfD8RzLfViWzwnEXy7lBw9Fk6zniI=;
+ b=lQsSUyRe1v/9hbv6BZtp994Qoxv6jtKZl15GHzyGYye9407VXOODiXQq3u9U6UGCA7
+ BWLSHq8dUcpbIX9CX1PJpamS1O7+LYvomXFWSvKchUFzU3IxabUZp2LAG9JBIE9JddGq
+ eH5BAIYTLCb1yNPaQI5Ds1NKxV1CHht3mie9hL9NLgh2EF+5Mf17UW0gELe5vuzkLGws
+ pykZmgL50KGSj5lhEJSZk7jveH+G2zUy/vl/D1z+pS2DEZYwx47chglaj4a2gy+VjcRg
+ AVg/6uSay46+ttbJVJi+955AE4tqEfTh+HYD3thYS405rr+27teWO6yYJKK7xGwOkhoq
+ x3cQ==
 X-Forwarded-Encrypted: i=1;
- AFNElJ9F37TGgeJXSJDMYTJ2LssxTiqJGBkJrJTMLG+QIUhlGFBPkAc593zNPpiYZhcPQPdQiW+v/+ORQhYT@nongnu.org
-X-Gm-Message-State: AOJu0Yze4+tP0YlCvdQamebgTtxE8C/JEDBbjdF6IbAptZw6F4Oqvorn
- 7lOPSlbrLhYOTXz/YIy2cw88xDueI6Y5nyyRJ804mhNoM12YcIugLsfD9H3uuTrGAZYzcdRbmNS
- rFoGDmey1mIaq48pM/kamPhWOZZXvcp/U/1YJf95cOpmLyzGShMruhHYZGw==
-X-Gm-Gg: Acq92OFj5cOk0vHI3gGHHZ70+NDhXjQDBFDjESJtgT85soEXHl0kHYAiiP5nrJFziq6
- J5DU3rLYXWr0eIKVyiVlxrUPpu6ilzTEJPcFE+UZKYT3vX8xeImNfYlkyv6XT+x34Og+xP29et9
- 98whoFSU59fodxVnQSbh5Ybg2ATDZZkfc/8RuG21/vpV9c+Ix/pL0FlM2iLOmUkG5oe3ODD4Vtf
- x9HGrl80YGLd6CTpLQNgyFadDKLVAiYYmyHXI5ldDnKZuDd8U0167dda6LdvyJGSm7n/Nup7EoX
- VhPyF8lt5UDxcLBNnWeqsigy1gUyGFKjMXQKvfeamAjfJflpvEPc1/rO53V9ZezNYziJQ8Cf2lp
- WjgjlDR9shmDtLDSZQmkOSD3lLyauCyTXB6amNyABbbEVT032Wx6LYOjOvcjFGkDYIvmQEK8WpD
- iqndlPsPrxv4k=
-X-Received: by 2002:a05:7300:8b84:b0:307:26a3:75e4 with SMTP id
- 5a478bee46e88-3074fa57610mr2746983eec.4.1780531656738; 
- Wed, 03 Jun 2026 17:07:36 -0700 (PDT)
-X-Received: by 2002:a05:7300:8b84:b0:307:26a3:75e4 with SMTP id
- 5a478bee46e88-3074fa57610mr2746954eec.4.1780531656105; 
- Wed, 03 Jun 2026 17:07:36 -0700 (PDT)
+ AFNElJ+sDGOeEdQwJyin7q+3ts7cCp5YW3jLLYtSqT6ndHHhqgrxleiBcCH125HkK08dSxQpKt5aFN/JDL68@nongnu.org
+X-Gm-Message-State: AOJu0YyyvlFjBFCOnm/6X/NZMvjCeGZhwqWlZ+MS3qpdwuCafI6iUTd1
+ KvcwCGEc77LSy4/5xunwMIqP6OCFBZR2I/JC+VRegSbfiXl67l+ln8/Of3zr0s7nkfov4rkmYFY
+ bFyYofAqZkh8+CLSiBxL+cQbNkZzPEEcUaCbTX4tPBaPLn07QUw8JoepP4w==
+X-Gm-Gg: Acq92OHGwZniev7X4GiPfbtM+b3OnyrYzdYms0/g6zVuDKFr7hhaahbjpnw7JHpOd9L
+ h2p+liY/SVBaY4CPkNhak0VdoQ/hB4L8O0X9djHYUA9EplAM22pli3PpUgXNyf9mfwT3EYn6p1a
+ IeTi7Lhw93DJirMCH4tPuQ3ZypQInDc2MqWn4zL2C7YJXVzdKuFexfx+OwsTbhivUoXYWVkbAZZ
+ FxBCjUMgpKkDe3DGsrHSgZuTP7Aj4pSUJxu7I3aAWb/SYrOx3Z2MXXMSe0oGTTMMnT211foLGq4
+ w2z81cuw6bDT1LR2tn+NcHzY/VUOtervVdleBMhrDkVcn6pQ9sL0FeIaLHIN85YchZrjlw5RdHM
+ UbevqWsLrwT17CuMxNGKCgv2ImNcMI1CYJ3u7REuDFyv3zQkEgLPdmVyHXLXbY5nrZjY/bx48lq
+ Uh4L95hJRCAsI=
+X-Received: by 2002:a05:7300:3254:b0:304:e6f8:7ccf with SMTP id
+ 5a478bee46e88-3074fbebfdfmr3027592eec.27.1780531659098; 
+ Wed, 03 Jun 2026 17:07:39 -0700 (PDT)
+X-Received: by 2002:a05:7300:3254:b0:304:e6f8:7ccf with SMTP id
+ 5a478bee46e88-3074fbebfdfmr3027571eec.27.1780531658509; 
+ Wed, 03 Jun 2026 17:07:38 -0700 (PDT)
 Received: from hu-jithjose-lv.qualcomm.com (Global_NAT1.qualcomm.com.
  [129.46.96.20]) by smtp.gmail.com with ESMTPSA id
- 5a478bee46e88-3074dfa3a2asm5374960eec.31.2026.06.03.17.07.35
+ 5a478bee46e88-3074dfa3a2asm5374960eec.31.2026.06.03.17.07.37
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 03 Jun 2026 17:07:35 -0700 (PDT)
+ Wed, 03 Jun 2026 17:07:37 -0700 (PDT)
 From: Jithu Joseph <jithu.joseph@oss.qualcomm.com>
 To: clg@kaod.org, jamin_lin@aspeedtech.com, komlodi@google.com
 Cc: nabihestefan@google.com, philmd@linaro.org, jithu.joseph@oss.qualcomm.com, 
  qemu-devel@nongnu.org
-Subject: [PATCH v2 0/3] hw/i3c: fix DW-I3C FIFO depth advertisement
-Date: Wed,  3 Jun 2026 17:07:31 -0700
-Message-ID: <20260604000734.1094382-1-jithu.joseph@oss.qualcomm.com>
+Subject: [PATCH v2 2/3] hw/i3c: rename DW-I3C queue capacity fields from
+ _bytes to _words
+Date: Wed,  3 Jun 2026 17:07:33 -0700
+Message-ID: <20260604000734.1094382-3-jithu.joseph@oss.qualcomm.com>
 X-Mailer: git-send-email 2.43.0
-In-Reply-To: <20260529014034.864722-1-jithu.joseph@oss.qualcomm.com>
+In-Reply-To: <20260604000734.1094382-1-jithu.joseph@oss.qualcomm.com>
 References: <20260529014034.864722-1-jithu.joseph@oss.qualcomm.com>
+ <20260604000734.1094382-1-jithu.joseph@oss.qualcomm.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-X-Proofpoint-ORIG-GUID: mAZfC7KQY_UmecRm9YRD0aaqMON036mI
-X-Authority-Analysis: v=2.4 cv=PNE/P/qC c=1 sm=1 tr=0 ts=6a20c1c9 cx=c_pps
- a=wEP8DlPgTf/vqF+yE6f9lg==:117 a=ouPCqIW2jiPt+lZRy3xVPw==:17
+X-Authority-Analysis: v=2.4 cv=R6sz39RX c=1 sm=1 tr=0 ts=6a20c1cb cx=c_pps
+ a=cFYjgdjTJScbgFmBucgdfQ==:117 a=ouPCqIW2jiPt+lZRy3xVPw==:17
  a=FelO9ux0wxsA:10 a=s4-Qcg_JpJYA:10 a=VkNPw1HP01LnGYTKEx00:22
- a=u7WPNUs3qKkmUXheDGA7:22 a=yx91gb_oNiZeI1HMLzn7:22 a=VwQbUJbxAAAA:8
- a=EUspDBNiAAAA:8 a=Bat5o3Dkq0--bRBYi74A:9 a=bBxd6f-gb0O0v-kibOvt:22
-X-Proofpoint-GUID: mAZfC7KQY_UmecRm9YRD0aaqMON036mI
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNjAzMDIzNSBTYWx0ZWRfXwfZIqUn59xog
- N+h+DQ/apWSC4ncru1SenyN4A5ZM2P29TuT/ffFTpdXbjYevTW3YZ4uzfw1Zuaw6V/FJ9Ge+14Z
- 7GDUJz13aO6YABxETltqLF35CX/+8IY8cRK2w9VNbD68Ur+3gCWP4XVFWgrzFRO4ujcfywmsw6X
- xN1Pc2y8bNm+/hyk1yZ0wGs28hzlGJGOwnvtQpx7rus6ZjuW5BwAq7sASIcHAruD0uNcpeAlpLc
- TH+GTeQ701ygmXnL0FZLoifJC06EF+205qhtCPA8ujMFMCBc3Bk+0XteN/Hfo3TtGT7VYVLLMuT
- lgg+KK2LpLu2Kn17L+EhdYsvT15sH1Wv9bMe/V/k6dlRRwWBKtjKvB699JAfrTZV1nBBbKKDCTM
- 6GCxjsdfvInyVX5FwjqT+sGUTNbdMy0vLTV514k8oRN5GDJcWUE8dN3jHb5kUcmQxbcLs854xfh
- /7mIdRkPgGgE8BGQBBA==
+ a=u7WPNUs3qKkmUXheDGA7:22 a=DJpcGTmdVt4CTyJn9g5Z:22 a=EUspDBNiAAAA:8
+ a=Au2XYW2znXaePupJvy4A:9 a=scEy_gLbYbu1JhEsrz4S:22
+X-Proofpoint-GUID: 3s_8yvqSn4Md_6uhvEvaXvIr89Ex99If
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNjAzMDIzNSBTYWx0ZWRfX4kjrYhQWDvR+
+ 0LnSgi53r3OlgwlWhjWv3rmnJNyK3cvmEDVW3cZ8mUtNlO+H4qZFNzrfVLoxFVpGHXm/wqurHTQ
+ P31PUxeP3wmk8EPXydcEmFhRzisyqsUA16Gl0mM+z4E+B5gWlnC2/akpSxRax23Bvgx6yqbFiR9
+ wdIhDk/KDnLTYkdeggvYu9DO2mJ0Dw5IlPWCjtdMsBnhs2HmP7r7PNKi19J9FBQIsxIM+Dhw6g4
+ 3kBaWZCoTv/8G2ZpDvcMtGR2QL5o+JPAzNGWywLvD945Fhq51BN0qww47o8Y43SHz/ksOwwklfW
+ 7pzhyBlyQwDc2J2EcVNPSdVyk6KuVpsvnQoqS+ddXX4El83XG6tYpn+rmPio6cNNeX+Iaq/45X5
+ D61hs6F02L0B5WQ8BLw4G+ZTwXjnrADrxVJ/gAULChd7pny3LtoJE9aKL6du/KhS9MDLUzDZZPO
+ JGL3fh/9olP3T6rPzXQ==
+X-Proofpoint-ORIG-GUID: 3s_8yvqSn4Md_6uhvEvaXvIr89Ex99If
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.125,FMLib:17.12.100.49
  definitions=2026-06-03_06,2026-05-28_03,2025-10-01_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- phishscore=0 bulkscore=0 clxscore=1015 malwarescore=0 spamscore=0
- adultscore=0 impostorscore=0 suspectscore=0 priorityscore=1501
- lowpriorityscore=0 classifier=typeunknown authscore=0 authtc= authcc=
- route=outbound adjust=0 reason=mlx scancount=1 engine=8.22.0-2605210000
- definitions=main-2606030235
-Received-SPF: pass client-ip=205.220.180.131;
- envelope-from=jithu.joseph@oss.qualcomm.com; helo=mx0b-0031df01.pphosted.com
+ spamscore=0 priorityscore=1501 malwarescore=0 bulkscore=0 clxscore=1015
+ lowpriorityscore=0 adultscore=0 impostorscore=0 suspectscore=0 phishscore=0
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.22.0-2605210000 definitions=main-2606030235
+Received-SPF: pass client-ip=205.220.168.131;
+ envelope-from=jithu.joseph@oss.qualcomm.com; helo=mx0a-0031df01.pphosted.com
 X-Spam_score_int: -27
 X-Spam_score: -2.8
 X-Spam_bar: --
@@ -148,59 +149,113 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-This series corrects the DesignWare I3C controller's advertised CMD/data
-FIFO depths and cleans up the misleading queue-capacity field names that
-made the bug easy to overlook.
+The cmd/resp, tx/rx, and IBI queue capacity values are passed straight
+to fifo32_create(), which interprets its capacity argument as a 32-bit
+word count.  The fields and device properties were therefore misnamed:
+setting e.g. tx-rx-queue-capacity-bytes=N sized the backing FIFO to N
+words, not N bytes.
 
-The Linux DW-I3C master driver reads QUEUE_STATUS_LEVEL and
-DATA_BUFFER_STATUS_LEVEL at probe to learn the controller's queue depths,
-then rejects any transfer larger than what was advertised with
--EOPNOTSUPP.  QEMU was resetting these registers to 0x02 / 0x10 instead of
-the real 0x10 / 0x40, so the guest believed the controller could only do
-64-byte transfers and failed any I3C transfer with a payload larger than
-64 B.  The backing FIFOs were already allocated at the correct size; only
-the advertised reset values were wrong.
+Rename the three struct fields and matching device-property strings:
 
-Patch 1 fixes the reset values, and additionally drives the advertised
-depths from the queue-capacity configs in the reset handlers (per
-Philippe's review) so a configured override is no longer silently ignored.
-Patch 2 is a no-functional-change cleanup renaming the queue-capacity
-struct fields and device properties from _bytes to _words, since the
-values are word counts passed to fifo32_create() -- the old names were
-what made the depth bug slow to spot.  Patch 3 keeps the old _bytes
-property names working as aliases, since they are user-visible and shipped
-in v11.0.0.
+  cmd_resp_queue_capacity_bytes  -> cmd_resp_queue_capacity_words
+  tx_rx_queue_capacity_bytes     -> tx_rx_queue_capacity_words
+  ibi_queue_capacity_bytes       -> ibi_queue_capacity_words
 
-Patch 1 is the actual bug fix and is tagged Cc: qemu-stable; it is kept
-self-contained (using the _bytes field names that exist in released
-branches) so it cherry-picks cleanly.  Patches 2 and 3 are master-only
-cleanup.
+Defaults are unchanged (0x10 / 0x40 / 0x10) -- they were being
+interpreted as word counts by fifo32_create() all along, just under a
+misleading label.  No behavioral change.
 
-Note on the IBI queue capacity: unlike the cmd/resp and tx/rx capacities,
-it is not advertised to the guest through any status register (the
-hardware exposes only IBI occupancy via IBI_BUF_BLR / IBI_STATUS_CNT, not
-a depth), so it sizes only the internal fifo32 backing store and has no
-entry in dw_i3c_resets[].
+Signed-off-by: Jithu Joseph <jithu.joseph@oss.qualcomm.com>
+---
+ include/hw/i3c/dw-i3c.h |  6 +++---
+ hw/i3c/dw-i3c.c         | 32 ++++++++++++++++----------------
+ 2 files changed, 19 insertions(+), 19 deletions(-)
 
-Changes since v1:
- - Patch 1: drive QUEUE_STATUS_LEVEL / DATA_BUFFER_STATUS_LEVEL from the
-   queue-capacity configs in the reset handlers, in addition to correcting
-   the reset-array values (Philippe Mathieu-Daude).
- - New patch 3: keep the renamed _bytes properties working as aliases so
-   existing command lines do not break (Philippe Mathieu-Daude).
- - v1: https://lore.kernel.org/qemu-devel/20260529014034.864722-1-jithu.joseph@oss.qualcomm.com/
-
-Jithu Joseph (3):
-  hw/i3c: fix CMD/data FIFO depth reset values to match real silicon
-  hw/i3c: rename DW-I3C queue capacity fields from _bytes to _words
-  hw/i3c: keep _bytes aliases for renamed queue-capacity properties
-
- include/hw/i3c/dw-i3c.h |  6 ++---
- hw/i3c/dw-i3c.c         | 58 +++++++++++++++++++++++++++++++----------
- 2 files changed, 47 insertions(+), 17 deletions(-)
-
-
-base-commit: 2db91528542672cf0db78b3f2cc0e22b36302b38
+diff --git a/include/hw/i3c/dw-i3c.h b/include/hw/i3c/dw-i3c.h
+index d26f60580f02..391470207c43 100644
+--- a/include/hw/i3c/dw-i3c.h
++++ b/include/hw/i3c/dw-i3c.h
+@@ -181,9 +181,9 @@ struct DWI3C {
+ 
+     struct {
+         uint8_t id;
+-        uint8_t cmd_resp_queue_capacity_bytes;
+-        uint16_t tx_rx_queue_capacity_bytes;
+-        uint8_t ibi_queue_capacity_bytes;
++        uint8_t cmd_resp_queue_capacity_words;
++        uint16_t tx_rx_queue_capacity_words;
++        uint8_t ibi_queue_capacity_words;
+         uint8_t num_addressable_devices;
+         uint16_t dev_addr_table_pointer;
+         uint16_t dev_addr_table_depth;
+diff --git a/hw/i3c/dw-i3c.c b/hw/i3c/dw-i3c.c
+index 06c2d55f5958..0d32d9ce78a0 100644
+--- a/hw/i3c/dw-i3c.c
++++ b/hw/i3c/dw-i3c.c
+@@ -948,9 +948,9 @@ static void dw_i3c_reset(DeviceState *dev)
+     ARRAY_FIELD_DP32(s->regs, DEV_CHAR_TABLE_POINTER, DEV_CHAR_TABLE_DEPTH,
+                      s->cfg.dev_char_table_depth);
+     ARRAY_FIELD_DP32(s->regs, QUEUE_STATUS_LEVEL, CMD_QUEUE_EMPTY_LOC,
+-                     s->cfg.cmd_resp_queue_capacity_bytes);
++                     s->cfg.cmd_resp_queue_capacity_words);
+     ARRAY_FIELD_DP32(s->regs, DATA_BUFFER_STATUS_LEVEL, TX_BUF_EMPTY_LOC,
+-                     s->cfg.tx_rx_queue_capacity_bytes);
++                     s->cfg.tx_rx_queue_capacity_words);
+ 
+     dw_i3c_cmd_queue_reset(s);
+     dw_i3c_resp_queue_reset(s);
+@@ -1798,9 +1798,9 @@ static void dw_i3c_reset_enter(Object *obj, ResetType type)
+     ARRAY_FIELD_DP32(s->regs, DEV_CHAR_TABLE_POINTER, DEV_CHAR_TABLE_DEPTH,
+                      s->cfg.dev_char_table_depth);
+     ARRAY_FIELD_DP32(s->regs, QUEUE_STATUS_LEVEL, CMD_QUEUE_EMPTY_LOC,
+-                     s->cfg.cmd_resp_queue_capacity_bytes);
++                     s->cfg.cmd_resp_queue_capacity_words);
+     ARRAY_FIELD_DP32(s->regs, DATA_BUFFER_STATUS_LEVEL, TX_BUF_EMPTY_LOC,
+-                     s->cfg.tx_rx_queue_capacity_bytes);
++                     s->cfg.tx_rx_queue_capacity_words);
+ }
+ 
+ static void dw_i3c_realize(DeviceState *dev, Error **errp)
+@@ -1814,14 +1814,14 @@ static void dw_i3c_realize(DeviceState *dev, Error **errp)
+                           DW_I3C_NR_REGS << 2);
+     sysbus_init_mmio(SYS_BUS_DEVICE(dev), &s->mr);
+ 
+-    fifo32_create(&s->cmd_queue, s->cfg.cmd_resp_queue_capacity_bytes);
+-    fifo32_create(&s->resp_queue, s->cfg.cmd_resp_queue_capacity_bytes);
+-    fifo32_create(&s->tx_queue, s->cfg.tx_rx_queue_capacity_bytes);
+-    fifo32_create(&s->rx_queue, s->cfg.tx_rx_queue_capacity_bytes);
+-    fifo32_create(&s->ibi_queue, s->cfg.ibi_queue_capacity_bytes);
++    fifo32_create(&s->cmd_queue, s->cfg.cmd_resp_queue_capacity_words);
++    fifo32_create(&s->resp_queue, s->cfg.cmd_resp_queue_capacity_words);
++    fifo32_create(&s->tx_queue, s->cfg.tx_rx_queue_capacity_words);
++    fifo32_create(&s->rx_queue, s->cfg.tx_rx_queue_capacity_words);
++    fifo32_create(&s->ibi_queue, s->cfg.ibi_queue_capacity_words);
+     /* Arbitrarily large enough to not be an issue. */
+     fifo8_create(&s->ibi_data.ibi_intermediate_queue,
+-                 s->cfg.ibi_queue_capacity_bytes * 8);
++                 s->cfg.ibi_queue_capacity_words * 8);
+ 
+     s->bus = i3c_init_bus(DEVICE(s), name);
+     I3CBusClass *bc = I3C_BUS_GET_CLASS(s->bus);
+@@ -1832,12 +1832,12 @@ static void dw_i3c_realize(DeviceState *dev, Error **errp)
+ 
+ static const Property dw_i3c_properties[] = {
+     DEFINE_PROP_UINT8("device-id", DWI3C, cfg.id, 0),
+-    DEFINE_PROP_UINT8("command-response-queue-capacity-bytes", DWI3C,
+-                      cfg.cmd_resp_queue_capacity_bytes, 0x10),
+-    DEFINE_PROP_UINT16("tx-rx-queue-capacity-bytes", DWI3C,
+-                      cfg.tx_rx_queue_capacity_bytes, 0x40),
+-    DEFINE_PROP_UINT8("ibi-queue-capacity-bytes", DWI3C,
+-                      cfg.ibi_queue_capacity_bytes, 0x10),
++    DEFINE_PROP_UINT8("command-response-queue-capacity-words", DWI3C,
++                      cfg.cmd_resp_queue_capacity_words, 0x10),
++    DEFINE_PROP_UINT16("tx-rx-queue-capacity-words", DWI3C,
++                      cfg.tx_rx_queue_capacity_words, 0x40),
++    DEFINE_PROP_UINT8("ibi-queue-capacity-words", DWI3C,
++                      cfg.ibi_queue_capacity_words, 0x10),
+     DEFINE_PROP_UINT8("num-addressable-devices", DWI3C,
+                       cfg.num_addressable_devices, 8),
+     DEFINE_PROP_UINT16("dev-addr-table-pointer", DWI3C,
 -- 
 2.43.0
 
