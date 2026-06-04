@@ -4,141 +4,102 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A8524CD6E6D
-	for <qemu-devel@archiver.kernel.org>; Thu,  4 Jun 2026 13:25:13 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D5CF9CD6E4A
+	for <qemu-devel@archiver.kernel.org>; Thu,  4 Jun 2026 13:33:32 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wV83n-0006AK-6w; Thu, 04 Jun 2026 09:24:35 -0400
+	id 1wV8Bh-0007GY-II; Thu, 04 Jun 2026 09:32:45 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <Pankaj.Gupta@amd.com>)
- id 1wV83l-00069z-Sj
- for qemu-devel@nongnu.org; Thu, 04 Jun 2026 09:24:33 -0400
-Received: from mail-southcentralusazon11011014.outbound.protection.outlook.com
- ([40.93.194.14] helo=SN4PR0501CU005.outbound.protection.outlook.com)
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1wV8BC-0007EZ-BX
+ for qemu-devel@nongnu.org; Thu, 04 Jun 2026 09:32:21 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <Pankaj.Gupta@amd.com>)
- id 1wV83i-0007ev-U8
- for qemu-devel@nongnu.org; Thu, 04 Jun 2026 09:24:33 -0400
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=mWDRDyS+l5dhCX/aXIgAsOahLKkqvLoQ/SO7DvvafdsZ8M4mLeyVFMB/D1k4Xm3enG4vB3KeYrsmZpJBrc0l3LI06ojLeP5Smd2V5Xb3MUobjTGhikAPGOjIJfSsxrM1gY7+VdRVd2y2mNK72pPdxEpwZd00Yp40Ch3hPs4pCDzld/fInpfPBK/5phB6DXRhCLRku8QsOc8X6ye2hUjxkNDwzIRtotbyuJtx+D6Xcppig9cuHTitAXaZ9EzDNyTjM7PlCkySnfxpQtoxSS3uaT72Kb83B88fTYVmwz4a+/1UO2gLXomdnvdJkBYDI01izhDV18iJDjsy0iST6giU2g==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=0VwY7ZkiilEqpvhfWYOFRq6u/6q4FLYvk5sw7kD+O1E=;
- b=nQqosnKTwu8ZUKq8WR13RODVwXxHds4cZpKXoEOtITL2H8lF2T7wvRdEekc9tR1N33k2vtBcJyCjTj+9OgWPedM7ZDY65YtJUlZZh8od7NeuuemdvTINcvhePWYKMj4fXiHNkh3UF7Xuy23S5aJLYx/ekUx7B0R+Ezh+r5kaRCWDD6OoQb+vvTgjk+49wSs0mPqI9xUgmxhf2vljWL4AmJkTby3/j4UI0S8Zv/MEBGpZBUUTUFbq3uniRxJiZY8/9G+WanCB/Q0sdv+fzPgqNvZqGjpwPG8IgHrQd4ctWavpl/6yNAp0JZVycGrfCVBUCNCq2LBXmg3EwYySIRj5Mw==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=amd.com; dmarc=pass action=none header.from=amd.com; dkim=pass
- header.d=amd.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=amd.com; s=selector1; 
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=0VwY7ZkiilEqpvhfWYOFRq6u/6q4FLYvk5sw7kD+O1E=;
- b=k66IklEZcFmQaz22xHUqzmKyPsUNQp8cMrUEqS9RZIMT+jyJc/ffWBeADnwOu/hoVy57H8ZViQjSvevWCQHLZbt5Gt06DwXQpQyf6iNfOyqZcNcJ6qeYfTw8lXpGWIGcwDYfvjcs9ips5g5YYLVkMS5lXcHan1WqTKJ1b6ulba4=
-Authentication-Results: dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=amd.com;
-Received: from CY8PR12MB7433.namprd12.prod.outlook.com (2603:10b6:930:53::22)
- by IA1PR12MB6530.namprd12.prod.outlook.com (2603:10b6:208:3a5::20)
- with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.92.7; Thu, 4 Jun 2026
- 13:19:22 +0000
-Received: from CY8PR12MB7433.namprd12.prod.outlook.com
- ([fe80::faae:d638:bdc9:4bf6]) by CY8PR12MB7433.namprd12.prod.outlook.com
- ([fe80::faae:d638:bdc9:4bf6%3]) with mapi id 15.21.0092.006; Thu, 4 Jun 2026
- 13:19:22 +0000
-Message-ID: <22bda2bc-97ba-4b08-ac75-a8807293441f@amd.com>
-Date: Thu, 4 Jun 2026 15:19:17 +0200
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH RFC 09/12] accel/kvm: Support shared/private conversions
- via guest_memfd ioctls
-To: Michael Roth <michael.roth@amd.com>, qemu-devel@nongnu.org
-Cc: kvm@vger.kernel.org, pbonzini@redhat.com, berrange@redhat.com,
- armbru@redhat.com, isaku.yamahata@intel.com, xiaoyao.li@intel.com,
- chao.p.peng@linux.intel.com, david@kernel.org, ashish.kalra@amd.com,
- ackerleytng@google.com
-References: <20260528000416.8161-1-michael.roth@amd.com>
- <20260528000416.8161-10-michael.roth@amd.com>
-Content-Language: en-US
-From: "Gupta, Pankaj" <pankaj.gupta@amd.com>
-In-Reply-To: <20260528000416.8161-10-michael.roth@amd.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-X-ClientProxiedBy: PR1P264CA0149.FRAP264.PROD.OUTLOOK.COM
- (2603:10a6:102:346::20) To CY8PR12MB7433.namprd12.prod.outlook.com
- (2603:10b6:930:53::22)
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1wV8B8-0002Wy-VS
+ for qemu-devel@nongnu.org; Thu, 04 Jun 2026 09:32:12 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1780579928;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=62EAMSkFdaLzZr8TxdRmkp/azwCR1AtZrnccAN1JTAM=;
+ b=NP0WUkVJZWwz+kiRe7nX8AzSlA1ZYBZ45kSte0IMQni8/PsAun6H7rQC7n2bK7XdcqloYY
+ vvS5WLmVnxvpxnsIBtwfOYMcSNigNIguz9P1GOWrQiJMEj3MYuyPtDUQ70+lcrFGRPvDw4
+ fTAfXVWyD1LNFMgU47qrJ9GS/7oS8aY=
+Received: from mail-vs1-f72.google.com (mail-vs1-f72.google.com
+ [209.85.217.72]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-9-iQCQL75-OjCZ8uM8eh5zkA-1; Thu, 04 Jun 2026 09:32:06 -0400
+X-MC-Unique: iQCQL75-OjCZ8uM8eh5zkA-1
+X-Mimecast-MFC-AGG-ID: iQCQL75-OjCZ8uM8eh5zkA_1780579926
+Received: by mail-vs1-f72.google.com with SMTP id
+ ada2fe7eead31-6c554284973so876990137.2
+ for <qemu-devel@nongnu.org>; Thu, 04 Jun 2026 06:32:06 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=redhat.com; s=google; t=1780579925; x=1781184725; darn=nongnu.org;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+ bh=62EAMSkFdaLzZr8TxdRmkp/azwCR1AtZrnccAN1JTAM=;
+ b=ErdSHdcEYvm/nuO4GK1HnqdrbovNFaiehJtBIQ8FuZfLk4G1hXwoWR6e4M6I+HhHDn
+ Cjf0U2OAqmusfXGIJokk8qmszNwynl9WS3iEcjVdmEH0gSN8zihx0i0UnZCbUxnaweAK
+ poBKfztRk9hrLE6bFxUOJOGZqou+oKpbLnFiw483bElXwONXBa9uzGeKchOmKyFxulum
+ w3JJiPVchHxL4ymq7hMZEMNIueLBwBJ7NE0VzcTktw+L+xQCn3ZPGwpyuEo0hVCZ3kWu
+ Hpp3DN3jjryxIb4PuZ7OTV7JkDEXLfIr6erlOa+jR3t4Jdw/Bp5hzvs250Cs9O0z6thd
+ cQ4Q==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1780579925; x=1781184725;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=62EAMSkFdaLzZr8TxdRmkp/azwCR1AtZrnccAN1JTAM=;
+ b=bGPdhoMMItVNzTBvTA4/EYAmSx79VtPRT6TIB2LhrZVqA/CVibypxBk6HjBty6ST+N
+ bPiVYrm2ElpVyHbeBhln3e9DOn2RMrYpCjNIKxJrin1kU5XyJCBzoebKwp6C0473jy+7
+ BzDGI1VcgYoY8lHPRRn1DVZnomeDoF15qbeCNv572BK49xwOAiYGtfdC24zRILdyiYYh
+ tTTV+hrJgqKCSEzdx8O/3cWlVQOUrTjZBSylIuvU2dqOtw6SLUyzDF1iAZvjDy8RjwFd
+ f1+OWYBzfzkHQPMMFhu0KJjMhVzoldvMJHRiRiQF0ST8iPrfSEPyFKIbhFXbnVj8Au45
+ qoeQ==
+X-Gm-Message-State: AOJu0YyIfuOYgINAyE8iYxiBJwmiEewcEsrAkhR0mavW3j2I4C7ZAe8Z
+ Evwczv1KCB51B4EGZDwN8w1GSnq1PanvMK7natdKb79HT3zsXE2lySlwBdKmHOiQ0zBKWgYjlJb
+ r3ILKGwyTgiYormUksl+isepfcUCTvD5u9lZkLs1h8Qq4/5ua1T17gpKd
+X-Gm-Gg: Acq92OHbaiD+2MWX3x4WEKcGLkICHvDlOt2C3I5yYwPze9+IpzwCOJUYd38QZzeMe7D
+ fplr2lLf1DBh5aYHQy2rqlNGli+iynCkrx0ttrrw+xiwDNM02pX1yBklZyGMat2w7ImyHj/rzA2
+ FobhI0b7he3dGeCJfR2TdyKG7tVkZr5QSFO0NkSGrV5KbLGk5bE5coZC2Nhn8q7sKjaN9VMoSiF
+ PQWmrngOPGji/qeLphJs335mQPHUgj5oEQn4xXdk939HmREkQo2/MfMD9bzT37mkNdGsDwdE5At
+ 2bPdzQztuHEC8prvnPdI9A5vqx0eRJlErNEpFzTEk6N1oYZZ9o7ZDDg58HX1OYM1EbYQJtwTR+W
+ jkfjtIPzqtkklCo+M6biY7HPr5g==
+X-Received: by 2002:a05:6102:290b:b0:632:a084:c0f7 with SMTP id
+ ada2fe7eead31-6ec444ce8f3mr4585643137.17.1780579925509; 
+ Thu, 04 Jun 2026 06:32:05 -0700 (PDT)
+X-Received: by 2002:a05:6102:290b:b0:632:a084:c0f7 with SMTP id
+ ada2fe7eead31-6ec444ce8f3mr4585586137.17.1780579925047; 
+ Thu, 04 Jun 2026 06:32:05 -0700 (PDT)
+Received: from x1.local ([142.189.10.167]) by smtp.gmail.com with ESMTPSA id
+ af79cd13be357-9158a00ac5esm594260285a.6.2026.06.04.06.32.04
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Thu, 04 Jun 2026 06:32:04 -0700 (PDT)
+Date: Thu, 4 Jun 2026 09:32:03 -0400
+From: Peter Xu <peterx@redhat.com>
+To: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
+Cc: qemu-devel@nongnu.org, Paolo Bonzini <pbonzini@redhat.com>,
+ Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@mailo.com>,
+ Fabiano Rosas <farosas@suse.de>
+Subject: Re: [PATCH] system/physmem: Assert migration invariants
+Message-ID: <aiF-U4gTz1n4IMBr@x1.local>
+References: <20260604-migration-v1-1-cef4a5b1bbdd@rsg.ci.i.u-tokyo.ac.jp>
 MIME-Version: 1.0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: CY8PR12MB7433:EE_|IA1PR12MB6530:EE_
-X-MS-Office365-Filtering-Correlation-Id: fca69368-f754-4ecb-e802-08dec23be456
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam: BCL:0;
- ARA:13230040|7416014|376014|366016|1800799024|18002099003|22082099003|6133799003|11063799006|4143699003|56012099006;
-X-Microsoft-Antispam-Message-Info: YN+B39LlKJnxx6zQcqzZKxbBbYfh1Dfk5LIzYgIIuk+GKX4vAVh1NYIphRZsuJWu+rER/8wvcta/0dHmiyeqPYMVFlb+cOZ3gJQfqRtynElJkPcdLTi5O3AIT6bqcpXr8WKt1jgAvDpjg4V8tFwRjbYnY9i6jO0+lExN2GP6cUqfcAViwxBmM7e4hKpFiT/ffqNpjRAaJQ1iNm3vzDBlKsqHZDR3j5shpq2DOGi16A7ZOWAcgbYVEumokx7QNxFCLexGueicLY4i3sDgoI32zEN4tH97eXS/lxRsTqEJP5jrhVt9Pszja/Y1HqeF6Ze3sZnfl1CBotT/opPZUoPky2vXGc9NyxisXtIQIKBD9AXiLNi2eFk7JfjYC5xERMM5EzHC1fpTvCUtWXFuB6RCB0SLCXVcuNT7pnDlT48l8S1SCIVkMr+89cVEDxK/cGP66/AFAy6fc1Fg7lZFHd6X6aMoYx+ct1ZCWpoSJdgO/4NpHQekx8OeSBfqCIJ2u8jWoM/VwTdybq5C5DOrYSUd7OH581w2xun3q4hMN0V2qVJ6cS4LlpIneAzZKMUCTt2hfPldCcMA545dhH6fCX8kLIyc1BIUT0BRo7yndoRjMO96oXy0+CWyvpc90m/5gYnSFJvWDJJkeBRqlG0EA2gTn0/oIFGtswMGl7xiwyGCsd/s0mLyiDLDNbs52opmpKp4
-X-Forefront-Antispam-Report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
- IPV:NLI; SFV:NSPM; H:CY8PR12MB7433.namprd12.prod.outlook.com; PTR:; CAT:NONE;
- SFS:(13230040)(7416014)(376014)(366016)(1800799024)(18002099003)(22082099003)(6133799003)(11063799006)(4143699003)(56012099006);
- DIR:OUT; SFP:1101; 
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0: =?utf-8?B?UEJydzU4dmI4dnJDTWJuS3JHRDdSdTFFYlNxUE5EWXQ5WmYwK3lPU25BeVc2?=
- =?utf-8?B?WE0xWE82WDhsYWtJL3g1bm9GSGk1U25LVFNEUDZFZGNRQ3pOTnNyd2pXSkxt?=
- =?utf-8?B?eVFRQkpXKzB4V0ZKUjZ3Q1Zud0toT1NFTThsSEV5Nmd2NHF3SDUxbmx2dHlr?=
- =?utf-8?B?WEtuNWRYaENhcmhHR2ZyTkwyT1loUG9BaGVxNDZYK2hrdm0xZzk4UE02SFQy?=
- =?utf-8?B?MmpZVzRDY3ZvV0tEVkt3KzluL0x2eTloQkJBNnIrZWhIUUZ3Q0ViaFQrM2tl?=
- =?utf-8?B?dkxtT2xSQXg3THFMakZaejBSZVlZMDdKZlZiLzFBeFhzZWNSU3BpNFJlaUtH?=
- =?utf-8?B?MkRTQ2FzWEJlNnZ5OWpFdEh0eFZUVU56YjUxa1c0VzBLMVlPb0dBN1hlaHFL?=
- =?utf-8?B?N0pReDhnVTJUT3h4a1kvLys0d1NRVHBBZG5EZXRiTjh3bVZGUGVoN1djSkxU?=
- =?utf-8?B?dzRKWWNqMGFHZEtnOWlFWE8wajdFY1I3S2VYaC9xV0hiTHFsZVRlYkxSSTZT?=
- =?utf-8?B?eUZ0Y3pHejg1YVJaSFpqTGtwUHF2NWhWT1hKejhia1U0ZVBVaGRrdE5GRFlW?=
- =?utf-8?B?ZllpT3dZeC9IdkllUFRvTVJvUUpNMWUwUFJ2UnQyQXRLUllqQlZGYU1nbXU1?=
- =?utf-8?B?bDliRUpMem1MazdWcWJsT3ViMmFwQy9MSXFyalQvUFgxeDlkRWMreTRndEJU?=
- =?utf-8?B?L01xSTRCaVIyYi9SRGkvL1JMU0RYRG1YNHhVTWlQRnpsSGhYR1NJKzJIRW5z?=
- =?utf-8?B?SjhUN0J4WDNLRUFDNmdXMzdJQ21zN2E3cFlUNVFPcExXQll1K0M1Wm0vUTcx?=
- =?utf-8?B?elFWN0dEVXd4Y2dDWDQ3YlNFSGQ3RGtUVExZa3IwSlQwakI0Q0xLTjFzY3N1?=
- =?utf-8?B?YnplUTZWbm9XRS9ZSFBhRDZ5cmZIQ1UrSkNOV3dPNmlEQmhtYmtQL3ZBcWxa?=
- =?utf-8?B?RFhDbzlTOFRDa1l5MUcrS21FNnZVSjBRMmltOUVOYjlHckVTUDZUV2Q1aUd0?=
- =?utf-8?B?c3FLdCtPWWoveTJYV040ZjVCWG9QYjZqZ0dncXQyQnNmdG41WEIvM0F2bUNk?=
- =?utf-8?B?UjdMM0NObTNTMnRGK3pydGxVY3E0ZG02cVkwam8xWHNIY2N4VWNsV0xZQ1o3?=
- =?utf-8?B?OFNpMklBMCtkdFdRbHNxbkt6aUkvc0NpUUpvN1J5QzREWGVJTjExQjB4RzA4?=
- =?utf-8?B?empkMVpYRGZHY3NGYjdSTFRDVVRXTWp2ZDZGOC8vZzhGcU45ZGJEU2o2cDlO?=
- =?utf-8?B?VGNrTDVpekVhdFJDR1dGOWFPbC82c2g2RW1zNnc4MnZnOHAyby9wMFdhNmFC?=
- =?utf-8?B?NkEyVHg0OER4SEpRUTJ3YmMybXVyYVNCdW1Qb2FaSHBRRUl5NGRtU05pdmxk?=
- =?utf-8?B?RWNrV3I3SVNMSFhCRkMrc2xpWm5Kck9xbzVrNVdTcnhEa0ZncURGeXpFRWx3?=
- =?utf-8?B?VE5wQUxZaHdydlV0MWtKdDBBV1J0eEZIb0J1NmNGTmYwNnpSWGt5Z0k3cEEx?=
- =?utf-8?B?UjZ3ckdnTHNkK0R2K2lPYndGZmJHWUhBMkp2SW5RNFFmaHZHM1c3eFlLaEpr?=
- =?utf-8?B?UnBRMUxsQzR5RUE3L05DM29ubTRKdmlCcU9EM1ZvMGUxWi9FOHgrZ1dTT0kx?=
- =?utf-8?B?alkvcTZqcFdtdUdtS2tBajVmVHUwRStnQnJLelF3YzVScEM1VE9kazJXY2VX?=
- =?utf-8?B?ODdDb3R0ZjRyTDA1UjlBMUNIQklpYnpGdTV3UUQ2ajEvc3I4enAxejU2TEs3?=
- =?utf-8?B?QVB2ZHpnMHgxY25hb1JMOTFyWWJLblE0UGJRbDNQVEhhd3Q0VVpiNVFVZVBS?=
- =?utf-8?B?YTFmeDJBd2RIallVanFiSzAwdFhDcVd6dmN2ZXhNZFU4SlZWWHc0eGhXMGQ1?=
- =?utf-8?B?aXV1eVZUTHJDSnEzbnJJT3ovZUN6ZXUyUmpZS2tlaUhFNm5YN2JLb1QrcG1W?=
- =?utf-8?B?NkRRVXpYRkZLNW5IQy9tMHFkcEovZWZTc1UvS2swdTk1OXl5UkpyZTN1TmtJ?=
- =?utf-8?B?c0VPclM0Q2dUR1FwdjJiRUJKWVJiNncrbi9qUUV4TjZ1aHlTMnlyTnRCSVBk?=
- =?utf-8?B?ZkVEME5HNmUweko5TE1wTUpwbjFqZ3BCZlY4bDJHQ3ZxNEpYVEJUbWhvRkdh?=
- =?utf-8?B?ay9wQWEzSnVzMDQyTkdSaHVGVEw0cm1kWTBRS0t0MDV5S1N4NUppWVUvSWR4?=
- =?utf-8?B?YjhsMzZXWFMzRGRLVEcvQm9XV0l5aEZrOWlpMWN6WStVcjNzVEFrTjJtK0tj?=
- =?utf-8?B?K1QwNXAwUVJHMUdFWGUwYThaTzBLYXlZRDFab2Q4eUtncHRNZ29qMW9wa3BM?=
- =?utf-8?B?WThXZWJBS0ZkWmYvcHlUYU8vWkRQeFBPQ3ptc1B3Y2NNelpMY2NLUT09?=
-X-OriginatorOrg: amd.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: fca69368-f754-4ecb-e802-08dec23be456
-X-MS-Exchange-CrossTenant-AuthSource: CY8PR12MB7433.namprd12.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 04 Jun 2026 13:19:22.6090 (UTC)
-X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
-X-MS-Exchange-CrossTenant-Id: 3dd8961f-e488-4e60-8e11-a82d994e183d
-X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: Zh97bfBkXxSP8RtS34LrFtDtlBSY695DUFVEUWRRtOv0w38GSuSFXJWJ1rgD0TOAaf75MzYJ2IrSlaa4R+CDpg==
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: IA1PR12MB6530
-Received-SPF: permerror client-ip=40.93.194.14;
- envelope-from=Pankaj.Gupta@amd.com;
- helo=SN4PR0501CU005.outbound.protection.outlook.com
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <20260604-migration-v1-1-cef4a5b1bbdd@rsg.ci.i.u-tokyo.ac.jp>
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=peterx@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -24
 X-Spam_score: -2.5
 X-Spam_bar: --
 X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.445,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -154,224 +115,90 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-
-> When using guest_memfd with support for shared memory / in-place
-> conversion, it is necessary to use the guest_memfd ioctls to handle
-> conversions instead of KVM ioctls. Implement support for this by looping
-> through all the sections within a converison range. Implement everything
-> in terms of the kvm_convert_memory() loop, which already deals with some
-> special considerations regarding various holes / region types that might
-> be encountered.
->
-> Also update kvm_set_memory_attributes_*() to use the same common path
-> when convert-in-place=false. This potentially results in a small change
-> in behavior due to the additional MMIO checks/skips now being applied in
-> that case (generally qemu-triggered during setup) rather than only for
-> kvm_convert_memory() (generally guest-triggered), but this is arguably
-> safer, and it provides similar behavior between convert-in-place=false
-> vs. convert-in-place=true, the latter of which *must* skip MMIO holes
-> because the regions (and associated guest_memfds) themselves track
-> shared/private state internally and passing the whole conversion range
-> through to KVM is not an option in that case.
->
-> Signed-off-by: Michael Roth <michael.roth@amd.com>
+On Thu, Jun 04, 2026 at 02:26:13PM +0900, Akihiko Odaki wrote:
+> The migration stream assumes that the set of migratable RAMBlocks does
+> not change while migration is running. Assert that RAMBlocks are not
+> made migratable or non-migratable during migration, and that migratable
+> RAMBlocks are not freed during migration.
+> 
+> Non-migratable RAMBlocks may still be allocated or freed during
+> migration; for example, QMP object-add of memory-backend-ram creates a
+> non-migratable RAMBlock without exposing it to the guest.
+> 
+> Signed-off-by: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
 > ---
->   accel/kvm/kvm-all.c | 131 ++++++++++++++++++++++++++++++++++++++------
->   1 file changed, 114 insertions(+), 17 deletions(-)
->
-> diff --git a/accel/kvm/kvm-all.c b/accel/kvm/kvm-all.c
-> index 62f2e8aa15..fd01435a0f 100644
-> --- a/accel/kvm/kvm-all.c
-> +++ b/accel/kvm/kvm-all.c
-> @@ -1626,14 +1626,78 @@ static int kvm_set_memory_attributes(hwaddr start, uint64_t size, uint64_t attr)
->       return r;
->   }
->   
-> -int kvm_set_memory_attributes_private(hwaddr start, uint64_t size)
-> +static int kvm_gmem_ioctl(int guest_memfd, unsigned long type, ...)
->   {
-> -    return kvm_set_memory_attributes(start, size, KVM_MEMORY_ATTRIBUTE_PRIVATE);
-> +    int ret;
-> +    void *arg;
-> +    va_list ap;
+>  system/physmem.c | 5 +++++
+>  1 file changed, 5 insertions(+)
+> 
+> diff --git a/system/physmem.c b/system/physmem.c
+> index 7bcbf8757361..42a39141645e 100644
+> --- a/system/physmem.c
+> +++ b/system/physmem.c
+> @@ -39,6 +39,7 @@
+>  #include "hw/core/qdev.h"
+>  #include "hw/core/qdev-properties.h"
+>  #include "hw/core/boards.h"
+> +#include "migration/misc.h"
+>  #include "system/xen.h"
+>  #include "system/kvm.h"
+>  #include "system/tcg.h"
+> @@ -1911,11 +1912,13 @@ bool qemu_ram_is_migratable(const RAMBlock *rb)
+>  
+>  void qemu_ram_set_migratable(RAMBlock *rb)
+>  {
+> +    assert(!migration_is_running());
+>      rb->flags |= RAM_MIGRATABLE;
+>  }
+>  
+>  void qemu_ram_unset_migratable(RAMBlock *rb)
+>  {
+> +    assert(!migration_is_running());
+>      rb->flags &= ~RAM_MIGRATABLE;
+>  }
+>  
+> @@ -2599,6 +2602,8 @@ void qemu_ram_free(RAMBlock *block)
+>          return;
+>      }
+>  
+> +    assert(!migration_is_running() || !qemu_ram_is_migratable(block));
 > +
-> +    va_start(ap, type);
-> +    arg = va_arg(ap, void *);
-> +    va_end(ap);
-> +
-> +    ret = ioctl(guest_memfd, type, arg);
-> +    if (ret == -1) {
-> +        ret = -errno;
-> +    }
-> +    return ret;
->   }
->   
-> -int kvm_set_memory_attributes_shared(hwaddr start, uint64_t size)
-> +static int guest_memfd_set_memory_attributes_fd(int guest_memfd, hwaddr offset,
-> +                                                uint64_t size, uint64_t attr)
->   {
-> -    return kvm_set_memory_attributes(start, size, 0);
-> +    struct kvm_memory_attributes2 attrs;
 
--    struct kvm_memory_attributes2 attrs;
-+    struct kvm_memory_attributes2 attrs = {0};
+The intention makes sense, however these asserts are slightly risky to me
+on a few things..
 
-Zero initializing 'attrs' fixed a '-EINVAL' error, caused because of 
-kernel 'attrs.reserved' check failed in 'kvm_gmem_set_attributes()'.
+Firstly, migration_is_running() covers a wide range, the tricky part is
+when CANCELLING and FAILING: when QEMU shutdowns with qemu_cleanup(), it
+only kicks the migration out with migration_cancel(), it won't wait for
+migration to finish completely.  I didn't verify the possibility, but IIUC
+it means during QEMU tearing down we may have ramblock freed while
+migration_is_running() returns true.
+
+Above will also include possibility of changing migration migratable. In
+this specific case, it's about marking ramblock to be unmigratable during
+tearing down with a call to vmstate_unregister_ram().
+
+The other thing is, strictly speaking the migration ABI is not ramblock
+pointers, but a combination of ramblock ID+page_size+addr+... info, per
+ram_save_setup().  I don't know if there's legal user (I'm having some form
+of ROMs in mind..) that may silently replace a ramblock pointer but kept
+everything else intact..
 
 Thanks,
 
-Pankaj
+>      if (block->host) {
+>          ram_block_notify_remove(block->host, block->used_length,
+>                                  block->max_length);
+> 
+> ---
+> base-commit: 2db91528542672cf0db78b3f2cc0e22b36302b38
+> change-id: 20260602-migration-15128dbe4036
+> 
+> Best regards,
+> --  
+> Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
+> 
 
-> +    int r;
-> +
-> +    assert((attr & kvm_supported_memory_attributes) == attr);
-> +    attrs.attributes = attr;
-> +    attrs.offset = offset;
-> +    attrs.size = size;
-> +    attrs.flags = 0;
-> +
-> +    /*
-> +     * guest_memfd may need to delay conversion requests due to
-> +     * the memory being in-use by the kernel. In most cases these
-> +     * will be transient uses. In some cases, userspace itself may
-> +     * be the cause of the memory being considered in-use, though
-> +     * QEMU currently takes steps to avoid this (e.g. via
-> +     * RamBlockAttributes). On that basis, this code loops
-> +     * indefinitely with the assumption that only transient cases
-> +     * will block, and that those will be for relatively short
-> +     * periods vs. the overall conversion path.
-> +     * If those assumptions at some point prove false, most likely
-> +     * this will manifest as guest-side lockups on their conversion
-> +     * path, which seems like the appropriate way to surface this
-> +     * situation to the guest owner rather than some hard timeout.
-> +     */
-> +    do {
-> +        r = kvm_gmem_ioctl(guest_memfd, KVM_SET_MEMORY_ATTRIBUTES2, &attrs);
-> +    } while (r == -EAGAIN);
-> +
-> +    if (r) {
-> +        error_report("failed to set memory (0x%" HWADDR_PRIx "+0x%" PRIx64 ") "
-> +                     "with attr 0x%" PRIx64 " error '%s'",
-> +                     offset, size, attr, strerror(-r));
-> +    }
-> +    return r;
-> +}
-> +
-> +static int guest_memfd_set_memory_section_attributes(MemoryRegionSection *section, uint64_t attr)
-> +{
-> +    hwaddr convert_offset, convert_size;
-> +    MemoryRegion *mr = section->mr;
-> +    RAMBlock *rb;
-> +
-> +    assert(mr);
-> +    rb = mr->ram_block;
-> +    assert(rb->guest_memfd);
-> +    convert_offset = section->offset_within_region;
-> +    convert_size = int128_get64(section->size);
-> +
-> +    return guest_memfd_set_memory_attributes_fd(rb->guest_memfd,
-> +                                                convert_offset,
-> +                                                convert_size,
-> +                                                attr);
->   }
->   
->   /* Called with KVMMemoryListener.slots_lock held */
-> @@ -3447,10 +3511,18 @@ static int kvm_convert_section(MemoryRegionSection *section, bool to_private)
->       hwaddr size = int128_get64(section->size);
->       int ret;
->   
-> -    if (to_private) {
-> -        ret = kvm_set_memory_attributes_private(start, size);
-> +    if (current_machine->cgs && current_machine->cgs->convert_in_place) {
-> +        ret = guest_memfd_set_memory_section_attributes(section,
-> +                                                        to_private ? KVM_MEMORY_ATTRIBUTE_PRIVATE
-> +                                                                   : 0);
->       } else {
-> -        ret = kvm_set_memory_attributes_shared(start, size);
-> +        /*
-> +         * Without in-place conversion, attribute-tracking is handled by KVM
-> +         * across all guest memory rather than on a per-section/slot basis.
-> +         */
-> +        ret = kvm_set_memory_attributes(start, size,
-> +                                        to_private ? KVM_MEMORY_ATTRIBUTE_PRIVATE
-> +                                                   : 0);
->       }
->   
->       return ret;
-> @@ -3544,7 +3616,8 @@ static int kvm_post_convert_section(MemoryRegionSection *section, bool to_privat
->       return 0;
->   }
->   
-> -int kvm_convert_memory(hwaddr start, hwaddr size, bool to_private)
-> +static int kvm_convert_memory_full(hwaddr start, hwaddr size, bool to_private,
-> +                                   bool pre_hooks, bool post_hooks)
->   {
->       int ret = -EINVAL;
->   
-> @@ -3588,10 +3661,12 @@ int kvm_convert_memory(hwaddr start, hwaddr size, bool to_private)
->               continue;
->           }
->   
-> -        ret = kvm_pre_convert_section(&section, to_private);
-> -        if (ret) {
-> -            memory_region_unref(section.mr);
-> -            break;
-> +        if (pre_hooks) {
-> +            ret = kvm_pre_convert_section(&section, to_private);
-> +            if (ret) {
-> +                memory_region_unref(section.mr);
-> +                break;
-> +            }
->           }
->   
->           ret = kvm_convert_section(&section, to_private);
-> @@ -3600,13 +3675,15 @@ int kvm_convert_memory(hwaddr start, hwaddr size, bool to_private)
->               break;
->           }
->   
-> -        ret = kvm_post_convert_section(&section, to_private);
-> -        memory_region_unref(section.mr);
-> -
-> -        if (ret) {
-> -            break;
-> +        if (post_hooks) {
-> +            ret = kvm_post_convert_section(&section, to_private);
-> +            if (ret) {
-> +                memory_region_unref(section.mr);
-> +                break;
-> +            }
->           }
->   
-> +        memory_region_unref(section.mr);
->           size -= section_end - start;
->           start = section_end;
->       }
-> @@ -3614,6 +3691,26 @@ int kvm_convert_memory(hwaddr start, hwaddr size, bool to_private)
->       return ret;
->   }
->   
-> +int kvm_convert_memory(hwaddr start, hwaddr size, bool to_private)
-> +{
-> +    return kvm_convert_memory_full(start, size, to_private, true, true);
-> +}
-> +
-> +static int kvm_convert_memory_attributes(hwaddr start, hwaddr size, bool to_private)
-> +{
-> +    return kvm_convert_memory_full(start, size, to_private, false, false);
-> +}
-> +
-> +int kvm_set_memory_attributes_private(hwaddr start, uint64_t size)
-> +{
-> +    return kvm_convert_memory_attributes(start, size, KVM_MEMORY_ATTRIBUTE_PRIVATE);
-> +}
-> +
-> +int kvm_set_memory_attributes_shared(hwaddr start, uint64_t size)
-> +{
-> +    return kvm_convert_memory_attributes(start, size, 0);
-> +}
-> +
->   int kvm_cpu_exec(CPUState *cpu)
->   {
->       struct kvm_run *run = cpu->kvm_run;
+-- 
+Peter Xu
+
 
