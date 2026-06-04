@@ -4,106 +4,65 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 970A7CD6E75
-	for <qemu-devel@archiver.kernel.org>; Thu,  4 Jun 2026 16:49:49 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A64BBCD6E77
+	for <qemu-devel@archiver.kernel.org>; Thu,  4 Jun 2026 16:51:27 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wVBFQ-0003Mu-3q; Thu, 04 Jun 2026 12:48:48 -0400
+	id 1wVBHe-0004F4-88; Thu, 04 Jun 2026 12:51:06 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <eauger@redhat.com>) id 1wVBFO-0003MK-Lw
- for qemu-devel@nongnu.org; Thu, 04 Jun 2026 12:48:46 -0400
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1wVBHb-0004Di-O7
+ for qemu-devel@nongnu.org; Thu, 04 Jun 2026 12:51:03 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <eauger@redhat.com>) id 1wVBFI-0008EU-PP
- for qemu-devel@nongnu.org; Thu, 04 Jun 2026 12:48:46 -0400
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1wVBHa-0000js-1E
+ for qemu-devel@nongnu.org; Thu, 04 Jun 2026 12:51:03 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1780591714;
+ s=mimecast20190719; t=1780591860;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=QHyvdlgQ7QsYbizi6Zy9GXst2SuP91Rk/k9524k2sXY=;
- b=CbvpTsI01HJwADh+5FKqJJKsZmmeeh0h4xVyErb10FdSGiEJMtVGwbYbN5+92k+QES+NSR
- Y9nprcX4ZKtsomE0XfEaNoG0pIYrRXG8Nm7zSBfznaTkXJs1bqapABEwExMzpSgXmfTVW7
- kIt9rLpYJtdelkg1yNDP2XmxSXhfYSg=
-Received: from mail-wr1-f72.google.com (mail-wr1-f72.google.com
- [209.85.221.72]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-689-E8defK4hNouQ4Rsf2qwcQg-1; Thu, 04 Jun 2026 12:48:31 -0400
-X-MC-Unique: E8defK4hNouQ4Rsf2qwcQg-1
-X-Mimecast-MFC-AGG-ID: E8defK4hNouQ4Rsf2qwcQg_1780591710
-Received: by mail-wr1-f72.google.com with SMTP id
- ffacd0b85a97d-4601c9b630fso406452f8f.0
- for <qemu-devel@nongnu.org>; Thu, 04 Jun 2026 09:48:31 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1780591710; x=1781196510; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=QHyvdlgQ7QsYbizi6Zy9GXst2SuP91Rk/k9524k2sXY=;
- b=tsqEeyCXuDizvEUZsYmoZwIvmI4XZGNqL2W7cRMvZsRaP5afR+CyR3nV96rEmxhA1j
- ltiKO5+9w8i+w8ZPeVKOHM1UmJ8O9e0wElTGjzPf58dTHWZNrMsa6Qwgr/FPJZ9vvvhr
- jXMbYbL+V26zzFF/ypk+UuiorjPjkCbnbEFsQBcaapCoQTuFeoyRtphgXHnG7mDIo84d
- mkO6Yly0+A4v/dt4AV0nzdzJAoGgwK5J218/M+/0axNT2jcYCktVyP2AISaInXSjogWp
- hzhqg3k3ORi53a+9evFy+Cj/joU1zY/ghCjJiTHif+pqWauuWkGecnJzJUpoTu0jNq74
- 9CCg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1780591710; x=1781196510;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=QHyvdlgQ7QsYbizi6Zy9GXst2SuP91Rk/k9524k2sXY=;
- b=tZ1UZHp2iCB9Z0Kq5tgA/7qm0Djn/ZoWbwZhcf5dM//aQbSIZoFgLEWaRzRPBnWS/i
- yHmc1eyZP60p5v8nJPS/CynCSyxZ1TKEA+JWjxpdQQ+7lOUqlF57jUDgQ07pRqNieoWQ
- seeFEkVk40woxKwWiH4/LQGSP0IWKDyfSuAiatexhOaa6ym9tkD3721Tm7a5XLy31BRo
- xgwhUFi1WhWEFm+0n1mBbH9ZN2rTU0PIma/j95ffuGeTFBIf30l+lKlAnUOoU2cgWdtY
- VfU58oStEHjswtzgR1yRA2wi6psi5u8aqW4AeeZG1zsie8LK3K4pkp7TuNTbqhgw6P44
- TyzQ==
-X-Forwarded-Encrypted: i=1;
- AFNElJ96LNmdThqiFRqA3R9iun7FsWUhgAPBqYfngCxUJTgijjnZOU4fI0P0f1LZLs8bSG7Ti61rTc7ixrYS@nongnu.org
-X-Gm-Message-State: AOJu0YwHRgBF0I8FCaLYhJvJ0gycCJmLNLkkkVWY05lCIPZNE2m1F9DI
- /0pPP2v33nNmAdyahLa/IC8KbhXPj/5pPQVIhsFRpYqIfG2AEW/n1mig5Unsxfq3c8xYeaQC5uX
- emsRMucq7foTbQ00IL0HmVuQnCJ+pzdVXfElcZFUblKXEgHmHLMANW457
-X-Gm-Gg: Acq92OGL2n1wYPw9aL4RO3XlI7Ta4o1QFfgL0cZH/y/L4VX9fiBRukDVZV80YU5ul4Z
- tgPSOMQIISLA20TSdgVlPGH0I021PD/DUd4a07BV9BEmUujffoJY++4xtvviCjzWkRBG1+ChJ4p
- oCZAytIf3oWgJYfn0dDBwEOamG9fgfruk51nEqV3YBC3nePt7XhI0bHOBiaux9UdKDwIEToQY7+
- MMaqFMlcLbkUM7M35ZU9HXJVpFY5q9NpeAFo7K2MNle3E4oJt8Kv6X4Fx4NTZ1RiFDL79J0kDfx
- e2HYEPJjzj/QBAnXshv+HwTxK1KqAX2eE+Mkpd7f26PBlE2mlH/TEUehVi13QXZy+AY4tG4JHHS
- ymjVP/nfsdKYo1S6H9FRfcxd1Z4s0ai9OpeA/urKN2l9jW6zJTYaKVUz31QS5WekLwXAl4ng9Yr
- I=
-X-Received: by 2002:a05:600c:440f:b0:490:bcf6:46bf with SMTP id
- 5b1f17b1804b1-490bcf64890mr48943235e9.9.1780591710237; 
- Thu, 04 Jun 2026 09:48:30 -0700 (PDT)
-X-Received: by 2002:a05:600c:440f:b0:490:bcf6:46bf with SMTP id
- 5b1f17b1804b1-490bcf64890mr48942855e9.9.1780591709814; 
- Thu, 04 Jun 2026 09:48:29 -0700 (PDT)
-Received: from ?IPV6:2a01:e0a:f0e:9070:527b:9dff:feef:3874?
- ([2a01:e0a:f0e:9070:527b:9dff:feef:3874])
- by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-490bc3cc140sm101883055e9.9.2026.06.04.09.48.28
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 04 Jun 2026 09:48:29 -0700 (PDT)
-Message-ID: <7d67628a-6fa0-4c4e-a469-a80adc902549@redhat.com>
-Date: Thu, 4 Jun 2026 18:48:28 +0200
+ content-transfer-encoding:content-transfer-encoding;
+ bh=bkLw2slq5pbLD39+bSQqKXGUC+kIR3vdzza2hCdSQ9k=;
+ b=GDYGBSQBOw3gHBCoenJiLUvxdVL0LVKbTCQzfT45Rb2BFPcVXLoxe6i08ciFl0VCkj/3u+
+ Ff6bPE71OiFSoAbLpxvXXt/QhazbgslyMFya1A+6faQIabkLB5YtHMQEOw1LhqakcmWrxU
+ gR8zpg2e1SqWkbcfAVJJSg3FhS7jW9Y=
+Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-689-flgM5vfxMv6Ns0vBNj7rHg-1; Thu,
+ 04 Jun 2026 12:50:56 -0400
+X-MC-Unique: flgM5vfxMv6Ns0vBNj7rHg-1
+X-Mimecast-MFC-AGG-ID: flgM5vfxMv6Ns0vBNj7rHg_1780591855
+Received: from mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.93])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 871A21800365; Thu,  4 Jun 2026 16:50:55 +0000 (UTC)
+Received: from berrange.com (unknown [10.44.50.34])
+ by mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id 62D0E1800480; Thu,  4 Jun 2026 16:50:52 +0000 (UTC)
+From: =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>
+To: qemu-devel@nongnu.org
+Cc: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
+ =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ "Michael S. Tsirkin" <mst@redhat.com>,
+ Mauro Matteo Cascella <mcascell@redhat.com>,
+ Paolo Bonzini <pbonzini@redhat.com>, Thomas Huth <thuth@redhat.com>,
+ =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>
+Subject: [qemu-web RFC 0/3] switch to GitLab confidential issues for security
+ disclosure
+Date: Thu,  4 Jun 2026 17:50:45 +0100
+Message-ID: <20260604165048.457860-1-berrange@redhat.com>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 09/21] arm: virt: create sbsa_gwdt watchdog
-Content-Language: en-US
-To: Igor Mammedov <imammedo@redhat.com>, qemu-devel@nongnu.org
-Cc: mst@redhat.com, anisinha@redhat.com, pbonzini@redhat.com,
- peter.maydell@linaro.org, shannon.zhaosl@gmail.com, philmd@linaro.org,
- zhao1.liu@intel.com, rad@semihalf.com, leif.lindholm@oss.qualcomm.com,
- qemu-arm@nongnu.org
-References: <20260303092532.2410177-1-imammedo@redhat.com>
- <20260303092532.2410177-10-imammedo@redhat.com>
-From: Eric Auger <eauger@redhat.com>
-In-Reply-To: <20260303092532.2410177-10-imammedo@redhat.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=eauger@redhat.com;
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 8bit
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.93
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=berrange@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -24
 X-Spam_score: -2.5
@@ -127,208 +86,109 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi Igor,
+I previously raised the idea of using GitLab issues for security
+disclosures:
 
-On 3/3/26 10:25 AM, Igor Mammedov wrote:
-> Allow to use SBSA generic watchdog with virt machine type.
-> (includes conditional generation of corresponding FDT and
-> ACPI GTDT descriptors)
-> 
-> Use '-device sbsa_gwdt' to command line to enable it.
-don't we use '-' instead of '_' in general. At least this is the case
-for dynamically instantiable arm-smmuv3 device. Better to align
+  https://lists.gnu.org/archive/html/qemu-devel/2026-05/msg04582.html
 
-also this is the terminology used in the fdt compat string
-$id: http://devicetree.org/schemas/watchdog/arm,sbsa-gwdt.yaml#
-    const: arm,sbsa-gwdt
+This patch proposal formalizes that into a concrete proposal:
 
-> 
-> Tested with Fedora 43:
->   FDT: -M virt,acpi=off -device sbsa_gwdt
->   ACPI: -M virt -device sbsa_gwdt
-> 
-> Signed-off-by: Igor Mammedov <imammedo@redhat.com>
-> ---
->  hw/arm/Kconfig           |  1 +
->  hw/arm/virt-acpi-build.c | 33 +++++++++++++++++++++++++++++++--
->  hw/arm/virt.c            |  2 ++
->  hw/core/sysbus-fdt.c     | 32 ++++++++++++++++++++++++++++++++
->  hw/watchdog/sbsa_gwdt.c  |  1 +
->  5 files changed, 67 insertions(+), 2 deletions(-)
-> 
-> diff --git a/hw/arm/Kconfig b/hw/arm/Kconfig
-> index c66c452737..1222efadd1 100644
-> --- a/hw/arm/Kconfig
-> +++ b/hw/arm/Kconfig
-> @@ -36,6 +36,7 @@ config ARM_VIRT
->      select VIRTIO_MEM_SUPPORTED
->      select ACPI_CXL
->      select ACPI_HMAT
-> +    select WDT_SBSA
->  
->  config CUBIEBOARD
->      bool
-> diff --git a/hw/arm/virt-acpi-build.c b/hw/arm/virt-acpi-build.c
-> index 719d2f994e..9c14b1d4d5 100644
-> --- a/hw/arm/virt-acpi-build.c
-> +++ b/hw/arm/virt-acpi-build.c
-> @@ -64,6 +64,7 @@
->  #include "hw/virtio/virtio-acpi.h"
->  #include "target/arm/cpu.h"
->  #include "target/arm/multiprocessing.h"
-> +#include "hw/watchdog/sbsa_gwdt.h"
->  
->  #define ARM_SPI_BASE 32
->  
-> @@ -863,6 +864,8 @@ build_gtdt(GArray *table_data, BIOSLinker *linker, VirtMachineState *vms)
->      const uint32_t irqflags = 0;  /* Interrupt is Level triggered  */
->      AcpiTable table = { .sig = "GTDT", .rev = 3, .oem_id = vms->oem_id,
->                          .oem_table_id = vms->oem_table_id };
-> +    uint32_t gtdt_start = table_data->len;
-> +    Object *wdt = object_resolve_type_unambiguous(TYPE_WDT_SBSA, NULL);
->  
->      acpi_table_begin(&table, table_data);
->  
-> @@ -893,10 +896,15 @@ build_gtdt(GArray *table_data, BIOSLinker *linker, VirtMachineState *vms)
->      build_append_int_noprefix(table_data, irqflags, 4);
->      /* CntReadBase Physical address */
->      build_append_int_noprefix(table_data, 0xFFFFFFFFFFFFFFFF, 8);
-> +
->      /* Platform Timer Count */
-> -    build_append_int_noprefix(table_data, 0, 4);
-> +    build_append_int_noprefix(table_data,  wdt ? 1 : 0, 4);
->      /* Platform Timer Offset */
-> -    build_append_int_noprefix(table_data, 0, 4);
-> +    build_append_int_noprefix(table_data,
-> +        wdt ? (table_data->len - gtdt_start) +
-> +              4 + 4 + 4 /* len of this & following 2 fields to skip */
-> +            : 0, 4);
-> +
->      if (vms->ns_el2_virt_timer_irq) {
->          /* Virtual EL2 Timer GSIV */
->          build_append_int_noprefix(table_data, ARCH_TIMER_NS_EL2_VIRT_IRQ, 4);
-> @@ -906,6 +914,27 @@ build_gtdt(GArray *table_data, BIOSLinker *linker, VirtMachineState *vms)
->          build_append_int_noprefix(table_data, 0, 4);
->          build_append_int_noprefix(table_data, 0, 4);
->      }
-> +
-> +    /* ACPI 6.5 spec: 5.2.25.2 ARM Generic Watchdog Structure (Table 5-124) */
-5.124
-> +    if (wdt) {
-> +        PlatformBusDevice *pbus = PLATFORM_BUS_DEVICE(vms->platform_bus_dev);
-> +        SysBusDevice *sd = SYS_BUS_DEVICE(wdt);
-> +        hwaddr mmio_base = vms->memmap[VIRT_PLATFORM_BUS].base;
-> +        hwaddr rbase = mmio_base + platform_bus_get_mmio_addr(pbus, sd, 0);
-> +        hwaddr cbase = mmio_base + platform_bus_get_mmio_addr(pbus, sd, 1);
-> +        int irq = ARM_SPI_BASE + vms->irqmap[VIRT_PLATFORM_BUS] +
-> +                  platform_bus_get_irqn(pbus, sd, 0);
-> +
-> +        build_append_int_noprefix(table_data, 1 /* Type: Watchdog GT */, 1);
-> +        build_append_int_noprefix(table_data, 28 /* Length */, 2);
-> +        build_append_int_noprefix(table_data, 0, 1);  /* Reserved */
-> +        /* RefreshFrame Physical Address */
-> +        build_append_int_noprefix(table_data, rbase, 8);
-> +        /* WatchdogControlFrame Physical Address */
-> +        build_append_int_noprefix(table_data, cbase, 8);
-> +        build_append_int_noprefix(table_data, irq, 4); /* Watchdog Timer GSIV */
-> +        build_append_int_noprefix(table_data, 0, 4); /* Watchdog Timer Flags */
-level, active high, non secure
-> +    }
->      acpi_table_end(linker, &table);
->  }
->  
-> diff --git a/hw/arm/virt.c b/hw/arm/virt.c
-> index cab2e21e8a..a87991b591 100644
-> --- a/hw/arm/virt.c
-> +++ b/hw/arm/virt.c
-> @@ -95,6 +95,7 @@
->  #include "hw/cxl/cxl.h"
->  #include "hw/cxl/cxl_host.h"
->  #include "qemu/guest-random.h"
-> +#include "hw/watchdog/sbsa_gwdt.h"
->  
->  static GlobalProperty arm_virt_compat_defaults[] = {
->      { TYPE_VIRTIO_IOMMU_PCI, "aw-bits", "48" },
-> @@ -3474,6 +3475,7 @@ static void virt_machine_class_init(ObjectClass *oc, const void *data)
->      machine_class_allow_dynamic_sysbus_dev(mc, TYPE_RAMFB_DEVICE);
->      machine_class_allow_dynamic_sysbus_dev(mc, TYPE_UEFI_VARS_SYSBUS);
->      machine_class_allow_dynamic_sysbus_dev(mc, TYPE_ARM_SMMUV3);
-> +    machine_class_allow_dynamic_sysbus_dev(mc, TYPE_WDT_SBSA);
->  #ifdef CONFIG_TPM
->      machine_class_allow_dynamic_sysbus_dev(mc, TYPE_TPM_TIS_SYSBUS);
->  #endif
-> diff --git a/hw/core/sysbus-fdt.c b/hw/core/sysbus-fdt.c
-> index 89d0c46445..76aa1bc579 100644
-> --- a/hw/core/sysbus-fdt.c
-> +++ b/hw/core/sysbus-fdt.c
-> @@ -36,6 +36,7 @@
->  #include "hw/display/ramfb.h"
->  #include "hw/uefi/var-service-api.h"
->  #include "hw/arm/fdt.h"
-> +#include "hw/watchdog/sbsa_gwdt.h"
->  
->  /*
->   * internal struct that contains the information to create dynamic
-> @@ -118,6 +119,36 @@ static int add_uefi_vars_node(SysBusDevice *sbdev, void *opaque)
->      return 0;
->  }
->  
-> +static int add_sbsa_gwdt_node(SysBusDevice *sbdev, void *opaque)
-> +{
-> +    PlatformBusFDTData *data = opaque;
-> +    PlatformBusDevice *pbus = data->pbus;
-> +    const char *parent_node = data->pbus_node_name;
-> +    void *fdt = data->fdt;
-> +    uint64_t cbase, rbase;
-> +    char *nodename;
-> +    int irq;
-> +
-> +    cbase = platform_bus_get_mmio_addr(pbus, sbdev, 1);  /* control frame */
-> +    rbase = platform_bus_get_mmio_addr(pbus, sbdev, 0);  /* refresh frame */
-> +    irq = platform_bus_get_irqn(pbus, sbdev, 0);
-> +
-> +    nodename = g_strdup_printf("%s/watchdog@%" PRIx64, parent_node, cbase);
-> +    qemu_fdt_add_subnode(fdt, nodename);
-> +
-> +    qemu_fdt_setprop_string(fdt, nodename, "compatible", "arm,sbsa-gwdt");
-> +    qemu_fdt_setprop_cells(fdt, nodename, "reg",
-> +                           cbase, SBSA_GWDT_CMMIO_SIZE,
-> +                           rbase, SBSA_GWDT_RMMIO_SIZE);
-> +    qemu_fdt_setprop_cells(fdt, nodename, "interrupts",
-> +                           GIC_FDT_IRQ_TYPE_SPI, data->irq_start + irq,
-> +                           GIC_FDT_IRQ_FLAGS_LEVEL_HI);
-> +    qemu_fdt_setprop_cell(fdt, nodename, "timeout-sec", 30);
-> +
-> +    g_free(nodename);
-> +    return 0;
-> +}
-> +
->  static int no_fdt_node(SysBusDevice *sbdev, void *opaque)
->  {
->      return 0;
-> @@ -140,6 +171,7 @@ static const BindingEntry bindings[] = {
->      TYPE_BINDING(TYPE_ARM_SMMUV3, no_fdt_node),
->      TYPE_BINDING(TYPE_RAMFB_DEVICE, no_fdt_node),
->      TYPE_BINDING(TYPE_UEFI_VARS_SYSBUS, add_uefi_vars_node),
-> +    TYPE_BINDING(TYPE_WDT_SBSA, add_sbsa_gwdt_node),
->      TYPE_BINDING("", NULL), /* last element */
->  };
->  
-> diff --git a/hw/watchdog/sbsa_gwdt.c b/hw/watchdog/sbsa_gwdt.c
-> index acb970e8b3..c4dd8005b7 100644
-> --- a/hw/watchdog/sbsa_gwdt.c
-> +++ b/hw/watchdog/sbsa_gwdt.c
-> @@ -285,6 +285,7 @@ static void wdt_sbsa_gwdt_class_init(ObjectClass *klass, const void *data)
->      dc->realize = wdt_sbsa_gwdt_realize;
->      device_class_set_legacy_reset(dc, wdt_sbsa_gwdt_reset);
->      dc->hotpluggable = false;
-> +    dc->user_creatable = true;
->      set_bit(DEVICE_CATEGORY_WATCHDOG, dc->categories);
->      dc->vmsd = &vmstate_sbsa_gwdt;
->      dc->desc = "SBSA-compliant generic watchdog device";
-Thanks
+ * qemu-security is entirely discontinued
 
-Eric
+ * "confidential" GitLab issues are to be used
 
+ * The priority is to have a low overhead process that is
+   as close to normal bug & development workflow as
+   possible.
+
+ * No embargoes will be accepted, beyond the time needed
+   for a maintainer to develop a patch, unless extenuating
+   scenarios apply. A vendor's/user's desire to delay to
+   suit their arbitrary software upgrade schedule is NOT
+   an extenuating scenario.
+
+ * All confidential issues will be expected to be made
+   public, either when the patch is proposed to qemu-devel,
+   or sooner if a issue is low severity and a patch is not
+   a priority for the manitainer
+
+ * Eliminate dependency on any single maintainer/person to
+   the greatest extent practical
+
+Some open questions
+
+ * I describe using "cve::required" as a gitlab label to
+   track issues that need CVEs allocating. I'm unclear what
+   the best way is to actually do the allocation. This is
+   where it is hardest to eliminate the single person
+   bottleneck / burden.
+
+   Traditionally I would email Red Hat product security via
+   Mauro (CC'd) but that's still a single point of failure.
+
+   I'm personally not willing to sign up for QEMU to be a
+   CNA, because they have unreasonable expectations for
+   volunteer projects. I'm not going to give them my phone
+   number nor agree to any SLAs for response to query.
+
+   From a selfish QEMU upstream maintainer POV, I would say
+   that CVEs are largely devoid of value. The people who
+   care most about them are the downstream vendors who
+   ship old QEMU versions and track bugs for backporting.
+   If we want to pull a security fix into our stable release
+   branches we can do that easily without a CVE.
+
+   Thus one nuclear option is to say "not our problem" and
+   no longer assign CVEs at all. Instead assign a unique ID
+   of QEMU's invention "QEMU-SEC-nnnnn", and let downstream
+   vendors take the pain of allocating and mapping QEMU's
+   identifiers to CVE identifiers.
+
+ * We have >100 disclosed issues to qemu-security
+   that were classed as non-virtualization bugs which
+   I asked the reporter to file gitlab issues for.
+   Almost no one followed up to do that. I don't want
+   these bugs to go into a black-hole as they are all
+   basically valid, but I also don't fancy bulk filing
+   100's of issues from my own account.
+
+   There are also more non-triaged issues some of which
+   are valid security bugs which ought to be tracked
+   rather than sucked into a black-hole. Again that
+   implies more bulk filing of bugs :-(
+
+ * Moving away from a small dedicated group of people
+   handling security reports, to a distributed
+   responsbility has a notable risk - every maintainer
+   may consider it "someone else's problem" and ignore
+   security disclosures. Some poor sucker then gets to
+   run triage across an ever increasing set of issues
+   and try to encourage maintainers into responding.
+
+   Based on our experience with normal bug triage work,
+   I'd say it is a near certainty that this will happen
+   to some extent.
+
+   I don't have any answer here other than even this
+   bad outcome will probably be less bad that the status
+   quo with qemu-security email disclosure. Personally
+   I can/will not continue with the email workflow any
+   more.
+
+   IMHO this mostly points towards the downstream vendors
+   needing to invest more in QEMU if they want to have a
+   guaranteed security SLA upstream.
+
+Daniel P. Berrangé (3):
+  contribute: reformat/restructure bug report guidance
+  contribute: add automate tool disclosure to bug reporting
+  contribute: switch security process to gitlab confidential issues
+
+ contribute/report-a-bug.md     |  63 +++++---
+ contribute/security-process.md | 280 ++++++++++++++-------------------
+ 2 files changed, 155 insertions(+), 188 deletions(-)
+
+-- 
+2.54.0
 
 
