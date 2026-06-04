@@ -4,70 +4,107 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 74108CD6E6B
-	for <qemu-devel@archiver.kernel.org>; Thu,  4 Jun 2026 12:01:34 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D37FBCD6E6B
+	for <qemu-devel@archiver.kernel.org>; Thu,  4 Jun 2026 12:05:42 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wV6l9-00048N-2C; Thu, 04 Jun 2026 08:01:15 -0400
+	id 1wV6or-0005a6-KI; Thu, 04 Jun 2026 08:05:07 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <yangjinqian1@huawei.com>)
- id 1wV6kW-0003vi-PD; Thu, 04 Jun 2026 08:00:42 -0400
-Received: from canpmsgout11.his.huawei.com ([113.46.200.226])
+ (Exim 4.90_1) (envelope-from <eric.auger@redhat.com>)
+ id 1wV6ol-0005ZK-5y
+ for qemu-devel@nongnu.org; Thu, 04 Jun 2026 08:04:59 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <yangjinqian1@huawei.com>)
- id 1wV6kT-0004hf-7t; Thu, 04 Jun 2026 08:00:36 -0400
-dkim-signature: v=1; a=rsa-sha256; d=huawei.com; s=dkim;
- c=relaxed/relaxed; q=dns/txt; h=From;
- bh=F8nmwbzNKOkK6Lf8Bm1FPkjQs63hUlv7sCQpS5epyPs=;
- b=dbiDXSBAxbyMCQu1k2Roodw6gtwp87+r7CWDzdkWP8oy80pMIWBy9kBN+sfPBn3vdndZ01gaT
- Rsawh8h3l9tCjPNoO28PT0Q1p33zO7dR/jXTRpBr1nyHnWcFFc7IHP+HjSf7gjf45RD7+vRqVmJ
- NZY5YENplJEMyEXaqq9wbo8=
-Received: from mail.maildlp.com (unknown [172.19.163.127])
- by canpmsgout11.his.huawei.com (SkyGuard) with ESMTPS id 4gWNGj2ng7zKm69;
- Thu,  4 Jun 2026 19:52:29 +0800 (CST)
-Received: from dggpemf500013.china.huawei.com (unknown [7.185.36.188])
- by mail.maildlp.com (Postfix) with ESMTPS id 7A0DB40572;
- Thu,  4 Jun 2026 20:00:22 +0800 (CST)
-Received: from [10.67.121.183] (10.67.121.183) by
- dggpemf500013.china.huawei.com (7.185.36.188) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.1544.11; Thu, 4 Jun 2026 20:00:20 +0800
-Message-ID: <b6cf3c71-f267-4f9b-9fe3-547859a3594b@huawei.com>
-Date: Thu, 4 Jun 2026 20:00:19 +0800
+ (Exim 4.90_1) (envelope-from <eric.auger@redhat.com>)
+ id 1wV6oi-0007jE-9B
+ for qemu-devel@nongnu.org; Thu, 04 Jun 2026 08:04:58 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1780574694;
+ h=from:from:reply-to:reply-to:subject:subject:date:date:
+ message-id:message-id:to:to:cc:cc:mime-version:mime-version:
+ content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=rWp2RSDCvMDMihzheVnZxgAJCtfA1V9HskT1OAMbe6E=;
+ b=H1Xw5pUczPwD3RSKU0E0x1j2ZL1B5Go99OSutC+LnwztX8Xn5/Igz14xu/5sOQqquwwtJr
+ 4RUPtKLxSyvYyLtmh3eSFdhwbM/9A/4RNBaRtGmc+QrH+78ovW46Z8O3TJs9TV8pjKS1oq
+ 0E3VPsWcR6g7TnV15DVs0DDvpRJzN5E=
+Received: from mail-wr1-f69.google.com (mail-wr1-f69.google.com
+ [209.85.221.69]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-296-8GovJ0O7N7GPZVxkPycaoQ-1; Thu, 04 Jun 2026 08:04:52 -0400
+X-MC-Unique: 8GovJ0O7N7GPZVxkPycaoQ-1
+X-Mimecast-MFC-AGG-ID: 8GovJ0O7N7GPZVxkPycaoQ_1780574691
+Received: by mail-wr1-f69.google.com with SMTP id
+ ffacd0b85a97d-45ef9437b7aso444322f8f.0
+ for <qemu-devel@nongnu.org>; Thu, 04 Jun 2026 05:04:52 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1780574691; x=1781179491;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:reply-to:user-agent:mime-version:date
+ :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=rWp2RSDCvMDMihzheVnZxgAJCtfA1V9HskT1OAMbe6E=;
+ b=XlbjVPHpvOLUOxLB4+3gFNVSXoYkH3nczo3w24JG8XeewHOe816TSdVZ2Zbx34xmZf
+ FBsaUT2yxwpsnWvOhhsbcfTqwbh7zgMFg7/byXnr/TAHLIGWkIDCMJNZpyFRQAC2ohwk
+ ++dafwJuSQ2ug+gj+otFt0SOG0x6tgHj9Ug0lV4OTubzxD8Fa/0rD1unNoSLoQCr2WwN
+ vZT01TT5sVZ4u6+rFv9o7+blgo9nqZn8tw0CTvN3eOsVeBkbmARWbzJDg8/lSg1xsLnS
+ zUedwU73zlSW+NgwuG4/ho3hgh8UGCodCUd1NNFd8MgV6O1fskPsaVaLadG/tStoBtUU
+ bqqA==
+X-Forwarded-Encrypted: i=1;
+ AFNElJ9W/iZwJ/Zb2XHV0VK86I/M85MeK/qJZSC+1KNrdylv6eW/Ns9+uDUj1osuiCB4O3zVCol/hFOFoWMq@nongnu.org
+X-Gm-Message-State: AOJu0YzbPSOGmoAW3fZxPsaK/VHVA2NdzX7mGP/WqX3Gu9i++K+MAZKC
+ YNVU0GG1Lx5cz3poD5fNv1V+6EsCsHqVG+TWYKosgggJNYMTiHBR4DUBsBMmfO/ZVOQz2dasc+7
+ zhPoAycsDIN7bmLyMQ9p5WEbqfUiU5qI0B/fo5zoisSr4BzCOy3kBXhbi
+X-Gm-Gg: Acq92OHkH4qnVOIE/v1fThOk/7B1kBYYk5eLxaf4HoA2xCPny/exWPOZB0eVreH6fev
+ bBbbljY3TJ6FjkuEWci7h/LLFx87rw5527TjSzBmuOT9JJH3W1wvFAiO+mQv3QF+mpZx0iJTZYK
+ QoM8wpadfs7n3Cd2XLlH4WqLntIanlprmzfnLWivEr08VCcn1sDcJ+1kURf3A4H/Z9gwQXHMR8D
+ Tp9GmdKlLDOPxE/UrmML0EtF6Pisf/b3PRMRJR1eNzmeVxZA+UfBN7rPxM8GWNJ7EMjkUE9A6Yt
+ A7thuYEvMX2iijSRuYWdLEP1EWsEgnaZwSpHjcxko+GL2BuF/3qB8vG7LVQ3W0cJnlWNemo8h4S
+ FvV8r5/uMLbl3U2pF0nVe0eQnCQ76/SwMfd9GC1s2X3SgIdwyFkLCUl/2vu4wzwsVAdNVb+z2lX
+ N4qDxl
+X-Received: by 2002:a05:600c:a09:b0:490:688b:f9f8 with SMTP id
+ 5b1f17b1804b1-490b5fe6672mr124374535e9.27.1780574691085; 
+ Thu, 04 Jun 2026 05:04:51 -0700 (PDT)
+X-Received: by 2002:a05:600c:a09:b0:490:688b:f9f8 with SMTP id
+ 5b1f17b1804b1-490b5fe6672mr124373775e9.27.1780574690619; 
+ Thu, 04 Jun 2026 05:04:50 -0700 (PDT)
+Received: from ?IPV6:2a01:e0a:f0e:9070:527b:9dff:feef:3874?
+ ([2a01:e0a:f0e:9070:527b:9dff:feef:3874])
+ by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-4601f2dcb13sm15562980f8f.2.2026.06.04.05.04.49
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Thu, 04 Jun 2026 05:04:50 -0700 (PDT)
+Message-ID: <0a3a4401-2c1f-485c-b0b4-5f435c0a58fa@redhat.com>
+Date: Thu, 4 Jun 2026 14:04:48 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v5 00/18] kvm/arm: Introduce a customizable aarch64 KVM
- host model
-To: <eric.auger@redhat.com>, <eric.auger.pro@gmail.com>,
- <qemu-devel@nongnu.org>, <qemu-arm@nongnu.org>, <kvmarm@lists.linux.dev>,
- <peter.maydell@linaro.org>, <shaju.abraham@nutanix.com>,
- <khushit.shah@nutanix.com>, <cohuck@redhat.com>,
- <richard.henderson@linaro.org>, <sebott@redhat.com>,
- <skolothumtho@nvidia.com>, <philmd@linaro.org>
-CC: <maz@kernel.org>, <oliver.upton@linux.dev>, <pbonzini@redhat.com>,
- <armbru@redhat.com>, <berrange@redhat.com>, <abologna@redhat.com>,
- <jdenemar@redhat.com>
-References: <20260519132905.145643-1-eric.auger@redhat.com>
- <5a533932-06fe-4401-abfe-66546c15c4ec@huawei.com>
- <1bdf5296-874b-488e-8a34-d6f8d23ddcae@huawei.com>
- <68090ea2-fe45-4935-80f2-1a4201b5c148@redhat.com>
-From: Jinqian Yang <yangjinqian1@huawei.com>
-In-Reply-To: <68090ea2-fe45-4935-80f2-1a4201b5c148@redhat.com>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 8bit
-X-Originating-IP: [10.67.121.183]
-X-ClientProxiedBy: kwepems500001.china.huawei.com (7.221.188.70) To
- dggpemf500013.china.huawei.com (7.185.36.188)
-Received-SPF: pass client-ip=113.46.200.226;
- envelope-from=yangjinqian1@huawei.com; helo=canpmsgout11.his.huawei.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+Subject: Re: [PATCH v6 25/31] hw/arm/tegra241-cmdqv: Limit queue size based on
+ backend page size
+Content-Language: en-US
+To: Shameer Kolothum <skolothumtho@nvidia.com>, qemu-arm@nongnu.org,
+ qemu-devel@nongnu.org
+Cc: peter.maydell@linaro.org, clg@redhat.com, alex@shazbot.org,
+ nicolinc@nvidia.com, nathanc@nvidia.com, mochs@nvidia.com, jan@nvidia.com,
+ jgg@nvidia.com, zhenzhong.duan@intel.com, kjaju@nvidia.com,
+ phrdina@redhat.com
+References: <20260601114221.457995-1-skolothumtho@nvidia.com>
+ <20260601114221.457995-26-skolothumtho@nvidia.com>
+From: Eric Auger <eric.auger@redhat.com>
+In-Reply-To: <20260601114221.457995-26-skolothumtho@nvidia.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=170.10.133.124;
+ envelope-from=eric.auger@redhat.com; helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -24
+X-Spam_score: -2.5
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.445,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -80,201 +117,87 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-To: eric.auger@redhat.com
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 
 
-On 2026/6/4 16:31, Eric Auger wrote:
-> Hi Jinqian,
-> 
-> On 6/4/26 8:32 AM, Jinqian Yang wrote:
->>
->>
->> On 2026/6/4 14:08, Jinqian Yang wrote:
->>>
->>>
->>> On 2026/5/19 21:27, Eric Auger wrote:
->>>> This series enhances the current host KVM model with capability to
->>>> set writable ID reg fields.
->>>>
->>>> Since v6.7 kernel, KVM/arm allows the userspace to overwrite the values
->>>> of a subset of ID regs. The list of writable fields continues to grow.
->>>> The feature ID range is defined as the AArch64 System register space
->>>> with op0==3, op1=={0, 1, 3}, CRn==0, CRm=={0-7}, op2=={0-7}.
->>>>
->>>> The end goal is to get more flexibility when migrating guests
->>>> between different host hardware.
->>>>
->>>> QEMU retrieves the writable ID fields from KVM UAPI [1] and
->>>> match them against a generated description of ID regs and their
->>>> named fields that stem from AARCHMRS Registers.json file.
->>>> Current description is based on latest 2026-03 edition.
->>>> The content of the generated files was compared against kernel
->>>> linux/arch/arm64/tools/sysreg file. It is not straightforward
->>>> to have unit tests for python scripts as there are many cases for
->>>> field extraction.
->>>>
->>>> For each writable named field a uint64 property is created
->>>> following the "SYSREG_<REG>_<FIELD>" naming convention. REG and
->>>> FIELD names are those described in ARM ARM Reference manual.
->>>>
->>>> The list of SYSREG_ID properties can be retrieved through the qmp
->>>> monitor using query-cpu-model-expansion [2].
->>>>
->>>> Connie & Eric
->>>>
->>>> This series can be found at:
->>>> https://github.com/eauger/qemu/tree/arm-cpu-model-v5
->>>>
->>>> History:
->>>> --------
->>>>
->>>> v4 -> v5:
->>>> - generate target/arm/cpu-idregs.h.inc that look similar to
->>>>     the format used in [RFC PATCH v1 02/13] target/arm:
->>>>     named_cpu_model: Add ID Register Fields without the
->>>>     description of the value values nor safe policy/value.
->>>>     I guess valid values could be generated from the Registers.json
->>>>     file too. Safe policy/values cannot.
->>>>     I reused one patch from the above series.
->>>>     Let's see how both series can progress/coexist without any
->>>>     anticipated bias.
->>>> - Addressed all comments from Shameer on v4
->>>> - Addressed 2 comments from v4 that were missed including the
->>>>     issue of IDreg visibility affected by some other settings.
->>>>     Unfortunately I was not able to test it.
->>>> - Further look at overrides between low level id reg field
->>>>     properties versus legacy CPU options. I have the feeling they
->>>>     can coexist as long as we document the hierarchy between them:
->>>>     host kvm default -> ID reg field props -> legacy CPU options
->>>> - Noticed more writable fields that are RES0/RAZ
->>>> - Improved commit messages in general
->>>>
->>>> References:
->>>> -----------
->>>>
->>>> [1]
->>>> KVM_CAP_ARM_SUPPORTED_REG_MASK_RANGES
->>>> KVM_ARM_GET_REG_WRITABLE_MASKS
->>>> Documentation/virt/kvm/api.rst
->>>>
->>>> [2]
->>>> qemu-system-aarch64 -qmp unix:/home/augere/TEST/QEMU/qmp-
->>>> sock,server,nowait -M virt --enable-kvm -cpu custom
->>>> sudo build/run qmp-shell /home/augere/TEST/QEMU/qmp-sock
->>>> Welcome to the QMP low-level shell!
->>>> Connected to QEMU 11.0.50
->>>> (QEMU) query-cpu-model-expansion type=full model={"name":"host"}
->>>>
->>>>
->>>> Cornelia Huck (3):
->>>>     target/arm/kvm: Introduce kvm_get_writable_id_regs
->>>>     arm-qmp-cmds: introspection for ID register props
->>>>     arm/cpu-features: document ID reg properties
->>>>
->>>> Eric Auger (14):
->>>>     scripts: introduce scripts/update-aarch64-cpu-sysregs-header.py
->>>>     target/arm/cpu-sysregs.h.inc: Sort by name alphabetical order
->>>>     target/arm/cpu-sysregs.h.inc: Update with automatic generation
->>>>     arm/cpu: Add infra to handle generated ID register definitions
->>>>     scripts: Introduce scripts/aarch64_sysreg_helpers module
->>>>     scripts: Introduce scripts/update-aarch64-cpu-sysreg-properties.py
->>>>     target/arm/cpu-idregs.h.inc: generate with script
->>>>     target/arm/cpu64: Retrieve writable ID reg map in
->>>>       aarch64_host_initfn()
->>>>     arm/kvm: Initialize all writable ID registers from host
->>>>     arm/kvm: write back modified ID regs to KVM
->>>>     target/arm/kvm: Introduce kvm_arm_expose_idreg_properties
->>>>     target/arm/kvm: Special case REVIDR_EL1 and AIDR_EL1
->>>>     target/arm/kvm: Ignore some writable bits that shouldn't be
->>>>     target/arm/cpu: Expose writable ID reg field properties on the kvm
->>>>       host vcpu model
->>>>
->>>> Shaju Abraham (1):
->>>>     target/arm/cpu_idregs: generate tables for Arm64 ID registers and
->>>>       fields
->>>>
->>>>    docs/system/arm/cpu-features.rst              | 106 ++-
->>>>    scripts/aarch64_sysreg_helpers.py             | 109 ++++
->>>>    .../update-aarch64-cpu-sysreg-properties.py   | 168 +++++
->>>>    scripts/update-aarch64-cpu-sysregs-header.py  |  51 ++
->>>>    target/arm/arm-qmp-cmds.c                     |  19 +
->>>>    target/arm/cpu-idregs.c                       |  50 ++
->>>>    target/arm/cpu-idregs.h                       |  33 +
->>>>    target/arm/cpu-idregs.h.inc                   | 617
->>>> ++++++++++++++++++
->>>>    target/arm/cpu-sysregs.h.inc                  |  57 +-
->>>>    target/arm/cpu.h                              |   3 +
->>>>    target/arm/cpu64.c                            |  14 +
->>>>    target/arm/kvm-stub.c                         |   5 +
->>>>    target/arm/kvm.c                              | 320 ++++++++-
->>>>    target/arm/kvm_arm.h                          |  12 +
->>>>    target/arm/meson.build                        |   1 +
->>>>    target/arm/trace-events                       |   6 +
->>>>    16 files changed, 1539 insertions(+), 32 deletions(-)
->>>>    create mode 100644 scripts/aarch64_sysreg_helpers.py
->>>>    create mode 100644 scripts/update-aarch64-cpu-sysreg-properties.py
->>>>    create mode 100755 scripts/update-aarch64-cpu-sysregs-header.py
->>>>    create mode 100644 target/arm/cpu-idregs.c
->>>>    create mode 100644 target/arm/cpu-idregs.h
->>>>    create mode 100644 target/arm/cpu-idregs.h.inc
->>>>
->>>
->>> Thanks for the patch series. I tested it, and it works as expected.
->>> After configuring the QEMU command, it was able to successfully migrate
->>> on Hisilicon KunPeng HIP09 and HIP12 chips.
->>>
->>> Tested-by: Jinqian Yang <yangjinqian1@huawei.com>
-> Thank you very much Jinqian for the testing. If it does not contain
-> anything confidential, could you paster the cmd line (restricted to the
-> SUSREG_* props) you used to tune your host vcpu model. This would
-> provide another example of usage for reviewers/maintainers?
-> 
+On 6/1/26 1:42 PM, Shameer Kolothum wrote:
+> From: Nicolin Chen <nicolinc@nvidia.com>
+>
+> CMDQV HW performs DMA accesses to guest queue memory by its host
+> physical address set up via IOMMUFD. This requires the guest queue
+> to be contiguous in both guest PA and host PA space. With Tegra241
+> CMDQV enabled, we must only advertise a command queue size (CMDQS)
+> that the host can safely back with physically contiguous memory.
+> Allowing a queue size larger than the host page size could cause
+> the hardware to DMA across page boundaries, leading to faults.
+>
+> Use qemu_minrampagesize() to find the smallest memory-backend page
+> size in use, then cap IDR1.CMDQS so the guest cannot configure a
+> command queue that exceeds that contiguous backing.
+>
+> Note this is done at SMMUv3 init, before any guest queue GPA is
+> known, so the cap is conservative. Maximum queue size is 8MiB;
+> it is recommended to back the VM with hugepage sizes large enough
+> so CMDQS stays at the HW maximum. Smaller backing pages reduce
+> CMDQS accordingly.
+>
+> Signed-off-by: Nicolin Chen <nicolinc@nvidia.com>
+> Signed-off-by: Shameer Kolothum <skolothumtho@nvidia.com>
+Reviewed-by: Eric Auger <eric.auger@redhat.com>
 
-Hi, Eric
+Eric
 
-Sure, here is the QEMU command line I used for testing the SYSREG_*
-properties.
+> ---
+>  hw/arm/tegra241-cmdqv.c | 20 ++++++++++++++++++++
+>  1 file changed, 20 insertions(+)
+>
+> diff --git a/hw/arm/tegra241-cmdqv.c b/hw/arm/tegra241-cmdqv.c
+> index ac17b56c1c..661c46e3d9 100644
+> --- a/hw/arm/tegra241-cmdqv.c
+> +++ b/hw/arm/tegra241-cmdqv.c
+> @@ -16,6 +16,8 @@
+>  #include "hw/arm/smmuv3-common.h"
+>  #include "hw/core/irq.h"
+>  #include "smmuv3-accel.h"
+> +#include "smmuv3-internal.h"
+> +#include "system/hostmem.h"
+>  #include "tegra241-cmdqv.h"
+>  #include "trace.h"
+>  
+> @@ -874,6 +876,8 @@ free_viommu:
+>  static void tegra241_cmdqv_init_regs(SMMUv3State *s, Tegra241CMDQV *cmdqv)
+>  {
+>      int i;
+> +    long pgsize;
+> +    uint32_t val;
+>  
+>      cmdqv->config = V_CONFIG_RESET;
+>      cmdqv->param = FIELD_DP32(0, PARAM, CMDQV_VER, CMDQV_VER);
+> @@ -905,6 +909,22 @@ static void tegra241_cmdqv_init_regs(SMMUv3State *s, Tegra241CMDQV *cmdqv)
+>          cmdqv->vcmdq_base[i] = 0;
+>          cmdqv->vcmdq_cons_indx_base[i] = 0;
+>      }
+> +
+> +    /*
+> +     * CMDQ must not cross a physical RAM backend page. Adjust CMDQS so the
+> +     * queue fits entirely within the smallest backend page size, ensuring
+> +     * the command queue is physically contiguous in host memory.
+> +     *
+> +     *   IDR1.CMDQS = log2(max_qsz) - entry_shift
+> +     *
+> +     * where entry_shift = 4 (each CMDQ entry is 16 bytes = 2^4).
+> +     */
+> +    pgsize = qemu_minrampagesize();
+> +    if (pgsize == LONG_MAX) {
+> +        pgsize = qemu_real_host_page_size();
+> +    }
+> +    val = FIELD_EX32(s->idr[1], IDR1, CMDQS);
+> +    s->idr[1] = FIELD_DP32(s->idr[1], IDR1, CMDQS, MIN(ctz64(pgsize) - 4, val));
+>  }
+>  
+>  static void tegra241_cmdqv_reset(SMMUv3State *s)
 
-```
--cpu host,pauth=off,pmu=off,sve=off,\
-SYSREG_ID_AA64PFR1_EL1_NMI=0x0,\
-SYSREG_ID_AA64ISAR1_EL1_LS64=0x0,\
-SYSREG_ID_AA64ISAR1_EL1_XS=0x0,\
-SYSREG_ID_AA64ISAR1_EL1_LRCPC=0x2,\
-SYSREG_ID_AA64ISAR2_EL1_RPRFM=0x0,\
-SYSREG_ID_AA64ISAR2_EL1_CLRBHB=0x0,\
-SYSREG_ID_AA64ISAR2_EL1_PAC_frac=0x0,\
-SYSREG_ID_AA64ISAR2_EL1_BC=0x0,\
-SYSREG_ID_AA64ISAR2_EL1_RPRES=0x0,\
-SYSREG_ID_AA64ISAR2_EL1_WFxT=0x0,\
-SYSREG_ID_AA64MMFR0_EL1_FGT=0x0,\
-SYSREG_ID_AA64MMFR0_EL1_BigEnd=0x0,\
-SYSREG_ID_AA64MMFR1_EL1_ECBHB=0x0,\
-SYSREG_ID_AA64MMFR1_EL1_CMOW=0x0,\
-SYSREG_ID_AA64MMFR1_EL1_TIDCP1=0x0,\
-SYSREG_ID_AA64MMFR1_EL1_nTLBPA=0x0,\
-SYSREG_ID_AA64MMFR1_EL1_AFP=0x0,\
-SYSREG_ID_AA64MMFR1_EL1_HCX=0x0,\
-SYSREG_ID_AA64MMFR1_EL1_ETS=0x0,\
-SYSREG_ID_AA64MMFR1_EL1_PAN=0x2,\
-SYSREG_ID_AA64MMFR1_EL1_HAFDBS=0x2,\
-SYSREG_ID_AA64MMFR2_EL1_CnP=0x0,\
-SYSREG_ID_AA64MMFR3_EL1_TCRX=0x0,\
-SYSREG_ID_AA64DFR0_EL1_PMUVer=0x6,\
-SYSREG_ID_AA64DFR0_EL1_DebugVer=0x9,\
-SYSREG_ID_AA64DFR0_EL1_DoubleLock=0xf,\
-SYSREG_ID_AA64ZFR0_EL1_F64MM=0x0,\
-SYSREG_ID_AA64ZFR0_EL1_F32MM=0x0,\
-SYSREG_ID_AA64ZFR0_EL1_SM4=0x0,\
-SYSREG_ID_AA64ZFR0_EL1_SHA3=0x0,\
-SYSREG_ID_AA64ZFR0_EL1_BitPerm=0x0,\
-SYSREG_ID_AA64ZFR0_EL1_AES=0x0,\
-SYSREG_ID_AA64ZFR0_EL1_SVEver=0x0,\
-SYSREG_CTR_EL0_L1Ip=0x2 \
-```
-
-Best regards,
-Jinqian
 
