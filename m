@@ -4,68 +4,137 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B2C77CD6E57
-	for <qemu-devel@archiver.kernel.org>; Thu,  4 Jun 2026 09:44:30 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D689BCD6E4A
+	for <qemu-devel@archiver.kernel.org>; Thu,  4 Jun 2026 09:54:25 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wV4cL-000494-2f; Thu, 04 Jun 2026 05:44:01 -0400
+	id 1wV4lH-0005VO-O4; Thu, 04 Jun 2026 05:53:15 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
- id 1wV4cB-00047P-6Z; Thu, 04 Jun 2026 05:43:51 -0400
-Received: from mgamail.intel.com ([192.198.163.10])
+ (Exim 4.90_1) (envelope-from <daniel.barboza@oss.qualcomm.com>)
+ id 1wV4lC-0005TB-MP
+ for qemu-devel@nongnu.org; Thu, 04 Jun 2026 05:53:12 -0400
+Received: from mx0a-0031df01.pphosted.com ([205.220.168.131])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
- id 1wV4c8-0008MT-23; Thu, 04 Jun 2026 05:43:50 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
- d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1780566228; x=1812102228;
- h=date:from:to:cc:subject:message-id:references:
- mime-version:content-transfer-encoding:in-reply-to;
- bh=jBnhXAJYaU2gjrYB2lA/Qkt0NX8m65lNZvcnPX205Jw=;
- b=OUM+fqSiPu2xVJVimDVfvtapHNbY/WBlq2jGKo2DT198oZO4AetA5q4n
- ISbyHViu48OHKgdI8/qxjyYFZZu6m85hlyQaQCDyguFBDTrIRtKYQf2lf
- nyQMugrUrSQ+CbNuj+jurNbwYiStFw4kX3Ey+vWuMT1uJS7sl21+OEYKw
- vuW87H8b3Pjch06O7Wfv0FOX4wvZHf0KnLPbtyxdaRjXf20j6d0gIY9Zs
- A93j46P1n/U4gsQqyC0Tmgj7eC8Kha8EmUr1JxFYMXxlQxGasvxTY/41/
- 3dmqxD9uIhVNHCer56gK+mKQMaFHpmRmeiPH68DXMBAFpZ+5J/IlAOqtO w==;
-X-CSE-ConnectionGUID: pS39nGR9Qv6/IUnPxncvIQ==
-X-CSE-MsgGUID: mkJARUYjS7yMsqWSWyoESQ==
-X-IronPort-AV: E=McAfee;i="6800,10657,11806"; a="92763291"
-X-IronPort-AV: E=Sophos;i="6.24,186,1774335600"; d="scan'208";a="92763291"
-Received: from orviesa008.jf.intel.com ([10.64.159.148])
- by fmvoesa104.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 04 Jun 2026 02:43:41 -0700
-X-CSE-ConnectionGUID: 6b2kWFhpTlGMXcElwRsFEw==
-X-CSE-MsgGUID: 87F8hMR7SfiBYGlU8Jwzhw==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.24,186,1774335600"; d="scan'208";a="244355682"
-Received: from liuzhao-optiplex-7080.sh.intel.com (HELO localhost)
- ([10.239.160.39])
- by orviesa008.jf.intel.com with ESMTP; 04 Jun 2026 02:43:40 -0700
-Date: Thu, 4 Jun 2026 18:11:44 +0800
-From: Zhao Liu <zhao1.liu@intel.com>
-To: Paolo Bonzini <pbonzini@redhat.com>
-Cc: qemu-devel@nongnu.org, qemu-rust@nongnu.org, armbru@redhat.com
-Subject: Re: [PATCH v3 15/19] scripts/qapi: generate high-level Rust bindings
-Message-ID: <aiFPYDvtWdAXD1kk@intel.com>
-References: <20260526175618.227743-1-pbonzini@redhat.com>
- <20260526175618.227743-16-pbonzini@redhat.com>
+ (Exim 4.90_1) (envelope-from <daniel.barboza@oss.qualcomm.com>)
+ id 1wV4l6-0003hj-W7
+ for qemu-devel@nongnu.org; Thu, 04 Jun 2026 05:53:08 -0400
+Received: from pps.filterd (m0279867.ppops.net [127.0.0.1])
+ by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
+ 6545PuMT994913
+ for <qemu-devel@nongnu.org>; Thu, 4 Jun 2026 09:53:01 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+ cc:content-transfer-encoding:date:from:in-reply-to:message-id
+ :mime-version:references:subject:to; s=qcppdkim1; bh=tjcJ28mFinE
+ xTdQkLHGFFBxaKcXZG06GkSkZCcUr+IA=; b=hZ8933vxbSyuJSh6epnSwdex7Vb
+ Umx+MAw45Qpma2T/aJrw5y83KmdI+fveEf7B8DKYiRNRc+axh7Dchg+fRUuyZjTh
+ 9JpnY+Iumfj2HMwkTiVq6cTYhKvyIlyy5Bj0zTwMYpp1nKMDVtTi9m/lcCTUAhZ7
+ A6Rp4frRqIMXZgciql5/nvcqEXRhkDnbA89qYXqsdRKi7mACETpwVtmPXY1D0jzg
+ GJ4ghNrC8j2giSs5lsuCDixVT4sPO4yTvR1JrH5q2LZjszlkDTjXq6zF6IzwOfjd
+ No6hOCq6Wq+TzARvIU/vS7cWigrO6sW9injd/e6dZ/hG07Amls35WVP3Aug==
+Received: from mail-yw1-f199.google.com (mail-yw1-f199.google.com
+ [209.85.128.199])
+ by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4ek374rxee-1
+ (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
+ for <qemu-devel@nongnu.org>; Thu, 04 Jun 2026 09:53:01 +0000 (GMT)
+Received: by mail-yw1-f199.google.com with SMTP id
+ 00721157ae682-7d19c3a699fso6713637b3.2
+ for <qemu-devel@nongnu.org>; Thu, 04 Jun 2026 02:53:01 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=oss.qualcomm.com; s=google; t=1780566780; x=1781171580; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=tjcJ28mFinExTdQkLHGFFBxaKcXZG06GkSkZCcUr+IA=;
+ b=PdxC499qvShdHKa1pDS7wxLH625THegWvIbiaDPUEz8AKfw8mxEaJw/S3BBmlRKnmh
+ 5Qg1LSK6j1C8qsIl4v1KgrOuP0D1KGs3o5KvpkjwZkoT82eWwz52ZQ3LnnB2Cpior7fn
+ nYfjPaGOvhqOZ9YTvDW90iF3Goj7mqkqMrH+kwsAPNIo1D9TNPHibJ/CGN3751fnjT1i
+ ohh9kErUzyNePVz5Z6yton33r8bI2ugn6svXRClqNfSVpgPcgUxHWSQTev6XCAkSnb4j
+ Xl7t+2vE3q3lizNWkBrAS/TyWyDEyAU96LDAgHNyhZQliAFd953r0v/o+nxAJDHIXxLL
+ QOIw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1780566780; x=1781171580;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=tjcJ28mFinExTdQkLHGFFBxaKcXZG06GkSkZCcUr+IA=;
+ b=ED97o3mfi418RPnvrWw4AZ8+egS4DF1qwcM6H1hgQBkKntLkPFgRC3LHkr6y6x32hh
+ LQ9voL4nF1ZoLP4CO7M/PPXJC4LKpTzFF7O/GB5or59r/0jRYNbzjXxgRoAeWqiBg3zX
+ Krd952r+mQWFH9vDGh4NMSHCZSEmoc/zsVPArce8dgOGYa3s01PV7ShdME5Ip/c9Tbpy
+ KDs1QgVRYCCc3vyHf80DE5HakBt/IOIWSm09i4IZNQ2xc87XR5vTylR+0pvTe57dFK/x
+ aK5xQmmZZ5LKsjksHOkNp8PnmMHPgyP+0NYHI1z0UI92ql+CKVTqqma8GLA611UCeE8s
+ em5w==
+X-Gm-Message-State: AOJu0YyD4DZwxaJFLXt2/g1YgJc/zIPJGoUC/iMDgEQHh0Lw5aEULvEr
+ bTcxzA6kMZbUXqFoNVw+8gmR6Ifes/E/XLPnJ2/W+4uaiyc2Qw6al6L8JDqQRG77m0aLLgtkn5v
+ 6nXIA2X78B7Zbb4GedXgpTQ6e0FU0Gi2SQpN3kyOH07eGbxBTXBDpbQi/6c2az4j2BA==
+X-Gm-Gg: Acq92OFRu4xuTKGx/bceFthdHZqbdYtp9whNtaWUfN8OY86ETYjLeBKyCap2JMM0SaW
+ 4M24FpXpTKK7KzlB/0IZryg3N+4gd4Y18PfJjN15usj15SYuTJ2A/kNb+fbwwOCpQP+En8LKuFV
+ uG3QmHzuCZUJfGlL0C3161YBFCiaiHZkT/BtQtwn35DlULS76fzyVLA5b0pc9/bQ85YCY0HJ4d+
+ TVszrD2DK1UIpo2swXD1nBO/tFgPSvEmodRBUnzlkueGMZy1k+oX/3Es6/hBKPqSZ4A+XHBeNEi
+ UrzC7JlzeiCvRWRpeG6g1xE0T+2JELjQYxJ6d2X5yjERhvKmh931HmrRwB9mhOWxwLhJIxXtPfS
+ x5kHQFqwB2NLkr5enGUDsSxhKvtdyCjp0QdgxUMl9EryEmcaUWiiVLzwSpRkFsrxDGoe2ug==
+X-Received: by 2002:a05:690e:4384:b0:652:ddea:1679 with SMTP id
+ 956f58d0204a3-660dbfc0251mr4376583d50.16.1780566780317; 
+ Thu, 04 Jun 2026 02:53:00 -0700 (PDT)
+X-Received: by 2002:a05:690e:4384:b0:652:ddea:1679 with SMTP id
+ 956f58d0204a3-660dbfc0251mr4376566d50.16.1780566779935; 
+ Thu, 04 Jun 2026 02:52:59 -0700 (PDT)
+Received: from QCOM-UWl2o8bcGT.qualcomm.com ([177.170.117.62])
+ by smtp.gmail.com with ESMTPSA id
+ 956f58d0204a3-660d64ba680sm3522830d50.21.2026.06.04.02.52.56
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Thu, 04 Jun 2026 02:52:59 -0700 (PDT)
+From: Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>
+To: qemu-devel@nongnu.org
+Cc: qemu-riscv@nongnu.org, alistair.francis@wdc.com, liwei1518@gmail.com,
+ zhiwei_liu@linux.alibaba.com, chao.liu.zevorn@gmail.com,
+ andrew.jones@oss.qualcomm.com, leif.lindholm@oss.qualcomm.com,
+ Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>,
+ Palmer Dabbelt <palmer@dabbelt.com>
+Subject: [PATCH v7 1/5] target/riscv/cpu.c: remove 'bare' condition for
+ .profile
+Date: Thu,  4 Jun 2026 06:52:40 -0300
+Message-ID: <20260604095244.3313259-2-daniel.barboza@oss.qualcomm.com>
+X-Mailer: git-send-email 2.43.0
+In-Reply-To: <20260604095244.3313259-1-daniel.barboza@oss.qualcomm.com>
+References: <20260604095244.3313259-1-daniel.barboza@oss.qualcomm.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <20260526175618.227743-16-pbonzini@redhat.com>
-Received-SPF: pass client-ip=192.198.163.10; envelope-from=zhao1.liu@intel.com;
- helo=mgamail.intel.com
-X-Spam_score_int: -47
-X-Spam_score: -4.8
-X-Spam_bar: ----
-X-Spam_report: (-4.8 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.445,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_MED=-2.3, SPF_HELO_NONE=0.001,
- SPF_NONE=0.001 autolearn=ham autolearn_force=no
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNjA0MDA5NSBTYWx0ZWRfX8emNDhO9nte4
+ vEvb5KNB8KxWVkzoCPv3uKgDVd7u31xEzqOej2zzWF1TiPbN6+EMmYSeKpGlGlz0TEiXX5mVG+h
+ /IjgPuXBPRNeXlnyYBzL7XcPh4m7YaWexvTooGvCDaO4+JH53s06TY4RsNHOhp0L0yvC5XvpPLP
+ yr75VjmTJ041VB9iIi8f/3oecnCmZtUnI9Ti6eh+jsctRlIxzd+UTHEmVKaPqE9HnKqH3OJuH5p
+ wPEhWDPlov6mTLlA1SIY85OuD15KESfeBN/ucAJRn6gccMsD0a4qogrtYcr3MP1CUssYkY1qe34
+ banxmLkbP3m1Dyp8VDqe7tDfwge86W9Sw2RMVX747fIEIoCoouLtB0OKVT0YZ9Hs9NobL+C5Psh
+ yGFVdwlt6gWBWTqrQyWT/R/JkL4hicZo6c0dlqXIXlLxW9LYvgmjvlSZ6pmqUGpIlTjhrOrrhTM
+ hWHxOk+QdYYSKeLOPVQ==
+X-Proofpoint-GUID: cJFrTq3PdGZa2zgDWDJb1Ei4zPsW6mOE
+X-Proofpoint-ORIG-GUID: cJFrTq3PdGZa2zgDWDJb1Ei4zPsW6mOE
+X-Authority-Analysis: v=2.4 cv=eJsjSnp1 c=1 sm=1 tr=0 ts=6a214afd cx=c_pps
+ a=72HoHk1woDtn7btP4rdmlg==:117 a=gdiugJE53z4H+vvYeRBHqw==:17
+ a=FelO9ux0wxsA:10 a=s4-Qcg_JpJYA:10 a=VkNPw1HP01LnGYTKEx00:22
+ a=u7WPNUs3qKkmUXheDGA7:22 a=eoimf2acIAo5FJnRuUoq:22 a=EUspDBNiAAAA:8
+ a=JF9118EUAAAA:8 a=GhL2bEVCvcqOW28JNKkA:9 a=kA6IBgd4cpdPkAWqgNAz:22
+ a=xVlTc564ipvMDusKsbsT:22
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.125,FMLib:17.12.100.49
+ definitions=2026-06-04_03,2026-05-28_03,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ malwarescore=0 spamscore=0 phishscore=0 bulkscore=0 impostorscore=0
+ lowpriorityscore=0 priorityscore=1501 clxscore=1015 adultscore=0
+ suspectscore=0 classifier=typeunknown authscore=0 authtc= authcc=
+ route=outbound adjust=0 reason=mlx scancount=1 engine=8.22.0-2605210000
+ definitions=main-2606040095
+Received-SPF: pass client-ip=205.220.168.131;
+ envelope-from=daniel.barboza@oss.qualcomm.com; helo=mx0a-0031df01.pphosted.com
+X-Spam_score_int: -27
+X-Spam_score: -2.8
+X-Spam_bar: --
+X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -81,176 +150,34 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, May 26, 2026 at 07:56:14PM +0200, Paolo Bonzini wrote:
-> Date: Tue, 26 May 2026 19:56:14 +0200
-> From: Paolo Bonzini <pbonzini@redhat.com>
-> Subject: [PATCH v3 15/19] scripts/qapi: generate high-level Rust bindings
-> X-Mailer: git-send-email 2.54.0
-> 
-> From: Marc-André Lureau <marcandre.lureau@redhat.com>
-> 
-> Generate high-level native Rust declarations for the QAPI types.
-> 
-> - char* is mapped to String, scalars to there corresponding Rust types
-> 
-> - enums use #[repr(u32)] and can be transmuted to their C counterparts
-> 
-> - has_foo/foo members are mapped to Option<T>
-> 
-> - lists are represented as Vec<T>
-> 
-> - structures map fields 1:1 to Rust
-> 
-> - alternate are represented as Rust enum, each variant being a 1-element
->   tuple
-> 
-> - unions are represented in a similar way as in C: a struct S with a "u"
->   member (since S may have extra 'base' fields). The discriminant
->   isn't a member of S, since Rust enum already include it, but it can be
->   recovered with "mystruct.u.into()"
-> 
-> Anything that includes a recursive struct puts it in a Box.  Lists are
-> not considered recursive, because Vec breaks the recursion (it's possible
-> to construct an object containing an empty Vec of its own type).
-> 
-> Given the experimental nature of Rust, and the incompleteness of the
-> backend (it lacks commands and events), QAPIRsBackend is not modular
-> and is not built together with the C and trace-event files.  It can
-> be used by specifying "-B qapi.backend.QAPIRsBackend" on the qapi-gen
-> command line.
-> 
-> Signed-off-by: Marc-André Lureau <marcandre.lureau@redhat.com>
-> Link: https://lore.kernel.org/r/20210907121943.3498701-21-marcandre.lureau@redhat.com
-> [Paolo: rewrite conversion of leaf types]
-> Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
-> ---
->  meson.build              |   4 +-
->  scripts/qapi/backend.py  |  25 +++
->  scripts/qapi/common.py   |  49 ++++++
->  scripts/qapi/rs.py       |  50 ++++++
->  scripts/qapi/rs_types.py | 372 +++++++++++++++++++++++++++++++++++++++
->  scripts/qapi/schema.py   |  59 +++++--
->  6 files changed, 540 insertions(+), 19 deletions(-)
->  create mode 100644 scripts/qapi/rs.py
->  create mode 100644 scripts/qapi/rs_types.py
+We want to configure other CPU types to use profiles as an alternative
+to adding every profile extension explicitly, i.e. a profile is nothing
+more than an extension bundle.
 
-Revisiting the v2 discussion, I think maybe it's still possible to use
-visit_module to identify predefined cases (in schema builtn module)
-instead of is_predefined?
+This means that a vendor CPU can set .profile=rva23s64 while having the
+same handling as any other vendor CPU. Same thing with all other CPU
+types.
 
-(I guess that's what Markus wanted in v2, hopefully... and apologies if
-this is a bit too verbose. I'm learning QAPI code so I want to explain
-my undersatnding in as much details as possible (to ensure "IIUC") :). )
+Signed-off-by: Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>
+Reviewed-by: Andrew Jones <andrew.jones@oss.qualcomm.com>
+Reviewed-by: Alistair Francis <alistair.francis@wdc.com>
+---
+ target/riscv/cpu.c | 1 -
+ 1 file changed, 1 deletion(-)
 
-> +class QAPISchemaGenRsTypeVisitor(QAPISchemaRsVisitor):
-> +    _schema: Optional[QAPISchema]
-> +
-> +    def __init__(self, prefix: str) -> None:
-> +        super().__init__(prefix, 'qapi-types',
-> +                         'Schema-defined QAPI types', __doc__)
-> +
-> +    def visit_begin(self, schema: QAPISchema) -> None:
-> +        self._schema = schema
-> +        objects_seen.add(schema.the_empty_object_type.name)
-> +
-> +        self._gen.preamble_add(
-> +            mcgen('''
-> +#![allow(unexpected_cfgs)]
-> +#![allow(non_camel_case_types)]
-> +#![allow(clippy::empty_structs_with_brackets)]
-> +#![allow(clippy::large_enum_variant)]
-> +#![allow(clippy::pub_underscore_fields)]
-> +
-> +// Because QAPI structs can contain float, for simplicity we never
-> +// derive Eq.  Clippy however would complain for those structs
-> +// that *could* be Eq too.
-> +#![allow(clippy::derive_partial_eq_without_eq)]
-> +
-> +use util::qobject::QObject;
-> +'''))
-
-IIUC, though there's only a single QAPIGenRs, but we can just use
-visit_module to cache a flag and don't need to skip something like C
-did:
-
-def visit_module(self, name: str) -> None:
-    self._in_builtin_module = QAPISchemaModule.is_builtin_module(name)
-
-builtin module is created by schema and is maintained in _module_dict
-(in QAPISchema.__init__()). When QAPISchema iterates through _module_dict,
-it will always visit he builtin module and once it enters builtin module,
-visit_module() will be called (QAPISchemaModule.visit()).
-
-With _in_builtin_module flag, then we just need to "proof" it has the
-same effect as is_predefined() method.
-
-> +    def visit_object_type(self,
-> +                          name: str,
-> +                          info: Optional[QAPISourceInfo],
-> +                          ifcond: QAPISchemaIfCond,
-> +                          features: List[QAPISchemaFeature],
-> +                          base: Optional[QAPISchemaObjectType],
-> +                          members: List[QAPISchemaObjectTypeMember],
-> +                          branches: Optional[QAPISchemaVariants]) -> None:
-> +        assert self._schema is not None
-
-(if we use self._in_builtin_module, this assertion can go away.)
-
-> +        if self._schema.is_predefined(name) or name.startswith('q_'):
-
-This is called by QAPISchemaObjectType not QAPISchemaBuiltinType, and
-QType is QPAISchemaEnumType.
-
-Only q_empty could hit is_predefined(), and q_empty has been included
-into builtin module (in QAPISchema._def_predefineds()).
-
-And a good thing is _def_predefineds() doesn't add other object type
-into builtin module! So "self._schema.is_predefined(name)" is same as
-"self._in_builtin_module"!
-
-> +            return
-> +        self._gen.add(gen_rs_object(name, ifcond, base, members, branches))
-> +
-> +    def visit_enum_type(self,
-> +                        name: str,
-> +                        info: Optional[QAPISourceInfo],
-> +                        ifcond: QAPISchemaIfCond,
-> +                        features: List[QAPISchemaFeature],
-> +                        members: List[QAPISchemaEnumMember],
-> +                        prefix: Optional[str]) -> None:
-> +        assert self._schema is not None
-
-(if we use self._in_builtin_module, this assertion can go away.
-
-> +        if self._schema.is_predefined(name):
-> +            return
-
-Similiarly, only QType can hit is_predefined(), and builtin module has
-only one enum: QType, therefore it's safe to use self._in_builtin_module
-here, too.
-
-> +        self._gen.add(gen_rs_enum(name, ifcond, members))
->
-> +    def visit_alternate_type(self,
-> +                             name: str,
-> +                             info: Optional[QAPISourceInfo],
-> +                             ifcond: QAPISchemaIfCond,
-> +                             features: List[QAPISchemaFeature],
-> +                             alternatives: QAPISchemaVariants) -> None:
-
-I think maybe we also should ship builtin for alternatives type.
-although for now there's no predefined alternatives...
-
-> +        self._gen.add(gen_rs_alternate(name, ifcond, alternatives))
-> +
-> +
-
-... Overall, it seems checking builtin module is more robust and
-porvides forward compatibility, and we don't need to add special case to
-check.
-
-Regards,
-Zhao
-
+diff --git a/target/riscv/cpu.c b/target/riscv/cpu.c
+index f3b5d4c94c..3f0f931335 100644
+--- a/target/riscv/cpu.c
++++ b/target/riscv/cpu.c
+@@ -2737,7 +2737,6 @@ static void riscv_cpu_class_base_init(ObjectClass *c, const void *data)
+         mcc->def->bare |= def->bare;
+         if (def->profile) {
+             assert(profile_extends(def->profile, mcc->def->profile));
+-            assert(mcc->def->bare);
+             mcc->def->profile = def->profile;
+         }
+         if (def->misa_mxl_max) {
+-- 
+2.43.0
 
 
