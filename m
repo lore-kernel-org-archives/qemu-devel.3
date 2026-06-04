@@ -4,54 +4,57 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E8015CD6E6B
-	for <qemu-devel@archiver.kernel.org>; Thu,  4 Jun 2026 12:44:05 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D92F0CD6E4A
+	for <qemu-devel@archiver.kernel.org>; Thu,  4 Jun 2026 12:44:50 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wV7PW-0003BL-Qv; Thu, 04 Jun 2026 08:42:58 -0400
+	id 1wV7RB-0005Li-1V; Thu, 04 Jun 2026 08:44:41 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <outgoing@sr.ht>) id 1wV2Li-0006t6-R4
- for qemu-devel@nongnu.org; Thu, 04 Jun 2026 03:18:43 -0400
-Received: from mail-a.sr.ht ([46.23.81.152])
+ (Exim 4.90_1) (envelope-from <guobin@linux.alibaba.com>)
+ id 1wV7R9-0005I8-0g
+ for qemu-devel@nongnu.org; Thu, 04 Jun 2026 08:44:39 -0400
+Received: from [115.124.30.111] (helo=out30-111.freemail.mail.aliyun.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <outgoing@sr.ht>) id 1wV2Lf-0003bW-DL
- for qemu-devel@nongnu.org; Thu, 04 Jun 2026 03:18:42 -0400
-DKIM-Signature: a=rsa-sha256; bh=oAvFqrZftth2c6bas4KhQjbPZs/8e0Y62M1fVqqHMrw=; 
- c=simple/simple; d=git.sr.ht;
- h=From:Date:Subject:Reply-to:In-Reply-To:To:Cc; q=dns/txt; s=20240113;
- t=1780557513; v=1;
- b=iW4Kl1DetSWU2IiiS+57mRYXrexWl4nvrH+64XP7iEw7dV6ujNZh0i5xKobV8e+c6Y+BkhGk
- clCzv09iDw5FK+lxrjqimQAg4nepmt+oJ0jJUs4eX/CQ/FutoOll5qPMVO5nRga+/cqRT6QDwaJ
- GgVksv8Ee7DssAF8vNYodYgdCjFEvCetZlrQThwGSDqKZjcyo43ZfcSVt+sUzuyrzc49w00osRl
- OiIcZzfSivmy+OBvTYpQoCniBtqqROsmqdCJrDSXMNTVrUFGf0h7GWmEDrm4STUm/XVs9vDl/yz
- yK54UbqdJe/bDBTC+dpZYrYkr0+r+jIybfry0zKoAV8Bg==
-Received: from git.sr.ht (unknown [46.23.81.155])
- by mail-a.sr.ht (Postfix) with ESMTPSA id B8E2821303;
- Thu, 04 Jun 2026 07:18:33 +0000 (UTC)
-From: ~kholia <kholia@git.sr.ht>
-Date: Wed, 22 Apr 2026 19:28:05 +0530
-Subject: [PATCH qemu 1/1] hw/usb/dev-storage: add vid/pid/manufacturer/product
- overrides
-Message-ID: <178055751360.22223.153528865155723674-1@git.sr.ht>
-X-Mailer: git.sr.ht
-In-Reply-To: <178055751360.22223.153528865155723674-0@git.sr.ht>
+ (Exim 4.90_1) (envelope-from <guobin@linux.alibaba.com>)
+ id 1wV7R6-0000pk-4k
+ for qemu-devel@nongnu.org; Thu, 04 Jun 2026 08:44:38 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linux.alibaba.com; s=default;
+ t=1780577064; h=From:To:Subject:Date:Message-ID:MIME-Version;
+ bh=FNoeXF/q9SSX6kIjlgmqW0EI5NGb078n4sgyRcBa0ks=;
+ b=j4IhclK7k7SqoNi8chmSv5BRvwRxVWIQUNb2pB6IqwiujgK5QMwhczMRR0AwerRdlwpKVsF22ujvEC6sqwKkvhFdteAtPUlOR0qCpZJrv6uagmtYVv7dxOsNzQURMZj2vp/tFc65EH6gjODz9WX3Ld8AOjmvw0Jcnoxvvjm0Q5A=
+X-Alimail-AntiSpam: AC=PASS; BC=-1|-1; BR=01201311R611e4; CH=green; DM=||false|;
+ DS=||; FP=0|-1|-1|-1|0|-1|-1|-1; HT=maildocker-contentspam033045098064;
+ MF=guobin@linux.alibaba.com; NM=1; PH=DS; RN=2; SR=0;
+ TI=SMTPD_---0X4ALFiu_1780577061; 
+Received: from localhost(mailfrom:guobin@linux.alibaba.com
+ fp:SMTPD_---0X4ALFiu_1780577061 cluster:ay36) by smtp.aliyun-inc.com;
+ Thu, 04 Jun 2026 20:44:22 +0800
+From: Bin Guo <guobin@linux.alibaba.com>
 To: qemu-devel@nongnu.org
-Cc: Paolo Bonzini <pbonzini@redhat.com>
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: quoted-printable
+Cc: "Michael S . Tsirkin" <mst@redhat.com>
+Subject: [PATCH] hw/virtio: propagate vhost_virtqueue_mask() errors from start
+ path
+Date: Thu,  4 Jun 2026 20:44:20 +0800
+Message-ID: <20260604124420.82450-1-guobin@linux.alibaba.com>
+X-Mailer: git-send-email 2.50.1
 MIME-Version: 1.0
-Received-SPF: pass client-ip=46.23.81.152; envelope-from=outgoing@sr.ht;
- helo=mail-a.sr.ht
-X-Spam_score_int: 38
-X-Spam_score: 3.8
-X-Spam_bar: +++
-X-Spam_report: (3.8 / 5.0 requ) BAYES_00=-1.9, DATE_IN_PAST_96_XX=3.405,
- DKIM_INVALID=0.1, DKIM_SIGNED=0.1, FREEMAIL_FORGED_REPLYTO=2.095,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
+Content-Transfer-Encoding: 8bit
+X-Host-Lookup-Failed: Reverse DNS lookup failed for 115.124.30.111 (deferred)
+Received-SPF: pass client-ip=115.124.30.111;
+ envelope-from=guobin@linux.alibaba.com;
+ helo=out30-111.freemail.mail.aliyun.com
+X-Spam_score_int: -166
+X-Spam_score: -16.7
+X-Spam_bar: ----------------
+X-Spam_report: (-16.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, ENV_AND_HDR_SPF_MATCH=-0.5,
+ RCVD_IN_DNSWL_NONE=-0.0001, RDNS_NONE=0.793, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001, UNPARSEABLE_RELAY=0.001, USER_IN_DEF_DKIM_WL=-7.5,
+ USER_IN_DEF_SPF_WL=-7.5 autolearn=no autolearn_force=no
 X-Spam_action: no action
-X-Mailman-Approved-At: Thu, 04 Jun 2026 08:42:54 -0400
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -63,146 +66,85 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-To: ~kholia <dhiru.kholia@gmail.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Dhiru Kholia <dhiru@openwall.com>
+vhost_virtqueue_start() unmasks the call notifier by calling
+vhost_virtqueue_mask(), whose vhost_set_vring_call ioctl can fail
+(closed vhost-user socket, kernel ENOMEM, revoked guest_notifier fd)
+but whose void signature throws the error away. vhost_dev_start()
+then reports success while the backend has no valid call eventfd for
+that vq, leaving the guest with a working kick path but no virtqueue
+interrupts -- a half-up state harder to diagnose than a clean failure.
 
-This patch adds the ability to override the Vendor ID, Product ID,
-Manufacturer and Product strings for USB storage devices via properties.
+Make vhost_virtqueue_mask() return int and handle the error in the
+start path via the existing fail_vector unwind. Other callers reach
+the function through VirtioDeviceClass.guest_notifier_mask, whose
+void signature offers no upward error channel; they invoke it as a
+statement and remain source-compatible.
 
-This allows emulating specific USB storage devices more accurately.
-When vid or pid is specified, a per-instance USB descriptor is
-created to hold these values.
+Resolves a long-standing TODO at the unmask call.
 
-This helps with debugging and reversing of various VID+PID restricted
-applications (e.g. Samsung SecretZone, SanDisk SecureAccess and others).
-
-Usage:
-
--drive file=3Dhdd.img,format=3Dqcow2,if=3Dnone,id=3Ddisk \
--device usb-storage,drive=3Ddisk,vid=3D0x1,pid=3D0x2,manufacturer=3DA,product=
-=3DB
-
-Signed-off-by: Dhiru Kholia <dhiru@openwall.com>
+Signed-off-by: Bin Guo <guobin@linux.alibaba.com>
 ---
- hw/usb/dev-storage-bot.c     |  1 +
- hw/usb/dev-storage-classic.c |  1 +
- hw/usb/dev-storage.c         | 43 ++++++++++++++++++++++++++++++++++++
- include/hw/usb/msd.h         |  3 +++
- 4 files changed, 48 insertions(+)
+ hw/virtio/vhost.c         | 12 +++++++++---
+ include/hw/virtio/vhost.h |  4 ++--
+ 2 files changed, 11 insertions(+), 5 deletions(-)
 
-diff --git a/hw/usb/dev-storage-bot.c b/hw/usb/dev-storage-bot.c
-index a7f8d80c17..9b8d12958c 100644
---- a/hw/usb/dev-storage-bot.c
-+++ b/hw/usb/dev-storage-bot.c
-@@ -30,6 +30,7 @@ static void usb_msd_bot_realize(USBDevice *dev, Error **err=
-p)
-     DeviceState *d =3D DEVICE(dev);
-=20
-     usb_desc_create_serial(dev);
-+    usb_msd_init_desc(dev);
-     usb_desc_init(dev);
-     dev->flags |=3D (1 << USB_DEV_FLAG_IS_SCSI_STORAGE);
-     if (d->hotplugged) {
-diff --git a/hw/usb/dev-storage-classic.c b/hw/usb/dev-storage-classic.c
-index 977151c4a0..92cf125c8e 100644
---- a/hw/usb/dev-storage-classic.c
-+++ b/hw/usb/dev-storage-classic.c
-@@ -53,6 +53,7 @@ static void usb_msd_storage_realize(USBDevice *dev, Error *=
-*errp)
-     s->conf.blk =3D NULL;
-=20
-     usb_desc_create_serial(dev);
-+    usb_msd_init_desc(dev);
-     usb_desc_init(dev);
-     dev->flags |=3D (1 << USB_DEV_FLAG_IS_SCSI_STORAGE);
-     scsi_bus_init(&s->bus, sizeof(s->bus), DEVICE(dev),
-diff --git a/hw/usb/dev-storage.c b/hw/usb/dev-storage.c
-index 040cf15051..0f1389b2d5 100644
---- a/hw/usb/dev-storage.c
-+++ b/hw/usb/dev-storage.c
-@@ -567,6 +567,47 @@ void *usb_msd_load_request(QEMUFile *f, SCSIRequest *req)
-     return NULL;
- }
-=20
-+static void usb_msd_unrealize(USBDevice *dev)
-+{
-+    if (dev->usb_desc !=3D &desc) {
-+        g_free((USBDesc *)dev->usb_desc);
-+    }
-+}
-+
-+void usb_msd_init_desc(USBDevice *dev)
-+{
-+    MSDState *s =3D USB_STORAGE_DEV(dev);
-+    USBDesc *d;
-+
-+    if (s->vid || s->pid) {
-+        d =3D g_new0(USBDesc, 1);
-+        *d =3D desc;
-+        if (s->vid) {
-+            d->id.idVendor =3D s->vid;
+diff --git a/hw/virtio/vhost.c b/hw/virtio/vhost.c
+index b9dc4ed13b..42e2fc9952 100644
+--- a/hw/virtio/vhost.c
++++ b/hw/virtio/vhost.c
+@@ -1351,8 +1351,11 @@ int vhost_virtqueue_start(struct vhost_dev *dev,
+      * will do it later.
+      */
+     if (!vdev->use_guest_notifier_mask) {
+-        /* TODO: check and handle errors. */
+-        vhost_virtqueue_mask(dev, vdev, idx, false);
++        r = vhost_virtqueue_mask(dev, vdev, idx, false);
++        if (r < 0) {
++            /* No call eventfd means no interrupts; bail out. */
++            goto fail_vector;
 +        }
-+        if (s->pid) {
-+            d->id.idProduct =3D s->pid;
-+        }
-+        dev->usb_desc =3D d;
-+    } else {
-+        dev->usb_desc =3D &desc;
-+    }
-+
-+    if (s->manufacturer) {
-+        usb_desc_set_string(dev, STR_MANUFACTURER, s->manufacturer);
-+    }
-+    if (s->product) {
-+        usb_desc_set_string(dev, STR_PRODUCT, s->product);
-+    }
-+}
-+
-+static const Property msd_properties_common[] =3D {
-+    DEFINE_PROP_UINT16("vid", MSDState, vid, 0),
-+    DEFINE_PROP_UINT16("pid", MSDState, pid, 0),
-+    DEFINE_PROP_STRING("manufacturer", MSDState, manufacturer),
-+    DEFINE_PROP_STRING("product", MSDState, product),
-+};
-+
- static const VMStateDescription vmstate_usb_msd =3D {
-     .name =3D "usb-storage",
-     .version_id =3D 1,
-@@ -597,9 +638,11 @@ static void usb_msd_class_initfn_common(ObjectClass *kla=
-ss, const void *data)
-     uc->handle_reset   =3D usb_msd_handle_reset;
-     uc->handle_control =3D usb_msd_handle_control;
-     uc->handle_data    =3D usb_msd_handle_data;
-+    uc->unrealize      =3D usb_msd_unrealize;
-     set_bit(DEVICE_CATEGORY_STORAGE, dc->categories);
-     dc->fw_name =3D "storage";
-     dc->vmsd =3D &vmstate_usb_msd;
-+    device_class_set_props(dc, msd_properties_common);
+     }
+ 
+     if (k->query_guest_notifiers &&
+@@ -1815,7 +1818,7 @@ bool vhost_virtqueue_pending(struct vhost_dev *hdev, int n)
  }
-=20
- static const TypeInfo usb_storage_dev_type_info =3D {
-diff --git a/include/hw/usb/msd.h b/include/hw/usb/msd.h
-index 125d2c218f..1920938a20 100644
---- a/include/hw/usb/msd.h
-+++ b/include/hw/usb/msd.h
-@@ -41,6 +41,8 @@ struct MSDState {
-     bool commandlog;
-     SCSIDevice *scsi_dev;
-     bool needs_reset;
-+    uint16_t vid, pid;
-+    char *manufacturer, *product;
- };
-=20
- typedef struct MSDState MSDState;
-@@ -53,3 +55,4 @@ void usb_msd_command_complete(SCSIRequest *req, size_t resi=
-d);
- void usb_msd_request_cancelled(SCSIRequest *req);
- void *usb_msd_load_request(QEMUFile *f, SCSIRequest *req);
- void usb_msd_handle_reset(USBDevice *dev);
-+void usb_msd_init_desc(USBDevice *dev);
---=20
-2.49.1
+ 
+ /* Mask/unmask events from this vq. */
+-void vhost_virtqueue_mask(struct vhost_dev *hdev, VirtIODevice *vdev, int n,
++int vhost_virtqueue_mask(struct vhost_dev *hdev, VirtIODevice *vdev, int n,
+                          bool mask)
+ {
+     struct VirtQueue *vvq = virtio_get_queue(vdev, n);
+@@ -1836,7 +1839,10 @@ void vhost_virtqueue_mask(struct vhost_dev *hdev, VirtIODevice *vdev, int n,
+     r = hdev->vhost_ops->vhost_set_vring_call(hdev, &file);
+     if (r < 0) {
+         error_report("vhost_set_vring_call failed %d", -r);
++        return r;
+     }
++
++    return 0;
+ }
+ 
+ bool vhost_config_pending(struct vhost_dev *hdev)
+diff --git a/include/hw/virtio/vhost.h b/include/hw/virtio/vhost.h
+index 89817bd848..96cc261822 100644
+--- a/include/hw/virtio/vhost.h
++++ b/include/hw/virtio/vhost.h
+@@ -317,8 +317,8 @@ bool vhost_virtqueue_pending(struct vhost_dev *hdev, int n);
+ 
+ /* Mask/unmask events from this vq.
+  */
+-void vhost_virtqueue_mask(struct vhost_dev *hdev, VirtIODevice *vdev, int n,
+-                          bool mask);
++int vhost_virtqueue_mask(struct vhost_dev *hdev, VirtIODevice *vdev, int n,
++                         bool mask);
+ 
+ /**
+  * vhost_get_features_ex() - sanitize the extended features set
+-- 
+2.50.1 (Apple Git-155)
+
 
