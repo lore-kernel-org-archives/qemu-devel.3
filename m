@@ -4,85 +4,85 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D37FBCD6E6B
-	for <qemu-devel@archiver.kernel.org>; Thu,  4 Jun 2026 12:05:42 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7BDB8CD6E6B
+	for <qemu-devel@archiver.kernel.org>; Thu,  4 Jun 2026 12:15:02 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wV6or-0005a6-KI; Thu, 04 Jun 2026 08:05:07 -0400
+	id 1wV6xt-000756-W9; Thu, 04 Jun 2026 08:14:26 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <eric.auger@redhat.com>)
- id 1wV6ol-0005ZK-5y
- for qemu-devel@nongnu.org; Thu, 04 Jun 2026 08:04:59 -0400
+ id 1wV6xr-00073C-75
+ for qemu-devel@nongnu.org; Thu, 04 Jun 2026 08:14:23 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <eric.auger@redhat.com>)
- id 1wV6oi-0007jE-9B
- for qemu-devel@nongnu.org; Thu, 04 Jun 2026 08:04:58 -0400
+ id 1wV6xo-0005h5-Pl
+ for qemu-devel@nongnu.org; Thu, 04 Jun 2026 08:14:22 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1780574694;
+ s=mimecast20190719; t=1780575258;
  h=from:from:reply-to:reply-to:subject:subject:date:date:
  message-id:message-id:to:to:cc:cc:mime-version:mime-version:
  content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=rWp2RSDCvMDMihzheVnZxgAJCtfA1V9HskT1OAMbe6E=;
- b=H1Xw5pUczPwD3RSKU0E0x1j2ZL1B5Go99OSutC+LnwztX8Xn5/Igz14xu/5sOQqquwwtJr
- 4RUPtKLxSyvYyLtmh3eSFdhwbM/9A/4RNBaRtGmc+QrH+78ovW46Z8O3TJs9TV8pjKS1oq
- 0E3VPsWcR6g7TnV15DVs0DDvpRJzN5E=
-Received: from mail-wr1-f69.google.com (mail-wr1-f69.google.com
- [209.85.221.69]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=S4fOxdJhGEH8bp7SeHy15zCxGqh4MUpx91ihvBdC4Tw=;
+ b=RfxY9DM1AFQZwYu6We0qeEYUPBtbbbjFBl16Cf0xVxvO7On5mNHAeAkbRzbiC2XrGA2TN9
+ UklX4zvZ5jz0vr86P1DWHZZxH94ynfdDtkdY0yVQp8F8K2Rqgeox35genFU9tX6sJTKdZn
+ M7adpfsvlaYbWXJbWQqeVfO/Y9sXwxA=
+Received: from mail-wm1-f70.google.com (mail-wm1-f70.google.com
+ [209.85.128.70]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-296-8GovJ0O7N7GPZVxkPycaoQ-1; Thu, 04 Jun 2026 08:04:52 -0400
-X-MC-Unique: 8GovJ0O7N7GPZVxkPycaoQ-1
-X-Mimecast-MFC-AGG-ID: 8GovJ0O7N7GPZVxkPycaoQ_1780574691
-Received: by mail-wr1-f69.google.com with SMTP id
- ffacd0b85a97d-45ef9437b7aso444322f8f.0
- for <qemu-devel@nongnu.org>; Thu, 04 Jun 2026 05:04:52 -0700 (PDT)
+ us-mta-92-tJXp8iz1PyGce-aubVKXaA-1; Thu, 04 Jun 2026 08:14:17 -0400
+X-MC-Unique: tJXp8iz1PyGce-aubVKXaA-1
+X-Mimecast-MFC-AGG-ID: tJXp8iz1PyGce-aubVKXaA_1780575256
+Received: by mail-wm1-f70.google.com with SMTP id
+ 5b1f17b1804b1-490bae3a39bso7073645e9.1
+ for <qemu-devel@nongnu.org>; Thu, 04 Jun 2026 05:14:17 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1780574691; x=1781179491;
+ d=1e100.net; s=20251104; t=1780575256; x=1781180056;
  h=content-transfer-encoding:in-reply-to:from:references:cc:to
  :content-language:subject:reply-to:user-agent:mime-version:date
  :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
  :message-id:reply-to;
- bh=rWp2RSDCvMDMihzheVnZxgAJCtfA1V9HskT1OAMbe6E=;
- b=XlbjVPHpvOLUOxLB4+3gFNVSXoYkH3nczo3w24JG8XeewHOe816TSdVZ2Zbx34xmZf
- FBsaUT2yxwpsnWvOhhsbcfTqwbh7zgMFg7/byXnr/TAHLIGWkIDCMJNZpyFRQAC2ohwk
- ++dafwJuSQ2ug+gj+otFt0SOG0x6tgHj9Ug0lV4OTubzxD8Fa/0rD1unNoSLoQCr2WwN
- vZT01TT5sVZ4u6+rFv9o7+blgo9nqZn8tw0CTvN3eOsVeBkbmARWbzJDg8/lSg1xsLnS
- zUedwU73zlSW+NgwuG4/ho3hgh8UGCodCUd1NNFd8MgV6O1fskPsaVaLadG/tStoBtUU
- bqqA==
+ bh=S4fOxdJhGEH8bp7SeHy15zCxGqh4MUpx91ihvBdC4Tw=;
+ b=pRUpOYC5y71Rqn+w1u8buS06IMk6nvYLTGc/NlwY78MHv1t4Dj0SYYf8xI+8ML3u6O
+ yuEHmQ0vh6iImpS1g2U5v6U1EDERD1KhxgwAvKq1Q8YlHCTP+JCnJsCMbfraMOmj8dma
+ zyBeBgnAPFKarStlgUMwXh01Ai0uM3kCDb3QqDmal9Rh4CwEp5X+RIv65TkNInP3aPoG
+ CVSXAIoPSvGiP+cboMxFY+rpq2SHXFhMH0GCBbeV3rPf3DHkNQMSweTS1CPZ1wfyMYGN
+ Kl4hC+yBRnOjdH6T4czNKhycDjgZYtXoA1MWv0lnT+rjHSAvJv9KBMT7CX6+HnQCcKvH
+ i3CQ==
 X-Forwarded-Encrypted: i=1;
- AFNElJ9W/iZwJ/Zb2XHV0VK86I/M85MeK/qJZSC+1KNrdylv6eW/Ns9+uDUj1osuiCB4O3zVCol/hFOFoWMq@nongnu.org
-X-Gm-Message-State: AOJu0YzbPSOGmoAW3fZxPsaK/VHVA2NdzX7mGP/WqX3Gu9i++K+MAZKC
- YNVU0GG1Lx5cz3poD5fNv1V+6EsCsHqVG+TWYKosgggJNYMTiHBR4DUBsBMmfO/ZVOQz2dasc+7
- zhPoAycsDIN7bmLyMQ9p5WEbqfUiU5qI0B/fo5zoisSr4BzCOy3kBXhbi
-X-Gm-Gg: Acq92OHkH4qnVOIE/v1fThOk/7B1kBYYk5eLxaf4HoA2xCPny/exWPOZB0eVreH6fev
- bBbbljY3TJ6FjkuEWci7h/LLFx87rw5527TjSzBmuOT9JJH3W1wvFAiO+mQv3QF+mpZx0iJTZYK
- QoM8wpadfs7n3Cd2XLlH4WqLntIanlprmzfnLWivEr08VCcn1sDcJ+1kURf3A4H/Z9gwQXHMR8D
- Tp9GmdKlLDOPxE/UrmML0EtF6Pisf/b3PRMRJR1eNzmeVxZA+UfBN7rPxM8GWNJ7EMjkUE9A6Yt
- A7thuYEvMX2iijSRuYWdLEP1EWsEgnaZwSpHjcxko+GL2BuF/3qB8vG7LVQ3W0cJnlWNemo8h4S
- FvV8r5/uMLbl3U2pF0nVe0eQnCQ76/SwMfd9GC1s2X3SgIdwyFkLCUl/2vu4wzwsVAdNVb+z2lX
- N4qDxl
-X-Received: by 2002:a05:600c:a09:b0:490:688b:f9f8 with SMTP id
- 5b1f17b1804b1-490b5fe6672mr124374535e9.27.1780574691085; 
- Thu, 04 Jun 2026 05:04:51 -0700 (PDT)
-X-Received: by 2002:a05:600c:a09:b0:490:688b:f9f8 with SMTP id
- 5b1f17b1804b1-490b5fe6672mr124373775e9.27.1780574690619; 
- Thu, 04 Jun 2026 05:04:50 -0700 (PDT)
+ AFNElJ/sQ8Z2HKJATEx4zHjlZINTJJYltNGYdsfkva8mEZ0mRTVIGHgVbumZIi04LL1A7dTvJOaa9qie6Nl8@nongnu.org
+X-Gm-Message-State: AOJu0YwK9hie15OSlvTFJ8QyoQeVMaTOgqLZzpvr4vJf0U5Pm3qwI4yZ
+ X9yWxN9EQ0QuuJhtdN1/ysMXA2ciZZjS0guVM48d0DZQC7vMCbhU8pm9VrFWdPxkjeyBt5bwGLO
+ k8pdNEOp6C8nAH+bC864qlt3t7sJZNM+DKrIN1HDHmFJrvKIMdfFpN8DZ
+X-Gm-Gg: Acq92OE3tVAMwTVAipwUzIAXbGkUCfRwb0HTl3RPnm+7fjfGQu3UM95rGjcF+dkG9Rj
+ IQDmxztMB7mZiF7wvOvk2QPB9PsOPsgObPvo3ij6X11qtYoenhr6l1haxyq2qIcU9BAFPFZxq0C
+ XweZs1mh/fz61fqsds1aEK1A4Nc2X5utjGh6Z1c3KNLkDGABOzSIA6yzxOgv3KBtfxs60z81sZd
+ aW+SrIalDFub9kW3LEhYVSrnxMXy1XH7EArUXOQAUvLlW5tgqFuMbZTUmPIXDfDAY7Dt7f02F0l
+ 4pi/sjfw4i3ks8e+99QFRUi4FV7/WtqFel6oM6qhmBVecD4IENe36uDeryz2MXwMOrIusUm2SCS
+ cuADrB4PyAh/gEy40/ffSaTP1oqFuJ9aAcpRWlS3UTK+owH0U6TE/s4lOm+RHWF2UmRo93G2jPj
+ 8/kLYI
+X-Received: by 2002:a05:600c:8216:b0:490:9588:bdb6 with SMTP id
+ 5b1f17b1804b1-490b610a410mr119575585e9.33.1780575256226; 
+ Thu, 04 Jun 2026 05:14:16 -0700 (PDT)
+X-Received: by 2002:a05:600c:8216:b0:490:9588:bdb6 with SMTP id
+ 5b1f17b1804b1-490b610a410mr119575205e9.33.1780575255778; 
+ Thu, 04 Jun 2026 05:14:15 -0700 (PDT)
 Received: from ?IPV6:2a01:e0a:f0e:9070:527b:9dff:feef:3874?
  ([2a01:e0a:f0e:9070:527b:9dff:feef:3874])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-4601f2dcb13sm15562980f8f.2.2026.06.04.05.04.49
+ 5b1f17b1804b1-490b7a273e3sm103740865e9.0.2026.06.04.05.14.14
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 04 Jun 2026 05:04:50 -0700 (PDT)
-Message-ID: <0a3a4401-2c1f-485c-b0b4-5f435c0a58fa@redhat.com>
-Date: Thu, 4 Jun 2026 14:04:48 +0200
+ Thu, 04 Jun 2026 05:14:15 -0700 (PDT)
+Message-ID: <4086087f-1513-488e-b927-b268773cafe7@redhat.com>
+Date: Thu, 4 Jun 2026 14:14:13 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v6 25/31] hw/arm/tegra241-cmdqv: Limit queue size based on
- backend page size
+Subject: Re: [PATCH v6 29/31] hw/arm/smmuv3-accel: Enforce viommu association
+ when CMDQV is active
 Content-Language: en-US
 To: Shameer Kolothum <skolothumtho@nvidia.com>, qemu-arm@nongnu.org,
  qemu-devel@nongnu.org
@@ -91,9 +91,9 @@ Cc: peter.maydell@linaro.org, clg@redhat.com, alex@shazbot.org,
  jgg@nvidia.com, zhenzhong.duan@intel.com, kjaju@nvidia.com,
  phrdina@redhat.com
 References: <20260601114221.457995-1-skolothumtho@nvidia.com>
- <20260601114221.457995-26-skolothumtho@nvidia.com>
+ <20260601114221.457995-30-skolothumtho@nvidia.com>
 From: Eric Auger <eric.auger@redhat.com>
-In-Reply-To: <20260601114221.457995-26-skolothumtho@nvidia.com>
+In-Reply-To: <20260601114221.457995-30-skolothumtho@nvidia.com>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 Received-SPF: pass client-ip=170.10.133.124;
@@ -104,7 +104,7 @@ X-Spam_bar: --
 X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.445,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -124,80 +124,78 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 
 On 6/1/26 1:42 PM, Shameer Kolothum wrote:
-> From: Nicolin Chen <nicolinc@nvidia.com>
+> When CMDQV is active, the first cold-plugged VFIO device establishes
+> the viommu to host SMMUv3 association, and the guest's boot-time CMDQV
+> configuration (VINTFs, VCMDQs) is built on top of that association.
 >
-> CMDQV HW performs DMA accesses to guest queue memory by its host
-> physical address set up via IOMMUFD. This requires the guest queue
-> to be contiguous in both guest PA and host PA space. With Tegra241
-> CMDQV enabled, we must only advertise a command queue size (CMDQS)
-> that the host can safely back with physically contiguous memory.
-> Allowing a queue size larger than the host page size could cause
-> the hardware to DMA across page boundaries, leading to faults.
+> Hot-unplugging that device would release the viommu and tear down all
+> CMDQV state. Hot-plugging another device behind a different host
+> SMMUv3+CMDQV would then re-bind the same vSMMUv3 to new host hardware,
+> while the guest keeps using its boot-time configuration and ends up
+> issuing commands to the wrong host. Block hot-unplug of the
+> establishing device to avoid this; retaining the binding across unplug
+> is non-trivial and not required by any current use case.
 >
-> Use qemu_minrampagesize() to find the smallest memory-backend page
-> size in use, then cap IDR1.CMDQS so the guest cannot configure a
-> command queue that exceeds that contiguous backing.
+> Also abort at machine_done if cmdqv=on is requested but no cold-plugged
+> VFIO device was present to initialize it.
 >
-> Note this is done at SMMUv3 init, before any guest queue GPA is
-> known, so the cap is conservative. Maximum queue size is 8MiB;
-> it is recommended to back the VM with hugepage sizes large enough
-> so CMDQS stays at the HW maximum. Smaller backing pages reduce
-> CMDQS accordingly.
->
-> Signed-off-by: Nicolin Chen <nicolinc@nvidia.com>
+> Reviewed-by: Nicolin Chen <nicolinc@nvidia.com>
 > Signed-off-by: Shameer Kolothum <skolothumtho@nvidia.com>
 Reviewed-by: Eric Auger <eric.auger@redhat.com>
 
 Eric
-
 > ---
->  hw/arm/tegra241-cmdqv.c | 20 ++++++++++++++++++++
->  1 file changed, 20 insertions(+)
+>  hw/arm/smmuv3-accel.h |  1 +
+>  hw/arm/smmuv3-accel.c | 18 ++++++++++++++++++
+>  2 files changed, 19 insertions(+)
 >
-> diff --git a/hw/arm/tegra241-cmdqv.c b/hw/arm/tegra241-cmdqv.c
-> index ac17b56c1c..661c46e3d9 100644
-> --- a/hw/arm/tegra241-cmdqv.c
-> +++ b/hw/arm/tegra241-cmdqv.c
-> @@ -16,6 +16,8 @@
->  #include "hw/arm/smmuv3-common.h"
->  #include "hw/core/irq.h"
->  #include "smmuv3-accel.h"
-> +#include "smmuv3-internal.h"
-> +#include "system/hostmem.h"
->  #include "tegra241-cmdqv.h"
->  #include "trace.h"
+> diff --git a/hw/arm/smmuv3-accel.h b/hw/arm/smmuv3-accel.h
+> index 5fc85fb89d..dd755c394d 100644
+> --- a/hw/arm/smmuv3-accel.h
+> +++ b/hw/arm/smmuv3-accel.h
+> @@ -84,6 +84,7 @@ typedef struct SMMUv3AccelDevice {
+>      IOMMUFDVdev *vdev;
+>      QLIST_ENTRY(SMMUv3AccelDevice) next;
+>      SMMUv3AccelState *s_accel;
+> +    Error *unplug_blocker; /* set when CMDQV is active to block hot-unplug */
+>  } SMMUv3AccelDevice;
 >  
-> @@ -874,6 +876,8 @@ free_viommu:
->  static void tegra241_cmdqv_init_regs(SMMUv3State *s, Tegra241CMDQV *cmdqv)
->  {
->      int i;
-> +    long pgsize;
-> +    uint32_t val;
+>  bool smmuv3_accel_init(SMMUv3State *s, Error **errp);
+> diff --git a/hw/arm/smmuv3-accel.c b/hw/arm/smmuv3-accel.c
+> index 9c3bd4413d..80900c2521 100644
+> --- a/hw/arm/smmuv3-accel.c
+> +++ b/hw/arm/smmuv3-accel.c
+> @@ -759,6 +759,18 @@ static bool smmuv3_accel_set_iommu_device(PCIBus *bus, void *opaque, int devfn,
+>          return false;
+>      }
 >  
->      cmdqv->config = V_CONFIG_RESET;
->      cmdqv->param = FIELD_DP32(0, PARAM, CMDQV_VER, CMDQV_VER);
-> @@ -905,6 +909,22 @@ static void tegra241_cmdqv_init_regs(SMMUv3State *s, Tegra241CMDQV *cmdqv)
->          cmdqv->vcmdq_base[i] = 0;
->          cmdqv->vcmdq_cons_indx_base[i] = 0;
+> +    /*
+> +     * CMDQV is active: block hot-unplug of the device that established the
+> +     * viommu association. Removing it would cause the vIOMMU to host SMMUv3
+> +     * association be changed via device hot-plug.
+> +     */
+> +    if (s->s_accel->cmdqv_ops) {
+> +        PCIDevice *pdev = pci_find_device(bus, pci_bus_num(bus), devfn);
+> +        error_setg(&accel_dev->unplug_blocker,
+> +                   "CMDQV is active: removing the device that established the "
+> +                   "viommu association would break the guest CMDQV");
+> +        qdev_add_unplug_blocker(DEVICE(pdev), accel_dev->unplug_blocker);
+> +    }
+>  done:
+>      accel_dev->hiodi = hiodi;
+>      accel_dev->s_accel = s->s_accel;
+> @@ -1082,6 +1094,12 @@ static void smmuv3_accel_machine_done(Notifier *notifier, void *data)
+>                       "at least one cold-plugged VFIO device");
+>          exit(1);
 >      }
 > +
-> +    /*
-> +     * CMDQ must not cross a physical RAM backend page. Adjust CMDQS so the
-> +     * queue fits entirely within the smallest backend page size, ensuring
-> +     * the command queue is physically contiguous in host memory.
-> +     *
-> +     *   IDR1.CMDQS = log2(max_qsz) - entry_shift
-> +     *
-> +     * where entry_shift = 4 (each CMDQ entry is 16 bytes = 2^4).
-> +     */
-> +    pgsize = qemu_minrampagesize();
-> +    if (pgsize == LONG_MAX) {
-> +        pgsize = qemu_real_host_page_size();
+> +    if (s->cmdqv == ON_OFF_AUTO_ON && !accel->cmdqv) {
+> +        error_report("arm-smmuv3 cmdqv=on requires at least one cold-plugged "
+> +                     "VFIO device");
+> +        exit(1);
 > +    }
-> +    val = FIELD_EX32(s->idr[1], IDR1, CMDQS);
-> +    s->idr[1] = FIELD_DP32(s->idr[1], IDR1, CMDQS, MIN(ctz64(pgsize) - 4, val));
 >  }
 >  
->  static void tegra241_cmdqv_reset(SMMUv3State *s)
+>  bool smmuv3_accel_init(SMMUv3State *s, Error **errp)
 
 
