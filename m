@@ -4,71 +4,64 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0D7D2CD6E68
-	for <qemu-devel@archiver.kernel.org>; Thu,  4 Jun 2026 05:26:46 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 778CDCD6E4A
+	for <qemu-devel@archiver.kernel.org>; Thu,  4 Jun 2026 05:37:41 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wV0bE-00049l-1z; Thu, 04 Jun 2026 01:26:36 -0400
+	id 1wV0lA-00064k-Jc; Thu, 04 Jun 2026 01:36:52 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <odaki@rsg.ci.i.u-tokyo.ac.jp>)
- id 1wV0bC-00049d-MG
- for qemu-devel@nongnu.org; Thu, 04 Jun 2026 01:26:34 -0400
-Received: from www3579.sakura.ne.jp ([49.212.243.89])
+ (Exim 4.90_1) (envelope-from <philmd@mailo.com>)
+ id 1wV0l1-00063m-TM; Thu, 04 Jun 2026 01:36:45 -0400
+Received: from msg-3.mailo.com ([213.182.54.8] helo=mailo.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <odaki@rsg.ci.i.u-tokyo.ac.jp>)
- id 1wV0bA-0007th-Rf
- for qemu-devel@nongnu.org; Thu, 04 Jun 2026 01:26:34 -0400
-Received: from h183.csg.ci.i.u-tokyo.ac.jp (h183.csg.ci.i.u-tokyo.ac.jp
- [133.11.54.183]) (authenticated bits=0)
- by www3579.sakura.ne.jp (8.16.1/8.16.1) with ESMTPSA id 6545QDxT008958
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NO);
- Thu, 4 Jun 2026 14:26:23 +0900 (JST)
- (envelope-from odaki@rsg.ci.i.u-tokyo.ac.jp)
-DKIM-Signature: a=rsa-sha256; bh=Jtb58Q0bo+ruLxhVDtt1iz7EyCH4ENLaedk1u9XckJE=; 
- c=relaxed/relaxed; d=rsg.ci.i.u-tokyo.ac.jp;
- h=From:Message-Id:To:Subject:Date;
- s=rs20250326; t=1780550783; v=1;
- b=UtJSFkD6mUElBeA19hQ6Fq2Md3s/77UTTqWryO8+rlIOjybRGL+JkA3pjL5Z2RGt
- mFV1tqXksRMn4pFWTyty3lV9qsV3E1a41e3ZONcqRKQ8nUas8DzEgxmB7yQSzQTF
- 1q2LUJaidOTsYtRk3hp5lgGWmGCuFO5IjWOdHF6rjnyENcC/NYobAjM0LXAKfW9W
- vQlTTcT+VjnnBjGzKEzR8UAYdY7BlBP3N+KsH6+24iufbgDtiKiKzeVyRHAnCSvc
- SN7U34mvr0AA8K8eNYC/anI3D9qFvssO8P+wVOh1RJfbDYoeP7auFXAbECvzpxg3
- 22P7ieZTO85IZDlPHj0njQ==
-From: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
-Date: Thu, 04 Jun 2026 14:26:13 +0900
-Subject: [PATCH] system/physmem: Assert migration invariants
+ (Exim 4.90_1) (envelope-from <philmd@mailo.com>)
+ id 1wV0ky-00027J-Ip; Thu, 04 Jun 2026 01:36:42 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=mailo.com; s=mailo;
+ t=1780550531; bh=yj72RW+PZSNnlRLCgVzePC22nbh2OZ+lxbXcXo1CbWM=;
+ h=X-EA-Auth:Message-ID:Date:MIME-Version:Subject:To:Cc:References:
+ From:In-Reply-To:Content-Type:Content-Transfer-Encoding;
+ b=R0vngN6VgivgdgZWc9sicYQbntx0Uah+q6s5C4q3gRQuy7z09wfi20yrsoNi3P68t
+ oDz5afNKwD+wB4kJrtQ41JYIBjvga6vsJN3lPsMbxa48BYdZ8G/v4wqqhJIsvttg3X
+ Q8WY6Nc6TuXn4ePiubAm9YIt34PavYkP+ZtQaOjE=
+Received: by be1-2.in.mailobj.net [192.168.91.12] with ESMTP
+ via ip-20.mailobj.net [213.182.54.20]
+ Thu,  4 Jun 2026 07:21:37 +0200 (CEST)
+X-EA-Auth: j46QNwIeAbDMCrpFUGdgVVD4zU9iTEbs4G+QSfuUnZPhzKs7Nmyti4H8mLg8STmfKoeclNXqONaSLYBelvly3cTkMFZH9NrS
+Message-ID: <6fe5e4ce-eb3b-4d5f-9b98-146e3cbd32d3@mailo.com>
+Date: Thu, 4 Jun 2026 07:21:35 +0200
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-Id: <20260604-migration-v1-1-cef4a5b1bbdd@rsg.ci.i.u-tokyo.ac.jp>
-X-B4-Tracking: v=1; b=H4sIAAAAAAAC/yXM0QpAMBSA4VdZ59pqG5a8ilxsc3CU0YaUvLvh8
- qu//4KIgTBCzS4IeFCkxSfIjIEbjR+QU5cMSigttFB8piGYLVVcllJVncVC5BpSvwbs6fxeTfs
- 77nZCt70DuO8H/PAYQm0AAAA=
-X-Change-ID: 20260602-migration-15128dbe4036
-To: qemu-devel@nongnu.org
-Cc: Paolo Bonzini <pbonzini@redhat.com>, Peter Xu <peterx@redhat.com>,
- =?utf-8?q?Philippe_Mathieu-Daud=C3=A9?= <philmd@mailo.com>,
- Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
-X-Mailer: b4 0.16-dev-16047
-X-Developer-Signature: v=1; a=openpgp-sha256; l=1776;
- i=odaki@rsg.ci.i.u-tokyo.ac.jp; h=from:subject:message-id;
- bh=c7OrWXCfjCvelYLH9J8v7KEw3IYBvGn59VWjHXSUou4=;
- b=owGbwMvMwCWmMbc20y1CyJDxtFoSQ5YiT82xhBLtT3aNvqdvr3zuOGcTw6oZx86rRyjfbdE1y
- H4bOCO2o5SFQYyLQVZMkSWlaDe3RnTtp8KE+BaYOaxMIEMYuDgFYCJXOBgZVvJeSoxJV3GbdaDd
- ii/wvmL4Ie1PC25dWdg9IdTS/itnBiPDJYMVJZsmf/8VKm4f6vivL8DUVCG+vbF0h9zsyl/p4Yv
- 5AA==
-X-Developer-Key: i=odaki@rsg.ci.i.u-tokyo.ac.jp; a=openpgp;
- fpr=AEDC03C9AF734F2EC26A7BFFA4BAEAA73536753C
-Received-SPF: pass client-ip=49.212.243.89;
- envelope-from=odaki@rsg.ci.i.u-tokyo.ac.jp; helo=www3579.sakura.ne.jp
-X-Spam_score_int: -16
-X-Spam_score: -1.7
-X-Spam_bar: -
-X-Spam_report: (-1.7 / 5.0 requ) BAYES_00=-1.9, DKIM_INVALID=0.1,
- DKIM_SIGNED=0.1, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=no autolearn_force=no
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v8 05/12] hw/riscv/aia: Configure stride for the M-mode
+ IMSIC
+Content-Language: en-US
+To: Joel Stanley <joel@jms.id.au>
+Cc: Alistair Francis <alistair.francis@wdc.com>,
+ Nicholas Piggin <npiggin@gmail.com>,
+ Andrew Jones <andrew.jones@oss.qualcomm.com>,
+ Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>,
+ Chao Liu <chao.liu.zevorn@gmail.com>, Michael Ellerman <mpe@kernel.org>,
+ Joel Stanley <jms@oss.tenstorrent.com>,
+ Anirudh Srinivasan <asrinivasan@oss.tenstorrent.com>,
+ Portia Stephens <portias@oss.tenstorrent.com>, qemu-riscv@nongnu.org,
+ qemu-devel@nongnu.org
+References: <20260603065859.592063-1-joel@jms.id.au>
+ <20260603065859.592063-6-joel@jms.id.au>
+ <876dbf23-c7ec-46f4-9232-816a3d0bf16c@mailo.com>
+ <CACPK8XeJX2s3-mvpsrCeOLsMyZXYN7fxiMCiitKTtN84Ntxvvw@mail.gmail.com>
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@mailo.com>
+In-Reply-To: <CACPK8XeJX2s3-mvpsrCeOLsMyZXYN7fxiMCiitKTtN84Ntxvvw@mail.gmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=213.182.54.8; envelope-from=philmd@mailo.com;
+ helo=mailo.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_PASS=-0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -84,62 +77,33 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The migration stream assumes that the set of migratable RAMBlocks does
-not change while migration is running. Assert that RAMBlocks are not
-made migratable or non-migratable during migration, and that migratable
-RAMBlocks are not freed during migration.
+On 4/6/26 05:03, Joel Stanley wrote:
+> On Wed, 3 Jun 2026 at 17:41, Philippe Mathieu-Daudé <philmd@mailo.com> wrote:
+>>> --- a/hw/riscv/aia.h
+>>> +++ b/hw/riscv/aia.h
+>>> @@ -14,6 +14,7 @@
+>>>    uint32_t imsic_num_bits(uint32_t count);
+>>>
+>>>    DeviceState *riscv_create_aia(bool msimode, int aia_guests,
+>>> +                             hwaddr m_imsic_stride,
+>>
+>> hw/riscv/virt-acpi-build.c:74:    uint64_t imsic_socket_addr, imsic_addr;
+>> hw/riscv/virt.c:532:    uint32_t imsic_max_hart_per_socket, imsic_addr,
+>> imsic_size;
+>> target/riscv/kvm/kvm-cpu.c:1829:    uint64_t socket, base_hart,
+>> hart_count, socket_imsic_base, imsic_addr;
+>>
+>> Why choose hwaddr for a stride (region size)?
+> 
+> Brain fart.
+> 
+>> Using uint64_t:
+>> Reviewed-by: Philippe Mathieu-Daudé <philmd@mailo.com>
+> 
+> uint32_t would be more than sufficient too, do you agree?
 
-Non-migratable RAMBlocks may still be allocated or freed during
-migration; for example, QMP object-add of memory-backend-ram creates a
-non-migratable RAMBlock without exposing it to the guest.
-
-Signed-off-by: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
----
- system/physmem.c | 5 +++++
- 1 file changed, 5 insertions(+)
-
-diff --git a/system/physmem.c b/system/physmem.c
-index 7bcbf8757361..42a39141645e 100644
---- a/system/physmem.c
-+++ b/system/physmem.c
-@@ -39,6 +39,7 @@
- #include "hw/core/qdev.h"
- #include "hw/core/qdev-properties.h"
- #include "hw/core/boards.h"
-+#include "migration/misc.h"
- #include "system/xen.h"
- #include "system/kvm.h"
- #include "system/tcg.h"
-@@ -1911,11 +1912,13 @@ bool qemu_ram_is_migratable(const RAMBlock *rb)
- 
- void qemu_ram_set_migratable(RAMBlock *rb)
- {
-+    assert(!migration_is_running());
-     rb->flags |= RAM_MIGRATABLE;
- }
- 
- void qemu_ram_unset_migratable(RAMBlock *rb)
- {
-+    assert(!migration_is_running());
-     rb->flags &= ~RAM_MIGRATABLE;
- }
- 
-@@ -2599,6 +2602,8 @@ void qemu_ram_free(RAMBlock *block)
-         return;
-     }
- 
-+    assert(!migration_is_running() || !qemu_ram_is_migratable(block));
-+
-     if (block->host) {
-         ram_block_notify_remove(block->host, block->used_length,
-                                 block->max_length);
-
----
-base-commit: 2db91528542672cf0db78b3f2cc0e22b36302b38
-change-id: 20260602-migration-15128dbe4036
-
-Best regards,
---  
-Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
+Yes I was thinking the same, 32-bit is sufficient. But maybe
+we should update the other cases for consistency (as a separate
+patch)?
 
 
