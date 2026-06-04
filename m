@@ -4,89 +4,88 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A0A16CD6E75
-	for <qemu-devel@archiver.kernel.org>; Thu,  4 Jun 2026 21:52:40 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C38CECD6E75
+	for <qemu-devel@archiver.kernel.org>; Thu,  4 Jun 2026 21:53:11 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wVFz3-0006rc-0k; Thu, 04 Jun 2026 17:52:13 -0400
+	id 1wVFz7-0006tF-Kf; Thu, 04 Jun 2026 17:52:17 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pierrick.bouvier@oss.qualcomm.com>)
- id 1wVFyz-0006rF-Of
- for qemu-devel@nongnu.org; Thu, 04 Jun 2026 17:52:10 -0400
+ id 1wVFz6-0006sJ-4m
+ for qemu-devel@nongnu.org; Thu, 04 Jun 2026 17:52:16 -0400
 Received: from mx0a-0031df01.pphosted.com ([205.220.168.131])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pierrick.bouvier@oss.qualcomm.com>)
- id 1wVFyx-0006i3-Qp
- for qemu-devel@nongnu.org; Thu, 04 Jun 2026 17:52:09 -0400
-Received: from pps.filterd (m0279866.ppops.net [127.0.0.1])
+ id 1wVFyz-0006jh-AW
+ for qemu-devel@nongnu.org; Thu, 04 Jun 2026 17:52:11 -0400
+Received: from pps.filterd (m0279864.ppops.net [127.0.0.1])
  by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 654HNpN8944431
- for <qemu-devel@nongnu.org>; Thu, 4 Jun 2026 21:52:04 GMT
+ 654JnpB53111402
+ for <qemu-devel@nongnu.org>; Thu, 4 Jun 2026 21:52:08 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
- cc:content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
- 81gSMsjHz7u/XT/45GCehHPFwYouwBtX864P/FusbOw=; b=lX7SiMJrvOPUWyb7
- PNYPeRp9zdnnyN/UdjuwbsAiku3U+EYSdfNoDN0kYfroeOh2JPOGQZxbLu5/aAoE
- EXeEZvd0UVyUg9Omv++AS4Rc0LJ84t/QCVXqi/T+BwYVTsXvu10zNFfBX5B9B3EU
- nIO1gFTuju+slLYlKk/zhRCOBjhXTtdz2Y5qata0pG+f9pwdCadfWWcx1WHj0PWu
- TElTdlTK7TtO/CjNHLI01UGxBqw1w5Pb4MZ8RcJxfKhszNJoK+d2s8UXbHe3COJP
- EV5wegUrBiSHaok3kkS3rkYu4mrhODV6KquuVRc03t45eh0IrGFpmxPp153dEZsH
- UY/+dA==
-Received: from mail-dy1-f197.google.com (mail-dy1-f197.google.com
- [74.125.82.197])
- by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4ek8d52u38-1
+ cc:content-transfer-encoding:date:from:in-reply-to:message-id
+ :mime-version:references:subject:to; s=qcppdkim1; bh=3ZonSs13WlR
+ UmFeR56D7sjhHu3JSlNQhEdOHPFKNos8=; b=m6yDzMNnJTfVvric91otBCf2/a2
+ ZlZVn2NP/daO0tc6JcfG5EWlSNRQWCWgDEvvCRsBvIvFYvWVDQ7YMn58lgdBt4ZI
+ TvAMwRrDLYIYAUACHmtKvgrw5ECzqdQWJWCvooP44PwFSL5nWmHscG+mWfpkpgZa
+ ZmoN9clcdyQuKoNx3m/6odzhZIyjeiyi9KIKnnnbqaaeG6jpUlaYFoPHG8svDOJu
+ jJJVjfYNITkRItOtvxboiGmAlYrFG/KHFXKBUUes/b59k3KFkXeUvCytjrmJc6p8
+ Ex6wsPA0xCwQ38YtH0ZRD4ZzDaIgVG7iw8+bHijh5bBl48M/nPcEjcrXngw==
+Received: from mail-dy1-f200.google.com (mail-dy1-f200.google.com
+ [74.125.82.200])
+ by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4ekfv70dtc-1
  (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
- for <qemu-devel@nongnu.org>; Thu, 04 Jun 2026 21:52:04 +0000 (GMT)
-Received: by mail-dy1-f197.google.com with SMTP id
- 5a478bee46e88-3074797dfa9so1670800eec.1
- for <qemu-devel@nongnu.org>; Thu, 04 Jun 2026 14:52:04 -0700 (PDT)
+ for <qemu-devel@nongnu.org>; Thu, 04 Jun 2026 21:52:07 +0000 (GMT)
+Received: by mail-dy1-f200.google.com with SMTP id
+ 5a478bee46e88-304d8613efbso1126164eec.1
+ for <qemu-devel@nongnu.org>; Thu, 04 Jun 2026 14:52:07 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=oss.qualcomm.com; s=google; t=1780609924; x=1781214724; darn=nongnu.org;
+ d=oss.qualcomm.com; s=google; t=1780609927; x=1781214727; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=81gSMsjHz7u/XT/45GCehHPFwYouwBtX864P/FusbOw=;
- b=WhcAH/HcxAonyeQw6R4C7Q374HO1xrOyx8DULx7X9MsBkZHW2OlZJFUYeqEVTA0BjS
- Nb+7sDaNhtOaR5GD9EEBiXqT/HxF52SuGasmMvquFrIoChteZ5f8sZV6PmLJvsAU/s2T
- PP+ZNxYiUpbYdRepCKLtTAN6baqxL+g61afbNGOzRSDXdVcyOd6awhV/QwEm9WtKaDDc
- Ldmdch50KhlB+eLZCq6PZ05ClWW7NZ0VcdL8WrCD128D8UiWAS1OEhU0j4VZk4oH0Jvo
- IKyGF3RgyUOiDhrBwV0I4BO9rcDDZJmRgiDS0kTK+TZZy6X+HW0XEpEsm+dsEMglIF85
- fPkA==
+ bh=3ZonSs13WlRUmFeR56D7sjhHu3JSlNQhEdOHPFKNos8=;
+ b=he5pibpyV7X4SxVBZJP7Yq5MBTtKJjmQ7jixiYcN6iLX8eFRebSzH45+1nTuBP0xvd
+ GZspBzgn2diTksgs37x20hivFGtbhot9AzLlbntDUiQ0aDtlhRPN/rSeKmhD7UOi+dxt
+ 6erCbtLXmDmu6pRPZsoB7HT94eQMitmovhwGWhtzYwRsCj/b3CScn0qpk+Eg5LOdylR0
+ L8oc3h63xXIWgGFPN3i5wMX/8/8JoGRjC0lXBWdQx9GKfPwbQg0nwUg09X5misbp9ouz
+ n7tEebswhwd9Rj4V88uzzmfykh/ljdJJtxhcJmLlh9yVgNMeJWL/G1tRsI+K7vn+D5zx
+ mjjw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1780609924; x=1781214724;
+ d=1e100.net; s=20251104; t=1780609927; x=1781214727;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to;
- bh=81gSMsjHz7u/XT/45GCehHPFwYouwBtX864P/FusbOw=;
- b=hhmkOyqbzXQs5ecUMw5Jz7l92QKv+zq5zm5NK+V9y3ozOmen8sj6gIJUvbtg6fKd1A
- Gik2E1ntmcesno8LLWE3/B0A6Hz9e+9l6oLg+/FRBjdIP6bGmBmHlp0iNrq7EkTYtFke
- R3qoIXz9KlQoJq/JErTwBf1+2HBHCSRtBhhGS+mLIsE+6pmNdXbMDBUA1NfRy7CMINuJ
- SGWNqrrRrqi90rXXCVnu2kw8foqNVwZasElsn7zxuHxePp3ttEiFAt7bjDQOLuB3W1dX
- 2FFmCtRyCaGGIUlmgt1kYd/2w4vAfJlWZ5GJx4YJcIG/G8jgOwTlu8XQJfbBeSfa4e04
- i5bA==
-X-Gm-Message-State: AOJu0YxwyXmgWlAf1gsd99reHWOH3331nqIRWenbBDZV7ya2wqvOvktW
- +tBKX3Erc/8A22vXND3LIcyBxm5bTXhNuB/iy1qvv8shldJ6j+KX/SorkBOROqIly3EJgSSXtOm
- Eog3SIHT5k7bP7YFl+jgk6wDrVvEGNnd8HAZ6VoGlb8GoBEt4LOqNYqgrAe+KEhBmrLQZ
-X-Gm-Gg: Acq92OGlnGxdpkP7krfEQ5W4fseY9lQ0nBp8wHqMREfWWzrPq725hGA4SUTvmn+2Cp/
- 7Ndt59B4+eydPc8YKD+stFNCwiHBdqhw8SxVRNEqQMYsfQ0PJ5/qWAwCB4rXlfKYumHMPBYuBA4
- QKq2HTcQspD1C3aiiwAQ8SUO/Jc6lPksvWuUXp+eRTRS+85cjneBlXKrCRe48Cpvk7dj2lOpmn7
- QJzAgxry5TN3HDcCIw9mZ/aIulcExbZ7tkiSfpIiMWzvRx5NwAQxtUHbF9qxg0omYgeU3e214eJ
- v0fQyof/R6wFM6kv4bz0EzWW0l9eg49K5Ak/fdKrYaoSOUpxjaFqHc5rNaPQWNXG6uxC/21DFGf
- RItpRoGXkIHCnwE3Ef1HFLB+bZ0R194VgFAYkng6hpXuKd6jVQX49z4gp00u4mBA1x/ZDokgoA/
- W1MyX/q1P/BHY8Qb6Y
-X-Received: by 2002:a05:7300:1352:b0:2d9:5cd9:b8ff with SMTP id
- 5a478bee46e88-3077ae86decmr295134eec.6.1780609924024; 
- Thu, 04 Jun 2026 14:52:04 -0700 (PDT)
-X-Received: by 2002:a05:7300:1352:b0:2d9:5cd9:b8ff with SMTP id
- 5a478bee46e88-3077ae86decmr295123eec.6.1780609923522; 
- Thu, 04 Jun 2026 14:52:03 -0700 (PDT)
+ bh=3ZonSs13WlRUmFeR56D7sjhHu3JSlNQhEdOHPFKNos8=;
+ b=gpAdTFy0ZHvXHgo7N73evqdiYBCnctIwWMju4wLZ2HTlhbfDZNUkh9+CEdkqSgyag+
+ ElsTAgqbFgKuUSn0QtvXGC8u5sFjiHbt95pjNhyS8SFnjYQcFKzlEW2IscESEN/sdbYT
+ xyQg3PR4e/exsXE3j8C871GTGALSt+kYvFeQ7vlFT+D1b9kXjXvSCmMQpLtGBobRQJ5U
+ awSHnlzkYwYJ55bddUUk2Hlmg5DfTZAy3fRzcpLUuqAOARlFyLR+KtoyCWGnxdxBSMtQ
+ nmrotvxj+PqEcQMEf1pnrTbLeMkcMRXyR+JLG3/FvFTCqoQJYSP/XEDZFOl29L+fYefH
+ n/zA==
+X-Gm-Message-State: AOJu0YySgAeAaABGg1tre0gj78yeXrjlSOCDmflxjn+cswWbXKId4AYr
+ YhrUmZzOYhcpmuI62qhWDhy4KJb4oh6E1DFMnqCJPupQ7CFW5lFAYFDlsO27j1tr315kjSZOK4r
+ 1e/nNMXlCnylvbI+U6wCEduTENFeiaBD+ZptyNcep/qkI/vlX7wut6rp+XSoJEeqGPCPQ
+X-Gm-Gg: Acq92OEy5xuoWJSxv/+k3rNttJcMBQTjTS/kFutVaEFu/zhP0xvnlnpTs/BQ/UhZ4Q0
+ KL/thYQiZjAlUqDqVHCOQYFTWGkHQBWq3s9i+SyU8T6oAJ9VyizfpUI4rhMNOA4k7/HxDWehYfV
+ EJalrJepqH0YUrexWYRvxgZ5/mHHa4SOGcV8TIt8egXXhHiDm+KLmjBZlHdI7+cRdflFiE4t7jN
+ 2aaAXgqI27wwntWDBuPP4HqkcWHvGgZuMHwb2VBLFoRQX4rG2YMvmaATgP2vscNXwIR7eKtE9zB
+ qfmALQmZpwPNwCZACJcoXoS3Lg8J9CIoKCujRJBmY5/UaZcI40Jfq7kPHUY+Piy4OJTZPpw9e3p
+ AjPexfSAk/GjC/VdGVmQ0F4AGRqdlpoFybKPewyl5snLNRZ3l5virn6Mq9K5gDOl66wXD8WZPHW
+ aQpxteVE7k26yOx9Kf
+X-Received: by 2002:a05:7300:fd09:b0:2f5:3fb3:4a76 with SMTP id
+ 5a478bee46e88-3077b38e294mr282504eec.10.1780609927238; 
+ Thu, 04 Jun 2026 14:52:07 -0700 (PDT)
+X-Received: by 2002:a05:7300:fd09:b0:2f5:3fb3:4a76 with SMTP id
+ 5a478bee46e88-3077b38e294mr282491eec.10.1780609926606; 
+ Thu, 04 Jun 2026 14:52:06 -0700 (PDT)
 Received: from hu-pbouvier-lv.qualcomm.com (Global_NAT1.qualcomm.com.
  [129.46.96.20]) by smtp.gmail.com with ESMTPSA id
- 5a478bee46e88-3074df64eb9sm5270115eec.25.2026.06.04.14.52.02
+ 5a478bee46e88-3074df64eb9sm5270115eec.25.2026.06.04.14.52.06
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 04 Jun 2026 14:52:03 -0700 (PDT)
+ Thu, 04 Jun 2026 14:52:06 -0700 (PDT)
 From: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
 To: qemu-devel@nongnu.org
 Cc: Stefan Hajnoczi <stefanha@redhat.com>, Jason Wang <jasowang@redhat.com>,
@@ -96,41 +95,38 @@ Cc: Stefan Hajnoczi <stefanha@redhat.com>, Jason Wang <jasowang@redhat.com>,
  Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
  Thomas Huth <thuth@redhat.com>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: [PATCH 1/5] net/af-xdp.c: maybe-uninitialized warning with gcov build
- on ubuntu2404
-Date: Thu,  4 Jun 2026 14:51:43 -0700
-Message-ID: <20260604215148.3769627-2-pierrick.bouvier@oss.qualcomm.com>
+Subject: [PATCH 5/5] tests: remove ubuntu2204 container
+Date: Thu,  4 Jun 2026 14:51:47 -0700
+Message-ID: <20260604215148.3769627-6-pierrick.bouvier@oss.qualcomm.com>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20260604215148.3769627-1-pierrick.bouvier@oss.qualcomm.com>
 References: <20260604215148.3769627-1-pierrick.bouvier@oss.qualcomm.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-X-Proofpoint-ORIG-GUID: xoUTqrjx0ozu7Fg7k18wGV5HaOzXAZyb
-X-Authority-Analysis: v=2.4 cv=IZG3n2qa c=1 sm=1 tr=0 ts=6a21f384 cx=c_pps
- a=Uww141gWH0fZj/3QKPojxA==:117 a=ouPCqIW2jiPt+lZRy3xVPw==:17
- a=IkcTkHD0fZMA:10 a=FelO9ux0wxsA:10 a=s4-Qcg_JpJYA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=YMgV9FUhrdKAYTUUvYB2:22
- a=EUspDBNiAAAA:8 a=VTEhrdiSVsHaVhHLs3AA:9 a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
- a=PxkB5W3o20Ba91AHUih5:22
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNjA0MDIxNCBTYWx0ZWRfXzpCECoW5QTsp
- 4R/d3dlKHNPkArHWQ/StJIlrXDzxzwUQb0RkzzUaZpXhxHcnOlhBLi+uf7Den3CeLwl5wMGg3pm
- pthMoXyNOLmpINELBQS72EeC9MwnNFUwLMrJ7jKj17ViUk6lp5Solq4Dw5EvBPI1oJsUJcvOo/w
- a2aSxmrcz2TWoVAyMub7JTSN+4I3ELYJNy62/zWx/1zw+7PMIilYrwqTJ1069m2vjsOc4PzpEQ8
- TGUo6xqsaNU+i2uZmlWvCYtY5A8h4qrSpi5mh8v/OsfHOt7e9xblNkM7z/BrgYJL0UjxZee/ch0
- 7i65eCkpqkg9vhQfCFKntG7s30eUlOZaREkWmx31TKBslxBYlRY9F0skIdXIlSBuQnqdY/L9CGE
- 22b4tCHIAVWuqpC6975sZ0pZJn4shtCBI8dWZXxvCL+MiW6wRrF/GRKgL3K4YrvTKcTOk17Ze77
- SrZevGYQDrE4LgadP+A==
-X-Proofpoint-GUID: xoUTqrjx0ozu7Fg7k18wGV5HaOzXAZyb
+X-Proofpoint-GUID: 2Gz5-ZJK3pEQKhX_3vEmLPCJggNwKZHG
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNjA0MDIxNCBTYWx0ZWRfXxT0yN/FLS4mw
+ xA2hjYg3k6UGiGb19GN5lYMrpNcPRFODlYTMLoa+aZPDsx3bJUGIp8oSvutFGt18PEqGpOoLVsg
+ QjVLvQSW+PXZIY7X+6ZwIyJceCRiMK4udcsTh7BHr1lL963yDMDpKacmDsr3xI6Kd193FVEMGHj
+ Ulk8kihcQbUUfyovRFEaY0PPdx43b0xbwY8a7uyXdLwwSVKHZMx6mOWnC0ypXdUlN2a0GSU7ADx
+ o5YAvwHgWihkdaCjW08T7WBjk9tgaM0votcP6YF1RsGu6FErZHlEjRU2IJ/oAvmRALeV/6p5jP8
+ sK6dDwDBwuKcUq/CSpEBjXDzZ5oSO2PEjq3xX9zyita1Z+f5gcW8rJ51XSF5tB24uMeMzMRjlga
+ 4CEYVSMStw8vNjLZ4xlcL7KdCxl6uhmwId7JbwdCa8mENvyYteTWvu/pjVg+vAKgPzzLxGAW3dj
+ sJ9jYcqzEvIsGkfK/JQ==
+X-Authority-Analysis: v=2.4 cv=JNULdcKb c=1 sm=1 tr=0 ts=6a21f387 cx=c_pps
+ a=PfFC4Oe2JQzmKTvty2cRDw==:117 a=ouPCqIW2jiPt+lZRy3xVPw==:17
+ a=FelO9ux0wxsA:10 a=s4-Qcg_JpJYA:10 a=VkNPw1HP01LnGYTKEx00:22
+ a=u7WPNUs3qKkmUXheDGA7:22 a=DJpcGTmdVt4CTyJn9g5Z:22 a=p0WdMEafAAAA:8
+ a=danhDmx_AAAA:8 a=EUspDBNiAAAA:8 a=hrA9KEnTT8eVkNhlHiQA:9
+ a=6Ab_bkdmUrQuMsNx7PHu:22
+X-Proofpoint-ORIG-GUID: 2Gz5-ZJK3pEQKhX_3vEmLPCJggNwKZHG
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.125,FMLib:17.12.100.49
  definitions=2026-06-04_06,2026-05-28_03,2025-10-01_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- clxscore=1015 spamscore=0 priorityscore=1501 impostorscore=0
- lowpriorityscore=0 suspectscore=0 bulkscore=0 malwarescore=0 phishscore=0
- adultscore=0 classifier=typeunknown authscore=0 authtc= authcc=
- route=outbound adjust=0 reason=mlx scancount=1 engine=8.22.0-2605210000
- definitions=main-2606040214
+ phishscore=0 lowpriorityscore=0 impostorscore=0 suspectscore=0 spamscore=0
+ clxscore=1015 adultscore=0 priorityscore=1501 malwarescore=0 bulkscore=0
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.22.0-2605210000 definitions=main-2606040214
 Received-SPF: pass client-ip=205.220.168.131;
  envelope-from=pierrick.bouvier@oss.qualcomm.com;
  helo=mx0a-0031df01.pphosted.com
@@ -156,37 +152,202 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Seems like a false positive, easily fix by explicitly initializing
-variable to NULL.
-
-In function ‘af_xdp_read_poll’,
-    inlined from ‘net_init_af_xdp’ at ../net/af-xdp.c:546:5:
-../net/af-xdp.c:78:10: error: ‘s’ may be used uninitialized [-Werror=maybe-uninitialized]
-   78 |     if (s->read_poll != enable) {
-      |         ~^~~~~~~~~~~
-../net/af-xdp.c: In function ‘net_init_af_xdp’:
-../net/af-xdp.c:461:17: note: ‘s’ was declared here
-  461 |     AFXDPState *s;
-      |
-
 Signed-off-by: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
 ---
- net/af-xdp.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ tests/docker/dockerfiles/ubuntu2204.docker | 168 ---------------------
+ tests/lcitool/refresh                      |   4 -
+ 2 files changed, 172 deletions(-)
+ delete mode 100644 tests/docker/dockerfiles/ubuntu2204.docker
 
-diff --git a/net/af-xdp.c b/net/af-xdp.c
-index 1ffd6363a8c..72d75748c6d 100644
---- a/net/af-xdp.c
-+++ b/net/af-xdp.c
-@@ -458,7 +458,7 @@ int net_init_af_xdp(const Netdev *netdev,
-     g_autofree int *sock_fds = NULL;
-     int i, queues;
-     Error *err = NULL;
--    AFXDPState *s;
-+    AFXDPState *s = NULL;
-     bool inhibit;
+diff --git a/tests/docker/dockerfiles/ubuntu2204.docker b/tests/docker/dockerfiles/ubuntu2204.docker
+deleted file mode 100644
+index 4617bbe1f65..00000000000
+--- a/tests/docker/dockerfiles/ubuntu2204.docker
++++ /dev/null
+@@ -1,168 +0,0 @@
+-# THIS FILE WAS AUTO-GENERATED
+-#
+-#  $ lcitool dockerfile --layers all ubuntu-2204 qemu
+-#
+-# https://gitlab.com/libvirt/libvirt-ci
+-
+-FROM docker.io/library/ubuntu:22.04
+-
+-RUN export DEBIAN_FRONTEND=noninteractive && \
+-    apt-get update && \
+-    apt-get install -y eatmydata && \
+-    eatmydata apt-get dist-upgrade -y && \
+-    eatmydata apt-get install --no-install-recommends -y \
+-                      bash \
+-                      bc \
+-                      bison \
+-                      bsdextrautils \
+-                      bzip2 \
+-                      ca-certificates \
+-                      ccache \
+-                      clang \
+-                      coreutils \
+-                      dbus \
+-                      debianutils \
+-                      diffutils \
+-                      exuberant-ctags \
+-                      findutils \
+-                      flex \
+-                      gcc \
+-                      gcovr \
+-                      gettext \
+-                      git \
+-                      hostname \
+-                      libaio-dev \
+-                      libasan6 \
+-                      libasound2-dev \
+-                      libattr1-dev \
+-                      libbpf-dev \
+-                      libbrlapi-dev \
+-                      libbz2-dev \
+-                      libc6-dev \
+-                      libcacard-dev \
+-                      libcap-ng-dev \
+-                      libcapstone-dev \
+-                      libcbor-dev \
+-                      libclang-dev \
+-                      libcmocka-dev \
+-                      libcurl4-gnutls-dev \
+-                      libdaxctl-dev \
+-                      libdrm-dev \
+-                      libepoxy-dev \
+-                      libfdt-dev \
+-                      libffi-dev \
+-                      libfuse3-dev \
+-                      libgbm-dev \
+-                      libgcrypt20-dev \
+-                      libglib2.0-dev \
+-                      libgnutls28-dev \
+-                      libgtk-3-dev \
+-                      libgtk-vnc-2.0-dev \
+-                      libibverbs-dev \
+-                      libiscsi-dev \
+-                      libjemalloc-dev \
+-                      libjpeg-turbo8-dev \
+-                      libjson-c-dev \
+-                      liblttng-ust-dev \
+-                      liblzo2-dev \
+-                      libncursesw5-dev \
+-                      libnfs-dev \
+-                      libnuma-dev \
+-                      libpam0g-dev \
+-                      libpcre2-dev \
+-                      libpipewire-0.3-dev \
+-                      libpixman-1-dev \
+-                      libpmem-dev \
+-                      libpng-dev \
+-                      libpulse-dev \
+-                      librbd-dev \
+-                      librdmacm-dev \
+-                      libsasl2-dev \
+-                      libsdl2-dev \
+-                      libsdl2-image-dev \
+-                      libseccomp-dev \
+-                      libselinux1-dev \
+-                      libslirp-dev \
+-                      libsnappy-dev \
+-                      libsndio-dev \
+-                      libspice-protocol-dev \
+-                      libspice-server-dev \
+-                      libssh-dev \
+-                      libstd-rust-dev \
+-                      libsystemd-dev \
+-                      libtasn1-6-dev \
+-                      libubsan1 \
+-                      libudev-dev \
+-                      liburing-dev \
+-                      libusb-1.0-0-dev \
+-                      libusbredirhost-dev \
+-                      libvdeplug-dev \
+-                      libvirglrenderer-dev \
+-                      libvte-2.91-dev \
+-                      libxen-dev \
+-                      libzstd-dev \
+-                      llvm \
+-                      locales \
+-                      make \
+-                      mtools \
+-                      multipath-tools \
+-                      nettle-dev \
+-                      ninja-build \
+-                      openssh-client \
+-                      pkgconf \
+-                      python3 \
+-                      python3-numpy \
+-                      python3-opencv \
+-                      python3-pillow \
+-                      python3-pip \
+-                      python3-setuptools \
+-                      python3-sphinx \
+-                      python3-sphinx-rtd-theme \
+-                      python3-tomli \
+-                      python3-venv \
+-                      python3-wheel \
+-                      python3-yaml \
+-                      rpm2cpio \
+-                      rustc-1.83 \
+-                      sed \
+-                      socat \
+-                      sparse \
+-                      swtpm \
+-                      systemtap-sdt-dev \
+-                      tar \
+-                      tesseract-ocr \
+-                      tesseract-ocr-eng \
+-                      vulkan-tools \
+-                      xorriso \
+-                      zlib1g-dev \
+-                      zstd && \
+-    eatmydata apt-get autoremove -y && \
+-    eatmydata apt-get autoclean -y && \
+-    sed -Ei 's,^# (en_US\.UTF-8 .*)$,\1,' /etc/locale.gen && \
+-    dpkg-reconfigure locales && \
+-    rm -f /usr/lib*/python3*/EXTERNALLY-MANAGED && \
+-    dpkg-query --showformat '${Package}_${Version}_${Architecture}\n' --show > /packages.txt && \
+-    mkdir -p /usr/libexec/ccache-wrappers && \
+-    ln -s /usr/bin/ccache /usr/libexec/ccache-wrappers/cc && \
+-    ln -s /usr/bin/ccache /usr/libexec/ccache-wrappers/clang && \
+-    ln -s /usr/bin/ccache /usr/libexec/ccache-wrappers/gcc
+-
+-RUN /usr/bin/pip3 install meson==1.8.1
+-
+-ENV CCACHE_WRAPPERSDIR="/usr/libexec/ccache-wrappers"
+-ENV LANG="en_US.UTF-8"
+-ENV MAKE="/usr/bin/make"
+-ENV NINJA="/usr/bin/ninja"
+-ENV PYTHON="/usr/bin/python3"
+-ENV RUSTC=/usr/bin/rustc-1.83
+-ENV RUSTDOC=/usr/bin/rustdoc-1.83
+-ENV CARGO_HOME=/usr/local/cargo
+-ENV PATH=$CARGO_HOME/bin:$PATH
+-RUN DEBIAN_FRONTEND=noninteractive eatmydata \
+-  apt install -y --no-install-recommends cargo
+-RUN cargo install --locked bindgen-cli
+-# As a final step configure the user (if env is defined)
+-ARG USER
+-ARG UID
+-RUN if [ "${USER}" ]; then \
+-  id ${USER} 2>/dev/null || useradd -u ${UID} -U ${USER}; fi
+diff --git a/tests/lcitool/refresh b/tests/lcitool/refresh
+index 26abc695735..e0da0d2de1d 100755
+--- a/tests/lcitool/refresh
++++ b/tests/lcitool/refresh
+@@ -231,10 +231,6 @@ try:
+     generate_dockerfile("opensuse-leap", "opensuse-leap-16")
+     generate_dockerfile("ubuntu2404", "ubuntu-2404",
+                         trailer="".join(ubuntu2404_rust_extras))
+-    generate_dockerfile("ubuntu2204", "ubuntu-2204",
+-                        trailer="".join(ubuntu2404_rust_extras),
+-                        # https://bugs.launchpad.net/ubuntu/+source/rustc-1.83/+bug/2120318
+-                        enable_rust=False)
  
-     ifindex = if_nametoindex(opts->ifname);
+     #
+     # Non-fatal Rust-enabled build
 -- 
 2.43.0
 
