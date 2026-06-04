@@ -4,61 +4,105 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 95AA7CD6E4A
-	for <qemu-devel@archiver.kernel.org>; Thu,  4 Jun 2026 07:17:24 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4F44DCD6E4A
+	for <qemu-devel@archiver.kernel.org>; Thu,  4 Jun 2026 07:29:37 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wV2K1-00058C-Kp; Thu, 04 Jun 2026 03:16:57 -0400
+	id 1wV2VX-00088t-MP; Thu, 04 Jun 2026 03:28:51 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@mailo.com>) id 1wV2K0-00057x-4k
- for qemu-devel@nongnu.org; Thu, 04 Jun 2026 03:16:56 -0400
-Received: from msg-4.mailo.com ([213.182.54.15] helo=mailo.com)
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@mailo.com>) id 1wV2Jy-0002mu-C1
- for qemu-devel@nongnu.org; Thu, 04 Jun 2026 03:16:55 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=mailo.com; s=mailo;
- t=1780554671; bh=FGQ+9wLfv/fe+fNlyG0Hd1+AUzlhQzADbpRIn9HoCyg=;
- h=X-EA-Auth:Message-ID:Date:MIME-Version:Subject:To:Cc:References:
- From:In-Reply-To:Content-Type:Content-Transfer-Encoding;
- b=K0/weJuMULJ/6VzANEfRpWVNkJlE2AibgxBY9QRuYdVFXCQMk5pEg8femaKXgEcGB
- TClZnLHusL1bPwHAnyzs59qFChezxmYdvuKE/J0Hr2lpiQGrSIaNSGhSbayat8vtfT
- jyLXo3Mp23yugEkDswFhu6tBCfrEqN/P6kfAotx8=
-Received: by be1-5.in.mailobj.net [192.168.91.15] with ESMTP
- via ip-20.mailobj.net [213.182.54.20]
- Thu,  4 Jun 2026 08:30:47 +0200 (CEST)
-X-EA-Auth: 1eRntmGuTuXUeGSUH/xu4UQmBdTMeZjghKh5V+pOrc46AtD+izPCj7KYl2TYh0PUeglvtWruob+YWF2CdBuwNFUMJlRpesPK
-Message-ID: <1d2381a2-7101-4039-b41a-d4cccbade4aa@mailo.com>
-Date: Thu, 4 Jun 2026 08:30:35 +0200
+ (Exim 4.90_1) (envelope-from <brookmangabriel@gmail.com>)
+ id 1wV2VV-00088D-1k
+ for qemu-devel@nongnu.org; Thu, 04 Jun 2026 03:28:49 -0400
+Received: from mail-pf1-x42f.google.com ([2607:f8b0:4864:20::42f])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <brookmangabriel@gmail.com>)
+ id 1wV2VS-0007l3-QD
+ for qemu-devel@nongnu.org; Thu, 04 Jun 2026 03:28:48 -0400
+Received: by mail-pf1-x42f.google.com with SMTP id
+ d2e1a72fcca58-842288702fbso149773b3a.1
+ for <qemu-devel@nongnu.org>; Thu, 04 Jun 2026 00:28:45 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1780558124; cv=none;
+ d=google.com; s=arc-20240605;
+ b=O7H3sNv8ILuH6mW9NdUGTW1dNX9jWp4ySHhrrdVnW3ORzk7wm0jVxOkoQ6r7cmut5r
+ kXdarfhMlE8JDh56uKyJfULtrmAFsfiv6BYxYpNbsd1F1CYcR7ooCYgu4SGIhCkPX3R/
+ xj21UTRbaFdHdKSHs+Gbgf96MoIvNhESR9kPoo1A2yTCj6iZjdxx1SbHNKDPK5bOEurm
+ 92qrHeb14xBoqJohVNaUXducoMD07CfB3LVmMVhC2+YkYKSFvpAZZWF5iwpDQZnzEIOd
+ l+ZT0H0kTyKj9SYZZhvWL6E0zCJDan5DjYIzvNcwIANOA/4neIXi0YUTeregrX8feAJf
+ eEpQ==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
+ s=arc-20240605; 
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:dkim-signature;
+ bh=VpSRCwgDLMji91ZXDpZd4bhHuRUeCACFSqRLsM8YCwU=;
+ fh=GgdWH1IMUnLvapwZcybkO7EfHLm5mb76g3oTyXmM4bo=;
+ b=DNOl2wSBLq3Fypl7ZEY73tqbWb1JoR3KXeH9aNWz0ZYDxWYNFUdELl0kBh8h1ItrK7
+ /BvQz5ajqAipqwL3LEaSHdl7NGtycIS+3OqqXkXBab3z6JZvX0+fwlJ11mxTKKOu5N/x
+ 0mtWX1M9+vuGKf8NU3nlbCfqFqW+GYl6vg5R5EVYJBdj7xvkc3sRiWjTA24ffaSpr6iG
+ 6PJDkNey9iUv0/sMgQQHes+Wk8glpJ6qAEDI8Z1JIfVXcOKNiRZd514zltJRgOOg2Avw
+ XsfdjICM4w1CmOF9UqHTER0WtxBWi5PhbJWFcAm/C+w90VpL/tMDkgIMXciZhD7Tw+SQ
+ a54g==; darn=nongnu.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=gmail.com; s=20251104; t=1780558124; x=1781162924; darn=nongnu.org;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=VpSRCwgDLMji91ZXDpZd4bhHuRUeCACFSqRLsM8YCwU=;
+ b=UGI7CUpAw2C0Zd72AnsgvoRi7aK8yVmWjUsXH98OmmwsUNeTI86c6F34BNe0oNSEXz
+ RJUUT4sUz3h35Y3xPiEtjnT13wVQMOyr47LUT/XICZbjsu8uh974SgGJA8QjMU/r4vst
+ +dUqQAxhkTjRGD8TC5qQC8lrIx7jTNXvyRxpF0VdfUas0z3UoeDG3phd7acPbJ2jJhtE
+ PxeZy1d9pskQ5T19Nt03vtgepKR7jnL167ksGyHstpfFiPWZ7Fc1oBemAqK3lXFBL7hf
+ KfLm4EgsOqg5r9KCTiCGjymaArDz+F22xbtSsiyBAGSeM6kVvcaF6e7m2ZYFJYXFGqFg
+ Aqdg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1780558124; x=1781162924;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=VpSRCwgDLMji91ZXDpZd4bhHuRUeCACFSqRLsM8YCwU=;
+ b=GRGsUbTHI4B9OI6I8BdR5ZAOiJ2kFZsuW1fRsjsiVp59tnlrj3utafLreGmoUwXHRq
+ AVn9jTSfhzK2IPloT4FkXR/lsZ7IAHhJMn87UQgkmSnggz3ZXddC6azpMN1ljcMOnK2+
+ qDp6svRLeCOdkCQjb+BLJV7nBehOGj9Sk+HIeyPDERzn6VS0msuZwmd9lKlcJIyDaqN2
+ aQXk+bnxx5RfhQFy5A23qKLnP+p96tub30+g+eTYlMm5nBLoK/rs7xmGZNY7QNA4ovWg
+ CtzUYAduZrDbrmcMcuC/HHdBmBZctVim4Z1M7A3gRXQpelsvQU+fmpzrXvWM5PP3uF4C
+ 4Hmg==
+X-Gm-Message-State: AOJu0YzBWVX/9AYrBmO3qwJVMfpj9GZwd0VJ+7755nynnb0hm70pqtU4
+ U1NKVlyPJVQtL+dY3A7pG1RzdGCsWTyrnmVCm+jb0R9LIPmbHPH5+4GxsOi/DE4b03ip3NJdnFE
+ F7OzLxqymea8hxc6CQLJKGNRCaXEC72i6aRjjYVU=
+X-Gm-Gg: Acq92OE1M3X2xltCT7MpPtkl1JiWEmpPslCQeX7sa+kmbn8WpeidtBrRVNrFYxqMyF2
+ wiBssKlvcmpHG9EVLRihYFO8VFfQIfOtnyf8v8NhGGq+Zcsd0vOezpef+rb0xlC+QW/v25YSJPc
+ JXKsGWI8jwj/7jGnH/2wkH/62GZVhz/El1zEXyCFHloqnbMo7Wa4VMzQUi1AU946/K/8E3wxbaH
+ 3113nzkQd/JkTt4cneolqkgPCTiJKdJQSfT15H7HOUz1ynJiXS7dXhpYDSNcXgU1Ia123Hywl6h
+ FOS7uwiqcrpn+BykyTVCqlTkOxe8Q4c=
+X-Received: by 2002:a05:6a00:22cb:b0:842:5b63:6116 with SMTP id
+ d2e1a72fcca58-84284dbdf1amr6652336b3a.7.1780558124415; Thu, 04 Jun 2026
+ 00:28:44 -0700 (PDT)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v9 0/4] hw/mem: add spm-memory device for Specific Purpose
- Memory
-Content-Language: en-US
-To: "Huang, FangSheng (Jerry)" <FangSheng.Huang@amd.com>,
- Igor Mammedov <imammedo@redhat.com>,
- "David Hildenbrand (Arm)" <david@kernel.org>
-Cc: qemu-devel@nongnu.org, gourry@gourry.net, Zhigang.Luo@amd.com,
- Lianjie.Shi@amd.com
-References: <20260602084447.1100554-1-FangSheng.Huang@amd.com>
- <39411489-1473-44ad-ad56-392aa27990ab@kernel.org>
- <5ff45049-d96e-428c-915d-fc14cbcb5e58@amd.com>
- <d4297ad2-4695-4634-a12e-80d65a34e79f@kernel.org>
- <c9707c49-59ee-458c-8469-12943bab90c2@mailo.com>
- <20260603151443.612d0e61@imammedo>
- <c7c8e578-86eb-4b74-b63b-6b81a76c4329@amd.com>
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@mailo.com>
-In-Reply-To: <c7c8e578-86eb-4b74-b63b-6b81a76c4329@amd.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=213.182.54.15; envelope-from=philmd@mailo.com;
- helo=mailo.com
+References: <20260529-feat-mte4-v7-0-ccbd3c14eb3c@gmail.com>
+In-Reply-To: <20260529-feat-mte4-v7-0-ccbd3c14eb3c@gmail.com>
+From: Gabriel Brookman <brookmangabriel@gmail.com>
+Date: Thu, 4 Jun 2026 00:28:32 -0700
+X-Gm-Features: AVHnY4JUR6Lj0SzYmQiULv7DmT4fq5rgboebDItbD7b-eIiHnHz4gjLO9JqoBFs
+Message-ID: <CA+1f7BA1Xbmb5atHKfFpd5K5VoXKo1zCmf4M6cH+PkQPifPXug@mail.gmail.com>
+Subject: Re: [PATCH v7 00/15] target/arm: add support for MTE4
+To: qemu-devel@nongnu.org
+Cc: Peter Maydell <peter.maydell@linaro.org>,
+ Gustavo Romero <gustavo.romero@linaro.org>, 
+ Richard Henderson <richard.henderson@linaro.org>, qemu-arm@nongnu.org, 
+ Laurent Vivier <laurent@vivier.eu>, Helge Deller <deller@gmx.de>, 
+ Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2607:f8b0:4864:20::42f;
+ envelope-from=brookmangabriel@gmail.com; helo=mail-pf1-x42f.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_PASS=-0.001,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -75,80 +119,160 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 4/6/26 05:35, Huang, FangSheng (Jerry) wrote:
-> 
-> 
-> On 6/3/2026 9:14 PM, Igor Mammedov wrote:
->> On Wed, 3 Jun 2026 09:45:28 +0200
->> Philippe Mathieu-Daudé <philmd@mailo.com> wrote:
->>
->>> On 2/6/26 14:21, David Hildenbrand (Arm) wrote:
->>>> On 6/2/26 12:02, Huang, FangSheng (Jerry) wrote:
->>>>>
->>>>>
->>>>> On 6/2/2026 5:36 PM, David Hildenbrand wrote:
->>>>>> On 6/2/26 10:44, fanhuang wrote:
->>>>>>> This series adds a TYPE_MEMORY_DEVICE subclass `spm-memory`
->>>>>>
->>>>>> Very nitty: but spm already includes "memory". And I think most 
->>>>>> things on the
->>>>>> cmdline use "mem" as abbreviation.
->>>>>>
->>>>>> "sp-mem" ? or simply "spm" ? Thoughts?
->>>>> Good point — the duplication didn't quite register when I named it.
->>>>> I lean toward simply `spm`: matches the `dimm` / `nvdimm` acronym-only
->>>>> pattern.
->>>>
->>>> Best to wait for more feedback :)
->>>
->>> +1 for 'spm'
->>
->> I like spm as well, but it's a very short acronym  and /me/ uselessly
->> worrying about ambiguity and future name conflicts.
->>
->> perhaps: sp-mem would be better in that regards.
->> Confirmed — quick grep on master finds "SPM" used in four unrelated
-> subsystems already (AVR SPM instruction, s390x spm instruction,
-> m25p80 SPI flash Status Protection Mode, AHCI Staggered Power
-> Management). Bare `spm` would land in noisy company.
-> 
-> Leaning toward `sp-mem` as you suggested. Concrete before/after:
-> 
->    cmdline:
->      BEFORE: -device spm-memory,memdev=m0,node=1
->      AFTER:  -device sp-mem,memdev=m0,node=1
-> 
->    file / TYPE / function (after also dropping the redundant _md_ infix
->    per Philippe's KISS suggestion):
->      BEFORE:
->        hw/mem/spm-memory.c  TYPE_SPM_MEMORY  spm_memory_md_get_addr()
->      AFTER:
->        hw/mem/sp-mem.c      TYPE_SP_MEM      sp_mem_get_addr()
-> 
->    QAPI enum value:
->      BEFORE: 'spm-memory'
->      AFTER:  'sp-mem'
-> 
->    Kconfig symbol:
->      BEFORE: CONFIG_SPM_MEMORY
->      AFTER:  CONFIG_SP_MEM
-> 
->    struct + cast macro (using OBJECT_DECLARE_SIMPLE_TYPE per Philippe,
->    since the class struct is empty and can be dropped):
->      BEFORE:
->        OBJECT_DECLARE_TYPE(SpmMemoryDevice, SpmMemoryDeviceClass,
->                            SPM_MEMORY)
->      AFTER:
->        OBJECT_DECLARE_SIMPLE_TYPE(SpMemDevice, SP_MEM)
+Hello all,
 
-All these changes LGTM!
+Friendly ping: I have an external deadline this Sunday, so if anything
+needs to be addressed on my end I'd want to know soon.
 
-> David, Philippe — any preference between this and `spm`? If sp-mem
-> works for everyone, I'll respin accordingly.
-> 
+(Re Peter's mte-10 segfault: like Richard, I can't reproduce it, but I
+am happy to dig in if Peter can share a way to reproduce it.)
+
+Thanks,
+Gabriel
+
+On Fri, May 29, 2026 at 12:52=E2=80=AFPM Gabriel Brookman
+<brookmangabriel@gmail.com> wrote:
+>
+> This series implements ARM's Enhanced Memory Tagging Extension
+> (MTE4). MTE4 implies the presence of several subfeatures:
+> FEAT_MTE_CANONICAL_TAGS, FEAT_MTE_TAGGED_FAR, FEAT_MTE_STORE_ONLY,
+> FEAT_MTE_NO_ADDRESS_TAGS, and FEAT_MTE_PERM, none of which are
+> currently implemented in QEMU. This patch implements all five.
+>
+> Testing:
+>   - Included for FAR and STORE_ONLY.
+>   - The MTE_CANONICAL/NAT test from v2, modified so MTE_CANONICAL is
+>     enabled in user mode (removed from tree in v3).
+>   - A bare-metal testsuite that sets up page tables for S1 and S2
+>     translation, to test the Tagged NoTagAccess fault.
+>   - The bare-metal testsuite also was used to test LDGM and similar
+>     instructions not permitted in user-mode.
+>   - The bare-metal testsuite also was used to test the mtx related
+>     patches.
+>
+> Thanks,
+> Gabriel Brookman
+>
+> Resolves: https://gitlab.com/qemu-project/qemu/-/issues/3116
+> Signed-off-by: Gabriel Brookman <brookmangabriel@gmail.com>
+> ---
+> Changes in v7:
+> - initialized "tagged" in combine_cacheattrs (MTEPERM), per Peter
+> - alphabetized MTE4 features on docs, per Richard
+> - moved comment in docs, per Richard
+> - rebased onto master, incrementing bits in TBFLAGS since FPMR_EL
+> - Link to v6: https://lore.kernel.org/qemu-devel/20260511-feat-mte4-v6-0-=
+8557cc1313b9@gmail.com
+>
+> Changes in v6:
+> - Moved certain functions between patches (Richard)
+> - Added G_NORETURN to canonical_tag_write_fail
+> - Updated ldg and bounds check functions to Richard's versions, tested
+>   these
+> - Link to v5: https://lore.kernel.org/qemu-devel/20260504-feat-mte4-v5-0-=
+232a648e63c6@gmail.com
+>
+> Changes in v5:
+> - MTX check feature split into three commits as per Richard's suggestion
+> - MTX passed down to instruction helpers in a new argument
+> - allocation_tag_mem_probe checks for probe in MTEPERM case
+> - tbi helper combined into tbi_or_mtx_helper
+> - MTX checks added to sme and sve functions
+> - bug with type conversion in LDGM helper fixed
+> - fixed multi-page tag-check bug and multi-page ST2G bug
+> - removed erroneous changes to _stub functions
+> - reorganized PAuth & MTX interactions to make them more readable
+> - Link to v4: https://lore.kernel.org/qemu-devel/20260309-feat-mte4-v4-0-=
+daaf0375620d@gmail.com
+>
+> Changes in v4:
+> - MTX now interacts with PAuth.
+> - Canonical tag checking only takes place in canonically tagged regions
+> - MTX bits enable tag checking
+> - MTX bits are placed in MTEDESC for access in mte_check helper
+> - Separate feature bits are used to delineate each feature
+> - PRCTL functions renamed and refactored as per Richard's suggestion
+> - Link to v3: https://lore.kernel.org/qemu-devel/20260105-feat-mte4-v3-0-=
+86a0d99ef2e4@gmail.com
+>
+> Changes in v3:
+> - Added prctl for MTE_STORE_ONLY to linux-user
+> - mte_check is no longer generated on read when STORE_ONLY enabled
+> - Implemented LDGM instruction
+> - Removed "long" datatype as per Richard's suggestion
+> - Implemented masking for VA range checks when MTX bit enabled
+> - Implemented MTE_PERM, with NoTagAccess attribute
+> - Removed user-mode test for MTE_CANONICAL, since can't enable in
+>   user-mode.
+> - Removed TBI from mte_check generation logic
+> - Link to v2: https://lore.kernel.org/qemu-devel/20251116-feat-mte4-v2-0-=
+9a7122b7fa76@gmail.com
+>
+> Changes in v2:
+> - Added tests for STORE_ONLY.
+> - Refined commit messages.
+> - Added FEAT_MTE_CANONICAL_TAGS and FEAT_MTE_NO_ADDRESS_TAGS + tests.
+> - fixed TCSO bit macro names.
+> - Link to v1: https://lore.kernel.org/qemu-devel/20251111-feat-mte4-v1-0-=
+72ef5cf276f9@gmail.com
+>
+> To: qemu-devel@nongnu.org
+> Cc: Peter Maydell <peter.maydell@linaro.org>
+> Cc: qemu-arm@nongnu.org
+> Cc: Laurent Vivier <laurent@vivier.eu>
+> Cc: Helge Deller <deller@gmx.de>
+> Cc: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
+>
+> ---
+> Gabriel Brookman (15):
+>       target/arm: implement MTE_PERM
+>       target/arm: add TCSO bitmasks to SCTLR
+>       target/arm: mte_check unemitted on STORE_ONLY load
+>       linux-user: add MTE_STORE_ONLY to prctl
+>       target/arm: emit tag check when MTX without TBI
+>       target/arm: add MTX to MTEDESC and DisasContext
+>       target/arm: add canonical tag check helper
+>       target/arm: add canonical MTE check logic
+>       target/arm: load on canonical tag loads ext bits
+>       target/arm: fault on tag store to canonical tag
+>       target/arm: skip tag bit bounds check if MTX is on
+>       target/arm: tag is not a part of PAuth with MTX
+>       docs: add MTE4 features to docs
+>       tests/tcg: add test for MTE FAR
+>       tests/tcg: add test for MTE_STORE_ONLY
+>
+>  docs/system/arm/emulation.rst        |   5 ++
+>  linux-user/aarch64/mte_user_helper.c |  11 ++-
+>  linux-user/aarch64/mte_user_helper.h |  14 ++--
+>  linux-user/aarch64/target_prctl.h    |   6 +-
+>  target/arm/cpu-features.h            |  15 ++++
+>  target/arm/cpu.h                     |   5 ++
+>  target/arm/gdbstub64.c               |   2 +-
+>  target/arm/helper.c                  |  36 +++++++--
+>  target/arm/internals.h               |  40 ++++++++--
+>  target/arm/ptw.c                     |  60 ++++++++++++--
+>  target/arm/tcg/cpu64.c               |   5 ++
+>  target/arm/tcg/helper-a64-defs.h     |  16 ++--
+>  target/arm/tcg/helper-a64.c          |   7 +-
+>  target/arm/tcg/hflags.c              |  25 +++++-
+>  target/arm/tcg/mte_helper.c          | 146 +++++++++++++++++++++++++++++=
+------
+>  target/arm/tcg/pauth_helper.c        |  18 ++++-
+>  target/arm/tcg/sme_helper.c          |   4 +-
+>  target/arm/tcg/sve_helper.c          |   6 +-
+>  target/arm/tcg/translate-a64.c       |  45 +++++++----
+>  target/arm/tcg/translate.h           |   3 +
+>  tests/tcg/aarch64/Makefile.target    |   2 +-
+>  tests/tcg/aarch64/mte-10.c           |  49 ++++++++++++
+>  tests/tcg/aarch64/mte-9.c            |  48 ++++++++++++
+>  tests/tcg/aarch64/mte.h              |   7 +-
+>  24 files changed, 484 insertions(+), 91 deletions(-)
+> ---
+> base-commit: 2db91528542672cf0db78b3f2cc0e22b36302b38
+> change-id: 20251109-feat-mte4-6740a6202e83
+>
 > Best regards,
-> FangSheng Huang (Jerry)
-> 
-
-
+> --
+> Gabriel Brookman <brookmangabriel@gmail.com>
+>
 
