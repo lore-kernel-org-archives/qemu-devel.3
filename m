@@ -4,86 +4,94 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 58471CD6E75
-	for <qemu-devel@archiver.kernel.org>; Thu,  4 Jun 2026 23:53:20 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E306FCD6E6E
+	for <qemu-devel@archiver.kernel.org>; Thu,  4 Jun 2026 23:55:42 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wVHoN-0006wA-7D; Thu, 04 Jun 2026 19:49:19 -0400
+	id 1wVHuP-0001Ot-3y; Thu, 04 Jun 2026 19:55:33 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1wVHoG-0006pQ-IJ
- for qemu-devel@nongnu.org; Thu, 04 Jun 2026 19:49:12 -0400
-Received: from mail-pl1-x636.google.com ([2607:f8b0:4864:20::636])
+ id 1wVHuM-0001OD-U0
+ for qemu-devel@nongnu.org; Thu, 04 Jun 2026 19:55:30 -0400
+Received: from mail-pj1-x1034.google.com ([2607:f8b0:4864:20::1034])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1wVHoD-0007y1-SE
- for qemu-devel@nongnu.org; Thu, 04 Jun 2026 19:49:12 -0400
-Received: by mail-pl1-x636.google.com with SMTP id
- d9443c01a7336-2c0b944f6edso13619445ad.2
- for <qemu-devel@nongnu.org>; Thu, 04 Jun 2026 16:49:09 -0700 (PDT)
+ id 1wVHuK-0001PO-Bu
+ for qemu-devel@nongnu.org; Thu, 04 Jun 2026 19:55:30 -0400
+Received: by mail-pj1-x1034.google.com with SMTP id
+ 98e67ed59e1d1-36ba706ab46so887442a91.1
+ for <qemu-devel@nongnu.org>; Thu, 04 Jun 2026 16:55:27 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1780616948; x=1781221748; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=YyZd4Axcmi17hT9uRHYw5WxR8cxng914FVY4xY+poHg=;
- b=U+k2ZDT6eS2l/G//mMcUW+he53jk7GbVp32dz+VPXDBBi4X8zpbl3ByyYoUVD29vST
- BF/pJSB46arOvbxIUO+wskDz3lGxgYGtt5StyoGrLPKTjjlA5/HLwknAbWNRzKOKEQ86
- hDu2Z2rO16yKaoHpn5WdXqnRpmgRdMf2JkuSfYgfk+14x4ZCve3izvs9nOUg3giO67Ib
- b4FRiEvAHCBi5Ov3KAgU90HqS2D7p1rVQxEJik0KIu6nkGdRJo6LoJUwVjC/nKigUDmh
- n+SN9Wn5/0g9aGTT4gzVp8UzU8uZkaIUVqI5EJdFJRxG8wODfPF64oact/6BbibBKba4
- EPFw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1780616948; x=1781221748;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
+ d=linaro.org; s=google; t=1780617326; x=1781222126; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:content-language:from
+ :references:to:subject:user-agent:mime-version:date:message-id:from
  :to:cc:subject:date:message-id:reply-to;
- bh=YyZd4Axcmi17hT9uRHYw5WxR8cxng914FVY4xY+poHg=;
- b=TjUtaOq2tM56MvGI0TutO97bjHRBJzyQTH0+40qfG1jwf3Fna+S1WMpMvfts84SQaN
- AHmd5iuzK78bOwcz7o0kStNmOw3dH3UejUpsHwVEWjwZOLewiBEhW6Uur/XNeqll+mdv
- P7x6TbSN2DanYBw4sqcud95QdyC8lJf+JgD/Od4dDrdBqIS6jG4MfiUPzxngBbd5NB4K
- 4pEuqgm5l+7JS303VG9eLv7X+aj0bgeYHOpD5hF4INeCECrddKRx8zlFVArgeHcDqR3m
- ZAF48s15yLYSsDuJqPkM4Ojejw6ySY56rkzk2Tf+TWtFnpJz7LL5J2cAKA2sXM7D0jqy
- Wb8g==
-X-Gm-Message-State: AOJu0YywYEZCGVoNfAfrMBycNnhPmHSuYbzNGMwfZQNmYvJpGCVNK6Ii
- KgNFP5JSRBtl479pA/tUFy7R0+EeLxUkXVM9v6TBiAw0X22hzHaU0zVHc66JG9ONXvvjTsjfxgv
- 7Gs5f+6c=
-X-Gm-Gg: Acq92OFkOgE7Z/9TvXH5nj0cSTWfjf8+cCnh3j229YnEaV3mZaZmdCLZOCT1NoohqID
- sF3F5DVlZ68i+KpZY97TSAMT3dnv91v3Ene1l8IbA3NqvZn7ao67411Eh6IvGNeKaFpU1yr6alT
- dcqKoX1KUr6pIgJo7oHrWW8vjKoUHzqeW3N40Ygc+taVuEquWwGW6f4SSorzNEN7yz9oi2aX8bm
- uSyGVwuIbVabVCWwrn9N8amMs9vwL0E89zHMXCyX+dWtYE+W9mCBguwgNpI9ubpbeMNycSeqkWA
- yh/NJFLo1jW9xk/mC7+M+fTo2nIS2GzjOz+JRxzu7KduNgLAH3aJrgQRy/kLKmnxjmn5xc3C7jG
- UGDTJn6uAriBT4beX14LpKj8Mg0FRCy7rAH4nyxuAvzZtQo4YJh350aB4JUdjWrG8VPCNd/4//a
- 5OQ8ttH/bC7tFUdEUxKp/FcAvnuAr1xnZFMGp4Bd/P0/e0wWUb+w==
-X-Received: by 2002:a17:902:e5ce:b0:2bd:5ab:af95 with SMTP id
- d9443c01a7336-2c1e77d145fmr7615235ad.0.1780616948316; 
- Thu, 04 Jun 2026 16:49:08 -0700 (PDT)
-Received: from stoup.. ([71.212.142.33]) by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-2c1664950aesm66541465ad.69.2026.06.04.16.49.07
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 04 Jun 2026 16:49:08 -0700 (PDT)
-From: Richard Henderson <richard.henderson@linaro.org>
-To: qemu-devel@nongnu.org
-Cc: qemu-arm@nongnu.org
-Subject: [PATCH 20/25] target/arm: Generalize sve_compact_[sd]
-Date: Thu,  4 Jun 2026 16:48:47 -0700
-Message-ID: <20260604234852.573178-21-richard.henderson@linaro.org>
-X-Mailer: git-send-email 2.43.0
-In-Reply-To: <20260604234852.573178-1-richard.henderson@linaro.org>
-References: <20260604234852.573178-1-richard.henderson@linaro.org>
+ bh=vHDS4aMpMK5Y1Kz0vp0t7rHq2Wt93CEbb3gvEl0QSQ4=;
+ b=Oz2WkKpLs66h1NAjW3L53eicKTUShsLW8Xoa7pmclUWc9ApeDWF5v2UgmNLNkpxNQU
+ kSLo5uDw7mriDwKihwpPWaZ22+C00QU4YNaHZ24vva1x7rFc2i4ynR9fobF4CieMLEyW
+ Q3pg9bXSsnvTi/Re0XqmY3V5bH0mo7TSC2cVGrzNM6OknnNBNu41BdQ+PW+Ldl3ztwjk
+ S25VetJNR8+6tIahKt4YB3JWlKGB5wasbblwlFDknDOosS93Bf36EHlSChFDuJ7FdLvG
+ LJOD1l1npUMjAY9wSzBB8As6+VNoBtA2uja1Gu+pixkXSadmGOQK9ABX6ntgVwevYIf8
+ fAYw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1780617326; x=1781222126;
+ h=content-transfer-encoding:in-reply-to:content-language:from
+ :references:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=vHDS4aMpMK5Y1Kz0vp0t7rHq2Wt93CEbb3gvEl0QSQ4=;
+ b=W2izZCwCDedhCjIAmsP8KZKKG4U3fESWkCv2s1+/cI4Qrj+GeVxq9snKbNVD7uYte2
+ IQCvgaHE44WpQj6Eg1lB8BKYVg6WzCinkES11OjvLL4u3il/Z2dVLsM1f2r7nEZ+YpAK
+ UToqtAxpSr967dPGFhHk4AUNKIEL5DpQdzERR0QqaArUb9AhdVx7+EwnjO73+/WjnhoH
+ YrQcsGJC6GE3OaWWlTwtygTrdPtQAfcTt/fMiBPNbGbFKaoQ4NmqrQwQbDU+5KB6gfVs
+ cBppVjfVNpJIIIaiAqyK0lC5mVNrK6h0wLH2tss85J1Oi6c0oOFYpsDKFcxeQw5m8y4D
+ 8dPg==
+X-Forwarded-Encrypted: i=1;
+ AFNElJ8pIyHPAbpLKUxgEmhFnWm+xqPMdkn/wdbiCcC539chv22z/+G4KgtNyomGvxqJ4ynz0W2dC3gELVx4@nongnu.org
+X-Gm-Message-State: AOJu0Yzrrs+/Jf3kwtPqKbOVHPsFbgCfTPWji7GPLjLRrRimdRU+mo0P
+ mkSphyR9+mzYk+BhsPw/XLFoL3FMjwQOaljc7if6SkaZ1giwQ8mHqg7ABmg63369i6E=
+X-Gm-Gg: Acq92OGZrrbwamumuKkFgzTGq57rwBYQS5Jdhx+AHgkwBTUJgC0VOfhv7Lcra68J5qG
+ /bXtlPVUDMwWY+X9p6va7P9n8Xpf3LE64Ta3ac3PIYGwaJc79cIwQvz6jysOKkw3kEtRkOTJDDG
+ 1MfFO5cbMBbqWkpZ5+p1qZDzIKaxWF4Xrw6WrFZheGdQuIPAwZMAVfJx837gcIhtJl/ZjthPXjk
+ 7ErHBEsX9N8drJrViRru8bq+/UDKMPdtz/FwZ93/wR4tRdZ5dvxB2ySLZjORSj64aMnc7DgO8oK
+ xfNMb5ve63qEfaBh1iGy8ov9A1hQq/PEvGPU9f5MrAWwxayl+jxAPXn7xCWglN/ufOIaC3WCSI4
+ 0FDSvBxRe92x/1ts1SRnuCef28sHKopivM50XoCEfo5AQJdmid5k4dYIrnT4cKiJhXmy8WLVdDb
+ OagESCDGqBQjRJ9GaFdyxnoBC13udemXVrIX9GxdnYXfkGSQk=
+X-Received: by 2002:a17:90b:4a50:b0:369:7421:b36f with SMTP id
+ 98e67ed59e1d1-370f0c4ecf2mr1019585a91.21.1780617326420; 
+ Thu, 04 Jun 2026 16:55:26 -0700 (PDT)
+Received: from [192.168.0.4] ([71.212.142.33])
+ by smtp.gmail.com with ESMTPSA id
+ 98e67ed59e1d1-36f6bf827f1sm5484180a91.3.2026.06.04.16.55.25
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Thu, 04 Jun 2026 16:55:25 -0700 (PDT)
+Message-ID: <fc032f29-f22a-4ac3-8a33-acc8eb46f974@linaro.org>
+Date: Thu, 4 Jun 2026 16:55:24 -0700
 MIME-Version: 1.0
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 03/12] linux-user/alpha: add coredump support
+To: Helge Deller <deller@gmx.de>, qemu-devel@nongnu.org,
+ Matt Turner <mattst88@gmail.com>
+References: <20260526190535.10833-1-deller@kernel.org>
+ <20260526190535.10833-4-deller@kernel.org>
+ <27b8facc-9b5d-48c0-ab84-6a8cedaa1672@linaro.org>
+ <9454aa45-8e52-4fc5-9570-94d1ff66bf26@gmx.de>
+From: Richard Henderson <richard.henderson@linaro.org>
+Content-Language: en-US
+In-Reply-To: <9454aa45-8e52-4fc5-9570-94d1ff66bf26@gmx.de>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::636;
- envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x636.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::1034;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pj1-x1034.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -99,80 +107,34 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Implement with a DO_COMPACT macro and general purpose
-predicate handling.
+On 6/4/26 14:44, Helge Deller wrote:
+> On 5/27/26 17:53, Richard Henderson wrote:
+>> On 5/26/26 12:05, Helge Deller wrote:
+>>> +/*
+>>> + * Matches the kernel's elf_gregset_t (ELF_NGREG = 33):
+>>> + *   r0-r30 at indices 0-30, pc at 31, ps at 32.
+>>> + * r31 (hardwired zero) is not stored; pc occupies index 31.
+>>> + */
+>>> +typedef struct target_elf_gregset_t {
+>>> +    abi_ulong regs[31];  /* integer registers r0-r30  [0..30] */
+>>> +    abi_ulong pc;        /* program counter           [31]    */
+>>> +    abi_ulong ps;        /* processor status          [32]    */
+>>> +} target_elf_gregset_t;
+>>> +
+>>
+>> But see dump_elf_thread():
+>>
+>>          /* Once upon a time this was the PS value.  Which is stupid
+>>             since that is always 8 for usermode.  Usurped for the more
+>>             useful value of the thread's UNIQUE field.  */
+>>          dest[32] = ti->pcb.unique;
+> 
+> Ok, what is your suggestion here?
+> Replace ps with unique? According to kernel this then should get the tls value.
+> What is this then in linux-user?
 
-Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
----
- target/arm/tcg/sve_helper.c | 51 +++++++++++++++----------------------
- 1 file changed, 21 insertions(+), 30 deletions(-)
+env->unique.
 
-diff --git a/target/arm/tcg/sve_helper.c b/target/arm/tcg/sve_helper.c
-index a13ccf4b85..40cf567b0d 100644
---- a/target/arm/tcg/sve_helper.c
-+++ b/target/arm/tcg/sve_helper.c
-@@ -3637,39 +3637,30 @@ DO_TRN(sve2_trn_q, Int128, )
- #undef DO_UZP
- #undef DO_TRN
- 
--void HELPER(sve_compact_s)(void *vd, void *vn, void *vg, uint32_t desc)
--{
--    intptr_t i, j, opr_sz = simd_oprsz(desc) / 4;
--    uint32_t *d = vd, *n = vn;
--    uint8_t *pg = vg;
--
--    for (i = j = 0; i < opr_sz; i++) {
--        if (pg[H1(i / 2)] & (i & 1 ? 0x10 : 0x01)) {
--            d[H4(j)] = n[H4(i)];
--            j++;
--        }
--    }
--    for (; j < opr_sz; j++) {
--        d[H4(j)] = 0;
--    }
-+#define DO_COMPACT(NAME, TYPE, H)                                     \
-+void HELPER(NAME)(void *vd, void *vn, void *vg, uint32_t desc)        \
-+{                                                                     \
-+    intptr_t i = 0, j = 0, oprsz = simd_oprsz(desc);                  \
-+    do {                                                              \
-+        uint16_t pg = *(uint16_t *)(vg + H1_2(i >> 3));               \
-+        do {                                                          \
-+            if (pg & 1) {                                             \
-+                *(TYPE *)(vd + H(j)) = *(TYPE *)(vn + H(i));          \
-+                j += sizeof(TYPE);                                    \
-+            }                                                         \
-+            i += sizeof(TYPE);                                        \
-+            pg >>= sizeof(TYPE);                                      \
-+        } while (i & 15);                                             \
-+    } while (i < oprsz);                                              \
-+    for (; j < oprsz; j += sizeof(TYPE)) {                            \
-+        *(TYPE *)(vd + H(j)) = 0;                                     \
-+    }                                                                 \
- }
- 
--void HELPER(sve_compact_d)(void *vd, void *vn, void *vg, uint32_t desc)
--{
--    intptr_t i, j, opr_sz = simd_oprsz(desc) / 8;
--    uint64_t *d = vd, *n = vn;
--    uint8_t *pg = vg;
-+DO_COMPACT(sve_compact_s, uint32_t, H1_4)
-+DO_COMPACT(sve_compact_d, uint64_t, H1_8)
- 
--    for (i = j = 0; i < opr_sz; i++) {
--        if (pg[H1(i)] & 1) {
--            d[j] = n[i];
--            j++;
--        }
--    }
--    for (; j < opr_sz; j++) {
--        d[j] = 0;
--    }
--}
-+#undef DO_COMPACT
- 
- /* Similar to the ARM LastActiveElement pseudocode function, except the
-  * result is multiplied by the element size.  This includes the not found
--- 
-2.43.0
 
+r~
 
