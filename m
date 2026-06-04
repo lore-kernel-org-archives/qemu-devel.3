@@ -4,187 +4,116 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 51210CD6E75
-	for <qemu-devel@archiver.kernel.org>; Thu,  4 Jun 2026 22:02:47 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2CD6FCD6E6E
+	for <qemu-devel@archiver.kernel.org>; Thu,  4 Jun 2026 22:42:53 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wVG90-0002j6-Ee; Thu, 04 Jun 2026 18:02:30 -0400
+	id 1wVGlT-0000pE-KB; Thu, 04 Jun 2026 18:42:15 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <deller@gmx.de>) id 1wVG8y-0002ij-AF
- for qemu-devel@nongnu.org; Thu, 04 Jun 2026 18:02:28 -0400
-Received: from mout.gmx.net ([212.227.15.19])
+ (Exim 4.90_1) (envelope-from <Michael.Roth@amd.com>)
+ id 1wVGlR-0000p2-9V
+ for qemu-devel@nongnu.org; Thu, 04 Jun 2026 18:42:13 -0400
+Received: from mail-centralusazon11010059.outbound.protection.outlook.com
+ ([52.101.61.59] helo=DM1PR04CU001.outbound.protection.outlook.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <deller@gmx.de>) id 1wVG8w-0001YN-5J
- for qemu-devel@nongnu.org; Thu, 04 Jun 2026 18:02:28 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmx.de;
- s=s31663417; t=1780610528; x=1781215328; i=deller@gmx.de;
- bh=jxg528G0qbUkPj6OywEWeeB3oLkJWGczydAJgdanrgQ=;
- h=X-UI-Sender-Class:Message-ID:Date:MIME-Version:Subject:To:Cc:
- References:From:In-Reply-To:Content-Type:
- Content-Transfer-Encoding:cc:content-transfer-encoding:
- content-type:date:from:message-id:mime-version:reply-to:subject:
- to;
- b=IWG1noDpv9tKUpx0bJRjkjzIspK2dMtBtYN27lKBEuH12evj0Oy3G4c6dOlfFtX0
- lX9ourMHCxbDqG48XbYpIgTx2ZH9YzT5xya/BQEVBzN7Yir51AgshMiJBv9ThaeVd
- XHj2ThRyunqdIlzyJ2mM8uqZoCipa/rFRHOFrHegEGiauEBiLtA7weRivMO9L3mzU
- CPmjtIMqvmO/02TI+OzQIxN0isz4JCo5vc6a299iahYMjBapMyo1QItbxrgnf6iE9
- Uh0jakAs5txaYOIemOIPvoF7tFfz4/XIpeQ7x+6LYhJjOAwDl54pRkaRPzG92hNGe
- I0snfpwwXV0OM6NTsg==
-X-UI-Sender-Class: 724b4f7f-cbec-4199-ad4e-598c01a50d3a
-Received: from client.hidden.invalid by mail.gmx.net (mrgmx005
- [212.227.17.190]) with ESMTPSA (Nemesis) id 1M6lpM-1wdUwo15P4-0009kG; Fri, 05
- Jun 2026 00:02:08 +0200
-Message-ID: <f9dc7ac9-4d59-421c-a024-a1fb743570e3@gmx.de>
-Date: Fri, 5 Jun 2026 00:02:06 +0200
+ (Exim 4.90_1) (envelope-from <Michael.Roth@amd.com>)
+ id 1wVGlO-0005Nj-4G
+ for qemu-devel@nongnu.org; Thu, 04 Jun 2026 18:42:13 -0400
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=TXeCSoqMi7GomxcUtR+a0nYIjAAK1cPAP684fdQGNhINaRrelfGKl95J/clVwCQtjdAZlSISpH4ciPAVrYZpPsvy9OXEIg6qpGzWmYBlfWkrQE+LSTZSZKVHTP10umavP0+A2vEZjnE36eDC7riJzzGREXSRlxBicdDd6ahWyrWqZTYB+bh9pes3lXXf3k9LLzACGPAReFAFyyEEqodCDSkmFF3IgmeJUCKX7PsZQyM6CDhGv8AM5tChXsuYZzNNo23yku/Jq30DAa5QTp4IJ5cRbgktljmFPezUmIXkAzoARslLjOF2Nh2+yev6fxQN17x9qMGfydiNdyu7ckfLLg==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=i76HvKosNZnntzlx+mKj5RrYNOkvyxS3sHJCdtQZ2oU=;
+ b=QRFFrZM/TxSQMEY+T6yOApYLG4E1jQR2V9dwAwOcFYPlzGGP2rBYSYMzKmddzKHipw0wgRGjjr4ObVvGtzNBG3gUWo+0YtOQeflFPnY6EDDy8sFXIYELaJieLgM/f69cdTreUc80IhTNoadNtwbYzt58BHbJuOxCTUgf2WPKeqvqq5XWfHFVLw5L+tOe21XpfZUSCm0RizAX6hktBerF/RCD6FH64LKAq4gLYK2HSxtH3bzjwqlwCnQEp2LopLAr/rV/DoZEnHUxz7zXDvo29Ro1EKhy7nySQk7ldyrMCdKrRaGI4jj9Fmu9MTeRsbZEo+iSLTQgoVaTx7TyCm2RWw==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass (sender ip is
+ 165.204.84.17) smtp.rcpttodomain=redhat.com smtp.mailfrom=amd.com; dmarc=pass
+ (p=quarantine sp=quarantine pct=100) action=none header.from=amd.com;
+ dkim=none (message not signed); arc=none (0)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=amd.com; s=selector1; 
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=i76HvKosNZnntzlx+mKj5RrYNOkvyxS3sHJCdtQZ2oU=;
+ b=0cUV7enwA7kICnQUOhn8kQzSWpYJAng2l6uxUEN2sQSYXazQTNf4/+uWpD/ZPankm8vEXcEquisD1QwXCZ1hgJt6BgF4vfRb7pOhii2dU8/BSTwAwF0SEc7SR8fMTFjN5o1UPC8ISjxFIPVCgN0TAC9YKb3B809o/mKfrp0NojA=
+Received: from MW4PR03CA0329.namprd03.prod.outlook.com (2603:10b6:303:dd::34)
+ by MW4PR12MB7439.namprd12.prod.outlook.com (2603:10b6:303:22b::7)
+ with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.92.8; Thu, 4 Jun 2026
+ 22:37:00 +0000
+Received: from CO1PEPF00012E7F.namprd03.prod.outlook.com
+ (2603:10b6:303:dd:cafe::8d) by MW4PR03CA0329.outlook.office365.com
+ (2603:10b6:303:dd::34) with Microsoft SMTP Server (version=TLS1_3,
+ cipher=TLS_AES_256_GCM_SHA384) id 15.21.92.8 via Frontend Transport; Thu, 4
+ Jun 2026 22:37:00 +0000
+X-MS-Exchange-Authentication-Results: spf=pass (sender IP is 165.204.84.17)
+ smtp.mailfrom=amd.com; dkim=none (message not signed)
+ header.d=none;dmarc=pass action=none header.from=amd.com;
+Received-SPF: Pass (protection.outlook.com: domain of amd.com designates
+ 165.204.84.17 as permitted sender) receiver=protection.outlook.com;
+ client-ip=165.204.84.17; helo=satlexmb07.amd.com; pr=C
+Received: from satlexmb07.amd.com (165.204.84.17) by
+ CO1PEPF00012E7F.mail.protection.outlook.com (10.167.249.54) with Microsoft
+ SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.21.92.5 via Frontend Transport; Thu, 4 Jun 2026 22:37:00 +0000
+Received: from localhost (10.180.168.240) by satlexmb07.amd.com
+ (10.181.42.216) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.2562.41; Thu, 4 Jun
+ 2026 17:36:58 -0500
+Date: Thu, 4 Jun 2026 17:36:42 -0500
+From: Michael Roth <michael.roth@amd.com>
+To: Peter Xu <peterx@redhat.com>
+CC: <qemu-devel@nongnu.org>, Juraj Marcin <jmarcin@redhat.com>, "David
+ Hildenbrand" <david@kernel.org>, Paolo Bonzini <pbonzini@redhat.com>, "Chenyi
+ Qiang" <chenyi.qiang@intel.com>, Fabiano Rosas <farosas@suse.de>, "Alexey
+ Kardashevskiy" <aik@amd.com>, Li Xiaoyao <xiaoyao.li@intel.com>
+Subject: Re: [PATCH v3 00/12] KVM/hostmem: Support init-shared guest-memfd as
+ VM backends
+Message-ID: <lpkcfd2crgparcd64ydry3ocryx3sfc5gj5pzrrms4nwvw6j4c@ulc3wa3rmefo>
+References: <20251215205203.1185099-1-peterx@redhat.com>
+ <rjqfiwh57gip3u3psqg33jhmo7ixaj2qwzupc7zdk7f3d26qnu@tglactz67ogk>
+ <aiCAFWKEAHkPLCO5@x1.local>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3 0/2] linux-user: implement fsmount(2) series of syscalls
-To: Xinhui Yang <cyan@cyano.uk>, qemu-devel@nongnu.org
-Cc: Laurent Vivier <laurent@vivier.eu>,
- Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
- Mingcong Bai <jeffbai@aosc.io>
-References: <cover.1780036891.git.cyan@cyano.uk>
-Content-Language: en-US
-From: Helge Deller <deller@gmx.de>
-Autocrypt: addr=deller@gmx.de; keydata=
- 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
-In-Reply-To: <cover.1780036891.git.cyan@cyano.uk>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: quoted-printable
-X-Provags-ID: V03:K1:WDCP3BZLLpGcIeoIML8TdWu6oB1iPsIW6XCTanty1aWSiNlgqc/
- ScLJ1DhqaAu9VRzWcG6Fv4ESGqSOD2WudWJH7oQc7Lwm91oUnB8SPUcEDAeIMpK9MPX/V/0
- fixffpxC0u57OL2gGOIOhGbcP9GK9xVEnaZ25SXKkR9JZHN1t3QvFchEGGLhoqq8+xUc7Zr
- JyPAs7pDz7VRPirX+cHhA==
-UI-OutboundReport: notjunk:1;M01:P0:waw7zIJj/+o=;WEMvZo6Jwa8mpbcGIl4a54cpGwd
- WGxDt18A/1xNMpvq/I0tLBlWLhPFWPEEZTvdDbXsxobqhjVNWdtPQErcckg61+mMgJyQQ3OEK
- CVaYKr05ALnf0bF8Fzx9FfvGcAAoHzZWxdBekmWhVvEuA2NbEuWTPJDu0cROi9zpOavlSnHkj
- LyO04CB18fiYlr7HVf85X0HSdFv4cMwVmE6U9/z1sbiYUIz7/xd9quy0SmcNfOjZlzDi/p8AP
- KcwvM1v2wa6dBe1bT5ELziUeBsFx0AePP0TAF8QJ4h8q84YbMrMCMirrKWwXlTwBW1w2Ljboz
- te2dG1SMLAuzie+qhrFfcD6WQwdWtec1gOw2GZlR/Br81eUIszmTOPt1pTYlMWnjnyYpOcB2p
- RJiWW2M6Kuzx3e2g/ZzcuLhY1CrpRAXTKO4/mxzalpJKqUQwdgdfc4iOg68YFEdQhe4xp9Cfr
- 6qUdODvCA+vQYbt8zdwWhYTE5n0QBOtJDP2GjKbeYHIUrKSGCShRVpAuVcuaqzZ4Ndkkx55vK
- eLEYJ/bHLplUyvnPKJgZ1FaUc8oLTOAhaN6V4bZgBzP/6OuLv+sYnD8lcUx/+uUR0EkwLnCvt
- 2+UEwLAuoNeH1fAwb7rozXAl+wo3hgcYGqlWYXZ7eLm3UQL3EW6xsTON9af3IMtj5auX7IVUG
- 8WwoZ/rxVd8vmyfIqg+6vKeJ8G9397+335pahyVUjEMIhL9VP0KFc4fuq5rLDEgEcpXun7a99
- 23sr6Xtcol+cpmF2i7QDsuL+6fbW9jTJ0BqCqh/yDblNBUH528L7ACjyqr6QXPMXGK81F70OB
- NsYbCj6KeDSEZ6yK8LB4jGo4IxaMY1Vu5MN1NIchqrJNnea7Nk5eaOTOpiSE83jazBmY4b9MT
- m0SqUMHEF/sYzfauSEkMIbQkGq5nizkRpCkNmBu4sT3ArsyDO3WvCsfr6LnpnPlSCVzNtBAXD
- +RhFpdf5suysj42YiHfw/z/Xtaig3a52npGuOCNmvfQVv4cIuaA1TDSaYi2oon1AmYVKYsuuO
- 3j5c3gKFzW6NAWU5KFP85UFf3+4K0FaPcuPgfqAuiB/7+SuebIliwXs342rdbAmd8+Fb9evW3
- zizPYrIap/PO/YMAoEK6qOrRMa8GjvRFxj11PQNeaHp1CCLxGKR7IZhG89GuJmGWJxkTkyA90
- ppeMwF0GO3aZL1DRzP5XwTSEnHsSzwPQu0S7wAJe1dNcX0f6PdJ+FvGfeh7v0KsBmOpLte8HJ
- 7Oboofgl/eQffGZSIgAHNsrIHfNzB7FjBSnMAYWrahKMNe2Jk58Ffqxz8SeG3GFsKxIxKzewA
- Z3R5QYyTbAiDhPMowaMjXRdoq0qk8sobIvP3OErDfBIIvG36pIu33VXS6bvnIFKFMhHqoxN/Y
- fzdhA/Yl2gnUZe1xN2QfrYjWgEhuFuCF3F1gz+pRLv5aVolfYlR+ILPMN0KtbYALvLJCz8tLZ
- uJrRXBmvUnYlgHbDBN5Qh1LqE7qKShZOt+3LBA+LG5cwQYgLdq7gQBoCXLucQVgYFyu0b9ZWZ
- 7r6POPK9oH2VxT46k7taD6p5vqe9+0QSXqRBb5n9edosbU1JEK6y1+nJj1TCSq6MuUFlstKTO
- OT3P0VMJz/qLkPJ63oDPqb9GvMbf1ODCD3rux/s+AYZrsDe96xIwSXPESv9+p8o2187x6jGG5
- Kv6pDuirfjgOJanzFy+XKU1LuxEmaPjuVLYkPchXEKJT2o08lQKd4odGWlq7JC3nR3egT78YV
- M8FDvAzvJFdqiwFBjdqR5J8kTu8bbn+UtMf/XShhj09qlBhZFbIW7jg3Vq6pRiM0YRJ0y93Dp
- qaojG55ufNzc3Af23vTRbTH/8F6rr32D2FZ5lFiDmgG3nqbvNhD8xhlqpMvc3FXIQoRecx8XS
- kWq5MYDi3D2c5yIrwC9fgp2am/Op/DKejLYpM81o09npxkMzEb2yw1AjeCZI2i7VmYB76a1e2
- 7l3dBpGiOGVvYDuqGfi5aZdGFotoCBYQkdf/ToW9AYTejT0lR/mTBAL/BM2vXkdtW/ZFiHecT
- 9oUBhehk8WNNmICOs+r5CpB7BhHo6vF90iyhVHvLFrms9BFevEg4hmUXZrQP+QOWgnbmTlFp+
- 5WeOKcEcVAnt/q4BVFuMTmMTUjGRYJEJ1hbrAFh6zLX4/HA02aBYyp9TsyB9qkSKFCavVSUu3
- KAk8TDyBhxfl+XXEZ6T7n+m7+cMGqkXxm881cmwwzu/nX2vhRMVwZNFcJUER6n63pIydyWhi6
- 9x/sf4EX2t+nzJDcqS6hzIP93P75gliaM2FIoBYtx22qe4TTT+U70OeO0Xg4Wobq6Djvum8b2
- 76kmBSnpr1DhaZVoy4T/NMXBYtpOTPD1uKNAcUrbAbhp5mbFuxMHsFGePxqrNbTBCsJkUS0zS
- fC+rRBCAP5jpNaIk1n3/f3W6lvtAA/5VzJFvmPCtiuYeANHSu5sWOpwY2mk1BcxPvCowo7LB3
- hZ2LcuV7XXcXM+FjODNSUnRKETHglG5JTygtEzsXAjg7sgsmP20jcwCtbjnvq7w95cBjapiYg
- MC7mpc7IlfakD22SU/rNFPWY8EgaV16udjoEYLzrxeYtQehTTl+1ZE4Xzcy2mL0F5tssipdYS
- kdts5FOTAkb6wUYFnR+Tor/DYT3z6L70UY6Y2/awpQ2qZv/k+O5QiJrapdkde4wdmbaDprgRN
- u+UzHHk96dBG47kdVna3xHbpvQUJShbMtaw8gCCGwZM6sJa/CtTOqsPBgjeLDrGibyPt2h09l
- xnBgHbK8oheZ43HWlcVGsYmC7fMSucKG2zigQ7X0bkhksMu95+AiCjtY2Z6ohKaUFMdryhV1X
- uWtCzeWhHG9x4jcqCDKggdFE531YVas4O0eEqzSVEdlEOcJkYqAF806Ege5n6tLj3hr3Vy5A0
- 0TLAFbL+7M79oHVv7iBzF4qDKWeGSk5rFZSuslhqw0jbn3iL5pOQJvdGbzdLGziNm1QBi5TKx
- JeYEmYEfgFAuARPpq/ah3f1u6ZK5ToOdJVFeqAjBeWrpy3h2+d5iz+kCUisYUPEA19N6IY12i
- P/wlM+OUuWgiG4bf8miEuv/amzkNKNDCESJ4O2DKaZSKbvIopefOa8gy6RnA0elQCZRpPgIZW
- 2fz5s1laiGh4tkwMG5dYJGMH1P1KHzrEZrfNVNDrhnVydU9kp3oIfAFdhOanRlIJYYlxib33D
- e4PDx16BaYfoTsQR9NoO1UCYw/GaO5OcKP2/+iJXs4tgEQ/wyhInljzOtoEa6+XcqrCWNzHzB
- 5iktePh2XCZnVza2f+TiV5gjnSRkcg5lU6JPEiqU4TXFMQltaj3IrLUF3OhW8koXULytmse1F
- coslyhhdzmvks/6QamPckZheExiuBpVR5dB62fi2XAJ5ej55YO7qRz4PmJ+pCL2h7DaPyHY/5
- mnW9fgDGp5f3EE5R7zn1nCz/JfQw0OKcIXFtRHbjiMqRaDA1NKyILFmjTSjBqv1Z8JksUKRVV
- 7u8eqUTHn3Z4BSlWmAMcco0N7iiSYXWwZLes6B2b5Pxuk4BNuaDV62/0HdP914uj45eDQrvZI
- zx9ww/RupC2X+b+v1MOwqvoLtN1tSY1DjXgojDbb+/lgnTCTMM/mqcUvHl6fMlh8kBZJLRhY7
- P140MW11HpU76VMr800VJu9GhE7ROUrhyagABKKsf7zA1D9kG8SDl0t8ifnsGLSBqQ0ukvLLB
- GqFCN+vSBKqvgHhZyJ7tyLKoffidDyuX8AgED3Z9yhfm19AM3lYhHWU6AX/0W6i2POlivY/tp
- rCy6FNuZaNG0huklYFoKpPrinScYBdfC9qxSthtFGsGLEbPsTiIWFEJ/Nb3Mar9UoFlhZIThV
- 3DgnpZHeAQ0rkgDJiTBaVcrdkQBRUxo7KhPzcRn66CSa5WWxJVt9Fc8y78ADpnlKnkMx/WOzG
- /sDu4bcdM/+QRK46Tp9T9YLP8E9cuVhSpjUDC6kotO1kxU22VafBrtsck/S+2yLwbLkGzOUSW
- SCPUOTzzVqUaJ3Guk0IpPOkXpbTVm9Br7wd0l7wD7CxslPwJf1qfdPubXsysMdtY1Q+Nw7U8n
- xcer7360IdmzabsFAnxkz+mUcm1hq5W6yHIguxieHTCH9e9AlWk9UT/pLLvGicx4auv6R0fnS
- 2ROIj1sQdCuIEY9Hx8c0pzSZWluUhYEMTfGdiaS7M6L8Wuo8xLRtfM/TWL3SbUiMS6vC7snx9
- 4n3UvxE4MBV1ytQDTHn2rhx/AFhBixPDEx4wM801d70cyUKROurrpODVhzqM7BuC7Xh55fiEs
- urnVFVnIMMAbPvOYfzDKxWe91EhXwEsyoVjM0fVTJ4XLU/v0gih5T8R4FYrnC9WOBug506tZy
- qdwrodVp2tw/28ON1pWlznulDqg3rmlJTqrNQblFmE3b7FBj0s/BRfuOwNhBfjKuTGLDndP8e
- v0XMCR9sO4EeC9zWf70cHk4rb1Xjdl7Q11lH3yk62u7uMGLVDMvw6xtF+7WhnKcIaE+SKd+SB
- 7/i2DhOqkGTkU51TzD1iuUKs/3CRrAsmSEeTZm8ynnObOHKnBxgNqG9+yqC//oq7IS5318E3r
- sz5KuVvI0J7zgxako2U7lD3dCBetNDvWWDiW0oQE7LW3GWfwdsUExlIhNTUiaWNJw+ilSWORc
- uDFmRht1XToFvrSqw3YWhk3jFdoRi7ChlncG2VRGafhCiM+1FzX3jPi6CpvM4d28ayQjf1N00
- UzkMW798OYmq5ZoAvWDZVgCrPFpQKId3hDfaXr2bBN2gK3LvxzmiTapBLeJszUgcI7hxNqUng
- tWiGtV7lIw5Stp/3ChpNbuQEj2FoXAHq1WzjQ5Qyry/O9xOfk7xjnkp0k0qmnQ8eSZDNQtfNp
- xqKkEjVMcxp3DyzJgvY1pUWadP8lt1poHBmLI6JWX2wEn7by5Ue1M0GkGMOPSpCxNElFI09Dp
- QMalQmMmlBInQiKhg+5NJGJUZeQypuRQfV262JJv7D8u2No2n6cYQo0Pt/h0pqpY6+xF6BlKP
- 88R9JPcPyFqO7C2uQ7IDWIHodi+2EjCixRE6Op+m/f6r71tuHJnVjZsXhgKLxMdMUlONbC8fz
- KzJbkYY1LQu+zgkiqEab24zyfMROcWIbeykEsXX3jcaAP0BrMoqw/wY4llCHUj66UzkUv1puH
- GwFBL+2RawJg9GFI+UxUlb1qnes58d3fzjrqKrheI/72qoDFpxbg+krhUFhdRlMQTTpbat+JH
- SP9Q4rfoBLvcL5fhnr4XXeF4FEXExn4Bqu4Awg/PyieEVMAFZ3o/1AIImZfwoa7SlzUldAcDZ
- RDyQTj4oOH3cwFuXqSMJifvSP3wZOGkdOXBfjoKMfJICEjaYaEXSZmU4nBbWVmmusZjGRbP1I
- l4xEmhEBlY60fr2LIi/bEZlW4YJiaLRiGNkixJrb9Hr17v5711trr4nxaGNIoQHCg8T+NDOx3
- dMXmdcL5zHqcssk8FA24PbnsEI4v/CAIgJ8wdMEwPsAO99dsUIYmSxkmWzDGgH/i5ApkMQhSD
- uAdPHDxSYGEe1aLmH+2+XKGP+p7gFhzhrU3NkUUKBWHW1UWFBgz5Rq1a7uRkBVRFLOpCS0FtR
- P9BI1ylUk4zQt2N1HFadu57UjoI=
-Received-SPF: pass client-ip=212.227.15.19; envelope-from=deller@gmx.de;
- helo=mout.gmx.net
-X-Spam_score_int: -27
-X-Spam_score: -2.8
+Content-Type: text/plain; charset="us-ascii"
+Content-Disposition: inline
+In-Reply-To: <aiCAFWKEAHkPLCO5@x1.local>
+X-Originating-IP: [10.180.168.240]
+X-ClientProxiedBy: satlexmb08.amd.com (10.181.42.217) To satlexmb07.amd.com
+ (10.181.42.216)
+X-EOPAttributedMessage: 0
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: CO1PEPF00012E7F:EE_|MW4PR12MB7439:EE_
+X-MS-Office365-Filtering-Correlation-Id: 2bfc9645-af34-405e-fd3a-08dec289cada
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam: BCL:0;
+ ARA:13230040|376014|82310400026|36860700016|1800799024|11063799006|4143699003|3023799007|6133799003|56012099006|22082099003|18002099003|13003099007;
+X-Microsoft-Antispam-Message-Info: iHamGyKX3bGnQ/lYfhwxt8cD4Di+UOREE9pHpVieAu1XqCvW5azJlTRHMhUvImfvw6m4XZr9X19XEEYy2fOqLmgFOgCBZb2VL+/m4TITuQLXqzW1ti1pK3hGjfUcyqExg8DrzEG68ooFt/YEiN2izXddcv6BczZpm8wpmWsMdf5GR6rS7yaJFjRhD111bsxUjaxkNRpsnz6x3FYjbHMim53lc8Bfe/MCUjclN4sDr4MovXXRtEHvlcpqRFID+g1+eOMzMjcaV/07EVwXWFJ+YPj5xdgwtKLtVPuU53Stra82HCDYAtmgGG3NKSdUg1zCrXn2cqWnTMcnx4ht+nQU92X2fdkrGcwR+ROQ4/Ny/6Pmqk10/ht/1NzSeYRTpR29ZsrvEZTm3jjz8ji3+WepdD5BAOhaUywDTPFr62F6k2/7mZSXwsxoOzhlfC1TOWI7AausKrxkcLKnNNye7IDTxSvB7rX0kH36SBkguruNg5Ezq0SCBajx/2H6tS156OxSD8bIRpMYcjh0hKHEZlWghSHSpHFW1zJdJO8aRkrIp+sGHwN/NUPYJqWLj13V5D9r2QD4DvLSxZmj5W7CdDQFKwOqouKfmvPqoKDlPvptSGdKxfIlnTKwQ49zxWtpDiJkFPa9FkmGUhmueDtlBGgqvrFxKVnaa3Xa2R6Yb95Yz5Aojsqu8dt979+F/U5S4oJr
+X-Forefront-Antispam-Report: CIP:165.204.84.17; CTRY:US; LANG:en; SCL:1; SRV:;
+ IPV:NLI; SFV:NSPM; H:satlexmb07.amd.com; PTR:InfoDomainNonexistent; CAT:NONE;
+ SFS:(13230040)(376014)(82310400026)(36860700016)(1800799024)(11063799006)(4143699003)(3023799007)(6133799003)(56012099006)(22082099003)(18002099003)(13003099007);
+ DIR:OUT; SFP:1101; 
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0: cSku/hjqAe17cFTAxdBSNV4rKgx/AaGhFEbj+5qPWP71VacSw15lR0jDGH0Q+9bOwEJXAcqOf4ckuScvOvpEuiShUg/6eEueDDfpqXYV+PKJVdHWvDP8Hw6hYRn1CKxvLAd+lm4LX4yu51nt0E723eTFrjJ4xgDjcz4+jLmlRS5jKgrVar+qXqqLa9WKarCJGbChrD2dh42EVGBsObuwje3KikCd/dO1q2CXbn/Ju8fjSkX3fh5dmkHZbQAlMeLEjDLcvB/yS+8B3QURm8D9AaExS4br+D1yzB+z4zx4q1KpGj1Yq1e2foZU4WEA0P/Nh6npbDAhMgdD+z1vvWIazUrifSf8zhpDP5RLBzGUAuI/MamzIoFjsinJAhNDkZ7+CCujDK5WOrdWpi8OEfyyDMv4iyShvwI07XQ/NIBpIsAmLvLYjEFYPQo0cD+bsrls
+X-OriginatorOrg: amd.com
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 04 Jun 2026 22:37:00.1513 (UTC)
+X-MS-Exchange-CrossTenant-Network-Message-Id: 2bfc9645-af34-405e-fd3a-08dec289cada
+X-MS-Exchange-CrossTenant-Id: 3dd8961f-e488-4e60-8e11-a82d994e183d
+X-MS-Exchange-CrossTenant-OriginalAttributedTenantConnectingIp: TenantId=3dd8961f-e488-4e60-8e11-a82d994e183d; Ip=[165.204.84.17];
+ Helo=[satlexmb07.amd.com]
+X-MS-Exchange-CrossTenant-AuthSource: CO1PEPF00012E7F.namprd03.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Anonymous
+X-MS-Exchange-CrossTenant-FromEntityHeader: HybridOnPrem
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: MW4PR12MB7439
+Received-SPF: permerror client-ip=52.101.61.59;
+ envelope-from=Michael.Roth@amd.com;
+ helo=DM1PR04CU001.outbound.protection.outlook.com
+X-Spam_score_int: -24
+X-Spam_score: -2.5
 X-Spam_bar: --
-X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_MSPIKE_H2=0.001, SPF_HELO_NONE=0.001,
+X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.445,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001, SPF_HELO_PASS=-0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -201,53 +130,290 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 5/29/26 08:53, Xinhui Yang wrote:
-> The motivation of the implementation is to allow any foreign guest OSes
-> with systemd v259+ to boot using systemd-nspawn(1), otherwise any
-> systemd service requiring importing credentials will fail, including
-> journald, D-Bus service and getty. We used to work around this issue by
-> patching systemd to retry the clone() without CLONE_NEWNS, which is not
-> and can not be implemented in QEMU user emulation.
->=20
-> mount(8) from util-linux worked prior to this patch because it will
-> fallback to the old mount(2) syscall if fsmount(8) series of syscalls
-> is not available.
->=20
-> Tested good on an x86-64 host, with:
->=20
-> - an AOSC OS mips64r6el guest, which boots successfully with full system=
-d
->    support using systemd-nspawn(1).
-> - a Gentoo ppc (big endian) guest, which boots successfully with full
->    systemd support, using systemd-nspawn(1).
->=20
-> Changes from v2:
->=20
-> * Apply the review from Pierrick Bouvier[1], making sure that the buffer
->    is unlocked before returning error in the fsconfig handler.
-> * Clearify some comments in syscall.c.
->=20
-> Changes from v1:
->=20
-> * Add missing guard for FSCONFIG_CMD_CREATE_EXCL in strace.c, since it i=
-s
->    only available since 6.6.
-> * Fix some wording issues in the cover letter.
->=20
-> [1]: https://lists.nongnu.org/archive/html/qemu-devel/2026-05/msg07794.h=
-tml
->=20
-> Xinhui Yang (2):
->    linux-user: implement fsmount(2) series of syscalls
->    linux-user/strace: add fsmount series of syscalls
->=20
->   linux-user/strace.c    | 105 +++++++++++++++++++++++++++++++++++++++++
->   linux-user/strace.list |  15 ++++++
->   linux-user/syscall.c   |  91 +++++++++++++++++++++++++++++++++++
->   3 files changed, 211 insertions(+)
+On Wed, Jun 03, 2026 at 03:27:17PM -0400, Peter Xu wrote:
+> On Tue, Jun 02, 2026 at 05:02:29PM -0500, Michael Roth wrote:
+> > On Mon, Dec 15, 2025 at 03:51:51PM -0500, Peter Xu wrote:
+> > > v1: https://lore.kernel.org/r/20251023185913.2923322-1-peterx@redhat.com
+> > > v2: https://lore.kernel.org/r/20251119172913.577392-1-peterx@redhat.com
+> > > 
+> > > v3:
+> > > - Collect R-bs from Xiaoyao
+> > > - Rebased to 10.2-rc3; no dependency needed now, as those got merged
+> > > - Reorder patches, touch up commit messages or comments on in-place misuse
+> > > - Added patch "kvm: Provide explicit error for kvm_create_guest_memfd()" [Xiaoyao]
+> > > - Added one patch for renaming machine_require_guest_memfd() [Xiaoyao]
+> > > - Added one patch for renaming memory_region_init_ram_guest_memfd() [Xiaoyao]
+> > > 
+> > > =========8<===========
+> > > 
+> > > This series allows QEMU to consume init-shared guest-memfd to be a common
+> > > memory backend. Before this series, guest-memfd was only used in CoCo and
+> > > the fds will be created implicitly whenever CoCo environment is detected.
+> > > When used in init-shared mode, the guest-memfd will be specified in the
+> > > command lines directly just like other types of memory backends.
+> > > 
+> > > In the current patchset, I reused the memory-backend-memfd object, rather
+> > > than creating a new type of object.  After all, guest-memfd (at least from
+> > > userspace POV) works similarly like a memfd, except that it was tailored
+> > > for VM's use case.
+> > > 
+> > > This approach so far also does not involve gmem bindings to KVM instances,
+> > > hence it is not prone to issues when the same chunk of RAM will be attached
+> > > to more than one KVM memslots.
+> > > 
+> > > Now, instead of using a normal memfd backend using:
+> > > 
+> > >   -object memory-backend-memfd,id=ID,size=SIZE,share=on
+> > > 
+> > > One can also boot a VM with guest-memfd:
+> > > 
+> > >   -object memory-backend-memfd,id=ID,size=SIZE,share=on,guest-memfd=on
+> > 
+> > Hi Peter,
+> 
+> Hi, Michael,
+> 
+> > 
+> > I'm working on enabling support for this, as well as enabling in-place
+> > conversion support for confidential VMs[1]. In my series I added a
+> > dedicated memory-backend-guest-memfd to handle using mmapable
+> > guest_memfd to back normal VMs (and confidential VMs with in-place
+> > conversion enabled on top). Xiaoyao mentioned we had some overlap and
+> > potential inter-dependencies between our series so I took some notes
+> > on the differences which I've included at the bottom of this email...
+> 
+> To Xiaoyao: thanks for linking these works, and also thanks for answering
+> other question I raised in the separate thread.
+> 
+> > 
+> > But at a high-level I think this series is further along in implementing
+> > guest_memfd for normal VMs, and I would plan to just mostly rebase my
+> > in-place conversion patches on top of your series. However I think it
+> > would be a good idea to go with a dedicated memory-backend-guest-memfd
+> > for reasons I outlined in my notes, so maybe this needs to be discussed
+> > more.
+> 
+> To me, it was just natural when working on that to reuse memfd backend,
+> because conceptually they're really the same: I guess guest-memfd is named
+> as guest-memfd (not guest-special-fd etc.) also because of that.
 
-series applied to the linux-user-next git tree.
+It's true that it's a 'memfd for guest stuff', but that 'guest stuff' is
+becoming a pretty wild set of additional features that I think could lead
+to some 'interesting' options that will never have any line-of-sight for
+normal memfd's.
 
-Thanks!
-Helge
+> 
+> I don't have a strong feeling here, hostmem-memfd.c is tiny so duplicating
+> isn't a major concern even if so.  It's just that I don't yet see when gmem
+> will become special.
+> 
+> Say, all of the features that memfd provides can easily be applied to
+> guest-memfd either now or at some point later:
+> 
+>   - hugetlb/hugetlbsize being one of them already, I believe we almost know
+>     1G will happen to gmem soon
+>   - seal: I don't see why we can't seal a gmemfd too.. maybe it'll come, in
+>     general the whole seal concept can apply to gmem too.
+>   - cpr support on memfd (or anything about live update in the future to
+>     happen on gmem): I believe gmem also want it..
+> 
+> IIUC it's a matter of if we expect future property of guest-memfd that will
+> stop applying to memfd anymore?
+
+Yah, I think that's the main thing to consider. There's a few things in the
+pipeline where the options associated with guest_memfd might diverage
+quite a bit from memfd:
+
+  - hugetlb: yes, these could potentially use the same options memfd
+    uses, and I'm guessing that will end up being the case, but one
+    large gap there is that shared memory is always split to 4K, which
+    we've accepted for now, but if you consider use-cases like DPDK
+    there can still be major performance bottlenecks that would drive
+    us to try to enable larger mappings for the shared ranges, and then
+    we'd end up with guest-memfd-specific parameters intermix with
+    normal memfd options, and our related documentation would need to
+    covers these differences case by case
+  - DAX-like stuff: there are some proposals for making device memory
+    available to use as private guest memory, and since 'guest-memfd'
+    is generally responsible for managing private memory, it will
+    likely end up being extended to handle this at some point. One
+    proposal/PoC[1] would involve at least needing additional options
+    for the /dev/dax path, but there have also been discussions about
+    having a general notion of custom allocators that can be plugged
+    into guest_memfd, and some of these might have overlapping options
+    WRT things like hugepages/etc. But at a high-level, DAX would map
+    more to memory-backend-file than memory-backend-memfd, so we'd
+    already be crossing up some wires there.
+  - live update: there's work[2] on enabling preservation of confidential
+    guest memory across kexec by preserving it through guest_memfd. This
+    one is still a bit mind-blowing to me but I could see us needing
+    some additional options here that would really make no sense for
+    memfd.
+  - directmap removal: these[3] patches allow a new guest_memfd flag to
+    be set to unmap guest_memfd pages from kernel directmap to help
+    mitigate speculative attacks, probably would involve a new option
+    as well that wouldn't be applicable to normal memfds
+
+It could also end up that even memory-backend-guest-memfd is too
+generic, and that some of these would involve a more specialized memory
+backend where may they can share a common base class for some of the
+core guest_memfd stuff but otherwise be separate backends with their
+own specific options. So to me, starting off building up
+memory-backend-memfd seems like a potential misstep, whereas we don't
+really lose much to start with a clean slate.
+
+[1] DAX: https://lwn.net/ml/all/20260423170219.281618-1-dave.jiang@intel.com/
+[2] LUO: https://lore.kernel.org/all/cover.1779080766.git.tarunsahu@google.com/#r
+[3] directmap removal: https://lore.kernel.org/kvm/20260317141031.514-1-kalyazin@amazon.com/
+
+> 
+> > 
+> > I also saw you were open to having someone pick up these patches if you
+> > don't think you'll have a chance to get to them near-term, so I'd be
+> > happy to pick them up if that's preferable.
+> 
+> Sure!  Indeed I don't have bandwidth to keep working on this one in the
+> near future. Please feel free to pick whatever needed into your series.
+
+Ok, sounds good, I'll pick these up for my next posting and incorporate
+any changes/comments that might still be pending at that time.
+
+Thanks for getting things to this stage!
+
+-Mike
+
+> 
+> Thanks,
+> 
+> > 
+> > Thanks!
+> > 
+> > -Mike
+> > 
+> > [1] https://lore.kernel.org/qemu-devel/20260528000416.8161-1-michael.roth@amd.com/
+> > 
+> > Comparisons to the above patchset:
+> > 
+> >   [PATCH v3 01/12] kvm: Decouple memory attribute check from kvm_guest_memfd_supported 
+> >     - similar to:
+> >         [PATCH 01/12] accel/kvm: Decouple guest_memfd checks from memory attribute checks
+> >     - to allow mmap case, both defer error handling to ram_block_add() + RAM_GUEST_MEMFD path
+> >     - pros: adds nice kvm_private_memory_attribute_supported() helper
+> >     - cons: my patch checks/prints error via kvm_create_guest_memfd(), which
+> >       makes it a more re-usable error since ram_block_add() isn't the only
+> >       caller.
+> >     - IMO, I think we should merge the pros of your patch into my similar patch
+> >       and add your Co-developed-by, but also fine to keep yours as-is and deal
+> >       with anything else needed as a follow-up patch
+> >   [PATCH v3 02/12] kvm: Detect guest-memfd flags supported
+> >     - similar to the kvm_supported_guest_memfd_flags / kvm_create_guest_memfd_shared()
+> >       additions that are part of:
+> >         [02/12] hostmem: Introduce dedicated memory backend for guest_memfd
+> >     - This patch could be treated as a common dependency of the above and I can
+> >       drop the corresponding changes from my patch
+> >   [PATCH v3 03/12] kvm: Provide explicit error for kvm_create_guest_memfd()
+> >     - Keep as-is
+> >   [PATCH v3 04/12] ramblock: Rename guest_memfd to guest_memfd_private
+> >     - Keep as-is
+> >   [PATCH v3 05/12] memory: Rename RAM_GUEST_MEMFD to RAM_GUEST_MEMFD_PRIVATE
+> >     - Keep as-is
+> >   [PATCH v3 06/12] memory: Rename memory_region_has_guest_memfd() to *_private()
+> >     - Keep as-is
+> >   [PATCH v3 07/12] hostmem: Rename guest_memfd to guest_memfd_private
+> >     - Keep as-is
+> >   [PATCH v3 08/12] hostmem: Support fully shared guest memfd to back a VM
+> >     - alternative to:
+> >         [02/12] hostmem: Introduce dedicated memory backend for guest_memfd
+> >     - pros: re-uses infrastructure from hostmem-memfd
+> >     - pros: less command-line changes vs. dedicated hostmem-guest-memfd (less libvirt changes?)
+> >     - cons: less flexibility vs. a dedicated backend
+> >     - cons: more risk of memfd vs guest_memfd behavior/options diverging over
+> >             time and having less commonality (e.g. if hugetlb has special options
+> >             we wouldn't need to muddy the existing documentation for normal
+> >             memfds or introduce alternative options alongside)
+> >     - IMO, a clean state patch only requires ~90 lines of potentially-duplicate
+> >       code, and that's offset to some degree by needing less special-casing
+> >       throughout hostmem-memfd.c (e.g. this patchset adds 55 lines on top), and
+> >       it seems worthwhile given some of the advanced use-cases planned around
+> >       guest_memfd (hugetlb, DAX-like functionality, and persisting userspace
+> >       across kexec) that might require special handling/options for very
+> >       different use-cases than normal memfds.
+> >   [PATCH v3 09/12] machine: Rename machine_require_guest_memfd() to *_private()
+> >     - Keep as-is
+> >     - (all these renames are a nice cleanup/prep and will help a lot with making
+> >       in-place conversion handling more readable)
+> >   [PATCH v3 10/12] memory: Rename memory_region_init_ram_guest_memfd() to *_private()
+> >     - Keep as-is
+> >     - (all these renames are a nice cleanup/prep and will help a lot with making
+> >       in-place conversion handling more readable)
+> >   [PATCH v3 11/12] tests/migration-test: Support guest-memfd init shared mem type
+> >     - Keep as-is
+> >   [PATCH v3 12/12] tests/migration-test: Add a precopy test for guest-memfd
+> >     - Keep as-is
+> > 
+> > > 
+> > > The init-shared guest-memfd relies on almost the latest linux, as the
+> > > mmap() support just landed v6.18-rc2.  When run it on an older qemu, we'll
+> > > see errors like:
+> > > 
+> > >   qemu-system-x86_64: KVM does not support guest_memfd
+> > > 
+> > > One thing to mention is live migration is by default supported, however
+> > > postcopy is still currently not supported.  The postcopy support will have
+> > > some kernel dependency work to be merged in Linux first.
+> > > 
+> > > Thanks,
+> > > 
+> > > Peter Xu (11):
+> > >   kvm: Detect guest-memfd flags supported
+> > >   kvm: Provide explicit error for kvm_create_guest_memfd()
+> > >   ramblock: Rename guest_memfd to guest_memfd_private
+> > >   memory: Rename RAM_GUEST_MEMFD to RAM_GUEST_MEMFD_PRIVATE
+> > >   memory: Rename memory_region_has_guest_memfd() to *_private()
+> > >   hostmem: Rename guest_memfd to guest_memfd_private
+> > >   hostmem: Support fully shared guest memfd to back a VM
+> > >   machine: Rename machine_require_guest_memfd() to *_private()
+> > >   memory: Rename memory_region_init_ram_guest_memfd() to *_private()
+> > >   tests/migration-test: Support guest-memfd init shared mem type
+> > >   tests/migration-test: Add a precopy test for guest-memfd
+> > > 
+> > > Xiaoyao Li (1):
+> > >   kvm: Decouple memory attribute check from kvm_guest_memfd_supported
+> > > 
+> > >  qapi/qom.json                         |  6 ++-
+> > >  include/hw/boards.h                   |  2 +-
+> > >  include/system/hostmem.h              |  2 +-
+> > >  include/system/kvm.h                  |  1 +
+> > >  include/system/memory.h               | 27 ++++++------
+> > >  include/system/ram_addr.h             |  2 +-
+> > >  include/system/ramblock.h             |  7 +++-
+> > >  tests/qtest/migration/framework.h     |  4 ++
+> > >  accel/kvm/kvm-all.c                   | 33 ++++++++++++---
+> > >  accel/stubs/kvm-stub.c                |  6 +++
+> > >  backends/hostmem-file.c               |  2 +-
+> > >  backends/hostmem-memfd.c              | 55 +++++++++++++++++++++---
+> > >  backends/hostmem-ram.c                |  2 +-
+> > >  backends/hostmem-shm.c                |  2 +-
+> > >  backends/hostmem.c                    |  2 +-
+> > >  backends/igvm.c                       |  4 +-
+> > >  hw/core/machine.c                     |  2 +-
+> > >  hw/i386/pc.c                          |  6 +--
+> > >  hw/i386/pc_sysfw.c                    |  8 ++--
+> > >  hw/i386/x86-common.c                  |  8 ++--
+> > >  system/memory.c                       | 17 ++++----
+> > >  system/physmem.c                      | 37 ++++++++++-------
+> > >  target/i386/kvm/kvm.c                 |  3 +-
+> > >  tests/qtest/migration/framework.c     | 60 +++++++++++++++++++++++++++
+> > >  tests/qtest/migration/precopy-tests.c | 12 ++++++
+> > >  25 files changed, 239 insertions(+), 71 deletions(-)
+> > > 
+> > > -- 
+> > > 2.50.1
+> > > 
+> > > 
+> > 
+> 
+> -- 
+> Peter Xu
+> 
 
