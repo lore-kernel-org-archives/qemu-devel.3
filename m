@@ -4,90 +4,147 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 71FADCD6E57
-	for <qemu-devel@archiver.kernel.org>; Thu,  4 Jun 2026 00:32:05 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B11D3CD6E60
+	for <qemu-devel@archiver.kernel.org>; Thu,  4 Jun 2026 00:45:49 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wUvzR-0007Pu-R8; Wed, 03 Jun 2026 20:31:17 -0400
+	id 1wUwCr-0002KZ-2O; Wed, 03 Jun 2026 20:45:09 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mattst88@gmail.com>)
- id 1wUvzM-0007NE-Ap
- for qemu-devel@nongnu.org; Wed, 03 Jun 2026 20:31:13 -0400
-Received: from mail-yx1-xb12f.google.com ([2607:f8b0:4864:20::b12f])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <mattst88@gmail.com>)
- id 1wUvzK-0004XY-36
- for qemu-devel@nongnu.org; Wed, 03 Jun 2026 20:31:12 -0400
-Received: by mail-yx1-xb12f.google.com with SMTP id
- 956f58d0204a3-66077e90382so192298d50.3
- for <qemu-devel@nongnu.org>; Wed, 03 Jun 2026 17:31:09 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <brian.cain@oss.qualcomm.com>)
+ id 1wUwCn-0002Hk-Sv
+ for qemu-devel@nongnu.org; Wed, 03 Jun 2026 20:45:05 -0400
+Received: from mx0b-0031df01.pphosted.com ([205.220.180.131])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <brian.cain@oss.qualcomm.com>)
+ id 1wUwCk-00089V-HS
+ for qemu-devel@nongnu.org; Wed, 03 Jun 2026 20:45:05 -0400
+Received: from pps.filterd (m0279871.ppops.net [127.0.0.1])
+ by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
+ 653LeLuR3240201
+ for <qemu-devel@nongnu.org>; Thu, 4 Jun 2026 00:44:59 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+ cc:content-transfer-encoding:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+ mc3ZWbPaUP7iv6VT2w71TPYqlZKyIJ7QvI4dzFshBck=; b=AArGYV7O1d3Hks+k
+ 4SfgxN1Cn6BPHreVCuFvUS4gS0BbnIsEcU8KYGKqserakftbMRgfre8xZdHFfrav
+ EkEo1OmQI1+7hBIs+EHVk5c8xRETy1bX/Zo0eC+HLeOsAbldh6dRDkeFRCJRy527
+ e10jxtiEk4bcbVqGw+H1XS+BbHIrG6u5iSq46W0xCh230bUBESSho/Gy9zURdkFx
+ PPPrYsaIHdxviLfI8Qj/dKPAZbKVdVH0HTdjolLgYaxe2d2IRDUaOWpxrqui0sl/
+ lKLXQIRX2VqAWpvSZHDuHyrkrFOqkEn8lkGKu7c01g4nmb0UZbWksJuFJZaRey5K
+ uVR0pA==
+Received: from mail-dl1-f69.google.com (mail-dl1-f69.google.com [74.125.82.69])
+ by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4ejvd08g9s-1
+ (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
+ for <qemu-devel@nongnu.org>; Thu, 04 Jun 2026 00:44:59 +0000 (GMT)
+Received: by mail-dl1-f69.google.com with SMTP id
+ a92af1059eb24-137f2083280so509770c88.1
+ for <qemu-devel@nongnu.org>; Wed, 03 Jun 2026 17:44:59 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1780533898; cv=none;
+ d=google.com; s=arc-20240605;
+ b=c19opjAZ0pKSuLIo2Aj4ZREe6D3+O+Hu4SPHpzHtsXlZ94Xq54a6S+UrQPhkJw2Hwv
+ 3GXN6Iu38YG5VEe0mNkNCL1mBEy66vh/+P5qqMQjDNqlYFJlgDO97IKmbw0rCCtKCLt/
+ G7b06MiC4GyBUTuPjrzQSew96EyQ55B5maWIHtcMFg5Pp1blE9cwR5T+v5W0YPnaiife
+ OJzaZAzf5wf4pN4mcpAAlfqp+tpVQZ7kr7WbmIoPyxq+boaTqn9qp0E9VzrPUa1I9HCS
+ 0XWtKoNj6W+LYADoODXpkkg8CUv1E7IfS1v3SlG44zI19FTeMh9w/GSP3OcS5LFoQJpm
+ OM+w==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
+ s=arc-20240605; 
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:dkim-signature;
+ bh=mc3ZWbPaUP7iv6VT2w71TPYqlZKyIJ7QvI4dzFshBck=;
+ fh=bd4NqF8mWkw5BKad7KyyuY5CBD+jIgRsk3tsaCztl6A=;
+ b=cp6ZyMEPs8sNXV8vH1RxRSMiZiH7hFwX6zzIDywF55YCAvxJY2hvllYsWlqN3HgtAB
+ thATMzGC5yM+T7M23hx9ozoIUAsIbMhga8IZ3AxFKJ0LF4Bbta2QqRGmfXQs07gTCIl9
+ CCuyU8J+G4mPxrwa67j8FpEPkJaywXw+lwUgTEg8Gq1bhSWOkFZ9dQzd1ZolIL/IN0Jr
+ 5xn3abK/ymO+s2dFsPe1Z5rsxyakPXW2BMP2/6cEHf6qOofaReMIUCZSvBaG9hz1BXwg
+ lK00PuVgwdpMKiJt5P1GCTOJ4w6IywP5AxELm1OOXvoApIU1VYDBQvYHSRevDNT7S5w2
+ J5QA==; darn=nongnu.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1780533069; x=1781137869; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+ d=oss.qualcomm.com; s=google; t=1780533898; x=1781138698; darn=nongnu.org;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:from:to:cc:subject:date
  :message-id:reply-to;
- bh=MWXBs1pgY1eWN4UiVrFEyWZcC6RnRdpjRugiAxsO/VU=;
- b=c4Kxy+0XRfe3jlin1u7Cq9QsAHusg1yiiHU2w/X1SZXK7s2VKhSbQMb4gmlVEqdQ/G
- /irdn7gWsieUSNlJFTGir2rp0+wZXB2YDvEmSYhEspiIaeBu7otBM9E4BTJqpbm0p3t/
- DRnZfrff2CDqL6m1bLBj7Gk42brCp5YSUA235XOGHypRUiaaXStgyCpYL/DSwNrfoVF0
- e0Hk/5Vhfmy7E4ho+1nm017gzRKPw/kzEg6MKA9kRMv6XrOlocPR1gPK6w3JwiH4nMPw
- nu0/6xgqynx0lvS0/ktsPkHEy7KAhc1i28SN+qNjtl6sgcBfeAb/os7H2T1FdAX/1Ey8
- mIJQ==
+ bh=mc3ZWbPaUP7iv6VT2w71TPYqlZKyIJ7QvI4dzFshBck=;
+ b=dSAqAYfZqGC3MZP5j94uJ4l8mIvcy7Xqgkn4aDSICNXUrmKBHCp2vzqDNjZrtjk2mT
+ eB1pasaIwTfMQChj0YfJOxFUALVjx7PfdGc5pV0f3Elhm3+VCa6ZNf5ogY7u1as+e3c/
+ 9CfcvjYnvmDS3Ye9DgaF2RhEnkgU3G3U0k5lCY3LxYpK8j3yYfOTNWb9ha2HaYi21qJr
+ N+Vta/V0R3yg1Czm+kWJaJ8WMnPJfcnGE6OMDW2fqLJ+yTDJ105Zxt6pLOmsUHriOMl0
+ ZYLzz7KhAYokdk1mLQrwEIZ1lzqEqsjLB97aFaLKjFPPn1LtOAkJFewYDuV+Cha8urs3
+ mCrw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1780533069; x=1781137869;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
+ d=1e100.net; s=20251104; t=1780533898; x=1781138698;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to;
- bh=MWXBs1pgY1eWN4UiVrFEyWZcC6RnRdpjRugiAxsO/VU=;
- b=VY3rCaQba0ITcNOvT31zWkTDZrzt3zZjgi5NdxWO4GhH2g8dKMOHHRWOTYqLpwUzct
- Jj0THjDJ6WtIkbcMl/dr12O1gvo59Qa/jsRmk0QYRGcwZb8WhK4m0j+4CMKy9J5Unt1l
- H+XFt0JtFIDjYAoivJIgT7blZpEuK5MQfstcy+0HU8KfjCHCkCgiYuj99UUcTDr/0CEe
- KC6UtfAUmWv/+jw9Iwvn0Ywaq4eYOGBwwzrpRfzUEbK7XJ5Nd8S+9U3LVK+R7wv88ZcC
- KFEUywC0VDmVf6T7ZBcTppMmEiPA9IkAoICCSyNSL9g2MYI9Rprk0Q4pat2TXckvb+N1
- 7Syw==
-X-Gm-Message-State: AOJu0Yze0A9XtPmT8Qq5bicMxyM90oiMX+jIksE1nzmVwniTNvdaHsgF
- TH3abjFbuM7r1IMMaM7Fd19j18gS9Dz2JT7Iom0W4KLu088HhZiu3kRo+Kz1ZWmU
-X-Gm-Gg: Acq92OGqSDtRnVVMtpW5/Xidu/RMQ0Si2YuuW1ML3c9/xmYr7567ERFjDJ1keJG9HdO
- 0lT34UelPopBXbnmffziuJR+spKSL95KMUmEd4bZoc/R7NDZeuXpd/QFJyE27sVzN+Xc66PoGbb
- vvInGkvpcKzOY8z1qsh4fL+jQtRTP+DE0dxc9192Hv9QPFbIrR7a7SBD3v9NYJJi9JdiQ+bpDXg
- zga7Mafdba8UiF+V3EApGmMwp6pe2qr1GQCy054KxiesNVvQXITuvw2RRUPJVKX2YrmkV7oqdUM
- OOOdGzFslz15Pwhk1LRMtGuvr53MgQKfWbcSkDaL5L8/0fjJfiybJP8GpxNf9HaGNQFTHVxdbYg
- mQ9r0bmrT71tp8SoKu5SUsBJIHhRC/Diyepnx/W2swkJmJy6LF371rJEC0654bcqjErRueTmb9D
- 5cAutt8khwiSVkczGFtHU/pVGTEPeD+DoCEA==
-X-Received: by 2002:a05:690e:d8d:b0:656:7cd:98e4 with SMTP id
- 956f58d0204a3-660dbbb0028mr5635790d50.16.1780533068532; 
- Wed, 03 Jun 2026 17:31:08 -0700 (PDT)
-Received: from localhost ([2600:1702:7a90:6f9f:8bc4:8aec:108d:7a04])
- by smtp.gmail.com with ESMTPSA id
- 956f58d0204a3-660d5ffc643sm2876132d50.9.2026.06.03.17.31.06
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 03 Jun 2026 17:31:06 -0700 (PDT)
-From: Matt Turner <mattst88@gmail.com>
-To: qemu-devel@nongnu.org
-Cc: Laurent Vivier <laurent@vivier.eu>, Helge Deller <deller@gmx.de>,
- Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
- Richard Henderson <richard.henderson@linaro.org>,
- Matt Turner <mattst88@gmail.com>
-Subject: [PATCH v2 4/4] linux-user/sparc: flush register windows before core
- dump
-Date: Wed,  3 Jun 2026 20:30:59 -0400
-Message-ID: <20260604003059.2083625-1-mattst88@gmail.com>
-X-Mailer: git-send-email 2.53.0
-In-Reply-To: <20260603161852.1831864-4-mattst88@gmail.com>
-References: <20260603161852.1831864-4-mattst88@gmail.com>
+ bh=mc3ZWbPaUP7iv6VT2w71TPYqlZKyIJ7QvI4dzFshBck=;
+ b=tS1pn37oiFCkGw/ShgSwrzAZ3Z9J8Dbkx4BsLu9LhJBf/7M6m8J6jnI1z4tYeDwTBc
+ tG0ScSVRj5q2e352OukVaA8esMeTmu0G1zRmFAeJrJgwSYBLD4IfXdNKBieCUODvHAV0
+ i4vDFMy+exPi8fWGL/Mj4ixVJ91UCvxYpwZuhzAkKa28gpbxXhoyirqb2maalFRxCFgM
+ QY/LkYiS2cI0XD46wju8e4sXetKDt0DXe6NvQKUquXOeaZ26AmC8oi3dhvagDbt4LcxB
+ DHqYuM+ZD3RPJAMgR4ygw6QB47cwJf08YnU+MwED7genb9KYeW45jIQM9h6SpNUjWDET
+ 7Oig==
+X-Gm-Message-State: AOJu0YyurZtREyaRktlxpgROAXaym6JM3kozcGwAxjyNAI0RNd9lQCPf
+ P6HvwUH9m/NTfVkTatzHu5+MYjKzct2YJ1S9Y7vQP+hios26zSRD5ivFoiixopFaoVxIezFRiSr
+ 7wCqUDJCJpWa2SCH+wH7zjRN9osXZCkORk5IeBnhDhvQniDPDEZD+ZxTpkZ2hXqFhnS8NYLowUN
+ thyi+yugieinFJR3S/DOwlP+7MnzUBMO7Q
+X-Gm-Gg: Acq92OGFdo4hyaWaaDOGYOurQT7hEllA0W7znjYJArMu/WwGJ0I3HfbK7TtV6ApiNkz
+ xhckOgc8+1omrR8JQYbCiQrmunI4xQzgq+BUhIeLef9SSAzplpSb19c51lL056Flyb4LxCLf7NT
+ xF5lgLr3Ve67w/D/9zMIbmfktHQXc5fuAMTGQ4jOdxDZH7QvjCyhwD8C1hcRuI+Liq4SCjaRZmX
+ KCUKYsLpOhR1OSiNw==
+X-Received: by 2002:a05:7022:2390:b0:137:ea56:370 with SMTP id
+ a92af1059eb24-137f6bb37aemr2318184c88.20.1780533898095; 
+ Wed, 03 Jun 2026 17:44:58 -0700 (PDT)
+X-Received: by 2002:a05:7022:2390:b0:137:ea56:370 with SMTP id
+ a92af1059eb24-137f6bb37aemr2318172c88.20.1780533897529; Wed, 03 Jun 2026
+ 17:44:57 -0700 (PDT)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::b12f;
- envelope-from=mattst88@gmail.com; helo=mail-yx1-xb12f.google.com
-X-Spam_score_int: -17
-X-Spam_score: -1.8
-X-Spam_bar: -
-X-Spam_report: (-1.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+References: <cover.1776339451.git.matheus.bernardino@oss.qualcomm.com>
+In-Reply-To: <cover.1776339451.git.matheus.bernardino@oss.qualcomm.com>
+From: Brian Cain <brian.cain@oss.qualcomm.com>
+Date: Wed, 3 Jun 2026 19:44:40 -0500
+X-Gm-Features: AVHnY4I_Jo7JS1p_sgmCzIaTy_XRPHekQm9uUeuC70Bz8NweA5urm409KXUiWmI
+Message-ID: <CAEqNhNaqmdRQ-VX57Nx+iVyK9MbZa+MiBj-3KHSErufwWeUitg@mail.gmail.com>
+Subject: Re: [PATCH v5 00/16] hexagon: add missing HVX float instructions
+To: Matheus Tavares Bernardino <matheus.bernardino@oss.qualcomm.com>
+Cc: qemu-devel@nongnu.org, richard.henderson@linaro.org, ale@rev.ng,
+ anjo@rev.ng, ltaylorsimpson@gmail.com, marco.liebel@oss.qualcomm.com,
+ philmd@linaro.org, quic_mburton@quicinc.com, sid.manning@oss.qualcomm.com
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+X-Proofpoint-GUID: lBCQN45UTn1KL04Gy-fbpvpfLzMT-dtx
+X-Authority-Analysis: v=2.4 cv=M8h97Sws c=1 sm=1 tr=0 ts=6a20ca8b cx=c_pps
+ a=kVLUcbK0zfr7ocalXnG1qA==:117 a=IkcTkHD0fZMA:10 a=FelO9ux0wxsA:10
+ a=s4-Qcg_JpJYA:10 a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22
+ a=3WHJM1ZQz_JShphwDgj5:22 a=VwQbUJbxAAAA:8 a=EUspDBNiAAAA:8
+ a=SnclFv0j17a7PWJ5ACwA:9 a=QEXdDO2ut3YA:10 a=vr4QvYf-bLy2KjpDp97w:22
+X-Proofpoint-ORIG-GUID: lBCQN45UTn1KL04Gy-fbpvpfLzMT-dtx
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNjA0MDAwNCBTYWx0ZWRfX/H0Gk0hqVVRB
+ BDp65VZU5OG2BA49XV6rSxe0g9gjgZq/2oImH9h77yDlPOw3qBMgN9DZLH81I0XpLFk0bpGRgPo
+ Bg9I6aNbz4XRfwjyIwikpvAeAJYiX5C2wJXNYXlW8U219GP9tlACDdiYpZU5sZ3neCyBu4wKp6M
+ b/wdWYMfkVpoAprrXbnSmVPZXOgoupP1s4Qby7vdEF6gOm8TpoSFSPtgEIfPHZ+wYR1lyoAQ14l
+ 0Scrkrt5S+bpU3EQbmIM2Dvft+HcMTjEm17/OklCr1a1LD7cf4+Kf7bRWRZj0gXFPtHgexPFeee
+ knOWG6odiMql6wKXzFMigK+BOp4UMn8FzAyK0PDORFksizvL6B0sL6/vUQ+MtIKvxhOK8JmZp41
+ i/OAomQ5vr/uowDRABjJuErXhXVChbR6sVTMS/EkiZrb4OLahFVmnL1/qKYYQJSgCh/H/QZXXH0
+ 4/iMxuX9xDy1zdDS67w==
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.125,FMLib:17.12.100.49
+ definitions=2026-06-04_01,2026-05-28_03,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ priorityscore=1501 bulkscore=0 malwarescore=0 suspectscore=0 spamscore=0
+ impostorscore=0 phishscore=0 lowpriorityscore=0 clxscore=1015 adultscore=0
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.22.0-2605210000 definitions=main-2606040004
+Received-SPF: pass client-ip=205.220.180.131;
+ envelope-from=brian.cain@oss.qualcomm.com; helo=mx0b-0031df01.pphosted.com
+X-Spam_score_int: -27
+X-Spam_score: -2.8
+X-Spam_bar: --
+X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -104,178 +161,149 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Without this, only the crash frame's window is spilled to the
-stack; all deeper call frames remain in the register file and
-are absent from the core's memory segments. Stack unwinding
-fails past the first DWARF step because the callers' register
-save areas contain stale/garbage data.
+On Thu, Apr 16, 2026 at 6:39=E2=80=AFAM Matheus Tavares Bernardino
+<matheus.bernardino@oss.qualcomm.com> wrote:
+>
+> This patchset adds 59 HVX floating point instructions from Hexagon
+> revisions v68 and v73 that were missing in qemu. Tests are also added at
+> the end.
+>
+> v4: https://lore.kernel.org/qemu-devel/cover.1775843299.git.matheus.berna=
+rdino@oss.qualcomm.com/
+> v3: https://lore.kernel.org/qemu-devel/cover.1775665981.git.matheus.berna=
+rdino@oss.qualcomm.com/
+> v2: https://lore.kernel.org/qemu-devel/cover.1775122853.git.matheus.berna=
+rdino@oss.qualcomm.com/
+> v1: https://lore.kernel.org/qemu-devel/cover.1774271525.git.matheus.berna=
+rdino@oss.qualcomm.com/
+>
+> Changes in v5:
+>         - patch 11: fixed copy-and-paste error (s/vmax/vmin)
+>         - patch 16: replaced float16 value for BF_* constants for
+>           clearity
+>
 
-The real kernel calls flush_all_user_windows() at the top of
-do_coredump(). Mirror that via a weak target_flush_windows()
-hook called from dump_core_and_abort(), with the SPARC override
-calling the existing flush_windows() in cpu_loop.c.
----
- linux-user/elfload.c          |  9 ++++++++
- linux-user/sparc/cpu_loop.c   |  3 ++-
- linux-user/sparc/cpu_loop.h   |  7 +++++++
- linux-user/sparc/elfload.c    | 39 +++++++++++++++++++++++++++++------
- linux-user/sparc/target_elf.h | 17 +++++++++++----
- 5 files changed, 64 insertions(+), 11 deletions(-)
- create mode 100644 linux-user/sparc/cpu_loop.h
+For the series:
 
-diff --git ./linux-user/elfload.c ./linux-user/elfload.c
-index f7625c0952..b05b8b0c6b 100644
---- ./linux-user/elfload.c
-+++ ./linux-user/elfload.c
-@@ -2445,6 +2445,9 @@ static int wmr_write_region(void *opaque, vaddr start,
-  * handler (provided that target process haven't registered
-  * handler for that) that does the dump when signal is received.
-  */
-+#ifdef TARGET_SPARC
-+#include "sparc/cpu_loop.h"
-+#endif
- static int elf_core_dump(int signr, const CPUArchState *env)
- {
-     const CPUState *cpu = env_cpu_const(env);
-@@ -2468,6 +2471,12 @@ static int elf_core_dump(int signr, const CPUArchState *env)
-     cpu_list_lock();
-     mmap_lock();
- 
-+#ifdef TARGET_SPARC
-+    CPU_FOREACH(cpu_iter) {
-+        flush_windows(cpu_env(cpu_iter));
-+    }
-+#endif
-+
-     /* By unprotecting, we merge vmas that might be split. */
-     walk_memory_regions(NULL, wmr_page_unprotect_regions);
- 
-diff --git ./linux-user/sparc/cpu_loop.c ./linux-user/sparc/cpu_loop.c
-index ab633eeae3..0aacda9448 100644
---- ./linux-user/sparc/cpu_loop.c
-+++ ./linux-user/sparc/cpu_loop.c
-@@ -22,6 +22,7 @@
- #include "user-internals.h"
- #include "user/cpu_loop.h"
- #include "signal-common.h"
-+#include "sparc/cpu_loop.h"
- 
- #define SPARC64_STACK_BIAS 2047
- 
-@@ -119,7 +120,7 @@ static void restore_window(CPUSPARCState *env)
- #endif
- }
- 
--static void flush_windows(CPUSPARCState *env)
-+void flush_windows(CPUSPARCState *env)
- {
-     int offset, cwp1;
- 
-diff --git ./linux-user/sparc/cpu_loop.h ./linux-user/sparc/cpu_loop.h
-new file mode 100644
-index 0000000000..fb6e82d372
---- /dev/null
-+++ ./linux-user/sparc/cpu_loop.h
-@@ -0,0 +1,7 @@
-+/* SPDX-License-Identifier: GPL-2.0-or-later */
-+#ifndef SPARC_CPU_LOOP_H
-+#define SPARC_CPU_LOOP_H
-+
-+void flush_windows(CPUSPARCState *env);
-+
-+#endif
-diff --git ./linux-user/sparc/elfload.c ./linux-user/sparc/elfload.c
-index e6387ec891..181f1e00b5 100644
---- ./linux-user/sparc/elfload.c
-+++ ./linux-user/sparc/elfload.c
-@@ -12,16 +12,41 @@ void elf_core_copy_regs(target_elf_gregset_t *r, const CPUArchState *env)
-     CPUSPARCState *e = (CPUSPARCState *)env;
-     int i;
- 
-+    memset(r, 0, sizeof(*r));
-+
- #if defined(TARGET_SPARC64) && !defined(TARGET_ABI32)
-+    /* Linux kernel layout for sparc64 (arch/sparc/include/asm/elf_64.h):
-+     *   [0..7]   G0-G7
-+     *   [8..15]  O0-O7
-+     *   [16..23] L0-L7
-+     *   [24..31] I0-I7
-+     *   [32]     TSTATE
-+     *   [33]     TPC
-+     *   [34]     TNPC
-+     *   [35]     Y
-+     */
-     for (i = 0; i < 8; i++) {
--        r->regs[i]     = tswap64(env->gregs[i]);
--        r->regs[8 + i] = tswap64(env->regwptr[WREG_O0 + i]);
-+        r->regs[i]      = tswap64(env->gregs[i]);
-+        r->regs[8 + i]  = tswap64(env->regwptr[WREG_O0 + i]);
-+        r->regs[16 + i] = tswap64(env->regwptr[WREG_L0 + i]);
-+        r->regs[24 + i] = tswap64(env->regwptr[WREG_I0 + i]);
-     }
--    r->regs[16] = tswap64(sparc64_tstate(e));
--    r->regs[17] = tswap64(env->pc);
--    r->regs[18] = tswap64(env->npc);
--    r->regs[19] = tswap64(env->y);
-+    r->regs[32] = tswap64(sparc64_tstate(e));
-+    r->regs[33] = tswap64(env->pc);
-+    r->regs[34] = tswap64(env->npc);
-+    r->regs[35] = tswap64(env->y);
- #else
-+    /* Linux kernel layout for sparc32 (arch/sparc/include/asm/elf_32.h):
-+     *   [0]      PSR
-+     *   [1]      PC
-+     *   [2]      NPC
-+     *   [3]      Y
-+     *   [4..11]  G0-G7
-+     *   [12..19] O0-O7
-+     *   [20..27] L0-L7
-+     *   [28..35] I0-I7
-+     *   [36..37] reserved (stack_check)
-+     */
-     r->regs[0] = tswap32(cpu_get_psr(e));
-     r->regs[1] = tswap32(env->pc);
-     r->regs[2] = tswap32(env->npc);
-@@ -29,6 +54,8 @@ void elf_core_copy_regs(target_elf_gregset_t *r, const CPUArchState *env)
-     for (i = 0; i < 8; i++) {
-         r->regs[4 + i]  = tswap32(env->gregs[i]);
-         r->regs[12 + i] = tswap32(env->regwptr[WREG_O0 + i]);
-+        r->regs[20 + i] = tswap32(env->regwptr[WREG_L0 + i]);
-+        r->regs[28 + i] = tswap32(env->regwptr[WREG_I0 + i]);
-     }
- #endif
- }
-diff --git ./linux-user/sparc/target_elf.h ./linux-user/sparc/target_elf.h
-index edb0b3103c..365af864b0 100644
---- ./linux-user/sparc/target_elf.h
-+++ ./linux-user/sparc/target_elf.h
-@@ -24,12 +24,21 @@
- #define HAVE_ELF_CORE_DUMP      1
- 
- /*
-- * Matches the kernel's elf_gregset_t (ELF_NGREG = 20).
-- * sparc32/sparc32plus: psr, pc, npc, y, u_regs[16] (g0-g7, o0-o7)
-- * sparc64:             u_regs[16] (g0-g7, o0-o7), tstate, pc, npc, y
-+ * Matches the kernel's elf_gregset_t.
-+ *   sparc32/sparc32plus (ELF_NGREG = 38):
-+ *     psr, pc, npc, y, u_regs[16] (g0-g7, o0-o7),
-+ *     reg_window[16] (l0-l7, i0-i7), stack_check[2]
-+ *   sparc64             (ELF_NGREG = 36):
-+ *     u_regs[16] (g0-g7, o0-o7), reg_window[16] (l0-l7, i0-i7),
-+ *     tstate, tpc, tnpc, y
-  */
-+#if defined(TARGET_SPARC64) && !defined(TARGET_ABI32)
-+# define TARGET_ELF_NGREG       36
-+#else
-+# define TARGET_ELF_NGREG       38
-+#endif
- typedef struct target_elf_gregset_t {
--    abi_ulong regs[20];
-+    abi_ulong regs[TARGET_ELF_NGREG];
- } target_elf_gregset_t;
- 
- #endif
--- 
-2.53.0
+Reviewed-by: Brian Cain <brian.cain@oss.qualcomm.com>
 
+>
+> Brian Cain (1):
+>   tests/docker: Update hexagon cross toolchain to 22.1.0
+>
+> Matheus Tavares Bernardino (15):
+>   target/hexagon: fix incorrect/too-permissive HVX encodings
+>   target/hexagon/cpu: add HVX IEEE FP extension
+>   hexagon: group cpu configurations in their own struct
+>   hexagon: print info on "-d in_asm" for disabled IEEE FP instructions
+>   target/hexagon: add v68 HVX IEEE float arithmetic insns
+>   target/hexagon: add v68 HVX IEEE float min/max insns
+>   target/hexagon: add v68 HVX IEEE float misc insns
+>   target/hexagon: add v68 HVX IEEE float conversion insns
+>   target/hexagon: add v68 HVX IEEE float compare insns
+>   target/hexagon: add v73 HVX IEEE bfloat16 insns
+>   tests/hexagon: add tests for v68 HVX IEEE float arithmetics
+>   tests/hexagon: add tests for v68 HVX IEEE float min/max
+>   tests/hexagon: add tests for v68 HVX IEEE float conversions
+>   tests/hexagon: add tests for v68 HVX IEEE float comparisons
+>   tests/hexagon: add tests for HVX bfloat
+>
+>  target/hexagon/cpu.h                          |  10 +-
+>  target/hexagon/cpu_bits.h                     |  10 +-
+>  target/hexagon/mmvec/hvx_ieee_fp.h            |  69 ++++
+>  target/hexagon/mmvec/macros.h                 |   8 +
+>  target/hexagon/mmvec/mmvec.h                  |   3 +
+>  target/hexagon/printinsn.h                    |   2 +-
+>  target/hexagon/translate.h                    |   1 +
+>  tests/tcg/hexagon/hex_test.h                  |  32 ++
+>  tests/tcg/hexagon/hvx_misc.h                  |  73 ++++
+>  target/hexagon/attribs_def.h.inc              |   9 +
+>  disas/hexagon.c                               |   3 +-
+>  target/hexagon/arch.c                         |   8 +
+>  target/hexagon/cpu.c                          |  18 +-
+>  target/hexagon/decode.c                       |   4 +-
+>  target/hexagon/mmvec/hvx_ieee_fp.c            | 137 +++++++
+>  target/hexagon/printinsn.c                    |   7 +-
+>  target/hexagon/translate.c                    |   5 +-
+>  tests/tcg/hexagon/fp_hvx.c                    | 226 +++++++++++
+>  tests/tcg/hexagon/fp_hvx_cmp.c                | 275 +++++++++++++
+>  tests/tcg/hexagon/fp_hvx_cvt.c                | 219 +++++++++++
+>  tests/tcg/hexagon/fp_hvx_disabled.c           |  57 +++
+>  target/hexagon/gen_tcg_funcs.py               |  11 +
+>  target/hexagon/hex_common.py                  |  27 ++
+>  target/hexagon/imported/mmvec/encode_ext.def  | 126 ++++--
+>  target/hexagon/imported/mmvec/ext.idef        | 369 +++++++++++++++++-
+>  target/hexagon/meson.build                    |   1 +
+>  .../dockerfiles/debian-hexagon-cross.docker   |  10 +-
+>  tests/tcg/hexagon/Makefile.target             |  14 +
+>  28 files changed, 1686 insertions(+), 48 deletions(-)
+>  create mode 100644 target/hexagon/mmvec/hvx_ieee_fp.h
+>  create mode 100644 target/hexagon/mmvec/hvx_ieee_fp.c
+>  create mode 100644 tests/tcg/hexagon/fp_hvx.c
+>  create mode 100644 tests/tcg/hexagon/fp_hvx_cmp.c
+>  create mode 100644 tests/tcg/hexagon/fp_hvx_cvt.c
+>  create mode 100644 tests/tcg/hexagon/fp_hvx_disabled.c
+>
+> Range-diff against v4:
+>  1:  1440dd86da =3D  1:  e94d57178d tests/docker: Update hexagon cross to=
+olchain to 22.1.0
+>  2:  b9a5a46b82 =3D  2:  1fe4b8a0fc target/hexagon: fix incorrect/too-per=
+missive HVX encodings
+>  3:  7889db953a =3D  3:  10fb5b86db target/hexagon/cpu: add HVX IEEE FP e=
+xtension
+>  4:  ac72a36fd8 =3D  4:  8f9a2e2ccf hexagon: group cpu configurations in =
+their own struct
+>  5:  e24b76d95a =3D  5:  1bdc772e4a hexagon: print info on "-d in_asm" fo=
+r disabled IEEE FP instructions
+>  6:  8c9ded658c =3D  6:  8923b6c6bc target/hexagon: add v68 HVX IEEE floa=
+t arithmetic insns
+>  7:  a89b231b2c =3D  7:  8e274a7a10 target/hexagon: add v68 HVX IEEE floa=
+t min/max insns
+>  8:  27a5ca1ce3 =3D  8:  0bd3279ca0 target/hexagon: add v68 HVX IEEE floa=
+t misc insns
+>  9:  7fecae322c =3D  9:  beca620d2e target/hexagon: add v68 HVX IEEE floa=
+t conversion insns
+> 10:  ebc920dfcf =3D 10:  96e27588ad target/hexagon: add v68 HVX IEEE floa=
+t compare insns
+> 11:  d408ee2b2c ! 11:  1a25337356 target/hexagon: add v73 HVX IEEE bfloat=
+16 insns
+>     @@ target/hexagon/imported/mmvec/ext.idef: ITERATOR_INSN_SHIFT_SLOT_F=
+LT(16, vconv_h
+>      +    "Vector IEEE max: bf", VdV.bf[i] =3D fp_max_bf(VuV.bf[i], VvV.b=
+f[i]);
+>      +    fBFLOAT())
+>      +ITERATOR_INSN_IEEE_FP_16_32_LATE(16, vmin_bf, "Vd32.bf=3Dvmin(Vu32.=
+bf,Vv32.bf)",
+>     -+    "Vector IEEE max: bf", VdV.bf[i] =3D fp_min_bf(VuV.bf[i], VvV.b=
+f[i]);
+>     ++    "Vector IEEE min: bf", VdV.bf[i] =3D fp_min_bf(VuV.bf[i], VvV.b=
+f[i]);
+>      +    fBFLOAT())
+>
+>       /******************************************************************=
+************
+> 12:  cde613d444 =3D 12:  791f122bfd tests/hexagon: add tests for v68 HVX =
+IEEE float arithmetics
+> 13:  08abae5ee5 =3D 13:  7fdbc12ed4 tests/hexagon: add tests for v68 HVX =
+IEEE float min/max
+> 14:  c20a21aad6 =3D 14:  ec6af07a28 tests/hexagon: add tests for v68 HVX =
+IEEE float conversions
+> 15:  6b473acaf5 =3D 15:  53e7370709 tests/hexagon: add tests for v68 HVX =
+IEEE float comparisons
+> 16:  10ebb63b81 ! 16:  392114c4c1 tests/hexagon: add tests for HVX bfloat
+>     @@ tests/tcg/hexagon/fp_hvx_cmp.c: static void test_cmp_hf(void)
+>      +
+>      +    /* Common numbers */
+>      +    PREP_TEST();
+>     -+    TEST_CMP_GT(bf, raw_hf((_Float16)2.2),  raw_hf((_Float16)2.1));
+>     -+    TEST_CMP_GT(bf, raw_hf((_Float16)0),    raw_hf((_Float16)-2.2))=
+;
+>     ++    TEST_CMP_GT(bf, BF_two, BF_one);
+>     ++    TEST_CMP_GT(bf, BF_one, BF_zero);
+>      +    CHECK(bf, 2);
+>      +
+>      +    /* Infinity vs Infinity/NaN */
+> --
+> 2.37.2
+>
 
