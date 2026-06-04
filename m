@@ -4,106 +4,85 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4F44DCD6E4A
-	for <qemu-devel@archiver.kernel.org>; Thu,  4 Jun 2026 07:29:37 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 90116CD6E4A
+	for <qemu-devel@archiver.kernel.org>; Thu,  4 Jun 2026 08:19:30 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wV2VX-00088t-MP; Thu, 04 Jun 2026 03:28:51 -0400
+	id 1wV3Ht-0006T2-SL; Thu, 04 Jun 2026 04:18:50 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <brookmangabriel@gmail.com>)
- id 1wV2VV-00088D-1k
- for qemu-devel@nongnu.org; Thu, 04 Jun 2026 03:28:49 -0400
-Received: from mail-pf1-x42f.google.com ([2607:f8b0:4864:20::42f])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <brookmangabriel@gmail.com>)
- id 1wV2VS-0007l3-QD
- for qemu-devel@nongnu.org; Thu, 04 Jun 2026 03:28:48 -0400
-Received: by mail-pf1-x42f.google.com with SMTP id
- d2e1a72fcca58-842288702fbso149773b3a.1
- for <qemu-devel@nongnu.org>; Thu, 04 Jun 2026 00:28:45 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1780558124; cv=none;
- d=google.com; s=arc-20240605;
- b=O7H3sNv8ILuH6mW9NdUGTW1dNX9jWp4ySHhrrdVnW3ORzk7wm0jVxOkoQ6r7cmut5r
- kXdarfhMlE8JDh56uKyJfULtrmAFsfiv6BYxYpNbsd1F1CYcR7ooCYgu4SGIhCkPX3R/
- xj21UTRbaFdHdKSHs+Gbgf96MoIvNhESR9kPoo1A2yTCj6iZjdxx1SbHNKDPK5bOEurm
- 92qrHeb14xBoqJohVNaUXducoMD07CfB3LVmMVhC2+YkYKSFvpAZZWF5iwpDQZnzEIOd
- l+ZT0H0kTyKj9SYZZhvWL6E0zCJDan5DjYIzvNcwIANOA/4neIXi0YUTeregrX8feAJf
- eEpQ==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
- s=arc-20240605; 
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:dkim-signature;
- bh=VpSRCwgDLMji91ZXDpZd4bhHuRUeCACFSqRLsM8YCwU=;
- fh=GgdWH1IMUnLvapwZcybkO7EfHLm5mb76g3oTyXmM4bo=;
- b=DNOl2wSBLq3Fypl7ZEY73tqbWb1JoR3KXeH9aNWz0ZYDxWYNFUdELl0kBh8h1ItrK7
- /BvQz5ajqAipqwL3LEaSHdl7NGtycIS+3OqqXkXBab3z6JZvX0+fwlJ11mxTKKOu5N/x
- 0mtWX1M9+vuGKf8NU3nlbCfqFqW+GYl6vg5R5EVYJBdj7xvkc3sRiWjTA24ffaSpr6iG
- 6PJDkNey9iUv0/sMgQQHes+Wk8glpJ6qAEDI8Z1JIfVXcOKNiRZd514zltJRgOOg2Avw
- XsfdjICM4w1CmOF9UqHTER0WtxBWi5PhbJWFcAm/C+w90VpL/tMDkgIMXciZhD7Tw+SQ
- a54g==; darn=nongnu.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1780558124; x=1781162924; darn=nongnu.org;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:from:to:cc:subject:date
- :message-id:reply-to;
- bh=VpSRCwgDLMji91ZXDpZd4bhHuRUeCACFSqRLsM8YCwU=;
- b=UGI7CUpAw2C0Zd72AnsgvoRi7aK8yVmWjUsXH98OmmwsUNeTI86c6F34BNe0oNSEXz
- RJUUT4sUz3h35Y3xPiEtjnT13wVQMOyr47LUT/XICZbjsu8uh974SgGJA8QjMU/r4vst
- +dUqQAxhkTjRGD8TC5qQC8lrIx7jTNXvyRxpF0VdfUas0z3UoeDG3phd7acPbJ2jJhtE
- PxeZy1d9pskQ5T19Nt03vtgepKR7jnL167ksGyHstpfFiPWZ7Fc1oBemAqK3lXFBL7hf
- KfLm4EgsOqg5r9KCTiCGjymaArDz+F22xbtSsiyBAGSeM6kVvcaF6e7m2ZYFJYXFGqFg
- Aqdg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1780558124; x=1781162924;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to;
- bh=VpSRCwgDLMji91ZXDpZd4bhHuRUeCACFSqRLsM8YCwU=;
- b=GRGsUbTHI4B9OI6I8BdR5ZAOiJ2kFZsuW1fRsjsiVp59tnlrj3utafLreGmoUwXHRq
- AVn9jTSfhzK2IPloT4FkXR/lsZ7IAHhJMn87UQgkmSnggz3ZXddC6azpMN1ljcMOnK2+
- qDp6svRLeCOdkCQjb+BLJV7nBehOGj9Sk+HIeyPDERzn6VS0msuZwmd9lKlcJIyDaqN2
- aQXk+bnxx5RfhQFy5A23qKLnP+p96tub30+g+eTYlMm5nBLoK/rs7xmGZNY7QNA4ovWg
- CtzUYAduZrDbrmcMcuC/HHdBmBZctVim4Z1M7A3gRXQpelsvQU+fmpzrXvWM5PP3uF4C
- 4Hmg==
-X-Gm-Message-State: AOJu0YzBWVX/9AYrBmO3qwJVMfpj9GZwd0VJ+7755nynnb0hm70pqtU4
- U1NKVlyPJVQtL+dY3A7pG1RzdGCsWTyrnmVCm+jb0R9LIPmbHPH5+4GxsOi/DE4b03ip3NJdnFE
- F7OzLxqymea8hxc6CQLJKGNRCaXEC72i6aRjjYVU=
-X-Gm-Gg: Acq92OE1M3X2xltCT7MpPtkl1JiWEmpPslCQeX7sa+kmbn8WpeidtBrRVNrFYxqMyF2
- wiBssKlvcmpHG9EVLRihYFO8VFfQIfOtnyf8v8NhGGq+Zcsd0vOezpef+rb0xlC+QW/v25YSJPc
- JXKsGWI8jwj/7jGnH/2wkH/62GZVhz/El1zEXyCFHloqnbMo7Wa4VMzQUi1AU946/K/8E3wxbaH
- 3113nzkQd/JkTt4cneolqkgPCTiJKdJQSfT15H7HOUz1ynJiXS7dXhpYDSNcXgU1Ia123Hywl6h
- FOS7uwiqcrpn+BykyTVCqlTkOxe8Q4c=
-X-Received: by 2002:a05:6a00:22cb:b0:842:5b63:6116 with SMTP id
- d2e1a72fcca58-84284dbdf1amr6652336b3a.7.1780558124415; Thu, 04 Jun 2026
- 00:28:44 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1wV3Hp-0006SV-GJ
+ for qemu-devel@nongnu.org; Thu, 04 Jun 2026 04:18:45 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1wV3Hm-0002da-WC
+ for qemu-devel@nongnu.org; Thu, 04 Jun 2026 04:18:45 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1780561119;
+ h=from:from:reply-to:reply-to:subject:subject:date:date:
+ message-id:message-id:to:to:cc:cc:mime-version:mime-version:
+ content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=JbUQ8XEVFls/F0FVjl04klnmXCcEvGbRPy/2ONr5eGg=;
+ b=CcDY4SNr4HvpeT087PPnGzc6jmNe2sKBFrpLz3iP/4XADULtCiyrSLVKn2lY27hVUyfYU/
+ 9mjJhGUS+2rkgJcsf8YDFxGcvTx+FZ3hMfmGYp7Qt3813w6bvIHQKBrwFxUOpEutjx5Rp5
+ KgpleDPPWK38NJpiIWpUxwTN1I3RP10=
+Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-493-reBsLNRrO8ufoQt6I8AUzw-1; Thu,
+ 04 Jun 2026 04:18:36 -0400
+X-MC-Unique: reBsLNRrO8ufoQt6I8AUzw-1
+X-Mimecast-MFC-AGG-ID: reBsLNRrO8ufoQt6I8AUzw_1780561115
+Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id C53B21956053; Thu,  4 Jun 2026 08:18:34 +0000 (UTC)
+Received: from redhat.com (unknown [10.44.50.34])
+ by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 2AC141955BC0; Thu,  4 Jun 2026 08:18:29 +0000 (UTC)
+Date: Thu, 4 Jun 2026 09:18:26 +0100
+From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
+To: Peter Xu <peterx@redhat.com>
+Cc: Fabiano Rosas <farosas@suse.de>, qemu-devel@nongnu.org,
+ Paolo Bonzini <pbonzini@redhat.com>, Mark Kanda <mark.kanda@oracle.com>,
+ "Michael S . Tsirkin" <mst@redhat.com>,
+ Markus Armbruster <armbru@redhat.com>, Eric Blake <eblake@redhat.com>,
+ "Maciej S. Szmigiero" <maciej.szmigiero@oracle.com>,
+ Jason Wang <jasowang@redhat.com>, Ben Chaney <bchaney@akamai.com>,
+ Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
+Subject: Re: [PATCH RFC 0/2] migration/vl: new -incoming config:* for early
+ migration parameters
+Message-ID: <aiE00jn-z-o_WlRo@redhat.com>
+References: <20260528212947.368132-1-peterx@redhat.com>
+ <87se7btcq9.fsf@suse.de> <ahmfh2s7CLFLoZKN@x1.local>
+ <ah_4hixGcNv-CLfv@redhat.com> <aiBNXUU0xcT_UbKO@x1.local>
+ <aiBhTTqSctU9lFsS@redhat.com> <87o6hr7brx.fsf@suse.de>
+ <aiBrp1UJZjmC1aI1@redhat.com> <aiB2nA5bmtBRWras@x1.local>
 MIME-Version: 1.0
-References: <20260529-feat-mte4-v7-0-ccbd3c14eb3c@gmail.com>
-In-Reply-To: <20260529-feat-mte4-v7-0-ccbd3c14eb3c@gmail.com>
-From: Gabriel Brookman <brookmangabriel@gmail.com>
-Date: Thu, 4 Jun 2026 00:28:32 -0700
-X-Gm-Features: AVHnY4JUR6Lj0SzYmQiULv7DmT4fq5rgboebDItbD7b-eIiHnHz4gjLO9JqoBFs
-Message-ID: <CA+1f7BA1Xbmb5atHKfFpd5K5VoXKo1zCmf4M6cH+PkQPifPXug@mail.gmail.com>
-Subject: Re: [PATCH v7 00/15] target/arm: add support for MTE4
-To: qemu-devel@nongnu.org
-Cc: Peter Maydell <peter.maydell@linaro.org>,
- Gustavo Romero <gustavo.romero@linaro.org>, 
- Richard Henderson <richard.henderson@linaro.org>, qemu-arm@nongnu.org, 
- Laurent Vivier <laurent@vivier.eu>, Helge Deller <deller@gmx.de>, 
- Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2607:f8b0:4864:20::42f;
- envelope-from=brookmangabriel@gmail.com; helo=mail-pf1-x42f.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <aiB2nA5bmtBRWras@x1.local>
+User-Agent: Mutt/2.3.1 (2026-03-20)
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.12
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=berrange@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: 8
+X-Spam_score: 0.8
+X-Spam_bar: /
+X-Spam_report: (0.8 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.445,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_SBL_CSS=3.335, SPF_HELO_PASS=-0.001,
+ SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -116,163 +95,113 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hello all,
+On Wed, Jun 03, 2026 at 02:46:52PM -0400, Peter Xu wrote:
+> On Wed, Jun 03, 2026 at 07:00:07PM +0100, Daniel P. Berrangé wrote:
+> > On Wed, Jun 03, 2026 at 02:51:30PM -0300, Fabiano Rosas wrote:
+> > > Daniel P. Berrangé <berrange@redhat.com> writes:
+> > > 
+> > > > In that case they should definitely be independent command line
+> > > > options. The old "-incoming" design is already broken / limited
+> > > > in the non-'defer' case because it is hardcoded to use URI syntax
+> > > > which can't express all the address formats we accept in QAPI
+> > > > syntax. Adding more special cases onto -incoming just makes the
+> > > > bad situation even worse and is not a forward looking design.
+> > > >
+> > > > If we need the ability to specify migration parameters on the
+> > > > CLI, then as a starting point for the design, we should assume that
+> > > > -incoming does not exist, and design a complete solution from scratch
+> > > > that uses QAPI exclusively, both for addresses and configuration.
+> > > >
+> > > > As discussed before, IMHO the "migrate" and "migrate-incoming"
+> > > > commands need to accept both the address(s) and parameters/capabilities
+> > > > as inline data items rather than relying on pre-configured global state
+> > > > from the 'migrate-parameter' / 'migrate-capability' commands.
+> > > >
+> > > > If we did that modelling for 'migrate-incoming' then that modelling of
+> > > > command parmaeters could map directly to a new '-migrate-incoming'
+> > > > command line argument that accepted exactly the same data model.
+> > > >
+> > > 
+> > > Maybe a user creatable object would better fit this use case instead of
+> > > a new command. We could expose what is today MigrationParameters plus
+> > > the few compat options from migration_properties. It could work more or
+> > > less the same for the QMP migration commands, QMP set/get commands,
+> > > source and destination command lines, the compatibility use-case and the
+> > > debugging use-case.
+> > 
+> > If we can do something using "-object" that is useful both at command
+> > line time and in QMP runtime, then that would be interesting too.
+> > 
+> > My general feeling wrt changes to the current command line is that
+> > any suggestion should be desgined with a nod towards a future scenario
+> > where QEMU is 100% configured with QMP. ie the full command line is
+> > 
+> >    qemu-system-x86_64 -qmp <address>
+> > 
+> > In this world, the current -incoming argument is already largely
+> > unsatisfactory for anything other than "defer".  A model that uses
+> > -object would fit in well, as would a hypothetical -migrate-incoming
+> > that directly mapped to 'migrate-incoming' QMP including capabilities
+> > and parameters.
+> 
+> I don't think even the current -incoming config:* is a blocker or add too
+> much complexity to the full-QMP-based solution.
+> 
+> When it comes, we can simply map all -incoming config:* (JSON or not) to
+> QMP command migrate-set-parameters, what we need is teaching that QMP
+> handler to apply parameters to the temporary MigrationParameters rather
+> than migration object when the latter hasn't been initialized.
+> 
+> I was talking to Fabiano and he suggested me to mention one more thing I
+> said on the list.  It's a matter of whether we should still invest time on
+> supporting migration caps/parameters in QMP migrate/migrate-incoming
+> commands.
+> 
+> Requirements like this (allow migration parameters to be accessible during
+> early stage of QEMU) is going towards the other direction of the that idea.
+> That means even if we put all configs (caps/params) into QMP command
+> migrate[-incoming], libvirt will still need to manage these global setup
+> and making sure when invoking migrate[-incoming] QMP commands they match
+> with the globals.  Say, if one start QEMU with -incoming config:local=on
+> but then invoke "migrate-incoming,local=off" it's illegal.
+> 
+> Considering that it looks like there're solid use cases that we want to
+> support (after CPR's "mode" parameter, now "local"), I want to discuss
+> again whether we want to still spend effort supporting "allow migrate QMP
+> command to specify capabilities/parameters".  Ultimately, we still seem to
+> need these global parameters.
 
-Friendly ping: I have an external deadline this Sunday, so if anything
-needs to be addressed on my end I'd want to know soon.
+This is saying that incoming migration is a multi phase/stage task.
 
-(Re Peter's mte-10 segfault: like Richard, I can't reproduce it, but I
-am happy to dig in if Peter can share a way to reproduce it.)
+There is a "prepare" phase which sets up QEMU ready to receive an
+incoming migration.
 
-Thanks,
-Gabriel
+There is a "running" phase where we are waiting for incoming connection
+and/or handling the migration data stream.
 
-On Fri, May 29, 2026 at 12:52=E2=80=AFPM Gabriel Brookman
-<brookmangabriel@gmail.com> wrote:
->
-> This series implements ARM's Enhanced Memory Tagging Extension
-> (MTE4). MTE4 implies the presence of several subfeatures:
-> FEAT_MTE_CANONICAL_TAGS, FEAT_MTE_TAGGED_FAR, FEAT_MTE_STORE_ONLY,
-> FEAT_MTE_NO_ADDRESS_TAGS, and FEAT_MTE_PERM, none of which are
-> currently implemented in QEMU. This patch implements all five.
->
-> Testing:
->   - Included for FAR and STORE_ONLY.
->   - The MTE_CANONICAL/NAT test from v2, modified so MTE_CANONICAL is
->     enabled in user mode (removed from tree in v3).
->   - A bare-metal testsuite that sets up page tables for S1 and S2
->     translation, to test the Tagged NoTagAccess fault.
->   - The bare-metal testsuite also was used to test LDGM and similar
->     instructions not permitted in user-mode.
->   - The bare-metal testsuite also was used to test the mtx related
->     patches.
->
-> Thanks,
-> Gabriel Brookman
->
-> Resolves: https://gitlab.com/qemu-project/qemu/-/issues/3116
-> Signed-off-by: Gabriel Brookman <brookmangabriel@gmail.com>
-> ---
-> Changes in v7:
-> - initialized "tagged" in combine_cacheattrs (MTEPERM), per Peter
-> - alphabetized MTE4 features on docs, per Richard
-> - moved comment in docs, per Richard
-> - rebased onto master, incrementing bits in TBFLAGS since FPMR_EL
-> - Link to v6: https://lore.kernel.org/qemu-devel/20260511-feat-mte4-v6-0-=
-8557cc1313b9@gmail.com
->
-> Changes in v6:
-> - Moved certain functions between patches (Richard)
-> - Added G_NORETURN to canonical_tag_write_fail
-> - Updated ldg and bounds check functions to Richard's versions, tested
->   these
-> - Link to v5: https://lore.kernel.org/qemu-devel/20260504-feat-mte4-v5-0-=
-232a648e63c6@gmail.com
->
-> Changes in v5:
-> - MTX check feature split into three commits as per Richard's suggestion
-> - MTX passed down to instruction helpers in a new argument
-> - allocation_tag_mem_probe checks for probe in MTEPERM case
-> - tbi helper combined into tbi_or_mtx_helper
-> - MTX checks added to sme and sve functions
-> - bug with type conversion in LDGM helper fixed
-> - fixed multi-page tag-check bug and multi-page ST2G bug
-> - removed erroneous changes to _stub functions
-> - reorganized PAuth & MTX interactions to make them more readable
-> - Link to v4: https://lore.kernel.org/qemu-devel/20260309-feat-mte4-v4-0-=
-daaf0375620d@gmail.com
->
-> Changes in v4:
-> - MTX now interacts with PAuth.
-> - Canonical tag checking only takes place in canonically tagged regions
-> - MTX bits enable tag checking
-> - MTX bits are placed in MTEDESC for access in mte_check helper
-> - Separate feature bits are used to delineate each feature
-> - PRCTL functions renamed and refactored as per Richard's suggestion
-> - Link to v3: https://lore.kernel.org/qemu-devel/20260105-feat-mte4-v3-0-=
-86a0d99ef2e4@gmail.com
->
-> Changes in v3:
-> - Added prctl for MTE_STORE_ONLY to linux-user
-> - mte_check is no longer generated on read when STORE_ONLY enabled
-> - Implemented LDGM instruction
-> - Removed "long" datatype as per Richard's suggestion
-> - Implemented masking for VA range checks when MTX bit enabled
-> - Implemented MTE_PERM, with NoTagAccess attribute
-> - Removed user-mode test for MTE_CANONICAL, since can't enable in
->   user-mode.
-> - Removed TBI from mte_check generation logic
-> - Link to v2: https://lore.kernel.org/qemu-devel/20251116-feat-mte4-v2-0-=
-9a7122b7fa76@gmail.com
->
-> Changes in v2:
-> - Added tests for STORE_ONLY.
-> - Refined commit messages.
-> - Added FEAT_MTE_CANONICAL_TAGS and FEAT_MTE_NO_ADDRESS_TAGS + tests.
-> - fixed TCSO bit macro names.
-> - Link to v1: https://lore.kernel.org/qemu-devel/20251111-feat-mte4-v1-0-=
-72ef5cf276f9@gmail.com
->
-> To: qemu-devel@nongnu.org
-> Cc: Peter Maydell <peter.maydell@linaro.org>
-> Cc: qemu-arm@nongnu.org
-> Cc: Laurent Vivier <laurent@vivier.eu>
-> Cc: Helge Deller <deller@gmx.de>
-> Cc: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
->
-> ---
-> Gabriel Brookman (15):
->       target/arm: implement MTE_PERM
->       target/arm: add TCSO bitmasks to SCTLR
->       target/arm: mte_check unemitted on STORE_ONLY load
->       linux-user: add MTE_STORE_ONLY to prctl
->       target/arm: emit tag check when MTX without TBI
->       target/arm: add MTX to MTEDESC and DisasContext
->       target/arm: add canonical tag check helper
->       target/arm: add canonical MTE check logic
->       target/arm: load on canonical tag loads ext bits
->       target/arm: fault on tag store to canonical tag
->       target/arm: skip tag bit bounds check if MTX is on
->       target/arm: tag is not a part of PAuth with MTX
->       docs: add MTE4 features to docs
->       tests/tcg: add test for MTE FAR
->       tests/tcg: add test for MTE_STORE_ONLY
->
->  docs/system/arm/emulation.rst        |   5 ++
->  linux-user/aarch64/mte_user_helper.c |  11 ++-
->  linux-user/aarch64/mte_user_helper.h |  14 ++--
->  linux-user/aarch64/target_prctl.h    |   6 +-
->  target/arm/cpu-features.h            |  15 ++++
->  target/arm/cpu.h                     |   5 ++
->  target/arm/gdbstub64.c               |   2 +-
->  target/arm/helper.c                  |  36 +++++++--
->  target/arm/internals.h               |  40 ++++++++--
->  target/arm/ptw.c                     |  60 ++++++++++++--
->  target/arm/tcg/cpu64.c               |   5 ++
->  target/arm/tcg/helper-a64-defs.h     |  16 ++--
->  target/arm/tcg/helper-a64.c          |   7 +-
->  target/arm/tcg/hflags.c              |  25 +++++-
->  target/arm/tcg/mte_helper.c          | 146 +++++++++++++++++++++++++++++=
-------
->  target/arm/tcg/pauth_helper.c        |  18 ++++-
->  target/arm/tcg/sme_helper.c          |   4 +-
->  target/arm/tcg/sve_helper.c          |   6 +-
->  target/arm/tcg/translate-a64.c       |  45 +++++++----
->  target/arm/tcg/translate.h           |   3 +
->  tests/tcg/aarch64/Makefile.target    |   2 +-
->  tests/tcg/aarch64/mte-10.c           |  49 ++++++++++++
->  tests/tcg/aarch64/mte-9.c            |  48 ++++++++++++
->  tests/tcg/aarch64/mte.h              |   7 +-
->  24 files changed, 484 insertions(+), 91 deletions(-)
-> ---
-> base-commit: 2db91528542672cf0db78b3f2cc0e22b36302b38
-> change-id: 20251109-feat-mte4-6740a6202e83
->
-> Best regards,
-> --
-> Gabriel Brookman <brookmangabriel@gmail.com>
->
+The current "migrate_incoming" overloads both tasks into the same QMP
+command such that they always happen at the same point in time.
+"-incoming defer" was a crude hack to partially separate them, allowing
+parameters/capabilities to be set before the real migrate_incoming
+QMP command is invoked.
+
+We can address that by separating the tasks explicitly with a
+"migrate_prepare" command / -migrate-prepare CLI arg that sets all
+the parameters/capabilities atomically, and a "migrate_run" command
+that initiates the processing.
+
+The "jobs" QAPI design has this explicit concept of different phases
+that a job can be in, and provides commands for lifecycle handling.
+
+With regards,
+Daniel
+-- 
+|: https://berrange.com       ~~        https://hachyderm.io/@berrange :|
+|: https://libvirt.org          ~~          https://entangle-photo.org :|
+|: https://pixelfed.art/berrange   ~~    https://fstop138.berrange.com :|
+
 
