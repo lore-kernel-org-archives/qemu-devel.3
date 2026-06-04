@@ -4,110 +4,146 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 204DFCD6E6B
-	for <qemu-devel@archiver.kernel.org>; Thu,  4 Jun 2026 10:38:50 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A1AC0CD6E57
+	for <qemu-devel@archiver.kernel.org>; Thu,  4 Jun 2026 11:22:55 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wV5Sq-0002lt-VI; Thu, 04 Jun 2026 06:38:16 -0400
+	id 1wV69O-000626-GC; Thu, 04 Jun 2026 07:22:14 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <paolo.bonzini@gmail.com>)
- id 1wV5Sp-0002li-J5
- for qemu-devel@nongnu.org; Thu, 04 Jun 2026 06:38:15 -0400
-Received: from mail-ot1-x336.google.com ([2607:f8b0:4864:20::336])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <paolo.bonzini@gmail.com>)
- id 1wV5Sm-0004oq-P6
- for qemu-devel@nongnu.org; Thu, 04 Jun 2026 06:38:15 -0400
-Received: by mail-ot1-x336.google.com with SMTP id
- 46e09a7af769-7e6fdfc8cc6so211807a34.2
- for <qemu-devel@nongnu.org>; Thu, 04 Jun 2026 03:38:12 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1780569491; cv=none;
- d=google.com; s=arc-20240605;
- b=SX4DpNv0vDd8VdTBCTmPa/XBBIEd9U5mBDMCm7FBqeFJtLriH1tMFJrKWsS1sOGr5j
- tjaefntHGaO9RSnpKRh6qLJZYiWs7Zu10Bwt0dYuF3+ATZFeTqdALxaCmeisgEbZDQ9D
- bk2iuLj21vLm3Zi78Gc3YagmQzNzcPVaf5/5Nd3ls9gfC4o1QhyUL65OST0JSf1v20NA
- Hes9jM8Eipsa2Ey3VDMC3xdul6vDO7reibPuBp+WmmIecfOSd0pFzW3l1zugS5Hv9ucX
- ExVWgBi+w4GAJu4kb8uGdaWCCHJOL7YLgj/8A2b8dTbosq8la9bVr6/qEuTgbWNY29+h
- Mjtg==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
- s=arc-20240605; 
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:dkim-signature;
- bh=/FXTxwovTltrDgjafBREoReIwaUQ7/TGSVuSWl9OXyw=;
- fh=bqjH7BNLc76+e6+cQ5/n9pYBhqLA50Xx9/zmk0S6xJI=;
- b=j+TkBtPpwd6Z16n7vYLTj8rnLAr43QE/lTdDlf7Ekogy8lCHVlAd5slhTgdN7YznRo
- fQJAnZG73PA3c+/GqpxoBSMDolt3gOtld1LP82LYGg3ivAV+9ZXecEjK69cmK9MD2+/y
- V44aIWbqCoYHcWv8NNcBQZLusxvZlTv/vT32jD51b5UduDWhrpp2BvY610eS3VroDD9s
- l2PLGUGWtWPD2hwtDzZB/XiZnGNDUKDfGo4MQmCdsJjMVXk9R26yUfpqFPWuAJPoWeNE
- nrkbDq+Fko3CMLvzL0bULXRw4HEeK7GugmZe/olA68y+7/3rxv2UrTKepi0LnVZQljX+
- 65oA==; darn=nongnu.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1780569491; x=1781174291; darn=nongnu.org;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=/FXTxwovTltrDgjafBREoReIwaUQ7/TGSVuSWl9OXyw=;
- b=ZBNInohSK2wsC2xWSOCfTVT28AboIPsSoDJEN12v7huWu2QFHNArFvjc49qBODFi7s
- 1u+X07ray/mDO2+1BTbKrta5nKAchthLFp7EgBiCie+DubHiuSBhZ6vCncAwqm3JPHRj
- CbZq3MeojkGVGU3yFyCGrl8beqrPchhYEdROMD9ntHo2E8ozcq5NyZ+/Nojc63NxHmRo
- wVqKY6V9kyFXgiQzxt8BRC93g3CJ7LP3L3QwGPT/BJb68U4LUKFXl/bCc/yHN6HnDLk0
- 9iJiKQQ2bDwuUDjQoxRIjUAzXA400nOFYZ7qBi1EROO9dkY/HEfWdw1v260EYGT9rhpW
- DbfA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1780569491; x=1781174291;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=/FXTxwovTltrDgjafBREoReIwaUQ7/TGSVuSWl9OXyw=;
- b=GO01Zjxj9FUxzdN119Jlxd1bKqIVp5xE24E46rodOMK8+dZpajgtKcmbZyYOa2YSDQ
- 23OfX8usXbB8I1dadSppgm2HAcXz1V4LtxO1exmC973gkcYnUBIceLWoh8xSkQzfLyHi
- 0SlGcLQe5WGGe8cAAOoWNd63ZMVyv/ocExD+IAzcxzN3BrZvG6mgOUREhWncvFxkgd3d
- lBWguERQqN5wTIpl8gkFXlHL3uRALON+yQIQezaQ8iJMXka9rqkzFAxzUilTRl1Y19fj
- X/0nRtuS2lFo7PIpweq6xRZ6cyzPnzRue7zdJOF7USbq2zbVMTDFHQRyfkay5+IenzPN
- +GYg==
-X-Gm-Message-State: AOJu0YxwgCN62AfOwRIrNsew9yQU0q46mMU8ROd0YIwO/zJFV4dzg1CX
- lsOEQtPIK0XV3ryUjMiPxuNnDjGwEcWZrxveSq1OGjdFYBGkWriALDLy2T/rBOmjXvXPnkzACJT
- UqoMtWOQY5Wmh/nvRY9Ixe+yb9/s3zk4=
-X-Gm-Gg: Acq92OE3vqbeI6ErTK4yrVuuimbPXK5vQ7djSgiRPcadqP/6v9SrPvoLgSAi3WjZijS
- eRQ2yT4NLiUhg4IHUf49BMStZM1uA/FpAXsJNl2Di08mpTjHuuUsAseK9R77br+FDxsnut/LkGy
- hemcOOBV6cJdvTiK48TE4Mbn89mIyPagCUyTduLhyyvZN5zoPXAQl2HTRPCx9MZtv749eyXG9II
- VY2RXKJJy9kazninFzxMkVfVdgrrqrhusvTAdj6fTa2V/NCHA5c9jquwc39nc+Olb082lrdxOyN
- qN+d0J/D0/quMF0+OAI=
-X-Received: by 2002:a9d:6a8b:0:b0:7e6:f450:2925 with SMTP id
- 46e09a7af769-7e6f4502bd3mr2316550a34.18.1780569491012; Thu, 04 Jun 2026
- 03:38:11 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <skolothumtho@nvidia.com>)
+ id 1wV69M-00061O-KJ; Thu, 04 Jun 2026 07:22:12 -0400
+Received: from mail-southcentralusazlp170110003.outbound.protection.outlook.com
+ ([2a01:111:f403:c10d::3] helo=SN4PR0501CU005.outbound.protection.outlook.com)
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <skolothumtho@nvidia.com>)
+ id 1wV69K-00025r-EL; Thu, 04 Jun 2026 07:22:12 -0400
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=jdbyifbydLWUXNihZr4Pq5u0e3zMSlF2+yshu3dyQ1SZC6mZ9p2opsHHVhosGCYCu9qQ1m+9Vs6z+xOYCr5zvFuL3IkSV/ZFpjyFJTO35P387ElcoW6eJDZppckLEnzm0cip4Y25VmTVMCOqdGypAQpsilT52IkPyKQhH/DNMCODiq0OqEMPjf+FwHnv6JlJZ9DOEiu23AWt7OC8rkzG81EEygqu9Z7YHwFxW1rIzwFOgu53ec5guZpTTmtyovd+tSjfrqM4MGBcZTEsL/jvV4cRyPGGtzTgYH0Ue7insWvTHxfWOVzQNxPEL0ZpeL4hJuVQ0OStGjmbkfgz5qo+ZQ==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=prMC5Srf9JiMMjE7jrYioqXj0txmKUqwb9NcW2oPT3A=;
+ b=Je7uk09Rt19hDOgOO1Vj0ziIYTmb/eK+2en9HxZcvXAZDEexIlwRzR9UFYFCFCxGDVrGgCA/F7VqOCm7KItv1Bv8YFGpypVH2p3OhQtkwuk5TPilAsMkm6BjJg4uT+FPrIOW60BLrdD+pXUcjrI7FCsRu4plmjhEjh5bGHU45eGK8GI9flxQFe5hrX+dPY6A6fnAhSBCI9RAHnVleTMB++9lybtLVa4AyjXoExLWgHbSSsgk4B+1mI1jJiUF+G4XXgaQt9HedFnmVaW5oXGi8MLYeRw5DuxEBo6jdCnT//oPT1MitqUrUJUVr1tjOuBZXiz0B2DiHq9qYVTWa8IyxA==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=nvidia.com; dmarc=pass action=none header.from=nvidia.com;
+ dkim=pass header.d=nvidia.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=Nvidia.com;
+ s=selector2;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=prMC5Srf9JiMMjE7jrYioqXj0txmKUqwb9NcW2oPT3A=;
+ b=q8wNdTs+X0Is6Uwv0SgRMX5M5xEyJuRssR3RDtDTkgWOOw2rDaVT56ohx34XmF8CmLqQxKUV1LqnUeTLomu5g5j+cMueYAwRln471OblwT7oTt8GHgDSsEHVN4okYuSv+oJH95EXETlufmvgy8mP9nkULtYlvFld5uKfxxvd2cenV7oX6Hr6DolhNGWu1WBQ1FoUw2kDAb2GLNj1ypCX23oZl6aGH80Yq8RVVUvG8QXtME/zc3loCQPAUzoQNljfBLfazLb1qlIDmyjoMhviXtaIGidxeQBabDGoqJphYVuz8geiBt01sfEGc56BHtkD/IZ47bopEM/kJckBnai5AA==
+Received: from CH3PR12MB7548.namprd12.prod.outlook.com (2603:10b6:610:144::12)
+ by SN7PR12MB7420.namprd12.prod.outlook.com (2603:10b6:806:2a7::7)
+ with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.92.8; Thu, 4 Jun 2026
+ 11:22:01 +0000
+Received: from CH3PR12MB7548.namprd12.prod.outlook.com
+ ([fe80::b710:d6a1:ab16:76de]) by CH3PR12MB7548.namprd12.prod.outlook.com
+ ([fe80::b710:d6a1:ab16:76de%6]) with mapi id 15.21.0092.006; Thu, 4 Jun 2026
+ 11:22:01 +0000
+From: Shameer Kolothum Thodi <skolothumtho@nvidia.com>
+To: "eric.auger@redhat.com" <eric.auger@redhat.com>, "qemu-arm@nongnu.org"
+ <qemu-arm@nongnu.org>, "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>
+CC: "peter.maydell@linaro.org" <peter.maydell@linaro.org>, "clg@redhat.com"
+ <clg@redhat.com>, "alex@shazbot.org" <alex@shazbot.org>, Nicolin Chen
+ <nicolinc@nvidia.com>, Nathan Chen <nathanc@nvidia.com>, Matt Ochs
+ <mochs@nvidia.com>, Jiandi An <jan@nvidia.com>, Jason Gunthorpe
+ <jgg@nvidia.com>, "zhenzhong.duan@intel.com" <zhenzhong.duan@intel.com>,
+ Krishnakant Jaju <kjaju@nvidia.com>, "phrdina@redhat.com"
+ <phrdina@redhat.com>
+Subject: RE: [PATCH v6 19/31] hw/arm/tegra241-cmdqv: Use mmap'd VINTF page0 as
+ VCMDQ backing
+Thread-Topic: [PATCH v6 19/31] hw/arm/tegra241-cmdqv: Use mmap'd VINTF page0
+ as VCMDQ backing
+Thread-Index: AQHc8by4fuaRR8TZcUOzaPeyLp//M7YuLUsAgAAO9wA=
+Date: Thu, 4 Jun 2026 11:22:01 +0000
+Message-ID: <CH3PR12MB7548722927EE767FD6736FB7AB102@CH3PR12MB7548.namprd12.prod.outlook.com>
+References: <20260601114221.457995-1-skolothumtho@nvidia.com>
+ <20260601114221.457995-20-skolothumtho@nvidia.com>
+ <d3ab357a-a0f2-48c8-b458-b5263220e09c@redhat.com>
+In-Reply-To: <d3ab357a-a0f2-48c8-b458-b5263220e09c@redhat.com>
+Accept-Language: en-US, en-GB
+Content-Language: en-US
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+authentication-results: dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=nvidia.com;
+x-ms-publictraffictype: Email
+x-ms-traffictypediagnostic: CH3PR12MB7548:EE_|SN7PR12MB7420:EE_
+x-ms-office365-filtering-correlation-id: afc7fb07-4806-414f-ee8d-08dec22b7f88
+x-ms-exchange-senderadcheck: 1
+x-ms-exchange-antispam-relay: 0
+x-microsoft-antispam: BCL:0;
+ ARA:13230040|1800799024|376014|366016|38070700021|3023799007|18002099003|22082099003|11063799006|4143699003|56012099006;
+x-microsoft-antispam-message-info: jTDvMtWXoxS45GrigOtAi4v+x7UemRjr6pa8zaNLl9peGWwOyqhutOhLKJFydAbCKDYIPNVWmsK6xW6zmPowXplmkUJ+dMOgGsdBj0Tp78wkgFm4ZHMKD+POpPI4S8F2cbXF4MQ/HuHDKRaqPBqMrjm3npOz8fvWJUKTaPDuxL1z6psmijWUcRJYJhBA3vv72s3dYE+vetsH5fDjnyO91p3AA3kY0P72Yai1ym1I5gYy6DaZLCyd/Lru9ala0Gro4mKMTSoGIFr3Kza4EGuptsLaEmnBBizi+h1mJ2vp2ywIfIaiwjlW9b6MIP1gKxLFmJ+Gi/SKFHRZNyDUJb//MvT7YfQ5wQmLFhDxD9pS/7KAi4F7jQs7eqmFRIJxNj4dXtdk+Z8W28dO2SJTi73+7HhOhRuaSjGmvcUsTILMj0/V8deM7DXOzlPqGPiKtGuHC0L3lJg8ZJLeYAQRfJ55pj/YjTxSSHDxPO5y+mBTyudrg50SXF7AKEkJnYR2wCcHoNeD32IQRMAFo/B7AxMSRTAll10rpDe2adI6yZv1nCi71frHd4uwliLcJEXQSb8z1AChXy95N/mIaM6ax9pscN/jw2vuFXiHKQw7A9hfWc1OI1eThgZ8I00keGEUsc+69+0iyf7vP4wZiMBagqA+ujFbSkhEDoOIDrqBxx9JfewobqgISVOwpw5PQtwXjKn/HbozrmDyWVkoKK89TgIdSKr3SSayX50ndTwNjf+4YXjqpxJuf2sbfK4jYyQcuunh
+x-forefront-antispam-report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
+ IPV:NLI; SFV:NSPM; H:CH3PR12MB7548.namprd12.prod.outlook.com; PTR:; CAT:NONE;
+ SFS:(13230040)(1800799024)(376014)(366016)(38070700021)(3023799007)(18002099003)(22082099003)(11063799006)(4143699003)(56012099006);
+ DIR:OUT; SFP:1101; 
+x-ms-exchange-antispam-messagedata-chunkcount: 1
+x-ms-exchange-antispam-messagedata-0: =?utf-8?B?Y0poSXZ2R3RFNG9NbVV4ZnZUT1VDSTNQZUZNNDY5STRrTml2REt2NTBndHZF?=
+ =?utf-8?B?Z1ZVMHM5MEhnYWlYa1p4d2UvQnUrcEZDcVBvWXhaOUFKbHNUMWZtTjRaVncy?=
+ =?utf-8?B?Nk9Qck9xR3EreFhDUmlNUWZOYWVIelRXQUVORUdPanVUbHlJcXc1TUZaY2Fr?=
+ =?utf-8?B?UExLRFlkc1ovRkZlQ2IybDFsYlNTVktpbi9JSVQ4VzJsRFV6c0h3V1Y0NSsy?=
+ =?utf-8?B?ZXRJaUZnRTJHT2YwNTVQNy9pUDh0L0F2c2JCenJGVUc3Njg4WWZBMXFCNHZO?=
+ =?utf-8?B?cFFqd1Q5V1hmQkdsazFaY0xabm1qWHprZTFjQmV4ZTl4R0ZwVmxzSTJtMm4z?=
+ =?utf-8?B?UU9EOFB1RW9TaElTdzBhaEhQcm41TkJLK3Vhd05xU3dBa2o2WHF6NEZ3Mmt2?=
+ =?utf-8?B?dWlVOWxlYnZUUFh1LzhjWlFMMk9xTml3MTQ4OFpERXRhYmROWGZ6Smcxc0dm?=
+ =?utf-8?B?aHdlekVCY05yVDFMTUZRaDZsSmJvM2FxWGlQTGg3TUs5dFBibk11Q1BWZ1Ra?=
+ =?utf-8?B?NUFSUWpua3UxVGZOb1kyb0hFSG1scDhkcm0yUzFHVEFtN3lDSFB2TGpiNVQ1?=
+ =?utf-8?B?VUQ3OHFjdzR6WXhVaW0wOGNrUzRTN3d5TXhjOUdGRHBSckRpWHdVc2dINmlq?=
+ =?utf-8?B?RFFqbUV6MlJ5OFRjcFdlL2lRMW5wYmtFcGxXTXZ4eHZJUGJ0a1psQjdQaVRU?=
+ =?utf-8?B?cEFEOGRTaUc4RVppOTUxVFg0MEdDYzZiZElNTW9qRXJzWEdCc3MwUXg3a3R3?=
+ =?utf-8?B?SE9FS2dFYllPOTRzUGRxLzc4S1k1U0FFeGl1bVN2K3VGaEsvODJIS0xnd0ND?=
+ =?utf-8?B?eTB5Y3p4M05VRDl1Z2xyTHJYS2ovL2p4end2TEM4VTFkQXh5LzJ4ZzR1UE5G?=
+ =?utf-8?B?V0ZneEo4bEdYNSs2ZkpZVkxYR1RzcWpPQ29xbWtYSVd5eXF2Y0JlN0N1TFpa?=
+ =?utf-8?B?UC9hREhiVXlSMEtzWk03R2xXNnBkWG9LYXNhVjNsaFlPcEpnTlVsMGgyR1Y4?=
+ =?utf-8?B?Vk0rNTZLbGJVSnp0RWJtUW1FRjE5QmdVZmRhSWpyTlVhaUxLcU5pclFjdm1o?=
+ =?utf-8?B?d00yaEJQSmlxY2pySzR5OGV1cTVTWCtCcmMyaUVaQWlVSzJqekMvajJ4amd1?=
+ =?utf-8?B?Zk8vWWp1a0M4SFpYUHgzZk9kajQ5MFJtNU9QbjBiV0xLTW03Qm5lZDNLeXN2?=
+ =?utf-8?B?S1hZZlRrK0xWYndxQThxSmNpK2tQbkpMNUZzNDJvK2drUVNLNVMybDR5V2Jk?=
+ =?utf-8?B?VmpNc1N4cUZEUmNhM3ROamlpNTRrSE9lN3c4R3oxQlJ5cCtrM0pqRjRNWHBW?=
+ =?utf-8?B?QTJzcld5U1h2VUdQRkN0bE5hZUw2d1ZPRGNEczNIRGxabUJ6bVhzTVNvSjR0?=
+ =?utf-8?B?Z2k3MjBkSG5FanhXdUMxWFlIRU02Z2ZWR0dWZDhVbHdvNk1ySUllUFpQN3RE?=
+ =?utf-8?B?eUN5OThPYSswZjkxMEJidDYwY0tPaU5BQ0pmYWU1L1BqWUlIMFcybnhsTllx?=
+ =?utf-8?B?eVZJOXl6VVJIV1Y4RFZYWTBsNkVoZEhGWjRCdkJEdGU2ZGhTaUZjdjE5SHRx?=
+ =?utf-8?B?NUdFWmcxelhVd3ZTeFpyckJYL3dDUmpIUWVvOWRORE9oQmNoNnFiWWI1MWE5?=
+ =?utf-8?B?Q2ZFRlg4djlWMlcyQW5URk13QmRyc0xNMy9NSll2YnJlN1JPQjBDT0h4Ymdu?=
+ =?utf-8?B?WTIyN0N1S2tWbkp3NDFiTDhtRHE0Z25RUnRkM2x2Nld1OVltSjl1cXZwKzZn?=
+ =?utf-8?B?Y2FqeFNGOVA1N3FuSlFQeTM1NzdnSzNYeVZYYlZrUlBZcVJGWFZBZ3hTM21F?=
+ =?utf-8?B?NEFrNEpmdG5WcVVDOU5ZZmttZE5XUUtTeXNPbXc2bkhWSUEvTG1yRnBZcW4v?=
+ =?utf-8?B?ZDI5Qi9hVEVxak1PQzRaaERlbTBHcWtpV2tLb2VZNzE0d0NETDhqcUxPWm5o?=
+ =?utf-8?B?clZVRUNIa3FqNWxWWjgzdHRHNFk0Ky9yc2FTNzBER0hDYjZZQ29RcnlKRjdR?=
+ =?utf-8?B?ck9WRi9wNGRRK202dXhBZUovTUFJT0VVV24yZ2lqYTM1RTcrRncxRHpyb0E0?=
+ =?utf-8?B?MERCOVFSc1crKzFqcE1zNDRDQ1pHR09GbndyYU5NWmRZNU9RbkdKL1pienRP?=
+ =?utf-8?B?cDZ0bjNKbWtUWTk2ZVJSWVlGemFQM3dCenpjYzZnL1NvcmtHVENOLzJwbDZ0?=
+ =?utf-8?B?bFNLOCtZZ1VxOGw2VnI4QUZERzl1c3lnRmlrOHNJY09vL3VRMHNkMmordUNm?=
+ =?utf-8?B?YkxQNjZzbFE4QUlFRXVtaE9QKzhidFYza2kxVUtaQ2VNejNscXFEM2Z0L3R4?=
+ =?utf-8?B?V3RHak5ORjhTbnZYM1cxV1FMbHdWWU13c3ZKQWtnbEtEbzlrbzV1dz09?=
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: base64
 MIME-Version: 1.0
-References: <20260529094619.1034458-1-pbonzini@redhat.com>
- <aiBBV48wyDF57vUi@redhat.com>
- <CABgObfZNX2rLnB=FosVopFmLB_S_5V48UPLjNTTtn543d9RfHg@mail.gmail.com>
- <aiBqT1KfI-qowr4L@redhat.com>
-In-Reply-To: <aiBqT1KfI-qowr4L@redhat.com>
-From: Paolo Bonzini <pbonzini@redhat.com>
-Date: Thu, 4 Jun 2026 12:37:58 +0200
-X-Gm-Features: AVHnY4I7DXKpFWKauzK9HzNMmMrBNjD6_UoV8DuMKbAdIo3LLcP7mqlpcYvMlb0
-Message-ID: <CAHFMJ7veDE+i89Kh-SaQOL3019W2YC9_o7DeQtDL-YKGxGGHVQ@mail.gmail.com>
-Subject: Re: [PATCH v2] docs/devel: relax policy on AI-generated contributions
-To: =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>
-Cc: qemu-devel <qemu-devel@nongnu.org>, "Michael S. Tsirkin" <mst@redhat.com>, 
- =?UTF-8?B?QWxleCBCZW5uw6ll?= <alex.bennee@linaro.org>, 
- Alistair Francis <alistair.francis@wdc.com>,
- BALATON Zoltan <balaton@eik.bme.hu>, 
- Fabiano Rosas <farosas@suse.de>, Kevin Wolf <kwolf@redhat.com>, 
- Peter Maydell <peter.maydell@linaro.org>, Warner Losh <imp@bsdimp.com>, 
- =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>
-Content-Type: multipart/alternative; boundary="000000000000027f4106536b2466"
-Received-SPF: pass client-ip=2607:f8b0:4864:20::336;
- envelope-from=paolo.bonzini@gmail.com; helo=mail-ot1-x336.google.com
-X-Spam_score_int: -16
-X-Spam_score: -1.7
-X-Spam_bar: -
-X-Spam_report: (-1.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, FREEMAIL_FORGED_FROMDOMAIN=0.001,
- FREEMAIL_FROM=0.001, HEADER_FROM_DIFFERENT_DOMAINS=0.249, HTML_MESSAGE=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=no autolearn_force=no
+X-OriginatorOrg: Nvidia.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-AuthSource: CH3PR12MB7548.namprd12.prod.outlook.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: afc7fb07-4806-414f-ee8d-08dec22b7f88
+X-MS-Exchange-CrossTenant-originalarrivaltime: 04 Jun 2026 11:22:01.1940 (UTC)
+X-MS-Exchange-CrossTenant-fromentityheader: Hosted
+X-MS-Exchange-CrossTenant-id: 43083d15-7273-40c1-b7db-39efd9ccc17a
+X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
+X-MS-Exchange-CrossTenant-userprincipalname: 8eNHgz3dAoHB6skMmImWpkPUcYfuAx8WE7kHdye4Frurcl1jExmaCdwOPPROwIpR524rg0Cu1DGfyVMQfDkPag==
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: SN7PR12MB7420
+Received-SPF: permerror client-ip=2a01:111:f403:c10d::3;
+ envelope-from=skolothumtho@nvidia.com;
+ helo=SN4PR0501CU005.outbound.protection.outlook.com
+X-Spam_score_int: -24
+X-Spam_score: -2.5
+X-Spam_bar: --
+X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.445,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ SPF_HELO_NONE=0.001, SPF_NONE=0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -123,357 +159,165 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
---000000000000027f4106536b2466
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-
-Il mer 3 giu 2026, 19:54 Daniel P. Berrang=C3=A9 <berrange@redhat.com> ha
-scritto:
-
-> The AI policy should just
-> make a point that we expect to be communicating with people not
-> bots pretending to be people.
->
-
-Yes, it's better to have that stated clearly.
-
-> True but we also need a rule. The spirit is better explained elsewhere
-> > (and also, building consensus on spirit vs. a rule are two different
-> > things).
->
-> Do we have a better elsewhere in this case ?  It is a point specifically
-> about intent of the AI policy rule.
-
-
-The rule in this draft says 20 lines, tests, mechanical changes and docs.
-The spirit is what is in the commit message, basically to maximize the
-benefit and limit the possible damage?
-
-> > Docs is an area I'm more wary of from the social expectation side rathe=
-r
-> > > than the technical or legal side.  I don't feeel like "pay attention =
-to
-> > > the organization and flow" really mitigates to the tendancy to
-> production
-> > > of vast reams of convincing sounding slop.
->
-
-> Can we do this more incrementally and have a more tightly constrained
-> guide for docs initially and review it again at a later date if we feel i=
-t
-> is worth relaxing further.
->
-
-Sure.
-
-Maybe the same can be done for boilerplate changes like the one I suggest
-below?
-
-> See my reply to Peter elsewhere in the thread. I agree with your
-> > concerns for both docs and discretion, but I had specific uses in mind
-> > that I'd like to allow.
-> >
-> > For docs:
-> > - create tutorials and/or feature documentation based on functional tes=
-ts
->
-> That doesn't sound too appealing to me. Reverse engineering docs or
-> tutorials from our functional tests is exactly the kind of thing that fee=
-ls
-> likely to result in volumous text of marginal value which will have a lar=
-ge
-> burden on reviewers.
->
-
-At the same time this can be helpful for maintainers themselves? Let's also
-look at this from the point of view of producing better output, not just
-from that of being on the receiving end of slop. Especially for docs I have
-a hard time imagining people sending out whole new "manuals"... The
-bugfixes rule ironically seems the most dangerous to me from the
-Dunning-Krueger point of view.
-
-My question is: do we want disclosure for anything is created with the help
-of LLMs, even if only small parts survive untouched? I think so, because a
-lot more, even if edited, would still be originally from AI. But then it's
-important to have rules allowing it and a way to track it.
-
-> - create function comments (including Rust doctests) based on a
-> > high-level, human-written description of the module
->
-> This feels interesting to trial.
->
-> The key difference with function comments is that you don't really have
-> any of the trouble with document structure & coherence. The API docs shou=
-ld
-> be comparatively smaller & easier to read & digest and give feedback on
-> accuracy of.
-
-
-True.
-
-> For maintainer discretion:
-> > - updating patches for changes to kernel APIs, before the kernel side
-> > is ready for inclusion
-> > - creation of parsing code for Rust procedural macros based on code
-> > examples and/or a human-written description of the macro
-> > - creation of boilerplate code similar to hw/core/hotplug.c
-> >
-> > I think all of these are potentially compelling and I would like
-> > people to be allowed to experiment with them or similar cases.
->
-> Those are largely in direct conflict with the intent behind only allowing
-> "small bug fixes" Either we accept broad contributions like this as a
-> project, or we don't - I don't see that as something that is suitable for
-> per-maintainer discretion. If it will not be intended for merge, then the
-> policy is irrelevant and people can just experiment out of tree at will.
-
-
-It would definitely be intended for merge. There's a lot of boilerplate
-code in the Rust bindings, for example, that is voluminous but *mostly*
-lacks creativity---the creative part basically can be described by the
-spec/docs and should already clear the low bar required for originality,
-even if the code is automatically generated. I included a couple examples
-in my reply to Peter.
-
-I have no preference for writing English or a programming language, but
-writing both sucks and LLMs are much better at coding than writing specs
-(plus, code can be tested). This is exactly the opposite of small bug fixes
-which are themselves the product of a creative process (debugging) but
-small enough that, once you've debugged them, there's basically only one
-way to write them.
-
-> The idea of contacting maintainers beforehand comes from the policy
-> > currently under discussion in the Rust project.
->
-> I presume you're looking at
->
->   https://github.com/rust-lang/rust-forge/pull/1040/changes
-
-
-Yes.
-
-What I find interesting there is that their rule that is comparable to your
-> "small bug fixes" rule, emphasizes it is about allowing "trivial" chances
-> and specifically references the idea of a threshold for originality /
-> copyrightability. I find that more satisfying than talking about lines of
-> code and bug fixes.
-
-
-It's also more abstract though; and doesn't touch on what happens if you
-stumble on someone else's threshold of originality. We're not lawyers, and
-our contributors probably have thought even less about these issues. That's
-why both Rust's policy and this proposal have (different) concrete ways to
-stay within the spirit.
-
-The talk about experimenting with LLMS for larger changes emphasizes
-> experimentation  and use of PRs in order to trigger the run of tools from
-> their review pipeline.
->
-> That doesn't explicitly say whether such "experiments" are permissible to
-> be merged though
-
-
-There is a part that mentions "pre-arranged, non-critical, high-quality,
-well-tested, and well-reviewed code changes that are originally created by
-an LLM", "to experiment with LLMs to inform future policies".
-
-They mention a private channel where maintainers can discuss whether the
-PRs pass the standards required of LLM changes. The mention of a higher
-standard strongly suggests that they intend to accept them, otherwise why
-would you have people do the work for nothing.
-
-Likewise, they say that for CI runs no disclosure is needed while "if a PR
-is no longer marked as clearly experimental, at that point disclosure is
-required". The no-longer-experimental PRs fall under the previous rule, and
-IMO this sentence also supports my reading that they are intended for
-merging.
-
-This is what I would like to have in QEMU as well, so that people are able
-to learn. We need to trust maintainers to understand the spirit---which
-does mean we need to write it down, though. :)
-
-Paolo
-
-I don't know if the Rust project has specific terminology here, but my
-> reading of that was that people can agree to collaborate publically on LL=
-M
-> work, but that does not appear to give individual maintainers permission =
-to
-> waive the LLM policy rules to merge arbitrary LLM code in the way this QE=
-MU
-> proposal suggests.
-
---000000000000027f4106536b2466
-Content-Type: text/html; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-
-<div dir=3D"auto"><div><br><br><div class=3D"gmail_quote"><div dir=3D"ltr" =
-class=3D"gmail_attr">Il mer 3 giu 2026, 19:54 Daniel P. Berrang=C3=A9 &lt;<=
-a href=3D"mailto:berrange@redhat.com" target=3D"_blank" rel=3D"noreferrer">=
-berrange@redhat.com</a>&gt; ha scritto:<br></div><blockquote class=3D"gmail=
-_quote" style=3D"margin:0 0 0 .8ex;border-left:1px #ccc solid;padding-left:=
-1ex">The AI policy should just<br>
-make a point that we expect to be communicating with people not<br>
-bots pretending to be people.<br></blockquote></div></div><div dir=3D"auto"=
-><br></div><div dir=3D"auto">Yes, it&#39;s better to have that stated clear=
-ly.</div><div dir=3D"auto"><br></div><div dir=3D"auto"><div class=3D"gmail_=
-quote"><blockquote class=3D"gmail_quote" style=3D"margin:0 0 0 .8ex;border-=
-left:1px #ccc solid;padding-left:1ex">&gt; True but we also need a rule. Th=
-e spirit is better explained elsewhere<br>
-&gt; (and also, building consensus on spirit vs. a rule are two different<b=
-r>
-&gt; things).<br>
-<br>
-Do we have a better elsewhere in this case ?=C2=A0 It is a point specifical=
-ly about intent of the AI policy rule.</blockquote></div></div><div dir=3D"=
-auto"><br></div><div dir=3D"auto">The rule in this draft says 20 lines, tes=
-ts, mechanical changes and docs. The spirit is what is in the commit messag=
-e, basically to maximize the benefit and limit the possible damage?</div><d=
-iv dir=3D"auto"><br></div><div dir=3D"auto"><div class=3D"gmail_quote"><blo=
-ckquote class=3D"gmail_quote" style=3D"margin:0 0 0 .8ex;border-left:1px #c=
-cc solid;padding-left:1ex">&gt; &gt; Docs is an area I&#39;m more wary of f=
-rom the social expectation side rather<br>
-&gt; &gt; than the technical or legal side.=C2=A0 I don&#39;t feeel like &q=
-uot;pay attention to<br>
-&gt; &gt; the organization and flow&quot; really mitigates to the tendancy =
-to production<br>
-&gt; &gt; of vast reams of convincing sounding slop.<br></blockquote></div>=
-</div><div dir=3D"auto"><div class=3D"gmail_quote"><blockquote class=3D"gma=
-il_quote" style=3D"margin:0 0 0 .8ex;border-left:1px #ccc solid;padding-lef=
-t:1ex">
-<br>
-Can we do this more incrementally and have a more tightly constrained guide=
- for docs initially and review it again at a later date if we feel it is wo=
-rth relaxing further.<br></blockquote></div></div><div dir=3D"auto"><br></d=
-iv><div dir=3D"auto">Sure.</div><div dir=3D"auto"><br></div><div dir=3D"aut=
-o">Maybe the same can be done for boilerplate changes like the one I sugges=
-t below?</div><div dir=3D"auto"><br></div><div dir=3D"auto"><div class=3D"g=
-mail_quote"><blockquote class=3D"gmail_quote" style=3D"margin:0 0 0 .8ex;bo=
-rder-left:1px #ccc solid;padding-left:1ex">
-&gt; See my reply to Peter elsewhere in the thread. I agree with your<br>
-&gt; concerns for both docs and discretion, but I had specific uses in mind=
-<br>
-&gt; that I&#39;d like to allow.<br>
-&gt; <br>
-&gt; For docs:<br>
-&gt; - create tutorials and/or feature documentation based on functional te=
-sts<br>
-<br>
-That doesn&#39;t sound too appealing to me. Reverse engineering docs or tut=
-orials from our functional tests is exactly the kind of thing that feels li=
-kely to result in volumous text of marginal value which will have a large b=
-urden on reviewers.<br></blockquote></div></div><div dir=3D"auto"><br></div=
-><div dir=3D"auto">At the same time this can be helpful for maintainers the=
-mselves? Let&#39;s also look at this from the point of view of producing be=
-tter output, not just from that of being on the receiving end of slop. Espe=
-cially for docs I have a hard time imagining people sending out whole new &=
-quot;manuals&quot;... The bugfixes rule ironically seems the most dangerous=
- to me from the Dunning-Krueger point of view.</div><div dir=3D"auto"><br><=
-/div><div dir=3D"auto">My question is: do we want disclosure for anything i=
-s created with the help of LLMs, even if only small parts survive untouched=
-? I think so, because a lot more, even if edited, would still be originally=
- from AI. But then it&#39;s important to have rules allowing it and a way t=
-o track it.</div><div dir=3D"auto"><br></div><div dir=3D"auto"><div class=
-=3D"gmail_quote"><blockquote class=3D"gmail_quote" style=3D"margin:0 0 0 .8=
-ex;border-left:1px #ccc solid;padding-left:1ex">&gt; - create function comm=
-ents (including Rust doctests) based on a<br>
-&gt; high-level, human-written description of the module<br>
-<br>
-This feels interesting to trial.<br>
-<br>
-The key difference with function comments is that you don&#39;t really have=
- any of the trouble with document structure &amp; coherence. The API docs s=
-hould be comparatively smaller &amp; easier to read &amp; digest and give f=
-eedback on accuracy of.</blockquote></div></div><div dir=3D"auto"><br></div=
-><div dir=3D"auto">True.=C2=A0</div><div dir=3D"auto"><br></div><div dir=3D=
-"auto"></div><div dir=3D"auto"><div class=3D"gmail_quote"><blockquote class=
-=3D"gmail_quote" style=3D"margin:0 0 0 .8ex;border-left:1px #ccc solid;padd=
-ing-left:1ex">&gt; For maintainer discretion:<br>
-&gt; - updating patches for changes to kernel APIs, before the kernel side<=
-br>
-&gt; is ready for inclusion<br>
-&gt; - creation of parsing code for Rust procedural macros based on code<br=
->
-&gt; examples and/or a human-written description of the macro<br>
-&gt; - creation of boilerplate code similar to hw/core/hotplug.c<br>
-&gt; <br>
-&gt; I think all of these are potentially compelling and I would like<br>
-&gt; people to be allowed to experiment with them or similar cases.<br>
-<br>
-Those are largely in direct conflict with the intent behind only allowing &=
-quot;small bug fixes&quot; Either we accept broad contributions like this a=
-s a project, or we don&#39;t - I don&#39;t see that as something that is su=
-itable for per-maintainer discretion. If it will not be intended for merge,=
- then the policy is irrelevant and people can just experiment out of tree a=
-t will.</blockquote></div></div><div dir=3D"auto"><br></div><div dir=3D"aut=
-o">It would definitely be intended for merge. There&#39;s a lot of boilerpl=
-ate code in the Rust bindings, for example, that is voluminous but *mostly*=
- lacks creativity---the creative part basically can be described by the spe=
-c/docs and should already clear the low bar required for originality, even =
-if the code is automatically generated. I included a couple examples in my =
-reply to Peter.</div><div dir=3D"auto"><br></div><div dir=3D"auto">I have n=
-o preference for writing English or a programming language, but writing bot=
-h sucks and LLMs are much better at coding than writing specs (plus, code c=
-an be tested). This is exactly the opposite of small bug fixes which are th=
-emselves the product of a creative process (debugging) but small enough tha=
-t, once you&#39;ve debugged them, there&#39;s basically only one way to wri=
-te them.</div><div dir=3D"auto"><br></div><div dir=3D"auto"><div class=3D"g=
-mail_quote"><blockquote class=3D"gmail_quote" style=3D"margin:0 0 0 .8ex;bo=
-rder-left:1px #ccc solid;padding-left:1ex">&gt; The idea of contacting main=
-tainers beforehand comes from the policy<br>
-&gt; currently under discussion in the Rust project.<br>
-<br>
-I presume you&#39;re looking at<br>
-<br>
-=C2=A0 <a href=3D"https://github.com/rust-lang/rust-forge/pull/1040/changes=
-" rel=3D"noreferrer noreferrer noreferrer" target=3D"_blank">https://github=
-.com/rust-lang/rust-forge/pull/1040/changes</a></blockquote></div></div><di=
-v dir=3D"auto"><br></div><div dir=3D"auto">Yes.=C2=A0</div><div dir=3D"auto=
-"><br></div><div dir=3D"auto"><div class=3D"gmail_quote"><blockquote class=
-=3D"gmail_quote" style=3D"margin:0 0 0 .8ex;border-left:1px #ccc solid;padd=
-ing-left:1ex">What I find interesting there is that their rule that is comp=
-arable to your &quot;small bug fixes&quot; rule, emphasizes it is about all=
-owing &quot;trivial&quot; chances and specifically references the idea of a=
- threshold for originality / copyrightability. I find that more satisfying =
-than talking about lines of code and bug fixes.</blockquote></div></div><di=
-v dir=3D"auto"><br></div><div dir=3D"auto">It&#39;s also more abstract thou=
-gh; and doesn&#39;t touch on what happens if you stumble on someone else&#3=
-9;s threshold of originality. We&#39;re not lawyers, and our contributors p=
-robably have thought even less about these issues. That&#39;s why both Rust=
-&#39;s policy and this proposal have (different) concrete ways to stay with=
-in the spirit.</div><div dir=3D"auto"><br></div><div dir=3D"auto"></div><di=
-v dir=3D"auto"><div class=3D"gmail_quote"><blockquote class=3D"gmail_quote"=
- style=3D"margin:0 0 0 .8ex;border-left:1px #ccc solid;padding-left:1ex">
-The talk about experimenting with LLMS for larger changes emphasizes experi=
-mentation=C2=A0 and use of PRs in order to trigger the run of tools from th=
-eir review pipeline.=C2=A0 =C2=A0<br>
-<br>
-That doesn&#39;t explicitly say whether such &quot;experiments&quot; are pe=
-rmissible to be merged though</blockquote></div></div><div dir=3D"auto"><br=
-></div><div dir=3D"auto">There is a part that mentions &quot;pre-arranged, =
-non-critical, high-quality, well-tested, and well-reviewed code changes tha=
-t are originally created by an LLM&quot;, &quot;to experiment with LLMs to =
-inform future policies&quot;.</div><div dir=3D"auto"><br></div><div dir=3D"=
-auto">They mention a private channel where maintainers can discuss whether =
-the PRs pass the standards required of LLM changes. The mention of a higher=
- standard strongly suggests that they intend to accept them, otherwise why =
-would you have people do the work for nothing.</div><div dir=3D"auto"><br><=
-/div><div dir=3D"auto">Likewise, they say that for CI runs no disclosure is=
- needed while &quot;if a PR is no longer marked as clearly experimental, at=
- that point disclosure is required&quot;. The no-longer-experimental PRs fa=
-ll under the previous rule, and IMO this sentence also supports my reading =
-that they are intended for merging.</div><div dir=3D"auto"><br></div><div d=
-ir=3D"auto">This is what I would like to have in QEMU as well, so that peop=
-le are able to learn. We need to trust maintainers to understand the spirit=
----which does mean we need to write it down, though. :)</div><div dir=3D"au=
-to"><br></div><div dir=3D"auto">Paolo</div><div dir=3D"auto"><br></div><div=
- dir=3D"auto"><div class=3D"gmail_quote"><blockquote class=3D"gmail_quote" =
-style=3D"margin:0 0 0 .8ex;border-left:1px #ccc solid;padding-left:1ex">I d=
-on&#39;t know if the Rust project has specific terminology here, but my rea=
-ding of that was that people can agree to collaborate publically on LLM wor=
-k, but that does not appear to give individual maintainers permission to wa=
-ive the LLM policy rules to merge arbitrary LLM code in the way this QEMU p=
-roposal suggests.</blockquote></div></div></div>
-
---000000000000027f4106536b2466--
+DQoNCj4gLS0tLS1PcmlnaW5hbCBNZXNzYWdlLS0tLS0NCj4gRnJvbTogRXJpYyBBdWdlciA8ZXJp
+Yy5hdWdlckByZWRoYXQuY29tPg0KPiBTZW50OiAwNCBKdW5lIDIwMjYgMTA6NTYNCj4gVG86IFNo
+YW1lZXIgS29sb3RodW0gVGhvZGkgPHNrb2xvdGh1bXRob0BudmlkaWEuY29tPjsgcWVtdS0NCj4g
+YXJtQG5vbmdudS5vcmc7IHFlbXUtZGV2ZWxAbm9uZ251Lm9yZw0KPiBDYzogcGV0ZXIubWF5ZGVs
+bEBsaW5hcm8ub3JnOyBjbGdAcmVkaGF0LmNvbTsgYWxleEBzaGF6Ym90Lm9yZzsgTmljb2xpbg0K
+PiBDaGVuIDxuaWNvbGluY0BudmlkaWEuY29tPjsgTmF0aGFuIENoZW4gPG5hdGhhbmNAbnZpZGlh
+LmNvbT47IE1hdHQNCj4gT2NocyA8bW9jaHNAbnZpZGlhLmNvbT47IEppYW5kaSBBbiA8amFuQG52
+aWRpYS5jb20+OyBKYXNvbiBHdW50aG9ycGUNCj4gPGpnZ0BudmlkaWEuY29tPjsgemhlbnpob25n
+LmR1YW5AaW50ZWwuY29tOyBLcmlzaG5ha2FudCBKYWp1DQo+IDxramFqdUBudmlkaWEuY29tPjsg
+cGhyZGluYUByZWRoYXQuY29tDQo+IFN1YmplY3Q6IFJlOiBbUEFUQ0ggdjYgMTkvMzFdIGh3L2Fy
+bS90ZWdyYTI0MS1jbWRxdjogVXNlIG1tYXAnZCBWSU5URg0KPiBwYWdlMCBhcyBWQ01EUSBiYWNr
+aW5nDQo+IA0KPiBFeHRlcm5hbCBlbWFpbDogVXNlIGNhdXRpb24gb3BlbmluZyBsaW5rcyBvciBh
+dHRhY2htZW50cw0KPiANCj4gDQo+IEhpIFNoYW1lZXIsDQo+IA0KPiBPbiA2LzEvMjYgMTo0MiBQ
+TSwgU2hhbWVlciBLb2xvdGh1bSB3cm90ZToNCj4gPiBody9hcm0vdGVncmEyNDEtY21kcXY6IFVz
+ZSBtbWFwJ2QgVklOVEYgUGFnZSAwIGFzIFZDTURRIGJhY2tpbmcNCj4gdGhlIHRpdGxlIGlzIGRv
+dWJsZSBoZXJlLg0KDQpBaC4uT2suDQoNCj4gQnkgdGhlIHdheSBtYXkgSSBzdWdnZXN0DQo+IGh3
+L2FybS90ZWdyYTI0MS1jbWRxdjogVXNlIG1tYXAnZCBWSU5URiBwYWdlMCBmb3IgbWFwcGVkIHZj
+bWRxcw0KPiBkaXJlY3Qgdmlldw0KPiANCj4gdG8gZW1waGFzaXplIHRoaXMgcmVsYXRlcyB0aGUg
+ZGlyZWN0IHZpZXcgYW5kIG9ubHkgZm9yIG1hcHBlZCB2Y21kcXMNCg0KSXQncyB0cnVlIHRoaXMg
+ZXZlbnR1YWxseSByZWxhdGVzIG9ubHkgdG8gdGhlIGRpcmVjdCBhcGVydHVyZSwgYnV0IG5vdCB5
+ZXQuDQpWSU5URiBwYWdlMCBvbmx5IGdldHMgbWFwcGVkIGludG8gdGhlIGd1ZXN0IGluIHBhdGNo
+IDIxLiBVbnRpbCB0aGVuLA0KZm9yIGFsbG9jYXRlZCB2Q01EUXMgd2UgdXNlIHRoZSBtbWFwJ2Qg
+VklOVEYgcGFnZTAgZm9yIGJvdGggZGlyZWN0DQphbmQgVklOVEYgYXBlcnR1cmUgYWNjZXNzZXMu
+DQoNCk1heSBiZSB3ZSBjYW4gcmVuYW1lIHRvOg0KUm91dGUgYWxsb2NhdGVkIFZDTURRIFBhZ2Uw
+IGFjY2Vzc2VzIHRvIHRoZSBtbWFwJ2QgVklOVEYgcGFnZTANCg0KPiA+DQo+ID4gSW50cm9kdWNl
+IHRlZ3JhMjQxX2NtZHF2X3ZpbnRmX3B0cigpIHRvIHJvdXRlIFZDTURRIFBhZ2UgMCByZWdpc3Rl
+cg0KPiA+IGFjY2Vzc2VzIHRocm91Z2ggdGhlIG1tYXAnZCBWSU5URiBQYWdlIDAgYmFja2luZyBv
+bmNlIGEgaGFyZHdhcmUNCj4gPiBxdWV1ZSBoYXMgYmVlbiBhbGxvY2F0ZWQgZm9yIHRoZSBWQ01E
+US4NCj4gPg0KPiA+IFRoZSB0d28gUUVNVS10cmFwcGVkIFBhZ2UgMCBhcGVydHVyZXMgKGRpcmVj
+dCBhdCAweDEwMDAwLCBWSU5URiBhdA0KPiA+IDB4MzAwMDApIGFyZSBoYXJkd2FyZSBhbGlhc2Vz
+IG9mIHRoZSBzYW1lIHVuZGVybHlpbmcgcmVnaXN0ZXJzLiBBDQo+ID4gc3Vic2VxdWVudCBwYXRj
+aCBpbnN0YWxscyB0aGUgVklOVEYgYXBlcnR1cmUgYXMgYSBSQU0tZGV2aWNlIGludG8NCj4gPiBn
+dWVzdCBNTUlPOyBpbiB0aGlzIHBhdGNoIGJvdGggcmVtYWluIFFFTVUtdHJhcHBlZC4NCj4gPg0K
+PiA+IFRoZSBkaXJlY3QgVkNNRFEgYXBlcnR1cmUgc3RheXMgUUVNVS10cmFwcGVkIChyYXRoZXIg
+dGhhbiBhbGlhc2VkDQo+ID4gdG8gdGhlIFZJTlRGIG1tYXApIHNvIHRoYXQgd3JpdGVzIHRvIGFu
+IHVuYWxsb2NhdGVkIFZDTURRIHJlbWFpbg0KPiA+IHdlbGwtZGVmaW5lZC4gVGhlIENNRFFWIGFy
+Y2hpdGVjdHVyZSBhbGxvd3Mgc29mdHdhcmUgdG8gcHJvZ3JhbSBhDQo+ID4gVkNNRFEgdGhyb3Vn
+aCB0aGUgZGlyZWN0IGFwZXJ0dXJlIHdpdGhvdXQgZmlyc3QgYWxsb2NhdGluZyBpdCB0byBhDQo+
+ID4gVklOVEY7IGFsaWFzaW5nIHRvIHRoZSBWSU5URiBtbWFwIHdvdWxkIHJvdXRlIHRob3NlIHdy
+aXRlcyBpbnRvDQo+ID4gdW5hbGxvY2F0ZWQgbG9naWNhbCBzbG90cyB3aGVyZSB0aGUgaGFyZHdh
+cmUgc2lsZW50bHkgZHJvcHMgdGhlbS4NCj4gPg0KPiA+IEEgVkNNRFEgUGFnZSAwIGFjY2VzcyBp
+cyBzZXJ2ZWQgZnJvbSBvbmUgb2YgdHdvIHNvdXJjZXM6DQo+ID4NCj4gPiAgIC0gQ2FjaGUtYmFj
+a2VkOiBubyBod19xdWV1ZSBpcyBhbGxvY2F0ZWQgZm9yIHRoZSBWQ01EUQ0KPiA+ICAgICAoSFdf
+UVVFVUVfQUxMT0MgaGFzIG5vdCB5ZXQgc3VjY2VlZGVkKS4gQm90aCBhcGVydHVyZXMgdXNlDQo+
+ID4gICAgIFFFTVUncyByZWdpc3RlciBjYWNoZS4NCj4gPg0KPiA+ICAgLSBIVy1iYWNrZWQ6IEhX
+X1FVRVVFX0FMTE9DIGhhcyBzdWNjZWVkZWQuIEJvdGggYXBlcnR1cmVzIGFjY2Vzcw0KPiA+ICAg
+ICB0aGUgcmVnaXN0ZXJzIGRpcmVjdGx5IHRocm91Z2ggdGhlIG1tYXAnZCBWSU5URiBQYWdlIDAu
+DQo+ID4NCj4gPiB0ZWdyYTI0MV9jbWRxdl9zeW5jX3ZjbWRxKCkgY29waWVzIGFueSBjYWNoZWQg
+d3JpdGVzIChDT05TX0lORFgsDQo+ID4gUFJPRF9JTkRYLCBDT05GSUcsIEdFUlJPUk4pIGludG8g
+dGhlIG1tYXAnZCBwYWdlIG9uIHRoZSBjYWNoZS10by1IVw0KPiA+IHRyYW5zaXRpb24gc28gdGhl
+IGd1ZXN0J3MgZWFybGllciByZWdpc3RlciBzdGF0ZSBzdXJ2aXZlcy4NCj4gPg0KPiA+IFNpZ25l
+ZC1vZmYtYnk6IFNoYW1lZXIgS29sb3RodW0gPHNrb2xvdGh1bXRob0BudmlkaWEuY29tPg0KPiA+
+IC0tLQ0KPiA+ICBody9hcm0vdGVncmEyNDEtY21kcXYuYyB8IDczDQo+ICsrKysrKysrKysrKysr
+KysrKysrKysrKysrKysrKysrKysrKysrKysrDQo+ID4gIDEgZmlsZSBjaGFuZ2VkLCA3MyBpbnNl
+cnRpb25zKCspDQo+ID4NCj4gPiBkaWZmIC0tZ2l0IGEvaHcvYXJtL3RlZ3JhMjQxLWNtZHF2LmMg
+Yi9ody9hcm0vdGVncmEyNDEtY21kcXYuYw0KPiA+IGluZGV4IDU0ZDk1ZjRlNGUuLmRjZTcwODk2
+OTcgMTAwNjQ0DQo+ID4gLS0tIGEvaHcvYXJtL3RlZ3JhMjQxLWNtZHF2LmMNCj4gPiArKysgYi9o
+dy9hcm0vdGVncmEyNDEtY21kcXYuYw0KPiA+IEBAIC0zOSw2ICszOSw0NyBAQCBzdGF0aWMgdm9p
+ZA0KPiB0ZWdyYTI0MV9jbWRxdl9mcmVlX2FsbF92Y21kcShUZWdyYTI0MUNNRFFWICpjbWRxdikN
+Cj4gPiAgICAgIH0NCj4gPiAgfQ0KPiA+DQo+ID4gKy8qDQo+ID4gKyAqIFJldHVybiBhIHBvaW50
+ZXIgaW50byB0aGUgbW1hcCdkIFZJTlRGIHBhZ2UwIGZvciB0aGUgVkNNRFEgUGFnZSAwDQo+ID4g
+KyAqIHJlZ2lzdGVyIGF0IEBvZmZzZXQwIGluIFZDTURRIHNsb3QgQGluZGV4LCBvciBOVUxMIHdo
+ZW4gdGhlIFZDTURRDQo+ID4gKyAqIGhhcyBubyBod19xdWV1ZSBhbGxvY2F0ZWQgb3IgdGhlIFZJ
+TlRGIHBhZ2UwIGlzIG5vdCBtbWFwJ2QuDQo+ID4gKyAqLw0KPiA+ICtzdGF0aWMgaW5saW5lIHVp
+bnQzMl90ICp0ZWdyYTI0MV9jbWRxdl92aW50Zl9wdHIoVGVncmEyNDFDTURRVg0KPiAqY21kcXYs
+DQo+ID4gKyAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICBp
+bnQgaW5kZXgsIGh3YWRkciBvZmZzZXQwKQ0KPiA+ICt7DQo+ID4gKyAgICBpZiAoIWNtZHF2LT52
+Y21kcVtpbmRleF0gfHwgIWNtZHF2LT52aW50Zl9wYWdlMCkgew0KPiA+ICsgICAgICAgIHJldHVy
+biBOVUxMOw0KPiA+ICsgICAgfQ0KPiA+ICsgICAgcmV0dXJuICh1aW50MzJfdCAqKShjbWRxdi0+
+dmludGZfcGFnZTAgKw0KPiA+ICsgICAgICAgICAgICAgICAgICAgICAgICAoaW5kZXggKiBDTURR
+Vl9WQ01EUV9TVFJJREUpICsNCj4gPiArICAgICAgICAgICAgICAgICAgICAgICAgKG9mZnNldDAg
+LSBDTURRVl9WQ01EUV9QQUdFMF9CQVNFKSk7DQo+ID4gK30NCj4gPiArDQo+ID4gKy8qDQo+ID4g
+KyAqIEZsdXNoIGNhY2hlZCByZWdpc3RlciB3cml0ZXMgaW50byB0aGUgbW1hcCdkIFZJTlRGIHBh
+Z2UwIGFmdGVyIGENCj4gPiArICogc3VjY2Vzc2Z1bCBIV19RVUVVRV9BTExPQywgc28gdGhlIGd1
+ZXN0J3MgZWFybGllciB3cml0ZXMgc3Vydml2ZQ0KPiA+ICsgKiB0aGUgY2FjaGUtdG8taGFyZHdh
+cmUgdHJhbnNpdGlvbi4NCj4gPiArICovDQo+ID4gK3N0YXRpYyB2b2lkIHRlZ3JhMjQxX2NtZHF2
+X3N5bmNfdmNtZHEoVGVncmEyNDFDTURRViAqY21kcXYsIGludA0KPiBpbmRleCkNCj4gPiArew0K
+PiA+ICsgICAgdWludDMyX3QgKnB0cjsNCj4gPiArDQo+ID4gKyAgICBwdHIgPSB0ZWdyYTI0MV9j
+bWRxdl92aW50Zl9wdHIoY21kcXYsIGluZGV4LA0KPiBBX1ZDTURRMF9DT05TX0lORFgpOw0KPiA+
+ICsgICAgaWYgKCFwdHIpIHsNCj4gPiArICAgICAgICByZXR1cm47DQo+ID4gKyAgICB9DQo+ID4g
+KyAgICAqcHRyID0gY21kcXYtPnZjbWRxX2NvbnNfaW5keFtpbmRleF07DQo+ID4gKw0KPiA+ICsg
+ICAgcHRyID0gdGVncmEyNDFfY21kcXZfdmludGZfcHRyKGNtZHF2LCBpbmRleCwNCj4gQV9WQ01E
+UTBfUFJPRF9JTkRYKTsNCj4gPiArICAgICpwdHIgPSBjbWRxdi0+dmNtZHFfcHJvZF9pbmR4W2lu
+ZGV4XTsNCj4gPiArDQo+ID4gKyAgICBwdHIgPSB0ZWdyYTI0MV9jbWRxdl92aW50Zl9wdHIoY21k
+cXYsIGluZGV4LCBBX1ZDTURRMF9DT05GSUcpOw0KPiA+ICsgICAgKnB0ciA9IGNtZHF2LT52Y21k
+cV9jb25maWdbaW5kZXhdOw0KPiA+ICsNCj4gPiArICAgIHB0ciA9IHRlZ3JhMjQxX2NtZHF2X3Zp
+bnRmX3B0cihjbWRxdiwgaW5kZXgsIEFfVkNNRFEwX0dFUlJPUk4pOw0KPiA+ICsgICAgKnB0ciA9
+IGNtZHF2LT52Y21kcV9nZXJyb3JuW2luZGV4XTsNCj4gPiArfQ0KPiA+ICsNCj4gPiAgLyoNCj4g
+PiAgICogQWxsb2NhdGUgYSBob3N0IEhXIFZDTURRIGZyb20gdGhlIGN1cnJlbnQgY2FjaGVkIEJB
+U0UgLyBzaXplIGZvcg0KPiBAaW5kZXguDQo+ID4gICAqDQo+ID4gQEAgLTk1LDYgKzEzNiw5IEBA
+IHN0YXRpYyBib29sDQo+IHRlZ3JhMjQxX2NtZHF2X3NldHVwX3ZjbWRxKFRlZ3JhMjQxQ01EUVYg
+KmNtZHF2LCBpbnQgaW5kZXgsDQo+ID4gICAgICBjbWRxdi0+dmNtZHFfZ2Vycm9yW2luZGV4XSAm
+PQ0KPiB+Ul9WQ01EUTBfR0VSUk9SX0NNRFFfSU5JVF9FUlJfTUFTSzsNCj4gPiAgICAgIGNtZHF2
+LT52Y21kcV9zdGF0dXNbaW5kZXhdIHw9DQo+IFJfVkNNRFEwX1NUQVRVU19DTURRX0VOX09LX01B
+U0s7DQo+ID4NCj4gPiArICAgIC8qIFByZS1hbGxvYyBjYWNoZWQgd3JpdGVzIHN1cnZpdmUgdGhl
+IGNhY2hlLXRvLWhhcmR3YXJlIHRyYW5zaXRpb24uICovDQo+IHdoYXQgYWJvdXQgdGhlIG9wcG9z
+aXRlIHRyYW5zaXRpb24/DQoNClllYWguIFdlIGRvbuKAmXQgZG8gYW55dGhpbmcgbm93LiBJIHRo
+aW5rIGJldHRlciB0byByZXNldCB0aGUgY2FjaGUgb24NCm9wcG9zaXRlIHRyYW5zaXRpb24uDQoN
+Cj4gPiArICAgIHRlZ3JhMjQxX2NtZHF2X3N5bmNfdmNtZHEoY21kcXYsIGluZGV4KTsNCj4gPiAr
+DQo+ID4gICAgICByZXR1cm4gdHJ1ZTsNCj4gPiAgfQ0KPiA+DQo+ID4gQEAgLTExMywxMyArMTU3
+LDIyIEBAIHN0YXRpYyB2b2lkDQo+IHRlZ3JhMjQxX2NtZHF2X3NldHVwX2FsbF92Y21kcShUZWdy
+YTI0MUNNRFFWICpjbWRxdiwNCj4gPiAgICoNCj4gPiAgICogVGhlIGNhbGxlciBub3JtYWxpemVz
+IHRoZSBNTUlPIG9mZnNldCBzdWNoIHRoYXQgQG9mZnNldDAgYWx3YXlzIHJlZmVycw0KPiA+ICAg
+KiB0byBhIFZDTURRMF8qIHJlZ2lzdGVyLCB3aGlsZSBAaW5kZXggc2VsZWN0cyB0aGUgVkNNRFEg
+aW5zdGFuY2UuDQo+ID4gKyAqDQo+ID4gKyAqIElmIHRoZSBWQ01EUSBpcyBhbGxvY2F0ZWQgYW5k
+IFZJTlRGIHBhZ2UwIGlzIG1tYXAnZCwgcmVhZCBkaXJlY3RseQ0KPiA+ICsgKiBmcm9tIHRoZSBW
+SU5URiBwYWdlMCBiYWNraW5nLiBPdGhlcndpc2UsIGZhbGwgYmFjayB0byB0aGUgY2FjaGUuDQo+
+ID4gICAqLw0KPiA+ICBzdGF0aWMgdWludDY0X3QgdGVncmEyNDFfY21kcXZfcmVhZF92Y21kcV9w
+YWdlMChUZWdyYTI0MUNNRFFWDQo+ICpjbWRxdiwNCj4gPiAgICAgICAgICAgICAgICAgICAgICAg
+ICAgICAgICAgICAgICAgICAgICAgICAgICAgaHdhZGRyIG9mZnNldDAsIGludCBpbmRleCwNCj4g
+PiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgYm9vbCBk
+aXJlY3QpDQo+ID4gIHsNCj4gPiArICAgIHVpbnQzMl90ICpwdHIgPSB0ZWdyYTI0MV9jbWRxdl92
+aW50Zl9wdHIoY21kcXYsIGluZGV4LCBvZmZzZXQwKTsNCj4gPiAgICAgIHVpbnQ2NF90IHZhbCA9
+IDA7DQo+ID4NCj4gPiArICAgIGlmIChwdHIpIHsNCj4gc2hvdWxkbid0IHlvdSB0ZXN0ICJkaXJl
+Y3QiIGFzIHdlbGw/IEkga25vdyB0aGF0IGxhdGVyIG9uIHRoaXMgaXMgd2lsbA0KPiBiZSBiYWNr
+ZWQgYnkgYW5vdGhlciBtciBidXQgSSB0aGluayB0aGlzIHdvdWxkIGJlIGNsZWFyZXIuDQoNCklz
+IHRoZSBzdWdnZXN0aW9uIGhlcmUgdG8ganVzdCBsaW1pdCB0aGlzIHRvICJkaXJlY3QiPyBXZSBj
+YW4ndCBkbyB0aGF0Lg0KQm90aCBhcGVydHVyZXMgYWxpYXMgdGhlIHNhbWUgcmVnaXN0ZXJzLCBh
+bmQgZm9yIGFuIGFsbG9jYXRlZCBhbmQNCm1tYXBwZWQgVklOVEYgcGFnZTAgd2UgYWNjZXNzIHRo
+ZSBodyBkaXJlY3RseS4NCg0KVGhlIHZpbnRmIHBhZ2UwIGdldHMgbWFwcGVkIHRvIHRoZSBndWVz
+dCBvbmx5IGluIHBhdGNoIDIxLCBzbw0KYWZ0ZXIgdGhhdCBvbmx5IHRoZSBkaXJlY3QgYXBlcnR1
+cmUgaXMgdHJhcHBlZCBoZXJlIGFueXdheS4NCg0KPiA+ICsgICAgICAgIHZhbCA9ICpwdHI7DQo+
+ID4gKyAgICAgICAgZ290byBvdXQ7DQo+ID4gKyAgICB9DQo+ID4gKw0KPiA+ICAgICAgc3dpdGNo
+IChvZmZzZXQwKSB7DQo+ID4gICAgICBjYXNlIEFfVkNNRFEwX0NPTlNfSU5EWDoNCj4gPiAgICAg
+ICAgICB2YWwgPSBjbWRxdi0+dmNtZHFfY29uc19pbmR4W2luZGV4XTsNCj4gPiBAQCAtMTQ0LDYg
+KzE5Nyw3IEBAIHN0YXRpYyB1aW50NjRfdA0KPiB0ZWdyYTI0MV9jbWRxdl9yZWFkX3ZjbWRxX3Bh
+Z2UwKFRlZ3JhMjQxQ01EUVYgKmNtZHF2LA0KPiA+ICAgICAgICAgICAgICAgICAgICAgICAgIiVz
+IHVuaGFuZGxlZCByZWFkIGFjY2VzcyBhdCAweCUiIFBSSXg2NCAiXG4iLA0KPiA+ICAgICAgICAg
+ICAgICAgICAgICAgICAgX19mdW5jX18sIG9mZnNldDApOw0KPiA+ICAgICAgfQ0KPiA+ICtvdXQ6
+DQo+ID4gICAgICB0cmFjZV90ZWdyYTI0MV9jbWRxdl9yZWFkX3ZjbWRxX3BhZ2UwKGluZGV4LCBk
+aXJlY3QgPyAiZGlyZWN0IiA6ICJ2aSIsDQo+ID4gICAgICAgICAgICAgICAgICAgICAgICAgICAg
+ICAgICAgICAgICAgICAgIG9mZnNldDAsIHZhbCk7DQo+ID4gICAgICByZXR1cm4gdmFsOw0KPiA+
+IEBAIC0yMjAsMTEgKzI3NCwyOSBAQCBzdGF0aWMgdWludDY0X3QNCj4gdGVncmEyNDFfY21kcXZf
+Y29uZmlnX3ZpbnRmX3JlYWQoVGVncmEyNDFDTURRViAqY21kcXYsDQo+ID4gICAqDQo+ID4gICAq
+IFBhZ2UgMCByZWdpc3RlcnMgYXJlIGFsbCAzMi1iaXQ7IHRoaXMgaGVscGVyIGlzIG9ubHkgY2Fs
+bGVkIGZvciA0LWJ5dGUNCj4gPiAgICogd3JpdGVzLg0KPiA+ICsgKg0KPiA+ICsgKiBJZiB0aGUg
+VkNNRFEgaXMgYWxsb2NhdGVkIGFuZCBWSU5URiBwYWdlMCBpcyBtbWFwJ2QsIHdyaXRlIGRpcmVj
+dGx5DQo+ID4gKyAqIHRvIHRoZSBWSU5URiBwYWdlMCBiYWNraW5nLiBPdGhlcndpc2UsIHVwZGF0
+ZSB0aGUgY2FjaGUuDQo+ID4gICAqLw0KPiA+ICBzdGF0aWMgdm9pZCB0ZWdyYTI0MV9jbWRxdl93
+cml0ZV92Y21kcV9wYWdlMChUZWdyYTI0MUNNRFFWDQo+ICpjbWRxdiwNCj4gPiAgICAgICAgICAg
+ICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgaHdhZGRyIG9mZnNldDAsIGludCBp
+bmRleCwNCj4gPiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAg
+dWludDMyX3QgdmFsdWUsIGJvb2wgZGlyZWN0KQ0KPiA+ICB7DQo+ID4gKyAgICB1aW50MzJfdCAq
+cHRyID0gdGVncmEyNDFfY21kcXZfdmludGZfcHRyKGNtZHF2LCBpbmRleCwgb2Zmc2V0MCk7DQo+
+IHNhbWUgaGVyZT8NCj4gPiArDQo+ID4gKyAgICBpZiAocHRyKSB7DQo+ID4gKyAgICAgICAgc3dp
+dGNoIChvZmZzZXQwKSB7DQo+ID4gKyAgICAgICAgY2FzZSBBX1ZDTURRMF9DT05TX0lORFg6DQo+
+ID4gKyAgICAgICAgY2FzZSBBX1ZDTURRMF9QUk9EX0lORFg6DQo+ID4gKyAgICAgICAgY2FzZSBB
+X1ZDTURRMF9DT05GSUc6DQo+ID4gKyAgICAgICAgY2FzZSBBX1ZDTURRMF9HRVJST1JOOg0KPiA+
+ICsgICAgICAgICAgICAqcHRyID0gdmFsdWU7DQo+ID4gKyAgICAgICAgICAgIGdvdG8gb3V0Ow0K
+PiA+ICsgICAgICAgIGRlZmF1bHQ6DQo+ID4gKyAgICAgICAgICAgIGJyZWFrOw0KPiA+ICsgICAg
+ICAgIH0NCj4gPiArICAgIH0NCj4gPiArDQo+ID4gICAgICBzd2l0Y2ggKG9mZnNldDApIHsNCj4g
+PiAgICAgIGNhc2UgQV9WQ01EUTBfQ09OU19JTkRYOg0KPiA+ICAgICAgICAgIGNtZHF2LT52Y21k
+cV9jb25zX2luZHhbaW5kZXhdID0gdmFsdWU7DQo+ID4gQEAgLTI1NSw2ICszMjcsNyBAQCBzdGF0
+aWMgdm9pZA0KPiB0ZWdyYTI0MV9jbWRxdl93cml0ZV92Y21kcV9wYWdlMChUZWdyYTI0MUNNRFFW
+ICpjbWRxdiwNCj4gPiAgICAgICAgICAgICAgICAgICAgICAgICIlcyB1bmhhbmRsZWQgd3JpdGUg
+YWNjZXNzIGF0IDB4JSIgUFJJeDY0ICJcbiIsDQo+ID4gICAgICAgICAgICAgICAgICAgICAgICBf
+X2Z1bmNfXywgb2Zmc2V0MCk7DQo+ID4gICAgICB9DQo+ID4gK291dDoNCj4gPiAgICAgIHRyYWNl
+X3RlZ3JhMjQxX2NtZHF2X3dyaXRlX3ZjbWRxX3BhZ2UwKGluZGV4LCBkaXJlY3QgPyAiZGlyZWN0
+IiA6ICJ2aSIsDQo+IGJ5IHRoZSB3YXkgY291bGQgYmUgaW50ZXJlc3RpbmcgdG8gbG9nIGluIHRo
+ZSB0cmFjZSBldmVudCB0aGF0IG1tYXBwZWQNCj4gd2FzIHVzZWQgaW5zdGVhZCBvZiBjYWNoZSBy
+ZWdzLg0KDQpDb3VsZCBkby4NCg0KVGhhbmtzLA0KU2hhbWVlcg0K
 
