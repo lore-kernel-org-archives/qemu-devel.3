@@ -4,57 +4,57 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 92125CD6E6B
-	for <qemu-devel@archiver.kernel.org>; Thu,  4 Jun 2026 13:46:54 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2F6BCCD6E6B
+	for <qemu-devel@archiver.kernel.org>; Thu,  4 Jun 2026 13:47:13 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wV8OU-0001wd-Cw; Thu, 04 Jun 2026 09:45:58 -0400
+	id 1wV8Oe-0002sS-Po; Thu, 04 Jun 2026 09:46:08 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1wV8NW-0001Mw-E5
- for qemu-devel@nongnu.org; Thu, 04 Jun 2026 09:44:58 -0400
+ id 1wV8O1-0001ei-Vw
+ for qemu-devel@nongnu.org; Thu, 04 Jun 2026 09:45:35 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1wV8NU-00008F-Re
- for qemu-devel@nongnu.org; Thu, 04 Jun 2026 09:44:58 -0400
+ id 1wV8Nx-0000lv-S1
+ for qemu-devel@nongnu.org; Thu, 04 Jun 2026 09:45:29 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1780580696;
+ s=mimecast20190719; t=1780580725;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=Xl9RCdMEAiNI/QszRDVHp8xycP9ssDJJLT37LguwrcY=;
- b=hlxjgqXnOhLpoUvMyzc2bGiaEBC3hNZoFgpcOtxDR/SNcw3WZ0u+LjAEboqCr26y+Z0bwc
- dYS2wn9MRIBRd1th0j8b5FUVr2ua6ILneUyQAmhLWAk5gpDC0zWetHmDBWXCHFULH6shYV
- odf1MM4sZO6TlVmNQTuKvWxpXLmtcc0=
-Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
+ bh=aH6Eqk16uEEVgv59pgvAwDG2vlInhXcrzcoLd+raoTs=;
+ b=ROrHLvCoW0CpIAImftiYXLU0XsqWfk9JUo9YPhOFr2uecanEvVSZoJJQ1xwfTzj/5yvPRE
+ 13/Qta/tULBmdGDqIkuQE09vs7YXstiQfHszEwaQlg1kzd/FL3qxpmva32MeCq/2+CZ9qi
+ eklYZ86iOmAsV7MyRr8yVj25W+zglkA=
+Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-660-jyPHo_ETP0iXAeVQpKdpDg-1; Thu,
- 04 Jun 2026 09:44:54 -0400
-X-MC-Unique: jyPHo_ETP0iXAeVQpKdpDg-1
-X-Mimecast-MFC-AGG-ID: jyPHo_ETP0iXAeVQpKdpDg_1780580692
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-294-SMMecOxFN9Cyl8NUcN-big-1; Thu,
+ 04 Jun 2026 09:45:23 -0400
+X-MC-Unique: SMMecOxFN9Cyl8NUcN-big-1
+X-Mimecast-MFC-AGG-ID: SMMecOxFN9Cyl8NUcN-big_1780580722
 Received: from mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.17])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 6D4B71944D2B; Thu,  4 Jun 2026 13:44:52 +0000 (UTC)
+ by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 0B1CF19560AF; Thu,  4 Jun 2026 13:45:22 +0000 (UTC)
 Received: from localhost (unknown [10.44.24.6])
  by mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 426E61955D87; Thu,  4 Jun 2026 13:44:49 +0000 (UTC)
+ id 8E4AF195608E; Thu,  4 Jun 2026 13:45:20 +0000 (UTC)
 From: =?utf-8?q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>
-Date: Thu, 04 Jun 2026 17:43:50 +0400
-Subject: [PATCH v5 04/12] system/ram-discard-manager: implement replay via
- is_populated iteration
+Date: Thu, 04 Jun 2026 17:43:55 +0400
+Subject: [PATCH v5 09/12] system/memory: add RamDiscardManager reference
+ counting and cleanup
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
-Message-Id: <20260604-rdm5-v5-4-5768e6a0943d@redhat.com>
+Message-Id: <20260604-rdm5-v5-9-5768e6a0943d@redhat.com>
 References: <20260604-rdm5-v5-0-5768e6a0943d@redhat.com>
 In-Reply-To: <20260604-rdm5-v5-0-5768e6a0943d@redhat.com>
 To: qemu-devel@nongnu.org
@@ -71,21 +71,21 @@ Cc: Zhenzhong Duan <zhenzhong.duan@intel.com>,
  Zhao Liu <zhao1.liu@intel.com>, Eric Blake <eblake@redhat.com>, 
  Markus Armbruster <armbru@redhat.com>, 
  =?utf-8?q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>
-X-Developer-Signature: v=1; a=openpgp-sha256; l=6612;
+X-Developer-Signature: v=1; a=openpgp-sha256; l=2561;
  i=marcandre.lureau@redhat.com; h=from:subject:message-id;
- bh=znVW5921M7+0092ia+MeDcCo7lcpbF5fnLhhQFRfDqg=;
- b=owEBbQKS/ZANAwAKAdro4Ql1lpzlAcsmYgBqIYEwCZfScNDE5Vpjil/kVwVsL+hRHm2fLwKlH
- OvbKXyWk8qJAjMEAAEKAB0WIQSHqb2TP4fGBtJ29i3a6OEJdZac5QUCaiGBMAAKCRDa6OEJdZac
- 5aLTD/90+rze5UF4V7k4llDujSN41MD2hldcmVC8EUhex1DIX479ntPfkHKdl7IJJZVmZ5OyPAP
- 8TKsnksokw9Jfa4zNKQQhlZiRQHnB6J+blGcT7yUBGq0+gwK3qTwDauxD3WE70un2a3QxSgAYaP
- 2KT70j3Vl69CfiCGNrMcsgBWGix7ZZX559QgfDCiQ/goXk/T1bpEtpmf/ZvMpoKwm82FpZTrvpJ
- bwc9Krsq0kM17lM8smI4TmcYHN4u0l4SmB2wFqm9fmuU2107d2v/E5OAjaaQERa6M5YXjuTjdP0
- 0JajWufgj6u2gznVtyv/DxZaMnOwEqwEMiWOWey9VHjYfoGNzEsXDVRdAvsD7FjeIIStSgcMTul
- bxw0isQCUOKQxaMFe6tNLuxddIUHx+yiBXogdWnh1m6gVb4tYJMPTIwR3nF8skAYPIzqldKgcB0
- zGb1R9oF7zkT4v+aphWkOF36NQ3DBsEV/QlsmVuteEp4zPkz+ikN1T71IE9pIiRMDseL1bf7S7G
- SpfwoSzxf3P/9IYRt/FZZkr8VxbzLbTgAUBMCLUCAbo3cuzTlnSWR1GdemNGKWIl8hgLuUu36yH
- iaaHkgmVwEm7Jlt0UqkKV4UcmbkeC948T2UXFU9iNIZW8X+3uqZtxlF5XK3D1m6TxPq2wILJ34+
- kmNQF1xPgrW6pqQ==
+ bh=xibSwiLSpvPuooM/HvA6wtCkxyx7qnL4hNrMlkAzRkA=;
+ b=owEBbQKS/ZANAwAKAdro4Ql1lpzlAcsmYgBqIYExpKbg/LwepGCYR9pYZ3/BEmPej2pbcVndO
+ mQaZhcwNLuJAjMEAAEKAB0WIQSHqb2TP4fGBtJ29i3a6OEJdZac5QUCaiGBMQAKCRDa6OEJdZac
+ 5W+5D/47xePRGJNbZvGYkwXmXgP0LZbMiUUhMv2DI+QEsRdpF7wOIA5clZ51zIN808rcijNf2yW
+ XQsNfnrzJ4nsSZh2MQKJ5eQmL4h2D0KqIgLyHHX1Og+bthiXns7vbefF3daipOOQl52+DtEG3rz
+ MZmkhjwnNKXQ+Ckz9HfDnZxdoO/wmyjrbM6DfQlGuUzgIYaDYWJXuH1BNlKUG+r23c4/hFt7uwH
+ U3M0JWTeuqArKobCd7z+kTfn+BSa9ucotKNXW7ugSG3UmGsTQnhjXeQre0oHAp9FuWE6fj/9ISA
+ h6C+s5s00KJCmhrP+98roNSCnBZwUUNSHM3dJnodTvO5oNciRBXMcwFZNEaU1HzAjPKc6ByB1Ve
+ vEA37D4yYw0N7ItCcf9gPivAdvQ3v6+FxVP2ocs/amrlvu6ocCCfOX/AHQhcTj2lj2Txy+lyRzb
+ 1yCQ/ByUGixYict5RAcNYVzjGVc4CXrm/kPKHCnREqFnBr8CgLNWEmR1/w6JjbA78LRD9Iwa771
+ CAHY1TCaBNuTYePrV1x5gZz8tG3KggN4gf+AB96ULI8X3ewK+1D++eYup0mTgKS4jInRDAQt3G3
+ ShnsdBQb6qgPsctZIkQXMbz/yGAyNa1DE27cuQxu1AUUwAK+OM45cKfrOgbF7pzFBYBvur4tQ1l
+ IvPTyGf4HWkc6kQ==
 X-Developer-Key: i=marcandre.lureau@redhat.com; a=openpgp;
  fpr=87A9BD933F87C606D276F62DDAE8E10975969CE5
 X-Scanned-By: MIMEDefang 3.0 on 10.30.177.17
@@ -115,154 +115,75 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Replace the source-level replay wrappers with a new
-replay_by_populated_state() helper that iterates the section at
-min-granularity, calls is_populated() for each chunk, and aggregates
-consecutive chunks of the same state before invoking the callback.
+Listeners now hold a reference to the RamDiscardManager, ensuring it
+stays alive while listeners are registered. The RDM is eagerly freed
+when the last source and listener are removed, and also unreffed during
+MemoryRegion finalization as a safety net.
 
-This moves the iteration logic from individual sources into the manager,
-preparing for multi-source aggregation where the manager must combine
-state from multiple sources anyway.
-
-The replay_populated/replay_discarded vtable entries in
-RamDiscardSourceClass are no longer called but remain in the interface
-for now; they will be removed in follow-up commits along with the
-now-dead source implementations.
+This completes the TODO left in the previous commit and prevents both
+use-after-free and memory leaks of the RamDiscardManager.
 
 Reviewed-by: Peter Xu <peterx@redhat.com>
 Signed-off-by: Marc-André Lureau <marcandre.lureau@redhat.com>
 ---
- system/ram-discard-manager.c | 85 +++++++++++++++++++++++++++++++-------------
- 1 file changed, 61 insertions(+), 24 deletions(-)
+ system/memory.c              | 14 +++++++++++---
+ system/ram-discard-manager.c |  2 ++
+ 2 files changed, 13 insertions(+), 3 deletions(-)
 
+diff --git a/system/memory.c b/system/memory.c
+index 7c75eef1cec..ee1a1a1cd53 100644
+--- a/system/memory.c
++++ b/system/memory.c
+@@ -1755,6 +1755,7 @@ static void memory_region_finalize(Object *obj)
+     memory_region_clear_coalescing(mr);
+     g_free((char *)mr->name);
+     g_free(mr->ioeventfds);
++    object_unref(mr->rdm);
+ }
+ 
+ Object *memory_region_owner(const MemoryRegion *mr)
+@@ -2058,11 +2059,18 @@ int memory_region_add_ram_discard_source(MemoryRegion *mr,
+ int memory_region_del_ram_discard_source(MemoryRegion *mr,
+                                           RamDiscardSource *source)
+ {
++    int ret;
+     g_assert(mr->rdm);
+ 
+-    return ram_discard_manager_del_source(mr->rdm, source);
+-
+-    /* if there is no source and no listener left, we could free rdm */
++    ret = ram_discard_manager_del_source(mr->rdm, source);
++    if (ret != 0) {
++        return ret;
++    }
++    if (QLIST_EMPTY(&mr->rdm->source_list) && QLIST_EMPTY(&mr->rdm->rdl_list)) {
++        object_unref(mr->rdm);
++        mr->rdm = NULL;
++    }
++    return 0;
+ }
+ 
+ /* Called with rcu_read_lock held.  */
 diff --git a/system/ram-discard-manager.c b/system/ram-discard-manager.c
-index 1c9ff7fda58..a907ddf3708 100644
+index 7da91bf648a..4e8816e5a2f 100644
 --- a/system/ram-discard-manager.c
 +++ b/system/ram-discard-manager.c
-@@ -27,26 +27,65 @@ static bool ram_discard_source_is_populated(const RamDiscardSource *rds,
-     return rdsc->is_populated(rds, section);
- }
+@@ -549,6 +549,7 @@ void ram_discard_manager_register_listener(RamDiscardManager *rdm,
  
--static int ram_discard_source_replay_populated(const RamDiscardSource *rds,
--                                               const MemoryRegionSection *section,
--                                               ReplayRamDiscardState replay_fn,
--                                               void *opaque)
-+/*
-+ * Iterate the section at source granularity, aggregating consecutive chunks
-+ * with matching populated state, and call replay_fn for each run.
-+ */
-+static int replay_by_populated_state(const RamDiscardManager *rdm,
-+                                     const MemoryRegionSection *section,
-+                                     bool replay_populated,
-+                                     ReplayRamDiscardState replay_fn,
-+                                     void *opaque)
- {
--    RamDiscardSourceClass *rdsc = RAM_DISCARD_SOURCE_GET_CLASS(rds);
-+    uint64_t granularity, offset, size, end, pos, run_start = 0;
-+    bool in_run = false;
-+    int ret = 0;
+     g_assert(section->mr == rdm->mr);
  
--    g_assert(rdsc->replay_populated);
--    return rdsc->replay_populated(rds, section, replay_fn, opaque);
--}
-+    granularity = ram_discard_source_get_min_granularity(rdm->rds, rdm->mr);
-+    offset = section->offset_within_region;
-+    size = int128_get64(section->size);
-+    end = offset + size;
-+
-+    /* Align iteration to granularity boundaries */
-+    pos = QEMU_ALIGN_DOWN(offset, granularity);
-+
-+    for (; pos < end; pos += granularity) {
-+        MemoryRegionSection chunk = {
-+            .mr = section->mr,
-+            .offset_within_region = pos,
-+            .size = int128_make64(granularity),
-+        };
-+        bool populated = ram_discard_source_is_populated(rdm->rds, &chunk);
-+
-+        if (populated == replay_populated) {
-+            if (!in_run) {
-+                run_start = pos;
-+                in_run = true;
-+            }
-+        } else if (in_run) {
-+            MemoryRegionSection tmp = *section;
-+
-+            if (memory_region_section_intersect_range(&tmp, run_start,
-+                                                      pos - run_start)) {
-+                ret = replay_fn(&tmp, opaque);
-+                if (ret) {
-+                    return ret;
-+                }
-+            }
-+            in_run = false;
-+        }
-+    }
- 
--static int ram_discard_source_replay_discarded(const RamDiscardSource *rds,
--                                               const MemoryRegionSection *section,
--                                               ReplayRamDiscardState replay_fn,
--                                               void *opaque)
--{
--    RamDiscardSourceClass *rdsc = RAM_DISCARD_SOURCE_GET_CLASS(rds);
-+    if (in_run) {
-+        MemoryRegionSection tmp = *section;
- 
--    g_assert(rdsc->replay_discarded);
--    return rdsc->replay_discarded(rds, section, replay_fn, opaque);
-+        if (memory_region_section_intersect_range(&tmp, run_start,
-+                                                  pos - run_start)) {
-+            ret = replay_fn(&tmp, opaque);
-+        }
-+    }
-+
-+    return ret;
- }
- 
- RamDiscardManager *ram_discard_manager_new(MemoryRegion *mr,
-@@ -78,8 +117,7 @@ int ram_discard_manager_replay_populated(const RamDiscardManager *rdm,
-                                          ReplayRamDiscardState replay_fn,
-                                          void *opaque)
- {
--    return ram_discard_source_replay_populated(rdm->rds, section,
--                                               replay_fn, opaque);
-+    return replay_by_populated_state(rdm, section, true, replay_fn, opaque);
- }
- 
- int ram_discard_manager_replay_discarded(const RamDiscardManager *rdm,
-@@ -87,8 +125,7 @@ int ram_discard_manager_replay_discarded(const RamDiscardManager *rdm,
-                                          ReplayRamDiscardState replay_fn,
-                                          void *opaque)
- {
--    return ram_discard_source_replay_discarded(rdm->rds, section,
--                                               replay_fn, opaque);
-+    return replay_by_populated_state(rdm, section, false, replay_fn, opaque);
- }
- 
- static void ram_discard_manager_initfn(Object *obj)
-@@ -182,8 +219,8 @@ void ram_discard_manager_register_listener(RamDiscardManager *rdm,
++    object_ref(rdm);
      rdl->section = memory_region_section_new_copy(section);
      QLIST_INSERT_HEAD(&rdm->rdl_list, rdl, next);
  
--    ret = ram_discard_source_replay_populated(rdm->rds, rdl->section,
--                                              rdm_populate_cb, rdl);
-+    ret = ram_discard_manager_replay_populated(rdm, rdl->section,
-+                                               rdm_populate_cb, rdl);
-     if (ret) {
-         error_report("%s: Replaying populated ranges failed: %s", __func__,
-                      strerror(-ret));
-@@ -208,8 +245,8 @@ int ram_discard_manager_replay_populated_to_listeners(RamDiscardManager *rdm)
-     int ret = 0;
+@@ -570,6 +571,7 @@ void ram_discard_manager_unregister_listener(RamDiscardManager *rdm,
+     memory_region_section_free_copy(rdl->section);
+     rdl->section = NULL;
+     QLIST_REMOVE(rdl, next);
++    object_unref(rdm);
+ }
  
-     QLIST_FOREACH(rdl, &rdm->rdl_list, next) {
--        ret = ram_discard_source_replay_populated(rdm->rds, rdl->section,
--                                                  rdm_populate_cb, rdl);
-+        ret = ram_discard_manager_replay_populated(rdm, rdl->section,
-+                                                   rdm_populate_cb, rdl);
-         if (ret) {
-             break;
-         }
+ int ram_discard_manager_replay_populated_to_listeners(RamDiscardManager *rdm)
 
 -- 
 2.54.0
