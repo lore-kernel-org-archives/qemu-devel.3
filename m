@@ -4,107 +4,102 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3901ACD6E4A
-	for <qemu-devel@archiver.kernel.org>; Thu,  4 Jun 2026 15:44:48 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2FB1ACD6E6D
+	for <qemu-devel@archiver.kernel.org>; Thu,  4 Jun 2026 15:47:45 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wVAFN-0003EA-TA; Thu, 04 Jun 2026 11:44:41 -0400
+	id 1wVAHy-0004N5-Mi; Thu, 04 Jun 2026 11:47:22 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <eric.auger@redhat.com>)
- id 1wVAFM-0003Da-BM
- for qemu-devel@nongnu.org; Thu, 04 Jun 2026 11:44:40 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <eric.auger@redhat.com>)
- id 1wVAFK-0002Eh-6Y
- for qemu-devel@nongnu.org; Thu, 04 Jun 2026 11:44:40 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1780587876;
- h=from:from:reply-to:reply-to:subject:subject:date:date:
- message-id:message-id:to:to:cc:cc:mime-version:mime-version:
- content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=9bd+Eq/SHlfjPT9OLcOXKzMgKPi0RpLrmvHcafQybNU=;
- b=FDacPuKvrv/JhM361MAkkhijdRWy6TaAV4Vgwx6Grs/OAB2FCmA9duJ+KY74cH+INRhErl
- JeF+5N7dTUSVIXyVx8MUdP81A6rB7PrlKSOX4EO9PD0mvpUQsp1umop6lPJWrcvO3vIpHd
- yVfCBhuG3njxSXIotJTj272p/XOAJP8=
-Received: from mail-wr1-f72.google.com (mail-wr1-f72.google.com
- [209.85.221.72]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-528-HmzdwLEVPP-fEU4igIFM_A-1; Thu, 04 Jun 2026 11:44:34 -0400
-X-MC-Unique: HmzdwLEVPP-fEU4igIFM_A-1
-X-Mimecast-MFC-AGG-ID: HmzdwLEVPP-fEU4igIFM_A_1780587873
-Received: by mail-wr1-f72.google.com with SMTP id
- ffacd0b85a97d-45f3d008865so622241f8f.0
- for <qemu-devel@nongnu.org>; Thu, 04 Jun 2026 08:44:34 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <luc.fast2004@gmail.com>)
+ id 1wVAHx-0004M7-8n
+ for qemu-devel@nongnu.org; Thu, 04 Jun 2026 11:47:21 -0400
+Received: from mail-yx1-xb133.google.com ([2607:f8b0:4864:20::b133])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <luc.fast2004@gmail.com>)
+ id 1wVAHp-0003IL-9s
+ for qemu-devel@nongnu.org; Thu, 04 Jun 2026 11:47:15 -0400
+Received: by mail-yx1-xb133.google.com with SMTP id
+ 956f58d0204a3-6603246b66dso1010305d50.1
+ for <qemu-devel@nongnu.org>; Thu, 04 Jun 2026 08:47:12 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1780588032; cv=none;
+ d=google.com; s=arc-20240605;
+ b=hC8VOOHiHUg/+uhI4zFYf2RnFHSSxZwH1HAjzIZmv5IIZIQbk3BEWurwCBlA1ZOEW1
+ 5jagOpEnVGKhkblcVF9vpKFxXHQbg5+QQ0wL8IU+vibOPPVHlVeKRgyP2KUQJYwFh2Nx
+ yBAn0OKLviu6Sqi5Nk6QJAc0bYbY57pMKUE6OYcNKO7TbAp/ColuPa/Z+HnyQ33fJhrG
+ X+yuadPUdtkvudzlxx3TclWQ+E9uYtt/fmQiRdlleUPA0GJF7wIsUFu6Qnc42G1bdNgW
+ pU8tFEwVqIHISjQmlBOKGP9hlzxhkKBI3h1LuIROAv+yijwir7P0F2tPKl94rrPslt/n
+ 4bsQ==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
+ s=arc-20240605; 
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:dkim-signature;
+ bh=YsUQLLfTQRZYB6LU/S8rFKZGD9R5vNNMZy8rHiaJRto=;
+ fh=jFfPqG94KQ0FlOp+wnmyg47Bb+noRWjqGdNwkgaBMRA=;
+ b=JH/bsCc5ywrHZQdUDG5wRcb59/KFXUz9dFMe+pq0EP37Pe5zKhi/lnDlS2Ke7ue3Vq
+ UwGarGfzw5CVGfVoa+MYZ/oqqUuCyqbj2rQccuOxI5gnI76yrUekusO0s8aXXE8oNgq+
+ Fy7qrj/SF4eJ16o6fDgFyRgb2kbsYgyY7nGahOBQOvVuVNPdlwjCDj3bDHWpxj+xSnFz
+ EVVttKXUjPrjj3tVOmBdTh2UZeX1SlmcdIEs53mzDM+QfHJXvFDs2awFTYGTQ/SJRyxt
+ 5UIeI3qXmlYUH9rA9OVEOgwQY58tdzJDrps6NvQcMsnmKRWKO8TXwSiwRHBSvmgmEaot
+ lV7A==; darn=nongnu.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=gmail.com; s=20251104; t=1780588032; x=1781192832; darn=nongnu.org;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:from:to:cc:subject:date:message-id:reply-to;
+ bh=YsUQLLfTQRZYB6LU/S8rFKZGD9R5vNNMZy8rHiaJRto=;
+ b=lt0oqvZ7yw5NYiiYyKZ9WU2p2QcbwyCKNWxDhAHLRteSyRD1pz6ex0ixrCk9/xUOaU
+ r9q34acq94p9izLSb5zyxG43MGMhsIdURZRT/FYpGjqLf49qszeZJccj3hrA3d4I5pFd
+ yhQ/XHcV/ChUvqoTS2QrrAASMJokCbIZpqTfXlQR81XHZfiiSRSKByDW5sOpeQnagv8J
+ hc9S09djHVVZTIfEoVVHHk6SITdWEQ3E2JRwRXhj+OZ10Y+niOtWZatA5LElRd+CJ3VG
+ 2/Lq/ZZ4v6a3xq7rFI0AJrswCLg7RUp1LhRB5cE+LiREnfPdm0jMXmvuSCEeIkfolelz
+ IAOw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1780587873; x=1781192673;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:reply-to:user-agent:mime-version:date
- :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ d=1e100.net; s=20251104; t=1780588032; x=1781192832;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
  :message-id:reply-to;
- bh=9bd+Eq/SHlfjPT9OLcOXKzMgKPi0RpLrmvHcafQybNU=;
- b=m1H/I3+0rB1l/Tsk9qwg0i97N3p3QeWbdA+dO7ROXyqwVxClgcjdNjrPguQLJ2Na3Z
- cIWMse2oB/l2FqGsjxD9qp1fe5PJS2aHPNrWX01w8v+FYkd30eC0YD27EbTwF33Zv+Kr
- uJkiZOugCpXD5XS8hacZkGI31WZddBnHP8vi1Gw4TkdvjsrEXcBTlZXmEMcYD0WnHs60
- epTa3OTJnD1KWoFQQ5QecCnqUbpIrn+l4EIjXdCLM7wuJrRmf7yDBRuj4Uo/oDurqWyl
- SZJoOAAR90tgYK6eo/YFn0rL1d8OOwy16eCOo7D6y+r6DTxYuCHiXSthNwst/Gy5CaDT
- Q0rQ==
-X-Forwarded-Encrypted: i=1;
- AFNElJ+D7TeTOZ/cbaAB/2yX//mNKKnB0sDFDkXSy1qzqA7S8WZE/c40pHkcbT7R5ch6AqcLgvC375gN05+H@nongnu.org
-X-Gm-Message-State: AOJu0YxNz6PnXN5e/5zzaMP+bM46cDGuADAlHjHg7/gswo8YKLxmJuiG
- T87oXHMJ6eTQIehQCwadc4g1sjdyIWlQbXUwsltjKTpN8zbe+x8HUKEgltl5Zf4KHgxXtrIeJAV
- +Ww/q1HiHUlp+kaKFurZNp3DtbvCiNB+BWcCXC8dq26UDnOmRH8jAz6nj
-X-Gm-Gg: Acq92OHeSFpXXIRyASNbZ0uTr7MnX7hr9Oj5b+iFz7Dcj7iy2fwkvECwfavWTXk3PXz
- Za3IpZKxShltzS2BDKh3v5fBiscuDgEY8pphlZBPwRSdxKqwTqUd503nMHzCVvvIjhKNKh4dtTR
- T+VQGbk4oDLxbjZ1oCJc2VDdRrhF6FrWwbO1P0hNk9wuEpy73OUf8JXnj14godo8Us5ojn7At5K
- T+x2q8OUTQzEqmcqgvvPJK4nr0HDxT8i0YCfiTEM927WY19joWTvFvyeZlp1NcM7qPAHfLO+miH
- xnXMqXkugSfZzoyj6jg3HM2Son1oQSOr+4PQH9rkM/xYjrDo6or80u5RZmDfENM3Y/HxosXt4gS
- 6uBVzEIw4wF61zow8fyM08xpx/D4GnjkjC0p/7hg/Ap4XqppBIwRWNaU8/lBFmvdp0YYzjhA5er
- vP+Jn9
-X-Received: by 2002:adf:d02a:0:b0:44f:69f4:39b5 with SMTP id
- ffacd0b85a97d-460276401efmr5248824f8f.29.1780587873202; 
- Thu, 04 Jun 2026 08:44:33 -0700 (PDT)
-X-Received: by 2002:adf:d02a:0:b0:44f:69f4:39b5 with SMTP id
- ffacd0b85a97d-460276401efmr5248787f8f.29.1780587872756; 
- Thu, 04 Jun 2026 08:44:32 -0700 (PDT)
-Received: from ?IPV6:2a01:e0a:f0e:9070:527b:9dff:feef:3874?
- ([2a01:e0a:f0e:9070:527b:9dff:feef:3874])
- by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-4601f2ec711sm16696661f8f.12.2026.06.04.08.44.31
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 04 Jun 2026 08:44:32 -0700 (PDT)
-Message-ID: <3c4afa12-4e2d-4585-98c0-3c95b6016d07@redhat.com>
-Date: Thu, 4 Jun 2026 17:44:30 +0200
+ bh=YsUQLLfTQRZYB6LU/S8rFKZGD9R5vNNMZy8rHiaJRto=;
+ b=G7CmqB1vonMGt5H5ZZ6+fF9FS0QH75H6BqsllTbZp1qQ35zW+R16GbTawUkgAMFfIh
+ Mht7dtcwaTxfMYNt6rowbdz9HE5cC+1BfHfNs2zY6iZ7vXhwo5asxyykGPHEFCW0Ikr9
+ YEn65GIzhP7gt/IdM8mNn8s+O+c08xLaS6pKYE9NGFGCnfcVjozwxMaGJDN928XHZ2PL
+ Mxz5e+j72iwc4aAzgRDoazde43p7NKh10khSm5ANIa7AVlBuNLpoz1q0iPB1LWv8VhN0
+ MzmKRuQpadNXiaXhL08WaOoAqmtOB9XBwyectfa82E8KfxiPC0H/juFfub7MeM2N0IgN
+ HgwQ==
+X-Gm-Message-State: AOJu0Yz+cmGf16rgQ8+iAfh4f9HAeX/6MUH9IzGJ0ywKVuOWM1et3rff
+ BJdfKBkjo0f40dn/kVCXSI+5W9BO87uQYnZ4aLEPVo3jDRDJVbwwLW5a/Fx5Urc56IKFRKaGhM2
+ jytSvxEzQ0PpEDnJXj8aBw0csECE/fe9r60PE
+X-Gm-Gg: Acq92OGZ2EDmE3gMMP9WGnV9DucKQGcU7845UDt4yCSBFqng0gdcypZY6qG/B9wVGPO
+ FGDi5Y7xXZTfQ5+Hp5RCBDRvq/m9XavnhcUFDQ7Od0rCrzRWEEZeY5Y3YncMSy2qVMyqf2S+KWB
+ trRjU4BEyj+8tLBfx7jhvj3cNNM6qTXCYPpeFZMnJPR4mPF8kSdkB1rmIKP0UZb3HVO0lxHwc9u
+ TBJBFiQ3RF0cuScjb1WwGJcZaoQRfQWs5uWQ90OTTYOTouv/IkdiuhF6IqF/7TMCwtvl7iUZ4E8
+ rywMkxfnCNmNfPrNXx6rqX9yV8X6fYlM/FU/uBblfUCGz4V0DdI=
+X-Received: by 2002:a05:690e:418b:b0:660:6497:f891 with SMTP id
+ 956f58d0204a3-660dc6050c2mr7294940d50.58.1780588031551; Thu, 04 Jun 2026
+ 08:47:11 -0700 (PDT)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v6 30/31] hw/arm/tegra241-cmdqv: Document the CMDQV design
- and lifecycle
-Content-Language: en-US
-To: Shameer Kolothum <skolothumtho@nvidia.com>, qemu-arm@nongnu.org,
- qemu-devel@nongnu.org
-Cc: peter.maydell@linaro.org, clg@redhat.com, alex@shazbot.org,
- nicolinc@nvidia.com, nathanc@nvidia.com, mochs@nvidia.com, jan@nvidia.com,
- jgg@nvidia.com, zhenzhong.duan@intel.com, kjaju@nvidia.com,
- phrdina@redhat.com
-References: <20260601114221.457995-1-skolothumtho@nvidia.com>
- <20260601114221.457995-31-skolothumtho@nvidia.com>
-From: Eric Auger <eric.auger@redhat.com>
-In-Reply-To: <20260601114221.457995-31-skolothumtho@nvidia.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=170.10.133.124;
- envelope-from=eric.auger@redhat.com; helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -24
-X-Spam_score: -2.5
-X-Spam_bar: --
-X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.445,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+References: <20260428162048.2995097-1-luc.fast2004@gmail.com>
+In-Reply-To: <20260428162048.2995097-1-luc.fast2004@gmail.com>
+From: Lucas Cardoso <luc.fast2004@gmail.com>
+Date: Thu, 4 Jun 2026 12:47:00 -0300
+X-Gm-Features: AVHnY4KpBb3l15pxonrPRi2mR0aCUWF7eBQTn8qL1wfjHrkzKPQqOeJUVtoSmhk
+Message-ID: <CAHMzB=hF7QRWSTOa_O8G=61mJ+Hq7+JgjO6h+M-Y+i4b0PS3kA@mail.gmail.com>
+Subject: Re: [PATCH v2] hw/audio/fmopl.c: Convert malloc, free to g_malloc0,
+ g_new and g_free
+To: qemu-devel@nongnu.org
+Cc: kraxel@redhat.com, qemu-trivial@nongnu.org, marcandre.lureau@redhat.com
+Content-Type: multipart/alternative; boundary="0000000000001caaf006536f75da"
+Received-SPF: pass client-ip=2607:f8b0:4864:20::b133;
+ envelope-from=luc.fast2004@gmail.com; helo=mail-yx1-xb133.google.com
+X-Spam_score_int: -17
+X-Spam_score: -1.8
+X-Spam_bar: -
+X-Spam_report: (-1.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001, HTML_MESSAGE=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -117,138 +112,255 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-To: eric.auger@redhat.com
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi Shammer,
+--0000000000001caaf006536f75da
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-On 6/1/26 1:42 PM, Shameer Kolothum wrote:
-> Add an overview describing the Tegra241 CMDQV passthrough model, MMIO
-> layout, guest-driven lifecycle, and per-VM isolation.
-some suggestions inline. Thank you very much for the documentation
-efforts! That's really helpful.
+Ping!
+Just following up on this patch. Let me know if there's anything else
+needed from my side to get it merged. If not, I could move onto patching
+'m68k.c' which would close the gitlab issue
+
+<https://gitlab.com/qemu-project/qemu/-/work_items/1798>
+Thanks,
+Lucas Cardoso
+
+Em ter., 28 de abr. de 2026 =C3=A0s 13:21, Lucas Cardoso <luc.fast2004@gmai=
+l.com>
+escreveu:
+
+> In accordance with QEMU's coding style guidelines, replace raw memory
+> allocation functions (malloc/free) with their GLib equivalents
+> (g_new/g_malloc0/g_free/g_clear_pointer).
 >
-> Signed-off-by: Shameer Kolothum <skolothumtho@nvidia.com>
+> Also removes the old generic error-handling code from
+> OPLOpenTable(), since the Glib functions abort the program automatically
+> if memory is exhausted.
+>
+> Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/1798
+> Reviewed-by: Marc-Andr=C3=A9 Lureau <marcandre.lureau@redhat.com>
+> Signed-off-by: Lucas Cardoso <luc.fast2004@gmail.com>
 > ---
->  hw/arm/tegra241-cmdqv.c | 93 +++++++++++++++++++++++++++++++++++++++++
->  1 file changed, 93 insertions(+)
+> v2:
+> - After some studying, I decided to follow Marc-Andr=C3=A9's feedback to =
+use
+> g_clear_pointer() instead of g_free(), on the OPLCloseTable function.
+>  hw/audio/fmopl.c | 43 ++++++++++++-------------------------------
+>  1 file changed, 12 insertions(+), 31 deletions(-)
 >
-> diff --git a/hw/arm/tegra241-cmdqv.c b/hw/arm/tegra241-cmdqv.c
-> index 4dba1783fa..5dbf68b421 100644
-> --- a/hw/arm/tegra241-cmdqv.c
-> +++ b/hw/arm/tegra241-cmdqv.c
-> @@ -7,6 +7,99 @@
->   * SPDX-License-Identifier: GPL-2.0-or-later
->   */
->  
-> +/*
-> + * Tegra241 CMDQV - overview
-> + * =========================
-> + *
-> + * NVIDIA Tegra241 extends SMMUv3 with a Command Queue Virtualization (CMDQ-V)
-> + * block. It lets a guest issue SMMU invalidation commands directly to
-> + * dedicated hardware queues (vCMDQs) without trapping into the hypervisor on
-> + * the fast path. vCMDQs are grouped into Virtual Interfaces (VINTFs); the
-s/are grouped/are exclusively allocated to VINTFS?
-> + * host kernel allocates one VINTF per emulated SMMUv3 instance via iommufd.
-> + * QEMU emulates the CMDQV MMIO region and drives the host kernel calls
-> + * (VIOMMU_ALLOC, HW_QUEUE_ALLOC, mmap); the actual command processing
-> + * happens on real hardware.
-> + *
-> + * A vCMDQ becomes functional only once allocated to a VINTF; until then,
-> + * register accesses only touch the QEMU-side cache and no command
-> + * processing happens. After allocation, command processing runs on the
-state is migrated from cache to HW and command processing ...
-> + * host hardware, and guest accesses to the live control/status registers
-> + * bypass QEMU and reach the host directly.
-> + *
-> + * MMIO layout (64KB pages, total TEGRA241_CMDQV_IO_LEN)
-> + * -----------------------------------------------------
-> + * The direct vCMDQ apertures (0x10000/0x20000) are HW aliases of the VINTF
-> + * apertures (0x30000/0x40000); they expose the same per-vCMDQ register slots
-> + * under different addressing.
-I would put above sentence after the layout description.
-> + *
-> + *   0x00000  CMDQV Config page: QEMU-trapped.
-> + *   0x10000  Direct vCMDQ Page 0 (control/status): QEMU-trapped and routed
-> + *            to either the mmap'd VINTF Page 0 (if the vCMDQ has been
-> + *            allocated to a VINTF) or a per-vCMDQ register cache (otherwise).
-> + *   0x20000  Direct vCMDQ Page 1 (BASE / DRAM addresses): QEMU-trapped.
-> + *   0x30000  VINTF Page 0 (per-VINTF control/status): mmap'd from the host
-> + *            via iommufd and installed into guest MMIO as a RAM-device
-> + *            subregion after the first HW_QUEUE_ALLOC; subsequent accesses
-> + *            bypass QEMU.
-> + *   0x40000  VINTF Page 1 (per-VINTF BASE): QEMU-trapped. Although this is
-> + *            a HW alias of the direct Page 1, the kernel only exposes mmap
-> + *            for VINTF Page 0; VINTF Page 1 is not mmap'd and stays trapped.
-> + *
-> + * The direct vCMDQ Page 0 stays trapped rather than aliased to the VINTF
-> + * Page 0 mmap. Direct aperture read/write is not an expected common usecase,
-You can justify it as you did in the individual patch (to keep
-management of unmapped vcmds in direct page compliant with the spec)
-> + * but trapping keeps accesses well-defined for an unallocated vCMDQ.
-> + *
-> + * Lifecycle (driven by guest events)
-> + * ----------------------------------
-> + * 1. First vfio-pci device attach (.set_iommu_device) triggers:
-> + *    - tegra241_cmdqv_probe(): IOMMU_GET_HW_INFO confirms host CMDQV support.
-> + *    - IOMMU_VIOMMU_ALLOC: the kernel allocates a VINTF for this VM,
-> + *      configures the VM's VMID (from its stage-2 HWPT) in VINTF_CONFIG,
-> + *      forces HYP_OWN=0, and returns the mmap offset/length for VINTF Page 0.
-> + *
-> + * 2. Guest writes VINTF_CONFIG.ENABLE = 1:
-> + *    QEMU mmap()s the offset from step 1 into its address space and reports
-> + *    STATUS.ENABLE_OK = 1. The host VINTF was already enabled by
-> + *    IOMMU_VIOMMU_ALLOC; QEMU only acks back.
-the host VINTF ... : I would add this in 1. I would remove "QEMU only
-acks back."
-> + *
-> + * 3. Guest completes vCMDQ setup (BASE, CMDQ_ALLOC_MAP.ALLOC, CMDQV_EN,
-> + *    VINTF.ENABLE, in any order; each precondition write retries the
-the HW queue allocation:
-> + *    allocation):
-> + *    IOMMU_HW_QUEUE_ALLOC binds the guest BASE GPA (translated through
-> + *    stage-2 and pinned by the kernel) to a host vCMDQ in this VM's VINTF.
-the guest is granted a new host vcmdq in its vintf?
-> + *
-> + * 4. After the first successful HW_QUEUE_ALLOC, the mmap'd VINTF Page 0 is
-> + *    installed into guest MMIO as a RAM-device subregion. Guest VINTF Page 0
-> + *    accesses (CMDQ_EN, PROD/CONS_INDX, STATUS, GERROR/GERRORN) thereafter
-> + *    go straight to host hardware, bypassing QEMU.
-> + *
-> + * 5. Guest SMMU driver programs a Stream Table Entry for a passthrough
-> + *    device: IOMMU_VDEVICE_ALLOC programs SID_MATCH/SID_REPLACE in this
-> + *    VM's VINTF so the device's guest vSID translates to its host pSID.
-> + *    Commands referencing unmapped SIDs are rejected by HW.
-> + *
-> + * Per-VM isolation
-> + * ----------------
-> + * - Each VM has its own iommufd FD; all iommufd objects (VINTF, vdevices,
-> + *   hw_queues, mmap regions) belong to that FD. Cross-FD lookups fail, so
-> + *   one VM cannot reach another VM's IDs.
-> + * - IOMMU_VIOMMU_ALLOC configures the VM's VMID in VINTF_CONFIG; the CMDQV
-> + *   hardware substitutes / checks VMID on every command the guest issues.
-> + * - The kernel allocates the VINTF with HYP_OWN = 0, which restricts the
-> + *   guest to a safe subset of commands.
-> + * - IOMMU_VDEVICE_ALLOC populates SID_MATCH/SID_REPLACE so invalidations
-> + *   only reach the host StreamIDs assigned to this VM (see step 5).
-> + * - IOMMU_HW_QUEUE_ALLOC binds each vCMDQ to a single VINTF, so a guest
-> + *   cannot reach a vCMDQ that belongs to another VM.
-> + *
-> + * Limits exposed to the guest
-> + * ---------------------------
-> + * One VINTF per emulated SMMUv3 and two vCMDQs per VINTF. Maximum vCMDQ
-> + * size is 8MiB. The queue must be physically contiguous (the HW reads it
-> + * via host PA), so QEMU caps it to the host memory-backend page size. Use
-> + * hugepage backing large enough to keep CMDQS at the HW maximum.
-> + */
-> +
->  #include "qemu/osdep.h"
->  #include "qemu/log.h"
->  #include "qemu/error-report.h"
-Thanks
+> diff --git a/hw/audio/fmopl.c b/hw/audio/fmopl.c
+> index a63ad0f04d..91fe806fd6 100644
+> --- a/hw/audio/fmopl.c
+> +++ b/hw/audio/fmopl.c
+> @@ -607,26 +607,10 @@ static int OPLOpenTable( void )
+>         double pom;
+>
+>         /* allocate dynamic tables */
+> -       if( (TL_TABLE =3D malloc(TL_MAX*2*sizeof(int32_t))) =3D=3D NULL)
+> -               return 0;
+> -       if( (SIN_TABLE =3D malloc(SIN_ENT*4 *sizeof(int32_t *))) =3D=3D N=
+ULL)
+> -       {
+> -               free(TL_TABLE);
+> -               return 0;
+> -       }
+> -       if( (AMS_TABLE =3D malloc(AMS_ENT*2 *sizeof(int32_t))) =3D=3D NUL=
+L)
+> -       {
+> -               free(TL_TABLE);
+> -               free(SIN_TABLE);
+> -               return 0;
+> -       }
+> -       if( (VIB_TABLE =3D malloc(VIB_ENT*2 *sizeof(int32_t))) =3D=3D NUL=
+L)
+> -       {
+> -               free(TL_TABLE);
+> -               free(SIN_TABLE);
+> -               free(AMS_TABLE);
+> -               return 0;
+> -       }
+> +    TL_TABLE =3D g_new(int32_t, TL_MAX * 2);
+> +    SIN_TABLE =3D g_new(int32_t *, SIN_ENT * 4);
+> +    AMS_TABLE =3D g_new(int32_t, AMS_ENT * 2);
+> +    VIB_TABLE =3D g_new(int32_t, VIB_ENT * 2);
+>      ENV_CURVE =3D g_new(int32_t, 2 * EG_ENT + 1);
+>         /* make total level table */
+>         for (t =3D 0;t < EG_ENT-1 ;t++){
+> @@ -695,11 +679,11 @@ static int OPLOpenTable( void )
+>
+>  static void OPLCloseTable( void )
+>  {
+> -    g_free(ENV_CURVE);
+> -       free(TL_TABLE);
+> -       free(SIN_TABLE);
+> -       free(AMS_TABLE);
+> -       free(VIB_TABLE);
+> +    g_clear_pointer(&ENV_CURVE, g_free);
+> +    g_clear_pointer(&TL_TABLE, g_free);
+> +    g_clear_pointer(&SIN_TABLE, g_free);
+> +    g_clear_pointer(&AMS_TABLE, g_free);
+> +    g_clear_pointer(&VIB_TABLE, g_free);
+>  }
+>
+>  /* CSM Key Control */
+> @@ -1081,11 +1065,8 @@ FM_OPL *OPLCreate(int clock, int rate)
+>         /* allocate OPL state space */
+>         state_size  =3D sizeof(FM_OPL);
+>         state_size +=3D sizeof(OPL_CH)*max_ch;
+> -       /* allocate memory block */
+> -       ptr =3D malloc(state_size);
+> -       if(ptr=3D=3DNULL) return NULL;
+> -       /* clear */
+> -       memset(ptr,0,state_size);
+> +    /* allocate memory block and zero-initialize */
+> +    ptr =3D g_malloc0(state_size);
+>         OPL        =3D (FM_OPL *)ptr; ptr+=3Dsizeof(FM_OPL);
+>         OPL->P_CH  =3D (OPL_CH *)ptr; ptr+=3Dsizeof(OPL_CH)*max_ch;
+>         /* set channel state pointer */
+> @@ -1128,7 +1109,7 @@ void OPLDestroy(FM_OPL *OPL)
+>         }
+>  #endif
+>         OPL_UnLockTable();
+> -       free(OPL);
+> +    g_free(OPL);
+>  }
+>
+>  /* ----------  Option handlers ----------       */
+> --
+> 2.51.0
+>
+>
 
-Eric
+--0000000000001caaf006536f75da
+Content-Type: text/html; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
+<div dir=3D"ltr"><div dir=3D"ltr"><div>Ping!</div>Just following up on this=
+ patch. Let me know if there&#39;s anything else needed from my side to get=
+ it merged. If not, I could move onto patching &#39;m68k.c&#39; which would=
+ close the <a href=3D"https://gitlab.com/qemu-project/qemu/-/work_items/179=
+8">gitlab issue<br><br></a></div><div>Thanks,<br></div><div>Lucas Cardoso</=
+div><br><div class=3D"gmail_quote gmail_quote_container"><div dir=3D"ltr" c=
+lass=3D"gmail_attr">Em ter., 28 de abr. de 2026 =C3=A0s 13:21, Lucas Cardos=
+o &lt;<a href=3D"mailto:luc.fast2004@gmail.com">luc.fast2004@gmail.com</a>&=
+gt; escreveu:<br></div><blockquote class=3D"gmail_quote" style=3D"margin:0p=
+x 0px 0px 0.8ex;border-left:1px solid rgb(204,204,204);padding-left:1ex">In=
+ accordance with QEMU&#39;s coding style guidelines, replace raw memory<br>
+allocation functions (malloc/free) with their GLib equivalents<br>
+(g_new/g_malloc0/g_free/g_clear_pointer).<br>
+<br>
+Also removes the old generic error-handling code from<br>
+OPLOpenTable(), since the Glib functions abort the program automatically<br=
+>
+if memory is exhausted.<br>
+<br>
+Resolves: <a href=3D"https://gitlab.com/qemu-project/qemu/-/work_items/1798=
+" rel=3D"noreferrer" target=3D"_blank">https://gitlab.com/qemu-project/qemu=
+/-/work_items/1798</a><br>
+Reviewed-by: Marc-Andr=C3=A9 Lureau &lt;<a href=3D"mailto:marcandre.lureau@=
+redhat.com" target=3D"_blank">marcandre.lureau@redhat.com</a>&gt;<br>
+Signed-off-by: Lucas Cardoso &lt;<a href=3D"mailto:luc.fast2004@gmail.com" =
+target=3D"_blank">luc.fast2004@gmail.com</a>&gt;<br>
+---<br>
+v2: <br>
+- After some studying, I decided to follow Marc-Andr=C3=A9&#39;s feedback t=
+o use g_clear_pointer() instead of g_free(), on the OPLCloseTable function.=
+<br>
+=C2=A0hw/audio/fmopl.c | 43 ++++++++++++-------------------------------<br>
+=C2=A01 file changed, 12 insertions(+), 31 deletions(-)<br>
+<br>
+diff --git a/hw/audio/fmopl.c b/hw/audio/fmopl.c<br>
+index a63ad0f04d..91fe806fd6 100644<br>
+--- a/hw/audio/fmopl.c<br>
++++ b/hw/audio/fmopl.c<br>
+@@ -607,26 +607,10 @@ static int OPLOpenTable( void )<br>
+=C2=A0 =C2=A0 =C2=A0 =C2=A0 double pom;<br>
+<br>
+=C2=A0 =C2=A0 =C2=A0 =C2=A0 /* allocate dynamic tables */<br>
+-=C2=A0 =C2=A0 =C2=A0 =C2=A0if( (TL_TABLE =3D malloc(TL_MAX*2*sizeof(int32_=
+t))) =3D=3D NULL)<br>
+-=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0return 0;<br>
+-=C2=A0 =C2=A0 =C2=A0 =C2=A0if( (SIN_TABLE =3D malloc(SIN_ENT*4 *sizeof(int=
+32_t *))) =3D=3D NULL)<br>
+-=C2=A0 =C2=A0 =C2=A0 =C2=A0{<br>
+-=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0free(TL_TABLE);<br>
+-=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0return 0;<br>
+-=C2=A0 =C2=A0 =C2=A0 =C2=A0}<br>
+-=C2=A0 =C2=A0 =C2=A0 =C2=A0if( (AMS_TABLE =3D malloc(AMS_ENT*2 *sizeof(int=
+32_t))) =3D=3D NULL)<br>
+-=C2=A0 =C2=A0 =C2=A0 =C2=A0{<br>
+-=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0free(TL_TABLE);<br>
+-=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0free(SIN_TABLE);<br=
+>
+-=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0return 0;<br>
+-=C2=A0 =C2=A0 =C2=A0 =C2=A0}<br>
+-=C2=A0 =C2=A0 =C2=A0 =C2=A0if( (VIB_TABLE =3D malloc(VIB_ENT*2 *sizeof(int=
+32_t))) =3D=3D NULL)<br>
+-=C2=A0 =C2=A0 =C2=A0 =C2=A0{<br>
+-=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0free(TL_TABLE);<br>
+-=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0free(SIN_TABLE);<br=
+>
+-=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0free(AMS_TABLE);<br=
+>
+-=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0return 0;<br>
+-=C2=A0 =C2=A0 =C2=A0 =C2=A0}<br>
++=C2=A0 =C2=A0 TL_TABLE =3D g_new(int32_t, TL_MAX * 2);<br>
++=C2=A0 =C2=A0 SIN_TABLE =3D g_new(int32_t *, SIN_ENT * 4);<br>
++=C2=A0 =C2=A0 AMS_TABLE =3D g_new(int32_t, AMS_ENT * 2);<br>
++=C2=A0 =C2=A0 VIB_TABLE =3D g_new(int32_t, VIB_ENT * 2);<br>
+=C2=A0 =C2=A0 =C2=A0ENV_CURVE =3D g_new(int32_t, 2 * EG_ENT + 1);<br>
+=C2=A0 =C2=A0 =C2=A0 =C2=A0 /* make total level table */<br>
+=C2=A0 =C2=A0 =C2=A0 =C2=A0 for (t =3D 0;t &lt; EG_ENT-1 ;t++){<br>
+@@ -695,11 +679,11 @@ static int OPLOpenTable( void )<br>
+<br>
+=C2=A0static void OPLCloseTable( void )<br>
+=C2=A0{<br>
+-=C2=A0 =C2=A0 g_free(ENV_CURVE);<br>
+-=C2=A0 =C2=A0 =C2=A0 =C2=A0free(TL_TABLE);<br>
+-=C2=A0 =C2=A0 =C2=A0 =C2=A0free(SIN_TABLE);<br>
+-=C2=A0 =C2=A0 =C2=A0 =C2=A0free(AMS_TABLE);<br>
+-=C2=A0 =C2=A0 =C2=A0 =C2=A0free(VIB_TABLE);<br>
++=C2=A0 =C2=A0 g_clear_pointer(&amp;ENV_CURVE, g_free);<br>
++=C2=A0 =C2=A0 g_clear_pointer(&amp;TL_TABLE, g_free);<br>
++=C2=A0 =C2=A0 g_clear_pointer(&amp;SIN_TABLE, g_free);<br>
++=C2=A0 =C2=A0 g_clear_pointer(&amp;AMS_TABLE, g_free);<br>
++=C2=A0 =C2=A0 g_clear_pointer(&amp;VIB_TABLE, g_free);<br>
+=C2=A0}<br>
+<br>
+=C2=A0/* CSM Key Control */<br>
+@@ -1081,11 +1065,8 @@ FM_OPL *OPLCreate(int clock, int rate)<br>
+=C2=A0 =C2=A0 =C2=A0 =C2=A0 /* allocate OPL state space */<br>
+=C2=A0 =C2=A0 =C2=A0 =C2=A0 state_size=C2=A0 =3D sizeof(FM_OPL);<br>
+=C2=A0 =C2=A0 =C2=A0 =C2=A0 state_size +=3D sizeof(OPL_CH)*max_ch;<br>
+-=C2=A0 =C2=A0 =C2=A0 =C2=A0/* allocate memory block */<br>
+-=C2=A0 =C2=A0 =C2=A0 =C2=A0ptr =3D malloc(state_size);<br>
+-=C2=A0 =C2=A0 =C2=A0 =C2=A0if(ptr=3D=3DNULL) return NULL;<br>
+-=C2=A0 =C2=A0 =C2=A0 =C2=A0/* clear */<br>
+-=C2=A0 =C2=A0 =C2=A0 =C2=A0memset(ptr,0,state_size);<br>
++=C2=A0 =C2=A0 /* allocate memory block and zero-initialize */<br>
++=C2=A0 =C2=A0 ptr =3D g_malloc0(state_size);<br>
+=C2=A0 =C2=A0 =C2=A0 =C2=A0 OPL=C2=A0 =C2=A0 =C2=A0 =C2=A0 =3D (FM_OPL *)pt=
+r; ptr+=3Dsizeof(FM_OPL);<br>
+=C2=A0 =C2=A0 =C2=A0 =C2=A0 OPL-&gt;P_CH=C2=A0 =3D (OPL_CH *)ptr; ptr+=3Dsi=
+zeof(OPL_CH)*max_ch;<br>
+=C2=A0 =C2=A0 =C2=A0 =C2=A0 /* set channel state pointer */<br>
+@@ -1128,7 +1109,7 @@ void OPLDestroy(FM_OPL *OPL)<br>
+=C2=A0 =C2=A0 =C2=A0 =C2=A0 }<br>
+=C2=A0#endif<br>
+=C2=A0 =C2=A0 =C2=A0 =C2=A0 OPL_UnLockTable();<br>
+-=C2=A0 =C2=A0 =C2=A0 =C2=A0free(OPL);<br>
++=C2=A0 =C2=A0 g_free(OPL);<br>
+=C2=A0}<br>
+<br>
+=C2=A0/* ----------=C2=A0 Option handlers ----------=C2=A0 =C2=A0 =C2=A0 =
+=C2=A0*/<br>
+-- <br>
+2.51.0<br>
+<br>
+</blockquote></div></div>
+
+--0000000000001caaf006536f75da--
 
