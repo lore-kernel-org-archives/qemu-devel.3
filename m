@@ -4,79 +4,79 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4A256CD6E6E
-	for <qemu-devel@archiver.kernel.org>; Thu,  4 Jun 2026 23:52:02 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1EF20CD6E6E
+	for <qemu-devel@archiver.kernel.org>; Thu,  4 Jun 2026 23:52:11 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wVHoJ-0006tt-Rw; Thu, 04 Jun 2026 19:49:15 -0400
+	id 1wVHoM-0006up-6l; Thu, 04 Jun 2026 19:49:18 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1wVHoG-0006pq-UJ
- for qemu-devel@nongnu.org; Thu, 04 Jun 2026 19:49:12 -0400
-Received: from mail-pl1-x629.google.com ([2607:f8b0:4864:20::629])
+ id 1wVHoH-0006qQ-Eo
+ for qemu-devel@nongnu.org; Thu, 04 Jun 2026 19:49:13 -0400
+Received: from mail-pl1-x62a.google.com ([2607:f8b0:4864:20::62a])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1wVHoE-0007yh-Dh
- for qemu-devel@nongnu.org; Thu, 04 Jun 2026 19:49:12 -0400
-Received: by mail-pl1-x629.google.com with SMTP id
- d9443c01a7336-2c0c1e0d00bso12820745ad.0
+ id 1wVHoF-0007z9-7s
+ for qemu-devel@nongnu.org; Thu, 04 Jun 2026 19:49:13 -0400
+Received: by mail-pl1-x62a.google.com with SMTP id
+ d9443c01a7336-2bf20f6be6bso9649565ad.3
  for <qemu-devel@nongnu.org>; Thu, 04 Jun 2026 16:49:10 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1780616949; x=1781221749; darn=nongnu.org;
+ d=linaro.org; s=google; t=1780616950; x=1781221750; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=L0FW3DsjEZddqvM23thQ90y+i9n6EfT233NwS1iXpUQ=;
- b=dm5FnQAIFU1poQBOyAb5/Sa7DajX8mMcOu1GObUHhZ0+qjVqkgW5kE17Eqq7h7Il88
- N658XT5nMSli6XbQRKcjDIoS4/61m86mK2VlfAadRf8XJt0qiRGioMhs/iSvL3TUGcH7
- 3QE0Q02aFiDsaKoMCI2DmZb4ha358j2sZ8jfzW9n/OakhCLrGprotJyuzaCA2yONjZEm
- mw2+4ZTf6+ojxmxnPuiqxjfnQZSImtD4+Sfde0/EK0X/7ddemtrT4dJoHqPfJCO3n72b
- eOKWVdvADVEHPuz4evULIREFTvFbZDvPOj3Oxg2BWq1Kj4HTRJIE6A3i0Pnw6RlBYxqx
- 7mwQ==
+ bh=0S4mgAnLz7VaCxx4V6clCkrHPo+LDsuEwWJQq3WHbB0=;
+ b=a7TefrPGvBSUKQAK7oeB2LQCOoKBcOlTXmMzoiCSHx3XwXWxsUwCfR8lCh0C3UlVFK
+ 6JvAOu7eJjoFhLrF3egI5ZeBJ8WLJdJyyvvZ4XFxAz2qLOLd+hz0TGPY1ysq8VINuyjN
+ vUMEBhzS+hBFDMTIL5QaUBuGgrpMCeBNehNiseo+KBtP5kyC4Bm7TEbBnt1N6UK/KD+9
+ +T/KO5jpsrMqaZrDN/ORotuBiWlZ08La1S+aEyAfhyz9qfVMCPJNCVk2zvbqh/gBZoCd
+ 7uE/AhE83+NBfq9p5aTXKS4kDw4culX6dPy51UecS0kuRGsAyQMJdP1AzXxYrnnkuRe7
+ JaEg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1780616949; x=1781221749;
+ d=1e100.net; s=20251104; t=1780616950; x=1781221750;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to;
- bh=L0FW3DsjEZddqvM23thQ90y+i9n6EfT233NwS1iXpUQ=;
- b=MVZQB+CBSH59BbAwGaVgpn1Tm0JjCovnCQeMHjOXBftjdJFObytNh56vJAwxO6i+0p
- aeQonRKl3llkpjmhH6VxuUzOlQHXvxEIeTbLGdFeVC96NR9YnFZd7oSd6zFsVIFNWdCO
- dMEWsWlnSMnZOsMM0d88KQI6WXR3UB4h2C8MdgfLyxKiNETQYHm6U4QDgQ3L2ReRQtJG
- YBr9gPHAiq4ZLEHaMbO2rklz+UPUbhGO435yqtGIo68Th085lO4kJxAx2fDARLagkxKe
- w7BdCHKK+5bxdIjfmoKnylkF6UXx3QqabudV91aBcM+yHooqldZSaZDr2XKLTcWQi2xC
- NgoQ==
-X-Gm-Message-State: AOJu0YxsnEN2ALA5q8vrlLOffqC0L9wsre64fs7z2A+wrLC/6Z0Q9Jxg
- llw74tcF0nFXhRCgM+r9gKsSbfBnoOlaRLQ+Grob3OFIbjoT3/PcKRhGBtyfj8l0JnKt5GBuM+d
- QUUKPxy8=
-X-Gm-Gg: Acq92OHCy3ZYrOPYu8N/MxEnZvVzBMPlQtxvhtM1E+L5vplfN49XAxGZXiVXDowRUm7
- 0Z5sqFwU26lfV0irR49RSD+jMq4b/vBmdA/diRchNTdgeWQ80+8iJ5t88yBzFi/N5XeEBdA18Gt
- UnkCOR/prNE6qGBwEzlpNbhN6maFeE/PxxoGwgnGvwxU8ijOTPmy6wKXJgJTn94C0/7GZ5ubEIB
- /sECemxv8f/JNvUoBsW5DM1Xmr2RIfMVa4my5HOsl/fKnbZk8/nHbX8CHbNqXEAJooQu7TiUFs7
- OlpSn5Zt7Ew2LABmbsIN5nyGsBWB9C4R/OZWOwqhEevBzZfBWm00O/V3VCaRigMmJyUcV9X3RFm
- NbY6aV6BXt9nSYtaA02Dd7oACdyy3iNcU7uX49b5I7waxOdiHxwRKgcxCewpkYWsmATxJ64NaJu
- HAD4hRDZ4y8gfimYRRfNbYS36w4MF50vJbYRMnlM0=
-X-Received: by 2002:a17:903:3504:b0:2c0:c37d:dfc3 with SMTP id
- d9443c01a7336-2c1e820e96emr6903765ad.15.1780616949027; 
+ bh=0S4mgAnLz7VaCxx4V6clCkrHPo+LDsuEwWJQq3WHbB0=;
+ b=cm+dPvrS9OTUHxwpBopnXFCnRtMoMAdoFv0munUNiFutckfJSbhja7X1/Zo9Y2FBW1
+ +N4DUrgWbmXKN7CIXBWuEG/rz6D+n936vOR5CB3Rhw/MRCKoz9Nbtk1c/1cwqnrbLCiu
+ 4jgQF5kBGA/o5baQOukOD5pQ9pSYZOdYAu0qxmVEUV4bFan7Pw/c07FtDmkogODll3SR
+ hNigC05iCsLm2Z2W2/FdpOeXzsTrhXKGSdk6hCfzAAsUQbXUtpo5fcM1LZoNgVQ0LwUq
+ nDag2a0CBcUqzTBVS+IpOmVUTt46GUnDtXbvBNNLZKQTG0h8I6t8RBbtesYwsCPXwGIt
+ hW9A==
+X-Gm-Message-State: AOJu0Yy9l1sFM95KJIyj9Al6wEwYBqYVh+81ciY1BuGEvr7yhzOyySMX
+ x5PP1KM0NJPbmzSLqZanMecxZ/Gdn9VJFshSnTHA1SPIE0Wy06AE9NIVtZQpgOs372QM5lL19Rv
+ AKvlAOPs=
+X-Gm-Gg: Acq92OH/Yp/ToLZNmd0U1b4WBmYgXwi3pdqHldnMDmiQdmK51KwZX0pV4zzB9rw+e9s
+ PU3sMvY/JrQ03Pv453+PzlF6CZwgl32GT2EfJT0HXXNn4hycYrxhilogdsq2+tSFjkKre/U2XoB
+ idQZnPaF1wxsBpt2cLCUXK34fwpBmSQKJJddcX64VzRAnyP1H1+We6kPTzLVQRqSX5hpLZgTA16
+ k7NdjChdfo1QuX+/RdYEZoIR2o6rH7bLYC78iX1ZErOageGw/xHfGBAqY5yXh5okC0ilYJHvKrR
+ xwt3NUXNVKXYD1zm5Lr+u6IO9wFP2k2iS6EPJ4i2O2sF2rS2RrtUTTpq+ArlFot/XjTY5HraY2c
+ e3SOBtcliwGzAMaIH2JOh4n8KxCaQRm8MCxN08qgC/6AntJgd9Pbi/Spbj6kEoX5TaNZdasRHc2
+ EhCNyYIILSBlvhPixVJT0MDYWt4t462sHpjb8BSck=
+X-Received: by 2002:a17:902:ccc3:b0:2b4:59bf:5728 with SMTP id
+ d9443c01a7336-2c1e80ec2abmr7532215ad.25.1780616949749; 
  Thu, 04 Jun 2026 16:49:09 -0700 (PDT)
 Received: from stoup.. ([71.212.142.33]) by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-2c1664950aesm66541465ad.69.2026.06.04.16.49.08
+ d9443c01a7336-2c1664950aesm66541465ad.69.2026.06.04.16.49.09
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 04 Jun 2026 16:49:08 -0700 (PDT)
+ Thu, 04 Jun 2026 16:49:09 -0700 (PDT)
 From: Richard Henderson <richard.henderson@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: qemu-arm@nongnu.org
-Subject: [PATCH 21/25] target/arm: Implement COMPACT for byte/halfword
-Date: Thu,  4 Jun 2026 16:48:48 -0700
-Message-ID: <20260604234852.573178-22-richard.henderson@linaro.org>
+Subject: [PATCH 22/25] target/arm: Implement FIRSTP, LASTP
+Date: Thu,  4 Jun 2026 16:48:49 -0700
+Message-ID: <20260604234852.573178-23-richard.henderson@linaro.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20260604234852.573178-1-richard.henderson@linaro.org>
 References: <20260604234852.573178-1-richard.henderson@linaro.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::629;
- envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x629.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::62a;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x62a.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -101,83 +101,148 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
 ---
- target/arm/tcg/helper-sve-defs.h |  2 ++
- target/arm/tcg/sve_helper.c      |  2 ++
- target/arm/tcg/translate-sve.c   | 22 +++++++++++++++++-----
- target/arm/tcg/sve.decode        |  1 -
- 4 files changed, 21 insertions(+), 6 deletions(-)
+ target/arm/tcg/helper-sve-defs.h |  3 ++
+ target/arm/tcg/sve_helper.c      | 30 +++++++++++++++++
+ target/arm/tcg/translate-sve.c   | 56 ++++++++++++++++++++++++++++++++
+ target/arm/tcg/sve.decode        |  3 ++
+ 4 files changed, 92 insertions(+)
 
 diff --git a/target/arm/tcg/helper-sve-defs.h b/target/arm/tcg/helper-sve-defs.h
-index 75c0fc919d..11342e1e59 100644
+index 11342e1e59..440a868cea 100644
 --- a/target/arm/tcg/helper-sve-defs.h
 +++ b/target/arm/tcg/helper-sve-defs.h
-@@ -733,6 +733,8 @@ DEF_HELPER_FLAGS_4(sve_trn_s, TCG_CALL_NO_RWG, void, ptr, ptr, ptr, i32)
- DEF_HELPER_FLAGS_4(sve_trn_d, TCG_CALL_NO_RWG, void, ptr, ptr, ptr, i32)
- DEF_HELPER_FLAGS_4(sve2_trn_q, TCG_CALL_NO_RWG, void, ptr, ptr, ptr, i32)
+@@ -961,6 +961,9 @@ DEF_HELPER_FLAGS_4(sve_brkns, TCG_CALL_NO_RWG, i32, ptr, ptr, ptr, i32)
+ DEF_HELPER_FLAGS_3(sve_cntp, TCG_CALL_NO_RWG, i64, ptr, ptr, i32)
+ DEF_HELPER_FLAGS_2(sve2p1_cntp_c, TCG_CALL_NO_RWG_SE, i64, i32, i32)
  
-+DEF_HELPER_FLAGS_4(sve2p2_compact_b, TCG_CALL_NO_RWG, void, ptr, ptr, ptr, i32)
-+DEF_HELPER_FLAGS_4(sve2p2_compact_h, TCG_CALL_NO_RWG, void, ptr, ptr, ptr, i32)
- DEF_HELPER_FLAGS_4(sve_compact_s, TCG_CALL_NO_RWG, void, ptr, ptr, ptr, i32)
- DEF_HELPER_FLAGS_4(sve_compact_d, TCG_CALL_NO_RWG, void, ptr, ptr, ptr, i32)
++DEF_HELPER_FLAGS_3(sve2p2_firstp, TCG_CALL_NO_RWG_SE, i64, ptr, ptr, i32)
++DEF_HELPER_FLAGS_3(sve2p2_lastp, TCG_CALL_NO_RWG_SE, i64, ptr, ptr, i32)
++
+ DEF_HELPER_FLAGS_3(sve_whilel, TCG_CALL_NO_RWG, i32, ptr, i32, i32)
+ DEF_HELPER_FLAGS_3(sve_whileg, TCG_CALL_NO_RWG, i32, ptr, i32, i32)
  
 diff --git a/target/arm/tcg/sve_helper.c b/target/arm/tcg/sve_helper.c
-index 40cf567b0d..3f99a362c3 100644
+index 3f99a362c3..57c7823feb 100644
 --- a/target/arm/tcg/sve_helper.c
 +++ b/target/arm/tcg/sve_helper.c
-@@ -3657,6 +3657,8 @@ void HELPER(NAME)(void *vd, void *vn, void *vg, uint32_t desc)        \
-     }                                                                 \
+@@ -4302,6 +4302,36 @@ uint64_t HELPER(sve2p1_cntp_c)(uint32_t png, uint32_t desc)
+     return count >> p.lg2_stride;
  }
  
-+DO_COMPACT(sve2p2_compact_b, uint8_t, H1)
-+DO_COMPACT(sve2p2_compact_h, uint16_t, H1_2)
- DO_COMPACT(sve_compact_s, uint32_t, H1_4)
- DO_COMPACT(sve_compact_d, uint64_t, H1_8)
- 
++uint64_t HELPER(sve2p2_firstp)(void *vn, void *vg, uint32_t pred_desc)
++{
++    intptr_t words = DIV_ROUND_UP(FIELD_EX32(pred_desc, PREDDESC, OPRSZ), 8);
++    intptr_t esz = FIELD_EX32(pred_desc, PREDDESC, ESZ);
++    uint64_t *n = vn, *g = vg, mask = pred_esz_masks[esz];
++
++    for (intptr_t i = 0; i < words; ++i) {
++        uint64_t t = n[i] & g[i] & mask;
++        if (t) {
++            return (ctz64(t) + i * 64) >> esz;
++        }
++    }
++    return -1;
++}
++
++uint64_t HELPER(sve2p2_lastp)(void *vn, void *vg, uint32_t pred_desc)
++{
++    intptr_t words = DIV_ROUND_UP(FIELD_EX32(pred_desc, PREDDESC, OPRSZ), 8);
++    intptr_t esz = FIELD_EX32(pred_desc, PREDDESC, ESZ);
++    uint64_t *n = vn, *g = vg, mask = pred_esz_masks[esz];
++
++    for (intptr_t i = words - 1; i >= 0; --i) {
++        uint64_t t = n[i] & g[i] & mask;
++        if (t) {
++            return ((clz64(t) ^ 63) + i * 64) >> esz;
++        }
++    }
++    return -1;
++}
++
+ /* C.f. Arm pseudocode EncodePredCount */
+ static uint64_t encode_pred_count(uint32_t elements, uint32_t count,
+                                   uint32_t esz, bool invert)
 diff --git a/target/arm/tcg/translate-sve.c b/target/arm/tcg/translate-sve.c
-index 3101f572fa..325fc28fb3 100644
+index 325fc28fb3..912290f460 100644
 --- a/target/arm/tcg/translate-sve.c
 +++ b/target/arm/tcg/translate-sve.c
-@@ -2769,11 +2769,23 @@ TRANS_FEAT_NONSTREAMING(TRN2_q, aa64_sve_f64mm, do_interleave_q,
-  *** SVE Permute Vector - Predicated Group
-  */
+@@ -3481,6 +3481,62 @@ static bool trans_SINCDECP_z(DisasContext *s, arg_incdec2_pred *a)
+     return true;
+ }
  
--static gen_helper_gvec_3 * const compact_fns[4] = {
--    NULL, NULL, gen_helper_sve_compact_s, gen_helper_sve_compact_d
--};
--TRANS_FEAT_NONSTREAMING(COMPACT, aa64_sve, gen_gvec_ool_arg_zpz,
--                        compact_fns[a->esz], a, 0)
-+static bool trans_COMPACT(DisasContext *s, arg_COMPACT *a)
++static bool do_firstp_lastp(DisasContext *s, arg_rpr_esz *a, bool firstp)
 +{
-+    static gen_helper_gvec_3 * const fns[4] = {
-+        gen_helper_sve2p2_compact_b, gen_helper_sve2p2_compact_h,
-+        gen_helper_sve_compact_s, gen_helper_sve_compact_d
-+    };
++    if (sve_access_check(s)) {
++        unsigned psz = pred_full_reg_size(s);
++        TCGv_i64 v = cpu_reg(s, a->rd);
 +
-+    if (!dc_isar_feature(aa64_sme2p2, s)) {
-+        if (!(a->esz >= MO_32
-+              ? dc_isar_feature(aa64_sve, s)
-+              : dc_isar_feature(aa64_sve2p2, s))) {
-+            return false;
++        if (psz <= 8) {
++            uint64_t psz_mask;
++
++            tcg_gen_ld_i64(v, tcg_env, pred_full_reg_offset(s, a->rn));
++            if (a->rn != a->pg) {
++                TCGv_i64 g = tcg_temp_new_i64();
++                tcg_gen_ld_i64(g, tcg_env, pred_full_reg_offset(s, a->pg));
++                tcg_gen_and_i64(v, v, g);
++            }
++
++            /*
++             * Reduce the pred_esz_masks value simply to reduce the
++             * size of the code generated here.
++             */
++            psz_mask = MAKE_64BIT_MASK(0, psz * 8);
++            tcg_gen_andi_i64(v, v, pred_esz_masks[a->esz] & psz_mask);
++
++            if (firstp) {
++                tcg_gen_ctzi_i64(v, v, -1);
++            } else {
++                tcg_gen_clzi_i64(v, v, 64);
++                tcg_gen_subfi_i64(v, 63, v);
++            }
++            tcg_gen_sari_i64(v, v, a->esz);
++        } else {
++            TCGv_ptr t_pn = tcg_temp_new_ptr();
++            TCGv_ptr t_pg = tcg_temp_new_ptr();
++            unsigned desc = 0;
++            TCGv_i32 t_desc;
++
++            desc = FIELD_DP32(desc, PREDDESC, OPRSZ, psz);
++            desc = FIELD_DP32(desc, PREDDESC, ESZ, a->esz);
++
++            tcg_gen_addi_ptr(t_pn, tcg_env, pred_full_reg_offset(s, a->rn));
++            tcg_gen_addi_ptr(t_pg, tcg_env, pred_full_reg_offset(s, a->pg));
++            t_desc = tcg_constant_i32(desc);
++
++            if (firstp) {
++                gen_helper_sve2p2_firstp(v, t_pn, t_pg, t_desc);
++            } else {
++                gen_helper_sve2p2_lastp(v, t_pn, t_pg, t_desc);
++            }
 +        }
-+        s->is_nonstreaming = true;
 +    }
-+    return gen_gvec_ool_arg_zpz(s, fns[a->esz], a, 0);
++    return true;
 +}
- 
- /* Call the helper that computes the ARM LastActiveElement pseudocode
-  * function, scaled by the element size.  This includes the not found
++
++TRANS_FEAT(FIRSTP, aa64_sme2p2_or_sve2p2, do_firstp_lastp, a, true)
++TRANS_FEAT(LASTP, aa64_sme2p2_or_sve2p2, do_firstp_lastp, a, false)
++
+ /*
+  *** SVE Integer Compare Scalars Group
+  */
 diff --git a/target/arm/tcg/sve.decode b/target/arm/tcg/sve.decode
-index 5ec1d420c2..a3eefd60e5 100644
+index a3eefd60e5..bdc2b7f0c0 100644
 --- a/target/arm/tcg/sve.decode
 +++ b/target/arm/tcg/sve.decode
-@@ -693,7 +693,6 @@ TBXQ            00000101 .. 1 ..... 001 101 ..... .....         @rd_rn_rm
- ### SVE Permute - Predicated Group
+@@ -852,6 +852,9 @@ BRKN            00100101 0. 01100001 .... 0 .... 0 ....         @pd_pg_pn_s
+ CNTP            00100101 ..    100 000 10 ....     0 .... ..... @rd_pg4_pn
+ CNTP_c          00100101 esz:2 100 000 10 000 vl:1 1 rn:4 rd:5
  
- # SVE compress active elements
--# Note esz >= 2
- COMPACT         00000101 .. 100001 100 ... ..... .....          @rd_pg_rn
++FIRSTP          00100101 ..    100 001 10 ....     0 .... ..... @rd_pg4_pn
++LASTP           00100101 ..    100 010 10 ....     0 .... ..... @rd_pg4_pn
++
+ # SVE inc/dec register by predicate count
+ INCDECP_r       00100101 .. 10110 d:1 10001 00 .... .....     @incdec_pred u=1
  
- # SVE conditionally broadcast element to vector
 -- 
 2.43.0
 
