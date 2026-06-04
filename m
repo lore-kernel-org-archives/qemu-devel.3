@@ -4,83 +4,83 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 89F25CD6E75
-	for <qemu-devel@archiver.kernel.org>; Thu,  4 Jun 2026 23:12:49 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4117FCD6E75
+	for <qemu-devel@archiver.kernel.org>; Thu,  4 Jun 2026 23:12:58 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wVHE4-0007I3-PV; Thu, 04 Jun 2026 19:11:48 -0400
+	id 1wVHDr-0007FY-KO; Thu, 04 Jun 2026 19:11:35 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1wVHE2-0007Hf-93
- for qemu-devel@nongnu.org; Thu, 04 Jun 2026 19:11:46 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1wVHDq-0007FJ-JE
+ for qemu-devel@nongnu.org; Thu, 04 Jun 2026 19:11:34 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1wVHE0-0006Na-Mf
- for qemu-devel@nongnu.org; Thu, 04 Jun 2026 19:11:46 -0400
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1wVHDo-0006LB-SV
+ for qemu-devel@nongnu.org; Thu, 04 Jun 2026 19:11:34 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1780614703;
+ s=mimecast20190719; t=1780614690;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=53eCSdM5/9myqcXLcdEsBbfYriv+6smkrhaDwhp6cx4=;
- b=RU9TLzJ0POYxJA4bY2/pYbTMte/yQVK6QxZc2hDPBcaMCuXXEdHpK9Ehsfyzxw1hUWhWyw
- 52F79sOAvNeG626A56KJoEgUpTkaBCG51xkHPBF6jmN17RsXgV+li2VIeWpxgWfdScNaEJ
- m3ffF7Si+j3FnlcYyUtphIbwZrgfMys=
+ bh=jh4FKDkkZ9fI3XwVHCClBi0qhOegTlBzdvQBSit/whg=;
+ b=WNx5EazuJRQEePuYGfBkeOWVPY0ySF3y5tRv6DQ5wLsZXZYz0daoxaK5mMmwEczASo/iLl
+ qKF08nVyuVdcDNrSE1evp3L42eqTXiqnoUwaFxYDtmNOkTuRwkEjHI0Wc6qknaFTAJlm07
+ pho1+7YgmAJVAZUJT1LcDG3syIuCogo=
 Received: from mail-qk1-f198.google.com (mail-qk1-f198.google.com
  [209.85.222.198]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-335-70nB35rLMd2pGQ88wNCJaw-1; Thu, 04 Jun 2026 19:11:37 -0400
-X-MC-Unique: 70nB35rLMd2pGQ88wNCJaw-1
-X-Mimecast-MFC-AGG-ID: 70nB35rLMd2pGQ88wNCJaw_1780614697
+ us-mta-520-PLaxo61COVyrJUrep4fITA-1; Thu, 04 Jun 2026 19:11:29 -0400
+X-MC-Unique: PLaxo61COVyrJUrep4fITA-1
+X-Mimecast-MFC-AGG-ID: PLaxo61COVyrJUrep4fITA_1780614689
 Received: by mail-qk1-f198.google.com with SMTP id
- af79cd13be357-9157929bf8fso131842185a.0
- for <qemu-devel@nongnu.org>; Thu, 04 Jun 2026 16:11:37 -0700 (PDT)
+ af79cd13be357-9157f1be04aso35697185a.3
+ for <qemu-devel@nongnu.org>; Thu, 04 Jun 2026 16:11:29 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1780614697; x=1781219497; darn=nongnu.org;
+ d=redhat.com; s=google; t=1780614689; x=1781219489; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=53eCSdM5/9myqcXLcdEsBbfYriv+6smkrhaDwhp6cx4=;
- b=pgrIO7lPV63WSCxG6ZVhORNiMUxI8SFTjWtxD4lc6G+wBNa8wrQtMd6uBM0lb8Jtyg
- adn0CdDvvBhcTpmBPMP0rICH4/xkwC82hzo/AZr4Jltf48ZaMHEDhIfQg3R7bw83Ckv4
- YyXQDkIg8y/kYVAm+8kfymvE0na1A1La3uIcWiTLpolFZvgslWr0LF9ljT1l9YnRC/Ka
- I03A3JZSiiV0dDi78+O7eJtuQlp0h+3D9jBfIv9AR5hcgXVSTBGwoC2ErBqB9cgvC3eA
- c0oeZezb/eWrB+9uPNDlztzw5af0+Y8CL6WzOfTYB2E8HLqpfn3bzMqxdTeFg1Tfz/2I
- ErMw==
+ bh=jh4FKDkkZ9fI3XwVHCClBi0qhOegTlBzdvQBSit/whg=;
+ b=Kd2X0/gsn2JlekC+JI0W2kVPhht5oODYYEzKkZn7MAYDztw1sm2ZphWEcKP2aVX7UU
+ 1znYjaNlodhL//i8D+69huqGezxBEGOTfYFhrUGKj5NPjcmncVJPtLJnquXc4GT3+cn5
+ 7tu4mf/ldUNGhlwDxuzcDxjfhLdqgTflAKJXhghKjrOk6/z2M26XxlulRIRXcn/hnqIX
+ VApirxIF91IlJAPEH6Z603JGdpphEh8t1mUYBr6JWnxzJ1ywOKxXlH/GgoeapceAk+vj
+ BQHD7FBj/+1A5Uez7pbuCLtWP6DhWqWS80fQcl2HfFK0ekraxwBwFPqE9iuGUGNozDom
+ l/nA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1780614697; x=1781219497;
+ d=1e100.net; s=20251104; t=1780614689; x=1781219489;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to;
- bh=53eCSdM5/9myqcXLcdEsBbfYriv+6smkrhaDwhp6cx4=;
- b=LvIhHyXsMZkaxxSMbpdd0tQDrYZ+vJPU+VsMrwrq5qMezxw6TFVRyYmQ6FCfPnUiej
- A5R9W/HeX18/qbh5D5lNqvmnqmJBr4FMpywVvm038Ge7yQlMIXtQXen+dxgWJiqpjtaT
- PBk6liq6kSXieT5kjsl2b1v3kFLTXkaMAsGoal3ctpWLKysxcV2famDdo6h7aGfR9Aki
- C8wgJK7NQrfu+0bnlBR+vqcVYgPIA3GKrfN2YUIY0s8Vi8enVW2z6D7A7DNyK05E9t5z
- H8wUcc7euHcRymv+H1miGRqy3AEhni3CvO/1Dfif1T2jEYbfCoFbVt5qYgK1u/FWbNYm
- 6ekA==
-X-Gm-Message-State: AOJu0YxJwWGhcqneM62FYacDzJf/FySGTJF9cwLx372BY1BqnsBa4isa
- 8rP4puEx3KvKovew7D4NtNHBrlCjy9XbPA+wgX2X6MsJ9KTb0iaiw1Bh/W29Ru02X9Hd+y+gMXF
- Ndkyngni8ZwfHNSf2HVIKiod5H8LvEuQc/VXV0SExX7RkHkaqBod/Mn9OJvG34Yw2xdimf5LBcH
- D9BYwNhd1TqM85wo9vb9+8pdd8/9jXUdYOcQhTdw==
-X-Gm-Gg: Acq92OEHaERyV4Ufn+TsBSr9UpEOBsmLyYw6BQvFzRO4pnV6P4tS/F6kEPfVIMjMQsp
- TK3gsx2OsKZOjCyJkzQtxpJVDDlOdDHG+yz1XC//i3YMXMKVP7VW59+ipLWzZ9mYncXsG3XnClS
- vOWMcljQPB9kkwFk0E8uqaEYTjj46OKs/VQd+XgiaWcX04nc+b2xF77khnuLpN3ihIE3J3xjdfe
- TuWX1ocKqgukhZtWB7GGu2KcJLg+9PF7xeL5K26YuYPSQFaI/NnuLsB6IORuqeEP3NjlCicE608
- OiRfOFPIxCqSe12blXVUCu+QdsmpfBmW2yrynyfmN9MeSqdQG2bppocyQSRmrQADznyoIHyy596
- i2XcPYKG4W9U2aNmLh8aYPtA=
-X-Received: by 2002:a05:620a:690d:b0:915:9f87:eae6 with SMTP id
- af79cd13be357-915a9da5824mr228195685a.42.1780614696964; 
- Thu, 04 Jun 2026 16:11:36 -0700 (PDT)
-X-Received: by 2002:a05:620a:690d:b0:915:9f87:eae6 with SMTP id
- af79cd13be357-915a9da5824mr228182985a.42.1780614696173; 
- Thu, 04 Jun 2026 16:11:36 -0700 (PDT)
+ bh=jh4FKDkkZ9fI3XwVHCClBi0qhOegTlBzdvQBSit/whg=;
+ b=awigZ7KorL5McZjEPzZHReqpqB+2KgRGz9S7CCvPQQZhtNwENGKQs/p3ibfaA1iVW5
+ gXwI5NFEXGk64B+0HpMLzaCnFLEDnmUIJXm5RtbsELyEsZGFzTeX+gNBCnZtGNi9n71q
+ Sbd4Vl9l53JOJ+K4cceFq1enePoNiBGG1Mtz7CWID/9Gu3PQo+gEyEg7Lvzv7By/pxRA
+ egWJwuksKoDW8JBPf+XGHYoC+226O2dwNKewCdnQG5YrRO98ZvO3v4QiLyb0w0CSwUh9
+ WoLpeYgfIXQ3tYR/UV3O5S2ODcElsJKOHhi/gSNrv4d7he/THmHo5bxaUWa0N7OSWpDr
+ rGSA==
+X-Gm-Message-State: AOJu0YxZ8ckURN0xt2S2H1syqMkcqVHiHrfkhfkeQHekwNL4RBpwX8V6
+ tbtRshf635W9dolRY1vKr2K0akEQIcMDJ61aFWC5/pHH7fsrjS2lrvzhoinbfm6X+BcDe9GxT/p
+ ajz+sn6VhZnMt6rcIcbW7si/U4MtWDpG9Is1Fw8y5rCVgoLG2lomexB9dkhiZFOj9zC44gHEDQY
+ dy8Dtbvs7KS4pANPo+hXOnnlqzmYlprPAHBF1E/w==
+X-Gm-Gg: Acq92OHnPjsSP5b1NmpjFFbnrWxK9YHnuaGgGpTjsXhF2v0JCZkw6yFVk6ob8mHzE7y
+ t4FppeFOU45hLllbSinPiYWkNuwJLSeqYy08xj7UULuc0nt4bikq+Z9EiDl+Qv+h0ee8hHgDr4I
+ h2Ak+26RBexuO6tPZOJJe3R01ObStBbRpZz+dDlf5yAFqUCIUTpwNqxWtv4/zQ+IZJtXU3G6s59
+ JRhxSQCwgZsh+Htk2O48d6zQEOENB0DJ1haEXl17n7KwYoQg6j4EYAsNFsu5q8ij2+OyC1wVqXW
+ RAd4gQ5YkZp0EKTOEdap3DFMj60iQxO1LWPIpNS7Hz1jvOs/3KxthMD2OZRmgWR9ILLN9+LE7nP
+ fGrBuwa2+yPN/Tflzf4PMT+E=
+X-Received: by 2002:a05:620a:2a05:b0:915:9125:e634 with SMTP id
+ af79cd13be357-915a9db4ce4mr216936685a.42.1780614688466; 
+ Thu, 04 Jun 2026 16:11:28 -0700 (PDT)
+X-Received: by 2002:a05:620a:2a05:b0:915:9125:e634 with SMTP id
+ af79cd13be357-915a9db4ce4mr216926285a.42.1780614687779; 
+ Thu, 04 Jun 2026 16:11:27 -0700 (PDT)
 Received: from x1.com ([142.189.10.167]) by smtp.gmail.com with ESMTPSA id
- af79cd13be357-9158a37cab6sm707617285a.22.2026.06.04.16.11.34
+ af79cd13be357-9158a37cab6sm707617285a.22.2026.06.04.16.11.26
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 04 Jun 2026 16:11:35 -0700 (PDT)
+ Thu, 04 Jun 2026 16:11:26 -0700 (PDT)
 From: Peter Xu <peterx@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: peterx@redhat.com,
@@ -96,22 +96,23 @@ Cc: peterx@redhat.com,
  Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>,
  =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>,
  "Dr . David Alan Gilbert" <dave@treblig.org>
-Subject: [PATCH 4/4] migration: Remove dependency to TYPE_DEVICE
-Date: Thu,  4 Jun 2026 19:11:18 -0400
-Message-ID: <20260604231118.1584889-5-peterx@redhat.com>
+Subject: [PATCH 1/4] qdev: Pave way for exporting Property to be used in
+ non-qdev
+Date: Thu,  4 Jun 2026 19:11:15 -0400
+Message-ID: <20260604231118.1584889-2-peterx@redhat.com>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260604231118.1584889-1-peterx@redhat.com>
 References: <20260604231118.1584889-1-peterx@redhat.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=peterx@redhat.com;
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=peterx@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -24
 X-Spam_score: -2.5
 X-Spam_bar: --
 X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.445,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
  SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -128,89 +129,104 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-While doing that, we still want to keep the Property list that migration
-object used to use.  Apply them directly to ObjectClass instead of setting
-them with a DeviceClass.
+Property itself is a well defined interface to either support smooth
+conversions to Object's properties, or supports global properties.  However
+currently it's tied to DeviceClass, aka, qdev. So non-qdev cannot use
+Property list.
 
-Manually apply the two extra properties (compat properties, global
-settings) in an instance_post_init() hook, just like most of the rest
-users, see callers of object_apply_compat_props().
+My current observation shows Property is almost ready to be used as a
+separated exported interface, except two small things that may need touch
+up internally:
+
+        qdev_prop_allow_set
+        qdev_prop_check_globals
+
+The 1st one currently checks against realize state (which is part of qdev
+attributes only).  The 2nd one checks for all global property being used in
+all non-pluggable qdevs.
+
+We can loose the check in both spots, keep the check if the driver is a
+qdev, otherwise we can safely whitelist non-qdev use cases of Property.
 
 Signed-off-by: Peter Xu <peterx@redhat.com>
 ---
- migration/migration.h |  2 +-
- migration/migration.c | 33 +++++++++++++++++++--------------
- 2 files changed, 20 insertions(+), 15 deletions(-)
+ hw/core/qdev-properties.c           | 24 ++++++++++++++++++++----
+ tests/unit/test-qdev-global-props.c |  6 +++++-
+ 2 files changed, 25 insertions(+), 5 deletions(-)
 
-diff --git a/migration/migration.h b/migration/migration.h
-index 841f49b215..8bdb8e8e6b 100644
---- a/migration/migration.h
-+++ b/migration/migration.h
-@@ -274,7 +274,7 @@ struct MigrationClass {
- 
- struct MigrationState {
-     /*< private >*/
--    DeviceState parent_obj;
-+    Object parent_obj;
- 
-     /*< public >*/
-     QemuThread thread;
-diff --git a/migration/migration.c b/migration/migration.c
-index 074d3f2c69..f9f102e78a 100644
---- a/migration/migration.c
-+++ b/migration/migration.c
-@@ -3966,11 +3966,9 @@ fail:
- 
- static void migration_class_init(ObjectClass *klass, const void *data)
+diff --git a/hw/core/qdev-properties.c b/hw/core/qdev-properties.c
+index 34d7b26a73..8f870c85fc 100644
+--- a/hw/core/qdev-properties.c
++++ b/hw/core/qdev-properties.c
+@@ -31,8 +31,14 @@ void qdev_prop_set_after_realize(DeviceState *dev, const char *name,
+ static bool qdev_prop_allow_set(Object *obj, const char *name,
+                                 const PropertyInfo *info, Error **errp)
  {
--    DeviceClass *dc = DEVICE_CLASS(klass);
--
--    dc->user_creatable = false;
--    device_class_set_props_n(dc, migration_properties,
--                             migration_properties_count);
-+    for (int i = 0; i < migration_properties_count; i++) {
-+        object_class_add_property(klass, &migration_properties[i]);
-+    }
- }
- 
- static void migration_instance_finalize(Object *obj)
-@@ -4028,21 +4026,28 @@ static bool migration_object_check(MigrationState *ms, Error **errp)
-     return migrate_caps_check(old_caps, ms->capabilities, errp);
- }
- 
--static const TypeInfo migration_type = {
--    .name = TYPE_MIGRATION,
-+static void migration_instance_post_init(Object *obj)
-+{
-     /*
--     * NOTE: TYPE_MIGRATION is not really a device, as the object is
--     * not created using qdev_new(), it is not attached to the qdev
--     * device tree, and it is never realized.
-+     * Apply these properties on top of default values:
-      *
--     * TODO: Make this TYPE_OBJECT once QOM provides something like
--     * TYPE_DEVICE's "-global" properties.
-+     * (1) machine compat properties
-+     * (2) -global settings in cmdlines
-+     *
-+     * Need to be applied in order so (2) takes precedence over (1).
-      */
--    .parent = TYPE_DEVICE,
-+    object_apply_compat_props(obj);
-+    object_apply_globals(obj);
-+}
+-    DeviceState *dev = DEVICE(obj);
++    DeviceState *dev;
 +
-+static const TypeInfo migration_type = {
-+    .name = TYPE_MIGRATION,
-+    .parent = TYPE_OBJECT,
-     .class_init = migration_class_init,
--    .class_size = sizeof(MigrationClass),
-+    .class_size = sizeof(ObjectClass),
-     .instance_size = sizeof(MigrationState),
-     .instance_init = migration_instance_init,
-+    .instance_post_init = migration_instance_post_init,
-     .instance_finalize = migration_instance_finalize,
- };
++    if (!object_dynamic_cast(obj, TYPE_DEVICE)) {
++        /* Currently, non-qdev can always set Property anytime */
++        return true;
++    }
+ 
++    dev = DEVICE(obj);
+     if (dev->realized && !info->realized_set_allowed) {
+         qdev_prop_set_after_realize(dev, name, errp);
+         return false;
+@@ -997,6 +1003,7 @@ int qdev_prop_check_globals(void)
+ 
+     for (i = 0; i < global_props()->len; i++) {
+         GlobalProperty *prop;
++        bool hotpluggable;
+         ObjectClass *oc;
+         DeviceClass *dc;
+ 
+@@ -1005,15 +1012,24 @@ int qdev_prop_check_globals(void)
+             continue;
+         }
+         oc = object_class_by_name(prop->driver);
+-        oc = object_class_dynamic_cast(oc, TYPE_DEVICE);
+         if (!oc) {
+             warn_report("global %s.%s has invalid class name",
+                         prop->driver, prop->property);
+             ret = 1;
+             continue;
+         }
+-        dc = DEVICE_CLASS(oc);
+-        if (!dc->hotpluggable && !prop->used) {
++        oc = object_class_dynamic_cast(oc, TYPE_DEVICE);
++        if (oc) {
++            dc = DEVICE_CLASS(oc);
++            hotpluggable = dc->hotpluggable;
++        } else {
++            /*
++             * Currently, to be strict to assume all non-qdev are not
++             * hotpluggable (whoever will use -global).
++             */
++            hotpluggable = false;
++        }
++        if (!hotpluggable && !prop->used) {
+             warn_report("global %s.%s=%s not used",
+                         prop->driver, prop->property, prop->value);
+             ret = 1;
+diff --git a/tests/unit/test-qdev-global-props.c b/tests/unit/test-qdev-global-props.c
+index 8ea362cbb9..86bb1458d9 100644
+--- a/tests/unit/test-qdev-global-props.c
++++ b/tests/unit/test-qdev-global-props.c
+@@ -275,8 +275,12 @@ static void test_dynamic_globalprop(void)
+     g_test_trap_assert_stderr_unmatched("*prop4*");
+     g_test_trap_assert_stderr(
+         "*warning: global nohotplug-type.prop5=105 not used*");
++    /*
++     * TYPE_OBJECT can opt-in for global properties, so the error is "not
++     * used" too for nondevice-type.
++     */
+     g_test_trap_assert_stderr(
+-        "*warning: global nondevice-type.prop6 has invalid class name*");
++        "*warning: global nondevice-type.prop6=106 not used*");
+     g_test_trap_assert_stdout("");
+ }
  
 -- 
 2.53.0
