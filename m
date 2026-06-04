@@ -4,91 +4,113 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 58A8BCD6E77
-	for <qemu-devel@archiver.kernel.org>; Thu,  4 Jun 2026 16:39:44 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 970A7CD6E75
+	for <qemu-devel@archiver.kernel.org>; Thu,  4 Jun 2026 16:49:49 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wVB64-0000vs-Hr; Thu, 04 Jun 2026 12:39:08 -0400
+	id 1wVBFQ-0003Mu-3q; Thu, 04 Jun 2026 12:48:48 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <stefanha@redhat.com>)
- id 1wVB63-0000vM-FP
- for qemu-devel@nongnu.org; Thu, 04 Jun 2026 12:39:07 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <eauger@redhat.com>) id 1wVBFO-0003MK-Lw
+ for qemu-devel@nongnu.org; Thu, 04 Jun 2026 12:48:46 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <stefanha@redhat.com>)
- id 1wVB61-00058T-LK
- for qemu-devel@nongnu.org; Thu, 04 Jun 2026 12:39:07 -0400
+ (Exim 4.90_1) (envelope-from <eauger@redhat.com>) id 1wVBFI-0008EU-PP
+ for qemu-devel@nongnu.org; Thu, 04 Jun 2026 12:48:46 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1780591144;
+ s=mimecast20190719; t=1780591714;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=2r+fzOpo5enQdSe1jmJ0C+/wa4xJ8Pn+LBWPFKbjY40=;
- b=HDTp/d38Cdfd5jFTXvsgB47gTMthC6mIIbNkPnOIwXQG5oGKMMn3uEbEj3LMmsyg7gOIrX
- RpQBqBTeYEtahX3mY9t4f1WMa37U6qoCjodMBYqT1CG/hrhsCAOIFu5bnCa8F/OmBdTNcZ
- 4lr8hzN014c4CW2HITVqHsBOom+Ozr0=
-Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-580-D4xkaiw8Op2hCC6E435Jgg-1; Thu,
- 04 Jun 2026 12:39:01 -0400
-X-MC-Unique: D4xkaiw8Op2hCC6E435Jgg-1
-X-Mimecast-MFC-AGG-ID: D4xkaiw8Op2hCC6E435Jgg_1780591139
-Received: from mx-prod-int-10.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-10.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.95])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id B8032180034C; Thu,  4 Jun 2026 16:38:58 +0000 (UTC)
-Received: from localhost (unknown [10.2.17.68])
- by mx-prod-int-10.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 4458A27A; Thu,  4 Jun 2026 16:38:56 +0000 (UTC)
-Date: Thu, 4 Jun 2026 12:28:53 -0400
-From: Stefan Hajnoczi <stefanha@redhat.com>
-To: Dorinda Bassey <dbassey@redhat.com>
-Cc: "Michael S. Tsirkin" <mst@redhat.com>, Albert Esteve <aesteve@redhat.com>,
- Stefan Hajnoczi <stefanha@gmail.com>,
- Alex =?iso-8859-1?Q?Benn=E9e?= <alex.bennee@linaro.org>,
- qemu-devel <qemu-devel@nongnu.org>, virtio-comment@lists.linux.dev,
- dev@lists.cloudhypervisor.org, rust-vmm@lists.opendev.org,
- Stefano Garzarella <sgarzare@redhat.com>,
- Manos Pitsidianakis <manos.pitsidianakis@linaro.org>,
- Demi Marie Obenour <demi@invisiblethingslab.com>,
- Alyssa Ross <hi@alyssa.is>, Mark Burton <MBURTON@qti.qualcomm.com>,
- Matti Moell <matti@qti.qualcomm.com>,
- Viresh Kumar <viresh.kumar@linaro.org>, Sergio Lopez <slp@redhat.com>,
- Vishwanath Seshagiri <vishs@meta.com>, Rob Bradford <rbradford@meta.com>,
- Zhengyu Zhao <zhaozhengyu@bytedance.com>,
- "Jorge E. Moreira" <jemoreira@google.com>
-Subject: Re: Where should the vhost-user specification live?
-Message-ID: <20260604162853.GC115597@fedora>
-References: <874ijtz038.fsf@draig.linaro.org>
- <CADSE00+RdBUhFVBDSXtVd1J5SaccqWy+RBxqnxuLKUYcitFMPw@mail.gmail.com>
- <20260601083628-mutt-send-email-mst@kernel.org>
- <CADSE00+kRnEC08LLVu6H065u2KaxBm-KnSN_8y6+964-FLbJMA@mail.gmail.com>
- <20260601090953-mutt-send-email-mst@kernel.org>
- <CAJSP0QV4W=5MJsSGggACv-tqxDtiieKc0YzEn8t-R=RD94KJaQ@mail.gmail.com>
- <CADSE00+ziHc8W2FqNT-aJU0Lt4sZ=NfQLc65m16vpT++pZM+xQ@mail.gmail.com>
- <20260601151815.GC411459@fedora>
- <20260601160352-mutt-send-email-mst@kernel.org>
- <CACzuRyxedVMHNGkRf7AVyPWUTMgBMa6_DBnSHn+V6H7wN7XzWw@mail.gmail.com>
+ bh=QHyvdlgQ7QsYbizi6Zy9GXst2SuP91Rk/k9524k2sXY=;
+ b=CbvpTsI01HJwADh+5FKqJJKsZmmeeh0h4xVyErb10FdSGiEJMtVGwbYbN5+92k+QES+NSR
+ Y9nprcX4ZKtsomE0XfEaNoG0pIYrRXG8Nm7zSBfznaTkXJs1bqapABEwExMzpSgXmfTVW7
+ kIt9rLpYJtdelkg1yNDP2XmxSXhfYSg=
+Received: from mail-wr1-f72.google.com (mail-wr1-f72.google.com
+ [209.85.221.72]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-689-E8defK4hNouQ4Rsf2qwcQg-1; Thu, 04 Jun 2026 12:48:31 -0400
+X-MC-Unique: E8defK4hNouQ4Rsf2qwcQg-1
+X-Mimecast-MFC-AGG-ID: E8defK4hNouQ4Rsf2qwcQg_1780591710
+Received: by mail-wr1-f72.google.com with SMTP id
+ ffacd0b85a97d-4601c9b630fso406452f8f.0
+ for <qemu-devel@nongnu.org>; Thu, 04 Jun 2026 09:48:31 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=redhat.com; s=google; t=1780591710; x=1781196510; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=QHyvdlgQ7QsYbizi6Zy9GXst2SuP91Rk/k9524k2sXY=;
+ b=tsqEeyCXuDizvEUZsYmoZwIvmI4XZGNqL2W7cRMvZsRaP5afR+CyR3nV96rEmxhA1j
+ ltiKO5+9w8i+w8ZPeVKOHM1UmJ8O9e0wElTGjzPf58dTHWZNrMsa6Qwgr/FPJZ9vvvhr
+ jXMbYbL+V26zzFF/ypk+UuiorjPjkCbnbEFsQBcaapCoQTuFeoyRtphgXHnG7mDIo84d
+ mkO6Yly0+A4v/dt4AV0nzdzJAoGgwK5J218/M+/0axNT2jcYCktVyP2AISaInXSjogWp
+ hzhqg3k3ORi53a+9evFy+Cj/joU1zY/ghCjJiTHif+pqWauuWkGecnJzJUpoTu0jNq74
+ 9CCg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1780591710; x=1781196510;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=QHyvdlgQ7QsYbizi6Zy9GXst2SuP91Rk/k9524k2sXY=;
+ b=tZ1UZHp2iCB9Z0Kq5tgA/7qm0Djn/ZoWbwZhcf5dM//aQbSIZoFgLEWaRzRPBnWS/i
+ yHmc1eyZP60p5v8nJPS/CynCSyxZ1TKEA+JWjxpdQQ+7lOUqlF57jUDgQ07pRqNieoWQ
+ seeFEkVk40woxKwWiH4/LQGSP0IWKDyfSuAiatexhOaa6ym9tkD3721Tm7a5XLy31BRo
+ xgwhUFi1WhWEFm+0n1mBbH9ZN2rTU0PIma/j95ffuGeTFBIf30l+lKlAnUOoU2cgWdtY
+ VfU58oStEHjswtzgR1yRA2wi6psi5u8aqW4AeeZG1zsie8LK3K4pkp7TuNTbqhgw6P44
+ TyzQ==
+X-Forwarded-Encrypted: i=1;
+ AFNElJ96LNmdThqiFRqA3R9iun7FsWUhgAPBqYfngCxUJTgijjnZOU4fI0P0f1LZLs8bSG7Ti61rTc7ixrYS@nongnu.org
+X-Gm-Message-State: AOJu0YwHRgBF0I8FCaLYhJvJ0gycCJmLNLkkkVWY05lCIPZNE2m1F9DI
+ /0pPP2v33nNmAdyahLa/IC8KbhXPj/5pPQVIhsFRpYqIfG2AEW/n1mig5Unsxfq3c8xYeaQC5uX
+ emsRMucq7foTbQ00IL0HmVuQnCJ+pzdVXfElcZFUblKXEgHmHLMANW457
+X-Gm-Gg: Acq92OGL2n1wYPw9aL4RO3XlI7Ta4o1QFfgL0cZH/y/L4VX9fiBRukDVZV80YU5ul4Z
+ tgPSOMQIISLA20TSdgVlPGH0I021PD/DUd4a07BV9BEmUujffoJY++4xtvviCjzWkRBG1+ChJ4p
+ oCZAytIf3oWgJYfn0dDBwEOamG9fgfruk51nEqV3YBC3nePt7XhI0bHOBiaux9UdKDwIEToQY7+
+ MMaqFMlcLbkUM7M35ZU9HXJVpFY5q9NpeAFo7K2MNle3E4oJt8Kv6X4Fx4NTZ1RiFDL79J0kDfx
+ e2HYEPJjzj/QBAnXshv+HwTxK1KqAX2eE+Mkpd7f26PBlE2mlH/TEUehVi13QXZy+AY4tG4JHHS
+ ymjVP/nfsdKYo1S6H9FRfcxd1Z4s0ai9OpeA/urKN2l9jW6zJTYaKVUz31QS5WekLwXAl4ng9Yr
+ I=
+X-Received: by 2002:a05:600c:440f:b0:490:bcf6:46bf with SMTP id
+ 5b1f17b1804b1-490bcf64890mr48943235e9.9.1780591710237; 
+ Thu, 04 Jun 2026 09:48:30 -0700 (PDT)
+X-Received: by 2002:a05:600c:440f:b0:490:bcf6:46bf with SMTP id
+ 5b1f17b1804b1-490bcf64890mr48942855e9.9.1780591709814; 
+ Thu, 04 Jun 2026 09:48:29 -0700 (PDT)
+Received: from ?IPV6:2a01:e0a:f0e:9070:527b:9dff:feef:3874?
+ ([2a01:e0a:f0e:9070:527b:9dff:feef:3874])
+ by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-490bc3cc140sm101883055e9.9.2026.06.04.09.48.28
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Thu, 04 Jun 2026 09:48:29 -0700 (PDT)
+Message-ID: <7d67628a-6fa0-4c4e-a469-a80adc902549@redhat.com>
+Date: Thu, 4 Jun 2026 18:48:28 +0200
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
- protocol="application/pgp-signature"; boundary="DetFCX6AZnDHq900"
-Content-Disposition: inline
-In-Reply-To: <CACzuRyxedVMHNGkRf7AVyPWUTMgBMa6_DBnSHn+V6H7wN7XzWw@mail.gmail.com>
-X-Scanned-By: MIMEDefang 3.6 on 10.30.177.95
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=stefanha@redhat.com;
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v2 09/21] arm: virt: create sbsa_gwdt watchdog
+Content-Language: en-US
+To: Igor Mammedov <imammedo@redhat.com>, qemu-devel@nongnu.org
+Cc: mst@redhat.com, anisinha@redhat.com, pbonzini@redhat.com,
+ peter.maydell@linaro.org, shannon.zhaosl@gmail.com, philmd@linaro.org,
+ zhao1.liu@intel.com, rad@semihalf.com, leif.lindholm@oss.qualcomm.com,
+ qemu-arm@nongnu.org
+References: <20260303092532.2410177-1-imammedo@redhat.com>
+ <20260303092532.2410177-10-imammedo@redhat.com>
+From: Eric Auger <eauger@redhat.com>
+In-Reply-To: <20260303092532.2410177-10-imammedo@redhat.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=eauger@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -24
 X-Spam_score: -2.5
 X-Spam_bar: --
 X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.445,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
  SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -105,114 +127,208 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+Hi Igor,
 
---DetFCX6AZnDHq900
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+On 3/3/26 10:25 AM, Igor Mammedov wrote:
+> Allow to use SBSA generic watchdog with virt machine type.
+> (includes conditional generation of corresponding FDT and
+> ACPI GTDT descriptors)
+> 
+> Use '-device sbsa_gwdt' to command line to enable it.
+don't we use '-' instead of '_' in general. At least this is the case
+for dynamically instantiable arm-smmuv3 device. Better to align
 
-On Tue, Jun 02, 2026 at 12:38:27PM +0200, Dorinda Bassey wrote:
-> Hi All,
->=20
-> Following up on this discussion: Albert, Stefano and I are organizing
-> a BoF session on vhost-user for Linux Plumbers Conference, so this
-> thread is very timely.
->=20
-> > I get a sense that this is about politics in the end. Do people feel
-> > they are not represented and would like to have more influence in the
-> > vhost-user spec?
->=20
-> I think the core issue is that vhost-user has grown beyond just QEMU.
-> The spec is now implemented by rust-vmm, cloud-hypervisor, crosvm,
-> libkrun, and others. All of these projects depend on the spec as their
-> source of truth for interoperability.
+also this is the terminology used in the fdt compat string
+$id: http://devicetree.org/schemas/watchdog/arm,sbsa-gwdt.yaml#
+    const: arm,sbsa-gwdt
 
-vhost-user was always an effort spanning multiple projects - that is
-fundamentally the purpose of the vhost-user protocol - so it bothers me
-when it is framed this way. CrosVM implemented a vhost-user front-end
-years ago. Features have been added to the spec that are not used by
-QEMU because the spec is for all front-ends and back-ends and their
-different use cases, not just QEMU.
+> 
+> Tested with Fedora 43:
+>   FDT: -M virt,acpi=off -device sbsa_gwdt
+>   ACPI: -M virt -device sbsa_gwdt
+> 
+> Signed-off-by: Igor Mammedov <imammedo@redhat.com>
+> ---
+>  hw/arm/Kconfig           |  1 +
+>  hw/arm/virt-acpi-build.c | 33 +++++++++++++++++++++++++++++++--
+>  hw/arm/virt.c            |  2 ++
+>  hw/core/sysbus-fdt.c     | 32 ++++++++++++++++++++++++++++++++
+>  hw/watchdog/sbsa_gwdt.c  |  1 +
+>  5 files changed, 67 insertions(+), 2 deletions(-)
+> 
+> diff --git a/hw/arm/Kconfig b/hw/arm/Kconfig
+> index c66c452737..1222efadd1 100644
+> --- a/hw/arm/Kconfig
+> +++ b/hw/arm/Kconfig
+> @@ -36,6 +36,7 @@ config ARM_VIRT
+>      select VIRTIO_MEM_SUPPORTED
+>      select ACPI_CXL
+>      select ACPI_HMAT
+> +    select WDT_SBSA
+>  
+>  config CUBIEBOARD
+>      bool
+> diff --git a/hw/arm/virt-acpi-build.c b/hw/arm/virt-acpi-build.c
+> index 719d2f994e..9c14b1d4d5 100644
+> --- a/hw/arm/virt-acpi-build.c
+> +++ b/hw/arm/virt-acpi-build.c
+> @@ -64,6 +64,7 @@
+>  #include "hw/virtio/virtio-acpi.h"
+>  #include "target/arm/cpu.h"
+>  #include "target/arm/multiprocessing.h"
+> +#include "hw/watchdog/sbsa_gwdt.h"
+>  
+>  #define ARM_SPI_BASE 32
+>  
+> @@ -863,6 +864,8 @@ build_gtdt(GArray *table_data, BIOSLinker *linker, VirtMachineState *vms)
+>      const uint32_t irqflags = 0;  /* Interrupt is Level triggered  */
+>      AcpiTable table = { .sig = "GTDT", .rev = 3, .oem_id = vms->oem_id,
+>                          .oem_table_id = vms->oem_table_id };
+> +    uint32_t gtdt_start = table_data->len;
+> +    Object *wdt = object_resolve_type_unambiguous(TYPE_WDT_SBSA, NULL);
+>  
+>      acpi_table_begin(&table, table_data);
+>  
+> @@ -893,10 +896,15 @@ build_gtdt(GArray *table_data, BIOSLinker *linker, VirtMachineState *vms)
+>      build_append_int_noprefix(table_data, irqflags, 4);
+>      /* CntReadBase Physical address */
+>      build_append_int_noprefix(table_data, 0xFFFFFFFFFFFFFFFF, 8);
+> +
+>      /* Platform Timer Count */
+> -    build_append_int_noprefix(table_data, 0, 4);
+> +    build_append_int_noprefix(table_data,  wdt ? 1 : 0, 4);
+>      /* Platform Timer Offset */
+> -    build_append_int_noprefix(table_data, 0, 4);
+> +    build_append_int_noprefix(table_data,
+> +        wdt ? (table_data->len - gtdt_start) +
+> +              4 + 4 + 4 /* len of this & following 2 fields to skip */
+> +            : 0, 4);
+> +
+>      if (vms->ns_el2_virt_timer_irq) {
+>          /* Virtual EL2 Timer GSIV */
+>          build_append_int_noprefix(table_data, ARCH_TIMER_NS_EL2_VIRT_IRQ, 4);
+> @@ -906,6 +914,27 @@ build_gtdt(GArray *table_data, BIOSLinker *linker, VirtMachineState *vms)
+>          build_append_int_noprefix(table_data, 0, 4);
+>          build_append_int_noprefix(table_data, 0, 4);
+>      }
+> +
+> +    /* ACPI 6.5 spec: 5.2.25.2 ARM Generic Watchdog Structure (Table 5-124) */
+5.124
+> +    if (wdt) {
+> +        PlatformBusDevice *pbus = PLATFORM_BUS_DEVICE(vms->platform_bus_dev);
+> +        SysBusDevice *sd = SYS_BUS_DEVICE(wdt);
+> +        hwaddr mmio_base = vms->memmap[VIRT_PLATFORM_BUS].base;
+> +        hwaddr rbase = mmio_base + platform_bus_get_mmio_addr(pbus, sd, 0);
+> +        hwaddr cbase = mmio_base + platform_bus_get_mmio_addr(pbus, sd, 1);
+> +        int irq = ARM_SPI_BASE + vms->irqmap[VIRT_PLATFORM_BUS] +
+> +                  platform_bus_get_irqn(pbus, sd, 0);
+> +
+> +        build_append_int_noprefix(table_data, 1 /* Type: Watchdog GT */, 1);
+> +        build_append_int_noprefix(table_data, 28 /* Length */, 2);
+> +        build_append_int_noprefix(table_data, 0, 1);  /* Reserved */
+> +        /* RefreshFrame Physical Address */
+> +        build_append_int_noprefix(table_data, rbase, 8);
+> +        /* WatchdogControlFrame Physical Address */
+> +        build_append_int_noprefix(table_data, cbase, 8);
+> +        build_append_int_noprefix(table_data, irq, 4); /* Watchdog Timer GSIV */
+> +        build_append_int_noprefix(table_data, 0, 4); /* Watchdog Timer Flags */
+level, active high, non secure
+> +    }
+>      acpi_table_end(linker, &table);
+>  }
+>  
+> diff --git a/hw/arm/virt.c b/hw/arm/virt.c
+> index cab2e21e8a..a87991b591 100644
+> --- a/hw/arm/virt.c
+> +++ b/hw/arm/virt.c
+> @@ -95,6 +95,7 @@
+>  #include "hw/cxl/cxl.h"
+>  #include "hw/cxl/cxl_host.h"
+>  #include "qemu/guest-random.h"
+> +#include "hw/watchdog/sbsa_gwdt.h"
+>  
+>  static GlobalProperty arm_virt_compat_defaults[] = {
+>      { TYPE_VIRTIO_IOMMU_PCI, "aw-bits", "48" },
+> @@ -3474,6 +3475,7 @@ static void virt_machine_class_init(ObjectClass *oc, const void *data)
+>      machine_class_allow_dynamic_sysbus_dev(mc, TYPE_RAMFB_DEVICE);
+>      machine_class_allow_dynamic_sysbus_dev(mc, TYPE_UEFI_VARS_SYSBUS);
+>      machine_class_allow_dynamic_sysbus_dev(mc, TYPE_ARM_SMMUV3);
+> +    machine_class_allow_dynamic_sysbus_dev(mc, TYPE_WDT_SBSA);
+>  #ifdef CONFIG_TPM
+>      machine_class_allow_dynamic_sysbus_dev(mc, TYPE_TPM_TIS_SYSBUS);
+>  #endif
+> diff --git a/hw/core/sysbus-fdt.c b/hw/core/sysbus-fdt.c
+> index 89d0c46445..76aa1bc579 100644
+> --- a/hw/core/sysbus-fdt.c
+> +++ b/hw/core/sysbus-fdt.c
+> @@ -36,6 +36,7 @@
+>  #include "hw/display/ramfb.h"
+>  #include "hw/uefi/var-service-api.h"
+>  #include "hw/arm/fdt.h"
+> +#include "hw/watchdog/sbsa_gwdt.h"
+>  
+>  /*
+>   * internal struct that contains the information to create dynamic
+> @@ -118,6 +119,36 @@ static int add_uefi_vars_node(SysBusDevice *sbdev, void *opaque)
+>      return 0;
+>  }
+>  
+> +static int add_sbsa_gwdt_node(SysBusDevice *sbdev, void *opaque)
+> +{
+> +    PlatformBusFDTData *data = opaque;
+> +    PlatformBusDevice *pbus = data->pbus;
+> +    const char *parent_node = data->pbus_node_name;
+> +    void *fdt = data->fdt;
+> +    uint64_t cbase, rbase;
+> +    char *nodename;
+> +    int irq;
+> +
+> +    cbase = platform_bus_get_mmio_addr(pbus, sbdev, 1);  /* control frame */
+> +    rbase = platform_bus_get_mmio_addr(pbus, sbdev, 0);  /* refresh frame */
+> +    irq = platform_bus_get_irqn(pbus, sbdev, 0);
+> +
+> +    nodename = g_strdup_printf("%s/watchdog@%" PRIx64, parent_node, cbase);
+> +    qemu_fdt_add_subnode(fdt, nodename);
+> +
+> +    qemu_fdt_setprop_string(fdt, nodename, "compatible", "arm,sbsa-gwdt");
+> +    qemu_fdt_setprop_cells(fdt, nodename, "reg",
+> +                           cbase, SBSA_GWDT_CMMIO_SIZE,
+> +                           rbase, SBSA_GWDT_RMMIO_SIZE);
+> +    qemu_fdt_setprop_cells(fdt, nodename, "interrupts",
+> +                           GIC_FDT_IRQ_TYPE_SPI, data->irq_start + irq,
+> +                           GIC_FDT_IRQ_FLAGS_LEVEL_HI);
+> +    qemu_fdt_setprop_cell(fdt, nodename, "timeout-sec", 30);
+> +
+> +    g_free(nodename);
+> +    return 0;
+> +}
+> +
+>  static int no_fdt_node(SysBusDevice *sbdev, void *opaque)
+>  {
+>      return 0;
+> @@ -140,6 +171,7 @@ static const BindingEntry bindings[] = {
+>      TYPE_BINDING(TYPE_ARM_SMMUV3, no_fdt_node),
+>      TYPE_BINDING(TYPE_RAMFB_DEVICE, no_fdt_node),
+>      TYPE_BINDING(TYPE_UEFI_VARS_SYSBUS, add_uefi_vars_node),
+> +    TYPE_BINDING(TYPE_WDT_SBSA, add_sbsa_gwdt_node),
+>      TYPE_BINDING("", NULL), /* last element */
+>  };
+>  
+> diff --git a/hw/watchdog/sbsa_gwdt.c b/hw/watchdog/sbsa_gwdt.c
+> index acb970e8b3..c4dd8005b7 100644
+> --- a/hw/watchdog/sbsa_gwdt.c
+> +++ b/hw/watchdog/sbsa_gwdt.c
+> @@ -285,6 +285,7 @@ static void wdt_sbsa_gwdt_class_init(ObjectClass *klass, const void *data)
+>      dc->realize = wdt_sbsa_gwdt_realize;
+>      device_class_set_legacy_reset(dc, wdt_sbsa_gwdt_reset);
+>      dc->hotpluggable = false;
+> +    dc->user_creatable = true;
+>      set_bit(DEVICE_CATEGORY_WATCHDOG, dc->categories);
+>      dc->vmsd = &vmstate_sbsa_gwdt;
+>      dc->desc = "SBSA-compliant generic watchdog device";
+Thanks
 
-I'm fine with moving the spec to a separate project if it makes
-day-to-day work easier, but it's not accurate to portray vhost-user and
-the work that has been done by people from many projects in this way.
+Eric
 
-> There are also concrete technical friction points. Let me share some
-> examples from rust-vmm:
->=20
-> rust-vmm SHMEM PR https://github.com/rust-vmm/vhost/pull/251
-> We had to wait for QEMU spec acceptance before merging the
-> implementation. The spec update was delayed with the comment
-> "should get picked for the next round" after QEMU freeze.
-
-I am happy to merge a vhost-user spec PR into qemu.git during the freeze
-if other projects need the spec change.
-
-> rust-vmm PR https://github.com/rust-vmm/vhost/pull/339 : was
-> kept as draft "waiting for QEMU spec changes to be finalized."
-> It was eventually merged when they decided the spec was
-> "stable enough" even though QEMU hadn't finalized it yet,
-> which felt awkward.
-
-In this particular case the QEMU patch series could have been split into
-just the spec change and the QEMU implementation with a note in the
-cover letter requesting to merge the spec change right away. I don't
-think anything was fundamentally blocking the spec change, although
-maintainers might be skeptical about rushing something that is still
-work in progress. There was a lack of communication here.
-
-> When multiple independent implementations wait on one
-> project's release cycles, it raises the question of whether the
-> governance model matches the ecosystem reality.
-
-If the experience with QEMU's release cycle is the main point of
-friction, then that is easy to solve by merging spec changes even during
-freeze.
-
->=20
-> > Why is the current system not neutral and how will the new system solve
-> > that?
->=20
-> For example the virtio-spec has OASIS governance where changes
-> are proposed and merged independently of any implementation's release
-> cycle. Whether that's the right model for vhost-user is worth discussing.
->
-> > You bring up project neutrality and a model where Michael is no longer
-> > the sole maintainer. It will be necessary to propose a concrete roadmap
-> > and also to explain the concerns about neutrality more so it's clear
-> > they won't be an issue anymore in the future system.
->=20
-> You're right that we need a concrete roadmap before making changes.
-> More reason to discuss in the BoF - to work this out with the people
-> actually doing the work: you, Michael, Albert, and others who've been
-> deeply involved. Maybe in the end the solution might be to "improve
-> QEMU's process" (like Michael's submodule suggestion) rather than
-> "move the spec." or something else? that's what we need to figure out
-> together.
->=20
-> Would folks here be interested in joining the discussion at Plumbers?
-
-Plumbers in October? How about scheduling a video call in the next few
-days instead of waiting. That will allow anyone to attend.
-
-Stefan
-
---DetFCX6AZnDHq900
-Content-Type: application/pgp-signature; name=signature.asc
-
------BEGIN PGP SIGNATURE-----
-
-iQEzBAEBCgAdFiEEhpWov9P5fNqsNXdanKSrs4Grc8gFAmohp8UACgkQnKSrs4Gr
-c8gICggAmfO31ycvI1saRRHQ8FbegJUjYWapIIaTNsyfKsiRkbF8eHyFSE8n5yHk
-63/8TepFvCR96RWl0vs3g3iNenamRF6Entd7RsgmuLF+ZIYuw7l8a9TebV8niit7
-cJ7gy7k7si2TSkoD+GcLhDZTQQQOLrO1tbTnYXiZhRoR0+Ja2hUnXQxZY8puL4ES
-eNV/5XeXI3UFLZJmaQ4lL4eXl+kvFVXMOk7I8tfScY5KBTxEALJx5nFvcpwxRZUn
-NF60X86/jcXqEJFKy36JCZkxKEYG1GXa9m2fIflLxlZofbDG/HdmIeZop3ADZbE2
-77yByygMc2FyUBlUDcPHuozmYB1AHg==
-=pPYA
------END PGP SIGNATURE-----
-
---DetFCX6AZnDHq900--
 
 
