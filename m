@@ -4,96 +4,96 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D7C83CD6E4A
-	for <qemu-devel@archiver.kernel.org>; Thu,  4 Jun 2026 14:02:26 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1BF7FCD6E4A
+	for <qemu-devel@archiver.kernel.org>; Thu,  4 Jun 2026 14:03:42 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wV8dG-0002PS-3W; Thu, 04 Jun 2026 10:01:14 -0400
+	id 1wV8fH-0003B5-Vx; Thu, 04 Jun 2026 10:03:21 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <stefanha@gmail.com>)
- id 1wV8d2-0002OB-1u
- for qemu-devel@nongnu.org; Thu, 04 Jun 2026 10:01:00 -0400
-Received: from mail-ed1-x52b.google.com ([2a00:1450:4864:20::52b])
+ id 1wV8f9-00039Q-52
+ for qemu-devel@nongnu.org; Thu, 04 Jun 2026 10:03:13 -0400
+Received: from mail-ed1-x530.google.com ([2a00:1450:4864:20::530])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <stefanha@gmail.com>)
- id 1wV8cz-00027W-US
- for qemu-devel@nongnu.org; Thu, 04 Jun 2026 10:00:59 -0400
-Received: by mail-ed1-x52b.google.com with SMTP id
- 4fb4d7f45d1cf-68cc6c7df99so1038230a12.1
- for <qemu-devel@nongnu.org>; Thu, 04 Jun 2026 07:00:57 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1780581656; cv=none;
+ id 1wV8f7-000326-Ev
+ for qemu-devel@nongnu.org; Thu, 04 Jun 2026 10:03:10 -0400
+Received: by mail-ed1-x530.google.com with SMTP id
+ 4fb4d7f45d1cf-68ae265815aso1390619a12.1
+ for <qemu-devel@nongnu.org>; Thu, 04 Jun 2026 07:03:08 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1780581788; cv=none;
  d=google.com; s=arc-20240605;
- b=elvDvGsUg3j1TNN0+UZT9qxMKTwKe3jwW+IvBCRecWhXJux8JeQhEMyURbkayq8vtL
- h2FZkueR1vvZ8sXgVeRy9u7aFLCooQZB9BkGMkXL59KJ4SzogEJtoMknYzzbfVSKvkpQ
- Jo/ulX3PIV0wJeFDzgroNJCB5GKvlc5VCAy2nVzI1orTxw0RD57fOJNxE2tshzHiLGBT
- E6qIO5uBF++uTmTNtckvJ63pgS+P1J74iRmiMxNTKwKCMI8r31pBnUMWI0p8vqxK4kq/
- k+zO+e2/WW27kshkKAeF0Ns2J2oqZJtYzK8h7FewAQSQ/NBMxWJI7ydLXa9/Q4y8jUJy
- LmPg==
+ b=Q5eqCjltFftISHs+x0oJbQjoJYBAJJJgt5F7fV/OMkJTPf/NYb+Hteuwy9daVUQkjn
+ 38ci8rB0i9aDceTT0ijRq6MWUZrL2isTII5fE6I/h3HASN0//8a2uT5dBq948Qc6rN05
+ zfHSI+xshZ8FhODasxsl8dIcuvriRJcNcYm5uJ+vAT9rtrM24hTA2jclCQOMC2xXOvWk
+ 8QybAzJi69Fdt+UirI0XzINkGiS3/OnGor9AoFT0GLcl/eqMVsMuoqWm2+86lNu7sTMV
+ RnyqSgGw/7/96V8uIJ7+nK4FJtJF5Y1gNid6WOivq+Ju5K1nCESM/kP785I4RnMgziDp
+ jQvQ==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
  s=arc-20240605; 
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:dkim-signature;
- bh=6fEG4lkTc/kOHovGjwVdPULfG+0u37KPbhewkHGQ8wU=;
- fh=I4bPGmFuSJAUDPPBcEbiWZt2Bp8JKDYHn7NU1zWWO5c=;
- b=e+4FBApy78guG+HqMcpov/GEHEhCxl1WTfp2zoaB6Ggmo01NhpgtefOB6dr9nPFBet
- eq++oMtayNlZ/dxjQTVibwcSK9kWoavcD46thexAJ60POg2tUfkSbm5bs6gxIrRExqC2
- uGZj9EkQNp9yzH1KemngOfvuQdP+noQ9THsbCQ7dz6QRdrI7TlPT3ThCV8PTalnDFRtW
- Hmr+rC6gT0OTW4Uc21kX3H8LWJMr0bm+eUgWuiflfqgWMif4tahLR17zcar+OtI4WLBh
- fzaE0uZqdt5wfBzpljqynceV37TYRWmmt0z6Fpe7rioZjMfnGD28LHwDuBGSfXIEX7qr
- 2EEg==; darn=nongnu.org
+ bh=DRKQ5csxONxEAsGj3yGZlwH1WMIq0MUto8HiPFP77j4=;
+ fh=VCry32mHH7hkgQVtJ8m+xMvReaGCR7EOuBssnL7YkvU=;
+ b=QNWJZp6xfXmIVEjmrTJBsWb4meRO5xLyLECt/O2P+GhEjT7m6MWn/4xq8dBF6hDZxj
+ 8QhjRisXylFC0FfkbQMD3CahOw2/S9+OgBK4+15Uhk/rRSkok33zPsqniG1kXtb+Oecv
+ r3tGM/emWGd4p5ZKBwHGeZsS4AKu1IZa7VKDvmGuRwHXXUPeEZsdAuQPuF9fDuXzaVl+
+ kRX+gTS+1JTHoSxAkbIDEM9r56CBC/q7VVfA0F8AgsTdk1gRX9v6LwduE1qgzSsr3KmJ
+ 5Lbb8mQ1t9sT/jfGB6V9ktNlHWx2/auxkMkvJswQ+7YdsbwGcSHTMfUcumAhu8oD0kL4
+ yDYg==; darn=nongnu.org
 ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1780581656; x=1781186456; darn=nongnu.org;
+ d=gmail.com; s=20251104; t=1780581788; x=1781186588; darn=nongnu.org;
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:from:to:cc:subject:date
  :message-id:reply-to;
- bh=6fEG4lkTc/kOHovGjwVdPULfG+0u37KPbhewkHGQ8wU=;
- b=sAkF9Z3FzyWzEirFABOCnz2SbnqhBdxCDXrB66kfbHp1dtlC/G94g20DkOAEyI0oWh
- DurL/cSFr9Wnm2xFvTYmWQFCeSP7fjtuV+SIyhTR9H0zvDLa2l9s/5z1ANFMsmCcjJ2g
- ICsGFM5H37Olk5qCBJpv9qBzPIFDJxe0TCUWNL+emFwC4mhUcCyAi9HFdSLaUDJvm8ER
- jJE8h0cNHUAE8J1oAH+yVneQtxt+a7i+kUMbkS9DjTrpBfBNE0dq0yE4tcJbPP9Ub6qf
- QRrTY46OXj3E1RfenPEmNhGJL7MivkLoCTzK7vkKlMX3ItIr1/BfiPa+Tsd9yPACDISf
- U3/w==
+ bh=DRKQ5csxONxEAsGj3yGZlwH1WMIq0MUto8HiPFP77j4=;
+ b=b7vPRs9cV+q6vZjy/dgD9A63F+y75zhfWMFNN05l/jQrHNLGoHlMPZPdWeQI2LNF+J
+ 7mAKHbtzNdU1a1czAfhDKpvigSUlOLl4jOZ+w7OPvOARXy5Egdh/xNvUvn4P62EpVQF0
+ ecGHfxOj/omfhFsW98MIF2GDVS19PdWeTr+MkTRqtDXEvfdRQE88SueAY5QsceKZM566
+ ihTL0MPz+o3E7PKmj864o79HRtY2rKrm/wZdyiQ46TbBmlE33krAfZWcpfCknZUkivg5
+ JX7emA3L2Fh/NuCb8y+yKznQ9bhrxl44ja6gyZRIoQx3pqc0ZMlzb3YN7jiPKDtIYV5R
+ puwg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1780581656; x=1781186456;
+ d=1e100.net; s=20251104; t=1780581788; x=1781186588;
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to;
- bh=6fEG4lkTc/kOHovGjwVdPULfG+0u37KPbhewkHGQ8wU=;
- b=g5t4RoB177ZLNyfplwJkUpgEzkzNhy22F86tbqvRedtG2GOBjkjdq67QY6NVdmRbcW
- FiOlXQJd2YxkuqKnlgjn8roEB8FDM27mpL5MyJTBNwg/azvKgLpQB0y9EjJ9l082vP40
- reiiO9lUb53B96ECXL+PySm0sOeh5cIkTRV7NRbueNQLDmHzw0AbysJSRtaAauXVoDwg
- KbgQRkIMusTwYQWF1R+wvr7HgqA/E3LGTp5utk+blXAun3Lh+NT2G0Zw1MriW7k0ZjfU
- xItgo1ozA1X+aeJv4DwVOgVo0gqLKfUbmQYzswG2vIlX6qAvpELgDW0Hilz0YxNHYSXj
- z8wg==
-X-Gm-Message-State: AOJu0YwfGcB+oDUEkv1DL7AhNB6UOzfK94sneC8JlNhCIAkvBPGPqUsU
- CHPVTqg2tt162Hd+6VL8eDutryRZzvHCWipY3q+E2HpXWoczeZCFZC+g1TLehX1TY2Aeyk+B/u7
- 0211BcjnGWMUs2kMLbcVwBZZq8pI8DdA=
-X-Gm-Gg: Acq92OGOW/4WitQov/ds0q1U13yoILleGWwRMQbDIKY8iZ1ws7WdNpVZ9IqRhbLSRuQ
- PC+/W1we9K2H4TDbNgdbp80vw6eaq1tG2RhjdNvCtwvvEAQzQ7CzB+FDYFuaq5m8HMQpAQ5kegN
- TGu66gBz7t/JS9Dp5V9ixGOWcPSeJaLavtXJUkrpXBZeeAMhmZXVMs60vW3kpToQscgwRJOMaZS
- 0QdCGJa96WIAbFs2fgJ7NwGmae/IKK/OyrW4vH2rphS8pFQD7mRZzqFlS8OZBtVffTmG3AqBIOG
- OhOqtk8zih7N5Raj63PEF+ylzFhjCKuVtOtg5xhxfLh84mykR18V
-X-Received: by 2002:a05:6402:1f4f:b0:66e:cf8d:6970 with SMTP id
- 4fb4d7f45d1cf-68e711f6842mr4155314a12.20.1780581655854; Thu, 04 Jun 2026
- 07:00:55 -0700 (PDT)
+ bh=DRKQ5csxONxEAsGj3yGZlwH1WMIq0MUto8HiPFP77j4=;
+ b=iMOksTYWthpvDpKtLUHmpD07B/1Hjzta7SeGbjFlKDOLlE6dakCZ9w6+bCe3BImokI
+ XjYMcCNwmbN1muznA2tjMWXVxktD+MssiV57TQchTME9nAu2gcUgpKKu8Xa36UgzIfi7
+ ePtdXfERqIBMzTk/PgvhU9n0RWVpKJRstG3jrYxU1HPoxr/pLhwoOBGdxbhVPqFwSKmC
+ XO1wUWNDatvf1VCnY3vswCrc9WMkgYsghKGaQXtPycg5VdpsMmYslHAI2xGMY5VXEe4+
+ SL/OC1j/eRXpFVJDjfbHspx0AIJozHTaX7Qos6nnh7uDPnIwiQgKVvToGaLzL8R5U7is
+ EowA==
+X-Gm-Message-State: AOJu0YyD0gxNkqONVk0g83pNauKsSQDVHsVIFs3ug54RARfJaFlzGIDt
+ +mvXw9FTS2Bn2BW18QFqRc9PVOkqBa0eCvarUzRYN7UNgi5F4UvkO7WqNao0diDa0CXBhCEChRa
+ taW/IDk3eve8YFF5P4HFRWjWYkvUulTU=
+X-Gm-Gg: Acq92OH2I9Aq2Fx6ZosPfoqZ62xJ7mzSWlEKIcd4STEi8Vjcwp0aOQ+QP2jjrxo9qOd
+ YiCyqCtM0+c6ZImKCmtKmt8M+o+f5+3QXHX7wlA56l8xRiKDU+pV8ymYYbOVaYiSYLv59Uw91Qz
+ gd0WUc+j1AM9wFr7TQ4pe3ITC/DRGklTTgMAf9bWyUMf1LGF5Z6x6Z4qjQDfMM/d+ZLutCkEVJc
+ KhU76o6bBvuuijYz+CEd16KrtcwRUjoPCLecrTF1IE7sCAvSjLvuv4TY3+vmZ6thvWY+Xyswsvj
+ I4fuS7GrYXBh+TTdNe0xGHEYqMKMw/QwAYDlC5SwukrV07EWcyOd
+X-Received: by 2002:a05:6402:e9f:b0:687:ece2:aac6 with SMTP id
+ 4fb4d7f45d1cf-68e713e302fmr4097041a12.15.1780581787345; Thu, 04 Jun 2026
+ 07:03:07 -0700 (PDT)
 MIME-Version: 1.0
 References: <20260603223430.3311916-1-connorkite@gmail.com>
- <20260603223430.3311916-3-connorkite@gmail.com>
-In-Reply-To: <20260603223430.3311916-3-connorkite@gmail.com>
+In-Reply-To: <20260603223430.3311916-1-connorkite@gmail.com>
 From: Stefan Hajnoczi <stefanha@gmail.com>
-Date: Thu, 4 Jun 2026 10:00:43 -0400
-X-Gm-Features: AVHnY4J-BwNveI_Xzie0uSJiGXTQgRTgmZ2wfY-WAt9eoALe_uPL0A87C_IcVuU
-Message-ID: <CAJSP0QUX+9mkuU1YQYwKbWwpMTuisy8Lbko-oL-fFZZusAF3nw@mail.gmail.com>
-Subject: Re: [PATCH 2/2] vhost-user: Add memory-isolation qdev property
-To: ConKite <connorkite@gmail.com>
-Cc: qemu-devel@nongnu.org, hreitz@redhat.com
+Date: Thu, 4 Jun 2026 10:02:54 -0400
+X-Gm-Features: AVHnY4IYL9xqBWnO6foyS0QmMUJfnpLH4pT4QKZOhZQXRHQpI7wc7Zvp7V0d4Hk
+Message-ID: <CAJSP0QVYq1PL2s1YeS7WW46BC+7zkCe85Foh-Q-jjB01B3Nqgg@mail.gmail.com>
+Subject: Re: [PATCH 0/2] vhost-user: Add and consolidate qdev properties
+To: "Michael S. Tsirkin" <mst@redhat.com>
+Cc: qemu-devel@nongnu.org, hreitz@redhat.com, ConKite <connorkite@gmail.com>, 
+ Alex Bennee <alex.bennee@linaro.org>
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::52b;
- envelope-from=stefanha@gmail.com; helo=mail-ed1-x52b.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::530;
+ envelope-from=stefanha@gmail.com; helo=mail-ed1-x530.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -116,37 +116,61 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, Jun 3, 2026 at 6:35=E2=80=AFPM ConKite <connorkite@gmail.com> wrote=
+On Wed, Jun 3, 2026 at 6:34=E2=80=AFPM ConKite <connorkite@gmail.com> wrote=
 :
 >
-> In support of future work to add a memory isolation mode to vhost-user de=
-vices, a
-> qdev property, "memory-isolation", is added to all vhost-user devices. Th=
-is is
-> simply a bool representing whether the mode is active or not.
+> [1/2] Consolidate chardev qdev property definitions in the
+> VHostUserBase family of devices.  Now, the definition only takes place
+> within VHostUserBase initialization and is inherited by children.
+
+This patch can be merged right away. It's a cleanup for vhost-user-base.
+
 >
-> Signed-of-by: Connor Kite <connorkite@gmail.com>
+> [2/2] In support of future work to add a memory isolation mode to vhost-u=
+ser
+> devices, a qdev property, "memory-isolation", is added to all vhost-user
+> devices.  This is simply a bool representing whether the mode is active
+> or not.
+
+This patch will need to wait until the memory isolation work is
+completed since the qdev property currently does nothing.
+
 >
+> These patches are grouped together as they both touch on qdev properties
+> held in common by all vhost-user devices.  Taken together, these patches
+> ensure that commmon properties are defined in the same location and way.
+>
+> Signed-off-by: Connor Kite <connorkite@gmail.com>
 > ---
->  hw/block/vhost-user-blk.c            | 1 +
->  hw/display/vhost-user-gpu.c          | 1 +
->  hw/scsi/vhost-user-scsi.c            | 1 +
->  hw/virtio/vhost-user-base.c          | 3 ++-
->  hw/virtio/vhost-user-fs.c            | 1 +
->  hw/virtio/vhost-user-scmi.c          | 1 +
->  hw/virtio/vhost-user-vsock.c         | 1 +
->  include/hw/virtio/vhost-user-base.h  | 1 +
->  include/hw/virtio/vhost-user-blk.h   | 1 +
->  include/hw/virtio/vhost-user-fs.h    | 1 +
->  include/hw/virtio/vhost-user-scmi.h  | 1 +
->  include/hw/virtio/vhost-user-vsock.h | 1 +
->  include/hw/virtio/virtio-gpu.h       | 1 +
->  include/hw/virtio/virtio-scsi.h      | 1 +
->  14 files changed, 15 insertions(+), 1 deletion(-)
-
-This patch can be applied after the memory isolation internals are
-merged in the future. For now it should stay out-of-tree because it's
-a user-visible option that is currently unimplemented.
-
-Reviewed-by: Stefan Hajnoczi <stefanha@redhat.com>
+> ConKite (2):
+>   vhost-user: Consolidate chardev property definitions
+>   vhost-user: Add memory-isolation qdev property to vhost-user devices
+>
+>  hw/block/vhost-user-blk.c            |  1 +
+>  hw/display/vhost-user-gpu.c          |  1 +
+>  hw/scsi/vhost-user-scsi.c            |  1 +
+>  hw/virtio/vhost-user-base.c          | 10 ++++++++++
+>  hw/virtio/vhost-user-fs.c            |  1 +
+>  hw/virtio/vhost-user-gpio.c          |  4 ----
+>  hw/virtio/vhost-user-i2c.c           |  5 -----
+>  hw/virtio/vhost-user-input.c         |  5 -----
+>  hw/virtio/vhost-user-rng.c           |  5 -----
+>  hw/virtio/vhost-user-rtc.c           |  4 ----
+>  hw/virtio/vhost-user-scmi.c          |  1 +
+>  hw/virtio/vhost-user-snd.c           |  1 -
+>  hw/virtio/vhost-user-spi.c           |  5 -----
+>  hw/virtio/vhost-user-test-device.c   |  1 -
+>  hw/virtio/vhost-user-vsock.c         |  1 +
+>  include/hw/virtio/vhost-user-base.h  |  1 +
+>  include/hw/virtio/vhost-user-blk.h   |  1 +
+>  include/hw/virtio/vhost-user-fs.h    |  1 +
+>  include/hw/virtio/vhost-user-scmi.h  |  1 +
+>  include/hw/virtio/vhost-user-vsock.h |  1 +
+>  include/hw/virtio/virtio-gpu.h       |  1 +
+>  include/hw/virtio/virtio-scsi.h      |  1 +
+>  22 files changed, 23 insertions(+), 30 deletions(-)
+>
+> --
+> 2.43.0
+>
 
