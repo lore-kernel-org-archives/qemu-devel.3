@@ -4,119 +4,116 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 40EA4CD6E6D
-	for <qemu-devel@archiver.kernel.org>; Thu,  4 Jun 2026 15:33:51 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 22C6FCD6E4A
+	for <qemu-devel@archiver.kernel.org>; Thu,  4 Jun 2026 15:34:32 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wVA4h-0007DA-2R; Thu, 04 Jun 2026 11:33:39 -0400
+	id 1wVA5I-0007Wd-2i; Thu, 04 Jun 2026 11:34:16 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@kaod.org>) id 1wVA4P-0007C4-E3
- for qemu-devel@nongnu.org; Thu, 04 Jun 2026 11:33:25 -0400
-Received: from smtpout1.mo528.mail-out.ovh.net ([46.105.34.251])
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1wVA5H-0007WO-Ez
+ for qemu-devel@nongnu.org; Thu, 04 Jun 2026 11:34:15 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@kaod.org>) id 1wVA4L-00069H-TX
- for qemu-devel@nongnu.org; Thu, 04 Jun 2026 11:33:21 -0400
-Received: from director3.derp.mail-out.ovh.net
- (director3.derp.mail-out.ovh.net [152.228.215.222])
- by mo528.mail-out.ovh.net (Postfix) with ESMTPS id 4gWT9N02N8z5vvS;
- Thu,  4 Jun 2026 15:33:11 +0000 (UTC)
-Received: from director3.derp.mail-out.ovh.net
- (director3.derp.mail-out.ovh.net. [127.0.0.1])
- by director3.derp.mail-out.ovh.net (inspect_sender_mail_agent) with SMTP
- for <jamin_lin@aspeedtech.com>; Thu,  4 Jun 2026 15:33:11 +0000 (UTC)
-Received: from mta10.priv.ovhmail-u2.ea.mail.ovh.net (unknown [10.110.188.244])
- by director3.derp.mail-out.ovh.net (Postfix) with ESMTPS id 4gWT9M27Lhz5vLS;
- Thu,  4 Jun 2026 15:33:11 +0000 (UTC)
-Received: from kaod.org (unknown [10.1.6.1])
- (Authenticated sender: clg@kaod.org)
- by mta10.priv.ovhmail-u2.ea.mail.ovh.net (Postfix) with ESMTPSA id
- 8CB6C1923063; Thu,  4 Jun 2026 15:33:10 +0000 (UTC)
-Authentication-Results: garm.ovh; auth=pass
- (GARM-96R001c11afcf0-67ac-4123-b87b-69f328dfc0f8,
- CF95B39D1A067B05C916C5BD8336C8853742392C) smtp.auth=clg@kaod.org
-X-OVh-ClientIp: 82.64.250.170
-Message-ID: <6b932f59-7d34-4931-a68d-56e96030e67d@kaod.org>
-Date: Thu, 4 Jun 2026 17:33:09 +0200
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1wVA5F-0006Rj-Kk
+ for qemu-devel@nongnu.org; Thu, 04 Jun 2026 11:34:15 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1780587251;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=LXuw1R4fWhgfkdPROp692WbisqAyHIQXKwa05SltI1w=;
+ b=jLu9LWnR39UN2eDpF91fDWM5umV/rJZv0fD3MrhnJcNDFhQ2a5ijVUtHrwLIPzNcaOt7Eb
+ sv0dMcnfw76XfY9IrgO66jIs61QBWScFZ/nYGuz1bq1WhpY/QRR9slvFkB3SkIwBgd6Qpy
+ eMJ9v0gNLkf6CR5pwUpz8qX9QFf4yJA=
+Received: from mail-qk1-f199.google.com (mail-qk1-f199.google.com
+ [209.85.222.199]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-593-DzwWj20BPcC8rA40iKHjCQ-1; Thu, 04 Jun 2026 11:34:08 -0400
+X-MC-Unique: DzwWj20BPcC8rA40iKHjCQ-1
+X-Mimecast-MFC-AGG-ID: DzwWj20BPcC8rA40iKHjCQ_1780587248
+Received: by mail-qk1-f199.google.com with SMTP id
+ af79cd13be357-91571300242so454717285a.1
+ for <qemu-devel@nongnu.org>; Thu, 04 Jun 2026 08:34:08 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=redhat.com; s=google; t=1780587247; x=1781192047; darn=nongnu.org;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+ bh=LXuw1R4fWhgfkdPROp692WbisqAyHIQXKwa05SltI1w=;
+ b=gy5sT7rDnP8Pj4n8mucc/TnTMEEaCNI5sxzXsOfAXqrt1WipCO4iuWuoByAK4MtlIp
+ srD0TkYEcndg36FSc+MO2SVZP6yOSTFjbcZnfEf/K4yrs44/qnWi+gRmUt10YEAGxdyS
+ N6r9P09LMCCaOboClqSQFFrp7UyR8N4W1JdPu2RiVDMInNY7ATGcjPFGWNf+Jvz0FBWQ
+ cPd32Sm/b2HDhqpE38XD2qT+zD7dh2H/pSCc+KGyjyvx1vX5T0cDtWuxWDXgJ/TGiJ0d
+ wqFfbuoy95521yj9a/JEtEUD8u97cjWVbMAbAFLv/YhulHJTSgMJIGeNvq1WuryLc0V+
+ SLBA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1780587247; x=1781192047;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=LXuw1R4fWhgfkdPROp692WbisqAyHIQXKwa05SltI1w=;
+ b=bwQeq7RtB0dmnjVaAyvMGICq+hCmR0F6gEmUn5ODLsaO2TE8Ps/KC0aGir4IbgYRiF
+ TvnN5RETJFAs/kI3F4bSTTin8jx7jaDg19eH0cIulfu6IByE4D69OVXwGXIfCvVKIwA4
+ H3zF80FX/9xrW5HN9eBMLBCM1U0Vh1tqzlqCF9CEY6pJlB4IeFwyiGslQRsxRKwWZSX0
+ 3nUoG029o/GyOWHEQ4jY5bnbzE8cdf1DwbyqMT4yYZgorOXJ7ycahKLw/OlAggssa9yA
+ Fvp+zR9FJF9CflqqXCszi2bCiN8lVur0xp5a6Ho5sfHj38001qBMuBF+kE3ivNbZHPU2
+ TWAQ==
+X-Forwarded-Encrypted: i=1;
+ AFNElJ9EAeBzZi3a5Ico1uqb9qIncikegpyxovlkWUzz6vqegSOIit/4LrszKc9kByKNPNH57j49lvrGfPg5@nongnu.org
+X-Gm-Message-State: AOJu0YxB7/pqRrOrC/eS+Nus4usLkeu3Z9rbsc54OiMZP6KtqyMv5tzs
+ jwXayf+Xud0kKbe2q88upX8S/8+hM36EDdJxehqffkalbG21f1Ck8ZWAPi1zV2RCJeyQdYAFjwS
+ hujcmTQFr9S4HRE9Da50kWQ/0uxe+r6hBWcG27mH6BdffICkaIjiSZinG
+X-Gm-Gg: Acq92OEugzHFMiaEyDFYApM4mCYe/94JbL8XR4t+8AhH52HmJc7IfP8Pkll0FSkpYGx
+ jSdAavArBXr/zeyXOHY55aC/fn34ks6+8Kq5aNQ0B61xCBC7dJM2fMHtzO4BKjZ9Tq8Vr+lCGTx
+ iwtChVF30CDCKXdSjs+DCrYpSx2yzh1dpdAGdMItW1UeLAOBJWf0BRFa58kJD793a9ooAjbPhbV
+ r/ES9oMb9h1eG0h2L33EMW/3E0DYGvWNLbw4mRBlWfNN+G0Tscp+5xbya0TuqtrRAib/Aq8ONWq
+ ge6Vy8Zsx5POJgUI1yjSXNqUZ8x4FcqCJ8haRSPuDuEbhivVJ5H+AalFs3Gacq/RWTzVo+SUDvQ
+ 9ALHAOftY06Gt8wIEvuq/Kalokg==
+X-Received: by 2002:a05:620a:3195:b0:911:dfb6:d89f with SMTP id
+ af79cd13be357-9159ae66cdbmr645004585a.4.1780587247497; 
+ Thu, 04 Jun 2026 08:34:07 -0700 (PDT)
+X-Received: by 2002:a05:620a:3195:b0:911:dfb6:d89f with SMTP id
+ af79cd13be357-9159ae66cdbmr645000385a.4.1780587246976; 
+ Thu, 04 Jun 2026 08:34:06 -0700 (PDT)
+Received: from x1.local ([142.189.10.167]) by smtp.gmail.com with ESMTPSA id
+ af79cd13be357-9158a40d566sm600669385a.47.2026.06.04.08.34.04
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Thu, 04 Jun 2026 08:34:05 -0700 (PDT)
+Date: Thu, 4 Jun 2026 11:34:04 -0400
+From: Peter Xu <peterx@redhat.com>
+To: Mark Cave-Ayland <mark.caveayland@nutanix.com>
+Cc: Fabiano Rosas <farosas@suse.de>, qemu-devel@nongnu.org,
+ Paolo Bonzini <pbonzini@redhat.com>, Mark Kanda <mark.kanda@oracle.com>,
+ "Michael S . Tsirkin" <mst@redhat.com>,
+ Markus Armbruster <armbru@redhat.com>, Eric Blake <eblake@redhat.com>,
+ "Maciej S. Szmigiero" <maciej.szmigiero@oracle.com>,
+ Jason Wang <jasowang@redhat.com>, Ben Chaney <bchaney@akamai.com>,
+ Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
+Subject: Re: [PATCH RFC 1/2] migration/vl: Allow set parameters with
+ -incoming config:*
+Message-ID: <aiGa7D2s7VlVowFO@x1.local>
+References: <20260528212947.368132-1-peterx@redhat.com>
+ <20260528212947.368132-2-peterx@redhat.com>
+ <87pl2ftc12.fsf@suse.de> <ahmrcVkOWW5iwozk@x1.local>
+ <87cxyetbc4.fsf@suse.de> <ah36ZhBP2TweYhg0@x1.local>
+ <87zf1d6p24.fsf@suse.de>
+ <12cf9760-831a-410c-b8dd-a9bc6befbae3@nutanix.com>
+ <aiBOg66Txxwv6w3I@x1.local>
+ <0ec66128-d2f0-49e8-b1e7-5602b3cd662f@nutanix.com>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 0/3] hw/i3c: fix DW-I3C FIFO depth advertisement
-To: Jithu Joseph <jithu.joseph@oss.qualcomm.com>, jamin_lin@aspeedtech.com,
- komlodi@google.com
-Cc: nabihestefan@google.com, philmd@linaro.org, qemu-devel@nongnu.org
-References: <20260529014034.864722-1-jithu.joseph@oss.qualcomm.com>
- <20260604000734.1094382-1-jithu.joseph@oss.qualcomm.com>
- <4696cf03-08ad-4de4-b782-4d5c253b2cef@kaod.org>
- <3a076897-ee9f-4422-8daf-ea44223eab59@oss.qualcomm.com>
-Content-Language: en-US, fr
-From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>
-Autocrypt: addr=clg@kaod.org; keydata=
- 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
-In-Reply-To: <3a076897-ee9f-4422-8daf-ea44223eab59@oss.qualcomm.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-x-ovh-tracer-id: 11148379403761134614
-X-VR-SPAMSTATE: OK
-X-VR-SPAMSCORE: -100
-X-VR-SPAMCAUSE: dmFkZTGGsKR/gwKAzusTuWTRzoTeGCUXlZFkFd5+hGDCCq5gSwbP+DE2qNtPxfbRCMAXLfps1AF2VdF9KbMy41roGCof/u3tdUH/N3oZcpLvK93ZjFx6ECidfgGwSWErvMtmMMYiwOEJUOm16zfA8+qU9l8izUAkjs5a/+l+JvTNsobAUMH0NaFs0EZjScRQ/rfRQ2MRKRZ5uhqrYqs8hpEiwszRwuwfpF0cbkKY0WUQ8AR2rESPitrYanQJyFJxpO1CNtFWEX7WklXx+rk7FNunOQSssyJYKvp0jVEOCp7iotUGSn9Rkap2E2Tn42Ro9/kTC34CoP/L+9U/85rWxS5IY+ffjtkmAe3WvRUsvJ7Zv5EiwjLIJkk0gO5PZYaXzHusocF811GEup5Ixr1wZ3BTOhU/T5zgfnuO1IRbWD+zsnMqcI7tp9hvMsfg6DpWTpzdfuQSk9rIOy+4An+0IJ3UYiTho602i/u3NEedDKdkB2eJ9gnTNEZVpPCiun5GX3V+M0JD66bdzrXd7fQis1PBtcglY8WVO0jRODJB3wJzvhbng9cqM1HR2QE+cs3zI6YIJ2FxkTffJy8Asm9eVTflS/E0R6j2DvDFlObHgPVnuIi4Ngl3W+8Ysy+29/7iqq3Pfemdp5HJeEzxU9BZOdteSr7+AF/YesAMFdWk1s0cHSPPKg
-DKIM-Signature: a=rsa-sha256; bh=s1P6TBWw0Kj8Ms8NY8g4VhY0jGwpaJHEnwTlV9HShMc=; 
- c=relaxed/relaxed; d=kaod.org; h=From; s=ovhmo393970-selector1;
- t=1780587192; v=1;
- b=lqL58r1sRqO0n4UyOORvfdrMfyVPycTMiBF0v+SJcUOLg+21b7VsSvx6CuY5gbLs6GW2miSu
- HV0egY6BHeKtYEWnjN26OoIKSJMVbgVJkdZYL9KWUNhagPs5iQ4NHzO40l/UMvnV6mW8ZaakJqy
- iBkQS+FX5x5bAzHWShcdNEGXex4Liv/8K2RP2W7K1GbAFheYOpg/nVUGNPb+C/paCYmLTgZ0AW0
- NTKC+axvIsar0xjluYrIhdwluejDFn9VVFJKEDZGLGv02yf/T6/iDVBN2EYgHgTcvlImvAxeBtA
- WxBFjDY6AIUBOWsznr2I7uE9qDMOGHbXI1c40e0BsaOPw==
-Received-SPF: pass client-ip=46.105.34.251; envelope-from=clg@kaod.org;
- helo=smtpout1.mo528.mail-out.ovh.net
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <0ec66128-d2f0-49e8-b1e7-5602b3cd662f@nutanix.com>
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=peterx@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -24
+X-Spam_score: -2.5
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.445,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -132,49 +129,44 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 6/4/26 17:24, Jithu Joseph wrote:
-> On 6/4/2026 1:28 AM, Cédric Le Goater wrote:
->> On 6/4/26 02:07, Jithu Joseph wrote:
->>> This series corrects the DesignWare I3C controller's advertised CMD/data
->>> FIFO depths and cleans up the misleading queue-capacity field names that
->>> made the bug easy to overlook.
->>>
+On Thu, Jun 04, 2026 at 10:21:45AM +0100, Mark Cave-Ayland wrote:
+> On 03/06/2026 16:55, Peter Xu wrote:
 > 
-> ...
->>
->>
->> Jithu,
->>
->> When you sent this v2, you did as a thread reply to :
->>
->>    https://lore.kernel.org/qemu-devel/20260529014034.864722-1-jithu.joseph@oss.qualcomm.com/
->>
->> This confuses the b4 tool and, in consequence, Jamin's Reviewed-by
->> is not collected it seems.
+> > On Wed, Jun 03, 2026 at 04:36:37PM +0100, Mark Cave-Ayland wrote:
+> > > Is the longer-term goal here to allow machine-versioned usage of all
+> > > migration parameters supplied via -incoming via -global?
+> > 
+> > Nop.
+> > 
+> > Machine compat properties sticks with machines, they'll be applied properly
+> > to migration objects at some point (needs to happen after machine object is
+> > initialized).  It'll keep working, no plan to change that.
 > 
-> Sorry Cédric that it broke your MAINTAINER flow ...
+> What are the machine compat properties currently being used for in this
+> case? Presumably something that isn't expressed through a capability?
 
-Well b4 isn't smart enough to grab the trailers on v2. Try it.
+Please refer to:
 
-> (I used to follow similar threading while sending newer revisions in LKML a while back)
+https://lore.kernel.org/qemu-devel/ahmiKxc0swrIJQVB@x1.local/
 
-I would recommend  to start a new email thread for each respin else
-the newer version of a series is "hidden" under the previous thread.
-
->>
->> Can you please resend as new thread ? If you can can collect Jamin's
->> Reviewed-by trailers it would be nice.
 > 
-> I just sent out v3 with Jaimin's tag here
-> https://lore.kernel.org/qemu-devel/20260604142207.2118098-1-jithu.joseph@oss.qualcomm.com/
+> > This series is only about exposing a new API to setup migration parameters
+> > so that modules (like TAP as backends) can query at very early stage of
+> > QEMU boot.
+> 
+> So shouldn't we just QOMify MigrationParameters so that our existing parser
+> can be used without coming up with a custom solution? I feel I'm missing
+> something obvious here since this was Fabiano's suggestion.
 
+IIUC this series almost does it, qobject_input_visitor_new_str() and then
+visit with a follow up visit_type_MigrationParameters().
 
-Applied to
-
-     https://github.com/legoater/qemu aspeed-next
+Do we explicitly need to make it a separate TYPE_OBJECT?  Is there any
+benefit of it, and how that proposal differs from the current?
 
 Thanks,
 
-C.
+-- 
+Peter Xu
 
 
