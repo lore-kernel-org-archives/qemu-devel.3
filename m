@@ -4,54 +4,68 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B7458CD6E6D
-	for <qemu-devel@archiver.kernel.org>; Thu,  4 Jun 2026 06:20:29 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2B421CD6E4A
+	for <qemu-devel@archiver.kernel.org>; Thu,  4 Jun 2026 06:33:55 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wV1Qk-0000Je-1r; Thu, 04 Jun 2026 02:19:51 -0400
+	id 1wV1dd-0004bk-9F; Thu, 04 Jun 2026 02:33:09 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@mailo.com>)
- id 1wV1Qf-0000Hw-Vh; Thu, 04 Jun 2026 02:19:45 -0400
-Received: from msg-2.mailo.com ([213.182.54.12] helo=mailo.com)
+ (Exim 4.90_1) (envelope-from <yangjinqian1@huawei.com>)
+ id 1wV1dc-0004bR-55; Thu, 04 Jun 2026 02:33:08 -0400
+Received: from canpmsgout12.his.huawei.com ([113.46.200.227])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@mailo.com>)
- id 1wV1Qd-0007Kf-D9; Thu, 04 Jun 2026 02:19:45 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=mailo.com; s=mailo;
- t=1780553770; bh=GU/d5DtZ0imSx5OhDggY7Er7TuoxYvb43OdYwQGncbw=;
- h=X-EA-Auth:Message-ID:Date:MIME-Version:Subject:To:Cc:References:
- From:In-Reply-To:Content-Type:Content-Transfer-Encoding;
- b=BTmI7B/U15HqGyKyokf37hdjuUp3+nIkCyoj2mptoi1vIMe8cQFNryiNnY8LTnBVC
- jn+cHnWKFMLzX2tQZ2Agu4wnwk3a52iJ6KBJW9q35s8ftXyw9OLlDeQH9nG0hU6MtH
- v9sucnbBLASN0jpaO9qi80wOtkPio6mwkWb1TrAg=
-Received: by be1-8.in.mailobj.net [192.168.91.18] with ESMTP
- via ip-20.mailobj.net [213.182.54.20]
- Thu,  4 Jun 2026 08:15:29 +0200 (CEST)
-X-EA-Auth: cThs8eykYyx5q8KYK8gRg+SeY624chqA3m3f271eKYBonuHhBxC5qsmSozuRd5C4PJkNVKHhi5hwcyuRWwLfZzuVBNAYk0Jz
-Message-ID: <0c1e6301-e196-41cf-84f1-6c6cd33ec1a4@mailo.com>
-Date: Thu, 4 Jun 2026 08:15:21 +0200
+ (Exim 4.90_1) (envelope-from <yangjinqian1@huawei.com>)
+ id 1wV1dW-0002vM-BF; Thu, 04 Jun 2026 02:33:07 -0400
+dkim-signature: v=1; a=rsa-sha256; d=huawei.com; s=dkim;
+ c=relaxed/relaxed; q=dns/txt; h=From;
+ bh=lICtzYs1mFPyTgDgLvlv3mIWdxDor5vCLT7iU63YAAc=;
+ b=g6RQT3LhK2h92E7yJwV+wcxrBQ2eQAWlJrEFlg0oES1pxDgS5G6hPMIJYuv5moi1X+1tnt3OR
+ 9N+PeUbz9SIKdISPFPLDcgEOfoPFqdYwtWnAARtSId1UU3Gp7KRSwv6+9/uONgLCBLIEf6aM+GH
+ N8rpWDbU8ykaaQryh4ddzKU=
+Received: from mail.maildlp.com (unknown [172.19.163.163])
+ by canpmsgout12.his.huawei.com (SkyGuard) with ESMTPS id 4gWF0l4hK4znTVh;
+ Thu,  4 Jun 2026 14:24:55 +0800 (CST)
+Received: from dggpemf500013.china.huawei.com (unknown [7.185.36.188])
+ by mail.maildlp.com (Postfix) with ESMTPS id 486344048B;
+ Thu,  4 Jun 2026 14:32:48 +0800 (CST)
+Received: from [10.67.121.183] (10.67.121.183) by
+ dggpemf500013.china.huawei.com (7.185.36.188) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.1544.11; Thu, 4 Jun 2026 14:32:47 +0800
+Message-ID: <1bdf5296-874b-488e-8a34-d6f8d23ddcae@huawei.com>
+Date: Thu, 4 Jun 2026 14:32:46 +0800
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2] disas: sparc: Fix integer overflow in
- compare_opcodes() for loop
-Content-Language: en-US
-To: Christian Barry <christian.barry@usp.br>, qemu-devel@nongnu.org
-Cc: Artyom Tarasenko <atar4qemu@gmail.com>,
- Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>, qemu-trivial@nongnu.org,
- Eduardo Augusto Cavalcanti <eduardoaugustoabc@ime.usp.br>
-References: <20260603190446.10319-1-christian.barry@usp.br>
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@mailo.com>
-In-Reply-To: <20260603190446.10319-1-christian.barry@usp.br>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=213.182.54.12; envelope-from=philmd@mailo.com;
- helo=mailo.com
+Subject: Re: [PATCH v5 00/18] kvm/arm: Introduce a customizable aarch64 KVM
+ host model
+To: Eric Auger <eric.auger@redhat.com>, <eric.auger.pro@gmail.com>,
+ <qemu-devel@nongnu.org>, <qemu-arm@nongnu.org>, <kvmarm@lists.linux.dev>,
+ <peter.maydell@linaro.org>, <shaju.abraham@nutanix.com>,
+ <khushit.shah@nutanix.com>, <cohuck@redhat.com>,
+ <richard.henderson@linaro.org>, <sebott@redhat.com>,
+ <skolothumtho@nvidia.com>, <philmd@linaro.org>
+CC: <maz@kernel.org>, <oliver.upton@linux.dev>, <pbonzini@redhat.com>,
+ <armbru@redhat.com>, <berrange@redhat.com>, <abologna@redhat.com>,
+ <jdenemar@redhat.com>
+References: <20260519132905.145643-1-eric.auger@redhat.com>
+ <5a533932-06fe-4401-abfe-66546c15c4ec@huawei.com>
+From: Jinqian Yang <yangjinqian1@huawei.com>
+In-Reply-To: <5a533932-06fe-4401-abfe-66546c15c4ec@huawei.com>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Transfer-Encoding: 8bit
+X-Originating-IP: [10.67.121.183]
+X-ClientProxiedBy: kwepems500001.china.huawei.com (7.221.188.70) To
+ dggpemf500013.china.huawei.com (7.185.36.188)
+Received-SPF: pass client-ip=113.46.200.227;
+ envelope-from=yangjinqian1@huawei.com; helo=canpmsgout12.his.huawei.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_PASS=-0.001,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_MSPIKE_H2=0.001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -68,42 +82,149 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi Christian,
 
-On 3/6/26 21:04, Christian Barry wrote:
-> From: Christian Barry <christian.barry@usp.br>
+
+On 2026/6/4 14:08, Jinqian Yang wrote:
 > 
-> Replaced left-shift of a literal 1 by i inside of two for loops in compare_opcodes() with 1ul type qualifier. This makes it so 1 is explicitly interpreted as an unsigned long int, preventing overflows.
 > 
-> Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/2618
+> On 2026/5/19 21:27, Eric Auger wrote:
+>> This series enhances the current host KVM model with capability to
+>> set writable ID reg fields.
+>>
+>> Since v6.7 kernel, KVM/arm allows the userspace to overwrite the values
+>> of a subset of ID regs. The list of writable fields continues to grow.
+>> The feature ID range is defined as the AArch64 System register space
+>> with op0==3, op1=={0, 1, 3}, CRn==0, CRm=={0-7}, op2=={0-7}.
+>>
+>> The end goal is to get more flexibility when migrating guests
+>> between different host hardware.
+>>
+>> QEMU retrieves the writable ID fields from KVM UAPI [1] and
+>> match them against a generated description of ID regs and their
+>> named fields that stem from AARCHMRS Registers.json file.
+>> Current description is based on latest 2026-03 edition.
+>> The content of the generated files was compared against kernel
+>> linux/arch/arm64/tools/sysreg file. It is not straightforward
+>> to have unit tests for python scripts as there are many cases for
+>> field extraction.
+>>
+>> For each writable named field a uint64 property is created
+>> following the "SYSREG_<REG>_<FIELD>" naming convention. REG and
+>> FIELD names are those described in ARM ARM Reference manual.
+>>
+>> The list of SYSREG_ID properties can be retrieved through the qmp
+>> monitor using query-cpu-model-expansion [2].
+>>
+>> Connie & Eric
+>>
+>> This series can be found at:
+>> https://github.com/eauger/qemu/tree/arm-cpu-model-v5
+>>
+>> History:
+>> --------
+>>
+>> v4 -> v5:
+>> - generate target/arm/cpu-idregs.h.inc that look similar to
+>>    the format used in [RFC PATCH v1 02/13] target/arm:
+>>    named_cpu_model: Add ID Register Fields without the
+>>    description of the value values nor safe policy/value.
+>>    I guess valid values could be generated from the Registers.json
+>>    file too. Safe policy/values cannot.
+>>    I reused one patch from the above series.
+>>    Let's see how both series can progress/coexist without any
+>>    anticipated bias.
+>> - Addressed all comments from Shameer on v4
+>> - Addressed 2 comments from v4 that were missed including the
+>>    issue of IDreg visibility affected by some other settings.
+>>    Unfortunately I was not able to test it.
+>> - Further look at overrides between low level id reg field
+>>    properties versus legacy CPU options. I have the feeling they
+>>    can coexist as long as we document the hierarchy between them:
+>>    host kvm default -> ID reg field props -> legacy CPU options
+>> - Noticed more writable fields that are RES0/RAZ
+>> - Improved commit messages in general
+>>
+>> References:
+>> -----------
+>>
+>> [1]
+>> KVM_CAP_ARM_SUPPORTED_REG_MASK_RANGES
+>> KVM_ARM_GET_REG_WRITABLE_MASKS
+>> Documentation/virt/kvm/api.rst
+>>
+>> [2]
+>> qemu-system-aarch64 -qmp unix:/home/augere/TEST/QEMU/qmp- 
+>> sock,server,nowait -M virt --enable-kvm -cpu custom
+>> sudo build/run qmp-shell /home/augere/TEST/QEMU/qmp-sock
+>> Welcome to the QMP low-level shell!
+>> Connected to QEMU 11.0.50
+>> (QEMU) query-cpu-model-expansion type=full model={"name":"host"}
+>>
+>>
+>> Cornelia Huck (3):
+>>    target/arm/kvm: Introduce kvm_get_writable_id_regs
+>>    arm-qmp-cmds: introspection for ID register props
+>>    arm/cpu-features: document ID reg properties
+>>
+>> Eric Auger (14):
+>>    scripts: introduce scripts/update-aarch64-cpu-sysregs-header.py
+>>    target/arm/cpu-sysregs.h.inc: Sort by name alphabetical order
+>>    target/arm/cpu-sysregs.h.inc: Update with automatic generation
+>>    arm/cpu: Add infra to handle generated ID register definitions
+>>    scripts: Introduce scripts/aarch64_sysreg_helpers module
+>>    scripts: Introduce scripts/update-aarch64-cpu-sysreg-properties.py
+>>    target/arm/cpu-idregs.h.inc: generate with script
+>>    target/arm/cpu64: Retrieve writable ID reg map in
+>>      aarch64_host_initfn()
+>>    arm/kvm: Initialize all writable ID registers from host
+>>    arm/kvm: write back modified ID regs to KVM
+>>    target/arm/kvm: Introduce kvm_arm_expose_idreg_properties
+>>    target/arm/kvm: Special case REVIDR_EL1 and AIDR_EL1
+>>    target/arm/kvm: Ignore some writable bits that shouldn't be
+>>    target/arm/cpu: Expose writable ID reg field properties on the kvm
+>>      host vcpu model
+>>
+>> Shaju Abraham (1):
+>>    target/arm/cpu_idregs: generate tables for Arm64 ID registers and
+>>      fields
+>>
+>>   docs/system/arm/cpu-features.rst              | 106 ++-
+>>   scripts/aarch64_sysreg_helpers.py             | 109 ++++
+>>   .../update-aarch64-cpu-sysreg-properties.py   | 168 +++++
+>>   scripts/update-aarch64-cpu-sysregs-header.py  |  51 ++
+>>   target/arm/arm-qmp-cmds.c                     |  19 +
+>>   target/arm/cpu-idregs.c                       |  50 ++
+>>   target/arm/cpu-idregs.h                       |  33 +
+>>   target/arm/cpu-idregs.h.inc                   | 617 ++++++++++++++++++
+>>   target/arm/cpu-sysregs.h.inc                  |  57 +-
+>>   target/arm/cpu.h                              |   3 +
+>>   target/arm/cpu64.c                            |  14 +
+>>   target/arm/kvm-stub.c                         |   5 +
+>>   target/arm/kvm.c                              | 320 ++++++++-
+>>   target/arm/kvm_arm.h                          |  12 +
+>>   target/arm/meson.build                        |   1 +
+>>   target/arm/trace-events                       |   6 +
+>>   16 files changed, 1539 insertions(+), 32 deletions(-)
+>>   create mode 100644 scripts/aarch64_sysreg_helpers.py
+>>   create mode 100644 scripts/update-aarch64-cpu-sysreg-properties.py
+>>   create mode 100755 scripts/update-aarch64-cpu-sysregs-header.py
+>>   create mode 100644 target/arm/cpu-idregs.c
+>>   create mode 100644 target/arm/cpu-idregs.h
+>>   create mode 100644 target/arm/cpu-idregs.h.inc
+>>
 > 
-> Signed-off-by: Christian Barry <christian.barry@usp.br>
-> Co-developed-by: Eduardo Augusto Cavalcanti <eduardoaugustoabc@ime.usp.br>
-> Signed-off-by: Eduardo Augusto Cavalcanti <eduardoaugustoabc@ime.usp.br>
-> ---
->   disas/sparc.c | 4 ++--
->   1 file changed, 2 insertions(+), 2 deletions(-)
+> Thanks for the patch series. I tested it, and it works as expected.
+> After configuring the QEMU command, it was able to successfully migrate
+> on Hisilicon KunPeng HIP09 and HIP12 chips.
 > 
-> diff --git a/disas/sparc.c b/disas/sparc.c
-> index 5689533ce1..40c1164554 100644
-> --- a/disas/sparc.c
-> +++ b/disas/sparc.c
-> @@ -2515,7 +2515,7 @@ compare_opcodes (const void * a, const void * b)
->        another, it is important to order the opcodes in the right order.  */
->     for (i = 0; i < 32; ++i)
->       {
-> -      unsigned long int x = 1 << i;
-> +      unsigned long int x = 1ul << i;
->         int x0 = (match0 & x) != 0;
->         int x1 = (match1 & x) != 0;
+> Tested-by: Jinqian Yang <yangjinqian1@huawei.com>
+> 
+> Thanks,
+> Shameer
+> 
 
-As Artyom suggested we should cherry-pick binutils commit 4383e1fc3b326.
+Sorry, I forgot to update the salutation name at the end.
 
-Alternatively:
-
-   if (match0 != match1) {
-       return extract32(match1, clz32(match0 ^ match1), 1) ?: -1;
-   }
-
-
+Thanks,
+Jinqian
 
