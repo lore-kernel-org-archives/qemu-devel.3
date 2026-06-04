@@ -4,107 +4,108 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4209BCD6E4A
-	for <qemu-devel@archiver.kernel.org>; Thu,  4 Jun 2026 11:52:00 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 10ED2CD6E4A
+	for <qemu-devel@archiver.kernel.org>; Thu,  4 Jun 2026 11:54:18 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wV6bm-0001Kk-7i; Thu, 04 Jun 2026 07:51:34 -0400
+	id 1wV6e8-0002Ch-Pw; Thu, 04 Jun 2026 07:54:00 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <eric.auger@redhat.com>)
- id 1wV6bk-0001KU-7V
- for qemu-devel@nongnu.org; Thu, 04 Jun 2026 07:51:32 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <eric.auger@redhat.com>)
- id 1wV6bi-0007fM-G9
- for qemu-devel@nongnu.org; Thu, 04 Jun 2026 07:51:31 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1780573889;
- h=from:from:reply-to:reply-to:subject:subject:date:date:
- message-id:message-id:to:to:cc:cc:mime-version:mime-version:
- content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=PdmReCAJNUtqEix/n4fG+YTi+9S85Iwj4f30F/ixVIU=;
- b=T3tjZ+fxUDgyR3dUGULS401f3su8MySv0mCAQClZNhwyqy5YIJhOTvQcihM8Po/Sjq59sq
- NhB0u3hd3Zrhk2a6t5ImzD2QmAV1tCyssX/ssQdtOmyxUkTEnqc6K2j9v8E/w4rsGO7omS
- 1Gdv1mb1kuvj805syjL7N6k8ACsk/AU=
-Received: from mail-wm1-f70.google.com (mail-wm1-f70.google.com
- [209.85.128.70]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-417-BeoQGOhjPs-rw27je5yJ8g-1; Thu, 04 Jun 2026 07:51:26 -0400
-X-MC-Unique: BeoQGOhjPs-rw27je5yJ8g-1
-X-Mimecast-MFC-AGG-ID: BeoQGOhjPs-rw27je5yJ8g_1780573885
-Received: by mail-wm1-f70.google.com with SMTP id
- 5b1f17b1804b1-490afe64f26so2853065e9.0
- for <qemu-devel@nongnu.org>; Thu, 04 Jun 2026 04:51:25 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1780573885; x=1781178685;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:reply-to:user-agent:mime-version:date
- :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ (Exim 4.90_1) (envelope-from <zhangckid@gmail.com>)
+ id 1wV6e6-0002CK-WD
+ for qemu-devel@nongnu.org; Thu, 04 Jun 2026 07:53:59 -0400
+Received: from mail-ej1-x62c.google.com ([2a00:1450:4864:20::62c])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <zhangckid@gmail.com>)
+ id 1wV6e4-0000FM-QT
+ for qemu-devel@nongnu.org; Thu, 04 Jun 2026 07:53:58 -0400
+Received: by mail-ej1-x62c.google.com with SMTP id
+ a640c23a62f3a-bed2195323cso88176166b.1
+ for <qemu-devel@nongnu.org>; Thu, 04 Jun 2026 04:53:56 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1780574035; cv=none;
+ d=google.com; s=arc-20240605;
+ b=RMlC/YjMmlbQdIaGAFXWA4h2qCXyTpl9rWKtojapux5GE1BRGBDT6Bph0kfy1qYeew
+ kVFDVHs63vi4Q8gxxJD3SEabchvWFrwXauPAMYYDQ2Vja76G7eD1R4wKWSNaZSaIcAJ2
+ 55lybQ5h0UOrSkvABAiFfJsool5AEd4wwjSj0eGIDlfJAYjvBIGc4UodqPLeUu3xdd2j
+ UWCwWK5RozKkylkv3vi2SW9vwrfK3j71JPUXny5IlG+LKqWoELVRcuRXAMrQ7S4LzOPJ
+ Yi5P1rO5JgG9mvflmPLQbrN1HLxKPisTG4XM3k6H8+Hc1i4Nz2HVJBdCqRUefRebjto3
+ UvHA==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
+ s=arc-20240605; 
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:dkim-signature;
+ bh=sV9jw1BEUpd6lu7HkscWcMxs6w2o2feLCZfmASY/CBE=;
+ fh=2vCTedxg5r0JPg5LnC8s7len6poc60rIFIIE/ngH4cY=;
+ b=I6s8oZ78Y1mJEUZfz8XnSj89rDyQoOQH3GbdRjXNvl7UZOSPOLeCCA7MPyJvoIpjpt
+ IU78FuzzwErKnxcExfwyhbnxgLtf0K1zgHYNQuQxW0WNmJTCtqMjVgJth9v2LmjvSpZf
+ PzPrGuCub3VXjUT0slnoGhQJIjspBTe20ortSHAegEwtqSz341byrM3gYXU6h5xICieb
+ BFF8edfJ3dyCfoFhDHMkPsIp8yd8gBSO95b6lzmO8jADZ9KZwcN2Q/wkO3xWSUojK/9a
+ +o3r0YDG75kXHmUxjP7Z6rORhyK1m4XZCrKnWXkR6kAq64GX4+jB/fOSwVEeiDJyl6NK
+ z3OA==; darn=nongnu.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=gmail.com; s=20251104; t=1780574035; x=1781178835; darn=nongnu.org;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:from:to:cc:subject:date
  :message-id:reply-to;
- bh=PdmReCAJNUtqEix/n4fG+YTi+9S85Iwj4f30F/ixVIU=;
- b=aLOG34mIk6Rwl31aTjG47+liSjy8SSydXov5mxz387vojkmtjV6rvQ2Xd0imekndE1
- UXswsWs/XaB+0secrYKqWY1zeWji0EcN8CAm+ZSDOtYTB41qMGYw26tuUhWGO2euhpef
- kFCrgGbubpJBn2zGIVFg1ZltR2ZE6lFzZLbypFeDXcasqgzEFOeMwYqdyPxSd716LDjv
- o0kDlunfZEyiCprpFAP2K4WxuZjOT3+Ft2pIeU3LN5IgsBKoE0Vy6J8SFaCec6SQ2pmr
- KgbHXoMXnLXg1NUivv+BwbxQKTygMpzsy5eTsplClunn1ZPP1FG8Kj9SHf5GGmz7NQwJ
- 7OZA==
-X-Forwarded-Encrypted: i=1;
- AFNElJ8seorJ1D72mVBpIeB1KkpNJq/jpgJRCj+skRAACufi7UNCe6jF21FRVn3Hc5bpY9U+HZQikK892Qxg@nongnu.org
-X-Gm-Message-State: AOJu0YzvX834ZZ7gfVJ365eYj0w6r2wTA5qk9TRXz6hzTJa5VCV6lkPP
- Nx2hdm6zKxdHrdGYjLTaVwurHjiJhgGMdZtE6ENh0TH6/HI59LNihAPrxSE/tUStQTIxvMJ53Eq
- jk2Xa4N/W1b3Z1rcndDUYJWrpIferRlOssM+hCIKkV4MOopQRgJ0u/B1U
-X-Gm-Gg: Acq92OH/x8aF+7UN74Uytf7ZtTDqm8dGAXRsu6uu04TPb/msy9AIwLLDCJx1fXTgpmi
- AWYyMRAV4phHAAPc6NU4QqzGzeliE1Nfmq1BIrGdvd7G85SM/35FaMjvDrBHgw+k5cqvDniVyrB
- 4VwT/ggQvqYFIqXK9OyZnqNJTcq38eUX0MULrbC3mCKxt5YTuUexyaLbH7rUkviAtH1YcgrJAEJ
- g3R5iKqaKahGjUrOkJILWnuRJ0nmqAY8Bmd8AyPZtXjqXChqy82HLKQ5mp0efRuof3533wIiWpL
- h/waoKjI+DrxFo3VB+vnUPnR+lWOrUZB3Ls7DZLPO5+2x2vrDFSXabdT9Syh7zCunZ2RFsKxz7R
- L9gSWub9nR/QJ02YiElbmqgS68x4ey8ru/VYXlEDuaAxpkpvp7lwr4fUPwyNwbAQt6TycEcw1J3
- RODT+Y
-X-Received: by 2002:a05:600c:34d3:b0:490:b26c:64ad with SMTP id
- 5b1f17b1804b1-490bc4cf867mr52346405e9.5.1780573884775; 
- Thu, 04 Jun 2026 04:51:24 -0700 (PDT)
-X-Received: by 2002:a05:600c:34d3:b0:490:b26c:64ad with SMTP id
- 5b1f17b1804b1-490bc4cf867mr52345905e9.5.1780573884409; 
- Thu, 04 Jun 2026 04:51:24 -0700 (PDT)
-Received: from ?IPV6:2a01:e0a:f0e:9070:527b:9dff:feef:3874?
- ([2a01:e0a:f0e:9070:527b:9dff:feef:3874])
- by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-490b7a273e3sm102509065e9.0.2026.06.04.04.51.23
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 04 Jun 2026 04:51:23 -0700 (PDT)
-Message-ID: <379a6953-e0a6-4c82-8446-ecdd24e19401@redhat.com>
-Date: Thu, 4 Jun 2026 13:51:22 +0200
+ bh=sV9jw1BEUpd6lu7HkscWcMxs6w2o2feLCZfmASY/CBE=;
+ b=cCRlfenbLODgIkg/JmkJunoJUm8wOmns2wu6KWrHI/I3H6Im8UfrwVG4YeuI7K9VvU
+ aoO28QZ5DRngd4f5osfILqMqKBWnr8oxPcBVlaqMHKjAceeq7NL8slUJaPx4C9uMKP/G
+ i8I2+VxiC6T3nOaa8ZqrXC5lsodGYJ5+MjVzj9lufpwScFadDUV5YQDtDJgMO2ubNWyu
+ kKxbX0Gtr8SCQ8F6lTL3FGPwTBXEs2BEIjnHvbzv9SH4a4yduFIqm0oLj90c7IFWzxl5
+ 3+xHUsB4HwRJMCXX2+z5FhPL+rTUoxGjx9SJ2N2qKyofM4ze5xR2RmEt3+yWVyYS7ObQ
+ hS+w==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1780574035; x=1781178835;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=sV9jw1BEUpd6lu7HkscWcMxs6w2o2feLCZfmASY/CBE=;
+ b=pLgTt6NWfq3GDfCqc/+AMqzsK7r3//h18iM8ywYgwJ83zUR7AFQ9jb3Uz4bByLfpk+
+ 6RRMxjkE+nndWZA7rqUx7Em0vxePg2cRTkfuGhPr/kli9w+m11ipy5JHIcCiXgUFCS5d
+ UykLsjkFQZ2VgCzyzYRJi/3hggOv8sJZZVOc2qwhag1X3CB5W9yGHrOHQwIqxdFz/84W
+ 0gZ3XAF/aUcHQ77GrmS38nYe5OAuHOQYPhj1e5uUx6j+4E+5OYyk3vWTbrpawhntU55P
+ yN8aCawLStWdiJv+niu3DLrSRTQT/X2yCfr34AyU4FNmwy4HqapAH8/SyuKfwGK+z8nX
+ l7Ng==
+X-Gm-Message-State: AOJu0YzPKpndLGLOD6Y8zY9/rnW5JywqIQMK7AHIKnvP4b5ytY8ueOY8
+ dWDVLLeSs+dWXwUpjvRA/yExoFc3+QHfc75YRgdr3xREBA99Sb9QLKY2uwpJ2hyBgbr2p6yTIwp
+ 3lwD1kDthVc+RWRSP1FQZfhqMYg8Cbss=
+X-Gm-Gg: Acq92OGSbbtbwr/gyErm5zJvuSlCc7w8r695dxcXuY7wUFIw2D1ln87galXF7QqsybX
+ Po1rXGXSO5kI2HtNd0JPlUy+IKOqsHow2fsIjdPfxsAChXvJN2z2Z9a6g3ScRfgrKjDAHo1WTdC
+ Z6TmooSLq1/HbjlEtdFhsnBOy3MHWxk7oOMwUJQds4EaRgKeaSgvQy+BNknyDnsrt7Rm+pBQYMC
+ aOFvvFmPE/vO/MWVjnMqwvWXZ+H/dZIPwuKP8XWfa4l/vvE/3ZFXer5/Afelp2NoJu4hOZJqBb7
+ L3HDpxXDByIbo5aiVvg=
+X-Received: by 2002:a17:907:d109:b0:bed:6ba7:6b03 with SMTP id
+ a640c23a62f3a-bf0acf1687emr428644266b.15.1780574034655; Thu, 04 Jun 2026
+ 04:53:54 -0700 (PDT)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v6 23/31] hw/arm/tegra241-cmdqv: Read and propagate
- Tegra241 CMDQV errors
-Content-Language: en-US
-To: Shameer Kolothum <skolothumtho@nvidia.com>, qemu-arm@nongnu.org,
- qemu-devel@nongnu.org
-Cc: peter.maydell@linaro.org, clg@redhat.com, alex@shazbot.org,
- nicolinc@nvidia.com, nathanc@nvidia.com, mochs@nvidia.com, jan@nvidia.com,
- jgg@nvidia.com, zhenzhong.duan@intel.com, kjaju@nvidia.com,
- phrdina@redhat.com
-References: <20260601114221.457995-1-skolothumtho@nvidia.com>
- <20260601114221.457995-24-skolothumtho@nvidia.com>
-From: Eric Auger <eric.auger@redhat.com>
-In-Reply-To: <20260601114221.457995-24-skolothumtho@nvidia.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=170.10.129.124;
- envelope-from=eric.auger@redhat.com; helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -24
-X-Spam_score: -2.5
+References: <20260529213321.96271-1-zhangckid@gmail.com>
+ <20260529213321.96271-16-zhangckid@gmail.com>
+ <87eciorgaj.fsf@pond.sub.org>
+In-Reply-To: <87eciorgaj.fsf@pond.sub.org>
+From: Zhang Chen <zhangckid@gmail.com>
+Date: Thu, 4 Jun 2026 19:53:18 +0800
+X-Gm-Features: AVHnY4JzgKSt1_E55kdnKRQxn92YIP9lp_yMn1UDwq3KxSUBVV0AUZOXqpO9PwA
+Message-ID: <CAK3tnvJauCiFZNW84JP39KoXD5NieVV5b+GR_F0yeixYbw3Biw@mail.gmail.com>
+Subject: Re: [PATCH V8 15/15] iothread: simplify API by merging
+ iothread_get_aio_context variants
+To: Markus Armbruster <armbru@redhat.com>
+Cc: qemu-devel <qemu-devel@nongnu.org>,
+ "Dr . David Alan Gilbert" <dave@treblig.org>, 
+ Eric Blake <eblake@redhat.com>, "Michael S . Tsirkin" <mst@redhat.com>, 
+ Stefan Hajnoczi <stefanha@redhat.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2a00:1450:4864:20::62c;
+ envelope-from=zhangckid@gmail.com; helo=mail-ej1-x62c.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.445,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -117,150 +118,269 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-To: eric.auger@redhat.com
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-
-
-On 6/1/26 1:42 PM, Shameer Kolothum wrote:
-> Install an event handler on the CMDQV vEVENTQ fd to read and propagate
-> host received CMDQV errors to the guest.
+On Wed, Jun 3, 2026 at 1:41=E2=80=AFAM Markus Armbruster <armbru@redhat.com=
+> wrote:
 >
-> The handler runs in QEMU's main loop, using a non-blocking fd registered
-> via qemu_set_fd_handler().
+> Zhang Chen <zhangckid@gmail.com> writes:
 >
-> Reviewed-by: Nicolin Chen <nicolinc@nvidia.com>
-> Signed-off-by: Shameer Kolothum <skolothumtho@nvidia.com>
-Reviewed-by: Eric Auger <eric.auger@redhat.com>
-
-Eric
-> ---
->  hw/arm/tegra241-cmdqv.c | 63 +++++++++++++++++++++++++++++++++++++++++
->  hw/arm/trace-events     |  1 +
->  2 files changed, 64 insertions(+)
+> > Simplify the interface by merging iothread_ref_and_get_aio_context()
+> > into iothread_get_aio_context(). The updated function now requires a
+> > 'holder' parameter, ensuring that every retrieval of an AioContext for
+> > long-term use is automatically registered in the IOThread's holder list=
+.
+> >
+> > Update all callers across block, virtio, scsi, net, and monitor
+> > subsystems to match the new signature. This cleanup reduces code
+> > redundancy and improves the reliability of IOThread introspection.
+> >
+> > Signed-off-by: Zhang Chen <zhangckid@gmail.com>
+> > ---
+> >  block/export/export.c           | 5 ++---
+> >  hw/block/dataplane/xen-block.c  | 4 ++--
+> >  hw/block/virtio-blk.c           | 4 ++--
+> >  hw/scsi/virtio-scsi-dataplane.c | 4 ++--
+> >  hw/vfio-user/proxy.c            | 3 +--
+> >  hw/virtio/iothread-vq-mapping.c | 3 +--
+> >  hw/virtio/virtio-balloon.c      | 2 +-
+> >  include/system/iothread.h       | 6 +++---
+> >  iothread.c                      | 9 ++-------
+> >  monitor/monitor.c               | 2 +-
+> >  net/colo-compare.c              | 2 +-
+> >  11 files changed, 18 insertions(+), 26 deletions(-)
+> >
+> > diff --git a/block/export/export.c b/block/export/export.c
+> > index b6c07f69b5..acd061e86e 100644
+> > --- a/block/export/export.c
+> > +++ b/block/export/export.c
+> > @@ -146,7 +146,7 @@ BlockExport *blk_exp_add(BlockExportOptions *export=
+, Error **errp)
+> >              .u.block_node.node_name =3D (char *)holder_name,
+> >          };
+> >
+> > -        new_ctx =3D iothread_ref_and_get_aio_context(iothread, &holder=
+);
+> > +        new_ctx =3D iothread_get_aio_context(iothread, &holder);
+> >          multithread_count =3D 1;
+> >          local_iothreads =3D g_new0(IOThread *, 1);
+> >          local_iothreads[0] =3D iothread;
+> > @@ -190,8 +190,7 @@ BlockExport *blk_exp_add(BlockExportOptions *export=
+, Error **errp)
+> >                  goto fail;
+> >              }
+> >              local_iothreads[i] =3D iothread;
+> > -            multithread_ctxs[i++] =3D iothread_ref_and_get_aio_context=
+(iothread,
+> > -                                                                     &=
+holder);
+> > +            multithread_ctxs[i++] =3D iothread_get_aio_context(iothrea=
+d, &holder);
+> >          }
+> >          assert(i =3D=3D multithread_count);
+> >      }
+> > diff --git a/hw/block/dataplane/xen-block.c b/hw/block/dataplane/xen-bl=
+ock.c
+> > index b5bf8d359f..46bfd62f5a 100644
+> > --- a/hw/block/dataplane/xen-block.c
+> > +++ b/hw/block/dataplane/xen-block.c
+> > @@ -628,8 +628,8 @@ XenBlockDataPlane *xen_block_dataplane_create(XenDe=
+vice *xendev,
+> >          };
+> >
+> >          dataplane->iothread =3D iothread;
+> > -        dataplane->ctx =3D iothread_ref_and_get_aio_context(dataplane-=
+>iothread,
+> > -                                                          &io_holder);
+> > +        dataplane->ctx =3D iothread_get_aio_context(dataplane->iothrea=
+d,
+> > +                                                  &io_holder);
+> >      } else {
+> >          dataplane->ctx =3D qemu_get_aio_context();
+> >      }
+> > diff --git a/hw/block/virtio-blk.c b/hw/block/virtio-blk.c
+> > index d8dc1dd136..d1d2bd7025 100644
+> > --- a/hw/block/virtio-blk.c
+> > +++ b/hw/block/virtio-blk.c
+> > @@ -1502,8 +1502,8 @@ static bool virtio_blk_vq_aio_context_init(VirtIO=
+Block *s, Error **errp)
+> >              .type =3D IO_THREAD_HOLDER_KIND_QOM_OBJECT,
+> >              .u.qom_object.qom_path =3D (char *)path,
+> >          };
+> > -        AioContext *ctx =3D iothread_ref_and_get_aio_context(conf->iot=
+hread,
+> > -                                                           &io_holder)=
+;
+> > +        AioContext *ctx =3D iothread_get_aio_context(conf->iothread,
+> > +                                                   &io_holder);
+> >          for (unsigned i =3D 0; i < conf->num_queues; i++) {
+> >              s->vq_aio_context[i] =3D ctx;
+> >          }
+> > diff --git a/hw/scsi/virtio-scsi-dataplane.c b/hw/scsi/virtio-scsi-data=
+plane.c
+> > index c71f33b41e..76ab22610f 100644
+> > --- a/hw/scsi/virtio-scsi-dataplane.c
+> > +++ b/hw/scsi/virtio-scsi-dataplane.c
+> > @@ -78,8 +78,8 @@ void virtio_scsi_dataplane_setup(VirtIOSCSI *s, Error=
+ **errp)
+> >              .type =3D IO_THREAD_HOLDER_KIND_QOM_OBJECT,
+> >              .u.qom_object.qom_path =3D (char *)path,
+> >          };
+> > -        AioContext *ctx =3D iothread_ref_and_get_aio_context(vs->conf.=
+iothread,
+> > -                                                           &io_holder)=
+;
+> > +        AioContext *ctx =3D iothread_get_aio_context(vs->conf.iothread=
+,
+> > +                                                   &io_holder);
+> >          for (uint16_t i =3D 0; i < vs->conf.num_queues; i++) {
+> >              s->vq_aio_context[VIRTIO_SCSI_VQ_NUM_FIXED + i] =3D ctx;
+> >          }
+> > diff --git a/hw/vfio-user/proxy.c b/hw/vfio-user/proxy.c
+> > index 756f368849..24af3c791b 100644
+> > --- a/hw/vfio-user/proxy.c
+> > +++ b/hw/vfio-user/proxy.c
+> > @@ -942,8 +942,7 @@ VFIOUserProxy *vfio_user_connect_dev(SocketAddress =
+*addr, Error **errp)
+> >          vfio_user_iothread =3D iothread_create("VFIO user", errp);
+> >      }
+> >
+> > -    proxy->ctx =3D iothread_ref_and_get_aio_context(vfio_user_iothread=
+,
+> > -                                                  &io_holder);
+> > +    proxy->ctx =3D iothread_get_aio_context(vfio_user_iothread, &io_ho=
+lder);
+> >      proxy->req_bh =3D qemu_bh_new(vfio_user_request, proxy);
+> >
+> >      QTAILQ_INIT(&proxy->outgoing);
+> > diff --git a/hw/virtio/iothread-vq-mapping.c b/hw/virtio/iothread-vq-ma=
+pping.c
+> > index 2cb48dd387..727358a483 100644
+> > --- a/hw/virtio/iothread-vq-mapping.c
+> > +++ b/hw/virtio/iothread-vq-mapping.c
+> > @@ -99,8 +99,7 @@ bool iothread_vq_mapping_apply(
+> >              .u.qom_object.qom_path =3D (char *)holder,
+> >          };
+> >
+> > -        AioContext *ctx =3D iothread_ref_and_get_aio_context(iothread,
+> > -                                                           &io_holder)=
+;
+> > +        AioContext *ctx =3D iothread_get_aio_context(iothread, &io_hol=
+der);
+> >
+> >          if (node->value->vqs) {
+> >              uint16List *vq;
+> > diff --git a/hw/virtio/virtio-balloon.c b/hw/virtio/virtio-balloon.c
+> > index e9d023b4ec..4405a87ed0 100644
+> > --- a/hw/virtio/virtio-balloon.c
+> > +++ b/hw/virtio/virtio-balloon.c
+> > @@ -903,7 +903,7 @@ static void virtio_balloon_device_realize(DeviceSta=
+te *dev, Error **errp)
+> >          precopy_add_notifier(&s->free_page_hint_notify);
+> >
+> >          s->free_page_bh =3D aio_bh_new_guarded(
+> > -                      iothread_ref_and_get_aio_context(s->iothread, &i=
+o_holder),
+> > +                      iothread_get_aio_context(s->iothread, &io_holder=
+),
+> >                        virtio_ballloon_get_free_page_hints, s,
+> >                        &dev->mem_reentrancy_guard);
+> >      }
+> > diff --git a/include/system/iothread.h b/include/system/iothread.h
+> > index 064c05e78d..e5db215954 100644
+> > --- a/include/system/iothread.h
+> > +++ b/include/system/iothread.h
+> > @@ -70,15 +70,15 @@ DECLARE_INSTANCE_CHECKER(IOThread, IOTHREAD,
+> >
+> >  char *iothread_get_id(IOThread *iothread);
+> >  IOThread *iothread_by_id(const char *id);
+> > -AioContext *iothread_get_aio_context(IOThread *iothread);
+> > +
+> >  /*
+> >   * The iothread_unsafe_get_aio_context() is a low-level unsafe way of =
+getting
+> >   * the AioContext, recommend migrating to the new API with IOThreadHol=
+der
+> >   * as much as possible.
+> >   */
+> >  AioContext *iothread_unsafe_get_aio_context(IOThread *iothread);
+> > -AioContext *iothread_ref_and_get_aio_context(IOThread *iothread,
+> > -                                             const IOThreadHolder *hol=
+der);
+> > +AioContext *iothread_get_aio_context(IOThread *iothread,
+> > +                                     const IOThreadHolder *holder);
+> >  void iothread_put_aio_context(IOThread *iothread, const IOThreadHolder=
+ *holder);
+> >  GMainContext *iothread_get_g_main_context(IOThread *iothread);
+> >
+> > diff --git a/iothread.c b/iothread.c
+> > index 5949785b32..9bc8e359c1 100644
+> > --- a/iothread.c
+> > +++ b/iothread.c
+> > @@ -469,13 +469,8 @@ char *iothread_get_id(IOThread *iothread)
+> >      return g_strdup(object_get_canonical_path_component(OBJECT(iothrea=
+d)));
+> >  }
+> >
+> > -AioContext *iothread_get_aio_context(IOThread *iothread)
+> > -{
+> > -    return iothread->ctx;
+> > -}
+> > -
+> > -AioContext *iothread_ref_and_get_aio_context(IOThread *iothread,
+> > -                                             const IOThreadHolder *hol=
+der)
+> > +AioContext *iothread_get_aio_context(IOThread *iothread,
+> > +                                     const IOThreadHolder *holder)
+> >  {
+> >      /* Add IOThreadHolder to the list */
+> >      iothread_ref(iothread, holder);
+> > diff --git a/monitor/monitor.c b/monitor/monitor.c
+> > index 7eec6f967d..4d00cf499c 100644
+> > --- a/monitor/monitor.c
+> > +++ b/monitor/monitor.c
+> > @@ -617,7 +617,7 @@ void monitor_data_init(Monitor *mon, bool is_qmp, b=
+ool skip_flush,
+> >              .type =3D IO_THREAD_HOLDER_KIND_MONITOR_NAME,
+> >              .u.monitor_name.monitor_name =3D (char *)mon->id,
+> >          };
+> > -        mon->ctx =3D iothread_ref_and_get_aio_context(mon_iothread, &h=
+older);
+> > +        mon->ctx =3D iothread_get_aio_context(mon_iothread, &holder);
+> >      }
+> >      qemu_mutex_init(&mon->mon_lock);
+> >      mon->is_qmp =3D is_qmp;
+> > diff --git a/net/colo-compare.c b/net/colo-compare.c
+> > index 4f180936e3..820ea4d824 100644
+> > --- a/net/colo-compare.c
+> > +++ b/net/colo-compare.c
+> > @@ -973,7 +973,7 @@ static void colo_compare_iothread(CompareState *s)
+> >          .u.qom_object.qom_path =3D (char *)path,
+> >      };
+> >
+> > -    AioContext *ctx =3D iothread_ref_and_get_aio_context(s->iothread, =
+&io_holder);
+> > +    AioContext *ctx =3D iothread_get_aio_context(s->iothread, &io_hold=
+er);
+> >
+> >      s->iothread_ctx =3D ctx;
+> >      s->worker_context =3D iothread_get_g_main_context(s->iothread);
 >
-> diff --git a/hw/arm/tegra241-cmdqv.c b/hw/arm/tegra241-cmdqv.c
-> index cdd4fa4f1a..d8b36164a1 100644
-> --- a/hw/arm/tegra241-cmdqv.c
-> +++ b/hw/arm/tegra241-cmdqv.c
-> @@ -14,6 +14,7 @@
->  
->  #include "hw/arm/smmuv3.h"
->  #include "hw/arm/smmuv3-common.h"
-> +#include "hw/core/irq.h"
->  #include "smmuv3-accel.h"
->  #include "tegra241-cmdqv.h"
->  #include "trace.h"
-> @@ -751,6 +752,51 @@ out:
->      trace_tegra241_cmdqv_write_mmio(offset, value, size);
->  }
->  
-> +static void tegra241_cmdqv_event_read(void *opaque)
-> +{
-> +    Tegra241CMDQV *cmdqv = opaque;
-> +    IOMMUFDVeventq *veventq = cmdqv->veventq;
-> +    struct {
-> +        struct iommufd_vevent_header hdr;
-> +        struct iommu_vevent_tegra241_cmdqv vevent;
-> +    } buf;
-> +    Error *local_err = NULL;
-> +
-> +    if (!smmuv3_accel_event_read_validate(veventq,
-> +                                          IOMMU_VEVENTQ_TYPE_TEGRA241_CMDQV,
-> +                                          &buf, sizeof(buf), &local_err)) {
-> +        warn_report_err_once(local_err);
-> +        return;
-> +    }
-> +
-> +    if (buf.vevent.lvcmdq_err_map[0] || buf.vevent.lvcmdq_err_map[1]) {
-> +        cmdqv->vintf_cmdq_err_map[0] =
-> +            extract64(buf.vevent.lvcmdq_err_map[0], 0, 32);
-> +        cmdqv->vintf_cmdq_err_map[1] =
-> +            extract64(buf.vevent.lvcmdq_err_map[0], 32, 32);
-> +        cmdqv->vintf_cmdq_err_map[2] =
-> +            extract64(buf.vevent.lvcmdq_err_map[1], 0, 32);
-> +        cmdqv->vintf_cmdq_err_map[3] =
-> +            extract64(buf.vevent.lvcmdq_err_map[1], 32, 32);
-> +        /*
-> +         * CMDQV_CMDQ_ERR_MAP and VINTF0_LVCMDQ_ERR_MAP are distinct
-> +         * registers (different MMIO offsets). With only VINTF0 exposed
-> +         * they carry the same data, so mirror.
-> +         */
-> +        for (int i = 0; i < 4; i++) {
-> +            cmdqv->cmdq_err_map[i] = cmdqv->vintf_cmdq_err_map[i];
-> +        }
-> +        /* Set the VINTF0 bit in VI_ERR_MAP_0 (only VINTF0 is exposed). */
-> +        cmdqv->vi_err_map[0] |= BIT(0);
-> +        if (!(cmdqv->vi_int_mask[0] & BIT(0))) {
-> +            qemu_irq_pulse(cmdqv->irq);
-> +        }
-> +        trace_tegra241_cmdqv_err_map(
-> +            cmdqv->vintf_cmdq_err_map[3], cmdqv->vintf_cmdq_err_map[2],
-> +            cmdqv->vintf_cmdq_err_map[1], cmdqv->vintf_cmdq_err_map[0]);
-> +    }
-> +}
-> +
->  static void tegra241_cmdqv_free_viommu(SMMUv3State *s)
->  {
->      SMMUv3AccelState *accel = s->s_accel;
-> @@ -762,6 +808,7 @@ static void tegra241_cmdqv_free_viommu(SMMUv3State *s)
->          return;
->      }
->      if (veventq) {
-> +        qemu_set_fd_handler(veventq->veventq_fd, NULL, NULL, NULL);
->          close(veventq->veventq_fd);
->          iommufd_backend_free_id(viommu->iommufd, veventq->veventq_id);
->          g_free(veventq);
-> @@ -777,6 +824,7 @@ tegra241_cmdqv_alloc_viommu(SMMUv3State *s, HostIOMMUDeviceIOMMUFD *idev,
->      Tegra241CMDQV *cmdqv = s->s_accel->cmdqv;
->      uint32_t viommu_id, veventq_id, veventq_fd;
->      IOMMUFDVeventq *veventq;
-> +    int flags;
->  
->      if (!iommufd_backend_alloc_viommu(idev->iommufd, idev->devid,
->                                        IOMMU_VIOMMU_TYPE_TEGRA241_CMDQV,
-> @@ -795,14 +843,29 @@ tegra241_cmdqv_alloc_viommu(SMMUv3State *s, HostIOMMUDeviceIOMMUFD *idev,
->          goto free_viommu;
->      }
->  
-> +    flags = fcntl(veventq_fd, F_GETFL);
-> +    if (flags < 0) {
-> +        error_setg(errp, "Failed to get flags for vEVENTQ fd");
-> +        goto free_veventq;
-> +    }
-> +    if (fcntl(veventq_fd, F_SETFL, O_NONBLOCK | flags) < 0) {
-> +        error_setg(errp, "Failed to set O_NONBLOCK on vEVENTQ fd");
-> +        goto free_veventq;
-> +    }
-> +
->      veventq = g_new(IOMMUFDVeventq, 1);
->      veventq->veventq_id = veventq_id;
->      veventq->veventq_fd = veventq_fd;
->      cmdqv->veventq = veventq;
->  
-> +    /* Set up event handler for veventq fd */
-> +    qemu_set_fd_handler(veventq_fd, tegra241_cmdqv_event_read, NULL, cmdqv);
->      *out_viommu_id = viommu_id;
->      return true;
->  
-> +free_veventq:
-> +    close(veventq_fd);
-> +    iommufd_backend_free_id(idev->iommufd, veventq_id);
->  free_viommu:
->      iommufd_backend_free_id(idev->iommufd, viommu_id);
->      return false;
-> diff --git a/hw/arm/trace-events b/hw/arm/trace-events
-> index d76f408d8a..115f1add9d 100644
-> --- a/hw/arm/trace-events
-> +++ b/hw/arm/trace-events
-> @@ -75,6 +75,7 @@ smmuv3_accel_install_ste(uint32_t vsid, const char * type, uint32_t hwpt_id) "vS
->  # tegra241-cmdqv
->  tegra241_cmdqv_read_mmio(uint64_t offset, uint64_t val, unsigned size) "offset: 0x%"PRIx64" val: 0x%"PRIx64" size: 0x%x"
->  tegra241_cmdqv_write_mmio(uint64_t offset, uint64_t val, unsigned size) "offset: 0x%"PRIx64" val: 0x%"PRIx64" size: 0x%x"
-> +tegra241_cmdqv_err_map(uint32_t map3, uint32_t map2, uint32_t map1, uint32_t map0) "hw irq received. error (hex) maps: %04X:%04X:%04X:%04X"
->  tegra241_cmdqv_read_vcmdq_page0(int index, const char *aperture, uint64_t offset0, uint64_t val) "vcmdq[%d] %s page0 offset0: 0x%"PRIx64" val: 0x%"PRIx64
->  tegra241_cmdqv_read_vcmdq_page1(int index, const char *aperture, uint64_t offset0, uint64_t val) "vcmdq[%d] %s page1 offset0: 0x%"PRIx64" val: 0x%"PRIx64
->  tegra241_cmdqv_write_vcmdq_page0(int index, const char *aperture, uint64_t offset0, uint64_t val) "vcmdq[%d] %s page0 offset0: 0x%"PRIx64" val: 0x%"PRIx64
+>
+> The patch appears to delete unused iothread_get_aio_context() from
+> iothread.[cg] and to rename iothread_ref_and_get_aio_context() to
+> iothread_get_aio_context().  It leaves iothread_get_aio_context() in
+> tests/unit/iothread.[ch] alone.  The result is confusing: test's
+> iothread_get_aio_context() takes now one parameter less than the regular
+> one.
+>
+> Should you change both versions?
+>
 
+Yes, I already noticed the iothread test, we can change it after
+merging this series.
+
+Thanks
+Chen
 
