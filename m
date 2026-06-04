@@ -4,107 +4,108 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3B6FFCD6E4A
-	for <qemu-devel@archiver.kernel.org>; Thu,  4 Jun 2026 09:56:45 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 55198CD6E57
+	for <qemu-devel@archiver.kernel.org>; Thu,  4 Jun 2026 09:58:34 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wV4oN-0000mU-Bn; Thu, 04 Jun 2026 05:56:27 -0400
+	id 1wV4qB-0001LE-W8; Thu, 04 Jun 2026 05:58:21 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <eric.auger@redhat.com>)
- id 1wV4oL-0000m7-NO
- for qemu-devel@nongnu.org; Thu, 04 Jun 2026 05:56:25 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <eric.auger@redhat.com>)
- id 1wV4oJ-0005Oq-La
- for qemu-devel@nongnu.org; Thu, 04 Jun 2026 05:56:25 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1780566982;
- h=from:from:reply-to:reply-to:subject:subject:date:date:
- message-id:message-id:to:to:cc:cc:mime-version:mime-version:
- content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=ac0HkQKW+RX66sL+t5akZQf6TIbWOSrh4Pl5Ay2MsFg=;
- b=CS/M+KI5WdppxPxcqGlaTfSOovcsZUfFqETQ1AFP1qmFLNPxUbtG1SHn/5viLWne04XBXY
- I4Zc5O0dnlg3bFlSa8xW48dSO3Xym8LNzAoeEgc9vCAZIF7GH92X/MerthRtPhOCZr/34v
- b6Jq4XWBcYJYjvXxPBcyL3VbWeSJTPc=
-Received: from mail-wr1-f71.google.com (mail-wr1-f71.google.com
- [209.85.221.71]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-634-gOwdFcmdNMuxRlvM1_9zvQ-1; Thu, 04 Jun 2026 05:56:21 -0400
-X-MC-Unique: gOwdFcmdNMuxRlvM1_9zvQ-1
-X-Mimecast-MFC-AGG-ID: gOwdFcmdNMuxRlvM1_9zvQ_1780566980
-Received: by mail-wr1-f71.google.com with SMTP id
- ffacd0b85a97d-460198535bcso357690f8f.3
- for <qemu-devel@nongnu.org>; Thu, 04 Jun 2026 02:56:20 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1780566980; x=1781171780;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:reply-to:user-agent:mime-version:date
- :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ (Exim 4.90_1) (envelope-from <zhangckid@gmail.com>)
+ id 1wV4q9-0001Kt-1D
+ for qemu-devel@nongnu.org; Thu, 04 Jun 2026 05:58:17 -0400
+Received: from mail-ej1-x62e.google.com ([2a00:1450:4864:20::62e])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <zhangckid@gmail.com>)
+ id 1wV4q6-0006H3-OA
+ for qemu-devel@nongnu.org; Thu, 04 Jun 2026 05:58:16 -0400
+Received: by mail-ej1-x62e.google.com with SMTP id
+ a640c23a62f3a-bed2195323cso72102866b.1
+ for <qemu-devel@nongnu.org>; Thu, 04 Jun 2026 02:58:13 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1780567092; cv=none;
+ d=google.com; s=arc-20240605;
+ b=THSo5jAvW7UH3VdW+phfRNj7lWz+DVdxK7KjFTvf1bZcDpnoz+4R0J+m+QQfw5zTY8
+ gRscB2XQmtQvXAIhg3/Sqkziv1T0X+ZjedNxBT11tJIlMBU+c9td/jBQJw3HuRPSwVpV
+ mK6OfHkqta92XhFE/crpfSbVTVwTZfD5q4Yp27kk6PokaX+sprrLIeIJ9f22zpdDowR9
+ uuNClJNxGi9zqcRwcSsB+zLzKSRBQKIHLxlhGZ89mm2GmhK2p1vHCUzLPGKTr8XQ39GL
+ UrMWqt7Qc7lWelrNNccaJNX5npFbD5dldibYPkeKKuZ+WkTYCocg6tKPimLms07FkERN
+ vbfQ==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
+ s=arc-20240605; 
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:dkim-signature;
+ bh=PbCpmMSpxs1Hd2YwpkKI59NJ2W4kFRfabpmYWC40V30=;
+ fh=2vCTedxg5r0JPg5LnC8s7len6poc60rIFIIE/ngH4cY=;
+ b=ZPqYgDdeFSfN8HD8ZxwxEvhd86kZjytsvdylQJg5XVeKl7jcnHSqmDP7Qrae3wi6nD
+ jmpNPQ3ujdanAW5vshpWMb6fR1cg+j57rxwJw7L1y+3+wl61V3It6oHLxeQPDKrViWrc
+ NxKe1sxuDuBfQrX8GB4rMNTBpjqITEGOhGamUz3Q4yERzV1Lnkbz2P77PbLQPlfVaZmA
+ IJKXBzdRLI4tZtXZNdb2zth+tlE+AfboF7n03FLZyP7vbeTJEewKMWRvlE4IFyedXwDt
+ YNltrKDLljOy+iCy4VuObKenhbnmOSE1f+7kyNfe9Lw6t01DnteHPLGQX7Gg/bjiRvqF
+ eTwA==; darn=nongnu.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=gmail.com; s=20251104; t=1780567092; x=1781171892; darn=nongnu.org;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:from:to:cc:subject:date
  :message-id:reply-to;
- bh=ac0HkQKW+RX66sL+t5akZQf6TIbWOSrh4Pl5Ay2MsFg=;
- b=ODkP6flJ9gJNA2bYo08LRgY4YtutPxduuSKxaSjsVte4gcT06V4BU8zEr6TqydXZ3J
- WFclbctRHd6VQ4MmTiHgB7ivExkpZl92K8QhAIwkCDrjdaKXNw1lFF1N2/s3ic/m20FR
- tO/Ckm9xJohAfdBEJphPcqUWnyudiP6zqX4Ef9KBexgX6/l8mjl5EH/FWrKHiXf09dzl
- mrpPRwnW24XcKri4IkFKqlCqqnKrV4oi1tzkoRbJBHncUkIZHBEC8EFjQGqFH0Ry1Qlb
- iM8/M6HQigjpJJtuQ69lItBeLfF5cIu8qwHwc5/0PUImfzXWbqPFsmCTjMVNUhERV5Hz
- X+lw==
-X-Forwarded-Encrypted: i=1;
- AFNElJ9GEOq2lLs/wEX+g5tbAjog0tTwyR5fu8Xp6mEsyet4qrh/9yCbOtA9wQzxi64140oB4CNqj5nuwqo2@nongnu.org
-X-Gm-Message-State: AOJu0Yym1ZHK+gc9Jx8TWekr1HLvemVB2HlylJdS9ZYAXaEr/u6NEEDK
- f88cZ/KG2Wx7rjI5ktbs0phW5q72z9YbOHe1G66ejcAWdwCsE/P6EAjFkSWoEQyrmZ7Ol5OaIR9
- x+JCxG04kjuSJ+5IZwUh691wiuXub7GL8L1qMobBPv2eNN59FTfbQpx+P
-X-Gm-Gg: Acq92OGO1RLmEADv2he7cTJYgk9ISoCEF/a9VZFj2HgxrWbW58XCh4N+SfDm7EFQzhL
- uJf40STQtTK+So7Ts282y7aebrn27M7iGEwFxo+ZmYQ2QYWFsIaIzGwvADzDRGzi12qjxqffWYi
- yNXLi0NU//c/89AC+8DSiEQBq/s27N0QBSYuTVj4YzY8cBS2yQB074u04upI9Dx33U/sfteK+rr
- +iVmsUnr03MSlfyI6u/kTL/VTiFgvHrigVk4+7dZ7ROIcxOvygMIiNIM4/4WP5rb6A5XilvcUq/
- Kq7Un52X+qtETQtCtDaJPc03NzQT3InM3WTA52dpWVZyV/gAd1JQig8a0quPU0jmFhnwed5A1j6
- 8zN0+MmvWcCmYKSq0uSYBOPQQpuKCzBi2MFBa1LlR2qnKqMZ2un59JZhPOpcQyxPh9AvBtz4B4S
- X4HTh5
-X-Received: by 2002:a05:6000:2401:b0:43b:5097:6f62 with SMTP id
- ffacd0b85a97d-46021760f85mr11482495f8f.36.1780566979658; 
- Thu, 04 Jun 2026 02:56:19 -0700 (PDT)
-X-Received: by 2002:a05:6000:2401:b0:43b:5097:6f62 with SMTP id
- ffacd0b85a97d-46021760f85mr11482437f8f.36.1780566979224; 
- Thu, 04 Jun 2026 02:56:19 -0700 (PDT)
-Received: from ?IPV6:2a01:e0a:f0e:9070:527b:9dff:feef:3874?
- ([2a01:e0a:f0e:9070:527b:9dff:feef:3874])
- by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-4601f2e4004sm15073960f8f.9.2026.06.04.02.56.17
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 04 Jun 2026 02:56:18 -0700 (PDT)
-Message-ID: <d3ab357a-a0f2-48c8-b458-b5263220e09c@redhat.com>
-Date: Thu, 4 Jun 2026 11:56:16 +0200
+ bh=PbCpmMSpxs1Hd2YwpkKI59NJ2W4kFRfabpmYWC40V30=;
+ b=LA1ALOXDWiUqEG4DQql7mWjXcw5IQCjlLrbSZSdrVsgqT04d+uvAnKox+59gGtKmsg
+ nnQfI4j/TcdQZG8rc3XcGhGC2GehpIh0YeOtBrQesvqRk2039S0HPJC9cLBHoRmmpUrj
+ JefLFsKCDaJSKhNlH1PWfcsRXNCzY0wzmp4pAPd6UWu6TuuxkBZSDe8bLhmrg+myo9v3
+ UYbkMxgpKY4YmSVA7lGnUGJlTN87AEi1WEbj2bDhfwLdqkRUNzLuVQU6xu3h72uEmFC6
+ OrWOI/Arb7oBXwpomlfMjo8hYkknnTYTP1si/wHicjyVrbl+gvGx7gckf9C0uBARw/Ed
+ ddyg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1780567092; x=1781171892;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=PbCpmMSpxs1Hd2YwpkKI59NJ2W4kFRfabpmYWC40V30=;
+ b=lSJSkoDJQz7eSBA0yzF7szzH5QFC/V4EwIiMyTr9DvbTl7kexEWJ1Q/gBzkDUkf3qD
+ cOYCg694ufYiYtWN2k+z2VKQOtOd9TFKwa8WjfQVR9OGhngicPO8Wr/7I8azjYFwIUeo
+ RZKQQvsAl9QKUYXyA1h9Y7RzpFC/+MJdX1Y7JiQ1rlARoaey58Gyeu+W+9EZGNh+f2Q2
+ /kHExFXLv1PHdgshSVZbIHyhvDtyuBrB9Tdo2/sRAZ50eIVl66J2sYF/FGCqM7WFCWaZ
+ ad+L//dBvrK4d8x2yuA1R/VpmtOGLgT+JMGExGrrDeVmTNmHhwZuBLtzlzy3IrY3im/B
+ QZLg==
+X-Gm-Message-State: AOJu0Ywd78NZ+7jogu08nE/ubr+Ztkdt6YhcpWECqZgnVeeEoTL/JbKD
+ fmU8dYuE+g/tIgjcTuWDPbbdlag84leSF5WjzNCdRKbwZK1weEoEEL7v4Tbx+X84/t5FyyvzhCY
+ rEiYwX3byyQaeTybMk3tTwIcnEKu1iCQ=
+X-Gm-Gg: Acq92OGvEj3qrrPo5lLYbZQ+3QTi/CB+1icxV1KYE2PX3EU366LSRbpfJ02ndmQYEYq
+ FNTqe1qjM1zi9IBfd2kCDts+zv9qZh0Y7p+xUqFVCIZJcemoARPHUm60a1xnAQjqFAopqOJgykI
+ nilxm39fFWaO13WisACIQw5TpJyKvWsSnWc3v0dirTam549sS0KwU+dSL8qWfUvmCzPzBjD0/B2
+ o+PBrCkyaQ6Uj7OIcGCjtmufyOwsAXvleY2V3wYRJZ4ZsiTFyjc39uKxUgZZXMREM1WcF72KC68
+ Ql8hVFpSj0UivNt8dbUSvVzgrthzzw==
+X-Received: by 2002:a17:907:ab5:b0:bdd:f2e9:37d2 with SMTP id
+ a640c23a62f3a-bf0aef024f6mr256404666b.33.1780567092079; Thu, 04 Jun 2026
+ 02:58:12 -0700 (PDT)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v6 19/31] hw/arm/tegra241-cmdqv: Use mmap'd VINTF page0 as
- VCMDQ backing
-Content-Language: en-US
-To: Shameer Kolothum <skolothumtho@nvidia.com>, qemu-arm@nongnu.org,
- qemu-devel@nongnu.org
-Cc: peter.maydell@linaro.org, clg@redhat.com, alex@shazbot.org,
- nicolinc@nvidia.com, nathanc@nvidia.com, mochs@nvidia.com, jan@nvidia.com,
- jgg@nvidia.com, zhenzhong.duan@intel.com, kjaju@nvidia.com,
- phrdina@redhat.com
-References: <20260601114221.457995-1-skolothumtho@nvidia.com>
- <20260601114221.457995-20-skolothumtho@nvidia.com>
-From: Eric Auger <eric.auger@redhat.com>
-In-Reply-To: <20260601114221.457995-20-skolothumtho@nvidia.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=170.10.133.124;
- envelope-from=eric.auger@redhat.com; helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -24
-X-Spam_score: -2.5
+References: <20260529213321.96271-1-zhangckid@gmail.com>
+ <20260529213321.96271-7-zhangckid@gmail.com>
+ <87ecioswnv.fsf@pond.sub.org>
+In-Reply-To: <87ecioswnv.fsf@pond.sub.org>
+From: Zhang Chen <zhangckid@gmail.com>
+Date: Thu, 4 Jun 2026 17:57:34 +0800
+X-Gm-Features: AVHnY4LHNniXPL1RPSXtJUriGzAO13jardetCYSprA32dnsQU4q5SpxUTJ61J4c
+Message-ID: <CAK3tnvJ1UHfAviTJd5vanpSBV2b+OR8XSJbVzh9WvL0nSr9MMQ@mail.gmail.com>
+Subject: Re: [PATCH V8 06/15] monitor: assign unique default ID to anonymous
+ monitors
+To: Markus Armbruster <armbru@redhat.com>
+Cc: qemu-devel <qemu-devel@nongnu.org>,
+ "Dr . David Alan Gilbert" <dave@treblig.org>, 
+ Eric Blake <eblake@redhat.com>, "Michael S . Tsirkin" <mst@redhat.com>, 
+ Stefan Hajnoczi <stefanha@redhat.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2a00:1450:4864:20::62e;
+ envelope-from=zhangckid@gmail.com; helo=mail-ej1-x62e.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.445,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -117,196 +118,334 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-To: eric.auger@redhat.com
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi Shameer,
+On Wed, Jun 3, 2026 at 1:02=E2=80=AFAM Markus Armbruster <armbru@redhat.com=
+> wrote:
+>
+> Zhang Chen <zhangckid@gmail.com> writes:
+>
+> > Currently, dynamically or implicitly created monitors (such as those
+> > generated via '-monitor stdio', GDB stub terminals, or mux chardevs)
+> > leave the 'id' field in the Monitor struct as NULL.
+>
+> There is no @id member in struct Monitor.
 
-On 6/1/26 1:42 PM, Shameer Kolothum wrote:
-> hw/arm/tegra241-cmdqv: Use mmap'd VINTF Page 0 as VCMDQ backing
-the title is double here.
-By the way may I suggest
-hw/arm/tegra241-cmdqv: Use mmap'd VINTF page0 for mapped vcmdqs direct view
+Yes, I try to add it in this patch.
 
-to emphasize this relates the direct view and only for mapped vcmdqs
 >
-> Introduce tegra241_cmdqv_vintf_ptr() to route VCMDQ Page 0 register
-> accesses through the mmap'd VINTF Page 0 backing once a hardware
-> queue has been allocated for the VCMDQ.
+> >                                                     But the original
+> > @MonitorOptions have the @id field.
 >
-> The two QEMU-trapped Page 0 apertures (direct at 0x10000, VINTF at
-> 0x30000) are hardware aliases of the same underlying registers. A
-> subsequent patch installs the VINTF aperture as a RAM-device into
-> guest MMIO; in this patch both remain QEMU-trapped.
+> QAPI type MonitorOptions has an optional member @id.
 >
-> The direct VCMDQ aperture stays QEMU-trapped (rather than aliased
-> to the VINTF mmap) so that writes to an unallocated VCMDQ remain
-> well-defined. The CMDQV architecture allows software to program a
-> VCMDQ through the direct aperture without first allocating it to a
-> VINTF; aliasing to the VINTF mmap would route those writes into
-> unallocated logical slots where the hardware silently drops them.
+> Instances are only created by monitor_init_opts() from a QemuOpts, and
+> member @id is set to the QemuOpts's @id, which is also optional.
 >
-> A VCMDQ Page 0 access is served from one of two sources:
+> monitor_init_opts() is only called during startup on behalf of CLI
+> option -mon, its shorthands -monitor, -qmp, -qmp-pretty, and for default
+> monitors.
 >
->   - Cache-backed: no hw_queue is allocated for the VCMDQ
->     (HW_QUEUE_ALLOC has not yet succeeded). Both apertures use
->     QEMU's register cache.
+> -mon accepts an "id" parameter, but it's optional.
 >
->   - HW-backed: HW_QUEUE_ALLOC has succeeded. Both apertures access
->     the registers directly through the mmap'd VINTF Page 0.
+> The others make up an "id".  For instance, the default monitor usually
+> gets "compat_monitor0".
 >
-> tegra241_cmdqv_sync_vcmdq() copies any cached writes (CONS_INDX,
-> PROD_INDX, CONFIG, GERRORN) into the mmap'd page on the cache-to-HW
-> transition so the guest's earlier register state survives.
+> Aside: there's code that checks whether a non-null QemuOpts "id" starts
+> with "compat_monitor".  That's horrifying.
 >
-> Signed-off-by: Shameer Kolothum <skolothumtho@nvidia.com>
-> ---
->  hw/arm/tegra241-cmdqv.c | 73 +++++++++++++++++++++++++++++++++++++++++
->  1 file changed, 73 insertions(+)
+> As far as I can tell, the only way to create a monitor with null @id in
+> MonitorOptions is -mon without "id".
 >
-> diff --git a/hw/arm/tegra241-cmdqv.c b/hw/arm/tegra241-cmdqv.c
-> index 54d95f4e4e..dce7089697 100644
-> --- a/hw/arm/tegra241-cmdqv.c
-> +++ b/hw/arm/tegra241-cmdqv.c
-> @@ -39,6 +39,47 @@ static void tegra241_cmdqv_free_all_vcmdq(Tegra241CMDQV *cmdqv)
->      }
->  }
->  
-> +/*
-> + * Return a pointer into the mmap'd VINTF page0 for the VCMDQ Page 0
-> + * register at @offset0 in VCMDQ slot @index, or NULL when the VCMDQ
-> + * has no hw_queue allocated or the VINTF page0 is not mmap'd.
-> + */
-> +static inline uint32_t *tegra241_cmdqv_vintf_ptr(Tegra241CMDQV *cmdqv,
-> +                                                 int index, hwaddr offset0)
-> +{
-> +    if (!cmdqv->vcmdq[index] || !cmdqv->vintf_page0) {
-> +        return NULL;
-> +    }
-> +    return (uint32_t *)(cmdqv->vintf_page0 +
-> +                        (index * CMDQV_VCMDQ_STRIDE) +
-> +                        (offset0 - CMDQV_VCMDQ_PAGE0_BASE));
-> +}
-> +
-> +/*
-> + * Flush cached register writes into the mmap'd VINTF page0 after a
-> + * successful HW_QUEUE_ALLOC, so the guest's earlier writes survive
-> + * the cache-to-hardware transition.
-> + */
-> +static void tegra241_cmdqv_sync_vcmdq(Tegra241CMDQV *cmdqv, int index)
-> +{
-> +    uint32_t *ptr;
-> +
-> +    ptr = tegra241_cmdqv_vintf_ptr(cmdqv, index, A_VCMDQ0_CONS_INDX);
-> +    if (!ptr) {
-> +        return;
-> +    }
-> +    *ptr = cmdqv->vcmdq_cons_indx[index];
-> +
-> +    ptr = tegra241_cmdqv_vintf_ptr(cmdqv, index, A_VCMDQ0_PROD_INDX);
-> +    *ptr = cmdqv->vcmdq_prod_indx[index];
-> +
-> +    ptr = tegra241_cmdqv_vintf_ptr(cmdqv, index, A_VCMDQ0_CONFIG);
-> +    *ptr = cmdqv->vcmdq_config[index];
-> +
-> +    ptr = tegra241_cmdqv_vintf_ptr(cmdqv, index, A_VCMDQ0_GERRORN);
-> +    *ptr = cmdqv->vcmdq_gerrorn[index];
-> +}
-> +
->  /*
->   * Allocate a host HW VCMDQ from the current cached BASE / size for @index.
->   *
-> @@ -95,6 +136,9 @@ static bool tegra241_cmdqv_setup_vcmdq(Tegra241CMDQV *cmdqv, int index,
->      cmdqv->vcmdq_gerror[index] &= ~R_VCMDQ0_GERROR_CMDQ_INIT_ERR_MASK;
->      cmdqv->vcmdq_status[index] |= R_VCMDQ0_STATUS_CMDQ_EN_OK_MASK;
->  
-> +    /* Pre-alloc cached writes survive the cache-to-hardware transition. */
-what about the opposite transition?
-> +    tegra241_cmdqv_sync_vcmdq(cmdqv, index);
-> +
->      return true;
->  }
->  
-> @@ -113,13 +157,22 @@ static void tegra241_cmdqv_setup_all_vcmdq(Tegra241CMDQV *cmdqv,
->   *
->   * The caller normalizes the MMIO offset such that @offset0 always refers
->   * to a VCMDQ0_* register, while @index selects the VCMDQ instance.
-> + *
-> + * If the VCMDQ is allocated and VINTF page0 is mmap'd, read directly
-> + * from the VINTF page0 backing. Otherwise, fall back to the cache.
->   */
->  static uint64_t tegra241_cmdqv_read_vcmdq_page0(Tegra241CMDQV *cmdqv,
->                                                  hwaddr offset0, int index,
->                                                  bool direct)
->  {
-> +    uint32_t *ptr = tegra241_cmdqv_vintf_ptr(cmdqv, index, offset0);
->      uint64_t val = 0;
->  
-> +    if (ptr) {
-shouldn't you test "direct" as well? I know that later on this is will
-be backed by another mr but I think this would be clearer.
-> +        val = *ptr;
-> +        goto out;
-> +    }
-> +
->      switch (offset0) {
->      case A_VCMDQ0_CONS_INDX:
->          val = cmdqv->vcmdq_cons_indx[index];
-> @@ -144,6 +197,7 @@ static uint64_t tegra241_cmdqv_read_vcmdq_page0(Tegra241CMDQV *cmdqv,
->                        "%s unhandled read access at 0x%" PRIx64 "\n",
->                        __func__, offset0);
->      }
-> +out:
->      trace_tegra241_cmdqv_read_vcmdq_page0(index, direct ? "direct" : "vi",
->                                            offset0, val);
->      return val;
-> @@ -220,11 +274,29 @@ static uint64_t tegra241_cmdqv_config_vintf_read(Tegra241CMDQV *cmdqv,
->   *
->   * Page 0 registers are all 32-bit; this helper is only called for 4-byte
->   * writes.
-> + *
-> + * If the VCMDQ is allocated and VINTF page0 is mmap'd, write directly
-> + * to the VINTF page0 backing. Otherwise, update the cache.
->   */
->  static void tegra241_cmdqv_write_vcmdq_page0(Tegra241CMDQV *cmdqv,
->                                               hwaddr offset0, int index,
->                                               uint32_t value, bool direct)
->  {
-> +    uint32_t *ptr = tegra241_cmdqv_vintf_ptr(cmdqv, index, offset0);
-same here?
-> +
-> +    if (ptr) {
-> +        switch (offset0) {
-> +        case A_VCMDQ0_CONS_INDX:
-> +        case A_VCMDQ0_PROD_INDX:
-> +        case A_VCMDQ0_CONFIG:
-> +        case A_VCMDQ0_GERRORN:
-> +            *ptr = value;
-> +            goto out;
-> +        default:
-> +            break;
-> +        }
-> +    }
-> +
->      switch (offset0) {
->      case A_VCMDQ0_CONS_INDX:
->          cmdqv->vcmdq_cons_indx[index] = value;
-> @@ -255,6 +327,7 @@ static void tegra241_cmdqv_write_vcmdq_page0(Tegra241CMDQV *cmdqv,
->                        "%s unhandled write access at 0x%" PRIx64 "\n",
->                        __func__, offset0);
->      }
-> +out:
->      trace_tegra241_cmdqv_write_vcmdq_page0(index, direct ? "direct" : "vi",
-by the way could be interesting to log in the trace event that mmapped
-was used instead of cache regs.
+> This is a swamp.  Instead of messing with MonitorOptions member @id, ...
 
-besides this looks good to me
+I don't quite understand here, the "compat_monitor0" has been saved in
+the struct chardev's label field. I know each monitor need to bind to a cha=
+rdev.
+In principle, the "compat_monitor0" mark belonging to the chardev, not
+the monitor.
+Why is it forbidden to replace monitor with chardev?
+So I think the monitor need to a unique ID field in the struct monitor.
 
-Thanks
+>
+> >                                     This makes it difficult to track,
+> > debug, or associate monitors with specific iothreads or
+> > infrastructure components.
+> >
+> > Fix this by introducing monitor_get_id(), which uses an atomic counter
+> > to generate a unique fallback name ("mon_default_X") when 'id' is
+> > not explicitly supplied in MonitorOptions. Update all internal HMP
+> > and QMP initialization paths to propagate and store this string.
+>
+> ... you create yet another ID that is used for nothing but referring to
+> monitors from IOThreadHolder.  Hmm.
+>
+> Is it really necessary that every monitor has an ID?  If a user want
+> one, they can simply avoid -mon without id.
 
-Eric
->                                             offset0, value);
->  }
+I think yes, the iothread ref/unref is the first user.
 
+>
+> If it's not necessary, ignore the remainder of my review.
+>
+> > Signed-off-by: Zhang Chen <zhangckid@gmail.com>
+> > ---
+> >  chardev/char.c             |  2 +-
+> >  gdbstub/system.c           |  3 ++-
+> >  include/monitor/monitor.h  |  6 ++++--
+> >  monitor/hmp.c              | 20 +++++++++++++++++++-
+> >  monitor/monitor-internal.h |  2 ++
+> >  monitor/monitor.c          |  4 ++--
+> >  monitor/qmp.c              | 18 +++++++++++++++++-
+> >  stubs/monitor-internal.c   |  3 ++-
+> >  8 files changed, 49 insertions(+), 9 deletions(-)
+> >
+> > diff --git a/chardev/char.c b/chardev/char.c
+> > index ca8b37ed8d..f057247001 100644
+> > --- a/chardev/char.c
+> > +++ b/chardev/char.c
+> > @@ -805,7 +805,7 @@ static Chardev *qemu_chr_new_from_name(const char *=
+label, const char *filename,
+> >
+> >      if (qemu_opt_get_bool(opts, "mux", 0)) {
+> >          assert(permit_mux_mon);
+> > -        monitor_init_hmp(chr, true, &err);
+> > +        monitor_init_hmp(chr, true, NULL, &err);
+> >          if (err) {
+> >              error_report_err(err);
+> >              object_unparent(OBJECT(chr));
+> > diff --git a/gdbstub/system.c b/gdbstub/system.c
+> > index e86c5870ab..50f934fde3 100644
+> > --- a/gdbstub/system.c
+> > +++ b/gdbstub/system.c
+> > @@ -388,7 +388,8 @@ bool gdbserver_start(const char *device, Error **er=
+rp)
+> >          /* Initialize a monitor terminal for gdb */
+> >          mon_chr =3D qemu_chardev_new(NULL, TYPE_CHARDEV_GDB,
+> >                                     NULL, NULL, &error_abort);
+> > -        monitor_init_hmp(mon_chr, false, &error_abort);
+> > +
+> > +        monitor_init_hmp(mon_chr, false, NULL, &error_abort);
+> >      } else {
+> >          qemu_chr_fe_deinit(&gdbserver_system_state.chr, true);
+> >          mon_chr =3D gdbserver_system_state.mon_chr;
+> > diff --git a/include/monitor/monitor.h b/include/monitor/monitor.h
+> > index 55649a8664..c6ccd34cda 100644
+> > --- a/include/monitor/monitor.h
+> > +++ b/include/monitor/monitor.h
+> > @@ -19,11 +19,13 @@ bool monitor_cur_is_qmp(void);
+> >
+> >  void monitor_init_globals(void);
+> >  void monitor_init_globals_core(void);
+> > -void monitor_init_qmp(Chardev *chr, bool pretty, Error **errp);
+> > -void monitor_init_hmp(Chardev *chr, bool use_readline, Error **errp);
+> > +void monitor_init_qmp(Chardev *chr, bool pretty, const char *id, Error=
+ **errp);
+> > +void monitor_init_hmp(Chardev *chr, bool use_readline, const char *id,
+> > +                      Error **errp);
+> >  int monitor_init(MonitorOptions *opts, bool allow_hmp, Error **errp);
+> >  int monitor_init_opts(QemuOpts *opts, Error **errp);
+> >  void monitor_cleanup(void);
+> > +char *monitor_get_id(void);
+> >
+> >  int monitor_suspend(Monitor *mon);
+> >  void monitor_resume(Monitor *mon);
+> > diff --git a/monitor/hmp.c b/monitor/hmp.c
+> > index cc4390486e..47f57f69e5 100644
+> > --- a/monitor/hmp.c
+> > +++ b/monitor/hmp.c
+> > @@ -43,6 +43,8 @@
+> >  #include "system/block-backend.h"
+> >  #include "trace.h"
+> >
+> > +static int mon_hmp_id_counter;
+> > +
+> >  static void monitor_command_cb(void *opaque, const char *cmdline,
+> >                                 void *readline_opaque)
+> >  {
+> > @@ -65,6 +67,14 @@ void monitor_read_command(MonitorHMP *mon, int show_=
+prompt)
+> >      }
+> >  }
+> >
+> > +static char *monitor_hmp_get_id(void)
+> > +{
+> > +    int id =3D qatomic_fetch_inc(&mon_hmp_id_counter);
+>
+> Why atomic?  As far as I can see, this is only called during startup in
+> the main thread.  Even if we merge dynamic monitor creation, the monitor
+> command to create a monitor will also run in the main thread.
+
+Yes, you are right.
+Will change it to:
+int id =3D mon_hmp_id_counter++;
+
+
+>
+> > +    char *name =3D g_strdup_printf("mon_default_hmp_%d", id);
+>
+> Can clash with the user's monitor IDs.
+
+Just run it when the user didn't input thie monitor ID:
+
++void monitor_init_hmp(Chardev *chr, bool use_readline, const char *id,
++                      Error **errp)
+ {
+     MonitorHMP *mon =3D g_new0(MonitorHMP, 1);
+
++    if (!id) {
++        g_autofree char *mon_id =3D  monitor_hmp_get_id();
++        mon->common.id =3D g_strdup(mon_id);
++    } else {
++        mon->common.id =3D g_strdup(id);
++    }
+
+>
+> > +
+> > +    return name;
+> > +}
+> > +
+> >  int monitor_read_password(MonitorHMP *mon, ReadLineFunc *readline_func=
+,
+> >                            void *opaque)
+> >  {
+> > @@ -1522,10 +1532,18 @@ static void monitor_readline_flush(void *opaque=
+)
+> >      monitor_flush(&mon->common);
+> >  }
+> >
+> > -void monitor_init_hmp(Chardev *chr, bool use_readline, Error **errp)
+> > +void monitor_init_hmp(Chardev *chr, bool use_readline, const char *id,
+> > +                      Error **errp)
+> >  {
+> >      MonitorHMP *mon =3D g_new0(MonitorHMP, 1);
+> >
+> > +    if (!id) {
+> > +        g_autofree char *mon_id =3D  monitor_hmp_get_id();
+> > +        mon->common.id =3D g_strdup(mon_id);
+> > +    } else {
+> > +        mon->common.id =3D g_strdup(id);
+> > +    }
+> > +
+> >      if (!qemu_chr_fe_init(&mon->common.chr, chr, errp)) {
+> >          g_free(mon);
+> >          return;
+> > diff --git a/monitor/monitor-internal.h b/monitor/monitor-internal.h
+> > index a5c4aba306..2060311b03 100644
+> > --- a/monitor/monitor-internal.h
+> > +++ b/monitor/monitor-internal.h
+> > @@ -108,6 +108,8 @@ struct Monitor {
+> >      bool skip_flush;
+> >      bool use_io_thread;
+> >
+> > +    char *id;
+>
+> Needs a comment.  In case you doubt it: explaining monitor IDs in my
+> review of the commit message took me ~120 words.
+
+OK, I learned a lot from your comments~
+
+Thanks~
+Chen
+
+>
+> > +
+> >      char *mon_cpu_path;
+> >      QTAILQ_ENTRY(Monitor) entry;
+> >
+> > diff --git a/monitor/monitor.c b/monitor/monitor.c
+> > index 00b93ed612..dafb4ad8b0 100644
+> > --- a/monitor/monitor.c
+> > +++ b/monitor/monitor.c
+> > @@ -732,7 +732,7 @@ int monitor_init(MonitorOptions *opts, bool allow_h=
+mp, Error **errp)
+> >
+> >      switch (opts->mode) {
+> >      case MONITOR_MODE_CONTROL:
+> > -        monitor_init_qmp(chr, opts->pretty, errp);
+> > +        monitor_init_qmp(chr, opts->pretty, opts->id, errp);
+> >          break;
+> >      case MONITOR_MODE_READLINE:
+> >          if (!allow_hmp) {
+> > @@ -743,7 +743,7 @@ int monitor_init(MonitorOptions *opts, bool allow_h=
+mp, Error **errp)
+> >              error_setg(errp, "'pretty' is not compatible with HMP moni=
+tors");
+> >              return -1;
+> >          }
+> > -        monitor_init_hmp(chr, true, errp);
+> > +        monitor_init_hmp(chr, true, opts->id, errp);
+> >          break;
+> >      default:
+> >          g_assert_not_reached();
+> > diff --git a/monitor/qmp.c b/monitor/qmp.c
+> > index 687019811f..b210850a15 100644
+> > --- a/monitor/qmp.c
+> > +++ b/monitor/qmp.c
+> > @@ -56,6 +56,7 @@
+> >   * Access must be atomic for thread safety.
+> >   */
+> >  static bool qmp_dispatcher_co_busy =3D true;
+> > +static int mon_qmp_id_counter;
+> >
+> >  struct QMPRequest {
+> >      /* Owner of the request */
+> > @@ -76,6 +77,14 @@ static bool qmp_oob_enabled(MonitorQMP *mon)
+> >      return mon->capab[QMP_CAPABILITY_OOB];
+> >  }
+> >
+> > +static char *monitor_qmp_get_id(void)
+> > +{
+> > +    int id =3D qatomic_fetch_inc(&mon_qmp_id_counter);
+>
+> Again, why atomic?
+>
+> > +    char *name =3D g_strdup_printf("mon_default_qmp_%d", id);
+>
+> Again, can clash with the user's IDs.
+>
+> > +
+> > +    return name;
+> > +}
+> > +
+> >  static void monitor_qmp_caps_reset(MonitorQMP *mon)
+> >  {
+> >      memset(mon->capab_offered, 0, sizeof(mon->capab_offered));
+> > @@ -513,10 +522,17 @@ static void monitor_qmp_setup_handlers_bh(void *o=
+paque)
+> >      monitor_list_append(&mon->common);
+> >  }
+> >
+> > -void monitor_init_qmp(Chardev *chr, bool pretty, Error **errp)
+> > +void monitor_init_qmp(Chardev *chr, bool pretty, const char *id, Error=
+ **errp)
+> >  {
+> >      MonitorQMP *mon =3D g_new0(MonitorQMP, 1);
+> >
+> > +    if (!id) {
+> > +        g_autofree char *mon_id =3D  monitor_qmp_get_id();
+> > +        mon->common.id =3D g_strdup(mon_id);
+> > +    } else {
+> > +        mon->common.id =3D g_strdup(id);
+> > +    }
+> > +
+> >      if (!qemu_chr_fe_init(&mon->common.chr, chr, errp)) {
+> >          g_free(mon);
+> >          return;
+> > diff --git a/stubs/monitor-internal.c b/stubs/monitor-internal.c
+> > index 4fece49d53..325a559e62 100644
+> > --- a/stubs/monitor-internal.c
+> > +++ b/stubs/monitor-internal.c
+> > @@ -8,6 +8,7 @@ int monitor_get_fd(Monitor *mon, const char *name, Erro=
+r **errp)
+> >      return -1;
+> >  }
+> >
+> > -void monitor_init_hmp(Chardev *chr, bool use_readline, Error **errp)
+> > +void monitor_init_hmp(Chardev *chr, bool use_readline, const char *id,
+> > +                      Error **errp)
+> >  {
+> >  }
+>
 
