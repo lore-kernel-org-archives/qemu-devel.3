@@ -4,45 +4,49 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B073ECD6E4A
-	for <qemu-devel@archiver.kernel.org>; Thu,  4 Jun 2026 07:17:10 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C616ECD6E68
+	for <qemu-devel@archiver.kernel.org>; Thu,  4 Jun 2026 07:17:11 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wV2Js-00056l-VY; Thu, 04 Jun 2026 03:16:48 -0400
+	id 1wV2Jg-00055j-Do; Thu, 04 Jun 2026 03:16:36 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@mailo.com>)
- id 1wV2Jp-00056L-Jz; Thu, 04 Jun 2026 03:16:46 -0400
+ (Exim 4.90_1) (envelope-from <philmd@mailo.com>) id 1wV2Jc-000559-5M
+ for qemu-devel@nongnu.org; Thu, 04 Jun 2026 03:16:32 -0400
 Received: from msg-3.mailo.com ([213.182.54.8] helo=mailo.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@mailo.com>)
- id 1wV2Jn-0002i5-Pm; Thu, 04 Jun 2026 03:16:45 -0400
+ (Exim 4.90_1) (envelope-from <philmd@mailo.com>) id 1wV2Ja-0002cr-47
+ for qemu-devel@nongnu.org; Thu, 04 Jun 2026 03:16:31 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=mailo.com; s=mailo;
- t=1780554430; bh=I5JCem6ReI09Y6M6i3h/53O1GGEcPnif8Nvqy6HgzwE=;
- h=X-EA-Auth:Message-ID:Date:MIME-Version:Subject:To:References:From:
- In-Reply-To:Content-Type:Content-Transfer-Encoding;
- b=ngPmGFGJvL7jRkMCnCRC4UkNw+2po1vjBganVL9GrDpB1Yf+ivWU1gDYSt6755jk9
- uS/uT/s5FpLrLO0N7d9VvR9TAkswL9fVW5krVcYYWAi6agSLclUY23f1Eof9A32ugm
- tiAE20VWxusxMmup6g9nLbd/0sr2NRwAsN8nS+mU=
-Received: by be1-1.in.mailobj.net [192.168.91.11] with ESMTP
+ t=1780554191; bh=e+c4waTMJ9KjxQjvHx9OcykyWJ3yySKtqJVrpQcA6N0=;
+ h=X-EA-Auth:Message-ID:Date:MIME-Version:Subject:To:Cc:References:
+ From:In-Reply-To:Content-Type:Content-Transfer-Encoding;
+ b=AxqGN8xzUrXsUY3xcKMWeYLdh8YRPpAq8Zfi1ipAhkBRVvkEBbUF56rJU1870vecR
+ RZVgTNOEkknY6dwl+IXz1EF7Ky7XbsiPvNg3GD0jbv9hY1u9WZDU0lkNRiZyKc34Xm
+ Nr3ySQ2vkyOpdxmn3T8J+h8XI6x5FZlv1e9MWg9s=
+Received: by be1-3.in.mailobj.net [192.168.91.13] with ESMTP
  via ip-20.mailobj.net [213.182.54.20]
- Thu,  4 Jun 2026 08:26:55 +0200 (CEST)
-X-EA-Auth: yGRVpfFkQkmgIXjOEi9j/nsbc8QMt21cHnmIKyoL4Am++zD/X2o63ye8hzBuqR09g47cgzw6GXyB02Rg7kO6iSROXvjqSuAv
-Message-ID: <a081403b-54e3-4f17-ac20-d2580ab23ed1@mailo.com>
-Date: Thu, 4 Jun 2026 08:26:43 +0200
+ Thu,  4 Jun 2026 08:22:59 +0200 (CEST)
+X-EA-Auth: FU/n0b6lrfWS7d7uO5AiSoDWAkfFan8IGND3dlPZaJzEtDdR0KPF39rb9Gayqz/pIbqcqvkHqKsupgIMcyI08OnWUzXkcgNt
+Message-ID: <569cc921-3d0d-4284-afa9-d11e62511d88@mailo.com>
+Date: Thu, 4 Jun 2026 08:22:48 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2] hw/pci/pci: Enforce pci_setup_iommu_per_bus() is
- called only once per bus
+Subject: Re: [PATCH 24/25] scripts/checkpatch: remove check on forbidden space
+ before '[' in C++
 Content-Language: en-US
-To: Eric Auger <eric.auger@redhat.com>, eric.auger.pro@gmail.com,
- qemu-devel@nongnu.org, qemu-arm@nongnu.org, peter.maydell@linaro.org,
- mst@redhat.com, skolothumtho@nvidia.com, nicolinc@nvidia.com,
- nathanc@nvidia.com
-References: <20260603124415.1120808-1-eric.auger@redhat.com>
+To: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>, qemu-devel@nongnu.org
+Cc: Chao Liu <chao.liu.zevorn@gmail.com>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ Brian Cain <brian.cain@oss.qualcomm.com>,
+ =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ Alexandre Iooss <erdnaxe@crans.org>
+References: <20260603205152.1440291-1-pierrick.bouvier@oss.qualcomm.com>
+ <20260603205152.1440291-25-pierrick.bouvier@oss.qualcomm.com>
 From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@mailo.com>
-In-Reply-To: <20260603124415.1120808-1-eric.auger@redhat.com>
+In-Reply-To: <20260603205152.1440291-25-pierrick.bouvier@oss.qualcomm.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=213.182.54.8; envelope-from=philmd@mailo.com;
@@ -68,33 +72,13 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 3/6/26 14:44, Eric Auger wrote:
-> Currently it is possible to attach several arm-smmuv3 devices to the
-> same bus although it is a wrong setup.
+On 3/6/26 22:51, Pierrick Bouvier wrote:
+> Lambdas are very confusing for checkpatch, so just relax this check.
 > 
-> Change the prototype of pci_setup_iommu_per_bus to pass an error
-> handle. This latter is set when iommu_per_bus is already set and
-> used by the single caller (smmu_base_realize) to report a useful
-> error to the end-user.
-> 
-> While at it document pci_setup_iommu_per_bus callback in the header.
-> 
-> Fixes: 66d2f665e163 ("hw/arm/virt: Allow user-creatable SMMUv3 dev instantiation")
-> Signed-off-by: Eric Auger <eric.auger@redhat.com>
-> Tested-by: Nathan Chen <nathanc@nvidia.com>
-> Reviewed-by: Shameer Kolothum <skolothumtho@nvidia.com>
-> Reviewed-by: Nicolin Chen <nicolinc@nvidia.com>
-> 
+> Signed-off-by: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
 > ---
-> 
-> v1 -> v2:
-> - in smmu_base_realize, return if pci_setup_iommu_per_bus returns false
->    (Philippe)
-> ---
->   include/hw/pci/pci.h | 16 +++++++++++++++-
->   hw/arm/smmu-common.c |  4 +++-
->   hw/pci/pci.c         |  9 +++++++--
->   3 files changed, 25 insertions(+), 4 deletions(-)
+>   scripts/checkpatch.pl | 3 ++-
+>   1 file changed, 2 insertions(+), 1 deletion(-)
 
 Reviewed-by: Philippe Mathieu-Daudé <philmd@mailo.com>
 
