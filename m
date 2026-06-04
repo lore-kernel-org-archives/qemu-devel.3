@@ -4,66 +4,66 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 63D80CD6E6D
-	for <qemu-devel@archiver.kernel.org>; Thu,  4 Jun 2026 15:03:59 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 936C4CD6E6D
+	for <qemu-devel@archiver.kernel.org>; Thu,  4 Jun 2026 15:07:15 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wV9bl-0005U7-MU; Thu, 04 Jun 2026 11:03:45 -0400
+	id 1wV9el-0006Nn-Tc; Thu, 04 Jun 2026 11:06:52 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1wV9bC-0005LY-2l
- for qemu-devel@nongnu.org; Thu, 04 Jun 2026 11:03:15 -0400
+ id 1wV9eg-0006NK-7N
+ for qemu-devel@nongnu.org; Thu, 04 Jun 2026 11:06:47 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1wV9b9-0007Rt-V7
- for qemu-devel@nongnu.org; Thu, 04 Jun 2026 11:03:09 -0400
+ id 1wV9ee-0002dV-5T
+ for qemu-devel@nongnu.org; Thu, 04 Jun 2026 11:06:45 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1780585387;
+ s=mimecast20190719; t=1780585601;
  h=from:from:reply-to:reply-to:subject:subject:date:date:
  message-id:message-id:to:to:cc:cc:mime-version:mime-version:
  content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=YUuXK+wfx1q3lgWYyvI8dmKqxSgHIxCPEOkpBMfDK60=;
- b=C+2AeoyJzfCo4OYirv9b18vn9GX8CXOaMDezdXTfHISrDWbJIDD03dAK9YpJPRyuYbq01H
- FLkf8FZF8jcBrE5RDY7Ua3oW++V5aMhxZGskZmil3ljR4BSghbwF8wiQriTAjyWsBRG7Rd
- tXoh8GJWLJwaq7LVVM124hx215riiG8=
-Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
+ bh=cbFgCJpJ2e1Y/HFbY9y1DpLzM1mCLF/Q9OcwlUIPo78=;
+ b=cTir6/7htSV3WdbeiNpgtarmOpF8ElcIrQOSUK6LazDotfd19hwSVMmLsmaCCMADTrHA+F
+ Wz6e9ZkU4U688j9IoXXhbuxg0tx/ACxy94YDC4SLSBaNJ3vDtYvog55CCT0Z2DcMrOWARy
+ PhD9vW65mrUYod4SHtP25aAFPDsg+ro=
+Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-490-ZKavaBbqPLCbcj1ceZhYTw-1; Thu,
- 04 Jun 2026 11:03:05 -0400
-X-MC-Unique: ZKavaBbqPLCbcj1ceZhYTw-1
-X-Mimecast-MFC-AGG-ID: ZKavaBbqPLCbcj1ceZhYTw_1780585384
-Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-326-dtMj4VSKP9K-o8Coz-dqsA-1; Thu,
+ 04 Jun 2026 11:06:36 -0400
+X-MC-Unique: dtMj4VSKP9K-o8Coz-dqsA-1
+X-Mimecast-MFC-AGG-ID: dtMj4VSKP9K-o8Coz-dqsA_1780585595
+Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id A4CBE1955F02
- for <qemu-devel@nongnu.org>; Thu,  4 Jun 2026 15:03:04 +0000 (UTC)
+ by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 7F943195605C
+ for <qemu-devel@nongnu.org>; Thu,  4 Jun 2026 15:06:35 +0000 (UTC)
 Received: from redhat.com (unknown [10.44.50.34])
- by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 48E5E1955BC1; Thu,  4 Jun 2026 15:03:02 +0000 (UTC)
-Date: Thu, 4 Jun 2026 16:02:59 +0100
+ by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 08DA430001A1; Thu,  4 Jun 2026 15:06:33 +0000 (UTC)
+Date: Thu, 4 Jun 2026 16:06:30 +0100
 From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 To: =?utf-8?Q?Marc-Andr=C3=A9?= Lureau <marcandre.lureau@redhat.com>
 Cc: qemu-devel@nongnu.org, armbru@redhat.com
-Subject: Re: [PATCH v3 17/24] hw/i386/pc: free pcspk on finalization
-Message-ID: <aiGTo1mbOVwVRm60@redhat.com>
+Subject: Re: [PATCH v3 11/24] system/ioport: minor code simplification
+Message-ID: <aiGUdhDT1NxqGXUQ@redhat.com>
 References: <20260516-qom-tests-v3-0-3f20c3a029a7@redhat.com>
- <20260516-qom-tests-v3-17-3f20c3a029a7@redhat.com>
+ <20260516-qom-tests-v3-11-3f20c3a029a7@redhat.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <20260516-qom-tests-v3-17-3f20c3a029a7@redhat.com>
+In-Reply-To: <20260516-qom-tests-v3-11-3f20c3a029a7@redhat.com>
 User-Agent: Mutt/2.3.1 (2026-03-20)
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.12
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
 Received-SPF: pass client-ip=170.10.133.124; envelope-from=berrange@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: 8
@@ -90,15 +90,13 @@ Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Sat, May 16, 2026 at 11:59:16AM +0400, Marc-André Lureau wrote:
-> Add pc_machine_finalize() to unref the pcspk device when it was never
-> realized. Once realized, the bus owns it and no action is needed.
+On Sat, May 16, 2026 at 11:59:10AM +0400, Marc-André Lureau wrote:
+> Drop needless memset() and replace g_malloc0() with g_new().
 > 
-> Fixes: 6b8d1416482f ("audio: create pcspk device early")
 > Signed-off-by: Marc-André Lureau <marcandre.lureau@redhat.com>
 > ---
->  hw/i386/pc.c | 10 ++++++++++
->  1 file changed, 10 insertions(+)
+>  system/ioport.c | 3 +--
+>  1 file changed, 1 insertion(+), 2 deletions(-)
 
 Reviewed-by: Daniel P. Berrangé <berrange@redhat.com>
 
