@@ -4,49 +4,49 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id AD37FCD6E7B
-	for <qemu-devel@archiver.kernel.org>; Thu,  4 Jun 2026 16:51:27 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5F9C5CD6E77
+	for <qemu-devel@archiver.kernel.org>; Thu,  4 Jun 2026 16:51:44 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wVBHp-0004Jr-Sy; Thu, 04 Jun 2026 12:51:17 -0400
+	id 1wVBHh-0004H3-KI; Thu, 04 Jun 2026 12:51:09 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1wVBHm-0004IQ-6Q
- for qemu-devel@nongnu.org; Thu, 04 Jun 2026 12:51:15 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ id 1wVBHf-0004GB-Oh
+ for qemu-devel@nongnu.org; Thu, 04 Jun 2026 12:51:07 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1wVBHj-0000lh-55
- for qemu-devel@nongnu.org; Thu, 04 Jun 2026 12:51:13 -0400
+ id 1wVBHd-0000kK-SJ
+ for qemu-devel@nongnu.org; Thu, 04 Jun 2026 12:51:07 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1780591870;
+ s=mimecast20190719; t=1780591864;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=1QPD+zulVISdjAoG69oav6f70W2SkFkGTIHgTCp+9X4=;
- b=e1sIS8ZdG5xX1YFkUN45yD11U1CtXPEme4W+ZgVB6yM6dkeYNS6creFVELhc7K5DDLpS4Y
- 3qSIswMUtnVy/FXgWVQyzwyMEJzMi986u1UWPNtSxPCq/yNvMsdpSJQobTSKvF5/FrwWdp
- 8AnVh6reCBBBDU5BF/u9ycU2aHPnDeU=
-Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
+ bh=STby0QuBkc+Vmuw0G5a4XWwhUsqCQeSe1oJbAwCl8wc=;
+ b=GnzL9yQ3QEE6fQje/TtEQ7lOLbTgNn+39QuJAwGgpPdQUVoGfvv/ZlGAgZk38NaMAFbvDt
+ pJcLg087TNfKGRT5UEco7hYw2geEIQ8JU3vmwamC38L+jueKQ5zjYBFdliRtrL4bJf+bR5
+ UGMIkd5Cw1Cl2b3LBxXwMVYal/yEsE4=
+Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-385-BwvbyuYlP0SXhzGQkJTilg-1; Thu,
- 04 Jun 2026 12:51:06 -0400
-X-MC-Unique: BwvbyuYlP0SXhzGQkJTilg-1
-X-Mimecast-MFC-AGG-ID: BwvbyuYlP0SXhzGQkJTilg_1780591865
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-686-0v5h212KMuWl99eaDMpwaA-1; Thu,
+ 04 Jun 2026 12:51:01 -0400
+X-MC-Unique: 0v5h212KMuWl99eaDMpwaA-1
+X-Mimecast-MFC-AGG-ID: 0v5h212KMuWl99eaDMpwaA_1780591859
 Received: from mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.93])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id A7FD71800473; Thu,  4 Jun 2026 16:51:05 +0000 (UTC)
+ by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id E9E1E195608B; Thu,  4 Jun 2026 16:50:58 +0000 (UTC)
 Received: from berrange.com (unknown [10.44.50.34])
  by mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id B16A11800480; Thu,  4 Jun 2026 16:51:02 +0000 (UTC)
+ id 259B1180049F; Thu,  4 Jun 2026 16:50:55 +0000 (UTC)
 From: =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
@@ -55,25 +55,26 @@ Cc: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
  Mauro Matteo Cascella <mcascell@redhat.com>,
  Paolo Bonzini <pbonzini@redhat.com>, Thomas Huth <thuth@redhat.com>,
  =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>
-Subject: [qemu-web RFC 3/3] contribute: switch security process to gitlab
- confidential issues
-Date: Thu,  4 Jun 2026 17:50:48 +0100
-Message-ID: <20260604165048.457860-4-berrange@redhat.com>
+Subject: [qemu-web RFC 1/3] contribute: reformat/restructure bug report
+ guidance
+Date: Thu,  4 Jun 2026 17:50:46 +0100
+Message-ID: <20260604165048.457860-2-berrange@redhat.com>
 In-Reply-To: <20260604165048.457860-1-berrange@redhat.com>
 References: <20260604165048.457860-1-berrange@redhat.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.93
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=berrange@redhat.com;
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=berrange@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -24
-X-Spam_score: -2.5
-X-Spam_bar: --
-X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.445,
+X-Spam_score_int: 8
+X-Spam_score: 0.8
+X-Spam_bar: /
+X-Spam_report: (0.8 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.445,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_SBL_CSS=3.335, SPF_HELO_PASS=-0.001,
+ SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -89,341 +90,83 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-It is no longer viable to handle the incredible volumes of
-AI assisted security disclosures via email, nor are extended
-embargos practical or useful.
-
-Remove all information about the current security process and
-instruct reporters to use 'confidential' issues. In contrast
-to the old highly restrictive "need to know" approach, the
-new approach makes all security issues visible to all QEMU
-maintainers immediately.
-
-The focus is on making issues public as soon as possible with
-a viable patch. Co-ordinated disclosure will no longer be
-attempted and nor will requests to embargoes be accepted.
+The current bug report bullet points are duplicating an
+arbitrary subset of what is already requested in the gitlab
+issue template. Rewrite the guidance such that it refers to
+the issue template fields being required, where applicable.
+Restructure the text in general so that it is all a bullet
+point list rather than a strange mix of list items and
+separate paragraphs.
 
 Signed-off-by: Daniel P. Berrangé <berrange@redhat.com>
 ---
- contribute/report-a-bug.md     |   9 +-
- contribute/security-process.md | 280 ++++++++++++++-------------------
- 2 files changed, 119 insertions(+), 170 deletions(-)
+ contribute/report-a-bug.md | 55 +++++++++++++++++++++++---------------
+ 1 file changed, 33 insertions(+), 22 deletions(-)
 
 diff --git a/contribute/report-a-bug.md b/contribute/report-a-bug.md
-index fd3bc6b..b506f9f 100644
+index 8a7c782..6071837 100644
 --- a/contribute/report-a-bug.md
 +++ b/contribute/report-a-bug.md
-@@ -11,6 +11,11 @@ on GitLab, taking into account the following guidance.
-   requested pieces of information that are relevant to the
-   discovered bug.
- 
-+* Bugs which are suspected, or known, to have security implications
-+  **must** be marked as "*confidential*" prior to submitting the
-+  disclosure. Consult the [security process](../security-process)
-+  for further guidance on security issue handling.
-+
- * Reproduce the problem with the latest upstream QEMU release.
-   Reports against older versions may not be acted upon with
-   with the same priority.
-@@ -37,10 +42,6 @@ on GitLab, taking into account the following guidance.
-   guidelines](../submit-a-patch/). QEMU does not use a merge
-   request workflow for contribution.
- 
--* Do NOT report security issues (or other bugs, too) as "confidential"
--  bugs in the bug tracker.  QEMU has a [security process](../security-process)
--  for issues that should be reported in a non-public way instead.
--
- * If the problem is believed to lie in the KVM kernel module,
-   following the [KVM wiki bug report](https://www.linux-kvm.org/page/Bugs)
-   guidance to submit an issue to the kernel bug tracker.
-diff --git a/contribute/security-process.md b/contribute/security-process.md
-index 5c708f5..a500b16 100644
---- a/contribute/security-process.md
-+++ b/contribute/security-process.md
-@@ -3,169 +3,117 @@ title: Security Process
- permalink: /contribute/security-process/
+@@ -3,26 +3,37 @@ title: Reporting a bug
+ permalink: /contribute/report-a-bug/
  ---
  
--Please report any suspected security issue in QEMU to the security mailing
--list at:
+-Bugs can be filed at our
++Bugs affecting upstream QEMU releases should be filed at our
+ [bug tracker](https://gitlab.com/qemu-project/qemu/-/issues), which is hosted
+-on GitLab. Note: If you've got a problem with how your Linux distribution
+-packages QEMU, please use the bug tracker from your distro instead.
 -
--* [\<qemu-security@nongnu.org\>](https://lists.nongnu.org/mailman/listinfo/qemu-security)
+-When submitting a bug report, please try to do the following:
 -
--Note that not all areas of QEMU are considered to provide a security
--boundary. Consult the guidance at the end of this page for further
--information on how QEMU classifies issues as security vulnerabilities
--vs regular bugs.
+-* Include the QEMU release version or the git commit hash into the description, so that it is later still clear in which version you have found the bug.  Reports against the [latest release](/download/#source) or even the latest development tree are usually acted upon faster.
 -
--## How to report an issue:
+-* Include the full command line used to launch the QEMU guest.
 -
--* Please include as many details as possible in the issue report.
--  Ex:
--    - QEMU version, upstream commit/tag
--    - Host & Guest architecture x86/Arm/PPC, 32/64 bit etc.
--    - Affected code area/snippets
--    - Stack traces, crash details
--    - Malicious inputs/reproducer steps etc.
--    - Any configurations/settings required to trigger the issue.
+-* Reproduce the problem directly with a QEMU command-line.  Avoid frontends and management stacks, to ensure that the bug is in QEMU itself and not in a frontend.
 -
--* Please share the QEMU command line used to invoke a guest VM.
+-* Include information about the host and guest (operating system, version, 32/64-bit).
 -
--* Please specify whom to acknowledge for reporting this issue.
+-QEMU does not use GitLab merge requests; patches are sent to the mailing list according to QEMU's [patch submissions guidelines](../submit-a-patch/).
 -
--* If any automated tools (AI/LLM based, traditional static
--  analysis, or fuzzers) were used to discover the issue, the
--  reporter is required to declare this at the start of the
--  security report. Users of such tools are required to perform
--  triage of their output. Findings and reproducer scenarios
--  output by automated tools must be validated prior to submitting
--  an issue to the QEMU security team.
+-Do NOT report security issues (or other bugs, too) as "confidential" bugs in the
+-bug tracker.  QEMU has a [security process](../security-process) for issues
+-that should be reported in a non-public way instead.
 -
--## How we respond:
--
--* Process of handling security issues comprises following steps:
--
--  0) **Acknowledge:**
--    - A non-automated response email is sent to the reporter(s) to acknowledge
--      the reception of the report. (*60 day's counter starts here*)
--
--  1) **Triage:**
--    - Examine the issue details and confirm whether the issue is genuine
--    - Validate if it can be misused for malicious purposes
--    - Determine its worst case impact and severity
--      [Low/Moderate/Important/Critical]
--
--  2) **Response:**
--    - Negotiate embargo timeline (if required, depending on severity)
--    - Request a [CVE](https://cveform.mitre.org/) and open an upstream
--      [bug](https://www.qemu.org/contribute/report-a-bug/)
--    - Create an upstream fix patch annotated with
--        - CVE-ID
--        - Link to an upstream bugzilla
--        - Reported-by, Tested-by etc. tags
--    - Once the patch is merged, close the upstream bug with a link to the
--      commit
--        - Fixed in: <commit hash/link>
--
--* Above security lists are operated by select analysts, maintainers and/or
--  representatives from downstream communities.
--
--* List members follow a **responsible disclosure** policy. Any non-public
--  information you share about security issues, is kept confidential within
--  members of the QEMU security team and a minimal supporting staff in their
--  affiliated companies. Such information will not be disclosed to third party
--  organisations/individuals without prior permission from the reporter(s).
--
--* We aim to process security issues within maximum of **60 days**. That is not
--  to say that issues will remain private for 60 days, nope. After the triaging
--  step above
--    - If severity of the issue is sufficiently low, an upstream public bug
--      will be created immediately.
--    - If severity of the issue requires co-ordinated disclosure at a future
--      date, then the embargo process below is followed, and upstream bug will
--      be opened at the end of the embargo period.
--
--  This will allow upstream contributors to create, test and track fix patch(es).
--
--### Publication embargo
--
--* If a security issue is reported that is not already public and its severity
--  requires coordinated disclosure, then an embargo date will be set and
--  communicated to the reporter(s).
--
--* Embargo periods will be negotiated by mutual agreement between reporter(s),
--  members of the security list and other relevant parties to the problem.
--  The preferred embargo period is upto [2
--  weeks](https://oss-security.openwall.org/wiki/mailing-lists/distros).
--  However, longer embargoes may be negotiated if the severity of the issue
--  requires it.
--
--* Members of the security list agree not to publicly disclose any details of
--  an embargoed security issue until its embargo date expires.
--
--### CVE allocation
--
--Each security issue is assigned a [CVE](https://cveform.mitre.org/) number.
--The CVE number is allocated by one of the vendor security engineers on the
--security list.
--
--## When to contact the QEMU Security List
--
--You should contact the Security List if:
--* You think there may be a security vulnerability in QEMU.
--* You are unsure about how a known vulnerability affects QEMU.
--* You can contact us in English. We are unable to respond in other languages.
--
--## When *not* to contact the QEMU Security List
--* You have not yet performed human review of the output of an automated tool.
--* You need assistance in a language other than English.
--* You require technical assistance (for example, "how do I configure QEMU?").
--* You need help upgrading QEMU due to security alerts.
--* Your issue is not security related.
--
--## How impact and severity of a bug is decided
--
--**Security criterion:**
--    -> [https://www.qemu.org/docs/master/system/security.html](https://www.qemu.org/docs/master/system/security.html)
--
--All security issues in QEMU are not equal. Based on the parts of the QEMU
--sources wherein the bug is found, its impact and severity could vary.
--
--In particular, QEMU is used in many different scenarios; some of them assume
--that the guest is trusted, some of them don't. General considerations to triage
--QEMU issues and decide whether a configuration is security sensitive include:
--
--* Is there any feasible way for a malicious party to exploit this flaw and
--  cause real damage? (e.g. from a guest or via downloadable images)
--* Does the flaw require access to the management interface? Would the
--  management interface be accessible in the scenario where the flaw could cause
--  real damage?
--* Is QEMU used in conjunction with a hypervisor (as opposed to TCG binary
--  translation)?
--* Is QEMU used to offer virtualised production services, as opposed to usage
--  as a development platform?
--
--Whenever some or all of these questions have negative answers, what appears to
--be a major security flaw might be considered of low severity because it could
--only be exercised in use cases where QEMU and everything interacting with it is
--trusted.
--
--For example, consider upstream commit [9201bb9 "sdhci.c: Limit the maximum
--block size"](https://gitlab.com/qemu-project/qemu/-/commit/9201bb9), an of out of
--bounds (OOB) memory access (ie. buffer overflow) issue that was found and fixed
--in the SD Host Controller emulation (hw/sd/sdhci.c).
--
--On the surface, this bug appears to be a genuine security flaw, with potentially
--severe implications. But digging further down, there are only two ways to use
--SD Host Controller emulation, one is via 'sdhci-pci' interface and the other
--is via 'generic-sdhci' interface.
--
--Of these two, the 'sdhci-pci' interface had actually been disabled by default
--in the upstream QEMU releases (commit [1910913 "sdhci: Make device "sdhci-pci"
--unavailable with -device"](https://gitlab.com/qemu-project/qemu/-/commit/1910913)
--at the time the flaw was reported; therefore, guests could not possibly use
--'sdhci-pci' for any purpose.
--
--The 'generic-sdhci' interface, instead, had only one user in 'Xilinx Zynq
--Baseboard emulation' (hw/arm/xilinx_zynq.c). Xilinx Zynq is a programmable
--systems on chip (SoC) device. While QEMU does emulate this device, in practice
--it is used to facilitate cross-platform developmental efforts, i.e. QEMU is
--used to write programs for the SoC device. In such developer environments, it
--is generally assumed that the guest is trusted.
--
--And thus, this buffer overflow turned out to be a security non-issue.
-+## How to disclosure a potential issues
+-For problems with KVM in the kernel, use the kernel bug tracker instead;
+-the [KVM wiki](https://www.linux-kvm.org/page/Bugs) has the details.
++on GitLab, taking into account the following guidance.
 +
-+**The QEMU project no longer accepts security issue disclosures via email.**
++* Use the provided GitLab issue template, filling in all
++  requested pieces of information that are relevant to the
++  discovered bug.
 +
-+New disclosures must follow the [report a bug](report-a-bug.html)
-+process to file a GitLab work item for each potential issue, ***marking
-+it as "*confidential*" prior to submission.***
++* Reproduce the problem with the latest upstream QEMU release.
++  Reports against older versions may not be acted upon with
++  with the same priority.
 +
-+If unsure of the security implications of an issue, err on the side
-+of caution and mark it as "*confidential*" initially.
++* Problems that have only been demonstrated with an release
++  packaged by an OS distribution vendor must be either reported
++  to the vendor's own bug tracker instead, or reproduced with
++  an upstream QEMU build prior to submission.
 +
-+## Handling of disclosures
++* Reproduce the problem directly with a QEMU command-line. Avoid
++  frontends and management stacks, to ensure that the bug is in
++  QEMU itself and not in a frontend and make it easier for
++  maintainers to understand the problematic scenario.
 +
-+Disclosures made via "*confidential*" GitLab issues are visible to, and
-+may be handled by, any QEMU subsystem maintainer whom has a GitLab
-+account [associated with the Reporter role in the project](https://gitlab.com/qemu-project/qemu/-/project_members).
-+Triage may also be performed by one or more automated tools and/or
-+AI agents run by the project that have been granted access to the
-+issue tracker.
++* If patches are available for an issue, they should be sent to
++  the mailing list according to QEMU's [patch submissions
++  guidelines](../submit-a-patch/). QEMU does not use a merge
++  request workflow for contribution.
 +
-+The first task upon receiving a disclosure is to evaluate eligibility
-+to follow the security triage process.
++* Do NOT report security issues (or other bugs, too) as "confidential"
++  bugs in the bug tracker.  QEMU has a [security process](../security-process)
++  for issues that should be reported in a non-public way instead.
 +
-+* Disclosures affecting code / features evaluated to fall under the
-+[non-virtualization use case](
-+https://www.qemu.org/docs/master/system/security.html#non-virtualization-use-case),
-+will generally not be eligible for handling as a security flaw.
-+Such disclosures should be immediately switched to the public
-+bug report process by removing the "*confidential*" marker.
-+
-+* Disclosures affecting code / features evaluated to fall under the
-+[virtualization use case](
-+https://www.qemu.org/docs/master/system/security.html#virtualization-use-case),
-+will be handled under a lightweight security triage process which
-+emphasizes getting a fix merged to the latest development branch
-+as quickly as possible.
-+
-+Any disclosure which gets switched to the public bug report process
-+will be fixed at the discretion of the maintainer, if and when time
-+allows.
-+
-+In all cases reporters are encouraged to develop and propose patches
-+for issues themselves at time of disclosure, to speed resolution.
-+
-+**NOTE:** The QEMU project policy is that all security disclosures received
-+using GitLab "*confidential*" issues **will eventually be made public**. Any
-+information that the reporter considers to be be sensitive / private **must**
-+be scrubbed before disclosure.
-+
-+## Triage process
-+
-+ * A maintainer will evaluate the circumstances of the issue
-+   to determine if it can be misused for malicious purposes.
-+
-+ * If there is no potential for meaningful exploit, the disclosure
-+   should be switched to the public bug report process by removing
-+   the "*confidential*" marker.
-+
-+ * If confirmed as a security flaw, a maintainer will request
-+   add the **"cve::required"** GitLab label to the GitLab work item,
-+   which indicates the need for a CNA to allocate a CVE.
-+
-+ * The maintainer(s) will develop and/or review patch(es)
-+   for the issue privately, optionally attaching work in
-+   progress fixes to the GitLab issues. All patches must
-+   include the issue URL in the commit message(s).
-+
-+ * When a CVE is allocated, it will be recorded as a comment on
-+   the GitLab issue, and the **"cve::requested"** label replaced by
-+   the **"cve::assigned"** label.
-+
-+ * The maintainer(s) will update the commit message(s) to include
-+   the assigned CVE. If multiple commits are required to fix an
-+   issue the CVE must be included in the final commit in the
-+   series, and may optionally be included in all prior commits.
-+
-+ * When the maintainer(s) are satisfied that the patch(es) are
-+   suitable to propose for merge, they must be submitted to
-+   the qemu-devel mailing list, and follow the normal process
-+   for merge henceforth.
-+
-+ * At the time the proposed patches are sent to qemu-devel, the
-+   maintainers should remove the "*confidential*" marker from the
-+   GitLab issue.
-+
-+ * When the patch is merged into the current development
-+   branch the issue must be closed. This should usually happen
-+   automatically if the git commits referenced the GitLab issue
-+   URL in [the normal format](https://docs.gitlab.com/user/project/issues/managing_issues/#default-closing-pattern).
-+
-+The QEMU project currently co-ordinates with Red Hat for CVE
-+assignment, in its role as the [CNA of last resort for OSS projects](
-+https://www.cve.org/PartnerInformation/ListofPartners/partner/redhat).
-+
-+## Embargo policy
-+
-+The QEMU project policy is to limit the time that a disclosure has the
-+"*confidential*" marker applied strictly to the minimum required to develop
-+and publish a suitable patch and allocate a CVE.
-+
-+Given the widespread use of AI/LLM based agents for security auditing,
-+as well as ongoing use of traditional fuzzing and static analyis
-+tools, the QEMU maintainers consider that any disclosure originating
-+from automated tools is highly likely to be independently re-discovered,
-+potentially many times over in a very short timeframe.
-+
-+Thus the QEMU maintainers will generally reject requests for arbitrary
-+embargos unless high severity, extenuating circumstances can be
-+demonstrated.
-+
-+If a patch for a confirmed security issue cannot be developed by a
-+maintainer in a reasonable time, the maintainers may choose to make
-+a disclosure public without having a patch available. This approach
-+should only be taken for issues judged to have low severity.
++* If the problem is believed to lie in the KVM kernel module,
++  following the [KVM wiki bug report](https://www.linux-kvm.org/page/Bugs)
++  guidance to submit an issue to the kernel bug tracker.
 -- 
 2.54.0
 
