@@ -4,106 +4,112 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 26DD4CD6E6B
-	for <qemu-devel@archiver.kernel.org>; Thu,  4 Jun 2026 13:18:27 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C0D63CD6E4A
+	for <qemu-devel@archiver.kernel.org>; Thu,  4 Jun 2026 13:19:35 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wV7xW-0004WD-J6; Thu, 04 Jun 2026 09:18:06 -0400
+	id 1wV7yl-0004qk-Os; Thu, 04 Jun 2026 09:19:23 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <sgarzare@redhat.com>)
- id 1wV7xU-0004Vf-Nc
- for qemu-devel@nongnu.org; Thu, 04 Jun 2026 09:18:04 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1wV7yi-0004nC-NR
+ for qemu-devel@nongnu.org; Thu, 04 Jun 2026 09:19:20 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <sgarzare@redhat.com>)
- id 1wV7xT-0004yM-1n
- for qemu-devel@nongnu.org; Thu, 04 Jun 2026 09:18:04 -0400
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1wV7yh-0005hu-7j
+ for qemu-devel@nongnu.org; Thu, 04 Jun 2026 09:19:20 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1780579081;
+ s=mimecast20190719; t=1780579158;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  in-reply-to:in-reply-to:references:references;
- bh=sEWi6G8/UGMpayW8eJf11XoBujX7FDgoivK7+ZHkzEI=;
- b=STetW3IfBtPcQ0GnwumHaKnaS8ov4imr+dTQhqKmTt8tAX70EN3D2sEryKFxi0LJWcHXdD
- fRftT/SfT9B7yPr5EX+rZcQqkagN2X9VVppmJQO6m+4vbMg2FZA6H4/DcEVZpU08HRf0Fr
- WkHLaFngHL32OYeY1P0J0LNAywWRBhM=
-Received: from mail-wr1-f70.google.com (mail-wr1-f70.google.com
- [209.85.221.70]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=bgOwZNI7KPN4QVhMDFgkQQQfAtQVW8qLdijH8wJDYvI=;
+ b=W1MNCGHdXQE5AcjHSLNYSYtljWub65JJJcJ+FAirrKy9i6MOVd/d3hlK65RGRsEfowSfBm
+ kOKSFh42Ovj3wemsOVbVvvbeFeeshj0+Jbxo3qgTvIikzwCMrmDcWVRoQ4FPXOkRn7sFqs
+ QLuAQkqNNc19UzRk9Fc+nHBzctWBH4c=
+Received: from mail-qv1-f69.google.com (mail-qv1-f69.google.com
+ [209.85.219.69]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-19-x-955FoBOvmLlGJLNkL5UQ-1; Thu, 04 Jun 2026 09:17:59 -0400
-X-MC-Unique: x-955FoBOvmLlGJLNkL5UQ-1
-X-Mimecast-MFC-AGG-ID: x-955FoBOvmLlGJLNkL5UQ_1780579079
-Received: by mail-wr1-f70.google.com with SMTP id
- ffacd0b85a97d-460153ce644so487914f8f.0
- for <qemu-devel@nongnu.org>; Thu, 04 Jun 2026 06:17:59 -0700 (PDT)
+ us-mta-172-7KueZTyQPVST42sN95LyPw-1; Thu, 04 Jun 2026 09:19:16 -0400
+X-MC-Unique: 7KueZTyQPVST42sN95LyPw-1
+X-Mimecast-MFC-AGG-ID: 7KueZTyQPVST42sN95LyPw_1780579156
+Received: by mail-qv1-f69.google.com with SMTP id
+ 6a1803df08f44-8cce2b4c290so16384976d6.3
+ for <qemu-devel@nongnu.org>; Thu, 04 Jun 2026 06:19:16 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1780579079; x=1781183879; darn=nongnu.org;
+ d=redhat.com; s=google; t=1780579156; x=1781183956; darn=nongnu.org;
  h=in-reply-to:content-disposition:mime-version:references:message-id
  :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
- bh=sEWi6G8/UGMpayW8eJf11XoBujX7FDgoivK7+ZHkzEI=;
- b=SILMHLnb+gcKyFU68jBXaXUgTL8S2PUlFIUm/XSMhGAp31BNCxdGTWYZZ+osu/25JQ
- sB2xWaYo6/xHNchy5j/pi6+ClabVbAgKsdWoYlJ5KqVO/cBVJdKDoQ/H0yFfC3F+50NP
- Ga2E9HKhj3mF9RFUO/tUfBPnbbY5YC+HwdyLm7GzVuEWFt9bYWYfvIncNhIB0FB2hege
- 9k1xLwFcrEiqFbVRwAW7rbYLUZyzC1SPZWwSbh92a6+aUGxfqTnNpkrXZabFjALN4jMm
- zGB/kelfhGgo+Z0D3hB+nhpQhX7duTo5eceHW8vXC7xhxeCXBHd3umljjR7Wvzi8R+OK
- +6tQ==
+ bh=bgOwZNI7KPN4QVhMDFgkQQQfAtQVW8qLdijH8wJDYvI=;
+ b=WOsNFzG0r2bKe2orp9GaMEY5rB+pCsBVVEkp1iHQcL3YJMup5CVNhG5lcmDJJK0sCa
+ z+vjgBmOviLiA5LQ0t3edbR8koEIOtKrZilG1i90GkuK+WDI+vQyUfbJCKtRH9cMaumV
+ xtuhyJJLQQ9kcnVPjfAohl1TdGruq5fa/B7KumHMkn03pBm9EQxpv11GfrJjuvER7rZ/
+ 2EVcediQzzYdwCAnmK2knpxH6YMAfr0H56TKS96ywTr/EhQ6Mwrih9skfWiCL04CSRaD
+ DQe41aCEfga77IaBCx+aSrXuJAHFRGzs1fnvyLie+Yg67njkdpLDH2s5ZeSeOjXJU3bT
+ a/kg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1780579079; x=1781183879;
+ d=1e100.net; s=20251104; t=1780579156; x=1781183956;
  h=in-reply-to:content-disposition:mime-version:references:message-id
  :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=sEWi6G8/UGMpayW8eJf11XoBujX7FDgoivK7+ZHkzEI=;
- b=byePAzyBvyB1gFTGuCW1+KH0GfnF8EzqA2WAK3XR7vLF0f7XzRkqkKB3kNF1AYKoAx
- ZYFMWSTco3sF9UHFA9b71PEnPcEh9822Pjy3WvYnht8P/vDczudzlBFadGjBcDer8bHj
- iTkasDENsA8GJi52NKeyhS7XdXssJ4dhAMSKo1DCczVZzTamGDx1ZsIXbqfi4Xzacc+I
- ZFR5NhYmfds52Feq90sah6Fu3TRRMWTQMJ9Z643PK30ng/+OimtU7uc1Kn+q5iSR4ugp
- K4ZvzVuFRp0HzyIDr3tmepZWAZhhv55gIBlc3lvLmLLm+RrFrd7hNg0/p7Y9ZNCZrs/i
- JcJQ==
-X-Gm-Message-State: AOJu0Yyq/SUlkx5AMzUnw7QncmYv9n7s1pkSMsLauAli9PRpROUDZThv
- YqvdbFHtWblFF0BA8mOBMSIWuLurIKno7LkUnDjYRW+G8BX6WaQtsBEwkzCcctdw4wWhZvKvw5A
- BwwjxA6sYySC+Y+MCPTctLwV02LPr0XfsNjD1aqqMTgpCuzl8g92s8OhU
-X-Gm-Gg: Acq92OFUZWb39ZnNpWdzoAbJfsf8/eZdS9SycJtnI8AjojBtXB5kg1ZXndd4UeKFZX+
- Xsl7F6SB7lXIhREZjm4MiuvzXih+mh1fwG90T93sNjHB2Kn7Ct5kFgOQiwpSDvTl/xSO57GEnAp
- ri7+GAh/djI/Z9rs9wcnGN0Ahxo5vceULnU17ZG5TtKzu3Vxo1YzkF+ah9+E8QWRQepW4ugVAMf
- NkCuRs21cnYkxski3ix7jWd22QsOQk/dasENpsbSWw0QeSi/RYyXz8stRCEJxLy5ZAiLBqvldSv
- ctqDF3Iw6xB72DmEZAhMU+YVMMFiBi5/jr8td1PkxiVGtI0+17tpWpRKLGqHFlOdqIlsxOqYMa5
- ZECxLyRj2d9aoljyWCn2ms/i/30GKZkPhFMMX5KcB+GkDMUaqMWsn/Ym1Hl32Y+dRQUcvU28WVW
- nzVuFT1g==
-X-Received: by 2002:a05:600c:4691:b0:490:bcf6:469f with SMTP id
- 5b1f17b1804b1-490bcf647e6mr59286025e9.0.1780579078383; 
- Thu, 04 Jun 2026 06:17:58 -0700 (PDT)
-X-Received: by 2002:a05:600c:4691:b0:490:bcf6:469f with SMTP id
- 5b1f17b1804b1-490bcf647e6mr59284995e9.0.1780579077649; 
- Thu, 04 Jun 2026 06:17:57 -0700 (PDT)
-Received: from sgarzare-redhat (host-82-53-135-12.retail.telecomitalia.it.
- [82.53.135.12]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-4601f2ed944sm16894564f8f.13.2026.06.04.06.17.56
+ bh=bgOwZNI7KPN4QVhMDFgkQQQfAtQVW8qLdijH8wJDYvI=;
+ b=l7XS12I5xCpvsmcDby+5kvi9WZ+4Q69JWKlg0v1E6V1keX9meFlBR0qmk+noXI8QDp
+ 72PlbLqFlXG6D7LjbNmdNv142kRWfyXJpgRn/Svzs6Ght5C46wkZCAkNxFT9C6456D4V
+ dV7x/1AJF6z8vkdX+hFBh0DelhH5pxglfpKz8suD9N7ElSxcAMdffsL+ZIr8xixTsyOU
+ wnX7bF+qlsJsJpsUTW8mYhe25VaYcQLqwiT/GLX2f4DBojKR4RDrsTu5h+e+1/5Ru8rW
+ ocmxL9Wc8CSt/JAljmkhZdlXtN1MwRi8+GE9ITE0FEP2vgCCD0DZAOMROvNCAZW6fza4
+ 581g==
+X-Forwarded-Encrypted: i=1;
+ AFNElJ/opphrtSvqOpDGty1YsNOhHrO8uF7pgqHjzhKGJ/0/58jj8OSfCpUAOm+7/UbEsquM7QmUREo7+9hg@nongnu.org
+X-Gm-Message-State: AOJu0YwvIg5zkLmf4lYaCaFACAi2N3G44itLK4id1e3oha1tz5mIuul7
+ C7f4mTvNwKPawiW0QyJNnWyVG40v+C0rFRnI9dsMYwgNkJUOmUmqqyM/GEbmgWwo22Ki5PhExiE
+ m0iq8ls3b+o62kSDYwqDVSQIo0VZQlXIt8A6RApG+py9WUAGETMSpTLTt
+X-Gm-Gg: Acq92OFzN2h4PZ/vqSW9KHu4CfcNwdR7SlyfObfTGnxTidbM+c83O3ct+/SKN99OwIU
+ ca659WoassgXanncp8Pb1fKsXn9NOu13CMWauFGqlTDfgqZMYxqlQnQNU9S8+mW/X72yY1QA/Y9
+ WrnsvK0p460yAi6rxHs1Qfj9VozYUQrWkU3aKb9v4fmcE3a8VovZGk14ndeKggjkhH2Kg7BjgCi
+ USCzB5nUd43JBNea22WwNis3ldl5cGSUTw44AFWSc0tAJmqOHpuQFyKN13e82e8KLR/Sez2o/Dc
+ HgvFvfslq0ivCkLEXSu5qH2WeeTfHEmPyGQRqbH31RM+8L1uo/V/e/c/Pmx33UMfBhZ1WNAmezn
+ B2LbljzvvAaIG2ZYeO26nIKa6UA==
+X-Received: by 2002:a05:6214:e48:b0:8ce:abea:4735 with SMTP id
+ 6a1803df08f44-8cecdd13b69mr112475866d6.39.1780579155788; 
+ Thu, 04 Jun 2026 06:19:15 -0700 (PDT)
+X-Received: by 2002:a05:6214:e48:b0:8ce:abea:4735 with SMTP id
+ 6a1803df08f44-8cecdd13b69mr112475386d6.39.1780579155184; 
+ Thu, 04 Jun 2026 06:19:15 -0700 (PDT)
+Received: from x1.local ([142.189.10.167]) by smtp.gmail.com with ESMTPSA id
+ 6a1803df08f44-8cecd051d61sm51813546d6.29.2026.06.04.06.19.14
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 04 Jun 2026 06:17:56 -0700 (PDT)
-Date: Thu, 4 Jun 2026 15:17:52 +0200
-From: Stefano Garzarella <sgarzare@redhat.com>
-To: Markus Armbruster <armbru@redhat.com>
-Cc: qemu-devel@nongnu.org, philmd@mailo.com, 
- pierrick.bouvier@oss.qualcomm.com, Julia Suvorova <jusual@redhat.com>, 
- Stefan Hajnoczi <stefanha@redhat.com>, qemu-block@nongnu.org
-Subject: Re: [PATCH v2 34/38] MAINTAINERS: Drop stale F: from "Linux io_uring"
-Message-ID: <aiF6lwircL8PCske@sgarzare-redhat>
-References: <20260603064032.3733394-1-armbru@redhat.com>
- <20260603064032.3733394-35-armbru@redhat.com>
+ Thu, 04 Jun 2026 06:19:14 -0700 (PDT)
+Date: Thu, 4 Jun 2026 09:19:13 -0400
+From: Peter Xu <peterx@redhat.com>
+To: Mark Cave-Ayland <mark.caveayland@nutanix.com>
+Cc: Fabiano Rosas <farosas@suse.de>, qemu-devel@nongnu.org,
+ Paolo Bonzini <pbonzini@redhat.com>, Mark Kanda <mark.kanda@oracle.com>,
+ "Michael S . Tsirkin" <mst@redhat.com>,
+ Markus Armbruster <armbru@redhat.com>, Eric Blake <eblake@redhat.com>,
+ "Maciej S. Szmigiero" <maciej.szmigiero@oracle.com>,
+ Jason Wang <jasowang@redhat.com>, Ben Chaney <bchaney@akamai.com>,
+ Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
+Subject: Re: [PATCH RFC 0/2] migration/vl: new -incoming config:* for early
+ migration parameters
+Message-ID: <aiF7UY6LPbYy7Ha_@x1.local>
+References: <20260528212947.368132-1-peterx@redhat.com>
+ <87se7btcq9.fsf@suse.de> <ahmfh2s7CLFLoZKN@x1.local>
+ <283f85de-92b0-4c62-94ed-631221b62c07@nutanix.com>
+ <aiBPakzg8080IOfo@x1.local>
+ <256f5918-0e33-4904-bdc9-8c0412fddd04@nutanix.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii; format=flowed
+Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <20260603064032.3733394-35-armbru@redhat.com>
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=sgarzare@redhat.com;
+In-Reply-To: <256f5918-0e33-4904-bdc9-8c0412fddd04@nutanix.com>
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=peterx@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -24
 X-Spam_score: -2.5
 X-Spam_bar: --
 X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.445,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
  SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -120,42 +126,42 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, Jun 03, 2026 at 08:40:28AM +0200, Markus Armbruster wrote:
->We neglected to update MAINTAINERS when we dropped stubs/io_uring.c.
->Update it now.
->
->Fixes: 047dabef97 (block/io_uring: use aio_add_sqe(), 2025-11-03)
->Cc: Julia Suvorova <jusual@redhat.com>
->Cc: Stefan Hajnoczi <stefanha@redhat.com>
->Cc: Stefano Garzarella <sgarzare@redhat.com>
->Cc: qemu-block@nongnu.org
->Signed-off-by: Markus Armbruster <armbru@redhat.com>
->Reviewed-by: Stefan Hajnoczi <stefanha@redhat.com>
->---
-> MAINTAINERS | 1 -
-> 1 file changed, 1 deletion(-)
->
->diff --git a/MAINTAINERS b/MAINTAINERS
->index 71383b9807..c5b6985767 100644
->--- a/MAINTAINERS
->+++ b/MAINTAINERS
->@@ -4331,7 +4331,6 @@ R: Stefano Garzarella <sgarzare@redhat.com>
-> L: qemu-block@nongnu.org
-> S: Maintained
-> F: block/io_uring.c
->-F: stubs/io_uring.c
+On Thu, Jun 04, 2026 at 11:00:17AM +0100, Mark Cave-Ayland wrote:
+> On 03/06/2026 16:59, Peter Xu wrote:
+> 
+> > > Is this part of the same problem in that the migration object needs to be
+> > > created much earlier than it is currently? And could doing this
+> > > potentially remove the need for a separate CPR channel?
+> > 
+> > The problem is the migration object can't yet be created too early, due to
+> > the fact it needs to apply compat properties.  That's why this series used
+> > another approach to have a temporary early MigrationParameters object to
+> > keep things until migration object is initialized (during which the temp
+> > object will be destroyed).
+> 
+> If the MigrationParameters are needed earlier, then presumably devices can
+> only depend upon the value of migration capabilities, and not the value of
+> migration compat props?
+> 
+> In that case could you not just build the migration compat props with
+> .realized_set_allowed = true in a similar way to e.g. hw/nvram/xlnx-bbram.c?
 
-Should we add `util/fdmon-io_uring.c` in this list ?
+Could you elaborate?
 
-BTW this is unrelated to this patch that LGTM:
+A few contexts to provide:
 
-Reviewed-by: Stefano Garzarella <sgarzare@redhat.com>
+Migration object (even if now a TYPE_DEVICE) doesn't use realize(), and it
+will be TYPE_OBJECT soon, which is at least the current plan.  Direct use
+of anything qdev specific won't work.
 
->
-> qcow2
-> M: Kevin Wolf <kwolf@redhat.com>
->-- 
->2.54.0
->
+The other thing is, migration parameters by default should be allowed to be
+set anytime after QEMU starts but before migration starts.  I don't yet
+understand the reference of realized_set_allowed use case, and how that
+idea can apply to migration.
+
+Thanks,
+
+-- 
+Peter Xu
 
 
