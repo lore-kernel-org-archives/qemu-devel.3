@@ -4,103 +4,96 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E6B67CD6E6B
-	for <qemu-devel@archiver.kernel.org>; Thu,  4 Jun 2026 13:34:20 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B8866CD6E6B
+	for <qemu-devel@archiver.kernel.org>; Thu,  4 Jun 2026 13:34:56 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wV8Cu-0007hW-Cd; Thu, 04 Jun 2026 09:34:00 -0400
+	id 1wV8Dc-0007x3-0h; Thu, 04 Jun 2026 09:34:44 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1wV8Cp-0007dx-SB
- for qemu-devel@nongnu.org; Thu, 04 Jun 2026 09:33:57 -0400
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1wV8DX-0007uM-2K
+ for qemu-devel@nongnu.org; Thu, 04 Jun 2026 09:34:39 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1wV8Cn-0003JA-8I
- for qemu-devel@nongnu.org; Thu, 04 Jun 2026 09:33:55 -0400
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1wV8DV-0003cR-4M
+ for qemu-devel@nongnu.org; Thu, 04 Jun 2026 09:34:38 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1780580031;
+ s=mimecast20190719; t=1780580076;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=ADLp4iRNryFqfFW/AbqAfGRCUJLsMNEU7SrJtRQKkj4=;
- b=SRQjUe/OSWZkXqCEkx7jeZRz7z0pdywDMeWqp02WGnpwQwQPXO5WvXhB7fXAQHJmK/Xg6a
- HtC+cngveHLHNqs6mkS+0bt8vDKeGDy1Uk86R1Zn/+FToTVnTjWjmSV4gkVA9tJ7QQYZcv
- Ylb3zGQJUKffRXBYvXjIl62ZIC3t6go=
-Received: from mail-qv1-f69.google.com (mail-qv1-f69.google.com
- [209.85.219.69]) by relay.mimecast.com with ESMTP with STARTTLS
+ to:to:cc:cc:mime-version:mime-version:
+ content-transfer-encoding:content-transfer-encoding;
+ bh=uh4IN7fW0iZNTG5gD7D/rzUpnRrAw74TjiSdkfRkhoE=;
+ b=Ca0Qvr99j+23fSYfwrqGl2oxkUQ8FvHRqgEWQXj4NKLdo/yAHjoKdKFgzmkwdXEEp7pynz
+ WsG/2KMUCAqZatqDlf10LlZbc5RsUBFRmYU2TWu+740UGYP9IQKm0SAmjUv3sSBicylppU
+ b+myPBTlInYRClNF1kJgSDv7yHevZvA=
+Received: from mail-qt1-f200.google.com (mail-qt1-f200.google.com
+ [209.85.160.200]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-390-MIzkQq03Ob-LX4ThbrI2xw-1; Thu, 04 Jun 2026 09:33:48 -0400
-X-MC-Unique: MIzkQq03Ob-LX4ThbrI2xw-1
-X-Mimecast-MFC-AGG-ID: MIzkQq03Ob-LX4ThbrI2xw_1780580028
-Received: by mail-qv1-f69.google.com with SMTP id
- 6a1803df08f44-8ccd5491db4so5553616d6.2
- for <qemu-devel@nongnu.org>; Thu, 04 Jun 2026 06:33:48 -0700 (PDT)
+ us-mta-594-IeiOqPwXMlm6N0D_6sFjBw-1; Thu, 04 Jun 2026 09:34:33 -0400
+X-MC-Unique: IeiOqPwXMlm6N0D_6sFjBw-1
+X-Mimecast-MFC-AGG-ID: IeiOqPwXMlm6N0D_6sFjBw_1780580073
+Received: by mail-qt1-f200.google.com with SMTP id
+ d75a77b69052e-5175bf22b1bso11674251cf.3
+ for <qemu-devel@nongnu.org>; Thu, 04 Jun 2026 06:34:33 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1780580028; x=1781184828; darn=nongnu.org;
- h=in-reply-to:content-transfer-encoding:content-disposition
- :mime-version:references:message-id:subject:cc:to:from:date:from:to
- :cc:subject:date:message-id:reply-to;
- bh=ADLp4iRNryFqfFW/AbqAfGRCUJLsMNEU7SrJtRQKkj4=;
- b=KmFD0mXVm5JhcEUI1JGp08ycvHZDgqtuI22dW9CYSM7MJ688rCw66vIy04uQw5peRj
- 8E6Qvr+ADipO7b+TeWno/2jtbm/MHeTY3IGiCsv4nlnZ1AJDsEc1CZG9P5+2FYEN5YyO
- x3pkhavgUcDVlkWucOn6uBkaiRFDMq5tlkYDtlIiCGzuaUVKTJz5xcdDy2Vvd0Ky6+2A
- He3x9gOfN+AdnLzw1sq6JTXvzkYCcnU/EYVthHtyd1fRdQ5W+J+1IiLBxiqxDO7CjMBh
- C0OoHt2NEugcBmG/+VcvfXF6Wb7JDWRwYXSbMNvR+WRnEwA0jN1DGOfHB6zxQgKiCQti
- pjaA==
+ d=redhat.com; s=google; t=1780580073; x=1781184873; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:from:to:cc:subject:date:message-id:reply-to;
+ bh=uh4IN7fW0iZNTG5gD7D/rzUpnRrAw74TjiSdkfRkhoE=;
+ b=hAle67wcuJ73r0R4J0omuxydAOuGhk59NuH1qyImWl3YEEztdlEV9GNIku8j7PK4SV
+ c1SgY26ddskvtCmTacmqDsK9Of1Y/Py+BvALoN1pb1dFymyTp8GHncnZR5q0kbeDqgwM
+ PlGJaqZ7nBoPH0bvyfSMSV2NcNyAUYj+S8NczBR6wEKG4QYLhIsxvQevg8hfjXOocTHh
+ JvVs7mAybymWftg3qJjWG2y0jPFs0AEW8Wuv1UPwexGHxrxBNc1IbXHwCKlb3WaZirAe
+ u8lwY6i+EeiBW8yK1ZiqBPDE4BLaqbAd55xsH1a2OJ+jacsIDwy3DtqDXJG5tT5OQXPv
+ rAUg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1780580028; x=1781184828;
- h=in-reply-to:content-transfer-encoding:content-disposition
- :mime-version:references:message-id:subject:cc:to:from:date:x-gm-gg
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=ADLp4iRNryFqfFW/AbqAfGRCUJLsMNEU7SrJtRQKkj4=;
- b=Z/Ocogc3G27nI3jzyww530b794TVQWzeHLuDxfLMG3v5tdBW4XuLVG+lH51RNqOCRv
- FAerA9bFMHrgSehUrv4AMsPZkzWAAiq0cQeun4bZxUQrSl92fTbCbJom2ye9lFWyj0Re
- P1sg0uk0/Jrgu04lI69bBese6nYxwVBoZT57eVkU+qaleeBtNyYgUbhTHxPLNDF91u+5
- jYl/oTLzvKtSM/krsMhWWVDxqtLKI9vq8q0MknCK1lTKO9VBKGlWKb4Pi2h1v00af0Mo
- 8CpDqfQJ7BPi/OkehUMoxfT7bieMYdZ4vfnaIMeJACjTGEWcVHilendpFPItNLkqzCvc
- ErHA==
-X-Gm-Message-State: AOJu0Yxhi9veBEDksu9YpK4rFSGwMTowbcy4srsZM8OTSoE3keEjB1Io
- w2HNvfjjTGEozSDwe0TXW+IiOuZd2WqeAxX472EodbuQFkSu5AU4uwkmJT8uw2rxqnqjBMWbY2B
- VKQFtSCBajfiKr8lPBUA+ipfuDbyO1l9hHnrHf5pIGULDIO6YnY8LPHoj
-X-Gm-Gg: Acq92OG2uF8uMIHHw8eQXgbruQBFeKTUIWE2ZddNKWWe3B0QI9D0aZT9X0sQtyp5+o+
- kvfPTW49nuUKv4o25IPsf3RQxKTtrBH8p+MRoiNDHDcWRGNclDGHnwN4BKZoBvEd8SjNGw0OpQJ
- Op1nsbnUZMbgzcRd2cq8cIBVom9M5bfr1YyNE33f9k/AmBJmlbAq4tV50aCog1lVgalHdcB1bGt
- /ByE8KjybEm8uxYNgZmwKgx7qgbw7lZmbXvTFBUTfcXBozGQzxnla7fOvl6q7ModyhuSVl5VFht
- cVUIUn/bJHEi4pmMSBtMPUTEFvWEnSqy5AtSLn6K5jPOftw+IBFR4QK8wz5BCFwwuPyx7YMUKDf
- rscIGIv1s3KZ61FhpxrD8LzKf2Q==
-X-Received: by 2002:a05:6214:540b:b0:8cd:b80e:6157 with SMTP id
- 6a1803df08f44-8cecdc2ddf8mr115414316d6.14.1780580027307; 
- Thu, 04 Jun 2026 06:33:47 -0700 (PDT)
-X-Received: by 2002:a05:6214:540b:b0:8cd:b80e:6157 with SMTP id
- 6a1803df08f44-8cecdc2ddf8mr115413586d6.14.1780580026679; 
- Thu, 04 Jun 2026 06:33:46 -0700 (PDT)
-Received: from x1.local ([142.189.10.167]) by smtp.gmail.com with ESMTPSA id
- 6a1803df08f44-8cecd06b231sm52923666d6.33.2026.06.04.06.33.45
+ d=1e100.net; s=20251104; t=1780580073; x=1781184873;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=uh4IN7fW0iZNTG5gD7D/rzUpnRrAw74TjiSdkfRkhoE=;
+ b=S3i5wZT4JgYWHC5o5Cm97QabynRRCHeEyTHojSsat0Z0LU72gbF+GN0sQSUF8yqcAq
+ Buls+W833yWfOWj8SW/IAl61SKU7X+nNFrVOhtQNbWXEEqENcd8ZxbWGUgGqp8MGX2c9
+ e1JwOTsEUJxVa88zs0qO6GgoJkVowJUT9azYkovKQ05WAvTbxgPP0+9dHwBHr1WJYaTL
+ oNpFa8XnJc8OTIXncDViH+Dze88MJuwfyZOJ2Kt+eqrK2OlnyQSEy5gRF8vzXnHwXQf5
+ cbqa40lxf0ve5RcAMXTh/RgemAqzsHB/iS3Eu08SWzD6cOtF9WDjm7uLD/Tt4ljFORnT
+ 822Q==
+X-Gm-Message-State: AOJu0Yym1u4sR8Jnb9hAl+Jnfmrz6VRolxwZuIr2KZA95d/whenK123n
+ z6xA0Tg0xCv+ay8HqCdydi0KTVQI2i3/4i5GvKmHo9YQJAmZWKJgh1Yw/WzxRPdGiCkAgfqkpBg
+ NFfen7TdePv7eocUXRBTlpo8UvUc1GPvxWpj3tVBLA1pu/Z4Xi22dd6n09uJKkWB3OhbRZMqRvW
+ b6vZgH52PU7Z2cherw7tejulGyw/0FZKIekqetxQ==
+X-Gm-Gg: Acq92OE45o/NLUQqi86+5nVMy4HRpFkSM08Lspf8uwXv684G0ub9ghl+Zt7SFBQv+zu
+ TwNeLNXA6hcKvKXa8/UWB+ExApwZfhx9L3iZYWwExcIjfXVsFC5CztJ9ZlhijOwi5doPsBb5kI9
+ nhbC3xosoiyFh/DksINmlltGYfDiDpc1rDg3M6g5Kyt31BwRytaH8rvIfXniWlu/E6eQPAZdTwf
+ LgDjQP2cApF1gE6zyi7Vh6fGonkX1H4mp1H+Pzzjb5VYey2w2V9+KnJl2pLEW6N2noxULewRThI
+ Z6guiZKzI0d8TUy0KdeVBSRTvQvh4OmYeO1qLGjdJHo2nhof0zv11eQH+fkjPJZSbqep9Xf+8bb
+ +eXaK+kZ2Nn9Qk0ZVlc4EI9c=
+X-Received: by 2002:a05:622a:420f:b0:517:5ffc:4a11 with SMTP id
+ d75a77b69052e-517786a9d2dmr105018611cf.36.1780580072469; 
+ Thu, 04 Jun 2026 06:34:32 -0700 (PDT)
+X-Received: by 2002:a05:622a:420f:b0:517:5ffc:4a11 with SMTP id
+ d75a77b69052e-517786a9d2dmr105017781cf.36.1780580071564; 
+ Thu, 04 Jun 2026 06:34:31 -0700 (PDT)
+Received: from x1.com ([142.189.10.167]) by smtp.gmail.com with ESMTPSA id
+ d75a77b69052e-517780e8169sm53217971cf.2.2026.06.04.06.34.30
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 04 Jun 2026 06:33:46 -0700 (PDT)
-Date: Thu, 4 Jun 2026 09:33:45 -0400
+ Thu, 04 Jun 2026 06:34:31 -0700 (PDT)
 From: Peter Xu <peterx@redhat.com>
-To: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
-Cc: qemu-devel@nongnu.org,
- Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@mailo.com>,
- Fabiano Rosas <farosas@suse.de>, Paolo Bonzini <pbonzini@redhat.com>,
- Alex =?utf-8?Q?Benn=C3=A9e?= <alex.bennee@linaro.org>
-Subject: Re: [PATCH] memory/ramblock: Fix clear of mru_block on possible race
+To: qemu-devel@nongnu.org
+Cc: Juraj Marcin <jmarcin@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@mailo.com>,
+ Peter Xu <peterx@redhat.com>,
+ =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ Fabiano Rosas <farosas@suse.de>,
+ Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
+Subject: [PATCH v2] memory/ramblock: Fix clear of mru_block on possible race
  condition
-Message-ID: <aiF-uS5MoQfjyY2d@x1.local>
-References: <20260601205900.1067714-1-peterx@redhat.com>
- <36749195-2c49-4f9c-8445-2e67b2097676@rsg.ci.i.u-tokyo.ac.jp>
- <ah80T6aIns82fspH@x1.local>
- <622da0a8-8101-4816-bf20-b5c3c9547a5f@rsg.ci.i.u-tokyo.ac.jp>
- <aiBl-hXpmXc8ULSJ@x1.local>
- <8eadb481-6d3a-459e-9db8-a9cca13d1cf4@rsg.ci.i.u-tokyo.ac.jp>
+Date: Thu,  4 Jun 2026 09:34:29 -0400
+Message-ID: <20260604133429.1268084-1-peterx@redhat.com>
+X-Mailer: git-send-email 2.53.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <8eadb481-6d3a-459e-9db8-a9cca13d1cf4@rsg.ci.i.u-tokyo.ac.jp>
 Received-SPF: pass client-ip=170.10.133.124; envelope-from=peterx@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -24
@@ -125,36 +118,128 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, Jun 04, 2026 at 02:24:07PM +0900, Akihiko Odaki wrote:
-> On 2026/06/04 2:35, Peter Xu wrote:
-> > On Wed, Jun 03, 2026 at 02:11:44PM +0900, Akihiko Odaki wrote:
-> > > qemu_get_ram_block() may set mru_block during the grace period. Once
-> > > mru_block is set, RCU readers can still access the ramblock, even if the
-> > > block is no longer visible in ram_list.
-> > 
-> > True..
-> > 
-> > > 
-> > > When enriching the comment in reclaim_ramblock_prepare(), I think the phrase
-> > > “the last reader that can access this ramblock is gone” could be improved.
-> > > What matters here is that the last reader that could find the block in
-> > > ram_list is gone. The block is no longer visible in ram_list to any later
-> > > reader, and clearing the cache at that point ensures that it is no longer
-> > > visible through an mru_block cache hit either.
-> > 
-> > Yes that's ambiguous.
-> > 
-> > I updated comments in this patch, removed the 1st reset of mru_block, and
-> > when at it also touched up the comment in qemu_get_ram_block(), let me know
-> > if there's further comments before repost.
-> 
-> It looks good. You may repost it with my Reviewed-by added:
-> 
-> Reviewed-by: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
+The race condition was not reported in any real bug, but I found it while
+reviewing some relevant chnages from Akihiko [1].  It's not clear if
+there's any way to reproduce it, so far it's only theoretical.  Hence
+there's also no Fixes tag attached.  There's also no need to copy stable
+until we have a solid reproducer.
 
-Thanks.
+Currently, mru_block might still points to ramblocks that are removed if
+below race condition happens:
 
+  Reader A                              Writer
+  --------                              ------
+  rcu_read_lock()
+  walk list, find block X
+                                        QLIST_REMOVE_RCU(X)
+                                        qatomic_set(&mru_block, NULL)
+                                        call_rcu(X, reclaim_ramblock)
+  qatomic_set(&mru_block, X)  <----------- overwrites NULL
+  rcu_read_unlock()
+                                        grace period ends, X freed
+
+  Reader C
+  --------
+  rcu_read_lock()
+  qatomic_rcu_read(&mru_block) -> X
+  Read X's block->offset ...  <----------- UAF
+
+To fix it, we can introduce a nested RCU free for reset of the mru_block
+field, and only free the ramblock until the 2nd RCU call.
+
+Since QEMU always: (1) dequeue the RCU node before invoking the
+function, (2) reset all fields in rcu_head in the call_rcu1() call, nested
+RCU will work all fine like what's used in this patch.
+
+[1] https://lore.kernel.org/r/5fd9e540-cf13-45f5-ba9a-c7faf364035b@rsg.ci.i.u-tokyo.ac.jp
+
+Reviewed-by: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
+Signed-off-by: Peter Xu <peterx@redhat.com>
+---
+
+Based-on: <5fd9e540-cf13-45f5-ba9a-c7faf364035b@rsg.ci.i.u-tokyo.ac.jp>
+
+v2:
+- Refine comments, remove the 1st reset of mru_block  [Akihiki]
+---
+ system/physmem.c | 46 ++++++++++++++++++++++++++++++----------------
+ 1 file changed, 30 insertions(+), 16 deletions(-)
+
+diff --git a/system/physmem.c b/system/physmem.c
+index 9e1ac13e82..c9e5696d6a 100644
+--- a/system/physmem.c
++++ b/system/physmem.c
+@@ -836,21 +836,14 @@ static RAMBlock *qemu_get_ram_block(ram_addr_t addr)
+     abort();
+ 
+ found:
+-    /* It is safe to write mru_block outside the BQL.  This
+-     * is what happens:
+-     *
+-     *     qatomic_set(&mru_block, xxx)
+-     *     rcu_read_unlock()
+-     *                                        xxx removed from list
+-     *                  rcu_read_lock()
+-     *                  read mru_block
+-     *                                        qatomic_set(&mru_block, NULL);
+-     *                                        call_rcu(reclaim_ramblock, xxx);
+-     *                  rcu_read_unlock()
++    /*
++     * It is safe to write mru_block outside the BQL, the writer (e.g. when
++     * QEMU frees a ramblock) is designed to be thread-safe with readers
++     * updating this field concurrently.  See reclaim_ramblock_prepare().
+      *
+-     * qatomic_rcu_set is not needed here.  The block was already published
+-     * when it was placed into the list.  Here we're just making an extra
+-     * copy of the pointer.
++     * qatomic_rcu_set() is not needed here, because the block was already
++     * published when it was placed into the list.  Here we're just making
++     * an extra copy of the pointer.
+      */
+     qatomic_set(&ram_list.mru_block, block);
+     return block;
+@@ -2590,6 +2583,23 @@ static void reclaim_ramblock(RAMBlock *block)
+     g_free(block);
+ }
+ 
++static void reclaim_ramblock_prepare(RAMBlock *block)
++{
++    /*
++     * After one round of grace period, no more reader can see this
++     * ramblock via ram_list.  Reset this field making sure it will never
++     * point to the ramblock being freed.
++     */
++    qatomic_set(&ram_list.mru_block, NULL);
++    /*
++     * Wait for a second round of grace period to make sure whoever
++     * accessed the ramblock previously via mru_block has finished using
++     * it.  Note: this is an intended nested use of rcu_head.  If needed,
++     * we can provide two rcu_heads for ramblock.
++     */
++    call_rcu(block, reclaim_ramblock, rcu);
++}
++
+ void qemu_ram_free(RAMBlock *block)
+ {
+     g_autofree char *name = NULL;
+@@ -2607,10 +2617,14 @@ void qemu_ram_free(RAMBlock *block)
+     name = cpr_name(block->mr);
+     cpr_delete_fd(name, 0);
+     QLIST_REMOVE_RCU(block, next);
+-    qatomic_set(&ram_list.mru_block, NULL);
+     /* Write list before version */
+     qatomic_store_release(&ram_list.version, ram_list.version + 1);
+-    call_rcu(block, reclaim_ramblock, rcu);
++    /*
++     * Wait for a grace period to make sure no reader can see this ramblock
++     * via ram_list anymore.  Note that readers can still see and access
++     * the ramblock via mru_block, so we can't free it yet.
++     */
++    call_rcu(block, reclaim_ramblock_prepare, rcu);
+     qemu_mutex_unlock_ramlist();
+ }
+ 
 -- 
-Peter Xu
+2.53.0
 
 
