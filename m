@@ -4,55 +4,106 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 904B9CD6E57
-	for <qemu-devel@archiver.kernel.org>; Thu,  4 Jun 2026 08:58:24 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1DB48CD6E4A
+	for <qemu-devel@archiver.kernel.org>; Thu,  4 Jun 2026 09:02:01 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wV3tB-00041E-1n; Thu, 04 Jun 2026 04:57:21 -0400
+	id 1wV3wx-0004vu-DX; Thu, 04 Jun 2026 05:01:15 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <guobin@linux.alibaba.com>)
- id 1wV3st-0003zQ-Vs; Thu, 04 Jun 2026 04:57:05 -0400
-Received: from [115.124.30.100] (helo=out30-100.freemail.mail.aliyun.com)
+ (Exim 4.90_1) (envelope-from <eric.auger@redhat.com>)
+ id 1wV3wv-0004vJ-T8
+ for qemu-devel@nongnu.org; Thu, 04 Jun 2026 05:01:13 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <guobin@linux.alibaba.com>)
- id 1wV3si-0002d0-QS; Thu, 04 Jun 2026 04:56:58 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linux.alibaba.com; s=default;
- t=1780563386; h=From:To:Subject:Date:Message-ID:MIME-Version;
- bh=ome00y6NCajRZ9+WaJy0c0RVI8D3yqZmz0PyuC8oox8=;
- b=fYvngzZfdGYRH+fRgN0mZ4F+seXjA1sOFwih3nU5/vBjVQF5bray8ViiIZ8qknlDXKOk6YVw8upBtTbteEuym0oRjxm+jLPn+w0x7nQjb++lKimfJ6lhz3i2zc8g178juC+ndcqcteLK2pTpmEHu+X2+Y433a4jqAuMXkwUMm90=
-X-Alimail-AntiSpam: AC=PASS; BC=-1|-1; BR=01201311R101e4; CH=green; DM=||false|;
- DS=||; FP=0|-1|-1|-1|0|-1|-1|-1; HT=maildocker-contentspam033045098064;
- MF=guobin@linux.alibaba.com; NM=1; PH=DS; RN=9; SR=0;
- TI=SMTPD_---0X49lhnY_1780563384; 
-Received: from localhost(mailfrom:guobin@linux.alibaba.com
- fp:SMTPD_---0X49lhnY_1780563384 cluster:ay36) by smtp.aliyun-inc.com;
- Thu, 04 Jun 2026 16:56:25 +0800
-From: Bin Guo <guobin@linux.alibaba.com>
-To: qemu-devel@nongnu.org
-Cc: mst@redhat.com, stefanha@redhat.com, kwolf@redhat.com, hreitz@redhat.com,
- pbonzini@redhat.com, fam@euphon.net, qemu-block@nongnu.org,
- qemu-stable@nongnu.org
-Subject: [PATCH] hw/virtio: reject malformed VirtQueueElement on migration load
-Date: Thu,  4 Jun 2026 16:56:24 +0800
-Message-ID: <20260604085624.53815-1-guobin@linux.alibaba.com>
-X-Mailer: git-send-email 2.50.1
+ (Exim 4.90_1) (envelope-from <eric.auger@redhat.com>)
+ id 1wV3wt-0004kQ-H5
+ for qemu-devel@nongnu.org; Thu, 04 Jun 2026 05:01:13 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1780563669;
+ h=from:from:reply-to:reply-to:subject:subject:date:date:
+ message-id:message-id:to:to:cc:cc:mime-version:mime-version:
+ content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=8VjNJBT6UnsFK45Y4KkBxOwq7GcYMKnNPXWNz8FGwag=;
+ b=I911Oay+WG17xUpvlbiee7TNmOiQ+FY/BZRK3EyOEVjqpPKq6wMnw5gDFBYEhP7FPc1BiZ
+ BQuntqWPIMqnlMnDSQXoGn3x+zBu0ZMhuGCZLUVpk1Q+46wsgvlVLeIQKmMFmbtBdu0Po6
+ xKAilqnyAdX3M15a4YoO2tZ3CNsXeL4=
+Received: from mail-ed1-f70.google.com (mail-ed1-f70.google.com
+ [209.85.208.70]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-451-d1cuw3IrNyG3WCopYB4jNg-1; Thu, 04 Jun 2026 05:01:08 -0400
+X-MC-Unique: d1cuw3IrNyG3WCopYB4jNg-1
+X-Mimecast-MFC-AGG-ID: d1cuw3IrNyG3WCopYB4jNg_1780563667
+Received: by mail-ed1-f70.google.com with SMTP id
+ 4fb4d7f45d1cf-68d23399751so410781a12.1
+ for <qemu-devel@nongnu.org>; Thu, 04 Jun 2026 02:01:08 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1780563667; x=1781168467;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:reply-to:user-agent:mime-version:date
+ :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=8VjNJBT6UnsFK45Y4KkBxOwq7GcYMKnNPXWNz8FGwag=;
+ b=h5BCdN0TEDao/NBjw+A+o4TTVBxKHImqH3jBPDWIWxyvinT40UWK0q27D8ecpuESM/
+ srhGxfnaH61TV8EscJZC/iSDpuyrKYxPp7kIWGFFkUZsQfW6PoCpwJK3MMX6LMPjxV6y
+ wGoaGCczEuuo7gwOdtnZM841tun1O0XzztJkzOlsLuzS5I6HsU8KSB9C30cOxOXhNRvI
+ a6fGxmATHsj2P8HJLvd3QhqNJC3qmO2jw/Oa0Zx6s2r6WTfe8GThaAsB5Ih+PhwrtWL/
+ G2/uBVT2ltXo+O62J6UteQWkqeVxbnbSV/eD5Fk+P85W0MyfMT4K5CFdOMHA8MqM48uw
+ itrQ==
+X-Forwarded-Encrypted: i=1;
+ AFNElJ9EKtO9130EMgBigijf50CdJ+kVQq4a0FAMxthSvY72/mkBCvHM8qBgI9+WTNyEE0B1NfNJyixCDZ5k@nongnu.org
+X-Gm-Message-State: AOJu0YyJsWrUdB0FdaEUvp8G56WZSEDYNZbrs6Hu7QkTRTfzJeWwsevc
+ MOILG3mZmJ9Prgu7gRywiHOtBIkcEBg5wgiDi3KHoIkdYaS2Y3K0tTh2mTkZNFJV4BRGEFtr0cU
+ zcW3KOOpJe56YkV91SC8sr+fsb57lceD28HiaOHlk0QRbeVrOR+519bB/
+X-Gm-Gg: Acq92OGV45SmPfZD8tUkRK1hiC7EBdRK9wO7c3cOmByGtjT8kdY4DzZpLkmnJqI7chY
+ wU0cu+wDyDmu/Wo37ojJUqk0bsfkHHOnUdk+G15QV1AbKVWTevM3WKNz1xEM/c3kTAE3it4qBzq
+ KcpF4kFiqwOkM1n4vA6uyyyZbLxu/S5n9RGpbDBqtwLp1t01DreJ1z/Bt4eHF0lAVhB5+h0EqAg
+ 81205bof4GoTqOmqx3B2XiQsAkDBUmKtFBOfaezqjjtYZlSp9EjLWDw0xSlX+5uek0zOHadeQrs
+ PcCP0TGQTgV3/D7EzmlYQZIKvsPJYKMMCx/aVYKjUlLgu07JMr0eIQqooHQzYYnDadiiB4Uipjr
+ QwGkq682AqG4mXH1fyvrFGS9SKPvES+R3qB4PxG3vnM7QRFhZXSc+GKG2lb11sUx1DsGspxJjEf
+ 7DoEh0
+X-Received: by 2002:a17:907:9627:b0:bed:afd7:185 with SMTP id
+ a640c23a62f3a-bf0af409847mr404282166b.43.1780563666998; 
+ Thu, 04 Jun 2026 02:01:06 -0700 (PDT)
+X-Received: by 2002:a17:907:9627:b0:bed:afd7:185 with SMTP id
+ a640c23a62f3a-bf0af409847mr404277166b.43.1780563666343; 
+ Thu, 04 Jun 2026 02:01:06 -0700 (PDT)
+Received: from ?IPV6:2a01:e0a:f0e:9070:527b:9dff:feef:3874?
+ ([2a01:e0a:f0e:9070:527b:9dff:feef:3874])
+ by smtp.gmail.com with ESMTPSA id
+ a640c23a62f3a-bf055500875sm264886966b.53.2026.06.04.02.01.05
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Thu, 04 Jun 2026 02:01:05 -0700 (PDT)
+Message-ID: <1a9b7bf7-cb1f-4826-a225-3346ba0debcb@redhat.com>
+Date: Thu, 4 Jun 2026 11:01:04 +0200
 MIME-Version: 1.0
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v6 17/31] hw/arm/tegra241-cmdqv: mmap VINTF Page0 for CMDQV
+Content-Language: en-US
+To: Shameer Kolothum <skolothumtho@nvidia.com>, qemu-arm@nongnu.org,
+ qemu-devel@nongnu.org
+Cc: peter.maydell@linaro.org, clg@redhat.com, alex@shazbot.org,
+ nicolinc@nvidia.com, nathanc@nvidia.com, mochs@nvidia.com, jan@nvidia.com,
+ jgg@nvidia.com, zhenzhong.duan@intel.com, kjaju@nvidia.com,
+ phrdina@redhat.com
+References: <20260601114221.457995-1-skolothumtho@nvidia.com>
+ <20260601114221.457995-18-skolothumtho@nvidia.com>
+From: Eric Auger <eric.auger@redhat.com>
+In-Reply-To: <20260601114221.457995-18-skolothumtho@nvidia.com>
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-X-Host-Lookup-Failed: Reverse DNS lookup failed for 115.124.30.100 (deferred)
-Received-SPF: pass client-ip=115.124.30.100;
- envelope-from=guobin@linux.alibaba.com;
- helo=out30-100.freemail.mail.aliyun.com
-X-Spam_score_int: -166
-X-Spam_score: -16.7
-X-Spam_bar: ----------------
-X-Spam_report: (-16.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, ENV_AND_HDR_SPF_MATCH=-0.5,
- RCVD_IN_DNSWL_NONE=-0.0001, RDNS_NONE=0.793, SPF_PASS=-0.001,
- T_SPF_HELO_TEMPERROR=0.01, UNPARSEABLE_RELAY=0.001, USER_IN_DEF_DKIM_WL=-7.5,
- USER_IN_DEF_SPF_WL=-7.5 autolearn=no autolearn_force=no
+Received-SPF: pass client-ip=170.10.129.124;
+ envelope-from=eric.auger@redhat.com; helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -24
+X-Spam_score: -2.5
+X-Spam_bar: --
+X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.445,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -65,116 +116,161 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-To: eric.auger@redhat.com
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-qemu_get_virtqueue_element() asserts on in_num/out_num read straight
-from the migration stream, then feeds them to virtqueue_alloc_element()
-as allocation sizes. A malformed stream from the source crashes the
-destination; with NDEBUG the asserts vanish and the heap allocation is
-driven by attacker-controlled values - the reason the in-tree TODO
-forbade NDEBUG builds. The hole is reachable on every inbound migration
-of a virtio-blk or virtio-scsi guest.
+Hi Shameer,
 
-Reject in_num/out_num that overflow their arrays, and reject
-in_num + out_num > VIRTQUEUE_MAX_SIZE (a single chain cannot exceed
-one ring). The OR short-circuits so the sum is only evaluated once
-both counts are individually bounded.
+On 6/1/26 1:42 PM, Shameer Kolothum wrote:
+> From: Nicolin Chen <nicolinc@nvidia.com>
+>
+> The kernel currently exposes a single VINTF per emulated SMMUv3
+> instance. IOMMU_VIOMMU_ALLOC returns an mmap offset for the host
+> VINTF Page0 allocated for this SMMU. However, VCMDQs only become
+> bound to that VINTF after IOMMU_HW_QUEUE_ALLOC, so until then the
+> mapped Page0 does not back any real VCMDQ state.
+>
+> When VINTF is enabled, mmap the kernel-provided Page0 region and set
+> STATUS.ENABLE_OK only if the mmap succeeds; unmap it when VINTF is
+> disabled. This prepares the VINTF mapping in advance of subsequent
+> patches that add VCMDQ allocation and the guest MMIO install.
+>
+> Signed-off-by: Nicolin Chen <nicolinc@nvidia.com>
+> Co-developed-by: Shameer Kolothum <skolothumtho@nvidia.com>
+> Signed-off-by: Shameer Kolothum <skolothumtho@nvidia.com>
+> ---
+>  hw/arm/tegra241-cmdqv.h |  3 +++
+>  hw/arm/tegra241-cmdqv.c | 50 ++++++++++++++++++++++++++++++++++++++---
+>  2 files changed, 50 insertions(+), 3 deletions(-)
+>
+> diff --git a/hw/arm/tegra241-cmdqv.h b/hw/arm/tegra241-cmdqv.h
+> index ad7fb8725f..c4d327a9a5 100644
+> --- a/hw/arm/tegra241-cmdqv.h
+> +++ b/hw/arm/tegra241-cmdqv.h
+> @@ -37,6 +37,8 @@
+>  #define CMDQV_VINTF_PAGE1_BASE  0x40000
+>  #define CMDQV_VCMDQ_STRIDE      0x80
+>  
+> +#define VINTF_PAGE_SIZE 0x10000
+> +
+>  struct iommu_viommu_tegra241_cmdqv;
+>  
+>  typedef struct Tegra241CMDQV {
+> @@ -45,6 +47,7 @@ typedef struct Tegra241CMDQV {
+>      MemoryRegion mmio_cmdqv;
+>      qemu_irq irq;
+>      IOMMUFDVeventq *veventq;
+> +    void *vintf_page0;
+>  
+>      /* CMDQ-V Config page register cache */
+>      uint32_t config;
+> diff --git a/hw/arm/tegra241-cmdqv.c b/hw/arm/tegra241-cmdqv.c
+> index 3cb1b45575..a52e153501 100644
+> --- a/hw/arm/tegra241-cmdqv.c
+> +++ b/hw/arm/tegra241-cmdqv.c
+> @@ -9,6 +9,8 @@
+>  
+>  #include "qemu/osdep.h"
+>  #include "qemu/log.h"
+> +#include "qemu/error-report.h"
+> +#include "qapi/error.h"
+>  
+>  #include "hw/arm/smmuv3.h"
+>  #include "hw/arm/smmuv3-common.h"
+> @@ -218,8 +220,42 @@ static void tegra241_cmdqv_write_vcmdq_page1_64(Tegra241CMDQV *cmdqv,
+>                                             offset0, value);
+>  }
+>  
+> +static bool
+> +tegra241_cmdqv_munmap_vintf_page0(Tegra241CMDQV *cmdqv, Error **errp)
+> +{
+> +    if (!cmdqv->vintf_page0) {
+> +        return true;
+> +    }
+> +
+> +    if (munmap(cmdqv->vintf_page0, VINTF_PAGE_SIZE) < 0) {
+> +        error_setg_errno(errp, errno, "Failed to unmap VINTF page0");
+> +        return false;
+> +    }
+> +    cmdqv->vintf_page0 = NULL;
+> +    return true;
+> +}
+> +
+> +static bool tegra241_cmdqv_mmap_vintf_page0(Tegra241CMDQV *cmdqv, Error **errp)
+> +{
+> +    IOMMUFDViommu *viommu = cmdqv->s_accel->viommu;
+> +
+> +    if (cmdqv->vintf_page0) {
+> +        return true;
+> +    }
+> +
+> +    if (!iommufd_backend_viommu_mmap(viommu->iommufd, viommu->viommu_id,
+> +                                     VINTF_PAGE_SIZE,
+> +                                     cmdqv->cmdqv_data->out_vintf_mmap_offset,
+> +                                     &cmdqv->vintf_page0, errp)) {
+> +        return false;
+> +    }
+> +
+> +    return true;
+> +}
+> +
+>  static void tegra241_cmdqv_config_vintf_write(Tegra241CMDQV *cmdqv,
+> -                                              hwaddr offset, uint64_t value)
+> +                                              hwaddr offset, uint64_t value,
+> +                                              Error **errp)
+>  {
+>      int i;
+>  
+> @@ -234,8 +270,11 @@ static void tegra241_cmdqv_config_vintf_write(Tegra241CMDQV *cmdqv,
+>  
+>          cmdqv->vintf_config = value;
+>          if (value & R_VINTF0_CONFIG_ENABLE_MASK) {
+> -            cmdqv->vintf_status |= R_VINTF0_STATUS_ENABLE_OK_MASK;
+> +            if (tegra241_cmdqv_mmap_vintf_page0(cmdqv, errp)) {
+> +                cmdqv->vintf_status |= R_VINTF0_STATUS_ENABLE_OK_MASK;
+> +            }
+>          } else {
+> +            tegra241_cmdqv_munmap_vintf_page0(cmdqv, errp);
+the munmap is only done upon guest action in this patch. Later on, it is
+also done on reset (in smmuv3_accel_reset called on smmu_reset_exit
+called in exit phase). So I think we are good overall but it is a bit
+annoying to leave it done only upon guest action in this patch. What do
+you think?
 
-virtio_blk_load_device() returns -EINVAL through its existing int
-return. virtio_scsi_load_request() has no error channel in its
-SCSIBusInfo hook signature and mirrors the existing error_report() +
-exit(1) used a few lines below for parse failures.
+Thanks
 
-Document the new NULL return on the prototype in virtio.h.
-
-Cc: qemu-stable@nongnu.org
-Fixes: 8059feee0041 ("virtio: introduce virtio_map")
-Signed-off-by: Bin Guo <guobin@linux.alibaba.com>
----
- hw/block/virtio-blk.c      |  3 +++
- hw/scsi/virtio-scsi.c      |  5 +++++
- hw/virtio/virtio.c         | 19 +++++++++++++------
- include/hw/virtio/virtio.h |  4 ++++
- 4 files changed, 25 insertions(+), 6 deletions(-)
-
-diff --git a/hw/block/virtio-blk.c b/hw/block/virtio-blk.c
-index 9cb9f1fb2b..97482c7981 100644
---- a/hw/block/virtio-blk.c
-+++ b/hw/block/virtio-blk.c
-@@ -1378,6 +1378,9 @@ static int virtio_blk_load_device(VirtIODevice *vdev, QEMUFile *f,
-         }
- 
-         req = qemu_get_virtqueue_element(vdev, f, sizeof(VirtIOBlockReq));
-+        if (!req) {
-+            return -EINVAL;
-+        }
-         virtio_blk_init_request(s, virtio_get_queue(vdev, vq_idx), req);
- 
-         WITH_QEMU_LOCK_GUARD(&s->rq_lock) {
-diff --git a/hw/scsi/virtio-scsi.c b/hw/scsi/virtio-scsi.c
-index 6c73768011..bb2412e89c 100644
---- a/hw/scsi/virtio-scsi.c
-+++ b/hw/scsi/virtio-scsi.c
-@@ -274,6 +274,11 @@ static void *virtio_scsi_load_request(QEMUFile *f, SCSIRequest *sreq)
-     assert(n < vs->conf.num_queues);
-     req = qemu_get_virtqueue_element(vdev, f,
-                                      sizeof(VirtIOSCSIReq) + vs->cdb_size);
-+    if (!req) {
-+        error_report("virtio-scsi: failed to load request from migration "
-+                     "stream (queue=%u)", n);
-+        exit(1);
-+    }
-     virtio_scsi_init_req(s, vs->cmd_vqs[n], req);
- 
-     if (virtio_scsi_parse_req(req, sizeof(VirtIOSCSICmdReq) + vs->cdb_size,
-diff --git a/hw/virtio/virtio.c b/hw/virtio/virtio.c
-index 63e2faee99..24df1d0300 100644
---- a/hw/virtio/virtio.c
-+++ b/hw/virtio/virtio.c
-@@ -2167,13 +2167,20 @@ void *qemu_get_virtqueue_element(VirtIODevice *vdev, QEMUFile *f, size_t sz)
- 
-     qemu_get_buffer(f, (uint8_t *)&data, sizeof(VirtQueueElementOld));
- 
--    /* TODO: teach all callers that this can fail, and return failure instead
--     * of asserting here.
--     * This is just one thing (there are probably more) that must be
--     * fixed before we can allow NDEBUG compilation.
-+    /*
-+     * Bound the untrusted counts before they reach
-+     * virtqueue_alloc_element() as allocation sizes. A single chain
-+     * cannot exceed the ring size, so the sum is bounded too.
-      */
--    assert(ARRAY_SIZE(data.in_addr) >= data.in_num);
--    assert(ARRAY_SIZE(data.out_addr) >= data.out_num);
-+    if (data.in_num > ARRAY_SIZE(data.in_addr) ||
-+        data.out_num > ARRAY_SIZE(data.out_addr) ||
-+        data.in_num + data.out_num > VIRTQUEUE_MAX_SIZE) {
-+        error_report("virtio: malformed VirtQueueElement on migration load: "
-+                     "in_num=%u out_num=%u (max=%u)",
-+                     data.in_num, data.out_num,
-+                     (unsigned)VIRTQUEUE_MAX_SIZE);
-+        return NULL;
-+    }
- 
-     elem = virtqueue_alloc_element(sz, data.out_num, data.in_num);
-     elem->index = data.index;
-diff --git a/include/hw/virtio/virtio.h b/include/hw/virtio/virtio.h
-index 6344bd7b68..3034257505 100644
---- a/include/hw/virtio/virtio.h
-+++ b/include/hw/virtio/virtio.h
-@@ -281,6 +281,10 @@ void virtqueue_fill(VirtQueue *vq, const VirtQueueElement *elem,
- void virtqueue_map(VirtIODevice *vdev, VirtQueueElement *elem);
- void *virtqueue_pop(VirtQueue *vq, size_t sz);
- unsigned int virtqueue_drop_all(VirtQueue *vq);
-+/**
-+ * Returns NULL if the migration stream encodes an out-of-range
-+ * descriptor count; callers must check before dereferencing.
-+ */
- void *qemu_get_virtqueue_element(VirtIODevice *vdev, QEMUFile *f, size_t sz);
- void qemu_put_virtqueue_element(VirtIODevice *vdev, QEMUFile *f,
-                                 VirtQueueElement *elem);
--- 
-2.50.1 (Apple Git-155)
+Eric 
+>              cmdqv->vintf_status &= ~R_VINTF0_STATUS_ENABLE_OK_MASK;
+>          }
+>          break;
+> @@ -341,6 +380,7 @@ out:
+>  static void tegra241_cmdqv_writel_mmio(Tegra241CMDQV *cmdqv, hwaddr offset,
+>                                         uint32_t value)
+>  {
+> +    Error *local_err = NULL;
+>      int index;
+>  
+>      switch (offset) {
+> @@ -359,7 +399,7 @@ static void tegra241_cmdqv_writel_mmio(Tegra241CMDQV *cmdqv, hwaddr offset,
+>          cmdqv->cmdq_alloc_map[(offset - A_CMDQ_ALLOC_MAP_0) / 4] = value;
+>          break;
+>      case A_VINTF0_CONFIG ... A_VINTF0_LVCMDQ_ERR_MAP_3:
+> -        tegra241_cmdqv_config_vintf_write(cmdqv, offset, value);
+> +        tegra241_cmdqv_config_vintf_write(cmdqv, offset, value, &local_err);
+>          break;
+>      case A_VI_VCMDQ0_CONS_INDX ... A_VI_VCMDQ1_GERRORN:
+>          /*
+> @@ -398,6 +438,10 @@ static void tegra241_cmdqv_writel_mmio(Tegra241CMDQV *cmdqv, hwaddr offset,
+>          qemu_log_mask(LOG_UNIMP, "%s unhandled write access at 0x%" PRIx64 "\n",
+>                        __func__, offset);
+>      }
+> +
+> +    if (local_err) {
+> +        error_report_err(local_err);
+> +    }
+>  }
+>  
+>  /*
 
 
