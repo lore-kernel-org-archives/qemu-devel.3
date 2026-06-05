@@ -4,107 +4,123 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id CB508CD6E79
-	for <qemu-devel@archiver.kernel.org>; Fri,  5 Jun 2026 14:39:49 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B57B1CD6E79
+	for <qemu-devel@archiver.kernel.org>; Fri,  5 Jun 2026 14:45:25 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wVVhv-0002Yg-2G; Fri, 05 Jun 2026 10:39:35 -0400
+	id 1wVVn4-0005Sn-IH; Fri, 05 Jun 2026 10:44:54 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1wVVht-0002YY-Hw
- for qemu-devel@nongnu.org; Fri, 05 Jun 2026 10:39:33 -0400
-Received: from smtp-out1.suse.de ([2a07:de40:b251:101:10:150:64:1])
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1wVVn3-0005SD-Qy
+ for qemu-devel@nongnu.org; Fri, 05 Jun 2026 10:44:53 -0400
+Received: from smtp-out2.suse.de ([2a07:de40:b251:101:10:150:64:2])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1wVVhr-0004mM-M6
- for qemu-devel@nongnu.org; Fri, 05 Jun 2026 10:39:33 -0400
-Received: from imap1.dmz-prg2.suse.org (unknown [10.150.64.97])
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1wVVn1-0007Kg-OY
+ for qemu-devel@nongnu.org; Fri, 05 Jun 2026 10:44:53 -0400
+Received: from imap1.dmz-prg2.suse.org (imap1.dmz-prg2.suse.org
+ [IPv6:2a07:de40:b281:104:10:150:64:97])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
  (No client certificate requested)
- by smtp-out1.suse.de (Postfix) with ESMTPS id 8C5056B17A;
- Fri,  5 Jun 2026 14:39:29 +0000 (UTC)
+ by smtp-out2.suse.de (Postfix) with ESMTPS id 233B4759A3;
+ Fri,  5 Jun 2026 14:44:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1780670369; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ t=1780670690; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
  mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=yuH4rNmTOKa87YS2UHT2MpHSI8Vx5Vd2V4hPkqlrg5s=;
- b=lvbU99e92b+nuGdM0EIA+TWIU/3MxQvb6QvkxvyOCZn5Bt6JQzifG2lKn3ru1q+Gf9auwA
- vOkV1fsc5QRNei0l8GLF+aSn8Jz9WSzrPbF2T72laa2EmFwKxYCJII8WeWli/gms7grlG2
- acDK65ek+jNMdCP1p3a8SRKnJJLlmBU=
+ bh=BNEj+Z2zdDsHA4YvVEnoXcKIsRv8I8RVLlIPVRTKQjk=;
+ b=El/tmNLdsuVNhUperFljdzAwTxeGgR5ukYbhsOtX1D82Ez6TqtIX/mfwf9332D83y/yGpc
+ kt+zw0QYTiL+Vo56xVID4tVihmquDjlpwTCfqaHZUtpGDxs6g8q4mLLhQPSxHgIFSXSKPK
+ OMyGfTDbkMRK2Ox0U+E3M4BcfKjqi1E=
 DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1780670369;
+ s=susede2_ed25519; t=1780670690;
  h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
  mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=yuH4rNmTOKa87YS2UHT2MpHSI8Vx5Vd2V4hPkqlrg5s=;
- b=i2iH7pumWj9+wBogVdaXh7dY/KtidTTaVDaznIjbKGtfKnzbNSlW/DUpfinWUYZS9H9R/Z
- Ulh1+qTUdCmEL+DQ==
-Authentication-Results: smtp-out1.suse.de;
-	none
+ bh=BNEj+Z2zdDsHA4YvVEnoXcKIsRv8I8RVLlIPVRTKQjk=;
+ b=DtC863clzfsv5DYyVYbe2REcssU+ugEHj40wYYGfyQo39lTimZFEN93NJXHSUoXV6iuYct
+ cPK5jOFyV3slo/AA==
+Authentication-Results: smtp-out2.suse.de;
+ dkim=pass header.d=suse.de header.s=susede2_rsa header.b="El/tmNLd";
+ dkim=pass header.d=suse.de header.s=susede2_ed25519 header.b=DtC863cl
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1780670369; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ t=1780670690; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
  mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=yuH4rNmTOKa87YS2UHT2MpHSI8Vx5Vd2V4hPkqlrg5s=;
- b=lvbU99e92b+nuGdM0EIA+TWIU/3MxQvb6QvkxvyOCZn5Bt6JQzifG2lKn3ru1q+Gf9auwA
- vOkV1fsc5QRNei0l8GLF+aSn8Jz9WSzrPbF2T72laa2EmFwKxYCJII8WeWli/gms7grlG2
- acDK65ek+jNMdCP1p3a8SRKnJJLlmBU=
+ bh=BNEj+Z2zdDsHA4YvVEnoXcKIsRv8I8RVLlIPVRTKQjk=;
+ b=El/tmNLdsuVNhUperFljdzAwTxeGgR5ukYbhsOtX1D82Ez6TqtIX/mfwf9332D83y/yGpc
+ kt+zw0QYTiL+Vo56xVID4tVihmquDjlpwTCfqaHZUtpGDxs6g8q4mLLhQPSxHgIFSXSKPK
+ OMyGfTDbkMRK2Ox0U+E3M4BcfKjqi1E=
 DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1780670369;
+ s=susede2_ed25519; t=1780670690;
  h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
  mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=yuH4rNmTOKa87YS2UHT2MpHSI8Vx5Vd2V4hPkqlrg5s=;
- b=i2iH7pumWj9+wBogVdaXh7dY/KtidTTaVDaznIjbKGtfKnzbNSlW/DUpfinWUYZS9H9R/Z
- Ulh1+qTUdCmEL+DQ==
+ bh=BNEj+Z2zdDsHA4YvVEnoXcKIsRv8I8RVLlIPVRTKQjk=;
+ b=DtC863clzfsv5DYyVYbe2REcssU+ugEHj40wYYGfyQo39lTimZFEN93NJXHSUoXV6iuYct
+ cPK5jOFyV3slo/AA==
 Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
  (No client certificate requested)
- by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id 23E1F779A8;
- Fri,  5 Jun 2026 14:39:28 +0000 (UTC)
+ by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id B5C05779A8;
+ Fri,  5 Jun 2026 14:44:49 +0000 (UTC)
 Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
- by imap1.dmz-prg2.suse.org with ESMTPSA id oZ+dOaDfImq6VwAAD6G6ig
- (envelope-from <farosas@suse.de>); Fri, 05 Jun 2026 14:39:28 +0000
+ by imap1.dmz-prg2.suse.org with ESMTPSA id mH6EIeHgImpgXQAAD6G6ig
+ (envelope-from <farosas@suse.de>); Fri, 05 Jun 2026 14:44:49 +0000
 From: Fabiano Rosas <farosas@suse.de>
-To: Peter Xu <peterx@redhat.com>, qemu-devel@nongnu.org
-Cc: peterx@redhat.com, =?utf-8?Q?Marc-Andr=C3=A9?= Lureau
+To: =?utf-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>, Peter Xu
+ <peterx@redhat.com>
+Cc: qemu-devel@nongnu.org, =?utf-8?Q?Marc-Andr=C3=A9?= Lureau
  <marcandre.lureau@redhat.com>,
  Juraj Marcin <jmarcin@redhat.com>, Vladimir Sementsov-Ogievskiy
- <vsementsov@yandex-team.ru>, =?utf-8?Q?Daniel_P=2E_Berrang=C3=A9?=
- <berrange@redhat.com>,
- Sana Sharma <sansshar@redhat.com>, Eric Blake <eblake@redhat.com>, Markus
- Armbruster <armbru@redhat.com>, Kevin Wolf <kwolf@redhat.com>, Paolo
- Bonzini <pbonzini@redhat.com>, Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?=
- <philmd@mailo.com>,
- Mark Cave-Ayland <mark.caveayland@nutanix.com>, Akihiko Odaki
+ <vsementsov@yandex-team.ru>, Sana Sharma <sansshar@redhat.com>, Eric Blake
+ <eblake@redhat.com>, Markus Armbruster <armbru@redhat.com>, Kevin Wolf
+ <kwolf@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>, Philippe
+ =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@mailo.com>, Mark Cave-Ayland
+ <mark.caveayland@nutanix.com>, Akihiko Odaki
  <odaki@rsg.ci.i.u-tokyo.ac.jp>, =?utf-8?Q?C=C3=A9dric?= Le Goater
  <clg@redhat.com>, "Dr . David Alan Gilbert" <dave@treblig.org>
-Subject: Re: [PATCH 1/4] qdev: Pave way for exporting Property to be used in
- non-qdev
-In-Reply-To: <20260604231118.1584889-2-peterx@redhat.com>
+Subject: Re: [PATCH 2/4] qdev: Introduce helper object_apply_globals()
+In-Reply-To: <aiKOalYvribeaiqw@redhat.com>
 References: <20260604231118.1584889-1-peterx@redhat.com>
- <20260604231118.1584889-2-peterx@redhat.com>
-Date: Fri, 05 Jun 2026 11:39:26 -0300
-Message-ID: <87fr316ogx.fsf@suse.de>
+ <20260604231118.1584889-3-peterx@redhat.com> <aiKOalYvribeaiqw@redhat.com>
+Date: Fri, 05 Jun 2026 11:44:47 -0300
+Message-ID: <87cxy56o80.fsf@suse.de>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Spamd-Result: default: False [-4.30 / 50.00]; BAYES_HAM(-3.00)[100.00%];
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+X-Rspamd-Action: no action
+X-Spamd-Result: default: False [-4.51 / 50.00]; BAYES_HAM(-3.00)[99.99%];
  NEURAL_HAM_LONG(-1.00)[-1.000];
+ R_DKIM_ALLOW(-0.20)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
  NEURAL_HAM_SHORT(-0.20)[-1.000]; MIME_GOOD(-0.10)[text/plain];
- ARC_NA(0.00)[]; MISSING_XM_UA(0.00)[]; RCVD_TLS_ALL(0.00)[];
- MIME_TRACE(0.00)[0:+]; RCVD_VIA_SMTP_AUTH(0.00)[];
- RCPT_COUNT_TWELVE(0.00)[17];
- FUZZY_RATELIMITED(0.00)[rspamd.com];
- MID_RHS_MATCH_FROM(0.00)[];
+ MX_GOOD(-0.01)[];
  DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
- FROM_HAS_DN(0.00)[]; TO_DN_SOME(0.00)[];
- FROM_EQ_ENVFROM(0.00)[]; TO_MATCH_ENVRCPT_ALL(0.00)[];
- RCVD_COUNT_TWO(0.00)[2];
- DBL_BLOCKED_OPENRESOLVER(0.00)[suse.de:mid,imap1.dmz-prg2.suse.org:helo]
-Received-SPF: pass client-ip=2a07:de40:b251:101:10:150:64:1;
- envelope-from=farosas@suse.de; helo=smtp-out1.suse.de
+ FUZZY_RATELIMITED(0.00)[rspamd.com];
+ RBL_SPAMHAUS_BLOCKED_OPENRESOLVER(0.00)[2a07:de40:b281:104:10:150:64:97:from]; 
+ ARC_NA(0.00)[]; RCPT_COUNT_TWELVE(0.00)[16];
+ TO_MATCH_ENVRCPT_ALL(0.00)[]; MIME_TRACE(0.00)[0:+];
+ SPAMHAUS_XBL(0.00)[2a07:de40:b281:104:10:150:64:97:from];
+ FROM_HAS_DN(0.00)[]; RCVD_TLS_ALL(0.00)[];
+ DKIM_TRACE(0.00)[suse.de:+];
+ DNSWL_BLOCKED(0.00)[2a07:de40:b281:106:10:150:64:167:received,2a07:de40:b281:104:10:150:64:97:from];
+ RCVD_COUNT_TWO(0.00)[2]; FROM_EQ_ENVFROM(0.00)[];
+ TO_DN_SOME(0.00)[]; MID_RHS_MATCH_FROM(0.00)[];
+ RECEIVED_SPAMHAUS_BLOCKED_OPENRESOLVER(0.00)[2a07:de40:b281:106:10:150:64:167:received];
+ DWL_DNSWL_BLOCKED(0.00)[suse.de:dkim]; MISSING_XM_UA(0.00)[];
+ RCVD_VIA_SMTP_AUTH(0.00)[];
+ DBL_BLOCKED_OPENRESOLVER(0.00)[imap1.dmz-prg2.suse.org:helo,
+ imap1.dmz-prg2.suse.org:rdns, suse.de:mid, suse.de:dkim]
+X-Rspamd-Server: rspamd2.dmz-prg2.suse.org
+X-Rspamd-Queue-Id: 233B4759A3
+Received-SPF: pass client-ip=2a07:de40:b251:101:10:150:64:2;
+ envelope-from=farosas@suse.de; helo=smtp-out2.suse.de
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -126,108 +142,57 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Peter Xu <peterx@redhat.com> writes:
+Daniel P. Berrang=C3=A9 <berrange@redhat.com> writes:
 
-> Property itself is a well defined interface to either support smooth
-> conversions to Object's properties, or supports global properties.  However
-> currently it's tied to DeviceClass, aka, qdev. So non-qdev cannot use
-> Property list.
+> On Thu, Jun 04, 2026 at 07:11:16PM -0400, Peter Xu wrote:
+>> The helper allows one object to apply anything from -global command lines
+>> to an object.
+>>=20
+>> Signed-off-by: Peter Xu <peterx@redhat.com>
+>> ---
+>>  include/hw/core/qdev-properties.h | 1 +
+>>  hw/core/qdev-properties.c         | 5 +++++
+>>  2 files changed, 6 insertions(+)
+>>=20
+>> diff --git a/include/hw/core/qdev-properties.h b/include/hw/core/qdev-pr=
+operties.h
+>> index eba5436e53..779acb31b6 100644
+>> --- a/include/hw/core/qdev-properties.h
+>> +++ b/include/hw/core/qdev-properties.h
+>> @@ -268,6 +268,7 @@ const GlobalProperty *qdev_find_global_prop(Object *=
+obj,
+>>                                              const char *name);
+>>  int qdev_prop_check_globals(void);
+>>  void qdev_prop_set_globals(DeviceState *dev);
+>> +void object_apply_globals(Object *obj);
+>>  void error_set_from_qdev_prop_error(Error **errp, int ret, Object *obj,
+>>                                      const char *name, const char *value=
+);
+>>=20=20
+>> diff --git a/hw/core/qdev-properties.c b/hw/core/qdev-properties.c
+>> index 8f870c85fc..a91c2ad101 100644
+>> --- a/hw/core/qdev-properties.c
+>> +++ b/hw/core/qdev-properties.c
+>> @@ -1045,6 +1045,11 @@ void qdev_prop_set_globals(DeviceState *dev)
+>>                                dev->hotplugged ? NULL : &error_fatal);
+>>  }
+>>=20=20
+>> +void object_apply_globals(Object *obj)
+>> +{
+>> +    object_apply_global_props(obj, global_props(), &error_fatal);
+>> +}
 >
-> My current observation shows Property is almost ready to be used as a
-> separated exported interface, except two small things that may need touch
-> up internally:
+> If a method has the "object_" prefix and takex "Object *" as its
+> instance, then it needs to live in qom/object.c / include/qom/object.h
+> but this again has the complexity of relying on the qdev Property
+> struct.  This is really mixing qdev & qom layers together which I
+> find pretty unpleasant.
 >
->         qdev_prop_allow_set
 
-Just a thought, we could use something like this to block update of
-migration parameters during migration runtime.
+True, but code like qdev_property_add_static() already mixes things up
+quite a bit. Not that this is justification to mix it even more, of
+course.
 
->         qdev_prop_check_globals
->
-> The 1st one currently checks against realize state (which is part of qdev
-> attributes only).  The 2nd one checks for all global property being used in
-> all non-pluggable qdevs.
->
-> We can loose the check in both spots, keep the check if the driver is a
-> qdev, otherwise we can safely whitelist non-qdev use cases of Property.
->
-> Signed-off-by: Peter Xu <peterx@redhat.com>
-> ---
->  hw/core/qdev-properties.c           | 24 ++++++++++++++++++++----
->  tests/unit/test-qdev-global-props.c |  6 +++++-
->  2 files changed, 25 insertions(+), 5 deletions(-)
->
-> diff --git a/hw/core/qdev-properties.c b/hw/core/qdev-properties.c
-> index 34d7b26a73..8f870c85fc 100644
-> --- a/hw/core/qdev-properties.c
-> +++ b/hw/core/qdev-properties.c
-> @@ -31,8 +31,14 @@ void qdev_prop_set_after_realize(DeviceState *dev, const char *name,
->  static bool qdev_prop_allow_set(Object *obj, const char *name,
->                                  const PropertyInfo *info, Error **errp)
->  {
-> -    DeviceState *dev = DEVICE(obj);
-> +    DeviceState *dev;
-> +
-> +    if (!object_dynamic_cast(obj, TYPE_DEVICE)) {
-> +        /* Currently, non-qdev can always set Property anytime */
-> +        return true;
-> +    }
->  
-> +    dev = DEVICE(obj);
->      if (dev->realized && !info->realized_set_allowed) {
->          qdev_prop_set_after_realize(dev, name, errp);
->          return false;
-> @@ -997,6 +1003,7 @@ int qdev_prop_check_globals(void)
->  
->      for (i = 0; i < global_props()->len; i++) {
->          GlobalProperty *prop;
-> +        bool hotpluggable;
->          ObjectClass *oc;
->          DeviceClass *dc;
->  
-> @@ -1005,15 +1012,24 @@ int qdev_prop_check_globals(void)
->              continue;
->          }
->          oc = object_class_by_name(prop->driver);
-> -        oc = object_class_dynamic_cast(oc, TYPE_DEVICE);
->          if (!oc) {
->              warn_report("global %s.%s has invalid class name",
->                          prop->driver, prop->property);
->              ret = 1;
->              continue;
->          }
-> -        dc = DEVICE_CLASS(oc);
-> -        if (!dc->hotpluggable && !prop->used) {
-> +        oc = object_class_dynamic_cast(oc, TYPE_DEVICE);
-> +        if (oc) {
-> +            dc = DEVICE_CLASS(oc);
-> +            hotpluggable = dc->hotpluggable;
-> +        } else {
-> +            /*
-> +             * Currently, to be strict to assume all non-qdev are not
-> +             * hotpluggable (whoever will use -global).
-> +             */
-> +            hotpluggable = false;
-> +        }
-> +        if (!hotpluggable && !prop->used) {
->              warn_report("global %s.%s=%s not used",
->                          prop->driver, prop->property, prop->value);
->              ret = 1;
-> diff --git a/tests/unit/test-qdev-global-props.c b/tests/unit/test-qdev-global-props.c
-> index 8ea362cbb9..86bb1458d9 100644
-> --- a/tests/unit/test-qdev-global-props.c
-> +++ b/tests/unit/test-qdev-global-props.c
-> @@ -275,8 +275,12 @@ static void test_dynamic_globalprop(void)
->      g_test_trap_assert_stderr_unmatched("*prop4*");
->      g_test_trap_assert_stderr(
->          "*warning: global nohotplug-type.prop5=105 not used*");
-> +    /*
-> +     * TYPE_OBJECT can opt-in for global properties, so the error is "not
-> +     * used" too for nondevice-type.
-> +     */
->      g_test_trap_assert_stderr(
-> -        "*warning: global nondevice-type.prop6 has invalid class name*");
-> +        "*warning: global nondevice-type.prop6=106 not used*");
->      g_test_trap_assert_stdout("");
->  }
+> With regards,
+> Daniel
 
