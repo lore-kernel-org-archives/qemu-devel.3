@@ -4,90 +4,86 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id F0E63CD6E7C
-	for <qemu-devel@archiver.kernel.org>; Fri,  5 Jun 2026 15:46:11 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 60173CD6E7D
+	for <qemu-devel@archiver.kernel.org>; Fri,  5 Jun 2026 15:46:12 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wVWkJ-0006Hc-5i; Fri, 05 Jun 2026 11:46:07 -0400
+	id 1wVWit-0004Qw-VW; Fri, 05 Jun 2026 11:44:40 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1wVWjv-0005j2-Qa
- for qemu-devel@nongnu.org; Fri, 05 Jun 2026 11:45:46 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ id 1wVWin-0004QL-Of
+ for qemu-devel@nongnu.org; Fri, 05 Jun 2026 11:44:33 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1wVWjt-0006MZ-1j
- for qemu-devel@nongnu.org; Fri, 05 Jun 2026 11:45:43 -0400
+ id 1wVWim-0005pG-4I
+ for qemu-devel@nongnu.org; Fri, 05 Jun 2026 11:44:33 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1780674336;
+ s=mimecast20190719; t=1780674269;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=dvtgUw0LsKgXWb3LBOponuFZWLxF4j1rwT2ki82oRjQ=;
- b=DRFhXor84nX9JpvYwq6Ppy2VsIYkIhHa/dsoAr+C/qhwPm2LNa9CfuWB7Lsi0ohFwleRu6
- NKyL+uyBGr1O6FyGdPSj4tgIeetsUQqYZjfc7Rei8Lf+0moNDAJnOkv6vBfTmWasb2GF5t
- xMeW+EgjRjqLY1R8B9MkgKEt0fjESrY=
-Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ content-transfer-encoding:content-transfer-encoding;
+ bh=XzKgajQ2STGB+mBRo2iO0iPU87pr90ifn4YhnB7X2ro=;
+ b=MK56vtWR/ZJgW/StHmxkJbBa/OozMMAkY9rEQYIJPGUZcV2H2JbOs8TxpY4Xhs5448LThb
+ Fmgwie+upxkwQITYR4cKS2dr92vag3ZzUhpvh37Al3USVJCq1mqB6psmYFoIP1clVmR84n
+ i5liG1blj4abbkslaS9AV5NEsQQw/6s=
+Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-316-6iooWXW3MaiT-1n6tvDGPA-1; Fri,
- 05 Jun 2026 11:45:32 -0400
-X-MC-Unique: 6iooWXW3MaiT-1n6tvDGPA-1
-X-Mimecast-MFC-AGG-ID: 6iooWXW3MaiT-1n6tvDGPA_1780674331
-Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-265-NajJxZRuOUiWNhQVYKoWNQ-1; Fri,
+ 05 Jun 2026 11:44:28 -0400
+X-MC-Unique: NajJxZRuOUiWNhQVYKoWNQ-1
+X-Mimecast-MFC-AGG-ID: NajJxZRuOUiWNhQVYKoWNQ_1780674267
+Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 71DC9195608C
- for <qemu-devel@nongnu.org>; Fri,  5 Jun 2026 15:45:31 +0000 (UTC)
+ by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id E976F180034E
+ for <qemu-devel@nongnu.org>; Fri,  5 Jun 2026 15:44:26 +0000 (UTC)
 Received: from localhost (unknown [10.44.24.6])
- by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 5BB411955BC0; Fri,  5 Jun 2026 15:45:29 +0000 (UTC)
-From: =?utf-8?q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>
-Date: Fri, 05 Jun 2026 19:44:32 +0400
-Subject: [GIT PULL 12/23] net/filter: free old values in property setters
+ by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id B026F3000210; Fri,  5 Jun 2026 15:44:25 +0000 (UTC)
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
-Message-Id: <20260605-qom-tests-v1-12-3f184f382c2b@redhat.com>
-References: <20260605-qom-tests-v1-0-3f184f382c2b@redhat.com>
-In-Reply-To: <20260605-qom-tests-v1-0-3f184f382c2b@redhat.com>
+Subject: [GIT PULL 0/23] Fix various QOM object life-cycle issues
+Message-Id: <20260605-qom-tests-v1-0-3f184f382c2b@redhat.com>
+Date: Fri, 05 Jun 2026 19:44:20 +0400
+From: =?utf-8?q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: stefanha@redhat.com
-X-Developer-Signature: v=1; a=openpgp-sha256; l=1002;
+X-Developer-Signature: v=1; a=openpgp-sha256; l=3854;
  i=marcandre.lureau@redhat.com; h=from:subject:message-id;
- bh=vSCX1oIavb9OdWbiPaCqHhj5OIrYz9DIRgOhx0so1ts=;
- b=owEBbQKS/ZANAwAKAdro4Ql1lpzlAcsmYgBqIu7V0hswmctlCcN/6a9g6va7JgUe4cYdNNUxH
- 4aiMxjnpbeJAjMEAAEKAB0WIQSHqb2TP4fGBtJ29i3a6OEJdZac5QUCaiLu1QAKCRDa6OEJdZac
- 5SKPD/9DqIXNDcuVu8Cm22ErlNw2mGiQZWo7Z/9Fk8+Q4NYV+q5c5Qx1KkJnb5A0c44QC/aybn1
- q1XjNht5930SUpytBNAIQ//AIB9asZ51PPGv5mvjRGzkhJoY6bO5Jk2uXey8pnRxQh7Jf1xMQ3g
- rqY4Orkn5bzPPxyOBjwcLYzcVWH7IdWGvr9ZDTowSB3rU5DI8vHLTLqeH5kPOjEwVoLHVbVmjcK
- y94vfVUj1N4HSmcNH9O5m+b+6Gr9HJ0E+s+BZBwEBZQzBHO8Ct511EXGvHhL2DJ6ES5Y5HyjaXR
- VDGYspu2QOpTpnAKmcsufXF0XVh67QOjaTHo2g9aUZfRG7kYIhmAskP4ays6ktL2UQekeyKbWlP
- Gy+ng0HGJFpGRlKw0xfKoAm2q3wqyuyo67bULh1KA4KOsB6KYb9bw7FtgGrqQBCmNKFuT+Z4plw
- qiokw9lMzx+4rEay2RVQKVBAgv929cxq1HSbdjCzbb7LJITfnA1XUiP3mgDgJCxUqpU9y4sYcFh
- fCbaWBybXN5vgICUOLmMTGGdQGCJa3P9aNW+wRuDPOpaOu7F968mvRZ0cVtb1voWQxlz9gcPAcE
- 7Hp6ZxGU7iopbLN+IqHEAM/TlMGipi3E+Xa0hjQlP7ZQpAp3ZqplBNIs06Ddu4PWPSfjpMRIOff
- N2LFjqVHDrNZXPQ==
+ bh=Cl8EoaZeZ7gGYCbbIvvAlJVQCANVINoI37A+PKuqML0=;
+ b=owEBbQKS/ZANAwAKAdro4Ql1lpzlAcsmYgBqIu7UqkWeq6soX6bFefNvHjY/m/XTusxXPhbh3
+ rAuReioJ0qJAjMEAAEKAB0WIQSHqb2TP4fGBtJ29i3a6OEJdZac5QUCaiLu1AAKCRDa6OEJdZac
+ 5esfD/4oFHG0rDNEBxqCF3azKeDljbAS0OUcFCeDQbG8FRQxRsxoYOozNx3x0+NKUjMgiW8ECpV
+ fU33l0gB8ry1JYSJqq1+aNqxa8u6z9DLD5q8VCMTghpXKfo5rhB2ey8kFffZ+EMMxxxvkdHT7s/
+ lHa9USCCn8eT0ITFlA7KEkghaHrXOgcXpbxgS3XW+hLGoUCUZIM6KQ2bhwYSrCW7S04QKbUOw77
+ /9z6EYlp8h8ZCoW5CFMSIxqbra6kEcEh2DwP12Km9bfQ6uJvzkmF2f7/LYGjhqQXzeCm0Vw+jTJ
+ nbw8KwRrNpT1gYBcwTXo1mzC3ltFIeHtbwTCGqEALF+MAx1odnIgjThzP25AaUmO8fwdFdDXG5W
+ 8cJtxBH0p//et+nsgrzC6vDdKWnyId7SP0ZxrXFtIgNxPK3+MlnVhcIvuITXnw/cZ3xZn8xnlOR
+ tbRLXTgSR893QUl4gpNtWKOGkaKuaC9xHtHU0ipLar0n0s/mHDAaapwxzjW2A+lgnE7BqrFATTZ
+ vUcUrBFDmJnQunZ3RN6d3A9wrvl3U72/muTkq0p/sUWtap0JlsOEs9jHuI43PJ/I8+Y8KP9pWaJ
+ w2YMfq5fSPvIs26dlbKjAtVoCnxu6Hh48k3QSe823wjzTfXEE9LvZQEn9DzS7ZZxpYI63UGCl1x
+ lq0sighAfbXhIew==
 X-Developer-Key: i=marcandre.lureau@redhat.com; a=openpgp;
  fpr=87A9BD933F87C606D276F62DDAE8E10975969CE5
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.12
-Received-SPF: pass client-ip=170.10.133.124;
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
+Received-SPF: pass client-ip=170.10.129.124;
  envelope-from=marcandre.lureau@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: 8
-X-Spam_score: 0.8
-X-Spam_bar: /
-X-Spam_report: (0.8 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.445,
+X-Spam_score_int: -24
+X-Spam_score: -2.5
+X-Spam_bar: --
+X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.445,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_SBL_CSS=3.335, SPF_HELO_PASS=-0.001,
- SPF_PASS=-0.001 autolearn=no autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -103,39 +99,81 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-netfilter_set_position and netfilter_set_netdev_id overwrote their
-respective fields with g_strdup without freeing the previous value,
-leaking memory on each property write.
+The following changes since commit 29c042c6e9d4a09d4a0ac3fa54aeb7ee08ce0bdc:
 
-Fixes: fdccce459621 ("init/cleanup of netfilter object")
-Reviewed-by: Daniel P. Berrangé <berrange@redhat.com>
-Signed-off-by: Marc-André Lureau <marcandre.lureau@redhat.com>
----
- net/filter.c | 2 ++
- 1 file changed, 2 insertions(+)
+  lcitool: remove Cirrus CI support (2026-06-03 12:45:38 -0400)
 
-diff --git a/net/filter.c b/net/filter.c
-index c7cc6615dc9..389f3b0bfef 100644
---- a/net/filter.c
-+++ b/net/filter.c
-@@ -130,6 +130,7 @@ static void netfilter_set_netdev_id(Object *obj, const char *str, Error **errp)
- {
-     NetFilterState *nf = NETFILTER(obj);
- 
-+    g_free(nf->netdev_id);
-     nf->netdev_id = g_strdup(str);
- }
- 
-@@ -182,6 +183,7 @@ static void netfilter_set_position(Object *obj, const char *str, Error **errp)
- {
-     NetFilterState *nf = NETFILTER(obj);
- 
-+    g_free(nf->position);
-     nf->position = g_strdup(str);
- }
- 
+are available in the Git repository at:
 
--- 
-2.54.0
+  https://gitlab.com/marcandre.lureau/qemu.git tags/qom-tests-pr-v1
+
+for you to fetch changes up to a78ee35b70b0ef18dfd6e2a3e8ab818471a9e503:
+
+  qtest: add "qom-tests" command (2026-06-05 12:23:33 +0400)
+
+----------------------------------------------------------------
+Fix various QOM object life-cycle issues
+
+This series adds a new "qom-tests" qtest command that exercises basic QOM
+object life-cycle: it instantiates all non-abstract object types, gets/sets
+their properties, and unrefs them. This quickly surfaces leaks and crashes
+that could otherwise be triggered at runtime via QMP qom commands.
+
+----------------------------------------------------------------
+Marc-André Lureau (24):
+      Fix various QOM object life-cycle issues
+      hw/pci: handle missing bus in prop_pci_busnr_get
+      chardev/char-socket: handle NULL addr in char_socket_get_addr
+      hw/pci-bridge: handle missing parent in prop_pxb_uid_get
+      hw/pci-host/i440fx: handle NULL bus in pci-hole64 getters
+      hw/pci-host/q35: handle NULL bus in pci-hole64 getters
+      hw/ipmi: reject NULL 'bmc' property rather than crash
+      hw/xlnx_dp: reject NULL 'dpdma' property rather than crash
+      hw/intc/apic: move checks to realize()
+      backends/cryptodev-lkcf: skip cleanup when not initialized
+      system/ioport: minor code simplification
+      hw/core/machine: free shim_filename on finalization
+      net/filter: free old values in property setters
+      target/i386/sev: add finalize functions and fix leaking setters
+      target/i386/kvm/tdx: free strings in tdx_guest_finalize
+      hw/i386/nitro_enclave: add instance finalize
+      hw/i386/pc: free pcspk on finalization
+      hw/tpm: free PPI buffer on finalization
+      hw/loongarch/virt: free flash devices and OEM strings on finalization
+      hw/ppc/spapr: free host_model and host_serial on finalization
+      target/riscv: fix general_user_opts hash table leak
+      target/riscv: use hash table as set for user_options
+      hw/i2c/pmbus: fix undefined behavior in pmbus_direct_mode2data
+      qtest: add "qom-tests" command
+
+ target/riscv/cpu.h                  |  3 ++-
+ tests/qtest/libqtest.h              |  8 ++++++
+ backends/cryptodev-lkcf.c           |  4 +++
+ chardev/char-socket.c               |  4 +++
+ hw/core/machine.c                   |  1 +
+ hw/display/xlnx_dp.c                |  6 +++++
+ hw/i2c/pmbus_device.c               |  6 +++--
+ hw/i386/nitro_enclave.c             | 11 ++++++++
+ hw/i386/pc.c                        | 10 +++++++
+ hw/intc/apic_common.c               | 23 +++++++++-------
+ hw/ipmi/ipmi.c                      |  8 +++++-
+ hw/loongarch/virt.c                 | 14 ++++++++++
+ hw/pci-bridge/pci_expander_bridge.c |  8 +++++-
+ hw/pci-host/i440fx.c                | 15 +++++++++--
+ hw/pci-host/q35.c                   | 15 +++++++++--
+ hw/pci/pci.c                        | 11 ++++++--
+ hw/ppc/spapr.c                      |  2 ++
+ hw/tpm/tpm_tis_sysbus.c             |  9 +++++++
+ net/filter.c                        |  2 ++
+ system/ioport.c                     |  3 +--
+ system/qtest.c                      | 46 ++++++++++++++++++++++++++++++++
+ target/i386/cpu-apic.c              |  6 +----
+ target/i386/kvm/tdx.c               |  5 ++++
+ target/i386/sev.c                   | 37 ++++++++++++++++++++++++++
+ target/riscv/cpu.c                  | 53 ++++++++++++++++++++++---------------
+ target/riscv/kvm/kvm-cpu.c          |  8 +++---
+ tests/qtest/libqtest.c              |  6 +++++
+ tests/qtest/qom-test.c              | 12 +++++++++
+ 28 files changed, 282 insertions(+), 54 deletions(-)
 
 
