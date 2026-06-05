@@ -4,73 +4,57 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6D019CD6E79
-	for <qemu-devel@archiver.kernel.org>; Fri,  5 Jun 2026 14:58:27 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 259DFCD8C81
+	for <qemu-devel@archiver.kernel.org>; Fri,  5 Jun 2026 15:01:07 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wVVzi-0003FO-FZ; Fri, 05 Jun 2026 10:57:58 -0400
+	id 1wVW2P-00062A-2P; Fri, 05 Jun 2026 11:00:45 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <cohuck@redhat.com>) id 1wVVz7-0002Qp-En
- for qemu-devel@nongnu.org; Fri, 05 Jun 2026 10:57:23 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <philmd@mailo.com>)
+ id 1wVW2M-0005yl-KG; Fri, 05 Jun 2026 11:00:43 -0400
+Received: from msg-4.mailo.com ([213.182.54.15] helo=mailo.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <cohuck@redhat.com>) id 1wVVz5-0005WH-BC
- for qemu-devel@nongnu.org; Fri, 05 Jun 2026 10:57:20 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1780671435;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=lMZTgq+W3oaOEY/UcLBDVwkqAOLsLQfr+h1MNjhpmg8=;
- b=AOgYTjr06GgXEvbZtmhPHUzjQIhQhsAmPg6DMlY6o7qNpxCwMiYrVfNXmPciPrXdK6ludR
- C7xNGDfUPvWri3DAMaxD43Y6XCNrT/4go9ce6w1veVyao5mpEJuKekJ/1hyd8NlpU0l8r+
- 0+4UI5ybnDjZPo3+jSTmQENs5oEllV4=
-Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-192-Mq9ssvv9MYOjvJWwMknkeQ-1; Fri,
- 05 Jun 2026 10:57:12 -0400
-X-MC-Unique: Mq9ssvv9MYOjvJWwMknkeQ-1
-X-Mimecast-MFC-AGG-ID: Mq9ssvv9MYOjvJWwMknkeQ_1780671431
-Received: from mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.111])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 79CEA19560A5; Fri,  5 Jun 2026 14:57:11 +0000 (UTC)
-Received: from gondolin.redhat.com (unknown [10.44.48.119])
- by mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 7A1DD180049F; Fri,  5 Jun 2026 14:57:09 +0000 (UTC)
-From: Cornelia Huck <cohuck@redhat.com>
-To: qemu-devel@nongnu.org
-Cc: qemu-s390x@nongnu.org,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Thomas Huth <thuth@redhat.com>,
- Richard Henderson <richard.henderson@linaro.org>,
- Cornelia Huck <cohuck@redhat.com>
-Subject: [PULL 7/7] buildsys: Stop checking for ESA/390 host
-Date: Fri,  5 Jun 2026 16:56:47 +0200
-Message-ID: <20260605145647.272621-8-cohuck@redhat.com>
-In-Reply-To: <20260605145647.272621-1-cohuck@redhat.com>
-References: <20260605145647.272621-1-cohuck@redhat.com>
+ (Exim 4.90_1) (envelope-from <philmd@mailo.com>)
+ id 1wVW1a-0006Kw-RC; Fri, 05 Jun 2026 11:00:40 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=mailo.com; s=mailo;
+ t=1780671538; bh=40XambyL0NZiHOcGr/oDIkHHWRqISSmA6XFCWBn9k00=;
+ h=X-EA-Auth:Message-ID:Date:MIME-Version:Subject:To:Cc:References:
+ From:In-Reply-To:Content-Type:Content-Transfer-Encoding;
+ b=mF5WXjWx69wWgicaRezuxOywfFOQ8zfk1skkx2kx+gXgViVLzFvHv5S3mRmqEyqZL
+ CI73NnZQVUG8g93nRMJU362iv2/hmTydNfaHWBxXYvEbSbBBKwZwfFr6Mswm3hGpb8
+ og18W74mUacxnhtKX/0r3O6WQmotm8bxqNG2aZX4=
+Received: by be1-6.in.mailobj.net [192.168.91.16] with ESMTP
+ via ip-20.mailobj.net [213.182.54.20]
+ Fri,  5 Jun 2026 16:58:58 +0200 (CEST)
+X-EA-Auth: lTR7g0WxJ8fRHMnAIFnh2MzeFO+Q4Aqbiin9w1jGGFgs9be44nopr7WhWMPiCXvRWkfOFcBifqtdnhTQY6ceMhDwnukWswQQ
+Message-ID: <d2682cb5-88e6-41f2-b07b-945af5f8d749@mailo.com>
+Date: Fri, 5 Jun 2026 16:58:56 +0200
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.111
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=cohuck@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: 8
-X-Spam_score: 0.8
-X-Spam_bar: /
-X-Spam_report: (0.8 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.445,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_SBL_CSS=3.335, SPF_HELO_PASS=-0.001,
- SPF_PASS=-0.001 autolearn=no autolearn_force=no
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v6 8/9] hw/hexagon: Define hexagon "virt" machine
+Content-Language: en-US
+To: Brian Cain <brian.cain@oss.qualcomm.com>, qemu-devel@nongnu.org
+Cc: matheus.bernardino@oss.qualcomm.com, pierrick.bouvier@oss.qualcomm.com,
+ ltaylorsimpson@gmail.com, philmd@linaro.org, Brian Cain <bcain@quicinc.com>,
+ Paolo Bonzini <pbonzini@redhat.com>, Kevin Wolf <kwolf@redhat.com>,
+ Hanna Reitz <hreitz@redhat.com>,
+ "open list:Block layer core" <qemu-block@nongnu.org>
+References: <20260529215937.610229-1-brian.cain@oss.qualcomm.com>
+ <20260529215937.610229-9-brian.cain@oss.qualcomm.com>
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@mailo.com>
+In-Reply-To: <20260529215937.610229-9-brian.cain@oss.qualcomm.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=213.182.54.15; envelope-from=philmd@mailo.com;
+ helo=mailo.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_PASS=-0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -86,129 +70,255 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Philippe Mathieu-Daudé <philmd@linaro.org>
+Hi Brian,
 
-We still build QEMU tools on 32-bit hosts (see commit
-cf634dfcd8f), however no OS supported by QEMU still runs
-on ESA/390 (Linux dropped support in release 4.1 in 2015).
+On 29/5/26 23:59, Brian Cain wrote:
+> From: Brian Cain <bcain@quicinc.com>
+> 
+> Signed-off-by: Brian Cain <brian.cain@oss.qualcomm.com>
+> ---
+>   configs/devices/hexagon-softmmu/default.mak |   1 +
+>   configs/targets/hexagon-softmmu.mak         |   1 +
+>   include/hw/hexagon/virt.h                   |  31 ++
+>   hw/hexagon/virt.c                           | 463 ++++++++++++++++++++
+>   hw/hexagon/Kconfig                          |  10 +
+>   hw/hexagon/meson.build                      |   1 +
+>   tests/qemu-iotests/testenv.py               |   1 +
+>   7 files changed, 508 insertions(+)
+>   create mode 100644 include/hw/hexagon/virt.h
+>   create mode 100644 hw/hexagon/virt.c
 
-Remove the configure check, directly checking for the 64-bit
-z/Architecture.
 
-Also per commit 3704993f545 from 2020:
+> +static int32_t fdt_add_hvm_pic_node(HexagonVirtMachineState *vms,
+> +                                     const struct hexagon_machine_config *m_cfg)
+> +{
 
-  "we don't support s390, only 64-bit s390x hosts".
+[*] Dead code (see below)
 
-Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Reviewed-by: Thomas Huth <thuth@redhat.com>
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
-Message-ID: <20260519171240.97420-4-philmd@linaro.org>
-Signed-off-by: Cornelia Huck <cohuck@redhat.com>
----
- block/file-posix.c        |  2 +-
- configure                 | 12 ++----------
- disas/disas-host.c        |  2 +-
- include/qemu/cacheflush.h |  2 +-
- include/qemu/timer.h      |  2 +-
- util/cacheflush.c         |  2 +-
- 6 files changed, 7 insertions(+), 15 deletions(-)
+> +    MachineState *ms = MACHINE(vms);
+> +    int32_t irq_phandle = qemu_fdt_alloc_phandle(ms->fdt);
+> +
+> +    qemu_fdt_setprop_cell(ms->fdt, "/soc", "interrupt-parent",
+> +                          irq_phandle);
+> +
+> +    qemu_fdt_add_subnode(ms->fdt, "/soc/interrupt-controller");
+> +    qemu_fdt_setprop_cell(ms->fdt, "/soc/interrupt-controller",
+> +                          "#address-cells", 2);
+> +    qemu_fdt_setprop_cell(ms->fdt, "/soc/interrupt-controller",
+> +                          "#interrupt-cells", 2);
+> +    qemu_fdt_setprop_string(ms->fdt, "/soc/interrupt-controller", "compatible",
+> +                            "qcom,h2-pic,hvm-pic");
+> +    qemu_fdt_setprop(ms->fdt, "/soc/interrupt-controller",
+> +                     "interrupt-controller", NULL, 0);
+> +    qemu_fdt_setprop_cell(ms->fdt, "/soc/interrupt-controller", "phandle",
+> +                          irq_phandle);
+> +
+> +    sysbus_mmio_map(SYS_BUS_DEVICE(vms->l2vic), 1,
+> +                    m_cfg->cfgtable.fastl2vic_base << 16);
+> +
+> +    return irq_phandle;
+> +}
 
-diff --git a/block/file-posix.c b/block/file-posix.c
-index e49b13d6abb5..5019ddade9b5 100644
---- a/block/file-posix.c
-+++ b/block/file-posix.c
-@@ -79,7 +79,7 @@
- #include <linux/hdreg.h>
- #include <linux/magic.h>
- #include <scsi/sg.h>
--#ifdef __s390__
-+#ifdef __s390x__
- #include <asm/dasd.h>
- #endif
- #ifndef FS_NOCOW_FL
-diff --git a/configure b/configure
-index 1ceb4d7ecc42..d786d3a7c9b4 100755
---- a/configure
-+++ b/configure
-@@ -399,12 +399,8 @@ elif check_define _ARCH_PPC64 ; then
-   else
-     cpu="ppc64"
-   fi
--elif check_define __s390__ ; then
--  if check_define __s390x__ ; then
--    cpu="s390x"
--  else
--    cpu="s390"
--  fi
-+elif check_define __s390x__ ; then
-+  cpu="s390x"
- elif check_define __riscv && check_define _LP64 ; then
-   cpu="riscv64"
- elif check_define __aarch64__ ; then
-@@ -461,10 +457,6 @@ case "$cpu" in
-     linux_arch=riscv
-     ;;
- 
--  s390)
--    linux_arch=s390
--    CPU_CFLAGS="-m31"
--    ;;
-   s390x)
-     host_arch=s390x
-     linux_arch=s390
-diff --git a/disas/disas-host.c b/disas/disas-host.c
-index 7cf432938e0b..d41235250a0a 100644
---- a/disas/disas-host.c
-+++ b/disas/disas-host.c
-@@ -74,7 +74,7 @@ static void initialize_debug_host(CPUDebug *s)
-     s->info.print_insn = print_insn_little_mips;
- #elif defined(__m68k__)
-     s->info.print_insn = print_insn_m68k;
--#elif defined(__s390__)
-+#elif defined(__s390x__)
-     s->info.cap_arch = CS_ARCH_SYSZ;
-     s->info.cap_insn_unit = 2;
-     s->info.cap_insn_split = 6;
-diff --git a/include/qemu/cacheflush.h b/include/qemu/cacheflush.h
-index 8c64b8781458..0618966ddde0 100644
---- a/include/qemu/cacheflush.h
-+++ b/include/qemu/cacheflush.h
-@@ -19,7 +19,7 @@
-  * mappings of the same physical page(s).
-  */
- 
--#if defined(__x86_64__) || defined(__s390__)
-+#if defined(__x86_64__) || defined(__s390x__)
- 
- static inline void flush_idcache_range(uintptr_t rx, uintptr_t rw, size_t len)
- {
-diff --git a/include/qemu/timer.h b/include/qemu/timer.h
-index ec03635dd34c..9a62ac8cded1 100644
---- a/include/qemu/timer.h
-+++ b/include/qemu/timer.h
-@@ -889,7 +889,7 @@ static inline int64_t cpu_get_host_ticks(void)
-     return val;
- }
- 
--#elif defined(__s390__)
-+#elif defined(__s390x__)
- 
- static inline int64_t cpu_get_host_ticks(void)
- {
-diff --git a/util/cacheflush.c b/util/cacheflush.c
-index 247c4ce29803..a44fb136f7e0 100644
---- a/util/cacheflush.c
-+++ b/util/cacheflush.c
-@@ -223,7 +223,7 @@ static void __attribute__((constructor)) init_cache_info(void)
-  * Architecture (+ OS) specific cache flushing mechanisms.
-  */
- 
--#if defined(__x86_64__) || defined(__s390__)
-+#if defined(__x86_64__) || defined(__s390x__)
- 
- /* Caches are coherent and do not require flushing; symbol inline. */
- 
--- 
-2.54.0
+
+> +static void fdt_add_uart(const HexagonVirtMachineState *vms, int uart,
+> +                         int32_t irq_phandle, int32_t clk_phandle)
+> +{
+> +    char *nodename;
+> +    hwaddr base = base_memmap[uart].base;
+> +    hwaddr size = base_memmap[uart].size;
+> +    assert(uart == 0);
+> +    int irq = irqmap[VIRT_UART0 + uart];
+> +    const char compat[] = "arm,pl011\0arm,primecell";
+> +    const char clocknames[] = "uartclk\0apb_pclk";
+> +    MachineState *ms = MACHINE(vms);
+> +    DeviceState *dev;
+> +    SysBusDevice *s;
+> +
+> +    dev = qdev_new(TYPE_PL011);
+> +    s = SYS_BUS_DEVICE(dev);
+> +    qdev_prop_set_chr(dev, "chardev", serial_hd(0));
+> +    qdev_connect_clock_in(dev, "clk", vms->apb_clk);
+> +    sysbus_realize_and_unref(s, &error_fatal);
+> +    sysbus_mmio_map(s, 0, base);
+> +    if (vms->l2vic) {
+> +        sysbus_connect_irq(s, 0, qdev_get_gpio_in(vms->l2vic, irq));
+
+[*] Dead code (see below)
+
+> +    }
+> +
+> +    nodename = g_strdup_printf("/pl011@%" PRIx64, base);
+> +    qemu_fdt_add_subnode(ms->fdt, nodename);
+> +
+> +    /* Note that we can't use setprop_string because of the embedded NUL */
+> +    qemu_fdt_setprop(ms->fdt, nodename, "compatible", compat, sizeof(compat));
+> +    qemu_fdt_setprop_cells(ms->fdt, nodename, "reg", 0, base, size);
+> +    if (vms->l2vic) {
+
+[*] Dead code (see below)
+
+> +        qemu_fdt_setprop_cells(ms->fdt, nodename, "interrupts",
+> +                               32 + irq, 0);
+> +        qemu_fdt_setprop_cell(ms->fdt, nodename, "interrupt-parent",
+> +                              irq_phandle);
+> +    }
+> +    qemu_fdt_setprop_cells(ms->fdt, nodename, "clocks", clk_phandle,
+> +                           clk_phandle);
+> +    qemu_fdt_setprop(ms->fdt, nodename, "clock-names", clocknames,
+> +                     sizeof(clocknames));
+> +
+> +    qemu_fdt_setprop_string(ms->fdt, "/chosen", "stdout-path", nodename);
+> +    qemu_fdt_add_subnode(ms->fdt, "/aliases");
+> +    qemu_fdt_setprop_string(ms->fdt, "/aliases", "serial0", nodename);
+> +
+> +    g_free(nodename);
+> +}
+
+
+> +static void fdt_add_virtio_devices(const HexagonVirtMachineState *vms,
+> +                                   int32_t irq_phandle)
+> +{
+> +    MachineState *ms = MACHINE(vms);
+> +    /* VirtIO MMIO devices */
+> +    for (int i = 0; i < VIRTIO_DEV_COUNT; i++) {
+> +        char *nodename;
+> +        int irq = irqmap[VIRT_MMIO] + i;
+> +        size_t size = base_memmap[VIRT_MMIO].size;
+> +        hwaddr base = base_memmap[VIRT_MMIO].base + i * size;
+> +
+> +        nodename = g_strdup_printf("/virtio_mmio@%" PRIx64, base);
+> +        qemu_fdt_add_subnode(ms->fdt, nodename);
+> +        qemu_fdt_setprop_string(ms->fdt, nodename, "compatible", "virtio,mmio");
+> +        qemu_fdt_setprop_sized_cells(ms->fdt, nodename, "reg", 2, base, 1,
+> +                                     size);
+> +        qemu_fdt_setprop_cells(ms->fdt, nodename, "interrupts", irq, 0);
+> +        qemu_fdt_setprop_cell(ms->fdt, nodename, "interrupt-parent",
+> +                              irq_phandle);
+> +
+> +        sysbus_create_simple(
+> +            "virtio-mmio", base,
+> +            qdev_get_gpio_in(vms->l2vic, irqmap[VIRT_MMIO] + i));
+
+[*] Unreachable otherwise that'd crash... Dead code.
+
+> +
+> +        g_free(nodename);
+> +    }
+> +}
+
+
+> +static void virt_init(MachineState *ms)
+> +{
+> +    HexagonVirtMachineState *vms = HEXAGON_VIRT_MACHINE(ms);
+> +    const struct hexagon_machine_config *m_cfg = &v68n_1024;
+> +    DeviceState *gsregs_dev;
+> +    DeviceState *tlb_dev;
+> +    DeviceState *cpu0;
+> +    int32_t irq_phandle = -1;
+> +    int32_t clk_phandle;
+> +
+> +    qemu_fdt_setprop_string(ms->fdt, "/chosen", "bootargs", ms->kernel_cmdline);
+> +
+> +    vms->sys = get_system_memory();
+> +
+> +    /* Create APB clock for peripherals */
+> +    vms->apb_clk = clock_new(OBJECT(ms), "apb-pclk");
+> +    clock_set_hz(vms->apb_clk, 24000000);
+> +
+> +    memory_region_init_ram(&vms->parent_obj.ram, NULL, "ddr.ram",
+> +                           ms->ram_size, &error_fatal);
+> +    memory_region_add_subregion(vms->sys, 0x0, &vms->parent_obj.ram);
+> +
+> +    if (m_cfg->l2tcm_size) {
+> +        memory_region_init_ram(&vms->tcm, NULL, "tcm.ram", m_cfg->l2tcm_size,
+> +                               &error_fatal);
+> +        memory_region_add_subregion(vms->sys, m_cfg->cfgtable.l2tcm_base << 16,
+> +                                    &vms->tcm);
+> +    }
+> +
+> +    memory_region_init_rom(&vms->parent_obj.cfgtable_rom, NULL,
+> +                           "config_table.rom", sizeof(m_cfg->cfgtable),
+> +                           &error_fatal);
+> +    memory_region_add_subregion(vms->sys, m_cfg->cfgbase,
+> +                                &vms->parent_obj.cfgtable_rom);
+> +    fdt_add_hvx(vms, m_cfg);
+> +
+> +    gsregs_dev = qdev_new(TYPE_HEXAGON_GLOBALREG);
+> +    object_property_add_child(OBJECT(ms), "global-regs", OBJECT(gsregs_dev));
+> +    qdev_prop_set_uint64(gsregs_dev, "config-table-addr", m_cfg->cfgbase);
+> +    qdev_prop_set_uint32(gsregs_dev, "dsp-rev", v68_rev);
+> +    sysbus_realize_and_unref(SYS_BUS_DEVICE(gsregs_dev), &error_fatal);
+> +
+> +    tlb_dev = qdev_new(TYPE_HEXAGON_TLB);
+> +    object_property_add_child(OBJECT(ms), "tlb", OBJECT(tlb_dev));
+> +    qdev_prop_set_uint32(tlb_dev, "num-entries",
+> +                         m_cfg->cfgtable.jtlb_size_entries);
+> +    sysbus_realize_and_unref(SYS_BUS_DEVICE(tlb_dev), &error_fatal);
+> +
+> +    cpu0 = NULL;
+> +    for (int i = 0; i < ms->smp.cpus; i++) {
+> +        HexagonCPU *cpu = HEXAGON_CPU(object_new(ms->cpu_type));
+> +        qemu_register_reset(do_cpu_reset, cpu);
+> +
+> +        if (i == 0) {
+> +            cpu0 = DEVICE(cpu);
+> +            if (ms->kernel_filename) {
+> +                uint64_t entry = load_kernel(vms);
+> +                qdev_prop_set_uint32(cpu0, "exec-start-addr", entry);
+> +            } else if (ms->firmware) {
+> +                uint64_t entry = load_bios(vms);
+> +                qdev_prop_set_uint32(cpu0, "exec-start-addr", entry);
+> +            }
+> +        }
+> +        qdev_prop_set_uint32(DEVICE(cpu), "htid", i);
+> +        qdev_prop_set_bit(DEVICE(cpu), "start-powered-off", (i != 0));
+> +        object_property_set_link(OBJECT(cpu), "global-regs",
+> +                                 OBJECT(gsregs_dev), &error_fatal);
+> +        object_property_set_link(OBJECT(cpu), "tlb",
+> +                                 OBJECT(tlb_dev), &error_fatal);
+> +
+> +        qdev_realize_and_unref(DEVICE(cpu), NULL, &error_fatal);
+> +    }
+> +    /* TODO: enable l2vic when l2vic device arrives */
+> +    if (object_class_by_name("l2vic")) {
+> +        vms->l2vic = sysbus_create_varargs(
+> +            "l2vic", m_cfg->l2vic_base,
+
+I'm really confused by this code, since no "l2vic" exist. Yet I suppose.
+Can't we just remove this code and re-introduce once with the former
+addition? I'd also remove the fdt_add_hvm_pic_node() and
+fdt_add_virtio_devices() methods.
+Normally all code should be used / tested, and IIUC [*] is dead code.
+
+> +            qdev_get_gpio_in(cpu0, 0),
+> +            qdev_get_gpio_in(cpu0, 1),
+> +            qdev_get_gpio_in(cpu0, 2),
+> +            qdev_get_gpio_in(cpu0, 3),
+> +            qdev_get_gpio_in(cpu0, 4),
+> +            qdev_get_gpio_in(cpu0, 5),
+> +            qdev_get_gpio_in(cpu0, 6),
+> +            qdev_get_gpio_in(cpu0, 7), NULL);
+> +
+> +        irq_phandle = fdt_add_hvm_pic_node(vms, m_cfg);
+> +        fdt_add_virtio_devices(vms, irq_phandle);
+> +        fdt_add_gpt_node(vms);
+> +    }
+> +
+> +    fdt_add_cpu_nodes(vms);
+> +    clk_phandle = fdt_add_clocks(vms);
+> +    fdt_add_uart(vms, VIRT_UART0, irq_phandle, clk_phandle);
+> +
+> +    rom_add_blob_fixed_as("config_table.rom", &m_cfg->cfgtable,
+> +                          sizeof(m_cfg->cfgtable), m_cfg->cfgbase,
+> +                          &address_space_memory);
+> +
+> +    hexagon_load_fdt(vms);
+> +}
+Rest of the patch LGTM.
+
+Regards,
+
+Phil.
+
 
 
