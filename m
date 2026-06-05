@@ -4,140 +4,91 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 86ECFCD6E79
-	for <qemu-devel@archiver.kernel.org>; Fri,  5 Jun 2026 14:50:38 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5BBCBCD6E7D
+	for <qemu-devel@archiver.kernel.org>; Fri,  5 Jun 2026 14:54:03 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wVVsR-0008VG-5v; Fri, 05 Jun 2026 10:50:27 -0400
+	id 1wVVvc-0000gV-9M; Fri, 05 Jun 2026 10:53:44 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <Sandipan.Das@amd.com>)
- id 1wVVsP-0008Tr-0F
- for qemu-devel@nongnu.org; Fri, 05 Jun 2026 10:50:25 -0400
-Received: from mail-southcentralusazon11012034.outbound.protection.outlook.com
- ([40.93.195.34] helo=SN4PR2101CU001.outbound.protection.outlook.com)
+ (Exim 4.90_1)
+ (envelope-from <devnull+shankerwangmiao.gmail.com@kernel.org>)
+ id 1wVUaz-000895-VR
+ for qemu-devel@nongnu.org; Fri, 05 Jun 2026 09:28:22 -0400
+Received: from sea.source.kernel.org ([2600:3c0a:e001:78e:0:1991:8:25])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <Sandipan.Das@amd.com>)
- id 1wVVsN-0002Df-4p
- for qemu-devel@nongnu.org; Fri, 05 Jun 2026 10:50:24 -0400
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=pVG26sdvQRxDxkkSnwaXa9KPCILMTlvaZrpXvmt9iFRBoFPxBhUuZGiQENcUo3oj+cZCvbb1FCIu1MgluBNDf8nsHVVzzD7GhbhdT3QFks3xiIddxqFxKoWmZMhsIGdiPfyq7dkHAgRX9ibOIY3gE/rORLn7UiOE5liIC5xu8uZ/BxdQ0wYshL0aEYWruTmW4CffL9HIrV5Md1RYWAHkTUY5uhb6vE5Blzc6ZaE1H1SVHqb1jLdsjwwc2NBIuDcwE0LumI+qA7QxDBsYjvRISrvqhl/uJJeAE8gskKJfJ7k8g5CQjpabu5gVcS1bo9HFamZ0aQAWcAokRT+HXpKSzQ==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=Q8cpVicnt9GmNjo0SIsd1PgHYyDRtJG3xnSDegEvZrI=;
- b=LhNIiJQLx+lGLQoPh5VRPfiPyd07+tmkh6vP0NC3z1Rb6BQULxEWyFrlJpysDEr3guRYIK+dcMwdzVGTN1uwEfLF5Sw3Vv5DcVm11yCyQ2VrOyBKFMlVScbLjKOouh0ahio7i9A/Y8uLkTs9f4X8QeHoz9t6pehWrM1QIsITkf72YpYMKy8AMUmYHvRzdg7Bsk8QE+dnHLcGL4WzLzLf/I696C7prEUefMBO1YCbfDfNLb13AfuV4drw5RTQbaAmo17QC/TIEvkcPyNkdCf7xbmJ86ConptiR4JXXSb2jFdvhHqIpUiVw/j0jr8Tk20jyV9o1E8I33h2TR+tSnpxzA==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=amd.com; dmarc=pass action=none header.from=amd.com; dkim=pass
- header.d=amd.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=amd.com; s=selector1; 
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=Q8cpVicnt9GmNjo0SIsd1PgHYyDRtJG3xnSDegEvZrI=;
- b=RAfCsMlRzBZox744LAwH4hdfMWfhALPEWY2vedPnDV7S7jMgYok/R9nF8Tj7ZT4LRJfDzPnIoU84wAiCGwCw6j+h3/h0DOAzOIxJsRPqnWXGN3vmKRyC5l69h7sDVHLYjvkrJL4RQR/0VkjDidNHvCeMWK9VNEhDueoUNJqkMeQ=
-Authentication-Results: dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=amd.com;
-Received: from PH7PR12MB5712.namprd12.prod.outlook.com (2603:10b6:510:1e3::13)
- by DS7PR12MB8417.namprd12.prod.outlook.com (2603:10b6:8:eb::21) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.92.7; Fri, 5 Jun 2026
- 14:45:10 +0000
-Received: from PH7PR12MB5712.namprd12.prod.outlook.com
- ([fe80::afe1:7dd0:ea71:b7e7]) by PH7PR12MB5712.namprd12.prod.outlook.com
- ([fe80::afe1:7dd0:ea71:b7e7%4]) with mapi id 15.21.0092.007; Fri, 5 Jun 2026
- 14:45:10 +0000
-Message-ID: <461adf2d-bbe3-4b65-a0a6-9e19ce1c13b3@amd.com>
-Date: Fri, 5 Jun 2026 20:15:01 +0530
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 1/1] target/i386/kvm: Use logical counter index for AMD
- PMU getter
-To: Dongli Zhang <dongli.zhang@oracle.com>, qemu-devel@nongnu.org
-Cc: kvm@vger.kernel.org, pbonzini@redhat.com, mtosatti@redhat.com,
- dapeng1.mi@linux.intel.com, zhao1.liu@intel.com, zide.chen@intel.com,
- joe.jin@oracle.com
-References: <20260325021236.14574-1-dongli.zhang@oracle.com>
-Content-Language: en-US
-From: Sandipan Das <sandipan.das@amd.com>
-In-Reply-To: <20260325021236.14574-1-dongli.zhang@oracle.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-ClientProxiedBy: BM1PR01CA0153.INDPRD01.PROD.OUTLOOK.COM
- (2603:1096:b00:68::23) To PH7PR12MB5712.namprd12.prod.outlook.com
- (2603:10b6:510:1e3::13)
+ (Exim 4.90_1)
+ (envelope-from <devnull+shankerwangmiao.gmail.com@kernel.org>)
+ id 1wVUay-0003Cj-3B
+ for qemu-devel@nongnu.org; Fri, 05 Jun 2026 09:28:21 -0400
+Received: from smtp.kernel.org (transwarp.subspace.kernel.org [100.75.92.58])
+ by sea.source.kernel.org (Postfix) with ESMTP id E2BBF401FE;
+ Fri,  5 Jun 2026 13:28:11 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPS id C4D57C2BCB4;
+ Fri,  5 Jun 2026 13:28:11 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+ s=k20201202; t=1780666091;
+ bh=K9Opf8T8QjXRB86i6iPuDMKbf8Ts5MbqIA8Eo2USS0U=;
+ h=From:Date:Subject:To:Cc:Reply-To:From;
+ b=puVK0HquRoVkaOvm0tSr9GuzCEpVWVibD3PfbFuo8TWXFYLQSlUveKnzZ0BRjn9Gg
+ 7alDyEHPwVDcP3dNe6KnW3byTZEv/C2LcbllxnOOv/MwgvIJtKrKDVg5ZITYazpks+
+ dogvXkd9yWqT71wepZhbuQptMwu9TJI0z2PaZ9Dpp+1I3Nl6vvbEsY69sbS8YFCw6j
+ GfFV4N5bJZebSfqxO0zpJmuDdlpP7oKQ7RoSJTaeFivgSEHIRbN9gLeu2LGMUzmaLx
+ uPzwKRuP2x70+8y4yTkr68Zzc5alprMslO4LjEK3D50XAESkzJIkVmT+dninyu2ZBl
+ caDExuuWujvOA==
+Received: from aws-us-west-2-korg-lkml-1.web.codeaurora.org
+ (localhost.localdomain [127.0.0.1])
+ by smtp.lore.kernel.org (Postfix) with ESMTP id AB98FCD6E79;
+ Fri,  5 Jun 2026 13:28:11 +0000 (UTC)
+From: Miao Wang via B4 Relay <devnull+shankerwangmiao.gmail.com@kernel.org>
+Date: Fri, 05 Jun 2026 21:27:56 +0800
+Subject: [PATCH] pvscsi: translate data endianness
 MIME-Version: 1.0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: PH7PR12MB5712:EE_|DS7PR12MB8417:EE_
-X-MS-Office365-Filtering-Correlation-Id: 6a7686d6-79ac-44f0-fbd1-08dec3110aa9
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam: BCL:0;
- ARA:13230040|366016|1800799024|376014|56012099006|11063799006|22082099003|18002099003;
-X-Microsoft-Antispam-Message-Info: Ac6l2B06o3UoZcGY0i4C/hudQIRNfemVxF7hvrDQq4jpqAW2nqy6or4lQN+ahKstC7ZH8N2jLlk+B3ZdyGriavV44K9mWtWoAzyT+wGM3KWlTeT7z2dKUjpAw+ZzC7se+DA/DAXvbbo+ub9pV8TiYNbHV1qSKcFqnjna94bRT3Ycr8zrBMkmhxOlCaFNsGxWr+kl3cWi+rV0DAthdhpfUiHhRguE39DAiKmjzXDqn8BMRj4xYT4H+V0G5p2MhStEyBLT2dcJef5H+ffyJUS0qEBMWUYo7Zd1a8D0CcMnvhw7BSedgU9AlzArkDIPQCRAwoHewSovvTqZOkX/l5dHufheWc9IBfEw25T/mnbKmHdrSdEo7C6J8DGQzhsVUH89ZQei6jyy/StjhRXn7mSGia79uCUXPEz3hC3jDiCAo/yz3CHe1yygFwWGBi9uKp5yWao+DdPp2Px1WjKy4Suj/sm8TNqnYJJBxI/ACmXgqmkxhWgjWXAIy5v6mxPXK6WXc1dYu1s43qfbVHW0AhoBMBEUUioNL40gzaM14gK5Yh0+Y6+pG+uL6V7aYl6TfNRgu/oRw5VemrGvET7W+iRMgHmtu3zFcrbweOVFJwxybj9w18e/DHrqR8lF7q9EdPgQD6oWr4vIJvelTw3wey4wUHVZDQuim2UWoX/Rez1Xl9E1glO8UT/TY92JQQhLePMy
-X-Forefront-Antispam-Report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
- IPV:NLI; SFV:NSPM; H:PH7PR12MB5712.namprd12.prod.outlook.com; PTR:; CAT:NONE;
- SFS:(13230040)(366016)(1800799024)(376014)(56012099006)(11063799006)(22082099003)(18002099003);
- DIR:OUT; SFP:1101; 
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0: =?utf-8?B?TTE3dTZuZUNKTURpdmllYUcvVlZyTjRBcHFJdG9sV2VBNGRYekdWVlNlMGQ1?=
- =?utf-8?B?TGFPV1czZ1cxdW9TY2lDRDlZZlpQNGpOdGVXZmtnY2JDSjQ2N2Y3eDlFejNL?=
- =?utf-8?B?d2NjeWUyRmdKWmlXdERhRUxycGx5R2lNeDU5cmZXd1hoaFlnZ0F0NHVlZ0xF?=
- =?utf-8?B?L2dFamZ1d0x3Slo1NXBTZVZVM01FMDc5VTd1TlhrZzVodENyL3pMTzVvODVN?=
- =?utf-8?B?Q21mS0FEeVB2M0poeXdpTjlmTDdxeXFpZnU3MzJuT3hFNUIwdGFFNDBRU0hO?=
- =?utf-8?B?bmhPRVNIK1M0dVkwRlFMTGJNTWpqd1YrWEZoODB3MGVwWHk5cnQ3Rk4ycUpa?=
- =?utf-8?B?VTZNeHRobTdkTitNTkpZeDNvcG5wczNCZFRYT0NXdzVISmZrWCtQRlJ3Rnl4?=
- =?utf-8?B?NTFqZmZzQ1VndURuYkovalQrUXVQd2VyQnRqQzVTS3JiWVRxR25CdEcvTzdj?=
- =?utf-8?B?QkJORFZVWlVQOUhsUDJYeVZGeUNtZ3NRb1BZTGpXelRoa0Q1Z0UrOWpjcUtS?=
- =?utf-8?B?cWwrcTRwUVdRSDRWSXJHUi9QS2ZyRTBLUUNBVW5mMjBQZzNQUDFuNytFUnl1?=
- =?utf-8?B?YTRUTlk1N0RUdFprZmFvV0pVUmFYeExHaVdWV2kxOUhYdXlzR3U5ZFNBUTht?=
- =?utf-8?B?NFVhakpRSVp0RVhMR2tIVVVYTllsNEZrT0R1bTROMlpDcVQzWVMrQ3Y4ZGU0?=
- =?utf-8?B?WVlZZEFPbktqZHI3SjFIMjR2akt2SDhQdWlzYXgzTVB5dTk0V3JWc3FFSTdV?=
- =?utf-8?B?V0VLbUdFdDg0aFhnelhBQXFhWGo5cHZPdU90Mms5Y3R2akp3dEwycDVZdmpm?=
- =?utf-8?B?dW9KclNnS3FWU1hYVnVXTVhCWVR2c2pFVmlwM2ppL3lPc2xnY1dBZ3A2U2FX?=
- =?utf-8?B?L283aUpaYzlwd29BS05RY0dDYUt6anVvejdhaE00ZXhZNFIydkNzdWxPOTkv?=
- =?utf-8?B?U2tWbFVIUTVHOXp0WWM3Q0JNY3duWU93cXZyYWU1dEJ6QWdoWGpTRHFCRWRo?=
- =?utf-8?B?dGxuNEhzTnRzNXlUbktGV1pDZ1ZrWXA1UGlrSlYvVkVkd0hjbVhNVlRheDdx?=
- =?utf-8?B?d1RuYzlVVi9iRVQvZVZ5RW9mSFBJYS8xUXcreDcrTHd2MmJrN0FpRmNaVGFW?=
- =?utf-8?B?ck9VM1BZa3FsTUZTQUlHUXR4Slp2UmRwanBic1ZtUzRnOTMrTjltU2hBL1Yz?=
- =?utf-8?B?UW1OUlp3LzZ3bVdoa1phUkcxY0IyWWs0cGRFYXpUSGJGZWlvVkE3NlJ5M00r?=
- =?utf-8?B?cCsvYjFUa2VwdjRrVWtySFBrOWxQcHRmenJiTXFjdDZyalNtaUdQVHBqQ1RE?=
- =?utf-8?B?eS9wYjUvMjE3Q2RkNzVadWFDKzNhOWE0aDZWTnhTWWhiNXdXbW1nQ1pocVBm?=
- =?utf-8?B?WUIxVTlzTzFPZzRlc3NFM1hhbUl2V1hGalB5Y2xKbC9qeDNSR1FVS3hEWnhT?=
- =?utf-8?B?V1RqMUZ6dVVxUzBlUzNMeGlReWhPRURBRHExTjhjRlVPVWx4ZFpmSDUwdEZw?=
- =?utf-8?B?Mm9lYnRSSUFGb2M5dlJmUXpVRVA5TmthSG5QYllRdzF2bVJZdzlwVnQ3M2Yx?=
- =?utf-8?B?Y2hpZTNuRUNDdUVSK3N0RVlWbFNXUUtySzd2S1JVQnF2a2NHZUVsRDVNaGVw?=
- =?utf-8?B?MlBQZ1J6VlBRbFhqUytOL3JBK3pzL0lObzYvbURoNWxhend1aTh1Rm8zc29O?=
- =?utf-8?B?Sk1TY2NGWTFrS2hvWWlLdzNxaVhlRFFlTmRkNCtGTUtZa2ZVN0NabTNQV1pR?=
- =?utf-8?B?S2NIZHpKdWw3MDJQZmhvbWMwT2VXeFFFSTN0cHBQeXRCby83cW9rVVVQVW1E?=
- =?utf-8?B?TG9vNzA4V1hVeW1pU0NBbU5nQmVGTHBHV0ZNd2w2VkY1cms5L3ZFZHhXUEZq?=
- =?utf-8?B?N0lsd2VCV1lXTXRDVFAvdjlpQWpIdUlMVzE3UmJLbXFQdmVlSFhyZzZwZE8x?=
- =?utf-8?B?ZCs5OUxCVW0zWlNpOXNWa3k3M0gvS0pZT05EaEVaVWJiTTZ0SG1idkVDWjJk?=
- =?utf-8?B?T1N1ZnBibHhlN2NPUFUwSE1rS0Z6TXR6Nzk0QWRYR3FkajZUWUxIY3dJdS9s?=
- =?utf-8?B?MWxJbkc3V1FheFE0NXdzak9xT0lNd3hKTUZlMzBCZlAzaVdhbVhubW80L2tY?=
- =?utf-8?B?U1BoWndQUjRpLzZaQldkZEFnbTRWZEZnYXA1d1hCVEtXeDlBOEppam5ZS1JE?=
- =?utf-8?B?aTV6a1Backx6blRBTldBd2NYVjBHMWsxSUV6ZlFpOFpDb1RmdnVVZk8zcGZP?=
- =?utf-8?B?VnNOcVVoMFZOUWJKbCtBVzc2RUVBWlZMODRnbWtabFpNeGdxd0lUMklrUE1T?=
- =?utf-8?B?ajBramZWT21OM0ozbkxuOGpsV0Y1NHRBSTlNYlB6MllFRkpJK2lwUT09?=
-X-OriginatorOrg: amd.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 6a7686d6-79ac-44f0-fbd1-08dec3110aa9
-X-MS-Exchange-CrossTenant-AuthSource: PH7PR12MB5712.namprd12.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 05 Jun 2026 14:45:09.9946 (UTC)
-X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
-X-MS-Exchange-CrossTenant-Id: 3dd8961f-e488-4e60-8e11-a82d994e183d
-X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: 2Lncbc8Ypr25yPaCOte+t0m5tC6jaG8OR5SGAoyfFEuYkPBOGwqNp+XbOMdHLTlgemxLdswJX4GxQAg+PQ8W9g==
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: DS7PR12MB8417
-Received-SPF: permerror client-ip=40.93.195.34;
- envelope-from=Sandipan.Das@amd.com;
- helo=SN4PR2101CU001.outbound.protection.outlook.com
-X-Spam_score_int: -24
-X-Spam_score: -2.5
-X-Spam_bar: --
-X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.445,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001, SPF_HELO_PASS=-0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+Message-Id: <20260605-pvscsi-endianness-v1-1-b0bf472b0f59@gmail.com>
+X-B4-Tracking: v=1; b=H4sIANvOImoC/x3MPQqAMAxA4atIZgO1av25ijiUNmqWKA2IULy7x
+ fEb3suglJgU5ipDopuVTylo6grC4WUn5FgM1lhnnOnxujUoI0lkL0KqGExsxymOdugISncl2vj
+ 5n8v6vh+FHf2KYwAAAA==
+X-Change-ID: 20260605-pvscsi-endianness-c0d389d8274e
+To: qemu-devel@nongnu.org
+Cc: Paolo Bonzini <pbonzini@redhat.com>, Fam Zheng <fam@euphon.net>,
+ Dmitry Fleytman <dmitry.fleytman@gmail.com>, b4-sent@kernel.org,
+ Miao Wang <shankerwangmiao@gmail.com>
+X-Mailer: b4 0.14.2
+X-Developer-Signature: v=1; a=openpgp-sha256; l=5870;
+ i=shankerwangmiao@gmail.com; s=20250715; h=from:subject:message-id;
+ bh=IDD6ngFrpnNwjIvo7mlAG2CQIH9yKzKqEbqAPfV7ac0=;
+ b=owEBbQKS/ZANAwAKAbAx48p7/tluAcsmYgBqIs7iFHWdvYvQ+eHP9PcejZHcy/LnvqNiXlcWM
+ e7YklLHYPWJAjMEAAEKAB0WIQREqPWPgPJBxluezBOwMePKe/7ZbgUCaiLO4gAKCRCwMePKe/7Z
+ bvS4D/wKIdrGYEL3DI3HZCBXXOk9aU2wsxAtYO5cbqjZ8vLFHR0ATWwCdoaCO70tUyUgBkCO/VW
+ vRqEPJBuyFhwhaYLkng7MvnzuvJHMmI9/e2OHtDNMc18nKVv5Mwd9lJ+Se3e3NOCkTSWATS1Jq7
+ IZd3jy7YiYzLA7U5N1smRHPGj2ilQG5Mrv6Bej3THc9rHqPwhOZG/Od6KC1PagRZXCRVNcMGqOS
+ jkArL8MTqhkD4APNBZGBBaHn7/qjsfq42qrQzAwPMuhqzrtP24OUtkM84RJiskmm1ocQOVs5V3+
+ EUp7ogXcFip1xzfLD6DDy0kW4cZAe4/hKvQt5nK6dx+y2ksbez7RXc3w8Q7ecYBVvgZ1AyRNtxd
+ JldOH2p+XHWvQiWck8jyhEyNQ3RwREi+qRviNMidpXR9TtJCzdqPtJeU79FkzoLnPzaiyFV4/ja
+ eVFc3jlswCd6WrMNH3k6Ob/nKjZbtECWJe8CTd8IGuNyyxwIBoMkk62blKM2HAf6F67wZBgDpn2
+ GFRQvWUoyrTHX5Yh7iaFJzRksnTmumoZT/VcdbdFgDZV362qwr0VT30+d1xwqN5a2V/Fmct9N+Z
+ qFSAs0oPM7x2xnEUjwVaiVvOSAsQt3otfnFDN42+2AKPn5PAkVV2LU9XVNi/s4w2T52h9xLbTT9
+ 0W8OUxDTk5ei9hg==
+X-Developer-Key: i=shankerwangmiao@gmail.com; a=openpgp;
+ fpr=6FAEFF06B7D212A774C60BFDFA0D166D6632EF4A
+X-Endpoint-Received: by B4 Relay for shankerwangmiao@gmail.com/20250715
+ with auth_id=462
+X-Original-From: Miao Wang <shankerwangmiao@gmail.com>
+Received-SPF: pass client-ip=2600:3c0a:e001:78e:0:1991:8:25;
+ envelope-from=devnull+shankerwangmiao.gmail.com@kernel.org;
+ helo=sea.source.kernel.org
+X-Spam_score_int: 0
+X-Spam_score: -0.0
+X-Spam_bar: /
+X-Spam_report: (-0.0 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ FREEMAIL_FORGED_REPLYTO=2.095, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
+X-Mailman-Approved-At: Fri, 05 Jun 2026 10:53:42 -0400
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -149,44 +100,168 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-To: shankerwangmiao@gmail.com
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 25-03-2026 07:42, Dongli Zhang wrote:
-> For Intel PMU, the counter and selector MSR ranges are disjoint. AMD PMU
-> behaves the same way when PerfCore is unavailable.
-> 
-> However, once PerfCore is present, AMD PMU switches to an interleaved
-> layout in which selector and counter MSRs share a single alternating range.
-> 
-> MSR_F15H_PERF_CTL0 = 0xc0010200
-> MSR_F15H_PERF_CTR0 = 0xc0010201
-> ... ...
-> ... ...
-> MSR_F15H_PERF_CTL5 = 0xc001020a
-> MSR_F15H_PERF_CTR5 = 0xc001020b
-> 
-> The commit 4c7f05232c ("target/i386/kvm: reset AMD PMU registers during VM
-> reset") added the getter/putter pair for AMD PMU MSRs to clear them on
-> reset, but it ignored that, without PerfCore, AMD reuses alternating MSR
-> addresses for selectors and counters. env->msr_gp_counters[] holds the raw
-> counts and env->msr_gp_evtsel[] holds the selectors, so with the
-> interleaved layout we must translate the MSR address back to the logical
-> counter index instead of treating the interleaved slot as the array index.
-> 
-> The arrays are sized to MAX_GP_COUNTERS = 18, so the code never writes past
-> the end. And in the reset path QEMU simply zeroes everything, so that use
-> case still works.
-> 
-> However, the live migration is broken. The PMU state is stored at the
-> wrong indices, so the destination VM reloads mismatched selector/counter
-> pairs. Fix the getter to use the logical counter index rather than the raw
-> interleaved offset.
-> 
-> Fixes: 4c7f05232c ("target/i386/kvm: reset AMD PMU registers during VM reset")
-> Signed-off-by: Dongli Zhang <dongli.zhang@oracle.com>
-> ---
+From: Miao Wang <shankerwangmiao@gmail.com>
 
-Reviewed-by: Sandipan Das <sandipan.das@amd.com>
+This patch improves the implementation of the pvscsi device by
+translating the endianness of the data sent or received from the guest.
+This ensures pvscsi can work on big-endian hosts with little-endian
+guests.
+
+Signed-off-by: Miao Wang <shankerwangmiao@gmail.com>
+---
+ hw/scsi/vmw_pvscsi.c | 58 +++++++++++++++++++++++++++++++++++++++++++++++++++-
+ 1 file changed, 57 insertions(+), 1 deletion(-)
+
+diff --git a/hw/scsi/vmw_pvscsi.c b/hw/scsi/vmw_pvscsi.c
+index 11ae6b9b7474b9bc87621137eb7911361b5fd721..883dfe9b6b5dc687737de356da02fe5f68aea7ad 100644
+--- a/hw/scsi/vmw_pvscsi.c
++++ b/hw/scsi/vmw_pvscsi.c
+@@ -35,6 +35,7 @@
+ #include "hw/pci/msi.h"
+ #include "hw/core/qdev-properties.h"
+ #include "exec/cpu-common.h"
++#include "exec/tswap.h"
+ #include "vmw_pvscsi.h"
+ #include "trace.h"
+ #include "qom/object.h"
+@@ -392,9 +393,18 @@ static void
+ pvscsi_cmp_ring_put(PVSCSIState *s, struct PVSCSIRingCmpDesc *cmp_desc)
+ {
+     hwaddr cmp_descr_pa;
++    struct PVSCSIRingCmpDesc cmp_desc_conv;
+ 
+     cmp_descr_pa = pvscsi_ring_pop_cmp_descr(&s->rings);
+     trace_pvscsi_cmp_ring_put(cmp_descr_pa);
++    cmp_desc_conv = (struct PVSCSIRingCmpDesc) {
++        .context = tswap64(cmp_desc->context),
++        .dataLen = tswap64(cmp_desc->dataLen),
++        .senseLen = tswap32(cmp_desc->senseLen),
++        .hostStatus = tswap16(cmp_desc->hostStatus),
++        .scsiStatus = tswap16(cmp_desc->scsiStatus),
++    };
++    cmp_desc = &cmp_desc_conv;
+     cpu_physical_memory_write(cmp_descr_pa, cmp_desc, sizeof(*cmp_desc));
+ }
+ 
+@@ -402,9 +412,18 @@ static void
+ pvscsi_msg_ring_put(PVSCSIState *s, struct PVSCSIRingMsgDesc *msg_desc)
+ {
+     hwaddr msg_descr_pa;
++    struct PVSCSIRingMsgDesc msg_desc_conv;
++    int i;
+ 
+     msg_descr_pa = pvscsi_ring_pop_msg_descr(&s->rings);
+     trace_pvscsi_msg_ring_put(msg_descr_pa);
++    msg_desc_conv = (struct PVSCSIRingMsgDesc) {
++        .type = tswap32(msg_desc->type),
++    };
++    for (i = 0; i < ARRAY_SIZE(msg_desc->args); i++) {
++        msg_desc_conv.args[i] = tswap32(msg_desc->args[i]);
++    }
++    msg_desc = &msg_desc_conv;
+     cpu_physical_memory_write(msg_descr_pa, msg_desc, sizeof(*msg_desc));
+ }
+ 
+@@ -481,6 +500,9 @@ pvscsi_get_next_sg_elem(PVSCSISGState *sg)
+     struct PVSCSISGElement elem;
+ 
+     cpu_physical_memory_read(sg->elemAddr, &elem, sizeof(elem));
++    elem.addr = tswap64(elem.addr);
++    elem.length = tswap32(elem.length);
++    elem.flags = tswap32(elem.flags);
+     if ((elem.flags & ~PVSCSI_KNOWN_FLAGS) != 0) {
+         /*
+             * There is PVSCSI_SGE_FLAG_CHAIN_ELEMENT flag described in
+@@ -759,6 +781,12 @@ pvscsi_process_io(PVSCSIState *s)
+ 
+         trace_pvscsi_process_io(next_descr_pa);
+         cpu_physical_memory_read(next_descr_pa, &descr, sizeof(descr));
++        descr.context = tswap64(descr.context);
++        descr.dataAddr = tswap64(descr.dataAddr);
++        descr.dataLen = tswap64(descr.dataLen);
++        descr.senseAddr = tswap64(descr.senseAddr);
++        descr.senseLen = tswap32(descr.senseLen);
++        descr.flags = tswap32(descr.flags);
+         pvscsi_process_request_descriptor(s, &descr);
+     }
+ 
+@@ -808,6 +836,17 @@ pvscsi_on_cmd_setup_rings(PVSCSIState *s)
+ {
+     PVSCSICmdDescSetupRings *rc =
+         (PVSCSICmdDescSetupRings *) s->curr_cmd_data;
++    PVSCSICmdDescSetupRings translated;
++    int i;
++
++    translated.reqRingNumPages = tswap32(rc->reqRingNumPages);
++    translated.cmpRingNumPages = tswap32(rc->cmpRingNumPages);
++    translated.ringsStatePPN = tswap64(rc->ringsStatePPN);
++    for (i = 0; i < PVSCSI_SETUP_RINGS_MAX_NUM_PAGES; i++) {
++        translated.reqRingPPNs[i] = tswap64(rc->reqRingPPNs[i]);
++        translated.cmpRingPPNs[i] = tswap64(rc->cmpRingPPNs[i]);
++    }
++    rc = &translated;
+ 
+     trace_pvscsi_on_cmd_arrived("PVSCSI_CMD_SETUP_RINGS");
+ 
+@@ -831,6 +870,11 @@ pvscsi_on_cmd_abort(PVSCSIState *s)
+     PVSCSICmdDescAbortCmd *cmd = (PVSCSICmdDescAbortCmd *) s->curr_cmd_data;
+     PVSCSIRequest *r, *next;
+ 
++    PVSCSICmdDescAbortCmd translated = *cmd;
++    translated.context = tswap32(cmd->context);
++    translated.target = tswap32(cmd->target);
++    cmd = &translated;
++
+     trace_pvscsi_on_cmd_abort(cmd->context, cmd->target);
+ 
+     QTAILQ_FOREACH_SAFE(r, &s->pending_queue, next, next) {
+@@ -862,6 +906,10 @@ pvscsi_on_cmd_reset_device(PVSCSIState *s)
+         (struct PVSCSICmdDescResetDevice *) s->curr_cmd_data;
+     SCSIDevice *sdev;
+ 
++    PVSCSICmdDescResetDevice translated = *cmd;
++    translated.target = tswap32(cmd->target);
++    cmd = &translated;
++
+     sdev = pvscsi_device_find(s, 0, cmd->target, cmd->lun, &target_lun);
+ 
+     trace_pvscsi_on_cmd_reset_dev(cmd->target, (int) target_lun, sdev);
+@@ -892,6 +940,14 @@ pvscsi_on_cmd_setup_msg_ring(PVSCSIState *s)
+ {
+     PVSCSICmdDescSetupMsgRing *rc =
+         (PVSCSICmdDescSetupMsgRing *) s->curr_cmd_data;
++    PVSCSICmdDescSetupMsgRing translated = *rc;
++    int i;
++
++    translated.numPages = tswap32(rc->numPages);
++    for (i = 0; i < PVSCSI_SETUP_MSG_RING_MAX_NUM_PAGES; i++) {
++        translated.ringPPNs[i] = tswap64(rc->ringPPNs[i]);
++    }
++    rc = &translated;
+ 
+     trace_pvscsi_on_cmd_arrived("PVSCSI_CMD_SETUP_MSG_RING");
+ 
+@@ -994,7 +1050,7 @@ pvscsi_on_command_data(PVSCSIState *s, uint32_t value)
+     size_t bytes_arrived = s->curr_cmd_data_cntr * sizeof(uint32_t);
+ 
+     assert(bytes_arrived < sizeof(s->curr_cmd_data));
+-    s->curr_cmd_data[s->curr_cmd_data_cntr++] = value;
++    s->curr_cmd_data[s->curr_cmd_data_cntr++] = tswap32(value);
+ 
+     pvscsi_do_command_processing(s);
+ }
+
+---
+base-commit: 29c042c6e9d4a09d4a0ac3fa54aeb7ee08ce0bdc
+change-id: 20260605-pvscsi-endianness-c0d389d8274e
+
+Best regards,
+-- 
+Miao Wang <shankerwangmiao@gmail.com>
+
 
 
