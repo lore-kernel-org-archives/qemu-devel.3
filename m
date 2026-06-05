@@ -4,116 +4,116 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6DAFDCD6E79
-	for <qemu-devel@archiver.kernel.org>; Fri,  5 Jun 2026 15:03:35 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D25AACD6E7C
+	for <qemu-devel@archiver.kernel.org>; Fri,  5 Jun 2026 15:12:14 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wVW4g-0006t2-8B; Fri, 05 Jun 2026 11:03:06 -0400
+	id 1wVWCi-00089x-SH; Fri, 05 Jun 2026 11:11:32 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1wVW4f-0006ru-1K
- for qemu-devel@nongnu.org; Fri, 05 Jun 2026 11:03:05 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1wVW4O-0007f9-Di
- for qemu-devel@nongnu.org; Fri, 05 Jun 2026 11:03:04 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1780671766;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1wVWBU-0007v6-AX
+ for qemu-devel@nongnu.org; Fri, 05 Jun 2026 11:10:10 -0400
+Received: from smtp-out1.suse.de ([2a07:de40:b251:101:10:150:64:1])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1wVWBD-0000b8-27
+ for qemu-devel@nongnu.org; Fri, 05 Jun 2026 11:10:00 -0400
+Received: from imap1.dmz-prg2.suse.org (unknown [10.150.64.97])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+ (No client certificate requested)
+ by smtp-out1.suse.de (Postfix) with ESMTPS id 410B76B34F;
+ Fri,  5 Jun 2026 15:06:58 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
+ t=1780672018; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=1fqerfuyomsVjlxvszMD3UGgLWv8i47s8BdIXBHk9f8=;
- b=DEFThgk/mabnEmXBreQIWrSRpAFR+1OjsepYIwxlanyXS6IT5UYDFsKcHkEn8rNFD1+Sny
- rTug7c0edqgmz5fMG5yVbUhSasa1v2MlQbYbCCCDWyKXIV7ercEfyYkwWVybSqsMJj8zHA
- P+4BsMHs8kVKu39nKjbxUITIsbNaIeU=
-Received: from mail-qt1-f199.google.com (mail-qt1-f199.google.com
- [209.85.160.199]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-551-LKoLyR1INPud1a2WysZkDg-1; Fri, 05 Jun 2026 11:02:44 -0400
-X-MC-Unique: LKoLyR1INPud1a2WysZkDg-1
-X-Mimecast-MFC-AGG-ID: LKoLyR1INPud1a2WysZkDg_1780671763
-Received: by mail-qt1-f199.google.com with SMTP id
- d75a77b69052e-51775f7b2afso59145851cf.1
- for <qemu-devel@nongnu.org>; Fri, 05 Jun 2026 08:02:44 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1780671763; x=1781276563; darn=nongnu.org;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
- bh=1fqerfuyomsVjlxvszMD3UGgLWv8i47s8BdIXBHk9f8=;
- b=sOF7AZ9+GASnJsovUWZDGGv7tl0ut6UhFwXMGRk0HGgfEMapKEo3phyBGDoxBura3K
- stXEOvXV24xxfCOoZI5lPKC2NoiuIzAH6pXKrXPaPm6RxQVoxIjUbXT2FZOAvgZin9Fj
- M1VqBbRkfreM82Z1a5CxHWPQh1/T3nAqakNo+S/AmuUBxVBb1Xg9GUvPD8912urRo8zh
- txHKtnCL4m5//TFGnajNoxbzf/hdT0YjeNYn7/tmlH67myhu/Jr4lgo7v4g+SCht1uum
- QKRfrqDH/mHzRnhXBzAU4HjpJ7H1DWn+RcIqnTsIgF7HZQXGHh4QzIxt7KdKft4+XD4J
- 1EjA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1780671763; x=1781276563;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=1fqerfuyomsVjlxvszMD3UGgLWv8i47s8BdIXBHk9f8=;
- b=lUpg0wpO1lrwV5S0c85MS6EmCticBITBnUNDzdL+dtc+q+IM2bfN+iXXuQaBkCp3CC
- FKcU3OsUysCGCJafeeeHKFsTTEjBvL0Ayq9upD+Dq3EaLU/Z1SBpOCjVI9ZmtJxe3tyz
- yF5uFYQL+Wp6GT02FojUp6QE+LZmtNjFrLKOaAuQVxzKLbgmmdCjDrm668GpSBmU4CPk
- 9te+Naj4r2I25QEjQ+H6w7N1KM4e330fRECq6abXxiNK6knfF4wrL7McVjOWeFY1gnf/
- imH1NyY6Ziz8BePhmS7/1lA/+wE9fQ15ns6pBcAOLBAtezCYZbjAYZ9MCPpT3TYhCEzS
- hhkQ==
-X-Forwarded-Encrypted: i=1;
- AFNElJ8hq2jKPYmxxd6HMEVdwQT4zzWG38cBIRSzC4PHJVvV2BMnZFFap+NMDYHitiN/z3pUFyc7yyIp0bJh@nongnu.org
-X-Gm-Message-State: AOJu0YwrnFLD3jH8qdsX304CHBW4nTaLGWn2sgYBkv6i0RQ9GrQgtD3t
- Y4k9dOC65R9XJicMFZ+1KA+bH2hwJI6C+kWsAo+gR9yD9db9CcvdkuD4U8WUHDFkUbaMBp9yKnb
- zkoQpsfxoH66JkMYD7oYrW4FVfcyJj3M7qfhHVi25CfXh+fNE9WtlPnpV
-X-Gm-Gg: Acq92OF6dLAA+Pc1Y97HP4sfgAfhm78Aa4neM0yMnFqWVZnq+PVCwqKPXfkz3v4Gd0O
- /4XfhHtqxpzAfCtV1qKSIiu+vrGc4JZhG1l4pmuQHIknmcPjEa4wSAhVyE3Wt/yCkIpz6lv7Mqx
- WMKWMqVsGGZmLA3kCMvboEGkWDUYy2HkQLRXIa7nBOOX6cjrekL6689qjx7IK+8SZSMGBQziWGZ
- g+WW9YEelBaZvfjCEADECUrLUeFwyrTp44biEYuv339e6016gOqlmlMPV1nfyw097PzDhNSRw6x
- hPl2q55FWPWDmACkCmK7GsK0CsnjGa9VMzTmBrG5jkFTaBlbGwzVR2IgW97MKQR80ZZ8WKEZ6kV
- Spkig4XtVvmdgZ/xGgo7n2YHXiQ==
-X-Received: by 2002:a05:620a:2a0e:b0:912:5d2a:4bd1 with SMTP id
- af79cd13be357-915ad37f751mr374301985a.40.1780671763362; 
- Fri, 05 Jun 2026 08:02:43 -0700 (PDT)
-X-Received: by 2002:a05:620a:2a0e:b0:912:5d2a:4bd1 with SMTP id
- af79cd13be357-915ad37f751mr374296185a.40.1780671762693; 
- Fri, 05 Jun 2026 08:02:42 -0700 (PDT)
-Received: from x1.local ([142.189.10.167]) by smtp.gmail.com with ESMTPSA id
- af79cd13be357-9158a3eea49sm903062585a.44.2026.06.05.08.02.40
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 05 Jun 2026 08:02:41 -0700 (PDT)
-Date: Fri, 5 Jun 2026 11:02:38 -0400
-From: Peter Xu <peterx@redhat.com>
-To: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
-Cc: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>,
- Fabiano Rosas <farosas@suse.de>, qemu-devel@nongnu.org,
- Paolo Bonzini <pbonzini@redhat.com>, Mark Kanda <mark.kanda@oracle.com>,
- "Michael S . Tsirkin" <mst@redhat.com>,
- Markus Armbruster <armbru@redhat.com>, Eric Blake <eblake@redhat.com>,
- "Maciej S. Szmigiero" <maciej.szmigiero@oracle.com>,
- Jason Wang <jasowang@redhat.com>, Ben Chaney <bchaney@akamai.com>
-Subject: Re: [PATCH RFC 0/2] migration/vl: new -incoming config:* for early
- migration parameters
-Message-ID: <aiLlDtW1APCCcQwY@x1.local>
-References: <aiBNXUU0xcT_UbKO@x1.local> <aiBhTTqSctU9lFsS@redhat.com>
- <87o6hr7brx.fsf@suse.de> <aiBrp1UJZjmC1aI1@redhat.com>
- <aiB2nA5bmtBRWras@x1.local>
- <21a05595-0266-4755-8a99-29a85b9da2db@yandex-team.ru>
- <aiG9Yn5My8LoTraZ@x1.local>
- <fde9e6a3-9aef-4c9b-8458-6b135cd60598@yandex-team.ru>
- <aiLYTYTb6TGY2Fgm@x1.local>
- <05261ed1-0b81-4099-8286-0ac727287a05@yandex-team.ru>
+ bh=nIbgIMmdxHdu6Z+tMe+rvAelnCNQmcaO7KIff7gZWdE=;
+ b=PyShQUUXIjgQE6FvYJTgCrLSj4+EpN00CiIo8v2P4zV1IFqmSSWMiMOP/AMnO2c2a//fNU
+ yEKj32BTenHKGGz/eINpEPoWmgYHwWFiAHuvMz2FInncZlF/hlRqfFHYP46LjnrGXoWprP
+ IPa5GvooJeDGTuE0dn2zWyCOgMMDKAE=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
+ s=susede2_ed25519; t=1780672018;
+ h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=nIbgIMmdxHdu6Z+tMe+rvAelnCNQmcaO7KIff7gZWdE=;
+ b=coA7/e5P0hDi6QR62Y6suqI2IfZ6KvSISQCwlYjHGkTsD3WV3nQbku9/Yuo/1EFJJt8kv6
+ 82EMdQ/pYVxx67DQ==
+Authentication-Results: smtp-out1.suse.de;
+	none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
+ t=1780672018; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=nIbgIMmdxHdu6Z+tMe+rvAelnCNQmcaO7KIff7gZWdE=;
+ b=PyShQUUXIjgQE6FvYJTgCrLSj4+EpN00CiIo8v2P4zV1IFqmSSWMiMOP/AMnO2c2a//fNU
+ yEKj32BTenHKGGz/eINpEPoWmgYHwWFiAHuvMz2FInncZlF/hlRqfFHYP46LjnrGXoWprP
+ IPa5GvooJeDGTuE0dn2zWyCOgMMDKAE=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
+ s=susede2_ed25519; t=1780672018;
+ h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=nIbgIMmdxHdu6Z+tMe+rvAelnCNQmcaO7KIff7gZWdE=;
+ b=coA7/e5P0hDi6QR62Y6suqI2IfZ6KvSISQCwlYjHGkTsD3WV3nQbku9/Yuo/1EFJJt8kv6
+ 82EMdQ/pYVxx67DQ==
+Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+ (No client certificate requested)
+ by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id D524F779A8;
+ Fri,  5 Jun 2026 15:06:57 +0000 (UTC)
+Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
+ by imap1.dmz-prg2.suse.org with ESMTPSA id zoQLKRHmImrHcgAAD6G6ig
+ (envelope-from <farosas@suse.de>); Fri, 05 Jun 2026 15:06:57 +0000
+From: Fabiano Rosas <farosas@suse.de>
+To: =?utf-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>
+Cc: Peter Xu <peterx@redhat.com>, qemu-devel@nongnu.org, =?utf-8?Q?Marc-An?=
+ =?utf-8?Q?dr=C3=A9?= Lureau
+ <marcandre.lureau@redhat.com>, Juraj Marcin <jmarcin@redhat.com>, Vladimir
+ Sementsov-Ogievskiy <vsementsov@yandex-team.ru>, Sana Sharma
+ <sansshar@redhat.com>, Eric Blake <eblake@redhat.com>, Markus Armbruster
+ <armbru@redhat.com>, Kevin Wolf <kwolf@redhat.com>, Paolo Bonzini
+ <pbonzini@redhat.com>, Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?=
+ <philmd@mailo.com>, Mark
+ Cave-Ayland <mark.caveayland@nutanix.com>, Akihiko Odaki
+ <odaki@rsg.ci.i.u-tokyo.ac.jp>, =?utf-8?Q?C=C3=A9dric?= Le Goater
+ <clg@redhat.com>, "Dr . David Alan Gilbert" <dave@treblig.org>
+Subject: Re: [PATCH 2/4] qdev: Introduce helper object_apply_globals()
+In-Reply-To: <aiLhcXUxVQ1K_6xA@redhat.com>
+References: <20260604231118.1584889-1-peterx@redhat.com>
+ <20260604231118.1584889-3-peterx@redhat.com> <aiKOalYvribeaiqw@redhat.com>
+ <87cxy56o80.fsf@suse.de> <aiLhcXUxVQ1K_6xA@redhat.com>
+Date: Fri, 05 Jun 2026 12:06:55 -0300
+Message-ID: <878q8t6n74.fsf@suse.de>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <05261ed1-0b81-4099-8286-0ac727287a05@yandex-team.ru>
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=peterx@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -24
-X-Spam_score: -2.5
+Content-Transfer-Encoding: quoted-printable
+X-Spamd-Result: default: False [-4.30 / 50.00]; BAYES_HAM(-3.00)[100.00%];
+ NEURAL_HAM_LONG(-1.00)[-1.000];
+ NEURAL_HAM_SHORT(-0.20)[-1.000]; MIME_GOOD(-0.10)[text/plain];
+ DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
+ FUZZY_RATELIMITED(0.00)[rspamd.com]; ARC_NA(0.00)[];
+ MIME_TRACE(0.00)[0:+]; TO_MATCH_ENVRCPT_ALL(0.00)[];
+ RCPT_COUNT_TWELVE(0.00)[16]; FROM_HAS_DN(0.00)[];
+ RCVD_TLS_ALL(0.00)[]; MISSING_XM_UA(0.00)[];
+ FROM_EQ_ENVFROM(0.00)[]; TO_DN_SOME(0.00)[];
+ RCVD_COUNT_TWO(0.00)[2]; RCVD_VIA_SMTP_AUTH(0.00)[];
+ MID_RHS_MATCH_FROM(0.00)[];
+ DBL_BLOCKED_OPENRESOLVER(0.00)[imap1.dmz-prg2.suse.org:helo,suse.de:mid]
+Received-SPF: pass client-ip=2a07:de40:b251:101:10:150:64:1;
+ envelope-from=farosas@suse.de; helo=smtp-out1.suse.de
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.445,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -129,18 +129,70 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Fri, Jun 05, 2026 at 05:37:03PM +0300, Vladimir Sementsov-Ogievskiy wrote:
-> Hmm, so, may be, I just go this way for my series? It will just work with
-> these two restrictions above, which is OK for me. And no conflict with
-> new "-incoming" design.
+Daniel P. Berrang=C3=A9 <berrange@redhat.com> writes:
 
-Sounds good.  IIUC that's also our original plan to make it experimental
-and see if that can lands earlier, so no worry on whatever happens with
-this series so far, feel free to go ahead.
+> On Fri, Jun 05, 2026 at 11:44:47AM -0300, Fabiano Rosas wrote:
+>> Daniel P. Berrang=C3=A9 <berrange@redhat.com> writes:
+>>=20
+>> > On Thu, Jun 04, 2026 at 07:11:16PM -0400, Peter Xu wrote:
+>> >> The helper allows one object to apply anything from -global command l=
+ines
+>> >> to an object.
+>> >>=20
+>> >> Signed-off-by: Peter Xu <peterx@redhat.com>
+>> >> ---
+>> >>  include/hw/core/qdev-properties.h | 1 +
+>> >>  hw/core/qdev-properties.c         | 5 +++++
+>> >>  2 files changed, 6 insertions(+)
+>> >>=20
+>> >> diff --git a/include/hw/core/qdev-properties.h b/include/hw/core/qdev=
+-properties.h
+>> >> index eba5436e53..779acb31b6 100644
+>> >> --- a/include/hw/core/qdev-properties.h
+>> >> +++ b/include/hw/core/qdev-properties.h
+>> >> @@ -268,6 +268,7 @@ const GlobalProperty *qdev_find_global_prop(Objec=
+t *obj,
+>> >>                                              const char *name);
+>> >>  int qdev_prop_check_globals(void);
+>> >>  void qdev_prop_set_globals(DeviceState *dev);
+>> >> +void object_apply_globals(Object *obj);
+>> >>  void error_set_from_qdev_prop_error(Error **errp, int ret, Object *o=
+bj,
+>> >>                                      const char *name, const char *va=
+lue);
+>> >>=20=20
+>> >> diff --git a/hw/core/qdev-properties.c b/hw/core/qdev-properties.c
+>> >> index 8f870c85fc..a91c2ad101 100644
+>> >> --- a/hw/core/qdev-properties.c
+>> >> +++ b/hw/core/qdev-properties.c
+>> >> @@ -1045,6 +1045,11 @@ void qdev_prop_set_globals(DeviceState *dev)
+>> >>                                dev->hotplugged ? NULL : &error_fatal);
+>> >>  }
+>> >>=20=20
+>> >> +void object_apply_globals(Object *obj)
+>> >> +{
+>> >> +    object_apply_global_props(obj, global_props(), &error_fatal);
+>> >> +}
+>> >
+>> > If a method has the "object_" prefix and takex "Object *" as its
+>> > instance, then it needs to live in qom/object.c / include/qom/object.h
+>> > but this again has the complexity of relying on the qdev Property
+>> > struct.  This is really mixing qdev & qom layers together which I
+>> > find pretty unpleasant.
+>> >
+>>=20
+>> True, but code like qdev_property_add_static() already mixes things up
+>> quite a bit. Not that this is justification to mix it even more, of
+>> course.
+>
+> That's not the same scenario as it is exclusively qdev code, using
+> qdev_ name prefix and taking "Device *" not "Object *".
+>
 
-Thanks,
+Reading your message again, I misinterpreted you as arguing against the
+overall coupling of ObjectProperty and Property. I agree with the
+specific point of the abstraction layers.
 
--- 
-Peter Xu
-
+> With regards,
+> Daniel
 
