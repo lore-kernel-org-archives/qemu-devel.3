@@ -4,87 +4,95 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 634BFCD6E7B
-	for <qemu-devel@archiver.kernel.org>; Fri,  5 Jun 2026 21:28:07 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7F6BECD6E7E
+	for <qemu-devel@archiver.kernel.org>; Fri,  5 Jun 2026 22:03:21 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wVc4i-0007oc-EP; Fri, 05 Jun 2026 17:27:32 -0400
+	id 1wVcce-0000wJ-4J; Fri, 05 Jun 2026 18:02:36 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <gourry@gourry.net>) id 1wVc4c-0007jg-Dr
- for qemu-devel@nongnu.org; Fri, 05 Jun 2026 17:27:28 -0400
-Received: from mail-ot1-x32a.google.com ([2607:f8b0:4864:20::32a])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <gourry@gourry.net>) id 1wVc4Y-0006Zv-H8
- for qemu-devel@nongnu.org; Fri, 05 Jun 2026 17:27:25 -0400
-Received: by mail-ot1-x32a.google.com with SMTP id
- 46e09a7af769-7e6cdd78fe6so1228558a34.2
- for <qemu-devel@nongnu.org>; Fri, 05 Jun 2026 14:27:20 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gourry.net; s=google; t=1780694840; x=1781299640; darn=nongnu.org;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
- bh=sGJ2zWdTQy5OMVXgDnK58g5j7YQaI1xNZsT8+Cr2GU8=;
- b=BQxxch/4mHrVBXaqOs2mCTRSkUn+O4d+HJ2UEiKiKa+VDOIn6cmmoJVZtRwe/X95r/
- n+tTduJvpIhfmjT12+gk9+Gd7ATvip0u2O/28QbFI10M0p9PVrzVGSWUs9n7ztyv3ZFT
- udCucdoZ4ZYsU1PELmMYZuHnE9+vGUkjoriBc9gzBgkB/kioRft6z7dbfQ1Pg0naPVtr
- h8pOgs+lm8mDRk0sVPEi+rTIRvu+RViqD/SbiN7GhYr7jzJqA2HJOOLF/ox9qv8ODYqB
- G3pPZQULT+HFx8LB7Mj5Qg3TDdzy6Jla3G3OXSEPmtV7KeytAQhTyGwLcDhu9+3hJ/vZ
- Yrog==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1780694840; x=1781299640;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=sGJ2zWdTQy5OMVXgDnK58g5j7YQaI1xNZsT8+Cr2GU8=;
- b=gl4QNOUilSSFTrDgPf0EgU8wFwykLVjfsPLeEomGMyRgytMWvDE+c458DvMS/OOApo
- dFjQqgzuzm90uQi6P0nCIjVOLe/sEA704m5U2Mx+OuL8b6qFC0ANHHdSnRfq7XK1LrtB
- MM4eQ/2cV7ppHaCC0rz/lGQC82kg0NAgpvVITIaWuuCqzP7ed6Ei2bYtKpUThWI5j8MP
- UnCsw1ycGXnX7KJF1mMDZsJ5X+npx+UvhvGwB8Go7tCBo6TK3uJsM203Zp8i9CSWJnt/
- XikTRr51t4MCojayLdw7mQAOOtTHRUIgJwfwXKK4FBrI641NsfR4TdYYoMlgJc0JrOjd
- B8CQ==
-X-Gm-Message-State: AOJu0YwYOS+k2DQuh/9RAT0ZsPc4gE+qXTWqpQ8z2kDXAdWpXecVb7BW
- sJ3jPWscGle048w9Um/Vm82Xqj8NzaXMDY2BsIDNzQvex19H7ObZ7PWjVu8djQQMBes=
-X-Gm-Gg: Acq92OEj3Q8JAq8p8btqs2xaGDJI5isAx+oGxqX0ahZUy1vR/4rQP306xPuol7tKRpu
- AkCvDcmW4MZkD9bCkBmivNDljw49ofXETnh0Z4sY/JgXwKEpE34xkN0AWjx/b23dzO6rbmJtM4f
- 4ZZlp/1idHspQGizOwQpbvnkeuOKjD6vm+y7x6pFGyGZ5hUPwdDRH9uCl7TD0zvK0v0cFJKaak8
- kkH921N0fS8xnR8Upud1a65/egMJX5PCll88tSbgYFdx87vUezkNcwbevBY0knNvmxeF2kMigJH
- C5tWuMGQQyMQkhCQItkuMEAwWnW/btfYnlaYJLj2kWYtJRsT6nNZKy+suChBpQr/jjatTVtzEUx
- KIU90FOtkhR/jsXJI0CItdlk8UthbDebrx4YKT1dNordDqRVbKyZlNEFes3NgLbIvtXcXsaT7Xc
- peaV4ibrLUJtGS0mhKaFOwCFwAf683Rmgs1S7LROqZxQxMC+/wKQXhWD6XnZmgpIrPiCK/32qVK
- Af49TIFuj03Pyc53g==
-X-Received: by 2002:a05:6830:2b09:b0:7dc:c7aa:22c7 with SMTP id
- 46e09a7af769-7e70c3e4ac0mr3235786a34.0.1780694839728; 
- Fri, 05 Jun 2026 14:27:19 -0700 (PDT)
-Received: from gourry-fedora-PF4VCD3F
- (pool-173-79-60-52.washdc.fios.verizon.net. [173.79.60.52])
- by smtp.gmail.com with ESMTPSA id
- 46e09a7af769-7e6e74b5e80sm6694964a34.7.2026.06.05.14.27.18
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 05 Jun 2026 14:27:19 -0700 (PDT)
-Date: Fri, 5 Jun 2026 22:27:16 +0100
-From: Gregory Price <gourry@gourry.net>
-To: fanhuang <FangSheng.Huang@amd.com>
-Cc: qemu-devel@nongnu.org, david@kernel.org, imammedo@redhat.com,
- philmd@mailo.com, Zhigang.Luo@amd.com, Lianjie.Shi@amd.com
-Subject: Re: [PATCH v10 2/4] i386/acpi-build: partition device_memory SRAT
- umbrella for sp-mem
-Message-ID: <aiM_NHx0a6x95KtP@gourry-fedora-PF4VCD3F>
-References: <20260605104609.1739911-1-FangSheng.Huang@amd.com>
- <20260605104609.1739911-3-FangSheng.Huang@amd.com>
+ (Exim 4.90_1) (envelope-from <alex@shazbot.org>) id 1wVccY-0000kZ-OO
+ for qemu-devel@nongnu.org; Fri, 05 Jun 2026 18:02:30 -0400
+Received: from fhigh-a2-smtp.messagingengine.com ([103.168.172.153])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <alex@shazbot.org>) id 1wVccW-0000pd-VB
+ for qemu-devel@nongnu.org; Fri, 05 Jun 2026 18:02:30 -0400
+Received: from phl-compute-04.internal (phl-compute-04.internal [10.202.2.44])
+ by mailfhigh.phl.internal (Postfix) with ESMTP id 7EA5C1400144;
+ Fri,  5 Jun 2026 18:02:26 -0400 (EDT)
+Received: from phl-frontend-04 ([10.202.2.163])
+ by phl-compute-04.internal (MEProxy); Fri, 05 Jun 2026 18:02:26 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=shazbot.org; h=
+ cc:cc:content-transfer-encoding:content-type:content-type:date
+ :date:from:from:in-reply-to:in-reply-to:message-id:mime-version
+ :references:reply-to:subject:subject:to:to; s=fm3; t=1780696946;
+ x=1780783346; bh=GoHKUNfkXqSLWbuSdK76tUylOPnCNLXAmYDahGa/Pa4=; b=
+ fvbrg1h0m1ZTcpKXCetRK60hUHY8tXZVh75BP5Pl5/VhjMYKEOenBNfGY8/0dlBo
+ SljHpalYgx5NY3PivQXSIlWW+bo4ShAA3zI3FNarJUsT1BJcxh6OdVS5gjGBbzjy
+ gN+cdgU9UfMAG7WumIcw0h1DAEwimgEdNwP7xajwoCjFgBtiZ6WKJIa/RVNR8QLh
+ PMlCGxYu2HbQzywAdiwqCnXsUbjgWRpDP9kBs+gcj4MaOWgW2WcLdssO8DIYS1s7
+ tWSsU9xwYxQOYyqTuCYJBl3ITcAOY1tpWfKPGuWjB7NaOhVz2xfYYc07bQdSX7z6
+ eDGW9BVq0Y7Bzm5sK3oeEQ==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+ messagingengine.com; h=cc:cc:content-transfer-encoding
+ :content-type:content-type:date:date:feedback-id:feedback-id
+ :from:from:in-reply-to:in-reply-to:message-id:mime-version
+ :references:reply-to:subject:subject:to:to:x-me-proxy
+ :x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=1780696946; x=
+ 1780783346; bh=GoHKUNfkXqSLWbuSdK76tUylOPnCNLXAmYDahGa/Pa4=; b=Q
+ gMjr1PIbGIsuQqglR0JoW80VGRHj8OVDFbbUr9IHOkVUHbIRrjkp98eHoTQVPyI8
+ 9qdvaHDDdSq3qN0+O1MgBpVsoLLtTnPvOSwQpMp7I3c1+weSUJxvqwi/k1oc6Xjo
+ ULE9LEqZvdIK1vuFlQgV8Chgl3Wm9jNwCjoTn3LRJi43HMfxvodNfJj72q/rQ0Tt
+ rKKkwURtbOBZ6KceXiE16Y+1M+L8CeJVdYHdldEkWfr76v493+8tqqS1AmvynfJC
+ 0zlrQaYFMT4XJjgblye/vSCEFIUtYivG8Z0Y/OO9gpGCCEgZnHExDXhairiS7ghP
+ VCoTng930R79/hxfO5bwQ==
+X-ME-Sender: <xms:ckcjaplHn54hZqRo_uN9fbw_MmfRwECAPeM9fq8kwAUQZrfQ8Ry-RA>
+ <xme:ckcjatxLLVeVPdpmB37eYiaOmqaqGdRtvNLFvO_S6YIaxQh1HUXrsKpSVJ84qutrN
+ s97lmvhH_dsrc3fdxxlziWcZ7zMhJcn8tU3f61ILE735vTyAeBXnA>
+X-ME-Received: <xmr:ckcjarM8et1p0EIG31xkl6HN3TedEFrDGiVp3IEea6jdtKR6glTXfglDQ90>
+X-ME-Proxy-Cause: dmFkZTFEBADKa0mg92+XbiQG+GdJ2DleML41YMhxyLjVIr28T13FuOoxrC/gdKYoz+4kt2
+ 5M1tZtE0CxP2MZBfhLukknaOpafK84IKW17Tu4lSJBZ4gchwDuA2ZXms80qij0N4BGlM3t
+ GPfeVcFGaEJo9DjndAMjPgiDXkB3cOVPyrvijrqbURR2n4caJyZTTPZBV1PulwOKkkbWp8
+ FoLsC6m325eyKUFxI4B8wArGp/iD4iLEvkz0BK1Je7jap1fbI9Q8JUC5pfMhdL/d7V/DeA
+ tQTNn015H+aL3N+DNCcYs4nU6a6ekNz23V/f89BYbrjk/2qlFPXsbagG+dxJGXTObxZ6Zu
+ vxX6++A+eP4NKYLMwvV6eTE3IJGxYA9jauzrZA4DSl8sMxzLYoVNRYCM5Mb8KTBK8InLT5
+ R2CXE+bSWOYlb8mebFKVK5j41v9s1jbjvDJzk7swtEyxNzL8BoMKrlsYWZ/HRcxYZOEdWM
+ XJw/pK3hNmV2RDvUoiyjvo3fKgELgiHTkb5yZmHczHCkGC26AVXFRcK4AdBjMAT3nUUmTw
+ apex4UY9j8syyb8inyX7TtuOelAqsDmYnwxUEiYXAK3+rRHfRDmYIbYKqGYlwpv5jJl5xT
+ wOu9AuFThGxLzFQ7tCMOkbAIegbtWlbwexAKjYp4DlBghqMfJqFgjlLMBJEg
+X-ME-Proxy: <xmx:ckcjaprrCUZXG0494ETUxVDT4tlIIOhaK6-ZDhiMBPfICmlA330PPA>
+ <xmx:ckcjakEHocLA3qwNAnwtYE5Cg7so5BqNHnka-YSgjnipCMF9TllbWQ>
+ <xmx:ckcjamrs7XwOWkx_l33a0qjqazZMSbCrM8UjCCOCclo4B6jv5v3PAQ>
+ <xmx:ckcjala04jf-r_K7aZKIHDeeoOHoaF8cLsEA-ia28KxRjr6Xah5PNg>
+ <xmx:ckcjaqEURJ8TQ4yF5OMwV7Q11F1WG_FpwWqnYtYzniJSRTQZ8a-yRxx->
+Feedback-ID: i03f14258:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
+ 5 Jun 2026 18:02:25 -0400 (EDT)
+Date: Fri, 5 Jun 2026 16:02:24 -0600
+From: Alex Williamson <alex@shazbot.org>
+To: Tomita Moeko <tomitamoeko@gmail.com>
+Cc: qemu-devel@nongnu.org, "Michael S. Tsirkin" <mst@redhat.com>,
+ =?UTF-8?B?Q8OpZHJpYw==?= Le Goater <clg@redhat.com>, K S Maan
+ <kirandeepmaan45@gmail.com>, alex@shazbot.org
+Subject: Re: [PATCH 6/6] vfio/igd: Clear saved BDSM in legacy VBIOS ROM at
+ load time
+Message-ID: <20260605160224.32405a42@shazbot.org>
+In-Reply-To: <20260603173355.36121-7-tomitamoeko@gmail.com>
+References: <20260603173355.36121-1-tomitamoeko@gmail.com>
+ <20260603173355.36121-7-tomitamoeko@gmail.com>
+X-Mailer: Claws Mail 4.4.0 (GTK 3.24.52; x86_64-pc-linux-gnu)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20260605104609.1739911-3-FangSheng.Huang@amd.com>
-Received-SPF: pass client-ip=2607:f8b0:4864:20::32a;
- envelope-from=gourry@gourry.net; helo=mail-ot1-x32a.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=103.168.172.153; envelope-from=alex@shazbot.org;
+ helo=fhigh-a2-smtp.messagingengine.com
+X-Spam_score_int: -27
+X-Spam_score: -2.8
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_PASS=-0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -101,149 +109,150 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Fri, Jun 05, 2026 at 06:46:07PM +0800, fanhuang wrote:
-> Restructure the device_memory SRAT umbrella entry into a per-kind
-> partition: each TYPE_SP_MEM device gets an ENABLED entry at its own
-> proximity_domain; the remaining sub-ranges get HOTPLUGGABLE | ENABLED
-> placeholders at the highest PXM, preserving the existing umbrella
-> convention.
-> 
-> Signed-off-by: FangSheng Huang <FangSheng.Huang@amd.com>
-> ---
->  hw/i386/acpi-build.c | 98 +++++++++++++++++++++++++++++++++++++++++---
->  1 file changed, 92 insertions(+), 6 deletions(-)
-> 
-> diff --git a/hw/i386/acpi-build.c b/hw/i386/acpi-build.c
-> index 0d7c83d5e9..76efa83808 100644
-> --- a/hw/i386/acpi-build.c
-> +++ b/hw/i386/acpi-build.c
-> @@ -52,6 +52,7 @@
->  #include "migration/vmstate.h"
->  #include "hw/mem/memory-device.h"
->  #include "hw/mem/nvdimm.h"
-> +#include "hw/mem/sp-mem.h"
->  #include "system/numa.h"
->  #include "system/reset.h"
->  #include "hw/hyperv/vmbus-bridge.h"
-> @@ -1346,6 +1347,96 @@ build_tpm_tcpa(GArray *table_data, BIOSLinker *linker, GArray *tcpalog,
+On Thu,  4 Jun 2026 01:33:54 +0800
+Tomita Moeko <tomitamoeko@gmail.com> wrote:
+> diff --git a/hw/vfio/igd.c b/hw/vfio/igd.c
+> index 17437ae18d..e00f6f8315 100644
+> --- a/hw/vfio/igd.c
+> +++ b/hw/vfio/igd.c
+> @@ -739,3 +739,109 @@ bool vfio_probe_igd_config_quirk(VFIOPCIDevice *vde=
+v, Error **errp)
+> =20
+>      return vfio_pci_igd_config_quirk(vdev, errp);
 >  }
->  #endif
->  
-> +typedef struct {
-> +    uint64_t addr;
-> +    uint64_t size;
-> +    uint32_t node;
-> +} SpMemRange;
-> +
-> +static int collect_sp_mem_ranges_cb(Object *obj, void *opaque)
-> +{
-> +    GArray *ranges = opaque;
-> +    SpMemDevice *spm;
-> +    MemoryDeviceClass *mdc;
-> +    SpMemRange r;
-> +
-> +    if (!object_dynamic_cast(obj, TYPE_SP_MEM)) {
-> +        return 0;
-> +    }
-> +    spm = SP_MEM(obj);
-> +    mdc = MEMORY_DEVICE_GET_CLASS(MEMORY_DEVICE(spm));
-> +    r.addr = mdc->get_addr(MEMORY_DEVICE(spm));
-> +    r.size = memory_region_size(
-> +                 host_memory_backend_get_memory(spm->hostmem));
-> +    r.node = spm->node;
-> +    g_array_append_val(ranges, r);
-> +    return 0;
-> +}
-> +
-> +static gint sp_mem_range_compare(gconstpointer a, gconstpointer b)
-> +{
-> +    const SpMemRange *range_a = a;
-> +    const SpMemRange *range_b = b;
-> +
-> +    if (range_a->addr < range_b->addr) {
-> +        return -1;
-> +    }
-> +    if (range_a->addr > range_b->addr) {
-> +        return 1;
-> +    }
-> +    return 0;
-> +}
 > +
 > +/*
-> + * Emit SRAT memory-affinity entries covering the device_memory region.
+> + * IGD ROM BAR read from kernel is actually the host VBIOS shadow RAM re=
+gion,
+> + * which contains host modifications. In Gen 6-9 VBIOS, the routine belo=
+w is
+> + * used to get BDSM value when programming the initial GTT.
+> + *   xx xx xx xx           v: .long ?                  # saved value
+> + *   66 53                    push  %ebx
+> + *   66 2e 83 3e xx xx 00     cmpl  $0x0,%cs:v         # is saved value =
+empty?
+> + *   74 07                    je    1f                 # if zero, go com=
+pute
+> + *   66 2e a1 xx xx           mov   %cs:v,%eax         # else return sav=
+ed value
+> + *   eb 0f                    jmp   2f
+> + *   b8 5e 10              1: mov   $0x105e,%ax        # dev 00:02.0, of=
+fset 5E
+> + *   e8 xx xx                 call  pci_read_cfg_word
+> + *   66 c1 e0 10              shl   $0x10,%eax         # left shift 16 b=
+its
+> + *   66 2e a3 xx xx           mov   %eax,%cs:v         # save the result
+> + *   66 5b                 2=EF=BC=9Apop   %ebx
+> + *   c3                       ret
+> + * When running the VBIOS in guest, saved value still reflects the host =
+stolen
+> + * memory base address, which is not correct in guest. So we need to pat=
+ch the
+> + * VBIOS to clear the saved value.
 > + *
-> + * For each plugged TYPE_SP_MEM device, emit an ENABLED entry at the
-> + * device's own proximity_domain.  All remaining sub-ranges (gaps
-> + * between sp-mem devices, leading and trailing padding, and ranges
-> + * occupied by other memory devices) are covered by HOTPLUGGABLE |
-> + * ENABLED placeholder entries at PXM = nb_numa_nodes - 1.
+> + * The unique 19-byte starts at `cmpl $0,%cs:v` and ends at `mov $0x105e=
+,%ax`
+> + * anchors the match to the routine. Both `cs:` displacements must refer=
+ence
+> + * the same offset.
 > + */
-> +static void build_srat_device_memory(GArray *table_data, MachineState *ms)
+
+Neat, cool quirk.
+
+> +static int igd_vbios_find_saved_bdsm(const uint8_t *rom, size_t rom_size,
+> +                                     uint16_t *bdsm_offset)
 > +{
-> +    g_autoptr(GArray) ranges = g_array_new(FALSE, TRUE, sizeof(SpMemRange));
-> +    uint64_t cursor, end;
-> +    int nb_nodes = ms->numa_state ? ms->numa_state->num_nodes : 0;
-> +    uint32_t hotplug_pxm = nb_nodes > 0 ? nb_nodes - 1 : 0;
-> +    guint i;
+> +    static const uint8_t start[] =3D { 0x66, 0x2e, 0x83, 0x3e };
+> +    static const uint8_t middle[] =3D { 0x00, 0x74, 0x07, 0x66, 0x2e, 0x=
+a1 };
+> +    static const uint8_t end[] =3D { 0xeb, 0x0f, 0xb8, 0x5e, 0x10 };
+> +    size_t i;
+> +    bool found =3D false;
 > +
-> +    if (!ms->device_memory) {
+> +    if (rom_size < 19) {
+> +        return -ENOENT;
+> +    }
+> +
+> +    for (i =3D 0; i + 19 <=3D rom_size; i++) {
+> +        if (memcmp(rom + i, start, sizeof(start)) !=3D 0 ||
+> +            memcmp(rom + i + 6, middle, sizeof(middle)) !=3D 0 ||
+> +            memcmp(rom + i + 14, end, sizeof(end)) !=3D 0) {
+> +            continue;
+> +        }
+> +
+> +        /* same saved value address? */
+> +        if (rom[i + 4] !=3D rom[i + 12] || rom[i + 5] !=3D rom[i + 13]) {
+> +            continue;
+> +        }
+> +
+> +        if (found) {
+> +            return -EEXIST;
+> +        }
+> +
+> +        *bdsm_offset =3D rom[i + 4] | ((uint16_t)rom[i + 5] << 8);
+
+This needs a bounds check to make sure it's still within the ROM,
+either here or before the memset().
+
+> +        found =3D true;
+> +    }
+> +
+> +    if (!found) {
+> +        return -ENOENT;
+> +    }
+> +
+> +    return 0;
+> +}
+> +
+> +void vfio_probe_igd_legacy_rom_quirk(VFIOPCIDevice *vdev)
+> +{
+> +    int ret, gen;
+> +    uint16_t pcir_offset, bdsm_offset =3D 0;
+> +    uint8_t checksum;
+> +
+> +    if (!vfio_pci_is(vdev, PCI_VENDOR_ID_INTEL, PCI_ANY_ID) ||
+> +        !vfio_is_vga(vdev) || !vdev->vga) {
 > +        return;
 > +    }
 > +
-> +    cursor = ms->device_memory->base;
-> +    end = cursor + memory_region_size(&ms->device_memory->mr);
-> +
-> +    object_child_foreach_recursive(qdev_get_machine(),
-> +                                   collect_sp_mem_ranges_cb, ranges);
-> +    g_array_sort(ranges, sp_mem_range_compare);
-> +
-> +    for (i = 0; i < ranges->len; i++) {
-> +        SpMemRange *r = &g_array_index(ranges, SpMemRange, i);
-> +
-> +        if (cursor < r->addr) {
-> +            build_srat_memory(table_data, cursor, r->addr - cursor,
-> +                              hotplug_pxm,
-> +                              MEM_AFFINITY_HOTPLUGGABLE |
-> +                              MEM_AFFINITY_ENABLED);
-> +        }
-> +        build_srat_memory(table_data, r->addr, r->size, r->node,
-> +                          MEM_AFFINITY_ENABLED);
-> +        cursor = r->addr + r->size;
+> +    /* Only Gen 6~9 devices have legacy VBIOS as Option ROM */
+> +    gen =3D igd_gen(vdev);
+> +    if (gen < 6 || gen > 9) {
+> +        return;
 > +    }
 > +
-
-Should we expect (cursor == end) here and fire a warning if there wasn't
-a full range to cover the region?  If not - why set it all as
-hotpluggable anyway?
-
-(Maybe just worth a comment here what the last block is actually doing)
-
-> +    if (cursor < end) {
-> +        build_srat_memory(table_data, cursor, end - cursor,
-> +                          hotplug_pxm,
-> +                          MEM_AFFINITY_HOTPLUGGABLE |
-> +                          MEM_AFFINITY_ENABLED);
+> +    if (pci_get_word(vdev->rom) !=3D 0xaa55) {
+> +        return;
 > +    }
-> +}
 > +
->  #define HOLE_640K_START  (640 * KiB)
->  #define HOLE_640K_END   (1 * MiB)
->  
-> @@ -1481,12 +1572,7 @@ build_srat(GArray *table_data, BIOSLinker *linker, MachineState *machine)
->       * Memory devices may override proximity set by this entry,
->       * providing _PXM method if necessary.
->       */
-> -    if (machine->device_memory) {
-> -        build_srat_memory(table_data, machine->device_memory->base,
-> -                          memory_region_size(&machine->device_memory->mr),
-> -                          nb_numa_nodes - 1,
-> -                          MEM_AFFINITY_HOTPLUGGABLE | MEM_AFFINITY_ENABLED);
-> -    }
-> +    build_srat_device_memory(table_data, machine);
->  
->      acpi_table_end(linker, &table);
->  }
-> -- 
-> 2.34.1
-> 
+> +    /* Must be a legacy ROM */
+> +    pcir_offset =3D pci_get_word(vdev->rom + 0x18);
+> +    if (pcir_offset >=3D vdev->rom_size ||
+
+This gates the below test to pcir_offset + 0x14, so should be:
+
+       if (pcir_offset + 0x14 >=3D vdev->rom_size ||
+
+> +        memcmp(vdev->rom + pcir_offset, "PCIR", 4) ||
+> +        pci_get_byte(vdev->rom + pcir_offset + 0x14) !=3D 0x00) {
+> +        return;
+> +    }
+> +
+> +    ret =3D igd_vbios_find_saved_bdsm(vdev->rom, vdev->rom_size, &bdsm_o=
+ffset);
+> +    if (ret < 0) {
+> +        return;
+> +    }
+> +
+> +    memset(vdev->rom + bdsm_offset, 0, sizeof(uint32_t));
+> +
+> +    checksum =3D pci_rom_calculate_checksum(vdev->rom, vdev->rom_size);
+> +    ((uint8_t *)vdev->rom)[6] =3D checksum;
+
+If updated per previous recommendation, this becomes:
+
+	((uint8_t *)vdev->rom)[6] -=3D checksum;
+
+Thanks,
+Alex
 
