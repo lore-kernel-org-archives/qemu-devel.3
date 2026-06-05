@@ -4,56 +4,51 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D76E6CD6E74
-	for <qemu-devel@archiver.kernel.org>; Fri,  5 Jun 2026 11:17:51 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id EC58DCD6E74
+	for <qemu-devel@archiver.kernel.org>; Fri,  5 Jun 2026 11:24:18 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wVSY3-0001PA-SL; Fri, 05 Jun 2026 07:17:11 -0400
+	id 1wVSeI-000340-3G; Fri, 05 Jun 2026 07:23:38 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <david@kernel.org>)
- id 1wVSXv-0001OQ-Up; Fri, 05 Jun 2026 07:17:08 -0400
-Received: from tor.source.kernel.org ([172.105.4.254])
+ (Exim 4.90_1) (envelope-from <david@kernel.org>) id 1wVSeG-00033s-2H
+ for qemu-devel@nongnu.org; Fri, 05 Jun 2026 07:23:36 -0400
+Received: from tor.source.kernel.org ([2600:3c04:e001:324:0:1991:8:25])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <david@kernel.org>)
- id 1wVSXu-0001S0-6v; Fri, 05 Jun 2026 07:17:03 -0400
+ (Exim 4.90_1) (envelope-from <david@kernel.org>) id 1wVSeE-0004Xt-Eh
+ for qemu-devel@nongnu.org; Fri, 05 Jun 2026 07:23:35 -0400
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
- by tor.source.kernel.org (Postfix) with ESMTP id 5B23A601DD;
- Fri,  5 Jun 2026 11:17:00 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9AAA71F0089A;
- Fri,  5 Jun 2026 11:16:55 +0000 (UTC)
+ by tor.source.kernel.org (Postfix) with ESMTP id 57772601E3;
+ Fri,  5 Jun 2026 11:23:32 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EE2411F00893;
+ Fri,  5 Jun 2026 11:23:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
- s=k20260515; t=1780658220;
- bh=v+Y3Yj6bbgt0s0hPsfH89bzu08XBtigSYiFF6IT5TNs=;
- h=Date:Subject:To:Cc:References:From:In-Reply-To;
- b=Eoy4V9OBKmzfumOqPtdBbUml8gbaeIb4xH/DKR4vtnv3DS3bKFHtwIj3dbIKPGxIq
- 7HEcS2218/NIbTnFhWyqqwJa0AEpiiLIIDLJUPl1kRsARqvqDBF1kKs0wZwlEyiGym
- AE/3i0xEsP0T4WZHMioAf/3l2mESb4fdo59Z82dYlr44D9V8+w5Qs9B5VZw93TYIYB
- YY5BE8gIQ+CJu6fxzR8SXgLctNW4fFd21PrXXqg1LQ3C33qq4nLMBW5wBXgrd2yzt/
- UIpnEugwz/6sBe2x++y5UPJ0lUizn91TlSmU7kcd5YQOfWFXSC74Eom3PkXHGsfXa4
- NoFhHIVDdI4yQ==
-Message-ID: <00427d28-3d84-4921-a4e1-145163a24b06@kernel.org>
-Date: Fri, 5 Jun 2026 13:16:52 +0200
+ s=k20260515; t=1780658612;
+ bh=sVrlMcyO0bk2T4Yg1Nm69chMsauWDeag0o8SBkOLy8E=;
+ h=Date:Subject:From:To:Cc:References:In-Reply-To;
+ b=BKBHwbDJuR65RHt+aW7aYxGCwzpgFXmr1+fRfqXjlPDJDY1SsXdTctFSdeB/UQdPO
+ Ec1LlBeUDPhqipn+4BPWS0x/RFVCkFRLkyDivIKbagfbocuzromhv3toRydAXHFlIE
+ 6HVj1TFBXQECLSxykv/GUNnhQcQPWAWiw9fOThdfny48rBmBRYLSl1gwnAy9cEeGtM
+ 6iQ1c+N7/bMobajVy64q+iA8U36Qmq0PVP20LKb6sRg9D2WSABJ1bmYGQawb5QT0UM
+ IolBHlfyiEZeswuv3g/9MPfq3Jun3Shl4MsyrVS9dpnxJ8d4q2KtoyZqvIeCZXVCOh
+ kRXCBOyk03HLw==
+Message-ID: <c0e369e3-21fb-41d7-a187-ce91d940e198@kernel.org>
+Date: Fri, 5 Jun 2026 13:23:26 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v5 03/12] system/memory: constify section arguments
-To: =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>,
- qemu-devel@nongnu.org
-Cc: Zhenzhong Duan <zhenzhong.duan@intel.com>,
- "Michael S. Tsirkin" <mst@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>,
- Peter Xu <peterx@redhat.com>, =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?=
- <philmd@mailo.com>, qemu-rust@nongnu.org, Alex Williamson
- <alex@shazbot.org>, =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>,
- "Maciej S. Szmigiero" <maciej.szmigiero@oracle.com>,
- Fabiano Rosas <farosas@suse.de>, Mark Kanda <mark.kanda@oracle.com>,
- Ben Chaney <bchaney@akamai.com>, Marcelo Tosatti <mtosatti@redhat.com>,
- kvm@vger.kernel.org, "Dr. David Alan Gilbert" <dave@treblig.org>,
- Zhao Liu <zhao1.liu@intel.com>, Eric Blake <eblake@redhat.com>,
- Markus Armbruster <armbru@redhat.com>
-References: <20260604-rdm5-v5-0-5768e6a0943d@redhat.com>
- <20260604-rdm5-v5-3-5768e6a0943d@redhat.com>
+Subject: Re: [PATCH v3 08/12] hostmem: Support fully shared guest memfd to
+ back a VM
 From: "David Hildenbrand (Arm)" <david@kernel.org>
+To: Michael Roth <michael.roth@amd.com>, Peter Xu <peterx@redhat.com>
+Cc: qemu-devel@nongnu.org, Juraj Marcin <jmarcin@redhat.com>,
+ Paolo Bonzini <pbonzini@redhat.com>, Chenyi Qiang <chenyi.qiang@intel.com>,
+ Fabiano Rosas <farosas@suse.de>, Alexey Kardashevskiy <aik@amd.com>,
+ Li Xiaoyao <xiaoyao.li@intel.com>
+References: <20251215205203.1185099-1-peterx@redhat.com>
+ <20251215205203.1185099-9-peterx@redhat.com>
+ <mvats5prlo3jb4qpu7liekphunyura5hqs5rm7smgwkmqbzgro@tzo2t2md2jzh>
+ <1cfcf99e-0cc8-4083-8e2c-91da70f8cb17@kernel.org>
 Content-Language: en-US
 Autocrypt: addr=david@kernel.org; keydata=
  xsFNBFXLn5EBEAC+zYvAFJxCBY9Tr1xZgcESmxVNI/0ffzE/ZQOiHJl6mGkmA1R7/uUpiCjJ
@@ -99,11 +94,11 @@ Autocrypt: addr=david@kernel.org; keydata=
  3iyY2Nsd7JxfKu1PRhCGwXzRw5TlfEsoRI7V9A8isUCoqE2Dzh3FvYHVeX4Us+bRL/oqareJ
  CIFqgYMyvHj7Q06kTKmauOe4Nf0l0qEkIuIzfoLJ3qr5UyXc2hLtWyT9Ir+lYlX9efqh7mOY
  qIws/H2t
-In-Reply-To: <20260604-rdm5-v5-3-5768e6a0943d@redhat.com>
+In-Reply-To: <1cfcf99e-0cc8-4083-8e2c-91da70f8cb17@kernel.org>
 Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=172.105.4.254; envelope-from=david@kernel.org;
- helo=tor.source.kernel.org
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2600:3c04:e001:324:0:1991:8:25;
+ envelope-from=david@kernel.org; helo=tor.source.kernel.org
 X-Spam_score_int: -24
 X-Spam_score: -2.5
 X-Spam_bar: --
@@ -125,15 +120,42 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 6/4/26 15:43, Marc-André Lureau wrote:
-> The sections shouldn't be modified.
+On 6/5/26 09:23, David Hildenbrand (Arm) wrote:
+>>>  static bool
+>>> @@ -47,11 +56,26 @@ memfd_backend_memory_alloc(HostMemoryBackend *backend, Error **errp)
+>>>          goto have_fd;
+>>>      }
+>>>  
+>>> -    fd = qemu_memfd_create(TYPE_MEMORY_BACKEND_MEMFD, backend->size,
+>>> -                           m->hugetlb, m->hugetlbsize, m->seal ?
+>>> -                           F_SEAL_GROW | F_SEAL_SHRINK | F_SEAL_SEAL : 0,
+>>> -                           errp);
+>>> -    if (fd == -1) {
+>>> +    if (m->guest_memfd) {
+>>> +        /* User choose to use fully shared guest-memfd to back the VM.. */
+>>> +        if (!backend->share) {
+>>> +            error_setg(errp, "Guest-memfd=on must be used with share=on");
+>>> +            return false;
+>>> +        }
+>>> +
+>>> +        /* TODO: add huge page support */
+>>
+>> Until that's added, the related options should be disabled. m->seal as
+>> well doesn't seem to be applicable for guest_memfd case.
 > 
-> Reviewed-by: Peter Xu <peterx@redhat.com>
-> Reviewed-by: Cédric Le Goater <clg@redhat.com>
-> Signed-off-by: Marc-André Lureau <marcandre.lureau@redhat.com>
-> ---
+> Which raises the question whether we want a new backend (I think you implement
+> that in your version).
+> 
+> guest_memfd is rather different in some aspects (e.g., resizing is already
+> completely forbidden).
+> 
+> What are the pros and cons of either approach?
+> 
 
-Acked-by: David Hildenbrand (Arm) <david@kernel.org>
+Ah, I see a discussion on that starting here:
+
+https://lore.kernel.org/r/lpkcfd2crgparcd64ydry3ocryx3sfc5gj5pzrrms4nwvw6j4c@ulc3wa3rmefo
+
 
 -- 
 Cheers,
