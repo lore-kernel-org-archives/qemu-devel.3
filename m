@@ -4,157 +4,116 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 47917CD6E7C
-	for <qemu-devel@archiver.kernel.org>; Fri,  5 Jun 2026 17:54:08 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 31C83CD6E7B
+	for <qemu-devel@archiver.kernel.org>; Fri,  5 Jun 2026 18:59:30 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wVYjS-0004Dy-5T; Fri, 05 Jun 2026 13:53:22 -0400
+	id 1wVZkp-0006vA-QK; Fri, 05 Jun 2026 14:58:51 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <brian.cain@oss.qualcomm.com>)
- id 1wVYjQ-0004Do-G3
- for qemu-devel@nongnu.org; Fri, 05 Jun 2026 13:53:20 -0400
-Received: from mx0b-0031df01.pphosted.com ([205.220.180.131])
+ (Exim 4.90_1) (envelope-from <zycai@linux.ibm.com>)
+ id 1wVZkm-0006ty-Hb; Fri, 05 Jun 2026 14:58:49 -0400
+Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <brian.cain@oss.qualcomm.com>)
- id 1wVYjP-0001aZ-0H
- for qemu-devel@nongnu.org; Fri, 05 Jun 2026 13:53:20 -0400
-Received: from pps.filterd (m0279870.ppops.net [127.0.0.1])
- by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 655EtZYH021067
- for <qemu-devel@nongnu.org>; Fri, 5 Jun 2026 17:53:16 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
- cc:content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
- xET67gGF1IH9QU+VRml1G4vqW5mNOStBo2asghDRr0w=; b=RpoZftecJjt/ObUe
- R0O8hQinc0ZSDfyRv6rl+28pxhlpeYLl1NKmuFI6UtQxXFtDiUBASto8SzgPa7Rd
- kCjiJG1HtRyKXVkI0KwdL51pZTtOGiotS3TYMmlb7EP61tN1scM/o8EAE1vZwe3z
- R3JJXihklqA4koDa1NDv9xvE15QV5BKqc5I/pw9QRl/eK3vj1zrht/HG0uCNIK5h
- K9H3+AEBHyRHY0DbeTxLpFx1nClsFJer4reoI48BUYtCXNcDqcBNOy9i0IGjotlF
- C/PR0h+dNqs9tecSN/RgBe2xUNRmykGKL+cyqAF+lamEKIVNuQaVqC528/g9cXHJ
- 4Xpm9A==
-Received: from mail-dl1-f69.google.com (mail-dl1-f69.google.com [74.125.82.69])
- by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4ektmfapfe-1
- (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
- for <qemu-devel@nongnu.org>; Fri, 05 Jun 2026 17:53:16 +0000 (GMT)
-Received: by mail-dl1-f69.google.com with SMTP id
- a92af1059eb24-137ea73393cso4227022c88.0
- for <qemu-devel@nongnu.org>; Fri, 05 Jun 2026 10:53:16 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1780681995; cv=none;
- d=google.com; s=arc-20240605;
- b=PW12ERs05QiyVanzVQSSomjAWe5Y4x39uXuVCpByX1yXeBA3FdplfVmZU2Ku0ob+QD
- qSeMBLqN6IMol5LdupcorwE9yLykWhiiNvFP6Or2ruvpYBc8A96NV8jFlqIia8gLJF3F
- fWZ7hPCuqrRWklZn+Q3Cg/5meAYOK42LBzoroChFd9g3Ax4XplrfXnEWbpbzTgLMPkNo
- HWk0CFol580c3I6TOegkx5cnRC1GahGENX/J9kwc5ilSIUXgixFRH4vR4HmFj9yss3F0
- Rs2MGBuNqJU1gnXF61drw0J/JMYHdezv98gLS6YP3Nkjd7yjtPgRC/LHy7OHT+X3xjiB
- Nz5A==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
- s=arc-20240605; 
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:dkim-signature;
- bh=xET67gGF1IH9QU+VRml1G4vqW5mNOStBo2asghDRr0w=;
- fh=YNQ2CrohjhB673nK7omX5CcdjyFwO2PFRPpJb6cN5Lk=;
- b=jZ1HcALBamQSi5WrjvSweiQPh9JX6bi6Ke84xmRb21dJVVvF4j9C7BtE/Q0zDF+Tr5
- 4koqW1R4vEdaXP4S+E7GRrrhr4G44+BbK/h++tDp9yi21QNYD7XwmTyGH0tKX9u6+X6f
- 9TtLAkZhY/gv82fOx3kOV3Tob/8N46XwabyB2DGgGmCR2fzrkeZWx5YgyTy4EO60LEXv
- XxtA/ovnMfTjCs6YXCu0V7U0816GLwT3bxzDhVDm5b1ugrtxGiT7LMde6sgX6HnAuGIU
- rwj4Co4mkuR7u+QdU3aaul+PtlRdobZ2Mxxx2FoQ+fgoBErfbg0AMdtHsX3L4SnjFQ8Q
- zH1A==; darn=nongnu.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=oss.qualcomm.com; s=google; t=1780681995; x=1781286795; darn=nongnu.org;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:from:to:cc:subject:date
- :message-id:reply-to;
- bh=xET67gGF1IH9QU+VRml1G4vqW5mNOStBo2asghDRr0w=;
- b=YYgoCKtd35sUgm1ycwVA4+jc75diw23PFvG5HvxtmF0R5y2CqWuj4UoGamBIZljd30
- 29dvxTvJvIhpF4m6ILGbdXuypiEbqebjBFX9x8pcZ0syQCiRmml1spJa1lAWAflvr3PD
- q9rtfGZ7CRMqz2yFz90vuGlCdAWs/HO0sIgOjhTw96f7CoEF7pGKWchQKdMvylw3tEpk
- H1LUuLZsx1Kp1YhMTBC3olbWpKdnIqrCSmoR5zXgtBgSu69VIXEWVFedUDxIrjzEht4K
- 7tIzszecuWGnLW+TC4LLS7WMWPfVe7DAZbcddyYQd6oJOO3dtZtFe22oTkYesyZjxZ4Q
- R6og==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1780681995; x=1781286795;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to;
- bh=xET67gGF1IH9QU+VRml1G4vqW5mNOStBo2asghDRr0w=;
- b=tVneTwuzbomuG0IA20s1MC+KDn9j02IFacHKaClq/W7MZKdRKuohGkfYPWHPi/+zAX
- kl+rk3ZZOMxHegFdZ+vvnN/pxnLAtkEI7VBaRnb2Cksgd/cGmB/CL7I+RivSPu6p7df3
- m6DhL04Q27igxWZJVMzA3r7aJkHitumI5m+EFKOiCZeEf/FolniXsF8bcnKGbVDba9WT
- YSAxM6OAaP1hikjhGfK4QNKiThggkUWNiHV7LFNU3632Za/Ctk78eUksJ5OpcxIWcypT
- 6frH1lJoUjyyMt9MZRVfeT8MA+Y2ySj7uxC5L2zuRdiIbAVo6L2XpUPvCaKZirJxQpSe
- 4Z2Q==
-X-Forwarded-Encrypted: i=1;
- AFNElJ/8dmBlCK1zDkMMjdSqYPuqjXqcBzHFUwvkLbkuIjAe8VLuwbJRyihSDRT79AecTV4XLG+JtCOb9uQB@nongnu.org
-X-Gm-Message-State: AOJu0YxVEzCzEhUbbZ27XJJjcjo/TZHW/SKXC6qUU7qVyCqnfJSpe+Nl
- PzCobGToM40y39muL7MFjssDCntg6JXSQH/YqSN5h6Olqdc/kylj0ZOhPAWs04bhjRmeNqtKTz/
- OtFr/H6Gs56297bEnSkRPtB8ETtnvu3DcTiPgpXO4numpuqqbT10s6/pfCKJHnyoBja7Mm1jQaF
- mCPJ1TauYbsInyWPReinhw7vmCige1Emh+
-X-Gm-Gg: Acq92OGPJ0kUZ81WF2mObtNY3QppW9Xp/w0c8z/eBsaeNCR1GHnnBxe0XLiq93FqDkt
- zHXZbTu+FLskNaxg8JRfbOJtpb83nkF5HjThk5dJMuaLhfHAu0T0c2i3CvHRLLw59Gmyp82di3H
- +4+72cbGIMZjm2WkZxT/HaOsB5fjuhxcFdOItGsycgWIZ+XKpKT2lUCQOKOVIgwksZynrfngPGY
- LMIIYuxEZdwEFslRg==
-X-Received: by 2002:a05:7022:1005:b0:136:ac69:b0e8 with SMTP id
- a92af1059eb24-138066be6a1mr2188298c88.15.1780681995051; 
- Fri, 05 Jun 2026 10:53:15 -0700 (PDT)
-X-Received: by 2002:a05:7022:1005:b0:136:ac69:b0e8 with SMTP id
- a92af1059eb24-138066be6a1mr2188280c88.15.1780681994513; Fri, 05 Jun 2026
- 10:53:14 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <zycai@linux.ibm.com>)
+ id 1wVZkk-00087I-6y; Fri, 05 Jun 2026 14:58:48 -0400
+Received: from pps.filterd (m0360072.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
+ 655DTeaJ1796433; Fri, 5 Jun 2026 18:58:40 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
+ :content-transfer-encoding:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to; s=pp1; bh=wpGS2F
+ PKmG4/pzq02zOMBUNlvTgTjQfEQl9SKtk7DrI=; b=IAr8a7dQGALU2NLPEwDOk8
+ NaxAPI3Qfk+n40BcteanlpKiBHa5FaGIh3mX7PQCU7ZMDSRePJZangPbmj5spsEY
+ LO+nROwh84mBSR6yuEYYAp5U29ImJ1TNCWtLHbb7bUns+vIUdDYmV0+74FYt6c8f
+ DwovXA4SSur7duWwGXJNWjwA12s4JGOg5k/S6W2Gx9KAMiHR7kg1xpX+oTnVaUD9
+ EGUaM2YfBwlQWFU+CqhlTI+/he9bb9LsoibHZ37deItFeivGnJy+Z7u1YQg4+FHz
+ jLqJWnxn9/gnhW9pPN2aNBcEq7WWki5WoxAbulvaU6Mds9hOMdGWUIwOrxV4m+jw
+ ==
+Received: from ppma11.dal12v.mail.ibm.com
+ (db.9e.1632.ip4.static.sl-reverse.com [50.22.158.219])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4efqhtn5ha-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Fri, 05 Jun 2026 18:58:40 +0000 (GMT)
+Received: from pps.filterd (ppma11.dal12v.mail.ibm.com [127.0.0.1])
+ by ppma11.dal12v.mail.ibm.com (8.18.1.7/8.18.1.7) with ESMTP id 655IsB8J014344;
+ Fri, 5 Jun 2026 18:58:39 GMT
+Received: from smtprelay01.wdc07v.mail.ibm.com ([172.16.1.68])
+ by ppma11.dal12v.mail.ibm.com (PPS) with ESMTPS id 4egcwytqk2-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Fri, 05 Jun 2026 18:58:39 +0000 (GMT)
+Received: from smtpav05.dal12v.mail.ibm.com (smtpav05.dal12v.mail.ibm.com
+ [10.241.53.104])
+ by smtprelay01.wdc07v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 655Iwb7x6095694
+ (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Fri, 5 Jun 2026 18:58:38 GMT
+Received: from smtpav05.dal12v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 906AF58056;
+ Fri,  5 Jun 2026 18:58:37 +0000 (GMT)
+Received: from smtpav05.dal12v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 5A54D58052;
+ Fri,  5 Jun 2026 18:58:36 +0000 (GMT)
+Received: from [9.61.146.40] (unknown [9.61.146.40])
+ by smtpav05.dal12v.mail.ibm.com (Postfix) with ESMTP;
+ Fri,  5 Jun 2026 18:58:36 +0000 (GMT)
+Message-ID: <97f3b33a-17ca-4ba9-a714-20e70f7a7edf@linux.ibm.com>
+Date: Fri, 5 Jun 2026 14:58:35 -0400
 MIME-Version: 1.0
-References: <20260529215554.606133-1-brian.cain@oss.qualcomm.com>
- <20260529215554.606133-39-brian.cain@oss.qualcomm.com>
- <c71f8159-5c3d-4e02-aa08-7d979f5454ab@linaro.org>
- <CAEqNhNaJx6_KPW8dxsoN3WdoVLAxhVQKKD=2S92ya9KONMdboA@mail.gmail.com>
- <f74e2828-921a-46e7-b6e3-83508a40ca90@mailo.com>
-In-Reply-To: <f74e2828-921a-46e7-b6e3-83508a40ca90@mailo.com>
-From: Brian Cain <brian.cain@oss.qualcomm.com>
-Date: Fri, 5 Jun 2026 12:52:57 -0500
-X-Gm-Features: AVHnY4ItNoxImZgUicN-_Cb_tec1EZZoHQBcuJOarzN4MmaS3lIwtuhSrWB-jpw
-Message-ID: <CAEqNhNb_nMuMOB95nWMH8M_3_nzrNLuhFGRky+rGuFJzY5DUtg@mail.gmail.com>
-Subject: Re: [PATCH v7 38/38] target/hexagon: Add hex_interrupts support
-To: =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@mailo.com>
-Cc: =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>,
- qemu-devel@nongnu.org, matheus.bernardino@oss.qualcomm.com,
- pierrick.bouvier@oss.qualcomm.com, ltaylorsimpson@gmail.com,
- Brian Cain <bcain@quicinc.com>, Sid Manning <sidneym@quicinc.com>,
- Michael Lambert <mlambert@quicinc.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-X-Proofpoint-ORIG-GUID: P-LbbuAKPLxwfki80hCgdNHu7V3VynSK
-X-Authority-Analysis: v=2.4 cv=GolyPE1C c=1 sm=1 tr=0 ts=6a230d0c cx=c_pps
- a=kVLUcbK0zfr7ocalXnG1qA==:117 a=IkcTkHD0fZMA:10 a=FelO9ux0wxsA:10
- a=s4-Qcg_JpJYA:10 a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22
- a=gowsoOTTUOVcmtlkKump:22 a=S56xvJB5AAAA:8 a=KKAkSRfTAAAA:8 a=COk6AnOGAAAA:8
- a=pGLkceISAAAA:8 a=EUspDBNiAAAA:8 a=reYZjIyCPtZuHwhyz44A:9 a=QEXdDO2ut3YA:10
- a=vr4QvYf-bLy2KjpDp97w:22 a=MH9Ivq0PDQRhlrFuIVvX:22 a=cvBusfyB2V15izCimMoJ:22
- a=TjNXssC_j7lpFel5tvFf:22
-X-Proofpoint-GUID: P-LbbuAKPLxwfki80hCgdNHu7V3VynSK
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNjA1MDE3NSBTYWx0ZWRfX9kgY+m3W9V3i
- +dWD/F2iLqgHvQ5fWUD5IlFLjDIfuDCzTzAkeJISRrMZ1VtlSX01sKQVWayzu7iPfbGlDSbqGdG
- 1GPKYoEfXpklYg5kQfuOcQjEgpxEPOAS1Hqs13e8oCvUqk6rSqIHWOhh85YAsTTmirdFwq2BCgt
- ZqEODnrSFBHBF9Cgpq3DMWJDFPMxALyCt0C9EhcO4k/16kpsPmUDZssQ35/Psgp4Jxg32v+CFJJ
- XvGjq+oy7XM5bO8aG3JBxTHl50r/jRcddgfOFIGErOPMffJP6ENq3ind6p1XLryiOD5Sa2HIfi9
- Mko0q763dXQICtPBWp4iJezEm6vkddPtGT5w+M9g38Nw88fGIYhIFJW+/Xey3XbMsZgtVcss/Hq
- pzZCk8CLBOz3TdKbyu8X1hTnzKTKz+lUjWH2QuykSbyeo6iZJnlO9nr9IbSmYlK4l+1XLuxAbtU
- sHRmfP2eMj15D0lMI4w==
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v11 30/32] tests/functional/s390x: Add secure IPL
+ functional test
+To: Eric Farman <farman@linux.ibm.com>, qemu-s390x@nongnu.org,
+ qemu-devel@nongnu.org
+Cc: jrossi@linux.ibm.com, cohuck@redhat.com, berrange@redhat.com,
+ richard.henderson@linaro.org, david@kernel.org, walling@linux.ibm.com,
+ jjherne@linux.ibm.com, pasic@linux.ibm.com, borntraeger@linux.ibm.com,
+ mjrosato@linux.ibm.com, iii@linux.ibm.com, eblake@redhat.com,
+ armbru@redhat.com, alifm@linux.ibm.com, brueckner@linux.ibm.com,
+ pierrick.bouvier@oss.qualcomm.com, jdaley@linux.ibm.com
+References: <20260505201905.997996-1-zycai@linux.ibm.com>
+ <20260505201905.997996-31-zycai@linux.ibm.com>
+ <ba1b75db4c3c110a7edae5a1753c32e5854a3ee5.camel@linux.ibm.com>
+ <b82d095dd3616822279151e562e06689e3bd4b7b.camel@linux.ibm.com>
+Content-Language: en-US
+From: Zhuoying Cai <zycai@linux.ibm.com>
+In-Reply-To: <b82d095dd3616822279151e562e06689e3bd4b7b.camel@linux.ibm.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+X-TM-AS-GCONF: 00
+X-Proofpoint-GUID: QqUcrNU6SC_UYSGiETSIozivVwkVLa2R
+X-Authority-Analysis: v=2.4 cv=fv/sol4f c=1 sm=1 tr=0 ts=6a231c60 cx=c_pps
+ a=aDMHemPKRhS1OARIsFnwRA==:117 a=aDMHemPKRhS1OARIsFnwRA==:17
+ a=IkcTkHD0fZMA:10 a=FelO9ux0wxsA:10 a=VkNPw1HP01LnGYTKEx00:22
+ a=RnoormkPH1_aCDwRdu11:22 a=RzCfie-kr_QcCd8fBx8p:22 a=vTr9H3xdAAAA:8
+ a=VnNF1IyMAAAA:8 a=WP5zsaevAAAA:8 a=bzaIFaoQP3wGUDjfQ98A:9 a=3ZKOabzyN94A:10
+ a=QEXdDO2ut3YA:10 a=t8Kx07QrZZTALmIZmm-o:22
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNjA1MDE4MyBTYWx0ZWRfX1z7JHLsm3gzH
+ WIKV1oFqzxr1GaAKoG5ELC9l348C5ABViwx/1wNScSFu6bJY+LkxN9uy+RNPgvbEAcrrtNmTwfg
+ 3cxRmPP1u8qXWLi29d+McOxjqOfbRkaSLzdnxysgO0jWIWoaoAlFhm0IuOF8kLzywcdfaKnGmOs
+ F25ynQDMbSzMJX95Q3xBL17JcegNf2lMfrpel+AW16FOT1rUyumNagYE3eL7Oram4sGuTDI6Uh8
+ JmuWBDmC+gtRRMwPZ+0hUMFUGgy855ygGIrePK4SYjwCHMpiFAFUYfYFsXr+DFAas4mtf/DWE7i
+ JZJWXwEKvt1woDSniSBjc9yIqJGpQ7nE6UA4qefZ1b/ysEF8bh2DOyjaqwycXtwPuPlsIq5zboo
+ UrlsxHeaGNj/egwItJ2a8OMy3CIWdYAoKpXVXzqDyb8zemKoThem+FMKLTf15mopZjKHTCl6l6A
+ Q4xENTFduwUQlEh313w==
+X-Proofpoint-ORIG-GUID: QqUcrNU6SC_UYSGiETSIozivVwkVLa2R
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.125,FMLib:17.12.100.49
  definitions=2026-06-05_03,2026-06-05_02,2025-10-01_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- lowpriorityscore=0 spamscore=0 priorityscore=1501 bulkscore=0 phishscore=0
- suspectscore=0 adultscore=0 impostorscore=0 clxscore=1015 malwarescore=0
+ adultscore=0 priorityscore=1501 spamscore=0 phishscore=0 clxscore=1015
+ impostorscore=0 suspectscore=0 bulkscore=0 lowpriorityscore=0 malwarescore=0
  classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2605210000 definitions=main-2606050175
-Received-SPF: pass client-ip=205.220.180.131;
- envelope-from=brian.cain@oss.qualcomm.com; helo=mx0b-0031df01.pphosted.com
-X-Spam_score_int: -27
-X-Spam_score: -2.8
+ reason=mlx scancount=1 engine=8.22.0-2605210000 definitions=main-2606050183
+Received-SPF: pass client-ip=148.163.158.5; envelope-from=zycai@linux.ibm.com;
+ helo=mx0b-001b2d01.pphosted.com
+X-Spam_score_int: -26
+X-Spam_score: -2.7
 X-Spam_bar: --
-X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001,
+X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
+ RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -171,38 +130,327 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Fri, Jun 5, 2026 at 10:24=E2=80=AFAM Philippe Mathieu-Daud=C3=A9 <philmd=
-@mailo.com> wrote:
->
-> On 3/6/26 16:00, Brian Cain wrote:
-> > On Sun, May 31, 2026 at 4:31=E2=80=AFPM Philippe Mathieu-Daud=C3=A9
-> > <philmd@linaro.org> wrote:
-> >>
-> >> On 29/5/26 23:55, Brian Cain wrote:
-> >>> From: Brian Cain <bcain@quicinc.com>
-> >>>
-> >>> Co-authored-by: Taylor Simpson <ltaylorsimpson@gmail.com>
-> >>> Co-authored-by: Sid Manning <sidneym@quicinc.com>
-> >>> Co-authored-by: Michael Lambert <mlambert@quicinc.com>
-> >>> Signed-off-by: Brian Cain <brian.cain@oss.qualcomm.com>
-> >>> ---
-> >>>    target/hexagon/cpu.h            |   2 +
-> >>>    target/hexagon/hex_interrupts.h |  15 ++
-> >>>    target/hexagon/cpu.c            |   4 +
-> >>>    target/hexagon/hex_interrupts.c | 371 ++++++++++++++++++++++++++++=
-++++
-> >>>    4 files changed, 392 insertions(+)
-> >>>    create mode 100644 target/hexagon/hex_interrupts.h
-> >>>    create mode 100644 target/hexagon/hex_interrupts.c
-> >>
-> >> Patch #28 mentions NMI, how is it handled?
-> >
-> > In these three patchsets, the nmi remains unimplemented.  Would you
-> > prefer I include the nmi implementation?
->
-> Could we simply drop the nmi helper in patch #28 and add it along
-> with the rest of the NMI implementation?
->
+Thanks for the feedback!
 
-Sure: I'll omit the nmi helper and include it in a future patchset.
+On 6/5/26 12:25 PM, Eric Farman wrote:
+> On Wed, 2026-06-03 at 14:50 -0400, Eric Farman wrote:
+>> On Tue, 2026-05-05 at 16:19 -0400, Zhuoying Cai wrote:
+>>> Add functional test for secure IPL.
+>>>
+>>> Signed-off-by: Zhuoying Cai <zycai@linux.ibm.com>
+>>> ---
+>>>  tests/functional/s390x/meson.build        |   2 +
+>>>  tests/functional/s390x/test_secure_ipl.py | 148 ++++++++++++++++++++++
+>>>  2 files changed, 150 insertions(+)
+>>>  create mode 100755 tests/functional/s390x/test_secure_ipl.py
+>>>
+>>> diff --git a/tests/functional/s390x/meson.build b/tests/functional/s390x/meson.build
+>>> index b065b666bc..01cb2d1d4c 100644
+>>> --- a/tests/functional/s390x/meson.build
+>>> +++ b/tests/functional/s390x/meson.build
+>>> @@ -2,6 +2,7 @@
+>>>  
+>>>  test_s390x_timeouts = {
+>>>    'ccw_virtio' : 420,
+>>> +  'secure_ipl' : 280,
+>>
+>> How'd you come up with this value?
+>>
+
+I based it on previous test runs where the test consistently completed
+within 200 seconds, so I set the timeout to 280 seconds to provide some
+buffer.
+
+However, I’ve noticed that when the cached qcow2 file is deleted and the
+test is run repeatedly, the download time can vary significantly and
+sometimes exceed this limit, leading to timeouts.
+
+I’m not sure what the best approach is here — whether to increase the
+timeout further or remove it entirely. Do you have any recommendations?
+
+>>>  }
+>>>  
+>>>  tests_s390x_system_quick = [
+>>> @@ -14,6 +15,7 @@ tests_s390x_system_thorough = [
+>>>    'ccw_virtio',
+>>>    'pxelinux',
+>>>    'replay',
+>>> +  'secure_ipl',
+>>>    'topology',
+>>>    'tuxrun',
+>>>  ]
+>>> diff --git a/tests/functional/s390x/test_secure_ipl.py b/tests/functional/s390x/test_secure_ipl.py
+>>> new file mode 100755
+>>> index 0000000000..0980daace1
+>>> --- /dev/null
+>>> +++ b/tests/functional/s390x/test_secure_ipl.py
+>>> @@ -0,0 +1,148 @@
+>>> +#!/usr/bin/env python3
+>>> +#
+>>> +# s390x Secure IPL functional test: validates secure-boot verification results
+>>> +#
+>>> +# SPDX-License-Identifier: GPL-2.0-or-later
+>>
+>> A general comment, you'll need some form of docstring for the entire file, and any classes/methods
+>> defined later on.
+>>
+>>> +
+>>> +from subprocess import check_call, DEVNULL
+>>> +
+>>> +from qemu_test import QemuSystemTest, Asset, get_qemu_img
+>>> +from qemu_test import exec_command_and_wait_for_pattern, exec_command
+>>> +from qemu_test import wait_for_console_pattern, skipBigDataTest
+>>> +
+>>> +class S390xSecureIpl(QemuSystemTest):
+>>> +    ASSET_F40_QCOW2 = Asset(
+>>> +        ('https://archives.fedoraproject.org/pub/archive/'
+>>> +         'fedora-secondary/releases/40/Server/s390x/images/'
+>>> +         'Fedora-Server-KVM-40-1.14.s390x.qcow2'),
+>>> +        '091c232a7301be14e19c76ce9a0c1cbd2be2c4157884a731e1fc4f89e7455a5f')
+>>> +
+>>> +    def __init__(self, *args, **kwargs):
+>>> +        super().__init__(*args, **kwargs)
+>>> +        self.root_password = None
+>>> +        self.qcow2_path = None
+>>> +        self.cert_path = None
+>>> +        self.prompt = None
+>>> +
+>>> +    # Boot a temporary VM to set up secure IPL image:
+>>> +    # - Create certificate
+>>> +    # - Sign stage3 binary and kernel
+>>> +    # - Run zipl
+>>> +    # - Extract certificate
+>>
+>> Can we break out those four chunks into standalone routines, so that we can identify them
+>> individually rather than as part of the novella that follows?
+>>
+>>> +    def setup_s390x_secure_ipl(self):
+>>> +        temp_vm = self.get_vm(name='sipl_setup')
+>>> +        temp_vm.set_machine('s390-ccw-virtio')
+>>> +
+>>> +        asset_path = self.ASSET_F40_QCOW2.fetch()
+>>> +        self.qcow2_path = self.scratch_file('f40.qcow2')
+>>> +        qemu_img = get_qemu_img(self)
+>>> +        check_call([qemu_img, 'create', '-f', 'qcow2', '-b', asset_path,
+>>> +                    '-F', 'qcow2', self.qcow2_path], stdout=DEVNULL, stderr=DEVNULL)
+>>> +
+>>> +        temp_vm.set_console()
+>>> +        temp_vm.add_args('-nographic',
+>>> +                         '-accel', 'kvm',
+>>> +                         '-m', '1024',
+>>> +                         '-drive',
+>>> +                         f'id=drive0,if=none,format=qcow2,file={self.qcow2_path}',
+>>> +                         '-device', 'virtio-blk-ccw,drive=drive0,bootindex=1')
+>>> +        temp_vm.launch()
+>>> +
+>>> +        # Initial root account setup (Fedora first boot screen)
+>>> +        self.root_password = 'fedora40password'
+>>> +        wait_for_console_pattern(self, 'Please make a selection from the above',
+>>> +                                 vm=temp_vm)
+>>> +        exec_command_and_wait_for_pattern(self, '4', 'Password:', vm=temp_vm)
+>>> +        exec_command_and_wait_for_pattern(self, self.root_password,
+>>> +                                          'Password (confirm):', vm=temp_vm)
+>>> +        exec_command_and_wait_for_pattern(self, self.root_password,
+>>> +                                    'Please make a selection from the above',
+>>> +                                    vm=temp_vm)
+>>> +
+>>> +        # Login as root
+>>> +        self.prompt = '[root@localhost ~]#'
+>>> +        exec_command_and_wait_for_pattern(self, 'c', 'localhost login:', vm=temp_vm)
+>>> +        exec_command_and_wait_for_pattern(self, 'root', 'Password:', vm=temp_vm)
+>>> +        exec_command_and_wait_for_pattern(self, self.root_password, self.prompt,
+>>> +                                          vm=temp_vm)
+>>> +
+>>> +        # Certificate generation
+>>> +        exec_command_and_wait_for_pattern(self,
+>>> +                                          'openssl version', 'OpenSSL 3.2.1 30',
+>>> +                                          vm=temp_vm)
+>>> +        exec_command_and_wait_for_pattern(self,
+>>> +                            'openssl req -new -x509 -newkey rsa:2048 '
+>>> +                            '-keyout mykey.pem -outform PEM -out mycert.pem '
+>>> +                            '-days 36500 -subj "/CN=My Name/" -nodes -verbose',
+>>> +                            'Writing private key to \'mykey.pem\'', vm=temp_vm)
+>>> +
+>>> +        # Install kernel-devel (needed for sign-file)
+>>> +        exec_command_and_wait_for_pattern(self,
+>>> +                                'sudo dnf install kernel-devel-$(uname -r) -y',
+>>> +                                'Complete!', vm=temp_vm)
+>>
+>> This is the last thing I see in base.log when running this test on my system. Looking at console
+>> log, this errors out:
+>>
+>> 2026-06-03 20:08:33,829: ^[[?2004h[root@localhost ~]# sudo dnf install kernel-devel-$(uname -r) -y
+>> 2026-06-03 20:08:34,147: ^[[?2004l^MFedora 40 - s390x        [===                 ] ---  B/s |   0 
+>> B     --:-- ETA^MFedora 40 - s390x                               0.0  B/s |   0  B     00:00
+>> 2026-06-03 20:08:34,147: Errors during downloading metadata for repository 'fedora':
+>> 2026-06-03 20:08:34,147: - Curl error (6): Couldn't resolve host name for
+>> https://mirrors.fedoraproject.org/metalink?repo=fedora-40&arch=s390x [Could not resolve host:
+>> mirrors.fedoraproject.org]
+>> 2026-06-03 20:08:34,207: Error: Failed to download metadata for repo 'fedora': Cannot prepare
+>> internal mirrorlist: Curl error (6): Couldn't resolve host name for
+>> https://mirrors.fedoraproject.org/metalink?repo=fedora-40&arch=s390x [Could not resolve host:
+>> mirrors.fedoraproject.org]
+>>
+>>
+>> Surrounding this, I'm noting that this is surrounded by messages from NetworkManager waiting for it
+>> to come online, so maybe there needs to be a check that there's actually a network here, so we can
+>> bail out rather than timeout.
+> 
+> Josh suggested (thank you!!) that perhaps I didn't have slirp enabled in my build when I tried this,
+> which is indeed the cause for my hangup. Easy fix on my side, but it's a dependency that maybe you
+> can account for in this test (or maybe -net none, if you dont need to connect it to anything?).
+> 
+
+slirp is a dependency since the guest needs network access to download
+packages. Thanks to Josh for pointing that out.
+
+I’ll add a check during test setup to ensure slirp is enabled so this
+dependency is handled explicitly.
+
+> Of course, remedying THAT problem gives me yet another error which I haven't chased down. Looks like
+> the first of these [*] failed later on. This is a particularly crusty system I'm using, so maybe
+> it's simply another thing that is missing.
+> 
+>>
+>>> +        wait_for_console_pattern(self, self.prompt, vm=temp_vm)
+>>> +        exec_command_and_wait_for_pattern(self,
+>>> +                                    'ls /usr/src/kernels/$(uname -r)/scripts/',
+>>> +                                    'sign-file', vm=temp_vm)
+>>> +
+>>> +        # Sign stage3 binary and kernel
+>>> +        exec_command(self, '/usr/src/kernels/$(uname -r)/scripts/sign-file '
+>>> +                    'sha256 mykey.pem mycert.pem /lib/s390-tools/stage3.bin',
+>>> +                    vm=temp_vm)
+>>> +        wait_for_console_pattern(self, self.prompt, vm=temp_vm)
+>>> +        exec_command(self, '/usr/src/kernels/$(uname -r)/scripts/sign-file '
+>>> +                    'sha256 mykey.pem mycert.pem /boot/vmlinuz-$(uname -r)',
+>>> +                    vm=temp_vm)
+>>> +        wait_for_console_pattern(self, self.prompt, vm=temp_vm)
+>>> +
+>>> +        # Run zipl to prepare for secure boot
+>>> +        exec_command_and_wait_for_pattern(self, 'zipl --secure 1 -VV', 'Done.',
+>>> +                                          vm=temp_vm)
+>>> +
+>>> +        # Extract certificate to host
+>>> +        out = exec_command_and_wait_for_pattern(self, 'cat mycert.pem',
+>>> +                                                '-----END CERTIFICATE-----',
+>>> +                                                vm=temp_vm)
+>>> +        # strip first line to avoid console echo artifacts
+>>> +        cert = "\n".join(out.decode("utf-8").splitlines()[1:])
+>>> +        self.log.info("%s", cert)
+>>> +
+>>> +        self.cert_path = self.scratch_file("mycert.pem")
+>>> +
+>>> +        with open(self.cert_path, 'w', encoding="utf-8") as file_object:
+>>> +            file_object.write(cert)
+>>> +
+>>> +        # Shutdown temp vm
+>>> +        temp_vm.shutdown()
+>>> +
+>>> +    @skipBigDataTest()
+>>> +    def test_s390x_secure_ipl(self):
+>>> +        self.require_accelerator('kvm')
+>>> +        self.setup_s390x_secure_ipl()
+>>> +
+>>> +        self.set_machine('s390-ccw-virtio')
+>>> +
+>>> +        self.vm.set_console()
+>>> +        self.vm.add_args('-nographic',
+>>> +                         '-machine', 's390-ccw-virtio,secure-boot=on,'
+>>> +                         f'boot-certs.0.path={self.cert_path}',
+>>> +                         '-accel', 'kvm',
+>>> +                         '-m', '1024',
+>>> +                         '-drive',
+>>> +                         f'id=drive1,if=none,format=qcow2,file={self.qcow2_path}',
+>>> +                         '-device', 'virtio-blk-ccw,drive=drive1,bootindex=1')
+>>> +        self.vm.launch()
+>>> +
+>>> +        # Expect two verified components
+>>> +        verified_output = "Verified component"
+>>> +        wait_for_console_pattern(self, verified_output)
+>>> +        wait_for_console_pattern(self, verified_output)
+> 
+> [*] Failure occurs here, because guest panicked. Surely it's something not set up correctly on the
+> guest that was created, because it's happening as soon as it tries to kick over to the guest kernel,
+> but I don't see any errors in the log that suggests anything amiss:
+> 
+> console.log:
+> ...
+> 2026-06-05 17:51:03,344: -----END CERTIFICATE-----
+> 2026-06-05 17:51:03,398: LOADPARM=[        ]
+> 2026-06-05 17:51:03,398:
+> 2026-06-05 17:51:03,398: Using virtio-blk.
+> 2026-06-05 17:51:03,399: Using SCSI scheme.
+> 2026-06-05 17:51:03,408: ..........
+> 
+> base.log:
+> ...
+> 2026-06-05 17:51:03,398 - DEBUG: qemu.qmp.protocol.default._set_state Transitioning from
+> 'Runstate.CONNECTING' to 'Runstate.RUNNING'.
+> 2026-06-05 17:51:03,398 - DEBUG: qemu-test._console_interaction Console interaction:
+> success_msg='Verified component' failure_msg='None' send_string='None'
+> 2026-06-05 17:51:03,398 - DEBUG: qemu.machine.machine.console_socket Opening console socket
+> 2026-06-05 17:51:03,410 - DEBUG: qemu.machine.machine.shutdown Shutting down VM appliance;
+> timeout=30
+> 2026-06-05 17:51:03,410 - DEBUG: qemu.machine.machine._soft_shutdown Attempting graceful termination
+> 2026-06-05 17:51:03,410 - DEBUG: qemu.machine.machine._early_cleanup Closing console socket
+> 2026-06-05 17:51:03,411 - DEBUG: qemu.machine.machine._soft_shutdown Politely asking QEMU to
+> terminate
+> 2026-06-05 17:51:03,411 - DEBUG: qemu.qmp.protocol.default._cb_outbound --> {
+>   "execute": "quit"
+> }
+> 2026-06-05 17:51:03,411 - DEBUG: qemu.qmp.protocol.default._cb_inbound <-- {
+>   "timestamp": {
+>     "seconds": 1780674663,
+>     "microseconds": 409153
+>   },
+>   "event": "GUEST_PANICKED",
+>   "data": {
+>     "action": "poweroff",
+>     "info": {
+>       "core": 0,
+>       "psw-addr": 17682,
+>       "reason": "disabled-wait",
+>       "psw-mask": 562952100904960,
+>       "type": "s390"
+>     }
+>   }
+> }
+> 
+> 
+
+The console.log should look like this when the guest components are
+successfully verified:
+...
+2026-06-05 20:34:33,447: -----END CERTIFICATE-----
+2026-06-05 20:34:33,851: LOADPARM=[        ]
+2026-06-05 20:34:33,851:
+2026-06-05 20:34:33,852: Using virtio-blk.
+2026-06-05 20:34:33,854: Using SCSI scheme.
+2026-06-05 20:34:33,856: ....Verified component
+2026-06-05 20:34:33,856:
+2026-06-05 20:34:34,307: ....Verified component
+2026-06-05 20:34:34,307:
+2026-06-05 20:34:34,316: ....
+
+In your console.log, it looks like the components are being loaded, but
+the verification step is not performed. This might be because the test
+is not using the built BIOS image?
+
+For reference, here are the build steps I used:
+# ninja -C build
+# make -C build/pc-bios/s390-ccw
+# cp build/pc-bios/s390-ccw/s390-ccw.img pc-bios
+# make install
+
+>>> +
+>>> +        # Login and verify the vm is booted using secure boot
+>>> +        wait_for_console_pattern(self, 'localhost login:')
+>>> +        exec_command_and_wait_for_pattern(self, 'root', 'Password:')
+>>> +        exec_command_and_wait_for_pattern(self, self.root_password, self.prompt)
+>>> +        exec_command_and_wait_for_pattern(self, 'cat /sys/firmware/ipl/secure', '1')
+>>> +
+>>> +if __name__ == '__main__':
+>>> +    QemuSystemTest.main()
+
 
