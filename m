@@ -4,80 +4,79 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C8DC1CD8C85
-	for <qemu-devel@archiver.kernel.org>; Fri,  5 Jun 2026 15:46:14 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B5C0CCD8C84
+	for <qemu-devel@archiver.kernel.org>; Fri,  5 Jun 2026 15:46:12 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wVWkN-0006Yc-7B; Fri, 05 Jun 2026 11:46:11 -0400
+	id 1wVWjL-0004h2-OV; Fri, 05 Jun 2026 11:45:07 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1wVWjz-0005pP-Kg
- for qemu-devel@nongnu.org; Fri, 05 Jun 2026 11:45:48 -0400
+ id 1wVWjJ-0004dN-Bd
+ for qemu-devel@nongnu.org; Fri, 05 Jun 2026 11:45:05 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1wVWjx-0006R8-VK
- for qemu-devel@nongnu.org; Fri, 05 Jun 2026 11:45:47 -0400
+ id 1wVWjH-00063f-W1
+ for qemu-devel@nongnu.org; Fri, 05 Jun 2026 11:45:05 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1780674344;
+ s=mimecast20190719; t=1780674303;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=oChfGW5Tq+2XS1SV5t1cQUIYoRVR7500LonYw5rznpg=;
- b=EBgeTEilVAEQbP5TkqsM8S8/bsYmztuVTTyp8B3LoYllWdLzecKRQ0jH9+JrhbfIkbZDir
- EaqVL9gFQlyKwCLyYYlz76fZ+0XD33OjGR9hk8WcKqid+u2tb9g0iIVqVFpm4F7t2yVf6t
- hw2wfI3qx6SoSeAkboT2jqyvdDgJjZ8=
+ bh=40y9nUEM2k+DgX74L7br+FVh1cGqfh7EYiI+WllmI9w=;
+ b=gszf9gIKXyJd1OOt5kwWW4yJjHt9XBxKnoZDWCfMWiY9fe4KhlRV7nHQ+dsbjave7D/gSY
+ Zrzs7n4Av9iiLAt9QDMAXS7XLneczh+rA/6XIOkzTikYoRgFcV6coUzFV9mC4ntPtdP7fp
+ VepHht9x7eKjrDtci7JNqQtD/nW8LuM=
 Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-677-nxvewf5uPqGNWqfNT2Hi7g-1; Fri,
- 05 Jun 2026 11:45:43 -0400
-X-MC-Unique: nxvewf5uPqGNWqfNT2Hi7g-1
-X-Mimecast-MFC-AGG-ID: nxvewf5uPqGNWqfNT2Hi7g_1780674342
-Received: from mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.111])
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-505-NVmsIupeP6WRZKHc9ydd8A-1; Fri,
+ 05 Jun 2026 11:44:59 -0400
+X-MC-Unique: NVmsIupeP6WRZKHc9ydd8A-1
+X-Mimecast-MFC-AGG-ID: NVmsIupeP6WRZKHc9ydd8A_1780674299
+Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
  by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 7CF921944D3B
- for <qemu-devel@nongnu.org>; Fri,  5 Jun 2026 15:45:42 +0000 (UTC)
+ id E843F1944B03
+ for <qemu-devel@nongnu.org>; Fri,  5 Jun 2026 15:44:58 +0000 (UTC)
 Received: from localhost (unknown [10.44.24.6])
- by mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 7347E180049F; Fri,  5 Jun 2026 15:45:40 +0000 (UTC)
+ by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id F0A7F1955BC0; Fri,  5 Jun 2026 15:44:57 +0000 (UTC)
 From: =?utf-8?q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>
-Date: Fri, 05 Jun 2026 19:44:34 +0400
-Subject: [GIT PULL 14/23] target/i386/kvm/tdx: free strings in
- tdx_guest_finalize
+Date: Fri, 05 Jun 2026 19:44:26 +0400
+Subject: [GIT PULL 06/23] hw/ipmi: reject NULL 'bmc' property rather than crash
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
-Message-Id: <20260605-qom-tests-v1-14-3f184f382c2b@redhat.com>
+Message-Id: <20260605-qom-tests-v1-6-3f184f382c2b@redhat.com>
 References: <20260605-qom-tests-v1-0-3f184f382c2b@redhat.com>
 In-Reply-To: <20260605-qom-tests-v1-0-3f184f382c2b@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: stefanha@redhat.com
-X-Developer-Signature: v=1; a=openpgp-sha256; l=893;
+X-Developer-Signature: v=1; a=openpgp-sha256; l=767;
  i=marcandre.lureau@redhat.com; h=from:subject:message-id;
- bh=DafxdRB7/MLkueWJrLE2w1Qd3zyBZmU4Trf2EjVE458=;
- b=owEBbQKS/ZANAwAKAdro4Ql1lpzlAcsmYgBqIu7VxQnHWL0kb0HMM9DjapnsY/wpon/kfpDN3
- BCyWxwOCsqJAjMEAAEKAB0WIQSHqb2TP4fGBtJ29i3a6OEJdZac5QUCaiLu1QAKCRDa6OEJdZac
- 5daDD/sHBhngmO7+5ST/REwMGs9R2myXdfB/2DaWtBjj316/p2OJ/cA7cCZemqJxP7AgqgYCFvU
- wcqQO2pWHsdA30Wse8C77Ga2fUnJ1829EnwV5NVVaK4hEm3xLRaA7LQARq0o7MCFmdXLUpRWLeW
- BU6+EE3KO0rpfn6jIujygHpp+HNqtsMQG1a/YBbwqnH7lkFb5OIX00c0hNjjY/jbAS5E/585r/O
- bY4tiQasp/+NlYnGAaZ0OW6Mf4ELOtM0Re0uSw7vbQDeSOTXvYquxU7zUACtErTqwnWbao50YRY
- vbjtrPGXUgEHbAtRIToIDA+gHxgJHSmi7+zMlVlALCQ9qfSBZpLgDbaBSdfARYLI7+dDogy+JHC
- KKAatAriypq2M1Z/uzynr/pX4nOPpmbzbiygqxNhCblegUYPyYe2iY38uauVqtRCLGIQ5jXMBEf
- ufC7tBr5GDVcTg+j+UPSq6UIKB8s/pNWSpmCHNRgAyStPfEp/fONGPCtyyzyeetzeG1T8A9jkKF
- 3OF6lMYgbStenjs5hIeRh23DwS+n1pdLYeVDecJquMUJ8dSSpAdRxs/f36XT8G2rqRmXonZ3rXa
- RZ5JJc0friVVVJ0VqkWrp81Sfbcoz0/Ryl6R+Jrnf4oF4zUqSpShwj4qGcQj7trYZZHlZ7wmDNt
- HuZM3YoKj61lLjA==
+ bh=mEwe7/OMVJKZh0U5KU7As11b7hk3pWmV01Cq6GcNgXU=;
+ b=owEBbQKS/ZANAwAKAdro4Ql1lpzlAcsmYgBqIu7Ug6zqn1gagGfsYTXgrcLMRhhJGF4dbzm2V
+ nVaSnuWyOmJAjMEAAEKAB0WIQSHqb2TP4fGBtJ29i3a6OEJdZac5QUCaiLu1AAKCRDa6OEJdZac
+ 5XExEAC5X19Hiz0hhGuUz4AjJYxBslmbDgJD/ERKuRnSawJjHzbyH8XtLRNuth4jWBuDzpYqPLY
+ 0mfDVvX5h3r3WH/vj3f5+CGAEU0+tlR2nPxkkg/1jTjEMFDv4vqwag5yTqxlTHMd35lDwBEERij
+ TcFcRKYxiYt1DeVHlNr0D0OleSEGZtZICodKiAh8gMSmEeUzMUwlarjTnX+IZNa7Y/HfrgOMJvQ
+ Ujaq2zbJPvSJk/m+NRApPtZcKcU99La1lE/+NrDxKPtuYOvxlvaRK6AFGz+3TIIg96hh7NsPfMv
+ eE03lf7k9OnnpzCtN/xKiSRajmQHH6fKIa/ZAvxzAW09T/7a06buIwwOFdWeH+lLJxT0iOpP36+
+ NCVqABlmDMCwsnvoca0b86iBNYF08yLpq2RMUPp7WstMlx2dDuN1mVxcyPc2DoRImFMo2Px+VOG
+ YF1NVGrXNE6/1NK3WRHXaiLbaszFIFUqiVng1LzVM+Khi/pp+Z1Dblg44JePCVR17hosEoSkTES
+ ChrngUpPRoZHSFgjAbmFnR1D9yNnX+5Khl/vwGRfnw1bshHHWYM5CQIZF1Zfby5s7b0zMDZx3pC
+ Afs60EFhO06dNY2L3n72GJtr17unn9y/kfbXowbOHCaqJSZqkJXFqgKj5xvpLHmFTw/YM6Rg7E5
+ SYsjRIgRgZAMq9w==
 X-Developer-Key: i=marcandre.lureau@redhat.com; a=openpgp;
  fpr=87A9BD933F87C606D276F62DDAE8E10975969CE5
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.111
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.12
 Received-SPF: pass client-ip=170.10.129.124;
  envelope-from=marcandre.lureau@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
@@ -104,32 +103,32 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-tdx_guest_finalize was empty, so mrconfigid, mrowner, and
-mrownerconfig set by property setters were never freed.
-
-Fixes: d05a0858cf87 ("i386/tdx: Support user configurable mrconfigid/mrowner/mrownerconfig")
 Reviewed-by: Daniel P. Berrangé <berrange@redhat.com>
 Signed-off-by: Marc-André Lureau <marcandre.lureau@redhat.com>
 ---
- target/i386/kvm/tdx.c | 5 +++++
- 1 file changed, 5 insertions(+)
+ hw/ipmi/ipmi.c | 8 +++++++-
+ 1 file changed, 7 insertions(+), 1 deletion(-)
 
-diff --git a/target/i386/kvm/tdx.c b/target/i386/kvm/tdx.c
-index 4714c9d514e..df46fce7693 100644
---- a/target/i386/kvm/tdx.c
-+++ b/target/i386/kvm/tdx.c
-@@ -1585,6 +1585,11 @@ static void tdx_guest_init(Object *obj)
- 
- static void tdx_guest_finalize(Object *obj)
+diff --git a/hw/ipmi/ipmi.c b/hw/ipmi/ipmi.c
+index b49affaccec..74818ff3cea 100644
+--- a/hw/ipmi/ipmi.c
++++ b/hw/ipmi/ipmi.c
+@@ -97,8 +97,14 @@ static void isa_ipmi_bmc_check(const Object *obj, const char *name,
  {
-+    TdxGuest *tdx = TDX_GUEST(obj);
+     IPMIBmc *bmc = IPMI_BMC(val);
+ 
+-    if (bmc->intf)
++    if (!bmc) {
++        error_setg(errp, "%s cannot be set to NULL", name);
++        return;
++    }
 +
-+    g_free(tdx->mrconfigid);
-+    g_free(tdx->mrowner);
-+    g_free(tdx->mrownerconfig);
++    if (bmc->intf) {
+         error_setg(errp, "BMC object is already in use");
++    }
  }
  
- static ResettableState *tdx_reset_state(Object *obj)
+ void ipmi_bmc_find_and_link(Object *obj, Object **bmc)
 
 -- 
 2.54.0
