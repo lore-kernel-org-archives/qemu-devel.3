@@ -4,109 +4,106 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5C58BCD6E6B
-	for <qemu-devel@archiver.kernel.org>; Fri,  5 Jun 2026 08:22:11 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id CAC64CD6E5D
+	for <qemu-devel@archiver.kernel.org>; Fri,  5 Jun 2026 08:22:47 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wVPnh-0003sD-2f; Fri, 05 Jun 2026 04:21:09 -0400
+	id 1wVPp8-0004Wk-4A; Fri, 05 Jun 2026 04:22:38 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <sgarzare@redhat.com>)
- id 1wVPnd-0003rM-K9
- for qemu-devel@nongnu.org; Fri, 05 Jun 2026 04:21:05 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <sgarzare@redhat.com>)
- id 1wVPnb-0003iG-VB
- for qemu-devel@nongnu.org; Fri, 05 Jun 2026 04:21:05 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1780647661;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=AYSrTba8hJjR+mnUCveYd8ESYYg3mUGLDjQDDvfC+2A=;
- b=XC+vcTytHW7N0aV10hoSsu8T9ufg4+KSY4l5zTTWN1eK5EU9Xvphu4MYQ5YpJlSiy868k1
- 9TlqzS+rU6GJ7te4iKXVf3BVSURwb487cGgXjeFjgIh9CCE5z2GDJyIx4ul+hDYO9VjTyO
- fMHhsDzDmr+fgzx+a5MhVcj5CFGF9u8=
-Received: from mail-wr1-f69.google.com (mail-wr1-f69.google.com
- [209.85.221.69]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-321-6e5EZQF5P8SEoCI4cRr8GQ-1; Fri, 05 Jun 2026 04:20:59 -0400
-X-MC-Unique: 6e5EZQF5P8SEoCI4cRr8GQ-1
-X-Mimecast-MFC-AGG-ID: 6e5EZQF5P8SEoCI4cRr8GQ_1780647658
-Received: by mail-wr1-f69.google.com with SMTP id
- ffacd0b85a97d-45eec2ba533so1070010f8f.3
- for <qemu-devel@nongnu.org>; Fri, 05 Jun 2026 01:20:59 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <infra.ai.cloud@bitdeer.com>)
+ id 1wVPp5-0004WF-Vw
+ for qemu-devel@nongnu.org; Fri, 05 Jun 2026 04:22:36 -0400
+Received: from mail-lj1-x233.google.com ([2a00:1450:4864:20::233])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <infra.ai.cloud@bitdeer.com>)
+ id 1wVPp3-0004CP-HV
+ for qemu-devel@nongnu.org; Fri, 05 Jun 2026 04:22:35 -0400
+Received: by mail-lj1-x233.google.com with SMTP id
+ 38308e7fff4ca-396779b9a7fso13848231fa.3
+ for <qemu-devel@nongnu.org>; Fri, 05 Jun 2026 01:22:32 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1780647749; cv=none;
+ d=google.com; s=arc-20240605;
+ b=beMcfEj+mE5Pi1G2E32EGUzMo9cUxdDrxwPZZnEri0bglXhrcQVEvENAa3ubjUNuAH
+ fdpeM8AbnfEP07FcybhAikYOhSWmcxVrfMXVvmzg+MS7JLru6TBNoB8dh1YJpebdkbid
+ pW6HJIa8jKRmYUQ96lzP618KisCid1WEDDoauW5XZSx4I8fOc/c7b44wlgPeOkuawTDB
+ Hb4SprqiP/t4X5LG2NGqUvl+0M7ys+sBmQrV5s10spRjbDaXEtm9UsC2i1x2m0fCKr3e
+ t19jq5c5ZqCT275fAm2XJdqGrcSR9RZz70C+l40133H9Y2W7h48Gd9+mSp3CqnW9cY8H
+ U3Rg==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
+ s=arc-20240605; 
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:dkim-signature;
+ bh=GpEHuE5kPK7Pr7bmO5Kq29IlE/AYkLhUV+YgYWTUjog=;
+ fh=P5AvhEwpGW6PR/Vm2nnvPJX0qS7I1LrMms1RbUf8wfg=;
+ b=jnP08zT/Z+FBdVLW/jK9KEO72pXxEs57nQFNKFEuZmzbbkWBwN9I9aO1D9nSwHi69H
+ fay8brQpvJxT0sxSETl0RuMFCc2mFnH6SS/5A+djrXIqF+1YFozRI4tEsuvyfNIVUtwo
+ 1dVjrSJL878a24o+pST1NeOTt2DAeqgnVJjVxOadUs8jwFCJMagrZNldK/dw0lYZ0//+
+ 9xkOEnx+0KmdkCsrscghWeRxnctsv/cMjx6LY5pXl7fpOHo0cvZ0PA0VVXk4XldVV2Ij
+ GmjaCE7VHS/YOqDFLCB+PJcZfE1UCUurkn3rFp3QhQ9h0lGm+guGxnW9uGYNpVfU+G1Y
+ riTg==; darn=nongnu.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1780647658; x=1781252458; darn=nongnu.org;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
- bh=AYSrTba8hJjR+mnUCveYd8ESYYg3mUGLDjQDDvfC+2A=;
- b=LgVekR+QTIQz5ez7wgZbn1qI5hhn6yrEHIWKSKVFrKFe/5fd6H1hv37rEJeWpfat5l
- 7v2uWKuw/bqIYeM0pbC/dF5AknrAb5KJv1SHOOSHHG52LrA76pDDVSa2O1uq4xlmjH1h
- nX7P6Mi9/a1lrU2/+wTK+ETS9nY+10EIkKDIEVKUHNrArwBRdD6RBp+RSOnCNBHz6KGs
- 6c59PYDcR0UKbQ43GMLlydhlPH8E1fJrRUFoAwLj3AU51JVok97TXl0jEbOEYx5QPaog
- XKDi9HUc6VJiArGPn9pvrKEGtUxNn3sipU1obhOlLmwnjJnEMQ6K5J/WTO7s2S5QEkpu
- 13XA==
+ d=bitdeer.com; s=google; t=1780647749; x=1781252549; darn=nongnu.org;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=GpEHuE5kPK7Pr7bmO5Kq29IlE/AYkLhUV+YgYWTUjog=;
+ b=pq9WAeO1b/eaFPbRwS1yMMGxCJgKzDfDXqVLqpL+jq6obDpEKQ4EuI+fEDWQihcr4R
+ FzE2qo3XZnZeNA3DbPidJx08KMKNSrzv0MigqgQksNhV+mxJXjaOzM3ULXCFAF7gUfP8
+ oUoSWX1IrnSpGMD+kkUc0EFkPs4HYbr94s64q8lV0RiyFHpKdDw3mvcb5LnvvhCwFnBz
+ wGh2UHlomPqx1z99OC/P80PaUCW+prYxG737CcJATIpDKin6susPiOpmGv0o+6Pq4kw/
+ SW2iVc7sbLW90LWuIpfeFHViektZPICF+syOrxtpBNLEcHOxvsam6VdLkB9SxP3xj9wd
+ DwJA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1780647658; x=1781252458;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=AYSrTba8hJjR+mnUCveYd8ESYYg3mUGLDjQDDvfC+2A=;
- b=SyaG/upD+w6u1eSgWKBRyFDezFo8pN5Lspu8y27UBYzD/9NOstSVgW4cAnpbeJeKWm
- 4pVVwaUSPa0ZgFfwdIQ1N3GdsvTGFMlUEhjcusWY9OZY33ra75103TaDlzZ7HDSth9IR
- hNE9O6IakmMwqO/KTSTpYOJy8/cCL4EAFObsPl5S7bxecO+nWEPXzVkpo+hAu7AndLue
- xDTdcxvOJsys2WVLBREL3qq2og86b+jWFNd+Kvbg4qTnn33Rc/4bsZIfI61nm3PLSbzd
- X9eh8POGY6ZnEhXLhARiBNoAKSbHWMNptWFrq6NXmJULiwk8N3zE4MnsjJBlX1vh9KE6
- Ql/Q==
+ d=1e100.net; s=20251104; t=1780647749; x=1781252549;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=GpEHuE5kPK7Pr7bmO5Kq29IlE/AYkLhUV+YgYWTUjog=;
+ b=OrG5QL9NJ33Nh9RZSYBQvzMAmsco+4VvpJx1AKfOeH+pCn5reU2WE+cRLuLNCuM/IG
+ d3zw5X2uLuTzDSCqukJzMSKg6bAvcAwWAqWcsc95lyC2A/HfLgY3Ox6a4ERzuOpXXGUt
+ pcFE5jcL4/LG+AP9qs8dZAM+5vBPsDcZFFq27wFm8Jg7OQ05NOGhRv3FJnZ/cljcWld8
+ KGWV6VJ6M7gOCtDaCFd16pgvbPVow6sqdImFeCS2Sa7zV04Zb0f8vW8pltGh0J2Jaq4R
+ 5YQuqRBqdr92ZhCerSsZ4oQPXC0bdW6yakUskT7iKVI0V5rxCpbHntgJdLEtlshnjLTe
+ bDVQ==
 X-Forwarded-Encrypted: i=1;
- AFNElJ+fI2hPY3nQMOROT9uGcrihlNVIndWB63Csi7eaghq2kml2uAQvtraVGwJSzRNQLLQ+NL7kIUFP8KvB@nongnu.org
-X-Gm-Message-State: AOJu0YzPb0jzSO4rCS2jIptzCBalSE7jLBrjt9+Zut6tNGoZiQ1lc19U
- uC8vovrA72St3c0Xt++kHiuM4hgrPTLsIvTTke3D8hsK+arvQvcngM7Zg3E2y5FT7jGFwIMMe+S
- ttBj05CScQI/zkpGshXLjST6E9PHzfuSP5ItL/pTEDFGqvyOEUJEjpcFK
-X-Gm-Gg: Acq92OEjhx5RZjpw39qjqPthkHERxHkEoc+F6TvNl/ayx0Mwb12YHmYvU2KP67hwh2Z
- Thb1RvflgKUh27U4gZIPRO9dm6915aZVtr5ZVY9y8cwarquJHvIFLJb38aZ3OjnyJ2fWeHzWcqn
- CgHEaf7su74kxqThxI1Wi6lOEfQoF3FIA1KeV/2eR/cpdZrnZ0+k2CV0aCWs6dtagGL2NgYTpZH
- mZ2HfGoRcM8pFu3CKY9AaPmQsbP71JT2+ZjuD2lejM8rpCdymR/F6pjaAFDsXdGbWqrf5egwC+9
- om/w8FJSiHIGJCDoYog6aAMWgl2DfBe3eOvRpa9wjUij/tRQ6KqmbvzblL7jXyE+zexJ2OVJ3Ey
- gl3jm8Zu3vD5i2hXYPVVKniSh0/7le+k4DtVyZQ2WoSOG3eUFf3ciU/EfVEJZa5Zf6zxB4/+W5V
- 2PD4pt1g==
-X-Received: by 2002:a05:600c:c0d0:b0:490:c2a3:abae with SMTP id
- 5b1f17b1804b1-490c2a3abf2mr22957815e9.34.1780647658291; 
- Fri, 05 Jun 2026 01:20:58 -0700 (PDT)
-X-Received: by 2002:a05:600c:c0d0:b0:490:c2a3:abae with SMTP id
- 5b1f17b1804b1-490c2a3abf2mr22957235e9.34.1780647657733; 
- Fri, 05 Jun 2026 01:20:57 -0700 (PDT)
-Received: from sgarzare-redhat (host-82-53-135-12.retail.telecomitalia.it.
- [82.53.135.12]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-490bc3d66c8sm127960485e9.10.2026.06.05.01.20.56
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 05 Jun 2026 01:20:57 -0700 (PDT)
-Date: Fri, 5 Jun 2026 10:20:52 +0200
-From: Stefano Garzarella <sgarzare@redhat.com>
-To: Stefan Hajnoczi <stefanha@redhat.com>
-Cc: Markus Armbruster <armbru@redhat.com>, qemu-devel@nongnu.org, 
- philmd@mailo.com, pierrick.bouvier@oss.qualcomm.com, qemu-block@nongnu.org
-Subject: Re: [PATCH v2 34/38] MAINTAINERS: Drop stale F: from "Linux io_uring"
-Message-ID: <aiKGgo6chvFrUcbL@sgarzare-redhat>
-References: <20260603064032.3733394-1-armbru@redhat.com>
- <20260603064032.3733394-35-armbru@redhat.com>
- <aiF6lwircL8PCske@sgarzare-redhat> <20260604142919.GA115597@fedora>
+ AFNElJ/bVbuBOnH7wsfTCrPeyLX6RG4/3746x55XUAtBNxvuZTd1qRTZWEj4RMvMH27gbdUdK0yIG8A1hLke@nongnu.org
+X-Gm-Message-State: AOJu0Yzy6X1nqP1giL99Yn57XyopNv6LfWvK0kGqUBflOY4jPw/j036i
+ D8hb4NzINTQTvBV6pQLhP4Q557CdI/W2A0wcP1MIiffgWu+HCDrVrK1+gvxX8o4z7v5gUZNGtId
+ 3IHJUHnQNd58xwwkGMffk6fwjYh6DagBYuGftmWUzgA==
+X-Gm-Gg: Acq92OGXL2eHBBktTn8Hdl7JSla9j63ihBjhruuiZwjFYDhEX3F99WCdcO2leWmtIEG
+ YH1Jl71lVyiCEpqpxIH5Rdg5tzmzfG64LqNO591FAOBo1pFUh3mbjJM6wLnnZbD69DXIReCb8n5
+ 1Nl03KpDPqiYsGSPPc8bpU4efPfXkv4z86jEUfa0hQHnZRftHBGraMYPVjnM74uuR7Vk7RMT7YM
+ 0gBw5zYG53pWA9B79XwniRstbPDA9hXzOOZyBCIUYCr+qzUiT/GBJ1apoWrHYpzWEbpg0p3deSm
+ RrEsIt58axSJv9Sw25T8
+X-Received: by 2002:a05:6512:3503:b0:5aa:7363:8219 with SMTP id
+ 2adb3069b0e04-5aa87bbc36dmr719979e87.17.1780647749283; Fri, 05 Jun 2026
+ 01:22:29 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii; format=flowed
-Content-Disposition: inline
-In-Reply-To: <20260604142919.GA115597@fedora>
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=sgarzare@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -24
-X-Spam_score: -2.5
+References: <20260604070029.34982-1-guobin@linux.alibaba.com>
+In-Reply-To: <20260604070029.34982-1-guobin@linux.alibaba.com>
+From: Hy Man <infra.ai.cloud@bitdeer.com>
+Date: Fri, 5 Jun 2026 16:22:18 +0800
+X-Gm-Features: AVVi8CehWLP43yLhYl0QqKHuUEMtibp5cV8zT-_XbebMEoocv3nCz5FputHBJj8
+Message-ID: <CAFWXh4w==tF6VA1QyHWRqBX0hBE2R1Ko7u2Expwn+xv7=Fed2w@mail.gmail.com>
+Subject: Re: [PATCH v2] accel/kvm: event-driven wakeup for dirty ring reaper
+ thread
+To: Bin Guo <guobin@linux.alibaba.com>
+Cc: Paolo Bonzini <pbonzini@redhat.com>, kvm@vger.kernel.org,
+ qemu-devel@nongnu.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2a00:1450:4864:20::233;
+ envelope-from=infra.ai.cloud@bitdeer.com; helo=mail-lj1-x233.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.445,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -122,69 +119,209 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, Jun 04, 2026 at 10:29:19AM -0400, Stefan Hajnoczi wrote:
->On Thu, Jun 04, 2026 at 03:17:52PM +0200, Stefano Garzarella wrote:
->> On Wed, Jun 03, 2026 at 08:40:28AM +0200, Markus Armbruster wrote:
->> > We neglected to update MAINTAINERS when we dropped stubs/io_uring.c.
->> > Update it now.
->> >
->> > Fixes: 047dabef97 (block/io_uring: use aio_add_sqe(), 2025-11-03)
->> > Cc: Julia Suvorova <jusual@redhat.com>
->> > Cc: Stefan Hajnoczi <stefanha@redhat.com>
->> > Cc: Stefano Garzarella <sgarzare@redhat.com>
->> > Cc: qemu-block@nongnu.org
->> > Signed-off-by: Markus Armbruster <armbru@redhat.com>
->> > Reviewed-by: Stefan Hajnoczi <stefanha@redhat.com>
->> > ---
->> > MAINTAINERS | 1 -
->> > 1 file changed, 1 deletion(-)
->> >
->> > diff --git a/MAINTAINERS b/MAINTAINERS
->> > index 71383b9807..c5b6985767 100644
->> > --- a/MAINTAINERS
->> > +++ b/MAINTAINERS
->> > @@ -4331,7 +4331,6 @@ R: Stefano Garzarella <sgarzare@redhat.com>
->> > L: qemu-block@nongnu.org
->> > S: Maintained
->> > F: block/io_uring.c
->> > -F: stubs/io_uring.c
->>
->> Should we add `util/fdmon-io_uring.c` in this list ?
+Reviewed-by: Hyman Huang <infra.ai.cloud@bitdeer.com>
+
+On Thu, Jun 4, 2026 at 3:00=E2=80=AFPM Bin Guo <guobin@linux.alibaba.com> w=
+rote:
 >
->No, this section is under "Block drivers" and is specifically for qcow2,
->iscsi, raw, etc.
-
-Oops, I missed we have sections in the MAINTAINERS file. I thought this 
-entry was a generic one for io_uring support in QEMU.
-
+> The reaper polls with sleep(1) (TODO in the code) and only notices
+> dirty-limit teardown at the next 1s tick.
 >
->util/fdmon-io_uring.c is covered by util/fdmon-*.c in "Block I/O path",
->which is where AioContext and QEMU's event loop lives. 
-
-Okay, makes sense to me, thanks for the clarification.
-
-> The name "Block
->I/O path" is not the best fit anymore and maybe it should be changed to
->"AioContext event loop".
-
-yeah, I agree.
-
-Thanks,
-Stefano
-
+> Replace the sleep with qemu_poll_ns() on an EventNotifier, kicked
+> from dirtylimit_state_finalize() after dirtylimit_state has been
+> cleared.  The kick must follow the NULL assignment: kicking earlier
+> wakes the reaper while dirtylimit_in_service() still returns true,
+> so it just loops back to wait.  A 1s fallback timeout remains as a
+> liveness backstop.
 >
->>
->> BTW this is unrelated to this patch that LGTM:
->>
->> Reviewed-by: Stefano Garzarella <sgarzare@redhat.com>
->>
->> >
->> > qcow2
->> > M: Kevin Wolf <kwolf@redhat.com>
->> > --
->> > 2.54.0
->> >
->>
-
-
+> 20 set-/cancel-vcpu-dirty-limit cycles via QMP, |reaper-wake -
+> cancel-ack| measured with strace on the reaper TID:
+>
+>     before: median 255 ms, max 502 ms
+>     after:  median 0.6 ms, max  27 ms
+>
+> kvm_dirty_ring_reaper_init() returns int again (was made void in
+> commit 43a5e377f4) to propagate event_notifier_init() failure.
+>
+> Signed-off-by: Bin Guo <guobin@linux.alibaba.com>
+> ---
+> Changes in v2:
+> - Fix compilation error: kvm_init() has no Error **errp parameter, so
+>   kvm_dirty_ring_reaper_init() now uses error_report() directly and
+>   no longer accepts an errp argument.
+> - Remove the kick from kvm_cpu_exec() KVM_EXIT_DIRTY_RING_FULL handler:
+>   it already reaps synchronously (all vCPUs or the ring-full one), so
+>   a background reaper kick would only be redundant or a no-op.
+> - Move kick site from dirtylimit_change(false) to
+>   dirtylimit_state_finalize() after dirtylimit_state =3D NULL, ensuring
+>   the reaper actually proceeds past the dirtylimit_in_service() check.
+>
+>  accel/kvm/kvm-all.c      | 42 ++++++++++++++++++++++++++++++++++------
+>  accel/stubs/kvm-stub.c   |  4 ++++
+>  include/system/kvm.h     |  7 +++++++
+>  include/system/kvm_int.h |  3 +++
+>  system/dirtylimit.c      |  2 ++
+>  5 files changed, 52 insertions(+), 6 deletions(-)
+>
+> diff --git a/accel/kvm/kvm-all.c b/accel/kvm/kvm-all.c
+> index 96f90ebb24..be005832bc 100644
+> --- a/accel/kvm/kvm-all.c
+> +++ b/accel/kvm/kvm-all.c
+> @@ -1754,6 +1754,8 @@ static void kvm_set_phys_mem(KVMMemoryListener *kml=
+,
+>      } while (size);
+>  }
+>
+> +#define KVM_DIRTY_RING_REAPER_FALLBACK_NS  (1 * NANOSECONDS_PER_SECOND)
+> +
+>  static void *kvm_dirty_ring_reaper_thread(void *data)
+>  {
+>      KVMState *s =3D data;
+> @@ -1764,12 +1766,18 @@ static void *kvm_dirty_ring_reaper_thread(void *d=
+ata)
+>      trace_kvm_dirty_ring_reaper("init");
+>
+>      while (true) {
+> +        GPollFD pfd =3D {
+> +            .fd =3D event_notifier_get_fd(&r->reaper_notifier),
+> +            .events =3D G_IO_IN,
+> +        };
+> +
+>          r->reaper_state =3D KVM_DIRTY_RING_REAPER_WAIT;
+>          trace_kvm_dirty_ring_reaper("wait");
+> -        /*
+> -         * TODO: provide a smarter timeout rather than a constant?
+> -         */
+> -        sleep(1);
+> +
+> +        qemu_poll_ns(&pfd, 1, KVM_DIRTY_RING_REAPER_FALLBACK_NS);
+> +
+> +        /* Drain unconditionally so a stale event can't spin the next lo=
+op. */
+> +        event_notifier_test_and_clear(&r->reaper_notifier);
+>
+>          /* keep sleeping so that dirtylimit not be interfered by reaper =
+*/
+>          if (dirtylimit_in_service()) {
+> @@ -1789,13 +1797,32 @@ static void *kvm_dirty_ring_reaper_thread(void *d=
+ata)
+>      g_assert_not_reached();
+>  }
+>
+> -static void kvm_dirty_ring_reaper_init(KVMState *s)
+> +static int kvm_dirty_ring_reaper_init(KVMState *s)
+>  {
+>      struct KVMDirtyRingReaper *r =3D &s->reaper;
+> +    int ret;
+> +
+> +    ret =3D event_notifier_init(&r->reaper_notifier, 0);
+> +    if (ret < 0) {
+> +        error_report("Failed to initialize dirty ring reaper notifier: %=
+s",
+> +                     strerror(-ret));
+> +        return ret;
+> +    }
+>
+>      qemu_thread_create(&r->reaper_thr, "kvm-reaper",
+>                         kvm_dirty_ring_reaper_thread,
+>                         s, QEMU_THREAD_JOINABLE);
+> +    return 0;
+> +}
+> +
+> +void kvm_dirty_ring_reaper_kick(void)
+> +{
+> +    KVMState *s =3D kvm_state;
+> +
+> +    if (!s || !s->kvm_dirty_ring_size) {
+> +        return;
+> +    }
+> +    event_notifier_set(&s->reaper.reaper_notifier);
+>  }
+>
+>  static int kvm_dirty_ring_init(KVMState *s)
+> @@ -3097,7 +3124,10 @@ static int kvm_init(AccelState *as, MachineState *=
+ms)
+>      }
+>
+>      if (s->kvm_dirty_ring_size) {
+> -        kvm_dirty_ring_reaper_init(s);
+> +        ret =3D kvm_dirty_ring_reaper_init(s);
+> +        if (ret < 0) {
+> +            goto err;
+> +        }
+>      }
+>
+>      if (kvm_check_extension(kvm_state, KVM_CAP_BINARY_STATS_FD)) {
+> diff --git a/accel/stubs/kvm-stub.c b/accel/stubs/kvm-stub.c
+> index c4617caac6..b878598552 100644
+> --- a/accel/stubs/kvm-stub.c
+> +++ b/accel/stubs/kvm-stub.c
+> @@ -134,6 +134,10 @@ uint32_t kvm_dirty_ring_size(void)
+>      return 0;
+>  }
+>
+> +void kvm_dirty_ring_reaper_kick(void)
+> +{
+> +}
+> +
+>  bool kvm_hwpoisoned_mem(void)
+>  {
+>      return false;
+> diff --git a/include/system/kvm.h b/include/system/kvm.h
+> index 5fa33eddda..e127a5eb37 100644
+> --- a/include/system/kvm.h
+> +++ b/include/system/kvm.h
+> @@ -553,6 +553,13 @@ bool kvm_dirty_ring_enabled(void);
+>
+>  uint32_t kvm_dirty_ring_size(void);
+>
+> +/**
+> + * kvm_dirty_ring_reaper_kick - wake the background dirty ring reaper.
+> + *
+> + * Safe from any thread; no-op when the dirty ring is not in use.
+> + */
+> +void kvm_dirty_ring_reaper_kick(void);
+> +
+>  void kvm_mark_guest_state_protected(void);
+>
+>  /**
+> diff --git a/include/system/kvm_int.h b/include/system/kvm_int.h
+> index 0876aac938..c14ebc927f 100644
+> --- a/include/system/kvm_int.h
+> +++ b/include/system/kvm_int.h
+> @@ -12,6 +12,7 @@
+>  #include "system/memory.h"
+>  #include "qapi/qapi-types-common.h"
+>  #include "qemu/accel.h"
+> +#include "qemu/event_notifier.h"
+>  #include "qemu/queue.h"
+>  #include "system/kvm.h"
+>  #include "accel/accel-ops.h"
+> @@ -100,6 +101,8 @@ struct KVMDirtyRingReaper {
+>      QemuThread reaper_thr;
+>      volatile uint64_t reaper_iteration; /* iteration number of reaper th=
+r */
+>      volatile enum KVMDirtyRingReaperState reaper_state; /* reap thr stat=
+e */
+> +    /* Wakeup channel: kicked when dirty-limit is torn down. */
+> +    EventNotifier reaper_notifier;
+>  };
+>  struct KVMState
+>  {
+> diff --git a/system/dirtylimit.c b/system/dirtylimit.c
+> index c934ceb0de..a33256ade7 100644
+> --- a/system/dirtylimit.c
+> +++ b/system/dirtylimit.c
+> @@ -239,6 +239,8 @@ void dirtylimit_state_finalize(void)
+>      g_free(dirtylimit_state);
+>      dirtylimit_state =3D NULL;
+>
+> +    kvm_dirty_ring_reaper_kick();
+> +
+>      trace_dirtylimit_state_finalize();
+>  }
+>
+> --
+> 2.50.1 (Apple Git-155)
+>
 
