@@ -4,62 +4,62 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A5BF2CD6E6B
-	for <qemu-devel@archiver.kernel.org>; Fri,  5 Jun 2026 08:46:30 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1E7DECD6E6B
+	for <qemu-devel@archiver.kernel.org>; Fri,  5 Jun 2026 08:47:01 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wVQ9o-00068c-Pf; Fri, 05 Jun 2026 04:44:00 -0400
+	id 1wVQ9q-0006AS-Qr; Fri, 05 Jun 2026 04:44:02 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <khushit.shah@nutanix.com>)
- id 1wVQ9m-00066C-DT; Fri, 05 Jun 2026 04:43:58 -0400
+ id 1wVQ9m-00066B-DS; Fri, 05 Jun 2026 04:43:58 -0400
 Received: from mx0b-002c1b01.pphosted.com ([148.163.155.12])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <khushit.shah@nutanix.com>)
- id 1wVQ9j-0002Zd-T0; Fri, 05 Jun 2026 04:43:58 -0400
+ id 1wVQ9j-0002Zf-Rx; Fri, 05 Jun 2026 04:43:58 -0400
 Received: from pps.filterd (m0127844.ppops.net [127.0.0.1])
  by mx0b-002c1b01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 6556MRUJ1185382; Fri, 5 Jun 2026 01:43:23 -0700
+ 6556MRUS1185382; Fri, 5 Jun 2026 01:43:31 -0700
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=nutanix.com; h=
  cc:content-transfer-encoding:content-type:date:from:in-reply-to
  :message-id:mime-version:references:subject:to; s=
- proofpoint20171006; bh=qpu/vUW5/4oKbS+N83wUCZeagPINvNsKs3mGdcVvk
- X8=; b=q2V4zHRvPStju8Jn272tgJF7BVvp/qzj0QcEHN6dL36gvSEddxnum5PBp
- eTFp4ekJD7S+pc8/+nGs3YxFaUHnMg+jlsB/RqihLy5PH6/gpi1JamK3c8hmIf69
- BkriNiJ1cdMaS+UfrDWGTj/ovO/8wVDIoyIgaIUEeEYU4Hum0PRPSM2Pqc9v6uLK
- BqFxArUCbpl+g97r27JuHDJx3uVjXShaC4ITcrE4W0hjot2o/gr8k6oJADaVFT2p
- 9qB5LNnQxh4y+4Mfph2bZkagTTdxPvgvHdj8vNomPBpPlTK4+DIRkN3bIhwPSISj
- Mn5SfJCOtFXX8VlAc/W1/KF9XSV3Q==
+ proofpoint20171006; bh=hQaEAz08JKn1aAsLYTiEElBUVD8YXZTF756KPlDND
+ Uk=; b=RIPx2TOVP7acm7tAjEYAN57z7wwxQIvhcRqLin9XiObRPTYuOvf4wMRZR
+ JEu5HM0nxJxXx1OBqg9bx0Yh+88DpjfDwIivreJBh0TVEDUDJcBl47LZ5pGDRjQ/
+ Dc3jVW1vwEyk45pRKGz7QugAvffvDWbvPhho5JTW+9NVWiZWyavlMH6WvFTdeuSa
+ +YLr/BVFcvBZkWCUx0hHgkd9IxaZTH98Ssa2LTCjKqjvz8rxJadTzatJQqpI40CI
+ 40HS1mtsjvXYVuKwjOaiBAXBlzSzeUjnBDK3rnQlnOUh+WywgvflaKmx5Lk6TcMk
+ Jxs4jjGqsGSZ2BvFE4ucQRp8wrK2A==
 Received: from ph7pr06cu001.outbound.protection.outlook.com
  (mail-westus3azon11020134.outbound.protection.outlook.com [52.101.201.134])
- by mx0b-002c1b01.pphosted.com (PPS) with ESMTPS id 4ejuupcm1f-5
+ by mx0b-002c1b01.pphosted.com (PPS) with ESMTPS id 4ejuupcm1f-11
  (version=TLSv1.3 cipher=TLS_AES_256_GCM_SHA384 bits=256 verify=NOT);
- Fri, 05 Jun 2026 01:43:23 -0700 (PDT)
+ Fri, 05 Jun 2026 01:43:31 -0700 (PDT)
 ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=HIdUC/Ca6VtHBpobV5ne7kqZ9mgU+qIjoMK1+6uCUWNxkfM/+ueaecONbBqLHM5ydh4CUgLJgWBaw3l4KPZ/fipA/NvIZUnlWv7DS6m0voh5q9dQGG/3t5tG95Sv8K3qO4LnIunIT1zkB78Au7N3jS1oAQxtUXct4DjnpObe4+8UOt1PNMiCX8aT/gRbbzo6AitAXM4aMcA/Oc367D5rhZK2AJba3/0c15/7BsOgmsbX6yvsdkfAVObopCYHQJ8pjoxOhkQ3i03ijA2gJULhY0veax+5OLW/UMxgSlycR1z3JT0bOuY/vkcr5LVNkZbjft2JkwKq1pesv9XOJbGsig==
+ b=Hqucc49NQ6bdgi9s//E+labJ7zTeAmhBAZ4g8g5mFNQh595I8CxoF/kEl8BK600KDRkklYm81pwNmrYY6D5fQpClJnjkBLMVDn821kn2mKaywKcvT1Zbc4sZtuUJh3FxXRIc7uZ+8ZU/s+Q1FY0cX3ho2QgEdJqJtA5d+xa08j8SBCAIY1NjqvIHhxQyCkVoMO5wuGb3VGP37zEdTc5jGEmsd0Gnkd8DGOL6dU5oJxzmvLrn/QxS6HAI+P6gDNeEOKvudBGjp/W66ZVqJ+RGuFA95vblvVy8lJtXQxVIv9BqXLQ9PGWyAiKpOKoB5i/IgTOfhm0D7h4lUlejFEqWqQ==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
  s=arcselector10001;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=qpu/vUW5/4oKbS+N83wUCZeagPINvNsKs3mGdcVvkX8=;
- b=kelHyYF7lhEUX8bjNcHLzeK9KOiWA0EoEvD1ucjIx54Sw5svZ/jJmwO7p/OprJuPYLb1B6lR1ANKuedQnmYZvisAJcvCYum+Vb0q3pf0+8CcW9+8d5zRJjpW27T7iLQnbErRSLXZOWqsi8r+jvG1RkwYgyXIrWeKeUYAAE5POFNCjPaX05cbKam3MYcxkmN9PQyASmyiP69pe4w1WT0u9DrkaWMCItQIEcDiLoMWixA9o0HjlEaSr+qFQbaB9bGBP+mHIf+Xui2E7Kh+SROb4EerZwNQ0TvUokcVLK+H6PBMLJ0iSgDi1uWjVsnS/rs+o8QtQwFjxxh1ilvwjJN9dg==
+ bh=hQaEAz08JKn1aAsLYTiEElBUVD8YXZTF756KPlDNDUk=;
+ b=SEo/SQiW2KrRwgWfzzbUjZYp3/JwmG2cY4FibUF9NhgSHyPeK9ukBnzkmy36SgOpTiIRdJ6kc5D56gtOck2pR/Bfw4tBs/qAFbD4ak7xe4YLgWpWrWPYKxXzjFjtjTTfYB+s0fDULm/ahEPFDogPxlAbVzd2CyLojhuoOakcSqFwrz5hIib9QELMF9sLzDtFu2FSbHP+iMgqRVnp9t2ptdDTFllpF6IfBiqc3BYHiwtOkgBqoWyG9gl0VECF/l6ORb5DDfxrpbiSJNskTZrU0MhfPBn1R95qr2O2D/iKEPKJlTUuzD95SmftyJaduHDXKgkapogvYiUZYINhGe2frw==
 ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
  smtp.mailfrom=nutanix.com; dmarc=pass action=none header.from=nutanix.com;
  dkim=pass header.d=nutanix.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=nutanix.com;
  s=selector1;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=qpu/vUW5/4oKbS+N83wUCZeagPINvNsKs3mGdcVvkX8=;
- b=goAwPlRfx70SIFmc6kWsHZfq6QSGA1QNthbsJxNoOsT8WsSQm43iGFYcQjmKPE0l0iStU6bS0OBsDPBNnnoX2MkYAd6x0UyDk7xGcRM6ZpjfzQ4un0N+aqDlt7OSjlzjqyrlqmTM3ezglSI7+N+x1Ek+ADSF0p2NpsJHs2a7xsdfp2BbQ04I4YuwEP7szB7VQjkBTEg8cuI80axQFbg6OfEWuEFzasXHT5Pkto4Rgfy7oxLFocG6yoGO4MFb6MetiVuEauBrlrDVjBWDx1Tz2aIKuURzISZN5Fcu3B2/JaPNHLtITeFY5pOb/44qhAJU2ALHOX5mrBDNAJwRRAKxzQ==
+ bh=hQaEAz08JKn1aAsLYTiEElBUVD8YXZTF756KPlDNDUk=;
+ b=D53h3be1cEL2h9u/i0DLmoz6o1yXwiAuEjdSL4qMcdSw3LjJRDdhPItfadKR2cVy1ovJA+4ys9zHYvS/MvanVPCDeCr+y8R0e+bmGsGLJ08lW7ST2cTozmCuTpjL6GYtL/StRPLikVxcFGK36qnZI88SnKrAJesi7xGNrJhdHmzxiabF6GGNFeOmiOeJapEchENehMBJLFbMNjAggmxMsrRJgKEx4mA3BqVdNyvrCK8YN20XquVD2KQzsxbYFkPRsOL2kDf6AoN/ClGPDup16iUuM9Vhnf5lLRlxaLsAXluG6mJD20R4yOhk6GcjslN0TcxIB4Q0zbyfk68x52JMsw==
 Received: from PH0PR02MB7557.namprd02.prod.outlook.com (2603:10b6:510:54::17)
  by MN6PR02MB10630.namprd02.prod.outlook.com (2603:10b6:208:4f4::5)
  with Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.92.8; Fri, 5 Jun 2026
- 08:43:18 +0000
+ 08:43:22 +0000
 Received: from PH0PR02MB7557.namprd02.prod.outlook.com
  ([fe80::4917:bc05:4373:6bef]) by PH0PR02MB7557.namprd02.prod.outlook.com
  ([fe80::4917:bc05:4373:6bef%5]) with mapi id 15.21.0092.007; Fri, 5 Jun 2026
- 08:43:18 +0000
+ 08:43:22 +0000
 From: Khushit Shah <khushit.shah@nutanix.com>
 To: qemu-devel@nongnu.org, qemu-arm@nongnu.org, kvmarm@lists.linux.dev,
  Eric Auger <eric.auger@redhat.com>
@@ -77,10 +77,10 @@ Cc: Cornelia Huck <cohuck@redhat.com>,
  Shaju Abraham <shaju.abraham@nutanix.com>,
  Mark Cave-Ayland <mark.caveayland@nutanix.com>,
  Khushit Shah <khushit.shah@nutanix.com>
-Subject: [RFC PATCH v2 22/29] target/arm/kvm: introduce kvm_arm_get_host_isar
- helper
-Date: Fri,  5 Jun 2026 08:33:51 +0000
-Message-ID: <20260605083358.1320563-23-khushit.shah@nutanix.com>
+Subject: [RFC PATCH v2 28/29] target/arm: supported-values and blockers for
+ CCSIDR cache properties
+Date: Fri,  5 Jun 2026 08:33:57 +0000
+Message-ID: <20260605083358.1320563-29-khushit.shah@nutanix.com>
 X-Mailer: git-send-email 2.43.7
 In-Reply-To: <20260605083358.1320563-1-khushit.shah@nutanix.com>
 References: <20260605083358.1320563-1-khushit.shah@nutanix.com>
@@ -92,75 +92,75 @@ X-ClientProxiedBy: PH7PR17CA0007.namprd17.prod.outlook.com
 MIME-Version: 1.0
 X-MS-PublicTrafficType: Email
 X-MS-TrafficTypeDiagnostic: PH0PR02MB7557:EE_|MN6PR02MB10630:EE_
-X-MS-Office365-Filtering-Correlation-Id: bbb77708-2cc1-41b2-46f7-08dec2de7d1c
+X-MS-Office365-Filtering-Correlation-Id: 4fbb60b6-b7eb-4828-1934-08dec2de7eab
 x-proofpoint-crosstenant: true
 X-MS-Exchange-SenderADCheck: 1
 X-MS-Exchange-AntiSpam-Relay: 0
 X-Microsoft-Antispam: BCL:0;
- ARA:13230040|366016|7416014|1800799024|376014|56012099006|18002099003|22082099003;
-X-Microsoft-Antispam-Message-Info: DCD7o9r4ybfNxonHwJMVfXBULXpPrncOhjSARibbslu8DbadRmh/n4GNLSm/re676w95xa2MUBTLiLQkifmmzYTPcr1xug04CgE1ssIN40TgmMR9Q2EvMk9zCt3seZui1rDAG0LPLwtyFiIfsWYf9l6aFvHZd3QrdVm9AyNo+Rw5Yz0rLSaVUAR+YLO5lnz0uTieMY1uGuXeXt+jRO2WQC0dSBG0kHV3/c00OlIRaFnzdSjRnkJ5xf2jXgRbCbGaRnQ+eBDXdmx2mM+7MYznRTrIM8Blz7JTFip1maA+7XQkMnrW5AjCIYHMq+f+nVmDDAwVuf1Z+A+HMWTEMtjWNplW5UsJmWvP1fwPCZ2LcSpPMf6ZWrPLEhw1HB9sR0A1wYAczKj2FP+p8z+/LEG7oFel1daxdYTiUuvfxfiRoJkJmyPwka99m1j5/qa3A3NJdzP3cKmjKTbkpzyMZJv5xIoTu6urXKSUaqvZoqGLrP87N9btXITHQHgiSt1xWObCU6UrcLf175Ce7OCeb4gtWTYwEiCzV0Duydii6IOQjvKqaDJGSutQrPnRb6COzSVCrrl2CIDt8cNJXJswpisbBDU8NmVf32BJ1EAaU6Z67OZyy3YiWuZlTE4qrDtSmM0hSaMQKqEz6RzZ/EIKp7AFIqzripIqXwufWYd9jbn+Sz/M8UbCGOUEOaWsxb3ckal3
+ ARA:13230040|366016|7416014|1800799024|376014|6133799003|56012099006|18002099003|22082099003;
+X-Microsoft-Antispam-Message-Info: q2/ry90KWyDn7YAW0GxU3POYZ9fZdNcZnrvicfogZsMBp61ZxjDDKYHTQAu8N+1Ox1iaMCsGOcw0QLc2CRE430nhlrLm7CtLrlrSmlYmeb2TlK568P2wWp3nxNGBaD2UjaXRRwHeFo2LOHd+uMdWiWbIOO63zxXdYoBgqriW6mMrIfJzBfABBPLBL/JgFVJcOWl9/ykCnbMCkTLm0p/u6FBYhed2Y6aGcKfaJAdXVAjPzpBV5ap/aUuFbPlA2JNGtwd6vf48PRMyPjhov7sdeva0NJNFNKajN4bTmo45UHNU75Ekk48hSTy1JloNDci6AmR8pwjol3/kY6koMQ0CRwtVTRcDi70SPdzTaer3XeQ5p0VIV9cuPfdrLrpJOFEn3dVjm9ncACA05CMr1eyNNaY94SjcMeKAppr/VhIvS6j/VFuGPxMca1supq6HTikj1FbJulpyDtR4fjsMA0xQs9Y3NEEONfFx+uDqwdDkt+HatI6d7DT0gFMoAvgMKE0AphJqLqFj4p+KH40P58y4AYZ4JjW39RqZD1SfNHBCxEFzhb7jQKHfWJrh/YTfDilDHEyhZm2f7xPqT7qCjWjSlDDeTxqypmO4jI1Yk4zJYWAFOYfEU1dSB/eP3yDTqzPK0WgjrgbAtqjtptPzV4/vgz4yOh+NBSXZm1LdPvrnbw7E/BwCkDJFtEqSYukr0BhU
 X-Forefront-Antispam-Report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
  IPV:NLI; SFV:NSPM; H:PH0PR02MB7557.namprd02.prod.outlook.com; PTR:; CAT:NONE;
- SFS:(13230040)(366016)(7416014)(1800799024)(376014)(56012099006)(18002099003)(22082099003);
+ SFS:(13230040)(366016)(7416014)(1800799024)(376014)(6133799003)(56012099006)(18002099003)(22082099003);
  DIR:OUT; SFP:1102; 
 X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0: =?us-ascii?Q?WevtszweUWG0HMzF3bmQRjTYvrBqQ7xNaMH17hbuZWucBS+3fZ8m7ayDNmtI?=
- =?us-ascii?Q?J+Ui9aEltnUesFNMMAId19F4YS5pDDfPnROJ0aOgWG6uIOJ0h+DVrQj04h41?=
- =?us-ascii?Q?U363wJH5B1WL+Lzv8NT52cgQXm19DoLXgoen7uC8zEdPXB2DHXTJ/z3t2VRI?=
- =?us-ascii?Q?zZDGJollYBGQwkoD1Xu8x9DV36JxwGpNBtPnY6knXy/JEN+hTPqrkgYHMBjy?=
- =?us-ascii?Q?MSyuBVJ5jwNhd8cL80M8ymdyKpsuE5SN3b06srbD+FuhDG5Hmu7vadfSnrPb?=
- =?us-ascii?Q?maMVv+iEkTnq1jfzid120nSkJBBBVNeOIwxI8YQnJ0V9jdHigouAKeoRhoUu?=
- =?us-ascii?Q?su9PUUTNI9qJQEEMGTquAxHyyCb8gPXCz/wZ4iP3mHZJknIDtEmwi2T5uCyv?=
- =?us-ascii?Q?RJUfrTNcB/vlxYd8Tio0gRSABcCAjhO7wgueOe5uhbykEGjMKpP88c/+hCbI?=
- =?us-ascii?Q?tjs1hnOEqgyyWop1b1QxrEh95tQQGb+7006FHz/TXBsp0PXRwPgPbpUjh97i?=
- =?us-ascii?Q?KJVP09gQf0mYdEgH+X0kfRctqc2ZLnSEcw6Rcxyuxw6KKFQ3EbXAIILzzOPZ?=
- =?us-ascii?Q?rUWmHG2/e6Rlt0eXW5jnwjBQX8EvziIU0TR23a8H1nhl+YCp9560jlM0bzIX?=
- =?us-ascii?Q?DsaqfUndAoj1M55KiAWE8vYlcMDsISk37NbHD8boM+0NDYE4T7u2EyDCrpLW?=
- =?us-ascii?Q?sFBwDse/hTLhd4zLqrGZHYU4ElA3eNB3jPci1RAa666qoSSs8aC9adJe/vBd?=
- =?us-ascii?Q?/99BIZxMelBUaq3pxm6upySlzznZ4kP/ymV2pj/cR+6NNbXOeMmpEBfNo6Sn?=
- =?us-ascii?Q?mLtHyQxHDU9TVB1zqKEKnNwHJL2CjddV0+OeGiVc7LMc2iD9YbARoh9qWPOV?=
- =?us-ascii?Q?UpW7hKQdn9V8F+AC7eSRUwOKQKHvSIDGzjPpmMzN/j+ZXO1495n5uz3oRfSo?=
- =?us-ascii?Q?zrnfthXrSuH1Yp2mbmmZdS9spUvI3chHq0SU1kriygMXV4EPtjXJD+q/1nQt?=
- =?us-ascii?Q?dzS5cGedWP7QH+VikQR6ILi++3BsADRfes/sXLGdN1ufjMpdeIEfS9PkuBhy?=
- =?us-ascii?Q?/rBUa6iuDqujIC/fef0K+ydMkgZWEyYBcbKluNdrO12Zz7Ofwj8tPyEBKN96?=
- =?us-ascii?Q?MCgmLYa5vu5NU7KZVtaumSduH7wBrK4ZOe5E0OXzopdgthupRqBAyGG64dRN?=
- =?us-ascii?Q?6S0VyQd4uRdeTZI/3WqVypZlbfpLfhg4LcYmRowz49rCNE/LNVQl936/q+3s?=
- =?us-ascii?Q?+/5b8KG07MPNKA9gbL7Mt4dSaAJbysHYdO7CCMHbcHK0cddWT1fVvi/vAKp5?=
- =?us-ascii?Q?32JrTqURdTBfmSpuo7XgibsbmqsvQA1vBmRh23KC1EAweSxcPw4Wiy2JI+1Z?=
- =?us-ascii?Q?hQ8oCSUwdyZylOKPzZzqOTb9ouQEzXgMpg9YaqD8MHxF/KgLad3qy1MpK077?=
- =?us-ascii?Q?C1MQaSbRneFG0KyFhHTHN+adRVx87hR8rbZRV6ndxQ+uO7nY9Cwbeoe39OxL?=
- =?us-ascii?Q?iJ+oBRfJZwDwb+6Tg4LKKf6ONn2sXD2tlR6LiqHPyTBGh+/FMz11jS4wP+Ww?=
- =?us-ascii?Q?T/cbcNdzZ/VudAS1Y2wKUtLaPHsWJzjZieIqh5klW1TCO+bii75sZKlB1grP?=
- =?us-ascii?Q?rl3a9UGJ6dkVnsUmZw9WF1MMpmxaAS3IUCDOx/NyLuNrqEJHzgS4347rjd8D?=
- =?us-ascii?Q?ERNeXK0lzCp7DeM9VixbrVYyZpXrNV0mNAXsosMegm9D3bCN8T/UYR7qETWe?=
- =?us-ascii?Q?uWE2xsHMkOqavgrrrtmj64rVOb835Yo=3D?=
-X-Exchange-RoutingPolicyChecked: huSbS/rPk8bbsXEwS1wP0S0gYCqPHwqbfV87BrJAI8vPZ23iWNJJduj26zJvjc5vQ6TQvkR9gKGl1wo+ByCEGiIlMHiwpQfMKSvJpEFmO8nJ8GvhDS2jM6xYym6UarsMWGNcQLxUKTpQJ5g440V3hkz7KNlNSxJnMPLWTWxWGJgdEV/j3/cYvQAm/X3qpvOUBgf/Lg7LDSTdu2V5owuJMBer/7goXagL/A6AtOE7m/1Tv2kBfRWEr00PTFRwiKiXT+CGut+qjAvki9QDPywqhkSCSs5JBxBp0hUhnfBwxMSgii5WmcHrRLetikEPTmay4fOWRREQuw3F2Nq5Q/8POg==
+X-MS-Exchange-AntiSpam-MessageData-0: =?us-ascii?Q?VDtEmwEQwwOccReTMHaksJahhtXpDKIC3DaHBnaPMKibgFSNc3rn9gkJompZ?=
+ =?us-ascii?Q?KrkmxKs+BCpJi7xw+3qkadoSE7llLEP7trGL8tJTdAdrYVXoJeQDZVYPTl1P?=
+ =?us-ascii?Q?uiaXpSPBLSOg7bNm01G/mFZ9dqv6JBd2u7FsPl9kdG77VZn7AFwv2OK9QLtj?=
+ =?us-ascii?Q?b6IF310KrTFeBn8OWmVrqCcG/hSa6IxG0z+iRb61G8vWEh6lJ9jDr8ZinBsS?=
+ =?us-ascii?Q?sO9QJTIGclqClAYZuOSwKQK+jzxtN9Q2JtvbxjtkBswFMPr6vUswAw+riR9f?=
+ =?us-ascii?Q?BXUkxr4Qo36ofm0nDKYrtNlewnj9MbFrVQOaKXcal9hvcMK8W588StOCMkix?=
+ =?us-ascii?Q?rBLFo32BrJoRseo+uatlhH0tSjoEZT3etCeie/6LiswbfsUD6FaCl0r592v+?=
+ =?us-ascii?Q?7lt02SO33IidVA4lyRTnIkT2apeZ3caakIHLIUVo6I6ezkFE9GSP8jJKV8JR?=
+ =?us-ascii?Q?dVolNJSB6RKGC9RUlWyAg8L9LMRG8yfhWsQORLdnX2fgDPk/TM2SfBwHTwk7?=
+ =?us-ascii?Q?F0fGOjzHDqHbGyQBfQKVgWKLs/4sMqId95YeWWVhMioshJXT2aWoz86jY7Y3?=
+ =?us-ascii?Q?Vp2D0mL/P6SwXabnsTiLRNIoYcagmNcVMW8WDyekgAcFMBxyW8NJpP6+ebqP?=
+ =?us-ascii?Q?R+0SFkPLcd6+tfVr96unufVmDirerPW+OPTuT2jdGNNtDY9XshDKhsL5we2R?=
+ =?us-ascii?Q?13Ut0nGRkAOBL0OMZ6dEgmghP6JP5+gAgThdWxYmTN4tzHBCGrwPAys1YjnE?=
+ =?us-ascii?Q?ZJDzu23Zw916kqm3OmtoUT1B9ZZP/e8UQvZ9rbwiey9gR7JLI4ixP6EIi25t?=
+ =?us-ascii?Q?6oOE0wTUxY5/LGDTziRoIVbNO3o1Bvr+2u7G8s+QdMwjwcUEWjJIJB8LjI7w?=
+ =?us-ascii?Q?KkE94WiPwwByrh0ANn7JfK3Oe11O8rAfPTeLG+CCF7lgtwAgfkofWf5ys+vs?=
+ =?us-ascii?Q?6iMq0V310kPpLToaadi/3sRgIco8MoQ8OoH42JQQOiZulGXiAYsi4jEdyQX0?=
+ =?us-ascii?Q?guoE+RPaqedP7VfJu6XUtdJbQCakS9N0x7XkrI0Zn8okaOsd7I1q/fd+Zr1U?=
+ =?us-ascii?Q?DlbbPoVp1V7coXF+0DLm/LjbEsawiqx4jNGZXCtCrj+MO8TWaks/SPQdD6ap?=
+ =?us-ascii?Q?y5MKAvL0KzoFJ9TTTDvU9Qd5iTeH9DVCBMt7ICIiVyhULdoN0X4/b1VPMXyZ?=
+ =?us-ascii?Q?4yknXlByy8CzK2/v/90fqNdRSCU0EpLJDcdWMCVcIN9zJFKEHtZUmFIMMreY?=
+ =?us-ascii?Q?yPS/WDFHhmoffB5EFg7oPnFGOsIO+HxI6CeR46njYq40uH4XQj+N+MOqN/Ku?=
+ =?us-ascii?Q?cXGeWQ4JlKhZnvNF6zC2u9LX83xPQEPY6X3KnCYotu+p/WGsy9Sym8w6yiNa?=
+ =?us-ascii?Q?xTTBALfH7Vk10ZKCiQmQaw/aJN172fiq4p/6F6Ejud7d6AbTS1rsS9DdwTJQ?=
+ =?us-ascii?Q?IimQk5Vh5jNST2Ud27wqew0k4Je+jwnHeXCrVI6TwuNE+tiumuhb3yL1u5Q/?=
+ =?us-ascii?Q?QB4Va8Ft7gbGdheIx+hN9mjkF9/W0CeWQpoZUi23RNA/aU0u2XAU7WTvdR0s?=
+ =?us-ascii?Q?yw8QRhbnH2BqXv2GYDL5avqrNK5eqX1ky/0gRDLwwPTe3a+CLJK+ShnK84Xa?=
+ =?us-ascii?Q?X0xMYa4F/IHaf69VHLZAE19HbAkS9jIjj+TV7/rJ4Ixa+itqrkb2Ss/U9jDE?=
+ =?us-ascii?Q?yGGbOq7pehC/OocPdM94PIkFfojRdwVWcmLykD71kOmH6Fe5oko44206IwEt?=
+ =?us-ascii?Q?JOKgyRapKrALf9vCqree47YUcNdxjmU=3D?=
+X-Exchange-RoutingPolicyChecked: lm/BAajwFrMGqUe28XsxnevGVQdqalLzI8MwYOz+C+7Qr0XjNeLFk9eExiNFHEfeNcLGlKitsHWLe9UPUxnblor+FSpQcF57vuK11G6pfqQ8Vod7aIc7hXwAK2xervlB6dGI2tgFDvNCph8/5mR454tsGXhRELkS2LoND6VOFt1lJpWedEQLzUP3u64FhcllPf/vPlUUtJMX7BhaXiQejpK2RchMi5B5ovULO+PQiE5G7ar83JJEQNTGxMYK4776rZ4UyMAiuZcaRBZTuTm9swRsYTKXbEKr36SKgkgdky6VrXgxF3Qpi2WUt2lftKDSJrX5OjoWGbpr3i3mhVdv1Q==
 X-OriginatorOrg: nutanix.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: bbb77708-2cc1-41b2-46f7-08dec2de7d1c
+X-MS-Exchange-CrossTenant-Network-Message-Id: 4fbb60b6-b7eb-4828-1934-08dec2de7eab
 X-MS-Exchange-CrossTenant-AuthSource: PH0PR02MB7557.namprd02.prod.outlook.com
 X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 05 Jun 2026 08:43:17.2316 (UTC)
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 05 Jun 2026 08:43:19.8735 (UTC)
 X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
 X-MS-Exchange-CrossTenant-Id: bb047546-786f-4de1-bd75-24e5b6f79043
 X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: nn4GPQQQJNBMhqmjRgkKzqPw8RO0sMtookCwHuzadw3BE7cX2ExkkPzEvfVhODAcdJhsazaztZNKk4e3CbaiKYFGSKCL++CB1qEWOenfuJQ=
+X-MS-Exchange-CrossTenant-UserPrincipalName: au+3l1Go483W5kwgitC9u+mXmKT4N1RI/L2Dc+SgGaZbF+5aWSrC/WlMyBv/W6A+DLwVMK3jqzHPXI/iwUSvUJ+/0E8BIyjvDRdhn+MceSk=
 X-MS-Exchange-Transport-CrossTenantHeadersStamped: MN6PR02MB10630
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNjA1MDA4MyBTYWx0ZWRfX198V/7XFeZvn
- N3Qew29w9ZoMXsNuCIoTjzgi6a0bGIcM0Ktr8g6cB70BBI/XxCldfRiTzRasq//Jj3H1s1BAZnJ
- GPUwPSwDFXt6yQ9UEkdkE2ixojF/SZd8dHyyJjoAHuOuXxDwuJa/tjw9LhGefSGGUHrj/gbahyP
- CL+7e6tyvf79DlI9WVwg7WQGhKBwx3ggisV4l7j8MlVNExzqaYCRlUhBchkTYBPKZnYnsqGg46C
- r+QNl5acU9N5ogNKHthv+EGUS0jxlsMdHgsJm+JTll4NmSFF7MbzD2JY4Vvrm17Evv2GEMev9C0
- qqdW3OO2B43BRcZvU9h/B64gqzlXQ4LAqr/aVQXx2ZM81amRTS+hCV6yqefwAApjfU9HV4WR2Xy
- dW34NDeMKW8yVTInbev6KTqp1MysoXfPKx2XtWr8iSquBqoVNrjb/qp27TYSyOzmEx0JZ3AnvJm
- xMGu/cegLcdObSxsOAQ==
-X-Proofpoint-ORIG-GUID: 5fvd1mFnOsv1ISoZ7jG2_o-99vo2pce6
-X-Authority-Analysis: v=2.4 cv=V6FNF+ni c=1 sm=1 tr=0 ts=6a228c2b cx=c_pps
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNjA1MDA4MyBTYWx0ZWRfX/ata+H3ezmN1
+ tBznngWMdgonZQ29n7LTttqsWj7nXkR3zaNJT8X7ux0pL+yHbM74V0crl+uZkQ6Ib096lppd4QN
+ hsT5Fzua2L+/jVbKHZbzGBiLdigG57qCKNF1Hf2u3LgbprnVphjq0+ZDSHQep5GmLtCe3a6ScVR
+ i9XqBgdvc98LX4gJhHMGc80aguNg9sSUylXJdcaWUqSAhUN8G3BVz7btyKQGlUMD1+VSFbLkGpg
+ DjoSxHzWd/gQFYgtAzR1sFI83MQz7IRyIhZaXQzD4Wi70wkkhaOguZczUYhBu0ILezx8MCc/gDE
+ JElhp50ZV6S821GKNchKmH1+CN85fghcSrY6wc5k+tuKeeLCg29lyMDUyqs9kfIXOhydV8ESrbT
+ iBthHI03sDcbRFVFHTdFdKgpBC8CkiG/T5R3fm/1Yibd+i0JkjOE4ChlE39Xan19wSfgoylDPY1
+ Clxem97VvPhqXbW3eaA==
+X-Proofpoint-ORIG-GUID: lErz9HKEcAczflRpGWxrAOzMvU5OjqFu
+X-Authority-Analysis: v=2.4 cv=V6FNF+ni c=1 sm=1 tr=0 ts=6a228c33 cx=c_pps
  a=h3Jk+6XEKCuoUZR+ZnWw9Q==:117 a=6eWqkTHjU83fiwn7nKZWdM+Sl24=:19
  a=z/mQ4Ysz8XfWz/Q5cLBRGdckG28=:19 a=lCpzRmAYbLLaTzLvsPZ7Mbvzbb8=:19
  a=xqWC_Br6kY4A:10 a=FelO9ux0wxsA:10 a=0kUYKlekyDsA:10
  a=VkNPw1HP01LnGYTKEx00:22 a=VofLwUrZ8Iiv6rRUPXIb:22 a=0LlEyIVc8U2lsR7dKhuH:22
- a=64Cc0HZtAAAA:8 a=vS_ObyiCXZHXlSlc3J4A:9
-X-Proofpoint-GUID: 5fvd1mFnOsv1ISoZ7jG2_o-99vo2pce6
+ a=64Cc0HZtAAAA:8 a=lWSKPyB6u50o3MQsOS0A:9
+X-Proofpoint-GUID: lErz9HKEcAczflRpGWxrAOzMvU5OjqFu
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.125,FMLib:17.12.100.49
  definitions=2026-06-05_01,2026-05-28_03,2025-10-01_01
@@ -189,67 +189,331 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Introduce kvm_arm_get_host_isar() to provide scratch vCPU probed host
-isar. Will be used in future commits.
+As CCSIDR banks are not backed by standard idregs[], add special
+handling for them to hook up supported values and blockers for them.
+
+KVM rejects CCSIDR[] linesize if it is < host CTR_EL0.*MinLineSize.
+Report such case in qmp's cpu-definition blockers using
+arm_ccsidr_get_blockers.
 
 Signed-off-by: Khushit Shah <khushit.shah@nutanix.com>
 ---
- target/arm/kvm-stub.c | 5 +++++
- target/arm/kvm.c      | 5 +++++
- target/arm/kvm_arm.h  | 4 ++++
- 3 files changed, 14 insertions(+)
+ target/arm/arm-cpu-models.c |   6 +-
+ target/arm/arm-cpu-props.c  | 154 ++++++++++++++++++++++++++++++++----
+ target/arm/arm-cpu-props.h  |   5 ++
+ 3 files changed, 147 insertions(+), 18 deletions(-)
 
-diff --git a/target/arm/kvm-stub.c b/target/arm/kvm-stub.c
-index 88cbe8d85c..dd683beaaf 100644
---- a/target/arm/kvm-stub.c
-+++ b/target/arm/kvm-stub.c
-@@ -119,3 +119,8 @@ char *kvm_print_register_name(uint64_t regidx)
+diff --git a/target/arm/arm-cpu-models.c b/target/arm/arm-cpu-models.c
+index 5f59650c81..d38293cfb2 100644
+--- a/target/arm/arm-cpu-models.c
++++ b/target/arm/arm-cpu-models.c
+@@ -568,11 +568,14 @@ void arm_cpu_class_check_missing_features(ARMCPUClass *acc, strList **blockers)
+     Error *err = NULL;
+     Object *obj = object_new_with_class(OBJECT_CLASS(acc));
+     ARMCPU *cpu = ARM_CPU(obj);
++    const ARMISARegisters *host_isar;
+ 
+     if (!kvm_enabled() || !arm_find_model(acc->info->name)) {
+         goto out;
+     }
+ 
++    host_isar = kvm_arm_get_host_isar();
++
+     if (cpu_isar_feature(aa64_sve, cpu)) {
+         arm_cpu_sve_finalize(cpu, &err);
+         if (err) {
+@@ -592,7 +595,8 @@ void arm_cpu_class_check_missing_features(ARMCPUClass *acc, strList **blockers)
+         }
+     }
+ 
+-    arm_idregs_get_blockers(cpu, kvm_arm_get_host_isar(), blockers);
++    arm_idregs_get_blockers(cpu, host_isar, blockers);
++    arm_ccsidr_get_blockers(cpu, host_isar, blockers);
+ out:
+     object_unref(obj);
+ }
+diff --git a/target/arm/arm-cpu-props.c b/target/arm/arm-cpu-props.c
+index 44f21de1c5..cb1c44ea1f 100644
+--- a/target/arm/arm-cpu-props.c
++++ b/target/arm/arm-cpu-props.c
+@@ -54,12 +54,13 @@
+       .get = _get,                                                       \
+       .set = _set }
+ 
+-#define ARM_CUSTOM_PROP(prop_name, _custom_type, _get, _set, _reset)     \
++#define ARM_CUSTOM_PROP(prop_name, _custom_type, _get, _set, _reset, _gsv) \
+     { .name = (prop_name), .type = ARM_PROP_CUSTOM,                      \
+       .u.custom_type = (_custom_type),                                   \
+       .get = _get,                                                       \
+       .set = _set,                                                       \
+-      .reset = _reset }
++      .reset = _reset,                                                   \
++      .get_supported_values = _gsv }
+ 
+ static void arm_composite_set_internal(ARMCPU *cpu,
+                                        const ArmCpuPropDesc *p,
+@@ -123,6 +124,44 @@ static void ccsidr_sets_set(ARMCPU *cpu, int level, bool is_icache,
+     *r = FIELD_DP64(*r, CCSIDR_EL1, NUMSETS, val - 1);
+ }
+ 
++static uint64_t ccsidr_sets_get_max(const ARMISARegisters *host_isar)
++{
++    return 1ULL << R_CCSIDR_EL1_NUMSETS_LENGTH;
++}
++
++static uint64_t ccsidr_associativity_get_max(const ARMISARegisters *host_isar)
++{
++    return 1ULL << R_CCSIDR_EL1_ASSOCIATIVITY_LENGTH;
++}
++
++static uint64_t ccsidr_linesize_get_max(const ARMISARegisters *host_isar)
++{
++    return 1ULL << (((1U << R_CCSIDR_EL1_LINESIZE_LENGTH) - 1) + 4); /* 2048 bytes */
++}
++
++static uint64_t ccsidr_linesize_get_min(const ARMISARegisters *host_isar)
++{
++    uint64_t host_IMinLine;
++    uint64_t host_DMinLine;
++
++    arm_idreg_field_read(host_isar, ARM_FIELD_CTR_EL0_IMINLINE, &host_IMinLine);
++    arm_idreg_field_read(host_isar, ARM_FIELD_CTR_EL0_DMINLINE, &host_DMinLine);
++
++    /*
++     * ccsidr_linesize_{get,set} are in unit of bytes.
++     * CTR_EL0.{IminLine,DminLine} is represented as log2(bytes / 4)
++     */
++    return 1ULL << (MAX(host_IMinLine, host_DMinLine) + 2);
++}
++
++static void ccsidr_sets_get_supported_values(const ArmCpuPropDesc *prop,
++                                             const ARMISARegisters *host_isar,
++                                             QList *out)
++{
++    qlist_append_str(out, g_strdup_printf("0-%" PRIu64,
++                                                        ccsidr_sets_get_max(host_isar)));
++}
++
+ static void ccsidr_associativity_get(ARMCPU *cpu, int level, bool is_icache,
+                                      Visitor *v, const char *name,
+                                      Error **errp)
+@@ -150,6 +189,14 @@ static void ccsidr_associativity_set(ARMCPU *cpu, int level, bool is_icache,
+     *r = FIELD_DP64(*r, CCSIDR_EL1, ASSOCIATIVITY, val - 1);
+ }
+ 
++static void ccsidr_associativity_get_supported_values(const ArmCpuPropDesc *prop,
++                                                      const ARMISARegisters *host_isar,
++                                                      QList *out)
++{
++    qlist_append_str(out, g_strdup_printf("0-%" PRIu64,
++        ccsidr_associativity_get_max(host_isar)));
++}
++
+ static void ccsidr_linesize_get(ARMCPU *cpu, int level, bool is_icache,
+                                 Visitor *v, const char *name, Error **errp)
  {
-     g_assert_not_reached();
+@@ -175,6 +222,15 @@ static void ccsidr_linesize_set(ARMCPU *cpu, int level, bool is_icache,
+     *r = FIELD_DP64(*r, CCSIDR_EL1, LINESIZE, enc);
+ }
+ 
++static void ccsidr_linesize_get_supported_values(const ArmCpuPropDesc *prop,
++                                                  const ARMISARegisters *host_isar,
++                                                  QList *out)
++{
++    qlist_append_str(out, g_strdup_printf("%" PRIu64 "-%" PRIu64,
++                                        ccsidr_linesize_get_min(host_isar),
++                                        ccsidr_linesize_get_max(host_isar)));
++}
++
+ static void ccsidr_sets_reset(ARMCPU *cpu, int level, bool is_icache)
+ {
+     uint64_t *r = &cpu->ccsidr[CACHE_BANK(level, is_icache)];
+@@ -206,7 +262,14 @@ static void ccsidr_linesize_reset(ARMCPU *cpu, int level, bool is_icache)
+     static void cache_##NAME##_##FIELD##_reset(ARMCPU *cpu,                 \
+                                                const char *name,            \
+                                                Error **errp)                \
+-    { ccsidr_##FIELD##_reset(cpu, (LVL), (IC)); }
++    { ccsidr_##FIELD##_reset(cpu, (LVL), (IC)); }                           \
++    static void cache_##NAME##_##FIELD##_get_supported_values(              \
++        const ArmCpuPropDesc *prop,                                         \
++        const ARMISARegisters *host_isar,                                   \
++        QList *out)                                                         \
++    {                                                                       \
++        ccsidr_##FIELD##_get_supported_values(prop, host_isar, out);        \
++    }
+ 
+ #define CACHE_PROP_FNS_ALL(NAME, LVL, IC) \
+     CACHE_PROP_FNS(NAME, LVL, IC, sets)   \
+@@ -439,53 +502,65 @@ const ArmCpuPropDesc arm_cpu_props[] = {
+     ARM_CUSTOM_PROP("cache_lvl1_icache_sets", "number",
+                     cache_lvl1_icache_sets_get,
+                     cache_lvl1_icache_sets_set,
+-                    cache_lvl1_icache_sets_reset),
++                    cache_lvl1_icache_sets_reset,
++                    cache_lvl1_icache_sets_get_supported_values),
+     ARM_CUSTOM_PROP("cache_lvl1_dcache_sets", "number",
+                     cache_lvl1_dcache_sets_get,
+                     cache_lvl1_dcache_sets_set,
+-                    cache_lvl1_dcache_sets_reset),
++                    cache_lvl1_dcache_sets_reset,
++                    cache_lvl1_dcache_sets_get_supported_values),
+     ARM_CUSTOM_PROP("cache_lvl2_sets", "number",
+                     cache_lvl2_sets_get,
+                     cache_lvl2_sets_set,
+-                    cache_lvl2_sets_reset),
++                    cache_lvl2_sets_reset,
++                    cache_lvl2_sets_get_supported_values),
+     ARM_CUSTOM_PROP("cache_lvl3_sets", "number",
+                     cache_lvl3_sets_get,
+                     cache_lvl3_sets_set,
+-                    cache_lvl3_sets_reset),
++                    cache_lvl3_sets_reset,
++                    cache_lvl3_sets_get_supported_values),
+ 
+     ARM_CUSTOM_PROP("cache_lvl1_icache_associativity", "number",
+                     cache_lvl1_icache_associativity_get,
+                     cache_lvl1_icache_associativity_set,
+-                    cache_lvl1_icache_associativity_reset),
++                    cache_lvl1_icache_associativity_reset,
++                    cache_lvl1_icache_associativity_get_supported_values),
+     ARM_CUSTOM_PROP("cache_lvl1_dcache_associativity", "number",
+                     cache_lvl1_dcache_associativity_get,
+                     cache_lvl1_dcache_associativity_set,
+-                    cache_lvl1_dcache_associativity_reset),
++                    cache_lvl1_dcache_associativity_reset,
++                    cache_lvl1_dcache_associativity_get_supported_values),
+     ARM_CUSTOM_PROP("cache_lvl2_associativity", "number",
+                     cache_lvl2_associativity_get,
+                     cache_lvl2_associativity_set,
+-                    cache_lvl2_associativity_reset),
++                    cache_lvl2_associativity_reset,
++                    cache_lvl2_associativity_get_supported_values),
+     ARM_CUSTOM_PROP("cache_lvl3_associativity", "number",
+                     cache_lvl3_associativity_get,
+                     cache_lvl3_associativity_set,
+-                    cache_lvl3_associativity_reset),
++                    cache_lvl3_associativity_reset,
++                    cache_lvl3_associativity_get_supported_values),
+ 
+     ARM_CUSTOM_PROP("cache_lvl1_icache_linesize", "number",
+                     cache_lvl1_icache_linesize_get,
+                     cache_lvl1_icache_linesize_set,
+-                    cache_lvl1_icache_linesize_reset),
++                    cache_lvl1_icache_linesize_reset,
++                    cache_lvl1_icache_linesize_get_supported_values),
+     ARM_CUSTOM_PROP("cache_lvl1_dcache_linesize", "number",
+                     cache_lvl1_dcache_linesize_get,
+                     cache_lvl1_dcache_linesize_set,
+-                    cache_lvl1_dcache_linesize_reset),
++                    cache_lvl1_dcache_linesize_reset,
++                    cache_lvl1_dcache_linesize_get_supported_values),
+     ARM_CUSTOM_PROP("cache_lvl2_linesize", "number",
+                     cache_lvl2_linesize_get,
+                     cache_lvl2_linesize_set,
+-                    cache_lvl2_linesize_reset),
++                    cache_lvl2_linesize_reset,
++                    cache_lvl2_linesize_get_supported_values),
+     ARM_CUSTOM_PROP("cache_lvl3_linesize", "number",
+                     cache_lvl3_linesize_get,
+                     cache_lvl3_linesize_set,
+-                    cache_lvl3_linesize_reset),
++                    cache_lvl3_linesize_reset,
++                    cache_lvl3_linesize_get_supported_values),
+ 
+     /* Fractional properties */
+     ARM_FRAC_PROP("feat_CSV2", ID_AA64PFR0, CSV2, ID_AA64PFR1, CSV2_FRAC, csv2_frac_vals),
+@@ -1011,6 +1086,10 @@ void arm_prop_append_supported_values(const ArmCpuPropDesc *prop,
+                                       const ARMISARegisters *host_isar,
+                                       QList *out)
+ {
++    if (prop->get_supported_values) {
++        prop->get_supported_values(prop, host_isar, out);
++        return;
++    }
+     switch (prop->type) {
+     case ARM_PROP_STRING:
+         arm_field_foreach_supported_arch_val(prop->u.field, host_isar,
+@@ -1066,11 +1145,11 @@ void arm_prop_append_supported_values(const ArmCpuPropDesc *prop,
+         break;
+     }
+     case ARM_PROP_COMPOSITE: {
+-        /* not supported for composites */
++        /* no defaults for composites */
+         break;
+     }
+     case ARM_PROP_CUSTOM: {
+-        /* not supported for custom props */
++        /* no defaults for custom props */
+         break;
+     }
+     default:
+@@ -1090,3 +1169,44 @@ const ArmCpuPropDesc *arm_prop_get_composite_of(const ArmCpuPropDesc *prop)
+ 
+     return NULL;
  }
 +
-+const ARMISARegisters *kvm_arm_get_host_isar(void)
++void arm_ccsidr_get_blockers(ARMCPU *cpu,
++                             const ARMISARegisters *host_isar,
++                             strList **blockers)
 +{
-+    return NULL;
++    uint64_t max_linesize = ccsidr_linesize_get_max(host_isar);
++    uint64_t min_linesize = ccsidr_linesize_get_min(host_isar);
++
++    if (!cpu->cache_exposed) {
++        return;
++    }
++
++    for (int level = 0; level < 3; level++) {
++        for (int is_icache = 0; is_icache < 2; is_icache++) {
++            uint64_t level_linesize;
++            char *linesize_props;
++            uint64_t ccsidr = cpu->ccsidr[CACHE_BANK(level, is_icache)];
++
++            if (ccsidr == 0) {
++                continue;
++            }
++
++            if (level == 0) {
++                linesize_props = g_strdup_printf("cache_lvl%d_%s_linesize",
++                    level + 1, is_icache ? "icache" : "dcache");
++            } else {
++                linesize_props = g_strdup_printf("cache_lvl%d_linesize",
++                    level + 1);
++            }
++
++            level_linesize = object_property_get_int(OBJECT(cpu),
++                           linesize_props, NULL);
++
++            if (level_linesize > max_linesize || level_linesize < min_linesize) {
++                QAPI_LIST_PREPEND(*blockers, linesize_props);
++            } else {
++                g_free(linesize_props);
++            }
++        }
++    }
 +}
-diff --git a/target/arm/kvm.c b/target/arm/kvm.c
-index cf6087d337..b4544f3514 100644
---- a/target/arm/kvm.c
-+++ b/target/arm/kvm.c
-@@ -597,6 +597,11 @@ void kvm_arm_set_cpu_features_from_host(ARMCPU *cpu)
-     env->features = arm_host_cpu_features.features;
- }
+diff --git a/target/arm/arm-cpu-props.h b/target/arm/arm-cpu-props.h
+index 55333de858..b32973349c 100644
+--- a/target/arm/arm-cpu-props.h
++++ b/target/arm/arm-cpu-props.h
+@@ -47,6 +47,9 @@ typedef struct ArmCpuPropDesc {
+     void (*get)(ARMCPU *cpu, Visitor *v, const char *name, Error **errp);
+     void (*set)(ARMCPU *cpu, Visitor *v, const char *name, Error **errp);
+     void (*reset)(ARMCPU *cpu, const char *name, Error **errp);
++    void (*get_supported_values)(const struct ArmCpuPropDesc *prop,
++                                 const ARMISARegisters *host_isar,
++                                 QList *out);
+ } ArmCpuPropDesc;
  
-+const ARMISARegisters *kvm_arm_get_host_isar(void)
-+{
-+    return &arm_host_cpu_features.isar;
-+}
-+
- static bool kvm_no_adjvtime_get(Object *obj, Error **errp)
- {
-     return !ARM_CPU(obj)->kvm_adjvtime;
-diff --git a/target/arm/kvm_arm.h b/target/arm/kvm_arm.h
-index e7c40fb003..750dbe1ef4 100644
---- a/target/arm/kvm_arm.h
-+++ b/target/arm/kvm_arm.h
-@@ -15,6 +15,8 @@
- #include "system/kvm.h"
- #include "target/arm/cpu-qom.h"
+ const ArmCpuPropDesc *get_arm_cpu_props(void);
+@@ -61,5 +64,7 @@ const ArmCpuPropDesc *arm_prop_for_field(ArmFieldIdx field);
+ void arm_prop_append_supported_values(const ArmCpuPropDesc *prop,
+                                       const ARMISARegisters *host_isar,
+                                       QList *out);
++void arm_ccsidr_get_blockers(ARMCPU *cpu, const ARMISARegisters *host_isar,
++                             strList **blockers);
  
-+typedef struct ARMISARegisters ARMISARegisters;
-+
- #define KVM_ARM_VGIC_V2   (1 << 0)
- #define KVM_ARM_VGIC_V3   (1 << 1)
- 
-@@ -229,6 +231,8 @@ void kvm_arm_enable_mte(Object *cpuobj, Error **errp);
- 
- void arm_cpu_kvm_set_irq(void *arm_cpu, int irq, int level);
- 
-+const ARMISARegisters *kvm_arm_get_host_isar(void);
-+
- void arm_gic_cap_kvm_probe(GICCapability *v2, GICCapability *v3);
- 
- /*
+ #endif
 -- 
 2.52.0
 
