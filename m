@@ -4,46 +4,53 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3F51CCD6E74
-	for <qemu-devel@archiver.kernel.org>; Fri,  5 Jun 2026 10:56:38 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C001CCD6E5D
+	for <qemu-devel@archiver.kernel.org>; Fri,  5 Jun 2026 11:04:18 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wVSE6-00061q-Ar; Fri, 05 Jun 2026 06:56:34 -0400
+	id 1wVSL3-0007U7-Qq; Fri, 05 Jun 2026 07:03:45 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@mailo.com>) id 1wVSE4-00061h-5u
- for qemu-devel@nongnu.org; Fri, 05 Jun 2026 06:56:32 -0400
+ (Exim 4.90_1) (envelope-from <philmd@mailo.com>) id 1wVSL1-0007To-Tt
+ for qemu-devel@nongnu.org; Fri, 05 Jun 2026 07:03:43 -0400
 Received: from msg-4.mailo.com ([213.182.54.15] helo=mailo.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@mailo.com>) id 1wVSE2-000108-Bx
- for qemu-devel@nongnu.org; Fri, 05 Jun 2026 06:56:31 -0400
+ (Exim 4.90_1) (envelope-from <philmd@mailo.com>) id 1wVSL0-0004Vw-4U
+ for qemu-devel@nongnu.org; Fri, 05 Jun 2026 07:03:43 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=mailo.com; s=mailo;
- t=1780656981; bh=Hv91Jdt48kB3qGhKj6fHPrSHbXTw38XhE3HhcR+9tRw=;
+ t=1780657417; bh=HIUXZ23cJoL7z6YuNj8R5oW/YZPd37UXSmbGQ6EZYyE=;
  h=X-EA-Auth:Message-ID:Date:MIME-Version:Subject:To:Cc:References:
  From:In-Reply-To:Content-Type:Content-Transfer-Encoding;
- b=Y0Z5KQ+sRLJ6Fpz9ZIzlP1CzONERkIxqlXIkQCSKxqUENJBSrDH2sr2IYaHSVWNF+
- WhA1MXCEkP29y9aoLQ1ybSiLpIpy4Ne00lvALtj0agKQuBPxrz8lX7uQEBx/FH6/QV
- NxAYQsIDq8vkOjhdL/rDb0ysbLOHhKE9Eh12O9bk=
-Received: by be1-2.in.mailobj.net [192.168.91.12] with ESMTP
+ b=mqoX92qb7tb3HxMmIooarUHGmKh1LDiCvXfjWurOhF654grUS2vu6ot1vYueSVyBL
+ 0T9vCIEgq9oIiZ0IrVdFXcfuJvhtjk7yDlU2BCuVF7Of7t1kpc6COc61v2LScuBlVV
+ 6ecn9Vxgf5IduKa5h4ciItILVCRZXpnZwlrHRyeY=
+Received: by be1-7.in.mailobj.net [192.168.91.17] with ESMTP
  via ip-20.mailobj.net [213.182.54.20]
- Fri,  5 Jun 2026 12:56:21 +0200 (CEST)
-X-EA-Auth: oxhYryEUKlAPjDe1JoAKtBoQkjyN0Rk669CjjkER2lhlClHw6FIS9vDCkUBjWbh/7m/OVL00QEZxj8fzDrnnLZL3/4CWP9uT
-Message-ID: <2b518a5f-b60b-4106-9ba3-59cef23380a0@mailo.com>
-Date: Fri, 5 Jun 2026 12:56:21 +0200
+ Fri,  5 Jun 2026 13:03:37 +0200 (CEST)
+X-EA-Auth: 68YR+Nm7X3M+6/3G/mtPrTlMNBwrIzPzchj5pq9i1xdplMCPNoa472hdhApk6LXd+k1WA2w791bwPi9m5bZIw42N6lffw9f7
+Message-ID: <31f00a8d-87ca-4dfb-bd18-de2e2a6806a8@mailo.com>
+Date: Fri, 5 Jun 2026 13:03:36 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3 13/14] target/loongarch: Add macro CSR_OFFSET and
- CPU_CSR_OFFSET
+Subject: Re: [PATCH v9 0/4] hw/mem: add spm-memory device for Specific Purpose
+ Memory
 Content-Language: en-US
-To: Bibo Mao <maobibo@loongson.cn>, Song Gao <gaosong@loongson.cn>,
- Richard Henderson <richard.henderson@linaro.org>
-Cc: qemu-devel@nongnu.org, SignKirigami <prcups@krgm.moe>,
- Hengyu Yu <yuhengyu25@mails.ucas.ac.cn>
-References: <20260605082552.175336-1-maobibo@loongson.cn>
- <20260605083910.175647-1-maobibo@loongson.cn>
+To: "Huang, FangSheng (Jerry)" <FangSheng.Huang@amd.com>
+Cc: qemu-devel@nongnu.org, gourry@gourry.net, Zhigang.Luo@amd.com,
+ Lianjie.Shi@amd.com, Igor Mammedov <imammedo@redhat.com>,
+ "David Hildenbrand (Arm)" <david@kernel.org>
+References: <20260602084447.1100554-1-FangSheng.Huang@amd.com>
+ <39411489-1473-44ad-ad56-392aa27990ab@kernel.org>
+ <5ff45049-d96e-428c-915d-fc14cbcb5e58@amd.com>
+ <d4297ad2-4695-4634-a12e-80d65a34e79f@kernel.org>
+ <c9707c49-59ee-458c-8469-12943bab90c2@mailo.com>
+ <20260603151443.612d0e61@imammedo>
+ <c7c8e578-86eb-4b74-b63b-6b81a76c4329@amd.com>
+ <1d2381a2-7101-4039-b41a-d4cccbade4aa@mailo.com>
+ <6f6559c8-f3c2-4d10-be9e-75985bcc934e@amd.com>
 From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@mailo.com>
-In-Reply-To: <20260605083910.175647-1-maobibo@loongson.cn>
+In-Reply-To: <6f6559c8-f3c2-4d10-be9e-75985bcc934e@amd.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=213.182.54.15; envelope-from=philmd@mailo.com;
@@ -69,38 +76,27 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 5/6/26 10:39, Bibo Mao wrote:
-> Instruction rdtime is to read TSC timestamp and logic vCPU id,
-> it is also used by Linux user mode emulation. However function
-> get_csr_offset() cannot be called in user mode emulation, here
-> macro CSR_OFFSET and CPU_CSR_OFFSET are added. The added macro
-> can be called in both user emulation and system emulation.
+On 5/6/26 12:40, Huang, FangSheng (Jerry) wrote:
+
+> Three items deviate from your suggestion:
 > 
-> Signed-off-by: Bibo Mao <maobibo@loongson.cn>
-> ---
->   target/loongarch/csr.c                            | 4 ++--
->   target/loongarch/csr.h                            | 3 +++
->   target/loongarch/tcg/insn_trans/trans_extra.c.inc | 6 +++++-
->   3 files changed, 10 insertions(+), 3 deletions(-)
+>    - DEVICE_CATEGORY_MEMORY: the enum doesn't currently exist in
+>      include/hw/core/qdev.h, and pc-dimm / nvdimm don't set any
+>      device category here. v10 follows the pc-dimm precedent.
 
+Yes, this was a question for Thomas / Igor, do we want to categorize
+memory devices out of misc ones?
 
-> diff --git a/target/loongarch/csr.h b/target/loongarch/csr.h
-> index ca988c21db..6e17275546 100644
-> --- a/target/loongarch/csr.h
-> +++ b/target/loongarch/csr.h
-> @@ -8,6 +8,9 @@
->   
->   #include "cpu-csr.h"
+> 
+>    - QAPI base refactor (id / memaddr / size at TYPE_MEMORY_DEVICE):
+>      acknowledged as a pre-existing pattern across PCDIMM / NVDIMM /
+>      VirtioMEM / SgxEPC / HvBalloon; out of scope for this series.
 
-Unrelated, but "csr.h" doesn't need to include "cpu-csr.h", better
-have it included explicitly where required.
+Agreed.
 
->   
-> +#define CSR_OFFSET(id)                  offsetof(CPULoongArchState, id)
-> +#define CPU_CSR_OFFSET(id, vm_level)    CSR_OFFSET(id)
+Regards,
 
-Reviewed-by: Philippe Mathieu-Daudé <philmd@mailo.com>
-
+Phil.
 
 
 
