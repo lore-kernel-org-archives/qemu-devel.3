@@ -4,88 +4,89 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 36119CD6E6E
-	for <qemu-devel@archiver.kernel.org>; Fri,  5 Jun 2026 22:03:20 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 50B6ECD8C83
+	for <qemu-devel@archiver.kernel.org>; Fri,  5 Jun 2026 22:03:24 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wVcd0-00013o-QM; Fri, 05 Jun 2026 18:02:58 -0400
+	id 1wVcd7-00014S-4w; Fri, 05 Jun 2026 18:03:05 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <alex@shazbot.org>) id 1wVccy-00013E-C7
- for qemu-devel@nongnu.org; Fri, 05 Jun 2026 18:02:56 -0400
-Received: from fhigh-a2-smtp.messagingengine.com ([103.168.172.153])
+ (Exim 4.90_1) (envelope-from <alex@shazbot.org>) id 1wVcd6-00014K-2m
+ for qemu-devel@nongnu.org; Fri, 05 Jun 2026 18:03:04 -0400
+Received: from fout-a1-smtp.messagingengine.com ([103.168.172.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <alex@shazbot.org>) id 1wVccw-0000v3-Kl
- for qemu-devel@nongnu.org; Fri, 05 Jun 2026 18:02:56 -0400
-Received: from phl-compute-07.internal (phl-compute-07.internal [10.202.2.47])
- by mailfhigh.phl.internal (Postfix) with ESMTP id D16231400144;
- Fri,  5 Jun 2026 18:02:53 -0400 (EDT)
-Received: from phl-frontend-03 ([10.202.2.162])
- by phl-compute-07.internal (MEProxy); Fri, 05 Jun 2026 18:02:53 -0400
+ (Exim 4.90_1) (envelope-from <alex@shazbot.org>) id 1wVcd4-0000wm-Ev
+ for qemu-devel@nongnu.org; Fri, 05 Jun 2026 18:03:03 -0400
+Received: from phl-compute-01.internal (phl-compute-01.internal [10.202.2.41])
+ by mailfout.phl.internal (Postfix) with ESMTP id E4934EC011A;
+ Fri,  5 Jun 2026 18:03:01 -0400 (EDT)
+Received: from phl-frontend-04 ([10.202.2.163])
+ by phl-compute-01.internal (MEProxy); Fri, 05 Jun 2026 18:03:01 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=shazbot.org; h=
  cc:cc:content-transfer-encoding:content-type:content-type:date
  :date:from:from:in-reply-to:in-reply-to:message-id:mime-version
- :references:reply-to:subject:subject:to:to; s=fm3; t=1780696973;
- x=1780783373; bh=5VvBWt46BROkzteYsD3w+k2Y0ycL/MWLwPxsCmCfvzM=; b=
- BeuzxzNs0D3eCNWzL3MLZH6u9LS1/LE7m8z//uanvD10lz0L8BRTJWJxryKTVM41
- LQx1zjj1rK3eGrpZPtzWkbR+fF8QdHJjhYxJVjtwCkTx2s/e7bgA4F7v1vHu4rZp
- uWSyrDFv8CDWQ8JMqxKMlK7+cpTpQm4Lhk9RJA+nFgJNfhzZnt6UdPf3pxzKRqXM
- qfIHPmQYnjf2YkY6V5EXlxa1e8QqBtvdj5N97cSl4R/BXhctECSd9WkIYwftYj9n
- 2K42hCWkHuqs1f+XADIkIVAN6vY8PaNmWJGEjM0hxFBytfelqvEqfN+JzMUNVvzM
- aJIaRkFl7bUp1y1BrKM8Hg==
+ :references:reply-to:subject:subject:to:to; s=fm3; t=1780696981;
+ x=1780783381; bh=BrRzzTmA+xQvWeI6UA5gDb94oacoCFBkcVRzPJInAYg=; b=
+ f/dZVHuWowflwFgLaLnNj0Ltkxh+TXFFqcYowqum0+EGRFiJEPTrHf+qIcO6JINC
+ oy0zMTZtgfCre53ht5wPFjqPNTKV2nPqlix++MssAH46DIDxUvjlcCWh6VoQI/eQ
+ sRNaVGHdSCmczlIo4Ut8Rf+w27BtP1xMjhvUuVqfp2NL4jpPQi8ycFe523yK5QCy
+ b3wznV0eGNce6v4BAkJSBfn+qAqfrAJ7ZzcO1D+OZSe9+9fNrR99u5kGxRNzrwnd
+ 5kMS4yTsQZ7cbXDsVFT+ynf6Kq/Hnkssu/mrrHufYQRH79qyl3dpjtzDxZZhC1LZ
+ DVs5wAlTjiA8Qj0g+ySggA==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
  messagingengine.com; h=cc:cc:content-transfer-encoding
  :content-type:content-type:date:date:feedback-id:feedback-id
  :from:from:in-reply-to:in-reply-to:message-id:mime-version
  :references:reply-to:subject:subject:to:to:x-me-proxy
- :x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=1780696973; x=
- 1780783373; bh=5VvBWt46BROkzteYsD3w+k2Y0ycL/MWLwPxsCmCfvzM=; b=G
- ipfW4K0eV4drF1zLLBXF+rsyXxudZ60si5gFti+1tgcuEROJ66pOp/ybTlxwFaSi
- 0ceY1mjIsdMYswFW03BytNA9WisNPuF+Z1WDB+OKgSVboM2RMX6FGXwcCQ0DYDTC
- BEgXIv8dx40nnvtWk1hXWbBhOZzTBQo69ibmA1Qtgswoa5J7GqbDNaYqe4rw6i8F
- TBIDfklrOSfIGnWGdTxQTk6gLdDm7EHb74EVp5ZI5vl+U6DI6WxrW67t9yGiM+O5
- 25RCF6KtsjckVYRBkmFheVE+8A3ngvrgxddGQwYaDyjMDWSFfowmPROH6bO0jxg4
- nF/dSkzGd9w+CNBc94uXg==
-X-ME-Sender: <xms:jUcjau78IboOi6NIPHLJeeLPNMwiPAfALVzaUFd6c6J09hHbxm7BdA>
- <xme:jUcjag3fGl2jFUSUjYHN-uG9AKG3kHu9WNyJ3uovQ_uibgYCS4WfEPBsAqf49FSwX
- sEhOmItKT_yvTqDKiwxiEc7sF-7KAz5IBEaw0Qihtt5d2bYYL6sUA>
-X-ME-Received: <xmr:jUcjapDuCwX9Xemhn0oNCYyjItx0DsCkQ03TDSb42DNCHewoow6I3Roc-ek>
-X-ME-Proxy-Cause: dmFkZTGGJd3OEbRBajcsXpavUPnGwIxLnr+81C1kXVZy8LYnHTtKp91O2HMlqWx4dLa6se
- kQn5S4N/5FN8JHf7aY1sgJaXOUeDH4xFDctLsBU+umt02xx81kj5bjK1lJJVGgfxseaguE
- yyEjOAAaafM8Gi7qPVI652cAbgDeOXpn4m6ps9iUqrfzXXxMPZm/mVVmag5WOqVKMrANiL
- B0VEtzKUBBYXgx6OWY2grYg5o1vDGy1HxNJzUtrXBGoM7dsfxiLNjgIyTpwWJxbFBDhzPD
- LGlAFfK+GYeyHKKfrWRdUZIKwQqkt5bQl7aQZu9UFxV+pc6nf5bKl+yZDXriaeKoZkdmNz
- Z1y6Xs7Y/ba7gFVUxZfbZ0454kWARcGLaEdSl8jyAdBJHJ/R2K42y4Xs/8i1gyDU8Gj4Qt
- N7poRSxA+rskJIBKCHAvHkJQMLNYsjHgx496piVrH3/OL0i7yxWGTKv//aDUTssbT0k9Ep
- hdaoOlspHiU8FCWI/M/W0BzRui53IdoqbfjFGsBKd0Qbv+NTmPab6z1iWhgYcmY37yz1g3
- YqQqo7Kl/hrMKAKVo2aWGNHGKsU62MCQw7pwxmo6MHC3URL/IK0tMykxVYidkuZOE3KI7Z
- ZMREOm4jYsjh15/BUrWypTz56augfOwnNRg6NzNDbZ4NzEvnDQk1Ku9vVhUg
-X-ME-Proxy: <xmx:jUcjarM0m6K0a1nsSXL8Uh-OWc45zEfmGbLzygOtGCRXGrzNhm6_fg>
- <xmx:jUcjauacNcWR_-8-x2OYaACXHjeXBcp8oT0fJaoHTZ7a6AJ16AC5aw>
- <xmx:jUcjaqvhvx6A8QQaDbrQ9n2L6pFO6aK--zuoXHc5_GQSm735W2rhog>
- <xmx:jUcjagOHjDYiYGymMh9KqhGbxqshVk64GJI6kzGgn_CPzG5tgxsErw>
- <xmx:jUcjaqoXhkTRrl4_dVW1yEDkFACPeucNjwpZTHxWz8X9XJcfYxQTZHLi>
+ :x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=1780696981; x=
+ 1780783381; bh=BrRzzTmA+xQvWeI6UA5gDb94oacoCFBkcVRzPJInAYg=; b=Z
+ lPDnwPJjrhKo26dpAflmM05TvXKAmtw25z1SDC2QjMLgPm9w1NVHBJdY7rftxKJT
+ fNiLkyr0ZG1aYeV3qF9s1gTMjPxPHsO8eRSc1TUiVzhjsSBMrehHzxCVHWYSklb5
+ 3Y6KYVEVeakLJpFNF6qYyZUQT8PuAU3tyRNGOzcFr43UH2sc2duIBa+YDQd12Byl
+ awIaRpPU52Zb4Vy3DIJ2/hkpVGQNKeTTNFE1KMYiX88QF5oynKxf490mb9kMYJph
+ vKkw4qjPRvYR94WjQ3Mfnuh7qAq+nVeZST33iZdGgpEZ0TBoGSZhj3/2lbo7YLPw
+ Ag/Kq5lpB1XO/8wWNuOjg==
+X-ME-Sender: <xms:lUcjanmrvAWEx6KS3jK6TxPJaXc1yMrzaUtNZ7hLqHcEQNiB1647hw>
+ <xme:lUcjajwS7PiUWRNVhsqiKYzzKpBCCZ3Az0wIRmkUsCQGzyqmdiVSCg-BZ3-Gh6N-q
+ uyY62zYm53GGAMRjWyYvTDOu40ne_AXFMO6vvgt6H0ovFJ4FBBmaA>
+X-ME-Received: <xmr:lUcjapPzbkICffAKUbm-WETGBl6JL6_DW6KeLmQuP5BIW2pijJxDvJCpQoQ>
+X-ME-Proxy-Cause: dmFkZTFW0/HJg84SCHeNWA+1evtL1PhrZVIVRZTGAahxDG44rtp+xna683lf2rr+HHhFct
+ syN4BxA5h4qmlSK6Q/oZ4UDNrK3oKLxN6mddwTuiGg/kkdspU7b9Fwle1S/UHOY+i2ummn
+ 1E6a/sw4sW2oOfVLzLyXTlFnHiodofTFoNKzRI99JFdw03GPzNaRnSviTKnFW0L6FLq69y
+ kVdD/8IOAFDGLIeuctWdeVIVm8vK572mRrVXPGNrinbqNggysXZVDWuFzAqW1xDzJQ6Ksz
+ 9+Hj67Wo2MUZB+csQwUxkiW6Lm5V2ZkoQIJ0gP+6rs2dHxNhYc+IdlJy7x4yAkemAcddqF
+ ql+9U5vFqFpwBNamsBOQPrV3VoLKbpK3RXMJH2hZ8WZGWqvyq8rFD+JT4dyOIY7AoXECen
+ fdc1XJ+j3rZ7hmbTGbVDVK0HJ6LxUKqdEGe9V6nHbLCsQ6tlf64w0IFpnIuwV7b3fc1K3J
+ COH5GI8TDBfa5kRYSpHVlqX6UM8ZKX/VFsCJfukL/73dr1ocXDi/dm+jYzzi0Gtu3o3FMK
+ 0SQ87igjmi+o149y64UqSbf7m6MYk5E8uOWqzHKHzEbZUMemVFJHsyXqjKtIWPn2yklPmf
+ /CL4xxT9Kcik8tMk5TeQIlqHI5m9SwbPX0iaup7BuzLOEJkz/z1NLm1z5kQg
+X-ME-Proxy: <xmx:lUcjavoICfUizYbwpae1P-H8SXJUTsDx8m73-io6VaCRiIGeLLZ1WA>
+ <xmx:lUcjaiHJJM6WP79wqxPFKM5XzIF8tOj_ThsiiIB0qgMSPtPa1uBfjw>
+ <xmx:lUcjasq4tr7CG88zPksH7ROjXeBw7AgS3Y1KZRghiF6kt1_WFqrBxw>
+ <xmx:lUcjajb5f0q2j6UPJGOjdGI4npFi1YfLw4otEe9-_7hGuaG1JCvv7g>
+ <xmx:lUcjagGsU3Vww6zB07Oz_gyzX-wQ92rbdukocvytunCS84IIqSvKqf1g>
 Feedback-ID: i03f14258:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
- 5 Jun 2026 18:02:52 -0400 (EDT)
-Date: Fri, 5 Jun 2026 16:02:51 -0600
+ 5 Jun 2026 18:03:01 -0400 (EDT)
+Date: Fri, 5 Jun 2026 16:03:00 -0600
 From: Alex Williamson <alex@shazbot.org>
 To: Tomita Moeko <tomitamoeko@gmail.com>
 Cc: qemu-devel@nongnu.org, "Michael S. Tsirkin" <mst@redhat.com>,
  =?UTF-8?B?Q8OpZHJpYw==?= Le Goater <clg@redhat.com>, K S Maan
  <kirandeepmaan45@gmail.com>, alex@shazbot.org
-Subject: Re: [PATCH 5/6] vfio/igd: Toggle rom_need_patch_id flag on IGD devices
-Message-ID: <20260605160251.4995910b@shazbot.org>
-In-Reply-To: <20260603173355.36121-6-tomitamoeko@gmail.com>
+Subject: Re: [PATCH 4/6] vfio/pci: Use pci_rom_patch_ids() for IGD ROM ID
+ patching
+Message-ID: <20260605160300.73b4c36c@shazbot.org>
+In-Reply-To: <20260603173355.36121-5-tomitamoeko@gmail.com>
 References: <20260603173355.36121-1-tomitamoeko@gmail.com>
- <20260603173355.36121-6-tomitamoeko@gmail.com>
+ <20260603173355.36121-5-tomitamoeko@gmail.com>
 X-Mailer: Claws Mail 4.4.0 (GTK 3.24.52; x86_64-pc-linux-gnu)
 MIME-Version: 1.0
 Content-Type: text/plain; charset=US-ASCII
 Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=103.168.172.153; envelope-from=alex@shazbot.org;
- helo=fhigh-a2-smtp.messagingengine.com
+Received-SPF: pass client-ip=103.168.172.144; envelope-from=alex@shazbot.org;
+ helo=fout-a1-smtp.messagingengine.com
 X-Spam_score_int: -27
 X-Spam_score: -2.8
 X-Spam_bar: --
@@ -108,97 +109,74 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu,  4 Jun 2026 01:33:53 +0800
+On Thu,  4 Jun 2026 01:33:52 +0800
 Tomita Moeko <tomitamoeko@gmail.com> wrote:
 
-> IGD ROMs are known to have wrong device IDs and bogus checksums.
-> Toggle the rom_need_patch_id flag when the IGD has ROM BAR or custom
-> romfile so that pci_rom_patch_ids() will correct the vendor/device IDs
-> and checksum.
-> 
-> The ROM BAR availability check is extracted into
-> vfio_pci_igd_has_rom_bar() to avoid duplicating the region info lookup.
+> Remove the duplicate inline logic in vfio_pci_load_rom() that patched
+> the device ID in an IGD option ROM and replace it with a call to
+> pci_rom_patch_ids(), conditioned on the rom_need_patch_id flag.
 > 
 > Reported-by: K S Maan <kirandeepmaan45@gmail.com>
 > Signed-off-by: Tomita Moeko <tomitamoeko@gmail.com>
 > Tested-by: K S Maan <kirandeepmaan45@gmail.com>
 > ---
->  hw/vfio/igd.c | 27 +++++++++++++++++++++------
->  1 file changed, 21 insertions(+), 6 deletions(-)
+>  hw/vfio/pci.c | 31 +++----------------------------
+>  1 file changed, 3 insertions(+), 28 deletions(-)
 > 
-> diff --git a/hw/vfio/igd.c b/hw/vfio/igd.c
-> index e091f21b6a..17437ae18d 100644
-> --- a/hw/vfio/igd.c
-> +++ b/hw/vfio/igd.c
-> @@ -509,11 +509,22 @@ void vfio_probe_igd_bar0_quirk(VFIOPCIDevice *vdev, int nr)
->      QLIST_INSERT_HEAD(&vdev->bars[nr].quirks, bdsm_quirk, next);
->  }
+> diff --git a/hw/vfio/pci.c b/hw/vfio/pci.c
+> index 9c06b25e63..6cbd65126e 100644
+> --- a/hw/vfio/pci.c
+> +++ b/hw/vfio/pci.c
+> @@ -1029,6 +1029,7 @@ static void vfio_update_msi(VFIOPCIDevice *vdev)
 >  
-> +static bool vfio_pci_igd_has_rom_bar(VFIOPCIDevice *vdev)
-> +{
-> +    struct vfio_region_info *rom = NULL;
-
-Nit, copied from existing code, but the initialization here is
-unnecessary.
-
-> +    int ret;
-> +
-> +    ret = vfio_device_get_region_info(&vdev->vbasedev,
-> +                                      VFIO_PCI_ROM_REGION_INDEX, &rom);
-> +
-> +    return !ret && rom->size;
-> +}
-> +
->  static bool vfio_pci_igd_config_quirk(VFIOPCIDevice *vdev, Error **errp)
+>  static void vfio_pci_load_rom(VFIOPCIDevice *vdev)
 >  {
->      struct vfio_region_info *opregion = NULL;
->      PCIDevice *pdev = PCI_DEVICE(vdev);
-> -    int ret, gen;
-> +    int gen;
->      uint64_t gms_size = 0;
->      uint64_t *bdsm_size;
->      uint32_t gmch;
-> @@ -556,8 +567,6 @@ static bool vfio_pci_igd_config_quirk(VFIOPCIDevice *vdev, Error **errp)
->           * - OpRegion
->           * - Same LPC bridge and Host bridge VID/DID/SVID/SSID as host
->           */
-> -        struct vfio_region_info *rom = NULL;
-> -
->          legacy_mode_enabled = true;
->          info_report("IGD legacy mode enabled, "
->                      "use x-igd-legacy-mode=off to disable it if unwanted.");
-> @@ -567,9 +576,7 @@ static bool vfio_pci_igd_config_quirk(VFIOPCIDevice *vdev, Error **errp)
->           * there's no ROM, there's no point in setting up this quirk.
->           * NB. We only seem to get BIOS ROMs, so UEFI VM would need CSM support.
->           */
-> -        ret = vfio_device_get_region_info(&vdev->vbasedev,
-> -                                          VFIO_PCI_ROM_REGION_INDEX, &rom);
-> -        if ((ret || !rom->size) && !pdev->romfile) {
-> +        if (!vfio_pci_igd_has_rom_bar(vdev) && !pdev->romfile) {
->              error_setg(&err, "Device has no ROM");
->              goto error;
+> +    PCIDevice *pdev = PCI_DEVICE(vdev);
+>      VFIODevice *vbasedev = &vdev->vbasedev;
+>      struct vfio_region_info *reg_info = NULL;
+>      uint64_t size;
+> @@ -1084,34 +1085,8 @@ static void vfio_pci_load_rom(VFIOPCIDevice *vdev)
 >          }
-> @@ -610,6 +617,14 @@ static bool vfio_pci_igd_config_quirk(VFIOPCIDevice *vdev, Error **errp)
->          goto error;
 >      }
 >  
-> +    /*
-> +     * IGD are known to have bad checksums and wrong device ID in its rom,
-> +     * request to patch it.
-> +     */
-> +    if (pdev->romfile || vfio_pci_igd_has_rom_bar(vdev)) {
-> +        pdev->rom_need_patch_id = true;
-> +    }
-> +
->      /*
->       * ASLS (OpRegion address) is read-only, emulated
->       * It contains HPA, guest firmware need to reprogram it with GPA.
+> -    /*
+> -     * Test the ROM signature against our device, if the vendor is correct
+> -     * but the device ID doesn't match, store the correct device ID and
+> -     * recompute the checksum.  Intel IGD devices need this and are known
+> -     * to have bogus checksums so we can't simply adjust the checksum.
+> -     */
+> -    if (pci_get_word(vdev->rom) == 0xaa55 &&
+> -        pci_get_word(vdev->rom + 0x18) + 8 < vdev->rom_size &&
+> -        !memcmp(vdev->rom + pci_get_word(vdev->rom + 0x18), "PCIR", 4)) {
+> -        uint16_t vid, did;
+> -
+> -        vid = pci_get_word(vdev->rom + pci_get_word(vdev->rom + 0x18) + 4);
+> -        did = pci_get_word(vdev->rom + pci_get_word(vdev->rom + 0x18) + 6);
+> -
+> -        if (vid == vdev->vendor_id && did != vdev->device_id) {
+> -            int i;
+> -            uint8_t csum, *data = vdev->rom;
+> -
+> -            pci_set_word(vdev->rom + pci_get_word(vdev->rom + 0x18) + 6,
+> -                         vdev->device_id);
+> -            data[6] = 0;
+> -
+> -            for (csum = 0, i = 0; i < vdev->rom_size; i++) {
+> -                csum += data[i];
+> -            }
+> -
+> -            data[6] = -csum;
+> -        }
+> +    if (pdev->rom_need_patch_id) {
+> +        pci_rom_patch_ids(pdev, vdev->rom, vdev->rom_size);
+>      }
+>  }
+>  
 
-Nit, the commit log rationalizes extracting vfio_pci_igd_has_rom_bar()
-to avoid duplication, but both call sites are within the same function
-and the status of whether the device has a ROM BAR is invariant.  We
-could test once before we branch into legacy mode test and avoid the
-helper and duplicate test.  Thanks,
+Wouldn't this provide cleaner bisection if we call the helper here
+unconditionally and make it conditional in the next patch?  Or just
+re-order patches 4 & 5 so we set the flag before we make this
+conditional on the flag.  Thanks,
 
 Alex
 
