@@ -4,104 +4,108 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id EB92ACD6E7D
-	for <qemu-devel@archiver.kernel.org>; Fri,  5 Jun 2026 15:20:30 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 519EFCD6E7D
+	for <qemu-devel@archiver.kernel.org>; Fri,  5 Jun 2026 15:22:23 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wVWLO-0005LL-1E; Fri, 05 Jun 2026 11:20:22 -0400
+	id 1wVWN8-0006AL-4l; Fri, 05 Jun 2026 11:22:10 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1wVWLM-0005Kr-I1
- for qemu-devel@nongnu.org; Fri, 05 Jun 2026 11:20:20 -0400
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1wVWN6-00069r-Hp
+ for qemu-devel@nongnu.org; Fri, 05 Jun 2026 11:22:08 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1wVWLK-0005xR-3d
- for qemu-devel@nongnu.org; Fri, 05 Jun 2026 11:20:20 -0400
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1wVWMy-0006fr-LM
+ for qemu-devel@nongnu.org; Fri, 05 Jun 2026 11:22:08 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1780672816;
+ s=mimecast20190719; t=1780672900;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=qjHqaSOnrx29GLKNlcvVjVzeXyq3ExDRnObF0ZIQkyM=;
- b=FB+nuCY305jJIf2HEdzqSCnkNd3SIQvalnn+sCCnVyQrwcjv6SZy293HgrNB8HaXcDtUXu
- eUtf4HtPqV+Z2FQErVVsiXIVxeqx2zHoc29BObUHRNDRZPC34hZuD8M/yBWZtJZS9Xibrq
- 6vRBqur1yMGsB8DdAifxmgYxNfFp0qI=
-Received: from mail-ed1-f69.google.com (mail-ed1-f69.google.com
- [209.85.208.69]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=4BusPpGTOpupd6cAkoKrqKwmO1c3evx1pEzcSOVk6M8=;
+ b=fhoIQxR6zmbAZZqbKYKgQMoXXlgYdJN11qOO8BbkCpgv9NzuoY8qjH0HjZnVKrtaHjteB2
+ J+bUQ9zRUTSGxGUhHxCKXyLEkoF4p5i9H6r5LJ/6ftltFkBkJRqYJ8rAWzcjGBvv3mXpR0
+ 4CxhOlWkZfmylzcSPPkmYRG+X0JpOlQ=
+Received: from mail-ej1-f69.google.com (mail-ej1-f69.google.com
+ [209.85.218.69]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-443-fuhxNX8kN_CMAFwMyJx12g-1; Fri, 05 Jun 2026 11:20:15 -0400
-X-MC-Unique: fuhxNX8kN_CMAFwMyJx12g-1
-X-Mimecast-MFC-AGG-ID: fuhxNX8kN_CMAFwMyJx12g_1780672814
-Received: by mail-ed1-f69.google.com with SMTP id
- 4fb4d7f45d1cf-68c4453b623so1960878a12.2
- for <qemu-devel@nongnu.org>; Fri, 05 Jun 2026 08:20:15 -0700 (PDT)
+ us-mta-43-ruMVR1uiORWnhqg5Rrcfbw-1; Fri, 05 Jun 2026 11:21:39 -0400
+X-MC-Unique: ruMVR1uiORWnhqg5Rrcfbw-1
+X-Mimecast-MFC-AGG-ID: ruMVR1uiORWnhqg5Rrcfbw_1780672898
+Received: by mail-ej1-f69.google.com with SMTP id
+ a640c23a62f3a-bf381078ac8so136496766b.3
+ for <qemu-devel@nongnu.org>; Fri, 05 Jun 2026 08:21:38 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1780672814; x=1781277614; darn=nongnu.org;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
- bh=qjHqaSOnrx29GLKNlcvVjVzeXyq3ExDRnObF0ZIQkyM=;
- b=mbHpKRWKVcJYsm3MOCRE71sUM17D6AaX1aPSqo8+lUgFYT47v2mBRJWR9QdOlrrTuo
- rUU6AFUBE+EdYZx+kObKAlN8oEAapfTx6wWyEX62cyT1q6cuaSMzB0POwru+Hyma+3L1
- qHBxMlnEHMLkPgi4gtRVX3KqnRi4PPNyfYyeD6dpjoAcSLp7GfUoIOIcuViz1JudL8cj
- 3fXUtucBk8RJ5Lq3gw0ZBWW8SIJoY3DtHyQ2wWyb0btRz3+J4onBsk4q7T4KfEmTxIne
- 8Vyr17MfyR/Lb3R7MKPjHUNlIuTFthih188Ih6E43bZSJmCrLefsvkUyTxhWZC1+xAjI
- OtrA==
+ d=redhat.com; s=google; t=1780672898; x=1781277698; darn=nongnu.org;
+ h=in-reply-to:content-transfer-encoding:content-disposition
+ :mime-version:references:message-id:subject:cc:to:from:date:from:to
+ :cc:subject:date:message-id:reply-to;
+ bh=4BusPpGTOpupd6cAkoKrqKwmO1c3evx1pEzcSOVk6M8=;
+ b=S53ZPvgJYoBB/KCLkmMFJma/Qa9dUIz9pe+iYRxMUNQA0Q0KJIsW1YjVqZpnUPfo5q
+ BrQXuI14gxvzrgWR0EMkCNenAXN6m3uJpX9yslzBz5m/vkbMUh6YdD2O1TfArJHzJ2R7
+ YKARzKdTWs4MgLKDNG9FTb9gr4/vbnFXgWtNnDfyYmTVI7skBzUTb+lPiBQUaXDH/bNd
+ 3sOpx3WePKAZ/e19+N5gpvpyFVkOrGzB8hLCA9Gxt+Z9nMrPk92hP02BYH3sk47Ezni3
+ p4rjqMtJxeNp1p+mFb7uRx8WwlJycYV+JGMIvfQ1zhuWA7CIjuI5ZKc5tg7B1nN1QRZX
+ mH0g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1780672814; x=1781277614;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=qjHqaSOnrx29GLKNlcvVjVzeXyq3ExDRnObF0ZIQkyM=;
- b=T+L+vG2B/IbXcZ3vLtxc2te5W+r13jzdm9HXkZsgNE3wnq+/I+8W3KcFq5bDnd8aaA
- r/vDTbqNStO7qexDw7kiSHrhxuOv0/oDExCTU0vBwnAMHravubTosabisVnduKMTVb80
- hvwFXiyGgPrVzYNz8HQfVO9OqJ1fSPYgfaiPOvt63zooK4jXCU8IoBQgw9DxxABznKJE
- leBXPqLhFz3M30x/I0JI26fLSd4YvW/5Iq8JI/V7TcLKSXNVvzE6Pqn3MVO83XHIIK3F
- vHnbJ1zTY4CuL5vwoSKYW9pB2BASzbIDCg1oyO/sN1oQnH8i577XnszetB2tlYeh7w5o
- xoYQ==
-X-Gm-Message-State: AOJu0YwbFw9ewwSMA/Rc/s14HnuxY/ZprrvcRTiHMUK3bp5I7TAtrJrO
- LNf/F19g20yy0jQEfjBXZHYipv4zNqCFD0ghCE4fY09g+Wg+7GlLDtoMc6seFRo5+KUeK93VCFh
- sZQ25/GCAHOJ99eEb665Dawb/CEKHvMMsc/7Yn1N6h2cQi1uRGHkeLilD
-X-Gm-Gg: Acq92OGBKaUP86ehIqCCFc8/4WCgCLtPAQcaDYcDHZbnHPevMghCJGnAWR9Qt5nZsYX
- Mz5RApmMseNWhgjelVhy2sZhNkckW2detCrnkLQ9bi2g0SSc3C3v2AzkvhetVpljUMJgUKbvm7H
- jn5NOtwm7KtumjhHXAR+SyPe6fTdmSTBAsMzle3OIap1DW1xCW9toducXrLF/8kCKqw4KOZ2qx1
- gy7JSzEZcm/GuF2FZOaXbLGiKC2AcFVcXPG6p4w5rQO3J0VBpcjR+kmOFcxsHMynvfaF1FM63GK
- 4lAK6D4vWQIvSiDvN91dzB+N30MeA9vUIx1vOTy/jWsmICgxEy9+lH4QNx7qwjgsa81RNbHVG2t
- gSJ6X/UIMbYOHvTgC44OtFwxilNJUce+865IZFc1Krby/hDDH41rwfT8=
-X-Received: by 2002:a05:6402:388f:b0:68a:ac22:ccc4 with SMTP id
- 4fb4d7f45d1cf-68fa5035f4fmr2129310a12.14.1780672813910; 
- Fri, 05 Jun 2026 08:20:13 -0700 (PDT)
-X-Received: by 2002:a05:6402:388f:b0:68a:ac22:ccc4 with SMTP id
- 4fb4d7f45d1cf-68fa5035f4fmr2129279a12.14.1780672813356; 
- Fri, 05 Jun 2026 08:20:13 -0700 (PDT)
-Received: from redhat.com (ppp-94-66-118-61.home.otenet.gr. [94.66.118.61])
- by smtp.gmail.com with ESMTPSA id
- 4fb4d7f45d1cf-68e65b4d988sm3934047a12.25.2026.06.05.08.20.11
+ d=1e100.net; s=20251104; t=1780672898; x=1781277698;
+ h=in-reply-to:content-transfer-encoding:content-disposition
+ :mime-version:references:message-id:subject:cc:to:from:date:x-gm-gg
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=4BusPpGTOpupd6cAkoKrqKwmO1c3evx1pEzcSOVk6M8=;
+ b=Y4YnAs1f9DGKij6PdQl81gescgQkQoBosua0A5Kd27rYkdJC2MRXfHKQ6fBWwWd4yQ
+ E6MwOMBV5yu9pQLR3/BiD9pBFaeW8J/KqRQp7UbDplikOA9XdQUneSWlMVblGWLzJo/n
+ mcobyqdqcb3cnDQf8xi6NMAqds9nA1k7NpaJk2Se1h2VvR5HTG7hbj/XpmcGT7bW56iI
+ 3GL3O70SKuanrnqoA6RX6UQJ1QG4lodR1SYkOOSGFnLqeS0WDtXJcCEl4S01FpdqFjju
+ 0zd4sRQhi2Duqj2iZsj4mgGT9g4lYGPEMEr3DdnR95euH9ZuO9Y2X0bDgCXdXTKaY+Uh
+ afrA==
+X-Gm-Message-State: AOJu0Yy0uEiIj4CuS4vtf8RIxF3A5U37ya2w3PMwy84oxZ63q7VtJjOb
+ 2Ptdzt7V7CEGMrFj58KLKZQzT3oP/LM2HBbr7TH65a3pAXGctrWelwFkVf20Ul97xajcwnGzAfq
+ I3gPbKigZ5OQ1di7WWY0qnU9R+e4JS3rBlY1EFwgFpmP6T1RWS1rtT0QI7+gb1Btx
+X-Gm-Gg: Acq92OGM0+Whr9NQ27TI9Frtw8QgOhldM3ZpcWXzCuw+vI2g1AOHUIszm+uHBPow3d2
+ OnO+MQGZapSNzekoWSlwpV7OszMS850Q01Fbz/nm5ZoJWJovYuVQxcp7kisMjP43TiLzaioaiaT
+ GlP6liconajTW7PAwoU5LQ8wbOplBBOtklJOAJMGf3avL8JzOfz7NiS+IPtToE9lu6ezuJKXy7C
+ vstV2PycChfQNKwgGodhq5OHuclt8sTij8KxKzeHrqVibRMaNj+vyIqYtUcBpRPpQg4D93rH15j
+ lPAOuDXiWOYViiNb7J0ezIogd7rcZfwXSrQb0mOJFuDJB12vc32YAUfTI1wNY4u89BCMrtKj2On
+ HyjJBemcBPC+0baZVUQ5878Pk4w==
+X-Received: by 2002:a17:906:dc8b:b0:bec:64c3:9ac0 with SMTP id
+ a640c23a62f3a-bf371e4e3aamr217080466b.14.1780672897540; 
+ Fri, 05 Jun 2026 08:21:37 -0700 (PDT)
+X-Received: by 2002:a17:906:dc8b:b0:bec:64c3:9ac0 with SMTP id
+ a640c23a62f3a-bf371e4e3aamr217067566b.14.1780672895959; 
+ Fri, 05 Jun 2026 08:21:35 -0700 (PDT)
+Received: from x1.local ([142.189.10.167]) by smtp.gmail.com with ESMTPSA id
+ a640c23a62f3a-bf054e05199sm459633866b.29.2026.06.05.08.21.32
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 05 Jun 2026 08:20:12 -0700 (PDT)
-Date: Fri, 5 Jun 2026 11:20:09 -0400
-From: "Michael S. Tsirkin" <mst@redhat.com>
-To: Fiona Ebner <f.ebner@proxmox.com>
-Cc: qemu-devel@nongnu.org, Peter Maydell <peter.maydell@linaro.org>,
- Paolo Abeni <pabeni@redhat.com>, Jason Wang <jasowang@redhat.com>,
- Lei Yang <leiyang@redhat.com>, Eduardo Habkost <eduardo@habkost.net>,
- Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
- Philippe =?iso-8859-1?Q?Mathieu-Daud=E9?= <philmd@linaro.org>,
- Yanan Wang <wangyanan55@huawei.com>, Zhao Liu <zhao1.liu@intel.com>,
- Gabriel Goller <g.goller@proxmox.com>,
- Stefan Hanreich <s.hanreich@proxmox.com>,
- Thomas Lamprecht <t.lamprecht@proxmox.com>
-Subject: Re: [PULL 12/14] virtio-net: Advertise UDP tunnel GSO support by
- default
-Message-ID: <20260605111823-mutt-send-email-mst@kernel.org>
-References: <cover.1762698873.git.mst@redhat.com>
- <1c79ab6937ae938d3dfd4da1c01afc7eb599857e.1762698873.git.mst@redhat.com>
- <077647f6-d569-4918-9aea-c0597a6ddbc8@proxmox.com>
+ Fri, 05 Jun 2026 08:21:34 -0700 (PDT)
+Date: Fri, 5 Jun 2026 11:21:31 -0400
+From: Peter Xu <peterx@redhat.com>
+To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
+Cc: qemu-devel@nongnu.org,
+ =?utf-8?Q?Marc-Andr=C3=A9?= Lureau <marcandre.lureau@redhat.com>,
+ Fabiano Rosas <farosas@suse.de>, Juraj Marcin <jmarcin@redhat.com>,
+ Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>,
+ Sana Sharma <sansshar@redhat.com>, Eric Blake <eblake@redhat.com>,
+ Markus Armbruster <armbru@redhat.com>,
+ Kevin Wolf <kwolf@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>,
+ Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@mailo.com>,
+ Mark Cave-Ayland <mark.caveayland@nutanix.com>,
+ Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>,
+ =?utf-8?Q?C=C3=A9dric?= Le Goater <clg@redhat.com>,
+ "Dr . David Alan Gilbert" <dave@treblig.org>
+Subject: Re: [PATCH 3/4] qdev: Refactor and rename of qdev_class_add_property()
+Message-ID: <aiLpe0L6GTEZMwqP@x1.local>
+References: <20260604231118.1584889-1-peterx@redhat.com>
+ <20260604231118.1584889-4-peterx@redhat.com>
+ <aiKMMMNrL97b3YzN@redhat.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <077647f6-d569-4918-9aea-c0597a6ddbc8@proxmox.com>
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=mst@redhat.com;
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <aiKMMMNrL97b3YzN@redhat.com>
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=peterx@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -24
 X-Spam_score: -2.5
@@ -125,128 +129,65 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Fri, Jun 05, 2026 at 04:02:39PM +0200, Fiona Ebner wrote:
-> Dear maintainers,
+On Fri, Jun 05, 2026 at 09:43:28AM +0100, Daniel P. Berrangé wrote:
+> On Thu, Jun 04, 2026 at 07:11:17PM -0400, Peter Xu wrote:
+> > Firstly, qdev_class_add_property() function almost has nothing to do with
+> > DeviceClass, it's a bridge between Property and object properties.
+> > 
+> > Change the 1st parameter of it, so that it can be used without DeviceClass
+> > context at all. When at it, remove the "name" field because it's always
+> > prop->name.
+> > 
+> > Export it for non-qdev use cases.
+> > 
+> > Signed-off-by: Peter Xu <peterx@redhat.com>
+> > ---
+> >  include/hw/core/qdev-properties.h | 10 ++++++++++
+> >  hw/core/qdev-properties.c         |  7 +++----
+> >  2 files changed, 13 insertions(+), 4 deletions(-)
+> > 
+> > diff --git a/include/hw/core/qdev-properties.h b/include/hw/core/qdev-properties.h
+> > index 779acb31b6..fec2aaac4d 100644
+> > --- a/include/hw/core/qdev-properties.h
+> > +++ b/include/hw/core/qdev-properties.h
+> > @@ -283,6 +283,16 @@ void error_set_from_qdev_prop_error(Error **errp, int ret, Object *obj,
+> >   */
+> >  void qdev_property_add_static(DeviceState *dev, const Property *prop);
+> >  
+> > +/**
+> > + * object_class_add_property:
+> > + * @oc: Object class to operate on.
+> > + * @prop: The qdev property definition.
+> > + *
+> > + * Add a Property to @oc.  This is the bridge to convert a Property into
+> > + * an object class property (as in ObjectClass.properties).
+> > + */
+> > +void object_class_add_property(ObjectClass *oc, const Property *prop);
 > 
-> Am 09.11.25 um 4:10 PM schrieb Michael S. Tsirkin:
-> > diff --git a/hw/net/virtio-net.c b/hw/net/virtio-net.c
-> > index 17ed0ef919..3b85560f6f 100644
-> > --- a/hw/net/virtio-net.c
-> > +++ b/hw/net/virtio-net.c
-> > @@ -4299,19 +4299,19 @@ static const Property virtio_net_properties[] = {
-> >      VIRTIO_DEFINE_PROP_FEATURE("host_tunnel", VirtIONet,
-> >                                 host_features_ex,
-> >                                 VIRTIO_NET_F_HOST_UDP_TUNNEL_GSO,
-> > -                               false),
-> > +                               true),
-> it seems that the host_tunnel setting can cause issues when VXLAN
-> traffic originating in a guest goes over a physical NIC which does not
-> support the feature. We received several reports about the issue
-> [0][1][2][3] and were able to reproduce it. Turning off the
-> 'host_tunnel' property in the commandline for the VirtIO net device
-> makes TCP traffic work. The network configuration from our reproducer
-> setup is as follows:
+> I'm really not a fan of this.
 > 
->       guest A (iperf3 -c)                   guest B (iperf3 -s)
->   vxlan using vNIC as underlay         vxlan using vNIC as underlay
-> virtualized NIC exposed to guest     virtualized NIC exposed to guest
->     ---guest boundary---                  ---guest boundary---
->  tap device connected to bridge       tap device connected to bridge
-> bridge with physical NIC as port     bridge with physical NIC as port
->         physical NIC   <---host boundary--->   physical NIC
+> Having both object_class_add_property and object_class_property_add
+> methods is horrendous naming.
 > 
-> Bridge configuration:
-> iface vmbr0 inet static
-> 	address 10.48.0.109/20
-> 	gateway 10.48.0.1
-> 	bridge-ports nic3
-> 	bridge-stp off
-> 	bridge-fd 0
-> 	bridge-vlan-aware yes
-> 	bridge-vids 2-4094
+> Methods named with an "object_class_" prefix must live in qom/object.c &
+> include/qom/object.h not in qdev. If doing that though, then the entire
+> "Property" concept would need to live in QOM code too, but I don't think
+> that is either desirable or neccessary.
 > 
-> VXLAN created with:
-> ip link add vxlan0 type vxlan id 100 remote X dstport 4789 dev eth1
-> where eth1 is the virtualized NIC exposed to the guest
-> 
-> The physical NIC does not have the feature:
-> Ethernet controller [0200]: Broadcom Inc. and subsidiaries NetXtreme
-> BCM5719 Gigabit Ethernet PCIe [14e4:1657] (rev 01)
-> tx-udp_tnl-segmentation: off [fixed]
-> tx-udp_tnl-csum-segmentation: off [fixed]
-> 
-> Using a physical NIC which does have the feature works:
-> Ethernet controller [0200]: Broadcom Inc. and subsidiaries BCM57504
-> NetXtreme-E 10Gb/25Gb/40Gb/50Gb/100Gb Ethernet [14e4:1751] (rev 11)
-> tx-udp_tnl-segmentation: on
-> tx-udp_tnl-csum-segmentation: on
-> 
-> Host kernel:
-> Proxmox VE with 7.0.2-6-pve
-> 
-> Guest kernel:
-> Apline with 6.18.34-0-lts
-> 
-> QEMU commandline for the vNIC:
-> > -netdev 'type=tap,id=net2,ifname=tap103i2,script=/usr/libexec/qemu-server/pve-bridge,downscript=/usr/libexec/qemu-server/pve-bridgedown,vhost=on' \
-> > -device 'virtio-net-pci,mac=BC:24:11:78:C3:3B,netdev=net2,bus=pci.0,addr=0x14,id=net2,rx_queue_size=1024,tx_queue_size=256,host_mtu=1500' \
-> 
-> We can see that QEMU sets the features for the tap interface via ioctl()
-> and the host kernel allows it:
-> tx-udp_tnl-segmentation: on
-> tx-udp_tnl-csum-segmentation: on
-> 
-> As far as we understand, in the problematic scenario, nothing is ever
-> filling in the checksums for the inner TCP packets, meaning the outer
-> UDP checksum ends up being wrong on the target side. Is the host kernel
-> responsible for doing that before passing the packet to the physical NIC
-> (without the feature)? Or who would be?
-> 
-> Turning off host_tunnel_csum without turning off host_tunnel does not help.
-> 
-> Interestingly, turning off the features for the working physical NIC
-> does not make it break:
-> tx-udp_tnl-segmentation: off
-> tx-udp_tnl-csum-segmentation: off
-> Could it be that the NIC just always fills in the inner TCP checksums
-> regardless of that setting?
-> 
-> On the other hand, running
-> localhost:~# ethtool -K eth2 tx-checksum-ip-generic off
-> Actual changes:
-> tx-checksum-ip-generic: off
-> tx-tcp-segmentation: off [not requested]
-> tx-tcp-ecn-segmentation: off [not requested]
-> tx-tcp6-segmentation: off [not requested]
-> tx-udp-segmentation: off [not requested]
-> inside the guests makes it work for the physical NIC without the
-> tx-udp_tnl* features.
-> 
-> I wanted to ask if this configuration is expected to be unsupported and
-> if the management is expected to turn off the feature on the commandline
-> if the traffic might go over a physical NIC without the feature. Or if
-> this could be a kernel or NIC bug that should be investigated further?
-> In the former case, should the option really be turned on by default
-> with new machine versions?
-> 
-> I'll be happy to test and capture/provide additional information. Let me
-> know what would be interesting.
-> 
-> Thanks to Stefan and Gabriel for looking into the issue with me!
-> 
-> Best Regards,
-> Fiona
-> 
-> [0]: https://bugzilla.proxmox.com/show_bug.cgi?id=7627
-> [1]: https://forum.proxmox.com/threads/183494/post-855144
-> [2]: https://forum.proxmox.com/threads/182328/post-854627
-> [3]: https://forum.proxmox.com/threads/183963/post-855737
+> AFAICT, the MigrationState class init method could just call the
+> existing object_class_property_add methods as any other non-qdev
+> Object impl does.
 
+I think I somehow missed the fact that qom does actually support
+setters/getters for some default types too.. with default val API:
 
-looks like a kernel or nic bug to me.
+object_property_add_uint64_ptr()
+object_property_set_default_uint()
+...
 
+I'll give it a shot.
 
 -- 
-MST
+Peter Xu
 
 
