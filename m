@@ -4,62 +4,61 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 10139CD6E5D
-	for <qemu-devel@archiver.kernel.org>; Fri,  5 Jun 2026 08:49:24 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A2D9CCD6E6B
+	for <qemu-devel@archiver.kernel.org>; Fri,  5 Jun 2026 08:49:36 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wVQ9p-00068h-3x; Fri, 05 Jun 2026 04:44:01 -0400
+	id 1wVQAD-0006Qc-0f; Fri, 05 Jun 2026 04:44:25 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <khushit.shah@nutanix.com>)
- id 1wVQ9j-00062m-5y; Fri, 05 Jun 2026 04:43:55 -0400
-Received: from mx0b-002c1b01.pphosted.com ([148.163.155.12])
+ id 1wVQAB-0006N4-AR; Fri, 05 Jun 2026 04:44:23 -0400
+Received: from mx0a-002c1b01.pphosted.com ([148.163.151.68])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <khushit.shah@nutanix.com>)
- id 1wVQ9e-0002Vx-J5; Fri, 05 Jun 2026 04:43:54 -0400
-Received: from pps.filterd (m0127844.ppops.net [127.0.0.1])
- by mx0b-002c1b01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 6556MRUR1185382; Fri, 5 Jun 2026 01:43:30 -0700
+ id 1wVQA8-0002pa-UF; Fri, 05 Jun 2026 04:44:23 -0400
+Received: from pps.filterd (m0127839.ppops.net [127.0.0.1])
+ by mx0a-002c1b01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
+ 6556OdLJ854749; Fri, 5 Jun 2026 01:43:10 -0700
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=nutanix.com; h=
- cc:content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=
- proofpoint20171006; bh=4eN5nXJoTKGpnFp/ezkq0RZhikSERKquIwk9Lr4+E
- R0=; b=G3l4wnk2IgdxW/4c0ujMVZlFOojUIe7jE2wHM1csQfymhaWGgd2563iOz
- hTKSYbiD5hOtdZo/XYcT+g5WXiMNZHBHfBA2bc3B2M78XrCYJ7RpglhkRQoklsS2
- 9SVeWJ5ePUUGaFB+4Kkacnth7tCjLu7ZvZ2spl+uxCuVQxOs7J/4e0NbKwtRHYtt
- T/1taA/pWXjSg/VQn6PucETZaTarqygtK4onTnaw1xeUpPKSLNcldBxNH70fre9Z
- I0UEykQtd8vPB3YMxiPIfyCnixFrn1RL8JGVr5et+KkOzUpFwRK1lIv6fkZKwR06
- szkq57PdnXQFiYMXSdVtrP4kQbnNw==
-Received: from ph7pr06cu001.outbound.protection.outlook.com
- (mail-westus3azon11020134.outbound.protection.outlook.com [52.101.201.134])
- by mx0b-002c1b01.pphosted.com (PPS) with ESMTPS id 4ejuupcm1f-10
+ cc:content-transfer-encoding:content-type:date:from:message-id
+ :mime-version:subject:to; s=proofpoint20171006; bh=wuDOgc0QT6/jL
+ M9A9CpWxid+vxM8EqVQnij8jS3RFF8=; b=q2mf6hIscjaCf+mvRvP93ZfcVOc0y
+ aO/km6+ScvC6c8Tx9KwXxyDK3DD7Z/FTjHWptFqJBRh7tql2g1crcFmvE5qrBgkp
+ VuiprHvqGJnvZdCnpd24rImzpU/OtuYVOj6RIXBM6HxwxLE/4M5bWxBdEvIFIrA5
+ gt95pQ0DF7sZAqMP02WMIzTNkE9YgtWF1YTb6sbOkFuuI2ZeOv7MlBHZD/ri2taN
+ 1hxmQnPKGv/PsG05My5kXAwima1I71gTmBRkPRJe9fuHT4e8NwaoAT/dGYehKI8q
+ WrdjmSMie1knPpQYt4yXc7z35UA0xKEKijqk4AukFRgd/yNTbUamu4H/w==
+Received: from ph0pr06cu001.outbound.protection.outlook.com
+ (mail-westus3azon11021094.outbound.protection.outlook.com [40.107.208.94])
+ by mx0a-002c1b01.pphosted.com (PPS) with ESMTPS id 4ejupdmnv4-1
  (version=TLSv1.3 cipher=TLS_AES_256_GCM_SHA384 bits=256 verify=NOT);
- Fri, 05 Jun 2026 01:43:29 -0700 (PDT)
+ Fri, 05 Jun 2026 01:43:10 -0700 (PDT)
 ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=SHyuO6xGHhV8tdQ3245MiS90Un6vOqIUf3JBOrikNc6gm+XWnt79OBJkUR5jxN9OaFA3xibGMnVzBjfP5RJyiF3pnop8qcEiw+a9TrqhN88ECtlV5eH2veR/MX2mea+6GFRqecO3CfsPtLX7Ld8bZr5hcuk8THHxmQYjhXr3z5RNEWGyZnU1n7aLGBgz6rPNMJjhaZffGKjUm2Ax1ZLnzoI7zctIIW/sTaY6GeqMhe5FV/cHImdA89KNvqOEsfu+bVcLp41fTFPRqDgHFjEaRB5BvwHJepMujQQYxm9m0dM4qC3Av1tIXXyjdfJkpx5KncHcH/6X9IW11n/BXR8GwQ==
+ b=bez2UvoR4N4Dqz/aRqZGdfzoTEb6uqB1r+gZtDT2ZRfF1qwwUE694jpEbstMA0lEZLCPrtf6ARBw+Ejw/2nRWtDFN9GqRCOhEYTkl3VpDqzeyGlKwaUzv4TttHTyd/PtjQFEz1a1Cr9fADjoEMlvUEUVM3kAdklvC/c7UKAj0jr42eUaJuiBTY/2Y4p7EpBjwx/x0R9rVCjlh6JOb7S33yIdCkkDEEp+eNVzrLfiQmKOM4Jsn7Aj5JdmFLUAScm8yaZV/lZllvzPwKdwhbJIYlhiaXP/opa/rIDsFcEuZ7Y7oSnI79cytWHJYn8sgs6l7VUE6ctv6Cm5lVV2RC9QgA==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
  s=arcselector10001;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=4eN5nXJoTKGpnFp/ezkq0RZhikSERKquIwk9Lr4+ER0=;
- b=Odc35ha9ZL93CtyLD3tuzazjBynQv5X2ZXkyVTjEb31saj7md3fWsIqBfWHLv24y7Ad4IHIkbcUq4TVWeegVhS8uGoo+A6arCL8PS9+XO2zIZcoXOyGL8sUJ4SpAzRxOchX+KpobZ1GRI9PJ4d5mkTb8BmqTemjO4XXcxuuO16JpPKM74FlQUHtdbGTuTPL0WSTM0WgQKItHZaKB1GcX28zWr88Gz7Z3C7vt17buGeH70hMgBta8MnFFiYoxBEQcrMSIyJkaacsR/cM2V5pGsFMmfpAzHx0PcJjebNnqwwLqv2Y2vN+M9HYb4Nq3H0WsjcqcUsNWb90enBmNEA9ueQ==
+ bh=wuDOgc0QT6/jLM9A9CpWxid+vxM8EqVQnij8jS3RFF8=;
+ b=DDLOpaMpdCwn/ozZc73eeFMIC/xk6n3Nb76wdS3NI0Y/PpLiD76eYiwWkRx1qla4EuEj2a9Fu9jTkiKanyLPm0zMcKP6HUpmK6m1vUzKRFUind3bhjXdf/7wsBjOV+/za8857ZC4Fu7MbETUag6nZ9XM+B+UyHz2y1oRAC0ioj2xLxCIA9qukstmzWaQ7ytYUmrJZlOERGW7tseCpLtS/66GSRZgsGyW9CgbTSfDBL0/tvkICVlhSFNOJPoB+gg2/J8mfuBTi8+Nle9hrtA42Xcv6i0YzY7JLt785aVJB/0qu6ba6/00CXnC7pYYCNDBU4nDmRjxHnERsIXL0WQVBw==
 ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
  smtp.mailfrom=nutanix.com; dmarc=pass action=none header.from=nutanix.com;
  dkim=pass header.d=nutanix.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=nutanix.com;
  s=selector1;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=4eN5nXJoTKGpnFp/ezkq0RZhikSERKquIwk9Lr4+ER0=;
- b=mgQZyIkrocghAMOZfYfMoTqa//KC9gDZBQf9UgldvCADsUMbzpZjFb9RWf95tsey03uAmD2jx7AhGgh1QVZLJHiEd2ERlAvjPODiqQebKao1Dk99Td3XV1134LtpcvjkAcSNa8Ch8fcr3ZKG7hG6l8lvjBGT2/+f1mszDqddbfENCFUl2dDwSMRsYl7zlCvoi+/60yJPKC6yUn//sSBvBFZaCxHo604CWXEYhXb/ueZ9XCiRNTDDpXlrS8MK6Yq1ZnNp05Ukb9RYyrMDfZEEA0XhuxHjaRTHT+USuyTpcYCXsQXX4UGsIDeyxZLy3zXwuzfYlwRCDYNg5zPtGdYswg==
+ bh=wuDOgc0QT6/jLM9A9CpWxid+vxM8EqVQnij8jS3RFF8=;
+ b=npb8t4Omp8+UvdkXdnY+EnmczMzvOt8msn70Ss7FykZ8YD7BiJm+FJxy/xsjyFdcTVidlSXlXtJV/QPE00hiQ/ExNIHbAnwDDetrCMaDzBIzxQQR/kZHNEHDn38lMj1XGoeO5SJmd2sVRjRBP3ftql//0tWsOMASDT7k2B2jcbZap4EfDDOodDaExJ5Sa8E2Fn+eMrkWWmk3kZoLwtyOfLRLEIeZFShFmgOxLImt60FZ/Bf9tsZ7gKuAl3jcdkuAKqok9wUQsQ9DnixKhIqLGcQ8Cd2Eh6mj9ldX74fNYussPcI6r7blxTZJR9/retSC/ne5nbc34vBkFNurHqGZIw==
 Received: from PH0PR02MB7557.namprd02.prod.outlook.com (2603:10b6:510:54::17)
- by MN6PR02MB10630.namprd02.prod.outlook.com (2603:10b6:208:4f4::5)
+ by CO6PR02MB7812.namprd02.prod.outlook.com (2603:10b6:303:a7::17)
  with Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.92.8; Fri, 5 Jun 2026
- 08:43:21 +0000
+ 08:43:08 +0000
 Received: from PH0PR02MB7557.namprd02.prod.outlook.com
  ([fe80::4917:bc05:4373:6bef]) by PH0PR02MB7557.namprd02.prod.outlook.com
  ([fe80::4917:bc05:4373:6bef%5]) with mapi id 15.21.0092.007; Fri, 5 Jun 2026
- 08:43:21 +0000
+ 08:43:08 +0000
 From: Khushit Shah <khushit.shah@nutanix.com>
 To: qemu-devel@nongnu.org, qemu-arm@nongnu.org, kvmarm@lists.linux.dev,
  Eric Auger <eric.auger@redhat.com>
@@ -77,12 +76,10 @@ Cc: Cornelia Huck <cohuck@redhat.com>,
  Shaju Abraham <shaju.abraham@nutanix.com>,
  Mark Cave-Ayland <mark.caveayland@nutanix.com>,
  Khushit Shah <khushit.shah@nutanix.com>
-Subject: [RFC PATCH v2 27/29] target/arm: Provide default cache hierarchy
-Date: Fri,  5 Jun 2026 08:33:56 +0000
-Message-ID: <20260605083358.1320563-28-khushit.shah@nutanix.com>
+Subject: [RFC PATCH v2 00/29] target/arm: Named CPU models for Arm64 on KVM
+Date: Fri,  5 Jun 2026 08:33:29 +0000
+Message-ID: <20260605083358.1320563-1-khushit.shah@nutanix.com>
 X-Mailer: git-send-email 2.43.7
-In-Reply-To: <20260605083358.1320563-1-khushit.shah@nutanix.com>
-References: <20260605083358.1320563-1-khushit.shah@nutanix.com>
 Content-Transfer-Encoding: 8bit
 Content-Type: text/plain
 X-ClientProxiedBy: PH7PR17CA0007.namprd17.prod.outlook.com
@@ -90,88 +87,88 @@ X-ClientProxiedBy: PH7PR17CA0007.namprd17.prod.outlook.com
  (2603:10b6:510:54::17)
 MIME-Version: 1.0
 X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: PH0PR02MB7557:EE_|MN6PR02MB10630:EE_
-X-MS-Office365-Filtering-Correlation-Id: 25ad1e72-d514-4129-ac07-08dec2de7e42
+X-MS-TrafficTypeDiagnostic: PH0PR02MB7557:EE_|CO6PR02MB7812:EE_
+X-MS-Office365-Filtering-Correlation-Id: c82dfbf9-171a-4571-6513-08dec2de77bf
 x-proofpoint-crosstenant: true
 X-MS-Exchange-SenderADCheck: 1
 X-MS-Exchange-AntiSpam-Relay: 0
 X-Microsoft-Antispam: BCL:0;
- ARA:13230040|366016|7416014|1800799024|376014|6133799003|56012099006|18002099003|22082099003;
-X-Microsoft-Antispam-Message-Info: LHh10VEL5jOeWTis7LMwekloftiJEC4w1d1rPxb1g89kqqvxuzZdRpmE5BKjn/P3i+UwVOdX3uhYGGzCFedSU5Ii5Yx36kvmbqnl345Sn+r5UWu3akSQtWfHl/PFH2UtmIBIzUTX5gQNsD0VI3moEDuUSFaIoK01NvBQs8a+67lOnTSz5AGOBBlQ2vm+XyfffafFxct2zGzeuCWAcwYZcPh8HCP+r7E9wXEvvp5FDgpXyM9VURtEawygJfnWt6+nsWSgXs+vWC0fIEQDZ66XOm5gofWbb3W9qbpDDIw8KIMlXeciDlGilcXDPqhL7iqjrLoUX5FX17UXKEBL9DN6ps2SPDw4vScwRhNBpA4aPOhJWrGLvxI9/+tf1GzxOqIyeisRm+St6/z5+f+dWRfxoO+wxeXPUD/xzQrejvb41X7PcFD3OyXEZd1KUgd7Iz5oi46v5OiHBAwOivjcOYqQtUaLI1myx0/gY/K09CaYq5nmpuItdmtyDdnEIb9pUIrgfNm4GqymjE95h0IgQ5bKQqi07EHQ64AJ+Ua8Jv2x+HmC7sZZTc47PB5bKEqWkfhIXomQxaK/tTu+smLGc5DRw3xX2frNmmwD9YH8p9FkPm1iE//nYaRuWKUuuOIBFcgl6Y4dzHE5zeoCA8vsWqBh/9aL7VnASUZJfZdQ3ZyAADM2TV3BeDZ+UvoJhHoY7VEC
+ ARA:13230040|1800799024|376014|7416014|366016|3023799007|6133799003|56012099006|18002099003;
+X-Microsoft-Antispam-Message-Info: ZcqkAW5+eBkReW8RVfuqh18qHL01MTuBg6/VLxzZqHOd9NB95DPb1aeLtWP3qQLLI3hoxZXo0hSKrBKtcWVZVPfJfQUKWOVnRweyxSvsTaiwopNoxJuRDdQ/WablXSCwo87NMR+AMhCXcpnJCTvYCDVnJVKlvwunlGXX9tHRrZEIOaMZqlZYZfjX/U4ZuYHFd6BD0xBV34+f3XWY4o2cvIdaMz0HMVwuXyzYirS/pfQzV/H6i+Xe3NWl1xdAgkif/bylmqaJLvbo5QbImPnt76QevQPhq14wxqdGpMc9MZ+kFLmSUrar9nvwzFE7QUwJ6sLCfmpHY7A+bUDkY35Z3XpnuhKcqm1Z1P53Hj71NvZ1lYrYZRuW4CWGGbOZJNy9PhwehxE9emDgpZm2KGtDYcoZDyZFmzoSmaBguc4MI+kjiF3CbOdlT39f9OhR5t8qhtg2qm0F8aiYIRsTNGKzQ6eMSqz8q3Y/DswDO8QT7Li5qx0D3yOahudWfJoxynA867s9N/jbsSxGFXgwQBeZGJVKOqQGNMyhBYTT5253tKlVuTopcutFY0zYodl3nAKooimKIt3bnpQG8xVNfACxA1IUXI3/X90k0NmEYXDbTXIE6AbI89taI8k3pPvK0hKZ2CbMUl6+kkBJbXbRLeHl/uCeCVj8TxVHcXAsNPofw8UZmaKNZGdH6EXOlH6BNA9oCD8dMnyvnGDTUDoGHEDdkg==
 X-Forefront-Antispam-Report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
  IPV:NLI; SFV:NSPM; H:PH0PR02MB7557.namprd02.prod.outlook.com; PTR:; CAT:NONE;
- SFS:(13230040)(366016)(7416014)(1800799024)(376014)(6133799003)(56012099006)(18002099003)(22082099003);
+ SFS:(13230040)(1800799024)(376014)(7416014)(366016)(3023799007)(6133799003)(56012099006)(18002099003);
  DIR:OUT; SFP:1102; 
 X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0: =?us-ascii?Q?ngJEe4EWuBIyY4/tzBnOFWIjRArYNzlxrMxsn5BPOdxT7hpewvwwCf6mFj/n?=
- =?us-ascii?Q?ePu8VZBLMh3gsLTutBSZdvvWYDcY4wyZVWv6yErLnepSYbMYhvwZ4YJGDcUX?=
- =?us-ascii?Q?+0p8cTKZ501XakZ0ZeHaPooeP1vFuvvt7aTv+iM/nA3HsmwiMQgFANIa27nb?=
- =?us-ascii?Q?6Wc9yCtac4qGv8mBwZjoax4E/sP40gYCaDAUeXw0B72U7EQBgIeg5OiFoVMj?=
- =?us-ascii?Q?TQWcWbuR0o2dcS3dA6qiEm0T/uQDWeeanFtun6wxxpviUJUIYD6Z78xIVw5X?=
- =?us-ascii?Q?F95PvUjWsdcd0+TYuBCiQvCIYRmDCqkH9jlAYqThG6LkmMdfF26Z3Y1mjfzr?=
- =?us-ascii?Q?hHSrwX5R9ttNzcORUztWgmPzrBr/vkQBCUeCQ9iLLS0x2FvtIiTEPSxuOZjk?=
- =?us-ascii?Q?a/rY5yPYLFi5wW9EG7/virifIwlNJp2xcQOF7+7YJ3bMPLnzc7/FS9xTZfMD?=
- =?us-ascii?Q?VKCbY6marYQs1i5k6JorFIFIxLoD0M63PNqVZV3JOOMUFOWRpgJyLuABnp+r?=
- =?us-ascii?Q?d9VFfr/s35iWVwNfOpzjkr7yG3d20kVLtFks6UP0oNFFyH7UnLHwx/oYC9By?=
- =?us-ascii?Q?1lKdTrUwbgirIvaw1wptJgTsq08xVaeiwYK5ecDK8+OHEa1EsraYeUVdUZ73?=
- =?us-ascii?Q?U4ShjBPb4UKCbcCBF9iAEKD4gUhNyPSHEiwlXpc+qQSb1o1mlQlKNFyA17Jy?=
- =?us-ascii?Q?0dS5Y7Gylzw5v0gj1WztZh9Qy6p/JxEHT9ww52ggwVjDQIKxYNb7BmuQEPVt?=
- =?us-ascii?Q?Z88Zswn9vNSh2NfYUxvbOT0SR44z7OFNdU/LuswRVKgxuEE1rjT5tV7tIImf?=
- =?us-ascii?Q?msgPhhqKTUBXq9dfRIp90moPMUhg6Sf7aC6D4A0x2M/Z2SxU5U147pKPz16O?=
- =?us-ascii?Q?/BwGmRDow9q9cKmROo+bX8GALFzwruHSbM5Y7PJkWOsOXgaV9Cd/SkM9NBHh?=
- =?us-ascii?Q?3CC+WF9TxcfgP97E8B4fHRGLiCTaJMWEHMyqWHThe17y4S4LVAGPlecj3Tw8?=
- =?us-ascii?Q?l/enOGSO6LBCKCzBuXQpuh2YaqU5Cdg17VZeCoFbR7/0iCaEfVj1MmUQENtt?=
- =?us-ascii?Q?WRfajCN1mDBCrOv8JU8E/0MmTty/ijvclEl3TGWudwBgpo277Ws/IAuQTrXV?=
- =?us-ascii?Q?0IZ7ikoEq34dN1RwG3kYUNcl9mq5VoJMXdMxVmGR97UbNVgkQFQZZkVCGRoO?=
- =?us-ascii?Q?fbEqap/hv0igLw9YmIxWUiSlS6jz9PtZ+qFlYUe/WCQ7MTdairy+eI7jTwLX?=
- =?us-ascii?Q?aLlJfSfZYvnAQ4bpvrwbSFVmGpIcQz07hI8Ny46TlLmFUo1e1pADazaX6oJw?=
- =?us-ascii?Q?S+PhKYaHPMyjEBZv2YQjxUw65lyZ0YPQ/sYspuF5N3ltgHdR4fC+o0fSFi27?=
- =?us-ascii?Q?eYJxf+8EpzGBXbCfNTW3c5jxJxL3/5nYJEgusmxa7kdAxBYiwXfkclG0YgFv?=
- =?us-ascii?Q?0Jy4kG2r2bQ2Jte2e5tr0y5hcIDbaj9MjKGy9xYzpsKIxelEZpJA03MC+jEi?=
- =?us-ascii?Q?4GXk71vojmz7awMY9Df9kdxnwbw37CZJtoV5fbqyZ+v1PosglldAGBv0Kfe4?=
- =?us-ascii?Q?Q76ez/dJxcs3qDG/gpOvNYrGrYCet9ewmomqs4oDhAiui8a8BVMpNGP2kvOO?=
- =?us-ascii?Q?ozSKrHsE/N93Wq8I1qOtgxIL0PmCB6e9D+O2U8zmqiQgPFb19MMj/m7/nYze?=
- =?us-ascii?Q?KoLzJdhkTginftnKdEO5HgbS0TZotKfMYibgsUhb89drzP+4tHwrZ45oogGX?=
- =?us-ascii?Q?8UFqLELuk3I50C/Wn3L1lluk1X4sLts=3D?=
-X-Exchange-RoutingPolicyChecked: OMw6XZuAQ9tTrYm47LMbWg6lMgD8QtQLl6106KaKwV42oRQBoEUodY6xjWfCpJutJ3VXwWZVqBEKKJwJI5fTuWMh9Q2K5c40Y4TGVAw+3USE01szf75jeAxdhE5JIA9YVF3H+6AMU/ZVfqjYKv8tOLo8Oe1eK95H7VefTBdtj0x79rkgTgIMDlbO/PF34eFvpGYYXlD5mt7X4XJcd5Up9UIbQ2y3Tes2iBYqjEb7lmpjx1txseDfQC19XRvf0ioswlCZxBsXuootnPN9ZsuZ69ZN1RU0elMVHvu6eDnNjfP5YW3NQzXM3CrFbpikIW0s8hqQmh+Hb2QEoOo4f5ohNw==
+X-MS-Exchange-AntiSpam-MessageData-0: =?us-ascii?Q?BMLR4quz0kihlBfK9u98/qyoExYHkdA5yYogKhXkv8Zq4OgRT0lX7d0Cyq2w?=
+ =?us-ascii?Q?lTGKRxywokAlcty2Gp050FPKh9Ca4M3QlDFxC+GDG1PA+9k8QYoc1JKO6NTd?=
+ =?us-ascii?Q?Gm8HYnfDLJ7RiElvdUWHorfonZATdZ3Qp+t6SF4200ydPX3COnrfaRiBZdE8?=
+ =?us-ascii?Q?ffdxvgmzUecBIaO0IvD8GHT1stc5rKfPly7XZFwZLaBHfvJ4pGjRhguDWZU/?=
+ =?us-ascii?Q?j2qtqDjkZ/kaHJ9g6QQ9NLmG6x754qLky8gp9QhwI5la44p6AtViirY20Qqg?=
+ =?us-ascii?Q?EvO6XRV1gFYuFp/tBflBe0v2Rv6Pdkame7dv1Agw15Lhr7RXXpakUMAWGdXN?=
+ =?us-ascii?Q?IYpn4Ru4woWjvs8Edm+sfpYwhfGndhWxoLorqZ2Y27KbQcwC+hJERBIRTFXX?=
+ =?us-ascii?Q?Vtn8RLI/OUeK/8N+aasl0mMjxolvE0Y3qFEV5b8j2KtRIhfGIc/HsUcsCQZf?=
+ =?us-ascii?Q?oSiTR5ir4ikNI+thxeZULzPCW8qYs5aY4pkU1mxnG24Wz8Vm80MiUxpiqMQC?=
+ =?us-ascii?Q?PNZYmqaLNN0uryjB2CrOuse9v8iJNSKi/zrOb3bRzLsnazn8U5ZbwQt47Ilf?=
+ =?us-ascii?Q?Fej5uxM867a1guzuGMYxeVbzuuQKE0d7yYcK7Lc3K1Mf/MXfFBs74rhKrP8I?=
+ =?us-ascii?Q?SViJAWdM3zT1CyDvHp5keYw1vUa5pS329EC2aMyuDJjVk5kY/ZFCUWSeM264?=
+ =?us-ascii?Q?4EYCwKlBkWXMQeAvglLhpUG2aH1iluTLpCxh68Zt/zitPcKJ0mjt4SJHWGLK?=
+ =?us-ascii?Q?E4+4qtRzdPv/XJbjAbms4da6V9K6AK7w21/r3DVuWSyk70UGtwqLEnd7H4NM?=
+ =?us-ascii?Q?zsJ++FKFUu3XCWhrulkgbfwbKBHkIl+Z1R7qmA7XmHgmpFrzPVGSnBHo5QEK?=
+ =?us-ascii?Q?Wj5ygLJVPgV8b2RWeNl5aXpijlx0bPecXfji8nayKmLa2ZX8197MAWPnXLxf?=
+ =?us-ascii?Q?0+yoOP9gDPiQddZZ46VJ+A0PhrkHwvkrf4g1IKRuAdZleCooPlUjTcSnP2Fu?=
+ =?us-ascii?Q?flRhrtchhQ9pry2ZF1hiKMF226Ph9pKAyx4fPqq2RoqPPfFCV1kX1vjv/oNV?=
+ =?us-ascii?Q?Va8E03qgcwLNdBS+fkwYtmbpcqMNXIt0/GKb3QkRGUXWZAZEmwkfpPigYbsC?=
+ =?us-ascii?Q?dSQJa00wFhkm1xvkyP5z4uGckPnvvZILeOBUpV7zZFVBBenbVCwamnPAFeBi?=
+ =?us-ascii?Q?0EI4NyNreCcRBI7zFsHykW/6zevJEs+CufZHmO6H1d7+BmPjuqy5F4LMraOX?=
+ =?us-ascii?Q?Z70BHliRtKwtCUcdzz+/LNCgC9IErW4ZkJJM4scVs4EY6SE9VX0SBLtboWdI?=
+ =?us-ascii?Q?ypNqaLNpfVY7pYbaq0dSo3W3YNHL1hkNxZMTMH+IzHGXYrWYkGwLmBnzn3Td?=
+ =?us-ascii?Q?wkTVZ2tJVek13xhHjTO04uKd8wUjehJdl0vTWhsTLeIF0Zydm4ehQa4VqJd2?=
+ =?us-ascii?Q?eoS7saGwkfaLz51yqh6Gn03HNYGsz7gTt3Z5S3UTJNl6ZCKJ7ChhW7SJSOM9?=
+ =?us-ascii?Q?2avi8lvUkwfPz1bnHi3hwSJW3jM8r1oho6VmsPbV9V8UrbyNXawXU2r+lmdd?=
+ =?us-ascii?Q?y496r9dhQm2wl3JHUicsbTomawLbW/NyCqFvFxOdoqxKq4UvRwAYs+ha6EiD?=
+ =?us-ascii?Q?Q2l0F+9m7Eo8ayMmSg/KlgreyJGpZg/jvJPhx/I8uhtnixF0nFpTfNrxXXU2?=
+ =?us-ascii?Q?HLimP1w9DuZGncI2MdVvUxF1fmAL7I6tnv6XGcriNEs24uCI6RB7QIA5c1hn?=
+ =?us-ascii?Q?pSbHGhKuZosgGfK5SXOdt+MDUzPoNzA=3D?=
+X-Exchange-RoutingPolicyChecked: alZDAS+4O1pij99BuO3xRk/8UCo8ELUtM5EbLUp1rrSjWl96zj64Q4eyAdR/v5HP1E4QBwoCw/pK707N+cpnRAeg/Seg6l0MTCgjirtGa60BUSh/1vxSL0KOlsGaQ4Rw/3FibXKm9Ft6Ofg5eWSzQuBcN3nm6aic3Ks0DwQFbEIzKasplZM3cGqQG/sZmLsYeZMGxWWXSn+mnX+pHExKl5/FGk8eseJ6igILasdn/xDiDUXi/jesY8fawa9E2cEEx9xEcJNpKiQWAqHrpb3Ign4XJOALL/l/EOZMQXGFrlG47puc6Z63dkeb8PA7mlbpc/rgITCu5QntedyYSd17kQ==
 X-OriginatorOrg: nutanix.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 25ad1e72-d514-4129-ac07-08dec2de7e42
+X-MS-Exchange-CrossTenant-Network-Message-Id: c82dfbf9-171a-4571-6513-08dec2de77bf
 X-MS-Exchange-CrossTenant-AuthSource: PH0PR02MB7557.namprd02.prod.outlook.com
 X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 05 Jun 2026 08:43:19.1266 (UTC)
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 05 Jun 2026 08:43:08.4637 (UTC)
 X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
 X-MS-Exchange-CrossTenant-Id: bb047546-786f-4de1-bd75-24e5b6f79043
 X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: XjIM+u0phHx7K+ySGCbaCGgWmzp5bKt9KrwpWI2kTHL9I1LM/HVCwMPjHMaSJDurkmmcJNX7HIguNtWFkXXBpfcoBB4ASutj0BKRmPk7iNo=
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: MN6PR02MB10630
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNjA1MDA4MyBTYWx0ZWRfXwySXTrA9VcgA
- 3zkqmUKnGzm3Y3buIE6+DXSo5rgJrE8Huh5A4Xb0FPAw3OUwOTxFC94PonaYPEPAkqxwnPFKzK3
- ILoQCQmgYLPdulaSn9ueUQACUPzWW7wDuZObJY56mbDFHa3zVG69crsoqMX6mHJTKYRAIsgiH9O
- LimJ/pMVv8SuQLRsu6gDKRGR3oB7UN7Sr3MDArvmLyqPVI0E9U66/Ru4dmZkV8BXgnaYXesfyUT
- fXTH/5S3RA9tfZPsWQFUs2jTykBzJUK+p8t8c+WJu3R5CWG8iHUxbq89z6Sgb4eS+B5HVuUm1pO
- UKfA0+QOGHNqXVGrZePqO0aH0sMMfkw1/26FCCFp2pF+hy21LwBoPLBSXyfKXpya9eoDFTuIFCh
- 5UmVTlFK5FTStva2OPHP47vUExlSfh+qBkzaWPk64Js97Zg+A5F8P7f4k7r/epf8rDBE8KD+sxl
- dIelen+z0Eb8lj02hzQ==
-X-Proofpoint-ORIG-GUID: qIGAG-vqrSlG759WXXwRNR2iPHUrK5g3
-X-Authority-Analysis: v=2.4 cv=V6FNF+ni c=1 sm=1 tr=0 ts=6a228c31 cx=c_pps
- a=h3Jk+6XEKCuoUZR+ZnWw9Q==:117 a=6eWqkTHjU83fiwn7nKZWdM+Sl24=:19
+X-MS-Exchange-CrossTenant-UserPrincipalName: NZD1TNFTo1nbiBJodvQN5edSMj7qPgb9Zsb+j2iTSQ2sHgIETSIidB+SoGeQVcwD4j2S0rbBUdL+UVf0mWb+e2ADXHGLt1SouWUqucpDPfE=
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: CO6PR02MB7812
+X-Proofpoint-ORIG-GUID: 4mn5cf1TMDBLMlGVLJFXb4NYxh2qKPKg
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNjA1MDA4MyBTYWx0ZWRfX7AI9XD9zkBMz
+ TZIzxDP7RKd4rg9d7TVjFb0ocRloIi5yBg5i79SSaWmW6K+CjLlhsTmpujO31JP3SdmgcB4r7Ym
+ sP54ZCYkc66jR/1o1p3QI3HJFDoR3IByJQ3w66+ey6tzYAVTrqETHVRUAuMRU6SdMQJFjjKOIWQ
+ sLTz0Fji2RQ6BdeVcE0aclrn6yRAGE1uFo7W5kuNEvab/acBF+4S3dUYoBsXvjsk+JQDyY+nF8F
+ lKKmpR2DkhhVHOs7Cf4ocYTebfXkaiRSPEHbvGhdUPX67mSGN3wely73mdNpnLRT5acQ309UlTB
+ vGN12rKHn+HMg3lCpTji9q34RB79oV/j+6jdvWmYEzvV78sk6x6a1vVw74QYSVqVREUmXSbbZ/h
+ UAG5IMfxf+3FxAkH2RwbO0iLbdAf+ggwp9Ci/vim/AJxlzySe+BDYknOy0vQpGdq5AmFenmg+FI
+ TvRR3jDdx8KL+/mQj4Q==
+X-Proofpoint-GUID: 4mn5cf1TMDBLMlGVLJFXb4NYxh2qKPKg
+X-Authority-Analysis: v=2.4 cv=dYmwG3Xe c=1 sm=1 tr=0 ts=6a228c1e cx=c_pps
+ a=Dy1/g0x6RHl9kMZQX3cATQ==:117 a=6eWqkTHjU83fiwn7nKZWdM+Sl24=:19
  a=z/mQ4Ysz8XfWz/Q5cLBRGdckG28=:19 a=lCpzRmAYbLLaTzLvsPZ7Mbvzbb8=:19
  a=xqWC_Br6kY4A:10 a=FelO9ux0wxsA:10 a=0kUYKlekyDsA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=VofLwUrZ8Iiv6rRUPXIb:22 a=0LlEyIVc8U2lsR7dKhuH:22
- a=64Cc0HZtAAAA:8 a=8U3q0NyPIHcyVLjXBGEA:9
-X-Proofpoint-GUID: qIGAG-vqrSlG759WXXwRNR2iPHUrK5g3
+ a=VkNPw1HP01LnGYTKEx00:22 a=VofLwUrZ8Iiv6rRUPXIb:22 a=y4UcunY2MAxhM4LwGdWI:22
+ a=VwQbUJbxAAAA:8 a=64Cc0HZtAAAA:8 a=20KFwNOVAAAA:8 a=fLdaxw7juexdDmRFceMA:9
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.125,FMLib:17.12.100.49
  definitions=2026-06-05_01,2026-05-28_03,2025-10-01_01
 X-Proofpoint-Spam-Reason: safe
-Received-SPF: pass client-ip=148.163.155.12;
- envelope-from=khushit.shah@nutanix.com; helo=mx0b-002c1b01.pphosted.com
+Received-SPF: pass client-ip=148.163.151.68;
+ envelope-from=khushit.shah@nutanix.com; helo=mx0a-002c1b01.pphosted.com
 X-Spam_score_int: -31
 X-Spam_score: -3.2
 X-Spam_bar: ---
 X-Spam_report: (-3.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.445,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_MSPIKE_H2=0.001, SPF_HELO_NONE=0.001,
+ RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -188,89 +185,237 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Default cache-hierarchy into kvm-base-v1, hence every model inherits
-a cache topology.
+Hi All,
 
-Topology:
-  L1:  separate-i-d, 4-way x 256 sets x 64B  = 64 KiB each
-  L2:  unified,      8-way x 2048 sets x 64B = 1 MiB
-  L3:  unified,      12-way x 8192 sets x 64B = 6 MiB
+This is the v2 RFC of the Named CPU models support for Arm64 in QEMU.
+v2 implements all of Planned items that were mentioned in v1.
+v1 link: https://lore.kernel.org/qemu-arm/20260513163356.3033159-1-shaju.abraham@nutanix.com/
 
-CLIDR_EL1 fields are set to match the geometry:
-  LoC=3, LoUIS=LoUU=1, ICB=unknown, TTYPEN=0.
+Background:
+=============================================================
+Currently QEMU only support -cpu host/max for KVM on Arm64. This disables
+live migration of VMs between hosts that differ in CPU features.
 
-Whether to keep them on as default is another question to tackle some
-another time.
+This RFC proposes hierarchical named models for Arm64 under KVM, this
+provides strict contract of CPU features that will be exposed to the guest
+for a given named model. Models can be customized further with feature
+properties (like feat_AES=off, pauth=on, sve=off, etc...). 
 
-Signed-off-by: Khushit Shah <khushit.shah@nutanix.com>
----
- target/arm/arm-cpu-models.c | 46 +++++++++++++++++++++++++++++++++++++
- 1 file changed, 46 insertions(+)
+The design has three layers: an ARM ID-register field table (single
+source of truth for fields, safe-rules, defaults, arch-defined values); a
+property layer on top (single-field, fractional, and composite properties);
+and a hierarchical named-model layer that picks values for those properties
+with parent-chain inheritance.
 
-diff --git a/target/arm/arm-cpu-models.c b/target/arm/arm-cpu-models.c
-index 3eafa0efc5..5f59650c81 100644
---- a/target/arm/arm-cpu-models.c
-+++ b/target/arm/arm-cpu-models.c
-@@ -46,6 +46,50 @@
- 
- #define MODEL_PROP_END  { .name = NULL }
- 
-+/*
-+ * Expose a default three-level cache hierarchy.
-+ * No justifications on the topology or the values.
-+ *
-+ * L1: separate-i-d-cache, 4-way, 64B, 256 sets: 64KiB
-+ * L2: unified-cache, 8-way, 64B, 2048 sets: 1MiB
-+ * L3: unified-cache, 12-way, 64B, 8192 sets: 6MiB
-+ *
-+ * Louis: 1
-+ * Loc: 3
-+ * Louu: 1
-+ * Icb: unknown (not specified)
-+ * Ttypen: 0
-+ */
-+static const ArmModelPropValue default_expose_cache_props[] = {
-+    MODEL_PROP("cache_lvl1_type", STR, "separate-i-d-cache"),
-+    MODEL_PROP("cache_lvl1_icache_linesize", NUM, 64),
-+    MODEL_PROP("cache_lvl1_icache_associativity", NUM, 4),
-+    MODEL_PROP("cache_lvl1_icache_sets", NUM, 256),
-+
-+    MODEL_PROP("cache_lvl1_dcache_linesize", NUM, 64),
-+    MODEL_PROP("cache_lvl1_dcache_associativity", NUM, 4),
-+    MODEL_PROP("cache_lvl1_dcache_sets", NUM, 256),
-+
-+    MODEL_PROP("cache_lvl2_type", STR, "unified-cache"),
-+    MODEL_PROP("cache_lvl2_linesize", NUM, 64),
-+    MODEL_PROP("cache_lvl2_associativity", NUM, 8),
-+    MODEL_PROP("cache_lvl2_sets", NUM, 2048),
-+
-+    MODEL_PROP("cache_lvl3_type", STR, "unified-cache"),
-+    MODEL_PROP("cache_lvl3_linesize", NUM, 64),
-+    MODEL_PROP("cache_lvl3_associativity", NUM, 12),
-+    MODEL_PROP("cache_lvl3_sets", NUM, 8192),
-+
-+    /* Only set/way based guest operations will care about this. */
-+    MODEL_PROP("cache_louis", NUM, 1),
-+    MODEL_PROP("cache_loc", NUM, 3), /* Can we safely set to 1 for performance? */
-+    MODEL_PROP("cache_louu", NUM, 1),
-+    MODEL_PROP("cache_icb_type", STR, "unknown"),
-+    MODEL_PROP("cache_ttypen", NUM, 0),
-+
-+    MODEL_PROP_END,
-+};
-+
- static const ArmModelPropValue kvm_base_v1_props[] = {
-     MODEL_PROP("el0_mode", STR, "aarch64"),
-     MODEL_PROP("el1_mode", STR, "aarch64"),
-@@ -57,6 +101,8 @@ static const ArmModelPropValue kvm_base_v1_props[] = {
-     MODEL_PROP("feat_MTE_FRAC", STR, "async"),
-     MODEL_PROP("hw_prop_CCIDX", STR, "32"),
- 
-+    MODEL_PROP_COMP("expose-cache", true, default_expose_cache_props),
-+
-     MODEL_PROP_END,
- };
- 
+The series also implements QMP commands that lets the management layer query
+which models a host can run, what each model resolves to, and which feature
+values the host supports.
+
+Relationship with "customizable host model" series:
+============================================================
+This RFC overlaps with customizable host model series [1]. The two series
+solve different parts of the same problem: [1] provides the lower layer
+(per-field SYSREG_<REG>_<FIELD> u64 properties on -cpu host,
+writable-mask probing, ID-register writeback).
+
+This series adds the layers above that, like:
+hierarchical named CPU models, default-from-zero baselines, fractional and
+composite properties for named models (sve, pauth, expose-cache),
+property/value names, and QMP introspection (blockers via safe-rule
+validation, supported values, new query-arm-cpu-props-info). This series
+also fixes the host-supports-Nested-Virtualziation-while-qemu-booted-without-it
+writeback case [2] that surfaces once [1]'s writeback lands.
+
+Long term plan is to rebase this series on top of [1]. Few difficulties
+in that will be augmenting the ID regs fields table with safe rules and
+default values, which Eric correctly mentioned in [1] that it cannot
+be inferred from Registers.json.
+
+For property names and values we have no strong preference,
+<SYSREG>_<REG>_<FIELD> with uint64 values or "feat_*" properties with
+string values (SYSREG_ID_AA64ISAR0_AES=2/feat_AES="pmull").
+
+[1]: https://lore.kernel.org/qemu-arm/20260519132905.145643-1-eric.auger@redhat.com/
+[2]: See patch 29 of this series.
+
+TL;DR examples:
+  # Boot with Grace
+  qemu-system-aarch64 -cpu grace-v1 -machine virt,accel=kvm ...
+
+  # Grace with a feature disabled
+  qemu-system-aarch64 -cpu grace-v1,feat_SHA1=off ...
+
+  # Host passthrough with individual feature control
+  qemu-system-aarch64 -cpu host,feat_AES=aes ...
+
+  # named CPU model with composite properties
+  qemu-system-aarch64 -cpu grace-v1,pauth=off,sve=on ...
+
+  # QMP -cpu host query-cpu-model-expansion:
+        "model": {
+            "name": "host",
+            "props": {
+                "cpu_partnum": 3407,
+                "feat_SM4": "on",
+                "feat_SM3": "on",
+                ....
+            }
+        }
+
+    # QMP -cpu graviton3-v1 query-cpu-model-expansion:
+        "model": {
+            "name": "graviton3-v1",
+            "props": {
+                "cpu_partnum": 3392,
+                "feat_SM4": "on",
+                "feat_SM3": "on",
+                "feat_RNDR": "on",
+                ....
+            }
+        }
+
+    # QMP query-cpu-definitions (on Grace host) (blockers for graviton3-v1):
+        {
+            "name": "grace-v1",
+            "typename": "grace-v1-arm-cpu",
+            "static": false,
+            "deprecated": false
+        },
+        {
+            "name": "graviton3-v1",
+            "typename": "graviton3-v1-arm-cpu",
+            "unavailable-features": [
+                "hw_prop_TGRAN4_2",
+                "hw_prop_TGRAN64_2",
+                "hw_prop_TGRAN16_2",
+                "hw_prop_APA",
+                "feat_RNDR"
+            ],
+            "static": false,
+            "deprecated": false
+        },
+        ....
+
+    # new QMP query-arm-cpu-props-info (on Grace host):
+        {
+            "name": "feat_SHA1",
+            "type": "boolean",
+            "supported-values": [
+                "on",
+                "off"
+            ]
+        },
+        {
+            "name": "feat_AES",
+            "type": "string",
+            "supported-values": [
+                "off",
+                "aes",
+                "pmull"
+            ]
+        },
+        ....
+
+Changes since v1:
+  - Added `query-cpu-definitions` and `query-cpu-model-expansion` QMP
+    support for named models and accompanying properties.
+  - Introduced `query-arm-cpu-props-info` QMP command that returns
+    list of all newly supported properties for -cpu host, and its supported
+    values.
+  - Add composite properties for named models which acts as master "on"/"off"
+    switches for features that compose of broader range of ID registers
+    fields like pauth and sve.
+  - Added `expose-cache` composite with other cache related properties to
+    allow named models to expose cache information to the guest.
+  - Cache the host isar view with and without EL2 support, and make
+    -cpu host with writeback work on host kernel that supports
+    virtualization.
+  - Validate the cpu->isar.idregs before writing back to KVM to catch early
+    errors.
+  - Properties and models are now defined in file rather than using .h.inc 
+    files.
+
+Tested on NVIDIA Grace and AWS Graviton3 hosts (6.18); booted grace-v1,
+graviton3-v1, neoverse-v2-v1, neoverse-v1-v1, and -cpu host with per-feature
+overrides.
+
+Plans for v3:
+  - Some documentation and unit tests.
+  - More properties based on what more the latest kernel supports.
+  - pmu composite property.
+  - Trying to rebase on top of [1].
+  - Splitting this huge series into 3-4 sub series.
+
+Warm Regards,
+Khushit, Shaju
+
+Khushit Shah (20):
+  target/arm: Introduce data-structures for the ARM property layer
+  target/arm: Add all ARM64 properties to host model
+  target/arm: Add Nvidia Grace named model
+  target/arm/kvm: enable writable implementation ID registers
+  target/aarm: Validate cpu->isar.idregs[] before writeback
+  target/arm/kvm: handle DCZID_EL0 specially
+  target/arm: skip GIC, COPDBG and PMU fields during KVM writeback
+  target/arm: Add composite property type to model definitions
+  target/arm: define pauth composite property
+  target/arm: define sve composite property
+  target/arm: Introduce stub files required for qmp support
+  target/arm/qmp: add named models and properties to cpu-model-expansion
+  target/arm/kvm: introduce kvm_arm_get_host_isar helper
+  target/arm/qmp: add query-arm-cpu-props-info
+  target/arm: Report "off" for ID fields gated by vCPU init flags
+  target/arm/qmp: hook blockers in query-cpu-definitions
+  target/arm: Support exposing cache information for named cpu models
+  target/arm: Provide default cache hierarchy
+  target/arm: supported-values and blockers for CCSIDR cache properties
+  target/arm/kvm: fix host model writeback when kernel supports EL2
+
+Shaju Abraham (9):
+  target/arm: named_cpu_model: define containers for ID registers and
+    fields
+  target/arm: Add ID Register field descriptions in cpu-idregs.h.inc
+  target/arm: Add MIDR, REVIDR, AIDR and extra ID regs to cpu-sysregs
+  target/arm: Generate ARM64 ID registers and field tables
+  target/arm: Replace FIELD() macros with IDREG_FIELD expansion
+  target/arm: Define ARM properties
+  target/arm: Add ID register field helper functions
+  target/arm: Add named cpu model infra + graviton3 named model
+  target/arm/kvm: Writeback modified ID registers to KVM
+
+ hw/arm/virt.c                    |   28 +-
+ qapi/misc-arm.json               |   41 +
+ stubs/qmp-arm-gic.c              |    6 +
+ target/arm/arm-cpu-models-stub.c |   18 +
+ target/arm/arm-cpu-models.c      |  620 ++++++++++
+ target/arm/arm-cpu-models.h      |   49 +
+ target/arm/arm-cpu-props-stub.c  |   36 +
+ target/arm/arm-cpu-props.c       | 1212 +++++++++++++++++++
+ target/arm/arm-cpu-props.h       |   70 ++
+ target/arm/arm-qmp-cmds.c        |  128 +-
+ target/arm/cpu-features.h        |  246 +---
+ target/arm/cpu-idregs.c          |  508 ++++++++
+ target/arm/cpu-idregs.h          |  119 ++
+ target/arm/cpu-idregs.h.inc      | 1898 ++++++++++++++++++++++++++++++
+ target/arm/cpu-sysregs.h.inc     |    5 +
+ target/arm/cpu.h                 |    3 +
+ target/arm/cpu64.c               |   31 +-
+ target/arm/kvm-stub.c            |    7 +-
+ target/arm/kvm.c                 |  356 +++++-
+ target/arm/kvm_arm.h             |    7 +-
+ target/arm/meson.build           |   11 +-
+ target/arm/trace-events          |    1 +
+ 22 files changed, 5148 insertions(+), 252 deletions(-)
+ create mode 100644 target/arm/arm-cpu-models-stub.c
+ create mode 100644 target/arm/arm-cpu-models.c
+ create mode 100644 target/arm/arm-cpu-models.h
+ create mode 100644 target/arm/arm-cpu-props-stub.c
+ create mode 100644 target/arm/arm-cpu-props.c
+ create mode 100644 target/arm/arm-cpu-props.h
+ create mode 100644 target/arm/cpu-idregs.c
+ create mode 100644 target/arm/cpu-idregs.h
+ create mode 100644 target/arm/cpu-idregs.h.inc
+
 -- 
 2.52.0
 
