@@ -4,69 +4,56 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id DFBA2CD6E79
-	for <qemu-devel@archiver.kernel.org>; Fri,  5 Jun 2026 13:28:45 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 60664CD8C81
+	for <qemu-devel@archiver.kernel.org>; Fri,  5 Jun 2026 14:04:15 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wVUb4-0008AW-AB; Fri, 05 Jun 2026 09:28:26 -0400
+	id 1wVV8T-0004aE-Tz; Fri, 05 Jun 2026 10:02:57 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <dg@treblig.org>)
- id 1wVUaz-00088y-MH; Fri, 05 Jun 2026 09:28:21 -0400
-Received: from mx.treblig.org ([2a00:1098:5b::1])
+ (Exim 4.90_1) (envelope-from <f.ebner@proxmox.com>)
+ id 1wVV8Q-0004a4-VZ
+ for qemu-devel@nongnu.org; Fri, 05 Jun 2026 10:02:55 -0400
+Received: from proxmox-new.maurer-it.com ([94.136.29.106])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <dg@treblig.org>)
- id 1wVUax-0003FG-JA; Fri, 05 Jun 2026 09:28:21 -0400
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=treblig.org
- ; s=bytemarkmx;
- h=Content-Type:MIME-Version:Message-ID:Subject:From:Date:From
- :Subject; bh=yld494QWOsUHEiHXxwJqnUvG/nKQkrdisZtXex83j+g=; b=gscinGheDUiVVSDV
- SPywv7RayzH5tj70NydC6I4MmOTodUA3Yqz/EacZHuo4Xv/qQooNfo/hS5226Z817bLJZtZsPnMQb
- zcqIL9Jn0TlOeoBpaOg9JyM5a3bSLAN1tU5Al/v4Dv9n9tuVDapj775MbcBo8V1bIfa+dA/VJVG9a
- bGd/ljh252GYtgzUCg6Squ6Nkz69P9LJvZO3C+IkiXpkUq/I4rYr9fiG9cJTWB120KK5PdKpw318F
- 9AxPiUkisj9Vqts7OUHKDyESTDBVsxRMF5ocIxjbLHrFbqYVqmwuWLZXvm+JXYbThX650jMizjY0i
- WLtXfEtUJFumiRNIxA==;
-Received: from dg by mx.treblig.org with local (Exim 4.98.2)
- (envelope-from <dg@treblig.org>) id 1wVUar-00000005SjV-0UQq;
- Fri, 05 Jun 2026 13:28:13 +0000
-Date: Fri, 5 Jun 2026 13:28:13 +0000
-From: "Dr. David Alan Gilbert" <dave@treblig.org>
-To: =?iso-8859-1?Q?Marc-Andr=E9?= Lureau <marcandre.lureau@redhat.com>
-Cc: qemu-devel@nongnu.org, Zhenzhong Duan <zhenzhong.duan@intel.com>,
- "Michael S. Tsirkin" <mst@redhat.com>,
- David Hildenbrand <david@kernel.org>,
- Paolo Bonzini <pbonzini@redhat.com>, Peter Xu <peterx@redhat.com>,
- Philippe =?iso-8859-1?Q?Mathieu-Daud=E9?= <philmd@mailo.com>,
- qemu-rust@nongnu.org, Alex Williamson <alex@shazbot.org>,
- =?iso-8859-1?Q?C=E9dric?= Le Goater <clg@redhat.com>,
- "Maciej S. Szmigiero" <maciej.szmigiero@oracle.com>,
- Fabiano Rosas <farosas@suse.de>, Mark Kanda <mark.kanda@oracle.com>,
- Ben Chaney <bchaney@akamai.com>,
- Marcelo Tosatti <mtosatti@redhat.com>, kvm@vger.kernel.org,
- Zhao Liu <zhao1.liu@intel.com>, Eric Blake <eblake@redhat.com>,
- Markus Armbruster <armbru@redhat.com>
-Subject: Re: [PATCH v5 12/12] RFC: monitor: add 'info ramblock-attributes'
- command
-Message-ID: <aiLO7ZQvowWHwK63@gallifrey>
-References: <20260604-rdm5-v5-0-5768e6a0943d@redhat.com>
- <20260604-rdm5-v5-12-5768e6a0943d@redhat.com>
+ (Exim 4.90_1) (envelope-from <f.ebner@proxmox.com>)
+ id 1wVV8O-0005tm-KS
+ for qemu-devel@nongnu.org; Fri, 05 Jun 2026 10:02:54 -0400
+Received: from proxmox-new.maurer-it.com (localhost.localdomain [127.0.0.1])
+ by proxmox-new.maurer-it.com (Proxmox) with ESMTP id 7D6FD8094F;
+ Fri, 05 Jun 2026 16:02:40 +0200 (CEST)
+Message-ID: <077647f6-d569-4918-9aea-c0597a6ddbc8@proxmox.com>
+Date: Fri, 5 Jun 2026 16:02:39 +0200
 MIME-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <20260604-rdm5-v5-12-5768e6a0943d@redhat.com>
-X-Chocolate: 70 percent or better cocoa solids preferably
-X-Operating-System: Linux/6.12.88+deb13-amd64 (x86_64)
-X-Uptime: 13:27:04 up 20 days, 16:39,  2 users,  load average: 0.06, 0.04, 0.00
-User-Agent: Mutt/2.2.13 (2024-03-09)
-Received-SPF: pass client-ip=2a00:1098:5b::1; envelope-from=dg@treblig.org;
- helo=mx.treblig.org
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PULL 12/14] virtio-net: Advertise UDP tunnel GSO support by
+ default
+To: "Michael S. Tsirkin" <mst@redhat.com>, qemu-devel@nongnu.org
+Cc: Peter Maydell <peter.maydell@linaro.org>, Paolo Abeni
+ <pabeni@redhat.com>, Jason Wang <jasowang@redhat.com>,
+ Lei Yang <leiyang@redhat.com>, Eduardo Habkost <eduardo@habkost.net>,
+ Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
+ =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Yanan Wang <wangyanan55@huawei.com>, Zhao Liu <zhao1.liu@intel.com>,
+ Gabriel Goller <g.goller@proxmox.com>,
+ Stefan Hanreich <s.hanreich@proxmox.com>,
+ Thomas Lamprecht <t.lamprecht@proxmox.com>
+References: <cover.1762698873.git.mst@redhat.com>
+ <1c79ab6937ae938d3dfd4da1c01afc7eb599857e.1762698873.git.mst@redhat.com>
+Content-Language: en-US
+From: Fiona Ebner <f.ebner@proxmox.com>
+In-Reply-To: <1c79ab6937ae938d3dfd4da1c01afc7eb599857e.1762698873.git.mst@redhat.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-Bm-Milter-Handled: 55990f41-d878-4baa-be0a-ee34c49e34d2
+X-Bm-Transport-Timestamp: 1780668119825
+Received-SPF: pass client-ip=94.136.29.106; envelope-from=f.ebner@proxmox.com;
+ helo=proxmox-new.maurer-it.com
+X-Spam_score_int: -18
+X-Spam_score: -1.9
+X-Spam_bar: -
+X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -83,187 +70,120 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-* Marc-André Lureau (marcandre.lureau@redhat.com) wrote:
-> Add a new 'info ramblock-attributes' HMP command and the corresponding
-> 'x-query-ramblock-attributes' QMP command to display the shared/private
-> memory attributes for ram blocks.
-> 
-> The QMP command returns structured data (RamBlockAttributesInfo list
-> with per-range shared/populated attributes), while HMP formats it for
-> human consumption.
-> 
-> This is useful for debugging confidential guests (TDX, SNP) to inspect
-> which memory regions are shared vs private, and their population state
-> when a RamDiscardManager is present (e.g. virtio-mem).
-> 
-> Signed-off-by: Marc-André Lureau <marcandre.lureau@redhat.com>
-> ---
->  qapi/machine.json             | 56 ++++++++++++++++++++++++++++++++++
->  include/monitor/hmp.h         |  1 +
->  hw/core/machine-hmp-cmds.c    | 32 +++++++++++++++++++
->  system/ram-block-attributes.c | 71 +++++++++++++++++++++++++++++++++++++++++++
->  hmp-commands-info.hx          | 13 ++++++++
->  5 files changed, 173 insertions(+)
-> 
+Dear maintainers,
 
-<snip>
+Am 09.11.25 um 4:10 PM schrieb Michael S. Tsirkin:
+> diff --git a/hw/net/virtio-net.c b/hw/net/virtio-net.c
+> index 17ed0ef919..3b85560f6f 100644
+> --- a/hw/net/virtio-net.c
+> +++ b/hw/net/virtio-net.c
+> @@ -4299,19 +4299,19 @@ static const Property virtio_net_properties[] = {
+>      VIRTIO_DEFINE_PROP_FEATURE("host_tunnel", VirtIONet,
+>                                 host_features_ex,
+>                                 VIRTIO_NET_F_HOST_UDP_TUNNEL_GSO,
+> -                               false),
+> +                               true),
+it seems that the host_tunnel setting can cause issues when VXLAN
+traffic originating in a guest goes over a physical NIC which does not
+support the feature. We received several reports about the issue
+[0][1][2][3] and were able to reproduce it. Turning off the
+'host_tunnel' property in the commandline for the VirtIO net device
+makes TCP traffic work. The network configuration from our reproducer
+setup is as follows:
 
-For HMP,
+      guest A (iperf3 -c)                   guest B (iperf3 -s)
+  vxlan using vNIC as underlay         vxlan using vNIC as underlay
+virtualized NIC exposed to guest     virtualized NIC exposed to guest
+    ---guest boundary---                  ---guest boundary---
+ tap device connected to bridge       tap device connected to bridge
+bridge with physical NIC as port     bridge with physical NIC as port
+        physical NIC   <---host boundary--->   physical NIC
 
-Acked-by: Dr. David Alan Gilbert <dave@treblig.org>
+Bridge configuration:
+iface vmbr0 inet static
+	address 10.48.0.109/20
+	gateway 10.48.0.1
+	bridge-ports nic3
+	bridge-stp off
+	bridge-fd 0
+	bridge-vlan-aware yes
+	bridge-vids 2-4094
 
-however, you might consider whether it would be better to add it
-to the existing "info ramblock"
+VXLAN created with:
+ip link add vxlan0 type vxlan id 100 remote X dstport 4789 dev eth1
+where eth1 is the virtualized NIC exposed to the guest
 
-Dave
+The physical NIC does not have the feature:
+Ethernet controller [0200]: Broadcom Inc. and subsidiaries NetXtreme
+BCM5719 Gigabit Ethernet PCIe [14e4:1657] (rev 01)
+tx-udp_tnl-segmentation: off [fixed]
+tx-udp_tnl-csum-segmentation: off [fixed]
 
-> +void hmp_info_ramblock_attributes(Monitor *mon, const QDict *qdict)
-> +{
-> +    Error *err = NULL;
-> +    g_autoptr(RamBlockAttributesInfoList) list = NULL;
-> +    RamBlockAttributesInfoList *it;
-> +
-> +    list = qmp_x_query_ramblock_attributes(&err);
-> +    if (hmp_handle_error(mon, err)) {
-> +        return;
-> +    }
-> +
-> +    for (it = list; it; it = it->next) {
-> +        RamBlockAttributesInfo *rba = it->value;
-> +        RamBlockAttributeRangeList *r;
-> +
-> +        monitor_printf(mon, "%s:\n", rba->name);
-> +        for (r = rba->ranges; r; r = r->next) {
-> +            RamBlockAttributeRange *range = r->value;
-> +            const char *shared = range->shared ? "shared" : "private";
-> +            const char *pop = range->has_populated ?
-> +                (range->populated ? "+populated" : "-populated") : "";
-> +
-> +            monitor_printf(mon,
-> +                           "  0x%016" PRIx64 "-0x%016" PRIx64 " %s%s\n",
-> +                           range->start,
-> +                           range->start + range->length - 1,
-> +                           shared, pop);
-> +        }
-> +    }
-> +}
-> diff --git a/system/ram-block-attributes.c b/system/ram-block-attributes.c
-> index 59ec7a28eb0..fb657ffca35 100644
-> --- a/system/ram-block-attributes.c
-> +++ b/system/ram-block-attributes.c
-> @@ -11,6 +11,7 @@
->  
->  #include "qemu/osdep.h"
->  #include "qemu/error-report.h"
-> +#include "qapi/qapi-commands-machine.h"
->  #include "system/ramblock.h"
->  #include "trace.h"
->  
-> @@ -221,3 +222,73 @@ static void ram_block_attributes_class_init(ObjectClass *klass,
->      rdsc->get_min_granularity = ram_block_attributes_rds_get_min_granularity;
->      rdsc->is_populated = ram_block_attributes_rds_is_populated;
->  }
-> +
-> +RamBlockAttributesInfoList *qmp_x_query_ramblock_attributes(Error **errp)
-> +{
-> +    RamBlockAttributesInfoList *head = NULL, **tail = &head;
-> +    RAMBlock *block;
-> +    size_t rba_block_size = ram_block_attributes_get_block_size();
-> +
-> +    RCU_READ_LOCK_GUARD();
-> +
-> +    RAMBLOCK_FOREACH(block) {
-> +        RamBlockAttributesInfo *rba;
-> +        RamBlockAttributeRangeList **range_tail;
-> +        RamBlockAttributes *attr = block->attributes;
-> +        RamDiscardManager *rdm;
-> +        unsigned long pos;
-> +
-> +        if (!attr) {
-> +            continue;
-> +        }
-> +
-> +        rdm = memory_region_get_ram_discard_manager(block->mr);
-> +        g_assert(rdm);
-> +
-> +        rba = g_new0(RamBlockAttributesInfo, 1);
-> +        rba->name = g_strdup(block->idstr);
-> +        range_tail = &rba->ranges;
-> +
-> +        pos = 0;
-> +        while (pos < attr->bitmap_size) {
-> +            bool is_shared = test_bit(pos, attr->bitmap);
-> +            unsigned long next;
-> +            uint64_t start_offset, length;
-> +            RamBlockAttributeRange *range;
-> +
-> +            if (is_shared) {
-> +                next = find_next_zero_bit(attr->bitmap,
-> +                                          attr->bitmap_size, pos);
-> +            } else {
-> +                next = find_next_bit(attr->bitmap,
-> +                                     attr->bitmap_size, pos);
-> +            }
-> +
-> +            start_offset = (uint64_t)pos * rba_block_size;
-> +            length = (uint64_t)(next - pos) * rba_block_size;
-> +
-> +            range = g_new0(RamBlockAttributeRange, 1);
-> +            range->start = start_offset;
-> +            range->length = length;
-> +            range->shared = is_shared;
-> +
-> +            {
-> +                MemoryRegionSection section = {
-> +                    .mr = block->mr,
-> +                    .offset_within_region = start_offset,
-> +                    .size = int128_make64(length),
-> +                };
-> +                range->has_populated = true;
-> +                range->populated =
-> +                    ram_discard_manager_is_populated(rdm, &section);
-> +            }
-> +
-> +            QAPI_LIST_APPEND(range_tail, range);
-> +            pos = next;
-> +        }
-> +
-> +        QAPI_LIST_APPEND(tail, rba);
-> +    }
-> +
-> +    return head;
-> +}
-> diff --git a/hmp-commands-info.hx b/hmp-commands-info.hx
-> index 82134eb6c21..f119b9cfebc 100644
-> --- a/hmp-commands-info.hx
-> +++ b/hmp-commands-info.hx
-> @@ -761,6 +761,19 @@ SRST
->      Dump all the ramblocks of the system.
->  ERST
->  
-> +    {
-> +        .name       = "ramblock-attributes",
-> +        .args_type  = "",
-> +        .params     = "",
-> +        .help       = "Display ramblock shared/private attributes",
-> +        .cmd        = hmp_info_ramblock_attributes,
-> +    },
-> +
-> +SRST
-> +  ``info ramblock-attributes``
-> +    Display the shared/private memory attributes for ram blocks.
-> +ERST
-> +
->      {
->          .name       = "hotpluggable-cpus",
->          .args_type  = "",
-> 
-> -- 
-> 2.54.0
-> 
--- 
- -----Open up your eyes, open up your mind, open up your code -------   
-/ Dr. David Alan Gilbert    |       Running GNU/Linux       | Happy  \ 
-\        dave @ treblig.org |                               | In Hex /
- \ _________________________|_____ http://www.treblig.org   |_______/
+Using a physical NIC which does have the feature works:
+Ethernet controller [0200]: Broadcom Inc. and subsidiaries BCM57504
+NetXtreme-E 10Gb/25Gb/40Gb/50Gb/100Gb Ethernet [14e4:1751] (rev 11)
+tx-udp_tnl-segmentation: on
+tx-udp_tnl-csum-segmentation: on
+
+Host kernel:
+Proxmox VE with 7.0.2-6-pve
+
+Guest kernel:
+Apline with 6.18.34-0-lts
+
+QEMU commandline for the vNIC:
+> -netdev 'type=tap,id=net2,ifname=tap103i2,script=/usr/libexec/qemu-server/pve-bridge,downscript=/usr/libexec/qemu-server/pve-bridgedown,vhost=on' \
+> -device 'virtio-net-pci,mac=BC:24:11:78:C3:3B,netdev=net2,bus=pci.0,addr=0x14,id=net2,rx_queue_size=1024,tx_queue_size=256,host_mtu=1500' \
+
+We can see that QEMU sets the features for the tap interface via ioctl()
+and the host kernel allows it:
+tx-udp_tnl-segmentation: on
+tx-udp_tnl-csum-segmentation: on
+
+As far as we understand, in the problematic scenario, nothing is ever
+filling in the checksums for the inner TCP packets, meaning the outer
+UDP checksum ends up being wrong on the target side. Is the host kernel
+responsible for doing that before passing the packet to the physical NIC
+(without the feature)? Or who would be?
+
+Turning off host_tunnel_csum without turning off host_tunnel does not help.
+
+Interestingly, turning off the features for the working physical NIC
+does not make it break:
+tx-udp_tnl-segmentation: off
+tx-udp_tnl-csum-segmentation: off
+Could it be that the NIC just always fills in the inner TCP checksums
+regardless of that setting?
+
+On the other hand, running
+localhost:~# ethtool -K eth2 tx-checksum-ip-generic off
+Actual changes:
+tx-checksum-ip-generic: off
+tx-tcp-segmentation: off [not requested]
+tx-tcp-ecn-segmentation: off [not requested]
+tx-tcp6-segmentation: off [not requested]
+tx-udp-segmentation: off [not requested]
+inside the guests makes it work for the physical NIC without the
+tx-udp_tnl* features.
+
+I wanted to ask if this configuration is expected to be unsupported and
+if the management is expected to turn off the feature on the commandline
+if the traffic might go over a physical NIC without the feature. Or if
+this could be a kernel or NIC bug that should be investigated further?
+In the former case, should the option really be turned on by default
+with new machine versions?
+
+I'll be happy to test and capture/provide additional information. Let me
+know what would be interesting.
+
+Thanks to Stefan and Gabriel for looking into the issue with me!
+
+Best Regards,
+Fiona
+
+[0]: https://bugzilla.proxmox.com/show_bug.cgi?id=7627
+[1]: https://forum.proxmox.com/threads/183494/post-855144
+[2]: https://forum.proxmox.com/threads/182328/post-854627
+[3]: https://forum.proxmox.com/threads/183963/post-855737
+
 
