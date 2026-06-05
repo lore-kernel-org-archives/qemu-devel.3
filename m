@@ -4,88 +4,89 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4C98BCD6E74
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 67F02CD6E5D
 	for <qemu-devel@archiver.kernel.org>; Fri,  5 Jun 2026 04:40:57 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wVMM2-0000mM-W0; Fri, 05 Jun 2026 00:40:23 -0400
+	id 1wVMM2-0000m0-IU; Fri, 05 Jun 2026 00:40:22 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <kylefoxaustin.github@gmail.com>)
- id 1wVLaw-0003lC-QR
- for qemu-devel@nongnu.org; Thu, 04 Jun 2026 23:51:43 -0400
-Received: from mail-yx1-xb130.google.com ([2607:f8b0:4864:20::b130])
+ id 1wVLX1-0003KV-2m
+ for qemu-devel@nongnu.org; Thu, 04 Jun 2026 23:47:39 -0400
+Received: from mail-yw1-x1136.google.com ([2607:f8b0:4864:20::1136])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <kylefoxaustin.github@gmail.com>)
- id 1wVLav-0002MN-2w
- for qemu-devel@nongnu.org; Thu, 04 Jun 2026 23:51:42 -0400
-Received: by mail-yx1-xb130.google.com with SMTP id
- 956f58d0204a3-6608c1a4215so1895526d50.0
- for <qemu-devel@nongnu.org>; Thu, 04 Jun 2026 20:51:40 -0700 (PDT)
+ id 1wVLWy-0001C1-AX
+ for qemu-devel@nongnu.org; Thu, 04 Jun 2026 23:47:38 -0400
+Received: by mail-yw1-x1136.google.com with SMTP id
+ 00721157ae682-7ea6923cc94so15454537b3.3
+ for <qemu-devel@nongnu.org>; Thu, 04 Jun 2026 20:47:35 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1780631500; x=1781236300; darn=nongnu.org;
+ d=gmail.com; s=20251104; t=1780631254; x=1781236054; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:message-id:date:subject:cc
  :to:from:from:to:cc:subject:date:message-id:reply-to;
- bh=xEhAhztERlLY25A4bHIiwaX34mD7mW74JJDyzCOigOA=;
- b=TKk7XXS+1fyKVaokKfRcL/EekQYZsgyp95KDzH/x/ihRmagl5EXRe1tZQeD6t+lYzE
- mXOrkx4zQTdLZDsQeJin2Sx4a3GAMWPrTde9hR/zTseRIkWWhx51iAgKRjTlkcYGg081
- 3ZXCuK++R95x6J6igZFjvjYUjVZlBRal7hOdpX2a9elDtAreEkiAnUWh9MeYoC9e7yiG
- 4SPMIpV39poR9UZc1hsrxhg+Pzsc4VqBbwLqjCvgPBlPTgGFAlAAcrhdc+hD68bCCMde
- FVsC56CJ3g9Kb0DWLlsP4r59h51LUo74omc7aV23HEjdZd+2wyt93eRJPKKQSAVjcUVb
- jElg==
+ bh=bmUZCPxlCwVjimaSrjGKpX2GbNzr8cV/TW/s7Au1g3A=;
+ b=amRgoYFwhWFLPJLIfQ9a5Qdd6ePOMnMAabcf2wFXh3NHZwjfewib1VY+mhvQa7ILuk
+ STtxV/cQ9S/XNDH/UPEgNXP2r5ZM2S98JmRoEbs5i4uBU2n6Ql7cZ+S9ztsOH2HPSo/v
+ SeskkTs8QPGQbkmYlNSLo3g0cpQAAKZuJ9AAtZGvR1O5z8+uxZdiRBxFkzVHf5+C4R4r
+ yA7p6sw3h45/KpFRpQzubeQLk+MWnfoSNPY9DibGfxn22MGgoS5Si6jubSy0gmONGsDk
+ J69ysCRnp1Uw5ZLLiC8vI7KTXWjCSDGQYVUXeFu8o524hVZapS9RMgFmQJZDRLGvKL53
+ Gq1A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1780631500; x=1781236300;
+ d=1e100.net; s=20251104; t=1780631254; x=1781236054;
  h=content-transfer-encoding:mime-version:message-id:date:subject:cc
  :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
  :message-id:reply-to;
- bh=xEhAhztERlLY25A4bHIiwaX34mD7mW74JJDyzCOigOA=;
- b=q87qIgdLoH01lv0KDerfM6F7y+XilK1SPS+3pIhzbfhxuItCoNEBzwAgXnXn6PVwJC
- UItrn90UT/5cM+dXOdNAiJzGziU25J4cy0JbXQ/c/qMerXjXYj2160/k7c7uktmN89wr
- mvnwoVSWpKbtB1rRh99S4cePFMqZAg3JwLb6TOPjhB5wm6M7d5afoI5ubJZ+6oQFCwDm
- JT+qUAQzu7qUipA6zadqxK5BP4FdMOkDAxupQ5//LplxwfGgYEEJr8ec3F9HmOVdOJNw
- ET4FqKn2SkkAI0jFuE6Fbq/FyQO9G+6TUFIjLiydN+atU5v206PMtGRHY10CZxIqjKK1
- HdNg==
+ bh=bmUZCPxlCwVjimaSrjGKpX2GbNzr8cV/TW/s7Au1g3A=;
+ b=mRcULRPNpSyhboheLRZiicS7uD0hfZ/kmrEJGqPh+A1aLcRdgx2XcLLFfjJJsXdV2Y
+ NW98iKh8U3pmgv2eKqakBDomH92RYf0idpd48lZoG5JSkZeBHtv5cWqr1T9q/p5njkVM
+ 174tno8qznuYkT6k3jC3czFTaLQWAuuOSFZD9OC5hgOZZZOK5s2CGDNEHEfQXmpV/8kq
+ K4ob9NPYyjXzFeb4B5GvA4NxjKqGzT9yZpRk+2LpZwup63MF7tbk1aQfU+8f2gXDVIVu
+ NRtsfyETBEMBJDImI3a9y1Dv3WxLIeRvp0qAVALx/ihgNSeG0pZTT/7+Fb/NwRbOSvIV
+ MWJg==
 X-Forwarded-Encrypted: i=1;
- AFNElJ96vVQuogQ7hLcGNZSxHKdmNK/WudPzA3pocZJB/gF9Ps5hiJ/3GQW2ok2fmhbj5LRP6IrxQfrMiKsl@nongnu.org
-X-Gm-Message-State: AOJu0YzWs2a/VwWhwfa3N30uWBMWHPpebqYC421MRqFzzjihF+s8K9Je
- uBVKjIA6j5a/xBTDw3EyGGqNCX/St3MQmr902yqJ+1SkqKIv+npe3Aed
-X-Gm-Gg: Acq92OHq86xdXwnHE9PJteC49MuSxNhVZpVu2SGK8CS/foA8i3ePoYwUj8jEYYOL2OA
- Uv4clF5IIKqIoWckbH1wEWotwWydMVQwewxThJeOk+JcKflat7MY2MugGAW7Yovq2U1X8kgzLGS
- Sz1CbqpHra6bI2iDqwXkZvSj8KWrgxknnbb8EPtnayLcw4TR6kDTvI3Rnk2+o9lyoguDM/wqOeJ
- 49Ht7ySlYPVC0NPu4u4sCQDCgwSU2DL624ErArroT+bhCo+UBSAuCxJOHuuH7Ch4/vp7GuJpfh9
- xCdUjGJEeXsP8GwvEELBu4xupMw8l/au5IhXsg8NhzsaFU1xIs5YCiBNKKb9Q0rtpb+mAt5xsex
- kQ2UMhLNrUCvI5n3ExRPJAWwkPfdmZGs7O1WfoZ/T6a/Zajj1T7GzNv6hDR3sVigfKAsSNUyvrs
- QPOUdRc+6K13gRZGTrC97BVNM93WI9AN2Y37jIYy3v2BmlczVCIF0Wj3qCIJCshoODnpiYLYnBo
- bq9E+4cJowt1bfkg+4R
-X-Received: by 2002:a05:690e:4007:b0:660:43ec:efbf with SMTP id
- 956f58d0204a3-6610a665445mr663444d50.11.1780631499819; 
- Thu, 04 Jun 2026 20:51:39 -0700 (PDT)
+ AFNElJ9SZEvea/et20LLwFfkEG11To+8NzFVgFg4GC8+krSp8fOxg8yXKrDWizfSMN5TfcGGZ7yNURaIPRxP@nongnu.org
+X-Gm-Message-State: AOJu0YzVoCE7tmqWQM6yTpflYum8kJnCcVg04MahMAee+Bhc12sjvNEu
+ M5WgB/wASJmiz+rveIGoa31+j6JsOmhA2eEGaj3q18HkU1Fx9wa04ikW
+X-Gm-Gg: Acq92OH38PrGfFfkIW5qyIawzxxojMf89O7YV850ExdoHT+I/pzdTxGK4eRoqG2qstO
+ 67VrSL1rxEv7WkUKTHsEEA2aOq+HxOpHnRceCK+5nCHEwf7RAR+nK0kG8nsp4M7zg5oEfm2QoRA
+ xY7SoCScANRvH9a3EjCXEoTGxYJ9kS0BeRP22tgLJ42nZmBdg4AWso9DY8Q+SfG9Xfd0xn0NcC8
+ YMuh25Gcd1FkpueqkKwnx707M1iHHKH6q9kGJFiVXfB/K/dDAYzYNa9aCLN/E7g01xZwbhuz1W3
+ X3Yj3dXbfaQudmyEpArIGRdfRTrRuGd2qB5zYaY6gbZFRGuczXOtMRCkYgcGs5nnDIvakf58RUR
+ WI5p8IG419dixjq/kuNT65nnEDeI31zMJUGkvK/4eQKPol+kp7rLHIU7mGWRTGL2y8vJnAozPsa
+ 0w67K/TGhOn09R6P5qAxtBUD1Ks/IeTmcSmOGws0B4qBtjnQusqXYFDSiMpXRWtLsdzDq3cWAwY
+ mxKL9V0vH0ZWx7STxYh
+X-Received: by 2002:a05:690c:610c:b0:7ec:552c:b8d7 with SMTP id
+ 00721157ae682-7ed0adc07b9mr18390097b3.14.1780631254430; 
+ Thu, 04 Jun 2026 20:47:34 -0700 (PDT)
 Received: from skippy.tail1682c8.ts.net
  (99-61-67-1.lightspeed.austtx.sbcglobal.net. [99.61.67.1])
  by smtp.gmail.com with ESMTPSA id
- 956f58d0204a3-660d5f39fedsm5080851d50.1.2026.06.04.20.51.38
+ 00721157ae682-7ea23a9a421sm45031457b3.39.2026.06.04.20.47.32
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 04 Jun 2026 20:51:38 -0700 (PDT)
+ Thu, 04 Jun 2026 20:47:33 -0700 (PDT)
 From: Kyle Fox <kylefoxaustin.github@gmail.com>
-To: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Cc: Kyle Fox <kylefoxaustin.github@gmail.com>, Bin Meng <bmeng.cn@gmail.com>,
- qemu-block@nongnu.org, qemu-devel@nongnu.org
-Subject: [PATCH] hw/sd/sdhci: let i.MX (u)SDHC issue commands without SDCLK_EN
-Date: Thu,  4 Jun 2026 22:51:34 -0500
-Message-Id: <20260605035134.2877604-1-kylefoxaustin.github@gmail.com>
+To: Peter Maydell <peter.maydell@linaro.org>
+Cc: Kyle Fox <kylefoxaustin.github@gmail.com>, qemu-arm@nongnu.org,
+ qemu-devel@nongnu.org
+Subject: [PATCH] target/arm: align down misaligned PMSAv7 MPU region base
+ instead of dropping it
+Date: Thu,  4 Jun 2026 22:47:29 -0500
+Message-Id: <20260605034729.2874861-1-kylefoxaustin.github@gmail.com>
 X-Mailer: git-send-email 2.34.1
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::b130;
- envelope-from=kylefoxaustin.github@gmail.com; helo=mail-yx1-xb130.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::1136;
+ envelope-from=kylefoxaustin.github@gmail.com; helo=mail-yw1-x1136.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-Mailman-Approved-At: Fri, 05 Jun 2026 00:40:21 -0400
 X-BeenThere: qemu-devel@nongnu.org
@@ -102,126 +103,80 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The i.MX (u)SDHC gates the SD card clock in hardware and has no
-software-visible "SD Clock Enable" bit, so the Linux sdhci-esdhc-imx
-driver programs only the divider and the internal-clock enable and never
-sets SDHC_CLOCK_SDCLK_EN. The generic command-dispatch gate,
-sdhci_can_issue_command() -> SDHC_CLOCK_IS_ON(), requires that bit, so
-under Linux every command issued to such a controller is silently
-dropped: no command-complete or command-timeout interrupt is raised, and
-the guest mmc layer falls back to a 10s host-side timeout per command,
-indefinitely. (The existing VENDORSPEC->clkcon mirror only covered the
-U-Boot fsl_esdhc_imx clock path, which does toggle the VENDORSPEC enable
-bits; the upstream Linux driver does not.)
+When a PMSAv7 (ARMv7-M) MPU region's DRBAR base is not aligned to its
+DRSR region size, get_phys_addr_pmsav7() logged a guest-error and
+skipped the region entirely (continue). The architecture calls a
+misaligned base UNPREDICTABLE, but real Cortex-M hardware does not
+disable the region: RBAR.ADDR is only bits [31:log2(size)], so the
+sub-size low bits are simply ignored and the region matches against the
+aligned-down base.
 
-On the i.MX 95 machine this wedges shutdown: with no backing storage the
-empty eMMC slot (non-removable, always probed) and SD slot both spin on
-these 10s timeouts, so device_shutdown() never returns and the guest
-never reaches PSCI SYSTEM_OFF -- a guest poweroff fails to terminate
-QEMU, and the controllers spew sdhci-esdhc-imx debug-status dumps the
-whole time.
+NXP's i.MX95 Cortex-M7 firmware (and the MCUXpresso SDK demos) rely on
+this. The M7 sets up a deny-all background region (region 0, whole
+address space, AP=000) and then grants the peripheral space with a
+512 MiB region programmed as DRBAR=0x4c800000 - misaligned, intended as
+0x40000000. QEMU dropped that region, so a privileged access to e.g.
+LPUART3 at 0x42570000 fell through to the deny-all region and took a
+MemManage fault (CFSR.DACCVIOL), trapping the firmware in its default
+fault handler before it could print anything.
 
-Add SDHCI_QUIRK_SDCLK_AUTO_GATE: when set, the controller is considered
-ready to issue commands once the internal clock is enabled and stable,
-without also requiring SDHC_CLOCK_SDCLK_EN. Set it on the three i.MX
-variants (imx-usdhc, fsl-esdhc-be, fsl-esdhc-le). With the clock gate
-relaxed, an absent card is reported promptly as a command timeout, card
-init fails in milliseconds instead of 10s, device_shutdown() completes,
-and guest poweroff terminates the VM cleanly.
-
-The change is strictly more permissive than the previous gate (every
-state that satisfied SDHC_CLOCK_IS_ON still dispatches), so controllers
-without the quirk are unaffected; the sdhci qtests (xlnx-zcu102 and
-sdhci-pci, neither of which sets the quirk) still pass.
+Align the base down to the region size (base &= ~rmask) to match
+silicon, and keep a (now-accurate) guest-error note. This only changes
+the previously-UNPREDICTABLE misaligned case; correctly-aligned regions
+are unaffected.
 
 Signed-off-by: Kyle Fox <kylefoxaustin.github@gmail.com>
-
 ---
- hw/sd/sdhci.c         | 25 +++++++++++++++++++++----
- include/hw/sd/sdhci.h | 11 +++++++++++
- 2 files changed, 32 insertions(+), 4 deletions(-)
+Found while bringing up the i.MX95 Cortex-M7 in an out-of-tree machine
+model: the M7's MCUXpresso-SDK firmware programs the misaligned 512 MiB
+peripheral region described above. With this change the firmware reaches
+its FreeRTOS/UART banner; without it the region was dropped and the first
+peripheral access took a MemManage DACCVIOL.
 
-diff --git a/hw/sd/sdhci.c b/hw/sd/sdhci.c
-index 4ad96a8760..d52335424b 100644
---- a/hw/sd/sdhci.c
-+++ b/hw/sd/sdhci.c
-@@ -1013,9 +1013,26 @@ static void sdhci_data_transfer(void *opaque)
-     }
- }
+The new branch only executes in the previously-UNPREDICTABLE misaligned
+case (base & rmask != 0), so correctly-aligned MPU regions are unchanged.
+
+Tested on master: qemu-system-arm builds clean, and the ARMv7-M / MPS2
+qtests pass with no regression -- boot-serial (incl. stm32vldiscovery,
+Cortex-M3), the stm32l4x5 suite (Cortex-M4: exti/gpio/rcc/syscfg/usart),
+microbit, sse-timer and cmsdk-apb-watchdog.
+
+ target/arm/ptw.c | 21 +++++++++++++++++----
+ 1 file changed, 17 insertions(+), 4 deletions(-)
+
+diff --git a/target/arm/ptw.c b/target/arm/ptw.c
+index 0a5201763a..3914d05449 100644
+--- a/target/arm/ptw.c
++++ b/target/arm/ptw.c
+@@ -2665,11 +2665,24 @@ static bool get_phys_addr_pmsav7(CPUARMState *env,
+             rmask = (1ull << rsize) - 1;
  
-+static bool sdhci_clock_is_on(SDHCIState *s)
-+{
-+    /*
-+     * The i.MX (u)SDHC has no software SD-clock-enable bit (the card clock
-+     * is auto-gated by hardware), so its driver never sets
-+     * SDHC_CLOCK_SDCLK_EN. For such a controller, treat the clock as
-+     * running once the internal clock is enabled and stable; otherwise
-+     * every command would be silently dropped (no completion/timeout IRQ),
-+     * stalling the guest on 10s host-side timeouts.
-+     */
-+    if (s->quirks & SDHCI_QUIRK_SDCLK_AUTO_GATE) {
-+        return (s->clkcon & (SDHC_CLOCK_INT_EN | SDHC_CLOCK_INT_STABLE)) ==
-+               (SDHC_CLOCK_INT_EN | SDHC_CLOCK_INT_STABLE);
-+    }
-+    return SDHC_CLOCK_IS_ON(s->clkcon);
-+}
-+
- static bool sdhci_can_issue_command(SDHCIState *s)
- {
--    if (!SDHC_CLOCK_IS_ON(s->clkcon) ||
-+    if (!sdhci_clock_is_on(s) ||
-         (((s->prnsts & SDHC_DATA_INHIBIT) || s->stopped_state) &&
-         ((s->cmdreg & SDHC_CMD_DATA_PRESENT) ||
-         ((s->cmdreg & SDHC_CMD_RESPONSE) == SDHC_CMD_RSP_WITH_BUSY &&
-@@ -1905,7 +1922,7 @@ static void fsl_esdhc_be_init(Object *obj)
-     DeviceState *dev = DEVICE(obj);
+             if (base & rmask) {
++                /*
++                 * The region base is not aligned to the region size. The
++                 * architecture calls this UNPREDICTABLE, but real Cortex-M
++                 * hardware ignores the sub-size low bits of RBAR.ADDR (the
++                 * field is only [31:log2(size)]) and matches against the
++                 * aligned-down base rather than disabling the region. NXP's
++                 * i.MX95 M7 firmware relies on this for its peripheral
++                 * region (e.g. DRBAR 0x4c800000 with a 512MB size, intended
++                 * as 0x40000000), so align down to match silicon instead of
++                 * dropping the region (which would leave the access to fall
++                 * through to a lower-priority deny-all background region).
++                 */
+                 qemu_log_mask(LOG_GUEST_ERROR,
+-                              "DRBAR[%d]: 0x%" PRIx32 " misaligned "
+-                              "to DRSR region size, mask = 0x%" PRIx32 "\n",
+-                              n, base, rmask);
+-                continue;
++                              "DRBAR[%d]: 0x%" PRIx32 " not aligned to DRSR "
++                              "region size (mask 0x%" PRIx32 "); aligning down "
++                              "to 0x%" PRIx32 " to match Cortex-M behaviour\n",
++                              n, base, rmask, base & ~rmask);
++                base &= ~rmask;
+             }
  
-     s->io_ops = &esdhc_mmio_be_ops;
--    s->quirks = SDHCI_QUIRK_NO_BUSY_IRQ;
-+    s->quirks = SDHCI_QUIRK_NO_BUSY_IRQ | SDHCI_QUIRK_SDCLK_AUTO_GATE;
-     qdev_prop_set_uint8(dev, "sd-spec-version", 2);
- }
- 
-@@ -1930,7 +1947,7 @@ static void fsl_esdhc_le_init(Object *obj)
-     DeviceState *dev = DEVICE(obj);
- 
-     s->io_ops = &esdhc_mmio_le_ops;
--    s->quirks = SDHCI_QUIRK_NO_BUSY_IRQ;
-+    s->quirks = SDHCI_QUIRK_NO_BUSY_IRQ | SDHCI_QUIRK_SDCLK_AUTO_GATE;
-     qdev_prop_set_uint8(dev, "sd-spec-version", 2);
- }
- 
-@@ -1951,7 +1968,7 @@ static void imx_usdhc_init(Object *obj)
-     DeviceState *dev = DEVICE(obj);
- 
-     s->io_ops = &usdhc_mmio_ops;
--    s->quirks = SDHCI_QUIRK_NO_BUSY_IRQ;
-+    s->quirks = SDHCI_QUIRK_NO_BUSY_IRQ | SDHCI_QUIRK_SDCLK_AUTO_GATE;
-     qdev_prop_set_uint8(dev, "sd-spec-version", 3);
- }
- 
-diff --git a/include/hw/sd/sdhci.h b/include/hw/sd/sdhci.h
-index a9da6203fc..d96f9c1dfa 100644
---- a/include/hw/sd/sdhci.h
-+++ b/include/hw/sd/sdhci.h
-@@ -115,6 +115,17 @@ typedef struct SDHCIState SDHCIState;
-  */
- #define SDHCI_QUIRK_NO_BUSY_IRQ    BIT(14)
- 
-+/*
-+ * The i.MX (u)SDHC gates the SD card clock automatically and has no
-+ * software-visible "SD Clock Enable" bit: its driver programs only the
-+ * divider and the internal-clock enable, never SDHC_CLOCK_SDCLK_EN. With
-+ * this quirk the controller is considered ready to issue commands once the
-+ * internal clock is enabled and stable, instead of also requiring
-+ * SDHC_CLOCK_SDCLK_EN (which such a driver never sets). QEMU-internal bit,
-+ * not mirrored from Linux.
-+ */
-+#define SDHCI_QUIRK_SDCLK_AUTO_GATE    BIT(16)
-+
- #define TYPE_PCI_SDHCI "sdhci-pci"
- DECLARE_INSTANCE_CHECKER(SDHCIState, PCI_SDHCI,
-                          TYPE_PCI_SDHCI)
+             if (address < base || address > base + rmask) {
 -- 
 2.34.1
 
