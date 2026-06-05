@@ -4,116 +4,103 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D25AACD6E7C
-	for <qemu-devel@archiver.kernel.org>; Fri,  5 Jun 2026 15:12:14 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 90269CD6E7C
+	for <qemu-devel@archiver.kernel.org>; Fri,  5 Jun 2026 15:12:43 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wVWCi-00089x-SH; Fri, 05 Jun 2026 11:11:32 -0400
+	id 1wVWDP-0008Ru-UA; Fri, 05 Jun 2026 11:12:07 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1wVWBU-0007v6-AX
- for qemu-devel@nongnu.org; Fri, 05 Jun 2026 11:10:10 -0400
-Received: from smtp-out1.suse.de ([2a07:de40:b251:101:10:150:64:1])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1wVWBD-0000b8-27
- for qemu-devel@nongnu.org; Fri, 05 Jun 2026 11:10:00 -0400
-Received: from imap1.dmz-prg2.suse.org (unknown [10.150.64.97])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
- (No client certificate requested)
- by smtp-out1.suse.de (Postfix) with ESMTPS id 410B76B34F;
- Fri,  5 Jun 2026 15:06:58 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1780672018; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=nIbgIMmdxHdu6Z+tMe+rvAelnCNQmcaO7KIff7gZWdE=;
- b=PyShQUUXIjgQE6FvYJTgCrLSj4+EpN00CiIo8v2P4zV1IFqmSSWMiMOP/AMnO2c2a//fNU
- yEKj32BTenHKGGz/eINpEPoWmgYHwWFiAHuvMz2FInncZlF/hlRqfFHYP46LjnrGXoWprP
- IPa5GvooJeDGTuE0dn2zWyCOgMMDKAE=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1780672018;
- h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=nIbgIMmdxHdu6Z+tMe+rvAelnCNQmcaO7KIff7gZWdE=;
- b=coA7/e5P0hDi6QR62Y6suqI2IfZ6KvSISQCwlYjHGkTsD3WV3nQbku9/Yuo/1EFJJt8kv6
- 82EMdQ/pYVxx67DQ==
-Authentication-Results: smtp-out1.suse.de;
-	none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1780672018; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=nIbgIMmdxHdu6Z+tMe+rvAelnCNQmcaO7KIff7gZWdE=;
- b=PyShQUUXIjgQE6FvYJTgCrLSj4+EpN00CiIo8v2P4zV1IFqmSSWMiMOP/AMnO2c2a//fNU
- yEKj32BTenHKGGz/eINpEPoWmgYHwWFiAHuvMz2FInncZlF/hlRqfFHYP46LjnrGXoWprP
- IPa5GvooJeDGTuE0dn2zWyCOgMMDKAE=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1780672018;
- h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=nIbgIMmdxHdu6Z+tMe+rvAelnCNQmcaO7KIff7gZWdE=;
- b=coA7/e5P0hDi6QR62Y6suqI2IfZ6KvSISQCwlYjHGkTsD3WV3nQbku9/Yuo/1EFJJt8kv6
- 82EMdQ/pYVxx67DQ==
-Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
- (No client certificate requested)
- by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id D524F779A8;
- Fri,  5 Jun 2026 15:06:57 +0000 (UTC)
-Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
- by imap1.dmz-prg2.suse.org with ESMTPSA id zoQLKRHmImrHcgAAD6G6ig
- (envelope-from <farosas@suse.de>); Fri, 05 Jun 2026 15:06:57 +0000
-From: Fabiano Rosas <farosas@suse.de>
-To: =?utf-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>
-Cc: Peter Xu <peterx@redhat.com>, qemu-devel@nongnu.org, =?utf-8?Q?Marc-An?=
- =?utf-8?Q?dr=C3=A9?= Lureau
- <marcandre.lureau@redhat.com>, Juraj Marcin <jmarcin@redhat.com>, Vladimir
- Sementsov-Ogievskiy <vsementsov@yandex-team.ru>, Sana Sharma
- <sansshar@redhat.com>, Eric Blake <eblake@redhat.com>, Markus Armbruster
- <armbru@redhat.com>, Kevin Wolf <kwolf@redhat.com>, Paolo Bonzini
- <pbonzini@redhat.com>, Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?=
- <philmd@mailo.com>, Mark
- Cave-Ayland <mark.caveayland@nutanix.com>, Akihiko Odaki
- <odaki@rsg.ci.i.u-tokyo.ac.jp>, =?utf-8?Q?C=C3=A9dric?= Le Goater
- <clg@redhat.com>, "Dr . David Alan Gilbert" <dave@treblig.org>
-Subject: Re: [PATCH 2/4] qdev: Introduce helper object_apply_globals()
-In-Reply-To: <aiLhcXUxVQ1K_6xA@redhat.com>
-References: <20260604231118.1584889-1-peterx@redhat.com>
- <20260604231118.1584889-3-peterx@redhat.com> <aiKOalYvribeaiqw@redhat.com>
- <87cxy56o80.fsf@suse.de> <aiLhcXUxVQ1K_6xA@redhat.com>
-Date: Fri, 05 Jun 2026 12:06:55 -0300
-Message-ID: <878q8t6n74.fsf@suse.de>
+ (Exim 4.90_1) (envelope-from <david@kernel.org>) id 1wVWCd-0008AF-0V
+ for qemu-devel@nongnu.org; Fri, 05 Jun 2026 11:11:23 -0400
+Received: from tor.source.kernel.org ([2600:3c04:e001:324:0:1991:8:25])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <david@kernel.org>) id 1wVWCV-0001rG-EJ
+ for qemu-devel@nongnu.org; Fri, 05 Jun 2026 11:11:14 -0400
+Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
+ by tor.source.kernel.org (Postfix) with ESMTP id D7E6A601DD;
+ Fri,  5 Jun 2026 15:10:59 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BDCAB1F00893;
+ Fri,  5 Jun 2026 15:10:57 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
+ s=k20260515; t=1780672259;
+ bh=CFnh0ysr0j7moptYDyijEwn2Dyx6iBAz4y2xV35eQdM=;
+ h=Date:Subject:To:Cc:References:From:In-Reply-To;
+ b=jrj8Ce1f9JTqRU+pTyuu/sTmLcTomc+T6rh9lhXfPqvwQKVom5PzTKXDKYe54bSde
+ h5+2WbZ8fQsKyCCJ3jzMRsMm54JwcNQLrykVdnlD3zMo6m4mF2/ce1PbSnq/YD0qjS
+ HojMincg8Y3Zo6aW2hko4DmByyrlbR1ULw+awNGrLayaqfkT2NjfsJMDRBggjhA2k9
+ j5o6SyijyeNmsOBV1uq40hSEtga+SWhH2V7cnQznrjMw2L8yUu0xGOCyTT/7xxFF/n
+ pHilzd30XQBC9Vmeaw2hV96IUxYfsUhzl3/i6vRE9OzhLWmuQh7oOjxtELBQxA186R
+ F+lCNGUoAerOQ==
+Message-ID: <38b904fb-fad5-4fd6-a0f9-eea629e25862@kernel.org>
+Date: Fri, 5 Jun 2026 17:10:54 +0200
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-X-Spamd-Result: default: False [-4.30 / 50.00]; BAYES_HAM(-3.00)[100.00%];
- NEURAL_HAM_LONG(-1.00)[-1.000];
- NEURAL_HAM_SHORT(-0.20)[-1.000]; MIME_GOOD(-0.10)[text/plain];
- DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
- FUZZY_RATELIMITED(0.00)[rspamd.com]; ARC_NA(0.00)[];
- MIME_TRACE(0.00)[0:+]; TO_MATCH_ENVRCPT_ALL(0.00)[];
- RCPT_COUNT_TWELVE(0.00)[16]; FROM_HAS_DN(0.00)[];
- RCVD_TLS_ALL(0.00)[]; MISSING_XM_UA(0.00)[];
- FROM_EQ_ENVFROM(0.00)[]; TO_DN_SOME(0.00)[];
- RCVD_COUNT_TWO(0.00)[2]; RCVD_VIA_SMTP_AUTH(0.00)[];
- MID_RHS_MATCH_FROM(0.00)[];
- DBL_BLOCKED_OPENRESOLVER(0.00)[imap1.dmz-prg2.suse.org:helo,suse.de:mid]
-Received-SPF: pass client-ip=2a07:de40:b251:101:10:150:64:1;
- envelope-from=farosas@suse.de; helo=smtp-out1.suse.de
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v10 1/4] hw/mem: add sp-mem device for Specific Purpose
+ Memory
+To: fanhuang <FangSheng.Huang@amd.com>, qemu-devel@nongnu.org,
+ imammedo@redhat.com, gourry@gourry.net, philmd@mailo.com
+Cc: Zhigang.Luo@amd.com, Lianjie.Shi@amd.com
+References: <20260605104609.1739911-1-FangSheng.Huang@amd.com>
+ <20260605104609.1739911-2-FangSheng.Huang@amd.com>
+From: "David Hildenbrand (Arm)" <david@kernel.org>
+Content-Language: en-US
+Autocrypt: addr=david@kernel.org; keydata=
+ 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
+ qIws/H2t
+In-Reply-To: <20260605104609.1739911-2-FangSheng.Huang@amd.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2600:3c04:e001:324:0:1991:8:25;
+ envelope-from=david@kernel.org; helo=tor.source.kernel.org
+X-Spam_score_int: -24
+X-Spam_score: -2.5
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.445,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -129,70 +116,31 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Daniel P. Berrang=C3=A9 <berrange@redhat.com> writes:
+On 6/5/26 12:46, fanhuang wrote:
+> Introduce a TYPE_MEMORY_DEVICE subclass `sp-mem` for boot-time
+> SOFT_RESERVED memory exposed to the guest with a per-device NUMA
+> proximity domain.
+> 
+> The device targets accelerator memory (HBM and similar) that the
+> firmware hands to the guest OS as SOFT_RESERVED memory, so a driver
+> in the guest -- rather than the kernel's general allocator -- owns
+> the range.
+> 
+> Usage:
+> 
+>     -object memory-backend-ram,id=spm0,size=$SIZE
+>     -numa node,nodeid=$N
+>     -device sp-mem,id=dev0,memdev=spm0,node=$N[,addr=$GPA]
+> 
+> The device is boot-time only (no hotplug).
+> 
+> Signed-off-by: FangSheng Huang <FangSheng.Huang@amd.com>
+> ---
 
-> On Fri, Jun 05, 2026 at 11:44:47AM -0300, Fabiano Rosas wrote:
->> Daniel P. Berrang=C3=A9 <berrange@redhat.com> writes:
->>=20
->> > On Thu, Jun 04, 2026 at 07:11:16PM -0400, Peter Xu wrote:
->> >> The helper allows one object to apply anything from -global command l=
-ines
->> >> to an object.
->> >>=20
->> >> Signed-off-by: Peter Xu <peterx@redhat.com>
->> >> ---
->> >>  include/hw/core/qdev-properties.h | 1 +
->> >>  hw/core/qdev-properties.c         | 5 +++++
->> >>  2 files changed, 6 insertions(+)
->> >>=20
->> >> diff --git a/include/hw/core/qdev-properties.h b/include/hw/core/qdev=
--properties.h
->> >> index eba5436e53..779acb31b6 100644
->> >> --- a/include/hw/core/qdev-properties.h
->> >> +++ b/include/hw/core/qdev-properties.h
->> >> @@ -268,6 +268,7 @@ const GlobalProperty *qdev_find_global_prop(Objec=
-t *obj,
->> >>                                              const char *name);
->> >>  int qdev_prop_check_globals(void);
->> >>  void qdev_prop_set_globals(DeviceState *dev);
->> >> +void object_apply_globals(Object *obj);
->> >>  void error_set_from_qdev_prop_error(Error **errp, int ret, Object *o=
-bj,
->> >>                                      const char *name, const char *va=
-lue);
->> >>=20=20
->> >> diff --git a/hw/core/qdev-properties.c b/hw/core/qdev-properties.c
->> >> index 8f870c85fc..a91c2ad101 100644
->> >> --- a/hw/core/qdev-properties.c
->> >> +++ b/hw/core/qdev-properties.c
->> >> @@ -1045,6 +1045,11 @@ void qdev_prop_set_globals(DeviceState *dev)
->> >>                                dev->hotplugged ? NULL : &error_fatal);
->> >>  }
->> >>=20=20
->> >> +void object_apply_globals(Object *obj)
->> >> +{
->> >> +    object_apply_global_props(obj, global_props(), &error_fatal);
->> >> +}
->> >
->> > If a method has the "object_" prefix and takex "Object *" as its
->> > instance, then it needs to live in qom/object.c / include/qom/object.h
->> > but this again has the complexity of relying on the qdev Property
->> > struct.  This is really mixing qdev & qom layers together which I
->> > find pretty unpleasant.
->> >
->>=20
->> True, but code like qdev_property_add_static() already mixes things up
->> quite a bit. Not that this is justification to mix it even more, of
->> course.
->
-> That's not the same scenario as it is exclusively qdev code, using
-> qdev_ name prefix and taking "Device *" not "Object *".
->
+Reviewed-by: David Hildenbrand <david@kernel.org>
 
-Reading your message again, I misinterpreted you as arguing against the
-overall coupling of ObjectProperty and Property. I agree with the
-specific point of the abstraction layers.
+-- 
+Cheers,
 
-> With regards,
-> Daniel
+David
 
