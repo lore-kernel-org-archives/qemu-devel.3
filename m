@@ -4,91 +4,121 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5BBCBCD6E7D
-	for <qemu-devel@archiver.kernel.org>; Fri,  5 Jun 2026 14:54:03 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 08240CD6E79
+	for <qemu-devel@archiver.kernel.org>; Fri,  5 Jun 2026 14:56:11 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wVVvc-0000gV-9M; Fri, 05 Jun 2026 10:53:44 -0400
+	id 1wVVxk-0001LI-7E; Fri, 05 Jun 2026 10:55:57 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1)
- (envelope-from <devnull+shankerwangmiao.gmail.com@kernel.org>)
- id 1wVUaz-000895-VR
- for qemu-devel@nongnu.org; Fri, 05 Jun 2026 09:28:22 -0400
-Received: from sea.source.kernel.org ([2600:3c0a:e001:78e:0:1991:8:25])
+ (Exim 4.90_1) (envelope-from <pabeni@redhat.com>) id 1wVVxX-0001Kb-Oj
+ for qemu-devel@nongnu.org; Fri, 05 Jun 2026 10:55:45 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1)
- (envelope-from <devnull+shankerwangmiao.gmail.com@kernel.org>)
- id 1wVUay-0003Cj-3B
- for qemu-devel@nongnu.org; Fri, 05 Jun 2026 09:28:21 -0400
-Received: from smtp.kernel.org (transwarp.subspace.kernel.org [100.75.92.58])
- by sea.source.kernel.org (Postfix) with ESMTP id E2BBF401FE;
- Fri,  5 Jun 2026 13:28:11 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPS id C4D57C2BCB4;
- Fri,  5 Jun 2026 13:28:11 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
- s=k20201202; t=1780666091;
- bh=K9Opf8T8QjXRB86i6iPuDMKbf8Ts5MbqIA8Eo2USS0U=;
- h=From:Date:Subject:To:Cc:Reply-To:From;
- b=puVK0HquRoVkaOvm0tSr9GuzCEpVWVibD3PfbFuo8TWXFYLQSlUveKnzZ0BRjn9Gg
- 7alDyEHPwVDcP3dNe6KnW3byTZEv/C2LcbllxnOOv/MwgvIJtKrKDVg5ZITYazpks+
- dogvXkd9yWqT71wepZhbuQptMwu9TJI0z2PaZ9Dpp+1I3Nl6vvbEsY69sbS8YFCw6j
- GfFV4N5bJZebSfqxO0zpJmuDdlpP7oKQ7RoSJTaeFivgSEHIRbN9gLeu2LGMUzmaLx
- uPzwKRuP2x70+8y4yTkr68Zzc5alprMslO4LjEK3D50XAESkzJIkVmT+dninyu2ZBl
- caDExuuWujvOA==
-Received: from aws-us-west-2-korg-lkml-1.web.codeaurora.org
- (localhost.localdomain [127.0.0.1])
- by smtp.lore.kernel.org (Postfix) with ESMTP id AB98FCD6E79;
- Fri,  5 Jun 2026 13:28:11 +0000 (UTC)
-From: Miao Wang via B4 Relay <devnull+shankerwangmiao.gmail.com@kernel.org>
-Date: Fri, 05 Jun 2026 21:27:56 +0800
-Subject: [PATCH] pvscsi: translate data endianness
+ (Exim 4.90_1) (envelope-from <pabeni@redhat.com>) id 1wVVxV-0004ZF-MO
+ for qemu-devel@nongnu.org; Fri, 05 Jun 2026 10:55:43 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1780671339;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=8p5mZu74fGrESFXJMy7M6633VpAD+iCO5vCLb9F43eE=;
+ b=aI+Laim0dKzMKbTG4Xhg9mVidCNqHyIqaOe5JMulLzf97GY2ya3j2KhUt5Ccj2TOARg6A7
+ J1aW8ajErv6NOnzTF+eMmbN+i3mlPZHEX158VtKLBCOaKTRZl7Fy64S7JAUWx25zdXN3Zo
+ mjxZmwITucOzZppvCAQ3x9SwAPmZ4SU=
+Received: from mail-wm1-f71.google.com (mail-wm1-f71.google.com
+ [209.85.128.71]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-463-vKzQO8sQNCOvdxa9em6rpQ-1; Fri, 05 Jun 2026 10:54:33 -0400
+X-MC-Unique: vKzQO8sQNCOvdxa9em6rpQ-1
+X-Mimecast-MFC-AGG-ID: vKzQO8sQNCOvdxa9em6rpQ_1780671272
+Received: by mail-wm1-f71.google.com with SMTP id
+ 5b1f17b1804b1-490b8adf8b8so19906695e9.0
+ for <qemu-devel@nongnu.org>; Fri, 05 Jun 2026 07:54:33 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=redhat.com; s=google; t=1780671272; x=1781276072; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:content-language:from
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=8p5mZu74fGrESFXJMy7M6633VpAD+iCO5vCLb9F43eE=;
+ b=KNLeqgzZwc2GzLuFEeprmZ+yAsH7MVKfyEJLiSV/pIb8n+dVBJsB6NoC3Pz0Pilitu
+ ZBK82jYJQVu9J0zPxF7er2USBWYe6ctMQscDU/xPDrjgZB76BV/LQFLN7/nV1C6HVuBb
+ 5GOtRbZcVbqHJdSnh8IUbJ9D4ofxmr0VztJowd0L+fx3TcVpuaZdS3+5s5iirAsHNJy4
+ RD73TY80rWpf4KW+HVX9yRG9KgyLFxZOjPRUnyH0iPJ04jHSR2eohMbk/f4bBx1XdCVl
+ TSZxzS6OOQwkqNAmvDL22cQwshJYI8EwNacf7MkzMHfFwsHEGug3moeWoFnOFnnz9Hv4
+ 4IXw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1780671272; x=1781276072;
+ h=content-transfer-encoding:in-reply-to:content-language:from
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=8p5mZu74fGrESFXJMy7M6633VpAD+iCO5vCLb9F43eE=;
+ b=fCck9uaVGwHPjQOeffsinM4jp+CcKGP9QR73D6/aZMWWtetugDuYVBqK3tTow9CNZg
+ Nuu9reKTxr5yaK/DHUQPTGXYhAanIzodQ4Gq7MXylun87Ci1yVSbw3hdCqoFLojAkXtj
+ 7okDjrWOfVH9HDwmeLhAoRdNRz5PwJOYwbiyXoS41hLP7ShhYDansI/PH4PvFoBJ+NsH
+ BnwKYJ5qgPfHPpbegivCw68aP4mScVymRuihGdPptZE2duiqksd3adHHZXIV7etwZqSS
+ ugqgECWpQeq+Mn6cOEBCzkUx2fJiZoNH4jRvxq87UvyCfVHnfSjxJX7PM4aNZPh2xsjp
+ i1/Q==
+X-Forwarded-Encrypted: i=1;
+ AFNElJ9dCOE3N+0wacEK+gBblTBogET29qhvti/X+Rhgyfkr6Xy7SLbHINSgGkMp/MT3X5/Hm66+FZO2ejxb@nongnu.org
+X-Gm-Message-State: AOJu0Yx5Inkil2006sNmzFoqDQauXnZwthcxkS0+6vMhUXticP2znZv4
+ Ck4C0pKR0kF5zwuvNZNtFw/QDX0UkBdhV9OXxR50YggGcZwqHsXaBGJFUacaBB9VbwPL82z9SdZ
+ Jw2/fR5yU6Yuh1LZFjvOiGi0NGjkGgHTjjwEKE+TIPa4xAyOacKkOxBZF
+X-Gm-Gg: Acq92OFwi+/kBjayiNRaVfuLnHDX3oSVhX782A0DK4KZe5BTMbbQaigq4JCq/7nzZii
+ +mfxqDU3WAzVFBzrk6y5D+2p8jNgBZflA21D4us+670mUNHbBOrXQ8jpiWv9fM6jc34eG2kOmaS
+ FM87ocg5H6neFTFsBhXWj1U92fNDwWxZKLmar1kQxdPa6XRFA/oUCq9lCl9u7rl0yuEXlRW3tnz
+ IPoJwJGy20OAh4kDkne9MksJkEg9WsdipPuFH0jwTiNJJ3h2dGp1qhcVqzLmpaj0jymXEsCTzpn
+ krNjTkmLf0stCGzVeTnajC/XBIFwRMwGg3+v1+hIEHE5RzO01MpDwBCwrfLGDSuvQCwc18DDQAO
+ XRFa7ZwNTJeMHCF/WdMhirP2anmQNwvlpuuMSugiEY2YKr4+KlOK8sTu97gaJ27d/0Vk=
+X-Received: by 2002:a05:600c:608e:b0:490:b355:9c8c with SMTP id
+ 5b1f17b1804b1-490c25f3f00mr61407355e9.23.1780671272024; 
+ Fri, 05 Jun 2026 07:54:32 -0700 (PDT)
+X-Received: by 2002:a05:600c:608e:b0:490:b355:9c8c with SMTP id
+ 5b1f17b1804b1-490c25f3f00mr61406895e9.23.1780671271606; 
+ Fri, 05 Jun 2026 07:54:31 -0700 (PDT)
+Received: from [192.168.88.32] ([212.105.155.59])
+ by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-490bc3918d7sm149055915e9.2.2026.06.05.07.54.30
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Fri, 05 Jun 2026 07:54:31 -0700 (PDT)
+Message-ID: <39100539-1c43-431b-886d-7d42850bc4c5@redhat.com>
+Date: Fri, 5 Jun 2026 16:54:29 +0200
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PULL 12/14] virtio-net: Advertise UDP tunnel GSO support by
+ default
+To: Fiona Ebner <f.ebner@proxmox.com>, "Michael S. Tsirkin" <mst@redhat.com>, 
+ qemu-devel@nongnu.org
+Cc: Peter Maydell <peter.maydell@linaro.org>, Jason Wang
+ <jasowang@redhat.com>, Lei Yang <leiyang@redhat.com>,
+ Eduardo Habkost <eduardo@habkost.net>,
+ Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
+ =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Yanan Wang <wangyanan55@huawei.com>, Zhao Liu <zhao1.liu@intel.com>,
+ Gabriel Goller <g.goller@proxmox.com>,
+ Stefan Hanreich <s.hanreich@proxmox.com>,
+ Thomas Lamprecht <t.lamprecht@proxmox.com>
+References: <cover.1762698873.git.mst@redhat.com>
+ <1c79ab6937ae938d3dfd4da1c01afc7eb599857e.1762698873.git.mst@redhat.com>
+ <077647f6-d569-4918-9aea-c0597a6ddbc8@proxmox.com>
+From: Paolo Abeni <pabeni@redhat.com>
+Content-Language: en-US
+In-Reply-To: <077647f6-d569-4918-9aea-c0597a6ddbc8@proxmox.com>
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
-Message-Id: <20260605-pvscsi-endianness-v1-1-b0bf472b0f59@gmail.com>
-X-B4-Tracking: v=1; b=H4sIANvOImoC/x3MPQqAMAxA4atIZgO1av25ijiUNmqWKA2IULy7x
- fEb3suglJgU5ipDopuVTylo6grC4WUn5FgM1lhnnOnxujUoI0lkL0KqGExsxymOdugISncl2vj
- 5n8v6vh+FHf2KYwAAAA==
-X-Change-ID: 20260605-pvscsi-endianness-c0d389d8274e
-To: qemu-devel@nongnu.org
-Cc: Paolo Bonzini <pbonzini@redhat.com>, Fam Zheng <fam@euphon.net>,
- Dmitry Fleytman <dmitry.fleytman@gmail.com>, b4-sent@kernel.org,
- Miao Wang <shankerwangmiao@gmail.com>
-X-Mailer: b4 0.14.2
-X-Developer-Signature: v=1; a=openpgp-sha256; l=5870;
- i=shankerwangmiao@gmail.com; s=20250715; h=from:subject:message-id;
- bh=IDD6ngFrpnNwjIvo7mlAG2CQIH9yKzKqEbqAPfV7ac0=;
- b=owEBbQKS/ZANAwAKAbAx48p7/tluAcsmYgBqIs7iFHWdvYvQ+eHP9PcejZHcy/LnvqNiXlcWM
- e7YklLHYPWJAjMEAAEKAB0WIQREqPWPgPJBxluezBOwMePKe/7ZbgUCaiLO4gAKCRCwMePKe/7Z
- bvS4D/wKIdrGYEL3DI3HZCBXXOk9aU2wsxAtYO5cbqjZ8vLFHR0ATWwCdoaCO70tUyUgBkCO/VW
- vRqEPJBuyFhwhaYLkng7MvnzuvJHMmI9/e2OHtDNMc18nKVv5Mwd9lJ+Se3e3NOCkTSWATS1Jq7
- IZd3jy7YiYzLA7U5N1smRHPGj2ilQG5Mrv6Bej3THc9rHqPwhOZG/Od6KC1PagRZXCRVNcMGqOS
- jkArL8MTqhkD4APNBZGBBaHn7/qjsfq42qrQzAwPMuhqzrtP24OUtkM84RJiskmm1ocQOVs5V3+
- EUp7ogXcFip1xzfLD6DDy0kW4cZAe4/hKvQt5nK6dx+y2ksbez7RXc3w8Q7ecYBVvgZ1AyRNtxd
- JldOH2p+XHWvQiWck8jyhEyNQ3RwREi+qRviNMidpXR9TtJCzdqPtJeU79FkzoLnPzaiyFV4/ja
- eVFc3jlswCd6WrMNH3k6Ob/nKjZbtECWJe8CTd8IGuNyyxwIBoMkk62blKM2HAf6F67wZBgDpn2
- GFRQvWUoyrTHX5Yh7iaFJzRksnTmumoZT/VcdbdFgDZV362qwr0VT30+d1xwqN5a2V/Fmct9N+Z
- qFSAs0oPM7x2xnEUjwVaiVvOSAsQt3otfnFDN42+2AKPn5PAkVV2LU9XVNi/s4w2T52h9xLbTT9
- 0W8OUxDTk5ei9hg==
-X-Developer-Key: i=shankerwangmiao@gmail.com; a=openpgp;
- fpr=6FAEFF06B7D212A774C60BFDFA0D166D6632EF4A
-X-Endpoint-Received: by B4 Relay for shankerwangmiao@gmail.com/20250715
- with auth_id=462
-X-Original-From: Miao Wang <shankerwangmiao@gmail.com>
-Received-SPF: pass client-ip=2600:3c0a:e001:78e:0:1991:8:25;
- envelope-from=devnull+shankerwangmiao.gmail.com@kernel.org;
- helo=sea.source.kernel.org
-X-Spam_score_int: 0
-X-Spam_score: -0.0
-X-Spam_bar: /
-X-Spam_report: (-0.0 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- FREEMAIL_FORGED_REPLYTO=2.095, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=no autolearn_force=no
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=pabeni@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -24
+X-Spam_score: -2.5
+X-Spam_bar: --
+X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.445,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
-X-Mailman-Approved-At: Fri, 05 Jun 2026 10:53:42 -0400
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -100,168 +130,137 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-To: shankerwangmiao@gmail.com
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Miao Wang <shankerwangmiao@gmail.com>
+Hi,
 
-This patch improves the implementation of the pvscsi device by
-translating the endianness of the data sent or received from the guest.
-This ensures pvscsi can work on big-endian hosts with little-endian
-guests.
+On 6/5/26 4:02 PM, Fiona Ebner wrote:
+> Am 09.11.25 um 4:10 PM schrieb Michael S. Tsirkin:
+>> diff --git a/hw/net/virtio-net.c b/hw/net/virtio-net.c
+>> index 17ed0ef919..3b85560f6f 100644
+>> --- a/hw/net/virtio-net.c
+>> +++ b/hw/net/virtio-net.c
+>> @@ -4299,19 +4299,19 @@ static const Property virtio_net_properties[] = {
+>>      VIRTIO_DEFINE_PROP_FEATURE("host_tunnel", VirtIONet,
+>>                                 host_features_ex,
+>>                                 VIRTIO_NET_F_HOST_UDP_TUNNEL_GSO,
+>> -                               false),
+>> +                               true),
+> it seems that the host_tunnel setting can cause issues when VXLAN
+> traffic originating in a guest goes over a physical NIC which does not
+> support the feature. We received several reports about the issue
+> [0][1][2][3] and were able to reproduce it. Turning off the
+> 'host_tunnel' property in the commandline for the VirtIO net device
+> makes TCP traffic work. The network configuration from our reproducer
+> setup is as follows:
+> 
+>       guest A (iperf3 -c)                   guest B (iperf3 -s)
+>   vxlan using vNIC as underlay         vxlan using vNIC as underlay
+> virtualized NIC exposed to guest     virtualized NIC exposed to guest
+>     ---guest boundary---                  ---guest boundary---
+>  tap device connected to bridge       tap device connected to bridge
+> bridge with physical NIC as port     bridge with physical NIC as port
+>         physical NIC   <---host boundary--->   physical NIC
+> 
+> Bridge configuration:
+> iface vmbr0 inet static
+> 	address 10.48.0.109/20
+> 	gateway 10.48.0.1
+> 	bridge-ports nic3
+> 	bridge-stp off
+> 	bridge-fd 0
+> 	bridge-vlan-aware yes
+> 	bridge-vids 2-4094
+> 
+> VXLAN created with:
+> ip link add vxlan0 type vxlan id 100 remote X dstport 4789 dev eth1
+> where eth1 is the virtualized NIC exposed to the guest
+> 
+> The physical NIC does not have the feature:
+> Ethernet controller [0200]: Broadcom Inc. and subsidiaries NetXtreme
+> BCM5719 Gigabit Ethernet PCIe [14e4:1657] (rev 01)
+> tx-udp_tnl-segmentation: off [fixed]
+> tx-udp_tnl-csum-segmentation: off [fixed]
+> 
+> Using a physical NIC which does have the feature works:
+> Ethernet controller [0200]: Broadcom Inc. and subsidiaries BCM57504
+> NetXtreme-E 10Gb/25Gb/40Gb/50Gb/100Gb Ethernet [14e4:1751] (rev 11)
+> tx-udp_tnl-segmentation: on
+> tx-udp_tnl-csum-segmentation: on
+> 
+> Host kernel:
+> Proxmox VE with 7.0.2-6-pve
+> 
+> Guest kernel:
+> Apline with 6.18.34-0-lts
+> 
+> QEMU commandline for the vNIC:
+>> -netdev 'type=tap,id=net2,ifname=tap103i2,script=/usr/libexec/qemu-server/pve-bridge,downscript=/usr/libexec/qemu-server/pve-bridgedown,vhost=on' \
+>> -device 'virtio-net-pci,mac=BC:24:11:78:C3:3B,netdev=net2,bus=pci.0,addr=0x14,id=net2,rx_queue_size=1024,tx_queue_size=256,host_mtu=1500' \
+> 
+> We can see that QEMU sets the features for the tap interface via ioctl()
+> and the host kernel allows it:
+> tx-udp_tnl-segmentation: on
+> tx-udp_tnl-csum-segmentation: on
+> 
+> As far as we understand, in the problematic scenario, nothing is ever
+> filling in the checksums for the inner TCP packets, meaning the outer
+> UDP checksum ends up being wrong on the target side. Is the host kernel
+> responsible for doing that before passing the packet to the physical NIC
+> (without the feature)? Or who would be?
+> 
+> Turning off host_tunnel_csum without turning off host_tunnel does not help.
+> 
+> Interestingly, turning off the features for the working physical NIC
+> does not make it break:
+> tx-udp_tnl-segmentation: off
+> tx-udp_tnl-csum-segmentation: off
+> Could it be that the NIC just always fills in the inner TCP checksums
+> regardless of that setting?
+> 
+> On the other hand, running
+> localhost:~# ethtool -K eth2 tx-checksum-ip-generic off
+> Actual changes:
+> tx-checksum-ip-generic: off
+> tx-tcp-segmentation: off [not requested]
+> tx-tcp-ecn-segmentation: off [not requested]
+> tx-tcp6-segmentation: off [not requested]
+> tx-udp-segmentation: off [not requested]
+> inside the guests makes it work for the physical NIC without the
+> tx-udp_tnl* features.
+> 
+> I wanted to ask if this configuration is expected to be unsupported and
+> if the management is expected to turn off the feature on the commandline
+> if the traffic might go over a physical NIC without the feature. Or if
+> this could be a kernel or NIC bug that should be investigated further?
+> In the former case, should the option really be turned on by default
+> with new machine versions?
 
-Signed-off-by: Miao Wang <shankerwangmiao@gmail.com>
----
- hw/scsi/vmw_pvscsi.c | 58 +++++++++++++++++++++++++++++++++++++++++++++++++++-
- 1 file changed, 57 insertions(+), 1 deletion(-)
+Thank you for the detailed report. The configuration you describe is
+supported and expected to work. The fact that different results are
+obtained on top of a NIC with:
 
-diff --git a/hw/scsi/vmw_pvscsi.c b/hw/scsi/vmw_pvscsi.c
-index 11ae6b9b7474b9bc87621137eb7911361b5fd721..883dfe9b6b5dc687737de356da02fe5f68aea7ad 100644
---- a/hw/scsi/vmw_pvscsi.c
-+++ b/hw/scsi/vmw_pvscsi.c
-@@ -35,6 +35,7 @@
- #include "hw/pci/msi.h"
- #include "hw/core/qdev-properties.h"
- #include "exec/cpu-common.h"
-+#include "exec/tswap.h"
- #include "vmw_pvscsi.h"
- #include "trace.h"
- #include "qom/object.h"
-@@ -392,9 +393,18 @@ static void
- pvscsi_cmp_ring_put(PVSCSIState *s, struct PVSCSIRingCmpDesc *cmp_desc)
- {
-     hwaddr cmp_descr_pa;
-+    struct PVSCSIRingCmpDesc cmp_desc_conv;
- 
-     cmp_descr_pa = pvscsi_ring_pop_cmp_descr(&s->rings);
-     trace_pvscsi_cmp_ring_put(cmp_descr_pa);
-+    cmp_desc_conv = (struct PVSCSIRingCmpDesc) {
-+        .context = tswap64(cmp_desc->context),
-+        .dataLen = tswap64(cmp_desc->dataLen),
-+        .senseLen = tswap32(cmp_desc->senseLen),
-+        .hostStatus = tswap16(cmp_desc->hostStatus),
-+        .scsiStatus = tswap16(cmp_desc->scsiStatus),
-+    };
-+    cmp_desc = &cmp_desc_conv;
-     cpu_physical_memory_write(cmp_descr_pa, cmp_desc, sizeof(*cmp_desc));
- }
- 
-@@ -402,9 +412,18 @@ static void
- pvscsi_msg_ring_put(PVSCSIState *s, struct PVSCSIRingMsgDesc *msg_desc)
- {
-     hwaddr msg_descr_pa;
-+    struct PVSCSIRingMsgDesc msg_desc_conv;
-+    int i;
- 
-     msg_descr_pa = pvscsi_ring_pop_msg_descr(&s->rings);
-     trace_pvscsi_msg_ring_put(msg_descr_pa);
-+    msg_desc_conv = (struct PVSCSIRingMsgDesc) {
-+        .type = tswap32(msg_desc->type),
-+    };
-+    for (i = 0; i < ARRAY_SIZE(msg_desc->args); i++) {
-+        msg_desc_conv.args[i] = tswap32(msg_desc->args[i]);
-+    }
-+    msg_desc = &msg_desc_conv;
-     cpu_physical_memory_write(msg_descr_pa, msg_desc, sizeof(*msg_desc));
- }
- 
-@@ -481,6 +500,9 @@ pvscsi_get_next_sg_elem(PVSCSISGState *sg)
-     struct PVSCSISGElement elem;
- 
-     cpu_physical_memory_read(sg->elemAddr, &elem, sizeof(elem));
-+    elem.addr = tswap64(elem.addr);
-+    elem.length = tswap32(elem.length);
-+    elem.flags = tswap32(elem.flags);
-     if ((elem.flags & ~PVSCSI_KNOWN_FLAGS) != 0) {
-         /*
-             * There is PVSCSI_SGE_FLAG_CHAIN_ELEMENT flag described in
-@@ -759,6 +781,12 @@ pvscsi_process_io(PVSCSIState *s)
- 
-         trace_pvscsi_process_io(next_descr_pa);
-         cpu_physical_memory_read(next_descr_pa, &descr, sizeof(descr));
-+        descr.context = tswap64(descr.context);
-+        descr.dataAddr = tswap64(descr.dataAddr);
-+        descr.dataLen = tswap64(descr.dataLen);
-+        descr.senseAddr = tswap64(descr.senseAddr);
-+        descr.senseLen = tswap32(descr.senseLen);
-+        descr.flags = tswap32(descr.flags);
-         pvscsi_process_request_descriptor(s, &descr);
-     }
- 
-@@ -808,6 +836,17 @@ pvscsi_on_cmd_setup_rings(PVSCSIState *s)
- {
-     PVSCSICmdDescSetupRings *rc =
-         (PVSCSICmdDescSetupRings *) s->curr_cmd_data;
-+    PVSCSICmdDescSetupRings translated;
-+    int i;
-+
-+    translated.reqRingNumPages = tswap32(rc->reqRingNumPages);
-+    translated.cmpRingNumPages = tswap32(rc->cmpRingNumPages);
-+    translated.ringsStatePPN = tswap64(rc->ringsStatePPN);
-+    for (i = 0; i < PVSCSI_SETUP_RINGS_MAX_NUM_PAGES; i++) {
-+        translated.reqRingPPNs[i] = tswap64(rc->reqRingPPNs[i]);
-+        translated.cmpRingPPNs[i] = tswap64(rc->cmpRingPPNs[i]);
-+    }
-+    rc = &translated;
- 
-     trace_pvscsi_on_cmd_arrived("PVSCSI_CMD_SETUP_RINGS");
- 
-@@ -831,6 +870,11 @@ pvscsi_on_cmd_abort(PVSCSIState *s)
-     PVSCSICmdDescAbortCmd *cmd = (PVSCSICmdDescAbortCmd *) s->curr_cmd_data;
-     PVSCSIRequest *r, *next;
- 
-+    PVSCSICmdDescAbortCmd translated = *cmd;
-+    translated.context = tswap32(cmd->context);
-+    translated.target = tswap32(cmd->target);
-+    cmd = &translated;
-+
-     trace_pvscsi_on_cmd_abort(cmd->context, cmd->target);
- 
-     QTAILQ_FOREACH_SAFE(r, &s->pending_queue, next, next) {
-@@ -862,6 +906,10 @@ pvscsi_on_cmd_reset_device(PVSCSIState *s)
-         (struct PVSCSICmdDescResetDevice *) s->curr_cmd_data;
-     SCSIDevice *sdev;
- 
-+    PVSCSICmdDescResetDevice translated = *cmd;
-+    translated.target = tswap32(cmd->target);
-+    cmd = &translated;
-+
-     sdev = pvscsi_device_find(s, 0, cmd->target, cmd->lun, &target_lun);
- 
-     trace_pvscsi_on_cmd_reset_dev(cmd->target, (int) target_lun, sdev);
-@@ -892,6 +940,14 @@ pvscsi_on_cmd_setup_msg_ring(PVSCSIState *s)
- {
-     PVSCSICmdDescSetupMsgRing *rc =
-         (PVSCSICmdDescSetupMsgRing *) s->curr_cmd_data;
-+    PVSCSICmdDescSetupMsgRing translated = *rc;
-+    int i;
-+
-+    translated.numPages = tswap32(rc->numPages);
-+    for (i = 0; i < PVSCSI_SETUP_MSG_RING_MAX_NUM_PAGES; i++) {
-+        translated.ringPPNs[i] = tswap64(rc->ringPPNs[i]);
-+    }
-+    rc = &translated;
- 
-     trace_pvscsi_on_cmd_arrived("PVSCSI_CMD_SETUP_MSG_RING");
- 
-@@ -994,7 +1050,7 @@ pvscsi_on_command_data(PVSCSIState *s, uint32_t value)
-     size_t bytes_arrived = s->curr_cmd_data_cntr * sizeof(uint32_t);
- 
-     assert(bytes_arrived < sizeof(s->curr_cmd_data));
--    s->curr_cmd_data[s->curr_cmd_data_cntr++] = value;
-+    s->curr_cmd_data[s->curr_cmd_data_cntr++] = tswap32(value);
- 
-     pvscsi_do_command_processing(s);
- }
+[1] tx-udp_tnl-segmentation: off [fixed]
 
----
-base-commit: 29c042c6e9d4a09d4a0ac3fa54aeb7ee08ce0bdc
-change-id: 20260605-pvscsi-endianness-c0d389d8274e
+WRT to similar setup on top of NIC with:
 
-Best regards,
--- 
-Miao Wang <shankerwangmiao@gmail.com>
+[2] tx-udp_tnl-segmentation: off
 
+is indeed strange/unexpected, as the two scenarios are indistinguishable
+from the stack perspective. I suspect the issue is NIC driver dependent.
+
+I understand [1] is using a tg3 driver, and [2] bnxt, both running Linux
+7.0.2, am I correct?
+
+If you disable csum offloading on the tg3 NIC, does that impact the results?
+
+If you have such data handy, could you please share pcap captures on
+both ends? links to some accessible URL would be better than sending a
+lot of data to the ML, I think.
+
+Thanks,
+
+Paolo
 
 
