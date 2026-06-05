@@ -4,129 +4,114 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 00B16CD6E7E
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id F0FA1CD6E7B
 	for <qemu-devel@archiver.kernel.org>; Fri,  5 Jun 2026 19:10:06 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wVZv6-0001CC-4l; Fri, 05 Jun 2026 15:09:28 -0400
+	id 1wVZvM-0001Eu-KF; Fri, 05 Jun 2026 15:09:44 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <i.maximets.ovn@gmail.com>)
- id 1wVZv3-0001Bo-Fk
- for qemu-devel@nongnu.org; Fri, 05 Jun 2026 15:09:25 -0400
-Received: from mail-wm1-f67.google.com ([209.85.128.67])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <i.maximets.ovn@gmail.com>)
- id 1wVZv1-0003xP-Hh
- for qemu-devel@nongnu.org; Fri, 05 Jun 2026 15:09:25 -0400
-Received: by mail-wm1-f67.google.com with SMTP id
- 5b1f17b1804b1-490b4e1ade7so25057015e9.0
- for <qemu-devel@nongnu.org>; Fri, 05 Jun 2026 12:09:20 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1780686560; x=1781291360;
- h=content-transfer-encoding:in-reply-to:autocrypt:from
- :content-language:references:to:subject:cc:user-agent:mime-version
- :date:message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=F2U4MoH19+47n0M8gVxREeWPASe9mIFY1o6i8auX+c0=;
- b=WuDymaZNzfB1jToQqcZbJz+1xertX/jSnWOlgDbzvPhwNaQKWuSRO7x2cMUYld/ea2
- SMzuGXBO+Fy/IXziuEb4b1YlDT/C4L8rs0+WmsgkrBP0puHx2CU9PFGMX7UTdtFGECze
- z3fbTuzg94xAC/0+n+UtT0bBdhcPoIQavl6Kd3LeEum5XmKl+Ozr2BM5o6Bbevf6gQMe
- N8mzplpV4Cj0Ntccv7pqxHb8pAtsje5dMbS3fvRHQHQFMyTtFr51+Kt4+1zG25xEVpAU
- t35FNRWkPm0ap+KIWIl33BnDDFHuklCTD+e7/D8pnWJUC+QDRZG5dY979k3BAfg9u73i
- WAqw==
-X-Forwarded-Encrypted: i=1;
- AFNElJ8nsp+ZJAXITCDv4QHMmrGTR0bZccd/yyacc3cVMUNDuc42rPRLMzA6wja4LJ40r84Q9joQ84Vkfl9b@nongnu.org
-X-Gm-Message-State: AOJu0YzXCHu1mHe7sqNqMRCdhbqFYlhBb97uvln0VoE/ob8XvMFxgc0Z
- rJ/Mxk/MNsIUhOSPNjmPRetuC4XkoVsSknZvOY7fdFlQ32ZG/+vy2LrS
-X-Gm-Gg: Acq92OGW1+JNzlpFZ7skh/ZS3XrMqttZvGpR3kmWKGEnGbXMh3tPB+U+jhsrIHvVIe2
- vdvYUa9EmXV+W9HieKrIbjemAO6ruLmRqSeCb6GKWCCxbOfML5XfgPqw9v+4/zXKzoX9K17rVSN
- xphIIpuDWK+u0zUDxG9h2gLz78uqlJwmQ6/ty1ruZRHKbo8J8tWOgxVSdr1s2jz7TRIRM5Cz+Gs
- vdtXoPTSuZ1KxVNsjYkfIBUnOeCDJI7xjt6ijZ/j5QhzVst/daArnYCsoqeqnwemYv9wNsGFYPF
- tFkruSIzE8b2ueHk1uecR7YNw9xuKFdMufLpcMI6Raloa/miwBQI1Lbb5Wts7bOptk/roC+F0tt
- eX0+cHBE/SQ/uERjpECzk9QybLB7baWzr1pytraBGCu/PrlKkIn7fa/rCNQxRHVOE82JE79rvje
- 8XIY7Srdc4XKjP97wkQHsfgC2JsqOiD3oGsnJA2LoemK9NRAIEakSigSYKw9MH2lFG5Q==
-X-Received: by 2002:a05:600c:608e:b0:490:b202:4772 with SMTP id
- 5b1f17b1804b1-490c25af61dmr80971055e9.2.1780686559752; 
- Fri, 05 Jun 2026 12:09:19 -0700 (PDT)
-Received: from [192.168.88.241] (89-24-36-255.nat.epc.tmcz.cz. [89.24.36.255])
- by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-490c2d37edbsm76923155e9.2.2026.06.05.12.09.18
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Fri, 05 Jun 2026 12:09:19 -0700 (PDT)
-Message-ID: <8cd17fc3-7f75-4da0-a46d-fcd9fb8fba39@ovn.org>
-Date: Fri, 5 Jun 2026 21:09:17 +0200
+ (Exim 4.90_1) (envelope-from <zycai@linux.ibm.com>)
+ id 1wVZvK-0001EE-Pd; Fri, 05 Jun 2026 15:09:42 -0400
+Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <zycai@linux.ibm.com>)
+ id 1wVZvJ-00040i-47; Fri, 05 Jun 2026 15:09:42 -0400
+Received: from pps.filterd (m0353725.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
+ 655DokIn2403947; Fri, 5 Jun 2026 19:09:37 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
+ :content-transfer-encoding:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to; s=pp1; bh=S/lmjb
+ 2DzrR1VNdxqY09WXox1RZcO/QjS8Sbm/G4+lQ=; b=kCY/9f8mJ1xIXdamEEBz1P
+ O0NyP8Owx1RxfkJl6YaZObwXsy42FB9/48up8Ssf8eD72QyndQtkeqx3GfGssPSA
+ WWdTo/f4sXnAwAha+6bnjrj5ziCpG80Ji8Rn5XJRXXDfwQNUVDGkBwBPO2qfJriv
+ ziOi1JnXQSsIiYLkOUVHaAOAVjblKf8uWRbFF1N5G/SmeoFYwm6cLEpXILwdEg/j
+ 3j19uAliOm8vfnNUxN7BZiinisTrhA3GH/zdvNkWjYZ+0C1arUCNecLXViRKzzW3
+ HLOEpae/6Cautm6H9SuzBtxRQF7BGqGV+tp3NPknnXzNTW4VCIMwSuMUgVuO+mfw
+ ==
+Received: from ppma12.dal12v.mail.ibm.com
+ (dc.9e.1632.ip4.static.sl-reverse.com [50.22.158.220])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4efpaen8cw-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Fri, 05 Jun 2026 19:09:37 +0000 (GMT)
+Received: from pps.filterd (ppma12.dal12v.mail.ibm.com [127.0.0.1])
+ by ppma12.dal12v.mail.ibm.com (8.18.1.7/8.18.1.7) with ESMTP id 655J95TT030706;
+ Fri, 5 Jun 2026 19:09:36 GMT
+Received: from smtprelay06.wdc07v.mail.ibm.com ([172.16.1.73])
+ by ppma12.dal12v.mail.ibm.com (PPS) with ESMTPS id 4ega7qu9mj-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Fri, 05 Jun 2026 19:09:36 +0000 (GMT)
+Received: from smtpav05.dal12v.mail.ibm.com (smtpav05.dal12v.mail.ibm.com
+ [10.241.53.104])
+ by smtprelay06.wdc07v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 655J9ZfF4194936
+ (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Fri, 5 Jun 2026 19:09:35 GMT
+Received: from smtpav05.dal12v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id ED38858067;
+ Fri,  5 Jun 2026 19:09:34 +0000 (GMT)
+Received: from smtpav05.dal12v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id BD68B58052;
+ Fri,  5 Jun 2026 19:09:33 +0000 (GMT)
+Received: from [9.61.146.40] (unknown [9.61.146.40])
+ by smtpav05.dal12v.mail.ibm.com (Postfix) with ESMTP;
+ Fri,  5 Jun 2026 19:09:33 +0000 (GMT)
+Message-ID: <00dba930-3820-4089-a6e3-44211ba253cb@linux.ibm.com>
+Date: Fri, 5 Jun 2026 15:09:33 -0400
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Cc: i.maximets@ovn.org, Stefan Hajnoczi <stefanha@redhat.com>,
- Jason Wang <jasowang@redhat.com>, =?UTF-8?Q?Daniel_P_=2E_Berrang=C3=A9?=
- <berrange@redhat.com>, =?UTF-8?Q?Alex_Benn=C3=A9e?=
- <alex.bennee@linaro.org>, Thomas Huth <thuth@redhat.com>,
- =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: Re: [PATCH 1/5] net/af-xdp.c: maybe-uninitialized warning with gcov
- build on ubuntu2404
-To: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>, qemu-devel@nongnu.org
-References: <20260604215148.3769627-1-pierrick.bouvier@oss.qualcomm.com>
- <20260604215148.3769627-2-pierrick.bouvier@oss.qualcomm.com>
+Subject: Re: [PATCH v11 04/32] hw/s390x/ipl: Create certificate store
+To: Collin Walling <walling@linux.ibm.com>, qemu-s390x@nongnu.org,
+ qemu-devel@nongnu.org
+Cc: jrossi@linux.ibm.com, cohuck@redhat.com, berrange@redhat.com,
+ richard.henderson@linaro.org, david@kernel.org, jjherne@linux.ibm.com,
+ pasic@linux.ibm.com, borntraeger@linux.ibm.com, farman@linux.ibm.com,
+ mjrosato@linux.ibm.com, iii@linux.ibm.com, eblake@redhat.com,
+ armbru@redhat.com, alifm@linux.ibm.com, brueckner@linux.ibm.com,
+ pierrick.bouvier@oss.qualcomm.com, jdaley@linux.ibm.com
+References: <20260505201905.997996-1-zycai@linux.ibm.com>
+ <20260505201905.997996-5-zycai@linux.ibm.com>
+ <7e410b08-2a87-450e-87db-2cb218e57d5d@linux.ibm.com>
 Content-Language: en-US
-From: Ilya Maximets <i.maximets@ovn.org>
-Autocrypt: addr=i.maximets@ovn.org; keydata=
- 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
-In-Reply-To: <20260604215148.3769627-2-pierrick.bouvier@oss.qualcomm.com>
+From: Zhuoying Cai <zycai@linux.ibm.com>
+In-Reply-To: <7e410b08-2a87-450e-87db-2cb218e57d5d@linux.ibm.com>
 Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=209.85.128.67;
- envelope-from=i.maximets.ovn@gmail.com; helo=mail-wm1-f67.google.com
-X-Spam_score_int: -15
-X-Spam_score: -1.6
-X-Spam_bar: -
-X-Spam_report: (-1.6 / 5.0 requ) BAYES_00=-1.9,
- FREEMAIL_FORGED_FROMDOMAIN=0.001, FREEMAIL_FROM=0.001,
- HEADER_FROM_DIFFERENT_DOMAINS=0.249, RCVD_IN_DNSWL_NONE=-0.0001,
- RCVD_IN_MSPIKE_H2=0.001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=no autolearn_force=no
+Content-Transfer-Encoding: 7bit
+X-TM-AS-GCONF: 00
+X-Authority-Analysis: v=2.4 cv=Zt3d7d7G c=1 sm=1 tr=0 ts=6a231ef1 cx=c_pps
+ a=bLidbwmWQ0KltjZqbj+ezA==:117 a=bLidbwmWQ0KltjZqbj+ezA==:17
+ a=IkcTkHD0fZMA:10 a=FelO9ux0wxsA:10 a=VkNPw1HP01LnGYTKEx00:22
+ a=RnoormkPH1_aCDwRdu11:22 a=V8glGbnc2Ofi9Qvn3v5h:22 a=VnNF1IyMAAAA:8
+ a=C23UrBuFxKJcSJhX7B4A:9 a=QEXdDO2ut3YA:10
+X-Proofpoint-GUID: ArAeQqy-2sF3M2hjU1HC866fyj4IbVcS
+X-Proofpoint-ORIG-GUID: ArAeQqy-2sF3M2hjU1HC866fyj4IbVcS
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNjA1MDE4OCBTYWx0ZWRfX3c/sx05qRBS9
+ KSjPoljhRGHD3qwHqq0DLUtzEabtJuLdBR7XHZRJNSl9JMZp1P8OcDr8aoRTkxnviUgGq/j466Z
+ pYgtNtUdGOaUp+SYvBeBtFs+/PQsEMbonJCY7/sstNIG1r0v+j15fySaXoQaWs/3MzsndddX/Dh
+ 9IoV6DAcIvXEOg5iPp1cxekxnK6Z4HrOeBDoFoGUcOIKPPEYImO+5AEfdH3hajcqZYHgVZrRRow
+ ZyM/G2spPmsnSkfrnx8D72Wm3pSpJJH25eC3JWbpFCdiq71lGf8gP0oi4pTpatc8/uzACWHjZBW
+ WfeMTGkWgnASU3YY55JE2XB45Z82RO6i2b0k9lKKIv2sQMbnN+DcwEXFxnlfJpWO1JYIZjIvg7H
+ NZPMrv+q3achOwiqzbkb3unqDoQnYKhx46Rl+pPc1dxukQ2tP1kFG+g/wFk0pwJyA22/YO2RYQE
+ QOzQLek+ycmY4+zqnWg==
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.125,FMLib:17.12.100.49
+ definitions=2026-06-05_03,2026-06-05_02,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ impostorscore=0 suspectscore=0 priorityscore=1501 bulkscore=0 clxscore=1015
+ phishscore=0 spamscore=0 malwarescore=0 adultscore=0 lowpriorityscore=0
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.22.0-2605210000 definitions=main-2606050188
+Received-SPF: pass client-ip=148.163.158.5; envelope-from=zycai@linux.ibm.com;
+ helo=mx0b-001b2d01.pphosted.com
+X-Spam_score_int: -26
+X-Spam_score: -2.7
+X-Spam_bar: --
+X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
+ RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -142,48 +127,66 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 6/4/26 11:51 PM, Pierrick Bouvier wrote:
-> Seems like a false positive, easily fix by explicitly initializing
-> variable to NULL.
+Thanks for the feedback!
+
+On 5/22/26 4:31 PM, Collin Walling wrote:
+> On 5/5/26 16:18, Zhuoying Cai wrote:
+>> Create a certificate store for boot certificates used for secure IPL.
+>>
+>> Load certificates from the `boot-certs` parameter of s390-ccw-virtio
+>> machine type option into the cert store.
+>>
+>> Currently, only X.509 certificates in PEM format are supported, as the
+>> QEMU command line accepts certificates in PEM format only.
 > 
-> In function ‘af_xdp_read_poll’,
->     inlined from ‘net_init_af_xdp’ at ../net/af-xdp.c:546:5:
-> ../net/af-xdp.c:78:10: error: ‘s’ may be used uninitialized [-Werror=maybe-uninitialized]
->    78 |     if (s->read_poll != enable) {
->       |         ~^~~~~~~~~~~
-> ../net/af-xdp.c: In function ‘net_init_af_xdp’:
-> ../net/af-xdp.c:461:17: note: ‘s’ was declared here
->   461 |     AFXDPState *s;
->       |
+> Let's add more context here:
+> 
+> "The raw Base64 data is stored, as well as the certificate's size.  The
+> binary (DER) size is stored as well, which may later be utilized for
+> secure boot (signature verification)."
+> 
+>>
+>> Signed-off-by: Zhuoying Cai <zycai@linux.ibm.com>
+>> Reviewed-by: Farhan Ali<alifm@linux.ibm.com>
+
+[...]
+
+>> +
+>> +static void update_cert_store(S390IPLCertificateStore *cert_store,
+>> +                              S390IPLCertificate *cert)
+>> +{
+>> +    size_t data_buf_size;
+>> +    size_t keyid_buf_size;
+>> +    size_t hash_buf_size;
+>> +    size_t cert_buf_size;
+>> +
+>> +    /* length field is word aligned for later DIAG use */
+>> +    keyid_buf_size = ROUND_UP(CERT_KEY_ID_LEN, 4);
+>> +    hash_buf_size = ROUND_UP(CERT_HASH_LEN, 4);
+>> +    cert_buf_size = ROUND_UP(cert->der_size, 4);
+>> +    data_buf_size = keyid_buf_size + hash_buf_size + cert_buf_size;
+>> +
+>> +    if (cert_store->largest_cert_size < data_buf_size) {
+>> +        cert_store->largest_cert_size = data_buf_size;
+>> +    }
+>> +
+>> +    g_assert(cert_store->count < MAX_CERTIFICATES);
+>> +
+>> +    cert_store->certs[cert_store->count] = *cert;
+> 
+> Should a g_steal_pointer be used here?
 > 
 
-I guess the 'nc0 && !inhibit' check is what making things confusing.
-I'd suggest to remove the nc0 check and move the upcast out of the
-if statement.  Then maybe collapse the two if statements into one.
+No, g_steal_pointer is not needed here. This line performs a struct
+copy, not a pointer assignment and no ownership transfer. The entire
+S390IPLCertificate is copied by value into this array.
 
-It seems cleaner than just silencing the warning.
-
-Will that solve the problem?
-
-Best regards, Ilya Maximets.
-
-> Signed-off-by: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
-> ---
->  net/af-xdp.c | 2 +-
->  1 file changed, 1 insertion(+), 1 deletion(-)
+>> +    cert_store->total_bytes += data_buf_size;
+>> +    cert_store->count++;
+>> +}
+>> +
 > 
-> diff --git a/net/af-xdp.c b/net/af-xdp.c
-> index 1ffd6363a8c..72d75748c6d 100644
-> --- a/net/af-xdp.c
-> +++ b/net/af-xdp.c
-> @@ -458,7 +458,7 @@ int net_init_af_xdp(const Netdev *netdev,
->      g_autofree int *sock_fds = NULL;
->      int i, queues;
->      Error *err = NULL;
-> -    AFXDPState *s;
-> +    AFXDPState *s = NULL;
->      bool inhibit;
->  
->      ifindex = if_nametoindex(opts->ifname);
+> Functionally, things look good to me.
+> 
 
 
