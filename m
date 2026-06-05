@@ -4,62 +4,62 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4547BCD6E6B
-	for <qemu-devel@archiver.kernel.org>; Fri,  5 Jun 2026 08:47:35 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id DF170CD6E5D
+	for <qemu-devel@archiver.kernel.org>; Fri,  5 Jun 2026 08:47:48 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wVQ9d-0005y2-7x; Fri, 05 Jun 2026 04:43:49 -0400
+	id 1wVQ9y-0006GZ-M1; Fri, 05 Jun 2026 04:44:10 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <khushit.shah@nutanix.com>)
- id 1wVQ9b-0005wU-Jj; Fri, 05 Jun 2026 04:43:47 -0400
-Received: from mx0a-002c1b01.pphosted.com ([148.163.151.68])
+ id 1wVQ9x-0006Fr-56; Fri, 05 Jun 2026 04:44:09 -0400
+Received: from mx0b-002c1b01.pphosted.com ([148.163.155.12])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <khushit.shah@nutanix.com>)
- id 1wVQ9Z-0002S6-4e; Fri, 05 Jun 2026 04:43:47 -0400
-Received: from pps.filterd (m0127838.ppops.net [127.0.0.1])
- by mx0a-002c1b01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 6556Ocu0889016; Fri, 5 Jun 2026 01:43:18 -0700
+ id 1wVQ9u-0002de-CK; Fri, 05 Jun 2026 04:44:08 -0400
+Received: from pps.filterd (m0127844.ppops.net [127.0.0.1])
+ by mx0b-002c1b01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
+ 6556MRUT1185382; Fri, 5 Jun 2026 01:43:32 -0700
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=nutanix.com; h=
  cc:content-transfer-encoding:content-type:date:from:in-reply-to
  :message-id:mime-version:references:subject:to; s=
- proofpoint20171006; bh=VahbJXWZ8CXjXBIPZl6mk9rlOme758HEDHSR+8Xgm
- 1g=; b=21sONRrnZXo8Mbz/Kb595tF46Fw7OcXXDG0DkFL5tHyw2QGKgfJDCBPqG
- d3C2U+FAmTBeeUIonNH6xztTlwDNKX939CHcNdKj1RAf79X0aPvVXpUD474gvaqp
- 3WPQhcu28xOiU3hB8zAQPo0SFxXejCbWdAy0lbVnOItxxzBoIOwep6Z5pEZ+hzmF
- YjsUXh55VmhR7iCZ06Dg0qpsYl4sA0tJxIhxIu5IgPOn5XEqoX+4rHlHlGjai4bW
- l5aybVF1ekcK/4J+IeOuozBRbZcUnU4uOHbT5/G6mvt9585nDcu68XDYmXRhdyax
- gVPTIdoOHHLbyt3vAaWC8KCG1lSzw==
-Received: from ph0pr06cu001.outbound.protection.outlook.com
- (mail-westus3azon11021117.outbound.protection.outlook.com [40.107.208.117])
- by mx0a-002c1b01.pphosted.com (PPS) with ESMTPS id 4ej5a2fxwg-2
+ proofpoint20171006; bh=IJvglxOZOgMA2qda+fgowy9ILLCZG8PXnVHeDhPbg
+ m4=; b=GQ6IriM9Q8naasoWvury7V3L3GaP2/i+6+PDreULQD6KPe3YSSBYrxqzE
+ ATEOaHbdpOKZ+YkqkeKj/u+CAV7Z8snvdZNvVPIBLhr2d2KrTtmNSZDf+BO0fg7Y
+ ibl7gTonq0tJBTt9pkxXu1dv0o1uqGqrBrFDtKEmX6JDmPnoXqnXpmcS4DcWSmhF
+ VcYFApGwnLbPa3Vao6YnujLEBIrLMqNEfotV57yptMTim8TPC0elfd8XPrK/Bpsg
+ ABkgNd9L4135CecU8MDgKDT2vWsZSRRNgzUYLSt92G8/7WPn93/QyNZx7fsozM4V
+ pJy2Hbkp4ji2OguvAlnhqzLHSVvOw==
+Received: from ph7pr06cu001.outbound.protection.outlook.com
+ (mail-westus3azon11020134.outbound.protection.outlook.com [52.101.201.134])
+ by mx0b-002c1b01.pphosted.com (PPS) with ESMTPS id 4ejuupcm1f-12
  (version=TLSv1.3 cipher=TLS_AES_256_GCM_SHA384 bits=256 verify=NOT);
- Fri, 05 Jun 2026 01:43:18 -0700 (PDT)
+ Fri, 05 Jun 2026 01:43:31 -0700 (PDT)
 ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=o0UYRYPCFpV36bU1sj1Hiogr5dH8ETCT0Opc98c5pjbnmxAHIesDBOqQtIHu+0Gl8NkOxz5ClyWIRhu/qskTyGxRsvjkhHN+h1cqf7MRJ/v2zMLSjqqHd1mXOZkQHak1uaOy9+TDnjQ0Nnp/Oblc5Q+OuZGxKxlNyhufH1aTb0Oj+jjIjq6lDrbpj5KVNXaNGsiOFbfFEe7oJyScfK2IsCqeU1gHgVdJh6a01N3J4miEcqfJ3rZh7RWGaQIHz399PkudZYSm/cSobt+BzTtEK6FYUrUU9CIL+vnU09Ros769oGfRfRPUI7BnmFIUIr41HWaGLkx0EB0BesNZjH1TnQ==
+ b=i8D3JfiuD3H+5oWQXY7TVwvnHeZFIILKyxPOUApWNtiwkUrnSwr13C8LziI9ID0Fvvec34foFtbCrjIqQYC0Zx584GuRnfIrrodvaTj5LhBTiOzbkLKwDeB6WWHXKHKrV2PHEuv81v+MTx/hkKJ21ytOr7Ae4rRB/XmBZEmy4sfeX7AOjwx0g+Sf99wpqxz/tVbn3j8KMRt1uEerNfd0JRPuRLcssVJXIcgXw7590/hRmeWdZ2b2wv20GGq06MJnKkQe+OEYmCtiKHnQrGpTJt34mcCM9p/45olbo9jB7BvJnlQlTiN650yhHwY9+khr9+9i7Zz17d26ZtZxEy/pnw==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
  s=arcselector10001;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=VahbJXWZ8CXjXBIPZl6mk9rlOme758HEDHSR+8Xgm1g=;
- b=s+qze8J52S/NQ3uQHRAwJ0X5exhPmhsdaX9vegDgtwzGiEUnDqW50Qg/AETBbLiQV4VDY6sogavb2oLoMMaxEmIpTpBNLTlNewpYxGVUMCg4i1ctQVOe7UcYF0DyotPebDaSytK7tRxz3/SjVR1a03wmb76j1fa5smwese2SDd8/MrtBcdljNw+0Ytvg5/QxFxvdNP4/tHScm1+eWxSnMB4nO/QM1Q06kRAoh86xw8gVX9Z81w5cQbrxat2PSaZlBrlJ8f97YsTDYMm2OYpvjo5AEH6djnN2P7jVm+f+QGYL4hgf6eI4Z/l9l9L+EUG56N1I/0j/qu7l+KXsuEUtFQ==
+ bh=IJvglxOZOgMA2qda+fgowy9ILLCZG8PXnVHeDhPbgm4=;
+ b=DZYl3pyU6FmIgnFjCW0azXieEKPXZJQGWdJkd1+gOwev3fL72uWurg8HLxfy2aKkc7475PgmZaEDfrGrsvwWWrE0m+09011UE0HmiZHxBZw9D6W5swMfgPfhCT5UZVY0Zs5bMp0rjYsbQ3gdmTziD6fwFTtLXooBrOzLACr74TXisV3xgkFJdu4X6nui82mrpbg7SCpTLTyK0XAsoylW4IXBKs7HKcw23NP8P8erelQgPiBOri4QAuKy22cDGY951Ek47kU3owqYAGyxC542gFPkWlfhg8K7Y50ylhxT3MXCUTD4I72vUUgZsPwm3I/Bsm3BsFhBlICkgf0gB9Wc+w==
 ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
  smtp.mailfrom=nutanix.com; dmarc=pass action=none header.from=nutanix.com;
  dkim=pass header.d=nutanix.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=nutanix.com;
  s=selector1;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=VahbJXWZ8CXjXBIPZl6mk9rlOme758HEDHSR+8Xgm1g=;
- b=s0uUhpZH4Osha4jQifQQIsmA206bpB00VkcIZeAaxJIqK0a6Jq8yQZtoUTzpMmwDlKlPx69BnGQfp15uzihvEpjlSwr7fT6CyXSMzZnSM2YnYx3FbdLfPqQ+XdRDI0Stb0q0m7Dq0J593B9e6gohTMD9x0mAtV18Snq19DCXTcL93mSfjtao0OpnBdYWn+kB9oaU4TSWugXUM1RvSkQZHD8DaOgk5plzmVsHdKqIgDa/vhz0vXDY2kNsdZ0vibMQqg+65lhau5sxcfbW4yAQPPGh+loJ0fPxe+qQ8NaNoADIRz0xbmVoKh/hc2ALkTKKat+bvcn7qbGH14AR8UFYRg==
+ bh=IJvglxOZOgMA2qda+fgowy9ILLCZG8PXnVHeDhPbgm4=;
+ b=kx3Eem3Se7tCQMt4Awj9nwyTI+sUB3lhf/NDFkoZB+uhCnx1d6gmzQTJzvrkoeI5GBTWGHcE5Y277OZUT1I99WU1ub9j+N6rId/QPx5pdQFO90zB/Od3sXZ2cZOVi1WoFJsyAJzKj5aQWmtDddrzVOZqBY11/+c3ZU8gS6bVTAf+vQWcYm4unV7y3PD+2taqdYxQirVc+ZoN/BGvOCRiFnG2b9q72TylQFXgtG6uLNSysono5c/Xs4bAFIH+U9SB8jOvNT0OYoYfXO44XUcP7Gi93SKCAt5e566zKtQScgPD897S/VN6fOIl77McBn+gHtpUD/k72cVeDlH1yW8V5A==
 Received: from PH0PR02MB7557.namprd02.prod.outlook.com (2603:10b6:510:54::17)
- by CO6PR02MB7812.namprd02.prod.outlook.com (2603:10b6:303:a7::17)
+ by MN6PR02MB10630.namprd02.prod.outlook.com (2603:10b6:208:4f4::5)
  with Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.92.8; Fri, 5 Jun 2026
- 08:43:14 +0000
+ 08:43:23 +0000
 Received: from PH0PR02MB7557.namprd02.prod.outlook.com
  ([fe80::4917:bc05:4373:6bef]) by PH0PR02MB7557.namprd02.prod.outlook.com
  ([fe80::4917:bc05:4373:6bef%5]) with mapi id 15.21.0092.007; Fri, 5 Jun 2026
- 08:43:14 +0000
+ 08:43:23 +0000
 From: Khushit Shah <khushit.shah@nutanix.com>
 To: qemu-devel@nongnu.org, qemu-arm@nongnu.org, kvmarm@lists.linux.dev,
  Eric Auger <eric.auger@redhat.com>
@@ -77,10 +77,10 @@ Cc: Cornelia Huck <cohuck@redhat.com>,
  Shaju Abraham <shaju.abraham@nutanix.com>,
  Mark Cave-Ayland <mark.caveayland@nutanix.com>,
  Khushit Shah <khushit.shah@nutanix.com>
-Subject: [RFC PATCH v2 14/29] target/arm: Validate cpu->isar.idregs[] before
- writeback
-Date: Fri,  5 Jun 2026 08:33:43 +0000
-Message-ID: <20260605083358.1320563-15-khushit.shah@nutanix.com>
+Subject: [RFC PATCH v2 29/29] target/arm/kvm: fix host model writeback when
+ kernel supports EL2
+Date: Fri,  5 Jun 2026 08:33:58 +0000
+Message-ID: <20260605083358.1320563-30-khushit.shah@nutanix.com>
 X-Mailer: git-send-email 2.43.7
 In-Reply-To: <20260605083358.1320563-1-khushit.shah@nutanix.com>
 References: <20260605083358.1320563-1-khushit.shah@nutanix.com>
@@ -91,88 +91,88 @@ X-ClientProxiedBy: PH7PR17CA0007.namprd17.prod.outlook.com
  (2603:10b6:510:54::17)
 MIME-Version: 1.0
 X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: PH0PR02MB7557:EE_|CO6PR02MB7812:EE_
-X-MS-Office365-Filtering-Correlation-Id: 58968b10-12dd-4ee5-a713-08dec2de7b39
+X-MS-TrafficTypeDiagnostic: PH0PR02MB7557:EE_|MN6PR02MB10630:EE_
+X-MS-Office365-Filtering-Correlation-Id: 12848bdb-1218-4291-8c82-08dec2de7ee6
 x-proofpoint-crosstenant: true
 X-MS-Exchange-SenderADCheck: 1
 X-MS-Exchange-AntiSpam-Relay: 0
 X-Microsoft-Antispam: BCL:0;
- ARA:13230040|1800799024|376014|7416014|366016|3023799007|6133799003|56012099006|22082099003|18002099003;
-X-Microsoft-Antispam-Message-Info: lS/RfY0CIngegiy3f2ySdJB+RYGwyZud3laA0puyNuxoXCpRafQ39zfmjQuwvYGDg6uoqqIryTUdxyZrIBtPPnqqJ2tqJ5n3yoetjVsMtSz+DjeYyEVDLf1oThFfvqmL7H/nk/B+ZnU8zGydeWn5phV3NBP/Ko18DRWwEpB/H3XTSr0hWcj/bCgC0VKDRXIpFepcgYcv1GeJO7W5HCo4c0A8V2PhbFvBL80SF58Bx9dn0KH8fU/582+fvVyU/cwwD/W/nGbv8PbvI7hCTeBVyU7QjLO8KW/sOrdKKrdjith+GENaqDGNN+dgUXr9n6cfm/+BWV7BZsZO3x1u8TCYC7SCfpWbCb2VModCDIYXqG1jHOKGCBy1IUEwc/pJx+zyb89abpUwCuKX86MRNlcrFIRRmL5LFmbChcIZHPjQuzoXvx6FPnL4DTrzUwguZ9SXMrXRL5fMZDnK1gWJifzGDDC+0TgWE8ftUFKXWybp8v5ZXEEEKc2jo4FgTcEkmngCaVl+hSG8TFfDJMTnk+IsyEWh3tZBKCQ+vzw5vCoyEQiPfgCie+LIrrWsRloyt3kfCQ+8aOenDqjTCdufNjiy7wgw48ZTf0o1N4yT8uiVDoj+POR8Cp/EdLQmY+6g78UoSaf0MTkLd3oA8Va92WvtviAOUbAwN3hNkNHveIvqe2kO+On1OK+2f7b3YgBtqDLv
+ ARA:13230040|366016|7416014|1800799024|376014|6133799003|3023799007|56012099006|18002099003|22082099003;
+X-Microsoft-Antispam-Message-Info: 3o1nvhXxynvumt81CAgneyVKwl/8XkzFjGsJsPsfrFk1MpCutUgwOzKSRFD2kHNx9B+DPMnYbc0OAGcECkxsYOCcv7coKJHNYGKo6vUDnMN5YAZSWF9akaWfWGifJ/1hS9kqzys37V0Ri3l4tUAN6KdWqPM+DOLxfPOxrXwK0Xk/UPi9J72AS43LXwpPcOnNJmsw4zTZmc/9RhWD7tC7agfn1M+6+MeYuGzKIhsR3a/FPbXezlgrG1JfSy+yLtUQM+TtWbOJNNlyXGAcf6ngNLd/V3c6KssRIJpvSeMhL2od4712QufPZ8bz/6Eg82qT6Yw5fE9/CerkosyXD3Kz/ZoTQOBdUfDvxUlUew8fl8A1H5ko9fsDi1bE7B7mJ+e01QmlM5YPO1hjI5ltdOQHcqqXaNljsqY6mjabst9k2PBsMmwxX5CUQ6NZwIT1PkK4HEnvi9vRCTHU/uZQWk+jyeu6eCtFGc0ppi8ApBD9NKUDW8TKONQJv1iEhE4JsN57RXeVjfFxB7NaiVYgfFk1P4Q/MXSDJybxLJjtPufpmrqtAJ69AxCNs0os6C4fGaE9Y0WenZgofJ1ierYsh0lX7rkqivZ5KucouQP6MdGd3Hv3YvIe1mwTue5bY7uzlsu9MsOS1q4GD9L4ItHDpi5GyKiuFcOeqADTZdXcRcpo5/Wgdwg2bPMGaRgSQfwxVBRs
 X-Forefront-Antispam-Report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
  IPV:NLI; SFV:NSPM; H:PH0PR02MB7557.namprd02.prod.outlook.com; PTR:; CAT:NONE;
- SFS:(13230040)(1800799024)(376014)(7416014)(366016)(3023799007)(6133799003)(56012099006)(22082099003)(18002099003);
+ SFS:(13230040)(366016)(7416014)(1800799024)(376014)(6133799003)(3023799007)(56012099006)(18002099003)(22082099003);
  DIR:OUT; SFP:1102; 
 X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0: =?us-ascii?Q?ionL5eugrSNTMMQxkCU+Wzd0F8RMdH/ok2WyVIj4IjD5dES2z9vK45zkqmpF?=
- =?us-ascii?Q?VkIqhXcbXXlI3Uk5AHnQSImKiO3/8GCc2Ux4xw8uaWTXOtoSTOx1gFkdazlX?=
- =?us-ascii?Q?m+CV2JsAWcZ3YsFhqYoNVRm7rIqI+/EzWmkH+wV5zoLsVXmv6vs8MjBi5qnY?=
- =?us-ascii?Q?kpuoqhXiM9fxuwldyforq2L+ooMInX3oK6yZPl5+d72tgYRpgpw8ePJy8A3z?=
- =?us-ascii?Q?1Fm+RUpkcCOT9H7WWKzohC5DRJnLSWSm4gDE+JihLNH3XG95T/6/D9slGwbc?=
- =?us-ascii?Q?FO5DV13c4ls+QGsu00LXUusuKFogrZ+XlK4vFykQttv3RrJn8scDGoeJdYVV?=
- =?us-ascii?Q?1Fzqf4L6iRxmJvtssNtiNg4xImHSg4dNlVEcQ5vycU3mj2xcbUvz8Oa69Cdz?=
- =?us-ascii?Q?hDhP4wsWqI58YHTr3KHQ8vNawGDinJ6FwHfC2t9qvgHZCyUubz2KYXokWojM?=
- =?us-ascii?Q?G+8EtrC1HLeZEyEjHe53MsZLsPF5QC0tFM5u8fD0etstzBok8CxQNenR9umw?=
- =?us-ascii?Q?ni77WeQzhRtrenIuYNiDf9++p/zyVf9cTQjVx8N84cz/mqhXJHt6g7DJ0ljk?=
- =?us-ascii?Q?xRyS6PEAFlAURClYjEz5GTd1gaVeU0nJJFBW33o7byEPmhL0mOjR2YUG5FHI?=
- =?us-ascii?Q?P+ILNJbsVBGUfglCmBo/QUicIF6ZxAaQj80rrdXywt/RQj96R2FXKVg3poQb?=
- =?us-ascii?Q?JwhMVI9IHyP43KEpZhO9gIW7bwCqvPNuvBBcUmOUmoex+JG5s6zw2Pq+/Mzz?=
- =?us-ascii?Q?N5KJanuBKUT+MbTXqaB+gfRe+s/40eZnFl8vGI08wz9y4RYPJ0Mp0LOpS0o9?=
- =?us-ascii?Q?OHHJvbxm0PfDCQ8F3UwR7RQ6xRI1VXREVkbmIvyZdO+iWYhigVTj6wVjPwvv?=
- =?us-ascii?Q?nDb08NctjHngV/l62CZx16M259JaFMW6HDMT1wUl9B79n1x6h+YKWwNtpAXR?=
- =?us-ascii?Q?JnO+M/ynTT1KbHO7DzH8/FXF7518DYYfMv28vbsMchg3NNvzJpmIresuRcWe?=
- =?us-ascii?Q?ji2AA1o+fw4n6IFCY/zLGdZpDqxUywqdaEFghpg9iw+lFz+vD7ERKd1+gcrG?=
- =?us-ascii?Q?BD+Nb7rVEYcXeIiI3hU5G8cnGJcu1rBtbuIhvYA4hAy7Uq7B5SBKftvl7MzK?=
- =?us-ascii?Q?CF1HBSMawindDGL9HX6doYNC8Z7yIFixPlIGssqnw1869vL20ORQenidmWip?=
- =?us-ascii?Q?6T0U6nXyFNZCB894kOtd1GM8yjCI/AZMlNKW5zpgIh+D24Q+upSTNgPT3M3A?=
- =?us-ascii?Q?8LBvi/k9Y8tCCbKAi7xu/C+Q69P3djGMtm3UdrDfdiLKK0hTFuG9oGKbf/4v?=
- =?us-ascii?Q?K23VS+gb6DB8pjIKVHcII/jycAP1EcQcvFM6/3T0cY+eku4RtoyI8oYnRkgS?=
- =?us-ascii?Q?CrUJhwV+QBW1ODGA93lpSkilRPDf41qPY4h9anqB/orycUPWnpvNabRgyv7P?=
- =?us-ascii?Q?mWjFVGvtfR4UtEK6GUsWDeXgEkgxffixx+FRnwnxG1SgiIEw0xpbFCrzArJs?=
- =?us-ascii?Q?totx8szEpwVyxysgL2h9zkhVXSfoiblNtVXZve9pZnEAe8o9ygl3yEsdluhP?=
- =?us-ascii?Q?lJg8chHT7F/llhwQNB0KSfMZB0AQ6QbMFoX2IzFD48VuRp1Sir0zmOy0YPWn?=
- =?us-ascii?Q?FpilG/e/0pU5GHiI4zZHPHK3/VnTL1hVfzraMxIbxYU4FhzNlIkP2bbzHEoP?=
- =?us-ascii?Q?HWXXWkZ3hAKrc47X/XCOizXz19iWU9pk5ybkvMJAQ7/sVVjp3XWX1ICubiTX?=
- =?us-ascii?Q?EPXrmDdxmtkbVVS/Hn3zfp5B3z9z9ks=3D?=
-X-Exchange-RoutingPolicyChecked: Iyh/q/wF8fO3PCItbtqbtE41DAqFhB3nLGgg2OEZUha4B3Lmo3vtuIkebZCm+qiyvkuKvOqkzGb/KGhOxCeczJYfqVlQiyumIpF+JQ4t1Wi/oJqRE47CiLukc2VZygHel9Ghf/ufy3DR/tx5+2HmDto56CC1w8o28DpbsqxIrJp0kwLw+agPfZRmtgesvyZ3zue3j5LJk/gWjrvs9/EbphVPPqVsT9YU0EtzNXRrSsE5iVpiu6J3RRe6gGErAJlAsD6E6NHzGsbaRl6QvQMBzAw0JKefOGtN1LIBvbRbf19yz0YUcw4+Cv2jIFDo7PP7aK/j0DKlcoV8jUK/EVah6w==
+X-MS-Exchange-AntiSpam-MessageData-0: =?us-ascii?Q?jFGrbi+ypHeSd7B2fxqOIy1l6b38BOUIBvADBBSmqFDVphlNdFceHqXOfvJB?=
+ =?us-ascii?Q?LHpJKNulW2ncNExxnC1L7boliBrWcaqKSjFbhuuEoqIy5OCGtqSD0lLLsr7N?=
+ =?us-ascii?Q?yW3H4QY8c5domVqRUj68+Pz9VVRqBjjxikb1PkG3aLp0+yVJegs13O/+rc4r?=
+ =?us-ascii?Q?Hf4wY0mMhyaysFdyTfVHGu/zyqm4cRrgQN2X0pDW2StE0UFmTKxFlEAjw92p?=
+ =?us-ascii?Q?dgCeZtUtrw1TSnJplbsGRxaXm04diIH6n/aA0nAsnaMy1CaXjWc1eO+pz9f+?=
+ =?us-ascii?Q?Hbm4857k18nhoc8j6IIcvoDkHo+2rGsxOas/z6O/r6rrpqD44x9KcxVPyhaV?=
+ =?us-ascii?Q?lKM3K0l/cyeRMFd4Yiz7H2hL+X0b/mf1iBJbC/7+Xnjat4eU4jJQOgFqW1Ea?=
+ =?us-ascii?Q?uM6Q529jqGphE5K6EnIzgIJ4wqLAAoOt5zlzqERsia0iXjFi1iA7gg+tyMjT?=
+ =?us-ascii?Q?zlVUmpf/yIOIddBR6Z/x+a0xpuaRz7Oy7Fr2izRyx/GGD7DIXVY5CcZTBAcP?=
+ =?us-ascii?Q?SolkeJf6hP7ELmz5nYrt57whggTuBa4BqZ2mmwu6aOWpn4OWJJFIOaWn396b?=
+ =?us-ascii?Q?nBALwfd36cpgE9Pcs6Ntx7LWtjE+08jzongQn9PALsUM6ghFXSC9P0sZ5xSq?=
+ =?us-ascii?Q?YnjgTKaAH2vCv0Yj4GOyzLj6OKiqFvt/+IeLqvsxDIOdgx3cYRwEgmfgK0i/?=
+ =?us-ascii?Q?2eYsNerATMwz0d25JHXB/3sbhkwzJCMV27QqkCxO8kfvFEUPzRi9Dkwc/1kE?=
+ =?us-ascii?Q?k5lyY3/AcTETMSPtxpUoLtkV9TwTin9lV/gZmTBBjSNKKipE4Bu80OVFXZ3z?=
+ =?us-ascii?Q?9Tcs2GRiQVeQjtPxRwLdAwViTCmIddcifkPFBkbfPsF3g2zc6FAW1xQ3hi5y?=
+ =?us-ascii?Q?85PpX+0HZzxU/5UEArLAB4FyIC0Wahp6OeRUwiL6l5SOKwaRneJz0HrxOfr0?=
+ =?us-ascii?Q?ovX3fIWXXM6s7CdMYMR3BUzuO9YGGyTqrX1cLuYbO2QOW1Xj4m1BFSyv7Efe?=
+ =?us-ascii?Q?hSNHy7cudh6U4Yn7JPK8yXNOi1VPGBDGAHznF18A2j2u8jjo7hkWVGfkPqlt?=
+ =?us-ascii?Q?DhtOq47C87VS9/FuJNMZVFMojq9Sc+ZfhuZAbVCvz9TX+s/Dqr57riYysQVG?=
+ =?us-ascii?Q?jaSfHGc5whldkLAJR4iHaUH3A3gGUMrnRCnWivkJdlHkrmz/5Y4mUu1IVx33?=
+ =?us-ascii?Q?3StOEq2EAPz/pYQ8fVx6Pnjl/6IVXOE0uUGHULpi3bM7+T4Y/oaqfUZ0iQyg?=
+ =?us-ascii?Q?Y2VTUx3S5/S0JaueCb3VACb7PNrRVGpaSo+62SeLOjUQ7xif6ZmAAow9AUAD?=
+ =?us-ascii?Q?eEVBahmUncKCNqkAo3PCXw4ex2viuqYdF+wImdRdBKiy+mZ+lXmWNxzJdChl?=
+ =?us-ascii?Q?1GCKpbYtIWLppueCpyM5eWrUuWNCzGERXFQOJq9fs8YxqCrXmsTnCKti7XhK?=
+ =?us-ascii?Q?dHFLjUv+vk2/p8HgvMkNAkmKWw6CADYevC6BIQU2L/V30eyqo1KLEVlNNCl0?=
+ =?us-ascii?Q?/sk2ZFJqxYBeaaHZ0CQgf6dilfKpM6V1BZ5yOm/uIQjGFrpffurqAaBAL52J?=
+ =?us-ascii?Q?kygcjiWmD7RGFZJ7Np6iou4g2Y/b5C/6ihTEKQIKeDYVcpc9DEXP0xKx2mK+?=
+ =?us-ascii?Q?JtxS7SbhAf3pFAfyj01iYA1Uyst64isgFuM8HKVTTesbxFJUDMxuKiutjVts?=
+ =?us-ascii?Q?6AI9+t059on9ems9m7dxz6WcKT/qwldo38ELHK7+qZavCkSNfBIywnJ8qa2S?=
+ =?us-ascii?Q?YkzSWTe2rWNjPBKtIJcbBo3GIoocQHk=3D?=
+X-Exchange-RoutingPolicyChecked: poUt8sX97Kh8NlqvufWF/8Y9yZHr+1INB3bEweTIADuEAjJujx3I0xbfpsx/6zmiLHZjypOX+VNmA/dVgUiffy5Wvoq4RzRFRABzVEGzV1Xu0UV+I0afZSlAk3Jjy8e1Oqio25SJmUGDIy0FNRzqEe3Sr88u26224rehrDnmxTRrCotsOf2Bn9oU/bSwJ2DrB2NGcO5P260KAHZ7IzM+o+YVJcHMCv0P8sLlD8To/eOAe8Ayzv0QXOuz5cVbqkVLICEWIofeRxkBb9lKdGNLCaiAjwbWoq3xmbb2e4bcn0ymxR1A3b9q3Uu4kK99HhqNCN3WfbfqoiTlMeGd7U8PIQ==
 X-OriginatorOrg: nutanix.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 58968b10-12dd-4ee5-a713-08dec2de7b39
+X-MS-Exchange-CrossTenant-Network-Message-Id: 12848bdb-1218-4291-8c82-08dec2de7ee6
 X-MS-Exchange-CrossTenant-AuthSource: PH0PR02MB7557.namprd02.prod.outlook.com
 X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 05 Jun 2026 08:43:14.1118 (UTC)
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 05 Jun 2026 08:43:20.2510 (UTC)
 X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
 X-MS-Exchange-CrossTenant-Id: bb047546-786f-4de1-bd75-24e5b6f79043
 X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: gDwt39Mf7mKrhOju/Z0AXW1Igo6PCLeyLE2xe8iFIHjynZ2OUr9CnP7k/j6SrkkNDh5C7b70DiREFTs0fGRmVdu1nTgb0kMC54dYJJMx0aw=
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: CO6PR02MB7812
-X-Authority-Analysis: v=2.4 cv=Mq5iLWae c=1 sm=1 tr=0 ts=6a228c26 cx=c_pps
- a=fJIB0T+C2yAfE4P2TQxPqg==:117 a=6eWqkTHjU83fiwn7nKZWdM+Sl24=:19
+X-MS-Exchange-CrossTenant-UserPrincipalName: lP9+32Yf2NXVqJwgHi8XetnVJew3e7WnYPJiJbfVg3k4AcysY7qecEXP2rqtNbtRIuQI+KHkjrARtijSN4CNYHqAFfT0FqA/DWPkTHX4CM4=
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: MN6PR02MB10630
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNjA1MDA4MyBTYWx0ZWRfXzpndv/IbCbyA
+ qn4aHpZfvP4yZfdlM50Ur+vbjAI2ss/9rffVA+IfSEv5g0Up1hip5iPI6KcZDjqAuYtWjDu5EIa
+ o2JpciXT5SabZ77tSWp+z5p7eA8CdpXos7PDnq+CdGO9NLjyHFgItDILSz70nqsyuwaFndf4lYX
+ Wz+PI647P+WCiAE2FUwrMDtCByKMu4ghFHso7zbiuOgzp9eXdP0/M5qm0XNHtO/UjcjFqbSd8lz
+ pcAiYLx342tvZCFt1jA6wsD/uO4+PNEnlE9ZG4LWa2M6HF69UWmZ7vi1gCRF4QlKSL03wsEbWcp
+ wkbUwW9GNxw4wcf2I+AFNyaaycI5J69IMFxTVa8yiASaUBfq6yQlTiRRK2sKA1a++TaXEuyHlIe
+ 1MUqmUMhFkV7jgX+4SbnRLGzhdIrD+DKqzt1lRTBqozAQb469u860UtvU53xH068Ox+0SY4SDtG
+ fHVSOcz01X4Xdm96u8A==
+X-Proofpoint-ORIG-GUID: zbliRuSpNeTQVal3zXwBZZ9KogKH7A0q
+X-Authority-Analysis: v=2.4 cv=V6FNF+ni c=1 sm=1 tr=0 ts=6a228c33 cx=c_pps
+ a=h3Jk+6XEKCuoUZR+ZnWw9Q==:117 a=6eWqkTHjU83fiwn7nKZWdM+Sl24=:19
  a=z/mQ4Ysz8XfWz/Q5cLBRGdckG28=:19 a=lCpzRmAYbLLaTzLvsPZ7Mbvzbb8=:19
  a=xqWC_Br6kY4A:10 a=FelO9ux0wxsA:10 a=0kUYKlekyDsA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=VofLwUrZ8Iiv6rRUPXIb:22 a=1L6crL_YRTbalZ11mEUO:22
- a=64Cc0HZtAAAA:8 a=nl4PRgY3Bpby1YJ86_MA:9
-X-Proofpoint-ORIG-GUID: fNrw5skSjmCxnj_hAk9FcbQT8Kkr0pP_
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNjA1MDA4MiBTYWx0ZWRfX8ZZJyD7trAeW
- jWGrrz09Ylgrvu0M8GWoshRoYDQGWV1W++pjxkHrFKuYPN5D9DEPPB9Zt7L6Iniw0vJ8lS3WQNn
- V4DA5p+E121i/9CoFWIb+bUIL2rga3x0gxJLzi5z/apyw+UfwtTlB968P9KtVVGoCyyJ8F1df/1
- Dh0+dYmlpPrdMpZRO0sXXSFCCKhF6kbGodF4p+ahrT5WOGqwuPeD0GxM0J4jCI9MIhAd5PnKSPU
- j4RVrxt1SCIKj/CgnTIqnURuIF8rSFCbO3GhvoiLfsSk5Hz8AMGUkC4vc7Ow4bTaM/MAUiF6IxG
- yffzTXKDYD4WcSPiLsowGYhG6upqi+Z43BdKjO7aWJ0+hOysgnDi9rnlsAXUdQJQs1D5mKcs1v8
- M54DyCCZglHPwBxEFbj5HGJ9IUXhY9TmmdYhkQjUgUv/NgnDT/gKuisPeYfFf8ChGTrDZSnvAMu
- 6vB3lQUkJckU6HkLpvg==
-X-Proofpoint-GUID: fNrw5skSjmCxnj_hAk9FcbQT8Kkr0pP_
+ a=VkNPw1HP01LnGYTKEx00:22 a=VofLwUrZ8Iiv6rRUPXIb:22 a=0LlEyIVc8U2lsR7dKhuH:22
+ a=64Cc0HZtAAAA:8 a=15h_muFj-VbmxBcijCsA:9
+X-Proofpoint-GUID: zbliRuSpNeTQVal3zXwBZZ9KogKH7A0q
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.125,FMLib:17.12.100.49
  definitions=2026-06-05_01,2026-05-28_03,2025-10-01_01
 X-Proofpoint-Spam-Reason: safe
-Received-SPF: pass client-ip=148.163.151.68;
- envelope-from=khushit.shah@nutanix.com; helo=mx0a-002c1b01.pphosted.com
+Received-SPF: pass client-ip=148.163.155.12;
+ envelope-from=khushit.shah@nutanix.com; helo=mx0b-002c1b01.pphosted.com
 X-Spam_score_int: -31
 X-Spam_score: -3.2
 X-Spam_bar: ---
 X-Spam_report: (-3.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.445,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001,
+ RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_MSPIKE_H2=0.001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -189,182 +189,326 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Before writing cpu->isar.idregs[] back to KVM, validate that every field
-satisfies its declared safe-rule against the host isar->idregs[] view.
-This catches values that would be unsafe to expose on the current host
-(e.g. claiming a higher feature level than the host actually supports).
+kvm_arm_get_host_cpu_features() probes the host by spinning up a
+scratch vCPU and reading its ID registers. When the host kernel
+advertises nested virtualization, the scratch is created with
+KVM_ARM_VCPU_HAS_EL2, which makes the kernel run limit_nv_id_reg()
+on that vCPU and force several fields (e.g. ID_AA64MMFR4_EL1.NV_frac,
+parts of ID_AA64DFR0_EL1) to values that match KVM's nested-virt
+capabilities rather than the raw host.
 
-Introduce arm_idregs_validate_safe_rule(), which iterates over every
-field defined in cpu-idregs.h.inc and checks the model value against
-the host value accoiding to the field's ArmIdRegSafeRule. If the
-requested value is invalid, error out, while also mentioning the
-related property.
+If the actual vCPU is later created without EL2 (e.g. -machine
+virt,virtualization=off), the EL2-on values cached above no longer
+match what the kernel exposes for the real vCPU and ID-register
+writeback fails.
+
+Fix this by caching two host views, one probed with EL2 and one
+without, and selecting the appropriate view at every use site.
+For -cpu host (and -cpu max) without EL2 we additionally rebase
+cpu->isar.idregs[] from the EL2-on view it was initialized with
+onto the EL2-off view via kvm_arm_rebase_host_idregs(), so each
+field that the user has not explicitly touched picks up the value
+that the real vCPU will actually see.
+
+Corner case: the rebase compares the post-init field value against
+the EL2-on host value to decide whether the user set it. If the
+user directly or indirectly set field X=i and the EL2-on view also
+reports feat_X=i but the EL2-off view reports feat_X=j, the rebase
+cannot distinguish "user asked for i" from "inherited i from host" and
+will overwrite with j. This only affects -cpu host/max without EL2
+on NV enabled kernels where the user-requested value happens to match
+the EL2-on host view, so we avoid the complexity of user set values
+tracking and accept the loss here.
+
+Named models are not affected with the issue as they already start
+with default-zeroed view.
 
 Signed-off-by: Khushit Shah <khushit.shah@nutanix.com>
 ---
- target/arm/arm-cpu-props.c | 14 +++++++++
- target/arm/arm-cpu-props.h |  1 +
- target/arm/cpu-idregs.c    | 64 ++++++++++++++++++++++++++++++++++++++
- target/arm/cpu-idregs.h    | 10 ++++++
- target/arm/kvm.c           |  7 +++++
- 5 files changed, 96 insertions(+)
+ target/arm/arm-cpu-models.c | 10 +++-
+ target/arm/arm-qmp-cmds.c   |  2 +-
+ target/arm/cpu64.c          |  2 +-
+ target/arm/kvm-stub.c       |  4 +-
+ target/arm/kvm.c            | 98 ++++++++++++++++++++++++++++++-------
+ target/arm/kvm_arm.h        |  5 +-
+ 6 files changed, 96 insertions(+), 25 deletions(-)
 
-diff --git a/target/arm/arm-cpu-props.c b/target/arm/arm-cpu-props.c
-index d5900c0e23..3a02079ff2 100644
---- a/target/arm/arm-cpu-props.c
-+++ b/target/arm/arm-cpu-props.c
-@@ -486,3 +486,17 @@ const ArmCpuPropDesc *get_arm_cpu_props(void)
- {
-     return arm_cpu_props;
- }
-+
-+const ArmCpuPropDesc *arm_prop_for_field(ArmFieldIdx field)
-+{
-+    for (const ArmCpuPropDesc *p = arm_cpu_props; p->name; p++) {
-+        if (p->type != ARM_PROP_FRACTIONAL && p->u.field == field) {
-+            return p;
-+        } else if (p->type == ARM_PROP_FRACTIONAL &&
-+                   (p->u.frac.base_field == field
-+                    || p->u.frac.frac_field == field)) {
-+            return p;
-+        }
-+    }
-+    return NULL;
-+}
-diff --git a/target/arm/arm-cpu-props.h b/target/arm/arm-cpu-props.h
-index 9ba3f4c100..36ca39d1a7 100644
---- a/target/arm/arm-cpu-props.h
-+++ b/target/arm/arm-cpu-props.h
-@@ -45,5 +45,6 @@ typedef struct ArmCpuPropDesc {
- void arm_add_cpu_props(Object *obj);
+diff --git a/target/arm/arm-cpu-models.c b/target/arm/arm-cpu-models.c
+index d38293cfb2..0fc30b72ed 100644
+--- a/target/arm/arm-cpu-models.c
++++ b/target/arm/arm-cpu-models.c
+@@ -548,7 +548,12 @@ static void arm_named_cpu_initfn(Object *obj)
+         return;
+     }
  
- const ArmCpuPropDesc *get_arm_cpu_props(void);
-+const ArmCpuPropDesc *arm_prop_for_field(ArmFieldIdx field);
+-    kvm_arm_set_cpu_features_from_host(cpu);
++    /*
++     * Start with the host view without EL2.
++     * If nested virt is needed user must provide values for all the
++     * blockers.
++     */
++    kvm_arm_set_cpu_features_from_host(cpu, false);
+     if (!arm_feature(&cpu->env, ARM_FEATURE_AARCH64)) {
+         return;
+     }
+@@ -574,7 +579,8 @@ void arm_cpu_class_check_missing_features(ARMCPUClass *acc, strList **blockers)
+         goto out;
+     }
  
- #endif
-diff --git a/target/arm/cpu-idregs.c b/target/arm/cpu-idregs.c
-index 591ca54e39..84e1d8d9f1 100644
---- a/target/arm/cpu-idregs.c
-+++ b/target/arm/cpu-idregs.c
-@@ -12,6 +12,7 @@
- #include "cpu-sysregs.h"
- #include "qemu/error-report.h"
- #include "qapi/error.h"
-+#include "arm-cpu-props.h"
+-    host_isar = kvm_arm_get_host_isar();
++    /* Use the host view without EL2 to calculate blockers. */
++    host_isar = kvm_arm_get_host_isar(false);
  
+     if (cpu_isar_feature(aa64_sve, cpu)) {
+         arm_cpu_sve_finalize(cpu, &err);
+diff --git a/target/arm/arm-qmp-cmds.c b/target/arm/arm-qmp-cmds.c
+index e13dfeb357..844bc84720 100644
+--- a/target/arm/arm-qmp-cmds.c
++++ b/target/arm/arm-qmp-cmds.c
+@@ -92,7 +92,7 @@ CpuPropInfoList *qmp_query_arm_cpu_props_info(Error **errp)
+ 
+         sv = qlist_new();
+         arm_prop_append_supported_values(pdesc,
+-                                         kvm_arm_get_host_isar(),
++                                         kvm_arm_get_host_isar(false),
+                                          sv);
+ 
+         prop_info->supported_values = QOBJECT(sv);
+diff --git a/target/arm/cpu64.c b/target/arm/cpu64.c
+index 2fa5b4d9da..bad0b1f9f9 100644
+--- a/target/arm/cpu64.c
++++ b/target/arm/cpu64.c
+@@ -889,7 +889,7 @@ static void aarch64_host_initfn(Object *obj)
+ 
+ #if defined(CONFIG_KVM)
+     kvm_arm_set_cpreg_mig_tolerances(cpu);
+-    kvm_arm_set_cpu_features_from_host(cpu);
++    kvm_arm_set_cpu_features_from_host(cpu, true);
+     aarch64_add_sve_properties(obj);
+     arm_add_cpu_props(obj);
+ #elif defined(CONFIG_HVF)
+diff --git a/target/arm/kvm-stub.c b/target/arm/kvm-stub.c
+index dd683beaaf..98f41818ba 100644
+--- a/target/arm/kvm-stub.c
++++ b/target/arm/kvm-stub.c
+@@ -45,7 +45,7 @@ bool kvm_arm_el2_supported(void)
  /*
-  * Generate an array of architecturely defined values for each field
-@@ -243,3 +244,66 @@ void arm_idregs_reset_to_defaults(ARMCPU *cpu)
+  * These functions should never actually be called without KVM support.
+  */
+-void kvm_arm_set_cpu_features_from_host(ARMCPU *cpu)
++void kvm_arm_set_cpu_features_from_host(ARMCPU *cpu, bool with_el2)
+ {
+     g_assert_not_reached();
+ }
+@@ -120,7 +120,7 @@ char *kvm_print_register_name(uint64_t regidx)
+     g_assert_not_reached();
+ }
+ 
+-const ARMISARegisters *kvm_arm_get_host_isar(void)
++const ARMISARegisters *kvm_arm_get_host_isar(bool with_el2)
+ {
+     return NULL;
+ }
+diff --git a/target/arm/kvm.c b/target/arm/kvm.c
+index 984c7fd256..3dbc2b5f1b 100644
+--- a/target/arm/kvm.c
++++ b/target/arm/kvm.c
+@@ -65,7 +65,7 @@ typedef struct ARMHostCPUFeatures {
+     const char *dtb_compatible;
+ } ARMHostCPUFeatures;
+ 
+-static ARMHostCPUFeatures arm_host_cpu_features;
++static ARMHostCPUFeatures arm_host_cpu_features[2];
+ 
+ #define DEF(NAME, OP0, OP1, CRN, CRM, OP2) [NAME##_IDX] = #NAME,
+ const char * const sysreg_names[NUM_ID_IDX] = {
+@@ -349,7 +349,7 @@ static uint32_t kvm_arm_sve_get_vls(int fd)
+     return vls[0] & MAKE_64BIT_MASK(0, ARM_MAX_VQ);
+ }
+ 
+-static void kvm_arm_get_host_cpu_features(ARMHostCPUFeatures *ahcf)
++static void kvm_arm_get_host_cpu_features(ARMHostCPUFeatures *ahcf, bool with_el2)
+ {
+     /* Identify the feature bits corresponding to the host CPU, and
+      * fill out the ARMHostCPUClass fields accordingly. To do this
+@@ -389,7 +389,7 @@ static void kvm_arm_get_host_cpu_features(ARMHostCPUFeatures *ahcf)
+      * Ask for EL2 if supported.
+      */
+     el2_supported = kvm_arm_el2_supported();
+-    if (el2_supported) {
++    if (el2_supported && with_el2) {
+         init.features[0] |= 1 << KVM_ARM_VCPU_HAS_EL2;
+     }
+ 
+@@ -528,7 +528,7 @@ static void kvm_arm_get_host_cpu_features(ARMHostCPUFeatures *ahcf)
+             err |= get_host_cpu_reg(fd, ahcf, ID_AA64ZFR0_EL1_IDX);
+ 
+             /* Read the set of supported vector lengths. */
+-            arm_host_cpu_features.sve_vq_supported = kvm_arm_sve_get_vls(fd);
++            ahcf->sve_vq_supported = kvm_arm_sve_get_vls(fd);
          }
      }
+     /*
+@@ -536,7 +536,6 @@ static void kvm_arm_get_host_cpu_features(ARMHostCPUFeatures *ahcf)
+      * for all registers, hence ignore the errors.
+      */
+     get_host_cpu_idregs_all(fd, ahcf);
+-
+     {
+         int wret = get_writable_id_regs(fdarray[1]);
+         if (wret) {
+@@ -572,15 +571,15 @@ static void kvm_arm_get_host_cpu_features(ARMHostCPUFeatures *ahcf)
+     ahcf->features = features;
  }
-+
-+bool arm_field_check_val_safe(ArmFieldIdx field, uint64_t val,
-+                              const ARMISARegisters *host_isar)
-+{
-+    const ArmIdRegField *f = arm_get_field_desc(field);
-+    uint64_t host_val;
-+
-+    arm_idreg_field_read(host_isar, f->idx, &host_val);
-+    switch (f->safe_rule) {
-+    case IDREG_SAFE_LOWER:
-+        return val <= host_val;
-+    case IDREG_SAFE_HIGHER:
-+        return val >= host_val;
-+    case IDREG_SAFE_HIGHER_OR_ZERO:
-+        return val >= host_val || val == 0;
-+    case IDREG_SAFE_SIGNED_LOWER:
-+        return sextract64(val, 0, f->length) <=
-+                sextract64(host_val, 0, f->length);
-+    case IDREG_SAFE_EXACT:
-+        return val == host_val || val == f->default_val;
-+    case IDREG_SAFE_ANY:
-+        return true;
-+    default:
-+        return false;
+ 
+-void kvm_arm_set_cpu_features_from_host(ARMCPU *cpu)
++void kvm_arm_set_cpu_features_from_host(ARMCPU *cpu, bool with_el2)
+ {
+     CPUARMState *env = &cpu->env;
+ 
+-    if (!arm_host_cpu_features.dtb_compatible) {
+-        kvm_arm_get_host_cpu_features(&arm_host_cpu_features);
++    if (!arm_host_cpu_features[with_el2].dtb_compatible) {
++        kvm_arm_get_host_cpu_features(&arm_host_cpu_features[with_el2], with_el2);
+     }
+ 
+-    cpu->kvm_target = arm_host_cpu_features.target;
++    cpu->kvm_target = arm_host_cpu_features[with_el2].target;
+ 
+     if (cpu->kvm_target == QEMU_KVM_ARM_TARGET_NONE) {
+         /*
+@@ -591,15 +590,18 @@ void kvm_arm_set_cpu_features_from_host(ARMCPU *cpu)
+         return;
+     }
+ 
+-    cpu->dtb_compatible = arm_host_cpu_features.dtb_compatible;
+-    cpu->isar = arm_host_cpu_features.isar;
+-    cpu->sve_vq.supported = arm_host_cpu_features.sve_vq_supported;
+-    env->features = arm_host_cpu_features.features;
++    cpu->dtb_compatible = arm_host_cpu_features[with_el2].dtb_compatible;
++    cpu->isar = arm_host_cpu_features[with_el2].isar;
++    cpu->sve_vq.supported = arm_host_cpu_features[with_el2].sve_vq_supported;
++    env->features = arm_host_cpu_features[with_el2].features;
+ }
+ 
+-const ARMISARegisters *kvm_arm_get_host_isar(void)
++const ARMISARegisters *kvm_arm_get_host_isar(bool with_el2)
+ {
+-    return &arm_host_cpu_features.isar;
++    if (!arm_host_cpu_features[with_el2].dtb_compatible) {
++        kvm_arm_get_host_cpu_features(&arm_host_cpu_features[with_el2], with_el2);
 +    }
-+    return false;
-+}
-+
-+bool arm_idregs_validate_safe_rule(ARMCPU *cpu,
-+                                   const ARMISARegisters *host_isar,
-+                                   Error **errp)
++    return &arm_host_cpu_features[with_el2].isar;
+ }
+ 
+ static bool kvm_no_adjvtime_get(Object *obj, Error **errp)
+@@ -2187,6 +2189,52 @@ bool kvm_arm_mte_supported(void)
+     return kvm_check_extension(kvm_state, KVM_CAP_ARM_MTE);
+ }
+ 
++/*
++ * Rebase cpu->isar.idregs[] on top of new_isar given the initial_isar.
++ *
++ * For fields in cpu->isar.idregs[] that are same as initial_isar, update
++ * the field with the new_isar values.
++ */
++static void kvm_arm_rebase_host_idregs(ARMCPU *cpu,
++                                       const ARMISARegisters *new_isar,
++                                       const ARMISARegisters *initial_isar)
 +{
-+    const ArmIdRegField *err_field = NULL;
-+
 +    for (int i = 0; i < NUM_ID_IDX; i++) {
-+        const ArmIdReg *reg = &arm_idregs[i];
-+        if (!reg->name) {
-+            continue;
-+        }
++        ArmIdReg *idreg = &arm_idregs[i];
 +
-+        for (uint32_t j = 0; j < reg->fields_count; j++) {
-+            uint64_t val;
-+            const ArmIdRegField *f = &reg->fields[j];
-+            arm_idreg_field_read(&cpu->isar, f->idx, &val);
-+            if (!arm_field_check_val_safe(f->idx, val, host_isar)) {
-+                err_field = f;
-+                error_setg(errp, "value %" PRIu64 " is not safe for field"
-+                           " %s.%s", val, reg->name, f->name);
-+                goto ret;
++        for (int j = 0; j < idreg->fields_count; j++) {
++            ArmIdRegField *field = &idreg->fields[j];
++            uint64_t idreg_val;
++            uint64_t initial_val;
++            uint64_t new_val;
++
++            arm_idreg_field_read(&cpu->isar, field->idx,
++                &idreg_val);
++            arm_idreg_field_read(initial_isar, field->idx,
++                &initial_val);
++            arm_idreg_field_read(new_isar, field->idx,
++                &new_val);
++
++            if (idreg_val == initial_val && new_val != idreg_val) {
++                /* The cpu->isar.idregs[]'s field val is same as
++                 * intial_isar.idregs[]'s field val, which was used to
++                 * initialise it. Hence, override it with the new_isar[]
++                 * value. User might have explicitly asked for some value
++                 * which matched the host value without EL2 in this case,
++                 * that value is lost. As rebase is needed in very specific
++                 * case, we avoid that complication.
++                 */
++                arm_idreg_field_write(cpu, field->idx, new_val,
++                    &error_abort);
++
++                warn_report("KVM ID %s.%s value changed from 0x%016"
++                             PRIx64 " to 0x%016" PRIx64,
++                             idreg->name, field->name, idreg_val, new_val);
 +            }
 +        }
 +    }
-+ret:
-+    if (err_field) {
-+        const ArmCpuPropDesc *prop = arm_prop_for_field(err_field->idx);
-+        if (prop) {
-+            error_prepend(errp, "Property %s: ", prop->name);
-+        }
-+        return false;
-+    }
-+
-+    return true;
 +}
-diff --git a/target/arm/cpu-idregs.h b/target/arm/cpu-idregs.h
-index 1389005099..c2ee82597e 100644
---- a/target/arm/cpu-idregs.h
-+++ b/target/arm/cpu-idregs.h
-@@ -86,4 +86,14 @@ bool arm_arch_val_from_name(ArmFieldIdx field, const char *name,
- bool arm_field_is_idreg_any(ArmFieldIdx field);
- void arm_idreg_field_reset_to_default(ARMCPU *cpu, ArmFieldIdx field);
- void arm_idregs_reset_to_defaults(ARMCPU *cpu);
 +
-+/*
-+ * Validate the ID registers values against safe values tags with host vals
-+ */
-+bool arm_idregs_validate_safe_rule(ARMCPU *cpu,
-+    const ARMISARegisters *host_isar,
-+    Error **errp);
-+bool arm_field_check_val_safe(ArmFieldIdx field, uint64_t val,
-+    const ARMISARegisters *host_isar);
-+
- #endif /* CPU_IDREGS_H */
-diff --git a/target/arm/kvm.c b/target/arm/kvm.c
-index 288b5ebe85..46d5532061 100644
---- a/target/arm/kvm.c
-+++ b/target/arm/kvm.c
-@@ -2118,6 +2118,7 @@ int kvm_arch_init_vcpu(CPUState *cs)
-     ARMCPU *cpu = ARM_CPU(cs);
-     CPUARMState *env = &cpu->env;
-     uint64_t psciver;
-+    Error *err = NULL;
+ QEMU_BUILD_BUG_ON(KVM_ARM64_SVE_VQ_MIN != 1);
  
-     if (cpu->kvm_target == QEMU_KVM_ARM_TARGET_NONE) {
-         error_report("KVM is not supported for this guest CPU type");
-@@ -2212,6 +2213,12 @@ int kvm_arch_init_vcpu(CPUState *cs)
+ static int kvm_arm_sve_set_vls(ARMCPU *cpu)
+@@ -2307,8 +2355,24 @@ int kvm_arch_init_vcpu(CPUState *cs)
          return ret;
      }
  
-+    /* validate the cpu->isar.idregs[] against the host's isar.idregs[]*/
-+    if (!arm_idregs_validate_safe_rule(cpu, &arm_host_cpu_features.isar, &err)) {
-+        error_report_err(err);
-+        return -EINVAL;
+-    /* validate the cpu->isar.idregs[] against the host's isar.idregs[]*/
+-    if (!arm_idregs_validate_safe_rule(cpu, &arm_host_cpu_features.isar, &err)) {
++    /* For -cpu host/max, rebase the idregs[] on top of cpregs[] */
++    if ((object_dynamic_cast(OBJECT(cpu), TYPE_ARM_HOST_CPU)
++        || object_dynamic_cast(OBJECT(cpu), TYPE_ARM_MAX_CPU))
++        && !cpu->has_el2
++        && kvm_arm_el2_supported()) {
++        /* scratch vCPU is created with EL2-enabled for -cpu host */
++        kvm_arm_rebase_host_idregs(cpu,
++                          kvm_arm_get_host_isar(false),
++                      kvm_arm_get_host_isar(true));
 +    }
 +
-     /* Apply named-model ID register overrides on top of KVM's defaults. */
-     kvm_arm_writeback_idregs(cpu);
-     write_list_to_kvmstate(cpu, KVM_PUT_FULL_STATE);
++    /*
++     * validate the cpu->isar.idregs[] against the ahcf->isar.idregs[],
++     * select ahcf based on the cpu->has_el2
++     */
++    if (!arm_idregs_validate_safe_rule(cpu,
++                             kvm_arm_get_host_isar(cpu->has_el2),
++                                  &err)) {
+         error_report_err(err);
+         return -EINVAL;
+     }
+diff --git a/target/arm/kvm_arm.h b/target/arm/kvm_arm.h
+index 750dbe1ef4..538f87e69e 100644
+--- a/target/arm/kvm_arm.h
++++ b/target/arm/kvm_arm.h
+@@ -129,11 +129,12 @@ void kvm_arm_destroy_scratch_host_vcpu(int *fdarray);
+ /**
+  * kvm_arm_set_cpu_features_from_host:
+  * @cpu: ARMCPU to set the features for
++ * @with_el2: probe the host with the EL2-enabled scratch vCPU view
+  *
+  * Set up the ARMCPU struct fields up to match the information probed
+  * from the host CPU.
+  */
+-void kvm_arm_set_cpu_features_from_host(ARMCPU *cpu);
++void kvm_arm_set_cpu_features_from_host(ARMCPU *cpu, bool with_el2);
+ 
+ /**
+  * kvm_arm_add_vcpu_properties:
+@@ -231,7 +232,7 @@ void kvm_arm_enable_mte(Object *cpuobj, Error **errp);
+ 
+ void arm_cpu_kvm_set_irq(void *arm_cpu, int irq, int level);
+ 
+-const ARMISARegisters *kvm_arm_get_host_isar(void);
++const ARMISARegisters *kvm_arm_get_host_isar(bool with_el2);
+ 
+ void arm_gic_cap_kvm_probe(GICCapability *v2, GICCapability *v3);
+ 
 -- 
 2.52.0
 
