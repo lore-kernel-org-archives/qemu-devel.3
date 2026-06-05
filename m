@@ -4,62 +4,86 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C001CCD6E5D
-	for <qemu-devel@archiver.kernel.org>; Fri,  5 Jun 2026 11:04:18 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 68D71CD6E74
+	for <qemu-devel@archiver.kernel.org>; Fri,  5 Jun 2026 11:07:30 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wVSL3-0007U7-Qq; Fri, 05 Jun 2026 07:03:45 -0400
+	id 1wVSO2-0008Hb-9q; Fri, 05 Jun 2026 07:06:50 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@mailo.com>) id 1wVSL1-0007To-Tt
- for qemu-devel@nongnu.org; Fri, 05 Jun 2026 07:03:43 -0400
-Received: from msg-4.mailo.com ([213.182.54.15] helo=mailo.com)
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@mailo.com>) id 1wVSL0-0004Vw-4U
- for qemu-devel@nongnu.org; Fri, 05 Jun 2026 07:03:43 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=mailo.com; s=mailo;
- t=1780657417; bh=HIUXZ23cJoL7z6YuNj8R5oW/YZPd37UXSmbGQ6EZYyE=;
- h=X-EA-Auth:Message-ID:Date:MIME-Version:Subject:To:Cc:References:
- From:In-Reply-To:Content-Type:Content-Transfer-Encoding;
- b=mqoX92qb7tb3HxMmIooarUHGmKh1LDiCvXfjWurOhF654grUS2vu6ot1vYueSVyBL
- 0T9vCIEgq9oIiZ0IrVdFXcfuJvhtjk7yDlU2BCuVF7Of7t1kpc6COc61v2LScuBlVV
- 6ecn9Vxgf5IduKa5h4ciItILVCRZXpnZwlrHRyeY=
-Received: by be1-7.in.mailobj.net [192.168.91.17] with ESMTP
- via ip-20.mailobj.net [213.182.54.20]
- Fri,  5 Jun 2026 13:03:37 +0200 (CEST)
-X-EA-Auth: 68YR+Nm7X3M+6/3G/mtPrTlMNBwrIzPzchj5pq9i1xdplMCPNoa472hdhApk6LXd+k1WA2w791bwPi9m5bZIw42N6lffw9f7
-Message-ID: <31f00a8d-87ca-4dfb-bd18-de2e2a6806a8@mailo.com>
-Date: Fri, 5 Jun 2026 13:03:36 +0200
+ (Exim 4.90_1) (envelope-from <qingwei.hu@bytedance.com>)
+ id 1wVSNv-0008GF-TD
+ for qemu-devel@nongnu.org; Fri, 05 Jun 2026 07:06:44 -0400
+Received: from mail-pl1-x632.google.com ([2607:f8b0:4864:20::632])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <qingwei.hu@bytedance.com>)
+ id 1wVSNt-0005uz-Sk
+ for qemu-devel@nongnu.org; Fri, 05 Jun 2026 07:06:43 -0400
+Received: by mail-pl1-x632.google.com with SMTP id
+ d9443c01a7336-2c0c1e0d00bso17380175ad.0
+ for <qemu-devel@nongnu.org>; Fri, 05 Jun 2026 04:06:41 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=bytedance.com; s=google; t=1780657600; x=1781262400; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:from:to:cc:subject:date:message-id:reply-to;
+ bh=4BOUEe+VamKGk6MRknmAp6o59Ee2hSdf7ohcP2aYG4I=;
+ b=TvK3GRuK91TLw+5AKl1JqhSn7oJ7gd9Z/Rw9JxCd/kuF51eIKMwGqydturUgS4e4DC
+ QiSdltLRYcaTij8yp4emdMjBDJZ8MTxmmJzSdPWpSEeQWUpw/gS1afN1S5/nSW7UK7pV
+ 3eDWdWo10wWZhKY0+jNty0eLqyBhRewZ9VPplTJY2u0nnUbwAsftlqId1UNmFvNZ/Ne4
+ 2NcACUgx+FxoqDf/CnzD9Kr9HUlKDtv3khTIMMoPNgdX5NfglBbhD2WBg9CdiemqouBH
+ o7r02F7Nz89Zxr0goaFfGuavmn14Jfd4rTnZzYtwqDeXAwzYuCJRBa8DBiXwpYOmLaXv
+ 79RA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1780657600; x=1781262400;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=4BOUEe+VamKGk6MRknmAp6o59Ee2hSdf7ohcP2aYG4I=;
+ b=rx1vCrPx9AGavfyUwJwRFWSMDi7BJNJTLP9RQr8pnKlHsxiCdsTow32IOdUfMyCrlI
+ ZBeoEiIfsSFtFZ9YwoB4uvhWSTWB+Aj+FT+dRAPc6wuaJcWPiVoATknLLgikfpHtYz1R
+ xTsD0GKEoyIy3A4HOtp8T4aeYoONWo1dg72c9HQuItOlsFFcAb51/QG/Hw/+t1jpf/mH
+ Os0gfzf6eHGVZnEYbVO8pKQx7FKa7XCJIL9aubtjrnrjoPwVYc6LW/BqkkngF0c7x3YN
+ jxUi6wLhfT/MyP1/AKUqPyDIr5PxU1qqQ53JjzgDfl2lUDpj1Ef66eeCjFiACt1TrkGa
+ JFVw==
+X-Gm-Message-State: AOJu0YyUUjNnMuIad0N1ETJev1eDIhIgi5cfGOYXOxchfUcFQCoCRDTd
+ +5P0E0FRhklYfEFvZLI64yWxD5028WEfGzNHwhsIVSnppsEGZ8ZHvxAtCU3SeVZu64tUTYv8Vdi
+ fZ7rPSSzghg==
+X-Gm-Gg: Acq92OHHzMGK0jAQ5hkwUeYZa1caTN5vYK8Zg6MtaAIVlIgZpc6qhyLUJfMSGT8s0up
+ se8pAg2TDWQYsgO3dm8XiBaHbOloWMplsdPp8GZhdPM0hh8dUbK1wwmE7oVQU+p3pqNZOMcLVxF
+ D0B2y8HdHAYkVN6PJ4KTH8NIgti4XJZmxTxRgFtrAIMdERVNnEBxexMenaDhWXD5idoUMKy3J+Z
+ Xfkg2qPpBL+dWFby7vbEukS+XZi2pt5e1VZyoM90avQhjnqzEDB+ieGvj/s2Ghz219SDXkMflBd
+ u1lEoUUTq4goPkWSKaNCi+2FYVbgHF0HJciEab2S5ziKN1qiZoj+KoyGroVNQymJ2Ibboh4aUuh
+ CIQzUtzsstmcI3ktHGYs9A+21BlzDsdlHRyFzqlErygsaaiMZEXxKVX9GVzAkrbnJ1eAHxc+R0v
+ sWsm13hZeypec/siu4lZKHcMkQSnP5r18mtTSwbM7S88/KRqAS/xQt
+X-Received: by 2002:a17:903:2c0e:b0:2b2:4d36:7aa with SMTP id
+ d9443c01a7336-2c1e85cdd1amr36937335ad.35.1780657599768; 
+ Fri, 05 Jun 2026 04:06:39 -0700 (PDT)
+Received: from n37-012-226.byted.org ([115.190.40.10])
+ by smtp.gmail.com with ESMTPSA id
+ d9443c01a7336-2c16629cf89sm88179605ad.56.2026.06.05.04.06.31
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Fri, 05 Jun 2026 04:06:35 -0700 (PDT)
+From: Qingwei Hu <qingwei.hu@bytedance.com>
+To: qemu-devel@nongnu.org
+Cc: qemu-riscv@nongnu.org, palmer@dabbelt.com, alistair.francis@wdc.com,
+ liwei1518@gmail.com, daniel.barboza@oss.qualcomm.com,
+ zhiwei_liu@linux.alibaba.com, chao.liu.zevorn@gmail.com,
+ jim.shu@sifive.com, Qingwei Hu <qingwei.hu@bytedance.com>
+Subject: [PATCH] hw/intc: riscv_aia: Skip reset for KVM irqchip
+Date: Fri,  5 Jun 2026 19:06:21 +0800
+Message-Id: <20260605110621.644997-1-qingwei.hu@bytedance.com>
+X-Mailer: git-send-email 2.39.5
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v9 0/4] hw/mem: add spm-memory device for Specific Purpose
- Memory
-Content-Language: en-US
-To: "Huang, FangSheng (Jerry)" <FangSheng.Huang@amd.com>
-Cc: qemu-devel@nongnu.org, gourry@gourry.net, Zhigang.Luo@amd.com,
- Lianjie.Shi@amd.com, Igor Mammedov <imammedo@redhat.com>,
- "David Hildenbrand (Arm)" <david@kernel.org>
-References: <20260602084447.1100554-1-FangSheng.Huang@amd.com>
- <39411489-1473-44ad-ad56-392aa27990ab@kernel.org>
- <5ff45049-d96e-428c-915d-fc14cbcb5e58@amd.com>
- <d4297ad2-4695-4634-a12e-80d65a34e79f@kernel.org>
- <c9707c49-59ee-458c-8469-12943bab90c2@mailo.com>
- <20260603151443.612d0e61@imammedo>
- <c7c8e578-86eb-4b74-b63b-6b81a76c4329@amd.com>
- <1d2381a2-7101-4039-b41a-d4cccbade4aa@mailo.com>
- <6f6559c8-f3c2-4d10-be9e-75985bcc934e@amd.com>
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@mailo.com>
-In-Reply-To: <6f6559c8-f3c2-4d10-be9e-75985bcc934e@amd.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=213.182.54.15; envelope-from=philmd@mailo.com;
- helo=mailo.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::632;
+ envelope-from=qingwei.hu@bytedance.com; helo=mail-pl1-x632.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_PASS=-0.001,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -76,27 +100,59 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 5/6/26 12:40, Huang, FangSheng (Jerry) wrote:
+The emulated APLIC and IMSIC state arrays are only allocated when QEMU
+handles the interrupt controller state itself. With KVM AIA/APLIC-IMSIC,
+the interrupt controller state is owned by the KVM in-kernel irqchip, so
+these emulated state arrays are not allocated.
 
-> Three items deviate from your suggestion:
-> 
->    - DEVICE_CATEGORY_MEMORY: the enum doesn't currently exist in
->      include/hw/core/qdev.h, and pc-dimm / nvdimm don't set any
->      device category here. v10 follows the pc-dimm precedent.
+The reset handlers added for APLIC and IMSIC still clear those arrays
+unconditionally. This makes qemu_system_reset(), which runs during machine
+creation, dereference NULL pointers with -machine virt,aia=aplic-imsic and
+KVM.
 
-Yes, this was a question for Thomas / Igor, do we want to categorize
-memory devices out of misc ones?
+Skip the emulated APLIC and IMSIC reset paths when the interrupt controller
+is handled by KVM. The emulated paths are unchanged for TCG and for
+configurations that use QEMU emulation.
 
-> 
->    - QAPI base refactor (id / memaddr / size at TYPE_MEMORY_DEVICE):
->      acknowledged as a pre-existing pattern across PCDIMM / NVDIMM /
->      VirtioMEM / SgxEPC / HvBalloon; out of scope for this series.
+Fixes: 99bfcd329a ("hw/intc: riscv_aplic: Add reset API to APLIC")
+Fixes: 766391483b ("hw/intc: riscv_imsic: Add reset API to IMSIC")
+Signed-off-by: Qingwei Hu <qingwei.hu@bytedance.com>
+---
+ hw/intc/riscv_aplic.c | 4 ++++
+ hw/intc/riscv_imsic.c | 4 ++++
+ 2 files changed, 8 insertions(+)
 
-Agreed.
-
-Regards,
-
-Phil.
-
+diff --git a/hw/intc/riscv_aplic.c b/hw/intc/riscv_aplic.c
+index c2c67c29e6..84606e9f3d 100644
+--- a/hw/intc/riscv_aplic.c
++++ b/hw/intc/riscv_aplic.c
+@@ -910,6 +910,10 @@ static void riscv_aplic_reset_enter(Object *obj, ResetType type)
+     RISCVAPLICState *aplic = RISCV_APLIC(obj);
+     int i;
+ 
++    if (!riscv_use_emulated_aplic(aplic->msimode)) {
++        return;
++    }
++
+     aplic->domaincfg = 0;
+     memset(aplic->sourcecfg, 0, sizeof(uint32_t) * aplic->num_irqs);
+     memset(aplic->target, 0, sizeof(uint32_t) * aplic->num_irqs);
+diff --git a/hw/intc/riscv_imsic.c b/hw/intc/riscv_imsic.c
+index ac59496c22..f1f23c3a3e 100644
+--- a/hw/intc/riscv_imsic.c
++++ b/hw/intc/riscv_imsic.c
+@@ -347,6 +347,10 @@ static void riscv_imsic_reset_enter(Object *obj, ResetType type)
+     RISCVIMSICState *imsic = RISCV_IMSIC(obj);
+     int i;
+ 
++    if (kvm_irqchip_in_kernel()) {
++        return;
++    }
++
+     memset(imsic->eidelivery, 0, sizeof(uint32_t) * imsic->num_pages);
+     memset(imsic->eithreshold, 0, sizeof(uint32_t) * imsic->num_pages);
+ 
+-- 
+2.47.3
 
 
