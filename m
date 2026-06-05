@@ -4,105 +4,68 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id CAC64CD6E5D
-	for <qemu-devel@archiver.kernel.org>; Fri,  5 Jun 2026 08:22:47 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6897BCD6E5D
+	for <qemu-devel@archiver.kernel.org>; Fri,  5 Jun 2026 08:24:51 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wVPp8-0004Wk-4A; Fri, 05 Jun 2026 04:22:38 -0400
+	id 1wVPqz-0006Sr-Fx; Fri, 05 Jun 2026 04:24:33 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <infra.ai.cloud@bitdeer.com>)
- id 1wVPp5-0004WF-Vw
- for qemu-devel@nongnu.org; Fri, 05 Jun 2026 04:22:36 -0400
-Received: from mail-lj1-x233.google.com ([2a00:1450:4864:20::233])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <infra.ai.cloud@bitdeer.com>)
- id 1wVPp3-0004CP-HV
- for qemu-devel@nongnu.org; Fri, 05 Jun 2026 04:22:35 -0400
-Received: by mail-lj1-x233.google.com with SMTP id
- 38308e7fff4ca-396779b9a7fso13848231fa.3
- for <qemu-devel@nongnu.org>; Fri, 05 Jun 2026 01:22:32 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1780647749; cv=none;
- d=google.com; s=arc-20240605;
- b=beMcfEj+mE5Pi1G2E32EGUzMo9cUxdDrxwPZZnEri0bglXhrcQVEvENAa3ubjUNuAH
- fdpeM8AbnfEP07FcybhAikYOhSWmcxVrfMXVvmzg+MS7JLru6TBNoB8dh1YJpebdkbid
- pW6HJIa8jKRmYUQ96lzP618KisCid1WEDDoauW5XZSx4I8fOc/c7b44wlgPeOkuawTDB
- Hb4SprqiP/t4X5LG2NGqUvl+0M7ys+sBmQrV5s10spRjbDaXEtm9UsC2i1x2m0fCKr3e
- t19jq5c5ZqCT275fAm2XJdqGrcSR9RZz70C+l40133H9Y2W7h48Gd9+mSp3CqnW9cY8H
- U3Rg==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
- s=arc-20240605; 
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:dkim-signature;
- bh=GpEHuE5kPK7Pr7bmO5Kq29IlE/AYkLhUV+YgYWTUjog=;
- fh=P5AvhEwpGW6PR/Vm2nnvPJX0qS7I1LrMms1RbUf8wfg=;
- b=jnP08zT/Z+FBdVLW/jK9KEO72pXxEs57nQFNKFEuZmzbbkWBwN9I9aO1D9nSwHi69H
- fay8brQpvJxT0sxSETl0RuMFCc2mFnH6SS/5A+djrXIqF+1YFozRI4tEsuvyfNIVUtwo
- 1dVjrSJL878a24o+pST1NeOTt2DAeqgnVJjVxOadUs8jwFCJMagrZNldK/dw0lYZ0//+
- 9xkOEnx+0KmdkCsrscghWeRxnctsv/cMjx6LY5pXl7fpOHo0cvZ0PA0VVXk4XldVV2Ij
- GmjaCE7VHS/YOqDFLCB+PJcZfE1UCUurkn3rFp3QhQ9h0lGm+guGxnW9uGYNpVfU+G1Y
- riTg==; darn=nongnu.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=bitdeer.com; s=google; t=1780647749; x=1781252549; darn=nongnu.org;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:from:to:cc:subject:date
- :message-id:reply-to;
- bh=GpEHuE5kPK7Pr7bmO5Kq29IlE/AYkLhUV+YgYWTUjog=;
- b=pq9WAeO1b/eaFPbRwS1yMMGxCJgKzDfDXqVLqpL+jq6obDpEKQ4EuI+fEDWQihcr4R
- FzE2qo3XZnZeNA3DbPidJx08KMKNSrzv0MigqgQksNhV+mxJXjaOzM3ULXCFAF7gUfP8
- oUoSWX1IrnSpGMD+kkUc0EFkPs4HYbr94s64q8lV0RiyFHpKdDw3mvcb5LnvvhCwFnBz
- wGh2UHlomPqx1z99OC/P80PaUCW+prYxG737CcJATIpDKin6susPiOpmGv0o+6Pq4kw/
- SW2iVc7sbLW90LWuIpfeFHViektZPICF+syOrxtpBNLEcHOxvsam6VdLkB9SxP3xj9wd
- DwJA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1780647749; x=1781252549;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to;
- bh=GpEHuE5kPK7Pr7bmO5Kq29IlE/AYkLhUV+YgYWTUjog=;
- b=OrG5QL9NJ33Nh9RZSYBQvzMAmsco+4VvpJx1AKfOeH+pCn5reU2WE+cRLuLNCuM/IG
- d3zw5X2uLuTzDSCqukJzMSKg6bAvcAwWAqWcsc95lyC2A/HfLgY3Ox6a4ERzuOpXXGUt
- pcFE5jcL4/LG+AP9qs8dZAM+5vBPsDcZFFq27wFm8Jg7OQ05NOGhRv3FJnZ/cljcWld8
- KGWV6VJ6M7gOCtDaCFd16pgvbPVow6sqdImFeCS2Sa7zV04Zb0f8vW8pltGh0J2Jaq4R
- 5YQuqRBqdr92ZhCerSsZ4oQPXC0bdW6yakUskT7iKVI0V5rxCpbHntgJdLEtlshnjLTe
- bDVQ==
-X-Forwarded-Encrypted: i=1;
- AFNElJ/bVbuBOnH7wsfTCrPeyLX6RG4/3746x55XUAtBNxvuZTd1qRTZWEj4RMvMH27gbdUdK0yIG8A1hLke@nongnu.org
-X-Gm-Message-State: AOJu0Yzy6X1nqP1giL99Yn57XyopNv6LfWvK0kGqUBflOY4jPw/j036i
- D8hb4NzINTQTvBV6pQLhP4Q557CdI/W2A0wcP1MIiffgWu+HCDrVrK1+gvxX8o4z7v5gUZNGtId
- 3IHJUHnQNd58xwwkGMffk6fwjYh6DagBYuGftmWUzgA==
-X-Gm-Gg: Acq92OGXL2eHBBktTn8Hdl7JSla9j63ihBjhruuiZwjFYDhEX3F99WCdcO2leWmtIEG
- YH1Jl71lVyiCEpqpxIH5Rdg5tzmzfG64LqNO591FAOBo1pFUh3mbjJM6wLnnZbD69DXIReCb8n5
- 1Nl03KpDPqiYsGSPPc8bpU4efPfXkv4z86jEUfa0hQHnZRftHBGraMYPVjnM74uuR7Vk7RMT7YM
- 0gBw5zYG53pWA9B79XwniRstbPDA9hXzOOZyBCIUYCr+qzUiT/GBJ1apoWrHYpzWEbpg0p3deSm
- RrEsIt58axSJv9Sw25T8
-X-Received: by 2002:a05:6512:3503:b0:5aa:7363:8219 with SMTP id
- 2adb3069b0e04-5aa87bbc36dmr719979e87.17.1780647749283; Fri, 05 Jun 2026
- 01:22:29 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <maobibo@loongson.cn>)
+ id 1wVPqx-0006Qt-8F
+ for qemu-devel@nongnu.org; Fri, 05 Jun 2026 04:24:31 -0400
+Received: from mail.loongson.cn ([114.242.206.163])
+ by eggs.gnu.org with esmtp (Exim 4.90_1)
+ (envelope-from <maobibo@loongson.cn>) id 1wVPqt-0004h4-8w
+ for qemu-devel@nongnu.org; Fri, 05 Jun 2026 04:24:30 -0400
+Received: from loongson.cn (unknown [10.40.46.54])
+ by gateway (Coremail) with SMTP id _____8BxT+q2hyJqnuMQAA--.45781S3;
+ Fri, 05 Jun 2026 16:24:22 +0800 (CST)
+Received: from fedora.loongson.cn (unknown [10.40.46.54])
+ by front1 (Coremail) with SMTP id qMiowJCxvsKuhyJqnLucAA--.34744S5;
+ Fri, 05 Jun 2026 16:24:22 +0800 (CST)
+From: Bibo Mao <maobibo@loongson.cn>
+To: Song Gao <gaosong@loongson.cn>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@mailo.com>,
+ Richard Henderson <richard.henderson@linaro.org>
+Cc: qemu-devel@nongnu.org, SignKirigami <prcups@krgm.moe>,
+ Hengyu Yu <yuhengyu25@mails.ucas.ac.cn>
+Subject: [PATCH v3 03/14] target/loongarch: Use sys_state in cpu_helper.c when
+ accessing CSR registers
+Date: Fri,  5 Jun 2026 16:25:41 +0800
+Message-ID: <20260605082552.175336-4-maobibo@loongson.cn>
+X-Mailer: git-send-email 2.54.0
+In-Reply-To: <20260605082552.175336-1-maobibo@loongson.cn>
+References: <20260605082552.175336-1-maobibo@loongson.cn>
 MIME-Version: 1.0
-References: <20260604070029.34982-1-guobin@linux.alibaba.com>
-In-Reply-To: <20260604070029.34982-1-guobin@linux.alibaba.com>
-From: Hy Man <infra.ai.cloud@bitdeer.com>
-Date: Fri, 5 Jun 2026 16:22:18 +0800
-X-Gm-Features: AVVi8CehWLP43yLhYl0QqKHuUEMtibp5cV8zT-_XbebMEoocv3nCz5FputHBJj8
-Message-ID: <CAFWXh4w==tF6VA1QyHWRqBX0hBE2R1Ko7u2Expwn+xv7=Fed2w@mail.gmail.com>
-Subject: Re: [PATCH v2] accel/kvm: event-driven wakeup for dirty ring reaper
- thread
-To: Bin Guo <guobin@linux.alibaba.com>
-Cc: Paolo Bonzini <pbonzini@redhat.com>, kvm@vger.kernel.org,
- qemu-devel@nongnu.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::233;
- envelope-from=infra.ai.cloud@bitdeer.com; helo=mail-lj1-x233.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+X-CM-TRANSID: qMiowJCxvsKuhyJqnLucAA--.34744S5
+X-CM-SenderInfo: xpdruxter6z05rqj20fqof0/
+X-Coremail-Antispam: 1Uk129KBj93XoWxCw43ZrWkCr45Ar48CrWDKFX_yoWrXry7pF
+ W8KrWSvr1UGFZ7Aay3K398t3W3XF4Yyws7W3ZIkw1Fvr1DW39agrW8WrnrCr17A345Ca1U
+ AFnrArWF9F17GFgCm3ZEXasCq-sJn29KB7ZKAUJUUUU7529EdanIXcx71UUUUU7KY7ZEXa
+ sCq-sGcSsGvfJ3Ic02F40EFcxC0VAKzVAqx4xG6I80ebIjqfuFe4nvWSU5nxnvy29KBjDU
+ 0xBIdaVrnRJUUU9Fb4IE77IF4wAFF20E14v26r1j6r4UM7CY07I20VC2zVCF04k26cxKx2
+ IYs7xG6rWj6s0DM7CIcVAFz4kK6r126r13M28lY4IEw2IIxxk0rwA2F7IY1VAKz4vEj48v
+ e4kI8wA2z4x0Y4vE2Ix0cI8IcVAFwI0_Xr0_Ar1l84ACjcxK6xIIjxv20xvEc7CjxVAFwI
+ 0_Gr0_Cr1l84ACjcxK6I8E87Iv67AKxVW8Jr0_Cr1UM28EF7xvwVC2z280aVCY1x0267AK
+ xVW8Jr0_Cr1UM2kKe7AKxVWUXVWUAwAS0I0E0xvYzxvE52x082IY62kv0487Mc804VCY07
+ AIYIkI8VC2zVCFFI0UMc02F40EFcxC0VAKzVAqx4xG6I80ewAv7VC0I7IYx2IY67AKxVWU
+ tVWrXwAv7VC2z280aVAFwI0_Gr0_Cr1lOx8S6xCaFVCjc4AY6r1j6r4UM4x0Y48IcxkI7V
+ AKI48JMxAIw28IcxkI7VAKI48JMxC20s026xCaFVCjc4AY6r1j6r4UMxCIbckI1I0E14v2
+ 6r1Y6r17MI8I3I0E5I8CrVAFwI0_Jr0_Jr4lx2IqxVCjr7xvwVAFwI0_JrI_JrWlx4CE17
+ CEb7AF67AKxVWUAVWUtwCIc40Y0x0EwIxGrwCI42IY6xIIjxv20xvE14v26r4j6ryUMIIF
+ 0xvE2Ix0cI8IcVCY1x0267AKxVW8JVWxJwCI42IY6xAIw20EY4v20xvaj40_Jr0_JF4lIx
+ AIcVC2z280aVAFwI0_Gr0_Cr1lIxAIcVC2z280aVCY1x0267AKxVW8JVW8JrUvcSsGvfC2
+ KfnxnUUI43ZEXa7IU8XyCJUUUUU==
+Received-SPF: pass client-ip=114.242.206.163; envelope-from=maobibo@loongson.cn;
+ helo=mail.loongson.cn
+X-Spam_score_int: -18
+X-Spam_score: -1.9
+X-Spam_bar: -
+X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -119,209 +82,106 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Reviewed-by: Hyman Huang <infra.ai.cloud@bitdeer.com>
+When accessing CSR register in file cpu_helper.c, use sys_state rather
+than env.
 
-On Thu, Jun 4, 2026 at 3:00=E2=80=AFPM Bin Guo <guobin@linux.alibaba.com> w=
-rote:
->
-> The reaper polls with sleep(1) (TODO in the code) and only notices
-> dirty-limit teardown at the next 1s tick.
->
-> Replace the sleep with qemu_poll_ns() on an EventNotifier, kicked
-> from dirtylimit_state_finalize() after dirtylimit_state has been
-> cleared.  The kick must follow the NULL assignment: kicking earlier
-> wakes the reaper while dirtylimit_in_service() still returns true,
-> so it just loops back to wait.  A 1s fallback timeout remains as a
-> liveness backstop.
->
-> 20 set-/cancel-vcpu-dirty-limit cycles via QMP, |reaper-wake -
-> cancel-ack| measured with strace on the reaper TID:
->
->     before: median 255 ms, max 502 ms
->     after:  median 0.6 ms, max  27 ms
->
-> kvm_dirty_ring_reaper_init() returns int again (was made void in
-> commit 43a5e377f4) to propagate event_notifier_init() failure.
->
-> Signed-off-by: Bin Guo <guobin@linux.alibaba.com>
-> ---
-> Changes in v2:
-> - Fix compilation error: kvm_init() has no Error **errp parameter, so
->   kvm_dirty_ring_reaper_init() now uses error_report() directly and
->   no longer accepts an errp argument.
-> - Remove the kick from kvm_cpu_exec() KVM_EXIT_DIRTY_RING_FULL handler:
->   it already reaps synchronously (all vCPUs or the ring-full one), so
->   a background reaper kick would only be redundant or a no-op.
-> - Move kick site from dirtylimit_change(false) to
->   dirtylimit_state_finalize() after dirtylimit_state =3D NULL, ensuring
->   the reaper actually proceeds past the dirtylimit_in_service() check.
->
->  accel/kvm/kvm-all.c      | 42 ++++++++++++++++++++++++++++++++++------
->  accel/stubs/kvm-stub.c   |  4 ++++
->  include/system/kvm.h     |  7 +++++++
->  include/system/kvm_int.h |  3 +++
->  system/dirtylimit.c      |  2 ++
->  5 files changed, 52 insertions(+), 6 deletions(-)
->
-> diff --git a/accel/kvm/kvm-all.c b/accel/kvm/kvm-all.c
-> index 96f90ebb24..be005832bc 100644
-> --- a/accel/kvm/kvm-all.c
-> +++ b/accel/kvm/kvm-all.c
-> @@ -1754,6 +1754,8 @@ static void kvm_set_phys_mem(KVMMemoryListener *kml=
-,
->      } while (size);
->  }
->
-> +#define KVM_DIRTY_RING_REAPER_FALLBACK_NS  (1 * NANOSECONDS_PER_SECOND)
-> +
->  static void *kvm_dirty_ring_reaper_thread(void *data)
->  {
->      KVMState *s =3D data;
-> @@ -1764,12 +1766,18 @@ static void *kvm_dirty_ring_reaper_thread(void *d=
-ata)
->      trace_kvm_dirty_ring_reaper("init");
->
->      while (true) {
-> +        GPollFD pfd =3D {
-> +            .fd =3D event_notifier_get_fd(&r->reaper_notifier),
-> +            .events =3D G_IO_IN,
-> +        };
-> +
->          r->reaper_state =3D KVM_DIRTY_RING_REAPER_WAIT;
->          trace_kvm_dirty_ring_reaper("wait");
-> -        /*
-> -         * TODO: provide a smarter timeout rather than a constant?
-> -         */
-> -        sleep(1);
-> +
-> +        qemu_poll_ns(&pfd, 1, KVM_DIRTY_RING_REAPER_FALLBACK_NS);
-> +
-> +        /* Drain unconditionally so a stale event can't spin the next lo=
-op. */
-> +        event_notifier_test_and_clear(&r->reaper_notifier);
->
->          /* keep sleeping so that dirtylimit not be interfered by reaper =
-*/
->          if (dirtylimit_in_service()) {
-> @@ -1789,13 +1797,32 @@ static void *kvm_dirty_ring_reaper_thread(void *d=
-ata)
->      g_assert_not_reached();
->  }
->
-> -static void kvm_dirty_ring_reaper_init(KVMState *s)
-> +static int kvm_dirty_ring_reaper_init(KVMState *s)
->  {
->      struct KVMDirtyRingReaper *r =3D &s->reaper;
-> +    int ret;
-> +
-> +    ret =3D event_notifier_init(&r->reaper_notifier, 0);
-> +    if (ret < 0) {
-> +        error_report("Failed to initialize dirty ring reaper notifier: %=
-s",
-> +                     strerror(-ret));
-> +        return ret;
-> +    }
->
->      qemu_thread_create(&r->reaper_thr, "kvm-reaper",
->                         kvm_dirty_ring_reaper_thread,
->                         s, QEMU_THREAD_JOINABLE);
-> +    return 0;
-> +}
-> +
-> +void kvm_dirty_ring_reaper_kick(void)
-> +{
-> +    KVMState *s =3D kvm_state;
-> +
-> +    if (!s || !s->kvm_dirty_ring_size) {
-> +        return;
-> +    }
-> +    event_notifier_set(&s->reaper.reaper_notifier);
->  }
->
->  static int kvm_dirty_ring_init(KVMState *s)
-> @@ -3097,7 +3124,10 @@ static int kvm_init(AccelState *as, MachineState *=
-ms)
->      }
->
->      if (s->kvm_dirty_ring_size) {
-> -        kvm_dirty_ring_reaper_init(s);
-> +        ret =3D kvm_dirty_ring_reaper_init(s);
-> +        if (ret < 0) {
-> +            goto err;
-> +        }
->      }
->
->      if (kvm_check_extension(kvm_state, KVM_CAP_BINARY_STATS_FD)) {
-> diff --git a/accel/stubs/kvm-stub.c b/accel/stubs/kvm-stub.c
-> index c4617caac6..b878598552 100644
-> --- a/accel/stubs/kvm-stub.c
-> +++ b/accel/stubs/kvm-stub.c
-> @@ -134,6 +134,10 @@ uint32_t kvm_dirty_ring_size(void)
->      return 0;
->  }
->
-> +void kvm_dirty_ring_reaper_kick(void)
-> +{
-> +}
-> +
->  bool kvm_hwpoisoned_mem(void)
->  {
->      return false;
-> diff --git a/include/system/kvm.h b/include/system/kvm.h
-> index 5fa33eddda..e127a5eb37 100644
-> --- a/include/system/kvm.h
-> +++ b/include/system/kvm.h
-> @@ -553,6 +553,13 @@ bool kvm_dirty_ring_enabled(void);
->
->  uint32_t kvm_dirty_ring_size(void);
->
-> +/**
-> + * kvm_dirty_ring_reaper_kick - wake the background dirty ring reaper.
-> + *
-> + * Safe from any thread; no-op when the dirty ring is not in use.
-> + */
-> +void kvm_dirty_ring_reaper_kick(void);
-> +
->  void kvm_mark_guest_state_protected(void);
->
->  /**
-> diff --git a/include/system/kvm_int.h b/include/system/kvm_int.h
-> index 0876aac938..c14ebc927f 100644
-> --- a/include/system/kvm_int.h
-> +++ b/include/system/kvm_int.h
-> @@ -12,6 +12,7 @@
->  #include "system/memory.h"
->  #include "qapi/qapi-types-common.h"
->  #include "qemu/accel.h"
-> +#include "qemu/event_notifier.h"
->  #include "qemu/queue.h"
->  #include "system/kvm.h"
->  #include "accel/accel-ops.h"
-> @@ -100,6 +101,8 @@ struct KVMDirtyRingReaper {
->      QemuThread reaper_thr;
->      volatile uint64_t reaper_iteration; /* iteration number of reaper th=
-r */
->      volatile enum KVMDirtyRingReaperState reaper_state; /* reap thr stat=
-e */
-> +    /* Wakeup channel: kicked when dirty-limit is torn down. */
-> +    EventNotifier reaper_notifier;
->  };
->  struct KVMState
->  {
-> diff --git a/system/dirtylimit.c b/system/dirtylimit.c
-> index c934ceb0de..a33256ade7 100644
-> --- a/system/dirtylimit.c
-> +++ b/system/dirtylimit.c
-> @@ -239,6 +239,8 @@ void dirtylimit_state_finalize(void)
->      g_free(dirtylimit_state);
->      dirtylimit_state =3D NULL;
->
-> +    kvm_dirty_ring_reaper_kick();
-> +
->      trace_dirtylimit_state_finalize();
->  }
->
-> --
-> 2.50.1 (Apple Git-155)
->
+Signed-off-by: Bibo Mao <maobibo@loongson.cn>
+Reviewed-by: Philippe Mathieu-Daudé <philmd@mailo.com>
+---
+ target/loongarch/cpu_helper.c | 41 +++++++++++++++++++----------------
+ 1 file changed, 22 insertions(+), 19 deletions(-)
+
+diff --git a/target/loongarch/cpu_helper.c b/target/loongarch/cpu_helper.c
+index eb9684a4a1..7f0e64a873 100644
+--- a/target/loongarch/cpu_helper.c
++++ b/target/loongarch/cpu_helper.c
+@@ -20,27 +20,29 @@
+ void get_dir_base_width(CPULoongArchState *env, uint64_t *dir_base,
+                         uint64_t *dir_width, unsigned int level)
+ {
++    CPUSysState *sys = env_sys(env);
++
+     switch (level) {
+     case 1:
+-        *dir_base = FIELD_EX64(env->CSR_PWCL, CSR_PWCL, DIR1_BASE);
+-        *dir_width = FIELD_EX64(env->CSR_PWCL, CSR_PWCL, DIR1_WIDTH);
++        *dir_base = FIELD_EX64(sys->CSR_PWCL, CSR_PWCL, DIR1_BASE);
++        *dir_width = FIELD_EX64(sys->CSR_PWCL, CSR_PWCL, DIR1_WIDTH);
+         break;
+     case 2:
+-        *dir_base = FIELD_EX64(env->CSR_PWCL, CSR_PWCL, DIR2_BASE);
+-        *dir_width = FIELD_EX64(env->CSR_PWCL, CSR_PWCL, DIR2_WIDTH);
++        *dir_base = FIELD_EX64(sys->CSR_PWCL, CSR_PWCL, DIR2_BASE);
++        *dir_width = FIELD_EX64(sys->CSR_PWCL, CSR_PWCL, DIR2_WIDTH);
+         break;
+     case 3:
+-        *dir_base = FIELD_EX64(env->CSR_PWCH, CSR_PWCH, DIR3_BASE);
+-        *dir_width = FIELD_EX64(env->CSR_PWCH, CSR_PWCH, DIR3_WIDTH);
++        *dir_base = FIELD_EX64(sys->CSR_PWCH, CSR_PWCH, DIR3_BASE);
++        *dir_width = FIELD_EX64(sys->CSR_PWCH, CSR_PWCH, DIR3_WIDTH);
+         break;
+     case 4:
+-        *dir_base = FIELD_EX64(env->CSR_PWCH, CSR_PWCH, DIR4_BASE);
+-        *dir_width = FIELD_EX64(env->CSR_PWCH, CSR_PWCH, DIR4_WIDTH);
++        *dir_base = FIELD_EX64(sys->CSR_PWCH, CSR_PWCH, DIR4_BASE);
++        *dir_width = FIELD_EX64(sys->CSR_PWCH, CSR_PWCH, DIR4_WIDTH);
+         break;
+     default:
+         /* level may be zero for ldpte */
+-        *dir_base = FIELD_EX64(env->CSR_PWCL, CSR_PWCL, PTBASE);
+-        *dir_width = FIELD_EX64(env->CSR_PWCL, CSR_PWCL, PTWIDTH);
++        *dir_base = FIELD_EX64(sys->CSR_PWCL, CSR_PWCL, PTBASE);
++        *dir_width = FIELD_EX64(sys->CSR_PWCL, CSR_PWCL, PTWIDTH);
+         break;
+     }
+ }
+@@ -156,13 +158,13 @@ TLBRet loongarch_ptw(CPULoongArchState *env, MMUContext *context,
+     vaddr address;
+     TLBRet ret;
+     MemTxResult ret1;
+-
++    CPUSysState *sys = env_sys(env);
+ 
+     address = context->addr;
+     if ((address >> 63) & 0x1) {
+-        base = env->CSR_PGDH;
++        base = sys->CSR_PGDH;
+     } else {
+-        base = env->CSR_PGDL;
++        base = sys->CSR_PGDL;
+     }
+     base &= palen_mask;
+ 
+@@ -315,8 +317,9 @@ TLBRet get_physical_address(CPULoongArchState *env, MMUContext *context,
+     int kernel_mode = mmu_idx == MMU_KERNEL_IDX;
+     uint32_t plv, base_c, base_v;
+     int64_t addr_high;
+-    uint8_t da = FIELD_EX64(env->CSR_CRMD, CSR_CRMD, DA);
+-    uint8_t pg = FIELD_EX64(env->CSR_CRMD, CSR_CRMD, PG);
++    CPUSysState *sys = env_sys(env);
++    uint8_t da = FIELD_EX64(sys->CSR_CRMD, CSR_CRMD, DA);
++    uint8_t pg = FIELD_EX64(sys->CSR_CRMD, CSR_CRMD, PG);
+     vaddr address;
+ 
+     /* Check PG and DA */
+@@ -337,12 +340,12 @@ TLBRet get_physical_address(CPULoongArchState *env, MMUContext *context,
+     /* Check direct map window */
+     for (int i = 0; i < 4; i++) {
+         if (is_la64(env)) {
+-            base_c = FIELD_EX64(env->CSR_DMW[i], CSR_DMW_64, VSEG);
++            base_c = FIELD_EX64(sys->CSR_DMW[i], CSR_DMW_64, VSEG);
+         } else {
+-            base_c = FIELD_EX64(env->CSR_DMW[i], CSR_DMW_32, VSEG);
++            base_c = FIELD_EX64(sys->CSR_DMW[i], CSR_DMW_32, VSEG);
+         }
+-        if ((plv & env->CSR_DMW[i]) && (base_c == base_v)) {
+-            context->physical = dmw_va2pa(env, address, env->CSR_DMW[i]);
++        if ((plv & sys->CSR_DMW[i]) && (base_c == base_v)) {
++            context->physical = dmw_va2pa(env, address, sys->CSR_DMW[i]);
+             context->prot = PAGE_READ | PAGE_WRITE | PAGE_EXEC;
+             context->mmu_index = MMU_DA_IDX;
+             return TLBRET_MATCH;
+-- 
+2.54.0
+
 
