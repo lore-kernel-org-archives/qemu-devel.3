@@ -4,69 +4,115 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id AF6E2CD6E7B
-	for <qemu-devel@archiver.kernel.org>; Fri,  5 Jun 2026 08:25:46 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 99EC2CD6E5D
+	for <qemu-devel@archiver.kernel.org>; Fri,  5 Jun 2026 08:30:35 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wVPr2-0006UK-7L; Fri, 05 Jun 2026 04:24:36 -0400
+	id 1wVPwb-0002Ez-K1; Fri, 05 Jun 2026 04:30:21 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <maobibo@loongson.cn>)
- id 1wVPqx-0006RY-PA
- for qemu-devel@nongnu.org; Fri, 05 Jun 2026 04:24:31 -0400
-Received: from mail.loongson.cn ([114.242.206.163])
- by eggs.gnu.org with esmtp (Exim 4.90_1)
- (envelope-from <maobibo@loongson.cn>) id 1wVPqu-0004h6-Cb
- for qemu-devel@nongnu.org; Fri, 05 Jun 2026 04:24:31 -0400
-Received: from loongson.cn (unknown [10.40.46.54])
- by gateway (Coremail) with SMTP id _____8Dxhum2hyJqnOMQAA--.46316S3;
- Fri, 05 Jun 2026 16:24:22 +0800 (CST)
-Received: from fedora.loongson.cn (unknown [10.40.46.54])
- by front1 (Coremail) with SMTP id qMiowJCxvsKuhyJqnLucAA--.34744S4;
- Fri, 05 Jun 2026 16:24:22 +0800 (CST)
-From: Bibo Mao <maobibo@loongson.cn>
-To: Song Gao <gaosong@loongson.cn>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@mailo.com>,
- Richard Henderson <richard.henderson@linaro.org>
-Cc: qemu-devel@nongnu.org, SignKirigami <prcups@krgm.moe>,
- Hengyu Yu <yuhengyu25@mails.ucas.ac.cn>
-Subject: [PATCH v3 02/14] target/loongarch: Use sys_state in cpu.c when
- accessing CSR registers
-Date: Fri,  5 Jun 2026 16:25:40 +0800
-Message-ID: <20260605082552.175336-3-maobibo@loongson.cn>
-X-Mailer: git-send-email 2.54.0
-In-Reply-To: <20260605082552.175336-1-maobibo@loongson.cn>
-References: <20260605082552.175336-1-maobibo@loongson.cn>
+ (Exim 4.90_1) (envelope-from <marcandre.lureau@gmail.com>)
+ id 1wVPwY-0002Ek-OK
+ for qemu-devel@nongnu.org; Fri, 05 Jun 2026 04:30:18 -0400
+Received: from mail-dy1-x132c.google.com ([2607:f8b0:4864:20::132c])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <marcandre.lureau@gmail.com>)
+ id 1wVPwW-0006aa-S0
+ for qemu-devel@nongnu.org; Fri, 05 Jun 2026 04:30:18 -0400
+Received: by mail-dy1-x132c.google.com with SMTP id
+ 5a478bee46e88-304d0ac5e3cso2831322eec.0
+ for <qemu-devel@nongnu.org>; Fri, 05 Jun 2026 01:30:15 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1780648214; cv=none;
+ d=google.com; s=arc-20240605;
+ b=OGSi9FnWES7nWhL+yq+iRCWMM+pqP20+uG1vb90Pgrp2elxp4LN3gzkA2wQMIV6N7w
+ 7T36JR8Qrw5h6qJFyhC5GR0BPZb4QLWQf7KThN/DTBslEin+Dsptu3VzflBsapBGUri9
+ iEU1pF+p89IDOqSuRlUaN8si5sHA6994UF7l6MEA4SzcYy+gptVIlx7PnSlXIWmg5cLV
+ 0x9xXOnBdPA0ho4jP924jRaodmcuPU/cvyMJRMrmwtRRADccb4A1ea6xaYR7Mco8ogOc
+ 8dq3uBvQYOx8OUiEJ8kzzRauguAZMl7hzyTXIBZeRzDVuFzUCJYNC87R1tPoyENvHQF/
+ FEVg==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
+ s=arc-20240605; 
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:dkim-signature;
+ bh=Gug/6neEE3H7MJPsoEVfLFTA/OYfPi0vxIgu6Xly6KY=;
+ fh=HeCjC7wjcae/jEorhX/Uph6IOJ9PtkUbUvjv0IqhXQU=;
+ b=JU3q1WtogqwPCrl4icf16NpIFvkLTLRcsrYdQTZkqbLEaaPGs16yePCC/ho6i+1bZh
+ C0hCOJLzbH1rCEXQ9QzGSnrqtG3EmAoN7VA5UJMzKYlf5y4RikcCgfkiR/mykEZgLWep
+ ywkjsl6nwGtuYJ8uXQXAm+PNTtcriYHQROsA8iFOgvLZ2CoqkQkp/q2mQRx9qB0uixdN
+ sdXgelDjvOqrlkhmmL6NBJKcjWvFx7WmNyb/bsNPJPc/LOL5ZtfYAJT7VvKiTWJkglza
+ XUzMjlOzWCQDpc9wAPDUqCQYQDu0HPTT6+vSYkskee0DWDkXOeqsOgm8UUQW/yy5/onF
+ LJNg==; darn=nongnu.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=redhat.com; s=google; t=1780648214; x=1781253014; darn=nongnu.org;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=Gug/6neEE3H7MJPsoEVfLFTA/OYfPi0vxIgu6Xly6KY=;
+ b=bjPPMcQHI13Q4LLr1wavBXvtOnJ3U6T9hEEvV0OuAtaCwLVvrS6Z6jBRWLN8y6Llfp
+ FdJ6Y0CANr8O2/drIlPlr6KCJ/yRBll9dIRPbK0QhoqD0P6xqZ0ErZDCNHjyd2V8YQhR
+ N+HK/vJx/mcyEmRkOorUAxVz+Rze1rLMxkdEvktVQhzDaDHhEst/OreXf97eLoqs9JAm
+ C6mmWj4EQ10Ftq+Hm6tPytHEmeLix293Ieb/toPjkakZFxQwJ5NorsOavnFitxDgoJlg
+ bZrVGqDVprL+4kbKR56mwC5MaYH2PyLwgNyj2Q3/tif4gDokXhbHU0B30nt+SfvHOVOU
+ U9jw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1780648214; x=1781253014;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=Gug/6neEE3H7MJPsoEVfLFTA/OYfPi0vxIgu6Xly6KY=;
+ b=rgznahnHZIAaiRrGix4MqdXH5zUTGOfpTap3hsR3uQgjBPEZoZUk2GIc1c6NwEU91Z
+ jW6gpsRD2yHSH8kROBOEgzUXzSdFnzYYlc4KUEUd5c3/i1kLvzdvyywdk17d+D4LDiDn
+ MdcVQsyup3qVdpYyRTC95fxzuQA2wv3Hxn3S7T+uYCwxzAwS5CMNEuoTv/maq/konwhQ
+ aizVpbJTPKYR/K6HkdOpxQXDKd0r9GZVt3Q4kejvd2IGL7+jbMp7tt9xThp4dFqLyfat
+ dVKLcJbxxnGMDbzxynPC4uCYpScpp4vJetxrofiD1TmxqU/NHuK1IbSXaeu4EKZPVKvz
+ K6YA==
+X-Gm-Message-State: AOJu0YwpgwKmnAHxGNQrogmukSgli6mA03LobG3htdQvbGwpBrQGvEFm
+ XZTIiuT1kmB5V5bD+q//I07fLq0JWRJcx/5Dy6LS9ZejC7N2q7UlbvC8vLUdKI/k4/eXkFGOzy5
+ jKLa1WoDys/WsOuG1q8poZ4f6oyF9hg8=
+X-Gm-Gg: Acq92OECZDubKpoAlEMHrXiBIpAB6gby3sn/rSaPHKlohJc2yYWMzDvJDVNGXVPBPsF
+ MAoidMWPG3OgrRdE8f6ghONFZeGdet4GVLFdIKTgBVSppiUQ/y+7t9M54sKwJJZnGhl5GCf/E2a
+ NMNGCqQRosOHmkmiMa1YS6dbZkrcb2ZEhUbOgUQujgeEpDfEPZ1aeoRnwtnQAoNjUOlAOy5LDz6
+ okoRraG8FBsboTgg0mvn4gD2bVV4UyJWgSCmkPv8+WfI0dekoPsg/cLgvRBEms7+jdSlqMz7Quz
+ fdT43dUTO1Lgw2FDRwXRVZJJ8QdPhVg+DEdJ+8LTieVB/LfEFA==
+X-Received: by 2002:a05:7301:9e41:b0:2ea:ed3e:13b7 with SMTP id
+ 5a478bee46e88-3077aee8674mr1145917eec.7.1780648214411; Fri, 05 Jun 2026
+ 01:30:14 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-X-CM-TRANSID: qMiowJCxvsKuhyJqnLucAA--.34744S4
-X-CM-SenderInfo: xpdruxter6z05rqj20fqof0/
-X-Coremail-Antispam: 1Uk129KBj93XoW3GrW7Zw1UXr18CrW5Kw15trc_yoWfKrW5pF
- 4UKFWqyw15Grs7A343Ja98tw13Zr1xZwn7A3sxCr1Y9F9rXr1fXFWkWr1xGFnrAr1ruF4x
- ZFnrJFW8tF4DAFbCm3ZEXasCq-sJn29KB7ZKAUJUUUU7529EdanIXcx71UUUUU7KY7ZEXa
- sCq-sGcSsGvfJ3Ic02F40EFcxC0VAKzVAqx4xG6I80ebIjqfuFe4nvWSU5nxnvy29KBjDU
- 0xBIdaVrnRJUUU9Fb4IE77IF4wAFF20E14v26r1j6r4UM7CY07I20VC2zVCF04k26cxKx2
- IYs7xG6rWj6s0DM7CIcVAFz4kK6r126r13M28lY4IEw2IIxxk0rwA2F7IY1VAKz4vEj48v
- e4kI8wA2z4x0Y4vE2Ix0cI8IcVAFwI0_Gr0_Xr1l84ACjcxK6xIIjxv20xvEc7CjxVAFwI
- 0_Gr0_Cr1l84ACjcxK6I8E87Iv67AKxVW8Jr0_Cr1UM28EF7xvwVC2z280aVCY1x0267AK
- xVW8Jr0_Cr1UM2kKe7AKxVWUXVWUAwAS0I0E0xvYzxvE52x082IY62kv0487Mc804VCY07
- AIYIkI8VC2zVCFFI0UMc02F40EFcxC0VAKzVAqx4xG6I80ewAv7VC0I7IYx2IY67AKxVWU
- tVWrXwAv7VC2z280aVAFwI0_Gr0_Cr1lOx8S6xCaFVCjc4AY6r1j6r4UM4x0Y48IcxkI7V
- AKI48JMxAIw28IcxkI7VAKI48JMxC20s026xCaFVCjc4AY6r1j6r4UMxCIbckI1I0E14v2
- 6r1Y6r17MI8I3I0E5I8CrVAFwI0_Jr0_Jr4lx2IqxVCjr7xvwVAFwI0_JrI_JrWlx4CE17
- CEb7AF67AKxVWUAVWUtwCIc40Y0x0EwIxGrwCI42IY6xIIjxv20xvE14v26r4j6ryUMIIF
- 0xvE2Ix0cI8IcVCY1x0267AKxVW8JVWxJwCI42IY6xAIw20EY4v20xvaj40_Jr0_JF4lIx
- AIcVC2z280aVAFwI0_Gr0_Cr1lIxAIcVC2z280aVCY1x0267AKxVW8JVW8JrUvcSsGvfC2
- KfnxnUUI43ZEXa7IU8XyCJUUUUU==
-Received-SPF: pass client-ip=114.242.206.163; envelope-from=maobibo@loongson.cn;
- helo=mail.loongson.cn
-X-Spam_score_int: -18
-X-Spam_score: -1.9
+References: <20260604231118.1584889-1-peterx@redhat.com>
+ <20260604231118.1584889-5-peterx@redhat.com>
+In-Reply-To: <20260604231118.1584889-5-peterx@redhat.com>
+From: =?UTF-8?B?TWFyYy1BbmRyw6kgTHVyZWF1?= <marcandre.lureau@redhat.com>
+Date: Fri, 5 Jun 2026 12:30:01 +0400
+X-Gm-Features: AVVi8CcfXaa_G_jpC_lsddc1rbjmT_NCLtwp5738kgP78nQVkkfss3SWVkCk4P8
+Message-ID: <CAJ+F1CLLOd0YUkaQifbzn5vDDh28UAv2=8Z3vpb9BNRYd-JYaQ@mail.gmail.com>
+Subject: Re: [PATCH 4/4] migration: Remove dependency to TYPE_DEVICE
+To: Peter Xu <peterx@redhat.com>
+Cc: qemu-devel@nongnu.org, Fabiano Rosas <farosas@suse.de>, 
+ Juraj Marcin <jmarcin@redhat.com>, 
+ Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>,
+ =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>, 
+ Sana Sharma <sansshar@redhat.com>, Eric Blake <eblake@redhat.com>, 
+ Markus Armbruster <armbru@redhat.com>, Kevin Wolf <kwolf@redhat.com>, 
+ Paolo Bonzini <pbonzini@redhat.com>,
+ =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@mailo.com>, 
+ Mark Cave-Ayland <mark.caveayland@nutanix.com>,
+ Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>, 
+ =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>, 
+ "Dr . David Alan Gilbert" <dave@treblig.org>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2607:f8b0:4864:20::132c;
+ envelope-from=marcandre.lureau@gmail.com; helo=mail-dy1-x132c.google.com
+X-Spam_score_int: -16
+X-Spam_score: -1.7
 X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001, UPPERCASE_50_75=0.008 autolearn=no autolearn_force=no
+X-Spam_report: (-1.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, FREEMAIL_FORGED_FROMDOMAIN=0.001,
+ FREEMAIL_FROM=0.001, HEADER_FROM_DIFFERENT_DOMAINS=0.249,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -82,224 +128,106 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-When accessing CSR register in file cpu.c, use sys_state rather than
-env.
+Hi
 
-Signed-off-by: Bibo Mao <maobibo@loongson.cn>
-Reviewed-by: Philippe Mathieu-Daudé <philmd@mailo.com>
----
- target/loongarch/cpu.c | 114 ++++++++++++++++++++++-------------------
- target/loongarch/cpu.h |   5 +-
- 2 files changed, 63 insertions(+), 56 deletions(-)
+On Fri, Jun 5, 2026 at 3:12=E2=80=AFAM Peter Xu <peterx@redhat.com> wrote:
+>
+> While doing that, we still want to keep the Property list that migration
+> object used to use.  Apply them directly to ObjectClass instead of settin=
+g
+> them with a DeviceClass.
+>
+> Manually apply the two extra properties (compat properties, global
+> settings) in an instance_post_init() hook, just like most of the rest
+> users, see callers of object_apply_compat_props().
+>
+> Signed-off-by: Peter Xu <peterx@redhat.com>
+> ---
+>  migration/migration.h |  2 +-
+>  migration/migration.c | 33 +++++++++++++++++++--------------
+>  2 files changed, 20 insertions(+), 15 deletions(-)
+>
+> diff --git a/migration/migration.h b/migration/migration.h
+> index 841f49b215..8bdb8e8e6b 100644
+> --- a/migration/migration.h
+> +++ b/migration/migration.h
+> @@ -274,7 +274,7 @@ struct MigrationClass {
+>
+>  struct MigrationState {
+>      /*< private >*/
+> -    DeviceState parent_obj;
+> +    Object parent_obj;
+>
 
-diff --git a/target/loongarch/cpu.c b/target/loongarch/cpu.c
-index 13de1722de..8424f185f2 100644
---- a/target/loongarch/cpu.c
-+++ b/target/loongarch/cpu.c
-@@ -62,6 +62,7 @@ void loongarch_cpu_set_irq(void *opaque, int irq, int level)
-     LoongArchCPU *cpu = opaque;
-     CPULoongArchState *env = &cpu->env;
-     CPUState *cs = CPU(cpu);
-+    CPUSysState *sys = env_sys(env);
- 
-     if (irq < 0 || irq >= N_IRQS) {
-         return;
-@@ -70,8 +71,8 @@ void loongarch_cpu_set_irq(void *opaque, int irq, int level)
-     if (kvm_enabled()) {
-         kvm_loongarch_set_interrupt(cpu, irq, level);
-     } else if (tcg_enabled()) {
--        env->CSR_ESTAT = deposit64(env->CSR_ESTAT, irq, 1, level != 0);
--        if (FIELD_EX64(env->CSR_ESTAT, CSR_ESTAT, IS)) {
-+        sys->CSR_ESTAT = deposit64(sys->CSR_ESTAT, irq, 1, level != 0);
-+        if (FIELD_EX64(sys->CSR_ESTAT, CSR_ESTAT, IS)) {
-             cpu_interrupt(cs, CPU_INTERRUPT_HARD);
-         } else {
-             cpu_reset_interrupt(cs, CPU_INTERRUPT_HARD);
-@@ -84,9 +85,10 @@ bool cpu_loongarch_hw_interrupts_pending(CPULoongArchState *env)
- {
-     uint32_t pending;
-     uint32_t status;
-+    CPUSysState *sys = env_sys(env);
- 
--    pending = FIELD_EX64(env->CSR_ESTAT, CSR_ESTAT, IS);
--    status  = FIELD_EX64(env->CSR_ECFG, CSR_ECFG, LIE);
-+    pending = FIELD_EX64(sys->CSR_ESTAT, CSR_ESTAT, IS);
-+    status  = FIELD_EX64(sys->CSR_ECFG, CSR_ECFG, LIE);
- 
-     return (pending & status) != 0;
- }
-@@ -112,11 +114,12 @@ static void loongarch_la464_init_csr(DeviceState *dev)
-     static bool initialized;
-     LoongArchCPU *cpu = LOONGARCH_CPU(dev);
-     CPULoongArchState *env = &cpu->env;
-+    CPUSysState *sys = env_sys(env);
-     int i, num;
- 
-     if (!initialized) {
-         initialized = true;
--        num = FIELD_EX64(env->CSR_PRCFG1, CSR_PRCFG1, SAVE_NUM);
-+        num = FIELD_EX64(sys->CSR_PRCFG1, CSR_PRCFG1, SAVE_NUM);
-         for (i = num; i < 16; i++) {
-             set_csr_flag(LOONGARCH_CSR_SAVE(i), CSRFL_UNUSED);
-         }
-@@ -275,6 +278,7 @@ static void loongarch_la464_initfn(Object *obj)
- {
-     LoongArchCPU *cpu = LOONGARCH_CPU(obj);
-     CPULoongArchState *env = &cpu->env;
-+    CPUSysState *sys;
-     uint32_t data = 0, field;
-     int i;
- 
-@@ -382,18 +386,19 @@ static void loongarch_la464_initfn(Object *obj)
-     data = FIELD_DP32(data, CPUCFG20, L3IU_SIZE, 6);
-     env->cpucfg[20] = data;
- 
--    env->CSR_ASID = FIELD_DP64(0, CSR_ASID, ASIDBITS, 0xa);
-+    sys = env_sys(env);
-+    sys->CSR_ASID = FIELD_DP64(0, CSR_ASID, ASIDBITS, 0xa);
- 
--    env->CSR_PRCFG1 = FIELD_DP64(env->CSR_PRCFG1, CSR_PRCFG1, SAVE_NUM, 8);
--    env->CSR_PRCFG1 = FIELD_DP64(env->CSR_PRCFG1, CSR_PRCFG1, TIMER_BITS, 0x2f);
--    env->CSR_PRCFG1 = FIELD_DP64(env->CSR_PRCFG1, CSR_PRCFG1, VSMAX, 7);
-+    sys->CSR_PRCFG1 = FIELD_DP64(sys->CSR_PRCFG1, CSR_PRCFG1, SAVE_NUM, 8);
-+    sys->CSR_PRCFG1 = FIELD_DP64(sys->CSR_PRCFG1, CSR_PRCFG1, TIMER_BITS, 0x2f);
-+    sys->CSR_PRCFG1 = FIELD_DP64(sys->CSR_PRCFG1, CSR_PRCFG1, VSMAX, 7);
- 
--    env->CSR_PRCFG2 = 0x3ffff000;
-+    sys->CSR_PRCFG2 = 0x3ffff000;
- 
--    env->CSR_PRCFG3 = FIELD_DP64(env->CSR_PRCFG3, CSR_PRCFG3, TLB_TYPE, 2);
--    env->CSR_PRCFG3 = FIELD_DP64(env->CSR_PRCFG3, CSR_PRCFG3, MTLB_ENTRY, 63);
--    env->CSR_PRCFG3 = FIELD_DP64(env->CSR_PRCFG3, CSR_PRCFG3, STLB_WAYS, 7);
--    env->CSR_PRCFG3 = FIELD_DP64(env->CSR_PRCFG3, CSR_PRCFG3, STLB_SETS, 8);
-+    sys->CSR_PRCFG3 = FIELD_DP64(sys->CSR_PRCFG3, CSR_PRCFG3, TLB_TYPE, 2);
-+    sys->CSR_PRCFG3 = FIELD_DP64(sys->CSR_PRCFG3, CSR_PRCFG3, MTLB_ENTRY, 63);
-+    sys->CSR_PRCFG3 = FIELD_DP64(sys->CSR_PRCFG3, CSR_PRCFG3, STLB_WAYS, 7);
-+    sys->CSR_PRCFG3 = FIELD_DP64(sys->CSR_PRCFG3, CSR_PRCFG3, STLB_SETS, 8);
- 
-     cpu->msgint = ON_OFF_AUTO_OFF;
-     cpu->ptw = ON_OFF_AUTO_OFF;
-@@ -595,6 +600,7 @@ static void loongarch_cpu_reset_hold(Object *obj, ResetType type)
-     CPUState *cs = CPU(obj);
-     LoongArchCPUClass *lacc = LOONGARCH_CPU_GET_CLASS(obj);
-     CPULoongArchState *env = cpu_env(cs);
-+    CPUSysState *sys = env_sys(env);
- 
-     if (lacc->parent_phases.hold) {
-         lacc->parent_phases.hold(obj, type);
-@@ -618,55 +624,55 @@ static void loongarch_cpu_reset_hold(Object *obj, ResetType type)
- 
-     int n;
-     /* Set csr registers value after reset, see the manual 6.4. */
--    env->CSR_CRMD = FIELD_DP64(env->CSR_CRMD, CSR_CRMD, PLV, 0);
--    env->CSR_CRMD = FIELD_DP64(env->CSR_CRMD, CSR_CRMD, IE, 0);
--    env->CSR_CRMD = FIELD_DP64(env->CSR_CRMD, CSR_CRMD, DA, 1);
--    env->CSR_CRMD = FIELD_DP64(env->CSR_CRMD, CSR_CRMD, PG, 0);
--    env->CSR_CRMD = FIELD_DP64(env->CSR_CRMD, CSR_CRMD, DATF, 0);
--    env->CSR_CRMD = FIELD_DP64(env->CSR_CRMD, CSR_CRMD, DATM, 0);
--
--    env->CSR_EUEN = FIELD_DP64(env->CSR_EUEN, CSR_EUEN, FPE, 0);
--    env->CSR_EUEN = FIELD_DP64(env->CSR_EUEN, CSR_EUEN, SXE, 0);
--    env->CSR_EUEN = FIELD_DP64(env->CSR_EUEN, CSR_EUEN, ASXE, 0);
--    env->CSR_EUEN = FIELD_DP64(env->CSR_EUEN, CSR_EUEN, BTE, 0);
--
--    env->CSR_MISC = 0;
--
--    env->CSR_ECFG = FIELD_DP64(env->CSR_ECFG, CSR_ECFG, VS, 0);
--    env->CSR_ECFG = FIELD_DP64(env->CSR_ECFG, CSR_ECFG, LIE, 0);
--
--    env->CSR_ESTAT = env->CSR_ESTAT & (~MAKE_64BIT_MASK(0, 2));
--    env->CSR_RVACFG = FIELD_DP64(env->CSR_RVACFG, CSR_RVACFG, RBITS, 0);
--    env->CSR_CPUID = cs->cpu_index;
--    env->CSR_TCFG = FIELD_DP64(env->CSR_TCFG, CSR_TCFG, EN, 0);
--    env->CSR_LLBCTL = FIELD_DP64(env->CSR_LLBCTL, CSR_LLBCTL, KLO, 0);
--    env->CSR_TLBRERA = FIELD_DP64(env->CSR_TLBRERA, CSR_TLBRERA, ISTLBR, 0);
--    env->CSR_MERRCTL = FIELD_DP64(env->CSR_MERRCTL, CSR_MERRCTL, ISMERR, 0);
--    env->CSR_TID = cs->cpu_index;
-+    sys->CSR_CRMD = FIELD_DP64(sys->CSR_CRMD, CSR_CRMD, PLV, 0);
-+    sys->CSR_CRMD = FIELD_DP64(sys->CSR_CRMD, CSR_CRMD, IE, 0);
-+    sys->CSR_CRMD = FIELD_DP64(sys->CSR_CRMD, CSR_CRMD, DA, 1);
-+    sys->CSR_CRMD = FIELD_DP64(sys->CSR_CRMD, CSR_CRMD, PG, 0);
-+    sys->CSR_CRMD = FIELD_DP64(sys->CSR_CRMD, CSR_CRMD, DATF, 0);
-+    sys->CSR_CRMD = FIELD_DP64(sys->CSR_CRMD, CSR_CRMD, DATM, 0);
-+
-+    sys->CSR_EUEN = FIELD_DP64(sys->CSR_EUEN, CSR_EUEN, FPE, 0);
-+    sys->CSR_EUEN = FIELD_DP64(sys->CSR_EUEN, CSR_EUEN, SXE, 0);
-+    sys->CSR_EUEN = FIELD_DP64(sys->CSR_EUEN, CSR_EUEN, ASXE, 0);
-+    sys->CSR_EUEN = FIELD_DP64(sys->CSR_EUEN, CSR_EUEN, BTE, 0);
-+
-+    sys->CSR_MISC = 0;
-+
-+    sys->CSR_ECFG = FIELD_DP64(sys->CSR_ECFG, CSR_ECFG, VS, 0);
-+    sys->CSR_ECFG = FIELD_DP64(sys->CSR_ECFG, CSR_ECFG, LIE, 0);
-+
-+    sys->CSR_ESTAT = sys->CSR_ESTAT & (~MAKE_64BIT_MASK(0, 2));
-+    sys->CSR_RVACFG = FIELD_DP64(sys->CSR_RVACFG, CSR_RVACFG, RBITS, 0);
-+    sys->CSR_CPUID = cs->cpu_index;
-+    sys->CSR_TCFG = FIELD_DP64(sys->CSR_TCFG, CSR_TCFG, EN, 0);
-+    sys->CSR_LLBCTL = FIELD_DP64(sys->CSR_LLBCTL, CSR_LLBCTL, KLO, 0);
-+    sys->CSR_TLBRERA = FIELD_DP64(sys->CSR_TLBRERA, CSR_TLBRERA, ISTLBR, 0);
-+    sys->CSR_MERRCTL = FIELD_DP64(sys->CSR_MERRCTL, CSR_MERRCTL, ISMERR, 0);
-+    sys->CSR_TID = cs->cpu_index;
-     /*
-      * Workaround for edk2-stable202408, CSR PGD register is set only if
-      * its value is equal to zero for boot cpu, it causes reboot issue.
-      *
-      * Here clear CSR registers relative with TLB.
-      */
--    env->CSR_PGDH = 0;
--    env->CSR_PGDL = 0;
--    env->CSR_PWCH = 0;
--    env->CSR_EENTRY = 0;
--    env->CSR_TLBRENTRY = 0;
--    env->CSR_MERRENTRY = 0;
-+    sys->CSR_PGDH = 0;
-+    sys->CSR_PGDL = 0;
-+    sys->CSR_PWCH = 0;
-+    sys->CSR_EENTRY = 0;
-+    sys->CSR_TLBRENTRY = 0;
-+    sys->CSR_MERRENTRY = 0;
-     /* set CSR_PWCL.PTBASE and CSR_STLBPS.PS bits from CSR_PRCFG2 */
--    if (env->CSR_PRCFG2 == 0) {
--        env->CSR_PRCFG2 = 0x3fffff000;
-+    if (sys->CSR_PRCFG2 == 0) {
-+        sys->CSR_PRCFG2 = 0x3fffff000;
-     }
--    tlb_ps = ctz32(env->CSR_PRCFG2);
--    env->CSR_STLBPS = FIELD_DP64(env->CSR_STLBPS, CSR_STLBPS, PS, tlb_ps);
--    env->CSR_PWCL = FIELD_DP64(env->CSR_PWCL, CSR_PWCL, PTBASE, tlb_ps);
-+    tlb_ps = ctz32(sys->CSR_PRCFG2);
-+    sys->CSR_STLBPS = FIELD_DP64(sys->CSR_STLBPS, CSR_STLBPS, PS, tlb_ps);
-+    sys->CSR_PWCL = FIELD_DP64(sys->CSR_PWCL, CSR_PWCL, PTBASE, tlb_ps);
-     for (n = 0; n < 4; n++) {
--        env->CSR_DMW[n] = FIELD_DP64(env->CSR_DMW[n], CSR_DMW, PLV0, 0);
--        env->CSR_DMW[n] = FIELD_DP64(env->CSR_DMW[n], CSR_DMW, PLV1, 0);
--        env->CSR_DMW[n] = FIELD_DP64(env->CSR_DMW[n], CSR_DMW, PLV2, 0);
--        env->CSR_DMW[n] = FIELD_DP64(env->CSR_DMW[n], CSR_DMW, PLV3, 0);
-+        sys->CSR_DMW[n] = FIELD_DP64(sys->CSR_DMW[n], CSR_DMW, PLV0, 0);
-+        sys->CSR_DMW[n] = FIELD_DP64(sys->CSR_DMW[n], CSR_DMW, PLV1, 0);
-+        sys->CSR_DMW[n] = FIELD_DP64(sys->CSR_DMW[n], CSR_DMW, PLV2, 0);
-+        sys->CSR_DMW[n] = FIELD_DP64(sys->CSR_DMW[n], CSR_DMW, PLV3, 0);
-     }
- 
- #ifndef CONFIG_USER_ONLY
-diff --git a/target/loongarch/cpu.h b/target/loongarch/cpu.h
-index b087548295..906470f59b 100644
---- a/target/loongarch/cpu.h
-+++ b/target/loongarch/cpu.h
-@@ -503,8 +503,9 @@ static inline bool is_va32(CPULoongArchState *env)
- {
-     /* VA32 if !LA64 or VA32L[1-3] */
-     bool va32 = !is_la64(env);
--    uint64_t plv = FIELD_EX64(env->CSR_CRMD, CSR_CRMD, PLV);
--    if (plv >= 1 && (FIELD_EX64(env->CSR_MISC, CSR_MISC, VA32) & (1 << plv))) {
-+    CPUSysState *sys = env_sys(env);
-+    uint64_t plv = FIELD_EX64(sys->CSR_CRMD, CSR_CRMD, PLV);
-+    if (plv >= 1 && (FIELD_EX64(sys->CSR_MISC, CSR_MISC, VA32) & (1 << plv))) {
-         va32 = true;
-     }
-     return va32;
--- 
-2.54.0
+You need to change MigrationClass.parent_class too
 
+>      /*< public >*/
+>      QemuThread thread;
+> diff --git a/migration/migration.c b/migration/migration.c
+> index 074d3f2c69..f9f102e78a 100644
+> --- a/migration/migration.c
+> +++ b/migration/migration.c
+> @@ -3966,11 +3966,9 @@ fail:
+>
+>  static void migration_class_init(ObjectClass *klass, const void *data)
+>  {
+> -    DeviceClass *dc =3D DEVICE_CLASS(klass);
+> -
+> -    dc->user_creatable =3D false;
+> -    device_class_set_props_n(dc, migration_properties,
+> -                             migration_properties_count);
+> +    for (int i =3D 0; i < migration_properties_count; i++) {
+> +        object_class_add_property(klass, &migration_properties[i]);
+> +    }
+>  }
+>
+>  static void migration_instance_finalize(Object *obj)
+> @@ -4028,21 +4026,28 @@ static bool migration_object_check(MigrationState=
+ *ms, Error **errp)
+>      return migrate_caps_check(old_caps, ms->capabilities, errp);
+>  }
+>
+> -static const TypeInfo migration_type =3D {
+> -    .name =3D TYPE_MIGRATION,
+> +static void migration_instance_post_init(Object *obj)
+> +{
+>      /*
+> -     * NOTE: TYPE_MIGRATION is not really a device, as the object is
+> -     * not created using qdev_new(), it is not attached to the qdev
+> -     * device tree, and it is never realized.
+> +     * Apply these properties on top of default values:
+>       *
+> -     * TODO: Make this TYPE_OBJECT once QOM provides something like
+> -     * TYPE_DEVICE's "-global" properties.
+> +     * (1) machine compat properties
+> +     * (2) -global settings in cmdlines
+> +     *
+> +     * Need to be applied in order so (2) takes precedence over (1).
+>       */
+> -    .parent =3D TYPE_DEVICE,
+> +    object_apply_compat_props(obj);
+> +    object_apply_globals(obj);
+> +}
+> +
+> +static const TypeInfo migration_type =3D {
+> +    .name =3D TYPE_MIGRATION,
+> +    .parent =3D TYPE_OBJECT,
+>      .class_init =3D migration_class_init,
+> -    .class_size =3D sizeof(MigrationClass),
+> +    .class_size =3D sizeof(ObjectClass),
+
+and this should still be MigrationClass
+
+>      .instance_size =3D sizeof(MigrationState),
+>      .instance_init =3D migration_instance_init,
+> +    .instance_post_init =3D migration_instance_post_init,
+>      .instance_finalize =3D migration_instance_finalize,
+>  };
+>
+> --
+> 2.53.0
+>
+>
+
+Otherwise, the series is good to me!
 
