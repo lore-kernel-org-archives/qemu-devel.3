@@ -4,48 +4,48 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id CCA0CCD6E74
-	for <qemu-devel@archiver.kernel.org>; Fri,  5 Jun 2026 10:47:18 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A166FCD6E7B
+	for <qemu-devel@archiver.kernel.org>; Fri,  5 Jun 2026 10:47:21 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wVS4Z-00027d-EO; Fri, 05 Jun 2026 06:46:43 -0400
+	id 1wVS4b-00028M-6n; Fri, 05 Jun 2026 06:46:45 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <FangSheng.Huang@amd.com>)
- id 1wVS4X-00023r-PN
- for qemu-devel@nongnu.org; Fri, 05 Jun 2026 06:46:41 -0400
-Received: from mail-westus3azlp170100009.outbound.protection.outlook.com
- ([2a01:111:f403:c107::9] helo=PH7PR06CU001.outbound.protection.outlook.com)
+ id 1wVS4Y-00027W-To
+ for qemu-devel@nongnu.org; Fri, 05 Jun 2026 06:46:42 -0400
+Received: from mail-westusazlp170120002.outbound.protection.outlook.com
+ ([2a01:111:f403:c001::2] helo=SJ2PR03CU001.outbound.protection.outlook.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <FangSheng.Huang@amd.com>)
- id 1wVS4V-0004Tf-Sn
- for qemu-devel@nongnu.org; Fri, 05 Jun 2026 06:46:41 -0400
+ id 1wVS4W-0004Ti-HA
+ for qemu-devel@nongnu.org; Fri, 05 Jun 2026 06:46:42 -0400
 ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=s3MD61W7G/5xJoh5ixZTCAuC3GXZi8jDQDea0P3sOHr2D6JkYZjZwDWQ51tUk67lFuJFU0aUFTgU2rfRy3e7kNamYMI029i0jfYCvNBCTUykmKAxFHu3+HTQJZOgy6ChdFqr5rNR/kQx3pmGJdAVC8v1zAi5Me3DBLYELDhiF0MhWqx4KrWk89sajW6NMhqImI24dTob8oV7BjfpizAtp0QjylIEa7VpfYNuKTBgDYVhDK3G4eKMG3H/g8x1HFtFXsuPLYcSmFV/rLpeuRyrOII02Z+fB19EN5+sE0JhVNQRkVCpADlCoooy+Z+BlwCc/GHV7pLrggwbdK3nxd0vmQ==
+ b=Eu86Bj5LxymJS5w8IYWAQMsv6dCy+bMnaNCR9tCCL0R9lSp551Y4zq91G0HxWPqvLj34DZDcgduGKDfFfKdSMrhbF9RHdoz8lG1zVnWITohPnRH7sCWFDWed+Hlt5odRZ/UBi0xUv9eyGlql7/2BKZFX/SmY/fUY0nYcJ4tp/YVSFIiEH69FZniABqakkhETjtfhaDezxstcZBYz58v8got7NIfTKPaPf9/x0MfQzXNfyRKIjRynhH57xdVrp7LsqPujuiljnW4frwvELFcx65iVzL7r6OkdRMSsxfK3QflUmnHQXwGMFm+7oIQ0hBg+I986lngJOiW+6WkhlzadEA==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
  s=arcselector10001;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=wPzE6w7Yh0e0kM2aJ6EH/P0Er9uDL6auYqDUmwh74ps=;
- b=aU0SAMavBWnyJPmwHSYl+pR1eha/DxeM7GggzTqk+ZuZ02Iex3OPA33TT4OGqQGzLh1pB7FrQKBRpAAeIzrWxUzyuuZfLR2kLo8lnD8ZHVnbnRMafCzJ+4dNPCyi+QROR8FGY/gjYRR3ab8zSMIMKwC6vcKwC/SzO5DJuB31DVx5Zk+raAjcnpp0chdCUL/g6xfCy0k34pVTh1h4JXhcsLwBlXY9bsoBTwO5htLFdTEmCmA0RBBW6qDJWMIp4QZD0nSoNljpMduYMjQ4PpjJR/z+ejpKhCEcIcB6jhRbscK0b+09Kt7RgtgML/4NpxkVIu3vOLfld3nesSN25UIK3Q==
+ bh=ozsTOAvXx4e7HGxaQk5y2RGCnZd/ViGM9GWOSiGQ+nE=;
+ b=OcLE3sQNz2Ou6utwhp7FA8D3M5QK33e5SCf4ZpOfXMElIo49wsH4o9UK3Ys7lKSJHjwPPWIZhayTPIP7dBj3RGs8cOguaTVTtVIYUc6Ujla5wfVb6woqBsCbtg0EUX0jOkieq7+piobHPDm0sfoOn5o6eRebo9sjIf4uqoJf7aWNpKOg7hat6IYDN3448IZ822En7f8BK1q79oCYXoLWnF+V08fq+5xwZZlPg6g4ercXfeM9TXxS1Lfj99mFlLqSE6E550YiU+NV3zkPtvP5rDCHMvxiPt+bc2bteF2mirpJcbLX1Eq3yfCVo3Y8U/nbrtqIK6ehOa/WkuBb/mczhA==
 ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass (sender ip is
  165.204.84.17) smtp.rcpttodomain=nongnu.org smtp.mailfrom=amd.com; dmarc=pass
  (p=quarantine sp=quarantine pct=100) action=none header.from=amd.com;
  dkim=none (message not signed); arc=none (0)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=amd.com; s=selector1; 
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=wPzE6w7Yh0e0kM2aJ6EH/P0Er9uDL6auYqDUmwh74ps=;
- b=LqbnBw94GGD9HECa/yr67TMe/ze1CaNGJRWfApu1EFCQyuz4EZUdaCgkMBCZgarTf5UyvGX7keb5Ito6OrmlGz1o+Jw7cPGhzPRWhvKV7jd+EYFw5ZWA2lE8UjKCgkJ4aC6MQK/sWcnbxt1mIicdWKfqgMvqFv5pUVvikaUa2So=
-Received: from BY1P220CA0020.NAMP220.PROD.OUTLOOK.COM (2603:10b6:a03:5c3::7)
- by CY5PR12MB6648.namprd12.prod.outlook.com (2603:10b6:930:3e::9) with
+ bh=ozsTOAvXx4e7HGxaQk5y2RGCnZd/ViGM9GWOSiGQ+nE=;
+ b=gSuNv0SJQjDtNUHD3zJv112w9KG7ntY3/fwgbj77So/oLOh0r2JiktvKSxav7PYBcyE290UHzFKBrY4C5ZTQWPAsO9/42oj+YjGtIPeJFa2ZfzRWvWx4cZUQ8vmbdQeeqw6MmARVqe2jX3kruXNNcw0KO3jPvXEX8ItbIUkPT/w=
+Received: from BY1P220CA0018.NAMP220.PROD.OUTLOOK.COM (2603:10b6:a03:5c3::8)
+ by BL1PR12MB5970.namprd12.prod.outlook.com (2603:10b6:208:399::21) with
  Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.92.9; Fri, 5 Jun 2026
- 10:46:34 +0000
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.92.8; Fri, 5 Jun 2026
+ 10:46:32 +0000
 Received: from SJ1PEPF000023CE.namprd02.prod.outlook.com
- (2603:10b6:a03:5c3:cafe::29) by BY1P220CA0020.outlook.office365.com
- (2603:10b6:a03:5c3::7) with Microsoft SMTP Server (version=TLS1_3,
+ (2603:10b6:a03:5c3:cafe::2f) by BY1P220CA0018.outlook.office365.com
+ (2603:10b6:a03:5c3::8) with Microsoft SMTP Server (version=TLS1_3,
  cipher=TLS_AES_256_GCM_SHA384) id 15.21.92.9 via Frontend Transport; Fri, 5
- Jun 2026 10:46:34 +0000
+ Jun 2026 10:46:32 +0000
 X-MS-Exchange-Authentication-Results: spf=pass (sender IP is 165.204.84.17)
  smtp.mailfrom=amd.com; dkim=none (message not signed)
  header.d=none;dmarc=pass action=none header.from=amd.com;
@@ -55,20 +55,19 @@ Received-SPF: Pass (protection.outlook.com: domain of amd.com designates
 Received: from satlexmb07.amd.com (165.204.84.17) by
  SJ1PEPF000023CE.mail.protection.outlook.com (10.167.244.10) with Microsoft
  SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.21.92.5 via Frontend Transport; Fri, 5 Jun 2026 10:46:34 +0000
+ 15.21.92.5 via Frontend Transport; Fri, 5 Jun 2026 10:46:32 +0000
 Received: from k-Super-Server.amd.com (10.180.168.240) by satlexmb07.amd.com
  (10.181.42.216) with Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.2562.41; Fri, 5 Jun
- 2026 05:46:31 -0500
+ 2026 05:46:29 -0500
 From: fanhuang <FangSheng.Huang@amd.com>
 To: <qemu-devel@nongnu.org>, <david@kernel.org>, <imammedo@redhat.com>,
  <gourry@gourry.net>, <philmd@mailo.com>
 CC: <Zhigang.Luo@amd.com>, <Lianjie.Shi@amd.com>, fanhuang
  <FangSheng.Huang@amd.com>
-Subject: [PATCH v10 2/4] i386/acpi-build: partition device_memory SRAT
- umbrella for sp-mem
-Date: Fri, 5 Jun 2026 18:46:07 +0800
-Message-ID: <20260605104609.1739911-3-FangSheng.Huang@amd.com>
+Subject: [PATCH v10 1/4] hw/mem: add sp-mem device for Specific Purpose Memory
+Date: Fri, 5 Jun 2026 18:46:06 +0800
+Message-ID: <20260605104609.1739911-2-FangSheng.Huang@amd.com>
 X-Mailer: git-send-email 2.34.1
 In-Reply-To: <20260605104609.1739911-1-FangSheng.Huang@amd.com>
 References: <20260605104609.1739911-1-FangSheng.Huang@amd.com>
@@ -80,38 +79,39 @@ X-ClientProxiedBy: satlexmb08.amd.com (10.181.42.217) To satlexmb07.amd.com
  (10.181.42.216)
 X-EOPAttributedMessage: 0
 X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: SJ1PEPF000023CE:EE_|CY5PR12MB6648:EE_
-X-MS-Office365-Filtering-Correlation-Id: b07e61d2-c6d2-4426-a09c-08dec2efb63a
+X-MS-TrafficTypeDiagnostic: SJ1PEPF000023CE:EE_|BL1PR12MB5970:EE_
+X-MS-Office365-Filtering-Correlation-Id: e3f7fc3b-9a5c-4381-5155-08dec2efb50b
 X-MS-Exchange-SenderADCheck: 1
 X-MS-Exchange-AntiSpam-Relay: 0
 X-Microsoft-Antispam: BCL:0;
- ARA:13230040|36860700016|376014|1800799024|82310400026|11063799006|56012099006|3023799007|6133799003|18002099003|22082099003|43062017;
-X-Microsoft-Antispam-Message-Info: Sr3VDQGiLhBOXAjxRmJrps2tGgd5ZykaGgbLdIKtUJOjEWDHqTyTrqo8ThpFkXmWdVINcQOeC4qq1ZWTlu7afxov8cM0Xd3pm4cRcoWcIKrVmx+t0JwwSiBeN27sSExsshiJDYcpCPFnOcAkbQZEEpisMeysR7Xa/aXX55V89VUZXTuOvkSraesRZvN1/QmRwFRqV+idmJwr4ZmbddxogCARsbXxWDZ6/+RiGiJ+MxRr31vCi2tOUVwN2H9jKDXXnVfzjXGJnu+nleL8fWnmkeJYaBnVI3uY6Y9wyP/8WiOHbeNToivQkbEPra8oOeZmLvpecrrlQ+KjTZSQBalRmLgQIkFqRZIdbsyFx/61qh1mVQ9TDgF6zqMZPednR1CJ8501ov3Cg3zQ+HtkNjcJ8NxCKsQVkMdefaMYsns2s7v2eYu2MYV1g76WZbAOs7okj206W49saB5w0kZXFDUVIIV9PW53KKm5HgGeemyG2nYVK3t8yvPRbiSQvfddBBOf0IEs+zif6AljjJ5FYRfsWf10AFdSF83SBP1exD30anvgArUb9ykn2iIcdMf38Cvf9gzDfBiM5UCsTgfbH5TwkF33l52pyRf6wOU3EE/T4ljqZp4B5/A2uJj43SLifs+JZalv6Zr3BRRiGqjkaWrAnX/rS1Rn8srC6iv83RtIJUACDIDL/e7+4Gzdans7wVz2AsMlDasRwZXvDa6913dptBCPWxELHqbPQ8fza1fI7+aBG+HTQ8BHeVyMzg/cascrOdaITEdyWELmQ+o4Z2n+gse5ZhJV9UqhmiC1qcrm4OA=
+ ARA:13230040|36860700016|376014|1800799024|82310400026|11063799006|56012099006|18002099003|22082099003|6133799003|43062017;
+X-Microsoft-Antispam-Message-Info: 3b+IKpuIHZoKf2ysUaSQYC0R/bwAJxAMcWnzD3xLnBQaWtakovGzOI/w+taOOMonwGqEPwD+yslKQnhNESuazc175vUcKOZwlW4GVsZ+NdnmzQ1qTg4R70qE/f18dwV/kqO5dBPq4ImLgXRo+rCG4RP34F1E4SaoN+wV1ZeY8bcIJVT6CYfwntBFfLVygp8VT4K1hGQWfd6ruflyZaMbbZxLGgZ38JKQxsBf5LodbEVoeGHWC3YExnnHmA9zKqYhcKGqTEtBsNw5i/BGtB85GlVqUGk6FrFcOF5DHLgvA6RcVLJhexqVdwe/8gqWR8bQkvhLSd+cL051hRzb/j7lsDZAHPZz3kLQuTs5ungGTBZeHpKGuBT1qFNsNYfFg+ISDKnanyYvKXkLlKEeH/0e0OYCOmFBgN/H58o1WAgGSUk3EYzsx0/eYW/sOw8je8NGG2dDmlKH76GR4xpkWQFa9gq6CdkPBe69zpAIwPwXvohsU6VfALLkSiNoBDM15+IXVBglpWImzBnhTY1PhkZj8yQN7JbP8tUtMFearoRdI4hXW86IUNHTxJbbQM/pN308GirmMPjOOON3Qk1yAyjkraMnUp2YRsczSsIi3/Fv8jEPhU2qAOH6s8MrRxxiT6w6V7ruAVsz22/ZFCxSKx4Dm/PGukKxe+KJyNp6orD12QZ8UXDO7iVHklgJXbkuegtL5E8Ekn/K2HGuIjX8Vi4V9/vm4dMaCSziBHLRJiBkwBisE3/fBCPWisaGFiIcVRAvjGmQLHS9ZOSebtzBaF6cOw1OIcOySIKo0HsYcTytZMM=
 X-Forefront-Antispam-Report: CIP:165.204.84.17; CTRY:US; LANG:en; SCL:1; SRV:;
  IPV:NLI; SFV:NSPM; H:satlexmb07.amd.com; PTR:InfoDomainNonexistent; CAT:NONE;
- SFS:(13230040)(36860700016)(376014)(1800799024)(82310400026)(11063799006)(56012099006)(3023799007)(6133799003)(18002099003)(22082099003)(43062017);
+ SFS:(13230040)(36860700016)(376014)(1800799024)(82310400026)(11063799006)(56012099006)(18002099003)(22082099003)(6133799003)(43062017);
  DIR:OUT; SFP:1101; 
 X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0: EUdn5BF1jAMHhjbcPtX+q3i54rPKLJGBsiZvejMtpFNCEJ6o6asIxE1TnTKgNMk7+F64VxmfZgG5VQ9cZlIBvDHt5Ms1fO+P0H3QmKyuBiBq8TkPQIyq/vpzox6xrGmH7qefIY/KkQotI4NeX47JiEt5lM4KIj1yka1QNIirUG9MUZxtynnlbFsD5bN90dEnNqBOW5DsJxU3x4jDKjDb3XY7tAhyijSh7lANVnT5m+nuPW1IaJl6CoXaWXoIRWMxpPqieC43WiSXX43jU8h8LAARyXfrzfiDnJgl7hXpFk0yvGKAJ7PHtYqJ6WJsnAq0sjt1dfP6WtQiEwFbwcYRfTFjcsHy9W2OylKxu/WkL8w6wQpQwSW5iPvhR6wdo643WUDr4xeQuBiAOARyHC/o72dh5/4T904n2R6Ad/TDSVx6NnTs4wuA6ZV1QCUPsr+j
+X-MS-Exchange-AntiSpam-MessageData-0: h/hiIcI7SLOatskLIndo6PyAiSyfxNvQontrPUABOxBHSQ6Ex1a9xW8rL1bJYC4YCWHIhFOhGh3AXmEBQI6gIP7LiVkHIE40pbYYTyzwIY/myJJIe22cJJPfKBqM2xYpsrgegIO9DFSUHA/Yvp4+FtKeCYKOcW9PmVa01QwJdM7Kju0kyILALqEC0McLoJwBuMTl+rZIfLEw72KynC6cQ7x3BrAzx+U1r7+Qk2/9A4BUCpe6si2c1GotwGEjfKH1vjeZfplbwk7ffHH7yUNcHYVviVeCn05PYPDYj/i3uwqtlw6y11b5s8hLH9Z3L/acAaajqcbUb6NtiWkaBPJPTnA7Wte4gxJ/joiLPXEDNVD5yydSLz8+mwS/kmZEW2FRgWGthT5RD6MmU+FKRfGRdiVA/LKDLejoepErOOrFw1n0duEj9KxK3Hhkk73Dgs6L
 X-OriginatorOrg: amd.com
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 05 Jun 2026 10:46:34.2705 (UTC)
-X-MS-Exchange-CrossTenant-Network-Message-Id: b07e61d2-c6d2-4426-a09c-08dec2efb63a
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 05 Jun 2026 10:46:32.2216 (UTC)
+X-MS-Exchange-CrossTenant-Network-Message-Id: e3f7fc3b-9a5c-4381-5155-08dec2efb50b
 X-MS-Exchange-CrossTenant-Id: 3dd8961f-e488-4e60-8e11-a82d994e183d
 X-MS-Exchange-CrossTenant-OriginalAttributedTenantConnectingIp: TenantId=3dd8961f-e488-4e60-8e11-a82d994e183d; Ip=[165.204.84.17];
  Helo=[satlexmb07.amd.com]
 X-MS-Exchange-CrossTenant-AuthSource: SJ1PEPF000023CE.namprd02.prod.outlook.com
 X-MS-Exchange-CrossTenant-AuthAs: Anonymous
 X-MS-Exchange-CrossTenant-FromEntityHeader: HybridOnPrem
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: CY5PR12MB6648
-Received-SPF: permerror client-ip=2a01:111:f403:c107::9;
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: BL1PR12MB5970
+Received-SPF: permerror client-ip=2a01:111:f403:c001::2;
  envelope-from=FangSheng.Huang@amd.com;
- helo=PH7PR06CU001.outbound.protection.outlook.com
+ helo=SJ2PR03CU001.outbound.protection.outlook.com
 X-Spam_score_int: -24
 X-Spam_score: -2.5
 X-Spam_bar: --
 X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.445,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_PASS=-0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -127,140 +127,314 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Restructure the device_memory SRAT umbrella entry into a per-kind
-partition: each TYPE_SP_MEM device gets an ENABLED entry at its own
-proximity_domain; the remaining sub-ranges get HOTPLUGGABLE | ENABLED
-placeholders at the highest PXM, preserving the existing umbrella
-convention.
+Introduce a TYPE_MEMORY_DEVICE subclass `sp-mem` for boot-time
+SOFT_RESERVED memory exposed to the guest with a per-device NUMA
+proximity domain.
+
+The device targets accelerator memory (HBM and similar) that the
+firmware hands to the guest OS as SOFT_RESERVED memory, so a driver
+in the guest -- rather than the kernel's general allocator -- owns
+the range.
+
+Usage:
+
+    -object memory-backend-ram,id=spm0,size=$SIZE
+    -numa node,nodeid=$N
+    -device sp-mem,id=dev0,memdev=spm0,node=$N[,addr=$GPA]
+
+The device is boot-time only (no hotplug).
 
 Signed-off-by: FangSheng Huang <FangSheng.Huang@amd.com>
 ---
- hw/i386/acpi-build.c | 98 +++++++++++++++++++++++++++++++++++++++++---
- 1 file changed, 92 insertions(+), 6 deletions(-)
+ qapi/machine.json       |  43 ++++++++++++-
+ include/hw/mem/sp-mem.h |  35 +++++++++++
+ hw/mem/sp-mem.c         | 130 ++++++++++++++++++++++++++++++++++++++++
+ hw/mem/Kconfig          |   4 ++
+ hw/mem/meson.build      |   1 +
+ 5 files changed, 211 insertions(+), 2 deletions(-)
+ create mode 100644 include/hw/mem/sp-mem.h
+ create mode 100644 hw/mem/sp-mem.c
 
-diff --git a/hw/i386/acpi-build.c b/hw/i386/acpi-build.c
-index 0d7c83d5e9..76efa83808 100644
---- a/hw/i386/acpi-build.c
-+++ b/hw/i386/acpi-build.c
-@@ -52,6 +52,7 @@
- #include "migration/vmstate.h"
- #include "hw/mem/memory-device.h"
- #include "hw/mem/nvdimm.h"
-+#include "hw/mem/sp-mem.h"
- #include "system/numa.h"
- #include "system/reset.h"
- #include "hw/hyperv/vmbus-bridge.h"
-@@ -1346,6 +1347,96 @@ build_tpm_tcpa(GArray *table_data, BIOSLinker *linker, GArray *tcpalog,
+diff --git a/qapi/machine.json b/qapi/machine.json
+index 685e4e29b8..41cc3a188a 100644
+--- a/qapi/machine.json
++++ b/qapi/machine.json
+@@ -1413,6 +1413,32 @@
+           }
  }
- #endif
  
-+typedef struct {
-+    uint64_t addr;
-+    uint64_t size;
-+    uint32_t node;
-+} SpMemRange;
-+
-+static int collect_sp_mem_ranges_cb(Object *obj, void *opaque)
-+{
-+    GArray *ranges = opaque;
-+    SpMemDevice *spm;
-+    MemoryDeviceClass *mdc;
-+    SpMemRange r;
-+
-+    if (!object_dynamic_cast(obj, TYPE_SP_MEM)) {
-+        return 0;
-+    }
-+    spm = SP_MEM(obj);
-+    mdc = MEMORY_DEVICE_GET_CLASS(MEMORY_DEVICE(spm));
-+    r.addr = mdc->get_addr(MEMORY_DEVICE(spm));
-+    r.size = memory_region_size(
-+                 host_memory_backend_get_memory(spm->hostmem));
-+    r.node = spm->node;
-+    g_array_append_val(ranges, r);
-+    return 0;
++##
++# @SpMemDeviceInfo:
++#
++# sp-mem device state information
++#
++# @id: device's ID
++#
++# @memaddr: physical address in memory, where device is mapped
++#
++# @size: size of memory that the device provides
++#
++# @node: NUMA proximity domain to which the device is assigned
++#
++# @memdev: memory backend linked with device
++#
++# Since: 11.1
++##
++{ 'struct': 'SpMemDeviceInfo',
++  'data': { '*id': 'str',
++            'memaddr': 'size',
++            'size': 'size',
++            'node': 'int',
++            'memdev': 'str'
++          }
 +}
 +
-+static gint sp_mem_range_compare(gconstpointer a, gconstpointer b)
-+{
-+    const SpMemRange *range_a = a;
-+    const SpMemRange *range_b = b;
+ ##
+ # @MemoryDeviceInfoKind:
+ #
+@@ -1426,11 +1452,13 @@
+ #
+ # @hv-balloon: since 8.2.
+ #
++# @sp-mem: since 11.1.
++#
+ # Since: 2.1
+ ##
+ { 'enum': 'MemoryDeviceInfoKind',
+   'data': [ 'dimm', 'nvdimm', 'virtio-pmem', 'virtio-mem', 'sgx-epc',
+-            'hv-balloon' ] }
++            'hv-balloon', 'sp-mem' ] }
+ 
+ ##
+ # @PCDIMMDeviceInfoWrapper:
+@@ -1482,6 +1510,16 @@
+ { 'struct': 'HvBalloonDeviceInfoWrapper',
+   'data': { 'data': 'HvBalloonDeviceInfo' } }
+ 
++##
++# @SpMemDeviceInfoWrapper:
++#
++# @data: sp-mem device state information
++#
++# Since: 11.1
++##
++{ 'struct': 'SpMemDeviceInfoWrapper',
++  'data': { 'data': 'SpMemDeviceInfo' } }
 +
-+    if (range_a->addr < range_b->addr) {
-+        return -1;
-+    }
-+    if (range_a->addr > range_b->addr) {
-+        return 1;
-+    }
-+    return 0;
-+}
-+
+ ##
+ # @MemoryDeviceInfo:
+ #
+@@ -1499,7 +1537,8 @@
+             'virtio-pmem': 'VirtioPMEMDeviceInfoWrapper',
+             'virtio-mem': 'VirtioMEMDeviceInfoWrapper',
+             'sgx-epc': 'SgxEPCDeviceInfoWrapper',
+-            'hv-balloon': 'HvBalloonDeviceInfoWrapper'
++            'hv-balloon': 'HvBalloonDeviceInfoWrapper',
++            'sp-mem': 'SpMemDeviceInfoWrapper'
+           }
+ }
+ 
+diff --git a/include/hw/mem/sp-mem.h b/include/hw/mem/sp-mem.h
+new file mode 100644
+index 0000000000..5c0b6ec4f8
+--- /dev/null
++++ b/include/hw/mem/sp-mem.h
+@@ -0,0 +1,35 @@
 +/*
-+ * Emit SRAT memory-affinity entries covering the device_memory region.
++ * Specific Purpose Memory (SPM) device
 + *
-+ * For each plugged TYPE_SP_MEM device, emit an ENABLED entry at the
-+ * device's own proximity_domain.  All remaining sub-ranges (gaps
-+ * between sp-mem devices, leading and trailing padding, and ranges
-+ * occupied by other memory devices) are covered by HOTPLUGGABLE |
-+ * ENABLED placeholder entries at PXM = nb_numa_nodes - 1.
++ * TYPE_MEMORY_DEVICE subclass for boot-time-only memory exposed to the
++ * guest as an E820 SOFT_RESERVED range with a SRAT memory-affinity entry.
++ *
++ * Copyright (c) 2026 Advanced Micro Devices, Inc.
++ *
++ * Authors:
++ *  FangSheng Huang <FangSheng.Huang@amd.com>
++ *
++ * SPDX-License-Identifier: GPL-2.0-or-later
 + */
-+static void build_srat_device_memory(GArray *table_data, MachineState *ms)
-+{
-+    g_autoptr(GArray) ranges = g_array_new(FALSE, TRUE, sizeof(SpMemRange));
-+    uint64_t cursor, end;
-+    int nb_nodes = ms->numa_state ? ms->numa_state->num_nodes : 0;
-+    uint32_t hotplug_pxm = nb_nodes > 0 ? nb_nodes - 1 : 0;
-+    guint i;
 +
-+    if (!ms->device_memory) {
++#ifndef QEMU_SP_MEM_H
++#define QEMU_SP_MEM_H
++
++#include "hw/mem/memory-device.h"
++#include "hw/core/qdev.h"
++#include "qom/object.h"
++#include "system/hostmem.h"
++
++#define TYPE_SP_MEM "sp-mem"
++
++OBJECT_DECLARE_SIMPLE_TYPE(SpMemDevice, SP_MEM)
++
++struct SpMemDevice {
++    DeviceState parent_obj;
++
++    HostMemoryBackend *hostmem;
++    uint32_t node;
++    uint64_t addr;
++};
++
++#endif /* QEMU_SP_MEM_H */
+diff --git a/hw/mem/sp-mem.c b/hw/mem/sp-mem.c
+new file mode 100644
+index 0000000000..f6ba9a6d7c
+--- /dev/null
++++ b/hw/mem/sp-mem.c
+@@ -0,0 +1,130 @@
++/*
++ * Specific Purpose Memory (SPM) device
++ *
++ * Copyright (c) 2026 Advanced Micro Devices, Inc.
++ *
++ * Authors:
++ *  FangSheng Huang <FangSheng.Huang@amd.com>
++ *
++ * SPDX-License-Identifier: GPL-2.0-or-later
++ */
++
++#include "qemu/osdep.h"
++#include "qemu/module.h"
++#include "qapi/error.h"
++#include "hw/core/qdev-properties.h"
++#include "hw/core/qdev.h"
++#include "hw/mem/sp-mem.h"
++#include "hw/mem/memory-device.h"
++#include "migration/vmstate.h"
++#include "system/hostmem.h"
++
++#define SP_MEM_MEMDEV_PROP    "memdev"
++#define SP_MEM_NODE_PROP      "node"
++#define SP_MEM_ADDR_PROP      "addr"
++
++static const Property sp_mem_properties[] = {
++    DEFINE_PROP_LINK(SP_MEM_MEMDEV_PROP, SpMemDevice, hostmem,
++                     TYPE_MEMORY_BACKEND, HostMemoryBackend *),
++    DEFINE_PROP_UINT32(SP_MEM_NODE_PROP, SpMemDevice, node, 0),
++    DEFINE_PROP_UINT64(SP_MEM_ADDR_PROP, SpMemDevice, addr, 0),
++};
++
++static uint64_t sp_mem_get_addr(const MemoryDeviceState *md)
++{
++    return SP_MEM(md)->addr;
++}
++
++static void sp_mem_set_addr(MemoryDeviceState *md, uint64_t addr,
++                            Error **errp)
++{
++    SP_MEM(md)->addr = addr;
++}
++
++static MemoryRegion *sp_mem_get_memory_region(MemoryDeviceState *md,
++                                              Error **errp)
++{
++    SpMemDevice *spm = SP_MEM(md);
++
++    if (!spm->hostmem) {
++        error_setg(errp, "'memdev' property must be set");
++        return NULL;
++    }
++    return host_memory_backend_get_memory(spm->hostmem);
++}
++
++static uint64_t sp_mem_get_plugged_size(const MemoryDeviceState *md,
++                                        Error **errp)
++{
++    SpMemDevice *spm = SP_MEM(md);
++    return spm->hostmem ?
++        memory_region_size(host_memory_backend_get_memory(spm->hostmem)) : 0;
++}
++
++static void sp_mem_fill_device_info(const MemoryDeviceState *md,
++                                    MemoryDeviceInfo *info)
++{
++    SpMemDeviceInfo *di = g_new0(SpMemDeviceInfo, 1);
++    SpMemDevice *spm = SP_MEM(md);
++    DeviceState *dev = DEVICE(md);
++
++    di->id = dev->id ? g_strdup(dev->id) : NULL;
++    di->memaddr = spm->addr;
++    di->size = spm->hostmem ? memory_region_size(
++                   host_memory_backend_get_memory(spm->hostmem)) : 0;
++    di->node = spm->node;
++    di->memdev = spm->hostmem ?
++                 object_get_canonical_path(OBJECT(spm->hostmem)) : NULL;
++
++    info->u.sp_mem.data = di;
++    info->type = MEMORY_DEVICE_INFO_KIND_SP_MEM;
++}
++
++static void sp_mem_realize(DeviceState *dev, Error **errp)
++{
++    SpMemDevice *spm = SP_MEM(dev);
++
++    if (!spm->hostmem) {
++        error_setg(errp, "'%s' property is required", SP_MEM_MEMDEV_PROP);
 +        return;
 +    }
-+
-+    cursor = ms->device_memory->base;
-+    end = cursor + memory_region_size(&ms->device_memory->mr);
-+
-+    object_child_foreach_recursive(qdev_get_machine(),
-+                                   collect_sp_mem_ranges_cb, ranges);
-+    g_array_sort(ranges, sp_mem_range_compare);
-+
-+    for (i = 0; i < ranges->len; i++) {
-+        SpMemRange *r = &g_array_index(ranges, SpMemRange, i);
-+
-+        if (cursor < r->addr) {
-+            build_srat_memory(table_data, cursor, r->addr - cursor,
-+                              hotplug_pxm,
-+                              MEM_AFFINITY_HOTPLUGGABLE |
-+                              MEM_AFFINITY_ENABLED);
-+        }
-+        build_srat_memory(table_data, r->addr, r->size, r->node,
-+                          MEM_AFFINITY_ENABLED);
-+        cursor = r->addr + r->size;
-+    }
-+
-+    if (cursor < end) {
-+        build_srat_memory(table_data, cursor, end - cursor,
-+                          hotplug_pxm,
-+                          MEM_AFFINITY_HOTPLUGGABLE |
-+                          MEM_AFFINITY_ENABLED);
-+    }
 +}
 +
- #define HOLE_640K_START  (640 * KiB)
- #define HOLE_640K_END   (1 * MiB)
++/* boot-time only; no plug/unplug state to migrate */
++static const VMStateDescription vmstate_sp_mem = {
++    .name = TYPE_SP_MEM,
++    .unmigratable = 1,
++};
++
++static void sp_mem_class_init(ObjectClass *oc, const void *data)
++{
++    DeviceClass *dc = DEVICE_CLASS(oc);
++    MemoryDeviceClass *mdc = MEMORY_DEVICE_CLASS(oc);
++
++    dc->desc = "SPM (Specific Purpose Memory) device";
++    dc->hotpluggable = false;
++    dc->realize = sp_mem_realize;
++    dc->vmsd = &vmstate_sp_mem;
++    device_class_set_props(dc, sp_mem_properties);
++
++    mdc->get_addr            = sp_mem_get_addr;
++    mdc->set_addr            = sp_mem_set_addr;
++    mdc->get_memory_region   = sp_mem_get_memory_region;
++    mdc->get_plugged_size    = sp_mem_get_plugged_size;
++    mdc->fill_device_info    = sp_mem_fill_device_info;
++}
++
++static const TypeInfo sp_mem_types[] = {
++    {
++        .name          = TYPE_SP_MEM,
++        .parent        = TYPE_DEVICE,
++        .class_init    = sp_mem_class_init,
++        .instance_size = sizeof(SpMemDevice),
++        .interfaces    = (InterfaceInfo[]) {
++            { TYPE_MEMORY_DEVICE },
++            { }
++        },
++    },
++};
++
++DEFINE_TYPES(sp_mem_types)
+diff --git a/hw/mem/Kconfig b/hw/mem/Kconfig
+index 73c5ae8ad9..39ddb36710 100644
+--- a/hw/mem/Kconfig
++++ b/hw/mem/Kconfig
+@@ -16,3 +16,7 @@ config CXL_MEM_DEVICE
+     bool
+     default y if CXL
+     select MEM_DEVICE
++
++config SP_MEM
++    bool
++    select MEM_DEVICE
+diff --git a/hw/mem/meson.build b/hw/mem/meson.build
+index 8c2beeb7d4..f410d75475 100644
+--- a/hw/mem/meson.build
++++ b/hw/mem/meson.build
+@@ -4,6 +4,7 @@ mem_ss.add(when: 'CONFIG_DIMM', if_true: files('pc-dimm.c'))
+ mem_ss.add(when: 'CONFIG_NPCM7XX', if_true: files('npcm7xx_mc.c'))
+ mem_ss.add(when: 'CONFIG_NVDIMM', if_true: files('nvdimm.c'))
+ mem_ss.add(when: 'CONFIG_CXL_MEM_DEVICE', if_true: files('cxl_type3.c'))
++mem_ss.add(when: 'CONFIG_SP_MEM', if_true: files('sp-mem.c'))
+ stub_ss.add(files('cxl_type3_stubs.c'))
  
-@@ -1481,12 +1572,7 @@ build_srat(GArray *table_data, BIOSLinker *linker, MachineState *machine)
-      * Memory devices may override proximity set by this entry,
-      * providing _PXM method if necessary.
-      */
--    if (machine->device_memory) {
--        build_srat_memory(table_data, machine->device_memory->base,
--                          memory_region_size(&machine->device_memory->mr),
--                          nb_numa_nodes - 1,
--                          MEM_AFFINITY_HOTPLUGGABLE | MEM_AFFINITY_ENABLED);
--    }
-+    build_srat_device_memory(table_data, machine);
- 
-     acpi_table_end(linker, &table);
- }
+ stub_ss.add(files('memory-device-stubs.c'))
 -- 
 2.34.1
 
