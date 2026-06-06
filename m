@@ -4,147 +4,87 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C003FCD8C89
-	for <qemu-devel@archiver.kernel.org>; Sat,  6 Jun 2026 02:34:26 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D1BC2CD6E55
+	for <qemu-devel@archiver.kernel.org>; Sat,  6 Jun 2026 05:16:34 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wVgrD-00078g-Qn; Fri, 05 Jun 2026 22:33:55 -0400
+	id 1wVjNy-000224-1u; Sat, 06 Jun 2026 01:15:54 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <daniel.barboza@oss.qualcomm.com>)
- id 1wVgrC-00078U-U8
- for qemu-devel@nongnu.org; Fri, 05 Jun 2026 22:33:54 -0400
-Received: from mx0b-0031df01.pphosted.com ([205.220.180.131])
+ (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
+ id 1wVjNr-00021t-KL
+ for qemu-devel@nongnu.org; Sat, 06 Jun 2026 01:15:48 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <daniel.barboza@oss.qualcomm.com>)
- id 1wVgrB-0005np-7l
- for qemu-devel@nongnu.org; Fri, 05 Jun 2026 22:33:54 -0400
-Received: from pps.filterd (m0279870.ppops.net [127.0.0.1])
- by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 6562PMxB199453
- for <qemu-devel@nongnu.org>; Sat, 6 Jun 2026 02:33:50 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
- cc:content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
- v1TIM0TZiva7fNh2VBKZ3XJJtWrkbwQ8XgKvXUXyoqM=; b=makyiGJwu3P+dWTn
- Y+//qSxq4WLwjc9OEiVv34lcqQuMnWaJWa+TsYPMLUuNrvOVRzDRtBoIVRdGkEBW
- Io+b/7kKwIet2ff/KBxHn1m9Tz1fZRZi5zf0It0+nleOg5yJk6lfzMcbYzW/iRoA
- RYwiylz/MAPRyDOT6F69qoPGv/ni3fyvv7FZQg7eslgZsbNjLMgDvwn1CIPO40Bk
- 1nfLp7QOylF7DSiW25RQQGN6QouOY0uo2IWzudn5wquh5QNFWG0ztkFyOTjo/cJr
- ULEKtL91Rhvpf5WeJWuGqaij81jrqsIDW82IDqsxWa8O/HqvpLbDQZ6hExcTlz15
- 1yVMZQ==
-Received: from mail-qk1-f199.google.com (mail-qk1-f199.google.com
- [209.85.222.199])
- by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4em9nm871s-1
- (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
- for <qemu-devel@nongnu.org>; Sat, 06 Jun 2026 02:33:50 +0000 (GMT)
-Received: by mail-qk1-f199.google.com with SMTP id
- af79cd13be357-9157f1be083so547351485a.3
- for <qemu-devel@nongnu.org>; Fri, 05 Jun 2026 19:33:50 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=oss.qualcomm.com; s=google; t=1780713230; x=1781318030; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:content-language:from
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=v1TIM0TZiva7fNh2VBKZ3XJJtWrkbwQ8XgKvXUXyoqM=;
- b=XTMB2z1v4YkBLZnWktL6aRHmtdsG7i7oaVnxmvKM6nBjCnQ/yK2e5DLcDbWZr9ZN1r
- hdrRwy8QTXXP9pkKVI1NmJei9MCkqt45lwu13vJIXLdZZ+g3VwqjRtr6LVhlU37BgdIS
- FlsaLoClMaW9uUcce0QTG7U0qzHbUlBq+JS9UBkahWjZEDuJoHrhO/dNDmZkx10mFhjE
- S42qXVO/T4B/xsH+JvQ8kt7NBGvXmyXSrzL4JupCaAG28i2UDGE4/zlwodoRWPetM8MA
- 88BV32zBHGp754dUOZu1AmGcRnjF82YDVoEgWWWtza/3gEt/YJXEaI/ND+vSJs9iRy0X
- tVQw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1780713230; x=1781318030;
- h=content-transfer-encoding:in-reply-to:content-language:from
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=v1TIM0TZiva7fNh2VBKZ3XJJtWrkbwQ8XgKvXUXyoqM=;
- b=kE9mddRZuc1sN2KAlDiBkLO84l4SXtJ4hP2J4hsl+kcnKG3KY90VIjb0b/DfhkxS5o
- IWPJugj8+nQcxj9UDrpucti6Xro8Mch2TauXWz3G2QYE4AmeqsYxpZV+d94E+Qq2oeju
- Ff2KMMabvgb6qZlKymEhGWrfyJpWrlT0HEMATGA7gHn6UMa5xIod0rY+gu8Evq9atmjM
- db/3aPHVb3F0eYRfyjV/OYuyeNtGHw0NoCSTctfDxCt9FARHE1uwCP3uxbv65tFZA9Q0
- ySZs8tnV9ZA+5ktXr1TqxZLDXhlKLMDQVcZxeZ/DWnMzOu2537u+6VEVpn66AZwbQ7Yx
- M1aQ==
-X-Forwarded-Encrypted: i=1;
- AFNElJ8M5tuLZys/PBaMRAzxbXl+7FCyBBBsO2hqhrlguIY4pKyuBdxx1ow1gQlfGBmMPg3MDavAqvAyAHW1@nongnu.org
-X-Gm-Message-State: AOJu0Yxn78uN2wuWSjmnfXSmktl72EUuyu5XUQkjx25Wd/jQCo8d+Oag
- swyTjF9h0KQFRyZbtp26uTLqC5NHGLl79YhCZeRKfkrQc4PNHQflS8WyXq6gOIc/mZOEWF4ivqu
- et8opjjQtV5RpP0L4ZN1KkpYDKdGTNW/6x6OcivOaLe5RmIBI6fStl2lnlg==
-X-Gm-Gg: Acq92OF4snZIQLt08gnek65vy7e9N0ktwPb5w6+2mD4WzySyQ3cx6tf/Vek4mT3KbS6
- k04ZxLQ7vXMVZKgjH+UOnUgenRZummomV3OozZEacFiuKCVrzwBg9jX+u9zpSVnxQlAb/tk8Qog
- +ZCoFcjpTMUqP10M+d5NbJ9zp5isuMGJIUhwGNOMfzqPe5FCx7O8CQKp1cVVdnqa3xe85p42aip
- 1m6jnm2NHklmvvR62FH/2ygOB2xjUTje78oDSjZpS7ijweUwMifu1Xb8MHktxMfXxgnt46CLyBi
- ZND3vopZQX4+M578h7lQfT/h1d/IedjafdEWY1qEx/LKeOkGWF+dCQVnzhzMwX3w5RddwgwMw8N
- IBbMfzJSCIOT/a3/bvt2jXX2I6sQ/ZZFXPJUcB0+rjuU8t7zNZkdKEIKvBH2FfWPeBriP
-X-Received: by 2002:a05:620a:2945:b0:915:40ff:4e10 with SMTP id
- af79cd13be357-915a9c4a2d5mr1126917785a.4.1780713229743; 
- Fri, 05 Jun 2026 19:33:49 -0700 (PDT)
-X-Received: by 2002:a05:620a:2945:b0:915:40ff:4e10 with SMTP id
- af79cd13be357-915a9c4a2d5mr1126914985a.4.1780713229238; 
- Fri, 05 Jun 2026 19:33:49 -0700 (PDT)
-Received: from [192.168.68.106] ([177.170.117.62])
- by smtp.gmail.com with ESMTPSA id
- af79cd13be357-9158a00a4f4sm1130666285a.3.2026.06.05.19.33.46
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Fri, 05 Jun 2026 19:33:48 -0700 (PDT)
-Message-ID: <3f9d50fb-304c-4ef3-bd63-9fd215b45965@oss.qualcomm.com>
-Date: Fri, 5 Jun 2026 23:33:45 -0300
+ (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
+ id 1wVjNp-0008Ac-Uc
+ for qemu-devel@nongnu.org; Sat, 06 Jun 2026 01:15:47 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1780722943;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding;
+ bh=321Sk4W0q2eBghQrYQieI1LQR7MJO5GdTpm52bl3Ibo=;
+ b=Qb7vSLstGmJp/2b+BxHUGpTXEbnuLc55PINRwgxp3OjIBhfP9CzuPP/ZcnGyoUpsdwaL4l
+ 52ZQYXyxUNEUIMyYNEd4hmhzFHr5u3iOq5yQBmYauledsj8emsBl3mT5WhxJDJMalOuFhN
+ Tb8RJDoXUblqXyjlt4uVSo0hMdRx9Ec=
+Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-528-w2lhZ3lnP9yZrRMMtD9zLg-1; Sat,
+ 06 Jun 2026 01:15:41 -0400
+X-MC-Unique: w2lhZ3lnP9yZrRMMtD9zLg-1
+X-Mimecast-MFC-AGG-ID: w2lhZ3lnP9yZrRMMtD9zLg_1780722941
+Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 0DDC0195608E
+ for <qemu-devel@nongnu.org>; Sat,  6 Jun 2026 05:15:41 +0000 (UTC)
+Received: from localhost (unknown [10.44.24.6])
+ by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id ED47D1955BC0; Sat,  6 Jun 2026 05:15:39 +0000 (UTC)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v7 2/5] target/riscv: Add server platform reference cpu
-To: Andrew Jones <andrew.jones@oss.qualcomm.com>
-Cc: Icenowy Zheng <uwu@icenowy.me>, qemu-devel@nongnu.org,
- qemu-riscv@nongnu.org, alistair.francis@wdc.com, liwei1518@gmail.com,
- zhiwei_liu@linux.alibaba.com, chao.liu.zevorn@gmail.com,
- leif.lindholm@oss.qualcomm.com, Fei Wu <wu.fei9@sanechips.com.cn>,
- Palmer Dabbelt <palmer@dabbelt.com>
-References: <20260604095244.3313259-1-daniel.barboza@oss.qualcomm.com>
- <20260604095244.3313259-3-daniel.barboza@oss.qualcomm.com>
- <4acb210eea217195fa733a4f42369c01591d5499.camel@icenowy.me>
- <a77a1891-214e-4788-8cc3-a5729f5cd182@oss.qualcomm.com>
- <9b05368c-972a-491e-bddb-7e015100eee2@oss.qualcomm.com>
- <5y2sdlx3pu5oyhrm3yxxkvkwv6pl3bpvuzdpnlqg4xt3l2zrxd@yi4h5x2f2xze>
-From: Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>
-Content-Language: en-US
-In-Reply-To: <5y2sdlx3pu5oyhrm3yxxkvkwv6pl3bpvuzdpnlqg4xt3l2zrxd@yi4h5x2f2xze>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNjA2MDAyMiBTYWx0ZWRfX66zFSDUPO3zj
- rUli2ZIhFeDzXKv1oVNEnedd/Ah6d9KraFTixGjPk/zG5/ECSL/+jYaPYUxWzxCdaRwRZI930bn
- D+QB8OQbAQAtTch8eTZwo2t7NVwVxrw+XDJbEcwds9JhYe/jBngzOOECvwT69t5qpNmghbQO+n4
- Eyf+6kLlnwwSN4H9B4yivbG8XwKhShW2KqjxFX4uxFW9zmbnrncLoKmYMlpjylpxzH4pIEvOdz/
- vgA0dgiFrH1jPRlKPX0Tkh4syOZKM/Xe7lfcrcDv4CI5mWe1r82cCAkjW7tvv2pH0AumaRKclBn
- XJdpO37b19PBlLfeEFw48udXWoesKVA1r6p2Sn53CzNidf4fg2C28Jkn0ck5jh/WQ5JzhqFYSM6
- KJy5zu2PeAt8kMQ9QwDFsUiiyhgVUcnpKuB2zJ+JebFbQQUgttd0Gscn/TCjMHJBm6Kks1r4d4e
- RvT7Sek9t6WTbfndyYA==
-X-Authority-Analysis: v=2.4 cv=Z9/c2nRA c=1 sm=1 tr=0 ts=6a23870e cx=c_pps
- a=HLyN3IcIa5EE8TELMZ618Q==:117 a=gdiugJE53z4H+vvYeRBHqw==:17
- a=IkcTkHD0fZMA:10 a=FelO9ux0wxsA:10 a=s4-Qcg_JpJYA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=gowsoOTTUOVcmtlkKump:22
- a=5l_fwqxPi-CwV5iqmxsA:9 a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
- a=bTQJ7kPSJx9SKPbeHEYW:22
-X-Proofpoint-ORIG-GUID: is0xogUOny7agrw7wGCteEFjd87zrTfm
-X-Proofpoint-GUID: is0xogUOny7agrw7wGCteEFjd87zrTfm
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.125,FMLib:17.12.100.49
- definitions=2026-06-06_01,2026-06-05_02,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- bulkscore=0 suspectscore=0 clxscore=1015 spamscore=0 impostorscore=0
- priorityscore=1501 lowpriorityscore=0 malwarescore=0 adultscore=0
- phishscore=0 classifier=typeunknown authscore=0 authtc= authcc=
- route=outbound adjust=0 reason=mlx scancount=1 engine=8.22.0-2605210000
- definitions=main-2606060022
-Received-SPF: pass client-ip=205.220.180.131;
- envelope-from=daniel.barboza@oss.qualcomm.com; helo=mx0b-0031df01.pphosted.com
-X-Spam_score_int: -27
-X-Spam_score: -2.8
-X-Spam_bar: --
-X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Subject: [GIT PULL v2 00/23] Fix various QOM object life-cycle issues
+Message-Id: <20260606-qom-tests-v2-0-55832d978a9f@redhat.com>
+Date: Sat, 06 Jun 2026 09:15:32 +0400
+From: =?utf-8?q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>
+To: qemu-devel@nongnu.org
+Cc: stefanha@redhat.com
+X-Developer-Signature: v=1; a=openpgp-sha256; l=3806;
+ i=marcandre.lureau@redhat.com; h=from:subject:message-id;
+ bh=ygHq6RKCcncIaJ3ibqV1KclPPvEx3yFMKLZQHcoGl7E=;
+ b=owEBbQKS/ZANAwAKAdro4Ql1lpzlAcsmYgBqI6z0tDpOBou7oPrQjS9bDSdBtD7bdQC1AT9/k
+ EhdYU2pelqJAjMEAAEKAB0WIQSHqb2TP4fGBtJ29i3a6OEJdZac5QUCaiOs9AAKCRDa6OEJdZac
+ 5UPXD/9Y04zpjUpyrHcexZ5cGowJ/vlGNGPQ2NwnrbN+Uod/tttcUjFoxGydGL8KDYVydNC6Yje
+ Tbx09O44t+lrofiKNelkqnpP3ehCsn5Dbav6ECZ8MLN8D/9h3Uy6GCYtkFF/MIAsLR2puyXneC4
+ v/5DpWqIw7QgbOczdSeuMi6Ia22o/2EDurIGI6ClI/st1nXyK/hfCHK4/kKFQadfSrzqNgGf1/G
+ HHwD4A3GVfLEv3Xue4MZM+JtDe8AXczQukWoKHl7SlWEzXfAUNvZ7K8igJyicq2SgFTwiG8Lf45
+ 7DVXJ8WIZXNleXnRBf0E3cWsDsouF14xUZcjx8gXT9mvh8JIO7gZlcPk85eSkKEh+yVGMAZnzpt
+ +y5qO1/kYHMzC0WGg/utaknRbK+sF8oV59cpWdJNVPozQuy2+6av3ivaYWuPyxVH3NwXehWpR07
+ XRFLAlj99vbgnB9xUeS2Y6mdlN9CYwyh9juJpBekXzG+iPnw4cm/xYXoIIyQ6afXS8Kng05zJjD
+ 9VEWW2ga8RzLMVW+z0mT8TFuLS6Urv/sWlEYe4FDwL0NoahZ5ZCDaJKQkZlCMpd+dwu0ftKQLg2
+ W+lmQcLZo3o5ZRtEbxJXIFTtuiWcmXSmTYpT02MI9sazVydgBdjJLbGxluZIyObmgQvbSFrV6Fo
+ VcY8OQRUDKzlPzA==
+X-Developer-Key: i=marcandre.lureau@redhat.com; a=openpgp;
+ fpr=87A9BD933F87C606D276F62DDAE8E10975969CE5
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.12
+Received-SPF: pass client-ip=170.10.133.124;
+ envelope-from=marcandre.lureau@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: 8
+X-Spam_score: 0.8
+X-Spam_bar: /
+X-Spam_report: (0.8 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.445,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_SBL_CSS=3.335, SPF_HELO_PASS=-0.001,
+ SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -160,78 +100,80 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+The following changes since commit 29c042c6e9d4a09d4a0ac3fa54aeb7ee08ce0bdc:
 
+  lcitool: remove Cirrus CI support (2026-06-03 12:45:38 -0400)
 
-On 6/5/2026 7:24 PM, Andrew Jones wrote:
-> On Fri, Jun 05, 2026 at 05:48:18PM -0300, Daniel Henrique Barboza wrote:
-> ...
->>> You're correct.  We're not initializing satp_mode to max_satp_mode, so the
->>> default value is being set to sv39.  This seems to be the case for all
->>> CPUs, not just this one.  For some reason I thought we were defaulting
->>> to the max_satp_mode.  I need to understand why sv39 is being set as
->>> default (i.e. why not BARE?).
->>
->> Got an update.  It turns out that what we're seeing is something that is
->> only happening to this CPU we're trying to add.
->>
->> The way satp mode is set on QEMU assuming no command line input:
->>
->> - "Bare" CPUs, aka CPUs that has just I or E enabled: default to BARE;
->>
->> - Profile CPUs: default to the minimum required by the spec.  E.g. for
->>    RVA23 the default is set to sv39;
->>
->> - all other CPUs: default to satp_mode_max from the CPU definition.
->>
->> The riscv-server-ref CPU is a BARE CPU that is using the profile framework
->> to enable extensions.  So for all intents and purposes the code is treating
->> it as a profile CPU with extra stuff.  Which is good, but then the
->> satp setting from RVA23 (sv39) is overwriting satp_mode_max from the
->> CPU definition.
->>
->> I believe the way we're creating riscv-server-ref here is correct, so what
->> I'm going to do is send a couple of fixes to allow riscv-server-ref to use
->> RVA23 as a base and honor its satp_mode_max value too.
-> 
-> But setting satp_mode_max to sv48 is not correct if that really means
-> _max_ since we want the reference platform to default to the minimum
-> (sv48) but also support the supported optional extensions and sv57 is
-> a supported optional extension.
+are available in the Git repository at:
 
-QEMU only works this way for profile CPUs.
+  https://gitlab.com/marcandre.lureau/qemu.git tags/qom-tests-pr-v2
 
-For non-profile CPUs: cpu.max_satp_mode is set internally as part of
-the CPU definition.  This is the maximum satp value that the CPU allows
-users to set via cmd line.  If the user does not provide a satp mode
-then we'll do curr_satp_mode = max_satp_mode.
+for you to fetch changes up to f74122507380ee53170c5b62e733bc247a76b4be:
 
-E.g. the thead vendor CPU defines .cfg.max_satp_mode = VM_1_10_SV39.
-In the command line we can't set anything higher than that:
+  qtest: add "qom-tests" command (2026-06-06 09:15:23 +0400)
 
-$ ./build/qemu-system-riscv64 -M virt -cpu thead-c906,sv57=on
-qemu-system-riscv64: satp_mode sv57 is higher than hw max capability sv39
+----------------------------------------------------------------
+Fix various QOM object life-cycle issues
 
+This series adds a new "qom-tests" qtest command that exercises basic QOM
+object life-cycle: it instantiates all non-abstract object types, gets/sets
+their properties, and unrefs them. This quickly surfaces leaks and crashes
+that could otherwise be triggered at runtime via QMP qom commands.
 
-For profile CPUs things are different: they are bare_cpu types, which are
-initialized with max_satp_mode sv57, and then during profile init we
-set the current satp_mode (current, not max_satp_mode) to the minimum
-the profile requires.  Thus the rva23s64 CPU, by default, starts with
-sv39 but it can go up to sv57.
+----------------------------------------------------------------
+Marc-André Lureau (23):
+      hw/pci: handle missing bus in prop_pci_busnr_get
+      chardev/char-socket: handle NULL addr in char_socket_get_addr
+      hw/pci-bridge: handle missing parent in prop_pxb_uid_get
+      hw/pci-host/i440fx: handle NULL bus in pci-hole64 getters
+      hw/pci-host/q35: handle NULL bus in pci-hole64 getters
+      hw/ipmi: reject NULL 'bmc' property rather than crash
+      hw/xlnx_dp: reject NULL 'dpdma' property rather than crash
+      hw/intc/apic: move checks to realize()
+      backends/cryptodev-lkcf: skip cleanup when not initialized
+      system/ioport: minor code simplification
+      hw/core/machine: free shim_filename on finalization
+      net/filter: free old values in property setters
+      target/i386/sev: add finalize functions and fix leaking setters
+      target/i386/kvm/tdx: free strings in tdx_guest_finalize
+      hw/i386/nitro_enclave: add instance finalize
+      hw/i386/pc: free pcspk on finalization
+      hw/tpm: free PPI buffer on finalization
+      hw/loongarch/virt: free flash devices and OEM strings on finalization
+      hw/ppc/spapr: free host_model and host_serial on finalization
+      target/riscv: fix general_user_opts hash table leak
+      target/riscv: use hash table as set for user_options
+      hw/i2c/pmbus: fix undefined behavior in pmbus_direct_mode2data
+      qtest: add "qom-tests" command
 
- From what I'm understanding we want the riscv-server-ref CPU to work
-like profile CPUs.  In fact I believe we can make it official by
-adding a 'default_satp_mode' setting in the CPU definition and allowing
-all CPUs to define a default satp and a max satp.  CPUs defs that don't
-set a default mode will keep working as today (default_satp_mode == max_satp_mode
-if no user input).
-
-
-I'll make changes and see how it goes.  Cheers,
-
-Daniel
-
-> 
-> Thanks,
-> drew
+ target/riscv/cpu.h                  |  3 ++-
+ tests/qtest/libqtest.h              |  8 ++++++
+ backends/cryptodev-lkcf.c           |  4 +++
+ chardev/char-socket.c               |  4 +++
+ hw/core/machine.c                   |  1 +
+ hw/display/xlnx_dp.c                |  6 +++++
+ hw/i2c/pmbus_device.c               |  6 +++--
+ hw/i386/nitro_enclave.c             | 11 ++++++++
+ hw/i386/pc.c                        | 10 +++++++
+ hw/intc/apic_common.c               | 23 +++++++++-------
+ hw/ipmi/ipmi.c                      |  8 +++++-
+ hw/loongarch/virt.c                 | 14 ++++++++++
+ hw/pci-bridge/pci_expander_bridge.c |  8 +++++-
+ hw/pci-host/i440fx.c                | 15 +++++++++--
+ hw/pci-host/q35.c                   | 15 +++++++++--
+ hw/pci/pci.c                        | 11 ++++++--
+ hw/ppc/spapr.c                      |  2 ++
+ hw/tpm/tpm_tis_sysbus.c             |  9 +++++++
+ net/filter.c                        |  2 ++
+ system/ioport.c                     |  3 +--
+ system/qtest.c                      | 46 ++++++++++++++++++++++++++++++++
+ target/i386/cpu-apic.c              |  6 +----
+ target/i386/kvm/tdx.c               |  5 ++++
+ target/i386/sev.c                   | 37 ++++++++++++++++++++++++++
+ target/riscv/cpu.c                  | 53 ++++++++++++++++++++++---------------
+ target/riscv/kvm/kvm-cpu.c          |  8 +++---
+ tests/qtest/libqtest.c              |  6 +++++
+ tests/qtest/qom-test.c              | 12 +++++++++
+ 28 files changed, 282 insertions(+), 54 deletions(-)
 
 
