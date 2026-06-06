@@ -4,87 +4,86 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4EFBCCD8C8E
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4D202CD8C92
 	for <qemu-devel@archiver.kernel.org>; Sat,  6 Jun 2026 13:48:33 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wVrNS-0002Md-Ul; Sat, 06 Jun 2026 09:47:57 -0400
+	id 1wVrNX-0002Ru-Qx; Sat, 06 Jun 2026 09:48:00 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <dev@khalid-dermoumi.de>)
- id 1wVmTt-0007xy-6B
- for qemu-devel@nongnu.org; Sat, 06 Jun 2026 04:34:13 -0400
-Received: from mo4-p00-ob.smtp.rzone.de ([85.215.255.23])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <dev@khalid-dermoumi.de>)
- id 1wVmTr-0006r2-JM
- for qemu-devel@nongnu.org; Sat, 06 Jun 2026 04:34:12 -0400
-ARC-Seal: i=1; a=rsa-sha256; t=1780734846; cv=none;
- d=strato.com; s=strato-dkim-0002;
- b=eqS90+HXr69V2xphfGeGN6SzbqxdY0lvWw0u1PdUlKWA3PmM16oHeMN3bEc2ipGs7G
- eO52vq+Tyyl7GkL0sJLDrSDOcN/7WIqQECSwfPqy6xCeUAbS8fnq+UudgAhQYTHk6AqG
- w0UXoAtMU+OrLle1EayE7GkocYlaYb9rYvjEw7/1LjoDsIHSchraU0KWbi09R8XLW6IC
- oSzRrPW99mqdODyG9p/99I7usVq38N7GD6/Jc3HpA0NAFeJ3pG1/9CnUSB7r5u0BYIBh
- 4PHDwveYkW7h3XbcOs4YoksnHl7FcN4NKPWNfmRsukNvCdyYo9M7s0Yi/WQjdkYJzYFs
- PikQ==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; t=1780734846;
- s=strato-dkim-0002; d=strato.com;
- h=Subject:From:To:Date:Message-ID:Cc:Date:From:Subject:Sender;
- bh=gjlwTj5VRlbHmbNZ3jVGgGYA98v6hXIlekzcnaNtpzY=;
- b=VsxmgE5EGXhQR870P2rQbijBZcay5U8VD5ctVqd/bCCxb/kztSrVwdr6iamsOhAEns
- PzCjpvqlENusO6jyS+vFu+PUiXZ0whIheg3zAdgCE+mp1E3TbYuQZXNCpOXTvxfivzTe
- FJ2S+rkZSMurXzzZGReAoAHJu7oMNa69iMnQ90Qp5bh5JVdmVFoyz8+xPd/cArzQOlcN
- 063ECelk1yMSO5NZNGD1f4EGSasBTATyabAMeNPsX8y2zlpfFlqWyj01KINCRx0GgXXd
- XLxxYJWZLMNBaAPJzeFLqA0oy/bhZGbWoPYUPzhlcMu6sSni2ex/h/toeI/ux6pCPYYN
- rm8g==
-ARC-Authentication-Results: i=1; strato.com;
-    arc=none;
-    dkim=none
-X-RZG-CLASS-ID: mo00
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; t=1780734846;
- s=strato-dkim-0002; d=khalid-dermoumi.de;
- h=Subject:From:To:Date:Message-ID:Cc:Date:From:Subject:Sender;
- bh=gjlwTj5VRlbHmbNZ3jVGgGYA98v6hXIlekzcnaNtpzY=;
- b=QWaNx//uFpLj36ipFJnDalRcZIwdc17URslLbaZ5pWGX6MZ9vwf9RfgNT+qpJDOSx1
- VMq6SOH1cphMVUdyfv59d/HKiRRchCQuEJW6/8ihuiaAgdIJ+cubpb4kYaeB1Y/2muAm
- g8q0BXrFpamo3wmF556OPUoekq/ud1qBVoCB9V6h3oExshK7Hku0Jo0C39blygElRBt0
- 38xK8SEuvjQf7h0s0+zeOEsOpoDxPvsBXVQwulyLqo4MAODRx5K5TwQ1HAa0acs8Fma6
- fascV3TrN6D8ojYRezfWmE1ZwpUrwSFDJgjns+iEiGVqj3sSilsQNuy2DI5JT1NUzLJa
- M82w==
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; t=1780734846;
- s=strato-dkim-0003; d=khalid-dermoumi.de;
- h=Subject:From:To:Date:Message-ID:Cc:Date:From:Subject:Sender;
- bh=gjlwTj5VRlbHmbNZ3jVGgGYA98v6hXIlekzcnaNtpzY=;
- b=SXB2dA66GSQxSxvQ895O2zIIQmcJSjGQ0BPDxglpP6DTgzJ4nQRVH7bDM3qE+3hWoJ
- EQHP/e9OR+cf64nxbGAQ==
-X-RZG-AUTH: ":J2gkfkipd/bPzGFzmGBYdHWvXeeTZnzuxeuq1/CUEEtdRcNCxKO3CF8tfqoeLgzSwhwq"
-Received: from [192.168.111.131] by smtp.strato.de (RZmta 55.0.1 DYNA|AUTH)
- with ESMTPSA id 974b132568Y6fXH
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256 bits))
- (Client did not present a certificate) for <qemu-devel@nongnu.org>;
- Sat, 6 Jun 2026 10:34:06 +0200 (CEST)
-Message-ID: <f59ad48f-c8ef-4bc8-96e4-ef3f0ab7fcdd@khalid-dermoumi.de>
-Date: Sat, 6 Jun 2026 10:34:05 +0200
-MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Content-Language: en-US
+ (Exim 4.90_1) (envelope-from <apolivodaa433@gmail.com>)
+ id 1wVnCk-0000Rb-LK
+ for qemu-devel@nongnu.org; Sat, 06 Jun 2026 05:20:34 -0400
+Received: from mail-lj1-x235.google.com ([2a00:1450:4864:20::235])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <apolivodaa433@gmail.com>)
+ id 1wVnCi-0003Xp-R4
+ for qemu-devel@nongnu.org; Sat, 06 Jun 2026 05:20:34 -0400
+Received: by mail-lj1-x235.google.com with SMTP id
+ 38308e7fff4ca-3967717c951so29221671fa.1
+ for <qemu-devel@nongnu.org>; Sat, 06 Jun 2026 02:20:32 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=gmail.com; s=20251104; t=1780737630; x=1781342430; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:from:to:cc:subject:date:message-id:reply-to;
+ bh=f2lDKcqQ8unO0L5ykgRMFRBw2EOUQnwyumW8J8Iy/4c=;
+ b=Et8d8RhwqZFH+Rlsh3wvKpSLcsN78Dz2IylTb9l4BY8OwK+njT5hPLgqpLQoHdqcPW
+ zWTxgkl8kpuG2q7fwDR+v1UHVHQHXHlQOicpU1bLhuPQNe2wUpoxXvhqbOifeu2Y79w/
+ kAiIpQnbP7tlSy5wbdT/JfQC4cVZrtSFn30z0VMwle02rozDFqKJMo7Gxc9EmStJxupD
+ U7uD0l8vuQ2QIae+luTVu0S8QCXUGlUDD8XGfBJsi1pMr2FJW1tO3/qrTdDvJsnVF6dp
+ aEaSPbizUkHhTKy3mqBGoPm8KNgyPt/q0c5lbrmyHRhudlnQeyjS6BnwmIH4LxK89Exi
+ luKA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1780737630; x=1781342430;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=f2lDKcqQ8unO0L5ykgRMFRBw2EOUQnwyumW8J8Iy/4c=;
+ b=FHwJd50a6xXDkN5VyhljCmqEECKpCksC6+Nh65YRnUH2rVw7mGQrPaRsjrGGZkJMuM
+ 1l6slDGOZpRwAE+v/NrOF3b7TPOxegdISk2uuqAtJwW7o+wt06+aIvElpTQ2FKtldwKV
+ yqHrPuNBJZm6b3CBhzorGNU1Gw069cLL4Xv6gXvCktF1/f8EcHC6MWBiVxxSZlDuPon4
+ 07uzRho6i1ryARXnSyfk374xnmQpGo+WFcmKxTS3X33D/hpTlvusnOSmRDOkZ6emM5Y3
+ 9p1S4yEKXfP+cwXTksG1uVc/h+KVMEoyH5CfSNDuX+mWmWISBUTOH3IniVmov3m2lg9v
+ Z7/Q==
+X-Gm-Message-State: AOJu0YydjeTN6cK93MES7tkERagjbb8btRpPM614cO5vsDjOFP6Ke026
+ /GaJeCtj6ng913u7YnxOU2ioOQ6KUymheEOVvV6d7bjiFMxrsq2SYgaj+W601OLt
+X-Gm-Gg: Acq92OGrQbuNmc1aaHt5RpdQz4PWFVlraHoOL9tEokWxZXrNqpgKtxcPP/k5LBr7bwf
+ 5R+fixgNZJnS4ql1IYoYBPXbEN2OwRv902LU+EkQVcnkDAOpXAF0sEnhzYUrR5c2yBH2QlpDVE7
+ s+RArfXqInCEYubqJ3vzcdg1vNNhCUx+aRmrvE3CxuP900XQaRFB6D+8RRZntiUSvUmLzmVlmf+
+ zJjLdQ7L4Pi+lJ7Wxcv5HRvdX6PfMeyI5RukmX92GQqHCaPfaynJCzO7o9r/HBOGLfRASDmNE26
+ u2r57XRF3tj4LfaijjBe5KgpXTp+TsqBHW2dmmju+Zbvi8xL1nlJHHjmORLXUvFR+twAHVefIcK
+ z3rrxsN4sgupehlZfIMj1djJ1cGSnVOer6ZIcwNSCRzcEHuOVme4LBQe5ZIgmVeHfQQxZSTTIlq
+ ww84oF+rWeAXOQZGTI9RzHa17oDF0=
+X-Received: by 2002:a2e:a58b:0:b0:391:1570:b6c6 with SMTP id
+ 38308e7fff4ca-396d07f0a62mr20909731fa.2.1780737630144; 
+ Sat, 06 Jun 2026 02:20:30 -0700 (PDT)
+Received: from kali ([82.162.57.219]) by smtp.gmail.com with ESMTPSA id
+ 38308e7fff4ca-396ac2be11esm29306311fa.27.2026.06.06.02.20.27
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Sat, 06 Jun 2026 02:20:28 -0700 (PDT)
+From: Andrey Polivoda <apolivodaa433@gmail.com>
 To: qemu-devel@nongnu.org
-Subject: Ubuntu 24.04 guest issue: unable to execute QEMU agent command
- 'guest-set-time': this feature or command is not currently supported
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: none client-ip=85.215.255.23;
- envelope-from=dev@khalid-dermoumi.de; helo=mo4-p00-ob.smtp.rzone.de
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_PASS=-0.001,
- SPF_NONE=0.001 autolearn=ham autolearn_force=no
+Cc: Andrey Polivoda <apolivodaa433@gmail.com>
+Subject: [PATCH] target/i386: helper_sysret(): Check that RCX contains a
+ canonical address when emulating an Intel CPU
+Date: Sat,  6 Jun 2026 19:20:12 +1000
+Message-ID: <20260606092022.67929-1-apolivodaa433@gmail.com>
+X-Mailer: git-send-email 2.53.0
+MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::235;
+ envelope-from=apolivodaa433@gmail.com; helo=mail-lj1-x235.google.com
+X-Spam_score_int: -7
+X-Spam_score: -0.8
+X-Spam_bar: /
+X-Spam_report: (-0.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FORGED_GMAIL_RCVD=1,
+ FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
-X-Mailman-Approved-At: Sat, 06 Jun 2026 09:47:41 -0400
+X-Mailman-Approved-At: Sat, 06 Jun 2026 09:47:42 -0400
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -96,42 +95,73 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-to:  Khalid Dermoumi <dev@khalid-dermoumi.de>
-From:  Khalid Dermoumi via qemu development <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi!
+Intel and AMD CPUs implement SYSRETQ instruction differently.
+One of these differences is whether a canonicality check of the address that
+will be loaded to RIP is performed: Intel CPUs do this check, AMD CPUs don't.
 
-I have an issue with qemu Ubuntu 24.04 guests under kvm and libvirt 
-(host is also Ubuntu 24.04). The guests do not get time synced when the 
-vms are resumed. When I try to set the time from the host manually, this 
-is returned:
+Currently, QEMU does not perform this check when emulating Intel CPUs.
+This patch corrects this by implementing the canonlicality check on a new RIP
+value from RCX and performing it only when emulating Intel CPUs.
 
-khalid@host:~$ virsh qemu-agent-command "virtual-027" 
-'{"execute":"guest-set-time"}'
-error: internal error: unable to execute QEMU agent command 
-'guest-set-time': this feature or command is not currently supported
+Flags and segment registers' caches are updated only after checking the new RIP
+value to ensure that CPU state is not modified in case the #GP(0) exception
+is raised due to the check failure.
 
-I am certain that the qemu-guest-agent is running, and otherwise working:
+Cc: qemu-devel@nongnu.org,
+    Paolo Bonzini <pbonzini@redhat.com>,
+    Richard Henderson <richard.henderson@linaro.org>
+Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/3223
+Signed-off-by: Andrey Polivoda <apolivodaa433@gmail.com>
+---
+ target/i386/tcg/seg_helper.c | 17 +++++++++++++----
+ 1 file changed, 13 insertions(+), 4 deletions(-)
 
-khalid@mobile-009:~$ virsh qemu-agent-command "virtual-027" 
-'{"execute":"guest-ping"}'
-{"return":{}}
-
-I tried to fix this, and looked at many things, but I couldn't find the 
-cause of the issue yet. The vms where running Ubuntu 20.04 before, and 
-time sync worked fine. After I upgraded them a few weeks ago, this 
-problem appeared.
-
-I would be thankful for any pointers to what's wrong.
-
-
-Regards,
-
+diff --git a/target/i386/tcg/seg_helper.c b/target/i386/tcg/seg_helper.c
+index 58aac72011..d5c174b7fd 100644
+--- a/target/i386/tcg/seg_helper.c
++++ b/target/i386/tcg/seg_helper.c
+@@ -1096,17 +1096,22 @@ void helper_sysret(CPUX86State *env, int dflag)
+     selector = (env->star >> 48) & 0xffff;
+ #ifdef TARGET_X86_64
+     if (env->hflags & HF_LMA_MASK) {
+-        cpu_load_eflags(env, (uint32_t)(env->regs[11]), TF_MASK | AC_MASK
+-                        | ID_MASK | IF_MASK | IOPL_MASK | VM_MASK | RF_MASK |
+-                        NT_MASK);
+         if (dflag == 2) {
++            uint64_t new_rip = env->regs[R_ECX];
++            if (IS_INTEL_CPU(env)) {
++                int shift = (get_pg_mode(env) & PG_MODE_LA57) ? 56 : 47;
++                int64_t sext = (int64_t)new_rip >> shift;
++                if (sext != 0 && sext != -1) {
++                    raise_exception_err_ra(env, EXCP0D_GPF, 0, GETPC());
++                }
++            }
+             cpu_x86_load_seg_cache(env, R_CS, (selector + 16) | 3,
+                                    0, 0xffffffff,
+                                    DESC_G_MASK | DESC_P_MASK |
+                                    DESC_S_MASK | (3 << DESC_DPL_SHIFT) |
+                                    DESC_CS_MASK | DESC_R_MASK | DESC_A_MASK |
+                                    DESC_L_MASK);
+-            env->eip = env->regs[R_ECX];
++            env->eip = new_rip;
+         } else {
+             cpu_x86_load_seg_cache(env, R_CS, selector | 3,
+                                    0, 0xffffffff,
+@@ -1120,6 +1125,10 @@ void helper_sysret(CPUX86State *env, int dflag)
+                                DESC_G_MASK | DESC_B_MASK | DESC_P_MASK |
+                                DESC_S_MASK | (3 << DESC_DPL_SHIFT) |
+                                DESC_W_MASK | DESC_A_MASK);
++
++        cpu_load_eflags(env, (uint32_t)(env->regs[11]), TF_MASK | AC_MASK
++                        | ID_MASK | IF_MASK | IOPL_MASK | VM_MASK | RF_MASK |
++                        NT_MASK);
+     } else
+ #endif
+     {
 -- 
-Khalid Dermoumi
-M: +49 177 6731348
-E: dev@khalid-dermoumi.de
+2.53.0
 
 
