@@ -4,80 +4,80 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 36589CD6E75
-	for <qemu-devel@archiver.kernel.org>; Sat,  6 Jun 2026 05:17:51 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7FE4ACD6E75
+	for <qemu-devel@archiver.kernel.org>; Sat,  6 Jun 2026 05:17:56 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wVjOH-0002AM-30; Sat, 06 Jun 2026 01:16:13 -0400
+	id 1wVjPT-0005EA-W4; Sat, 06 Jun 2026 01:17:28 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1wVjO5-00026E-Qe
- for qemu-devel@nongnu.org; Sat, 06 Jun 2026 01:16:02 -0400
+ id 1wVjPR-0004xA-C0
+ for qemu-devel@nongnu.org; Sat, 06 Jun 2026 01:17:25 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1wVjO4-0008C2-Ff
- for qemu-devel@nongnu.org; Sat, 06 Jun 2026 01:16:01 -0400
+ id 1wVjPP-0008Mn-PZ
+ for qemu-devel@nongnu.org; Sat, 06 Jun 2026 01:17:25 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1780722959;
+ s=mimecast20190719; t=1780723042;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=1KSCoPhM3lk7JFhTxcjXT83QO7v9CIqkxILozb1DjS4=;
- b=JgkUVTHdnLTQayZUaI4+S528i4dFdiNJJ1FpJiDwp9K7aKXLWvCrMOQieOWLueSTMFK47D
- Zp4IoVzSEmDGQl5OgBaE0f2fhztbT0omCzwHNRpMDl7i4X/1IqA4B3k7P0etx9/syUp75N
- zAVo597/QFighG0C30uJ8b2m40dk1VU=
-Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
+ bh=xzKJ/IpdkG01bM1txdqjhoLFTRAUk3+pG2IUFauAHiA=;
+ b=IhbZiOXOuZu93yjjQJqP8jNfb8cv1hqq7BhJeKIUbfJ1TklizVAOIEY6DJBws68lfAZWwl
+ sOVwRwkuuE0qgT+ePOsKIGjntvsPSQ6ElG8nRV8cNpICRMG5I98N34szV0FCoAF8heJnUy
+ 36PCCefXYBP62kfTe3AK1GQTTzD/gEo=
+Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-613-0iFngg0wMNKXKuZipOa0Mw-1; Sat,
- 06 Jun 2026 01:15:57 -0400
-X-MC-Unique: 0iFngg0wMNKXKuZipOa0Mw-1
-X-Mimecast-MFC-AGG-ID: 0iFngg0wMNKXKuZipOa0Mw_1780722956
-Received: from mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.111])
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-361-r78MoDlGMfCnWn5k0pQl7g-1; Sat,
+ 06 Jun 2026 01:17:21 -0400
+X-MC-Unique: r78MoDlGMfCnWn5k0pQl7g-1
+X-Mimecast-MFC-AGG-ID: r78MoDlGMfCnWn5k0pQl7g_1780723040
+Received: from mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.93])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id C90FE180044D
- for <qemu-devel@nongnu.org>; Sat,  6 Jun 2026 05:15:56 +0000 (UTC)
+ by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 7A94A18002FB
+ for <qemu-devel@nongnu.org>; Sat,  6 Jun 2026 05:17:20 +0000 (UTC)
 Received: from localhost (unknown [10.44.24.6])
- by mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id D469B1800361; Sat,  6 Jun 2026 05:15:55 +0000 (UTC)
+ by mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id 451981800480; Sat,  6 Jun 2026 05:17:18 +0000 (UTC)
 From: =?utf-8?q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>
-Date: Sat, 06 Jun 2026 09:15:35 +0400
-Subject: [GIT PULL v2 03/23] hw/pci-bridge: handle missing parent in
- prop_pxb_uid_get
+Date: Sat, 06 Jun 2026 09:15:51 +0400
+Subject: [GIT PULL v2 19/23] hw/ppc/spapr: free host_model and host_serial
+ on finalization
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
-Message-Id: <20260606-qom-tests-v2-3-55832d978a9f@redhat.com>
+Message-Id: <20260606-qom-tests-v2-19-55832d978a9f@redhat.com>
 References: <20260606-qom-tests-v2-0-55832d978a9f@redhat.com>
 In-Reply-To: <20260606-qom-tests-v2-0-55832d978a9f@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: stefanha@redhat.com
-X-Developer-Signature: v=1; a=openpgp-sha256; l=1251;
+X-Developer-Signature: v=1; a=openpgp-sha256; l=867;
  i=marcandre.lureau@redhat.com; h=from:subject:message-id;
- bh=n1HD5N4FZEYQbnTz/49cmNT99YN0r5FAVFil0pDrL3g=;
- b=owEBbQKS/ZANAwAKAdro4Ql1lpzlAcsmYgBqI6z0U79PgSmp2Nns1j+04YC4v4VqqR/qTKQGA
- Yh6bNS/tdyJAjMEAAEKAB0WIQSHqb2TP4fGBtJ29i3a6OEJdZac5QUCaiOs9AAKCRDa6OEJdZac
- 5W3HD/9U6U5p5IipvEJ8ngxAS8yRWXgHwyFVluqRpjry5Oqh7yIrtbnC4wfuJgTW90X5on5p6RT
- 6D5BMM/GYiN9/jyIS0jia9bnFZykd3wAjLO8G6NZQAUSiR5zVdw1eOfnOXPaRO21CEIoVYApbu0
- Xeiz3MiOqezadzg3B9LVimOXeIExiD2gFpFT8LYQ+bVkHPkJQN2LA95PKX5xxMVYGfPaOfN9TuS
- rUxL9fjluW4AB0TKdMADZ7+HmZq9Aoy4FyxQbYEH+RrLvcJvzOAJGYyLoFVXpR668Ky4GemrOar
- MsyoM2cciyvLOej3A5Fv9uQ5cGXjhtgHncjYvK9P8sc1DzHglHwDKnbk+hTQhPeVWpVEcrgoDJr
- Ax134v8XBzJFsceRaHtgk9a6s3gkoI9PhZI19UoyrB/GDDgr4gEG2RGq7CebjchcYKi9nYCL9MI
- r/iHnPZfKV8JKJyYpRQ7qz0LA6j/kHNnu7WwUipTrmBS+yU58q4NmWJXVUtJYkgKUce6nO0s4vI
- cH98UNokBYGBSlJlIR4D93x7h5i3wLZTySONxhoLDPAoD7m0hP/O/60bAVDS6jXwUYtRCg4LpId
- 3xvxI4wYLnWcmsiUvd4PBtmZXPXm0IQnYLWZ7ydY79YChU6iBi+/YKUjrCpKeaWN3mIICzxYXx/
- lI6G/styWrW9aaQ==
+ bh=EFDae8u7ennK5lGTEip5Z4TCCmPwbTBDCnezXm8A95s=;
+ b=owEBbQKS/ZANAwAKAdro4Ql1lpzlAcsmYgBqI6z1WHdm3DEK/PyXaBMvb5q6PgQvRiaLD7OlO
+ 3b08+KrJwWJAjMEAAEKAB0WIQSHqb2TP4fGBtJ29i3a6OEJdZac5QUCaiOs9QAKCRDa6OEJdZac
+ 5fKgD/92HsMte1XT6fHbxiDfOfvi5GlK+vN6X4wbUiq9c/ALCAMmsssOrcfI4KNhUBZGyB9qXiK
+ uemvyWvEPPuNr52ZfGdbazWdt+xT0Ky1kLcw0SABWGADLjilyUfCfLFS5g7QBxdbEz/cNnV3fwR
+ lwbZ248ljCILgNn4t8e07ldMVExYHFrcvkeh7QqWjQr2onlq5DlIqb1rQ/PoctLhbW9Up1/4023
+ TvbAajpUSDEmTi1yzqfbmO901fLLVZAke0MnJ4K0D3y7YnOgYkk2x5/wRCsZWcx2t6ZJ65Xu97n
+ ZhWQHDqnZloE5gvrt9d0ODq9/qfvoReBqZoWOqvjDQn1z+YXa8APlzitglQ/Qdwujbcd6QXkxLI
+ Jsv+OJd8lO0ujYke4PjDa9kEQSjYhxkbdeYjq+20Ou4jhQK+829b5N9LVAueyCHZAnJLjYbAL9l
+ x6kDCk0lb1wT7e+ueOYyDDjpfHlJURRnaksT1XKUSu3yiKVxpDJ7FISK0B1MS/iJ/OlWGP+o/By
+ QVCXKZkqgehdA4dxMfQoiuaFrzoIzfP0vHpxNKt1xUzXW5akrnkB6AznJqaTJvjWGgbqvVQzDqN
+ VInmjM2P7v/PZSykGVKE+l8/WxOp4rz/7GoZoQ8V1AWi9UHINj5X00itYzD9JR7UrT7NGMmjuVR
+ iwUBLKqeZEyzVYQ==
 X-Developer-Key: i=marcandre.lureau@redhat.com; a=openpgp;
  fpr=87A9BD933F87C606D276F62DDAE8E10975969CE5
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.111
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.93
 Received-SPF: pass client-ip=170.10.129.124;
  envelope-from=marcandre.lureau@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
@@ -103,38 +103,29 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-When called on an unrealized pxb bus (e.g. from
-qmp_qom_list_properties), bus->parent_dev is NULL. The pxb_bus_num()
-callback dereferences it unconditionally. Check for this to avoid a
-NULL dereference.
+The host_model and host_serial strings are allocated via g_strdup in
+property setters but never freed when the machine is destroyed.
 
-Fixes: 97b9cb066e5f ("hw/pci-bridge: Add acpi_uid property to TYPE_PXB_BUS")
+Fixes: 27461d69a0f ("ppc: add host-serial and host-model machine attributes (CVE-2019-8934)")
 Reviewed-by: Daniel P. Berrangé <berrange@redhat.com>
 Signed-off-by: Marc-André Lureau <marcandre.lureau@redhat.com>
 ---
- hw/pci-bridge/pci_expander_bridge.c | 8 +++++++-
- 1 file changed, 7 insertions(+), 1 deletion(-)
+ hw/ppc/spapr.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/hw/pci-bridge/pci_expander_bridge.c b/hw/pci-bridge/pci_expander_bridge.c
-index 11623a5666f..40ffbc4e082 100644
---- a/hw/pci-bridge/pci_expander_bridge.c
-+++ b/hw/pci-bridge/pci_expander_bridge.c
-@@ -85,8 +85,14 @@ static uint16_t pxb_bus_numa_node(PCIBus *bus)
- static void prop_pxb_uid_get(Object *obj, Visitor *v, const char *name,
-                              void *opaque, Error **errp)
- {
--    uint32_t uid = pci_bus_num(PCI_BUS(obj));
-+    PCIBus *bus = PCI_BUS(obj);
-+    uint32_t uid;
+diff --git a/hw/ppc/spapr.c b/hw/ppc/spapr.c
+index 191f7431bdf..f0e99bb5be7 100644
+--- a/hw/ppc/spapr.c
++++ b/hw/ppc/spapr.c
+@@ -3517,6 +3517,8 @@ static void spapr_machine_finalizefn(Object *obj)
+     SpaprMachineState *spapr = SPAPR_MACHINE(obj);
  
-+    if (!bus->parent_dev) {
-+        error_setg(errp, "bus not attached to a device");
-+        return;
-+    }
-+    uid = pci_bus_num(bus);
-     visit_type_uint32(v, name, &uid, errp);
+     g_free(spapr->kvm_type);
++    g_free(spapr->host_model);
++    g_free(spapr->host_serial);
  }
  
+ void spapr_do_system_reset_on_cpu(CPUState *cs, run_on_cpu_data arg)
 
 -- 
 2.54.0
