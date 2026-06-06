@@ -4,90 +4,90 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 944FFCD6E55
-	for <qemu-devel@archiver.kernel.org>; Sat,  6 Jun 2026 05:19:22 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 672A3CD6E55
+	for <qemu-devel@archiver.kernel.org>; Sat,  6 Jun 2026 05:19:35 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wVjOH-0002AN-3S; Sat, 06 Jun 2026 01:16:13 -0400
+	id 1wVjPr-0006qd-RJ; Sat, 06 Jun 2026 01:17:51 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1wVjOC-00029H-4B
- for qemu-devel@nongnu.org; Sat, 06 Jun 2026 01:16:08 -0400
+ id 1wVjPo-0006eW-KW
+ for qemu-devel@nongnu.org; Sat, 06 Jun 2026 01:17:49 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1wVjOA-0008D1-PM
- for qemu-devel@nongnu.org; Sat, 06 Jun 2026 01:16:07 -0400
+ id 1wVjPm-0008RC-Ci
+ for qemu-devel@nongnu.org; Sat, 06 Jun 2026 01:17:47 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1780722966;
+ s=mimecast20190719; t=1780723065;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=dMU+/9kJPvBI6+rr+qjuUE2o/XCGiPk1vWq0Y33MHrs=;
- b=GT3fMUNjigFa9qVTFKjprTKlGiBk15Kq06OOk2OpAAhMOzIWCXHMM8XrG44rg92dbhyRJE
- iz47C1qCOm+KBVwLiJmPNLS0OiJQXQt/+xdoyNVYlDUarYVzlxhAgVIuR1UABoJgWvGnEK
- INUzvuWOMD698hzoKmjlnKmHNtzGfQU=
-Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
+ bh=9VyZiJ2ahA2S/F2Rs8hb2fk5gvFLJAv/h8MtGmJNquk=;
+ b=L1dMWXbhaxLm60jXAH7a9Ryzx3nlV/8O19iMjJQNUrVriluGFbNUAi0cWoQgq3YimEqNxz
+ grGVuBzA1XaR3V0jDekRJPpCfMmRlPx7NcBXrOTnjGKn4Qgi5JPbo22D3ZVNG2i087j7+W
+ QiEs0kfh25qXuso0gYCOejiKzU587S4=
+Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-438-wFDvO_4uN8e8Cz_iQtfPaw-1; Sat,
- 06 Jun 2026 01:16:02 -0400
-X-MC-Unique: wFDvO_4uN8e8Cz_iQtfPaw-1
-X-Mimecast-MFC-AGG-ID: wFDvO_4uN8e8Cz_iQtfPaw_1780722962
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-74-W4Y3m4VGM9ea7ZdqHqLVjg-1; Sat,
+ 06 Jun 2026 01:17:43 -0400
+X-MC-Unique: W4Y3m4VGM9ea7ZdqHqLVjg-1
+X-Mimecast-MFC-AGG-ID: W4Y3m4VGM9ea7ZdqHqLVjg_1780723062
 Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 0D35C180044D
- for <qemu-devel@nongnu.org>; Sat,  6 Jun 2026 05:16:02 +0000 (UTC)
+ by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 345ED19560A3
+ for <qemu-devel@nongnu.org>; Sat,  6 Jun 2026 05:17:42 +0000 (UTC)
 Received: from localhost (unknown [10.44.24.6])
  by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id EB2251955BC0; Sat,  6 Jun 2026 05:16:00 +0000 (UTC)
+ id E5F611955BC0; Sat,  6 Jun 2026 05:17:40 +0000 (UTC)
 From: =?utf-8?q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>
-Date: Sat, 06 Jun 2026 09:15:36 +0400
-Subject: [GIT PULL v2 04/23] hw/pci-host/i440fx: handle NULL bus in
- pci-hole64 getters
+Date: Sat, 06 Jun 2026 09:15:55 +0400
+Subject: [GIT PULL v2 23/23] qtest: add "qom-tests" command
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
-Message-Id: <20260606-qom-tests-v2-4-55832d978a9f@redhat.com>
+Message-Id: <20260606-qom-tests-v2-23-55832d978a9f@redhat.com>
 References: <20260606-qom-tests-v2-0-55832d978a9f@redhat.com>
 In-Reply-To: <20260606-qom-tests-v2-0-55832d978a9f@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: stefanha@redhat.com
-X-Developer-Signature: v=1; a=openpgp-sha256; l=1993;
+X-Developer-Signature: v=1; a=openpgp-sha256; l=4983;
  i=marcandre.lureau@redhat.com; h=from:subject:message-id;
- bh=OVF9SYpNWrlV6USrd7t5agr6GhrxgYTzZ+VWk9J0k8Q=;
- b=owEBbQKS/ZANAwAKAdro4Ql1lpzlAcsmYgBqI6z0r+HxpBIe+U43NaxusRL10a5nAxAty9WCY
- sZL8yNIiPaJAjMEAAEKAB0WIQSHqb2TP4fGBtJ29i3a6OEJdZac5QUCaiOs9AAKCRDa6OEJdZac
- 5ZCTD/0U7ma8QVhoVM4EZ7ZTZ3bvto4ldeL/GI3Z7UA8OLDnLpB2zKKb23aE5lKNMWkn5ya78jJ
- 2BwJ+jxaugaA8ny+PkcqFUpGf0SSwUTEYZOquJcngrH3XP60AIPxaFB0Z3XeGHQPlBgrBdNVYxH
- dTlc2xmoS0FqR5kI89j1yJtlTppg8otZreV6Dpyf6U91XYkGvgpI8V03873tB2CEjNA9nEf4ioL
- xqx9Fc3JQozAYYVxvUaTxlvYmlK9FPmADroCEA1wu4EwsxLioYHlxBqcCC5RhxdbZTqGd8j6yl8
- BLOQ3p4UQDtrCtwTHUjHe1O5QVLnuKYPpYFAAwYB4aiwe+6qdFY/vC/uN/4rtTkJHrvsrFnWPVW
- 9ixelYAfIBjB3zKVD7Zyi+UMHCt+t8kmSr/mspVbgb7CHy8E/CD5yNqA9px16uGN0MLny6j5tHD
- hj3PCOHICk/OGcpE5CcTOinWAdyf1poitPEeoBVYhVXTwYt49O87zzlAS1sbOoF9XBPPA3tb2W/
- wCTm6ECgHhY6pME76xK+vhbI0P7rG4qQhVf1EWWpeVPDOhTkmAQ0QbuDLG28o+0Nr4pA5EnDTUK
- N4CsuGfF0r5yO6jrx373NR49xtjXbqpeGYdmrzAMgHC1Rk9FJf+gZsll7I3aXPi/ZtkFE/jGV2Y
- hp3n6rfSHeNQreg==
+ bh=BgJPBPmH5B6RRCynYwgwnZTtBG1LgQz3rhYtKXyzYDQ=;
+ b=owEBbQKS/ZANAwAKAdro4Ql1lpzlAcsmYgBqI6z1mCW8lMLQNLJUh6MRBhMGcMMP4ZseNfkhc
+ FOn7UvKZRuJAjMEAAEKAB0WIQSHqb2TP4fGBtJ29i3a6OEJdZac5QUCaiOs9QAKCRDa6OEJdZac
+ 5bD9D/wOvKwJ6mycP7q3Yt6mad004NMXPD79GQeUydevG0HuImvbRbdZRDGqS/9L9u47b/R5JjV
+ u8L5jrDp0y39NdN3Hugah/ufvXG61iUdc9Ah670lCv/+iMHModyLkBQocg5UYv375jcCGXkdJfp
+ HXajRHbtrJMyXWt+odvx28cFypEgJwy3kX7hdfOm6zL/kLuYFsd2KcVr6iR09UXsrRq/n+YOqCN
+ Tobz0UdZcYnFVX5XKKDp9fu8WTm4OJhDig96JV5AJrwr4VCT6HWnpkouBawq95YwS9H2LUbbILB
+ Ul7FyGJjpr7RTbDmtTWn0XcF8e05Dr5rEKwQ9A+3LgHzs2cSU6BnPk58sOEFwFsgiAB+6Pv1UZM
+ RMBVmAUlfFHfCXhYhyHZa9IZqlqkfKCUDf225ht2jdgVH16oyZsvHYV/4KIhm5L/i/C0lD2orUJ
+ Y00D0iG80++ZbLMlai6P44d26b/D+sqFeBL0g6vI6tfyQq2vv6sLe9oK+QbigXqd8j8wXu1EBmO
+ cvArqJfh+P7vH4eVBxbDvnhCklnNMBA3LCo9b/I2t1ZdynIlL1EaQV7GORDqdql8vg+wWgpps0F
+ gRAAKYqB2TkRFC+ntRproimCsSWhXEV9/pxF76UprdYtdHJrUWvlHtGnyZv3HfDmU+hOTlPRyNn
+ UZwsD/Dajuo6HoQ==
 X-Developer-Key: i=marcandre.lureau@redhat.com; a=openpgp;
  fpr=87A9BD933F87C606D276F62DDAE8E10975969CE5
 X-Scanned-By: MIMEDefang 3.0 on 10.30.177.12
 Received-SPF: pass client-ip=170.10.133.124;
  envelope-from=marcandre.lureau@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -24
-X-Spam_score: -2.5
-X-Spam_bar: --
-X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.445,
+X-Spam_score_int: 8
+X-Spam_score: 0.8
+X-Spam_bar: /
+X-Spam_report: (0.8 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.445,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_SBL_CSS=3.335, SPF_HELO_PASS=-0.001,
+ SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -103,54 +103,151 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-When called on an unrealized i440FX host bridge (e.g. from
-qmp_qom_list_properties), h->bus is NULL since the root bus is only
-created during realize. Guard against this in both
-pci_hole64_start and pci_hole64_end getters, reporting an error.
+Add a new "qom-tests" to exercise basic object lifecycle. Instantiate
+all non-abstract objects, get and set properties and unref.
 
-Signed-off-by: Marc-André Lureau <marcandre.lureau@redhat.com>
+This should quickly find leaks and other related issues that are
+eventually triggerable at run-time with QMP qom commands.
+
 Reviewed-by: Daniel P. Berrangé <berrange@redhat.com>
+Signed-off-by: Marc-André Lureau <marcandre.lureau@redhat.com>
 ---
- hw/pci-host/i440fx.c | 15 +++++++++++++--
- 1 file changed, 13 insertions(+), 2 deletions(-)
+ tests/qtest/libqtest.h |  8 ++++++++
+ system/qtest.c         | 46 ++++++++++++++++++++++++++++++++++++++++++++++
+ tests/qtest/libqtest.c |  6 ++++++
+ tests/qtest/qom-test.c | 12 ++++++++++++
+ 4 files changed, 72 insertions(+)
 
-diff --git a/hw/pci-host/i440fx.c b/hw/pci-host/i440fx.c
-index e7d638b296c..c1982f7962a 100644
---- a/hw/pci-host/i440fx.c
-+++ b/hw/pci-host/i440fx.c
-@@ -189,8 +189,14 @@ static void i440fx_pcihost_get_pci_hole64_start(Object *obj, Visitor *v,
-                                                 const char *name,
-                                                 void *opaque, Error **errp)
- {
--    uint64_t hole64_start = i440fx_pcihost_get_pci_hole64_start_value(obj);
-+    PCIHostState *h = PCI_HOST_BRIDGE(obj);
-+    uint64_t hole64_start;
+diff --git a/tests/qtest/libqtest.h b/tests/qtest/libqtest.h
+index 950ea2baafa..45217fb8dc0 100644
+--- a/tests/qtest/libqtest.h
++++ b/tests/qtest/libqtest.h
+@@ -426,6 +426,14 @@ char *qtest_vhmp(QTestState *s, const char *fmt, va_list ap)
  
-+    if (!h->bus) {
-+        error_setg(errp, "PCI host bridge not realized");
-+        return;
-+    }
-+    hole64_start = i440fx_pcihost_get_pci_hole64_start_value(obj);
-     visit_type_uint64(v, name, &hole64_start, errp);
+ void qtest_module_load(QTestState *s, const char *prefix, const char *libname);
+ 
++/**
++ * qtest_qom_tests:
++ * @s: #QTestState instance to operate on.
++ *
++ * Run QOM property get/set round-trip tests on all non-abstract types.
++ */
++void qtest_qom_tests(QTestState *s);
++
+ /**
+  * qtest_get_irq:
+  * @s: #QTestState instance to operate on.
+diff --git a/system/qtest.c b/system/qtest.c
+index d6db057b0a2..fd37bcbfaab 100644
+--- a/system/qtest.c
++++ b/system/qtest.c
+@@ -31,6 +31,8 @@
+ #include "qemu/cutils.h"
+ #include "qemu/target-info.h"
+ #include "qom/object_interfaces.h"
++#include "qom/qom-qobject.h"
++#include "qobject/qobject.h"
+ 
+ #define MAX_IRQ 256
+ 
+@@ -754,6 +756,50 @@ static void qtest_process_command(CharFrontend *chr, gchar **words)
+         new_ns = qemu_clock_advance_virtual_time(ns);
+         qtest_sendf(chr, "%s %"PRIi64"\n",
+                     new_ns == ns ? "OK" : "FAIL", new_ns);
++    } else if (strcmp(words[0], "qom-tests") == 0) {
++        GSList *list, *l;
++
++        list = object_class_get_list(NULL, false);
++        for (l = list; l; l = l->next) {
++            ObjectClass *klass = l->data;
++            const char *type_name = object_class_get_name(klass);
++            Object *obj;
++            ObjectPropertyIterator iter;
++            ObjectProperty *prop;
++
++            obj = object_new_with_class(klass);
++            object_property_iter_init(&iter, obj);
++            while ((prop = object_property_iter_next(&iter))) {
++                QObject *value;
++                Error *local_err = NULL;
++
++                value = object_property_get_qobject(obj, prop->name,
++                                                    &local_err);
++                if (local_err) {
++                    error_report("qom-tests: %s.%s: get failed: %s",
++                                 type_name, prop->name,
++                                 error_get_pretty(local_err));
++                    error_free(local_err);
++                    continue;
++                }
++
++                if (prop->set) {
++                    if (!object_property_set_qobject(obj, prop->name, value,
++                                                     &local_err)) {
++                        error_report("qom-tests: %s.%s: set failed: %s",
++                                     type_name, prop->name,
++                                     error_get_pretty(local_err));
++                        error_free(local_err);
++                    }
++                }
++
++                qobject_unref(value);
++            }
++
++            object_unref(obj);
++        }
++        g_slist_free(list);
++        qtest_send(chr, "OK\n");
+     } else if (process_command_cb && process_command_cb(chr, words)) {
+         /* Command got consumed by the callback handler */
+     } else {
+diff --git a/tests/qtest/libqtest.c b/tests/qtest/libqtest.c
+index b1e06ea364e..4e22c66b754 100644
+--- a/tests/qtest/libqtest.c
++++ b/tests/qtest/libqtest.c
+@@ -1137,6 +1137,12 @@ void qtest_module_load(QTestState *s, const char *prefix, const char *libname)
+     qtest_rsp(s);
  }
  
-@@ -206,10 +212,15 @@ static void i440fx_pcihost_get_pci_hole64_end(Object *obj, Visitor *v,
++void qtest_qom_tests(QTestState *s)
++{
++    qtest_sendf(s, "qom-tests\n");
++    qtest_rsp(s);
++}
++
+ static int64_t qtest_clock_rsp(QTestState *s)
  {
-     PCIHostState *h = PCI_HOST_BRIDGE(obj);
-     I440FXState *s = I440FX_PCI_HOST_BRIDGE(obj);
--    uint64_t hole64_start = i440fx_pcihost_get_pci_hole64_start_value(obj);
-+    uint64_t hole64_start;
-     Range w64;
-     uint64_t value, hole64_end;
+     gchar **words;
+diff --git a/tests/qtest/qom-test.c b/tests/qtest/qom-test.c
+index 6421f2d9d9f..cf4c6b5add5 100644
+--- a/tests/qtest/qom-test.c
++++ b/tests/qtest/qom-test.c
+@@ -227,6 +227,17 @@ static void add_machine_test_case(const char *mname)
+     g_free(path);
+ }
  
-+    if (!h->bus) {
-+        error_setg(errp, "PCI host bridge not realized");
-+        return;
-+    }
-+    hole64_start = i440fx_pcihost_get_pci_hole64_start_value(obj);
-     pci_bus_get_w64_range(h->bus, &w64);
-     value = range_is_empty(&w64) ? 0 : range_upb(&w64) + 1;
-     hole64_end = ROUND_UP(hole64_start + s->pci_hole64_size, 1ULL << 30);
++static void test_qom_qtests(void)
++{
++    QTestState *qts;
++
++    qts = qtest_initf("-machine none");
++
++    qtest_qom_tests(qts);
++
++    qtest_quit(qts);
++}
++
+ int main(int argc, char **argv)
+ {
+     char *v_env = getenv("V");
+@@ -238,6 +249,7 @@ int main(int argc, char **argv)
+     g_test_init(&argc, &argv, NULL);
+ 
+     qtest_cb_for_every_machine(add_machine_test_case, g_test_quick());
++    qtest_add_func("qom/qom-qtests", test_qom_qtests);
+ 
+     return g_test_run();
+ }
 
 -- 
 2.54.0
