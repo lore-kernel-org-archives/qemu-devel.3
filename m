@@ -4,53 +4,72 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2FF74CD8C88
-	for <qemu-devel@archiver.kernel.org>; Sat,  6 Jun 2026 21:34:52 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 52E90CD8C88
+	for <qemu-devel@archiver.kernel.org>; Sat,  6 Jun 2026 22:11:26 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wVyea-00025M-4C; Sat, 06 Jun 2026 17:34:04 -0400
+	id 1wVzEC-0007eu-I9; Sat, 06 Jun 2026 18:10:52 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <deller@kernel.org>) id 1wVyeY-00025B-PV
- for qemu-devel@nongnu.org; Sat, 06 Jun 2026 17:34:02 -0400
-Received: from tor.source.kernel.org ([172.105.4.254])
+ (Exim 4.90_1) (envelope-from <stefanha@redhat.com>)
+ id 1wVzEB-0007eG-1J
+ for qemu-devel@nongnu.org; Sat, 06 Jun 2026 18:10:51 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <deller@kernel.org>) id 1wVyeW-0000wk-BN
- for qemu-devel@nongnu.org; Sat, 06 Jun 2026 17:34:02 -0400
-Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
- by tor.source.kernel.org (Postfix) with ESMTP id D16BE600AE;
- Sat,  6 Jun 2026 21:33:52 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7CFE81F00893;
- Sat,  6 Jun 2026 21:33:51 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
- s=k20260515; t=1780781632;
- bh=et5eLMegT6ampsfftjXOFLTcAsoi2sO/Rg/7dQphinA=;
- h=From:To:Cc:Subject:Date;
- b=RmWbr/GM56SwRtzURAxc5LV9/nRuhsjcRhE+bJV2r/EeK4cZgwJV0n0cBl2DZQwDs
- ogEzkwNnjf1TU1G8lTtnMKl5OW439umS/hof907vdJaTUAjkOv325Bp6IcK2k0uz+A
- AIRTSdfh/48yaDrsF5yR2QQ5Cl0yO+0t2CEn0RUReVdvio4iqOPbi2Uet35yJ6vsRk
- WZFJZ8EDLCN31dLKhKdKU/QaU0RUYeOtk4CXTaNKK75C+Q1d0N7u2Nkhanrj3hnANv
- g1IilTNIOdZVdkSoswXyDgV1joFXTv0Rz5iehXGi5xYtXKqdI1WsfbotBAKYHQKq5r
- U8hWoOEJVtzeQ==
-From: Helge Deller <deller@kernel.org>
-To: qemu-devel@nongnu.org
-Cc: Richard Henderson <richard.henderson@linaro.org>,
- Matt Turner <mattst88@gmail.com>, Helge Deller <deller@gmx.de>
-Subject: [PATCH] linux-user/alpha: add coredump support
-Date: Sat,  6 Jun 2026 23:33:43 +0200
-Message-ID: <20260606213343.11970-1-deller@kernel.org>
-X-Mailer: git-send-email 2.54.0
+ (Exim 4.90_1) (envelope-from <stefanha@redhat.com>)
+ id 1wVzE8-0006JQ-UE
+ for qemu-devel@nongnu.org; Sat, 06 Jun 2026 18:10:50 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1780783848;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=qmghMrQEhEjXZNtOXFG1SjawJpI2mVWsQlI09frTRdo=;
+ b=N9NHi1GP/rBJhoLteVIK4Q+jl3icNkO4Cwb2hVHKtKIyGgOteJ6S58K4pFz4mGHBSAaaqy
+ gD7EHy4pUhWZoCnI83mIrIsd2iiJ7YmqbCAmeJO/HBxelxdgYvljl67S0/J5mjI336z0Rc
+ EZ/E4mtOPkFYk3RzSL3h1hnH/csQKWE=
+Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-442-Ywax4FvjOqapZXSIXGpDIA-1; Sat,
+ 06 Jun 2026 18:10:46 -0400
+X-MC-Unique: Ywax4FvjOqapZXSIXGpDIA-1
+X-Mimecast-MFC-AGG-ID: Ywax4FvjOqapZXSIXGpDIA_1780783845
+Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 6CAC9195608C
+ for <qemu-devel@nongnu.org>; Sat,  6 Jun 2026 22:10:45 +0000 (UTC)
+Received: from localhost (unknown [10.2.16.28])
+ by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id 97B2230001BE; Sat,  6 Jun 2026 22:10:44 +0000 (UTC)
+Date: Sat, 6 Jun 2026 18:10:43 -0400
+From: Stefan Hajnoczi <stefanha@redhat.com>
+To: =?iso-8859-1?Q?Marc-Andr=E9?= Lureau <marcandre.lureau@redhat.com>
+Cc: qemu-devel@nongnu.org, stefanha@redhat.com
+Subject: Re: [GIT PULL v2 00/23] Fix various QOM object life-cycle issues
+Message-ID: <20260606221043.GA365874@fedora>
+References: <20260606-qom-tests-v2-0-55832d978a9f@redhat.com>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=172.105.4.254; envelope-from=deller@kernel.org;
- helo=tor.source.kernel.org
-X-Spam_score_int: -24
-X-Spam_score: -2.5
-X-Spam_bar: --
-X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.445,
+Content-Type: multipart/signed; micalg=pgp-sha512;
+ protocol="application/pgp-signature"; boundary="JvA7B4EMNzyaWofC"
+Content-Disposition: inline
+In-Reply-To: <20260606-qom-tests-v2-0-55832d978a9f@redhat.com>
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=stefanha@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: 8
+X-Spam_score: 0.8
+X-Spam_bar: /
+X-Spam_report: (0.8 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.445,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_SBL_CSS=3.335, SPF_HELO_PASS=-0.001,
+ SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -66,78 +85,30 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Matt Turner <mattst88@gmail.com>
 
-Define HAVE_ELF_CORE_DUMP and target_elf_gregset_t in target_elf.h,
-mirroring the kernel's elf_gregset_t (ELF_NGREG = 66): r0-r31
-[0..31], f0-f31 [32..63], pc [64], unique [65].  Implement
-elf_core_copy_regs() in elfload.c to populate the gregset from
-CPUAlphaState.
+--JvA7B4EMNzyaWofC
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
 
-Without this, bprm->core_dump is NULL for Alpha targets.  When a
-guest signal goes unhandled, dump_core_and_abort() skips the core
-write and falls through to die_with_signal(), which re-raises the
-signal to the host.  The host kernel then writes an x86-64 core file
-for the qemu-alpha process instead of an Alpha guest core.
+Applied, thanks.
 
-v2: Store thread unique field, same as in Linux kernel. Added by Helge &
-suggested by Richard.
+Please update the changelog at https://wiki.qemu.org/ChangeLog/11.1 for any user-visible changes.
 
-Signed-off-by: Matt Turner <mattst88@gmail.com>
-Signed-off-by: Helge Deller <deller@gmx.de>
----
- linux-user/alpha/elfload.c    | 12 ++++++++++++
- linux-user/alpha/target_elf.h | 13 +++++++++++++
- 2 files changed, 25 insertions(+)
+--JvA7B4EMNzyaWofC
+Content-Type: application/pgp-signature; name=signature.asc
 
-diff --git a/linux-user/alpha/elfload.c b/linux-user/alpha/elfload.c
-index 1e44475c47..d2aed15ce5 100644
---- a/linux-user/alpha/elfload.c
-+++ b/linux-user/alpha/elfload.c
-@@ -3,8 +3,20 @@
- #include "qemu/osdep.h"
- #include "qemu.h"
- #include "loader.h"
-+#include "target_elf.h"
- 
- 
-+void elf_core_copy_regs(target_elf_gregset_t *r, const CPUAlphaState *env)
-+{
-+    int i;
-+
-+    for (i = 0; i < 31; i++) {
-+        r->regs[i] = tswap64(env->ir[i]);
-+    }
-+    r->pc = tswap64(env->pc);
-+    r->unique = env->unique;
-+}
-+
- const char *get_elf_cpu_model(uint32_t eflags)
- {
-     return "ev67";
-diff --git a/linux-user/alpha/target_elf.h b/linux-user/alpha/target_elf.h
-index 864dc6e2e6..4987ae3944 100644
---- a/linux-user/alpha/target_elf.h
-+++ b/linux-user/alpha/target_elf.h
-@@ -11,4 +11,17 @@
- #define ELF_CLASS               ELFCLASS64
- #define ELF_MACHINE             EM_ALPHA
- 
-+#define HAVE_ELF_CORE_DUMP      1
-+
-+/*
-+ * Matches the kernel's elf_gregset_t (ELF_NGREG = 33):
-+ *   r0-r30 at indices 0-30, pc at 31, ps at 32.
-+ * r31 (hardwired zero) is not stored; pc occupies index 31.
-+ */
-+typedef struct target_elf_gregset_t {
-+    abi_ulong regs[31];  /* integer registers r0-r30  [0..30] */
-+    abi_ulong pc;        /* program counter           [31]    */
-+    abi_ulong unique;    /* thread's UNIQUE field     [32]    */
-+} target_elf_gregset_t;
-+
- #endif
--- 
-2.54.0
+-----BEGIN PGP SIGNATURE-----
+
+iQEzBAEBCgAdFiEEhpWov9P5fNqsNXdanKSrs4Grc8gFAmokmuMACgkQnKSrs4Gr
+c8iGCwgArlXIcTQTsiZZHDX7BWGpiGv1s9jKaB1Kh/ZOSJmDgLmm5/oVnAubEIDZ
+ShbUp+ykExzt8/mdxSX3wpinZZU92G104SdVdmIDCkRBae7wcfbbYtCOlpF0ScMO
+W+61UArxt/kzUKgbCJmxOby6Ub+2fagcVw52GToQicER/T4C4m4sXTzqNoKk1tlp
+OPg8b+RpyUROV55/uOt3DMIsq9UOBfITM/tZj4SsIQ1WhEhv7NFVYj+D95YR1nk/
+yTYh8GBP5pPpDvhI98O8ukxNPN3+BKm1AQEUc9XlQ5OJn49JkUVkpE/zx5rpkhia
+Zd8H/UFU+8mfZXzRynJnYkZZlbQZOQ==
+=yMPK
+-----END PGP SIGNATURE-----
+
+--JvA7B4EMNzyaWofC--
 
 
