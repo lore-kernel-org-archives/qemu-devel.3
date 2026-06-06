@@ -4,142 +4,116 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 66CA8CD8C88
-	for <qemu-devel@archiver.kernel.org>; Sat,  6 Jun 2026 16:10:10 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A8DDCCD8C88
+	for <qemu-devel@archiver.kernel.org>; Sat,  6 Jun 2026 16:21:10 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wVtaO-0001xY-Aa; Sat, 06 Jun 2026 12:09:24 -0400
+	id 1wVtl6-0003hH-KN; Sat, 06 Jun 2026 12:20:30 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <andrew.jones@oss.qualcomm.com>)
- id 1wVtaL-0001xF-VH
- for qemu-devel@nongnu.org; Sat, 06 Jun 2026 12:09:22 -0400
-Received: from mx0a-0031df01.pphosted.com ([205.220.168.131])
+ (Exim 4.90_1) (envelope-from <farman@linux.ibm.com>)
+ id 1wVtkj-0003Wz-Dn; Sat, 06 Jun 2026 12:20:07 -0400
+Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <andrew.jones@oss.qualcomm.com>)
- id 1wVtaJ-0002Vs-3q
- for qemu-devel@nongnu.org; Sat, 06 Jun 2026 12:09:20 -0400
-Received: from pps.filterd (m0279864.ppops.net [127.0.0.1])
- by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 656EsSoR1677190
- for <qemu-devel@nongnu.org>; Sat, 6 Jun 2026 16:09:16 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
- cc:content-type:date:from:in-reply-to:message-id:mime-version
- :references:subject:to; s=qcppdkim1; bh=WVwFr6iNr3nJbDTOpgOPusav
- iKyW8l75NcPsMN/wwkE=; b=bDEupg5vH22ntHBhK3Vlvp5L1/gopRK6w4fTGiwE
- jbLXv5DUx/2NJVfZjORLrjZZqejoyYUHXAangCAkjd4h7OOLinf2q+hi11Bug5+t
- qi7JEvteb7KV4jKLEKr+HKiwezrdb8CMKG5Vw+k8VwF7S9btC6obvXbt3qmCN1pP
- bLk/6QRqVBn9Mfekt09r/POZZZsmtdB11gV7ZiEStzgPQjE9hS0VYuqrsBp5KOK5
- fdZ/eTQnuFVaX02s0apZYnDBvsj73Ce8FYpJHPjWWBfV/WXb9AQ3i1ILYlWU1mMW
- qNPVnkapCnIy9uY/r2wtDz76lHSQ7ZTcpvg0cMMJyH0ZXw==
-Received: from mail-dy1-f200.google.com (mail-dy1-f200.google.com
- [74.125.82.200])
- by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4emcqgsd2g-1
- (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
- for <qemu-devel@nongnu.org>; Sat, 06 Jun 2026 16:09:16 +0000 (GMT)
-Received: by mail-dy1-f200.google.com with SMTP id
- 5a478bee46e88-30761ab3483so2875495eec.0
- for <qemu-devel@nongnu.org>; Sat, 06 Jun 2026 09:09:16 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=oss.qualcomm.com; s=google; t=1780762155; x=1781366955; darn=nongnu.org;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
- bh=WVwFr6iNr3nJbDTOpgOPusaviKyW8l75NcPsMN/wwkE=;
- b=YBfR2yVU21vnIiBIKUzmdOGwrivGlWJ1fFJvaxApjvd5On0xQL3yQXKBdiMnWHUak4
- BcQ+KHTAK3ob/wHXKhFuHJ72c9g91Sv6Qp9LeT8SKOt9JPGin1DZy151MLuprrFdOwJ8
- DsFISTrDD3/hwukJh5fjny2cHtIrvLS3k2Ds1dKWssTxlYW6Vil9e8Am6mKn9sfuHGn/
- MaY3oMVuV5A5Lrz39TkN8pdFwuKqGvE0wTewqesG5TJ+1J1ZclbL3xHYWmCoimDy+P+I
- UDJCmBMQ6as4D8MPETV5PMMJaW4DMCgv4ldeOnCFUP9VV9thumV/mq3ZE0veW0dLSlGh
- RZkA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1780762155; x=1781366955;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=WVwFr6iNr3nJbDTOpgOPusaviKyW8l75NcPsMN/wwkE=;
- b=RscvE10pWmoKfkStLowl+sdTTXMzD3JHm3/6sJlz8d8qpKUdwD4x6AOOhzBhEpX3fZ
- tDx47QMxCs9xZzgZd72oJWDZrQgii2RjwmsoNmDmozi55gZwrjRxhbnXCsx/38odoRoC
- vJmDsu2Qjqq0bgyEO7fAUCNTL65qV3OYv7v6lZJFeVlvHHa7J1tNGY7l/9nXaHDkuF33
- I8QjR0Xwgo2BzQafuVH+78YgU54+hy6x3q8L1eqKG/KkC4iQRSb6YOeKxKMryTnNQmjy
- owM0iOB+H2NrMc/LEmJSIG9/Vn5z4fGM7VIsI8vTgj7xSpfcQin6dL6Si55UvcF4oH2v
- XFjQ==
-X-Forwarded-Encrypted: i=1;
- AFNElJ/1T/QiqlKM6ruXq35AVSaYMQ/VAXeSfkM3ajN/XskilknGWt7bMRhZv9wx+1MidN+bWADupJk6LGCZ@nongnu.org
-X-Gm-Message-State: AOJu0YweGxPUqofErqtqlFKqu285mKNmQ3HI4ZtZaoR3xmVfHh4IHQeK
- lBY3uRuY9K2x+iPL5ihYPNaaEBxPByOwcLqMZho7Lbt/uOwVRq4n8zWh3hnzKluey1UgLRCxKW2
- wTCsMmEplS/q606BWCc58EKDZ9++cDi2QOTxy/2TW0fvkeds9S+sun4q8Mw==
-X-Gm-Gg: Acq92OE8X+UwfKoGogd1yohNspt50UdnsHyZZB2MukbjwjMQVFVogT24efIk0gkmn7a
- 2TWGaJ68wgvKzw7kXWmrQUqq+jwtaUe8/Nr8HS7eEDDpzOUmtvcOM44J5QI9eYWDcuN88eg7ohw
- PmXR7THZMHA680N085UgXb12o2FfjblOgkOpy52aPagY6/Omq3yn74lu8fyc8z36C3EN+VA4xBx
- EaxyvlNc/FA3X2OO0AYK27xxlOPjHfN4YmrFrhB75xuyOxh9H4fAC/NSDQLsJ1znQFuzRG6Z6dm
- 3Qtm1uDEoG5tUpJig5bC52sTu/d3o2awjqW04XMJITum5o5/oFc9Ke9C7NFs+XrnRGEiuGZgyJs
- 4kmFcvFk6a0n+cdxlsUMms4I8dI/tM7thPbMTW3mS5A==
-X-Received: by 2002:a05:7301:578e:b0:304:e6f8:7ccf with SMTP id
- 5a478bee46e88-3077b78118bmr5564830eec.27.1780762155462; 
- Sat, 06 Jun 2026 09:09:15 -0700 (PDT)
-X-Received: by 2002:a05:7301:578e:b0:304:e6f8:7ccf with SMTP id
- 5a478bee46e88-3077b78118bmr5564784eec.27.1780762154340; 
- Sat, 06 Jun 2026 09:09:14 -0700 (PDT)
-Received: from localhost ([140.82.166.162]) by smtp.gmail.com with ESMTPSA id
- 5a478bee46e88-3074db85f60sm13888759eec.8.2026.06.06.09.09.12
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Sat, 06 Jun 2026 09:09:13 -0700 (PDT)
-Date: Sat, 6 Jun 2026 11:09:11 -0500
-From: Andrew Jones <andrew.jones@oss.qualcomm.com>
-To: Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>
-Cc: Icenowy Zheng <uwu@icenowy.me>, qemu-devel@nongnu.org,
- qemu-riscv@nongnu.org, alistair.francis@wdc.com, liwei1518@gmail.com,
- zhiwei_liu@linux.alibaba.com, chao.liu.zevorn@gmail.com,
- leif.lindholm@oss.qualcomm.com, Fei Wu <wu.fei9@sanechips.com.cn>,
- Palmer Dabbelt <palmer@dabbelt.com>
-Subject: Re: [PATCH v7 2/5] target/riscv: Add server platform reference cpu
-Message-ID: <skdkxsqs7ag7el6ikasgpdhc6p2g3zdoqexse2fj2mzhmlybmt@2pxvqsl7ho77>
-References: <20260604095244.3313259-1-daniel.barboza@oss.qualcomm.com>
- <20260604095244.3313259-3-daniel.barboza@oss.qualcomm.com>
- <4acb210eea217195fa733a4f42369c01591d5499.camel@icenowy.me>
- <a77a1891-214e-4788-8cc3-a5729f5cd182@oss.qualcomm.com>
- <9b05368c-972a-491e-bddb-7e015100eee2@oss.qualcomm.com>
- <5y2sdlx3pu5oyhrm3yxxkvkwv6pl3bpvuzdpnlqg4xt3l2zrxd@yi4h5x2f2xze>
- <3f9d50fb-304c-4ef3-bd63-9fd215b45965@oss.qualcomm.com>
- <17b395009bef17cc056ae4a58a83c744ebb12798.camel@icenowy.me>
- <eb4169a9-6f28-4104-884a-62249f7ccdbd@oss.qualcomm.com>
+ (Exim 4.90_1) (envelope-from <farman@linux.ibm.com>)
+ id 1wVtkh-0005g4-UD; Sat, 06 Jun 2026 12:20:05 -0400
+Received: from pps.filterd (m0360083.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
+ 656FG2DZ399924; Sat, 6 Jun 2026 16:19:53 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
+ :content-transfer-encoding:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to; s=pp1; bh=FDDhww
+ /H1YJvNkflohNyhTn8sTUv33BMmNs7KI5N6tQ=; b=isJIcj05Ue/TyQ2IYqkBaS
+ xv+nFePfYwWJFBNBXnLG1R9p2rNovLtDvddhSy7kkS4Cyuuog313gPkgwWPcDzWN
+ pKRinUpGjwyOLFum1K+egaThk8dInZXIoVABK2ATnPKQ/KsYhUgZVFJ/WIe02VVp
+ +GXoYUVQh5BBsvaebYPnlhRjajimIXdpHDrtFbG7zajB6yqsV+SFDbbHG1+vVjKc
+ ynF6wk2seZEZNOxhxleF5Y72KX9zEURTr2Q/9yOZLVEoxybpdYGJ0vQB4/aZCG1m
+ 6xgKsEg2FiZhiXPNt+UFJRjYsYT8N5SD7Yg5GhftiRy2VVwRYua2PSNIDHY/2e1A
+ ==
+Received: from ppma21.wdc07v.mail.ibm.com
+ (5b.69.3da9.ip4.static.sl-reverse.com [169.61.105.91])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4emb23hgh9-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Sat, 06 Jun 2026 16:19:53 +0000 (GMT)
+Received: from pps.filterd (ppma21.wdc07v.mail.ibm.com [127.0.0.1])
+ by ppma21.wdc07v.mail.ibm.com (8.18.1.7/8.18.1.7) with ESMTP id 656GJqhW019043;
+ Sat, 6 Jun 2026 16:19:52 GMT
+Received: from smtprelay04.wdc07v.mail.ibm.com ([172.16.1.71])
+ by ppma21.wdc07v.mail.ibm.com (PPS) with ESMTPS id 4egb7kp8s3-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Sat, 06 Jun 2026 16:19:52 +0000 (GMT)
+Received: from smtpav05.wdc07v.mail.ibm.com (smtpav05.wdc07v.mail.ibm.com
+ [10.39.53.232])
+ by smtprelay04.wdc07v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 656GJome37749086
+ (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Sat, 6 Jun 2026 16:19:50 GMT
+Received: from smtpav05.wdc07v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id B5A7D58053;
+ Sat,  6 Jun 2026 16:19:50 +0000 (GMT)
+Received: from smtpav05.wdc07v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id BCBC558043;
+ Sat,  6 Jun 2026 16:19:48 +0000 (GMT)
+Received: from li-479af74c-31f9-11b2-a85c-e4ddee11713b.ibm.com (unknown
+ [9.61.143.205]) by smtpav05.wdc07v.mail.ibm.com (Postfix) with ESMTP;
+ Sat,  6 Jun 2026 16:19:48 +0000 (GMT)
+Message-ID: <86cc9f4e6492b169b48e33793208215f6f8c2265.camel@linux.ibm.com>
+Subject: Re: [PATCH v11 30/32] tests/functional/s390x: Add secure IPL
+ functional test
+From: Eric Farman <farman@linux.ibm.com>
+To: Zhuoying Cai <zycai@linux.ibm.com>, qemu-s390x@nongnu.org,
+ qemu-devel@nongnu.org
+Cc: jrossi@linux.ibm.com, cohuck@redhat.com, berrange@redhat.com,
+ richard.henderson@linaro.org, david@kernel.org, walling@linux.ibm.com,
+ jjherne@linux.ibm.com, pasic@linux.ibm.com, borntraeger@linux.ibm.com,
+ mjrosato@linux.ibm.com, iii@linux.ibm.com, eblake@redhat.com,
+ armbru@redhat.com, alifm@linux.ibm.com, brueckner@linux.ibm.com,
+ pierrick.bouvier@oss.qualcomm.com, jdaley@linux.ibm.com
+Date: Sat, 06 Jun 2026 12:19:48 -0400
+In-Reply-To: <97f3b33a-17ca-4ba9-a714-20e70f7a7edf@linux.ibm.com>
+References: <20260505201905.997996-1-zycai@linux.ibm.com>
+ <20260505201905.997996-31-zycai@linux.ibm.com>
+ <ba1b75db4c3c110a7edae5a1753c32e5854a3ee5.camel@linux.ibm.com>
+ <b82d095dd3616822279151e562e06689e3bd4b7b.camel@linux.ibm.com>
+ <97f3b33a-17ca-4ba9-a714-20e70f7a7edf@linux.ibm.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+User-Agent: Evolution 3.58.3 (3.58.3-1.fc43) 
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <eb4169a9-6f28-4104-884a-62249f7ccdbd@oss.qualcomm.com>
-X-Authority-Analysis: v=2.4 cv=dJGWXuZb c=1 sm=1 tr=0 ts=6a24462c cx=c_pps
- a=PfFC4Oe2JQzmKTvty2cRDw==:117 a=cvcws7F5//HeuvjG1O1erQ==:17
- a=kj9zAlcOel0A:10 a=FelO9ux0wxsA:10 a=s4-Qcg_JpJYA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=DJpcGTmdVt4CTyJn9g5Z:22
- a=iSatDKZ6tTKaIovgxsEA:9 a=CjuIK1q_8ugA:10 a=6Ab_bkdmUrQuMsNx7PHu:22
-X-Proofpoint-GUID: ChYnrgxwv73GUajNjL5QbpmNZVg0QGnC
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNjA2MDE2NiBTYWx0ZWRfXxA7WsZXHESNS
- 96eMTvVPGLZhxPVI88M2HDEyW8TzURfcSfIQTdb5Dn2fti9HjC/vu0y5ae/cIsttki1S708dMmY
- ielhicb+bqXfDWPtZh0PtHEh0nd9AWaPVhfB1WqAD/568Jw4oY3TOMjJ6Zhq0seeDiqfUEMZHV/
- xf5BrGjvA5oOYaHLHB+e6nGirWLdKwGXX/4eaNiozCysfSfkCsI0fezVcfFCp9Wi0AuIGte7U7Y
- rZO9qKBrW0N47QoRnnmD+VWpiFj1mR74TRDElI/R6NFV5zqNMRof66yArdCmy5nZbzvjAOGJICE
- 0aQR1rozW4ltZiGOhPJNCZfWnDWFzFsuh2afWDib/t4khVgAQ3q51pyZhqp98qUYlDDTXBRvYi5
- aC/C75xshwUHN4OfgTkzk/Q2q+DCBQWOZmunuEAKD3Nzr0NvGdYHyEtIM8qjh5I4NhiJsgUsv4r
- cKiN2feigv1tooSafeQ==
-X-Proofpoint-ORIG-GUID: ChYnrgxwv73GUajNjL5QbpmNZVg0QGnC
+X-TM-AS-GCONF: 00
+X-Authority-Analysis: v=2.4 cv=b4uCJNGx c=1 sm=1 tr=0 ts=6a2448a9 cx=c_pps
+ a=GFwsV6G8L6GxiO2Y/PsHdQ==:117 a=GFwsV6G8L6GxiO2Y/PsHdQ==:17
+ a=IkcTkHD0fZMA:10 a=FelO9ux0wxsA:10 a=VkNPw1HP01LnGYTKEx00:22
+ a=RnoormkPH1_aCDwRdu11:22 a=iQ6ETzBq9ecOQQE5vZCe:22 a=waOdMU7LWt82WyP_VOAA:9
+ a=QEXdDO2ut3YA:10 a=zZCYzV9kfG8A:10
+X-Proofpoint-ORIG-GUID: g0AZ_A4GLUR6OYcI0QG5ZKXu9koG_ZmP
+X-Proofpoint-GUID: g0AZ_A4GLUR6OYcI0QG5ZKXu9koG_ZmP
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNjA2MDE2NiBTYWx0ZWRfXyptF1MFSg182
+ u4hbZpFEO3MT2Xe76FNr/503kdFB8rBV/dpxnen8HiBgGXnG8TegaaBu4W3Zzhw+uHzSvgFxC4F
+ 32f5pP/HdT1vGtncFmpA8QBSsLewJJFcIcig/EjoKPJ9cMOfEuvRhzpO3Q8aJb8RxPdMKS/4SaP
+ wa9IGDouUufv6s9F1zSfuKJZYNRZbrLm6mLsaBNYtsFIA5Rq3GT4YR+uD3MpWrIeIYlSdepYyNM
+ AVGWjnvwFlBNPfVkS8bIrD36O5zfNAdQAkCTZfICXRgg5seWeWJ9yosN+ecbVkxKYSjt08CkUd5
+ 8KHhFJd0MzrUJ1+fm/MhLPXP934dVbdxBbx18W7utO81kTG+jFCCBgD4AJL790dpu2BRs7pT1n+
+ 0ZeopNvcM1tcfQUFiXTY6pZFr8KvH3otjHbDZCWS6UHpwN5UjuSwpacbwCcRTuyl4zzxbGVREsk
+ hMc/axDilNj3hsXUfUg==
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.125,FMLib:17.12.100.49
  definitions=2026-06-06_04,2026-06-05_02,2025-10-01_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- priorityscore=1501 malwarescore=0 bulkscore=0 adultscore=0 phishscore=0
- clxscore=1015 lowpriorityscore=0 impostorscore=0 suspectscore=0 spamscore=0
+ clxscore=1015 spamscore=0 bulkscore=0 phishscore=0 priorityscore=1501
+ lowpriorityscore=0 adultscore=0 malwarescore=0 impostorscore=0 suspectscore=0
  classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
  reason=mlx scancount=1 engine=8.22.0-2605210000 definitions=main-2606060166
-Received-SPF: pass client-ip=205.220.168.131;
- envelope-from=andrew.jones@oss.qualcomm.com; helo=mx0a-0031df01.pphosted.com
-X-Spam_score_int: -27
-X-Spam_score: -2.8
+Received-SPF: pass client-ip=148.163.156.1; envelope-from=farman@linux.ibm.com;
+ helo=mx0a-001b2d01.pphosted.com
+X-Spam_score_int: -26
+X-Spam_score: -2.7
 X-Spam_bar: --
-X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
+ RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -155,28 +129,19 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Sat, Jun 06, 2026 at 07:21:32AM -0300, Daniel Henrique Barboza wrote:
-...
-> > I think we can just make RVSP a profile, and rvsp-ref CPU a BARE CPU
-> > based on that profile; then set the profile's min SATP to Sv48, and the
-> > BARE CPU's max SATP to Sv57.
-> > 
-> > In this case if any other CPU complying to RVSP is added, it can just
-> > reuse the profile.
-> 
-> Having riscv-server-ref being a profile CPU seems compelling indeed ...
-> new CPUs could instance it with .profile = &rvserver-ref to have everything
-> already sorted out, we would also have a flag to enable the profile for
-> existing cpus, e.g. -cpu rv64,rvserver-ref=on.
-> 
-> Drew, any thoughts?
+On Fri, 2026-06-05 at 14:58 -0400, Zhuoying Cai wrote:
+> In your console.log, it looks like the components are being loaded, but
+> the verification step is not performed. This might be because the test
+> is not using the built BIOS image?
 
-As long as the concept of 'profile' is internal to QEMU and we comment its
-[ab]use explaining why the riscv-server-ref is modeled that way, then that
-sounds good to me. If the concept is exposed to users then I fear we'd
-confuse things by inventing profiles that don't exist in the profiles
-spec.
+Ah, of course. I missed this bringing the system back online I was using fo=
+r your changes. Sorry,
+must've been Friday. :)
 
-Thanks,
-drew
+>=20
+> For reference, here are the build steps I used:
+> # ninja -C build
+> # make -C build/pc-bios/s390-ccw
+> # cp build/pc-bios/s390-ccw/s390-ccw.img pc-bios
+> # make install
 
