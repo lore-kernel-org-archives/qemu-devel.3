@@ -4,90 +4,90 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 56F10CD8C93
-	for <qemu-devel@archiver.kernel.org>; Sat,  6 Jun 2026 19:53:29 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 680EECD8C88
+	for <qemu-devel@archiver.kernel.org>; Sat,  6 Jun 2026 19:53:30 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wVx4P-00062v-9C; Sat, 06 Jun 2026 15:52:37 -0400
+	id 1wVx4T-00065H-43; Sat, 06 Jun 2026 15:52:41 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <chad@jablonski.xyz>)
- id 1wVx4O-00062j-Dj
- for qemu-devel@nongnu.org; Sat, 06 Jun 2026 15:52:36 -0400
-Received: from fout-b8-smtp.messagingengine.com ([202.12.124.151])
+ id 1wVx4Q-00063h-IO
+ for qemu-devel@nongnu.org; Sat, 06 Jun 2026 15:52:38 -0400
+Received: from fhigh-b4-smtp.messagingengine.com ([202.12.124.155])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <chad@jablonski.xyz>)
- id 1wVx4M-00014Y-CV
- for qemu-devel@nongnu.org; Sat, 06 Jun 2026 15:52:36 -0400
-Received: from phl-compute-01.internal (phl-compute-01.internal [10.202.2.41])
- by mailfout.stl.internal (Postfix) with ESMTP id AB3511D0009D;
- Sat,  6 Jun 2026 15:52:33 -0400 (EDT)
+ id 1wVx4M-00013G-RT
+ for qemu-devel@nongnu.org; Sat, 06 Jun 2026 15:52:38 -0400
+Received: from phl-compute-04.internal (phl-compute-04.internal [10.202.2.44])
+ by mailfhigh.stl.internal (Postfix) with ESMTP id EF14B7A0069;
+ Sat,  6 Jun 2026 15:52:32 -0400 (EDT)
 Received: from phl-frontend-04 ([10.202.2.163])
- by phl-compute-01.internal (MEProxy); Sat, 06 Jun 2026 15:52:33 -0400
+ by phl-compute-04.internal (MEProxy); Sat, 06 Jun 2026 15:52:33 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=jablonski.xyz;
  h=cc:cc:content-transfer-encoding:content-type:date:date:from
  :from:in-reply-to:in-reply-to:message-id:mime-version:references
- :reply-to:subject:subject:to:to; s=fm3; t=1780775553; x=
- 1780861953; bh=eYcvw03LK/lQ530qh+6y+nOv2u4ZT1Ir+87Ge2U2nh0=; b=U
- iORG0gtCGiT44uF8hYMB8UZdFatWVA3CY+5GFeZVPQm1EwxwBo+8gLqrcnHkcxt7
- jhUsw9xHsIOu0wO3xxO9TEMv3aZ6SnLDTKR8sJ1NNURbtJYyQju0fU1AIwuEAiXl
- UyqBcRbLgdnzqm4dEgAHGEIWeJOzRrwWoM4bc8lXqc05n+20VtuYAxAVxOlCPJ4v
- X+pN8A28b34EYkIVZa4//2in1pa04mK5KlVgfxD7S2AlrISrT4hKGmLboqBnZ8Jd
- QX8+m8Bmp+33FrHnEUDh4tr2seWwizzH/AORr+xPsZ5/uaLT8ls+5LdlbcQ40Qpr
- wsiN3wjTYmkJu+8j1w8Bg==
+ :reply-to:subject:subject:to:to; s=fm3; t=1780775552; x=
+ 1780861952; bh=oH2vw2ylL4HPw15CyrL0DBfurI7dmllX0oOBvZyy4cg=; b=N
+ AXe/dJQutjDgQoOnuGJnSzDDrtSqa6eveLpm4IXP7BPAsKHM/e+DG3EpQTMvTyEm
+ h/wUVNle7W1LFgfxCYQhqqU/lByjgHecPvELTo8TA8D+MM+0NhWZeCJOb4bP0zA3
+ TVoUknnJttmDmOBQ1kMAsS9ldAd8nvwaMhAMtEHyEYSRlWcROxe7ZlzcGwxJRF+Y
+ fd7XN+IkZtWnwMgYHqyZpGk31YiLWbWcxgJnijGNNIjTUe4mrOImTrmKA73EMZVN
+ 8tcQxJ6Fb30Yc/7uY8euFw1EOxXcvqzoPr0riuVvFyadscFI7Thz8S/N2IQRtXsI
+ iACADfPbHZMec5Af7N0fg==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
  messagingengine.com; h=cc:cc:content-transfer-encoding
  :content-type:date:date:feedback-id:feedback-id:from:from
  :in-reply-to:in-reply-to:message-id:mime-version:references
  :reply-to:subject:subject:to:to:x-me-proxy:x-me-sender
- :x-me-sender:x-sasl-enc; s=fm1; t=1780775553; x=1780861953; bh=e
- Ycvw03LK/lQ530qh+6y+nOv2u4ZT1Ir+87Ge2U2nh0=; b=I2SyQNeMVf0mSEOx/
- Iyl+PlAWVkJ3VGz9FdvKLtkVRmEmuxYpjOQG+PVjTJ/XQ7euIOyQXqtJvHqNeS30
- Y2nAh6boLTlhPlqAlI7K4dkFJrmT5UZMORtVeYiZmW56c7vgABDGM089vkXxCCuJ
- luc8QDy12swDas7pnM/x7RZoiwHMxo+r0vbbHw3RAn7ww+x885GPzFJv6DJtzycE
- zxLeMf8TC4mdFWrs2lQuciuQJLv4OSWpY7z8LBZn4jH0vS3beY67p+txpTP4QIa2
- h7nP+K5NkwzfMWsyimwaTpZeGawZa/Fywocg176qTzGgcDJDv9/vt5BWHaHeYhzW
- r6Ppw==
-X-ME-Sender: <xms:gXokanvGMu5zUq-cMrwqOjFitWZICO8K0JuVYG5qYN9ktL8JA7HDuQ>
- <xme:gXokav77Jl9CHn0Db788j7PQgkX4qTkCUVu2oLIBZNIdDaV7SlG1eoiLW7JPDIgmb
- ad6MYCva7umBaUB06JRhC7GUB3bA95Dp02pan3B5ta6cQfNuVzPui3t>
-X-ME-Received: <xmr:gXokaoKHpVDIwF2xGqbQMT3ZSDMjR03_X1jyO0mX0Rmypz80GAOEsi5stYvH>
+ :x-me-sender:x-sasl-enc; s=fm1; t=1780775552; x=1780861952; bh=o
+ H2vw2ylL4HPw15CyrL0DBfurI7dmllX0oOBvZyy4cg=; b=F48rLOrGeI32gwQPQ
+ y38hchm33b+UlUQ8C6OIQQBpPHTG9UNoA40alMNC1XK7KHxDFY/W8Kz/extG6rQq
+ yLN0izOa4rBDYiEmEmG0m7M5T66rE+HxrvoKgNrxj95QgxNUg6v0tWTZTEKFTUe1
+ LTjSIL9WQwfl8+TxqiNK1BpjpVEuPw/a4i5/CA3Hl0wT/n84XqO9Ymq6jbA6H5XL
+ pO2+JLQHxry9th9KybXJAmBvZM1XgkJ1BrxUA0iGpQ9W6imqtKRwzPBV6reQoJLS
+ GXu+DueVMYTFYmoenqB3fYan8Dh02hni+ecN15exJzm3gXWKWPlF06g1hmmZgS1C
+ Hy1cg==
+X-ME-Sender: <xms:gHokalEVn5rgxMHE_ov2hs5IyyWXGodzQLHFprYHT1tEMVVEwljiTg>
+ <xme:gHokahzRYFlq18pqPVheoEyQH2ZXgRdt6Iw0pkvzdr5WFhTuvNHxRknHbx6RgkX0d
+ qxr_cUFADMMkAsarQrRS7iyuLcCBq2EIWmQe5KBbTDylk-POUsHV5A>
+X-ME-Received: <xmr:gHokakg5Zkw9foXlG28ZKPLUwvec96bZHy7Hz1niGIYsu9e5te7R54v53x-t>
 X-ME-Proxy-Cause: dmFkZTF5V5TJt4YyOidEvSaeu/MRla4xP+DmdZQhB39MOi6suQo+ewwhopiobLPZpZFZya
  cAlJGIfDtnd9YI9euUev0/BPlhx7gFnO282gf6qihxTXQ9XGsNSFgetoCcqBrBvyjHrANh
  atTdGgjKUldYBX7wk7l0Cl09WJIHvldYLH4ZomEKYEpVZT82+Oh5snshv7XK6+9Sb5cWbw
  e84vQB5olzLLZrdcgzNge+k12PyvF6W544E61zazKBZo950akvs+WrgTOdnqD9gQaa29eu
- Mvbl6jhgYAGUnVDqLD0fWkRRImSA3/gMsTXu4gQwDYtEjGvTqg8SUjhCR0pAYP3BvhiEY3
- 2ff+gqafSfrK7PvDojuhkOSRkNloJGUd1HukQRK20VHhxNW0M18RqcTlqfapLbLvfUeMLA
- Wl5w0pHHNUwa9r0zguX9eZQEvW8biArySMzCEGIirb/FnwAFAba9GT7f4HlXTsYU8PdXVN
- PlZ5L62FBe+d7d1hKQdNiNvcqZI9KaLApnjQDVsim+IKTI9scSPpbmKQd//yd28BH2M/Dd
- 6WEyw4n27UVU/6bKF3O3DTEu5HCMc48SKexUQGisGCgtF6aeiirKmQxl+QDDyN5s0lI6FX
- tKdHk5RrZPTeBkDfmbywrT9167CQ9OYY5pJVecDG8aKpK4QU123OJmLg0kqw
-X-ME-Proxy: <xmx:gXokav4B3J5FklWtyafOYmg6mWpo5QoVItCj8Lwqdtk1lmHnxgNGGQ>
- <xmx:gXokaryIANKojmWrjN72T3hUEqZcQ_KNGwwfgoRsRDwupSqnAtWQJQ>
- <xmx:gXokajah9ASZjEx8r5vsvhkHeWHnsmlKAHAv784qdewgpv_1iW_iYg>
- <xmx:gXokatQxmsRGQoMZFGKfjfUC-FoPmiXWrKBPYl-4yKcysqpXtLrvjw>
- <xmx:gXokask6Pefeg7zHHuzg8VhJzRjF7xcZpuIJ8p-VIf3fImNWqy4kKO2G>
+ Mvbl6jhgYAGUnVDqLD0fWkRRImSA3/gMsTXu4gQwDYtEjGvTqg8SUjhCR0pAYP3BvhiEhA
+ o0U4n/Cs/RsCAN3edcWyH+zB8C+POCU5knL1zYO53K42ISlAzsJLQZ1IXhqxGrDTgUM1nj
+ XtV9mA9ozLT9DUjFQEox55SoRzH8zIfxN8mhpbrCFqm9pzaYMgRT6O40ZtVyf+JHHLAEpK
+ o4ZLCuoD721aDev6EdB8ZsRr0E6vWAACDZ8CDz7vmKMd2V11DMEONbKmdn1WIuUNbnqD9y
+ oJCK7ieJrjD9rC56e+axSI6pmHzBXsXdemipxNwXAjgIX1LfYOH4BfZuBieTHbw/83wO5F
+ BCfkD2lM5FMPYhfzWN0YVxpP3vUlIszFCiiq3XI+S1ChuZmtMkGnDSZN6Upg
+X-ME-Proxy: <xmx:gHokakyXJ4aAybwL-5pHUsbY_TA3KeWkZZ3IkBVnjjB7GjcHCXxPBw>
+ <xmx:gHokavIuO33fhhS1Fp8RLwVQIp-IX6z_10MFTqHZpkvrRTQX6-ubxg>
+ <xmx:gHokajTqCazooYZmMWGsigTgIlrdKLG7l58o1wnyGpV7rpkv4tmojQ>
+ <xmx:gHokavp5ZpaFALgOVQ3qG9kBBoWGq5dJKCfO3Pt5IhMosvfLZzV4Sw>
+ <xmx:gHokavfFSekznMKDAUYHgRRPFNKWEGsUDbMwhnloW9AN7nTITpZuBnJp>
 Feedback-ID: ib26944c1:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Sat,
- 6 Jun 2026 15:52:33 -0400 (EDT)
+ 6 Jun 2026 15:52:32 -0400 (EDT)
 Received: from localhost (chomposaur [local])
- by chomposaur (OpenSMTPD) with ESMTPA id 7ab2d1ca;
+ by chomposaur (OpenSMTPD) with ESMTPA id 80c6d66f;
  Sat, 6 Jun 2026 19:52:30 +0000 (UTC)
 From: Chad Jablonski <chad@jablonski.xyz>
 To: qemu-devel@nongnu.org
 Cc: BALATON Zoltan <balaton@eik.bme.hu>,
 	Chad Jablonski <chad@jablonski.xyz>
-Subject: [PATCH v3 4/7] ati-vga: Implement CCE mode registers for r128
-Date: Sat,  6 Jun 2026 15:52:13 -0400
-Message-ID: <20260606195216.2524314-5-chad@jablonski.xyz>
+Subject: [PATCH v3 2/7] ati-vga: Chip-specific register handlers
+Date: Sat,  6 Jun 2026 15:52:11 -0400
+Message-ID: <20260606195216.2524314-3-chad@jablonski.xyz>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260606195216.2524314-1-chad@jablonski.xyz>
 References: <20260606195216.2524314-1-chad@jablonski.xyz>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=202.12.124.151; envelope-from=chad@jablonski.xyz;
- helo=fout-b8-smtp.messagingengine.com
+Received-SPF: pass client-ip=202.12.124.155; envelope-from=chad@jablonski.xyz;
+ helo=fhigh-b4-smtp.messagingengine.com
 X-Spam_score_int: -22
 X-Spam_score: -2.3
 X-Spam_bar: --
@@ -111,103 +111,483 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The PM4_BUFFER_CNTL register is used to set up the CCE FIFO for r128.
-These are straightforward reads and writes. Future CCE patches make use of
-this state.
+Move read and write register handlers to chip-specific functions so that
+register differences are defined in one place for each chip. This prepares
+for differences that occur in CCE setup.
 
-The PM4_MICRO_CNTL register has a single flag that is used by drivers to
-enable processing of CCE commands from the CCE FIFO. Reverse engineering
-uncovered additional debug fields, many of which have an unclear purpose.
-They have been omitted for now but could be added if needed.
-
-These registers are not covered by available register references. They
-are implemented based on their use in Linux 6.2
-(drivers/gpu/drm/r128/r128_cce.c).
+The only behavioral change is that the Rage 128 will now return 0 when
+reading the HOST_PATH_CNTL register. This is technically more correct in
+that the Rage 128 doesn't have this register.
 
 Signed-off-by: Chad Jablonski <chad@jablonski.xyz>
 ---
- hw/display/ati.c      | 16 ++++++++++++++++
- hw/display/ati_int.h  |  6 ++++++
- hw/display/ati_regs.h | 14 ++++++++++++++
- 3 files changed, 36 insertions(+)
+ hw/display/ati.c | 351 ++++++++++++++++++++++++++++-------------------
+ 1 file changed, 211 insertions(+), 140 deletions(-)
 
 diff --git a/hw/display/ati.c b/hw/display/ati.c
-index 73fd5e7d23..7724be863f 100644
+index b4c9086188..826c856b1c 100644
 --- a/hw/display/ati.c
 +++ b/hw/display/ati.c
-@@ -299,6 +299,14 @@ static bool ati_r128_mm_read(ATIVGAState *s, hwaddr addr, unsigned int size,
-     case DEFAULT_OFFSET:
-         *val = s->regs.default_offset;
-         break;
-+    case PM4_BUFFER_CNTL:
-+        *val = ((s->cce.buffer_mode & 0xf) << 28) |
-+               (s->cce.no_update << 27) |
-+               (s->cce.buffer_size_l2qw & 0x7ffffff);
-+        break;
-+    case PM4_MICRO_CNTL:
-+        *val = s->cce.freerun ? PM4_MICRO_FREERUN : 0;
-+        break;
-     default:
-         return false;
+@@ -277,11 +277,86 @@ static inline uint32_t ati_reg_read_offs(uint32_t reg, int offs,
      }
-@@ -682,6 +690,14 @@ static bool ati_r128_reg_write(ATIVGAState *s, hwaddr addr, uint64_t data,
-         s->regs.default_pitch = data & 0x3fff;
-         s->regs.default_tile = (data >> 16) & 1;
+ }
+ 
++static bool ati_r128_mm_read(ATIVGAState *s, hwaddr addr, unsigned int size,
++                             uint32_t *val)
++{
++    switch (addr) {
++    case BIOS_0_SCRATCH ... BUS_CNTL - 1:
++    {
++        int i = (addr - BIOS_0_SCRATCH) / 4;
++        if (i <= 3) {
++            *val = ati_reg_read_offs(s->regs.bios_scratch[i],
++                                     addr - (BIOS_0_SCRATCH + i * 4), size);
++        }
++        break;
++    }
++    case DST_PITCH:
++        *val = s->regs.dst_pitch | s->regs.dst_tile << 16;
++        break;
++    case SRC_PITCH:
++        *val = s->regs.src_pitch | s->regs.src_tile << 16;
++        break;
++    case DEFAULT_OFFSET:
++        *val = s->regs.default_offset;
++        break;
++    default:
++        return false;
++    }
++
++    return true;
++}
++
++static bool ati_r100_mm_read(ATIVGAState *s, hwaddr addr, unsigned int size,
++                             uint32_t *val)
++{
++    switch (addr) {
++    case BIOS_0_SCRATCH ... BUS_CNTL - 1:
++    {
++        int i = (addr - BIOS_0_SCRATCH) / 4;
++        *val = ati_reg_read_offs(s->regs.bios_scratch[i],
++                                 addr - (BIOS_0_SCRATCH + i * 4), size);
++        break;
++    }
++    case HOST_PATH_CNTL:
++        *val = BIT(23); /* Radeon HDP_APER_CNTL */
++        break;
++    case MEM_SDRAM_MODE_REG:
++        *val = BIT(28) | BIT(20);
++        break;
++    case DST_PITCH:
++        *val = s->regs.dst_pitch;
++        break;
++    case SRC_PITCH:
++        *val = s->regs.src_pitch;
++        break;
++    case DEFAULT_OFFSET:
++        *val = s->regs.default_offset >> 10;
++        *val |= s->regs.default_pitch << 16;
++        *val |= s->regs.default_tile << 30;
++        break;
++    default:
++        return false;
++    }
++
++    return true;
++}
++
+ static uint64_t ati_mm_read(void *opaque, hwaddr addr, unsigned int size)
+ {
+     ATIVGAState *s = opaque;
+     uint32_t val = 0;
+ 
++    if (s->dev_id == PCI_DEVICE_ID_ATI_RAGE128_PF) {
++        if (ati_r128_mm_read(s, addr, size, &val)) {
++            return val;
++        }
++    } else {
++        if (ati_r100_mm_read(s, addr, size, &val)) {
++            return val;
++        }
++    }
++
++    /* Shared Registers */
+     switch (addr) {
+     case MM_INDEX:
+         val = s->regs.mm_index;
+@@ -300,16 +375,6 @@ static uint64_t ati_mm_read(void *opaque, hwaddr addr, unsigned int size)
+                 "ati_mm_read: mm_index too small: %u\n", s->regs.mm_index);
+         }
          break;
-+    case PM4_BUFFER_CNTL:
-+        s->cce.buffer_size_l2qw = data & 0x7ffffff;
-+        s->cce.no_update = (data >> 27) & 1;
-+        s->cce.buffer_mode = (data >> 28) & 0xf;
-+        break;
-+    case PM4_MICRO_CNTL:
-+        s->cce.freerun = !!(data & PM4_MICRO_FREERUN);
-+        break;
-     default:
-         return false;
+-    case BIOS_0_SCRATCH ... BUS_CNTL - 1:
+-    {
+-        int i = (addr - BIOS_0_SCRATCH) / 4;
+-        if (s->dev_id == PCI_DEVICE_ID_ATI_RAGE128_PF && i > 3) {
+-            break;
+-        }
+-        val = ati_reg_read_offs(s->regs.bios_scratch[i],
+-                                addr - (BIOS_0_SCRATCH + i * 4), size);
+-        break;
+-    }
+     case GEN_INT_CNTL:
+         val = s->regs.gen_int_cntl;
+         break;
+@@ -371,17 +436,9 @@ static uint64_t ati_mm_read(void *opaque, hwaddr addr, unsigned int size)
+     case CONFIG_REG_APER_SIZE:
+         val = memory_region_size(&s->mm) / 2;
+         break;
+-    case HOST_PATH_CNTL:
+-        val = BIT(23); /* Radeon HDP_APER_CNTL */
+-        break;
+     case MC_STATUS:
+         val = 5;
+         break;
+-    case MEM_SDRAM_MODE_REG:
+-        if (s->dev_id != PCI_DEVICE_ID_ATI_RAGE128_PF) {
+-            val = BIT(28) | BIT(20);
+-        }
+-        break;
+     case RBBM_STATUS:
+     case GUI_STAT:
+         val = 64; /* free CMDFIFO entries */
+@@ -436,12 +493,6 @@ static uint64_t ati_mm_read(void *opaque, hwaddr addr, unsigned int size)
+     case DST_OFFSET:
+         val = s->regs.dst_offset;
+         break;
+-    case DST_PITCH:
+-        val = s->regs.dst_pitch;
+-        if (s->dev_id == PCI_DEVICE_ID_ATI_RAGE128_PF) {
+-            val |= s->regs.dst_tile << 16;
+-        }
+-        break;
+     case DST_WIDTH:
+         val = s->regs.dst_width;
+         break;
+@@ -472,12 +523,6 @@ static uint64_t ati_mm_read(void *opaque, hwaddr addr, unsigned int size)
+     case SRC_OFFSET:
+         val = s->regs.src_offset;
+         break;
+-    case SRC_PITCH:
+-        val = s->regs.src_pitch;
+-        if (s->dev_id == PCI_DEVICE_ID_ATI_RAGE128_PF) {
+-            val |= s->regs.src_tile << 16;
+-        }
+-        break;
+     case DP_BRUSH_BKGD_CLR:
+         val = s->regs.dp_brush_bkgd_clr;
+         break;
+@@ -502,14 +547,6 @@ static uint64_t ati_mm_read(void *opaque, hwaddr addr, unsigned int size)
+     case DP_WRITE_MASK:
+         val = s->regs.dp_write_mask;
+         break;
+-    case DEFAULT_OFFSET:
+-        val = s->regs.default_offset;
+-        if (s->dev_id != PCI_DEVICE_ID_ATI_RAGE128_PF) {
+-            val >>= 10;
+-            val |= s->regs.default_pitch << 16;
+-            val |= s->regs.default_tile << 30;
+-        }
+-        break;
+     case DEFAULT_PITCH:
+         val = s->regs.default_pitch;
+         val |= s->regs.default_tile << 16;
+@@ -562,20 +599,150 @@ static inline void ati_reg_write_offs(uint32_t *reg, int offs,
      }
-diff --git a/hw/display/ati_int.h b/hw/display/ati_int.h
-index eae3e89617..9259373733 100644
---- a/hw/display/ati_int.h
-+++ b/hw/display/ati_int.h
-@@ -113,6 +113,12 @@ typedef struct ATIMicrocodeState {
+ }
  
- typedef struct ATICCEState {
-     ATIMicrocodeState microcode;
-+    /* MicroCntl */
-+    bool freerun;
-+    /* BufferCntl */
-+    uint32_t buffer_size_l2qw;
-+    bool no_update;
-+    uint8_t buffer_mode;
- } ATICCEState;
- 
- struct ATIVGAState {
-diff --git a/hw/display/ati_regs.h b/hw/display/ati_regs.h
-index b813fa119e..6591c6587f 100644
---- a/hw/display/ati_regs.h
-+++ b/hw/display/ati_regs.h
-@@ -387,7 +387,21 @@
- #define PC_BUSY                                 0x80000000
- 
- #define BUS_MASTER_DIS                          0x00000040
+-void ati_reg_write(ATIVGAState *s, hwaddr addr,
+-                   uint64_t data, unsigned int size)
++static bool ati_r128_reg_write(ATIVGAState *s, hwaddr addr, uint64_t data,
++                               unsigned int size)
+ {
+     switch (addr) {
+     case BIOS_0_SCRATCH ... BUS_CNTL - 1:
+     {
+         int i = (addr - BIOS_0_SCRATCH) / 4;
+-        if (s->dev_id == PCI_DEVICE_ID_ATI_RAGE128_PF && i > 3) {
+-            break;
++        if (i <= 3) {
++            ati_reg_write_offs(&s->regs.bios_scratch[i],
++                               addr - (BIOS_0_SCRATCH + i * 4), data, size);
++        }
++        break;
++    }
++    case GEN_INT_STATUS:
++        data &= 0x000f040fUL;
++        s->regs.gen_int_status &= ~data;
++        ati_vga_update_irq(s);
++        break;
++    case GPIO_MONID ... GPIO_MONID + 3:
++        /* Rage128p accesses DDC via MONID(1-2) with additional mask bit */
++        ati_reg_write_offs(&s->regs.gpio_monid,
++                           addr - GPIO_MONID, data, size);
++        if ((s->regs.gpio_monid & BIT(25)) &&
++            ((addr <= GPIO_MONID + 2 && addr + size > GPIO_MONID + 2) ||
++             (addr == GPIO_MONID && (s->regs.gpio_monid & 0x60000)))) {
++            s->regs.gpio_monid = ati_i2c(&s->bbi2c, s->regs.gpio_monid, 1);
+         }
++        break;
++    case DST_PITCH:
++        s->regs.dst_pitch = data & 0x3fff;
++        s->regs.dst_tile = (data >> 16) & 1;
++        break;
++    case SRC_PITCH_OFFSET:
++        s->regs.src_offset = (data & 0x1fffff) << 5;
++        s->regs.src_pitch = (data & 0x7fe00000) >> 21;
++        s->regs.src_tile = data >> 31;
++        break;
++    case DST_PITCH_OFFSET:
++        s->regs.dst_offset = (data & 0x1fffff) << 5;
++        s->regs.dst_pitch = (data & 0x7fe00000) >> 21;
++        s->regs.dst_tile = data >> 31;
++        break;
++    case SRC_PITCH:
++        s->regs.src_pitch = data & 0x3fff;
++        s->regs.src_tile = (data >> 16) & 1;
++        break;
++    case DEFAULT_OFFSET:
++        s->regs.default_offset = data & 0xfffffff0;
++        break;
++    case DEFAULT_PITCH:
++        s->regs.default_pitch = data & 0x3fff;
++        s->regs.default_tile = (data >> 16) & 1;
++        break;
++    default:
++        return false;
++    }
 +
-+/* PM4_BUFFER_CNTL buffer mode bit constants */
- #define PM4_BUFFER_CNTL_NONPM4                  0x00000000
-+#define PM4_BUFFER_CNTL_192PIO                  0x00000001
-+#define PM4_BUFFER_CNTL_192BM                   0x00000002
-+#define PM4_BUFFER_CNTL_128PIO_64INDBM          0x00000003
-+#define PM4_BUFFER_CNTL_128BM_64INDBM           0x00000004
-+#define PM4_BUFFER_CNTL_64PIO_128INDBM          0x00000005
-+#define PM4_BUFFER_CNTL_64BM_128INDBM           0x00000006
-+#define PM4_BUFFER_CNTL_64PIO_64VCBM_64INDBM    0x00000007
-+#define PM4_BUFFER_CNTL_64BM_64VCBM_64INDBM     0x00000008
-+#define PM4_BUFFER_CNTL_64PIO_64VCPIO_64INPIO   0x0000000f
++    return true;
++}
 +
-+/* PM4_MICRO_CNTL bit constants */
-+#define PM4_MICRO_FREERUN                       0x40000000
- 
- /* DP_DATATYPE bit constants */
- #define DST_8BPP                                0x00000002
++static bool ati_r100_reg_write(ATIVGAState *s, hwaddr addr, uint64_t data,
++                               unsigned int size)
++{
++    switch (addr) {
++    case BIOS_0_SCRATCH ... BUS_CNTL - 1:
++    {
++        int i = (addr - BIOS_0_SCRATCH) / 4;
+         ati_reg_write_offs(&s->regs.bios_scratch[i],
+                            addr - (BIOS_0_SCRATCH + i * 4), data, size);
+         break;
+     }
++    case GEN_INT_STATUS:
++        data &= 0xfc080effUL;
++        s->regs.gen_int_status &= ~data;
++        ati_vga_update_irq(s);
++        break;
++    /*
++     * GPIO regs for DDC access. Because some drivers access these via
++     * multiple byte writes we have to be careful when we send bits to
++     * avoid spurious changes in bitbang_i2c state. Only do it when either
++     * the enable bits are changed or output bits changed while enabled.
++     */
++    case GPIO_VGA_DDC ... GPIO_VGA_DDC + 3:
++        /* FIXME: Maybe add a property to select VGA or DVI port? */
++        break;
++    case GPIO_DVI_DDC ... GPIO_DVI_DDC + 3:
++        ati_reg_write_offs(&s->regs.gpio_dvi_ddc,
++                           addr - GPIO_DVI_DDC, data, size);
++        if ((addr <= GPIO_DVI_DDC + 2 && addr + size > GPIO_DVI_DDC + 2) ||
++            (addr == GPIO_DVI_DDC && (s->regs.gpio_dvi_ddc & 0x30000))) {
++            s->regs.gpio_dvi_ddc = ati_i2c(&s->bbi2c,
++                                           s->regs.gpio_dvi_ddc, 0);
++        }
++        break;
++    case GPIO_MONID ... GPIO_MONID + 3:
++        /* FIXME What does Radeon have here? */
++        break;
++    case DST_TILE:
++        s->regs.dst_tile = data & 3;
++        break;
++    case DST_PITCH:
++        s->regs.dst_pitch = data & 0x3fff;
++        break;
++    case SRC_PITCH_OFFSET:
++        s->regs.src_offset = (data & 0x3fffff) << 10;
++        s->regs.src_pitch = (data & 0x3fc00000) >> 16;
++        s->regs.src_tile = (data >> 30) & 1;
++        break;
++    case DST_PITCH_OFFSET:
++        s->regs.dst_offset = (data & 0x3fffff) << 10;
++        s->regs.dst_pitch = (data & 0x3fc00000) >> 16;
++        s->regs.dst_tile = data >> 30;
++        break;
++    case SRC_PITCH:
++        s->regs.src_pitch = data & 0x3fff;
++        break;
++    case DEFAULT_OFFSET:
++        /* Radeon has DEFAULT_PITCH_OFFSET here like DST_PITCH_OFFSET */
++        s->regs.default_offset = (data & 0x3fffff) << 10;
++        s->regs.default_pitch = (data & 0x3fc00000) >> 16;
++        s->regs.default_tile = data >> 30;
++        break;
++    default:
++        return false;
++    }
++
++    return true;
++}
++
++void ati_reg_write(ATIVGAState *s, hwaddr addr,
++                   uint64_t data, unsigned int size)
++{
++    if (s->dev_id == PCI_DEVICE_ID_ATI_RAGE128_PF) {
++        if (ati_r128_reg_write(s, addr, data, size)) {
++            return;
++        }
++    } else {
++        if (ati_r100_reg_write(s, addr, data, size)) {
++            return;
++        }
++    }
++
++    /* Shared Registers */
++    switch (addr) {
+     case GEN_INT_CNTL:
+         s->regs.gen_int_cntl = data;
+         if (data & CRTC_VBLANK_INT) {
+@@ -585,12 +752,6 @@ void ati_reg_write(ATIVGAState *s, hwaddr addr,
+             ati_vga_update_irq(s);
+         }
+         break;
+-    case GEN_INT_STATUS:
+-        data &= (s->dev_id == PCI_DEVICE_ID_ATI_RAGE128_PF ?
+-                 0x000f040fUL : 0xfc080effUL);
+-        s->regs.gen_int_status &= ~data;
+-        ati_vga_update_irq(s);
+-        break;
+     case CRTC_GEN_CNTL ... CRTC_GEN_CNTL + 3:
+     {
+         uint32_t val = s->regs.crtc_gen_cntl;
+@@ -638,41 +799,6 @@ void ati_reg_write(ATIVGAState *s, hwaddr addr,
+         s->regs.dac_cntl = data & 0xffffe3ff;
+         s->vga.dac_8bit = !!(data & DAC_8BIT_EN);
+         break;
+-    /*
+-     * GPIO regs for DDC access. Because some drivers access these via
+-     * multiple byte writes we have to be careful when we send bits to
+-     * avoid spurious changes in bitbang_i2c state. Only do it when either
+-     * the enable bits are changed or output bits changed while enabled.
+-     */
+-    case GPIO_VGA_DDC ... GPIO_VGA_DDC + 3:
+-        if (s->dev_id != PCI_DEVICE_ID_ATI_RAGE128_PF) {
+-            /* FIXME: Maybe add a property to select VGA or DVI port? */
+-        }
+-        break;
+-    case GPIO_DVI_DDC ... GPIO_DVI_DDC + 3:
+-        if (s->dev_id != PCI_DEVICE_ID_ATI_RAGE128_PF) {
+-            ati_reg_write_offs(&s->regs.gpio_dvi_ddc,
+-                               addr - GPIO_DVI_DDC, data, size);
+-            if ((addr <= GPIO_DVI_DDC + 2 && addr + size > GPIO_DVI_DDC + 2) ||
+-                (addr == GPIO_DVI_DDC && (s->regs.gpio_dvi_ddc & 0x30000))) {
+-                s->regs.gpio_dvi_ddc = ati_i2c(&s->bbi2c,
+-                                               s->regs.gpio_dvi_ddc, 0);
+-            }
+-        }
+-        break;
+-    case GPIO_MONID ... GPIO_MONID + 3:
+-        /* FIXME What does Radeon have here? */
+-        if (s->dev_id == PCI_DEVICE_ID_ATI_RAGE128_PF) {
+-            /* Rage128p accesses DDC via MONID(1-2) with additional mask bit */
+-            ati_reg_write_offs(&s->regs.gpio_monid,
+-                               addr - GPIO_MONID, data, size);
+-            if ((s->regs.gpio_monid & BIT(25)) &&
+-                ((addr <= GPIO_MONID + 2 && addr + size > GPIO_MONID + 2) ||
+-                 (addr == GPIO_MONID && (s->regs.gpio_monid & 0x60000)))) {
+-                s->regs.gpio_monid = ati_i2c(&s->bbi2c, s->regs.gpio_monid, 1);
+-            }
+-        }
+-        break;
+     case PALETTE_INDEX ... PALETTE_INDEX + 3:
+         if (size == 4) {
+             vga_ioport_write(&s->vga, VGA_PEL_IR, (data >> 16) & 0xff);
+@@ -800,18 +926,7 @@ void ati_reg_write(ATIVGAState *s, hwaddr addr,
+         ati_cursor_define(s);
+         break;
+     case DST_OFFSET:
+-            s->regs.dst_offset = data & 0xfffffff0;
+-        break;
+-    case DST_PITCH:
+-            s->regs.dst_pitch = data & 0x3fff;
+-        if (s->dev_id == PCI_DEVICE_ID_ATI_RAGE128_PF) {
+-            s->regs.dst_tile = (data >> 16) & 1;
+-        }
+-        break;
+-    case DST_TILE:
+-        if (s->dev_id == PCI_DEVICE_ID_ATI_RADEON_QY) {
+-            s->regs.dst_tile = data & 3;
+-        }
++        s->regs.dst_offset = data & 0xfffffff0;
+         break;
+     case DST_WIDTH:
+         s->regs.dst_width = data & 0x3fff;
+@@ -832,28 +947,6 @@ void ati_reg_write(ATIVGAState *s, hwaddr addr,
+     case DST_Y:
+         s->regs.dst_y = data & 0x3fff;
+         break;
+-    case SRC_PITCH_OFFSET:
+-        if (s->dev_id == PCI_DEVICE_ID_ATI_RAGE128_PF) {
+-            s->regs.src_offset = (data & 0x1fffff) << 5;
+-            s->regs.src_pitch = (data & 0x7fe00000) >> 21;
+-            s->regs.src_tile = data >> 31;
+-        } else {
+-            s->regs.src_offset = (data & 0x3fffff) << 10;
+-            s->regs.src_pitch = (data & 0x3fc00000) >> 16;
+-            s->regs.src_tile = (data >> 30) & 1;
+-        }
+-        break;
+-    case DST_PITCH_OFFSET:
+-        if (s->dev_id == PCI_DEVICE_ID_ATI_RAGE128_PF) {
+-            s->regs.dst_offset = (data & 0x1fffff) << 5;
+-            s->regs.dst_pitch = (data & 0x7fe00000) >> 21;
+-            s->regs.dst_tile = data >> 31;
+-        } else {
+-            s->regs.dst_offset = (data & 0x3fffff) << 10;
+-            s->regs.dst_pitch = (data & 0x3fc00000) >> 16;
+-            s->regs.dst_tile = data >> 30;
+-        }
+-        break;
+     case SRC_Y_X:
+         s->regs.src_x = data & 0x3fff;
+         s->regs.src_y = (data >> 16) & 0x3fff;
+@@ -915,13 +1008,7 @@ void ati_reg_write(ATIVGAState *s, hwaddr addr,
+         s->regs.dst_height = (data >> 16) & 0x3fff;
+         break;
+     case SRC_OFFSET:
+-            s->regs.src_offset = data & 0xfffffff0;
+-        break;
+-    case SRC_PITCH:
+-            s->regs.src_pitch = data & 0x3fff;
+-        if (s->dev_id == PCI_DEVICE_ID_ATI_RAGE128_PF) {
+-            s->regs.src_tile = (data >> 16) & 1;
+-        }
++        s->regs.src_offset = data & 0xfffffff0;
+         break;
+     case DP_BRUSH_BKGD_CLR:
+         s->regs.dp_brush_bkgd_clr = data;
+@@ -947,22 +1034,6 @@ void ati_reg_write(ATIVGAState *s, hwaddr addr,
+     case DP_WRITE_MASK:
+         s->regs.dp_write_mask = data;
+         break;
+-    case DEFAULT_OFFSET:
+-        if (s->dev_id == PCI_DEVICE_ID_ATI_RAGE128_PF) {
+-            s->regs.default_offset = data & 0xfffffff0;
+-        } else {
+-            /* Radeon has DEFAULT_PITCH_OFFSET here like DST_PITCH_OFFSET */
+-            s->regs.default_offset = (data & 0x3fffff) << 10;
+-            s->regs.default_pitch = (data & 0x3fc00000) >> 16;
+-            s->regs.default_tile = data >> 30;
+-        }
+-        break;
+-    case DEFAULT_PITCH:
+-        if (s->dev_id == PCI_DEVICE_ID_ATI_RAGE128_PF) {
+-            s->regs.default_pitch = data & 0x3fff;
+-            s->regs.default_tile = (data >> 16) & 1;
+-        }
+-        break;
+     case DEFAULT_SC_BOTTOM_RIGHT:
+         s->regs.default_sc_right = data & 0x3fff;
+         s->regs.default_sc_bottom = (data >> 16) & 0x3fff;
 -- 
 2.53.0
 
