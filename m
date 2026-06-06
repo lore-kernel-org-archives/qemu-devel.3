@@ -4,70 +4,147 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1767DCD8C8E
-	for <qemu-devel@archiver.kernel.org>; Sat,  6 Jun 2026 09:01:50 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 945D7CD8C85
+	for <qemu-devel@archiver.kernel.org>; Sat,  6 Jun 2026 10:22:29 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wVmuH-0005Rd-2m; Sat, 06 Jun 2026 05:01:29 -0400
+	id 1wVoA4-0002Wa-4k; Sat, 06 Jun 2026 06:21:52 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <lixianglai@loongson.cn>)
- id 1wVmuE-0005RO-6O
- for qemu-devel@nongnu.org; Sat, 06 Jun 2026 05:01:26 -0400
-Received: from mail.loongson.cn ([114.242.206.163])
- by eggs.gnu.org with esmtp (Exim 4.90_1)
- (envelope-from <lixianglai@loongson.cn>) id 1wVmuB-00079K-E8
- for qemu-devel@nongnu.org; Sat, 06 Jun 2026 05:01:25 -0400
-Received: from loongson.cn (unknown [10.20.42.126])
- by gateway (Coremail) with SMTP id _____8CxHurX4SNqqj0RAA--.45930S3;
- Sat, 06 Jun 2026 17:01:11 +0800 (CST)
-Received: from [10.20.42.126] (unknown [10.20.42.126])
- by front1 (Coremail) with SMTP id qMiowJBxbcLS4SNqDpudAA--.34873S3;
- Sat, 06 Jun 2026 17:01:09 +0800 (CST)
-Subject: Re: [PATCH] target/loongarch: clear the registers when cpu is reset
-To: =?UTF-8?Q?Alex_Benn=c3=a9e?= <alex.bennee@linaro.org>,
- Bibo Mao <maobibo@loongson.cn>
-Cc: qemu-devel@nongnu.org, Song Gao <gaosong@loongson.cn>
-References: <20260529063858.3437928-1-lixianglai@loongson.cn>
- <9ede8d17-2a2c-ce1a-16e8-80fc3e984451@loongson.cn>
- <87h5nmxu3x.fsf@draig.linaro.org>
-From: lixianglai <lixianglai@loongson.cn>
-Message-ID: <ba79ca06-e440-c959-5275-2cd3c56695c2@loongson.cn>
-Date: Sat, 6 Jun 2026 16:51:12 +0800
-User-Agent: Mozilla/5.0 (X11; Linux loongarch64; rv:68.0) Gecko/20100101
- Thunderbird/68.7.0
+ (Exim 4.90_1) (envelope-from <daniel.barboza@oss.qualcomm.com>)
+ id 1wVoA0-0002VD-4B
+ for qemu-devel@nongnu.org; Sat, 06 Jun 2026 06:21:48 -0400
+Received: from mx0a-0031df01.pphosted.com ([205.220.168.131])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <daniel.barboza@oss.qualcomm.com>)
+ id 1wVo9u-0001HD-QB
+ for qemu-devel@nongnu.org; Sat, 06 Jun 2026 06:21:45 -0400
+Received: from pps.filterd (m0279862.ppops.net [127.0.0.1])
+ by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
+ 65660Tuw621639
+ for <qemu-devel@nongnu.org>; Sat, 6 Jun 2026 10:21:38 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+ cc:content-transfer-encoding:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+ DejfRrWtCynbs0DyMPq+0tSZ/zxjjbW5L0n/mIpCTPE=; b=A5FeVMf2s7BlKlF8
+ BV1MQ/g9MHjlZaB+FL/lv2TKpkH/dREpMOeX0PdyQ9htD2xnnA5kDUeTqAKvC4hD
+ 027tcyvucZFra7tihFc3eCxVoJi6SKYBBDjXQmpaILpOvjdTacEKEEsh6g8b25Cy
+ 2uUldPin0o1qtLJxkX79qAN7QCTEmM0JGlaENkGFU0Re6HGUTo4dhfcMsiDDI98c
+ t/SNDhWYr2158hZ5zErqMaLMXlCKxCDmYsRMcEpxVl/wmWinrLqoQKoPlPXODyCn
+ dDAc+bUL5eDfoBUPFefYp6hZIIpIjQFV+lIL/FWiU8RPrThbD+r//WosMEflaOil
+ jeNBfA==
+Received: from mail-qt1-f199.google.com (mail-qt1-f199.google.com
+ [209.85.160.199])
+ by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4emcadrncw-1
+ (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
+ for <qemu-devel@nongnu.org>; Sat, 06 Jun 2026 10:21:38 +0000 (GMT)
+Received: by mail-qt1-f199.google.com with SMTP id
+ d75a77b69052e-517582695d7so66445631cf.0
+ for <qemu-devel@nongnu.org>; Sat, 06 Jun 2026 03:21:38 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=oss.qualcomm.com; s=google; t=1780741297; x=1781346097; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:content-language:from
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=DejfRrWtCynbs0DyMPq+0tSZ/zxjjbW5L0n/mIpCTPE=;
+ b=cNog+Tkidq6xHifiAvfeUgNF3KMR5HzQYKTvBF03StVt6mSfnPYVYq6KLz970Nu1XV
+ uLnbik/hh4f6BJVeyvNjoBo4JGtVf5NnR8tmlN+/+lTBECeJgtFIcmmQoEN9wAWPPDI/
+ dNslNgojs98PcUEgrgCdughEiovZ48qz4W0DF7oNExA11InrePXf36W1ZmTPI6n5daHz
+ kgjQETZfGMBbDh5J4XvyVzy2FwFcjTSp++RpLhYdzGa+izDP02CwkrLCIDAf9HTiQck8
+ W73rSE11U7Nttc/fsTnLAPkSJmC1qdBQNL80rYHTUFr1IBK+5fmTfnOeauMouyKup1Mx
+ qOlQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1780741297; x=1781346097;
+ h=content-transfer-encoding:in-reply-to:content-language:from
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=DejfRrWtCynbs0DyMPq+0tSZ/zxjjbW5L0n/mIpCTPE=;
+ b=mTW70kGoPqb3DhNmu5J35FEIolOh0dmm3dSH0bl2jGDhqqFK2uoOhnYMtVwDVvJ89w
+ 4qlHu1Tgy02HwPKJYf4saGcqZtYam9BmxHLzxxsZh2eJnxqHuI60PS1pzwejBb4+Svt2
+ c6P95XdaQ+CLq/84sTcYyP0IqPLICU2xEc9tU/eKmVaaN/XrFlWcepT4KTeb5jORFhxh
+ 0n+wleFMzVSTtkhEoyAqyPW+JajAbYSbOdMrfq5Foxt4VpjYKysWjT2HCuoaMalSVZ77
+ zp51/6tjpfPZjA5kvWof04RHFv8G7CrIsBlXOb7Rrx+1ewcCtcmeuZ4xYmPEpDkDdVnX
+ abiQ==
+X-Gm-Message-State: AOJu0YyRe7bPxt0V3+R3XpCmsBqqkYo6byRM8xzLmjOrcN5p7cFb2YKT
+ 5cJVXDY/lV8mbNhE4+PnWcTINZe34g77ApJfxz7Hagjzb++0J28NqrThUhMaP1jLjszh+TZ9tjh
+ sJH25sLGHmL+Q9ab36es6k/koA9w3EcXnlJzWk1OOfBsCsm9Nc3gCgGTQeg==
+X-Gm-Gg: Acq92OHicG8icQ4eO9cJSf8HwpQutjlFoUkf2PyQ7NVqc4ROxGrlLXPe9zeKvxUb/E4
+ YFhjLeWznMLNuBxq1AZOpllKiKvFk6nrKfoSKISixdGnb2DMdbOZ8Z6Sa+nuZx61sfSrIhlFxOX
+ xPAfXYlqDxkAE7Bg7jDP66hvTv6+0eNsI2X0gGjgHoREi3tn/ACOel70Di1/lqRYyqCPgSMrHp5
+ DKQY7kmJmmumGSn4wG4vE3G+baBFLC/lILovFr6S3bCC3f5yPXUfNwl8Y3+XIJ3xI1XiFN0qzKd
+ HZ/LI/Id5rwgZ9p4d+lFWyTP+ldTVDBIMm3b8gW0MIJ65nckjKeNKLYhQPiuhLSX2uGWhKDOUDC
+ YY2BpVHNyl5KRbrY0BQmQ1/GF6G3cXxHPLZWrmZArb5BLvO+9yRU3qC3z4PeUEq1AVy45
+X-Received: by 2002:ac8:5d8d:0:b0:517:5879:1e2f with SMTP id
+ d75a77b69052e-517987df585mr68619891cf.27.1780741297263; 
+ Sat, 06 Jun 2026 03:21:37 -0700 (PDT)
+X-Received: by 2002:ac8:5d8d:0:b0:517:5879:1e2f with SMTP id
+ d75a77b69052e-517987df585mr68619661cf.27.1780741296789; 
+ Sat, 06 Jun 2026 03:21:36 -0700 (PDT)
+Received: from [192.168.68.106] ([177.170.117.62])
+ by smtp.gmail.com with ESMTPSA id
+ 6a1803df08f44-8cecd0708cfsm105976426d6.38.2026.06.06.03.21.34
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Sat, 06 Jun 2026 03:21:36 -0700 (PDT)
+Message-ID: <eb4169a9-6f28-4104-884a-62249f7ccdbd@oss.qualcomm.com>
+Date: Sat, 6 Jun 2026 07:21:32 -0300
 MIME-Version: 1.0
-In-Reply-To: <87h5nmxu3x.fsf@draig.linaro.org>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Transfer-Encoding: 8bit
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v7 2/5] target/riscv: Add server platform reference cpu
+To: Icenowy Zheng <uwu@icenowy.me>,
+ Andrew Jones <andrew.jones@oss.qualcomm.com>
+Cc: qemu-devel@nongnu.org, qemu-riscv@nongnu.org, alistair.francis@wdc.com,
+ liwei1518@gmail.com, zhiwei_liu@linux.alibaba.com,
+ chao.liu.zevorn@gmail.com, leif.lindholm@oss.qualcomm.com,
+ Fei Wu <wu.fei9@sanechips.com.cn>, Palmer Dabbelt <palmer@dabbelt.com>
+References: <20260604095244.3313259-1-daniel.barboza@oss.qualcomm.com>
+ <20260604095244.3313259-3-daniel.barboza@oss.qualcomm.com>
+ <4acb210eea217195fa733a4f42369c01591d5499.camel@icenowy.me>
+ <a77a1891-214e-4788-8cc3-a5729f5cd182@oss.qualcomm.com>
+ <9b05368c-972a-491e-bddb-7e015100eee2@oss.qualcomm.com>
+ <5y2sdlx3pu5oyhrm3yxxkvkwv6pl3bpvuzdpnlqg4xt3l2zrxd@yi4h5x2f2xze>
+ <3f9d50fb-304c-4ef3-bd63-9fd215b45965@oss.qualcomm.com>
+ <17b395009bef17cc056ae4a58a83c744ebb12798.camel@icenowy.me>
+From: Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>
 Content-Language: en-US
-X-CM-TRANSID: qMiowJBxbcLS4SNqDpudAA--.34873S3
-X-CM-SenderInfo: 5ol0xt5qjotxo6or00hjvr0hdfq/
-X-Coremail-Antispam: 1Uk129KBj93XoWxXFW8ur4DAr1fAFW5Zw1kZwc_yoWrur45pa
- 10kFWqkFy5tFZFyw1fXan8Krs8Zr18Kwn2vw43GFy0kr98Xw1SgFW0gryvgry7Z3yrAF4F
- 9rnFkFW5uF4rAFgCm3ZEXasCq-sJn29KB7ZKAUJUUUUU529EdanIXcx71UUUUU7KY7ZEXa
- sCq-sGcSsGvfJ3Ic02F40EFcxC0VAKzVAqx4xG6I80ebIjqfuFe4nvWSU5nxnvy29KBjDU
- 0xBIdaVrnRJUUUv0b4IE77IF4wAFF20E14v26r1j6r4UM7CY07I20VC2zVCF04k26cxKx2
- IYs7xG6rWj6s0DM7CIcVAFz4kK6r106r15M28lY4IEw2IIxxk0rwA2F7IY1VAKz4vEj48v
- e4kI8wA2z4x0Y4vE2Ix0cI8IcVAFwI0_Jr0_JF4l84ACjcxK6xIIjxv20xvEc7CjxVAFwI
- 0_Jr0_Gr1l84ACjcxK6I8E87Iv67AKxVWUJVW8JwA2z4x0Y4vEx4A2jsIEc7CjxVAFwI0_
- Gr0_Gr1UM2AIxVAIcxkEcVAq07x20xvEncxIr21l57IF6xkI12xvs2x26I8E6xACxx1l5I
- 8CrVACY4xI64kE6c02F40Ex7xfMcIj6xIIjxv20xvE14v26r1j6r18McIj6I8E87Iv67AK
- xVWUJVW8JwAm72CE4IkC6x0Yz7v_Jr0_Gr1lF7xvr2IY64vIr41lc7I2V7IY0VAS07AlzV
- AYIcxG8wCF04k20xvY0x0EwIxGrwCFx2IqxVCFs4IE7xkEbVWUJVW8JwC20s026c02F40E
- 14v26r1j6r18MI8I3I0E7480Y4vE14v26r106r1rMI8E67AF67kF1VAFwI0_JF0_Jw1lIx
- kGc2Ij64vIr41lIxAIcVC0I7IYx2IY67AKxVWUJVWUCwCI42IY6xIIjxv20xvEc7CjxVAF
- wI0_Jr0_Gr1lIxAIcVCF04k26cxKx2IYs7xG6r1j6r1xMIIF0xvEx4A2jsIE14v26r1j6r
- 4UMIIF0xvEx4A2jsIEc7CjxVAFwI0_Jr0_GrUvcSsGvfC2KfnxnUUI43ZEXa7IU8czVUUU
- UUU==
-Received-SPF: pass client-ip=114.242.206.163;
- envelope-from=lixianglai@loongson.cn; helo=mail.loongson.cn
-X-Spam_score_int: -48
-X-Spam_score: -4.9
-X-Spam_bar: ----
-X-Spam_report: (-4.9 / 5.0 requ) BAYES_00=-1.9, NICE_REPLY_A=-2.97,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+In-Reply-To: <17b395009bef17cc056ae4a58a83c744ebb12798.camel@icenowy.me>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+X-Authority-Analysis: v=2.4 cv=DIa/JSNb c=1 sm=1 tr=0 ts=6a23f4b2 cx=c_pps
+ a=WeENfcodrlLV9YRTxbY/uA==:117 a=gdiugJE53z4H+vvYeRBHqw==:17
+ a=IkcTkHD0fZMA:10 a=FelO9ux0wxsA:10 a=s4-Qcg_JpJYA:10
+ a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=_K5XuSEh1TEqbUxoQ0s3:22
+ a=ulUEThHsuaDsgZ1WON8A:9 a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
+ a=kacYvNCVWA4VmyqE58fU:22
+X-Proofpoint-GUID: vqCYpsMCtlCEtgR95gRcclacTcVcZDVe
+X-Proofpoint-ORIG-GUID: vqCYpsMCtlCEtgR95gRcclacTcVcZDVe
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNjA2MDEwMSBTYWx0ZWRfX6v4G20cY3IDI
+ LlVTs6RfxoeUklvppoaHI8WVGE/crEG7wXAKeakXB2fwuTGSfaRcZFrJQQ2yqiCDjT0nRm1twh+
+ rZFX3jncYDMiVFc799GPEp12PvsJRC9heHamEZflg3T+ylQcrUxjeG07ouYxsagWXNxXhxH7mUt
+ b0a1/ghjZPb6OaZXK1DrGpORL9MkWMAmp0OchKGkU8rsyTA9ZqBRjVPgAtCKR7N+zkWwCYkKaUR
+ glutsoD48t8rBDQcvgDSpYxnMKN7vUrqUtv7PNCkf+3MzWxAaVAfmGRIX8YGXP6Rj6NO1MRI61x
+ hn69+egxnKSaFiFw0pNo0LofFgYaKVl/Lp+5kfDrknSIvWcRm9xoHCCwmctE+R29FFh/uI1wfVX
+ AeA6xHj/MGulrysLiO95SYmwwgh6R4iB8dcylsQrVgQlKayRpdKDQ+/KjAbGO3D4/utsyIJlFBw
+ GCqr+mgItN8m/F1hiIQ==
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.125,FMLib:17.12.100.49
+ definitions=2026-06-06_02,2026-06-05_02,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ impostorscore=0 lowpriorityscore=0 priorityscore=1501 phishscore=0
+ bulkscore=0 adultscore=0 malwarescore=0 clxscore=1015 spamscore=0
+ suspectscore=0 classifier=typeunknown authscore=0 authtc= authcc=
+ route=outbound adjust=0 reason=mlx scancount=1 engine=8.22.0-2605210000
+ definitions=main-2606060101
+Received-SPF: pass client-ip=205.220.168.131;
+ envelope-from=daniel.barboza@oss.qualcomm.com; helo=mx0a-0031df01.pphosted.com
+X-Spam_score_int: -27
+X-Spam_score: -2.8
+X-Spam_bar: --
+X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -83,107 +160,128 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi Alex Bennée :
-> Bibo Mao <maobibo@loongson.cn> writes:
->
->> On 2026/5/29 下午2:38, Xianglai Li wrote:
->>> Set the CSR_CRMD, CSR_ESTAT, CSR_MSGIS and CSR_PERFCTRL registers to the
->>> reset state when the CPU is reset.
->> Hi Xianglai,
+
+
+On 6/6/2026 2:16 AM, Icenowy Zheng wrote:
+> 在 2026-06-05五的 23:33 -0300，Daniel Henrique Barboza写道：
 >>
->> Thanks for the patch.
 >>
->> Could you add some description how do you find this issue? such as by
->> code reviewing or there is a real problem.
-> Also Loongarch seems to be one of the few that doesn't just do:
->
->    memset(env, 0, offsetof(CPUFooState, end_reset_fields));
-
-Hello, I noticed that the patch below will make extensive modifications 
-to the CSR register
-members in the `CPULoongArchState` structure. I will wait until the 
-patch below is merged
-into the mainline, and then refer to other architectures to modify the 
-implementation of
-`end_reset_fields` before submitting the second version of the patch.
-
-https://lore.kernel.org/qemu-devel/20260605083938.175658-1-maobibo@loongson.cn/
-
-Thanks!
-Xianglai.
-
-> in the reset function.
->
->>> Signed-off-by: Xianglai Li <lixianglai@loongson.cn>
->>> ---
->>> Cc: Bibo Mao <maobibo@loongson.cn>
->>> Cc: Song Gao <gaosong@loongson.cn>
->>>    target/loongarch/cpu-csr.h |  7 +++++++
->>>    target/loongarch/cpu.c     | 19 ++++++++++++++++++-
->>>    2 files changed, 25 insertions(+), 1 deletion(-)
->>> diff --git a/target/loongarch/cpu-csr.h b/target/loongarch/cpu-csr.h
->>> index d860417af2..d936af8e57 100644
->>> --- a/target/loongarch/cpu-csr.h
->>> +++ b/target/loongarch/cpu-csr.h
->>> @@ -211,6 +211,13 @@ FIELD(CSR_DMW_64, VSEG, 60, 4)
->>>    #define LOONGARCH_CSR_PERFCTRL(N)    (0x200 + 2 * N)
->>>    #define LOONGARCH_CSR_PERFCNTR(N)    (0x201 + 2 * N)
->>>    +FIELD(CSR_PERFCTRL, EV, 0, 10)
->>> +FIELD(CSR_PERFCTRL, PLV0, 16, 1)
->>> +FIELD(CSR_PERFCTRL, PLV1, 17, 1)
->>> +FIELD(CSR_PERFCTRL, PLV2, 18, 1)
->>> +FIELD(CSR_PERFCTRL, PLV3, 19, 1)
->>> +FIELD(CSR_PERFCTRL, PMIE, 20, 1)
->>> +
->>>    /* Debug CSRs */
->>>    #define LOONGARCH_CSR_DBG            0x500 /* debug config */
->>>    FIELD(CSR_DBG, DST, 0, 1)
->>> diff --git a/target/loongarch/cpu.c b/target/loongarch/cpu.c
->>> index 8f277f7696..7f82c4c46c 100644
->>> --- a/target/loongarch/cpu.c
->>> +++ b/target/loongarch/cpu.c
->>> @@ -622,6 +622,7 @@ static void loongarch_cpu_reset_hold(Object *obj, ResetType type)
->>>        env->CSR_CRMD = FIELD_DP64(env->CSR_CRMD, CSR_CRMD, PG, 0);
->>>        env->CSR_CRMD = FIELD_DP64(env->CSR_CRMD, CSR_CRMD, DATF, 0);
->>>        env->CSR_CRMD = FIELD_DP64(env->CSR_CRMD, CSR_CRMD, DATM, 0);
->>> +    env->CSR_CRMD = FIELD_DP64(env->CSR_CRMD, CSR_CRMD, WE, 0);
->>>          env->CSR_EUEN = FIELD_DP64(env->CSR_EUEN, CSR_EUEN, FPE, 0);
->>>        env->CSR_EUEN = FIELD_DP64(env->CSR_EUEN, CSR_EUEN, SXE, 0);
->>> @@ -633,7 +634,7 @@ static void loongarch_cpu_reset_hold(Object *obj, ResetType type)
->>>        env->CSR_ECFG = FIELD_DP64(env->CSR_ECFG, CSR_ECFG, VS, 0);
->>>        env->CSR_ECFG = FIELD_DP64(env->CSR_ECFG, CSR_ECFG, LIE, 0);
->>>    -    env->CSR_ESTAT = env->CSR_ESTAT & (~MAKE_64BIT_MASK(0, 2));
->>> +    env->CSR_ESTAT = 0;
->>>        env->CSR_RVACFG = FIELD_DP64(env->CSR_RVACFG, CSR_RVACFG, RBITS, 0);
->>>        env->CSR_CPUID = cs->cpu_index;
->>>        env->CSR_TCFG = FIELD_DP64(env->CSR_TCFG, CSR_TCFG, EN, 0);
->>> @@ -641,6 +642,22 @@ static void loongarch_cpu_reset_hold(Object *obj, ResetType type)
->>>        env->CSR_TLBRERA = FIELD_DP64(env->CSR_TLBRERA, CSR_TLBRERA, ISTLBR, 0);
->>>        env->CSR_MERRCTL = FIELD_DP64(env->CSR_MERRCTL, CSR_MERRCTL, ISMERR, 0);
->>>        env->CSR_TID = cs->cpu_index;
->>> +
->>> +    memset(env->CSR_MSGIS, 0, sizeof(env->CSR_MSGIS));
->>> +    env->CSR_DBG = FIELD_DP64(env->CSR_DBG, CSR_DBG, DST, 0);
->>> +    for (n = 0; n < MAX_PERF_EVENTS; n++) {
->> how about for (n = 0; n < env.perf_event_num; n++) {  ?
->>
->> Regards
->> Bibo Mao
->>> +        env->CSR_PERFCTRL[n] = FIELD_DP64(env->CSR_PERFCTRL[n], CSR_PERFCTRL,
->>> +                                          PLV0, 0);
->>> +        env->CSR_PERFCTRL[n] = FIELD_DP64(env->CSR_PERFCTRL[n], CSR_PERFCTRL,
->>> +                                          PLV1, 0);
->>> +        env->CSR_PERFCTRL[n] = FIELD_DP64(env->CSR_PERFCTRL[n], CSR_PERFCTRL,
->>> +                                          PLV2, 0);
->>> +        env->CSR_PERFCTRL[n] = FIELD_DP64(env->CSR_PERFCTRL[n], CSR_PERFCTRL,
->>> +                                          PLV3, 0);
->>> +        env->CSR_PERFCTRL[n] = FIELD_DP64(env->CSR_PERFCTRL[n], CSR_PERFCTRL,
->>> +                                          PMIE, 0);
->>> +    }
->>> +
->>>        /*
->>>         * Workaround for edk2-stable202408, CSR PGD register is set only if
->>>         * its value is equal to zero for boot cpu, it causes reboot issue.
+>> On 6/5/2026 7:24 PM, Andrew Jones wrote:
+>>> On Fri, Jun 05, 2026 at 05:48:18PM -0300, Daniel Henrique Barboza
+>>> wrote:
+>>> ...
+>>>>> You're correct.  We're not initializing satp_mode to
+>>>>> max_satp_mode, so the
+>>>>> default value is being set to sv39.  This seems to be the case
+>>>>> for all
+>>>>> CPUs, not just this one.  For some reason I thought we were
+>>>>> defaulting
+>>>>> to the max_satp_mode.  I need to understand why sv39 is being
+>>>>> set as
+>>>>> default (i.e. why not BARE?).
+>>>>
+>>>> Got an update.  It turns out that what we're seeing is something
+>>>> that is
+>>>> only happening to this CPU we're trying to add.
+>>>>
+>>>> The way satp mode is set on QEMU assuming no command line input:
+>>>>
+>>>> - "Bare" CPUs, aka CPUs that has just I or E enabled: default to
+>>>> BARE;
+>>>>
+>>>> - Profile CPUs: default to the minimum required by the spec.
+>>>> E.g. for
+>>>>     RVA23 the default is set to sv39;
+>>>>
+>>>> - all other CPUs: default to satp_mode_max from the CPU
+>>>> definition.
+>>>>
+>>>> The riscv-server-ref CPU is a BARE CPU that is using the profile
+>>>> framework
+>>>> to enable extensions.  So for all intents and purposes the code
+>>>> is treating
+>>>> it as a profile CPU with extra stuff.  Which is good, but then
+>>>> the
+>>>> satp setting from RVA23 (sv39) is overwriting satp_mode_max from
+>>>> the
+>>>> CPU definition.
+>>>>
+>>>> I believe the way we're creating riscv-server-ref here is
+>>>> correct, so what
+>>>> I'm going to do is send a couple of fixes to allow riscv-server-
+>>>> ref to use
+>>>> RVA23 as a base and honor its satp_mode_max value too.
 >>>
+>>> But setting satp_mode_max to sv48 is not correct if that really
+>>> means
+>>> _max_ since we want the reference platform to default to the
+>>> minimum
+>>> (sv48) but also support the supported optional extensions and sv57
+>>> is
+>>> a supported optional extension.
+>>
+>> QEMU only works this way for profile CPUs.
+>>
+>> For non-profile CPUs: cpu.max_satp_mode is set internally as part of
+>> the CPU definition.  This is the maximum satp value that the CPU
+>> allows
+>> users to set via cmd line.  If the user does not provide a satp mode
+>> then we'll do curr_satp_mode = max_satp_mode.
+>>
+>> E.g. the thead vendor CPU defines .cfg.max_satp_mode = VM_1_10_SV39.
+>> In the command line we can't set anything higher than that:
+>>
+>> $ ./build/qemu-system-riscv64 -M virt -cpu thead-c906,sv57=on
+>> qemu-system-riscv64: satp_mode sv57 is higher than hw max capability
+>> sv39
+>>
+>>
+>> For profile CPUs things are different: they are bare_cpu types, which
+>> are
+>> initialized with max_satp_mode sv57, and then during profile init we
+>> set the current satp_mode (current, not max_satp_mode) to the minimum
+>> the profile requires.  Thus the rva23s64 CPU, by default, starts with
+>> sv39 but it can go up to sv57.
+>>
+>>   From what I'm understanding we want the riscv-server-ref CPU to work
+>> like profile CPUs.  In fact I believe we can make it official by
+>> adding a 'default_satp_mode' setting in the CPU definition and
+>> allowing
+>> all CPUs to define a default satp and a max satp.  CPUs defs that
+>> don't
+>> set a default mode will keep working as today (default_satp_mode ==
+>> max_satp_mode
+>> if no user input).
+> 
+> I think we can just make RVSP a profile, and rvsp-ref CPU a BARE CPU
+> based on that profile; then set the profile's min SATP to Sv48, and the
+> BARE CPU's max SATP to Sv57.
+> 
+> In this case if any other CPU complying to RVSP is added, it can just
+> reuse the profile.
+
+Having riscv-server-ref being a profile CPU seems compelling indeed ...
+new CPUs could instance it with .profile = &rvserver-ref to have everything
+already sorted out, we would also have a flag to enable the profile for
+existing cpus, e.g. -cpu rv64,rvserver-ref=on.
+
+Drew, any thoughts?
+
+
+Daniel
+
+> 
+> Thanks,
+> Icenowy
+> 
+>>
+>>
+>> I'll make changes and see how it goes.  Cheers,
+>>
+>> Daniel
+>>
+>>>
+>>> Thanks,
+>>> drew
 
 
