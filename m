@@ -4,79 +4,80 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 45B21CD6E75
-	for <qemu-devel@archiver.kernel.org>; Sat,  6 Jun 2026 05:17:29 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 73925CD6E75
+	for <qemu-devel@archiver.kernel.org>; Sat,  6 Jun 2026 05:17:31 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wVjOA-00025j-Kq; Sat, 06 Jun 2026 01:16:08 -0400
+	id 1wVjP5-0002qv-5r; Sat, 06 Jun 2026 01:17:04 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1wVjNv-000226-6f
- for qemu-devel@nongnu.org; Sat, 06 Jun 2026 01:15:53 -0400
+ id 1wVjP0-0002jZ-7L
+ for qemu-devel@nongnu.org; Sat, 06 Jun 2026 01:16:58 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1wVjNt-0008BG-OA
- for qemu-devel@nongnu.org; Sat, 06 Jun 2026 01:15:50 -0400
+ id 1wVjOy-0008GF-Pc
+ for qemu-devel@nongnu.org; Sat, 06 Jun 2026 01:16:57 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1780722948;
+ s=mimecast20190719; t=1780723016;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=EHaYJTnNXtnP4r58RbVBZ5CHW50pjzFA4v+h6Y0CfyA=;
- b=SUCpEv0mg9yH5MBVkArBlrQCdhylN4tzbBRraql7nDCj490gpm5/1O2p7WFS+8XqetUCeK
- G56BgdUstCF2Sj2mO1Pku8OjmMJLJJIsd7UjcJ7pDh+eacsG8HJsq6Fgj16zkPMUcai4az
- cwiDNgrH3eebctIvDu/S9I9h269biRs=
-Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
+ bh=oChfGW5Tq+2XS1SV5t1cQUIYoRVR7500LonYw5rznpg=;
+ b=b2/6pe38MscO8lF95LjHCFL4yRuS26LKK0aQwWulD49Xd8UcCV97Jyr4sl8Rn6ik6rU6hy
+ 28h6raV50VsUdCtksGNQjTjHAGZZqTIsvNGaw2W0dWFSVdiDcKh6oeQ12L1Q1LEW3if0Dz
+ kOTZjR3WBSBuNcIiWSupHN37e8qEx3Q=
+Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-684-ocFrnxgROHmO4vAsnlspoQ-1; Sat,
- 06 Jun 2026 01:15:47 -0400
-X-MC-Unique: ocFrnxgROHmO4vAsnlspoQ-1
-X-Mimecast-MFC-AGG-ID: ocFrnxgROHmO4vAsnlspoQ_1780722946
-Received: from mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.111])
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-656-v0fzHXVePCih6PZ8VteIAQ-1; Sat,
+ 06 Jun 2026 01:16:54 -0400
+X-MC-Unique: v0fzHXVePCih6PZ8VteIAQ-1
+X-Mimecast-MFC-AGG-ID: v0fzHXVePCih6PZ8VteIAQ_1780723014
+Received: from mx-prod-int-10.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-10.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.95])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 48B7F180049F
- for <qemu-devel@nongnu.org>; Sat,  6 Jun 2026 05:15:46 +0000 (UTC)
+ by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 0B0DB1800345
+ for <qemu-devel@nongnu.org>; Sat,  6 Jun 2026 05:16:54 +0000 (UTC)
 Received: from localhost (unknown [10.44.24.6])
- by mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 231BB18005AE; Sat,  6 Jun 2026 05:15:44 +0000 (UTC)
+ by mx-prod-int-10.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id 0309827A; Sat,  6 Jun 2026 05:16:52 +0000 (UTC)
 From: =?utf-8?q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>
-Date: Sat, 06 Jun 2026 09:15:33 +0400
-Subject: [GIT PULL v2 01/23] hw/pci: handle missing bus in prop_pci_busnr_get
+Date: Sat, 06 Jun 2026 09:15:46 +0400
+Subject: [GIT PULL v2 14/23] target/i386/kvm/tdx: free strings in
+ tdx_guest_finalize
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
-Message-Id: <20260606-qom-tests-v2-1-55832d978a9f@redhat.com>
+Message-Id: <20260606-qom-tests-v2-14-55832d978a9f@redhat.com>
 References: <20260606-qom-tests-v2-0-55832d978a9f@redhat.com>
 In-Reply-To: <20260606-qom-tests-v2-0-55832d978a9f@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: stefanha@redhat.com
-X-Developer-Signature: v=1; a=openpgp-sha256; l=1326;
+X-Developer-Signature: v=1; a=openpgp-sha256; l=893;
  i=marcandre.lureau@redhat.com; h=from:subject:message-id;
- bh=6du0B3+bTyiu/gIbq11MHIRY6wGGJJ3yX28+ndrVGuE=;
- b=owEBbQKS/ZANAwAKAdro4Ql1lpzlAcsmYgBqI6z083AKVxSQ2Bn2+Po1oO3N5hy2HrJiUrjMc
- xjWGmcJfrSJAjMEAAEKAB0WIQSHqb2TP4fGBtJ29i3a6OEJdZac5QUCaiOs9AAKCRDa6OEJdZac
- 5eY0EACyoPCk1WI6mCKUWSftfl5QIDKaH8lRnyMNYA2XHhQ6+fCCS3WJPizIm+ZG9GscWbSIJJN
- YCDVfF4cMlTOrLZp4oIq53IEO/o5/agDBMKn+oQVJPbmaSOfVlz4rKIgBMW076ITFpC6/P5BxiR
- cT0NsSePxY21NMK5ED7KJYGd94J7dN2YggLVBHBvlJvhyqbnnCIw5IwaerGq9rVOjliompHMtpC
- qjLWRckzfWBFdivKOrsvjHAfX6TKZCD3dkO+2f8W52p+BssbswndH5iuK87yqkk3RVhv/gr26st
- 8S/24gAoijPPAF5f93q6/cPJgXAnk4aCKcrJ6cuvzs/tPZL9ybhe4RZq0j5tHyQECkvw5I89uUL
- aFAY9Xlex33qLB9kYFczzvsLb8++ErtyRTqGpDFQEnkE88Ehd2xN8lEFx/voOrgO609Z68faL3Y
- Cj4DEngsnQvwuGKQHrr/aGnVafF+MyduY/9+cxen+Oi2EWLjlyJ7qwadBgk9194z1cEVOEpmfql
- lx8BVF9MBkUGahR6mvwkfLveP5tWkKY229TYN5rRs+s0jMWdHD7yKMLExYQJ1MTw0/IBj9d2p6Q
- WHs9iKzsHnibHukCHtqXUWEOTJJRbhfzqeBoxv/rTCGlyUTrE+f9DzAz0HuQ9w3q1AzA2e7fQky
- QFYTOJ1vC6qLw9A==
+ bh=DafxdRB7/MLkueWJrLE2w1Qd3zyBZmU4Trf2EjVE458=;
+ b=owEBbQKS/ZANAwAKAdro4Ql1lpzlAcsmYgBqI6z1c5DUMYA1MTkgkGDX9ofxiIPNp3JP6u3AM
+ wd8hyChLy6JAjMEAAEKAB0WIQSHqb2TP4fGBtJ29i3a6OEJdZac5QUCaiOs9QAKCRDa6OEJdZac
+ 5cqpD/9e53MDmDNaLjlNUrxybvdST10gneJgVnyGHyRhmk8KwmmTV8aDtAScg0T19aMqHNkgupJ
+ VKgRadhtHGSbXcYcNODy/m/dnXMjk2FakbbPLX/RlXQOGwRHKZ0rN/O/iYI742210QlaxUkI0dU
+ vzUQFsWziqROKpT1ZtU0/xmy+rhRRovR6W7ijCbcRrXoBE/vTfk3efoMHqhFFCV92+v8qNNGkJc
+ yUokz53ma22Lm0eJvNUjI170gonKWopOdGOlVpViWbvzH/Gkm015RHKth+q1MmI3W40TKmL+XRO
+ Af9V94wnCLIRDU1atA8Nd4+XJkTV3adZVTGBw1eOZW6lggkklS/5AjOs1DIhowhyUrRSMgBaG2u
+ 91gBvz35vtJf2kqDmZUm4KRxxRzLRNtPm/e0fv/o+VhFG0jvMcQ8AyCWXkMn+gdAiJwFVTeaubM
+ 3WQJ4Sw8lKB9r5J6YGeirCYVHzIeN3+ELBfyccou7KDjrFbtRqG+ZGAcrinUBMDmTChLquZMx/7
+ FYzX2658pGC8B8iBPrRTQyxENwhQugVO+a26rDhnjtRNEcjTMwgbdKl7J1fH2n00T4KvRsbYbeI
+ gXn9yJu7ecavv0eXsRgo/aaFrhApUR2aQFLZqRJ9bEoVWDbBS5EYfD3N2mlLc2SjAlXjpuBA24Z
+ 1UExoP4eDGenonQ==
 X-Developer-Key: i=marcandre.lureau@redhat.com; a=openpgp;
  fpr=87A9BD933F87C606D276F62DDAE8E10975969CE5
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.111
+X-Scanned-By: MIMEDefang 3.6 on 10.30.177.95
 Received-SPF: pass client-ip=170.10.133.124;
  envelope-from=marcandre.lureau@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
@@ -102,42 +103,32 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-When called on an unrealized device (e.g. from
-qmp_qom_list_properties), pci_get_bus() returns NULL since the device
-has no parent bus. Check for this to avoid a NULL dereference in
-pci_bus_num().
+tdx_guest_finalize was empty, so mrconfigid, mrowner, and
+mrownerconfig set by property setters were never freed.
 
-Fixes: df9ac7254fd9 ("hw/pci: Add a busnr property to pci_props and use for acpi/gi")
+Fixes: d05a0858cf87 ("i386/tdx: Support user configurable mrconfigid/mrowner/mrownerconfig")
 Reviewed-by: Daniel P. Berrangé <berrange@redhat.com>
 Signed-off-by: Marc-André Lureau <marcandre.lureau@redhat.com>
 ---
- hw/pci/pci.c | 11 +++++++++--
- 1 file changed, 9 insertions(+), 2 deletions(-)
+ target/i386/kvm/tdx.c | 5 +++++
+ 1 file changed, 5 insertions(+)
 
-diff --git a/hw/pci/pci.c b/hw/pci/pci.c
-index 4298adf5a0a..cec065d108f 100644
---- a/hw/pci/pci.c
-+++ b/hw/pci/pci.c
-@@ -64,10 +64,17 @@ static void pcibus_reset_hold(Object *obj, ResetType type);
- static bool pcie_has_upstream_port(PCIDevice *dev);
+diff --git a/target/i386/kvm/tdx.c b/target/i386/kvm/tdx.c
+index 4714c9d514e..df46fce7693 100644
+--- a/target/i386/kvm/tdx.c
++++ b/target/i386/kvm/tdx.c
+@@ -1585,6 +1585,11 @@ static void tdx_guest_init(Object *obj)
  
- static void prop_pci_busnr_get(Object *obj, Visitor *v, const char *name,
--                             void *opaque, Error **errp)
-+                               void *opaque, Error **errp)
+ static void tdx_guest_finalize(Object *obj)
  {
--    uint8_t busnr = pci_dev_bus_num(PCI_DEVICE(obj));
-+    PCIDevice *dev = PCI_DEVICE(obj);
-+    PCIBus *bus = pci_get_bus(dev);
-+    uint8_t busnr;
- 
-+    if (!bus) {
-+        error_setg(errp, "device not attached to a PCI bus");
-+        return;
-+    }
-+    busnr = pci_bus_num(bus);
-     visit_type_uint8(v, name, &busnr, errp);
++    TdxGuest *tdx = TDX_GUEST(obj);
++
++    g_free(tdx->mrconfigid);
++    g_free(tdx->mrowner);
++    g_free(tdx->mrownerconfig);
  }
  
+ static ResettableState *tdx_reset_state(Object *obj)
 
 -- 
 2.54.0
