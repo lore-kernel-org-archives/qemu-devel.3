@@ -4,77 +4,91 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D107FCD6E75
-	for <qemu-devel@archiver.kernel.org>; Sat,  6 Jun 2026 05:17:33 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1E0AACD6E75
+	for <qemu-devel@archiver.kernel.org>; Sat,  6 Jun 2026 05:17:41 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wVjPE-0003UK-JC; Sat, 06 Jun 2026 01:17:12 -0400
+	id 1wVjPa-0005p3-1i; Sat, 06 Jun 2026 01:17:34 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <uwu@icenowy.me>)
- id 1wVjPB-00037G-9w; Sat, 06 Jun 2026 01:17:09 -0400
-Received: from sender4-op-o12.zoho.com ([136.143.188.12])
+ (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
+ id 1wVjPX-0005eg-Na
+ for qemu-devel@nongnu.org; Sat, 06 Jun 2026 01:17:31 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <uwu@icenowy.me>)
- id 1wVjP9-0008Iy-Eh; Sat, 06 Jun 2026 01:17:08 -0400
-ARC-Seal: i=1; a=rsa-sha256; t=1780723006; cv=none; 
- d=zohomail.com; s=zohoarc; 
- b=kxos7LJ1yinkzpP5ls5EJvUYc9+ztamvTpvne7FwStu33VYIrWw2RRpxCMJdNJ9/kl7/XxesPJS5Dm5YVOTSEfefstgObKeozRWVgbk2jmT4cinroDlYVpxa0a8ngwAcNjcsvYjoCiF7oHxv9e0D8wF40Ciz8xAL8JlmxEpK3+s=
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=zohomail.com;
- s=zohoarc; t=1780723006;
- h=Content-Type:Content-Transfer-Encoding:Cc:Cc:Date:Date:From:From:In-Reply-To:MIME-Version:Message-ID:References:Subject:Subject:To:To:Message-Id:Reply-To;
- bh=Bud71TsslVRu8CyzB+cvMpilOUUTUGSLvUZRWJ3sshY=; 
- b=i/fTNWz0eDuBIAIE+Vle4M8C/fsvrWVUWlrKNCocwB6eI3msJ/JFvM3D25613WCcxHqXAcYJiErHnbh7lMw7uei3+xEDTkjimfov0eMf7zOPBwFi6QSgcpxB16HlxCY8p3oKNI3Xb4Tl9+sBC1Kgq9xTsnCWWPhhv79NlCMhl0U=
-ARC-Authentication-Results: i=1; mx.zohomail.com;
- dkim=pass  header.i=icenowy.me;
- spf=pass  smtp.mailfrom=uwu@icenowy.me;
- dmarc=pass header.from=<uwu@icenowy.me>
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; t=1780723006; 
- s=zmail2; d=icenowy.me; i=uwu@icenowy.me;
- h=Message-ID:Subject:Subject:From:From:To:To:Cc:Cc:Date:Date:In-Reply-To:References:Content-Type:Content-Transfer-Encoding:MIME-Version:Message-Id:Reply-To;
- bh=Bud71TsslVRu8CyzB+cvMpilOUUTUGSLvUZRWJ3sshY=;
- b=nTFzYpFqjh2kpzOQv59SxHnoaItdF5dotHgAu2bnlCKUls2y7VMr/al3CUDNhmwo
- 1vFG0JW1sHZgvhnHBzO+PNJMHOeaiZ7rhLAhv/JY3LlS3vj5EcNN3o520G1Dz2bEABE
- qaioHLXjqbY2V6iB85ImFJzRnwBp70fH0YQSHWDuruJnJZFuAe5v8+o5LH437HcLa2/
- pX7YSY7RikaM9wUy2Y3os4MsqH8rPyv9U/SBFoFILx7vO/EWGA18l4o0YobtGuaGDjU
- GR0RGFQ7s0tFdIbHEfkYmWkecwjWemKloM042IsHFHYwH4pMsCuScUWWbXKwbHqVcnS
- lHr1GrkL1A==
-Received: by mx.zohomail.com with SMTPS id 1780723004105485.3738790350237;
- Fri, 5 Jun 2026 22:16:44 -0700 (PDT)
-Message-ID: <17b395009bef17cc056ae4a58a83c744ebb12798.camel@icenowy.me>
-Subject: Re: [PATCH v7 2/5] target/riscv: Add server platform reference cpu
-From: Icenowy Zheng <uwu@icenowy.me>
-To: Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>, Andrew Jones
- <andrew.jones@oss.qualcomm.com>
-Cc: qemu-devel@nongnu.org, qemu-riscv@nongnu.org, alistair.francis@wdc.com, 
- liwei1518@gmail.com, zhiwei_liu@linux.alibaba.com,
- chao.liu.zevorn@gmail.com, 	leif.lindholm@oss.qualcomm.com, Fei Wu
- <wu.fei9@sanechips.com.cn>, Palmer Dabbelt <palmer@dabbelt.com>
-Date: Sat, 06 Jun 2026 13:16:36 +0800
-In-Reply-To: <3f9d50fb-304c-4ef3-bd63-9fd215b45965@oss.qualcomm.com>
-References: <20260604095244.3313259-1-daniel.barboza@oss.qualcomm.com>
- <20260604095244.3313259-3-daniel.barboza@oss.qualcomm.com>
- <4acb210eea217195fa733a4f42369c01591d5499.camel@icenowy.me>
- <a77a1891-214e-4788-8cc3-a5729f5cd182@oss.qualcomm.com>
- <9b05368c-972a-491e-bddb-7e015100eee2@oss.qualcomm.com>
- <5y2sdlx3pu5oyhrm3yxxkvkwv6pl3bpvuzdpnlqg4xt3l2zrxd@yi4h5x2f2xze>
- <3f9d50fb-304c-4ef3-bd63-9fd215b45965@oss.qualcomm.com>
-Organization: Anthon Open-Source Community
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-User-Agent: Evolution 3.58.3 
+ (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
+ id 1wVjPV-0008Oa-Ng
+ for qemu-devel@nongnu.org; Sat, 06 Jun 2026 01:17:31 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1780723049;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=GrHGxvWCZFyP9F/U9uEn3LFLHsakCxnRmQhrxq0JqIM=;
+ b=XA2KaCogFnlaHtpO1qrkBYCcji7TE2fqHHgQRB3T4M79p8orn8DUXftvXQgNl3kTZ4plPB
+ OTMfboVFsALJcJ9OiZa9U8NOgG0BfFbulgJgXNxf1SAHCc3PHBC052B+dNHopFoHf20WAn
+ k/bO/X0U1rZVpf4188rYJsKr32pM4uk=
+Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-112-zVBi4th0M0SN4YLRYvbZmg-1; Sat,
+ 06 Jun 2026 01:17:27 -0400
+X-MC-Unique: zVBi4th0M0SN4YLRYvbZmg-1
+X-Mimecast-MFC-AGG-ID: zVBi4th0M0SN4YLRYvbZmg_1780723046
+Received: from mx-prod-int-10.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-10.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.95])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 881B219560A3
+ for <qemu-devel@nongnu.org>; Sat,  6 Jun 2026 05:17:26 +0000 (UTC)
+Received: from localhost (unknown [10.44.24.6])
+ by mx-prod-int-10.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id 25D8127A; Sat,  6 Jun 2026 05:17:24 +0000 (UTC)
+From: =?utf-8?q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>
+Date: Sat, 06 Jun 2026 09:15:52 +0400
+Subject: [GIT PULL v2 20/23] target/riscv: fix general_user_opts hash table
+ leak
 MIME-Version: 1.0
-X-ZohoMailClient: External
-Received-SPF: pass client-ip=136.143.188.12; envelope-from=uwu@icenowy.me;
- helo=sender4-op-o12.zoho.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 8bit
+Message-Id: <20260606-qom-tests-v2-20-55832d978a9f@redhat.com>
+References: <20260606-qom-tests-v2-0-55832d978a9f@redhat.com>
+In-Reply-To: <20260606-qom-tests-v2-0-55832d978a9f@redhat.com>
+To: qemu-devel@nongnu.org
+Cc: stefanha@redhat.com
+X-Developer-Signature: v=1; a=openpgp-sha256; l=9672;
+ i=marcandre.lureau@redhat.com; h=from:subject:message-id;
+ bh=HxjHARniAbZ71B0WPuGb8+FlvpnOsoMgTb+xCutausA=;
+ b=kA0DAAoB2ujhCXWWnOUByyZiAGojrPWjWXFS+LLANXzBhceNeydolH995wH2wv7RaE8uqGpGc
+ 4kCMwQAAQoAHRYhBIepvZM/h8YG0nb2Ldro4Ql1lpzlBQJqI6z1AAoJENro4Ql1lpzlhoYP/iN5
+ SkHyiV56MKqKuvg0gx1oMbNm7a2tQlmzy20iOwpTjY9Xt42kCLichODMUKdtsswKKtD+IbWjzUw
+ s89m6oD/9JDKIaHQ7rtfWaPLP+K1ZIgw1xZiZvNm5Xqy0xeZk64LN1MF5R8eibD7GXSQ7F5aUaW
+ XX6qS0UMd/rkU2znEe7HVIabbbAnonw9qKM0/c9i+0n115om3QSyTJdqAG6GMpi1dtYynUtS6LE
+ hRp9pRmYBWbZCffTzEqh+RqWxYK8CgluaYsFUvyobQ3x7epwx3/LuXbSZ8zDucdfjaUujiQPFjm
+ 1bapgtSigQFvzX+1zQVEpp+6/LrMSYGC8bTsm7Gw4mPjKaqwTGyCEtNVe5/0PB+DMdkTKGco7+A
+ xq0bodjqaGGkjydTma0D58tQU8xdg6p3NW5zXl7I7eHU9KZd8WN+RbYvGjz90ZOBtK2TYFFAP6m
+ pKQTrxJA1y2FwgJM/0mE0RSkqyVKDQQWCSW7YBCDl2J+q4kFGpVDyWEYsxmsEAxz2JH/Lzi3x+R
+ qin3MEiYUGtZAL2MpsBVJPIa0+nQBvgU8Qqf+vYmvU0kr1r8dOvMg1y6YGKUsp/PSWvYwo4XiEf
+ XvyMX8vtVvaB4zWx0ExXoXIcpnSo3UMBRn0etS+vXvWRoH4YC4tzknEu0yZegHhXQPUi8P1BgRw
+ UxLnS
+X-Developer-Key: i=marcandre.lureau@redhat.com; a=openpgp;
+ fpr=87A9BD933F87C606D276F62DDAE8E10975969CE5
+X-Scanned-By: MIMEDefang 3.6 on 10.30.177.95
+Received-SPF: pass client-ip=170.10.133.124;
+ envelope-from=marcandre.lureau@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: 8
+X-Spam_score: 0.8
+X-Spam_bar: /
+X-Spam_report: (0.8 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.445,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_SBL_CSS=3.335, SPF_HELO_PASS=-0.001,
+ SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -90,116 +104,274 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-=E5=9C=A8 2026-06-05=E4=BA=94=E7=9A=84 23:33 -0300=EF=BC=8CDaniel Henrique =
-Barboza=E5=86=99=E9=81=93=EF=BC=9A
->=20
->=20
-> On 6/5/2026 7:24 PM, Andrew Jones wrote:
-> > On Fri, Jun 05, 2026 at 05:48:18PM -0300, Daniel Henrique Barboza
-> > wrote:
-> > ...
-> > > > You're correct.=C2=A0 We're not initializing satp_mode to
-> > > > max_satp_mode, so the
-> > > > default value is being set to sv39.=C2=A0 This seems to be the case
-> > > > for all
-> > > > CPUs, not just this one.=C2=A0 For some reason I thought we were
-> > > > defaulting
-> > > > to the max_satp_mode.=C2=A0 I need to understand why sv39 is being
-> > > > set as
-> > > > default (i.e. why not BARE?).
-> > >=20
-> > > Got an update.=C2=A0 It turns out that what we're seeing is something
-> > > that is
-> > > only happening to this CPU we're trying to add.
-> > >=20
-> > > The way satp mode is set on QEMU assuming no command line input:
-> > >=20
-> > > - "Bare" CPUs, aka CPUs that has just I or E enabled: default to
-> > > BARE;
-> > >=20
-> > > - Profile CPUs: default to the minimum required by the spec.=C2=A0
-> > > E.g. for
-> > > =C2=A0=C2=A0 RVA23 the default is set to sv39;
-> > >=20
-> > > - all other CPUs: default to satp_mode_max from the CPU
-> > > definition.
-> > >=20
-> > > The riscv-server-ref CPU is a BARE CPU that is using the profile
-> > > framework
-> > > to enable extensions.=C2=A0 So for all intents and purposes the code
-> > > is treating
-> > > it as a profile CPU with extra stuff.=C2=A0 Which is good, but then
-> > > the
-> > > satp setting from RVA23 (sv39) is overwriting satp_mode_max from
-> > > the
-> > > CPU definition.
-> > >=20
-> > > I believe the way we're creating riscv-server-ref here is
-> > > correct, so what
-> > > I'm going to do is send a couple of fixes to allow riscv-server-
-> > > ref to use
-> > > RVA23 as a base and honor its satp_mode_max value too.
-> >=20
-> > But setting satp_mode_max to sv48 is not correct if that really
-> > means
-> > _max_ since we want the reference platform to default to the
-> > minimum
-> > (sv48) but also support the supported optional extensions and sv57
-> > is
-> > a supported optional extension.
->=20
-> QEMU only works this way for profile CPUs.
->=20
-> For non-profile CPUs: cpu.max_satp_mode is set internally as part of
-> the CPU definition.=C2=A0 This is the maximum satp value that the CPU
-> allows
-> users to set via cmd line.=C2=A0 If the user does not provide a satp mode
-> then we'll do curr_satp_mode =3D max_satp_mode.
->=20
-> E.g. the thead vendor CPU defines .cfg.max_satp_mode =3D VM_1_10_SV39.
-> In the command line we can't set anything higher than that:
->=20
-> $ ./build/qemu-system-riscv64 -M virt -cpu thead-c906,sv57=3Don
-> qemu-system-riscv64: satp_mode sv57 is higher than hw max capability
-> sv39
->=20
->=20
-> For profile CPUs things are different: they are bare_cpu types, which
-> are
-> initialized with max_satp_mode sv57, and then during profile init we
-> set the current satp_mode (current, not max_satp_mode) to the minimum
-> the profile requires.=C2=A0 Thus the rva23s64 CPU, by default, starts wit=
-h
-> sv39 but it can go up to sv57.
->=20
-> =C2=A0From what I'm understanding we want the riscv-server-ref CPU to wor=
-k
-> like profile CPUs.=C2=A0 In fact I believe we can make it official by
-> adding a 'default_satp_mode' setting in the CPU definition and
-> allowing
-> all CPUs to define a default satp and a max satp.=C2=A0 CPUs defs that
-> don't
-> set a default mode will keep working as today (default_satp_mode =3D=3D
-> max_satp_mode
-> if no user input).
+The global general_user_opts hash table is recreated on every
+riscv_cpu_init() call, leaking the previous one.
 
-I think we can just make RVSP a profile, and rvsp-ref CPU a BARE CPU
-based on that profile; then set the profile's min SATP to Sv48, and the
-BARE CPU's max SATP to Sv57.
+Furthermore, the CPU settings should be associated with their instance
+and not global.
 
-In this case if any other CPU complying to RVSP is added, it can just
-reuse the profile.
+Add a finalize() to free associated instances.
 
-Thanks,
-Icenowy
+Fixes: d167a2247ede ("target/riscv: move 'pmu-mask' and 'pmu-num' to riscv_cpu_properties[]")
+Reviewed-by: Alistair Francis <alistair.francis@wdc.com>
+Signed-off-by: Marc-André Lureau <marcandre.lureau@redhat.com>
+---
+ target/riscv/cpu.h         |  3 ++-
+ target/riscv/cpu.c         | 53 ++++++++++++++++++++++++++++------------------
+ target/riscv/kvm/kvm-cpu.c |  8 +++----
+ 3 files changed, 38 insertions(+), 26 deletions(-)
 
->=20
->=20
-> I'll make changes and see how it goes.=C2=A0 Cheers,
->=20
-> Daniel
->=20
-> >=20
-> > Thanks,
-> > drew
+diff --git a/target/riscv/cpu.h b/target/riscv/cpu.h
+index 7d79c7a5a7e..f7d8a08c087 100644
+--- a/target/riscv/cpu.h
++++ b/target/riscv/cpu.h
+@@ -547,6 +547,7 @@ struct ArchCPU {
+     uint32_t pmu_avail_ctrs;
+     /* Mapping of events to counters */
+     GHashTable *pmu_event_ctr_map;
++    GHashTable *user_options;
+     const GPtrArray *decoders;
+ };
+ 
+@@ -620,7 +621,7 @@ bool riscv_cpu_tlb_fill(CPUState *cs, vaddr address, int size,
+                         bool probe, uintptr_t retaddr);
+ char *riscv_isa_string(RISCVCPU *cpu);
+ int riscv_cpu_max_xlen(RISCVCPUClass *mcc);
+-bool riscv_cpu_option_set(const char *optname);
++bool riscv_cpu_option_set(RISCVCPU *cpu, const char *optname);
+ 
+ #ifndef CONFIG_USER_ONLY
+ void riscv_cpu_do_interrupt(CPUState *cpu);
+diff --git a/target/riscv/cpu.c b/target/riscv/cpu.c
+index 862834b4809..57000983edd 100644
+--- a/target/riscv/cpu.c
++++ b/target/riscv/cpu.c
+@@ -27,6 +27,7 @@
+ #include "qapi/error.h"
+ #include "qapi/visitor.h"
+ #include "qemu/error-report.h"
++#include "qemu/timer.h"
+ #include "hw/core/qdev-properties.h"
+ #include "hw/core/qdev-prop-internal.h"
+ #include "migration/vmstate.h"
+@@ -59,18 +60,16 @@ bool riscv_cpu_is_32bit(RISCVCPU *cpu)
+     return riscv_cpu_mxl(&cpu->env) == MXL_RV32;
+ }
+ 
+-/* Hash that stores general user set numeric options */
+-static GHashTable *general_user_opts;
+-
+-static void cpu_option_add_user_setting(const char *optname, uint32_t value)
++static void cpu_option_add_user_setting(RISCVCPU *cpu, const char *optname,
++                                        uint32_t value)
+ {
+-    g_hash_table_insert(general_user_opts, (gpointer)optname,
++    g_hash_table_insert(cpu->user_options, (gpointer)optname,
+                         GUINT_TO_POINTER(value));
+ }
+ 
+-bool riscv_cpu_option_set(const char *optname)
++bool riscv_cpu_option_set(RISCVCPU *cpu, const char *optname)
+ {
+-    return g_hash_table_contains(general_user_opts, optname);
++    return g_hash_table_contains(cpu->user_options, optname);
+ }
+ 
+ #ifndef CONFIG_USER_ONLY
+@@ -1126,7 +1125,7 @@ static void riscv_cpu_init(Object *obj)
+                             "riscv.cpu.rnmi", RNMI_MAX);
+ #endif /* CONFIG_USER_ONLY */
+ 
+-    general_user_opts = g_hash_table_new(g_str_hash, g_str_equal);
++    cpu->user_options = g_hash_table_new(g_str_hash, g_str_equal);
+ 
+     /*
+      * The timer and performance counters extensions were supported
+@@ -1291,7 +1290,7 @@ static void prop_pmu_num_set(Object *obj, Visitor *v, const char *name,
+ 
+     warn_report("\"pmu-num\" property is deprecated; use \"pmu-mask\"");
+     cpu->cfg.pmu_mask = pmu_mask;
+-    cpu_option_add_user_setting("pmu-mask", pmu_mask);
++    cpu_option_add_user_setting(cpu, "pmu-mask", pmu_mask);
+ }
+ 
+ static void prop_pmu_num_get(Object *obj, Visitor *v, const char *name,
+@@ -1333,7 +1332,7 @@ static void prop_pmu_mask_set(Object *obj, Visitor *v, const char *name,
+         return;
+     }
+ 
+-    cpu_option_add_user_setting(name, value);
++    cpu_option_add_user_setting(cpu, name, value);
+     cpu->cfg.pmu_mask = value;
+ }
+ 
+@@ -1365,7 +1364,7 @@ static void prop_mmu_set(Object *obj, Visitor *v, const char *name,
+         return;
+     }
+ 
+-    cpu_option_add_user_setting(name, value);
++    cpu_option_add_user_setting(cpu, name, value);
+     cpu->cfg.mmu = value;
+ }
+ 
+@@ -1397,7 +1396,7 @@ static void prop_pmp_set(Object *obj, Visitor *v, const char *name,
+         return;
+     }
+ 
+-    cpu_option_add_user_setting(name, value);
++    cpu_option_add_user_setting(cpu, name, value);
+     cpu->cfg.pmp = value;
+ }
+ 
+@@ -1437,7 +1436,7 @@ static void prop_num_pmp_regions_set(Object *obj, Visitor *v, const char *name,
+         return;
+     }
+ 
+-    cpu_option_add_user_setting(name, value);
++    cpu_option_add_user_setting(cpu, name, value);
+     cpu->cfg.pmp_regions = value;
+ }
+ 
+@@ -1475,7 +1474,7 @@ static void prop_pmp_granularity_set(Object *obj, Visitor *v, const char *name,
+         return;
+     }
+ 
+-    cpu_option_add_user_setting(name, value);
++    cpu_option_add_user_setting(cpu, name, value);
+     cpu->cfg.pmp_granularity = value;
+ }
+ 
+@@ -1548,7 +1547,7 @@ static void prop_priv_spec_set(Object *obj, Visitor *v, const char *name,
+         return;
+     }
+ 
+-    cpu_option_add_user_setting(name, priv_version);
++    cpu_option_add_user_setting(cpu, name, priv_version);
+     cpu->env.priv_ver = priv_version;
+ }
+ 
+@@ -1582,7 +1581,7 @@ static void prop_vext_spec_set(Object *obj, Visitor *v, const char *name,
+         return;
+     }
+ 
+-    cpu_option_add_user_setting(name, VEXT_VERSION_1_00_0);
++    cpu_option_add_user_setting(cpu, name, VEXT_VERSION_1_00_0);
+     cpu->env.vext_ver = VEXT_VERSION_1_00_0;
+ }
+ 
+@@ -1625,7 +1624,7 @@ static void prop_vlen_set(Object *obj, Visitor *v, const char *name,
+         return;
+     }
+ 
+-    cpu_option_add_user_setting(name, value);
++    cpu_option_add_user_setting(cpu, name, value);
+     cpu->cfg.vlenb = value >> 3;
+ }
+ 
+@@ -1666,7 +1665,7 @@ static void prop_elen_set(Object *obj, Visitor *v, const char *name,
+         return;
+     }
+ 
+-    cpu_option_add_user_setting(name, value);
++    cpu_option_add_user_setting(cpu, name, value);
+     cpu->cfg.elen = value;
+ }
+ 
+@@ -1702,7 +1701,7 @@ static void prop_cbom_blksize_set(Object *obj, Visitor *v, const char *name,
+         return;
+     }
+ 
+-    cpu_option_add_user_setting(name, value);
++    cpu_option_add_user_setting(cpu, name, value);
+     cpu->cfg.cbom_blocksize = value;
+ }
+ 
+@@ -1738,7 +1737,7 @@ static void prop_cbop_blksize_set(Object *obj, Visitor *v, const char *name,
+         return;
+     }
+ 
+-    cpu_option_add_user_setting(name, value);
++    cpu_option_add_user_setting(cpu, name, value);
+     cpu->cfg.cbop_blocksize = value;
+ }
+ 
+@@ -1774,7 +1773,7 @@ static void prop_cboz_blksize_set(Object *obj, Visitor *v, const char *name,
+         return;
+     }
+ 
+-    cpu_option_add_user_setting(name, value);
++    cpu_option_add_user_setting(cpu, name, value);
+     cpu->cfg.cboz_blocksize = value;
+ }
+ 
+@@ -2834,6 +2833,17 @@ void riscv_isa_write_fdt(RISCVCPU *cpu, void *fdt, char *nodename)
+     DEFINE_RISCV_CPU(type_name, parent_type_name,             \
+         .profile = &(profile_))
+ 
++static void riscv_cpu_instance_finalize(Object *obj)
++{
++    RISCVCPU *cpu = RISCV_CPU(obj);
++
++#ifndef CONFIG_USER_ONLY
++    g_clear_pointer(&cpu->pmu_timer, timer_free);
++    g_clear_pointer(&cpu->pmu_event_ctr_map, g_hash_table_destroy);
++#endif
++    g_clear_pointer(&cpu->user_options, g_hash_table_destroy);
++}
++
+ static const TypeInfo riscv_cpu_type_infos[] = {
+     {
+         .name = TYPE_RISCV_CPU,
+@@ -2841,6 +2851,7 @@ static const TypeInfo riscv_cpu_type_infos[] = {
+         .instance_size = sizeof(RISCVCPU),
+         .instance_align = __alignof(RISCVCPU),
+         .instance_init = riscv_cpu_init,
++        .instance_finalize = riscv_cpu_instance_finalize,
+         .abstract = true,
+         .class_size = sizeof(RISCVCPUClass),
+         .class_init = riscv_cpu_common_class_init,
+diff --git a/target/riscv/kvm/kvm-cpu.c b/target/riscv/kvm/kvm-cpu.c
+index 17ba38403a3..53d88339c13 100644
+--- a/target/riscv/kvm/kvm-cpu.c
++++ b/target/riscv/kvm/kvm-cpu.c
+@@ -2034,7 +2034,7 @@ void riscv_kvm_cpu_finalize_features(RISCVCPU *cpu, Error **errp)
+     }
+ 
+     if (cpu->cfg.ext_zicbom &&
+-        riscv_cpu_option_set(kvm_cbom_blocksize.name)) {
++        riscv_cpu_option_set(cpu, kvm_cbom_blocksize.name)) {
+ 
+         reg.id = KVM_RISCV_REG_ID_ULONG(KVM_REG_RISCV_CONFIG,
+                                         kvm_cbom_blocksize.kvm_reg_id);
+@@ -2053,7 +2053,7 @@ void riscv_kvm_cpu_finalize_features(RISCVCPU *cpu, Error **errp)
+     }
+ 
+     if (cpu->cfg.ext_zicboz &&
+-        riscv_cpu_option_set(kvm_cboz_blocksize.name)) {
++        riscv_cpu_option_set(cpu, kvm_cboz_blocksize.name)) {
+ 
+         reg.id = KVM_RISCV_REG_ID_ULONG(KVM_REG_RISCV_CONFIG,
+                                         kvm_cboz_blocksize.kvm_reg_id);
+@@ -2072,7 +2072,7 @@ void riscv_kvm_cpu_finalize_features(RISCVCPU *cpu, Error **errp)
+     }
+ 
+     if (cpu->cfg.ext_zicbop &&
+-        riscv_cpu_option_set(kvm_cbop_blocksize.name)) {
++        riscv_cpu_option_set(cpu, kvm_cbop_blocksize.name)) {
+ 
+         reg.id = KVM_RISCV_REG_ID_ULONG(KVM_REG_RISCV_CONFIG,
+                                         kvm_cbop_blocksize.kvm_reg_id);
+@@ -2091,7 +2091,7 @@ void riscv_kvm_cpu_finalize_features(RISCVCPU *cpu, Error **errp)
+     }
+ 
+     /* Users are setting vlen, not vlenb */
+-    if (riscv_has_ext(env, RVV) && riscv_cpu_option_set("vlen")) {
++    if (riscv_has_ext(env, RVV) && riscv_cpu_option_set(cpu, "vlen")) {
+         if (!kvm_v_vlenb.supported) {
+             error_setg(errp, "Unable to set 'vlenb': register not supported");
+             return;
+
+-- 
+2.54.0
+
 
