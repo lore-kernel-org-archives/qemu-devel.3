@@ -4,83 +4,83 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id BACA7CD8C9A
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 56F10CD8C93
 	for <qemu-devel@archiver.kernel.org>; Sat,  6 Jun 2026 19:53:29 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wVx4R-000648-5V; Sat, 06 Jun 2026 15:52:39 -0400
+	id 1wVx4P-00062v-9C; Sat, 06 Jun 2026 15:52:37 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <chad@jablonski.xyz>)
- id 1wVx4P-00063G-Ow
- for qemu-devel@nongnu.org; Sat, 06 Jun 2026 15:52:37 -0400
+ id 1wVx4O-00062j-Dj
+ for qemu-devel@nongnu.org; Sat, 06 Jun 2026 15:52:36 -0400
 Received: from fout-b8-smtp.messagingengine.com ([202.12.124.151])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <chad@jablonski.xyz>)
- id 1wVx4M-000136-QD
- for qemu-devel@nongnu.org; Sat, 06 Jun 2026 15:52:37 -0400
-Received: from phl-compute-05.internal (phl-compute-05.internal [10.202.2.45])
- by mailfout.stl.internal (Postfix) with ESMTP id 850631D00022;
- Sat,  6 Jun 2026 15:52:32 -0400 (EDT)
-Received: from phl-frontend-03 ([10.202.2.162])
- by phl-compute-05.internal (MEProxy); Sat, 06 Jun 2026 15:52:32 -0400
+ id 1wVx4M-00014Y-CV
+ for qemu-devel@nongnu.org; Sat, 06 Jun 2026 15:52:36 -0400
+Received: from phl-compute-01.internal (phl-compute-01.internal [10.202.2.41])
+ by mailfout.stl.internal (Postfix) with ESMTP id AB3511D0009D;
+ Sat,  6 Jun 2026 15:52:33 -0400 (EDT)
+Received: from phl-frontend-04 ([10.202.2.163])
+ by phl-compute-01.internal (MEProxy); Sat, 06 Jun 2026 15:52:33 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=jablonski.xyz;
  h=cc:cc:content-transfer-encoding:content-type:date:date:from
  :from:in-reply-to:in-reply-to:message-id:mime-version:references
- :reply-to:subject:subject:to:to; s=fm3; t=1780775552; x=
- 1780861952; bh=nV5gQGa7tVGGnv1cHuBOy8aHu7FdD1UW6rgORbw3idM=; b=C
- ZTn5c64XVWPyaRnmPtVr5soOlB1b0I1jEM0S95YWlzamqLtXzVH4Q1ZLx7Rndqjb
- 2/G4AH9vnxDUIx6jmehpy4qhHUHVP+Z2deM/SOZQr4Zi9XKE6oN5rXj7t9+dUnyj
- 3qhglKHjAaOPBtDueoY5K56FZzE6RvczQedUWqfLayJxyk/570Cf8cZ6yB3AN5GM
- Nff4Io3DMR3R10NtkKt1wAbpzWkipffr3LsOJugYw1dGmluLk5V9CWF2WCoSvyib
- bTwfBBZGnsoR9rsDj1hKJ+XRgFlttFv02TJvkSBT371tssKRqp+/FlZEep/uBNWK
- aCtXMcUNLAr+bWQKT20Pg==
+ :reply-to:subject:subject:to:to; s=fm3; t=1780775553; x=
+ 1780861953; bh=eYcvw03LK/lQ530qh+6y+nOv2u4ZT1Ir+87Ge2U2nh0=; b=U
+ iORG0gtCGiT44uF8hYMB8UZdFatWVA3CY+5GFeZVPQm1EwxwBo+8gLqrcnHkcxt7
+ jhUsw9xHsIOu0wO3xxO9TEMv3aZ6SnLDTKR8sJ1NNURbtJYyQju0fU1AIwuEAiXl
+ UyqBcRbLgdnzqm4dEgAHGEIWeJOzRrwWoM4bc8lXqc05n+20VtuYAxAVxOlCPJ4v
+ X+pN8A28b34EYkIVZa4//2in1pa04mK5KlVgfxD7S2AlrISrT4hKGmLboqBnZ8Jd
+ QX8+m8Bmp+33FrHnEUDh4tr2seWwizzH/AORr+xPsZ5/uaLT8ls+5LdlbcQ40Qpr
+ wsiN3wjTYmkJu+8j1w8Bg==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
  messagingengine.com; h=cc:cc:content-transfer-encoding
  :content-type:date:date:feedback-id:feedback-id:from:from
  :in-reply-to:in-reply-to:message-id:mime-version:references
  :reply-to:subject:subject:to:to:x-me-proxy:x-me-sender
- :x-me-sender:x-sasl-enc; s=fm1; t=1780775552; x=1780861952; bh=n
- V5gQGa7tVGGnv1cHuBOy8aHu7FdD1UW6rgORbw3idM=; b=ExS7tPDFPWdux59x/
- oXM2fadR2ChLYzwMIjiY5KN1fzpdk6Wjp44EHR9SYEgYdEMAFSkr+CNtTgmvJrNf
- Cow/33bzPm82aqUqqPgmwyqmHj0pC0rMeHgtKy6h3d8cUNigTQFSBX0GOuaxOXvB
- YwAfBDlXK8pWY5so8Zj3ZNq700dYF8dEAkdRD57jcIhlj3KII/1rCak030y5YW+E
- D73UTWGwUC4fohY7wxlFF6qd08FgoC6iF+4/FafS3GTN+3Z+mSHJIL3ABdxazr+r
- c5paz95T+R/eqRDW/5GIenH5r+ZBrDVJsEuMHaqkcijUekb8y9MGd5aU9PgzMEhR
- /SWng==
-X-ME-Sender: <xms:gHokasEbrzsjH7Ct1A2pONwg88I2cG6uVJXUbQNGj4LtBSwx7DPGFA>
- <xme:gHokaswuPGKaGdzcdnL9nqc7hXisDU3tX_xmZnN5drcQSrX361JM8XLl5hcjRBIRx
- fvHn9dNAPqnBdl2IFIfyRG0xmxRlp7l7RQQNAZj5uCr5F_UasOgQiw>
-X-ME-Received: <xmr:gHokajg9OSb9o2O8oWmu1bjnJNxOQpkmJgpVE0oMZIol800wKMWaxJcA4FPP>
+ :x-me-sender:x-sasl-enc; s=fm1; t=1780775553; x=1780861953; bh=e
+ Ycvw03LK/lQ530qh+6y+nOv2u4ZT1Ir+87Ge2U2nh0=; b=I2SyQNeMVf0mSEOx/
+ Iyl+PlAWVkJ3VGz9FdvKLtkVRmEmuxYpjOQG+PVjTJ/XQ7euIOyQXqtJvHqNeS30
+ Y2nAh6boLTlhPlqAlI7K4dkFJrmT5UZMORtVeYiZmW56c7vgABDGM089vkXxCCuJ
+ luc8QDy12swDas7pnM/x7RZoiwHMxo+r0vbbHw3RAn7ww+x885GPzFJv6DJtzycE
+ zxLeMf8TC4mdFWrs2lQuciuQJLv4OSWpY7z8LBZn4jH0vS3beY67p+txpTP4QIa2
+ h7nP+K5NkwzfMWsyimwaTpZeGawZa/Fywocg176qTzGgcDJDv9/vt5BWHaHeYhzW
+ r6Ppw==
+X-ME-Sender: <xms:gXokanvGMu5zUq-cMrwqOjFitWZICO8K0JuVYG5qYN9ktL8JA7HDuQ>
+ <xme:gXokav77Jl9CHn0Db788j7PQgkX4qTkCUVu2oLIBZNIdDaV7SlG1eoiLW7JPDIgmb
+ ad6MYCva7umBaUB06JRhC7GUB3bA95Dp02pan3B5ta6cQfNuVzPui3t>
+X-ME-Received: <xmr:gXokaoKHpVDIwF2xGqbQMT3ZSDMjR03_X1jyO0mX0Rmypz80GAOEsi5stYvH>
 X-ME-Proxy-Cause: dmFkZTF5V5TJt4YyOidEvSaeu/MRla4xP+DmdZQhB39MOi6suQo+ewwhopiobLPZpZFZya
  cAlJGIfDtnd9YI9euUev0/BPlhx7gFnO282gf6qihxTXQ9XGsNSFgetoCcqBrBvyjHrANh
  atTdGgjKUldYBX7wk7l0Cl09WJIHvldYLH4ZomEKYEpVZT82+Oh5snshv7XK6+9Sb5cWbw
  e84vQB5olzLLZrdcgzNge+k12PyvF6W544E61zazKBZo950akvs+WrgTOdnqD9gQaa29eu
- Mvbl6jhgYAGUnVDqLD0fWkRRImSA3/gMsTXu4gQwDYtEjGvTqg8SUjhCR0pAYP3BvhiErw
- /9pzAr9QNUhJnS4q8suxaG7qN4Lbm/eNTakOGGrANR1UkwRn1wWem4EDm51Pf/kPhDD5aE
- 5cZokUX57WSSkT8Qpgxxr8d3+NlI0UyKYgzAOT4qxoZrsz1gXT6d6gEtAzkRnRzHTOpz/9
- 4UhGcdG4lHK8CMYCToRyGyCDCh2V6/YWSefBA177xsIcMgdWFv67xr9ntVmgnsx+GBHmq9
- jtRz0kOcp1KD/TXsaShRErFDI1uNR/WgzYGLGhWbGvOauNnVCwh/H5glDZf3FMncA/jbIy
- cE4AXGCnRa0RAPebhJaeuetq9RboUgRyxl//YledjAOrs2XOKh/ms61mmKfA
-X-ME-Proxy: <xmx:gHokanzkyZuCp_fzExAPZs2ilCSbHL3MFbtq75U33ydNGl1m1b-Fvg>
- <xmx:gHokamIs70zXIj70ntCpxQPV7aCBgGthmRecpIZ12POrd2xIlCoqXw>
- <xmx:gHokauRyn5SY5iBhieP6D-WOrwkiI2NboB3sX1HODmqZYToC2naZlA>
- <xmx:gHokaurMH5nRIxtrGO7WWgddXy6Un15F_EvZEB_JQliDiiWKQC6xpA>
- <xmx:gHokaieOISl-ozL1HTndFyVpZaBjc93O_HMkEO6HGyWl5otlH10CHmqJ>
+ Mvbl6jhgYAGUnVDqLD0fWkRRImSA3/gMsTXu4gQwDYtEjGvTqg8SUjhCR0pAYP3BvhiEY3
+ 2ff+gqafSfrK7PvDojuhkOSRkNloJGUd1HukQRK20VHhxNW0M18RqcTlqfapLbLvfUeMLA
+ Wl5w0pHHNUwa9r0zguX9eZQEvW8biArySMzCEGIirb/FnwAFAba9GT7f4HlXTsYU8PdXVN
+ PlZ5L62FBe+d7d1hKQdNiNvcqZI9KaLApnjQDVsim+IKTI9scSPpbmKQd//yd28BH2M/Dd
+ 6WEyw4n27UVU/6bKF3O3DTEu5HCMc48SKexUQGisGCgtF6aeiirKmQxl+QDDyN5s0lI6FX
+ tKdHk5RrZPTeBkDfmbywrT9167CQ9OYY5pJVecDG8aKpK4QU123OJmLg0kqw
+X-ME-Proxy: <xmx:gXokav4B3J5FklWtyafOYmg6mWpo5QoVItCj8Lwqdtk1lmHnxgNGGQ>
+ <xmx:gXokaryIANKojmWrjN72T3hUEqZcQ_KNGwwfgoRsRDwupSqnAtWQJQ>
+ <xmx:gXokajah9ASZjEx8r5vsvhkHeWHnsmlKAHAv784qdewgpv_1iW_iYg>
+ <xmx:gXokatQxmsRGQoMZFGKfjfUC-FoPmiXWrKBPYl-4yKcysqpXtLrvjw>
+ <xmx:gXokask6Pefeg7zHHuzg8VhJzRjF7xcZpuIJ8p-VIf3fImNWqy4kKO2G>
 Feedback-ID: ib26944c1:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Sat,
- 6 Jun 2026 15:52:31 -0400 (EDT)
+ 6 Jun 2026 15:52:33 -0400 (EDT)
 Received: from localhost (chomposaur [local])
- by chomposaur (OpenSMTPD) with ESMTPA id 77189e14;
+ by chomposaur (OpenSMTPD) with ESMTPA id 7ab2d1ca;
  Sat, 6 Jun 2026 19:52:30 +0000 (UTC)
 From: Chad Jablonski <chad@jablonski.xyz>
 To: qemu-devel@nongnu.org
 Cc: BALATON Zoltan <balaton@eik.bme.hu>,
 	Chad Jablonski <chad@jablonski.xyz>
-Subject: [PATCH v3 1/7] ati-vga: Extract ati_reg_write() from ati_mm_write()
-Date: Sat,  6 Jun 2026 15:52:10 -0400
-Message-ID: <20260606195216.2524314-2-chad@jablonski.xyz>
+Subject: [PATCH v3 4/7] ati-vga: Implement CCE mode registers for r128
+Date: Sat,  6 Jun 2026 15:52:13 -0400
+Message-ID: <20260606195216.2524314-5-chad@jablonski.xyz>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260606195216.2524314-1-chad@jablonski.xyz>
 References: <20260606195216.2524314-1-chad@jablonski.xyz>
@@ -111,112 +111,103 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Move register write logic into its own function. This is in preparation
-for CCE engine support for register writes. MMIO writes will have their
-own distinct policy that doesn't apply to writes made by the CCE engine.
+The PM4_BUFFER_CNTL register is used to set up the CCE FIFO for r128.
+These are straightforward reads and writes. Future CCE patches make use of
+this state.
 
-Note: Because of the recursion in the MM_DATA handler the calls to
-ati_mm_write needed to be changed to ati_reg_write. This means that
-tracing output changes slightly for MM_DATA writes. Otherwise, this
-is purely a refactor and does not change behavior.
+The PM4_MICRO_CNTL register has a single flag that is used by drivers to
+enable processing of CCE commands from the CCE FIFO. Reverse engineering
+uncovered additional debug fields, many of which have an unclear purpose.
+They have been omitted for now but could be added if needed.
+
+These registers are not covered by available register references. They
+are implemented based on their use in Linux 6.2
+(drivers/gpu/drm/r128/r128_cce.c).
 
 Signed-off-by: Chad Jablonski <chad@jablonski.xyz>
 ---
- hw/display/ati.c     | 58 ++++++++++++++++++++++++++------------------
- hw/display/ati_int.h |  2 ++
- 2 files changed, 36 insertions(+), 24 deletions(-)
+ hw/display/ati.c      | 16 ++++++++++++++++
+ hw/display/ati_int.h  |  6 ++++++
+ hw/display/ati_regs.h | 14 ++++++++++++++
+ 3 files changed, 36 insertions(+)
 
 diff --git a/hw/display/ati.c b/hw/display/ati.c
-index d77589df67..b4c9086188 100644
+index 73fd5e7d23..7724be863f 100644
 --- a/hw/display/ati.c
 +++ b/hw/display/ati.c
-@@ -562,32 +562,10 @@ static inline void ati_reg_write_offs(uint32_t *reg, int offs,
+@@ -299,6 +299,14 @@ static bool ati_r128_mm_read(ATIVGAState *s, hwaddr addr, unsigned int size,
+     case DEFAULT_OFFSET:
+         *val = s->regs.default_offset;
+         break;
++    case PM4_BUFFER_CNTL:
++        *val = ((s->cce.buffer_mode & 0xf) << 28) |
++               (s->cce.no_update << 27) |
++               (s->cce.buffer_size_l2qw & 0x7ffffff);
++        break;
++    case PM4_MICRO_CNTL:
++        *val = s->cce.freerun ? PM4_MICRO_FREERUN : 0;
++        break;
+     default:
+         return false;
      }
- }
- 
--static void ati_mm_write(void *opaque, hwaddr addr,
--                           uint64_t data, unsigned int size)
-+void ati_reg_write(ATIVGAState *s, hwaddr addr,
-+                   uint64_t data, unsigned int size)
- {
--    ATIVGAState *s = opaque;
--
--    if (addr < CUR_OFFSET || addr > CUR_CLR1 || ATI_DEBUG_HW_CURSOR) {
--        trace_ati_mm_write(size, addr, ati_reg_name(addr & ~3ULL), data);
--    }
-     switch (addr) {
--    case MM_INDEX:
--        s->regs.mm_index = data & ~3;
--        break;
--    case MM_DATA ... MM_DATA + 3:
--        /* indexed access to regs or memory */
--        if (s->regs.mm_index & BIT(31)) {
--            uint32_t idx = s->regs.mm_index & ~BIT(31);
--            if (idx <= s->vga.vram_size - size) {
--                stn_le_p(s->vga.vram_ptr + idx, size, data);
--            }
--        } else if (s->regs.mm_index > MM_DATA + 3) {
--            ati_mm_write(s, s->regs.mm_index + addr - MM_DATA, data, size);
--        } else {
--            qemu_log_mask(LOG_GUEST_ERROR,
--                "ati_mm_write: mm_index too small: %u\n", s->regs.mm_index);
--        }
--        break;
-     case BIOS_0_SCRATCH ... BUS_CNTL - 1:
-     {
-         int i = (addr - BIOS_0_SCRATCH) / 4;
-@@ -1043,6 +1021,38 @@ static void ati_mm_write(void *opaque, hwaddr addr,
+@@ -682,6 +690,14 @@ static bool ati_r128_reg_write(ATIVGAState *s, hwaddr addr, uint64_t data,
+         s->regs.default_pitch = data & 0x3fff;
+         s->regs.default_tile = (data >> 16) & 1;
+         break;
++    case PM4_BUFFER_CNTL:
++        s->cce.buffer_size_l2qw = data & 0x7ffffff;
++        s->cce.no_update = (data >> 27) & 1;
++        s->cce.buffer_mode = (data >> 28) & 0xf;
++        break;
++    case PM4_MICRO_CNTL:
++        s->cce.freerun = !!(data & PM4_MICRO_FREERUN);
++        break;
+     default:
+         return false;
      }
- }
- 
-+static void ati_mm_write(void *opaque, hwaddr addr,
-+                         uint64_t data, unsigned int size)
-+{
-+    ATIVGAState *s = opaque;
-+
-+    if (addr < CUR_OFFSET || addr > CUR_CLR1 || ATI_DEBUG_HW_CURSOR) {
-+        trace_ati_mm_write(size, addr, ati_reg_name(addr & ~3ULL), data);
-+    }
-+    switch (addr) {
-+    case MM_INDEX:
-+        s->regs.mm_index = data & ~3;
-+        break;
-+    case MM_DATA ... MM_DATA + 3:
-+        /* indexed access to regs or memory */
-+        if (s->regs.mm_index & BIT(31)) {
-+            uint32_t idx = s->regs.mm_index & ~BIT(31);
-+            if (idx <= s->vga.vram_size - size) {
-+                stn_le_p(s->vga.vram_ptr + idx, size, data);
-+            }
-+        } else if (s->regs.mm_index > MM_DATA + 3) {
-+            ati_reg_write(s, s->regs.mm_index + addr - MM_DATA, data, size);
-+        } else {
-+            qemu_log_mask(LOG_GUEST_ERROR,
-+                "ati_mm_write: mm_index too small: %u\n", s->regs.mm_index);
-+        }
-+        break;
-+    default:
-+        ati_reg_write(s, addr, data, size);
-+        break;
-+    }
-+}
-+
- static const MemoryRegionOps ati_mm_ops = {
-     .read = ati_mm_read,
-     .write = ati_mm_write,
 diff --git a/hw/display/ati_int.h b/hw/display/ati_int.h
-index 0c48934d33..18dca730c3 100644
+index eae3e89617..9259373733 100644
 --- a/hw/display/ati_int.h
 +++ b/hw/display/ati_int.h
-@@ -128,6 +128,8 @@ struct ATIVGAState {
- };
+@@ -113,6 +113,12 @@ typedef struct ATIMicrocodeState {
  
- const char *ati_reg_name(int num);
-+void ati_reg_write(ATIVGAState *s, hwaddr addr,
-+                   uint64_t data, unsigned int size);
+ typedef struct ATICCEState {
+     ATIMicrocodeState microcode;
++    /* MicroCntl */
++    bool freerun;
++    /* BufferCntl */
++    uint32_t buffer_size_l2qw;
++    bool no_update;
++    uint8_t buffer_mode;
+ } ATICCEState;
  
- void ati_2d_blt(ATIVGAState *s);
- bool ati_host_data_flush(ATIVGAState *s);
+ struct ATIVGAState {
+diff --git a/hw/display/ati_regs.h b/hw/display/ati_regs.h
+index b813fa119e..6591c6587f 100644
+--- a/hw/display/ati_regs.h
++++ b/hw/display/ati_regs.h
+@@ -387,7 +387,21 @@
+ #define PC_BUSY                                 0x80000000
+ 
+ #define BUS_MASTER_DIS                          0x00000040
++
++/* PM4_BUFFER_CNTL buffer mode bit constants */
+ #define PM4_BUFFER_CNTL_NONPM4                  0x00000000
++#define PM4_BUFFER_CNTL_192PIO                  0x00000001
++#define PM4_BUFFER_CNTL_192BM                   0x00000002
++#define PM4_BUFFER_CNTL_128PIO_64INDBM          0x00000003
++#define PM4_BUFFER_CNTL_128BM_64INDBM           0x00000004
++#define PM4_BUFFER_CNTL_64PIO_128INDBM          0x00000005
++#define PM4_BUFFER_CNTL_64BM_128INDBM           0x00000006
++#define PM4_BUFFER_CNTL_64PIO_64VCBM_64INDBM    0x00000007
++#define PM4_BUFFER_CNTL_64BM_64VCBM_64INDBM     0x00000008
++#define PM4_BUFFER_CNTL_64PIO_64VCPIO_64INPIO   0x0000000f
++
++/* PM4_MICRO_CNTL bit constants */
++#define PM4_MICRO_FREERUN                       0x40000000
+ 
+ /* DP_DATATYPE bit constants */
+ #define DST_8BPP                                0x00000002
 -- 
 2.53.0
 
