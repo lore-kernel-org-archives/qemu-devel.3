@@ -4,104 +4,70 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0D2D0CD8C8E
-	for <qemu-devel@archiver.kernel.org>; Sat,  6 Jun 2026 09:00:43 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1767DCD8C8E
+	for <qemu-devel@archiver.kernel.org>; Sat,  6 Jun 2026 09:01:50 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wVmsr-0004tP-I2; Sat, 06 Jun 2026 05:00:01 -0400
+	id 1wVmuH-0005Rd-2m; Sat, 06 Jun 2026 05:01:29 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <manos.pitsidianakis@linaro.org>)
- id 1wVmso-0004pq-Ug
- for qemu-devel@nongnu.org; Sat, 06 Jun 2026 04:59:58 -0400
-Received: from mail-wr1-x42b.google.com ([2a00:1450:4864:20::42b])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <manos.pitsidianakis@linaro.org>)
- id 1wVmsn-0006kt-5q
- for qemu-devel@nongnu.org; Sat, 06 Jun 2026 04:59:58 -0400
-Received: by mail-wr1-x42b.google.com with SMTP id
- ffacd0b85a97d-4600cbb06deso1447688f8f.1
- for <qemu-devel@nongnu.org>; Sat, 06 Jun 2026 01:59:55 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1780736394; cv=none;
- d=google.com; s=arc-20240605;
- b=RiKaPmp/XRj1NynGVUUw7oukl825v/9xM3uGG14PadxRdW/hanXJCHADZVCDNFmHaN
- Sh1rnbLdZ3vGqTl4ZwHQ4aTfDucmPJ9s2A6OivfiQ9fVIuhzn2p86VrBweTl3kYoPibL
- qJUx/2rv/aTjs5NJSYQW55eRbNN9tYxXy/6mvvwhL3etkTCN7Jb/hzdyylM7n21i/l6Z
- OFQs0a5EvZeO2tPLL3VHfKLm5xvJsMmPsDgL2d23KB9ZrV6ZaUujTNlyXerE0Wocnh+6
- peMlcfNhan2hdviZmTzxB4kFu6g4gRabrdF43bbtMTcVfrXXZeWBC/VM+FpvvTEJrAyh
- o67A==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
- s=arc-20240605; 
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:dkim-signature;
- bh=hAg9NEVjHIVMK26SP8XaqIZhDvxJMkEq16+yEpZ5BNw=;
- fh=yFwpxU1smeIZGGIaW0nc2v+dGP4Vy/SMhT0yTeaSpMQ=;
- b=bsOr+l053jTsXwdRDpdIJ3XMO2i4GKy4RAopHWQ3kcgtfD/l+KPHgB91qkGOnauG1F
- Y+S1Kf2oQJkvmLXn7YKK3ekrb+8Koly0QTacaF6T2Gg4no8FG5M5Txd7+PrUvxuDP0SS
- +lO0LsgiaNxAKWn58Hjz6l0CfgL6XIzMigQNnmssQMdefQlzjI+CgPvqx7MjZ+sLhYRr
- 1lyx9b6mfQ4GmedIdWNVwYwiiD1uaufLpNi2NEePwf9cPrBV6bqpXaty/v71rA7x8lni
- RO0o9Aslsx3eSQEhk0FNIZ6G2iIq1ybZG60QE+Z8wGCmFGjwlaLJA2SBxNX8mG698cKv
- Z5dQ==; darn=nongnu.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1780736394; x=1781341194; darn=nongnu.org;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=hAg9NEVjHIVMK26SP8XaqIZhDvxJMkEq16+yEpZ5BNw=;
- b=cNccXNPPfTMLeOWBXEm8lTOVsp9yYFx4MhW0hsmpHDmEm261pSA3/G0Qbg3kfafZQt
- uQwGWszpO2yBojtCP2vyGsRmj+Hq75/9hgkwwf5BUKi095Nhg2fBuS21FAkfmLrDg/J0
- rJE88v234OWNRQr5+eaP0DPKRkMXpXsK2lIJjOGCgR367adCHskJ8SxCDlgfh6FWpyjP
- RPhDwQYR/0NUY1tgA02xjnyArxxqSV0s3vLz4tN+ub7ILe5wa/0uueYG6VS0XK0Mp7nR
- tUtTjPK71gbzUKcNFhVqqpKmC0VqneBvezbnRL+u1Naf/kL9cEzKLzC4Ut6Q3DTptrRG
- UOeQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1780736394; x=1781341194;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=hAg9NEVjHIVMK26SP8XaqIZhDvxJMkEq16+yEpZ5BNw=;
- b=sxH3+cEXZ1PgjoKj3XcQgdnbBrpNUPkhHBLD/PYwOXIfOT9YyBMHW2P+tjQWYPkvzd
- ehu4zLgQcN7mIsoh/FRKuPjXIMvem5ReTCojsbs8n18njjX00NDuRklNl9o1ID+/vhz9
- Re7q/KmDlhI9bdfnJTJAUGK964f44Tw/Xg0upSoLhkrp5d1O1nacbVXDfKF6HXg+IULn
- NxFzC7278BoimrJV75L+ebQKqgNR1SJflcegMpNTc7u99XWciSfMHgdlWLH6QEdTiyqs
- 6IBHyDJiCX9Rx0k99SiJRuMKScR8qyj6432vw2feM4RYtRyFVX//z2P57PN1Hla3G+6C
- dZrg==
-X-Gm-Message-State: AOJu0YxvqgU9+seFETgQ6z1WgIknGSe16YHDy8lhV5r3r6rIhpC7ogNG
- Prm40INbZPWn1xN3svA65CZ2rvRl6gPgTh+4Z/9rm7GBfCFkztN+4VakKA1QeMNJyjN8GzdIZy+
- j5FwiNsevIWx5QVTWfnYM1M2HRpPRIqfdZqKJVEAEDQ==
-X-Gm-Gg: Acq92OHqUoE9DDN1dzYKQ4Qd/e7ENHddTMh2wvZcCq1XCEhWfcyvPBzjcqJ3DLRWBPG
- TwxswBnVaiI94TaBs+fL/nzPAy8m6eQLcQWcK+K8eMpmtU0+EHQGMyzHvCOUufSAIEKkHB4bsSN
- wdJaR1HglZCxqRALxAtv6ex7BLxIAJtOrPkyNxAe1EHyrG7IGEmUEfr7HKwCW7Q80psvmZPBHtH
- fCdnRsj7WpGTFWRxEGxOduQnbx1nhjOa324o1GrAGve50Yxxh3qpKMLsndVDJMPM+pvA7OOcE/V
- HyM614lVzP65F3eTR5NUmA9vbet2+A9gVlHKOGlqIcgEPkVHhEra/VvRmmU3rYfrChTNqvfcb8+
- M5+agZjlw+UZFgvoC2dBR
-X-Received: by 2002:a05:6000:1aca:b0:45e:9520:d729 with SMTP id
- ffacd0b85a97d-460328109c5mr8782327f8f.0.1780736394072; Sat, 06 Jun 2026
- 01:59:54 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <lixianglai@loongson.cn>)
+ id 1wVmuE-0005RO-6O
+ for qemu-devel@nongnu.org; Sat, 06 Jun 2026 05:01:26 -0400
+Received: from mail.loongson.cn ([114.242.206.163])
+ by eggs.gnu.org with esmtp (Exim 4.90_1)
+ (envelope-from <lixianglai@loongson.cn>) id 1wVmuB-00079K-E8
+ for qemu-devel@nongnu.org; Sat, 06 Jun 2026 05:01:25 -0400
+Received: from loongson.cn (unknown [10.20.42.126])
+ by gateway (Coremail) with SMTP id _____8CxHurX4SNqqj0RAA--.45930S3;
+ Sat, 06 Jun 2026 17:01:11 +0800 (CST)
+Received: from [10.20.42.126] (unknown [10.20.42.126])
+ by front1 (Coremail) with SMTP id qMiowJBxbcLS4SNqDpudAA--.34873S3;
+ Sat, 06 Jun 2026 17:01:09 +0800 (CST)
+Subject: Re: [PATCH] target/loongarch: clear the registers when cpu is reset
+To: =?UTF-8?Q?Alex_Benn=c3=a9e?= <alex.bennee@linaro.org>,
+ Bibo Mao <maobibo@loongson.cn>
+Cc: qemu-devel@nongnu.org, Song Gao <gaosong@loongson.cn>
+References: <20260529063858.3437928-1-lixianglai@loongson.cn>
+ <9ede8d17-2a2c-ce1a-16e8-80fc3e984451@loongson.cn>
+ <87h5nmxu3x.fsf@draig.linaro.org>
+From: lixianglai <lixianglai@loongson.cn>
+Message-ID: <ba79ca06-e440-c959-5275-2cd3c56695c2@loongson.cn>
+Date: Sat, 6 Jun 2026 16:51:12 +0800
+User-Agent: Mozilla/5.0 (X11; Linux loongarch64; rv:68.0) Gecko/20100101
+ Thunderbird/68.7.0
 MIME-Version: 1.0
-References: <20260606074756.43804-1-lhestz@163.com>
- <20260606074756.43804-2-lhestz@163.com>
-In-Reply-To: <20260606074756.43804-2-lhestz@163.com>
-From: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
-Date: Sat, 6 Jun 2026 11:59:42 +0300
-X-Gm-Features: AVVi8CcDIoAIffckj2wJRi9ZSjJJFZ14C9aqw36LnC7sCq5GbWbNRmphhsYkMD4
-Message-ID: <CAAjaMXadn9e-T7OtHrq05rpx2QOF4Ac=2xukMrv6UGJKcsZN5Q@mail.gmail.com>
-Subject: Re: [PATCH] hw/virtio-crypto: enforce max akcipher key length
-To: helei <lhestz@163.com>
-Cc: "open list:ARM SMMU <qemu-arm@nongnu.org>, " <qemu-devel@nongnu.org>,
- Gonglei <arei.gonglei@huawei.com>, zhenwei.pi@linux.dev, 
- "Michael S. Tsirkin" <mst@redhat.com>
-Content-Type: multipart/alternative; boundary="000000000000352f5506539200a1"
-Received-SPF: pass client-ip=2a00:1450:4864:20::42b;
- envelope-from=manos.pitsidianakis@linaro.org; helo=mail-wr1-x42b.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, HTML_MESSAGE=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+In-Reply-To: <87h5nmxu3x.fsf@draig.linaro.org>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Content-Language: en-US
+X-CM-TRANSID: qMiowJBxbcLS4SNqDpudAA--.34873S3
+X-CM-SenderInfo: 5ol0xt5qjotxo6or00hjvr0hdfq/
+X-Coremail-Antispam: 1Uk129KBj93XoWxXFW8ur4DAr1fAFW5Zw1kZwc_yoWrur45pa
+ 10kFWqkFy5tFZFyw1fXan8Krs8Zr18Kwn2vw43GFy0kr98Xw1SgFW0gryvgry7Z3yrAF4F
+ 9rnFkFW5uF4rAFgCm3ZEXasCq-sJn29KB7ZKAUJUUUUU529EdanIXcx71UUUUU7KY7ZEXa
+ sCq-sGcSsGvfJ3Ic02F40EFcxC0VAKzVAqx4xG6I80ebIjqfuFe4nvWSU5nxnvy29KBjDU
+ 0xBIdaVrnRJUUUv0b4IE77IF4wAFF20E14v26r1j6r4UM7CY07I20VC2zVCF04k26cxKx2
+ IYs7xG6rWj6s0DM7CIcVAFz4kK6r106r15M28lY4IEw2IIxxk0rwA2F7IY1VAKz4vEj48v
+ e4kI8wA2z4x0Y4vE2Ix0cI8IcVAFwI0_Jr0_JF4l84ACjcxK6xIIjxv20xvEc7CjxVAFwI
+ 0_Jr0_Gr1l84ACjcxK6I8E87Iv67AKxVWUJVW8JwA2z4x0Y4vEx4A2jsIEc7CjxVAFwI0_
+ Gr0_Gr1UM2AIxVAIcxkEcVAq07x20xvEncxIr21l57IF6xkI12xvs2x26I8E6xACxx1l5I
+ 8CrVACY4xI64kE6c02F40Ex7xfMcIj6xIIjxv20xvE14v26r1j6r18McIj6I8E87Iv67AK
+ xVWUJVW8JwAm72CE4IkC6x0Yz7v_Jr0_Gr1lF7xvr2IY64vIr41lc7I2V7IY0VAS07AlzV
+ AYIcxG8wCF04k20xvY0x0EwIxGrwCFx2IqxVCFs4IE7xkEbVWUJVW8JwC20s026c02F40E
+ 14v26r1j6r18MI8I3I0E7480Y4vE14v26r106r1rMI8E67AF67kF1VAFwI0_JF0_Jw1lIx
+ kGc2Ij64vIr41lIxAIcVC0I7IYx2IY67AKxVWUJVWUCwCI42IY6xIIjxv20xvEc7CjxVAF
+ wI0_Jr0_Gr1lIxAIcVCF04k26cxKx2IYs7xG6r1j6r1xMIIF0xvEx4A2jsIE14v26r1j6r
+ 4UMIIF0xvEx4A2jsIEc7CjxVAFwI0_Jr0_GrUvcSsGvfC2KfnxnUUI43ZEXa7IU8czVUUU
+ UUU==
+Received-SPF: pass client-ip=114.242.206.163;
+ envelope-from=lixianglai@loongson.cn; helo=mail.loongson.cn
+X-Spam_score_int: -48
+X-Spam_score: -4.9
+X-Spam_bar: ----
+X-Spam_report: (-4.9 / 5.0 requ) BAYES_00=-1.9, NICE_REPLY_A=-2.97,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -117,132 +83,107 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
---000000000000352f5506539200a1
-Content-Type: text/plain; charset="UTF-8"
+Hi Alex Bennée :
+> Bibo Mao <maobibo@loongson.cn> writes:
+>
+>> On 2026/5/29 下午2:38, Xianglai Li wrote:
+>>> Set the CSR_CRMD, CSR_ESTAT, CSR_MSGIS and CSR_PERFCTRL registers to the
+>>> reset state when the CPU is reset.
+>> Hi Xianglai,
+>>
+>> Thanks for the patch.
+>>
+>> Could you add some description how do you find this issue? such as by
+>> code reviewing or there is a real problem.
+> Also Loongarch seems to be one of the few that doesn't just do:
+>
+>    memset(env, 0, offsetof(CPUFooState, end_reset_fields));
 
-On Sat, 6 Jun 2026, 10:52 helei, <lhestz@163.com> wrote:
+Hello, I noticed that the patch below will make extensive modifications 
+to the CSR register
+members in the `CPULoongArchState` structure. I will wait until the 
+patch below is merged
+into the mainline, and then refer to other architectures to modify the 
+implementation of
+`end_reset_fields` before submitting the second version of the patch.
 
-> Introduce VIRTIO_CRYPTO_MAX_AKCIPHER_KEY_LEN. We set this hard
-> limit to 1MB, which mirrors the linux kernel's internal payload
-> restriction for the 'add_key' syscall.
->
-> Signed-off-by: helei <lhestz@163.com>
-> ---
->  hw/virtio/virtio-crypto.c | 13 +++++++++++++
->  1 file changed, 13 insertions(+)
->
-> diff --git a/hw/virtio/virtio-crypto.c b/hw/virtio/virtio-crypto.c
-> index 6fceb39681..06be93a0ac 100644
-> --- a/hw/virtio/virtio-crypto.c
-> +++ b/hw/virtio/virtio-crypto.c
-> @@ -25,6 +25,13 @@
->  #include "system/cryptodev-vhost.h"
->
->  #define VIRTIO_CRYPTO_VM_VERSION 1
-> +/*
-> + * The virtio-crypto spec does not limit akcipher key lengths. To prevent
-> + * guest-introduced OOM attacks via excessive host memory allocation, we
-> + * enforce a 1MB limit. This aligns with the linux kernel's internal max
-> + * payload limit for the add_key syscall.
-> + */
-> +#define VIRTIO_CRYPTO_MAX_AKCIPHER_KEY_LEN ((1024 * 1024) - 1)
->
->  typedef struct VirtIOCryptoSessionReq {
->      VirtIODevice *vdev;
-> @@ -216,6 +223,12 @@ virtio_crypto_create_asym_session(VirtIOCrypto
-> *vcrypto,
->          return -VIRTIO_CRYPTO_NOTSUPP;
->      }
->
-> +    if (keylen > VIRTIO_CRYPTO_MAX_AKCIPHER_KEY_LEN) {
-> +        error_report("virtio-crypto length of akcipher key is too large:
-> %u",
-> +                     keylen);
-> +        return -VIRTIO_CRYPTO_ERR;
-> +    }
-> +
->      if (keylen) {
->          asym_info->key = g_malloc(keylen);
->
+https://lore.kernel.org/qemu-devel/20260605083938.175658-1-maobibo@loongson.cn/
 
-Unrelated to this patch, but this g_malloc could be g_try_malloc.
+Thanks!
+Xianglai.
 
-         if (iov_to_buf(iov, out_num, 0, asym_info->key, keylen) != keylen)
-> {
-> --
-> 2.43.0
+> in the reset function.
 >
->
->
+>>> Signed-off-by: Xianglai Li <lixianglai@loongson.cn>
+>>> ---
+>>> Cc: Bibo Mao <maobibo@loongson.cn>
+>>> Cc: Song Gao <gaosong@loongson.cn>
+>>>    target/loongarch/cpu-csr.h |  7 +++++++
+>>>    target/loongarch/cpu.c     | 19 ++++++++++++++++++-
+>>>    2 files changed, 25 insertions(+), 1 deletion(-)
+>>> diff --git a/target/loongarch/cpu-csr.h b/target/loongarch/cpu-csr.h
+>>> index d860417af2..d936af8e57 100644
+>>> --- a/target/loongarch/cpu-csr.h
+>>> +++ b/target/loongarch/cpu-csr.h
+>>> @@ -211,6 +211,13 @@ FIELD(CSR_DMW_64, VSEG, 60, 4)
+>>>    #define LOONGARCH_CSR_PERFCTRL(N)    (0x200 + 2 * N)
+>>>    #define LOONGARCH_CSR_PERFCNTR(N)    (0x201 + 2 * N)
+>>>    +FIELD(CSR_PERFCTRL, EV, 0, 10)
+>>> +FIELD(CSR_PERFCTRL, PLV0, 16, 1)
+>>> +FIELD(CSR_PERFCTRL, PLV1, 17, 1)
+>>> +FIELD(CSR_PERFCTRL, PLV2, 18, 1)
+>>> +FIELD(CSR_PERFCTRL, PLV3, 19, 1)
+>>> +FIELD(CSR_PERFCTRL, PMIE, 20, 1)
+>>> +
+>>>    /* Debug CSRs */
+>>>    #define LOONGARCH_CSR_DBG            0x500 /* debug config */
+>>>    FIELD(CSR_DBG, DST, 0, 1)
+>>> diff --git a/target/loongarch/cpu.c b/target/loongarch/cpu.c
+>>> index 8f277f7696..7f82c4c46c 100644
+>>> --- a/target/loongarch/cpu.c
+>>> +++ b/target/loongarch/cpu.c
+>>> @@ -622,6 +622,7 @@ static void loongarch_cpu_reset_hold(Object *obj, ResetType type)
+>>>        env->CSR_CRMD = FIELD_DP64(env->CSR_CRMD, CSR_CRMD, PG, 0);
+>>>        env->CSR_CRMD = FIELD_DP64(env->CSR_CRMD, CSR_CRMD, DATF, 0);
+>>>        env->CSR_CRMD = FIELD_DP64(env->CSR_CRMD, CSR_CRMD, DATM, 0);
+>>> +    env->CSR_CRMD = FIELD_DP64(env->CSR_CRMD, CSR_CRMD, WE, 0);
+>>>          env->CSR_EUEN = FIELD_DP64(env->CSR_EUEN, CSR_EUEN, FPE, 0);
+>>>        env->CSR_EUEN = FIELD_DP64(env->CSR_EUEN, CSR_EUEN, SXE, 0);
+>>> @@ -633,7 +634,7 @@ static void loongarch_cpu_reset_hold(Object *obj, ResetType type)
+>>>        env->CSR_ECFG = FIELD_DP64(env->CSR_ECFG, CSR_ECFG, VS, 0);
+>>>        env->CSR_ECFG = FIELD_DP64(env->CSR_ECFG, CSR_ECFG, LIE, 0);
+>>>    -    env->CSR_ESTAT = env->CSR_ESTAT & (~MAKE_64BIT_MASK(0, 2));
+>>> +    env->CSR_ESTAT = 0;
+>>>        env->CSR_RVACFG = FIELD_DP64(env->CSR_RVACFG, CSR_RVACFG, RBITS, 0);
+>>>        env->CSR_CPUID = cs->cpu_index;
+>>>        env->CSR_TCFG = FIELD_DP64(env->CSR_TCFG, CSR_TCFG, EN, 0);
+>>> @@ -641,6 +642,22 @@ static void loongarch_cpu_reset_hold(Object *obj, ResetType type)
+>>>        env->CSR_TLBRERA = FIELD_DP64(env->CSR_TLBRERA, CSR_TLBRERA, ISTLBR, 0);
+>>>        env->CSR_MERRCTL = FIELD_DP64(env->CSR_MERRCTL, CSR_MERRCTL, ISMERR, 0);
+>>>        env->CSR_TID = cs->cpu_index;
+>>> +
+>>> +    memset(env->CSR_MSGIS, 0, sizeof(env->CSR_MSGIS));
+>>> +    env->CSR_DBG = FIELD_DP64(env->CSR_DBG, CSR_DBG, DST, 0);
+>>> +    for (n = 0; n < MAX_PERF_EVENTS; n++) {
+>> how about for (n = 0; n < env.perf_event_num; n++) {  ?
+>>
+>> Regards
+>> Bibo Mao
+>>> +        env->CSR_PERFCTRL[n] = FIELD_DP64(env->CSR_PERFCTRL[n], CSR_PERFCTRL,
+>>> +                                          PLV0, 0);
+>>> +        env->CSR_PERFCTRL[n] = FIELD_DP64(env->CSR_PERFCTRL[n], CSR_PERFCTRL,
+>>> +                                          PLV1, 0);
+>>> +        env->CSR_PERFCTRL[n] = FIELD_DP64(env->CSR_PERFCTRL[n], CSR_PERFCTRL,
+>>> +                                          PLV2, 0);
+>>> +        env->CSR_PERFCTRL[n] = FIELD_DP64(env->CSR_PERFCTRL[n], CSR_PERFCTRL,
+>>> +                                          PLV3, 0);
+>>> +        env->CSR_PERFCTRL[n] = FIELD_DP64(env->CSR_PERFCTRL[n], CSR_PERFCTRL,
+>>> +                                          PMIE, 0);
+>>> +    }
+>>> +
+>>>        /*
+>>>         * Workaround for edk2-stable202408, CSR PGD register is set only if
+>>>         * its value is equal to zero for boot cpu, it causes reboot issue.
+>>>
 
---000000000000352f5506539200a1
-Content-Type: text/html; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-
-<div dir=3D"auto"><div><br><br><div class=3D"gmail_quote gmail_quote_contai=
-ner"><div dir=3D"ltr" class=3D"gmail_attr">On Sat, 6 Jun 2026, 10:52 helei,=
- &lt;<a href=3D"mailto:lhestz@163.com">lhestz@163.com</a>&gt; wrote:<br></d=
-iv><blockquote class=3D"gmail_quote" style=3D"margin:0px 0px 0px 0.8ex;bord=
-er-left:1px solid rgb(204,204,204);padding-left:1ex">Introduce VIRTIO_CRYPT=
-O_MAX_AKCIPHER_KEY_LEN. We set this hard<br>
-limit to 1MB, which mirrors the linux kernel&#39;s internal payload<br>
-restriction for the &#39;add_key&#39; syscall.<br>
-<br>
-Signed-off-by: helei &lt;<a href=3D"mailto:lhestz@163.com" target=3D"_blank=
-" rel=3D"noreferrer">lhestz@163.com</a>&gt;<br>
----<br>
-=C2=A0hw/virtio/virtio-crypto.c | 13 +++++++++++++<br>
-=C2=A01 file changed, 13 insertions(+)<br>
-<br>
-diff --git a/hw/virtio/virtio-crypto.c b/hw/virtio/virtio-crypto.c<br>
-index 6fceb39681..06be93a0ac 100644<br>
---- a/hw/virtio/virtio-crypto.c<br>
-+++ b/hw/virtio/virtio-crypto.c<br>
-@@ -25,6 +25,13 @@<br>
-=C2=A0#include &quot;system/cryptodev-vhost.h&quot;<br>
-<br>
-=C2=A0#define VIRTIO_CRYPTO_VM_VERSION 1<br>
-+/*<br>
-+ * The virtio-crypto spec does not limit akcipher key lengths. To prevent<=
-br>
-+ * guest-introduced OOM attacks via excessive host memory allocation, we<b=
-r>
-+ * enforce a 1MB limit. This aligns with the linux kernel&#39;s internal m=
-ax<br>
-+ * payload limit for the add_key syscall.<br>
-+ */<br>
-+#define VIRTIO_CRYPTO_MAX_AKCIPHER_KEY_LEN ((1024 * 1024) - 1)<br>
-<br>
-=C2=A0typedef struct VirtIOCryptoSessionReq {<br>
-=C2=A0 =C2=A0 =C2=A0VirtIODevice *vdev;<br>
-@@ -216,6 +223,12 @@ virtio_crypto_create_asym_session(VirtIOCrypto *vcrypt=
-o,<br>
-=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0return -VIRTIO_CRYPTO_NOTSUPP;<br>
-=C2=A0 =C2=A0 =C2=A0}<br>
-<br>
-+=C2=A0 =C2=A0 if (keylen &gt; VIRTIO_CRYPTO_MAX_AKCIPHER_KEY_LEN) {<br>
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 error_report(&quot;virtio-crypto length of akc=
-ipher key is too large: %u&quot;,<br>
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
-=A0keylen);<br>
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 return -VIRTIO_CRYPTO_ERR;<br>
-+=C2=A0 =C2=A0 }<br>
-+<br>
-=C2=A0 =C2=A0 =C2=A0if (keylen) {<br>
-=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0asym_info-&gt;key =3D g_malloc(keylen);<b=
-r></blockquote></div></div><div dir=3D"auto"></div><div dir=3D"auto"><br></=
-div><div dir=3D"auto">Unrelated to this patch, but this g_malloc could be g=
-_try_malloc.</div><div dir=3D"auto"><br></div><div dir=3D"auto"><div class=
-=3D"gmail_quote gmail_quote_container"><blockquote class=3D"gmail_quote" st=
-yle=3D"margin:0px 0px 0px 0.8ex;border-left:1px solid rgb(204,204,204);padd=
-ing-left:1ex">
-=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0if (iov_to_buf(iov, out_num, 0, asym_info=
--&gt;key, keylen) !=3D keylen) {<br>
--- <br>
-2.43.0<br>
-<br>
-<br>
-</blockquote></div></div></div>
-
---000000000000352f5506539200a1--
 
