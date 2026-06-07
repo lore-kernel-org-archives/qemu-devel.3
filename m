@@ -4,35 +4,35 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9850DCD8C8C
-	for <qemu-devel@archiver.kernel.org>; Sun,  7 Jun 2026 14:05:11 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 09E0BCD8C88
+	for <qemu-devel@archiver.kernel.org>; Sun,  7 Jun 2026 14:05:28 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wWE6l-0004Jj-Lm; Sun, 07 Jun 2026 10:04:11 -0400
+	id 1wWE6y-0004MX-1y; Sun, 07 Jun 2026 10:04:24 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <deller@kernel.org>) id 1wWE6j-0004JS-Ks
- for qemu-devel@nongnu.org; Sun, 07 Jun 2026 10:04:09 -0400
-Received: from tor.source.kernel.org ([172.105.4.254])
+ (Exim 4.90_1) (envelope-from <deller@kernel.org>) id 1wWE6w-0004MP-Ir
+ for qemu-devel@nongnu.org; Sun, 07 Jun 2026 10:04:22 -0400
+Received: from tor.source.kernel.org ([2600:3c04:e001:324:0:1991:8:25])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <deller@kernel.org>) id 1wWE6i-00084f-5O
- for qemu-devel@nongnu.org; Sun, 07 Jun 2026 10:04:09 -0400
+ (Exim 4.90_1) (envelope-from <deller@kernel.org>) id 1wWE6u-00087J-TF
+ for qemu-devel@nongnu.org; Sun, 07 Jun 2026 10:04:22 -0400
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
- by tor.source.kernel.org (Postfix) with ESMTP id DBAE160018;
- Sun,  7 Jun 2026 14:04:06 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F22D41F00893;
- Sun,  7 Jun 2026 14:04:04 +0000 (UTC)
+ by tor.source.kernel.org (Postfix) with ESMTP id 45E5160018;
+ Sun,  7 Jun 2026 14:04:20 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5DF3C1F00893;
+ Sun,  7 Jun 2026 14:04:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
- s=k20260515; t=1780841046;
- bh=et5eLMegT6ampsfftjXOFLTcAsoi2sO/Rg/7dQphinA=;
+ s=k20260515; t=1780841060;
+ bh=7LLRWlYl4f50tTS2x2GJ/eFkVK++jmXZ/i6kKIARBlk=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References;
- b=KPFXJUCAG2rQ2GNEwIT2U/vFxY8VU0WzMXxWhqYlLkStLrj3VlGgHZ3fQL7sMT8J7
- TpXRwBuhTGr4FVM0fJQfHyVXTO9yFnJ+o5TQzmKJryumQRkJy9Ixwwz8AIO3NGZLCc
- zJSagyRh6fhO7qaQlMyPBjvdu8h9mutkVg5slGMytwxXXivaHZEe/aOXGSvGeo/+ij
- T5zCyBYLzjFzqLWtDeYSf1lgotUE2UtdXYCo8RJoG4uXAR5x4Vo+kPPE5tCDWuo2FV
- BbIhzAZs0dDE8JxX6usf6xLYanbDb4qzdc2j2nzQmQ3UEATT9u1Ul9D1ruPfBHhUXg
- Jpup91KTrffuQ==
+ b=i+htPQebVybQqK5/xMve51dnxXppeqheHJ0LhRbOJIfvP2/g1DeQGSmJ3Spz4KLso
+ J7ZR48V+9re+nA2seLz1df7Q/rg1u6oNHJjRyb60q3WnACDsp9tHgZmeqMOUOi1d8g
+ ew8YNYmEYUvbo0hZ+xAALPctEKX+ELrNwgKWpCK3DosCsr0fPdToq4dnHIflLcs9TJ
+ X19BnA9SeQ2XxBEMAg4HEn4ofdW2CTSjJkE+OeZ1O6xOtVq+bWuKJFZex6yFy7adVl
+ oV6SCOvNAlrOyFpaS85YnkldRsFV/I/vqATTYtuZYTBivACmTFMqAm0LgoCe1udd2O
+ mOvnuV+7MOL/g==
 From: Helge Deller <deller@kernel.org>
 To: qemu-devel@nongnu.org
 Cc: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
@@ -40,16 +40,16 @@ Cc: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
  Yoshinori Sato <yoshinori.sato@nifty.com>,
  Max Filippov <jcmvbkbc@gmail.com>, Helge Deller <deller@gmx.de>,
  Matt Turner <mattst88@gmail.com>
-Subject: [PATCH 03/10] linux-user/alpha: add coredump support
-Date: Sun,  7 Jun 2026 16:03:49 +0200
-Message-ID: <20260607140356.10702-4-deller@kernel.org>
+Subject: [PATCH 09/10] linux-user/xtensa: restore FP rounding mode on sigreturn
+Date: Sun,  7 Jun 2026 16:03:55 +0200
+Message-ID: <20260607140356.10702-10-deller@kernel.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260607140356.10702-1-deller@kernel.org>
 References: <20260607140356.10702-1-deller@kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=172.105.4.254; envelope-from=deller@kernel.org;
- helo=tor.source.kernel.org
+Received-SPF: pass client-ip=2600:3c04:e001:324:0:1991:8:25;
+ envelope-from=deller@kernel.org; helo=tor.source.kernel.org
 X-Spam_score_int: -24
 X-Spam_score: -2.5
 X-Spam_bar: --
@@ -73,75 +73,117 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Matt Turner <mattst88@gmail.com>
 
-Define HAVE_ELF_CORE_DUMP and target_elf_gregset_t in target_elf.h,
-mirroring the kernel's elf_gregset_t (ELF_NGREG = 66): r0-r31
-[0..31], f0-f31 [32..63], pc [64], unique [65].  Implement
-elf_core_copy_regs() in elfload.c to populate the gregset from
-CPUAlphaState.
+The Xtensa FCR rounding-mode (RM) bits are not held only in
+env->uregs[FCR]: they are also reflected into env->fp_status via
+set_float_rounding_mode().  Similarly, FSR exception flags are mirrored
+into env->fp_status.  Every write to FCR/FSR goes through
+helper_wur_fpu{2k,}_fcr / helper_wur_fpu_fsr which keep the two in sync.
 
-Without this, bprm->core_dump is NULL for Alpha targets.  When a
-guest signal goes unhandled, dump_core_and_abort() skips the core
-write and falls through to die_with_signal(), which re-raises the
-signal to the host.  The host kernel then writes an x86-64 core file
-for the qemu-alpha process instead of an Alpha guest core.
+restore_sigcontext() previously wrote nothing back for xtregs, leaving
+env->fp_status with whatever rounding mode and exception flags the
+signal handler last installed.  Any FP instruction in the interrupted
+code could then operate with the wrong mode.
 
-v2: Store thread unique field, same as in Linux kernel. Added by Helge &
-suggested by Richard.
+Add a minimal target_xtensa_xtregs sub-frame carrying FCR and FSR.
+setup_sigcontext() saves the current values and points sc_xtregs at the
+sub-frame when XTENSA_OPTION_FP_COPROCESSOR or
+XTENSA_OPTION_DFP_COPROCESSOR is present (both use env->fp_status driven
+by FCR/FSR). restore_sigcontext() reads sc_xtregs; if non-zero it
+restores FCR and FSR through cpu_set_fcr()/cpu_set_fsr() so fp_status
+round-trips correctly across signal delivery.
 
 Signed-off-by: Matt Turner <mattst88@gmail.com>
+Cc: Max Filippov <jcmvbkbc@gmail.com>
 Signed-off-by: Helge Deller <deller@gmx.de>
 ---
- linux-user/alpha/elfload.c    | 12 ++++++++++++
- linux-user/alpha/target_elf.h | 13 +++++++++++++
- 2 files changed, 25 insertions(+)
+ linux-user/xtensa/signal.c | 36 +++++++++++++++++++++++++++++++-----
+ 1 file changed, 31 insertions(+), 5 deletions(-)
 
-diff --git a/linux-user/alpha/elfload.c b/linux-user/alpha/elfload.c
-index 1e44475c47..d2aed15ce5 100644
---- a/linux-user/alpha/elfload.c
-+++ b/linux-user/alpha/elfload.c
-@@ -3,8 +3,20 @@
- #include "qemu/osdep.h"
- #include "qemu.h"
- #include "loader.h"
-+#include "target_elf.h"
+diff --git a/linux-user/xtensa/signal.c b/linux-user/xtensa/signal.c
+index ef8b0c3a27..fef23952b7 100644
+--- a/linux-user/xtensa/signal.c
++++ b/linux-user/xtensa/signal.c
+@@ -21,6 +21,7 @@
+ #include "user-internals.h"
+ #include "signal-common.h"
+ #include "linux-user/trace.h"
++#include "target/xtensa/cpu.h"
  
+ struct target_sigcontext {
+     abi_ulong sc_pc;
+@@ -43,10 +44,15 @@ struct target_ucontext {
+     target_sigset_t tuc_sigmask;
+ };
  
-+void elf_core_copy_regs(target_elf_gregset_t *r, const CPUAlphaState *env)
-+{
-+    int i;
++struct target_xtensa_xtregs {
++    uint32_t fcr;
++    uint32_t fsr;
++};
 +
-+    for (i = 0; i < 31; i++) {
-+        r->regs[i] = tswap64(env->ir[i]);
-+    }
-+    r->pc = tswap64(env->pc);
-+    r->unique = env->unique;
-+}
-+
- const char *get_elf_cpu_model(uint32_t eflags)
+ struct target_rt_sigframe {
+     target_siginfo_t info;
+     struct target_ucontext uc;
+-    /* TODO: xtregs */
++    struct target_xtensa_xtregs xtregs;
+     uint8_t retcode[6];
+     abi_ulong window[4];
+ };
+@@ -107,6 +113,7 @@ static int flush_window_regs(CPUXtensaState *env)
+ }
+ 
+ static int setup_sigcontext(struct target_rt_sigframe *frame,
++                            abi_ulong frame_addr,
+                             CPUXtensaState *env)
  {
-     return "ev67";
-diff --git a/linux-user/alpha/target_elf.h b/linux-user/alpha/target_elf.h
-index 864dc6e2e6..4987ae3944 100644
---- a/linux-user/alpha/target_elf.h
-+++ b/linux-user/alpha/target_elf.h
-@@ -11,4 +11,17 @@
- #define ELF_CLASS               ELFCLASS64
- #define ELF_MACHINE             EM_ALPHA
+     struct target_sigcontext *sc = &frame->uc.tuc_mcontext;
+@@ -123,8 +130,15 @@ static int setup_sigcontext(struct target_rt_sigframe *frame,
+     for (i = 0; i < 16; ++i) {
+         __put_user(env->regs[i], sc->sc_a + i);
+     }
+-    __put_user(0, &sc->sc_xtregs);
+-    /* TODO: xtregs */
++    if (xtensa_option_enabled(env->config, XTENSA_OPTION_FP_COPROCESSOR) ||
++        xtensa_option_enabled(env->config, XTENSA_OPTION_DFP_COPROCESSOR)) {
++        __put_user(env->uregs[FCR], &frame->xtregs.fcr);
++        __put_user(cpu_get_fsr(env), &frame->xtregs.fsr);
++        __put_user(frame_addr + offsetof(struct target_rt_sigframe, xtregs),
++                   &sc->sc_xtregs);
++    } else {
++        __put_user(0, &sc->sc_xtregs);
++    }
+     return 1;
+ }
  
-+#define HAVE_ELF_CORE_DUMP      1
+@@ -190,7 +204,7 @@ void setup_rt_frame(int sig, struct target_sigaction *ka,
+     __put_user(0, &frame->uc.tuc_flags);
+     __put_user(0, &frame->uc.tuc_link);
+     target_save_altstack(&frame->uc.tuc_stack, env);
+-    if (!setup_sigcontext(frame, env)) {
++    if (!setup_sigcontext(frame, frame_addr, env)) {
+         unlock_user_struct(frame, frame_addr, 0);
+         goto give_sigsegv;
+     }
+@@ -266,7 +280,19 @@ static void restore_sigcontext(CPUXtensaState *env,
+     for (i = 0; i < 16; ++i) {
+         __get_user(env->regs[i], sc->sc_a + i);
+     }
+-    /* TODO: xtregs */
++    {
++        abi_ulong xtregs_addr;
 +
-+/*
-+ * Matches the kernel's elf_gregset_t (ELF_NGREG = 33):
-+ *   r0-r30 at indices 0-30, pc at 31, ps at 32.
-+ * r31 (hardwired zero) is not stored; pc occupies index 31.
-+ */
-+typedef struct target_elf_gregset_t {
-+    abi_ulong regs[31];  /* integer registers r0-r30  [0..30] */
-+    abi_ulong pc;        /* program counter           [31]    */
-+    abi_ulong unique;    /* thread's UNIQUE field     [32]    */
-+} target_elf_gregset_t;
++        __get_user(xtregs_addr, &sc->sc_xtregs);
++        if (xtregs_addr) {
++            uint32_t fcr, fsr;
 +
- #endif
++            __get_user(fcr, &frame->xtregs.fcr);
++            __get_user(fsr, &frame->xtregs.fsr);
++            cpu_set_fcr(env, fcr);
++            cpu_set_fsr(env, fsr);
++        }
++    }
+ }
+ 
+ long do_rt_sigreturn(CPUXtensaState *env)
 -- 
 2.54.0
 
