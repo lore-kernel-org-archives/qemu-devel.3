@@ -4,48 +4,47 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 311B2CD8CA4
-	for <qemu-devel@archiver.kernel.org>; Sun,  7 Jun 2026 17:59:51 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A9EE2CD8C92
+	for <qemu-devel@archiver.kernel.org>; Sun,  7 Jun 2026 17:59:54 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wWHmF-0000Ko-Pk; Sun, 07 Jun 2026 13:59:15 -0400
+	id 1wWHmU-0000Ne-2q; Sun, 07 Jun 2026 13:59:30 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1)
- (envelope-from <7840fbdba06d0f4c45cac96a0a9aa35681ef177f@kylie.crudebyte.com>)
- id 1wWHmE-0000Ju-27; Sun, 07 Jun 2026 13:59:14 -0400
+ (envelope-from <20720aa8a3d90233314e26966c480fdcc17409ce@kylie.crudebyte.com>)
+ id 1wWHmS-0000NK-8W; Sun, 07 Jun 2026 13:59:28 -0400
 Received: from kylie.crudebyte.com ([5.189.157.229])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1)
- (envelope-from <7840fbdba06d0f4c45cac96a0a9aa35681ef177f@kylie.crudebyte.com>)
- id 1wWHmC-0004KR-Fm; Sun, 07 Jun 2026 13:59:13 -0400
+ (envelope-from <20720aa8a3d90233314e26966c480fdcc17409ce@kylie.crudebyte.com>)
+ id 1wWHmQ-0004Mo-IQ; Sun, 07 Jun 2026 13:59:27 -0400
 DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
  d=crudebyte.com; s=kylie; h=Cc:To:Subject:Date:From:References:In-Reply-To:
  Message-ID:Content-Type:Content-Transfer-Encoding:MIME-Version:Content-ID:
- Content-Description; bh=j+IJKoaTTT2cxXkfp0g/5zvDk/18rKDB/i3pyHZ0ieY=; b=ck0v4
- Ag917os6/3AG8KJIwcWoVk9MDsUm0Gz+/IBPB6a0OEFH9G+eF27hb1OMPb9CbwOrivu/jB1jvychT
- qgOi14PaxumE2gX+tG3d/vopr6wb0UXP7ZJN6sMBvza2bUtmfguLAwWMWVCu4qnkt9nVCxefuW5NJ
- 1hTE1Q20LUX5x8ieA9CEFxiSzecpGcc4ydXLBxVCSUy+DM6UZdxdlI/KOC9mAfiDLczPH/ZC3bGD0
- Bp11DelvOe5G6KRu3W/e+EraU3ZzBglGpRodAb6K9PHLPbCvAyKQ6q2kT9wFk+4x0PAPdMmdV6vWy
- EhRBL1cgNigWXC70PMGlEQbds0tcQn5gYBKkMeTAbSFh4osPm1Y5cero/08SzFKmliknQi6trXaZH
- pBbgMPIk/BXwuY2OJN70glVK+vMRtl2+CCEV8q3hxNVcpYcngYfACZm1ce5siWfRqBoWA6a81a974
- Q5VAeBdYm7S4cWfEIjRbMj9pxjHNuvfXL4qs7DHx75HVcSEo0EKinx5aNA0xz6f+eeX0F3wCm3dAS
- Mrerm0ODuwnhT05IAvasquTkAPKlZjCxr7E6tdVbicB7hpTSIcF1NytzAOdURgcdrHCgYaM41FmzN
- HiIYRqI7UldwQ7oB5a7j9hnFN2bIAXMu26Il8REEShSCI++pwvAYdaRSu+ZMJQ=;
-Message-ID: <7840fbdba06d0f4c45cac96a0a9aa35681ef177f.1780851947.git.qemu_oss@crudebyte.com>
+ Content-Description; bh=+Pb1E062e+vdMI39HgiCkAtZTwKmpyquagDGi2YMRJw=; b=mOGpV
+ UGIOQV7y2elbfFMGLPgBi5zRzO9MVKVqoJGwyeEopFzOWICoq/dpy2pVi5RF4frIscRTi0MP+1wsY
+ QlFe91q/0FmIMujIeiD6LvIaM9FYsp6o7d+4vsNS8GX3tYbFgSCZbuOG7YuIQ1F0tFa4wi4SSQ7Db
+ JA69IUPzZGMpWt452yd3wwKbJqzbM4POr1YkHSOKXhcyKNjhCY+AzmZVovGVxIQiWY4r/m4MVFHZj
+ pXJ9hm3/YVu6Eo/bQwUiGgrIYJaW8wlw74H2np5qLQNsfnPzR3DxM41jX+oATVYbzXLtPZcFqp0Gc
+ ufkJYovKFOl7K8KcIlUIhe903lkarEUVYltypeqnYXde8iH4rmF7NXBIC33XGwAjFFL/x3xPNRT6b
+ 1kcaIEmjfMpN/sVs5//32TZXtobcQ/E5CCAm8L5wzwQiUHFVdUXfl5JbTy1jDfAZdoMCaKsiYXi2m
+ nJlk0YDfMyon07UeIaKR1oPReZ33GAmP6jYjs0IyYCNd2ZT6cDUd4ugFZ8R3jjZIvN7f7lMEh4QO1
+ afs7FILZA9nbVDVeyJ2/ypMAaEbO8/MTB6C5/soOAad7GjGEP3lQEgZeYq40bfhLoAHuZP9nShrrT
+ 8gwJ+3QproqwlLlgDtRhjWtCJQLB6YfKeheemOGfl+LxJhauvFMcAQFBNo4oMI=;
+Message-ID: <20720aa8a3d90233314e26966c480fdcc17409ce.1780851947.git.qemu_oss@crudebyte.com>
 In-Reply-To: <cover.1780851947.git.qemu_oss@crudebyte.com>
 References: <cover.1780851947.git.qemu_oss@crudebyte.com>
 From: Christian Schoenebeck <qemu_oss@crudebyte.com>
 Date: Sun, 07 Jun 2026 19:22:19 +0200
-Subject: [PATCH 12/12] tests/9p: add 3 xattr FID limit test cases (local fs
- driver)
+Subject: [PATCH 04/12] tests/9p: add Tread / Rread test client functions
 To: qemu-devel@nongnu.org,
     qemu-stable@nongnu.org
 Cc: Greg Kurz <groug@kaod.org>,
     Feifan Qian <bea1e@proton.me>
 Received-SPF: pass client-ip=5.189.157.229;
- envelope-from=7840fbdba06d0f4c45cac96a0a9aa35681ef177f@kylie.crudebyte.com;
+ envelope-from=20720aa8a3d90233314e26966c480fdcc17409ce@kylie.crudebyte.com;
  helo=kylie.crudebyte.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
@@ -68,135 +67,138 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Analogue to the previously added 3 synth tests, add (similar) 3 test
-cases using the "local" fs driver to verify correct xattr FID limit
-enforcement of 9pfs server with a real filesystem.
-
-These 3 new local tests use the shared test code of the previously
-added 3 synth tests. The only difference is that the local fs driver
-does not expose the current internal xattr FID counter, so we can't
-verify this with the local tests.
-
-These are "slow" tests, i.e. they are not running by default.
-Use -m slow for running theses tests.
+Add v9fs_tread() and v9fs_rread() functions to the 9P test client
+for reading files from 9pfs server in test cases.
 
 Signed-off-by: Christian Schoenebeck <qemu_oss@crudebyte.com>
 ---
- tests/qtest/virtio-9p-test.c | 69 ++++++++++++++++++++++++++++++++++--
- 1 file changed, 66 insertions(+), 3 deletions(-)
+ tests/qtest/libqos/virtio-9p-client.c | 45 +++++++++++++++++++++++++++
+ tests/qtest/libqos/virtio-9p-client.h | 33 ++++++++++++++++++++
+ tests/qtest/virtio-9p-test.c          |  1 +
+ 3 files changed, 79 insertions(+)
 
+diff --git a/tests/qtest/libqos/virtio-9p-client.c b/tests/qtest/libqos/virtio-9p-client.c
+index af01d4c345..b9785ef8cb 100644
+--- a/tests/qtest/libqos/virtio-9p-client.c
++++ b/tests/qtest/libqos/virtio-9p-client.c
+@@ -241,6 +241,7 @@ static const char *rmessage_name(uint8_t id)
+         id == P9_RUNLINKAT ? "RUNLINKAT" :
+         id == P9_RFLUSH ? "RFLUSH" :
+         id == P9_RREADDIR ? "RREADDIR" :
++        id == P9_RREAD ? "RREAD" :
+         "<unknown>";
+ }
+ 
+@@ -1103,3 +1104,47 @@ void v9fs_runlinkat(P9Req *req)
+     v9fs_req_recv(req, P9_RUNLINKAT);
+     v9fs_req_free(req);
+ }
++
++/* size[4] Tread tag[2] fid[4] offset[8] count[4] */
++TReadRes v9fs_tread(TReadOpt opt)
++{
++    P9Req *req;
++    uint32_t err;
++
++    g_assert(opt.client);
++
++    uint32_t body_size = 4 + 8 + 4;
++
++    req = v9fs_req_init(opt.client, body_size, P9_TREAD, opt.tag);
++    v9fs_uint32_write(req, opt.fid);
++    v9fs_uint64_write(req, opt.offset);
++    v9fs_uint32_write(req, opt.count);
++    v9fs_req_send(req);
++
++    if (!opt.requestOnly) {
++        v9fs_req_wait_for_reply(req, NULL);
++        if (opt.expectErr) {
++            v9fs_rlerror(req, &err);
++            g_assert_cmpint(err, ==, opt.expectErr);
++        } else {
++            v9fs_rread(req, opt.rread.count, opt.rread.data);
++        }
++        req = NULL; /* request was freed */
++    }
++
++    return (TReadRes) {
++        .req = req,
++        .count = opt.rread.count ? *opt.rread.count : 0
++    };
++}
++
++/* size[4] Rread tag[2] count[4] data[count] */
++void v9fs_rread(P9Req *req, uint32_t *count, void *data)
++{
++    v9fs_req_recv(req, P9_RREAD);
++    v9fs_uint32_read(req, count);
++    if (data && *count > 0) {
++        v9fs_memread(req, data, *count);
++    }
++    v9fs_req_free(req);
++}
+diff --git a/tests/qtest/libqos/virtio-9p-client.h b/tests/qtest/libqos/virtio-9p-client.h
+index e3221a3104..37f2517cff 100644
+--- a/tests/qtest/libqos/virtio-9p-client.h
++++ b/tests/qtest/libqos/virtio-9p-client.h
+@@ -473,6 +473,37 @@ typedef struct TunlinkatRes {
+     P9Req *req;
+ } TunlinkatRes;
+ 
++/* options for 'Tread' 9p request */
++typedef struct TReadOpt {
++    /* 9P client being used (mandatory) */
++    QVirtio9P *client;
++    /* user supplied tag number being returned with response (optional) */
++    uint16_t tag;
++    /* file ID of file to read from (required) */
++    uint32_t fid;
++    /* start position of read from beginning of file (optional) */
++    uint64_t offset;
++    /* how many bytes to read (required) */
++    uint32_t count;
++    /* data being received from 9p server as 'Rread' response (optional) */
++    struct {
++        uint32_t *count;
++        void *data;
++    } rread;
++    /* only send Tread request but not wait for a reply? (optional) */
++    bool requestOnly;
++    /* do we expect an Rlerror response, if yes which error code? (optional) */
++    uint32_t expectErr;
++} TReadOpt;
++
++/* result of 'Tread' 9p request */
++typedef struct TReadRes {
++    /* if requestOnly was set: request object for further processing */
++    P9Req *req;
++    /* amount of bytes read */
++    uint32_t count;
++} TReadRes;
++
+ void v9fs_set_allocator(QGuestAllocator *t_alloc);
+ void v9fs_memwrite(P9Req *req, const void *addr, size_t len);
+ void v9fs_memskip(P9Req *req, size_t len);
+@@ -524,5 +555,7 @@ TlinkRes v9fs_tlink(TlinkOpt);
+ void v9fs_rlink(P9Req *req);
+ TunlinkatRes v9fs_tunlinkat(TunlinkatOpt);
+ void v9fs_runlinkat(P9Req *req);
++TReadRes v9fs_tread(TReadOpt opt);
++void v9fs_rread(P9Req *req, uint32_t *count, void *data);
+ 
+ #endif
 diff --git a/tests/qtest/virtio-9p-test.c b/tests/qtest/virtio-9p-test.c
-index 2e88429dfa..d559f0f8a0 100644
+index 1c69d41e33..8ccec77e70 100644
 --- a/tests/qtest/virtio-9p-test.c
 +++ b/tests/qtest/virtio-9p-test.c
-@@ -395,6 +395,19 @@ static void do_xattr_limit(QVirtio9P *v9p, int max_xattr, bool check_counter)
-     }
- }
+@@ -31,6 +31,7 @@
+ #define tsymlink(...) v9fs_tsymlink((TsymlinkOpt) __VA_ARGS__)
+ #define tlink(...) v9fs_tlink((TlinkOpt) __VA_ARGS__)
+ #define tunlinkat(...) v9fs_tunlinkat((TunlinkatOpt) __VA_ARGS__)
++#define tread(...) v9fs_tread((TReadOpt) __VA_ARGS__)
  
-+static void do_local_xattr_limit(QVirtio9P *v9p, int max_xattr)
-+{
-+    g_autofree char *test_file = virtio_9p_test_path("WRITE");
-+
-+    /*
-+     * this file must be created for the test to work with the 'local' fs driver
-+     */
-+    g_file_set_contents(test_file, "", 0, NULL);
-+
-+    /* the actual test code shared with the 'synth' fs driver tests */
-+    do_xattr_limit(v9p, max_xattr, false);
-+}
-+
- static void fs_walk_no_slash(void *obj, void *data, QGuestAllocator *t_alloc)
+ static void pci_config(void *obj, void *data, QGuestAllocator *t_alloc)
  {
-     QVirtio9P *v9p = obj;
-@@ -990,6 +1003,27 @@ static void fs_deep_absolute_path(void *obj, void *data,
-     g_string_free(path, TRUE);
- }
- 
-+static void fs_local_xattr_limit_default(void *obj, void *data,
-+                                         QGuestAllocator *t_alloc)
-+{
-+    v9fs_set_allocator(t_alloc);
-+    do_local_xattr_limit(obj, V9FS_MAX_XATTR_DEFAULT);
-+}
-+
-+static void fs_local_xattr_limit_custom(void *obj, void *data,
-+                                        QGuestAllocator *t_alloc)
-+{
-+    v9fs_set_allocator(t_alloc);
-+    do_local_xattr_limit(obj, 100);
-+}
-+
-+static void fs_local_xattr_limit_unlimited(void *obj, void *data,
-+                                           QGuestAllocator *t_alloc)
-+{
-+    v9fs_set_allocator(t_alloc);
-+    do_local_xattr_limit(obj, -1);
-+}
-+
- static void *synth_max_xattr_custom_opt(GString *cmd_line, void *arg)
- {
-     virtio_9p_add_synth_driver_args(cmd_line, "max_xattr=100");
-@@ -1008,20 +1042,41 @@ static void cleanup_9p_local_driver(void *data)
-     virtio_9p_remove_local_test_dir();
- }
- 
--static void *assign_9p_local_driver(GString *cmd_line, void *arg)
-+static void assign_9p_local_driver_with_args(GString *cmd_line,
-+                                             const char *extra_opts)
- {
-     /* make sure test dir for the 'local' tests exists */
-     virtio_9p_create_local_test_dir();
- 
--    virtio_9p_assign_local_driver(cmd_line, "security_model=mapped-xattr");
-+    g_autofree char *opts = g_strdup("security_model=mapped-xattr");
-+    if (extra_opts) {
-+        opts = g_strdup_printf("%s,%s", opts, extra_opts);
-+    }
-+    virtio_9p_assign_local_driver(cmd_line, opts);
- 
-     g_test_queue_destroy(cleanup_9p_local_driver, NULL);
-+}
-+
-+static void *assign_9p_local_driver(GString *cmd_line, void *arg)
-+{
-+    assign_9p_local_driver_with_args(cmd_line, NULL);
-+    return arg;
-+}
-+
-+static void *local_max_xattr_custom_opt(GString *cmd_line, void *arg)
-+{
-+    assign_9p_local_driver_with_args(cmd_line, "max_xattr=100");
-+    return arg;
-+}
-+
-+static void *local_max_xattr_unlimited_opt(GString *cmd_line, void *arg)
-+{
-+    assign_9p_local_driver_with_args(cmd_line, "max_xattr=0");
-     return arg;
- }
- 
- static void register_virtio_9p_test(void)
- {
--
-     QOSGraphTestOptions opts = {
-     };
- 
-@@ -1078,6 +1133,14 @@ static void register_virtio_9p_test(void)
-                  &opts);
-     qos_add_test("local/deep_absolute_path", "virtio-9p",
-                  fs_deep_absolute_path, &opts);
-+    qos_add_test("local/xattr_limit/default", "virtio-9p",
-+                 fs_local_xattr_limit_default, &opts);
-+    opts.before = local_max_xattr_custom_opt;
-+    qos_add_test("local/xattr_limit/custom", "virtio-9p",
-+                 fs_local_xattr_limit_custom, &opts);
-+    opts.before = local_max_xattr_unlimited_opt;
-+    qos_add_test("local/xattr_limit/unlimited", "virtio-9p",
-+                 fs_local_xattr_limit_unlimited, &opts);
- }
- 
- libqos_init(register_virtio_9p_test);
 -- 
 2.47.3
 
