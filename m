@@ -4,57 +4,60 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 81D9BCD8C88
-	for <qemu-devel@archiver.kernel.org>; Sun,  7 Jun 2026 10:43:30 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 58621CD8C88
+	for <qemu-devel@archiver.kernel.org>; Sun,  7 Jun 2026 14:04:51 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wWAxz-0002qG-Cq; Sun, 07 Jun 2026 06:42:55 -0400
+	id 1wWE6t-0004Lf-Mz; Sun, 07 Jun 2026 10:04:19 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <zenghui.yu@linux.dev>)
- id 1wWAxx-0002pe-50
- for qemu-devel@nongnu.org; Sun, 07 Jun 2026 06:42:53 -0400
-Received: from out-179.mta0.migadu.com ([2001:41d0:1004:224b::b3])
+ (Exim 4.90_1) (envelope-from <deller@kernel.org>) id 1wWE6s-0004LJ-LL
+ for qemu-devel@nongnu.org; Sun, 07 Jun 2026 10:04:18 -0400
+Received: from tor.source.kernel.org ([172.105.4.254])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <zenghui.yu@linux.dev>)
- id 1wWAxu-0007HV-Jg
- for qemu-devel@nongnu.org; Sun, 07 Jun 2026 06:42:52 -0400
-Message-ID: <745e66c7-2a9b-4185-bae7-77e10623332b@linux.dev>
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linux.dev; s=key1;
- t=1780828965;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=noYmow1kBQa3rEdW0s9wrCxvvB3LEAmiDxNdxTGBF3k=;
- b=CbJCRR5ogyAvkAdGDsJegdh23c/CDQDOi11Hg3byDtp57Ll3EGnjrOZogLBOqvLqMrmt/T
- 4PupJ4DdMgn2wig6Q2JhnRbAtqk1yXP/N4Y0m8B3vgTTAtyA2tCyhfIl7Uy7G1/JNXJH/U
- mp67/f+dmQTv+dWmwhbwEyvMgGzvYOU=
-Date: Sun, 7 Jun 2026 18:42:30 +0800
+ (Exim 4.90_1) (envelope-from <deller@kernel.org>) id 1wWE6q-00086L-KY
+ for qemu-devel@nongnu.org; Sun, 07 Jun 2026 10:04:18 -0400
+Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
+ by tor.source.kernel.org (Postfix) with ESMTP id EE8A560018;
+ Sun,  7 Jun 2026 14:04:15 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D9FCB1F00893;
+ Sun,  7 Jun 2026 14:04:13 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
+ s=k20260515; t=1780841055;
+ bh=gEmpbKVD9hDcSZqLWrik9HtYpOvGlKu3Ri0bvNo/FQk=;
+ h=From:To:Cc:Subject:Date:In-Reply-To:References;
+ b=fVBxOEV4CTtlMUmoDf4OgKZzSZUUMyRlAOsL/8LwBjLu2fYQUkb5G0m34c38P9f6G
+ PovWQMq5MDP4mmKwvxZGVUalhN+C6hDKs3MDy46T4aNze6UK6FZ0QalrdVtV4ol5lu
+ ku05mCoJirlMPzYhCZDWKx4LajKdUTCZg47m+QPrHVHvDesQQrkaKfeiK+JKkb01dR
+ o/U16v5CXyMnrb3x34BFL76IHrtC7ahbb1IZjfRgSYtVT98HVy4E1JjEjTeN2orx/5
+ jZGMMudyxCTzQBZ7Go3TTyajX+/ZtL3sJE8g4ZPswcIX9v06u1avb2chBBd36jd6d1
+ IUgEXmpyiIwoA==
+From: Helge Deller <deller@kernel.org>
+To: qemu-devel@nongnu.org
+Cc: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
+ Laurent Vivier <laurent@vivier.eu>,
+ Yoshinori Sato <yoshinori.sato@nifty.com>,
+ Max Filippov <jcmvbkbc@gmail.com>, Helge Deller <deller@gmx.de>,
+ Matt Turner <mattst88@gmail.com>,
+ Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>
+Subject: [PATCH 07/10] linux-user/sparc: flush register windows before core
+ dump
+Date: Sun,  7 Jun 2026 16:03:53 +0200
+Message-ID: <20260607140356.10702-8-deller@kernel.org>
+X-Mailer: git-send-email 2.54.0
+In-Reply-To: <20260607140356.10702-1-deller@kernel.org>
+References: <20260607140356.10702-1-deller@kernel.org>
 MIME-Version: 1.0
-Subject: Re: [PULL 17/21] target/arm: implement FEAT_RNG_TRAP for RNDR/RNDRRS
-To: Peter Maydell <peter.maydell@linaro.org>
-References: <20260529114723.42040-1-peter.maydell@linaro.org>
- <20260529114723.42040-18-peter.maydell@linaro.org>
-Content-Language: en-US
-X-Report-Abuse: Please report any abuse attempt to abuse@migadu.com and
- include these headers.
-From: Zenghui Yu <zenghui.yu@linux.dev>
-Cc: qemu-devel@nongnu.org, Alexander Graf <agraf@csgraf.de>,
- qemu-arm <qemu-arm@nongnu.org>
-In-Reply-To: <20260529114723.42040-18-peter.maydell@linaro.org>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-Migadu-Flow: FLOW_OUT
-Received-SPF: pass client-ip=2001:41d0:1004:224b::b3;
- envelope-from=zenghui.yu@linux.dev; helo=out-179.mta0.migadu.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=172.105.4.254; envelope-from=deller@kernel.org;
+ helo=tor.source.kernel.org
+X-Spam_score_int: -24
+X-Spam_score: -2.5
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_PASS=-0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.445,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -70,170 +73,184 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-+ Alexander and qemu-arm (for HVF/arm),
+From: Matt Turner <mattst88@gmail.com>
 
-On 5/29/26 7:47 PM, Peter Maydell wrote:
-> From: Jason Wright <wrigjl@proton.me>
-> 
-> Add an .accessfn to the RNDR and RNDRRS system registers that traps
-> reads to EL3 when SCR_EL3.TRNDR is set, as required by FEAT_RNG_TRAP.
-> Mark SCR_EL3.TRNDR (bit 40) as a writable field in scr_write() when
-> the CPU advertises the feature. The pseudocode in DDI0487 revision M.b
-> shows the trap firing from EL0, EL1, EL2, and EL3, so there is no
-> check of arm_current_el().
-> 
-> When FEAT_RNG_TRAP is implemented without FEAT_RNG, an RNDR/RNDRRS read
-> with SCR_EL3.TRNDR=0 should UNDEF rather than succeed; handle that case
-> in access_rndr(). Register the rndr_reginfo CP reg entries whenever either
-> FEAT_RNG or FEAT_RNG_TRAP is implemented, so the accessfn fires even on a
-> FEAT_RNG_TRAP-only CPU.
-> 
-> When SCR_EL3.TRNDR is set, ID_AA64ISAR0_EL1.RNDR reads as 1 regardless
-> of whether FEAT_RNG is implemented; give ID_AA64ISAR0_EL1 a readfn so it
-> reports this at runtime, as we already do for ID_AA64PFR0_EL1.
-> 
-> Suggested-by: Richard Henderson <richard.henderson@linaro.org>
-> Suggested-by: Peter Maydell <peter.maydell@linaro.org>
-> Signed-off-by: Jason Wright <wrigjl@proton.me>
-> Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
-> Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
-> ---
->  target/arm/cpu-features.h |  5 ++++
->  target/arm/helper.c       | 58 +++++++++++++++++++++++++++++++++++----
->  2 files changed, 58 insertions(+), 5 deletions(-)
-> 
-> diff --git a/target/arm/cpu-features.h b/target/arm/cpu-features.h
-> index 4e8d844fea..38a695ded7 100644
-> --- a/target/arm/cpu-features.h
-> +++ b/target/arm/cpu-features.h
-> @@ -908,6 +908,11 @@ static inline bool isar_feature_aa64_rndr(const ARMISARegisters *id)
->      return FIELD_EX64_IDREG(id, ID_AA64ISAR0, RNDR) != 0;
->  }
->  
-> +static inline bool isar_feature_aa64_rng_trap(const ARMISARegisters *id)
-> +{
-> +    return FIELD_EX64_IDREG(id, ID_AA64PFR1, RNDR_TRAP) != 0;
-> +}
-> +
->  static inline bool isar_feature_aa64_tlbirange(const ARMISARegisters *id)
->  {
->      return FIELD_EX64_IDREG(id, ID_AA64ISAR0, TLB) == 2;
-> diff --git a/target/arm/helper.c b/target/arm/helper.c
-> index 34487eeaa3..9dd8fdfa41 100644
-> --- a/target/arm/helper.c
-> +++ b/target/arm/helper.c
-> @@ -790,6 +790,9 @@ static void scr_write(CPUARMState *env, const ARMCPRegInfo *ri, uint64_t value)
->          if (cpu_isar_feature(aa64_fpmr, cpu)) {
->              valid_mask |= SCR_ENFPM;
->          }
-> +        if (cpu_isar_feature(aa64_rng_trap, cpu)) {
-> +            valid_mask |= SCR_TRNDR;
-> +        }
->      } else {
->          valid_mask &= ~(SCR_RW | SCR_ST);
->          if (cpu_isar_feature(aa32_ras, cpu)) {
-> @@ -5170,6 +5173,21 @@ static uint64_t id_aa64pfr0_read(CPUARMState *env, const ARMCPRegInfo *ri)
->      }
->      return pfr0;
->  }
-> +
-> +static uint64_t id_aa64isar0_read(CPUARMState *env, const ARMCPRegInfo *ri)
-> +{
-> +    ARMCPU *cpu = env_archcpu(env);
-> +    uint64_t isar0 = GET_IDREG(&cpu->isar, ID_AA64ISAR0);
-> +
-> +    /*
-> +     * When FEAT_RNG_TRAP is active (SCR_EL3.TRNDR set), ID_AA64ISAR0_EL1.RNDR
-> +     * reads as 1 regardless of whether FEAT_RNG is implemented.
-> +     */
-> +    if (env->cp15.scr_el3 & SCR_TRNDR) {
-> +        isar0 = FIELD_DP64(isar0, ID_AA64ISAR0, RNDR, 1);
-> +    }
-> +    return isar0;
-> +}
->  #endif
->  
->  /*
-> @@ -5304,6 +5322,22 @@ static const ARMCPRegInfo pauth_reginfo[] = {
->        .fieldoffset = offsetof(CPUARMState, keys.apib.hi) },
->  };
->  
-> +static CPAccessResult access_rndr(CPUARMState *env, const ARMCPRegInfo *ri,
-> +                                  bool isread)
-> +{
-> +    if (env->cp15.scr_el3 & SCR_TRNDR) {
-> +        return CP_ACCESS_TRAP_EL3;
-> +    }
-> +    /*
-> +     * Note that FEAT_RNG_TRAP may be implemented without FEAT_RNG.
-> +     * In that case, if the trap is not enabled, the read undefs.
-> +     */
-> +    if (!cpu_isar_feature(aa64_rndr, env_archcpu(env))) {
-> +        return CP_ACCESS_UNDEFINED;
-> +    }
-> +    return CP_ACCESS_OK;
-> +}
-> +
->  static uint64_t rndr_readfn(CPUARMState *env, const ARMCPRegInfo *ri)
->  {
->      Error *err = NULL;
-> @@ -5335,11 +5369,11 @@ static const ARMCPRegInfo rndr_reginfo[] = {
->      { .name = "RNDR", .state = ARM_CP_STATE_AA64,
->        .type = ARM_CP_NO_RAW | ARM_CP_SUPPRESS_TB_END | ARM_CP_IO,
->        .opc0 = 3, .opc1 = 3, .crn = 2, .crm = 4, .opc2 = 0,
-> -      .access = PL0_R, .readfn = rndr_readfn },
-> +      .access = PL0_R, .accessfn = access_rndr, .readfn = rndr_readfn },
->      { .name = "RNDRRS", .state = ARM_CP_STATE_AA64,
->        .type = ARM_CP_NO_RAW | ARM_CP_SUPPRESS_TB_END | ARM_CP_IO,
->        .opc0 = 3, .opc1 = 3, .crn = 2, .crm = 4, .opc2 = 1,
-> -      .access = PL0_R, .readfn = rndr_readfn },
-> +      .access = PL0_R, .accessfn = access_rndr, .readfn = rndr_readfn },
->  };
->  
->  static void dccvap_writefn(CPUARMState *env, const ARMCPRegInfo *ri,
-> @@ -6522,11 +6556,24 @@ void register_cp_regs_for_features(ARMCPU *cpu)
->                .access = PL1_R, .type = ARM_CP_CONST,
->                .accessfn = access_tid3,
->                .resetvalue = 0 },
-> +            /*
-> +             * ID_AA64ISAR0_EL1 is not a plain ARM_CP_CONST in system
-> +             * emulation because the RNDR field depends on SCR_EL3.TRNDR
-> +             * at read time when FEAT_RNG_TRAP is implemented.
-> +             */
->              { .name = "ID_AA64ISAR0_EL1", .state = ARM_CP_STATE_AA64,
->                .opc0 = 3, .opc1 = 0, .crn = 0, .crm = 6, .opc2 = 0,
-> -              .access = PL1_R, .type = ARM_CP_CONST,
-> +              .access = PL1_R,
-> +#ifdef CONFIG_USER_ONLY
-> +              .type = ARM_CP_CONST,
-> +              .resetvalue = GET_IDREG(isar, ID_AA64ISAR0)
-> +#else
-> +              .type = ARM_CP_NO_RAW,
->                .accessfn = access_tid3,
-> -              .resetvalue = GET_IDREG(isar, ID_AA64ISAR0)},
-> +              .readfn = id_aa64isar0_read,
-> +              .writefn = arm_cp_write_ignore
-> +#endif
-> +            },
+Without this, only the crash frame's window is spilled to the
+stack; all deeper call frames remain in the register file and
+are absent from the core's memory segments. Stack unwinding
+fails past the first DWARF step because the callers' register
+save areas contain stale/garbage data.
 
-A new assert() was triggered when booting guest on M1 since this change:
+The real kernel calls flush_all_user_windows() at the top of
+do_coredump(). Mirror that via a weak target_flush_windows()
+hook called from dump_core_and_abort(), with the SPARC override
+calling the existing flush_windows() in cpu_loop.c.
 
-Assertion failed: (!(ri->type & ARM_CP_NO_RAW)), function hvf_arch_init_vcpu, file hvf.c, line 1442.
+Signed-off-by: Matt Turner <mattst88@gmail.com>
+Cc: Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>
+Signed-off-by: Helge Deller <deller@gmx.de>
+---
+ linux-user/elfload.c          |  9 ++++++++
+ linux-user/sparc/cpu_loop.c   |  3 ++-
+ linux-user/sparc/cpu_loop.h   |  7 +++++++
+ linux-user/sparc/elfload.c    | 39 +++++++++++++++++++++++++++++------
+ linux-user/sparc/target_elf.h | 17 +++++++++++----
+ 5 files changed, 64 insertions(+), 11 deletions(-)
+ create mode 100644 linux-user/sparc/cpu_loop.h
 
-Thanks,
-Zenghui
+diff --git a/linux-user/elfload.c b/linux-user/elfload.c
+index f7625c0952..b05b8b0c6b 100644
+--- a/linux-user/elfload.c
++++ b/linux-user/elfload.c
+@@ -2445,6 +2445,9 @@ static int wmr_write_region(void *opaque, vaddr start,
+  * handler (provided that target process haven't registered
+  * handler for that) that does the dump when signal is received.
+  */
++#ifdef TARGET_SPARC
++#include "sparc/cpu_loop.h"
++#endif
+ static int elf_core_dump(int signr, const CPUArchState *env)
+ {
+     const CPUState *cpu = env_cpu_const(env);
+@@ -2468,6 +2471,12 @@ static int elf_core_dump(int signr, const CPUArchState *env)
+     cpu_list_lock();
+     mmap_lock();
+ 
++#ifdef TARGET_SPARC
++    CPU_FOREACH(cpu_iter) {
++        flush_windows(cpu_env(cpu_iter));
++    }
++#endif
++
+     /* By unprotecting, we merge vmas that might be split. */
+     walk_memory_regions(NULL, wmr_page_unprotect_regions);
+ 
+diff --git a/linux-user/sparc/cpu_loop.c b/linux-user/sparc/cpu_loop.c
+index ab633eeae3..0aacda9448 100644
+--- a/linux-user/sparc/cpu_loop.c
++++ b/linux-user/sparc/cpu_loop.c
+@@ -22,6 +22,7 @@
+ #include "user-internals.h"
+ #include "user/cpu_loop.h"
+ #include "signal-common.h"
++#include "sparc/cpu_loop.h"
+ 
+ #define SPARC64_STACK_BIAS 2047
+ 
+@@ -119,7 +120,7 @@ static void restore_window(CPUSPARCState *env)
+ #endif
+ }
+ 
+-static void flush_windows(CPUSPARCState *env)
++void flush_windows(CPUSPARCState *env)
+ {
+     int offset, cwp1;
+ 
+diff --git a/linux-user/sparc/cpu_loop.h b/linux-user/sparc/cpu_loop.h
+new file mode 100644
+index 0000000000..fb6e82d372
+--- /dev/null
++++ b/linux-user/sparc/cpu_loop.h
+@@ -0,0 +1,7 @@
++/* SPDX-License-Identifier: GPL-2.0-or-later */
++#ifndef SPARC_CPU_LOOP_H
++#define SPARC_CPU_LOOP_H
++
++void flush_windows(CPUSPARCState *env);
++
++#endif
+diff --git a/linux-user/sparc/elfload.c b/linux-user/sparc/elfload.c
+index e6387ec891..181f1e00b5 100644
+--- a/linux-user/sparc/elfload.c
++++ b/linux-user/sparc/elfload.c
+@@ -12,16 +12,41 @@ void elf_core_copy_regs(target_elf_gregset_t *r, const CPUArchState *env)
+     CPUSPARCState *e = (CPUSPARCState *)env;
+     int i;
+ 
++    memset(r, 0, sizeof(*r));
++
+ #if defined(TARGET_SPARC64) && !defined(TARGET_ABI32)
++    /* Linux kernel layout for sparc64 (arch/sparc/include/asm/elf_64.h):
++     *   [0..7]   G0-G7
++     *   [8..15]  O0-O7
++     *   [16..23] L0-L7
++     *   [24..31] I0-I7
++     *   [32]     TSTATE
++     *   [33]     TPC
++     *   [34]     TNPC
++     *   [35]     Y
++     */
+     for (i = 0; i < 8; i++) {
+-        r->regs[i]     = tswap64(env->gregs[i]);
+-        r->regs[8 + i] = tswap64(env->regwptr[WREG_O0 + i]);
++        r->regs[i]      = tswap64(env->gregs[i]);
++        r->regs[8 + i]  = tswap64(env->regwptr[WREG_O0 + i]);
++        r->regs[16 + i] = tswap64(env->regwptr[WREG_L0 + i]);
++        r->regs[24 + i] = tswap64(env->regwptr[WREG_I0 + i]);
+     }
+-    r->regs[16] = tswap64(sparc64_tstate(e));
+-    r->regs[17] = tswap64(env->pc);
+-    r->regs[18] = tswap64(env->npc);
+-    r->regs[19] = tswap64(env->y);
++    r->regs[32] = tswap64(sparc64_tstate(e));
++    r->regs[33] = tswap64(env->pc);
++    r->regs[34] = tswap64(env->npc);
++    r->regs[35] = tswap64(env->y);
+ #else
++    /* Linux kernel layout for sparc32 (arch/sparc/include/asm/elf_32.h):
++     *   [0]      PSR
++     *   [1]      PC
++     *   [2]      NPC
++     *   [3]      Y
++     *   [4..11]  G0-G7
++     *   [12..19] O0-O7
++     *   [20..27] L0-L7
++     *   [28..35] I0-I7
++     *   [36..37] reserved (stack_check)
++     */
+     r->regs[0] = tswap32(cpu_get_psr(e));
+     r->regs[1] = tswap32(env->pc);
+     r->regs[2] = tswap32(env->npc);
+@@ -29,6 +54,8 @@ void elf_core_copy_regs(target_elf_gregset_t *r, const CPUArchState *env)
+     for (i = 0; i < 8; i++) {
+         r->regs[4 + i]  = tswap32(env->gregs[i]);
+         r->regs[12 + i] = tswap32(env->regwptr[WREG_O0 + i]);
++        r->regs[20 + i] = tswap32(env->regwptr[WREG_L0 + i]);
++        r->regs[28 + i] = tswap32(env->regwptr[WREG_I0 + i]);
+     }
+ #endif
+ }
+diff --git a/linux-user/sparc/target_elf.h b/linux-user/sparc/target_elf.h
+index edb0b3103c..365af864b0 100644
+--- a/linux-user/sparc/target_elf.h
++++ b/linux-user/sparc/target_elf.h
+@@ -24,12 +24,21 @@
+ #define HAVE_ELF_CORE_DUMP      1
+ 
+ /*
+- * Matches the kernel's elf_gregset_t (ELF_NGREG = 20).
+- * sparc32/sparc32plus: psr, pc, npc, y, u_regs[16] (g0-g7, o0-o7)
+- * sparc64:             u_regs[16] (g0-g7, o0-o7), tstate, pc, npc, y
++ * Matches the kernel's elf_gregset_t.
++ *   sparc32/sparc32plus (ELF_NGREG = 38):
++ *     psr, pc, npc, y, u_regs[16] (g0-g7, o0-o7),
++ *     reg_window[16] (l0-l7, i0-i7), stack_check[2]
++ *   sparc64             (ELF_NGREG = 36):
++ *     u_regs[16] (g0-g7, o0-o7), reg_window[16] (l0-l7, i0-i7),
++ *     tstate, tpc, tnpc, y
+  */
++#if defined(TARGET_SPARC64) && !defined(TARGET_ABI32)
++# define TARGET_ELF_NGREG       36
++#else
++# define TARGET_ELF_NGREG       38
++#endif
+ typedef struct target_elf_gregset_t {
+-    abi_ulong regs[20];
++    abi_ulong regs[TARGET_ELF_NGREG];
+ } target_elf_gregset_t;
+ 
+ #endif
+-- 
+2.54.0
 
->              { .name = "ID_AA64ISAR1_EL1", .state = ARM_CP_STATE_AA64,
->                .opc0 = 3, .opc1 = 0, .crn = 0, .crm = 6, .opc2 = 1,
->                .access = PL1_R, .type = ARM_CP_CONST,
-> @@ -7454,7 +7501,8 @@ void register_cp_regs_for_features(ARMCPU *cpu)
->      if (cpu_isar_feature(aa64_pauth, cpu)) {
->          define_arm_cp_regs(cpu, pauth_reginfo);
->      }
-> -    if (cpu_isar_feature(aa64_rndr, cpu)) {
-> +    if (cpu_isar_feature(aa64_rndr, cpu) ||
-> +        cpu_isar_feature(aa64_rng_trap, cpu)) {
->          define_arm_cp_regs(cpu, rndr_reginfo);
->      }
->      /* Data Cache clean instructions up to PoP */
 
