@@ -4,45 +4,48 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id BB374CD8C9F
-	for <qemu-devel@archiver.kernel.org>; Sun,  7 Jun 2026 18:01:07 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E1335CD8C8C
+	for <qemu-devel@archiver.kernel.org>; Sun,  7 Jun 2026 18:01:27 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wWHmd-0000Sy-Vc; Sun, 07 Jun 2026 13:59:40 -0400
+	id 1wWHm7-0000GQ-4M; Sun, 07 Jun 2026 13:59:07 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1)
- (envelope-from <7840fbdba06d0f4c45cac96a0a9aa35681ef177f@kylie.crudebyte.com>)
- id 1wWHmV-0000OB-6N; Sun, 07 Jun 2026 13:59:32 -0400
+ (envelope-from <f3e89e13712ecc50b1f68e5fb10b66f48a8a1cee@kylie.crudebyte.com>)
+ id 1wWHm5-0000FZ-1J; Sun, 07 Jun 2026 13:59:05 -0400
 Received: from kylie.crudebyte.com ([5.189.157.229])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1)
- (envelope-from <7840fbdba06d0f4c45cac96a0a9aa35681ef177f@kylie.crudebyte.com>)
- id 1wWHmT-0004NZ-On; Sun, 07 Jun 2026 13:59:30 -0400
+ (envelope-from <f3e89e13712ecc50b1f68e5fb10b66f48a8a1cee@kylie.crudebyte.com>)
+ id 1wWHm3-0004Ix-NO; Sun, 07 Jun 2026 13:59:04 -0400
 DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
- d=crudebyte.com; s=kylie; h=Cc:To:Subject:Date:From:Message-ID:Content-Type:
- Content-Transfer-Encoding:MIME-Version:References:In-Reply-To:Content-ID:
- Content-Description; bh=jD1wXkmkyKQfUf+7OeaUMtdC+KJVr0TLz2x8n3WjaE8=; b=DvX2H
- 77dbCTRrHYbs6YtzEDgTEiGE/K4tTEgW1ja4VD+cDavIhbnruWzBgsJkevop5C8q+kWTiv0+e69Ia
- 2QYFgz02CxgM6NH4RcyslbOz00wjdJg1Z719EK5KVtjXzzADb9Q2Ln2wsyPJQB11qkhyeZkDRTpbu
- XzIXvaZwLm7Kf4F/dPdcfxhlo+pxgp4yxBHfBI56g5oEC6BT+/bDLlE8g6yuW6kMtAPIFumETDK90
- ZQBeG0Iwx/QPptCxjPQ+qjnR3COATgBQXYaqWwl/NUjVCfLjxInJb+lzCcYUSDvJ7iVrU94X5I/Wj
- /wxPXdnsBqIq4WfWPPszXXkRloJsxbxzuM9yOplu+YFCdteL8nWqAPGmb2UoQymdZ+cDuRp5wcAkw
- JTr/h/ADOPaUBWzmSmaUQJ/FvTkZe1Fnadx/XPsNZNfMJZhbUZIKh8M94jZCq8cHWN5nvMpXAY4Ez
- IoONxzAeZ0kN4dm27U3eGS/5HUy4r+qMkKCCwIrMHbENxw4D29E2QMhum6sczPTnJQJTFPwkA4UCk
- 5u1CpSKcYrxBF0bP7LTxGuTd/67IqgrPtjlAZ8XVuw4F76yKcwBjLE6vVJ3LfXPmzqqAeTnJ4hqkz
- kLJcc7zv0ow5Qu6usuqbA8N/0W9B/CGUd63lZg1UuDc69W/owptW0vV/6weMbE=;
-Message-ID: <cover.1780851947.git.qemu_oss@crudebyte.com>
+ d=crudebyte.com; s=kylie; h=Cc:To:Subject:Date:From:References:In-Reply-To:
+ Message-ID:Content-Type:Content-Transfer-Encoding:MIME-Version:Content-ID:
+ Content-Description; bh=sp0WkOTMIe228ItB5HcjR8cQW87AIQqOYxQTM+5MspM=; b=muydM
+ NCbVMLTz1yEMv9Rjx7Yc4jxK/vtoeaa6DNBpSu/WRxeQTEas1R1DQokxoE5wXOM0OsnBFYQp0ZTJh
+ WvS9xiGhoMvfMx+2X7vemgQuQ5WO7R1ZnS52ck8sCL/vEUjkF9tY8Wmuy7mXHVSHr7DHIgdM9oJ1d
+ FkpwMoVSexbwpUI3J8BftlaqLa5lofisg1bqcuUTOzx+rLAY6RxsdefNXNeMohK/EVYwnPAc6F8js
+ 77xUiT/SqQeUHMU7uDwjXCaGniQXvEzMmJBlpXxUjR6qVR+tJetQsX20gEbeC4dVBmEXTA60864Fp
+ Wsht5UaggSKH1P0VnkYfjfGN9rT6yM+LnNj90BMrlsunyuh/M4AQKnRxALmd+vHmAjcvsRa0YHD+c
+ u9iWnZnL4H1Z0KHI6v4wXn1Bi3sAgXS6TDGTH4NSrz2XFCOYpotIbs6T0wkUjAnLq9lE/4+RRblZY
+ 8oqc8s135SVhwXiL4P+0tilPjqW7YstAKqtpdzvQlGdVhXsIMEJI2ob32xq/d8zTzqOwhSG0nhxzo
+ WQR0xwN27wKN0hFL38FehP7f9aH7Fpp/8HDLHGm0apVdFZQ2Tent9AmWcrie6drMIPCnjeoCnrUvc
+ Bjc8vsypnpv0ei6qpCITbBbRAF/tnOQxonBN+9UE+iBo57XbXyrtvLEBnOfalo=;
+Message-ID: <f3e89e13712ecc50b1f68e5fb10b66f48a8a1cee.1780851947.git.qemu_oss@crudebyte.com>
+In-Reply-To: <cover.1780851947.git.qemu_oss@crudebyte.com>
+References: <cover.1780851947.git.qemu_oss@crudebyte.com>
 From: Christian Schoenebeck <qemu_oss@crudebyte.com>
 Date: Sun, 07 Jun 2026 19:22:19 +0200
-Subject: [PATCH 00/12] 9pfs: add xattr FID limit (CVE-2026-8348)
+Subject: [PATCH 07/12] hw/9pfs: enable xattr (mockup) support for synth fs
+ driver
 To: qemu-devel@nongnu.org,
     qemu-stable@nongnu.org
 Cc: Greg Kurz <groug@kaod.org>,
     Feifan Qian <bea1e@proton.me>
 Received-SPF: pass client-ip=5.189.157.229;
- envelope-from=7840fbdba06d0f4c45cac96a0a9aa35681ef177f@kylie.crudebyte.com;
+ envelope-from=f3e89e13712ecc50b1f68e5fb10b66f48a8a1cee@kylie.crudebyte.com;
  helo=kylie.crudebyte.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
@@ -65,55 +68,45 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-This series adds a limit on the number of simultaneously open xattr FIDs
-in QEMU's 9p filesystem server to prevent host memory exhaustion attacks.
+The synth backend is used for testing only. Enable xattr operations
+by making lsetxattr and lremovexattr callbacks to return success
+result.
 
-The Txattrcreate 9p request creates FIDs for extended attribute operations.
-Each xattr FID contains a buffer for the xattr value. Without a limit, a
-malicious priviliged guest with direct communication access to 9p server
-could create a huge number of xattr FIDs, leading to potential host memory
-exhaustion (DoS, potentially affecting other services on host).
+They are still actually not doing anything, they just pretend to be
+working to prevent 9pfs server from erroring out on xattr requests.
 
-Overview Patches:
+This allows the subsequent test case patches to verify xattr FID
+limit enforcement.
 
- - Patch 1 is the core fix that limits the amount of xattr FIDs to 1024.
+Signed-off-by: Christian Schoenebeck <qemu_oss@crudebyte.com>
+---
+ hw/9pfs/9p-synth.c | 8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
 
- - Patch 2 adds option "max_xattr" allowing to override the default value.
-
- - Patch 3 updates QEMU documentation with this new option.
-
- - All other patches are basically just test case changes that guard
-   correct behaviour of this new limit.
-
-Christian Schoenebeck (12):
-  hw/9pfs: add xattr FID limit to prevent memory exhaustion
-  hw/9pfs: add max_xattr option
-  qemu-options: document 9pfs max_xattr option
-  tests/9p: add Tread / Rread test client functions
-  tests/9p: add Tclunk / Rclunk test client functions
-  tests/9p: add Txattrcreate / Rxattrcreate test client functions
-  hw/9pfs: enable xattr (mockup) support for synth fs driver
-  hw/9pfs: add xattr count query interface fo fs synth driver
-  tests/9p: increase P9_MAX_SIZE for test client
-  tests/9p: add virtio_9p_add_synth_driver_args() test client function
-  tests/9p: add 3 xattr FID limit test cases (synth fs driver)
-  tests/9p: add 3 xattr FID limit test cases (local fs driver)
-
- fsdev/file-op-9p.h                    |  11 ++
- fsdev/qemu-fsdev-opts.c               |   6 +
- fsdev/qemu-fsdev.c                    |   2 +-
- hw/9pfs/9p-local.c                    |   9 +
- hw/9pfs/9p-synth.c                    |  51 ++++-
- hw/9pfs/9p.c                          |  60 ++++++
- qemu-options.hx                       |  28 ++-
- system/vl.c                           |   7 +-
- tests/qtest/libqos/virtio-9p-client.c | 124 ++++++++++++
- tests/qtest/libqos/virtio-9p-client.h |  88 ++++++++-
- tests/qtest/libqos/virtio-9p.c        |   6 +
- tests/qtest/libqos/virtio-9p.h        |   6 +
- tests/qtest/virtio-9p-test.c          | 261 +++++++++++++++++++++++++-
- 13 files changed, 640 insertions(+), 19 deletions(-)
-
+diff --git a/hw/9pfs/9p-synth.c b/hw/9pfs/9p-synth.c
+index 322dc3bb69..4b0732e093 100644
+--- a/hw/9pfs/9p-synth.c
++++ b/hw/9pfs/9p-synth.c
+@@ -477,15 +477,15 @@ static int synth_lsetxattr(FsContext *ctx, V9fsPath *path,
+                                 const char *name, void *value,
+                                 size_t size, int flags)
+ {
+-    errno = ENOTSUP;
+-    return -1;
++    /* pretend it worked */
++    return 0;
+ }
+ 
+ static int synth_lremovexattr(FsContext *ctx,
+                                    V9fsPath *path, const char *name)
+ {
+-    errno = ENOTSUP;
+-    return -1;
++    /* pretend it worked */
++    return 0;
+ }
+ 
+ static int synth_name_to_path(FsContext *ctx, V9fsPath *dir_path,
 -- 
 2.47.3
 
