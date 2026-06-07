@@ -4,50 +4,54 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A598ECD8C8C
-	for <qemu-devel@archiver.kernel.org>; Sun,  7 Jun 2026 14:05:00 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E3BF6CD8C8C
+	for <qemu-devel@archiver.kernel.org>; Sun,  7 Jun 2026 14:05:06 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wWE6f-0004IX-NY; Sun, 07 Jun 2026 10:04:05 -0400
+	id 1wWE6p-0004Kn-2H; Sun, 07 Jun 2026 10:04:15 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <deller@kernel.org>) id 1wWE6e-0004IC-Mt
- for qemu-devel@nongnu.org; Sun, 07 Jun 2026 10:04:04 -0400
-Received: from sea.source.kernel.org ([2600:3c0a:e001:78e:0:1991:8:25])
+ (Exim 4.90_1) (envelope-from <deller@kernel.org>) id 1wWE6n-0004KP-NX
+ for qemu-devel@nongnu.org; Sun, 07 Jun 2026 10:04:13 -0400
+Received: from sea.source.kernel.org ([172.234.252.31])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <deller@kernel.org>) id 1wWE6d-0007wr-23
- for qemu-devel@nongnu.org; Sun, 07 Jun 2026 10:04:04 -0400
+ (Exim 4.90_1) (envelope-from <deller@kernel.org>) id 1wWE6m-00085h-5j
+ for qemu-devel@nongnu.org; Sun, 07 Jun 2026 10:04:13 -0400
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
- by sea.source.kernel.org (Postfix) with ESMTP id A83F1444A1;
- Sun,  7 Jun 2026 14:04:00 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 25B5A1F00893;
- Sun,  7 Jun 2026 14:03:58 +0000 (UTC)
+ by sea.source.kernel.org (Postfix) with ESMTP id 487D241B73;
+ Sun,  7 Jun 2026 14:04:11 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4C52D1F00893;
+ Sun,  7 Jun 2026 14:04:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
- s=k20260515; t=1780841040;
- bh=Ehewi21KCB8+ZvN7wBtsAhDnIzIFLGUR7xeLDo5MqXM=;
- h=From:To:Cc:Subject:Date;
- b=CHKKOb4OxQbuA06ADmkDYF8xWExP4I1asyoa7nOoIKGXIUF5Mohu9YJSpZaXy9dvC
- BlSe37Druue5nAREloC3LuBsrkC5mmBETG614CBZP+hGERC0+B3/a5XA4IcVZ/FEUr
- a1N+lcMpkJu8y7kqzYLgF42vTQlg6fh/kRTIxwnkCTwEGVWX1/h7VIs9sFentVvdIR
- zogX+/itAKBfC61MPq0vzE7E768Nl9JvsnTxWfZYFJorlnBbdQbcPPAWwPGHn/Bhqf
- 1hsCqCHM4mj9FVTB7kjQzUJliY//zyndFAUt2YFqq1PcPYksA4phhfe0U8G6CY63zE
- p5yP1Pk5H0fxQ==
+ s=k20260515; t=1780841051;
+ bh=J1AWjYZU/hD53VPk5IiZ2Jz6nUV+3nPhEWHBfOxyoTE=;
+ h=From:To:Cc:Subject:Date:In-Reply-To:References;
+ b=U+GPrPTKNQAKBXYb/dChj93Zr03RwQAYY2B2K2hgxSslrSkKKwPYzS77XTMhaCMFd
+ O9vVyKKjlxJ/0q33dCkWmhLRELojdyUa6JuYRY21Luxdg9nCLBP9ZQcAwQd4qB4ZIh
+ QVtwfuZkxmm0hPbNvj0kxj+MkwkeDjU9AcpU34PN34UK4P/cfGCSHtf/ZZm2B1Ll4w
+ myg4jymZmF/44Z+5W2gsU9lyWStBdDISh6cOOwbVDoTKuimIGcTpy/INxqOC2EZJwi
+ 1KKTcxj0Qd7YLGwGbQC+t4PHoS+rQf20scjnD0JtVmwybdj89W0dR3Wn2X/hQgIXKf
+ /iGoameZ8RJQA==
 From: Helge Deller <deller@kernel.org>
 To: qemu-devel@nongnu.org
 Cc: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
  Laurent Vivier <laurent@vivier.eu>,
  Yoshinori Sato <yoshinori.sato@nifty.com>,
- Max Filippov <jcmvbkbc@gmail.com>, Helge Deller <deller@gmx.de>
-Subject: [PATCH 00/10] linux-user patches for alpha, sparc, sh4 and xtensa
-Date: Sun,  7 Jun 2026 16:03:46 +0200
-Message-ID: <20260607140356.10702-1-deller@kernel.org>
+ Max Filippov <jcmvbkbc@gmail.com>, Helge Deller <deller@gmx.de>,
+ Matt Turner <mattst88@gmail.com>,
+ Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>
+Subject: [PATCH 05/10] linux-user/sparc: restore L/I registers from RSA in
+ sparc64_set_context
+Date: Sun,  7 Jun 2026 16:03:51 +0200
+Message-ID: <20260607140356.10702-6-deller@kernel.org>
 X-Mailer: git-send-email 2.54.0
+In-Reply-To: <20260607140356.10702-1-deller@kernel.org>
+References: <20260607140356.10702-1-deller@kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2600:3c0a:e001:78e:0:1991:8:25;
- envelope-from=deller@kernel.org; helo=sea.source.kernel.org
+Received-SPF: pass client-ip=172.234.252.31; envelope-from=deller@kernel.org;
+ helo=sea.source.kernel.org
 X-Spam_score_int: -24
 X-Spam_score: -2.5
 X-Spam_bar: --
@@ -69,52 +73,49 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Helge Deller <deller@gmx.de>
+From: Matt Turner <mattst88@gmail.com>
 
-Various linux-user related patches from Matt Turner with coredump support for
-alpha and sparc, as well as some fixes for the signal handler in sparc and
-xtensa.
+The kernel's do_rt_sigreturn loads L and I registers from the register
+save area (RSA) at the restored O6+STACK_BIAS.  QEMU lacks the kernel's
+window-fill path, so restore L0-L7 and I0-I5 explicitly from the RSA.
+I6 and I7 are already restored from mc_fp/mc_i7.
 
-The patches from Xinhui Yang add the missing fsmount series syscalls support
-for systemd.
+Signed-off-by: Matt Turner <mattst88@gmail.com>
+Cc: Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>
+Signed-off-by: Helge Deller <deller@gmx.de>
+---
+ linux-user/sparc/signal.c | 18 ++++++++++++++++++
+ 1 file changed, 18 insertions(+)
 
-Especially the sparc and xtensa patches would benefit from a review, as I'm not an
-expert in those architectures.
-
-Matt Turner (8):
-  linux-user/alpha: add coredump support
-  linux-user/sparc: add coredump support
-  linux-user/sparc: restore L/I registers from RSA in
-    sparc64_set_context
-  linux-user/sparc: call block_signals() before set_sigmask() in
-    setcontext
-  linux-user/sparc: flush register windows before core dump
-  target/sh4: decode_gusa: recognize add#imm with prior mov Rm, Rn
-  linux-user/xtensa: restore FP rounding mode on sigreturn
-  target/xtensa: add cpu_set_fcr/fsr helpers to sync fp_status
-
-Xinhui Yang (2):
-  linux-user: implement fsmount(2) series of syscalls
-  linux-user/strace: add fsmount series of syscalls
-
- linux-user/alpha/elfload.c    |  12 ++++
- linux-user/alpha/target_elf.h |  13 +++++
- linux-user/elfload.c          |   9 +++
- linux-user/sparc/cpu_loop.c   |   3 +-
- linux-user/sparc/cpu_loop.h   |   7 +++
- linux-user/sparc/elfload.c    |  54 +++++++++++++++++
- linux-user/sparc/signal.c     |  27 +++++++++
- linux-user/sparc/target_elf.h |  20 +++++++
- linux-user/strace.c           | 105 ++++++++++++++++++++++++++++++++++
- linux-user/strace.list        |  15 +++++
- linux-user/syscall.c          |  91 +++++++++++++++++++++++++++++
- linux-user/xtensa/signal.c    |  36 ++++++++++--
- target/sh4/translate.c        |   2 +-
- target/xtensa/cpu.h           |   4 ++
- target/xtensa/fpu_helper.c    |  42 ++++++++++++++
- 15 files changed, 433 insertions(+), 7 deletions(-)
- create mode 100644 linux-user/sparc/cpu_loop.h
-
+diff --git a/linux-user/sparc/signal.c b/linux-user/sparc/signal.c
+index d339f89928..fda5508c48 100644
+--- a/linux-user/sparc/signal.c
++++ b/linux-user/sparc/signal.c
+@@ -656,6 +656,24 @@ void sparc64_set_context(CPUSPARCState *env)
+     __get_user(env->regwptr[WREG_FP], &(ucp->tuc_mcontext.mc_fp));
+     __get_user(env->regwptr[WREG_I7], &(ucp->tuc_mcontext.mc_i7));
+ 
++    /*
++     * The kernel's do_rt_sigreturn loads L and I registers from the
++     * register save area (RSA) at the new O6+STACK_BIAS.  Unlike the
++     * kernel, QEMU has no kernel-mode path that triggers a window fill,
++     * so we must do it explicitly here.  I6 and I7 are already restored
++     * from mc_fp and mc_i7 above; restore L0-L7 and I0-I5 from the RSA.
++     */
++    {
++        abi_ulong sp_ptr = env->regwptr[WREG_O6];
++        /* LP64 O6 is biased (8-byte-aligned - 2047); low bit set. ILP32 O6 is 4-byte-aligned. */
++        if (sp_ptr & 3)
++            sp_ptr += TARGET_STACK_BIAS;
++        for (i = 0; i < 8; i++)
++            get_user_ual(env->regwptr[WREG_L0 + i], sp_ptr + i * 8);
++        for (i = 0; i < 6; i++)  /* I0-I5; I6=FP and I7 already restored */
++            get_user_ual(env->regwptr[WREG_I0 + i], sp_ptr + 64 + i * 8);
++    }
++
+     fpup = &ucp->tuc_mcontext.mc_fpregs;
+ 
+     __get_user(fenab, &(fpup->mcfpu_enab));
 -- 
 2.54.0
 
