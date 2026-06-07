@@ -4,47 +4,48 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C0DF0CD8C92
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B80D8CD8C89
 	for <qemu-devel@archiver.kernel.org>; Sun,  7 Jun 2026 18:01:06 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wWHmg-0000VH-UX; Sun, 07 Jun 2026 13:59:42 -0400
+	id 1wWHmM-0000Ld-F9; Sun, 07 Jun 2026 13:59:22 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1)
- (envelope-from <a884579a315b6e9c1bbbddf44ea200dded0af0ca@kylie.crudebyte.com>)
- id 1wWHmd-0000Re-Al; Sun, 07 Jun 2026 13:59:39 -0400
+ (envelope-from <ea697681cc57f3eae898d55242c2535a1d844eb4@kylie.crudebyte.com>)
+ id 1wWHmL-0000LO-R8; Sun, 07 Jun 2026 13:59:21 -0400
 Received: from kylie.crudebyte.com ([5.189.157.229])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1)
- (envelope-from <a884579a315b6e9c1bbbddf44ea200dded0af0ca@kylie.crudebyte.com>)
- id 1wWHmb-0004O9-MO; Sun, 07 Jun 2026 13:59:39 -0400
+ (envelope-from <ea697681cc57f3eae898d55242c2535a1d844eb4@kylie.crudebyte.com>)
+ id 1wWHmJ-0004M0-LE; Sun, 07 Jun 2026 13:59:21 -0400
 DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
  d=crudebyte.com; s=kylie; h=Cc:To:Subject:Date:From:References:In-Reply-To:
  Message-ID:Content-Type:Content-Transfer-Encoding:MIME-Version:Content-ID:
- Content-Description; bh=Aa5phmjF26iLIol4VbMlxdYrehVT63j6N+RZvPFfJUM=; b=vACs1
- XZxYcjomsYDeAoa26ZRyRJgVWmOTUGnFoc+nnqWXIu3NdUA5UZGD5p2DjUhRmpVEdQMMqDbr6M41C
- /RdmE3FHtDvffxbAa3BG7a+KGfYXQyaI34V8B7NAtfyMo1zTNA4G0oM6uSkepAGnnioNA57vSz/4/
- lx/qJVuvg+0CpwBm3j8wmzHu19AB0XjYek+3h643QrUenaIHWd6AhMzCeRm6Lh06/Z8Jajl06kJKr
- VQKS4BWWZ33T+/0XibUPhaXXcu7fPcX8nE7WVP9x8EIYZ6O5Tc1C7WwpE2SHGC6mC/Er3zjdV/YgC
- WFE0zv4Fys8111qb71/hEUHUxQ8uJrGTOpkRBwoajQTBeVoDyAykoDiPifMTe8gPe8lfNoeBxrm2f
- LifwUyLDjs9EuXMYup3z0ojUynSgBShUlQFpxzhc908XXE/i927Bix7nBpggo7I/W7u8NOedh2hY5
- 7rRdJ7galSGSQrw5+MmoU09MVGRUvWXxJXs251kYNOmIWc5UcEBY29g8UC+MbObnvpyz7ZBk6Ymjl
- HX1ERq9R8qNlNt3UDiRztJouFtHNFKm+P76LrRAgGco2CsF2OmQYM1GNToyamlZUEK+fcE+VKJSRL
- wuHNbFM2hXwzwt8lsQbIwCX0PeYdx9UQTY9zk4vuUASVNtlrbAfhaNG6+nrnbw=;
-Message-ID: <a884579a315b6e9c1bbbddf44ea200dded0af0ca.1780851947.git.qemu_oss@crudebyte.com>
+ Content-Description; bh=3RDkS9FqMQ4WNcgV486Q4foDMpqFcAB7lrLv51/S8jc=; b=CVR3J
+ i7S79s8uyuYcR6EvLzPoz0VqfBlCOu/6CK1XJbcb+t2o/3/n+2ymr3jQJcozTdsWjmxK3v6F4uJtu
+ n5X83CS030wPhKvPA21SdFEYgO2YoZgtYJ7g3A/ToazOxUp5s10JuENFmznh6ZdH7bBOutb4QG9Qw
+ 9YMxf3/m1zZV4xMFhPCIzQ9TcNiydhKCuPDV5duqdy/Ys5OVXnrNjSOnMpIgFt+2gOYh7AmWabdGD
+ yiojlnx/NgrxVci6PllF/Rkdy7H5ydqKpIvQRUUESaUQJQ/MdqJ7dYFajux3io8yOZee18Mw3u8KU
+ CV9vY6Db63aWexAvdx3QOJA+3BR5C0XkFAoLJ6xOuFS1H1SfLELIAC25zCoPWpKj4gOf+hZiHlGkf
+ SyAnI4CDGfBG13Rj/oqnrHp2C/81BPMgvEg+oafEJCJYlad9oz/sm9REeeJkk/GbMSWG/KgGXbvbO
+ vTYy+IN7Zb83ysl7e280UWmY8riiWd4S2XntKQd9hxTZKA/2jzK0DZ3PmmW5MZ564TzwHcx3var2i
+ nVINXUvYdO020ENLLSER+FOD0y9w6zi0s66z6r07VelTjfcUfBDYhOnPtZEesNsQMHfV3EY2/9ZJP
+ 00GbHhjDzP6DxbPm9CzyLtaIIpG8nRF58Go0wRB2WLA5PIFvVv3nqBXw9tBpF4=;
+Message-ID: <ea697681cc57f3eae898d55242c2535a1d844eb4.1780851947.git.qemu_oss@crudebyte.com>
 In-Reply-To: <cover.1780851947.git.qemu_oss@crudebyte.com>
 References: <cover.1780851947.git.qemu_oss@crudebyte.com>
 From: Christian Schoenebeck <qemu_oss@crudebyte.com>
 Date: Sun, 07 Jun 2026 19:22:19 +0200
-Subject: [PATCH 02/12] hw/9pfs: add max_xattr option
+Subject: [PATCH 11/12] tests/9p: add 3 xattr FID limit test cases (synth fs
+ driver)
 To: qemu-devel@nongnu.org,
     qemu-stable@nongnu.org
 Cc: Greg Kurz <groug@kaod.org>,
     Feifan Qian <bea1e@proton.me>
 Received-SPF: pass client-ip=5.189.157.229;
- envelope-from=a884579a315b6e9c1bbbddf44ea200dded0af0ca@kylie.crudebyte.com;
+ envelope-from=ea697681cc57f3eae898d55242c2535a1d844eb4@kylie.crudebyte.com;
  helo=kylie.crudebyte.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
@@ -67,182 +68,262 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Previous patch introduced a limit of max. 1024 simultanious xattr FIDs.
+Add 3 test cases to verify correct xattr FID limit enforcement of
+9pfs server.
 
-This patch introduces an option "max_attr" that allows to override this
-limit, just for the case that some user might run into this limit for
-some reason, even if unlikely; or for reducing the limit further down
-(e.g. that default limit of 1024 would cap at max. 64 MiB host memory,
-at least on Linux hosts where the limit per xattr is 64k).
+ - 1. test with default max_xattr=1024
+ - 2. test with custom max_xattr=100
+ - 3. test with unlimited max_xattr=0
 
-This new "max_xattr" option can be specified with both -fsdev and
--virtfs command line options, with the "local" and the "synth" fs
-drivers.
+These are tests using the synth driver. Advantage: by using the
+synth driver the tests cannot only check when the xattr FID limit
+kicks in (server would return an Rlerror response with ENOSPC),
+but also validate the current 9p server internal xattr FID
+counter at any moment.
 
-The previous limit of 1024 is preserved as default value.
+These are "slow" tests, i.e. they are not running by default.
+Use -m slow for running theses tests.
 
 Signed-off-by: Christian Schoenebeck <qemu_oss@crudebyte.com>
 ---
- fsdev/file-op-9p.h      |  2 ++
- fsdev/qemu-fsdev-opts.c |  6 ++++++
- fsdev/qemu-fsdev.c      |  2 +-
- hw/9pfs/9p-local.c      |  9 +++++++++
- hw/9pfs/9p-synth.c      | 17 +++++++++++++++++
- hw/9pfs/9p.c            |  4 ++--
- system/vl.c             |  7 ++++++-
- 7 files changed, 43 insertions(+), 4 deletions(-)
+ tests/qtest/virtio-9p-test.c | 189 ++++++++++++++++++++++++++++++++++-
+ 1 file changed, 188 insertions(+), 1 deletion(-)
 
-diff --git a/fsdev/file-op-9p.h b/fsdev/file-op-9p.h
-index d67c4687b3..e8a0728c78 100644
---- a/fsdev/file-op-9p.h
-+++ b/fsdev/file-op-9p.h
-@@ -101,6 +101,8 @@ typedef struct FsDriverEntry {
-     FsThrottle fst;
-     mode_t fmode;
-     mode_t dmode;
-+    /* temporary storage for parse_opts only */
-+    uint32_t max_xattr;
- } FsDriverEntry;
+diff --git a/tests/qtest/virtio-9p-test.c b/tests/qtest/virtio-9p-test.c
+index 99a897b158..2e88429dfa 100644
+--- a/tests/qtest/virtio-9p-test.c
++++ b/tests/qtest/virtio-9p-test.c
+@@ -35,6 +35,15 @@
+ #define tclunk(...) v9fs_tclunk((TClunkOpt) __VA_ARGS__)
+ #define txattrcreate(...) v9fs_txattrcreate((TXattrCreateOpt) __VA_ARGS__)
  
- struct FsContext {
-diff --git a/fsdev/qemu-fsdev-opts.c b/fsdev/qemu-fsdev-opts.c
-index 07a18c6e48..c2c1e83611 100644
---- a/fsdev/qemu-fsdev-opts.c
-+++ b/fsdev/qemu-fsdev-opts.c
-@@ -46,6 +46,9 @@ static QemuOptsList qemu_fsdev_opts = {
-         }, {
-             .name = "dmode",
-             .type = QEMU_OPT_NUMBER,
-+        }, {
-+            .name = "max_xattr",
-+            .type = QEMU_OPT_NUMBER,
-         },
- 
-         THROTTLE_OPTS,
-@@ -92,6 +95,9 @@ static QemuOptsList qemu_virtfs_opts = {
-         }, {
-             .name = "dmode",
-             .type = QEMU_OPT_NUMBER,
-+        }, {
-+            .name = "max_xattr",
-+            .type = QEMU_OPT_NUMBER,
-         },
- 
-         { /*End of list */ }
-diff --git a/fsdev/qemu-fsdev.c b/fsdev/qemu-fsdev.c
-index 57877dad0a..f97103cf44 100644
---- a/fsdev/qemu-fsdev.c
-+++ b/fsdev/qemu-fsdev.c
-@@ -45,7 +45,7 @@ typedef struct FsDriverListEntry {
- static QTAILQ_HEAD(, FsDriverListEntry) fsdriver_entries =
-     QTAILQ_HEAD_INITIALIZER(fsdriver_entries);
- 
--#define COMMON_FS_DRIVER_OPTIONS "id", "fsdriver", "readonly"
-+#define COMMON_FS_DRIVER_OPTIONS "id", "fsdriver", "readonly", "max_xattr"
- 
- static FsDriverTable FsDrivers[] = {
-     {
-diff --git a/hw/9pfs/9p-local.c b/hw/9pfs/9p-local.c
-index aa48306b0e..4708e170a4 100644
---- a/hw/9pfs/9p-local.c
-+++ b/hw/9pfs/9p-local.c
-@@ -1527,6 +1527,15 @@ static int local_parse_opts(QemuOpts *opts, FsDriverEntry *fse, Error **errp)
-     const char *path = qemu_opt_get(opts, "path");
-     const char *multidevs = qemu_opt_get(opts, "multidevs");
- 
-+    uint64_t val = qemu_opt_get_number(opts, "max_xattr",
-+                                       V9FS_MAX_XATTR_DEFAULT);
-+    if (val > UINT32_MAX) {
-+        error_setg(errp, "max_xattr value '%s' too large",
-+                   qemu_opt_get(opts, "max_xattr"));
-+        return -1;
-+    }
-+    fse->max_xattr = val;
++/*
++ * xattr size to be used for xattr tests
++ *
++ * 64k is the max. xattr size supported by the Linux kernel, However btrfs
++ * for instance supports only 16219 bytes. So let's be conservative and
++ * just use 8k for the xattr tests.
++ */
++#define TEST_XATTR_SIZE (8 * 1024)
 +
-     if (!sec_model) {
-         error_setg(errp, "security_model property not set");
-         error_append_security_model_hint(errp);
-diff --git a/hw/9pfs/9p-synth.c b/hw/9pfs/9p-synth.c
-index b3743f6169..322dc3bb69 100644
---- a/hw/9pfs/9p-synth.c
-+++ b/hw/9pfs/9p-synth.c
-@@ -25,6 +25,8 @@
- #include "qemu/rcu_queue.h"
- #include "qemu/cutils.h"
- #include "system/qtest.h"
-+#include "qapi/error.h"
-+#include "qemu/option.h"
- 
- /* Root node for synth file system */
- static V9fsSynthNode synth_root = {
-@@ -629,12 +631,27 @@ static int synth_init(FsContext *ctx, Error **errp)
-     return 0;
- }
- 
-+static int synth_parse_opts(QemuOpts *opts, FsDriverEntry *fse, Error **errp)
-+{
-+    uint64_t val = qemu_opt_get_number(opts, "max_xattr",
-+                                       V9FS_MAX_XATTR_DEFAULT);
-+    if (val > UINT32_MAX) {
-+        error_setg(errp, "max_xattr value '%s' too large",
-+                   qemu_opt_get(opts, "max_xattr"));
-+        return -1;
-+    }
-+    fse->max_xattr = val;
-+
-+    return 0;
-+}
-+
- static bool synth_has_valid_file_handle(int fid_type, V9fsFidOpenState *fs)
+ static void pci_config(void *obj, void *data, QGuestAllocator *t_alloc)
  {
+     QVirtio9P *v9p = obj;
+@@ -107,6 +116,42 @@ static bool fs_dirents_contain_name(struct V9fsDirent *e, const char* name)
      return false;
  }
  
- FileOperations synth_ops = {
-+    .parse_opts   = synth_parse_opts,
-     .init         = synth_init,
-     .lstat        = synth_lstat,
-     .readlink     = synth_readlink,
-diff --git a/hw/9pfs/9p.c b/hw/9pfs/9p.c
-index 10e2e53c01..46db172a0b 100644
---- a/hw/9pfs/9p.c
-+++ b/hw/9pfs/9p.c
-@@ -4464,8 +4464,8 @@ int v9fs_device_realize_common(V9fsState *s, const V9fsTransport *t,
++/*
++ * Returns the current internal xattr FID count (works with synth driver only).
++ */
++static size_t get_xattr_count(QVirtio9P *v9p)
++{
++    uint16_t nwqid;
++    v9fs_qid *wqid;
++    const char *xattr_count_path[] = { "stat", "xattr_count" };
++    size_t xattr_count;
++    uint32_t bytes_read;
++
++    /* walk to /stat/xattr_count file */
++    uint32_t fid = twalk({
++        .client = v9p, .fid = 0,
++        .nwname = 2, .wnames = (char **)xattr_count_path,
++        .rwalk = { .nwqid = &nwqid, .wqid = &wqid }
++    }).newfid;
++
++    /* open for read */
++    tlopen({
++        .client = v9p, .fid = fid, .flags = O_RDONLY,
++        .rlopen = { .qid = NULL, .iounit = NULL }
++    });
++
++    /* read the internal xattr FID count */
++    tread({
++        .client = v9p, .fid = fid, .offset = 0, .count = sizeof(xattr_count),
++        .rread = { .count = &bytes_read, .data = &xattr_count }
++    });
++
++    /* cleanup */
++    tclunk({ .client = v9p, .fid = fid });
++
++    return xattr_count;
++}
++
+ /* basic readdir test where reply fits into a single response message */
+ static void fs_readdir(void *obj, void *data, QGuestAllocator *t_alloc)
+ {
+@@ -248,6 +293,108 @@ static void do_readdir_split(QVirtio9P *v9p, uint32_t count)
+     g_free(wnames[0]);
+ }
  
-     s->reclaiming = false;
++/*
++ * Test 9p server's xattr FID count limit enforcement.
++ *
++ * Shared test code for both 'synth' and 'local' driver to verify correct
++ * behaviour of 9p server enforcing preconfigured xattr FID count limit
++ * correctly.
++ *
++ * @v9p: 9pfs client
++ *
++ * @max_xattr: max. allowed xattr FIDs, or -1 for infinite
++ *
++ * @check_counter: whether to verify 9p server internal xattr FID counter
++ *                 (only works with 'synth' fs driver)
++ */
++static void do_xattr_limit(QVirtio9P *v9p, int max_xattr, bool check_counter)
++{
++    size_t count;
++    int i;
++    int limit = (max_xattr != -1) ? max_xattr : V9FS_MAX_XATTR_DEFAULT + 100;
++    g_autofree uint32_t *fids = g_new0(uint32_t, limit);
++    uint32_t err_fid = 0;
++    const char *file_path[] = { QTEST_V9FS_SYNTH_WRITE_FILE };
++    g_autofree uint8_t *xattr_data = g_malloc(TEST_XATTR_SIZE);
++
++    if (!g_test_slow()) {
++        g_test_skip("This is a slow test, run with -m slow");
++        return;
++    }
++
++    /* prepare xattr data with 'X' characters */
++    memset(xattr_data, 'X', TEST_XATTR_SIZE);
++
++    tattach({ .client = v9p });
++
++    /* create max. amount of permitted xattrs */
++    for (i = 0; i < limit; i++) {
++        /* walk to create a new fid */
++        fids[i] = twalk({
++            .client = v9p, .fid = 0,
++            .nwname = 1, .wnames = (char **) file_path
++        }).newfid;
++
++        /* create new xattr fid */
++        txattrcreate({
++            .client = v9p, .fid = fids[i], .name = "user.test",
++            .size = TEST_XATTR_SIZE, .flags = 0
++        });
++
++        /* transfer the xattr data */
++        twrite({
++            .client = v9p, .fid = fids[i], .offset = 0,
++            .count = TEST_XATTR_SIZE, .data = xattr_data
++        });
++
++        /* verify server internal xattr counter */
++        if (check_counter) {
++            count = get_xattr_count(v9p);
++            g_assert_cmpuint(count, ==, (i + 1));
++        }
++
++        /* avoid virtio descriptor exhaustion */
++        qvirtqueue_reset_pool(v9p->vq);
++    }
++
++    /* if xattrs are limited, the next xattr should fail */
++    if (max_xattr != -1) {
++        /* walk to create another fid */
++        err_fid = twalk({
++            .client = v9p, .fid = 0,
++            .nwname = 1, .wnames = (char **) file_path
++        }).newfid;
++
++        /* try to create one more xattr fid - should fail */
++        txattrcreate({
++            .client = v9p, .fid = err_fid, .name = "user.test_exceed",
++            .size = TEST_XATTR_SIZE, .flags = 0,
++            .expectErr = ENOSPC
++        });
++
++        /* verify internal xattr counter hasn't changed */
++        if (check_counter) {
++            count = get_xattr_count(v9p);
++            g_assert_cmpuint(count, ==, limit);
++        }
++    }
++
++    /* clunk all fids (should decrement xattr counter) */
++    for (i = 0; i < limit; i++) {
++        tclunk({ .client = v9p, .fid = fids[i] });
++        qvirtqueue_reset_pool(v9p->vq);
++    }
++    if (err_fid) {
++        tclunk({ .client = v9p, .fid = err_fid });
++    }
++
++    /* verify internal xattr counter is zero */
++    if (check_counter) {
++        count = get_xattr_count(v9p);
++        g_assert_cmpuint(count, ==, 0);
++    }
++}
++
+ static void fs_walk_no_slash(void *obj, void *data, QGuestAllocator *t_alloc)
+ {
+     QVirtio9P *v9p = obj;
+@@ -508,6 +655,27 @@ static void fs_readdir_split_512(void *obj, void *data,
+     do_readdir_split(obj, 512);
+ }
  
--    /* init xattr FID limit */
--    s->ctx.xattr_fid_limit = V9FS_MAX_XATTR_DEFAULT;
-+    /* init xattr FID limit from fsdev config */
-+    s->ctx.xattr_fid_limit = fse->max_xattr;
-     s->ctx.xattr_fid_count = 0;
++static void fs_synth_xattr_limit_default(void *obj, void *data,
++                                         QGuestAllocator *t_alloc)
++{
++    v9fs_set_allocator(t_alloc);
++    do_xattr_limit(obj, V9FS_MAX_XATTR_DEFAULT, true);
++}
++
++static void fs_synth_xattr_limit_custom(void *obj, void *data,
++                                        QGuestAllocator *t_alloc)
++{
++    v9fs_set_allocator(t_alloc);
++    do_xattr_limit(obj, 100, true);
++}
++
++static void fs_synth_xattr_limit_unlimited(void *obj, void *data,
++                                           QGuestAllocator *t_alloc)
++{
++    v9fs_set_allocator(t_alloc);
++    do_xattr_limit(obj, -1, true);
++}
++
  
-     rc = 0;
-diff --git a/system/vl.c b/system/vl.c
-index dbdd4f2257..eb86d725bd 100644
---- a/system/vl.c
-+++ b/system/vl.c
-@@ -3259,7 +3259,7 @@ void qemu_init(int argc, char **argv)
-                 QemuOpts *fsdev;
-                 QemuOpts *device;
-                 const char *writeout, *sock_fd, *socket, *path, *security_model,
--                           *multidevs;
-+                           *multidevs, *max_xattr_str;
+ /* tests using the 9pfs 'local' fs driver */
  
-                 olist = qemu_find_opts("virtfs");
-                 if (!olist) {
-@@ -3323,6 +3323,11 @@ void qemu_init(int argc, char **argv)
-                 if (multidevs) {
-                     qemu_opt_set(fsdev, "multidevs", multidevs, &error_abort);
-                 }
-+                max_xattr_str = qemu_opt_get(opts, "max_xattr");
-+                if (max_xattr_str) {
-+                    qemu_opt_set(fsdev, "max_xattr", max_xattr_str,
-+                                 &error_abort);
-+                }
-                 device = qemu_opts_create(qemu_find_opts("device"), NULL, 0,
-                                           &error_abort);
-                 qemu_opt_set(device, "driver", "virtio-9p-pci", &error_abort);
+@@ -822,6 +990,18 @@ static void fs_deep_absolute_path(void *obj, void *data,
+     g_string_free(path, TRUE);
+ }
+ 
++static void *synth_max_xattr_custom_opt(GString *cmd_line, void *arg)
++{
++    virtio_9p_add_synth_driver_args(cmd_line, "max_xattr=100");
++    return arg;
++}
++
++static void *synth_max_xattr_unlimited_opt(GString *cmd_line, void *arg)
++{
++    virtio_9p_add_synth_driver_args(cmd_line, "max_xattr=0");
++    return arg;
++}
++
+ static void cleanup_9p_local_driver(void *data)
+ {
+     /* remove previously created test dir when test is completed */
+@@ -872,7 +1052,14 @@ static void register_virtio_9p_test(void)
+                  fs_readdir_split_256,  &opts);
+     qos_add_test("synth/readdir/split_128", "virtio-9p",
+                  fs_readdir_split_128,  &opts);
+-
++    qos_add_test("synth/xattr_limit/default", "virtio-9p",
++                 fs_synth_xattr_limit_default, &opts);
++    opts.before = synth_max_xattr_custom_opt;
++    qos_add_test("synth/xattr_limit/custom", "virtio-9p",
++                 fs_synth_xattr_limit_custom, &opts);
++    opts.before = synth_max_xattr_unlimited_opt;
++    qos_add_test("synth/xattr_limit/unlimited", "virtio-9p",
++                 fs_synth_xattr_limit_unlimited, &opts);
+ 
+     /* 9pfs test cases using the 'local' filesystem driver */
+     opts.before = assign_9p_local_driver;
 -- 
 2.47.3
 
