@@ -4,71 +4,59 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9655BCD8C8E
-	for <qemu-devel@archiver.kernel.org>; Sat,  6 Jun 2026 22:11:26 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5D958CD8C88
+	for <qemu-devel@archiver.kernel.org>; Sun,  7 Jun 2026 00:16:45 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wVzEC-0007er-1o; Sat, 06 Jun 2026 18:10:52 -0400
+	id 1wW1BC-0003h5-Hu; Sat, 06 Jun 2026 20:15:54 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <stefanha@redhat.com>)
- id 1wVzEA-0007e9-RO
- for qemu-devel@nongnu.org; Sat, 06 Jun 2026 18:10:50 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <lhestz@163.com>) id 1wW1BA-0003gx-Cd
+ for qemu-devel@nongnu.org; Sat, 06 Jun 2026 20:15:52 -0400
+Received: from m16.mail.163.com ([220.197.31.2])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <stefanha@redhat.com>)
- id 1wVzE8-0006IQ-FH
- for qemu-devel@nongnu.org; Sat, 06 Jun 2026 18:10:50 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1780783847;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=SrPoFaTK+cMk6fS5raD474pg/brgfVe9JO9xQGSvq48=;
- b=JDPug+HqyNTdVOW9xcGWzq4sGFmTxULSzu00sdE6WRy6ixv9swAonlJUH8hWyYqOixbKMq
- zKusqRkgBN6zKN7s0aX4X4CuNb91dtWJt2E/ZsBOs+eZusU0plA/5aVBuzI0A4eaiKWFM6
- wRWQUkDIZb1o0uUjRqr1FVBEQcjMGmo=
-Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-388-6Q-reWsKO3eSsuvKaa1eCg-1; Sat,
- 06 Jun 2026 18:10:44 -0400
-X-MC-Unique: 6Q-reWsKO3eSsuvKaa1eCg-1
-X-Mimecast-MFC-AGG-ID: 6Q-reWsKO3eSsuvKaa1eCg_1780783843
-Received: from mx-prod-int-10.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-10.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.95])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id A87BF18003FC; Sat,  6 Jun 2026 22:10:42 +0000 (UTC)
-Received: from localhost (unknown [10.2.16.28])
- by mx-prod-int-10.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id D23D027A; Sat,  6 Jun 2026 22:10:41 +0000 (UTC)
-Date: Sat, 6 Jun 2026 18:10:38 -0400
-From: Stefan Hajnoczi <stefanha@redhat.com>
-To: Cornelia Huck <cohuck@redhat.com>
-Cc: qemu-devel@nongnu.org, qemu-s390x@nongnu.org,
- Cornelia Huck <cohuck@redhat.com>
-Subject: Re: [PULL 0/7] s390x updates
-Message-ID: <20260606221038.GA365828@fedora>
-References: <20260605145647.272621-1-cohuck@redhat.com>
+ (Exim 4.90_1) (envelope-from <lhestz@163.com>) id 1wW1B7-0001av-HH
+ for qemu-devel@nongnu.org; Sat, 06 Jun 2026 20:15:52 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=163.com;
+ s=s110527; h=Message-ID:Date:MIME-Version:Subject:To:From:
+ Content-Type; bh=Gy8thGB9jxv0DJWtpjIJUimv547bDA1+txl2GPxG7w4=;
+ b=WgzlFEfe8vwYdGaLD8hLubeWX3astvVlnA8sT2ipygqI4BHpY+H+okTftGBmdH
+ yjMY+1WMjF7DQh49Ix04GPLWnNliT2OU8MK//UUNWWr/bRvAIzuy5OROCcGJif9y
+ SUPEI2S3NgoqIh4O5iv47TEWTkKCEI+h/FHakHr3F/zdQ=
+Received: from [IPV6:2409:8a00:18c7:4890:9a3c:298b:940a:e997] (unknown [])
+ by gzsmtp3 (Coremail) with SMTP id PigvCgDX_xQXuCRqG4qpAw--.55368S2;
+ Sun, 07 Jun 2026 08:15:21 +0800 (CST)
+Message-ID: <392e03eb-63e4-4db0-89d2-b7ddc32b91e8@163.com>
+Date: Sun, 7 Jun 2026 08:15:19 +0800
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
- protocol="application/pgp-signature"; boundary="baVOW1ENpJRAoKeN"
-Content-Disposition: inline
-In-Reply-To: <20260605145647.272621-1-cohuck@redhat.com>
-X-Scanned-By: MIMEDefang 3.6 on 10.30.177.95
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=stefanha@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -24
-X-Spam_score: -2.5
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 0/1] hw/virtio-crypto: add akcipher keylen validation
+To: "Michael S. Tsirkin" <mst@redhat.com>
+Cc: qemu-devel@nongnu.org, arei.gonglei@huawei.com, zhenwei.pi@linux.dev
+References: <20260606074756.43804-1-lhestz@163.com>
+ <20260606043251-mutt-send-email-mst@kernel.org>
+Content-Language: en-US
+From: helei <lhestz@163.com>
+In-Reply-To: <20260606043251-mutt-send-email-mst@kernel.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+X-CM-TRANSID: PigvCgDX_xQXuCRqG4qpAw--.55368S2
+X-Coremail-Antispam: 1Uf129KBjvdXoWrtr4xKFWkCrykur47KryrCrg_yoWkWFc_Wr
+ 4ku39xGw4vyFn2va9F9345WrW7u3y8tFyDJF15Za1xJryrXFsxZF1xXrnavF1DAayUXF4j
+ gr4Fyr1rtwnxujkaLaAFLSUrUUUUjb8apTn2vfkv8UJUUUU8Yxn0WfASr-VFAUDa7-sFnT
+ 9fnUUvcSsGvfC2KfnxnUUI43ZEXa7xRRJ5r3UUUUU==
+X-Originating-IP: [2409:8a00:18c7:4890:9a3c:298b:940a:e997]
+X-CM-SenderInfo: pokh23r26rljoofrz/xtbC8xnXA2okuBns1AAA3p
+Received-SPF: pass client-ip=220.197.31.2; envelope-from=lhestz@163.com;
+ helo=m16.mail.163.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.445,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -85,29 +73,34 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 
---baVOW1ENpJRAoKeN
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
+On 6/6/26 16:37, Michael S. Tsirkin wrote:
+> On Sat, Jun 06, 2026 at 03:47:55PM +0800, helei wrote:
+>> The virtio-crypto spec does not dictate a maximum length limit for
+>> asymmetric cipher (akcipher) keys. We added a hard limit which mirrors
+>> the linux kernels's internal limit for akcipher keys (see
+>> keyctl framework and the add_key syscall).
+> We have max_size - doesn't that apply?
+> backends/cryptodev-builtin.c actually sets it:
+> backends/cryptodev-builtin.c:#define CRYPTODEV_BUITLIN_MAX_REQUEST_SIZE  (1024 * 1024)
+> backends/cryptodev-builtin.c:    backend->conf.max_size = CRYPTODEV_BUITLIN_MAX_REQUEST_SIZE;
 
-Applied, thanks.
+Thanks for your review!  I have verified via testing that all processing 
+requests in the dataq are strictly
 
-Please update the changelog at https://wiki.qemu.org/ChangeLog/11.1 for any user-visible changes.
+bounded by max_size, but session creation requests in the ctrlq are not.
 
---baVOW1ENpJRAoKeN
-Content-Type: application/pgp-signature; name=signature.asc
-
------BEGIN PGP SIGNATURE-----
-
-iQEzBAEBCgAdFiEEhpWov9P5fNqsNXdanKSrs4Grc8gFAmokmt4ACgkQnKSrs4Gr
-c8gh1AgAyYwq1ki457SwvVUJBoXTy2pSVnsBXEuLd+CbL+ZetAVVezQuUyed5/zi
-evFqg1z1LxS/v6LjLl/wFEr6otxm8AABppOnw4HS20Ttt5OmEJLPvF6FdeMFaZwQ
-qHEJvYugLStVR9zRHEN4WPFz2arCpIR+3ODhc3k5WsH2AQWOq9QnnJyscrvrd7sz
-VG+MF2W6deOPGMDDwhAHH9dAnGmWXxgP9mBx/XoX7CaOJgHeBkXfmIlaGjcgkny3
-WwVlpEmwoVPQ38M1mhdAIUfriMRbXfnF3vrPAJcbNKiyyTqyxCjRSsEJn8+Wbzj6
-IbhUixURL1afjjjJA5fRh9mKgd2+iQ==
-=abP7
------END PGP SIGNATURE-----
-
---baVOW1ENpJRAoKeN--
+>
+>> Maybe we should update the virtio-spec and add a max_akcipher_key_len
+>> field for virtio crypto devices.
+> maybe
+>
+>> helei (1):
+>>    hw/virtio-crypto: enforce max akcipher key length
+>>
+>>   hw/virtio/virtio-crypto.c | 13 +++++++++++++
+>>   1 file changed, 13 insertions(+)
+>>
+>> -- 
+>> 2.43.0
 
 
