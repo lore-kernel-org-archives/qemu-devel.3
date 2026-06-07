@@ -4,54 +4,54 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A5FA8CD8C88
-	for <qemu-devel@archiver.kernel.org>; Sun,  7 Jun 2026 14:05:40 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id BA1D9CD8C8E
+	for <qemu-devel@archiver.kernel.org>; Sun,  7 Jun 2026 14:05:41 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wWE71-0004NG-4P; Sun, 07 Jun 2026 10:04:27 -0400
+	id 1wWE6r-0004L9-44; Sun, 07 Jun 2026 10:04:17 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <deller@kernel.org>) id 1wWE6z-0004Mt-S4
- for qemu-devel@nongnu.org; Sun, 07 Jun 2026 10:04:25 -0400
-Received: from tor.source.kernel.org ([2600:3c04:e001:324:0:1991:8:25])
+ (Exim 4.90_1) (envelope-from <deller@kernel.org>) id 1wWE6q-0004Kv-1P
+ for qemu-devel@nongnu.org; Sun, 07 Jun 2026 10:04:16 -0400
+Received: from sea.source.kernel.org ([2600:3c0a:e001:78e:0:1991:8:25])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <deller@kernel.org>) id 1wWE6y-00088C-6n
- for qemu-devel@nongnu.org; Sun, 07 Jun 2026 10:04:25 -0400
+ (Exim 4.90_1) (envelope-from <deller@kernel.org>) id 1wWE6o-00085z-Cl
+ for qemu-devel@nongnu.org; Sun, 07 Jun 2026 10:04:15 -0400
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
- by tor.source.kernel.org (Postfix) with ESMTP id 551156001D;
- Sun,  7 Jun 2026 14:04:22 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6CD6B1F00893;
- Sun,  7 Jun 2026 14:04:20 +0000 (UTC)
+ by sea.source.kernel.org (Postfix) with ESMTP id 84CAE44353;
+ Sun,  7 Jun 2026 14:04:13 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9DE491F00893;
+ Sun,  7 Jun 2026 14:04:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
- s=k20260515; t=1780841062;
- bh=RfxlUwNU/48O+8PvYhYcsgantRKLa0A2pRTtbB1enaY=;
+ s=k20260515; t=1780841053;
+ bh=Z1dfaMdDG1BHIABJPuyTvw9aGXsVucAwD1oVosQ69OE=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References;
- b=gyJ1sjVf47+a6UHesFQWUc96tB54KHrcEUHMG2rg/9qHFYhgYjDN0+FIhGlyie7fw
- UicBLFluopap1G6/QTGnscVcbOy15p869mC7aeU/7jLTofemKipKoYuxmUH2lY+fqq
- lZ6ZhoWQ0lAJla4xU0RVJ7ladpMtwKbVcHFPZQewq+Qr+XZwsqIqXPAQ4hlBz8OdRz
- OcjsPQBfj+TclXHUB/tm1CnYLo4UZK8hjLAHGw3cxCsgNgiuBXCEpINk8WsKuO9Bfl
- KrenkjFmIgdsuwAuJSIYZc+tcyNL9b4iEzAMo2A9HbkxnBi6VnfnvGtBkDaEcuJrK2
- Qjeai4TGy/aTw==
+ b=E7FXUhiOzubVp01t2baeApImLVVoIYzPJ2rtL0TcVHFN5Txrz40XcZtBEb477A05B
+ UCLjWA2h/QAwYe38CDc/vQR+E5QxbnQvCfS1Vs/Hkoeakz7HvmP1P5Yyc89yMeLZmV
+ ZmjsWi+wLA1a1TAnjOywEVXE7BK5hFVGLbXKTf549g/dIwALnJ40cW+mBqkssiCVN/
+ x9oza8uw/Tz/abN0g9V3tyaXVFLjdlWkHiJTvCh9jDOJJwQli2LuO5/L66RZXqOHlM
+ HvsH0EYQDmK+Pv6UnPxgLu1ANrS5H05qlBxrTKPbiNSUQ+Lz1rqUcm/UYw/8aJvrH3
+ 7lD1zRgPZUvhQ==
 From: Helge Deller <deller@kernel.org>
 To: qemu-devel@nongnu.org
 Cc: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
  Laurent Vivier <laurent@vivier.eu>,
  Yoshinori Sato <yoshinori.sato@nifty.com>,
  Max Filippov <jcmvbkbc@gmail.com>, Helge Deller <deller@gmx.de>,
- Matt Turner <mattst88@gmail.com>
-Subject: [PATCH 10/10] target/xtensa: add cpu_set_fcr/fsr helpers to sync
- fp_status
-Date: Sun,  7 Jun 2026 16:03:56 +0200
-Message-ID: <20260607140356.10702-11-deller@kernel.org>
+ Matt Turner <mattst88@gmail.com>,
+ Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>
+Subject: [PATCH 06/10] linux-user/sparc: call block_signals() before
+ set_sigmask() in setcontext
+Date: Sun,  7 Jun 2026 16:03:52 +0200
+Message-ID: <20260607140356.10702-7-deller@kernel.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260607140356.10702-1-deller@kernel.org>
 References: <20260607140356.10702-1-deller@kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2600:3c04:e001:324:0:1991:8:25;
- envelope-from=deller@kernel.org; helo=tor.source.kernel.org
+Received-SPF: pass client-ip=2600:3c0a:e001:78e:0:1991:8:25;
+ envelope-from=deller@kernel.org; helo=sea.source.kernel.org
 X-Spam_score_int: -24
 X-Spam_score: -2.5
 X-Spam_bar: --
@@ -75,94 +75,75 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Matt Turner <mattst88@gmail.com>
 
-Factor FCR→fp_status and FSR→fp_status synchronisation out of the
-wur_fpu{2k,}_fcr/wur_fpu_fsr helpers into cpu_set_fcr(), cpu_set_fsr(),
-and cpu_get_fsr(). Signal delivery code needs to restore the FP rounding
-mode and exception flags without duplicating the flag-mapping tables.
+sparc64_set_context() emulates the kernel's `ta 0x6f` trap by calling
+set_sigmask() to install the mask supplied via the user's ucontext_t.
+The contract of set_sigmask() (see its comment in linux-user/signal.c)
+is that the caller must have first called block_signals(), which sets
+TaskState::signal_pending.
 
-cpu_set_fcr() applies the union mask 0xfffff07f (superset of the
-wur_fpu_fcr mask 0x0000007f and the wur_fpu2k_fcr mask 0xfffff07f) so
-that FCR bits valid only on fpu2k configs are preserved while MBZ bits
-7-11 are always cleared.
+Without block_signals(), if a guest signal is pending-and-blocked at
+the time setcontext is invoked and the new mask unblocks it,
+signal_pending stays 0 and the post-trap process_pending_signals()
+call in linux-user/sparc/cpu_loop.c never enters its while loop, so
+the now-deliverable signal is left undelivered indefinitely.
 
-v2: Use FloatRoundMode as suggested by Richard.
+This affects programs that use getcontext/setcontext to swap signal
+masks, including libunwind's unw_resume() out of a signal handler:
+without this fix, the test program below loops forever printing
+"calling setcontext" instead of delivering the pending SIGUSR2.
+
+  #define _GNU_SOURCE
+  #include <ucontext.h>
+  #include <signal.h>
+  #include <stdio.h>
+  #include <unistd.h>
+  static int got;
+  static void h(int s) { got = 1; }
+  int main(void) {
+      signal(SIGUSR2, h);
+      sigset_t m; sigemptyset(&m); sigaddset(&m, SIGUSR2);
+      sigprocmask(SIG_BLOCK, &m, NULL);
+      kill(getpid(), SIGUSR2);
+      ucontext_t uc;
+      getcontext(&uc);
+      if (got) return 0;
+      uc.uc_sigmask.__val[0] = 0;
+      setcontext(&uc);
+      return 1;
+  }
+
+The 32-bit sparc do_sigreturn / do_rt_sigreturn paths already get
+block_signals() from the rt_sigreturn syscall wrapper in
+linux-user/syscall.c, so only sparc64_set_context (invoked directly
+from cpu_loop) needs the addition.
 
 Signed-off-by: Matt Turner <mattst88@gmail.com>
-Cc: Max Filippov <jcmvbkbc@gmail.com>
+Cc: Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>
 Signed-off-by: Helge Deller <deller@gmx.de>
 ---
- target/xtensa/cpu.h        |  4 ++++
- target/xtensa/fpu_helper.c | 42 ++++++++++++++++++++++++++++++++++++++
- 2 files changed, 46 insertions(+)
+ linux-user/sparc/signal.c | 9 +++++++++
+ 1 file changed, 9 insertions(+)
 
-diff --git a/target/xtensa/cpu.h b/target/xtensa/cpu.h
-index 75cfeee6e3..442e98bd1b 100644
---- a/target/xtensa/cpu.h
-+++ b/target/xtensa/cpu.h
-@@ -642,6 +642,10 @@ static inline void xtensa_select_static_vectors(CPUXtensaState *env,
- }
- void xtensa_runstall(CPUXtensaState *env, bool runstall);
- 
-+uint32_t cpu_get_fsr(CPUXtensaState *env);
-+void cpu_set_fcr(CPUXtensaState *env, uint32_t v);
-+void cpu_set_fsr(CPUXtensaState *env, uint32_t v);
-+
- #define XTENSA_OPTION_BIT(opt) (((uint64_t)1) << (opt))
- #define XTENSA_OPTION_ALL (~(uint64_t)0)
- 
-diff --git a/target/xtensa/fpu_helper.c b/target/xtensa/fpu_helper.c
-index 5358060c50..9f1256f677 100644
---- a/target/xtensa/fpu_helper.c
-+++ b/target/xtensa/fpu_helper.c
-@@ -64,6 +64,48 @@ void xtensa_use_first_nan(CPUXtensaState *env, bool use_first)
-                              &env->fp_status);
- }
- 
-+uint32_t cpu_get_fsr(CPUXtensaState *env)
-+{
-+    uint32_t flags = 0;
-+    int fef = get_float_exception_flags(&env->fp_status);
-+    unsigned i;
-+
-+    for (i = 0; i < ARRAY_SIZE(xtensa_fp_flag_map); ++i) {
-+        if (fef & xtensa_fp_flag_map[i].softfloat_fp_flag) {
-+            flags |= xtensa_fp_flag_map[i].xtensa_fp_flag;
-+        }
-+    }
-+    return flags << XTENSA_FSR_FLAGS_SHIFT;
-+}
-+
-+void cpu_set_fcr(CPUXtensaState *env, uint32_t v)
-+{
-+    static const FloatRoundMode rounding_mode[] = {
-+        float_round_nearest_even,
-+        float_round_to_zero,
-+        float_round_up,
-+        float_round_down,
-+    };
-+
-+    env->uregs[FCR] = v & 0xfffff07f;
-+    set_float_rounding_mode(rounding_mode[v & 3], &env->fp_status);
-+}
-+
-+void cpu_set_fsr(CPUXtensaState *env, uint32_t v)
-+{
-+    uint32_t flags = v >> XTENSA_FSR_FLAGS_SHIFT;
-+    int fef = 0;
-+    unsigned i;
-+
-+    env->uregs[FSR] = v & 0x00000f80;
-+    for (i = 0; i < ARRAY_SIZE(xtensa_fp_flag_map); ++i) {
-+        if (flags & xtensa_fp_flag_map[i].xtensa_fp_flag) {
-+            fef |= xtensa_fp_flag_map[i].softfloat_fp_flag;
-+        }
-+    }
-+    set_float_exception_flags(fef, &env->fp_status);
-+}
-+
- void HELPER(wur_fpu2k_fcr)(CPUXtensaState *env, uint32_t v)
- {
-     static const int rounding_mode[] = {
+diff --git a/linux-user/sparc/signal.c b/linux-user/sparc/signal.c
+index fda5508c48..ba692c3123 100644
+--- a/linux-user/sparc/signal.c
++++ b/linux-user/sparc/signal.c
+@@ -619,6 +619,15 @@ void sparc64_set_context(CPUSPARCState *env)
+             }
+         }
+         target_to_host_sigset_internal(&set, &target_set);
++        /*
++         * set_sigmask() requires the caller to have first called
++         * block_signals() so that process_pending_signals() is guaranteed
++         * to run after the mask change.  Without this, a guest signal that
++         * is pending-and-blocked at setcontext time is left undelivered
++         * even after its mask bit is cleared, because signal_pending stays
++         * 0 and the post-trap process_pending_signals() loop never enters.
++         */
++        block_signals();
+         set_sigmask(&set);
+     }
+     env->pc = pc;
 -- 
 2.54.0
 
