@@ -4,54 +4,52 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 58621CD8C88
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id DCF44CD8C8E
 	for <qemu-devel@archiver.kernel.org>; Sun,  7 Jun 2026 14:04:51 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wWE6t-0004Lf-Mz; Sun, 07 Jun 2026 10:04:19 -0400
+	id 1wWE6i-0004JC-L1; Sun, 07 Jun 2026 10:04:08 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <deller@kernel.org>) id 1wWE6s-0004LJ-LL
- for qemu-devel@nongnu.org; Sun, 07 Jun 2026 10:04:18 -0400
-Received: from tor.source.kernel.org ([172.105.4.254])
+ (Exim 4.90_1) (envelope-from <deller@kernel.org>) id 1wWE6h-0004J4-NA
+ for qemu-devel@nongnu.org; Sun, 07 Jun 2026 10:04:07 -0400
+Received: from sea.source.kernel.org ([172.234.252.31])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <deller@kernel.org>) id 1wWE6q-00086L-KY
- for qemu-devel@nongnu.org; Sun, 07 Jun 2026 10:04:18 -0400
+ (Exim 4.90_1) (envelope-from <deller@kernel.org>) id 1wWE6f-00082e-Q9
+ for qemu-devel@nongnu.org; Sun, 07 Jun 2026 10:04:07 -0400
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
- by tor.source.kernel.org (Postfix) with ESMTP id EE8A560018;
- Sun,  7 Jun 2026 14:04:15 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D9FCB1F00893;
- Sun,  7 Jun 2026 14:04:13 +0000 (UTC)
+ by sea.source.kernel.org (Postfix) with ESMTP id 9DA2E41524;
+ Sun,  7 Jun 2026 14:04:04 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E2A861F00893;
+ Sun,  7 Jun 2026 14:04:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
- s=k20260515; t=1780841055;
- bh=gEmpbKVD9hDcSZqLWrik9HtYpOvGlKu3Ri0bvNo/FQk=;
+ s=k20260515; t=1780841044;
+ bh=MqB7UL4fPRYcru3EnbnH7S5G3PK67/sx3b0o2FxbdEo=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References;
- b=fVBxOEV4CTtlMUmoDf4OgKZzSZUUMyRlAOsL/8LwBjLu2fYQUkb5G0m34c38P9f6G
- PovWQMq5MDP4mmKwvxZGVUalhN+C6hDKs3MDy46T4aNze6UK6FZ0QalrdVtV4ol5lu
- ku05mCoJirlMPzYhCZDWKx4LajKdUTCZg47m+QPrHVHvDesQQrkaKfeiK+JKkb01dR
- o/U16v5CXyMnrb3x34BFL76IHrtC7ahbb1IZjfRgSYtVT98HVy4E1JjEjTeN2orx/5
- jZGMMudyxCTzQBZ7Go3TTyajX+/ZtL3sJE8g4ZPswcIX9v06u1avb2chBBd36jd6d1
- IUgEXmpyiIwoA==
+ b=U4jUhRS73PFNo+za7JCnvkmtbzOeigDze0yAvX/3DLjjOFT5E2vq/sJZjXdJcTWRd
+ epJ6xUO+nhLcLeMdqqtKotv/F2Grs4fqosYjb/I/ky3rvRBqt2beaT4L/DysYgA4Qh
+ USVFaNpXjWzTUmvi+nPCRNOSVj59Itfw6drbwQ06bT/mq19BMd0qSf+o3m43+tbhfm
+ S99kKQ2GjSuBZXIe/fW2IK3B2nY5bfe1yv2rwFJO4VoSW4hU7G5m8q2m/3vn4oPkSd
+ lzdmODizncoF6zTYm24/PIqspEwjbXmLDpuc6XTGJ4oESjUC29loxRXze49TCKZzgG
+ rDH/6+aVzFqjw==
 From: Helge Deller <deller@kernel.org>
 To: qemu-devel@nongnu.org
 Cc: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
  Laurent Vivier <laurent@vivier.eu>,
  Yoshinori Sato <yoshinori.sato@nifty.com>,
  Max Filippov <jcmvbkbc@gmail.com>, Helge Deller <deller@gmx.de>,
- Matt Turner <mattst88@gmail.com>,
- Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>
-Subject: [PATCH 07/10] linux-user/sparc: flush register windows before core
- dump
-Date: Sun,  7 Jun 2026 16:03:53 +0200
-Message-ID: <20260607140356.10702-8-deller@kernel.org>
+ Xinhui Yang <cyan@cyano.uk>
+Subject: [PATCH 02/10] linux-user/strace: add fsmount series of syscalls
+Date: Sun,  7 Jun 2026 16:03:48 +0200
+Message-ID: <20260607140356.10702-3-deller@kernel.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260607140356.10702-1-deller@kernel.org>
 References: <20260607140356.10702-1-deller@kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=172.105.4.254; envelope-from=deller@kernel.org;
- helo=tor.source.kernel.org
+Received-SPF: pass client-ip=172.234.252.31; envelope-from=deller@kernel.org;
+ helo=sea.source.kernel.org
 X-Spam_score_int: -24
 X-Spam_score: -2.5
 X-Spam_bar: --
@@ -73,183 +71,176 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Matt Turner <mattst88@gmail.com>
+From: Xinhui Yang <cyan@cyano.uk>
 
-Without this, only the crash frame's window is spilled to the
-stack; all deeper call frames remain in the register file and
-are absent from the core's memory segments. Stack unwinding
-fails past the first DWARF step because the callers' register
-save areas contain stale/garbage data.
+Following the addition of fsmount(2) series of syscalls in the syscall
+handler, strace support is added, with a dedicated function to print the
+parameters of fsconfig(2), which contains parameters that can be
+interpreted as multiple types.
 
-The real kernel calls flush_all_user_windows() at the top of
-do_coredump(). Mirror that via a weak target_flush_windows()
-hook called from dump_core_and_abort(), with the SPARC override
-calling the existing flush_windows() in cpu_loop.c.
+Snippet of the strace dump when running `mount -t tmpfs tmpfs /media`:
 
-Signed-off-by: Matt Turner <mattst88@gmail.com>
-Cc: Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>
+18 fsopen(tmpfs,1) = 3
+18 read(3,0x407fcf1c,8191) = -1 errno=61 (No data available)
+18 fsconfig(3,FSCONFIG_SET_STRING,"source","tmpfs",0) = 0
+18 read(3,0x407fce3c,8191) = -1 errno=61 (No data available)
+18 fsconfig(3,FSCONFIG_CMD_CREATE,NULL,NULL,0) = 0
+18 read(3,0x407fce3c,8191) = -1 errno=61 (No data available)
+18 fsmount(3,1,0) = 4
+18 read(3,0x407fce3c,8191) = -1 errno=61 (No data available)
+18 statx(4,"",AT_EMPTY_PATH|AT_STATX_SYNC_AS_STAT,0x1000,0x407fee98) = 0
+18 move_mount(4,,-100,/media,4) = 0
+18 read(3,0x407fcfcc,8191) = -1 errno=61 (No data available)
+18 close(3) = 0
+18 close(4) = 0
+
+Signed-off-by: Xinhui Yang <cyan@cyano.uk>
+Reviewed-by: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
 Signed-off-by: Helge Deller <deller@gmx.de>
 ---
- linux-user/elfload.c          |  9 ++++++++
- linux-user/sparc/cpu_loop.c   |  3 ++-
- linux-user/sparc/cpu_loop.h   |  7 +++++++
- linux-user/sparc/elfload.c    | 39 +++++++++++++++++++++++++++++------
- linux-user/sparc/target_elf.h | 17 +++++++++++----
- 5 files changed, 64 insertions(+), 11 deletions(-)
- create mode 100644 linux-user/sparc/cpu_loop.h
+ linux-user/strace.c    | 105 +++++++++++++++++++++++++++++++++++++++++
+ linux-user/strace.list |  15 ++++++
+ 2 files changed, 120 insertions(+)
 
-diff --git a/linux-user/elfload.c b/linux-user/elfload.c
-index f7625c0952..b05b8b0c6b 100644
---- a/linux-user/elfload.c
-+++ b/linux-user/elfload.c
-@@ -2445,6 +2445,9 @@ static int wmr_write_region(void *opaque, vaddr start,
-  * handler (provided that target process haven't registered
-  * handler for that) that does the dump when signal is received.
-  */
-+#ifdef TARGET_SPARC
-+#include "sparc/cpu_loop.h"
-+#endif
- static int elf_core_dump(int signr, const CPUArchState *env)
- {
-     const CPUState *cpu = env_cpu_const(env);
-@@ -2468,6 +2471,12 @@ static int elf_core_dump(int signr, const CPUArchState *env)
-     cpu_list_lock();
-     mmap_lock();
+diff --git a/linux-user/strace.c b/linux-user/strace.c
+index 2cbaf94c89..d861f311f6 100644
+--- a/linux-user/strace.c
++++ b/linux-user/strace.c
+@@ -4344,6 +4344,111 @@ print_statx(CPUArchState *cpu_env, const struct syscallname *name,
+ }
+ #endif
  
-+#ifdef TARGET_SPARC
-+    CPU_FOREACH(cpu_iter) {
-+        flush_windows(cpu_env(cpu_iter));
++#ifdef TARGET_NR_fsconfig
++static void
++print_fsconfig_cmd_name(int cmd)
++{
++    switch (cmd) {
++    case FSCONFIG_SET_FLAG:
++        qemu_log("%s%s", "FSCONFIG_SET_FLAG", get_comma(0));
++        break;
++    case FSCONFIG_SET_STRING:
++        qemu_log("%s%s", "FSCONFIG_SET_STRING", get_comma(0));
++        break;
++    case FSCONFIG_SET_BINARY:
++        qemu_log("%s%s", "FSCONFIG_SET_BINARY", get_comma(0));
++        break;
++    case FSCONFIG_SET_PATH:
++        qemu_log("%s%s", "FSCONFIG_SET_PATH", get_comma(0));
++        break;
++    case FSCONFIG_SET_PATH_EMPTY:
++        qemu_log("%s%s", "FSCONFIG_SET_PATH_EMPTY", get_comma(0));
++        break;
++    case FSCONFIG_SET_FD:
++        qemu_log("%s%s", "FSCONFIG_SET_FD", get_comma(0));
++        break;
++    case FSCONFIG_CMD_CREATE:
++        qemu_log("%s%s", "FSCONFIG_CMD_CREATE", get_comma(0));
++        break;
++    case FSCONFIG_CMD_RECONFIGURE:
++        qemu_log("%s%s", "FSCONFIG_CMD_RECONFIGURE", get_comma(0));
++        break;
++#ifdef FSCONFIG_CMD_CREATE_EXCL
++    case FSCONFIG_CMD_CREATE_EXCL:
++        /* Only available since Linux 6.6. */
++        qemu_log("%s%s", "FSCONFIG_CMD_CREATE_EXCL", get_comma(0));
++        break;
++#endif
++    default:
++        qemu_log("%s (%d)%s", "UNKNOWN_CMD", cmd, get_comma(0));
++        break;
 +    }
-+#endif
++}
 +
-     /* By unprotecting, we merge vmas that might be split. */
-     walk_memory_regions(NULL, wmr_page_unprotect_regions);
- 
-diff --git a/linux-user/sparc/cpu_loop.c b/linux-user/sparc/cpu_loop.c
-index ab633eeae3..0aacda9448 100644
---- a/linux-user/sparc/cpu_loop.c
-+++ b/linux-user/sparc/cpu_loop.c
-@@ -22,6 +22,7 @@
- #include "user-internals.h"
- #include "user/cpu_loop.h"
- #include "signal-common.h"
-+#include "sparc/cpu_loop.h"
- 
- #define SPARC64_STACK_BIAS 2047
- 
-@@ -119,7 +120,7 @@ static void restore_window(CPUSPARCState *env)
- #endif
- }
- 
--static void flush_windows(CPUSPARCState *env)
-+void flush_windows(CPUSPARCState *env)
- {
-     int offset, cwp1;
- 
-diff --git a/linux-user/sparc/cpu_loop.h b/linux-user/sparc/cpu_loop.h
-new file mode 100644
-index 0000000000..fb6e82d372
---- /dev/null
-+++ b/linux-user/sparc/cpu_loop.h
-@@ -0,0 +1,7 @@
-+/* SPDX-License-Identifier: GPL-2.0-or-later */
-+#ifndef SPARC_CPU_LOOP_H
-+#define SPARC_CPU_LOOP_H
-+
-+void flush_windows(CPUSPARCState *env);
-+
-+#endif
-diff --git a/linux-user/sparc/elfload.c b/linux-user/sparc/elfload.c
-index e6387ec891..181f1e00b5 100644
---- a/linux-user/sparc/elfload.c
-+++ b/linux-user/sparc/elfload.c
-@@ -12,16 +12,41 @@ void elf_core_copy_regs(target_elf_gregset_t *r, const CPUArchState *env)
-     CPUSPARCState *e = (CPUSPARCState *)env;
-     int i;
- 
-+    memset(r, 0, sizeof(*r));
-+
- #if defined(TARGET_SPARC64) && !defined(TARGET_ABI32)
-+    /* Linux kernel layout for sparc64 (arch/sparc/include/asm/elf_64.h):
-+     *   [0..7]   G0-G7
-+     *   [8..15]  O0-O7
-+     *   [16..23] L0-L7
-+     *   [24..31] I0-I7
-+     *   [32]     TSTATE
-+     *   [33]     TPC
-+     *   [34]     TNPC
-+     *   [35]     Y
++static void
++print_fsconfig(CPUArchState *cpu_env, const struct syscallname *name,
++            abi_long arg0, abi_long arg1, abi_long arg2,
++            abi_long arg3, abi_long arg4, abi_long arg5)
++{
++    /*
++     * fsconfig(int fd, int cmd, char* key, void* value, int aux)
++     * Where:
++     * fd: file descriptor returned by fsopen().
++     * cmd: integer constant specifying a command.
++     * key: a string, can be NULL on certain commands.
++     * value: any data in a buffer, can be NULL, raw buffer or a string.
++     * aux: axillary values such as flags for FSCONFIG_SET_PATH.
 +     */
-     for (i = 0; i < 8; i++) {
--        r->regs[i]     = tswap64(env->gregs[i]);
--        r->regs[8 + i] = tswap64(env->regwptr[WREG_O0 + i]);
-+        r->regs[i]      = tswap64(env->gregs[i]);
-+        r->regs[8 + i]  = tswap64(env->regwptr[WREG_O0 + i]);
-+        r->regs[16 + i] = tswap64(env->regwptr[WREG_L0 + i]);
-+        r->regs[24 + i] = tswap64(env->regwptr[WREG_I0 + i]);
-     }
--    r->regs[16] = tswap64(sparc64_tstate(e));
--    r->regs[17] = tswap64(env->pc);
--    r->regs[18] = tswap64(env->npc);
--    r->regs[19] = tswap64(env->y);
-+    r->regs[32] = tswap64(sparc64_tstate(e));
-+    r->regs[33] = tswap64(env->pc);
-+    r->regs[34] = tswap64(env->npc);
-+    r->regs[35] = tswap64(env->y);
- #else
-+    /* Linux kernel layout for sparc32 (arch/sparc/include/asm/elf_32.h):
-+     *   [0]      PSR
-+     *   [1]      PC
-+     *   [2]      NPC
-+     *   [3]      Y
-+     *   [4..11]  G0-G7
-+     *   [12..19] O0-O7
-+     *   [20..27] L0-L7
-+     *   [28..35] I0-I7
-+     *   [36..37] reserved (stack_check)
++    int cmd = (int) arg1;
++    print_syscall_prologue(name);
++    print_raw_param("%d", arg0, 0);
++    print_fsconfig_cmd_name(cmd);
++    /* Process arg2 (key). */
++    switch (cmd) {
++    case FSCONFIG_SET_FLAG:
++    case FSCONFIG_SET_STRING:
++    case FSCONFIG_SET_BINARY:
++    case FSCONFIG_SET_PATH:
++    case FSCONFIG_SET_PATH_EMPTY:
++    case FSCONFIG_SET_FD:
++        print_string(arg2, 0);
++        break;
++    default:
++        print_pointer(arg2, 0);
++        break;
++    }
++    /* Process arg3 (value). */
++    switch (cmd) {
++    case FSCONFIG_SET_STRING:
++    case FSCONFIG_SET_PATH:
++    case FSCONFIG_SET_PATH_EMPTY:
++        print_string(arg3, 0);
++        break;
++    default:
++        print_pointer(arg3, 0);
++        break;
++    }
++    /*
++     * Process arg4 (aux).
++     * On FSCONFIG_SET_PATH and FSCONFIG_SET_PATH_EMPTY, aux can
++     * be either 0 or AT_FDCWD.
++     * On FSCONFIG_SET_BINARY, aux is an integer to state the length
++     * of the buffer pointed by arg3.
++     * Otherwise, it must be 0.
 +     */
-     r->regs[0] = tswap32(cpu_get_psr(e));
-     r->regs[1] = tswap32(env->pc);
-     r->regs[2] = tswap32(env->npc);
-@@ -29,6 +54,8 @@ void elf_core_copy_regs(target_elf_gregset_t *r, const CPUArchState *env)
-     for (i = 0; i < 8; i++) {
-         r->regs[4 + i]  = tswap32(env->gregs[i]);
-         r->regs[12 + i] = tswap32(env->regwptr[WREG_O0 + i]);
-+        r->regs[20 + i] = tswap32(env->regwptr[WREG_L0 + i]);
-+        r->regs[28 + i] = tswap32(env->regwptr[WREG_I0 + i]);
-     }
- #endif
- }
-diff --git a/linux-user/sparc/target_elf.h b/linux-user/sparc/target_elf.h
-index edb0b3103c..365af864b0 100644
---- a/linux-user/sparc/target_elf.h
-+++ b/linux-user/sparc/target_elf.h
-@@ -24,12 +24,21 @@
- #define HAVE_ELF_CORE_DUMP      1
- 
- /*
-- * Matches the kernel's elf_gregset_t (ELF_NGREG = 20).
-- * sparc32/sparc32plus: psr, pc, npc, y, u_regs[16] (g0-g7, o0-o7)
-- * sparc64:             u_regs[16] (g0-g7, o0-o7), tstate, pc, npc, y
-+ * Matches the kernel's elf_gregset_t.
-+ *   sparc32/sparc32plus (ELF_NGREG = 38):
-+ *     psr, pc, npc, y, u_regs[16] (g0-g7, o0-o7),
-+ *     reg_window[16] (l0-l7, i0-i7), stack_check[2]
-+ *   sparc64             (ELF_NGREG = 36):
-+ *     u_regs[16] (g0-g7, o0-o7), reg_window[16] (l0-l7, i0-i7),
-+ *     tstate, tpc, tnpc, y
-  */
-+#if defined(TARGET_SPARC64) && !defined(TARGET_ABI32)
-+# define TARGET_ELF_NGREG       36
-+#else
-+# define TARGET_ELF_NGREG       38
++    switch (cmd) {
++    case FSCONFIG_SET_PATH:
++    case FSCONFIG_SET_PATH_EMPTY:
++        print_at_dirfd(arg4, 1);
++        break;
++    default:
++        print_raw_param("%d", arg4, 1);
++        break;
++    }
++    print_syscall_epilogue(name);
++}
 +#endif
- typedef struct target_elf_gregset_t {
--    abi_ulong regs[20];
-+    abi_ulong regs[TARGET_ELF_NGREG];
- } target_elf_gregset_t;
- 
++
+ #ifdef TARGET_NR_ioctl
+ static void
+ print_ioctl(CPUArchState *cpu_env, const struct syscallname *name,
+diff --git a/linux-user/strace.list b/linux-user/strace.list
+index 6162a407f9..3a366b8cac 100644
+--- a/linux-user/strace.list
++++ b/linux-user/strace.list
+@@ -1722,3 +1722,18 @@
+ #ifdef TARGET_NR_rseq
+ { TARGET_NR_rseq, "rseq" , "%s(%p,%u,%d,%#x)", NULL, NULL },
  #endif
++#ifdef TARGET_NR_fsopen
++{ TARGET_NR_fsopen, "fsopen", "%s(%s,%d)", NULL, NULL },
++#endif
++#ifdef TARGET_NR_fsconfig
++{ TARGET_NR_fsconfig, "fsconfig", NULL, print_fsconfig, NULL },
++#endif
++#ifdef TARGET_NR_fsmount
++{ TARGET_NR_fsmount, "fsmount", "%s(%d,%d,%d)", NULL, NULL },
++#endif
++#ifdef TARGET_NR_move_mount
++{ TARGET_NR_move_mount, "move_mount", "%s(%d,%s,%d,%s,%d)", NULL, NULL },
++#endif
++#ifdef TARGET_NR_fspick
++{ TARGET_NR_fspick, "fspick", "%s(%d,%s,%d)", NULL, NULL },
++#endif
 -- 
 2.54.0
 
