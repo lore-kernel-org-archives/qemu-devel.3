@@ -4,57 +4,110 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 09F9CCD8C8C
-	for <qemu-devel@archiver.kernel.org>; Sun,  7 Jun 2026 18:23:40 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 79E17CD8C8C
+	for <qemu-devel@archiver.kernel.org>; Sun,  7 Jun 2026 20:07:35 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wWI8z-0008Ia-Dd; Sun, 07 Jun 2026 14:22:45 -0400
+	id 1wWJll-0001sy-1V; Sun, 07 Jun 2026 16:06:53 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <wrigjl@proton.me>)
- id 1wWI8x-0008Hf-Rt; Sun, 07 Jun 2026 14:22:43 -0400
-Received: from mail-07.mail-europe.com ([188.165.51.139])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <wrigjl@proton.me>)
- id 1wWI8u-0001L7-KV; Sun, 07 Jun 2026 14:22:43 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=proton.me;
- s=protonmail; t=1780856551; x=1781115751;
- bh=ZQdAkYVIFVaTOqJuW8j/vIjhopqCarqaDjawrzt2kCU=;
- h=Date:To:From:Cc:Subject:Message-ID:In-Reply-To:References:
- Feedback-ID:From:To:Cc:Date:Subject:Reply-To:Feedback-ID:
- Message-ID:BIMI-Selector;
- b=Lkr51H0LOWhOiK+d/yEhs+wrIyZOTkXPZxXLD/vUJv6Sg5olJHoAiAERomCsUQNNU
- 589prkdYzL4olq3Eks09E5rqyiS/JPrW+pUeLm9yZteZSpqFLNswG7UW08VL9chssY
- 1jtWBpA5BlQ+xoGrpua0O3lX8+pdY28Am8H6bNMz5wxbKGZvcyJ+d3mRC1jrSmtjc6
- pSaJWg1hcTdGtnnJRgGLkvR83x8Hd5OSrw/IrkI5mAz0W8aDAUJuGymbcbPTVlYYkR
- 45HEpWUF3OQIJsrsja+Iue69vbxaJTUy5LiQnhL7mVqc2f3Dy6ZKmPAyCnbA46zSjH
- jCBDpnr+6Ou5g==
-Date: Sun, 07 Jun 2026 18:22:26 +0000
-To: agraf@csgraf.de, peter.maydell@linaro.org
-From: Jason Wright <wrigjl@proton.me>
-Cc: qemu-arm@nongnu.org, qemu-devel@nongnu.org, zenghui.yu@linux.dev,
- richard.henderson@linaro.org
-Subject: [PATCH] target/arm/hvf: manually sync ID_AA64ISAR0_EL1 on vCPU init
-Message-ID: <20260607182221.4357-1-wrigjl@proton.me>
-In-Reply-To: <745e66c7-2a9b-4185-bae7-77e10623332b@linux.dev>
-References: <20260529114723.42040-1-peter.maydell@linaro.org>
- <20260529114723.42040-18-peter.maydell@linaro.org>
- <745e66c7-2a9b-4185-bae7-77e10623332b@linux.dev>
-Feedback-ID: 198029889:user:proton
-X-Pm-Message-ID: 00ef15f4273d06cd7b6cf38421dc48d0aeef72f8
+ (Exim 4.90_1) (envelope-from <jcmvbkbc@gmail.com>)
+ id 1wWJlj-0001sc-Oz
+ for qemu-devel@nongnu.org; Sun, 07 Jun 2026 16:06:51 -0400
+Received: from mail-qk1-x732.google.com ([2607:f8b0:4864:20::732])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <jcmvbkbc@gmail.com>)
+ id 1wWJlh-0000Xk-Bo
+ for qemu-devel@nongnu.org; Sun, 07 Jun 2026 16:06:50 -0400
+Received: by mail-qk1-x732.google.com with SMTP id
+ af79cd13be357-9158fbaa4bbso417099585a.1
+ for <qemu-devel@nongnu.org>; Sun, 07 Jun 2026 13:06:47 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1780862807; cv=none;
+ d=google.com; s=arc-20240605;
+ b=c7Y+lnHUD+TOeZ6X8RAL5UbLVz/ue1dIUyQEr7SSyNidJJ5i37WJnZ4Xn0lxxn7kda
+ C2TiGJ1wXHFoM6Or79u96Zm0gdjT0mg8khOMMprfRo2FLoMaPqbwJ3+Javao7pTENc1R
+ j6Y+c9dQzATKT4IsxqIZaK34mcx2GFLTp7y7M2uTlYO0fE7Gi38ntvKGELhnKk6e0Ph7
+ dYbE2VzMbLrF3iAFu8hYRf19Hps7sTFnTfxak9rAdgG7DqjuqELKLVA77FjPMgWialif
+ 33kHoZpO7eHybRvAqOAvYdUZN8+DsmPT4SJ1EJCIVjBk7l16L05oCk0typpIyH0x1TYP
+ qtxQ==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
+ s=arc-20240605; 
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:dkim-signature;
+ bh=SyWRMsRsIis9tdHllM2jJgDcp0mpM1nhxFAF+wOcW38=;
+ fh=FpVn51f7DcT5MzflneaVHJ9yKzeMunHRcwvV5jfuaAo=;
+ b=b8T5igvJNdrZbrTtriLFbFs66eQVbS4aTNQX88r0wGal1VPqdeFXX1+ChzyN+voFEc
+ U7Ii+JaDYg3hbgkFDxg1gm1hF69SD1BIxDVCmPilg4ba2YhmE6YX5QIsTWyEpb3/rtlU
+ GYktvfriMY84kM9699GaYkNCF1t9HUu3iWpzyjqqbfKQjDKGTWi0ioHNxqoU/Db4dXN+
+ P0xVuvPg+HPofjBKNWca5nJeWXz0DoUrxjtCDU27Q/fQ1UjVrub1fGpCMkcw7mUoLM58
+ rIi9ngxQThOD2f0xbu4UCsvOTXPDBh8sQqxiQQzaMCD0UOlu3QkNwgiCVHQkgtoK7vtO
+ EjNA==; darn=nongnu.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=gmail.com; s=20251104; t=1780862807; x=1781467607; darn=nongnu.org;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=SyWRMsRsIis9tdHllM2jJgDcp0mpM1nhxFAF+wOcW38=;
+ b=ahQgESqKxVyu/N4sDa92dAsipveEC0av+9OPhFE5s7LaJIYErAopXhdV9dVPANENZo
+ mtvfmM6GEHlFWJoZ+0K90iyeOlMwIw6NljFUXLdH4GCVOEmnvRXON50DNiQg42m3nL6k
+ kaMHAHfoXLUyDtnRzCDjVJJWMWkXy8aq7fTvbkFB6dumY2NdwQDC/pHGEX+CWrmSMW97
+ 8kqXpI9o0f5sGutvp1NwtFcQJnblJCbhvmdb7RNVfAqnQU5DOW0ZFyytSpGZM/jEl1jI
+ 56hdciCXIwNc7gOJZ211cty51a106jQ5SqaukGs86EJHViuNgP71iO5AnTuRFQ8RSGnX
+ Hkcw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1780862807; x=1781467607;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=SyWRMsRsIis9tdHllM2jJgDcp0mpM1nhxFAF+wOcW38=;
+ b=pfCZiAn0U4tX4yM/i6qbJm8fn125MYPb/pZoNqB9fiAtR7K1fnxlRnxvHnAC1YHJw/
+ tWH5P7z4XpAtokLu1gNH6dADHO2EfwjLwc9RC/Rjy+bzdOtj4F+7O0kggMAbCHSmEyRy
+ x9LxzREUxLXGWgWm9cillTWXl9iCISDiIdIesVi6nV38ftNolDvJvKVpZnyA8G87m0YX
+ O611SjQLKtiIWF7K/ZtA/rSzVrT6Zh6UkNwPkZWYVvcyops4q+4aJuNBzZORUjOL8Mzt
+ IdzEhtJ2fxPXMuntLcUfS5o3oqfNpfKNeTwpbLCXOu7dsGJGRGrbbUTamrV42y500FeU
+ 4S2Q==
+X-Gm-Message-State: AOJu0YwNqTY2T8aOFSBgjsFDpf8G4IwmiK7xhAQQkmu+qi/KELSJA4gU
+ s2IpbMO2qbw8IgrKC5qERhkSZtkQfp3RDsMnFl9bo4pJWhMSfLYgxmyCem4UkBVRgBpM8EwPQ5T
+ Ibz6qBwR5m3ud8NzbDkkyz/9xhTETv3g=
+X-Gm-Gg: Acq92OHlmQRNz5iALs2WInPBBfgCTd8Fb34ahINZ1G8Vf6LHD0JwATAS3Z3kW/SDGeZ
+ AhvaWQPEsBMYWjxDVwsvEItJILUq2MMLOwre2oEOov1pT2HCJViUEiu3VzcFpJhbVf3aukUARzd
+ IYC0LYUZZmZ29KDQIfvKR6F6qmA05xS2oE993eDh0TG80Oy9Sqadf+jAhAoQYCqeusA89JHPG67
+ geKhw1e25JgjSClYrnANVotwHxw0T5tMFXhoL7z9nbvrOnb57ExXylnLGPpva7qPnf8NbTVWTfU
+ 08+sb6I6Ri1zmxwlfAEJZeslOhDx9zuOMuEtSiaNNL3/d6aLK2VNskAbFIOoCXNFnLCflUz4ldX
+ FEFCxld6/Ja1sAD7tOrG5M5YJG1tE+gkEiexh
+X-Received: by 2002:a05:620a:6505:b0:915:7c1a:1390 with SMTP id
+ af79cd13be357-915a9d5859amr2315347185a.39.1780862806898; Sun, 07 Jun 2026
+ 13:06:46 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+References: <20260607140356.10702-1-deller@kernel.org>
+ <20260607140356.10702-10-deller@kernel.org>
+In-Reply-To: <20260607140356.10702-10-deller@kernel.org>
+From: Max Filippov <jcmvbkbc@gmail.com>
+Date: Sun, 7 Jun 2026 13:06:35 -0700
+X-Gm-Features: AVVi8CcSo9avB4tVy0dSJtDZi-EgKRwLES_NSFjiyyp7X0CUXvMHIldh8iuO6T8
+Message-ID: <CAMo8BfKSegeBHdKaxiXp3RQ+XX-BO9sztt-MucX_cWR=frnxfA@mail.gmail.com>
+Subject: Re: [PATCH 09/10] linux-user/xtensa: restore FP rounding mode on
+ sigreturn
+To: Helge Deller <deller@kernel.org>
+Cc: qemu-devel@nongnu.org, 
+ Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
+ Laurent Vivier <laurent@vivier.eu>, 
+ Yoshinori Sato <yoshinori.sato@nifty.com>, Helge Deller <deller@gmx.de>, 
+ Matt Turner <mattst88@gmail.com>
+Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=188.165.51.139; envelope-from=wrigjl@proton.me;
- helo=mail-07.mail-europe.com
-X-Spam_score_int: -27
-X-Spam_score: -2.8
-X-Spam_bar: --
-X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Received-SPF: pass client-ip=2607:f8b0:4864:20::732;
+ envelope-from=jcmvbkbc@gmail.com; helo=mail-qk1-x732.google.com
+X-Spam_score_int: 4
+X-Spam_score: 0.4
+X-Spam_bar: /
+X-Spam_report: (0.4 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1, DKIM_VALID=-0.1,
+ DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ FROM_LOCAL_NOVOWEL=0.5, HK_RANDOM_ENVFROM=0.999, HK_RANDOM_FROM=0.999,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -70,75 +123,140 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Commit 887eaa8a29 ("target/arm: implement FEAT_RNG_TRAP for RNDR/RNDRRS")
-gave ID_AA64ISAR0_EL1 a readfn so the RNDR field can reflect SCR_EL3.TRNDR
-at read time, and marked the cpreg ARM_CP_NO_RAW in the system-emulation
-path.  HVF then trips its hvf_arch_init_vcpu() assertion that no ID
-register in hvf_sreg_list[] is NO_RAW, aborting on boot on Apple Silicon:
+On Sun, Jun 7, 2026 at 7:04=E2=80=AFAM Helge Deller <deller@kernel.org> wro=
+te:
+>
+> From: Matt Turner <mattst88@gmail.com>
+>
+> The Xtensa FCR rounding-mode (RM) bits are not held only in
+> env->uregs[FCR]: they are also reflected into env->fp_status via
+> set_float_rounding_mode().  Similarly, FSR exception flags are mirrored
+> into env->fp_status.  Every write to FCR/FSR goes through
+> helper_wur_fpu{2k,}_fcr / helper_wur_fpu_fsr which keep the two in sync.
+>
+> restore_sigcontext() previously wrote nothing back for xtregs, leaving
+> env->fp_status with whatever rounding mode and exception flags the
+> signal handler last installed.  Any FP instruction in the interrupted
+> code could then operate with the wrong mode.
+>
+> Add a minimal target_xtensa_xtregs sub-frame carrying FCR and FSR.
 
-  Assertion failed: (!(ri->type & ARM_CP_NO_RAW)),
-  function hvf_arch_init_vcpu, file hvf.c, line 1442.
+The structure of the xtregs area is defined by the target xtensa core and
+this definition doesn't match what a typical core with FPU would produce.
 
-Reproduce with:
+Also this area saves not only FCR and FSR, but all of the FPU registers,
+which are caller-saved. Not saving them means that any operation
+that touches FPU registers in the signal handler context will clobber
+them for the code that was interrupted by the signal.
 
-  qemu-system-aarch64 -M virt,accel=3Dhvf -cpu host \
-                      -nographic -display none -bios /dev/null
+> setup_sigcontext() saves the current values and points sc_xtregs at the
+> sub-frame when XTENSA_OPTION_FP_COPROCESSOR or
+> XTENSA_OPTION_DFP_COPROCESSOR is present (both use env->fp_status driven
+> by FCR/FSR). restore_sigcontext() reads sc_xtregs; if non-zero it
+> restores FCR and FSR through cpu_set_fcr()/cpu_set_fsr() so fp_status
+> round-trips correctly across signal delivery.
+>
+> Signed-off-by: Matt Turner <mattst88@gmail.com>
+> Cc: Max Filippov <jcmvbkbc@gmail.com>
+> Signed-off-by: Helge Deller <deller@gmx.de>
+> ---
+>  linux-user/xtensa/signal.c | 36 +++++++++++++++++++++++++++++++-----
+>  1 file changed, 31 insertions(+), 5 deletions(-)
+>
+> diff --git a/linux-user/xtensa/signal.c b/linux-user/xtensa/signal.c
+> index ef8b0c3a27..fef23952b7 100644
+> --- a/linux-user/xtensa/signal.c
+> +++ b/linux-user/xtensa/signal.c
+> @@ -21,6 +21,7 @@
+>  #include "user-internals.h"
+>  #include "signal-common.h"
+>  #include "linux-user/trace.h"
+> +#include "target/xtensa/cpu.h"
+>
+>  struct target_sigcontext {
+>      abi_ulong sc_pc;
+> @@ -43,10 +44,15 @@ struct target_ucontext {
+>      target_sigset_t tuc_sigmask;
+>  };
+>
+> +struct target_xtensa_xtregs {
+> +    uint32_t fcr;
+> +    uint32_t fsr;
+> +};
+> +
+>  struct target_rt_sigframe {
+>      target_siginfo_t info;
+>      struct target_ucontext uc;
+> -    /* TODO: xtregs */
+> +    struct target_xtensa_xtregs xtregs;
+>      uint8_t retcode[6];
+>      abi_ulong window[4];
+>  };
+> @@ -107,6 +113,7 @@ static int flush_window_regs(CPUXtensaState *env)
+>  }
+>
+>  static int setup_sigcontext(struct target_rt_sigframe *frame,
+> +                            abi_ulong frame_addr,
+>                              CPUXtensaState *env)
+>  {
+>      struct target_sigcontext *sc =3D &frame->uc.tuc_mcontext;
+> @@ -123,8 +130,15 @@ static int setup_sigcontext(struct target_rt_sigfram=
+e *frame,
+>      for (i =3D 0; i < 16; ++i) {
+>          __put_user(env->regs[i], sc->sc_a + i);
+>      }
+> -    __put_user(0, &sc->sc_xtregs);
+> -    /* TODO: xtregs */
+> +    if (xtensa_option_enabled(env->config, XTENSA_OPTION_FP_COPROCESSOR)=
+ ||
+> +        xtensa_option_enabled(env->config, XTENSA_OPTION_DFP_COPROCESSOR=
+)) {
+> +        __put_user(env->uregs[FCR], &frame->xtregs.fcr);
+> +        __put_user(cpu_get_fsr(env), &frame->xtregs.fsr);
 
-Mirror the existing treatment of ID_AA64PFR0_EL1: move
-HV_SYS_REG_ID_AA64ISAR0_EL1 into the SYNC_NO_RAW_REGS block in
-sysreg.c.inc so the assert loop skips it, and push QEMU's view of the
-register to the vCPU at init time.  HVF does not expose EL3, so
-SCR_EL3.TRNDR is never set and the readfn is functionally static there.
+cpu_get_fsr() is introduced in the next patch of the series. It should go b=
+efore
+this one to keep the series bisectable.
 
-Reported-by: Zenghui Yu <zenghui.yu@linux.dev>
-Fixes: 887eaa8a29 ("target/arm: implement FEAT_RNG_TRAP for RNDR/RNDRRS")
-Signed-off-by: Jason Wright <wrigjl@proton.me>
----
- target/arm/hvf/hvf.c        | 4 ++++
- target/arm/hvf/sysreg.c.inc | 2 +-
- 2 files changed, 5 insertions(+), 1 deletion(-)
+> +        __put_user(frame_addr + offsetof(struct target_rt_sigframe, xtre=
+gs),
+> +                   &sc->sc_xtregs);
+> +    } else {
+> +        __put_user(0, &sc->sc_xtregs);
+> +    }
+>      return 1;
+>  }
+>
+> @@ -190,7 +204,7 @@ void setup_rt_frame(int sig, struct target_sigaction =
+*ka,
+>      __put_user(0, &frame->uc.tuc_flags);
+>      __put_user(0, &frame->uc.tuc_link);
+>      target_save_altstack(&frame->uc.tuc_stack, env);
+> -    if (!setup_sigcontext(frame, env)) {
+> +    if (!setup_sigcontext(frame, frame_addr, env)) {
+>          unlock_user_struct(frame, frame_addr, 0);
+>          goto give_sigsegv;
+>      }
+> @@ -266,7 +280,19 @@ static void restore_sigcontext(CPUXtensaState *env,
+>      for (i =3D 0; i < 16; ++i) {
+>          __get_user(env->regs[i], sc->sc_a + i);
+>      }
+> -    /* TODO: xtregs */
+> +    {
+> +        abi_ulong xtregs_addr;
+> +
+> +        __get_user(xtregs_addr, &sc->sc_xtregs);
+> +        if (xtregs_addr) {
+> +            uint32_t fcr, fsr;
+> +
+> +            __get_user(fcr, &frame->xtregs.fcr);
+> +            __get_user(fsr, &frame->xtregs.fsr);
+> +            cpu_set_fcr(env, fcr);
+> +            cpu_set_fsr(env, fsr);
 
-diff --git a/target/arm/hvf/hvf.c b/target/arm/hvf/hvf.c
-index d88cbe7c82..afa1120c8a 100644
---- a/target/arm/hvf/hvf.c
-+++ b/target/arm/hvf/hvf.c
-@@ -1485,6 +1485,10 @@ int hvf_arch_init_vcpu(CPUState *cpu)
-     ret =3D hv_vcpu_set_sys_reg(cpu->accel->fd, HV_SYS_REG_ID_AA64PFR0_EL1=
-, pfr);
-     assert_hvf_ok(ret);
-=20
-+    ret =3D hv_vcpu_set_sys_reg(cpu->accel->fd, HV_SYS_REG_ID_AA64ISAR0_EL=
-1,
-+                              GET_IDREG(&arm_cpu->isar, ID_AA64ISAR0));
-+    assert_hvf_ok(ret);
-+
-     /* We're limited to underlying hardware caps, override internal versio=
-ns */
-     ret =3D hv_vcpu_get_sys_reg(cpu->accel->fd, HV_SYS_REG_ID_AA64MMFR0_EL=
-1,
-                               &arm_cpu->isar.idregs[ID_AA64MMFR0_EL1_IDX])=
-;
-diff --git a/target/arm/hvf/sysreg.c.inc b/target/arm/hvf/sysreg.c.inc
-index c11dbf274e..acd5a41364 100644
---- a/target/arm/hvf/sysreg.c.inc
-+++ b/target/arm/hvf/sysreg.c.inc
-@@ -89,13 +89,13 @@ DEF_SYSREG(HV_SYS_REG_MDCCINT_EL1, 2, 0, 0, 2, 0)
- DEF_SYSREG(HV_SYS_REG_MIDR_EL1, 3, 0, 0, 0, 0)
- DEF_SYSREG(HV_SYS_REG_MPIDR_EL1, 3, 0, 0, 0, 5)
- DEF_SYSREG(HV_SYS_REG_ID_AA64PFR0_EL1, 3, 0, 0, 4, 0)
-+DEF_SYSREG(HV_SYS_REG_ID_AA64ISAR0_EL1, 3, 0, 0, 6, 0)
- #endif
-=20
- DEF_SYSREG(HV_SYS_REG_ID_AA64PFR1_EL1, 3, 0, 0, 4, 1)
- /* Add ID_AA64PFR2_EL1 here when HVF supports it */
- DEF_SYSREG(HV_SYS_REG_ID_AA64DFR0_EL1, 3, 0, 0, 5, 0)
- DEF_SYSREG(HV_SYS_REG_ID_AA64DFR1_EL1, 3, 0, 0, 5, 1)
--DEF_SYSREG(HV_SYS_REG_ID_AA64ISAR0_EL1, 3, 0, 0, 6, 0)
- DEF_SYSREG(HV_SYS_REG_ID_AA64ISAR1_EL1, 3, 0, 0, 6, 1)
-=20
- #ifdef SYNC_NO_MMFR0
+Same here.
+
 --=20
-2.50.1 (Apple Git-155)
-
-
+Thanks.
+-- Max
 
