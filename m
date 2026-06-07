@@ -4,47 +4,48 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1CCE4CD8C92
-	for <qemu-devel@archiver.kernel.org>; Sun,  7 Jun 2026 17:59:50 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 311B2CD8CA4
+	for <qemu-devel@archiver.kernel.org>; Sun,  7 Jun 2026 17:59:51 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wWHmB-0000JN-TR; Sun, 07 Jun 2026 13:59:11 -0400
+	id 1wWHmF-0000Ko-Pk; Sun, 07 Jun 2026 13:59:15 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1)
- (envelope-from <eb2d66400d7763e0f4c92e03c527009d5093f5ac@kylie.crudebyte.com>)
- id 1wWHmA-0000IK-Vh; Sun, 07 Jun 2026 13:59:10 -0400
+ (envelope-from <7840fbdba06d0f4c45cac96a0a9aa35681ef177f@kylie.crudebyte.com>)
+ id 1wWHmE-0000Ju-27; Sun, 07 Jun 2026 13:59:14 -0400
 Received: from kylie.crudebyte.com ([5.189.157.229])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1)
- (envelope-from <eb2d66400d7763e0f4c92e03c527009d5093f5ac@kylie.crudebyte.com>)
- id 1wWHm9-0004Jm-J7; Sun, 07 Jun 2026 13:59:10 -0400
+ (envelope-from <7840fbdba06d0f4c45cac96a0a9aa35681ef177f@kylie.crudebyte.com>)
+ id 1wWHmC-0004KR-Fm; Sun, 07 Jun 2026 13:59:13 -0400
 DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
  d=crudebyte.com; s=kylie; h=Cc:To:Subject:Date:From:References:In-Reply-To:
  Message-ID:Content-Type:Content-Transfer-Encoding:MIME-Version:Content-ID:
- Content-Description; bh=Nvijw5zxNpcwR19Sl1opG3FKxsazjdsC775GYkiqEho=; b=JcaXY
- FVuaGREgC2mgI+cIxiZTua8/3GtwwQkzBLWbCmifsJMbShi3kioiv56hk/pYCXGJemD1s7egn9Jx3
- pHbf3ce0ReGvW8roqXloOEJoypFveCfXbGk2ANJgecFDdyLNLn91RPE4ZWBQ9edqbfvIiatDC79/v
- OclSj80f9Tshb6e4lcPVcH4g+l7eySl+WRk5Q4/HHx8BuhqR0eEZ4g/WhO4YXVcbfRamc/ZAUYDQH
- UIC4JAnRNAnXnernRU4+Flx5AVXd+mSvbAZXAPlytDv61UaAS/yDPgBxgzC8V8NLC92GOsuFsDJ8M
- hac7SV96IXDcjgScXrOwmZiohenZCGOkKAfVgSVZYLwQEj7umND50umNUYPvXU8LUTlEPgAeqQNJ6
- b4mIhZz3YoNVS/0POxrWHCAfHRu3ZdWzbARsUwP+1wSZVpMBc+PKLq51l7pGHZArpEfJFo4smfoac
- xLUg3jhPHtlvHXMcU6nGexzkq8CPaallE0vF7GfOI84yrJQahmc6cPtHQxAZvXzRbQE64u2GvZzX1
- jDdJIDjoJO+C6l4+gKrwSpzWnEa1S/C8toBXDvHpy2o8Ec3tqevcddYPzfExnbR9N2Z+2Qpr03x4H
- f6bMcWvBtXlSbJQSKfaG1tiGGnWnWnzPRJz8d9vcwycwkfIlFoa2CNZqta1AWU=;
-Message-ID: <eb2d66400d7763e0f4c92e03c527009d5093f5ac.1780851947.git.qemu_oss@crudebyte.com>
+ Content-Description; bh=j+IJKoaTTT2cxXkfp0g/5zvDk/18rKDB/i3pyHZ0ieY=; b=ck0v4
+ Ag917os6/3AG8KJIwcWoVk9MDsUm0Gz+/IBPB6a0OEFH9G+eF27hb1OMPb9CbwOrivu/jB1jvychT
+ qgOi14PaxumE2gX+tG3d/vopr6wb0UXP7ZJN6sMBvza2bUtmfguLAwWMWVCu4qnkt9nVCxefuW5NJ
+ 1hTE1Q20LUX5x8ieA9CEFxiSzecpGcc4ydXLBxVCSUy+DM6UZdxdlI/KOC9mAfiDLczPH/ZC3bGD0
+ Bp11DelvOe5G6KRu3W/e+EraU3ZzBglGpRodAb6K9PHLPbCvAyKQ6q2kT9wFk+4x0PAPdMmdV6vWy
+ EhRBL1cgNigWXC70PMGlEQbds0tcQn5gYBKkMeTAbSFh4osPm1Y5cero/08SzFKmliknQi6trXaZH
+ pBbgMPIk/BXwuY2OJN70glVK+vMRtl2+CCEV8q3hxNVcpYcngYfACZm1ce5siWfRqBoWA6a81a974
+ Q5VAeBdYm7S4cWfEIjRbMj9pxjHNuvfXL4qs7DHx75HVcSEo0EKinx5aNA0xz6f+eeX0F3wCm3dAS
+ Mrerm0ODuwnhT05IAvasquTkAPKlZjCxr7E6tdVbicB7hpTSIcF1NytzAOdURgcdrHCgYaM41FmzN
+ HiIYRqI7UldwQ7oB5a7j9hnFN2bIAXMu26Il8REEShSCI++pwvAYdaRSu+ZMJQ=;
+Message-ID: <7840fbdba06d0f4c45cac96a0a9aa35681ef177f.1780851947.git.qemu_oss@crudebyte.com>
 In-Reply-To: <cover.1780851947.git.qemu_oss@crudebyte.com>
 References: <cover.1780851947.git.qemu_oss@crudebyte.com>
 From: Christian Schoenebeck <qemu_oss@crudebyte.com>
 Date: Sun, 07 Jun 2026 19:22:19 +0200
-Subject: [PATCH 09/12] tests/9p: increase P9_MAX_SIZE for test client
+Subject: [PATCH 12/12] tests/9p: add 3 xattr FID limit test cases (local fs
+ driver)
 To: qemu-devel@nongnu.org,
     qemu-stable@nongnu.org
 Cc: Greg Kurz <groug@kaod.org>,
     Feifan Qian <bea1e@proton.me>
 Received-SPF: pass client-ip=5.189.157.229;
- envelope-from=eb2d66400d7763e0f4c92e03c527009d5093f5ac@kylie.crudebyte.com;
+ envelope-from=7840fbdba06d0f4c45cac96a0a9aa35681ef177f@kylie.crudebyte.com;
  helo=kylie.crudebyte.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
@@ -67,36 +68,135 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Increase the maximum 9P message size from 4k to 32k to support larger
-messages.
+Analogue to the previously added 3 synth tests, add (similar) 3 test
+cases using the "local" fs driver to verify correct xattr FID limit
+enforcement of 9pfs server with a real filesystem.
 
-This is needed for the xattr tests being added with the subsequent
-patches which are going to transmit xattrs of size 8k. It would have
-also been possible to send them in multiple chunks, however let's not
-overcomplicate things.
+These 3 new local tests use the shared test code of the previously
+added 3 synth tests. The only difference is that the local fs driver
+does not expose the current internal xattr FID counter, so we can't
+verify this with the local tests.
 
-This new msize is still reasonable small compared to common msize
-values on production systems.
+These are "slow" tests, i.e. they are not running by default.
+Use -m slow for running theses tests.
 
 Signed-off-by: Christian Schoenebeck <qemu_oss@crudebyte.com>
 ---
- tests/qtest/libqos/virtio-9p-client.h | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ tests/qtest/virtio-9p-test.c | 69 ++++++++++++++++++++++++++++++++++--
+ 1 file changed, 66 insertions(+), 3 deletions(-)
 
-diff --git a/tests/qtest/libqos/virtio-9p-client.h b/tests/qtest/libqos/virtio-9p-client.h
-index c432b0daee..4b04324503 100644
---- a/tests/qtest/libqos/virtio-9p-client.h
-+++ b/tests/qtest/libqos/virtio-9p-client.h
-@@ -21,7 +21,8 @@
- #include "qgraph.h"
- #include "tests/qtest/libqtest-single.h"
+diff --git a/tests/qtest/virtio-9p-test.c b/tests/qtest/virtio-9p-test.c
+index 2e88429dfa..d559f0f8a0 100644
+--- a/tests/qtest/virtio-9p-test.c
++++ b/tests/qtest/virtio-9p-test.c
+@@ -395,6 +395,19 @@ static void do_xattr_limit(QVirtio9P *v9p, int max_xattr, bool check_counter)
+     }
+ }
  
--#define P9_MAX_SIZE 4096 /* Max size of a T-message or R-message */
-+/* Max size of a T-message or R-message */
-+#define P9_MAX_SIZE (32 * 1024)
++static void do_local_xattr_limit(QVirtio9P *v9p, int max_xattr)
++{
++    g_autofree char *test_file = virtio_9p_test_path("WRITE");
++
++    /*
++     * this file must be created for the test to work with the 'local' fs driver
++     */
++    g_file_set_contents(test_file, "", 0, NULL);
++
++    /* the actual test code shared with the 'synth' fs driver tests */
++    do_xattr_limit(v9p, max_xattr, false);
++}
++
+ static void fs_walk_no_slash(void *obj, void *data, QGuestAllocator *t_alloc)
+ {
+     QVirtio9P *v9p = obj;
+@@ -990,6 +1003,27 @@ static void fs_deep_absolute_path(void *obj, void *data,
+     g_string_free(path, TRUE);
+ }
  
- typedef struct {
-     QTestState *qts;
++static void fs_local_xattr_limit_default(void *obj, void *data,
++                                         QGuestAllocator *t_alloc)
++{
++    v9fs_set_allocator(t_alloc);
++    do_local_xattr_limit(obj, V9FS_MAX_XATTR_DEFAULT);
++}
++
++static void fs_local_xattr_limit_custom(void *obj, void *data,
++                                        QGuestAllocator *t_alloc)
++{
++    v9fs_set_allocator(t_alloc);
++    do_local_xattr_limit(obj, 100);
++}
++
++static void fs_local_xattr_limit_unlimited(void *obj, void *data,
++                                           QGuestAllocator *t_alloc)
++{
++    v9fs_set_allocator(t_alloc);
++    do_local_xattr_limit(obj, -1);
++}
++
+ static void *synth_max_xattr_custom_opt(GString *cmd_line, void *arg)
+ {
+     virtio_9p_add_synth_driver_args(cmd_line, "max_xattr=100");
+@@ -1008,20 +1042,41 @@ static void cleanup_9p_local_driver(void *data)
+     virtio_9p_remove_local_test_dir();
+ }
+ 
+-static void *assign_9p_local_driver(GString *cmd_line, void *arg)
++static void assign_9p_local_driver_with_args(GString *cmd_line,
++                                             const char *extra_opts)
+ {
+     /* make sure test dir for the 'local' tests exists */
+     virtio_9p_create_local_test_dir();
+ 
+-    virtio_9p_assign_local_driver(cmd_line, "security_model=mapped-xattr");
++    g_autofree char *opts = g_strdup("security_model=mapped-xattr");
++    if (extra_opts) {
++        opts = g_strdup_printf("%s,%s", opts, extra_opts);
++    }
++    virtio_9p_assign_local_driver(cmd_line, opts);
+ 
+     g_test_queue_destroy(cleanup_9p_local_driver, NULL);
++}
++
++static void *assign_9p_local_driver(GString *cmd_line, void *arg)
++{
++    assign_9p_local_driver_with_args(cmd_line, NULL);
++    return arg;
++}
++
++static void *local_max_xattr_custom_opt(GString *cmd_line, void *arg)
++{
++    assign_9p_local_driver_with_args(cmd_line, "max_xattr=100");
++    return arg;
++}
++
++static void *local_max_xattr_unlimited_opt(GString *cmd_line, void *arg)
++{
++    assign_9p_local_driver_with_args(cmd_line, "max_xattr=0");
+     return arg;
+ }
+ 
+ static void register_virtio_9p_test(void)
+ {
+-
+     QOSGraphTestOptions opts = {
+     };
+ 
+@@ -1078,6 +1133,14 @@ static void register_virtio_9p_test(void)
+                  &opts);
+     qos_add_test("local/deep_absolute_path", "virtio-9p",
+                  fs_deep_absolute_path, &opts);
++    qos_add_test("local/xattr_limit/default", "virtio-9p",
++                 fs_local_xattr_limit_default, &opts);
++    opts.before = local_max_xattr_custom_opt;
++    qos_add_test("local/xattr_limit/custom", "virtio-9p",
++                 fs_local_xattr_limit_custom, &opts);
++    opts.before = local_max_xattr_unlimited_opt;
++    qos_add_test("local/xattr_limit/unlimited", "virtio-9p",
++                 fs_local_xattr_limit_unlimited, &opts);
+ }
+ 
+ libqos_init(register_virtio_9p_test);
 -- 
 2.47.3
 
