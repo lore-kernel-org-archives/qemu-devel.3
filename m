@@ -4,47 +4,45 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id BA1D9CD8C8E
-	for <qemu-devel@archiver.kernel.org>; Sun,  7 Jun 2026 14:05:41 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8FC53CD8C8C
+	for <qemu-devel@archiver.kernel.org>; Sun,  7 Jun 2026 14:05:43 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wWE6r-0004L9-44; Sun, 07 Jun 2026 10:04:17 -0400
+	id 1wWE6h-0004Ip-6Z; Sun, 07 Jun 2026 10:04:07 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <deller@kernel.org>) id 1wWE6q-0004Kv-1P
- for qemu-devel@nongnu.org; Sun, 07 Jun 2026 10:04:16 -0400
+ (Exim 4.90_1) (envelope-from <deller@kernel.org>) id 1wWE6f-0004IK-9t
+ for qemu-devel@nongnu.org; Sun, 07 Jun 2026 10:04:05 -0400
 Received: from sea.source.kernel.org ([2600:3c0a:e001:78e:0:1991:8:25])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <deller@kernel.org>) id 1wWE6o-00085z-Cl
- for qemu-devel@nongnu.org; Sun, 07 Jun 2026 10:04:15 -0400
+ (Exim 4.90_1) (envelope-from <deller@kernel.org>) id 1wWE6d-0007zE-KD
+ for qemu-devel@nongnu.org; Sun, 07 Jun 2026 10:04:05 -0400
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
- by sea.source.kernel.org (Postfix) with ESMTP id 84CAE44353;
- Sun,  7 Jun 2026 14:04:13 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9DE491F00893;
- Sun,  7 Jun 2026 14:04:11 +0000 (UTC)
+ by sea.source.kernel.org (Postfix) with ESMTP id 8DD5443857;
+ Sun,  7 Jun 2026 14:04:02 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0843C1F00893;
+ Sun,  7 Jun 2026 14:04:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
- s=k20260515; t=1780841053;
- bh=Z1dfaMdDG1BHIABJPuyTvw9aGXsVucAwD1oVosQ69OE=;
+ s=k20260515; t=1780841042;
+ bh=SZokrjayKiS1ulA/9qnPoBKc5DedE8QybE5mhesGm2A=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References;
- b=E7FXUhiOzubVp01t2baeApImLVVoIYzPJ2rtL0TcVHFN5Txrz40XcZtBEb477A05B
- UCLjWA2h/QAwYe38CDc/vQR+E5QxbnQvCfS1Vs/Hkoeakz7HvmP1P5Yyc89yMeLZmV
- ZmjsWi+wLA1a1TAnjOywEVXE7BK5hFVGLbXKTf549g/dIwALnJ40cW+mBqkssiCVN/
- x9oza8uw/Tz/abN0g9V3tyaXVFLjdlWkHiJTvCh9jDOJJwQli2LuO5/L66RZXqOHlM
- HvsH0EYQDmK+Pv6UnPxgLu1ANrS5H05qlBxrTKPbiNSUQ+Lz1rqUcm/UYw/8aJvrH3
- 7lD1zRgPZUvhQ==
+ b=eidsL1rgl/IuYZGGGN30ksXyTH8LS5jBlAvKZF7Z5CZ8JF+0g14REminHI0TOEB/U
+ ZNa2J8T2G+IIQJu1ZuO5FnLd00h2EE2tr+qenMGU3NLXfpk+YwKGI6SfJ6kWWOTgye
+ yqT2o26l3Ppja9rjP7CdPkbr1BOzvO/w0ybPpggokEGloXBJ83ZsUog5rS7l8bHA9V
+ fs/IfK/2LNIWaEHIj8y65bKJRyik43oEc4bVswKeG2pTXcpKrVZrFiPeoMlIMOtvTZ
+ xCqTR+b5FKgUvHXJ1wf6/dtGYbddi/bwE0SB3V4lFh8I6DMNJulwO8NFA7KF/vRZMw
+ pX+XQkpbJ+Xow==
 From: Helge Deller <deller@kernel.org>
 To: qemu-devel@nongnu.org
 Cc: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
  Laurent Vivier <laurent@vivier.eu>,
  Yoshinori Sato <yoshinori.sato@nifty.com>,
  Max Filippov <jcmvbkbc@gmail.com>, Helge Deller <deller@gmx.de>,
- Matt Turner <mattst88@gmail.com>,
- Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>
-Subject: [PATCH 06/10] linux-user/sparc: call block_signals() before
- set_sigmask() in setcontext
-Date: Sun,  7 Jun 2026 16:03:52 +0200
-Message-ID: <20260607140356.10702-7-deller@kernel.org>
+ Xinhui Yang <cyan@cyano.uk>
+Subject: [PATCH 01/10] linux-user: implement fsmount(2) series of syscalls
+Date: Sun,  7 Jun 2026 16:03:47 +0200
+Message-ID: <20260607140356.10702-2-deller@kernel.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260607140356.10702-1-deller@kernel.org>
 References: <20260607140356.10702-1-deller@kernel.org>
@@ -73,77 +71,127 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Matt Turner <mattst88@gmail.com>
+From: Xinhui Yang <cyan@cyano.uk>
 
-sparc64_set_context() emulates the kernel's `ta 0x6f` trap by calling
-set_sigmask() to install the mask supplied via the user's ucontext_t.
-The contract of set_sigmask() (see its comment in linux-user/signal.c)
-is that the caller must have first called block_signals(), which sets
-TaskState::signal_pending.
+This series of syscalls replaces the old mount(2) syscall with a series
+of syscalls that operates around a filesystem context. This series of
+syscalls is available since Linux 5.2 and glibc 2.36+.
 
-Without block_signals(), if a guest signal is pending-and-blocked at
-the time setcontext is invoked and the new mask unblocks it,
-signal_pending stays 0 and the post-trap process_pending_signals()
-call in linux-user/sparc/cpu_loop.c never enters its while loop, so
-the now-deliverable signal is left undelivered indefinitely.
+Their users include systemd since v259 and libmount from util-linux, and
+possibly other widely used projects.
 
-This affects programs that use getcontext/setcontext to swap signal
-masks, including libunwind's unw_resume() out of a signal handler:
-without this fix, the test program below loops forever printing
-"calling setcontext" instead of delivering the pending SIGUSR2.
+Preliminary checks are implemented to ensure the validity of the
+interface.
 
-  #define _GNU_SOURCE
-  #include <ucontext.h>
-  #include <signal.h>
-  #include <stdio.h>
-  #include <unistd.h>
-  static int got;
-  static void h(int s) { got = 1; }
-  int main(void) {
-      signal(SIGUSR2, h);
-      sigset_t m; sigemptyset(&m); sigaddset(&m, SIGUSR2);
-      sigprocmask(SIG_BLOCK, &m, NULL);
-      kill(getpid(), SIGUSR2);
-      ucontext_t uc;
-      getcontext(&uc);
-      if (got) return 0;
-      uc.uc_sigmask.__val[0] = 0;
-      setcontext(&uc);
-      return 1;
-  }
-
-The 32-bit sparc do_sigreturn / do_rt_sigreturn paths already get
-block_signals() from the rt_sigreturn syscall wrapper in
-linux-user/syscall.c, so only sparc64_set_context (invoked directly
-from cpu_loop) needs the addition.
-
-Signed-off-by: Matt Turner <mattst88@gmail.com>
-Cc: Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>
+Signed-off-by: Xinhui Yang <cyan@cyano.uk>
+Reviewed-by: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
 Signed-off-by: Helge Deller <deller@gmx.de>
 ---
- linux-user/sparc/signal.c | 9 +++++++++
- 1 file changed, 9 insertions(+)
+ linux-user/syscall.c | 91 ++++++++++++++++++++++++++++++++++++++++++++
+ 1 file changed, 91 insertions(+)
 
-diff --git a/linux-user/sparc/signal.c b/linux-user/sparc/signal.c
-index fda5508c48..ba692c3123 100644
---- a/linux-user/sparc/signal.c
-+++ b/linux-user/sparc/signal.c
-@@ -619,6 +619,15 @@ void sparc64_set_context(CPUSPARCState *env)
-             }
-         }
-         target_to_host_sigset_internal(&set, &target_set);
-+        /*
-+         * set_sigmask() requires the caller to have first called
-+         * block_signals() so that process_pending_signals() is guaranteed
-+         * to run after the mask change.  Without this, a guest signal that
-+         * is pending-and-blocked at setcontext time is left undelivered
-+         * even after its mask bit is cleared, because signal_pending stays
-+         * 0 and the post-trap process_pending_signals() loop never enters.
-+         */
-+        block_signals();
-         set_sigmask(&set);
-     }
-     env->pc = pc;
+diff --git a/linux-user/syscall.c b/linux-user/syscall.c
+index 7d7a7b489c..c5c2aa80ec 100644
+--- a/linux-user/syscall.c
++++ b/linux-user/syscall.c
+@@ -14412,6 +14412,97 @@ static abi_long do_syscall1(CPUArchState *cpu_env, int num, abi_long arg1,
+         return do_map_shadow_stack(cpu_env, arg1, arg2, arg3);
+ #endif
+ 
++#if defined(TARGET_NR_fsopen)
++    case TARGET_NR_fsopen:
++        {
++            p = lock_user_string(arg1);
++            if (!p) {
++                return -TARGET_EFAULT;
++            }
++            ret = get_errno(fsopen(p, arg2));
++            unlock_user(p, arg1, 0);
++        }
++        return ret;
++    case TARGET_NR_fsconfig:
++        {
++            /*
++             * fsconfig(int, int, char *, void *, int)
++             * NOTE: p4 is nullable and its type might not be a string.
++             */
++            void *p3, *p4;
++            int cmd = (int) arg2;
++            switch (cmd) {
++            case FSCONFIG_SET_BINARY:
++            case FSCONFIG_SET_STRING:
++            case FSCONFIG_SET_PATH:
++            case FSCONFIG_SET_PATH_EMPTY:
++                p3 = lock_user_string(arg3);
++                if (!p3) {
++                    return -TARGET_EFAULT;
++                }
++                if (cmd != FSCONFIG_SET_BINARY) {
++                    /* key and value must be strings. */
++                    p4 = lock_user_string(arg4);
++                } else {
++                    /*
++                     * Otherwise the value must be a raw buffer with its
++                     * length specified in arg5 (aux).
++                     */
++                    p4 = lock_user(VERIFY_READ, arg4, arg5, 1);
++                }
++                if (!p4) {
++                    unlock_user(p3, arg3, 0);
++                    return -TARGET_EFAULT;
++                }
++                ret = get_errno(fsconfig(arg1, arg2, p3, p4, arg5));
++                unlock_user(p3, arg3, 0);
++                unlock_user(p4, arg4, 0);
++                break;
++
++            case FSCONFIG_SET_FLAG:
++            case FSCONFIG_SET_FD:
++                /* arg4 (value) must be NULL. */
++                if (arg4) {
++                    return -TARGET_EFAULT;
++                }
++                p3 = lock_user_string(arg3);
++                if (!p3) {
++                    return -TARGET_EFAULT;
++                }
++                ret = get_errno(fsconfig(arg1, arg2, p3, NULL, arg5));
++                unlock_user(p3, arg3, 0);
++                break;
++            case FSCONFIG_CMD_CREATE:
++            case FSCONFIG_CMD_RECONFIGURE:
++#ifdef FSCONFIG_CMD_CREATE_EXCL
++            /*
++             * FSCONFIG_CMD_CREATE_EXCL is only available since Linux
++             * 6.6. Guarding it to allow building with pre-6.6 headers.
++             */
++            case FSCONFIG_CMD_CREATE_EXCL:
++#endif
++                /* key and value must be NULL, aux must be 0. */
++                if (arg3 || arg4 || arg5) {
++                    return -TARGET_EFAULT;
++                }
++                ret = get_errno(fsconfig(arg1, arg2, NULL, NULL, 0));
++                break;
++            default:
++                return -TARGET_EFAULT;
++            }
++        }
++        return ret;
++    case TARGET_NR_fsmount:
++        ret = get_errno(fsmount(arg1, arg2, arg3));
++        return ret;
++    case TARGET_NR_fspick:
++        {
++            p = lock_user_string(arg2);
++            ret = get_errno(fspick(arg1, p, arg3));
++            unlock_user(p, arg2, 0);
++        }
++        return ret;
++#endif
+     default:
+         qemu_log_mask(LOG_UNIMP, "Unsupported syscall: %d\n", num);
+         return -TARGET_ENOSYS;
 -- 
 2.54.0
 
