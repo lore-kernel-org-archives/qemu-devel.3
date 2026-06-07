@@ -4,58 +4,105 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8FC53CD8C8C
-	for <qemu-devel@archiver.kernel.org>; Sun,  7 Jun 2026 14:05:43 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 24683CD8C8E
+	for <qemu-devel@archiver.kernel.org>; Sun,  7 Jun 2026 14:43:02 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wWE6h-0004Ip-6Z; Sun, 07 Jun 2026 10:04:07 -0400
+	id 1wWEhc-0003nz-5M; Sun, 07 Jun 2026 10:42:16 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <deller@kernel.org>) id 1wWE6f-0004IK-9t
- for qemu-devel@nongnu.org; Sun, 07 Jun 2026 10:04:05 -0400
-Received: from sea.source.kernel.org ([2600:3c0a:e001:78e:0:1991:8:25])
+ (Exim 4.90_1) (envelope-from <anisinha@redhat.com>)
+ id 1wWEhX-0003nT-Hp
+ for qemu-devel@nongnu.org; Sun, 07 Jun 2026 10:42:12 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <deller@kernel.org>) id 1wWE6d-0007zE-KD
- for qemu-devel@nongnu.org; Sun, 07 Jun 2026 10:04:05 -0400
-Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
- by sea.source.kernel.org (Postfix) with ESMTP id 8DD5443857;
- Sun,  7 Jun 2026 14:04:02 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0843C1F00893;
- Sun,  7 Jun 2026 14:04:00 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
- s=k20260515; t=1780841042;
- bh=SZokrjayKiS1ulA/9qnPoBKc5DedE8QybE5mhesGm2A=;
- h=From:To:Cc:Subject:Date:In-Reply-To:References;
- b=eidsL1rgl/IuYZGGGN30ksXyTH8LS5jBlAvKZF7Z5CZ8JF+0g14REminHI0TOEB/U
- ZNa2J8T2G+IIQJu1ZuO5FnLd00h2EE2tr+qenMGU3NLXfpk+YwKGI6SfJ6kWWOTgye
- yqT2o26l3Ppja9rjP7CdPkbr1BOzvO/w0ybPpggokEGloXBJ83ZsUog5rS7l8bHA9V
- fs/IfK/2LNIWaEHIj8y65bKJRyik43oEc4bVswKeG2pTXcpKrVZrFiPeoMlIMOtvTZ
- xCqTR+b5FKgUvHXJ1wf6/dtGYbddi/bwE0SB3V4lFh8I6DMNJulwO8NFA7KF/vRZMw
- pX+XQkpbJ+Xow==
-From: Helge Deller <deller@kernel.org>
-To: qemu-devel@nongnu.org
-Cc: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
- Laurent Vivier <laurent@vivier.eu>,
- Yoshinori Sato <yoshinori.sato@nifty.com>,
- Max Filippov <jcmvbkbc@gmail.com>, Helge Deller <deller@gmx.de>,
- Xinhui Yang <cyan@cyano.uk>
-Subject: [PATCH 01/10] linux-user: implement fsmount(2) series of syscalls
-Date: Sun,  7 Jun 2026 16:03:47 +0200
-Message-ID: <20260607140356.10702-2-deller@kernel.org>
+ (Exim 4.90_1) (envelope-from <anisinha@redhat.com>)
+ id 1wWEhU-0005BV-Qn
+ for qemu-devel@nongnu.org; Sun, 07 Jun 2026 10:42:11 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1780843327;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:
+ content-transfer-encoding:content-transfer-encoding;
+ bh=Q8XQOn9LUh37rgLXmw94eIPYjrEIayaDjh+oohRkMR4=;
+ b=ZoybR2KcIsOrt3ce0FJRIp3sUfQk6GgpZYkvJU3aORXhbTxa2u7cU9PgDEV65X6P2ILXzw
+ t93rRVaRO04vTDN60JhI7b/Cr0M0eNkSuNS6iZ6zH/C/LaV3UO1qo5ghxvvQT3p9G/aUXE
+ GErRDOyBSHFzflkQNQPG51vdbKp60Mk=
+Received: from mail-pg1-f199.google.com (mail-pg1-f199.google.com
+ [209.85.215.199]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-604-R0We1wGWNcmodFeOHXbSdg-1; Sun, 07 Jun 2026 10:42:03 -0400
+X-MC-Unique: R0We1wGWNcmodFeOHXbSdg-1
+X-Mimecast-MFC-AGG-ID: R0We1wGWNcmodFeOHXbSdg_1780843323
+Received: by mail-pg1-f199.google.com with SMTP id
+ 41be03b00d2f7-c8611b27631so882025a12.0
+ for <qemu-devel@nongnu.org>; Sun, 07 Jun 2026 07:42:03 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=redhat.com; s=google; t=1780843323; x=1781448123; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:from:to:cc:subject:date:message-id:reply-to;
+ bh=Q8XQOn9LUh37rgLXmw94eIPYjrEIayaDjh+oohRkMR4=;
+ b=ZQr/lFcuP7MhQ1z7uKzAvo6psbLDK0kU+vcdacg09AzUR+Rc6KG7w0cgcBmxMwe1LP
+ 9x8V1gc3Fi39JqQpTIchY1ZGOGtGRN2FvAzq/5Pn4nc6RjSSRMJ3HaLC8ZcelBa6gBso
+ w8Ujvs24hffu9oNKf7T8YYo1rb7lLXruPvqQW7B8xMo0ZRJNiVyUkLzUtJ1f4s1yQqL7
+ OTBWl1SbBzR09RlvT3GkXY5kowI5G0zmUYRBXKx56yI/NTOdt51Eo6BQQyCGemCophkd
+ CjmXKO+AY0HK8B06U5zKZ2cZKHnOdSE4HnOOSACRQTDa2KH2QzeOB70G6yv0H/6E9X6D
+ vbvg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1780843323; x=1781448123;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=Q8XQOn9LUh37rgLXmw94eIPYjrEIayaDjh+oohRkMR4=;
+ b=VTQwJBrVAaQWAae0qp3plUhyH1SfbShIRDMhdhHhpIyc5lcdD1fsEqrBwvySfjCVIp
+ s302DrRDtm5351zS2dD+S/bnElfh7enLyhBjFSzlQ6IU93u/yTrRYfLQMLCNlYgSWlKC
+ IUj+P4TsyRN7ga0ff3z9yZQ35OvG8JWQTLYSoyha0iuDjLZS67i6RDLPeCtPRfxU1OrS
+ xajjALjy48oJqSlGc/V5a1RGyVrBS/kfD0JHbJYNVGpD1jyw2JSjyFIPO8ROIzLRbarz
+ pxwZl5/j1F8BgNoTMy03ug/WH1LVDKwOJ9G9aeaMSvC3JXktNtwA9aQtQSzzpHG/f5Xj
+ MQnw==
+X-Forwarded-Encrypted: i=1;
+ AFNElJ/O9O5aCpa06f8eujt3IwnXJd+sAqnmIMnNqz129g8F3dxmkCXhS/2BeccmjwxOSJvPnoRAl8qucUyh@nongnu.org
+X-Gm-Message-State: AOJu0YxniBqaJmqrLuLiAEsYaBzVQgO2iLdcjGqG0kKUGybfeBQLw2Jr
+ k2DPMctX7FOnGiknrm9GbnrNJAlC9KhyD95LIE6jBLN6WWDSlS0azqHPJGv65Oxpjo7Ns9WXLpo
+ x+bMVQOaiPR/jEDKr1qVapMxEhL0oQCDTI+fRQk0VyNUrpmnWOEdts0e7
+X-Gm-Gg: Acq92OFcSsvYxvl+2irpElmO6sKLYaJoHD1EQJaAkIoDZCh4U69lSvySXxO4aOP8YIO
+ Jr/6Z85hCdlpjvS2hocDv9KM63gZTtq2tK+ktn48j0D4txvNNx9FOcg0EE/9ceyyLp+BzdiDc89
+ wpn0Q2GQjFDKQC+xZUt5a8Pp2hmx5CZ2RUelg97Ur2v0d35Hx5/JSBxJaUlXJSgGAy3DP1VBTgd
+ EA2fS8sC4sqtbGsBEtG7jutl2+F2jusnqv+oYXjfm7H0hWwFqdJgM4xpl9Wz2GaievxVvkkfaNB
+ nI84VADFKpWtNcmkxSlBzk1zCTPfm2Hn5ZMMAwRsJbtM2qc5O4ZRmiq6bSEKoG2GoZZO+G9gkI2
+ 4adyV7+S2t/PVYO+wwdLXq3qHi/1+cgUwCIrLQiY/RZ7BUTOLY2Bmj2gBjmPA+4/4QN7r
+X-Received: by 2002:a17:903:2acd:b0:2c0:bcff:e1a9 with SMTP id
+ d9443c01a7336-2c1ec7dc6d1mr87143965ad.9.1780843322697; 
+ Sun, 07 Jun 2026 07:42:02 -0700 (PDT)
+X-Received: by 2002:a17:903:2acd:b0:2c0:bcff:e1a9 with SMTP id
+ d9443c01a7336-2c1ec7dc6d1mr87143795ad.9.1780843322167; 
+ Sun, 07 Jun 2026 07:42:02 -0700 (PDT)
+Received: from ani-lenovo.lan ([122.163.16.238])
+ by smtp.googlemail.com with ESMTPSA id
+ d9443c01a7336-2c164f8679esm147750565ad.21.2026.06.07.07.41.58
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Sun, 07 Jun 2026 07:42:01 -0700 (PDT)
+From: Ani Sinha <anisinha@redhat.com>
+To: Gerd Hoffmann <kraxel@redhat.com>,
+ Stefano Garzarella <sgarzare@redhat.com>, Ani Sinha <anisinha@redhat.com>
+Cc: qemu-trivial@nongnu.org,
+	qemu-devel@nongnu.org
+Subject: [PATCH] igvm: spit out region size on error
+Date: Sun,  7 Jun 2026 20:11:44 +0530
+Message-ID: <20260607144144.445493-1-anisinha@redhat.com>
 X-Mailer: git-send-email 2.54.0
-In-Reply-To: <20260607140356.10702-1-deller@kernel.org>
-References: <20260607140356.10702-1-deller@kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2600:3c0a:e001:78e:0:1991:8:25;
- envelope-from=deller@kernel.org; helo=sea.source.kernel.org
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=anisinha@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -24
 X-Spam_score: -2.5
 X-Spam_bar: --
 X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.445,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -71,127 +118,31 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Xinhui Yang <cyan@cyano.uk>
+This change makes the error message provide more details on the values that
+caused the error. Cosmetic, no functional change. Only useful for debugging
+purpose.
 
-This series of syscalls replaces the old mount(2) syscall with a series
-of syscalls that operates around a filesystem context. This series of
-syscalls is available since Linux 5.2 and glibc 2.36+.
-
-Their users include systemd since v259 and libmount from util-linux, and
-possibly other widely used projects.
-
-Preliminary checks are implemented to ensure the validity of the
-interface.
-
-Signed-off-by: Xinhui Yang <cyan@cyano.uk>
-Reviewed-by: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
-Signed-off-by: Helge Deller <deller@gmx.de>
+CC: qemu-trivial@nongnu.org
+Signed-off-by: Ani Sinha <anisinha@redhat.com>
 ---
- linux-user/syscall.c | 91 ++++++++++++++++++++++++++++++++++++++++++++
- 1 file changed, 91 insertions(+)
+ backends/igvm.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/linux-user/syscall.c b/linux-user/syscall.c
-index 7d7a7b489c..c5c2aa80ec 100644
---- a/linux-user/syscall.c
-+++ b/linux-user/syscall.c
-@@ -14412,6 +14412,97 @@ static abi_long do_syscall1(CPUArchState *cpu_env, int num, abi_long arg1,
-         return do_map_shadow_stack(cpu_env, arg1, arg2, arg3);
- #endif
- 
-+#if defined(TARGET_NR_fsopen)
-+    case TARGET_NR_fsopen:
-+        {
-+            p = lock_user_string(arg1);
-+            if (!p) {
-+                return -TARGET_EFAULT;
-+            }
-+            ret = get_errno(fsopen(p, arg2));
-+            unlock_user(p, arg1, 0);
-+        }
-+        return ret;
-+    case TARGET_NR_fsconfig:
-+        {
-+            /*
-+             * fsconfig(int, int, char *, void *, int)
-+             * NOTE: p4 is nullable and its type might not be a string.
-+             */
-+            void *p3, *p4;
-+            int cmd = (int) arg2;
-+            switch (cmd) {
-+            case FSCONFIG_SET_BINARY:
-+            case FSCONFIG_SET_STRING:
-+            case FSCONFIG_SET_PATH:
-+            case FSCONFIG_SET_PATH_EMPTY:
-+                p3 = lock_user_string(arg3);
-+                if (!p3) {
-+                    return -TARGET_EFAULT;
-+                }
-+                if (cmd != FSCONFIG_SET_BINARY) {
-+                    /* key and value must be strings. */
-+                    p4 = lock_user_string(arg4);
-+                } else {
-+                    /*
-+                     * Otherwise the value must be a raw buffer with its
-+                     * length specified in arg5 (aux).
-+                     */
-+                    p4 = lock_user(VERIFY_READ, arg4, arg5, 1);
-+                }
-+                if (!p4) {
-+                    unlock_user(p3, arg3, 0);
-+                    return -TARGET_EFAULT;
-+                }
-+                ret = get_errno(fsconfig(arg1, arg2, p3, p4, arg5));
-+                unlock_user(p3, arg3, 0);
-+                unlock_user(p4, arg4, 0);
-+                break;
-+
-+            case FSCONFIG_SET_FLAG:
-+            case FSCONFIG_SET_FD:
-+                /* arg4 (value) must be NULL. */
-+                if (arg4) {
-+                    return -TARGET_EFAULT;
-+                }
-+                p3 = lock_user_string(arg3);
-+                if (!p3) {
-+                    return -TARGET_EFAULT;
-+                }
-+                ret = get_errno(fsconfig(arg1, arg2, p3, NULL, arg5));
-+                unlock_user(p3, arg3, 0);
-+                break;
-+            case FSCONFIG_CMD_CREATE:
-+            case FSCONFIG_CMD_RECONFIGURE:
-+#ifdef FSCONFIG_CMD_CREATE_EXCL
-+            /*
-+             * FSCONFIG_CMD_CREATE_EXCL is only available since Linux
-+             * 6.6. Guarding it to allow building with pre-6.6 headers.
-+             */
-+            case FSCONFIG_CMD_CREATE_EXCL:
-+#endif
-+                /* key and value must be NULL, aux must be 0. */
-+                if (arg3 || arg4 || arg5) {
-+                    return -TARGET_EFAULT;
-+                }
-+                ret = get_errno(fsconfig(arg1, arg2, NULL, NULL, 0));
-+                break;
-+            default:
-+                return -TARGET_EFAULT;
-+            }
-+        }
-+        return ret;
-+    case TARGET_NR_fsmount:
-+        ret = get_errno(fsmount(arg1, arg2, arg3));
-+        return ret;
-+    case TARGET_NR_fspick:
-+        {
-+            p = lock_user_string(arg2);
-+            ret = get_errno(fspick(arg1, p, arg3));
-+            unlock_user(p, arg2, 0);
-+        }
-+        return ret;
-+#endif
-     default:
-         qemu_log_mask(LOG_UNIMP, "Unsupported syscall: %d\n", num);
-         return -TARGET_ENOSYS;
+diff --git a/backends/igvm.c b/backends/igvm.c
+index 31ff6ee0b2..8b578b3b5b 100644
+--- a/backends/igvm.c
++++ b/backends/igvm.c
+@@ -207,8 +207,8 @@ static void *qigvm_prepare_memory(QIgvm *ctx, uint64_t addr, uint64_t size,
+             error_setg(
+                 errp,
+                 "Processing of IGVM file failed: Could not prepare memory "
+-                "at address 0x%" PRIx64 ": region size exceeded",
+-                addr);
++                "at address 0x%" PRIx64 ": region size 0x%" PRIx64 " exceeded",
++                addr, size);
+             return NULL;
+         }
+         return qemu_map_ram_ptr(mrs.mr->ram_block, mrs.offset_within_region);
 -- 
 2.54.0
 
