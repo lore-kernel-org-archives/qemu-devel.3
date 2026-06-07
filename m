@@ -4,52 +4,50 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id DCF44CD8C8E
-	for <qemu-devel@archiver.kernel.org>; Sun,  7 Jun 2026 14:04:51 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A598ECD8C8C
+	for <qemu-devel@archiver.kernel.org>; Sun,  7 Jun 2026 14:05:00 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wWE6i-0004JC-L1; Sun, 07 Jun 2026 10:04:08 -0400
+	id 1wWE6f-0004IX-NY; Sun, 07 Jun 2026 10:04:05 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <deller@kernel.org>) id 1wWE6h-0004J4-NA
- for qemu-devel@nongnu.org; Sun, 07 Jun 2026 10:04:07 -0400
-Received: from sea.source.kernel.org ([172.234.252.31])
+ (Exim 4.90_1) (envelope-from <deller@kernel.org>) id 1wWE6e-0004IC-Mt
+ for qemu-devel@nongnu.org; Sun, 07 Jun 2026 10:04:04 -0400
+Received: from sea.source.kernel.org ([2600:3c0a:e001:78e:0:1991:8:25])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <deller@kernel.org>) id 1wWE6f-00082e-Q9
- for qemu-devel@nongnu.org; Sun, 07 Jun 2026 10:04:07 -0400
+ (Exim 4.90_1) (envelope-from <deller@kernel.org>) id 1wWE6d-0007wr-23
+ for qemu-devel@nongnu.org; Sun, 07 Jun 2026 10:04:04 -0400
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
- by sea.source.kernel.org (Postfix) with ESMTP id 9DA2E41524;
- Sun,  7 Jun 2026 14:04:04 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E2A861F00893;
- Sun,  7 Jun 2026 14:04:02 +0000 (UTC)
+ by sea.source.kernel.org (Postfix) with ESMTP id A83F1444A1;
+ Sun,  7 Jun 2026 14:04:00 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 25B5A1F00893;
+ Sun,  7 Jun 2026 14:03:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
- s=k20260515; t=1780841044;
- bh=MqB7UL4fPRYcru3EnbnH7S5G3PK67/sx3b0o2FxbdEo=;
- h=From:To:Cc:Subject:Date:In-Reply-To:References;
- b=U4jUhRS73PFNo+za7JCnvkmtbzOeigDze0yAvX/3DLjjOFT5E2vq/sJZjXdJcTWRd
- epJ6xUO+nhLcLeMdqqtKotv/F2Grs4fqosYjb/I/ky3rvRBqt2beaT4L/DysYgA4Qh
- USVFaNpXjWzTUmvi+nPCRNOSVj59Itfw6drbwQ06bT/mq19BMd0qSf+o3m43+tbhfm
- S99kKQ2GjSuBZXIe/fW2IK3B2nY5bfe1yv2rwFJO4VoSW4hU7G5m8q2m/3vn4oPkSd
- lzdmODizncoF6zTYm24/PIqspEwjbXmLDpuc6XTGJ4oESjUC29loxRXze49TCKZzgG
- rDH/6+aVzFqjw==
+ s=k20260515; t=1780841040;
+ bh=Ehewi21KCB8+ZvN7wBtsAhDnIzIFLGUR7xeLDo5MqXM=;
+ h=From:To:Cc:Subject:Date;
+ b=CHKKOb4OxQbuA06ADmkDYF8xWExP4I1asyoa7nOoIKGXIUF5Mohu9YJSpZaXy9dvC
+ BlSe37Druue5nAREloC3LuBsrkC5mmBETG614CBZP+hGERC0+B3/a5XA4IcVZ/FEUr
+ a1N+lcMpkJu8y7kqzYLgF42vTQlg6fh/kRTIxwnkCTwEGVWX1/h7VIs9sFentVvdIR
+ zogX+/itAKBfC61MPq0vzE7E768Nl9JvsnTxWfZYFJorlnBbdQbcPPAWwPGHn/Bhqf
+ 1hsCqCHM4mj9FVTB7kjQzUJliY//zyndFAUt2YFqq1PcPYksA4phhfe0U8G6CY63zE
+ p5yP1Pk5H0fxQ==
 From: Helge Deller <deller@kernel.org>
 To: qemu-devel@nongnu.org
 Cc: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
  Laurent Vivier <laurent@vivier.eu>,
  Yoshinori Sato <yoshinori.sato@nifty.com>,
- Max Filippov <jcmvbkbc@gmail.com>, Helge Deller <deller@gmx.de>,
- Xinhui Yang <cyan@cyano.uk>
-Subject: [PATCH 02/10] linux-user/strace: add fsmount series of syscalls
-Date: Sun,  7 Jun 2026 16:03:48 +0200
-Message-ID: <20260607140356.10702-3-deller@kernel.org>
+ Max Filippov <jcmvbkbc@gmail.com>, Helge Deller <deller@gmx.de>
+Subject: [PATCH 00/10] linux-user patches for alpha, sparc, sh4 and xtensa
+Date: Sun,  7 Jun 2026 16:03:46 +0200
+Message-ID: <20260607140356.10702-1-deller@kernel.org>
 X-Mailer: git-send-email 2.54.0
-In-Reply-To: <20260607140356.10702-1-deller@kernel.org>
-References: <20260607140356.10702-1-deller@kernel.org>
 MIME-Version: 1.0
+Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=172.234.252.31; envelope-from=deller@kernel.org;
- helo=sea.source.kernel.org
+Received-SPF: pass client-ip=2600:3c0a:e001:78e:0:1991:8:25;
+ envelope-from=deller@kernel.org; helo=sea.source.kernel.org
 X-Spam_score_int: -24
 X-Spam_score: -2.5
 X-Spam_bar: --
@@ -71,176 +69,52 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Xinhui Yang <cyan@cyano.uk>
+From: Helge Deller <deller@gmx.de>
 
-Following the addition of fsmount(2) series of syscalls in the syscall
-handler, strace support is added, with a dedicated function to print the
-parameters of fsconfig(2), which contains parameters that can be
-interpreted as multiple types.
+Various linux-user related patches from Matt Turner with coredump support for
+alpha and sparc, as well as some fixes for the signal handler in sparc and
+xtensa.
 
-Snippet of the strace dump when running `mount -t tmpfs tmpfs /media`:
+The patches from Xinhui Yang add the missing fsmount series syscalls support
+for systemd.
 
-18 fsopen(tmpfs,1) = 3
-18 read(3,0x407fcf1c,8191) = -1 errno=61 (No data available)
-18 fsconfig(3,FSCONFIG_SET_STRING,"source","tmpfs",0) = 0
-18 read(3,0x407fce3c,8191) = -1 errno=61 (No data available)
-18 fsconfig(3,FSCONFIG_CMD_CREATE,NULL,NULL,0) = 0
-18 read(3,0x407fce3c,8191) = -1 errno=61 (No data available)
-18 fsmount(3,1,0) = 4
-18 read(3,0x407fce3c,8191) = -1 errno=61 (No data available)
-18 statx(4,"",AT_EMPTY_PATH|AT_STATX_SYNC_AS_STAT,0x1000,0x407fee98) = 0
-18 move_mount(4,,-100,/media,4) = 0
-18 read(3,0x407fcfcc,8191) = -1 errno=61 (No data available)
-18 close(3) = 0
-18 close(4) = 0
+Especially the sparc and xtensa patches would benefit from a review, as I'm not an
+expert in those architectures.
 
-Signed-off-by: Xinhui Yang <cyan@cyano.uk>
-Reviewed-by: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
-Signed-off-by: Helge Deller <deller@gmx.de>
----
- linux-user/strace.c    | 105 +++++++++++++++++++++++++++++++++++++++++
- linux-user/strace.list |  15 ++++++
- 2 files changed, 120 insertions(+)
+Matt Turner (8):
+  linux-user/alpha: add coredump support
+  linux-user/sparc: add coredump support
+  linux-user/sparc: restore L/I registers from RSA in
+    sparc64_set_context
+  linux-user/sparc: call block_signals() before set_sigmask() in
+    setcontext
+  linux-user/sparc: flush register windows before core dump
+  target/sh4: decode_gusa: recognize add#imm with prior mov Rm, Rn
+  linux-user/xtensa: restore FP rounding mode on sigreturn
+  target/xtensa: add cpu_set_fcr/fsr helpers to sync fp_status
 
-diff --git a/linux-user/strace.c b/linux-user/strace.c
-index 2cbaf94c89..d861f311f6 100644
---- a/linux-user/strace.c
-+++ b/linux-user/strace.c
-@@ -4344,6 +4344,111 @@ print_statx(CPUArchState *cpu_env, const struct syscallname *name,
- }
- #endif
- 
-+#ifdef TARGET_NR_fsconfig
-+static void
-+print_fsconfig_cmd_name(int cmd)
-+{
-+    switch (cmd) {
-+    case FSCONFIG_SET_FLAG:
-+        qemu_log("%s%s", "FSCONFIG_SET_FLAG", get_comma(0));
-+        break;
-+    case FSCONFIG_SET_STRING:
-+        qemu_log("%s%s", "FSCONFIG_SET_STRING", get_comma(0));
-+        break;
-+    case FSCONFIG_SET_BINARY:
-+        qemu_log("%s%s", "FSCONFIG_SET_BINARY", get_comma(0));
-+        break;
-+    case FSCONFIG_SET_PATH:
-+        qemu_log("%s%s", "FSCONFIG_SET_PATH", get_comma(0));
-+        break;
-+    case FSCONFIG_SET_PATH_EMPTY:
-+        qemu_log("%s%s", "FSCONFIG_SET_PATH_EMPTY", get_comma(0));
-+        break;
-+    case FSCONFIG_SET_FD:
-+        qemu_log("%s%s", "FSCONFIG_SET_FD", get_comma(0));
-+        break;
-+    case FSCONFIG_CMD_CREATE:
-+        qemu_log("%s%s", "FSCONFIG_CMD_CREATE", get_comma(0));
-+        break;
-+    case FSCONFIG_CMD_RECONFIGURE:
-+        qemu_log("%s%s", "FSCONFIG_CMD_RECONFIGURE", get_comma(0));
-+        break;
-+#ifdef FSCONFIG_CMD_CREATE_EXCL
-+    case FSCONFIG_CMD_CREATE_EXCL:
-+        /* Only available since Linux 6.6. */
-+        qemu_log("%s%s", "FSCONFIG_CMD_CREATE_EXCL", get_comma(0));
-+        break;
-+#endif
-+    default:
-+        qemu_log("%s (%d)%s", "UNKNOWN_CMD", cmd, get_comma(0));
-+        break;
-+    }
-+}
-+
-+static void
-+print_fsconfig(CPUArchState *cpu_env, const struct syscallname *name,
-+            abi_long arg0, abi_long arg1, abi_long arg2,
-+            abi_long arg3, abi_long arg4, abi_long arg5)
-+{
-+    /*
-+     * fsconfig(int fd, int cmd, char* key, void* value, int aux)
-+     * Where:
-+     * fd: file descriptor returned by fsopen().
-+     * cmd: integer constant specifying a command.
-+     * key: a string, can be NULL on certain commands.
-+     * value: any data in a buffer, can be NULL, raw buffer or a string.
-+     * aux: axillary values such as flags for FSCONFIG_SET_PATH.
-+     */
-+    int cmd = (int) arg1;
-+    print_syscall_prologue(name);
-+    print_raw_param("%d", arg0, 0);
-+    print_fsconfig_cmd_name(cmd);
-+    /* Process arg2 (key). */
-+    switch (cmd) {
-+    case FSCONFIG_SET_FLAG:
-+    case FSCONFIG_SET_STRING:
-+    case FSCONFIG_SET_BINARY:
-+    case FSCONFIG_SET_PATH:
-+    case FSCONFIG_SET_PATH_EMPTY:
-+    case FSCONFIG_SET_FD:
-+        print_string(arg2, 0);
-+        break;
-+    default:
-+        print_pointer(arg2, 0);
-+        break;
-+    }
-+    /* Process arg3 (value). */
-+    switch (cmd) {
-+    case FSCONFIG_SET_STRING:
-+    case FSCONFIG_SET_PATH:
-+    case FSCONFIG_SET_PATH_EMPTY:
-+        print_string(arg3, 0);
-+        break;
-+    default:
-+        print_pointer(arg3, 0);
-+        break;
-+    }
-+    /*
-+     * Process arg4 (aux).
-+     * On FSCONFIG_SET_PATH and FSCONFIG_SET_PATH_EMPTY, aux can
-+     * be either 0 or AT_FDCWD.
-+     * On FSCONFIG_SET_BINARY, aux is an integer to state the length
-+     * of the buffer pointed by arg3.
-+     * Otherwise, it must be 0.
-+     */
-+    switch (cmd) {
-+    case FSCONFIG_SET_PATH:
-+    case FSCONFIG_SET_PATH_EMPTY:
-+        print_at_dirfd(arg4, 1);
-+        break;
-+    default:
-+        print_raw_param("%d", arg4, 1);
-+        break;
-+    }
-+    print_syscall_epilogue(name);
-+}
-+#endif
-+
- #ifdef TARGET_NR_ioctl
- static void
- print_ioctl(CPUArchState *cpu_env, const struct syscallname *name,
-diff --git a/linux-user/strace.list b/linux-user/strace.list
-index 6162a407f9..3a366b8cac 100644
---- a/linux-user/strace.list
-+++ b/linux-user/strace.list
-@@ -1722,3 +1722,18 @@
- #ifdef TARGET_NR_rseq
- { TARGET_NR_rseq, "rseq" , "%s(%p,%u,%d,%#x)", NULL, NULL },
- #endif
-+#ifdef TARGET_NR_fsopen
-+{ TARGET_NR_fsopen, "fsopen", "%s(%s,%d)", NULL, NULL },
-+#endif
-+#ifdef TARGET_NR_fsconfig
-+{ TARGET_NR_fsconfig, "fsconfig", NULL, print_fsconfig, NULL },
-+#endif
-+#ifdef TARGET_NR_fsmount
-+{ TARGET_NR_fsmount, "fsmount", "%s(%d,%d,%d)", NULL, NULL },
-+#endif
-+#ifdef TARGET_NR_move_mount
-+{ TARGET_NR_move_mount, "move_mount", "%s(%d,%s,%d,%s,%d)", NULL, NULL },
-+#endif
-+#ifdef TARGET_NR_fspick
-+{ TARGET_NR_fspick, "fspick", "%s(%d,%s,%d)", NULL, NULL },
-+#endif
+Xinhui Yang (2):
+  linux-user: implement fsmount(2) series of syscalls
+  linux-user/strace: add fsmount series of syscalls
+
+ linux-user/alpha/elfload.c    |  12 ++++
+ linux-user/alpha/target_elf.h |  13 +++++
+ linux-user/elfload.c          |   9 +++
+ linux-user/sparc/cpu_loop.c   |   3 +-
+ linux-user/sparc/cpu_loop.h   |   7 +++
+ linux-user/sparc/elfload.c    |  54 +++++++++++++++++
+ linux-user/sparc/signal.c     |  27 +++++++++
+ linux-user/sparc/target_elf.h |  20 +++++++
+ linux-user/strace.c           | 105 ++++++++++++++++++++++++++++++++++
+ linux-user/strace.list        |  15 +++++
+ linux-user/syscall.c          |  91 +++++++++++++++++++++++++++++
+ linux-user/xtensa/signal.c    |  36 ++++++++++--
+ target/sh4/translate.c        |   2 +-
+ target/xtensa/cpu.h           |   4 ++
+ target/xtensa/fpu_helper.c    |  42 ++++++++++++++
+ 15 files changed, 433 insertions(+), 7 deletions(-)
+ create mode 100644 linux-user/sparc/cpu_loop.h
+
 -- 
 2.54.0
 
