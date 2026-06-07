@@ -4,54 +4,52 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E3BF6CD8C8C
-	for <qemu-devel@archiver.kernel.org>; Sun,  7 Jun 2026 14:05:06 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9850DCD8C8C
+	for <qemu-devel@archiver.kernel.org>; Sun,  7 Jun 2026 14:05:11 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wWE6p-0004Kn-2H; Sun, 07 Jun 2026 10:04:15 -0400
+	id 1wWE6l-0004Jj-Lm; Sun, 07 Jun 2026 10:04:11 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <deller@kernel.org>) id 1wWE6n-0004KP-NX
- for qemu-devel@nongnu.org; Sun, 07 Jun 2026 10:04:13 -0400
-Received: from sea.source.kernel.org ([172.234.252.31])
+ (Exim 4.90_1) (envelope-from <deller@kernel.org>) id 1wWE6j-0004JS-Ks
+ for qemu-devel@nongnu.org; Sun, 07 Jun 2026 10:04:09 -0400
+Received: from tor.source.kernel.org ([172.105.4.254])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <deller@kernel.org>) id 1wWE6m-00085h-5j
- for qemu-devel@nongnu.org; Sun, 07 Jun 2026 10:04:13 -0400
+ (Exim 4.90_1) (envelope-from <deller@kernel.org>) id 1wWE6i-00084f-5O
+ for qemu-devel@nongnu.org; Sun, 07 Jun 2026 10:04:09 -0400
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
- by sea.source.kernel.org (Postfix) with ESMTP id 487D241B73;
- Sun,  7 Jun 2026 14:04:11 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4C52D1F00893;
- Sun,  7 Jun 2026 14:04:09 +0000 (UTC)
+ by tor.source.kernel.org (Postfix) with ESMTP id DBAE160018;
+ Sun,  7 Jun 2026 14:04:06 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F22D41F00893;
+ Sun,  7 Jun 2026 14:04:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
- s=k20260515; t=1780841051;
- bh=J1AWjYZU/hD53VPk5IiZ2Jz6nUV+3nPhEWHBfOxyoTE=;
+ s=k20260515; t=1780841046;
+ bh=et5eLMegT6ampsfftjXOFLTcAsoi2sO/Rg/7dQphinA=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References;
- b=U+GPrPTKNQAKBXYb/dChj93Zr03RwQAYY2B2K2hgxSslrSkKKwPYzS77XTMhaCMFd
- O9vVyKKjlxJ/0q33dCkWmhLRELojdyUa6JuYRY21Luxdg9nCLBP9ZQcAwQd4qB4ZIh
- QVtwfuZkxmm0hPbNvj0kxj+MkwkeDjU9AcpU34PN34UK4P/cfGCSHtf/ZZm2B1Ll4w
- myg4jymZmF/44Z+5W2gsU9lyWStBdDISh6cOOwbVDoTKuimIGcTpy/INxqOC2EZJwi
- 1KKTcxj0Qd7YLGwGbQC+t4PHoS+rQf20scjnD0JtVmwybdj89W0dR3Wn2X/hQgIXKf
- /iGoameZ8RJQA==
+ b=KPFXJUCAG2rQ2GNEwIT2U/vFxY8VU0WzMXxWhqYlLkStLrj3VlGgHZ3fQL7sMT8J7
+ TpXRwBuhTGr4FVM0fJQfHyVXTO9yFnJ+o5TQzmKJryumQRkJy9Ixwwz8AIO3NGZLCc
+ zJSagyRh6fhO7qaQlMyPBjvdu8h9mutkVg5slGMytwxXXivaHZEe/aOXGSvGeo/+ij
+ T5zCyBYLzjFzqLWtDeYSf1lgotUE2UtdXYCo8RJoG4uXAR5x4Vo+kPPE5tCDWuo2FV
+ BbIhzAZs0dDE8JxX6usf6xLYanbDb4qzdc2j2nzQmQ3UEATT9u1Ul9D1ruPfBHhUXg
+ Jpup91KTrffuQ==
 From: Helge Deller <deller@kernel.org>
 To: qemu-devel@nongnu.org
 Cc: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
  Laurent Vivier <laurent@vivier.eu>,
  Yoshinori Sato <yoshinori.sato@nifty.com>,
  Max Filippov <jcmvbkbc@gmail.com>, Helge Deller <deller@gmx.de>,
- Matt Turner <mattst88@gmail.com>,
- Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>
-Subject: [PATCH 05/10] linux-user/sparc: restore L/I registers from RSA in
- sparc64_set_context
-Date: Sun,  7 Jun 2026 16:03:51 +0200
-Message-ID: <20260607140356.10702-6-deller@kernel.org>
+ Matt Turner <mattst88@gmail.com>
+Subject: [PATCH 03/10] linux-user/alpha: add coredump support
+Date: Sun,  7 Jun 2026 16:03:49 +0200
+Message-ID: <20260607140356.10702-4-deller@kernel.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260607140356.10702-1-deller@kernel.org>
 References: <20260607140356.10702-1-deller@kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=172.234.252.31; envelope-from=deller@kernel.org;
- helo=sea.source.kernel.org
+Received-SPF: pass client-ip=172.105.4.254; envelope-from=deller@kernel.org;
+ helo=tor.source.kernel.org
 X-Spam_score_int: -24
 X-Spam_score: -2.5
 X-Spam_bar: --
@@ -75,47 +73,75 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Matt Turner <mattst88@gmail.com>
 
-The kernel's do_rt_sigreturn loads L and I registers from the register
-save area (RSA) at the restored O6+STACK_BIAS.  QEMU lacks the kernel's
-window-fill path, so restore L0-L7 and I0-I5 explicitly from the RSA.
-I6 and I7 are already restored from mc_fp/mc_i7.
+Define HAVE_ELF_CORE_DUMP and target_elf_gregset_t in target_elf.h,
+mirroring the kernel's elf_gregset_t (ELF_NGREG = 66): r0-r31
+[0..31], f0-f31 [32..63], pc [64], unique [65].  Implement
+elf_core_copy_regs() in elfload.c to populate the gregset from
+CPUAlphaState.
+
+Without this, bprm->core_dump is NULL for Alpha targets.  When a
+guest signal goes unhandled, dump_core_and_abort() skips the core
+write and falls through to die_with_signal(), which re-raises the
+signal to the host.  The host kernel then writes an x86-64 core file
+for the qemu-alpha process instead of an Alpha guest core.
+
+v2: Store thread unique field, same as in Linux kernel. Added by Helge &
+suggested by Richard.
 
 Signed-off-by: Matt Turner <mattst88@gmail.com>
-Cc: Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>
 Signed-off-by: Helge Deller <deller@gmx.de>
 ---
- linux-user/sparc/signal.c | 18 ++++++++++++++++++
- 1 file changed, 18 insertions(+)
+ linux-user/alpha/elfload.c    | 12 ++++++++++++
+ linux-user/alpha/target_elf.h | 13 +++++++++++++
+ 2 files changed, 25 insertions(+)
 
-diff --git a/linux-user/sparc/signal.c b/linux-user/sparc/signal.c
-index d339f89928..fda5508c48 100644
---- a/linux-user/sparc/signal.c
-+++ b/linux-user/sparc/signal.c
-@@ -656,6 +656,24 @@ void sparc64_set_context(CPUSPARCState *env)
-     __get_user(env->regwptr[WREG_FP], &(ucp->tuc_mcontext.mc_fp));
-     __get_user(env->regwptr[WREG_I7], &(ucp->tuc_mcontext.mc_i7));
+diff --git a/linux-user/alpha/elfload.c b/linux-user/alpha/elfload.c
+index 1e44475c47..d2aed15ce5 100644
+--- a/linux-user/alpha/elfload.c
++++ b/linux-user/alpha/elfload.c
+@@ -3,8 +3,20 @@
+ #include "qemu/osdep.h"
+ #include "qemu.h"
+ #include "loader.h"
++#include "target_elf.h"
  
-+    /*
-+     * The kernel's do_rt_sigreturn loads L and I registers from the
-+     * register save area (RSA) at the new O6+STACK_BIAS.  Unlike the
-+     * kernel, QEMU has no kernel-mode path that triggers a window fill,
-+     * so we must do it explicitly here.  I6 and I7 are already restored
-+     * from mc_fp and mc_i7 above; restore L0-L7 and I0-I5 from the RSA.
-+     */
-+    {
-+        abi_ulong sp_ptr = env->regwptr[WREG_O6];
-+        /* LP64 O6 is biased (8-byte-aligned - 2047); low bit set. ILP32 O6 is 4-byte-aligned. */
-+        if (sp_ptr & 3)
-+            sp_ptr += TARGET_STACK_BIAS;
-+        for (i = 0; i < 8; i++)
-+            get_user_ual(env->regwptr[WREG_L0 + i], sp_ptr + i * 8);
-+        for (i = 0; i < 6; i++)  /* I0-I5; I6=FP and I7 already restored */
-+            get_user_ual(env->regwptr[WREG_I0 + i], sp_ptr + 64 + i * 8);
-+    }
+ 
++void elf_core_copy_regs(target_elf_gregset_t *r, const CPUAlphaState *env)
++{
++    int i;
 +
-     fpup = &ucp->tuc_mcontext.mc_fpregs;
++    for (i = 0; i < 31; i++) {
++        r->regs[i] = tswap64(env->ir[i]);
++    }
++    r->pc = tswap64(env->pc);
++    r->unique = env->unique;
++}
++
+ const char *get_elf_cpu_model(uint32_t eflags)
+ {
+     return "ev67";
+diff --git a/linux-user/alpha/target_elf.h b/linux-user/alpha/target_elf.h
+index 864dc6e2e6..4987ae3944 100644
+--- a/linux-user/alpha/target_elf.h
++++ b/linux-user/alpha/target_elf.h
+@@ -11,4 +11,17 @@
+ #define ELF_CLASS               ELFCLASS64
+ #define ELF_MACHINE             EM_ALPHA
  
-     __get_user(fenab, &(fpup->mcfpu_enab));
++#define HAVE_ELF_CORE_DUMP      1
++
++/*
++ * Matches the kernel's elf_gregset_t (ELF_NGREG = 33):
++ *   r0-r30 at indices 0-30, pc at 31, ps at 32.
++ * r31 (hardwired zero) is not stored; pc occupies index 31.
++ */
++typedef struct target_elf_gregset_t {
++    abi_ulong regs[31];  /* integer registers r0-r30  [0..30] */
++    abi_ulong pc;        /* program counter           [31]    */
++    abi_ulong unique;    /* thread's UNIQUE field     [32]    */
++} target_elf_gregset_t;
++
+ #endif
 -- 
 2.54.0
 
