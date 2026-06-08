@@ -4,107 +4,104 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D7428CD8C9F
-	for <qemu-devel@archiver.kernel.org>; Mon,  8 Jun 2026 09:32:00 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9DC48CD8C92
+	for <qemu-devel@archiver.kernel.org>; Mon,  8 Jun 2026 09:35:02 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wWWKP-0003mc-Hb; Mon, 08 Jun 2026 05:31:29 -0400
+	id 1wWWNg-0004lt-7j; Mon, 08 Jun 2026 05:34:52 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1wWWKO-0003mQ-EH
- for qemu-devel@nongnu.org; Mon, 08 Jun 2026 05:31:28 -0400
-Received: from mail-yx1-xb12b.google.com ([2607:f8b0:4864:20::b12b])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1wWWKG-0002Ee-RJ
- for qemu-devel@nongnu.org; Mon, 08 Jun 2026 05:31:22 -0400
-Received: by mail-yx1-xb12b.google.com with SMTP id
- 956f58d0204a3-6605c3453f2so3934024d50.1
- for <qemu-devel@nongnu.org>; Mon, 08 Jun 2026 02:31:20 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1780911079; cv=none;
- d=google.com; s=arc-20240605;
- b=GbEDCXpqrjQin/M3COxmvl+CTAYtxq2GtxsTHfBN/hgycijhg3MtG3Gz1aBu0mDZqJ
- orRgITS7Y/Kv0lwKpbp7qyGPQYwVJW9zxc+qQLPpMehm0aCAOxPKTTt10Pz+KdKahisV
- UcdpNMsY3cMsUZBPRrNt2/jw8OjWjD+X8tNM+aBIGvTG8s6SbbfaKbJLSjstOPb3cEa6
- ocaeaU53bW8kjC21AN8814ynS7SWW7UWfz67adlkk1hRaUhA06rthZGfQdMwBIh8ls20
- EbvlZ+cuAs8fjqzWjGfXsbJW/oZ8xg20iDlpdLwsdqwzup9ADOX7PEAySykakILvGqji
- SNFw==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
- s=arc-20240605; 
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:dkim-signature;
- bh=oN9vwWZquI/3ZWu2yPWpiXfFjfHxa2fsFxu7s44lRSk=;
- fh=9EeywghUUErPHelOOUazhOgI6Eicsx7RNvMDuf0Gp+8=;
- b=k8VWIz8Bhg0gYaZiIbJ96tGsRQ6u5A9BsZTjwpi11Q/IAGzA0MoNXXakCX1IxD9LfP
- COUDVsEbDw0BIX4QgbS6kZTdQPsqhfifJUrZGYLeN07navT57yy44x9vmoJ9UpV7q61v
- /kdSkO1jkAikcr8wkXuWh/NMw8pQ5TC+Il97CUMsrJ6yWZLISi++9p4kvqHA8xxSjEYq
- fm3sSlYzwQlFnh1OdwFRdT/Zp08GL5DcpR6/epoFjF2KN3wUKc+WQDwubJo3NKrp/Ple
- iXEdwVzIVMVlXQpD1R/+j2+dK5V9AB9xMYHP6y31+abY5rtUBXRJahOUs5RUylsfy83u
- ODvQ==; darn=nongnu.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1780911079; x=1781515879; darn=nongnu.org;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=oN9vwWZquI/3ZWu2yPWpiXfFjfHxa2fsFxu7s44lRSk=;
- b=ZKJbHb3vdtg19oyBIl+h/MAaFj5iMAKPkBktoyvS7QmOI6ceJwqniQynIXYSxz1yZZ
- mPxq3bdG8xos67AxCNl3pZvaw4haJaCU+Ni3fBYev3hl18khlg19a9CFsuGkGWB5Wleo
- YqJAmkmamTuqBe1GiH8kO+VMyPGFl+cTZHTY1/4vP/Qhl0yJgzqFnxetLchUBWZYbyDQ
- cD2voAZOXzKugB+0MQeh7vNuCiqfrXLtmsU2tcLLt4X/LihlNzEVV0Cy+ByyFvpksuj7
- iRmxEGx3H1GgfTligiP5IIrBhFz1Y/+QY+0EmbzgXMBWFmuYLOGlHTwIz6mw/h6N5L5G
- 7JCg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1780911079; x=1781515879;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=oN9vwWZquI/3ZWu2yPWpiXfFjfHxa2fsFxu7s44lRSk=;
- b=By9S4ZcahDcEksa2h/YwCLNnrKGKJgFUCq1VQG6MtHJtoUGVtsFdaBG2O+usQUeQSC
- 22JxeVoFbubnT0b7XI7PTYXF7vel/WJUcmpN5YOeYq3PzOh+jpangPVXSbYuWvDQTsZm
- 71aqw8QYKRQMuDfWJ6WOIKyT+/RYSzTjIIMO8BdmSREezuKqDRpSMY47ZqwF+/cSrcrl
- y7Xkw9xIPPBGscjue0b+eXQLN464Yg/BqDXtjFHOQhHTwM551ZaW4OfJrdLoXn/i6ltC
- Q54N2HGNqCip/XfEuEm1VFv3OHiUeHSLn6JFYlhqhBU5ou+gAEXsr+RIdum+ym7wD47L
- m3VA==
-X-Forwarded-Encrypted: i=1;
- AFNElJ/7CQw3cFRcK22EnH9+iyd5NroFKlTP6bKwOFtijwZpByslh+MuszIzlRbm5ebbY5K8cZ/gTItd92Gk@nongnu.org
-X-Gm-Message-State: AOJu0Yw9h6kKFmWgM8pHt7vw1dxhcHdmyRpTHBbmJwQFQaBgDuJOu0Wf
- czYV5I4WpExlZEtB+zKc6TkUmX+WOddkgiXbmxq5JWH9zzyb6rIiDhPeAQW4DlzhMG/gfn/7Mn0
- H7ocZ3F4ZjOq7rOpCxaCWFsLfVEoqM1FZxWkcu2ovFQ==
-X-Gm-Gg: Acq92OEjcxyMBIOGZ4L0q1qtr8ekWZZo0h/wqNum/CkQsnqTaKbrNVQbdk0IYeXk2J5
- Uza/UBmKST+1qL3IOj4zQw06GwKZjdYxcv7WTQt4GobrMrNziaA+Jas6jd63KWqXhxEKBFo9tUx
- ylgnl5BwyMD8es9ZvQEAdvt70ma8T5Pm7cONGr301i2qNHpA+lUyQjleroFSY51PsDob6l+TDV9
- 8YlMkw4gt7HBANzcZacp+BaRWtPczEOJGUVM8wc433kbo09e7vEztU1aEjhjzw4P3dNMAo+oX3A
- QrW2vUIlxmQdkQnCANDfwF2nPb7izkQjkMYHuJ1qMNJ6ctBCVNvgraRxQYjUe8IPiny3ADMtlcj
- tJw==
-X-Received: by 2002:a05:690e:144b:b0:660:8e61:1a60 with SMTP id
- 956f58d0204a3-661073da64dmr12014708d50.14.1780911079245; Mon, 08 Jun 2026
- 02:31:19 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <jishnuvw@linux.ibm.com>)
+ id 1wWWNe-0004lH-Ux; Mon, 08 Jun 2026 05:34:50 -0400
+Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <jishnuvw@linux.ibm.com>)
+ id 1wWWNc-0003ld-Pe; Mon, 08 Jun 2026 05:34:50 -0400
+Received: from pps.filterd (m0360083.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
+ 65891SEl2567161; Mon, 8 Jun 2026 09:34:45 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
+ :content-transfer-encoding:date:from:message-id:mime-version
+ :subject:to; s=pp1; bh=KiJrUKXTM2NpjQx5AuWHT0ygGK+HHZKTH3trNOiwm
+ UI=; b=iszj5uQK4bAzl+b51g+Xy84FxYEvpgydlln8hjdZupsx8MCXDuwgFDPv/
+ uHI7d+fZ4w7a/PTt1iH7gUBmvH6ezSxCIv8Fj5Aul8TznsCJeNtUoMKaiYsvVvkp
+ H9398ZZIb6E9TvtPvUWQe4wLOf70HBXJi8laZCY0qQeNrjtw69dJDPQ6Fr7KlCWW
+ 9ocrvh1TGu2jiUAW2bebxyGN8V9PxIMi70v971WzvWY5Za/mIlw/IS4FKiI7bnrH
+ MEXrsPtSsUrq2aO68matO6bIz+S6GCeFdXPwix9EbRKv09/IZNiZ8w8MrB/ni+FF
+ CquPbiI+U5msLjjTPLBI2KgKA/U1Q==
+Received: from ppma21.wdc07v.mail.ibm.com
+ (5b.69.3da9.ip4.static.sl-reverse.com [169.61.105.91])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4emb23pmf3-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Mon, 08 Jun 2026 09:34:44 +0000 (GMT)
+Received: from pps.filterd (ppma21.wdc07v.mail.ibm.com [127.0.0.1])
+ by ppma21.wdc07v.mail.ibm.com (8.18.1.7/8.18.1.7) with ESMTP id 6589Ybv4014043;
+ Mon, 8 Jun 2026 09:34:43 GMT
+Received: from smtprelay01.fra02v.mail.ibm.com ([9.218.2.227])
+ by ppma21.wdc07v.mail.ibm.com (PPS) with ESMTPS id 4emxvjmpft-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Mon, 08 Jun 2026 09:34:43 +0000 (GMT)
+Received: from smtpav06.fra02v.mail.ibm.com (smtpav06.fra02v.mail.ibm.com
+ [10.20.54.105])
+ by smtprelay01.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 6589YdLM61342182
+ (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Mon, 8 Jun 2026 09:34:39 GMT
+Received: from smtpav06.fra02v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 8B7EA2004B;
+ Mon,  8 Jun 2026 09:34:39 +0000 (GMT)
+Received: from smtpav06.fra02v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 8F3FF20049;
+ Mon,  8 Jun 2026 09:34:37 +0000 (GMT)
+Received: from li-0bf05b4c-28e4-11b2-a85c-ce7af937d338.bl1-in.ibm.com (unknown
+ [9.123.4.46]) by smtpav06.fra02v.mail.ibm.com (Postfix) with ESMTP;
+ Mon,  8 Jun 2026 09:34:37 +0000 (GMT)
+From: Jishnu Warrier <jishnuvw@linux.ibm.com>
+To: qemu-devel@nongnu.org, qemu-ppc@nongnu.org
+Cc: Nicholas Piggin <npiggin@gmail.com>,
+ Harsh Prateek Bora <harshpb@linux.ibm.com>,
+ Glenn Miles <milesg@linux.ibm.com>, Aditya Gupta <adityag@linux.ibm.com>,
+ Mahesh Salgaonkar <mahesh@linux.ibm.com>,
+ Jishnu Warrier <jishnuvw@linux.ibm.com>
+Subject: [PATCH v2] hw/pci-host: Split PowerNV PHB5 code from PHB4 files
+Date: Mon,  8 Jun 2026 15:04:30 +0530
+Message-ID: <20260608093430.2729688-1-jishnuvw@linux.ibm.com>
+X-Mailer: git-send-email 2.53.0
 MIME-Version: 1.0
-References: <20260604-checkpatch-v3-1-23fc7b12a7e4@rsg.ci.i.u-tokyo.ac.jp>
-In-Reply-To: <20260604-checkpatch-v3-1-23fc7b12a7e4@rsg.ci.i.u-tokyo.ac.jp>
-From: Peter Maydell <peter.maydell@linaro.org>
-Date: Mon, 8 Jun 2026 10:31:07 +0100
-X-Gm-Features: AVVi8CdJ_2tpBNYedwGa1mA2eCjQAnfasGaR0MSbd8B3wTERPOAOwzEd-p_MoOU
-Message-ID: <CAFEAcA8uV11z1BGp05gs+f-v4E+CE4DQQJa++DFUMxcCZ8kCDg@mail.gmail.com>
-Subject: Re: [PATCH v3] checkpatch: Check .m, .build, .hx, .in, .json, .txt
- and .plist
-To: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
-Cc: Paolo Bonzini <pbonzini@redhat.com>,
- =?UTF-8?B?TWFyYy1BbmRyw6kgTHVyZWF1?= <marcandre.lureau@redhat.com>, 
- "Daniel P. Berrange" <berrange@redhat.com>,
- =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@mailo.com>, 
- Chao Liu <chao.liu.zevorn@gmail.com>, qemu-devel@nongnu.org, devel@daynix.com
-Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2607:f8b0:4864:20::b12b;
- envelope-from=peter.maydell@linaro.org; helo=mail-yx1-xb12b.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+Content-Transfer-Encoding: 8bit
+X-TM-AS-GCONF: 00
+X-Proofpoint-Reinject: loops=2 maxloops=12
+X-Authority-Analysis: v=2.4 cv=b4uCJNGx c=1 sm=1 tr=0 ts=6a268cb5 cx=c_pps
+ a=GFwsV6G8L6GxiO2Y/PsHdQ==:117 a=GFwsV6G8L6GxiO2Y/PsHdQ==:17
+ a=FelO9ux0wxsA:10 a=VkNPw1HP01LnGYTKEx00:22 a=RnoormkPH1_aCDwRdu11:22
+ a=iQ6ETzBq9ecOQQE5vZCe:22 a=VnNF1IyMAAAA:8 a=Ktw8pwExaukf0xcacNkA:9
+X-Proofpoint-ORIG-GUID: Yopw3uGHE9qVA7uacb0Nly389X9yY2kX
+X-Proofpoint-GUID: LNsLW_dIbTXV99XrnzFBudf4bTMXz6SM
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNjA4MDA4NCBTYWx0ZWRfX7KWsCFc46TQ9
+ hIGWiDixH1zqDraQ1v2KYZfo/TRpBJ66Q9iOJWb0phFB85N4NAJr/TaqJkOoDPsn2C/LQO/19Ci
+ QsDP1vvMsUmj27qL9vDoS5im/mS7SSbhAl2hkVZx3xah1y7+4vIF3+btdg6WVCETFe5q1fDywuJ
+ Qf86sE5oAGOcT5jlU67fLmO/034roPIfDse1s2zHjdOmel8qSaAXJcP5BZFl49hl1+mY3B/T9eQ
+ OyMZjlIhDKQXTyBN6+YInFX4rFel9kVZmqlsh9lvmb2phYku4FBRwfA9kALXdahJMz/rEyQfgSx
+ jly1hVsmWNKDLKqbIoRdjtmo4i8wmNjzAsWXlUPiCPr7ql/i8hRhkWo4L6MsUyStysCr9qoB0P1
+ fVohBmRvYMTbyKfYbynh4QbnXgm+PWQep3FeNuxNrKLZffa3pIynsJ6l5EoFW7PGNWv/HiXMctA
+ rqjR8EXCEolS4hNqw5g==
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.125,FMLib:17.12.100.49
+ definitions=2026-06-08_02,2026-06-05_02,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ clxscore=1015 spamscore=0 bulkscore=0 phishscore=0 priorityscore=1501
+ lowpriorityscore=0 adultscore=0 malwarescore=0 impostorscore=0 suspectscore=0
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.22.0-2605210000 definitions=main-2606080084
+Received-SPF: pass client-ip=148.163.156.1;
+ envelope-from=jishnuvw@linux.ibm.com; helo=mx0a-001b2d01.pphosted.com
+X-Spam_score_int: -26
+X-Spam_score: -2.7
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
+ RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -121,28 +118,242 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, 4 Jun 2026 at 11:11, Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp> wrote:
->
-> Check more text files: Objective-C, Meson, "hx", JSON, and property
-> list.
->
-> Signed-off-by: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
+Separate Power10/11 PHB5 implementation from Power9 PHB4 code for
+better maintainability and clarity. This is a pure code movement
+with no functional changes.
 
-This is missing rationale. Currently checkpatch is set up
-to check source code files, and the bulk of its checks are
-for source code issues. Why do we want to make it also check
-non-source-code files?
+Signed-off-by: Jishnu Warrier <jishnuvw@linux.ibm.com>
+---
+ hw/pci-host/meson.build    |  2 +
+ hw/pci-host/pnv_phb4.c     |  6 ---
+ hw/pci-host/pnv_phb4_pec.c | 58 ----------------------------
+ hw/pci-host/pnv_phb5.c     | 23 ++++++++++++
+ hw/pci-host/pnv_phb5_pec.c | 77 ++++++++++++++++++++++++++++++++++++++
+ 5 files changed, 102 insertions(+), 64 deletions(-)
+ create mode 100644 hw/pci-host/pnv_phb5.c
+ create mode 100644 hw/pci-host/pnv_phb5_pec.c
 
-> -our $SrcFile    = qr{\.(?:(h|c)(\.inc)?|cpp|s|S|pl|py|sh)$};
-> +our $SrcFile =
-> +       qr{\.(?:(h|c|m)(\.inc)?|cpp|s|S|pl|py|sh|build|hx|in|json|plist|txt)$};
+diff --git a/hw/pci-host/meson.build b/hw/pci-host/meson.build
+index 86b754d0b0..3217e7e912 100644
+--- a/hw/pci-host/meson.build
++++ b/hw/pci-host/meson.build
+@@ -44,5 +44,7 @@ specific_ss.add(when: 'CONFIG_PCI_POWERNV', if_true: files(
+   'pnv_phb3_pbcq.c',
+   'pnv_phb4.c',
+   'pnv_phb4_pec.c',
++  'pnv_phb5.c',
++  'pnv_phb5_pec.c',
+   'pnv_phb.c',
+ ))
+diff --git a/hw/pci-host/pnv_phb4.c b/hw/pci-host/pnv_phb4.c
+index 396bc47817..705a5bcf07 100644
+--- a/hw/pci-host/pnv_phb4.c
++++ b/hw/pci-host/pnv_phb4.c
+@@ -1721,11 +1721,6 @@ static const TypeInfo pnv_phb4_type_info = {
+     }
+ };
+ 
+-static const TypeInfo pnv_phb5_type_info = {
+-    .name          = TYPE_PNV_PHB5,
+-    .parent        = TYPE_PNV_PHB4,
+-    .instance_size = sizeof(PnvPHB4),
+-};
+ 
+ static void pnv_phb4_root_bus_get_prop(Object *obj, Visitor *v,
+                                        const char *name,
+@@ -1794,7 +1789,6 @@ static void pnv_phb4_register_types(void)
+ {
+     type_register_static(&pnv_phb4_root_bus_info);
+     type_register_static(&pnv_phb4_type_info);
+-    type_register_static(&pnv_phb5_type_info);
+     type_register_static(&pnv_phb4_iommu_memory_region_info);
+ }
+ 
+diff --git a/hw/pci-host/pnv_phb4_pec.c b/hw/pci-host/pnv_phb4_pec.c
+index 58ec14ec2f..ee5cdc3e45 100644
+--- a/hw/pci-host/pnv_phb4_pec.c
++++ b/hw/pci-host/pnv_phb4_pec.c
+@@ -394,67 +394,9 @@ static const TypeInfo pnv_pec_type_info = {
+     }
+ };
+ 
+-/*
+- * POWER10 definitions
+- */
+-static uint32_t pnv_phb5_pec_xscom_cplt_base(PnvPhb4PecState *pec)
+-{
+-    return PNV10_XSCOM_PEC_NEST_CPLT_BASE + XPEC_PCI_CPLT_OFFSET * pec->index;
+-}
+-
+-static uint32_t pnv_phb5_pec_xscom_pci_base(PnvPhb4PecState *pec)
+-{
+-    return PNV10_XSCOM_PEC_PCI_BASE + 0x1000000 * pec->index;
+-}
+-
+-static uint32_t pnv_phb5_pec_xscom_nest_base(PnvPhb4PecState *pec)
+-{
+-    /* index goes down ... */
+-    return PNV10_XSCOM_PEC_NEST_BASE - 0x1000000 * pec->index;
+-}
+-
+-/*
+- * PEC0 -> 3 stacks
+- * PEC1 -> 3 stacks
+- */
+-static const uint32_t pnv_phb5_pec_num_stacks[] = { 3, 3 };
+-
+-static void pnv_phb5_pec_class_init(ObjectClass *klass, const void *data)
+-{
+-    PnvPhb4PecClass *pecc = PNV_PHB4_PEC_CLASS(klass);
+-    static const char compat[] = "ibm,power10-pbcq";
+-    static const char stk_compat[] = "ibm,power10-phb-stack";
+-
+-    pecc->xscom_cplt_base = pnv_phb5_pec_xscom_cplt_base;
+-    pecc->xscom_nest_base = pnv_phb5_pec_xscom_nest_base;
+-    pecc->xscom_pci_base  = pnv_phb5_pec_xscom_pci_base;
+-    pecc->xscom_nest_size = PNV10_XSCOM_PEC_NEST_SIZE;
+-    pecc->xscom_pci_size  = PNV10_XSCOM_PEC_PCI_SIZE;
+-    pecc->compat = compat;
+-    pecc->compat_size = sizeof(compat);
+-    pecc->stk_compat = stk_compat;
+-    pecc->stk_compat_size = sizeof(stk_compat);
+-    pecc->version = PNV_PHB5_VERSION;
+-    pecc->phb_type = TYPE_PNV_PHB5;
+-    pecc->num_phbs = pnv_phb5_pec_num_stacks;
+-}
+-
+-static const TypeInfo pnv_phb5_pec_type_info = {
+-    .name          = TYPE_PNV_PHB5_PEC,
+-    .parent        = TYPE_PNV_PHB4_PEC,
+-    .instance_size = sizeof(PnvPhb4PecState),
+-    .class_init    = pnv_phb5_pec_class_init,
+-    .class_size    = sizeof(PnvPhb4PecClass),
+-    .interfaces    = (const InterfaceInfo[]) {
+-        { TYPE_PNV_XSCOM_INTERFACE },
+-        { }
+-    }
+-};
+-
+ static void pnv_pec_register_types(void)
+ {
+     type_register_static(&pnv_pec_type_info);
+-    type_register_static(&pnv_phb5_pec_type_info);
+ }
+ 
+ type_init(pnv_pec_register_types);
+diff --git a/hw/pci-host/pnv_phb5.c b/hw/pci-host/pnv_phb5.c
+new file mode 100644
+index 0000000000..c3f2e16ce6
+--- /dev/null
++++ b/hw/pci-host/pnv_phb5.c
+@@ -0,0 +1,23 @@
++/*
++ * QEMU PowerPC PowerNV (POWER10) PHB5 model
++ *
++ * Copyright (c) 2018-2026, IBM Corporation.
++ *
++ * SPDX-License-Identifier: GPL-2.0-or-later
++ */
++
++#include "qemu/osdep.h"
++#include "hw/pci-host/pnv_phb4.h"
++
++static const TypeInfo pnv_phb5_type_info = {
++    .name          = TYPE_PNV_PHB5,
++    .parent        = TYPE_PNV_PHB4,
++    .instance_size = sizeof(PnvPHB4),
++};
++
++static void pnv_phb5_register_types(void)
++{
++    type_register_static(&pnv_phb5_type_info);
++}
++
++type_init(pnv_phb5_register_types);
+diff --git a/hw/pci-host/pnv_phb5_pec.c b/hw/pci-host/pnv_phb5_pec.c
+new file mode 100644
+index 0000000000..488ccbfb12
+--- /dev/null
++++ b/hw/pci-host/pnv_phb5_pec.c
+@@ -0,0 +1,77 @@
++/*
++ * QEMU PowerPC PowerNV (POWER10) PHB5 PEC model
++ *
++ * Copyright (c) 2018-2026, IBM Corporation.
++ *
++ * SPDX-License-Identifier: GPL-2.0-or-later
++ */
++
++#include "qemu/osdep.h"
++#include "hw/pci-host/pnv_phb4.h"
++#include "hw/ppc/pnv_xscom.h"
++
++#define XPEC_PCI_CPLT_OFFSET                        0x1000000ULL
++
++/*
++ * POWER10 definitions
++ */
++static uint32_t pnv_phb5_pec_xscom_cplt_base(PnvPhb4PecState *pec)
++{
++    return PNV10_XSCOM_PEC_NEST_CPLT_BASE + XPEC_PCI_CPLT_OFFSET * pec->index;
++}
++
++static uint32_t pnv_phb5_pec_xscom_pci_base(PnvPhb4PecState *pec)
++{
++    return PNV10_XSCOM_PEC_PCI_BASE + 0x1000000 * pec->index;
++}
++
++static uint32_t pnv_phb5_pec_xscom_nest_base(PnvPhb4PecState *pec)
++{
++    /* index goes down ... */
++    return PNV10_XSCOM_PEC_NEST_BASE - 0x1000000 * pec->index;
++}
++
++/*
++ * PEC0 -> 3 stacks
++ * PEC1 -> 3 stacks
++ */
++static const uint32_t pnv_phb5_pec_num_stacks[] = { 3, 3 };
++
++static void pnv_phb5_pec_class_init(ObjectClass *klass, const void *data)
++{
++    PnvPhb4PecClass *pecc = PNV_PHB4_PEC_CLASS(klass);
++    static const char compat[] = "ibm,power10-pbcq";
++    static const char stk_compat[] = "ibm,power10-phb-stack";
++
++    pecc->xscom_cplt_base = pnv_phb5_pec_xscom_cplt_base;
++    pecc->xscom_nest_base = pnv_phb5_pec_xscom_nest_base;
++    pecc->xscom_pci_base  = pnv_phb5_pec_xscom_pci_base;
++    pecc->xscom_nest_size = PNV10_XSCOM_PEC_NEST_SIZE;
++    pecc->xscom_pci_size  = PNV10_XSCOM_PEC_PCI_SIZE;
++    pecc->compat = compat;
++    pecc->compat_size = sizeof(compat);
++    pecc->stk_compat = stk_compat;
++    pecc->stk_compat_size = sizeof(stk_compat);
++    pecc->version = PNV_PHB5_VERSION;
++    pecc->phb_type = TYPE_PNV_PHB5;
++    pecc->num_phbs = pnv_phb5_pec_num_stacks;
++}
++
++static const TypeInfo pnv_phb5_pec_type_info = {
++    .name          = TYPE_PNV_PHB5_PEC,
++    .parent        = TYPE_PNV_PHB4_PEC,
++    .instance_size = sizeof(PnvPhb4PecState),
++    .class_init    = pnv_phb5_pec_class_init,
++    .class_size    = sizeof(PnvPhb4PecClass),
++    .interfaces    = (const InterfaceInfo[]) {
++        { TYPE_PNV_XSCOM_INTERFACE },
++        { }
++    }
++};
++
++static void pnv_phb5_pec_register_types(void)
++{
++    type_register_static(&pnv_phb5_pec_type_info);
++}
++
++type_init(pnv_phb5_pec_register_types);
+-- 
+2.53.0
 
-If I run checkpatch on our .hx files, I get a lot of complaints
-about trailing whitespace after "\" characters. I have a vague
-memory that those are deliberate, though I forget the details.
-We shouldn't add a file type to this list if it's going to
-produce a lot of false positives.
-
-thanks
--- PMM
 
