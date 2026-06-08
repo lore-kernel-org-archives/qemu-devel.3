@@ -4,36 +4,36 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 15B98CD8CA7
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 00B08CD8C9D
 	for <qemu-devel@archiver.kernel.org>; Mon,  8 Jun 2026 11:05:11 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wWXmb-0000oW-DH; Mon, 08 Jun 2026 07:04:41 -0400
+	id 1wWXmd-0000p5-Sp; Mon, 08 Jun 2026 07:04:43 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <jean-louis@dupond.be>)
- id 1wWXmX-0000mZ-M1; Mon, 08 Jun 2026 07:04:37 -0400
+ id 1wWXmW-0000mX-QF; Mon, 08 Jun 2026 07:04:37 -0400
 Received: from apollo.dupie.be ([2001:bc8:3f2a:101::1])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <jean-louis@dupond.be>)
- id 1wWXmU-0006uR-AI; Mon, 08 Jun 2026 07:04:37 -0400
+ id 1wWXmU-0006v3-9p; Mon, 08 Jun 2026 07:04:36 -0400
 Received: from lt-jeanlouis (unknown
  [IPv6:2a02:a03f:fafb:301:46c3:62e6:fe62:23a1])
- by apollo.dupie.be (Postfix) with ESMTPSA id F23A41520F54;
- Mon, 08 Jun 2026 13:04:28 +0200 (CEST)
+ by apollo.dupie.be (Postfix) with ESMTPSA id DFB4D1520F7B;
+ Mon, 08 Jun 2026 13:04:29 +0200 (CEST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=dupond.be; s=dkim;
- t=1780916669;
+ t=1780916670;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=ImXwFcjGNeGxBq1Hn6LVUNqP61YvpAoEcEaKTkM3cyg=;
- b=N7JZnNf6jon7lEJytduDKbSWY7xDvUqPFwz7bpKYFO67rQ8E6kJfE+xuw/hHS95cMa2KXX
- MXcfJNpiE+6HeEGY79vIGrjUD+y6siNIBgNZPziheDMx8bABxEbpqV0nsHrKWlYgCbWBfM
- hdTdn2ySxraaSCqQvcJarbuDvdaDvyQaxhfgRE0DklzFQGqU2/ktomFKsy55acQbx+qTV/
- Lzwm8RqFwhLQmI66lLdmB+ZEcIMLHojvhhy+hcIh6WAdmRS/oGweRcCKTqcN3g3wI3gCTg
- +G/HM/FiqvRKgYsqNBiwYxflpsDhLIAG9ZyI9UIjqNLfW/bH/FzmDCqJxDmc1A==
+ bh=9JvfuXR7szPhJ39nFbfdTuSR/jfEBTyesjCCNDkiDaY=;
+ b=g1fEhMggR5sdeW3S44CPDNWI812I1Wwek1rJzUnJNpP4UwudhykMGmTqZbeEFXm7AuX+AS
+ B0ob9gAYUQXkYvzjeQazR+a0j0w85GYgnWIiW5qLF3vD+sp2i1ykjExYsMdfj4C+BD/S4Z
+ nxm1eS00bmxuhuFMi6WLAd9nnVnP7hz6idCM6fvMlHN6rJltoIXERQWUIyFCWXKJwsxY+o
+ 328ev11gYqeNeo08K1wygwOsJpmmg92+VGCOx7XsV3SeHWmH0QOrV8X9wl/gwTl3dWvNj5
+ FBUoShclpigmFYJubqcpH/FoVZqYZbiNWEj1JikpD0qw20UiWOCiE7SUYkIARw==
 From: Jean-Louis Dupond <jean-louis@dupond.be>
 To: qemu-devel@nongnu.org
 Cc: Kevin Wolf <kwolf@redhat.com>,
@@ -41,9 +41,9 @@ Cc: Kevin Wolf <kwolf@redhat.com>,
  Hanna Reitz <hreitz@redhat.com>, qemu-block@nongnu.org,
  Fiona Ebner <f.ebner@proxmox.com>, John Snow <jsnow@redhat.com>,
  Jean-Louis Dupond <jean-louis@dupond.be>
-Subject: [PATCH 1/3] block: add bdrv_open_backing_chain_until
-Date: Mon,  8 Jun 2026 13:03:44 +0200
-Message-ID: <20260608110346.3231998-2-jean-louis@dupond.be>
+Subject: [PATCH 3/3] iotests/290: add test case for qemu-img measure
+Date: Mon,  8 Jun 2026 13:03:46 +0200
+Message-ID: <20260608110346.3231998-4-jean-louis@dupond.be>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260608110346.3231998-1-jean-louis@dupond.be>
 References: <20260608110346.3231998-1-jean-louis@dupond.be>
@@ -72,183 +72,145 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Add a new function called bdrv_open_backing_chain_until.
-This is used to open a block up until a specified backing chain.
+We create an image, write and discard some data in it, and then create a
+snapshot. In the snapshot we write and discard again some data.
+Then we measure the images with the base specified to calculate the
+merged image size. Finally we commit the image and check it's size.
 
-Modified bdrv_open_inherit to accept a new arg 'open_backing' to force
-to to no open the next backing. Adjusting all references to keep the
-existing behaviour.
+This scenario is executed for discard-no-unref enabled and disabled.
 
 Signed-off-by: Jean-Louis Dupond <jean-louis@dupond.be>
 ---
- block.c                            | 65 +++++++++++++++++++++++++-----
- block/mirror.c                     |  2 +-
- include/block/block-global-state.h |  7 +++-
- 3 files changed, 62 insertions(+), 12 deletions(-)
+ tests/qemu-iotests/290     | 45 ++++++++++++++++++++++++++++
+ tests/qemu-iotests/290.out | 61 ++++++++++++++++++++++++++++++++++++++
+ 2 files changed, 106 insertions(+)
 
-diff --git a/block.c b/block.c
-index f0a6042e61..a4f4ce1c21 100644
---- a/block.c
-+++ b/block.c
-@@ -83,6 +83,7 @@ static QLIST_HEAD(, BlockDriver) bdrv_drivers =
- static BlockDriverState *bdrv_open_inherit(const char *filename,
-                                            const char *reference,
-                                            QDict *options, int flags,
-+                                           bool open_backing,
-                                            BlockDriverState *parent,
-                                            const BdrvChildClass *child_class,
-                                            BdrvChildRole child_role,
-@@ -3617,6 +3618,7 @@ out:
-  * TODO Can this be unified with bdrv_open_image()?
-  */
- int bdrv_open_backing_file(BlockDriverState *bs, QDict *parent_options,
-+                           bool open_backing,
-                            const char *bdref_key, Error **errp)
- {
-     ERRP_GUARD();
-@@ -3695,9 +3697,9 @@ int bdrv_open_backing_file(BlockDriverState *bs, QDict *parent_options,
-         qdict_put_str(options, "driver", bs->backing_format);
-     }
+diff --git a/tests/qemu-iotests/290 b/tests/qemu-iotests/290
+index 776b59de1b..4702461aa8 100755
+--- a/tests/qemu-iotests/290
++++ b/tests/qemu-iotests/290
+@@ -92,6 +92,51 @@ for qcow2_compat in 0.10 1.1; do
+     $QEMU_IMG map "$TEST_IMG" | _filter_testdir
+ done
  
--    backing_hd = bdrv_open_inherit(backing_filename, reference, options, 0, bs,
--                                   &child_of_bds, bdrv_backing_role(bs), true,
--                                   errp);
-+    backing_hd = bdrv_open_inherit(backing_filename, reference, options, 0,
-+                                   open_backing, bs, &child_of_bds,
-+                                   bdrv_backing_role(bs), true, errp);
-     if (!backing_hd) {
-         bs->open_flags |= BDRV_O_NO_BACKING;
-         error_prepend(errp, "Could not open backing file: ");
-@@ -3733,6 +3735,48 @@ free_exit:
-     return ret;
- }
- 
-+int
-+bdrv_open_backing_chain_until(BlockDriverState *top_bs,
-+                              const char *base_filename,
-+                              Error **errp)
++echo
++echo "### Test qemu-img measure for commit differences with 'discard-no-unref' option enabled"
++echo
++
++for DISCARD_NO_UNREF in true false; do
++    echo "# Create a base image and fill it with data"
++    TEST_IMG="$TEST_IMG.base" _make_test_img 128M
++
++    $QEMU_IO -c 'write 0 8M' "$TEST_IMG.base" | _filter_qemu_io
++    $QEMU_IO -c 'write 10M 8M' "$TEST_IMG.base" | _filter_qemu_io
++    $QEMU_IO -c 'write 24M 32M' "$TEST_IMG.base" | _filter_qemu_io
++    $QEMU_IO -c 'write 56M 20M' "$TEST_IMG.base" | _filter_qemu_io
++    $QEMU_IO -c "reopen -o discard=unmap,discard-no-unref=$DISCARD_NO_UNREF" \
++        -c 'discard 32M 10M' "$TEST_IMG.base" | _filter_qemu_io
++
++    echo "# Create a top image and do some writes and discards"
++    TEST_IMG="$TEST_IMG.top" _make_test_img -b "$TEST_IMG.base" -F $IMGFMT 128M
++
++    $QEMU_IO -c "reopen -o discard=unmap,discard-no-unref=$DISCARD_NO_UNREF" -c 'write 16M 8M' \
++        -c 'discard 60M 20M' -c 'write 84M 10M' "$TEST_IMG.top" | _filter_qemu_io
++
++    FILE_JSON="json:{
++        'file': {
++            'driver': 'file',
++            'filename': '$TEST_IMG.top'
++        },
++        'driver': 'qcow2',
++        'discard': 'unmap',
++        'discard-no-unref': '$DISCARD_NO_UNREF',
++        'backing': {
++            'driver': 'qcow2',
++            'discard-no-unref': '$DISCARD_NO_UNREF',
++            'file': {
++                'driver': 'file',
++                'filename': '$TEST_IMG.base'
++            },
++            'backing': null
++        }}"
++    echo "# Measure size with discard-no-unref=$DISCARD_NO_UNREF"
++    $QEMU_IMG measure --output=json -O qcow2 "${FILE_JSON}"
++    echo "# Merging the top image into the base image"
++    $QEMU_IMG commit -t none -f qcow2 "${FILE_JSON}"
++    stat -c"base disk image file size in bytes: %s" "$TEST_IMG.base"
++done
++
+ # success, all done
+ echo "*** done"
+ rm -f $seq.full
+diff --git a/tests/qemu-iotests/290.out b/tests/qemu-iotests/290.out
+index 22b476594f..6dafbfc2b9 100644
+--- a/tests/qemu-iotests/290.out
++++ b/tests/qemu-iotests/290.out
+@@ -58,4 +58,65 @@ read 131072/131072 bytes at offset 0
+ 128 KiB, X ops; XX:XX:XX.X (XXX YYY/sec and XXX ops/sec)
+ # Output of qemu-img map
+ Offset          Length          Mapped to       File
++
++### Test qemu-img measure for commit differences with 'discard-no-unref' option enabled
++
++# Create a base image and fill it with data
++Formatting 'TEST_DIR/t.IMGFMT.base', fmt=IMGFMT size=134217728
++wrote 8388608/8388608 bytes at offset 0
++8 MiB, X ops; XX:XX:XX.X (XXX YYY/sec and XXX ops/sec)
++wrote 8388608/8388608 bytes at offset 10485760
++8 MiB, X ops; XX:XX:XX.X (XXX YYY/sec and XXX ops/sec)
++wrote 33554432/33554432 bytes at offset 25165824
++32 MiB, X ops; XX:XX:XX.X (XXX YYY/sec and XXX ops/sec)
++wrote 20971520/20971520 bytes at offset 58720256
++20 MiB, X ops; XX:XX:XX.X (XXX YYY/sec and XXX ops/sec)
++discard 10485760/10485760 bytes at offset 33554432
++10 MiB, X ops; XX:XX:XX.X (XXX YYY/sec and XXX ops/sec)
++# Create a top image and do some writes and discards
++Formatting 'TEST_DIR/t.IMGFMT.top', fmt=IMGFMT size=134217728 backing_file=TEST_DIR/t.IMGFMT.base backing_fmt=IMGFMT
++wrote 8388608/8388608 bytes at offset 16777216
++8 MiB, X ops; XX:XX:XX.X (XXX YYY/sec and XXX ops/sec)
++discard 20971520/20971520 bytes at offset 62914560
++20 MiB, X ops; XX:XX:XX.X (XXX YYY/sec and XXX ops/sec)
++wrote 10485760/10485760 bytes at offset 88080384
++10 MiB, X ops; XX:XX:XX.X (XXX YYY/sec and XXX ops/sec)
++# Measure size with discard-no-unref=true
 +{
-+    BlockDriverState *base_bs = NULL;
-+    BlockDriverState *curr = top_bs;
-+    int ret;
-+
-+    GLOBAL_STATE_CODE();
-+
-+    if (!base_filename) {
-+        return 0;
-+    }
-+
-+    while (!(base_bs = bdrv_find_backing_image(top_bs, base_filename))) {
-+        QDict *options;
-+
-+        options = qdict_clone_shallow(curr->options);
-+        ret = bdrv_open_backing_file(curr, options, false, "backing", errp);
-+        qobject_unref(options);
-+        if (ret < 0) {
-+            return ret;
-+        }
-+
-+        bdrv_graph_rdlock_main_loop();
-+        if (!curr->backing) {
-+            bdrv_graph_rdunlock_main_loop();
-+            error_setg(errp,
-+                       "Did not find '%s' in the backing chain of '%s'",
-+                       base_filename, top_bs->filename);
-+            return -ENOENT;
-+        }
-+
-+        /* Switch to the next layer */
-+        curr = curr->backing->bs;
-+        bdrv_graph_rdunlock_main_loop();
-+    }
-+
-+    return 0;
++    "bitmaps": 0,
++    "required": 88408064,
++    "fully-allocated": 134545408
 +}
-+
- static BlockDriverState *
- bdrv_open_child_bs(const char *filename, QDict *options, const char *bdref_key,
-                    BlockDriverState *parent, const BdrvChildClass *child_class,
-@@ -3767,7 +3811,7 @@ bdrv_open_child_bs(const char *filename, QDict *options, const char *bdref_key,
-         goto done;
-     }
- 
--    bs = bdrv_open_inherit(filename, reference, image_options, 0,
-+    bs = bdrv_open_inherit(filename, reference, image_options, 0, true,
-                            parent, child_class, child_role, parse_filename,
-                            errp);
-     if (!bs) {
-@@ -3897,8 +3941,8 @@ BlockDriverState *bdrv_open_blockdev_ref(BlockdevRef *ref, Error **errp)
- 
-     }
- 
--    bs = bdrv_open_inherit(NULL, reference, qdict, 0, NULL, NULL, 0, false,
--                           errp);
-+    bs = bdrv_open_inherit(NULL, reference, qdict, 0, true, NULL, NULL, 0,
-+                           false, errp);
-     obj = NULL;
-     qobject_unref(obj);
-     visit_free(v);
-@@ -3986,7 +4030,7 @@ out:
-  */
- static BlockDriverState * no_coroutine_fn
- bdrv_open_inherit(const char *filename, const char *reference, QDict *options,
--                  int flags, BlockDriverState *parent,
-+                  int flags, bool open_backing, BlockDriverState *parent,
-                   const BdrvChildClass *child_class, BdrvChildRole child_role,
-                   bool parse_filename, Error **errp)
- {
-@@ -4199,8 +4243,9 @@ bdrv_open_inherit(const char *filename, const char *reference, QDict *options,
-     }
- 
-     /* If there is a backing file, use it */
--    if ((flags & BDRV_O_NO_BACKING) == 0) {
--        ret = bdrv_open_backing_file(bs, options, "backing", &local_err);
-+    if ((flags & BDRV_O_NO_BACKING) == 0 && open_backing) {
-+        ret = bdrv_open_backing_file(bs, options, open_backing, "backing",
-+                                     &local_err);
-         if (ret < 0) {
-             goto close_and_fail;
-         }
-@@ -4283,7 +4328,7 @@ BlockDriverState *bdrv_open(const char *filename, const char *reference,
- {
-     GLOBAL_STATE_CODE();
- 
--    return bdrv_open_inherit(filename, reference, options, flags, NULL,
-+    return bdrv_open_inherit(filename, reference, options, flags, true, NULL,
-                              NULL, 0, true, errp);
- }
- 
-diff --git a/block/mirror.c b/block/mirror.c
-index 089856f4a8..a4dde5d36d 100644
---- a/block/mirror.c
-+++ b/block/mirror.c
-@@ -785,7 +785,7 @@ static int mirror_exit_common(Job *job)
-         bdrv_graph_rdlock_main_loop();
-         assert(!bdrv_backing_chain_next(target_bs));
-         ret = bdrv_open_backing_file(bdrv_skip_filters(target_bs), NULL,
--                                     "backing", &local_err);
-+                                     true, "backing", &local_err);
-         bdrv_graph_rdunlock_main_loop();
-         if (ret < 0) {
-             error_report_err(local_err);
-diff --git a/include/block/block-global-state.h b/include/block/block-global-state.h
-index ed89999f0f..c7becd9d73 100644
---- a/include/block/block-global-state.h
-+++ b/include/block/block-global-state.h
-@@ -110,7 +110,12 @@ bdrv_set_backing_hd(BlockDriverState *bs, BlockDriverState *backing_hd,
-                     Error **errp);
- 
- int bdrv_open_backing_file(BlockDriverState *bs, QDict *parent_options,
--                           const char *bdref_key, Error **errp);
-+                           bool open_backing, const char *bdref_key,
-+                           Error **errp);
-+
-+int bdrv_open_backing_chain_until(BlockDriverState *top_bs,
-+                                  const char *base_filename,
-+                                  Error **errp);
- 
- BlockDriverState * no_coroutine_fn
- bdrv_open(const char *filename, const char *reference, QDict *options,
++# Merging the top image into the base image
++Image committed.
++base disk image file size in bytes: 88408064
++# Create a base image and fill it with data
++Formatting 'TEST_DIR/t.IMGFMT.base', fmt=IMGFMT size=134217728
++wrote 8388608/8388608 bytes at offset 0
++8 MiB, X ops; XX:XX:XX.X (XXX YYY/sec and XXX ops/sec)
++wrote 8388608/8388608 bytes at offset 10485760
++8 MiB, X ops; XX:XX:XX.X (XXX YYY/sec and XXX ops/sec)
++wrote 33554432/33554432 bytes at offset 25165824
++32 MiB, X ops; XX:XX:XX.X (XXX YYY/sec and XXX ops/sec)
++wrote 20971520/20971520 bytes at offset 58720256
++20 MiB, X ops; XX:XX:XX.X (XXX YYY/sec and XXX ops/sec)
++discard 10485760/10485760 bytes at offset 33554432
++10 MiB, X ops; XX:XX:XX.X (XXX YYY/sec and XXX ops/sec)
++# Create a top image and do some writes and discards
++Formatting 'TEST_DIR/t.IMGFMT.top', fmt=IMGFMT size=134217728 backing_file=TEST_DIR/t.IMGFMT.base backing_fmt=IMGFMT
++wrote 8388608/8388608 bytes at offset 16777216
++8 MiB, X ops; XX:XX:XX.X (XXX YYY/sec and XXX ops/sec)
++discard 20971520/20971520 bytes at offset 62914560
++20 MiB, X ops; XX:XX:XX.X (XXX YYY/sec and XXX ops/sec)
++wrote 10485760/10485760 bytes at offset 88080384
++10 MiB, X ops; XX:XX:XX.X (XXX YYY/sec and XXX ops/sec)
++# Measure size with discard-no-unref=false
++{
++    "bitmaps": 0,
++    "required": 71630848,
++    "fully-allocated": 134545408
++}
++# Merging the top image into the base image
++Image committed.
++base disk image file size in bytes: 71630848
+ *** done
 -- 
 2.54.0
 
