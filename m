@@ -4,104 +4,112 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 50202CD8C92
-	for <qemu-devel@archiver.kernel.org>; Mon,  8 Jun 2026 09:38:18 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id BC66ACD8C92
+	for <qemu-devel@archiver.kernel.org>; Mon,  8 Jun 2026 09:38:34 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wWWQO-0005Wb-FP; Mon, 08 Jun 2026 05:37:40 -0400
+	id 1wWWR8-0005gC-Jq; Mon, 08 Jun 2026 05:38:28 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1wWWQM-0005Vw-TM
- for qemu-devel@nongnu.org; Mon, 08 Jun 2026 05:37:38 -0400
-Received: from mail-yw1-x112e.google.com ([2607:f8b0:4864:20::112e])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1wWWQL-00057h-CO
- for qemu-devel@nongnu.org; Mon, 08 Jun 2026 05:37:38 -0400
-Received: by mail-yw1-x112e.google.com with SMTP id
- 00721157ae682-7e8ec43e5f9so53116447b3.0
- for <qemu-devel@nongnu.org>; Mon, 08 Jun 2026 02:37:36 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1780911456; cv=none;
- d=google.com; s=arc-20240605;
- b=lcOcPavQ1H0R/4DZxD2Rdf4MKIx3a6v48n+ns/wgZ59iMch7TIk3edyqEqQbVsGioJ
- 3DhnCZOHvWqU3SHEnK450rZJNMUrwKS39pjwPERnomhEs7bI964J3e9dJJn3cKZ18Fg3
- N681HELl+1D5AM525WNacl38Yip0gdIRx08b6n//a585jH/HQSK6nZTz0dEynB8jCa4G
- jgivxM32sPGM9rSVinLp76t+pWHCvTw/EHKKNpxv3oT1iiCCHt0OpfgPj89ytNbqsgN+
- VRu0Y1YaxRFiEfwGQLxylznm+G2YMOH8jyyFEUOSUFlw6NxGF6ouaBUYJMhthBiU96It
- fkiw==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
- s=arc-20240605; 
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:dkim-signature;
- bh=J5L1JFcEbvERzC9sMUHEuhDP6qO9bjuPMoCnatQ7p9o=;
- fh=g+MQkiJJtCsmZcvB/tRD1/+P3M8b+o/kjXYGQzUye+I=;
- b=NNWrevY6RUzc7NUVh0ZtKbjxXG2VWIZVqjS2dL6C8Vy1PaKE7xLKGTkaJVfm4KtDAY
- nFSCkfKP4e2njUZzw6GaXewT0tgGAyOZe3DNeUCRYQIJEAu+/01V6s+R+Oyf0rkYEcYf
- DuUpWef8r4ZYS+DXhVPC/UoiFeqC+XZ2VW0qo/bNwIx7GU+tOqI/fAt+ID3URRZ1TE7b
- HruwcUdfYXcyGOWawuKYT/OkpgxglyqltSe2IjhQDKppDtX3dBYY0MdMUa3WxbG/hjyx
- jU8FdNNiBjyJ7Jrtdcxd9RgAlVxY552q/PyZjgOpaH4hRnTrDq/QtTWTkulBnNpNSkAo
- qZsA==; darn=nongnu.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
+ (Exim 4.90_1) (envelope-from <leonardi@redhat.com>)
+ id 1wWWR3-0005dY-Ai
+ for qemu-devel@nongnu.org; Mon, 08 Jun 2026 05:38:22 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <leonardi@redhat.com>)
+ id 1wWWQz-0005U8-6y
+ for qemu-devel@nongnu.org; Mon, 08 Jun 2026 05:38:21 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1780911494;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding;
+ bh=kppLJO0fX8gGVRKWJJztsqRrRPTzd1ASqdXx2FhnR+4=;
+ b=FbKwT9JDJ4D0cuS/Lh5RdEi3aQJOFP1m4zER8ycN2Otw/BrIAFNqWAQ0Fi5/0jTpDd27QP
+ /oyTHVuQLzJ+fFHf1Na8xEfHY+ovSEQMQdgP4LdPLZoWR9JZKQFIREBxC5NUfIErkQDig4
+ MvDUxfJBHY3PakZ/ecp6F40bEIINuyg=
+Received: from mail-wr1-f72.google.com (mail-wr1-f72.google.com
+ [209.85.221.72]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-676-04MTLBRVOK29DPyBxSWK0A-1; Mon, 08 Jun 2026 05:38:12 -0400
+X-MC-Unique: 04MTLBRVOK29DPyBxSWK0A-1
+X-Mimecast-MFC-AGG-ID: 04MTLBRVOK29DPyBxSWK0A_1780911492
+Received: by mail-wr1-f72.google.com with SMTP id
+ ffacd0b85a97d-45f3d008865so2929990f8f.0
+ for <qemu-devel@nongnu.org>; Mon, 08 Jun 2026 02:38:12 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1780911456; x=1781516256; darn=nongnu.org;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=J5L1JFcEbvERzC9sMUHEuhDP6qO9bjuPMoCnatQ7p9o=;
- b=vuCalg2Ya6Hn87VliHEjbiooRkJ/ge0bp5g31blmkh6Xdp7CAzZxZNn3HwKH/AEowe
- pqctREOozOSfMYcDl7+qVKqlFNUaRH30wbAqXIFvIg6d5G04K28E2lDeunCUDo3A00bC
- akdJJ4JduXaFEq5MHp4LyRQjDR9gHtEx5WQ4xyAhVJchWuE7cIj7Dzl308XGkevLpS5J
- /iwCSyhmCn37YEfeso5uAuuc0HcigM8Yzf6kfw53e+RP1ehwmNsJQfGnm4byK3WNzWow
- V01EeUnPcUb0ozkFcf55Pzl2qalmkKQ305Q4O/QXWIxtQGDR1pwOR9mw1Qv1+zOKuQmy
- 4Q7w==
+ d=redhat.com; s=google; t=1780911491; x=1781516291; darn=nongnu.org;
+ h=cc:to:content-transfer-encoding:mime-version:message-id:date
+ :subject:from:from:to:cc:subject:date:message-id:reply-to;
+ bh=kppLJO0fX8gGVRKWJJztsqRrRPTzd1ASqdXx2FhnR+4=;
+ b=MsFSS14POOi+Vrruhyi+zKXFrgbnwa24Sw+hVsG7tC3YecYicLkgjeu6/+Jxu09I9H
+ 2zVrPMLazIF0YhmQql7tyF+1EjF0w1SMQ4TYwF91OuzSOzUviY7xqPMbSsEnvkc2vPtj
+ mP+234UWpok3pP7PB1jCk8//rtO7H44EgN2NiX0bDD+dPpwAMnqqqfXDzFNqPJrzu0Tq
+ rGIFo9Dl/LsDab0pFjL/H1rIH0vvUUnui6hFsPZXQ7zWOG2qNVh1NDtyHjpLMSteD5RL
+ hZ+bez+KMqXHaDrlPjhXsCHHsmlCXaNGOkE7zCmri+pXnJCyRJhqhfNqAx76gInqR8GT
+ j/hg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1780911456; x=1781516256;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ d=1e100.net; s=20251104; t=1780911491; x=1781516291;
+ h=cc:to:content-transfer-encoding:mime-version:message-id:date
+ :subject:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
  :message-id:reply-to;
- bh=J5L1JFcEbvERzC9sMUHEuhDP6qO9bjuPMoCnatQ7p9o=;
- b=JfVdjTTMmeMy8Vy23PKNvFI8UxkUyMvdzKjeNsKj8NjTAeNs8Z1ux+BwlGPfxDK1TO
- R766RdtLTdX3Qz/s1cp/RQtp4GX98YpsZLG7A5HqRC7CCcEzM/5BWzV60eRhks2CyTT1
- 27x9yFHKdj6UjC2AWr8tCzFNq0qIGYapm4yJQFbs1lKiYruteCLxZLP9/B6E4b0b4kPb
- 24+kkXinUNeVjz/+p7SpT5qtxx0T2vWN/UwoOGvlQX7XKV3U/GZDYa9KsztL8nGevbcq
- mAcOeKdFhKXEf/oNaH8w7+zF44KBZnkpGvPiDnqPf4VSwCTfH8pf/5NmYV2beUyjgxGn
- KHtA==
-X-Forwarded-Encrypted: i=1;
- AFNElJ+QRRaX3OyPYHBnJhLLG7qII7zGExN0kuWhUX406l5Sv2wkCUVa4AOss7xAVYtytQd2FibVbf9Te7R6@nongnu.org
-X-Gm-Message-State: AOJu0YwYn9MMpryUCk32Neu18BTzGlMhKPzIMVrNBNAuj5x0yTTAZEwG
- tIXe6zjtErqrnz88HiTN2Ta+S+6RHfTRrhyXbJRhiS6nVU9Jc90Q/RWIP9wByl14ooveD/JrcGC
- HusF1NB1x3ja1tU5eDucXMiXo+VAjGiyNd9JC8fE6Wg==
-X-Gm-Gg: Acq92OFiMP1RsoBbs0sp9r3sdZerKa5sQY7CxMV7jOEfIVBI4TIV9RU9d5HXiY9eHlk
- 1Akfn7TIzzuMah1tDTkpIKEtW186bPg5+Qcdre2JNrnfNEo6bX/PZA8PFrzItdnWzLO/kv0iuEI
- evug+g5YM4KxejTCErB7Uk6qfyunCMVMOjIXnHF0JsigoUzEV6mSoomxtHR+FnxFaoMQqBPJ1f0
- lElkE6rS4MAIsPOSx/BxJ7wzcQtRc2ySNtYcoNdEga5cg25a9eMXbPyRkfaGKAHkTK1mu2kRe9a
- 3HKIVP52dJVxcfNWsi6NxiusDw72KFBU8MrSc/HZ0sG9wTAZbEo7mkeiaVxv0LkbPHoF4f3xL5m
- xsQ==
-X-Received: by 2002:a05:690e:bc2:b0:660:8508:5c15 with SMTP id
- 956f58d0204a3-6610779e086mr11012601d50.49.1780911455764; Mon, 08 Jun 2026
- 02:37:35 -0700 (PDT)
+ bh=kppLJO0fX8gGVRKWJJztsqRrRPTzd1ASqdXx2FhnR+4=;
+ b=BGQli9DB8MoMR0uUyeExTEX+5/RHXOmjgdAb6ktSI31fVb/plBdQQl21xRF7uvFW0S
+ sI4EPErKGulZEE57ZgJ109m3ONJf17HMeEC7dzSlPdwrLdwhjR0RNK6/yDK2dJL96wgA
+ yNTmsj3AA0bpr/dABOY94QtgK6KxF8XpRGJynY/1qGNAWyoMWYmqsBhrKFxOWi6CuIHH
+ mIUVB95gFf2Zn0BgRwB4DAhBbaul3b04XAHiKF9FC1nVzW+QJIc6upwjeoYqnGoJiAQz
+ Rsht8hbTwbk0gTFo2lB/UTlDSTm63rIpqK/MTHvAJV78wNF8MndSCbKNvElQ3Dt3ebMS
+ XQWQ==
+X-Gm-Message-State: AOJu0YyNg26IonDRFFYpgl9JPPg6r56SbuTAifoJkrpDpys5rwNFVUd2
+ kc9aFwqqJiaFj7LfV4v+0C7ja0ihPpvTS/BEs+Fd+1IKRtnI45gJal6r9DIu1H8GWaIsnSIkWEY
+ VuYeXffkDKqpppiLKFH+Quu6pouskahhMkkiQOKQlZfEPI92H++KWKMWW
+X-Gm-Gg: Acq92OHCpCmO9ztRfI+5dZ9YSPzpnLMfqnO5J1+zBeMs7pUo5/dmeQd1lkKpxt7/FPE
+ sjns0NB05iHP4r04DWLaDXe0bkNLiVD77y4pwTGZQ9KrhJXkzqCA7MgNzYbAVSFpxAqNzBMswrh
+ 81DLtgkoy8TQ8wfeT1XwRUiCrtS+sX6LSoIhqJfcTKFeBz+Mkk5rD3zaN04ocwe88jJvwhd+8El
+ FnFkCh2HksSfFu8UVaKPNp38tQ0v3QrZPO2mMqyET+JVb5CxM7GKb5IA5mKrl4uxC478L/k3cZX
+ AKo1L6W1p7ly30zHna0lp14dWKgOZmr4YvXmhKA33UgKmo+rAC2CmHUdrWzaVcgDUUVEjxGICaA
+ ifmr1p6s3F3dEuzpQsKD45jWOSrmRo5nW9G4xox3TRJVQoAsNIFQ+XytOFul2GWgvr0YZsekm0l
+ mfdNBD7JMMuIwRwSgoKUOECOsZ2GU=
+X-Received: by 2002:a05:6000:4802:b0:45e:f3b2:1228 with SMTP id
+ ffacd0b85a97d-46032b611d3mr21862787f8f.3.1780911491547; 
+ Mon, 08 Jun 2026 02:38:11 -0700 (PDT)
+X-Received: by 2002:a05:6000:4802:b0:45e:f3b2:1228 with SMTP id
+ ffacd0b85a97d-46032b611d3mr21862730f8f.3.1780911491132; 
+ Mon, 08 Jun 2026 02:38:11 -0700 (PDT)
+Received: from lleonard-thinkpadx1carbongen13.rmtit.csb ([176.206.19.176])
+ by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-4601f34413csm50144923f8f.21.2026.06.08.02.38.10
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Mon, 08 Jun 2026 02:38:10 -0700 (PDT)
+From: Luigi Leonardi <leonardi@redhat.com>
+Subject: [PATCH 0/2] igvm: device tree support
+Date: Mon, 08 Jun 2026 11:37:45 +0200
+Message-Id: <20260608-microvm_device_tree-v1-0-730874ad0008@redhat.com>
 MIME-Version: 1.0
-References: <20260605034729.2874861-1-kylefoxaustin.github@gmail.com>
-In-Reply-To: <20260605034729.2874861-1-kylefoxaustin.github@gmail.com>
-From: Peter Maydell <peter.maydell@linaro.org>
-Date: Mon, 8 Jun 2026 10:37:23 +0100
-X-Gm-Features: AVVi8CcI9Ri40NPGHNuqJlFE6tU-04vN5237IiSyt5BxVqNfiKETCrUY6erp-1U
-Message-ID: <CAFEAcA_=2j+jHuqcCF0S9X=4q3dhY8=EKJuGCkuuUSG1jaO0bQ@mail.gmail.com>
-Subject: Re: [PATCH] target/arm: align down misaligned PMSAv7 MPU region base
- instead of dropping it
-To: Kyle Fox <kylefoxaustin.github@gmail.com>
-Cc: qemu-arm@nongnu.org, qemu-devel@nongnu.org
-Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2607:f8b0:4864:20::112e;
- envelope-from=peter.maydell@linaro.org; helo=mail-yw1-x112e.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+X-B4-Tracking: v=1; b=H4sIAAAAAAAC/x2MSQqAMBAEvyJzNhAVQvArImJiq3NwYSIiBP/u4
+ LHo6sqUIIxEbZFJcHPiY1eoyoLiOu4LDE/KVNvaWWe92TjKcW/DpHLEcAlgdGtiE6oA70ifp2D
+ m5692/ft+mAR9RWUAAAA=
+X-Change-ID: 20260608-microvm_device_tree-0263c3b1be86
+To: qemu-devel@nongnu.org
+Cc: "Michael S. Tsirkin" <mst@redhat.com>, 
+ Paolo Bonzini <pbonzini@redhat.com>, 
+ Richard Henderson <richard.henderson@linaro.org>, 
+ Gerd Hoffmann <kraxel@redhat.com>, Stefano Garzarella <sgarzare@redhat.com>, 
+ Ani Sinha <anisinha@redhat.com>, Zhao Liu <zhao1.liu@intel.com>, 
+ Oliver Steffen <osteffen@redhat.com>, Luigi Leonardi <leonardi@redhat.com>
+X-Mailer: b4 0.14.3
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=leonardi@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -24
+X-Spam_score: -2.5
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.445,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -117,30 +125,53 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Fri, 5 Jun 2026 at 04:47, Kyle Fox <kylefoxaustin.github@gmail.com> wrote:
->
-> When a PMSAv7 (ARMv7-M) MPU region's DRBAR base is not aligned to its
-> DRSR region size, get_phys_addr_pmsav7() logged a guest-error and
-> skipped the region entirely (continue). The architecture calls a
-> misaligned base UNPREDICTABLE, but real Cortex-M hardware does not
-> disable the region: RBAR.ADDR is only bits [31:log2(size)], so the
-> sub-size low bits are simply ignored and the region matches against the
-> aligned-down base.
->
-> NXP's i.MX95 Cortex-M7 firmware (and the MCUXpresso SDK demos) rely on
-> this. The M7 sets up a deny-all background region (region 0, whole
-> address space, AP=000) and then grants the peripheral space with a
-> 512 MiB region programmed as DRBAR=0x4c800000 - misaligned, intended as
-> 0x40000000. QEMU dropped that region, so a privileged access to e.g.
-> LPUART3 at 0x42570000 fell through to the deny-all region and took a
-> MemManage fault (CFSR.DACCVIOL), trapping the firmware in its default
-> fault handler before it could print anything.
+This series consists of two patches:
 
-This is a guest software bug -- software must not rely on UNPREDICTABLE
-behaviour, even if the hardware implementation happens to do the
-same thing every time. Other M-profile CPUs might do something different.
-The right thing to do here is to fix the broken software...
+The first patch packs the device tree for microvm. This is a soft
+prerequisite for the next patch that exposes it via IGVM.
+Currently the unpacked microvm device tree buffer occupies 1 MiB
+(the default FDT_MAX_SIZE), while the actual content is well below
+4096 bytes. Packing removes the unused space.
 
-thanks
--- PMM
+The second patch exposes the device tree via IGVM.
+
+This will be consumed by Coconut SVSM with the upcoming device tree
+support [1]. This will allow SVSM to run on a normal CPU (not AMD SEV-SNP)
+and execute all its tests using upstream QEMU.
+
+Eventually edk2 will also be able to consume DT via IGVM, but the work
+has not started yet.
+
+[1] https://github.com/coconut-svsm/svsm/pull/1006
+
+To: qemu-devel@nongnu.org
+Cc: Michael S. Tsirkin <mst@redhat.com>
+Cc: Paolo Bonzini <pbonzini@redhat.com>
+Cc: Richard Henderson <richard.henderson@linaro.org>
+Cc: Gerd Hoffmann <kraxel@redhat.com>
+Cc: Stefano Garzarella <sgarzare@redhat.com>
+Cc: Ani Sinha <anisinha@redhat.com>
+Cc: Zhao Liu <zhao1.liu@intel.com>
+Cc: Oliver Steffen <osteffen@redhat.com>
+
+Signed-off-by: Luigi Leonardi <leonardi@redhat.com>
+---
+Luigi Leonardi (2):
+      hw/i386/microvm: pack device tree
+      igvm: Fill device tree IGVM parameter field on x86_64
+
+ backends/igvm.c       |  2 ++
+ hw/i386/microvm-dt.c  |  9 +++++++++
+ include/system/igvm.h |  2 ++
+ stubs/igvm.c          |  6 ++++++
+ target/i386/igvm.c    | 36 ++++++++++++++++++++++++++++++++++++
+ 5 files changed, 55 insertions(+)
+---
+base-commit: 29c042c6e9d4a09d4a0ac3fa54aeb7ee08ce0bdc
+change-id: 20260608-microvm_device_tree-0263c3b1be86
+
+Best regards,
+-- 
+Luigi Leonardi <leonardi@redhat.com>
+
 
