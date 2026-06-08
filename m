@@ -4,74 +4,74 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 996EBCD8CA8
-	for <qemu-devel@archiver.kernel.org>; Mon,  8 Jun 2026 19:01:29 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 05228CD6E79
+	for <qemu-devel@archiver.kernel.org>; Mon,  8 Jun 2026 19:01:39 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wWfD5-00017e-VM; Mon, 08 Jun 2026 15:00:31 -0400
+	id 1wWfCw-00010h-1P; Mon, 08 Jun 2026 15:00:22 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <james.hilliard1@gmail.com>)
- id 1wWfD1-00014R-DR
- for qemu-devel@nongnu.org; Mon, 08 Jun 2026 15:00:27 -0400
+ id 1wWfCr-0000zA-Ri
+ for qemu-devel@nongnu.org; Mon, 08 Jun 2026 15:00:18 -0400
 Received: from mail-ot1-x333.google.com ([2607:f8b0:4864:20::333])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <james.hilliard1@gmail.com>)
- id 1wWfCz-0006tK-CU
- for qemu-devel@nongnu.org; Mon, 08 Jun 2026 15:00:26 -0400
+ id 1wWfCp-0006f6-FL
+ for qemu-devel@nongnu.org; Mon, 08 Jun 2026 15:00:17 -0400
 Received: by mail-ot1-x333.google.com with SMTP id
- 46e09a7af769-7e6128bd9b3so2592388a34.1
- for <qemu-devel@nongnu.org>; Mon, 08 Jun 2026 12:00:24 -0700 (PDT)
+ 46e09a7af769-7e6ec655c80so2525570a34.0
+ for <qemu-devel@nongnu.org>; Mon, 08 Jun 2026 12:00:14 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1780945224; x=1781550024; darn=nongnu.org;
+ d=gmail.com; s=20251104; t=1780945212; x=1781550012; darn=nongnu.org;
  h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
  :mime-version:subject:date:from:from:to:cc:subject:date:message-id
- :reply-to; bh=W8sf8OT+nsg957PRY3OZR99qZCzK1VlYe1z4gwGaMBA=;
- b=acscsU2SmdiScb0Ozt93cvpm2jHDC7CMB2nyWMPgIp6UY3BJyedb3Vq+RUryDWGL/C
- t3drzZLgMGRg7O7AR5WTF8lPDHkBilPOnPC0hUlG3iSfd8EbJw43iXgYU+WC2HFariyP
- j3xE5YNaq8/WNNQFI+4I750umtVoodnnhxb0IQyOEbMtunVDix0Qym1helqBxTERLEWS
- nUeKibTMhTPl/hNn4mkK950J2M5l9vkPfmeFjJJgpkX0sQ9psYJ4JvAVvBgBrLJU89U9
- dnG8mOB+k3p8FFO5/mWsGxDgsOT3I6iTByWqxHUmfMfgzdOKcblH8nyds+B06MPcuGZJ
- +N7Q==
+ :reply-to; bh=XC3KOmfiBf3uOHhOBkXrSekokX1Dg+EUGg6cXmaFlII=;
+ b=Gybhdxxc612HK7ZDVc4QRSZpNJkQKvUyWhM6gHmFHbarwnCoN5CHaEdLuww6kUkoUb
+ 0rqC84UQSa2PsDklZ0PrxdixoTSEpeFiEy8DOSRPP1x0rKPBSaw+jzGRh9bBdSJayyuf
+ xgNPtQJKM0jDDzqkWDgs9uiNRvqZ0PDYb6spD5RDKf5muzDcOUq/0ljsBzoLtHuY/Wuq
+ ULGBhM1vmMwW8OkksQXcK5weU5ii2SuIFkCr1LtJEsdO5BgIWI9DABgoRO/OkOPjkEz6
+ Tush4kUCaJ2oox0pJ8J2cjeE5d5mIRBcknI4/B0Zan+oqxP5x6qyRUZmidbjwsgZcJC9
+ oiWw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1780945224; x=1781550024;
+ d=1e100.net; s=20251104; t=1780945212; x=1781550012;
  h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
  :mime-version:subject:date:from:x-gm-gg:x-gm-message-state:from:to
  :cc:subject:date:message-id:reply-to;
- bh=W8sf8OT+nsg957PRY3OZR99qZCzK1VlYe1z4gwGaMBA=;
- b=CR3ezjR29f+31es6tfk1axVcgpVwkjXY+dnS6FgSRv0K0Z4anTNjb1vaT8plxHpwBa
- iciXwnoa+oPJEXwRz/yUiaL8zDMc3xBmU8bEStCDHFqSOmFE+wkYMpSG8BZMxDUB+x55
- sSaV35JZNzCvCc79LWdE4EcFyP29flc6xngx1NLtLQKZ1XDK5g5lRkXJoUQSBDjRm7xQ
- levrVD84k494ft+sWOispVAHfyNHfXWw/ZBCZ3BuaUk6yAZpD5Uast39gwDs+rHRARXx
- snlkEM5SKsZweMdhcZrXH1eURj+U0Wzi0/F/5g3Hc1an4AtZ8k9QGTQPHNK4Q7XiZTI+
- 4/Yg==
-X-Gm-Message-State: AOJu0Yy4WW8Lk3aEPStaGztWtUZ2UKy/ucfAShv8WzmaHFlcl81u8J/d
- svo/4bUCDI2AEi9mUqFP/EUpXAsCmJBpTGSS1mBK+inwqA5x/XXPulthCev0dkjiIek=
-X-Gm-Gg: Acq92OHU+Nuwe+Ub3sBhSmUQT0LiwCH0FZ0Wzy4SdlQPYQQZUvdh3AsbMsLtejG3bru
- dsOruKQnh/Kurt/4ltFdXSKvXia5gvD7lvIC8sdRv9QmROcgAguanWTv0aGA6TUUnO5wUKCOdec
- bhVGZRRyhha7i+Z78TXVLbLLWQgqFD8k+mbNZ4evgr154QBO0hbmy6PDiHYXUeunSekOQSSHt5R
- FFv/GDKNeem7JWaOMBblFmxz6tiO+hbkwu4Che4CqGEihesPyTKZj709w62hOyHW6EZek2JWkZe
- dON7OPMQjteBldkAJ+5KxIZTHAOj/SgtxulRSAOXTxsNP05ZvPInQGFr0ZRKx3zK2/afhogIPhX
- vdXnm/lIpqidJQs3GITF7amUMS2SkJohst+E6AkuJu4HvkPJRy9Sw77yLc+uCLCOMDL/9ustYrU
- eMSjSNcxxIANEuFJJEWVqWO3s8XkrUr3E6Ip+Qj8RFnAimIhsFLMnwlGEZtKP6+SbxE4d6cJ6G8
- EbXp/mBz8FtzHaJ0YPwbyfcUwiBsyksv9T70c8vcKUIE9A7T0mh5mttkQMJkHUDV9Z3REY8gTd3
- ZMLRzcv5WeFu4yEijadL3cxM1IUPlZzT
-X-Received: by 2002:a05:6830:2b11:b0:7dc:c7aa:22d4 with SMTP id
- 46e09a7af769-7e70c63de1bmr9623065a34.1.1780945224062; 
- Mon, 08 Jun 2026 12:00:24 -0700 (PDT)
+ bh=XC3KOmfiBf3uOHhOBkXrSekokX1Dg+EUGg6cXmaFlII=;
+ b=H+jwMSfkamtCbQmW2DBzoViVoF2bhRfb/hteSIa25JO3aeXnKvY9oj+FQrcY7hYy2E
+ eMMotUijf5pZ4Hx6YRaccVQB3pjRsLnQBNJ2P1eWA46LxURGPNaVs8meMBJbM2GNzt4h
+ 1sMidumeYTVgXFuXPx3BKa2QW2MnCNPGdPjJLaNxPlKf9HVLLU25vbsCZhZ53nJn/z8/
+ PUifD3u5pbKgGHJVko1lU+RvgduEHl2GtGMlZtZ+XJa6pRI/AjcwER0OY45xzXIWYimV
+ ZcOE0vzzEgQmXem1sGS/+VCC/y4t0wIZY4nZaTf4UcM9wMpIxa3TW/dPeN2EnoSa/7yf
+ W9vA==
+X-Gm-Message-State: AOJu0YxQvBDspGSseaSXMdA31vl7D5zSyKT61MDxvCZrjOcwWYqvXPzn
+ NSCtIZNhpuSqM+TAfP/59WkXBhf+gioQWrSbFyWrHTpCnJqQ/DJpa6XNZGKxVn+4tjA=
+X-Gm-Gg: Acq92OHpGiHF6ZdXRnUcq966xyN9yoLa3BWFuu6lx3cJVMPtadYH5t9Vb9b72PcNm7D
+ uYsoUtEFyKQ3PAlLOmrICcj/D222xcw7eQptCOfbsj/nseOU3jmpXz5pz0BdrvssUiZ7R/zc7xA
+ A20JbjL5D2JKDJvw6eRCHCQXLNMVrl2Mo2YPb+0io6GzhaISuS/QN0uAT5xO37osatgxzV+j4ZZ
+ 4T2mOZMSJs27SDAJcPDNxxeJ1FrrBbNDoGuWxcbVKpzEASK5OCqAEUqreGGjMpvdVT5mtuGfESd
+ hpIOr62XGnfdaQ/w3cs9+5RFUtkjBwI+wF1m42HKm/5IiZ9yIgivG0lAk0OmVLZsTsUyfCr97z/
+ wvXtQv/3LoRpUzwnab8vxV7iawV/vxbGK91xKGJ5GmDgnkSBs4pJUK3gdpmgp837vj8aQbo7dQK
+ daBJyIGtaz81qXShMOUziUuQIezerVku4Fu1NUXvXje21Tg5C2UCYPLCBQ2PP/GqVAOMd+U1Cdr
+ NV2uybKZyTOEg552Z1T5p4eh1g7w+l8rjPfNMPYnVE2B413AX4BxCTFSnucOlNzSWJHHq42IKP/
+ mADc7s1gO0g+DlDhgGmX7gRwmaooz4JY
+X-Received: by 2002:a05:6830:2b0b:b0:7e6:e349:539a with SMTP id
+ 46e09a7af769-7e70ca9cb5fmr10197266a34.21.1780945211896; 
+ Mon, 08 Jun 2026 12:00:11 -0700 (PDT)
 Received: from mac.localdomain (97-118-5-210.hlrn.qwest.net. [97.118.5.210])
  by smtp.gmail.com with ESMTPSA id
- 46e09a7af769-7e6e75db138sm12397777a34.11.2026.06.08.12.00.23
+ 46e09a7af769-7e6e75db138sm12397777a34.11.2026.06.08.12.00.11
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 08 Jun 2026 12:00:23 -0700 (PDT)
+ Mon, 08 Jun 2026 12:00:11 -0700 (PDT)
 From: James Hilliard <james.hilliard1@gmail.com>
-Date: Mon, 08 Jun 2026 12:59:46 -0600
-Subject: [PATCH v16 21/21] tests/tcg/mips: cover Octeon QMAC instructions
+Date: Mon, 08 Jun 2026 12:59:33 -0600
+Subject: [PATCH v16 08/21] target/mips: add Octeon AES COP2 helpers
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20260608-mips-octeon-missing-insns-v2-v16-21-daef7a0d8b04@gmail.com>
+Message-Id: <20260608-mips-octeon-missing-insns-v2-v16-8-daef7a0d8b04@gmail.com>
 References: <20260608-mips-octeon-missing-insns-v2-v16-0-daef7a0d8b04@gmail.com>
 In-Reply-To: <20260608-mips-octeon-missing-insns-v2-v16-0-daef7a0d8b04@gmail.com>
 To: qemu-devel@nongnu.org
@@ -111,79 +111,200 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Add smoke coverage for Octeon QMAC and QMACS fixed-point accumulator
-instruction paths.
+Add helper support for the Octeon AES operation selectors. Direct
+register-transfer selectors do not need helpers; the ECB/CBC encrypt and
+decrypt operations consume the AES input, key, IV, and key-length state.
 
-The coverage exercises normal accumulation, saturating accumulation, and
-the sticky saturation flag.
+AESRESINP is modeled as one architectural register bank; operation
+helpers consume the current AESRESINP block and write the result back to
+the same bank.
 
 Signed-off-by: James Hilliard <james.hilliard1@gmail.com>
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
 ---
-Changes v12 -> v13:
-  - Add QMAC/QMACS smoke coverage.
----
- tests/tcg/mips/user/isa/octeon/octeon-insns.c | 40 +++++++++++++++++++++++++++
- 1 file changed, 40 insertions(+)
+Changes v9 -> v10:
+  - Drop the non-architectural AES input/result split.
+  - Model AESRESINP as a single architectural input/result bank.
 
-diff --git a/tests/tcg/mips/user/isa/octeon/octeon-insns.c b/tests/tcg/mips/user/isa/octeon/octeon-insns.c
-index 6480c8532a..6fffc82010 100644
---- a/tests/tcg/mips/user/isa/octeon/octeon-insns.c
-+++ b/tests/tcg/mips/user/isa/octeon/octeon-insns.c
-@@ -129,6 +129,43 @@ static uint64_t octeon_vmm0(uint64_t mpl0, uint64_t p0,
-     return rd;
+Changes v8 -> v9:
+  - Split AES operation selectors into their own COP2 helper patch.
+  - Replace generic selector dispatch with per-operation AES helpers.
+  - Add matching helper.h declarations with the helper implementation.
+---
+ target/mips/helper.h            |   4 ++
+ target/mips/tcg/octeon_crypto.c | 145 ++++++++++++++++++++++++++++++++++++++++
+ 2 files changed, 149 insertions(+)
+
+diff --git a/target/mips/helper.h b/target/mips/helper.h
+index c4e7693df6..39c226ded9 100644
+--- a/target/mips/helper.h
++++ b/target/mips/helper.h
+@@ -52,6 +52,10 @@ DEF_HELPER_2(octeon_cp2_mt_zuc_start, void, env, i64)
+ DEF_HELPER_2(octeon_cp2_mt_zuc_more, void, env, i64)
+ DEF_HELPER_2(octeon_cp2_mt_snow3g_start, void, env, i64)
+ DEF_HELPER_2(octeon_cp2_mt_snow3g_more, void, env, i64)
++DEF_HELPER_2(octeon_cp2_mt_aes_enc_cbc1, void, env, i64)
++DEF_HELPER_2(octeon_cp2_mt_aes_enc1, void, env, i64)
++DEF_HELPER_2(octeon_cp2_mt_aes_dec_cbc1, void, env, i64)
++DEF_HELPER_2(octeon_cp2_mt_aes_dec1, void, env, i64)
+ 
+ /* microMIPS functions */
+ DEF_HELPER_4(lwm, void, env, tl, tl, i32)
+diff --git a/target/mips/tcg/octeon_crypto.c b/target/mips/tcg/octeon_crypto.c
+index b8157c9a8e..3de7ad31bf 100644
+--- a/target/mips/tcg/octeon_crypto.c
++++ b/target/mips/tcg/octeon_crypto.c
+@@ -841,6 +841,151 @@ static void octeon_snow3g_more(MIPSOcteonCryptoState *crypto)
+     octeon_snow3g_queue_result(crypto);
  }
  
-+static uint64_t octeon_qmac_lo(uint64_t rs, uint64_t rt, uint64_t lo)
++static int octeon_aes_key_bits(const MIPSOcteonCryptoState *crypto)
 +{
-+    uint64_t rd;
++    enum {
++        OCTEON_AES_KEYLEN_128 = 1,
++        OCTEON_AES_KEYLEN_192 = 2,
++        OCTEON_AES_KEYLEN_256 = 3,
++    };
 +
-+    asm volatile(
-+        "move $8, %[rs]\n\t"
-+        "move $9, %[rt]\n\t"
-+        "mtlo %[lo]\n\t"
-+        "mthi $0\n\t"
-+        ".word 0x710904d2\n\t" /* qmac.03 $8, $9 */
-+        "mflo %[rd]\n\t"
-+        : [rd] "=r" (rd)
-+        : [rs] "r" (rs), [rt] "r" (rt), [lo] "r" (lo)
-+        : "$8", "$9");
-+
-+    return rd;
++    switch (crypto->aes_keylen) {
++    case OCTEON_AES_KEYLEN_128:
++        return 128;
++    case OCTEON_AES_KEYLEN_192:
++        return 192;
++    case OCTEON_AES_KEYLEN_256:
++        return 256;
++    default:
++        return 0;
++    }
 +}
 +
-+static uint64_t octeon_qmacs_state(uint64_t rs, uint64_t rt, uint64_t lo)
++static void octeon_aes_load_key(const MIPSOcteonCryptoState *crypto,
++                                uint8_t *key, size_t keylen)
 +{
-+    uint64_t hi, rd;
-+
-+    asm volatile(
-+        "move $8, %[rs]\n\t"
-+        "move $9, %[rt]\n\t"
-+        "mtlo %[lo]\n\t"
-+        "mthi $0\n\t"
-+        ".word 0x71090012\n\t" /* qmacs.00 $8, $9 */
-+        "mfhi %[hi]\n\t"
-+        "mflo %[rd]\n\t"
-+        : [hi] "=r" (hi), [rd] "=r" (rd)
-+        : [rs] "r" (rs), [rt] "r" (rt), [lo] "r" (lo)
-+        : "$8", "$9");
-+
-+    return ((hi & 1) << 32) | (rd & 0xffffffff);
++    stq_be_p(key, crypto->aes_key[0]);
++    stq_be_p(key + 8, crypto->aes_key[1]);
++    if (keylen > 16) {
++        stq_be_p(key + 16, crypto->aes_key[2]);
++    }
++    if (keylen > 24) {
++        stq_be_p(key + 24, crypto->aes_key[3]);
++    }
 +}
 +
- static uint64_t octeon_vmm0_zeroes_mpl1(void)
++static void octeon_aes_load_block(const uint64_t regs[2], uint8_t *block)
++{
++    stq_be_p(block, regs[0]);
++    stq_be_p(block + 8, regs[1]);
++}
++
++static void octeon_aes_store_block(uint64_t regs[2], const uint8_t *block)
++{
++    regs[0] = ldq_be_p(block);
++    regs[1] = ldq_be_p(block + 8);
++}
++
++static void octeon_aes_encrypt_common(MIPSOcteonCryptoState *crypto, bool cbc)
++{
++    AES_KEY key;
++    uint8_t in[16];
++    uint8_t out[16];
++    uint8_t iv[16];
++    uint8_t raw_key[32] = {};
++    int bits = octeon_aes_key_bits(crypto);
++
++    if (!bits) {
++        return;
++    }
++
++    octeon_aes_load_key(crypto, raw_key, bits / 8);
++    octeon_aes_load_block(crypto->aes_resinp, in);
++    if (cbc) {
++        int i;
++
++        octeon_aes_load_block(crypto->aes_iv, iv);
++        for (i = 0; i < sizeof(in); i++) {
++            in[i] ^= iv[i];
++        }
++    }
++
++    AES_set_encrypt_key(raw_key, bits, &key);
++    AES_encrypt(in, out, &key);
++    octeon_aes_store_block(crypto->aes_resinp, out);
++    if (cbc) {
++        octeon_aes_store_block(crypto->aes_iv, out);
++    }
++}
++
++static void octeon_aes_decrypt_common(MIPSOcteonCryptoState *crypto, bool cbc)
++{
++    AES_KEY key;
++    uint8_t in[16];
++    uint8_t out[16];
++    uint8_t iv[16];
++    uint8_t next_iv[16];
++    uint8_t raw_key[32] = {};
++    int bits = octeon_aes_key_bits(crypto);
++    int i;
++
++    if (!bits) {
++        return;
++    }
++
++    octeon_aes_load_key(crypto, raw_key, bits / 8);
++    octeon_aes_load_block(crypto->aes_resinp, in);
++    if (cbc) {
++        memcpy(next_iv, in, sizeof(next_iv));
++        octeon_aes_load_block(crypto->aes_iv, iv);
++    }
++
++    AES_set_decrypt_key(raw_key, bits, &key);
++    AES_decrypt(in, out, &key);
++    if (cbc) {
++        for (i = 0; i < sizeof(out); i++) {
++            out[i] ^= iv[i];
++        }
++    }
++
++    octeon_aes_store_block(crypto->aes_resinp, out);
++    if (cbc) {
++        octeon_aes_store_block(crypto->aes_iv, next_iv);
++    }
++}
++
++void helper_octeon_cp2_mt_aes_enc_cbc1(CPUMIPSState *env, uint64_t value)
++{
++    MIPSOcteonCryptoState *crypto = &env->octeon_crypto;
++
++    crypto->aes_resinp[1] = value;
++    octeon_aes_encrypt_common(crypto, true);
++}
++
++void helper_octeon_cp2_mt_aes_enc1(CPUMIPSState *env, uint64_t value)
++{
++    MIPSOcteonCryptoState *crypto = &env->octeon_crypto;
++
++    crypto->aes_resinp[1] = value;
++    octeon_aes_encrypt_common(crypto, false);
++}
++
++void helper_octeon_cp2_mt_aes_dec_cbc1(CPUMIPSState *env, uint64_t value)
++{
++    MIPSOcteonCryptoState *crypto = &env->octeon_crypto;
++
++    crypto->aes_resinp[1] = value;
++    octeon_aes_decrypt_common(crypto, true);
++}
++
++void helper_octeon_cp2_mt_aes_dec1(CPUMIPSState *env, uint64_t value)
++{
++    MIPSOcteonCryptoState *crypto = &env->octeon_crypto;
++
++    crypto->aes_resinp[1] = value;
++    octeon_aes_decrypt_common(crypto, false);
++}
++
+ void helper_octeon_cp2_mt_snow3g_start(CPUMIPSState *env, uint64_t value)
  {
-     uint64_t rd;
-@@ -355,6 +392,9 @@ int main(void)
-     assert(octeon_seq(0xabc, 0xdef) == 0);
-     assert(octeon_sne(0xabc, 0xabc) == 0);
-     assert(octeon_sne(0xabc, 0xdef) == 1);
-+    assert(octeon_qmac_lo(0x0003000000000000ULL, 2, 1) == 13);
-+    assert(octeon_qmacs_state(1, 1, 0x7ffffffe) == 0x17fffffffULL);
-+    assert(octeon_qmacs_state(0x8000, 0x8000, 0) == 0x17fffffffULL);
-     assert(octeon_vmulu(5, 7, 11) == 46);
-     assert(octeon_vmm0(5, 13, 7, 11) == 59);
-     assert(octeon_vmm0_zeroes_mpl1() == 0);
+     octeon_snow3g_start(&env->octeon_crypto, value);
 
 -- 
 2.54.0
