@@ -4,58 +4,57 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E62B5CD8C9D
-	for <qemu-devel@archiver.kernel.org>; Mon,  8 Jun 2026 00:20:48 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 41F5BCD8C90
+	for <qemu-devel@archiver.kernel.org>; Mon,  8 Jun 2026 00:23:59 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wWNil-0004mw-77; Sun, 07 Jun 2026 20:20:03 -0400
+	id 1wWNm8-0005iA-7T; Sun, 07 Jun 2026 20:23:32 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <gshan@redhat.com>) id 1wWNij-0004mD-GZ
- for qemu-devel@nongnu.org; Sun, 07 Jun 2026 20:20:01 -0400
+ (Exim 4.90_1) (envelope-from <gshan@redhat.com>) id 1wWNm5-0005hv-TI
+ for qemu-devel@nongnu.org; Sun, 07 Jun 2026 20:23:29 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <gshan@redhat.com>) id 1wWNih-0004a2-Li
- for qemu-devel@nongnu.org; Sun, 07 Jun 2026 20:20:01 -0400
+ (Exim 4.90_1) (envelope-from <gshan@redhat.com>) id 1wWNm3-0005ki-OP
+ for qemu-devel@nongnu.org; Sun, 07 Jun 2026 20:23:29 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1780877998;
+ s=mimecast20190719; t=1780878206;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding;
- bh=5vaHIIQFViOS2iqOdyLp/QUUrpdLIRe+sbrKu+JL6xs=;
- b=IrZWSfyVHgMAm0nOmOt4+SXjmS3d7iX+7y4xPtKkJbiHKbguOIxRFfKmwdHjWvtZNBoLzM
- BfRCBMO4JsBSjjSRseW1AHQpczDW9pa1cl/DRjZ42XuQ/tF+7UR0JdbKWSREhBQ5Shzei0
- hsbAolLu0gbCk7dwNAngPaIEvhy8S9s=
+ bh=vm2zjuFL31XFvgAb6Tw4aXzH3ExlILwIQ7zUbyCuiu8=;
+ b=MNqBY/hsvgAFu+IzH4IQR3HYBinxGFidxDiL4P9yvLJve/yQEnyVv8wwQsg05MTjKdpKDV
+ iiQitI5zqtBpe4L45ukBUeBX0Y8EjGpkBz4eL7iUCcEMbRpMx+kEhKDtLrk3WCF5W0uwX+
+ zKbFXJoOYLiJGAI+vfi+Yi5m3GdEZWM=
 Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-310-MeEc67aQP7Ghu_Pt6rDX9Q-1; Sun,
- 07 Jun 2026 20:18:37 -0400
-X-MC-Unique: MeEc67aQP7Ghu_Pt6rDX9Q-1
-X-Mimecast-MFC-AGG-ID: MeEc67aQP7Ghu_Pt6rDX9Q_1780877916
-Received: from mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.93])
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-679-jeIYaM57Ml-RuxUTbE9jNA-1; Sun,
+ 07 Jun 2026 20:23:22 -0400
+X-MC-Unique: jeIYaM57Ml-RuxUTbE9jNA-1
+X-Mimecast-MFC-AGG-ID: jeIYaM57Ml-RuxUTbE9jNA_1780878201
+Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
  by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id DCA6B18004A9; Mon,  8 Jun 2026 00:18:35 +0000 (UTC)
+ id CAB101800473; Mon,  8 Jun 2026 00:23:20 +0000 (UTC)
 Received: from gshan-thinkpadx1nanogen2.rmtau.csb (unknown [10.64.136.3])
- by mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 5D3BE1800480; Mon,  8 Jun 2026 00:18:31 +0000 (UTC)
+ by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 5D65130001BE; Mon,  8 Jun 2026 00:23:16 +0000 (UTC)
 From: Gavin Shan <gshan@redhat.com>
 To: qemu-devel@nongnu.org
-Cc: qemu-arm@nongnu.org, mst@redhat.com, jugraham@redhat.com,
- shan.gavin@gmail.com
-Subject: [PATCH RFCv1] virtio: Inherit max bounce buffer size from bus parent
- if possible
-Date: Mon,  8 Jun 2026 10:18:21 +1000
-Message-ID: <20260608001821.850921-1-gshan@redhat.com>
+Cc: qemu-arm@nongnu.org, pbonzini@redhat.com, peterx@redhat.com,
+ philmd@mailo.com, shan.gavin@gmail.com
+Subject: [PATCH] system/memory: Remove MAX_PHYS_ADDR
+Date: Mon,  8 Jun 2026 10:23:03 +1000
+Message-ID: <20260608002303.851456-1-gshan@redhat.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.93
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
 Received-SPF: pass client-ip=170.10.129.124; envelope-from=gshan@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -24
@@ -64,7 +63,7 @@ X-Spam_bar: --
 X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.445,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -80,105 +79,29 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On the guest where a NVidia's GH100 card is passed from the host, the
-guest system hang can be observed on attempt to compile 'cuda-samples',
-as reported by Julia.
+Remove MAX_PHYS_ADDR and MAX_PHYS_ADDR_SPACE_BITS as they're not used
+since the addition by commit 052e87b073cb ("memory: make section size
+a 128-bit integer").
 
-   host$ lspci | grep GH100
-   0009:01:00.0 3D controller: NVIDIA Corporation GH100 [GH200 120GB / 480GB] (rev a1)
-   host$ /home/sandbox/gavin/qemu.main/build/qemu-system-aarch64 -accel kvm \
-         -machine virt,gic-version=host,ras=on,highmem-mmio-size=4T         \
-         -cpu host -smp cpus=32 -m size=8G                                  \
-         -drive file=/home/gavin/sandbox/images/disk.qcow2,if=none,id=d0    \
-         -device virtio-blk-pci,id=vb0,bus=pcie.0,drive=d0,num-queues=4     \
-         -device vfio-pci-nohotplug,host=0009:01:00.0,bus=pcie.1.0
-
-   guest$ cd cuda-samples/build
-   guest$ make -j 20 clean
-   guest$ make -j 20
-               :
-   [ 54%] Linking CUDA executable graphMemoryNodes
-   [ 54%] Built target graphMemoryNodes
-   <no more output afterwards, guest becomes frozen here>
-
-   guest$ qemu-system-aarch64: virtio: bogus descriptor or out of resources
-   [  555.814025] virtio_blk virtio0: [vda] new size: 268435456 512-byte logical blocks (137 GB/128 GiB)
-
-When the GPU's driver (NVidia open driver) is loaded on guest bootup,
-the memory blocks residing in the PCI BAR can be presented to the guest
-through memory hot-add. The page cache can be allocated from the hot added
-memory blocks when cuda-samples is being built. Afterwards, he page cache
-is sent to QEMU's virtio-blk device as part of the DMA request, the bounce
-buffer is used to accomodate the request as the corresponding memory
-region (MemoryRegion) is a RAM DEVICE region in qemu. For this specific
-case, false is returned from memory_access_is_direct() in the path where
-the DMA request is handled.
-
-  QEMU
-  ====
-  virtio_blk_handle_output
-    virtio_blk_handle_vq
-      virtio_blk_get_request
-        virtqueue_pop
-          virtqueue_split_pop
-            virtqueue_map_desc
-              address_space_map
-                memory_access_is_direct         # Return false
-                  memory_region_supports_direct_access
-
-  (qemu) info mtree
-          :
-  memory-region: pci_bridge_pci
-    0000000000000000-ffffffffffffffff (prio 0, container): pci_bridge_pci
-      0000042000000000-0000043fffffffff (prio 1, i/o): 0009:01:00.0 base BAR 4
-        0000042000000000-0000043fffffffff (prio 0, i/o): 0009:01:00.0 BAR 4
-          0000042000000000-000004379fffffff (prio 0, ramd): 0009:01:00.0 BAR 4 mmaps[0]
-
-By default, the max bounce buffer size is only 4096 bytes, even less
-than one page when the guest page is 64KB. This tries to fix the issue
-by inheriting the customized max bounce buffer size of the virtio bus's
-parent through property 'x-max-bounce-buffer-size' when the customized
-size is a larger one. With this applied, no guest system hang is seen
-with '-device virtio-blk-pci,...,x-max-bounce-buffer-size=268435456'.
-
-Reported-by: Julia Graham <jugraham@redhat.com>
 Signed-off-by: Gavin Shan <gshan@redhat.com>
 ---
- hw/virtio/virtio-bus.c | 14 ++++++++++++++
- 1 file changed, 14 insertions(+)
+ include/system/memory.h | 3 ---
+ 1 file changed, 3 deletions(-)
 
-diff --git a/hw/virtio/virtio-bus.c b/hw/virtio/virtio-bus.c
-index cef944e015..e0933823f3 100644
---- a/hw/virtio/virtio-bus.c
-+++ b/hw/virtio/virtio-bus.c
-@@ -42,6 +42,7 @@ do { printf("virtio_bus: " fmt , ## __VA_ARGS__); } while (0)
- /* A VirtIODevice is being plugged */
- void virtio_bus_device_plugged(VirtIODevice *vdev, Error **errp)
- {
-+    AddressSpace *as;
-     DeviceState *qdev = DEVICE(vdev);
-     BusState *qbus = BUS(qdev_get_parent_bus(qdev));
-     VirtioBusState *bus = VIRTIO_BUS(qbus);
-@@ -100,6 +101,19 @@ void virtio_bus_device_plugged(VirtIODevice *vdev, Error **errp)
-                 return;
-             }
-         }
-+    } else {
-+        /*
-+         * The maximal bounce buffer size of the virtio bus's parent may
-+         * have been customized by property 'x-max-bounce-buffer-size'.
-+         * Lets inherit the customized size if it's larger than the
-+         * current one.
-+         */
-+        as = klass->get_dma_as ? klass->get_dma_as(qbus->parent) : NULL;
-+        if (as) {
-+            vdev->dma_as->max_bounce_buffer_size = MAX(
-+                    vdev->dma_as->max_bounce_buffer_size,
-+                    as->max_bounce_buffer_size);
-+        }
-     }
- }
+diff --git a/include/system/memory.h b/include/system/memory.h
+index 1417132f6d..c449c0385e 100644
+--- a/include/system/memory.h
++++ b/include/system/memory.h
+@@ -36,9 +36,6 @@ enum device_endian {
  
+ #define RAM_ADDR_INVALID (~(ram_addr_t)0)
+ 
+-#define MAX_PHYS_ADDR_SPACE_BITS 62
+-#define MAX_PHYS_ADDR            (((hwaddr)1 << MAX_PHYS_ADDR_SPACE_BITS) - 1)
+-
+ #define TYPE_MEMORY_REGION "memory-region"
+ DECLARE_INSTANCE_CHECKER(MemoryRegion, MEMORY_REGION,
+                          TYPE_MEMORY_REGION)
 -- 
 2.54.0
 
