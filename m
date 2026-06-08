@@ -4,112 +4,126 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D0AF5CD8C9D
-	for <qemu-devel@archiver.kernel.org>; Mon,  8 Jun 2026 16:08:37 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2FB14CD8C9D
+	for <qemu-devel@archiver.kernel.org>; Mon,  8 Jun 2026 16:12:03 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wWcWZ-0004zY-Ki; Mon, 08 Jun 2026 12:08:27 -0400
+	id 1wWcZT-0006in-TL; Mon, 08 Jun 2026 12:11:28 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1wWcWV-0004z6-LB
- for qemu-devel@nongnu.org; Mon, 08 Jun 2026 12:08:24 -0400
-Received: from mail-ej1-x62c.google.com ([2a00:1450:4864:20::62c])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1wWcWU-0007UA-3a
- for qemu-devel@nongnu.org; Mon, 08 Jun 2026 12:08:23 -0400
-Received: by mail-ej1-x62c.google.com with SMTP id
- a640c23a62f3a-bed2b9bfa02so611316466b.1
- for <qemu-devel@nongnu.org>; Mon, 08 Jun 2026 09:08:20 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1780934900; cv=none;
+ (Exim 4.90_1) (envelope-from <mcascell@redhat.com>)
+ id 1wWcYt-0006By-SI
+ for qemu-devel@nongnu.org; Mon, 08 Jun 2026 12:10:52 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <mcascell@redhat.com>)
+ id 1wWcYr-0000P1-Hf
+ for qemu-devel@nongnu.org; Mon, 08 Jun 2026 12:10:51 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1780935048;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=Dw/Zlg2kKsHElmqY0RSlpzEUxJBz+r0l0AX25v84Yqw=;
+ b=Xjm4xDT2tO1rx/R2gfjNtr7BCgW/fPR6SrDf9dSecVwLRR4BC/vtZ7PlIkdf6Ha7CNZrf/
+ ll6CLnxeS8nzQEKdmXfy2SKKIhzyEDSH5aZjTAGHqzAKLFLviU84KGBtzVviKzHu++vt6I
+ 7AfIbADlhihfpcq6rZdlhQMSDS55teg=
+Received: from mail-pf1-f197.google.com (mail-pf1-f197.google.com
+ [209.85.210.197]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-108-m0yLihRkM9GnrQiR-hemmQ-1; Mon, 08 Jun 2026 12:10:36 -0400
+X-MC-Unique: m0yLihRkM9GnrQiR-hemmQ-1
+X-Mimecast-MFC-AGG-ID: m0yLihRkM9GnrQiR-hemmQ_1780935035
+Received: by mail-pf1-f197.google.com with SMTP id
+ d2e1a72fcca58-8428419982eso3847072b3a.3
+ for <qemu-devel@nongnu.org>; Mon, 08 Jun 2026 09:10:36 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1780935035; cv=none;
  d=google.com; s=arc-20240605;
- b=kgg9i/1mqpYmVhn9cz8Z0qb48TxNEh+tNSVmJwwt7nwED3zuSNyz7i5lUQbcXN8QfM
- LNlknoXVjXjjpBjCToZBgC8zHKv3+qIBQXdtxSFGhIrb5pKH3A5Ffckcr993WjVL43Wq
- /Q7Ab6llPFzQ/t9sw/Gk420ZtkLRyEkhnU1ZM8WhIOUh80YaZrB8itlJXtxnfFOS9S9g
- x/umIqK6bosVYNTuoHMEFyx/UTn37TlLiD+qhe1ES/KXMuvqBX6n2HX0PFG8+XMSeE4Z
- FJmjT9r63S9gA7RIF4Ka2XhzsYz3GovOCANiRbeRXSLDGGJ1I90oAHpw5Y8ifYlRdgI8
- xi+Q==
+ b=cZOaWaM3xJgDZo0oIQLWJ7hQwTHqjLSkITkEcMP/SQ75gLNQoVq/AU/n1zz3BrTXcx
+ G1F21XztLsA7N6qoY2yn/r4Q+bHdz7+0V3Wzpr4nX/gZeMObPNxSrmdIMhnVSlWou0k0
+ /TcZkJ/SiycAqDTO6UmPunblOyA8iifTCgNBIetQVMKq8faBVVpLWPLA8xKiQBbz1OdE
+ u2yYc6sPty70u1mLPiL5qBIGdQ+TH46pKSmnShLG+Lf2v7Z0aNtAarUgyEx1sGxvh3uY
+ erYOQdicYY6//CKZNlLCiv1GlwqD+k1sEWI/on8W+7QY/oQsntgVipWcWtN4VIUJMqh+
+ 0WsQ==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
  s=arc-20240605; 
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:dkim-signature;
- bh=JviVQiNcyfBKKTJ9X+lnH18j4+CiFFtHjwWqorA4zLw=;
- fh=F8TB8zHciHT63HpcYYSLckSvVVJwGMtcKH4uTYU8jy0=;
- b=Qh4ifbEqSUUevcmvemqYlKyM2ICh2ZTKXKYjgJc/Hpt4FZ4G6qpzhemgGp7DWUXxKe
- lMON4sL40qQX6OOOl2PnpPlqtX2CjQU7XqLaSykLRZFqB/UX0YfOfOsZs1963LplPjZ7
- 4GLvE8oFFWxcY3IbgozOkEWsjR0Wjkoa7EwEmDIw+NV7msurFGo31ZfZ9vae4Y/hInRG
- e21H0X2vqFngpDiagvKgexb1l3E5WV3/HTbBGKHvDv+WwWets6Rry9h7T78MeNyCm2Xx
- sXDSfNQmdS2wqnpDxPN68k27uju1CwVDclMhp6yDC7At8EGCWG/EvgVp/aHl2RKpPTDv
- MhzA==; darn=nongnu.org
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:dkim-signature;
+ bh=Dw/Zlg2kKsHElmqY0RSlpzEUxJBz+r0l0AX25v84Yqw=;
+ fh=/7u6kWjSJTv3U77d8Tt3ruvRubiPIwzyxEw6EJeEfRo=;
+ b=CILS7rCyTShXV1Sp5C01/fS3hs8PLqO+bTIHqdfl/gI4Do3ZG/AyVSHejo5GSd17zp
+ sPJB27P+tBzmpMzXgcreVwmbuhHsmQcgH3HwsClafp40jSUyBGfYVvwfCyH4z2L5iCWq
+ f7oitfSp71aP2rtvzUl0Z+9FCrxA2WQo3/mr0/zt4BENmKFAVnBg2jMt9uCN0OaAMbUK
+ F+LHnky9MkPMaFRALo4+USpQceRLJwnHNQ0iN0a4v4BRYyQmuwbR0C/sJ/oSVISAPiI1
+ FDfF6X032qLebl981WKGudvtDQhSY5ts7L1RbZfya4w6Xw8nytLEfjcK9RJJhJG2Ebt2
+ ue0g==; darn=nongnu.org
 ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1780934900; x=1781539700; darn=nongnu.org;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=JviVQiNcyfBKKTJ9X+lnH18j4+CiFFtHjwWqorA4zLw=;
- b=Jqxo/oUGvJqgdasQAWVPVyN+/jUFi+Gyy/7XdKC2O1hPG8+hmqz3kUNvXNM7w8yIqe
- DclUJwgVhmGWaBkO3SYTwp0Tn1/GsEPtxa+VqEdca+rzlgwwGRwWp3NLWWhRdDbZaAY/
- 5hyJFKflKWQtp+h1o95KDkBZCCcT4UnHggt6aq44l+55LZKbRijHua6tLdjQFzko43wP
- c1r0Cr8wWJvF8J2+WggzcUKDHxnbKf4SjSp+qhlRWGdzt8en6rlIxMdAXGIgcBfYNGFd
- qH+4zGnuDfAmTH2N5SSumCJQKUCqHwNj451jGi5EEKTCSqeJdi3iVD3jSe7h/VjKGsFI
- URUQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1780934900; x=1781539700;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ d=redhat.com; s=google; t=1780935035; x=1781539835; darn=nongnu.org;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:from:to:cc:subject:date
  :message-id:reply-to;
- bh=JviVQiNcyfBKKTJ9X+lnH18j4+CiFFtHjwWqorA4zLw=;
- b=NU2We7+1stfnWepgPQKEa2ycT9va/lJQ1oVzPiOirAcpRNAL8RLa7Zjar6irtSDsN8
- /eY6VwzVtRLYi1GFD1QDLqa+9wPwQpU0BOP3x65I7SUpNtF5S2HnvKrC453yrvnIgJ5U
- lS2deD1ixQ8dC9y3RFt5jExAFC6kDkb/r6xq6J2sQ1wZa5tmJaphs0Un1au40FzCneSE
- boKhI9+DQCj9UK6P5ThGopzdwjqvrijim3VdoZEM6gsQJFlhY5igqUXu1ViY733697xl
- P7cEV11rA8kGgdJyMt8RcrL9dyk8xZRXAcG08WnXutHCSCNeYf7DQeUtGtF2q396s96d
- //ig==
-X-Forwarded-Encrypted: i=1;
- AFNElJ9j3xjt6u54E0DHaBzruvQZ6WJ3Y2pHmZ2wuaO92xUfHQpAiwJxuhpmHlQJbBYwtbPecZJTLV6iDQhm@nongnu.org
-X-Gm-Message-State: AOJu0YxGrQigrE0jOCArpxvE2pdEx5z3HTU7+S+ksq2ZlDm1tcwL94dj
- vE2PxkMkmDHABTHS2z1kZGbu6hhM8ib+YR+/+ooKzz0SBbvEyCtjEj4KskLDrzRNgdAXEd9ZU/c
- 6w+v2cLh+/qRoFw0TfmgAyUhpR3MO+UmbeAoy04doGA==
-X-Gm-Gg: Acq92OG//OQJVPN1WiTrxwNWgGWjbBPR0TvAwxzotHz7UycdnuT5+XwA6mlL4J5UTpb
- hcUI7skKd41/WBbv66++yhjJ2lNCncooHifzLeQYY9sMzipwH04z0V140AFS+TMqrKToWpA8viV
- XNk5pNBD1CQ7V2SQN0OyIT6o8S8F08e7X0dLx+G4ITvghfsy/4/D12k1/hlhYPlon9nPnQn/FQc
- 3HnaONqf9e2PIct4QW3qmnT5kI59MLx2yIt/mgA8Ho6qKZe/fcrKxhexaJq4/dWu2XvhVLAnGIT
- GV33j1rvw/82CqDpWF7pM9VJdyWp9gZw+e76GjR4IBXzyUkRK7FluAJda3HEQYouzeuZ2ipo3FL
- I9LVKo+s1Rr7P
-X-Received: by 2002:a17:907:a0d1:b0:bec:fa92:d370 with SMTP id
- a640c23a62f3a-bf373ee4f1fmr836333566b.33.1780934899498; Mon, 08 Jun 2026
- 09:08:19 -0700 (PDT)
+ bh=Dw/Zlg2kKsHElmqY0RSlpzEUxJBz+r0l0AX25v84Yqw=;
+ b=IPbJK/cz4L7ezbYmlcQx0Ehy2YrYBXFkCRrDw5vRa42cxECSaNEgdXEU+xXdhSUUR+
+ /DHaZygylp4CF+yZgCpaZLtq5e432AerWhM9PuG5cTcpRgP53+72wVC+2dBvObzqP/N8
+ Ao6B+pAKdNYbuQsZEbjw1LBlLRyKe2niwOIgff+qf1gqWTDDq14TwzlC1AEO/Kxw+TTT
+ g2n1c1nQPVIy/gG1zqKOH/IcxI+k/ddM0tK6UR+Z5v+l1rw1duYKzTLU1p/C3N79ki8i
+ gaGrRhVc3TgCJmiIxMFWKIEl7oNiRzUHYWC/OUPhKbFVKKPM6DhzBnBqb4qCcRY2+aEN
+ Lvaw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1780935035; x=1781539835;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=Dw/Zlg2kKsHElmqY0RSlpzEUxJBz+r0l0AX25v84Yqw=;
+ b=phFHkMVUQJNgjGAov991xrPXuts8eYy5o6x+H2cQeV2OtJPrJxATSySNiXGzi+Bupo
+ eBUtOvWnzyrel5X55x4d0HuUcsQ45yoTPh6tKjwHX9d71XaKgeKkaHvsCJHQdyD3+AI+
+ 5+7qUj48iwVJTamseVcVlQmXCBLFyBLIGD6ANTWXcmiuwSYQP3CRz2Vhv0/ygIz/Ahso
+ 7RxNvr1PCVuxI3XFilmuzQPftRTXOu8fikpIPHHGnNY1q6TNIM9e5TRH95sFVXV3Fsjc
+ 2XygwGMHQVN6D4g+S8c8oMRjHacedckvsPOWm1XciiR24TRLH+Q55S6p2CdsQbBRIyzm
+ sT1g==
+X-Gm-Message-State: AOJu0YwbjvJ4UZ1wh8sxO+53GibqzCpmW9j5v0AviA8J6ASfgasXerwE
+ C6UxBx3jBlNKp3t+3UwEtcqQK8Q6f3L45XfOUsH+FTHWeBWqAuExx6h9EGqRdKrerAGTQ2p0F0Z
+ 3LJX2lMjAexCMb1dR9hdCUnDqhHusb6c6zrhM7K7siHi66dFsKo+7Id8kAIKzXiorEY2nNdMBMJ
+ 2lQ3QCdeOI5XD2XUd48sAdNXvCs0bF2FA=
+X-Gm-Gg: Acq92OFeBFiHg8W+NXPIs3CyzGMwxDWsCluI9W3kNAFNVpw/V59f3x79nHsPOJKDZEP
+ n6k/qy++s6Nr9m/nvo8Lq4o8LVePHFFvJ7wyNVrS6pd1xN0CYVM5uzYOM8LVflq31zLzTcA4IIS
+ YBA1qqfZPRpl7KOCV1YkZOPvzsfkKExpIOTHbDLzOheUx7M8grlOMhiM74dHB/7bSgKkehi9FJo
+ eoYdsxv6SUra1M=
+X-Received: by 2002:a05:6a00:2d10:b0:842:4a39:6047 with SMTP id
+ d2e1a72fcca58-842b0f514c6mr15725357b3a.29.1780935035152; 
+ Mon, 08 Jun 2026 09:10:35 -0700 (PDT)
+X-Received: by 2002:a05:6a00:2d10:b0:842:4a39:6047 with SMTP id
+ d2e1a72fcca58-842b0f514c6mr15725323b3a.29.1780935034605; Mon, 08 Jun 2026
+ 09:10:34 -0700 (PDT)
 MIME-Version: 1.0
-References: <20260608-testing-macos-v1-1-42774498936f@meta.com>
- <CAFEAcA-aNmOmjhbVypCLpDVowTeSK-28aaY5X0jqRe32qmkqUQ@mail.gmail.com>
- <aibhMPHu6nbBT3Yi@redhat.com>
- <CAFEAcA98r4DxQbB+yiWKqnTGSzps+GGQ3gxFPLogBGTXY77jXQ@mail.gmail.com>
- <CAMdbysh2-mjxmWZcfDw53UbJd0keBtTgO_gnGc6pPMzv3GOPDw@mail.gmail.com>
-In-Reply-To: <CAMdbysh2-mjxmWZcfDw53UbJd0keBtTgO_gnGc6pPMzv3GOPDw@mail.gmail.com>
-From: Peter Maydell <peter.maydell@linaro.org>
-Date: Mon, 8 Jun 2026 17:08:04 +0100
-X-Gm-Features: AVVi8CfLW4QgxX-WzxPhpXCDVlLiG2UQv4yfMo5J7Xkonlm_JeH1j_tQrMdF-xE
-Message-ID: <CAFEAcA_WtRMz93Y7CrGW0PDTzoA+jXtY-4e0AgYXemCe4GG6RQ@mail.gmail.com>
-Subject: Re: [PATCH] tests: strip macOS "-unsigned" suffix from binary name
-To: Emmanuel Blot <eblot@meta.com>
-Cc: =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>, 
- qemu-devel@nongnu.org, Thomas Huth <th.huth+qemu@posteo.eu>, 
- =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@mailo.com>, 
- Fabiano Rosas <farosas@suse.de>, Laurent Vivier <lvivier@redhat.com>, 
- Paolo Bonzini <pbonzini@redhat.com>,
- =?UTF-8?B?QWxleCBCZW5uw6ll?= <alex.bennee@linaro.org>
+References: <20260604165048.457860-1-berrange@redhat.com>
+In-Reply-To: <20260604165048.457860-1-berrange@redhat.com>
+From: Mauro Matteo Cascella <mcascell@redhat.com>
+Date: Mon, 8 Jun 2026 18:10:23 +0200
+X-Gm-Features: AVVi8CduJleZgFyB_oggVAtsXvvZp4YIivOmwOBXl81xZaWKvs54md-q57ZRoVs
+Message-ID: <CAA8xKjVx6Da3SHkg-bNewk5yZFUSrrHpxMr2EViP87v=_zDN=g@mail.gmail.com>
+Subject: Re: [qemu-web RFC 0/3] switch to GitLab confidential issues for
+ security disclosure
+To: =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>
+Cc: qemu-devel@nongnu.org, 
+ Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
+ =?UTF-8?B?QWxleCBCZW5uw6ll?= <alex.bennee@linaro.org>, 
+ "Michael S. Tsirkin" <mst@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>,
+ Thomas Huth <thuth@redhat.com>
 Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2a00:1450:4864:20::62c;
- envelope-from=peter.maydell@linaro.org; helo=mail-ej1-x62c.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=mcascell@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -24
+X-Spam_score: -2.5
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.445,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -125,19 +139,125 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Mon, 8 Jun 2026 at 16:57, Emmanuel Blot <eblot@meta.com> wrote:
+On Thu, Jun 4, 2026 at 6:50=E2=80=AFPM Daniel P. Berrang=C3=A9 <berrange@re=
+dhat.com> wrote:
 >
-> Ok thanks, got it.
+> I previously raised the idea of using GitLab issues for security
+> disclosures:
 >
-> I need to use `ninja -C build qemy-system-arm` to generate the signed
-> binary, because the default target only generates the `-unsigned`
-> version (I guess this is the linker's default output, macOS requires
-> an extra signing step).
-> The signed version is defined as an on-demand command which is not
-> part of the default build (`all`).
+>   https://lists.gnu.org/archive/html/qemu-devel/2026-05/msg04582.html
+>
+> This patch proposal formalizes that into a concrete proposal:
+>
+>  * qemu-security is entirely discontinued
+>
+>  * "confidential" GitLab issues are to be used
+>
+>  * The priority is to have a low overhead process that is
+>    as close to normal bug & development workflow as
+>    possible.
+>
+>  * No embargoes will be accepted, beyond the time needed
+>    for a maintainer to develop a patch, unless extenuating
+>    scenarios apply. A vendor's/user's desire to delay to
+>    suit their arbitrary software upgrade schedule is NOT
+>    an extenuating scenario.
+>
+>  * All confidential issues will be expected to be made
+>    public, either when the patch is proposed to qemu-devel,
+>    or sooner if a issue is low severity and a patch is not
+>    a priority for the manitainer
+>
+>  * Eliminate dependency on any single maintainer/person to
+>    the greatest extent practical
+>
+> Some open questions
+>
+>  * I describe using "cve::required" as a gitlab label to
+>    track issues that need CVEs allocating. I'm unclear what
+>    the best way is to actually do the allocation. This is
+>    where it is hardest to eliminate the single person
+>    bottleneck / burden.
+>
+>    Traditionally I would email Red Hat product security via
+>    Mauro (CC'd) but that's still a single point of failure.
 
-Right, this is the bug that needs fixing. The default target should
-build the signed binary.
+I'm totally fine to remain the designated PoC for CVE assignments. To
+mitigate the risk of a single point of failure, I'd suggest directing
+all CVE requests to secalert@redhat.com with me on CC.
 
--- PMM
+>    I'm personally not willing to sign up for QEMU to be a
+>    CNA, because they have unreasonable expectations for
+>    volunteer projects. I'm not going to give them my phone
+>    number nor agree to any SLAs for response to query.
+>
+>    From a selfish QEMU upstream maintainer POV, I would say
+>    that CVEs are largely devoid of value. The people who
+>    care most about them are the downstream vendors who
+>    ship old QEMU versions and track bugs for backporting.
+>    If we want to pull a security fix into our stable release
+>    branches we can do that easily without a CVE.
+>
+>    Thus one nuclear option is to say "not our problem" and
+>    no longer assign CVEs at all. Instead assign a unique ID
+>    of QEMU's invention "QEMU-SEC-nnnnn", and let downstream
+>    vendors take the pain of allocating and mapping QEMU's
+>    identifiers to CVE identifiers.
+>
+>  * We have >100 disclosed issues to qemu-security
+>    that were classed as non-virtualization bugs which
+>    I asked the reporter to file gitlab issues for.
+>    Almost no one followed up to do that. I don't want
+>    these bugs to go into a black-hole as they are all
+>    basically valid, but I also don't fancy bulk filing
+>    100's of issues from my own account.
+>
+>    There are also more non-triaged issues some of which
+>    are valid security bugs which ought to be tracked
+>    rather than sucked into a black-hole. Again that
+>    implies more bulk filing of bugs :-(
+>
+>  * Moving away from a small dedicated group of people
+>    handling security reports, to a distributed
+>    responsbility has a notable risk - every maintainer
+>    may consider it "someone else's problem" and ignore
+>    security disclosures. Some poor sucker then gets to
+>    run triage across an ever increasing set of issues
+>    and try to encourage maintainers into responding.
+>
+>    Based on our experience with normal bug triage work,
+>    I'd say it is a near certainty that this will happen
+>    to some extent.
+>
+>    I don't have any answer here other than even this
+>    bad outcome will probably be less bad that the status
+>    quo with qemu-security email disclosure. Personally
+>    I can/will not continue with the email workflow any
+>    more.
+>
+>    IMHO this mostly points towards the downstream vendors
+>    needing to invest more in QEMU if they want to have a
+>    guaranteed security SLA upstream.
+>
+> Daniel P. Berrang=C3=A9 (3):
+>   contribute: reformat/restructure bug report guidance
+>   contribute: add automate tool disclosure to bug reporting
+>   contribute: switch security process to gitlab confidential issues
+>
+>  contribute/report-a-bug.md     |  63 +++++---
+>  contribute/security-process.md | 280 ++++++++++++++-------------------
+>  2 files changed, 155 insertions(+), 188 deletions(-)
+>
+> --
+> 2.54.0
+>
+
+LGTM. For the series:
+Reviewed-by: Mauro Matteo Cascella <mcascell@redhat.com>
+
+--
+Mauro Matteo Cascella
+Red Hat Product Security
+PGP-Key ID: BB3410B0
+
 
