@@ -4,75 +4,75 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3D2DBCD8CA4
-	for <qemu-devel@archiver.kernel.org>; Mon,  8 Jun 2026 19:03:01 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8C166CD6E79
+	for <qemu-devel@archiver.kernel.org>; Mon,  8 Jun 2026 19:03:35 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wWfD3-00015h-AY; Mon, 08 Jun 2026 15:00:29 -0400
+	id 1wWfD5-00017E-Pl; Mon, 08 Jun 2026 15:00:31 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <james.hilliard1@gmail.com>)
- id 1wWfCy-00012C-Hm
- for qemu-devel@nongnu.org; Mon, 08 Jun 2026 15:00:24 -0400
-Received: from mail-ot1-x330.google.com ([2607:f8b0:4864:20::330])
+ id 1wWfCz-00013E-L7
+ for qemu-devel@nongnu.org; Mon, 08 Jun 2026 15:00:25 -0400
+Received: from mail-oi1-x22f.google.com ([2607:f8b0:4864:20::22f])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <james.hilliard1@gmail.com>)
- id 1wWfCv-0006mo-Kf
- for qemu-devel@nongnu.org; Mon, 08 Jun 2026 15:00:24 -0400
-Received: by mail-ot1-x330.google.com with SMTP id
- 46e09a7af769-7e6f27619e7so3821520a34.2
- for <qemu-devel@nongnu.org>; Mon, 08 Jun 2026 12:00:21 -0700 (PDT)
+ id 1wWfCv-0006h8-LH
+ for qemu-devel@nongnu.org; Mon, 08 Jun 2026 15:00:25 -0400
+Received: by mail-oi1-x22f.google.com with SMTP id
+ 5614622812f47-4859b1fc7a8so2458893b6e.0
+ for <qemu-devel@nongnu.org>; Mon, 08 Jun 2026 12:00:20 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1780945220; x=1781550020; darn=nongnu.org;
+ d=gmail.com; s=20251104; t=1780945219; x=1781550019; darn=nongnu.org;
  h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
  :mime-version:subject:date:from:from:to:cc:subject:date:message-id
- :reply-to; bh=kNDxHYWhTOsNn0OdBaliY8wf/EghWpS60PkiWLVESW8=;
- b=UUzZ+fd8jMfpEA3THVF3kNF4nHtegtKkzGk21sY5mnOiafmj7VRiDmDDLKmC5qF4dj
- aS97qGC0FWmSDN/rTcItZJ2XfKbeBQ24BJM88n/w2xzMpwkCuFrr3sq5M5FBWL6F2J2S
- zN4sZt1ssRgHzVKMZ58ETXruPln1soM9cEJ7lKdryrzEm/GUthqEQGyN408yUUH3qe0I
- FsCip18WoGTkAvKY4Jdqb7zQ9k4i8pFu4EoieLGNM6oIa0f8PRCdmRk4g/pOHLZLU61J
- zmaJ8JVM8CYlNC/Dc809qFLgHJU+oMy2g+6mBZNh4UtsJF6nfTL/kQcnzYuFdtl+T7Tg
- 4FeQ==
+ :reply-to; bh=BpjNFRkJXDxeJXgFf+peeS1OMxQxnbmGHgcjDSZVnxY=;
+ b=cm8eLiHCIgR1t5fGvYCVHBkVkViq8FDpM15hVh+MKY4UoM2Umtg5YYtW/Kqo0rGXhT
+ qV6GM5Fi9sVwZLuwrddWZ+sg8ob7nqji85WmHYI/HuR6SO7YCdDXbRB9Jn0U/c7ns2B7
+ lZJEK9+K92tdSufXOcGMI0/CPpiK6uq1gJ65U2NZQz327YtCZsah2EWW31b2S4NEdr9q
+ r99MxzIoJKcDhqWpCJCZPsn7q0PqNIn1Vv+I5HVEZuPzBk5Ko5G8Gfb9rY8k/tHP3ZRu
+ QiDsETLKygJAm9/k3N2E6ifj/fDG/ItHzUyIPk/av4kW57UKmGf/9PQFK1ZhnNG8B5/i
+ oX8A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1780945220; x=1781550020;
+ d=1e100.net; s=20251104; t=1780945219; x=1781550019;
  h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
  :mime-version:subject:date:from:x-gm-gg:x-gm-message-state:from:to
  :cc:subject:date:message-id:reply-to;
- bh=kNDxHYWhTOsNn0OdBaliY8wf/EghWpS60PkiWLVESW8=;
- b=CxhowrncyzNw41VluU6Jq6HQaF6lqcbt/mFK5/O9UnIrzAak7hC//yLXY81VBM8H68
- I8yylsLlKw1AbgLvaxuMRGUlAjWlDPR2z6Aoi56r6/pCyDcpqkuN27c1t/BKMxVB9rYV
- A/aKvEi1R5oIN/JAHNY57HcA3jJH6ORN0aUbQord9G1DOo/E+Xy/cKU/xerV20c/oioT
- aUgFRojObjZWrHa/2C5N5bUB9zgqms9EAGZOYMhwyXwt3J3WltnKfVHJdi75cIysPCiM
- tAtQ1TrsismUJGUcsIKfKluufFnn3MR/EQh3tU1ugCrkApZrV2hBgoig5fOSuv+veXiP
- 0Bvw==
-X-Gm-Message-State: AOJu0YwdE5CbMFuJSVkaazrvlDDy2zHU8/l40VRGxtBFYUn6CD4n8xXa
- 6BIhtc/cYE8oAswngDFYMVO6yQTDy/SRfychXWSJL38i1EZ+EuEMZd7PSpFKPT/2hFY=
-X-Gm-Gg: Acq92OHZalbukZBbLPXuuVAFvBc0o46eTwYglNeo5FcISg7Iw80hiashKRsK0QBOvUc
- kNeVePTNrCGhvY2KTY+491T75l5PUyZFfXcrYFnM8Y5bjqZfkbb7f/Op7vqy82MHB/ZhkVP36Gu
- GBXS8ovMaHYV8feKOb4TJdoGR1OCUtDmZdFfrQVwBxxi08jbEEH6tjqL6MQeBSJqzFPvC+BfPx3
- pLER2nY0I+oCSP/v9XYiYGLJBrIxhTiVuFYfHEHewvYQfSZur+8fN+t/spHRaP7BnGHaK/6bXkO
- MFsWUWYFf8GH+xlTt72ic4pL1Zk20NAe4xQh6noWtiioiYWpm3VLS5R4hZVcxeNrEuETzITQ+YV
- a7/oDkLVA5ZBNA3pmNezkj922GGqoTVct0gNieILFBe2cvAL9Qa221iqB/9hOTG2Hf8hkoRh4E1
- 6tzfyp3uj1KcHOQjEemhedZT6N4Hd0gR2YW3U3all4UPwsFZHpo/956H2DLaHpuj2QjTfeR60yq
- euCGyj62pTimBbiV27Hum0qKDe+f9hlOZvwLFow0NFuDqm9q2ZMTKYmyCMrZHIowvLFb74ERjmZ
- 6gjXTV66akH47+h3bu0Lz48eKGUTfQQnewKoNL8YpVE=
-X-Received: by 2002:a05:6830:67f7:b0:7e6:eb9c:3781 with SMTP id
- 46e09a7af769-7e70c7c99d1mr11288529a34.12.1780945220467; 
- Mon, 08 Jun 2026 12:00:20 -0700 (PDT)
+ bh=BpjNFRkJXDxeJXgFf+peeS1OMxQxnbmGHgcjDSZVnxY=;
+ b=cKYVaVAccguTQLTVMeXsrf37xmSESMEs5eAGXjiD6WTBrVPyMCXdBTZFDDsgHRvQ0V
+ MXTDRKVLjlGbCP66H++A25hj3VhrVR8KJLwubjbEY2fSCnGkW69/Ofvb/peLYeQ9t3Gw
+ L6T4CfPzxR9bMqp051nwObqMUuF/ARYYwZJnW5Bxb9s+j79D9CoKJD0yVs17L2p7CR2u
+ bO1+P230COK6U4uyyeIKOG1fVS4IdovLzhMglL+wcqSlF9vR/B7NY6kVu1HqU0CWEDCJ
+ L9vA/88ahd74OjZUWSlUAvkipWVuNFo0BzBcqo3lOPf37zfp+dYBjD0DrVb1GeiFEGLU
+ rKIw==
+X-Gm-Message-State: AOJu0Ywq+azDONkQiAx2o3JEi37boEBk0jTJ2h74MgOKaP7I/qaxzK6R
+ 2jgG9doGBHjeLh+vwVed7YwIeatPkIRB777DXF5EDSWakHVD36M16hmrnjJ4S4cZPY4=
+X-Gm-Gg: Acq92OEKlWgucptb7tYuR2w4mxSzXoPiCojWyJ0glIBaUk3WQAih8WfzEdcenan48ef
+ mfJnTXZ9VUCAh8xVq74+Z5dlhC8RUCViUhKGZKQTzB1r2OX2bJUDhs31PCxiVEt3RfEZRTAjA6M
+ pRNyLtYlgHqGXa1HiTC1ksaASZ1/rXlIiQBH688FuKg/2G8OphSlMD4nc0Q40Z2jdS2/daLbd93
+ Mz37TMCJtr151H58MmsKjXXkamjyP3pESFjz/tmL/pSF2FoF1kVIeaUi3pgkYFl5VcT6dE4y25v
+ fPtM/4tJSAWC2LfnVVkWL3Pn8kqCFW7d/FYPEtiXG7yyKKuNJEmmVdXTtJ8z3pABSHY6jyK1Fxd
+ kgvDXVc4HsAEQ51kc1ju0y6COLvqpmeHi6jO2eHZmTgIpi+bTvoV5WNXlwfb23n3o6jOpgS7eRs
+ kwxTXtnI9UTz/nSSdYowlDjVj85TxSgzxedos6NrPUPJxFppAgbMHkSFuISILRNzz3VSFPPhucc
+ Lwk9ZSG9juTMhJ3XYd6uUlak/n5XOG6tY9hBw03cSkXTN+vsY4FKFX1qInz4yqx39PJK4N468eT
+ QrOu/b28OOJerP6Y+QxqyGhOVg4Pbi6z
+X-Received: by 2002:a05:6808:4f48:b0:467:27d2:969f with SMTP id
+ 5614622812f47-4868debbe24mr9802978b6e.17.1780945219161; 
+ Mon, 08 Jun 2026 12:00:19 -0700 (PDT)
 Received: from mac.localdomain (97-118-5-210.hlrn.qwest.net. [97.118.5.210])
  by smtp.gmail.com with ESMTPSA id
- 46e09a7af769-7e6e75db138sm12397777a34.11.2026.06.08.12.00.19
+ 46e09a7af769-7e6e75db138sm12397777a34.11.2026.06.08.12.00.18
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 08 Jun 2026 12:00:19 -0700 (PDT)
+ Mon, 08 Jun 2026 12:00:18 -0700 (PDT)
 From: James Hilliard <james.hilliard1@gmail.com>
-Date: Mon, 08 Jun 2026 12:59:42 -0600
-Subject: [PATCH v16 17/21] target/mips: decode Octeon ZUC and SNOW3G COP2
+Date: Mon, 08 Jun 2026 12:59:41 -0600
+Subject: [PATCH v16 16/21] target/mips: decode Octeon HSH and SHA3 COP2
  selectors
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20260608-mips-octeon-missing-insns-v2-v16-17-daef7a0d8b04@gmail.com>
+Message-Id: <20260608-mips-octeon-missing-insns-v2-v16-16-daef7a0d8b04@gmail.com>
 References: <20260608-mips-octeon-missing-insns-v2-v16-0-daef7a0d8b04@gmail.com>
 In-Reply-To: <20260608-mips-octeon-missing-insns-v2-v16-0-daef7a0d8b04@gmail.com>
 To: qemu-devel@nongnu.org
@@ -87,8 +87,8 @@ Cc: Laurent Vivier <laurent@vivier.eu>, Helge Deller <deller@gmx.de>,
  =?utf-8?q?Philippe_Mathieu-Daud=C3=A9?= <philmd@mailo.com>, 
  =?utf-8?q?Philippe_Mathieu-Daud=C3=A9?= <philmd@mailo.com>
 X-Mailer: b4 0.15.2
-Received-SPF: pass client-ip=2607:f8b0:4864:20::330;
- envelope-from=james.hilliard1@gmail.com; helo=mail-ot1-x330.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::22f;
+ envelope-from=james.hilliard1@gmail.com; helo=mail-oi1-x22f.google.com
 X-Spam_score_int: -17
 X-Spam_score: -1.8
 X-Spam_bar: -
@@ -113,59 +113,319 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 Add explicit decodetree entries and translator bindings for the Octeon
-ZUC and SNOW3G COP2 operation selectors.  These stream-cipher selectors
-operate on the shared HSH register window state, so dispatch them through
-the per-operation helpers added with the corresponding engine support.
+HSH shared-window selectors and SHA3 operation selectors. Simple SHA3 DAT
+register moves and XORDAT selectors use direct TCG transfers, while HSH
+operation selectors and SHA3 STARTOP remain helper-backed for their
+visible side effects.
 
-Keep stream-cipher decode separate because these selectors share the HSH
-register window with unrelated engines.
+Keep HSH/SHA3 decode separate from direct register transfers because the
+shared hash-window aliases and side-effecting operations need their own
+selector coverage.
 
 Signed-off-by: James Hilliard <james.hilliard1@gmail.com>
 Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+---
+Changes v14 -> v15:
+  - Use direct TCG moves for SHA3 DAT24 and DAT15 selectors.
+  - Use direct TCG XORs for SHA3 XORDAT selectors.
+  - Switch SHA3 STARTOP to an env-only helper call.
+  - Add Richard Henderson's Reviewed-by tag.
 
----
+Changes v10 -> v13:
+  - Keep this patch limited to HSH/SHA3 selector additions; CRC/GFM
+    selector finalization stays in the CRC/GFM selector patch.
+  - Name the 0x0057 SDK compatibility selector as STARTSHA1_COMPAT and
+    document why it is kept despite not appearing in the public manuals.
+
 Changes v9 -> v10:
-  - Split ZUC/SNOW3G selector decode out of the monolithic Octeon COP2
+  - Split HSH/SHA3 selector decode out of the monolithic Octeon COP2
     selector decode patch.
-  - Kept stream-cipher operation selectors helper-backed because they
-    operate on the shared HSH register-window state.
+  - Reworked the shared HSH/SHA3 register-window transfers around the
+    architectural hash state instead of DATW/IVW shadow state.
 ---
- target/mips/tcg/octeon.decode      | 4 ++++
- target/mips/tcg/octeon_translate.c | 4 ++++
- 2 files changed, 8 insertions(+)
+ target/mips/tcg/octeon.decode      |  77 ++++++++++++++++++++++++++++
+ target/mips/tcg/octeon_translate.c | 102 +++++++++++++++++++++++++++++++++++++
+ 2 files changed, 179 insertions(+)
 
 diff --git a/target/mips/tcg/octeon.decode b/target/mips/tcg/octeon.decode
-index b1a63b743f..2b27fa205f 100644
+index 70e02d0b0e..b1a63b743f 100644
 --- a/target/mips/tcg/octeon.decode
 +++ b/target/mips/tcg/octeon.decode
-@@ -265,8 +265,12 @@ LDX          011111 ..... ..... ..... 01000 001010 @lx
+@@ -113,6 +113,7 @@ LDX          011111 ..... ..... ..... 01000 001010 @lx
+     CVM_MF_HSH_DAT4                      010010 00001 rt:5 0000 0000 0100 0100 &cp2
+     CVM_MF_HSH_DAT5                      010010 00001 rt:5 0000 0000 0100 0101 &cp2
+     CVM_MF_HSH_DAT6                      010010 00001 rt:5 0000 0000 0100 0110 &cp2
++    CVM_MF_SHA3_DAT24                    010010 00001 rt:5 0000 0000 0101 0000 &cp2
+     CVM_MF_3DES_KEY0                     010010 00001 rt:5 0000 0000 1000 0000 &cp2
+     CVM_MF_3DES_KEY1                     010010 00001 rt:5 0000 0000 1000 0001 &cp2
+     CVM_MF_3DES_KEY2                     010010 00001 rt:5 0000 0000 1000 0010 &cp2
+@@ -137,6 +138,30 @@ LDX          011111 ..... ..... ..... 01000 001010 @lx
+     CVM_MF_GFM_MUL_REFLECT1              010010 00001 rt:5 0000 0000 0101 1001 &cp2
+     CVM_MF_GFM_RESINP_REFLECT0           010010 00001 rt:5 0000 0000 0101 1010 &cp2
+     CVM_MF_GFM_RESINP_REFLECT1           010010 00001 rt:5 0000 0000 0101 1011 &cp2
++    CVM_MF_HSH_DATW0                     010010 00001 rt:5 0000 0010 0100 0000 &cp2
++    CVM_MF_HSH_DATW1                     010010 00001 rt:5 0000 0010 0100 0001 &cp2
++    CVM_MF_HSH_DATW2                     010010 00001 rt:5 0000 0010 0100 0010 &cp2
++    CVM_MF_HSH_DATW3                     010010 00001 rt:5 0000 0010 0100 0011 &cp2
++    CVM_MF_HSH_DATW4                     010010 00001 rt:5 0000 0010 0100 0100 &cp2
++    CVM_MF_HSH_DATW5                     010010 00001 rt:5 0000 0010 0100 0101 &cp2
++    CVM_MF_HSH_DATW6                     010010 00001 rt:5 0000 0010 0100 0110 &cp2
++    CVM_MF_HSH_DATW7                     010010 00001 rt:5 0000 0010 0100 0111 &cp2
++    CVM_MF_HSH_DATW8                     010010 00001 rt:5 0000 0010 0100 1000 &cp2
++    CVM_MF_HSH_DATW9                     010010 00001 rt:5 0000 0010 0100 1001 &cp2
++    CVM_MF_HSH_DATW10                    010010 00001 rt:5 0000 0010 0100 1010 &cp2
++    CVM_MF_HSH_DATW11                    010010 00001 rt:5 0000 0010 0100 1011 &cp2
++    CVM_MF_HSH_DATW12                    010010 00001 rt:5 0000 0010 0100 1100 &cp2
++    CVM_MF_HSH_DATW13                    010010 00001 rt:5 0000 0010 0100 1101 &cp2
++    CVM_MF_HSH_DATW14                    010010 00001 rt:5 0000 0010 0100 1110 &cp2
++    CVM_MF_HSH_DATW15                    010010 00001 rt:5 0000 0010 0100 1111 &cp2
++    CVM_MF_HSH_IVW0                      010010 00001 rt:5 0000 0010 0101 0000 &cp2
++    CVM_MF_HSH_IVW1                      010010 00001 rt:5 0000 0010 0101 0001 &cp2
++    CVM_MF_HSH_IVW2                      010010 00001 rt:5 0000 0010 0101 0010 &cp2
++    CVM_MF_HSH_IVW3                      010010 00001 rt:5 0000 0010 0101 0011 &cp2
++    CVM_MF_HSH_IVW4                      010010 00001 rt:5 0000 0010 0101 0100 &cp2
++    CVM_MF_HSH_IVW5                      010010 00001 rt:5 0000 0010 0101 0101 &cp2
++    CVM_MF_HSH_IVW6                      010010 00001 rt:5 0000 0010 0101 0110 &cp2
++    CVM_MF_HSH_IVW7                      010010 00001 rt:5 0000 0010 0101 0111 &cp2
+     CVM_MF_GFM_MUL0                      010010 00001 rt:5 0000 0010 0101 1000 &cp2
+     CVM_MF_GFM_MUL1                      010010 00001 rt:5 0000 0010 0101 1001 &cp2
+     CVM_MF_GFM_RESINP0                   010010 00001 rt:5 0000 0010 0101 1010 &cp2
+@@ -153,6 +178,10 @@ LDX          011111 ..... ..... ..... 01000 001010 @lx
+     CVM_MT_HSH_IV1                       010010 00101 rt:5 0000 0000 0100 1001 &cp2
+     CVM_MT_HSH_IV2                       010010 00101 rt:5 0000 0000 0100 1010 &cp2
+     CVM_MT_HSH_IV3                       010010 00101 rt:5 0000 0000 0100 1011 &cp2
++    CVM_MT_SHA3_DAT24                    010010 00101 rt:5 0000 0000 0101 0000 &cp2
++    CVM_MT_SHA3_DAT15                    010010 00101 rt:5 0000 0000 0101 0001 &cp2
++    # Cavium SDK code uses 0x0057 as a STARTSHA1 compatibility alias.
++    CVM_MT_HSH_STARTSHA1_COMPAT          010010 00101 rt:5 0000 0000 0101 0111 &cp2
+     CVM_MT_GFM_MUL_REFLECT0              010010 00101 rt:5 0000 0000 0101 1000 &cp2
+     CVM_MT_GFM_MUL_REFLECT1              010010 00101 rt:5 0000 0000 0101 1001 &cp2
+     CVM_MT_GFM_XOR0_REFLECT              010010 00101 rt:5 0000 0000 0101 1100 &cp2
+@@ -182,19 +211,67 @@ LDX          011111 ..... ..... ..... 01000 001010 @lx
+     CVM_MT_CRC_BYTE_REFLECT              010010 00101 rt:5 0000 0010 0001 0100 &cp2
+     CVM_MT_CRC_HALF_REFLECT              010010 00101 rt:5 0000 0010 0001 0101 &cp2
+     CVM_MT_CRC_WORD_REFLECT              010010 00101 rt:5 0000 0010 0001 0110 &cp2
++    CVM_MT_HSH_DATW0                     010010 00101 rt:5 0000 0010 0100 0000 &cp2
++    CVM_MT_HSH_DATW1                     010010 00101 rt:5 0000 0010 0100 0001 &cp2
++    CVM_MT_HSH_DATW2                     010010 00101 rt:5 0000 0010 0100 0010 &cp2
++    CVM_MT_HSH_DATW3                     010010 00101 rt:5 0000 0010 0100 0011 &cp2
++    CVM_MT_HSH_DATW4                     010010 00101 rt:5 0000 0010 0100 0100 &cp2
++    CVM_MT_HSH_DATW5                     010010 00101 rt:5 0000 0010 0100 0101 &cp2
++    CVM_MT_HSH_DATW6                     010010 00101 rt:5 0000 0010 0100 0110 &cp2
++    CVM_MT_HSH_DATW7                     010010 00101 rt:5 0000 0010 0100 0111 &cp2
++    CVM_MT_HSH_DATW8                     010010 00101 rt:5 0000 0010 0100 1000 &cp2
++    CVM_MT_HSH_DATW9                     010010 00101 rt:5 0000 0010 0100 1001 &cp2
++    CVM_MT_HSH_DATW10                    010010 00101 rt:5 0000 0010 0100 1010 &cp2
++    CVM_MT_HSH_DATW11                    010010 00101 rt:5 0000 0010 0100 1011 &cp2
++    CVM_MT_HSH_DATW12                    010010 00101 rt:5 0000 0010 0100 1100 &cp2
++    CVM_MT_HSH_DATW13                    010010 00101 rt:5 0000 0010 0100 1101 &cp2
++    CVM_MT_HSH_DATW14                    010010 00101 rt:5 0000 0010 0100 1110 &cp2
++    CVM_MT_HSH_DATW15                    010010 00101 rt:5 0000 0010 0100 1111 &cp2
++    CVM_MT_HSH_IVW0                      010010 00101 rt:5 0000 0010 0101 0000 &cp2
++    CVM_MT_HSH_IVW1                      010010 00101 rt:5 0000 0010 0101 0001 &cp2
++    CVM_MT_HSH_IVW2                      010010 00101 rt:5 0000 0010 0101 0010 &cp2
++    CVM_MT_HSH_IVW3                      010010 00101 rt:5 0000 0010 0101 0011 &cp2
++    CVM_MT_HSH_IVW4                      010010 00101 rt:5 0000 0010 0101 0100 &cp2
++    CVM_MT_HSH_IVW5                      010010 00101 rt:5 0000 0010 0101 0101 &cp2
++    CVM_MT_HSH_IVW6                      010010 00101 rt:5 0000 0010 0101 0110 &cp2
++    CVM_MT_HSH_IVW7                      010010 00101 rt:5 0000 0010 0101 0111 &cp2
+     CVM_MT_GFM_MUL0                      010010 00101 rt:5 0000 0010 0101 1000 &cp2
+     CVM_MT_GFM_MUL1                      010010 00101 rt:5 0000 0010 0101 1001 &cp2
+     CVM_MT_GFM_RESINP0                   010010 00101 rt:5 0000 0010 0101 1010 &cp2
+     CVM_MT_GFM_RESINP1                   010010 00101 rt:5 0000 0010 0101 1011 &cp2
++    CVM_MT_GFM_XOR0                      010010 00101 rt:5 0000 0010 0101 1100 &cp2
+     CVM_MT_GFM_POLY                      010010 00101 rt:5 0000 0010 0101 1110 &cp2
++    CVM_MT_SHA3_XORDAT0                  010010 00101 rt:5 0000 0010 1100 0000 &cp2
++    CVM_MT_SHA3_XORDAT1                  010010 00101 rt:5 0000 0010 1100 0001 &cp2
++    CVM_MT_SHA3_XORDAT2                  010010 00101 rt:5 0000 0010 1100 0010 &cp2
++    CVM_MT_SHA3_XORDAT3                  010010 00101 rt:5 0000 0010 1100 0011 &cp2
++    CVM_MT_SHA3_XORDAT4                  010010 00101 rt:5 0000 0010 1100 0100 &cp2
++    CVM_MT_SHA3_XORDAT5                  010010 00101 rt:5 0000 0010 1100 0101 &cp2
++    CVM_MT_SHA3_XORDAT6                  010010 00101 rt:5 0000 0010 1100 0110 &cp2
++    CVM_MT_SHA3_XORDAT7                  010010 00101 rt:5 0000 0010 1100 0111 &cp2
++    CVM_MT_SHA3_XORDAT8                  010010 00101 rt:5 0000 0010 1100 1000 &cp2
++    CVM_MT_SHA3_XORDAT9                  010010 00101 rt:5 0000 0010 1100 1001 &cp2
++    CVM_MT_SHA3_XORDAT10                 010010 00101 rt:5 0000 0010 1100 1010 &cp2
++    CVM_MT_SHA3_XORDAT11                 010010 00101 rt:5 0000 0010 1100 1011 &cp2
++    CVM_MT_SHA3_XORDAT12                 010010 00101 rt:5 0000 0010 1100 1100 &cp2
++    CVM_MT_SHA3_XORDAT13                 010010 00101 rt:5 0000 0010 1100 1101 &cp2
++    CVM_MT_SHA3_XORDAT14                 010010 00101 rt:5 0000 0010 1100 1110 &cp2
++    CVM_MT_SHA3_XORDAT15                 010010 00101 rt:5 0000 0010 1100 1111 &cp2
++    CVM_MT_SHA3_XORDAT16                 010010 00101 rt:5 0000 0010 1101 0000 &cp2
++    CVM_MT_SHA3_XORDAT17                 010010 00101 rt:5 0000 0010 1101 0001 &cp2
+     CVM_MT_CRC_LEN                       010010 00101 rt:5 0001 0010 0000 0010 &cp2
+     CVM_MT_CRC_DWORD                     010010 00101 rt:5 0001 0010 0000 0111 &cp2
+     CVM_MT_CRC_VAR                       010010 00101 rt:5 0001 0010 0000 1000 &cp2
      CVM_MT_CRC_DWORD_REFLECT             010010 00101 rt:5 0001 0010 0001 0111 &cp2
      CVM_MT_CRC_VAR_REFLECT               010010 00101 rt:5 0001 0010 0001 1000 &cp2
-     CVM_MT_HSH_STARTMD5                  010010 00101 rt:5 0100 0000 0100 0111 &cp2
-+    CVM_MT_SNOW3G_START                  010010 00101 rt:5 0100 0000 0100 1101 &cp2
-+    CVM_MT_SNOW3G_MORE                   010010 00101 rt:5 0100 0000 0100 1110 &cp2
-     CVM_MT_HSH_STARTSHA256               010010 00101 rt:5 0100 0000 0100 1111 &cp2
-     CVM_MT_SHA3_STARTOP                  010010 00101 rt:5 0100 0000 0101 0010 &cp2
-+    CVM_MT_ZUC_START                     010010 00101 rt:5 0100 0000 0101 0101 &cp2
-+    CVM_MT_ZUC_MORE                      010010 00101 rt:5 0100 0000 0101 0110 &cp2
-     CVM_MT_HSH_STARTSHA                  010010 00101 rt:5 0100 0000 0101 0111 &cp2
++    CVM_MT_HSH_STARTMD5                  010010 00101 rt:5 0100 0000 0100 0111 &cp2
++    CVM_MT_HSH_STARTSHA256               010010 00101 rt:5 0100 0000 0100 1111 &cp2
++    CVM_MT_SHA3_STARTOP                  010010 00101 rt:5 0100 0000 0101 0010 &cp2
++    CVM_MT_HSH_STARTSHA                  010010 00101 rt:5 0100 0000 0101 0111 &cp2
      CVM_MT_GFM_XORMUL1_REFLECT           010010 00101 rt:5 0100 0000 0101 1101 &cp2
      CVM_MT_CRC_POLYNOMIAL                010010 00101 rt:5 0100 0010 0000 0000 &cp2
+     CVM_MT_CRC_POLYNOMIAL_REFLECT        010010 00101 rt:5 0100 0010 0001 0000 &cp2
++    CVM_MT_HSH_STARTSHA512               010010 00101 rt:5 0100 0010 0100 1111 &cp2
+     CVM_MT_GFM_XORMUL1                   010010 00101 rt:5 0100 0010 0101 1101 &cp2
+   ]
+   CP2_Undef                              010010 ----- ----- ---- ---- ---- ----
 diff --git a/target/mips/tcg/octeon_translate.c b/target/mips/tcg/octeon_translate.c
-index 5497e5a6ce..b4663b35a3 100644
+index ce4cfcb3f3..5497e5a6ce 100644
 --- a/target/mips/tcg/octeon_translate.c
 +++ b/target/mips/tcg/octeon_translate.c
-@@ -345,6 +345,10 @@ CP2_MT_XOR_I64(CVM_MT_SHA3_XORDAT15, sha3_dat[15]);
- CP2_MT_XOR_I64(CVM_MT_SHA3_XORDAT16, sha3_dat[16]);
- CP2_MT_XOR_I64(CVM_MT_SHA3_XORDAT17, sha3_dat[17]);
- CP2_MT_HELPER_ENV(CVM_MT_SHA3_STARTOP, sha3_startop);
-+CP2_MT_HELPER(CVM_MT_ZUC_START, zuc_start);
-+CP2_MT_HELPER(CVM_MT_ZUC_MORE, zuc_more);
-+CP2_MT_HELPER(CVM_MT_SNOW3G_START, snow3g_start);
-+CP2_MT_HELPER(CVM_MT_SNOW3G_MORE, snow3g_more);
- CP2_MT_HELPER(CVM_MT_HSH_STARTSHA1_COMPAT, hsh_startsha1_compat);
- CP2_MT_I64(CVM_MT_HSH_DATW0, hsh_dat[0]);
- CP2_MT_I64(CVM_MT_HSH_DATW1, hsh_dat[1]);
+@@ -47,6 +47,11 @@
+ #define CP2_MT_HELPER(NAME, SUFFIX) \
+     TRANS(NAME, trans_octeon_cp2_mt_helper, \
+           gen_helper_octeon_cp2_mt_ ## SUFFIX)
++#define CP2_MT_HELPER_ENV(NAME, SUFFIX) \
++    TRANS(NAME, trans_octeon_cp2_mt_helper_env, \
++          gen_helper_octeon_cp2_mt_ ## SUFFIX)
++#define CP2_MT_XOR_I64(NAME, FIELD) \
++    TRANS(NAME, trans_octeon_cp2_mt_xor_i64, OCTEON_CRYPTO_OFFSET(FIELD))
+ 
+ #define OCTEON_LO32_OFFSET (HOST_BIG_ENDIAN ? 4 : 0)
+ 
+@@ -165,6 +170,19 @@ static bool trans_octeon_cp2_mt_hsh_pair(DisasContext *ctx, arg_cp2 *a,
+     return true;
+ }
+ 
++static bool trans_octeon_cp2_mt_xor_i64(DisasContext *ctx, arg_cp2 *a,
++                                        int offset)
++{
++    TCGv_i64 value = tcg_temp_new_i64();
++    TCGv_i64 old = tcg_temp_new_i64();
++
++    gen_load_gpr(value, a->rt);
++    tcg_gen_ld_i64(old, tcg_env, offset);
++    tcg_gen_xor_i64(old, old, value);
++    tcg_gen_st_i64(old, tcg_env, offset);
++    return true;
++}
++
+ static bool trans_octeon_cp2_mt_helper(DisasContext *ctx, arg_cp2 *a,
+                                        void (*gen_helper)(TCGv_env, TCGv_i64))
+ {
+@@ -175,6 +193,13 @@ static bool trans_octeon_cp2_mt_helper(DisasContext *ctx, arg_cp2 *a,
+     return true;
+ }
+ 
++static bool trans_octeon_cp2_mt_helper_env(DisasContext *ctx, arg_cp2 *a,
++                                           void (*gen_helper)(TCGv_env))
++{
++    gen_helper(tcg_env);
++    return true;
++}
++
+ CP2_MF_HSH_PAIR(CVM_MF_HSH_DAT0, hsh_dat, 0);
+ CP2_MF_HSH_PAIR(CVM_MF_HSH_DAT1, hsh_dat, 1);
+ CP2_MF_HSH_PAIR(CVM_MF_HSH_DAT2, hsh_dat, 2);
+@@ -212,10 +237,35 @@ CP2_MF_I64(CVM_MF_GFM_RESINP1, gfm_resinp[1]);
+ CP2_MF_U16(CVM_MF_GFM_POLY, gfm_poly);
+ 
+ CP2_MF_HELPER(CVM_MF_CRC_IV_REFLECT, crc_iv_reflect);
++CP2_MF_I64(CVM_MF_SHA3_DAT24, sha3_dat24);
+ CP2_MF_HELPER(CVM_MF_GFM_MUL_REFLECT0, gfm_mul_reflect0);
+ CP2_MF_HELPER(CVM_MF_GFM_MUL_REFLECT1, gfm_mul_reflect1);
+ CP2_MF_HELPER(CVM_MF_GFM_RESINP_REFLECT0, gfm_resinp_reflect0);
+ CP2_MF_HELPER(CVM_MF_GFM_RESINP_REFLECT1, gfm_resinp_reflect1);
++CP2_MF_I64(CVM_MF_HSH_DATW0, hsh_dat[0]);
++CP2_MF_I64(CVM_MF_HSH_DATW1, hsh_dat[1]);
++CP2_MF_I64(CVM_MF_HSH_DATW2, hsh_dat[2]);
++CP2_MF_I64(CVM_MF_HSH_DATW3, hsh_dat[3]);
++CP2_MF_I64(CVM_MF_HSH_DATW4, hsh_dat[4]);
++CP2_MF_I64(CVM_MF_HSH_DATW5, hsh_dat[5]);
++CP2_MF_I64(CVM_MF_HSH_DATW6, hsh_dat[6]);
++CP2_MF_I64(CVM_MF_HSH_DATW7, hsh_dat[7]);
++CP2_MF_I64(CVM_MF_HSH_DATW8, hsh_dat[8]);
++CP2_MF_I64(CVM_MF_HSH_DATW9, hsh_dat[9]);
++CP2_MF_I64(CVM_MF_HSH_DATW10, hsh_dat[10]);
++CP2_MF_I64(CVM_MF_HSH_DATW11, hsh_dat[11]);
++CP2_MF_I64(CVM_MF_HSH_DATW12, hsh_dat[12]);
++CP2_MF_I64(CVM_MF_HSH_DATW13, hsh_dat[13]);
++CP2_MF_I64(CVM_MF_HSH_DATW14, hsh_dat[14]);
++CP2_MF_I64(CVM_MF_HSH_DATW15, hsh_dat[15]);
++CP2_MF_I64(CVM_MF_HSH_IVW0, hsh_iv[0]);
++CP2_MF_I64(CVM_MF_HSH_IVW1, hsh_iv[1]);
++CP2_MF_I64(CVM_MF_HSH_IVW2, hsh_iv[2]);
++CP2_MF_I64(CVM_MF_HSH_IVW3, hsh_iv[3]);
++CP2_MF_I64(CVM_MF_HSH_IVW4, hsh_iv[4]);
++CP2_MF_I64(CVM_MF_HSH_IVW5, hsh_iv[5]);
++CP2_MF_I64(CVM_MF_HSH_IVW6, hsh_iv[6]);
++CP2_MF_I64(CVM_MF_HSH_IVW7, hsh_iv[7]);
+ 
+ CP2_MT_HSH_PAIR(CVM_MT_HSH_DAT0, hsh_dat, 0);
+ CP2_MT_HSH_PAIR(CVM_MT_HSH_DAT1, hsh_dat, 1);
+@@ -254,11 +304,13 @@ CP2_MT_I64(CVM_MT_GFM_MUL0, gfm_mul[0]);
+ CP2_MT_I64(CVM_MT_GFM_MUL1, gfm_mul[1]);
+ CP2_MT_I64(CVM_MT_GFM_RESINP0, gfm_resinp[0]);
+ CP2_MT_I64(CVM_MT_GFM_RESINP1, gfm_resinp[1]);
++CP2_MT_XOR_I64(CVM_MT_GFM_XOR0, gfm_resinp[0]);
+ CP2_MT_U16(CVM_MT_GFM_POLY, gfm_poly);
+ CP2_MT_U8_MASKED(CVM_MT_CRC_LEN, crc_len, 0xf);
+ CP2_MT_U32(CVM_MT_CRC_POLYNOMIAL, crc_poly);
+ 
+ CP2_MT_HELPER(CVM_MT_CRC_POLYNOMIAL_REFLECT, crc_write_polynomial_reflect);
++
+ CP2_MT_HELPER(CVM_MT_CRC_IV_REFLECT, crc_write_iv_reflect);
+ CP2_MT_HELPER(CVM_MT_CRC_BYTE, crc_write_byte);
+ CP2_MT_HELPER(CVM_MT_CRC_HALF, crc_write_half);
+@@ -272,6 +324,56 @@ CP2_MT_HELPER(CVM_MT_CRC_DWORD_REFLECT, crc_write_dword_reflect);
+ CP2_MT_HELPER(CVM_MT_CRC_VAR_REFLECT, crc_write_var_reflect);
+ CP2_MT_HELPER(CVM_MT_GFM_XORMUL1_REFLECT, gfm_xormul1_reflect);
+ CP2_MT_HELPER(CVM_MT_GFM_XORMUL1, gfm_xormul1);
++CP2_MT_I64(CVM_MT_SHA3_DAT24, sha3_dat24);
++CP2_MT_I64(CVM_MT_SHA3_DAT15, hsh_dat[15]);
++CP2_MT_XOR_I64(CVM_MT_SHA3_XORDAT0, sha3_dat[0]);
++CP2_MT_XOR_I64(CVM_MT_SHA3_XORDAT1, sha3_dat[1]);
++CP2_MT_XOR_I64(CVM_MT_SHA3_XORDAT2, sha3_dat[2]);
++CP2_MT_XOR_I64(CVM_MT_SHA3_XORDAT3, sha3_dat[3]);
++CP2_MT_XOR_I64(CVM_MT_SHA3_XORDAT4, sha3_dat[4]);
++CP2_MT_XOR_I64(CVM_MT_SHA3_XORDAT5, sha3_dat[5]);
++CP2_MT_XOR_I64(CVM_MT_SHA3_XORDAT6, sha3_dat[6]);
++CP2_MT_XOR_I64(CVM_MT_SHA3_XORDAT7, sha3_dat[7]);
++CP2_MT_XOR_I64(CVM_MT_SHA3_XORDAT8, sha3_dat[8]);
++CP2_MT_XOR_I64(CVM_MT_SHA3_XORDAT9, sha3_dat[9]);
++CP2_MT_XOR_I64(CVM_MT_SHA3_XORDAT10, sha3_dat[10]);
++CP2_MT_XOR_I64(CVM_MT_SHA3_XORDAT11, sha3_dat[11]);
++CP2_MT_XOR_I64(CVM_MT_SHA3_XORDAT12, sha3_dat[12]);
++CP2_MT_XOR_I64(CVM_MT_SHA3_XORDAT13, sha3_dat[13]);
++CP2_MT_XOR_I64(CVM_MT_SHA3_XORDAT14, sha3_dat[14]);
++CP2_MT_XOR_I64(CVM_MT_SHA3_XORDAT15, sha3_dat[15]);
++CP2_MT_XOR_I64(CVM_MT_SHA3_XORDAT16, sha3_dat[16]);
++CP2_MT_XOR_I64(CVM_MT_SHA3_XORDAT17, sha3_dat[17]);
++CP2_MT_HELPER_ENV(CVM_MT_SHA3_STARTOP, sha3_startop);
++CP2_MT_HELPER(CVM_MT_HSH_STARTSHA1_COMPAT, hsh_startsha1_compat);
++CP2_MT_I64(CVM_MT_HSH_DATW0, hsh_dat[0]);
++CP2_MT_I64(CVM_MT_HSH_DATW1, hsh_dat[1]);
++CP2_MT_I64(CVM_MT_HSH_DATW2, hsh_dat[2]);
++CP2_MT_I64(CVM_MT_HSH_DATW3, hsh_dat[3]);
++CP2_MT_I64(CVM_MT_HSH_DATW4, hsh_dat[4]);
++CP2_MT_I64(CVM_MT_HSH_DATW5, hsh_dat[5]);
++CP2_MT_I64(CVM_MT_HSH_DATW6, hsh_dat[6]);
++CP2_MT_I64(CVM_MT_HSH_DATW7, hsh_dat[7]);
++CP2_MT_I64(CVM_MT_HSH_DATW8, hsh_dat[8]);
++CP2_MT_I64(CVM_MT_HSH_DATW9, hsh_dat[9]);
++CP2_MT_I64(CVM_MT_HSH_DATW10, hsh_dat[10]);
++CP2_MT_I64(CVM_MT_HSH_DATW11, hsh_dat[11]);
++CP2_MT_I64(CVM_MT_HSH_DATW12, hsh_dat[12]);
++CP2_MT_I64(CVM_MT_HSH_DATW13, hsh_dat[13]);
++CP2_MT_I64(CVM_MT_HSH_DATW14, hsh_dat[14]);
++CP2_MT_I64(CVM_MT_HSH_DATW15, hsh_dat[15]);
++CP2_MT_I64(CVM_MT_HSH_IVW0, hsh_iv[0]);
++CP2_MT_I64(CVM_MT_HSH_IVW1, hsh_iv[1]);
++CP2_MT_I64(CVM_MT_HSH_IVW2, hsh_iv[2]);
++CP2_MT_I64(CVM_MT_HSH_IVW3, hsh_iv[3]);
++CP2_MT_I64(CVM_MT_HSH_IVW4, hsh_iv[4]);
++CP2_MT_I64(CVM_MT_HSH_IVW5, hsh_iv[5]);
++CP2_MT_I64(CVM_MT_HSH_IVW6, hsh_iv[6]);
++CP2_MT_I64(CVM_MT_HSH_IVW7, hsh_iv[7]);
++CP2_MT_HELPER(CVM_MT_HSH_STARTMD5, hsh_startmd5);
++CP2_MT_HELPER(CVM_MT_HSH_STARTSHA256, hsh_startsha256);
++CP2_MT_HELPER(CVM_MT_HSH_STARTSHA, hsh_startsha);
++CP2_MT_HELPER(CVM_MT_HSH_STARTSHA512, hsh_startsha512);
+ 
+ static bool trans_BBIT(DisasContext *ctx, arg_BBIT *a)
+ {
 
 -- 
 2.54.0
