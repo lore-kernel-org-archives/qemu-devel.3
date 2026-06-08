@@ -4,56 +4,56 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2A8A6CD8C8E
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4CBB0CD8C9D
 	for <qemu-devel@archiver.kernel.org>; Mon,  8 Jun 2026 07:20:03 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wWUFI-0007z0-CH; Mon, 08 Jun 2026 03:18:04 -0400
+	id 1wWUFK-000868-Em; Mon, 08 Jun 2026 03:18:06 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1wWUEp-0007gU-Nu
- for qemu-devel@nongnu.org; Mon, 08 Jun 2026 03:17:36 -0400
+ id 1wWUF4-0007pF-MS
+ for qemu-devel@nongnu.org; Mon, 08 Jun 2026 03:17:54 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1wWUEo-0008Pm-CP
- for qemu-devel@nongnu.org; Mon, 08 Jun 2026 03:17:35 -0400
+ id 1wWUF2-0008TL-Gz
+ for qemu-devel@nongnu.org; Mon, 08 Jun 2026 03:17:49 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1780903053;
+ s=mimecast20190719; t=1780903067;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=CcFD3eGKhNYPPn3etCR+FB+6qCGmANbtAookYVP4Y8w=;
- b=TNoTJ5P/CFGULp/NE4Xw+Yk17lXdqBByNvM6GEWUqsdtnux6wRhP9CXizZb8yI9/KuDApx
- qsg18G4/AmDqmlw5i5/eNLziPgPaa8rGUKwOtUf9SF7v4wCjoVz9hJF0MFXkOnkapI6+/O
- xfa0ZFiyw4E/gx7pTvUxixkU8RC2Tkc=
+ bh=qgSJ8GIemylwK2Rz+k6Wvgj6TCAI6JvDZRNWAtchu4s=;
+ b=UEmZtmdf/Rt3fcCc2OebW3iFmONOVJPBZxpA5EYs9bieYGG9gj0suNc0BpucO/ncLHivXc
+ QlzvtsPKIa73jUVmH93DGgB1Tty8EVHA7AskwPBX3Zn3BZtYdmo7Ml6Zu2tVMttca9Bj2u
+ atOW0infJlg4ImTBmVbQYSkatrLY4x8=
 Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-107-e7wI3nJ7O0GBFNzAFU7e_A-1; Mon,
- 08 Jun 2026 03:17:29 -0400
-X-MC-Unique: e7wI3nJ7O0GBFNzAFU7e_A-1
-X-Mimecast-MFC-AGG-ID: e7wI3nJ7O0GBFNzAFU7e_A_1780903048
-Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-287-fuzRg2jhPRynf6RY5w7CDA-1; Mon,
+ 08 Jun 2026 03:17:45 -0400
+X-MC-Unique: fuzRg2jhPRynf6RY5w7CDA-1
+X-Mimecast-MFC-AGG-ID: fuzRg2jhPRynf6RY5w7CDA_1780903064
+Received: from mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.17])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
  by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 7F4701800BC3; Mon,  8 Jun 2026 07:17:28 +0000 (UTC)
+ id 15A491800345; Mon,  8 Jun 2026 07:17:44 +0000 (UTC)
 Received: from localhost (unknown [10.44.22.16])
- by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 10EE119560A2; Mon,  8 Jun 2026 07:17:26 +0000 (UTC)
+ by mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id 23C571956053; Mon,  8 Jun 2026 07:17:42 +0000 (UTC)
 From: =?utf-8?q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>
-Date: Mon, 08 Jun 2026 11:16:27 +0400
-Subject: [PATCH v2 09/33] ui/qmp: keep a reference of console across yield
+Date: Mon, 08 Jun 2026 11:16:30 +0400
+Subject: [PATCH v2 12/33] ui/spice: remove dead spice_displays
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
-Message-Id: <20260608-b4-ui-v2-9-9ea6355ea08f@redhat.com>
+Message-Id: <20260608-b4-ui-v2-12-9ea6355ea08f@redhat.com>
 References: <20260608-b4-ui-v2-0-9ea6355ea08f@redhat.com>
 In-Reply-To: <20260608-b4-ui-v2-0-9ea6355ea08f@redhat.com>
 To: qemu-devel@nongnu.org
@@ -67,24 +67,24 @@ Cc: Paolo Bonzini <pbonzini@redhat.com>,
  Peter Maydell <peter.maydell@linaro.org>, 
  Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>, 
  =?utf-8?q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>
-X-Developer-Signature: v=1; a=openpgp-sha256; l=979;
+X-Developer-Signature: v=1; a=openpgp-sha256; l=868;
  i=marcandre.lureau@redhat.com; h=from:subject:message-id;
- bh=0olnm0BeIdXkJ0+wwoqLifsBYBl2XPr7D4I8xkjuhkU=;
- b=owEBbQKS/ZANAwAKAdro4Ql1lpzlAcsmYgBqJmxJdMdDNoXaUOPWZGKtDUajhmm5c4Z60+3kx
- d4U2xf3nliJAjMEAAEKAB0WIQSHqb2TP4fGBtJ29i3a6OEJdZac5QUCaiZsSQAKCRDa6OEJdZac
- 5ThvD/4hLy17igI54vr3RK0mfeFz59gI6hLG/FOfQtqyPeTtz3Ji+ab7sAIaUYTwOxltBVljY4u
- eJRUZZ58P5iYXlAnGRZ9GwmzTojWQ5mMPfT+2xpAzHqzXKExSOEh61kzCPDUBwHKGAnCOhGQ8Lx
- khU/6MgaTgqhFQ17WyuHwcQyWLdpEIM3h33J4cO9coNVe/NoL/w6wXuI7f7ZIHQD785kH7I7jJF
- MzuYbKEhQzMQQ8d4OiQM4ZzEWja04MrMJFDkY6w14N3gSsI0U6dXw0D/xAZbsNFeu6YK8S0buZQ
- /ws3RjYNo50r/wg94XwBTLTiMvcjZH0RcU1Mz0VfdXMkJSAv9pUeN2mcb4LIsCbl3Ini6XURGnr
- SIbzilE3PxC/r+Dt24krVC2+Ntgz8wMIe6zQR+oC1DC3Zo0jeyhqJGYzl+jSuWKheGvCUTK991f
- 6o5v/Z9LNRLeVDIyonMDlYuP4nMfS1zAsEVzpSsuHE+zlv8fG6U54PxfPa0d0nKZeLFC10iZ7Du
- I2ICiowejDFWuMnJIoII1Foi3bjK2zldamyZf2WS96iQh+VcPTGm4ZgwkHADYWVYb+IJhhuhDEp
- vSewljWmH3PrcgJ4xBZSVuD+e4eTtDnbsqsWnlamCbuBW52bTwb6vl4sWosYAzvpYUZ1lJrgP//
- 5kRKkQ1kCt9Y6Zg==
+ bh=s60ojf6CttJ409AzZo9Cfg75xyybBgiiGTPP9biqSiE=;
+ b=owEBbQKS/ZANAwAKAdro4Ql1lpzlAcsmYgBqJmxJtMddbFtvMBcz5i0aSR7i1UPwzOGhU0iL8
+ /ObzSlwFN+JAjMEAAEKAB0WIQSHqb2TP4fGBtJ29i3a6OEJdZac5QUCaiZsSQAKCRDa6OEJdZac
+ 5fIqD/95/+eMS1qvN+1hGlKVLkDHDemWTf7LSKlp/53zld8rxbMPhlc/eUO99Bg38r0EuZ4srHx
+ woGWiRFl7Y6AF14vJCZGfr1lHJlMy+Ubz0/AOJ5sev4gORwGc3Oec5uCHSwhXHKiaLOUfzD6i76
+ o0nknwiiUfud0QfdPZ9rqCp45+/xqEVQy1BWKz+R5fJLNkOwg1pfNPHAKhVZ8nAu+5yHuwlsjWk
+ k8mFhwCy8ZtuZMfy90Zzr2eQo0ZI+WJZlDInl1S61JY7Is3Vj2UW21aaPJDyRc6CzXvxF3+1uXu
+ wP+i7fIzvBdCRsmp3/tfa8Apb1rfmyBw5ExQXIcy+Jx/r7UqHNlhRQZzTDBOgs8AsfbSULb2xlF
+ O4naioy4fnlA4CdKescqbCeFocnnDaagMQzJUBmsfJHpBLo/seqP/4XLpN2opc+8tGI4H7BUhqf
+ 7BpvORHdj8XSpaDmE42Uigik8HHjWNM+0SAfXWLjpZvE6njkceUT1sgx52bsiTlwiFuKXfcSfEh
+ t74BALXc4tsj69zIJerWyDJ2NWE9K0XuzJW8z7JV25vxHrIy2CxuDjhMP8JCj88YC7fj1UmZJDv
+ 4E+1IZWirtKf5XMayhwChv0cgKv5fHMunCWsOnobh5cZ88jG2OMiPCF2TXW4V7fLKFdtsVSsH7r
+ 5mtnInrBiQ18Chg==
 X-Developer-Key: i=marcandre.lureau@redhat.com; a=openpgp;
  fpr=87A9BD933F87C606D276F62DDAE8E10975969CE5
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.12
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.17
 Received-SPF: pass client-ip=170.10.129.124;
  envelope-from=marcandre.lureau@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
@@ -110,38 +110,31 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-While the coroutine is waiting, the console could be finalized. Keep a
-reference to prevent this.
+This is left-over from commit 9fa032866da ("spice: fix multihead support")
 
 Signed-off-by: Marc-André Lureau <marcandre.lureau@redhat.com>
 ---
- ui/ui-qmp-cmds.c | 3 +++
- 1 file changed, 3 insertions(+)
+ include/ui/qemu-spice.h | 7 -------
+ 1 file changed, 7 deletions(-)
 
-diff --git a/ui/ui-qmp-cmds.c b/ui/ui-qmp-cmds.c
-index 1173c82cf7f..753cc2bf522 100644
---- a/ui/ui-qmp-cmds.c
-+++ b/ui/ui-qmp-cmds.c
-@@ -348,6 +348,7 @@ qmp_screendump(const char *filename, const char *device,
-         }
-     }
+diff --git a/include/ui/qemu-spice.h b/include/ui/qemu-spice.h
+index 111a09ceca3..59a68cd9833 100644
+--- a/include/ui/qemu-spice.h
++++ b/include/ui/qemu-spice.h
+@@ -33,13 +33,6 @@ bool qemu_spice_have_display_interface(QemuConsole *con);
+ int qemu_spice_add_display_interface(QXLInstance *qxlin, QemuConsole *con);
+ int qemu_spice_migrate_info(const char *hostname, int port, int tls_port,
+                             const char *subject);
+-
+-#else  /* CONFIG_SPICE */
+-
+-#include "qemu/error-report.h"
+-
+-#define spice_displays 0
+-
+ #endif /* CONFIG_SPICE */
  
-+    object_ref(con);
-     qemu_console_co_wait_update(con);
- 
-     /*
-@@ -358,9 +359,11 @@ qmp_screendump(const char *filename, const char *device,
-     surface = qemu_console_surface(con);
-     if (!surface) {
-         error_setg(errp, "no surface");
-+        object_unref(con);
-         return;
-     }
-     image = pixman_image_ref(surface->image);
-+    object_unref(con);
- 
-     fd = qemu_create(filename, O_WRONLY | O_TRUNC | O_BINARY, 0666, errp);
-     if (fd == -1) {
+ static inline bool qemu_using_spice(Error **errp)
 
 -- 
 2.54.0
