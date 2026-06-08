@@ -4,114 +4,88 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3A038CD8C9D
-	for <qemu-devel@archiver.kernel.org>; Mon,  8 Jun 2026 13:28:31 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 45EAFCD8C9F
+	for <qemu-devel@archiver.kernel.org>; Mon,  8 Jun 2026 13:30:46 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wWa1b-00020V-Cd; Mon, 08 Jun 2026 09:28:19 -0400
+	id 1wWa3Z-00042Z-JU; Mon, 08 Jun 2026 09:30:21 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <dengler@linux.ibm.com>)
- id 1wWXao-0007ex-Rh; Mon, 08 Jun 2026 06:52:30 -0400
-Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1wWa3U-00042F-OH
+ for qemu-devel@nongnu.org; Mon, 08 Jun 2026 09:30:16 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <dengler@linux.ibm.com>)
- id 1wWXan-0002QL-9K; Mon, 08 Jun 2026 06:52:30 -0400
-Received: from pps.filterd (m0360072.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 657NfGW14023506; Mon, 8 Jun 2026 10:52:23 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
- :content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=pp1; bh=2h14IG
- irb4yzQHx+2IUhzs5iUX0FOXjrnZv4/ty/9h8=; b=e3rd6ONor4o0eiMHRI7/OU
- m1WC1p+nj95rNSg1qIE3mAT78OV00XSWuepiz8cBjw2yXbBCC87YwfMNQ/tVKs0S
- 913rhtcvOlIzotlxR61EpcD397Mx/tGYb4YX4ecx68ppz6PA+wbKXi71/4vK+26x
- L+zO4Yr+UAIarTIQF2vGnMwewYYxNuPjp27hyFCsVHWDS1ryMoTpLYKeInguHiMK
- Aann9Zp5n+tkLBtcZGZPxvzUHf2eU9QRYatzor9PncQAOPHV0nMDnOKsHrSS87Zm
- vaDphQP+gyEcgcaa67Z3Z1CPXCKLwqHY3Xumc9L14rTiYm/vbdFq1FSMcpiIUvZw
- ==
-Received: from ppma21.wdc07v.mail.ibm.com
- (5b.69.3da9.ip4.static.sl-reverse.com [169.61.105.91])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4emb6spqyh-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Mon, 08 Jun 2026 10:52:23 +0000 (GMT)
-Received: from pps.filterd (ppma21.wdc07v.mail.ibm.com [127.0.0.1])
- by ppma21.wdc07v.mail.ibm.com (8.18.1.7/8.18.1.7) with ESMTP id 658AnklE026055;
- Mon, 8 Jun 2026 10:52:22 GMT
-Received: from smtprelay02.fra02v.mail.ibm.com ([9.218.2.226])
- by ppma21.wdc07v.mail.ibm.com (PPS) with ESMTPS id 4emxvjmxb4-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Mon, 08 Jun 2026 10:52:22 +0000 (GMT)
-Received: from smtpav04.fra02v.mail.ibm.com (smtpav04.fra02v.mail.ibm.com
- [10.20.54.103])
- by smtprelay02.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 658AqJ1K50856244
- (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Mon, 8 Jun 2026 10:52:19 GMT
-Received: from smtpav04.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 0DDAB2004B;
- Mon,  8 Jun 2026 10:52:19 +0000 (GMT)
-Received: from smtpav04.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id C360220043;
- Mon,  8 Jun 2026 10:52:18 +0000 (GMT)
-Received: from [9.111.215.124] (unknown [9.111.215.124])
- by smtpav04.fra02v.mail.ibm.com (Postfix) with ESMTP;
- Mon,  8 Jun 2026 10:52:18 +0000 (GMT)
-Message-ID: <60756e0a-0dba-4e0c-a3c3-cf1758062556@linux.ibm.com>
-Date: Mon, 8 Jun 2026 12:52:18 +0200
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1wWa3S-0002fu-TE
+ for qemu-devel@nongnu.org; Mon, 08 Jun 2026 09:30:16 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1780925413;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=yydCoCed6+ynC97mmYPUNt3OveMLiukoasGjhCjXbws=;
+ b=Q3zdO+9E1szMxUevPsmyFbF8id1oqy3ag8R9kJNRD0bm720RU3gO3VEpGOfU1BvVSyF81F
+ DpA+LGERykHT2TVjmnli7u2MlxvBISe/2F5tHr9AoH4Ekz5jCVpeGEY0ZQZDzJrSHxsIif
+ kmRWf9kTu6WYOlc6Xgl5E9lBaKqSjnI=
+Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-346-LpNAokFvMyyu7BAMMXaYIw-1; Mon,
+ 08 Jun 2026 09:30:09 -0400
+X-MC-Unique: LpNAokFvMyyu7BAMMXaYIw-1
+X-Mimecast-MFC-AGG-ID: LpNAokFvMyyu7BAMMXaYIw_1780925406
+Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 6E1281955F6A; Mon,  8 Jun 2026 13:30:05 +0000 (UTC)
+Received: from blackfin.pond.sub.org (unknown [10.44.22.28])
+ by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id A6A7F19560A6; Mon,  8 Jun 2026 13:30:04 +0000 (UTC)
+Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
+ id 4088E21E6A01; Mon, 08 Jun 2026 15:30:02 +0200 (CEST)
+From: Markus Armbruster <armbru@redhat.com>
+To: =?utf-8?Q?Marc-Andr=C3=A9?= Lureau <marcandre.lureau@redhat.com>
+Cc: qemu-devel@nongnu.org,  Zhenzhong Duan <zhenzhong.duan@intel.com>,
+ "Michael S. Tsirkin" <mst@redhat.com>,  David Hildenbrand
+ <david@kernel.org>,  Paolo Bonzini <pbonzini@redhat.com>,  Peter Xu
+ <peterx@redhat.com>,  Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?=
+ <philmd@mailo.com>,
+ qemu-rust@nongnu.org,  Alex Williamson <alex@shazbot.org>,  =?utf-8?Q?C?=
+ =?utf-8?Q?=C3=A9dric?= Le Goater <clg@redhat.com>,  "Maciej S. Szmigiero"
+ <maciej.szmigiero@oracle.com>,  Fabiano Rosas <farosas@suse.de>,  Mark
+ Kanda <mark.kanda@oracle.com>,  Ben Chaney <bchaney@akamai.com>,  Marcelo
+ Tosatti <mtosatti@redhat.com>,  kvm@vger.kernel.org,  "Dr. David Alan
+ Gilbert" <dave@treblig.org>,  Zhao Liu <zhao1.liu@intel.com>,  Eric Blake
+ <eblake@redhat.com>
+Subject: Re: [PATCH v5 12/12] RFC: monitor: add 'info ramblock-attributes'
+ command
+In-Reply-To: <20260604-rdm5-v5-12-5768e6a0943d@redhat.com> (=?utf-8?Q?=22M?=
+ =?utf-8?Q?arc-Andr=C3=A9?=
+ Lureau"'s message of "Thu, 04 Jun 2026 17:43:58 +0400")
+References: <20260604-rdm5-v5-0-5768e6a0943d@redhat.com>
+ <20260604-rdm5-v5-12-5768e6a0943d@redhat.com>
+Date: Mon, 08 Jun 2026 15:30:02 +0200
+Message-ID: <87a4t5tb1h.fsf@pond.sub.org>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v6 00/17] target/s390x: Extend qemu CPACF support
-To: Cornelia Huck <cohuck@redhat.com>
-Cc: Harald Freudenberger <freude@linux.ibm.com>, richard.henderson@linaro.org, 
- iii@linux.ibm.com, david@kernel.org, thuth@redhat.com,
- berrange@redhat.com, qemu-s390x@nongnu.org, qemu-devel@nongnu.org,
- borntraeger@linux.ibm.com
-References: <20260526121550.5296-1-freude@linux.ibm.com>
- <87y0gpmnnp.fsf@redhat.com>
-From: Holger Dengler <dengler@linux.ibm.com>
-Content-Language: de-DE
-In-Reply-To: <87y0gpmnnp.fsf@redhat.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-X-TM-AS-GCONF: 00
-X-Proofpoint-ORIG-GUID: fsVRJP84kM-5RoUNNfBhGVBTciJcm4ve
-X-Proofpoint-GUID: fsVRJP84kM-5RoUNNfBhGVBTciJcm4ve
-X-Authority-Analysis: v=2.4 cv=ZbEt8MVA c=1 sm=1 tr=0 ts=6a269ee7 cx=c_pps
- a=GFwsV6G8L6GxiO2Y/PsHdQ==:117 a=GFwsV6G8L6GxiO2Y/PsHdQ==:17
- a=IkcTkHD0fZMA:10 a=FelO9ux0wxsA:10 a=VkNPw1HP01LnGYTKEx00:22
- a=RnoormkPH1_aCDwRdu11:22 a=RzCfie-kr_QcCd8fBx8p:22 a=VnNF1IyMAAAA:8
- a=BDnArHBwf9zq2L3U8vkA:9 a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
- a=zZCYzV9kfG8A:10
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNjA4MDA5OSBTYWx0ZWRfXyb8gEtnD7dUl
- app09SNfZr23LZGVy9KgT9Dd29biA05tfgcwTJVbRnsEttA2vWpoN0G2V2sSEG51jIN98HxH/8o
- 3G46NBdAn6xK9wZe8Jg/QnrQBawT6ju09kqX8vCgEcnIReDLkkjLJ0vApUIurMA3kLmLcbhn5xL
- XcTPf0C5biAyFaB/YIX+7SJbWi4xd6SSNn28MEWiPC9C8m7ZOmzD9yhNxuAmVZY5kIyPV0I5lT8
- k05dsSMgS2wlxGEZGYz6sHiQdxTQ42UQw7qp/v7ByxT6Nyz+YyJgV+y2WC9iMAfO9kQqg0580sU
- IhWe0IrUA5LvRTwXYgGizsd0a3XmEuH0kMynjiEjTSTvZaEq3WCT8yv2CQkD+L1PAuFrtZ+yxxg
- b5arWUyRcL9Lituk6ZL+I4mJhy2U7rpr6npq7AoYeHYIfN9K9Kr5ZAkGIayhiSYdoNiFqEClSw+
- d0rUCoI4AAFgNkXAUug==
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.125,FMLib:17.12.100.49
- definitions=2026-06-08_02,2026-06-05_02,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- suspectscore=0 impostorscore=0 malwarescore=0 lowpriorityscore=0
- clxscore=1011 adultscore=0 spamscore=0 priorityscore=1501 bulkscore=0
- phishscore=0 classifier=typeunknown authscore=0 authtc= authcc=
- route=outbound adjust=0 reason=mlx scancount=1 engine=8.22.0-2605210000
- definitions=main-2606080099
-Received-SPF: pass client-ip=148.163.158.5; envelope-from=dengler@linux.ibm.com;
- helo=mx0b-001b2d01.pphosted.com
-X-Spam_score_int: -26
-X-Spam_score: -2.7
-X-Spam_bar: --
-X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
- RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.12
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=armbru@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: 8
+X-Spam_score: 0.8
+X-Spam_bar: /
+X-Spam_report: (0.8 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.445,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_SBL_CSS=3.335, SPF_HELO_PASS=-0.001,
+ SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
-X-Mailman-Approved-At: Mon, 08 Jun 2026 09:28:01 -0400
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -126,19 +100,122 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi Cornelia,
+Marc-Andr=C3=A9 Lureau <marcandre.lureau@redhat.com> writes:
 
-On 08/06/2026 10:39, Cornelia Huck wrote:
-> Also, is there any public documentation for these instructions? If not,
-> it would be helpful if someone with access to the documentation could
-> give an R-b here.
+> Add a new 'info ramblock-attributes' HMP command and the corresponding
+> 'x-query-ramblock-attributes' QMP command to display the shared/private
+> memory attributes for ram blocks.
+>
+> The QMP command returns structured data (RamBlockAttributesInfo list
+> with per-range shared/populated attributes), while HMP formats it for
+> human consumption.
+>
+> This is useful for debugging confidential guests (TDX, SNP) to inspect
+> which memory regions are shared vs private, and their population state
+> when a RamDiscardManager is present (e.g. virtio-mem).
+>
+> Signed-off-by: Marc-Andr=C3=A9 Lureau <marcandre.lureau@redhat.com>
+> ---
+>  qapi/machine.json             | 56 ++++++++++++++++++++++++++++++++++
+>  include/monitor/hmp.h         |  1 +
+>  hw/core/machine-hmp-cmds.c    | 32 +++++++++++++++++++
+>  system/ram-block-attributes.c | 71 +++++++++++++++++++++++++++++++++++++=
+++++++
+>  hmp-commands-info.hx          | 13 ++++++++
+>  5 files changed, 173 insertions(+)
+>
+> diff --git a/qapi/machine.json b/qapi/machine.json
+> index 685e4e29b87..a1af5c61176 100644
+> --- a/qapi/machine.json
+> +++ b/qapi/machine.json
+> @@ -1738,6 +1738,62 @@
+>    'returns': 'HumanReadableText',
+>    'features': [ 'unstable' ] }
+>=20=20
+> +##
+> +# @RamBlockAttributeRange:
+> +#
+> +# A contiguous range within a ram block with uniform attributes.
 
-All CPACF instructions and related topics are documented in the z/Architecture
-Principles of Operation [1].
+RAM please.  More of the same below, not flagging it again.
 
-[1] https://www.ibm.com/docs/en/module_1678991624569/pdf/SA22-7832-14.pdf
--- 
-Mit freundlichen Grüßen / Kind regards
-Holger Dengler
+> +#
+> +# @start: start offset in bytes within the ram block
+> +#
+> +# @length: length in bytes of the range
+> +#
+> +# @shared: true if the range is shared, false if private
+
+Can we assume that anybody with a use for x-query-ramblock-attributes
+understands what "range is shared" means?
+
+> +#
+> +# @populated: true if the entire range is fully populated across all
+> +#     RamDiscardManager sources; false if any sub-block is discarded.
+> +#     Only present when a RamDiscardManager is managing the block.
+
+Can we assume that anybody with a use for x-query-ramblock-attributes
+understands what "a RamDiscardManager is managing the block" means?
+
+I can't find anything about RamDiscardManager in docs.  Would it make
+sense to have something there, so we can point to it here?
+
+> +#
+> +# Since: 11.1
+> +##
+> +{ 'struct': 'RamBlockAttributeRange',
+> +  'data': { 'start': 'uint64',
+> +            'length': 'uint64',
+> +            'shared': 'bool',
+> +            '*populated': 'bool' } }
+> +
+> +##
+> +# @RamBlockAttributesInfo:
+> +#
+> +# Shared/private memory attributes for a ram block.
+> +#
+> +# @name: the ram block identifier
+
+Apparently, this is a memory region name, obtained with
+memory_region_name().  Correct?
+
+If yes, then what about "@name: the memory region name"?  Or maybe "the
+name of the RAM block's memory region"?
+
+> +#
+> +# @ranges: list of attribute ranges
+> +#
+> +# Since: 11.1
+> +##
+> +{ 'struct': 'RamBlockAttributesInfo',
+> +  'data': { 'name': 'str',
+> +            'ranges': [ 'RamBlockAttributeRange' ] } }
+> +
+> +##
+> +# @x-query-ramblock-attributes:
+> +#
+> +# Query ram block shared/private attributes.  This is useful
+> +# to debug confidential guests.
+
+Ignorant question: how are RAM blocks related to memory regions?
+
+> +#
+> +# Features:
+> +#
+> +# @unstable: This command is meant for debugging.
+> +#
+> +# Returns: list of ram block attributes
+> +#
+> +# Since: 11.1
+> +##
+> +{ 'command': 'x-query-ramblock-attributes',
+> +  'returns': [ 'RamBlockAttributesInfo' ],
+> +  'features': [ 'unstable' ] }
+> +
+>  ##
+>  # @x-query-roms:
+>  #
+
+[...]
 
 
