@@ -4,62 +4,109 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D8F1ECD8C9D
-	for <qemu-devel@archiver.kernel.org>; Mon,  8 Jun 2026 14:40:22 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0E4A2CD8C92
+	for <qemu-devel@archiver.kernel.org>; Mon,  8 Jun 2026 14:48:45 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wWb8K-0002ud-Ma; Mon, 08 Jun 2026 10:39:20 -0400
+	id 1wWbGg-00064H-CP; Mon, 08 Jun 2026 10:47:58 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <lhestz@163.com>) id 1wWb8B-0002o4-63
- for qemu-devel@nongnu.org; Mon, 08 Jun 2026 10:39:14 -0400
-Received: from m16.mail.163.com ([220.197.31.2])
+ (Exim 4.90_1) (envelope-from <leonardi@redhat.com>)
+ id 1wWbGV-00060q-Pl
+ for qemu-devel@nongnu.org; Mon, 08 Jun 2026 10:47:48 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <lhestz@163.com>) id 1wWb88-0001Q3-2U
- for qemu-devel@nongnu.org; Mon, 08 Jun 2026 10:39:10 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=163.com;
- s=s110527; h=Message-ID:Date:MIME-Version:Subject:To:From:
- Content-Type; bh=nBbLOJxJg/UDsza20S8zygdRqNfzX/rqdzBOy98TzEc=;
- b=b33O21rnP6GiXIFLWcOuw5hsbNxOUcm488e0+X2vVqGN/KapMlhCX477FLt6e5
- rHZ7YT5FzAmAqPgR7jLv3VjBBRrx31z0HZbnuaKLvpg+Gg/7m6N2kBzVesuDdB3N
- h0avT2tIfMiHiaNfO40KL2OG5E+yOJLMaMw/guk0TzZtk=
-Received: from [IPV6:2409:8a00:18c7:4890:5c16:8947:ceb9:8733] (unknown [])
- by gzga-smtp-mtada-g0-4 (Coremail) with SMTP id
- _____wDHA6Ii0yZqhfEaCQ--.2580S2; 
- Mon, 08 Jun 2026 22:35:16 +0800 (CST)
-Message-ID: <9b5b6607-13f5-4b61-88be-d8386a0d1b00@163.com>
-Date: Mon, 8 Jun 2026 22:35:14 +0800
+ (Exim 4.90_1) (envelope-from <leonardi@redhat.com>)
+ id 1wWbGU-0004ok-5T
+ for qemu-devel@nongnu.org; Mon, 08 Jun 2026 10:47:47 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1780930064;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=H4+VtE5u1cbA1gYtQYcqvpHTrErJFhGyuZxQqOpMGXs=;
+ b=DuwgNNtJgk+bHCZV7P1XewD/Q32KFwa1qeDUdoqihyrLnSJse9XvSni9WHYyvV1YHhZ3rw
+ uZ4SBIUQrAKIUyZ44gFXOW8TS8VRvrXFrtERGjAbFr94KdXB0U3UXqyklad19Ywe+Zm6wA
+ UKc89Ru3ILYDcgWKwL8s99wLU9M3A4g=
+Received: from mail-wr1-f71.google.com (mail-wr1-f71.google.com
+ [209.85.221.71]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-53-fhNBxLFaMRuAsixrgU8ERA-1; Mon, 08 Jun 2026 10:47:42 -0400
+X-MC-Unique: fhNBxLFaMRuAsixrgU8ERA-1
+X-Mimecast-MFC-AGG-ID: fhNBxLFaMRuAsixrgU8ERA_1780930061
+Received: by mail-wr1-f71.google.com with SMTP id
+ ffacd0b85a97d-460129ef947so2605234f8f.1
+ for <qemu-devel@nongnu.org>; Mon, 08 Jun 2026 07:47:42 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=redhat.com; s=google; t=1780930061; x=1781534861; darn=nongnu.org;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+ bh=H4+VtE5u1cbA1gYtQYcqvpHTrErJFhGyuZxQqOpMGXs=;
+ b=eCQmAE+q3kBJ7eq8Spqejtjgn24E5wBnDKuhIWI710vsQ/1x2CqdB2dChW1WaM9UMj
+ HgamTWXwM9tDAqAXLohW+EoDpnlnLtf16t6c2Oy12AcO5vTp58wacqKUvtpTFfCi+JRY
+ LuhB6a2SGQiVxwTWxzkx13Tg+tTswxJZEpBewbwENEbe0X/oEeemX88t+PaJVRTLu9gE
+ iQW+YrygdAox0HKKezTzAELJR7mzf6esXpZ5UWEmBfYWShFcRasm8LKlCmQVIOKaEDOz
+ viaotXJtW3QCAV6GSbShsvIkeBL5mYcdsMyX1j6aapOngIgnKkovA90nI8RmoBaPIVnd
+ W6jA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1780930061; x=1781534861;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=H4+VtE5u1cbA1gYtQYcqvpHTrErJFhGyuZxQqOpMGXs=;
+ b=BmwuZGGmi3w18BVMsRbflbxIiiqTyv64XnKlhLLajgGjXJ5CL2ZJEg7V8gMZoJiqIY
+ WuiO9KNMBoEOvvwEUUPmL6hTkETxPMqZG+vvTSijNA7TcVXlA8ftKqYbz/jHc2BUuo+q
+ ViwfpHTuzuLcyURYgJDvych8qE0UFy648fTJ7/1RU024e+pq9JMGfCG2OiXJTW8aZ0MY
+ TSS/kaFQ7Xm4ko//0uBcVUd3O4C8WHeMGftG8GZr53ruSHsvQEKlQVT6q+ZkuVrkDZwY
+ wtRosMWDRp1cet+Nmrf0oZJAOlKJNUGYxyX316U5ykhz/L9vvVmwpYKOjl1nhx7D+2kr
+ T6sw==
+X-Gm-Message-State: AOJu0YzbQsMtFErZrTN2msJSvGB1yEnvf+jlpGCpX8a47NiBddxmwqn0
+ 0CYGMZg7UmugfYbsqSaf+k19v9FE9FLAqoTc6SA7yBT1xmzye155h3EcsrWXY7h4icR5Ft8ba4R
+ Qmms5Cc0KZw21eT330ZDQen5mWIGWEiSw0anmOKJLKonqE2L0hNl9USMX
+X-Gm-Gg: Acq92OGysugBRY9fA9IlRPdCJ0L6jyzQFawuNytzzmVeCTQ4q5UEoQLxgaG59PeOBPJ
+ yEAagHmNr6wV2LLPZpi+oPD2uOTIwsQ4MOsAjs+f4ZEuKVLhC9L1ZdWc/rKtDYMFaWGxlauSr3D
+ r5zWY5KBDSIOTEnv8vZRj8yTzyhIn9Q76DATwuH0MXupjalvVbCAELes0Nm0b2t8SngKKvK+Fyo
+ VYffS9fdq/RwtM4l1AEGBp0Dtlz0hQZYDd0dZInVycG07jFbGXpz5VWOndd6TGvjolSRq41R/pS
+ QDlIXvf/8XLQQarUw5kuovJqAxI+nBltTkd7zITU/1QT3PyA76qpxLnflags2ERFv7o+ZSadirA
+ JPAFU0kM7Ng8eqt/0iEldsPned/cwpNJYECEyBFXHnMp4clqJV1pdE5JDduOW9YH4cmB5Yw==
+X-Received: by 2002:a05:6000:25c4:b0:460:18cc:dcfe with SMTP id
+ ffacd0b85a97d-46030621869mr26955359f8f.34.1780930061293; 
+ Mon, 08 Jun 2026 07:47:41 -0700 (PDT)
+X-Received: by 2002:a05:6000:25c4:b0:460:18cc:dcfe with SMTP id
+ ffacd0b85a97d-46030621869mr26955283f8f.34.1780930060815; 
+ Mon, 08 Jun 2026 07:47:40 -0700 (PDT)
+Received: from leonardi-redhat ([176.206.19.176])
+ by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-4601f2eadefsm54440508f8f.11.2026.06.08.07.47.39
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Mon, 08 Jun 2026 07:47:40 -0700 (PDT)
+Date: Mon, 8 Jun 2026 16:47:37 +0200
+From: Luigi Leonardi <leonardi@redhat.com>
+To: Gerd Hoffmann <kraxel@redhat.com>
+Cc: qemu-devel@nongnu.org, "Michael S. Tsirkin" <mst@redhat.com>, 
+ Paolo Bonzini <pbonzini@redhat.com>,
+ Richard Henderson <richard.henderson@linaro.org>, 
+ Stefano Garzarella <sgarzare@redhat.com>, Ani Sinha <anisinha@redhat.com>,
+ Zhao Liu <zhao1.liu@intel.com>, Oliver Steffen <osteffen@redhat.com>
+Subject: Re: [PATCH 2/2] igvm: Fill device tree IGVM parameter field on x86_64
+Message-ID: <aibVr8P3xtxb3oQQ@leonardi-redhat>
+References: <20260608-microvm_device_tree-v1-0-730874ad0008@redhat.com>
+ <20260608-microvm_device_tree-v1-2-730874ad0008@redhat.com>
+ <aibDrvcHZu514FeF@sirius.home.kraxel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 0/1] hw/virtio-crypto: add akcipher keylen validation
-To: "Michael S. Tsirkin" <mst@redhat.com>
-Cc: qemu-devel@nongnu.org, arei.gonglei@huawei.com, zhenwei.pi@linux.dev
-References: <20260606074756.43804-1-lhestz@163.com>
- <20260606043251-mutt-send-email-mst@kernel.org>
- <392e03eb-63e4-4db0-89d2-b7ddc32b91e8@163.com>
- <20260606102015-mutt-send-email-mst@kernel.org>
-Content-Language: en-US
-From: helei <lhestz@163.com>
-In-Reply-To: <20260606102015-mutt-send-email-mst@kernel.org>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-X-CM-TRANSID: _____wDHA6Ii0yZqhfEaCQ--.2580S2
-X-Coremail-Antispam: 1Uf129KBjvJXoWxXF1Utr1fAr4fWr1UCr4xtFb_yoW5CrWfpa
- yrtFZavF1ktF42k3ZayayaqryYyrWrJr17Jry2qF1xCrs0vr1xZFy7KryY9FyDAFn3A34I
- qr4qqas8Wa9FyFJanT9S1TB71UUUUU7qnTZGkaVYY2UrUUUUjbIjqfuFe4nvWSU5nxnvy2
- 9KBjDUYxBIdaVFxhVjvjDU0xZFpf9x0zR_b1nUUUUU=
-X-Originating-IP: [2409:8a00:18c7:4890:5c16:8947:ceb9:8733]
-X-CM-SenderInfo: pokh23r26rljoofrz/xtbC9AQiTWom0ySZbAAA3R
-Received-SPF: pass client-ip=220.197.31.2; envelope-from=lhestz@163.com;
- helo=m16.mail.163.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+Content-Type: text/plain; charset=us-ascii; format=flowed
+Content-Disposition: inline
+In-Reply-To: <aibDrvcHZu514FeF@sirius.home.kraxel.org>
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=leonardi@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -24
+X-Spam_score: -2.5
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.445,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -75,86 +122,27 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-
-
-On 6/7/26 10:18, Michael S. Tsirkin wrote:
-> On Sun, Jun 07, 2026 at 08:15:19AM +0800, helei wrote:
+On Mon, Jun 08, 2026 at 04:11:56PM +0200, Gerd Hoffmann wrote:
+>On Mon, Jun 08, 2026 at 11:37:47AM +0200, Luigi Leonardi wrote:
+>> Coconut SVSM, with the upcoming device tree support[1], will use
+>> the IGVM device tree parameter to discover virtio-mmio and ISA serial
+>> devices instead of relying on the fw_cfg interface, which is
+>> QEMU-specific.
 >>
->> On 6/6/26 16:37, Michael S. Tsirkin wrote:
->>> On Sat, Jun 06, 2026 at 03:47:55PM +0800, helei wrote:
->>>> The virtio-crypto spec does not dictate a maximum length limit for
->>>> asymmetric cipher (akcipher) keys. We added a hard limit which mirrors
->>>> the linux kernels's internal limit for akcipher keys (see
->>>> keyctl framework and the add_key syscall).
->>> We have max_size - doesn't that apply?
->>> backends/cryptodev-builtin.c actually sets it:
->>> backends/cryptodev-builtin.c:#define CRYPTODEV_BUITLIN_MAX_REQUEST_SIZE  (1024 * 1024)
->>> backends/cryptodev-builtin.c:    backend->conf.max_size = CRYPTODEV_BUITLIN_MAX_REQUEST_SIZE;
->>
->> Thanks for your review!  I have verified via testing that all processing
->> requests in the dataq are strictly
->>
->> bounded by max_size, but session creation requests in the ctrlq are not.
-> 
-> 
-> 
-> well if we read the spec it's vague
-> 
->   max_size is defined as "the maximum size of the variable-length parameters of data operation of
->   each crypto request's content." and
->   The driver SHOULD read max_size to discover the maximum size of the variable-length parameters of
->   data operation of the crypto request's content
-> 
-> 
->   so data operation.
-> 
->   however:
-> 
->   "The device MUST set max_size to show the
->   maximum size of crypto request the device supports".
-> 
->   seems to cover all requests?
-> 
-the original architectural intent was almost certainly for max_size to
-govern data-plane payloads, while control messages are handled by their
-own independent limits (max_cipher_key_len and max_auth_key_len).
-both upstream linux guest driver (virtio_crypto_skcipher_algs.c) and
-qemu's builtin-backend actually implement it exactly this way:
-- data path enforces max_size by checking it against payload length
-(note that cryptodev-builtin recently capped this to 1MB via CVE-2025-14876)
-- control path completely ignores max_size when creating sessions
+>> The IGVM parameter handler is implemented for the i386 machine
+>> target and stubbed for all others.
+>
+>Hmm, why?  I can't see anything i386-specific in that code, it should
+>work just fine everywhere.  For example on aarch64 (which is not yet
+>supported by qemu but already in the igvm specification).
+>
+>take care,
+>  Gerd
+>
 
-> 
-> 
-> btw vhost user sets max_size to max u64 - is that sane?
-> 
-this is sane for an out-of-process data plane from a transport
-perspective, but it creates a practical catch when backed by a dpdk
-implementation:
-- in dpdk vhost_crypto.c, vhost_crypto_check_cipher_request() enforces a
-strict check: src_data_len <= RTE_MBUF_DEFAULT_BUF_SIZE (2176 bytes)
-- the guest kernel driver simply wraps the incoming sg list and passes
-it to virtqueue directly.
-this creates a tricky situation for users: because vhost-user claims
-max_size is max_u64, the users has no way of knowing this 2KB ceiling
-exists unless they explicitly know the host backend is dpdk and look at
-its source code.
+Right, good point. I think this function can be moved to `backends/igvm.c`
+directly, so we'll have aarch64 DT support for free.
 
->   
-> 
->>>
->>>> Maybe we should update the virtio-spec and add a max_akcipher_key_len
->>>> field for virtio crypto devices.
->>> maybe
->>>
->>>> helei (1):
->>>>    hw/virtio-crypto: enforce max akcipher key length
->>>>
->>>>   hw/virtio/virtio-crypto.c | 13 +++++++++++++
->>>>   1 file changed, 13 insertions(+)
->>>>
->>>> -- 
->>>> 2.43.0
-> 
+Luigi
 
 
