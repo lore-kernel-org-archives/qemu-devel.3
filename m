@@ -4,157 +4,104 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 75097CD8C9D
-	for <qemu-devel@archiver.kernel.org>; Mon,  8 Jun 2026 14:33:27 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 86442CD8C9D
+	for <qemu-devel@archiver.kernel.org>; Mon,  8 Jun 2026 14:35:56 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wWb23-0000kh-Bn; Mon, 08 Jun 2026 10:32:51 -0400
+	id 1wWb4j-0001de-RU; Mon, 08 Jun 2026 10:35:38 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <avihaih@nvidia.com>)
- id 1wWb21-0000kT-AB
- for qemu-devel@nongnu.org; Mon, 08 Jun 2026 10:32:49 -0400
-Received: from mail-northcentralusazlp170130007.outbound.protection.outlook.com
- ([2a01:111:f403:c105::7] helo=CH4PR04CU002.outbound.protection.outlook.com)
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1wWb4d-0001cu-5v
+ for qemu-devel@nongnu.org; Mon, 08 Jun 2026 10:35:33 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <avihaih@nvidia.com>)
- id 1wWb1z-0007jB-Kv
- for qemu-devel@nongnu.org; Mon, 08 Jun 2026 10:32:49 -0400
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=Xcvd0yGTgoLHHCKcNm2LGEgkjJ+obHxIECACvFPrSr61x/cp5vwzhHpL1KbLnzExS9ZJ5g4OWGfW8abNc3/jOKrnAPEnwbl4F62pieprYjtWySMZo0SrQzFlnJpjJASmxZw4LrMvLNPknBMWBeNTMCJS4NxoMTZ/Buej7O7MQUFil5ucYKOM02b4neaE9tXvL+SfCDhwvtXzTc9zp2Yf/DaJNnjJzz9/1KmLJ4wvYU/i6tkMb4ikjkb97S/Jya0fasu13OzBRCo9QD2zFkFnR6A7jSFMW8kPxvNWDdbhv8mJt4BcvAmN2Ua2OWyrEEnFsDdkUS1P4asxdBrAuTz3iA==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=vwY5jHOL/IJGxve1e12izbtAOkbxoCP6i6SVOHeF8dw=;
- b=efFamzhNP0znOGYet/mGNwIdZ3LGS/4yXpVpaJNdrHGrTVLFzlQhgpPRwDKEnzXnKl5am+c+ZFYtEvIkMKWzaB+a+vfwIJprsUkdIUG6YAWRiOSkXDvP53S1I+5wfA3bjBt3dXPcx+NFlSQApLChY/Ucb0NsWRhbZcqYrf5QMDSEDzcKrcAjGnrgiEWTxRSsIe3pbXHKme3nsBZYqC5qSuYMUHKiNhewZ+XQ9NqoGOqGDdAOJ7PRFkNTNBVuZqpHSoXe1/dnGAPMo87BPWcCpdgE5CNfh2h7dgMJaFZDdQNa6VKc1I4+UXorrpmFrTX45LM3hwxuAKWbW+DKj7W97w==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=nvidia.com; dmarc=pass action=none header.from=nvidia.com;
- dkim=pass header.d=nvidia.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=Nvidia.com;
- s=selector2;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=vwY5jHOL/IJGxve1e12izbtAOkbxoCP6i6SVOHeF8dw=;
- b=ULC9GIq/992Q2pxPz1WMJ/h5mJUdfFsuRKdqTcq03L6cSSWZqAGLyJiaUzQiA7qt/tx3AataHUNJcBgfYtW49zkNGkMoc2qnxE08O7BadUfXqbb2vRnH3FuDGo1ci148t9puYvL36Tg/lg+VSa50o0K/+fNt/dT/Js5ArwS4yryrTDzq5SvhzMzAedy3Uj3uUBc83K3zH98JaSHUdLPYKbbcuopfbDO95fdaqP002Ao+aMLxsyBKOe3nJ3oIqzc2EmYciTfHou/kAkaBUxnpzwPKGBfGtKq1G2mNE+Xqe63E7mChtNm6LNIXvt738QK8ZIVg+TCvIAXG08FliFznlA==
-Authentication-Results: dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=nvidia.com;
-Received: from BL1PR12MB5063.namprd12.prod.outlook.com (2603:10b6:208:31a::11)
- by PH8PR12MB6745.namprd12.prod.outlook.com (2603:10b6:510:1c0::10)
- with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.92.13; Mon, 8 Jun 2026
- 14:32:37 +0000
-Received: from BL1PR12MB5063.namprd12.prod.outlook.com
- ([fe80::a0c2:5681:4aca:90da]) by BL1PR12MB5063.namprd12.prod.outlook.com
- ([fe80::a0c2:5681:4aca:90da%7]) with mapi id 15.21.0092.011; Mon, 8 Jun 2026
- 14:32:37 +0000
-Message-ID: <4d953317-1446-40db-8e21-b92001967bec@nvidia.com>
-Date: Mon, 8 Jun 2026 17:32:30 +0300
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 02/13] migration: Run final save_query_pending at
- switchover
-To: Peter Xu <peterx@redhat.com>
-Cc: qemu-devel@nongnu.org, Alex Williamson <alex@shazbot.org>,
- =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>,
- Fabiano Rosas <farosas@suse.de>,
- Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
- =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Zhao Liu <zhao1.liu@intel.com>, Halil Pasic <pasic@linux.ibm.com>,
- Christian Borntraeger <borntraeger@linux.ibm.com>,
- Jason Herne <jjherne@linux.ibm.com>,
- Richard Henderson <richard.henderson@linaro.org>,
- Ilya Leoshkevich <iii@linux.ibm.com>, David Hildenbrand <david@kernel.org>,
- Eric Farman <farman@linux.ibm.com>, Matthew Rosato <mjrosato@linux.ibm.com>,
- Cornelia Huck <cohuck@redhat.com>, Eric Blake <eblake@redhat.com>,
- Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>,
- John Snow <jsnow@redhat.com>, Markus Armbruster <armbru@redhat.com>,
- Maor Gottlieb <maorg@nvidia.com>, Gavin Shan <gshan@redhat.com>,
- Wei Wang <wei.w.wang@intel.com>
-References: <20260602092621.382-1-avihaih@nvidia.com>
- <20260602092621.382-3-avihaih@nvidia.com> <aiCJHa-lT9Ycf6jq@x1.local>
- <aiCWynDFLoxtcctK@x1.local> <722fb01a-988b-4b21-9cca-aca1de2858db@nvidia.com>
- <aiGzVgatc_0Df21z@x1.local> <f27b2f9d-b72b-4fab-acc7-b560d29c95af@nvidia.com>
- <aibNja4cvhmgaioj@x1.local>
-Content-Language: en-US
-From: Avihai Horon <avihaih@nvidia.com>
-In-Reply-To: <aibNja4cvhmgaioj@x1.local>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-ClientProxiedBy: FR4P281CA0217.DEUP281.PROD.OUTLOOK.COM
- (2603:10a6:d10:e4::19) To BL1PR12MB5063.namprd12.prod.outlook.com
- (2603:10b6:208:31a::11)
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1wWb4a-0000Jk-V2
+ for qemu-devel@nongnu.org; Mon, 08 Jun 2026 10:35:30 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1780929327;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=idpFh90Vgx90mVssXYaIvdpbfEGRhlcJJVtTlaFUQOk=;
+ b=FSxbs8DwAEu5Ip88fitA9Wonm3F85gyhf1PvXuK77NHKVTVWPxVRx/PhCHDHBUkMPCljGY
+ VgXw7RxuAwMUq1E0u3lM15IVK8m37d6MLXpyD1nkKWEVOtmuFx/YddIOpYkknvFdpCMVV4
+ MQUhhdgCQzkoUrypNVThN/bt1PBVsB8=
+Received: from mail-qv1-f71.google.com (mail-qv1-f71.google.com
+ [209.85.219.71]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-425-q_QNfCbONp22ZYtzoxAuxg-1; Mon, 08 Jun 2026 10:35:23 -0400
+X-MC-Unique: q_QNfCbONp22ZYtzoxAuxg-1
+X-Mimecast-MFC-AGG-ID: q_QNfCbONp22ZYtzoxAuxg_1780929323
+Received: by mail-qv1-f71.google.com with SMTP id
+ 6a1803df08f44-8cecac0e467so76801686d6.0
+ for <qemu-devel@nongnu.org>; Mon, 08 Jun 2026 07:35:23 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=redhat.com; s=google; t=1780929323; x=1781534123; darn=nongnu.org;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+ bh=idpFh90Vgx90mVssXYaIvdpbfEGRhlcJJVtTlaFUQOk=;
+ b=Zg37YG5wqbhcJG2D3buBC48RtxJgXNKvKS5YY9XXVhe4KzqiLlX1Ci1dFBgIBgSTA0
+ Ac7X7GUZ5R2UYSmslq5DHl4E2I2XPhsKGCgyvLsfaioz6QfqtjKk0tq1Xzk9NUFjIA2Z
+ avYEnToH2QbCU+cJTOqHbVXbKHeaO6Wd+GSQvCMymSMJCDwRNXZP/goctWiRLwaOs8ms
+ 38mcEcZmIC7sGXJ4elw38/3DiYWYdzPRL2Rh2p0zXQtfKbx/VcoP34dDbQDpqdGEELEU
+ sIU1jH1sHtjIzZsFhePDM0Iw59xt+mgD4RHbOE27n165Pf4EQtqZ6dTQ51XjoufIM4nE
+ z97A==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1780929323; x=1781534123;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=idpFh90Vgx90mVssXYaIvdpbfEGRhlcJJVtTlaFUQOk=;
+ b=Eethx/Z2NpKJUW4dbMNoKrM+K5AE8AC+k29eLQrmy0U2p/cBtEv5RNwr4V3fN/TZHv
+ 8Gxayi1SZBd/FunqaBsFqE0kJxFIX9kZ6zSkXnj62i4KvS/QuqVg/50t+/iOB1EZPeZC
+ hZmYkPM36rxa/SfFg52gsInMyif+WJisfOwZfgK4XYX7dVbD/ZzxvfxBeH+vu/KFxI1t
+ cJiNz8Hz7DEpRzP2lsZHLr+swuAiVOftHf4+PHRB7v0Iq+wN/024KgUxc4KW5NLaeV7y
+ pn9b8TP0Wgl09PGdFh7hHNfokysiokobm1qF6w3gcBdOPTbLDstaSr6wuiW6p/Y1182R
+ n7AA==
+X-Forwarded-Encrypted: i=1;
+ AFNElJ/v596l/Hqxur+9PqP+lFfQG3vooNnCf8e9FogWUPWr6OHViZoTWALppjQdAS6AkfgG9naw/XbMQCRY@nongnu.org
+X-Gm-Message-State: AOJu0Yz0lPLI6nbXP6HvcadnqTXIxWXhCFWaoj1UAi7xs0wfZ70ETPbg
+ 2ifNxCK37yIqd6xRP0UyruGA5WfOjMWHOCSK2pdJDf47C5m/I+sJnqc0TcGxjyOJMDChCSZA0KD
+ sUpu4OvGovQFFhjYP2nn+uRD9cDXAChEh/yql7wlKojHi3cMfetvKdmuM
+X-Gm-Gg: Acq92OGVuvb/kFOS3YSSrj5+LYj28jlrqroczCX/23VPQRpXuueglh8hkHzMVp8pNzk
+ 4FMECi+PDkua1wsp5W4c4oMi/scZnTA1XxgxJwwQ2hN7p7qHE25XEJHFG1+OBgZdF/e5ybHO0S0
+ 9yR/tySjPvhONWsQMGmZWtjEM7soheygVICAywfTRio7LpCJ7u5vCQKQHRhtvoskdUjUTmOcube
+ 9kNq0K8Tco/mex+u/qeEDF6+0QqISDln1s5v+22d1SRpyIC6ZtxfYF613pVEHHLVxgRj0CdKf3a
+ SHlUu1NJGUhVa6e0h/VMovXxRDrydN4eGEMfknYJI6L01jXa25gwAmmPvUqapC/rC+cOA/P2GQz
+ VZd7BuP+K6LXk8S1Pr79xTfjyNQ==
+X-Received: by 2002:a0c:ea45:0:b0:8cc:f354:f47f with SMTP id
+ 6a1803df08f44-8cee60233b7mr199354066d6.29.1780929323008; 
+ Mon, 08 Jun 2026 07:35:23 -0700 (PDT)
+X-Received: by 2002:a0c:ea45:0:b0:8cc:f354:f47f with SMTP id
+ 6a1803df08f44-8cee60233b7mr199353176d6.29.1780929322268; 
+ Mon, 08 Jun 2026 07:35:22 -0700 (PDT)
+Received: from x1.local ([142.189.10.167]) by smtp.gmail.com with ESMTPSA id
+ 6a1803df08f44-8cecd07629dsm169055706d6.39.2026.06.08.07.35.21
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Mon, 08 Jun 2026 07:35:21 -0700 (PDT)
+Date: Mon, 8 Jun 2026 10:35:20 -0400
+From: Peter Xu <peterx@redhat.com>
+To: Bibo Mao <maobibo@loongson.cn>
+Cc: Fabiano Rosas <farosas@suse.de>, Laurent Vivier <lvivier@redhat.com>,
+ Paolo Bonzini <pbonzini@redhat.com>, Song Gao <gaosong@loongson.cn>,
+ qemu-devel@nongnu.org
+Subject: Re: [PATCH] tests/qtest/migration: Add migration test on loongarch
+Message-ID: <aibTKGCz7vIS-fMH@x1.local>
+References: <20260608065947.428141-1-maobibo@loongson.cn>
 MIME-Version: 1.0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: BL1PR12MB5063:EE_|PH8PR12MB6745:EE_
-X-MS-Office365-Filtering-Correlation-Id: c84c921d-9648-4cf5-ec48-08dec56ac975
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam: BCL:0;
- ARA:13230040|366016|1800799024|376014|7416014|11063799006|4143699003|56012099006|18002099003|22082099003;
-X-Microsoft-Antispam-Message-Info: pfPTn11/Ba6qIyJRGN1EbeVH+qmxJD4d1gUNp5WE16kwZDBMYJ6dnSWd2a4P0p9jWjkrIJJF4ugHKh4YHt/NV9jHlQLVbmmAn86sqGjEVPhSPbX8JPRSMwf+Qvsql9pqoOwue9VfMumibpKVQEe/jjnGSuSmtwIcEPhZXAMTAhknPg572v1gTEmnl8gWU11UPI8p3qFx0nniRpeZ+iMBreLW5oMRWIwSR6HrA0fPf43NQV7z7ObwtRBVYgd5ZP991JU9Ng66D+gfu929LNjn7DloBCCDzPZOyusyeIya6/4+BKzjDApQo2A2wFgVQrw+cntFFQ1yxtXobYm6j3NGeFiA6gxmFBTTBg9TLxiWb1pjaYAUsG5D+wFYy8YaUkD/HUUNXyWGnYlf2hBkodQkYvvhvvB6IiYZj+yd7+q/i5R8nLHElWsT+L4N2HPi7nJ3QO/2w1dBiBVJzgX3bAMnkHdlvv3Xm3DNjIr8yjlV/VjhRmSV4Y2VRNc5vSwXiFD84E23dTNcZilABHDWgTAxeZcvY2TW3eUNvkagBQHQJc6Y3JXumEcdU3iIwvw6xrGkKKtx3BfvgpQjnjpiBhon0csZ4MGcyI/imqMWtS/L/D+k4H0NncSTY5CmUgFyhSgHEz5LdWJcNNAN9TQDlggF+HkTlYbSQjqTfpyoZi3zvvsKe6Xl7q/eSoyMTHyaCqFs
-X-Forefront-Antispam-Report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
- IPV:NLI; SFV:NSPM; H:BL1PR12MB5063.namprd12.prod.outlook.com; PTR:; CAT:NONE;
- SFS:(13230040)(366016)(1800799024)(376014)(7416014)(11063799006)(4143699003)(56012099006)(18002099003)(22082099003);
- DIR:OUT; SFP:1101; 
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0: =?utf-8?B?QmJlWit4QlFSOGZ3Mm52bVl3V0V5MnJERHhSdyszNTlMeUk3NjdpUzdJTXND?=
- =?utf-8?B?SGxPYjdmSHQ3aWMycXhkOW9IRGwxdGtOeERuN1RzdlY5OU1CNTlidzlwVmFJ?=
- =?utf-8?B?Sy9RUmJjdUFnNmZDTitiTHdpTDVRN3pSV0wzN3BDckNPbGltaGhMRVdJTDZn?=
- =?utf-8?B?d05STWhkdTAxOUozMjYzeEpCSWZKNEdFRXMrcVZNVkJwa3RwN3FkTnBudUdN?=
- =?utf-8?B?eWpaaUdaaGZpSGkwc1ZXQ3RoZ0RKbXQ5TVYrRUtrSDhGUk82YnpGNTJZRWxQ?=
- =?utf-8?B?TkVxRWNCdHJJczhQZHhJVUhkTzZRMWpWU3pvb3Y1Q2dFZXJtNU9oK1Y1WVFY?=
- =?utf-8?B?elBieVBFelpXZlpaTjJ2RE9mSFNKTUl5TEQ2TlN0d1ROblRCemFoUUVBL2U1?=
- =?utf-8?B?UzJsZkpSeEtyWlBzSkFiV0tTY2JHVEFRY281MmFtQ3N5ZUljZ0dnTkVLM252?=
- =?utf-8?B?QzVKV2V2NzBHRWFSZE9ZRHlyeXlRdVhSY1pxcnduQVBkNXA4Qm0wbUxvZUJ5?=
- =?utf-8?B?K2pmekJYZW1mK3poMlZjOEd2NGp4dEtILzQxVk1oa1hncmNlNDBwZk9VSkhm?=
- =?utf-8?B?cmxUS0JzZnVVQzR4RXNmU29kaVdRTWUxdmMxa3BQckM3RHJxR01EeHRmeUpa?=
- =?utf-8?B?Q2hzeGRWeHNJTjNQUTlVOUxxeXU5MTEybktwN3l0SzV2UjBmWUk1SEg4MUEv?=
- =?utf-8?B?czVxdEJWSVNsdkxzdStYYU94UWhxN2FBbE95aFVYRjBnZkxXZ3RmbE5xMURL?=
- =?utf-8?B?b09NTU8vT2FIVmVrd3pybVUwUldHWmVaNUZLa2l2UkdnZDA1U0Y5REd4YTBt?=
- =?utf-8?B?UUNpS3ZzVGtpcTVRTTNjd05GalVSb2t6eTlHZVhMWVF6cWxPNHlsOGp2MU1V?=
- =?utf-8?B?cC9FeWJVdGJUYjhFc2tWM3pNSThWMnJPOE53N0xxVHZtdVVOcHY1Vk9EWVU0?=
- =?utf-8?B?QitTU2ZGc1BlQnMrcjVzakNPNkRSTFQyckwrSThUSzlxUDd5V0laY1NtWExX?=
- =?utf-8?B?TXYySzEwYmZNUDFHaGQ0bC91Q2VjeDJXOXhsalorV2c2M3RZMVhPaE4rdkNa?=
- =?utf-8?B?bmMyNHB5Nm5yVXpWM0FNZGtOc29JVVlBVThoUkRkUUFrU2NHTFFEMkxaMjJV?=
- =?utf-8?B?ZzZDLzNKWVMwc0MzSlpOL3NzMTNMdG9nVjdLcGV0ME95YlFUZVZjZ1FCS1ps?=
- =?utf-8?B?OTVSR0Y4WEh3WE0xa0JHSHZKRFdyRHJTWmxNZmkvWS9MQ3pMSDVCeXhmNDAw?=
- =?utf-8?B?S3ZIUVIrSE9wNDJFZ1EzMmVGdDVmVlFzZ2Vid2NPaVp4OWdSOU5HcmJ2Vmkw?=
- =?utf-8?B?R3hRTHNJMHJyS0FlKzhkNDVOS1JodmtCSFZ4aS82MWFuWDVsVmhkL3BnT3Qr?=
- =?utf-8?B?Qndpbi9ORW1PdHY0RXl2VStDZkx6WDhyQkVKNThIck9DcHBkLzdJazZBMmpT?=
- =?utf-8?B?MHVrVkpoQmsvblVuUW1KelB2OVBBVmJFWDJIMzZXRG9ic1VQbUVZZlV2QVcw?=
- =?utf-8?B?Z0JKSDlmNlBVaGJJdTZUR2UvZG5yL0tQeDNXdzBtQ2g0OXpBUVBNK1d5eFc2?=
- =?utf-8?B?bkVPSU12R0dmc1g5RWl5TmY3WDNJbC95aWx1L2lBRXkxbVlJU3ovVW1uSDJp?=
- =?utf-8?B?WmViMnArN0R1d0VpbGZWUmlqL24xWVdGZ1JnVGdHQUExbTFPSkRWOGRUVUp6?=
- =?utf-8?B?NlBqdU5uTmtJUW9Xdm9DVytQK1IxM1dkTld1eFZLN3hpbzFTQ1NQTnZwQnBC?=
- =?utf-8?B?NW1qU1lBZVlSemxqTm1RbG84STR2LzZJcE5jYmkvK2IyNEwreHFHbDNSYTJz?=
- =?utf-8?B?UHU0ZURBTmluaUZkTWdzTFJQUVppUWoxeE5HUTkydDlhWnp6UW5WK0pqL3Zr?=
- =?utf-8?B?RFhWaDF4VnBkSU9FekttL2dibElTQUNPRWdBTzZNUmtqNzQ3ODV5SDBTVnBY?=
- =?utf-8?B?Y1NXL3dXcnpQWjdJRnNtUVdJbGYzZWpCa3phdktjb2libGpCU3hZa25Ua2dS?=
- =?utf-8?B?QWZ1RGZhalFHSVNyU1lPN1p6V0NlVGFJelQ1WE9kcEZQRGJ0M1FIRkdwZzJ3?=
- =?utf-8?B?WWhLaWxGbkZPR0F2cFR4N3NNYzJ4N0tZQnptOUkyMWlNM1pmcDdKTEhjTklD?=
- =?utf-8?B?OFROUmJXT3BCUlp3SmN6TmpXNHZDZkI1ZUxOQUI5UWoyM0c3N3R1ajFveis5?=
- =?utf-8?B?MkFvSi9lejNabnJNblB1SmJnUzNsL3ZTYnZIcnc5T1pzUitjY0ZhUytia2ts?=
- =?utf-8?B?MjZ3VWl6a3FYNjBaNnF5QjgvZklvQVJwMm5RUWhSeGJFK2RxTnUvcFBmUDZx?=
- =?utf-8?B?WjQybWR5d3Z6M3dQcG9QcDRTMGw2THZVNWc2WmhsY3BJUktDaVNUUT09?=
-X-OriginatorOrg: Nvidia.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: c84c921d-9648-4cf5-ec48-08dec56ac975
-X-MS-Exchange-CrossTenant-AuthSource: BL1PR12MB5063.namprd12.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 08 Jun 2026 14:32:37.3289 (UTC)
-X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
-X-MS-Exchange-CrossTenant-Id: 43083d15-7273-40c1-b7db-39efd9ccc17a
-X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: uS/aBhDJQF2MeCCkY3qERNdFXwJ2wFne3gMDWttXveXrMF8dvGwFiEgzVGrruh6VY6yy/StI8MRzkHngHQ4MZA==
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: PH8PR12MB6745
-Received-SPF: permerror client-ip=2a01:111:f403:c105::7;
- envelope-from=avihaih@nvidia.com;
- helo=CH4PR04CU002.outbound.protection.outlook.com
-X-Spam_score_int: -14
-X-Spam_score: -1.5
-X-Spam_bar: -
-X-Spam_report: (-1.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.445,
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <20260608065947.428141-1-maobibo@loongson.cn>
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=peterx@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -24
+X-Spam_score: -2.5
+X-Spam_bar: --
+X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.445,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- FORGED_SPF_HELO=1, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_PASS=-0.001,
- SPF_NONE=0.001 autolearn=no autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -170,54 +117,237 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+On Mon, Jun 08, 2026 at 02:59:47PM +0800, Bibo Mao wrote:
+> Add migration qtest on loongarch64 system, the test passes to run with
+> the following result:
+>   qemu:qtest+qtest-loongarch64/qtest-loongarch64/migration-test OK 15.94s 9 subtests passed
+> 
+> Signed-off-by: Bibo Mao <maobibo@loongson.cn>
+> ---
+>  MAINTAINERS                                   |  1 +
+>  tests/qtest/meson.build                       |  3 +-
+>  tests/qtest/migration/Makefile                |  2 +-
+>  tests/qtest/migration/bootfile.c              |  4 ++
+>  tests/qtest/migration/bootfile.h              |  4 ++
+>  tests/qtest/migration/framework.c             |  6 +++
+>  tests/qtest/migration/loongarch64/Makefile    | 20 ++++++++
+>  .../qtest/migration/loongarch64/a-b-kernel.S  | 46 +++++++++++++++++++
+>  .../qtest/migration/loongarch64/a-b-kernel.h  | 13 ++++++
+>  9 files changed, 97 insertions(+), 2 deletions(-)
+>  create mode 100644 tests/qtest/migration/loongarch64/Makefile
+>  create mode 100644 tests/qtest/migration/loongarch64/a-b-kernel.S
+>  create mode 100644 tests/qtest/migration/loongarch64/a-b-kernel.h
+> 
+> diff --git a/MAINTAINERS b/MAINTAINERS
+> index 79ecac16fe..2105db7155 100644
+> --- a/MAINTAINERS
+> +++ b/MAINTAINERS
+> @@ -1368,6 +1368,7 @@ F: hw/intc/loongarch_*.c
+>  F: hw/intc/loongson_ipi_common.c
+>  F: hw/rtc/ls7a_rtc.c
+>  F: gdbstub/gdb-xml/loongarch*.xml
+> +F: tests/qtest/migration/loongarch64/
+>  
+>  M68K Machines
+>  -------------
+> diff --git a/tests/qtest/meson.build b/tests/qtest/meson.build
+> index 45ea497fa5..1636b8616e 100644
+> --- a/tests/qtest/meson.build
+> +++ b/tests/qtest/meson.build
+> @@ -154,7 +154,8 @@ qtests_loongarch64 = qtests_filter + \
+>    (config_all_devices.has_key('CONFIG_LOONGARCH_VIRT') ? ['numa-test'] : []) + \
+>    (unpack_edk2_blobs ? ['bios-tables-test'] : []) + \
+>    ['boot-serial-test',
+> -   'cpu-plug-test']
+> +   'cpu-plug-test',
+> +   'migration-test']
+>  
+>  qtests_m68k = ['boot-serial-test'] + \
+>    qtests_filter
+> diff --git a/tests/qtest/migration/Makefile b/tests/qtest/migration/Makefile
+> index c183b69941..b94836eb0f 100644
+> --- a/tests/qtest/migration/Makefile
+> +++ b/tests/qtest/migration/Makefile
+> @@ -5,7 +5,7 @@
+>  # See the COPYING file in the top-level directory.
+>  #
+>  
+> -TARGET_LIST = i386 aarch64 s390x ppc64
+> +TARGET_LIST = i386 aarch64 s390x ppc64 loongarch64
+>  
+>  SRC_PATH = ../../../..
+>  
+> diff --git a/tests/qtest/migration/bootfile.c b/tests/qtest/migration/bootfile.c
+> index 479c43231d..e46ad09de7 100644
+> --- a/tests/qtest/migration/bootfile.c
+> +++ b/tests/qtest/migration/bootfile.c
+> @@ -19,6 +19,7 @@
+>  #include "bootfile.h"
+>  #include "i386/a-b-bootblock.h"
+>  #include "aarch64/a-b-kernel.h"
+> +#include "loongarch64/a-b-kernel.h"
+>  #include "ppc64/a-b-kernel.h"
+>  #include "s390x/a-b-bios.h"
+>  
+> @@ -57,6 +58,9 @@ char *bootfile_create(const char *arch, const char *dir, bool suspend_me)
+>          content = aarch64_kernel;
+>          len = sizeof(aarch64_kernel);
+>          g_assert(sizeof(aarch64_kernel) <= ARM_TEST_MAX_KERNEL_SIZE);
+> +    } else if (strcmp(arch, "loongarch64") == 0) {
+> +        content = loongarch64_kernel;
+> +        len = sizeof(loongarch64_kernel);
+>      } else {
+>          g_assert_not_reached();
+>      }
+> diff --git a/tests/qtest/migration/bootfile.h b/tests/qtest/migration/bootfile.h
+> index 0ce5b34433..a4060ea4f7 100644
+> --- a/tests/qtest/migration/bootfile.h
+> +++ b/tests/qtest/migration/bootfile.h
+> @@ -42,6 +42,10 @@
+>   */
+>  #define ARM_TEST_MAX_KERNEL_SIZE (512 * 1024)
+>  
+> +/* LoongArch64 */
+> +#define LOONGARCH_TEST_MEM_START (32 * 1024 * 1024)
+> +#define LOONGARCH_TEST_MEM_END   (100 * 1024 * 1024)
+> +
+>  #ifndef MIGRATION_GUEST_CODE
+>  void bootfile_delete(void);
+>  char *bootfile_create(const char *arch, const char *dir, bool suspend_me);
+> diff --git a/tests/qtest/migration/framework.c b/tests/qtest/migration/framework.c
+> index a9b58d03aa..a830b96f41 100644
+> --- a/tests/qtest/migration/framework.c
+> +++ b/tests/qtest/migration/framework.c
+> @@ -360,6 +360,12 @@ int migrate_args(char **from, char **to, MigrateStart *args)
+>          arch_opts = g_strdup_printf("-cpu max -kernel %s", bootpath);
+>          start_address = ARM_TEST_MEM_START;
+>          end_address = ARM_TEST_MEM_END;
+> +    } else if (strcmp(arch, "loongarch64") == 0) {
+> +        memory_size = "256M";
+> +        machine_alias = "virt";
+> +        arch_opts = g_strdup_printf("-bios %s", bootpath);
+> +        start_address = LOONGARCH_TEST_MEM_START;
+> +        end_address = LOONGARCH_TEST_MEM_END;
+>      } else {
+>          g_assert_not_reached();
+>      }
+> diff --git a/tests/qtest/migration/loongarch64/Makefile b/tests/qtest/migration/loongarch64/Makefile
+> new file mode 100644
+> index 0000000000..3c8cfeee86
+> --- /dev/null
+> +++ b/tests/qtest/migration/loongarch64/Makefile
+> @@ -0,0 +1,20 @@
+> +# SPDX-License-Identifier: GPL-2.0-or-later
+> +
+> +# To specify cross compiler prefix, use CROSS_PREFIX=
+> +#   $ make CROSS_PREFIX=loongarch64-linux-gnu-
+> +
+> +.PHONY: all clean
+> +all: a-b-kernel.h
+> +
+> +a-b-kernel.h: loongarch64.kernel
+> +	echo "$$__note" > $@
+> +	xxd -i $< | sed -e 's/.*int.*//' >> $@
+> +
+> +loongarch64.kernel: loongarch64.elf
+> +	$(CROSS_PREFIX)objcopy -j .text -O binary $< $@
+> +
+> +loongarch64.elf: a-b-kernel.S
+> +	$(CROSS_PREFIX)gcc -o $@ -nostdlib -Wl,--build-id=none $<
+> +
+> +clean:
+> +	$(RM) *.kernel *.elf
+> diff --git a/tests/qtest/migration/loongarch64/a-b-kernel.S b/tests/qtest/migration/loongarch64/a-b-kernel.S
+> new file mode 100644
+> index 0000000000..577d4b238c
+> --- /dev/null
+> +++ b/tests/qtest/migration/loongarch64/a-b-kernel.S
+> @@ -0,0 +1,46 @@
+> +/* SPDX-License-Identifier: GPL-2.0-or-later */
+> +
+> +#include "../bootfile.h"
+> +
+> +#define LOONGARCH_CSR_CRMD          0
+> +#define LOONGARCH_VIRT_UART         0x1FE001E0
+> +.section .text
+> +
+> +    .globl  _start
+> +_start:
+> +    /* output char 'A' to UART16550 */
+> +    li.d    $t0, LOONGARCH_VIRT_UART
+> +    li.w    $t1, 'A'
+> +    st.b    $t1, $t0, 0
+> +
+> +    /* traverse test memory region */
+> +    li.d    $t0, LOONGARCH_TEST_MEM_START
+> +    li.d    $t1, LOONGARCH_TEST_MEM_END
+> +    li.d    $t2, TEST_MEM_PAGE_SIZE
+> +    li.d    $t4, LOONGARCH_VIRT_UART
+> +    li.w    $t5, 'B'
+> +
+> +clean:
+> +    st.b    $zero, $t0, 0
+> +    add.d   $t0,   $t0, $t2
+> +    bne     $t0,   $t1, clean
+> +    /* keeps a counter so we can limit the output speed */
+> +    addi.d  $t6,   $zero, 0
+> +
+> +mainloop:
+> +    li.d    $t0, LOONGARCH_TEST_MEM_START
+> +
+> +innerloop:
+> +    ld.bu   $t3, $t0, 0
+> +    addi.w  $t3, $t3, 1
+> +    ext.w.b $t3, $t3
+> +    st.b    $t3, $t0, 0
+> +    add.d   $t0, $t0, $t2
+> +    bne     $t0, $t1, innerloop
+> +
+> +    addi.d  $t6, $t6, 1
+> +    andi    $t6, $t6, 31
+> +    bnez    $t6, mainloop
+> +
+> +    st.b    $t5, $t4, 0
+> +    b       mainloop
+> diff --git a/tests/qtest/migration/loongarch64/a-b-kernel.h b/tests/qtest/migration/loongarch64/a-b-kernel.h
+> new file mode 100644
+> index 0000000000..132db292b9
+> --- /dev/null
+> +++ b/tests/qtest/migration/loongarch64/a-b-kernel.h
+> @@ -0,0 +1,13 @@
+> +
+> +unsigned char loongarch64_kernel[] = {
+> +  0x0c, 0xc0, 0x3f, 0x14, 0x8c, 0x81, 0x87, 0x03, 0x0d, 0x04, 0x81, 0x03,
+> +  0x8d, 0x01, 0x00, 0x29, 0x0c, 0x00, 0x04, 0x14, 0x0d, 0x80, 0x0c, 0x14,
+> +  0x2e, 0x00, 0x00, 0x14, 0x10, 0xc0, 0x3f, 0x14, 0x10, 0x82, 0x87, 0x03,
+> +  0x11, 0x08, 0x81, 0x03, 0x80, 0x01, 0x00, 0x29, 0x8c, 0xb9, 0x10, 0x00,
+> +  0x8d, 0xf9, 0xff, 0x5f, 0x12, 0x00, 0xc0, 0x02, 0x0c, 0x00, 0x04, 0x14,
+> +  0x8f, 0x01, 0x00, 0x2a, 0xef, 0x05, 0x80, 0x02, 0xef, 0x5d, 0x00, 0x00,
+> +  0x8f, 0x01, 0x00, 0x29, 0x8c, 0xb9, 0x10, 0x00, 0x8d, 0xed, 0xff, 0x5f,
+> +  0x52, 0x06, 0xc0, 0x02, 0x52, 0x7e, 0x40, 0x03, 0x5f, 0xde, 0xff, 0x47,
+> +  0x11, 0x02, 0x00, 0x29, 0xff, 0xd7, 0xff, 0x53
+> +};
 
-On 6/8/2026 5:11 PM, Peter Xu wrote:
-> External email: Use caution opening links or attachments
->
->
-> On Mon, Jun 08, 2026 at 03:07:32PM +0300, Avihai Horon wrote:
->>>> 2. It calls migration_bitmap_sync and not migration_bitmap_sync_precopy,
->>>> i.e., without precopy_notify calls.
->>> This is another thing I feel like got overlooked in the free page hint
->>> feature.  The only notifiers registered is that balloon device, logically I
->>> think we need these notifiers in postcopy too to make sure we properly stop
->>> the free page hints seeing BEFORE_BITMAP_SYNC, then don't start it
->>> (vm_running=false) in AFTER_BITMAP_SYNC:
->>>
->>> virtio_balloon_free_page_hint_notify():
->>>
->>>       case PRECOPY_NOTIFY_BEFORE_BITMAP_SYNC:
->>>           virtio_balloon_free_page_stop(dev);
->>>           break;
->>>       case PRECOPY_NOTIFY_AFTER_BITMAP_SYNC:
->>>           if (vdev->vm_running) {
->>>               virtio_balloon_free_page_start(dev);
->>>               break;
->>>           }
->> Actually, looking more closely in the code, I see that it's not used if
->> postcopy is enabled [1].
->> So calling the precopy notifiers in postcopy switchover is basically a
->> no-op.
->>
->> Then it seems fine to call migration_bitmap_sync_precopy from postcopy
->> switchover flow.
->>
->> [1] See commit fd51e54fa102 ("virtio-balloon: don't start free page hinting
->> if postcopy is possible")
-> Yes, thanks for the pointer.  So it relies on the DONE event rather than
-> stop() to really stop the reporting.. good to know it was already bypassed
-> for postcopy, I definitely forgot that change.  For now, we can add another
-> trivial comment if we want.  So what we really need is final=true for
-> postcopy.
->
->  From a notifier semantics POV, IIUC it's also correct to notify here in
-> postcopy_start(), because at this stage it is still precopy.  Source QEMU
-> will move to postcopy stage (starting from POSTCOPY_DEVICE state) only if
-> postcopy_start() succeeded.  So a precopy notifier, no matter the analysis
-> of balloon use case, should theoretically apply here as well.
+The binary data matches with what I tested with this patch, but it misses
+the __note, please re-generate with the current Makefile to make it aligned
+with the rest headers; also it won't show up as modifications with
+re-generations then.
 
-Agreed.
+The other thing is I saw we added enforcements to use SPDX license
+identifiers since last year (b36934063c5), IIUC we can add that line into
+__note of the Makefile.
 
-Thanks.
+Thanks,
+
+> +
+> 
+> base-commit: 3390aba56c354637eccd2d5ab5fd6efc2f026f06
+> -- 
+> 2.54.0
+> 
+> 
+
+-- 
+Peter Xu
 
 
