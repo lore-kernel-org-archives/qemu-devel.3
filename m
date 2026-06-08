@@ -4,56 +4,56 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B7D46CD8C9D
-	for <qemu-devel@archiver.kernel.org>; Mon,  8 Jun 2026 07:17:37 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 75397CD8C8E
+	for <qemu-devel@archiver.kernel.org>; Mon,  8 Jun 2026 07:17:38 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wWUEb-0007Zl-Ev; Mon, 08 Jun 2026 03:17:21 -0400
+	id 1wWUEe-0007ax-4k; Mon, 08 Jun 2026 03:17:24 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1wWUEa-0007Zb-LR
- for qemu-devel@nongnu.org; Mon, 08 Jun 2026 03:17:20 -0400
+ id 1wWUEc-0007Zz-4B
+ for qemu-devel@nongnu.org; Mon, 08 Jun 2026 03:17:22 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1wWUEW-0008Ko-3q
- for qemu-devel@nongnu.org; Mon, 08 Jun 2026 03:17:20 -0400
+ id 1wWUEa-0008LA-5j
+ for qemu-devel@nongnu.org; Mon, 08 Jun 2026 03:17:21 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1780903035;
+ s=mimecast20190719; t=1780903039;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=G5SzvzpXGBk9fZpb0FRhhyEQyeRaoQnIRBj/ot4ruJI=;
- b=KghYeVMBsIAcxoC4fpDF3DZr8zAlzhYtr/m9NKrOkWNo9w40hsWllLRgUXAomH+0DSTnye
- sEtl2O2GyPqVwbOLG/GverhmbK+Mv+frge1u4h73f2BmvJuTcSvEY1yIMKILnHVgyXNYVM
- MPmrYihmi54/9Wzl2jOJ117kdqRnlY8=
-Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
+ bh=NiPRbgAGG9+H5A2Rhy9bpK7HQJj7Pl9u84rDJDqgsuw=;
+ b=MedilRb1ApkcDaXMJhZHTIfY+yl8fQSDDtxMiaghczZGgKR8YP+ZQ3ZB4WFlEuyqOsUpFE
+ XKsC1kk4hHYOiILWhdZtWYWlfKsuVUp1J52LC4W/6UfumssYphNjTY5QpjTXeaZ/eBRos8
+ 0ti7smg+L9LQuRip+VUmtkG1fCKc9fQ=
+Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-582-ZIZyOojlOASGOtK0OiVeMQ-1; Mon,
- 08 Jun 2026 03:17:12 -0400
-X-MC-Unique: ZIZyOojlOASGOtK0OiVeMQ-1
-X-Mimecast-MFC-AGG-ID: ZIZyOojlOASGOtK0OiVeMQ_1780903031
-Received: from mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.111])
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-222-CoFDv1seP1mfFXbpPSzoVw-1; Mon,
+ 08 Jun 2026 03:17:13 -0400
+X-MC-Unique: CoFDv1seP1mfFXbpPSzoVw-1
+X-Mimecast-MFC-AGG-ID: CoFDv1seP1mfFXbpPSzoVw_1780903032
+Received: from mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.93])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 8A1A31955E94; Mon,  8 Jun 2026 07:17:00 +0000 (UTC)
+ by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 10B2719560B1; Mon,  8 Jun 2026 07:17:12 +0000 (UTC)
 Received: from localhost (unknown [10.44.22.16])
- by mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id EB559180049F; Mon,  8 Jun 2026 07:16:58 +0000 (UTC)
+ by mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id 3BD011800480; Mon,  8 Jun 2026 07:17:09 +0000 (UTC)
 From: =?utf-8?q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>
-Date: Mon, 08 Jun 2026 11:16:22 +0400
-Subject: [PATCH v2 04/33] scripts/lsan_suppressions: suppress fontconfig leaks
+Date: Mon, 08 Jun 2026 11:16:24 +0400
+Subject: [PATCH v2 06/33] glib-compat: add fallback for g_clear_fd/g_autofd
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
-Message-Id: <20260608-b4-ui-v2-4-9ea6355ea08f@redhat.com>
+Message-Id: <20260608-b4-ui-v2-6-9ea6355ea08f@redhat.com>
 References: <20260608-b4-ui-v2-0-9ea6355ea08f@redhat.com>
 In-Reply-To: <20260608-b4-ui-v2-0-9ea6355ea08f@redhat.com>
 To: qemu-devel@nongnu.org
@@ -67,24 +67,24 @@ Cc: Paolo Bonzini <pbonzini@redhat.com>,
  Peter Maydell <peter.maydell@linaro.org>, 
  Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>, 
  =?utf-8?q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>
-X-Developer-Signature: v=1; a=openpgp-sha256; l=842;
+X-Developer-Signature: v=1; a=openpgp-sha256; l=1408;
  i=marcandre.lureau@redhat.com; h=from:subject:message-id;
- bh=3FLGohYn6yxaHskRhEfW2sASVFQSoADTVQldsLNnhHQ=;
- b=owEBbQKS/ZANAwAKAdro4Ql1lpzlAcsmYgBqJmxIsmyj4dpHC8QwMKXSF8wcic02Pz4GZjHK8
- vX1cbBD8paJAjMEAAEKAB0WIQSHqb2TP4fGBtJ29i3a6OEJdZac5QUCaiZsSAAKCRDa6OEJdZac
- 5espEACe7yPFCosPWFi2BoI0CKpg2PvWwxrYPKDEZxGhR5TyWPG9oFepCaedzZbNlaTlKswRnnJ
- SKlqtxlKuVc20cxK3L/o+RRr+5neWUboeYelKEMrIZ2qJOJiX6F1cIoCpwYsL8sGEc15Rwfesx5
- po+4iFSYfBts0fEZ034kvDfDy7rvDpXwy4lLfV1Zn89luVLgsnZzHI18CPwWxyC8q2H9Rn6JsES
- G7noCyXESeOcBDZE93/RCY+MlzISqfvRxwzIXfJY4uDsokvryeDnegwGU67ltsppa62gYet7e5V
- zaVgtXyxP/9527+ohyZtXez1Fo8nP1IrBV66Nfp3DiSXzlZ2QOM5oB7389TziMYX8pY6a2IaIVK
- b4t9KLr26isnhafS3tBPEintHeInNAC8JRs1DCFfIoPkTDgy69xiZNsVDZJNlymJnAxTR2AIvYB
- SARmO3wUrSAXZBMtBLpQMSJCqQ3EAaDjCuaNVlgPwTszs6+ui3TGl+iIxLQ/KnZN8NENDWQOTsb
- d1yXZhTM/Df9AWvvKOWkO9ot3xuU+4tylyksTKrp6BCn3+l0wKhYXYDPGos/LA0o2DQGVJkNlRM
- GcNCnOKGwU0olFekExFphHog/N2GwOD/7m7XgQK85Y3g2BI3VSbOX1Wz+lXlWL4tgGSUrjNdA35
- V0eHlgFrMWmZWEg==
+ bh=yIivtAt+njPmx4qztb8O8h6ia85KP5LqwxILrMj9U00=;
+ b=owEBbQKS/ZANAwAKAdro4Ql1lpzlAcsmYgBqJmxIgWyIOIRXmjCwAXcRk11LXemF4Y0nTEQZm
+ EskNzS/BduJAjMEAAEKAB0WIQSHqb2TP4fGBtJ29i3a6OEJdZac5QUCaiZsSAAKCRDa6OEJdZac
+ 5aiUEACTfCMbkEAocgRTpkAI/x9fRrFeywZ3zQ+3SRAqTkZ4ua5ifb4JYcLJzarY4i9HQPiIrDJ
+ fzlxlazgik8VCfDWOzt+zuU8nvwdf8jOzTSELa7rNGYduKfoAVAwSPXJgok+5KXUwlSiH7YFWBU
+ gzdQ2Xb2qStB5F1KXBrrg82Z8QXh3XoxuIyM6q0n5sDkvpXY2xdKFJgS3HoIqPYReznixUZnBHn
+ 0r70Q/G4aYwU0yQS0t8pghPX6aGCLFYfxY1txv8JYjYljtX1GP7SyMQvjxkzFT0YFAfilXJ6KMQ
+ TZ0HgAjsWcj4n1nGsdnosX7WKlVib2SKAbOqMfA287HpJ3wH8l3B696uS/w4obu1NouJm9xvffB
+ 4E0iWBrZaf9NQTlzbtq4/t0BFtqAJmORAV1oJwwYJjQJiJj/O1lDlTTfDI1j1OBFyRLwMWzDIMz
+ ezPgSygDQnDO0c36FA+TEUoiwcQd6ZHK+ucPBFnJ3M8ozNtc90QvkSgky+nJkn8vigaltut2uwC
+ 25YBx5PxVBTsAuYnIXwxLhfx7yO/lWREM+UPp/h9aecxedFv7F06w+aZ4PrLkJveUJ7KtfduaAj
+ g4WNxBZLmHxXd61g2/9yQs5/gZB/dILAclbDVGoq1hf0Vc4gAfD0QIIpIeRUQxCkbJTGTHIctkJ
+ 2oqs/ZGy/vWLJvA==
 X-Developer-Key: i=marcandre.lureau@redhat.com; a=openpgp;
  fpr=87A9BD933F87C606D276F62DDAE8E10975969CE5
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.111
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.93
 Received-SPF: pass client-ip=170.10.133.124;
  envelope-from=marcandre.lureau@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
@@ -111,28 +111,60 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Those are annoying reports for gtk/sdl etc.
+Those helpers were added in glib 2.76.
 
 Signed-off-by: Marc-André Lureau <marcandre.lureau@redhat.com>
 ---
- scripts/lsan_suppressions.txt | 4 ++++
- 1 file changed, 4 insertions(+)
+ include/glib-compat.h | 29 +++++++++++++++++++++++++++++
+ 1 file changed, 29 insertions(+)
 
-diff --git a/scripts/lsan_suppressions.txt b/scripts/lsan_suppressions.txt
-index 30256bc6d01..f3b827facff 100644
---- a/scripts/lsan_suppressions.txt
-+++ b/scripts/lsan_suppressions.txt
-@@ -10,6 +10,10 @@ leak:/lib64/libtcmalloc_minimal.so.4
- # libxkbcommon also leaks in qemu-keymap
- leak:/lib64/libxkbcommon.so.0
+diff --git a/include/glib-compat.h b/include/glib-compat.h
+index 2e32b90f051..32ee2afdcdf 100644
+--- a/include/glib-compat.h
++++ b/include/glib-compat.h
+@@ -30,6 +30,7 @@
+ #pragma GCC diagnostic ignored "-Wdeprecated-declarations"
  
-+# libfontconfig leaks are notorious, for ex
-+# https://gitlab.freedesktop.org/fontconfig/fontconfig/-/work_items/519
-+leak:libfontconfig.so
+ #include <glib.h>
++#include <glib/gstdio.h>
+ #if defined(G_OS_UNIX)
+ #include <glib-unix.h>
+ #include <sys/types.h>
+@@ -129,6 +130,34 @@ qemu_g_test_slow(void)
+ #define g_test_thorough() qemu_g_test_slow()
+ #define g_test_quick() (!qemu_g_test_slow())
+ 
++static inline gboolean g_clear_fd_qemu(int *fd_ptr, GError **error)
++{
++#if GLIB_CHECK_VERSION(2, 76, 0)
++    return g_clear_fd(fd_ptr, error);
++#else
++    int fd = *fd_ptr;
 +
- # g_set_user_dirs() deliberately leaks the previous cached g_get_user_*
- # values. This is documented in upstream glib's valgrind-format
- # suppression file:
++    *fd_ptr = -1;
++
++    if (fd < 0) {
++        return TRUE;
++    }
++
++    return g_close(fd, error);
++#endif
++}
++#define g_clear_fd(fd, err) g_clear_fd_qemu(fd, err)
++
++#if !GLIB_CHECK_VERSION(2, 76, 0)
++static inline void _g_clear_fd_ignore_error(int *fd_ptr)
++{
++    int errsv = errno;
++    g_clear_fd(fd_ptr, NULL);
++    errno = errsv;
++}
++#define g_autofd __attribute__((cleanup(_g_clear_fd_ignore_error)))
++#endif
++
+ #pragma GCC diagnostic pop
+ 
+ #ifndef G_NORETURN
 
 -- 
 2.54.0
