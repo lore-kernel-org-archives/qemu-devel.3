@@ -4,56 +4,57 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C0F0ECD8C92
-	for <qemu-devel@archiver.kernel.org>; Mon,  8 Jun 2026 07:24:23 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C5E54CD8C8E
+	for <qemu-devel@archiver.kernel.org>; Mon,  8 Jun 2026 07:24:56 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wWUH9-0003NB-9q; Mon, 08 Jun 2026 03:19:59 -0400
+	id 1wWUGr-00035h-Mp; Mon, 08 Jun 2026 03:19:41 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1wWUGb-0002oo-Vo
- for qemu-devel@nongnu.org; Mon, 08 Jun 2026 03:19:29 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ id 1wWUGV-0002eJ-1C
+ for qemu-devel@nongnu.org; Mon, 08 Jun 2026 03:19:20 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1wWUGZ-0000xO-Fv
- for qemu-devel@nongnu.org; Mon, 08 Jun 2026 03:19:24 -0400
+ id 1wWUGT-0000qr-Dn
+ for qemu-devel@nongnu.org; Mon, 08 Jun 2026 03:19:18 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1780903162;
+ s=mimecast20190719; t=1780903156;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=smITB6zL39eWiVsZ5X8YQmvcTjlNu7U6xyC2M1fco68=;
- b=M3o9wGsm24lD3bCUCmw/wSrBaTEYOAu7iQpj1nttfglTRrBmG+QLCTKyFgAuamw0oD29yU
- EVO6sAPtdIZHKZDc9+BbZJzctZeyPOJGXGqCjkeRzjV0ysa2dhAj1mqpwjkWNGnk1J0WXf
- O+pcc+bpzrBH0qBS2qFw34XJ82KIRlk=
-Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
+ bh=+H65yUMS8QFZ0xHQwMaM4OHCR//vhW9gwvM6NoXdvEg=;
+ b=ef/WV/BHz+nuMmXUrbd3oqVe2k0TtpAT99/E656pRf+5SQ6yYNMmWWvT06tjIrBiUCzBji
+ EyqCM+dXeYfO9cL5BFTKSHF5usu+1wvHgYgXveHSg/nGN5568MWpKmuuxYg0kilhMbhZ6T
+ Rxi+yfmwSM6g0GsfJsCsGWMrn2YNg9M=
+Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-618-jWHCaYTnNTqlvzXSaGdUeg-1; Mon,
- 08 Jun 2026 03:19:21 -0400
-X-MC-Unique: jWHCaYTnNTqlvzXSaGdUeg-1
-X-Mimecast-MFC-AGG-ID: jWHCaYTnNTqlvzXSaGdUeg_1780903160
-Received: from mx-prod-int-10.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-10.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.95])
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-201-8eS3cnGiOi2_rEUPb7YuzA-1; Mon,
+ 08 Jun 2026 03:19:00 -0400
+X-MC-Unique: 8eS3cnGiOi2_rEUPb7YuzA-1
+X-Mimecast-MFC-AGG-ID: 8eS3cnGiOi2_rEUPb7YuzA_1780903138
+Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 2D5DD1800750; Mon,  8 Jun 2026 07:19:20 +0000 (UTC)
+ by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id B01EA19560A3; Mon,  8 Jun 2026 07:18:58 +0000 (UTC)
 Received: from localhost (unknown [10.44.22.16])
- by mx-prod-int-10.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id D0D11763; Mon,  8 Jun 2026 07:19:18 +0000 (UTC)
+ by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id C02593008B34; Mon,  8 Jun 2026 07:18:57 +0000 (UTC)
 From: =?utf-8?q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>
-Date: Mon, 08 Jun 2026 11:16:48 +0400
-Subject: [PATCH v2 30/33] ui/console: register console in QOM tree dynamically
+Date: Mon, 08 Jun 2026 11:16:44 +0400
+Subject: [PATCH v2 26/33] ui/gtk: move global display settings out of
+ per-console init
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
-Message-Id: <20260608-b4-ui-v2-30-9ea6355ea08f@redhat.com>
+Message-Id: <20260608-b4-ui-v2-26-9ea6355ea08f@redhat.com>
 References: <20260608-b4-ui-v2-0-9ea6355ea08f@redhat.com>
 In-Reply-To: <20260608-b4-ui-v2-0-9ea6355ea08f@redhat.com>
 To: qemu-devel@nongnu.org
@@ -67,34 +68,35 @@ Cc: Paolo Bonzini <pbonzini@redhat.com>,
  Peter Maydell <peter.maydell@linaro.org>, 
  Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>, 
  =?utf-8?q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>
-X-Developer-Signature: v=1; a=openpgp-sha256; l=1885;
+X-Developer-Signature: v=1; a=openpgp-sha256; l=3093;
  i=marcandre.lureau@redhat.com; h=from:subject:message-id;
- bh=gHM3wO/P2ne1JXOvnW4MgBu4jfpvTvZCkSPD3/MPa0o=;
- b=owEBbQKS/ZANAwAKAdro4Ql1lpzlAcsmYgBqJmxNFhto47ZXxJcuCkL36/QJ5coCohAPTUODP
- kaAN/Ne2n2JAjMEAAEKAB0WIQSHqb2TP4fGBtJ29i3a6OEJdZac5QUCaiZsTQAKCRDa6OEJdZac
- 5fcOD/9IvqdxetlvLZhAqZdLu5vUxPNbaAl0LYNzo9dFOT5kAsAoStmdcuFw+9QkLoMfEhLLkyq
- AfkNpn/lliTw5hU9QSTj7s6y/R4MyqSYFPTZGHBWVbxmbcs2iEqFfs6+pvzKwb7acZo4mMU7uw2
- tewOp+XDWf2hzKQbEIPZdvxAs6kAOQ/Ypl3pmCGGHRM7vkuf5qkMUFl2bprvzjQ4I2o63BoQjNp
- 9vvOPxwGyGr7lQZEEdnQWWva9OB/NC/iGPz2HhqSbv2jxAhQ1BQeOUkYmyFPAh+0rsfzSMQQyN0
- b16YXULHdOV7L5SGxR32oo8nZ88AHDSUy8dMpzjADcJHNBVLJ5VauqmWnhksffLDPm8mfQ9OJqZ
- ez/xdeEh0kwIXTh1ofsHGTC95eDkRGdu1ElPDF7dqNbNFht+mojSPV7SW8Rsw9vb5yUzrdkRr5K
- 8rJr4WBawwIZG4VuWTH/9fQgJjc5pBE9+yBSVZfX37fNjNbjTTmbgVmjktdHUTc2gvTK1VmoHAV
- 01bjWVU9buvC8fdULnOwXccLLJi37Dc3kIn/H6J6xWmonMblEafqfv9rPLMbSOz+g1qHpmHUAZn
- tM3QJepcM23g00/1W8Z9pLjT98rHhzRsr3Y3VL7haq6lc/Afs7kx0qaxd1ZWTGfCerzo/D8TaPd
- MDepFo6OwdMNqmQ==
+ bh=T3Lt4cLR7Bg9GWH2jYmqVlSV1/LktAb6F8RB4zswtXA=;
+ b=owEBbQKS/ZANAwAKAdro4Ql1lpzlAcsmYgBqJmxMll2gy036aC14VVKW29DciojsX8UtOM05Q
+ IgjlDUM0DiJAjMEAAEKAB0WIQSHqb2TP4fGBtJ29i3a6OEJdZac5QUCaiZsTAAKCRDa6OEJdZac
+ 5Xe6D/wOlzc4AskBiy2Bm+/yc0foFA0kpcJNppbM7qQL//jnz/JYSTX8JETnAKwdh6znH7SsRT5
+ yweTn/IM9lxWtHMbM/qlc9hxHd/oa+s2wZ4NWpJab4zf0gidUiLwfrKt75PM9hRB6V5LZimyCU+
+ KZwcPkpY+Iirphuger/DvHx7IeN7X2ZrCB2hMLBb873KYeTX5k0373qNiL37xl/7613RLY0AXKB
+ KmkqjS5oBJhWh3KVSbsoQT7KxPuSBCNtTLdAeWHvkntq+nK+w/1f3AUsu5hMiwYSFqFwmsOVcx0
+ L7YAhZaJIfKffn3H23Kkk5g1TlAKSbNcI3Mzho2GWwUzYHQtuiIXEe258bj089lUmiqP8swAQgB
+ 6h/1IjP6zq98RjFSunJob7A7h5N44jdlkevSRyoxU/lg9qRhFGqokCdiMxQFAvquY3osHvOzwEc
+ vy8TtLXmXARt+2u5Bk9rc+tyHL3KpG5643gNl43XHv/Rn/0GhhPv/X5fNLq+OYJRD+afHHb370A
+ LVtqVCub1lONSrWx34ZfR11oT+jGfH0a/p7WqIjOG00iNrlBJHkJbzOf1q6do3GIJez3OVzZJCB
+ TzRaCUpoSrTdM3TebfoWLlmL8VvxYyMQIj/Z3TtL8t+yuqbbr3Tu6YK4SIoIzzKtReyJBNvcknD
+ HbHQKW7+SUHGd2g==
 X-Developer-Key: i=marcandre.lureau@redhat.com; a=openpgp;
  fpr=87A9BD933F87C606D276F62DDAE8E10975969CE5
-X-Scanned-By: MIMEDefang 3.6 on 10.30.177.95
-Received-SPF: pass client-ip=170.10.133.124;
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
+Received-SPF: pass client-ip=170.10.129.124;
  envelope-from=marcandre.lureau@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -24
-X-Spam_score: -2.5
-X-Spam_bar: --
-X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.445,
+X-Spam_score_int: 8
+X-Spam_score: 0.8
+X-Spam_bar: /
+X-Spam_report: (0.8 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.445,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_SBL_CSS=3.335, SPF_HELO_PASS=-0.001,
+ SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -110,64 +112,95 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Consoles created after init_displaystate() (e.g. hotplugged
-display devices) were never added to the /backend/console[N]
-QOM tree. Extract qemu_console_add_to_qom() and call it from
-qemu_console_register() when the display is already initialized.
+Move zoom_to_fit, keep_aspect_ratio and touch_slots initialisation
+from gd_vc_gfx_init() to gd_create_menu_view(). These are global
+display settings that should be set once after all consoles are
+created, not repeated on every per-console init (where the last
+iteration's values silently win).
 
 Signed-off-by: Marc-André Lureau <marcandre.lureau@redhat.com>
 ---
- ui/console.c | 17 ++++++++++++-----
- 1 file changed, 12 insertions(+), 5 deletions(-)
+ ui/gtk.c | 46 +++++++++++++++++++++++-----------------------
+ 1 file changed, 23 insertions(+), 23 deletions(-)
 
-diff --git a/ui/console.c b/ui/console.c
-index 975eaf15706..e01d893df4b 100644
---- a/ui/console.c
-+++ b/ui/console.c
-@@ -376,6 +376,13 @@ void qemu_text_console_put_string(QemuTextConsole *s, const char *str, int len)
-     }
+diff --git a/ui/gtk.c b/ui/gtk.c
+index 5bc2a04b43f..e86b618f770 100644
+--- a/ui/gtk.c
++++ b/ui/gtk.c
+@@ -2269,8 +2269,6 @@ static GSList *gd_vc_gfx_init(GtkDisplayState *s, VirtualConsole *vc,
+                               GSList *group, GtkWidget *view_menu)
+ {
+     const DisplayChangeListenerOps *ops = &dcl_ops;
+-    bool zoom_to_fit = false;
+-    int i;
+ 
+     vc->label = qemu_console_get_label(con);
+     vc->s = s;
+@@ -2350,26 +2348,6 @@ static GSList *gd_vc_gfx_init(GtkDisplayState *s, VirtualConsole *vc,
+     gd_connect_vc_gfx_signals(vc);
+     group = gd_vc_menu_init(s, vc, idx, group, view_menu);
+ 
+-    if (qemu_console_ui_info_supported(vc->gfx.dcl.con)) {
+-        zoom_to_fit = true;
+-    }
+-    if (s->opts->u.gtk.has_zoom_to_fit) {
+-        zoom_to_fit = s->opts->u.gtk.zoom_to_fit;
+-    }
+-    if (zoom_to_fit) {
+-        gtk_menu_item_activate(GTK_MENU_ITEM(s->zoom_fit_item));
+-        s->free_scale = true;
+-    }
+-
+-    s->keep_aspect_ratio = true;
+-    if (s->opts->u.gtk.has_keep_aspect_ratio)
+-        s->keep_aspect_ratio = s->opts->u.gtk.keep_aspect_ratio;
+-
+-    for (i = 0; i < INPUT_EVENT_SLOTS_MAX; i++) {
+-        struct touch_slot *slot = &touch_slots[i];
+-        slot->tracking_id = -1;
+-    }
+-
+     return group;
  }
  
-+static void qemu_console_add_to_qom(QemuConsole *con)
-+{
-+    g_autofree gchar *name = g_strdup_printf("console[%d]", con->index);
-+    object_property_add_child(object_get_container("backend"),
-+                              name, OBJECT(con));
-+}
-+
- static void
- qemu_console_register(QemuConsole *c)
- {
-@@ -413,6 +420,10 @@ qemu_console_register(QemuConsole *c)
-             }
-         }
-     }
-+
-+    if (phase_check(PHASE_MACHINE_READY)) {
-+        qemu_console_add_to_qom(c);
-+    }
- }
- 
- static void
-@@ -1089,17 +1100,13 @@ void qemu_console_remove_notifier(Notifier *notifier)
-  */
- DisplayState *init_displaystate(void)
- {
--    gchar *name;
+@@ -2379,7 +2357,8 @@ static GtkWidget *gd_create_menu_view(GtkDisplayState *s, DisplayOptions *opts)
+     GtkWidget *view_menu;
+     GtkWidget *separator;
      QemuConsole *con;
+-    int vc;
++    bool zoom_to_fit = false;
++    int vc, i;
  
-     QTAILQ_FOREACH(con, &consoles, next) {
-         /* Hook up into the qom tree here (not in object_new()), once
-          * all QemuConsoles are created and the order / numbering
-          * doesn't change any more */
--        name = g_strdup_printf("console[%d]", con->index);
--        object_property_add_child(object_get_container("backend"),
--                                  name, OBJECT(con));
--        g_free(name);
-+        qemu_console_add_to_qom(con);
+     view_menu = gtk_menu_new();
+     gtk_menu_set_accel_group(GTK_MENU(view_menu), s->accel_group);
+@@ -2453,6 +2432,27 @@ static GtkWidget *gd_create_menu_view(GtkDisplayState *s, DisplayOptions *opts)
+         v = g_new0(VirtualConsole, 1);
+         g_ptr_array_add(s->vcs, v);
+         group = gd_vc_gfx_init(s, v, con, vc, group, view_menu);
++        if (qemu_console_ui_info_supported(con)) {
++            zoom_to_fit = true;
++        }
++    }
++
++    if (s->opts->u.gtk.has_zoom_to_fit) {
++        zoom_to_fit = s->opts->u.gtk.zoom_to_fit;
++    }
++    if (zoom_to_fit) {
++        gtk_menu_item_activate(GTK_MENU_ITEM(s->zoom_fit_item));
++        s->free_scale = true;
++    }
++
++    s->keep_aspect_ratio = true;
++    if (s->opts->u.gtk.has_keep_aspect_ratio) {
++        s->keep_aspect_ratio = s->opts->u.gtk.keep_aspect_ratio;
++    }
++
++    for (i = 0; i < INPUT_EVENT_SLOTS_MAX; i++) {
++        struct touch_slot *slot = &touch_slots[i];
++        slot->tracking_id = -1;
      }
  
-     return display_state;
+ #if defined(CONFIG_VTE)
 
 -- 
 2.54.0
