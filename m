@@ -4,105 +4,67 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 727EFCD8C8C
-	for <qemu-devel@archiver.kernel.org>; Sun,  7 Jun 2026 20:47:32 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E62B5CD8C9D
+	for <qemu-devel@archiver.kernel.org>; Mon,  8 Jun 2026 00:20:48 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wWKOD-0005uL-ON; Sun, 07 Jun 2026 16:46:37 -0400
+	id 1wWNil-0004mw-77; Sun, 07 Jun 2026 20:20:03 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jcmvbkbc@gmail.com>)
- id 1wWKOB-0005tM-Dt
- for qemu-devel@nongnu.org; Sun, 07 Jun 2026 16:46:35 -0400
-Received: from mail-qk1-x735.google.com ([2607:f8b0:4864:20::735])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <jcmvbkbc@gmail.com>)
- id 1wWKOA-0001GM-4d
- for qemu-devel@nongnu.org; Sun, 07 Jun 2026 16:46:35 -0400
-Received: by mail-qk1-x735.google.com with SMTP id
- af79cd13be357-9159477c893so473507885a.0
- for <qemu-devel@nongnu.org>; Sun, 07 Jun 2026 13:46:33 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1780865193; cv=none;
- d=google.com; s=arc-20240605;
- b=aWD7buvKSmcbmc0TJGnbzLQsZBh/FUQpWOMVE9mToaIIlwUFwTRvNMRM3vg2BafPYy
- w7FZ1VtgS32oeTVPKFn92gH+D0nnOswxeOqVA/Djf7WJt/qhRy05ukAii+frqb6Nyklo
- KAI01nvCDfjsGIlyrpmEfQNPQzbzfnmGoNeXESCc0jc8DHe6BwQINWTRke+t5Dmztoxk
- u3Joq1XGF33Ogl2pIusEuPWZNFFwQNLGYHf21RIrJR08hL8h/xv5zPBy+AYsaf45eXnl
- n0qQCQXlJgZMf28CnhTIbcFLSwLTCo0KuWYeiQo77rAcPBApS9lQdxkWsSpT7gCxDH18
- fdKw==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
- s=arc-20240605; 
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:dkim-signature;
- bh=eQnjQoXnP+z8OYaeZT+X+pfOXJDNjEgiA1wJQR1dN90=;
- fh=2NkPUOH/T6obL5oX5qBYKhCWscG9yjQJvLJ7uC9v4/s=;
- b=XFNDG3ZyTx2CzEIdgtVgNbZ0W6eyrjYzlyr4TxwTpmVXGeL0lOHma9I8Eh1x3KaNOC
- UlzfMXB9N+F134r7Fnq2IgJlS5WTZx4YELZDwy71maSEVhmKRj1JmX+HAliNdGcuvQwU
- FdRG1RZA6AWQJc8OWZOp2ks/jlhsx7EadVBwgZYw1ijDuAViLVpXfng7n0ULTj9petlI
- k+/kZ4rkwe1EdSBYpEU8LbVBayijFe0pqqMWU+B7Cb8Bn7AEWVCzoDembPwOV/n3884j
- k3Eu7ZTtTf2TKcfAQSS/R/bRG0Nd+9FK4PblbTkSJze6pIBJXBW9/p3lrVpbnAoTyZiM
- pBwA==; darn=nongnu.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1780865193; x=1781469993; darn=nongnu.org;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:from:to:cc:subject:date
- :message-id:reply-to;
- bh=eQnjQoXnP+z8OYaeZT+X+pfOXJDNjEgiA1wJQR1dN90=;
- b=ozJibbQPBn3tPFH7b6n/cNVlM5zTZsIfSZvU8WrwY0YMLDjmR/mTF//BnInDh3GHnA
- aHO9cly/OJG/hhj2triv6b+lULnUp6OoVR7V+EjODUPkxeLHxfnCoHRf/ISbXf2GSDc7
- jf6c7yAbtZ58+Hp0UCl4G8QeQoZKHufgeuXDEIN3kQ02HEclFDa0qRxL/qwhXEdEgB7W
- jxMlmgYgnCnuxaQprt8Vi2fOVf6cU6y4mpoDpfM6BJUvePXcRK6P867i6VoImzsiGy3u
- FRHQg/DF2jOOIFIOvJ+7rJ7AWBA+Oo37H1GmD2n6N4zGC9Kecz0y3mnyjX4zwnxHcxCS
- YVGw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1780865193; x=1781469993;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to;
- bh=eQnjQoXnP+z8OYaeZT+X+pfOXJDNjEgiA1wJQR1dN90=;
- b=tH+qHkYpRZRTQXM6I3Vs1C4uPYQfkhsUkRchWkT2yVwcXluNIA2NkRulKMifdx1eAf
- MrLTa9T3KsmpyUMTX+MFVoUS80BBKV8y6fdDpT6yXnjf/Oc325FFoMFUtzMHXYOj9pOv
- 17UoPJ/h7eiW/0OfpV0qGp6kcjWIkUFoZzDntNLrRk6RDpneFsVbBdVwmKzvdk9ggL7a
- hIXVYc8df0a9Ue4HHT0BXflyVqpYWkrUCDmWhca4HCEjdgKehFsquNgWBYJBYyIxECC2
- qO3UUWV8j7EIDiPfyA+vuXQ74J/7OoGHapVSW5RgskXW1wQAVt9KxfwzVTf7iuiY88UH
- 7EZg==
-X-Gm-Message-State: AOJu0YzeRs1jx9WG8g2iJDslQEtCBm22sRzXFp2mEJUfslOSByxoupPa
- Ma/dSvyy/dEKt49QINGQa9d+XjNxC/Gv/oE6z15LqyoSuBuOZjoDg4hFW6sfwBN7ZXTYqyO8fgz
- zeyrf/Aq+ZdZBBjBoYd5MSCSv84OdXXc=
-X-Gm-Gg: Acq92OGWfLT5yX4lnQHGJGfJbwgTZxqa3AHMStADZh0k1lTuU9Oj3TH6tIKawjXPCxY
- t/acg8axrfZkmjmTNFbDAVmSlkGJ8Ah3SIDNQLPDsln63Z9hRtk2ppxPXe7wFqBC+QlRjAFQug0
- 19g3NYpLdwrogsvFXcelPcJaJ+hks0wzm7FTr95Drz+53Ez2z1QuePphNdB3CBgf9/qo4Jj8NsS
- Uq0NOIyrp419Xp73yL+z51v054tU/ANbyUOK0o8dt6NN4ZDYcBSFRFWzFfIn9h60N1JW6mI6ndL
- d2Bmu0Aqk9Pc0rx/4vE+uCMYmbINwiDz91yYDt/SWLZmarIft/p7MCno/P6TnlsAG5fBPTKjYtL
- xEKjk6YfG/9djbeJZNlEbwYLXjIHw0LVbzTn7
-X-Received: by 2002:a05:620a:690d:b0:915:8865:dc01 with SMTP id
- af79cd13be357-915a9da7f30mr2206249685a.46.1780865193005; Sun, 07 Jun 2026
- 13:46:33 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <gshan@redhat.com>) id 1wWNij-0004mD-GZ
+ for qemu-devel@nongnu.org; Sun, 07 Jun 2026 20:20:01 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <gshan@redhat.com>) id 1wWNih-0004a2-Li
+ for qemu-devel@nongnu.org; Sun, 07 Jun 2026 20:20:01 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1780877998;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding;
+ bh=5vaHIIQFViOS2iqOdyLp/QUUrpdLIRe+sbrKu+JL6xs=;
+ b=IrZWSfyVHgMAm0nOmOt4+SXjmS3d7iX+7y4xPtKkJbiHKbguOIxRFfKmwdHjWvtZNBoLzM
+ BfRCBMO4JsBSjjSRseW1AHQpczDW9pa1cl/DRjZ42XuQ/tF+7UR0JdbKWSREhBQ5Shzei0
+ hsbAolLu0gbCk7dwNAngPaIEvhy8S9s=
+Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-310-MeEc67aQP7Ghu_Pt6rDX9Q-1; Sun,
+ 07 Jun 2026 20:18:37 -0400
+X-MC-Unique: MeEc67aQP7Ghu_Pt6rDX9Q-1
+X-Mimecast-MFC-AGG-ID: MeEc67aQP7Ghu_Pt6rDX9Q_1780877916
+Received: from mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.93])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id DCA6B18004A9; Mon,  8 Jun 2026 00:18:35 +0000 (UTC)
+Received: from gshan-thinkpadx1nanogen2.rmtau.csb (unknown [10.64.136.3])
+ by mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 5D3BE1800480; Mon,  8 Jun 2026 00:18:31 +0000 (UTC)
+From: Gavin Shan <gshan@redhat.com>
+To: qemu-devel@nongnu.org
+Cc: qemu-arm@nongnu.org, mst@redhat.com, jugraham@redhat.com,
+ shan.gavin@gmail.com
+Subject: [PATCH RFCv1] virtio: Inherit max bounce buffer size from bus parent
+ if possible
+Date: Mon,  8 Jun 2026 10:18:21 +1000
+Message-ID: <20260608001821.850921-1-gshan@redhat.com>
 MIME-Version: 1.0
-References: <20260604162849.199541-1-audgirka@redhat.com>
-In-Reply-To: <20260604162849.199541-1-audgirka@redhat.com>
-From: Max Filippov <jcmvbkbc@gmail.com>
-Date: Sun, 7 Jun 2026 13:46:22 -0700
-X-Gm-Features: AVVi8CffGr15_uQqnuTCg7lcEdGwrLM44w81uonYMbDbRlfta-OX6aH8XidhXjM
-Message-ID: <CAMo8BfJMJ+hf5MBptz-sFojCLAYdEsiduR1xbMhJs2kN1Ju-yQ@mail.gmail.com>
-Subject: Re: [PATCH] hw/xtensa: replace calloc with g_new0 in mx_pic
-To: Ajinkya Udgirkar <ajinkyaudgirkar@gmail.com>
-Cc: qemu-devel@nongnu.org, qemu-trivial@nongnu.org, 
- Ajinkya Udgirkar <audgirka@redhat.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2607:f8b0:4864:20::735;
- envelope-from=jcmvbkbc@gmail.com; helo=mail-qk1-x735.google.com
-X-Spam_score_int: 4
-X-Spam_score: 0.4
-X-Spam_bar: /
-X-Spam_report: (0.4 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1, DKIM_VALID=-0.1,
- DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
- FROM_LOCAL_NOVOWEL=0.5, HK_RANDOM_ENVFROM=0.999, HK_RANDOM_FROM=0.999,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=no autolearn_force=no
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.93
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=gshan@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -24
+X-Spam_score: -2.5
+X-Spam_bar: --
+X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.445,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -118,21 +80,106 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, Jun 4, 2026 at 9:29=E2=80=AFAM Ajinkya Udgirkar
-<ajinkyaudgirkar@gmail.com> wrote:
->
-> Replace libc calloc() with GLib g_new0() for consistency with the
-> rest of the QEMU codebase. g_new0() aborts on allocation failure
-> rather than returning NULL, which matches QEMU's allocation policy.
->
-> Signed-off-by: Ajinkya Udgirkar <audgirka@redhat.com>
-> ---
->  hw/xtensa/mx_pic.c | 2 +-
->  1 file changed, 1 insertion(+), 1 deletion(-)
+On the guest where a NVidia's GH100 card is passed from the host, the
+guest system hang can be observed on attempt to compile 'cuda-samples',
+as reported by Julia.
 
-Reviewed-by: Max Filippov <jcmvbkbc@gmail.com>
+   host$ lspci | grep GH100
+   0009:01:00.0 3D controller: NVIDIA Corporation GH100 [GH200 120GB / 480GB] (rev a1)
+   host$ /home/sandbox/gavin/qemu.main/build/qemu-system-aarch64 -accel kvm \
+         -machine virt,gic-version=host,ras=on,highmem-mmio-size=4T         \
+         -cpu host -smp cpus=32 -m size=8G                                  \
+         -drive file=/home/gavin/sandbox/images/disk.qcow2,if=none,id=d0    \
+         -device virtio-blk-pci,id=vb0,bus=pcie.0,drive=d0,num-queues=4     \
+         -device vfio-pci-nohotplug,host=0009:01:00.0,bus=pcie.1.0
 
---=20
-Thanks.
--- Max
+   guest$ cd cuda-samples/build
+   guest$ make -j 20 clean
+   guest$ make -j 20
+               :
+   [ 54%] Linking CUDA executable graphMemoryNodes
+   [ 54%] Built target graphMemoryNodes
+   <no more output afterwards, guest becomes frozen here>
+
+   guest$ qemu-system-aarch64: virtio: bogus descriptor or out of resources
+   [  555.814025] virtio_blk virtio0: [vda] new size: 268435456 512-byte logical blocks (137 GB/128 GiB)
+
+When the GPU's driver (NVidia open driver) is loaded on guest bootup,
+the memory blocks residing in the PCI BAR can be presented to the guest
+through memory hot-add. The page cache can be allocated from the hot added
+memory blocks when cuda-samples is being built. Afterwards, he page cache
+is sent to QEMU's virtio-blk device as part of the DMA request, the bounce
+buffer is used to accomodate the request as the corresponding memory
+region (MemoryRegion) is a RAM DEVICE region in qemu. For this specific
+case, false is returned from memory_access_is_direct() in the path where
+the DMA request is handled.
+
+  QEMU
+  ====
+  virtio_blk_handle_output
+    virtio_blk_handle_vq
+      virtio_blk_get_request
+        virtqueue_pop
+          virtqueue_split_pop
+            virtqueue_map_desc
+              address_space_map
+                memory_access_is_direct         # Return false
+                  memory_region_supports_direct_access
+
+  (qemu) info mtree
+          :
+  memory-region: pci_bridge_pci
+    0000000000000000-ffffffffffffffff (prio 0, container): pci_bridge_pci
+      0000042000000000-0000043fffffffff (prio 1, i/o): 0009:01:00.0 base BAR 4
+        0000042000000000-0000043fffffffff (prio 0, i/o): 0009:01:00.0 BAR 4
+          0000042000000000-000004379fffffff (prio 0, ramd): 0009:01:00.0 BAR 4 mmaps[0]
+
+By default, the max bounce buffer size is only 4096 bytes, even less
+than one page when the guest page is 64KB. This tries to fix the issue
+by inheriting the customized max bounce buffer size of the virtio bus's
+parent through property 'x-max-bounce-buffer-size' when the customized
+size is a larger one. With this applied, no guest system hang is seen
+with '-device virtio-blk-pci,...,x-max-bounce-buffer-size=268435456'.
+
+Reported-by: Julia Graham <jugraham@redhat.com>
+Signed-off-by: Gavin Shan <gshan@redhat.com>
+---
+ hw/virtio/virtio-bus.c | 14 ++++++++++++++
+ 1 file changed, 14 insertions(+)
+
+diff --git a/hw/virtio/virtio-bus.c b/hw/virtio/virtio-bus.c
+index cef944e015..e0933823f3 100644
+--- a/hw/virtio/virtio-bus.c
++++ b/hw/virtio/virtio-bus.c
+@@ -42,6 +42,7 @@ do { printf("virtio_bus: " fmt , ## __VA_ARGS__); } while (0)
+ /* A VirtIODevice is being plugged */
+ void virtio_bus_device_plugged(VirtIODevice *vdev, Error **errp)
+ {
++    AddressSpace *as;
+     DeviceState *qdev = DEVICE(vdev);
+     BusState *qbus = BUS(qdev_get_parent_bus(qdev));
+     VirtioBusState *bus = VIRTIO_BUS(qbus);
+@@ -100,6 +101,19 @@ void virtio_bus_device_plugged(VirtIODevice *vdev, Error **errp)
+                 return;
+             }
+         }
++    } else {
++        /*
++         * The maximal bounce buffer size of the virtio bus's parent may
++         * have been customized by property 'x-max-bounce-buffer-size'.
++         * Lets inherit the customized size if it's larger than the
++         * current one.
++         */
++        as = klass->get_dma_as ? klass->get_dma_as(qbus->parent) : NULL;
++        if (as) {
++            vdev->dma_as->max_bounce_buffer_size = MAX(
++                    vdev->dma_as->max_bounce_buffer_size,
++                    as->max_bounce_buffer_size);
++        }
+     }
+ }
+ 
+-- 
+2.54.0
+
 
