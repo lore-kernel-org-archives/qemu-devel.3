@@ -4,56 +4,56 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9136DCD8C9D
-	for <qemu-devel@archiver.kernel.org>; Mon,  8 Jun 2026 07:18:34 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 02A8FCD8C8E
+	for <qemu-devel@archiver.kernel.org>; Mon,  8 Jun 2026 07:18:51 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wWUFc-0000Yk-VD; Mon, 08 Jun 2026 03:18:25 -0400
+	id 1wWUFI-00080u-MQ; Mon, 08 Jun 2026 03:18:05 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1wWUFW-00007p-Gr
- for qemu-devel@nongnu.org; Mon, 08 Jun 2026 03:18:19 -0400
+ id 1wWUEu-0007jm-DI
+ for qemu-devel@nongnu.org; Mon, 08 Jun 2026 03:17:43 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1wWUFU-0000FX-SS
- for qemu-devel@nongnu.org; Mon, 08 Jun 2026 03:18:18 -0400
+ id 1wWUEs-0008RX-V6
+ for qemu-devel@nongnu.org; Mon, 08 Jun 2026 03:17:40 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1780903095;
+ s=mimecast20190719; t=1780903058;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=h0vBgMB+JfoVtADoFb3UEwzuxSvcYgxQQ4fbzcKMdy0=;
- b=ElrKC5V4EOmWKAV4d+b86tdj64n4PCbj6q+YNIK74Xjhi9pjg68u/eaAr4+mV+ASioiapA
- ZY9TpBYPJE7eUjArFpN3FhBjTFokrC/h3zVuhHXZqLsR320xuKC3kOPaOuiAYK3klwNYhE
- NbbTWxOe6XS+/8aDoFXRIDdyql7D5V0=
-Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
+ bh=6K3XQqYyaBJEyhYGRQWW9UcrsUENmBwDbMiigmHod70=;
+ b=SCjTQoEp/aFEHNPS3r7g3/ccKYjXiHChuP1+FVH/hoi3N5pwkXDEaUmZiO9Ycs5UpLzBe8
+ 3oJTCuA7etU63ty3KvgkICkzw1C8NEhBQuYMzxttsBdt0hW6OiwLM1t65xmGQX6N+JQNQW
+ tQ/sVzGhj5oFMZ/RnnQMaFZmtoj4YNg=
+Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-125-bQXBGl8QMp2r6zpK2OvMlg-1; Mon,
- 08 Jun 2026 03:18:12 -0400
-X-MC-Unique: bQXBGl8QMp2r6zpK2OvMlg-1
-X-Mimecast-MFC-AGG-ID: bQXBGl8QMp2r6zpK2OvMlg_1780903091
-Received: from mx-prod-int-10.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-10.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.95])
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-333-oVPsncoXMDKsfeJxEs8C4w-1; Mon,
+ 08 Jun 2026 03:17:35 -0400
+X-MC-Unique: oVPsncoXMDKsfeJxEs8C4w-1
+X-Mimecast-MFC-AGG-ID: oVPsncoXMDKsfeJxEs8C4w_1780903053
+Received: from mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.17])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id E259F1800370; Mon,  8 Jun 2026 07:18:10 +0000 (UTC)
+ by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id A46BE180034B; Mon,  8 Jun 2026 07:17:33 +0000 (UTC)
 Received: from localhost (unknown [10.44.22.16])
- by mx-prod-int-10.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 87EE8765; Mon,  8 Jun 2026 07:18:09 +0000 (UTC)
+ by mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id 565CF1956053; Mon,  8 Jun 2026 07:17:31 +0000 (UTC)
 From: =?utf-8?q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>
-Date: Mon, 08 Jun 2026 11:16:35 +0400
-Subject: [PATCH v2 17/33] ui/spice-app: implement display cleanup
+Date: Mon, 08 Jun 2026 11:16:28 +0400
+Subject: [PATCH v2 10/33] ui: stop ui timer when closing
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
-Message-Id: <20260608-b4-ui-v2-17-9ea6355ea08f@redhat.com>
+Message-Id: <20260608-b4-ui-v2-10-9ea6355ea08f@redhat.com>
 References: <20260608-b4-ui-v2-0-9ea6355ea08f@redhat.com>
 In-Reply-To: <20260608-b4-ui-v2-0-9ea6355ea08f@redhat.com>
 To: qemu-devel@nongnu.org
@@ -67,24 +67,24 @@ Cc: Paolo Bonzini <pbonzini@redhat.com>,
  Peter Maydell <peter.maydell@linaro.org>, 
  Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>, 
  =?utf-8?q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>
-X-Developer-Signature: v=1; a=openpgp-sha256; l=1540;
+X-Developer-Signature: v=1; a=openpgp-sha256; l=738;
  i=marcandre.lureau@redhat.com; h=from:subject:message-id;
- bh=cpTjZniLMqEA6rNMksDOJAEvoDe9Yx6APfWnAl9Mp3Q=;
- b=owEBbQKS/ZANAwAKAdro4Ql1lpzlAcsmYgBqJmxKfYGxN1x0IGWez76xDdI/nkIc3Qza0+F2N
- 2K6UkwH2rKJAjMEAAEKAB0WIQSHqb2TP4fGBtJ29i3a6OEJdZac5QUCaiZsSgAKCRDa6OEJdZac
- 5ZvmD/sEUzpXfZXkjOVkI2IHQDwQ6fyMwrXnbnPn3KfRqzvYt8ENAIJ3I6OskDmsCt2+wqh5HR8
- ifi5V6/ZaufThq7GmVdcwLQoC0Mh1YMOVbUOsi4lnHc0TmtKZk/XGP/KUav+lQq4UDUTPf3qQjA
- X5MRDlghGUFSPxo3ZXS0/B53O45ehQD6qSvr0i6Z8oXbj9jUR5tqu7AOlJo2HXGdvvwfPcgtBJl
- gb+NCyR9JmWBxSLdQSdSwZT0F96fCzw0ZCoDN9HSjhMbJ7ZmTzGutm/cJRVC8SLcgJbZltHeGYY
- gDUWD6so0xswA7FPLgGh8sD+Jg4TEtFVuylZZ6qtz7i087JKr2ONWIkdodAc8dnHs+RtkIWiM9H
- OxYV19vj7ep907OOhkVNbS/AYIdPqgTizvaragfk4t+NLNy1gWdgRTrRv7mek2QdEqIbwDJL5NJ
- XZ8ckOcAAhET+n3rqzX3pD6BtmbD4qCZvVIP9YYO+dUDpUz1ljMWYFTWsdC3xJI4SJmegNrDWPw
- 008wHzU4XzJbLeMGlHQUKQDAvrymoXzNBODvXHwmdcovmNX8VIxiBifXZXyjyJCOerlGXDLXXVD
- gICMJu5z/i8+TRlzP7fVzoojT/zaLG8hLSucOPuNRtEPGDqxURsh52tKN4PwhqymtW1HkHngGPK
- UwJhp3M43uUXPHw==
+ bh=YUzpFgJn1xd0cDCfwxua7PPmtRu9gxO8rB3nqbkqdZI=;
+ b=owEBbQKS/ZANAwAKAdro4Ql1lpzlAcsmYgBqJmxJjqDtYesNtgsqNGnU0gH9W39QfXFrlYWnK
+ t5p4qDzU3KJAjMEAAEKAB0WIQSHqb2TP4fGBtJ29i3a6OEJdZac5QUCaiZsSQAKCRDa6OEJdZac
+ 5QocD/9MTrFCLXs2lJUrTnd24xpOf73yqqFoZbpjSn2icE8oMTvRmnc58aht+OHnQ1ZmGe8WxtJ
+ nWhgbZkIzE5FiEIo7pm83R2rFtQIvl5eXciewIp0saYDEUo1/GWFTTj1p5qf/u6M4pZHUKubivE
+ wGhzp1HKcoVrg2FcQ1Fn5RDyMJ31E5aELJzv6t8JBG+/z6U2JmxpV/kydefWuV7i1MuEV6RTm2N
+ dxAZJSQeyFe+iCNKaqM+vVHdridhr93/cKIXox2wuL8FOH3N8TgeBw0fvZoc+ZCLyx8yaBvCdYf
+ 1rLtbH3pHICyjis28US89yPAjrATccjYhyMg+C17xeABenQg9n0Z/owXSClz5syxvFBVf/3FJEk
+ BiFk7eMNdKeppb+ill7N8/DLgs8D6iYO+BHAf5y9cKjr/XHNvmoWMirtQTm46pQhueb3wm0tLGf
+ d13ljPwv5QRNNOGJinZM2m7zFxrfyRIpXA/nWBc+gb//HUGpIwnPAgE7Cu38Iej4RRXByWOfh1L
+ 75iYfqNebzf/UptZ/VrJ2AP2AGyDqTYJX2kNAaw5UV3W92lPIhmZkB/fcqekjErKJ8bYv1j6Eet
+ F+P6TH6jekz6g6fQuxJkV6J0K91VwFQBhLof4HVPxJ1DviQrIRfPGRL1OXmD7QJVJJ55jaEFGBs
+ 2SgcdPKQhHtvc8Q==
 X-Developer-Key: i=marcandre.lureau@redhat.com; a=openpgp;
  fpr=87A9BD933F87C606D276F62DDAE8E10975969CE5
-X-Scanned-By: MIMEDefang 3.6 on 10.30.177.95
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.17
 Received-SPF: pass client-ip=170.10.129.124;
  envelope-from=marcandre.lureau@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
@@ -110,56 +110,26 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Replace the atexit() handler with the display cleanup callback,
-reusing the existing spice_app_atexit() function.
+hwops is reset, so if the UI timer is pending it will crash.
 
+Fixes: 9588d67e72 ("console: minimal hotplug suport")
 Signed-off-by: Marc-André Lureau <marcandre.lureau@redhat.com>
 ---
- ui/spice-app.c | 10 +++++-----
- 1 file changed, 5 insertions(+), 5 deletions(-)
+ ui/console.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/ui/spice-app.c b/ui/spice-app.c
-index 0df7325e679..fe3df62bfa5 100644
---- a/ui/spice-app.c
-+++ b/ui/spice-app.c
-@@ -119,16 +119,17 @@ static const TypeInfo char_vc_type_info = {
-     .class_size = sizeof(VCChardevClass),
- };
+diff --git a/ui/console.c b/ui/console.c
+index a7c977d0c44..436444723a5 100644
+--- a/ui/console.c
++++ b/ui/console.c
+@@ -1136,6 +1136,7 @@ void qemu_graphic_console_close(QemuConsole *con)
+     trace_console_gfx_close(con->index);
+     object_property_set_link(OBJECT(con), "device", NULL, &error_abort);
+     qemu_graphic_console_set_hwops(con, &unused_ops, NULL);
++    timer_del(con->ui_timer);
  
--static void spice_app_atexit(void)
-+static void spice_app_cleanup(void)
- {
-     if (sock_path) {
-         unlink(sock_path);
-+        g_clear_pointer(&sock_path, g_free);
-     }
-     if (tmp_dir) {
-         rmdir(tmp_dir);
-+        tmp_dir = NULL;
-     }
--    g_free(sock_path);
--    g_free(app_dir);
-+    g_clear_pointer(&app_dir, g_free);
- }
- 
- static void spice_app_display_early_init(DisplayOptions *opts)
-@@ -146,8 +147,6 @@ static void spice_app_display_early_init(DisplayOptions *opts)
-         exit(1);
-     }
- 
--    atexit(spice_app_atexit);
--
-     if (qemu_name) {
-         app_dir = g_build_filename(g_get_user_runtime_dir(),
-                                    "qemu", qemu_name, NULL);
-@@ -218,6 +217,7 @@ static QemuDisplay qemu_display_spice_app = {
-     .type       = DISPLAY_TYPE_SPICE_APP,
-     .early_init = spice_app_display_early_init,
-     .init       = spice_app_display_init,
-+    .cleanup    = spice_app_cleanup,
-     .vc         = "vc",
- };
- 
+     if (con->gl) {
+         qemu_console_gl_scanout_disable(con);
 
 -- 
 2.54.0
