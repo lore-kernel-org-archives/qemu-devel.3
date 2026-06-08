@@ -4,114 +4,101 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D0E34CD8C9D
-	for <qemu-devel@archiver.kernel.org>; Mon,  8 Jun 2026 14:16:43 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0CA75CD8C92
+	for <qemu-devel@archiver.kernel.org>; Mon,  8 Jun 2026 14:19:38 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wWamF-0003Ca-Q6; Mon, 08 Jun 2026 10:16:31 -0400
+	id 1wWaov-00045I-Mr; Mon, 08 Jun 2026 10:19:17 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jrossi@linux.ibm.com>)
- id 1wWam7-0003Bj-EE; Mon, 08 Jun 2026 10:16:24 -0400
-Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jrossi@linux.ibm.com>)
- id 1wWam4-0003NX-WA; Mon, 08 Jun 2026 10:16:22 -0400
-Received: from pps.filterd (m0356516.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 6589kWE83408398; Mon, 8 Jun 2026 14:16:09 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
- :content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=pp1; bh=64xIJW
- w1AMKL8GO58zHE7O9D5ShUo66kzybtdjo60yI=; b=p1kB2J/vs0F4OyY4TaGDIy
- tzH7pC44bEtR7m2kyXVUhNWf49kSnICC7hsYNURy/DE+31oPQtn9sEOqyF2dSa8o
- vXUMUZX7lgU03h5ihFvnVsSyEnSCzgyEkx2zs19R9G6Wgz8DnbQcmtCckueL3E8U
- 7AYHKvommhECcNe/x3a0ypPakMqJ4T4+6xK1mDcIDBME5QzmsqzlUGsIFgp+WNyI
- Re02zOtK8hA8iOOceKugZbBsENkQ1bPq5kzCYyoTzPgfUKIX0mnQBstiE9iNKVSJ
- Fo+pstwHPUoeJsPkLCebOOZ/FBuAjf9HucWL5YwgoR8QkxJFI5S5I+6G85v4d90g
- ==
-Received: from ppma12.dal12v.mail.ibm.com
- (dc.9e.1632.ip4.static.sl-reverse.com [50.22.158.220])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4em8yhqtdk-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Mon, 08 Jun 2026 14:16:09 +0000 (GMT)
-Received: from pps.filterd (ppma12.dal12v.mail.ibm.com [127.0.0.1])
- by ppma12.dal12v.mail.ibm.com (8.18.1.7/8.18.1.7) with ESMTP id 658E4bf8005677;
- Mon, 8 Jun 2026 14:16:08 GMT
-Received: from smtprelay05.dal12v.mail.ibm.com ([172.16.1.7])
- by ppma12.dal12v.mail.ibm.com (PPS) with ESMTPS id 4emwvpwsw5-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Mon, 08 Jun 2026 14:16:08 +0000 (GMT)
-Received: from smtpav03.dal12v.mail.ibm.com (smtpav03.dal12v.mail.ibm.com
- [10.241.53.102])
- by smtprelay05.dal12v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 658EG8rs3605166
- (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Mon, 8 Jun 2026 14:16:08 GMT
-Received: from smtpav03.dal12v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id DF2B458063;
- Mon,  8 Jun 2026 14:16:07 +0000 (GMT)
-Received: from smtpav03.dal12v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id B6DE55803F;
- Mon,  8 Jun 2026 14:16:06 +0000 (GMT)
-Received: from [9.61.108.75] (unknown [9.61.108.75])
- by smtpav03.dal12v.mail.ibm.com (Postfix) with ESMTPS;
- Mon,  8 Jun 2026 14:16:06 +0000 (GMT)
-Message-ID: <ba4c0775-5679-478c-8b7b-cae9bc656a52@linux.ibm.com>
-Date: Mon, 8 Jun 2026 10:16:06 -0400
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1wWaot-000444-VB
+ for qemu-devel@nongnu.org; Mon, 08 Jun 2026 10:19:16 -0400
+Received: from mail-yx1-xb132.google.com ([2607:f8b0:4864:20::b132])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1wWaos-0003t5-6r
+ for qemu-devel@nongnu.org; Mon, 08 Jun 2026 10:19:15 -0400
+Received: by mail-yx1-xb132.google.com with SMTP id
+ 956f58d0204a3-6608c1a4215so5149049d50.0
+ for <qemu-devel@nongnu.org>; Mon, 08 Jun 2026 07:19:13 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1780928353; cv=none;
+ d=google.com; s=arc-20240605;
+ b=YSCr1sHyRzcvg0OkqXpxTj3EqgEz2jRRG56N//deFYC6nU/gqJuChdeN4dT1OBYVNR
+ ksDpzRfVUtIBpZnTAgdP3K/6aNRA1S3EuoBUxpKTqvAYjESLiwkqOcwywlqZhsnYYfOL
+ ic1aynV0PkvBLRFmb6mtT7zC+IUVhCu3M5PsOZZZ5I/u/lSVdMzdxD9kMuseylzB8UP1
+ UKhr0Q13XIeKHEqKYgymskdueJeBlQhLiJ07fJBcTiN6nwobnXy9990izq4J2nSRU0I+
+ 7Kds6E9Nzhy5WPpXLsHHoH7FzgtndV80/2ExN2xS3B3d56kYjVV6VWAE0U+8CdP5aeBI
+ f3zw==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
+ s=arc-20240605; 
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:dkim-signature;
+ bh=om0tzg0m4U5QCoIhM6Nq0tRE2axddiJx5RTHpKKTNqQ=;
+ fh=EozbU2Dip7ihBuM+OpDpcROKl5e201y/O7KnKTMuldA=;
+ b=TLondpP9bfKh472UlUh/EgZI1F1GkhMCclDzOtVJejQBvhUTYtf4nY1gx9N/6GlEGF
+ /CiszyUrraK5f1caji31JXM55Z/CQ7KVUlyI4xRS/ttYKEy894NLv+NAR/2gG0KljTzn
+ pWr35DD5we+IFGRH9APrERu2af7yfCrQLz8SBWMqjPwimkeVX1I+NvZu1BPsQpik/UTY
+ qNfQpOIdSztGZMXKbuyGJGtxQB6gKa7GWjBIAVYY5w4VGXnFvRwl8PZSmGIi81ekgtyT
+ gBV7/YYldxjbVOA02hjsTbGdnygCuROPXlIP3e6BJ2gB439QCPfUhRLEYhDDz+QO3NNg
+ Cx9w==; darn=nongnu.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1780928353; x=1781533153; darn=nongnu.org;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:from:to:cc:subject:date:message-id:reply-to;
+ bh=om0tzg0m4U5QCoIhM6Nq0tRE2axddiJx5RTHpKKTNqQ=;
+ b=pjhINbRS2jYG3F5pQi8xNzUK+N1tI+mH/SWAiRQHFp1ADk83wEscE9UJoult/Zs4ii
+ cqbXe1UJOjMc9ta+3ILnRkpcheAa5xWxX46g6DQFRzwkJA7R25I+JPjX1SXHuyOY2bIP
+ pTUI78dwcIRcm6YD1LBKPFVf3TkWfQCNasaDPcxJMrwhrexBE+OjS6pv0wmHUnJcpF1n
+ kKGYKhCNgy7wEhwLcaUaLzxDRWeBcBZGvGgY2bVWq4hg/FuTcZlmfU8mLFX0rbDb1rDs
+ wSiUF32yCfg659gvSwAl522L5uAeaD/11TFmo8S30mAXcSVVczyOEeBtoIuRVreP+txA
+ rh/A==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1780928353; x=1781533153;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=om0tzg0m4U5QCoIhM6Nq0tRE2axddiJx5RTHpKKTNqQ=;
+ b=L66v9jFGjwwr3apXI1IkhfoVkMZ5Z73skOg+EIaXjfxntorpxyQAg2EZCTwb8S3XFb
+ /2ip4m4gfHiJsnVVfymlGj2YGhXKgI3X02rr1CA3F5igLXOwSS065iJz9+3hztMTcNzh
+ JV46kTPXNXz8GXslqycIoU5PO+sE3z9MgKDi1zrWOp3IS53wzzNfL6q/SqWSRIcF7tnk
+ fFJViDSSFcNZj+FYKMfIHodJVNaHCfhvu8F6AxHkeS0533OzTlRHQes0oLeKyGyQSj7/
+ uETOF3xD6t0ykkKm/+oviFjyuw8qSsc4MVWfbMTxXR+NiPbaqEngXgQOITHIa6M9zK4L
+ XLYw==
+X-Gm-Message-State: AOJu0YzwfSzEF/B/SFo3Zk07zXiE6y7I7EqDWVq3bWpmNzXg9o/4iFCj
+ 6YcnZykXOu/byoTKyGKWQI92atf0Eu6fxOXZ7AmVGwW5FnG2GS4Zffird6iSM9JDuowEjGD30oF
+ yZ07yDX/LZFSF4BAtzVuTQ8tmI6mVS3J4XmAWc4yAfw==
+X-Gm-Gg: Acq92OFAVMp0hx1a3fP8oR+iFX6o6VhjQT0REYziMMO19io5mrXU5QPDDAFRZpg5Kur
+ g+0gak+uZukn1bw+VJTBjUAfw98T/FAYo/X59Jc6DTV+2w/jBa9yL6jzGTql//NJfuQkSoLda6E
+ ZzpgbYE25msbstIIbawRstd4E6HZT9HgaH2U1qGDPY782CAmeXH3SKzZx4j0PseWOsJyQk5oH6j
+ YV52cBQl4eFKomanJwUJcmH4V4O5dQjwOH3qYe5MT34lorJHKtoXlFpXhQ3aM/HwBL47SlqrzES
+ RhtVrfzARsae51p7jMqbEFHr8fokFG0j2t5en8oc6Y/J6TKXteA2GUHhD4t55nCcNA1alQVKDjD
+ qQD8et14hX1LD
+X-Received: by 2002:a05:690e:43d0:b0:660:689b:1509 with SMTP id
+ 956f58d0204a3-6610a792c76mr7390839d50.29.1780928352815; Mon, 08 Jun 2026
+ 07:19:12 -0700 (PDT)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v11 09/32] s390x/diag: Implement DIAG 320 subcode 2
-To: Zhuoying Cai <zycai@linux.ibm.com>, qemu-s390x@nongnu.org,
- qemu-devel@nongnu.org
-Cc: cohuck@redhat.com, berrange@redhat.com, richard.henderson@linaro.org,
- david@kernel.org, walling@linux.ibm.com, jjherne@linux.ibm.com,
- pasic@linux.ibm.com, borntraeger@linux.ibm.com, farman@linux.ibm.com,
- mjrosato@linux.ibm.com, iii@linux.ibm.com, eblake@redhat.com,
- armbru@redhat.com, alifm@linux.ibm.com, brueckner@linux.ibm.com,
- pierrick.bouvier@oss.qualcomm.com, jdaley@linux.ibm.com
-References: <20260505201905.997996-1-zycai@linux.ibm.com>
- <20260505201905.997996-10-zycai@linux.ibm.com>
- <ce623f2a-9247-4a67-98a0-7a180fdb88ca@linux.ibm.com>
- <f5998015-159a-4d67-b006-092d20d91c2c@linux.ibm.com>
-Content-Language: en-US
-From: Jared Rossi <jrossi@linux.ibm.com>
-In-Reply-To: <f5998015-159a-4d67-b006-092d20d91c2c@linux.ibm.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-X-TM-AS-GCONF: 00
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNjA4MDEzNCBTYWx0ZWRfX7xCvHhpjSzjj
- 6gMADdiV+d45XYSjjVVDb5h+GN7uV+VJDY3RiwhzkV3AFq56IXqx73hu5Rms0eR3EsMZa9qLt3j
- VaL5ayodyFt2/Rh9ZClhSVIste79/NVTwk9qEOO/Kgjuvcu6HxbbTKe9+g6iAo8oQwVYIrcUaag
- t5pTOwo1iJ011IaLN0H9At9tDmysbSOUGs3HElrwesxt2rhEp01inMNXyVqP4Tjofj2Pjiprr/g
- CAd10Uw8rnAR0dNOqPwnCb5xaFAwYF5KO5qwNPPb53AIZTS3b6aBQqwRqyJHnpV9UFPjy/0VHtM
- HIckI/nFDZqSL2u+DuvWLTktQWLoW+/xuJtLAy9DdGqPFtFc8MxP36vPbQni9oXvrS1ou3Oxeh3
- oignkxDq4qnmiL92a74joNvC4Ppto7YivHUrHVy4h9jbLKAG4PUrFteii0QVUBOi4Rq2KDXm/UD
- mCjEgurE7hlvkPCoOZg==
-X-Authority-Analysis: v=2.4 cv=HvFG3UTS c=1 sm=1 tr=0 ts=6a26cea9 cx=c_pps
- a=bLidbwmWQ0KltjZqbj+ezA==:117 a=bLidbwmWQ0KltjZqbj+ezA==:17
- a=IkcTkHD0fZMA:10 a=FelO9ux0wxsA:10 a=VkNPw1HP01LnGYTKEx00:22
- a=RnoormkPH1_aCDwRdu11:22 a=Y2IxJ9c9Rs8Kov3niI8_:22 a=x_i36jWCeggssP13cGMA:9
- a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
-X-Proofpoint-ORIG-GUID: pRWGTZgwM4hC3A42oppnublQJLT6i6Jm
-X-Proofpoint-GUID: pRWGTZgwM4hC3A42oppnublQJLT6i6Jm
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.125,FMLib:17.12.100.49
- definitions=2026-06-08_03,2026-06-05_02,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- impostorscore=0 clxscore=1015 lowpriorityscore=0 adultscore=0 suspectscore=0
- spamscore=0 priorityscore=1501 phishscore=0 malwarescore=0 bulkscore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2605210000 definitions=main-2606080134
-Received-SPF: pass client-ip=148.163.158.5; envelope-from=jrossi@linux.ibm.com;
- helo=mx0b-001b2d01.pphosted.com
-X-Spam_score_int: -26
-X-Spam_score: -2.7
+References: <20260604134422.359214-1-kraxel@redhat.com>
+In-Reply-To: <20260604134422.359214-1-kraxel@redhat.com>
+From: Peter Maydell <peter.maydell@linaro.org>
+Date: Mon, 8 Jun 2026 15:19:01 +0100
+X-Gm-Features: AVVi8Cff_dY1TE8lAoOpU9BdJH3uDvjH-ENKwuFiD2bnSV4UZyJjSx-SyH2d1sM
+Message-ID: <CAFEAcA9RnjQyxmBcBunrMq6EB=L=Oc4_aWQAYY8rVFr6mKWXog@mail.gmail.com>
+Subject: Re: [PATCH] add a note on -shim to direct kernel boot docs
+To: Gerd Hoffmann <kraxel@redhat.com>
+Cc: qemu-devel@nongnu.org, 
+ Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
+Content-Type: text/plain; charset="UTF-8"
+Received-SPF: pass client-ip=2607:f8b0:4864:20::b132;
+ envelope-from=peter.maydell@linaro.org; helo=mail-yx1-xb132.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
- RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -128,70 +115,81 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-
-
-On 6/5/26 3:20 PM, Zhuoying Cai wrote:
-> Thanks for the feedback!
+On Thu, 4 Jun 2026 at 14:45, Gerd Hoffmann <kraxel@redhat.com> wrote:
 >
-> On 5/24/26 6:32 PM, Jared Rossi wrote:
->>
->> On 5/5/26 4:18 PM, Zhuoying Cai wrote:
->>> [...]
->>> +
->>> +    rc = handle_hash(vce, cert, keyid_field_len);
->>> +    if (rc) {
->>> +        return -1;
->>> +    }
->>> +    hash_field_len = ROUND_UP(be16_to_cpu(vce->vce_hdr.hash_len), 4);
->>> +
->>> +    rc = handle_cert(vce, cert, hash_field_len);
->>> +    if (rc || !is_cert_valid(cert)) {
->>> +        return -1;
->>> +    }
->>> +    cert_field_len = ROUND_UP(be32_to_cpu(vce->vce_hdr.cert_len), 4);
->>> +
->>> +    vce_len = sizeof(VCEntryHeader) + keyid_field_len + hash_field_len + cert_field_len;
->>> +    if (vce_len > be32_to_cpu(vce->vce_hdr.len)) {
->>> +        return -1;
->>> +    }
->> We already used the maximum size when we allocated space for the VCE, so
->> this
->> check is redundant I think?
->>
-> Although exceeding the maximum size is unlikely, I think it’s good
-> practice to keep this check, along with those in the handle_* functions.
-> These checks help ensure that the actual lengths of the certificate
-> metadata retrieved from the qcrypto functions remain within the defined
-> limits.
+> Signed-off-by: Gerd Hoffmann <kraxel@redhat.com>
+> ---
+>  docs/system/linuxboot.rst | 9 +++++++++
+>  1 file changed, 9 insertions(+)
+
+Thanks for this patch; I've tried to expand it to make it
+more comprehensible to people (like me ;-)) who aren't
+very familiar with UEFI, but I may have made some errors in
+the process.
+
+> diff --git a/docs/system/linuxboot.rst b/docs/system/linuxboot.rst
+> index f7573ab80aa2..72af18ce1b5e 100644
+> --- a/docs/system/linuxboot.rst
+> +++ b/docs/system/linuxboot.rst
+> @@ -17,6 +17,15 @@ Use ``-kernel`` to provide the Linux kernel image and ``-append`` to
+>  give the kernel command line arguments. The ``-initrd`` option can be
+>  used to provide an INITRD image.
 >
-> Please let me know what you think.
-After taking another look, I realize this check is not redundant in the 
-way I
-thought it was.  As far as I can tell, when building the cert store, the 
-size
-of each entry is checked using the largest_cert_size variable, but we never
-validate that this value is within our max cert size.  So the check here is
-actually the first time we validate the total size.
+> +The ``-shim`` option specifies the shim.efi binary.
 
-In my opinion we should check this in the update_cert_store() function 
-that was
-introduced in Patch 4 and gets called as the cert store is populated.  I 
-guess
-this ties back in to some of the other comments about defining 
-MAX_ENTRY_SIZE
-earlier in the series.
+``...`` around shim.efi (here and below).
 
-Maybe we could detect invalid certs earlier if we add a secondary check that
-data_buf_size <= CERT_BUF_MAX_LEN when updating largest_cert_size.  I 
-think both
-update_cert_store() and build_vce_data() are doing the same size 
-calculations,
-right?
+>  This is needed
 
-I think we have all of this information available to reject certs before 
-they
-are added to the cert store.
+"when you are booting UEFI firmware and using the ``-kernel`` option to
+tell UEFI to boot a specific kernel image, and the UEFI firmware you
+are booting has UEFI secure boot enabled."
 
-Regards,
-Jared Rossi
+(Or is it when the kernel has UEFI secure boot enabled? Or both?)
+
+> +when using direct kernel boot with UEFI secure boot enabled.
+
+I think we could add here:
+
+"When this option is specified, the guest UEFI firmware will
+first load and run the shim binary, and then the shim binary will
+run
+
+
+> The
+> +verification chain used by linux distros requires shim.efi.  Typically
+
+"Linux" (here and below)
+
+> +shim.efi is signed by micsosoft and verified by the firmware.  The
+
+"Microsoft"
+
+> +linux kernel is signed by the distro and is verified by shim.efi.  So
+> +without shim.efi in the loop secure boot verification will not work.
+
+What are the symptoms? Does the firmware refuse to start the kernel,
+or does the kernel produce an error? If we can be specific about
+the problem that adding a '-shim' argument is fixing, then users
+may have some chance of finding out about the option when they
+run into the error and are searching for the solution.
+
+> +Usually you can find shim.efi as ``EFI/BOOT/BOOT{X64,AA64}.EFI`` on
+> +distro install media.
+
+I think the BOOT* names are a RedHat-ism -- my local Ubuntu box
+has "shimx64.efi".
+
+I think we could reasonably expand this to
+"in the ``EFI/BOOT/`` directory on distro install media.
+It might be named something like ``BOOTX64.EFI``, ``BOOTAA64.EFI``,
+``shimx64.efi`` or `shimaa64.efi``, depending on your distro
+and guest architecture."
+
+Do we need to warn the user to make sure they use e.g. a matched
+shim binary for the guest kernel they're trying to boot, or can
+anybody's shim binary boot anybody's guest kernel ?
+
+thanks
+-- PMM
 
