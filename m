@@ -4,87 +4,110 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 45EAFCD8C9F
-	for <qemu-devel@archiver.kernel.org>; Mon,  8 Jun 2026 13:30:46 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 63BE0CD8C92
+	for <qemu-devel@archiver.kernel.org>; Mon,  8 Jun 2026 13:30:59 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wWa3Z-00042Z-JU; Mon, 08 Jun 2026 09:30:21 -0400
+	id 1wWa3s-0004Dz-Mg; Mon, 08 Jun 2026 09:30:40 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1wWa3U-00042F-OH
- for qemu-devel@nongnu.org; Mon, 08 Jun 2026 09:30:16 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1wWa3S-0002fu-TE
- for qemu-devel@nongnu.org; Mon, 08 Jun 2026 09:30:16 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1780925413;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=yydCoCed6+ynC97mmYPUNt3OveMLiukoasGjhCjXbws=;
- b=Q3zdO+9E1szMxUevPsmyFbF8id1oqy3ag8R9kJNRD0bm720RU3gO3VEpGOfU1BvVSyF81F
- DpA+LGERykHT2TVjmnli7u2MlxvBISe/2F5tHr9AoH4Ekz5jCVpeGEY0ZQZDzJrSHxsIif
- kmRWf9kTu6WYOlc6Xgl5E9lBaKqSjnI=
-Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-346-LpNAokFvMyyu7BAMMXaYIw-1; Mon,
- 08 Jun 2026 09:30:09 -0400
-X-MC-Unique: LpNAokFvMyyu7BAMMXaYIw-1
-X-Mimecast-MFC-AGG-ID: LpNAokFvMyyu7BAMMXaYIw_1780925406
-Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 6E1281955F6A; Mon,  8 Jun 2026 13:30:05 +0000 (UTC)
-Received: from blackfin.pond.sub.org (unknown [10.44.22.28])
- by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id A6A7F19560A6; Mon,  8 Jun 2026 13:30:04 +0000 (UTC)
-Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
- id 4088E21E6A01; Mon, 08 Jun 2026 15:30:02 +0200 (CEST)
-From: Markus Armbruster <armbru@redhat.com>
-To: =?utf-8?Q?Marc-Andr=C3=A9?= Lureau <marcandre.lureau@redhat.com>
-Cc: qemu-devel@nongnu.org,  Zhenzhong Duan <zhenzhong.duan@intel.com>,
- "Michael S. Tsirkin" <mst@redhat.com>,  David Hildenbrand
- <david@kernel.org>,  Paolo Bonzini <pbonzini@redhat.com>,  Peter Xu
- <peterx@redhat.com>,  Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?=
- <philmd@mailo.com>,
- qemu-rust@nongnu.org,  Alex Williamson <alex@shazbot.org>,  =?utf-8?Q?C?=
- =?utf-8?Q?=C3=A9dric?= Le Goater <clg@redhat.com>,  "Maciej S. Szmigiero"
- <maciej.szmigiero@oracle.com>,  Fabiano Rosas <farosas@suse.de>,  Mark
- Kanda <mark.kanda@oracle.com>,  Ben Chaney <bchaney@akamai.com>,  Marcelo
- Tosatti <mtosatti@redhat.com>,  kvm@vger.kernel.org,  "Dr. David Alan
- Gilbert" <dave@treblig.org>,  Zhao Liu <zhao1.liu@intel.com>,  Eric Blake
- <eblake@redhat.com>
-Subject: Re: [PATCH v5 12/12] RFC: monitor: add 'info ramblock-attributes'
- command
-In-Reply-To: <20260604-rdm5-v5-12-5768e6a0943d@redhat.com> (=?utf-8?Q?=22M?=
- =?utf-8?Q?arc-Andr=C3=A9?=
- Lureau"'s message of "Thu, 04 Jun 2026 17:43:58 +0400")
-References: <20260604-rdm5-v5-0-5768e6a0943d@redhat.com>
- <20260604-rdm5-v5-12-5768e6a0943d@redhat.com>
-Date: Mon, 08 Jun 2026 15:30:02 +0200
-Message-ID: <87a4t5tb1h.fsf@pond.sub.org>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1wWa3q-0004DC-Ax
+ for qemu-devel@nongnu.org; Mon, 08 Jun 2026 09:30:38 -0400
+Received: from mail-yx1-xb131.google.com ([2607:f8b0:4864:20::b131])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1wWa3o-0002mZ-Kc
+ for qemu-devel@nongnu.org; Mon, 08 Jun 2026 09:30:38 -0400
+Received: by mail-yx1-xb131.google.com with SMTP id
+ 956f58d0204a3-660456349d9so4151051d50.3
+ for <qemu-devel@nongnu.org>; Mon, 08 Jun 2026 06:30:36 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1780925435; cv=none;
+ d=google.com; s=arc-20240605;
+ b=Tqr03ExrKL/FyLNH5rKN7VfHRy2/2tkGyIR0H+HavZ4h8I2+DYTuDEKBs40QaF8NAw
+ ge7THANxNZG46ewp6Z3L4m4QHCsQ1OsbWYsBXSkPvC52Wxb0e6CpqsqIvaue42wLbeXW
+ QNxl+T2vRCL/ady/m+yHxGvXLRNlC8YM21LL0rueqxHg+V77o30Rgr3fWg29mI7yxGud
+ VU84A3pfQXg9FPqzxW4iFeWw0BgYQ1CF2xzY+fhaSp0aJfX2TDNRuXhH7EtAsTS+q5PY
+ AxpJTB1z2S1r6sOp+g3R+ZlbGNeePACm/+cPogyFJXCaiX9QIP5xnxlhhMNCMxqaY6o1
+ AShA==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
+ s=arc-20240605; 
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:dkim-signature;
+ bh=PsLWL74BoRjUjdW6fn0hi8lSYZTAAtYLAmP4Y8UoPqk=;
+ fh=VdU0ZIHHM7Xuu0AoHAY9TnsLw+Rmx6THNQ8Qxyqt4ys=;
+ b=LM/fHJXL2kkJDeid5leofiE8ePW4LMvBeHSjScTxJV8EmGjxabAzHNsiTCr96HhMzk
+ IIsLrlcaw3LtbB6YyNjHudP889viy8wpOTiSXcS1rftlRD3ONl3kK4QYB5O8Fp1LKIP/
+ DgM1GHsRWrXt8GhtF49vyJEVP85FnC98JzUibw6+d9s480enOGiEX2EvYKESC5yzRkfN
+ +uaCLEtyOTfoVaXIVSCWFucCXLFVwWk+gTIavEkukjeU2ISUlkiq9bTHFkfr443wfKf6
+ 6g8Xf7mmwqOVdS5KqmWav4WBka2OiA3swhLmNNMht5tffD1drqCAgJ/dig/XCaVguPa/
+ xSMQ==; darn=nongnu.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1780925435; x=1781530235; darn=nongnu.org;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:from:to:cc:subject:date:message-id:reply-to;
+ bh=PsLWL74BoRjUjdW6fn0hi8lSYZTAAtYLAmP4Y8UoPqk=;
+ b=iqq10YXkA6SWJgZijndLbVB6Dzbu8hiSmTvMezAV3wvucwL1PAuuTfNr3tJo4FjUhl
+ /c/ul0twI4R+KH4Q03KoEUWGnEQfoW+SAk0JT1c7v27ar4Ft6amqiBLO5jaQSqO/SSkG
+ N9gLZz8aUKdtMWgnK1jx5zuuFvAEi4996WGzjz8blFTYdqwJyOAtnzYCEflWofxnpS+w
+ Rn60AJS5CBF/e2unCPZ4VCGg/LuPg0xGlthZBXuOVSVm5yzkcvzehF1kC1fM7YTptC6b
+ tFoGipisbX/4zhxC1kBihL4B9CK/khgGzLRhRvMC94fRMRj7M9ZUIS6cUrDBbBHn83qQ
+ jKSA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1780925435; x=1781530235;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=PsLWL74BoRjUjdW6fn0hi8lSYZTAAtYLAmP4Y8UoPqk=;
+ b=LA2MWLETdmzY2AYDwmdvvgyQ3YSQt+ViRpg+l/oYLadQ+RIQKORvtWXK06VqQ6FHTr
+ uU01UzRX4WDJNg/6gdS6XIu3rotwNya7U9kdfI5F1hVVQsK4ojVmcvFrTRxEhepwc+yr
+ LUGK2eSZThjmev5UQmraSEEu4DUNktsZjA9AmUAdYwBdiaO7dR6Ig66HZqnvfkTDPXSf
+ FJcANqD72Mf3eFRyw91LKCpTbObRgegDpU/XxXqvaXO+IlQFEyMh3tbmkFtL8shqXneQ
+ 2LIk3q0825FWIoi+OlR97STQSZhQ2pG9UwfX//ah18fYp3zu+bm3OVHOyXFuEgnG5LQ3
+ yfUA==
+X-Gm-Message-State: AOJu0YwJSt30bMf9AGzWB7lbktqIFz3CSMcfTQ9D1oIqqaY423QjA0lZ
+ hFElmST79q70Y2FUBs5xWTnPgJk0y65O52xwHFdq7oksPGeGckSHfu4EbTfraNHIq7VIE2VNSov
+ mfUuMiwMqighzVdVdIRDSiUKeGIl5RJ58Y13iZutUEA==
+X-Gm-Gg: Acq92OE4shsZjvX/aSTjIVE4GV8IwNz3b/Qgp6/duWVM5P3BeWvJcSZ3Lih1t9GiZ5i
+ 80Y4lwT51aDtE1uFfLrkBKkCrtk3KVmwpds8TklEgFBFz+3bNPjv1/Z3P6cwyMDCSzhlOqIzw1p
+ Y0/5cimC8mbuAz5xLz70nAgFRDrHTYSpyfg+vFgui4hYj5tEVCLn4NPFo215VWrsx9j/8h1y306
+ BozLh5HoCfYYRlyD23HVcrCam7F10eYuASB0Va9znhthmwTcYYW1Yx17jDhvsTaneD8Nhgok8dk
+ 6AugV+kvFCCQ2WrsfL/hLhO7OPfVbVWxuHdZUnbXdG5ZABp4bVjZPqal3YDDCapFvZQ3WXFISic
+ JlQ==
+X-Received: by 2002:a05:690e:120a:b0:661:37ed:6461 with SMTP id
+ 956f58d0204a3-66137ed65dbmr3430968d50.1.1780925435175; Mon, 08 Jun 2026
+ 06:30:35 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.12
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=armbru@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: 8
-X-Spam_score: 0.8
-X-Spam_bar: /
-X-Spam_report: (0.8 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.445,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_SBL_CSS=3.335, SPF_HELO_PASS=-0.001,
- SPF_PASS=-0.001 autolearn=no autolearn_force=no
+References: <20260521112806.504961-1-kraxel@redhat.com>
+ <CAFEAcA8hbObntY8Tp+kOV7btb-io92O9GW99-6SPxigPJUjPrw@mail.gmail.com>
+ <aiE5LrpfnJRbkx-A@sirius.home.kraxel.org>
+ <CAFEAcA_ow2ro3h0nfhY3jA_XToAnjdVFNPrF25aWLd=X2cnmaw@mail.gmail.com>
+ <aia8iXGozAclWQCb@sirius.home.kraxel.org>
+ <CAFEAcA9oB_-ao5C8fGYonE7njUMWLHo5-iETeN_XtnFL4PzyvA@mail.gmail.com>
+ <aibALjyPTXVUDpDv@sirius.home.kraxel.org>
+In-Reply-To: <aibALjyPTXVUDpDv@sirius.home.kraxel.org>
+From: Peter Maydell <peter.maydell@linaro.org>
+Date: Mon, 8 Jun 2026 14:30:23 +0100
+X-Gm-Features: AVVi8CetmNrwVukKIi-1g4-LBK3y_qq1bRAZUL-3XCNm9LKAy6WWUy7gT_Xf7FI
+Message-ID: <CAFEAcA-VQWKzJ-aNnzYHZ7a+sVP1y6tkUnE3YCPydsqP0uVXvg@mail.gmail.com>
+Subject: Re: [PATCH 0/3] hw/arm: add support for shim loading
+To: Gerd Hoffmann <kraxel@redhat.com>
+Cc: qemu-devel@nongnu.org, "Michael S. Tsirkin" <mst@redhat.com>, 
+ =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>, 
+ qemu-arm@nongnu.org, Richard Henderson <richard.henderson@linaro.org>, 
+ Paolo Bonzini <pbonzini@redhat.com>
+Content-Type: text/plain; charset="UTF-8"
+Received-SPF: pass client-ip=2607:f8b0:4864:20::b131;
+ envelope-from=peter.maydell@linaro.org; helo=mail-yx1-xb131.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -100,122 +123,42 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Marc-Andr=C3=A9 Lureau <marcandre.lureau@redhat.com> writes:
-
-> Add a new 'info ramblock-attributes' HMP command and the corresponding
-> 'x-query-ramblock-attributes' QMP command to display the shared/private
-> memory attributes for ram blocks.
+On Mon, 8 Jun 2026 at 14:23, Gerd Hoffmann <kraxel@redhat.com> wrote:
 >
-> The QMP command returns structured data (RamBlockAttributesInfo list
-> with per-range shared/populated attributes), while HMP formats it for
-> human consumption.
+>   Hi,
 >
-> This is useful for debugging confidential guests (TDX, SNP) to inspect
-> which memory regions are shared vs private, and their population state
-> when a RamDiscardManager is present (e.g. virtio-mem).
+> > > When not booting via UEFI you can ignore that.
+> >
+> > But if I'm doing direct kernel boot then by definition I'm
+> > not booting via UEFI, I'm directly booting the kernel...
 >
-> Signed-off-by: Marc-Andr=C3=A9 Lureau <marcandre.lureau@redhat.com>
-> ---
->  qapi/machine.json             | 56 ++++++++++++++++++++++++++++++++++
->  include/monitor/hmp.h         |  1 +
->  hw/core/machine-hmp-cmds.c    | 32 +++++++++++++++++++
->  system/ram-block-attributes.c | 71 +++++++++++++++++++++++++++++++++++++=
-++++++
->  hmp-commands-info.hx          | 13 ++++++++
->  5 files changed, 173 insertions(+)
+> You can (on aarch64) do direct kernel boot both with and without
+> UEFI firmware ...
 >
-> diff --git a/qapi/machine.json b/qapi/machine.json
-> index 685e4e29b87..a1af5c61176 100644
-> --- a/qapi/machine.json
-> +++ b/qapi/machine.json
-> @@ -1738,6 +1738,62 @@
->    'returns': 'HumanReadableText',
->    'features': [ 'unstable' ] }
->=20=20
-> +##
-> +# @RamBlockAttributeRange:
-> +#
-> +# A contiguous range within a ram block with uniform attributes.
+> Without firmware qemu will load the kernel binary, then start the VM
+> with the instruction pointer register pointing to the elf entry point.
+>
+> With firmware qemu exposes kernel + initrd (and with this patch shim
+> too) via fw_cfg, and the firmware can pick it up from there and run
+> it (instead of trying to boot via disk / cdrom / network).
 
-RAM please.  More of the same below, not flagging it again.
+I don't really think of the latter as being direct-boot, and
+nor does our documentation:
 
-> +#
-> +# @start: start offset in bytes within the ram block
-> +#
-> +# @length: length in bytes of the range
-> +#
-> +# @shared: true if the range is shared, false if private
+https://www.qemu.org/docs/master/system/invocation.html#hxtool-8
 
-Can we assume that anybody with a use for x-query-ramblock-attributes
-understands what "range is shared" means?
+# There are broadly 4 ways you can boot a system with QEMU.
+#
+#  - specify a firmware and let it control finding a kernel
+#  - specify a firmware and pass a hint to the kernel to boot
+#  - direct kernel image boot
+#  - manually load files into the guest's address space
+#
+# The third method is useful for quickly testing kernels but as there is
+# no firmware to pass configuration information to the kernel [...]
 
-> +#
-> +# @populated: true if the entire range is fully populated across all
-> +#     RamDiscardManager sources; false if any sub-block is discarded.
-> +#     Only present when a RamDiscardManager is managing the block.
+Anyway, I'll reply to your patch updating the documentation
+with some suggestions for expanding it.
 
-Can we assume that anybody with a use for x-query-ramblock-attributes
-understands what "a RamDiscardManager is managing the block" means?
-
-I can't find anything about RamDiscardManager in docs.  Would it make
-sense to have something there, so we can point to it here?
-
-> +#
-> +# Since: 11.1
-> +##
-> +{ 'struct': 'RamBlockAttributeRange',
-> +  'data': { 'start': 'uint64',
-> +            'length': 'uint64',
-> +            'shared': 'bool',
-> +            '*populated': 'bool' } }
-> +
-> +##
-> +# @RamBlockAttributesInfo:
-> +#
-> +# Shared/private memory attributes for a ram block.
-> +#
-> +# @name: the ram block identifier
-
-Apparently, this is a memory region name, obtained with
-memory_region_name().  Correct?
-
-If yes, then what about "@name: the memory region name"?  Or maybe "the
-name of the RAM block's memory region"?
-
-> +#
-> +# @ranges: list of attribute ranges
-> +#
-> +# Since: 11.1
-> +##
-> +{ 'struct': 'RamBlockAttributesInfo',
-> +  'data': { 'name': 'str',
-> +            'ranges': [ 'RamBlockAttributeRange' ] } }
-> +
-> +##
-> +# @x-query-ramblock-attributes:
-> +#
-> +# Query ram block shared/private attributes.  This is useful
-> +# to debug confidential guests.
-
-Ignorant question: how are RAM blocks related to memory regions?
-
-> +#
-> +# Features:
-> +#
-> +# @unstable: This command is meant for debugging.
-> +#
-> +# Returns: list of ram block attributes
-> +#
-> +# Since: 11.1
-> +##
-> +{ 'command': 'x-query-ramblock-attributes',
-> +  'returns': [ 'RamBlockAttributesInfo' ],
-> +  'features': [ 'unstable' ] }
-> +
->  ##
->  # @x-query-roms:
->  #
-
-[...]
-
+-- PMM
 
