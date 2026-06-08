@@ -4,53 +4,52 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D1E4ACD8CA4
-	for <qemu-devel@archiver.kernel.org>; Mon,  8 Jun 2026 19:44:14 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7631DCD8CA4
+	for <qemu-devel@archiver.kernel.org>; Mon,  8 Jun 2026 19:44:21 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wWfsd-0008VB-Ir; Mon, 08 Jun 2026 15:43:27 -0400
+	id 1wWfsh-0008W2-OH; Mon, 08 Jun 2026 15:43:31 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <deller@kernel.org>) id 1wWfsS-0008T5-Or
- for qemu-devel@nongnu.org; Mon, 08 Jun 2026 15:43:17 -0400
-Received: from sea.source.kernel.org ([2600:3c0a:e001:78e:0:1991:8:25])
+ (Exim 4.90_1) (envelope-from <deller@kernel.org>) id 1wWfsL-0008SG-2A
+ for qemu-devel@nongnu.org; Mon, 08 Jun 2026 15:43:09 -0400
+Received: from tor.source.kernel.org ([172.105.4.254])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <deller@kernel.org>) id 1wWfsR-0006DF-7C
- for qemu-devel@nongnu.org; Mon, 08 Jun 2026 15:43:16 -0400
+ (Exim 4.90_1) (envelope-from <deller@kernel.org>) id 1wWfsJ-0006Bx-KO
+ for qemu-devel@nongnu.org; Mon, 08 Jun 2026 15:43:08 -0400
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
- by sea.source.kernel.org (Postfix) with ESMTP id EDE0040A50;
- Mon,  8 Jun 2026 19:43:13 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F05EB1F00893;
- Mon,  8 Jun 2026 19:43:11 +0000 (UTC)
+ by tor.source.kernel.org (Postfix) with ESMTP id 148B260098;
+ Mon,  8 Jun 2026 19:43:07 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DC3731F00893;
+ Mon,  8 Jun 2026 19:43:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
- s=k20260515; t=1780947793;
- bh=Z1dfaMdDG1BHIABJPuyTvw9aGXsVucAwD1oVosQ69OE=;
+ s=k20260515; t=1780947786;
+ bh=7yYTiLNsF0Ma6LBU7IM8obbatVSGeWaX23IU43WW7R0=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References;
- b=Z6xEbIPto6U+AvHb0dH5/GAOjqih6V4qVuZe+Vs5Z6JvwtHWI05dlDIxXmLXvQ5US
- qG2ULjiTxQ2tw458dczjJbrZTmmKI0U4fxlHv+JK/4zUdN5ozzEa2taFv0jp0KfZSi
- lZak/Bibf+4HEvrV2mMmXtoCga+GFnVE07bBZmrOXBD8DtQvqtElAl4tRks8cqyYm0
- N5ZzpHcStnVkvfae97Z5MRHPtxamKvwSt8YGC3r6GvJ3KgtOvjWwsLBfA9bgjGLO2h
- DmDkfKB7i6g5n6XE7DymUrooYiFTxZqCd4ajeEYFCO6LTolPKjCy7MOuVB9n2kV+dU
- f+HVdUdAC/P6w==
+ b=IQ0Kwd8KcSl6+tpseZvf/kuAu7TjIKDdUDkHEQHAKQmFQUia1zhzpegTOGXmo9EKV
+ FvTcccpNjKy95yT8n76W6bPkzFwwMZEMfmy8uY7CcxU3+WK1QJ8vnRwH0h0ObYinJ7
+ iOWxy2F8thf2zdFf3jakUXY/a4c24DXNNekQRN/dyCIrVA/6ZsCau42yLF1eQj6bYB
+ nwo+un7poKxyFCteoAwtiVO1l+/a7y3qkSUUjO2Nykmb6AgP5y8ciMMUQO2PcS5ODx
+ cxsnQvpcBn3yoJ6OaQLqqJtsuoyc9WxAnvj5JTCYGfs6nQWsHXKlcaI7RSXvKG9E7d
+ 5WnVDrbIO6LRA==
 From: Helge Deller <deller@kernel.org>
 To: qemu-devel@nongnu.org
 Cc: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
  Max Filippov <jcmvbkbc@gmail.com>, Helge Deller <deller@gmx.de>,
  Yoshinori Sato <yoshinori.sato@nifty.com>,
  Laurent Vivier <laurent@vivier.eu>, Matt Turner <mattst88@gmail.com>,
- Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>
-Subject: [PULL 6/8] linux-user/sparc: call block_signals() before
- set_sigmask() in setcontext
-Date: Mon,  8 Jun 2026 21:42:54 +0200
-Message-ID: <20260608194256.13794-7-deller@kernel.org>
+ Richard Henderson <richard.henderson@linaro.org>
+Subject: [PULL 3/8] linux-user/alpha: add coredump support
+Date: Mon,  8 Jun 2026 21:42:51 +0200
+Message-ID: <20260608194256.13794-4-deller@kernel.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260608194256.13794-1-deller@kernel.org>
 References: <20260608194256.13794-1-deller@kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2600:3c0a:e001:78e:0:1991:8:25;
- envelope-from=deller@kernel.org; helo=sea.source.kernel.org
+Received-SPF: pass client-ip=172.105.4.254; envelope-from=deller@kernel.org;
+ helo=tor.source.kernel.org
 X-Spam_score_int: -24
 X-Spam_score: -2.5
 X-Spam_bar: --
@@ -74,75 +73,76 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Matt Turner <mattst88@gmail.com>
 
-sparc64_set_context() emulates the kernel's `ta 0x6f` trap by calling
-set_sigmask() to install the mask supplied via the user's ucontext_t.
-The contract of set_sigmask() (see its comment in linux-user/signal.c)
-is that the caller must have first called block_signals(), which sets
-TaskState::signal_pending.
+Define HAVE_ELF_CORE_DUMP and target_elf_gregset_t in target_elf.h,
+mirroring the kernel's elf_gregset_t (ELF_NGREG = 66): r0-r31
+[0..31], f0-f31 [32..63], pc [64], unique [65].  Implement
+elf_core_copy_regs() in elfload.c to populate the gregset from
+CPUAlphaState.
 
-Without block_signals(), if a guest signal is pending-and-blocked at
-the time setcontext is invoked and the new mask unblocks it,
-signal_pending stays 0 and the post-trap process_pending_signals()
-call in linux-user/sparc/cpu_loop.c never enters its while loop, so
-the now-deliverable signal is left undelivered indefinitely.
+Without this, bprm->core_dump is NULL for Alpha targets.  When a
+guest signal goes unhandled, dump_core_and_abort() skips the core
+write and falls through to die_with_signal(), which re-raises the
+signal to the host.  The host kernel then writes an x86-64 core file
+for the qemu-alpha process instead of an Alpha guest core.
 
-This affects programs that use getcontext/setcontext to swap signal
-masks, including libunwind's unw_resume() out of a signal handler:
-without this fix, the test program below loops forever printing
-"calling setcontext" instead of delivering the pending SIGUSR2.
-
-  #define _GNU_SOURCE
-  #include <ucontext.h>
-  #include <signal.h>
-  #include <stdio.h>
-  #include <unistd.h>
-  static int got;
-  static void h(int s) { got = 1; }
-  int main(void) {
-      signal(SIGUSR2, h);
-      sigset_t m; sigemptyset(&m); sigaddset(&m, SIGUSR2);
-      sigprocmask(SIG_BLOCK, &m, NULL);
-      kill(getpid(), SIGUSR2);
-      ucontext_t uc;
-      getcontext(&uc);
-      if (got) return 0;
-      uc.uc_sigmask.__val[0] = 0;
-      setcontext(&uc);
-      return 1;
-  }
-
-The 32-bit sparc do_sigreturn / do_rt_sigreturn paths already get
-block_signals() from the rt_sigreturn syscall wrapper in
-linux-user/syscall.c, so only sparc64_set_context (invoked directly
-from cpu_loop) needs the addition.
+v2: Store thread unique field, same as in Linux kernel. Added by Helge &
+suggested by Richard.
 
 Signed-off-by: Matt Turner <mattst88@gmail.com>
-Cc: Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>
 Signed-off-by: Helge Deller <deller@gmx.de>
+Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
 ---
- linux-user/sparc/signal.c | 9 +++++++++
- 1 file changed, 9 insertions(+)
+ linux-user/alpha/elfload.c    | 12 ++++++++++++
+ linux-user/alpha/target_elf.h | 13 +++++++++++++
+ 2 files changed, 25 insertions(+)
 
-diff --git a/linux-user/sparc/signal.c b/linux-user/sparc/signal.c
-index fda5508c48..ba692c3123 100644
---- a/linux-user/sparc/signal.c
-+++ b/linux-user/sparc/signal.c
-@@ -619,6 +619,15 @@ void sparc64_set_context(CPUSPARCState *env)
-             }
-         }
-         target_to_host_sigset_internal(&set, &target_set);
-+        /*
-+         * set_sigmask() requires the caller to have first called
-+         * block_signals() so that process_pending_signals() is guaranteed
-+         * to run after the mask change.  Without this, a guest signal that
-+         * is pending-and-blocked at setcontext time is left undelivered
-+         * even after its mask bit is cleared, because signal_pending stays
-+         * 0 and the post-trap process_pending_signals() loop never enters.
-+         */
-+        block_signals();
-         set_sigmask(&set);
-     }
-     env->pc = pc;
+diff --git a/linux-user/alpha/elfload.c b/linux-user/alpha/elfload.c
+index 1e44475c47..1969f620a5 100644
+--- a/linux-user/alpha/elfload.c
++++ b/linux-user/alpha/elfload.c
+@@ -3,8 +3,20 @@
+ #include "qemu/osdep.h"
+ #include "qemu.h"
+ #include "loader.h"
++#include "target_elf.h"
+ 
+ 
++void elf_core_copy_regs(target_elf_gregset_t *r, const CPUAlphaState *env)
++{
++    int i;
++
++    for (i = 0; i < 31; i++) {
++        r->regs[i] = tswap64(env->ir[i]);
++    }
++    r->pc = tswap64(env->pc);
++    r->unique = tswap64(env->unique);
++}
++
+ const char *get_elf_cpu_model(uint32_t eflags)
+ {
+     return "ev67";
+diff --git a/linux-user/alpha/target_elf.h b/linux-user/alpha/target_elf.h
+index 864dc6e2e6..4987ae3944 100644
+--- a/linux-user/alpha/target_elf.h
++++ b/linux-user/alpha/target_elf.h
+@@ -11,4 +11,17 @@
+ #define ELF_CLASS               ELFCLASS64
+ #define ELF_MACHINE             EM_ALPHA
+ 
++#define HAVE_ELF_CORE_DUMP      1
++
++/*
++ * Matches the kernel's elf_gregset_t (ELF_NGREG = 33):
++ *   r0-r30 at indices 0-30, pc at 31, ps at 32.
++ * r31 (hardwired zero) is not stored; pc occupies index 31.
++ */
++typedef struct target_elf_gregset_t {
++    abi_ulong regs[31];  /* integer registers r0-r30  [0..30] */
++    abi_ulong pc;        /* program counter           [31]    */
++    abi_ulong unique;    /* thread's UNIQUE field     [32]    */
++} target_elf_gregset_t;
++
+ #endif
 -- 
 2.54.0
 
