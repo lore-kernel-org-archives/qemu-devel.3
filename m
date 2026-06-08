@@ -4,118 +4,118 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C5418CD8CA4
-	for <qemu-devel@archiver.kernel.org>; Mon,  8 Jun 2026 20:06:50 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 93E6FCD6E79
+	for <qemu-devel@archiver.kernel.org>; Mon,  8 Jun 2026 20:43:49 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wWgF3-0007Ap-Rd; Mon, 08 Jun 2026 16:06:37 -0400
+	id 1wWgoU-0005x1-RN; Mon, 08 Jun 2026 16:43:14 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1wWgEo-00079s-C7
- for qemu-devel@nongnu.org; Mon, 08 Jun 2026 16:06:25 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <Michael.Roth@amd.com>)
+ id 1wWgoS-0005qK-B3
+ for qemu-devel@nongnu.org; Mon, 08 Jun 2026 16:43:12 -0400
+Received: from mail-westus3azlp170100009.outbound.protection.outlook.com
+ ([2a01:111:f403:c107::9] helo=PH7PR06CU001.outbound.protection.outlook.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1wWgEk-0002ER-S2
- for qemu-devel@nongnu.org; Mon, 08 Jun 2026 16:06:21 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1780949175;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=vyaPZaRRpx6husgrWHuH7/f5GAvNytxDR5A4359Snlw=;
- b=Dzj7m2fqVvsxyj89dKz2OtApA/mcVOD0iRTC9Ab+LcAQhPZurtXLAEV14gAkAfWdVk6g1Y
- QIfecDTpg3anl7FrEU48QZBHMPHtncbzWvPkJaBy3niEqpwh7FFnK3UMirjF95r1M8IcMR
- 2DSq/ulKZIyOuTjLgkrNbO/ajf55Bbw=
-Received: from mail-wr1-f72.google.com (mail-wr1-f72.google.com
- [209.85.221.72]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-586-i0qjrAnTPq2w9NAwLozo6Q-1; Mon, 08 Jun 2026 16:06:14 -0400
-X-MC-Unique: i0qjrAnTPq2w9NAwLozo6Q-1
-X-Mimecast-MFC-AGG-ID: i0qjrAnTPq2w9NAwLozo6Q_1780949173
-Received: by mail-wr1-f72.google.com with SMTP id
- ffacd0b85a97d-4601c9b630fso1887091f8f.0
- for <qemu-devel@nongnu.org>; Mon, 08 Jun 2026 13:06:14 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1780949173; x=1781553973; darn=nongnu.org;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
- bh=vyaPZaRRpx6husgrWHuH7/f5GAvNytxDR5A4359Snlw=;
- b=KpyKse5Bxd2f6Rk6VvJdllaPFz7fO5nKYJCzu73aO8bPnaziSXdF3e+NsJCcBw7Ivr
- X2Y5MGvUWZ9FAfJrIRxpBLGSN+K8apqoY3LF2VjvJTFBWv7rRUI1NL4lE84kvcJN1Ph8
- auNnzYccJcIFHoyXIUdfVSl73j9nyF1uyVADdYDKrXLh6yVCioZdgjbT2EVHir6WP+uA
- uqQzoz2E5g1qvsK6ZxGWXMFvKyLbhkdAbVcs+6zFOaE+xZVi7mYIW9HfxKWkc8S5+V4V
- upO9tKQOi21nak67HOjq8xkCi+RbYunatXpzt56vL1r8xqD8I1MWUUlsT8yiiM743Fjk
- R+kg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1780949173; x=1781553973;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=vyaPZaRRpx6husgrWHuH7/f5GAvNytxDR5A4359Snlw=;
- b=mDE5P7d4W53TYJhYZVgq2WZfHi1xWBvzIj80EFO/gxU1wRNwCHUfwVvfTqGlWplyI+
- v3Hs0GOTR80bdBzu+drPsW+Jb5ieo0kO+eoODtJi6cMeM2WPet4U1CJNcwwFQADiv/H2
- d4sdCpmgizoKzFEoKZKXXjznKObJeTkza0Ep9FkRYy0pZA2CcA91bnQjyvq5mcfdyvax
- tO4xFKlZ9uvKVv1vZJRABC7bQpcG7YF54Nd5W0zAFyU1gBnFBkQX2WiPUhWvQvXCV4rN
- 4g2hHaoVzAvxQRR5erhjaIjIg4HDOObq676WLuLCh0kQ74eG/k/D6jGuD3A9x2oy7okJ
- KP7A==
-X-Forwarded-Encrypted: i=1;
- AFNElJ8FEg7NHI4ELzF0GzjvsedNtRZ6Ugxs/3IP07DlQAtSbRWisCduiZ2DFmF9krLm1auDaUw/dj2wVIPM@nongnu.org
-X-Gm-Message-State: AOJu0YyuLViRAJ9UqMSMdsCO3WFEVxYHl/Zh/WZzvC8qvwtJYjTyOcc0
- /k6rMjUwcikg8Pn8RFgTG+WDFOTW1tgAp1VLZRYONtdYtGJq4aI7JeXOzpFRDK6Ht322hQ7O8YQ
- +6sZCFHX8+V5zaJpYw2QQ5QIoiGddsstA61Tw9obyKRKDqykZZVHvbSOK
-X-Gm-Gg: Acq92OHKsVYamhgmecUhnIaY9tVHaU6rbud9z1vhCqjoxPzGK51+lioT3OynQABfESd
- snDgiQGNeVO8TNCRHbFnkiJYeqJSUhIiXjjVdWxJRvMpEy+QsEUelvFtWdcp+Jmse6aaj10iLAj
- U+AIu1lD1XIQJu6iOrBKEeOuWc5Y5HAhHy6bqvLyfHJ5sYYd4gX3jnnIUFuXSMbY9ndsFttfLtO
- FMJNEATJSH0oFHEVE0BA8J8hh7td2fj7fDOb4q9+m/jVaKJGMfm9sZysYyQpqeUg6p7P/IU1Q6R
- tNj+cKC28sL0F08oy1uh90niv89HSgSYdOrGdj8O8p15fLE9/LiX9JOsMAZnYToKwmjRenBJylw
- KeYuvME5PCDt6tt9V5+rQ/YZNC+GjFkbcOvSkUymOgG2sSqdS7RD7AQ==
-X-Received: by 2002:a05:600c:4ec7:b0:490:b8ee:d6a5 with SMTP id
- 5b1f17b1804b1-490c2589927mr284374825e9.6.1780949173018; 
- Mon, 08 Jun 2026 13:06:13 -0700 (PDT)
-X-Received: by 2002:a05:600c:4ec7:b0:490:b8ee:d6a5 with SMTP id
- 5b1f17b1804b1-490c2589927mr284374465e9.6.1780949172557; 
- Mon, 08 Jun 2026 13:06:12 -0700 (PDT)
-Received: from redhat.com (IGLD-80-230-85-71.inter.net.il. [80.230.85.71])
- by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-490bc3fd663sm484766645e9.10.2026.06.08.13.06.10
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 08 Jun 2026 13:06:11 -0700 (PDT)
-Date: Mon, 8 Jun 2026 16:06:08 -0400
-From: "Michael S. Tsirkin" <mst@redhat.com>
-To: Paolo Abeni <pabeni@redhat.com>
-Cc: Fiona Ebner <f.ebner@proxmox.com>, qemu-devel@nongnu.org,
- Peter Maydell <peter.maydell@linaro.org>,
- Jason Wang <jasowang@redhat.com>, Lei Yang <leiyang@redhat.com>,
- Eduardo Habkost <eduardo@habkost.net>,
- Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
- Philippe =?iso-8859-1?Q?Mathieu-Daud=E9?= <philmd@linaro.org>,
- Yanan Wang <wangyanan55@huawei.com>, Zhao Liu <zhao1.liu@intel.com>,
- Gabriel Goller <g.goller@proxmox.com>,
- Stefan Hanreich <s.hanreich@proxmox.com>,
- Thomas Lamprecht <t.lamprecht@proxmox.com>
-Subject: Re: [PULL 12/14] virtio-net: Advertise UDP tunnel GSO support by
- default
-Message-ID: <20260608160546-mutt-send-email-mst@kernel.org>
-References: <cover.1762698873.git.mst@redhat.com>
- <1c79ab6937ae938d3dfd4da1c01afc7eb599857e.1762698873.git.mst@redhat.com>
- <077647f6-d569-4918-9aea-c0597a6ddbc8@proxmox.com>
- <39100539-1c43-431b-886d-7d42850bc4c5@redhat.com>
- <127b6887-f93a-4081-a264-1bc63f37921d@proxmox.com>
- <375064ee-5a6f-44d4-8192-09f39804be69@redhat.com>
+ (Exim 4.90_1) (envelope-from <Michael.Roth@amd.com>)
+ id 1wWgoO-00037a-U0
+ for qemu-devel@nongnu.org; Mon, 08 Jun 2026 16:43:12 -0400
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=aaQWlMj2OmjyzG4i6XSinI5Az1XEqn+vp1THEOdI4rUbalflcq9WcwIBzC1n3zWsc3VAX8VoaUqGlv2Rlr62t/DjDNhibSxpfDt878etE9og14XpjGUmGRvhyauSUz6jLCaPkRe3wpCspWbh6cfuvmEQCpQM9/jRe8PkJGTaA5PV0BiM88MSpEJT6usmJQTuzEJs4AKLLYrNUSkaKwCXUphZJSVKG4/wRH/KoHN62xlE0kqSjn5aZiiGx72aWG7G/oyRxJVJSkj0YaIzDOFIBV4K1pDB/MLzsHBO8d2G8mmDVHPzIxagOhxu9f1gpxv3npI3QaVKD8yzwCf8obcnSA==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=8VRgWXvT+NiziVGiykTeZz8RUTXsYuDDxEpb+DWwSfE=;
+ b=YTb/1Z1lLh7vln1YQmgM0Mb21JLUVUx0B1A0MDyokccnUP1lvSn/rbeeKRpwvzt+5F9mP3lY0uU1VWGdHqBkmblUAgr1aSsFv6H0pIrEO0zUzvyXOD7KuyVTEj616Nhe9fzwaUOhKweEOrfEQEvSY2OP31VqN2R3DAb691GjDQ6pnqEUYgSUFIn8/gQUC4U4oWs4aGRkFyWVdAqiRhuKDb2MA3G/87fVF/SjHI7iGo3rhd/B0WceVagiXEP38a7NfraNZnYLa36/LU1pEurlZw3drImzA9VedCkjxEhk9MsROmJNprLl9HUdBVmM7hoIP/ouLD5DaGORvw5d66o5vw==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass (sender ip is
+ 165.204.84.17) smtp.rcpttodomain=redhat.com smtp.mailfrom=amd.com; dmarc=pass
+ (p=quarantine sp=quarantine pct=100) action=none header.from=amd.com;
+ dkim=none (message not signed); arc=none (0)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=amd.com; s=selector1; 
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=8VRgWXvT+NiziVGiykTeZz8RUTXsYuDDxEpb+DWwSfE=;
+ b=xjGQ2J2khIx/GhkTuYIYMFVZva6Mz8d4ZNVkxnIlbraeLa0v9TW3fXQ0iXWzeqEqxhLZJuGERw6OQ/f9TUL0l99K6YxeALwS0LSkrfCT096+8MdH2f2JlQVlfDvRtZeg/NFNEttIJN4rG1840G+PUIgp1rU1rhPk+5e2g/zy4sw=
+Received: from SA9P223CA0002.NAMP223.PROD.OUTLOOK.COM (2603:10b6:806:26::7) by
+ MW5PR12MB5624.namprd12.prod.outlook.com (2603:10b6:303:19d::19) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.92.13; Mon, 8 Jun 2026
+ 20:42:56 +0000
+Received: from SA2PEPF00003AE6.namprd02.prod.outlook.com
+ (2603:10b6:806:26:cafe::7d) by SA9P223CA0002.outlook.office365.com
+ (2603:10b6:806:26::7) with Microsoft SMTP Server (version=TLS1_3,
+ cipher=TLS_AES_256_GCM_SHA384) id 15.21.92.13 via Frontend Transport; Mon, 8
+ Jun 2026 20:42:56 +0000
+X-MS-Exchange-Authentication-Results: spf=pass (sender IP is 165.204.84.17)
+ smtp.mailfrom=amd.com; dkim=none (message not signed)
+ header.d=none;dmarc=pass action=none header.from=amd.com;
+Received-SPF: Pass (protection.outlook.com: domain of amd.com designates
+ 165.204.84.17 as permitted sender) receiver=protection.outlook.com;
+ client-ip=165.204.84.17; helo=satlexmb07.amd.com; pr=C
+Received: from satlexmb07.amd.com (165.204.84.17) by
+ SA2PEPF00003AE6.mail.protection.outlook.com (10.167.248.6) with Microsoft
+ SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.21.113.7 via Frontend Transport; Mon, 8 Jun 2026 20:42:56 +0000
+Received: from localhost (10.180.168.240) by satlexmb07.amd.com
+ (10.181.42.216) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.2562.41; Mon, 8 Jun
+ 2026 15:42:55 -0500
+Date: Mon, 8 Jun 2026 15:21:45 -0500
+From: Michael Roth <michael.roth@amd.com>
+To: Markus Armbruster <armbru@redhat.com>
+CC: <qemu-devel@nongnu.org>, <kvm@vger.kernel.org>, <pbonzini@redhat.com>,
+ <berrange@redhat.com>, <pankaj.gupta@amd.com>, <isaku.yamahata@intel.com>,
+ <xiaoyao.li@intel.com>, <chao.p.peng@linux.intel.com>, <david@kernel.org>,
+ <ashish.kalra@amd.com>, <ackerleytng@google.com>
+Subject: Re: [PATCH RFC 04/12] accel/kvm: Add CGS option to control in-place
+ conversion support
+Message-ID: <2ein52r6fjl7gulyxuk6qe5nnppt4m5mjyjcjcceacakrviscw@qad6egy4vjb4>
+References: <20260528000416.8161-1-michael.roth@amd.com>
+ <20260528000416.8161-5-michael.roth@amd.com>
+ <87wlwh5p0z.fsf@pond.sub.org>
+ <bhawvkft4dhs6aq7jcajyf2zqk2fo6rta37jwit45l3z2txmh2@3yav2up5cthy>
+ <87zf15la6q.fsf@pond.sub.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset="us-ascii"
 Content-Disposition: inline
-In-Reply-To: <375064ee-5a6f-44d4-8192-09f39804be69@redhat.com>
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=mst@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
+In-Reply-To: <87zf15la6q.fsf@pond.sub.org>
+X-Originating-IP: [10.180.168.240]
+X-ClientProxiedBy: satlexmb07.amd.com (10.181.42.216) To satlexmb07.amd.com
+ (10.181.42.216)
+X-EOPAttributedMessage: 0
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: SA2PEPF00003AE6:EE_|MW5PR12MB5624:EE_
+X-MS-Office365-Filtering-Correlation-Id: 8df30795-ddba-495f-4af2-08dec59e8540
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam: BCL:0;
+ ARA:13230040|1800799024|7416014|36860700016|376014|82310400026|22082099003|18002099003|11063799006|56012099006|4143699003;
+X-Microsoft-Antispam-Message-Info: r1DuScfe1UMhEeSPWjvnCRw9yhHg06AQWFELPae5mWehK9GT596YthesjcFfoAb50Qslkl97OQUD7qiw6tcWqyqRIxfPCVst3zSHawsiUU2b2VzrIiygYhEYW+UvYbzNNtAu6yMTGmyK/gCnommpN93LhOjDMsKU4ldXec2/T8PtoAl6e/2r8/uWU/fr74uW/eq8fIoQJs628MNgFl0cVvmzxA3PezGEG+b7TNx0J39/XrHUfBdwiNqa0wd5sOrEp4ljTnb1lQIzBlo+3HBjHx+gTIR9DgAIspvKY8uiffT/nJoVcqDisBL93/iPjvraMvBrlEMd6s2EvVbV8LXRevKLAova/9FK8Y3T7ArRatBEIePigQvfCxmTYiyD8hsxn0+SVFJmaHnmvgzRCqonnnsPvLUgKZD6aNAl4eolLHjq+I0Q7t8JfZl+4nrlwI/IXZSSRPILMQMC3r4mutErWYGtNodHQmHzvTOv7fUjEI2Od/al+Xv6WanaaVqAbE+bixi57pLNOnbz2KiggVg/MtAiHTVf8TZU40pVQocj6Kl3vu3/e9weIRIJHidRB9PL8WJM5nGJCgfHHnQzH059Gey+OViZXLJMh0BLhRypxl6VnyKa65RpsQ7wtWvODn0VITEmZ6ISAGSDiWtfpronK+D8UxtdknWU19/ys7+4YZSadxirycqOadL+kw1RLOs5tJPznXG9lxrqJlFmBuIUDBndx4yq49nE1W1Vahf0BUM=
+X-Forefront-Antispam-Report: CIP:165.204.84.17; CTRY:US; LANG:en; SCL:1; SRV:;
+ IPV:NLI; SFV:NSPM; H:satlexmb07.amd.com; PTR:InfoDomainNonexistent; CAT:NONE;
+ SFS:(13230040)(1800799024)(7416014)(36860700016)(376014)(82310400026)(22082099003)(18002099003)(11063799006)(56012099006)(4143699003);
+ DIR:OUT; SFP:1101; 
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0: qBiAwJ7hsX4eERXeD0HYvVDoM2+/GZacQnSoopEx+7AI3F8MPXMp+ONRgUUpMsGhwBDhyOuEvgT+ttMJ46IojnMP/Cfw5ke0NjXIG/YAfGozD5ugVkbqZUMAvxZQltyHB7t8sZ/sh4ZMW8sop/Q+XX+R+NEgH6w3NcJ7ahLGqPGpb6fmvzFgE0uh06Ce9zASUopIba/qcgbAQow9n3AqQ5+sgHO/YTyzh9nPm6ea9ABhObSVCi5xU2sY5fOyJMZGLYk6U6FCG+S+6veQ96DhcpVK4D+dwvrYlq2ICcQQRWjM32zsxUT0FsUcwFQyHR4UOfl4XzIc6ZjrDNnjuYMlLZzcl79OH+MOmRlyo6w52CwasuQfuqkwjigKDekhQYiw9M6etdECRUNK8fEx/6+o32PKeaKuAoqM6zeWGk04/QWHEUzcxGFafx16rHiJKTdx
+X-OriginatorOrg: amd.com
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 08 Jun 2026 20:42:56.3560 (UTC)
+X-MS-Exchange-CrossTenant-Network-Message-Id: 8df30795-ddba-495f-4af2-08dec59e8540
+X-MS-Exchange-CrossTenant-Id: 3dd8961f-e488-4e60-8e11-a82d994e183d
+X-MS-Exchange-CrossTenant-OriginalAttributedTenantConnectingIp: TenantId=3dd8961f-e488-4e60-8e11-a82d994e183d; Ip=[165.204.84.17];
+ Helo=[satlexmb07.amd.com]
+X-MS-Exchange-CrossTenant-AuthSource: SA2PEPF00003AE6.namprd02.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Anonymous
+X-MS-Exchange-CrossTenant-FromEntityHeader: HybridOnPrem
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: MW5PR12MB5624
+Received-SPF: permerror client-ip=2a01:111:f403:c107::9;
+ envelope-from=Michael.Roth@amd.com;
+ helo=PH7PR06CU001.outbound.protection.outlook.com
 X-Spam_score_int: -24
 X-Spam_score: -2.5
 X-Spam_bar: --
 X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.445,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -131,212 +131,119 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Mon, Jun 08, 2026 at 07:12:14PM +0200, Paolo Abeni wrote:
-> On 6/8/26 12:41 PM, Fiona Ebner wrote:
-> > Am 05.06.26 um 4:54 PM schrieb Paolo Abeni:
-> >> On 6/5/26 4:02 PM, Fiona Ebner wrote:
-> >>> Am 09.11.25 um 4:10 PM schrieb Michael S. Tsirkin:
-> >>>> diff --git a/hw/net/virtio-net.c b/hw/net/virtio-net.c
-> >>>> index 17ed0ef919..3b85560f6f 100644
-> >>>> --- a/hw/net/virtio-net.c
-> >>>> +++ b/hw/net/virtio-net.c
-> >>>> @@ -4299,19 +4299,19 @@ static const Property virtio_net_properties[] = {
-> >>>>      VIRTIO_DEFINE_PROP_FEATURE("host_tunnel", VirtIONet,
-> >>>>                                 host_features_ex,
-> >>>>                                 VIRTIO_NET_F_HOST_UDP_TUNNEL_GSO,
-> >>>> -                               false),
-> >>>> +                               true),
-> >>> it seems that the host_tunnel setting can cause issues when VXLAN
-> >>> traffic originating in a guest goes over a physical NIC which does not
-> >>> support the feature. We received several reports about the issue
-> >>> [0][1][2][3] and were able to reproduce it. Turning off the
-> >>> 'host_tunnel' property in the commandline for the VirtIO net device
-> >>> makes TCP traffic work. The network configuration from our reproducer
-> >>> setup is as follows:
-> >>>
-> >>>       guest A (iperf3 -c)                   guest B (iperf3 -s)
-> >>>   vxlan using vNIC as underlay         vxlan using vNIC as underlay
-> >>> virtualized NIC exposed to guest     virtualized NIC exposed to guest
-> >>>     ---guest boundary---                  ---guest boundary---
-> >>>  tap device connected to bridge       tap device connected to bridge
-> >>> bridge with physical NIC as port     bridge with physical NIC as port
-> >>>         physical NIC   <---host boundary--->   physical NIC
-> >>>
-> >>> Bridge configuration:
-> >>> iface vmbr0 inet static
-> >>> 	address 10.48.0.109/20
-> >>> 	gateway 10.48.0.1
-> >>> 	bridge-ports nic3
-> >>> 	bridge-stp off
-> >>> 	bridge-fd 0
-> >>> 	bridge-vlan-aware yes
-> >>> 	bridge-vids 2-4094
-> >>>
-> >>> VXLAN created with:
-> >>> ip link add vxlan0 type vxlan id 100 remote X dstport 4789 dev eth1
-> >>> where eth1 is the virtualized NIC exposed to the guest
-> >>>
-> >>> The physical NIC does not have the feature:
-> >>> Ethernet controller [0200]: Broadcom Inc. and subsidiaries NetXtreme
-> >>> BCM5719 Gigabit Ethernet PCIe [14e4:1657] (rev 01)
-> >>> tx-udp_tnl-segmentation: off [fixed]
-> >>> tx-udp_tnl-csum-segmentation: off [fixed]
-> >>>
-> >>> Using a physical NIC which does have the feature works:
-> >>> Ethernet controller [0200]: Broadcom Inc. and subsidiaries BCM57504
-> >>> NetXtreme-E 10Gb/25Gb/40Gb/50Gb/100Gb Ethernet [14e4:1751] (rev 11)
-> >>> tx-udp_tnl-segmentation: on
-> >>> tx-udp_tnl-csum-segmentation: on
-> >>>
-> >>> Host kernel:
-> >>> Proxmox VE with 7.0.2-6-pve
-> >>>
-> >>> Guest kernel:
-> >>> Apline with 6.18.34-0-lts
-> >>>
-> >>> QEMU commandline for the vNIC:
-> >>>> -netdev 'type=tap,id=net2,ifname=tap103i2,script=/usr/libexec/qemu-server/pve-bridge,downscript=/usr/libexec/qemu-server/pve-bridgedown,vhost=on' \
-> >>>> -device 'virtio-net-pci,mac=BC:24:11:78:C3:3B,netdev=net2,bus=pci.0,addr=0x14,id=net2,rx_queue_size=1024,tx_queue_size=256,host_mtu=1500' \
-> >>>
-> >>> We can see that QEMU sets the features for the tap interface via ioctl()
-> >>> and the host kernel allows it:
-> >>> tx-udp_tnl-segmentation: on
-> >>> tx-udp_tnl-csum-segmentation: on
-> >>>
-> >>> As far as we understand, in the problematic scenario, nothing is ever
-> >>> filling in the checksums for the inner TCP packets, meaning the outer
-> >>> UDP checksum ends up being wrong on the target side. Is the host kernel
-> >>> responsible for doing that before passing the packet to the physical NIC
-> >>> (without the feature)? Or who would be?
-> >>>
-> >>> Turning off host_tunnel_csum without turning off host_tunnel does not help.
-> >>>
-> >>> Interestingly, turning off the features for the working physical NIC
-> >>> does not make it break:
-> >>> tx-udp_tnl-segmentation: off
-> >>> tx-udp_tnl-csum-segmentation: off
-> >>> Could it be that the NIC just always fills in the inner TCP checksums
-> >>> regardless of that setting?
-> >>>
-> >>> On the other hand, running
-> >>> localhost:~# ethtool -K eth2 tx-checksum-ip-generic off
-> >>> Actual changes:
-> >>> tx-checksum-ip-generic: off
-> >>> tx-tcp-segmentation: off [not requested]
-> >>> tx-tcp-ecn-segmentation: off [not requested]
-> >>> tx-tcp6-segmentation: off [not requested]
-> >>> tx-udp-segmentation: off [not requested]
-> >>> inside the guests makes it work for the physical NIC without the
-> >>> tx-udp_tnl* features.
-> >>>
-> >>> I wanted to ask if this configuration is expected to be unsupported and
-> >>> if the management is expected to turn off the feature on the commandline
-> >>> if the traffic might go over a physical NIC without the feature. Or if
-> >>> this could be a kernel or NIC bug that should be investigated further?
-> >>> In the former case, should the option really be turned on by default
-> >>> with new machine versions?
-> >>
-> >> Thank you for the detailed report. The configuration you describe is
-> >> supported and expected to work. The fact that different results are
-> >> obtained on top of a NIC with:
-> >>
-> >> [1] tx-udp_tnl-segmentation: off [fixed]
-> >>
-> >> WRT to similar setup on top of NIC with:
-> >>
-> >> [2] tx-udp_tnl-segmentation: off
-> >>
-> >> is indeed strange/unexpected, as the two scenarios are indistinguishable
-> >> from the stack perspective. I suspect the issue is NIC driver dependent.
-> >>
-> >> I understand [1] is using a tg3 driver, and [2] bnxt, both running Linux
-> >> 7.0.2, am I correct?
-> > 
-> > Yes.
-> > 
-> >> If you disable csum offloading on the tg3 NIC, does that impact the results?
-> > 
-> > Yes, doing
-> > 
-> > root@tamy3:~# ethtool -K nic3 tx-checksum-ipv4 off
-> > Actual changes:
-> > tx-checksum-ipv4: off
-> > tx-tcp-segmentation: off [not requested]
-> > tx-tcp-ecn-segmentation: off [not requested]
-> > 
-> > on both hosts makes it work.
-> > 
-> >> If you have such data handy, could you please share pcap captures on
-> >> both ends? links to some accessible URL would be better than sending a
-> >> lot of data to the ML, I think.
-> > 
-> > I captured the following while the problem is present with
-> > tcpdump -i foo udp port 4789 -w bar.pcap
-> > on the host interfaces (tap, bridge and physical NIC) just to be sure.
-> > Looking at it with tcpdump -envvvr, within the same host, only the
-> > timestamps change. Between the hosts, the UDP checksums do change, but
-> > the inner TCP checksums do not. So I suppose the NIC fills in the UDP
-> > checksum based on the still wrong data? Since the UDP checksum would
-> > already be correct if the TCP checksums would be fixed up?
-> > 
-> > For the NIC with the tx-udp_tnl features, the inner TCP checksums do get
-> > corrected and the UDP checksum stays the same. I did not include
-> > captures for this.
-> > 
-> > IPs for the guest running iperf -s (on host tamy2)
-> > 10.48.6.81 for the virtualized NIC
-> > 10.0.123.102 for the VXLAN
-> > 
-> > IPs for the guest running iperf -c (on host tamy3):
-> > 10.48.6.101 for the virtualized NIC
-> > 10.0.123.103 for the VXLAN
-> > 
-> > The captures are short, so I take the liberty to just provide them directly:
-> > 
-> > [I] febner@enia ~> tar cf pcap.tar tamy*.pcap
-> > [I] febner@enia ~> xz pcap.tar
-> > [I] febner@enia ~> base64 -w 70 pcap.tar.xz
-> > /Td6WFoAAATm1rRGBMDXBYCgASEBFgAAAAAAAKQwOkPgT/8Cz10AOhhJ/551cIJN23SQMX
-> > Q2Us4cGiof2bxOS4FK4DxejNh+76NiWIpdIfOxrB5urac3FT0mPKMbUreSY+04/NhofcgS
-> > Zz41D6t/Xp+VkPxNYx7Xsp3xz4xUCsVuK205jz6G/NAY0bJ0+UrJuCkP0G5VBtn88hJstD
-> > 7qlaT7qcBLECseOO1OfqsLezxasbm5p614IL18cqAVMCMWucr/Kh2Oqth26v7zI4SVEJC/
-> > YSEgaOhfjCbQZSi85BEw9/NSZO6IqoyNLrEiPUPgXTWH63NssG+4RMuBswrkgN5Wld70B1
-> > mROOCwKbo9b9oXI4DumGHqgCV5jdAxzITpEjMQpvDKh6NvM5L/8v1cPiGjLFSL2JesZ0F5
-> > dTbstymv1q4eN+9f3ng+4AXCvDzaziYMwtGwxYyptK5qDI2oGsCIGwFDpP/ZEw7NYI9EMM
-> > G2+SDG6D8bKgKWl9Mi6EJcqSMVKFR1P1Z/P3XJ/9sWOMJug1IVYZGIJmtXXM3+roqOEGMF
-> > tco/LMUJHgdmfkitfuZ5tN1+0EVE0/f4GQiUpdidjqfZ2m9jL0svcGXUd5D3LN0tbh5vmP
-> > KzXQNtMQiMY6Fj7gbzDbOQGGW/L3/34B5YV+pWEpzhAbeTI9KL0ZF3vJ0OESlL9OMhrqgl
-> > WX23bxek2h9eG15eO9cderaoCOFb8NEKIjC+UTh2Ir7/ZFfDvlXeGB/3jXM8OTmWmJSr5b
-> > CrAvBQ4xvow3hwKq2Fbyu7aU6KycVpo03a+59LqxPyRfc3qRXcoUnp8MTi2YUk+kfYR6mI
-> > S9AE/5xYFzb7I40RUBPUm0OCzguzk9qlIcab3lnTFnrMWa+Cj9AMIkWEEf0tMzw0v9+17u
-> > VJg/8tWMad3d9Jc5Z6B9kOukzGvgVEWoq4z9snb/k6u2sBVY36q2iI1cmSPrI+UcF2GtSA
-> > Qs6bt/T/c1Xi2r0Up+tRDrIE9O2aNAAAAKAWpkIVfsvrAAHzBYCgAQAA6om1scRn+wIAAA
-> > AABFla
+On Mon, Jun 08, 2026 at 10:15:41AM +0200, Markus Armbruster wrote:
+> Michael Roth <michael.roth@amd.com> writes:
 > 
-> Thanks for the data. The bug is in the virtio_net driver; non GSO
-> packets requiring inner header csum are handled unmodified from the
-> guest to the host, and the H/W NICs has to compute the inner transport
-> header csum for the encap packet.
+> > On Tue, Jun 02, 2026 at 10:23:40AM +0200, Markus Armbruster wrote:
+> >> Michael Roth <michael.roth@amd.com> writes:
+> >> 
+> >> > For confidential guests, guest_memfd is currently used only for private
+> >> > guest memory, and normal guest memory comes from the configured memory
+> >> > backend just as it does for a non-confidential guest. It is now possible
+> >> > to use the same physical memory to back a particular GPA regardless of
+> >> > whether it is in a shared or private state. This avoids the need to
+> >> > rely on discarding memory between shared/private conversions (to avoid
+> >> > doubled memory usage), and is intended to be the primary mode of using
+> >> > guest_memfd for confidential guests moving forward, and future features
+> >> > like hugepage support will likely require it.
+> >> >
+> >> > Add an option to enable this support. Since ConfidentialGuestSupport is
+> >> > already used to track some guest_memfd-related functionality (e.g.
+> >> > whether it is required for the configured machine), similarly introduce
+> >> > this option as a property of ConfidentialGuestSupport.
+> >> >
+> >> > Also add the KVM-specific checks to enable this support, but leave the
+> >> > option disabled until other required changes are implemented for
+> >> > CGS variants that intend to make use of KVM's in-place conversion
+> >> > support.
+> >> >
+> >> > Signed-off-by: Michael Roth <michael.roth@amd.com>
+> >> 
+> >> [...]
+> >> 
+> >> > diff --git a/qapi/qom.json b/qapi/qom.json
+> >> > index 502fafeb15..037c078799 100644
+> >> > --- a/qapi/qom.json
+> >> > +++ b/qapi/qom.json
+> >> > @@ -1014,6 +1014,21 @@
+> >> >    'if': 'CONFIG_IGVM',
+> >> >    'data': { 'file': 'str' } }
+> >> >  
+> >> > +##
+> >> > +# @ConfidentialGuestSupportProperties:
+> >> > +#
+> >> > +# Properties for ConfidentialGuestSupport base class.
+> >> > +#
+> >> > +# @convert-in-place: If true, the same physical pages are reused
+> >> > +#     when memory is converted between shared and private states.
+> >> > +#     If false (default), separate allocations are used depending
+> >> > +#     on whether the page is private or shared.
+> >> > +#
+> >> > +# Since: 11.1
+> >> > +##
+> >> > +{ 'struct': 'ConfidentialGuestSupportProperties',
+> >> > +  'data': { '*convert-in-place': 'bool' } }
+> >> > +
+> >> >  ##
+> >> >  # @SevCommonProperties:
+> >> >  #
+> >> > @@ -1038,6 +1053,7 @@
+> >> >  # Since: 9.1
+> >> >  ##
+> >> >  { 'struct': 'SevCommonProperties',
+> >> > +  'base': 'ConfidentialGuestSupportProperties',
+> >> >    'data': { '*sev-device': 'str',
+> >> >              '*cbitpos': 'uint32',
+> >> >              'reduced-phys-bits': 'uint32',
+> >> 
+> >> Why use a base type instead of simply adding @convert-in-place to
+> >> SevCommonProperties?
+> >> 
+> >
+> > My thinking was that TDX and other implementations would similarly enable
+> > this through their CGS implementation, so I went ahead and carved out a
+> > set of common properties that ConfidentialGuestSupport implementations
+> > could use the same ,convert-in-place=true option (or set it by default
+> > for newer implementations)
 > 
-> Could you please try the attached kernel patch? You will need to update
-> the kernel inside the guest.
+> How confident are we in future reuse by TDX and others?
+> 
+> If there are doubts, refactoring for reuse when reuse happens would be
+> smarter.  The refactoring would be a bit of churn, but not all that
+> much.
+> 
+> If it's something like "pretty much inevitable", preparing the reuse now
+> saves us that churn, and makes sense.
+> 
+> Judgement call, i.e. you decide.
 
-Paolo was there supposed to be a patch here?
+Hoping to hear back from the TDX folks on whether there's anything
+missing to switch things on there too, at which point maybe it won't be
+premature to have a common type. But yah, until then I can plan to keep
+the option specific to SEV/SevCommonProperties. As you said, not a big
+deal to move it out to a common base after-the-fact.
 
-> > Do you have any tips where to start looking in the kernel? What is the
-> > expected place where the TCP checksums are corrected if the NIC does not
-> > have the tx-udp_tnl features?
 > 
-> Hopefully no more investigation needed. FTR, for non GSO packets, the
-> inner transport header csum should be computed inside the guest before
-> transmitting on the virtio net device.
+> > It is sort of tied to the 'allow_convert_in_place' flag that is part of
+> > the common ConfidentialGuestSupport object struct, so the property
+> > handling is sort of tied to the common ConfidentialGuestSupport base
+> > class as well rather than something implementation-specific.
 > 
-> For GSO packets such csum should be computed inside the host, just
-> before transmitting on the H/W NIC (if the latter does not support the
-> relevant offload).
-> 
-> Thanks,
-> 
-> Paolo
+> Valid point.  Not sure how much weight to assign to it, though.
 
+Yah, I was purposely trying to make it easy for other platforms to switch
+it on, but if we do for the time being keep it limited to SNP, then
+there's probably other ways to go about it.
+
+> 
+> > Not sure if there are better ways to handle all that though.
+> 
+> Work your rationale into the commit message, please.
+> 
+
+Will do!
+
+Thanks,
+
+Mike
 
