@@ -4,56 +4,56 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 75397CD8C8E
-	for <qemu-devel@archiver.kernel.org>; Mon,  8 Jun 2026 07:17:38 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0696FCD8C8E
+	for <qemu-devel@archiver.kernel.org>; Mon,  8 Jun 2026 07:17:43 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wWUEe-0007ax-4k; Mon, 08 Jun 2026 03:17:24 -0400
+	id 1wWUEg-0007bS-Er; Mon, 08 Jun 2026 03:17:26 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1wWUEc-0007Zz-4B
- for qemu-devel@nongnu.org; Mon, 08 Jun 2026 03:17:22 -0400
+ id 1wWUEe-0007b0-5o
+ for qemu-devel@nongnu.org; Mon, 08 Jun 2026 03:17:24 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1wWUEa-0008LA-5j
- for qemu-devel@nongnu.org; Mon, 08 Jun 2026 03:17:21 -0400
+ id 1wWUEc-0008Li-Pc
+ for qemu-devel@nongnu.org; Mon, 08 Jun 2026 03:17:23 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1780903039;
+ s=mimecast20190719; t=1780903042;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=NiPRbgAGG9+H5A2Rhy9bpK7HQJj7Pl9u84rDJDqgsuw=;
- b=MedilRb1ApkcDaXMJhZHTIfY+yl8fQSDDtxMiaghczZGgKR8YP+ZQ3ZB4WFlEuyqOsUpFE
- XKsC1kk4hHYOiILWhdZtWYWlfKsuVUp1J52LC4W/6UfumssYphNjTY5QpjTXeaZ/eBRos8
- 0ti7smg+L9LQuRip+VUmtkG1fCKc9fQ=
-Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
+ bh=42pjXpnS3GuIn7s6Zh3seKv48mIlHa86AQ8iMF/OKzA=;
+ b=ZG/ml+HJmmUYipUVrx/wWzniJAata4kKu206d0HJ8I5k3+y8AM7/6aBLbbTeQrjS6ihEv7
+ wnAbC4UaTQyvylo+wzPaJn97uT81OeSmlFyNRvwCGVNVQMGbf9E1Ez29EqhLdvLRRAadR4
+ 0FwYltpTcAlFsJErryh4+bDmxRdzY+A=
+Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-222-CoFDv1seP1mfFXbpPSzoVw-1; Mon,
- 08 Jun 2026 03:17:13 -0400
-X-MC-Unique: CoFDv1seP1mfFXbpPSzoVw-1
-X-Mimecast-MFC-AGG-ID: CoFDv1seP1mfFXbpPSzoVw_1780903032
-Received: from mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.93])
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-288-Hz9-mQ0kPg2ccKnwxA02Cg-1; Mon,
+ 08 Jun 2026 03:17:18 -0400
+X-MC-Unique: Hz9-mQ0kPg2ccKnwxA02Cg-1
+X-Mimecast-MFC-AGG-ID: Hz9-mQ0kPg2ccKnwxA02Cg_1780903037
+Received: from mx-prod-int-10.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-10.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.95])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 10B2719560B1; Mon,  8 Jun 2026 07:17:12 +0000 (UTC)
+ by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 7C4B219560A1; Mon,  8 Jun 2026 07:17:17 +0000 (UTC)
 Received: from localhost (unknown [10.44.22.16])
- by mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 3BD011800480; Mon,  8 Jun 2026 07:17:09 +0000 (UTC)
+ by mx-prod-int-10.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id 167D21624; Mon,  8 Jun 2026 07:17:15 +0000 (UTC)
 From: =?utf-8?q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>
-Date: Mon, 08 Jun 2026 11:16:24 +0400
-Subject: [PATCH v2 06/33] glib-compat: add fallback for g_clear_fd/g_autofd
+Date: Mon, 08 Jun 2026 11:16:25 +0400
+Subject: [PATCH v2 07/33] ui/dbus: remove mouse handler on dispose
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
-Message-Id: <20260608-b4-ui-v2-6-9ea6355ea08f@redhat.com>
+Message-Id: <20260608-b4-ui-v2-7-9ea6355ea08f@redhat.com>
 References: <20260608-b4-ui-v2-0-9ea6355ea08f@redhat.com>
 In-Reply-To: <20260608-b4-ui-v2-0-9ea6355ea08f@redhat.com>
 To: qemu-devel@nongnu.org
@@ -67,24 +67,24 @@ Cc: Paolo Bonzini <pbonzini@redhat.com>,
  Peter Maydell <peter.maydell@linaro.org>, 
  Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>, 
  =?utf-8?q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>
-X-Developer-Signature: v=1; a=openpgp-sha256; l=1408;
+X-Developer-Signature: v=1; a=openpgp-sha256; l=719;
  i=marcandre.lureau@redhat.com; h=from:subject:message-id;
- bh=yIivtAt+njPmx4qztb8O8h6ia85KP5LqwxILrMj9U00=;
- b=owEBbQKS/ZANAwAKAdro4Ql1lpzlAcsmYgBqJmxIgWyIOIRXmjCwAXcRk11LXemF4Y0nTEQZm
- EskNzS/BduJAjMEAAEKAB0WIQSHqb2TP4fGBtJ29i3a6OEJdZac5QUCaiZsSAAKCRDa6OEJdZac
- 5aiUEACTfCMbkEAocgRTpkAI/x9fRrFeywZ3zQ+3SRAqTkZ4ua5ifb4JYcLJzarY4i9HQPiIrDJ
- fzlxlazgik8VCfDWOzt+zuU8nvwdf8jOzTSELa7rNGYduKfoAVAwSPXJgok+5KXUwlSiH7YFWBU
- gzdQ2Xb2qStB5F1KXBrrg82Z8QXh3XoxuIyM6q0n5sDkvpXY2xdKFJgS3HoIqPYReznixUZnBHn
- 0r70Q/G4aYwU0yQS0t8pghPX6aGCLFYfxY1txv8JYjYljtX1GP7SyMQvjxkzFT0YFAfilXJ6KMQ
- TZ0HgAjsWcj4n1nGsdnosX7WKlVib2SKAbOqMfA287HpJ3wH8l3B696uS/w4obu1NouJm9xvffB
- 4E0iWBrZaf9NQTlzbtq4/t0BFtqAJmORAV1oJwwYJjQJiJj/O1lDlTTfDI1j1OBFyRLwMWzDIMz
- ezPgSygDQnDO0c36FA+TEUoiwcQd6ZHK+ucPBFnJ3M8ozNtc90QvkSgky+nJkn8vigaltut2uwC
- 25YBx5PxVBTsAuYnIXwxLhfx7yO/lWREM+UPp/h9aecxedFv7F06w+aZ4PrLkJveUJ7KtfduaAj
- g4WNxBZLmHxXd61g2/9yQs5/gZB/dILAclbDVGoq1hf0Vc4gAfD0QIIpIeRUQxCkbJTGTHIctkJ
- 2oqs/ZGy/vWLJvA==
+ bh=Zlbop9zuN6D0e4GxEJlAcaL73bwcfVgoQ3P7DEp7fMs=;
+ b=owEBbQKS/ZANAwAKAdro4Ql1lpzlAcsmYgBqJmxIl0k7OJW2wftFX4HM3DVfNXftb7kh5RfHQ
+ z0LPZliz4aJAjMEAAEKAB0WIQSHqb2TP4fGBtJ29i3a6OEJdZac5QUCaiZsSAAKCRDa6OEJdZac
+ 5YW/D/9c/3BUi5xDZvezUbEtrwKztoYJ3uikyESq6CJvC9cUt05ccQJOyV28tWJVlG3DdwYJ+1g
+ XxwKJunAYq84OuMGsf3ndIZ5T1said5AYnbNywJmuW5iFh9wbCAkbCBMfqtHsF8eMnMiZQUQM0W
+ Ss5DsMvH4WcK2m5x8XKafTvQn31W8yfTcxsh01SXcGjmYJr1MxDw86G9edLV/9LcsNy+Q1tzRG3
+ EUGN08NtwJkRimfxeyL3ETgSWd21jKy10PZ0BT26bjgIqdTCXYZVE19HusfLTZrZzF7OpPO1sTc
+ NADWOlUp7ecC5ANC7Lw2IqKmiAUF27VvcZO/n7b9OOkhVfmfDAFEmoFc6vkpt5r81cQ8wM1p7si
+ N5tTlSgCy2V6+xv68JZ/39XwDFmUfFenFFusaion3T/rGDyVCaF3lgrnsh3to5De5LqCRDxIq8X
+ H9Jw6d1NxjLGCi8TvXqKf2ZNoCzxzyZ8hRmEtWhUSxiEIYEikBcf1Y5PhfMc1ocUBFiiWnjRLpj
+ 9kUhVSl5X7ES1jGp+NlJrrIvh1LD4LkGb2rTyR8sqBhh9/vQxqbwoilShdP/vuMTITlPPmXau5n
+ haSBy9vzHjbOSB7quCF+0fbusDscHDjUutcBeZfC+ULGPrTS08VN+2j7LXyrsw8JqQ8doG2xysE
+ KkGIXUO2IYl1/eg==
 X-Developer-Key: i=marcandre.lureau@redhat.com; a=openpgp;
  fpr=87A9BD933F87C606D276F62DDAE8E10975969CE5
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.93
+X-Scanned-By: MIMEDefang 3.6 on 10.30.177.95
 Received-SPF: pass client-ip=170.10.133.124;
  envelope-from=marcandre.lureau@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
@@ -111,60 +111,24 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Those helpers were added in glib 2.76.
-
+Fixes: 142ca628a7 ("ui: add a D-Bus display backend")
 Signed-off-by: Marc-André Lureau <marcandre.lureau@redhat.com>
 ---
- include/glib-compat.h | 29 +++++++++++++++++++++++++++++
- 1 file changed, 29 insertions(+)
+ ui/dbus-console.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/include/glib-compat.h b/include/glib-compat.h
-index 2e32b90f051..32ee2afdcdf 100644
---- a/include/glib-compat.h
-+++ b/include/glib-compat.h
-@@ -30,6 +30,7 @@
- #pragma GCC diagnostic ignored "-Wdeprecated-declarations"
+diff --git a/ui/dbus-console.c b/ui/dbus-console.c
+index 21eceb24362..0813a08f85e 100644
+--- a/ui/dbus-console.c
++++ b/ui/dbus-console.c
+@@ -151,6 +151,7 @@ dbus_display_console_dispose(GObject *object)
+     DBusDisplayConsole *ddc = DBUS_DISPLAY_CONSOLE(object);
  
- #include <glib.h>
-+#include <glib/gstdio.h>
- #if defined(G_OS_UNIX)
- #include <glib-unix.h>
- #include <sys/types.h>
-@@ -129,6 +130,34 @@ qemu_g_test_slow(void)
- #define g_test_thorough() qemu_g_test_slow()
- #define g_test_quick() (!qemu_g_test_slow())
- 
-+static inline gboolean g_clear_fd_qemu(int *fd_ptr, GError **error)
-+{
-+#if GLIB_CHECK_VERSION(2, 76, 0)
-+    return g_clear_fd(fd_ptr, error);
-+#else
-+    int fd = *fd_ptr;
-+
-+    *fd_ptr = -1;
-+
-+    if (fd < 0) {
-+        return TRUE;
-+    }
-+
-+    return g_close(fd, error);
-+#endif
-+}
-+#define g_clear_fd(fd, err) g_clear_fd_qemu(fd, err)
-+
-+#if !GLIB_CHECK_VERSION(2, 76, 0)
-+static inline void _g_clear_fd_ignore_error(int *fd_ptr)
-+{
-+    int errsv = errno;
-+    g_clear_fd(fd_ptr, NULL);
-+    errno = errsv;
-+}
-+#define g_autofd __attribute__((cleanup(_g_clear_fd_ignore_error)))
-+#endif
-+
- #pragma GCC diagnostic pop
- 
- #ifndef G_NORETURN
+     qemu_console_unregister_listener(&ddc->dcl);
++    qemu_remove_mouse_mode_change_notifier(&ddc->mouse_mode_notifier);
+     g_clear_object(&ddc->iface_touch);
+     g_clear_object(&ddc->iface_mouse);
+     g_clear_object(&ddc->iface_kbd);
 
 -- 
 2.54.0
