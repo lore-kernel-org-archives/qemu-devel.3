@@ -4,101 +4,58 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B9262CD8C9F
-	for <qemu-devel@archiver.kernel.org>; Mon,  8 Jun 2026 10:50:20 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 15B98CD8CA7
+	for <qemu-devel@archiver.kernel.org>; Mon,  8 Jun 2026 11:05:11 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wWXY5-00071r-50; Mon, 08 Jun 2026 06:49:41 -0400
+	id 1wWXmb-0000oW-DH; Mon, 08 Jun 2026 07:04:41 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1wWXY3-00071e-Hm
- for qemu-devel@nongnu.org; Mon, 08 Jun 2026 06:49:39 -0400
-Received: from mail-yx1-xb12a.google.com ([2607:f8b0:4864:20::b12a])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1wWXY1-0001Qi-CQ
- for qemu-devel@nongnu.org; Mon, 08 Jun 2026 06:49:39 -0400
-Received: by mail-yx1-xb12a.google.com with SMTP id
- 956f58d0204a3-660323f7b27so4286452d50.3
- for <qemu-devel@nongnu.org>; Mon, 08 Jun 2026 03:49:36 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1780915776; cv=none;
- d=google.com; s=arc-20240605;
- b=d5J028r1B7N2Y04xuicjtF8/dV8ivHUUvRioM+YrC4cCnR7FekbmbW4GnLSarnqfHg
- uoS0FIvAY0pR3OLm6YJbbIirYHQa+edM3ryIH1FiOncG9esYzlV2lfxWoS/lI0P7rTrk
- 5X0yA70fYN3zmDYlZI9Y/OuEs8Gh5gESyTcryQPcyfJaCLLnDj2LlBVlfbUdPws3L3yQ
- bCn1kFyYtkWwYYLwqL8GDjrMWr145wDj8lAQaw/LBIZFx1zS1ZTA2ZvSfgWuiAsOqeH0
- 2Rancj7w6YLZYL2xYSHWIYVWuc4UTYRNEb8fckSnzc4uzLfVymy2ukYn+dyZj//hey9q
- ue+w==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
- s=arc-20240605; 
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:dkim-signature;
- bh=eCPllJT2xO635yf42qMV1ZL2QitlN4gYtPEJ7c+Tw+Q=;
- fh=2Ql2JQXYYxz1RYoZmvk1GClubAUYYhKeJe346T0P6v0=;
- b=U7G+m8iOYX2ulMIKXGnYDM7lIfui6cvvAWdCYrL5N2zbJfxKz3tiOfVoDfbq/5ayp+
- OXq4jaXyOk+UV8OFLNXMhbi5kVPwpLAtrnpkP4h6ZWNRQLxSH2WMQOjR9pjpxLLSz3Ws
- jx9/j1aWNITIAw96xNHnvkJWnfpmlPYMmZd5uJtsmU/KLUKi5dF/319fLoeMMY07KqSM
- DMmVA4vAFshlMeMmUaZA5MfRe6Ru3qQcYt1E85S2uMocsNTyiVGpwk0GZ61rTeheUeTY
- X15E8toDr45q5o5OVh9bSDBA8rIk5UCv9fW86O7KoDFhwMrietCtFSbY80FD4z6/g8UV
- dSVg==; darn=nongnu.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1780915776; x=1781520576; darn=nongnu.org;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=eCPllJT2xO635yf42qMV1ZL2QitlN4gYtPEJ7c+Tw+Q=;
- b=ZMIIzteglJiTqA4ecLpLVcspSu/sfigjAcW84PC9XEDyZxRaBgPpcfRvSXYE+SGwAt
- 05+Qah/cC4x7ZLnqWz7aBHJoaQKtmPUVjLeWAR061Zj7XNleVlx01XYfZ/mRDQzOhX1v
- 2h15RbrgTfegdAQb2haW6Cmj7K4r3muF3yfH1EyQZvh0KLqlLQzoM3VtLveADs3opdI3
- G74tNlOi0Jk7M61KaW3p2jE9X5JIujoMjW94sdKn3zBsbOB5MWGScxisWIOFOKpDRCpd
- ECigoINtQVI8xMUFB5lh4qLHkjF6QnfWPEUvaNrNTHjE82uAUGoNfF7TTILhxXZuZlDz
- /+9A==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1780915776; x=1781520576;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=eCPllJT2xO635yf42qMV1ZL2QitlN4gYtPEJ7c+Tw+Q=;
- b=VexWhbFh2nMMMS/E2+HX+ogZn5X7CnN28HJLeI28YD9bogmizkBYUXkh5dB5zWF3+s
- 6BPnX2n+6vcEj8N37U0auzYtyCdVkKkMozqusQjj1yMJ3HvxI2PoWYs0B4+gzP4+xhE0
- bl60yNO0OFiva931Tm2gu/c6L1Awe3nR1lYw9wbWnbueP9gRF9pm/QmRHVTVg/b2SMfw
- OhLPciEEj3EozD8NjZS+03g/ZKCAi2SGswK5n+i7lmOwJNxKNJlMru8lIXqY4GJyBPGQ
- 3ggM/tG2Ag61EUYoGtNGyZuzkPY2I65Rsm5qUC8rV9iGZs9mPVN61sSrG5Xm0A9r2DyR
- rKuw==
-X-Gm-Message-State: AOJu0YxpboyZhUNSm7JX2cEopY9oWIvRw9MySHLFegaFv5ZsmD5cQz3g
- wiuG17zpm4ao1RiaEfilHgyyfhC4DwOk+utW5HcVpZWeUqlsjsFHdC27YgSpbCwCGthCY/rpVRk
- vyLK9FvSV6mSJ0UBcZMwowc+kHJI1m6snvvWZMwenrg==
-X-Gm-Gg: Acq92OGgxuvx7ul/TzdP/TcgYAMcRuiId98yU/PCyMmhyTeIgm9UH1MtEsvGk0s7qLw
- E7+dLqDuEQm+j+z5Ol8VQJtJKR6AYB8wnBGJwLOIVvzzPM5jPIZjLTNejNVCGWt4t2HaJ/m1xCr
- sMbDxwB7gZeQt8doOvhKoQaL4gjesRYZS03Zi1iTicWYUE9/gcWx42q5mG1D0L3Uw7PxXShIUQ3
- ylQAhR2M2Mm0frjeEs5hiwMJj3S1pS0DAdBJ8HFA0AnQDXxu57hDj1cbHuaOaR//INBFjDNx3gT
- bSfIg0FEjLpTWDnnwslzFGoA7Ay0STuiW7Twca1w9fnVJooqjjwl+8Rj750zjO8wbPMB9ifR7Cl
- Zgg==
-X-Received: by 2002:a05:690e:4804:b0:65d:81d3:c1c8 with SMTP id
- 956f58d0204a3-66106f4e0ebmr7869614d50.45.1780915776033; Mon, 08 Jun 2026
- 03:49:36 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <jean-louis@dupond.be>)
+ id 1wWXmX-0000mZ-M1; Mon, 08 Jun 2026 07:04:37 -0400
+Received: from apollo.dupie.be ([2001:bc8:3f2a:101::1])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <jean-louis@dupond.be>)
+ id 1wWXmU-0006uR-AI; Mon, 08 Jun 2026 07:04:37 -0400
+Received: from lt-jeanlouis (unknown
+ [IPv6:2a02:a03f:fafb:301:46c3:62e6:fe62:23a1])
+ by apollo.dupie.be (Postfix) with ESMTPSA id F23A41520F54;
+ Mon, 08 Jun 2026 13:04:28 +0200 (CEST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=dupond.be; s=dkim;
+ t=1780916669;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=ImXwFcjGNeGxBq1Hn6LVUNqP61YvpAoEcEaKTkM3cyg=;
+ b=N7JZnNf6jon7lEJytduDKbSWY7xDvUqPFwz7bpKYFO67rQ8E6kJfE+xuw/hHS95cMa2KXX
+ MXcfJNpiE+6HeEGY79vIGrjUD+y6siNIBgNZPziheDMx8bABxEbpqV0nsHrKWlYgCbWBfM
+ hdTdn2ySxraaSCqQvcJarbuDvdaDvyQaxhfgRE0DklzFQGqU2/ktomFKsy55acQbx+qTV/
+ Lzwm8RqFwhLQmI66lLdmB+ZEcIMLHojvhhy+hcIh6WAdmRS/oGweRcCKTqcN3g3wI3gCTg
+ +G/HM/FiqvRKgYsqNBiwYxflpsDhLIAG9ZyI9UIjqNLfW/bH/FzmDCqJxDmc1A==
+From: Jean-Louis Dupond <jean-louis@dupond.be>
+To: qemu-devel@nongnu.org
+Cc: Kevin Wolf <kwolf@redhat.com>,
+ Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>,
+ Hanna Reitz <hreitz@redhat.com>, qemu-block@nongnu.org,
+ Fiona Ebner <f.ebner@proxmox.com>, John Snow <jsnow@redhat.com>,
+ Jean-Louis Dupond <jean-louis@dupond.be>
+Subject: [PATCH 1/3] block: add bdrv_open_backing_chain_until
+Date: Mon,  8 Jun 2026 13:03:44 +0200
+Message-ID: <20260608110346.3231998-2-jean-louis@dupond.be>
+X-Mailer: git-send-email 2.54.0
+In-Reply-To: <20260608110346.3231998-1-jean-louis@dupond.be>
+References: <20260608110346.3231998-1-jean-louis@dupond.be>
 MIME-Version: 1.0
-References: <20260531153354.88909-2-hemanshu.khilari.foss@gmail.com>
-In-Reply-To: <20260531153354.88909-2-hemanshu.khilari.foss@gmail.com>
-From: Peter Maydell <peter.maydell@linaro.org>
-Date: Mon, 8 Jun 2026 11:49:24 +0100
-X-Gm-Features: AVVi8Cecz8WqKkuppWp6jlld-oDo0FMthiKdB87xZmUrgYGoV9JTXX4KOOk5Bqs
-Message-ID: <CAFEAcA9ABygEkZPs+bQQCESiPCR7D78uKpFv=AuoxH=hjsS_OQ@mail.gmail.com>
-Subject: Re: [PATCH v2] hw/core/qdev-clock: Fix potential null pointer
- dereference
-To: "hemanshu.khilari.foss" <hemanshu.khilari.foss@gmail.com>
-Cc: qemu-devel@nongnu.org, luc@lmichel.fr, hemanshu_dev@proton.me
-Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2607:f8b0:4864:20::b12a;
- envelope-from=peter.maydell@linaro.org; helo=mail-yx1-xb12a.google.com
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2001:bc8:3f2a:101::1;
+ envelope-from=jean-louis@dupond.be; helo=apollo.dupie.be
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -115,27 +72,184 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Sun, 31 May 2026 at 16:34, hemanshu.khilari.foss
-<hemanshu.khilari.foss@gmail.com> wrote:
->
-> qdev_get_clocklist() function returns a pointer to the NamedClockList
-> struct. This function is called in qdev_alias_clock() and the returned
-> pointer is immediately dereferenced without a null check.
->
-> Passing clock name that doesn't exist to qdev_get_clocklist() is a
-> programming error, and so this change is not fixing a bug, only making
-> the reporting of that programming error a bit more helpful and bringing
-> it in to line with qdev_get_clock_in() and qdev_get_clock_out().
->
-> Cc: luc@lmichel.fr
-> Cc: peter.maydell@linaro.org
-> Cc: hemanshu_dev@proton.me
-> Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/2342
-> Signed-off-by: hemanshu.khilari.foss <hemanshu.khilari.foss@gmail.com>
-> ---
+Add a new function called bdrv_open_backing_chain_until.
+This is used to open a block up until a specified backing chain.
 
-Thanks for this patch -- I've applied it to my target-arm.next
-tree, so it will get upstream in a week or two.
+Modified bdrv_open_inherit to accept a new arg 'open_backing' to force
+to to no open the next backing. Adjusting all references to keep the
+existing behaviour.
 
--- PMM
+Signed-off-by: Jean-Louis Dupond <jean-louis@dupond.be>
+---
+ block.c                            | 65 +++++++++++++++++++++++++-----
+ block/mirror.c                     |  2 +-
+ include/block/block-global-state.h |  7 +++-
+ 3 files changed, 62 insertions(+), 12 deletions(-)
+
+diff --git a/block.c b/block.c
+index f0a6042e61..a4f4ce1c21 100644
+--- a/block.c
++++ b/block.c
+@@ -83,6 +83,7 @@ static QLIST_HEAD(, BlockDriver) bdrv_drivers =
+ static BlockDriverState *bdrv_open_inherit(const char *filename,
+                                            const char *reference,
+                                            QDict *options, int flags,
++                                           bool open_backing,
+                                            BlockDriverState *parent,
+                                            const BdrvChildClass *child_class,
+                                            BdrvChildRole child_role,
+@@ -3617,6 +3618,7 @@ out:
+  * TODO Can this be unified with bdrv_open_image()?
+  */
+ int bdrv_open_backing_file(BlockDriverState *bs, QDict *parent_options,
++                           bool open_backing,
+                            const char *bdref_key, Error **errp)
+ {
+     ERRP_GUARD();
+@@ -3695,9 +3697,9 @@ int bdrv_open_backing_file(BlockDriverState *bs, QDict *parent_options,
+         qdict_put_str(options, "driver", bs->backing_format);
+     }
+ 
+-    backing_hd = bdrv_open_inherit(backing_filename, reference, options, 0, bs,
+-                                   &child_of_bds, bdrv_backing_role(bs), true,
+-                                   errp);
++    backing_hd = bdrv_open_inherit(backing_filename, reference, options, 0,
++                                   open_backing, bs, &child_of_bds,
++                                   bdrv_backing_role(bs), true, errp);
+     if (!backing_hd) {
+         bs->open_flags |= BDRV_O_NO_BACKING;
+         error_prepend(errp, "Could not open backing file: ");
+@@ -3733,6 +3735,48 @@ free_exit:
+     return ret;
+ }
+ 
++int
++bdrv_open_backing_chain_until(BlockDriverState *top_bs,
++                              const char *base_filename,
++                              Error **errp)
++{
++    BlockDriverState *base_bs = NULL;
++    BlockDriverState *curr = top_bs;
++    int ret;
++
++    GLOBAL_STATE_CODE();
++
++    if (!base_filename) {
++        return 0;
++    }
++
++    while (!(base_bs = bdrv_find_backing_image(top_bs, base_filename))) {
++        QDict *options;
++
++        options = qdict_clone_shallow(curr->options);
++        ret = bdrv_open_backing_file(curr, options, false, "backing", errp);
++        qobject_unref(options);
++        if (ret < 0) {
++            return ret;
++        }
++
++        bdrv_graph_rdlock_main_loop();
++        if (!curr->backing) {
++            bdrv_graph_rdunlock_main_loop();
++            error_setg(errp,
++                       "Did not find '%s' in the backing chain of '%s'",
++                       base_filename, top_bs->filename);
++            return -ENOENT;
++        }
++
++        /* Switch to the next layer */
++        curr = curr->backing->bs;
++        bdrv_graph_rdunlock_main_loop();
++    }
++
++    return 0;
++}
++
+ static BlockDriverState *
+ bdrv_open_child_bs(const char *filename, QDict *options, const char *bdref_key,
+                    BlockDriverState *parent, const BdrvChildClass *child_class,
+@@ -3767,7 +3811,7 @@ bdrv_open_child_bs(const char *filename, QDict *options, const char *bdref_key,
+         goto done;
+     }
+ 
+-    bs = bdrv_open_inherit(filename, reference, image_options, 0,
++    bs = bdrv_open_inherit(filename, reference, image_options, 0, true,
+                            parent, child_class, child_role, parse_filename,
+                            errp);
+     if (!bs) {
+@@ -3897,8 +3941,8 @@ BlockDriverState *bdrv_open_blockdev_ref(BlockdevRef *ref, Error **errp)
+ 
+     }
+ 
+-    bs = bdrv_open_inherit(NULL, reference, qdict, 0, NULL, NULL, 0, false,
+-                           errp);
++    bs = bdrv_open_inherit(NULL, reference, qdict, 0, true, NULL, NULL, 0,
++                           false, errp);
+     obj = NULL;
+     qobject_unref(obj);
+     visit_free(v);
+@@ -3986,7 +4030,7 @@ out:
+  */
+ static BlockDriverState * no_coroutine_fn
+ bdrv_open_inherit(const char *filename, const char *reference, QDict *options,
+-                  int flags, BlockDriverState *parent,
++                  int flags, bool open_backing, BlockDriverState *parent,
+                   const BdrvChildClass *child_class, BdrvChildRole child_role,
+                   bool parse_filename, Error **errp)
+ {
+@@ -4199,8 +4243,9 @@ bdrv_open_inherit(const char *filename, const char *reference, QDict *options,
+     }
+ 
+     /* If there is a backing file, use it */
+-    if ((flags & BDRV_O_NO_BACKING) == 0) {
+-        ret = bdrv_open_backing_file(bs, options, "backing", &local_err);
++    if ((flags & BDRV_O_NO_BACKING) == 0 && open_backing) {
++        ret = bdrv_open_backing_file(bs, options, open_backing, "backing",
++                                     &local_err);
+         if (ret < 0) {
+             goto close_and_fail;
+         }
+@@ -4283,7 +4328,7 @@ BlockDriverState *bdrv_open(const char *filename, const char *reference,
+ {
+     GLOBAL_STATE_CODE();
+ 
+-    return bdrv_open_inherit(filename, reference, options, flags, NULL,
++    return bdrv_open_inherit(filename, reference, options, flags, true, NULL,
+                              NULL, 0, true, errp);
+ }
+ 
+diff --git a/block/mirror.c b/block/mirror.c
+index 089856f4a8..a4dde5d36d 100644
+--- a/block/mirror.c
++++ b/block/mirror.c
+@@ -785,7 +785,7 @@ static int mirror_exit_common(Job *job)
+         bdrv_graph_rdlock_main_loop();
+         assert(!bdrv_backing_chain_next(target_bs));
+         ret = bdrv_open_backing_file(bdrv_skip_filters(target_bs), NULL,
+-                                     "backing", &local_err);
++                                     true, "backing", &local_err);
+         bdrv_graph_rdunlock_main_loop();
+         if (ret < 0) {
+             error_report_err(local_err);
+diff --git a/include/block/block-global-state.h b/include/block/block-global-state.h
+index ed89999f0f..c7becd9d73 100644
+--- a/include/block/block-global-state.h
++++ b/include/block/block-global-state.h
+@@ -110,7 +110,12 @@ bdrv_set_backing_hd(BlockDriverState *bs, BlockDriverState *backing_hd,
+                     Error **errp);
+ 
+ int bdrv_open_backing_file(BlockDriverState *bs, QDict *parent_options,
+-                           const char *bdref_key, Error **errp);
++                           bool open_backing, const char *bdref_key,
++                           Error **errp);
++
++int bdrv_open_backing_chain_until(BlockDriverState *top_bs,
++                                  const char *base_filename,
++                                  Error **errp);
+ 
+ BlockDriverState * no_coroutine_fn
+ bdrv_open(const char *filename, const char *reference, QDict *options,
+-- 
+2.54.0
+
 
