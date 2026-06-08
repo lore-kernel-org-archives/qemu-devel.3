@@ -4,86 +4,108 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C38B1CD8C9F
-	for <qemu-devel@archiver.kernel.org>; Mon,  8 Jun 2026 09:20:00 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8F268CD8C9F
+	for <qemu-devel@archiver.kernel.org>; Mon,  8 Jun 2026 09:22:20 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wWW8w-0000Hk-Df; Mon, 08 Jun 2026 05:19:38 -0400
+	id 1wWWBR-0001Ih-6x; Mon, 08 Jun 2026 05:22:13 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <apolivodaa433@gmail.com>)
- id 1wWW8t-0000F3-OZ
- for qemu-devel@nongnu.org; Mon, 08 Jun 2026 05:19:35 -0400
-Received: from mail-lj1-x229.google.com ([2a00:1450:4864:20::229])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <apolivodaa433@gmail.com>)
- id 1wWW8j-0004re-7a
- for qemu-devel@nongnu.org; Mon, 08 Jun 2026 05:19:27 -0400
-Received: by mail-lj1-x229.google.com with SMTP id
- 38308e7fff4ca-3965d76090bso36433661fa.2
- for <qemu-devel@nongnu.org>; Mon, 08 Jun 2026 02:19:24 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1780910363; x=1781515163; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:from:to:cc:subject:date:message-id:reply-to;
- bh=5X+tw0HgT0J/AU9AHfidQJCM2gu7ryLNaTBeSDEjxqk=;
- b=mG59e4DybhqsDkuCzUi4VE7Z4OTMm/lD0flivogM/QXjMw6zMdl2G6KsauaJybumd3
- zhePQratHM5LgphxjKuajZ6mI52EaEGH8Xk07OIY7D8eofYMNr7uusSGB649PvB/OrOC
- 6mbns4eiuqJXJn8Sxfylb/clVWdB/qoFc0HY7XMLN52U0Smi8Gj/de6VFZhvPZvFDXsI
- qdT+XvfWhOrcb24cZACVSC0p/43oUJATG06bea2zebwb0nXKoQdyrp1vwXiS4cwagMk7
- LaZtSqk98MgmwBk/bCYMcbbRX8/sNgCg9tepi5gshtDRTOjXT57nPuD3zza7cVu4OG0r
- xqgg==
+ (Exim 4.90_1) (envelope-from <eric.auger@redhat.com>)
+ id 1wWWBN-0001He-SL
+ for qemu-devel@nongnu.org; Mon, 08 Jun 2026 05:22:09 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <eric.auger@redhat.com>)
+ id 1wWWBM-0005og-4G
+ for qemu-devel@nongnu.org; Mon, 08 Jun 2026 05:22:09 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1780910526;
+ h=from:from:reply-to:reply-to:subject:subject:date:date:
+ message-id:message-id:to:to:cc:cc:mime-version:mime-version:
+ content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=1PCRIJ/nkoZvJQPHHr6M0TIXThbK7yCd5/htQLuMB6k=;
+ b=ImoVGsXibtd/2nfl84F3RkYj9av7v6Uec3FOUzzo6s9PkktaLvNeif3ypLgZOf/pUyGS4x
+ gL9zrdgd7q+5ZYqLfDs1vO758MYvHFleJ3ektttwgDHGEmBgzbS+x2o5l1hcXqlqkAcxiK
+ nZMpPSOoLmZMpWTTAGycrO2AS5tB8nk=
+Received: from mail-ed1-f69.google.com (mail-ed1-f69.google.com
+ [209.85.208.69]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-329-1ULwQ7IbNRaSQG1iXXRLOQ-1; Mon, 08 Jun 2026 05:22:04 -0400
+X-MC-Unique: 1ULwQ7IbNRaSQG1iXXRLOQ-1
+X-Mimecast-MFC-AGG-ID: 1ULwQ7IbNRaSQG1iXXRLOQ_1780910524
+Received: by mail-ed1-f69.google.com with SMTP id
+ 4fb4d7f45d1cf-68c19f1f654so3063621a12.2
+ for <qemu-devel@nongnu.org>; Mon, 08 Jun 2026 02:22:04 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1780910363; x=1781515163;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ d=1e100.net; s=20251104; t=1780910524; x=1781515324;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:reply-to:user-agent:mime-version:date
+ :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
  :message-id:reply-to;
- bh=5X+tw0HgT0J/AU9AHfidQJCM2gu7ryLNaTBeSDEjxqk=;
- b=Mn0sauId7nU7k1bKedCSFILVbF7aPKfIIMgBOdS/VYaBhbyf1fXEt2+xa2cCJoO0MP
- dZs+lICgvqcmKk8heoEr75GQzkV0/Y9SAPxjIGaRRyDlqHX45tLClo9AISzNB0HXIiyH
- Nf4EFe/ojqvJzil/fpizG+tLe0CsAQ6lDOAMv5FIEl/cr4RLIRR5MCORHgcRCbYWsG3x
- Vo0XxWnYQnpoPI3W+gwDnRqs1kQRv1pFhGuNAvsPZDP2l/yhtdjepxNqoSdDLQtodz66
- qr5Jm/hFtuUlCqi6nKXTxXIfQkZpbfcDcU3Bk5s46G9fQ4/lHkFk0hDX85Nh6DPQuw2t
- QSrA==
-X-Gm-Message-State: AOJu0Yyjh1Mx6Z5DDxjAASsaGjeO48tQeLK/oHu1Z32cn+FEj7o9hEsO
- 8+OaaOaZk/6R7vd6mO8SuZAftbKe5X8y4GbSv2PJR2Nj/ZN/wFZDb0MnK8+iXr5guW4=
-X-Gm-Gg: Acq92OHSo0JUZ0R6n1ivQYZoCQKmXXTuwoEnny4HtezAlC7XtJXNmsxaXLBhx7k/1Wt
- eiax1KkhikfbdEYw5y9fARzAumZoRss7cf0mF9/dCUfy1oFtyuQyhUiUMR/uQsyzpxPSW/7P00K
- eSPYeINAMVvDWgftp1TH5Gn0mjq+eSTPNV43/h3IqpegQCu6R19CViAvvKg8vUozFOI2ULErUrS
- 5EHvO3zzoaxcoE9GQi0/O80Yh8uYJEVahPAmdHX9qO7ddM9y5XktNu2C76FaZUdoVDngGbhsBO6
- cttXZfIS2exz/DcgaEujSafHJzgRSYYND6f2c8KYZRBGGHLVvi5TbYkdY4UgHgMvXjkKWHxw6gp
- felzk1W57XAfcc6V0gzTH7ovN13T5FDF/az4aA1UBUnRlOtJM8UZ6DpovddIN4msa88A0BTNRlr
- UDHkB8iIARy9sqnDo8EC/wVsgaS9E=
-X-Received: by 2002:a2e:a915:0:b0:38b:be3e:b752 with SMTP id
- 38308e7fff4ca-396d0951a68mr39087621fa.20.1780910362349; 
- Mon, 08 Jun 2026 02:19:22 -0700 (PDT)
-Received: from kali ([82.162.57.219]) by smtp.gmail.com with ESMTPSA id
- 38308e7fff4ca-396ac2be369sm44373221fa.26.2026.06.08.02.19.20
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 08 Jun 2026 02:19:21 -0700 (PDT)
-From: Andrey Polivoda <apolivodaa433@gmail.com>
-To: qemu-devel@nongnu.org
-Cc: Andrey Polivoda <apolivodaa433@gmail.com>,
- Paolo Bonzini <pbonzini@redhat.com>,
- Richard Henderson <richard.henderson@linaro.org>
-Subject: [PATCH v2] target/i386: helper_sysret(): Check that RCX contains a
- canonical address when emulating an Intel CPU
-Date: Mon,  8 Jun 2026 19:18:15 +1000
-Message-ID: <20260608091815.31303-1-apolivodaa433@gmail.com>
-X-Mailer: git-send-email 2.53.0
+ bh=1PCRIJ/nkoZvJQPHHr6M0TIXThbK7yCd5/htQLuMB6k=;
+ b=aesZ0l9LxbC6FiLhtJwuvkYACg27QiU6MzLkrfjs5QPvKpW9D0rrX+Vpz6yXStnkdq
+ ZuL5QuqUSYRcXZVFsmXaNBEsiK5htlT24M7tdTrJ5tm6oogDBuyKkDXdHHxLAnQjZeve
+ LL5OXLutzkjJSlT0ylO1jTgyEyMyKgzJWvQ2mDTHZVdNiQ3qsMy2XCecG9MJNTv7aX24
+ khepqeBF+glsvaGgnHJc/quXfkYlU+D+PjRg3sS/Iy5hC+NBVk3GD7nKNkniMYLlTkGZ
+ QU8MJwgCnQVRv2UgG0MczLG1quEC2PTI3UXsEUvNdaAfd6GrUzqeK2xpSVRPwYn3dhU/
+ Ppgw==
+X-Forwarded-Encrypted: i=1;
+ AFNElJ+lDMkts4nRZTLR9jD1ZxD1zomdM8VW1IjeRVcAP5JNH7Rbzr3wbr2NzxTN7WtOahUcEAkMkZ2UbrGO@nongnu.org
+X-Gm-Message-State: AOJu0YzyYdLDceiFym6Kmv7eORN2vMRF/Nq1xg5xH5sYb8fADUNLaRds
+ mLBqQAUHToR6IerAvE9CsTg2k6mOpXI3AwtVVK6q4QEV2BsPqOACOZ4JxQ+hXO2jgm12ZR+dcz4
+ DOinv4SjBlxr1/0PtLYrEmggGTEgpCS3gOcL4ocP8ToYJai5kGU9o9ckQ
+X-Gm-Gg: Acq92OFh/nQt114xB59LamyrUGGhZ64qXBH2dz1pPzlbRKPOJB+qkv/6GUALrd4b6a8
+ thyXPZ0XQY+LQ80Rb7JksMTIqbuWc/AdNrYPu2/q2w2weM4ftsXa03T9Rqv9fL6OF7ey+VTh1/x
+ KEPy8hwrlF+H4n7JizXVa2lVc7paCcWwtyt2kx1mCquw/2yBpMEgVrXLyhchWNNhJKckUWG042M
+ gFXz2XfYZMzav0A7lzPtnJxFZisE36TVGv4Ch2vst4XFq8Q3Mv621mkOrTuYaXHwhaQ4EBJx7DR
+ 4AvhRgi6zDdCy2CR0IX6o/ybQHcXla79i5JMKfKPcafVlS+NZtcw6E+6cY95SJCZKd3o3aZCge8
+ MhdYxS8DbPvoC8P2QILJXEoQt+r3Etd4yGZbPO/JhY9nOB9VG5aVrsLPURR1s9mS90idraBa4EC
+ N1AYt3
+X-Received: by 2002:a05:6402:3807:b0:66f:2ea5:c269 with SMTP id
+ 4fb4d7f45d1cf-68fa503900cmr6856022a12.15.1780910523578; 
+ Mon, 08 Jun 2026 02:22:03 -0700 (PDT)
+X-Received: by 2002:a05:6402:3807:b0:66f:2ea5:c269 with SMTP id
+ 4fb4d7f45d1cf-68fa503900cmr6855998a12.15.1780910522925; 
+ Mon, 08 Jun 2026 02:22:02 -0700 (PDT)
+Received: from ?IPV6:2a01:e0a:f0e:9070:527b:9dff:feef:3874?
+ ([2a01:e0a:f0e:9070:527b:9dff:feef:3874])
+ by smtp.gmail.com with ESMTPSA id
+ 4fb4d7f45d1cf-6915a637180sm2871162a12.26.2026.06.08.02.22.01
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Mon, 08 Jun 2026 02:22:02 -0700 (PDT)
+Message-ID: <01c228d2-96ca-4b71-9546-4944ed6e8910@redhat.com>
+Date: Mon, 8 Jun 2026 11:22:01 +0200
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::229;
- envelope-from=apolivodaa433@gmail.com; helo=mail-lj1-x229.google.com
-X-Spam_score_int: -7
-X-Spam_score: -0.8
-X-Spam_bar: /
-X-Spam_report: (-0.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FORGED_GMAIL_RCVD=1,
- FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=no autolearn_force=no
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v5 8/9] hw/arm/smmuv3: Set default ats, ril, ssidsize, oas
+ to auto
+Content-Language: en-US
+To: Nathan Chen <nathanc@nvidia.com>, qemu-arm@nongnu.org,
+ qemu-devel@nongnu.org
+Cc: Peter Maydell <peter.maydell@linaro.org>,
+ =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@mailo.com>,
+ Zhao Liu <zhao1.liu@intel.com>, Matt Ochs <mochs@nvidia.com>,
+ Nicolin Chen <nicolinc@nvidia.com>,
+ Shameer Kolothum <skolothumtho@nvidia.com>
+References: <20260605001712.1823737-1-nathanc@nvidia.com>
+ <20260605001712.1823737-9-nathanc@nvidia.com>
+From: Eric Auger <eric.auger@redhat.com>
+In-Reply-To: <20260605001712.1823737-9-nathanc@nvidia.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=170.10.129.124;
+ envelope-from=eric.auger@redhat.com; helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -24
+X-Spam_score: -2.5
+X-Spam_bar: --
+X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.445,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -96,74 +118,109 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-To: eric.auger@redhat.com
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Intel and AMD CPUs implement SYSRETQ instruction differently.
-One of these differences is whether a canonicality check of the address that
-will be loaded to RIP is performed: Intel CPUs do this check, AMD CPUs don't.
 
-Currently, QEMU does not perform this check when emulating Intel CPUs.
-This patch corrects this by implementing the canonlicality check on a new RIP
-value from RCX and performing it only when emulating Intel CPUs.
 
-Flags and segment registers' caches are updated only after checking the new RIP
-value to ensure that CPU state is not modified in case the #GP(0) exception
-is raised due to the check failure.
+On 6/5/26 2:17 AM, Nathan Chen wrote:
+> From: Nathan Chen <nathanc@nvidia.com>
+>
+> Set the default value of ATS, RIL, SSIDSIZE, and OAS to auto, in order
+> to match the host IOMMU properties when accel=on.
+>
+> If accel=off and these property values are set to auto, the default
+> property values defined in smmuv3_init_id_regs() for OAS and RIL will
+> remain unchanged, while SSIDSIZE and ATS values will remain initialized
+> at 0.
+>
+> Introduce a new compat for the changed defaults.
+>
+> Reviewed-by: Shameer Kolothum <skolothumtho@nvidia.com>
+> Signed-off-by: Nathan Chen <nathanc@nvidia.com>
+Reviewed-by: Eric Auger <eric.auger@redhat.com>
 
-Cc: qemu-devel@nongnu.org
-Cc: Paolo Bonzini <pbonzini@redhat.com>
-Cc: Richard Henderson <richard.henderson@linaro.org>
-Fixes: 14ce26e75513 ("x86_64 target support")
-Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/3223
-Signed-off-by: Andrey Polivoda <apolivodaa433@gmail.com>
----
- target/i386/tcg/seg_helper.c | 17 +++++++++++++----
- 1 file changed, 13 insertions(+), 4 deletions(-)
+Thanks
 
-diff --git a/target/i386/tcg/seg_helper.c b/target/i386/tcg/seg_helper.c
-index 58aac72011..d5c174b7fd 100644
---- a/target/i386/tcg/seg_helper.c
-+++ b/target/i386/tcg/seg_helper.c
-@@ -1096,17 +1096,22 @@ void helper_sysret(CPUX86State *env, int dflag)
-     selector = (env->star >> 48) & 0xffff;
- #ifdef TARGET_X86_64
-     if (env->hflags & HF_LMA_MASK) {
--        cpu_load_eflags(env, (uint32_t)(env->regs[11]), TF_MASK | AC_MASK
--                        | ID_MASK | IF_MASK | IOPL_MASK | VM_MASK | RF_MASK |
--                        NT_MASK);
-         if (dflag == 2) {
-+            uint64_t new_rip = env->regs[R_ECX];
-+            if (IS_INTEL_CPU(env)) {
-+                int shift = (get_pg_mode(env) & PG_MODE_LA57) ? 56 : 47;
-+                int64_t sext = (int64_t)new_rip >> shift;
-+                if (sext != 0 && sext != -1) {
-+                    raise_exception_err_ra(env, EXCP0D_GPF, 0, GETPC());
-+                }
-+            }
-             cpu_x86_load_seg_cache(env, R_CS, (selector + 16) | 3,
-                                    0, 0xffffffff,
-                                    DESC_G_MASK | DESC_P_MASK |
-                                    DESC_S_MASK | (3 << DESC_DPL_SHIFT) |
-                                    DESC_CS_MASK | DESC_R_MASK | DESC_A_MASK |
-                                    DESC_L_MASK);
--            env->eip = env->regs[R_ECX];
-+            env->eip = new_rip;
-         } else {
-             cpu_x86_load_seg_cache(env, R_CS, selector | 3,
-                                    0, 0xffffffff,
-@@ -1120,6 +1125,10 @@ void helper_sysret(CPUX86State *env, int dflag)
-                                DESC_G_MASK | DESC_B_MASK | DESC_P_MASK |
-                                DESC_S_MASK | (3 << DESC_DPL_SHIFT) |
-                                DESC_W_MASK | DESC_A_MASK);
-+
-+        cpu_load_eflags(env, (uint32_t)(env->regs[11]), TF_MASK | AC_MASK
-+                        | ID_MASK | IF_MASK | IOPL_MASK | VM_MASK | RF_MASK |
-+                        NT_MASK);
-     } else
- #endif
-     {
--- 
-2.53.0
+Eric
+>  hw/arm/smmuv3.c   | 23 +++++++++++++++--------
+>  hw/core/machine.c |  5 +++++
+>  2 files changed, 20 insertions(+), 8 deletions(-)
+>
+> diff --git a/hw/arm/smmuv3.c b/hw/arm/smmuv3.c
+> index 89289ab6d2..83fa6468fd 100644
+> --- a/hw/arm/smmuv3.c
+> +++ b/hw/arm/smmuv3.c
+> @@ -2129,12 +2129,19 @@ static const Property smmuv3_properties[] = {
+>      DEFINE_PROP_BOOL("accel", SMMUv3State, accel, false),
+>      /* GPA of MSI doorbell, for SMMUv3 accel use. */
+>      DEFINE_PROP_UINT64("msi-gpa", SMMUv3State, msi_gpa, 0),
+> +    /*
+> +     * AUTO values for accel=off will resolve to:
+> +     * ril: on
+> +     * ats: off
+> +     * oas: 44
+> +     * ssidsize: 0
+> +     */
+>      /* RIL can be turned off for accel cases */
+> -    DEFINE_PROP_ON_OFF_AUTO("ril", SMMUv3State, ril, ON_OFF_AUTO_ON),
+> -    DEFINE_PROP_ON_OFF_AUTO("ats", SMMUv3State, ats, ON_OFF_AUTO_OFF),
+> -    DEFINE_PROP_OAS_MODE("oas", SMMUv3State, oas, OAS_MODE_44),
+> +    DEFINE_PROP_ON_OFF_AUTO("ril", SMMUv3State, ril, ON_OFF_AUTO_AUTO),
+> +    DEFINE_PROP_ON_OFF_AUTO("ats", SMMUv3State, ats, ON_OFF_AUTO_AUTO),
+> +    DEFINE_PROP_OAS_MODE("oas", SMMUv3State, oas, OAS_MODE_AUTO),
+>      DEFINE_PROP_SSIDSIZE_MODE("ssidsize", SMMUv3State, ssidsize,
+> -                              SSID_SIZE_MODE_0),
+> +                              SSID_SIZE_MODE_AUTO),
+>  };
+>  
+>  static void smmuv3_instance_init(Object *obj)
+> @@ -2164,22 +2171,22 @@ static void smmuv3_class_init(ObjectClass *klass, const void *data)
+>          "enabling.");
+>      object_class_property_set_description(klass, "ril",
+>          "Enable/disable range invalidation support (for accel=on). "
+> -        "Valid values are on, off, and auto. Defaults to on. "
+> +        "Valid values are on, off, and auto. Defaults to auto. "
+>          "Any attempt to turn it 'on' while the host does not support "
+>          "it would fail.");
+>      object_class_property_set_description(klass, "ats",
+>          "Enable/disable ATS support (for accel=on). "
+> -        "Valid values are on, off, and auto. Defaults to off. "
+> +        "Valid values are on, off, and auto. Defaults to auto. "
+>          "Please ensure host platform supports ATS before setting it "
+>          "to on.");
+>      object_class_property_set_description(klass, "oas",
+>          "Set Output Address Size in bits (for accel=on). "
+> -        "Valid values are 44, 48, and auto. Defaults to 44 bits."
+> +        "Valid values are 44, 48, and auto. Defaults to auto."
+>          "Please ensure the value does not exceed the maximum "
+>          "Output Address Size supported by the host platform.");
+>      object_class_property_set_description(klass, "ssidsize",
+>          "Set number of bits used to represent SubstreamIDs (SSIDs). "
+> -        "Valid values are 0-20 and auto. Defaults to 0. "
+> +        "Valid values are 0-20 and auto. Defaults to auto. "
+>          "A value of N allows SSIDs in the range [0 .. 2^N - 1]. "
+>          "A value of 0 disables SubstreamID support. A value greater "
+>          "than 0 is required to enable PASID support."
+> diff --git a/hw/core/machine.c b/hw/core/machine.c
+> index 63baff859f..3339da99ee 100644
+> --- a/hw/core/machine.c
+> +++ b/hw/core/machine.c
+> @@ -38,9 +38,14 @@
+>  #include "hw/virtio/virtio-iommu.h"
+>  #include "hw/acpi/generic_event_device.h"
+>  #include "qemu/audio.h"
+> +#include "hw/arm/smmuv3.h"
+>  
+>  GlobalProperty hw_compat_11_0[] = {
+>      { "chardev-vc", "encoding", "cp437" },
+> +    { TYPE_ARM_SMMUV3, "ats", "off" },
+> +    { TYPE_ARM_SMMUV3, "ril", "on" },
+> +    { TYPE_ARM_SMMUV3, "ssidsize", "0" },
+> +    { TYPE_ARM_SMMUV3, "oas", "44" },
+>  };
+>  const size_t hw_compat_11_0_len = G_N_ELEMENTS(hw_compat_11_0);
+>  
 
 
