@@ -4,51 +4,51 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id EE850CD8C9F
-	for <qemu-devel@archiver.kernel.org>; Mon,  8 Jun 2026 09:17:07 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 922CACD8C92
+	for <qemu-devel@archiver.kernel.org>; Mon,  8 Jun 2026 09:17:31 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wWW6K-0006kB-1b; Mon, 08 Jun 2026 05:16:56 -0400
+	id 1wWW6j-0006p7-R6; Mon, 08 Jun 2026 05:17:21 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1wWW65-0006je-Eh
- for qemu-devel@nongnu.org; Mon, 08 Jun 2026 05:16:45 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ id 1wWW6g-0006ol-Or
+ for qemu-devel@nongnu.org; Mon, 08 Jun 2026 05:17:19 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1wWW64-0003GA-0s
- for qemu-devel@nongnu.org; Mon, 08 Jun 2026 05:16:41 -0400
+ id 1wWW6e-0003L0-Lf
+ for qemu-devel@nongnu.org; Mon, 08 Jun 2026 05:17:17 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1780910198;
+ s=mimecast20190719; t=1780910236;
  h=from:from:reply-to:reply-to:subject:subject:date:date:
  message-id:message-id:to:to:cc:cc:mime-version:mime-version:
  content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=1JFVki46P7V6Cr04O05VHVjFeHpaVDNUXfFFis3PaF4=;
- b=dNiMUqVVyJKTXd82SVayvE0nz2ZE1BIbVKp/1sXNfYUEwePXSMAdNmnKNDSgZtgYpHw3y0
- R6+SHbHYgvjz1SpmD0hZN1fZvPwX7d3j5gfXrVls2CpYzDPDLQcMjY95bv4cHPTquVP7gg
- PeQVyAw6VRlymZ9rU8AG+D+rRgJoTNI=
-Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
+ bh=BMF1py5uCwaDjYMTrYwhfqdd1Hlb49tknlLWwbh+wG8=;
+ b=EbVLAdzhMJamZMHodxBwZsPlKVlaWAt6XSHS4QljxNKJykFgezytTt6bc5p9xD8v5LUk4Q
+ qqX1iZxU/FnhegOKRGv/lEZ2eq2HQwImySDZGygqO+wcT9DgzpQI/XuO2yfj0T5qJO9KTy
+ 0SgKLGfBCJY2Ajnfa0SBKLOMfc0NKIs=
+Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-62-Ul0unm0VPaSflG0_hLZ23A-1; Mon,
- 08 Jun 2026 05:16:34 -0400
-X-MC-Unique: Ul0unm0VPaSflG0_hLZ23A-1
-X-Mimecast-MFC-AGG-ID: Ul0unm0VPaSflG0_hLZ23A_1780910193
-Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-383-GHD5KdOxPNOrH2XdWsu7vA-1; Mon,
+ 08 Jun 2026 05:17:12 -0400
+X-MC-Unique: GHD5KdOxPNOrH2XdWsu7vA-1
+X-Mimecast-MFC-AGG-ID: GHD5KdOxPNOrH2XdWsu7vA_1780910231
+Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 252E6180044D; Mon,  8 Jun 2026 09:16:33 +0000 (UTC)
+ by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id DACD91800345; Mon,  8 Jun 2026 09:17:10 +0000 (UTC)
 Received: from redhat.com (unknown [10.44.49.219])
- by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 98ED33008B37; Mon,  8 Jun 2026 09:16:27 +0000 (UTC)
-Date: Mon, 8 Jun 2026 10:16:18 +0100
+ by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 2AEA419560A3; Mon,  8 Jun 2026 09:17:04 +0000 (UTC)
+Date: Mon, 8 Jun 2026 10:16:59 +0100
 From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 To: =?utf-8?Q?Marc-Andr=C3=A9?= Lureau <marcandre.lureau@redhat.com>
 Cc: qemu-devel@nongnu.org, Paolo Bonzini <pbonzini@redhat.com>,
@@ -59,25 +59,25 @@ Cc: qemu-devel@nongnu.org, Paolo Bonzini <pbonzini@redhat.com>,
  =?utf-8?Q?C=C3=A9dric?= Le Goater <clg@redhat.com>,
  Peter Maydell <peter.maydell@linaro.org>,
  Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
-Subject: Re: [PATCH v2 09/33] ui/qmp: keep a reference of console across yield
-Message-ID: <aiaIYth3foxZvngR@redhat.com>
+Subject: Re: [PATCH v2 10/33] ui: stop ui timer when closing
+Message-ID: <aiaIi-DBKLi_8Dpx@redhat.com>
 References: <20260608-b4-ui-v2-0-9ea6355ea08f@redhat.com>
- <20260608-b4-ui-v2-9-9ea6355ea08f@redhat.com>
+ <20260608-b4-ui-v2-10-9ea6355ea08f@redhat.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <20260608-b4-ui-v2-9-9ea6355ea08f@redhat.com>
+In-Reply-To: <20260608-b4-ui-v2-10-9ea6355ea08f@redhat.com>
 User-Agent: Mutt/2.3.2 (2026-04-26)
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=berrange@redhat.com;
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.12
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=berrange@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -24
 X-Spam_score: -2.5
 X-Spam_bar: --
 X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.445,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
  SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -95,14 +95,14 @@ Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Mon, Jun 08, 2026 at 11:16:27AM +0400, Marc-André Lureau wrote:
-> While the coroutine is waiting, the console could be finalized. Keep a
-> reference to prevent this.
+On Mon, Jun 08, 2026 at 11:16:28AM +0400, Marc-André Lureau wrote:
+> hwops is reset, so if the UI timer is pending it will crash.
 > 
+> Fixes: 9588d67e72 ("console: minimal hotplug suport")
 > Signed-off-by: Marc-André Lureau <marcandre.lureau@redhat.com>
 > ---
->  ui/ui-qmp-cmds.c | 3 +++
->  1 file changed, 3 insertions(+)
+>  ui/console.c | 1 +
+>  1 file changed, 1 insertion(+)
 
 Reviewed-by: Daniel P. Berrangé <berrange@redhat.com>
 
