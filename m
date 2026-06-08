@@ -4,27 +4,27 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0C9A9CD8C92
-	for <qemu-devel@archiver.kernel.org>; Mon,  8 Jun 2026 15:22:37 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 85B2BCD8C9F
+	for <qemu-devel@archiver.kernel.org>; Mon,  8 Jun 2026 15:22:38 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wWbn2-0001ub-Ex; Mon, 08 Jun 2026 11:21:24 -0400
+	id 1wWbn3-0001vk-D1; Mon, 08 Jun 2026 11:21:25 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <joro@8bytes.org>) id 1wWbn0-0001t7-FI
- for qemu-devel@nongnu.org; Mon, 08 Jun 2026 11:21:22 -0400
+ (Exim 4.90_1) (envelope-from <joro@8bytes.org>) id 1wWbn1-0001tp-EF
+ for qemu-devel@nongnu.org; Mon, 08 Jun 2026 11:21:23 -0400
 Received: from mail.8bytes.org ([2a01:238:42d9:3f00:e505:6202:4f0c:f051])
  by eggs.gnu.org with esmtp (Exim 4.90_1)
- (envelope-from <joro@8bytes.org>) id 1wWbmy-0007sv-Vp
- for qemu-devel@nongnu.org; Mon, 08 Jun 2026 11:21:22 -0400
+ (envelope-from <joro@8bytes.org>) id 1wWbmz-0007se-G5
+ for qemu-devel@nongnu.org; Mon, 08 Jun 2026 11:21:23 -0400
 Received: from io.home.8bytes.org (p4ffe1d30.dip0.t-ipconnect.de
  [79.254.29.48])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mail.8bytes.org (Postfix) with ESMTPSA id 5144020294B;
- Mon,  8 Jun 2026 17:21:16 +0200 (CEST)
+ by mail.8bytes.org (Postfix) with ESMTPSA id 72292202946;
+ Mon,  8 Jun 2026 17:21:15 +0200 (CEST)
 From: =?UTF-8?q?J=C3=B6rg=20R=C3=B6del?= <joro@8bytes.org>
 To: Paolo Bonzini <pbonzini@redhat.com>,
  Richard Henderson <richard.henderson@linaro.org>
@@ -33,9 +33,9 @@ Cc: philmd@linaro.org, marcel.apfelbaum@gmail.com, zhao1.liu@intel.com,
  mtosatti@redhat.com, Tom Lendacky <thomas.lendacky@amd.com>,
  qemu-devel@nongnu.org, kvm@vger.kernel.org, coconut-svsm@lists.linux.dev,
  joerg.roedel@amd.com
-Subject: [RFC PATCH 10/10] KVM: Set GSI routes for default plane
-Date: Mon,  8 Jun 2026 17:21:09 +0200
-Message-ID: <20260608152109.356783-11-joro@8bytes.org>
+Subject: [RFC PATCH 05/10] accel/kvm: Support nr_planes call-back
+Date: Mon,  8 Jun 2026 17:21:04 +0200
+Message-ID: <20260608152109.356783-6-joro@8bytes.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260608152109.356783-1-joro@8bytes.org>
 References: <20260608152109.356783-1-joro@8bytes.org>
@@ -65,64 +65,66 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Joerg Roedel <joerg.roedel@amd.com>
 
-This ensures that all IOAPIC IRQs are routed to the default device
-plane in the KVM guest.
-
 Signed-off-by: Joerg Roedel <joerg.roedel@amd.com>
 ---
- accel/kvm/kvm-all.c | 11 ++++++++++-
- 1 file changed, 10 insertions(+), 1 deletion(-)
+ accel/kvm/kvm-all.c | 19 +++++++++++++++++++
+ dtc                 |  1 +
+ ui/keycodemapdb     |  1 +
+ 3 files changed, 21 insertions(+)
+ create mode 160000 dtc
+ create mode 160000 ui/keycodemapdb
 
 diff --git a/accel/kvm/kvm-all.c b/accel/kvm/kvm-all.c
-index 31d80f7ac48b..2bd98efaadab 100644
+index 7429e2be8ba9..dbfef63a84b0 100644
 --- a/accel/kvm/kvm-all.c
 +++ b/accel/kvm/kvm-all.c
-@@ -134,6 +134,7 @@ static int map_kvm_run(KVMState *s, CPUState *cpu, Error **errp);
- static int map_kvm_dirty_gfns(KVMState *s, CPUState *cpu, Error **errp);
- static int vcpu_unmap_regions(KVMState *s, CPUState *cpu);
- static void kvm_alloc_vcpu_plane(CPUState *cpu, unsigned plane_id, int kvm_fd);
-+static int kvm_create_plane(KVMState *s, unsigned id);
- 
- struct KVMResampleFd {
-     int gsi;
-@@ -2238,6 +2239,7 @@ void kvm_init_irq_routing(KVMState *s)
- 
- void kvm_irqchip_commit_routes(KVMState *s)
- {
-+    unsigned plane = qdev_default_plane();
-     int ret;
- 
-     if (kvm_gsi_direct_mapping()) {
-@@ -2250,7 +2252,7 @@ void kvm_irqchip_commit_routes(KVMState *s)
- 
-     s->irq_routes->flags = 0;
-     trace_kvm_irqchip_commit_routes();
--    ret = kvm_vm_ioctl(s, KVM_SET_GSI_ROUTING, s->irq_routes);
-+    ret = kvm_vm_plane_ioctl(s, plane, KVM_SET_GSI_ROUTING, s->irq_routes);
-     assert(ret == 0);
+@@ -4247,6 +4247,24 @@ static bool kvm_accel_has_memory(AccelState *accel, AddressSpace *as,
+     return false;
  }
  
-@@ -2667,6 +2669,8 @@ static int do_kvm_irqchip_create(KVMState *s)
- 
- static void kvm_irqchip_create(KVMState *s)
- {
-+    int device_plane = qdev_default_plane();
++static uint8_t kvm_nr_planes(AccelState *accel, MachineState *ms)
++{
++    uint8_t nr_planes = 1;
 +
-     assert(s->kernel_irqchip_split != ON_OFF_AUTO_AUTO);
- 
-     if (do_kvm_irqchip_create(s) < 0) {
-@@ -2679,6 +2683,11 @@ static void kvm_irqchip_create(KVMState *s)
-     kvm_async_interrupts_allowed = true;
-     kvm_halt_in_kernel_allowed = true;
- 
-+    /* Make sure irqchip target plane is known to KVM */
-+    if (device_plane != 0) {
-+        kvm_create_plane(s, device_plane);
++    // Planes are only supported with in-kernel APIC
++    if (kvm_irqchip_in_kernel()) {
++	    int ret;
++        KVMState *kvm = KVM_STATE(accel);
++
++        ret = kvm_vm_ioctl(kvm, KVM_CHECK_EXTENSION, KVM_CAP_PLANES);
++        if (ret > 0) {
++            nr_planes = ret;
++        }
 +    }
 +
-     kvm_init_irq_routing(s);
++    return nr_planes;
++}
++
+ static void kvm_get_kvm_shadow_mem(Object *obj, Visitor *v,
+                                    const char *name, void *opaque,
+                                    Error **errp)
+@@ -4437,6 +4455,7 @@ static void kvm_accel_class_init(ObjectClass *oc, const void *data)
+     ac->init_machine = kvm_init;
+     ac->rebuild_guest = kvm_reset_vmfd;
+     ac->has_memory = kvm_accel_has_memory;
++    ac->nr_planes = kvm_nr_planes;
+     ac->allowed = &kvm_allowed;
+     ac->gdbstub_supported_sstep_flags = kvm_gdbstub_sstep_flags;
  
-     s->gsimap = g_hash_table_new(g_direct_hash, g_direct_equal);
+diff --git a/dtc b/dtc
+new file mode 160000
+index 000000000000..b6910bec1161
+--- /dev/null
++++ b/dtc
+@@ -0,0 +1 @@
++Subproject commit b6910bec11614980a21e46fbccc35934b671bd81
+diff --git a/ui/keycodemapdb b/ui/keycodemapdb
+new file mode 160000
+index 000000000000..d21009b1c9f9
+--- /dev/null
++++ b/ui/keycodemapdb
+@@ -0,0 +1 @@
++Subproject commit d21009b1c9f94b740ea66be8e48a1d8ad8124023
 -- 
 2.53.0
 
