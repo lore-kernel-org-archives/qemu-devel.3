@@ -4,84 +4,97 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id BF828CD8CA4
-	for <qemu-devel@archiver.kernel.org>; Mon,  8 Jun 2026 19:02:57 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3D2DBCD8CA4
+	for <qemu-devel@archiver.kernel.org>; Mon,  8 Jun 2026 19:03:01 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wWfEn-0004cp-Nd; Mon, 08 Jun 2026 15:02:19 -0400
+	id 1wWfD3-00015h-AY; Mon, 08 Jun 2026 15:00:29 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1wWfEX-0004JU-8O
- for qemu-devel@nongnu.org; Mon, 08 Jun 2026 15:02:01 -0400
-Received: from mail-pl1-x630.google.com ([2607:f8b0:4864:20::630])
+ (Exim 4.90_1) (envelope-from <james.hilliard1@gmail.com>)
+ id 1wWfCy-00012C-Hm
+ for qemu-devel@nongnu.org; Mon, 08 Jun 2026 15:00:24 -0400
+Received: from mail-ot1-x330.google.com ([2607:f8b0:4864:20::330])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1wWfEV-00073A-OA
- for qemu-devel@nongnu.org; Mon, 08 Jun 2026 15:02:00 -0400
-Received: by mail-pl1-x630.google.com with SMTP id
- d9443c01a7336-2bf114b0cf9so41556125ad.2
- for <qemu-devel@nongnu.org>; Mon, 08 Jun 2026 12:01:59 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <james.hilliard1@gmail.com>)
+ id 1wWfCv-0006mo-Kf
+ for qemu-devel@nongnu.org; Mon, 08 Jun 2026 15:00:24 -0400
+Received: by mail-ot1-x330.google.com with SMTP id
+ 46e09a7af769-7e6f27619e7so3821520a34.2
+ for <qemu-devel@nongnu.org>; Mon, 08 Jun 2026 12:00:21 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1780945318; x=1781550118; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=RR3f6n7QOv11gidVm90QTUAQNyftyjjJwksqYB2mkq4=;
- b=jb1Dgo7M1TC2s61FUL7Uq72M6oHEWhH5cBUygwKtfYsDjHFY0BFav/FuDRFcVPPZeG
- UKyv+dyBkIgGU/vpSrBFaCDrePF9UNV2A3Q9SKY+DzHjEZzb/90FXPnSzBREXq2p/sm5
- Ox1NJDIPy6FHvuvzeodbsUaSEx6EO2Xa32qsGp4axqWPFfEgSqsgq3uSYpz33T9zSmvU
- VWnRyI9AlVkdbJgc1VG2Qe0viFdc/04Id46eS7QsuBQP9XjNsmBg4Yb9uLEPUpJiZ/Pl
- zdXZZklWaY00nbdw0LSunBy/B9486UsGl9K0LizfhloRTuRfY0UADBc6zU1PndMyCtxY
- L1zw==
+ d=gmail.com; s=20251104; t=1780945220; x=1781550020; darn=nongnu.org;
+ h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
+ :mime-version:subject:date:from:from:to:cc:subject:date:message-id
+ :reply-to; bh=kNDxHYWhTOsNn0OdBaliY8wf/EghWpS60PkiWLVESW8=;
+ b=UUzZ+fd8jMfpEA3THVF3kNF4nHtegtKkzGk21sY5mnOiafmj7VRiDmDDLKmC5qF4dj
+ aS97qGC0FWmSDN/rTcItZJ2XfKbeBQ24BJM88n/w2xzMpwkCuFrr3sq5M5FBWL6F2J2S
+ zN4sZt1ssRgHzVKMZ58ETXruPln1soM9cEJ7lKdryrzEm/GUthqEQGyN408yUUH3qe0I
+ FsCip18WoGTkAvKY4Jdqb7zQ9k4i8pFu4EoieLGNM6oIa0f8PRCdmRk4g/pOHLZLU61J
+ zmaJ8JVM8CYlNC/Dc809qFLgHJU+oMy2g+6mBZNh4UtsJF6nfTL/kQcnzYuFdtl+T7Tg
+ 4FeQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1780945318; x=1781550118;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to;
- bh=RR3f6n7QOv11gidVm90QTUAQNyftyjjJwksqYB2mkq4=;
- b=KUGyJB6lk91bmiGkBm3MFucgW8Fi01BCh3m1hG4P34SZ2zgo7ztfElp+D3Oc/JVpMr
- eF6R2c/fG84kiYYDuUpBmokn5klxXHjUWNllanyi2J3EpqlBFbuf4dvUwBfLcCbc5/oi
- qKOGNJb1wXfRoSUeTz9s5lLOc1YQ7jdOll1nayPxB17+hsFfk34NW/SawHiRNBlVZORT
- WE2IYCn1xtYc2kh7c3n8jB2ruHp3CKQc6iACR8a3VWaM8Fl+ox04kqwlUWtqso8449o9
- I/u6KPYf1aMVW0jjryZYoioX2/mFTH7QKstjMedWQXZbipHLkXRJULpdJMqghgXKq1Bb
- YuKg==
-X-Gm-Message-State: AOJu0YxvJAS+3hPQ6TFX183iCi2xNWFCqTjeUUUjmyN28Sy6MibO+EWi
- nU8HKUwKW5Blox6mbmO4jZdpXLjnnCfJuj7H0pVNaOhL0eZVhwHJhhsXCsqgGCqyRuoOUq96kST
- o7+vKBrc=
-X-Gm-Gg: Acq92OEczy5VMyXm+t4Yq0rUU6THSergnqyNsu/AzfpL1NPi/5IWtv8BDP4Em0auvtV
- hJ8cighXIvfDydzgqSZrBsTLfCnJtyLOm77gmAqvm8zEg1w/yuaJcCGkYgeE1k9E3EAjO8DQZk7
- q9XxZlSi6ToeUmXy406+nzF1uQOHXXNUWdGEfwoQeL05CrsvBbpHUIoUyy0xlqCguGWwEuFjc+r
- 8p9EF6r7rwvSG4jL/ryRjYZZ43r1ON/MRnndVwHtNm5mgGyNA7JRxqcB/c0Ya+hqPOS5VxTQsxW
- Z+jiXk7Dfh0UbXYy6Bhu4iHi0n4HyfyZOGZ6jwfrw6yLgoFOjC6JLVvAbI4VG1lTqOmBVrJVKhO
- 6bSlq06h2WtnLGBnNT5jhz4NpEk8pLlJHSmU0TUvGko9lnrltqOeAbe1X6wpbNZqOnBk+isIsFZ
- ZAZR6SNS5JelTjfT29O9AhVfTfKpjdIXbPU27OsN4=
-X-Received: by 2002:a17:903:2a84:b0:2c0:c389:d99c with SMTP id
- d9443c01a7336-2c1e8332a7cmr185718865ad.15.1780945317848; 
- Mon, 08 Jun 2026 12:01:57 -0700 (PDT)
-Received: from stoup.. ([71.212.142.33]) by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-2c24edbb49bsm60900875ad.38.2026.06.08.12.01.57
+ d=1e100.net; s=20251104; t=1780945220; x=1781550020;
+ h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
+ :mime-version:subject:date:from:x-gm-gg:x-gm-message-state:from:to
+ :cc:subject:date:message-id:reply-to;
+ bh=kNDxHYWhTOsNn0OdBaliY8wf/EghWpS60PkiWLVESW8=;
+ b=CxhowrncyzNw41VluU6Jq6HQaF6lqcbt/mFK5/O9UnIrzAak7hC//yLXY81VBM8H68
+ I8yylsLlKw1AbgLvaxuMRGUlAjWlDPR2z6Aoi56r6/pCyDcpqkuN27c1t/BKMxVB9rYV
+ A/aKvEi1R5oIN/JAHNY57HcA3jJH6ORN0aUbQord9G1DOo/E+Xy/cKU/xerV20c/oioT
+ aUgFRojObjZWrHa/2C5N5bUB9zgqms9EAGZOYMhwyXwt3J3WltnKfVHJdi75cIysPCiM
+ tAtQ1TrsismUJGUcsIKfKluufFnn3MR/EQh3tU1ugCrkApZrV2hBgoig5fOSuv+veXiP
+ 0Bvw==
+X-Gm-Message-State: AOJu0YwdE5CbMFuJSVkaazrvlDDy2zHU8/l40VRGxtBFYUn6CD4n8xXa
+ 6BIhtc/cYE8oAswngDFYMVO6yQTDy/SRfychXWSJL38i1EZ+EuEMZd7PSpFKPT/2hFY=
+X-Gm-Gg: Acq92OHZalbukZBbLPXuuVAFvBc0o46eTwYglNeo5FcISg7Iw80hiashKRsK0QBOvUc
+ kNeVePTNrCGhvY2KTY+491T75l5PUyZFfXcrYFnM8Y5bjqZfkbb7f/Op7vqy82MHB/ZhkVP36Gu
+ GBXS8ovMaHYV8feKOb4TJdoGR1OCUtDmZdFfrQVwBxxi08jbEEH6tjqL6MQeBSJqzFPvC+BfPx3
+ pLER2nY0I+oCSP/v9XYiYGLJBrIxhTiVuFYfHEHewvYQfSZur+8fN+t/spHRaP7BnGHaK/6bXkO
+ MFsWUWYFf8GH+xlTt72ic4pL1Zk20NAe4xQh6noWtiioiYWpm3VLS5R4hZVcxeNrEuETzITQ+YV
+ a7/oDkLVA5ZBNA3pmNezkj922GGqoTVct0gNieILFBe2cvAL9Qa221iqB/9hOTG2Hf8hkoRh4E1
+ 6tzfyp3uj1KcHOQjEemhedZT6N4Hd0gR2YW3U3all4UPwsFZHpo/956H2DLaHpuj2QjTfeR60yq
+ euCGyj62pTimBbiV27Hum0qKDe+f9hlOZvwLFow0NFuDqm9q2ZMTKYmyCMrZHIowvLFb74ERjmZ
+ 6gjXTV66akH47+h3bu0Lz48eKGUTfQQnewKoNL8YpVE=
+X-Received: by 2002:a05:6830:67f7:b0:7e6:eb9c:3781 with SMTP id
+ 46e09a7af769-7e70c7c99d1mr11288529a34.12.1780945220467; 
+ Mon, 08 Jun 2026 12:00:20 -0700 (PDT)
+Received: from mac.localdomain (97-118-5-210.hlrn.qwest.net. [97.118.5.210])
+ by smtp.gmail.com with ESMTPSA id
+ 46e09a7af769-7e6e75db138sm12397777a34.11.2026.06.08.12.00.19
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 08 Jun 2026 12:01:57 -0700 (PDT)
-From: Richard Henderson <richard.henderson@linaro.org>
-To: qemu-devel@nongnu.org
-Cc: Peter Maydell <peter.maydell@linaro.org>
-Subject: [PATCH 1/2] fpu: Handle all rounding modes in partsN_uncanon_normal
-Date: Mon,  8 Jun 2026 12:01:54 -0700
-Message-ID: <20260608190155.637067-2-richard.henderson@linaro.org>
-X-Mailer: git-send-email 2.43.0
-In-Reply-To: <20260608190155.637067-1-richard.henderson@linaro.org>
-References: <20260608190155.637067-1-richard.henderson@linaro.org>
+ Mon, 08 Jun 2026 12:00:19 -0700 (PDT)
+From: James Hilliard <james.hilliard1@gmail.com>
+Date: Mon, 08 Jun 2026 12:59:42 -0600
+Subject: [PATCH v16 17/21] target/mips: decode Octeon ZUC and SNOW3G COP2
+ selectors
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::630;
- envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x630.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+Message-Id: <20260608-mips-octeon-missing-insns-v2-v16-17-daef7a0d8b04@gmail.com>
+References: <20260608-mips-octeon-missing-insns-v2-v16-0-daef7a0d8b04@gmail.com>
+In-Reply-To: <20260608-mips-octeon-missing-insns-v2-v16-0-daef7a0d8b04@gmail.com>
+To: qemu-devel@nongnu.org
+Cc: Laurent Vivier <laurent@vivier.eu>, Helge Deller <deller@gmx.de>, 
+ Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>, 
+ Jiaxun Yang <jiaxun.yang@flygoat.com>, 
+ Aurelien Jarno <aurelien@aurel32.net>, 
+ Aleksandar Rikalo <arikalo@gmail.com>, Huacai Chen <chenhuacai@kernel.org>, 
+ Richard Henderson <richard.henderson@linaro.org>, 
+ Paolo Bonzini <pbonzini@redhat.com>, 
+ James Hilliard <james.hilliard1@gmail.com>, 
+ =?utf-8?q?Philippe_Mathieu-Daud=C3=A9?= <philmd@mailo.com>, 
+ =?utf-8?q?Philippe_Mathieu-Daud=C3=A9?= <philmd@mailo.com>
+X-Mailer: b4 0.15.2
+Received-SPF: pass client-ip=2607:f8b0:4864:20::330;
+ envelope-from=james.hilliard1@gmail.com; helo=mail-ot1-x330.google.com
+X-Spam_score_int: -17
+X-Spam_score: -1.8
+X-Spam_bar: -
+X-Spam_report: (-1.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -99,27 +112,62 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Missed float_round_nearest_even_max when recomputing round.
+Add explicit decodetree entries and translator bindings for the Octeon
+ZUC and SNOW3G COP2 operation selectors.  These stream-cipher selectors
+operate on the shared HSH register window state, so dispatch them through
+the per-operation helpers added with the corresponding engine support.
 
-Reported-by: Peter Maydell <peter.maydell@linaro.org>
-Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
+Keep stream-cipher decode separate because these selectors share the HSH
+register window with unrelated engines.
+
+Signed-off-by: James Hilliard <james.hilliard1@gmail.com>
+Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+
 ---
- fpu/softfloat-parts.c.inc | 1 +
- 1 file changed, 1 insertion(+)
+Changes v9 -> v10:
+  - Split ZUC/SNOW3G selector decode out of the monolithic Octeon COP2
+    selector decode patch.
+  - Kept stream-cipher operation selectors helper-backed because they
+    operate on the shared HSH register-window state.
+---
+ target/mips/tcg/octeon.decode      | 4 ++++
+ target/mips/tcg/octeon_translate.c | 4 ++++
+ 2 files changed, 8 insertions(+)
 
-diff --git a/fpu/softfloat-parts.c.inc b/fpu/softfloat-parts.c.inc
-index a154faf32b..c86fc9ccc5 100644
---- a/fpu/softfloat-parts.c.inc
-+++ b/fpu/softfloat-parts.c.inc
-@@ -437,6 +437,7 @@ static void partsN(uncanon_normal)(FloatPartsN *p, float_status *s,
-             /* Need to recompute round-to-even/round-to-odd. */
-             switch (get_float_rounding_mode(s)) {
-             case float_round_nearest_even:
-+            case float_round_nearest_even_max:
-                 if (N > 64 && frac_lsb == 0) {
-                     inc = ((p->frac_hi & 1) ||
-                            (p->frac_lo & round_mask) != frac_lsbm1
+diff --git a/target/mips/tcg/octeon.decode b/target/mips/tcg/octeon.decode
+index b1a63b743f..2b27fa205f 100644
+--- a/target/mips/tcg/octeon.decode
++++ b/target/mips/tcg/octeon.decode
+@@ -265,8 +265,12 @@ LDX          011111 ..... ..... ..... 01000 001010 @lx
+     CVM_MT_CRC_DWORD_REFLECT             010010 00101 rt:5 0001 0010 0001 0111 &cp2
+     CVM_MT_CRC_VAR_REFLECT               010010 00101 rt:5 0001 0010 0001 1000 &cp2
+     CVM_MT_HSH_STARTMD5                  010010 00101 rt:5 0100 0000 0100 0111 &cp2
++    CVM_MT_SNOW3G_START                  010010 00101 rt:5 0100 0000 0100 1101 &cp2
++    CVM_MT_SNOW3G_MORE                   010010 00101 rt:5 0100 0000 0100 1110 &cp2
+     CVM_MT_HSH_STARTSHA256               010010 00101 rt:5 0100 0000 0100 1111 &cp2
+     CVM_MT_SHA3_STARTOP                  010010 00101 rt:5 0100 0000 0101 0010 &cp2
++    CVM_MT_ZUC_START                     010010 00101 rt:5 0100 0000 0101 0101 &cp2
++    CVM_MT_ZUC_MORE                      010010 00101 rt:5 0100 0000 0101 0110 &cp2
+     CVM_MT_HSH_STARTSHA                  010010 00101 rt:5 0100 0000 0101 0111 &cp2
+     CVM_MT_GFM_XORMUL1_REFLECT           010010 00101 rt:5 0100 0000 0101 1101 &cp2
+     CVM_MT_CRC_POLYNOMIAL                010010 00101 rt:5 0100 0010 0000 0000 &cp2
+diff --git a/target/mips/tcg/octeon_translate.c b/target/mips/tcg/octeon_translate.c
+index 5497e5a6ce..b4663b35a3 100644
+--- a/target/mips/tcg/octeon_translate.c
++++ b/target/mips/tcg/octeon_translate.c
+@@ -345,6 +345,10 @@ CP2_MT_XOR_I64(CVM_MT_SHA3_XORDAT15, sha3_dat[15]);
+ CP2_MT_XOR_I64(CVM_MT_SHA3_XORDAT16, sha3_dat[16]);
+ CP2_MT_XOR_I64(CVM_MT_SHA3_XORDAT17, sha3_dat[17]);
+ CP2_MT_HELPER_ENV(CVM_MT_SHA3_STARTOP, sha3_startop);
++CP2_MT_HELPER(CVM_MT_ZUC_START, zuc_start);
++CP2_MT_HELPER(CVM_MT_ZUC_MORE, zuc_more);
++CP2_MT_HELPER(CVM_MT_SNOW3G_START, snow3g_start);
++CP2_MT_HELPER(CVM_MT_SNOW3G_MORE, snow3g_more);
+ CP2_MT_HELPER(CVM_MT_HSH_STARTSHA1_COMPAT, hsh_startsha1_compat);
+ CP2_MT_I64(CVM_MT_HSH_DATW0, hsh_dat[0]);
+ CP2_MT_I64(CVM_MT_HSH_DATW1, hsh_dat[1]);
+
 -- 
-2.43.0
+2.54.0
 
 
