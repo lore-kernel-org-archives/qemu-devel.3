@@ -4,126 +4,119 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2FB14CD8C9D
-	for <qemu-devel@archiver.kernel.org>; Mon,  8 Jun 2026 16:12:03 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 697B2CD8C9D
+	for <qemu-devel@archiver.kernel.org>; Mon,  8 Jun 2026 16:12:20 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wWcZT-0006in-TL; Mon, 08 Jun 2026 12:11:28 -0400
+	id 1wWcZw-0007FP-GF; Mon, 08 Jun 2026 12:11:56 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mcascell@redhat.com>)
- id 1wWcYt-0006By-SI
- for qemu-devel@nongnu.org; Mon, 08 Jun 2026 12:10:52 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mcascell@redhat.com>)
- id 1wWcYr-0000P1-Hf
- for qemu-devel@nongnu.org; Mon, 08 Jun 2026 12:10:51 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1780935048;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=Dw/Zlg2kKsHElmqY0RSlpzEUxJBz+r0l0AX25v84Yqw=;
- b=Xjm4xDT2tO1rx/R2gfjNtr7BCgW/fPR6SrDf9dSecVwLRR4BC/vtZ7PlIkdf6Ha7CNZrf/
- ll6CLnxeS8nzQEKdmXfy2SKKIhzyEDSH5aZjTAGHqzAKLFLviU84KGBtzVviKzHu++vt6I
- 7AfIbADlhihfpcq6rZdlhQMSDS55teg=
-Received: from mail-pf1-f197.google.com (mail-pf1-f197.google.com
- [209.85.210.197]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-108-m0yLihRkM9GnrQiR-hemmQ-1; Mon, 08 Jun 2026 12:10:36 -0400
-X-MC-Unique: m0yLihRkM9GnrQiR-hemmQ-1
-X-Mimecast-MFC-AGG-ID: m0yLihRkM9GnrQiR-hemmQ_1780935035
-Received: by mail-pf1-f197.google.com with SMTP id
- d2e1a72fcca58-8428419982eso3847072b3a.3
- for <qemu-devel@nongnu.org>; Mon, 08 Jun 2026 09:10:36 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1780935035; cv=none;
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1wWcZo-0006zg-Kr
+ for qemu-devel@nongnu.org; Mon, 08 Jun 2026 12:11:51 -0400
+Received: from mail-ej1-x629.google.com ([2a00:1450:4864:20::629])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1wWcZl-0001Ic-KX
+ for qemu-devel@nongnu.org; Mon, 08 Jun 2026 12:11:47 -0400
+Received: by mail-ej1-x629.google.com with SMTP id
+ a640c23a62f3a-bf1141c26ecso567967566b.0
+ for <qemu-devel@nongnu.org>; Mon, 08 Jun 2026 09:11:44 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1780935103; cv=none;
  d=google.com; s=arc-20240605;
- b=cZOaWaM3xJgDZo0oIQLWJ7hQwTHqjLSkITkEcMP/SQ75gLNQoVq/AU/n1zz3BrTXcx
- G1F21XztLsA7N6qoY2yn/r4Q+bHdz7+0V3Wzpr4nX/gZeMObPNxSrmdIMhnVSlWou0k0
- /TcZkJ/SiycAqDTO6UmPunblOyA8iifTCgNBIetQVMKq8faBVVpLWPLA8xKiQBbz1OdE
- u2yYc6sPty70u1mLPiL5qBIGdQ+TH46pKSmnShLG+Lf2v7Z0aNtAarUgyEx1sGxvh3uY
- erYOQdicYY6//CKZNlLCiv1GlwqD+k1sEWI/on8W+7QY/oQsntgVipWcWtN4VIUJMqh+
- 0WsQ==
+ b=Zs2XSOfWRuYPiCCR+LgAdozmuso0l+6zvws8ElsnJlwzeexEVaIUo0/M0vKOnX4t+z
+ lhRdgPX+u+z36e7Hz81rEqHON+HsrY2M0mXbaVZiN9jYMawxA69gqGG7LJhcWmDBoK7B
+ FSgoEgCo0hyKBx3sNYU3eDHr2NXunzeNCfWrSQynD2UiX66Abr+6blfBpep3pcDftuI2
+ lLrxolR7rkjEMXHOh6kj7kpjPr5ZKn0SnvuhbOVh64lRE9dUJsgT8e4CxVyj3V52beY4
+ 8790lHNyo3Exte0NW0Twvpt47R/9iERQFdiIUm6bY8s3CGcyb41Rv/J7pJqtFIVebWzA
+ nP/Q==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
  s=arc-20240605; 
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:dkim-signature;
- bh=Dw/Zlg2kKsHElmqY0RSlpzEUxJBz+r0l0AX25v84Yqw=;
- fh=/7u6kWjSJTv3U77d8Tt3ruvRubiPIwzyxEw6EJeEfRo=;
- b=CILS7rCyTShXV1Sp5C01/fS3hs8PLqO+bTIHqdfl/gI4Do3ZG/AyVSHejo5GSd17zp
- sPJB27P+tBzmpMzXgcreVwmbuhHsmQcgH3HwsClafp40jSUyBGfYVvwfCyH4z2L5iCWq
- f7oitfSp71aP2rtvzUl0Z+9FCrxA2WQo3/mr0/zt4BENmKFAVnBg2jMt9uCN0OaAMbUK
- F+LHnky9MkPMaFRALo4+USpQceRLJwnHNQ0iN0a4v4BRYyQmuwbR0C/sJ/oSVISAPiI1
- FDfF6X032qLebl981WKGudvtDQhSY5ts7L1RbZfya4w6Xw8nytLEfjcK9RJJhJG2Ebt2
- ue0g==; darn=nongnu.org
+ bh=mb7X/0HHleI60MgeHsluNqVdU8t3PIEaJe3bEgirxyU=;
+ fh=pKySv2xcbjaCYxZIv8yzgUGbkvgT4ofnF4GNuybRbac=;
+ b=B+leduQjxLNKpr9xbPR1eJze7irE1kKuXyYl9rA6etEor6HAyQGG7MikMwr1SKusv3
+ tfOMUlB9ZHgbyk5JWDYT2OOKsoiAycew5NNtABObylPBf+GkFnKUjBu3JfLdSuBYQpad
+ MP3vcUom6GHBGeSF8BFFERgbqfKqil8kvM/OMeFzAvHT3Sw42tyoNU9ddHGYIeYGG0H3
+ WehQp+k/CkQjQOmjvsYuzSdHh0aTzUNvdWVpfkyDZEfl4ezJ+XxvUmF2ffgGZZKk/h7H
+ aYqmd0abshqOlvzIEzUzayRjZKF7SQnxlQFyu+v8t+udaCsc9Xd2bgh1C9aL+LnLZA6M
+ ZqyA==; darn=nongnu.org
 ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1780935035; x=1781539835; darn=nongnu.org;
+ d=linaro.org; s=google; t=1780935103; x=1781539903; darn=nongnu.org;
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:from:to:cc:subject:date
  :message-id:reply-to;
- bh=Dw/Zlg2kKsHElmqY0RSlpzEUxJBz+r0l0AX25v84Yqw=;
- b=IPbJK/cz4L7ezbYmlcQx0Ehy2YrYBXFkCRrDw5vRa42cxECSaNEgdXEU+xXdhSUUR+
- /DHaZygylp4CF+yZgCpaZLtq5e432AerWhM9PuG5cTcpRgP53+72wVC+2dBvObzqP/N8
- Ao6B+pAKdNYbuQsZEbjw1LBlLRyKe2niwOIgff+qf1gqWTDDq14TwzlC1AEO/Kxw+TTT
- g2n1c1nQPVIy/gG1zqKOH/IcxI+k/ddM0tK6UR+Z5v+l1rw1duYKzTLU1p/C3N79ki8i
- gaGrRhVc3TgCJmiIxMFWKIEl7oNiRzUHYWC/OUPhKbFVKKPM6DhzBnBqb4qCcRY2+aEN
- Lvaw==
+ bh=mb7X/0HHleI60MgeHsluNqVdU8t3PIEaJe3bEgirxyU=;
+ b=fPrf3STMQb3i3S3Rp8ht5Q4Q4nBNUnvkqXKGmQsC6npFYRb8JXmU+ASPtm3zKh19/g
+ uK1LGIipvotXNDcg2ht7hU4ByxZJj/TgK3eUvF9iWqcyVw3I1uqqqVXiVhh6b5RPoX56
+ txH1PcJAqYGKvMo4vSTHFZ9ObfI2CPAUvHQ1wbvp2Xa/3PSs3SW0stAIoUCywDFzdT8+
+ UCxIh1XCDpcYfAXUXabO7tCvGWUwNt7A7jpZL1pGMsRwf3H6W0/EnbWElW9TfgOV7gUn
+ Nh4B/Npw8oPhq5Ue10rqs3GoNfPjEvdMKJFDDE03Xe3bX5QrsbvTUCUaJDcYZSpvHGHD
+ bKLg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1780935035; x=1781539835;
+ d=1e100.net; s=20251104; t=1780935103; x=1781539903;
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to;
- bh=Dw/Zlg2kKsHElmqY0RSlpzEUxJBz+r0l0AX25v84Yqw=;
- b=phFHkMVUQJNgjGAov991xrPXuts8eYy5o6x+H2cQeV2OtJPrJxATSySNiXGzi+Bupo
- eBUtOvWnzyrel5X55x4d0HuUcsQ45yoTPh6tKjwHX9d71XaKgeKkaHvsCJHQdyD3+AI+
- 5+7qUj48iwVJTamseVcVlQmXCBLFyBLIGD6ANTWXcmiuwSYQP3CRz2Vhv0/ygIz/Ahso
- 7RxNvr1PCVuxI3XFilmuzQPftRTXOu8fikpIPHHGnNY1q6TNIM9e5TRH95sFVXV3Fsjc
- 2XygwGMHQVN6D4g+S8c8oMRjHacedckvsPOWm1XciiR24TRLH+Q55S6p2CdsQbBRIyzm
- sT1g==
-X-Gm-Message-State: AOJu0YwbjvJ4UZ1wh8sxO+53GibqzCpmW9j5v0AviA8J6ASfgasXerwE
- C6UxBx3jBlNKp3t+3UwEtcqQK8Q6f3L45XfOUsH+FTHWeBWqAuExx6h9EGqRdKrerAGTQ2p0F0Z
- 3LJX2lMjAexCMb1dR9hdCUnDqhHusb6c6zrhM7K7siHi66dFsKo+7Id8kAIKzXiorEY2nNdMBMJ
- 2lQ3QCdeOI5XD2XUd48sAdNXvCs0bF2FA=
-X-Gm-Gg: Acq92OFeBFiHg8W+NXPIs3CyzGMwxDWsCluI9W3kNAFNVpw/V59f3x79nHsPOJKDZEP
- n6k/qy++s6Nr9m/nvo8Lq4o8LVePHFFvJ7wyNVrS6pd1xN0CYVM5uzYOM8LVflq31zLzTcA4IIS
- YBA1qqfZPRpl7KOCV1YkZOPvzsfkKExpIOTHbDLzOheUx7M8grlOMhiM74dHB/7bSgKkehi9FJo
- eoYdsxv6SUra1M=
-X-Received: by 2002:a05:6a00:2d10:b0:842:4a39:6047 with SMTP id
- d2e1a72fcca58-842b0f514c6mr15725357b3a.29.1780935035152; 
- Mon, 08 Jun 2026 09:10:35 -0700 (PDT)
-X-Received: by 2002:a05:6a00:2d10:b0:842:4a39:6047 with SMTP id
- d2e1a72fcca58-842b0f514c6mr15725323b3a.29.1780935034605; Mon, 08 Jun 2026
- 09:10:34 -0700 (PDT)
+ bh=mb7X/0HHleI60MgeHsluNqVdU8t3PIEaJe3bEgirxyU=;
+ b=UvnZ6NPccV1ZFYON9rJ4cDLinJPyTpbbrQuW3GeQ3d7TXryH40xv20Wl+c4DwT256n
+ nEJOfGPRDw6J93ciGppiQpiKd6LH0X9viGGnojnLpSsY13DXHwaD4f4DPAH31bCv0fnc
+ z02R8Fg+efvj3SqFXdQwkwndVPauNdSAfLHTjVwInocPgrp2IK4f8AeZO/Hc9BijqlOz
+ DQyQviVdZFcJkeN1+AXkjuvLh3fv5b1pe0edMNaI0z6PTSaV38IkMS0Rw/7H2Dxa3Ir7
+ tJDm09ycKsy09xJ4IVVpUvEH0WgPZ/Rrqe4vH7N6ktVneZC2qePXyAHR1f0+ymjT+ZMI
+ UoPA==
+X-Gm-Message-State: AOJu0YywrCU+9RsMGAcfoDa7ZNGBNUvMq5FrN1Ji1Sb3Sq5epY/lD6vO
+ 2bZUV0EDbeYDcLOUzg2UB0lPmYan9YpvOFD0ojTmXYF6B4DdC1jOS0foxDabj3hP9KGhGkJQLMS
+ 4dyLu6WC255v16hh1MW4D9kyHn7HFr1kPFAzlDB6i3Q==
+X-Gm-Gg: Acq92OEFaVixHcyptgZLusDjSXOXifXNdU+DuRP0Wvzp0FsHKJLjTiaSTURL9DltQRZ
+ KRUQzSD2AFYhAC+BVO6i34DDXr6++CcN00s1ZW0elF4azuaHMBU/JnVT08KCul6e+nCi1yQF1Wk
+ btfKV+HZDYEHJxrk5rJdRetha/9ftN3p2WNJhpZVQp86u3ZP6FgYImjybe3UUZhRipg0AyAcmu4
+ qKlKv4XMK5G/8YLhnSXe2wdU3QBeICR7I2tS+NIhSZHWYMlcm0nys36E/ivT1Ka/5dgrXL/SC2a
+ g+I0avrqz5NsjY54Teno32cFyfMKsMiSDxqkH/95bPw96Hi2H0MrSSJ00OPi50fP9Kqn1gB28Xt
+ XJw==
+X-Received: by 2002:a17:906:4fcd:b0:bda:e47:70c7 with SMTP id
+ a640c23a62f3a-bf37018943dmr750952766b.12.1780935102743; Mon, 08 Jun 2026
+ 09:11:42 -0700 (PDT)
 MIME-Version: 1.0
-References: <20260604165048.457860-1-berrange@redhat.com>
-In-Reply-To: <20260604165048.457860-1-berrange@redhat.com>
-From: Mauro Matteo Cascella <mcascell@redhat.com>
-Date: Mon, 8 Jun 2026 18:10:23 +0200
-X-Gm-Features: AVVi8CduJleZgFyB_oggVAtsXvvZp4YIivOmwOBXl81xZaWKvs54md-q57ZRoVs
-Message-ID: <CAA8xKjVx6Da3SHkg-bNewk5yZFUSrrHpxMr2EViP87v=_zDN=g@mail.gmail.com>
-Subject: Re: [qemu-web RFC 0/3] switch to GitLab confidential issues for
- security disclosure
-To: =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>
-Cc: qemu-devel@nongnu.org, 
+References: <20260529174639.451353-1-peter.maydell@linaro.org>
+ <20260529174639.451353-4-peter.maydell@linaro.org>
+ <d6f30fab-eb87-45e7-bc5b-bd1f97afead8@mailo.com>
+ <CAFEAcA8uLpCA2kCzqM2jii+jigd-mRYgpVCfb=qvwZH4SU9Gzg@mail.gmail.com>
+ <d9abaa0e-abf2-4eef-9292-171b55588f4b@oss.qualcomm.com>
+In-Reply-To: <d9abaa0e-abf2-4eef-9292-171b55588f4b@oss.qualcomm.com>
+From: Peter Maydell <peter.maydell@linaro.org>
+Date: Mon, 8 Jun 2026 17:11:28 +0100
+X-Gm-Features: AVVi8CcVqTPxvPyd3XU_krhff2YEDZx-bRty171du_uAM2BxE1I2OjPWjEmEoek
+Message-ID: <CAFEAcA8iD_SPwbHr5+OgyoR9C-R6+y5SuQmPO3QFUunfA_Og6Q@mail.gmail.com>
+Subject: Re: [PATCH 3/5] hw/nvram/fw_cfg: Enforce standard layout for x86
+ fw_cfg I/O ports
+To: =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@oss.qualcomm.com>
+Cc: qemu-devel@nongnu.org, Gerd Hoffmann <kraxel@redhat.com>, 
  Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
- =?UTF-8?B?QWxleCBCZW5uw6ll?= <alex.bennee@linaro.org>, 
- "Michael S. Tsirkin" <mst@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>,
- Thomas Huth <thuth@redhat.com>
+ Paolo Bonzini <pbonzini@redhat.com>, 
+ "Michael S. Tsirkin" <mst@redhat.com>, Sergio Lopez <slp@redhat.com>,
+ Song Gao <gaosong@loongson.cn>, 
+ Bibo Mao <maobibo@loongson.cn>, Jiaxun Yang <jiaxun.yang@flygoat.com>, 
+ Palmer Dabbelt <palmer@dabbelt.com>,
+ Alistair Francis <alistair.francis@wdc.com>, 
+ Weiwei Li <liwei1518@gmail.com>, 
+ Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>,
+ Liu Zhiwei <zhiwei_liu@linux.alibaba.com>, 
+ Chao Liu <chao.liu.zevorn@gmail.com>
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=mcascell@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -24
-X-Spam_score: -2.5
+Received-SPF: pass client-ip=2a00:1450:4864:20::629;
+ envelope-from=peter.maydell@linaro.org; helo=mail-ej1-x629.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.445,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -139,125 +132,74 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, Jun 4, 2026 at 6:50=E2=80=AFPM Daniel P. Berrang=C3=A9 <berrange@re=
-dhat.com> wrote:
+On Mon, 8 Jun 2026 at 17:02, Philippe Mathieu-Daud=C3=A9
+<philmd@oss.qualcomm.com> wrote:
 >
-> I previously raised the idea of using GitLab issues for security
-> disclosures:
+> On 8/6/26 11:12, Peter Maydell wrote:
+> > On Wed, 3 Jun 2026 at 08:08, Philippe Mathieu-Daud=C3=A9 <philmd@mailo.=
+com> wrote:
+> >>
+> >> On 29/5/26 19:46, Peter Maydell wrote:
+> >>> The fw_cfg_init_io_dma() function allows the caller to specify the
+> >>> base port number of the selector/data register and the base port
+> >>> number of the DMA address register separately. No caller actually
+> >>> uses this: they all pass in base + 4 for the dma_iobase.
+> >>>
+> >>> To reduce the risk of unnecessary variation in what different x86
+> >>> machine types use as their fw_cfg register layout, remove the
+> >>> dma_iobase argument from fw_cfg_init_io_dma(), and have the function
+> >>> always use the same "DMA port is base port + 4" layout.
+> >>>
+> >>> Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
+> >>> ---
+> >>>    hw/i386/fw_cfg.c          |  3 +--
+> >>>    hw/i386/microvm.c         |  3 +--
+> >>>    hw/i386/pc.c              |  3 +--
+> >>>    hw/nvram/fw_cfg.c         |  8 ++++----
+> >>>    include/hw/nvram/fw_cfg.h | 17 +++++++++++++++--
+> >>>    5 files changed, 22 insertions(+), 12 deletions(-)
+> >>
+> >>
+> >>> diff --git a/include/hw/nvram/fw_cfg.h b/include/hw/nvram/fw_cfg.h
+> >>> index 45a3747908..be3fb5f8aa 100644
+> >>> --- a/include/hw/nvram/fw_cfg.h
+> >>> +++ b/include/hw/nvram/fw_cfg.h
+> >>> @@ -305,8 +305,21 @@ bool fw_cfg_add_file_from_generator(FWCfgState *=
+s,
+> >>>                                        Object *parent, const char *pa=
+rt,
+> >>>                                        const char *filename, Error **=
+errp);
+> >>>
+> >>> -FWCfgState *fw_cfg_init_io_dma(uint32_t iobase, uint32_t dma_iobase,
+> >>> -                                AddressSpace *dma_as);
+> >>> +/**
+> >>> + * fw_cfg_init_io_dma:
+> >>> + * @iobase: x86 port number which is the base of the fw_cfg port ran=
+ge
+> >>
+> >> s/x86/ISA/?
+> >
+> > This is specifically x86, because we use this where we're
+> > wiring fw_cfg up to the x86 in/out port instructions. There's
+> > no ISA-bus version of fw_cfg. Anything other than x86 should
+> > be using the memory-mapped fw_cfg.
 >
->   https://lists.gnu.org/archive/html/qemu-devel/2026-05/msg04582.html
+> But this "x86 port number" is really a address on the ISA I/O bus.
 >
-> This patch proposal formalizes that into a concrete proposal:
->
->  * qemu-security is entirely discontinued
->
->  * "confidential" GitLab issues are to be used
->
->  * The priority is to have a low overhead process that is
->    as close to normal bug & development workflow as
->    possible.
->
->  * No embargoes will be accepted, beyond the time needed
->    for a maintainer to develop a patch, unless extenuating
->    scenarios apply. A vendor's/user's desire to delay to
->    suit their arbitrary software upgrade schedule is NOT
->    an extenuating scenario.
->
->  * All confidential issues will be expected to be made
->    public, either when the patch is proposed to qemu-devel,
->    or sooner if a issue is low severity and a patch is not
->    a priority for the manitainer
->
->  * Eliminate dependency on any single maintainer/person to
->    the greatest extent practical
->
-> Some open questions
->
->  * I describe using "cve::required" as a gitlab label to
->    track issues that need CVEs allocating. I'm unclear what
->    the best way is to actually do the allocation. This is
->    where it is hardest to eliminate the single person
->    bottleneck / burden.
->
->    Traditionally I would email Red Hat product security via
->    Mauro (CC'd) but that's still a single point of failure.
+> Maybe make explicit we want this method restricted to x86 instead?
 
-I'm totally fine to remain the designated PoC for CVE assignments. To
-mitigate the risk of a single point of failure, I'd suggest directing
-all CVE requests to secalert@redhat.com with me on CC.
+I do, which is why I say "x86 port number".
 
->    I'm personally not willing to sign up for QEMU to be a
->    CNA, because they have unreasonable expectations for
->    volunteer projects. I'm not going to give them my phone
->    number nor agree to any SLAs for response to query.
->
->    From a selfish QEMU upstream maintainer POV, I would say
->    that CVEs are largely devoid of value. The people who
->    care most about them are the downstream vendors who
->    ship old QEMU versions and track bugs for backporting.
->    If we want to pull a security fix into our stable release
->    branches we can do that easily without a CVE.
->
->    Thus one nuclear option is to say "not our problem" and
->    no longer assign CVEs at all. Instead assign a unique ID
->    of QEMU's invention "QEMU-SEC-nnnnn", and let downstream
->    vendors take the pain of allocating and mapping QEMU's
->    identifiers to CVE identifiers.
->
->  * We have >100 disclosed issues to qemu-security
->    that were classed as non-virtualization bugs which
->    I asked the reporter to file gitlab issues for.
->    Almost no one followed up to do that. I don't want
->    these bugs to go into a black-hole as they are all
->    basically valid, but I also don't fancy bulk filing
->    100's of issues from my own account.
->
->    There are also more non-triaged issues some of which
->    are valid security bugs which ought to be tracked
->    rather than sucked into a black-hole. Again that
->    implies more bulk filing of bugs :-(
->
->  * Moving away from a small dedicated group of people
->    handling security reports, to a distributed
->    responsbility has a notable risk - every maintainer
->    may consider it "someone else's problem" and ignore
->    security disclosures. Some poor sucker then gets to
->    run triage across an ever increasing set of issues
->    and try to encourage maintainers into responding.
->
->    Based on our experience with normal bug triage work,
->    I'd say it is a near certainty that this will happen
->    to some extent.
->
->    I don't have any answer here other than even this
->    bad outcome will probably be less bad that the status
->    quo with qemu-security email disclosure. Personally
->    I can/will not continue with the email workflow any
->    more.
->
->    IMHO this mostly points towards the downstream vendors
->    needing to invest more in QEMU if they want to have a
->    guaranteed security SLA upstream.
->
-> Daniel P. Berrang=C3=A9 (3):
->   contribute: reformat/restructure bug report guidance
->   contribute: add automate tool disclosure to bug reporting
->   contribute: switch security process to gitlab confidential issues
->
->  contribute/report-a-bug.md     |  63 +++++---
->  contribute/security-process.md | 280 ++++++++++++++-------------------
->  2 files changed, 155 insertions(+), 188 deletions(-)
->
-> --
-> 2.54.0
->
+> "ISA port number which is the base of the fw_cfg port range (restricted
+> to x86 targets)."
 
-LGTM. For the series:
-Reviewed-by: Mauro Matteo Cascella <mcascell@redhat.com>
+This seems more confusing to me because it brings ISA into it.
+We don't care about ISA or not ISA, we only care that this is
+an x86 I/O port. It happens that on the PC the x86 I/O ports
+can be handled by ISA cards, but it's not relevant here.
+In particular, the fw_cfg device is not an ISA device.
 
---
-Mauro Matteo Cascella
-Red Hat Product Security
-PGP-Key ID: BB3410B0
-
+thanks
+-- PMM
 
