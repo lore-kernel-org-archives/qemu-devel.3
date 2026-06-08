@@ -4,36 +4,36 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 00B08CD8C9D
-	for <qemu-devel@archiver.kernel.org>; Mon,  8 Jun 2026 11:05:11 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B9DBBCD8C9F
+	for <qemu-devel@archiver.kernel.org>; Mon,  8 Jun 2026 11:05:34 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wWXmd-0000p5-Sp; Mon, 08 Jun 2026 07:04:43 -0400
+	id 1wWXme-0000pB-D3; Mon, 08 Jun 2026 07:04:44 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <jean-louis@dupond.be>)
- id 1wWXmW-0000mX-QF; Mon, 08 Jun 2026 07:04:37 -0400
+ id 1wWXmY-0000n7-GW; Mon, 08 Jun 2026 07:04:39 -0400
 Received: from apollo.dupie.be ([2001:bc8:3f2a:101::1])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <jean-louis@dupond.be>)
- id 1wWXmU-0006v3-9p; Mon, 08 Jun 2026 07:04:36 -0400
+ id 1wWXmU-0006uw-VK; Mon, 08 Jun 2026 07:04:38 -0400
 Received: from lt-jeanlouis (unknown
  [IPv6:2a02:a03f:fafb:301:46c3:62e6:fe62:23a1])
- by apollo.dupie.be (Postfix) with ESMTPSA id DFB4D1520F7B;
+ by apollo.dupie.be (Postfix) with ESMTPSA id 5A6F91520F65;
  Mon, 08 Jun 2026 13:04:29 +0200 (CEST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=dupond.be; s=dkim;
- t=1780916670;
+ t=1780916669;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=9JvfuXR7szPhJ39nFbfdTuSR/jfEBTyesjCCNDkiDaY=;
- b=g1fEhMggR5sdeW3S44CPDNWI812I1Wwek1rJzUnJNpP4UwudhykMGmTqZbeEFXm7AuX+AS
- B0ob9gAYUQXkYvzjeQazR+a0j0w85GYgnWIiW5qLF3vD+sp2i1ykjExYsMdfj4C+BD/S4Z
- nxm1eS00bmxuhuFMi6WLAd9nnVnP7hz6idCM6fvMlHN6rJltoIXERQWUIyFCWXKJwsxY+o
- 328ev11gYqeNeo08K1wygwOsJpmmg92+VGCOx7XsV3SeHWmH0QOrV8X9wl/gwTl3dWvNj5
- FBUoShclpigmFYJubqcpH/FoVZqYZbiNWEj1JikpD0qw20UiWOCiE7SUYkIARw==
+ bh=1gSIJbMghTr9Bgu4o/y7W2q9KZXCsTPkVKrbUvq4OkU=;
+ b=Y9zuXxepJbIhpR5CX7/c+1x8xKToB+btjMw8P4AS3tB7kgJUd7xZRVuET89IlPCNxzKMLw
+ zurp8V91S945EvHTmtQaMM05YxGXILVOrqGhdr2u/L82zgCWDdE+kfBw9rf5FQbugoKNBy
+ waWL9VWwANQOrdQc+RboJAGc8K/zrw6n8x8JSGZr9updvfVjXtNbfZLyPWq1OTk/szGjv1
+ CUH6MM/39b/3gWFb5lJQQ67DbLnzbvRmTieZpzuEERK9aAvqOMNutGkaP+Zdx0bk4ydEL4
+ a4IT+ZdD+Xun1MQA/ND+3dQe3Q2L+GnS8ak3nCkUM/lIpUWWerXviIqumM55Pg==
 From: Jean-Louis Dupond <jean-louis@dupond.be>
 To: qemu-devel@nongnu.org
 Cc: Kevin Wolf <kwolf@redhat.com>,
@@ -41,9 +41,9 @@ Cc: Kevin Wolf <kwolf@redhat.com>,
  Hanna Reitz <hreitz@redhat.com>, qemu-block@nongnu.org,
  Fiona Ebner <f.ebner@proxmox.com>, John Snow <jsnow@redhat.com>,
  Jean-Louis Dupond <jean-louis@dupond.be>
-Subject: [PATCH 3/3] iotests/290: add test case for qemu-img measure
-Date: Mon,  8 Jun 2026 13:03:46 +0200
-Message-ID: <20260608110346.3231998-4-jean-louis@dupond.be>
+Subject: [PATCH 2/3] block: support measure for commit
+Date: Mon,  8 Jun 2026 13:03:45 +0200
+Message-ID: <20260608110346.3231998-3-jean-louis@dupond.be>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260608110346.3231998-1-jean-louis@dupond.be>
 References: <20260608110346.3231998-1-jean-louis@dupond.be>
@@ -72,145 +72,300 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-We create an image, write and discard some data in it, and then create a
-snapshot. In the snapshot we write and discard again some data.
-Then we measure the images with the base specified to calculate the
-merged image size. Finally we commit the image and check it's size.
+Add a new option to qemu-img measure to specify the base node you want
+to merge the image into.
+This will open all the images between top and base, and calculate the
+size required for merging this layer into the base image.
 
-This scenario is executed for discard-no-unref enabled and disabled.
+Also modify the calculation so it takes into account the
+discard-no-unref setting of the base image.
+If discard-no-unref is enabled on the base, discarded blocks in the
+layers above the base will not free clusters in the base image, but will
+only mark them ZERO.
+
+[1]: https://gitlab.com/qemu-project/qemu/-/issues/2369
 
 Signed-off-by: Jean-Louis Dupond <jean-louis@dupond.be>
 ---
- tests/qemu-iotests/290     | 45 ++++++++++++++++++++++++++++
- tests/qemu-iotests/290.out | 61 ++++++++++++++++++++++++++++++++++++++
- 2 files changed, 106 insertions(+)
+ block/qcow2.c                    | 90 ++++++++++++++++++++++++++++----
+ qemu-img-cmds.hx                 |  4 +-
+ qemu-img.c                       | 37 +++++++++++--
+ tests/qemu-iotests/178.out.qcow2 |  6 +--
+ tests/qemu-iotests/178.out.raw   |  6 +--
+ 5 files changed, 121 insertions(+), 22 deletions(-)
 
-diff --git a/tests/qemu-iotests/290 b/tests/qemu-iotests/290
-index 776b59de1b..4702461aa8 100755
---- a/tests/qemu-iotests/290
-+++ b/tests/qemu-iotests/290
-@@ -92,6 +92,51 @@ for qcow2_compat in 0.10 1.1; do
-     $QEMU_IMG map "$TEST_IMG" | _filter_testdir
- done
+diff --git a/block/qcow2.c b/block/qcow2.c
+index 81fd299b4c..3e3578e831 100644
+--- a/block/qcow2.c
++++ b/block/qcow2.c
+@@ -5231,6 +5231,8 @@ static BlockMeasureInfo *qcow2_measure(QemuOpts *opts, BlockDriverState *in_bs,
+     bool has_backing_file;
+     bool has_luks;
+     bool extended_l2;
++    BlockDriverState *base_bs = NULL;
++    bool base_discard_no_unref = false;
+     size_t l2e_size;
  
-+echo
-+echo "### Test qemu-img measure for commit differences with 'discard-no-unref' option enabled"
-+echo
+     /* Parse image creation options */
+@@ -5311,6 +5313,21 @@ static BlockMeasureInfo *qcow2_measure(QemuOpts *opts, BlockDriverState *in_bs,
+             goto err;
+         }
+ 
++        base_bs = bdrv_find_base(in_bs);
++        /*
++         * bdrv_find_base() returns in_bs itself when the image has no backing
++         * chain. Then this can stay NULL.
++         */
++        if (base_bs == in_bs) {
++            base_bs = NULL;
++        }
++        if (base_bs && base_bs->drv &&
++            !strcmp(base_bs->drv->format_name, "qcow2")) {
++            BDRVQcow2State *base_s = base_bs->opaque;
 +
-+for DISCARD_NO_UNREF in true false; do
-+    echo "# Create a base image and fill it with data"
-+    TEST_IMG="$TEST_IMG.base" _make_test_img 128M
++            base_discard_no_unref = base_s->discard_no_unref;
++        }
 +
-+    $QEMU_IO -c 'write 0 8M' "$TEST_IMG.base" | _filter_qemu_io
-+    $QEMU_IO -c 'write 10M 8M' "$TEST_IMG.base" | _filter_qemu_io
-+    $QEMU_IO -c 'write 24M 32M' "$TEST_IMG.base" | _filter_qemu_io
-+    $QEMU_IO -c 'write 56M 20M' "$TEST_IMG.base" | _filter_qemu_io
-+    $QEMU_IO -c "reopen -o discard=unmap,discard-no-unref=$DISCARD_NO_UNREF" \
-+        -c 'discard 32M 10M' "$TEST_IMG.base" | _filter_qemu_io
+         virtual_size = ROUND_UP(ssize, cluster_size);
+ 
+         if (has_backing_file) {
+@@ -5326,8 +5343,10 @@ static BlockMeasureInfo *qcow2_measure(QemuOpts *opts, BlockDriverState *in_bs,
+ 
+             for (offset = 0; offset < ssize; offset += pnum) {
+                 int ret;
++                int retp = 0;
++                bool count = false;
+ 
+-                ret = bdrv_block_status_above(in_bs, NULL, offset,
++                ret = bdrv_block_status_above(in_bs, base_bs, offset,
+                                               ssize - offset, &pnum, NULL,
+                                               NULL);
+                 if (ret < 0) {
+@@ -5336,15 +5355,68 @@ static BlockMeasureInfo *qcow2_measure(QemuOpts *opts, BlockDriverState *in_bs,
+                     goto err;
+                 }
+ 
+-                if (ret & BDRV_BLOCK_ZERO) {
++                if (ret & BDRV_BLOCK_ZERO && !base_bs &&
++                    !base_discard_no_unref) {
+                     /* Skip zero regions (safe with no backing file) */
+-                } else if ((ret & (BDRV_BLOCK_DATA | BDRV_BLOCK_ALLOCATED)) ==
+-                           (BDRV_BLOCK_DATA | BDRV_BLOCK_ALLOCATED)) {
+-                    /* Extend pnum to end of cluster for next iteration */
+-                    pnum = ROUND_UP(offset + pnum, cluster_size) - offset;
+-
+-                    /* Count clusters we've seen */
+-                    required += offset % cluster_size + pnum;
++                } else {
++                    /*
++                     * If there is a base image in the chain, query its
++                     * allocation status for this region so we can decide
++                     * whether the cluster survives a commit into the base.
++                     */
++                    if (base_bs) {
++                        int64_t pnum_base = 0;
++                        retp = bdrv_block_status_above(base_bs, NULL, offset,
++                                            ssize - offset, &pnum_base, NULL,
++                                            NULL);
++                        if (retp < 0) {
++                            error_setg_errno(&local_err, -retp,
++                                    "Unable to get block status of the base");
++                            goto err;
++                        }
++                        /*
++                         * If the base contiguous block is smaller,
++                         * use that pnum, so the next iteration starts with
++                         * the smallest offset.
++                         */
++                        if (pnum_base > 0 && pnum_base < pnum) {
++                            pnum = pnum_base;
++                        }
++                    }
 +
-+    echo "# Create a top image and do some writes and discards"
-+    TEST_IMG="$TEST_IMG.top" _make_test_img -b "$TEST_IMG.base" -F $IMGFMT 128M
++                    if ((ret & (BDRV_BLOCK_DATA | BDRV_BLOCK_ALLOCATED)) ==
++                        (BDRV_BLOCK_DATA | BDRV_BLOCK_ALLOCATED)) {
++                        /* The overlay has its own data here; it is written. */
++                        count = true;
++                    } else if (base_discard_no_unref) {
++                        /*
++                         * With discard-no-unref enabled on the base, clusters
++                         * allocated in the base keep their reference when the
++                         * overlay is committed (discarded clusters are only
++                         * marked zero), so count any cluster that has a valid
++                         * offset in the base.
++                         */
++                        count = retp & BDRV_BLOCK_OFFSET_VALID;
++                    } else {
++                        /*
++                         * Without discard-no-unref, committing the overlay
++                         * frees the base clusters that the overlay discards
++                         * (the overlay marks them zero). Every other cluster
++                         * that is allocated in the base is retained, so count
++                         * it unless the overlay zeroes it out.
++                         */
++                        count = (retp & BDRV_BLOCK_ALLOCATED) &&
++                                !((ret & BDRV_BLOCK_ALLOCATED) &&
++                                  (ret & BDRV_BLOCK_ZERO));
++                    }
 +
-+    $QEMU_IO -c "reopen -o discard=unmap,discard-no-unref=$DISCARD_NO_UNREF" -c 'write 16M 8M' \
-+        -c 'discard 60M 20M' -c 'write 84M 10M' "$TEST_IMG.top" | _filter_qemu_io
++                    if (count) {
++                        /* Extend pnum to end of cluster for next iteration */
++                        pnum = ROUND_UP(offset + pnum, cluster_size) - offset;
 +
-+    FILE_JSON="json:{
-+        'file': {
-+            'driver': 'file',
-+            'filename': '$TEST_IMG.top'
-+        },
-+        'driver': 'qcow2',
-+        'discard': 'unmap',
-+        'discard-no-unref': '$DISCARD_NO_UNREF',
-+        'backing': {
-+            'driver': 'qcow2',
-+            'discard-no-unref': '$DISCARD_NO_UNREF',
-+            'file': {
-+                'driver': 'file',
-+                'filename': '$TEST_IMG.base'
-+            },
-+            'backing': null
-+        }}"
-+    echo "# Measure size with discard-no-unref=$DISCARD_NO_UNREF"
-+    $QEMU_IMG measure --output=json -O qcow2 "${FILE_JSON}"
-+    echo "# Merging the top image into the base image"
-+    $QEMU_IMG commit -t none -f qcow2 "${FILE_JSON}"
-+    stat -c"base disk image file size in bytes: %s" "$TEST_IMG.base"
-+done
++                        /* Count clusters we've seen */
++                        required += offset % cluster_size + pnum;
++                    }
+                 }
+             }
+         }
+diff --git a/qemu-img-cmds.hx b/qemu-img-cmds.hx
+index 6bc8265cfb..f3f5c63773 100644
+--- a/qemu-img-cmds.hx
++++ b/qemu-img-cmds.hx
+@@ -78,9 +78,9 @@ SRST
+ ERST
+ 
+ DEF("measure", img_measure,
+-"measure [--output=ofmt] [-O output_fmt] [-o options] [--size N | [--object objectdef] [--image-opts] [-f fmt] [-l snapshot_param] filename]")
++"measure [--output=ofmt] [-O output_fmt] [-o options] [--size N | [--object objectdef] [--image-opts] [-f fmt] [-l snapshot_param] [-b base] filename]")
+ SRST
+-.. option:: measure [--output=OFMT] [-O OUTPUT_FMT] [-o OPTIONS] [--size N | [--object OBJECTDEF] [--image-opts] [-f FMT] [-l SNAPSHOT_PARAM] FILENAME]
++.. option:: measure [--output=OFMT] [-O OUTPUT_FMT] [-o OPTIONS] [--size N | [--object OBJECTDEF] [--image-opts] [-f FMT] [-l SNAPSHOT_PARAM] [-b BASE] FILENAME]
+ ERST
+ 
+ DEF("snapshot", img_snapshot,
+diff --git a/qemu-img.c b/qemu-img.c
+index c42dd4e995..0aa53d7ef8 100644
+--- a/qemu-img.c
++++ b/qemu-img.c
+@@ -5653,6 +5653,7 @@ static int img_measure(const img_cmd_t *ccmd, int argc, char **argv)
+     BlockBackend *in_blk = NULL;
+     BlockDriver *drv;
+     const char *filename = NULL;
++    const char *base_filename = NULL;
+     const char *fmt = NULL;
+     const char *out_fmt = "raw";
+     char *options = NULL;
+@@ -5676,6 +5677,7 @@ static int img_measure(const img_cmd_t *ccmd, int argc, char **argv)
+         {"image-opts", no_argument, 0, OPTION_IMAGE_OPTS},
+         {"source-image-opts", no_argument, 0, OPTION_IMAGE_OPTS}, /* img_convert */
+         {"snapshot", required_argument, 0, 'l'},
++        {"base", required_argument, 0, 'b'},
+         {"target-format", required_argument, 0, 'O'},
+         {"target-format-options", required_argument, 0, 'o'}, /* img_convert */
+         {"options", required_argument, 0, 'o'},
+@@ -5686,11 +5688,11 @@ static int img_measure(const img_cmd_t *ccmd, int argc, char **argv)
+         {0, 0, 0, 0}
+     };
+ 
+-    while ((c = getopt_long(argc, argv, "hf:l:O:o:Us:",
++    while ((c = getopt_long(argc, argv, "hf:l:b:O:o:Us:",
+                             long_options, NULL)) != -1) {
+         switch (c) {
+         case 'h':
+-            cmd_help(ccmd, "[-f FMT|--image-opts] [-l SNAPSHOT]\n"
++            cmd_help(ccmd, "[-f FMT|--image-opts] [-l SNAPSHOT] [-b BASE]\n"
+ "       [-O TARGET_FMT] [-o TARGET_FMT_OPTS] [--output human|json]\n"
+ "       [--object OBJDEF] (--size SIZE | FILE)\n"
+ ,
+@@ -5701,6 +5703,8 @@ static int img_measure(const img_cmd_t *ccmd, int argc, char **argv)
+ "     instead of a file name (incompatible with --format)\n"
+ "  -l, --snapshot SNAPSHOT\n"
+ "     use this snapshot in FILE as source\n"
++"  -b, --base BASE\n"
++"     open FILE backing chain up to BASE (inclusive)\n"
+ "  -O, --target-format TARGET_FMT\n"
+ "     desired target/output image format (default: raw)\n"
+ "  -o TARGET_FMT_OPTS\n"
+@@ -5738,6 +5742,9 @@ static int img_measure(const img_cmd_t *ccmd, int argc, char **argv)
+                 snapshot_name = optarg;
+             }
+             break;
++        case 'b':
++            base_filename = optarg;
++            break;
+         case 'O':
+             out_fmt = optarg;
+             break;
+@@ -5773,8 +5780,10 @@ static int img_measure(const img_cmd_t *ccmd, int argc, char **argv)
+         filename = argv[optind];
+     }
+ 
+-    if (!filename && (image_opts || fmt || snapshot_name || sn_opts)) {
+-        error_report("--image-opts, -f, and -l require a filename argument.");
++    if (!filename && (image_opts || fmt || snapshot_name || sn_opts ||
++                      base_filename)) {
++        error_report("--image-opts, -f, -l, and -b require a filename "
++                     "argument.");
+         goto out;
+     }
+     if (filename && img_size != -1) {
+@@ -5787,12 +5796,30 @@ static int img_measure(const img_cmd_t *ccmd, int argc, char **argv)
+     }
+ 
+     if (filename) {
+-        in_blk = img_open(image_opts, filename, fmt, 0,
++        int src_flags = 0;
 +
- # success, all done
- echo "*** done"
- rm -f $seq.full
-diff --git a/tests/qemu-iotests/290.out b/tests/qemu-iotests/290.out
-index 22b476594f..6dafbfc2b9 100644
---- a/tests/qemu-iotests/290.out
-+++ b/tests/qemu-iotests/290.out
-@@ -58,4 +58,65 @@ read 131072/131072 bytes at offset 0
- 128 KiB, X ops; XX:XX:XX.X (XXX YYY/sec and XXX ops/sec)
- # Output of qemu-img map
- Offset          Length          Mapped to       File
++        /*
++         * When measuring with --base, avoid opening the full backing chain.
++         * We selectively open only up to the requested base afterwards.
++         */
++        if (base_filename) {
++            src_flags |= BDRV_O_NO_BACKING;
++        }
 +
-+### Test qemu-img measure for commit differences with 'discard-no-unref' option enabled
++        in_blk = img_open(image_opts, filename, fmt, src_flags,
+                           false, false, force_share);
+         if (!in_blk) {
+             goto out;
+         }
+ 
++        if (base_filename) {
++            if (bdrv_open_backing_chain_until(blk_bs(in_blk), base_filename,
++                                              &local_err) < 0) {
++                error_report_err(local_err);
++                goto out;
++            }
++        }
 +
-+# Create a base image and fill it with data
-+Formatting 'TEST_DIR/t.IMGFMT.base', fmt=IMGFMT size=134217728
-+wrote 8388608/8388608 bytes at offset 0
-+8 MiB, X ops; XX:XX:XX.X (XXX YYY/sec and XXX ops/sec)
-+wrote 8388608/8388608 bytes at offset 10485760
-+8 MiB, X ops; XX:XX:XX.X (XXX YYY/sec and XXX ops/sec)
-+wrote 33554432/33554432 bytes at offset 25165824
-+32 MiB, X ops; XX:XX:XX.X (XXX YYY/sec and XXX ops/sec)
-+wrote 20971520/20971520 bytes at offset 58720256
-+20 MiB, X ops; XX:XX:XX.X (XXX YYY/sec and XXX ops/sec)
-+discard 10485760/10485760 bytes at offset 33554432
-+10 MiB, X ops; XX:XX:XX.X (XXX YYY/sec and XXX ops/sec)
-+# Create a top image and do some writes and discards
-+Formatting 'TEST_DIR/t.IMGFMT.top', fmt=IMGFMT size=134217728 backing_file=TEST_DIR/t.IMGFMT.base backing_fmt=IMGFMT
-+wrote 8388608/8388608 bytes at offset 16777216
-+8 MiB, X ops; XX:XX:XX.X (XXX YYY/sec and XXX ops/sec)
-+discard 20971520/20971520 bytes at offset 62914560
-+20 MiB, X ops; XX:XX:XX.X (XXX YYY/sec and XXX ops/sec)
-+wrote 10485760/10485760 bytes at offset 88080384
-+10 MiB, X ops; XX:XX:XX.X (XXX YYY/sec and XXX ops/sec)
-+# Measure size with discard-no-unref=true
-+{
-+    "bitmaps": 0,
-+    "required": 88408064,
-+    "fully-allocated": 134545408
-+}
-+# Merging the top image into the base image
-+Image committed.
-+base disk image file size in bytes: 88408064
-+# Create a base image and fill it with data
-+Formatting 'TEST_DIR/t.IMGFMT.base', fmt=IMGFMT size=134217728
-+wrote 8388608/8388608 bytes at offset 0
-+8 MiB, X ops; XX:XX:XX.X (XXX YYY/sec and XXX ops/sec)
-+wrote 8388608/8388608 bytes at offset 10485760
-+8 MiB, X ops; XX:XX:XX.X (XXX YYY/sec and XXX ops/sec)
-+wrote 33554432/33554432 bytes at offset 25165824
-+32 MiB, X ops; XX:XX:XX.X (XXX YYY/sec and XXX ops/sec)
-+wrote 20971520/20971520 bytes at offset 58720256
-+20 MiB, X ops; XX:XX:XX.X (XXX YYY/sec and XXX ops/sec)
-+discard 10485760/10485760 bytes at offset 33554432
-+10 MiB, X ops; XX:XX:XX.X (XXX YYY/sec and XXX ops/sec)
-+# Create a top image and do some writes and discards
-+Formatting 'TEST_DIR/t.IMGFMT.top', fmt=IMGFMT size=134217728 backing_file=TEST_DIR/t.IMGFMT.base backing_fmt=IMGFMT
-+wrote 8388608/8388608 bytes at offset 16777216
-+8 MiB, X ops; XX:XX:XX.X (XXX YYY/sec and XXX ops/sec)
-+discard 20971520/20971520 bytes at offset 62914560
-+20 MiB, X ops; XX:XX:XX.X (XXX YYY/sec and XXX ops/sec)
-+wrote 10485760/10485760 bytes at offset 88080384
-+10 MiB, X ops; XX:XX:XX.X (XXX YYY/sec and XXX ops/sec)
-+# Measure size with discard-no-unref=false
-+{
-+    "bitmaps": 0,
-+    "required": 71630848,
-+    "fully-allocated": 134545408
-+}
-+# Merging the top image into the base image
-+Image committed.
-+base disk image file size in bytes: 71630848
- *** done
+         if (sn_opts) {
+             bdrv_snapshot_load_tmp(blk_bs(in_blk),
+                     qemu_opt_get(sn_opts, SNAPSHOT_OPT_ID),
+diff --git a/tests/qemu-iotests/178.out.qcow2 b/tests/qemu-iotests/178.out.qcow2
+index 61506b519f..0984a74a50 100644
+--- a/tests/qemu-iotests/178.out.qcow2
++++ b/tests/qemu-iotests/178.out.qcow2
+@@ -6,9 +6,9 @@ qemu-img: Either --size N or one filename must be specified.
+ qemu-img: --size N cannot be used together with a filename.
+ qemu-img: At most one filename argument is allowed.
+ qemu-img: Either --size N or one filename must be specified.
+-qemu-img: --image-opts, -f, and -l require a filename argument.
+-qemu-img: --image-opts, -f, and -l require a filename argument.
+-qemu-img: --image-opts, -f, and -l require a filename argument.
++qemu-img: --image-opts, -f, -l, and -b require a filename argument.
++qemu-img: --image-opts, -f, -l, and -b require a filename argument.
++qemu-img: --image-opts, -f, -l, and -b require a filename argument.
+ qemu-img: Invalid option list: ,
+ qemu-img: Invalid parameter 'snapshot.foo'
+ qemu-img: Failed in parsing snapshot param 'snapshot.foo=bar'
+diff --git a/tests/qemu-iotests/178.out.raw b/tests/qemu-iotests/178.out.raw
+index 6d994a433a..81249e718b 100644
+--- a/tests/qemu-iotests/178.out.raw
++++ b/tests/qemu-iotests/178.out.raw
+@@ -6,9 +6,9 @@ qemu-img: Either --size N or one filename must be specified.
+ qemu-img: --size N cannot be used together with a filename.
+ qemu-img: At most one filename argument is allowed.
+ qemu-img: Either --size N or one filename must be specified.
+-qemu-img: --image-opts, -f, and -l require a filename argument.
+-qemu-img: --image-opts, -f, and -l require a filename argument.
+-qemu-img: --image-opts, -f, and -l require a filename argument.
++qemu-img: --image-opts, -f, -l, and -b require a filename argument.
++qemu-img: --image-opts, -f, -l, and -b require a filename argument.
++qemu-img: --image-opts, -f, -l, and -b require a filename argument.
+ qemu-img: Invalid option list: ,
+ qemu-img: Invalid parameter 'snapshot.foo'
+ qemu-img: Failed in parsing snapshot param 'snapshot.foo=bar'
 -- 
 2.54.0
 
