@@ -4,99 +4,56 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C5E54CD8C8E
-	for <qemu-devel@archiver.kernel.org>; Mon,  8 Jun 2026 07:24:56 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 807EBCD8C8E
+	for <qemu-devel@archiver.kernel.org>; Mon,  8 Jun 2026 07:38:44 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wWUGr-00035h-Mp; Mon, 08 Jun 2026 03:19:41 -0400
+	id 1wWUYf-0004n2-Bp; Mon, 08 Jun 2026 03:38:05 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1wWUGV-0002eJ-1C
- for qemu-devel@nongnu.org; Mon, 08 Jun 2026 03:19:20 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <guobin@linux.alibaba.com>)
+ id 1wWUYI-0004mK-N4
+ for qemu-devel@nongnu.org; Mon, 08 Jun 2026 03:37:44 -0400
+Received: from [115.124.30.131] (helo=out30-131.freemail.mail.aliyun.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1wWUGT-0000qr-Dn
- for qemu-devel@nongnu.org; Mon, 08 Jun 2026 03:19:18 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1780903156;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=+H65yUMS8QFZ0xHQwMaM4OHCR//vhW9gwvM6NoXdvEg=;
- b=ef/WV/BHz+nuMmXUrbd3oqVe2k0TtpAT99/E656pRf+5SQ6yYNMmWWvT06tjIrBiUCzBji
- EyqCM+dXeYfO9cL5BFTKSHF5usu+1wvHgYgXveHSg/nGN5568MWpKmuuxYg0kilhMbhZ6T
- Rxi+yfmwSM6g0GsfJsCsGWMrn2YNg9M=
-Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-201-8eS3cnGiOi2_rEUPb7YuzA-1; Mon,
- 08 Jun 2026 03:19:00 -0400
-X-MC-Unique: 8eS3cnGiOi2_rEUPb7YuzA-1
-X-Mimecast-MFC-AGG-ID: 8eS3cnGiOi2_rEUPb7YuzA_1780903138
-Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id B01EA19560A3; Mon,  8 Jun 2026 07:18:58 +0000 (UTC)
-Received: from localhost (unknown [10.44.22.16])
- by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id C02593008B34; Mon,  8 Jun 2026 07:18:57 +0000 (UTC)
-From: =?utf-8?q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>
-Date: Mon, 08 Jun 2026 11:16:44 +0400
-Subject: [PATCH v2 26/33] ui/gtk: move global display settings out of
- per-console init
-MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 8bit
-Message-Id: <20260608-b4-ui-v2-26-9ea6355ea08f@redhat.com>
-References: <20260608-b4-ui-v2-0-9ea6355ea08f@redhat.com>
-In-Reply-To: <20260608-b4-ui-v2-0-9ea6355ea08f@redhat.com>
+ (Exim 4.90_1) (envelope-from <guobin@linux.alibaba.com>)
+ id 1wWUXt-0006vk-QC
+ for qemu-devel@nongnu.org; Mon, 08 Jun 2026 03:37:24 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linux.alibaba.com; s=default;
+ t=1780904196; h=From:To:Subject:Date:Message-ID:MIME-Version;
+ bh=uVXs4uKozx10/GNq7As9iMdwia3TumrKyskF0JGC//4=;
+ b=R6H5QZwtQITb8SOPHorWlD2NenhSXCoGM8wDV4vDapsLlEOaJDBUpblQYmRKPG7Go1xL5zOLL6/kL5VxUEQJpXvlPjgsizHwZQAbqegP7zNMHPgjpF27yPfrcPV+gTGsHu5zF6BVuLodWJECVQsRojlThNfxt5kBj+dRFClJrT4=
+X-Alimail-AntiSpam: AC=PASS; BC=-1|-1; BR=01201311R881e4; CH=green; DM=||false|;
+ DS=||; FP=0|-1|-1|-1|0|-1|-1|-1; HT=maildocker-contentspam011083073210;
+ MF=guobin@linux.alibaba.com; NM=1; PH=DS; RN=3; SR=0;
+ TI=SMTPD_---0X4LMWly_1780904194; 
+Received: from localhost(mailfrom:guobin@linux.alibaba.com
+ fp:SMTPD_---0X4LMWly_1780904194 cluster:ay36) by smtp.aliyun-inc.com;
+ Mon, 08 Jun 2026 15:36:34 +0800
+From: Bin Guo <guobin@linux.alibaba.com>
 To: qemu-devel@nongnu.org
-Cc: Paolo Bonzini <pbonzini@redhat.com>, 
- =?utf-8?q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>, 
- =?utf-8?q?Philippe_Mathieu-Daud=C3=A9?= <philmd@mailo.com>, 
- Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>, 
- Fabiano Rosas <farosas@suse.de>, Laurent Vivier <lvivier@redhat.com>, 
- Alex Williamson <alex@shazbot.org>, 
- =?utf-8?q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>, 
- Peter Maydell <peter.maydell@linaro.org>, 
- Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>, 
- =?utf-8?q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>
-X-Developer-Signature: v=1; a=openpgp-sha256; l=3093;
- i=marcandre.lureau@redhat.com; h=from:subject:message-id;
- bh=T3Lt4cLR7Bg9GWH2jYmqVlSV1/LktAb6F8RB4zswtXA=;
- b=owEBbQKS/ZANAwAKAdro4Ql1lpzlAcsmYgBqJmxMll2gy036aC14VVKW29DciojsX8UtOM05Q
- IgjlDUM0DiJAjMEAAEKAB0WIQSHqb2TP4fGBtJ29i3a6OEJdZac5QUCaiZsTAAKCRDa6OEJdZac
- 5Xe6D/wOlzc4AskBiy2Bm+/yc0foFA0kpcJNppbM7qQL//jnz/JYSTX8JETnAKwdh6znH7SsRT5
- yweTn/IM9lxWtHMbM/qlc9hxHd/oa+s2wZ4NWpJab4zf0gidUiLwfrKt75PM9hRB6V5LZimyCU+
- KZwcPkpY+Iirphuger/DvHx7IeN7X2ZrCB2hMLBb873KYeTX5k0373qNiL37xl/7613RLY0AXKB
- KmkqjS5oBJhWh3KVSbsoQT7KxPuSBCNtTLdAeWHvkntq+nK+w/1f3AUsu5hMiwYSFqFwmsOVcx0
- L7YAhZaJIfKffn3H23Kkk5g1TlAKSbNcI3Mzho2GWwUzYHQtuiIXEe258bj089lUmiqP8swAQgB
- 6h/1IjP6zq98RjFSunJob7A7h5N44jdlkevSRyoxU/lg9qRhFGqokCdiMxQFAvquY3osHvOzwEc
- vy8TtLXmXARt+2u5Bk9rc+tyHL3KpG5643gNl43XHv/Rn/0GhhPv/X5fNLq+OYJRD+afHHb370A
- LVtqVCub1lONSrWx34ZfR11oT+jGfH0a/p7WqIjOG00iNrlBJHkJbzOf1q6do3GIJez3OVzZJCB
- TzRaCUpoSrTdM3TebfoWLlmL8VvxYyMQIj/Z3TtL8t+yuqbbr3Tu6YK4SIoIzzKtReyJBNvcknD
- HbHQKW7+SUHGd2g==
-X-Developer-Key: i=marcandre.lureau@redhat.com; a=openpgp;
- fpr=87A9BD933F87C606D276F62DDAE8E10975969CE5
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
-Received-SPF: pass client-ip=170.10.129.124;
- envelope-from=marcandre.lureau@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: 8
-X-Spam_score: 0.8
-X-Spam_bar: /
-X-Spam_report: (0.8 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.445,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_SBL_CSS=3.335, SPF_HELO_PASS=-0.001,
- SPF_PASS=-0.001 autolearn=no autolearn_force=no
+Cc: David Hildenbrand <david@kernel.org>,
+ "Michael S . Tsirkin" <mst@redhat.com>
+Subject: [PATCH] hw/virtio: balloon: access RAMBlock directly via mr->ram_block
+Date: Mon,  8 Jun 2026 15:36:32 +0800
+Message-ID: <20260608073632.1113-1-guobin@linux.alibaba.com>
+X-Mailer: git-send-email 2.50.1
+MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
+X-Host-Lookup-Failed: Reverse DNS lookup failed for 115.124.30.131 (deferred)
+Received-SPF: pass client-ip=115.124.30.131;
+ envelope-from=guobin@linux.alibaba.com;
+ helo=out30-131.freemail.mail.aliyun.com
+X-Spam_score_int: -166
+X-Spam_score: -16.7
+X-Spam_bar: ----------------
+X-Spam_report: (-16.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, ENV_AND_HDR_SPF_MATCH=-0.5,
+ RCVD_IN_DNSWL_NONE=-0.0001, RDNS_NONE=0.793, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001, UNPARSEABLE_RELAY=0.001, USER_IN_DEF_DKIM_WL=-7.5,
+ USER_IN_DEF_SPF_WL=-7.5 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -112,97 +69,99 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Move zoom_to_fit, keep_aspect_ratio and touch_slots initialisation
-from gd_vc_gfx_init() to gd_create_menu_view(). These are global
-display settings that should be set once after all consoles are
-created, not repeated on every per-console init (where the last
-iteration's values silently win).
+The balloon inflate/deflate paths obtained the RAMBlock through a
+round-trip: compute host VA via memory_region_get_ram_ptr(), then
+reverse-lookup via qemu_ram_block_from_host() which linearly scans
+the RAMBlock list.
 
-Signed-off-by: Marc-André Lureau <marcandre.lureau@redhat.com>
+Since memory_region_find() already resolves to the concrete RAM
+MemoryRegion (aliases flattened), mr->ram_block is guaranteed valid
+and mr_offset directly serves as the RAMBlock offset.  Use this to
+eliminate the unnecessary VA computation and list walk.
+
+This also removes the long-standing XXX comment asking for a better
+approach.
+
+Signed-off-by: Bin Guo <guobin@linux.alibaba.com>
 ---
- ui/gtk.c | 46 +++++++++++++++++++++++-----------------------
- 1 file changed, 23 insertions(+), 23 deletions(-)
+ hw/virtio/virtio-balloon.c | 30 +++++++++---------------------
+ 1 file changed, 9 insertions(+), 21 deletions(-)
 
-diff --git a/ui/gtk.c b/ui/gtk.c
-index 5bc2a04b43f..e86b618f770 100644
---- a/ui/gtk.c
-+++ b/ui/gtk.c
-@@ -2269,8 +2269,6 @@ static GSList *gd_vc_gfx_init(GtkDisplayState *s, VirtualConsole *vc,
-                               GSList *group, GtkWidget *view_menu)
+diff --git a/hw/virtio/virtio-balloon.c b/hw/virtio/virtio-balloon.c
+index 4c5f486ba2..4a7f0bb9a8 100644
+--- a/hw/virtio/virtio-balloon.c
++++ b/hw/virtio/virtio-balloon.c
+@@ -80,21 +80,15 @@ static void balloon_inflate_page(VirtIOBalloon *balloon,
+                                  MemoryRegion *mr, hwaddr mr_offset,
+                                  PartiallyBalloonedPage *pbp)
  {
-     const DisplayChangeListenerOps *ops = &dcl_ops;
--    bool zoom_to_fit = false;
--    int i;
+-    void *addr = memory_region_get_ram_ptr(mr) + mr_offset;
+-    ram_addr_t rb_offset, rb_aligned_offset, base_gpa;
+-    RAMBlock *rb;
++    RAMBlock *rb = mr->ram_block;
++    ram_addr_t rb_aligned_offset, base_gpa;
+     size_t rb_page_size;
+     int subpages;
  
-     vc->label = qemu_console_get_label(con);
-     vc->s = s;
-@@ -2350,26 +2348,6 @@ static GSList *gd_vc_gfx_init(GtkDisplayState *s, VirtualConsole *vc,
-     gd_connect_vc_gfx_signals(vc);
-     group = gd_vc_menu_init(s, vc, idx, group, view_menu);
+-    /* XXX is there a better way to get to the RAMBlock than via a
+-     * host address? */
+-    rb = qemu_ram_block_from_host(addr, false, &rb_offset);
+     rb_page_size = qemu_ram_pagesize(rb);
  
--    if (qemu_console_ui_info_supported(vc->gfx.dcl.con)) {
--        zoom_to_fit = true;
--    }
--    if (s->opts->u.gtk.has_zoom_to_fit) {
--        zoom_to_fit = s->opts->u.gtk.zoom_to_fit;
--    }
--    if (zoom_to_fit) {
--        gtk_menu_item_activate(GTK_MENU_ITEM(s->zoom_fit_item));
--        s->free_scale = true;
--    }
+     if (rb_page_size == BALLOON_PAGE_SIZE) {
+-        /* Easy case */
 -
--    s->keep_aspect_ratio = true;
--    if (s->opts->u.gtk.has_keep_aspect_ratio)
--        s->keep_aspect_ratio = s->opts->u.gtk.keep_aspect_ratio;
--
--    for (i = 0; i < INPUT_EVENT_SLOTS_MAX; i++) {
--        struct touch_slot *slot = &touch_slots[i];
--        slot->tracking_id = -1;
--    }
--
-     return group;
- }
+-        ram_block_discard_range(rb, rb_offset, rb_page_size);
++        ram_block_discard_range(rb, mr_offset, rb_page_size);
+         /* We ignore errors from ram_block_discard_range(), because it
+          * has already reported them, and failing to discard a balloon
+          * page is not fatal */
+@@ -110,10 +104,9 @@ static void balloon_inflate_page(VirtIOBalloon *balloon,
+     warn_report_once(
+ "Balloon used with backing page size > 4kiB, this may not be reliable");
  
-@@ -2379,7 +2357,8 @@ static GtkWidget *gd_create_menu_view(GtkDisplayState *s, DisplayOptions *opts)
-     GtkWidget *view_menu;
-     GtkWidget *separator;
-     QemuConsole *con;
--    int vc;
-+    bool zoom_to_fit = false;
-+    int vc, i;
+-    rb_aligned_offset = QEMU_ALIGN_DOWN(rb_offset, rb_page_size);
++    rb_aligned_offset = QEMU_ALIGN_DOWN(mr_offset, rb_page_size);
+     subpages = rb_page_size / BALLOON_PAGE_SIZE;
+-    base_gpa = memory_region_get_ram_addr(mr) + mr_offset -
+-               (rb_offset - rb_aligned_offset);
++    base_gpa = memory_region_get_ram_addr(mr) + rb_aligned_offset;
  
-     view_menu = gtk_menu_new();
-     gtk_menu_set_accel_group(GTK_MENU(view_menu), s->accel_group);
-@@ -2453,6 +2432,27 @@ static GtkWidget *gd_create_menu_view(GtkDisplayState *s, DisplayOptions *opts)
-         v = g_new0(VirtualConsole, 1);
-         g_ptr_array_add(s->vcs, v);
-         group = gd_vc_gfx_init(s, v, con, vc, group, view_menu);
-+        if (qemu_console_ui_info_supported(con)) {
-+            zoom_to_fit = true;
-+        }
-+    }
-+
-+    if (s->opts->u.gtk.has_zoom_to_fit) {
-+        zoom_to_fit = s->opts->u.gtk.zoom_to_fit;
-+    }
-+    if (zoom_to_fit) {
-+        gtk_menu_item_activate(GTK_MENU_ITEM(s->zoom_fit_item));
-+        s->free_scale = true;
-+    }
-+
-+    s->keep_aspect_ratio = true;
-+    if (s->opts->u.gtk.has_keep_aspect_ratio) {
-+        s->keep_aspect_ratio = s->opts->u.gtk.keep_aspect_ratio;
-+    }
-+
-+    for (i = 0; i < INPUT_EVENT_SLOTS_MAX; i++) {
-+        struct touch_slot *slot = &touch_slots[i];
-+        slot->tracking_id = -1;
+     if (pbp->bitmap && !virtio_balloon_pbp_matches(pbp, base_gpa)) {
+         /* We've partially ballooned part of a host page, but now
+@@ -126,7 +119,7 @@ static void balloon_inflate_page(VirtIOBalloon *balloon,
+         virtio_balloon_pbp_alloc(pbp, base_gpa, subpages);
      }
  
- #if defined(CONFIG_VTE)
-
+-    set_bit((rb_offset - rb_aligned_offset) / BALLOON_PAGE_SIZE,
++    set_bit((mr_offset - rb_aligned_offset) / BALLOON_PAGE_SIZE,
+             pbp->bitmap);
+ 
+     if (bitmap_full(pbp->bitmap, subpages)) {
+@@ -144,19 +137,14 @@ static void balloon_inflate_page(VirtIOBalloon *balloon,
+ static void balloon_deflate_page(VirtIOBalloon *balloon,
+                                  MemoryRegion *mr, hwaddr mr_offset)
+ {
+-    void *addr = memory_region_get_ram_ptr(mr) + mr_offset;
+-    ram_addr_t rb_offset;
+-    RAMBlock *rb;
++    RAMBlock *rb = mr->ram_block;
+     size_t rb_page_size;
+     void *host_addr;
+     int ret;
+ 
+-    /* XXX is there a better way to get to the RAMBlock than via a
+-     * host address? */
+-    rb = qemu_ram_block_from_host(addr, false, &rb_offset);
+     rb_page_size = qemu_ram_pagesize(rb);
+-
+-    host_addr = (void *)((uintptr_t)addr & ~(rb_page_size - 1));
++    host_addr = qemu_ram_get_host_addr(rb) +
++                QEMU_ALIGN_DOWN(mr_offset, rb_page_size);
+ 
+     /* When a page is deflated, we hint the whole host page it lives
+      * on, since we can't do anything smaller */
 -- 
-2.54.0
+2.50.1 (Apple Git-155)
 
 
