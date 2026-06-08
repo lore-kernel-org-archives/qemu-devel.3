@@ -4,26 +4,26 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 85B2BCD8C9F
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D4A0ACD8CA4
 	for <qemu-devel@archiver.kernel.org>; Mon,  8 Jun 2026 15:22:38 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wWbn3-0001vk-D1; Mon, 08 Jun 2026 11:21:25 -0400
+	id 1wWbn4-0001vp-S5; Mon, 08 Jun 2026 11:21:26 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <joro@8bytes.org>) id 1wWbn1-0001tp-EF
- for qemu-devel@nongnu.org; Mon, 08 Jun 2026 11:21:23 -0400
+ (Exim 4.90_1) (envelope-from <joro@8bytes.org>) id 1wWbn2-0001uK-0l
+ for qemu-devel@nongnu.org; Mon, 08 Jun 2026 11:21:24 -0400
 Received: from mail.8bytes.org ([2a01:238:42d9:3f00:e505:6202:4f0c:f051])
  by eggs.gnu.org with esmtp (Exim 4.90_1)
- (envelope-from <joro@8bytes.org>) id 1wWbmz-0007se-G5
+ (envelope-from <joro@8bytes.org>) id 1wWbmz-0007sn-SY
  for qemu-devel@nongnu.org; Mon, 08 Jun 2026 11:21:23 -0400
 Received: from io.home.8bytes.org (p4ffe1d30.dip0.t-ipconnect.de
  [79.254.29.48])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mail.8bytes.org (Postfix) with ESMTPSA id 72292202946;
+ by mail.8bytes.org (Postfix) with ESMTPSA id C5AE5202948;
  Mon,  8 Jun 2026 17:21:15 +0200 (CEST)
 From: =?UTF-8?q?J=C3=B6rg=20R=C3=B6del?= <joro@8bytes.org>
 To: Paolo Bonzini <pbonzini@redhat.com>,
@@ -33,9 +33,9 @@ Cc: philmd@linaro.org, marcel.apfelbaum@gmail.com, zhao1.liu@intel.com,
  mtosatti@redhat.com, Tom Lendacky <thomas.lendacky@amd.com>,
  qemu-devel@nongnu.org, kvm@vger.kernel.org, coconut-svsm@lists.linux.dev,
  joerg.roedel@amd.com
-Subject: [RFC PATCH 05/10] accel/kvm: Support nr_planes call-back
-Date: Mon,  8 Jun 2026 17:21:04 +0200
-Message-ID: <20260608152109.356783-6-joro@8bytes.org>
+Subject: [RFC PATCH 07/10] hw/core/machine: Add device-plane property
+Date: Mon,  8 Jun 2026 17:21:06 +0200
+Message-ID: <20260608152109.356783-8-joro@8bytes.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260608152109.356783-1-joro@8bytes.org>
 References: <20260608152109.356783-1-joro@8bytes.org>
@@ -65,66 +65,96 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Joerg Roedel <joerg.roedel@amd.com>
 
+Add a property to the QEMU MachineState to specify the default plane
+to send device interrupts to.
+
 Signed-off-by: Joerg Roedel <joerg.roedel@amd.com>
 ---
- accel/kvm/kvm-all.c | 19 +++++++++++++++++++
- dtc                 |  1 +
- ui/keycodemapdb     |  1 +
- 3 files changed, 21 insertions(+)
- create mode 160000 dtc
- create mode 160000 ui/keycodemapdb
+ hw/core/machine.c        | 22 ++++++++++++++++++++++
+ include/hw/core/boards.h |  3 +++
+ include/hw/core/qdev.h   |  1 +
+ 3 files changed, 26 insertions(+)
 
-diff --git a/accel/kvm/kvm-all.c b/accel/kvm/kvm-all.c
-index 7429e2be8ba9..dbfef63a84b0 100644
---- a/accel/kvm/kvm-all.c
-+++ b/accel/kvm/kvm-all.c
-@@ -4247,6 +4247,24 @@ static bool kvm_accel_has_memory(AccelState *accel, AddressSpace *as,
-     return false;
- }
+diff --git a/hw/core/machine.c b/hw/core/machine.c
+index 0aa77a57e956..62ea86512645 100644
+--- a/hw/core/machine.c
++++ b/hw/core/machine.c
+@@ -1218,6 +1218,7 @@ static void machine_initfn(Object *obj)
+     ms->kernel_cmdline = g_strdup("");
+     ms->ram_size = mc->default_ram_size;
+     ms->maxram_size = mc->default_ram_size;
++    ms->device_plane = 0;
  
-+static uint8_t kvm_nr_planes(AccelState *accel, MachineState *ms)
-+{
-+    uint8_t nr_planes = 1;
+     if (mc->nvdimm_supported) {
+         ms->nvdimms_state = g_new0(NVDIMMState, 1);
+@@ -1253,6 +1254,12 @@ static void machine_initfn(Object *obj)
+                                    "ACPI Serial Port Console Redirection "
+                                    "Table (spcr)");
+ 
++    /* Default Device Plane */
++    object_property_add_uint8_ptr(obj, "device-plane", &ms->device_plane,
++                                  OBJ_PROP_FLAG_READWRITE);
++    object_property_set_description(obj, "device-plane",
++                                    "Default plane to receive device IRQs");
 +
-+    // Planes are only supported with in-kernel APIC
-+    if (kvm_irqchip_in_kernel()) {
-+	    int ret;
-+        KVMState *kvm = KVM_STATE(accel);
-+
-+        ret = kvm_vm_ioctl(kvm, KVM_CHECK_EXTENSION, KVM_CAP_PLANES);
-+        if (ret > 0) {
-+            nr_planes = ret;
-+        }
+     /* default to mc->default_cpus */
+     ms->smp.cpus = mc->default_cpus;
+     ms->smp.max_cpus = mc->default_cpus;
+@@ -1675,6 +1682,12 @@ void machine_run_board_init(MachineState *machine, const char *mem_path, Error *
+                                    "on", false);
+     }
+ 
++    if (machine->device_plane >= accel_nr_planes(machine)) {
++        error_report("Invalid plane specified: %d (highest supported plane: %d)",
++                     machine->device_plane, accel_nr_planes(machine) - 1);
++        exit(EXIT_FAILURE);
 +    }
 +
-+    return nr_planes;
+     accel_init_interfaces(ACCEL_GET_CLASS(machine->accelerator));
+     machine_class->init(machine);
+     phase_advance(PHASE_MACHINE_INITIALIZED);
+@@ -1761,6 +1774,15 @@ void qdev_machine_creation_done(void)
+     register_global_state();
+ }
+ 
++uint8_t qdev_default_plane(void)
++{
++    if (current_machine != NULL) {
++        return current_machine->device_plane;
++    } else {
++        return 0;
++    }
 +}
 +
- static void kvm_get_kvm_shadow_mem(Object *obj, Visitor *v,
-                                    const char *name, void *opaque,
-                                    Error **errp)
-@@ -4437,6 +4455,7 @@ static void kvm_accel_class_init(ObjectClass *oc, const void *data)
-     ac->init_machine = kvm_init;
-     ac->rebuild_guest = kvm_reset_vmfd;
-     ac->has_memory = kvm_accel_has_memory;
-+    ac->nr_planes = kvm_nr_planes;
-     ac->allowed = &kvm_allowed;
-     ac->gdbstub_supported_sstep_flags = kvm_gdbstub_sstep_flags;
+ static const TypeInfo machine_info = {
+     .name = TYPE_MACHINE,
+     .parent = TYPE_OBJECT,
+diff --git a/include/hw/core/boards.h b/include/hw/core/boards.h
+index b8dad0a1074d..d2d1336939ed 100644
+--- a/include/hw/core/boards.h
++++ b/include/hw/core/boards.h
+@@ -447,6 +447,9 @@ struct MachineState {
+      * Set to false by default for all regular use.
+      */
+     bool new_accel_vmfd_on_reset;
++
++    /* Default plane to receive device IRQs */
++    uint8_t device_plane;
+ };
  
-diff --git a/dtc b/dtc
-new file mode 160000
-index 000000000000..b6910bec1161
---- /dev/null
-+++ b/dtc
-@@ -0,0 +1 @@
-+Subproject commit b6910bec11614980a21e46fbccc35934b671bd81
-diff --git a/ui/keycodemapdb b/ui/keycodemapdb
-new file mode 160000
-index 000000000000..d21009b1c9f9
---- /dev/null
-+++ b/ui/keycodemapdb
-@@ -0,0 +1 @@
-+Subproject commit d21009b1c9f94b740ea66be8e48a1d8ad8124023
+ /*
+diff --git a/include/hw/core/qdev.h b/include/hw/core/qdev.h
+index f99a8979ccb1..83ad1d5f1550 100644
+--- a/include/hw/core/qdev.h
++++ b/include/hw/core/qdev.h
+@@ -560,6 +560,7 @@ void qdev_simple_device_unplug_cb(HotplugHandler *hotplug_dev,
+                                   DeviceState *dev, Error **errp);
+ void qdev_machine_creation_done(void);
+ bool qdev_machine_modified(void);
++uint8_t qdev_default_plane(void);
+ 
+ /**
+  * qdev_add_unplug_blocker: Add an unplug blocker to a device
 -- 
 2.53.0
 
