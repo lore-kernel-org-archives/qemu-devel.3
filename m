@@ -4,53 +4,50 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5A55ECD8CA4
-	for <qemu-devel@archiver.kernel.org>; Mon,  8 Jun 2026 19:44:07 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 35DBDCD6E79
+	for <qemu-devel@archiver.kernel.org>; Mon,  8 Jun 2026 19:44:08 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wWfsi-0008WH-4e; Mon, 08 Jun 2026 15:43:32 -0400
+	id 1wWfsU-0008Sv-2L; Mon, 08 Jun 2026 15:43:18 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <deller@kernel.org>) id 1wWfsX-0008UI-40
- for qemu-devel@nongnu.org; Mon, 08 Jun 2026 15:43:21 -0400
-Received: from sea.source.kernel.org ([172.234.252.31])
+ (Exim 4.90_1) (envelope-from <deller@kernel.org>) id 1wWfsG-0008Rr-Gi
+ for qemu-devel@nongnu.org; Mon, 08 Jun 2026 15:43:04 -0400
+Received: from tor.source.kernel.org ([172.105.4.254])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <deller@kernel.org>) id 1wWfsV-0006Dv-KT
- for qemu-devel@nongnu.org; Mon, 08 Jun 2026 15:43:20 -0400
+ (Exim 4.90_1) (envelope-from <deller@kernel.org>) id 1wWfsE-0006AW-Tr
+ for qemu-devel@nongnu.org; Mon, 08 Jun 2026 15:43:04 -0400
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
- by sea.source.kernel.org (Postfix) with ESMTP id B10864013E;
- Mon,  8 Jun 2026 19:43:18 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AF9AB1F00893;
- Mon,  8 Jun 2026 19:43:16 +0000 (UTC)
+ by tor.source.kernel.org (Postfix) with ESMTP id 7A0E460098;
+ Mon,  8 Jun 2026 19:43:00 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AB6081F00893;
+ Mon,  8 Jun 2026 19:42:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
- s=k20260515; t=1780947798;
- bh=jX18zqXFA+LNSDjlxcNAVPph0zpvwfV3CNTKM9znobo=;
- h=From:To:Cc:Subject:Date:In-Reply-To:References;
- b=dSNszXUEzgadrSPpxlI3USw/vZG9rTGVN5r6mfp+z6gRpNcunvARbTZOFpIDkZ+Ah
- c0Bv51RUvVPMc+cQs4t1bYRiAwZPvve7cYVCPGUTawSL6IMyvSMHrH7a7ybqsUnlCc
- 5QEFfvpyjJKuQRDwbFZSzW7sf6ld2+mtCvk3SLPKyx4uEfr+ZRqHXnWWSEt0ay8/85
- FpKTMkmsAMjS/z3MObbbxswiWOCkrcN7o8xv3n7PghsjdD9RE4O/3qkhL/k1uw22r1
- 0OS4DS+uFEixjVCPA81l3MdP8EFWx4YzX3dxdhg1WtMR40Wtd7ggS3hRZdAVo6TMvM
- T/xyXHYoqBArw==
+ s=k20260515; t=1780947780;
+ bh=RUMByu/fpDdE65xUoRUclh3AVYC8YbM0hG6NpjUSfrg=;
+ h=From:To:Cc:Subject:Date;
+ b=dMasf6kB1hOJfGtZF2A0y+pI+5GXrb22wWc02M0ecT1oMx927xQVxrt5TkaUNB5cM
+ zhsva91hIAiFDHO6mILnSu7NgCyk4RJqo0/dsI1L6EAB/Thg1ptlndE3CkiVk0uJJu
+ hiWeQABhh1W6J7whotc0b56st/nFDygQdaz06pUXX9s3KqvkukxR/DaWiapQVGgbf5
+ nzqCMoQvomwAn6wB4mpi/sV0AmI+HrDrhs5ymlhjSF/1XILYgNHQpBKmoJb5PYPJpL
+ 1y79WsyGA7BbJNTxj++rlfnccofq1zTw1w0XfONtwpVKqpbPiyuib7Ct40mxnN32Y7
+ bUwalb51UTQAw==
 From: Helge Deller <deller@kernel.org>
 To: qemu-devel@nongnu.org
 Cc: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
  Max Filippov <jcmvbkbc@gmail.com>, Helge Deller <deller@gmx.de>,
  Yoshinori Sato <yoshinori.sato@nifty.com>,
- Laurent Vivier <laurent@vivier.eu>, Matt Turner <mattst88@gmail.com>,
- Richard Henderson <richard.henderson@linaro.org>
-Subject: [PULL 8/8] target/sh4: decode_gusa: recognize add#imm with prior mov
- Rm, Rn
-Date: Mon,  8 Jun 2026 21:42:56 +0200
-Message-ID: <20260608194256.13794-9-deller@kernel.org>
+ Laurent Vivier <laurent@vivier.eu>
+Subject: [PULL 0/8] Linux user patches
+Date: Mon,  8 Jun 2026 21:42:48 +0200
+Message-ID: <20260608194256.13794-1-deller@kernel.org>
 X-Mailer: git-send-email 2.54.0
-In-Reply-To: <20260608194256.13794-1-deller@kernel.org>
-References: <20260608194256.13794-1-deller@kernel.org>
+Content-Type: text/plain; charset="utf-8"
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=172.234.252.31; envelope-from=deller@kernel.org;
- helo=sea.source.kernel.org
+Received-SPF: pass client-ip=172.105.4.254; envelope-from=deller@kernel.org;
+ helo=tor.source.kernel.org
 X-Spam_score_int: -24
 X-Spam_score: -2.5
 X-Spam_bar: --
@@ -72,44 +69,60 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Matt Turner <mattst88@gmail.com>
+From: Helge Deller <deller@gmx.de>
 
-The gUSA pattern matcher rejected `add #imm, Rn` whenever any prior
-`mov Rm, Rn` appeared (mv_src >= 0), forcing a fallback to
-cpu_exec_step_atomic for sequences like:
+The following changes since commit 29c042c6e9d4a09d4a0ac3fa54aeb7ee08ce0bdc:
 
-  mov.l  @r2, r3      ; load
-  mov    r3, r7       ; save old value (mv_src == ld_dst)
-  add    #1, r7       ; increment copy
-  mov.l  r7, @r2      ; store
+  lcitool: remove Cirrus CI support (2026-06-03 12:45:38 -0400)
 
-When mv_src == ld_dst the move merely copies the loaded value to
-preserve it -- exactly the situation already accepted for the
-`add Rm, Rn` form. The immediate form can be handled identically with
-tcg_gen_atomic_fetch_add_i32 + tcg_gen_add_i32, so translate it inline
-instead of taking the slower single-step atomic fallback.
+are available in the Git repository at:
 
-Signed-off-by: Matt Turner <mattst88@gmail.com>
-Cc: Yoshinori Sato <yoshinori.sato@nifty.com>
-Cc: Richard Henderson <richard.henderson@linaro.org>
-Signed-off-by: Helge Deller <deller@gmx.de>
----
- target/sh4/translate.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+  https://github.com/hdeller/qemu-hppa.git tags/linux-user-pull-request
 
-diff --git a/target/sh4/translate.c b/target/sh4/translate.c
-index 5adf650744..d38a6bd352 100644
---- a/target/sh4/translate.c
-+++ b/target/sh4/translate.c
-@@ -1974,7 +1974,7 @@ static void decode_gusa(DisasContext *ctx, CPUSH4State *env)
-         break;
- 
-     case 0x7000 ... 0x700f: /* add #imm,Rn */
--        if (op_dst != B11_8 || mv_src >= 0) {
-+        if (op_dst != B11_8 || (mv_src >= 0 && mv_src != ld_dst)) {
-             goto fail;
-         }
-         op_opc = INDEX_op_add;
+for you to fetch changes up to fd8da2844c4354ecf54bd73a2fa7babe669b7a12:
+
+  target/sh4: decode_gusa: recognize add#imm with prior mov Rm, Rn (2026-06-07 17:56:24 +0200)
+
+----------------------------------------------------------------
+linux-user patches for alpha, sparc and sh4
+
+Various linux-user related patches from Matt Turner with coredump support for
+alpha and sparc, as well as some fixes for the signal handler in sparc.
+
+The patches from Xinhui Yang add the missing fsmount series syscalls support
+for systemd.
+
+----------------------------------------------------------------
+
+Matt Turner (6):
+  linux-user/alpha: add coredump support
+  linux-user/sparc: add coredump support
+  linux-user/sparc: restore L/I registers from RSA in
+    sparc64_set_context
+  linux-user/sparc: call block_signals() before set_sigmask() in
+    setcontext
+  linux-user/sparc: flush register windows before core dump
+  target/sh4: decode_gusa: recognize add#imm with prior mov Rm, Rn
+
+Xinhui Yang (2):
+  linux-user: implement fsmount(2) series of syscalls
+  linux-user/strace: add fsmount series of syscalls
+
+ linux-user/alpha/elfload.c    |  12 ++++
+ linux-user/alpha/target_elf.h |  13 +++++
+ linux-user/elfload.c          |   9 +++
+ linux-user/sparc/cpu_loop.c   |   3 +-
+ linux-user/sparc/cpu_loop.h   |   7 +++
+ linux-user/sparc/elfload.c    |  54 +++++++++++++++++
+ linux-user/sparc/signal.c     |  27 +++++++++
+ linux-user/sparc/target_elf.h |  20 +++++++
+ linux-user/strace.c           | 105 ++++++++++++++++++++++++++++++++++
+ linux-user/strace.list        |  15 +++++
+ linux-user/syscall.c          |  91 +++++++++++++++++++++++++++++
+ target/sh4/translate.c        |   2 +-
+ 12 files changed, 356 insertions(+), 2 deletions(-)
+ create mode 100644 linux-user/sparc/cpu_loop.h
+
 -- 
 2.54.0
 
