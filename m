@@ -4,55 +4,97 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 12BE6CD8C8E
-	for <qemu-devel@archiver.kernel.org>; Mon,  8 Jun 2026 07:44:14 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 17D5CCD8C92
+	for <qemu-devel@archiver.kernel.org>; Mon,  8 Jun 2026 08:15:58 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wWUdg-0005nr-4d; Mon, 08 Jun 2026 03:43:16 -0400
+	id 1wWV8c-0003PC-86; Mon, 08 Jun 2026 04:15:14 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <qemu_oss@crudebyte.com>)
- id 1wWUdf-0005nI-1u; Mon, 08 Jun 2026 03:43:15 -0400
-Received: from kylie.crudebyte.com ([5.189.157.229])
+ (Exim 4.90_1) (envelope-from <its@irrelevant.dk>)
+ id 1wWV8Z-0003OT-ST; Mon, 08 Jun 2026 04:15:11 -0400
+Received: from fout-a4-smtp.messagingengine.com ([103.168.172.147])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <qemu_oss@crudebyte.com>)
- id 1wWUdd-00020d-LC; Mon, 08 Jun 2026 03:43:14 -0400
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
- d=crudebyte.com; s=kylie; h=Content-Type:Content-Transfer-Encoding:
- MIME-Version:References:In-Reply-To:Message-ID:Date:Subject:Cc:To:From:
- Content-ID:Content-Description;
- bh=Kn35hDnaSLjae/Yd0ULCdnsIN2Ar34hDYqCT3UNMT0g=; b=nhd+3Kq9ytPBvqxRwi24BaVF7D
- KrHeIw3WW1qAiIc7cfh0+g4xK2X+kwVESE3ejglA74ZiNEXd/2d7Djo6isSeXNCXKW+J96sUzhs71
- a2istru4I4sXtoFtb0bXNMcdySa51Dg9dgEbyMRfdcexyvZsaglnhGjAOaYaSQUK16gDmmfm0bmfq
- AF42WO75ggflNpe5bRP+TDltsvwsjiOcnUdEayyXPpbjax90Hu338wu2/G3YFS82SI7ZHNC6WA11f
- 1ZntE4y1hPM2QU1uzzMLCe38qCh8cgI22+tgbvTfGGkIFGrd8VZDaBNdVMfyRwbTn/qSwvct4LdZY
- dfc2Ek6uruNA16+2ll/vkfXmlxcm3NzsInnzjtGbFVcAuXAZq6B/k6EP6q+PFrUnQV0Lnz3P0lBSP
- OLDX/f6Y90bOYjyd5XReO0b5f79Mo6jr+2xRTcGbotQ4uSK0qgZB4DqUyp0nCdObX9gXdpSErGx7x
- ytp5XjTU+fsFkcyaAKxPKAWf/Yc0ZQcjpzCX8XHxOTWY+H5NJR/yJp5v1oIKqdAK4hWmVunhk2obw
- bRS3/gQ7QRKRjm26NT2qg8L1wysDVAOemRbTZApb1iSnRXfdzutrrlrhdWr2kq4kJ3i/bjLdlPQ6q
- /ChbQ84WjGbQAnB+9HkAqmxye7QIlNeJaRF2rrw2A=;
-From: Christian Schoenebeck <qemu_oss@crudebyte.com>
-To: Stefano Stabellini <sstabellini@kernel.org>
-Cc: qemu-devel@nongnu.org, qemu-stable@nongnu.org, Greg Kurz <groug@kaod.org>, 
- Feifan Qian <bea1e@proton.me>, Anthony PERARD <anthony@xenproject.org>,
- "Edgar E. Iglesias" <edgar.iglesias@gmail.com>
-Subject: Re: [PATCH 3/8] 9pfs/xen: implement msize_limit callback
-Date: Mon, 08 Jun 2026 09:43:07 +0200
-Message-ID: <5999446.DvuYhMxLoT@weasel>
-In-Reply-To: <7f592f8cdeeea8b91998363ad9599dfb1f2b3108.1779916560.git.qemu_oss@crudebyte.com>
-References: <cover.1779916560.git.qemu_oss@crudebyte.com>
- <7f592f8cdeeea8b91998363ad9599dfb1f2b3108.1779916560.git.qemu_oss@crudebyte.com>
+ (Exim 4.90_1) (envelope-from <its@irrelevant.dk>)
+ id 1wWV8Y-0006nO-3q; Mon, 08 Jun 2026 04:15:11 -0400
+Received: from phl-compute-09.internal (phl-compute-09.internal [10.202.2.49])
+ by mailfout.phl.internal (Postfix) with ESMTP id 921EBEC01FF;
+ Mon,  8 Jun 2026 04:15:06 -0400 (EDT)
+Received: from phl-frontend-03 ([10.202.2.162])
+ by phl-compute-09.internal (MEProxy); Mon, 08 Jun 2026 04:15:06 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=irrelevant.dk;
+ h=cc:cc:content-type:content-type:date:date:from:from
+ :in-reply-to:in-reply-to:message-id:mime-version:references
+ :reply-to:subject:subject:to:to; s=fm3; t=1780906506; x=
+ 1780992906; bh=WuTBLcbM0YrFq69apAbkxDdd5xJiYnMusghCpIsaOwA=; b=X
+ xn0ILOtgeNX7pSVSg6ZG55jRY80qov4B0IEzsmZaPpUyz1Ua10QPcW4HI/a4Qcrh
+ x+DNialFYSqTiHlMnkFtY0mr1sAjBrfHMzgErPDmK2bHL2zevOh3TyPjS6mQ/cxR
+ iZvqm3K+qAhiYFtn4jBZNwKb6Qo36N4+PJJUrMWouddxTKNJtX0xzkv/f9t1kWhB
+ dyMMLS9xRpLQA31QZgs2TSpUxRJWO1uvcLkmByeeS66+eDuZnO6qXygnbiDwMQDX
+ Jqhm576gEbmBdscvlpQRdo2paUgLn6mv2e/2xgxWK1ogCMfpqJ2i7OJyMxYl+YtO
+ 0e5dAyazUZR58ipNX71UA==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+ messagingengine.com; h=cc:cc:content-type:content-type:date:date
+ :feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+ :message-id:mime-version:references:reply-to:subject:subject:to
+ :to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
+ 1780906506; x=1780992906; bh=WuTBLcbM0YrFq69apAbkxDdd5xJiYnMusgh
+ CpIsaOwA=; b=dIP7WNHbQWzf20puEkdNVupx/nMdCfR/hWv0m4wYlX1Qw/TnwjN
+ 70vjGk/gE/aai2uFsjfzD3YsLadeTxgk+eXJXpSIjrKGv3xHffpq/ZDgpTLratAb
+ TwY4eAf9VBgrry5etXHO1xxFkWD7/vZaiL636oIeLysA9j3vMlhfB7y42fBDDNzW
+ rlx+EnT/2cO4MWAv1QwJ1Kkj0EAStVrwS4xMQ16Qpye86eUrVWA2ZXRxpBBlg46T
+ 1l5Jq/WIEOJA8GYsWNhyutVpD8EC61cQ5pKMtVbuyjlHxuFl603Dhul4m18JfHPg
+ ZPxWoen4ejbDajjin7IUoFrltr03MUuxRhA==
+X-ME-Sender: <xms:CXomajvJlabs32RN0VCiyLkh1A9cjlKffisp-75A-f8kGWrBhIGKAg>
+ <xme:CXomagWD2iNYAvtjGYM5fTwtxfl18I1MAKnf8y5QixUKBlseZEqEGZPxpzNreaW29
+ j6x7C5VmHqXAd4YbD9x7PBmobU9TU7wH6Bn25jou1kt33gD7XFfeYw>
+X-ME-Received: <xmr:CXomajxiJ4SuNUeGUfg15JPS7wS-afbZy5vvBIv9oxyAfklU5G0kMXA7sJDiaw>
+X-ME-Proxy-Cause: dmFkZTFmMPv2A1pj1T351020dJ6qrMbKe3lK3Naj3bt9UbcJs+083ESHranRVLkn+pbdgL
+ e7zafStYDFM7VoaoqNVdipAAG6X5EGfMrIfY+OtGMkvn31x7CxWNB5dJ0dxTh6yPvifvSE
+ r8Oo6G7s1VIsYaoHsbQzCFws5+IuXULsETxhW/PrQWLTKVgdCHUuwLKpPY9zQ/4KPOIO3G
+ 4krpokMP70Rtykm/1x4clLGVHzFCJhX8uh9GpAIzYh3PF2EqleX+q9u0lI0h/u1zH1YVkr
+ MLYaX52EH1huOsEF6HzpOIG4Faw5v+epbcQPxN8xdR46ESudrvRP9O7HNQdR6y4/FTikCV
+ gPbQwcaMCDRitLdAD7eiEgJzqFoo9R696TdopZ5+3K3yamUYpaBnEIqae/wHThgfRY+VPy
+ BV8N2PmN4K2lA0h3uayz5PjmIT/uNipc14YcpOzvUly7jffOa9Nn6MN5WzEUHXrY2jxbLE
+ XL/7Bhk5jkyD+IERLmLHEKblJgeQRhvcL6kMp+96Ykew82wtUl5QoVyB6I2WzUbJlfNqdv
+ k9BzrsECA3Xa9+PoEclYfG0S3yHmcJ0SmVesU4OHozIXvLf/U/0uhK1tbsV7ogYlIo63Lr
+ Kc0igOxIPcig6NOTizEBQUT/ZgsnvKaLVjhAi4vz7Bvt2jtgaEnNQqV5yJJw
+X-ME-Proxy: <xmx:CXomanEmiPv9YTe1NYTtp0ooTOb7xDeQjE2R7jyqkVyzc7TXfue6RQ>
+ <xmx:CXomaosd_6GQwd9CRIBSi2IewTSU9Nn1mSXyRcQw6Znlt7Q_Jp4Z0g>
+ <xmx:CXomanCz_CblKfQZb5Wqcg9EH9zC-N2iDOclS4b5GTMLH7kGgCIifA>
+ <xmx:CXomajCdmXQz11a1BXAR-hRGSfTxKG1Qo27G10id0-UdzXBSJIzbMg>
+ <xmx:Cnomaq1CppNAkDy20llxUEHbNPDEliW5tR0Ofdf9c-ga-WCZ5WpnLP_z>
+Feedback-ID: idc91472f:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
+ 8 Jun 2026 04:15:05 -0400 (EDT)
+Date: Mon, 8 Jun 2026 10:15:04 +0200
+From: Klaus Jensen <its@irrelevant.dk>
+To: Daniel Gomez <da.gomez@kernel.org>
+Cc: qemu-devel@nongnu.org, Paolo Bonzini <pbonzini@redhat.com>,
+ Peter Xu <peterx@redhat.com>,
+ Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Keith Busch <kbusch@kernel.org>,
+ Jesper Devantier <foss@defmacro.it>, qemu-block@nongnu.org,
+ Daniel Gomez <da.gomez@samsung.com>, GOST <gost.dev@samsung.com>,
+ Klaus Jensen <k.jensen@samsung.com>
+Subject: Re: [PATCH 2/3] hw/nvme: drop DMA-path IOV_MAX guard
+Message-ID: <aiZ6CKSFLjf4SD3I@AALNPWKJENSEN.aal.scsc.local>
+References: <20260529-align-nvme-mdts-with-linux-v1-0-221d4d21ab43@samsung.com>
+ <20260529-align-nvme-mdts-with-linux-v1-2-221d4d21ab43@samsung.com>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 7Bit
-Content-Type: text/plain; charset="utf-8"
-Received-SPF: pass client-ip=5.189.157.229;
- envelope-from=qemu_oss@crudebyte.com; helo=kylie.crudebyte.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+Content-Type: multipart/signed; micalg=pgp-sha512;
+ protocol="application/pgp-signature"; boundary="IGhDx0WYYf7YfG6t"
+Content-Disposition: inline
+In-Reply-To: <20260529-align-nvme-mdts-with-linux-v1-2-221d4d21ab43@samsung.com>
+Received-SPF: pass client-ip=103.168.172.147; envelope-from=its@irrelevant.dk;
+ helo=fout-a4-smtp.messagingengine.com
+X-Spam_score_int: -27
+X-Spam_score: -2.8
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_PASS=-0.001,
+X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_MSPIKE_H2=0.001, SPF_HELO_PASS=-0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -69,51 +111,71 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi Stefano,
 
-would you have a chance to look at this Xen patch 3 and patch 7 whether I am 
-doing it right for Xen?
+--IGhDx0WYYf7YfG6t
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-/Christian
-
-On Wednesday, 27 May 2026 23:15:25 CEST Christian Schoenebeck wrote:
-> Add and implement the msize_limit callback for the Xen transport.
-> 
-> The limit is calculated using XEN_FLEX_RING_SIZE() based on the
-> negotiated ring_order. For the theoretical maximum ring_order of 9,
-> this results in a maximum 'msize' of 1048576 bytes (1 MiB).
-> 
-> Signed-off-by: Christian Schoenebeck <qemu_oss@crudebyte.com>
+On May 29 14:36, Daniel Gomez wrote:
+> From: Daniel Gomez <da.gomez@samsung.com>
+>=20
+> dma_blk_cb() now chunks at IOV_MAX, so the per-mapping cap on sg->qsg
+> in nvme_map_addr() is redundant. Drop it.
+>=20
+> Suggested-by: Klaus Jensen <k.jensen@samsung.com>
+> Signed-off-by: Daniel Gomez <da.gomez@samsung.com>
 > ---
->  hw/9pfs/xen-9p-backend.c | 7 +++++++
->  1 file changed, 7 insertions(+)
-> 
-> diff --git a/hw/9pfs/xen-9p-backend.c b/hw/9pfs/xen-9p-backend.c
-> index ca0fff5fa9..94654022fe 100644
-> --- a/hw/9pfs/xen-9p-backend.c
-> +++ b/hw/9pfs/xen-9p-backend.c
-> @@ -250,12 +250,19 @@ static void xen_9pfs_push_and_notify(V9fsPDU *pdu)
->      qemu_bh_schedule(ring->bh);
->  }
-> 
-> +static size_t xen_9p_msize_limit(V9fsState *s)
-> +{
-> +    Xen9pfsDev *xen_9pfs = container_of(s, Xen9pfsDev, state);
-> +    return XEN_FLEX_RING_SIZE(xen_9pfs->rings[0].ring_order);
-> +}
-> +
->  static const V9fsTransport xen_9p_transport = {
->      .pdu_vmarshal = xen_9pfs_pdu_vmarshal,
->      .pdu_vunmarshal = xen_9pfs_pdu_vunmarshal,
->      .init_in_iov_from_pdu = xen_9pfs_init_in_iov_from_pdu,
->      .init_out_iov_from_pdu = xen_9pfs_init_out_iov_from_pdu,
->      .push_and_notify = xen_9pfs_push_and_notify,
-> +    .msize_limit = xen_9p_msize_limit,
->  };
-> 
->  static int xen_9pfs_init(struct XenLegacyDevice *xendev)
+>  hw/nvme/ctrl.c | 4 ----
+>  1 file changed, 4 deletions(-)
+>=20
+> diff --git a/hw/nvme/ctrl.c b/hw/nvme/ctrl.c
+> index be6c7028cb5..00995d9808f 100644
+> --- a/hw/nvme/ctrl.c
+> +++ b/hw/nvme/ctrl.c
+> @@ -866,10 +866,6 @@ static uint16_t nvme_map_addr(NvmeCtrl *n, NvmeSg *s=
+g, hwaddr addr, size_t len)
+>          return NVME_INVALID_USE_OF_CMB | NVME_DNR;
+>      }
+> =20
+> -    if (sg->qsg.nsg + 1 > IOV_MAX) {
+> -        goto max_mappings_exceeded;
+> -    }
+> -
+>      qemu_sglist_add(&sg->qsg, addr, len);
+> =20
+>      return NVME_SUCCESS;
+>=20
+> --=20
+> 2.53.0
+>=20
+>=20
+
+I posted something similar a while back where I also removed the
+restriction for CMB/PMR. However, I think that was wrong - for CMB/PMR
+we take the blk_ path directly, which will not split on its own.
+
+However, that means MDTS can't go that high if we have CMB/PMR enabled,
+right?
 
 
+Thanks,
+Klaus
 
+--IGhDx0WYYf7YfG6t
+Content-Type: application/pgp-signature; name="signature.asc"
 
+-----BEGIN PGP SIGNATURE-----
+
+iQEzBAABCgAdFiEEUigzqnXi3OaiR2bATeGvMW1PDekFAmomegUACgkQTeGvMW1P
+DenJHQgAjwplkqHaZZxJR3sBtsHo29BGooBBtu5iiKSAB2M1o5qtD6JHNGjqtNsw
+ab2P+s9hGKNzU2NTD+KjPUzMUXV5Gleimx/6kHlqEzag5oleZctL/Xroj+0WGxgv
+egJkgy7+IjlJW3FswjWH1n2EHn3h0rl8yMJmobcLCwN4fJlrsQBlTMjVX5dgEbls
+ahN86vrBJeDwA7/njVr0BePNEL0Dbzb4Rdwbko/QoCUWPsb0qy5+yZ+sXYeR0gQz
+EZSjoELEZ+Iph6u5D6syeBYWBb1Rle6KGr6nRJ1J2zaYjF4Py1u3N53YXmnaHFko
+lgujS8Rt/eM2oq8guWtBhzxjuTxP5w==
+=lv3n
+-----END PGP SIGNATURE-----
+
+--IGhDx0WYYf7YfG6t--
 
