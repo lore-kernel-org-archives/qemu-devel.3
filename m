@@ -4,156 +4,139 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 28B13CD8C9D
-	for <qemu-devel@archiver.kernel.org>; Mon,  8 Jun 2026 12:13:54 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2AC10CD8C9F
+	for <qemu-devel@archiver.kernel.org>; Mon,  8 Jun 2026 12:17:07 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wWYqn-00053T-3v; Mon, 08 Jun 2026 08:13:05 -0400
+	id 1wWYu4-0005sB-FK; Mon, 08 Jun 2026 08:16:32 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <avihaih@nvidia.com>)
- id 1wWYqb-00053K-Ir
- for qemu-devel@nongnu.org; Mon, 08 Jun 2026 08:12:53 -0400
-Received: from mail-westus3azon11010043.outbound.protection.outlook.com
- ([52.101.201.43] helo=PH7PR06CU001.outbound.protection.outlook.com)
+ (Exim 4.90_1) (envelope-from <daniel.barboza@oss.qualcomm.com>)
+ id 1wWYtj-0005rd-F9
+ for qemu-devel@nongnu.org; Mon, 08 Jun 2026 08:16:08 -0400
+Received: from mx0b-0031df01.pphosted.com ([205.220.180.131])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <avihaih@nvidia.com>)
- id 1wWYqX-0003lG-SH
- for qemu-devel@nongnu.org; Mon, 08 Jun 2026 08:12:52 -0400
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=xSzdv9MQVGpXnoH2Cc/PUTxgdbHPr1K8LdwjV/xz83TAzCpED/W46+nPAnIg7ZXnD5GtbZ+MtonA34uHnGWScIXSgkHP1p5R5ZnZfwcYUMdumCQeGmxeYJy1ujzJe1QGcWA1Q1jY8zl7k3qmj2R9Yl1Y/BRs4HGIKIraiNmA4wSRQ5/lrwxrxNRrmw7txMePWSQIZRt6Zl7GKqOzWL/gN7jZpMwrxsFQs/v+w4sp+9l06wHcRWG4wSzy6BXPEdZzv2nsKsEcNX+A7NbbkVbPycQpMooaLaw6DUOms1w4BzwDP0JlxROvdXxpH9KbEim3JJbbl64LqoluvxgbsBl4jw==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=R9jsfUBKSH4fHLce5tlrivuQ9FJab75xgz8YSFDS+Xo=;
- b=byj/82LLoCpjdrlrz4S/Xl9299UcRK4pITvvML+V6pEUaTLid2/G8SefY5BOPQ3gHJol5CnMz8LZ1cqyyNfUqJ8Zikzomf7+ZgZPd5tJORqMK+RMjyQldG2TIXbFaPGWwbaRbQpgRIqNXAVrMdlg2b5iW3mcGjhG4jCdRlGKKjpokLDes8PWe4BpLHpUceiPcbIJ+UdLFyzesNI/z5v0/o86Qo0iSFs1S0xnuLZkiJBp7pHFACj49Hz2BqeaYpOg2FxOqH8A1Kre6kJ24N7TjhAB2PnqbkEfuUNDDIOs46ZY+8gOSSIXVBZ9RhZSdp4AgamPOOcLjJcUC2RdgIELJQ==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=nvidia.com; dmarc=pass action=none header.from=nvidia.com;
- dkim=pass header.d=nvidia.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=Nvidia.com;
- s=selector2;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=R9jsfUBKSH4fHLce5tlrivuQ9FJab75xgz8YSFDS+Xo=;
- b=qi9RcW4TX/1gKXzQpb9HvW8SjNRYU1N9WxVBwS1KurnwjfUWEt691Sx6zZyktQb0xdqDzFYzg6NDYDZNd1LjgqTXZyw5pcnWrcrxas18MwGUF6rc9AElc2EjvYEukqkJeDeNyuJc1+uI4KwM2c7A816OnA9DMyrpYX4DMxrKPa79Ah/7CVT2e//1Vv5RP2+ycclSkK7WQsbn9KHYCO9WwK6hD00kvgBBpPhyz8TYSuFSyb5hIW8Osh6QjNn1YlMRS8eRlCEzaNbgEqiyp3hUjiHfOsz0M4vwb7OMnkWJ5mBxZ9/rCB6zIHGPWccY5hsd8D7jEpJi5c2q/HgnftS0NQ==
-Authentication-Results: dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=nvidia.com;
-Received: from BL1PR12MB5063.namprd12.prod.outlook.com (2603:10b6:208:31a::11)
- by MN2PR12MB4080.namprd12.prod.outlook.com (2603:10b6:208:1d9::16)
- with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.92.8; Mon, 8 Jun 2026
- 12:07:38 +0000
-Received: from BL1PR12MB5063.namprd12.prod.outlook.com
- ([fe80::a0c2:5681:4aca:90da]) by BL1PR12MB5063.namprd12.prod.outlook.com
- ([fe80::a0c2:5681:4aca:90da%7]) with mapi id 15.21.0092.011; Mon, 8 Jun 2026
- 12:07:38 +0000
-Message-ID: <f27b2f9d-b72b-4fab-acc7-b560d29c95af@nvidia.com>
-Date: Mon, 8 Jun 2026 15:07:32 +0300
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 02/13] migration: Run final save_query_pending at
- switchover
-To: Peter Xu <peterx@redhat.com>
-Cc: qemu-devel@nongnu.org, Alex Williamson <alex@shazbot.org>,
- =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>,
- Fabiano Rosas <farosas@suse.de>,
- Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
- =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Zhao Liu <zhao1.liu@intel.com>, Halil Pasic <pasic@linux.ibm.com>,
- Christian Borntraeger <borntraeger@linux.ibm.com>,
- Jason Herne <jjherne@linux.ibm.com>,
- Richard Henderson <richard.henderson@linaro.org>,
- Ilya Leoshkevich <iii@linux.ibm.com>, David Hildenbrand <david@kernel.org>,
- Eric Farman <farman@linux.ibm.com>, Matthew Rosato <mjrosato@linux.ibm.com>,
- Cornelia Huck <cohuck@redhat.com>, Eric Blake <eblake@redhat.com>,
- Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>,
- John Snow <jsnow@redhat.com>, Markus Armbruster <armbru@redhat.com>,
- Maor Gottlieb <maorg@nvidia.com>, Gavin Shan <gshan@redhat.com>,
- Wei Wang <wei.w.wang@intel.com>
-References: <20260602092621.382-1-avihaih@nvidia.com>
- <20260602092621.382-3-avihaih@nvidia.com> <aiCJHa-lT9Ycf6jq@x1.local>
- <aiCWynDFLoxtcctK@x1.local> <722fb01a-988b-4b21-9cca-aca1de2858db@nvidia.com>
- <aiGzVgatc_0Df21z@x1.local>
-Content-Language: en-US
-From: Avihai Horon <avihaih@nvidia.com>
-In-Reply-To: <aiGzVgatc_0Df21z@x1.local>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-ClientProxiedBy: FRYP281CA0009.DEUP281.PROD.OUTLOOK.COM (2603:10a6:d10::19)
- To BL1PR12MB5063.namprd12.prod.outlook.com
- (2603:10b6:208:31a::11)
+ (Exim 4.90_1) (envelope-from <daniel.barboza@oss.qualcomm.com>)
+ id 1wWYtf-0004xN-Fx
+ for qemu-devel@nongnu.org; Mon, 08 Jun 2026 08:16:06 -0400
+Received: from pps.filterd (m0279872.ppops.net [127.0.0.1])
+ by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
+ 658BBFZi3417303
+ for <qemu-devel@nongnu.org>; Mon, 8 Jun 2026 12:15:59 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+ cc:content-transfer-encoding:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+ 7DvVeShl7xjUO/MtaA0R2/qznezTekNxJDlFS+AqW/w=; b=j3v/jGsjc42w7cMq
+ hLcKeXou0AlpYaFLtmKxrwG9e4PJY9N6mJuSDBEzeJJ1o/fiuHDFkmxx19kE0ESP
+ ZfUr88HQz4rLebVB6jK//MRHIc+3/44AGXOa8i668h9HZHsEW5ekJu6FdpiyQuPk
+ qea5KlHIrQjA7hfJlje4MtF0XczXyUc7v7RzCCItfKctT+7No69mLY2yHO9wLrHi
+ 1fdFE840pT/EDcoMmopkA1IyT+LmWq6+YKsFExfa2AayrC0T8Hpvf0rt7DNbJYSC
+ vhAHngVD+AQ+/3DCZ8nYJk7HzWBKPU+uxJlKpAeg08uWlh9C+EeH5m32jGCZq2Bt
+ Cr7rZQ==
+Received: from mail-qt1-f197.google.com (mail-qt1-f197.google.com
+ [209.85.160.197])
+ by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4enuptghny-1
+ (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
+ for <qemu-devel@nongnu.org>; Mon, 08 Jun 2026 12:15:59 +0000 (GMT)
+Received: by mail-qt1-f197.google.com with SMTP id
+ d75a77b69052e-5178bcab15bso89059571cf.0
+ for <qemu-devel@nongnu.org>; Mon, 08 Jun 2026 05:15:59 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=oss.qualcomm.com; s=google; t=1780920959; x=1781525759; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:content-language:from
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=7DvVeShl7xjUO/MtaA0R2/qznezTekNxJDlFS+AqW/w=;
+ b=LSPUk4qyWOxgxNLxjYjN5Bo+hPSzwOl4f6f4wZHo20gCJ18PqspVoFaG0eTenAayGo
+ vQch616PVIK1bAG1sGVsLKm2CORGuIXwZKIe0EazvkXagQme7JifnWcB4awyx4Eg1tSZ
+ LqZddSN8Q3oxL/riVnMvMfqqBM1ncaglJMZcfx833/2GiQyfo4cAbCRfqJ8ZzHnR18tz
+ BmEAQmXBp3ae5q9QXnZOtr6SmniFvmLMJ4QaWmhg3qIc5PKQ1aClJmw0Hz9DRIf1e1UN
+ LCnJmrFDvVfraP99PAC5Gbt2xnq939xr66gkESvAOssWMdSkBvFUDLGoDGw9Miopo2Hm
+ Ch7w==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1780920959; x=1781525759;
+ h=content-transfer-encoding:in-reply-to:content-language:from
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=7DvVeShl7xjUO/MtaA0R2/qznezTekNxJDlFS+AqW/w=;
+ b=IHGodX+OO4NMiLVfgu8FIHI0rQ/NqqNMsoQ4TLTf8QIcYajocQ/odf4WW/0pjk8xB8
+ aFfvJDSSgwzGw0oK1J5s7NKKfqB7QFIssmNCuzj+AXlWTVGBlWhZ4VfYIKNvRZnoeCC4
+ rKhznTawhx+C2RXfK/+YZQ9dC5cFYnaVfO6aovsfuqN7wgRrD3Kiis2kqrVl7TRpIuwS
+ 04Ei7H9d/0e2PnSZXl3Lmkg9e1tPov0VGZpsWBIw52J7UrBsWxSL4xpdW4JXyllJdEpW
+ 9YMRQEWLSuMxP8qUNutSzyvFYWBNW3Y4abXYu3j7o5B9k6lX4K4gZvmJhOwCRLkptckJ
+ wXmQ==
+X-Gm-Message-State: AOJu0YwM4/RkayPJ+dKMWLKZjEa3r+FtQInZtaLEZVlLhz7NS6nKxkSv
+ CkK7xurhWMy742z+FLyVyhUeT2z263VNAht792CynpgwbPiTiSkDglphf9IiYSPUMp1BICwfqTT
+ nDmMY2cDauy3rmYvK7c+sz6yiCQLzsjznpQEVVkiUkqGWpLiiOz+taLfWMA==
+X-Gm-Gg: Acq92OFb6yid89cVq2ucC2Gi8vCV6DmW5QwoINYMx1Q+kPcrGzq1PjDZFdA7mwwKUsQ
+ c0clMVakcKGplris4TLE3yAJmQSszYYEDkSUkKB/r+jOsBxM8zcb6ZPMCYmGM8aT/aVZsqsCtk6
+ WVdeeJYp3tgVP5muiseWwiEZmRD3AzlE1FfpHkQC0Nv+m0j19yo/Hsjswacr3om06kC3WbwSYiA
+ vD9iR8fQGbtZUtm/wtFstR3qeCLMkipZMODNxwaM3BumLXtNEQpQXVq0BRCWeizcCsBLS80YaHn
+ vjnvyhZqOO8bI2wFF2eRh6slN2g8Bwh4z6v9WI6nSYTr0Dzix4Zz53WHHPIvz+g+IbAYLdXMQp8
+ VJhVWDl5uLpcn5HI0MpZH4fMQUKaQ3IBTAqu96WautrCBzgiFsShbZ5IY1zd0sWYil4hH
+X-Received: by 2002:a05:622a:230f:b0:517:9d71:4155 with SMTP id
+ d75a77b69052e-5179d714cf5mr190560951cf.46.1780920958744; 
+ Mon, 08 Jun 2026 05:15:58 -0700 (PDT)
+X-Received: by 2002:a05:622a:230f:b0:517:9d71:4155 with SMTP id
+ d75a77b69052e-5179d714cf5mr190560401cf.46.1780920958276; 
+ Mon, 08 Jun 2026 05:15:58 -0700 (PDT)
+Received: from [192.168.68.106] ([177.170.117.62])
+ by smtp.gmail.com with ESMTPSA id
+ d75a77b69052e-517940762fbsm96947551cf.18.2026.06.08.05.15.56
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Mon, 08 Jun 2026 05:15:57 -0700 (PDT)
+Message-ID: <be7ea7b6-4e6c-4ab4-94d3-2c82f225c1ad@oss.qualcomm.com>
+Date: Mon, 8 Jun 2026 09:15:55 -0300
 MIME-Version: 1.0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: BL1PR12MB5063:EE_|MN2PR12MB4080:EE_
-X-MS-Office365-Filtering-Correlation-Id: 2a588e28-8404-4f23-9345-08dec55688c2
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam: BCL:0;
- ARA:13230040|1800799024|366016|376014|7416014|11063799006|6133799003|5023799004|4143699003|56012099006|18002099003|22082099003;
-X-Microsoft-Antispam-Message-Info: Qxds+ZQLhJz3lmBHsyrU6i7mVJp+1Jq+uHzCu3XOSPR8JKS3Wl5LQqgUVVQ9QWl/OyVDn080d7N1tRCeKQnIXjgE13RCxGqBCBFX9+UVXqjozLMilu7lpTrnZUUgX/9AXViFzQC5eOeRNR4/YZQVHRf/G/qsuxRM8VaFzC3OEwNPKRNR6F4DMxp5AvW8Shhq7sTatq8b9SNN4Or+fj8EafInTYLiVD9CqewQSSMsiouu6813YNZ5oUfzU8g+ZsXVuWIgJPK9S4xsYLxrLtwm/lUh6t4KmztyaPvrKCCPxL74kgVIPi1OY58ITXH0BU5dKg8CZhvtW8GuTniW6tHoaMCWwnSoipcwFii99ia2ID8tcwYCW5ck8KIy99Ee4vdpGX9VKHwbTBe9H/rxn6uY1zILo0dvk6AaB0igS3wA4Atv04dU5llfL2Loh9AGRY5MdAqGlvpxhZ1yByl/MsPBKELEHO8VvHhwAEYYfCjjszHpYtPXoJCfmRvniV/nCMSfDLjrA/DI4VlkcDA5ieEJBStJmdCr9enrYxlN1wF1bGv1hk9v4X3/BSuHbUfrtgYvgOjJ47p+Dd/RV7vhRowgB7IFPDe2sEMS4pBQbrLSlzV7OneEf8lwXkZdN6rygfECwUbkr/R1/eQE9cZ0d9bPCsP70xhcZsh9ZFRgFPTmX+beaXyFwHXbJyFhHRb8zjka
-X-Forefront-Antispam-Report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
- IPV:NLI; SFV:NSPM; H:BL1PR12MB5063.namprd12.prod.outlook.com; PTR:; CAT:NONE;
- SFS:(13230040)(1800799024)(366016)(376014)(7416014)(11063799006)(6133799003)(5023799004)(4143699003)(56012099006)(18002099003)(22082099003);
- DIR:OUT; SFP:1101; 
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0: =?utf-8?B?N28veFZkVDlSL2xldkZwQlREZ2d6K3NxU0VFbVJEcFlGd2ZRT05IUU00S2xM?=
- =?utf-8?B?KzJJTXhCZFVFb2xNUHdad3UzalJFTkNwbWp1S1h4UkxqRWIrOEgxejBNVUZa?=
- =?utf-8?B?VE9iWjY2ZE1ZMjBlWWJqaFFsZ2FjOVlRNnp0cTNveWNjbzNSTk5WU2ZQeUxG?=
- =?utf-8?B?Z1ZybldNbGlwT0ZDZDEraVdHdS9mOXJwOVFDNFExeHVHQ2RQRWU3eStaUUVV?=
- =?utf-8?B?NWJQU1dhOENlZ2I1WmZ1alNUZ2JSRkVKVllGRjNPaUhiUDZhZVh4TkRYMlZv?=
- =?utf-8?B?c3JUL3NabGYvV2tGOFM5c0F4UEwxZm9LdnVxR2Urd1pmbEtWMzFWc1hlaEFr?=
- =?utf-8?B?eklHNW5mZ2xXaTZ3dTl2dFg2ZHFSdmkycWtkNmNiK1ZsSjdTQy9vSWJQamVQ?=
- =?utf-8?B?cU9EdUlwUVhpL1I1aHlqTEFJRTMvaEo1akt0OUsvZHpYNkw4VjJ0V3hDYVcw?=
- =?utf-8?B?emZ3RTdKKzJ2VzZKcnY5Z0VVdmV5MzNDVmJwVjR1UDFBcHFIZFJSdmZtZTdM?=
- =?utf-8?B?YVRZZ2dpRUlER0d0ZVdGOVpLUEg1dmlQMWtRYVQxcXBFOXAxMWwwdXYxeTBw?=
- =?utf-8?B?eGdIcU9BRUh5TE5xd2U1RjVvcVpFV0RSV1JZY1pDRitOeDV4QTJJV2J6dUhU?=
- =?utf-8?B?U3RaL0hTMitDNTF0bm5yTWhGd0QxUjcrRDlKcW5wMk03QVR4dTRGSnZVbTdF?=
- =?utf-8?B?QTEyVHJ0K0JLNEtoempnRWhYUVhUaHU4NkhBMXZyMTRaOTVETGRZRk53U0Fj?=
- =?utf-8?B?MlZFMGdIcTZKM2tFOE41a1UzTjZwOFd6ZXlVTFNqVnVlODlnNUJtcVVQUlFl?=
- =?utf-8?B?SEI1Y0lOWGxIQ21NMUtQU0crZSttWlRPVCtIZVZzNVBJcXpZUWs5bi9vR2FT?=
- =?utf-8?B?QTltSDY3eXFQUmxKeWpqd3ZOTWQ4cmt2YVV1WndtZGZKdGhJNjIyV2VQbTlN?=
- =?utf-8?B?YnhNRnU5Wi9wWnJGd3ZvNHcvNTBmakNxOVE2L2duZzR2dFBTQ0JLZ3UvNXBU?=
- =?utf-8?B?YndJKzRMSnBBUUo0dEJGazllYnFpeEUzb1lVWDNiczVuMmpFVkVhWGxmU0E2?=
- =?utf-8?B?RENsV0JubVVra0Ria0hRMU1BT0ZMRittYW5LT0pPY1V5ZDhhTDFCaWNlQnQy?=
- =?utf-8?B?SGRlTVU5V1pPZkZiS1RMY2pDbWJnaFZvZXpsZHZaRERid0ZOZjFOSEdGazlV?=
- =?utf-8?B?RFZQRHRBK1I0eU1uOXJhVUgwMld1RFJOZkR5bUZzNHpBUVhrb0RYS0wybndm?=
- =?utf-8?B?QXhyWXBjMlBHNkF6NlVJSHlINThheEY5SlNRR0p2US9jT1Vra3c2bnk0b1lE?=
- =?utf-8?B?VDdMZ0RLQUk5RkQ4S25zS1RjNktrSzBSQ1BMVlp1dzQvdE1UTnVIZWlFSERN?=
- =?utf-8?B?WUZERUxIclQ3eC8zQVVsazR3cXZQb1dQRjNQWi9WVmt4SnNJUzVBckpMN0Rx?=
- =?utf-8?B?MWU2RjlXbFNUdURiQ2lqZnl6N1dqbTVpMVU0dnJqNDA3SWZ2U284S3diWXNN?=
- =?utf-8?B?aThIUWhYTTlYY0lVdWphTm11WEw4VWF4UFBIaUJmandPaC9ubnFuVmdLU1ky?=
- =?utf-8?B?K2dic3I4dURsUzJlcS9BTnAxeUkrM2R5OGQ5UnBMT0VjbjkvV1NtbTRONTRN?=
- =?utf-8?B?QkNyYTRjdG9VUnB5WXRsd3BXSE8rK2ZzYzVJOG1hN05hYWxkMHA4T1BsR01S?=
- =?utf-8?B?Z1JUWG9hM0FYU0lqQzJGT0wwS3k5eHhBZnZxN2lkdStkZmJsNE9MTUZIUUxR?=
- =?utf-8?B?UDl2UFJuYUtNVkM2SzgyV3hMdi9talBuNUwyU2lZbzBtUnBhclFxSUU2VDBM?=
- =?utf-8?B?THdMWWQ1WXJxRkFtQ2VxRlUwTlJVT2IzN0VYaEFETzd4bkhhSFJId2VCS1Fp?=
- =?utf-8?B?TGo5NWd5eHpCWHdIbUU3RlNCVGxJZDJKM1NldEZsVDZOMHBhMHpURFJldkVO?=
- =?utf-8?B?VFpCS3hVbitTMG01TitGNGx4b0xCR1YzY2pKNzlLaTdGZDZFaURydVJzLzhs?=
- =?utf-8?B?OEQ4SHR3dTVlemY5T1RWYnFXQkI3dWV3bHE1cUJTTjFINXNsT1FkUVErUmNZ?=
- =?utf-8?B?N2ozK081TXBhZUJsM0hZWXBibEVpQlJNUE0xZlpUK3l6WkhwaEl0UGRVZU1o?=
- =?utf-8?B?VjRFenNFYkZHYVAzbWJBRzR5QmFpaWRxZ0pjdFVlMEFwRlhMVlgrYWVsdDJ6?=
- =?utf-8?B?VzZONmVZMGlPSGhkR3VCd0M4NVUxaVlFZkJQcGpnUCs2bWJLSjU5MWl1RWFw?=
- =?utf-8?B?VktLUXZJaGRwUjk3cElBbEhXODdGcXR2NGhOYVdMVUgyMFJFaXBBUGd5WFBF?=
- =?utf-8?B?Zk9MbnRGZzFOQWc5ZGlTVGgzZzZ4QzBVS1hKbS81L1JPNnd6YXN5dz09?=
-X-OriginatorOrg: Nvidia.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 2a588e28-8404-4f23-9345-08dec55688c2
-X-MS-Exchange-CrossTenant-AuthSource: BL1PR12MB5063.namprd12.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 08 Jun 2026 12:07:38.7884 (UTC)
-X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
-X-MS-Exchange-CrossTenant-Id: 43083d15-7273-40c1-b7db-39efd9ccc17a
-X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: fzq6F0dJ5b5x/yTT6kdBsCfHGfA3uukF0w/VCYJh/5U/ED0CEb0/5p+GwxooxKIVFg1Q/RBKoF1ezmG3X5wBeQ==
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: MN2PR12MB4080
-Received-SPF: permerror client-ip=52.101.201.43;
- envelope-from=avihaih@nvidia.com;
- helo=PH7PR06CU001.outbound.protection.outlook.com
-X-Spam_score_int: -24
-X-Spam_score: -2.5
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 0/2] memory.c: make memory_region_dispatch_* report
+ ACCESS_ERROR
+To: Peter Maydell <peter.maydell@linaro.org>
+Cc: qemu-devel@nongnu.org, richard.henderson@linaro.org, philmd@mailo.com
+References: <20260602190857.1506939-1-daniel.barboza@oss.qualcomm.com>
+ <CAFEAcA9WZLV_fsFRN7g9-3NdJ0ecXGYqJHbp6kPPpSAiwM5PnQ@mail.gmail.com>
+ <98b5f348-aac4-4be9-a897-95da11c19aa5@oss.qualcomm.com>
+ <CAFEAcA-P4OySVHDziG59Ln7CuqLFArHjc5v8NsAQafD9HxsuyA@mail.gmail.com>
+From: Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>
+Content-Language: en-US
+In-Reply-To: <CAFEAcA-P4OySVHDziG59Ln7CuqLFArHjc5v8NsAQafD9HxsuyA@mail.gmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+X-Proofpoint-ORIG-GUID: cDSD-nswJ68QqU7tCsgV97YEuSqzUpk6
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNjA4MDExNSBTYWx0ZWRfX5dVSeSS5Xc5S
+ iAox1XG7nprWxNqp3djp+IA4sjl/X/JGOnbmir2THyYtKC2e9+zV79svFGCcfm3WS7GV1V/bZ4P
+ xXP7sHhNTFN6OZWzEv4yigXf5lILzAdI8NBlk4ZjWE5YjghYV3VbEyGWVM38PGHgsrIeYnGSLw+
+ WYM3T6LDrnjVqrO8o40tYBxfaLU69iUPvwNNSI1nwlLL7cpTDRGCY8jSzag/CSVRBUvA4PecSro
+ 4fEVGHFJHAWD7+9OudktE9Yd5EkfMM3i3Xm6l8A6nO/Mz//Hv3eZWk4poImmkuRDAGZ8/eMZngx
+ EJyOkIun62cWcGPtmZFkVvqKUObnPqo0wLNpcZL3q2Dx11EknJsBGSlGeCe1M2ZaK/L43tj5PL4
+ JiXpa2LAHfwz7vRnneLNsaLxnzLJQ4OOe1yXKR0TQVkYlI+PER75OXLu8xGMmZu6dCniyotWsMJ
+ 1JX637qRxLQONK3rD/w==
+X-Authority-Analysis: v=2.4 cv=XKAAjwhE c=1 sm=1 tr=0 ts=6a26b27f cx=c_pps
+ a=EVbN6Ke/fEF3bsl7X48z0g==:117 a=gdiugJE53z4H+vvYeRBHqw==:17
+ a=IkcTkHD0fZMA:10 a=FelO9ux0wxsA:10 a=s4-Qcg_JpJYA:10 a=sWKEhP36mHoA:10
+ a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=yx91gb_oNiZeI1HMLzn7:22
+ a=HwFc7jivAAAA:8 a=EUspDBNiAAAA:8 a=PnJWYD0x070Nr_Fov_EA:9 a=3ZKOabzyN94A:10
+ a=QEXdDO2ut3YA:10 a=a_PwQJl-kcHnX1M80qC6:22 a=kr7TZk85JJIQSqC0cl8G:22
+X-Proofpoint-GUID: cDSD-nswJ68QqU7tCsgV97YEuSqzUpk6
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.125,FMLib:17.12.100.49
+ definitions=2026-06-08_03,2026-06-05_02,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ impostorscore=0 phishscore=0 lowpriorityscore=0 bulkscore=0 adultscore=0
+ suspectscore=0 malwarescore=0 spamscore=0 clxscore=1015 priorityscore=1501
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.22.0-2605210000 definitions=main-2606080115
+Received-SPF: pass client-ip=205.220.180.131;
+ envelope-from=daniel.barboza@oss.qualcomm.com; helo=mx0b-0031df01.pphosted.com
+X-Spam_score_int: -27
+X-Spam_score: -2.8
 X-Spam_bar: --
-X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.445,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001, SPF_HELO_NONE=0.001,
- SPF_NONE=0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -170,510 +153,137 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 
-On 6/4/2026 8:18 PM, Peter Xu wrote:
-> External email: Use caution opening links or attachments
->
->
-> On Thu, Jun 04, 2026 at 06:29:01PM +0300, Avihai Horon wrote:
->> On 6/4/2026 12:04 AM, Peter Xu wrote:
->>> External email: Use caution opening links or attachments
->>>
->>>
->>> On Wed, Jun 03, 2026 at 04:05:49PM -0400, Peter Xu wrote:
->>>> On Tue, Jun 02, 2026 at 12:26:10PM +0300, Avihai Horon wrote:
->>>>> Before switchover, the source needs one last exact pending query so
->>>>> modules can flush dirty state. This is currently done ad hoc in modules
->>>>> handlers. For example, RAM syncs its dirty bitmap in its save_complete
->>>>> handler.
->>>>>
->>>>> This should be a general concept relevant for any module, so extract it
->>>>> to migration core instead by running a final save_query_pending before
->>>>> switchover.
->>>>>
->>>>> The final query requires special handling by modules (e.g., it's called
->>>>> with BQL locked, during VM stop), so extend save_query_pending
->>>>> SaveVMHandlers callback and qemu_savevm_query_pending() with a "final"
->>>>> flag so migration modules can tell the last pending query during
->>>>> switchover from periodic iteration queries.
->>>>>
->>>>> Not all modules need the final query; skip it for those who don't need.
->>>>>
->>>>> Signed-off-by: Avihai Horon <avihaih@nvidia.com>
->>>>> ---
->>>>>    include/migration/register.h   | 41 ++++++++++++++++++----------------
->>>>>    migration/savevm.h             |  3 ++-
->>>>>    hw/s390x/s390-stattrib.c       |  9 ++++++--
->>>>>    hw/vfio/migration.c            |  6 ++++-
->>>>>    migration/block-dirty-bitmap.c |  6 ++++-
->>>>>    migration/migration.c          |  7 ++++--
->>>>>    migration/ram.c                | 37 ++++++++++++++++++------------
->>>>>    migration/savevm.c             | 27 +++++++++++++++++-----
->>>>>    migration/trace-events         |  2 +-
->>>>>    9 files changed, 91 insertions(+), 47 deletions(-)
->>>>>
->>>>> diff --git a/include/migration/register.h b/include/migration/register.h
->>>>> index 5e5e0ee432..6f632123f1 100644
->>>>> --- a/include/migration/register.h
->>>>> +++ b/include/migration/register.h
->>>>> @@ -171,6 +171,28 @@ typedef struct SaveVMHandlers {
->>>>>         */
->>>>>        bool (*is_active_iterate)(void *opaque);
->>>>>
->>>>> +    /**
->>>>> +     * @save_query_pending
->>>>> +     *
->>>>> +     * This estimates the remaining data to transfer on the source side.
->>>>> +     *
->>>>> +     * When @exact is true, a module must report accurate results.  When
->>>>> +     * @exact is false, a module may report estimates.
->>>>> +     *
->>>>> +     * It's highly recommended that modules implement a faster version of
->>>>> +     * the query path (for example, by proper caching on the counters) if
->>>>> +     * an accurate query will be time-consuming.
->>>>> +     *
->>>>> +     * @opaque: data pointer passed to register_savevm_live()
->>>>> +     * @pending: pointer to a MigPendingData struct
->>>>> +     * @exact: set to true for an accurate (slow) query
->>>>> +     * @final: set to true for the final query during switchover. When final is
->>>>> +     * true, the query is called with BQL locked. Otherwise, it's called with
->>>>> +     * BQL unlocked.
->>>>> +     */
->>>>> +    void (*save_query_pending)(void *opaque, MigPendingData *pending,
->>>>> +                               bool exact, bool final);
->>>>> +
->>>>>        /* This runs outside the BQL in the migration case, and
->>>>>         * within the lock in the savevm case.  The callback had better only
->>>>>         * use data that is local to the migration thread or protected
->>>>> @@ -210,25 +232,6 @@ typedef struct SaveVMHandlers {
->>>>>         */
->>>>>        bool (*save_postcopy_prepare)(QEMUFile *f, void *opaque, Error **errp);
->>>>>
->>>>> -    /**
->>>>> -     * @save_query_pending
->>>>> -     *
->>>>> -     * This estimates the remaining data to transfer on the source side.
->>>>> -     *
->>>>> -     * When @exact is true, a module must report accurate results.  When
->>>>> -     * @exact is false, a module may report estimates.
->>>>> -     *
->>>>> -     * It's highly recommended that modules implement a faster version of
->>>>> -     * the query path (for example, by proper caching on the counters) if
->>>>> -     * an accurate query will be time-consuming.
->>>>> -     *
->>>>> -     * @opaque: data pointer passed to register_savevm_live()
->>>>> -     * @pending: pointer to a MigPendingData struct
->>>>> -     * @exact: set to true for an accurate (slow) query
->>>>> -     */
->>>>> -    void (*save_query_pending)(void *opaque, MigPendingData *pending,
->>>>> -                               bool exact);
->>>>> -
->>>>>        /**
->>>>>         * @load_state
->>>>>         *
->>>>> diff --git a/migration/savevm.h b/migration/savevm.h
->>>>> index 96fdf96d4e..10b3d78a5f 100644
->>>>> --- a/migration/savevm.h
->>>>> +++ b/migration/savevm.h
->>>>> @@ -45,7 +45,8 @@ int qemu_savevm_state_iterate(QEMUFile *f, bool postcopy);
->>>>>    void qemu_savevm_state_cleanup(void);
->>>>>    void qemu_savevm_state_complete_postcopy(QEMUFile *f);
->>>>>    int qemu_savevm_state_complete_precopy(MigrationState *s);
->>>>> -void qemu_savevm_query_pending(MigPendingData *pending, bool exact);
->>>>> +void qemu_savevm_query_pending_iter(MigPendingData *pending, bool exact);
->>>>> +void qemu_savevm_query_pending_final(MigPendingData *pending);
->>>>>    int qemu_savevm_state_complete_precopy_iterable(QEMUFile *f, bool in_postcopy);
->>>>>    bool qemu_savevm_state_postcopy_prepare(QEMUFile *f, Error **errp);
->>>>>    void qemu_savevm_state_end(QEMUFile *f);
->>>>> diff --git a/hw/s390x/s390-stattrib.c b/hw/s390x/s390-stattrib.c
->>>>> index c334714b31..aed0c6844d 100644
->>>>> --- a/hw/s390x/s390-stattrib.c
->>>>> +++ b/hw/s390x/s390-stattrib.c
->>>>> @@ -190,12 +190,17 @@ static int cmma_save_setup(QEMUFile *f, void *opaque, Error **errp)
->>>>>    }
->>>>>
->>>>>    static void cmma_state_pending(void *opaque, MigPendingData *pending,
->>>>> -                               bool exact)
->>>>> +                               bool exact, bool final)
->>>>>    {
->>>>>        S390StAttribState *sas = S390_STATTRIB(opaque);
->>>>>        S390StAttribClass *sac = S390_STATTRIB_GET_CLASS(sas);
->>>>> -    long long res = sac->get_dirtycount(sas);
->>>>> +    long long res;
->>>>>
->>>>> +    if (final) {
->>>>> +        return;
->>>>> +    }
->>>>> +
->>>>> +    res = sac->get_dirtycount(sas);
->>>>>        if (res >= 0) {
->>>>>            pending->precopy_bytes += res;
->>>>>        }
->>>>> diff --git a/hw/vfio/migration.c b/hw/vfio/migration.c
->>>>> index fb12b9717f..95072d6664 100644
->>>>> --- a/hw/vfio/migration.c
->>>>> +++ b/hw/vfio/migration.c
->>>>> @@ -622,12 +622,16 @@ static void vfio_state_pending_sync(VFIODevice *vbasedev)
->>>>>    }
->>>>>
->>>>>    static void vfio_state_pending(void *opaque, MigPendingData *pending,
->>>>> -                               bool exact)
->>>>> +                               bool exact, bool final)
->>>>>    {
->>>>>        VFIODevice *vbasedev = opaque;
->>>>>        VFIOMigration *migration = vbasedev->migration;
->>>>>        uint64_t precopy_size, stopcopy_size;
->>>>>
->>>>> +    if (final) {
->>>>> +        return;
->>>>> +    }
->>>>> +
->>>>>        if (exact) {
->>>>>            vfio_state_pending_sync(vbasedev);
->>>>>        }
->>>>> diff --git a/migration/block-dirty-bitmap.c b/migration/block-dirty-bitmap.c
->>>>> index 7ef3759e53..66ed91de03 100644
->>>>> --- a/migration/block-dirty-bitmap.c
->>>>> +++ b/migration/block-dirty-bitmap.c
->>>>> @@ -767,12 +767,16 @@ static int dirty_bitmap_save_complete(QEMUFile *f, void *opaque)
->>>>>    }
->>>>>
->>>>>    static void dirty_bitmap_state_pending(void *opaque, MigPendingData *data,
->>>>> -                                       bool exact)
->>>>> +                                       bool exact, bool final)
->>>>>    {
->>>>>        DBMSaveState *s = &((DBMState *)opaque)->save;
->>>>>        SaveBitmapState *dbms;
->>>>>        uint64_t pending = 0;
->>>>>
->>>>> +    if (final) {
->>>>> +        return;
->>>>> +    }
->>>>> +
->>>>>        bql_lock();
->>>>>
->>>>>        QSIMPLEQ_FOREACH(dbms, &s->dbms_list, entry) {
->>>>> diff --git a/migration/migration.c b/migration/migration.c
->>>>> index 7488a94206..df8ed3a9fd 100644
->>>>> --- a/migration/migration.c
->>>>> +++ b/migration/migration.c
->>>>> @@ -2787,12 +2787,15 @@ static bool migration_switchover_prepare(MigrationState *s)
->>>>>    static bool migration_switchover_start(MigrationState *s, Error **errp)
->>>>>    {
->>>>>        ERRP_GUARD();
->>>>> +    MigPendingData pending = {};
->>>>>
->>>>>        if (!migration_switchover_prepare(s)) {
->>>>>            error_setg(errp, "Switchover is interrupted");
->>>>>            return false;
->>>>>        }
->>>>>
->>>>> +    qemu_savevm_query_pending_final(&pending);
->>>> Not needed for postcopy, we can move it to migration_completion_precopy().
->> While currently not needed (because VFIO isn't compatible with postcopy),
->> AFAIU, generally it is needed because we have here a switchover similar to
->> precopy case -- the switchover decision and VM stop at stopcopy_start() are
->> not atomic, so theoretically a device may want to request an ACK in this
->> gap.
+
+On 6/8/2026 7:08 AM, Peter Maydell wrote:
+> On Mon, 8 Jun 2026 at 10:47, Daniel Henrique Barboza
+> <daniel.barboza@oss.qualcomm.com> wrote:
 >>
->> But that's all theoretical and not necessary currently.
-> True, then it makes more sense to keep it here.  You can enhance the
-> comment below with VFIO implications for the future DMA faults when it's
-> ready.
->
->>> A better idea is.. we can drop migration_bitmap_sync() in
->>> ram_postcopy_send_discard_bitmap() too, then we can keep this one.
->>>
->>> But then, let's properly document this, both for precopy and postcopy
->>> cases.  One example:
->>>
->>>       /*
->>>        * The final query to the whole system on dirty data to make sure we
->>>        * collect the latest status of the VM.  For precopy, source QEMU will
->>>        * dump all the dirty data during switchover.  For postcopy, this will
->>>        * properly update all the dirty bitmaps to finally generate the
->>>        * correct discard bitmaps; see ram_postcopy_send_discard_bitmap().
->>>        */
->> The last dirty sync is done a bit differently for postcopy case:
->>    postcopy_start()
->>      ram_postcopy_send_discard_bitmap()
->>        migration_bitmap_sync(rs, false);
 >>
->> 1. The last_stage parameter of migration_bitmap_sync() is false (shouldn't
->> it be true here as well?).
-> Yes, I think it should.
->
-> The only thing uses that last_stage so far should be ARM64 where some dirty
-> data can be generated to bitmap not ring (only matters when dirty ring
-> enabled).  In that case AFAIU we need that too for a postcopy switchover.
-
-Ack.
-
->
->> 2. It calls migration_bitmap_sync and not migration_bitmap_sync_precopy,
->> i.e., without precopy_notify calls.
-> This is another thing I feel like got overlooked in the free page hint
-> feature.  The only notifiers registered is that balloon device, logically I
-> think we need these notifiers in postcopy too to make sure we properly stop
-> the free page hints seeing BEFORE_BITMAP_SYNC, then don't start it
-> (vm_running=false) in AFTER_BITMAP_SYNC:
->
-> virtio_balloon_free_page_hint_notify():
->
->      case PRECOPY_NOTIFY_BEFORE_BITMAP_SYNC:
->          virtio_balloon_free_page_stop(dev);
->          break;
->      case PRECOPY_NOTIFY_AFTER_BITMAP_SYNC:
->          if (vdev->vm_running) {
->              virtio_balloon_free_page_start(dev);
->              break;
->          }
-
-Actually, looking more closely in the code, I see that it's not used if 
-postcopy is enabled [1].
-So calling the precopy notifiers in postcopy switchover is basically a 
-no-op.
-
-Then it seems fine to call migration_bitmap_sync_precopy from postcopy 
-switchover flow.
-
-[1] See commit fd51e54fa102 ("virtio-balloon: don't start free page 
-hinting if postcopy is possible")
-
->> If we need to keep the above differences for postcopy then I guess we'd need
->> to introduce different final query flow for it. It may be cumbersome.
->> Do you think we should do this extra effort to support it, or, as you
->> suggested, we can drop the final switchover ack check for postcopy for now?
-> IMHO you can add a small patch for replacing the postcopy sync first with
-> migration_bitmap_sync_precopy(last_stage=true), copy Gavin and Wei in that
-> patch only:
->
-> Gavin Shan <gshan@redhat.com>
-> Wei Wang <wei.w.wang@intel.com>
->
-> Then this patch can be on top.
-
-Sure, will do.
-
->
-> I'll loop both of them in while replying, to see if we can collect early
-> comments.
->
->>>> I'd also appreciate a short comment explaining why the final query is
->>>> needed.
->>>>
->>>>> +
->>>>>        /* Inactivate disks except in COLO */
->>>>>        if (!migrate_colo()) {
->>>>>            /*
->>>>> @@ -3285,7 +3288,7 @@ static void migration_iteration_go_next(MigPendingData *pending)
->>>>>        /*
->>>>>         * Do a slow sync first before boosting the iteration count.
->>>>>         */
->>>>> -    qemu_savevm_query_pending(pending, true);
->>>>> +    qemu_savevm_query_pending_iter(pending, true);
->>>>>
->>>>>        /*
->>>>>         * Update the dirty information for the whole system for this
->>>>> @@ -3336,7 +3339,7 @@ static MigIterateState migration_iteration_run(MigrationState *s)
->>>>>        bool complete_ready;
->>>>>
->>>>>        /* Fast path - get the estimated amount of pending data */
->>>>> -    qemu_savevm_query_pending(&pending, false);
->>>>> +    qemu_savevm_query_pending_iter(&pending, false);
->>>>>
->>>>>        if (in_postcopy) {
->>>>>            /*
->>>>> diff --git a/migration/ram.c b/migration/ram.c
->>>>> index fc38ffbf8a..4e3f442593 100644
->>>>> --- a/migration/ram.c
->>>>> +++ b/migration/ram.c
->>>>> @@ -3376,10 +3376,6 @@ static int ram_save_complete(QEMUFile *f, void *opaque)
->>>>>        rs->last_stage = !migration_in_colo_state();
->>>>>
->>>>>        WITH_RCU_READ_LOCK_GUARD() {
->>>>> -        if (!migration_in_postcopy()) {
->>>>> -            migration_bitmap_sync_precopy(true);
->>>>> -        }
->>>>> -
->>>>>            ret = rdma_registration_start(f, RAM_CONTROL_FINISH);
->>>>>            if (ret < 0) {
->>>>>                qemu_file_set_error(f, ret);
->>>>> @@ -3442,25 +3438,38 @@ static int ram_save_complete(QEMUFile *f, void *opaque)
->>>>>        return qemu_fflush(f);
->>>>>    }
->>>>>
->>>>> -static void ram_state_pending(void *opaque, MigPendingData *pending,
->>>>> -                              bool exact)
->>>>> +static void ram_state_pending_sync(bool exact, bool final)
->>>>>    {
->>>>> -    RAMState **temp = opaque;
->>>>> -    RAMState *rs = *temp;
->>>>> -    uint64_t remaining_size;
->>>>> -
->>>>>        /*
->>>>>         * Sync is not needed either with: (1) a fast query, or (2) after
->>>>>         * postcopy has started (no new dirty will generate anymore).
->>>>>         */
->>>>> -    if (exact && !migration_in_postcopy()) {
->>>>> +    if (!exact || migration_in_postcopy()) {
->>>>> +        return;
->>>>> +    }
->>>>> +
->>>>> +    /* Final pending query is called with BQL locked */
->>>>> +    if (!final) {
->>>>>            bql_lock();
->>>>> -        WITH_RCU_READ_LOCK_GUARD() {
->>>>> -            migration_bitmap_sync_precopy(false);
->>>>> -        }
->>>>> +    }
->>>>> +
->>>>> +    WITH_RCU_READ_LOCK_GUARD() {
->>>>> +        migration_bitmap_sync_precopy(final);
->>>>> +    }
->>>>> +
->>>>> +    if (!final) {
->>>>>            bql_unlock();
->>>>>        }
->>>>> +}
->>>>> +
->>>>> +static void ram_state_pending(void *opaque, MigPendingData *pending,
->>>>> +                              bool exact, bool final)
->>>>> +{
->>>>> +    RAMState **temp = opaque;
->>>>> +    RAMState *rs = *temp;
->>>>> +    uint64_t remaining_size;
->>>>>
->>>>> +    ram_state_pending_sync(exact, final);
->>>>>        remaining_size = rs->migration_dirty_pages * TARGET_PAGE_SIZE;
->>>>>
->>>>>        if (migrate_postcopy_ram()) {
->>>>> diff --git a/migration/savevm.c b/migration/savevm.c
->>>>> index 23adaf9dd9..22cb6a15c6 100644
->>>>> --- a/migration/savevm.c
->>>>> +++ b/migration/savevm.c
->>>>> @@ -1795,7 +1795,8 @@ int qemu_savevm_state_complete_precopy(MigrationState *s)
->>>>>        return qemu_fflush(f);
->>>>>    }
->>>>>
->>>>> -void qemu_savevm_query_pending(MigPendingData *pending, bool exact)
->>>>> +static void qemu_savevm_query_pending(MigPendingData *pending, bool exact,
->>>>> +                                      bool final)
->>>>>    {
->>>>>        SaveStateEntry *se;
->>>>>
->>>>> @@ -1808,7 +1809,7 @@ void qemu_savevm_query_pending(MigPendingData *pending, bool exact)
->>>>>            if (!qemu_savevm_state_active(se)) {
->>>>>                continue;
->>>>>            }
->>>>> -        se->ops->save_query_pending(se->opaque, pending, exact);
->>>>> +        se->ops->save_query_pending(se->opaque, pending, exact, final);
->>>>>        }
->>>>>
->>>>>        pending->total_bytes = pending->precopy_bytes +
->>>>> @@ -1817,16 +1818,30 @@ void qemu_savevm_query_pending(MigPendingData *pending, bool exact)
->>>>>        /*
->>>>>         * Update system remaining dirty bytes whenever QEMU queries.  It will
->>>>>         * make the value to be not as accurate, but should still be pretty
->>>>> -     * close to reality when this got invoked frequently while iterating.
->>>>> +     * close to reality when this got invoked frequently while iterating.  Don't
->>>>> +     * update in final query as some modules may skip it if not needed.
->>>> IMHO this specialty isn't needed.  We can just make all modules report and
->>>> making sure we don't deadlock on bql.  AFAIU, CMMA never takes BQL, while
->>>> dirty-bitmap should conditionally take it now.
->> I didn't want to add unnecessary work for the critical downtime path, i.e.,
->> unnecessary exact queries.
-> If there's any real slow sync, then likely it needs to happen.. because of
-> the same reason why RAM do the sync, to make sure the data is latest in
-> QEMU migration core (say, bitmaps).  If it's a fast sync then it doesn't
-> matter.
-
-Yes, but what I meant is that currently cmma and block dirty bitmaps 
-don't issue a final slow sync during switchover, only RAM does.
-
-But it does seem harmless to add this final sync for them.
-
->
-> query_pending() so far should achieve both functions: (1) synchronize dirty
-> info with whatever remote modules like KVM, enforced when exact=true, (2)
-> report.
->
-> VFIO is just special because VFIO dirty info accuracy never rely on
-> query_pending or whatever it collects, so it's purely a way to estimate for
-> size of dirty, hence (2) only.
->
->> I am not familiar with the other devices, but if you think it's negligible
->> for them then we can drop this specialty (in VFIO I'd still like to skip the
->> stopcopy size query; using the cached value is good enough IMHO).
-> Yes VFIO is fine but it'll be good to comment.  Let's try to drop them, I
-> want to avoid below "if (!final)" if possible.
-
-Alright, will change that.
-
-Thanks.
-
->
-> Thanks,
->
->> Thanks.
 >>
->>>>>         */
->>>>> -    mig_stats.dirty_bytes_total = pending->total_bytes;
->>>>> -
->>>>> -    trace_qemu_savevm_query_pending(exact, pending->precopy_bytes,
->>>>> +    if (!final) {
->>>>> +        mig_stats.dirty_bytes_total = pending->total_bytes;
->>>>> +    }
-> [a]
->
->>>> Then we remove this too which is counter-intuitive..
+>> On 6/8/2026 6:09 AM, Peter Maydell wrote:
+>>> On Tue, 2 Jun 2026 at 20:09, Daniel Henrique Barboza
+>>> <daniel.barboza@oss.qualcomm.com> wrote:
 >>>>
->>>> The rest looks all reasonable.
+>>>> Hello,
 >>>>
->>>> Thanks,
+>>>> I decided to propose this change after working in a RISC-V gitlab bug
+>>>> [1].  In my proposed fix [2] I had to make assumptions about
+>>>> address_space_ld* error return, which is always MEMTX_DECODE_ERROR, to
+>>>> identify that in that particular scenario this is a permission error.
+>>>> In RISC-V (and from what I can see other archs like x86) an ACCESS_ERROR
+>>>> due to mem page permission issues will fire a different fault than other
+>>>> errors like page not found.
 >>>>
->>>>> +    trace_qemu_savevm_query_pending(exact, final, pending->precopy_bytes,
->>>>>                                        pending->stopcopy_bytes,
->>>>>                                        pending->postcopy_bytes,
->>>>>                                        pending->total_bytes);
->>>>>    }
->>>>>
->>>>> +void qemu_savevm_query_pending_iter(MigPendingData *pending, bool exact)
->>>>> +{
->>>>> +    qemu_savevm_query_pending(pending, exact, false);
->>>>> +}
->>>>> +
->>>>> +void qemu_savevm_query_pending_final(MigPendingData *pending)
->>>>> +{
->>>>> +    g_assert(bql_locked());
->>>>> +
->>>>> +    qemu_savevm_query_pending(pending, true, true);
->>>>> +}
->>>>> +
->>>>>    void qemu_savevm_state_cleanup(void)
->>>>>    {
->>>>>        SaveStateEntry *se;
->>>>> diff --git a/migration/trace-events b/migration/trace-events
->>>>> index de99d976ab..1c9212d3e2 100644
->>>>> --- a/migration/trace-events
->>>>> +++ b/migration/trace-events
->>>>> @@ -7,7 +7,7 @@ qemu_loadvm_state_section_partend(uint32_t section_id) "%u"
->>>>>    qemu_loadvm_state_post_main(int ret) "%d"
->>>>>    qemu_loadvm_state_section_startfull(uint32_t section_id, const char *idstr, uint32_t instance_id, uint32_t version_id) "%u(%s) %u %u"
->>>>>    qemu_savevm_send_packaged(void) ""
->>>>> -qemu_savevm_query_pending(bool exact, uint64_t precopy, uint64_t stopcopy, uint64_t postcopy, uint64_t total) "exact=%d, precopy=%"PRIu64", stopcopy=%"PRIu64", postcopy=%"PRIu64", total=%"PRIu64
->>>>> +qemu_savevm_query_pending(bool exact, bool final, uint64_t precopy, uint64_t stopcopy, uint64_t postcopy, uint64_t total) "exact=%d, final=%d, precopy=%"PRIu64", stopcopy=%"PRIu64", postcopy=%"PRIu64", total=%"PRIu64
->>>>>    loadvm_state_switchover_ack_needed(unsigned int switchover_ack_pending_num) "Switchover ack pending num=%u"
->>>>>    loadvm_state_setup(void) ""
->>>>>    loadvm_state_cleanup(void) ""
->>>>> --
->>>>> 2.40.1
->>>>>
->>>> --
->>>> Peter Xu
->>> --
->>> Peter Xu
+>>>> The core logic is on memory_region_access_valid(), which already makes a
+>>>> distinction between error reasons when we look at the qemu_log_mask()
+>>>> errors, e.g. this is being characterized as a 'rejected':
+>>>>
+>>>> if (mr->ops->valid.accepts
+>>>>           && !mr->ops->valid.accepts(mr->opaque, addr, size, is_write, attrs)) {
+>>>>           qemu_log_mask(LOG_INVALID_MEM, "Invalid %s at addr 0x%" HWADDR_PRIX
+>>>>                         ", size %u, region '%s', reason: rejected\n",
+>>>>                         is_write ? "write" : "read",
+>>>>                         addr, size, memory_region_name(mr));
 >>>
-> --
-> Peter Xu
->
+>>> valid.accepts returning false isn't a  permissions error, though.
+>>> It's for cases like "you tried to do a byte access to this device
+>>> that requires 32-bit accesses only". Permissions errors are entirely
+>>> in the MMU, and don't appear in the MemTx APIs, which are about
+>>> transactions in the fabric outside the MMU. The CPU emulation
+>>> catches permissions errors early before it even does the
+>>> address_space_ld* call.
+>>>
+>>> What is the equivalent of this in the underlying hardware?
+>>> The current error codes are intended to roughly match the AXI
+>>> bus SLVERR and DECERR error responses (which are "we were
+>>> able to pass this memory transaction to a device, but it
+>>> rejected it" and "we weren't able to find the device for
+>>> this memory transaction at all").
+>>>
+>>> The valid.accepts callback failing is always "we know the memory
+>>> region but it doesn't like this", which is true for all
+>>> memory_region_access_valid() failures, so maybe the problem
+>>> here is that we return DECODE_ERROR for that case when
+>>> we should be returning ACCESS_ERROR ?
+>>
+>> This is the end result I'm going for.  In patch 1 I changed memory_region_access_valid()
+>> to return ACCESS_ERROR when the valid.accepts fails, keeping all the
+>> other exit code as DECODE_ERROR.  The ACCESS_ERROR will then be propagated
+>> as an error in target/riscv/cpu_helper.c, get_physical_address():
+>>
+>>           if (riscv_cpu_mxl(env) == MXL_RV32) {
+>>               pte = be ? address_space_ldl_be(cs->as, pte_addr, attrs, &res)
+>>                        : address_space_ldl_le(cs->as, pte_addr, attrs, &res);
+>>           } else {
+>>               pte = be ? address_space_ldq_be(cs->as, pte_addr, attrs, &res)
+>>                        : address_space_ldq_le(cs->as, pte_addr, attrs, &res);
+>>           }
+>>
+>>           if (res != MEMTX_OK) {
+>>               return TRANSLATE_FAIL;
+>>           }
+>>
+>> In this particular case 'res' will fail as ACCESS_ERROR if the pte does not have
+>> the right permissions and we can throw the right exception.
+> 
+> But what's the "right exception" here? This is, I think, the code
+> for "the MMU is loading the page table entry from external memory".
+> I'm not clear what this has to do with permissions. Generally
+> "permissions" is a concept that applies to virtual addresses, i.e.
+> "does the page table for this vaddr say we can access it?", and there's
+> no concept of permissions for physical addresses. The exception to
+> that is that you might have something like Arm's "granule protection
+> table" which does apply permissions to physical accesses, so an
+> in-guest-memory data structure defines what physical addresses can be
+> accessed in particular ways. In QEMU we model this as effectively
+> another level of page tables, so again the check happens before we
+> do the address_space_ld* call. For risc-v a quick look at the architecture
+> spec suggests that the Smepmp extension is a bit like this (but
+> handled via registers rather than guest-memory data structures).
+> 
+> The other kind of check that might need to be done in the MMU before
+> the load call is "is this physaddr out of range?" (e.g. CPU has
+> 48 bit physaddrs and the L1 PTE specifies a physaddr for the L2 PTE
+> that is outside the 48 bit range).
+> 
+> Do you have a reference in the architecture spec for the check that
+> you're trying to implement here ?
+
+Sure.  It's on the RISC-V Privileged ISA, chapter 12, section
+12.3.2 "Virtual Address Translation Process":
+
+https://docs.riscv.org/reference/isa/_attachments/riscv-privileged.pdf
+
+9. If pte.a=0, or if the original memory access is a store and pte.d=0:
+- If the Svade extension is implemented, stop and raise a page-fault
+   exception corresponding to the original access type
+- If a store to the PTE at address a+va.vpn[i]×PTESIZE would violate a
+   PMA or PMP check, raise an access-fault exception corresponding to
+   the original access type.
+
+At this moment we're throwing a page-fault exception for both cases.  We
+want the second case to throw an access-fault exception.  PMA stands for
+"Physical Memory Access", i.e. the read/write/execute bits of the PTE.
+PMP is an optional physical-memory protection scheme.  Both are related
+to a PTE permission to be read/write/executed, regardless of other
+failures like address misaligned/wrong operation size.
+
+
+Thanks,
+Daniel
+
+> 
+> I would be a bit surprised if the riscv architecture mandated different
+> MMU errors for "page table entry load failed because the physaddr is not
+> pointing at any device" vs "page table entry load failed because the
+> physaddr points at a device and the device rejected it", because it's
+> really up to the bus specification how clearly it distinguishes these
+> various kinds of external abort (or even whether it distinguishes them
+> synchronously vs asynchronously, given the existence of caches), and
+> usually architecture specifications try not to impose too much on
+> the implementation.
+> 
+> thanks
+> -- PMM
+
 
