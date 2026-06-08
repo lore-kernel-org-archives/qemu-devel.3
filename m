@@ -4,149 +4,145 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B897ACD6E79
-	for <qemu-devel@archiver.kernel.org>; Mon,  8 Jun 2026 17:14:24 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id EA45ACD6E79
+	for <qemu-devel@archiver.kernel.org>; Mon,  8 Jun 2026 17:23:04 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wWdY3-0006Pv-Q5; Mon, 08 Jun 2026 13:14:03 -0400
+	id 1wWdfe-00080F-La; Mon, 08 Jun 2026 13:21:54 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1wWdXz-0006PL-9H
- for qemu-devel@nongnu.org; Mon, 08 Jun 2026 13:13:59 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <pierrick.bouvier@oss.qualcomm.com>)
+ id 1wWdfd-0007zz-LF
+ for qemu-devel@nongnu.org; Mon, 08 Jun 2026 13:21:53 -0400
+Received: from mx0a-0031df01.pphosted.com ([205.220.168.131])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1wWdXx-0005mQ-Te
- for qemu-devel@nongnu.org; Mon, 08 Jun 2026 13:13:59 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1780938836;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=AMS8o+uMadScrn1SbV0ZyHdgbWx2TsoNtYYJAaveu9s=;
- b=VAjmeRHwMuV8AEPKpyOQd4Lq8KrXbv+CoZn6Gw3AIxnEvYXxNBJvGr+06jRcfwLHWqzlDR
- yJGX/yO4VX9LsOacM4VsntZ35NisHzup4xH9yYeDxk+C34CcV4yssCpFJae34ZsFk22dzm
- pB/mWgkHdj9Heu2j6M81arvLk1csJgk=
-Received: from mail-wm1-f69.google.com (mail-wm1-f69.google.com
- [209.85.128.69]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-678-nUO-UwB7MIWC72vza-mD9g-1; Mon, 08 Jun 2026 13:13:54 -0400
-X-MC-Unique: nUO-UwB7MIWC72vza-mD9g-1
-X-Mimecast-MFC-AGG-ID: nUO-UwB7MIWC72vza-mD9g_1780938834
-Received: by mail-wm1-f69.google.com with SMTP id
- 5b1f17b1804b1-490a786f987so52563555e9.3
- for <qemu-devel@nongnu.org>; Mon, 08 Jun 2026 10:13:54 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <pierrick.bouvier@oss.qualcomm.com>)
+ id 1wWdfb-0007xt-Mv
+ for qemu-devel@nongnu.org; Mon, 08 Jun 2026 13:21:53 -0400
+Received: from pps.filterd (m0279867.ppops.net [127.0.0.1])
+ by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
+ 658FFVMT3588414
+ for <qemu-devel@nongnu.org>; Mon, 8 Jun 2026 17:21:49 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+ cc:content-transfer-encoding:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+ byEZMiyALoWwHrwjcxCgVD5dkZ4TK+9EwlRd5vilHZk=; b=e3/9+CMUmLISOKXe
+ 1u0fBWHRsjjYKluozrAbYiuiJ7HIJXjZW96GpEk4kj0TJC3Zg9vB9Pc3jIWGyxSP
+ aoDkLiIVZsp9uokEnTJidP2zMLsM8geUwLAVNQMqz3aJWo8gT4NWktxkmql7a3aL
+ er8hz9yFWUJ81sAO7LIzMX/0oQpiq5Sat4j0eDq0t249wNlphsojWt4VN9q3HSvh
+ PNyAJzv49r0AUQiYC8ch7OArqJdcQS2xNFyiLuk+E4JIqLPcWnwdqOf3ITc6fyxM
+ 43/UMX83/zfCx3+gT08gFDHQy/BSxmnOQt1v8vaexgenx9h7UW59rJqyOuzNgBic
+ YfOqmQ==
+Received: from mail-dl1-f72.google.com (mail-dl1-f72.google.com [74.125.82.72])
+ by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4enun421r4-1
+ (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
+ for <qemu-devel@nongnu.org>; Mon, 08 Jun 2026 17:21:48 +0000 (GMT)
+Received: by mail-dl1-f72.google.com with SMTP id
+ a92af1059eb24-137e49e896aso2845953c88.0
+ for <qemu-devel@nongnu.org>; Mon, 08 Jun 2026 10:21:48 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1780938833; x=1781543633; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:autocrypt:from:cc
- :content-language:references:to:subject:user-agent:mime-version:date
- :message-id:from:to:cc:subject:date:message-id:reply-to;
- bh=AMS8o+uMadScrn1SbV0ZyHdgbWx2TsoNtYYJAaveu9s=;
- b=c6krhrV52vYaGGbxS0a9yp3YmjRto1+R2Q7TlyfWgX7aLFLrGdIdN8pSChDs4mLBIo
- ERvOQt2r+IG1Y447h0T1xyW2bWtS1CDXI699Pz61iFUa2hTYkg5KgxmMsLt8xfOQyXZc
- Ee5c085AQ4SUR4xDluYmlwsnVcJa3Ykyskydg98QYkuUGBC44G7JfA4C5n2Zb6LFzXtB
- r9LCHeeE4W2NAtY7mKR1cadnh/YigUNgk4yIRP2QLtIkC1YqVo2uLiN/1FpHpn56KGZY
- afJXzdjo19pBPeGufISQqNPRmR2pv38EgJihH7pbSrfUGekLi39cIszxmjjmUlwskM53
- sOPA==
+ d=oss.qualcomm.com; s=google; t=1780939308; x=1781544108; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:content-language:from
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=byEZMiyALoWwHrwjcxCgVD5dkZ4TK+9EwlRd5vilHZk=;
+ b=UwxlIC4Rx5gsCTqcZFF2gZ1+falBVdwEaAXq5Do++uj/mVS6ioMLlICvcCa0cawHYy
+ OyPZ73Dcq10WIXTpa6XNkl4E2s7x2u2Lo4VU2m/hWpiaiaIZ4WgXLI0LO/3b9jbvoK0C
+ 5ZQoAU5pWGrfBoIciy+d1L4Ld2MYQRFY1nxeOrIHe/2JbcbBjogVthybjfcEPkWtposO
+ 9d0YC0BrtiYNSxWUmmRSk4c+y/Hl9UipLpULVTlx5Zx0nPzs7iBSUzVlP4YkQJo3rexw
+ 1D9yG2dLmR8h3kcZb2aCrZHcHrm/Hi0xhghj8tIDQrGe2jcWG+icTjTnW2Zwz5kLSMnI
+ E1iw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1780938833; x=1781543633;
- h=content-transfer-encoding:in-reply-to:autocrypt:from:cc
- :content-language:references:to:subject:user-agent:mime-version:date
- :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=AMS8o+uMadScrn1SbV0ZyHdgbWx2TsoNtYYJAaveu9s=;
- b=S0M9/HOrsCuELFcWip7n5xvLXoxCoPjy+q6F0Km0NnAiR3vJfhA/xVIHIUXockfXEH
- 6x2EDzo4c4W4NPt3fFO2U3OAbhMQ4yd+LrwuWoSPez2ygi7CMkcNoZi6dttQbHFvKCZH
- bE0gXw8WyacgiH+ZqJ9/AUGE1ZkZ6ISn6Et9n5IN+It9Bi7kvdZ0w4LnvgQiw377lotp
- kjOnx1brmFDoRnTnhiozia9W7Mqe3iwvdbW1xoDzgdV61h1t21xe92oMySCDYixeDJZO
- 5VuPcOokTLJKvdcZtq3ZF3RId6vAjd0cl7BPffJp0Blx/9kKboozQVOBjU8OsnDi+zM+
- hV0Q==
-X-Gm-Message-State: AOJu0YwIWDs+p48LwGnp4xcVTyyCWdLs1MfY0eQ2VfuZYhucLawMpXE+
- RqQGPuIVeK0+ZkQDxkfwBZMCe/mMsa9DNurLzUtV0wjncAcFBIWYq3SDS9x5hn02Ic/KZ2MjuxN
- p6HnMo2Whkv8cYXSk8h409TzPrxIn5rXvqM+d6IXEItIof072x7XSmdZJ
-X-Gm-Gg: Acq92OH9HcG1IuDfKKjK0LqoQU7bkYBtv6Of1b0TXg/spavM/U47uxn+K2mRooTFo5Q
- BxFIUnBEpGIJradcP/zkhmxwYWbNdivxbGIOcjp9i9OTgdqwEnjQJUYXoyITo3sOLuIOUGnp2l9
- qE13uTciie22UdK4g316PveSmdsNJtaZSjkHtenGOiTtO/U40eU90Dg8lEJxrpHrJNqNmS4Wdcj
- jgx3WIHah6NvvawHiIOtiWuXLCmULiQNI8xUDNSzknV5hKegba4o0nPeEqVE0YFi6pq9ziTLxbg
- iULycVb0zxIAH9V4eM9RuW+Lbv8lwBNuEPDtp56xn+BCdSofLdwpXHa29I+gLyG/qrCEkwL97zv
- 4L1ofoLXe90DAuAjV+0P67Lj1ZFNdwg==
-X-Received: by 2002:a05:600c:458a:b0:48f:e518:d110 with SMTP id
- 5b1f17b1804b1-490c2614beemr242978285e9.32.1780938833474; 
- Mon, 08 Jun 2026 10:13:53 -0700 (PDT)
-X-Received: by 2002:a05:600c:458a:b0:48f:e518:d110 with SMTP id
- 5b1f17b1804b1-490c2614beemr242978045e9.32.1780938833089; 
- Mon, 08 Jun 2026 10:13:53 -0700 (PDT)
-Received: from [192.168.0.9] ([47.64.115.148])
- by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-490c2cbb4cbsm222324455e9.0.2026.06.08.10.13.52
+ d=1e100.net; s=20251104; t=1780939308; x=1781544108;
+ h=content-transfer-encoding:in-reply-to:content-language:from
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=byEZMiyALoWwHrwjcxCgVD5dkZ4TK+9EwlRd5vilHZk=;
+ b=tYEALX2pObZxwTY4IbEl65gjVIy90n9+3ZcpweeFNYOC8XtQn+fztpTiUKTdoT8nQq
+ A3ooGlNlaOHQLd36rkKwanCPC4Nl1ouqza64vDC6C9n5S1bw+UwIhgq3latcMkz+Uaq9
+ iOYn1LoJnhzWm4Dp9zDNOeFT6j6TG11g5OZSRnH+0aKvwM8goOyXgGihhFxZ69Ojtp71
+ 99K/Mkjo8uUoBcxQpevxbPVcbl4ZNIrN6LtZOzipcDyB5AfW7x67Iihmh5XmwQR/YbFS
+ FOwI89zxMmKUm5lG2KB8ZiKvNJOX6JwA9VPh1IVjOzjpoqn5ANo0eGMs57EUmUFcWQ+Q
+ NvnA==
+X-Forwarded-Encrypted: i=1;
+ AFNElJ+R5uPkioTFStenGBi2cGG+bnWypuraswP2H9G70P1xXJG0Pyi4y9/RisygENi6hwWrfNBE88VSr49R@nongnu.org
+X-Gm-Message-State: AOJu0YxiOwRmLvMmQ0m2RmwyzY8DiybAgXfSVoK/9yYcI046FvvFdBVD
+ VuSxcFh1exrP4hlrk7YCcaPJUJNNEJHxCJvmW/+A6tc51gKKLLhuoKD8CQZstkoCx9RbjOEKFSh
+ vEHo0I0LrICklDcTMk1wW4+qwpTY3xJwkBtU/2mzbXfdWw5j/rsqTSUPPMQ==
+X-Gm-Gg: Acq92OGduKewi0mgEvZLLK9fg0kgzs+IAAnaL9oF4j4kPYJ1t35p7MpDiA15XVRtK12
+ C6JfOqjO/CHa1SyZz8vZYF1jaPy9d8utKkrVRUtQTSxEK7aPD2AWZINNmkCGFGnK3jKb6juW48D
+ PLTnPPPG9YB//b7qCB+edXSkLq6kEHM1u5LGJPCWNukGIlMftmdIdYEL7bNZf/2D8/BdLvd2HDk
+ BdBzUp+9/Q3c5Q/P6Vfj36IXrSTTShyWJe6Q7BRLDbuc1yWFNw8yVc1LTKTrkqkmadXAnC51Bha
+ m9fy+mADyCf5lHlxopXmyHguvpP3Sy9BGU2iFExVAJrzlXa/y65XgjXcCW6jqU7lB4R/Gdc8Xj7
+ Z48m1bIyrV2QEh2BlQFO29HDgeVMqc2U7rcWkkoTmlXJcIMJD8hIbRrGu/S1AI4fC89++dZbpRC
+ V4aIWbWHgtUlQg6bY782NA+eBb
+X-Received: by 2002:a05:7022:486:b0:138:5f0:49dc with SMTP id
+ a92af1059eb24-13807d98bf9mr7319958c88.20.1780939307914; 
+ Mon, 08 Jun 2026 10:21:47 -0700 (PDT)
+X-Received: by 2002:a05:7022:486:b0:138:5f0:49dc with SMTP id
+ a92af1059eb24-13807d98bf9mr7319935c88.20.1780939307378; 
+ Mon, 08 Jun 2026 10:21:47 -0700 (PDT)
+Received: from [192.168.1.170] (216-71-219-44.dyn.novuscom.net.
+ [216.71.219.44]) by smtp.gmail.com with ESMTPSA id
+ a92af1059eb24-137f5550bcdsm13243108c88.14.2026.06.08.10.21.46
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 08 Jun 2026 10:13:52 -0700 (PDT)
-Message-ID: <f2516211-6fbc-4714-b674-4276464f94ff@redhat.com>
-Date: Mon, 8 Jun 2026 19:13:51 +0200
+ Mon, 08 Jun 2026 10:21:46 -0700 (PDT)
+Message-ID: <104c42b7-26b9-47de-8ccf-33af3092dd51@oss.qualcomm.com>
+Date: Mon, 8 Jun 2026 10:21:45 -0700
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: artifact download for qtest
-To: Ani Sinha <anisinha@redhat.com>, Fabiano Rosas <farosas@suse.de>
-References: <CAK3XEhMNqHbkL2P6Xg3_hJ8WAxhPQgurjvuZg-vXUDZ5=x-RRA@mail.gmail.com>
+Subject: Re: [PATCH 1/5] net/af-xdp.c: maybe-uninitialized warning with gcov
+ build on ubuntu2404
+To: Ilya Maximets <i.maximets@ovn.org>, qemu-devel@nongnu.org
+Cc: Stefan Hajnoczi <stefanha@redhat.com>, Jason Wang <jasowang@redhat.com>,
+ =?UTF-8?Q?Daniel_P_=2E_Berrang=C3=A9?= <berrange@redhat.com>,
+ =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ Thomas Huth <thuth@redhat.com>, =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?=
+ <philmd@linaro.org>
+References: <20260604215148.3769627-1-pierrick.bouvier@oss.qualcomm.com>
+ <20260604215148.3769627-2-pierrick.bouvier@oss.qualcomm.com>
+ <8cd17fc3-7f75-4da0-a46d-fcd9fb8fba39@ovn.org>
+From: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
 Content-Language: en-US
-Cc: qemu-devel <qemu-devel@nongnu.org>,
- "Daniel P. Berrange" <berrange@redhat.com>
-From: Thomas Huth <thuth@redhat.com>
-Autocrypt: addr=thuth@redhat.com; keydata=
- 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
-In-Reply-To: <CAK3XEhMNqHbkL2P6Xg3_hJ8WAxhPQgurjvuZg-vXUDZ5=x-RRA@mail.gmail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=thuth@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -24
-X-Spam_score: -2.5
+In-Reply-To: <8cd17fc3-7f75-4da0-a46d-fcd9fb8fba39@ovn.org>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNjA4MDE2NCBTYWx0ZWRfX5iia4Ww7xadB
+ WEIhqBUYQwI2ZKQSFhXpPmb9itWw15Ij+qZWUdB5QD7zt4lf+n46fAn1PmW49nuBfS6XO/Wtex2
+ zpvFzma5FBeWfxH6kErQBJfaNcc48qQxJwOUwAwukf9HUN38X1hznvkd5eq+2eRO2Bs2v9DuPHG
+ b8Y/VQWIic/ouhWeDI6zI5SrBl/6JCGfH+Jo8xJRyphXtHm8bGKkcOA7igVBBD2QVm9tox2Q72P
+ Mq+HxMLY2nUPpFh53kndjankdYmHdEKLWZJBf7RGgJj9tHizH4fveIAPkPi/nGj/w35Rv3Grj0J
+ sT4uojGzlYJkvF2ojU7gGqs5c0QFJzwoA6gsyYFe0XIg+eK1LOgEwlzGDeYh8Wg+7uytAqn+SrM
+ i/FfoWg23hY8D6kqoVuNY/fDW4NgX4MkgTvUOe4vL344up9dgyNo3VottKpzDwuCxEt5D24a3PF
+ +JfehHmwge8LO2F5b6g==
+X-Proofpoint-ORIG-GUID: loP5s_as8bbFBry9ff2EcHSX8lGelDMq
+X-Authority-Analysis: v=2.4 cv=ZY4t8MVA c=1 sm=1 tr=0 ts=6a26fa2c cx=c_pps
+ a=bS7HVuBVfinNPG3f6cIo3Q==:117 a=iLqgmErQAxjCjdq5jj1Aqg==:17
+ a=IkcTkHD0fZMA:10 a=FelO9ux0wxsA:10 a=s4-Qcg_JpJYA:10
+ a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=eoimf2acIAo5FJnRuUoq:22
+ a=EUspDBNiAAAA:8 a=XJ5qDKgWmhKLeYt-95sA:9 a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
+ a=vBUdepa8ALXHeOFLBtFW:22
+X-Proofpoint-GUID: loP5s_as8bbFBry9ff2EcHSX8lGelDMq
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.125,FMLib:17.12.100.49
+ definitions=2026-06-08_04,2026-06-05_02,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ suspectscore=0 phishscore=0 adultscore=0 priorityscore=1501 impostorscore=0
+ lowpriorityscore=0 spamscore=0 malwarescore=0 bulkscore=0 clxscore=1015
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.22.0-2605210000 definitions=main-2606080164
+Received-SPF: pass client-ip=205.220.168.131;
+ envelope-from=pierrick.bouvier@oss.qualcomm.com;
+ helo=mx0a-0031df01.pphosted.com
+X-Spam_score_int: -27
+X-Spam_score: -2.8
 X-Spam_bar: --
-X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.445,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -162,31 +158,102 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 30/05/2026 16.56, Ani Sinha wrote:
-> Hi,
+On 6/5/2026 12:09 PM, Ilya Maximets wrote:
+> On 6/4/26 11:51 PM, Pierrick Bouvier wrote:
+>> Seems like a false positive, easily fix by explicitly initializing
+>> variable to NULL.
+>>
+>> In function ‘af_xdp_read_poll’,
+>>     inlined from ‘net_init_af_xdp’ at ../net/af-xdp.c:546:5:
+>> ../net/af-xdp.c:78:10: error: ‘s’ may be used uninitialized [-Werror=maybe-uninitialized]
+>>    78 |     if (s->read_poll != enable) {
+>>       |         ~^~~~~~~~~~~
+>> ../net/af-xdp.c: In function ‘net_init_af_xdp’:
+>> ../net/af-xdp.c:461:17: note: ‘s’ was declared here
+>>   461 |     AFXDPState *s;
+>>       |
+>>
 > 
-> I am trying to write a qtest for which I need an IGVM file. I have the
-> file, about 54 MiB in size.
+> I guess the 'nc0 && !inhibit' check is what making things confusing.
+> I'd suggest to remove the nc0 check and move the upcast out of the
+> if statement.  Then maybe collapse the two if statements into one.
+> 
+> It seems cleaner than just silencing the warning.
+> 
+> Will that solve the problem?
+>
 
-54 MiB is quite big, I agree that we likely don't want to check that into 
-the main repository, especially if it is for a test only...
-(BTW, what's its compressed size?)
+Such patch?
 
-> Instead of committing this IGVM binary
-> file with the test, I wanted to check if I can put it somewhere, say
-> in a gitlab repo and then make the test download it. This would be
-> similar to asset downloads for functional tests. No this test cannot
-> be a python functional test.  I am wondering if anyone has faced this
-> situation before and what the best way to solve this problem is.
+```
+diff --git a/net/af-xdp.c b/net/af-xdp.c
+index 72d75748c6d..b25c7e69d7e 100644
+--- a/net/af-xdp.c
++++ b/net/af-xdp.c
+@@ -458,7 +458,7 @@ int net_init_af_xdp(const Netdev *netdev,
+     g_autofree int *sock_fds = NULL;
+     int i, queues;
+     Error *err = NULL;
+-    AFXDPState *s = NULL;
++    AFXDPState *s;
+     bool inhibit;
 
-I'm not maintaining the qtests anymore, but I assume that there is no 
-interest in duplicating all the asset downloading logic there.
+     ifindex = if_nametoindex(opts->ifname);
+@@ -533,8 +533,9 @@ int net_init_af_xdp(const Netdev *netdev,
+         }
+     }
 
-What's the exact reason why you cannot do it as a functional test instead? 
-You could maybe also start the qemu binary there with "-accel qtest -qtest 
-..." to fake a qtest environment - a little bit cumbersome, but certainly 
-doable, I think.
+-    if (nc0 && !inhibit) {
+-        s = DO_UPCAST(AFXDPState, nc, nc0);
++    s = DO_UPCAST(AFXDPState, nc, nc0);
++
++    if (!inhibit) {
+         if (bpf_xdp_query_id(s->ifindex, s->xdp_flags, &prog_id) ||
+!prog_id) {
+             error_setg_errno(&err, errno,
+                              "no XDP program loaded on '%s', ifindex: %d",
+```
 
-  Thomas
+It solves the issue indeed, and we are guaranteed it's correct since
+queues >= 1. Another thing that work also, and is more concise is:
 
+```
+@@ -533,6 +533,8 @@ int net_init_af_xdp(const Netdev *netdev,
+         }
+     }
+
++    g_assert(queues > 0);
++
+     if (nc0 && !inhibit) {
+         s = DO_UPCAST(AFXDPState, nc, nc0);
+         if (bpf_xdp_query_id(s->ifindex, s->xdp_flags, &prog_id) ||
+!prog_id) {
+```
+
+Which version do you prefer?
+
+> Best regards, Ilya Maximets.
+> 
+>> Signed-off-by: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
+>> ---
+>>  net/af-xdp.c | 2 +-
+>>  1 file changed, 1 insertion(+), 1 deletion(-)
+>>
+>> diff --git a/net/af-xdp.c b/net/af-xdp.c
+>> index 1ffd6363a8c..72d75748c6d 100644
+>> --- a/net/af-xdp.c
+>> +++ b/net/af-xdp.c
+>> @@ -458,7 +458,7 @@ int net_init_af_xdp(const Netdev *netdev,
+>>      g_autofree int *sock_fds = NULL;
+>>      int i, queues;
+>>      Error *err = NULL;
+>> -    AFXDPState *s;
+>> +    AFXDPState *s = NULL;
+>>      bool inhibit;
+>>  
+>>      ifindex = if_nametoindex(opts->ifname);
+> 
+
+Regards,
+Pierrick
 
