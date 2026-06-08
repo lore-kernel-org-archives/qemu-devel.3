@@ -4,56 +4,57 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0696FCD8C8E
-	for <qemu-devel@archiver.kernel.org>; Mon,  8 Jun 2026 07:17:43 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9F52ECD8C9D
+	for <qemu-devel@archiver.kernel.org>; Mon,  8 Jun 2026 07:17:49 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wWUEg-0007bS-Er; Mon, 08 Jun 2026 03:17:26 -0400
+	id 1wWUET-0007YQ-Iy; Mon, 08 Jun 2026 03:17:13 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1wWUEe-0007b0-5o
- for qemu-devel@nongnu.org; Mon, 08 Jun 2026 03:17:24 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ id 1wWUEQ-0007Wv-CO
+ for qemu-devel@nongnu.org; Mon, 08 Jun 2026 03:17:11 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1wWUEc-0008Li-Pc
- for qemu-devel@nongnu.org; Mon, 08 Jun 2026 03:17:23 -0400
+ id 1wWUEO-0008Ik-Fl
+ for qemu-devel@nongnu.org; Mon, 08 Jun 2026 03:17:10 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1780903042;
+ s=mimecast20190719; t=1780903027;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=42pjXpnS3GuIn7s6Zh3seKv48mIlHa86AQ8iMF/OKzA=;
- b=ZG/ml+HJmmUYipUVrx/wWzniJAata4kKu206d0HJ8I5k3+y8AM7/6aBLbbTeQrjS6ihEv7
- wnAbC4UaTQyvylo+wzPaJn97uT81OeSmlFyNRvwCGVNVQMGbf9E1Ez29EqhLdvLRRAadR4
- 0FwYltpTcAlFsJErryh4+bDmxRdzY+A=
-Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ bh=2NOLZxbPovEmcF485gB8YHfSGPUMzoplq1iZoovF3nM=;
+ b=Kx6QwbVOpTQLxx6lq449tmDnYo4f08XXiAa96ubRYjFEegt+Kbfcc2hLW2Hls1uh0LfTij
+ POZJmrQUu75cPLkAjpl/c3F6BQtgnRkPvfUvEsYSZZrTC+t5MSaPvd0B2li0h7BBHjp5LT
+ biSESY8HeUhwNAEPPT66fVibx/dcV9Q=
+Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-288-Hz9-mQ0kPg2ccKnwxA02Cg-1; Mon,
- 08 Jun 2026 03:17:18 -0400
-X-MC-Unique: Hz9-mQ0kPg2ccKnwxA02Cg-1
-X-Mimecast-MFC-AGG-ID: Hz9-mQ0kPg2ccKnwxA02Cg_1780903037
-Received: from mx-prod-int-10.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-10.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.95])
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-645-u90KAHsiOvSiQ8MY_3cy8A-1; Mon,
+ 08 Jun 2026 03:17:03 -0400
+X-MC-Unique: u90KAHsiOvSiQ8MY_3cy8A-1
+X-Mimecast-MFC-AGG-ID: u90KAHsiOvSiQ8MY_3cy8A_1780903022
+Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 7C4B219560A1; Mon,  8 Jun 2026 07:17:17 +0000 (UTC)
+ by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 9946F18005A6; Mon,  8 Jun 2026 07:16:49 +0000 (UTC)
 Received: from localhost (unknown [10.44.22.16])
- by mx-prod-int-10.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 167D21624; Mon,  8 Jun 2026 07:17:15 +0000 (UTC)
+ by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id E898B19560A2; Mon,  8 Jun 2026 07:16:47 +0000 (UTC)
 From: =?utf-8?q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>
-Date: Mon, 08 Jun 2026 11:16:25 +0400
-Subject: [PATCH v2 07/33] ui/dbus: remove mouse handler on dispose
+Date: Mon, 08 Jun 2026 11:16:20 +0400
+Subject: [PATCH v2 02/33] build-sys: build with -fno-omit-frame-pointer
+ with ASAN
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
-Message-Id: <20260608-b4-ui-v2-7-9ea6355ea08f@redhat.com>
+Message-Id: <20260608-b4-ui-v2-2-9ea6355ea08f@redhat.com>
 References: <20260608-b4-ui-v2-0-9ea6355ea08f@redhat.com>
 In-Reply-To: <20260608-b4-ui-v2-0-9ea6355ea08f@redhat.com>
 To: qemu-devel@nongnu.org
@@ -67,35 +68,34 @@ Cc: Paolo Bonzini <pbonzini@redhat.com>,
  Peter Maydell <peter.maydell@linaro.org>, 
  Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>, 
  =?utf-8?q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>
-X-Developer-Signature: v=1; a=openpgp-sha256; l=719;
+X-Developer-Signature: v=1; a=openpgp-sha256; l=780;
  i=marcandre.lureau@redhat.com; h=from:subject:message-id;
- bh=Zlbop9zuN6D0e4GxEJlAcaL73bwcfVgoQ3P7DEp7fMs=;
- b=owEBbQKS/ZANAwAKAdro4Ql1lpzlAcsmYgBqJmxIl0k7OJW2wftFX4HM3DVfNXftb7kh5RfHQ
- z0LPZliz4aJAjMEAAEKAB0WIQSHqb2TP4fGBtJ29i3a6OEJdZac5QUCaiZsSAAKCRDa6OEJdZac
- 5YW/D/9c/3BUi5xDZvezUbEtrwKztoYJ3uikyESq6CJvC9cUt05ccQJOyV28tWJVlG3DdwYJ+1g
- XxwKJunAYq84OuMGsf3ndIZ5T1said5AYnbNywJmuW5iFh9wbCAkbCBMfqtHsF8eMnMiZQUQM0W
- Ss5DsMvH4WcK2m5x8XKafTvQn31W8yfTcxsh01SXcGjmYJr1MxDw86G9edLV/9LcsNy+Q1tzRG3
- EUGN08NtwJkRimfxeyL3ETgSWd21jKy10PZ0BT26bjgIqdTCXYZVE19HusfLTZrZzF7OpPO1sTc
- NADWOlUp7ecC5ANC7Lw2IqKmiAUF27VvcZO/n7b9OOkhVfmfDAFEmoFc6vkpt5r81cQ8wM1p7si
- N5tTlSgCy2V6+xv68JZ/39XwDFmUfFenFFusaion3T/rGDyVCaF3lgrnsh3to5De5LqCRDxIq8X
- H9Jw6d1NxjLGCi8TvXqKf2ZNoCzxzyZ8hRmEtWhUSxiEIYEikBcf1Y5PhfMc1ocUBFiiWnjRLpj
- 9kUhVSl5X7ES1jGp+NlJrrIvh1LD4LkGb2rTyR8sqBhh9/vQxqbwoilShdP/vuMTITlPPmXau5n
- haSBy9vzHjbOSB7quCF+0fbusDscHDjUutcBeZfC+ULGPrTS08VN+2j7LXyrsw8JqQ8doG2xysE
- KkGIXUO2IYl1/eg==
+ bh=gmRieSy7YIQF3DAHwWXNcE5raE5XS8w6VE6DgvhJdaI=;
+ b=owEBbQKS/ZANAwAKAdro4Ql1lpzlAcsmYgBqJmxHqF8JnReriRintlpyIy+szK4T8G5ei/6zn
+ tRenmifyAuJAjMEAAEKAB0WIQSHqb2TP4fGBtJ29i3a6OEJdZac5QUCaiZsRwAKCRDa6OEJdZac
+ 5UG8EACkjoFzhyW5J8KrF6YsexN25RXyfgVlgdUcXvLvweqfEEEaq4UKc/8UNNch+lWEp+hIQXS
+ ZOsOAUDYLS4tknBZJqAjn8+qqxyKcbrftUzNA4oqqlBmymQg1XDyO3JDCKaivIAG7USCavvqvfd
+ 5oSFY42cxrGUrK3y2br+Ll4Uqu2hHN6dJfTMMWMSMhA0kOhWKQfJJZvg4dDlDqbkhBOvsshh+YW
+ G7WvDqHvgVWrgQB0L8shI2x/fcQWOjTrxGxXyCpyM8a2pQdDtInhMB9/8GMKMNLmxxkFk/EOV7b
+ tCOMTWgzVX6Mfqx6NW2/+KQQpQ3vYcTp1eGbHdbWlR3jlBBpPCYQUvIGcogMfv/IsyzCnedTyqw
+ fVnuQZqnPcQdc/QxSSXgYJkU4wutnIl02JoBZU26s8i8B+SUTnzmDR5mLy9zxsn6Mxbbe6GNghs
+ XWM2ZohD51MHYJRMbudTWUH8HRIZ+XoKlIDZkAUHCctO1rtt++aMudPLL6/J9yTLUWQDnB54/l0
+ PLlf6KOIjFDmXFAfjrwg0CcEj5kZb81tN59PxqBNRmEwyx1c8G3gZnTxzU48dc9np0RMWsYtZJr
+ PPMWJ6jYUOgXtXr+1NbiFQaN4eUmDfFPITu49egspuPBJBZPwAiNuUV54gRXBa+P41o5JRAn6yr
+ rlXRi+aiiPCtyWg==
 X-Developer-Key: i=marcandre.lureau@redhat.com; a=openpgp;
  fpr=87A9BD933F87C606D276F62DDAE8E10975969CE5
-X-Scanned-By: MIMEDefang 3.6 on 10.30.177.95
-Received-SPF: pass client-ip=170.10.133.124;
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.12
+Received-SPF: pass client-ip=170.10.129.124;
  envelope-from=marcandre.lureau@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: 8
-X-Spam_score: 0.8
-X-Spam_bar: /
-X-Spam_report: (0.8 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.445,
+X-Spam_score_int: -24
+X-Spam_score: -2.5
+X-Spam_bar: --
+X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.445,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_SBL_CSS=3.335, SPF_HELO_PASS=-0.001,
- SPF_PASS=-0.001 autolearn=no autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -111,24 +111,27 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Fixes: 142ca628a7 ("ui: add a D-Bus display backend")
+On fc44, LSan fails to suppress leak:qemu_irq_intercept_in, because
+the backtrace isn't deep enough.
+
 Signed-off-by: Marc-André Lureau <marcandre.lureau@redhat.com>
 ---
- ui/dbus-console.c | 1 +
- 1 file changed, 1 insertion(+)
+ meson.build | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/ui/dbus-console.c b/ui/dbus-console.c
-index 21eceb24362..0813a08f85e 100644
---- a/ui/dbus-console.c
-+++ b/ui/dbus-console.c
-@@ -151,6 +151,7 @@ dbus_display_console_dispose(GObject *object)
-     DBusDisplayConsole *ddc = DBUS_DISPLAY_CONSOLE(object);
- 
-     qemu_console_unregister_listener(&ddc->dcl);
-+    qemu_remove_mouse_mode_change_notifier(&ddc->mouse_mode_notifier);
-     g_clear_object(&ddc->iface_touch);
-     g_clear_object(&ddc->iface_mouse);
-     g_clear_object(&ddc->iface_kbd);
+diff --git a/meson.build b/meson.build
+index 19e123423b5..3711483b95e 100644
+--- a/meson.build
++++ b/meson.build
+@@ -545,6 +545,8 @@ if get_option('asan')
+   if cc.has_argument('-fsanitize=address')
+     qemu_cflags = ['-fsanitize=address'] + qemu_cflags
+     qemu_ldflags = ['-fsanitize=address'] + qemu_ldflags
++    # Ensure complete stack traces for LSan suppressions to match correctly.
++    qemu_cflags += ['-fno-omit-frame-pointer']
+   else
+     error('Your compiler does not support -fsanitize=address')
+   endif
 
 -- 
 2.54.0
