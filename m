@@ -4,119 +4,131 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 990C5CD8CA4
-	for <qemu-devel@archiver.kernel.org>; Mon,  8 Jun 2026 20:43:49 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id DB22DCD8CA7
+	for <qemu-devel@archiver.kernel.org>; Mon,  8 Jun 2026 21:07:52 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wWgok-0006DN-Gd; Mon, 08 Jun 2026 16:43:30 -0400
+	id 1wWhBZ-0007ZL-Hq; Mon, 08 Jun 2026 17:07:05 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <Michael.Roth@amd.com>)
- id 1wWgoi-0006DA-KQ
- for qemu-devel@nongnu.org; Mon, 08 Jun 2026 16:43:28 -0400
-Received: from mail-westcentralusazlp170100005.outbound.protection.outlook.com
- ([2a01:111:f403:c112::5] helo=CY7PR03CU001.outbound.protection.outlook.com)
+ (Exim 4.90_1) (envelope-from <daniel.barboza@oss.qualcomm.com>)
+ id 1wWhBV-0007Yx-QM
+ for qemu-devel@nongnu.org; Mon, 08 Jun 2026 17:07:02 -0400
+Received: from mx0b-0031df01.pphosted.com ([205.220.180.131])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <Michael.Roth@amd.com>)
- id 1wWgog-0003Fz-34
- for qemu-devel@nongnu.org; Mon, 08 Jun 2026 16:43:28 -0400
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=qOjnA6tk4dBPVp4++ca/sjTnkMixv0+1q9IkBXI16zbnE/Cvh4yzeVtcvqIU4bEZcLCeBTgLWIl4mPFWZxS6Fdv+EmxgLne7DpFDhvC0bkR5lerZiq0xviQju8Y96UL09T31/HueDH7c6DDT+XQ0kG5KG+NoJu+hcEkPe1E95pGn1nRZ7tpyCGQrTloVE74Dw1Cs7EYiXjzdkumawB6fpP8woGEG+QyckRwRHk2/v0iZoeR/oPPsH6ubqI8uwO62i9T0uaJ3iOPmyGcSnFtnJjWC5JW0F5Mede/cDNo1E3zf5+VB84vDv6Yhx6/k46vIo2+rWRLPQajiCaiWH+Q5mw==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=caK17talZkMPn+wrd0iN633O6KBDgREuK95iwT+acX8=;
- b=fPmqziggZzRauZ0GWv2O1qAotUpRzL2mV2BdFAwMie/kzKVoFU3LMszS48+atjZ8s/FAou6ObfD0rueUXbxrT9fPGDz16fqmsXdOemtt0nxOAYB3a1nxWSS1r4AeM12PGmhzEyHNnvzU2FYZWMSSoo86Xrqp59sET3VTXaA3UWZt69ueKPHTH5YQdSGKD3+D47lRTP27auqHjWmlCMXZe2r3nHgo8EQpNto2qDVy8CO+pQ+1i90644tLWf0MKSeiwKsaFqqciQHjXvSXFqu8d5/4U5c14+tk7nHS0M2ZBceR1elUCoj6v3A+RBfiLd5uLOYoetVenzJX4alj6gaOsA==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass (sender ip is
- 165.204.84.17) smtp.rcpttodomain=redhat.com smtp.mailfrom=amd.com; dmarc=pass
- (p=quarantine sp=quarantine pct=100) action=none header.from=amd.com;
- dkim=none (message not signed); arc=none (0)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=amd.com; s=selector1; 
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=caK17talZkMPn+wrd0iN633O6KBDgREuK95iwT+acX8=;
- b=TfTXbeyMcRd2w0ppEtFLykkYhCktDzQ7z8HB+BhNTm9SDfzg6LTNSkV0KRhVofcATjMWTRfA1SqPjcg19CEqexDaQO39skVBVQogz8guUslmBsm3OxIfMBrPC6AXbYedb8ww/NjpGLab/gO2sOKep/9Wog0r+BbHYjy0sqLVxl8=
-Received: from SA1P222CA0192.NAMP222.PROD.OUTLOOK.COM (2603:10b6:806:3c4::13)
- by SN7PR12MB7836.namprd12.prod.outlook.com (2603:10b6:806:34e::9)
- with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.92.13; Mon, 8 Jun 2026
- 20:43:16 +0000
-Received: from SA2PEPF00003AE9.namprd02.prod.outlook.com
- (2603:10b6:806:3c4:cafe::99) by SA1P222CA0192.outlook.office365.com
- (2603:10b6:806:3c4::13) with Microsoft SMTP Server (version=TLS1_3,
- cipher=TLS_AES_256_GCM_SHA384) id 15.21.92.13 via Frontend Transport; Mon, 8
- Jun 2026 20:43:16 +0000
-X-MS-Exchange-Authentication-Results: spf=pass (sender IP is 165.204.84.17)
- smtp.mailfrom=amd.com; dkim=none (message not signed)
- header.d=none;dmarc=pass action=none header.from=amd.com;
-Received-SPF: Pass (protection.outlook.com: domain of amd.com designates
- 165.204.84.17 as permitted sender) receiver=protection.outlook.com;
- client-ip=165.204.84.17; helo=satlexmb07.amd.com; pr=C
-Received: from satlexmb07.amd.com (165.204.84.17) by
- SA2PEPF00003AE9.mail.protection.outlook.com (10.167.248.9) with Microsoft
- SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.21.113.7 via Frontend Transport; Mon, 8 Jun 2026 20:43:16 +0000
-Received: from localhost (10.180.168.240) by satlexmb07.amd.com
- (10.181.42.216) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.2562.41; Mon, 8 Jun
- 2026 15:43:16 -0500
-Date: Mon, 8 Jun 2026 15:42:40 -0500
-From: Michael Roth <michael.roth@amd.com>
-To: Markus Armbruster <armbru@redhat.com>
-CC: <qemu-devel@nongnu.org>, <kvm@vger.kernel.org>, <pbonzini@redhat.com>,
- <berrange@redhat.com>, <pankaj.gupta@amd.com>, <isaku.yamahata@intel.com>,
- <xiaoyao.li@intel.com>, <chao.p.peng@linux.intel.com>, <david@kernel.org>,
- <ashish.kalra@amd.com>, <ackerleytng@google.com>
-Subject: Re: [PATCH RFC 02/12] hostmem: Introduce dedicated memory backend
- for guest_memfd
-Message-ID: <ftjw4gdopj7lwhwyzxqqqq4fgnn6qvjec4lkxlgwl4mxx6di6a@hxtznrzho7ui>
-References: <20260528000416.8161-1-michael.roth@amd.com>
- <20260528000416.8161-3-michael.roth@amd.com>
- <871pep73o6.fsf@pond.sub.org>
- <ge6uyrbigeoym74thogtolbe3e3jgya7hsibzrrqum6nevusys@ixh7rwe7lzsx>
- <87v7btl9yx.fsf@pond.sub.org>
+ (Exim 4.90_1) (envelope-from <daniel.barboza@oss.qualcomm.com>)
+ id 1wWhBU-0006yC-1g
+ for qemu-devel@nongnu.org; Mon, 08 Jun 2026 17:07:01 -0400
+Received: from pps.filterd (m0279871.ppops.net [127.0.0.1])
+ by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
+ 658Ix7pf314986
+ for <qemu-devel@nongnu.org>; Mon, 8 Jun 2026 21:06:53 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+ cc:content-transfer-encoding:date:from:message-id:mime-version
+ :subject:to; s=qcppdkim1; bh=A8pFO5uKfkU+vxdf6kK+BSxIjx20O3kZkXx
+ 4dTPB1Ws=; b=Q2hkjvVp2DZ29suFnbPdw6EGUDsCX4VAwTfqzVoPfkM81RuMbiu
+ lVqA+8pwuMPNFHktbv1+wlAmhcZJxH3E1flx7h9U9HY+c/lMAFDbFobiaZsluPJq
+ c32FuUijksBbQr3zjjv/NWriOHT9CMo39+BN/UeVel6dS0Jv4wooVI9LYnyVPOMI
+ wa3IG+NHmCvOAAyoMrwKBHPjMUKvpg9SVxdMqUQneLzcH0AeIm6l5Cn1Dsym1hNq
+ vD0fTXFT5LJWU1s6pKKtJu4wZiGfAEtOMZsRpLTm1copqqu1oXrzm8Ox3qn1Q2WZ
+ hAG++u5X0Kvs21O+dNMezcyX+HG8Eg9jrLg==
+Received: from mail-dy1-f200.google.com (mail-dy1-f200.google.com
+ [74.125.82.200])
+ by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4entr0k7mu-1
+ (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
+ for <qemu-devel@nongnu.org>; Mon, 08 Jun 2026 21:06:53 +0000 (GMT)
+Received: by mail-dy1-f200.google.com with SMTP id
+ 5a478bee46e88-304ed777a96so3077684eec.1
+ for <qemu-devel@nongnu.org>; Mon, 08 Jun 2026 14:06:53 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=oss.qualcomm.com; s=google; t=1780952812; x=1781557612; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:from:to:cc:subject:date:message-id:reply-to;
+ bh=A8pFO5uKfkU+vxdf6kK+BSxIjx20O3kZkXx4dTPB1Ws=;
+ b=avNpkpeJPSqKMan6lOQUx1hm2vPPrY+tThldtpF93K7iFcLzfoW67DxBK2NS7VxYv2
+ WU6rCpYZCIl3g2yRYHwSOaqMhBle4E5HB8BSU2XfHPg+8rnPazXeMxyDC8Jqd7bvrTnM
+ yJUMUD+RU2YcILDW79sn4CKpoixPJGFnzE8NyxlVI3TvvlqL0xT7Y34eptHfMZR5oc22
+ W5Nxz597+s5cnoxpbgj2LnrmUwNy5GEMh3P0Ni2PhDfrVuyzRPl7KOTgx0KO9IhA5yZ9
+ DNyMlDQGaAbJ16QUK6ycq8yHrVLqqH9t+UzjoQGDUe2zWbqDd0Xr7e8kmqCXgF+EdCIH
+ ro+A==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1780952812; x=1781557612;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=A8pFO5uKfkU+vxdf6kK+BSxIjx20O3kZkXx4dTPB1Ws=;
+ b=SQOAWqYjjKHQxcWxcpe1dGlpLzCGF9FcC+9d0cJegyuk1Gy30VtNEfusjY9yTqVHNi
+ a5mr+06tfPeRZzyya8kNrJfVvexpHurFa/jFPgnGinWzGTHczYFicjR91Lq1swBeO29P
+ iKesqgeTGKCFIRA8IO23AB0K6FykCpZTDyKaoK2tmyd7wHB60JbCZI4rq5OFZfr3VKXL
+ ADlQbXmjMLxKQazIsCrNFBeS4KNOYtc50L/Y71yHbQAX36Iwsk30exWb5btUSrFEHgXi
+ wJ4k81RH4YhY2tJKBU7GXc3efNUfKDoB6QyrFbvxglnO8GA2LNk2hOYsYJnXyi98cSS8
+ 1eUw==
+X-Gm-Message-State: AOJu0YxxQQlpj5CdKyxBbRR2HMMcutpCYS6lcHOKjKidf2BgwaC9TEkN
+ rw8rGvs9eZ5kPWx5m5444FF6iSnVnKdB/bGmM+VltmdPGZeX2bOlEZNwNFCKYRY9sjEfVK81Y8h
+ IO/F92HVn1paaKSe70EsDjAlJJBRUNGQgS4YKBkZlTU9Ona3gVY2OwK1QVUcliUFHyQ==
+X-Gm-Gg: Acq92OGfEe8wenBs1u6eqQhJ6aICVGk8pOnqAuwLXeIEdjgE+Nw4Y1jZkLdCRSpi+RC
+ bGNAXQGnTTodq6yQF2xA3WrSKzZcrJA1RyGvq6hEJUffQ341fAUSh0APlSl8k7/6VJNtXSY9dd8
+ WViJOkPs8zi0Ou8Awwaqtc8dn7f5wHIYjXRqvsbEt3vHDOrVrnp/Evydibk6L1uYnsFGY4MYzW/
+ XwCG3r1ZYvuC5Vfz4Pc26E1OVZxp35PoPiWmMhzwnPsoGHLKH5J3GExlnTJIWKcYpA2PqWwUg8m
+ kkDq+CRyMx5UUDY9dSuOaJU05hdbwwkI8IVpqLwDx7BZoij6APOus/VeLc+Hekb7XfJcdBwpOCW
+ PF01qphjRQLf0agbLpzc97fPlZ7TezSrBCzyBfQRq3HewgaNKEjFc5r9earwWw36OFgitdA==
+X-Received: by 2002:a05:7022:113:b0:12c:9037:5126 with SMTP id
+ a92af1059eb24-13807d36f7bmr6837195c88.9.1780952812308; 
+ Mon, 08 Jun 2026 14:06:52 -0700 (PDT)
+X-Received: by 2002:a05:7022:113:b0:12c:9037:5126 with SMTP id
+ a92af1059eb24-13807d36f7bmr6837171c88.9.1780952811842; 
+ Mon, 08 Jun 2026 14:06:51 -0700 (PDT)
+Received: from QCOM-UWl2o8bcGT.qualcomm.com ([177.170.117.62])
+ by smtp.gmail.com with ESMTPSA id
+ a92af1059eb24-137f5539432sm15822414c88.9.2026.06.08.14.06.49
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Mon, 08 Jun 2026 14:06:51 -0700 (PDT)
+From: Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>
+To: qemu-devel@nongnu.org
+Cc: qemu-riscv@nongnu.org, alistair.francis@wdc.com, liwei1518@gmail.com,
+ zhiwei_liu@linux.alibaba.com, chao.liu.zevorn@gmail.com,
+ Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>,
+ Palmer Dabbelt <palmer@dabbelt.com>
+Subject: [PATCH] hw/riscv/virt.c: fix 'iommu-map' FDT entry
+Date: Mon,  8 Jun 2026 18:06:42 -0300
+Message-ID: <20260608210642.464131-1-daniel.barboza@oss.qualcomm.com>
+X-Mailer: git-send-email 2.43.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset="us-ascii"
-Content-Disposition: inline
-In-Reply-To: <87v7btl9yx.fsf@pond.sub.org>
-X-Originating-IP: [10.180.168.240]
-X-ClientProxiedBy: satlexmb07.amd.com (10.181.42.216) To satlexmb07.amd.com
- (10.181.42.216)
-X-EOPAttributedMessage: 0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: SA2PEPF00003AE9:EE_|SN7PR12MB7836:EE_
-X-MS-Office365-Filtering-Correlation-Id: 6ba1eed5-2930-4c8c-6d35-08dec59e916d
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam: BCL:0;
- ARA:13230040|36860700016|82310400026|1800799024|7416014|376014|13003099007|10063799003|18002099003|22082099003|11063799006|5023799004|3023799007|4143699003|56012099006;
-X-Microsoft-Antispam-Message-Info: Mv/Zf0AT2yHA6yWlHFwxI37ADs0Lk7daUWmCFBc7h4r7TwQR8HKMS4Ei05OT4BLOUa6OWalTRPRpeFwBMq+JWbprHve9+ZhUFsv4Li+GujFYChneJ/+DUTs+xNaOHfiZ9ay2UEr6EtHarBSy+R2JERA2P0/y0CvMh54MG1LI03g1a01owDVuSxLarVgtkrD1w2C5CCcOPG8pSeUH/HQ4NXURzLM+uc+2hsGyrQAkAvYRHQeTUWoYjmlKI0cPd4kwgOUxej3s6xAp/b+8qiAU9lkZJ1dKylesOIAVMjfaWc+QEjCuNZafe02lua5K7pAgErgA2JRVvpowvqVpczdbAo4CDePYM8QdWDVr8A9aAcxRFz/CH5hKrX2X1ZEB6rNupSjDeS0A/QM3h2KXEyXBwLObb8Xv0pPc8KCW6knjnIh43ksjVk83UR7TsWp2hzxyQtjWaejxxkovKB0avZdIwoDTCTKX2ZGIB34HbYiGpP+j9MrpNPaCUBh7VHd4FbxFljaDGSyXfxG3AsdGBdjOVDBkqO6gI7bCfYyRaopafGs6DndKXBzyyIKALRZzd+FqTQdJt6n1doW/yaFMjwCpKcYmmbstQOcP7QuKyknBSHoQOQR+qfU1TlOF9JXN/I+/z+GGPR9/35b44xGnN1P47iQg1ouU/QmwSFg291FFkiGGVkK/26BqZpcl17XFCsnwOz+sm2XPPb+GLS0Z9WEVuRuwjo5uziZ+LHCfIOZItSM=
-X-Forefront-Antispam-Report: CIP:165.204.84.17; CTRY:US; LANG:en; SCL:1; SRV:;
- IPV:NLI; SFV:NSPM; H:satlexmb07.amd.com; PTR:InfoDomainNonexistent; CAT:NONE;
- SFS:(13230040)(36860700016)(82310400026)(1800799024)(7416014)(376014)(13003099007)(10063799003)(18002099003)(22082099003)(11063799006)(5023799004)(3023799007)(4143699003)(56012099006);
- DIR:OUT; SFP:1101; 
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0: MOHOOtl9FCNA+9QGC+gLBKG7fJCWnbsPhe/6RlOUjTp9b/S7OoydsMaNuu/h8Q+XiUt22IijQAp/ciw/Mn3ZFyZriKaxqCuVVsAOlfnO1+rKEnhMB1p5znmFkcvG2T2cuuP4zGahYCi1pExWxYkPB7A56PxNCxj6OVodPsjO8de4gKsbCeuY4JStaX6wddVS6E+b2vW3VlWf56Yc6/UpaXsa0ZCqMhQqAw2bCkjehcMXQei6r/ZgjLbaey0c3sR62s0eP4bFVG0x2TaprP7HP76RM+bSQd9ptyEdbXlyfr0frj6DoH6N1NvpJPZZN4fk/AR0AiSgg0hdQsUiSTCsWsaKRHXD7yLnRsn9AHx27DiCJAmPVUkRer/ujSNRTRMfCd8fwCgH4aucMEsQR1MeJAiHp6uQ2x7K4Ki7FaT/l06OeDzLIc1nmqqDW/mdtcIh
-X-OriginatorOrg: amd.com
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 08 Jun 2026 20:43:16.7943 (UTC)
-X-MS-Exchange-CrossTenant-Network-Message-Id: 6ba1eed5-2930-4c8c-6d35-08dec59e916d
-X-MS-Exchange-CrossTenant-Id: 3dd8961f-e488-4e60-8e11-a82d994e183d
-X-MS-Exchange-CrossTenant-OriginalAttributedTenantConnectingIp: TenantId=3dd8961f-e488-4e60-8e11-a82d994e183d; Ip=[165.204.84.17];
- Helo=[satlexmb07.amd.com]
-X-MS-Exchange-CrossTenant-AuthSource: SA2PEPF00003AE9.namprd02.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Anonymous
-X-MS-Exchange-CrossTenant-FromEntityHeader: HybridOnPrem
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: SN7PR12MB7836
-Received-SPF: permerror client-ip=2a01:111:f403:c112::5;
- envelope-from=Michael.Roth@amd.com;
- helo=CY7PR03CU001.outbound.protection.outlook.com
-X-Spam_score_int: -24
-X-Spam_score: -2.5
+Content-Transfer-Encoding: 8bit
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNjA4MDE5MSBTYWx0ZWRfX7OWE10iHnI9V
+ UL0DDhgvjhg7EDwb35N8FNvctq7CvEeS9Qc2fG1YgNo1ZJj0V70r0TRZiWS9DtYYgfTRRCK3N+f
+ X2ZGzOdN5y6xiJF9ztZm5m3Jy1zHHsEfQVQX+3JwG64uertrmF2/KzQCYITfMin2IO+hroEQkBE
+ XeTHRewXbeZkNtOgbaaCpC3lbVxv84sEKh64m8QV979wN8SOXEFtjO/TRy1600evgJzhvba70HR
+ pz2AKu8NKgT9Y2DZ1bf/LOr69S0AW67UQNpktgqS4yeR8e+adVkaZVuOjYv8y7mqvnpzx+ANJ+1
+ O1bVFy6Q5LZqU1q5+P3bxw7PR5R2rkG3bf0wOHo8yDuy6MuffMF/sxk0reNrWEu3fiUnnK9Pbi7
+ 26ncTIPaK/yZY0A71AK+oflJZtkrWGtYx1dXFa8q6F00dj8HUrEUo9njGvKcZmMqZB8Sq0zDdvo
+ G0/5JMuCK86s7Bg+5wQ==
+X-Proofpoint-ORIG-GUID: Tm_sT_MnwD5TBl2vb6tRis93F6z1N2pr
+X-Proofpoint-GUID: Tm_sT_MnwD5TBl2vb6tRis93F6z1N2pr
+X-Authority-Analysis: v=2.4 cv=VowTxe2n c=1 sm=1 tr=0 ts=6a272eed cx=c_pps
+ a=PfFC4Oe2JQzmKTvty2cRDw==:117 a=gdiugJE53z4H+vvYeRBHqw==:17
+ a=FelO9ux0wxsA:10 a=s4-Qcg_JpJYA:10 a=VkNPw1HP01LnGYTKEx00:22
+ a=u7WPNUs3qKkmUXheDGA7:22 a=3WHJM1ZQz_JShphwDgj5:22 a=VwQbUJbxAAAA:8
+ a=EUspDBNiAAAA:8 a=oNYACLWKlWMaaXUTyR8A:9 a=6Ab_bkdmUrQuMsNx7PHu:22
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.125,FMLib:17.12.100.49
+ definitions=2026-06-08_05,2026-06-05_02,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ impostorscore=0 spamscore=0 phishscore=0 priorityscore=1501
+ lowpriorityscore=0 malwarescore=0 suspectscore=0 bulkscore=0 clxscore=1015
+ adultscore=0 classifier=typeunknown authscore=0 authtc= authcc=
+ route=outbound adjust=0 reason=mlx scancount=1 engine=8.22.0-2605210000
+ definitions=main-2606080191
+Received-SPF: pass client-ip=205.220.180.131;
+ envelope-from=daniel.barboza@oss.qualcomm.com; helo=mx0b-0031df01.pphosted.com
+X-Spam_score_int: -27
+X-Spam_score: -2.8
 X-Spam_bar: --
-X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.445,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- PDS_LTC_HUSH=0.001, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_PASS=-0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -132,206 +144,63 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Mon, Jun 08, 2026 at 10:20:22AM +0200, Markus Armbruster wrote:
-> Michael Roth <michael.roth@amd.com> writes:
-> 
-> > On Tue, Jun 02, 2026 at 10:22:01AM +0200, Markus Armbruster wrote:
-> >> Michael Roth <michael.roth@amd.com> writes:
-> >> 
-> >> > In the initial implementation of guest_memfd in the linux kernel, it
-> >> > was not possible to map memory into userspace for direct access; instead
-> >> > the memory provided by the memory backend would be used for cases where
-> >> > a confidential VM wants to access normal/unprotected/unencrypted memory
-> >> > that can be used for shared memory use cases, and for access to private
-> >> > memory a guest_memfd could be associated with the same memslot. A memory
-> >> > 'private' attribute set via KVM_SET_MEMORY_ATTRIBUTES could then be used
-> >> > to have KVM route to the approprate backing memory.
-> >> >
-> >> > In that model, it didn't make sense to introduce a specific backend for
-> >> > guest_memfd, since there was always a generally need to have a separate
-> >> 
-> >> a general need?
-> >
-> > Much nicer :)
-> >
-> >> 
-> >> > backend type to handle shared memory access/allocation. Instead, QEMU
-> >> > configures the guest_memfd support for the associated memslots
-> >> > internally for cases where it is running a confidential VM.
-> >> >
-> >> > However, with recent changes in guest_memfd kernel support, it is now
-> >> > possible to mmap() a guest_memfd FD into userspace and use it for shared
-> >> > memory, as well as continue to use the same physical pages for the same
-> >> > GPA ranges after they are converted to private ("in-place conversion").
-> >> >
-> >> > To enable the use of this mmap()-able/guest_memfd-provided memory to be
-> >> > used for normal/shared memory instead of just for private memory,
-> >> > introduce a dedicated guest_memfd memory backend that can be used both
-> >> > for confidential VMs that wish to make use of in-place conversion, as
-> >> > well as for non-confidential VMs that just want to make use of
-> >> > guest_memfd for normal memory (which can be useful both for testing as
-> >> > well as a stepping stone to things like software-protected VMs where the
-> >> > host can be trusted to provided some additional degree of isolation for
-> >> > the VM independently of hardware support).
-> >> >
-> >> > Signed-off-by: Michael Roth <michael.roth@amd.com>
-> >> 
-> >> [...]
-> >> 
-> >> > diff --git a/qapi/qom.json b/qapi/qom.json
-> >> > index dd45ac1087..502fafeb15 100644
-> >> > --- a/qapi/qom.json
-> >> > +++ b/qapi/qom.json
-> >> > @@ -661,7 +661,8 @@
-> >> >  # @share: if false, the memory is private to QEMU; if true, it is
-> >> >  #     shared (default false for backends memory-backend-file and
-> >> >  #     memory-backend-ram, true for backends memory-backend-epc,
-> >> > -#     memory-backend-memfd, and memory-backend-shm)
-> >> > +#     memory-backend-memfd, memory-backend-shm, and
-> >> > +#     memory-backend-guest-memfd)
-> >> >  #
-> >> >  # @reserve: if true, reserve swap space (or huge pages) if applicable
-> >> >  #     (default: true) (since 6.1)
-> >> > @@ -780,6 +781,18 @@
-> >> >              '*seal': 'bool' },
-> >> >    'if': 'CONFIG_LINUX' }
-> >> >  
-> >> > +##
-> >> > +# @MemoryBackendGuestMemfdProperties:
-> >> > +#
-> >> > +# Properties for memory-backend-guest-memfd objects.
-> >> > +#
-> >> > +# Since: 11.1
-> >> > +##
-> >> > +{ 'struct': 'MemoryBackendGuestMemfdProperties',
-> >> > +  'base': 'MemoryBackendProperties',
-> >> > +  'data': {},
-> >> > +  'if': 'CONFIG_LINUX' }
-> >> > +
-> >> 
-> >> Identical to MemoryBackendProperties so far.
-> >> 
-> >> >  ##
-> >> >  # @MemoryBackendShmProperties:
-> >> >  #
-> >> > @@ -1234,6 +1247,8 @@
-> >> >      'memory-backend-file',
-> >> >      { 'name': 'memory-backend-memfd',
-> >> >        'if': 'CONFIG_LINUX' },
-> >> > +    { 'name': 'memory-backend-guest-memfd',
-> >> > +      'if': 'CONFIG_LINUX' },
-> >> >      'memory-backend-ram',
-> >> >      { 'name': 'memory-backend-shm',
-> >> >        'if': 'CONFIG_POSIX' },
-> >> > @@ -1312,6 +1327,8 @@
-> >> >        'memory-backend-file':        'MemoryBackendFileProperties',
-> >> >        'memory-backend-memfd':       { 'type': 'MemoryBackendMemfdProperties',
-> >> >                                        'if': 'CONFIG_LINUX' },
-> >> > +      'memory-backend-guest-memfd': { 'type': 'MemoryBackendGuestMemfdProperties',
-> >> > +                                      'if': 'CONFIG_LINUX' },
-> >> 
-> >> You could use MemoryBackendProperties here, and drop
-> >> MemoryBackendGuestMemfdProperties, similar to how memory-backend-ram
-> >> is done.
-> >
-> > That's true. I think I was anticipating it being warranted at some point, but
-> > that doesn't need to happen here.
-> >
-> >> 
-> >> >        'memory-backend-ram':         'MemoryBackendProperties',
-> >> >        'memory-backend-shm':         { 'type': 'MemoryBackendShmProperties',
-> >> >                                        'if': 'CONFIG_POSIX' },
-> >> 
-> >> Should we provide guidance on when to use which memory backend?  The
-> >> commit message provides some clues...
-> >
-> > Were you thinking from a schema perspective, or something more
-> > user-facing?
-> 
-> The QAPI schema doc comments become the QEMU QMP Reference Manual, which
-> I believe is the first stop for "how do I use this?"
-> 
-> Sometimes, a full answer just doesn't fit there comfortably.  So we put
-> it elsewhere, and point to it from the QMP Reference.
+Based on the DT documentation of 'iommu-map':
 
-Makes sense, I'll cross reference the documentation and provide some
-background on how the backends / options are used.
+https://www.kernel.org/doc/Documentation/devicetree/bindings/pci/pci-iommu.txt
 
-Thanks,
+- iommu-map: Maps a Requester ID to an IOMMU and associated IOMMU specifier
+  data.
 
-Mike
+  The property is an arbitrary number of tuples of
+  (rid-base,iommu,iommu-base,length).
 
-> 
-> > Either way, docs/system/confidential-guest-support.rst could definitely
-> > use some sprucing up as part of this series, so I can cover this aspect
-> > there as well.
-> >
-> >> 
-> >> > diff --git a/qemu-options.hx b/qemu-options.hx
-> >> > index 96ae41f787..3c754c149f 100644
-> >> > --- a/qemu-options.hx
-> >> > +++ b/qemu-options.hx
-> >> > @@ -5858,6 +5858,11 @@ SRST
-> >> >          off will cause a failure during allocation because it is not supported
-> >> >          by this backend.
-> >> >  
-> >> > +    ``-object memory-backend-guest-memfd,id=id,prealloc=on|off,size=size,host-nodes=host-nodes,policy=default|preferred|bind|interleave``
-> >> > +        Creates an anonymous memory file backend object that has similar
-> >> > +        semantics to memfd, but is also usable as private memory when
-> >> > +        running as a confidential VM. (Linux only)
-> >> 
-> >> There is no object type "memfd".  Do you mean "memory-backend-memfd"?
-> >
-> > Yes, will update.
-> >
-> >> 
-> >> If yes, that one has additional properties @hugetlb, @hugetlbsize, and
-> >> @seal.  Why are they not needed for memory-backend-guest-memfd?
-> >
-> > ATM, hugetlb is not enabled for guest_memfd in the kernel. It's likely the
-> > same set of options will apply, but there are also efforts to do things like
-> > plumb DAX memory through guest_memfd for confidential VMs where maybe we end
-> > up needing to be a bit more flexible/creative... not sure, but it seemed
-> > like a good idea to give ourselves a clean slate since the support isn't
-> > there yet anyway.
-> 
-> I gather these properties cannot work today.  I agree we shouldn't add
-> them until they do.
-> 
-> > For seal, I'm not aware of any plan to support that for guest_memfd, so
-> > it seems like unecessary baggage to pull in.
-> 
-> Likewise.
+----------
 
-Sounds good, though I'm sort of now leaning more toward the
-memory-backend-memfd,guest_memfd=on approach that Peter implemented[1]
-since it requires less assumptions about what we'll need to do later
-(i.e. if we want to introduce a backend specifically for guest_memfd
-we'll still have the option, but if we do it now, but decide to go back
-to re-using the existin *-memfd/*-file/*-etc backends because the
-option format seems more familiar to QEMU users, then the dedicated
-backend is a little bit more of a pain to turn around and try to
-deprecate.
+We're adding a no-op entry (length = 0) in iommu-map:
 
-Not sure yet what we'll end up doing though, but hopefully for v2 we'll
-have a plan for what to do initially at least.
+         qemu_fdt_setprop_cells(ms->fdt, name, "iommu-map",
+                                0, iommu_sys_phandle, 0, 0, 0,
+                                iommu_sys_phandle, 0, 0xffff);
 
-Thanks,
+This is easily seen in the generated DT:
 
-Mike
+iommu-map = <0x00 0x8000 0x00 0x00 0x00 0x8000 0x00 0xffff>;
 
-[1] https://lore.kernel.org/qemu-devel/aiCAFWKEAHkPLCO5@x1.local/
+The tuple (0 0 0x8000 0) does nothing since it has length = 0.  The
+information we want to advertise is in the second tuple only.  Thus
+remove the empty tuple.
 
-> 
-> > Thanks,
-> >
-> > Mike
-> >
-> >> 
-> >> > +
-> >> >      ``-object iommufd,id=id[,fd=fd]``
-> >> >          Creates an iommufd backend which allows control of DMA mapping
-> >> >          through the ``/dev/iommu`` device.
-> >> 
-> 
+While we're at it, seems like we've mistaken the API and we're using
+0xffff as 'last address', but in fact it is length.  This means that
+we're telling the DT we're mapping 0x0 -> 0xfffe, which wasn't our
+intention.  Therefore change size to '0x10000' to reflect the address
+mapping we want (0x0 -> 0xffff).
+
+Found while reviewing the RISC-V Server Platform DT generation, which
+happens to copy a lot of code from the 'virt' board, and this nit is
+also present there.
+
+Fixes: 2c12de1460 ("hw/riscv/virt: Add IOMMU as platform device if the option is set")
+Signed-off-by: Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>
+---
+ hw/riscv/virt.c | 3 +--
+ 1 file changed, 1 insertion(+), 2 deletions(-)
+
+diff --git a/hw/riscv/virt.c b/hw/riscv/virt.c
+index ce64eaaef7..0c489bb412 100644
+--- a/hw/riscv/virt.c
++++ b/hw/riscv/virt.c
+@@ -900,8 +900,7 @@ static void create_fdt_pcie(RISCVVirtState *s,
+ 
+     if (virt_is_iommu_sys_enabled(s)) {
+         qemu_fdt_setprop_cells(ms->fdt, name, "iommu-map",
+-                               0, iommu_sys_phandle, 0, 0, 0,
+-                               iommu_sys_phandle, 0, 0xffff);
++                               0, iommu_sys_phandle, 0, 0x10000);
+     }
+ 
+     create_pcie_irq_map(s, ms->fdt, name, irq_pcie_phandle);
+-- 
+2.43.0
+
 
