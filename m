@@ -4,56 +4,57 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id AF40DCD8C92
-	for <qemu-devel@archiver.kernel.org>; Mon,  8 Jun 2026 07:23:23 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8BAF8CD8C8E
+	for <qemu-devel@archiver.kernel.org>; Mon,  8 Jun 2026 07:23:25 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wWUHJ-0003aH-I2; Mon, 08 Jun 2026 03:20:11 -0400
+	id 1wWUGr-00035f-Mw; Mon, 08 Jun 2026 03:19:41 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1wWUGe-00032i-69
- for qemu-devel@nongnu.org; Mon, 08 Jun 2026 03:19:37 -0400
+ id 1wWUGU-0002d8-El
+ for qemu-devel@nongnu.org; Mon, 08 Jun 2026 03:19:20 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1wWUGZ-0000xU-Sd
- for qemu-devel@nongnu.org; Mon, 08 Jun 2026 03:19:26 -0400
+ id 1wWUGR-0000pK-5x
+ for qemu-devel@nongnu.org; Mon, 08 Jun 2026 03:19:18 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1780903163;
+ s=mimecast20190719; t=1780903154;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=vSo12UqAozNyKPNf2wzj6CS1smHf5IC3QLcPig7r7q0=;
- b=dpONcwV4MpGPxsqktx3oou70/PuBq5ZfuoFsu+l3+aZiegL2w3zIt8T9bsNhHIcoj0shBc
- ClhSq8bwclHAmJZS89TUmvbEmMfHL2HmL2aS3l+9XAYOqJ6ltvkrO8o7P45nhs7BpKqPx3
- rHfYezM80RXZsqdVQHx2euTmVcNMv68=
+ bh=EfZGD2CKF+sg59f12dKDT06fKxquYa1/bhpSzhpSmNo=;
+ b=iJSlMacgy0F7SzjvVWO64mRHrpgUZcB9Hn3ZAcPfKnI3w8C9olLzRcFqzVMslJ8LKWtKwp
+ 2i2mery9togmv6Vqo76535dkyOh2rnheYfdWIMTYm8uj2tWTPHoIZ2R/3E4WKclCfgW5lQ
+ 4EieUmoMOC2QMNU5sbO0Pn+/q9MuxPw=
 Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-47-t78_EQ_ZOHGC5uljl6PE2Q-1; Mon,
- 08 Jun 2026 03:19:16 -0400
-X-MC-Unique: t78_EQ_ZOHGC5uljl6PE2Q-1
-X-Mimecast-MFC-AGG-ID: t78_EQ_ZOHGC5uljl6PE2Q_1780903155
-Received: from mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.17])
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-79-mDBF2aNePCuMU0SJPJy_dQ-1; Mon,
+ 08 Jun 2026 03:19:05 -0400
+X-MC-Unique: mDBF2aNePCuMU0SJPJy_dQ-1
+X-Mimecast-MFC-AGG-ID: mDBF2aNePCuMU0SJPJy_dQ_1780903143
+Received: from mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.111])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
  by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 063681956094; Mon,  8 Jun 2026 07:19:15 +0000 (UTC)
+ id 9EB8E19560A5; Mon,  8 Jun 2026 07:19:03 +0000 (UTC)
 Received: from localhost (unknown [10.44.22.16])
- by mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 87E151956053; Mon,  8 Jun 2026 07:19:13 +0000 (UTC)
+ by mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id AB8141800347; Mon,  8 Jun 2026 07:19:02 +0000 (UTC)
 From: =?utf-8?q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>
-Date: Mon, 08 Jun 2026 11:16:47 +0400
-Subject: [PATCH v2 29/33] ui/gtk: handle console hotplug/unplug events
+Date: Mon, 08 Jun 2026 11:16:45 +0400
+Subject: [PATCH v2 27/33] ui/gtk: fix tab re-insertion order on window
+ close
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
-Message-Id: <20260608-b4-ui-v2-29-9ea6355ea08f@redhat.com>
+Message-Id: <20260608-b4-ui-v2-27-9ea6355ea08f@redhat.com>
 References: <20260608-b4-ui-v2-0-9ea6355ea08f@redhat.com>
 In-Reply-To: <20260608-b4-ui-v2-0-9ea6355ea08f@redhat.com>
 To: qemu-devel@nongnu.org
@@ -67,24 +68,24 @@ Cc: Paolo Bonzini <pbonzini@redhat.com>,
  Peter Maydell <peter.maydell@linaro.org>, 
  Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>, 
  =?utf-8?q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>
-X-Developer-Signature: v=1; a=openpgp-sha256; l=4053;
+X-Developer-Signature: v=1; a=openpgp-sha256; l=1954;
  i=marcandre.lureau@redhat.com; h=from:subject:message-id;
- bh=oS1XDhLVUJSxwsHHpY/8zKXncSL2PFHxGoOAAs9N4C0=;
- b=owEBbQKS/ZANAwAKAdro4Ql1lpzlAcsmYgBqJmxN1O8HE9QddYSfgDzMrGoVOY33tUiIcfIGn
- fVLNzeX0iuJAjMEAAEKAB0WIQSHqb2TP4fGBtJ29i3a6OEJdZac5QUCaiZsTQAKCRDa6OEJdZac
- 5XCkD/4oKdHhDz9H/f5ygcsfV5BO+1C/o4tZ5Yd+Mp3pVPqjMYhyRzwLEbeGiCDeWaDE/fAwirf
- gDzrkXnzO9fPgBRrcg76IQ7EIlWGXcW/cJ5O6zXncMSAd/nQoQq40ygQRf08iDvwRVNuZfwJs5j
- o6iYL2Ns5HfB9FcRh+EAVcefawYyumEoWRsRcmt7v3QDimHgFaKmS2b08+z1jx5KmQz2RLkNP6j
- Yf1422mKwxL66Ujxb8CN4TUnk4xtmXcJM/7hr449+PDWPjEBKxrtL3zxJkL7i++3ssDAek25cUN
- ku9AjrUkI8FB8GdAUae1Zly2cIgmm7jb6wq+ZMb4OiNMb3M34AIsLCoLJAI2X5czNStz1ijFylN
- X0ONLcxRqvRz7kaQWLFLSQZgicvzNPGFqE/cxYNCoA5Rc4+YRoouQaCshKXcD9WP6iiM2oZhRMA
- KSgf53m46WQ2lNRTAYmSJKTzthgIJLuDg+cwlrHHIQdoYQ9BccV+oZtFHa3//QLOY2+tL3W9rz2
- YxseUtnsUVgQ4hRSrF1xXx4FB7/uLBbWOR7CSAbJMAC3o20b6fKp3JL6+p3yeJmANPQ2Nz7JfW3
- rXjl/q0p0J5g5j8xhBCRNXQcDBbDPJZv/4pNY1qAae/3DogqHFJcpd8NagZTabMHLIEdUs2WWee
- uS9+qp/pvWyfmcA==
+ bh=IQjCpCJjmG96ugeyLyDomxPwrpESOHbu7i2WdeA4Yk0=;
+ b=owEBbQKS/ZANAwAKAdro4Ql1lpzlAcsmYgBqJmxNrmyauMf3HTPqpAmUB5ZSJHVtaRR9O5vSH
+ Wujf/lHoMSJAjMEAAEKAB0WIQSHqb2TP4fGBtJ29i3a6OEJdZac5QUCaiZsTQAKCRDa6OEJdZac
+ 5VBgEACQeNQMwJ5paLJVoiwINQnKPdSwA5o5kM/kehbMoraWHNGKloDrGmQ1y8ZJgfPbmSHgFCC
+ LK99TwHlQA7+lSFXE8BJ6fLR7LAXx+8h4ysQ4/3JG/HW4BcAoalLVCS0pcNon30RTw95WhLehKc
+ widx5MZnd6EacyuUUpCBiXLEWqSScg1Ssv9jj9Z5BPgoMrOOtq8McvE7ryPTA8LikomgzEs60dc
+ 0ex5YL0JFFR6zbPRG7btSoeV7rimoYaxBVm0gmxi2PiVmV+GZP8z43VdAbDDNzYDtNtxUkcPXi4
+ IE2VyITbMlqcdyR6LkhZcX4QKO2c9Lm79w/6xLNq8VKUcI5Eb8134wdAgKSzgt8MnCvzFX46aO7
+ BLHOI8caG5wkXhi5ZzzGB0zL1zr7zXzPI9pLzFBa+IcjdRaINdhHvPrQD3daXEIUL5AQ5ER4yQo
+ Y2BtxssDex3topOjRddYVHgBMbhkINbKpbtESMCcWBYPdBscvVRRSELJYD3nKRR/fVcfqmFxpdc
+ BKsMgvvokZMhYLqTdyNSjJbChIaMxNq3Zrr+wuvfCVj0S+N4/tCnRXl/jZzI5hhIyNAOz4Ao/gI
+ H5aMYDZQOXGV0xkKYFQhlO3O4ntXyB5AaDn6Kzug/kugv3oRqiFOsAe+wIc7lzm8YvwpF8CzIA3
+ hCHjRcOZYU2iHoA==
 X-Developer-Key: i=marcandre.lureau@redhat.com; a=openpgp;
  fpr=87A9BD933F87C606D276F62DDAE8E10975969CE5
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.17
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.111
 Received-SPF: pass client-ip=170.10.129.124;
  envelope-from=marcandre.lureau@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
@@ -111,140 +112,61 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Register a console notifier so the GTK display dynamically creates and
-destroys VirtualConsole tabs when graphic consoles are added or removed
-at runtime (e.g. vfio-pci with display=on hotplug).
-
-Add skips consoles that already have a VC binding, remove skips unknown
-consoles.
+Add gd_vc_notebook_pos() which computes the correct notebook position
+for a console by counting only non-detached (non-windowed) tabs before
+it. Use it in gd_tab_window_close() so a re-attached tab is inserted
+at its logical position rather than appended at the end.
 
 Signed-off-by: Marc-André Lureau <marcandre.lureau@redhat.com>
 ---
- include/ui/gtk.h |  1 +
- ui/gtk.c         | 77 +++++++++++++++++++++++++++++++++++++++++++++++++++++++-
- 2 files changed, 77 insertions(+), 1 deletion(-)
+ ui/gtk.c | 27 ++++++++++++++++++++++++---
+ 1 file changed, 24 insertions(+), 3 deletions(-)
 
-diff --git a/include/ui/gtk.h b/include/ui/gtk.h
-index b0be5070795..6cb611ce474 100644
---- a/include/ui/gtk.h
-+++ b/include/ui/gtk.h
-@@ -140,6 +140,7 @@ struct GtkDisplayState {
- 
-     GdkCursor *null_cursor;
-     Notifier mouse_mode_notifier;
-+    Notifier console_notifier;
-     gboolean free_scale;
-     gboolean keep_aspect_ratio;
- 
 diff --git a/ui/gtk.c b/ui/gtk.c
-index 6325704c397..6ef58d1367c 100644
+index e86b618f770..32f3a0805e1 100644
 --- a/ui/gtk.c
 +++ b/ui/gtk.c
-@@ -2332,7 +2332,8 @@ static bool gd_scale_valid(double scale)
-     return scale >= VC_SCALE_MIN && scale <= VC_SCALE_MAX;
+@@ -1464,16 +1464,37 @@ static void gd_menu_show_tabs(GtkMenuItem *item, void *opaque)
+     gd_update_windowsize(vc);
  }
  
--static void add_gfx_console(GtkDisplayState *s, QemuConsole *con)
-+static VirtualConsole *
-+add_gfx_console(GtkDisplayState *s, QemuConsole *con)
++static int gd_vc_notebook_pos(GtkDisplayState *s, VirtualConsole *target)
++{
++    int pos = 0;
++    guint i;
++
++    for (i = 0; i < s->vcs->len; i++) {
++        VirtualConsole *vc = g_ptr_array_index(s->vcs, i);
++        if (vc == target) {
++            return pos;
++        }
++        if (!vc->window) {
++            pos++;
++        }
++    }
++    g_assert_not_reached();
++}
++
+ static gboolean gd_tab_window_close(GtkWidget *widget, GdkEvent *event,
+                                     void *opaque)
  {
-     VirtualConsole *vc = g_new0(VirtualConsole, 1);
-     const DisplayChangeListenerOps *ops = &dcl_ops;
-@@ -2414,6 +2415,76 @@ static void add_gfx_console(GtkDisplayState *s, QemuConsole *con)
-     qemu_console_register_listener(con, &vc->gfx.dcl, ops);
+     VirtualConsole *vc = opaque;
+     GtkDisplayState *s = vc->s;
++    int page;
  
-     gd_connect_vc_gfx_signals(vc);
-+    return vc;
-+}
-+
-+static void gd_vc_add_gfx(GtkDisplayState *s, QemuConsole *con)
-+{
-+    VirtualConsole *vc;
-+    int i;
-+
-+    for (i = 0; i < (int)s->vcs->len; i++) {
-+        VirtualConsole *v = g_ptr_array_index(s->vcs, i);
-+        if (v->type == GD_VC_GFX && v->gfx.dcl.con == con) {
-+            return;
-+        }
-+    }
-+
-+    vc = add_gfx_console(s, con);
-+    gtk_widget_show_all(vc->tab_item);
-+    gtk_widget_realize(vc->gfx.drawing_area);
-+
-+    if (s->free_scale) {
-+        gd_update_windowsize(vc);
-+    }
-+
-+    gd_update_caption(s);
-+    gd_rebuild_vc_menu(s);
-+
-+    gtk_notebook_set_show_tabs(GTK_NOTEBOOK(s->notebook), true);
-+}
-+
-+static void gd_vc_remove_gfx(GtkDisplayState *s, QemuConsole *con)
-+{
-+    VirtualConsole *vc = NULL;
-+    guint idx;
-+
-+    for (idx = 0; idx < s->vcs->len; idx++) {
-+        VirtualConsole *v = g_ptr_array_index(s->vcs, idx);
-+        if (v->type == GD_VC_GFX && v->gfx.dcl.con == con) {
-+            vc = v;
-+            break;
-+        }
-+    }
-+    if (!vc) {
-+        return;
-+    }
-+
-+    if (s->kbd_owner == vc) {
-+        gd_ungrab_keyboard(s);
-+    }
-+    if (s->ptr_owner == vc) {
-+        gd_ungrab_pointer(s);
-+    }
-+
-+    g_ptr_array_remove_index(s->vcs, idx);
-+    gd_rebuild_vc_menu(s);
-+    gd_update_caption(s);
-+}
-+
-+static void gd_console_notify(Notifier *n, void *data)
-+{
-+    GtkDisplayState *s = container_of(n, GtkDisplayState, console_notifier);
-+    QemuConsoleEvent *event = data;
-+
-+    switch (event->type) {
-+    case QEMU_CONSOLE_ADDED:
-+        gd_vc_add_gfx(s, event->con);
-+        break;
-+    case QEMU_CONSOLE_REMOVED:
-+        gd_vc_remove_gfx(s, event->con);
-+        break;
-+    }
- }
- 
- static void gd_create_menu_view(GtkDisplayState *s, DisplayOptions *opts)
-@@ -2688,6 +2759,9 @@ static void gtk_display_init(DisplayState *ds, DisplayOptions *opts)
- 
-     gd_create_menus(s, opts);
- 
-+    s->console_notifier.notify = gd_console_notify;
-+    qemu_console_add_notifier(&s->console_notifier);
-+
-     gd_connect_signals(s);
- 
-     gtk_notebook_set_show_tabs(GTK_NOTEBOOK(s->notebook), FALSE);
-@@ -2808,6 +2882,7 @@ static void gtk_display_cleanup(void)
-         return;
-     }
- 
-+    qemu_console_remove_notifier(&s->console_notifier);
-     qemu_remove_mouse_mode_change_notifier(&s->mouse_mode_notifier);
-     gd_clipboard_cleanup(s);
-     g_signal_handlers_disconnect_by_func(s->notebook,
+     gtk_widget_set_sensitive(vc->menu_item, true);
+-    gd_widget_reparent(vc->window, s->notebook, vc->tab_item);
+-    gtk_notebook_set_tab_label_text(GTK_NOTEBOOK(s->notebook),
+-                                    vc->tab_item, vc->label);
++    g_object_ref(vc->tab_item);
++    gtk_container_remove(GTK_CONTAINER(vc->window), vc->tab_item);
++    page = gd_vc_notebook_pos(s, vc);
++    gtk_notebook_insert_page(GTK_NOTEBOOK(s->notebook),
++                             vc->tab_item, gtk_label_new(vc->label), page);
++    g_object_unref(vc->tab_item);
+     gtk_widget_destroy(vc->window);
+     vc->window = NULL;
+ #if defined(CONFIG_OPENGL)
 
 -- 
 2.54.0
