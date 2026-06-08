@@ -4,99 +4,101 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8C7D8CD8C9F
-	for <qemu-devel@archiver.kernel.org>; Mon,  8 Jun 2026 09:25:13 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D7428CD8C9F
+	for <qemu-devel@archiver.kernel.org>; Mon,  8 Jun 2026 09:32:00 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wWWDu-0002T6-RZ; Mon, 08 Jun 2026 05:24:46 -0400
+	id 1wWWKP-0003mc-Hb; Mon, 08 Jun 2026 05:31:29 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1wWWDr-0002Sl-Ml
- for qemu-devel@nongnu.org; Mon, 08 Jun 2026 05:24:44 -0400
-Received: from mail-yx1-xb12a.google.com ([2607:f8b0:4864:20::b12a])
+ id 1wWWKO-0003mQ-EH
+ for qemu-devel@nongnu.org; Mon, 08 Jun 2026 05:31:28 -0400
+Received: from mail-yx1-xb12b.google.com ([2607:f8b0:4864:20::b12b])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1wWWDp-0007Nq-VR
- for qemu-devel@nongnu.org; Mon, 08 Jun 2026 05:24:43 -0400
-Received: by mail-yx1-xb12a.google.com with SMTP id
- 956f58d0204a3-660e9ff0587so1617308d50.0
- for <qemu-devel@nongnu.org>; Mon, 08 Jun 2026 02:24:40 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1780910680; cv=none;
+ id 1wWWKG-0002Ee-RJ
+ for qemu-devel@nongnu.org; Mon, 08 Jun 2026 05:31:22 -0400
+Received: by mail-yx1-xb12b.google.com with SMTP id
+ 956f58d0204a3-6605c3453f2so3934024d50.1
+ for <qemu-devel@nongnu.org>; Mon, 08 Jun 2026 02:31:20 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1780911079; cv=none;
  d=google.com; s=arc-20240605;
- b=QXoqu0xNUSTko4c5fCRNjgo6Pf5BxPmVBH2ibrNXKwbxrs0MoAByXxEngv4uSPlY1x
- GEmOrIFoMQYHBHQ8rqvXmL0f/hpstxTzj69j/9aCH1gvu039/1CfMcAtSlJ+RIBSwJ7h
- CcOwZtUISrCoAOuCRZ/uCxs/6/Q/cGqYI+E9b5hhRjqhAtcJEQVxVuT2xquwq6u+Mzrm
- ANImwE0VvnYOWEdoRBh4fIy/Telsm8Pp24vxLZKtjg7uHfRHTofzUkfozoz/5+E56r+s
- JeAqjsZO46cnApsVD0kBw6Ebqpw4xxE+DE+XxzWjPV8hsvxTIuEkjb0EBqyWeW49Kq7N
- iuXQ==
+ b=GbEDCXpqrjQin/M3COxmvl+CTAYtxq2GtxsTHfBN/hgycijhg3MtG3Gz1aBu0mDZqJ
+ orRgITS7Y/Kv0lwKpbp7qyGPQYwVJW9zxc+qQLPpMehm0aCAOxPKTTt10Pz+KdKahisV
+ UcdpNMsY3cMsUZBPRrNt2/jw8OjWjD+X8tNM+aBIGvTG8s6SbbfaKbJLSjstOPb3cEa6
+ ocaeaU53bW8kjC21AN8814ynS7SWW7UWfz67adlkk1hRaUhA06rthZGfQdMwBIh8ls20
+ EbvlZ+cuAs8fjqzWjGfXsbJW/oZ8xg20iDlpdLwsdqwzup9ADOX7PEAySykakILvGqji
+ SNFw==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
  s=arc-20240605; 
  h=cc:to:subject:message-id:date:from:in-reply-to:references
  :mime-version:dkim-signature;
- bh=vPidOw72KGAxsKvn0SeAXzVGd4KUgMOCY/GVTBKBj00=;
- fh=VdU0ZIHHM7Xuu0AoHAY9TnsLw+Rmx6THNQ8Qxyqt4ys=;
- b=RzP9sHo/q9DnReIUZn91HcNgN4SCc+yburzt8GR+ANb8u7qQJ5vI5YWbvMAehbHmTD
- g7eGjSg2CPlErsCrivcTxSQ/MFYXzA6esn1Zgj4ArVrUAuZ7VP5HIHHbiwdD+Af3lzIG
- +iZlZ3mQ8BwDVIlsTOYW1xqFbAVpkY6BHx/XjSnvQHyPnVp1N8A6suLywbIkHoF0JWoq
- BEES8Cb4tunBIiMDwYpICLDafSSeHkN04TfSE5U5d0rQOegq5hkjvdT6bLXPAr7zm/Da
- bwkmjg9eBWeA3r6x1ZmAJV4CY28eBgk4VsfViFcqqPjirs1jrv6xQEKywL7idBh8LK3e
- Uk5A==; darn=nongnu.org
+ bh=oN9vwWZquI/3ZWu2yPWpiXfFjfHxa2fsFxu7s44lRSk=;
+ fh=9EeywghUUErPHelOOUazhOgI6Eicsx7RNvMDuf0Gp+8=;
+ b=k8VWIz8Bhg0gYaZiIbJ96tGsRQ6u5A9BsZTjwpi11Q/IAGzA0MoNXXakCX1IxD9LfP
+ COUDVsEbDw0BIX4QgbS6kZTdQPsqhfifJUrZGYLeN07navT57yy44x9vmoJ9UpV7q61v
+ /kdSkO1jkAikcr8wkXuWh/NMw8pQ5TC+Il97CUMsrJ6yWZLISi++9p4kvqHA8xxSjEYq
+ fm3sSlYzwQlFnh1OdwFRdT/Zp08GL5DcpR6/epoFjF2KN3wUKc+WQDwubJo3NKrp/Ple
+ iXEdwVzIVMVlXQpD1R/+j2+dK5V9AB9xMYHP6y31+abY5rtUBXRJahOUs5RUylsfy83u
+ ODvQ==; darn=nongnu.org
 ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1780910680; x=1781515480; darn=nongnu.org;
+ d=linaro.org; s=google; t=1780911079; x=1781515879; darn=nongnu.org;
  h=cc:to:subject:message-id:date:from:in-reply-to:references
  :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=vPidOw72KGAxsKvn0SeAXzVGd4KUgMOCY/GVTBKBj00=;
- b=X3koX8J3/KmEFmnChMsOqIGT4/GsUEwgq9t4VfDywsoo4pvxXJ7H0gXjLE4Oz3bF+n
- FHZjL/fCKUUw0a/dIhOyud+myQJyIPq9dDjtfg1em4hdUhwExUujuzstGmsiEq2mdObn
- ASnLE54EhokCLDsTM3wVWktzdXklp5Yyp1D/7qv15lXVtnxED+GxXnjiIPYKwpXI/8QO
- 5IN9zXB25Z+eXJ2LllkATGWy1pqkT+5nv1lV2m6PcGeb6rB8Iry1eF2qZiZgMZ1jk587
- /HGfwJmvJ+TYTuR2zSMGU1LSUZzkXMFLhpKwKnKT0LJWHAuUud0w3ACPDuArF3LKiIlx
- dKow==
+ bh=oN9vwWZquI/3ZWu2yPWpiXfFjfHxa2fsFxu7s44lRSk=;
+ b=ZKJbHb3vdtg19oyBIl+h/MAaFj5iMAKPkBktoyvS7QmOI6ceJwqniQynIXYSxz1yZZ
+ mPxq3bdG8xos67AxCNl3pZvaw4haJaCU+Ni3fBYev3hl18khlg19a9CFsuGkGWB5Wleo
+ YqJAmkmamTuqBe1GiH8kO+VMyPGFl+cTZHTY1/4vP/Qhl0yJgzqFnxetLchUBWZYbyDQ
+ cD2voAZOXzKugB+0MQeh7vNuCiqfrXLtmsU2tcLLt4X/LihlNzEVV0Cy+ByyFvpksuj7
+ iRmxEGx3H1GgfTligiP5IIrBhFz1Y/+QY+0EmbzgXMBWFmuYLOGlHTwIz6mw/h6N5L5G
+ 7JCg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1780910680; x=1781515480;
+ d=1e100.net; s=20251104; t=1780911079; x=1781515879;
  h=cc:to:subject:message-id:date:from:in-reply-to:references
  :mime-version:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
  :message-id:reply-to;
- bh=vPidOw72KGAxsKvn0SeAXzVGd4KUgMOCY/GVTBKBj00=;
- b=W8vPpI80EO6SfeU6gcu14yJxOkOh2JA+hKAIUwuCCQ1yCqZAwpBAT9KogZlJ8m9D3X
- k8lRaugugSgFd10ISw/IsEkN1yyAfhlqgOqNXlL41JkYmUC0jpHEh2SC6col1nqv85J+
- STLGmvW/wgvWPzMg8oAPBrl4bgrhbQ+imthsUj1kEmNm8HFhboQlaR2m/SqbItsXk/6W
- CbYvsBfG6sJyTgkmSfQOmY3yMZ3QKblEpFv8mgzyHr37kVEO1z5QrL0ZFHkxQx4cDr4+
- XBX3UD9ymKzzRqatpKDgfjDeXCx1pkRRJZFR94puSUZv3/9v2gakLEEGuHoXdO6o8TE8
- 9d7w==
-X-Gm-Message-State: AOJu0YyURBOpxZx2tiukDzh9o08GBymrNk25wuNBFKKDwveWpt3iaNL4
- zvelFSOj+EBkUAx7kOEztTjcWbpcTiV4b4nIDgM1R2OhRvLUmlfrYr/orns+X1qXYaFMN0fF5sh
- ciaKTL0TsM6Wsw5sNKrygnfr91AmfXIUA1YIs8mx2LA==
-X-Gm-Gg: Acq92OEQk7qW9gdZ2A4UE4GXrU6qDhL6xGLlTvvF9nv7t+2iaPAb43XrCTG57QfHy5p
- 2kKzIooAX+Hr9GQQqM0+FcRDejzZrR0IJUetFYQnA5qkmCZbOVj9uNWCS/y8QeOBCz7CkK8wnrg
- 2RhR1g2rOTSMumEO68Kki3tlFis0pIOCaoh+f4Z4vQQ33u62dBzkQ9WGUwjsGciwwsL5lTa9h0U
- r+b9iNDDo7gDDX0Pmacxcobp1mc1jbRPNdtGSZhLWreVpmbygxo8yTsOKSrr6+szJQofffKsuGA
- EiBfBIlsRhJBbHQtnbf7HgeTePgAOuykSo2ls8w6NE4T2/wL2LEKWuAQluoMnqb8EDUBjLsunrA
- eegll3WMu0jRI
-X-Received: by 2002:a53:d005:0:b0:660:71c3:aadf with SMTP id
- 956f58d0204a3-66106f171e7mr11183960d50.39.1780910679706; Mon, 08 Jun 2026
- 02:24:39 -0700 (PDT)
+ bh=oN9vwWZquI/3ZWu2yPWpiXfFjfHxa2fsFxu7s44lRSk=;
+ b=By9S4ZcahDcEksa2h/YwCLNnrKGKJgFUCq1VQG6MtHJtoUGVtsFdaBG2O+usQUeQSC
+ 22JxeVoFbubnT0b7XI7PTYXF7vel/WJUcmpN5YOeYq3PzOh+jpangPVXSbYuWvDQTsZm
+ 71aqw8QYKRQMuDfWJ6WOIKyT+/RYSzTjIIMO8BdmSREezuKqDRpSMY47ZqwF+/cSrcrl
+ y7Xkw9xIPPBGscjue0b+eXQLN464Yg/BqDXtjFHOQhHTwM551ZaW4OfJrdLoXn/i6ltC
+ Q54N2HGNqCip/XfEuEm1VFv3OHiUeHSLn6JFYlhqhBU5ou+gAEXsr+RIdum+ym7wD47L
+ m3VA==
+X-Forwarded-Encrypted: i=1;
+ AFNElJ/7CQw3cFRcK22EnH9+iyd5NroFKlTP6bKwOFtijwZpByslh+MuszIzlRbm5ebbY5K8cZ/gTItd92Gk@nongnu.org
+X-Gm-Message-State: AOJu0Yw9h6kKFmWgM8pHt7vw1dxhcHdmyRpTHBbmJwQFQaBgDuJOu0Wf
+ czYV5I4WpExlZEtB+zKc6TkUmX+WOddkgiXbmxq5JWH9zzyb6rIiDhPeAQW4DlzhMG/gfn/7Mn0
+ H7ocZ3F4ZjOq7rOpCxaCWFsLfVEoqM1FZxWkcu2ovFQ==
+X-Gm-Gg: Acq92OEjcxyMBIOGZ4L0q1qtr8ekWZZo0h/wqNum/CkQsnqTaKbrNVQbdk0IYeXk2J5
+ Uza/UBmKST+1qL3IOj4zQw06GwKZjdYxcv7WTQt4GobrMrNziaA+Jas6jd63KWqXhxEKBFo9tUx
+ ylgnl5BwyMD8es9ZvQEAdvt70ma8T5Pm7cONGr301i2qNHpA+lUyQjleroFSY51PsDob6l+TDV9
+ 8YlMkw4gt7HBANzcZacp+BaRWtPczEOJGUVM8wc433kbo09e7vEztU1aEjhjzw4P3dNMAo+oX3A
+ QrW2vUIlxmQdkQnCANDfwF2nPb7izkQjkMYHuJ1qMNJ6ctBCVNvgraRxQYjUe8IPiny3ADMtlcj
+ tJw==
+X-Received: by 2002:a05:690e:144b:b0:660:8e61:1a60 with SMTP id
+ 956f58d0204a3-661073da64dmr12014708d50.14.1780911079245; Mon, 08 Jun 2026
+ 02:31:19 -0700 (PDT)
 MIME-Version: 1.0
-References: <20260521112806.504961-1-kraxel@redhat.com>
- <CAFEAcA8hbObntY8Tp+kOV7btb-io92O9GW99-6SPxigPJUjPrw@mail.gmail.com>
- <aiE5LrpfnJRbkx-A@sirius.home.kraxel.org>
-In-Reply-To: <aiE5LrpfnJRbkx-A@sirius.home.kraxel.org>
+References: <20260604-checkpatch-v3-1-23fc7b12a7e4@rsg.ci.i.u-tokyo.ac.jp>
+In-Reply-To: <20260604-checkpatch-v3-1-23fc7b12a7e4@rsg.ci.i.u-tokyo.ac.jp>
 From: Peter Maydell <peter.maydell@linaro.org>
-Date: Mon, 8 Jun 2026 10:24:28 +0100
-X-Gm-Features: AVVi8CdENXUQ5vy8mT0gx7QJrIkh525pM64K1wcDTX4Imtu2W-EYWjQ_XZpwpe0
-Message-ID: <CAFEAcA_ow2ro3h0nfhY3jA_XToAnjdVFNPrF25aWLd=X2cnmaw@mail.gmail.com>
-Subject: Re: [PATCH 0/3] hw/arm: add support for shim loading
-To: Gerd Hoffmann <kraxel@redhat.com>
-Cc: qemu-devel@nongnu.org, "Michael S. Tsirkin" <mst@redhat.com>, 
- =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>, 
- qemu-arm@nongnu.org, Richard Henderson <richard.henderson@linaro.org>, 
- Paolo Bonzini <pbonzini@redhat.com>
+Date: Mon, 8 Jun 2026 10:31:07 +0100
+X-Gm-Features: AVVi8CdJ_2tpBNYedwGa1mA2eCjQAnfasGaR0MSbd8B3wTERPOAOwzEd-p_MoOU
+Message-ID: <CAFEAcA8uV11z1BGp05gs+f-v4E+CE4DQQJa++DFUMxcCZ8kCDg@mail.gmail.com>
+Subject: Re: [PATCH v3] checkpatch: Check .m, .build, .hx, .in, .json, .txt
+ and .plist
+To: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
+Cc: Paolo Bonzini <pbonzini@redhat.com>,
+ =?UTF-8?B?TWFyYy1BbmRyw6kgTHVyZWF1?= <marcandre.lureau@redhat.com>, 
+ "Daniel P. Berrange" <berrange@redhat.com>,
+ =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@mailo.com>, 
+ Chao Liu <chao.liu.zevorn@gmail.com>, qemu-devel@nongnu.org, devel@daynix.com
 Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2607:f8b0:4864:20::b12a;
- envelope-from=peter.maydell@linaro.org; helo=mail-yx1-xb12a.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::b12b;
+ envelope-from=peter.maydell@linaro.org; helo=mail-yx1-xb12b.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -119,51 +121,28 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, 4 Jun 2026 at 10:27, Gerd Hoffmann <kraxel@redhat.com> wrote:
+On Thu, 4 Jun 2026 at 11:11, Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp> wrote:
 >
-> On Thu, May 28, 2026 at 03:28:05PM +0100, Peter Maydell wrote:
-> > On Thu, 21 May 2026 at 12:28, Gerd Hoffmann <kraxel@redhat.com> wrote:
-> > >
-> > > Also little refactoring in preparation
-> > > to avoid code duplication.
-> > >
-> > > Gerd Hoffmann (3):
-> > >   hw/nvram: add load_image_to_fw_cfg_file()
-> > >   hw/i386: switch shim loading to load_image_to_fw_cfg_file
-> > >   hw/arm: add support for shim loading
-> >
-> > Any chance of some information on what this is?
+> Check more text files: Objective-C, Meson, "hx", JSON, and property
+> list.
 >
-> It passes the shim binary to the efi firmware,
-> in addition to the kernel binary.
->
-> x86 has this for a while already, this brings arm on par.
->
-> docs update with some background below.
->
-> take care,
->   Gerd
->
-> --- a/docs/system/linuxboot.rst
-> +++ b/docs/system/linuxboot.rst
-> @@ -17,6 +17,15 @@ Use ``-kernel`` to provide the Linux kernel image and ``-append`` to
->  give the kernel command line arguments. The ``-initrd`` option can be
->  used to provide an INITRD image.
->
-> +The ``-shim`` option specifies the shim.efi binary.  This is needed
-> +when using direct kernel boot with UEFI secure boot enabled.  The
-> +verification chain used by linux distros requires shim.efi.  Typically
-> +shim.efi is signed by micsosoft and verified by the firmware.  The
-> +linux kernel is signed by the distro and is verified by shim.efi.  So
-> +without shim.efi in the loop secure boot verification will not work.
-> +Usually you can find shim.efi as ``EFI/BOOT/BOOT{X64,AA64}.EFI`` on
-> +distro install media.
+> Signed-off-by: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
 
-Thanks. I'm not sure why you'd want to enable UEFI secure boot
-when you're not booting via UEFI, though.
+This is missing rationale. Currently checkpatch is set up
+to check source code files, and the bulk of its checks are
+for source code issues. Why do we want to make it also check
+non-source-code files?
 
-Do we actually run the shim.efi code, or is it just there to
-be "verified" ?
+> -our $SrcFile    = qr{\.(?:(h|c)(\.inc)?|cpp|s|S|pl|py|sh)$};
+> +our $SrcFile =
+> +       qr{\.(?:(h|c|m)(\.inc)?|cpp|s|S|pl|py|sh|build|hx|in|json|plist|txt)$};
 
+If I run checkpatch on our .hx files, I get a lot of complaints
+about trailing whitespace after "\" characters. I have a vague
+memory that those are deliberate, though I forget the details.
+We shouldn't add a file type to this list if it's going to
+produce a lot of false positives.
+
+thanks
 -- PMM
 
