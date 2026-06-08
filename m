@@ -4,26 +4,26 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D4A0ACD8CA4
-	for <qemu-devel@archiver.kernel.org>; Mon,  8 Jun 2026 15:22:38 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7E3F9CD8C9D
+	for <qemu-devel@archiver.kernel.org>; Mon,  8 Jun 2026 15:22:41 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wWbn4-0001vp-S5; Mon, 08 Jun 2026 11:21:26 -0400
+	id 1wWbn2-0001vH-UG; Mon, 08 Jun 2026 11:21:24 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <joro@8bytes.org>) id 1wWbn2-0001uK-0l
- for qemu-devel@nongnu.org; Mon, 08 Jun 2026 11:21:24 -0400
-Received: from mail.8bytes.org ([2a01:238:42d9:3f00:e505:6202:4f0c:f051])
+ (Exim 4.90_1) (envelope-from <joro@8bytes.org>) id 1wWbn1-0001to-Dx
+ for qemu-devel@nongnu.org; Mon, 08 Jun 2026 11:21:23 -0400
+Received: from mail.8bytes.org ([85.214.250.239])
  by eggs.gnu.org with esmtp (Exim 4.90_1)
- (envelope-from <joro@8bytes.org>) id 1wWbmz-0007sn-SY
+ (envelope-from <joro@8bytes.org>) id 1wWbmz-0007sg-DC
  for qemu-devel@nongnu.org; Mon, 08 Jun 2026 11:21:23 -0400
 Received: from io.home.8bytes.org (p4ffe1d30.dip0.t-ipconnect.de
  [79.254.29.48])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mail.8bytes.org (Postfix) with ESMTPSA id C5AE5202948;
+ by mail.8bytes.org (Postfix) with ESMTPSA id 9BAFF202947;
  Mon,  8 Jun 2026 17:21:15 +0200 (CEST)
 From: =?UTF-8?q?J=C3=B6rg=20R=C3=B6del?= <joro@8bytes.org>
 To: Paolo Bonzini <pbonzini@redhat.com>,
@@ -33,16 +33,16 @@ Cc: philmd@linaro.org, marcel.apfelbaum@gmail.com, zhao1.liu@intel.com,
  mtosatti@redhat.com, Tom Lendacky <thomas.lendacky@amd.com>,
  qemu-devel@nongnu.org, kvm@vger.kernel.org, coconut-svsm@lists.linux.dev,
  joerg.roedel@amd.com
-Subject: [RFC PATCH 07/10] hw/core/machine: Add device-plane property
-Date: Mon,  8 Jun 2026 17:21:06 +0200
-Message-ID: <20260608152109.356783-8-joro@8bytes.org>
+Subject: [RFC PATCH 06/10] accel/kvm: Handle KVM_PLANE_EVENT_CREATE_CPU event
+Date: Mon,  8 Jun 2026 17:21:05 +0200
+Message-ID: <20260608152109.356783-7-joro@8bytes.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260608152109.356783-1-joro@8bytes.org>
 References: <20260608152109.356783-1-joro@8bytes.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a01:238:42d9:3f00:e505:6202:4f0c:f051;
- envelope-from=joro@8bytes.org; helo=mail.8bytes.org
+Received-SPF: pass client-ip=85.214.250.239; envelope-from=joro@8bytes.org;
+ helo=mail.8bytes.org
 X-Spam_score_int: -18
 X-Spam_score: -1.9
 X-Spam_bar: -
@@ -65,96 +65,138 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Joerg Roedel <joerg.roedel@amd.com>
 
-Add a property to the QEMU MachineState to specify the default plane
-to send device interrupts to.
+Implement the plane event handling infrastructure and handle the
+KVM_PLANE_EVENT_CREATE_CPU event.
 
+Co-developed-by: Tom Lendacky <thomas.lendacky@amd.com>
 Signed-off-by: Joerg Roedel <joerg.roedel@amd.com>
 ---
- hw/core/machine.c        | 22 ++++++++++++++++++++++
- include/hw/core/boards.h |  3 +++
- include/hw/core/qdev.h   |  1 +
- 3 files changed, 26 insertions(+)
+ accel/kvm/kvm-all.c   | 13 +++++++---
+ include/system/kvm.h  |  2 +-
+ target/i386/kvm/kvm.c | 57 +++++++++++++++++++++++++++++++++++++++++++
+ 3 files changed, 67 insertions(+), 5 deletions(-)
 
-diff --git a/hw/core/machine.c b/hw/core/machine.c
-index 0aa77a57e956..62ea86512645 100644
---- a/hw/core/machine.c
-+++ b/hw/core/machine.c
-@@ -1218,6 +1218,7 @@ static void machine_initfn(Object *obj)
-     ms->kernel_cmdline = g_strdup("");
-     ms->ram_size = mc->default_ram_size;
-     ms->maxram_size = mc->default_ram_size;
-+    ms->device_plane = 0;
- 
-     if (mc->nvdimm_supported) {
-         ms->nvdimms_state = g_new0(NVDIMMState, 1);
-@@ -1253,6 +1254,12 @@ static void machine_initfn(Object *obj)
-                                    "ACPI Serial Port Console Redirection "
-                                    "Table (spcr)");
- 
-+    /* Default Device Plane */
-+    object_property_add_uint8_ptr(obj, "device-plane", &ms->device_plane,
-+                                  OBJ_PROP_FLAG_READWRITE);
-+    object_property_set_description(obj, "device-plane",
-+                                    "Default plane to receive device IRQs");
-+
-     /* default to mc->default_cpus */
-     ms->smp.cpus = mc->default_cpus;
-     ms->smp.max_cpus = mc->default_cpus;
-@@ -1675,6 +1682,12 @@ void machine_run_board_init(MachineState *machine, const char *mem_path, Error *
-                                    "on", false);
-     }
- 
-+    if (machine->device_plane >= accel_nr_planes(machine)) {
-+        error_report("Invalid plane specified: %d (highest supported plane: %d)",
-+                     machine->device_plane, accel_nr_planes(machine) - 1);
-+        exit(EXIT_FAILURE);
-+    }
-+
-     accel_init_interfaces(ACCEL_GET_CLASS(machine->accelerator));
-     machine_class->init(machine);
-     phase_advance(PHASE_MACHINE_INITIALIZED);
-@@ -1761,6 +1774,15 @@ void qdev_machine_creation_done(void)
-     register_global_state();
+diff --git a/accel/kvm/kvm-all.c b/accel/kvm/kvm-all.c
+index dbfef63a84b0..c5fe6d189e62 100644
+--- a/accel/kvm/kvm-all.c
++++ b/accel/kvm/kvm-all.c
+@@ -573,11 +573,17 @@ static void kvm_alloc_vcpu_plane(CPUState *cpu, unsigned plane_id, int kvm_fd)
+     cpu->kvm_plane_state[plane_id] = p;
  }
  
-+uint8_t qdev_default_plane(void)
-+{
-+    if (current_machine != NULL) {
-+        return current_machine->device_plane;
-+    } else {
-+        return 0;
+-void kvm_create_vcpu_plane(CPUState *cpu, unsigned plane_id, int kvm_fd)
++void kvm_create_vcpu_plane(CPUState *cpu, unsigned plane_id)
+ {
+-    int vcpu_fd = cpu_kvm_plane(cpu, 0)->kvm_fd;
+-    int plane_fd = kvm_vm_plane_ioctl(cpu->kvm_state, plane_id, KVM_CREATE_VCPU, vcpu_fd);
++    X86CPU *x86_cpu = X86_CPU(cpu);
++    int plane_fd;
+ 
++    if (kvm_get_or_create_plane_fd(cpu->kvm_state, plane_id) < 0) {
++        fprintf(stderr, "Failed to create plane %d\n", plane_id);
++        abort();
 +    }
++
++    plane_fd = kvm_vm_plane_ioctl(cpu->kvm_state, plane_id, KVM_CREATE_VCPU, x86_cpu->apic_id);
+     if (plane_fd < 0) {
+         fprintf(stderr, "Failed to create plane vcpu\n");
+         abort();
+@@ -586,7 +592,6 @@ void kvm_create_vcpu_plane(CPUState *cpu, unsigned plane_id, int kvm_fd)
+     kvm_alloc_vcpu_plane(cpu, plane_id, plane_fd);
+ }
+ 
+-
+ /**
+  * kvm_create_vcpu - Gets a parked KVM vCPU or creates a KVM vCPU
+  * @cpu: QOM CPUState object for which KVM vCPU has to be fetched/created.
+diff --git a/include/system/kvm.h b/include/system/kvm.h
+index 16597333cfa5..24a21915366f 100644
+--- a/include/system/kvm.h
++++ b/include/system/kvm.h
+@@ -221,7 +221,7 @@ int kvm_vm_ioctl(KVMState *s, unsigned long type, ...);
+ int kvm_vm_plane_ioctl(KVMState *s, unsigned plane_id, unsigned long type, ...);
+ 
+ int kvm_get_or_create_plane_fd(KVMState *s, unsigned id);
+-void kvm_create_vcpu_plane(CPUState *cpu, unsigned plane, int kvm_fd);
++void kvm_create_vcpu_plane(CPUState *cpu, unsigned plane);
+ 
+ void kvm_flush_coalesced_mmio_buffer(void);
+ 
+diff --git a/target/i386/kvm/kvm.c b/target/i386/kvm/kvm.c
+index 9e352882c8c3..30fba9e75016 100644
+--- a/target/i386/kvm/kvm.c
++++ b/target/i386/kvm/kvm.c
+@@ -6524,6 +6524,60 @@ static int kvm_handle_hypercall(X86CPU *cpu, struct kvm_run *run)
+     return -EINVAL;
+ }
+ 
++static CPUState *kvm_get_cpu_by_apicid(CPUState *cpu, unsigned apic_id)
++{
++    CPU_FOREACH(cpu) {
++        X86CPU *x86_cpu = X86_CPU(cpu);
++        if (x86_cpu->apic_id == apic_id) {
++            return cpu;
++        }
++    }
++
++    return NULL;
 +}
 +
- static const TypeInfo machine_info = {
-     .name = TYPE_MACHINE,
-     .parent = TYPE_OBJECT,
-diff --git a/include/hw/core/boards.h b/include/hw/core/boards.h
-index b8dad0a1074d..d2d1336939ed 100644
---- a/include/hw/core/boards.h
-+++ b/include/hw/core/boards.h
-@@ -447,6 +447,9 @@ struct MachineState {
-      * Set to false by default for all regular use.
-      */
-     bool new_accel_vmfd_on_reset;
++static void create_plane_vcpu_cb(CPUState *cs, run_on_cpu_data data)
++{
++    int plane = data.host_int;
 +
-+    /* Default plane to receive device IRQs */
-+    uint8_t device_plane;
- };
++    kvm_create_vcpu_plane(cs, plane);
++}
++
++static int kvm_handle_plane_create_vcpu(CPUState *cpu, struct kvm_run *run)
++{
++    CPUState *target_cpu = NULL;
++    int plane = -EINVAL;
++
++    plane = run->plane_event.plane;
++    if (plane < 0) {
++        return plane;
++    }
++
++    target_cpu = kvm_get_cpu_by_apicid(cpu, run->plane_event.extra[0]);
++    if (target_cpu == NULL) {
++        return -EINVAL;
++    }
++
++    bql_lock();
++    run_on_cpu(target_cpu, create_plane_vcpu_cb, RUN_ON_CPU_HOST_INT(plane));
++    bql_unlock();
++
++    return 0;
++}
++
++static int kvm_handle_plane_event(CPUState *cpu, struct kvm_run *run)
++{
++    switch (run->plane_event.cause) {
++        case KVM_PLANE_EVENT_CREATE_VCPU:
++            return kvm_handle_plane_create_vcpu(cpu, run);
++        default:
++            fprintf(stderr, "KVM: unknown plane event %d\n", run->plane_event.cause);
++            break;
++    }
++
++    return -EINVAL;
++}
++
+ #define VMX_INVALID_GUEST_STATE 0x80000021
  
- /*
-diff --git a/include/hw/core/qdev.h b/include/hw/core/qdev.h
-index f99a8979ccb1..83ad1d5f1550 100644
---- a/include/hw/core/qdev.h
-+++ b/include/hw/core/qdev.h
-@@ -560,6 +560,7 @@ void qdev_simple_device_unplug_cb(HotplugHandler *hotplug_dev,
-                                   DeviceState *dev, Error **errp);
- void qdev_machine_creation_done(void);
- bool qdev_machine_modified(void);
-+uint8_t qdev_default_plane(void);
- 
- /**
-  * qdev_add_unplug_blocker: Add an unplug blocker to a device
+ int kvm_arch_handle_exit(CPUState *cs, struct kvm_run *run)
+@@ -6648,6 +6702,9 @@ int kvm_arch_handle_exit(CPUState *cs, struct kvm_run *run)
+             break;
+         }
+         ret = 0;
++	break;
++    case KVM_EXIT_PLANE_EVENT:
++        ret = kvm_handle_plane_event(cs, run);
+         break;
+     default:
+         fprintf(stderr, "KVM: unknown exit reason %d\n", run->exit_reason);
 -- 
 2.53.0
 
