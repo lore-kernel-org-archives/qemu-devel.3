@@ -4,60 +4,64 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 79641CD8C9D
-	for <qemu-devel@archiver.kernel.org>; Mon,  8 Jun 2026 13:26:51 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A2AD1CD8C92
+	for <qemu-devel@archiver.kernel.org>; Mon,  8 Jun 2026 13:26:52 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wWZzN-0000GN-UD; Mon, 08 Jun 2026 09:26:01 -0400
+	id 1wWZzH-0000Ev-HV; Mon, 08 Jun 2026 09:25:55 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <stefanha@redhat.com>)
- id 1wWZzI-0000FR-SD
- for qemu-devel@nongnu.org; Mon, 08 Jun 2026 09:25:56 -0400
+ id 1wWZzF-0000EB-Iu
+ for qemu-devel@nongnu.org; Mon, 08 Jun 2026 09:25:54 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <stefanha@redhat.com>)
- id 1wWZzH-0008Vl-G6
- for qemu-devel@nongnu.org; Mon, 08 Jun 2026 09:25:56 -0400
+ id 1wWZzD-0008T8-Tj
+ for qemu-devel@nongnu.org; Mon, 08 Jun 2026 09:25:53 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1780925154;
+ s=mimecast20190719; t=1780925150;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding;
- bh=+EEbiLf3OKcgyz9n1CRLnSbxD8pzXi7kZbFtz2Y50Og=;
- b=Y+kmGqmbHhAJjNOawGvOrKSWo4DJyffgoP3XEUh+Hza6W8/M/mqAQof4TAyi1EQTW3tdwJ
- yHuiWgLqAEUMneh1BxdbbWNTXA7bkBoO1rcgC90ctGA/HqJ0tSdt73pJLgBYt8vGLKDRNY
- wD9GJzKUVTH6TpqbRPO8xOtQ5xQ0ugU=
-Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
+ to:to:cc:cc:mime-version:mime-version:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=QacUtpu9mGw44ZmVTNI8OyXBWgeJQcc56jtqDPj9X3E=;
+ b=Dr0Rf2CBOcgYFL+VgzO9McPTGm4wBhljQpkOi9ilHdFRaunkSfxAy+7FRt0wxYd30T9oZE
+ E61MgF+f92n7r0V91TPYA1SqFvp6M9tmTdXSvKOfHGR36bxi++dbSNf8tlEf1n0cLaANyO
+ BfQDmNlacUSOap8K1HgYN08t50xcGdM=
+Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-394-Fw0Yikw-Mn-TVPZbkFN4kQ-1; Mon,
- 08 Jun 2026 09:25:51 -0400
-X-MC-Unique: Fw0Yikw-Mn-TVPZbkFN4kQ-1
-X-Mimecast-MFC-AGG-ID: Fw0Yikw-Mn-TVPZbkFN4kQ_1780925150
-Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-686-ycxv5AANNFSjZALPrM9ZoQ-1; Mon,
+ 08 Jun 2026 09:25:49 -0400
+X-MC-Unique: ycxv5AANNFSjZALPrM9ZoQ-1
+X-Mimecast-MFC-AGG-ID: ycxv5AANNFSjZALPrM9ZoQ_1780925147
+Received: from mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.111])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id B86A419560AA; Mon,  8 Jun 2026 13:25:50 +0000 (UTC)
+ by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id D6A8A195608F; Mon,  8 Jun 2026 13:25:46 +0000 (UTC)
 Received: from localhost (unknown [10.2.16.156])
- by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 38CC53008B3B; Mon,  8 Jun 2026 13:25:50 +0000 (UTC)
+ by mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id 0CC111800347; Mon,  8 Jun 2026 13:25:45 +0000 (UTC)
 From: Stefan Hajnoczi <stefanha@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: Fam Zheng <fam@euphon.net>, Stefan Hajnoczi <stefanha@redhat.com>,
  qemu-block@nongnu.org, Kevin Wolf <kwolf@redhat.com>,
- Hanna Reitz <hreitz@redhat.com>
-Subject: [PULL 0/2] Block patches
-Date: Mon,  8 Jun 2026 09:25:22 -0400
-Message-ID: <20260608132524.470459-1-stefanha@redhat.com>
-Content-Type: text/plain; charset="utf-8"
+ Hanna Reitz <hreitz@redhat.com>, Fiona Ebner <f.ebner@proxmox.com>,
+ qemu-stable@nongnu.org
+Subject: [PULL 1/2] block/io: fallback to bounce buffer if BLKZEROOUT is not
+ supported because of alignment
+Date: Mon,  8 Jun 2026 09:25:23 -0400
+Message-ID: <20260608132524.470459-2-stefanha@redhat.com>
+In-Reply-To: <20260608132524.470459-1-stefanha@redhat.com>
+References: <20260608132524.470459-1-stefanha@redhat.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.111
 Received-SPF: pass client-ip=170.10.133.124; envelope-from=stefanha@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: 8
@@ -83,34 +87,53 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The following changes since commit 3390aba56c354637eccd2d5ab5fd6efc2f026f06:
+From: Fiona Ebner <f.ebner@proxmox.com>
 
-  Merge tag 'qom-tests-pr-v2' of https://gitlab.com/marcandre.lureau/qemu into staging (2026-06-06 14:47:04 -0400)
+Commit 5634622bcb ("file-posix: allow BLKZEROOUT with -t writeback")
+enables the BLKZEROOUT ioctl when using 'writeback' cache, regressing
+certain 'qemu-img convert' invocations, because of a pre-existing
+issue. Namely, the BLKZEROOUT ioctl might fail with errno EINVAL when
+the request is shorter than the block size of the block device.
+Fallback to the bounce buffer, similar to when the ioctl is not
+supported at all, rather than treating such an error as fatal.
 
-are available in the Git repository at:
+Resolves: https://gitlab.com/qemu-project/qemu/-/issues/3257
+Resolves: https://bugzilla.proxmox.com/show_bug.cgi?id=7197
+Cc: qemu-stable@nongnu.org
+Signed-off-by: Fiona Ebner <f.ebner@proxmox.com>
+Message-ID: <20260105143416.737482-1-f.ebner@proxmox.com>
+[Added TODO comment describing a larger fix that could be implemented in
+the future.
+--Stefan]
+Signed-off-by: Stefan Hajnoczi <stefanha@redhat.com>
+---
+ block/io.c | 13 ++++++++++++-
+ 1 file changed, 12 insertions(+), 1 deletion(-)
 
-  https://gitlab.com/stefanha/qemu.git tags/block-pull-request
-
-for you to fetch changes up to 3f3ba1408b52a5ffc10096936451489fe7d066d7:
-
-  MAINTAINERS: remove Julia Suvorova from Linux io_uring (2026-06-08 08:38:30 -0400)
-
-----------------------------------------------------------------
-Pull request
-
-----------------------------------------------------------------
-
-Fiona Ebner (1):
-  block/io: fallback to bounce buffer if BLKZEROOUT is not supported
-    because of alignment
-
-Stefan Hajnoczi (1):
-  MAINTAINERS: remove Julia Suvorova from Linux io_uring
-
- MAINTAINERS |  1 -
- block/io.c  | 13 ++++++++++++-
- 2 files changed, 12 insertions(+), 2 deletions(-)
-
+diff --git a/block/io.c b/block/io.c
+index e8fb4ede4d..6c0bbdcf1e 100644
+--- a/block/io.c
++++ b/block/io.c
+@@ -1918,7 +1918,18 @@ bdrv_co_do_pwrite_zeroes(BlockDriverState *bs, int64_t offset, int64_t bytes,
+             assert(!bs->supported_zero_flags);
+         }
+ 
+-        if (ret == -ENOTSUP && !(flags & BDRV_REQ_NO_FALLBACK)) {
++        /*
++         * TODO The ret == -EINVAL && num < alignment case is a workaround for
++         * when request_alignment is 1 on files with cache=writeback. The Linux
++         * ioctl(BLKZEROOUT) requires block alignment and will fail with
++         * EINVAL. The block layer should align the request to
++         * write_zeroes_alignment instead of trying the syscall, failing, and
++         * falling back to a bounce buffer. Doing that is not easy so for now
++         * we use a bounce buffer:
++         * https://lore.kernel.org/qemu-devel/20260109120837.2772961-1-f.ebner@proxmox.com/
++         */
++        if ((ret == -ENOTSUP || (ret == -EINVAL && num < alignment)) &&
++            !(flags & BDRV_REQ_NO_FALLBACK)) {
+             /* Fall back to bounce buffer if write zeroes is unsupported */
+             BdrvRequestFlags write_flags = flags & ~BDRV_REQ_ZERO_WRITE;
+ 
 -- 
 2.54.0
 
