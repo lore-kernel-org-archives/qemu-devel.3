@@ -4,112 +4,109 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 42FE2CD8C92
-	for <qemu-devel@archiver.kernel.org>; Mon,  8 Jun 2026 15:38:59 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5F3EFCD8C9D
+	for <qemu-devel@archiver.kernel.org>; Mon,  8 Jun 2026 15:40:57 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wWc3g-0001Cy-8q; Mon, 08 Jun 2026 11:38:36 -0400
+	id 1wWc5e-0001r0-4O; Mon, 08 Jun 2026 11:40:38 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1wWc3d-0001CR-V8
- for qemu-devel@nongnu.org; Mon, 08 Jun 2026 11:38:34 -0400
-Received: from mail-yx1-xb133.google.com ([2607:f8b0:4864:20::b133])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1wWc3b-0004uo-7T
- for qemu-devel@nongnu.org; Mon, 08 Jun 2026 11:38:33 -0400
-Received: by mail-yx1-xb133.google.com with SMTP id
- 956f58d0204a3-6604176b575so3985886d50.1
- for <qemu-devel@nongnu.org>; Mon, 08 Jun 2026 08:38:30 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1780933110; cv=none;
- d=google.com; s=arc-20240605;
- b=MpmaZrMsnqYKZRnZxKD17cUHrNV5Y4blG77VLzweejM1enGlC8oLMkZfwLg53miq4V
- ZIx/LTX8TxcuHUroNY9z5Cj6KmZOcAIv764cSqkSajBATfwvqGT7cZazNjkFaCJRamqf
- S5jvI2QJAgfuWFbJ4SpaP/q5Jtd2y1rnzsWiLAQKK58o200LiXFF/f9ASTXdqjJnEzjA
- OsG0mSUQzx3tq42XAi88KiEL38MS0klVtf25jRiQsnPhs6W3X6vG6cViEhIlCBpUq1yK
- 2MovrYv96LRzH5FjRrKzHGjIAuffYTv3D8gG9pXfdB2guv3mCmf2cD9lboxRxGUaUwDf
- kc3Q==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
- s=arc-20240605; 
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:dkim-signature;
- bh=a4g+gkhBiLBRig2Q+JqCOCMKPSIeyA8keg+2S1dA8+I=;
- fh=opqnWuQ9axaTDnVV896x2DCbrS3lBUc5M9UTh/IaCZc=;
- b=DaDCYuulkLv1tHAGk917PgXGugSQYYpPJxLCmtys6HEGCaG6V4qgFUoGiSrEoQCTFO
- bYNfgsMko0r4JfFsl1uZTom8uGd319e5R3r7PeO9LGxQw80/DAYuBg/59fVWy2Hsezk/
- 7mCyfBanEKQ6RageKjaTZbypSsz/QswBjKJW+JtGYteENRGq/dzL6CxzTepsalfLTBv6
- pz165VvODF5O1Rn8tEmiM68oyCZeK9DNAQBuleRuZZkVSyboNFPzkmiYj8Osl3hkXQ3Q
- dBFHsDAVDeVM1s/FkNdLhzClOl/ZCn0X/kF1JqahzVkW01LHHOtP9Y/oKIhHhzY3Imw/
- tygw==; darn=nongnu.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
+ (Exim 4.90_1) (envelope-from <leonardi@redhat.com>)
+ id 1wWc5d-0001qs-Fm
+ for qemu-devel@nongnu.org; Mon, 08 Jun 2026 11:40:37 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <leonardi@redhat.com>)
+ id 1wWc5b-0005pb-La
+ for qemu-devel@nongnu.org; Mon, 08 Jun 2026 11:40:37 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1780933234;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=COYbRJUie3WL5fi0pN8P/LhnoecNN0vX72u89slDsfc=;
+ b=PzAMnyhdRfT76C2iMzqhQ0CaDnHS6gJDZkelqgPXZDQxuAiV2fu3DT8+GuM7kgMvNWarUW
+ eoDfUmlo4wHJxTv8OsQognb/R/UBT0PiCoCOJJZMMnNBaK0dNw7Sl2QtVaACHxd1N2E3JZ
+ NvG5/k32Hb5duhE6LaA6Rlkt2HsXEq8=
+Received: from mail-wr1-f72.google.com (mail-wr1-f72.google.com
+ [209.85.221.72]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-172-OKKtmNoYNzqgacYjylQYtg-1; Mon, 08 Jun 2026 11:40:33 -0400
+X-MC-Unique: OKKtmNoYNzqgacYjylQYtg-1
+X-Mimecast-MFC-AGG-ID: OKKtmNoYNzqgacYjylQYtg_1780933231
+Received: by mail-wr1-f72.google.com with SMTP id
+ ffacd0b85a97d-45eec2ba533so3065633f8f.3
+ for <qemu-devel@nongnu.org>; Mon, 08 Jun 2026 08:40:32 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1780933110; x=1781537910; darn=nongnu.org;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:from:to:cc:subject:date
- :message-id:reply-to;
- bh=a4g+gkhBiLBRig2Q+JqCOCMKPSIeyA8keg+2S1dA8+I=;
- b=YxAhQ4r0/QFZrOO1RNvAKaZfGP8ksHfTdGCGc8PZORAdmvO2c3DYl2JqzhRo3N8IAh
- Sd1ErmbVxoyf5TY/g9PmSvVMjOO7NtzN6HH3/xFB0SeF+O9bakjApTLI7KfaHASTt3uH
- c1fKZBvwIwYlhS4Q95vmX5mwTK7++X015kbH0h0I8wyffCaCxQ22vVGwP5EkjWS8Mepg
- vl07Oey2xYMjNW2y9XeB9kUN3yzO7jpPKQB8GRyUD+8E2HMZ5P+diBPomIGz3rC2a5Q+
- m614JlPqd6bL6wt2tlJIA1IWOsjZlBZml3m7AbTjsIfAYLpUvEVzd0/Kt+ajz3vj+Doa
- zpqQ==
+ d=redhat.com; s=google; t=1780933231; x=1781538031; darn=nongnu.org;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+ bh=COYbRJUie3WL5fi0pN8P/LhnoecNN0vX72u89slDsfc=;
+ b=Vq0j6ZSrAqS/4DyNcXjvXdlQOwrUX3uhs5+p0Oirk3nVwavbWysuI2+Og1qUtXClYa
+ 6aw4gm0Tir3O5gZZUW3Qpp8dmFTJj50Ar+AgRfgs2uKMHqDrqWkaUexeDmj0C6/9Go/h
+ NecIEgSE7kG5Fd8Q0FMDxTgQb0zrKtgkiEHrBx8CSR9GDGDNliwAL7KAuHaeTruSplWj
+ MuJGkJAAlHulQzADcM6p4NFTpk2NOLbmIPW7oSixsNxD0YBeJXmTx5vJPtpHnamo2Y5I
+ IUlMNW19kfcFllBuVVksRHJLka+ISXmVJTiYKbX6R/eJ3OF5r3hw6ZnYjCShUUBi14eM
+ qUDQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1780933110; x=1781537910;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to;
- bh=a4g+gkhBiLBRig2Q+JqCOCMKPSIeyA8keg+2S1dA8+I=;
- b=GyT+pBTrDB2mS9lZm8jjBatTAmZpsWgug+ThOKkkV+qCmWg8/Bi0+0QkInuyMI3YK9
- xaEoQRBO43pZ/1NWeA9Z/4JRqyE+bTcNmyk/YyIhSxPIErn5+WrpCpqxkDF1Q4DUKa0C
- 7qATaKGYlkGpkBovrfof+IttCOmKjrxJe1EdNTqGzl4VIzk5Jr84rg+lpkga03E/o9EG
- ne6C8H/Zg28qCb9Tf6wBKbwCwOBA79w+NYsgnT4aYuu3kyXiEg7ULyACJVVg03KAm1xX
- 6NL/8NQZcO/Cmw3QtO8vZa8sbLuPEhKWg5oc0ZFbWleajSPMNC7rexJaaZuLvxm8Eskc
- 11nw==
-X-Forwarded-Encrypted: i=1;
- AFNElJ82fpPLrRLeni5BLdSp9jud0jJl4ArsHkA4RiCgCqtHDQ7QLsEcKFEYHVuFTeQloLCCoAsN8Gpom6sK@nongnu.org
-X-Gm-Message-State: AOJu0YyXFEsEmuw8j0EzInfMf8SCEnneUx+/Z2+4poxlkRByln4MQFB2
- 16lCNc0VsgPzfUDnQKYjXCzjSNhDEKHcF9ebQ7FmG1Lai0YN+2lcK1yIkQUxQNLEYB8ueyA2fY4
- mB2u4ppPQuzPyGeoRRfwCRMnMF6LmwSmhjMCKSjEtvw==
-X-Gm-Gg: Acq92OEVUY5C3rIaevF3oT1UJCkZj2eBKsql1BTNGG2rukfhU5qXqP2XFM7dIOC1e/K
- vAl04bJyQmrjIrbJ65qfS249omanyh0O42xlDKzgq9lg0k1oghe8+uwMwa4/0emLbfLTYOnFJHw
- XsXZqJjoXievUp9TDJzs49a1n41Bu2Fa/ykt1M2TiKWXO3gKQsADfM/2acIItRdQ/98KmtoEZ7l
- Y4e0hsb9ZSCH3WzbKnZ3rdI0a8gInkuvhhZB9+IJMUBDcDUtBLVd1OQnB5fxSHWx+AJDcqF4nXs
- 7f8HeH+QGiLdqsBWfd1lWKXUaFTKw5qrrIJ/18NtOX9+xWbSHiHCs0hWPKUl6wETNcKcM2WT6Ae
- Lpg==
-X-Received: by 2002:a05:690e:4806:b0:651:b67e:6e58 with SMTP id
- 956f58d0204a3-66106e0451fmr9313996d50.7.1780933109280; Mon, 08 Jun 2026
- 08:38:29 -0700 (PDT)
-MIME-Version: 1.0
-References: <20260608-testing-macos-v1-1-42774498936f@meta.com>
- <CAFEAcA-aNmOmjhbVypCLpDVowTeSK-28aaY5X0jqRe32qmkqUQ@mail.gmail.com>
- <aibhMPHu6nbBT3Yi@redhat.com>
-In-Reply-To: <aibhMPHu6nbBT3Yi@redhat.com>
-From: Peter Maydell <peter.maydell@linaro.org>
-Date: Mon, 8 Jun 2026 16:38:17 +0100
-X-Gm-Features: AVVi8CeddfpxL76UMQrmz-LPkp7jsMtoZkEQMmKApcN7VPR1O6o1RGea93cI4CA
-Message-ID: <CAFEAcA98r4DxQbB+yiWKqnTGSzps+GGQ3gxFPLogBGTXY77jXQ@mail.gmail.com>
-Subject: Re: [PATCH] tests: strip macOS "-unsigned" suffix from binary name
-To: =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>
-Cc: Emmanuel Blot <eblot@meta.com>, qemu-devel@nongnu.org, 
- Thomas Huth <th.huth+qemu@posteo.eu>,
- =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@mailo.com>, 
- Fabiano Rosas <farosas@suse.de>, Laurent Vivier <lvivier@redhat.com>, 
+ d=1e100.net; s=20251104; t=1780933231; x=1781538031;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=COYbRJUie3WL5fi0pN8P/LhnoecNN0vX72u89slDsfc=;
+ b=QNbhTtkgfhsdHuKQim5gjCe+IK2MaaQJBLWyJsksmfS05k46RIt9bB89qdRaO/e2CU
+ /dWfcCrCrlV77zRYG6wVuH9EITV4HSfqenZkmhO5k7WxB406KTGGtK9MI6WXF4MV2Zd2
+ nTduDH4EBCK035Q+gNxyvawYAZSaX5j2VBBSv94VClJ9avkQ5kwjWwny+A1+QBUPTo/4
+ WFZBVbaiYeVr4WtjXkhgEyh8A0EqypXy5oXhYQfho2n2s39G7xp7PeuxLKwA2G1f8z1t
+ /K7qZ1CRF+QUY5dNn0t432MJZGc3xQyuI+uoTQHGUy1/bEATisYJ3xFB63V17BPaJfo8
+ oRXA==
+X-Gm-Message-State: AOJu0YyXi0qG8VhU/JmjolGeCwEZTmX1kn3ZsRMP88K0Qf2nnQ3GoOOH
+ Yo57e1+kxGd/xyk5EjQkPKQJ++RAascmnK09nM9J78sF+afkNmpBjAPUjEkM0txyx9dwubSCFfx
+ T/l9HCr4tEteDJK6hS3+s+DWBgQOgmFZZhh38RV4zrqmjlBGkU1NJl4X2
+X-Gm-Gg: Acq92OE5UZojDT6FNJmNKJnV3hjiu38vKSE474mHtmdl+p/SzKU2TSR96tUBfE9vcIC
+ P4Pyrkjy+Pn7rpPyrGKZ4mJTcx+kcljaMgx8+e/DRoEaWhIkwubKBeEBeGP2F+khj0ODzBYpIKd
+ /7Vqa78y+Q7+5WHQaCXFnGXicb4qJaGb2bLyC+/XbMIFRAoLQOrCQqBOb+E31bE3dHzMGdgVmdR
+ fdt+wqfpJSdfikIBd2SihVucCz2rC9mx7NqtfjVeMeUHmUirDsf0zWXmwr0GaKN02fH2tM6U5L0
+ 9C9CRKfdas3vZ9WXPbkp9G5qOyjGI3gzm1JpKSNSvpga3r1HJSIkOcKQStONmHsJbdSFRmQJu+C
+ 7P42WuGI7Tsd+DibskqiDeJTsxiYSOliIylu5pSxIBJqhUnDLLr+WvastPAG0AO06seTKgA==
+X-Received: by 2002:a05:600c:a011:b0:490:58ef:cea7 with SMTP id
+ 5b1f17b1804b1-490c25ee058mr276443015e9.22.1780933231325; 
+ Mon, 08 Jun 2026 08:40:31 -0700 (PDT)
+X-Received: by 2002:a05:600c:a011:b0:490:58ef:cea7 with SMTP id
+ 5b1f17b1804b1-490c25ee058mr276442415e9.22.1780933230876; 
+ Mon, 08 Jun 2026 08:40:30 -0700 (PDT)
+Received: from leonardi-redhat ([176.206.19.176])
+ by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-490bc4082c3sm388726345e9.13.2026.06.08.08.40.29
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Mon, 08 Jun 2026 08:40:30 -0700 (PDT)
+Date: Mon, 8 Jun 2026 17:40:21 +0200
+From: Luigi Leonardi <leonardi@redhat.com>
+To: Stefano Garzarella <sgarzare@redhat.com>
+Cc: qemu-devel@nongnu.org, "Michael S. Tsirkin" <mst@redhat.com>, 
  Paolo Bonzini <pbonzini@redhat.com>,
- =?UTF-8?B?QWxleCBCZW5uw6ll?= <alex.bennee@linaro.org>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2607:f8b0:4864:20::b133;
- envelope-from=peter.maydell@linaro.org; helo=mail-yx1-xb133.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+ Richard Henderson <richard.henderson@linaro.org>, 
+ Gerd Hoffmann <kraxel@redhat.com>, Ani Sinha <anisinha@redhat.com>,
+ Zhao Liu <zhao1.liu@intel.com>, Oliver Steffen <osteffen@redhat.com>
+Subject: Re: [PATCH 2/2] igvm: Fill device tree IGVM parameter field on x86_64
+Message-ID: <aibfxMaqNea6Y2j0@leonardi-redhat>
+References: <20260608-microvm_device_tree-v1-0-730874ad0008@redhat.com>
+ <20260608-microvm_device_tree-v1-2-730874ad0008@redhat.com>
+ <aibRJYujhIGXExms@sgarzare-redhat>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii; format=flowed
+Content-Disposition: inline
+In-Reply-To: <aibRJYujhIGXExms@sgarzare-redhat>
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=leonardi@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -24
+X-Spam_score: -2.5
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.445,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -125,58 +122,114 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Mon, 8 Jun 2026 at 16:35, Daniel P. Berrang=C3=A9 <berrange@redhat.com> =
-wrote:
+On Mon, Jun 08, 2026 at 04:50:02PM +0200, Stefano Garzarella wrote:
+>On Mon, Jun 08, 2026 at 11:37:47AM +0200, Luigi Leonardi wrote:
+>>Coconut SVSM, with the upcoming device tree support[1], will use
+>>the IGVM device tree parameter to discover virtio-mmio and ISA serial
+>>devices instead of relying on the fw_cfg interface, which is
+>>QEMU-specific.
+>>
+>>The IGVM parameter handler is implemented for the i386 machine
+>>target and stubbed for all others.
+>>
+>>[1] https://github.com/coconut-svsm/svsm/pull/1006
+>>
+>>Signed-off-by: Luigi Leonardi <leonardi@redhat.com>
+>>---
+>>backends/igvm.c       |  2 ++
+>>include/system/igvm.h |  2 ++
+>>stubs/igvm.c          |  6 ++++++
+>>target/i386/igvm.c    | 36 ++++++++++++++++++++++++++++++++++++
+>>4 files changed, 46 insertions(+)
+>>
+>>diff --git a/backends/igvm.c b/backends/igvm.c
+>>index c347d0c17e..9c6bee4add 100644
+>>--- a/backends/igvm.c
+>>+++ b/backends/igvm.c
+>>@@ -130,6 +130,8 @@ static struct QIGVMHandler handlers[] = {
+>>      qigvm_initialization_guest_policy },
+>>    { IGVM_VHT_MADT, IGVM_HEADER_SECTION_DIRECTIVE,
+>>      qigvm_directive_madt },
+>>+    { IGVM_VHT_DEVICE_TREE, IGVM_HEADER_SECTION_DIRECTIVE,
+>>+      qigvm_directive_device_tree },
+>>};
+>>
+>>static int qigvm_handler(QIgvm *ctx, uint32_t type, Error **errp)
+>>diff --git a/include/system/igvm.h b/include/system/igvm.h
+>>index 64d3542311..d39f3d55f1 100644
+>>--- a/include/system/igvm.h
+>>+++ b/include/system/igvm.h
+>>@@ -32,5 +32,7 @@ int qigvm_x86_set_vp_context(void *data, int index,
+>> *  IGVM parameter handlers
+>> */
+>>int qigvm_directive_madt(QIgvm *ctx, const uint8_t *header_data, Error **errp);
+>>+int qigvm_directive_device_tree(QIgvm *ctx, const uint8_t *header_data,
+>>+                                Error **errp);
+>>
+>>#endif
+>>diff --git a/stubs/igvm.c b/stubs/igvm.c
+>>index 9e9f683fc9..b4d533ad24 100644
+>>--- a/stubs/igvm.c
+>>+++ b/stubs/igvm.c
+>>@@ -29,3 +29,9 @@ int qigvm_directive_madt(QIgvm *ctx, const uint8_t *header_data, Error **errp)
+>>{
+>>    return -1;
+>>}
+>>+
+>>+int qigvm_directive_device_tree(QIgvm *ctx, const uint8_t *header_data,
+>>+                                Error **errp)
+>>+{
+>>+    return -1;
 >
-> On Mon, Jun 08, 2026 at 04:29:47PM +0100, Peter Maydell wrote:
-> > On Mon, 8 Jun 2026 at 16:25, Emmanuel Blot <eblot@meta.com> wrote:
-> > >
-> > > On macOS, plain QEMU binaries are named qemu-system-<arch>-unsigned.
-> > >
-> > > In libqtest, qtest_get_arch() extracts the architecture by splitting
-> > > after "-system-", which yields "arm-unsigned" instead of "arm".  This
-> > > prevents the QOS graph from matching any machine node, causing all
-> > > QOS-based tests to be silently skipped.
-> > >
-> > > In the functional test framework, the same suffix causes the arch to
-> > > be parsed as "unsigned", leading to wrong output directories and
-> > > teardown failures.
-> > >
-> > > Strip the "-unsigned" suffix on both code paths.
-> > >
-> > > Signed-off-by: Emmanuel Blot <eblot@meta.com>
-> > > ---
-> > > Address issues with liqtest and functional test framework when run fr=
-om
-> > > a macOS host.
-> > >
-> > > Unsigned binaries on macOS may be appended an `-unsigned` suffix, whi=
-ch
-> > > confuse these components that rely on the binary name to recover the
-> > > guest architecture.
-> >
-> > I still think this not the right thing to do. The "make" process
-> > on macos should produce and sign the binary in-place in the
-> > build tree, so that users and test cases don't have to care
-> > about this macos specific weirdness. (If the signing is
-> > location-specific and we need to sign again for "make install"
-> > that's fine. But we should produce a working binary with the
-> > usual name in the build tree, not a non-working one or one with a
-> > nonstandard name.)
+>This is pre-existing in the other stubs, so maybe should be fixed in 
+>another patch, but IMO we should set errp, like we do in other files 
+>in stubs/ (e.g. monitor-internal.c, qmp*.c, etc.)
 >
-> Yes, I was just about to write similar when I saw your message.
-> We should not have this custom "-unsigned" name  in the build
-> tree as specialcases like this break too many expectations,
-> especially when most devs aren't ever testing for macOS and so
-> won't see the special case.
+>I mean something like:
+>
+>    error_setg(errp, "IGVM not supported on this platform");
+>
 
-I think it's OK to have the -unsigned binary as an interim step,
-where we compile to qemu-foo-unsigned and then immediately sign
-to produce qemu-foo. The problem is that "make" is for some reason
-not actually doing the signing step. Alex notes in that other
-thread that you can make it do the signing part by manually
-running "make qemu-system-aarch64". We just don't have this
-working correctly so that "make all" does it.
+Yep, I will send another patch.
 
--- PMM
+>>+}
+>>diff --git a/target/i386/igvm.c b/target/i386/igvm.c
+>>index f41b498b89..13db6e9be0 100644
+>>--- a/target/i386/igvm.c
+>>+++ b/target/i386/igvm.c
+>>@@ -11,6 +11,8 @@
+>>
+>>#include "qemu/osdep.h"
+>>
+>>+#include <libfdt.h>
+>>+
+>>#include "cpu.h"
+>>#include "hw/i386/e820_memory_layout.h"
+>>#include "hw/i386/acpi-build.h"
+>>@@ -210,3 +212,37 @@ int qigvm_directive_madt(QIgvm *ctx, const uint8_t *header_data, Error **errp)
+>>    g_array_free(madt, true);
+>>    return result;
+>>}
+>>+
+>>+/*
+>>+ * Process device tree IGVM parameter
+>>+ */
+>>+int qigvm_directive_device_tree(QIgvm *ctx, const uint8_t *header_data,
+>>+                                Error **errp)
+>>+{
+>>+    const IGVM_VHS_PARAMETER *param = (const IGVM_VHS_PARAMETER *)header_data;
+>>+    QIgvmParameterData *param_entry;
+>>+    uint32_t fdt_size;
+>>+
+>>+    /* Find the parameter area that should hold the device tree data */
+>
+>This comment is a bit pointless; IMHO, we should explain why we return 
+>success if we can't find the device tree area.
+
+Good point: in every place where we used `qigvm_find_param_entry` we
+have this behaviour. I don't think it makes too much sense because it's
+probably due to a malformed igvm-file. WDYT?
+
+Luigi
+
 
