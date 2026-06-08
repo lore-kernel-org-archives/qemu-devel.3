@@ -4,110 +4,112 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B8678CD8C9D
-	for <qemu-devel@archiver.kernel.org>; Mon,  8 Jun 2026 16:06:14 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id AE29DCD8C92
+	for <qemu-devel@archiver.kernel.org>; Mon,  8 Jun 2026 16:06:23 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wWcTz-0003xG-4b; Mon, 08 Jun 2026 12:05:47 -0400
+	id 1wWcUT-00042B-4J; Mon, 08 Jun 2026 12:06:18 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1wWcTp-0003wS-Ib
- for qemu-devel@nongnu.org; Mon, 08 Jun 2026 12:05:39 -0400
-Received: from mail-ej1-x636.google.com ([2a00:1450:4864:20::636])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1wWcTl-0006cP-Fu
- for qemu-devel@nongnu.org; Mon, 08 Jun 2026 12:05:36 -0400
-Received: by mail-ej1-x636.google.com with SMTP id
- a640c23a62f3a-bec405a6ea5so652471966b.0
- for <qemu-devel@nongnu.org>; Mon, 08 Jun 2026 09:05:31 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1780934730; cv=none;
- d=google.com; s=arc-20240605;
- b=EJ1bnWG6K9rUoMx3xG14hFAvPR/kgOHDpwL4nSuVHcsYMlx8G+wpNRgvE6cbLW3RHv
- Sw48NwlMye0DaBE6aFTtUBhKLZrINesPTy1vr5FZtFmTqUaFIZFqm9T/oArxJe2T03AP
- 6yHqzCxVBb/Dw5DlPAv6dT8Br8DnsjG2JY+YCCCLzLsImudv56B34zqARLj0W5frdmA1
- QYwUKbJX76rqGYoBg5EmNLGmSeK3hbRz+qw+AMJ0yXaKS2elnDYECfj6VFcgllDzJvWf
- 3HlrFnKYCVdi+DfYFU94Yzm+n20684xSdnFWWZ1oV+VwK7vMD+26SXebQ03tLZvFjK2R
- x0SA==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
- s=arc-20240605; 
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:dkim-signature;
- bh=BRgT605k8dfAx+YdtLK8ADrnknINr0SKeKiA4MiO6GQ=;
- fh=862SatUZa+S3PxnsjY378FtwpY16se653fzzPvFU7oA=;
- b=SKx2O5DeFP0/Ng5KnI+kV7Ip4S6dcB0zFTUwtYXrztj62eZC5wUP2a1KwvMiU/WE6k
- 4qBJwUtiMfXwiHTvhnBtz7HloVxV9HJQnpaBL7ZmkHYTFcNF2dGo69uPfLiO+gt5tdCJ
- nj7oianjs9PukTKeMf6sNubUWVmlGZKDnu2sQcPvSzPE8gjfWU/kWQYkLXPZGhT4kx8E
- o0jhoY17HuYlEdHnO8QykYlETmtxp+56c4ILfg6O9SGI/OTnEa8eUoXIWEn9vbxUCO2o
- 8dWNym65iZd738VnXGuDUkKc3B8HniSqHOjMxGxMcJcoGMtJsEmK9nkbS+Eo602F4ytJ
- bIww==; darn=nongnu.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1780934730; x=1781539530; darn=nongnu.org;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=BRgT605k8dfAx+YdtLK8ADrnknINr0SKeKiA4MiO6GQ=;
- b=FQuipSsobjwTdcygJ4bBVRwW+4vnOhhK1XN6s5QR4TKZhvSePKfbHys07yqkaR6KAa
- PoEtkgCuNbhpeQ1oMxDaUCIgSUS21zOkc0IJzO8I2PJa9uF7giewU+FCKLyjoFZCZE/H
- goiRwBKbTKVwEUG8hXAajf0bofiUt0Ch9mLPoQVWiNGpx0j5jnOx50Vc3z/Q+g1ROPIa
- gGhw1qPoI1wV5cH4B+zf/hcp9umfKiucl350st7QhUUnSQLcGo0R3UVZ5q9QquzWUj9w
- TfT+oUg2uQM0xkT7qKfokw2QVB84xYKLeOr8repbU0/F/QrYFeh5ER7BvKHZa5NOpInu
- CMTA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1780934730; x=1781539530;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=BRgT605k8dfAx+YdtLK8ADrnknINr0SKeKiA4MiO6GQ=;
- b=HDL4Bn3qXyMUZ8FxGVuBdHCaNgp+pgyp9XIi0fYhPLD9BjqZ1benhohLc8EqHVz8Y5
- Mb+sYlZmdiwbWLzhR+XHlrniDWtsmhhbJH00+5pCMMV1KCbZXVyXjPhj2us4QIt/62rt
- wE/qB3M4ety/v2EhBKVYvHc17BIgNBjYbcYsi+fnCiFd67yGl2mMQN6eGpH/SglEA+Cc
- DFeI0KVtDEzg+53Hf0m/UmEtC1IKtVMSLWrDZ9jvxbCNgG95LjRtouFiO1z+wBb1DpSr
- 97SK7g6cxKRjao7ZLrsaAhAnqgRglU8P1a322pvO9GeJz3n2gUzR9QDznNkwaJCP5KwD
- DYDw==
-X-Forwarded-Encrypted: i=1;
- AFNElJ8Dnwg6qREKprSHDuKrYa0lMbeillwRhWpse1+O4cu6WYaqqiFuWqQvEPCYN66XJVmxg+y3PKEpIYhG@nongnu.org
-X-Gm-Message-State: AOJu0YyUyOJFstDJMjXGRTiod/rLCAFPuW+acrjxxBg6yxsEgUJ7LABO
- D03DVJilQ1FCps33+qZDVuUPb6p4+Spw2t1gQlfZNmQsZPsE3h9zSNijH4mfX9fNzfn8pMfPVS4
- t80+kG5FZSTKJJm//YZ48m17/1PQF3sFQsDriEFpiKQ==
-X-Gm-Gg: Acq92OE1K2HnqwmRj8RgCc9tdct7+x/KeHH8E45DZ+6hhBD9Alhw9G1/WS96IzrTmQ9
- 5XTe6tq8n76SyCP6weDrRwFWzSYaltPvtl6jE7uFunB0frYNnztOxJ+oiE9ovUXiHKLuezPPr0+
- 0Bwmi1mT8SOMMxf5iEz4m0L8IO1J+kwnMDp34QMxpCWYl2z28nufViRnS0Vqg3k0vFSfJiQUbyY
- uzmFjG7ClDh2TLGrDmqBDetcYVdwUz/4lQ3eDogXTG1ICHx4BH07laGgbuBScvX+69jbkvvcMzH
- 5kcMO0R/bv+T+LpNOPDB8RKH66k726zUjWqjZO5vkkUWp2rfddnzI2b9K1h6ULx/5xdSj0OFfRq
- zxg==
-X-Received: by 2002:a17:907:a49:b0:bed:19af:f8aa with SMTP id
- a640c23a62f3a-bf37057a9a2mr798173666b.13.1780934729535; Mon, 08 Jun 2026
- 09:05:29 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
+ id 1wWcUJ-0003z7-HW
+ for qemu-devel@nongnu.org; Mon, 08 Jun 2026 12:06:08 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
+ id 1wWcUG-0006hp-9D
+ for qemu-devel@nongnu.org; Mon, 08 Jun 2026 12:06:07 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1780934756;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
+ bh=ujR843trII2bv3A0tTWm9dqZAw/R+5zr8OxmEk+g53M=;
+ b=ORnNVH+g58YEZULmbNqIpg8NbV3IvlC1eEh/TnjaRPrOBmuBw8wPet24aba8qn7XMh8bxT
+ JESS4s9/N0no7r/5QfRYma4DnaaPW7A8O6z29KgDGKOrJe1GC00q674W6vwMSAjO9j2Wv+
+ hvSpfBqd8W5nt9pCZ3ZfXAkiirDDG6c=
+Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-283-vUM5-sK8PwOU5iZWPYQWjQ-1; Mon,
+ 08 Jun 2026 12:05:43 -0400
+X-MC-Unique: vUM5-sK8PwOU5iZWPYQWjQ-1
+X-Mimecast-MFC-AGG-ID: vUM5-sK8PwOU5iZWPYQWjQ_1780934742
+Received: from mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.111])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 831FC1955DCE; Mon,  8 Jun 2026 16:05:41 +0000 (UTC)
+Received: from [10.44.48.99] (unknown [10.44.48.99])
+ by mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id E660D18005B8; Mon,  8 Jun 2026 16:05:38 +0000 (UTC)
+Message-ID: <c189e708-f9ac-4ed1-ad93-04d8916afac3@redhat.com>
+Date: Mon, 8 Jun 2026 18:05:34 +0200
 MIME-Version: 1.0
-References: <20260529114723.42040-1-peter.maydell@linaro.org>
- <20260529114723.42040-18-peter.maydell@linaro.org>
- <745e66c7-2a9b-4185-bae7-77e10623332b@linux.dev>
- <20260607182221.4357-1-wrigjl@proton.me>
- <CAFEAcA-xEaA2LM=17Q1pKOF6L=rHhaDimXeSmLe=BtDqeaBeFA@mail.gmail.com>
- <aibmIdorcTobj2yo@Jasons-MacBook-Pro.local>
-In-Reply-To: <aibmIdorcTobj2yo@Jasons-MacBook-Pro.local>
-From: Peter Maydell <peter.maydell@linaro.org>
-Date: Mon, 8 Jun 2026 17:05:14 +0100
-X-Gm-Features: AVVi8CcssVn5ksc4UvVhWrtATM1q7vJrWv_84FJTdcJC5zLEdrISwTvHqaiwFWU
-Message-ID: <CAFEAcA85HahxFXoDVW_xBZEtG2SUd_3PseYLrpUXE6P_Hb_5mA@mail.gmail.com>
-Subject: Re: [PATCH] target/arm/hvf: manually sync ID_AA64ISAR0_EL1 on vCPU
- init
-To: "Jason L. Wright'" <wrigjl@proton.me>
-Cc: agraf@csgraf.de, qemu-arm@nongnu.org, qemu-devel@nongnu.org, 
- zenghui.yu@linux.dev, richard.henderson@linaro.org
-Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2a00:1450:4864:20::636;
- envelope-from=peter.maydell@linaro.org; helo=mail-ej1-x636.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v2] memory/ramblock: Fix clear of mru_block on possible
+ race condition
+To: Peter Xu <peterx@redhat.com>, qemu-devel@nongnu.org
+Cc: Juraj Marcin <jmarcin@redhat.com>,
+ =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@mailo.com>,
+ =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ Fabiano Rosas <farosas@suse.de>, Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
+References: <20260604133429.1268084-1-peterx@redhat.com>
+Content-Language: en-US
+From: Paolo Bonzini <pbonzini@redhat.com>
+Autocrypt: addr=pbonzini@redhat.com; keydata=
+ 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
+In-Reply-To: <20260604133429.1268084-1-peterx@redhat.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.111
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=pbonzini@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: 8
+X-Spam_score: 0.8
+X-Spam_bar: /
+X-Spam_report: (0.8 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.445,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_SBL_CSS=3.335, SPF_HELO_PASS=-0.001,
+ SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -123,122 +125,84 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Mon, 8 Jun 2026 at 16:56, Jason L. Wright' <wrigjl@proton.me> wrote:
->
-> On Mon, Jun 08, 2026 at 02:07:03PM +0100, Peter Maydell wrote:
-> > On Sun, 7 Jun 2026 at 19:22, Jason Wright <wrigjl@proton.me> wrote:
-> > >
-> > > Commit 887eaa8a29 ("target/arm: implement FEAT_RNG_TRAP for RNDR/RNDRRS")
-> > > gave ID_AA64ISAR0_EL1 a readfn so the RNDR field can reflect SCR_EL3.TRNDR
-> > > at read time, and marked the cpreg ARM_CP_NO_RAW in the system-emulation
-> > > path.  HVF then trips its hvf_arch_init_vcpu() assertion that no ID
-> > > register in hvf_sreg_list[] is NO_RAW, aborting on boot on Apple Silicon:
-> > >
-> > >   Assertion failed: (!(ri->type & ARM_CP_NO_RAW)),
-> > >   function hvf_arch_init_vcpu, file hvf.c, line 1442.
-> > >
-> > > Reproduce with:
-> > >
-> > >   qemu-system-aarch64 -M virt,accel=hvf -cpu host \
-> > >                       -nographic -display none -bios /dev/null
-> > >
-> > > Mirror the existing treatment of ID_AA64PFR0_EL1: move
-> > > HV_SYS_REG_ID_AA64ISAR0_EL1 into the SYNC_NO_RAW_REGS block in
-> > > sysreg.c.inc so the assert loop skips it, and push QEMU's view of the
-> > > register to the vCPU at init time.  HVF does not expose EL3, so
-> > > SCR_EL3.TRNDR is never set and the readfn is functionally static there.
-> > >
-> > > Reported-by: Zenghui Yu <zenghui.yu@linux.dev>
-> > > Fixes: 887eaa8a29 ("target/arm: implement FEAT_RNG_TRAP for RNDR/RNDRRS")
-> > > Signed-off-by: Jason Wright <wrigjl@proton.me>
-> > > ---
-> > >  target/arm/hvf/hvf.c        | 4 ++++
-> > >  target/arm/hvf/sysreg.c.inc | 2 +-
-> > >  2 files changed, 5 insertions(+), 1 deletion(-)
-> > >
-> > > diff --git a/target/arm/hvf/hvf.c b/target/arm/hvf/hvf.c
-> > > index d88cbe7c82..afa1120c8a 100644
-> > > --- a/target/arm/hvf/hvf.c
-> > > +++ b/target/arm/hvf/hvf.c
-> > > @@ -1485,6 +1485,10 @@ int hvf_arch_init_vcpu(CPUState *cpu)
-> > >      ret = hv_vcpu_set_sys_reg(cpu->accel->fd, HV_SYS_REG_ID_AA64PFR0_EL1, pfr);
-> > >      assert_hvf_ok(ret);
-> > >
-> > > +    ret = hv_vcpu_set_sys_reg(cpu->accel->fd, HV_SYS_REG_ID_AA64ISAR0_EL1,
-> > > +                              GET_IDREG(&arm_cpu->isar, ID_AA64ISAR0));
-> > > +    assert_hvf_ok(ret);
-> > > +
-> >
-> > For ID_AA64PFR0_EL1, we do "read the value from hvf, update it,
-> > write it back", and we do not either read or write the isar.idregs[]
-> > entry for it.
-> >
-> > For ID_AA64MMFR0_EL1, we read the hvf value into the isar.idregs[]
-> > array entry, update it there, and write it back to hvf.
-> >
-> > For ID_AA64ISAR0_EL1, we write whatever is in the isar.idregs[]
-> > array entry into hvf.
-> >
-> > Why do we do three different things for these three registers ?
-> >
-> I think it's each call doing the minimum work required for that
-> register.
->
-> MIDR_EL1 / MPIDR_EL1 are QEMU-defined identity values; HVF has
-> nothing useful to contribute, so we just write.
+On 6/4/26 15:34, Peter Xu wrote:
+> The race condition was not reported in any real bug, but I found it while
+> reviewing some relevant chnages from Akihiko [1].  It's not clear if
+> there's any way to reproduce it, so far it's only theoretical.  Hence
+> there's also no Fixes tag attached.  There's also no need to copy stable
+> until we have a solid reproducer.
+> 
+> Currently, mru_block might still points to ramblocks that are removed if
+> below race condition happens:
+> 
+>    Reader A                              Writer
+>    --------                              ------
+>    rcu_read_lock()
+>    walk list, find block X
+>                                          QLIST_REMOVE_RCU(X)
+>                                          qatomic_set(&mru_block, NULL)
+>                                          call_rcu(X, reclaim_ramblock)
+>    qatomic_set(&mru_block, X)  <----------- overwrites NULL
+>    rcu_read_unlock()
+>                                          grace period ends, X freed
+> 
+>    Reader C
+>    --------
+>    rcu_read_lock()
+>    qatomic_rcu_read(&mru_block) -> X
+>    Read X's block->offset ...  <----------- UAF
+> 
+> To fix it, we can introduce a nested RCU free for reset of the mru_block
+> field, and only free the ramblock until the 2nd RCU call.
 
-These don't have isar.idregs[] entries either, so it makes sense
-that they're not quite the same.
+There is a version field in RAMList.  Maybe we need mru_version too?
 
-> ID_AA64PFR0_EL1 needs HVF's value as the base (host feature set)
-> and then ORs in the GIC sysreg-iface bit, which depends on
-> env->gicv3state runtime overlay, hence the get/modify/set.
+- reader A reads version before starting the list walk, then writes 
+mru_version and mru_block
 
-But why do we not update isar.idregs[] to match ?
+- writers update version and do not even have to clear mru_block
 
-> ID_AA64MMFR0_EL1 also needs HVF's value as the base, and the
-> modification (clamping PARANGE to the configured IPA size)
-> consults isar.idregs[], so we read into idregs[] before clamping
-> and then write back.
+- new readers ignore mru_block if mru_version != version
 
-But why does the modification consult isar.idregs[] rather than
-taking a value that it's passed in as an argument ?
+This works, but there is a snag:
 
-> ID_AA64ISAR0_EL1 in this patch has no runtime overlay on the HVF
-> path: SCR_EL3.TRNDR is permanently 0 since HVF does not expose
-> EL3, so the readfn is a constant equal to
-> isar.idregs[ID_AA64ISAR0_EL1_IDX], which was already seeded from
-> the host during realize.
+     reader A (MRU parts elided, assuming a miss)
+     --------------------------------------------
+     load_acquire version // load version before walking list
+     walk list
+     ...
 
-But if the values in isar.idregs[] are seeded from HVF during
-realize, why do we not trust the isar.idregs[] value when we're
-handling ID_AA64PFR0_EL1?
+             writer B
+             -----------------------
+             // like seqcount_write_begin
+             store version++
+             smp_wmb();
+             // ----
+             QLIST_REMOVE_RCU
+             store release version++  // like seqcount_write_end
 
-> The three methods track different requirements, so I matched
-> the closest existing pattern for ID_AA64ISAR0_EL1 and left
-> the others alone.
+     // these two must be atomic!
+     store release mru_version = version & ~1, mru_block = block
 
-It seems to me that you've added a third thing that's different
-from either of the ways that we handle existing ID registers
-with an isar.idregs[] field.
+     reader C (MRU parts shown)
+     --------------------
+     load_acquire mru_version    // like seqcount_read_begin
+     load mru_block
+     // like seqcount_read_retry
+     smp_rmb()
+     load_acquire version
+     // ----
+     if block == NULL || version != mru_version || block mismatch
+       walk list
 
-I think we need to figure out:
+In other words, the seqcount retry check compares the current version of 
+the list against the one *stored by the previous reader*.
 
-(1) can we trust that the isar.idregs[] values at this point
-are the ones that hvf uses? If so we don't need to re-read
-the hvf values. If we can't trust them we should consistently
-read the hvf values.
+The snag is that torn writes of the (version, block) pair are a problem, 
+so the store of mru_version and mru_block must be atomic and that 
+requires CONFIG_ATOMIC128.  Maybe avoid MRU altogether if it's not 
+available, and if it is use qatomic_read__nocheck/qatomic_set__nocheck?
 
-(2) do we need to update the isar.idregs[] values when we
-modify the values to write back to hvf? If so, we should
-do it consistently for all these regs. If not, we should
-not update any of them.
+Paolo
 
-Currently ID_AA64PFR0_EL1 neither trusts isar.idregs[] nor
-updates it; ID_AA64MMFR0_EL1 does not trust isar.idregs[]
-but does update it; and ID_AA64ISAR0_EL1 trusts isar.idregs[]
-and has no need to update it.
-
-thanks
--- PMM
 
