@@ -4,70 +4,145 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 14357CD8C9D
-	for <qemu-devel@archiver.kernel.org>; Mon,  8 Jun 2026 16:54:03 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E1422CD6E79
+	for <qemu-devel@archiver.kernel.org>; Mon,  8 Jun 2026 16:54:20 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wWdD7-000149-Lg; Mon, 08 Jun 2026 12:52:25 -0400
+	id 1wWdEd-0003e2-4W; Mon, 08 Jun 2026 12:53:59 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <kwolf@redhat.com>) id 1wWdD5-000136-G6
- for qemu-devel@nongnu.org; Mon, 08 Jun 2026 12:52:23 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <pierrick.bouvier@oss.qualcomm.com>)
+ id 1wWdEa-0003Uw-Jv
+ for qemu-devel@nongnu.org; Mon, 08 Jun 2026 12:53:56 -0400
+Received: from mx0a-0031df01.pphosted.com ([205.220.168.131])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <kwolf@redhat.com>) id 1wWdD3-0007Or-DO
- for qemu-devel@nongnu.org; Mon, 08 Jun 2026 12:52:23 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1780937540;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=LE8c/pl/LqdqddNHJP6y9NruhA7u8u6MoJm+ZyEsBZQ=;
- b=ZqkSsBKKTVtzf4AFE8lNElvkpKiBD7w7ApH4y5gAXvU+VhPaSEbfS7rC5COwe+j7GLavY5
- GgGE7XapdkjZBhJhNAki1WQ/pnFhGARqAGcf+d9c4AmHFdVypSR7E075i/cbSW0WA0w5QF
- EP9+PLk3zMOlejXJ9mao7AIThhWksMg=
-Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-563-1lUSYJzcMbu6YdyIOp9neA-1; Mon,
- 08 Jun 2026 12:52:17 -0400
-X-MC-Unique: 1lUSYJzcMbu6YdyIOp9neA-1
-X-Mimecast-MFC-AGG-ID: 1lUSYJzcMbu6YdyIOp9neA_1780937536
-Received: from mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.17])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 433621955F0B; Mon,  8 Jun 2026 16:52:16 +0000 (UTC)
-Received: from merkur.fritz.box (unknown [10.44.50.32])
- by mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id DC82419540CB; Mon,  8 Jun 2026 16:52:14 +0000 (UTC)
-From: Kevin Wolf <kwolf@redhat.com>
-To: qemu-block@nongnu.org
-Cc: kwolf@redhat.com,
-	stefanha@redhat.com,
-	qemu-devel@nongnu.org
-Subject: [PULL 2/8] qemu-img: add sub-command --remove-all to 'qemu-img bitmap'
-Date: Mon,  8 Jun 2026 18:52:01 +0200
-Message-ID: <20260608165207.307488-3-kwolf@redhat.com>
-In-Reply-To: <20260608165207.307488-1-kwolf@redhat.com>
-References: <20260608165207.307488-1-kwolf@redhat.com>
+ (Exim 4.90_1) (envelope-from <pierrick.bouvier@oss.qualcomm.com>)
+ id 1wWdEY-0007qb-SM
+ for qemu-devel@nongnu.org; Mon, 08 Jun 2026 12:53:56 -0400
+Received: from pps.filterd (m0279867.ppops.net [127.0.0.1])
+ by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
+ 658FFW1Y3588417
+ for <qemu-devel@nongnu.org>; Mon, 8 Jun 2026 16:53:53 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+ cc:content-transfer-encoding:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+ 1GsNrgRxTDhbBk/dFoxdmC8ACsjju7Jlh4G8J1+yM2I=; b=oXhq6I/gEhqKDc05
+ l4mIRNL3Go+PNsFOyy5XpP2vjKZU7EZgi5XyUVmZryoZgfIqQ8enO1QECohtlXZ3
+ hvsjkUJMwSZL74IYMCryNAnK0TOCgvahXHHhnCC753Vxhktkvltzk6AHd0rGfLPN
+ WAsNDabuh+dGtjdlx1i+bx9H9PJc7Y0sLSkQD59feGwtS+OCvVw/jHUe9gTP9jCQ
+ Y7A8xfvXTMVdfceS+QwawE2n5sijEU5gbz0WoJsZyaMlaOxIPxIQ/a+c37b/NSI+
+ ZxCyWTyvDtHItzNuuTpPb6Gi9rxI9XHR6Psi/hq3ShYR51Fq7T7h74sflo+/r6HL
+ Rgr+5Q==
+Received: from mail-dl1-f71.google.com (mail-dl1-f71.google.com [74.125.82.71])
+ by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4enun41w4u-1
+ (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
+ for <qemu-devel@nongnu.org>; Mon, 08 Jun 2026 16:53:52 +0000 (GMT)
+Received: by mail-dl1-f71.google.com with SMTP id
+ a92af1059eb24-1370417c0bfso4233572c88.0
+ for <qemu-devel@nongnu.org>; Mon, 08 Jun 2026 09:53:52 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=oss.qualcomm.com; s=google; t=1780937632; x=1781542432; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:content-language:from
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=1GsNrgRxTDhbBk/dFoxdmC8ACsjju7Jlh4G8J1+yM2I=;
+ b=TpfoAwfJiPVHv41HBI3tFjheAQWXd/Bupis+pBhMb4VEnhNiOQHBy4/EsVYYTf54ws
+ M7yj0M7T5rmsWFQ0lhxSo05RDDtYaTXgOwKD7Xxn/FTpXUUjyBkWKTdxAWjY5QB1s2l0
+ fk69C1busJtRw+mcTJQNkQo3hYgdkOp2HwnvHaoM20NzPnwNWrNeMgNNhRyPBkE8IBaO
+ oY6FZc88Ggo5/hAp3mDl0IOam9FidcVqLMOaJSD3F2o45JYGvaIOfs1weIqSzuCvoYGW
+ 6JDK45Bexp//mNopLgXa6wxeTTuvwyvkwtLyq+D8F0TmDRPRxKkqklJNgpvcEuF4gIex
+ iCqQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1780937632; x=1781542432;
+ h=content-transfer-encoding:in-reply-to:content-language:from
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=1GsNrgRxTDhbBk/dFoxdmC8ACsjju7Jlh4G8J1+yM2I=;
+ b=hxws3rZNWi72Vpi0YSqr2LvUA99jmnpDhWTAVgpnfTA3topp83H/f4J3caFtBMIH7a
+ zVMpPVuXuVrtPKNpWTBk/bY0ge2JcR0uPyJMIOpJd1Q+APtwxmnd53UTR5yTsiYK4JzN
+ 281G9yPTlspozUg/qrVsDoNBmfZBfZCXKMdIzcjih9lnKbW+DHsChioiEui9Dzk9D0hC
+ Bkpq0KmUtvtZRaKEVTjLAa+1f81GG8QTU+fIn/jivhD/ksKTed/JurmjpQ5dXDlkig7X
+ 8MiaelAtYsCIB+jcYGQNGyBPqPmPXsPMeJdgZEG0cG/2xJBt8TB6NBfH/pMY0xFJwzBd
+ ezfQ==
+X-Forwarded-Encrypted: i=1;
+ AFNElJ/NJWMY545v0TdA8ZcD4yAfMLfqQSEHr8K9vdRfbW3Ec8n+a/NG6TcmGV8MnjBQptPaVZ2RKSwJnSIA@nongnu.org
+X-Gm-Message-State: AOJu0YxkQmeCZwjw7opsEySeuFZh4jC/hewWmPer+ABD2jMRgtJ7Ecws
+ pFW1YaJ6PKJ1RXW/u8hkrKFyFzMyS3G7t0Z2cH4VsgxAobqdjlSHDEBUokfkxjIpOIipUfw/0ja
+ 88RFqoL1vvvZ4C0/5+7y4hoXT0Vqd//WTOgVA8kSd76zFhPBjQhcUiQtWaw==
+X-Gm-Gg: Acq92OEh3xJaYr94G5eqbDJohxK0TjyQP0X9cAqiUfrpw/zK8rAgUV5gbmA4z4SB3cq
+ UcKFKVitmH/qf2goiF3SiDBpMW82uVk9vA83FudVdjN+6n+LXM0cm5dP1LHNPzSg6UTI9306Qek
+ G3JG2rqyIXIPE8sRCWp2d7eEEmsN5pCQKxX26f69CUukXxnkeNfgP2D2I0rjiYQSRmVFMBXJm66
+ uTltlsSRBDnmIPdG8DKuA6EdgHJtz+nwX4/EJCwXDObT6j99lUI6YpxNHLf6SC3eGqapVzW/Ulp
+ YeBS4LMIUjJcF2DhGvhxutHyzYl+9NyfqWZ8LtIeOhWojgkrGHHY4JyFOFoJb+XgS+pTcW98EV2
+ 3+e8H9HhjerTMeBwonnKMrnV6r+VmrrOS88Ol7YVVaF03G7YlTWod26O+nk90yuS/09td5cDywu
+ Ystw1vuWPqwE/mIHpXdN4EFqHk
+X-Received: by 2002:a05:7022:160c:b0:137:ee08:ad37 with SMTP id
+ a92af1059eb24-13807d75982mr6845262c88.13.1780937632051; 
+ Mon, 08 Jun 2026 09:53:52 -0700 (PDT)
+X-Received: by 2002:a05:7022:160c:b0:137:ee08:ad37 with SMTP id
+ a92af1059eb24-13807d75982mr6845240c88.13.1780937631478; 
+ Mon, 08 Jun 2026 09:53:51 -0700 (PDT)
+Received: from [192.168.1.170] (216-71-219-44.dyn.novuscom.net.
+ [216.71.219.44]) by smtp.gmail.com with ESMTPSA id
+ a92af1059eb24-137f5539432sm15070003c88.9.2026.06.08.09.53.50
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Mon, 08 Jun 2026 09:53:50 -0700 (PDT)
+Message-ID: <ab20e1f1-51b4-45c2-a1f2-f842e828c8d7@oss.qualcomm.com>
+Date: Mon, 8 Jun 2026 09:53:49 -0700
 MIME-Version: 1.0
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 01/25] plugins: bump version
+To: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>, qemu-devel@nongnu.org
+Cc: Chao Liu <chao.liu.zevorn@gmail.com>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ Brian Cain <brian.cain@oss.qualcomm.com>,
+ =?UTF-8?Q?Philippe_Mathieu-Daud_=C3=A9?= <philmd@linaro.org>,
+ =?UTF-8?Q?Alex_Benn_=C3=A9_e?= <alex.bennee@linaro.org>,
+ Alexandre Iooss <erdnaxe@crans.org>
+References: <20260603205152.1440291-1-pierrick.bouvier@oss.qualcomm.com>
+ <20260603205152.1440291-2-pierrick.bouvier@oss.qualcomm.com>
+ <tgau1a.ktx4pl5etvkk@linaro.org>
+From: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
+Content-Language: en-US
+In-Reply-To: <tgau1a.ktx4pl5etvkk@linaro.org>
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.17
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=kwolf@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: 8
-X-Spam_score: 0.8
-X-Spam_bar: /
-X-Spam_report: (0.8 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.445,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_SBL_CSS=3.335, SPF_HELO_PASS=-0.001,
- SPF_PASS=-0.001 autolearn=no autolearn_force=no
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNjA4MDE2MSBTYWx0ZWRfX1LFdUI+rwHmy
+ ORF7lAptXgaB3e5/EfWjseg46xJLo5gSemzAJJuS0FD/dnQHTsMemJx3auwdIygNmP9L+N3fNX8
+ d03+2hfHidCG5nUrLnKEZhVimS3b2CrWQTsez3rU0v+KDHDDS/AKkEzeTx9bv88LLyb3f4TcNEX
+ L4rVhzy8rxW6Gx1bsBPneQxehmnEowruyX/0w1ib44m1Yo4oZw33xpNtZKiZX3n3nbisB6EkYQ4
+ mGzPT7xFVGp+2sYkSepnPE/fimK+B+swpk4FAuPIS5r2JugTH886h50zbFV521M+gD4R2agfSDf
+ R4Upa2oPfCvcjI6tH8zenlajPj/7I7B0PrKGbMMSaGaelaQkDBvLBBuUPJ9MeIxdYaO+j1OGRBD
+ arQUCLJEgHUC7mDLACmNTEL7VwtkejKqQHVHgxrAai1nr2h2yofFRKttGj+7dtWmz9VLeZRl5FX
+ ObOvomMUBKUp3MLJY7A==
+X-Proofpoint-ORIG-GUID: 9zJKdQqOglPfc9xY2qhVXGG3oB2G8I7E
+X-Authority-Analysis: v=2.4 cv=ZY4t8MVA c=1 sm=1 tr=0 ts=6a26f3a0 cx=c_pps
+ a=JYo30EpNSr/tUYqK9jHPoA==:117 a=iLqgmErQAxjCjdq5jj1Aqg==:17
+ a=IkcTkHD0fZMA:10 a=FelO9ux0wxsA:10 a=s4-Qcg_JpJYA:10
+ a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=eoimf2acIAo5FJnRuUoq:22
+ a=EUspDBNiAAAA:8 a=KKAkSRfTAAAA:8 a=k7pgqVW5xrXgoEMQx38A:9 a=3ZKOabzyN94A:10
+ a=QEXdDO2ut3YA:10 a=Fk4IpSoW4aLDllm1B1p-:22 a=cvBusfyB2V15izCimMoJ:22
+X-Proofpoint-GUID: 9zJKdQqOglPfc9xY2qhVXGG3oB2G8I7E
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.125,FMLib:17.12.100.49
+ definitions=2026-06-08_04,2026-06-05_02,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ suspectscore=0 phishscore=0 adultscore=0 priorityscore=1501 impostorscore=0
+ lowpriorityscore=0 spamscore=0 malwarescore=0 bulkscore=0 clxscore=1015
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.22.0-2605210000 definitions=main-2606080161
+Received-SPF: pass client-ip=205.220.168.131;
+ envelope-from=pierrick.bouvier@oss.qualcomm.com;
+ helo=mx0a-0031df01.pphosted.com
+X-Spam_score_int: -27
+X-Spam_score: -2.8
+X-Spam_bar: --
+X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -83,318 +158,69 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: "Denis V. Lunev" <den@openvz.org>
+On 6/7/2026 10:58 PM, Manos Pitsidianakis wrote:
+> On Wed, 03 Jun 2026 23:51, Pierrick Bouvier
+> <pierrick.bouvier@oss.qualcomm.com> wrote:
+>> Next commits will be breaking changes, so bump min version and version
+>> accordingly.
+>>
+>> Signed-off-by: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
+>> ---
+> 
+> Reviewed-by: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
+> 
+>> include/plugins/qemu-plugin.h | 6 +++++-
+>> plugins/plugin.h              | 2 +-
+>> 2 files changed, 6 insertions(+), 2 deletions(-)
+>>
+>> diff --git a/include/plugins/qemu-plugin.h b/include/plugins/qemu-
+>> plugin.h
+>> index 4eb1d2cd85c..435a14f5a00 100644
+>> --- a/include/plugins/qemu-plugin.h
+>> +++ b/include/plugins/qemu-plugin.h
+>> @@ -80,11 +80,15 @@ typedef uint64_t qemu_plugin_id_t;
+>>  * - added disconinuity callback API (for interrupts, exceptions, host
+>> calls)
+>>  * - added syscall filter callback API, which allows skipping syscalls
+>> and
+>>  *   setting custom syscall return values
+>> + *
+>> + * version 7:
+>> + * - add userdata to all plugin callbacks, allowing maintenance of state
+>> + *   externally, and easing interfacing with other languages.
+> 
+> You could alternatively add only "version 7" line and add the
+> "changelog" lines in the patches that introduce them, but doesn't make a
+> big difference.
+>
 
-From time to time it is needed to remove all bitmaps from the image.
-Before this patch the process is not very convenient. One should
-perform
-    qemu-img info
-and parse the output to obtain all names. After that one should
-sequentially call
-    qemu-img bitmap --remove
-for each present bitmap.
-
-The patch adds --remove-all sub-command to 'qemu-img bitmap'. The
-new sub-command also composes with other bitmap actions in the same
-invocation, so a common "wipe and recreate" workflow can be expressed
-as
-    qemu-img bitmap --remove-all --add NEW FILE
-instead of enumerating existing bitmaps, removing them one by one,
-and only then adding the fresh one.
-
-Cc: Kevin Wolf <kwolf@redhat.com>
-Cc: Hanna Czenczek <hreitz@redhat.com>
-Signed-off-by: Denis V. Lunev <den@openvz.org>
-Message-ID: <20260520235952.500250-1-den@openvz.org>
-Reviewed-by: Kevin Wolf <kwolf@redhat.com>
-Signed-off-by: Kevin Wolf <kwolf@redhat.com>
----
- docs/tools/qemu-img.rst                       | 10 +++-
- qemu-img.c                                    | 55 ++++++++++++++++---
- tests/qemu-iotests/tests/qemu-img-bitmaps     | 24 ++++++++
- tests/qemu-iotests/tests/qemu-img-bitmaps.out | 46 ++++++++++++++++
- 4 files changed, 125 insertions(+), 10 deletions(-)
-
-diff --git a/docs/tools/qemu-img.rst b/docs/tools/qemu-img.rst
-index 558b0eb84d6..b0c798b77a0 100644
---- a/docs/tools/qemu-img.rst
-+++ b/docs/tools/qemu-img.rst
-@@ -301,15 +301,19 @@ Command description:
-   For write tests, by default a buffer filled with zeros is written. This can be
-   overridden with a pattern byte specified by *PATTERN*.
- 
--.. option:: bitmap (--merge SOURCE | --add | --remove | --clear | --enable | --disable)... [-b SOURCE_FILE [-F SOURCE_FMT]] [-g GRANULARITY] [--object OBJECTDEF] [--image-opts | -f FMT] FILENAME BITMAP
-+.. option:: bitmap (--merge SOURCE | --add | --remove | --remove-all | --clear | --enable | --disable)... [-b SOURCE_FILE [-F SOURCE_FMT]] [-g GRANULARITY] [--object OBJECTDEF] [--image-opts | -f FMT] FILENAME [BITMAP]
- 
--  Perform one or more modifications of the persistent bitmap *BITMAP*
--  in the disk image *FILENAME*.  The various modifications are:
-+  Perform one or more modifications of persistent bitmaps in the disk
-+  image *FILENAME*.  Most operations require *BITMAP* to be specified;
-+  ``--remove-all`` operates on all bitmaps and does not take *BITMAP*.
-+  The various modifications are:
- 
-   ``--add`` to create *BITMAP*, enabled to record future edits.
- 
-   ``--remove`` to remove *BITMAP*.
- 
-+  ``--remove-all`` to remove all bitmaps.
-+
-   ``--clear`` to clear *BITMAP*.
- 
-   ``--enable`` to change *BITMAP* to start recording future edits.
-diff --git a/qemu-img.c b/qemu-img.c
-index c42dd4e995e..2f63d311413 100644
---- a/qemu-img.c
-+++ b/qemu-img.c
-@@ -87,6 +87,7 @@ enum {
-     OPTION_FORCE = 276,
-     OPTION_SKIP_BROKEN = 277,
-     OPTION_LIMITS = 278,
-+    OPTION_REMOVE_ALL = 279,
- };
- 
- typedef enum OutputFormat {
-@@ -5018,6 +5019,7 @@ enum ImgBitmapAct {
-     BITMAP_ENABLE,
-     BITMAP_DISABLE,
-     BITMAP_MERGE,
-+    BITMAP_REMOVE_ALL,
- };
- typedef struct ImgBitmapAction {
-     enum ImgBitmapAct act;
-@@ -5036,7 +5038,7 @@ static int img_bitmap(const img_cmd_t *ccmd, int argc, char **argv)
-     BlockDriverState *bs = NULL, *src_bs = NULL;
-     bool image_opts = false;
-     int64_t granularity = 0;
--    bool add = false, merge = false;
-+    bool add = false, merge = false, need_bitmap_name = false;
-     QSIMPLEQ_HEAD(, ImgBitmapAction) actions;
-     ImgBitmapAction *act, *act_next;
-     const char *op;
-@@ -5052,6 +5054,7 @@ static int img_bitmap(const img_cmd_t *ccmd, int argc, char **argv)
-             {"add", no_argument, 0, OPTION_ADD},
-             {"granularity", required_argument, 0, 'g'},
-             {"remove", no_argument, 0, OPTION_REMOVE},
-+            {"remove-all", no_argument, 0, OPTION_REMOVE_ALL},
-             {"clear", no_argument, 0, OPTION_CLEAR},
-             {"enable", no_argument, 0, OPTION_ENABLE},
-             {"disable", no_argument, 0, OPTION_DISABLE},
-@@ -5070,9 +5073,9 @@ static int img_bitmap(const img_cmd_t *ccmd, int argc, char **argv)
-         switch (c) {
-         case 'h':
-             cmd_help(ccmd, "[-f FMT | --image-opts]\n"
--"        ( --add [-g SIZE] | --remove | --clear | --enable | --disable |\n"
--"          --merge SOURCE [-b SRC_FILE [-F SRC_FMT]] )..\n"
--"        [--object OBJDEF] FILE BITMAP\n"
-+"        ( --add [-g SIZE] | --remove | --remove-all | --clear | --enable |\n"
-+"          --disable | --merge SOURCE [-b SRC_FILE [-F SRC_FMT]] )..\n"
-+"        [--object OBJDEF] FILE [BITMAP]\n"
- ,
- "  -f, --format FMT\n"
- "     specify FILE format explicitly (default: probing is used)\n"
-@@ -5086,6 +5089,8 @@ static int img_bitmap(const img_cmd_t *ccmd, int argc, char **argv)
- "     with optional multiplier suffix (in powers of 1024)\n"
- "  --remove\n"
- "     removes BITMAP from FILE\n"
-+"  --remove-all\n"
-+"     removes all bitmaps from FILE\n"
- "  --clear\n"
- "     clears BITMAP in FILE\n"
- "  --enable, --disable\n"
-@@ -5116,6 +5121,7 @@ static int img_bitmap(const img_cmd_t *ccmd, int argc, char **argv)
-             act->act = BITMAP_ADD;
-             QSIMPLEQ_INSERT_TAIL(&actions, act, next);
-             add = true;
-+            need_bitmap_name = true;
-             break;
-         case 'g':
-             granularity = cvtnum("granularity", optarg, true);
-@@ -5127,21 +5133,30 @@ static int img_bitmap(const img_cmd_t *ccmd, int argc, char **argv)
-             act = g_new0(ImgBitmapAction, 1);
-             act->act = BITMAP_REMOVE;
-             QSIMPLEQ_INSERT_TAIL(&actions, act, next);
-+            need_bitmap_name = true;
-+            break;
-+        case OPTION_REMOVE_ALL:
-+            act = g_new0(ImgBitmapAction, 1);
-+            act->act = BITMAP_REMOVE_ALL;
-+            QSIMPLEQ_INSERT_TAIL(&actions, act, next);
-             break;
-         case OPTION_CLEAR:
-             act = g_new0(ImgBitmapAction, 1);
-             act->act = BITMAP_CLEAR;
-             QSIMPLEQ_INSERT_TAIL(&actions, act, next);
-+            need_bitmap_name = true;
-             break;
-         case OPTION_ENABLE:
-             act = g_new0(ImgBitmapAction, 1);
-             act->act = BITMAP_ENABLE;
-             QSIMPLEQ_INSERT_TAIL(&actions, act, next);
-+            need_bitmap_name = true;
-             break;
-         case OPTION_DISABLE:
-             act = g_new0(ImgBitmapAction, 1);
-             act->act = BITMAP_DISABLE;
-             QSIMPLEQ_INSERT_TAIL(&actions, act, next);
-+            need_bitmap_name = true;
-             break;
-         case OPTION_MERGE:
-             act = g_new0(ImgBitmapAction, 1);
-@@ -5149,6 +5164,7 @@ static int img_bitmap(const img_cmd_t *ccmd, int argc, char **argv)
-             act->src = optarg;
-             QSIMPLEQ_INSERT_TAIL(&actions, act, next);
-             merge = true;
-+            need_bitmap_name = true;
-             break;
-         case 'b':
-             src_filename = optarg;
-@@ -5165,8 +5181,8 @@ static int img_bitmap(const img_cmd_t *ccmd, int argc, char **argv)
-     }
- 
-     if (QSIMPLEQ_EMPTY(&actions)) {
--        error_report("Need at least one of --add, --remove, --clear, "
--                     "--enable, --disable, or --merge");
-+        error_report("Need at least one of --add, --remove, --remove-all, "
-+                     "--clear, --enable, --disable, or --merge");
-         goto out;
-     }
- 
-@@ -5184,11 +5200,22 @@ static int img_bitmap(const img_cmd_t *ccmd, int argc, char **argv)
-         goto out;
-     }
- 
--    if (optind != argc - 2) {
-+    if (need_bitmap_name && optind != argc - 2) {
-         error_report("Expecting filename and bitmap name");
-         goto out;
-     }
- 
-+    /*
-+     * Every action other than --remove-all sets need_bitmap_name, so
-+     * !need_bitmap_name means the only action(s) given were --remove-all
-+     * and the BITMAP positional argument must be omitted. Combinations
-+     * like '--remove-all --add foo' remain valid via the branch above.
-+     */
-+    if (!need_bitmap_name && optind != argc - 1) {
-+        error_report("Expecting filename");
-+        goto out;
-+    }
-+
-     filename = argv[optind];
-     bitmap = argv[optind + 1];
- 
-@@ -5225,6 +5252,20 @@ static int img_bitmap(const img_cmd_t *ccmd, int argc, char **argv)
-             qmp_block_dirty_bitmap_remove(bs->node_name, bitmap, &err);
-             op = "remove";
-             break;
-+        case BITMAP_REMOVE_ALL: {
-+            BdrvDirtyBitmap *bm;
-+            while ((bm = bdrv_dirty_bitmap_first(bs))) {
-+                const char *name = bdrv_dirty_bitmap_name(bm);
-+                qmp_block_dirty_bitmap_remove(bs->node_name, name, &err);
-+                if (err) {
-+                    /* Save name for proper error reporting */
-+                    bitmap = name;
-+                    break;
-+                }
-+            }
-+            op = "remove-all";
-+            break;
-+        }
-         case BITMAP_CLEAR:
-             qmp_block_dirty_bitmap_clear(bs->node_name, bitmap, &err);
-             op = "clear";
-diff --git a/tests/qemu-iotests/tests/qemu-img-bitmaps b/tests/qemu-iotests/tests/qemu-img-bitmaps
-index 7a3fe8c3d37..979bc0d6c9c 100755
---- a/tests/qemu-iotests/tests/qemu-img-bitmaps
-+++ b/tests/qemu-iotests/tests/qemu-img-bitmaps
-@@ -161,6 +161,30 @@ $QEMU_IMG convert --bitmaps -O qcow2 "$TEST_IMG" "$TEST_IMG.copy"
- TEST_IMG="$TEST_IMG.copy" _img_info --format-specific \
-     | _filter_irrelevant_img_info
- 
-+echo
-+echo "=== Check --remove-all ==="
-+echo
-+
-+# Start from a fresh image so prior state does not bleed into the assertions
-+_rm_test_img "$TEST_IMG"
-+_make_test_img 10M
-+$QEMU_IMG bitmap --add -f $IMGFMT "$TEST_IMG" b0
-+$QEMU_IMG bitmap --add -f $IMGFMT "$TEST_IMG" b1
-+$QEMU_IMG bitmap --add -f $IMGFMT "$TEST_IMG" b2
-+_img_info --format-specific | _filter_irrelevant_img_info
-+
-+# Sweep every bitmap in a single command, no BITMAP positional
-+echo
-+$QEMU_IMG bitmap --remove-all -f $IMGFMT "$TEST_IMG"
-+_img_info --format-specific | _filter_irrelevant_img_info
-+
-+# Wipe + recreate in one invocation: only 'fresh' should remain
-+echo
-+$QEMU_IMG bitmap --add -f $IMGFMT "$TEST_IMG" b0
-+$QEMU_IMG bitmap --add -f $IMGFMT "$TEST_IMG" b1
-+$QEMU_IMG bitmap --remove-all --add -f $IMGFMT "$TEST_IMG" fresh
-+_img_info --format-specific | _filter_irrelevant_img_info
-+
- # success, all done
- echo '*** done'
- rm -f $seq.full
-diff --git a/tests/qemu-iotests/tests/qemu-img-bitmaps.out b/tests/qemu-iotests/tests/qemu-img-bitmaps.out
-index 74b81f703b0..99290d3ba5e 100644
---- a/tests/qemu-iotests/tests/qemu-img-bitmaps.out
-+++ b/tests/qemu-iotests/tests/qemu-img-bitmaps.out
-@@ -180,4 +180,50 @@ Format specific information:
-             name: b2
-             granularity: 65536
-     corrupt: false
-+
-+=== Check --remove-all ===
-+
-+Formatting 'TEST_DIR/t.IMGFMT', fmt=IMGFMT size=10485760
-+image: TEST_DIR/t.IMGFMT
-+file format: IMGFMT
-+virtual size: 10 MiB (10485760 bytes)
-+cluster_size: 65536
-+Format specific information:
-+    bitmaps:
-+        [0]:
-+            flags:
-+                [0]: auto
-+            name: b0
-+            granularity: 65536
-+        [1]:
-+            flags:
-+                [0]: auto
-+            name: b1
-+            granularity: 65536
-+        [2]:
-+            flags:
-+                [0]: auto
-+            name: b2
-+            granularity: 65536
-+    corrupt: false
-+
-+image: TEST_DIR/t.IMGFMT
-+file format: IMGFMT
-+virtual size: 10 MiB (10485760 bytes)
-+cluster_size: 65536
-+Format specific information:
-+    corrupt: false
-+
-+image: TEST_DIR/t.IMGFMT
-+file format: IMGFMT
-+virtual size: 10 MiB (10485760 bytes)
-+cluster_size: 65536
-+Format specific information:
-+    bitmaps:
-+        [0]:
-+            flags:
-+                [0]: auto
-+            name: fresh
-+            granularity: 65536
-+    corrupt: false
- *** done
--- 
-2.54.0
+I didn't find a better place for that, since next 22 commits are kind of
+an "atomic" step regarding the version bump.
+ >>  */
+>>
+>> extern QEMU_PLUGIN_EXPORT int qemu_plugin_version;
+>>
+>> -#define QEMU_PLUGIN_VERSION 6
+>> +#define QEMU_PLUGIN_VERSION 7
+>>
+>> /**
+>>  * struct qemu_info_t - system information for plugins
+>> diff --git a/plugins/plugin.h b/plugins/plugin.h
+>> index 6fbc443b96c..9179da43851 100644
+>> --- a/plugins/plugin.h
+>> +++ b/plugins/plugin.h
+>> @@ -16,7 +16,7 @@
+>> #include "qemu/queue.h"
+>> #include "qemu/qht.h"
+>>
+>> -#define QEMU_PLUGIN_MIN_VERSION 2
+>> +#define QEMU_PLUGIN_MIN_VERSION 7
+>>
+>> /* global state */
+>> struct qemu_plugin_state {
+>> -- 
+>> 2.43.0
+>>
+>>
 
 
