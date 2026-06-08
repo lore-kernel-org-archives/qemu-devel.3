@@ -4,116 +4,118 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9A0FECD8CA4
-	for <qemu-devel@archiver.kernel.org>; Mon,  8 Jun 2026 20:03:14 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C5418CD8CA4
+	for <qemu-devel@archiver.kernel.org>; Mon,  8 Jun 2026 20:06:50 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wWgAu-0006ME-Jm; Mon, 08 Jun 2026 16:02:20 -0400
+	id 1wWgF3-0007Ap-Rd; Mon, 08 Jun 2026 16:06:37 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1wWgAq-0006Ln-VC
- for qemu-devel@nongnu.org; Mon, 08 Jun 2026 16:02:16 -0400
-Received: from smtp-out1.suse.de ([2a07:de40:b251:101:10:150:64:1])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1wWgAo-0001KZ-Sk
- for qemu-devel@nongnu.org; Mon, 08 Jun 2026 16:02:16 -0400
-Received: from imap1.dmz-prg2.suse.org (imap1.dmz-prg2.suse.org
- [IPv6:2a07:de40:b281:104:10:150:64:97])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
- (No client certificate requested)
- by smtp-out1.suse.de (Postfix) with ESMTPS id 0CC726AA22;
- Mon,  8 Jun 2026 20:02:08 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1780948928; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1wWgEo-00079s-C7
+ for qemu-devel@nongnu.org; Mon, 08 Jun 2026 16:06:25 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1wWgEk-0002ER-S2
+ for qemu-devel@nongnu.org; Mon, 08 Jun 2026 16:06:21 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1780949175;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  in-reply-to:in-reply-to:references:references;
- bh=Q/K7SdJx5PLBpotlvecwQBT02XXiyNjW87OlaLttjyY=;
- b=yfiIK7ZlkzBZgz9iKYUz/8hpWOwSLUTBKIlro9thP3M5jvwETH9j8ohKkk7rLO+Cl6VnOq
- 9r3yejEUEtqxSLjZuMOWOxRfP/tz1HHGYEH8tXzb5G2MNnvhWi82+TXOfuzvKcwrZqUyxk
- SrvUrYrCbtocfsUzI1VSw92qc6nSc3c=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1780948928;
- h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=Q/K7SdJx5PLBpotlvecwQBT02XXiyNjW87OlaLttjyY=;
- b=tYTvL2UHGBvLJFnxE8DiUcfNLlZHFPeCdedyJ2WTy1RmCDRcyDoKeRmo/RDsUpNEmC0foU
- u92wxHl5xYlzwRAw==
-Authentication-Results: smtp-out1.suse.de;
- dkim=pass header.d=suse.de header.s=susede2_rsa header.b=yfiIK7Zl;
- dkim=pass header.d=suse.de header.s=susede2_ed25519 header.b=tYTvL2UH
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1780948928; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=Q/K7SdJx5PLBpotlvecwQBT02XXiyNjW87OlaLttjyY=;
- b=yfiIK7ZlkzBZgz9iKYUz/8hpWOwSLUTBKIlro9thP3M5jvwETH9j8ohKkk7rLO+Cl6VnOq
- 9r3yejEUEtqxSLjZuMOWOxRfP/tz1HHGYEH8tXzb5G2MNnvhWi82+TXOfuzvKcwrZqUyxk
- SrvUrYrCbtocfsUzI1VSw92qc6nSc3c=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1780948928;
- h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=Q/K7SdJx5PLBpotlvecwQBT02XXiyNjW87OlaLttjyY=;
- b=tYTvL2UHGBvLJFnxE8DiUcfNLlZHFPeCdedyJ2WTy1RmCDRcyDoKeRmo/RDsUpNEmC0foU
- u92wxHl5xYlzwRAw==
-Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
- (No client certificate requested)
- by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id 9E48D779A7;
- Mon,  8 Jun 2026 20:02:07 +0000 (UTC)
-Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
- by imap1.dmz-prg2.suse.org with ESMTPSA id o1PuG78fJ2rjCgAAD6G6ig
- (envelope-from <farosas@suse.de>); Mon, 08 Jun 2026 20:02:07 +0000
-From: Fabiano Rosas <farosas@suse.de>
-To: =?utf-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>
-Cc: Thomas Huth <thuth@redhat.com>, Ani Sinha <anisinha@redhat.com>,
- qemu-devel <qemu-devel@nongnu.org>
-Subject: Re: artifact download for qtest
-In-Reply-To: <aicYc6GGapIJTKdi@redhat.com>
-References: <CAK3XEhMNqHbkL2P6Xg3_hJ8WAxhPQgurjvuZg-vXUDZ5=x-RRA@mail.gmail.com>
- <f2516211-6fbc-4714-b674-4276464f94ff@redhat.com> <87v7bs6e2p.fsf@suse.de>
- <aicYc6GGapIJTKdi@redhat.com>
-Date: Mon, 08 Jun 2026 17:02:01 -0300
-Message-ID: <87se6w6bt2.fsf@suse.de>
+ bh=vyaPZaRRpx6husgrWHuH7/f5GAvNytxDR5A4359Snlw=;
+ b=Dzj7m2fqVvsxyj89dKz2OtApA/mcVOD0iRTC9Ab+LcAQhPZurtXLAEV14gAkAfWdVk6g1Y
+ QIfecDTpg3anl7FrEU48QZBHMPHtncbzWvPkJaBy3niEqpwh7FFnK3UMirjF95r1M8IcMR
+ 2DSq/ulKZIyOuTjLgkrNbO/ajf55Bbw=
+Received: from mail-wr1-f72.google.com (mail-wr1-f72.google.com
+ [209.85.221.72]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-586-i0qjrAnTPq2w9NAwLozo6Q-1; Mon, 08 Jun 2026 16:06:14 -0400
+X-MC-Unique: i0qjrAnTPq2w9NAwLozo6Q-1
+X-Mimecast-MFC-AGG-ID: i0qjrAnTPq2w9NAwLozo6Q_1780949173
+Received: by mail-wr1-f72.google.com with SMTP id
+ ffacd0b85a97d-4601c9b630fso1887091f8f.0
+ for <qemu-devel@nongnu.org>; Mon, 08 Jun 2026 13:06:14 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=redhat.com; s=google; t=1780949173; x=1781553973; darn=nongnu.org;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+ bh=vyaPZaRRpx6husgrWHuH7/f5GAvNytxDR5A4359Snlw=;
+ b=KpyKse5Bxd2f6Rk6VvJdllaPFz7fO5nKYJCzu73aO8bPnaziSXdF3e+NsJCcBw7Ivr
+ X2Y5MGvUWZ9FAfJrIRxpBLGSN+K8apqoY3LF2VjvJTFBWv7rRUI1NL4lE84kvcJN1Ph8
+ auNnzYccJcIFHoyXIUdfVSl73j9nyF1uyVADdYDKrXLh6yVCioZdgjbT2EVHir6WP+uA
+ uqQzoz2E5g1qvsK6ZxGWXMFvKyLbhkdAbVcs+6zFOaE+xZVi7mYIW9HfxKWkc8S5+V4V
+ upO9tKQOi21nak67HOjq8xkCi+RbYunatXpzt56vL1r8xqD8I1MWUUlsT8yiiM743Fjk
+ R+kg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1780949173; x=1781553973;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=vyaPZaRRpx6husgrWHuH7/f5GAvNytxDR5A4359Snlw=;
+ b=mDE5P7d4W53TYJhYZVgq2WZfHi1xWBvzIj80EFO/gxU1wRNwCHUfwVvfTqGlWplyI+
+ v3Hs0GOTR80bdBzu+drPsW+Jb5ieo0kO+eoODtJi6cMeM2WPet4U1CJNcwwFQADiv/H2
+ d4sdCpmgizoKzFEoKZKXXjznKObJeTkza0Ep9FkRYy0pZA2CcA91bnQjyvq5mcfdyvax
+ tO4xFKlZ9uvKVv1vZJRABC7bQpcG7YF54Nd5W0zAFyU1gBnFBkQX2WiPUhWvQvXCV4rN
+ 4g2hHaoVzAvxQRR5erhjaIjIg4HDOObq676WLuLCh0kQ74eG/k/D6jGuD3A9x2oy7okJ
+ KP7A==
+X-Forwarded-Encrypted: i=1;
+ AFNElJ8FEg7NHI4ELzF0GzjvsedNtRZ6Ugxs/3IP07DlQAtSbRWisCduiZ2DFmF9krLm1auDaUw/dj2wVIPM@nongnu.org
+X-Gm-Message-State: AOJu0YyuLViRAJ9UqMSMdsCO3WFEVxYHl/Zh/WZzvC8qvwtJYjTyOcc0
+ /k6rMjUwcikg8Pn8RFgTG+WDFOTW1tgAp1VLZRYONtdYtGJq4aI7JeXOzpFRDK6Ht322hQ7O8YQ
+ +6sZCFHX8+V5zaJpYw2QQ5QIoiGddsstA61Tw9obyKRKDqykZZVHvbSOK
+X-Gm-Gg: Acq92OHKsVYamhgmecUhnIaY9tVHaU6rbud9z1vhCqjoxPzGK51+lioT3OynQABfESd
+ snDgiQGNeVO8TNCRHbFnkiJYeqJSUhIiXjjVdWxJRvMpEy+QsEUelvFtWdcp+Jmse6aaj10iLAj
+ U+AIu1lD1XIQJu6iOrBKEeOuWc5Y5HAhHy6bqvLyfHJ5sYYd4gX3jnnIUFuXSMbY9ndsFttfLtO
+ FMJNEATJSH0oFHEVE0BA8J8hh7td2fj7fDOb4q9+m/jVaKJGMfm9sZysYyQpqeUg6p7P/IU1Q6R
+ tNj+cKC28sL0F08oy1uh90niv89HSgSYdOrGdj8O8p15fLE9/LiX9JOsMAZnYToKwmjRenBJylw
+ KeYuvME5PCDt6tt9V5+rQ/YZNC+GjFkbcOvSkUymOgG2sSqdS7RD7AQ==
+X-Received: by 2002:a05:600c:4ec7:b0:490:b8ee:d6a5 with SMTP id
+ 5b1f17b1804b1-490c2589927mr284374825e9.6.1780949173018; 
+ Mon, 08 Jun 2026 13:06:13 -0700 (PDT)
+X-Received: by 2002:a05:600c:4ec7:b0:490:b8ee:d6a5 with SMTP id
+ 5b1f17b1804b1-490c2589927mr284374465e9.6.1780949172557; 
+ Mon, 08 Jun 2026 13:06:12 -0700 (PDT)
+Received: from redhat.com (IGLD-80-230-85-71.inter.net.il. [80.230.85.71])
+ by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-490bc3fd663sm484766645e9.10.2026.06.08.13.06.10
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Mon, 08 Jun 2026 13:06:11 -0700 (PDT)
+Date: Mon, 8 Jun 2026 16:06:08 -0400
+From: "Michael S. Tsirkin" <mst@redhat.com>
+To: Paolo Abeni <pabeni@redhat.com>
+Cc: Fiona Ebner <f.ebner@proxmox.com>, qemu-devel@nongnu.org,
+ Peter Maydell <peter.maydell@linaro.org>,
+ Jason Wang <jasowang@redhat.com>, Lei Yang <leiyang@redhat.com>,
+ Eduardo Habkost <eduardo@habkost.net>,
+ Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
+ Philippe =?iso-8859-1?Q?Mathieu-Daud=E9?= <philmd@linaro.org>,
+ Yanan Wang <wangyanan55@huawei.com>, Zhao Liu <zhao1.liu@intel.com>,
+ Gabriel Goller <g.goller@proxmox.com>,
+ Stefan Hanreich <s.hanreich@proxmox.com>,
+ Thomas Lamprecht <t.lamprecht@proxmox.com>
+Subject: Re: [PULL 12/14] virtio-net: Advertise UDP tunnel GSO support by
+ default
+Message-ID: <20260608160546-mutt-send-email-mst@kernel.org>
+References: <cover.1762698873.git.mst@redhat.com>
+ <1c79ab6937ae938d3dfd4da1c01afc7eb599857e.1762698873.git.mst@redhat.com>
+ <077647f6-d569-4918-9aea-c0597a6ddbc8@proxmox.com>
+ <39100539-1c43-431b-886d-7d42850bc4c5@redhat.com>
+ <127b6887-f93a-4081-a264-1bc63f37921d@proxmox.com>
+ <375064ee-5a6f-44d4-8192-09f39804be69@redhat.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-X-Rspamd-Action: no action
-X-Rspamd-Queue-Id: 0CC726AA22
-X-Spamd-Result: default: False [-4.51 / 50.00]; BAYES_HAM(-3.00)[100.00%];
- NEURAL_HAM_LONG(-1.00)[-1.000];
- R_DKIM_ALLOW(-0.20)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
- NEURAL_HAM_SHORT(-0.20)[-1.000]; MIME_GOOD(-0.10)[text/plain];
- MX_GOOD(-0.01)[]; FROM_HAS_DN(0.00)[];
- TO_MATCH_ENVRCPT_ALL(0.00)[]; TO_DN_ALL(0.00)[];
- DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
- ARC_NA(0.00)[]; FUZZY_RATELIMITED(0.00)[rspamd.com];
- RCVD_TLS_ALL(0.00)[]; DKIM_TRACE(0.00)[suse.de:+];
- RCPT_COUNT_THREE(0.00)[4]; RCVD_COUNT_TWO(0.00)[2];
- FROM_EQ_ENVFROM(0.00)[]; MIME_TRACE(0.00)[0:+];
- DNSWL_BLOCKED(0.00)[2a07:de40:b281:106:10:150:64:167:received,2a07:de40:b281:104:10:150:64:97:from];
- RCVD_VIA_SMTP_AUTH(0.00)[]; MID_RHS_MATCH_FROM(0.00)[];
- MISSING_XM_UA(0.00)[];
- DBL_BLOCKED_OPENRESOLVER(0.00)[suse.de:mid, suse.de:dkim,
- imap1.dmz-prg2.suse.org:rdns, imap1.dmz-prg2.suse.org:helo]
-X-Rspamd-Server: rspamd1.dmz-prg2.suse.org
-Received-SPF: pass client-ip=2a07:de40:b251:101:10:150:64:1;
- envelope-from=farosas@suse.de; helo=smtp-out1.suse.de
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <375064ee-5a6f-44d4-8192-09f39804be69@redhat.com>
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=mst@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -24
+X-Spam_score: -2.5
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.445,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -129,86 +131,212 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Daniel P. Berrang=C3=A9 <berrange@redhat.com> writes:
+On Mon, Jun 08, 2026 at 07:12:14PM +0200, Paolo Abeni wrote:
+> On 6/8/26 12:41 PM, Fiona Ebner wrote:
+> > Am 05.06.26 um 4:54 PM schrieb Paolo Abeni:
+> >> On 6/5/26 4:02 PM, Fiona Ebner wrote:
+> >>> Am 09.11.25 um 4:10 PM schrieb Michael S. Tsirkin:
+> >>>> diff --git a/hw/net/virtio-net.c b/hw/net/virtio-net.c
+> >>>> index 17ed0ef919..3b85560f6f 100644
+> >>>> --- a/hw/net/virtio-net.c
+> >>>> +++ b/hw/net/virtio-net.c
+> >>>> @@ -4299,19 +4299,19 @@ static const Property virtio_net_properties[] = {
+> >>>>      VIRTIO_DEFINE_PROP_FEATURE("host_tunnel", VirtIONet,
+> >>>>                                 host_features_ex,
+> >>>>                                 VIRTIO_NET_F_HOST_UDP_TUNNEL_GSO,
+> >>>> -                               false),
+> >>>> +                               true),
+> >>> it seems that the host_tunnel setting can cause issues when VXLAN
+> >>> traffic originating in a guest goes over a physical NIC which does not
+> >>> support the feature. We received several reports about the issue
+> >>> [0][1][2][3] and were able to reproduce it. Turning off the
+> >>> 'host_tunnel' property in the commandline for the VirtIO net device
+> >>> makes TCP traffic work. The network configuration from our reproducer
+> >>> setup is as follows:
+> >>>
+> >>>       guest A (iperf3 -c)                   guest B (iperf3 -s)
+> >>>   vxlan using vNIC as underlay         vxlan using vNIC as underlay
+> >>> virtualized NIC exposed to guest     virtualized NIC exposed to guest
+> >>>     ---guest boundary---                  ---guest boundary---
+> >>>  tap device connected to bridge       tap device connected to bridge
+> >>> bridge with physical NIC as port     bridge with physical NIC as port
+> >>>         physical NIC   <---host boundary--->   physical NIC
+> >>>
+> >>> Bridge configuration:
+> >>> iface vmbr0 inet static
+> >>> 	address 10.48.0.109/20
+> >>> 	gateway 10.48.0.1
+> >>> 	bridge-ports nic3
+> >>> 	bridge-stp off
+> >>> 	bridge-fd 0
+> >>> 	bridge-vlan-aware yes
+> >>> 	bridge-vids 2-4094
+> >>>
+> >>> VXLAN created with:
+> >>> ip link add vxlan0 type vxlan id 100 remote X dstport 4789 dev eth1
+> >>> where eth1 is the virtualized NIC exposed to the guest
+> >>>
+> >>> The physical NIC does not have the feature:
+> >>> Ethernet controller [0200]: Broadcom Inc. and subsidiaries NetXtreme
+> >>> BCM5719 Gigabit Ethernet PCIe [14e4:1657] (rev 01)
+> >>> tx-udp_tnl-segmentation: off [fixed]
+> >>> tx-udp_tnl-csum-segmentation: off [fixed]
+> >>>
+> >>> Using a physical NIC which does have the feature works:
+> >>> Ethernet controller [0200]: Broadcom Inc. and subsidiaries BCM57504
+> >>> NetXtreme-E 10Gb/25Gb/40Gb/50Gb/100Gb Ethernet [14e4:1751] (rev 11)
+> >>> tx-udp_tnl-segmentation: on
+> >>> tx-udp_tnl-csum-segmentation: on
+> >>>
+> >>> Host kernel:
+> >>> Proxmox VE with 7.0.2-6-pve
+> >>>
+> >>> Guest kernel:
+> >>> Apline with 6.18.34-0-lts
+> >>>
+> >>> QEMU commandline for the vNIC:
+> >>>> -netdev 'type=tap,id=net2,ifname=tap103i2,script=/usr/libexec/qemu-server/pve-bridge,downscript=/usr/libexec/qemu-server/pve-bridgedown,vhost=on' \
+> >>>> -device 'virtio-net-pci,mac=BC:24:11:78:C3:3B,netdev=net2,bus=pci.0,addr=0x14,id=net2,rx_queue_size=1024,tx_queue_size=256,host_mtu=1500' \
+> >>>
+> >>> We can see that QEMU sets the features for the tap interface via ioctl()
+> >>> and the host kernel allows it:
+> >>> tx-udp_tnl-segmentation: on
+> >>> tx-udp_tnl-csum-segmentation: on
+> >>>
+> >>> As far as we understand, in the problematic scenario, nothing is ever
+> >>> filling in the checksums for the inner TCP packets, meaning the outer
+> >>> UDP checksum ends up being wrong on the target side. Is the host kernel
+> >>> responsible for doing that before passing the packet to the physical NIC
+> >>> (without the feature)? Or who would be?
+> >>>
+> >>> Turning off host_tunnel_csum without turning off host_tunnel does not help.
+> >>>
+> >>> Interestingly, turning off the features for the working physical NIC
+> >>> does not make it break:
+> >>> tx-udp_tnl-segmentation: off
+> >>> tx-udp_tnl-csum-segmentation: off
+> >>> Could it be that the NIC just always fills in the inner TCP checksums
+> >>> regardless of that setting?
+> >>>
+> >>> On the other hand, running
+> >>> localhost:~# ethtool -K eth2 tx-checksum-ip-generic off
+> >>> Actual changes:
+> >>> tx-checksum-ip-generic: off
+> >>> tx-tcp-segmentation: off [not requested]
+> >>> tx-tcp-ecn-segmentation: off [not requested]
+> >>> tx-tcp6-segmentation: off [not requested]
+> >>> tx-udp-segmentation: off [not requested]
+> >>> inside the guests makes it work for the physical NIC without the
+> >>> tx-udp_tnl* features.
+> >>>
+> >>> I wanted to ask if this configuration is expected to be unsupported and
+> >>> if the management is expected to turn off the feature on the commandline
+> >>> if the traffic might go over a physical NIC without the feature. Or if
+> >>> this could be a kernel or NIC bug that should be investigated further?
+> >>> In the former case, should the option really be turned on by default
+> >>> with new machine versions?
+> >>
+> >> Thank you for the detailed report. The configuration you describe is
+> >> supported and expected to work. The fact that different results are
+> >> obtained on top of a NIC with:
+> >>
+> >> [1] tx-udp_tnl-segmentation: off [fixed]
+> >>
+> >> WRT to similar setup on top of NIC with:
+> >>
+> >> [2] tx-udp_tnl-segmentation: off
+> >>
+> >> is indeed strange/unexpected, as the two scenarios are indistinguishable
+> >> from the stack perspective. I suspect the issue is NIC driver dependent.
+> >>
+> >> I understand [1] is using a tg3 driver, and [2] bnxt, both running Linux
+> >> 7.0.2, am I correct?
+> > 
+> > Yes.
+> > 
+> >> If you disable csum offloading on the tg3 NIC, does that impact the results?
+> > 
+> > Yes, doing
+> > 
+> > root@tamy3:~# ethtool -K nic3 tx-checksum-ipv4 off
+> > Actual changes:
+> > tx-checksum-ipv4: off
+> > tx-tcp-segmentation: off [not requested]
+> > tx-tcp-ecn-segmentation: off [not requested]
+> > 
+> > on both hosts makes it work.
+> > 
+> >> If you have such data handy, could you please share pcap captures on
+> >> both ends? links to some accessible URL would be better than sending a
+> >> lot of data to the ML, I think.
+> > 
+> > I captured the following while the problem is present with
+> > tcpdump -i foo udp port 4789 -w bar.pcap
+> > on the host interfaces (tap, bridge and physical NIC) just to be sure.
+> > Looking at it with tcpdump -envvvr, within the same host, only the
+> > timestamps change. Between the hosts, the UDP checksums do change, but
+> > the inner TCP checksums do not. So I suppose the NIC fills in the UDP
+> > checksum based on the still wrong data? Since the UDP checksum would
+> > already be correct if the TCP checksums would be fixed up?
+> > 
+> > For the NIC with the tx-udp_tnl features, the inner TCP checksums do get
+> > corrected and the UDP checksum stays the same. I did not include
+> > captures for this.
+> > 
+> > IPs for the guest running iperf -s (on host tamy2)
+> > 10.48.6.81 for the virtualized NIC
+> > 10.0.123.102 for the VXLAN
+> > 
+> > IPs for the guest running iperf -c (on host tamy3):
+> > 10.48.6.101 for the virtualized NIC
+> > 10.0.123.103 for the VXLAN
+> > 
+> > The captures are short, so I take the liberty to just provide them directly:
+> > 
+> > [I] febner@enia ~> tar cf pcap.tar tamy*.pcap
+> > [I] febner@enia ~> xz pcap.tar
+> > [I] febner@enia ~> base64 -w 70 pcap.tar.xz
+> > /Td6WFoAAATm1rRGBMDXBYCgASEBFgAAAAAAAKQwOkPgT/8Cz10AOhhJ/551cIJN23SQMX
+> > Q2Us4cGiof2bxOS4FK4DxejNh+76NiWIpdIfOxrB5urac3FT0mPKMbUreSY+04/NhofcgS
+> > Zz41D6t/Xp+VkPxNYx7Xsp3xz4xUCsVuK205jz6G/NAY0bJ0+UrJuCkP0G5VBtn88hJstD
+> > 7qlaT7qcBLECseOO1OfqsLezxasbm5p614IL18cqAVMCMWucr/Kh2Oqth26v7zI4SVEJC/
+> > YSEgaOhfjCbQZSi85BEw9/NSZO6IqoyNLrEiPUPgXTWH63NssG+4RMuBswrkgN5Wld70B1
+> > mROOCwKbo9b9oXI4DumGHqgCV5jdAxzITpEjMQpvDKh6NvM5L/8v1cPiGjLFSL2JesZ0F5
+> > dTbstymv1q4eN+9f3ng+4AXCvDzaziYMwtGwxYyptK5qDI2oGsCIGwFDpP/ZEw7NYI9EMM
+> > G2+SDG6D8bKgKWl9Mi6EJcqSMVKFR1P1Z/P3XJ/9sWOMJug1IVYZGIJmtXXM3+roqOEGMF
+> > tco/LMUJHgdmfkitfuZ5tN1+0EVE0/f4GQiUpdidjqfZ2m9jL0svcGXUd5D3LN0tbh5vmP
+> > KzXQNtMQiMY6Fj7gbzDbOQGGW/L3/34B5YV+pWEpzhAbeTI9KL0ZF3vJ0OESlL9OMhrqgl
+> > WX23bxek2h9eG15eO9cderaoCOFb8NEKIjC+UTh2Ir7/ZFfDvlXeGB/3jXM8OTmWmJSr5b
+> > CrAvBQ4xvow3hwKq2Fbyu7aU6KycVpo03a+59LqxPyRfc3qRXcoUnp8MTi2YUk+kfYR6mI
+> > S9AE/5xYFzb7I40RUBPUm0OCzguzk9qlIcab3lnTFnrMWa+Cj9AMIkWEEf0tMzw0v9+17u
+> > VJg/8tWMad3d9Jc5Z6B9kOukzGvgVEWoq4z9snb/k6u2sBVY36q2iI1cmSPrI+UcF2GtSA
+> > Qs6bt/T/c1Xi2r0Up+tRDrIE9O2aNAAAAKAWpkIVfsvrAAHzBYCgAQAA6om1scRn+wIAAA
+> > AABFla
+> 
+> Thanks for the data. The bug is in the virtio_net driver; non GSO
+> packets requiring inner header csum are handled unmodified from the
+> guest to the host, and the H/W NICs has to compute the inner transport
+> header csum for the encap packet.
+> 
+> Could you please try the attached kernel patch? You will need to update
+> the kernel inside the guest.
 
-> On Mon, Jun 08, 2026 at 04:13:02PM -0300, Fabiano Rosas wrote:
->> Thomas Huth <thuth@redhat.com> writes:
->>=20
->> > On 30/05/2026 16.56, Ani Sinha wrote:
->> >> Hi,
->> >>=20
->> >> I am trying to write a qtest for which I need an IGVM file. I have the
->> >> file, about 54 MiB in size.
->> >
->> > 54 MiB is quite big, I agree that we likely don't want to check that i=
-nto=20
->> > the main repository, especially if it is for a test only...
->> > (BTW, what's its compressed size?)
->> >
->> >> Instead of committing this IGVM binary
->> >> file with the test, I wanted to check if I can put it somewhere, say
->> >> in a gitlab repo and then make the test download it. This would be
->> >> similar to asset downloads for functional tests. No this test cannot
->> >> be a python functional test.  I am wondering if anyone has faced this
->> >> situation before and what the best way to solve this problem is.
->> >
->> > I'm not maintaining the qtests anymore, but I assume that there is no=
-=20
->> > interest in duplicating all the asset downloading logic there.
->> >
->>=20
->> It would be nice if we could extract the existing code into a little
->> asset library that could be invoked from the other test frameworks.
->
-> IMHO that isn't really practical, all the asset handling is in python.
-> It'd be mad to re-implement that in C and then call it from python,
-> and the C isn't really going to call the current python either....
->
+Paolo was there supposed to be a patch here?
 
-What about a standalone downloader? I'm still thinking about reusing
-more of the common operations between test frameworks. Is it feasible to
-have a cmdline app that can be invoked by qtest and place artifacts in a
-common place?
+> > Do you have any tips where to start looking in the kernel? What is the
+> > expected place where the TCP checksums are corrected if the NIC does not
+> > have the tx-udp_tnl features?
+> 
+> Hopefully no more investigation needed. FTR, for non GSO packets, the
+> inner transport header csum should be computed inside the guest before
+> transmitting on the virtio net device.
+> 
+> For GSO packets such csum should be computed inside the host, just
+> before transmitting on the H/W NIC (if the latter does not support the
+> relevant offload).
+> 
+> Thanks,
+> 
+> Paolo
 
->> > What's the exact reason why you cannot do it as a functional test inst=
-ead?=20
->> > You could maybe also start the qemu binary there with "-accel qtest -q=
-test=20
->> > ..." to fake a qtest environment - a little bit cumbersome, but certai=
-nly=20
->> > doable, I think.
->
-> ..if we didn't have the historical baggage already, then I'd that
-> qtests should conceptually just be a subset of the functional
-> tests. Writing them in python would be nicer than doing them in C.
->
-
-But could we make _working_ with them in python be equivalent to C? I
-agree it's nice to write tests in a higher level language, but python
-specifically is a big pain when it comes to actually finding out why a
-test is failing. And debugging is even worse.
-
-The tradeoff is that unittest is clearly superior to glib as a test
-runner. Having a more modern way of generating command-lines would be
-nice too.
-
-> The qtest service is integrated in QEMU, what's missing is
->
->  * the client side to talk the qtest protocol
-
-python/qemu/machine/qtest.py?
-
->  * the various bus specific helper APIs
->
-> I don't know how hard it would be to bootstrap the client side in
-> python, but the general qtest protocol is 2000 lines of C, so
-> probably more like 500 lines of python to replace it, plus whatever
-> helpers you might want on top. Probably not terribly much work to
-> get something useful kickstarted.
->
-> NB, I am *not* sugggesting re-writing the actual existing tests,
-> just make it possible to write new qtests in python.
->
-> With regards,
-> Daniel
 
