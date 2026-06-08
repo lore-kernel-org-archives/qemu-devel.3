@@ -4,56 +4,56 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7C669CD8C92
-	for <qemu-devel@archiver.kernel.org>; Mon,  8 Jun 2026 07:24:13 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9D666CD8C92
+	for <qemu-devel@archiver.kernel.org>; Mon,  8 Jun 2026 07:24:17 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wWUFP-0008DX-3j; Mon, 08 Jun 2026 03:18:11 -0400
+	id 1wWUG5-0002Ci-08; Mon, 08 Jun 2026 03:18:53 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1wWUFN-00089P-Fa
- for qemu-devel@nongnu.org; Mon, 08 Jun 2026 03:18:09 -0400
+ id 1wWUFr-0001Np-BC
+ for qemu-devel@nongnu.org; Mon, 08 Jun 2026 03:18:43 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1wWUFL-0000Ej-5E
- for qemu-devel@nongnu.org; Mon, 08 Jun 2026 03:18:09 -0400
+ id 1wWUFp-0000Sw-IA
+ for qemu-devel@nongnu.org; Mon, 08 Jun 2026 03:18:39 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1780903086;
+ s=mimecast20190719; t=1780903116;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=0slAZr5wYvHwbne6mZ/zPGy2Lj/fJ6NfvG10inQysxA=;
- b=fmXxnk3dL4/7AtrmEcOb53xhLl4K5YYpkUaSDMavO0Q8sFCXEYaqHo9OjBsvh/AqXJ6FgI
- cIa1OcJx/Ct9nBPGVhXFOr6NblsxYz2befRU5E6wcT1/bRdZwIvs3wac5xYCttsptCEXu3
- K0g3cF/w5zD6KdxsoY4V96GF1c2Uuy4=
-Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
+ bh=ylTC7BARlqZ+04IBD49T6S4GmlKV0BK7BLmD7AYS7/w=;
+ b=N8xQaoP+M50hSb6FVVYMECcYzYdxWBypl9xrPjKFStrzj8b89FHWMi0l+s/4InsFaFX3Hq
+ K5cPjvmWjlCgmPEXiFNQY6T0qGMGiiLNWPPrwbtnowXYbptW9YVj7OIDtM3E/IEB9Z2N5S
+ bopb0Wst1viONfsizUw1OGSZAS+eusc=
+Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-572-kDuN8hUsN2aTLmKXkOeTPw-1; Mon,
- 08 Jun 2026 03:18:02 -0400
-X-MC-Unique: kDuN8hUsN2aTLmKXkOeTPw-1
-X-Mimecast-MFC-AGG-ID: kDuN8hUsN2aTLmKXkOeTPw_1780903081
-Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-186-a8r50Z4LOL2BkaSDLIb6Cg-1; Mon,
+ 08 Jun 2026 03:18:27 -0400
+X-MC-Unique: a8r50Z4LOL2BkaSDLIb6Cg-1
+X-Mimecast-MFC-AGG-ID: a8r50Z4LOL2BkaSDLIb6Cg_1780903106
+Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id A92CB1955F1F; Mon,  8 Jun 2026 07:18:00 +0000 (UTC)
+ by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 92E5A1956089; Mon,  8 Jun 2026 07:18:26 +0000 (UTC)
 Received: from localhost (unknown [10.44.22.16])
- by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 2E24B3008B34; Mon,  8 Jun 2026 07:17:58 +0000 (UTC)
+ by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id 9A8F619560A6; Mon,  8 Jun 2026 07:18:25 +0000 (UTC)
 From: =?utf-8?q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>
-Date: Mon, 08 Jun 2026 11:16:33 +0400
-Subject: [PATCH v2 15/33] ui/curses: implement display cleanup
+Date: Mon, 08 Jun 2026 11:16:38 +0400
+Subject: [PATCH v2 20/33] ui/dbus: implement display cleanup
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
-Message-Id: <20260608-b4-ui-v2-15-9ea6355ea08f@redhat.com>
+Message-Id: <20260608-b4-ui-v2-20-9ea6355ea08f@redhat.com>
 References: <20260608-b4-ui-v2-0-9ea6355ea08f@redhat.com>
 In-Reply-To: <20260608-b4-ui-v2-0-9ea6355ea08f@redhat.com>
 To: qemu-devel@nongnu.org
@@ -67,24 +67,24 @@ Cc: Paolo Bonzini <pbonzini@redhat.com>,
  Peter Maydell <peter.maydell@linaro.org>, 
  Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>, 
  =?utf-8?q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>
-X-Developer-Signature: v=1; a=openpgp-sha256; l=1612;
+X-Developer-Signature: v=1; a=openpgp-sha256; l=1563;
  i=marcandre.lureau@redhat.com; h=from:subject:message-id;
- bh=CrS76SW/HLMQ3iT1E5F2L0lWK5WfDn5ZaHj1Iew5FR4=;
- b=owEBbQKS/ZANAwAKAdro4Ql1lpzlAcsmYgBqJmxKqzDCFR+lBmUTVzOV1fiWY3Y5y0nuE2tnM
- n0mVGBrY7iJAjMEAAEKAB0WIQSHqb2TP4fGBtJ29i3a6OEJdZac5QUCaiZsSgAKCRDa6OEJdZac
- 5TIeD/9/ybLA6EdImr+O6P274nBoiTlfrW1ouyF22rA0sEd8Lb0GI6zPZxXVBdKq5k5aU0HhypS
- gRxc8JwuuAJJHvmiYvfjOwSejPuokmeDJik5NtcW6M4BmCMb/cCcTBMHH5pO32mFKQkejWlK3bE
- 5r9sBmTRZh8PPPAL75ZVEAOtK9u6MD5bEwY+dPk4cMw5m7V/J+cEIBaMRalrw8nEnEOgLO+HmaY
- kYmSmTW8jn0ME2/beq4uu/9CCntbppZxABaANRf0o5Y7P0/sjcgWYrwOYX5Q6rBiMJpGgR9BPDh
- 3bK4RVKY/fjeAlyq8wLEPs8kNxtIuJGKpiXqTut2wjnPVpQih0NyoG+ZLEs3GESC4wnHQUQad1c
- dgU8ajC39QJGKc5cOVM1u8n5yRUSWk3Km0dYnaBqG/bM943JR6lPqR8Z18yB16wJuvngJGmMBJ+
- 8nSoG6k+iGA1BUWgjdPuTVczlLeKXv54z1OyqtGqRTt6hiBiXyPDxHqdU6mQA5jD8d5KZ3cX/p0
- 38BeCyYx/vHiXMopPMKccUXVt77O1xra8Bv6XjXVHWrdop5RCAi2Le82Z81YW82bw3CpDpZlM7T
- fZxBje6sbQHOyoHhb8ojToiYJXiubeYpDPKDalR8E4dCOwl7GVbLhm3t2s002OvExRK8sTqGBcU
- oIHWABRdLnf80oQ==
+ bh=KjogY/hMAZwWfbbFTG+U8PdOErEGRgvAosOe7XnBmzY=;
+ b=owEBbQKS/ZANAwAKAdro4Ql1lpzlAcsmYgBqJmxLZb7Qy9ngLLiTcrLxuOJiz+H6pYVsr2mGO
+ B8cdV0FR8KJAjMEAAEKAB0WIQSHqb2TP4fGBtJ29i3a6OEJdZac5QUCaiZsSwAKCRDa6OEJdZac
+ 5W9CEACqvr7Tnypc1K4zHeKg+2/OGDwMAoZb0fIo2RHM9CqX8OKjkk3O5jILOtHl+1vsruWQCFc
+ cPiBg6BQqLrDeZD0M2lEcsOqXsFcBM1ERserB+ANE52mDQ5BclALV90GQcsDXuQsW5stF9NsUEN
+ wSjnAPdUYGfe9FH7YKt5WLULYGVq9Ia9DiGI4hAR8YPJBtjaMnmQLkodTLgZJTlYrfE7Vk/TOxb
+ 9MtuaBPtvcn0XQ6v3y0sSzlyc2d8nXToDzwX7qXyHYdjUQvfFUxt5Cso+lsnlOGmgJi22+Jc6E6
+ bZxXai+2ddkPpn7gNQU8v225k+6JXKSz3APtd8Gzg0NOu2bOg7J7LLoogRngJUX0Ho+Xe6ra7Cm
+ lyIOZpYFUNrlM4d2XLL8JIuQtpdAn3gCz/dMdw7gw3uK+473K0s+okcVYkBipuqvsFNr1n/uQgJ
+ +HN8bgs2fb7KwtgxaoJLnCqHk+koYQT3fdKGuatmooIinp2koOA2vOSeiQIMTFPeO8qEsQsuUP7
+ t/jou1ezUfaJazgw51xmY+f1y4ukS451rAEwqXA4PtP7kYHOskrUP0UuB6aNLtWy/OvZPrFrSfP
+ RtUwcOuMOd2SzfUZUQ2W/b4JaA5ojyW4LZVwt07MkrWZQnvFolsjzI1fXZHSsKQnCQgEffUl2ud
+ 5wfj2PeNEDSfDZQ==
 X-Developer-Key: i=marcandre.lureau@redhat.com; a=openpgp;
  fpr=87A9BD933F87C606D276F62DDAE8E10975969CE5
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.12
 Received-SPF: pass client-ip=170.10.133.124;
  envelope-from=marcandre.lureau@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
@@ -111,59 +111,57 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Replace the atexit() handler with a proper cleanup callback. The new
-curses_cleanup() unregisters the display listener, destroy & free the
-allocated resources.
+Add dbus_cleanup() to unparent the D-Bus display object, ensuring
+proper teardown before user_creatable_cleanup() runs.
 
 Signed-off-by: Marc-André Lureau <marcandre.lureau@redhat.com>
 ---
- ui/curses.c | 17 ++++++++++++-----
- 1 file changed, 12 insertions(+), 5 deletions(-)
+ ui/dbus-console.c |  3 +++
+ ui/dbus.c         | 13 +++++++++++++
+ 2 files changed, 16 insertions(+)
 
-diff --git a/ui/curses.c b/ui/curses.c
-index 24d3713e57d..4db32b6168d 100644
---- a/ui/curses.c
-+++ b/ui/curses.c
-@@ -411,11 +411,19 @@ static void curses_refresh(DisplayChangeListener *dcl)
-     }
- }
+diff --git a/ui/dbus-console.c b/ui/dbus-console.c
+index f784ccbe572..a4a17f5b4d0 100644
+--- a/ui/dbus-console.c
++++ b/ui/dbus-console.c
+@@ -152,6 +152,9 @@ dbus_display_console_dispose(GObject *object)
+     DBusDisplayConsole *ddc = DBUS_DISPLAY_CONSOLE(object);
  
--static void curses_atexit(void)
-+static void curses_cleanup(void)
- {
-+    if (!dcl) {
-+        return;
+     qemu_console_unregister_listener(&ddc->dcl);
++    if (ddc->dcl.con) {
++        qemu_console_set_display_gl_ctx(ddc->dcl.con, NULL);
 +    }
-+
-     endwin();
--    g_free(vga_to_curses);
--    g_free(screen);
-+    qemu_console_unregister_listener(dcl);
-+    g_clear_pointer(&dcl, g_free);
-+    g_clear_pointer(&screenpad, delwin);
-+    g_clear_pointer(&vga_to_curses, g_free);
-+    g_clear_pointer(&screen, g_free);
-+    g_clear_pointer(&kbd_layout, kbd_layout_free);
- }
- 
- /*
-@@ -799,8 +807,6 @@ static void curses_display_init(DisplayState *ds, DisplayOptions *opts)
-     vga_to_curses = g_new0(cchar_t, 256);
-     curses_setup();
-     curses_keyboard_setup();
--    atexit(curses_atexit);
--
-     curses_winch_init();
- 
-     dcl = g_new0(DisplayChangeListener, 1);
-@@ -812,6 +818,7 @@ static void curses_display_init(DisplayState *ds, DisplayOptions *opts)
- static QemuDisplay qemu_display_curses = {
-     .type       = DISPLAY_TYPE_CURSES,
-     .init       = curses_display_init,
-+    .cleanup    = curses_cleanup,
+     qemu_remove_mouse_mode_change_notifier(&ddc->mouse_mode_notifier);
+     qemu_remove_led_event_handler(ddc->kbd_leds_updated);
+     g_clear_object(&ddc->iface_touch);
+diff --git a/ui/dbus.c b/ui/dbus.c
+index e02a94df2f3..b23cb44c535 100644
+--- a/ui/dbus.c
++++ b/ui/dbus.c
+@@ -615,10 +615,23 @@ static const TypeInfo dbus_display_info = {
+     }
  };
  
- static void register_curses(void)
++static void
++dbus_cleanup(void)
++{
++    Object *o;
++
++    o = object_resolve_path_component(object_get_objects_root(),
++                                      "dbus-display");
++    if (o) {
++        object_unparent(o);
++    }
++}
++
+ static QemuDisplay qemu_display_dbus = {
+     .type       = DISPLAY_TYPE_DBUS,
+     .early_init = early_dbus_init,
+     .init       = dbus_init,
++    .cleanup    = dbus_cleanup,
+     .vc         = "vc",
+ };
+ 
 
 -- 
 2.54.0
