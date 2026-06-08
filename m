@@ -4,112 +4,112 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id AE29DCD8C92
-	for <qemu-devel@archiver.kernel.org>; Mon,  8 Jun 2026 16:06:23 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D0AF5CD8C9D
+	for <qemu-devel@archiver.kernel.org>; Mon,  8 Jun 2026 16:08:37 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wWcUT-00042B-4J; Mon, 08 Jun 2026 12:06:18 -0400
+	id 1wWcWZ-0004zY-Ki; Mon, 08 Jun 2026 12:08:27 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1wWcUJ-0003z7-HW
- for qemu-devel@nongnu.org; Mon, 08 Jun 2026 12:06:08 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1wWcUG-0006hp-9D
- for qemu-devel@nongnu.org; Mon, 08 Jun 2026 12:06:07 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1780934756;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=ujR843trII2bv3A0tTWm9dqZAw/R+5zr8OxmEk+g53M=;
- b=ORnNVH+g58YEZULmbNqIpg8NbV3IvlC1eEh/TnjaRPrOBmuBw8wPet24aba8qn7XMh8bxT
- JESS4s9/N0no7r/5QfRYma4DnaaPW7A8O6z29KgDGKOrJe1GC00q674W6vwMSAjO9j2Wv+
- hvSpfBqd8W5nt9pCZ3ZfXAkiirDDG6c=
-Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-283-vUM5-sK8PwOU5iZWPYQWjQ-1; Mon,
- 08 Jun 2026 12:05:43 -0400
-X-MC-Unique: vUM5-sK8PwOU5iZWPYQWjQ-1
-X-Mimecast-MFC-AGG-ID: vUM5-sK8PwOU5iZWPYQWjQ_1780934742
-Received: from mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.111])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 831FC1955DCE; Mon,  8 Jun 2026 16:05:41 +0000 (UTC)
-Received: from [10.44.48.99] (unknown [10.44.48.99])
- by mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id E660D18005B8; Mon,  8 Jun 2026 16:05:38 +0000 (UTC)
-Message-ID: <c189e708-f9ac-4ed1-ad93-04d8916afac3@redhat.com>
-Date: Mon, 8 Jun 2026 18:05:34 +0200
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1wWcWV-0004z6-LB
+ for qemu-devel@nongnu.org; Mon, 08 Jun 2026 12:08:24 -0400
+Received: from mail-ej1-x62c.google.com ([2a00:1450:4864:20::62c])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1wWcWU-0007UA-3a
+ for qemu-devel@nongnu.org; Mon, 08 Jun 2026 12:08:23 -0400
+Received: by mail-ej1-x62c.google.com with SMTP id
+ a640c23a62f3a-bed2b9bfa02so611316466b.1
+ for <qemu-devel@nongnu.org>; Mon, 08 Jun 2026 09:08:20 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1780934900; cv=none;
+ d=google.com; s=arc-20240605;
+ b=kgg9i/1mqpYmVhn9cz8Z0qb48TxNEh+tNSVmJwwt7nwED3zuSNyz7i5lUQbcXN8QfM
+ LNlknoXVjXjjpBjCToZBgC8zHKv3+qIBQXdtxSFGhIrb5pKH3A5Ffckcr993WjVL43Wq
+ /Q7Ab6llPFzQ/t9sw/Gk420ZtkLRyEkhnU1ZM8WhIOUh80YaZrB8itlJXtxnfFOS9S9g
+ x/umIqK6bosVYNTuoHMEFyx/UTn37TlLiD+qhe1ES/KXMuvqBX6n2HX0PFG8+XMSeE4Z
+ FJmjT9r63S9gA7RIF4Ka2XhzsYz3GovOCANiRbeRXSLDGGJ1I90oAHpw5Y8ifYlRdgI8
+ xi+Q==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
+ s=arc-20240605; 
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:dkim-signature;
+ bh=JviVQiNcyfBKKTJ9X+lnH18j4+CiFFtHjwWqorA4zLw=;
+ fh=F8TB8zHciHT63HpcYYSLckSvVVJwGMtcKH4uTYU8jy0=;
+ b=Qh4ifbEqSUUevcmvemqYlKyM2ICh2ZTKXKYjgJc/Hpt4FZ4G6qpzhemgGp7DWUXxKe
+ lMON4sL40qQX6OOOl2PnpPlqtX2CjQU7XqLaSykLRZFqB/UX0YfOfOsZs1963LplPjZ7
+ 4GLvE8oFFWxcY3IbgozOkEWsjR0Wjkoa7EwEmDIw+NV7msurFGo31ZfZ9vae4Y/hInRG
+ e21H0X2vqFngpDiagvKgexb1l3E5WV3/HTbBGKHvDv+WwWets6Rry9h7T78MeNyCm2Xx
+ sXDSfNQmdS2wqnpDxPN68k27uju1CwVDclMhp6yDC7At8EGCWG/EvgVp/aHl2RKpPTDv
+ MhzA==; darn=nongnu.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1780934900; x=1781539700; darn=nongnu.org;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:from:to:cc:subject:date:message-id:reply-to;
+ bh=JviVQiNcyfBKKTJ9X+lnH18j4+CiFFtHjwWqorA4zLw=;
+ b=Jqxo/oUGvJqgdasQAWVPVyN+/jUFi+Gyy/7XdKC2O1hPG8+hmqz3kUNvXNM7w8yIqe
+ DclUJwgVhmGWaBkO3SYTwp0Tn1/GsEPtxa+VqEdca+rzlgwwGRwWp3NLWWhRdDbZaAY/
+ 5hyJFKflKWQtp+h1o95KDkBZCCcT4UnHggt6aq44l+55LZKbRijHua6tLdjQFzko43wP
+ c1r0Cr8wWJvF8J2+WggzcUKDHxnbKf4SjSp+qhlRWGdzt8en6rlIxMdAXGIgcBfYNGFd
+ qH+4zGnuDfAmTH2N5SSumCJQKUCqHwNj451jGi5EEKTCSqeJdi3iVD3jSe7h/VjKGsFI
+ URUQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1780934900; x=1781539700;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=JviVQiNcyfBKKTJ9X+lnH18j4+CiFFtHjwWqorA4zLw=;
+ b=NU2We7+1stfnWepgPQKEa2ycT9va/lJQ1oVzPiOirAcpRNAL8RLa7Zjar6irtSDsN8
+ /eY6VwzVtRLYi1GFD1QDLqa+9wPwQpU0BOP3x65I7SUpNtF5S2HnvKrC453yrvnIgJ5U
+ lS2deD1ixQ8dC9y3RFt5jExAFC6kDkb/r6xq6J2sQ1wZa5tmJaphs0Un1au40FzCneSE
+ boKhI9+DQCj9UK6P5ThGopzdwjqvrijim3VdoZEM6gsQJFlhY5igqUXu1ViY733697xl
+ P7cEV11rA8kGgdJyMt8RcrL9dyk8xZRXAcG08WnXutHCSCNeYf7DQeUtGtF2q396s96d
+ //ig==
+X-Forwarded-Encrypted: i=1;
+ AFNElJ9j3xjt6u54E0DHaBzruvQZ6WJ3Y2pHmZ2wuaO92xUfHQpAiwJxuhpmHlQJbBYwtbPecZJTLV6iDQhm@nongnu.org
+X-Gm-Message-State: AOJu0YxGrQigrE0jOCArpxvE2pdEx5z3HTU7+S+ksq2ZlDm1tcwL94dj
+ vE2PxkMkmDHABTHS2z1kZGbu6hhM8ib+YR+/+ooKzz0SBbvEyCtjEj4KskLDrzRNgdAXEd9ZU/c
+ 6w+v2cLh+/qRoFw0TfmgAyUhpR3MO+UmbeAoy04doGA==
+X-Gm-Gg: Acq92OG//OQJVPN1WiTrxwNWgGWjbBPR0TvAwxzotHz7UycdnuT5+XwA6mlL4J5UTpb
+ hcUI7skKd41/WBbv66++yhjJ2lNCncooHifzLeQYY9sMzipwH04z0V140AFS+TMqrKToWpA8viV
+ XNk5pNBD1CQ7V2SQN0OyIT6o8S8F08e7X0dLx+G4ITvghfsy/4/D12k1/hlhYPlon9nPnQn/FQc
+ 3HnaONqf9e2PIct4QW3qmnT5kI59MLx2yIt/mgA8Ho6qKZe/fcrKxhexaJq4/dWu2XvhVLAnGIT
+ GV33j1rvw/82CqDpWF7pM9VJdyWp9gZw+e76GjR4IBXzyUkRK7FluAJda3HEQYouzeuZ2ipo3FL
+ I9LVKo+s1Rr7P
+X-Received: by 2002:a17:907:a0d1:b0:bec:fa92:d370 with SMTP id
+ a640c23a62f3a-bf373ee4f1fmr836333566b.33.1780934899498; Mon, 08 Jun 2026
+ 09:08:19 -0700 (PDT)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2] memory/ramblock: Fix clear of mru_block on possible
- race condition
-To: Peter Xu <peterx@redhat.com>, qemu-devel@nongnu.org
-Cc: Juraj Marcin <jmarcin@redhat.com>,
- =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@mailo.com>,
- =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
- Fabiano Rosas <farosas@suse.de>, Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
-References: <20260604133429.1268084-1-peterx@redhat.com>
-Content-Language: en-US
-From: Paolo Bonzini <pbonzini@redhat.com>
-Autocrypt: addr=pbonzini@redhat.com; keydata=
- xsEhBFRCcBIBDqDGsz4K0zZun3jh+U6Z9wNGLKQ0kSFyjN38gMqU1SfP+TUNQepFHb/Gc0E2
- CxXPkIBTvYY+ZPkoTh5xF9oS1jqI8iRLzouzF8yXs3QjQIZ2SfuCxSVwlV65jotcjD2FTN04
- hVopm9llFijNZpVIOGUTqzM4U55sdsCcZUluWM6x4HSOdw5F5Utxfp1wOjD/v92Lrax0hjiX
- DResHSt48q+8FrZzY+AUbkUS+Jm34qjswdrgsC5uxeVcLkBgWLmov2kMaMROT0YmFY6A3m1S
- P/kXmHDXxhe23gKb3dgwxUTpENDBGcfEzrzilWueOeUWiOcWuFOed/C3SyijBx3Av/lbCsHU
- Vx6pMycNTdzU1BuAroB+Y3mNEuW56Yd44jlInzG2UOwt9XjjdKkJZ1g0P9dwptwLEgTEd3Fo
- UdhAQyRXGYO8oROiuh+RZ1lXp6AQ4ZjoyH8WLfTLf5g1EKCTc4C1sy1vQSdzIRu3rBIjAvnC
- tGZADei1IExLqB3uzXKzZ1BZ+Z8hnt2og9hb7H0y8diYfEk2w3R7wEr+Ehk5NQsT2MPI2QBd
- wEv1/Aj1DgUHZAHzG1QN9S8wNWQ6K9DqHZTBnI1hUlkp22zCSHK/6FwUCuYp1zcAEQEAAc0j
- UGFvbG8gQm9uemluaSA8cGJvbnppbmlAcmVkaGF0LmNvbT7CwU0EEwECACMFAlRCcBICGwMH
- CwkIBwMCAQYVCAIJCgsEFgIDAQIeAQIXgAAKCRB+FRAMzTZpsbceDp9IIN6BIA0Ol7MoB15E
- 11kRz/ewzryFY54tQlMnd4xxfH8MTQ/mm9I482YoSwPMdcWFAKnUX6Yo30tbLiNB8hzaHeRj
- jx12K+ptqYbg+cevgOtbLAlL9kNgLLcsGqC2829jBCUTVeMSZDrzS97ole/YEez2qFpPnTV0
- VrRWClWVfYh+JfzpXmgyhbkuwUxNFk421s4Ajp3d8nPPFUGgBG5HOxzkAm7xb1cjAuJ+oi/K
- CHfkuN+fLZl/u3E/fw7vvOESApLU5o0icVXeakfSz0LsygEnekDbxPnE5af/9FEkXJD5EoYG
- SEahaEtgNrR4qsyxyAGYgZlS70vkSSYJ+iT2rrwEiDlo31MzRo6Ba2FfHBSJ7lcYdPT7bbk9
- AO3hlNMhNdUhoQv7M5HsnqZ6unvSHOKmReNaS9egAGdRN0/GPDWr9wroyJ65ZNQsHl9nXBqE
- AukZNr5oJO5vxrYiAuuTSd6UI/xFkjtkzltG3mw5ao2bBpk/V/YuePrJsnPFHG7NhizrxttB
- nTuOSCMo45pfHQ+XYd5K1+Cv/NzZFNWscm5htJ0HznY+oOsZvHTyGz3v91pn51dkRYN0otqr
- bQ4tlFFuVjArBZcapSIe6NV8C4cEiSTOwE0EVEJx7gEIAMeHcVzuv2bp9HlWDp6+RkZe+vtl
- KwAHplb/WH59j2wyG8V6i33+6MlSSJMOFnYUCCL77bucx9uImI5nX24PIlqT+zasVEEVGSRF
- m8dgkcJDB7Tps0IkNrUi4yof3B3shR+vMY3i3Ip0e41zKx0CvlAhMOo6otaHmcxr35sWq1Jk
- tLkbn3wG+fPQCVudJJECvVQ//UAthSSEklA50QtD2sBkmQ14ZryEyTHQ+E42K3j2IUmOLriF
- dNr9NvE1QGmGyIcbw2NIVEBOK/GWxkS5+dmxM2iD4Jdaf2nSn3jlHjEXoPwpMs0KZsgdU0pP
- JQzMUMwmB1wM8JxovFlPYrhNT9MAEQEAAcLBMwQYAQIACQUCVEJx7gIbDAAKCRB+FRAMzTZp
- sadRDqCctLmYICZu4GSnie4lKXl+HqlLanpVMOoFNnWs9oRP47MbE2wv8OaYh5pNR9VVgyhD
- OG0AU7oidG36OeUlrFDTfnPYYSF/mPCxHttosyt8O5kabxnIPv2URuAxDByz+iVbL+RjKaGM
- GDph56ZTswlx75nZVtIukqzLAQ5fa8OALSGum0cFi4ptZUOhDNz1onz61klD6z3MODi0sBZN
- Aj6guB2L/+2ZwElZEeRBERRd/uommlYuToAXfNRdUwrwl9gRMiA0WSyTb190zneRRDfpSK5d
- usXnM/O+kr3Dm+Ui+UioPf6wgbn3T0o6I5BhVhs4h4hWmIW7iNhPjX1iybXfmb1gAFfjtHfL
- xRUr64svXpyfJMScIQtBAm0ihWPltXkyITA92ngCmPdHa6M1hMh4RDX+Jf1fiWubzp1voAg0
- JBrdmNZSQDz0iKmSrx8xkoXYfA3bgtFN8WJH2xgFL28XnqY4M6dLhJwV3z08tPSRqYFm4NMP
- dRsn0/7oymhneL8RthIvjDDQ5ktUjMe8LtHr70OZE/TT88qvEdhiIVUogHdo4qBrk41+gGQh
- b906Dudw5YhTJFU3nC6bbF2nrLlB4C/XSiH76ZvqzV0Z/cAMBo5NF/w=
-In-Reply-To: <20260604133429.1268084-1-peterx@redhat.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.111
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=pbonzini@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: 8
-X-Spam_score: 0.8
-X-Spam_bar: /
-X-Spam_report: (0.8 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.445,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_SBL_CSS=3.335, SPF_HELO_PASS=-0.001,
- SPF_PASS=-0.001 autolearn=no autolearn_force=no
+References: <20260608-testing-macos-v1-1-42774498936f@meta.com>
+ <CAFEAcA-aNmOmjhbVypCLpDVowTeSK-28aaY5X0jqRe32qmkqUQ@mail.gmail.com>
+ <aibhMPHu6nbBT3Yi@redhat.com>
+ <CAFEAcA98r4DxQbB+yiWKqnTGSzps+GGQ3gxFPLogBGTXY77jXQ@mail.gmail.com>
+ <CAMdbysh2-mjxmWZcfDw53UbJd0keBtTgO_gnGc6pPMzv3GOPDw@mail.gmail.com>
+In-Reply-To: <CAMdbysh2-mjxmWZcfDw53UbJd0keBtTgO_gnGc6pPMzv3GOPDw@mail.gmail.com>
+From: Peter Maydell <peter.maydell@linaro.org>
+Date: Mon, 8 Jun 2026 17:08:04 +0100
+X-Gm-Features: AVVi8CfLW4QgxX-WzxPhpXCDVlLiG2UQv4yfMo5J7Xkonlm_JeH1j_tQrMdF-xE
+Message-ID: <CAFEAcA_WtRMz93Y7CrGW0PDTzoA+jXtY-4e0AgYXemCe4GG6RQ@mail.gmail.com>
+Subject: Re: [PATCH] tests: strip macOS "-unsigned" suffix from binary name
+To: Emmanuel Blot <eblot@meta.com>
+Cc: =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>, 
+ qemu-devel@nongnu.org, Thomas Huth <th.huth+qemu@posteo.eu>, 
+ =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@mailo.com>, 
+ Fabiano Rosas <farosas@suse.de>, Laurent Vivier <lvivier@redhat.com>, 
+ Paolo Bonzini <pbonzini@redhat.com>,
+ =?UTF-8?B?QWxleCBCZW5uw6ll?= <alex.bennee@linaro.org>
+Content-Type: text/plain; charset="UTF-8"
+Received-SPF: pass client-ip=2a00:1450:4864:20::62c;
+ envelope-from=peter.maydell@linaro.org; helo=mail-ej1-x62c.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -125,84 +125,19 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 6/4/26 15:34, Peter Xu wrote:
-> The race condition was not reported in any real bug, but I found it while
-> reviewing some relevant chnages from Akihiko [1].  It's not clear if
-> there's any way to reproduce it, so far it's only theoretical.  Hence
-> there's also no Fixes tag attached.  There's also no need to copy stable
-> until we have a solid reproducer.
-> 
-> Currently, mru_block might still points to ramblocks that are removed if
-> below race condition happens:
-> 
->    Reader A                              Writer
->    --------                              ------
->    rcu_read_lock()
->    walk list, find block X
->                                          QLIST_REMOVE_RCU(X)
->                                          qatomic_set(&mru_block, NULL)
->                                          call_rcu(X, reclaim_ramblock)
->    qatomic_set(&mru_block, X)  <----------- overwrites NULL
->    rcu_read_unlock()
->                                          grace period ends, X freed
-> 
->    Reader C
->    --------
->    rcu_read_lock()
->    qatomic_rcu_read(&mru_block) -> X
->    Read X's block->offset ...  <----------- UAF
-> 
-> To fix it, we can introduce a nested RCU free for reset of the mru_block
-> field, and only free the ramblock until the 2nd RCU call.
+On Mon, 8 Jun 2026 at 16:57, Emmanuel Blot <eblot@meta.com> wrote:
+>
+> Ok thanks, got it.
+>
+> I need to use `ninja -C build qemy-system-arm` to generate the signed
+> binary, because the default target only generates the `-unsigned`
+> version (I guess this is the linker's default output, macOS requires
+> an extra signing step).
+> The signed version is defined as an on-demand command which is not
+> part of the default build (`all`).
 
-There is a version field in RAMList.  Maybe we need mru_version too?
+Right, this is the bug that needs fixing. The default target should
+build the signed binary.
 
-- reader A reads version before starting the list walk, then writes 
-mru_version and mru_block
-
-- writers update version and do not even have to clear mru_block
-
-- new readers ignore mru_block if mru_version != version
-
-This works, but there is a snag:
-
-     reader A (MRU parts elided, assuming a miss)
-     --------------------------------------------
-     load_acquire version // load version before walking list
-     walk list
-     ...
-
-             writer B
-             -----------------------
-             // like seqcount_write_begin
-             store version++
-             smp_wmb();
-             // ----
-             QLIST_REMOVE_RCU
-             store release version++  // like seqcount_write_end
-
-     // these two must be atomic!
-     store release mru_version = version & ~1, mru_block = block
-
-     reader C (MRU parts shown)
-     --------------------
-     load_acquire mru_version    // like seqcount_read_begin
-     load mru_block
-     // like seqcount_read_retry
-     smp_rmb()
-     load_acquire version
-     // ----
-     if block == NULL || version != mru_version || block mismatch
-       walk list
-
-In other words, the seqcount retry check compares the current version of 
-the list against the one *stored by the previous reader*.
-
-The snag is that torn writes of the (version, block) pair are a problem, 
-so the store of mru_version and mru_block must be atomic and that 
-requires CONFIG_ATOMIC128.  Maybe avoid MRU altogether if it's not 
-available, and if it is use qatomic_read__nocheck/qatomic_set__nocheck?
-
-Paolo
-
+-- PMM
 
