@@ -4,92 +4,108 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id EEC7ACD98C5
-	for <qemu-devel@archiver.kernel.org>; Tue,  9 Jun 2026 15:51:14 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A6AD7CD8CB9
+	for <qemu-devel@archiver.kernel.org>; Tue,  9 Jun 2026 15:52:25 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wWyit-000348-3z; Tue, 09 Jun 2026 11:50:39 -0400
+	id 1wWyk8-0003xh-VR; Tue, 09 Jun 2026 11:51:56 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1wWyir-00033D-GN
- for qemu-devel@nongnu.org; Tue, 09 Jun 2026 11:50:37 -0400
-Received: from mail-pl1-x635.google.com ([2607:f8b0:4864:20::635])
+ (Exim 4.90_1) (envelope-from <titusr@google.com>) id 1wWyk8-0003wl-3m
+ for qemu-devel@nongnu.org; Tue, 09 Jun 2026 11:51:56 -0400
+Received: from mail-lf1-x12b.google.com ([2a00:1450:4864:20::12b])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1wWyip-0006jz-FI
- for qemu-devel@nongnu.org; Tue, 09 Jun 2026 11:50:37 -0400
-Received: by mail-pl1-x635.google.com with SMTP id
- d9443c01a7336-2bf2e8ccca1so40784625ad.0
- for <qemu-devel@nongnu.org>; Tue, 09 Jun 2026 08:50:35 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <titusr@google.com>) id 1wWyk5-00070x-0U
+ for qemu-devel@nongnu.org; Tue, 09 Jun 2026 11:51:55 -0400
+Received: by mail-lf1-x12b.google.com with SMTP id
+ 2adb3069b0e04-5aa62bd04fbso30762e87.0
+ for <qemu-devel@nongnu.org>; Tue, 09 Jun 2026 08:51:52 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1781020311; cv=none;
+ d=google.com; s=arc-20240605;
+ b=RsH/WLFvw1Pk0s99gNF3EnkCyc5dIz7OBa1474Uwwfmrchqm0DcfT7aG6qC1Hka+Is
+ qaW2nrQ3jIBxUUgDfV5iTAloQqB/XjjsZL4FFJldEe8V1rzngiph5ZE8FzC65JiFxYlY
+ lnRCsV2Vh81O4EloU6Q5MzVdVu1Opk82YzhJZ8XVCD+I2Wq7a2Mp1Apr0N7f2H820HU2
+ sADG3RgI7O/Gg92Vj0kQciL3cGZM/iAU8NNMnKfX+kx0mnGfi54zLVN2DqsJM3zcw/Ka
+ Uyo0ZGU5kODApE89XaMaJK1LADzvRHwwbZuCHC/W75M0A6rd9HuxdVizCSqFXlSHwktK
+ fEQQ==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
+ s=arc-20240605; 
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:dkim-signature;
+ bh=wNVM8/XIQ+GMp2Km6P124CqDPpvEiW+D0aQeKgN3Az8=;
+ fh=GZ4mKLDmqDtqJtf7iD6uEuKA1Lm/eILkcjqcU9S6Qvo=;
+ b=W6AP7allulnWAlhVBoMeOemlvnt+HIXixjiVrOilauZV6rtSebUJMSOZFEP7qZRbPC
+ ar72FiP5TrJoFAeYjFdmBg8VltgbQSMP0ADsYCo0Zss8g3Mr8MCxNPNPyHHL6XOQDtFs
+ KuOlMBwF7zJnWGjNNZFHWjEHjEmjuBSeRxOq2J3OwU3xdYHYNOHmC8WufRpqYvsEM+Wy
+ bmDreaYF3hTbt1H82/zOJrd+IF5IuPutfFPFGTkS6epB8RnIY1lGVO0gKqgmvGCnt8ZU
+ NQYsfWszWrv/vu4iLAjN1c8krjWmmA5kkqdBqTFKsM7nsze88Rdf+E2CQsT07SI3UVDW
+ uZcQ==; darn=nongnu.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1781020234; x=1781625034; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:content-language:from
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=UmyYVA71jlMvI5AczbEHaGsMbq3mgwjXxuff5ch/snc=;
- b=Q4MD2xKgIg5Nf0nBnNfEGF5HwePAoJNVgQkGV2tJdXU4UiAWWcFt4upm7x0vsAEBW7
- 78r0D9kKaLOZEkqXQ/GlD4eEs6vbslpniO2vSN/ctLGM7Zukzb0IojZmo33o7ao8biIA
- nk3c0ioWTqf4DG6ZMHCqfaaF2N6T2qYYifP965jygsOpsS8v40bLVx6XqjZtDObBQBS/
- 8Y90V+iKhRKHyUG/bYUs6kV+y6+B95OzP7lNkR3CieG6cWjuoIrLr3n5wOTrs92cfRYl
- N0dVjvIUcCLsF1tSyGaKB+oF82nNX8IpN+QkqOJw8+ZQN8COkbESGCuL/ntVBuy6e/xs
- wNLw==
+ d=google.com; s=20251104; t=1781020311; x=1781625111; darn=nongnu.org;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=wNVM8/XIQ+GMp2Km6P124CqDPpvEiW+D0aQeKgN3Az8=;
+ b=OteLEIbV8juVlw/RPBoJOAsAF+aLOIsDIlV9cDniJbmZFze1L+6Xsk1tdib0Sp2yHq
+ mwQPFQgPTPAHT87Uc09sTy5Jblmm0B9wy9qTzAbwCxqG06B+RPfsiEgvHsvKbMFv6IRb
+ VdTehG7ed44u163Tu75pm7sK+7QJ3EhBiZ+bqQlaOs814XJVmQ5zlRFRk2ivRx8gB9W5
+ 0OAqN96UdzGWDV50I6HmKgF/3HE7YqH0RrwcIW2/YNMdGqRozZilBj0dTQYAtWJsE2uB
+ S8pjMas5enBEnZi0N5JMG0JAuB6Rb9lhMtFn52t1CRcfDttNfe+SyMswAMMtXCGEOeEM
+ JXHw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1781020234; x=1781625034;
- h=content-transfer-encoding:in-reply-to:content-language:from
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=UmyYVA71jlMvI5AczbEHaGsMbq3mgwjXxuff5ch/snc=;
- b=dySgpAC4o83fqqzPdBrw9lSwQmd11xjsy0xfWLUnpQYqQj6LYat9vDoou0YIwKqQdn
- 6QkBVivTZdkGkrbsgfkUNxzvmJ+yewSXM7nMfOs87jf0A5v08CZAI+FYmZZimf8ZRNw9
- W2XBx5UYeikmwwXw3sz5Nyalt+xFuZ1VS/swX43l9Hu4zobOf4UypfosKFZkvII4VpNT
- LmB11gCVWHSa3gDNeet8oSKR31dSbBgfkEqMn5qb+CEmeHMDg739pcGxpmlKSC8uu83D
- IBQEUQ9WpUUkmMvWXX4+896R4Bcl/FGrtsTfcK0goTSHrYl6KpO6met72nI35UDiLGdK
- drNA==
-X-Gm-Message-State: AOJu0Yyp3HA+AXzfw3qjUsxagEXPQcNfWXj9L6L3d8gERlo7YSGpGXty
- G1fYuiEZ90jnaUapf44QThesYraweG+1zdXym7g6ERKUHP7naYfS0N89Sci/sj3BxBc=
-X-Gm-Gg: Acq92OEFeT18NkaXmyZnXbWxJBmddWHfnpiz96+9vdDK6kyAaM7beD/+QNLpidd2R+N
- DDhEElYKUhOvlTiVdAEgqaqtojnFBUqXRynD4uz5FJhtWMW4nvSd/evdXFRXfX5zn4SXMIkBG4i
- iR+cFc60xDA7FWauSTUr26Nto5x08OjQdSHV0iI8Ivlgt6Kf0/3YcgvMdWoI9jjFjXY+UdJF6lZ
- kFpb0VGTic5MFsWMqSHycJ/BofmmTo3TMgIky9st+i0BnPAaQJH6o9AFhmO0GasdsRYfLFkRzk/
- FaWoE+W6vSYfyZgifUrYni4WuxIghUKgEKIJPFHsO4EuPLnskv6rDmpgsyiBWXbkQVcECW+GFBb
- gnDOVqyyS13l/btbXlFXXVoIS7uNvLxvpAjrlaGov7RPTLWmjUoW1zPbMqhCejQ1XB7xsHRIb0t
- 7GtjjGbV9thQa5l9PTcN2ay55TZpamUa1D7LQKChuv345Po0pmEswNkdcbXQ==
-X-Received: by 2002:a17:903:3888:b0:2bd:606d:b339 with SMTP id
- d9443c01a7336-2c1e80ec394mr259498595ad.21.1781020233738; 
- Tue, 09 Jun 2026 08:50:33 -0700 (PDT)
-Received: from [192.168.0.4] ([71.212.142.33])
- by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-2c16649fcdfsm284087845ad.78.2026.06.09.08.50.32
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 09 Jun 2026 08:50:33 -0700 (PDT)
-Message-ID: <c2ef2ce8-5c4a-4b8a-8928-b08058bdc8e4@linaro.org>
-Date: Tue, 9 Jun 2026 08:50:31 -0700
+ d=1e100.net; s=20251104; t=1781020311; x=1781625111;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=wNVM8/XIQ+GMp2Km6P124CqDPpvEiW+D0aQeKgN3Az8=;
+ b=eRZ4WKflM8ag+dkHUlVkdcxyrd1ihxuqdOPJyDj6IidODjuAK2/YqVlL9GqOakS3qR
+ 3AJ5nwSuc3iJuMRTTBeFX1o7M0/Ydo9KSLfpZ7Cwb1qrXx84nSyGIXPrNHWMbfHnOlSb
+ qwb9nH6vEonaIWlT5roknpNZJYSwaBiR1peGc7vrB7Z42bhutWJBAuIkA50cSA9wua07
+ rHpjMa/1EGvVtkBDaZ6DZDc8/LWHpK5SwOwdLn9zziGXf0BQFBc5MX7fBoRje7PurrOO
+ rFf5MYkgmttCXJzNOLGgjL6SJKGl80m4sC0mPsI0yuIM464+6VpPSSv+0V83irBnivB/
+ H3Vg==
+X-Forwarded-Encrypted: i=1;
+ AFNElJ/YlOJZO0Ce114y0AXX6M0dAb01bLHYK3csOKhgdbvX6alqhmcMwACIm4CBEODXXKPZ8ltFny0gXGm3@nongnu.org
+X-Gm-Message-State: AOJu0Yz6t6ASxwyowOm2NbV/dHud5IZyZ7Gs+f/XK21mAlFfHnTgPqF3
+ DN0S1qyHspYh7lV+hbg8l6StyFZRt1Y8Npi7fHjMgnie0UcsM1qPQtJlbXtp1QB9tz58XA2lTm6
+ 7mPexvWXionokB1q2isiBhYGr+f3JJJ0IYsA41i3s
+X-Gm-Gg: Acq92OF/ddR9niaNdLm4k370dcxt8acVD/JuKBdpAgEkDM9UytIM/IMykjB4oAH8nR5
+ 1Am053iFfXMP2YhEiMstnGjBrGz9ZLnfkgHtZwWnh5OVD2i1LlmlFcvosYLNXElv0mMiRG1MEd8
+ FvqQkljSOZzuloX2wLG9KWhXYVk2k4O6lEcmorrIYvRH8O6JAoxAAwUHyqpsx2LHh89aVPWedLj
+ ZI9FqyZu7OxAu1vikAaxl8HNtC6yrf43HtYFSMN++Y97gVCpKR6cbi4aTcxRqSe+XKbXWgck70a
+ w9ZM+ymGmjtqq0A3/GINQIT4G/c38sY6V750sAi9F0nhiTj+kQ==
+X-Received: by 2002:a05:6512:23a8:b0:5a8:73f1:4099 with SMTP id
+ 2adb3069b0e04-5aa8856cd45mr731268e87.0.1781020310309; Tue, 09 Jun 2026
+ 08:51:50 -0700 (PDT)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v9 03/45] target/arm: Use FloatParts64 in f16_dotadd
+References: <20260609105626.1038690-1-thuth@redhat.com>
+ <CAFEAcA9O6b02VMuto8VzaEsVi3zTqNtQKG_RcMaPnNdPXGUBhw@mail.gmail.com>
+ <CAMvPwGpvpHD+Sx-HZR4FFMJB+W8Rk8LoU0256Q=vwKAdC96HSQ@mail.gmail.com>
+ <CAFEAcA9N_O7RZRU+SPTfB_ePasjVZvUsFPhndfQDuHgQ+4Q-5A@mail.gmail.com>
+In-Reply-To: <CAFEAcA9N_O7RZRU+SPTfB_ePasjVZvUsFPhndfQDuHgQ+4Q-5A@mail.gmail.com>
+From: Titus Rwantare <titusr@google.com>
+Date: Tue, 9 Jun 2026 08:51:13 -0700
+X-Gm-Features: AVVi8Cdai3kcd1rD-r_4IKxs0gsOerSlPqiCRzTaBqR3URolkh9sVOzU02dxeO4
+Message-ID: <CAMvPwGpzAcDxeqSvQmOjzkQn6T91CAmTO31bNs0wmSMqQKG=Qg@mail.gmail.com>
+Subject: Re: [PATCH] hw/i2c/pmbus_device: Fix a possible crash when requesting
+ too many bytes
 To: Peter Maydell <peter.maydell@linaro.org>
-Cc: qemu-devel@nongnu.org, qemu-arm@nongnu.org,
- =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-References: <20260603032855.106930-1-richard.henderson@linaro.org>
- <20260603032855.106930-4-richard.henderson@linaro.org>
- <CAFEAcA_jORCuOnt4oh_JB7ZdqmZeo2yjYwssoT+-3D8K8P1DEQ@mail.gmail.com>
-From: Richard Henderson <richard.henderson@linaro.org>
-Content-Language: en-US
-In-Reply-To: <CAFEAcA_jORCuOnt4oh_JB7ZdqmZeo2yjYwssoT+-3D8K8P1DEQ@mail.gmail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::635;
- envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x635.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Cc: Thomas Huth <thuth@redhat.com>, qemu-devel@nongnu.org,
+ qemu-trivial@nongnu.org, qemu-arm@nongnu.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2a00:1450:4864:20::12b;
+ envelope-from=titusr@google.com; helo=mail-lf1-x12b.google.com
+X-Spam_score_int: -175
+X-Spam_score: -17.6
+X-Spam_bar: -----------------
+X-Spam_report: (-17.6 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_MED=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ ENV_AND_HDR_SPF_MATCH=-0.5, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001, USER_IN_DEF_DKIM_WL=-7.5,
+ USER_IN_DEF_SPF_WL=-7.5 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -105,88 +121,61 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 6/9/26 08:23, Peter Maydell wrote:
-> On Wed, 3 Jun 2026 at 04:29, Richard Henderson
-> <richard.henderson@linaro.org> wrote:
->>
->> Use softfloat-parts.h so that we can more naturally
->> perform the required operations witha single rounding step.
->> This happens to also simplify the NaN detection step.
->>
->> Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
->> Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
->> Message-Id: <20260517002550.321291-11-richard.henderson@linaro.org>
->> ---
-> 
->> diff --git a/target/arm/tcg/sme_helper.c b/target/arm/tcg/sme_helper.c
->> index 376fbd48d4..7ef6f5d71b 100644
->> --- a/target/arm/tcg/sme_helper.c
->> +++ b/target/arm/tcg/sme_helper.c
->> @@ -27,6 +27,7 @@
->>   #include "accel/tcg/helper-retaddr.h"
->>   #include "qemu/int128.h"
->>   #include "fpu/softfloat.h"
->> +#include "fpu/softfloat-parts.h"
->>   #include "vec_internal.h"
->>   #include "sve_ldst_internal.h"
->>       } else {
->> -        float64 e1r = float16_to_float64(h1r, true, s_f16);
->> -        float64 e1c = float16_to_float64(h1c, true, s_f16);
->> -        float64 e2r = float16_to_float64(h2r, true, s_f16);
->> -        float64 e2c = float16_to_float64(h2c, true, s_f16);
->> -        float64 t64;
->> -
->>           /*
->>            * The ARM pseudocode function FPDot performs both multiplies
->> -         * and the add with a single rounding operation.  Emulate this
->> -         * by performing the first multiply in round-to-odd, then doing
->> -         * the second multiply as fused multiply-add, and rounding to
->> -         * float32 all in one step.
->> +         * and the add with a single rounding operation.
->>            */
->> -        t64 = float64_mul(e1r, e2r, s_odd);
->> -        t64 = float64r32_muladd(e1c, e2c, t64, 0, s_std);
->> +        FloatParts64 tmp = parts64_mul(&p1r, &p2r, s_std);
->> +        tmp = parts64_muladd(&p1c, &p2c, &tmp, 0, s_std);
-> 
-> This change results in our incorrectly reporting an input-denormal-used
-> exception when FPCR.AH=1 and some of the halfprec inputs are denormal.
-> (For AH=1 we are supposed to set IDC for input-denormal-used only for
-> single and double precision inputs, not for halfprec. We achieve that by
-> having vfp_get_fpsr_from_host() mask out the input_denormal_used flag
-> from FPST_STD_F16.)
+   On Tue, 9 Jun 2026 at 08:25, Peter Maydell <peter.maydell@linaro.org> wr=
+ote:
+>
+> On Tue, 9 Jun 2026 at 15:52, Titus Rwantare <titusr@google.com> wrote:
+> >
+> > On Tue, 9 Jun 2026 at 04:01, Peter Maydell <peter.maydell@linaro.org> w=
+rote:
+> > > I had a look at this bug earlier, but was not sure that this is the
+> > > right thing. What happens is that the guest does something that
+> > > causes the device to queue up data X ready for the guest to
+> > > read, but then instead of reading it, the guest does another
+> > > "I would like data X please" action. My guess is that the way
+> > > the hardware handles this is probably not "add the second
+> > > copy of data X after the first one". Perhaps it is "drop the
+> > > data the guest didn't read, so the next guest read gets the
+> > > second lot of data, not the first". But maybe the spec really
+> > > does say "you can do things in the order 'ask for A, ask for
+> > > B, read data for A, read data for B".
+> > >
+> > > I couldn't conveniently find the pmbus spec to find out what
+> > > the hardware is supposed to do here. We need some input from
+> > > somebody who knows about pmbus.
+>
+> > Queueing reads are an implementation detail I decided on, not part of
+> > the spec. How the data gets discarded is up to the device
+> > manufacturer.
+>
+> So what *does* the spec say? Does it just say that if you don't
+> read all the data before doing something else then it's all
+> unpredictable? Is there a way for the guest to get the device
+> back into a sane state after it's broken it like that?
+>
+> -- PMM
 
-Oh, right.
+I'm not sure this can happen on hardware. The device puts all the
+bytes on the bus, and the controller can interrupt it with a Repeated
+START
 
-> 
-> I think this worked previously because we did a float_to_float
-> conversion using the f16 status (float_to_float consumes an
-> input denormal, which we don't report because we use the f16
-> status), and any f16 denormal is not a denormal in f64 and
-> so the 64-bit ops never see an input denormal, so using s_std
-> wasn't a problem ? 
-
-That sounds right.
-
-> (Also, for the operation using s_odd that
-> is a copy of an fp_status so any exception flags set there
-> never get copied back to the live version. Presumably we
-> relied on it never being able to generate an exception?)
-
-I didn't think we were relying on that, only avoiding swapping rounding mode for each 
-vector element.
-
-> I think it doesn't matter whether we use s_std or s_f16
-> in the final round-and-pack step, because the only differences
-> between the F16 and normal fpstatus are to do with input
-> denormals (separate flush-to-zero control, and different
-> denormal-consumed reporting), and that happens in the
-> "unpack" and "do operation" steps; nothing cares in "pack".
-> I went with s_f16 because we usually do the whole
-> "unpack; operation; pack" sequence with a single fp status.
-
-Yep, thanks.
-
-
-r~
+SMBus v3.3 6.5:
+```
+The data formats implemented by SMBus are:
+=E2=80=A2 Controller-transmitter transmits to target-receiver: The transfer
+direction in this case is not changed.
+=E2=80=A2 Controller reads target immediately after the first byte: At the
+moment of the first acknowledgment (provided by the target-receiver)
+the controller-transmitter becomes a controller-receiver and the
+target-receiver becomes a target-transmitter.
+=E2=80=A2 Combined format: During a change of direction within a transfer, =
+the
+controller generates a REPEATED START condition and the target address
+but with the R/W#
+set to 1. In this case the controller receiver terminates the transfer
+by generating a NACK on the last byte of the transfer and a STOP
+condition.
+```
+Hmm, seems to me the data gets cleared with a change in direction.
+-Titus
 
