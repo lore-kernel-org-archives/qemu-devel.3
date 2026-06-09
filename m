@@ -4,99 +4,108 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id DACB1CD8CA8
-	for <qemu-devel@archiver.kernel.org>; Tue,  9 Jun 2026 11:14:07 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id BDA9DCD8CA8
+	for <qemu-devel@archiver.kernel.org>; Tue,  9 Jun 2026 11:15:13 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wWuOb-0003JG-Fb; Tue, 09 Jun 2026 07:13:25 -0400
+	id 1wWuPu-0003gA-Sf; Tue, 09 Jun 2026 07:14:47 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <filip.hejsek@gmail.com>)
- id 1wWuOZ-0003J1-HG
- for qemu-devel@nongnu.org; Tue, 09 Jun 2026 07:13:23 -0400
-Received: from mail-wr1-x42a.google.com ([2a00:1450:4864:20::42a])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <filip.hejsek@gmail.com>)
- id 1wWuOU-00030E-Qj
- for qemu-devel@nongnu.org; Tue, 09 Jun 2026 07:13:20 -0400
-Received: by mail-wr1-x42a.google.com with SMTP id
- ffacd0b85a97d-46015dc517aso4349672f8f.2
- for <qemu-devel@nongnu.org>; Tue, 09 Jun 2026 04:13:17 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <imammedo@redhat.com>)
+ id 1wWuPs-0003ft-6c
+ for qemu-devel@nongnu.org; Tue, 09 Jun 2026 07:14:44 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <imammedo@redhat.com>)
+ id 1wWuPp-0004PU-LT
+ for qemu-devel@nongnu.org; Tue, 09 Jun 2026 07:14:43 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1781003680;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=AdkVMVGtoy59iqPOwHbGtIE/43+sDgUaPj0ygDg9zxY=;
+ b=PG49KAenOxfXHKmLM66GZOJjqqn2aAMKROV+Ksob8wckVODGFGuPdilzE6wTb0/n8pPwcU
+ UQt32mGEYyt5ssAs2l0TVONAKpJnUPV8Tv44Z8guiC9grimLdHMIOllRcR4tP2zl7Edfmg
+ fKeHa19SdHUaoT6jVWmenB2zT9ba15I=
+Received: from mail-wm1-f70.google.com (mail-wm1-f70.google.com
+ [209.85.128.70]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-270-k8oLuyyqOVWxK5ofS5qA3A-1; Tue, 09 Jun 2026 07:14:38 -0400
+X-MC-Unique: k8oLuyyqOVWxK5ofS5qA3A-1
+X-Mimecast-MFC-AGG-ID: k8oLuyyqOVWxK5ofS5qA3A_1781003677
+Received: by mail-wm1-f70.google.com with SMTP id
+ 5b1f17b1804b1-490b79e6b94so39159985e9.2
+ for <qemu-devel@nongnu.org>; Tue, 09 Jun 2026 04:14:38 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1781003595; x=1781608395; darn=nongnu.org;
- h=mime-version:user-agent:content-transfer-encoding:references
- :in-reply-to:date:cc:to:from:subject:message-id:from:to:cc:subject
- :date:message-id:reply-to;
- bh=1IghAgosARcWbQQ3noBtNpja0F6Bfk2uPH/+nYNqAPo=;
- b=hTbepnWRIdgxg5XTlClnTzZQ80sIrFVuSEJh0KrDQbIUA1LY1de37Ai+BfZN/Wkq9x
- xA0jqOklp9Zsu0k1FhswQeQ+DQHDBT8hVbtGltRGL5mHhVpbwgO9rev2+sDko8p3ARpu
- 7FL4SRimiBF/SekfbzB72mieKdXWIGr6fgIiJB2iN1nL4OaVvtiCHuocqnDN/L9nfUwV
- s8OeaGKqz2pmOM9kHJd4Tsh4dpKaZkzPABSd5qqwGeKJ1fA/5O2mbhwuBI3V739Oby4a
- kIUTfHwhI6NSOWbvysO63zkJKHPEx8GWsN6HwAh0thDXNg9tB1oCQ4yQfszcYbrvi7CX
- uSBQ==
+ d=redhat.com; s=google; t=1781003677; x=1781608477; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:subject:cc:to:from:date:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=AdkVMVGtoy59iqPOwHbGtIE/43+sDgUaPj0ygDg9zxY=;
+ b=iIB8jn/Ql5DGoskISOvm0HWZQuVNZDZCl/gWcmpCHJ7toOJNZTFmuVeZMk7vrfIzqG
+ aNeQQbacgKbwZ7PDx/QDSNt2Ve7+UdChP9vqdOWjtB+9l3OvTM0oidKNKaLjs5Ig4cv9
+ qBdfP/lVXB/n1oD4HopTWhh/VgFbeQqQFVO/fPnZga+Brr4vkTuIAq843ClyEIGJfG2I
+ UYlf2jJfgYErafHP7Nuwc2PNzl4zfSf/Zy02rtQNqqRFwbHXtuygcQ9uQyGXIbGbl0/M
+ laD76i8PA/LzKphTBvuqKdhfFgEOvnbpcEQI7pyrgbsS8KhZrfPVVE3WcOE8q6nGIbhQ
+ ZZRw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1781003595; x=1781608395;
- h=mime-version:user-agent:content-transfer-encoding:references
- :in-reply-to:date:cc:to:from:subject:message-id:x-gm-gg
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=1IghAgosARcWbQQ3noBtNpja0F6Bfk2uPH/+nYNqAPo=;
- b=DP/eEA4ganxMLrSV55ID69QBi7zW3/IkRXfJfNg196bJ1oE00/IUFmUBBHsa7tCsbj
- qSMLhzjQzp0NgnrQzKU0ONyUbotwb42BbIgNJhIOlkL9F1S9NgOBwrP83dGQmN293b1s
- eZhyGFUriE9wWiX+5PxPwGRMhcJnNICR/9pNIumzHh5QOSVM1QLM3OAR5Gdp1b8Y3m4I
- 0Hj9ymzpVffJDWLT+7JQKKJRvWTo9DtSEFM2kIoKm+OF501gB432wusmUUhyTKA6O2wJ
- MAeXN/YTilQ77hAqt08fh3Mq6GQdawTjwvl4jUMbSFPGmndEDCdCDNaJmUnaBX+BLkbh
- XXtQ==
-X-Gm-Message-State: AOJu0Ywuck6eMLvnmHAGvDGO7mzyvnzQTkNAD8vBgzQ/oPd5+6pm1pHf
- 0lO8m+6ESluEomJ4oroSXNQdJRsuGi8dj3+DWOO8u7H1r1t0SZ/qGg6f
-X-Gm-Gg: Acq92OFs8bOOmB6I77q9z012EV3QWO78pxVjfJfCI+1i0QULrYkpmuJ61DAl4xltbYc
- EKks6LhuiCYjIvG/D/6chmgaQOOnc05rxUw4ntwIJ6BfeUj/V+j8BeontyDWRvWcjkBddXelyUW
- yGrD4pcVo6mStGGH51PAq5jQsn/BtfctLeACRBRyKIEiwne75R26V2viAcpwAFHPn2QS/WdNf0B
- /krpn7qLKHVnB7uFldki9yKbojDNEbqL/QRAM001f+CSS/krYTSw+/FF1i20j97F7Kj7f85sMYs
- IiAyJO4izgNRJo4NihaMqnMq+4flOnA0/wwZPFtQmJAziXXlP7DmP0c901O1AaVkm3m9psypeI5
- edjkRjsoKNyw6Bm1TfjIGom28owL5cpOfxJInizh1BRYUBALyscqPKsovvYHetqjoDlFwjD7cNz
- L7FCpKyxNYolxNTNn/3nV2yx6QGyvfamtgkVMTqwSartrcskSfA6dCpYHSGjGoP31/oq1W
-X-Received: by 2002:adf:f750:0:b0:45e:d8dc:922e with SMTP id
- ffacd0b85a97d-4603063a8ccmr22191925f8f.20.1781003595363; 
- Tue, 09 Jun 2026 04:13:15 -0700 (PDT)
-Received: from [10.33.80.40] (mem-185.47.220.165.jmnet.cz. [185.47.220.165])
- by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-4601f2dcae2sm64785026f8f.6.2026.06.09.04.13.14
+ d=1e100.net; s=20251104; t=1781003677; x=1781608477;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=AdkVMVGtoy59iqPOwHbGtIE/43+sDgUaPj0ygDg9zxY=;
+ b=YKathiZgyhgj+cY0Vt3KshoY9K+8P4dBYVVgJxe/65hm7gbGCYZi3qBg+eqryrxAVI
+ 37xurNslkmw5XWKLeBxqbRP4fhR6F60C38h/K2x2Q/IfK6WEIAGHmxpqMetdq+gMrSkX
+ FlmROVnbNxwMP9L6k3gYNZNt/am9+cLR3KEf6zaEVnNgHU108xLgWDPI/MxscwvdB+QZ
+ 1CcrxYvfhp5utqGLkDxwccIpdusqQ3ogmuSnMoRQ0VM/fe4aXRATDn+997FiKl74by0M
+ M9MAkp4EgTk0iQNWygzqcbDIGhEx2kEVjDj97odgsfcwaIUUCaKBCdeA3pGKMraCHLxb
+ eT7w==
+X-Gm-Message-State: AOJu0YyTLQfXCJek8CEBlaF1E9YLKewfuS7YSe0cKt9uPB0EZesSqsk1
+ mRWuzB7VmqHVkJNex6/dH8c6cZW1Hv13xtJMiVl5kyJt8H6YWg7sZty8AaVFFNn1bawpR871ffm
+ l/5KtczTUFy/XIgYrGS1Rbh2hruFDbuU6ij68Li4lf0VRvgrz6r+28KyB
+X-Gm-Gg: Acq92OGWWyOiVA/xOyW0YMvmAFFMLbMlcV46XGbMSduSZ99ZqcbHtfpCCxrJ3lGyOvZ
+ 4Lj4Y6syAmW34EhusSbQlGYu5T2CnTgjKWvzP51z2Gm9R8TG231Ws2xGjeMTCHndukg8vTRM5Ih
+ uGSil9BYRiPfZopHfdNlaz6Tr/wIX/a6R/v2hL0L3L0QvvSvshKNPapbdgJqIB+b/7BWNqwm+Au
+ t13+5ar6jpfjedyuBggMtaj1n6zkmU/LzSGbvQbeJJQPr4wXcg7MyylZFbQmGROM/S1yJUyUG4X
+ xCLKN+40sTPTRfe7WboLuaoKocG65DS/Qubi0XTmIm/TkvvLfBjSYtuuiRkvXVDJY/q9F0iSWY/
+ RQH0qlbJFUBBUxfWt
+X-Received: by 2002:a05:600c:1d0a:b0:48e:5d91:cfe3 with SMTP id
+ 5b1f17b1804b1-490d71ecbe8mr28973175e9.1.1781003677312; 
+ Tue, 09 Jun 2026 04:14:37 -0700 (PDT)
+X-Received: by 2002:a05:600c:1d0a:b0:48e:5d91:cfe3 with SMTP id
+ 5b1f17b1804b1-490d71ecbe8mr28972815e9.1.1781003676939; 
+ Tue, 09 Jun 2026 04:14:36 -0700 (PDT)
+Received: from imammedo ([213.175.46.86]) by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-4601f34413csm60276191f8f.21.2026.06.09.04.14.36
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 09 Jun 2026 04:13:14 -0700 (PDT)
-Message-ID: <ba34daea09f83601c88be90006ca28e3700910d9.camel@gmail.com>
-Subject: Re: [PATCH v6 00/12] virtio-console: notify about the terminal size
-From: Filip Hejsek <filip.hejsek@gmail.com>
-To: Maximilian Immanuel Brandtner <maxbr@linux.ibm.com>, "Michael S.
- Tsirkin"	 <mst@redhat.com>
-Cc: qemu-devel@nongnu.org, =?ISO-8859-1?Q?Marc-Andr=E9?= Lureau	
- <marcandre.lureau@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>, Laurent
- Vivier <lvivier@redhat.com>, Amit Shah <amit@kernel.org>, Markus Armbruster
- <armbru@redhat.com>,  Eric Blake <eblake@redhat.com>, Eduardo Habkost
- <eduardo@habkost.net>, Marcel Apfelbaum	 <marcel.apfelbaum@gmail.com>,
- Philippe =?ISO-8859-1?Q?Mathieu-Daud=E9?=	 <philmd@linaro.org>, Yanan Wang
- <wangyanan55@huawei.com>, Zhao Liu	 <zhao1.liu@intel.com>, "Daniel P."
- =?ISO-8859-1?Q?Berrang=E9?=	 <berrange@redhat.com>, Szymon Lukasz
- <noh4hss@gmail.com>
-Date: Tue, 09 Jun 2026 13:13:13 +0200
-In-Reply-To: <147cee86401993714fa94bd6cc79c4dbbdcaca52.camel@linux.ibm.com>
-References: <20260119-console-resize-v6-0-33a7b0330a7a@gmail.com>
- <cc0b8cce5bf5763ace058270e9d80fb84873dbd7.camel@linux.ibm.com>
- <20260609040710-mutt-send-email-mst@kernel.org>
- <147cee86401993714fa94bd6cc79c4dbbdcaca52.camel@linux.ibm.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-User-Agent: Evolution 3.60.2 
+ Tue, 09 Jun 2026 04:14:36 -0700 (PDT)
+Date: Tue, 9 Jun 2026 13:14:35 +0200
+From: Igor Mammedov <imammedo@redhat.com>
+To: fanhuang <FangSheng.Huang@amd.com>
+Cc: <qemu-devel@nongnu.org>, <david@kernel.org>, <gourry@gourry.net>,
+ <philmd@mailo.com>, <Zhigang.Luo@amd.com>, <Lianjie.Shi@amd.com>
+Subject: Re: [PATCH v10 2/4] i386/acpi-build: partition device_memory SRAT
+ umbrella for sp-mem
+Message-ID: <20260609131435.34646220@imammedo>
+In-Reply-To: <20260605104609.1739911-3-FangSheng.Huang@amd.com>
+References: <20260605104609.1739911-1-FangSheng.Huang@amd.com>
+ <20260605104609.1739911-3-FangSheng.Huang@amd.com>
+X-Mailer: Claws Mail 4.4.0 (GTK 3.24.52; x86_64-redhat-linux-gnu)
 MIME-Version: 1.0
-Received-SPF: pass client-ip=2a00:1450:4864:20::42a;
- envelope-from=filip.hejsek@gmail.com; helo=mail-wr1-x42a.google.com
-X-Spam_score_int: -10
-X-Spam_score: -1.1
-X-Spam_bar: -
-X-Spam_report: (-1.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FORGED_GMAIL_RCVD=1,
- FREEMAIL_FROM=0.001, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=no autolearn_force=no
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=imammedo@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -24
+X-Spam_score: -2.5
+X-Spam_bar: --
+X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.445,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -112,67 +121,151 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, 2026-06-09 at 10:26 +0200, Maximilian Immanuel Brandtner wrote:
-> On Tue, 2026-06-09 at 04:09 -0400, Michael S. Tsirkin wrote:
-> > On Tue, Jun 09, 2026 at 10:02:40AM +0200, Maximilian Immanuel
-> > Brandtner wrote:
-> > > What's the status of this series? It seems to me to have somewhat
-> > > stalled, because of the virtio resize event discrepancy that has
-> > > been
-> > > adressed by backporting the relevant patch. At this point it's been
-> > > almost 6 months since any changes have been made to this patch-set,
-> > > even though at this point it would have to be refactored to address
-> > > changes that have been made to QEMU since. Has progress on this
-> > > patch-
-> > > set just stalled or are there any remaining concerns about the
-> > > implementation of this patch-set I'm unaware of?
-> > >=20
-> > > Kind regards,
-> > > Max Brandtner
-> >=20
-> > Whom are you asking?
-> > There were comments on patches 7 and 8 and Filip seems to have
-> > indicated
-> > he intends to address them, and even posted diffs.
-> > So now, I expect v7 with that.
-> I suppose Filip for the most part. It's just that close to 6 months of
-> inactivity is quite a while and sometimes as other stuff happens people
-> can forget about a patch-series.
->=20
-> Kind regards,
-> Max Brandtner
+On Fri, 5 Jun 2026 18:46:07 +0800
+fanhuang <FangSheng.Huang@amd.com> wrote:
 
-Hi all,
+> Restructure the device_memory SRAT umbrella entry into a per-kind
+> partition: each TYPE_SP_MEM device gets an ENABLED entry at its own
+> proximity_domain; the remaining sub-ranges get HOTPLUGGABLE | ENABLED
+> placeholders at the highest PXM, preserving the existing umbrella
+> convention.
+> 
+> Signed-off-by: FangSheng Huang <FangSheng.Huang@amd.com>
+> ---
+>  hw/i386/acpi-build.c | 98 +++++++++++++++++++++++++++++++++++++++++---
+>  1 file changed, 92 insertions(+), 6 deletions(-)
+> 
+> diff --git a/hw/i386/acpi-build.c b/hw/i386/acpi-build.c
+> index 0d7c83d5e9..76efa83808 100644
+> --- a/hw/i386/acpi-build.c
+> +++ b/hw/i386/acpi-build.c
+> @@ -52,6 +52,7 @@
+>  #include "migration/vmstate.h"
+>  #include "hw/mem/memory-device.h"
+>  #include "hw/mem/nvdimm.h"
+> +#include "hw/mem/sp-mem.h"
+>  #include "system/numa.h"
+>  #include "system/reset.h"
+>  #include "hw/hyperv/vmbus-bridge.h"
+> @@ -1346,6 +1347,96 @@ build_tpm_tcpa(GArray *table_data, BIOSLinker *linker, GArray *tcpalog,
+>  }
+>  #endif
+>  
+> +typedef struct {
+> +    uint64_t addr;
+> +    uint64_t size;
+> +    uint32_t node;
+> +} SpMemRange;
+> +
+> +static int collect_sp_mem_ranges_cb(Object *obj, void *opaque)
+sp_mem_collect... maybe
 
-Sorry, I did indeed forget about the series.
+> +{
+> +    GArray *ranges = opaque;
+> +    SpMemDevice *spm;
+> +    MemoryDeviceClass *mdc;
+> +    SpMemRange r;
+> +
+> +    if (!object_dynamic_cast(obj, TYPE_SP_MEM)) {
+> +        return 0;
+> +    }
+> +    spm = SP_MEM(obj);
+> +    mdc = MEMORY_DEVICE_GET_CLASS(MEMORY_DEVICE(spm));
+> +    r.addr = mdc->get_addr(MEMORY_DEVICE(spm));
+> +    r.size = memory_region_size(
+> +                 host_memory_backend_get_memory(spm->hostmem));
+> +    r.node = spm->node;
+> +    g_array_append_val(ranges, r);
+> +    return 0;
+> +}
+> +
+> +static gint sp_mem_range_compare(gconstpointer a, gconstpointer b)
+> +{
+> +    const SpMemRange *range_a = a;
+> +    const SpMemRange *range_b = b;
+> +
+> +    if (range_a->addr < range_b->addr) {
+> +        return -1;
+> +    }
+> +    if (range_a->addr > range_b->addr) {
+> +        return 1;
+> +    }
+> +    return 0;
+> +}
+> +
+> +/*
+> + * Emit SRAT memory-affinity entries covering the device_memory region.
+> + *
+> + * For each plugged TYPE_SP_MEM device, emit an ENABLED entry at the
+> + * device's own proximity_domain.  All remaining sub-ranges (gaps
+> + * between sp-mem devices, leading and trailing padding, and ranges
+> + * occupied by other memory devices) are covered by HOTPLUGGABLE |
+> + * ENABLED placeholder entries at PXM = nb_numa_nodes - 1.
+> + */
+> +static void build_srat_device_memory(GArray *table_data, MachineState *ms)
+> +{
+> +    g_autoptr(GArray) ranges = g_array_new(FALSE, TRUE, sizeof(SpMemRange));
+> +    uint64_t cursor, end;
+region_start, region_end
 
-From what I remember, I was trying to address an issue with the size
-not being updated after a migration, and it turned out fixing this
-required adding the current size to the migration stream (in order to
-avoid sending unnecessary resize events when the size doesn't change,
-which MST pointed out would add guest performance overhead).
+> +    int nb_nodes = ms->numa_state ? ms->numa_state->num_nodes : 0;
+> +    uint32_t hotplug_pxm = nb_nodes > 0 ? nb_nodes - 1 : 0;
 
-However, since virtio console serialization still uses save/load
-methods rather than VMState macros, I couldn't simply add a subsection,
-so I wasn't quite sure how to proceed. It seemed like the right thing
-to do was to migrate virtio-console to VMState, but that would have
-taken more effort than I was willing to put in at that moment. And then
-some other stuff happened in my life and now here we are.
+when function is called ms->numa_state->num_nodes is always > 0, isn't it?
 
-So anyway, in order to make progress on this, I see two approaches:
+> +    guint i;
+> +
+> +    if (!ms->device_memory) {
+> +        return;
+> +    }
+> +
+> +    cursor = ms->device_memory->base;
+> +    end = cursor + memory_region_size(&ms->device_memory->mr);
+> +
+> +    object_child_foreach_recursive(qdev_get_machine(),
+> +                                   collect_sp_mem_ranges_cb, ranges);
+> +    g_array_sort(ranges, sp_mem_range_compare);
+> +
+> +    for (i = 0; i < ranges->len; i++) {
+> +        SpMemRange *r = &g_array_index(ranges, SpMemRange, i);
+> +
+> +        if (cursor < r->addr) {
+> +            build_srat_memory(table_data, cursor, r->addr - cursor,
+> +                              hotplug_pxm,
+> +                              MEM_AFFINITY_HOTPLUGGABLE |
+> +                              MEM_AFFINITY_ENABLED);
+> +        }
+> +        build_srat_memory(table_data, r->addr, r->size, r->node,
+> +                          MEM_AFFINITY_ENABLED);
+> +        cursor = r->addr + r->size;
+> +    }
+> +
+> +    if (cursor < end) {
+> +        build_srat_memory(table_data, cursor, end - cursor,
+> +                          hotplug_pxm,
+> +                          MEM_AFFINITY_HOTPLUGGABLE |
+> +                          MEM_AFFINITY_ENABLED);
+> +    }
+> +}
+> +
+>  #define HOLE_640K_START  (640 * KiB)
+>  #define HOLE_640K_END   (1 * MiB)
+>  
+> @@ -1481,12 +1572,7 @@ build_srat(GArray *table_data, BIOSLinker *linker, MachineState *machine)
+>       * Memory devices may override proximity set by this entry,
+>       * providing _PXM method if necessary.
+>       */
+> -    if (machine->device_memory) {
+keep it here, and drop one in build_srat_device_memory()
 
-1. Just bump the migration stream version. Makes the loading code more
-convoluted due to version checks and increases tech dept for future
-VMState migration, but shouldn't be that hard to do.
+> -        build_srat_memory(table_data, machine->device_memory->base,
+> -                          memory_region_size(&machine->device_memory->mr),
+> -                          nb_numa_nodes - 1,
+> -                          MEM_AFFINITY_HOTPLUGGABLE | MEM_AFFINITY_ENABLED);
+> -    }
+> +    build_srat_device_memory(table_data, machine);
+>  
+>      acpi_table_end(linker, &table);
+>  }
 
-2. Do the VMState migration now. This is complicated by the fact the on
-load,=C2=A0some of the state shouldn't be restored back into the field that
-was saved, but instead should be compared and the guest notified if it
-is different. I'm also not quite sure how hard it will be to preserve
-migration stream compatibility.
-
-Which one would be preferable to do?
-
-Kind regards,
-Filip Hejsek
 
