@@ -4,77 +4,81 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 37CCDCD8CB2
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id ECEAECD8CB9
 	for <qemu-devel@archiver.kernel.org>; Tue,  9 Jun 2026 19:27:59 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wX24a-0005I0-3t; Tue, 09 Jun 2026 15:25:21 -0400
+	id 1wX266-000804-Bo; Tue, 09 Jun 2026 15:26:50 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1wX21g-0003T2-By
- for qemu-devel@nongnu.org; Tue, 09 Jun 2026 15:22:19 -0400
-Received: from mail-pl1-x62e.google.com ([2607:f8b0:4864:20::62e])
+ id 1wX21s-0003Z3-Bo
+ for qemu-devel@nongnu.org; Tue, 09 Jun 2026 15:22:31 -0400
+Received: from mail-pl1-x631.google.com ([2607:f8b0:4864:20::631])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1wX21c-0003yr-U7
- for qemu-devel@nongnu.org; Tue, 09 Jun 2026 15:22:15 -0400
-Received: by mail-pl1-x62e.google.com with SMTP id
- d9443c01a7336-2c0b944f6edso61071865ad.2
- for <qemu-devel@nongnu.org>; Tue, 09 Jun 2026 12:21:12 -0700 (PDT)
+ id 1wX21g-0004CE-TT
+ for qemu-devel@nongnu.org; Tue, 09 Jun 2026 15:22:23 -0400
+Received: by mail-pl1-x631.google.com with SMTP id
+ d9443c01a7336-2bf77d4a4e2so37214015ad.1
+ for <qemu-devel@nongnu.org>; Tue, 09 Jun 2026 12:21:42 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1781032871; x=1781637671; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:from:to:cc:subject:date:message-id:reply-to;
- bh=yTMSYWpfUMipEhrLcwHEDVCvznmKW22u2UG4z7J9j4M=;
- b=ImdQoBppH8gwVMdMcNGbigopTBlAn5FaclQlHX/Tg/0PnVMNXbmC0atAoZm3F1UGXc
- lzAQ1XNvYIt4gC/Z7+iztRum/3BtJ8XRSc0U9PzEZlkcxBVIC+sD49nziAkynNiCFqdY
- ZC5OW7M3UGxsXl2ZrI9n6WcpOi+tsdICfKVawqXKaJ9hvuFxsd8N2XhyAO1pQeW0vZtp
- Rdi4u4rZbxTgB37PEmjxiHX8DcUU/Ubc8Iw7iEnZEmNU7VkjEXwBqNNLp2ep/ZXxF7fe
- Oo02sgQwULzAPfWlrHdfAgc85v9MgKLdQIZZj3qyiASvhgKp8AzS2PtfwfUIwrzOhdyc
- CoQg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1781032871; x=1781637671;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ d=linaro.org; s=google; t=1781032902; x=1781637702; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=yTMSYWpfUMipEhrLcwHEDVCvznmKW22u2UG4z7J9j4M=;
- b=L32YVSnlDFAfOq5gkaCTBooGvZs7s/MydLFCxoJi2aXRjb+qg4WW+R3SEdQO6tzTWU
- 5JkTNDXLQzGdrhYadeH4BK52EZ8utCEvt611/eyCvVxN1KpPKlQFlRMidTF2+b0M1kDZ
- yy5oZgkswFbdnlL5iJPHO6g2GjphZxhU0wWjRk9iv99STxIT5le4aobYImmhJdfx5WR5
- 2HIRo/sYJOO72Lz5wopgK4W2IjqQEerwPWkQkRiFwlU4eklaC/iiHyyi7ta3p5jeG2vC
- IAPKDKxMAnCIzxWK3+7HzUJrWQe++fhga45H7V2XRhigcDrLcF8wWaMUp9c1WuCJwC1z
- 9lfg==
-X-Gm-Message-State: AOJu0Yx5rzuSRxOxSeD+sxFGjE0A263k0gZf23ocv6O6m9cuxhBtRjJp
- GbmS5xyKSas4JPRrkyzxlUF4B4/fyQlHeuzJCv+DSp3avl2V9vdOaXTAP2TYv0vddepmBUmGIXr
- nG/sX/ic=
-X-Gm-Gg: Acq92OFtycfj5GegdbnS/blhtVgqkhI3mOfPj9iw9pYhz3iVy2zxuv05SCsvGn3HnZu
- LFPrlz+sPDZMuoQsfECJ7Y246FEX/dzwz/JzrF6x0E9KA8R47qvkhyWWfm182E5LPcD0KHZvJQa
- 0p2p+zAwMIi5r3o8W+tocxesm5DZtmPnFi9KcSrBBh/hwOQt9gY+2msm+7gGso2Mg6WcqUuOWz6
- 4wfZVQgbUJSz73ejuQmwoxiv3ITPsVxNksXMl6Spf0B6I+uyfAH39qBQ9Mut8cGbx2WgFX020vX
- QrpJeegHsBdrnSvAlJ8Yo3tMdGzA8ILp8jW/JwqqzdkxcZy6fy2reAXKOzqrJleAYS9+q8RV/G1
- 3VK09oCbJQ35QD3Can/F4sMdqNLKN0KbmGLfWHr1tIB+s9mKKeMjvi+wvZerNLGxdrW7NGGOgc+
- 8Afr9Wagpz6hNfc9KnmMQtkM27SFqSh3WRR2Uz6W4=
-X-Received: by 2002:a17:902:e74e:b0:2c0:b35d:ed49 with SMTP id
- d9443c01a7336-2c1e7b35822mr254824515ad.2.1781032871163; 
- Tue, 09 Jun 2026 12:21:11 -0700 (PDT)
+ bh=DS9O8SaU3UtlC+2YZXc3ame2k7BLsC7rPFolJeiV0Jo=;
+ b=OPmIqInpyH2WGs9GhZiIr4pLqLFcISqbcKqpg95nJg2jHqA9IjXgnOrnPbET+39YT5
+ 1+ZJ1mLN9wfXv4+ZBuCXWBcBKc/e6RuVzUI+D40uhYShjCvbhkEYEwbbAXsMvtvFPstD
+ pWwFL3CihtLNOKKZ7ifA/JXPWkvUipW/fpWTXYXy7VDYbme0WdDQQx+rIQx4UZrlffIN
+ PLjDoGN6MtW61XBE+GD0jOkD5ieBwITN48Fy8D0NZveBpAnVqfn2GwzMkzx2PW0DKTkN
+ j/qnsHNS/sx8Ig1abZvKjs5E1amj1hh8cWP24M2IPom8cU62ZmptK1EoSsNTtS9W2U5z
+ 8zhw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1781032902; x=1781637702;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=DS9O8SaU3UtlC+2YZXc3ame2k7BLsC7rPFolJeiV0Jo=;
+ b=Mk1JlEvKHOkYWSaDeJ3oARrKnkmTWRdAOc6djDGNeQE5GSC7a5p87FJfBzMQla+sku
+ i6iqCEzLAaPF+BIlT3D1cSnHK4qlHgvWKkZAOhQeEdT0aJ4FyBnJvx82cK/i0jt5vJ6V
+ Qb8Tb+HKMaET0aNKcxoSII4g7OXLufZ78DbWhNSRokuC2nZ+ZeUwJp6eZymvFvvdQD2E
+ Qz2kMOiln1Va3kCGVJjFKZb52UECCZ24JPeRK4PiQLaWdcn0SR9M0vq2x/vGvuBbYj/R
+ OzSvu3CPhRNWNShnYD8lYOnJgTIZa6TmpmTFugrbM03EHjXUFWVuGiBa8HHU6157XT6M
+ hNbQ==
+X-Gm-Message-State: AOJu0YzVahF5sZC5MyYYO/3l+A7nF2QVwsCdIWQ+VAsugca+oEZKFJvh
+ M4Co8KdVt69C9/SwaJXMlHMeMFUkm0GLGZ5bd854qOrEpkBL2WP5e80hGoxYf9FSZG5IZzC80t7
+ DCKryqd4=
+X-Gm-Gg: Acq92OFWQNnLcRq6qetRvxG7s5tQvDQATOrSg62+OoOby8HmSadu4GRwE2PF///m1dv
+ JW5QH9HoUlJU+zRAcBvKwnTo8d7M4o7225cPy9ln2VAafnmRJfUe2CYexeyxIrusOFWW/Ltd7Qe
+ NC7YXifBnO3eW9hSUnjN1On7u/7jbyZOjYdn9Q380fQsEoHuxj/VyEk/YUZIkIGc9a7byAHnXwk
+ dFi1XPAvVwCUnJJydMDhdqIFwXtk8i24UOXeR4OzrBlxyuN4MnPAmq8iw+klyq5EIamDHvoHWQa
+ SZpHYAfYhmVgetrInKKulkWtiGwNmqcSH43vSXC/Z2Av5IATTBnX3hIOhDvUO9y9TmXE1WQiwdW
+ oJ7xAALhynXCmJfNy2kgrRdYCtEA9iWPrVcMaxsnyBO0Nlj2R9Rn4gbm7DsryYdBMx28rAb7JcP
+ 6/HLFfn3KH5AzNNOsLp15FeGEu+XXlyQbhLZ4mXPU=
+X-Received: by 2002:a17:903:3b8c:b0:2bf:361e:3edc with SMTP id
+ d9443c01a7336-2c1ec3f61a1mr187134945ad.2.1781032901512; 
+ Tue, 09 Jun 2026 12:21:41 -0700 (PDT)
 Received: from stoup.. ([71.212.142.33]) by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-2c164f88473sm240806095ad.25.2026.06.09.12.21.10
+ d9443c01a7336-2c164f88473sm240806095ad.25.2026.06.09.12.21.41
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 09 Jun 2026 12:21:10 -0700 (PDT)
+ Tue, 09 Jun 2026 12:21:41 -0700 (PDT)
 From: Richard Henderson <richard.henderson@linaro.org>
 To: qemu-devel@nongnu.org
-Cc: qemu-arm@nongnu.org
-Subject: [PATCH v10 00/45] target/arm: Implement FEAT_FP8
-Date: Tue,  9 Jun 2026 12:20:24 -0700
-Message-ID: <20260609192110.752384-1-richard.henderson@linaro.org>
+Cc: qemu-arm@nongnu.org,
+	Peter Maydell <peter.maydell@linaro.org>
+Subject: [PATCH v10 39/45] target/arm: Enable FEAT_FP8DOT2,
+ FEAT_SSVE_FP8DOT2 for -cpu max
+Date: Tue,  9 Jun 2026 12:21:03 -0700
+Message-ID: <20260609192110.752384-40-richard.henderson@linaro.org>
 X-Mailer: git-send-email 2.43.0
+In-Reply-To: <20260609192110.752384-1-richard.henderson@linaro.org>
+References: <20260609192110.752384-1-richard.henderson@linaro.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::62e;
- envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x62e.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::631;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x631.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -97,88 +101,69 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Changes for v10:
-  - bfdotadd_ebf and f16_dotadd fixes
-  - streaming fixes
-  - comment fixes
-  - All patches reviewed.
+Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
+Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
+---
+ linux-user/aarch64/elfload.c  | 2 ++
+ target/arm/tcg/cpu64.c        | 2 ++
+ docs/system/arm/emulation.rst | 2 ++
+ 3 files changed, 6 insertions(+)
 
-r~
-
-Richard Henderson (45):
-  target/arm: Use FloatParts64 in bfdotadd_ebf
-  target/arm: Drop oddstatus from is_ebf and bfdotadd_ebf
-  target/arm: Use FloatParts64 in f16_dotadd
-  target/arm: Generalize TRANS_FEAT_STREAMING_SME2
-  target/arm: Introduce arm_init_fp_status
-  target/arm: Set e4m3_nan_is_snan
-  target/arm: Implement BF1CVTL, BF1CVTL2, BF2CVTL, BF2CVTL2 for AdvSIMD
-  target/arm: Implement BF1CVT, BF1CVTLT, BF2CVT, BF2CVTLT for SVE
-  target/arm: Rename SME BFCVT patterns to BFCVT_hs
-  target/arm: Implement BF1CVT, BF1CVTL, BF2CVT, BF2CVTL for SME
-  target/arm: Implement F1CVTL, F1CVTL2, F2CVTL, F2CVTL2 for AdvSIMD
-  target/arm: Implement F1CVT, F1CVTLT, F2CVT, F2CVTLT for SVE
-  target/arm: Implement F1CVT, F1CVTL, F2CVT, F2CVTL for SME
-  target/arm: Implement BFCVTN for SVE
-  target/arm: Implement FCVTN (16- to 8-bit fp) for AdvSIMD
-  target/arm: Implement FCVTN, FCVTN2 (32- to 8-bit fp) for AdvSIMD
-  target/arm: Implement FCVTN (16- to 8-bit fp) for SVE
-  target/arm: Implement FCVTNB, FCVTNT for SVE
-  target/arm: Implement FCVT (FP16 to FP8) for SME
-  target/arm: Implement FCVT, FCVTN (FP32 to FP8) for SME
-  target/arm: Implement LUTI2, LUTI4 for AdvSIMD
-  target/arm: Implement LUTI2, LUTI4 for SVE
-  target/arm: Enable FEAT_LUT for -cpu max
-  target/arm: Enable FEAT_FP8 for -cpu max
-  target/arm: Update ID_AA64SMFR0_EL1 fields to ARM M.b
-  target/arm: Implement MOVT (vector to table)
-  target/arm: Implement LUTI4 (four registers, 8-bit)
-  target/arm: Enable FEAT_SME_LUTv2 for -cpu max
-  target/arm: Implement FMLALB, FMLALT for AdvSIMD
-  target/arm: Implement FMLALB, FMLALT (FP8 to FP16) for SVE
-  target/arm: Implement FMLALL{BB,BT,TB,TT} for AdvSIMD
-  target/arm: Implement FMLALL{BB,BT,TB,TT} for SVE
-  target/arm: Enable FEAT_FP8FMA, FEAT_SSVE_FP8FMA for -cpu max
-  target/arm: Implement FDOT (FP8 to FP32) for AdvSIMD
-  target/arm: Implement FDOT (FP8 to FP32) for SVE
-  target/arm: Enable FEAT_FP8DOT4, FEAT_SSVE_FP8DOT4 for -cpu max
-  target/arm: Implement FDOT (FP8 to FP16) for AdvSIMD
-  target/arm: Implement FDOT (FP8 to FP16) for SVE
-  target/arm: Enable FEAT_FP8DOT2, FEAT_SSVE_FP8DOT2 for -cpu max
-  target/arm: Implement FMMLA (FP8 to FP32) for AdvSIMD
-  target/arm: Implement FMMLA (FP8 to FP32) for SVE
-  target/arm: Enable FEAT_F8F32MM for -cpu max
-  target/arm: Implement FMMLA (FP8 to FP16) for AdvSIMD
-  target/arm: Implement FMMLA (FP8 to FP16) for SVE
-  target/arm: Enable FEAT_F8F16MM for -cpu max
-
- target/arm/cpu-features.h        |  83 +++
- target/arm/helper-fp8.h          |  14 +
- target/arm/tcg/helper-defs.h     |   6 +
- target/arm/tcg/helper-fp8-defs.h |  40 ++
- target/arm/tcg/helper-sme-defs.h |   2 +-
- target/arm/tcg/translate-a64.h   |   1 +
- target/arm/tcg/translate.h       |   7 +-
- target/arm/tcg/vec_internal.h    |  12 +-
- linux-user/aarch64/elfload.c     |  13 +
- target/arm/cpu.c                 |  20 +-
- target/arm/tcg/cpu64.c           |  16 +
- target/arm/tcg/fp8_helper.c      | 859 +++++++++++++++++++++++++++++++
- target/arm/tcg/sme_helper.c      | 105 ++--
- target/arm/tcg/translate-a64.c   | 160 ++++++
- target/arm/tcg/translate-sme.c   |  71 ++-
- target/arm/tcg/translate-sve.c   | 245 ++++++++-
- target/arm/tcg/vec_helper.c      | 194 ++++---
- docs/system/arm/emulation.rst    |  11 +
- target/arm/tcg/a64.decode        |  39 ++
- target/arm/tcg/meson.build       |   1 +
- target/arm/tcg/sme.decode        |  25 +-
- target/arm/tcg/sve.decode        |  48 +-
- 22 files changed, 1815 insertions(+), 157 deletions(-)
- create mode 100644 target/arm/helper-fp8.h
- create mode 100644 target/arm/tcg/helper-fp8-defs.h
- create mode 100644 target/arm/tcg/fp8_helper.c
-
+diff --git a/linux-user/aarch64/elfload.c b/linux-user/aarch64/elfload.c
+index be33fede6b..d40e39169b 100644
+--- a/linux-user/aarch64/elfload.c
++++ b/linux-user/aarch64/elfload.c
+@@ -228,8 +228,10 @@ abi_ulong get_elf_hwcap2(CPUState *cs)
+                                ARM_HWCAP2_A64_F8E5M2);
+     GET_FEATURE_ID(aa64_f8fma, ARM_HWCAP2_A64_F8FMA);
+     GET_FEATURE_ID(aa64_f8dp4, ARM_HWCAP2_A64_F8DP4);
++    GET_FEATURE_ID(aa64_f8dp2, ARM_HWCAP2_A64_F8DP2);
+     GET_FEATURE_ID(aa64_ssve_f8fma, ARM_HWCAP2_A64_SME_SF8FMA);
+     GET_FEATURE_ID(aa64_ssve_f8dp4, ARM_HWCAP2_A64_SME_SF8DP4);
++    GET_FEATURE_ID(aa64_ssve_f8dp2, ARM_HWCAP2_A64_SME_SF8DP2);
+ 
+     return hwcaps;
+ }
+diff --git a/target/arm/tcg/cpu64.c b/target/arm/tcg/cpu64.c
+index 1e2d1311b9..893e20f0eb 100644
+--- a/target/arm/tcg/cpu64.c
++++ b/target/arm/tcg/cpu64.c
+@@ -1378,6 +1378,7 @@ void aarch64_max_tcg_initfn(Object *obj)
+     SET_IDREG(isar, ID_AA64DFR0, t);
+ 
+     t = GET_IDREG(isar, ID_AA64SMFR0);
++    t = FIELD_DP64(t, ID_AA64SMFR0, SF8DP2, 1);   /* FEAT_SSVE_FP8DOT2 */
+     t = FIELD_DP64(t, ID_AA64SMFR0, SF8DP4, 1);   /* FEAT_SSVE_FP8DOT4 */
+     t = FIELD_DP64(t, ID_AA64SMFR0, SF8FMA, 1);   /* FEAT_SSVE_FP8FMA */
+     t = FIELD_DP64(t, ID_AA64SMFR0, F32F32, 1);   /* FEAT_SME */
+@@ -1398,6 +1399,7 @@ void aarch64_max_tcg_initfn(Object *obj)
+     t = GET_IDREG(isar, ID_AA64FPFR0);
+     t = FIELD_DP64(t, ID_AA64FPFR0, F8E5M2, 1);   /* FEAT_FP8 */
+     t = FIELD_DP64(t, ID_AA64FPFR0, F8E4M3, 1);   /* FEAT_FP8 */
++    t = FIELD_DP64(t, ID_AA64FPFR0, F8DP2, 1);    /* FEAT_FP8DOT2 */
+     t = FIELD_DP64(t, ID_AA64FPFR0, F8DP4, 1);    /* FEAT_FP8DOT4 */
+     t = FIELD_DP64(t, ID_AA64FPFR0, F8FMA, 1);    /* FEAT_FP8FMA */
+     t = FIELD_DP64(t, ID_AA64FPFR0, F8CVT, 1);    /* FEAT_FP8 */
+diff --git a/docs/system/arm/emulation.rst b/docs/system/arm/emulation.rst
+index 8d786f9dae..f1c8f5aa68 100644
+--- a/docs/system/arm/emulation.rst
++++ b/docs/system/arm/emulation.rst
+@@ -76,6 +76,7 @@ the following architecture extensions:
+ - FEAT_FP (Floating Point extensions)
+ - FEAT_FP16 (Half-precision floating-point data processing)
+ - FEAT_FP8 (FP8 convert instructions)
++- FEAT_FP8DOT2 (FP8 2-way dot product to half-precision instructions)
+ - FEAT_FP8DOT4 (FP8 4-way dot product to single-precision instructions)
+ - FEAT_FP8FMA (FP8 multiply-accumulate to half-precision and single-precision instructions)
+ - FEAT_FPAC (Faulting on AUT* instructions)
+@@ -163,6 +164,7 @@ the following architecture extensions:
+ - FEAT_SME_F64F64 (Double-precision floating-point outer product instructions)
+ - FEAT_SME_I16I64 (16-bit to 64-bit integer widening outer product instructions)
+ - FEAT_SME_LUTv2 (Lookup table instructions with 4-bit indices and 8-bit elements)
++- FEAT_SSVE_FP8DOT2 (SVE2 FP8 2-way dot product to half-precision instructions in Streaming SVE mode)
+ - FEAT_SSVE_FP8DOT4 (SVE2 FP8 4-way dot product to single-precision instructions in Streaming SVE mode)
+ - FEAT_SSVE_FP8FMA (SVE2 FP8 multiply-accumulate to half-precision and single-precision instructions in Streaming SVE mode)
+ - FEAT_SVE (Scalable Vector Extension)
 -- 
 2.43.0
 
