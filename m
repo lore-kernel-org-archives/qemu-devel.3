@@ -4,41 +4,39 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2F5D1CD6E79
-	for <qemu-devel@archiver.kernel.org>; Tue,  9 Jun 2026 09:56:49 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id EFBD6CD8CA4
+	for <qemu-devel@archiver.kernel.org>; Tue,  9 Jun 2026 09:56:48 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wWtCD-0002BB-PO; Tue, 09 Jun 2026 05:56:33 -0400
+	id 1wWtCD-0002B8-Og; Tue, 09 Jun 2026 05:56:33 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <gaosong@loongson.cn>)
- id 1wWtCC-00024w-5b
+ id 1wWtCC-000281-Pc
  for qemu-devel@nongnu.org; Tue, 09 Jun 2026 05:56:32 -0400
 Received: from mail.loongson.cn ([114.242.206.163])
  by eggs.gnu.org with esmtp (Exim 4.90_1)
- (envelope-from <gaosong@loongson.cn>) id 1wWtCA-0005ex-1K
- for qemu-devel@nongnu.org; Tue, 09 Jun 2026 05:56:31 -0400
+ (envelope-from <gaosong@loongson.cn>) id 1wWtCA-0005f6-4t
+ for qemu-devel@nongnu.org; Tue, 09 Jun 2026 05:56:32 -0400
 Received: from loongson.cn (unknown [10.2.5.185])
- by gateway (Coremail) with SMTP id _____8Cx3enu4idqizUSAA--.48339S3;
- Tue, 09 Jun 2026 17:54:54 +0800 (CST)
+ by gateway (Coremail) with SMTP id _____8Axp3jv4idqjjUSAA--.23775S3;
+ Tue, 09 Jun 2026 17:54:55 +0800 (CST)
 Received: from localhost.localdomain (unknown [10.2.5.185])
- by front1 (Coremail) with SMTP id qMiowJDxSMHg4idqJrGgAA--.28412S14;
+ by front1 (Coremail) with SMTP id qMiowJDxSMHg4idqJrGgAA--.28412S16;
  Tue, 09 Jun 2026 17:54:54 +0800 (CST)
 From: Song Gao <gaosong@loongson.cn>
 To: qemu-devel@nongnu.org
-Cc: Bibo Mao <maobibo@loongson.cn>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@mailo.com>
-Subject: [PULL 12/14] target/loongarch: Add wrapper function get_csr_offset()
-Date: Tue,  9 Jun 2026 17:28:22 +0800
-Message-Id: <20260609092824.227250-13-gaosong@loongson.cn>
+Cc: Bibo Mao <maobibo@loongson.cn>
+Subject: [PULL 14/14] target/loongarch: Add new structure CPUSysState
+Date: Tue,  9 Jun 2026 17:28:24 +0800
+Message-Id: <20260609092824.227250-15-gaosong@loongson.cn>
 X-Mailer: git-send-email 2.39.1
 In-Reply-To: <20260609092824.227250-1-gaosong@loongson.cn>
 References: <20260609092824.227250-1-gaosong@loongson.cn>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-X-CM-TRANSID: qMiowJDxSMHg4idqJrGgAA--.28412S14
+X-CM-TRANSID: qMiowJDxSMHg4idqJrGgAA--.28412S16
 X-CM-SenderInfo: 5jdr20tqj6z05rqj20fqof0/
 X-Coremail-Antispam: 1Uk129KBjDUn29KB7ZKAUJUUUUU529EdanIXcx71UUUUU7KY7
  ZEXasCq-sGcSsGvfJ3UbIjqfuFe4nvWSU5nxnvy29KBjDU0xBIdaVrnUUvcSsGvfC2Kfnx
@@ -67,125 +65,267 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Bibo Mao <maobibo@loongson.cn>
 
-Add wrapper function get_csr_offset(), it is to get offset from structure
-CPULoongArchState. There is no function change, and it is used for future
-LVZ feature.
+New structure CPUSysState is added here, now it only contains CSR
+registers, in future TLB and timer can be moved to this structure also.
+
+It is only code movement, no function change.
 
 Signed-off-by: Bibo Mao <maobibo@loongson.cn>
-Reviewed-by: Philippe Mathieu-Daudé <philmd@mailo.com>
 Tested-by: Song Gao <gaosong@loongson.cn>
-Message-ID: <20260605083904.175636-1-maobibo@loongson.cn>
+Message-ID: <20260605083938.175658-1-maobibo@loongson.cn>
 Signed-off-by: Song Gao <gaosong@loongson.cn>
 ---
- target/loongarch/cpu.c                           |  4 ++--
- target/loongarch/csr.h                           |  4 ++++
- .../tcg/insn_trans/trans_privileged.c.inc        | 16 +++++++++++-----
- 3 files changed, 17 insertions(+), 7 deletions(-)
+ target/loongarch/cpu.c     |   4 +-
+ target/loongarch/cpu.h     |  35 +++++------
+ target/loongarch/csr.h     |   8 ++-
+ target/loongarch/machine.c | 118 +++++++++++++++++++------------------
+ 4 files changed, 85 insertions(+), 80 deletions(-)
 
 diff --git a/target/loongarch/cpu.c b/target/loongarch/cpu.c
-index 8424f185f2..a8e51d977c 100644
+index a8e51d977c..fb03424ffa 100644
 --- a/target/loongarch/cpu.c
 +++ b/target/loongarch/cpu.c
-@@ -761,7 +761,7 @@ static void loongarch_cpu_dump_csr(CPUState *cs, FILE *f)
- {
- #ifndef CONFIG_USER_ONLY
-     CPULoongArchState *env = cpu_env(cs);
--    CSRInfo *csr_info;
-+    const CSRInfo *csr_info;
-     int64_t *addr;
-     int i, j, len, col = 0;
+@@ -282,7 +282,7 @@ static void loongarch_la464_initfn(Object *obj)
+     uint32_t data = 0, field;
+     int i;
  
-@@ -783,7 +783,7 @@ static void loongarch_cpu_dump_csr(CPUState *cs, FILE *f)
-             qemu_fprintf(f, " CSR%03d:", col);
-         }
+-    set_sys_state(env, env);
++    set_sys_state(env, &env->sys_states[0]);
+     for (i = 0; i < 21; i++) {
+         env->cpucfg[i] = 0x0;
+     }
+@@ -412,7 +412,7 @@ static void loongarch_la132_initfn(Object *obj)
+     uint32_t data = 0;
+     int i;
  
--        addr = (void *)env + csr_info->offset;
-+        addr = (void *)env + get_csr_offset(csr_info, 0);
-         qemu_fprintf(f, " %s ", csr_info->name);
-         len = strlen(csr_info->name);
-         for (; len < 6; len++) {
+-    set_sys_state(env, env);
++    set_sys_state(env, &env->sys_states[0]);
+     for (i = 0; i < 21; i++) {
+         env->cpucfg[i] = 0x0;
+     }
+diff --git a/target/loongarch/cpu.h b/target/loongarch/cpu.h
+index 906470f59b..ad30c73167 100644
+--- a/target/loongarch/cpu.h
++++ b/target/loongarch/cpu.h
+@@ -317,23 +317,7 @@ typedef struct  LoongArchBT {
+ #define CPU_VENDOR_LOONGSON   "Loongson"
+ #define CPU_MODEL_3A5000      "3A5000"
+ #define CPU_MODEL_1C101       "1C101"
+-struct CPUArchState;
+-typedef struct CPUArchState CPUSysState;
+-
+-typedef struct CPUArchState {
+-    uint64_t gpr[32];
+-    uint64_t pc;
+-
+-    fpr_t fpr[32];
+-    bool cf[8];
+-    uint32_t fcsr0;
+-    lbt_t  lbt;
+-
+-    uint32_t cpucfg[21];
+-    uint32_t pv_features;
+-    uint64_t vendor_id;
+-    uint64_t cpu_id;
+-
++typedef struct CPUSysState {
+     /* LoongArch CSRs */
+     uint64_t CSR_CRMD;
+     uint64_t CSR_PRMD;
+@@ -395,6 +379,23 @@ typedef struct CPUArchState {
+     uint64_t CSR_MSGIS[N_MSGIS];
+     uint64_t CSR_MSGIR;
+     uint64_t CSR_MSGIE;
++} CPUSysState;
++
++typedef struct CPUArchState {
++    uint64_t gpr[32];
++    uint64_t pc;
++
++    fpr_t fpr[32];
++    bool cf[8];
++    uint32_t fcsr0;
++    lbt_t  lbt;
++
++    uint32_t cpucfg[21];
++    uint32_t pv_features;
++    uint64_t vendor_id;
++    uint64_t cpu_id;
++    CPUSysState sys_states[1];
++
+     struct {
+         uint64_t guest_addr;
+     } stealtime;
 diff --git a/target/loongarch/csr.h b/target/loongarch/csr.h
-index 508a3214fc..ca988c21db 100644
+index 6e17275546..c2b6b882bc 100644
 --- a/target/loongarch/csr.h
 +++ b/target/loongarch/csr.h
-@@ -27,4 +27,8 @@ typedef struct {
+@@ -8,8 +8,10 @@
  
- CSRInfo *get_csr(unsigned int csr_num);
+ #include "cpu-csr.h"
+ 
+-#define CSR_OFFSET(id)                  offsetof(CPULoongArchState, id)
+-#define CPU_CSR_OFFSET(id, vm_level)    CSR_OFFSET(id)
++#define CSR_OFFSET(id)                  offsetof(CPUSysState, id)
++#define CPU_CSR_OFFSET(id, vm_level)                                     \
++                    (offsetof(CPULoongArchState, sys_states[vm_level])   \
++                             + CSR_OFFSET(id))
+ 
+ typedef void (*GenCSRFunc)(void);
+ enum {
+@@ -32,6 +34,6 @@ CSRInfo *get_csr(unsigned int csr_num);
  bool set_csr_flag(unsigned int csr_num, int flag);
-+static inline unsigned int get_csr_offset(const CSRInfo *csr, int vm_level)
-+{
-+    return csr->offset;
-+}
+ static inline unsigned int get_csr_offset(const CSRInfo *csr, int vm_level)
+ {
+-    return csr->offset;
++    return csr->offset + offsetof(CPULoongArchState, sys_states[vm_level]);
+ }
  #endif /* TARGET_LOONGARCH_CSR_H */
-diff --git a/target/loongarch/tcg/insn_trans/trans_privileged.c.inc b/target/loongarch/tcg/insn_trans/trans_privileged.c.inc
-index 2094d182ac..6728ce5ec9 100644
---- a/target/loongarch/tcg/insn_trans/trans_privileged.c.inc
-+++ b/target/loongarch/tcg/insn_trans/trans_privileged.c.inc
-@@ -106,6 +106,7 @@ static bool trans_csrrd(DisasContext *ctx, arg_csrrd *a)
-     TCGv dest;
-     const CSRInfo *csr;
-     GenCSRRead readfn;
-+    tcg_target_long offset;
+diff --git a/target/loongarch/machine.c b/target/loongarch/machine.c
+index 4db53fec26..931a5ca5ba 100644
+--- a/target/loongarch/machine.c
++++ b/target/loongarch/machine.c
+@@ -58,9 +58,9 @@ static const VMStateDescription vmstate_msgint = {
+     .minimum_version_id = 1,
+     .needed = msgint_needed,
+     .fields = (const VMStateField[]) {
+-        VMSTATE_UINT64_ARRAY(env.CSR_MSGIS, LoongArchCPU, N_MSGIS),
+-        VMSTATE_UINT64(env.CSR_MSGIR, LoongArchCPU),
+-        VMSTATE_UINT64(env.CSR_MSGIE, LoongArchCPU),
++        VMSTATE_UINT64_ARRAY(env.sys_states[0].CSR_MSGIS, LoongArchCPU, N_MSGIS),
++        VMSTATE_UINT64(env.sys_states[0].CSR_MSGIR, LoongArchCPU),
++        VMSTATE_UINT64(env.sys_states[0].CSR_MSGIE, LoongArchCPU),
+         VMSTATE_END_OF_LIST()
+     },
+ };
+@@ -167,8 +167,10 @@ static const VMStateDescription vmstate_pmu = {
+     .needed = pmu_needed,
+     .fields = (const VMStateField[]) {
+         VMSTATE_UINT32(env.perf_event_num, LoongArchCPU),
+-        VMSTATE_UINT64_ARRAY(env.CSR_PERFCTRL, LoongArchCPU, MAX_PERF_EVENTS),
+-        VMSTATE_UINT64_ARRAY(env.CSR_PERFCNTR, LoongArchCPU, MAX_PERF_EVENTS),
++        VMSTATE_UINT64_ARRAY(env.sys_states[0].CSR_PERFCTRL, LoongArchCPU,\
++                             MAX_PERF_EVENTS),
++        VMSTATE_UINT64_ARRAY(env.sys_states[0].CSR_PERFCNTR, LoongArchCPU, \
++                             MAX_PERF_EVENTS),
+         VMSTATE_END_OF_LIST()
+     },
+ };
+@@ -215,61 +217,61 @@ const VMStateDescription vmstate_loongarch_cpu = {
+         VMSTATE_UINT64(env.pc, LoongArchCPU),
  
-     if (check_plv(ctx)) {
-         return false;
-@@ -121,7 +122,8 @@ static bool trans_csrrd(DisasContext *ctx, arg_csrrd *a)
-         if (readfn) {
-             readfn(dest, tcg_env);
-         } else {
--            tcg_gen_ld_tl(dest, tcg_env, csr->offset);
-+            offset = get_csr_offset(csr, 0);
-+            tcg_gen_ld_tl(dest, tcg_env, offset);
-         }
-     }
-     gen_set_gpr(a->rd, dest, EXT_NONE);
-@@ -133,6 +135,7 @@ static bool trans_csrwr(DisasContext *ctx, arg_csrwr *a)
-     TCGv dest, src1;
-     const CSRInfo *csr;
-     GenCSRWrite writefn;
-+    tcg_target_long offset;
+         /* Remaining CSRs */
+-        VMSTATE_UINT64(env.CSR_CRMD, LoongArchCPU),
+-        VMSTATE_UINT64(env.CSR_PRMD, LoongArchCPU),
+-        VMSTATE_UINT64(env.CSR_EUEN, LoongArchCPU),
+-        VMSTATE_UINT64(env.CSR_MISC, LoongArchCPU),
+-        VMSTATE_UINT64(env.CSR_ECFG, LoongArchCPU),
+-        VMSTATE_UINT64(env.CSR_ESTAT, LoongArchCPU),
+-        VMSTATE_UINT64(env.CSR_ERA, LoongArchCPU),
+-        VMSTATE_UINT64(env.CSR_BADV, LoongArchCPU),
+-        VMSTATE_UINT64(env.CSR_BADI, LoongArchCPU),
+-        VMSTATE_UINT64(env.CSR_EENTRY, LoongArchCPU),
+-        VMSTATE_UINT64(env.CSR_TLBIDX, LoongArchCPU),
+-        VMSTATE_UINT64(env.CSR_TLBEHI, LoongArchCPU),
+-        VMSTATE_UINT64(env.CSR_TLBELO0, LoongArchCPU),
+-        VMSTATE_UINT64(env.CSR_TLBELO1, LoongArchCPU),
+-        VMSTATE_UINT64(env.CSR_ASID, LoongArchCPU),
+-        VMSTATE_UINT64(env.CSR_PGDL, LoongArchCPU),
+-        VMSTATE_UINT64(env.CSR_PGDH, LoongArchCPU),
+-        VMSTATE_UINT64(env.CSR_PGD, LoongArchCPU),
+-        VMSTATE_UINT64(env.CSR_PWCL, LoongArchCPU),
+-        VMSTATE_UINT64(env.CSR_PWCH, LoongArchCPU),
+-        VMSTATE_UINT64(env.CSR_STLBPS, LoongArchCPU),
+-        VMSTATE_UINT64(env.CSR_RVACFG, LoongArchCPU),
+-        VMSTATE_UINT64(env.CSR_PRCFG1, LoongArchCPU),
+-        VMSTATE_UINT64(env.CSR_PRCFG2, LoongArchCPU),
+-        VMSTATE_UINT64(env.CSR_PRCFG3, LoongArchCPU),
+-        VMSTATE_UINT64_ARRAY(env.CSR_SAVE, LoongArchCPU, 16),
+-        VMSTATE_UINT64(env.CSR_TID, LoongArchCPU),
+-        VMSTATE_UINT64(env.CSR_TCFG, LoongArchCPU),
+-        VMSTATE_UINT64(env.CSR_TVAL, LoongArchCPU),
+-        VMSTATE_UINT64(env.CSR_CNTC, LoongArchCPU),
+-        VMSTATE_UINT64(env.CSR_TICLR, LoongArchCPU),
+-        VMSTATE_UINT64(env.CSR_LLBCTL, LoongArchCPU),
+-        VMSTATE_UINT64(env.CSR_IMPCTL1, LoongArchCPU),
+-        VMSTATE_UINT64(env.CSR_IMPCTL2, LoongArchCPU),
+-        VMSTATE_UINT64(env.CSR_TLBRENTRY, LoongArchCPU),
+-        VMSTATE_UINT64(env.CSR_TLBRBADV, LoongArchCPU),
+-        VMSTATE_UINT64(env.CSR_TLBRERA, LoongArchCPU),
+-        VMSTATE_UINT64(env.CSR_TLBRSAVE, LoongArchCPU),
+-        VMSTATE_UINT64(env.CSR_TLBRELO0, LoongArchCPU),
+-        VMSTATE_UINT64(env.CSR_TLBRELO1, LoongArchCPU),
+-        VMSTATE_UINT64(env.CSR_TLBREHI, LoongArchCPU),
+-        VMSTATE_UINT64(env.CSR_TLBRPRMD, LoongArchCPU),
+-        VMSTATE_UINT64(env.CSR_MERRCTL, LoongArchCPU),
+-        VMSTATE_UINT64(env.CSR_MERRINFO1, LoongArchCPU),
+-        VMSTATE_UINT64(env.CSR_MERRINFO2, LoongArchCPU),
+-        VMSTATE_UINT64(env.CSR_MERRENTRY, LoongArchCPU),
+-        VMSTATE_UINT64(env.CSR_MERRERA, LoongArchCPU),
+-        VMSTATE_UINT64(env.CSR_MERRSAVE, LoongArchCPU),
+-        VMSTATE_UINT64(env.CSR_CTAG, LoongArchCPU),
+-        VMSTATE_UINT64_ARRAY(env.CSR_DMW, LoongArchCPU, 4),
++        VMSTATE_UINT64(env.sys_states[0].CSR_CRMD, LoongArchCPU),
++        VMSTATE_UINT64(env.sys_states[0].CSR_PRMD, LoongArchCPU),
++        VMSTATE_UINT64(env.sys_states[0].CSR_EUEN, LoongArchCPU),
++        VMSTATE_UINT64(env.sys_states[0].CSR_MISC, LoongArchCPU),
++        VMSTATE_UINT64(env.sys_states[0].CSR_ECFG, LoongArchCPU),
++        VMSTATE_UINT64(env.sys_states[0].CSR_ESTAT, LoongArchCPU),
++        VMSTATE_UINT64(env.sys_states[0].CSR_ERA, LoongArchCPU),
++        VMSTATE_UINT64(env.sys_states[0].CSR_BADV, LoongArchCPU),
++        VMSTATE_UINT64(env.sys_states[0].CSR_BADI, LoongArchCPU),
++        VMSTATE_UINT64(env.sys_states[0].CSR_EENTRY, LoongArchCPU),
++        VMSTATE_UINT64(env.sys_states[0].CSR_TLBIDX, LoongArchCPU),
++        VMSTATE_UINT64(env.sys_states[0].CSR_TLBEHI, LoongArchCPU),
++        VMSTATE_UINT64(env.sys_states[0].CSR_TLBELO0, LoongArchCPU),
++        VMSTATE_UINT64(env.sys_states[0].CSR_TLBELO1, LoongArchCPU),
++        VMSTATE_UINT64(env.sys_states[0].CSR_ASID, LoongArchCPU),
++        VMSTATE_UINT64(env.sys_states[0].CSR_PGDL, LoongArchCPU),
++        VMSTATE_UINT64(env.sys_states[0].CSR_PGDH, LoongArchCPU),
++        VMSTATE_UINT64(env.sys_states[0].CSR_PGD, LoongArchCPU),
++        VMSTATE_UINT64(env.sys_states[0].CSR_PWCL, LoongArchCPU),
++        VMSTATE_UINT64(env.sys_states[0].CSR_PWCH, LoongArchCPU),
++        VMSTATE_UINT64(env.sys_states[0].CSR_STLBPS, LoongArchCPU),
++        VMSTATE_UINT64(env.sys_states[0].CSR_RVACFG, LoongArchCPU),
++        VMSTATE_UINT64(env.sys_states[0].CSR_PRCFG1, LoongArchCPU),
++        VMSTATE_UINT64(env.sys_states[0].CSR_PRCFG2, LoongArchCPU),
++        VMSTATE_UINT64(env.sys_states[0].CSR_PRCFG3, LoongArchCPU),
++        VMSTATE_UINT64_ARRAY(env.sys_states[0].CSR_SAVE, LoongArchCPU, 16),
++        VMSTATE_UINT64(env.sys_states[0].CSR_TID, LoongArchCPU),
++        VMSTATE_UINT64(env.sys_states[0].CSR_TCFG, LoongArchCPU),
++        VMSTATE_UINT64(env.sys_states[0].CSR_TVAL, LoongArchCPU),
++        VMSTATE_UINT64(env.sys_states[0].CSR_CNTC, LoongArchCPU),
++        VMSTATE_UINT64(env.sys_states[0].CSR_TICLR, LoongArchCPU),
++        VMSTATE_UINT64(env.sys_states[0].CSR_LLBCTL, LoongArchCPU),
++        VMSTATE_UINT64(env.sys_states[0].CSR_IMPCTL1, LoongArchCPU),
++        VMSTATE_UINT64(env.sys_states[0].CSR_IMPCTL2, LoongArchCPU),
++        VMSTATE_UINT64(env.sys_states[0].CSR_TLBRENTRY, LoongArchCPU),
++        VMSTATE_UINT64(env.sys_states[0].CSR_TLBRBADV, LoongArchCPU),
++        VMSTATE_UINT64(env.sys_states[0].CSR_TLBRERA, LoongArchCPU),
++        VMSTATE_UINT64(env.sys_states[0].CSR_TLBRSAVE, LoongArchCPU),
++        VMSTATE_UINT64(env.sys_states[0].CSR_TLBRELO0, LoongArchCPU),
++        VMSTATE_UINT64(env.sys_states[0].CSR_TLBRELO1, LoongArchCPU),
++        VMSTATE_UINT64(env.sys_states[0].CSR_TLBREHI, LoongArchCPU),
++        VMSTATE_UINT64(env.sys_states[0].CSR_TLBRPRMD, LoongArchCPU),
++        VMSTATE_UINT64(env.sys_states[0].CSR_MERRCTL, LoongArchCPU),
++        VMSTATE_UINT64(env.sys_states[0].CSR_MERRINFO1, LoongArchCPU),
++        VMSTATE_UINT64(env.sys_states[0].CSR_MERRINFO2, LoongArchCPU),
++        VMSTATE_UINT64(env.sys_states[0].CSR_MERRENTRY, LoongArchCPU),
++        VMSTATE_UINT64(env.sys_states[0].CSR_MERRERA, LoongArchCPU),
++        VMSTATE_UINT64(env.sys_states[0].CSR_MERRSAVE, LoongArchCPU),
++        VMSTATE_UINT64(env.sys_states[0].CSR_CTAG, LoongArchCPU),
++        VMSTATE_UINT64_ARRAY(env.sys_states[0].CSR_DMW, LoongArchCPU, 4),
  
-     if (check_plv(ctx)) {
-         return false;
-@@ -154,8 +157,9 @@ static bool trans_csrwr(DisasContext *ctx, arg_csrwr *a)
-         writefn(dest, tcg_env, src1);
-     } else {
-         dest = tcg_temp_new();
--        tcg_gen_ld_tl(dest, tcg_env, csr->offset);
--        tcg_gen_st_tl(src1, tcg_env, csr->offset);
-+        offset = get_csr_offset(csr, 0);
-+        tcg_gen_ld_tl(dest, tcg_env, offset);
-+        tcg_gen_st_tl(src1, tcg_env, offset);
-     }
-     gen_set_gpr(a->rd, dest, EXT_NONE);
-     return true;
-@@ -166,6 +170,7 @@ static bool trans_csrxchg(DisasContext *ctx, arg_csrxchg *a)
-     TCGv src1, mask, oldv, newv, temp;
-     const CSRInfo *csr;
-     GenCSRWrite writefn;
-+    tcg_target_long offset;
+         /* Debug CSRs */
+-        VMSTATE_UINT64(env.CSR_DBG, LoongArchCPU),
+-        VMSTATE_UINT64(env.CSR_DERA, LoongArchCPU),
+-        VMSTATE_UINT64(env.CSR_DSAVE, LoongArchCPU),
++        VMSTATE_UINT64(env.sys_states[0].CSR_DBG, LoongArchCPU),
++        VMSTATE_UINT64(env.sys_states[0].CSR_DERA, LoongArchCPU),
++        VMSTATE_UINT64(env.sys_states[0].CSR_DSAVE, LoongArchCPU),
  
-     if (check_plv(ctx)) {
-         return false;
-@@ -191,7 +196,8 @@ static bool trans_csrxchg(DisasContext *ctx, arg_csrxchg *a)
-     newv = tcg_temp_new();
-     temp = tcg_temp_new();
- 
--    tcg_gen_ld_tl(oldv, tcg_env, csr->offset);
-+    offset = get_csr_offset(csr, 0);
-+    tcg_gen_ld_tl(oldv, tcg_env, offset);
-     tcg_gen_and_tl(newv, src1, mask);
-     tcg_gen_andc_tl(temp, oldv, mask);
-     tcg_gen_or_tl(newv, newv, temp);
-@@ -200,7 +206,7 @@ static bool trans_csrxchg(DisasContext *ctx, arg_csrxchg *a)
-     if (writefn) {
-         writefn(oldv, tcg_env, newv);
-     } else {
--        tcg_gen_st_tl(newv, tcg_env, csr->offset);
-+        tcg_gen_st_tl(newv, tcg_env, offset);
-     }
-     gen_set_gpr(a->rd, oldv, EXT_NONE);
-     return true;
+         VMSTATE_UINT64(kvm_state_counter, LoongArchCPU),
+         /* PV steal time */
 -- 
 2.54.0
 
