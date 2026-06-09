@@ -4,48 +4,48 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7EE40CD8CB9
-	for <qemu-devel@archiver.kernel.org>; Tue,  9 Jun 2026 14:28:09 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 250EDCD8CA4
+	for <qemu-devel@archiver.kernel.org>; Tue,  9 Jun 2026 14:28:10 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wWxPA-0002hU-T5; Tue, 09 Jun 2026 10:26:12 -0400
+	id 1wWxPO-0002kr-Ms; Tue, 09 Jun 2026 10:26:26 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1)
- (envelope-from <46e28e8fea419cc93bdfccb6f5c4af6c86cfc25e@kylie.crudebyte.com>)
- id 1wWxOy-0002Z7-Do; Tue, 09 Jun 2026 10:26:01 -0400
+ (envelope-from <831b5ca3fb4dc81f8354fd6eedc405d12ac54a92@kylie.crudebyte.com>)
+ id 1wWxPL-0002kB-FQ; Tue, 09 Jun 2026 10:26:23 -0400
 Received: from kylie.crudebyte.com ([5.189.157.229])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1)
- (envelope-from <46e28e8fea419cc93bdfccb6f5c4af6c86cfc25e@kylie.crudebyte.com>)
- id 1wWxOw-0001Lu-N0; Tue, 09 Jun 2026 10:25:59 -0400
+ (envelope-from <831b5ca3fb4dc81f8354fd6eedc405d12ac54a92@kylie.crudebyte.com>)
+ id 1wWxPH-0001Po-Te; Tue, 09 Jun 2026 10:26:22 -0400
 DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
  d=crudebyte.com; s=kylie; h=Cc:To:Subject:Date:From:References:In-Reply-To:
  Message-ID:Content-Type:Content-Transfer-Encoding:MIME-Version:Content-ID:
- Content-Description; bh=xW/DPGJd1kcaXKX7UWvwp4TuiSMmM2UJikdF3Y9+z5U=; b=f07kq
- yvgGSWqGqELzWStuom9BFoDETEw6II7pJCfxSReBIRXjsvu19XMk5btsNxYf9t3ZOhHVaT/2VyPr8
- AYgi8OZ9ITFzCZ6eQ4O1frRaxPRUWKfZC0VlNyFRvk8ruLtRf9K4W0Q7ykozWhFAytRlhntpFP/ZX
- qJsyZsZCeAQVFA6DE+Tk6LYhdS/DGuinydED+0QQzYmgSWnUqeXhoNw9k5zH+NxK1NSYvQP+ilfjw
- kaPr1COFVAw5wNSVDtjIT/hrVUKxwCAG5oKa9HWqjPF7E24N5jdLDkznQFJ3Uj6kVpz2FzKzNHKb1
- GW9P3zXpgcwCv+P6quyX/1UCn1Lu4Ul48z1zPGolhNujVgplOTOD1aeL1ByWERkgpCDDg5/zcAFVg
- +TVvb2HI5SFbS9UaeNQvR0eYE1voi200+9nLN46UIQmfGVNNzlAkB5XaRc1RtM15dlbT/KXKm9JAA
- CmpzI0aljw6/JWWjz+g+Ab31WsQtaMTaZpyVLFXUeEZFMu5P3hufXkmhtmYiXbQlQnsYtq0fkl/kY
- K4A+0eaHIw9J9L+9H8CyAcs7D45cCLAGa+zaxaeTqKWXrfjE/AsBqR9lPW5ox45oi0x4SA4RfbWK2
- SBfKcQJQEzxfKIA+WHLZ9hUTf+pLoyyKc4xeK0sggkcyALg4CtkxSuplQBF57I=;
-Message-ID: <46e28e8fea419cc93bdfccb6f5c4af6c86cfc25e.1781012549.git.qemu_oss@crudebyte.com>
+ Content-Description; bh=MPXirfvjJ7Fh7uljcTgPHq1el/KLSC/poiStjCdWqDE=; b=kA8BL
+ IAfb6ijo6R3n5PUXAkcthRMtYiwYBs0gFIs6XlHIwclxiCNF3S7MR6+hUza1Wz7+lEWu79i4f0lLv
+ +YDepzCcorz7YBD4gveTMNkwG1own9txPyqQw0O5XlmBLPW9ugyi8MIg6G9c+elM4Z7gYp8IV1lWA
+ PzExt0Ji3xbaC/7hqPfB//L+pSneY2xIvq+XBZB5GgDPVUz9xoI8vXYXgrlBnQSR2FnuwqNgSTfCH
+ SZN2c0izwkPqoUnABdMqZnlfJpVSwVBSf/IN2dAv+fGXg6tx94RscIDo892ZL7InFiFRN+4UmPdQM
+ YG52fRv1a3Mk3iZQAD0cRcNKyJRPaf1X9fRQ7+vdr6wkQ0rXDUhZi45WoigVOvkemXeRD/8jnqjh5
+ AU+ylwM+fFd6weLg1+4rz8hD3NFPQewCQ8e2pgDlSkDhiFz3m5qGEJWu+Tzk6xrjCxOOAy8AgoWPu
+ ItPtTnog+HUqVUjiciVZaAv8OWZPqsSvRQQ7I4unSoksKOjYS1OFQtiCpJdnJ813bK2H5oQbgksLb
+ tfIlDO9QJQbzY56qnp2rSm1RPhR6ryvjKrUpBhmYq1dG1dibbhVH/FV9RkU8CFsgrOUfrjNmeuq93
+ fH/N3BC9nO/zflm58viLgvMC7Gpc2bn2cjnNZ1FFqjaQdJQNXeDInjHEOL957g=;
+Message-ID: <831b5ca3fb4dc81f8354fd6eedc405d12ac54a92.1781012549.git.qemu_oss@crudebyte.com>
 In-Reply-To: <cover.1781012549.git.qemu_oss@crudebyte.com>
 References: <cover.1781012549.git.qemu_oss@crudebyte.com>
 From: Christian Schoenebeck <qemu_oss@crudebyte.com>
 Date: Tue, 09 Jun 2026 15:47:06 +0200
-Subject: [PATCH v2 08/12] hw/9pfs: add xattr count query interface fo fs synth
- driver
+Subject: [PATCH v2 11/12] tests/9p: add 3 xattr FID limit test cases (synth fs
+ driver)
 To: qemu-devel@nongnu.org,
     qemu-stable@nongnu.org
 Cc: Greg Kurz <groug@kaod.org>,
     Feifan Qian <bea1e@proton.me>
 Received-SPF: pass client-ip=5.189.157.229;
- envelope-from=46e28e8fea419cc93bdfccb6f5c4af6c86cfc25e@kylie.crudebyte.com;
+ envelope-from=831b5ca3fb4dc81f8354fd6eedc405d12ac54a92@kylie.crudebyte.com;
  helo=kylie.crudebyte.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
@@ -68,62 +68,259 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Add a synthetic /stat/xattr_count file path that, if being read by 9p
-client, returns the the 9p server internal xattr FID counter to
-client.
+Add 3 test cases to verify correct xattr FID limit enforcement of
+9pfs server.
 
-This allows to test and verify that the xattr FID limit is being
-enforced correctly.
+ - 1. test with default max_xattr=1024
+ - 2. test with custom max_xattr=100
+ - 3. test with unlimited max_xattr=0
+
+These are tests using the synth driver. Advantage: by using the
+synth driver the tests cannot only check when the xattr FID limit
+kicks in (server would return an Rlerror response with ENOSPC),
+but also validate the current 9p server internal xattr FID
+counter at any moment.
 
 Signed-off-by: Christian Schoenebeck <qemu_oss@crudebyte.com>
 ---
- hw/9pfs/9p-synth.c | 26 ++++++++++++++++++++++++++
- 1 file changed, 26 insertions(+)
+ tests/qtest/virtio-9p-test.c | 189 ++++++++++++++++++++++++++++++++++-
+ 1 file changed, 188 insertions(+), 1 deletion(-)
 
-diff --git a/hw/9pfs/9p-synth.c b/hw/9pfs/9p-synth.c
-index 4b0732e093..3b3654b282 100644
---- a/hw/9pfs/9p-synth.c
-+++ b/hw/9pfs/9p-synth.c
-@@ -565,6 +565,19 @@ static ssize_t v9fs_synth_qtest_flush_write(void *buf, int len, off_t offset,
-     return 1;
+diff --git a/tests/qtest/virtio-9p-test.c b/tests/qtest/virtio-9p-test.c
+index 99a897b158..2e88429dfa 100644
+--- a/tests/qtest/virtio-9p-test.c
++++ b/tests/qtest/virtio-9p-test.c
+@@ -35,6 +35,15 @@
+ #define tclunk(...) v9fs_tclunk((TClunkOpt) __VA_ARGS__)
+ #define txattrcreate(...) v9fs_txattrcreate((TXattrCreateOpt) __VA_ARGS__)
+ 
++/*
++ * xattr size to be used for xattr tests
++ *
++ * 64k is the max. xattr size supported by the Linux kernel, However btrfs
++ * for instance supports only 16219 bytes. So let's be conservative and
++ * just use 8k for the xattr tests.
++ */
++#define TEST_XATTR_SIZE (8 * 1024)
++
+ static void pci_config(void *obj, void *data, QGuestAllocator *t_alloc)
+ {
+     QVirtio9P *v9p = obj;
+@@ -107,6 +116,42 @@ static bool fs_dirents_contain_name(struct V9fsDirent *e, const char* name)
+     return false;
  }
  
-+/* transmits internal xattr counter to client */
-+static ssize_t v9fs_synth_read_xattr_count(void *buf, int len, off_t offset,
-+                                           void *arg)
++/*
++ * Returns the current internal xattr FID count (works with synth driver only).
++ */
++static size_t get_xattr_count(QVirtio9P *v9p)
 +{
-+    FsContext *ctx = arg;
-+    size_t local_count = ctx->xattr_fid_count;
-+    if (len < (int)sizeof(size_t)) {
-+        return -ENOSPC;
-+    }
-+    memcpy(buf, &local_count, sizeof(size_t));
-+    return sizeof(size_t);
++    uint16_t nwqid;
++    v9fs_qid *wqid;
++    const char *xattr_count_path[] = { "stat", "xattr_count" };
++    size_t xattr_count;
++    uint32_t bytes_read;
++
++    /* walk to /stat/xattr_count file */
++    uint32_t fid = twalk({
++        .client = v9p, .fid = 0,
++        .nwname = 2, .wnames = (char **)xattr_count_path,
++        .rwalk = { .nwqid = &nwqid, .wqid = &wqid }
++    }).newfid;
++
++    /* open for read */
++    tlopen({
++        .client = v9p, .fid = fid, .flags = O_RDONLY,
++        .rlopen = { .qid = NULL, .iounit = NULL }
++    });
++
++    /* read the internal xattr FID count */
++    tread({
++        .client = v9p, .fid = fid, .offset = 0, .count = sizeof(xattr_count),
++        .rread = { .count = &bytes_read, .data = &xattr_count }
++    });
++
++    /* cleanup */
++    tclunk({ .client = v9p, .fid = fid });
++
++    return xattr_count;
 +}
 +
- static int synth_init(FsContext *ctx, Error **errp)
+ /* basic readdir test where reply fits into a single response message */
+ static void fs_readdir(void *obj, void *data, QGuestAllocator *t_alloc)
  {
-     QLIST_INIT(&synth_root.child);
-@@ -626,6 +639,19 @@ static int synth_init(FsContext *ctx, Error **errp)
-                 g_free(name);
-             }
-         }
-+
-+        /* Directory for internal statistic queries */
-+        {
-+            V9fsSynthNode *stat_dir = NULL;
-+            ret = qemu_v9fs_synth_mkdir(NULL, 0755, "stat", &stat_dir);
-+            assert(!ret);
-+
-+            /* File for internal xattr count query */
-+            ret = qemu_v9fs_synth_add_file(stat_dir, 0444, "xattr_count",
-+                                           v9fs_synth_read_xattr_count,
-+                                           NULL, ctx);
-+            assert(!ret);
-+        }
-     }
+@@ -248,6 +293,108 @@ static void do_readdir_split(QVirtio9P *v9p, uint32_t count)
+     g_free(wnames[0]);
+ }
  
-     return 0;
++/*
++ * Test 9p server's xattr FID count limit enforcement.
++ *
++ * Shared test code for both 'synth' and 'local' driver to verify correct
++ * behaviour of 9p server enforcing preconfigured xattr FID count limit
++ * correctly.
++ *
++ * @v9p: 9pfs client
++ *
++ * @max_xattr: max. allowed xattr FIDs, or -1 for infinite
++ *
++ * @check_counter: whether to verify 9p server internal xattr FID counter
++ *                 (only works with 'synth' fs driver)
++ */
++static void do_xattr_limit(QVirtio9P *v9p, int max_xattr, bool check_counter)
++{
++    size_t count;
++    int i;
++    int limit = (max_xattr != -1) ? max_xattr : V9FS_MAX_XATTR_DEFAULT + 100;
++    g_autofree uint32_t *fids = g_new0(uint32_t, limit);
++    uint32_t err_fid = 0;
++    const char *file_path[] = { QTEST_V9FS_SYNTH_WRITE_FILE };
++    g_autofree uint8_t *xattr_data = g_malloc(TEST_XATTR_SIZE);
++
++    if (!g_test_slow()) {
++        g_test_skip("This is a slow test, run with -m slow");
++        return;
++    }
++
++    /* prepare xattr data with 'X' characters */
++    memset(xattr_data, 'X', TEST_XATTR_SIZE);
++
++    tattach({ .client = v9p });
++
++    /* create max. amount of permitted xattrs */
++    for (i = 0; i < limit; i++) {
++        /* walk to create a new fid */
++        fids[i] = twalk({
++            .client = v9p, .fid = 0,
++            .nwname = 1, .wnames = (char **) file_path
++        }).newfid;
++
++        /* create new xattr fid */
++        txattrcreate({
++            .client = v9p, .fid = fids[i], .name = "user.test",
++            .size = TEST_XATTR_SIZE, .flags = 0
++        });
++
++        /* transfer the xattr data */
++        twrite({
++            .client = v9p, .fid = fids[i], .offset = 0,
++            .count = TEST_XATTR_SIZE, .data = xattr_data
++        });
++
++        /* verify server internal xattr counter */
++        if (check_counter) {
++            count = get_xattr_count(v9p);
++            g_assert_cmpuint(count, ==, (i + 1));
++        }
++
++        /* avoid virtio descriptor exhaustion */
++        qvirtqueue_reset_pool(v9p->vq);
++    }
++
++    /* if xattrs are limited, the next xattr should fail */
++    if (max_xattr != -1) {
++        /* walk to create another fid */
++        err_fid = twalk({
++            .client = v9p, .fid = 0,
++            .nwname = 1, .wnames = (char **) file_path
++        }).newfid;
++
++        /* try to create one more xattr fid - should fail */
++        txattrcreate({
++            .client = v9p, .fid = err_fid, .name = "user.test_exceed",
++            .size = TEST_XATTR_SIZE, .flags = 0,
++            .expectErr = ENOSPC
++        });
++
++        /* verify internal xattr counter hasn't changed */
++        if (check_counter) {
++            count = get_xattr_count(v9p);
++            g_assert_cmpuint(count, ==, limit);
++        }
++    }
++
++    /* clunk all fids (should decrement xattr counter) */
++    for (i = 0; i < limit; i++) {
++        tclunk({ .client = v9p, .fid = fids[i] });
++        qvirtqueue_reset_pool(v9p->vq);
++    }
++    if (err_fid) {
++        tclunk({ .client = v9p, .fid = err_fid });
++    }
++
++    /* verify internal xattr counter is zero */
++    if (check_counter) {
++        count = get_xattr_count(v9p);
++        g_assert_cmpuint(count, ==, 0);
++    }
++}
++
+ static void fs_walk_no_slash(void *obj, void *data, QGuestAllocator *t_alloc)
+ {
+     QVirtio9P *v9p = obj;
+@@ -508,6 +655,27 @@ static void fs_readdir_split_512(void *obj, void *data,
+     do_readdir_split(obj, 512);
+ }
+ 
++static void fs_synth_xattr_limit_default(void *obj, void *data,
++                                         QGuestAllocator *t_alloc)
++{
++    v9fs_set_allocator(t_alloc);
++    do_xattr_limit(obj, V9FS_MAX_XATTR_DEFAULT, true);
++}
++
++static void fs_synth_xattr_limit_custom(void *obj, void *data,
++                                        QGuestAllocator *t_alloc)
++{
++    v9fs_set_allocator(t_alloc);
++    do_xattr_limit(obj, 100, true);
++}
++
++static void fs_synth_xattr_limit_unlimited(void *obj, void *data,
++                                           QGuestAllocator *t_alloc)
++{
++    v9fs_set_allocator(t_alloc);
++    do_xattr_limit(obj, -1, true);
++}
++
+ 
+ /* tests using the 9pfs 'local' fs driver */
+ 
+@@ -822,6 +990,18 @@ static void fs_deep_absolute_path(void *obj, void *data,
+     g_string_free(path, TRUE);
+ }
+ 
++static void *synth_max_xattr_custom_opt(GString *cmd_line, void *arg)
++{
++    virtio_9p_add_synth_driver_args(cmd_line, "max_xattr=100");
++    return arg;
++}
++
++static void *synth_max_xattr_unlimited_opt(GString *cmd_line, void *arg)
++{
++    virtio_9p_add_synth_driver_args(cmd_line, "max_xattr=0");
++    return arg;
++}
++
+ static void cleanup_9p_local_driver(void *data)
+ {
+     /* remove previously created test dir when test is completed */
+@@ -872,7 +1052,14 @@ static void register_virtio_9p_test(void)
+                  fs_readdir_split_256,  &opts);
+     qos_add_test("synth/readdir/split_128", "virtio-9p",
+                  fs_readdir_split_128,  &opts);
+-
++    qos_add_test("synth/xattr_limit/default", "virtio-9p",
++                 fs_synth_xattr_limit_default, &opts);
++    opts.before = synth_max_xattr_custom_opt;
++    qos_add_test("synth/xattr_limit/custom", "virtio-9p",
++                 fs_synth_xattr_limit_custom, &opts);
++    opts.before = synth_max_xattr_unlimited_opt;
++    qos_add_test("synth/xattr_limit/unlimited", "virtio-9p",
++                 fs_synth_xattr_limit_unlimited, &opts);
+ 
+     /* 9pfs test cases using the 'local' filesystem driver */
+     opts.before = assign_9p_local_driver;
 -- 
 2.47.3
 
