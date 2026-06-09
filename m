@@ -4,94 +4,56 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E86BECD98C3
-	for <qemu-devel@archiver.kernel.org>; Tue,  9 Jun 2026 14:36:41 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id BAF45CD8CAA
+	for <qemu-devel@archiver.kernel.org>; Tue,  9 Jun 2026 14:43:59 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wWxYo-0004NE-NA; Tue, 09 Jun 2026 10:36:10 -0400
+	id 1wWxfb-0008AG-8w; Tue, 09 Jun 2026 10:43:11 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1wWxYm-0004B9-9k
- for qemu-devel@nongnu.org; Tue, 09 Jun 2026 10:36:08 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <jic23@kernel.org>) id 1wWxfa-00089u-3H
+ for qemu-devel@nongnu.org; Tue, 09 Jun 2026 10:43:10 -0400
+Received: from sea.source.kernel.org ([2600:3c0a:e001:78e:0:1991:8:25])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1wWxYk-0007UM-KG
- for qemu-devel@nongnu.org; Tue, 09 Jun 2026 10:36:07 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1781015766;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=FjXNi19ZJmavNuiphzSk5VdGv3UJju9zSxL7sC1u9eQ=;
- b=LgYYvXVW5wUSM2aKRF8Kz/olgEORJppufwlPAgq/Ujp34lASA9ABr5kJMptQhJBpla9yFp
- FmbwzJ9IMnkr/L1KtNmdOGAQglBhfUshlKZNY0BpQGjZxQ2fljiXRz15LEERSUotxtDd5z
- D4rUnoQlUqBBG2U4tRpVf4Rkw/8D6b0=
-Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-280-yu02C5j3NIeLyjseaF0Tgw-1; Tue,
- 09 Jun 2026 10:36:04 -0400
-X-MC-Unique: yu02C5j3NIeLyjseaF0Tgw-1
-X-Mimecast-MFC-AGG-ID: yu02C5j3NIeLyjseaF0Tgw_1781015763
-Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 5D023195DE73; Tue,  9 Jun 2026 14:36:03 +0000 (UTC)
-Received: from localhost (unknown [10.44.24.21])
- by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 70DEB3008B39; Tue,  9 Jun 2026 14:36:02 +0000 (UTC)
-From: =?utf-8?q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>
-Date: Tue, 09 Jun 2026 18:34:34 +0400
-Subject: [PATCH 15/17] ui/spice: switch LED handling to Notifier-based
- input API
+ (Exim 4.90_1) (envelope-from <jic23@kernel.org>) id 1wWxfY-0006kU-Kk
+ for qemu-devel@nongnu.org; Tue, 09 Jun 2026 10:43:09 -0400
+Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
+ by sea.source.kernel.org (Postfix) with ESMTP id F27AE4037A;
+ Tue,  9 Jun 2026 14:43:06 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5E1911F00893;
+ Tue,  9 Jun 2026 14:43:05 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
+ s=k20260515; t=1781016186;
+ bh=X6DlgiFeqiDltReqZUR2C0NXuX8KbDCrPp4/HO9+CYU=;
+ h=Date:From:To:Cc:Subject:In-Reply-To:References;
+ b=VaiqJ7VONUNBMZi7DavMaeacd3XbOBItSgd1MPcBG2t8HmvFjCVAjyUro4EejVDd+
+ Gj1qbmBphQfsLY7mIoyvdgcbJ+iQbMsa6NY/rrpB866F6BDz25PsIFjkx6MrNujhj0
+ vMZsmX8q+7qBCBVm3ry7tua1YFlSZ+WK9JPvbxSv4dzicNJemxDqmb920mzA8mwSKz
+ ti073pFXho66B0g/cBO/owzmfXQbS7BQnvz7BzNJZebHjm/a9x4Bqfs/pAe/wpBGPg
+ Wf8iFrM24skDPdMvR5Roh0lgdDgUok2Oh5fZ19rwM+RqoaHbeaA/N4bPR5/BSxS04y
+ +GNIx/f0uk6ew==
+Date: Tue, 9 Jun 2026 15:42:58 +0100
+From: Jonathan Cameron <jic23@kernel.org>
+To: =?UTF-8?B?VGFtw6FzIEtpcsOhbHk=?= <kiraly.tamas@outlook.com>
+Cc: "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>, "philmd@mailo.com"
+ <philmd@mailo.com>
+Subject: Re: RFC sensor simulation in QEMU
+Message-ID: <20260609154258.7fae97b3@jic23-huawei>
+In-Reply-To: <BESP192MB2919F3C79FA633DBB40571C89C122@BESP192MB2919.EURP192.PROD.OUTLOOK.COM>
+References: <BESP192MB2919F3C79FA633DBB40571C89C122@BESP192MB2919.EURP192.PROD.OUTLOOK.COM>
+X-Mailer: Claws Mail 4.4.0 (GTK 3.24.52; x86_64-pc-linux-gnu)
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 8bit
-Message-Id: <20260609-ui-input-v1-15-42615deb818e@redhat.com>
-References: <20260609-ui-input-v1-0-42615deb818e@redhat.com>
-In-Reply-To: <20260609-ui-input-v1-0-42615deb818e@redhat.com>
-To: qemu-devel@nongnu.org
-Cc: "Dr. David Alan Gilbert" <dave@treblig.org>, 
- Paolo Bonzini <pbonzini@redhat.com>, 
- Richard Henderson <richard.henderson@linaro.org>, 
- "Michael S. Tsirkin" <mst@redhat.com>, Gerd Hoffmann <kraxel@redhat.com>, 
- =?utf-8?q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>
-X-Developer-Signature: v=1; a=openpgp-sha256; l=1471;
- i=marcandre.lureau@redhat.com; h=from:subject:message-id;
- bh=mhLxwyrNkZYzaYRF+D3AbBaHWTrkuxc49OGXzxkMtOY=;
- b=owEBbQKS/ZANAwAKAdro4Ql1lpzlAcsmYgBqKCR5P+3O21DYskjRVNqF5wB0XKEO9FUzx03TU
- AIbpDg+ZgSJAjMEAAEKAB0WIQSHqb2TP4fGBtJ29i3a6OEJdZac5QUCaigkeQAKCRDa6OEJdZac
- 5SdcD/9xUN5UFnKkBbWBQ82TOhoh9V034daxU5DTpgskekQmeCNvZwdfClDV5LvG3eVX0KiRORw
- Pbsyagop6U9eL69gMIu3f7kKTzSCWVd+/1bXb4DVSkkEYUMlHRp+zeNysU45/LMMgkBZh1XaqdR
- wkhpgmNdAam8r4x64VfCCk2QHgNcL16Imd+tOOxWIacLw5hUefmzfIuT8lCR47HfUqNTNZ0zDIc
- KS4a0ziZN6GgEJ1Jxqh5HNmk9/bv/O2L9cHQ3L8Bf1wuycd+yklR9FMYIxjwLLMk0jdJEu6TFdI
- KWqnnHgrlWRRvapeJoGZk+KbqB3rN5sLFWq3we6khIMVn+oUSICeG5PfTIYK7wAzsFiprvd/1QR
- nykCGiLrez8tOsp1HCVXykQXiPTrnnQ9Ofm+Q0MZlCtR+NbmR3EtXQ2TqTdzq88XPqL38WlfAS3
- DK4G1UAcAe7ttulvpWvKzxLE1oHWNvnpM0EStXqUobbObzaqJ165SoO8PnCyWzZAGtwd6dw12Bx
- GoZiSGwv/vR10gdEM0g4anA3TZl6ydJ36WDpHXQj+Dlgw9WPTFbKm5DDny2Vs6/ugWuCTfxgVHt
- piiEhwL1NBPbVycxMVqB5EQuZWmaIp5uYF088UxGr38X9cbzbvs2+loQ0+QPouHTI7Lvd7D6yfL
- t88ru4CW/e5L3rg==
-X-Developer-Key: i=marcandre.lureau@redhat.com; a=openpgp;
- fpr=87A9BD933F87C606D276F62DDAE8E10975969CE5
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
-Received-SPF: pass client-ip=170.10.133.124;
- envelope-from=marcandre.lureau@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: 8
-X-Spam_score: 0.8
-X-Spam_bar: /
-X-Spam_report: (0.8 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.445,
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2600:3c0a:e001:78e:0:1991:8:25;
+ envelope-from=jic23@kernel.org; helo=sea.source.kernel.org
+X-Spam_score_int: -24
+X-Spam_score: -2.5
+X-Spam_bar: --
+X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.445,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_SBL_CSS=3.335, SPF_HELO_PASS=-0.001,
- SPF_PASS=-0.001 autolearn=no autolearn_force=no
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -107,49 +69,30 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Signed-off-by: Marc-André Lureau <marcandre.lureau@redhat.com>
----
- ui/spice-input.c | 10 +++++++---
- 1 file changed, 7 insertions(+), 3 deletions(-)
+On Tue, 2 Jun 2026 13:23:14 +0000
+Tam=C3=A1s Kir=C3=A1ly <kiraly.tamas@outlook.com> wrote:
 
-diff --git a/ui/spice-input.c b/ui/spice-input.c
-index f0bb915fd77..f5329b8aed9 100644
---- a/ui/spice-input.c
-+++ b/ui/spice-input.c
-@@ -33,6 +33,7 @@ typedef struct QemuSpiceKbd {
-     int ledstate;
-     bool emul0;
-     size_t pauseseq;
-+    Notifier led_notifier;
- } QemuSpiceKbd;
- 
- static void kbd_push_key(SpiceKbdInstance *sin, uint8_t frag);
-@@ -86,9 +87,11 @@ static uint8_t kbd_get_leds(SpiceKbdInstance *sin)
-     return kbd->ledstate;
- }
- 
--static void kbd_leds(void *opaque, int ledstate)
-+static void kbd_leds(Notifier *notifier, void *data)
- {
--    QemuSpiceKbd *kbd = opaque;
-+    QemuSpiceKbd *kbd = container_of(notifier, QemuSpiceKbd, led_notifier);
-+    /* spice has no associated console support */
-+    int ledstate = qemu_input_get_led(NULL);
- 
-     kbd->ledstate = 0;
-     if (ledstate & QEMU_SCROLL_LOCK_LED) {
-@@ -247,7 +250,8 @@ void qemu_spice_input_init(void)
-     kbd = g_malloc0(sizeof(*kbd));
-     kbd->sin.base.sif = &kbd_interface.base;
-     qemu_spice.add_interface(&kbd->sin.base);
--    qemu_add_led_event_handler(kbd_leds, kbd);
-+    kbd->led_notifier.notify = kbd_leds;
-+    qemu_input_led_notifier_add(&kbd->led_notifier);
- 
-     pointer = g_malloc0(sizeof(*pointer));
-     pointer->mouse.base.sif  = &mouse_interface.base;
+> Hi all,
+>=20
+> I am interested in implementing sensor simulations. I already saw that th=
+ere are some sensor implementations with varying details in QEMU. My questi=
+on is the following: Is that a good idea to extend that part of QEMU or new=
+ implementations should happen outside of QEMU and some protocol, e.g. vhos=
+t user should be used to provide sensors to QEMU? I would like to align wit=
+h the long term ideas. What was the original intent with the sensor subsyst=
+em?
 
--- 
-2.54.0
+Hi Tam=C3=A1s
+
+'Sensors' is a very broad term. Could you be a little more specific in what
+types of sensors you are interested in?
+
+Thanks,
+
+Jonathan
+=20
+>=20
+> regards
+> Tam=C3=A1s Kir=C3=A1ly
 
 
