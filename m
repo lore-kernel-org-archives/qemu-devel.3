@@ -4,133 +4,103 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C1E46CD8CB2
-	for <qemu-devel@archiver.kernel.org>; Tue,  9 Jun 2026 18:58:31 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id CBD87CD8CB2
+	for <qemu-devel@archiver.kernel.org>; Tue,  9 Jun 2026 19:17:28 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wX1eO-0007fO-MI; Tue, 09 Jun 2026 14:58:12 -0400
+	id 1wX1wY-000629-1D; Tue, 09 Jun 2026 15:16:58 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1wX1eN-0007fD-GT
- for qemu-devel@nongnu.org; Tue, 09 Jun 2026 14:58:11 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1wX1eL-000088-Dt
- for qemu-devel@nongnu.org; Tue, 09 Jun 2026 14:58:11 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1781031487;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=bUz4z9xJm0sVo+7VV1gF6jdAjVdm+QQcpxU667lJY5w=;
- b=HoTaI0ddgyIZsGq4WdedeGUDFHIkIti1E3eFjJW3Nic+YK86bUTfT7B3cIRXdfHPosY0p2
- 8S/+FxW7PDUssD2r45rXZYE1m7akj5PFMzsC/ZwkzZZVj09866TbWaEaNqhGT5RkJHzUlB
- a3NOjlU/6ir1InOkry+Y53wSl9H9asU=
-Received: from mail-qt1-f198.google.com (mail-qt1-f198.google.com
- [209.85.160.198]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-589-MTeGtQqAM-Cl3J9dUq23Dg-1; Tue, 09 Jun 2026 14:58:04 -0400
-X-MC-Unique: MTeGtQqAM-Cl3J9dUq23Dg-1
-X-Mimecast-MFC-AGG-ID: MTeGtQqAM-Cl3J9dUq23Dg_1781031482
-Received: by mail-qt1-f198.google.com with SMTP id
- d75a77b69052e-517c65c019bso36505111cf.0
- for <qemu-devel@nongnu.org>; Tue, 09 Jun 2026 11:58:03 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1781031482; cv=none;
- d=google.com; s=arc-20240605;
- b=QQ27BzPpYvb7HhshKR57qSvUOdbL9afmmF239jETlnogbO0MDAMyF53ZW2GTqcnGUY
- FJ6STuFq18o7ETqZ2UKE8oxEFYL+zfBYMSStKPnIGGJGD0f0EFdRkzzcVKYUUdOxR/t1
- asMDhKKKEbN5y1jrVxGTAMFbFjQADsiVVAxEa5eJ49YnF7WBFJzKT/fJ9mhi3BJMFOCE
- cFCwVloMYSDc6HhGTdlVmy0QSJ2WY2Kv/Mgtsu7E0ZXybe/gT/Saqwgu7teVViwjNDe5
- YzdMzesnBbQ+W6+E9TeMniSj1TWm/p+B0BBKPqoqTsaoJDgrVDZLVLSI9aeTG00OvYmW
- nhWw==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
- s=arc-20240605; 
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:dkim-signature;
- bh=bUz4z9xJm0sVo+7VV1gF6jdAjVdm+QQcpxU667lJY5w=;
- fh=Ohhlf+kwivs7jyQv9LUTHNY6pEAdnCK0uS2X5z9ZBdU=;
- b=aPfa7Tk0rOPyULDaz5/d4WGIUkDGa5u+dHY+tohFuwc6wtei9mpmBINfAGr6ZAAWyR
- cTCkpveAGOa7qFFKcmx/wc1zauTfcw0UggbNEO0F0KyvKKcmCke0gjXuxLI9zmFKw8zv
- 3GueFDYMtk/U5O/DVYYXl3RHSXdwK73rIzKhkB8Ow8suo+Zvm6zjMe7dScOP46EzzqYN
- XFaA1DKosUgIigrLe0NQ7IeL35lN8GaJ9HXY1e3gwokIy9dojiObHrgTagVMdMPVG3qT
- y/DtChhBvacgtEi7iF8f3lXWJhIlN2nucg99BHueNIaS6CE91Jk2+fDojSePfZtdeH99
- auMQ==; darn=nongnu.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
+ (Exim 4.90_1) (envelope-from <filip.hejsek@gmail.com>)
+ id 1wX1wO-0005zK-Ex
+ for qemu-devel@nongnu.org; Tue, 09 Jun 2026 15:16:48 -0400
+Received: from mail-wm1-x32b.google.com ([2a00:1450:4864:20::32b])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <filip.hejsek@gmail.com>)
+ id 1wX1wM-00064y-RP
+ for qemu-devel@nongnu.org; Tue, 09 Jun 2026 15:16:48 -0400
+Received: by mail-wm1-x32b.google.com with SMTP id
+ 5b1f17b1804b1-490ac357c55so64417655e9.1
+ for <qemu-devel@nongnu.org>; Tue, 09 Jun 2026 12:16:46 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1781031482; x=1781636282; darn=nongnu.org;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:from:to:cc:subject:date
- :message-id:reply-to;
- bh=bUz4z9xJm0sVo+7VV1gF6jdAjVdm+QQcpxU667lJY5w=;
- b=ZadTtLF9070uG2YE+S9AfW3+8JTwucNOQvgXFI8r9Z/IaBGYXsfEZOQHf2MYeKosdo
- CTFyPobyPqr6IWpv9Z2EimvU9nGwv/Lgt1mtVd2+8O6NyApHRaSUUPBDo4+27uwzKDwl
- ScZjo1rgnSpXtOAJyk2oeLMckMYxEcAdUJEfbUBtIQv7ATCrHHGdr1AtqBAkyqMjAwnS
- kQmKlvEuvvUsQLd5FndLIubIGKPeU3dadGi6NoQIMo9tiYhu6bjWKB7mUee3w5SWRt60
- Otd8Y59EnxIFLZ1CR9mMklJogtzTS8iH2O/dNlmSWeI38JlNI2k3ODFzrKnBaP1yinzq
- xnMQ==
+ d=gmail.com; s=20251104; t=1781032605; x=1781637405; darn=nongnu.org;
+ h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
+ :mime-version:subject:date:from:from:to:cc:subject:date:message-id
+ :reply-to; bh=OH4Q74ERPGJwIH9McuO1k6xhWrHxhqiSPJG1425IFTs=;
+ b=TcaW0SIEhx0GNjrRmmG/VnFEtS+Gb0hrmUg7vNo4g6fvRNbNYitsa5vg2Onxp1V72R
+ CCvy0pa+/LOkpWqFVXeMNJGq3HL/vqmkpxWhp2qqCcnBPYxROw7mAP6tfECItYjqlLp6
+ 5IDORGscXkORK6BjCJV7LhbpYjKb4M4dHiqc1x/12Q/m+FLGH3RgO4YyPwBFk8abBZtw
+ Cz2HpmB5lBjS1YjPwue5wjuVa34mkkg4jNZkYnpHI7wUJ/Qno0lfZ0He/MSRjL+Hoc+r
+ 7YT5G/GJpzwwwEMG8EEPMZwu96NDFFM9y3lf80GFFyDJc7FVqc6GpbaRPjnQwJCvEXKN
+ rnLw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1781031482; x=1781636282;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to;
- bh=bUz4z9xJm0sVo+7VV1gF6jdAjVdm+QQcpxU667lJY5w=;
- b=kpUY9pFpV65tMA45ZW2SDzRSyBPgpDw5ntIdTRZ/QeJJ+8BiWDvROcE99WgJ8wEnhF
- R5uA3wuibaH+6iqhiwgJYfFhKEPoEQHp2bV7N8pS+IritciWDw7P+okVH/Q3ppFPFCAD
- xoatteSldXu1QhBoZwoi+zDA6F2l1Nty/aKFZ2rqLP9SE4OxhHksKUi9/sSwrX0I+GiR
- 2Eof9ze16Db8ZTotXisB/eQ8pDamKnw57kaOAeVHqGowZfxvUlTMgIns0a9O/5nc+WaQ
- tUL/ERYxdYhA/tc50J5eGcVUNE7ZAwOlXsKr+ldCOzR++h+G2xo3/nQ4yAqdTqD/ZStT
- humg==
-X-Gm-Message-State: AOJu0YxEOiKvOCe7lbeyYOKkxEPty5okkLrFkukqePE6EO8csUYG6O37
- UOYd9Hv3jxE4pf1FGDT+MfnwDZtxQQwAqdKY6XprHJAfz9Mw7DuiH9o8zBQ/y6ol1dCUJv3KwfF
- lN1jm50AUIOtOU8Bf5PeSob10XMUYzgKSmVumNoiAKOuCKOz8CPAJHPKH228j0op+hZCAQ/d7Fv
- o5guBjcR6+OwKVE2US3UgVOKWyqZSia0k=
-X-Gm-Gg: Acq92OEuwOUaZyK/A1aFwQx47/ZkA3jw3NDFxVPEy5ICVBhAB7YsLu9yDHHZYoca+EV
- c65SoGeVe6QRc0FlNKmnxjCwXUeqG4EL+/Q3lma21DGKJshJoDDTevLy7dmSB0GFFxOmgHq8URH
- BF6apq0iS7vwbcOubEc1/pu/05kmKR/sqJI+BZvN5JrtqXj5eHfUHe/rA4aJx5gftqozEEvD28T
- IyAWwIB9w+SpAM5RhYBvlVPNPk0rhmYdTX2Y7z0ed4+fkXu
-X-Received: by 2002:ac8:598d:0:b0:517:5bc1:e1f0 with SMTP id
- d75a77b69052e-517959957a0mr324623001cf.0.1781031482325; 
- Tue, 09 Jun 2026 11:58:02 -0700 (PDT)
-X-Received: by 2002:ac8:598d:0:b0:517:5bc1:e1f0 with SMTP id
- d75a77b69052e-517959957a0mr324622421cf.0.1781031481868; Tue, 09 Jun 2026
- 11:58:01 -0700 (PDT)
+ d=1e100.net; s=20251104; t=1781032605; x=1781637405;
+ h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
+ :mime-version:subject:date:from:x-gm-gg:x-gm-message-state:from:to
+ :cc:subject:date:message-id:reply-to;
+ bh=OH4Q74ERPGJwIH9McuO1k6xhWrHxhqiSPJG1425IFTs=;
+ b=ZkgVh7iTPZKMQVuplFDnfHZnIYhOJ/SgZz5OGMdCnKRwUGCNdJOnUfYISgGJYFZrmS
+ Kalgs/GyLc02ceXPw50DZwhPt9ZCUOy7CpVIsRRTjIpWBsYLJ/z3HmbKg+ILVcnkZDmF
+ pe1U/U8sDh68BGmtqkBsodwI7MVMf1OIdNa84yD4YW0sSu8ESUj4ABMH3J0tKtN8UDkq
+ MAcmBNoOFdBmjJvzdl47yeh4Po5PQ4G2SnDX+ZwpV5AXkONy/XRPcrPElxuyNDqyC/ue
+ le1XHg6HUzxzoo2HskRXKieyF4Qw1qxroFtEtbJeZgmc0XySahbip0QOFnzus/sdPkWs
+ I1tw==
+X-Gm-Message-State: AOJu0Yy6n0OgWfOEVHwepO5fr+0/SaqFfQxO8Nn+k2jEmn0kzKQ19UgJ
+ ngGmVNyC3W6P1Ce4yShkCu/Hmc+4jnxIDB9alj+DPQ/FScBzUV5k8gNv
+X-Gm-Gg: Acq92OE76QlFLk1OIVh6wtOBe8xCtwY8Sxb8W+xTinEVyI7rWH3lUyRBxY+kCwet8Fd
+ 9WugUBzw4gfqhznb47szW0FIn1itfYKVavBP7FfsZowX+p3WWO/SVMcGCHBuA1ERLJUBIxMRTzo
+ CgRGyfdt29inF6BOkTzYYa/QpMmb1lKSb3jilamgJf4WJZxp8zbY42mXICPfrs3ee6uL33Q0gPZ
+ URKugdTr5SZ+ddNcgrUzQndTVj7dTXDK83Kzs+z9pX0JBSCprGWsJubjh/o+XUt8akDv9Bf4Mey
+ q7jow7d5ayX/bWHcAw6xg4P/k7RDVfue/Mixy8GC4hq8IhC3Qh2NoXsrqr0E+nDvZcDHRQT3gKA
+ TBAfgp+5sKIpeJCvcu4YZyrZfLTjidF+gq72waeqq0+/DSmSal/UhA+1SsaOlCFuxpNlRdleSHK
+ erVO8i6jSULMpSHJcEBnad0UnKB1pW0rW/aBt4ec2G3WoTlUgy7agcJGXfxd1qAqo=
+X-Received: by 2002:a05:600c:4708:b0:490:bd66:e522 with SMTP id
+ 5b1f17b1804b1-490c26038d2mr343852385e9.29.1781032604927; 
+ Tue, 09 Jun 2026 12:16:44 -0700 (PDT)
+Received: from localhost (mem-185.47.220.165.jmnet.cz. [185.47.220.165])
+ by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-4601f351d69sm115984364f8f.29.2026.06.09.12.16.44
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Tue, 09 Jun 2026 12:16:44 -0700 (PDT)
+From: Filip Hejsek <filip.hejsek@gmail.com>
+Date: Tue, 09 Jun 2026 21:16:11 +0200
+Subject: [PATCH v7 01/12] chardev: add cols, rows fields
 MIME-Version: 1.0
-References: <20260603032201.993015-1-jsnow@redhat.com>
- <20260603032201.993015-13-jsnow@redhat.com>
- <874ijboms6.fsf@pond.sub.org>
-In-Reply-To: <874ijboms6.fsf@pond.sub.org>
-From: John Snow <jsnow@redhat.com>
-Date: Tue, 9 Jun 2026 14:57:51 -0400
-X-Gm-Features: AVVi8CcmL5RcjMHoqmKCDwgyIh7PYamDdMOzM2lSQJRccGXaYGBtPFhkdtejFOs
-Message-ID: <CAFn=p-YJg_KhMf3vHZYP-4F1FVsA-MOE=ydRAmUv5srdVteuwQ@mail.gmail.com>
-Subject: Re: [PATCH v3 12/16] qapi/docs: add "Intro" section parsing
-To: Markus Armbruster <armbru@redhat.com>
-Cc: qemu-devel@nongnu.org, Ani Sinha <anisinha@redhat.com>, 
- Michael Roth <michael.roth@amd.com>, Igor Mammedov <imammedo@redhat.com>, 
- Peter Maydell <peter.maydell@linaro.org>, Eric Blake <eblake@redhat.com>, 
- =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@mailo.com>, 
- Mauro Carvalho Chehab <mchehab+huawei@kernel.org>,
- "Michael S. Tsirkin" <mst@redhat.com>, 
- =?UTF-8?B?TWFyYy1BbmRyw6kgTHVyZWF1?= <marcandre.lureau@redhat.com>, 
- Paolo Bonzini <pbonzini@redhat.com>,
- Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>, 
- Richard Henderson <richard.henderson@linaro.org>,
- Gerd Hoffmann <kraxel@redhat.com>, 
- =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>, 
- linux-edac@vger.kernel.org, Cleber Rosa <crosa@redhat.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=jsnow@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -24
-X-Spam_score: -2.5
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 8bit
+Message-Id: <20260609-console-resize-v7-1-0c550fdcec15@gmail.com>
+References: <20260609-console-resize-v7-0-0c550fdcec15@gmail.com>
+In-Reply-To: <20260609-console-resize-v7-0-0c550fdcec15@gmail.com>
+To: qemu-devel@nongnu.org
+Cc: =?utf-8?q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>, 
+ Paolo Bonzini <pbonzini@redhat.com>, "Michael S. Tsirkin" <mst@redhat.com>, 
+ Laurent Vivier <lvivier@redhat.com>, Amit Shah <amit@kernel.org>, 
+ Markus Armbruster <armbru@redhat.com>, Eric Blake <eblake@redhat.com>, 
+ Eduardo Habkost <eduardo@habkost.net>, 
+ Marcel Apfelbaum <marcel.apfelbaum@gmail.com>, 
+ Yanan Wang <wangyanan55@huawei.com>, Zhao Liu <zhao1.liu@intel.com>, 
+ =?utf-8?q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>, 
+ Maximilian Immanuel Brandtner <maxbr@linux.ibm.com>, 
+ =?utf-8?q?Philippe_Mathieu-Daud=C3=A9?= <philmd@mailo.com>, 
+ Szymon Lukasz <noh4hss@gmail.com>
+X-Mailer: b4 0.15.2
+X-Developer-Signature: v=1; a=ed25519-sha256; t=1781032602; l=2201;
+ i=filip.hejsek@gmail.com; s=20250912; h=from:subject:message-id;
+ bh=9+RA4/uRgkyYUZwZVDrcY1V52SqthzJ4VPoz0W5p3dU=;
+ b=9bTaaLuF5xIqXgktzI943lEKRWKFzOs+8QCZkGZ9d+JvKgWFn3nU/lRAu/AYVnjiEu9FgkQUR
+ julBy1wtjjEDjKQOOPJB0AgPgrt8ptoI/Rparf23mQsP8lXByK7b+Xe
+X-Developer-Key: i=filip.hejsek@gmail.com; a=ed25519;
+ pk=nakB8gEK3oi+Q/5dBTMCy/LgZL47NP60z1jeDR6O/WU=
+Received-SPF: pass client-ip=2a00:1450:4864:20::32b;
+ envelope-from=filip.hejsek@gmail.com; helo=mail-wm1-x32b.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.445,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -146,93 +116,80 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, Jun 9, 2026 at 9:39=E2=80=AFAM Markus Armbruster <armbru@redhat.com=
-> wrote:
->
-> John Snow <jsnow@redhat.com> writes:
->
-> > Add parsing for explicit Intro section syntax.
-> >
-> > A side effect of this patch is that we will (currently) always create
-> > an empty Intro section, similar to how we used to have an empty Plain
-> > section. The tests are adjusted accordingly, rendered document output
-> > does not change at all.
-> >
-> > Signed-off-by: John Snow <jsnow@redhat.com>
-> > ---
-> >  docs/devel/qapi-code-gen.rst   | 16 +++++++---------
-> >  scripts/qapi/parser.py         |  4 ++--
-> >  tests/qapi-schema/doc-good.out | 18 ++++++++++++++++++
-> >  3 files changed, 27 insertions(+), 11 deletions(-)
-> >
-> > diff --git a/docs/devel/qapi-code-gen.rst b/docs/devel/qapi-code-gen.rs=
-t
-> > index 3a632b4a648..b1cc5b5f0db 100644
-> > --- a/docs/devel/qapi-code-gen.rst
-> > +++ b/docs/devel/qapi-code-gen.rst
-> > @@ -984,11 +984,11 @@ definition it documents.
-> >  When documentation is required (see pragma_ 'doc-required'), every
-> >  definition must have documentation.
-> >
-> > -Definition documentation starts with a line naming the definition,
-> > -followed by an optional overview, a description of each argument (for
-> > -commands and events), member (for structs and unions), branch (for
-> > -alternates), or value (for enums), a description of each feature (if
-> > -any), and finally optional tagged sections.
-> > +Definition documentation starts with a description naming the
-> > +definition with an optional indented overview, a description of each
-> > +argument (for commands and events), member (for structs and unions),
-> > +branch (for alternates), or value (for enums), a description of each
-> > +feature (if any), and finally optional tagged sections.
-> >
-> >  Descriptions start with '\@name:'.  The description text must be
-> >  indented like this::
->
-> This works if we convert the entire schema in the same series.  I guess
-> that's the plan.  Is it?
+From: Szymon Lukasz <noh4hss@gmail.com>
 
-I still plan to do it piecemeal: I will probably send everything out
-in a big series, but you will be able to cherry-pick and stage those
-patches individually as you feel they are ready. This way, modules
-that need further revisions don't hold up the entire series and v2,
-v3, etc won't email bomb all of creation just to fix an indent in a
-single module somewhere.
+These fields should be interpreted as the size of the terminal connected
+to a given chardev.
 
-I think this documentation still covers it just fine: "an optional
-indented overview". Technically the things we haven't converted just
-omit that indented overview. Those overviews just remain as
-"plaintext".
+Signed-off-by: Szymon Lukasz <noh4hss@gmail.com>
+Reviewed-by: Daniel P. Berrangé <berrange@redhat.com>
+[Filip: CharBackend -> CharFrontend]
+Signed-off-by: Filip Hejsek <filip.hejsek@gmail.com>
+---
+ chardev/char-fe.c         | 13 +++++++++++++
+ include/chardev/char-fe.h | 10 ++++++++++
+ include/chardev/char.h    |  1 +
+ 3 files changed, 24 insertions(+)
 
-It's not perfect documentation, but the expected window where we have
-two competing systems should be quite small in the grand scheme, so I
-don't think it's worth writing docs to cover the technicalities of the
-transition.
+diff --git a/chardev/char-fe.c b/chardev/char-fe.c
+index a44f267373..c61c91f779 100644
+--- a/chardev/char-fe.c
++++ b/chardev/char-fe.c
+@@ -329,6 +329,19 @@ void qemu_chr_fe_set_echo(CharFrontend *c, bool echo)
+     }
+ }
+ 
++void qemu_chr_fe_get_winsize(CharFrontend *c, uint16_t *cols, uint16_t *rows)
++{
++    Chardev *chr = c->chr;
++
++    if (chr) {
++        *cols = chr->cols;
++        *rows = chr->rows;
++    } else {
++        *cols = 0;
++        *rows = 0;
++    }
++}
++
+ void qemu_chr_fe_set_open(CharFrontend *c, bool is_open)
+ {
+     Chardev *chr = c->chr;
+diff --git a/include/chardev/char-fe.h b/include/chardev/char-fe.h
+index 5f8a6df17d..53b8d2a1dc 100644
+--- a/include/chardev/char-fe.h
++++ b/include/chardev/char-fe.h
+@@ -157,6 +157,16 @@ int qemu_chr_fe_wait_connected(CharFrontend *c, Error **errp);
+  */
+ void qemu_chr_fe_set_echo(CharFrontend *c, bool echo);
+ 
++/**
++ * qemu_chr_fe_get_winsize:
++ * @cols: the address for storing columns
++ * @rows: the address for storing rows
++ *
++ * Get the size of the terminal connected to the chardev backend.
++ * Returns *cols = *rows = 0, if no associated Chardev.
++ */
++void qemu_chr_fe_get_winsize(CharFrontend *c, uint16_t *cols, uint16_t *rows);
++
+ /**
+  * qemu_chr_fe_set_open:
+  * @c: a CharFrontend
+diff --git a/include/chardev/char.h b/include/chardev/char.h
+index 7377d8e60a..6394ec2ffe 100644
+--- a/include/chardev/char.h
++++ b/include/chardev/char.h
+@@ -66,6 +66,7 @@ struct Chardev {
+     bool logtimestamp;
+     bool log_line_start;
+     int be_open;
++    uint16_t cols, rows;
+     /* used to coordinate the chardev-change special-case: */
+     bool handover_yank_instance;
+     GSource *gsource;
 
---js
-
->
-> > @@ -1093,8 +1093,7 @@ Examples of complete definition documentation::
-> >
-> >   ##
-> >   # @BlockStats:
-> > - #
-> > - # Statistics of a virtual block device or a block backing device.
-> > + #     Statistics of a virtual block device or a block backing device.
-> >   #
-> >   # @device: If the stats are for a virtual block device, the name
-> >   #     corresponding to the virtual block device.
-> > @@ -1111,8 +1110,7 @@ Examples of complete definition documentation::
-> >
-> >   ##
-> >   # @query-blockstats:
-> > - #
-> > - # Query the @BlockStats for all virtual block devices.
-> > + #     Query the @BlockStats for all virtual block devices.
-> >   #
-> >   # @query-nodes: If true, the command will query all the block nodes
-> >   #     ... explain, explain ...
->
-> [...]
->
+-- 
+2.54.0
 
 
