@@ -4,63 +4,102 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 418A5CD8CA4
-	for <qemu-devel@archiver.kernel.org>; Tue,  9 Jun 2026 09:20:50 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9655ECD6E79
+	for <qemu-devel@archiver.kernel.org>; Tue,  9 Jun 2026 09:25:11 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wWsdM-0008H1-U3; Tue, 09 Jun 2026 05:20:32 -0400
+	id 1wWshJ-0000OQ-Fq; Tue, 09 Jun 2026 05:24:37 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <f.ebner@proxmox.com>)
- id 1wWsdL-0008Gt-8R
- for qemu-devel@nongnu.org; Tue, 09 Jun 2026 05:20:31 -0400
-Received: from proxmox-new.maurer-it.com ([94.136.29.106])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <f.ebner@proxmox.com>)
- id 1wWsdJ-0005qE-EN
- for qemu-devel@nongnu.org; Tue, 09 Jun 2026 05:20:31 -0400
-Received: from proxmox-new.maurer-it.com (localhost.localdomain [127.0.0.1])
- by proxmox-new.maurer-it.com (Proxmox) with ESMTP id 1B75580A3E;
- Tue, 09 Jun 2026 11:20:26 +0200 (CEST)
-Message-ID: <566e0cc5-9a50-43b8-9866-f599a4657004@proxmox.com>
-Date: Tue, 9 Jun 2026 11:20:21 +0200
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1wWshG-0000No-08
+ for qemu-devel@nongnu.org; Tue, 09 Jun 2026 05:24:34 -0400
+Received: from mail-yx1-xb132.google.com ([2607:f8b0:4864:20::b132])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1wWshD-0001Qw-20
+ for qemu-devel@nongnu.org; Tue, 09 Jun 2026 05:24:33 -0400
+Received: by mail-yx1-xb132.google.com with SMTP id
+ 956f58d0204a3-6604176b575so4879881d50.1
+ for <qemu-devel@nongnu.org>; Tue, 09 Jun 2026 02:24:30 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1780997069; cv=none;
+ d=google.com; s=arc-20240605;
+ b=atm7OJxCOpOfDIVq098uuu6QoLviOTnKLwnsArB+HW76JSqfxzpo2bGXQP6dAn6JpC
+ dPPBhAomPaOSFuCcd+3CZOwdNgQS1s/xa3VLWxdh4w5UkK1C4mav15UGcvbB5ysV8HD0
+ WCb6c6tCHmtgjlie3GfANIUtjqH4sFSRVeUmm5lHx+VdxxOzmfIjRU8na/iQp9bzoHy3
+ yjnRMMh3sQE3zs/jvnbSx94e1F0mm03jrRbCDDt6FlI2EipQ9OaHfqlkNpBPFXN8HeTw
+ VFV3bv1WDTaJJRdnE0T5EOifutMkjTYJuS2Sh4Uh3Qy1cqRhC0TLkMfl8BxMWK0nZBly
+ IzKQ==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
+ s=arc-20240605; 
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:dkim-signature;
+ bh=s+0BfXHM21QnV4863C6uImYyGFFQDfVOWFUWijIqoLk=;
+ fh=/ftcwOPYeEIhzseC7WF42kR+xVR/IJiWpLC1+A7SOWQ=;
+ b=GLu/6nBoKgdrcjjSmZfR5JzonhiDBQWf1EaCEOlPJhDLAAXIR5lEw1lwnh7QRkB/4R
+ TFUvCJjw6b1UIs5ai9FE2cDrsk496TVWYSX4/eRMOVZQwggEVl3PHk9M4pi44loti6KI
+ 0N73/V9LKUONAFA76iLce/6iGDUeUP/YbV8pAZmj+Tn9Nt5QtbwwfmF2zBZjyEHKRxtX
+ oaKm9EYSMaBsSENjHnZpZ7vCmomUOvmN3CgCAm8YY9jLiF7J1I5wUwdCCWX49PYb3zPK
+ NyBcq5GW8ywGI645CmRM0aarg1kryNHrIqewNL/Y8SuObc0jOHPTwsO0ptYk8AsddNN3
+ s03w==; darn=nongnu.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1780997069; x=1781601869; darn=nongnu.org;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:from:to:cc:subject:date:message-id:reply-to;
+ bh=s+0BfXHM21QnV4863C6uImYyGFFQDfVOWFUWijIqoLk=;
+ b=ucHEjO5RpBsHo5ckYkOF9rCwamqNFB/kusGD9/pAbPJnzvuVXOLuScakq+mDxHUsfi
+ BrUYjJBErhZR7PrLwHy7wN8ZqYMzTVWSUUT0RdF3cDsnWrZb+2qkEjYnSusRGLVveCwZ
+ 8GUrRRSTOmLo9LVZdYYzEKEGAC60GrbRVRhuZcMnQU8BEyR2seOwWyz/J38jqVY/HfLN
+ 1c5leXz+atiOwIILI7D1pf/JganKHZwVHY5FhT+76PrwAQVBJdhKXHRwt/qLimWlE94R
+ 0ZDsqwKCTQudPVIa4zBbjtfs5YE+hY148IDk7Alfe42MwrK+hEIfF8PrZEuEY5q7ZJIW
+ WOcw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1780997069; x=1781601869;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=s+0BfXHM21QnV4863C6uImYyGFFQDfVOWFUWijIqoLk=;
+ b=X6Z5tr1ozzlEzI4CWaH+CNNkBRF2qniiP/NNJ2few9mYDJa2dIMIKLTvNLIOcDWyzo
+ 55jT7HFJKmE+A55NaZNlhXosy5hit4MR6U8anHc7EIfK0028I7Pt0QbxAD7doPyrSlfe
+ zib9wtg8DjHv2wiVl8us61kEdBRDiRtd7AM3NACOUXSKURY9DPFHcHGCnhdWXBDobd21
+ huWGUDVLve0yx+7b7jIEvEQgZ9AXZjb/p1Z1WDWtCDCMTMKHzx8BQg1YOi+FbdmdhtYB
+ vxsK17NlPjOzx0SsuZ0L30SrchI6zH3EUrNLSr1nJdqcwB5xrMcrE4pZtp40a8rQ54TU
+ Oiwg==
+X-Gm-Message-State: AOJu0YyuXEVmrqJyVXybzU9oXXix0dfRfp8qJcYMlcrfIy0010T/ZVB6
+ illNVbfoRJjhbf/Dy5WJwRUvnr0tnInH/plw4iyE/zD4eSNUF79CC1WLVpWkSRrGxouK6cEKnB7
+ jHlIiAk92EOKbEkUmKhETM17gOj3qUIPn6f/HHb9XVQ==
+X-Gm-Gg: Acq92OHyTqsj6wUWF3oXpNVxxjxT4EmVApfTKVt6QfkX/uh1Vi03WySKNjfNVAl0oTN
+ LO4V8aQSlbPZAMejpqN82SRAI2wc8b0ESGMcynqhaDeDgXkb/VGoM5RW7U613IBLf2CqNmYreZA
+ LkGTb0LqmJIdQx6A9wR9upn1yafx72GE96VsmY9ahT8jBaHSuQgSC/m1sll+Abo33iUM03W6gFN
+ P/umtd2WLjUNcI0U2sV8OEL1+TWeLpMk3FiyprJKWbFXHdNzcXXZjnqGFr7S+dR1yhc3PAd5t9l
+ WM4H20SmfkViGvNOKL5NRoC8WuOzZ86X/jnTc/isPCQZWk/jwka0rNFBtTIaO3LJ0jYJx7HX8QT
+ olQ==
+X-Received: by 2002:a53:df87:0:b0:660:446b:7aad with SMTP id
+ 956f58d0204a3-66106fe57f8mr13338895d50.57.1780997068676; Tue, 09 Jun 2026
+ 02:24:28 -0700 (PDT)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PULL 12/14] virtio-net: Advertise UDP tunnel GSO support by
- default
-To: Paolo Abeni <pabeni@redhat.com>, "Michael S. Tsirkin" <mst@redhat.com>
-Cc: qemu-devel@nongnu.org, Peter Maydell <peter.maydell@linaro.org>,
- Jason Wang <jasowang@redhat.com>, Lei Yang <leiyang@redhat.com>,
- Eduardo Habkost <eduardo@habkost.net>,
- Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
- =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Yanan Wang <wangyanan55@huawei.com>, Zhao Liu <zhao1.liu@intel.com>,
- Gabriel Goller <g.goller@proxmox.com>,
- Stefan Hanreich <s.hanreich@proxmox.com>,
- Thomas Lamprecht <t.lamprecht@proxmox.com>
-References: <cover.1762698873.git.mst@redhat.com>
- <1c79ab6937ae938d3dfd4da1c01afc7eb599857e.1762698873.git.mst@redhat.com>
- <077647f6-d569-4918-9aea-c0597a6ddbc8@proxmox.com>
- <39100539-1c43-431b-886d-7d42850bc4c5@redhat.com>
- <127b6887-f93a-4081-a264-1bc63f37921d@proxmox.com>
- <375064ee-5a6f-44d4-8192-09f39804be69@redhat.com>
- <20260608160546-mutt-send-email-mst@kernel.org>
- <935be681-4920-4361-b54e-3c14da9fc368@redhat.com>
-Content-Language: en-US
-From: Fiona Ebner <f.ebner@proxmox.com>
-In-Reply-To: <935be681-4920-4361-b54e-3c14da9fc368@redhat.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-Bm-Milter-Handled: 55990f41-d878-4baa-be0a-ee34c49e34d2
-X-Bm-Transport-Timestamp: 1780996780541
-Received-SPF: pass client-ip=94.136.29.106; envelope-from=f.ebner@proxmox.com;
- helo=proxmox-new.maurer-it.com
-X-Spam_score_int: -18
-X-Spam_score: -1.9
-X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+References: <20260603032855.106930-1-richard.henderson@linaro.org>
+ <20260603032855.106930-23-richard.henderson@linaro.org>
+In-Reply-To: <20260603032855.106930-23-richard.henderson@linaro.org>
+From: Peter Maydell <peter.maydell@linaro.org>
+Date: Tue, 9 Jun 2026 10:24:17 +0100
+X-Gm-Features: AVVi8Cd6sGxpi5dkdrZEQo85TMgWAk4dtx6bwD74Du4bvx96AFXH5vXU5Kl3WDk
+Message-ID: <CAFEAcA_SLtJuVgeD5eD=XLS5pJn_iQYGRoegNc6w6vkpS5-BBQ@mail.gmail.com>
+Subject: Re: [PATCH v9 22/45] target/arm: Implement LUTI2, LUTI4 for SVE
+To: Richard Henderson <richard.henderson@linaro.org>
+Cc: qemu-devel@nongnu.org, qemu-arm@nongnu.org
+Content-Type: text/plain; charset="UTF-8"
+Received-SPF: pass client-ip=2607:f8b0:4864:20::b132;
+ envelope-from=peter.maydell@linaro.org; helo=mail-yx1-xb132.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -76,25 +115,14 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Am 09.06.26 um 9:03 AM schrieb Paolo Abeni:
-> On 6/8/26 10:06 PM, Michael S. Tsirkin wrote:
->> On Mon, Jun 08, 2026 at 07:12:14PM +0200, Paolo Abeni wrote:
->>> Thanks for the data. The bug is in the virtio_net driver; non GSO
->>> packets requiring inner header csum are handled unmodified from the
->>> guest to the host, and the H/W NICs has to compute the inner transport
->>> header csum for the encap packet.
->>>
->>> Could you please try the attached kernel patch? You will need to update
->>> the kernel inside the guest.
+On Wed, 3 Jun 2026 at 04:30, Richard Henderson
+<richard.henderson@linaro.org> wrote:
+>
+> Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
+> ---
 
-I first tested 7.1.0-rc7 inside the guest and the issue was still
-present. With your patch on top, the issue is gone :)
+Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
 
-Thank you for the fast fix!
-
-Tested-by: Fiona Ebner <f.ebner@proxmox.com>
-
-Best Regards,
-Fiona
-
+thanks
+-- PMM
 
