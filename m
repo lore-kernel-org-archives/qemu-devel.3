@@ -4,110 +4,81 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D4545CD8CA4
-	for <qemu-devel@archiver.kernel.org>; Tue,  9 Jun 2026 13:01:07 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4CC7ACD98C3
+	for <qemu-devel@archiver.kernel.org>; Tue,  9 Jun 2026 13:05:19 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wWw4S-0006qS-Ew; Tue, 09 Jun 2026 09:00:44 -0400
+	id 1wWw8Q-0007ox-3q; Tue, 09 Jun 2026 09:04:50 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <zhangckid@gmail.com>)
- id 1wWw4Q-0006ph-38
- for qemu-devel@nongnu.org; Tue, 09 Jun 2026 09:00:42 -0400
-Received: from mail-ed1-x531.google.com ([2a00:1450:4864:20::531])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <zhangckid@gmail.com>)
- id 1wWw4O-0003Nr-GS
- for qemu-devel@nongnu.org; Tue, 09 Jun 2026 09:00:41 -0400
-Received: by mail-ed1-x531.google.com with SMTP id
- 4fb4d7f45d1cf-69170548d0eso4200882a12.2
- for <qemu-devel@nongnu.org>; Tue, 09 Jun 2026 06:00:40 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1781010039; cv=none;
- d=google.com; s=arc-20240605;
- b=HEBBUIbEEul+YRB/Nl7gzKyVInvg0QaTXqlFyk74YQXly9SZDma7YRCp4I1NN/DW5g
- f5LfY5AU5ZeJK7fpNFv7upXAjMrwyqGNVcYtevNzp9qW6yTciAG6L0RUjFHQvCVI+3FL
- HLd+9liP6HlMbTFJ020VZtoIR0aHS/mAfaPrELvifjK73XoYObeoHiekf3BFIBFG+BJi
- kRhuXBwY86/pLgs6bMcR4RQTgkvXuigCbknTDV6jz9rsHfyKUWukXr6so+hPohbvKHgi
- RV7VZpCzcE5JhbL+gid8y1lNlGA4v0Yt/50wmB+OMQmOmbdBWCa8n/TnmgOGIItitYO/
- k71w==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
- s=arc-20240605; 
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:dkim-signature;
- bh=XtaTvZBB01ivzRnhF0DV0zRyD2VbJ5cFl0/+7HP8ADg=;
- fh=2vCTedxg5r0JPg5LnC8s7len6poc60rIFIIE/ngH4cY=;
- b=KwH6Q5egyR9hiQNI7pslTvI60RjoTVH/ZiYir/b/YLrtJSx7LAhLXaorsA1m+VsTbW
- DF0G/HhIm21NAUfxYdNDCMUI4TcqMhttmCKjCHdOaUDfcx2iJ2bwG1+0P1bG7ivHKu9n
- 5jqhMJSsT8S+zSZmax6w0tZ4A3Gq8hS8qFkH5Jz/5MwGPZnC0/uIvx705GXGcJJXBkpS
- v6znwL+G70vZVvGWB4+JT7mIwhkAd9nBkrSWBlo5Zq/rgqUiJxlMdu9+EnSLANygolaZ
- fOOqcstm0gSFB+Mpo58Gr29+pOGSgriXTdBiNFGc/9yFuGylK0wYDgPW8aMsWftOnOZO
- wizQ==; darn=nongnu.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1781010039; x=1781614839; darn=nongnu.org;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:from:to:cc:subject:date
- :message-id:reply-to;
- bh=XtaTvZBB01ivzRnhF0DV0zRyD2VbJ5cFl0/+7HP8ADg=;
- b=mpVVks+tpijH+Urob8dMJan546FOw+Tzd6AXJLmXm/BKieDAthMayzcDq5ufphwYIq
- npc7Gku44p53LvfhKzfOxvlBoGXLeGuqwRg+luc97ZnKBMXWMy955Mbw3k6k26kP0RuY
- sc1BszgTJGikCaS2SFQxa2SoTN0mpid3ddh8vVtquaZq1nVDzpra26YlDAq/A63Mu44f
- 52TnKsf3aTTiGFAXozhl5/xefNAiOj2MijeIkEaScmGr/ImPotUga2hs1VxYl40O3w+k
- MnOHBlplgLr+Y3aezqeSQL5vSPcVGyL2qcOsS1qqhwFGBS75i65+3gbBuiPdkWXxhvou
- RpUw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1781010039; x=1781614839;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to;
- bh=XtaTvZBB01ivzRnhF0DV0zRyD2VbJ5cFl0/+7HP8ADg=;
- b=h0pIfYsA/d1Km8cYRYlA4vTCkgPGZWSYhFslwHjQHVWmJbT7VKj12yIBR3PnXwhYPn
- TPAjXOG2i2NNIuiikQ9A90emIXCslLs/bgJqPj3yqmvh16dnYvuL4MYLdxjU6HGcPMhs
- uYhbNQXxQckOd+WhgvN/PTyJTU1SyTy/O2PIL0T0V3KfvCfgGWxvr4O4XkiKFFEEzbN9
- KnzcBxKOwHNsIqoR1KPw/cSaf7yoA5jqM6jkq01lcOWohII2OlxbAPuBahsukbzs1BjN
- bW61odLVpnjZgjfLqBxpkOsPhYCu5hFwwMGPznh7V8Iy2ONGsueFaKNooOXFZcu/5w41
- oofg==
-X-Gm-Message-State: AOJu0YwjPfKE5uBoUXep3ECAREyt7mrfet1ToUkluXhDJKWh1kZOBX0C
- bJQnRaJJjN9cNq/Er2BZzH4DMi+M0dBWuEOzmjlX9Lna2JIK3RfY9rrq4tVQK3a6Zvhn/cNJYY+
- eJgmrArjeokoZcNh07SFd+X9+6IdfTgI=
-X-Gm-Gg: Acq92OGsHzpL0ONoAY9/C2wk+i/VWse8aV+0U8+FLmePrK4HSGHc5bgyKTbgPze235f
- PXYw8IhLmNm2ryz5RJ5JFGwCtHwm5BrcHSHTjfrk9D3wDKjGXxV1NxGl4kTTCLEuMoJC/qVvV0j
- GUp1bI6k9lor5l48gUOQjUc+YlJuW3qfd+YC1NHVYHN8SZVDTTByjdHl1nBAHB/ZfqOhABYYM4B
- Re+X+XOo/ZTc73wz51tG0cOMdradjCRWX3pp9vx8osnYUMeQLd0FfsWEDBCrT7PCEGTtrztt9xm
- Qp0rePW41SysMDd53qg=
-X-Received: by 2002:a05:6402:5d1:b0:68d:ad45:5cac with SMTP id
- 4fb4d7f45d1cf-68fa4c00789mr8941959a12.3.1781010038296; Tue, 09 Jun 2026
- 06:00:38 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1wWw8O-0007oo-E6
+ for qemu-devel@nongnu.org; Tue, 09 Jun 2026 09:04:48 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1wWw8M-0006Vu-1B
+ for qemu-devel@nongnu.org; Tue, 09 Jun 2026 09:04:48 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1781010283;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=F3CmK6ZXtYFIZx5iWj69/LflJXKWuy6s6P57URhYfz4=;
+ b=Ouj16zkGb5R2L1r/dYX2GQN72f0Tvvau6v14uB7/iIch2SmEsl0OuOmp6JQtDghzf8Cehp
+ 9+1K19MY7z192zZhjqE+MzzfACNdPkSIfbV0nwT5pYTFNKr3RxhkLRoJvL6rXhoLSABNbM
+ aAHY+Ha1F0egBltdAK6fpxUq1rbkdHc=
+Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-652-zsc8jzQYOCqcrbG20Qr8eA-1; Tue,
+ 09 Jun 2026 09:04:38 -0400
+X-MC-Unique: zsc8jzQYOCqcrbG20Qr8eA-1
+X-Mimecast-MFC-AGG-ID: zsc8jzQYOCqcrbG20Qr8eA_1781010275
+Received: from mx-prod-int-10.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-10.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.95])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 98AF81964CFA; Tue,  9 Jun 2026 13:04:35 +0000 (UTC)
+Received: from blackfin.pond.sub.org (unknown [10.44.22.28])
+ by mx-prod-int-10.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 2CD4CD6E; Tue,  9 Jun 2026 13:04:35 +0000 (UTC)
+Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
+ id C07A621E6A01; Tue, 09 Jun 2026 15:04:32 +0200 (CEST)
+From: Markus Armbruster <armbru@redhat.com>
+To: Filip Hejsek <filip.hejsek@gmail.com>
+Cc: "Michael S. Tsirkin" <mst@redhat.com>,  amit@kernel.org,
+ berrange@redhat.com,  eblake@redhat.com,  eduardo@habkost.net,
+ lvivier@redhat.com,  marcandre.lureau@redhat.com,
+ marcel.apfelbaum@gmail.com,  maxbr@linux.ibm.com,  noh4hss@gmail.com,
+ pbonzini@redhat.com,  philmd@linaro.org,  qemu-devel@nongnu.org,
+ wangyanan55@huawei.com,  zhao1.liu@intel.com
+Subject: Re: [PATCH] qapi: drop "must exist" from ID descriptions for
+ consistency
+In-Reply-To: <87ik7rq36i.fsf@pond.sub.org> (Markus Armbruster's message of
+ "Tue, 09 Jun 2026 15:00:21 +0200")
+References: <924c52d6089b3c0cfd3a235887579ae0322cffba.camel@gmail.com>
+ <20260120081821.884342-1-filip.hejsek@gmail.com>
+ <877bo8q9yc.fsf@pond.sub.org>
+ <20260609063539-mutt-send-email-mst@kernel.org>
+ <87ik7rq36i.fsf@pond.sub.org>
+Date: Tue, 09 Jun 2026 15:04:32 +0200
+Message-ID: <87tsrboof3.fsf@pond.sub.org>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 MIME-Version: 1.0
-References: <20260529213321.96271-1-zhangckid@gmail.com>
- <20260529213321.96271-16-zhangckid@gmail.com>
- <87eciorgaj.fsf@pond.sub.org>
- <CAK3tnvJauCiFZNW84JP39KoXD5NieVV5b+GR_F0yeixYbw3Biw@mail.gmail.com>
- <875x3tl6k6.fsf@pond.sub.org>
-In-Reply-To: <875x3tl6k6.fsf@pond.sub.org>
-From: Zhang Chen <zhangckid@gmail.com>
-Date: Tue, 9 Jun 2026 21:00:01 +0800
-X-Gm-Features: AVVi8CdKJ5BBbXE5NLLecjqHADHZ3fnDwKSzRrII_-QyAVyHLIXK4l0z_FimeQs
-Message-ID: <CAK3tnvJAFoHVbdQYxYnWD7rgD8KWzFGJfSwFPQ4oVn9bn6ZKbQ@mail.gmail.com>
-Subject: Re: [PATCH V8 15/15] iothread: simplify API by merging
- iothread_get_aio_context variants
-To: Markus Armbruster <armbru@redhat.com>
-Cc: qemu-devel <qemu-devel@nongnu.org>,
- "Dr . David Alan Gilbert" <dave@treblig.org>, 
- Eric Blake <eblake@redhat.com>, "Michael S . Tsirkin" <mst@redhat.com>, 
- Stefan Hajnoczi <stefanha@redhat.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::531;
- envelope-from=zhangckid@gmail.com; helo=mail-ed1-x531.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Type: text/plain
+X-Scanned-By: MIMEDefang 3.6 on 10.30.177.95
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=armbru@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: 8
+X-Spam_score: 0.8
+X-Spam_bar: /
+X-Spam_report: (0.8 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.445,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_SBL_CSS=3.335, SPF_HELO_PASS=-0.001,
+ SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -123,35 +94,18 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Mon, Jun 8, 2026 at 6:42=E2=80=AFPM Markus Armbruster <armbru@redhat.com=
-> wrote:
->
-> Zhang Chen <zhangckid@gmail.com> writes:
->
-> > On Wed, Jun 3, 2026 at 1:41=E2=80=AFAM Markus Armbruster <armbru@redhat=
-.com> wrote:
->
-> [...]
->
-> >> The patch appears to delete unused iothread_get_aio_context() from
-> >> iothread.[cg] and to rename iothread_ref_and_get_aio_context() to
-> >> iothread_get_aio_context().  It leaves iothread_get_aio_context() in
-> >> tests/unit/iothread.[ch] alone.  The result is confusing: test's
-> >> iothread_get_aio_context() takes now one parameter less than the regul=
-ar
-> >> one.
-> >>
-> >> Should you change both versions?
-> >>
-> >
-> > Yes, I already noticed the iothread test, we can change it after
-> > merging this series.
->
-> What about changing it in v9?  Assuming we need a v9.
->
+Markus Armbruster <armbru@redhat.com> writes:
 
-OK, I will add this part in V9.
+> "Michael S. Tsirkin" <mst@redhat.com> writes:
 
-Thanks
-Chen
+[...]
+
+>> maybe after it gets a signed off by tag from the author.
+>
+> Oops, missed that!  Can't take it without.
+>
+> Filip?
+
+Found v2, thanks!
+
 
