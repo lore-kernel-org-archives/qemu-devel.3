@@ -4,102 +4,118 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E8942CD8CAC
-	for <qemu-devel@archiver.kernel.org>; Tue,  9 Jun 2026 08:25:24 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0A19BCD8CBD
+	for <qemu-devel@archiver.kernel.org>; Tue,  9 Jun 2026 08:27:16 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wWrlQ-0002Yt-SQ; Tue, 09 Jun 2026 04:24:48 -0400
+	id 1wWrnX-0003Lr-NT; Tue, 09 Jun 2026 04:26:59 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1wWrlN-0002YZ-Ri
- for qemu-devel@nongnu.org; Tue, 09 Jun 2026 04:24:45 -0400
-Received: from mail-yx1-xb130.google.com ([2607:f8b0:4864:20::b130])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1wWrlM-0002va-38
- for qemu-devel@nongnu.org; Tue, 09 Jun 2026 04:24:45 -0400
-Received: by mail-yx1-xb130.google.com with SMTP id
- 956f58d0204a3-66061993294so5508271d50.3
- for <qemu-devel@nongnu.org>; Tue, 09 Jun 2026 01:24:42 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1780993481; cv=none;
- d=google.com; s=arc-20240605;
- b=amXB0wIriSVpshufKLgg58YfmwDYQldaMx43SkybzUVRsUYwoYuZpQfg/UXmzHT1tD
- bH74rhE3rYNH38cgyqwEReXgdgiIc9AqDwkAfOsdFQP/jlBdL6Hl20Zc4CxPGuq28Y2x
- M2BoSk3UK97ZaPhjUwQd3lWZSYohqsn6zNSVhibFAbhJbuGRV1vlmxtJbuLTPLgdBwOc
- 8TcvywhTWtxQYUJUGdGVpbfzMgFoT877Hl1Jb15blxGgoZHeSgv4VYgTimsXSTC8WHGp
- 45fEu44lcMTUiiMJQKnnsloGaQ5O55zSf987YdX5YvVgu/asU390ZlKoZi/MCIgWyZ9Y
- HJHQ==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
- s=arc-20240605; 
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:dkim-signature;
- bh=gvRmu949fyV9dIe2hiEzyWUsojQhzItGWn2M0PgLXlk=;
- fh=GI2e/SBiq4MTIPc9mHou6R6WJe3VvhdDMWKbaXflkfU=;
- b=XEMGBp1T7Kl8dX7KFM8bsvNZj6j32L+Z5rs5VQw0AQ8dPvJTtZgz7UR1wt5uwAVD4g
- TSEB0AjWlH8S0Wvve4JYtAuOpzzqbfPtc/BEmZV5Q7PsRp8zVNSJi5Rvd3cokWYzBCM9
- sfsa0wBrJej/723Gl2xD4yKFYw1ezb0kzTrA1pS9AiLCVS1Fe5gwDzPqbq5sWDQMdKZ4
- R5okv04RcKyMq1YYFUOlRAG+bmQCITzu9tcjnYYS3BJQe8XBsduNh3JQ/0T9pqSs9nUz
- X25u0TMtZaxFyL4ANcNXt/Wn+egUZfFSlTa3IQdIu0dRlYvm9Iv7kRumhB9OjxFutOj0
- Es5w==; darn=nongnu.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1780993481; x=1781598281; darn=nongnu.org;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=gvRmu949fyV9dIe2hiEzyWUsojQhzItGWn2M0PgLXlk=;
- b=YlISL381CnvVBFY+6UrZp2BikQJtpihODzBKAWZH5oEln9catKrbFtWG4A5dPWd/90
- KF4Y+AAppj7vOHlKxbpzAwlhlkR7krhyBiEYNNv7HtXcZdHJZG1xAHjADWTtAMmSF6J/
- chDRvSn21l1JDVagz7RndwBC/sMXCGvdat5spjTHG1KbsjxIeJDUwEVXnhdJMguPWAXk
- yRSbNtVtJcAWRhEvbi22DNap0FkZtZZs3mlgWuUhyaRiOJHH2YtfKdTmHjzEYDWXAcI6
- wK0JWd3AyvHh4aj9qT6Pq0eIAPi1e1dM4mEV/FEj0CYGRptYaKiE0PISsYIrTQSE5PYP
- dqFg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1780993481; x=1781598281;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=gvRmu949fyV9dIe2hiEzyWUsojQhzItGWn2M0PgLXlk=;
- b=bc37ppffJziR+t/HatZGLurH0Z4nAGYBQyDeIoEIV55JKi5SHaqExSre1DkEZ3x/2n
- wPcsYTB/DdJRzVl9+BFeAvN141JnrCMZBTft1c9Wsvt7nr7Yd+xtSjRgmu21WOlxip35
- fkq+twZmiY0PE99+4/hEwtoaBVWNrDebB45uUPIYXsJZz0opwomhNGxF1DzsylcPCFgR
- lAdSrv9ZAsUHfdp0f2NrUtC2vvOzsvAypDmZUzXmTw/wBbgaUITBHSmAG+YboUpoHdIK
- K951Ju4YHhhbeuEAN4eNQzlQcCGqM8i5k2N/+NEdtvbO+fH8dGe/PEmmsOoqhohAJt2m
- Haxw==
-X-Gm-Message-State: AOJu0Ywbkqz9VBzUCY3LyW1gE1+h4LFq1n8ZSU9/qbBRgCkjhot/29gh
- /mnnycXfil6Q2iU3TP+aHfnDZ+JNqGfFOBDmNwGeZ0WZiy2pFd/cG+gGM7i7D+BOq1Rf1lyua1K
- 9PoqXk4BzHNXpx9/0Gbil+ktxmxAzSU0g6r5J9iLNaw==
-X-Gm-Gg: Acq92OExCDGesOtDUBzDUwwn+Rk0DK0I3ZwfKt6yuGs5aWs687QHCKrwuTGmDmkZe1j
- DBUFRBi576zKmN2zxyl9YyvBrOODEFpWb3jxRhgSrJb38YHuDhfn7JcJgeoq5cv0Rzc8mU0mttD
- eEPo/2Uk8Dfve0PNl8bDyuiGmFAEHsrFscgGZU7l+8Qkf9tZosRwwDpJmCOHCek24p3ovD49ULV
- fdtS9hQLgXqs4dKqyzG8K4zIQGaUp2oHJ+7OlbE6BrEwM8eiHcypmSWtwE+Bs35/YfnzKsGuhIo
- oxitVgMcuX8AYaLgeG19MisoFWVEzrYiZt/8nMc8r/js35WQuYly43EJUGfZFMt3Nd++GURmopw
- 48g==
-X-Received: by 2002:a05:690e:418b:b0:65c:17fe:6d49 with SMTP id
- 956f58d0204a3-66106ffee84mr15462245d50.61.1780993481177; Tue, 09 Jun 2026
- 01:24:41 -0700 (PDT)
-MIME-Version: 1.0
-References: <20260608190155.637067-1-richard.henderson@linaro.org>
- <20260608190155.637067-2-richard.henderson@linaro.org>
-In-Reply-To: <20260608190155.637067-2-richard.henderson@linaro.org>
-From: Peter Maydell <peter.maydell@linaro.org>
-Date: Tue, 9 Jun 2026 09:24:29 +0100
-X-Gm-Features: AVVi8CdSYh72XjmG4Q0bvfCNdGpdxtKvywQm9bw8VqXmqIjLLxGQV9hXZRqBiKs
-Message-ID: <CAFEAcA-u9nG8cnX2_suYNZj_+L3coWL+DT9VdewbO_OZfDR70w@mail.gmail.com>
-Subject: Re: [PATCH 1/2] fpu: Handle all rounding modes in
- partsN_uncanon_normal
-To: Richard Henderson <richard.henderson@linaro.org>
-Cc: qemu-devel@nongnu.org
+ (Exim 4.90_1) (envelope-from <maxbr@linux.ibm.com>)
+ id 1wWrnW-0003LO-6F
+ for qemu-devel@nongnu.org; Tue, 09 Jun 2026 04:26:58 -0400
+Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <maxbr@linux.ibm.com>)
+ id 1wWrnU-0003yr-JI
+ for qemu-devel@nongnu.org; Tue, 09 Jun 2026 04:26:57 -0400
+Received: from pps.filterd (m0353729.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
+ 658K7E2d1448816; Tue, 9 Jun 2026 08:26:40 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
+ :content-transfer-encoding:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to; s=pp1; bh=+IObn0
+ l2Gziks6neqcqEfYkF0yRGoug8D8GCZdpQjQU=; b=qSoocQGVgtV+FZXLhC0iAu
+ UBZr0BoylTntALY1iQfrc7B4krpAKfSihsHvwIk+THfSi4tIaP1AD2V8YsGFKyD7
+ WaxYVxgjPz6GU3wXognnLN98x5Eiz4u1I2tahTXie3pf/y08cTWaATz3jJvnPlyn
+ ZTePoddq1qphHuDdNFVNENPkNAqAy85OinlYIpF2xZjpfPVolfVDid8AzH0Pydp8
+ At6GT8l/qKZceNT9JfdR2gM/kwvZisnbP/uAH5cyZdPqNLXuUiMXLqsXLDB90EC5
+ P4fhCXRnBFfr3GnbpTwEI8CeEGI725Lw7bfTu0uWKEMESgudhbE43YV9ZoAmSswA
+ ==
+Received: from ppma13.dal12v.mail.ibm.com
+ (dd.9e.1632.ip4.static.sl-reverse.com [50.22.158.221])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4emb7qk5q8-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Tue, 09 Jun 2026 08:26:39 +0000 (GMT)
+Received: from pps.filterd (ppma13.dal12v.mail.ibm.com [127.0.0.1])
+ by ppma13.dal12v.mail.ibm.com (8.18.1.7/8.18.1.7) with ESMTP id 6598JeO8006612;
+ Tue, 9 Jun 2026 08:26:38 GMT
+Received: from smtprelay04.fra02v.mail.ibm.com ([9.218.2.228])
+ by ppma13.dal12v.mail.ibm.com (PPS) with ESMTPS id 4en03g0xdy-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Tue, 09 Jun 2026 08:26:38 +0000 (GMT)
+Received: from smtpav04.fra02v.mail.ibm.com (smtpav04.fra02v.mail.ibm.com
+ [10.20.54.103])
+ by smtprelay04.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 6598QaKm13107644
+ (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Tue, 9 Jun 2026 08:26:36 GMT
+Received: from smtpav04.fra02v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id B69FC20043;
+ Tue,  9 Jun 2026 08:26:36 +0000 (GMT)
+Received: from smtpav04.fra02v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 83E3720040;
+ Tue,  9 Jun 2026 08:26:36 +0000 (GMT)
+Received: from li-9b52914c-2c8b-11b2-a85c-a36f6d484b4a.ibm.com (unknown
+ [9.224.77.197]) by smtpav04.fra02v.mail.ibm.com (Postfix) with ESMTP;
+ Tue,  9 Jun 2026 08:26:36 +0000 (GMT)
+Message-ID: <147cee86401993714fa94bd6cc79c4dbbdcaca52.camel@linux.ibm.com>
+Subject: Re: [PATCH v6 00/12] virtio-console: notify about the terminal size
+From: Maximilian Immanuel Brandtner <maxbr@linux.ibm.com>
+To: "Michael S. Tsirkin" <mst@redhat.com>
+Cc: Filip Hejsek <filip.hejsek@gmail.com>, qemu-devel@nongnu.org,
+ =?ISO-8859-1?Q?Marc-Andr=E9?= Lureau	 <marcandre.lureau@redhat.com>, Paolo
+ Bonzini <pbonzini@redhat.com>, Laurent Vivier <lvivier@redhat.com>, Amit
+ Shah <amit@kernel.org>, Markus Armbruster <armbru@redhat.com>, Eric Blake
+ <eblake@redhat.com>, Eduardo Habkost <eduardo@habkost.net>, Marcel
+ Apfelbaum	 <marcel.apfelbaum@gmail.com>, Philippe
+ =?ISO-8859-1?Q?Mathieu-Daud=E9?=	 <philmd@linaro.org>, Yanan Wang
+ <wangyanan55@huawei.com>, Zhao Liu	 <zhao1.liu@intel.com>, "Daniel P."
+ =?ISO-8859-1?Q?Berrang=E9?=	 <berrange@redhat.com>, Szymon Lukasz
+ <noh4hss@gmail.com>
+Date: Tue, 09 Jun 2026 10:26:36 +0200
+In-Reply-To: <20260609040710-mutt-send-email-mst@kernel.org>
+References: <20260119-console-resize-v6-0-33a7b0330a7a@gmail.com>
+ <cc0b8cce5bf5763ace058270e9d80fb84873dbd7.camel@linux.ibm.com>
+ <20260609040710-mutt-send-email-mst@kernel.org>
 Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2607:f8b0:4864:20::b130;
- envelope-from=peter.maydell@linaro.org; helo=mail-yx1-xb130.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+Content-Transfer-Encoding: quoted-printable
+User-Agent: Evolution 3.58.3 (3.58.3-1.fc43) 
+MIME-Version: 1.0
+X-TM-AS-GCONF: 00
+X-Proofpoint-Reinject: loops=2 maxloops=12
+X-Authority-Analysis: v=2.4 cv=HppG3UTS c=1 sm=1 tr=0 ts=6a27ce3f cx=c_pps
+ a=AfN7/Ok6k8XGzOShvHwTGQ==:117 a=AfN7/Ok6k8XGzOShvHwTGQ==:17
+ a=IkcTkHD0fZMA:10 a=FelO9ux0wxsA:10 a=VkNPw1HP01LnGYTKEx00:22
+ a=RnoormkPH1_aCDwRdu11:22 a=uAbxVGIbfxUO_5tXvNgY:22 a=Bd7h0VvgvP5irlchiG4A:9
+ a=QEXdDO2ut3YA:10
+X-Proofpoint-GUID: BHvgcPvxCC5IwgQNySJYsHfRQoQPK8uc
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNjA5MDA3NiBTYWx0ZWRfXzABzt+T0aR/b
+ A20N6XxDabtyYsF0s8n489LOlINwDxIiTqoeu4jY3Vvwt400tYSAM8Cq8WINR2WJXnrWwWR7zUm
+ zOj23Tbi1n23itIPQ9016yZj7gBeFftmj4MIvOIts6XttM5sqJqU2tm07CE57bxBvcVz1UXGTXw
+ dhscgzSHuebRxNwRUksGaQDSx0zJfc1hbwFD8ks4gjrP9rnYMQP4blT/CNMqg+b8xaEqL7Z4bFF
+ 8beHcQ1sybpSYG5df4mK+z4S7sJ2XDKPeq37JQBaR6vTZ7MZLSay0FZ6JLGXnd3GWKZv2SX258R
+ x6+7Ei2uqpHHz5ZAQGpXeCDGuQA/NgDq6HZwcolYjyecyWjZLvQsEBYMumI6FNK+F8FZvNeHWeH
+ GnHNRiHBb6VNKt/g8OT4EKA0GL+n72NGYzLYvAKJ3yraYXfCB6COMjeJe/im/xaFf1pxVIm2+nA
+ 4ZsOVg1nX4ZhKwsGDnA==
+X-Proofpoint-ORIG-GUID: kKNSgZVY0j6xoiBTWLHv2Uo9J0nLwvLD
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.125,FMLib:17.12.100.49
+ definitions=2026-06-09_02,2026-06-09_01,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ lowpriorityscore=0 adultscore=0 phishscore=0 malwarescore=0 impostorscore=0
+ priorityscore=1501 clxscore=1015 bulkscore=0 spamscore=0 suspectscore=0
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.22.0-2605210000 definitions=main-2606090076
+Received-SPF: pass client-ip=148.163.156.1; envelope-from=maxbr@linux.ibm.com;
+ helo=mx0a-001b2d01.pphosted.com
+X-Spam_score_int: -26
+X-Spam_score: -2.7
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
+ RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -116,25 +132,32 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Mon, 8 Jun 2026 at 20:01, Richard Henderson
-<richard.henderson@linaro.org> wrote:
->
-> Missed float_round_nearest_even_max when recomputing round.
->
-> Reported-by: Peter Maydell <peter.maydell@linaro.org>
-> Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
-> ---
->  fpu/softfloat-parts.c.inc | 1 +
->  1 file changed, 1 insertion(+)
+On Tue, 2026-06-09 at 04:09 -0400, Michael S. Tsirkin wrote:
+> On Tue, Jun 09, 2026 at 10:02:40AM +0200, Maximilian Immanuel
+> Brandtner wrote:
+> > What's the status of this series? It seems to me to have somewhat
+> > stalled, because of the virtio resize event discrepancy that has
+> > been
+> > adressed by backporting the relevant patch. At this point it's been
+> > almost 6 months since any changes have been made to this patch-set,
+> > even though at this point it would have to be refactored to address
+> > changes that have been made to QEMU since. Has progress on this
+> > patch-
+> > set just stalled or are there any remaining concerns about the
+> > implementation of this patch-set I'm unaware of?
+> >=20
+> > Kind regards,
+> > Max Brandtner
+>=20
+> Whom are you asking?
+> There were comments on patches 7 and 8 and Filip seems to have
+> indicated
+> he intends to address them, and even posted diffs.
+> So now, I expect v7 with that.
+I suppose Filip for the most part. It's just that close to 6 months of
+inactivity is quite a while and sometimes as other stuff happens people
+can forget about a patch-series.
 
-Fixes: 72330260cdb ("softfloat: Add float_round_nearest_even_max")
-CC: qemu-stable@nongnu.org
-
-(dunno if hexagon hits this codepath, but it doesn't hurt to put
-the fix into stable)
-
-Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
-
-thanks
--- PMM
+Kind regards,
+Max Brandtner
 
