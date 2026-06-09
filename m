@@ -4,82 +4,80 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 46233CD6E79
-	for <qemu-devel@archiver.kernel.org>; Tue,  9 Jun 2026 04:13:13 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id EBE84CD8CB9
+	for <qemu-devel@archiver.kernel.org>; Tue,  9 Jun 2026 04:25:30 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wWnpT-0002n6-8Z; Tue, 09 Jun 2026 00:12:43 -0400
+	id 1wWo1G-0004eI-30; Tue, 09 Jun 2026 00:24:54 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <keosung.park@samsung.com>)
- id 1wWnpQ-0002mo-8T
- for qemu-devel@nongnu.org; Tue, 09 Jun 2026 00:12:40 -0400
-Received: from mailout1.samsung.com ([203.254.224.24])
+ (Exim 4.90_1) (envelope-from <kirill@korins.ky>) id 1wWm4Q-0001ct-7f
+ for qemu-devel@nongnu.org; Mon, 08 Jun 2026 22:20:03 -0400
+Received: from mx1.catap.net ([162.55.82.72])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <keosung.park@samsung.com>)
- id 1wWnpN-0005On-22
- for qemu-devel@nongnu.org; Tue, 09 Jun 2026 00:12:40 -0400
-Received: from epcas2p1.samsung.com (unknown [182.195.41.53])
- by mailout1.samsung.com (KnoxPortal) with ESMTP id
- 20260609041229epoutp011ffbe97e3afbe083202d91f53b3e4885~3Tl_JmPiS2942329423epoutp01f
- for <qemu-devel@nongnu.org>; Tue,  9 Jun 2026 04:12:29 +0000 (GMT)
-DKIM-Filter: OpenDKIM Filter v2.11.0 mailout1.samsung.com
- 20260609041229epoutp011ffbe97e3afbe083202d91f53b3e4885~3Tl_JmPiS2942329423epoutp01f
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=samsung.com;
- s=mail20170921; t=1780978349;
- bh=TqIvJe3RKwK7aU1y+Q7f2uDi1Gq/BJLAwiVun+M56P0=;
- h=Subject:Reply-To:From:To:CC:In-Reply-To:Date:References:From;
- b=HtJj0LYXRisWmurMB4yz8V4OZwPKJO64yK5a1w9zfdO8z24WDTHK4dEO6tuEBEGPm
- mjdkO/cx7KNzFSKtloWJOdq3SC9PfEs6aBXdQR+5IW3DHZLRTnyy0k4CooZOtbfvBu
- kpAbpyearnABLwX55V9OLUUFPDx3h0JL39ph23uU=
-Received: from epsnrtp04.localdomain (unknown [182.195.42.156]) by
- epcas2p4.samsung.com (KnoxPortal) with ESMTPS id
- 20260609041229epcas2p4af9c0752bb860e36821c514bcbcba264~3Tl9yzlhr1203712037epcas2p4h;
- Tue,  9 Jun 2026 04:12:29 +0000 (GMT)
-Received: from epcas2p3.samsung.com (unknown [182.195.38.211]) by
- epsnrtp04.localdomain (Postfix) with ESMTP id 4gZFqd1Qlbz6B9mD; Tue,  9 Jun
- 2026 04:12:29 +0000 (GMT)
-Mime-Version: 1.0
-Subject: [PATCH 2/2] tests/qtest: Add UFS HID qtest
-From: Keoseong Park <keosung.park@samsung.com>
-To: Jeuk Kim <jeuk20.kim@samsung.com>, "farosas@suse.de" <farosas@suse.de>,
- "lvivier@redhat.com" <lvivier@redhat.com>, "pbonzini@redhat.com"
- <pbonzini@redhat.com>
-CC: "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>, Keoseong Park
- <keosung.park@samsung.com>
-X-Priority: 3
-X-Content-Kind-Code: NORMAL
-In-Reply-To: <20260609023909epcms2p3f8856f12fed093168aff636f8dc8f994@epcms2p3>
-X-CPGS-Detection: blocking_info_exchange
-X-Drm-Type: N,general
-X-Msg-Generator: Mail
-X-Msg-Type: PERSONAL
-X-Reply-Demand: N
-Message-ID: <20260609041228epcms2p511070f9b5c2179967c0a27dd591a6d94@epcms2p5>
-Date: Tue, 09 Jun 2026 13:12:28 +0900
-X-CMS-MailID: 20260609041228epcms2p511070f9b5c2179967c0a27dd591a6d94
-Content-Transfer-Encoding: 7bit
-Content-Type: text/plain; charset="utf-8"
-X-Sendblock-Type: AUTO_CONFIDENTIAL
-CMS-TYPE: 102P
-X-CPGSPASS: Y
-X-CPGSPASS: Y
-cpgsPolicy: CPGSC10-223,Y
-X-CFilter-Loop: Reflected
-X-CMS-RootMailID: 20260609023909epcms2p3f8856f12fed093168aff636f8dc8f994
-References: <20260609023909epcms2p3f8856f12fed093168aff636f8dc8f994@epcms2p3>
- <CGME20260609023909epcms2p3f8856f12fed093168aff636f8dc8f994@epcms2p5>
-Received-SPF: pass client-ip=203.254.224.24;
- envelope-from=keosung.park@samsung.com; helo=mailout1.samsung.com
-X-Spam_score_int: -31
-X-Spam_score: -3.2
-X-Spam_bar: ---
-X-Spam_report: (-3.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.445,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ (Exim 4.90_1) (envelope-from <kirill@korins.ky>) id 1wWm4M-0003Mk-BY
+ for qemu-devel@nongnu.org; Mon, 08 Jun 2026 22:20:01 -0400
+ARC-Seal: i=1; a=rsa-sha256; s=20240125rsa; cv=none; d=mx.catap.net; b=mjiZm8H
+ 7zEpzjKA3SWMSxWBVTXalb1tx1dYMur3KSYrc+ISLrY80cwPrxo+XcYEpt200IJkRSCdb8
+ zko3i1Fkpm7P3CgiXqRTtXI1wrppFQpF/nYQsdvZN8aaGRMrPt8le1aDIOqGYL5L66Ie5i
+ x19B3Z8G8w/FRp9HNTg2SlWsz1ghDfRIPwVGDdMWwbhfnmf6molFPIJcAFK5IWQwc0/Od4
+ 6oGpb6BzR5IQFOLC1KzLOqtC1sFRGIPp/F0yy4t8allBbN2GeESePIGbjU/L3pGYNqY0FA
+ Ad/khfGCuRskOx09WcuURsfa/eZCukWrYZePp02Xuo5/rf7mFYR10dA==
+ARC-Message-Signature: i=1; a=rsa-sha256; s=20240125rsa; c=simple/simple; bh=P
+ JPAShit9jm++v6V4WGKHz1axdgnEFfRDSlf7Vm4TdE=;
+ h=date:subject:cc:to:
+ from:dkim-signature:dkim-signature; d=mx.catap.net; b=thrQTtEPmiFG37BA
+ 9PrGM/wQaf6zPXqOtYtuUq2l19/QBhkv5/E/YaYnnpfrnMk0zBeuwZC30h2xddyR5Z0QZT
+ GGPwsbFFWaXyaaNeWtRh+TayVCfRreiFf/9JqmCRzyB/IjVMi+wUp9/zVu5fafRWf5KRKh
+ NKOZJgGdstif1nj7gF+/6ADj7hcnrnHxM27tABY8C+vp/IAHhRWKIqQoxBuYHgZQ0rIaXF
+ bGYmZAmUKt8Z9XGEb7MSAnQHQ7VogoYTACEy0HRx/FIj8Buy8XnGBwQM29++U70Kqga2/R
+ 9QfQMxsQ2uBVLdDNRTd1p3Q3e1HX3ZWABU8rfcN8c0qr6g==
+ARC-Authentication-Results: i=1; mx.catap.net; dkim=pass
+ header.s=20240125rsa header.d=korins.ky header.a=rsa-sha256 
+ header.b=uYEalUz3; dkim=pass header.s=20240125ed25519 
+ header.d=korins.ky header.a=ed25519-sha256 header.b=jRK8kdfe;
+ arc=none; iprev=pass; spf=none
+ smtp.helo=postmaster@matebook.home.arpa; spf=softfail
+ smtp.mailfrom=kirill@korins.ky
+DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple; s=20240125rsa; bh=PJPAShit
+ 9jm++v6V4WGKHz1axdgnEFfRDSlf7Vm4TdE=; h=date:subject:cc:to:from;
+ d=korins.ky; b=uYEalUz3AUJKW+LX7bxMYph/XXty/6oGuQ1koKRX0J6RIUPsKfG5ca6
+ DvTs0GUnXqUwtvefpjiiPEUxwERX8vucprl9Sky9SuWgsxfYtdSyfjXsnEzSM+onAoaeYM
+ WQw61goTUKAKqIiLFg5fn24wBcTiFJGvJ1IC7VzirYDpxu+mx/4N4VyP6MIrx1grb9Zx+l
+ 1pjZnnVBQVO+6d1u+U1XptRs2qif0FluGbfcRv+VQNyNUh4dpeK6sO9gx4pFG/Tj8gLijl
+ JvZMNLHGIZYXm9ltbdwZcx1rpemkMQ8xgE5eHEaktEy/vJtP/3+1B4XKEjw3E8k1gskaxT
+ YosAmuQ==
+DKIM-Signature: v=1; a=ed25519-sha256; c=simple/simple; s=20240125ed25519;
+ bh=PJPAShit9jm++v6V4WGKHz1axdgnEFfRDSlf7Vm4TdE=; h=date:subject:cc:to:
+ from; d=korins.ky; b=jRK8kdfeXcMjtZWqlc2Uf8JY3FUhOmkvx5qb5SuhyYXAZOPdt
+ W9ATeGj1ar036k0RlE6Ro16t5pFoUqFcHn0BQ==
+Received: by mx1.catap.net (OpenSMTPD) with ESMTPSA id 0eab6f1c
+ (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO); 
+ Tue, 9 Jun 2026 04:19:51 +0200 (CEST)
+Received: from localhost (matebook.home.arpa [local])
+ by matebook.home.arpa (OpenSMTPD) with ESMTPA id 345dd43e;
+ Tue, 9 Jun 2026 04:19:50 +0200 (CEST)
+From: "Kirill A. Korinsky" <kirill@korins.ky>
+To: qemu-devel@nongnu.org
+Cc: "Kirill A. Korinsky" <kirill@korins.ky>
+Subject: [PATCH] powernv: boot OpenBSD on POWER9
+Date: Tue,  9 Jun 2026 04:19:45 +0200
+Message-ID: <20260609021945.73632-1-kirill@korins.ky>
+X-Mailer: git-send-email 2.54.0
+MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=162.55.82.72; envelope-from=kirill@korins.ky;
+ helo=mx1.catap.net
+X-Spam_score_int: -43
+X-Spam_score: -4.4
+X-Spam_bar: ----
+X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_MED=-2.3, SPF_HELO_PASS=-0.001, SPF_PASS=-0.001,
+ UNPARSEABLE_RELAY=0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
+X-Mailman-Approved-At: Tue, 09 Jun 2026 00:24:38 -0400
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -91,328 +89,126 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-To: keosung.park@samsung.com
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Cover the HID attribute permission table, the disable / analysis /
-defrag state transitions, partial defrag bounded by dHIDSize, and
-the terminal auto-reset behaviors.
+OpenBSD/powernv programs PTCR for LPID 0 with a partition
+table size exponent one smaller than QEMU's existing ISA v3.0
+interpretation. Try QEMU's existing PATS interpretation first,
+then fall back to the OpenBSD LPID 0 form; nonzero LPIDs keep
+the old behaviour.
 
-Signed-off-by: Keoseong Park <keosung.park@samsung.com>
+The PSI model now exposes POWER9 IRQ level and pending status
+registers, and keeps both updated while delivering through the
+existing XIVE LSI source. This lets guests that select the
+POWER9 PSI LSI IRQ method continue to receive LPC interrupts.
+
+The blast radius is probably minimal: the partition table
+fallback is limited to bare metal LPID 0 after the original
+lookup fails, while the PSI change only touches POWER9 PSI
+state and reuses the existing delivery path.
+
+Signed-off-by: Kirill A. Korinsky <kirill@korins.ky>
 ---
- tests/qtest/ufs-test.c | 290 +++++++++++++++++++++++++++++++++++++++++
- 1 file changed, 290 insertions(+)
+ hw/ppc/pnv_psi.c           | 17 ++++++++---------
+ target/ppc/mmu-book3s-v3.c | 33 ++++++++++++++++++++++++++++-----
+ 2 files changed, 36 insertions(+), 14 deletions(-)
 
-diff --git a/tests/qtest/ufs-test.c b/tests/qtest/ufs-test.c
-index f677896db0..5496276326 100644
---- a/tests/qtest/ufs-test.c
-+++ b/tests/qtest/ufs-test.c
-@@ -1386,6 +1386,295 @@ static void *ufs_blk_test_setup(GString *cmd_line, void *arg)
-     return arg;
- }
- 
-+/*
-+ * Helper to read a single HID attribute value.
-+ * Returns the host-endian attribute value; asserts OCS success.
-+ */
-+static uint32_t ufs_hid_read_attr(QUfs *ufs, uint8_t idn)
-+{
-+    enum UtpOcsCodes ocs;
-+    UtpUpiuRsp rsp;
-+
-+    ocs = ufs_send_query(ufs, UFS_UPIU_QUERY_FUNC_STANDARD_READ_REQUEST,
-+                         UFS_UPIU_QUERY_OPCODE_READ_ATTR,
-+                         idn, 0, 0, 0, &rsp);
-+    g_assert_cmpuint(ocs, ==, UFS_OCS_SUCCESS);
-+    g_assert_cmpuint(rsp.header.response, ==, UFS_COMMAND_RESULT_SUCCESS);
-+    return be32_to_cpu(rsp.qr.value);
-+}
-+
-+/*
-+ * Helper to write a single HID attribute value.
-+ * Asserts OCS success.
-+ */
-+static void ufs_hid_write_attr(QUfs *ufs, uint8_t idn, uint32_t value)
-+{
-+    enum UtpOcsCodes ocs;
-+    UtpUpiuRsp rsp;
-+
-+    ocs = ufs_send_query(ufs, UFS_UPIU_QUERY_FUNC_STANDARD_WRITE_REQUEST,
-+                         UFS_UPIU_QUERY_OPCODE_WRITE_ATTR,
-+                         idn, 0, 0, value, &rsp);
-+    g_assert_cmpuint(ocs, ==, UFS_OCS_SUCCESS);
-+    g_assert_cmpuint(rsp.header.response, ==, UFS_COMMAND_RESULT_SUCCESS);
-+}
-+
-+static uint32_t ufs_hid_wait_leave_state(QUfs *ufs, uint32_t from)
-+{
-+    uint64_t end_time =
-+        g_get_monotonic_time() + TIMEOUT_SECONDS * G_TIME_SPAN_SECOND;
-+    uint32_t state;
-+
-+    do {
-+        qtest_clock_step(ufs->dev.bus->qts, 100);
-+        state = ufs_hid_read_attr(ufs, UFS_QUERY_ATTR_IDN_HID_STATE);
-+    } while (state == from && g_get_monotonic_time() < end_time);
-+
-+    return state;
-+}
-+
-+static uint32_t ufs_hid_wait_state(QUfs *ufs, uint32_t expected)
-+{
-+    uint64_t end_time =
-+        g_get_monotonic_time() + TIMEOUT_SECONDS * G_TIME_SPAN_SECOND;
-+    uint32_t state;
-+
-+    do {
-+        qtest_clock_step(ufs->dev.bus->qts, 100);
-+        state = ufs_hid_read_attr(ufs, UFS_QUERY_ATTR_IDN_HID_STATE);
-+    } while (state != expected && g_get_monotonic_time() < end_time);
-+
-+    g_assert_cmpuint(state, ==, expected);
-+    return state;
-+}
-+
-+static void ufs_hid_wait_progress_complete(QUfs *ufs)
-+{
-+    uint64_t end_time =
-+        g_get_monotonic_time() + TIMEOUT_SECONDS * G_TIME_SPAN_SECOND;
-+    uint32_t val;
-+
-+    do {
-+        qtest_clock_step(ufs->dev.bus->qts, 100);
-+        val = ufs_hid_read_attr(ufs, UFS_QUERY_ATTR_IDN_HID_PROG_RATIO);
-+    } while (val != 100 && g_get_monotonic_time() < end_time);
-+
-+    g_assert_cmpuint(val, ==, 100);
-+}
-+
-+static void ufstest_hid(void *obj, void *data, QGuestAllocator *alloc)
-+{
-+    QUfs *ufs = obj;
-+    uint32_t val;
-+    enum UtpOcsCodes ocs;
-+    UtpUpiuRsp rsp;
-+    const int test_lun = 1;
-+    const uint8_t request_sense_cdb[UFS_CDB_SIZE] = {
-+        REQUEST_SENSE,
-+    };
-+    const uint8_t write_cdb[UFS_CDB_SIZE] = {
-+        /* WRITE(10) to LBA 0, transfer length 8 sectors = 1 fragment */
-+        WRITE_10, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x08, 0x00
-+    };
-+    uint8_t write_buf[4096];
-+    uint8_t read_buf[4096];
-+    int i;
-+
-+    ufs_init(ufs, alloc);
-+
-+    /* Clear Unit Attention */
-+    ufs_send_scsi_command(ufs, test_lun, request_sense_cdb, NULL, 0,
-+                          read_buf, sizeof(read_buf), &rsp);
-+
-+    /*
-+     * 1. Verify HID default attribute values
-+     */
-+    val = ufs_hid_read_attr(ufs, UFS_QUERY_ATTR_IDN_DEFRAG_OP);
-+    g_assert_cmpuint(val, ==, UFS_HID_OP_DISABLE);
-+
-+    val = ufs_hid_read_attr(ufs, UFS_QUERY_ATTR_IDN_HID_AVAIL_SIZE);
-+    g_assert_cmpuint(val, ==, 0xFFFFFFFF);
-+
-+    val = ufs_hid_read_attr(ufs, UFS_QUERY_ATTR_IDN_HID_SIZE);
-+    g_assert_cmpuint(val, ==, 0xFFFFFFFF);
-+
-+    val = ufs_hid_read_attr(ufs, UFS_QUERY_ATTR_IDN_HID_PROG_RATIO);
-+    g_assert_cmpuint(val, ==, 0);
-+
-+    val = ufs_hid_read_attr(ufs, UFS_QUERY_ATTR_IDN_HID_STATE);
-+    g_assert_cmpuint(val, ==, UFS_HID_STATE_IDLE);
-+
-+    /*
-+     * 2. Verify read-only attributes reject writes
-+     */
-+    ocs = ufs_send_query(ufs, UFS_UPIU_QUERY_FUNC_STANDARD_WRITE_REQUEST,
-+                         UFS_UPIU_QUERY_OPCODE_WRITE_ATTR,
-+                         UFS_QUERY_ATTR_IDN_HID_AVAIL_SIZE, 0, 0, 0x100,
-+                         &rsp);
-+    g_assert_cmpuint(ocs, ==, UFS_OCS_INVALID_CMD_TABLE_ATTR);
-+    g_assert_cmpuint(rsp.header.response, ==,
-+                     UFS_QUERY_RESULT_NOT_WRITEABLE);
-+
-+    ocs = ufs_send_query(ufs, UFS_UPIU_QUERY_FUNC_STANDARD_WRITE_REQUEST,
-+                         UFS_UPIU_QUERY_OPCODE_WRITE_ATTR,
-+                         UFS_QUERY_ATTR_IDN_HID_PROG_RATIO, 0, 0, 50,
-+                         &rsp);
-+    g_assert_cmpuint(ocs, ==, UFS_OCS_INVALID_CMD_TABLE_ATTR);
-+    g_assert_cmpuint(rsp.header.response, ==,
-+                     UFS_QUERY_RESULT_NOT_WRITEABLE);
-+
-+    ocs = ufs_send_query(ufs, UFS_UPIU_QUERY_FUNC_STANDARD_WRITE_REQUEST,
-+                         UFS_UPIU_QUERY_OPCODE_WRITE_ATTR,
-+                         UFS_QUERY_ATTR_IDN_HID_STATE, 0, 0, 0x01, &rsp);
-+    g_assert_cmpuint(ocs, ==, UFS_OCS_INVALID_CMD_TABLE_ATTR);
-+    g_assert_cmpuint(rsp.header.response, ==,
-+                     UFS_QUERY_RESULT_NOT_WRITEABLE);
-+
-+    /*
-+     * 3. Verify invalid bDefragOperation value is rejected
-+     */
-+    ocs = ufs_send_query(ufs, UFS_UPIU_QUERY_FUNC_STANDARD_WRITE_REQUEST,
-+                         UFS_UPIU_QUERY_OPCODE_WRITE_ATTR,
-+                         UFS_QUERY_ATTR_IDN_DEFRAG_OP, 0, 0, 0x03,
-+                         &rsp);
-+    g_assert_cmpuint(ocs, ==, UFS_OCS_INVALID_CMD_TABLE_ATTR);
-+    g_assert_cmpuint(rsp.header.response, ==,
-+                     UFS_QUERY_RESULT_INVALID_VALUE);
-+
-+    /*
-+     * 4. dHIDSize is writable and readable
-+     */
-+    ufs_hid_write_attr(ufs, UFS_QUERY_ATTR_IDN_HID_SIZE, 0x100);
-+    val = ufs_hid_read_attr(ufs, UFS_QUERY_ATTR_IDN_HID_SIZE);
-+    g_assert_cmpuint(val, ==, 0x100);
-+
-+    /* Restore default */
-+    ufs_hid_write_attr(ufs, UFS_QUERY_ATTR_IDN_HID_SIZE, 0xFFFFFFFF);
-+
-+    /*
-+     * 5. Analysis with no fragments -> Defrag Not Required, then reading
-+     *    bHIDState in a terminal state auto-resets HID to Idle.
-+     */
-+    ufs_hid_write_attr(ufs, UFS_QUERY_ATTR_IDN_DEFRAG_OP,
-+                       UFS_HID_OP_ANALYSIS);
-+
-+    val = ufs_hid_read_attr(ufs, UFS_QUERY_ATTR_IDN_HID_STATE);
-+    g_assert_cmpuint(val, ==, UFS_HID_STATE_ANALYSIS_IN_PROGRESS);
-+
-+    /* Idle handler advances analysis; first non-analysis read is decisive */
-+    val = ufs_hid_wait_leave_state(ufs, UFS_HID_STATE_ANALYSIS_IN_PROGRESS);
-+    g_assert_cmpuint(val, ==, UFS_HID_STATE_DEFRAG_NOT_REQUIRED);
-+
-+    /* Reading Not Required auto-reset to Idle */
-+    val = ufs_hid_read_attr(ufs, UFS_QUERY_ATTR_IDN_HID_STATE);
-+    g_assert_cmpuint(val, ==, UFS_HID_STATE_IDLE);
-+
-+    val = ufs_hid_read_attr(ufs, UFS_QUERY_ATTR_IDN_HID_AVAIL_SIZE);
-+    g_assert_cmpuint(val, ==, 0xFFFFFFFF);
-+
-+    /*
-+     * 6. Generate fragmentation via SCSI WRITE, then analyze (analysis
-+     *    only): the machine settles at Defrag Required.
-+     */
-+    memset(write_buf, 0xab, sizeof(write_buf));
-+    for (i = 0; i < 4; i++) {
-+        ocs = ufs_send_scsi_command(ufs, test_lun, write_cdb, write_buf,
-+                                    sizeof(write_buf), NULL, 0, &rsp);
-+        g_assert_cmpuint(ocs, ==, UFS_OCS_SUCCESS);
-+    }
-+
-+    ufs_hid_write_attr(ufs, UFS_QUERY_ATTR_IDN_DEFRAG_OP,
-+                       UFS_HID_OP_ANALYSIS);
-+
-+    val = ufs_hid_read_attr(ufs, UFS_QUERY_ATTR_IDN_HID_STATE);
-+    g_assert_cmpuint(val, ==, UFS_HID_STATE_ANALYSIS_IN_PROGRESS);
-+
-+    val = ufs_hid_wait_leave_state(ufs, UFS_HID_STATE_ANALYSIS_IN_PROGRESS);
-+    g_assert_cmpuint(val, ==, UFS_HID_STATE_DEFRAG_REQUIRED);
-+
-+    val = ufs_hid_read_attr(ufs, UFS_QUERY_ATTR_IDN_DEFRAG_OP);
-+    g_assert_cmpuint(val, ==, UFS_HID_OP_DISABLE);
-+
-+    val = ufs_hid_read_attr(ufs, UFS_QUERY_ATTR_IDN_HID_AVAIL_SIZE);
-+    g_assert_cmpuint(val, >, 0);
-+
-+    /*
-+     * 7. Disable resets to Idle from any state
-+     */
-+    ufs_hid_write_attr(ufs, UFS_QUERY_ATTR_IDN_DEFRAG_OP,
-+                       UFS_HID_OP_DISABLE);
-+
-+    val = ufs_hid_read_attr(ufs, UFS_QUERY_ATTR_IDN_HID_STATE);
-+    g_assert_cmpuint(val, ==, UFS_HID_STATE_IDLE);
-+
-+    /*
-+     * 8. Partial defrag cycle: dHIDSize limits the requested defrag size,
-+     *    and reading bHIDProgressRatio at 100% resets the HID attributes.
-+     */
-+    for (i = 0; i < 4; i++) {
-+        ocs = ufs_send_scsi_command(ufs, test_lun, write_cdb, write_buf,
-+                                    sizeof(write_buf), NULL, 0, &rsp);
-+        g_assert_cmpuint(ocs, ==, UFS_OCS_SUCCESS);
-+    }
-+
-+    ufs_hid_write_attr(ufs, UFS_QUERY_ATTR_IDN_HID_SIZE, 2);
-+    ufs_hid_write_attr(ufs, UFS_QUERY_ATTR_IDN_DEFRAG_OP,
-+                       UFS_HID_OP_DEFRAG);
-+
-+    /* Should start in Analysis In Progress */
-+    val = ufs_hid_read_attr(ufs, UFS_QUERY_ATTR_IDN_HID_STATE);
-+    g_assert_cmpuint(val, ==, UFS_HID_STATE_ANALYSIS_IN_PROGRESS);
-+
-+    ufs_hid_wait_progress_complete(ufs);
-+
-+    val = ufs_hid_read_attr(ufs, UFS_QUERY_ATTR_IDN_HID_AVAIL_SIZE);
-+    g_assert_cmpuint(val, ==, 0xFFFFFFFF);
-+
-+    val = ufs_hid_read_attr(ufs, UFS_QUERY_ATTR_IDN_DEFRAG_OP);
-+    g_assert_cmpuint(val, ==, UFS_HID_OP_DISABLE);
-+
-+    val = ufs_hid_read_attr(ufs, UFS_QUERY_ATTR_IDN_HID_PROG_RATIO);
-+    g_assert_cmpuint(val, ==, 0);
-+
-+    /*
-+     * Re-analyze after the partial defrag. There were 8 fragments before
-+     * defrag, and dHIDSize limited the completed operation to 2.
-+     */
-+    ufs_hid_write_attr(ufs, UFS_QUERY_ATTR_IDN_DEFRAG_OP,
-+                       UFS_HID_OP_ANALYSIS);
-+
-+    val = ufs_hid_wait_leave_state(ufs, UFS_HID_STATE_ANALYSIS_IN_PROGRESS);
-+    g_assert_cmpuint(val, ==, UFS_HID_STATE_DEFRAG_REQUIRED);
-+
-+    val = ufs_hid_read_attr(ufs, UFS_QUERY_ATTR_IDN_HID_AVAIL_SIZE);
-+    g_assert_cmpuint(val, ==, 6);
-+
-+    ufs_hid_write_attr(ufs, UFS_QUERY_ATTR_IDN_DEFRAG_OP,
-+                       UFS_HID_OP_DISABLE);
-+    ufs_hid_write_attr(ufs, UFS_QUERY_ATTR_IDN_HID_SIZE, 0xFFFFFFFF);
-+
-+    /*
-+     * 9. Full defrag cycle: reading bHIDState in Completed state returns
-+     *    Completed once and resets HID attributes to Idle/default values.
-+     */
-+    ufs_hid_write_attr(ufs, UFS_QUERY_ATTR_IDN_DEFRAG_OP,
-+                       UFS_HID_OP_DEFRAG);
-+
-+    val = ufs_hid_wait_state(ufs, UFS_HID_STATE_DEFRAG_COMPLETED);
-+    g_assert_cmpuint(val, ==, UFS_HID_STATE_DEFRAG_COMPLETED);
-+
-+    val = ufs_hid_read_attr(ufs, UFS_QUERY_ATTR_IDN_HID_STATE);
-+    g_assert_cmpuint(val, ==, UFS_HID_STATE_IDLE);
-+
-+    val = ufs_hid_read_attr(ufs, UFS_QUERY_ATTR_IDN_DEFRAG_OP);
-+    g_assert_cmpuint(val, ==, UFS_HID_OP_DISABLE);
-+
-+    val = ufs_hid_read_attr(ufs, UFS_QUERY_ATTR_IDN_HID_AVAIL_SIZE);
-+    g_assert_cmpuint(val, ==, 0xFFFFFFFF);
-+
-+    ufs_exit(ufs, alloc);
-+}
-+
- static void ufs_register_nodes(void)
+diff --git a/hw/ppc/pnv_psi.c b/hw/ppc/pnv_psi.c
+index e8701c6100..941540df2d 100644
+--- a/hw/ppc/pnv_psi.c
++++ b/hw/ppc/pnv_psi.c
+@@ -688,6 +688,8 @@ static uint64_t pnv_psi_p9_mmio_read(void *opaque, hwaddr addr, unsigned size)
+     case PSIHB9_ESB_CI_BASE:
+     case PSIHB9_ESB_NOTIF_ADDR:
+     case PSIHB9_IVT_OFFSET:
++    case PSIHB9_IRQ_LEVEL:
++    case PSIHB9_IRQ_STAT:
+         val = psi->regs[reg];
+         break;
+     default:
+@@ -817,18 +819,15 @@ static const MemoryRegionOps pnv_psi_p9_xscom_ops = {
+ static void pnv_psi_power9_set_irq(void *opaque, int irq, int state)
  {
-     const char *arch;
-@@ -1439,6 +1728,7 @@ static void ufs_register_nodes(void)
-                  &io_test_opts);
-     qos_add_test("wb-init", "ufs", ufstest_wb_init, &wb_test_opts);
-     qos_add_test("wb-read-write", "ufs", ufstest_wb_read_write, &wb_test_opts);
-+    qos_add_test("hid", "ufs", ufstest_hid, &io_test_opts);
- }
+     PnvPsi *psi = opaque;
+-    uint64_t irq_method = psi->regs[PSIHB_REG(PSIHB9_INTERRUPT_CONTROL)];
++    uint64_t irq_bit = PPC_BIT(irq);
  
- libqos_init(ufs_register_nodes);
+-    if (irq_method & PSIHB9_IRQ_METHOD) {
+-        qemu_log_mask(LOG_GUEST_ERROR, "PSI: LSI IRQ method no supported\n");
+-        return;
+-    }
+-
+-    /* Update LSI levels */
++    /* Update LSI levels and pending status */
+     if (state) {
+-        psi->regs[PSIHB_REG(PSIHB9_IRQ_LEVEL)] |= PPC_BIT(irq);
++        psi->regs[PSIHB_REG(PSIHB9_IRQ_LEVEL)] |= irq_bit;
++        psi->regs[PSIHB_REG(PSIHB9_IRQ_STAT)] |= irq_bit;
+     } else {
+-        psi->regs[PSIHB_REG(PSIHB9_IRQ_LEVEL)] &= ~PPC_BIT(irq);
++        psi->regs[PSIHB_REG(PSIHB9_IRQ_LEVEL)] &= ~irq_bit;
++        psi->regs[PSIHB_REG(PSIHB9_IRQ_STAT)] &= ~irq_bit;
+     }
+ 
+     qemu_set_irq(psi->qirqs[irq], state);
+diff --git a/target/ppc/mmu-book3s-v3.c b/target/ppc/mmu-book3s-v3.c
+index 3865556310..4babe4c536 100644
+--- a/target/ppc/mmu-book3s-v3.c
++++ b/target/ppc/mmu-book3s-v3.c
+@@ -23,19 +23,21 @@
+ #include "mmu-hash64.h"
+ #include "mmu-book3s-v3.h"
+ 
+-bool ppc64_v3_get_pate(PowerPCCPU *cpu, target_ulong lpid, ppc_v3_pate_t *entry)
++static bool ppc64_v3_get_pate_from_size(PowerPCCPU *cpu, target_ulong lpid,
++                                        ppc_v3_pate_t *entry,
++                                        uint64_t table_size)
+ {
+     uint64_t patb = cpu->env.spr[SPR_PTCR] & PTCR_PATB;
+-    uint64_t pats = cpu->env.spr[SPR_PTCR] & PTCR_PATS;
++    uint64_t entries;
+ 
+     /* Check if partition table is properly aligned */
+-    if (patb & MAKE_64BIT_MASK(0, pats + 12)) {
++    if (patb & (table_size - 1)) {
+         return false;
+     }
+ 
+     /* Calculate number of entries */
+-    pats = 1ull << (pats + 12 - 4);
+-    if (pats <= lpid) {
++    entries = table_size / sizeof(*entry);
++    if (entries <= lpid) {
+         return false;
+     }
+ 
+@@ -45,3 +47,24 @@ bool ppc64_v3_get_pate(PowerPCCPU *cpu, target_ulong lpid, ppc_v3_pate_t *entry)
+     entry->dw1 = ldq_phys(CPU(cpu)->as, patb + 8);
+     return true;
+ }
++
++bool ppc64_v3_get_pate(PowerPCCPU *cpu, target_ulong lpid, ppc_v3_pate_t *entry)
++{
++    uint64_t pats = cpu->env.spr[SPR_PTCR] & PTCR_PATS;
++
++    /*
++     * Keep the existing ISA v3.0 PATS interpretation first.  OpenBSD/powernv
++     * uses the PATSIZE value it writes to PTCR as one exponent smaller, and it
++     * only needs that interpretation for the bare metal LPID 0 table.
++     */
++    if (ppc64_v3_get_pate_from_size(cpu, lpid, entry, 1ull << (pats + 12))) {
++        return true;
++    }
++
++    if (lpid == 0) {
++        return ppc64_v3_get_pate_from_size(cpu, lpid, entry,
++                                           1ull << (pats + 11));
++    }
++
++    return false;
++}
 -- 
-2.25.1
+2.54.0
 
 
