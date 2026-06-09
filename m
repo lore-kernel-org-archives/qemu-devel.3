@@ -4,70 +4,114 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id BDEFFCD8C9D
-	for <qemu-devel@archiver.kernel.org>; Tue,  9 Jun 2026 01:34:45 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3991ECD8C9D
+	for <qemu-devel@archiver.kernel.org>; Tue,  9 Jun 2026 02:09:38 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wWlLi-0002nz-3C; Mon, 08 Jun 2026 21:33:50 -0400
+	id 1wWlta-0007yz-Sj; Mon, 08 Jun 2026 22:08:50 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <maobibo@loongson.cn>)
- id 1wWlLe-0002m8-Rt
- for qemu-devel@nongnu.org; Mon, 08 Jun 2026 21:33:46 -0400
-Received: from mail.loongson.cn ([114.242.206.163])
- by eggs.gnu.org with esmtp (Exim 4.90_1)
- (envelope-from <maobibo@loongson.cn>) id 1wWlLb-00077M-Fa
- for qemu-devel@nongnu.org; Mon, 08 Jun 2026 21:33:46 -0400
-Received: from loongson.cn (unknown [10.20.42.62])
- by gateway (Coremail) with SMTP id _____8CxHupsbSdq_xYSAA--.47405S3;
- Tue, 09 Jun 2026 09:33:33 +0800 (CST)
-Received: from [10.20.42.62] (unknown [10.20.42.62])
- by front1 (Coremail) with SMTP id qMiowJDxysFqbSdqyUqgAA--.39640S3;
- Tue, 09 Jun 2026 09:33:30 +0800 (CST)
-Subject: Re: [PATCH] tests/qtest/migration: Add migration test on loongarch
-To: Peter Xu <peterx@redhat.com>
-Cc: Fabiano Rosas <farosas@suse.de>, Laurent Vivier <lvivier@redhat.com>,
- Paolo Bonzini <pbonzini@redhat.com>, Song Gao <gaosong@loongson.cn>,
- qemu-devel@nongnu.org
-References: <20260608065947.428141-1-maobibo@loongson.cn>
- <aibTKGCz7vIS-fMH@x1.local>
-From: Bibo Mao <maobibo@loongson.cn>
-Message-ID: <f88e5be2-4b31-41b8-d5ed-c46a39a9e3f2@loongson.cn>
-Date: Tue, 9 Jun 2026 09:30:23 +0800
-User-Agent: Mozilla/5.0 (X11; Linux loongarch64; rv:68.0) Gecko/20100101
- Thunderbird/68.7.0
+ (Exim 4.90_1) (envelope-from <gshan@redhat.com>) id 1wWltX-0007yY-CB
+ for qemu-devel@nongnu.org; Mon, 08 Jun 2026 22:08:47 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <gshan@redhat.com>) id 1wWltV-000758-QK
+ for qemu-devel@nongnu.org; Mon, 08 Jun 2026 22:08:47 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1780970924;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=Y4v33umGdgm2QnITjy1hxJKHFbQtMz9zglZApgzaBUQ=;
+ b=R/+eh7pp7v6WRSr3g03ljWHVt8slx9GG8fHRVORjXIbSukgRz/xCHAglFMqqxQbaTAONqa
+ wmj8QXsrgrHMhVHptsCldKSSfSaSdK5HoDfyipS9GFeAfLxqLe4w945XKp+Fkj5Qh2w9zq
+ cv6yA+PWWXqO6wST6aoJ9kcNA2rLCLg=
+Received: from mail-pg1-f198.google.com (mail-pg1-f198.google.com
+ [209.85.215.198]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-616-lJ5c4Y_4PhKSeki5LD5dNw-1; Mon, 08 Jun 2026 22:08:42 -0400
+X-MC-Unique: lJ5c4Y_4PhKSeki5LD5dNw-1
+X-Mimecast-MFC-AGG-ID: lJ5c4Y_4PhKSeki5LD5dNw_1780970921
+Received: by mail-pg1-f198.google.com with SMTP id
+ 41be03b00d2f7-c85dcdbe502so3298744a12.2
+ for <qemu-devel@nongnu.org>; Mon, 08 Jun 2026 19:08:42 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=redhat.com; s=google; t=1780970921; x=1781575721; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=Y4v33umGdgm2QnITjy1hxJKHFbQtMz9zglZApgzaBUQ=;
+ b=E9yZvRD9knzWkAFj6rHxREMF5ejDyt4Pw17AxKgbNrNU4G173D29bGe93SatxxMCxW
+ xcu9gnbRvwegHnL6YUFone3lV3uZN8+8eFABNlfMxqOBEBim3ND30AJOiJ/y4GsUy1Bb
+ 80h5Mej5ajV21xRq1hc8h53gl3dqfOXSo4gXYuyaxB6hKYK2VQ1eNzFOQsNJze3W+mxP
+ Q3/X1S0gmvpukim0oPkZEr4yTIn8iLQi6dqKF177jYT87RL62D+d9sOuNyCjfbNJyguM
+ 4Y6VNtDVahDLFh8DN1UbH8U2jHWOmnxKcoFZlDWwSotoduQyPi1lBiJuPDOj6Qnvg/iI
+ jNsQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1780970921; x=1781575721;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=Y4v33umGdgm2QnITjy1hxJKHFbQtMz9zglZApgzaBUQ=;
+ b=F6MwtdOGlt/f4OpGhRIqsadDAuAnYjBgGSPqqaNh6JnBBOAlxboIwt0TCEQ111GQfh
+ iRerxy5+w9FTRWR+GHyGcFGVw2Rsetp6817Wwc9xe5cBd6vsO+Hul+Xfeo66tkweBSUl
+ TpiPzj8HbfRrgofhjWq1Ohy50NWImLGLyBWhybb0swySGVDy7menkFVBJbrZRRahUyBo
+ FQrxcA8Nw0mOWGmr4//9Sj4w/eVj9rCuX/KkKGnPj6eVmTNR18UnWxEy+oGbeE1wFh1N
+ +ZBaB0jekdgaanFom5qt/AJLowPzO6Ip2TU5aXbrFIPr1w9nnbT63pJcQKA4uE+CBiNY
+ 2GSw==
+X-Forwarded-Encrypted: i=1;
+ AFNElJ9zjsNegyNirqWNB6AOyv/H2loU80+BlH1SNH3icfkwJA/Viskhm0h9LyZplnmgDbWXVaOYQcpCVsp9@nongnu.org
+X-Gm-Message-State: AOJu0YwKY3nR7FTLWXr+OQTPwbdAd3k9HuACSa2Tegk1L8j3CCCD8gGb
+ J1NfCg6V5F4RzAuWVKLG6DzjqTk9m//sMMqI1gTI4fLL43/h0qeg+FQJvw+EwSDPgA180pmiHaC
+ ZJtN2DbPsgaOxi5uxTIZRNiBtEorQQ7jH6EaG6aDd9m/DtIEPIT0Ehyag
+X-Gm-Gg: Acq92OHteOewd8nos9llKnX9rKKYe5ICn1928s7qR6cr0Bb6Ie2A3AIjnN+zrLtwskp
+ OHqnosZ1egdvd9ZRQgV4NGMFqS+BosYwzDlEdMyEdO3OCIskujr2XoXfxRihMk3a0/AIBHI0GIS
+ BviWpXbJ7cCUnjEst19tMcUbmFr+NO8wPAHl8TCbcn4aknqM9OqQqUlgrcquxq/B2mHQ/VDF9LD
+ Yan3if3iiTTa2vcVYfcKJq9uFuYB+DwnDamkuuiO0pxDMF0dsOkl8YGUxKTxpAdvHJrsYWqu2/P
+ Pt9MAmBH0YZVuAubN9am9z85nbpYwYiKA/xGdhot3jbuQbjkeyqX7SOFmC3VYU2FvD+ppN+JlHB
+ twQFa4HBHM2JHU4MYN6rwIHPUJ8VoVQRi6Xh76KLUulTENFhMGJQx8Bvv6zylMqW8pQ9Z+sGvhn
+ U=
+X-Received: by 2002:a05:6300:6705:b0:3b4:6af4:bd9e with SMTP id
+ adf61e73a8af0-3b4cd0801efmr23481376637.43.1780970921124; 
+ Mon, 08 Jun 2026 19:08:41 -0700 (PDT)
+X-Received: by 2002:a05:6300:6705:b0:3b4:6af4:bd9e with SMTP id
+ adf61e73a8af0-3b4cd0801efmr23481330637.43.1780970920640; 
+ Mon, 08 Jun 2026 19:08:40 -0700 (PDT)
+Received: from [192.168.68.51] (n175-34-8-244.mrk21.qld.optusnet.com.au.
+ [175.34.8.244]) by smtp.gmail.com with ESMTPSA id
+ 41be03b00d2f7-c85df0b56c5sm16986971a12.27.2026.06.08.19.08.37
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Mon, 08 Jun 2026 19:08:40 -0700 (PDT)
+Message-ID: <21664978-9a01-4ff5-8213-5bd5d93750ae@redhat.com>
+Date: Tue, 9 Jun 2026 12:08:34 +1000
 MIME-Version: 1.0
-In-Reply-To: <aibTKGCz7vIS-fMH@x1.local>
-Content-Type: text/plain; charset=utf-8; format=flowed
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH RFCv1] virtio: Inherit max bounce buffer size from bus
+ parent if possible
+To: =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>
+Cc: Peter Xu <peterx@redhat.com>, qemu-devel@nongnu.org, qemu-arm@nongnu.org, 
+ mst@redhat.com, jugraham@redhat.com, shan.gavin@gmail.com
+References: <20260608001821.850921-1-gshan@redhat.com>
+ <aiaDgG26a6TUrKuM@redhat.com>
+ <07ca74b4-52a8-4187-a57c-7c3277e574d3@redhat.com>
+ <aiapywnJY64G7nUK@redhat.com>
 Content-Language: en-US
+From: Gavin Shan <gshan@redhat.com>
+In-Reply-To: <aiapywnJY64G7nUK@redhat.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-X-CM-TRANSID: qMiowJDxysFqbSdqyUqgAA--.39640S3
-X-CM-SenderInfo: xpdruxter6z05rqj20fqof0/
-X-Coremail-Antispam: 1Uk129KBj93XoW3Xr1fGF1xGw4UZr17KF13KFX_yoWfXryDpw
- 1rCay8Ka1xGF17t3WxWFy5uFyFqr1xKFnI9FWxGr10yrZxAF10yw1agry2gFn3X3y0vF4I
- v3Z5tr1ay3WqyrXCm3ZEXasCq-sJn29KB7ZKAUJUUUU5529EdanIXcx71UUUUU7KY7ZEXa
- sCq-sGcSsGvfJ3Ic02F40EFcxC0VAKzVAqx4xG6I80ebIjqfuFe4nvWSU5nxnvy29KBjDU
- 0xBIdaVrnRJUUUv0b4IE77IF4wAFF20E14v26r1j6r4UM7CY07I20VC2zVCF04k26cxKx2
- IYs7xG6rWj6s0DM7CIcVAFz4kK6r1j6r18M28lY4IEw2IIxxk0rwA2F7IY1VAKz4vEj48v
- e4kI8wA2z4x0Y4vE2Ix0cI8IcVAFwI0_JFI_Gr1l84ACjcxK6xIIjxv20xvEc7CjxVAFwI
- 0_Gr0_Cr1l84ACjcxK6I8E87Iv67AKxVW8JVWxJwA2z4x0Y4vEx4A2jsIEc7CjxVAFwI0_
- Gr0_Gr1UM2AIxVAIcxkEcVAq07x20xvEncxIr21l57IF6xkI12xvs2x26I8E6xACxx1l5I
- 8CrVACY4xI64kE6c02F40Ex7xfMcIj6xIIjxv20xvE14v26r1Y6r17McIj6I8E87Iv67AK
- xVWUJVW8JwAm72CE4IkC6x0Yz7v_Jr0_Gr1lF7xvr2IY64vIr41lc7I2V7IY0VAS07AlzV
- AYIcxG8wCF04k20xvY0x0EwIxGrwCFx2IqxVCFs4IE7xkEbVWUJVW8JwC20s026c02F40E
- 14v26r1j6r18MI8I3I0E7480Y4vE14v26r106r1rMI8E67AF67kF1VAFwI0_JF0_Jw1lIx
- kGc2Ij64vIr41lIxAIcVC0I7IYx2IY67AKxVWUJVWUCwCI42IY6xIIjxv20xvEc7CjxVAF
- wI0_Jr0_Gr1lIxAIcVCF04k26cxKx2IYs7xG6r1j6r1xMIIF0xvEx4A2jsIE14v26r1j6r
- 4UMIIF0xvEx4A2jsIEc7CjxVAFwI0_Jr0_GrUvcSsGvfC2KfnxnUUI43ZEXa7IU1QVy3UU
- UUU==
-Received-SPF: pass client-ip=114.242.206.163; envelope-from=maobibo@loongson.cn;
- helo=mail.loongson.cn
-X-Spam_score_int: -48
-X-Spam_score: -4.9
-X-Spam_bar: ----
-X-Spam_report: (-4.9 / 5.0 requ) BAYES_00=-1.9, NICE_REPLY_A=-2.97,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=gshan@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -24
+X-Spam_score: -2.5
+X-Spam_bar: --
+X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.445,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -83,249 +127,69 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-
-
-On 2026/6/8 下午10:35, Peter Xu wrote:
-> On Mon, Jun 08, 2026 at 02:59:47PM +0800, Bibo Mao wrote:
->> Add migration qtest on loongarch64 system, the test passes to run with
->> the following result:
->>    qemu:qtest+qtest-loongarch64/qtest-loongarch64/migration-test OK 15.94s 9 subtests passed
+On 6/8/26 9:38 PM, Daniel P. Berrangé wrote:
+> On Mon, Jun 08, 2026 at 09:11:50PM +1000, Gavin Shan wrote:
+>> Hi Daniel,
 >>
->> Signed-off-by: Bibo Mao <maobibo@loongson.cn>
->> ---
->>   MAINTAINERS                                   |  1 +
->>   tests/qtest/meson.build                       |  3 +-
->>   tests/qtest/migration/Makefile                |  2 +-
->>   tests/qtest/migration/bootfile.c              |  4 ++
->>   tests/qtest/migration/bootfile.h              |  4 ++
->>   tests/qtest/migration/framework.c             |  6 +++
->>   tests/qtest/migration/loongarch64/Makefile    | 20 ++++++++
->>   .../qtest/migration/loongarch64/a-b-kernel.S  | 46 +++++++++++++++++++
->>   .../qtest/migration/loongarch64/a-b-kernel.h  | 13 ++++++
->>   9 files changed, 97 insertions(+), 2 deletions(-)
->>   create mode 100644 tests/qtest/migration/loongarch64/Makefile
->>   create mode 100644 tests/qtest/migration/loongarch64/a-b-kernel.S
->>   create mode 100644 tests/qtest/migration/loongarch64/a-b-kernel.h
+>> On 6/8/26 6:55 PM, Daniel P. Berrangé wrote:
+>>> On Mon, Jun 08, 2026 at 10:18:21AM +1000, Gavin Shan wrote:
+>>>> On the guest where a NVidia's GH100 card is passed from the host, the
+>>>> guest system hang can be observed on attempt to compile 'cuda-samples',
+>>>> as reported by Julia.
+>>>
+>>> snip
+>>>
 >>
->> diff --git a/MAINTAINERS b/MAINTAINERS
->> index 79ecac16fe..2105db7155 100644
->> --- a/MAINTAINERS
->> +++ b/MAINTAINERS
->> @@ -1368,6 +1368,7 @@ F: hw/intc/loongarch_*.c
->>   F: hw/intc/loongson_ipi_common.c
->>   F: hw/rtc/ls7a_rtc.c
->>   F: gdbstub/gdb-xml/loongarch*.xml
->> +F: tests/qtest/migration/loongarch64/
->>   
->>   M68K Machines
->>   -------------
->> diff --git a/tests/qtest/meson.build b/tests/qtest/meson.build
->> index 45ea497fa5..1636b8616e 100644
->> --- a/tests/qtest/meson.build
->> +++ b/tests/qtest/meson.build
->> @@ -154,7 +154,8 @@ qtests_loongarch64 = qtests_filter + \
->>     (config_all_devices.has_key('CONFIG_LOONGARCH_VIRT') ? ['numa-test'] : []) + \
->>     (unpack_edk2_blobs ? ['bios-tables-test'] : []) + \
->>     ['boot-serial-test',
->> -   'cpu-plug-test']
->> +   'cpu-plug-test',
->> +   'migration-test']
->>   
->>   qtests_m68k = ['boot-serial-test'] + \
->>     qtests_filter
->> diff --git a/tests/qtest/migration/Makefile b/tests/qtest/migration/Makefile
->> index c183b69941..b94836eb0f 100644
->> --- a/tests/qtest/migration/Makefile
->> +++ b/tests/qtest/migration/Makefile
->> @@ -5,7 +5,7 @@
->>   # See the COPYING file in the top-level directory.
->>   #
->>   
->> -TARGET_LIST = i386 aarch64 s390x ppc64
->> +TARGET_LIST = i386 aarch64 s390x ppc64 loongarch64
->>   
->>   SRC_PATH = ../../../..
->>   
->> diff --git a/tests/qtest/migration/bootfile.c b/tests/qtest/migration/bootfile.c
->> index 479c43231d..e46ad09de7 100644
->> --- a/tests/qtest/migration/bootfile.c
->> +++ b/tests/qtest/migration/bootfile.c
->> @@ -19,6 +19,7 @@
->>   #include "bootfile.h"
->>   #include "i386/a-b-bootblock.h"
->>   #include "aarch64/a-b-kernel.h"
->> +#include "loongarch64/a-b-kernel.h"
->>   #include "ppc64/a-b-kernel.h"
->>   #include "s390x/a-b-bios.h"
->>   
->> @@ -57,6 +58,9 @@ char *bootfile_create(const char *arch, const char *dir, bool suspend_me)
->>           content = aarch64_kernel;
->>           len = sizeof(aarch64_kernel);
->>           g_assert(sizeof(aarch64_kernel) <= ARM_TEST_MAX_KERNEL_SIZE);
->> +    } else if (strcmp(arch, "loongarch64") == 0) {
->> +        content = loongarch64_kernel;
->> +        len = sizeof(loongarch64_kernel);
->>       } else {
->>           g_assert_not_reached();
->>       }
->> diff --git a/tests/qtest/migration/bootfile.h b/tests/qtest/migration/bootfile.h
->> index 0ce5b34433..a4060ea4f7 100644
->> --- a/tests/qtest/migration/bootfile.h
->> +++ b/tests/qtest/migration/bootfile.h
->> @@ -42,6 +42,10 @@
->>    */
->>   #define ARM_TEST_MAX_KERNEL_SIZE (512 * 1024)
->>   
->> +/* LoongArch64 */
->> +#define LOONGARCH_TEST_MEM_START (32 * 1024 * 1024)
->> +#define LOONGARCH_TEST_MEM_END   (100 * 1024 * 1024)
->> +
->>   #ifndef MIGRATION_GUEST_CODE
->>   void bootfile_delete(void);
->>   char *bootfile_create(const char *arch, const char *dir, bool suspend_me);
->> diff --git a/tests/qtest/migration/framework.c b/tests/qtest/migration/framework.c
->> index a9b58d03aa..a830b96f41 100644
->> --- a/tests/qtest/migration/framework.c
->> +++ b/tests/qtest/migration/framework.c
->> @@ -360,6 +360,12 @@ int migrate_args(char **from, char **to, MigrateStart *args)
->>           arch_opts = g_strdup_printf("-cpu max -kernel %s", bootpath);
->>           start_address = ARM_TEST_MEM_START;
->>           end_address = ARM_TEST_MEM_END;
->> +    } else if (strcmp(arch, "loongarch64") == 0) {
->> +        memory_size = "256M";
->> +        machine_alias = "virt";
->> +        arch_opts = g_strdup_printf("-bios %s", bootpath);
->> +        start_address = LOONGARCH_TEST_MEM_START;
->> +        end_address = LOONGARCH_TEST_MEM_END;
->>       } else {
->>           g_assert_not_reached();
->>       }
->> diff --git a/tests/qtest/migration/loongarch64/Makefile b/tests/qtest/migration/loongarch64/Makefile
->> new file mode 100644
->> index 0000000000..3c8cfeee86
->> --- /dev/null
->> +++ b/tests/qtest/migration/loongarch64/Makefile
->> @@ -0,0 +1,20 @@
->> +# SPDX-License-Identifier: GPL-2.0-or-later
->> +
->> +# To specify cross compiler prefix, use CROSS_PREFIX=
->> +#   $ make CROSS_PREFIX=loongarch64-linux-gnu-
->> +
->> +.PHONY: all clean
->> +all: a-b-kernel.h
->> +
->> +a-b-kernel.h: loongarch64.kernel
->> +	echo "$$__note" > $@
->> +	xxd -i $< | sed -e 's/.*int.*//' >> $@
->> +
->> +loongarch64.kernel: loongarch64.elf
->> +	$(CROSS_PREFIX)objcopy -j .text -O binary $< $@
->> +
->> +loongarch64.elf: a-b-kernel.S
->> +	$(CROSS_PREFIX)gcc -o $@ -nostdlib -Wl,--build-id=none $<
->> +
->> +clean:
->> +	$(RM) *.kernel *.elf
->> diff --git a/tests/qtest/migration/loongarch64/a-b-kernel.S b/tests/qtest/migration/loongarch64/a-b-kernel.S
->> new file mode 100644
->> index 0000000000..577d4b238c
->> --- /dev/null
->> +++ b/tests/qtest/migration/loongarch64/a-b-kernel.S
->> @@ -0,0 +1,46 @@
->> +/* SPDX-License-Identifier: GPL-2.0-or-later */
->> +
->> +#include "../bootfile.h"
->> +
->> +#define LOONGARCH_CSR_CRMD          0
->> +#define LOONGARCH_VIRT_UART         0x1FE001E0
->> +.section .text
->> +
->> +    .globl  _start
->> +_start:
->> +    /* output char 'A' to UART16550 */
->> +    li.d    $t0, LOONGARCH_VIRT_UART
->> +    li.w    $t1, 'A'
->> +    st.b    $t1, $t0, 0
->> +
->> +    /* traverse test memory region */
->> +    li.d    $t0, LOONGARCH_TEST_MEM_START
->> +    li.d    $t1, LOONGARCH_TEST_MEM_END
->> +    li.d    $t2, TEST_MEM_PAGE_SIZE
->> +    li.d    $t4, LOONGARCH_VIRT_UART
->> +    li.w    $t5, 'B'
->> +
->> +clean:
->> +    st.b    $zero, $t0, 0
->> +    add.d   $t0,   $t0, $t2
->> +    bne     $t0,   $t1, clean
->> +    /* keeps a counter so we can limit the output speed */
->> +    addi.d  $t6,   $zero, 0
->> +
->> +mainloop:
->> +    li.d    $t0, LOONGARCH_TEST_MEM_START
->> +
->> +innerloop:
->> +    ld.bu   $t3, $t0, 0
->> +    addi.w  $t3, $t3, 1
->> +    ext.w.b $t3, $t3
->> +    st.b    $t3, $t0, 0
->> +    add.d   $t0, $t0, $t2
->> +    bne     $t0, $t1, innerloop
->> +
->> +    addi.d  $t6, $t6, 1
->> +    andi    $t6, $t6, 31
->> +    bnez    $t6, mainloop
->> +
->> +    st.b    $t5, $t4, 0
->> +    b       mainloop
->> diff --git a/tests/qtest/migration/loongarch64/a-b-kernel.h b/tests/qtest/migration/loongarch64/a-b-kernel.h
->> new file mode 100644
->> index 0000000000..132db292b9
->> --- /dev/null
->> +++ b/tests/qtest/migration/loongarch64/a-b-kernel.h
->> @@ -0,0 +1,13 @@
->> +
->> +unsigned char loongarch64_kernel[] = {
->> +  0x0c, 0xc0, 0x3f, 0x14, 0x8c, 0x81, 0x87, 0x03, 0x0d, 0x04, 0x81, 0x03,
->> +  0x8d, 0x01, 0x00, 0x29, 0x0c, 0x00, 0x04, 0x14, 0x0d, 0x80, 0x0c, 0x14,
->> +  0x2e, 0x00, 0x00, 0x14, 0x10, 0xc0, 0x3f, 0x14, 0x10, 0x82, 0x87, 0x03,
->> +  0x11, 0x08, 0x81, 0x03, 0x80, 0x01, 0x00, 0x29, 0x8c, 0xb9, 0x10, 0x00,
->> +  0x8d, 0xf9, 0xff, 0x5f, 0x12, 0x00, 0xc0, 0x02, 0x0c, 0x00, 0x04, 0x14,
->> +  0x8f, 0x01, 0x00, 0x2a, 0xef, 0x05, 0x80, 0x02, 0xef, 0x5d, 0x00, 0x00,
->> +  0x8f, 0x01, 0x00, 0x29, 0x8c, 0xb9, 0x10, 0x00, 0x8d, 0xed, 0xff, 0x5f,
->> +  0x52, 0x06, 0xc0, 0x02, 0x52, 0x7e, 0x40, 0x03, 0x5f, 0xde, 0xff, 0x47,
->> +  0x11, 0x02, 0x00, 0x29, 0xff, 0xd7, 0xff, 0x53
->> +};
+>> Thanks for looking into this.
 > 
-> The binary data matches with what I tested with this patch, but it misses
-> the __note, please re-generate with the current Makefile to make it aligned
-> with the rest headers; also it won't show up as modifications with
-> re-generations then.
-Hi Peter,
+> NB, I didn't really look into it beyond noticing the suggestion
+> that users set an "x-" property as a proposed solution to failing
+> to boot, which raised a red-flag to me from a usability POV.
+> 
+> I don't really know anything about the underlying technical problems
+> here, so can't offer specific guidance in that area.
+> 
 
-Thanks for reviewing my patch.
+Ok, no worries, I got your points :-)
 
-oh, there is notes if it is generated in directory 
-tests/qtest/migration, however no in directory 
-tests/qtest/migration/loongarch64 :( Will re-generate with notes added.
+>>
+>>>> By default, the max bounce buffer size is only 4096 bytes, even less
+>>>> than one page when the guest page is 64KB. This tries to fix the issue
+>>>> by inheriting the customized max bounce buffer size of the virtio bus's
+>>>> parent through property 'x-max-bounce-buffer-size' when the customized
+>>>> size is a larger one. With this applied, no guest system hang is seen
+>>>> with '-device virtio-blk-pci,...,x-max-bounce-buffer-size=268435456'.
+>>>
+>>> "x-max-bounce-buffer-size"  is an experimental / unsupported property.
+>>>
+>>> We really shouldn't be expecting users to have to set this in a production
+>>> deployment in order to stop a guest from hanging.  Even if we dropped the
+>>> experimental marker from this property, users would still need to know to
+>>> provide this magic setting, so it would still be broken out of the box.
+>>>
+>>> How can we  get a solution that "just works" out of the box, which is
+>>> fully supported, not relying on experimental properties ?
+>>>
+>>
+>> How do we know that "x-max-bounce-buffer-size" is an experimental or unsupported
+>> property? I guess the properties whose names start with "x-" are all treated as
+>> experimental and unsupported?
 > 
-> The other thing is I saw we added enforcements to use SPDX license
-> identifiers since last year (b36934063c5), IIUC we can add that line into
-> __note of the Makefile.
-yeap, will add SPDX license about __note in the Makefile in next version.
+> Yes, any QEMU property starting with 'x-' is experimental/unstable/
+> unsupported and can be changed/withdrawn at any time.  Libvirt will
+> not provide any way to configure 'x-' properties, as it requires a
+> supported/stable solution from QEMU.
+> 
 
-Regards
-Bibo Mao
-> 
-> Thanks,
-> 
->> +
->>
->> base-commit: 3390aba56c354637eccd2d5ab5fd6efc2f026f06
->> -- 
->> 2.54.0
->>
->>
-> 
+Yeah. Apart from the option of adding a new property to MachineState to disable
+the check on the max bounce buffer size, we also can make this existing option
+"x-max-bounce-buffer-size" official and officially supported by renaming it to
+"max-bounce-buffer-size". Lets see what comments Michael or Peter will have.
+
+> With regards,
+> Daniel
+
+Thanks,
+Gavin
 
 
