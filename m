@@ -4,47 +4,48 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A050FCD8CA4
-	for <qemu-devel@archiver.kernel.org>; Tue,  9 Jun 2026 14:27:47 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 180B3CD8CA4
+	for <qemu-devel@archiver.kernel.org>; Tue,  9 Jun 2026 14:28:07 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wWxPg-00030L-Ef; Tue, 09 Jun 2026 10:26:44 -0400
+	id 1wWxPR-0002rA-S2; Tue, 09 Jun 2026 10:26:29 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1)
- (envelope-from <f13f16c0fca4db8bf31960139d169b4d280c8776@kylie.crudebyte.com>)
- id 1wWxPc-0002wL-DW; Tue, 09 Jun 2026 10:26:42 -0400
+ (envelope-from <df93ef4700c808af4c120ea0e636b28539fe4598@kylie.crudebyte.com>)
+ id 1wWxPQ-0002pI-GN; Tue, 09 Jun 2026 10:26:28 -0400
 Received: from kylie.crudebyte.com ([5.189.157.229])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1)
- (envelope-from <f13f16c0fca4db8bf31960139d169b4d280c8776@kylie.crudebyte.com>)
- id 1wWxPa-0001Tr-PN; Tue, 09 Jun 2026 10:26:40 -0400
+ (envelope-from <df93ef4700c808af4c120ea0e636b28539fe4598@kylie.crudebyte.com>)
+ id 1wWxPN-0001Qs-Lc; Tue, 09 Jun 2026 10:26:27 -0400
 DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
  d=crudebyte.com; s=kylie; h=Cc:To:Subject:Date:From:References:In-Reply-To:
  Message-ID:Content-Type:Content-Transfer-Encoding:MIME-Version:Content-ID:
- Content-Description; bh=8z6iKW8YNi1KKFTG5t1wGDQ446H2qhx33nkQX+TXy8E=; b=LP8wt
- ToBR6mYxo0FoMU02HT62xJcKOXyz1LsL1JeZQOPnXHudxbh7hGOw/yJ+Gh+ouG7M3fCQpWQ7TK5ez
- pJlUQF/ucl0jtKTq6uvDL5JczPGNxETFbTSITEq2FQmO/4mKsbCTgmzaKF6kDDUaSoznq1JflJDUL
- HLXFKRHvsXOViKvZV6fOLjcb/rkQzRMaQirh3RQj5D3PkmeVImeivUVDzCcnLM84Rdz4zCuv29ECl
- DP6U7hQQLqVxK1+JdzomzAKBA0dSY2qybgDz08AkWmZHUWdAJM5aN2BX5P5PogKr2webFTR57XVvo
- U+dYtIhqSQIYMKuKN/FxqvkeD/69Ke/Ela4ZRVZE0+X+1jGnIom2dedxl6IS8OjLogNPJ1+Vbq50X
- gsZrnRb1mTF3ZepN4fRpCb8y2gy0T7ektgQmTUVq86xZ5BBQmHdYVQqKpz2O9diZFoLw7eLR55fxf
- uXqZa2NIrmKg76MLmKklykZw2+ff9i0ab2pLP3rqhplNQOwsNZbmzsyjhLs2+1xNUicnJzB+vZ2MC
- qcY5hJxvKnmvStJ9E21Gi1RK8DpeCKkaek1oH43pRswBdxk8jTyLOIEl4Dh9jYTux1WD70aDQ2vFt
- Xgy57AwtSoCpU6fdDV48c/XUtaz3CqymljsjWIr5cDiXDyVdYgk1+2gDp6nHlA=;
-Message-ID: <f13f16c0fca4db8bf31960139d169b4d280c8776.1781012549.git.qemu_oss@crudebyte.com>
+ Content-Description; bh=vsAnzYnUkbJPIjTxynzHZ+ERTcjQW3lJwhEltlSR2jw=; b=LC8sH
+ ETMRpplF02XWG2v7SUVSENN1lCjyBx5xOxnHVMA7TFsSVv9X5GHAeKDobqk9D+7jthKFLAGSfOYgH
+ FOQs1SFge5uDKzBGJ6v+LWOpVfCL/ZMdVhp++xhJNsgNUc0ND/QuJSTpeswndxl6jFOzv3cOc4IM6
+ iqCwoyIvIFRjQ3PfvThTodF3GgccmpJJWo78+SvyUlptZm2/fBvXoCbubd8u49V37P4WKkNFzsc6a
+ hJgRk/J43ymTnzh+rj7KvhZzUxWGiCle0hCt3iMS2A8RRuZTammQCMHP+3Xosx+1aUbMULz9/VqXA
+ uj/voKZJirN+zOhFUmKjO4nfscYuyrcuy5ElsfyV3bgzPNRxuvYGI5Yzo9rGErCPar9hJ/15F4jaE
+ uHLAfDlFo2Pe7mMi4etJ0bUyKxue6jYnNrwuCj9gNqi9P8Smce9qMFqhZzC40+6dg+uknExnooBUj
+ 6bDYFLvaeEXvCw7DkkrdewiAVIb8JPhsDJ8ABAgJRou/yBBfsPSqalkaMf5xqsrpea4lK0swohRUY
+ hzinZpuCnLdMaVoFTy+ymD3hbM6ti7ZXdXA7qNShP7UvSwdbHuIKA2o2BwC3BL7zz00BLvsn7GQ/Q
+ Lf7Cd0Ok3np/6S8lMdnbAYjNDfeHba3P8vHed1hbKA3ExJJzW68HtvUEvf7qrA=;
+Message-ID: <df93ef4700c808af4c120ea0e636b28539fe4598.1781012549.git.qemu_oss@crudebyte.com>
 In-Reply-To: <cover.1781012549.git.qemu_oss@crudebyte.com>
 References: <cover.1781012549.git.qemu_oss@crudebyte.com>
 From: Christian Schoenebeck <qemu_oss@crudebyte.com>
 Date: Tue, 09 Jun 2026 15:47:06 +0200
-Subject: [PATCH v2 05/12] tests/9p: add Tclunk / Rclunk test client functions
+Subject: [PATCH v2 10/12] tests/9p: add virtio_9p_add_synth_driver_args() test
+ client function
 To: qemu-devel@nongnu.org,
     qemu-stable@nongnu.org
 Cc: Greg Kurz <groug@kaod.org>,
     Feifan Qian <bea1e@proton.me>
 Received-SPF: pass client-ip=5.189.157.229;
- envelope-from=f13f16c0fca4db8bf31960139d169b4d280c8776@kylie.crudebyte.com;
+ envelope-from=df93ef4700c808af4c120ea0e636b28539fe4598@kylie.crudebyte.com;
  helo=kylie.crudebyte.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
@@ -67,116 +68,49 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Add v9fs_tclunk() and v9fs_rclunk() functions to the 9P test client
-for closing file handles (or "FIDs") in test cases.
+Add virtio_9p_add_synth_driver_args() to allow appending custom
+QEMU options for individual 9p synth tests.
 
 Signed-off-by: Christian Schoenebeck <qemu_oss@crudebyte.com>
 ---
- tests/qtest/libqos/virtio-9p-client.c | 34 +++++++++++++++++++++++++++
- tests/qtest/libqos/virtio-9p-client.h | 22 +++++++++++++++++
- tests/qtest/virtio-9p-test.c          |  1 +
- 3 files changed, 57 insertions(+)
+ tests/qtest/libqos/virtio-9p.c | 6 ++++++
+ tests/qtest/libqos/virtio-9p.h | 6 ++++++
+ 2 files changed, 12 insertions(+)
 
-diff --git a/tests/qtest/libqos/virtio-9p-client.c b/tests/qtest/libqos/virtio-9p-client.c
-index b9785ef8cb..83af6dab5d 100644
---- a/tests/qtest/libqos/virtio-9p-client.c
-+++ b/tests/qtest/libqos/virtio-9p-client.c
-@@ -242,6 +242,7 @@ static const char *rmessage_name(uint8_t id)
-         id == P9_RFLUSH ? "RFLUSH" :
-         id == P9_RREADDIR ? "RREADDIR" :
-         id == P9_RREAD ? "RREAD" :
-+        id == P9_RCLUNK ? "RCLUNK" :
-         "<unknown>";
+diff --git a/tests/qtest/libqos/virtio-9p.c b/tests/qtest/libqos/virtio-9p.c
+index 186fcc1141..823756de8c 100644
+--- a/tests/qtest/libqos/virtio-9p.c
++++ b/tests/qtest/libqos/virtio-9p.c
+@@ -228,6 +228,12 @@ static void regex_replace(GString *haystack, const char *pattern,
+     g_string_assign(haystack, s);
  }
  
-@@ -1148,3 +1149,36 @@ void v9fs_rread(P9Req *req, uint32_t *count, void *data)
-     }
-     v9fs_req_free(req);
- }
-+
-+/* size[4] Tclunk tag[2] fid[4] */
-+TClunkRes v9fs_tclunk(TClunkOpt opt)
++void virtio_9p_add_synth_driver_args(GString *cmd_line, const char *args)
 +{
-+    P9Req *req;
-+    uint32_t err;
-+
-+    g_assert(opt.client);
-+
-+    req = v9fs_req_init(opt.client, 4, P9_TCLUNK, opt.tag);
-+    v9fs_uint32_write(req, opt.fid);
-+    v9fs_req_send(req);
-+
-+    if (!opt.requestOnly) {
-+        v9fs_req_wait_for_reply(req, NULL);
-+        if (opt.expectErr) {
-+            v9fs_rlerror(req, &err);
-+            g_assert_cmpint(err, ==, opt.expectErr);
-+        } else {
-+            v9fs_rclunk(req);
-+        }
-+        req = NULL; /* request was freed */
-+    }
-+
-+    return (TClunkRes) { .req = req };
++    /* append passed args to '-fsdev ...' group */
++    regex_replace(cmd_line, "(-fsdev \\w[^ ]*)", "\\1,%s", args);
 +}
 +
-+/* size[4] Rclunk tag[2] */
-+void v9fs_rclunk(P9Req *req)
-+{
-+    v9fs_req_recv(req, P9_RCLUNK);
-+    v9fs_req_free(req);
-+}
-diff --git a/tests/qtest/libqos/virtio-9p-client.h b/tests/qtest/libqos/virtio-9p-client.h
-index 37f2517cff..f7ef7f0067 100644
---- a/tests/qtest/libqos/virtio-9p-client.h
-+++ b/tests/qtest/libqos/virtio-9p-client.h
-@@ -504,6 +504,26 @@ typedef struct TReadRes {
-     uint32_t count;
- } TReadRes;
- 
-+/* options for 'Tclunk' 9p request */
-+typedef struct TClunkOpt {
-+    /* 9P client being used (mandatory) */
-+    QVirtio9P *client;
-+    /* user supplied tag number being returned with response (optional) */
-+    uint16_t tag;
-+    /* file ID to clunk (required) */
-+    uint32_t fid;
-+    /* only send Tclunk request but not wait for a reply? (optional) */
-+    bool requestOnly;
-+    /* do we expect an Rlerror response, if yes which error code? (optional) */
-+    uint32_t expectErr;
-+} TClunkOpt;
-+
-+/* result of 'Tclunk' 9p request */
-+typedef struct TClunkRes {
-+    /* if requestOnly was set: request object for further processing */
-+    P9Req *req;
-+} TClunkRes;
-+
- void v9fs_set_allocator(QGuestAllocator *t_alloc);
- void v9fs_memwrite(P9Req *req, const void *addr, size_t len);
- void v9fs_memskip(P9Req *req, size_t len);
-@@ -557,5 +577,7 @@ TunlinkatRes v9fs_tunlinkat(TunlinkatOpt);
- void v9fs_runlinkat(P9Req *req);
- TReadRes v9fs_tread(TReadOpt opt);
- void v9fs_rread(P9Req *req, uint32_t *count, void *data);
-+TClunkRes v9fs_tclunk(TClunkOpt opt);
-+void v9fs_rclunk(P9Req *req);
- 
- #endif
-diff --git a/tests/qtest/virtio-9p-test.c b/tests/qtest/virtio-9p-test.c
-index 8ccec77e70..099c5e0ca0 100644
---- a/tests/qtest/virtio-9p-test.c
-+++ b/tests/qtest/virtio-9p-test.c
-@@ -32,6 +32,7 @@
- #define tlink(...) v9fs_tlink((TlinkOpt) __VA_ARGS__)
- #define tunlinkat(...) v9fs_tunlinkat((TunlinkatOpt) __VA_ARGS__)
- #define tread(...) v9fs_tread((TReadOpt) __VA_ARGS__)
-+#define tclunk(...) v9fs_tclunk((TClunkOpt) __VA_ARGS__)
- 
- static void pci_config(void *obj, void *data, QGuestAllocator *t_alloc)
+ void virtio_9p_assign_local_driver(GString *cmd_line, const char *args)
  {
+     g_assert_nonnull(local_test_path);
+diff --git a/tests/qtest/libqos/virtio-9p.h b/tests/qtest/libqos/virtio-9p.h
+index 480727120e..e7efeef7a1 100644
+--- a/tests/qtest/libqos/virtio-9p.h
++++ b/tests/qtest/libqos/virtio-9p.h
+@@ -44,6 +44,12 @@ struct QVirtio9PDevice {
+     QVirtio9P v9p;
+ };
+ 
++/**
++ * Add required test specific args to the QEMU command line for the 9pfs
++ * 'synth' fs driver.
++ */
++void virtio_9p_add_synth_driver_args(GString *cmd_line, const char *args);
++
+ /**
+  * Creates the directory for the 9pfs 'local' filesystem driver to access.
+  */
 -- 
 2.47.3
 
