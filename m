@@ -4,83 +4,103 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 46D60CD8CAA
-	for <qemu-devel@archiver.kernel.org>; Tue,  9 Jun 2026 10:59:34 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id DD787CD8CAA
+	for <qemu-devel@archiver.kernel.org>; Tue,  9 Jun 2026 11:02:57 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wWuAz-0001ES-P9; Tue, 09 Jun 2026 06:59:22 -0400
+	id 1wWuDi-0001z9-Cv; Tue, 09 Jun 2026 07:02:16 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1wWuAp-0001E3-9N
- for qemu-devel@nongnu.org; Tue, 09 Jun 2026 06:59:11 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1wWuAk-0004ts-AS
- for qemu-devel@nongnu.org; Tue, 09 Jun 2026 06:59:08 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1781002744;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=O2uWd1OSRuv/AisuD6Qc+yfYpvy0KTABFXqDhRLF8tc=;
- b=YZRCXtzulh+BbnMPl3NN73rcSs2k8T/y6CJolMO5gBMPLZxvwsqoF31DTzEaFYS2rJRBIB
- bDRthqrSNVsXzpg/dmgyIZHk4YjSGjH/J242nKy8/i7D5tTI4kh1B+pOYAe7zKUchMoWpa
- mmdLELI2BPJzhf/ZHFdwT4gA4GvkzqQ=
-Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-499-c6nZMEQDM-StBjojnwVpMQ-1; Tue,
- 09 Jun 2026 06:59:01 -0400
-X-MC-Unique: c6nZMEQDM-StBjojnwVpMQ-1
-X-Mimecast-MFC-AGG-ID: c6nZMEQDM-StBjojnwVpMQ_1781002739
-Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 35E9A19560BB; Tue,  9 Jun 2026 10:58:59 +0000 (UTC)
-Received: from blackfin.pond.sub.org (unknown [10.44.22.28])
- by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 79FA43008B38; Tue,  9 Jun 2026 10:58:58 +0000 (UTC)
-Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
- id 145E921E6A01; Tue, 09 Jun 2026 12:58:56 +0200 (CEST)
-From: Markus Armbruster <armbru@redhat.com>
-To: John Snow <jsnow@redhat.com>
-Cc: qemu-devel@nongnu.org,  Ani Sinha <anisinha@redhat.com>,  Michael Roth
- <michael.roth@amd.com>,  Igor Mammedov <imammedo@redhat.com>,  Peter
- Maydell <peter.maydell@linaro.org>,  Eric Blake <eblake@redhat.com>,
- Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@mailo.com>,  Mauro
- Carvalho Chehab
- <mchehab+huawei@kernel.org>,  "Michael S. Tsirkin" <mst@redhat.com>,
- =?utf-8?Q?Marc-Andr=C3=A9?= Lureau <marcandre.lureau@redhat.com>,  Paolo
- Bonzini <pbonzini@redhat.com>,  Pierrick Bouvier
- <pierrick.bouvier@oss.qualcomm.com>,  Richard Henderson
- <richard.henderson@linaro.org>,  Gerd Hoffmann <kraxel@redhat.com>,
- Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- linux-edac@vger.kernel.org, Cleber Rosa <crosa@redhat.com>
-Subject: Re: [PATCH v3 07/16] qapi/docs: add "Intro" section
-In-Reply-To: <20260603032201.993015-8-jsnow@redhat.com> (John Snow's message
- of "Tue, 2 Jun 2026 23:21:52 -0400")
-References: <20260603032201.993015-1-jsnow@redhat.com>
- <20260603032201.993015-8-jsnow@redhat.com>
-Date: Tue, 09 Jun 2026 12:58:56 +0200
-Message-ID: <87tsrcou8f.fsf@pond.sub.org>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1wWuDP-0001wZ-HE
+ for qemu-devel@nongnu.org; Tue, 09 Jun 2026 07:01:54 -0400
+Received: from mail-yx1-xb131.google.com ([2607:f8b0:4864:20::b131])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1wWuDN-0005Tq-Jo
+ for qemu-devel@nongnu.org; Tue, 09 Jun 2026 07:01:51 -0400
+Received: by mail-yx1-xb131.google.com with SMTP id
+ 956f58d0204a3-660ea43107fso5240924d50.0
+ for <qemu-devel@nongnu.org>; Tue, 09 Jun 2026 04:01:49 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1781002908; cv=none;
+ d=google.com; s=arc-20240605;
+ b=iWEFl7faQJRzJA9/xOQ2XSkyshtOhnqXTKUr76kqV7srF4oag52gIHCSJnUmfeiOWM
+ SzBtfIVjtL2/ezntqroA7TiKx8PZroBampYJaJbJkpP8lV2A887Dn08N43BCJ/ekUFwb
+ sptVh9j6wdGCOlxXngWFXlFYF1gVrChHQ+XEHm7Vw+fswab6YB2nwt3v2iWTdTw3j2nr
+ hHOqmfYG5AGq2W684Plo6m9HM/V5M3aGQIfizPE0bqeOM8NYus6dQEbmM3dn54vrYSTE
+ A42XoNsvoJv+LQyxOuJiYuilPWWkSMUmqjYkF8XwyliTVupjtsFFvwZ9x/W32hdOHBY0
+ YTgw==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
+ s=arc-20240605; 
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:dkim-signature;
+ bh=IWvx6N/trd7GUv7lRQQJVJ/o7RKzQvf1YBdlMGaL8p0=;
+ fh=R/1LKvM0o68i4KJVrUSNja+N6WhXTCc88rnpVqvVlCA=;
+ b=AgGtnevVwjQBe/otUSqfyWzrq24qgfy5UsNQPXjlI9a0HDs91X1jloAbD2D/deRMaa
+ 771lcl/8OmRfYCJyYnpmONsWPTu0S69568cW8piViJwqIkF63U/pOP/RPSin9cuPPVlE
+ xNeixrUzrBkWx9mu8uUfj9i1jfhXYOwLylhZc6jb1Ku3jIRj2hx08kqgp+mrGvW+JC6p
+ PNEE3/2LLJC/BG4hY6rSpkuc5O+Rf7O41GdtU8eM5ZHdQjDzinFXFTKVDrGyP7P9A6tM
+ beMrVp8+beaMy7QWnKS8Yej10C/fsJkKslpp3Tmfz6rNfZP5NHjgmaPVaSsXu1QvwA6X
+ GUag==; darn=nongnu.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1781002908; x=1781607708; darn=nongnu.org;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:from:to:cc:subject:date:message-id:reply-to;
+ bh=IWvx6N/trd7GUv7lRQQJVJ/o7RKzQvf1YBdlMGaL8p0=;
+ b=j982zha9PMd0YJB2FolzjXg8DnxZPgzYM+fNPO2h7b43IL/z1IuRFeFZsbN/oBWVyq
+ vrVXgYoCQ6gbuGPTz8Pa/sif8FxanER3ffotZ9Jp3Jz069G7HK01Fnp4nZYfAlG9jBw2
+ yFRdK8v5cNiSU2Mqex2hqMSgG4mlhsWWtK8TNkqdPsRWvr+0xdS0yt7oCfsGSl/6gICZ
+ PPh+7fIR4sfr1Xxt7ZP44beVKq+mKS9evTxsdfnCxjNKOR1XIXAqy1IO8q+VBjeCCD90
+ kYDo+aoDyotgdOOPfXIIqViM4OjPXALZ3FdfuHNaTtDwhMCjIVngQ6oS6pqcofyrBVYW
+ TkQg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1781002908; x=1781607708;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=IWvx6N/trd7GUv7lRQQJVJ/o7RKzQvf1YBdlMGaL8p0=;
+ b=rF7/ZhxSOlLrjF7fP9ybv1zzSwjVPODKXXyzmSQbLE99hgy+lenc1g5IILToysw4qu
+ cTRenZlQ8pVLoZTeRf8fQpnsZW+WYzfLXdmXElABdFILIxQbHtocAE6pWfAG0AW6VQO8
+ EiWhJ/YeFvNKXNTLKNnh/1dg4uiUyHGNHzMKHSoJuKw82mURI1T3+eo3MTDiGcwJ+UH0
+ CpVXSifUdRdYNa+fIheOn5yzGadbZyIv8YGWfTmZ01nv+8bU4Dxrx8xUjWB11Tp4UGzG
+ 6hG/i+IATWhwat3uDZ5kUmUHIXzrn8E7LPjPV68GMkhVqGALfZ87lKAn0FBPx5YF6j04
+ z9EQ==
+X-Gm-Message-State: AOJu0Yy9r2n4yZB5Gs+4XpK+yPes3St2YD7Gmoi4sMlVsfPE2MScFHvt
+ 1+dDgMRnTLPDrJnAQ/LqV/nYxU8TrK/UVp6M5EWxtG/uxuKOZ8MaRNhp/I+IP2+L/y22evQekm9
+ DEa0ZvBdLbygcLD9j4blSRjObEqzvA5wJp5ZhBwQ/QA==
+X-Gm-Gg: Acq92OEJeQnejoUwJTWp04pF/fXq6686wTkG6p/A9ghN5BOUrP9/mJcYhz0jVgIOoKZ
+ vg1AYf9GYiBlAETbxolVPlrw9N8C4dLEOP//vQ5iNRrenKnKSz1DsgVaHp/2zwdcBFx4YKR1xzf
+ x/JX2ZGGfgoUihyq9Kx1wyeH3L8Yi7jWj5OG9XGiqKdcZrXd0Y3uvxfC9v/ZTxfSBKDY4GNQWF/
+ W/YtZoVWZRCV/32RzoBwjWa6RbKyrJOAEsdxTwwu3ke8OWpIgEZ6bujPJGKKrJoaFTAydreit/s
+ dLzJKEE2NPhQrwGlpNByUfJoruDWjzJSJIMUxgt9FEFGgSz84NPw5xbQqbizDAyOeSNMC2j5N9q
+ oYW5hhXrNbqFj
+X-Received: by 2002:a05:690e:140d:b0:660:62e5:9300 with SMTP id
+ 956f58d0204a3-6610779e02amr17201153d50.48.1781002908052; Tue, 09 Jun 2026
+ 04:01:48 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=armbru@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: 8
-X-Spam_score: 0.8
-X-Spam_bar: /
-X-Spam_report: (0.8 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.445,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_SBL_CSS=3.335, SPF_HELO_PASS=-0.001,
- SPF_PASS=-0.001 autolearn=no autolearn_force=no
+References: <20260609105626.1038690-1-thuth@redhat.com>
+In-Reply-To: <20260609105626.1038690-1-thuth@redhat.com>
+From: Peter Maydell <peter.maydell@linaro.org>
+Date: Tue, 9 Jun 2026 12:01:36 +0100
+X-Gm-Features: AVVi8Cc8oKQrydmGDQOBxXvHxwWMlyhEXLAqM4JoePjcSpmZv054gl6whVUi45E
+Message-ID: <CAFEAcA9O6b02VMuto8VzaEsVi3zTqNtQKG_RcMaPnNdPXGUBhw@mail.gmail.com>
+Subject: Re: [PATCH] hw/i2c/pmbus_device: Fix a possible crash when requesting
+ too many bytes
+To: Thomas Huth <thuth@redhat.com>
+Cc: qemu-devel@nongnu.org, Titus Rwantare <titusr@google.com>,
+ qemu-trivial@nongnu.org, qemu-arm@nongnu.org
+Content-Type: text/plain; charset="UTF-8"
+Received-SPF: pass client-ip=2607:f8b0:4864:20::b131;
+ envelope-from=peter.maydell@linaro.org; helo=mail-yx1-xb131.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -96,64 +116,55 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-John Snow <jsnow@redhat.com> writes:
-
-> This patch adds an "Intro" doc section, intended to eventually replace
-> the "Plain" doc section alongside a forthcoming "Details" section.
+On Tue, 9 Jun 2026 at 11:56, Thomas Huth <thuth@redhat.com> wrote:
 >
-> For now, this section is not actually instantiated or used, but
-> subsequent patches will slowly convert the leading introductory sections
-> of QAPIDoc documentation to use this new section.
+> From: Thomas Huth <thuth@redhat.com>
 >
-> A main motivation of this series of changes is to more explicitly
-> delineate the "Introductory" documentation for each QAPI definition for
-> the sake of the inliner. When inlining members, examples, and details
-> from multiple QAPIDoc sections, we will want to omit the "Introductory"
-> text from inlined definitions while keeping notes, caution boxes,
-> examples, and so on. This new section facilitates that.
+> The pmbus_send_string() function contains an assert() statement that
+> can be triggered by the guest code when requesting too many data
+> without reading from the device in between. This should not be possible.
+> pmbus_send() already has a similar logic, but it simply ignores the
+> error after logging a message with qemu_log_mask(), so do the same now
+> in pmbus_send_string() to fix the issue.
 >
-> Signed-off-by: John Snow <jsnow@redhat.com>
+> Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/3388
+> Signed-off-by: Thomas Huth <thuth@redhat.com>
 > ---
->  docs/sphinx/qapidoc.py | 2 +-
->  scripts/qapi/parser.py | 3 ++-
->  2 files changed, 3 insertions(+), 2 deletions(-)
+>  hw/i2c/pmbus_device.c | 7 ++++++-
+>  1 file changed, 6 insertions(+), 1 deletion(-)
 >
-> diff --git a/docs/sphinx/qapidoc.py b/docs/sphinx/qapidoc.py
-> index c2f09bac16c..1f7c15b7075 100644
-> --- a/docs/sphinx/qapidoc.py
-> +++ b/docs/sphinx/qapidoc.py
-> @@ -368,7 +368,7 @@ def visit_sections(self, ent: QAPISchemaDefinition) -> None:
->          for i, section in enumerate(sections):
->              section.text = self.reformat_arobase(section.text)
->  
-> -            if section.kind == QAPIDoc.Kind.PLAIN:
-> +            if section.kind.name in ("PLAIN", "INTRO"):
+> diff --git a/hw/i2c/pmbus_device.c b/hw/i2c/pmbus_device.c
+> index b1f9843f52e..6aa608a2998 100644
+> --- a/hw/i2c/pmbus_device.c
+> +++ b/hw/i2c/pmbus_device.c
+> @@ -104,7 +104,12 @@ void pmbus_send_string(PMBusDevice *pmdev, const char *data)
+>      }
+>
+>      size_t len = strlen(data);
+> -    g_assert(len + pmdev->out_buf_len < SMBUS_DATA_MAX_LEN);
+> +    if (len + pmdev->out_buf_len >= SMBUS_DATA_MAX_LEN) {
+> +        qemu_log_mask(LOG_GUEST_ERROR,
+> +                      "%s: requested too much data from PMBus device\n",
+> +                      __func__);
+> +        return;
+> +    }
 
-Is the change from QAPIDoc.Kind.FOO to "FOO" just for brevity, or is
-something going on I don't understand?
+I had a look at this bug earlier, but was not sure that this is the
+right thing. What happens is that the guest does something that
+causes the device to queue up data X ready for the guest to
+read, but then instead of reading it, the guest does another
+"I would like data X please" action. My guess is that the way
+the hardware handles this is probably not "add the second
+copy of data X after the first one". Perhaps it is "drop the
+data the guest didn't read, so the next guest read gets the
+second lot of data, not the first". But maybe the spec really
+does say "you can do things in the order 'ask for A, ask for
+B, read data for A, read data for B".
 
->                  self.visit_paragraph(section)
->              elif section.kind == QAPIDoc.Kind.MEMBER:
->                  assert isinstance(section, QAPIDoc.ArgSection)
-> diff --git a/scripts/qapi/parser.py b/scripts/qapi/parser.py
-> index d8068bb1bf6..97e7dacb0fd 100644
-> --- a/scripts/qapi/parser.py
-> +++ b/scripts/qapi/parser.py
-> @@ -681,6 +681,7 @@ class Kind(enum.Enum):
->          ERRORS = 4
->          SINCE = 5
->          TODO = 6
-> +        INTRO = 7
->  
->          @staticmethod
->          def from_string(kind: str) -> 'QAPIDoc.Kind':
-> @@ -748,7 +749,7 @@ def has_features(self) -> bool:
->      def end(self) -> None:
->          for section in self.all_sections:
->              section.text = section.text.strip('\n')
-> -            if section.kind != QAPIDoc.Kind.PLAIN and section.text == '':
-> +            if not (section.kind.name in ("INTRO", "PLAIN") or section.text):
->                  raise QAPISemError(
->                      section.info, "text required after '%s:'" % section.kind)
+I couldn't conveniently find the pmbus spec to find out what
+the hardware is supposed to do here. We need some input from
+somebody who knows about pmbus.
 
+thanks
+-- PMM
 
