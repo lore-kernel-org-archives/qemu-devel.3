@@ -4,115 +4,139 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C87E7CD8CA8
-	for <qemu-devel@archiver.kernel.org>; Tue,  9 Jun 2026 21:53:06 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C24F6CD8CA8
+	for <qemu-devel@archiver.kernel.org>; Tue,  9 Jun 2026 21:53:22 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wX4NP-00009h-MS; Tue, 09 Jun 2026 17:52:52 -0400
+	id 1wX4J7-0006kV-3E; Tue, 09 Jun 2026 17:48:25 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <zycai@linux.ibm.com>)
- id 1wX4Mv-0007vH-6u; Tue, 09 Jun 2026 17:52:21 -0400
-Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
+ (Exim 4.90_1) (envelope-from <pierrick.bouvier@oss.qualcomm.com>)
+ id 1wX4Iu-0006er-8v
+ for qemu-devel@nongnu.org; Tue, 09 Jun 2026 17:48:13 -0400
+Received: from mx0a-0031df01.pphosted.com ([205.220.168.131])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <zycai@linux.ibm.com>)
- id 1wX4Mr-0001SR-NF; Tue, 09 Jun 2026 17:52:20 -0400
-Received: from pps.filterd (m0353729.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 659HZ95l3019572; Tue, 9 Jun 2026 21:51:58 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
- :content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=pp1; bh=bARAb8
- /mpgzNFEFTTfLrc9gtsFO66OT4Lku8Fy5zH6s=; b=QZDwg6cIr/JUCb+gattwtX
- mnY2Kfs7LgQ4Ggsps+5OxSJsxcoQnZxTIe4vJ/pk9704kHvDfjW8/GnEUQwdrMca
- gZ8jsWej/7LEhS/MvI8HR0d1ygWY/WHm9Y8pOhkBW7YzMbyl3h3NzBjK8NFDBFnq
- hBZvZACz0JlHhULWj5RzugSO1TF2WPD7RbZAxmVsemF4yGzAx8Ca0lQmgy7AFZWI
- qIXOt7dO0e+s1Y408WwE774Gj9bToEQPIKfm7ElE/Zyj/5QJhIxq8N3bRUdIVfeP
- EYAxfdMdEnA2Ytw/Xrh9VBNwOX5RT7yt6te5aCiREmFdUy3Fzcn+VOvcfMl6dpJg
- ==
-Received: from ppma11.dal12v.mail.ibm.com
- (db.9e.1632.ip4.static.sl-reverse.com [50.22.158.219])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4emb7qpdh7-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Tue, 09 Jun 2026 21:51:57 +0000 (GMT)
-Received: from pps.filterd (ppma11.dal12v.mail.ibm.com [127.0.0.1])
- by ppma11.dal12v.mail.ibm.com (8.18.1.7/8.18.1.7) with ESMTP id 659LnbnD029817;
- Tue, 9 Jun 2026 21:51:57 GMT
-Received: from smtprelay07.dal12v.mail.ibm.com ([172.16.1.9])
- by ppma11.dal12v.mail.ibm.com (PPS) with ESMTPS id 4en0jybqgg-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Tue, 09 Jun 2026 21:51:57 +0000 (GMT)
-Received: from smtpav02.dal12v.mail.ibm.com (smtpav02.dal12v.mail.ibm.com
- [10.241.53.101])
- by smtprelay07.dal12v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 659Lpuqo32047622
- (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Tue, 9 Jun 2026 21:51:56 GMT
-Received: from smtpav02.dal12v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 1633B5805E;
- Tue,  9 Jun 2026 21:51:56 +0000 (GMT)
-Received: from smtpav02.dal12v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id E739658051;
- Tue,  9 Jun 2026 21:51:54 +0000 (GMT)
-Received: from [9.61.12.186] (unknown [9.61.12.186])
- by smtpav02.dal12v.mail.ibm.com (Postfix) with ESMTP;
- Tue,  9 Jun 2026 21:51:54 +0000 (GMT)
-Message-ID: <2635b777-34d9-4add-870d-0de0902c5e3e@linux.ibm.com>
-Date: Tue, 9 Jun 2026 17:51:54 -0400
+ (Exim 4.90_1) (envelope-from <pierrick.bouvier@oss.qualcomm.com>)
+ id 1wX4Is-000834-IH
+ for qemu-devel@nongnu.org; Tue, 09 Jun 2026 17:48:12 -0400
+Received: from pps.filterd (m0279864.ppops.net [127.0.0.1])
+ by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
+ 659K4ss83266538
+ for <qemu-devel@nongnu.org>; Tue, 9 Jun 2026 21:47:59 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+ cc:content-transfer-encoding:date:from:in-reply-to:message-id
+ :mime-version:references:subject:to; s=qcppdkim1; bh=aMpA1Zh64s8
+ KexCk2V7o804331/kR5xrcpeFiGqPvno=; b=Of/pyJXsae0ZE6wUEAw2WKQl3jc
+ PJi0w3+N5kl961PIlHmYmYFOgnwXrntI9mTFnoXybprR7BQbRFj5b14JZd7BXQf0
+ 9K0mKz0XSSxZGBYxWtm2WAGzwYCIc0w2KgwHAWY7WYw7inAH2SRUhnynpTOxBao/
+ SHoLI7DDHmCadlEAFkjkhRgfWpsXU8vl7NU9YHI4r5haqvjC0cm2RlsT33IwODxB
+ WheIoY+hHP+O8jt2UQ3txKQTXeGsXjOOnLMVCOPDCU4E5F//FDrqrBepMvJblXPf
+ jZlQNO+/qST3FXnTTdRPAM9uvppH24Mt+aKvK5d31IJ9qx4tqMr1Pb/AIBQ==
+Received: from mail-dl1-f70.google.com (mail-dl1-f70.google.com [74.125.82.70])
+ by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4epg3jujj9-1
+ (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
+ for <qemu-devel@nongnu.org>; Tue, 09 Jun 2026 21:47:59 +0000 (GMT)
+Received: by mail-dl1-f70.google.com with SMTP id
+ a92af1059eb24-137eff27f36so7820816c88.1
+ for <qemu-devel@nongnu.org>; Tue, 09 Jun 2026 14:47:58 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=oss.qualcomm.com; s=google; t=1781041678; x=1781646478; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=aMpA1Zh64s8KexCk2V7o804331/kR5xrcpeFiGqPvno=;
+ b=gW8UBXJVVfx8kvbM2/1W86uQiYTx44Hpc8RymmJ8vgBGtpQP+Da/QqAZRyy8P3EtBq
+ QtQEiBWnxqJY00DTjyUMhcKZ9UF+n8PiEdjrdjCQjRnylr6Vzm+CqO11AhISAoWMkQwP
+ ZC2GvMJr6pprNeXA+KOBieuHNh8cPW2+m6hNUfgWYvDbvXGYqt+dNDf1pcYgyrX40UxU
+ 62sLGI8uqddQnRHD/gY3J2q9enpLHf3v7j942RqhDd1fql5P1f4En1i7vJSdxqPLNft+
+ +uFn/hCRmVab/hUoDbhehXzDS2100B4Tjuwr2MvTSZ7dODCGSkq/Zu/NYuVBU+yf1wEU
+ 7Hfg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1781041678; x=1781646478;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=aMpA1Zh64s8KexCk2V7o804331/kR5xrcpeFiGqPvno=;
+ b=a0Zf0+PqZVwEyK7sWkuXwUkHyDwYX+fYRuEBVZ5z2DIYNDb+MDQ6tXTIrIhQRX2K02
+ lEWGKlQ4QxVxpYn6uF2nmHNP6urwwm7fKqWNpPX86cgwghnx/OovoEhOzh3n39Ytk/my
+ X+yz5KGF5utqdd7hNkG8QnaRoy/L82bCstT5uqIrUjrq2p3CFmwBp623XUP1OcamEJ/Y
+ uul2m0frj8RzOIAE5LSr9JdWhtn2lrPTeFFO+sp6I5jTMpqbMJsPo5aXm3OBbJ53KxXq
+ QfSYXk85LRRcMCCv+jhdDQarPBVyLfrHGhjCoxKy+9eQ+NrqOfyaDehN37UyV1oyJoDu
+ n9/Q==
+X-Gm-Message-State: AOJu0YzCbSSsz3fDEvtul84d/qtXrdhKtYHiNK38mgwjaq6k+ouzDrIF
+ 7I4L2zEmqpfuNInGqnp7hc3VJP37jmp5R520zEF2pNRU83MX4zB0s6cEDgTPd+St/9B3Yu/78qq
+ cLmnpQF471TgN4Mkzl9NQvygcD7WXj3Rg+JnaEvzXonc5wZw5BhUJrFf4psu0iVS+VYIA
+X-Gm-Gg: Acq92OGkCDqNBpcVfdfdFWZEkEOJw71BnfGlzn1fKv4Pp3ehp9vhKe4u8spgVDTXBAN
+ ypNp2K70oL8twSs9Hx056GJiechrpmufICGIcUE31d7guid937CBlAR8qqFQDkBJSnf0aDXc7iD
+ 5nGOL8Ij/DYCb8XBefNJ03365HmLCsY7qRoPBqUrtj9gWsSxDT5ocAke4kzC2m+SWdzAnZgmmV1
+ e9WdzCG7uC56hok9UXhHFACQZ6kqgBviQxEo9/BpFEQtaj9QUNqemqVaIGDoQuf9vMF1iyFtbux
+ Azty3tslf/4rt0JzONE/Ae1Y+Q6ENcdeg7+JsFDXotxOiZGS2UFLOOJskPIZaIlq6ihwiQnQMnM
+ yyLbI76RdsHecW0UgX27o5JeBOzKQ2sHvHWbsm8uHZaV2V3CkQXBi/NMhjS3bBxvz5EpfAZfR5s
+ oNtnf319iSHiOitLlc
+X-Received: by 2002:a05:7022:ef18:b0:136:89f7:a2aa with SMTP id
+ a92af1059eb24-1380670b248mr10296490c88.28.1781041678337; 
+ Tue, 09 Jun 2026 14:47:58 -0700 (PDT)
+X-Received: by 2002:a05:7022:ef18:b0:136:89f7:a2aa with SMTP id
+ a92af1059eb24-1380670b248mr10296474c88.28.1781041677819; 
+ Tue, 09 Jun 2026 14:47:57 -0700 (PDT)
+Received: from hu-pbouvier-lv.qualcomm.com (Global_NAT1.qualcomm.com.
+ [129.46.96.20]) by smtp.gmail.com with ESMTPSA id
+ a92af1059eb24-137f5550bcdsm17095895c88.14.2026.06.09.14.47.56
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Tue, 09 Jun 2026 14:47:57 -0700 (PDT)
+From: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
+To: qemu-devel@nongnu.org
+Cc: Thomas Huth <thuth@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>,
+ Manos Pitsidianakis <manos.pitsidianakis@linaro.org>,
+ =?UTF-8?q?Daniel=20P=20=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ qemu-arm@nongnu.org, Richard Henderson <richard.henderson@linaro.org>,
+ =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ Alexandre Iooss <erdnaxe@crans.org>,
+ Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
+ Peter Maydell <peter.maydell@linaro.org>,
+ Gustavo Romero <gustavo.romero@linaro.org>
+Subject: [PATCH 06/27] tests/tcg/meson.build: introduce test_name
+Date: Tue,  9 Jun 2026 14:47:24 -0700
+Message-ID: <20260609214745.772536-7-pierrick.bouvier@oss.qualcomm.com>
+X-Mailer: git-send-email 2.43.0
+In-Reply-To: <20260609214745.772536-1-pierrick.bouvier@oss.qualcomm.com>
+References: <20260609214745.772536-1-pierrick.bouvier@oss.qualcomm.com>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v11 09/32] s390x/diag: Implement DIAG 320 subcode 2
-To: Jared Rossi <jrossi@linux.ibm.com>, qemu-s390x@nongnu.org,
- qemu-devel@nongnu.org
-Cc: cohuck@redhat.com, berrange@redhat.com, richard.henderson@linaro.org,
- david@kernel.org, walling@linux.ibm.com, jjherne@linux.ibm.com,
- pasic@linux.ibm.com, borntraeger@linux.ibm.com, farman@linux.ibm.com,
- mjrosato@linux.ibm.com, iii@linux.ibm.com, eblake@redhat.com,
- armbru@redhat.com, alifm@linux.ibm.com, brueckner@linux.ibm.com,
- pierrick.bouvier@oss.qualcomm.com, jdaley@linux.ibm.com
-References: <20260505201905.997996-1-zycai@linux.ibm.com>
- <20260505201905.997996-10-zycai@linux.ibm.com>
- <ce623f2a-9247-4a67-98a0-7a180fdb88ca@linux.ibm.com>
- <053fe695-54a7-475e-b7f0-11a7eb34f67c@linux.ibm.com>
- <febb7ef1-4059-42f2-9ec0-4beac378cc45@linux.ibm.com>
-Content-Language: en-US
-From: Zhuoying Cai <zycai@linux.ibm.com>
-In-Reply-To: <febb7ef1-4059-42f2-9ec0-4beac378cc45@linux.ibm.com>
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-X-TM-AS-GCONF: 00
-X-Authority-Analysis: v=2.4 cv=HppG3UTS c=1 sm=1 tr=0 ts=6a288afe cx=c_pps
- a=aDMHemPKRhS1OARIsFnwRA==:117 a=aDMHemPKRhS1OARIsFnwRA==:17
- a=IkcTkHD0fZMA:10 a=FelO9ux0wxsA:10 a=VkNPw1HP01LnGYTKEx00:22
- a=RnoormkPH1_aCDwRdu11:22 a=uAbxVGIbfxUO_5tXvNgY:22 a=20KFwNOVAAAA:8
- a=57xXvlBjRI5xFtRfWcwA:9 a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
-X-Proofpoint-GUID: r-NhG_onf2VpasidIwG6SuSkw9NMP2QU
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNjA5MDIwMyBTYWx0ZWRfX3ZOSXO+kU5uj
- YylhDQ6+PK4rkXdDAoJl8GQ+Za5jzhhFW+OtScpIzYWfQ5fRSC1KnhWgoKid8SVweIJjGSarW39
- mWC0szrhpHBLZrMl/qjOq/eY7EhmPIv4w1eR4fQcIMmRkZ0plpTATT5hbNXqW91TD0KeOIoqCiH
- GtzzJYHFYmFWW8Ah57en1sCW/d7Sd1d6UQlXykbe9HIU/uDGysl9qTBxGDcBByF4KyVOgfziSvl
- PHAclBtCCTt6rQsfYHhm5nY7c2UpXnYIVXsU6JDNoEDqOI/ifEK/jDoE7pUALHhmqG0aboz2n8f
- ao3Pd4icGj5QkLKF7GIZ1+GxJAOK3iuu6aQSkKcK5r1lfO9IvviJiIoh2J6FLbCVdIz7iwsmV8j
- nqsMziYpYxJTwRg4csdEKx0Y7px7t6ZBa65wUdjG2Oyr3PgWSsyonQI9PfRqySs5ya9Pd7Hot8H
- zHZlZv43PEgMkq28jVw==
-X-Proofpoint-ORIG-GUID: r-NhG_onf2VpasidIwG6SuSkw9NMP2QU
+X-Proofpoint-GUID: uUAL2noQDZeyGZ-tUpIECPueaJrWuCDK
+X-Authority-Analysis: v=2.4 cv=aa9RWxot c=1 sm=1 tr=0 ts=6a288a0f cx=c_pps
+ a=SvEPeNj+VMjHSW//kvnxuw==:117 a=ouPCqIW2jiPt+lZRy3xVPw==:17
+ a=FelO9ux0wxsA:10 a=s4-Qcg_JpJYA:10 a=VkNPw1HP01LnGYTKEx00:22
+ a=u7WPNUs3qKkmUXheDGA7:22 a=DJpcGTmdVt4CTyJn9g5Z:22 a=EUspDBNiAAAA:8
+ a=FnD13UrixhZlOC8LVz4A:9 a=Kq8ClHjjuc5pcCNDwlU0:22
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNjA5MDIwNCBTYWx0ZWRfXzL7fjBsYF1lW
+ kpGVo2FdZI9TaJWTc1lv9xxw64u+ybkgCZ9S8lIbx0NYxy1TT90s/8W2xQkQ6XPPlxk2h6vmyNs
+ Jg/X4rXd0+OeJxfJ5XPlJHUeagMlbFrKP+fidJQbE36s2ZaxXzW2aVUOs1JujGBdC2CM3Xq1eDy
+ D9d0ic2pexlLZj/sKfAiCfE8KcVqSITR+P3ptlUTvV1rdNRTQcuw97vGxuo/nsJ3rwrgFJPH+tn
+ DwTC9vD5DQvGtw1ToCd+reJh4nlNOqvcdqsNrTF+J3NoO79bfnFo+xZcNL/s17E3agbxt3vLeau
+ SuLE44FKaTwGZJRxfhZbkwCTKYl3vPUje+VwW8t6lryqPWTmAuukisqR1x/Muw6heJQEDqlqtPK
+ x3WTIz+fCcgiwYxj+S/4/5eYUkqRtuY1Y5yTWMedviGANPLK5plbQxyk6fpc1CyUo12rIDB/y1+
+ JgcwQwKAGlRDwKz6mog==
+X-Proofpoint-ORIG-GUID: uUAL2noQDZeyGZ-tUpIECPueaJrWuCDK
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.125,FMLib:17.12.100.49
  definitions=2026-06-09_04,2026-06-09_02,2025-10-01_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- lowpriorityscore=0 adultscore=0 phishscore=0 malwarescore=0 impostorscore=0
- priorityscore=1501 clxscore=1015 bulkscore=0 spamscore=0 suspectscore=0
+ phishscore=0 suspectscore=0 priorityscore=1501 impostorscore=0 adultscore=0
+ spamscore=0 bulkscore=0 malwarescore=0 clxscore=1015 lowpriorityscore=0
  classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2605210000 definitions=main-2606090203
-Received-SPF: pass client-ip=148.163.156.1; envelope-from=zycai@linux.ibm.com;
- helo=mx0a-001b2d01.pphosted.com
-X-Spam_score_int: -26
-X-Spam_score: -2.7
+ reason=mlx scancount=1 engine=8.22.0-2605210000 definitions=main-2606090204
+Received-SPF: pass client-ip=205.220.168.131;
+ envelope-from=pierrick.bouvier@oss.qualcomm.com;
+ helo=mx0a-0031df01.pphosted.com
+X-Spam_score_int: -27
+X-Spam_score: -2.8
 X-Spam_bar: --
-X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
- RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
+X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -129,63 +153,67 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 6/9/26 1:42 PM, Jared Rossi wrote:
-> 
-> 
-> On 6/9/26 11:28 AM, Zhuoying Cai wrote:
->> [...]
-> 
->>      vce_max_size = sizeof(VCEntryHeader) +
->>                     ROUND_UP(CERT_KEY_ID_LEN, 4) +
->>                     ROUND_UP(CERT_HASH_LEN, 4) +
->>                     ROUND_UP(cert->der_size, 4);
->>
->> After thinking about this, I’m not entirely sure, but I think using the
->> calculated vce_max_size might be a better choice than MAX_ENTRY_SIZE,
->> since vce_max_size more closely reflects the size of the current VCE.
->>
->> MAX_ENTRY_SIZE is currently defined as 8192, which is significantly
->> larger than the size of a single VCB that will be requested in a later
->> patch.
-> 
-> I agree that it does make more sense to use the calculated size here, but
-> do we actually know 8192 is significantly larger than what we will need?
-> If so that seems like a problem with our definition of the max size.
-> 
-> Can we use a smaller value, or is it possible that the calculated
-> vce_max_size is close to 8k anyway?
-> 
+We add possibility to duplicate a test for a given src. This allows to
+declare several tests that still share the same executable, thus saving
+space and compile time.
 
-I'm not entirely sure, but I think it’s uncommon for a self-generated
-certificate to reach such a large size, though it is not impossible.
-From my experience, the largest certificate I’ve generated used an RSA
-16384-bit key and was 5982 bytes. Typically, certificates range from
-about 1 KB to 4 KB in size. For reference, RHEL 10.2 signs components
-using the Red Hat Secure Boot 302 certificate from
-https://access.redhat.com/security/team/key, which has a size of 4429 bytes.
+A side note to mention that meson perfectly supports declaring several
+tests with the same name. However, we prevent that to force dev to
+clarify what is the intent of each individual test.
 
->> Although we check whether the remaining space is sufficient to
->> store the VCE, allocating MAX_ENTRY_SIZE for each VCE might be unnecessary?
->>
->> Just wondering if this makes sense, or if you think we should keep using
->> MAX_ENTRY_SIZE here?
-> In this context, yes, it would be better to use the calculated size, but
-> also if you feel that the current definition of MAX_ENTRY_SIZE will be
-> significantly larger than we need, should we reconsider what we define
-> MAX_ENTRY_SIZE as?
+Signed-off-by: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
+---
+ tests/tcg/meson.build | 14 ++++++++++----
+ 1 file changed, 10 insertions(+), 4 deletions(-)
 
-We could reduce the limit to something like 6144 (6 * 1024) or 7168 (7 *
-1024) to better align with the certificate sizes we are likely to use
-during verification, or keep it at 8192 (8 * 1024) to provide additional
-buffer for less common cases.
-
-Please let me know what you think.
-
->> [...]
-> 
-> Regards,
-> Jared Rossi
-
-
+diff --git a/tests/tcg/meson.build b/tests/tcg/meson.build
+index 2c6d85c586a..bb0184732fd 100644
+--- a/tests/tcg/meson.build
++++ b/tests/tcg/meson.build
+@@ -12,6 +12,7 @@ tcg_tests = {}
+ #       {
+ #         'src_file': {
+ #           'exe_name': ['provide an alternative binary name'],
++#           'test_name': ['provide an alternative test name'],
+ #         }
+ #       },
+ #       ...
+@@ -21,8 +22,8 @@ tcg_tests = {}
+ #
+ # Every test executable, identified by 'exe_name' is built only once.
+ # Tests for a given src use the same executable by default, and their definition
+-# is guaranteed to be unique also.
+-# Default name is derived from src if 'exe_name' is omitted.
++# is guaranteed to be unique also. They can be duplicated by setting 'test_name'.
++# Default name is derived from src if 'exe_name' and 'test_name' are omitted.
+ 
+ # plugins come first, as we need to build the list
+ subdir('plugins')
+@@ -51,7 +52,7 @@ foreach target, plan: tcg_tests
+       # return a clear error if user mispell a setup entry
+       foreach key, _ : setup
+         if key not in [
+-                       'exe_name',
++                       'exe_name', 'test_name',
+                        ]
+           error('unknown tcg setup entry \'' + key + '\' for test ' + src)
+         endif
+@@ -66,8 +67,13 @@ foreach target, plan: tcg_tests
+         exe_name = setup['exe_name']
+       endif
+ 
+-      exe_name = target + '-' + exe_name
+       test_name = exe_name
++      if 'test_name' in setup
++        test_name = setup['test_name']
++      endif
++
++      exe_name = target + '-' + exe_name
++      test_name = target + '-' + test_name
+ 
+       if test_name in added_tests
+         error('test ' + test_name + ' was already added: ' +
+-- 
+2.43.0
 
 
