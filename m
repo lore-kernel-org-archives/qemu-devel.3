@@ -4,140 +4,115 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9046BCD8CB2
-	for <qemu-devel@archiver.kernel.org>; Tue,  9 Jun 2026 21:52:54 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C87E7CD8CA8
+	for <qemu-devel@archiver.kernel.org>; Tue,  9 Jun 2026 21:53:06 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wX4JQ-0007L2-Uq; Tue, 09 Jun 2026 17:48:44 -0400
+	id 1wX4NP-00009h-MS; Tue, 09 Jun 2026 17:52:52 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pierrick.bouvier@oss.qualcomm.com>)
- id 1wX4JC-0006tv-FS
- for qemu-devel@nongnu.org; Tue, 09 Jun 2026 17:48:30 -0400
-Received: from mx0a-0031df01.pphosted.com ([205.220.168.131])
+ (Exim 4.90_1) (envelope-from <zycai@linux.ibm.com>)
+ id 1wX4Mv-0007vH-6u; Tue, 09 Jun 2026 17:52:21 -0400
+Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pierrick.bouvier@oss.qualcomm.com>)
- id 1wX4J5-0008C6-Pw
- for qemu-devel@nongnu.org; Tue, 09 Jun 2026 17:48:29 -0400
-Received: from pps.filterd (m0279863.ppops.net [127.0.0.1])
- by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 659K4hpH3229320
- for <qemu-devel@nongnu.org>; Tue, 9 Jun 2026 21:48:12 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
- cc:content-transfer-encoding:date:from:in-reply-to:message-id
- :mime-version:references:subject:to; s=qcppdkim1; bh=wJRVYYDL9J5
- awLnVNWgque9y4f2f+h6eDXpG+UPbSkY=; b=oM1wxGUfTw4o39cntGHEKd4ZwoT
- t97KMLCdhWQEgcXSzFwyk/o5Ykd/7z0cXhVP1A7xUEzKKrZfz0b/u0M/+RhyzIsn
- ZfuD0yXRt42Ba75Pfz5FoX230IXOSedL2tbJzTmuc7yczewtib+JaPhM0EbWkT4N
- N5vo+fiQcd53oGStEsR9YwzLxVesCeV7iqmJTVZSD+svBZhiQPV7y8jgKrV0k8Rj
- qHI9AxqUOJo6H6jmQ+K6gLpdK+uSyl7OiksKXoeGc8uLrbU85A9zGX5BrnPfjhde
- hYswB+lg8nlclzY0j+GizgE1nNeVQ/lIuaO4Itytn1DYNZrd5yQqWsdYbLQ==
-Received: from mail-dy1-f200.google.com (mail-dy1-f200.google.com
- [74.125.82.200])
- by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4epg3wkg2m-1
- (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
- for <qemu-devel@nongnu.org>; Tue, 09 Jun 2026 21:48:12 +0000 (GMT)
-Received: by mail-dy1-f200.google.com with SMTP id
- 5a478bee46e88-304ed777a96so4190409eec.1
- for <qemu-devel@nongnu.org>; Tue, 09 Jun 2026 14:48:12 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=oss.qualcomm.com; s=google; t=1781041692; x=1781646492; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=wJRVYYDL9J5awLnVNWgque9y4f2f+h6eDXpG+UPbSkY=;
- b=QW14ThPKonk50txPgc1svzYeOwSpBZQsBir5jHJi7tmFC2B8tD80PAajNtgeblT8z9
- FWppI+lO9M3ZQo3y5zyrT3ML8kPk30T0BwNWSvoZnJiurRA4XKBMWk15mSiUaPMqkBqD
- adKA3fwMoBMlc7ePughLoAzL5NFjcqhKsSVejiJDxB22INYKwsaDGOd3GUv2Y8oYzIs4
- RyPUbj3Uimnr8Q1Bg+iU/ic7uuIbpL4AIcHeefvH1e/fu2enQf5EN9CQoa3DgpVkXc2G
- 4bCTnM7Fkduj5BsNa2iQiB+QokxFJAle5Y/8cJUsxkawlt6NjLwkdrUbMk6KR6Y/9orc
- Zo3w==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1781041692; x=1781646492;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to;
- bh=wJRVYYDL9J5awLnVNWgque9y4f2f+h6eDXpG+UPbSkY=;
- b=ekhHkYqkQWeIvM817UCOyoWoMtgUaZyYhyDoIaMRf1VStG54iFQl03E6UA2+a7jKIV
- CzOgGQqkGuHSb9V9+ZUey4V2pEI2jEWsFkIGWmhQkdbHs9s21uNyRR+orzajMMS+MFQy
- UxCg6sfX2/qal0M8q2eP4LtQLSX70lQif2+vwkAeitOmJGR8Uqg9so+cPvdFZSalUfU1
- ex0filqieDQw2Gl1+jMSEkak0oLNhiX6DeCrqYa9dXEThbqbLDo7sJpm9BHKtbrqjKb4
- 8DIAsNJW9OD+WYUadaJ+hm6DcRK/4rpFlhVnsSWYvj/Mp7P2PqmtvPWi0GyVrkC181m0
- F3xw==
-X-Gm-Message-State: AOJu0YxyEhSqdyfQDYTctH6WZCbxxRKJYK0rGSReTspLG/ZuX+MVaodl
- JIxD7pvRKurhd32b4c1kAZDuIUWUO/po6Wld4lC1gSJmGicud05af4UWb9Z90IbxOGqZApmgKHC
- XCOc5syIQ3KE/bGoMxL50rAVmejO2Bk6IiYIFINopSIm9EKwVokG6SLA2IEttE3LHbkKg
-X-Gm-Gg: Acq92OE6IZeW3Ud9/lcXhoLUkLO1N/q9Bjh8SEj8TJuqX84nQvX9sqBriO/aHpwfNmV
- FDqRyKkkQarshr+e3l7vDi5owI3YTdnOzxwz0od0oybHGOoJLsqhYYnPrwU88XG93V/BjpBZkIa
- h/j74YIEnr/oF6LG4PV/uDDAcEdwn3FcgFuCAfYgrvFk8nrsxzn1NH8S9m1ObfxZkuXttVn7xPZ
- ZDG+MDih8Xgu5ZMwG4gfcG7oA4S3RqdXVS491YXZQuF6NKyhDd29jZFsCVMKLid2wyulzEYyKDW
- NTl7cOQHQfRgKsPGPujqQospvGMHz++817MAXgT97ZIjHVF4nuqjDHV3Cruboto+qHUJVL7TJcW
- nnnkd7wr4xUxcliw961U1QKTro8HHZVCjMrHojCUC6561mwsvAbe15+JNU/BeksJnlW4D5BAX4/
- oAFuTxEKAL0lH9QRTE
-X-Received: by 2002:a05:7022:207:b0:136:4bbe:9523 with SMTP id
- a92af1059eb24-13807d3698bmr9681168c88.8.1781041691857; 
- Tue, 09 Jun 2026 14:48:11 -0700 (PDT)
-X-Received: by 2002:a05:7022:207:b0:136:4bbe:9523 with SMTP id
- a92af1059eb24-13807d3698bmr9681139c88.8.1781041691368; 
- Tue, 09 Jun 2026 14:48:11 -0700 (PDT)
-Received: from hu-pbouvier-lv.qualcomm.com (Global_NAT1.qualcomm.com.
- [129.46.96.20]) by smtp.gmail.com with ESMTPSA id
- a92af1059eb24-137f5550bcdsm17095895c88.14.2026.06.09.14.48.10
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 09 Jun 2026 14:48:10 -0700 (PDT)
-From: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
-To: qemu-devel@nongnu.org
-Cc: Thomas Huth <thuth@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>,
- Manos Pitsidianakis <manos.pitsidianakis@linaro.org>,
- =?UTF-8?q?Daniel=20P=20=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- qemu-arm@nongnu.org, Richard Henderson <richard.henderson@linaro.org>,
- =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
- Alexandre Iooss <erdnaxe@crans.org>,
- Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
- Peter Maydell <peter.maydell@linaro.org>,
- Gustavo Romero <gustavo.romero@linaro.org>
-Subject: [PATCH 18/27] tests/tcg/meson.build: add wrapper run_with_input
-Date: Tue,  9 Jun 2026 14:47:36 -0700
-Message-ID: <20260609214745.772536-19-pierrick.bouvier@oss.qualcomm.com>
-X-Mailer: git-send-email 2.43.0
-In-Reply-To: <20260609214745.772536-1-pierrick.bouvier@oss.qualcomm.com>
-References: <20260609214745.772536-1-pierrick.bouvier@oss.qualcomm.com>
+ (Exim 4.90_1) (envelope-from <zycai@linux.ibm.com>)
+ id 1wX4Mr-0001SR-NF; Tue, 09 Jun 2026 17:52:20 -0400
+Received: from pps.filterd (m0353729.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
+ 659HZ95l3019572; Tue, 9 Jun 2026 21:51:58 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
+ :content-transfer-encoding:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to; s=pp1; bh=bARAb8
+ /mpgzNFEFTTfLrc9gtsFO66OT4Lku8Fy5zH6s=; b=QZDwg6cIr/JUCb+gattwtX
+ mnY2Kfs7LgQ4Ggsps+5OxSJsxcoQnZxTIe4vJ/pk9704kHvDfjW8/GnEUQwdrMca
+ gZ8jsWej/7LEhS/MvI8HR0d1ygWY/WHm9Y8pOhkBW7YzMbyl3h3NzBjK8NFDBFnq
+ hBZvZACz0JlHhULWj5RzugSO1TF2WPD7RbZAxmVsemF4yGzAx8Ca0lQmgy7AFZWI
+ qIXOt7dO0e+s1Y408WwE774Gj9bToEQPIKfm7ElE/Zyj/5QJhIxq8N3bRUdIVfeP
+ EYAxfdMdEnA2Ytw/Xrh9VBNwOX5RT7yt6te5aCiREmFdUy3Fzcn+VOvcfMl6dpJg
+ ==
+Received: from ppma11.dal12v.mail.ibm.com
+ (db.9e.1632.ip4.static.sl-reverse.com [50.22.158.219])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4emb7qpdh7-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Tue, 09 Jun 2026 21:51:57 +0000 (GMT)
+Received: from pps.filterd (ppma11.dal12v.mail.ibm.com [127.0.0.1])
+ by ppma11.dal12v.mail.ibm.com (8.18.1.7/8.18.1.7) with ESMTP id 659LnbnD029817;
+ Tue, 9 Jun 2026 21:51:57 GMT
+Received: from smtprelay07.dal12v.mail.ibm.com ([172.16.1.9])
+ by ppma11.dal12v.mail.ibm.com (PPS) with ESMTPS id 4en0jybqgg-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Tue, 09 Jun 2026 21:51:57 +0000 (GMT)
+Received: from smtpav02.dal12v.mail.ibm.com (smtpav02.dal12v.mail.ibm.com
+ [10.241.53.101])
+ by smtprelay07.dal12v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 659Lpuqo32047622
+ (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Tue, 9 Jun 2026 21:51:56 GMT
+Received: from smtpav02.dal12v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 1633B5805E;
+ Tue,  9 Jun 2026 21:51:56 +0000 (GMT)
+Received: from smtpav02.dal12v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id E739658051;
+ Tue,  9 Jun 2026 21:51:54 +0000 (GMT)
+Received: from [9.61.12.186] (unknown [9.61.12.186])
+ by smtpav02.dal12v.mail.ibm.com (Postfix) with ESMTP;
+ Tue,  9 Jun 2026 21:51:54 +0000 (GMT)
+Message-ID: <2635b777-34d9-4add-870d-0de0902c5e3e@linux.ibm.com>
+Date: Tue, 9 Jun 2026 17:51:54 -0400
 MIME-Version: 1.0
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v11 09/32] s390x/diag: Implement DIAG 320 subcode 2
+To: Jared Rossi <jrossi@linux.ibm.com>, qemu-s390x@nongnu.org,
+ qemu-devel@nongnu.org
+Cc: cohuck@redhat.com, berrange@redhat.com, richard.henderson@linaro.org,
+ david@kernel.org, walling@linux.ibm.com, jjherne@linux.ibm.com,
+ pasic@linux.ibm.com, borntraeger@linux.ibm.com, farman@linux.ibm.com,
+ mjrosato@linux.ibm.com, iii@linux.ibm.com, eblake@redhat.com,
+ armbru@redhat.com, alifm@linux.ibm.com, brueckner@linux.ibm.com,
+ pierrick.bouvier@oss.qualcomm.com, jdaley@linux.ibm.com
+References: <20260505201905.997996-1-zycai@linux.ibm.com>
+ <20260505201905.997996-10-zycai@linux.ibm.com>
+ <ce623f2a-9247-4a67-98a0-7a180fdb88ca@linux.ibm.com>
+ <053fe695-54a7-475e-b7f0-11a7eb34f67c@linux.ibm.com>
+ <febb7ef1-4059-42f2-9ec0-4beac378cc45@linux.ibm.com>
+Content-Language: en-US
+From: Zhuoying Cai <zycai@linux.ibm.com>
+In-Reply-To: <febb7ef1-4059-42f2-9ec0-4beac378cc45@linux.ibm.com>
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNjA5MDIwNSBTYWx0ZWRfXwqATeOc9PnrJ
- vMtCr9Vu864q3xPtUR78ZeUvvBMnV74lyPiXYdsXO7JK7LKc2zB4VNn/HUU+/zsdxaaSqb2RiY7
- UpeLAsjX5aY0FfkCpTcSKo5NR15ZaWa623Spsr/2vYrm7rLAj+IHkeSqPmB+tOvVqaAuFqQvqZL
- kNK2YpalUXCGuvYDJyn7AMrWDoCmhLZXGBoMDfOlDfB1DGEQl9t7doBTU9vxdOfxVKYxYHk66ZA
- b/nsgEngDu7izlXoy7Fg5s+Y/DgcdTfopA+7DgjD/8e30NTbmY0wye85dU0VziWAVhPL4p2EVs1
- M6LJd/hWpKweg60yEvMQ4y6nsI2hQVDGlPTptGVW6H6TfRG51mAVswRelGhUM/SqmdSUHQonRVv
- Lt+Vr9/FS9vjNVN+BtNhgfkNffOu1WiNQLh3yITN9L6AkBf7+6SDiR2X0pl6v88K94Yp0zjlQdw
- j3FH/cXKv7S6wLWR8iQ==
-X-Authority-Analysis: v=2.4 cv=csWrVV4i c=1 sm=1 tr=0 ts=6a288a1c cx=c_pps
- a=PfFC4Oe2JQzmKTvty2cRDw==:117 a=ouPCqIW2jiPt+lZRy3xVPw==:17
- a=FelO9ux0wxsA:10 a=s4-Qcg_JpJYA:10 a=VkNPw1HP01LnGYTKEx00:22
- a=u7WPNUs3qKkmUXheDGA7:22 a=yOCtJkima9RkubShWh1s:22 a=EUspDBNiAAAA:8
- a=xR2A3ow12ysiLA1IkLQA:9 a=6Ab_bkdmUrQuMsNx7PHu:22
-X-Proofpoint-GUID: 8kmc14SzwxcaV4qk1dadD-cguxMqmAZr
-X-Proofpoint-ORIG-GUID: 8kmc14SzwxcaV4qk1dadD-cguxMqmAZr
+X-TM-AS-GCONF: 00
+X-Authority-Analysis: v=2.4 cv=HppG3UTS c=1 sm=1 tr=0 ts=6a288afe cx=c_pps
+ a=aDMHemPKRhS1OARIsFnwRA==:117 a=aDMHemPKRhS1OARIsFnwRA==:17
+ a=IkcTkHD0fZMA:10 a=FelO9ux0wxsA:10 a=VkNPw1HP01LnGYTKEx00:22
+ a=RnoormkPH1_aCDwRdu11:22 a=uAbxVGIbfxUO_5tXvNgY:22 a=20KFwNOVAAAA:8
+ a=57xXvlBjRI5xFtRfWcwA:9 a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
+X-Proofpoint-GUID: r-NhG_onf2VpasidIwG6SuSkw9NMP2QU
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNjA5MDIwMyBTYWx0ZWRfX3ZOSXO+kU5uj
+ YylhDQ6+PK4rkXdDAoJl8GQ+Za5jzhhFW+OtScpIzYWfQ5fRSC1KnhWgoKid8SVweIJjGSarW39
+ mWC0szrhpHBLZrMl/qjOq/eY7EhmPIv4w1eR4fQcIMmRkZ0plpTATT5hbNXqW91TD0KeOIoqCiH
+ GtzzJYHFYmFWW8Ah57en1sCW/d7Sd1d6UQlXykbe9HIU/uDGysl9qTBxGDcBByF4KyVOgfziSvl
+ PHAclBtCCTt6rQsfYHhm5nY7c2UpXnYIVXsU6JDNoEDqOI/ifEK/jDoE7pUALHhmqG0aboz2n8f
+ ao3Pd4icGj5QkLKF7GIZ1+GxJAOK3iuu6aQSkKcK5r1lfO9IvviJiIoh2J6FLbCVdIz7iwsmV8j
+ nqsMziYpYxJTwRg4csdEKx0Y7px7t6ZBa65wUdjG2Oyr3PgWSsyonQI9PfRqySs5ya9Pd7Hot8H
+ zHZlZv43PEgMkq28jVw==
+X-Proofpoint-ORIG-GUID: r-NhG_onf2VpasidIwG6SuSkw9NMP2QU
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.125,FMLib:17.12.100.49
  definitions=2026-06-09_04,2026-06-09_02,2025-10-01_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- priorityscore=1501 clxscore=1015 spamscore=0 adultscore=0 lowpriorityscore=0
- malwarescore=0 impostorscore=0 phishscore=0 suspectscore=0 bulkscore=0
+ lowpriorityscore=0 adultscore=0 phishscore=0 malwarescore=0 impostorscore=0
+ priorityscore=1501 clxscore=1015 bulkscore=0 spamscore=0 suspectscore=0
  classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2605210000 definitions=main-2606090205
-Received-SPF: pass client-ip=205.220.168.131;
- envelope-from=pierrick.bouvier@oss.qualcomm.com;
- helo=mx0a-0031df01.pphosted.com
-X-Spam_score_int: -27
-X-Spam_score: -2.8
+ reason=mlx scancount=1 engine=8.22.0-2605210000 definitions=main-2606090203
+Received-SPF: pass client-ip=148.163.156.1; envelope-from=zycai@linux.ibm.com;
+ helo=mx0a-001b2d01.pphosted.com
+X-Spam_score_int: -26
+X-Spam_score: -2.7
 X-Spam_bar: --
-X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001,
+X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
+ RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -154,48 +129,63 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Semihosting console tests require console interaction, and were flagged
-as manual because of this. This wrapper automates interaction, by
-sending a specific string on stdin.
+On 6/9/26 1:42 PM, Jared Rossi wrote:
+> 
+> 
+> On 6/9/26 11:28 AM, Zhuoying Cai wrote:
+>> [...]
+> 
+>>      vce_max_size = sizeof(VCEntryHeader) +
+>>                     ROUND_UP(CERT_KEY_ID_LEN, 4) +
+>>                     ROUND_UP(CERT_HASH_LEN, 4) +
+>>                     ROUND_UP(cert->der_size, 4);
+>>
+>> After thinking about this, I’m not entirely sure, but I think using the
+>> calculated vce_max_size might be a better choice than MAX_ENTRY_SIZE,
+>> since vce_max_size more closely reflects the size of the current VCE.
+>>
+>> MAX_ENTRY_SIZE is currently defined as 8192, which is significantly
+>> larger than the size of a single VCB that will be requested in a later
+>> patch.
+> 
+> I agree that it does make more sense to use the calculated size here, but
+> do we actually know 8192 is significantly larger than what we will need?
+> If so that seems like a problem with our definition of the max size.
+> 
+> Can we use a smaller value, or is it possible that the calculated
+> vce_max_size is close to 8k anyway?
+> 
 
-Signed-off-by: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
----
- tests/tcg/meson.build               |  1 +
- tests/tcg/scripts/run_with_input.sh | 12 ++++++++++++
- 2 files changed, 13 insertions(+)
- create mode 100755 tests/tcg/scripts/run_with_input.sh
+I'm not entirely sure, but I think it’s uncommon for a self-generated
+certificate to reach such a large size, though it is not impossible.
+From my experience, the largest certificate I’ve generated used an RSA
+16384-bit key and was 5982 bytes. Typically, certificates range from
+about 1 KB to 4 KB in size. For reference, RHEL 10.2 signs components
+using the Red Hat Secure Boot 302 certificate from
+https://access.redhat.com/security/team/key, which has a size of 4429 bytes.
 
-diff --git a/tests/tcg/meson.build b/tests/tcg/meson.build
-index f379449e582..7201a7809e1 100644
---- a/tests/tcg/meson.build
-+++ b/tests/tcg/meson.build
-@@ -8,6 +8,7 @@ endif
- gdb = find_program(gdb_progs, required: false)
- prog_gdb_test = find_program('../guest-debug/run-test.py')
- prog_run_and_diff = find_program('./scripts/run_and_diff.sh')
-+prog_run_with_input = find_program('./scripts/run_with_input.sh')
- prog_run_and_check_forbidden_output = find_program(
-   './scripts/run_and_check_forbidden_output.sh'
- )
-diff --git a/tests/tcg/scripts/run_with_input.sh b/tests/tcg/scripts/run_with_input.sh
-new file mode 100755
-index 00000000000..3d280547c3a
---- /dev/null
-+++ b/tests/tcg/scripts/run_with_input.sh
-@@ -0,0 +1,12 @@
-+#!/usr/bin/env bash
-+# SPDX-License-Identifier: GPL-2.0-or-later
-+
-+set -euo pipefail
-+
-+if [ $# -lt 2 ]; then
-+    echo "run_with_input: input_string cmd [args]..." 1>&2
-+    exit 1
-+fi
-+input="$1";shift
-+set -x
-+echo "$input" | "$@"
--- 
-2.43.0
+>> Although we check whether the remaining space is sufficient to
+>> store the VCE, allocating MAX_ENTRY_SIZE for each VCE might be unnecessary?
+>>
+>> Just wondering if this makes sense, or if you think we should keep using
+>> MAX_ENTRY_SIZE here?
+> In this context, yes, it would be better to use the calculated size, but
+> also if you feel that the current definition of MAX_ENTRY_SIZE will be
+> significantly larger than we need, should we reconsider what we define
+> MAX_ENTRY_SIZE as?
+
+We could reduce the limit to something like 6144 (6 * 1024) or 7168 (7 *
+1024) to better align with the certificate sizes we are likely to use
+during verification, or keep it at 8192 (8 * 1024) to provide additional
+buffer for less common cases.
+
+Please let me know what you think.
+
+>> [...]
+> 
+> Regards,
+> Jared Rossi
+
+
 
 
