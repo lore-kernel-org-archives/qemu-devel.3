@@ -4,73 +4,95 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 50C46CD8CB9
-	for <qemu-devel@archiver.kernel.org>; Tue,  9 Jun 2026 15:32:31 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4AD27CD98C5
+	for <qemu-devel@archiver.kernel.org>; Tue,  9 Jun 2026 15:36:48 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wWyR5-0003pf-DN; Tue, 09 Jun 2026 11:32:15 -0400
+	id 1wWyUu-0004qv-S3; Tue, 09 Jun 2026 11:36:12 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <kwolf@redhat.com>) id 1wWyR3-0003ow-Vf
- for qemu-devel@nongnu.org; Tue, 09 Jun 2026 11:32:13 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <alex@shazbot.org>) id 1wWyUs-0004qT-58
+ for qemu-devel@nongnu.org; Tue, 09 Jun 2026 11:36:10 -0400
+Received: from fhigh-a8-smtp.messagingengine.com ([103.168.172.159])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <kwolf@redhat.com>) id 1wWyR0-0006Id-Tm
- for qemu-devel@nongnu.org; Tue, 09 Jun 2026 11:32:13 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1781019129;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=6Tb38EhzxJ9FPHU99MtdRA+a7+nQt1AnFO8pAvKMGho=;
- b=e8JBPHhrhCi6gZRyN1bAneLKiOuwfMShlvxbROfkekH/7exIwHw30JJfefKaO4QQ2jhnk2
- rxpgdX/aGjjWiJmBb6jU2pyqEoU0zj9dCEPSZIpv8/vK57NMdELZk65xLZH9Yu84ohHLJU
- PaBAW+5f3F4FroBmBNQK1gpffUrLHNo=
-Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-641-IeyeOY5KPN2iP3tbPFidLA-1; Tue,
- 09 Jun 2026 11:32:06 -0400
-X-MC-Unique: IeyeOY5KPN2iP3tbPFidLA-1
-X-Mimecast-MFC-AGG-ID: IeyeOY5KPN2iP3tbPFidLA_1781019125
-Received: from mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.17])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id EE2C8195FCC8; Tue,  9 Jun 2026 15:32:04 +0000 (UTC)
-Received: from redhat.com (unknown [10.44.33.91])
- by mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 199A41956053; Tue,  9 Jun 2026 15:32:02 +0000 (UTC)
-Date: Tue, 9 Jun 2026 17:32:00 +0200
-From: Kevin Wolf <kwolf@redhat.com>
-To: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
-Cc: Stefan Hajnoczi <stefanha@gmail.com>,
- qemu-devel <qemu-devel@nongnu.org>, Eric Blake <eblake@redhat.com>,
- qemu block <qemu-block@nongnu.org>
-Subject: Re: Race condition in qemu-iotests nbd 205?
-Message-ID: <aigx8G_jb7RLfbly@redhat.com>
-References: <CAJSP0QU6Ko87bYaaNm6DCB7krVZgbo_YohuVKSAunBpnDJFdHA@mail.gmail.com>
- <457460b8-70ba-4edf-989d-5dca4d68bbea@yandex-team.ru>
+ (Exim 4.90_1) (envelope-from <alex@shazbot.org>) id 1wWyUo-00015v-2Q
+ for qemu-devel@nongnu.org; Tue, 09 Jun 2026 11:36:09 -0400
+Received: from phl-compute-02.internal (phl-compute-02.internal [10.202.2.42])
+ by mailfhigh.phl.internal (Postfix) with ESMTP id 7BE1814000BB;
+ Tue,  9 Jun 2026 11:36:03 -0400 (EDT)
+Received: from phl-frontend-03 ([10.202.2.162])
+ by phl-compute-02.internal (MEProxy); Tue, 09 Jun 2026 11:36:03 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=shazbot.org; h=
+ cc:cc:content-transfer-encoding:content-type:content-type:date
+ :date:from:from:in-reply-to:in-reply-to:message-id:mime-version
+ :references:reply-to:subject:subject:to:to; s=fm3; t=1781019363;
+ x=1781105763; bh=0wIF04rCADL4FP/olrhMJI07G6x432e+F07/o7/Aeg8=; b=
+ iNbiVLqKSMjXk3h9i0u2T+ykaKo+S7P1AoZKWxec7w4N5LSYuoRjAFfJupLV3ylp
+ YIskuouE10wHItAIYh3/ICIYNAZ9NZ+qoYYgc+Ie2Z+JXF3BQqEz8luuwSgUf6Ih
+ JB0NCIJ4/p8RlzLzNVyVmzjAg3ntaQBkL1ixaSaw8C4p0kzsgYY74lkENZGGtLH5
+ rZGJ7r/oB3f7IN1xf+jjoxpHw5ffK0dQNQ9qWGa33XcT+NuYS565M3CT+CedMhhp
+ BuIKL9nFppLYlhSXPCD9EmTqoDhcFdIiZK/0S11pD5Ei0JC+MtCnNgp99GlDuc+L
+ ispukCgRrdIeCyZhkePueQ==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+ messagingengine.com; h=cc:cc:content-transfer-encoding
+ :content-type:content-type:date:date:feedback-id:feedback-id
+ :from:from:in-reply-to:in-reply-to:message-id:mime-version
+ :references:reply-to:subject:subject:to:to:x-me-proxy
+ :x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=1781019363; x=
+ 1781105763; bh=0wIF04rCADL4FP/olrhMJI07G6x432e+F07/o7/Aeg8=; b=A
+ edOu2aDiU44Tq+TxyiEvkeKVriM2l35GLATEv5mW8QfL5863Sz/gQyZAFH1VQens
+ /LiT2c61az3eonumBeNQYtv1vGZURe1crnnRmnkL6OWkOlzayf4/cKrXFHhn0Zr3
+ 2PFLoxJgKUHN3OZbN4WF/RZhlowVyhOWaMWlETH7AyclRlP83mhXYnOrT5vaLVJO
+ cD7Ba/NmmgxZjmbTnVdPOp7QS0L+RaGducysoj8gtAtdGwDltLvHSKYIN5CNKxn6
+ UoEljnxYOot/bZFw+fU9KJB7yRnj9yHnDhtkgrn6fOKutqQ0Jytu6w2f0JR8DnBW
+ TNJhIWN7KnUBL6jEeRd6w==
+X-ME-Sender: <xms:4zIoasjIyuPVvJCBfwy2CRhsd5_3N27ccS_fiR-HvjsvqjOyFMHHmg>
+ <xme:4zIoat-GF7oX_QK9CXfYQVAy9fDmGMrErCFivAHPQcp5jiJ_FgzUDLFLCXqGnMT4A
+ Go5nF39fqxT_CrrwXE0DO4yp5M4saTPQq4Iq1qqiVpDHTUuymcmpg>
+X-ME-Received: <xmr:4zIoavoO_my-lySUpRxbfzsIsqbMPp0qp3GTosINnAPQwds83WZyDJWD1_w>
+X-ME-Proxy-Cause: dmFkZTFFUpGjjmihIIHbNVLC/jR0MYDO7Yz1OcEbuBORzHZ9NSy7GLwyvtJEIWmvrsejZ1
+ KpWUIfiguSPoaOW3F9uLeWY7U1klr1io6U9+xkTnKC5/1hoelE9k/JrotpkZd8u8wEFa1T
+ NQBbePSslA/RQlQwTtihLuH+leq3wpoMoxJWfE8wmndDouNMP7or1+JjxjqEpU5QUZ/KUr
+ Bq36d/sCtiHp4zBoFePrVBypm2lO3zlnzR8hkHDarSn7WMovMpeXt18AxD4aD0UkePHKAp
+ 2UTxNTZgbjlEZDeR8AEOM3E1voYmKEwDzL0J8Ad9Ktz5VtWKraJjoouEul92Z80IN/5zKf
+ RWGLIIs4+HUj8dc4erA/WnhmxHB8tmXHQCZvEWmee8f9qU6MDbfSbFRmvEs0EtfWL1OZSt
+ V4QYHh7kWUErN9VOjCTpkFqMNlAaC2W52Eqr6wPawphDwwOidAaS0MUf/W1p/WhcBgjAgq
+ Gkfn4O3B0K5WHK0XUQGccGE72w9Fil0bq7yion0XRiMKomFzWJWlPxrfck14AOJMy53Uz6
+ AibU0+b18iHJrCNvCE2Dtg4t/zopK3W933wzQie6waSXMj8YqNSMWrr3Ig3yWS8jRx8pTb
+ 05VVMqjAH6DLg/q7Wen9awFcUfnJvUJgAyrnzUGT5g/te6naTaAxU3CQn8rg
+X-ME-Proxy: <xmx:4zIoatU9ijtZbawko5FcqFL42HwpsfGRkh6N1Rv-fXg3g0kqhw8lNw>
+ <xmx:4zIoamAMiYxcFcfTOeNlWQ3JEaIBqFlbx5JrVQuzw_fb9t1_JWPezA>
+ <xmx:4zIoap305YOYFJK1oTEa_SHQI0XFMEjH_LRa_uSkwdTuTTmrWyBheA>
+ <xmx:4zIoag0E4M8gP4nneGuYfa8eJnzAR32XaRuWDjBMSkqz_j0vI7oOnw>
+ <xmx:4zIoaqwtwpchzvCkgLj3cYSBkZkcD8dTKZVNIFJeMraDF71yill3_8B4>
+Feedback-ID: i03f14258:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
+ 9 Jun 2026 11:36:02 -0400 (EDT)
+Date: Tue, 9 Jun 2026 09:36:01 -0600
+From: Alex Williamson <alex@shazbot.org>
+To: Tomita Moeko <tomitamoeko@gmail.com>
+Cc: qemu-devel@nongnu.org, =?UTF-8?B?Q8OpZHJpYw==?= Le Goater
+ <clg@redhat.com>, "Michael S. Tsirkin" <mst@redhat.com>, K S Maan
+ <kirandeepmaan45@gmail.com>, alex@shazbot.org
+Subject: Re: [PATCH v2 2/7] hw/pci: Skip EFI option ROM in pci_patch_ids()
+Message-ID: <20260609093601.59aa6fde@shazbot.org>
+In-Reply-To: <20260608134559.23971-3-tomitamoeko@gmail.com>
+References: <20260608134559.23971-1-tomitamoeko@gmail.com>
+ <20260608134559.23971-3-tomitamoeko@gmail.com>
+X-Mailer: Claws Mail 4.4.0 (GTK 3.24.52; x86_64-pc-linux-gnu)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <457460b8-70ba-4edf-989d-5dca4d68bbea@yandex-team.ru>
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.17
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=kwolf@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: 8
-X-Spam_score: 0.8
-X-Spam_bar: /
-X-Spam_report: (0.8 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.445,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_SBL_CSS=3.335, SPF_HELO_PASS=-0.001,
- SPF_PASS=-0.001 autolearn=no autolearn_force=no
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=103.168.172.159; envelope-from=alex@shazbot.org;
+ helo=fhigh-a8-smtp.messagingengine.com
+X-Spam_score_int: -27
+X-Spam_score: -2.8
+X-Spam_bar: --
+X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_PASS=-0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -86,123 +108,48 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Am 09.06.2026 um 14:10 hat Vladimir Sementsov-Ogievskiy geschrieben:
-> 08.06.26 17:23, Stefan Hajnoczi пишет:
-> > Hi Vladimir,
-> > It looks like there is a race condition in qemu-iotests 205 when the
-> > NBD server is shutting down:
-> > 
-> > +FAIL: test_remove_during_connect_safe_hard (__main__.TestNbdServerRemove)
-> > +----------------------------------------------------------------------
-> > +Traceback (most recent call last):
-> > + File "/builds/qemu-project/qemu/tests/qemu-iotests/205", line 149,
-> > in test_remove_during_connect_safe_hard
-> > + self.assertExportNotFound('exp')
-> > + File "/builds/qemu-project/qemu/tests/qemu-iotests/205", line 63, in
-> > assertExportNotFound
-> > + self.assert_qmp(result, 'error/desc', "Export 'exp' is not found")
-> > + File "/builds/qemu-project/qemu/tests/qemu-iotests/iotests.py", line
-> > 1246, in assert_qmp
-> > + self.assertEqual(result, value,
-> > +AssertionError: "Export 'exp' is already shutting down" != "Export
-> > 'exp' is not found"
-> > +- Export 'exp' is already shutting down
-> > ++ Export 'exp' is not found
-> > + : "error/desc" is "Export 'exp' is already shutting down", expected
-> > "Export 'exp' is not found"
-> > 
-> > https://gitlab.com/qemu-project/qemu/-/jobs/14745043965#L328
-> > 
-> > I have not seen this CI failure before, so it might be rare and hard
-> > to reproduce.
-> > 
-> > Stefan
+On Mon,  8 Jun 2026 21:45:53 +0800
+Tomita Moeko <tomitamoeko@gmail.com> wrote:
+
+> pci_patch_ids() patches the checksum at the reserved 0x06 byte, but
+> for EFI option ROMs the 32 bits at 0x04 are the EFI signature and
+> must be 0x00000EF1. Since OVMF does not check vendor/device IDs in
+> the PCIR header or the checksum, skip patching for EFI ROMs.
 > 
-> Hi! Looks like a degradation in commit
-> 
-> 
->     commit 3c3bc462adeb561f5dfdcbb84ae691c95ccef916
->     Author: Kevin Wolf <kwolf@redhat.com>
->     Date:   Thu Sep 24 17:27:06 2020 +0200
-> 
->         block/export: Add block-export-del
-> 
->         Implement a new QMP command block-export-del and make nbd-server-remove
->         a wrapper around it.
-> 
-> 
-> Before that commit we search for export by nbd_export_find(), and it fails
-> with "Export 'exp' is not found" as expected, because prior
-> qmp_nbd_server_remove(mode=hard) does
-> 
->   nbd_export_remove() -> nbd_export_request_shutdown() -> QTAILQ_REMOVE(&exports, exp, next);
-> 
-> when nbd_export_find() searches for that export exactly in this "exports" list
-> (static global in nbd/server.c)
-> 
-> 
-> Starting with 3c3bc462adeb5
-> 
-> qmp_nbd_server_remove() searches for export by blk_export_find(), which searches in
-> block_exports list in block/export/export.c.
-> 
-> Previous qmp_nbd_server_remove(mode=hard) does
-> 
->   qmp_block_export_del() -> blk_exp_request_shutdown() -> nbd_export_request_shutdown(),
-> 
-> which removes the export only from "exports" list in nbd/server.c.
-> 
-> 
-> How the export is removed from block_exports list? It is done in blk_exp_delete_bh(),
-> scheduled by
-> 
-> void blk_exp_unref(BlockExport *exp)
-> {
->     assert(exp->refcount > 0);
->     if (--exp->refcount == 0) {
->         /* Touch the block_exports list only in the main thread */
->         aio_bh_schedule_oneshot(qemu_get_aio_context(), blk_exp_delete_bh,
->                                 exp);
->     }
-> }
-> 
+> Reported-by: K S Maan <kirandeepmaan45@gmail.com>
+> Signed-off-by: Tomita Moeko <tomitamoeko@gmail.com>
 > ---
+>  hw/pci/pci.c | 5 +++++
+>  1 file changed, 5 insertions(+)
 > 
-> I think, all the references should be removed druing qmp nbd-server-remove(hard) call,
-> but probably, we still have a (small) chance of doing this check in test
-> 
->    self.assertExportNotFound('exp')
-> 
-> and get unexpected answer _before_ scheduled removal actually done.
-> 
-> ---
-> 
-> blk_exp_unref() does scheduling to main thread since
-> 
->     commit bc4ee65b8c309ed6a726e3ea1b73f7fa31b4bb95
->     Author: Kevin Wolf <kwolf@redhat.com>
->     Date:   Thu Sep 24 17:27:03 2020 +0200
-> 
->         block/export: Add blk_exp_close_all(_type)
-> 
-> ---
-> 
-> Not sure, how to properly fix it... Of course, better is to support old behavior,
-> when action of nbd-server-remove(hard) was synchronous.
+> diff --git a/hw/pci/pci.c b/hw/pci/pci.c
+> index 742917f79d..eb10e586d5 100644
+> --- a/hw/pci/pci.c
+> +++ b/hw/pci/pci.c
+> @@ -2521,6 +2521,11 @@ static void pci_patch_ids(PCIDevice *pdev, uint8_t *ptr, uint32_t size)
+>          return;
+>      }
+>  
+> +    /* OVMF won't check IDs in PCIR header, skip EFI roms */
+> +    if (pci_get_byte(ptr + pcir_offset + 0x14) == 0x03) {
+> +        return;
+> +    }
+> +
 
-I guess you can always add one more AIO_WAIT_WHILE(), this time to
-nbd-server-remove, but blocking QMP commands aren't really nice, so I'd
-rather avoid that. In the case of nbd-server-remove, if you analysis is
-correct, the current behaviour has been there for almost six years.
+Just above this we have the sanity testing:
 
-So my gut feeling is that it's better to fix the test case to wait for
-the BLOCK_EXPORT_DELETED event.
+    if (pcir_offset + 8 >= size || memcmp(ptr + pcir_offset, "PCIR", 4)) {
+        trace_pci_bad_pcir_offset(pcir_offset);
+        return;
+    }
 
-And then I saw that nbd-server-add and nbd-server-remove have actually
-been deprecated since QEMU 5.2, so maybe the best way forward is really
-to just delete them? That will still require changing the test case, of
-course.
++8 covers the vendor and device IDs, but now we're reaching deeper and
+should extend the validation to match.  s/8/0x14/  Thanks,
 
-Kevin
+Alex
+
+>      vendor_id = pci_get_word(pdev->config + PCI_VENDOR_ID);
+>      device_id = pci_get_word(pdev->config + PCI_DEVICE_ID);
+>      rom_vendor_id = pci_get_word(ptr + pcir_offset + 4);
 
 
