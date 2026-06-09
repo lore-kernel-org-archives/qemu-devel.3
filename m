@@ -4,100 +4,85 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9EAE0CD8CB2
-	for <qemu-devel@archiver.kernel.org>; Tue,  9 Jun 2026 19:19:58 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E6198CD8CAD
+	for <qemu-devel@archiver.kernel.org>; Tue,  9 Jun 2026 19:23:59 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wX1wp-00069r-Q2; Tue, 09 Jun 2026 15:17:22 -0400
+	id 1wX22R-0003dh-D8; Tue, 09 Jun 2026 15:23:07 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <filip.hejsek@gmail.com>)
- id 1wX1wV-00062T-CU
- for qemu-devel@nongnu.org; Tue, 09 Jun 2026 15:16:58 -0400
-Received: from mail-wm1-x330.google.com ([2a00:1450:4864:20::330])
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1wX21C-0003Cg-Bw
+ for qemu-devel@nongnu.org; Tue, 09 Jun 2026 15:21:58 -0400
+Received: from mail-pl1-x635.google.com ([2607:f8b0:4864:20::635])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <filip.hejsek@gmail.com>)
- id 1wX1wT-0006PV-A4
- for qemu-devel@nongnu.org; Tue, 09 Jun 2026 15:16:54 -0400
-Received: by mail-wm1-x330.google.com with SMTP id
- 5b1f17b1804b1-490ae94a89eso50998075e9.1
- for <qemu-devel@nongnu.org>; Tue, 09 Jun 2026 12:16:52 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1wX20t-0003zw-DW
+ for qemu-devel@nongnu.org; Tue, 09 Jun 2026 15:21:35 -0400
+Received: by mail-pl1-x635.google.com with SMTP id
+ d9443c01a7336-2c0c2c7d45eso53589555ad.1
+ for <qemu-devel@nongnu.org>; Tue, 09 Jun 2026 12:21:15 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1781032612; x=1781637412; darn=nongnu.org;
- h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
- :mime-version:subject:date:from:from:to:cc:subject:date:message-id
- :reply-to; bh=S6jSm4Mi9XKgjjqZh5KQVJBGlx7yAY6ZGbKU8eIlcy0=;
- b=sQReY5v3xxUK4pX8wVdA+62lE/zQJn77nEIaOcJRaW5O9dmzWnkKVDFgQ1yLMRDpn8
- feC7U0fd2mCwR90p3tQbhqgaqneMFq1Fmz89STzBoRYg4D4LHQI0o7gv25Ht35ohS/B9
- D5O0/hYuUSK+VA8ccNKqLFFen0iXpGIluBeHc4B2Id3O8DkKAT1DMKz8s9DQISrjnsA7
- jjerd10X3U63p2W4LzxQE4WIbt2gemFqSvo5DvoEpvrf7LAllJqrEcG2beg7ZPGwlNYn
- iwsM/l4a2asGjh9wQSXeXBb0iT8+qGZYk2GCIhC849+u8p1gLkEk+gW3ShWlcVIuUkDd
- Qm8Q==
+ d=linaro.org; s=google; t=1781032875; x=1781637675; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=qxJlZl6n8F/qIy1kJwiEnWFNrPr1p3ske2PZwKnmD7Q=;
+ b=xC9sfD4wz33+MK2lSFcwryHr3uSrufASx2/X6y3/hsmu3AvZTL6y3yyC4RSQOIxuB8
+ HimgpsY0EzA0/JknNyZXQUwZH9sBOqTTu8sPB7BTg1LfJboZiNQWHtAMg5/eiNyA+ZmK
+ nCRWiVtRA1k1ZNAx8lbbeAShwbAyntON/7Y8V4IeXyZ79wpoifQuIX0jGclqhPExWilv
+ f0LfAOEQA9+kRYwYtq4k8auJ3TSU0F/GP+55wzhkdchpRcK/IJ1QPwHJErohcwWtoAgK
+ lNfqYcvbBKw+Fi9vg01pp6umlnRmI7iR5NPlgjYsHpB6TGLuIzN+nO+//1OCjGvN77gH
+ Maag==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1781032612; x=1781637412;
- h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
- :mime-version:subject:date:from:x-gm-gg:x-gm-message-state:from:to
- :cc:subject:date:message-id:reply-to;
- bh=S6jSm4Mi9XKgjjqZh5KQVJBGlx7yAY6ZGbKU8eIlcy0=;
- b=tLg5hjB3h5AM9VwNHO+3sbH4f0c4JlbsdC8XMcPrqYSAPeLLRYFUvrEj5G5ocMdnuH
- uZAU63TCpWMQTBhSUNMjCGKRcc49YNZudlbQEPZrbZFrKqtYtdKPff8Uk89LAN0CJ/DP
- iC7eqhEoDWIIGHEKEQj90cJs/ZdeShV+W8UDFPnuC2DVfa8A5I/VCjnr2lr1dfXWZL41
- JtLgSzLgjXe+F2yN67p2v0k6KZusvQFvNNcUfDd5MNz+rPiAbwON4iM1SvwMcbDjy6Gq
- VvymMhcmi4eOkJVgHn+bjZ6G3lukNG85NwTIgA5VOOtqTcqiKpuGyqrdES84+D4P3iGP
- kUzw==
-X-Gm-Message-State: AOJu0YxpgmUk7//a0P5lf/qRPeedLE1LqMj3b7/h/E0hVWVyX1NkhucZ
- CSIaDJ+RcqJXSyHKzwQUIpDP56VNB/ciHxn30hULC1Fe6UThHrQl40MY
-X-Gm-Gg: Acq92OHc+Sme2xFcIQpjVubbuAOs5yYeJZguJFUMiNAO1tX3ZB7ITWUr8idsOqxK9yf
- 86hmSSxhX66UiBiskSrD0iEs5WeFKfJFw8NItJ6BwKeOLr+c3yKdtOCAEX0+6/StCCUdFs/eW5Q
- ypDff+wz68moM1I+5FnJakZd1p1vnDKYMJ/nn/be+4BIxwT9YH+ZtuoFzajA//oWYiqX5EmSFVn
- OnR4RFaTrtJ5BtLomxqlUHiWwokFBCcCWgffDKsEqu2YSwN5Up2TdMBLCg/Fj4jp/v28SL+EL/F
- HGqEGo5/h6QNr4rkiQNvGZD6XC0zTuAm5hN43LYwHKAHqSM9rngrIXoJo+TDBdwvzvcdG5mstrb
- IyZJx9DEIzpQYUlKdeMApvMVqWgey8+UWSh00utIRvvvNg5bnKbpNzEyymPh1/NtT+kMXPyOWHK
- HcJEhdhDBav11ISpBWLjfbW0OEgYtptr/aQUtmqNt/4xHuEtHT4/3iGYzEOXKi/J4=
-X-Received: by 2002:a05:600c:1908:b0:490:b5d0:598f with SMTP id
- 5b1f17b1804b1-490c25b5f6cmr360246245e9.13.1781032611689; 
- Tue, 09 Jun 2026 12:16:51 -0700 (PDT)
-Received: from localhost (mem-185.47.220.165.jmnet.cz. [185.47.220.165])
- by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-4601f2f67c6sm62218751f8f.16.2026.06.09.12.16.51
+ d=1e100.net; s=20251104; t=1781032875; x=1781637675;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=qxJlZl6n8F/qIy1kJwiEnWFNrPr1p3ske2PZwKnmD7Q=;
+ b=QAp6SSaB8sfagBzIq2DhGTBmugC2HfjlnJpPv+4sUJDwIBRPGQYG0us6yh9Y+kgdNu
+ vlzdd07m2fUEYE9PP1l0VhxivXULtiEysfc33K1sIh/u122Vg/JJHDfTsbac5ECNfTAT
+ spQrCJr3DbpxvM9T33EQyfMK4vKEpnLiIGorLgH38toAJo8MmrQQL8Ey9tov2536/jQ4
+ w7YIw3e6Hqn1rQfHc0yp/ha/OkpHtewgfWOvnh7Ex4hkmyGUUZmOTTs91+c4F/1Df7GV
+ EQTEhM51MH3Sh6dEjXZJLArHrGyhz7ndJt3eWa59t2LER1OUp0+W77btTM0R5RcVwIxp
+ KzLA==
+X-Gm-Message-State: AOJu0YytZVJPm/Jv60jRUWz6f9+rtOTdwZRW83MCvTb8WtQM7uqhyiia
+ VIG9FFvspebM/f3s8DwYc5bhv7YzSD73ffzy+Xvzwu+ZUlqa1OVOslQxnsEZIGufxw1cZXyK6uE
+ +iFybgnY=
+X-Gm-Gg: Acq92OHhAVmCQuhuyA4/zJubCHM9HNCv/gvsHqNOn1u3oWiytQDyqqqeKQj/cVi8qjN
+ CAeF7Y4tmb+sxabu9cj7aZEXM7Oz4sIdGRF47pf8bwGsIAqOilEYmtTrgVgYl99H+QA65xsYmya
+ SHzSziZ/ROEirrLhTU/vxe9Zbc3cfMxH3PIIPxW6bm49RS4VBhrGKUaTWrjgd/ziR+tRk8AHkeL
+ GVPpxyymXtVq4aoGWYJw92W3+87/kOZiO4mwv74We6bMhMysZMb+Poc7sQnwAp7E2WX3ZipOBxv
+ m4Eezz1NeL96VdYNYWi0uwCT2LYaU+DlDShC87PdgAYr/hasfm9OgmWaypDzwSOn3nAbaqquiBa
+ IMMk9usnZV0DgehbPVpIX9Gru3PMFHmL83m/98vr3bRF8bAFlttByq8OZtgRUyOrSfOiBD7WY7x
+ SPqIVhgKxcJIJ1I+R0XDgWY8u/Eoar+NN0y3KZ7wo=
+X-Received: by 2002:a17:903:3bc7:b0:2bd:c925:3a16 with SMTP id
+ d9443c01a7336-2c1e80e3bcbmr254403755ad.2.1781032874861; 
+ Tue, 09 Jun 2026 12:21:14 -0700 (PDT)
+Received: from stoup.. ([71.212.142.33]) by smtp.gmail.com with ESMTPSA id
+ d9443c01a7336-2c164f88473sm240806095ad.25.2026.06.09.12.21.14
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 09 Jun 2026 12:16:51 -0700 (PDT)
-From: Filip Hejsek <filip.hejsek@gmail.com>
-Date: Tue, 09 Jun 2026 21:16:17 +0200
-Subject: [PATCH v7 07/12] char-win-stdio: add support for terminal size
-MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 8bit
-Message-Id: <20260609-console-resize-v7-7-0c550fdcec15@gmail.com>
-References: <20260609-console-resize-v7-0-0c550fdcec15@gmail.com>
-In-Reply-To: <20260609-console-resize-v7-0-0c550fdcec15@gmail.com>
+ Tue, 09 Jun 2026 12:21:14 -0700 (PDT)
+From: Richard Henderson <richard.henderson@linaro.org>
 To: qemu-devel@nongnu.org
-Cc: =?utf-8?q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>, 
- Paolo Bonzini <pbonzini@redhat.com>, "Michael S. Tsirkin" <mst@redhat.com>, 
- Laurent Vivier <lvivier@redhat.com>, Amit Shah <amit@kernel.org>, 
- Markus Armbruster <armbru@redhat.com>, Eric Blake <eblake@redhat.com>, 
- Eduardo Habkost <eduardo@habkost.net>, 
- Marcel Apfelbaum <marcel.apfelbaum@gmail.com>, 
- Yanan Wang <wangyanan55@huawei.com>, Zhao Liu <zhao1.liu@intel.com>, 
- =?utf-8?q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>, 
- Maximilian Immanuel Brandtner <maxbr@linux.ibm.com>, 
- =?utf-8?q?Philippe_Mathieu-Daud=C3=A9?= <philmd@mailo.com>
-X-Mailer: b4 0.15.2
-X-Developer-Signature: v=1; a=ed25519-sha256; t=1781032602; l=1838;
- i=filip.hejsek@gmail.com; s=20250912; h=from:subject:message-id;
- bh=Zdzf8kR2p+Yk8aUvofodNOe4lBaihFirTsXeIEwC6zo=;
- b=p0nIIgDOrrSGUiX+XVmiwnzqizlTpv5o406SXU+Fd6QxD1vPMnrW90yoAD4I8K5XLNnFhNY3j
- mXNADHrd75kB4dGJr+jkaatu+94DAnk4roRor87s6RT+J1rIAKkfgvj
-X-Developer-Key: i=filip.hejsek@gmail.com; a=ed25519;
- pk=nakB8gEK3oi+Q/5dBTMCy/LgZL47NP60z1jeDR6O/WU=
-Received-SPF: pass client-ip=2a00:1450:4864:20::330;
- envelope-from=filip.hejsek@gmail.com; helo=mail-wm1-x330.google.com
+Cc: qemu-arm@nongnu.org,
+	Peter Maydell <peter.maydell@linaro.org>
+Subject: [PATCH v10 05/45] target/arm: Introduce arm_init_fp_status
+Date: Tue,  9 Jun 2026 12:20:29 -0700
+Message-ID: <20260609192110.752384-6-richard.henderson@linaro.org>
+X-Mailer: git-send-email 2.43.0
+In-Reply-To: <20260609192110.752384-1-richard.henderson@linaro.org>
+References: <20260609192110.752384-1-richard.henderson@linaro.org>
+MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::635;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x635.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -115,61 +100,59 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Use GetConsoleScreenBufferInfo to obtain terminal size
-and set ENABLE_WINDOW_INPUT to receive resize notifications.
+Create a function to set all default controls for a float_status.
+Other settings for specific FPST will be set afterward.
 
-Reviewed-by: Daniel P. Berrangé <berrange@redhat.com>
-Signed-off-by: Filip Hejsek <filip.hejsek@gmail.com>
+Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
+Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
 ---
- chardev/char-win-stdio.c | 19 +++++++++++++++++++
- 1 file changed, 19 insertions(+)
+ target/arm/cpu.c | 19 +++++++++++--------
+ 1 file changed, 11 insertions(+), 8 deletions(-)
 
-diff --git a/chardev/char-win-stdio.c b/chardev/char-win-stdio.c
-index bb9c195a8b..188d26502d 100644
---- a/chardev/char-win-stdio.c
-+++ b/chardev/char-win-stdio.c
-@@ -44,6 +44,20 @@ typedef struct WinStdioChardev WinStdioChardev;
- DECLARE_INSTANCE_CHECKER(WinStdioChardev, WIN_STDIO_CHARDEV,
-                          TYPE_CHARDEV_WIN_STDIO)
- 
-+static void win_stdio_chr_resize(Chardev *chr)
-+{
-+    HANDLE hStdOut = GetStdHandle(STD_OUTPUT_HANDLE);
-+    CONSOLE_SCREEN_BUFFER_INFO ScreenBufferInfo;
-+
-+    if (GetConsoleScreenBufferInfo(hStdOut, &ScreenBufferInfo)) {
-+        uint16_t cols = ScreenBufferInfo.srWindow.Right + 1
-+                        - ScreenBufferInfo.srWindow.Left;
-+        uint16_t rows = ScreenBufferInfo.srWindow.Bottom + 1
-+                        - ScreenBufferInfo.srWindow.Top;
-+        qemu_chr_resize(chr, cols, rows);
-+    }
-+}
-+
- static void win_stdio_wait_func(void *opaque)
- {
-     Chardev *chr = CHARDEV(opaque);
-@@ -75,6 +89,9 @@ static void win_stdio_wait_func(void *opaque)
-                 }
-             }
-         }
-+        if (buf[i].EventType == WINDOW_BUFFER_SIZE_EVENT) {
-+            win_stdio_chr_resize(chr);
-+        }
-     }
+diff --git a/target/arm/cpu.c b/target/arm/cpu.c
+index a13e6dae2a..b75c6a6622 100644
+--- a/target/arm/cpu.c
++++ b/target/arm/cpu.c
+@@ -304,6 +304,13 @@ static void cp_reg_check_reset(gpointer key, gpointer value,  gpointer opaque)
+     assert(oldvalue == newvalue);
  }
  
-@@ -201,6 +218,8 @@ static bool win_stdio_chr_open(Chardev *chr,
-         } else {
-             dwMode &= ~ENABLE_PROCESSED_INPUT;
-         }
-+        dwMode |= ENABLE_WINDOW_INPUT;
-+        win_stdio_chr_resize(chr);
++static void arm_init_fp_status(float_status *s)
++{
++    memset(s, 0, sizeof(*s));
++    arm_set_default_fp_behaviours(s);
++    /* We want 0 for all other settings. */
++}
++
+ static void arm_cpu_reset_hold(Object *obj, ResetType type)
+ {
+     CPUState *cs = CPU(obj);
+@@ -626,20 +633,16 @@ static void arm_cpu_reset_hold(Object *obj, ResetType type)
+         env->sau.ctrl = 0;
      }
  
-     SetConsoleMode(stdio->hStdIn, dwMode);
-
++    for (int i = 0; i < FPST_COUNT; i++) {
++        arm_init_fp_status(&env->vfp.fp_status[i]);
++    }
++
+     set_flush_to_zero(1, &env->vfp.fp_status[FPST_STD]);
+     set_flush_inputs_to_zero(1, &env->vfp.fp_status[FPST_STD]);
+     set_default_nan_mode(1, &env->vfp.fp_status[FPST_STD]);
+     set_default_nan_mode(1, &env->vfp.fp_status[FPST_STD_F16]);
+     set_default_nan_mode(1, &env->vfp.fp_status[FPST_ZA]);
+     set_default_nan_mode(1, &env->vfp.fp_status[FPST_ZA_F16]);
+-    arm_set_default_fp_behaviours(&env->vfp.fp_status[FPST_A32]);
+-    arm_set_default_fp_behaviours(&env->vfp.fp_status[FPST_A64]);
+-    arm_set_default_fp_behaviours(&env->vfp.fp_status[FPST_ZA]);
+-    arm_set_default_fp_behaviours(&env->vfp.fp_status[FPST_STD]);
+-    arm_set_default_fp_behaviours(&env->vfp.fp_status[FPST_A32_F16]);
+-    arm_set_default_fp_behaviours(&env->vfp.fp_status[FPST_A64_F16]);
+-    arm_set_default_fp_behaviours(&env->vfp.fp_status[FPST_ZA_F16]);
+-    arm_set_default_fp_behaviours(&env->vfp.fp_status[FPST_STD_F16]);
+     arm_set_ah_fp_behaviours(&env->vfp.fp_status[FPST_AH]);
+     set_flush_to_zero(1, &env->vfp.fp_status[FPST_AH]);
+     set_flush_inputs_to_zero(1, &env->vfp.fp_status[FPST_AH]);
 -- 
-2.54.0
+2.43.0
 
 
