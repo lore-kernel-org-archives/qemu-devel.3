@@ -4,63 +4,63 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0C7FBCD8CAD
-	for <qemu-devel@archiver.kernel.org>; Tue,  9 Jun 2026 20:51:11 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 217D5CD98C6
+	for <qemu-devel@archiver.kernel.org>; Tue,  9 Jun 2026 20:51:12 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wX3PJ-0008OE-Su; Tue, 09 Jun 2026 16:50:45 -0400
+	id 1wX3PH-0008Nq-Jc; Tue, 09 Jun 2026 16:50:43 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <dongli.zhang@oracle.com>)
- id 1wX3PE-0008Mu-Tc
+ id 1wX3PE-0008Mp-Mk
  for qemu-devel@nongnu.org; Tue, 09 Jun 2026 16:50:40 -0400
 Received: from mx0a-00069f02.pphosted.com ([205.220.165.32])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <dongli.zhang@oracle.com>)
- id 1wX3PC-0000MF-2j
+ id 1wX3PB-0000M8-UI
  for qemu-devel@nongnu.org; Tue, 09 Jun 2026 16:50:40 -0400
-Received: from pps.filterd (m0246627.ppops.net [127.0.0.1])
+Received: from pps.filterd (m0333521.ppops.net [127.0.0.1])
  by mx0b-00069f02.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 659KBmvT2134549; Tue, 9 Jun 2026 20:50:33 GMT
+ 659KBYGe3717964; Tue, 9 Jun 2026 20:50:32 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=oracle.com; h=cc
  :content-transfer-encoding:date:from:in-reply-to:message-id
- :mime-version:references:subject:to; s=corp-2025-04-25; bh=aAMbd
- 9NhPfm3vLYooXyD7mg+ApQv48UepFY6bs9O55Q=; b=IqnJZ7fqi3dPgFOFffGa5
- vDDW9/k3Kav8BDVMjJdvAoA5oAEkan6Rhe//B30xYoHu3KLWzYtsoZkwSEk0PlF0
- X7NMP8byQ6kdlhhwjASXMOgMbs+HigOBhBRVREBGkCIEHS1y9mJhS7yaFYygI5xi
- 3h42rBqI/n/OITM6GMYYcL8yT1y+KqgG0ad8qpymgUZO8nqkDA2jvPbrIhiL9amU
- yOiv0Yn2tH3SqzohPsfl5ydZ//qz+gbGOcO5566SwMS4fE9UEsbzVhHx+B9RN+qZ
- J4V1VNPvnGM3Gmyd8KfzDz88DCo9laO+j0jvxl1u0M2chVuBv1c8Cs5mieI4eXpK
- Q==
+ :mime-version:references:subject:to; s=corp-2025-04-25; bh=nPnLf
+ Hr2KR80pWu/JIM8AXkZrCIjJWLwygALaGisYmA=; b=fyjF4fhw0jbNIL6YABkA3
+ MX806NlOICfQQqZFuVoiwLA0vCzhsFviYZ5FhF5LYPqDH1/xJEe7WxB7wC9nz1kp
+ LfrEXPOXSA5KSxaOe1ZWnRq3xIcJZ7VbDUbYGgUZou02VZiollTK46ezV24YeFcN
+ i0jWSLEpJ9fiTUVdMRsqqPr5M4qEnP5ODBCYWzqVTiX8HO8TXb9SXaLOr/4c1nh1
+ qwQ41Jjl6KTXEKQmUTaafg0ftJzTGuWAOrTHHL0h75k1ak82DBE0GB9yJVjR7Y1B
+ VrpB4P00LAmuLf7bMx7cbTcFoFDakitCYFMAahN/63ZEWPRSJPbUxAFra1LFNmtq
+ g==
 Received: from iadpaimrmta01.imrmtpd1.prodappiadaev1.oraclevcn.com
  (iadpaimrmta01.appoci.oracle.com [130.35.100.223])
- by mx0b-00069f02.pphosted.com (PPS) with ESMTPS id 4ema4y5ar1-1
+ by mx0b-00069f02.pphosted.com (PPS) with ESMTPS id 4emaf95arv-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Tue, 09 Jun 2026 20:50:32 +0000 (GMT)
+ Tue, 09 Jun 2026 20:50:31 +0000 (GMT)
 Received: from pps.filterd
  (iadpaimrmta01.imrmtpd1.prodappiadaev1.oraclevcn.com [127.0.0.1])
  by iadpaimrmta01.imrmtpd1.prodappiadaev1.oraclevcn.com (8.18.1.7/8.18.1.7)
- with ESMTP id 659KmWQn023153; Tue, 9 Jun 2026 20:50:31 GMT
+ with ESMTP id 659KmXa8023253; Tue, 9 Jun 2026 20:50:30 GMT
 Received: from pps.reinject (localhost [127.0.0.1])
  by iadpaimrmta01.imrmtpd1.prodappiadaev1.oraclevcn.com (PPS) with ESMTPS id
- 4ema0qn7mn-1
+ 4ema0qn7m5-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Tue, 09 Jun 2026 20:50:31 +0000 (GMT)
+ Tue, 09 Jun 2026 20:50:30 +0000 (GMT)
 Received: from iadpaimrmta01.imrmtpd1.prodappiadaev1.oraclevcn.com
  (iadpaimrmta01.imrmtpd1.prodappiadaev1.oraclevcn.com [127.0.0.1])
- by pps.reinject (8.18.1.12/8.18.1.12) with ESMTP id 659KoTpL030607;
- Tue, 9 Jun 2026 20:50:31 GMT
+ by pps.reinject (8.18.1.12/8.18.1.12) with ESMTP id 659KoTpJ030607;
+ Tue, 9 Jun 2026 20:50:30 GMT
 Received: from localhost.localdomain (ca-dev80.us.oracle.com [10.211.9.80])
  by iadpaimrmta01.imrmtpd1.prodappiadaev1.oraclevcn.com (PPS) with ESMTP id
- 4ema0qn7ju-3; Tue, 09 Jun 2026 20:50:31 +0000 (GMT)
+ 4ema0qn7ju-2; Tue, 09 Jun 2026 20:50:30 +0000 (GMT)
 From: Dongli Zhang <dongli.zhang@oracle.com>
 To: qemu-devel@nongnu.org
 Cc: alejandro.j.jimenez@oracle.com, sarunkod@amd.com, pbonzini@redhat.com,
  richard.henderson@linaro.org, mst@redhat.com
-Subject: [PATCH 2/4] amd_iommu: Use full BDF when reporting page faults
-Date: Tue,  9 Jun 2026 13:43:33 -0700
-Message-ID: <20260609204403.323149-3-dongli.zhang@oracle.com>
+Subject: [PATCH 1/4] amd_iommu: Do not create duplicate MSI capability
+Date: Tue,  9 Jun 2026 13:43:32 -0700
+Message-ID: <20260609204403.323149-2-dongli.zhang@oracle.com>
 X-Mailer: git-send-email 2.43.5
 In-Reply-To: <20260609204403.323149-1-dongli.zhang@oracle.com>
 References: <20260609204403.323149-1-dongli.zhang@oracle.com>
@@ -74,22 +74,22 @@ X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 suspectscore=0
  bulkscore=0
  malwarescore=0 adultscore=0 lowpriorityscore=0 classifier=spam adjust=0
  reason=mlx scancount=1 engine=8.19.0-2605130000 definitions=main-2606090195
-X-Authority-Analysis: v=2.4 cv=ZMvnX37b c=1 sm=1 tr=0 ts=6a287c99 b=1 cx=c_pps
+X-Proofpoint-GUID: wxtpizBBvt5a-2Hqhi0B7MTh1RN6K47g
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNjA5MDE5NSBTYWx0ZWRfX6RJQTZGYaPp6
+ p7eGqWi28WlzXE0oNKg5FMuKtuDDpD02EvlkRZsK677EDwayU5G9aDgJlhXbbOiIkYbYufPkJWS
+ /vxugSzfKa9BXtQsn4o+aSZoGkB4Yrzx3xp1WXMWBgIvVbtN9IR+9i0BtE+VDojzxVtduU1kzxa
+ xO9A87kbsTS0qeKWgoNVBQb7aDU5MtYmIECtKFH0LjH41UsXHtQ3GXtMITQIbpARpGJ6XbcQocz
+ h92CFRN60JdAoCvbddaGeT/vi84CpvLZdGEkkSCXOSwqxk9TQkFl4aJTEt2mlmkh5Z2Hva+014E
+ IfEzN3cj3jf8OrW0TtKJyvQU0bTgmVYKNRqMJVF6NSU4wOBWfJ6xUnifEVOFJ0jMuLa1Hr3oJjh
+ WaeFkWS1nNG3PZUc8u2VOpvfCVpMhlU8b6jDfjt14KKSF2RCFIvpw+aEx+PA4m0bPk5WfcAKBmp
+ gOG8t6y2qV762qThrswoObvjwNKhDO03Se9x2UKg=
+X-Proofpoint-ORIG-GUID: wxtpizBBvt5a-2Hqhi0B7MTh1RN6K47g
+X-Authority-Analysis: v=2.4 cv=OYeoyBTY c=1 sm=1 tr=0 ts=6a287c98 b=1 cx=c_pps
  a=zPCbziy225d3KhSqZt3L1A==:117
  a=zPCbziy225d3KhSqZt3L1A==:17
  a=FelO9ux0wxsA:10 a=VkNPw1HP01LnGYTKEx00:22 a=jiCTI4zE5U7BLdzWsZGv:22
- a=RD47p0oAkeU5bO7t-o6f:22 a=yPCof4ZbAAAA:8 a=ll-nBFWiReWw3pmKOSoA:9
+ a=x0eKOSpe3m1H3M0S9YoZ:22 a=yPCof4ZbAAAA:8 a=w9z83O1xWNOsbQloCHQA:9
  a=5yU3S35YU4bGjq-dph-N:22 a=Bho9c0fBagfJEIQBS7DQ:22 cc=ntf awl=host:12312
-X-Proofpoint-ORIG-GUID: u3BbCQ9p-7h7xGnBUXISwII2hRjKjNTh
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNjA5MDE5NSBTYWx0ZWRfX5NwfVy9jEuKC
- QxV2RJQItJUxdu1XY3FmeQk0y3kT8JXCgljv1PrL0/mPaR3K8je3pOfCcBzn8ohwifeog+dFXod
- kUbW6jNS4pOzwuu3cEprCHO79C8CRMlajsw0NoG5XVj9F7a78BxJL0wjD0+ALZ0N70CRPAR+Z78
- Uhz7KpunAtB/ER7Du7UWAyho6NKrCUs7MyXtMEPGTDc2/CM0fZSYWGCWZ1oK6loC7ftJCeetMwn
- 6TWdPStMKy5Aywm/gPaL9EhEedhx1rGbaDnUIR1+Ozni4iRAF5I/XYYw6AlHaen2xlIkEP/po0W
- rZocoYVQDGfYEIzKuA+LtHcVGmdZ8v9DwpOfRFcJy5eluHamRjlKrzEvuZDqLLNiY3P0w1b84jN
- irFj3ehyOl1rxZaJUorWnhlnW2UrMzSCIAJvlH4DxpJLLFfg3ZU7+slli1qOaoepWFpbpsdPn6G
- zomAUXGKB5niheeHs9Oa0Y263ZsjW0DgQS41VxU0=
-X-Proofpoint-GUID: u3BbCQ9p-7h7xGnBUXISwII2hRjKjNTh
 Received-SPF: pass client-ip=205.220.165.32;
  envelope-from=dongli.zhang@oracle.com; helo=mx0a-00069f02.pphosted.com
 X-Spam_score_int: -27
@@ -114,98 +114,55 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-AMDVIAddressSpace->devfn only contains the PCI device/function number.
-AMD-Vi event log entries require the full DeviceID, including the PCI
-bus number.
+amdvi_pci_realize() manually adds an MSI capability before calling
+msi_init(). msi_init() creates the MSI capability itself, so the device
+can expose duplicate MSI capabilities to the guest.
 
-When reporting IO page faults for devices behind a pcie-root-port, QEMU
-logs the fault against the wrong requester. For example, a fault from
-01:00.0 is reported as 00:00.0 because only devfn is passed to
-amdvi_page_fault().
+Drop the manual MSI capability and let msi_init() create the single MSI
+capability used by QEMU.
 
-[root@vm ~]# lspci
-... ...
-01:00.0 Ethernet controller: Red Hat, Inc. Virtio 1.0 network device (rev 01)
+Otherwise, there are duplicate MSI capabilities in guest VM lspci.
 
-[   58.154050] pci 0000:00:00.0: AMD-Vi: Event logged [IO_PAGE_FAULT domain=0x0000 address=0xc0000000 flags=0x000a]
-[   58.156968] pci 0000:00:00.0: AMD-Vi: Event logged [IO_PAGE_FAULT domain=0x0000 address=0xc0000000 flags=0x000a]
-
-Use the full BDF consistently for AMD-Vi address spaces and pass it to
-page fault and page-table access error reporting.
+[root@vm ~]# lspci -vvv -s 00:02.0
+00:02.0 IOMMU: Advanced Micro Devices, Inc. [AMD] Family 15h (Models 10h-1fh) I/O Memory Management Unit
+	Subsystem: Red Hat, Inc. Device 1100
+	Control: I/O+ Mem+ BusMaster- SpecCycle- MemWINV- VGASnoop- ParErr- Stepping- SERR+ FastB2B- DisINTx+
+	Status: Cap+ 66MHz- UDF- FastB2B- ParErr- DEVSEL=fast >TAbort- <TAbort- <MAbort- >SERR- <PERR- INTx-
+	Interrupt: pin ? routed to IRQ 24
+	Capabilities: [60] MSI: Enable+ Count=1/1 Maskable- 64bit+
+		Address: 00000000fee02000  Data: 0021
+	Capabilities: [5c] HyperTransport: Slave or Primary Interface
+		Command: BaseUnitID=0 UnitCnt=0 MastHost- DefDir-
+		Link Control 0: CFlE- CST+ CFE- <LkFail- Init- EOC- TXO- <CRCErr=c
+		Link Config 0: MLWI=16bit MLWO=8bit LWI=8bit LWO=8bit
+		Link Control 1: CFlE- CST- CFE- <LkFail- Init- EOC- TXO- <CRCErr=0
+		Link Config 1: MLWI=8bit MLWO=[6] LWI=[6] LWO=N/C
+		Revision ID: 0.00
+	Capabilities: [58] MSI: Enable- Count=1/1 Maskable- 64bit-
+		Address: 00005808  Data: 5c05
+	Capabilities: [40] Secure device <?>
 
 Signed-off-by: Dongli Zhang <dongli.zhang@oracle.com>
 ---
- hw/i386/amd_iommu.c | 15 +++++++++++----
- 1 file changed, 11 insertions(+), 4 deletions(-)
+ hw/i386/amd_iommu.c | 5 -----
+ 1 file changed, 5 deletions(-)
 
 diff --git a/hw/i386/amd_iommu.c b/hw/i386/amd_iommu.c
-index 997d02eab5..ca9d79bb51 100644
+index 789e09d6f2..997d02eab5 100644
 --- a/hw/i386/amd_iommu.c
 +++ b/hw/i386/amd_iommu.c
-@@ -87,6 +87,11 @@ typedef struct AMDVIIOTLBEntry {
-     uint64_t page_mask;         /* physical page size  */
- } AMDVIIOTLBEntry;
- 
-+static uint16_t amdvi_as_devid(AMDVIAddressSpace *as)
-+{
-+    return PCI_BUILD_BDF(pci_bus_num(as->bus), as->devfn);
-+}
-+
- /*
-  * These 'fault' reasons have an overloaded meaning since they are not only
-  * intended for describing reasons that generate an IO_PAGE_FAULT as per the AMD
-@@ -613,7 +618,7 @@ static inline uint64_t amdvi_get_pte_entry(AMDVIState *s, uint64_t pte_addr,
- 
- static int amdvi_as_to_dte(AMDVIAddressSpace *as, uint64_t *dte)
- {
--    uint16_t devid = PCI_BUILD_BDF(pci_bus_num(as->bus), as->devfn);
-+    uint16_t devid = amdvi_as_devid(as);
-     AMDVIState *s = as->iommu_state;
- 
-     if (!amdvi_get_dte(s, devid, dte)) {
-@@ -664,6 +669,7 @@ static uint64_t fetch_pte(AMDVIAddressSpace *as, hwaddr address, uint64_t dte,
- {
-     IOMMUAccessFlags perms = amdvi_get_perms(dte);
- 
-+    uint16_t devid = amdvi_as_devid(as);
-     uint8_t level, mode;
-     uint64_t pte_addr;
- 
-@@ -719,7 +725,7 @@ static uint64_t fetch_pte(AMDVIAddressSpace *as, hwaddr address, uint64_t dte,
-          * and walk down to the lower level.
-          */
-         pte_addr = NEXT_PTE_ADDR(*pte, level, address);
--        *pte = amdvi_get_pte_entry(as->iommu_state, pte_addr, as->devfn);
-+        *pte = amdvi_get_pte_entry(as->iommu_state, pte_addr, devid);
- 
-         if (*pte == (uint64_t)-1) {
-             /*
-@@ -1763,6 +1769,7 @@ static void amdvi_page_walk(AMDVIAddressSpace *as, uint64_t *dte,
-     uint8_t mode;
-     uint64_t pte;
-     int fetch_ret;
-+    uint16_t devid = amdvi_as_devid(as);
- 
-     /* make sure the DTE has TV = 1 */
-     if (!(dte[0] & AMDVI_DEV_TRANSLATION_VALID)) {
-@@ -1796,7 +1803,7 @@ static void amdvi_page_walk(AMDVIAddressSpace *as, uint64_t *dte,
-     if (fetch_ret < 0 || !IOMMU_PTE_PRESENT(pte) ||
-         perms != (perms & amdvi_get_perms(pte))) {
- 
--        amdvi_page_fault(as->iommu_state, as->devfn, addr, perms);
-+        amdvi_page_fault(as->iommu_state, devid, addr, perms);
-         trace_amdvi_page_fault(addr);
-         return;
+@@ -2422,11 +2422,6 @@ static void amdvi_pci_realize(PCIDevice *pdev, Error **errp)
      }
-@@ -1823,7 +1830,7 @@ static void amdvi_do_translate(AMDVIAddressSpace *as, hwaddr addr,
-                                bool is_write, IOMMUTLBEntry *ret)
- {
-     AMDVIState *s = as->iommu_state;
--    uint16_t devid = PCI_BUILD_BDF(pci_bus_num(as->bus), as->devfn);
-+    uint16_t devid = amdvi_as_devid(as);
-     AMDVIIOTLBEntry *iotlb_entry = amdvi_iotlb_lookup(s, addr, devid);
-     uint64_t entry[4];
-     int dte_ret;
+     s->capab_offset = ret;
+ 
+-    ret = pci_add_capability(pdev, PCI_CAP_ID_MSI, 0,
+-                             AMDVI_CAPAB_REG_SIZE, errp);
+-    if (ret < 0) {
+-        return;
+-    }
+     ret = pci_add_capability(pdev, PCI_CAP_ID_HT, 0,
+                              AMDVI_CAPAB_REG_SIZE, errp);
+     if (ret < 0) {
 -- 
 2.43.5
 
