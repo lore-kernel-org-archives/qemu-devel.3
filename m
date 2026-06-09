@@ -4,48 +4,47 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id ADD75CD8CB9
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A96BDCD8CAA
 	for <qemu-devel@archiver.kernel.org>; Tue,  9 Jun 2026 14:26:27 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wWxOq-0002Wg-FB; Tue, 09 Jun 2026 10:25:52 -0400
+	id 1wWxP9-0002gM-15; Tue, 09 Jun 2026 10:26:11 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1)
- (envelope-from <eb3787869745d47234fb662600187bf773e1ef8a@kylie.crudebyte.com>)
- id 1wWxOo-0002VK-DN; Tue, 09 Jun 2026 10:25:50 -0400
+ (envelope-from <2c100487252994d6d03baa499ef25e5e1bdaf2cb@kylie.crudebyte.com>)
+ id 1wWxP6-0002cK-7w; Tue, 09 Jun 2026 10:26:08 -0400
 Received: from kylie.crudebyte.com ([5.189.157.229])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1)
- (envelope-from <eb3787869745d47234fb662600187bf773e1ef8a@kylie.crudebyte.com>)
- id 1wWxOk-0001BB-Qz; Tue, 09 Jun 2026 10:25:49 -0400
+ (envelope-from <2c100487252994d6d03baa499ef25e5e1bdaf2cb@kylie.crudebyte.com>)
+ id 1wWxP4-0001NW-7u; Tue, 09 Jun 2026 10:26:07 -0400
 DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
  d=crudebyte.com; s=kylie; h=Cc:To:Subject:Date:From:References:In-Reply-To:
  Message-ID:Content-Type:Content-Transfer-Encoding:MIME-Version:Content-ID:
- Content-Description; bh=MfenymRhk48IxUTxbFS7vY9DrB63qmTI315WRZ5gsUk=; b=wNblw
- 1oc4YOrahxXvsQmoBh20QpV+sGP3lqhqshedyD6lYh2DwTC5jFIflb8KeOFbfF9RNGRePvobcofk+
- kB1j3HobsSij0vCXxiawDXwsrh0c2lNooRz87VYKh+qyy0CLOJw7YhK9+NOCdiTYxG1P2B1LX/l9S
- 5tB6uRat5BWOTpzWVgmQhpeyo7H7NVf4YQuzxYgSmqrKhtaYIBPA+uxIVl2jrkQGzPARq5+TGdQnJ
- 359x+0opr7bUjeYv80H1y5KuG6nZMivCCW/tmeqh6Qwvmv7zckYsqVKZkP3PjF9nW72RbD4kUbsf2
- pXiWe/cvCpfh6w6mxIPbHKZDSXpFNEcrgvmFHmN0/amBZ5lJ6TlJDPmSm0RSiHMV/tjJ2vsqQYbDI
- 6UnZQ5p0jfytykfDV54fMNzBXU6HWYwwS2gXN1h1xlfo3gwt71lYQncRACkagN8gKA6ppLwZjvza0
- xaHRupwM+R44/GlOp2muvk3bmMKUwFaz/qAQr1nqBbddhUhPUuJ3Yl8QCGOEnHQvlW1khBWaLMGyi
- JtUZA3ZLErXEMB+SitYhuCdBmmmnliXWplkkfwZYkMTDJJjZdkYrUks1GWX48i2uVo49YR7y6uLfU
- LXrO9mMd4sKVh4loCurnQvW4nlVScfbvnJ7RfxVT+qelMsdrARx4bssoFmbjZs=;
-Message-ID: <eb3787869745d47234fb662600187bf773e1ef8a.1781012549.git.qemu_oss@crudebyte.com>
+ Content-Description; bh=ufiiCn3cvKp4ufTQLLv5qoeOBCcGqz3IzSs540NafIM=; b=Fi/Yz
+ okwBnuH5CibgeMvJpWAddLv/lN+TjjtTGfCbCYBTEq0i5blPTLDr4r68qvu3Zlli4LP28XQ7LM2eG
+ vSirXOiq/Jlj3Up9UE3NrY+imIHyRdkvAwGW+yEVxqyMCpQxNlM/t2Dj58Iw8SlBVJDG6XkBcc+wM
+ Xe9O6VualWktn0jgvUsOb+/D2zGj8J7t4oKl397bUoFHx+TNJgy10evmmZA8WqRwwOrBfloXH5wwB
+ 1M+scg3GShwO0tU+/XXU5TbYPWf2H1LjVlU0whljcNOOys4yP9+wEaUh531W6YmndAN05BmLmbVRr
+ 4/8LEebx0TukxkqTaO8rc1w17ISrUv5z8KiXHyljjMKCw9qCSyy/S1kAyHbHWwUdrC0qXqfcdr5Aw
+ Jr6bYO1DrszcIiUqMouUV7IR2ys7FcA9Xw5h9r8DbebzKBso2J0uJPxV+qZZ2ZUXIth8ph8IZCcR5
+ 3lUlK34Jm5BJ8FeDHagYpMYVXdgXRySJFcWzoeKeihL28qI+L33BytxiWv3ZcWw1H47oXD5XvxpKW
+ jU66E/7Z9MDtL/1YE3E+oITU66YYJ2xLxoT+4SWY0xmZd9VCsE4lYaFGRXaZn88MD//7KlOBthpWh
+ DfvE6IkQ+rCrEG3eRCyoY1CVdGGIz8Ly9B9NH5ZoEFtH2z/RtgrujdKVqgyESQ=;
+Message-ID: <2c100487252994d6d03baa499ef25e5e1bdaf2cb.1781012549.git.qemu_oss@crudebyte.com>
 In-Reply-To: <cover.1781012549.git.qemu_oss@crudebyte.com>
 References: <cover.1781012549.git.qemu_oss@crudebyte.com>
 From: Christian Schoenebeck <qemu_oss@crudebyte.com>
 Date: Tue, 09 Jun 2026 15:47:06 +0200
-Subject: [PATCH v2 01/12] hw/9pfs: add xattr FID limit to prevent memory
- exhaustion
+Subject: [PATCH v2 03/12] qemu-options: document 9pfs max_xattr option
 To: qemu-devel@nongnu.org,
     qemu-stable@nongnu.org
 Cc: Greg Kurz <groug@kaod.org>,
     Feifan Qian <bea1e@proton.me>
 Received-SPF: pass client-ip=5.189.157.229;
- envelope-from=eb3787869745d47234fb662600187bf773e1ef8a@kylie.crudebyte.com;
+ envelope-from=2c100487252994d6d03baa499ef25e5e1bdaf2cb@kylie.crudebyte.com;
  helo=kylie.crudebyte.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
@@ -68,202 +67,87 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Add a limit on the number of simultaneously open xattr FIDs to prevent
-host memory exhaustion attacks. Each xattr FID contains a buffer for the
-xattr value, and without a limit, a malicious priviliged guest with
-direct communication access to 9p server could create a huge number of
-xattr FIDs until host memory is eventually exhausted.
+Add documentation for the new "max_xattr" command line option
+of 9pfs server, introduced by the previous commit.
 
-Fix this by:
-
- - add xattr_fid_limit to struct FsContext for the max. amount
- - add xattr_fid_count to struct FsContext for the current amount
- - init xattr_fid_limit with 1024
- - init xattr_fid_count with 0
- - add function xattr_fid_count_inc() to increment the count
- - add function xattr_fid_count_decr() to decrement the count
- - call xattr_fid_count_inc() in Txattrcreate handler
- - call xattr_fid_count_inc() in Txattrwalk handler
- - call xattr_fid_count_decr() when a xattr FID is freed
-
-Additionally:
-
- - reset the xattr FID counter in virtfs_reset()
-
-When the limit is reached then xattr_fid_count_inc() returns -ENOSPC and
-the request handler is aborted on its error path without turning the
-FID into an xattr type and without allocating memory for the xattr.
-
-The default value of 1024 was chosen, as (sane usage of) xattr requests
-in the 9p protocol are usually very short-lived, and even machines with
-128 cores with very high xattr activity should have plenty of head room
-without ever hitting this limit.
-
-Fixes: 10b468bdc5 ("virtio-9p: Implement TXATTRCREATE")
-Fixes: CVE-2026-8348
-Reported-by: Feifan Qian <bea1e@proton.me>
 Signed-off-by: Christian Schoenebeck <qemu_oss@crudebyte.com>
 ---
- fsdev/file-op-9p.h |  9 +++++++
- hw/9pfs/9p.c       | 62 ++++++++++++++++++++++++++++++++++++++++++++++
- 2 files changed, 71 insertions(+)
+ qemu-options.hx | 28 ++++++++++++++++++++--------
+ 1 file changed, 20 insertions(+), 8 deletions(-)
 
-diff --git a/fsdev/file-op-9p.h b/fsdev/file-op-9p.h
-index e8d0661c4b..454761d81d 100644
---- a/fsdev/file-op-9p.h
-+++ b/fsdev/file-op-9p.h
-@@ -81,6 +81,11 @@ typedef struct ExtendedOps {
+diff --git a/qemu-options.hx b/qemu-options.hx
+index 96ae41f787..456d44af39 100644
+--- a/qemu-options.hx
++++ b/qemu-options.hx
+@@ -1914,19 +1914,19 @@ ERST
  
- #define V9FS_SEC_MASK               0x0000003C
+ DEF("fsdev", HAS_ARG, QEMU_OPTION_fsdev,
+     "-fsdev local,id=id,path=path,security_model=mapped-xattr|mapped-file|passthrough|none\n"
+-    " [,writeout=immediate][,readonly=on][,fmode=fmode][,dmode=dmode]\n"
++    " [,writeout=immediate][,readonly=on][,fmode=fmode][,dmode=dmode][,max_xattr=max]\n"
+     " [[,throttling.bps-total=b]|[[,throttling.bps-read=r][,throttling.bps-write=w]]]\n"
+     " [[,throttling.iops-total=i]|[[,throttling.iops-read=r][,throttling.iops-write=w]]]\n"
+     " [[,throttling.bps-total-max=bm]|[[,throttling.bps-read-max=rm][,throttling.bps-write-max=wm]]]\n"
+     " [[,throttling.iops-total-max=im]|[[,throttling.iops-read-max=irm][,throttling.iops-write-max=iwm]]]\n"
+     " [[,throttling.iops-size=is]]\n"
+-    "-fsdev synth,id=id\n",
++    "-fsdev synth,id=id[,max_xattr=max]\n",
+     QEMU_ARCH_ALL)
  
-+/*
-+ * Limits the maximum amount of simultaneously open xattr FIDs to prevent
-+ * host memory exhaustion (as each xattr FID contains a xattr value buffer).
-+ */
-+#define V9FS_MAX_XATTR_DEFAULT  1024
+ SRST
+-``-fsdev local,id=id,path=path,security_model=security_model [,writeout=writeout][,readonly=on][,fmode=fmode][,dmode=dmode] [,throttling.option=value[,throttling.option=value[,...]]]``
++``-fsdev local,id=id,path=path,security_model=security_model [,writeout=writeout][,readonly=on][,fmode=fmode][,dmode=dmode][,max_xattr=max] [,throttling.option=value[,throttling.option=value[,...]]]``
+   \ 
+-``-fsdev synth,id=id[,readonly=on]``
++``-fsdev synth,id=id[,readonly=on][,max_xattr=max]``
+     Define a new file system device. Valid options are:
  
- typedef struct FileOperations FileOperations;
- typedef struct XattrOperations XattrOperations;
-@@ -109,6 +114,10 @@ struct FsContext {
-     void *private;
-     mode_t fmode;
-     mode_t dmode;
-+    /* max. amount of simultaneously open xattr FIDs */
-+    uint32_t xattr_fid_limit;
-+    /* current amount of open xattr FIDs */
-+    uint32_t xattr_fid_count;
- };
+     ``local``
+@@ -2000,6 +2000,12 @@ SRST
+         Let every is bytes of a request count as a new request for iops
+         throttling purposes.
  
- struct V9fsPath {
-diff --git a/hw/9pfs/9p.c b/hw/9pfs/9p.c
-index b4314d2549..053f0cc64b 100644
---- a/hw/9pfs/9p.c
-+++ b/hw/9pfs/9p.c
-@@ -265,6 +265,31 @@ static size_t v9fs_string_size(V9fsString *str)
-     return str->size;
- }
++    ``max_xattr=max``
++        Specifies the maximum number of concurrent xattr FIDs allowed for
++        this export. The default is 1024. Set to 0 for allowing an infinite
++        number of xattr FIDs. This limit prevents host memory exhaustion
++        attacks by capping the number of simultaneous xattr FIDs.
++
+     -fsdev option is used along with -device driver "virtio-9p-...".
  
-+static int xattr_fid_count_inc(V9fsPDU *pdu)
-+{
-+    V9fsState *s = pdu->s;
-+
-+    if (s->ctx.xattr_fid_limit > 0 &&
-+        s->ctx.xattr_fid_count >= s->ctx.xattr_fid_limit) {
-+        error_report_once("9pfs: xattr_fid_count limit exceeded "
-+                          "(configurable by option 'max_xattr').");
-+        return -ENOSPC;
-+    }
-+    s->ctx.xattr_fid_count++;
-+    return 0;
-+}
-+
-+static void xattr_fid_count_decr(V9fsPDU *pdu)
-+{
-+    V9fsState *s = pdu->s;
-+
-+    if (s->ctx.xattr_fid_count > 0) {
-+        s->ctx.xattr_fid_count--;
-+    } else {
-+        error_report_once("9pfs: xattr_fid_count underflow detected");
-+    }
-+}
-+
- /*
-  * returns 0 if fid got re-opened, 1 if not, < 0 on error
-  */
-@@ -397,6 +422,7 @@ static int coroutine_fn free_fid(V9fsPDU *pdu, V9fsFidState *fidp)
-         }
-     } else if (fidp->fid_type == P9_FID_XATTR) {
-         retval = v9fs_xattr_fid_clunk(pdu, fidp);
-+        xattr_fid_count_decr(pdu);
-     }
-     v9fs_path_free(&fidp->path);
-     g_free(fidp);
-@@ -634,6 +660,14 @@ static void coroutine_fn virtfs_reset(V9fsPDU *pdu)
-         fidp->clunked = true;
-         put_fid(pdu, fidp);
-     }
-+
-+    /*
-+     * Explicitly reset the xattr FID counter.
-+     *
-+     * free_fid() already decrements the counter for each P9_FID_XATTR, so the
-+     * counter should already be zero, hence this is just a defensive measure.
-+     */
-+    s->ctx.xattr_fid_count = 0;
- }
+ ``-device virtio-9p-type,fsdev=id,mount_tag=mount_tag``
+@@ -2019,14 +2025,14 @@ ERST
  
- #define P9_QID_TYPE_DIR         0x80
-@@ -4006,6 +4040,14 @@ static void coroutine_fn v9fs_xattrwalk(void *opaque)
-             clunk_fid(s, xattr_fidp->fid);
-             goto out;
-         }
-+
-+        /* Check xattr FID limit */
-+        err = xattr_fid_count_inc(pdu);
-+        if (err < 0) {
-+            clunk_fid(s, xattr_fidp->fid);
-+            goto out;
-+        }
-+
-         /*
-          * Read the xattr value
-          */
-@@ -4013,6 +4055,7 @@ static void coroutine_fn v9fs_xattrwalk(void *opaque)
-         xattr_fidp->fid_type = P9_FID_XATTR;
-         xattr_fidp->fs.xattr.xattrwalk_fid = true;
-         xattr_fidp->fs.xattr.value = g_malloc0(size);
-+
-         if (size) {
-             err = v9fs_co_llistxattr(pdu, &xattr_fidp->path,
-                                      xattr_fidp->fs.xattr.value,
-@@ -4039,6 +4082,14 @@ static void coroutine_fn v9fs_xattrwalk(void *opaque)
-             clunk_fid(s, xattr_fidp->fid);
-             goto out;
-         }
-+
-+        /* Check xattr FID limit */
-+        err = xattr_fid_count_inc(pdu);
-+        if (err < 0) {
-+            clunk_fid(s, xattr_fidp->fid);
-+            goto out;
-+        }
-+
-         /*
-          * Read the xattr value
-          */
-@@ -4046,6 +4097,7 @@ static void coroutine_fn v9fs_xattrwalk(void *opaque)
-         xattr_fidp->fid_type = P9_FID_XATTR;
-         xattr_fidp->fs.xattr.xattrwalk_fid = true;
-         xattr_fidp->fs.xattr.value = g_malloc0(size);
-+
-         if (size) {
-             err = v9fs_co_lgetxattr(pdu, &xattr_fidp->path,
-                                     &name, xattr_fidp->fs.xattr.value,
-@@ -4147,6 +4199,12 @@ static void coroutine_fn v9fs_xattrcreate(void *opaque)
-         goto out_put_fid;
-     }
+ DEF("virtfs", HAS_ARG, QEMU_OPTION_virtfs,
+     "-virtfs local,path=path,mount_tag=tag,security_model=mapped-xattr|mapped-file|passthrough|none\n"
+-    "        [,id=id][,writeout=immediate][,readonly=on][,fmode=fmode][,dmode=dmode][,multidevs=remap|forbid|warn]\n"
+-    "-virtfs synth,mount_tag=tag[,id=id][,readonly=on]\n",
++    "        [,id=id][,writeout=immediate][,readonly=on][,fmode=fmode][,dmode=dmode][,multidevs=remap|forbid|warn][,max_xattr=max]\n"
++    "-virtfs synth,mount_tag=tag[,id=id][,readonly=on][,max_xattr=max]\n",
+     QEMU_ARCH_ALL)
  
-+    /* Check xattr FID limit */
-+    err = xattr_fid_count_inc(pdu);
-+    if (err < 0) {
-+        goto out_put_fid;
-+    }
-+
-     /* Make the file fid point to xattr */
-     xattr_fidp = file_fidp;
-     xattr_fidp->fid_type = P9_FID_XATTR;
-@@ -4408,6 +4466,10 @@ int v9fs_device_realize_common(V9fsState *s, const V9fsTransport *t,
+ SRST
+-``-virtfs local,path=path,mount_tag=mount_tag ,security_model=security_model[,writeout=writeout][,readonly=on] [,fmode=fmode][,dmode=dmode][,multidevs=multidevs]``
++``-virtfs local,path=path,mount_tag=mount_tag ,security_model=security_model[,writeout=writeout][,readonly=on] [,fmode=fmode][,dmode=dmode][,multidevs=multidevs][,max_xattr=max]``
+   \ 
+-``-virtfs synth,mount_tag=mount_tag``
++``-virtfs synth,mount_tag=mount_tag[,max_xattr=max]``
+     Define a new virtual filesystem device and expose it to the guest using
+     a virtio-9p-device (a.k.a. 9pfs), which essentially means that a certain
+     directory on host is made directly accessible by guest as a pass-through
+@@ -2092,6 +2098,12 @@ SRST
+         Specifies the tag name to be used by the guest to mount this
+         export point.
  
-     s->reclaiming = false;
- 
-+    /* init xattr FID limit */
-+    s->ctx.xattr_fid_limit = V9FS_MAX_XATTR_DEFAULT;
-+    s->ctx.xattr_fid_count = 0;
++    ``max_xattr=max``
++        Specifies the maximum number of concurrent xattr FIDs allowed for
++        this export. The default is 1024. Set to 0 for allowing an infinite
++        number of xattr FIDs. This limit prevents host memory exhaustion
++        attacks by capping the number of simultaneous xattr FIDs.
 +
-     rc = 0;
- out:
-     if (rc) {
+     ``multidevs=remap|forbid|warn``
+         Specifies how to deal with multiple devices being shared with
+         the same 9p export in order to avoid file ID collisions on guest.
 -- 
 2.47.3
 
