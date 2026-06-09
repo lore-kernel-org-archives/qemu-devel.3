@@ -4,111 +4,105 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A7422CD8CA8
-	for <qemu-devel@archiver.kernel.org>; Tue,  9 Jun 2026 10:36:24 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 46B6FCD8CA8
+	for <qemu-devel@archiver.kernel.org>; Tue,  9 Jun 2026 10:52:13 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wWtoc-0004zK-3K; Tue, 09 Jun 2026 06:36:14 -0400
+	id 1wWu3d-0007lf-FQ; Tue, 09 Jun 2026 06:51:45 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1wWtoa-0004yo-1i
- for qemu-devel@nongnu.org; Tue, 09 Jun 2026 06:36:12 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1wWtoY-0004Sr-Dj
- for qemu-devel@nongnu.org; Tue, 09 Jun 2026 06:36:11 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1781001369;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=476xZ3aw8WsRlJZUxEuaTxFQvtn7IxL0SABWEggIlAE=;
- b=V5e+GctYfsuA4TptCuIhdC5z4OnnfowIN9VuH0b4BNMa+FCf/GtE8iaMGRHiQKHKTpfVCS
- Fyk6866OMrO6IiVO03gP/b8HCca9RDCmhVKI10axgsblA9Y6kTGFWCviZrq1DWS7vC1gkt
- 4iZn/9AC2UYZRv4mjNDNww1kJwb1Gdg=
-Received: from mail-wm1-f72.google.com (mail-wm1-f72.google.com
- [209.85.128.72]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-520-QXTKLxs3N7O1BFaaWFvlCg-1; Tue, 09 Jun 2026 06:36:08 -0400
-X-MC-Unique: QXTKLxs3N7O1BFaaWFvlCg-1
-X-Mimecast-MFC-AGG-ID: QXTKLxs3N7O1BFaaWFvlCg_1781001367
-Received: by mail-wm1-f72.google.com with SMTP id
- 5b1f17b1804b1-490aadb1386so28781275e9.0
- for <qemu-devel@nongnu.org>; Tue, 09 Jun 2026 03:36:08 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1wWu3Z-0007l7-Gk
+ for qemu-devel@nongnu.org; Tue, 09 Jun 2026 06:51:41 -0400
+Received: from mail-yx1-xb136.google.com ([2607:f8b0:4864:20::b136])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1wWu3X-0000lG-Hh
+ for qemu-devel@nongnu.org; Tue, 09 Jun 2026 06:51:40 -0400
+Received: by mail-yx1-xb136.google.com with SMTP id
+ 956f58d0204a3-66077e90382so5038376d50.3
+ for <qemu-devel@nongnu.org>; Tue, 09 Jun 2026 03:51:39 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1781002298; cv=none;
+ d=google.com; s=arc-20240605;
+ b=ZKbmxKOk4nx3jCcbOjrvsVabNhn1TyGO4vneVdHnoQI2/bpxsr9qTN/xbAHmzhrIG/
+ lg5nsFLt+nK67pv7r7OZOyKOzJy3pMFn3y0GpR4Dn8NpPmMdZz8XRQefYD6SmSJOROrb
+ d/K3se5S6hFL6ycVrzq/iwEcpaQw74k7+1IMHOrL6k9OMXBGUKI1N1Nk89HTs/9uLVqo
+ nf4B+Jd+MKB5IpbS+O/rYaWLj+sUvT20FRjw74JuvR3rCtaE1TociHElu87hRb0Q67xi
+ ldmd/VHJkmbpwkJvDILeCPikXUlteXrvwvCq2TLKJz9aOGO8pR4sTcaU8OkT8Wnf28S4
+ 70mg==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
+ s=arc-20240605; 
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:dkim-signature;
+ bh=WiZyWl3UNuvsRsJvmXehW74+HCKdcWPr+4Zi9gv4GnY=;
+ fh=imtBV1wbGXv0x57jvAdO+i2hmYlhvp1isA/zYisvMms=;
+ b=gCVihv0s4IYRH0gwbqLIthAXKZ28RdynsCHw2E7UT6WnFi2ADo8xHwsSSRfONEehyI
+ KhX5TolH1uZa7Zd8w2m9hz7pHsnzAheABGBjSMpQ3Pel/YospARAauHGdhi+G0/9toJ9
+ Qs7Syxj/E3trfiMF7s/E7hVzeejyIJ0xxdenWC5iHQrQt9zMgfcAoW0lK68vSRSpFXJ0
+ 6/xHXN7yo6CtOGdit/pqMpWgJjnhg5+EZBkUxOiQWwMmuAvwB3Yo+oOOAbj77PXvmNS2
+ t6wUqwJZ6UVPWLtIX9hIiARGZHy/G/r2YE+dHBKj9w+RwwK9xq3LZ+GVVP+wzv7o1M0i
+ PF/A==; darn=nongnu.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1781001367; x=1781606167; darn=nongnu.org;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
- bh=476xZ3aw8WsRlJZUxEuaTxFQvtn7IxL0SABWEggIlAE=;
- b=GAmOnuvr1QqpNtOTSfzhVye6w8lTn0ICRpeG4hbRy7E3J4hr8muGc+J7a37kGdL76d
- vYRI1/5XftKW3W7Pcdf8gQHtPDi6R6KjAzRreFRtxVwNabeukvNBGXr1J7VYISOo5ZBP
- gwUtEOVnmfrmdH61SJYKzw5XLwUSzFrJG6IIXNbcSxyYPqAM7T2myZnAvNradt59RsjF
- M/VmWh8GzQnHY+5nefosfQGxLff51inxHPotdS4rTAmh+j0AKA7x2lpy0yww7Y1tXA2i
- 6+Q0X3fFN2c6mA3BYL59fEQoQyoLtr/x9C1uFc3jzz7OfdOku96h2BqiZ/SKeMQsD1vF
- Er7A==
+ d=linaro.org; s=google; t=1781002298; x=1781607098; darn=nongnu.org;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=WiZyWl3UNuvsRsJvmXehW74+HCKdcWPr+4Zi9gv4GnY=;
+ b=o2wyeBta9FmVc/GiSkd1C3LuXW32mV7k7OOP5M1WYiq208GF14VVEBxNFvT4dEPuwE
+ AanVo/0ph3pjBaImQ8MeRUm2HXxnzRv+DnumsRdas0S1sxquVNpTn5KjkyC0lHI/HrT6
+ dez62M59p/uQghsyB+8rGbEEn940wbFdUn1dPVVs8GzWLp3Ig0llX6CflepAe9PQ32rU
+ 5NM8SHIHqK0L15CdUvVG1QHvtEYzSNkRXEnWMm3moFUP3PbE2Eq9bL1xSuWl7h5Yo4Cn
+ s6OL2RLPw1wvFys5ZcrYf0jG7IvfZiFMXms9DlLDbiGlLr4T39mFbKPUYaBNO94DO+Xq
+ 9vog==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1781001367; x=1781606167;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=476xZ3aw8WsRlJZUxEuaTxFQvtn7IxL0SABWEggIlAE=;
- b=BcOs2VDsdEjXpO/dcT/W9DYY0IV6Gimy+zZ3jsrvCXGdvMIdNlDbdvOQAnmVnOmUBG
- u3t96/808fZcC263JDNxHJ5PXdjbuQCmO6zbQx9gh29qPvwPSZqItB9gd486KVePJzoS
- eE0eA22U7kxUUGIXGGoJznLHWpY9IfIi8lSRmKcSBonDn+SGQ+IT5iBFFDoX7gYqnwV4
- qEiDWci5Ncvo4FO3Z7hND9JKqx69i+NxcqS1goBJO5IJTq1BI0eb+o7H5LcUAsVmMZOg
- EceUdTE+ERkILqd67MEsV0pujT//PbPkswhggzRXR8QsljDnFDRd5Oac/tInL/DMnVX0
- guuQ==
-X-Forwarded-Encrypted: i=1;
- AFNElJ87iyAefIkrN7DKeb0oEZHAxD54eo4MsYXXdebJ/v4xzlANIyc3zAuvT/IMGjGnG0R3MLokogsBsGMS@nongnu.org
-X-Gm-Message-State: AOJu0YzQ8Y9CqThycvCYm8+jaHU3LzI2GwSP+iCAl9o8t8xusIucohtM
- OTHaGhNCl81SPI8WiBakYJV+3+YLJHJtuBKo4gtdrVEejNGF7cjO+EZPhU1hIvpcwkvzW7dZwEp
- U4jv5JqommZlVc8bTYjT5+UDQS61knQ4qruWO71i3cL3I9salsN/cpa6g
-X-Gm-Gg: Acq92OFV4vQMOTtlaox94zZpQjZDo/8n9auQIoaJOfHjnaiZyec+/xWMnb3nCqlz/dF
- eZfjrHpx4NwF103CEb7CyTlo5A0yE4gLXueKheIQLSu9LdpihtDzXsOq2r9Qt1KGsbJlOrOMMMP
- 0/L5L6J6g8zbg8NzwvevNwcnCiFzqe0vrW0/FzuKLMzV7O6auyHAicOFbsZNJEbnr014asfvTYU
- c5hpuS9AElTJsYPd/Lts5kzJgXhC3tLTafRFoRCafi4uCDApLOasuU3pKaWIr0aUZ2RO/rQhe05
- 9vOLikCaOHh5WlCUl0jjq309BaEJBX+wn6cqy0oMxeRxbWBSt0Z0t5dGZmdAxGXZrCZwAWwuXm/
- EN34VQ7TPTrgyS48yz2UzNFWEhazW62jQZ/3JzqCARqZHz7TXayeMpw==
-X-Received: by 2002:a05:600c:6388:b0:48a:53cb:8604 with SMTP id
- 5b1f17b1804b1-490c2d1412emr250001305e9.14.1781001366963; 
- Tue, 09 Jun 2026 03:36:06 -0700 (PDT)
-X-Received: by 2002:a05:600c:6388:b0:48a:53cb:8604 with SMTP id
- 5b1f17b1804b1-490c2d1412emr250000715e9.14.1781001366387; 
- Tue, 09 Jun 2026 03:36:06 -0700 (PDT)
-Received: from redhat.com (IGLD-80-230-85-71.inter.net.il. [80.230.85.71])
- by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-490c2d37edbsm374334905e9.2.2026.06.09.03.36.04
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 09 Jun 2026 03:36:05 -0700 (PDT)
-Date: Tue, 9 Jun 2026 06:36:02 -0400
-From: "Michael S. Tsirkin" <mst@redhat.com>
-To: Markus Armbruster <armbru@redhat.com>
-Cc: Filip Hejsek <filip.hejsek@gmail.com>, amit@kernel.org,
- berrange@redhat.com, eblake@redhat.com, eduardo@habkost.net,
- lvivier@redhat.com, marcandre.lureau@redhat.com,
- marcel.apfelbaum@gmail.com, maxbr@linux.ibm.com, noh4hss@gmail.com,
- pbonzini@redhat.com, philmd@linaro.org, qemu-devel@nongnu.org,
- wangyanan55@huawei.com, zhao1.liu@intel.com
-Subject: Re: [PATCH] qapi: drop "must exist" from ID descriptions for
- consistency
-Message-ID: <20260609063539-mutt-send-email-mst@kernel.org>
-References: <924c52d6089b3c0cfd3a235887579ae0322cffba.camel@gmail.com>
- <20260120081821.884342-1-filip.hejsek@gmail.com>
- <877bo8q9yc.fsf@pond.sub.org>
+ d=1e100.net; s=20251104; t=1781002298; x=1781607098;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=WiZyWl3UNuvsRsJvmXehW74+HCKdcWPr+4Zi9gv4GnY=;
+ b=Tyz5o7Guu70UW+M32zWW3sOqlIagugpY4xQ3nv8UangkYuOK+l1rZccYhc6HOuBvh6
+ KVoJkoCiwZcKlf5mO3/PV34hhyyIRkJJ5zlDBoJ9Pdu+CymgFXBbcmEntpGygXpfwttF
+ zf8OWz/u73K+J0+RdV6c1YSYTxus25XHEhzT/yZRFKPPPrdzY9zdd8YhtToueGV4cf23
+ dUJnGmBeBMqhQwhyn2+w1qnqplfCobmJhLFaLQl95W2kd9/rAM3CGdZV2yE2ZY11p88k
+ RB/O6aPYxV3hfHGzcqdubQqGLVQ7XEsNOhpcVcNqUP44trNzbo3ddI/L4J8wIkSYCfl+
+ nQxQ==
+X-Gm-Message-State: AOJu0YwSlHKoffoqPFRUsQHKhiSz27AiyDGPeQdxfLH2AoASy73tjzE6
+ 34VB30E8RrCJoUvFiuKTxZobbT4kM4iuRht6/P9XFeWqltCWOeyAz0OrjCEay64OE4rdUwj/b5p
+ qfU0yA4NZBuWy6lJvuQ8pHejc5xyZrQ/CHyoXRuVEFg==
+X-Gm-Gg: Acq92OGLRBzi34aETzsHcy2/D+KppZQEnpHQqPMeR3vpzjB5KyICkOqpJ+yiLb1ASAd
+ OmrifCPsGDkwzBNS8noQLQ4cD+UGwQS4ILuqnzBAKivLYHp381aefJC5iTmLq0Y8ZRvEcFkFoYc
+ I9PzrM3SbuoXNYmFSmAYPNqo/8aY8nwdITi+rti1l6Os0YgjmW5xZMqWF5k01dz8+4IZvPIyhN7
+ ARij/xONtKtQUjR7gQEdr4NxAdSiEFtNSS6AJoufujso5A18Aj4QQJcSpYjLgbZ8dJsr91MCs7o
+ gZDf1D1Qn2YT8XJGpWbvCFW5IN+OHfYkr9Qq1aXj0PbttuvQO5ylqlOCS5zahJTKyZ0ihOa8pFe
+ 6pQbGJhWVoU8c
+X-Received: by 2002:a05:690e:400d:b0:65e:4b1d:c694 with SMTP id
+ 956f58d0204a3-6614f7fa798mr1629260d50.45.1781002298059; Tue, 09 Jun 2026
+ 03:51:38 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <877bo8q9yc.fsf@pond.sub.org>
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=mst@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -24
-X-Spam_score: -2.5
+References: <20260603032855.106930-1-richard.henderson@linaro.org>
+ <20260603032855.106930-4-richard.henderson@linaro.org>
+In-Reply-To: <20260603032855.106930-4-richard.henderson@linaro.org>
+From: Peter Maydell <peter.maydell@linaro.org>
+Date: Tue, 9 Jun 2026 11:51:26 +0100
+X-Gm-Features: AVVi8Cd2bDzh1nnNMTkt48l5Y8fzUkghxDoyBBUzWP8cZiHjqmAZRgzGwB60FQM
+Message-ID: <CAFEAcA9D3x7hD=RmhddTmuHWvd+cpp027A18k+OQY3sPiQrW_g@mail.gmail.com>
+Subject: Re: [PATCH v9 03/45] target/arm: Use FloatParts64 in f16_dotadd
+To: Richard Henderson <richard.henderson@linaro.org>
+Cc: qemu-devel@nongnu.org, qemu-arm@nongnu.org, 
+ =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2607:f8b0:4864:20::b136;
+ envelope-from=peter.maydell@linaro.org; helo=mail-yx1-xb136.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.445,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -124,62 +118,53 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, Jun 09, 2026 at 12:34:03PM +0200, Markus Armbruster wrote:
-> Uh, this fell through the cracks, possibly because it was buried within
-> a thread.
-> 
-> Filip Hejsek <filip.hejsek@gmail.com> writes:
-> 
-> > Make chardev ID param descriptions more consistend with ID descriptions
-> 
-> Typo: consistent
-> 
-> Not worth a respin.
-> 
-> > elsewhere.
-> > ---
-> >  qapi/char.json | 6 +++---
-> >  1 file changed, 3 insertions(+), 3 deletions(-)
-> >
-> > diff --git a/qapi/char.json b/qapi/char.json
-> > index 140614f82c..fbac5a1cb7 100644
-> > --- a/qapi/char.json
-> > +++ b/qapi/char.json
-> > @@ -791,7 +791,7 @@
-> >  #
-> >  # Change a character device backend
-> >  #
-> > -# @id: the chardev's ID, must exist
-> > +# @id: the chardev's ID
-> >  #
-> >  # @backend: new backend type and parameters
-> >  #
-> > @@ -832,7 +832,7 @@
-> >  #
-> >  # Remove a character device backend
-> >  #
-> > -# @id: the chardev's ID, must exist and not be in use
-> > +# @id: the chardev's ID, must not be in use
-> >  #
-> >  # Since: 1.4
-> >  #
-> > @@ -849,7 +849,7 @@
-> >  #
-> >  # Send a break to a character device
-> >  #
-> > -# @id: the chardev's ID, must exist
-> > +# @id: the chardev's ID
-> >  #
-> >  # Since: 2.10
-> >  #
-> 
-> Reviewed-by: Markus Armbruster <armbru@redhat.com>
-> 
-> I can take this.
+On Wed, 3 Jun 2026 at 04:29, Richard Henderson
+<richard.henderson@linaro.org> wrote:
+>
+> Use softfloat-parts.h so that we can more naturally
+> perform the required operations witha single rounding step.
+> This happens to also simplify the NaN detection step.
+>
+> Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
+> Reviewed-by: Philippe Mathieu-Daud=C3=A9 <philmd@linaro.org>
+> Message-Id: <20260517002550.321291-11-richard.henderson@linaro.org>
+> ---
+>  target/arm/tcg/sme_helper.c | 96 ++++++++++++++++---------------------
+>  1 file changed, 40 insertions(+), 56 deletions(-)
 
-maybe after it gets a signed off by tag from the author.
 
--- 
-MST
 
+> @@ -1240,48 +1238,49 @@ static float32 f16_dotadd(float32 sum, uint32_t e=
+1, uint32_t e2,
+>      float16 h2c =3D e2 >> 16;
+>      float32 t32;
+>
+> +    FloatParts64 p1r =3D float16_unpack_canonical(h1r, s_f16);
+> +    FloatParts64 p1c =3D float16_unpack_canonical(h1c, s_f16);
+> +    FloatParts64 p2r =3D float16_unpack_canonical(h2r, s_f16);
+> +    FloatParts64 p2c =3D float16_unpack_canonical(h2c, s_f16);
+> +
+> +    int all_mask =3D (float_cmask(p1r.cls) | float_cmask(p1c.cls) |
+> +                    float_cmask(p1r.cls) | float_cmask(p1c.cls));
+
+This looks like a cut-and-paste error : we don't take account
+of p2r.cls and p2c.cls, so if those inputs are NaNs we won't
+handle them correctly. This should fix it:
+
+--- a/target/arm/tcg/sme_helper.c
++++ b/target/arm/tcg/sme_helper.c
+@@ -1244,7 +1244,7 @@ static float32 f16_dotadd(float32 sum, uint32_t
+e1, uint32_t e2,
+     FloatParts64 p2c =3D float16_unpack_canonical(h2c, s_f16);
+
+     int all_mask =3D (float_cmask(p1r.cls) | float_cmask(p1c.cls) |
+-                    float_cmask(p1r.cls) | float_cmask(p1c.cls));
++                    float_cmask(p2r.cls) | float_cmask(p2c.cls));
+
+     /* C.f. FPProcessNaNs4 */
+     if (unlikely(all_mask & float_cmask_anynan)) {
+
+
+thanks
+-- PMM
 
