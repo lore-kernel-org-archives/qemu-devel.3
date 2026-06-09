@@ -4,71 +4,71 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 200A8CD8CB2
-	for <qemu-devel@archiver.kernel.org>; Tue,  9 Jun 2026 23:19:13 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D7FA8CD8CB2
+	for <qemu-devel@archiver.kernel.org>; Tue,  9 Jun 2026 23:21:52 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wX5if-0007DX-8b; Tue, 09 Jun 2026 19:18:54 -0400
+	id 1wX5lD-0000dC-CN; Tue, 09 Jun 2026 19:21:31 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1wX5ia-0007BN-91
- for qemu-devel@nongnu.org; Tue, 09 Jun 2026 19:18:49 -0400
-Received: from smtp-out2.suse.de ([195.135.223.131])
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1wX5lC-0000ae-3c
+ for qemu-devel@nongnu.org; Tue, 09 Jun 2026 19:21:30 -0400
+Received: from smtp-out1.suse.de ([195.135.223.130])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1wX5iV-0006bp-JQ
- for qemu-devel@nongnu.org; Tue, 09 Jun 2026 19:18:46 -0400
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1wX5l9-00023o-U0
+ for qemu-devel@nongnu.org; Tue, 09 Jun 2026 19:21:29 -0400
 Received: from imap1.dmz-prg2.suse.org (imap1.dmz-prg2.suse.org
  [IPv6:2a07:de40:b281:104:10:150:64:97])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
  (No client certificate requested)
- by smtp-out2.suse.de (Postfix) with ESMTPS id 6C37475C86;
- Tue,  9 Jun 2026 23:18:41 +0000 (UTC)
+ by smtp-out1.suse.de (Postfix) with ESMTPS id 1A9346A932;
+ Tue,  9 Jun 2026 23:21:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1781047121; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ t=1781047286; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
  mime-version:mime-version:content-type:content-type:
  in-reply-to:in-reply-to:references:references;
- bh=pmMSLLZYKuSFrgW4y9eCQ2luBve/y4vsyHGWESuVdgQ=;
- b=O5JEzyzYvWuPwabBPqyaklQ1u+KVrHIEUIdM2A4UOWL3PsjwcevcFHe4EjVBDiI4kXnHFM
- xohGRG9BiVTbYpmxoosTJ3pC/7ef3XIAveJas2Vt14BUCv8mtCqufNREHq4kmZGtDK6FCV
- 0QqSNgrdLjOkKxfQdx3LJQEh6YbZlYY=
+ bh=JiQT306ZsYyNGqJaI9bEIqWY1UM6yQRkTaUZ21idcrI=;
+ b=uZUMebOz6fmuBtGm4beGVRFsWS35xiPAbgK2cXLG+Mx/vGxpeQSLKLo+mIj1j/fo0DclS5
+ EZHST8MfIGz9tyA4LqGsmC1QOajSNUbFmPHSHi944y8iBcVXsR3Y96vVpg9wCbvm+6Mm2f
+ 1pFBzIS90NOjD/V+s0xpPT0aI4qCdnM=
 DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1781047121;
+ s=susede2_ed25519; t=1781047286;
  h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
  mime-version:mime-version:content-type:content-type:
  in-reply-to:in-reply-to:references:references;
- bh=pmMSLLZYKuSFrgW4y9eCQ2luBve/y4vsyHGWESuVdgQ=;
- b=IBjOv3rB9PoUs+qcNJlp9pDgBQF/85olXUee8dnBFdR0llEnqmMESlcYgHbyqD6FMgbET6
- sFMc9SokSgI1YoAA==
-Authentication-Results: smtp-out2.suse.de;
- dkim=pass header.d=suse.de header.s=susede2_rsa header.b=O5JEzyzY;
- dkim=pass header.d=suse.de header.s=susede2_ed25519 header.b=IBjOv3rB
+ bh=JiQT306ZsYyNGqJaI9bEIqWY1UM6yQRkTaUZ21idcrI=;
+ b=dUAVzg8XNicLTL76NYd8UGWBxn7tT52ReSh/PUsfp0lbQWpOdhWGV8uin6E+aJsH6UKyYx
+ sBTVqne3dU+SR4DA==
+Authentication-Results: smtp-out1.suse.de;
+ dkim=pass header.d=suse.de header.s=susede2_rsa header.b=Qz+TqjoA;
+ dkim=pass header.d=suse.de header.s=susede2_ed25519 header.b="NwJX/2NT"
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1781047121; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ t=1781047285; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
  mime-version:mime-version:content-type:content-type:
  in-reply-to:in-reply-to:references:references;
- bh=pmMSLLZYKuSFrgW4y9eCQ2luBve/y4vsyHGWESuVdgQ=;
- b=O5JEzyzYvWuPwabBPqyaklQ1u+KVrHIEUIdM2A4UOWL3PsjwcevcFHe4EjVBDiI4kXnHFM
- xohGRG9BiVTbYpmxoosTJ3pC/7ef3XIAveJas2Vt14BUCv8mtCqufNREHq4kmZGtDK6FCV
- 0QqSNgrdLjOkKxfQdx3LJQEh6YbZlYY=
+ bh=JiQT306ZsYyNGqJaI9bEIqWY1UM6yQRkTaUZ21idcrI=;
+ b=Qz+TqjoAjNVDjlSqpeKBz2g5oJIcy3joY/Vk4y7GaKxBoo6yYt09txahPu2XWL0QbkI17y
+ +L44wCp8SjwAA2uWMK7yj/CKVgShQbw+fvEJYfCKkU7Otr0lRYnHM8YRLuH98veKcuG3WC
+ HDjiOlZ/R+A3Q4U6FJbLNf0MSNrpzUE=
 DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1781047121;
+ s=susede2_ed25519; t=1781047285;
  h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
  mime-version:mime-version:content-type:content-type:
  in-reply-to:in-reply-to:references:references;
- bh=pmMSLLZYKuSFrgW4y9eCQ2luBve/y4vsyHGWESuVdgQ=;
- b=IBjOv3rB9PoUs+qcNJlp9pDgBQF/85olXUee8dnBFdR0llEnqmMESlcYgHbyqD6FMgbET6
- sFMc9SokSgI1YoAA==
+ bh=JiQT306ZsYyNGqJaI9bEIqWY1UM6yQRkTaUZ21idcrI=;
+ b=NwJX/2NT2TV3d1bL++Ya8/Epc6ihOPUUL1Mro1PrXYsZ/GsRRmQexP8p3mLjMT+MkbGRrb
+ rpJrYgFTZMVZH4Cw==
 Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
  (No client certificate requested)
- by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id 0BC32779A7;
- Tue,  9 Jun 2026 23:18:40 +0000 (UTC)
+ by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id AACA1779A7;
+ Tue,  9 Jun 2026 23:21:24 +0000 (UTC)
 Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
- by imap1.dmz-prg2.suse.org with ESMTPSA id JSiRM1CfKGrQTQAAD6G6ig
- (envelope-from <farosas@suse.de>); Tue, 09 Jun 2026 23:18:40 +0000
+ by imap1.dmz-prg2.suse.org with ESMTPSA id 2AEoHvSfKGoMUAAAD6G6ig
+ (envelope-from <farosas@suse.de>); Tue, 09 Jun 2026 23:21:24 +0000
 From: Fabiano Rosas <farosas@suse.de>
 To: Peter Xu <peterx@redhat.com>, qemu-devel@nongnu.org
 Cc: qemu-arm@nongnu.org, =?utf-8?Q?C=C3=A9dric?= Le Goater <clg@redhat.com>,
@@ -85,39 +85,35 @@ Cc: qemu-arm@nongnu.org, =?utf-8?Q?C=C3=A9dric?= Le Goater <clg@redhat.com>,
  <marcandre.lureau@redhat.com>, Juraj Marcin <jmarcin@redhat.com>,
  qemu-rust@nongnu.org, Markus Armbruster <armbru@redhat.com>, Mark
  Cave-Ayland <mark.caveayland@nutanix.com>
-Subject: Re: [PATCH v2 07/10] qom: Add object_property_add_size_ptr()
-In-Reply-To: <20260609172514.2037645-8-peterx@redhat.com>
+Subject: Re: [PATCH v2 08/10] qom: Add object_property_add_*_ptr_def()
+In-Reply-To: <20260609172514.2037645-9-peterx@redhat.com>
 References: <20260609172514.2037645-1-peterx@redhat.com>
- <20260609172514.2037645-8-peterx@redhat.com>
-Date: Tue, 09 Jun 2026 20:18:38 -0300
-Message-ID: <878q8n5mlt.fsf@suse.de>
+ <20260609172514.2037645-9-peterx@redhat.com>
+Date: Tue, 09 Jun 2026 20:21:18 -0300
+Message-ID: <875x3r5mhd.fsf@suse.de>
 MIME-Version: 1.0
 Content-Type: text/plain
 X-Rspamd-Action: no action
-X-Rspamd-Queue-Id: 6C37475C86
-X-Spamd-Result: default: False [-4.51 / 50.00]; BAYES_HAM(-3.00)[99.99%];
+X-Spamd-Result: default: False [-4.51 / 50.00]; BAYES_HAM(-3.00)[100.00%];
  NEURAL_HAM_LONG(-1.00)[-1.000];
- NEURAL_HAM_SHORT(-0.20)[-1.000];
  R_DKIM_ALLOW(-0.20)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
- MIME_GOOD(-0.10)[text/plain]; MX_GOOD(-0.01)[];
- URIBL_BLOCKED(0.00)[imap1.dmz-prg2.suse.org:rdns,imap1.dmz-prg2.suse.org:helo,suse.de:dkim,suse.de:email,suse.de:mid];
- DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
- RCPT_COUNT_TWELVE(0.00)[20];
- SPAMHAUS_XBL(0.00)[2a07:de40:b281:104:10:150:64:97:from];
- MIME_TRACE(0.00)[0:+];
+ NEURAL_HAM_SHORT(-0.20)[-1.000]; MIME_GOOD(-0.10)[text/plain];
+ MX_GOOD(-0.01)[]; ARC_NA(0.00)[]; RCVD_VIA_SMTP_AUTH(0.00)[];
+ RCVD_TLS_ALL(0.00)[]; MISSING_XM_UA(0.00)[];
+ RCPT_COUNT_TWELVE(0.00)[20]; MIME_TRACE(0.00)[0:+];
+ TO_DN_SOME(0.00)[]; FUZZY_RATELIMITED(0.00)[rspamd.com];
+ MID_RHS_MATCH_FROM(0.00)[];
  RBL_SPAMHAUS_BLOCKED_OPENRESOLVER(0.00)[2a07:de40:b281:104:10:150:64:97:from]; 
- FUZZY_RATELIMITED(0.00)[rspamd.com]; ARC_NA(0.00)[];
- FROM_HAS_DN(0.00)[]; TO_DN_SOME(0.00)[];
- MID_RHS_MATCH_FROM(0.00)[]; RCVD_COUNT_TWO(0.00)[2];
- FROM_EQ_ENVFROM(0.00)[]; TO_MATCH_ENVRCPT_ALL(0.00)[];
+ FROM_EQ_ENVFROM(0.00)[]; FROM_HAS_DN(0.00)[];
  RECEIVED_SPAMHAUS_BLOCKED_OPENRESOLVER(0.00)[2a07:de40:b281:106:10:150:64:167:received];
- MISSING_XM_UA(0.00)[]; RCVD_VIA_SMTP_AUTH(0.00)[];
- RCVD_TLS_ALL(0.00)[]; DKIM_TRACE(0.00)[suse.de:+];
- DBL_BLOCKED_OPENRESOLVER(0.00)[suse.de:dkim, suse.de:email, suse.de:mid,
- imap1.dmz-prg2.suse.org:rdns, imap1.dmz-prg2.suse.org:helo]
-X-Rspamd-Server: rspamd1.dmz-prg2.suse.org
-Received-SPF: pass client-ip=195.135.223.131; envelope-from=farosas@suse.de;
- helo=smtp-out2.suse.de
+ RCVD_COUNT_TWO(0.00)[2]; TO_MATCH_ENVRCPT_ALL(0.00)[];
+ DBL_BLOCKED_OPENRESOLVER(0.00)[imap1.dmz-prg2.suse.org:helo,imap1.dmz-prg2.suse.org:rdns,suse.de:email,suse.de:dkim,suse.de:mid];
+ DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
+ DKIM_TRACE(0.00)[suse.de:+]
+X-Rspamd-Server: rspamd2.dmz-prg2.suse.org
+X-Rspamd-Queue-Id: 1A9346A932
+Received-SPF: pass client-ip=195.135.223.130; envelope-from=farosas@suse.de;
+ helo=smtp-out1.suse.de
 X-Spam_score_int: -43
 X-Spam_score: -4.4
 X-Spam_bar: ----
@@ -142,95 +138,131 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 Peter Xu <peterx@redhat.com> writes:
 
-> Add a helper to set qom property via a size pointer.
+> Add sister functions for existing pointer versions, to make it even easier
+> to use by:
+>
+> - always make properties to be rw-able
+> - allowing to specify default values
+> - no retcode needed (assert on failure, always)
 >
 > Signed-off-by: Peter Xu <peterx@redhat.com>
-
-Reviewed-by: Fabiano Rosas <farosas@suse.de>
-
 > ---
->  include/qom/object-property-ptr.h | 16 +++++++++++++
->  qom/object-property-ptr.c         | 40 +++++++++++++++++++++++++++++++
->  2 files changed, 56 insertions(+)
+>  include/qom/object-property-ptr.h | 28 +++++++++++++
+>  qom/object-property-ptr.c         | 67 +++++++++++++++++++++++++++++++
+>  2 files changed, 95 insertions(+)
 >
 > diff --git a/include/qom/object-property-ptr.h b/include/qom/object-property-ptr.h
-> index 9cd8600094..be467c64af 100644
+> index be467c64af..ecd6f7819b 100644
 > --- a/include/qom/object-property-ptr.h
 > +++ b/include/qom/object-property-ptr.h
-> @@ -115,4 +115,20 @@ ObjectProperty *object_class_property_add_uint64_ptr(ObjectClass *klass,
->                                            const uint64_t *v,
->                                            ObjectPropertyFlags flags);
+> @@ -131,4 +131,32 @@ object_property_add_size_ptr(Object *obj, const char *name,
+>                               const uint64_t *v,
+>                               ObjectPropertyFlags flags);
 >  
-> +/**
-> + * object_property_add_size_ptr:
-> + * @obj: the object to add a property to
-> + * @name: the name of the property
-> + * @v: pointer to value
-> + * @flags: bitwise-or'd ObjectPropertyFlags
+> +/*
+> + * Below are sister helpers of above, except that:
 > + *
-> + * Add a property of type 'size' to the object.
+> + * (1) nothing is returned
+> + * (2) always make the property to be both readable and writeable
+> + * (3) allow setting default value
 > + *
-> + * Returns: The newly added property on success, or %NULL on failure.
+> + * Please refer to the sister functions for the documentation.
 > + */
-> +ObjectProperty *
-> +object_property_add_size_ptr(Object *obj, const char *name,
-> +                             const uint64_t *v,
-> +                             ObjectPropertyFlags flags);
+> +void
+> +object_property_add_bool_ptr_def(Object *obj, const char *name,
+> +                                 const bool *v, bool def);
+> +void
+> +object_property_add_uint8_ptr_def(Object *obj, const char *name,
+> +                                  const uint8_t *v, uint8_t def);
+> +void
+> +object_property_add_uint16_ptr_def(Object *obj, const char *name,
+> +                                   const uint16_t *v, uint16_t def);
+> +void
+> +object_property_add_uint32_ptr_def(Object *obj, const char *name,
+> +                                   const uint32_t *v, uint32_t def);
+> +void
+> +object_property_add_uint64_ptr_def(Object *obj, const char *name,
+> +                                   const uint64_t *v, uint64_t def);
+> +void
+> +object_property_add_size_ptr_def(Object *obj, const char *name,
+> +                                 const uint64_t *v, uint64_t def);
 > +
 >  #endif
 > diff --git a/qom/object-property-ptr.c b/qom/object-property-ptr.c
-> index 49f223da7b..21ceb2510d 100644
+> index 21ceb2510d..ae9081d2d8 100644
 > --- a/qom/object-property-ptr.c
 > +++ b/qom/object-property-ptr.c
-> @@ -107,6 +107,26 @@ static void property_set_uint64_ptr(Object *obj, Visitor *v, const char *name,
->      *field = value;
->  }
->  
-> +static void property_get_size_ptr(Object *obj, Visitor *v, const char *name,
-> +                                  void *opaque, Error **errp)
-> +{
-> +    uint64_t value = *(uint64_t *)opaque;
-> +    visit_type_size(v, name, &value, errp);
-> +}
-> +
-> +static void property_set_size_ptr(Object *obj, Visitor *v, const char *name,
-> +                                  void *opaque, Error **errp)
-> +{
-> +    uint64_t *field = opaque;
-> +    uint64_t value;
-> +
-> +    if (!visit_type_size(v, name, &value, errp)) {
-> +        return;
-> +    }
-> +
-> +    *field = value;
-> +}
-> +
->  ObjectProperty *
->  object_property_add_bool_ptr(Object *obj, const char *name,
->                               const bool *v, ObjectPropertyFlags flags)
-> @@ -285,3 +305,23 @@ object_class_property_add_uint64_ptr(ObjectClass *klass, const char *name,
->      return object_class_property_add(klass, name, "uint64",
->                                       getter, setter, NULL, (void *)v);
+> @@ -325,3 +325,70 @@ object_property_add_size_ptr(Object *obj, const char *name,
+>      return object_property_add(obj, name, "size",
+>                                 getter, setter, NULL, (void *)v);
 >  }
 > +
-> +ObjectProperty *
-> +object_property_add_size_ptr(Object *obj, const char *name,
-> +                             const uint64_t *v,
-> +                             ObjectPropertyFlags flags)
+> +void
+> +object_property_add_bool_ptr_def(Object *obj, const char *name,
+> +                                 const bool *v, bool def)
 > +{
-> +    ObjectPropertyAccessor *getter = NULL;
-> +    ObjectPropertyAccessor *setter = NULL;
+> +    ObjectProperty *prop;
 > +
-> +    if ((flags & OBJ_PROP_FLAG_READ) == OBJ_PROP_FLAG_READ) {
-> +        getter = property_get_size_ptr;
-> +    }
-> +
-> +    if ((flags & OBJ_PROP_FLAG_WRITE) == OBJ_PROP_FLAG_WRITE) {
-> +        setter = property_set_size_ptr;
-> +    }
-> +
-> +    return object_property_add(obj, name, "size",
-> +                               getter, setter, NULL, (void *)v);
+> +    prop = object_property_add_bool_ptr(obj, name, v,
+> +                                        OBJ_PROP_FLAG_READWRITE);
+> +    object_property_set_default_bool(prop, def);
 > +}
+> +
+> +
+> +void
+> +object_property_add_uint8_ptr_def(Object *obj, const char *name,
+> +                                  const uint8_t *v, uint8_t def)
+> +{
+> +    ObjectProperty *prop;
+> +
+> +    prop = object_property_add_uint8_ptr(obj, name, v,
+> +                                         OBJ_PROP_FLAG_READWRITE);
+> +    object_property_set_default_uint(prop, def);
+> +}
+> +
+> +void
+> +object_property_add_uint16_ptr_def(Object *obj, const char *name,
+> +                                   const uint16_t *v, uint16_t def)
+> +{
+> +    ObjectProperty *prop;
+> +
+> +    prop = object_property_add_uint16_ptr(obj, name, v,
+> +                                          OBJ_PROP_FLAG_READWRITE);
+> +    object_property_set_default_uint(prop, def);
+> +}
+> +
+> +void
+> +object_property_add_uint32_ptr_def(Object *obj, const char *name,
+> +                                   const uint32_t *v, uint32_t def)
+> +{
+> +    ObjectProperty *prop;
+> +
+> +    prop = object_property_add_uint32_ptr(obj, name, v,
+> +                                          OBJ_PROP_FLAG_READWRITE);
+> +    object_property_set_default_uint(prop, def);
+> +}
+> +
+> +void
+> +object_property_add_uint64_ptr_def(Object *obj, const char *name,
+> +                                   const uint64_t *v, uint64_t def)
+> +{
+> +    ObjectProperty *prop;
+> +
+> +    prop = object_property_add_uint64_ptr(obj, name, v,
+> +                                          OBJ_PROP_FLAG_READWRITE);
+> +    object_property_set_default_uint(prop, def);
+> +}
+> +
+> +void
+> +object_property_add_size_ptr_def(Object *obj, const char *name,
+> +                                 const uint64_t *v, uint64_t def)
+> +{
+> +    ObjectProperty *prop;
+> +
+> +    prop = object_property_add_size_ptr(obj, name, v,
+> +                                        OBJ_PROP_FLAG_READWRITE);
+> +    object_property_set_default_uint(prop, def);
+> +}
+
+Reviewed-by: Fabiano Rosas <farosas@suse.de>
 
