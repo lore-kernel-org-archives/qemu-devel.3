@@ -4,56 +4,57 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 869CFCD8CAA
-	for <qemu-devel@archiver.kernel.org>; Tue,  9 Jun 2026 14:36:39 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 663E3CD8CB9
+	for <qemu-devel@archiver.kernel.org>; Tue,  9 Jun 2026 14:36:41 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wWxZ1-0005Yu-41; Tue, 09 Jun 2026 10:36:23 -0400
+	id 1wWxYR-0002TO-Ls; Tue, 09 Jun 2026 10:35:47 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1wWxYy-0005TP-LX
- for qemu-devel@nongnu.org; Tue, 09 Jun 2026 10:36:20 -0400
+ id 1wWxYQ-0002Oz-2C
+ for qemu-devel@nongnu.org; Tue, 09 Jun 2026 10:35:46 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1wWxYx-0007Yh-5Y
- for qemu-devel@nongnu.org; Tue, 09 Jun 2026 10:36:20 -0400
+ id 1wWxYO-00073X-MQ
+ for qemu-devel@nongnu.org; Tue, 09 Jun 2026 10:35:45 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1781015778;
+ s=mimecast20190719; t=1781015744;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=DjnAxC/Mc7CJiqlOeCM3RQtg+Isi+MArKrw26TJllhg=;
- b=b/IFUvPUF6bR+yL55Snx9rhYtSLdLYihDKBlXg/p/E5BlEUMwBCnD/Y/XUA6GDnHmbM15L
- 1vL5FB8uhQQ9IouhKirBUMbZHyVN1U5WmbBnMqhDIbh6eJX6/EM6ctmsovH2vRskfiQkVO
- msrKlYSwOBgHkTKfbk9z7W3HmfmFt9M=
-Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
+ bh=1nNc/INcsPpcggiUKdGL+v67fCZIsx+PXcGTnYiRPMc=;
+ b=MA9WTPrOAZQDYVt8bqCKHeArHTX/q9wkMto6nA9/elyMcoiKTzs1qPb/X6HCdaKHnNo0IY
+ HvYHokpGH5LHvk+9t8qKFpwUTjHRvndYPWHOEJZ5te28OI1S/2FvSYLz0nSM3cUsuxokjV
+ /c9v7rDs+CQu8HnF6UpE6hWk37Ptq+0=
+Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-528-B5KdD12sPSuB30pBcfuKxQ-1; Tue,
- 09 Jun 2026 10:36:14 -0400
-X-MC-Unique: B5KdD12sPSuB30pBcfuKxQ-1
-X-Mimecast-MFC-AGG-ID: B5KdD12sPSuB30pBcfuKxQ_1781015773
-Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-562-gmtiu2lsNriGW_Mf-TamcQ-1; Tue,
+ 09 Jun 2026 10:35:40 -0400
+X-MC-Unique: gmtiu2lsNriGW_Mf-TamcQ-1
+X-Mimecast-MFC-AGG-ID: gmtiu2lsNriGW_Mf-TamcQ_1781015740
+Received: from mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.17])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 637C2195C268; Tue,  9 Jun 2026 14:36:13 +0000 (UTC)
+ by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id E3B3F195F16F; Tue,  9 Jun 2026 14:35:39 +0000 (UTC)
 Received: from localhost (unknown [10.44.24.21])
- by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id DF40D1954B02; Tue,  9 Jun 2026 14:36:11 +0000 (UTC)
+ by mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id 056E21954102; Tue,  9 Jun 2026 14:35:38 +0000 (UTC)
 From: =?utf-8?q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>
-Date: Tue, 09 Jun 2026 18:34:36 +0400
-Subject: [PATCH 17/17] ui/input: remove old LED handler broadcast queue
+Date: Tue, 09 Jun 2026 18:34:30 +0400
+Subject: [PATCH 11/17] hw/input/ps2: use qemu_input_handler_set_led() for
+ LED state
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
-Message-Id: <20260609-ui-input-v1-17-42615deb818e@redhat.com>
+Message-Id: <20260609-ui-input-v1-11-42615deb818e@redhat.com>
 References: <20260609-ui-input-v1-0-42615deb818e@redhat.com>
 In-Reply-To: <20260609-ui-input-v1-0-42615deb818e@redhat.com>
 To: qemu-devel@nongnu.org
@@ -62,24 +63,24 @@ Cc: "Dr. David Alan Gilbert" <dave@treblig.org>,
  Richard Henderson <richard.henderson@linaro.org>, 
  "Michael S. Tsirkin" <mst@redhat.com>, Gerd Hoffmann <kraxel@redhat.com>, 
  =?utf-8?q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>
-X-Developer-Signature: v=1; a=openpgp-sha256; l=2215;
+X-Developer-Signature: v=1; a=openpgp-sha256; l=857;
  i=marcandre.lureau@redhat.com; h=from:subject:message-id;
- bh=NHaVAaoIWOcPRSUWYUSpmvX80VOfS5rhWCqfzhbLc/A=;
- b=owEBbQKS/ZANAwAKAdro4Ql1lpzlAcsmYgBqKCR5+wamHn/U3GWgK/fyG8WzC72DYLJrVq/Ii
- f9PbSDCsy2JAjMEAAEKAB0WIQSHqb2TP4fGBtJ29i3a6OEJdZac5QUCaigkeQAKCRDa6OEJdZac
- 5XjbD/95rNhc6ceJd49DQQ4oejkRlP9MaFbb488PDCTWGM4htQA9vQWlwpNyMmK71gD5bzC9MWq
- aAbgke64qnyFhEdnWLWKQIcKbihPLCNvIlxcFRb6eaMYRiphvvTp25qy9HzBaMHWoiWPuhoCzdM
- jmQWAEKZjB+K+1PX4pFygOYXHXbg5SPowOIjNDiy87IYEpi/JPy9nzYrysC5KF5pYDFAt//NVgf
- 8r0TF5Imy50Sc2Dq6JGhmfvgGOHJ/JjMYNwDgtzzYF/HAKWpQEh1gfewfoOGzueeUS7XjgShjQ/
- U3z9uxNV2VdKroZki1HCp9VsReKuA7cQpZkqmUQbdyqJtZrLgQbTDUNqGQFgXV7GL8rfUPovK1R
- aeNEBK3qBPAA6ropkiTCTlJ6WoJYSp0636nJSY8Ism1uFjJQVJcqySYFPs77Ep+BzbSobPhM5Q9
- TmCEHuOtyjM1DQd7kPjiN8w50hG+8tg6r3vPlPzAxWem8AIyhwFCzzpDZENr1MQn4U7Ync6mRfw
- DWmZ8opG27y7s5EXRIWxDI2h7BsAIJQ0BzwGp8LKtwci2kv7MS7eEQUl43lP6Q/2s7SKTO7fxHI
- Q6juojfragt+XAvKa4avC/n6OOEPgAbHekG7YNor3nN3Bi9uBb8bY39ll9cQE0ZcYzsTzwPY/9Z
- NErSgGB4Fm111Xw==
+ bh=t0Z9m7c1Hh+44awYmkSHssaygTyzyWH8QlSLYI/LQak=;
+ b=owEBbQKS/ZANAwAKAdro4Ql1lpzlAcsmYgBqKCR4NU/74WlNez1eA5DQ0oRhJUoxNtBWL2ida
+ d/MzyaVVvWJAjMEAAEKAB0WIQSHqb2TP4fGBtJ29i3a6OEJdZac5QUCaigkeAAKCRDa6OEJdZac
+ 5bytEACUcw6Vcm/X79cH91QCpNunKyxIXJJaMGYGHelnKx04GZO1NvWx8kdQ6cw0mly6S5Pz7SL
+ WizATzWyRLkfERwM8pbgsU9MbZIOYLlw15bM9YRWja3M+QqwwNigN3r3h3lL42KN9a9tIauseZu
+ TkN01tqx5AQqeT2vHwc4l7l94iui/KK0LpORR+A6Wy/f7wgQ0YiN8Bp/+wH1OMZAJffGEmAXT2D
+ x2OXBbvgfI8gScAlNDY4h221XgVj9jIZL6LbnLRZKXAKbVSQF4t+LAX9DzoeOPpYE9GhtLt49Wk
+ YwsB25YRbv5RbwDAMAuarpNwRttgkd3dMFEKXwIbOUPp2KkSCLvDswKt+0txZHMVdd+Ycdwkzvh
+ /wE4ZA7OfiH1V3+xUMPQ+ZpA6vh8pRGTSqM7in+q0rjdK+ZDHOUgo4e890OvcF41s8oTHxdGPSq
+ JSyjUXCfy33F/1bduOuBuR7uYAM9cJUMB/dv0ta0rgmoi+A7CSjywD+V8LRUQQuff7Mta8Vf2sM
+ oscg34SC4NMOUqfCq+zEXMQFOH6FUjpL7ogr9jaSzhpzsKs8Hkp54q0cR1uFLuilGFETqeBEVOu
+ EjRkzLt4FyXm7lhhBPHA+0xniu5fqF1TOgEpbTKJCtoA0rGROWNNLBN/hXRJkaxp8oU0JBQau0X
+ ZPF8saZuMKiWFZw==
 X-Developer-Key: i=marcandre.lureau@redhat.com; a=openpgp;
  fpr=87A9BD933F87C606D276F62DDAE8E10975969CE5
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.12
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.17
 Received-SPF: pass client-ip=170.10.133.124;
  envelope-from=marcandre.lureau@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
@@ -108,81 +109,31 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 Signed-off-by: Marc-André Lureau <marcandre.lureau@redhat.com>
 ---
- include/ui/console.h |  9 ---------
- ui/input.c           | 40 ----------------------------------------
- 2 files changed, 49 deletions(-)
+ hw/input/ps2.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/include/ui/console.h b/include/ui/console.h
-index 0299ed4b566..b7bfecb6ee9 100644
---- a/include/ui/console.h
-+++ b/include/ui/console.h
-@@ -54,15 +54,6 @@ enum qemu_color_names {
- #define ATTR2CHTYPE(c, fg, bg, bold) \
-     ((bold) << 21 | (bg) << 11 | (fg) << 8 | (c))
- 
--typedef void QEMUPutLEDEvent(void *opaque, int ledstate);
--
--typedef struct QEMUPutLEDEntry QEMUPutLEDEntry;
--
--QEMUPutLEDEntry *qemu_add_led_event_handler(QEMUPutLEDEvent *func, void *opaque);
--void qemu_remove_led_event_handler(QEMUPutLEDEntry *entry);
--
--void kbd_put_ledstate(int ledstate);
--
- bool qemu_mouse_set(int index, Error **errp);
- 
- /* keysym is a unicode code except for special keys (see QEMU_KEY_xxx
-diff --git a/ui/input.c b/ui/input.c
-index 99a1090f8c3..b6bbfa8f128 100644
---- a/ui/input.c
-+++ b/ui/input.c
-@@ -689,46 +689,6 @@ void qemu_input_touch_event(QemuConsole *con,
-     }
+diff --git a/hw/input/ps2.c b/hw/input/ps2.c
+index 97df7a9a43e..7fbee17fbf0 100644
+--- a/hw/input/ps2.c
++++ b/hw/input/ps2.c
+@@ -577,7 +577,7 @@ static void ps2_set_ledstate(PS2KbdState *s, int ledstate)
+ {
+     trace_ps2_set_ledstate(s, ledstate);
+     s->ledstate = ledstate;
+-    kbd_put_ledstate(ledstate);
++    qemu_input_handler_set_led(PS2_DEVICE(s)->hs, ledstate);
  }
  
--struct QEMUPutLEDEntry {
--    QEMUPutLEDEvent *put_led;
--    void *opaque;
--    QTAILQ_ENTRY(QEMUPutLEDEntry) next;
--};
--
--static QTAILQ_HEAD(, QEMUPutLEDEntry) led_handlers =
--    QTAILQ_HEAD_INITIALIZER(led_handlers);
--
--QEMUPutLEDEntry *qemu_add_led_event_handler(QEMUPutLEDEvent *func,
--                                            void *opaque)
--{
--    QEMUPutLEDEntry *s;
--
--    s = g_new0(QEMUPutLEDEntry, 1);
--
--    s->put_led = func;
--    s->opaque = opaque;
--    QTAILQ_INSERT_TAIL(&led_handlers, s, next);
--    return s;
--}
--
--void qemu_remove_led_event_handler(QEMUPutLEDEntry *entry)
--{
--    if (entry == NULL) {
--        return;
--    }
--    QTAILQ_REMOVE(&led_handlers, entry, next);
--    g_free(entry);
--}
--
--void kbd_put_ledstate(int ledstate)
--{
--    QEMUPutLEDEntry *cursor;
--
--    QTAILQ_FOREACH(cursor, &led_handlers, next) {
--        cursor->put_led(cursor->opaque, ledstate);
--    }
--}
--
- void qmp_send_key(KeyValueList *keys, bool has_hold_time, int64_t hold_time,
-                   Error **errp)
+ static void ps2_reset_keyboard(PS2KbdState *s)
+@@ -1108,7 +1108,7 @@ static int ps2_kbd_ledstate_post_load(void *opaque, int version_id)
  {
+     PS2KbdState *s = opaque;
+ 
+-    kbd_put_ledstate(s->ledstate);
++    qemu_input_handler_set_led(PS2_DEVICE(s)->hs, s->ledstate);
+     return 0;
+ }
+ 
 
 -- 
 2.54.0
