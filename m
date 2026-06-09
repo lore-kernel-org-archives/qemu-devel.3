@@ -4,100 +4,98 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 161DACD8CAE
-	for <qemu-devel@archiver.kernel.org>; Tue,  9 Jun 2026 06:03:42 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1F6F4CD8CA8
+	for <qemu-devel@archiver.kernel.org>; Tue,  9 Jun 2026 06:23:20 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wWpYB-0000Is-Uv; Tue, 09 Jun 2026 02:03:00 -0400
+	id 1wWprB-0005GS-46; Tue, 09 Jun 2026 02:22:37 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1wWpY5-0000Hd-K3
- for qemu-devel@nongnu.org; Tue, 09 Jun 2026 02:02:54 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1wWpr6-0005GH-EU
+ for qemu-devel@nongnu.org; Tue, 09 Jun 2026 02:22:32 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1wWpY3-00074q-P3
- for qemu-devel@nongnu.org; Tue, 09 Jun 2026 02:02:53 -0400
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1wWpr4-00043o-UR
+ for qemu-devel@nongnu.org; Tue, 09 Jun 2026 02:22:32 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1780984970;
+ s=mimecast20190719; t=1780986149;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=+WsFTeva9DDVqKdZDqTnWrW1+2BsUsih7ugLigDjlKU=;
- b=dFqK2qMAWxv1g9ovJNwJbFIJP5tdNN0ZJc5wrHsN4dO2JeJule76EYV455D7JVAmKb08bw
- GVGWVPd7Zz6sWI5SiNtoIpeRWZLLoxBoAPuj2pKXGqO8+lMbH+xFDXNQTBXc1+CDPtV5rq
- VhlEHC7O43znWwjJAQsUxlj9tlQidJ4=
+ bh=8LuQehIcg/MZhpGZIY3NZOC2EAieoCwUV3mZFeAzcog=;
+ b=dg0eI3ntKumCQGHiwktikHJv5ExfRqZU3ZGIm0+lX/ftJNGB7ISbfpZh/HN6csMe2DpvSH
+ xIRkKSHrihdp8LO0clmQsRx5WnG6yQjsQt7HvBcdcrhx1Ij+eJ9Iwfhd6UtTNpVfTTHKe8
+ C/l3GzRNMBxDVZzy9QzjzeG+HvAcYqs=
 Received: from mail-wr1-f72.google.com (mail-wr1-f72.google.com
  [209.85.221.72]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-653-e7H5Eo85OpOJxe6C4_uVdA-1; Tue, 09 Jun 2026 02:02:48 -0400
-X-MC-Unique: e7H5Eo85OpOJxe6C4_uVdA-1
-X-Mimecast-MFC-AGG-ID: e7H5Eo85OpOJxe6C4_uVdA_1780984967
+ us-mta-228-Qy5zDDEiOsqziJBs1ynZig-1; Tue, 09 Jun 2026 02:22:27 -0400
+X-MC-Unique: Qy5zDDEiOsqziJBs1ynZig-1
+X-Mimecast-MFC-AGG-ID: Qy5zDDEiOsqziJBs1ynZig_1780986146
 Received: by mail-wr1-f72.google.com with SMTP id
- ffacd0b85a97d-45eef10d5ebso2422158f8f.0
- for <qemu-devel@nongnu.org>; Mon, 08 Jun 2026 23:02:48 -0700 (PDT)
+ ffacd0b85a97d-45ef2bd566bso2757318f8f.0
+ for <qemu-devel@nongnu.org>; Mon, 08 Jun 2026 23:22:27 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1780984967; x=1781589767; darn=nongnu.org;
+ d=redhat.com; s=google; t=1780986146; x=1781590946; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:autocrypt:from
  :content-language:references:cc:to:subject:user-agent:mime-version
  :date:message-id:from:to:cc:subject:date:message-id:reply-to;
- bh=+WsFTeva9DDVqKdZDqTnWrW1+2BsUsih7ugLigDjlKU=;
- b=U+urzA3mmf/djDHHajBUIGFm7tjYTErkYlYXFPNPUssP7BGhCkz6DdyADShBuPW0pY
- vk7IQ7A3Mo+tqq7oGh3jd9M8q2LHWNePyiwDL4OfW4EcGzrkqiBFF35VTZkuj5hJ8S+R
- hw9AstF1ML3aUWwxf2cAAvYOSd4xTjzazjbSvFZRxG/cWCRZm+ztosiR+w7NBNdrtqWF
- aRumVwHnnr4nQvGLfLiUVDML5qdDQ1FdjYG5JKpS+Ecl+5tKuZbtOVhq5600X/uIG9oZ
- 68xxtA6cDdHmstCvRe9NYAdRLpxoO37pc4caTArZThbHU8Q/K83z4N083ygTYkJ5lmm6
- 6lJA==
+ bh=8LuQehIcg/MZhpGZIY3NZOC2EAieoCwUV3mZFeAzcog=;
+ b=gdiBmqHK9oXXajYU1cQQlVzD9yt3UAn4d1zK3fYeCmqsRv6AuEAUj/2urZUvZbvD49
+ 3bIH8Zzt4qv/fNxx98euNGB2g1YfEbie3q4GBMVrijcZ68c7c28d2gzMeJT5ZoCKebj6
+ xqHq2GULyiOBbzqPJ2rO5sdhUcFPMbt0rBEoFMV936EFxuOFSLzsD2qGdz2vyNsN5j6y
+ XGsZh9lztQQzFWjRUiyyjCbSx15pJf1I+IbGpJZ84URZJnyztTOwrpBqGuDNPkRTFpOk
+ UehXNkoEEkNRdbZhugihXuKlvlN63kpI4xJwZlMgPdNbTXZ2sZtR6TtLPZFcwQ2AZaCd
+ ziGA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1780984967; x=1781589767;
+ d=1e100.net; s=20251104; t=1780986146; x=1781590946;
  h=content-transfer-encoding:in-reply-to:autocrypt:from
  :content-language:references:cc:to:subject:user-agent:mime-version
  :date:message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
  :message-id:reply-to;
- bh=+WsFTeva9DDVqKdZDqTnWrW1+2BsUsih7ugLigDjlKU=;
- b=lYS4mI2QAbvzwh7575E/gKGN96zbW7IlwvsMJCLk2XcGMuH6tvqDnotPPe33QOsc/C
- s9POq3tlA+I9UJ7QOxbvuwTl1v6/PSXjGUP/SnfhQasKt89MtD3Aoq5giJYbZdxEHtQ1
- DnBE6kdUXF6aqg+qG5dnAjoXpLvhKmYv8oN/XGUJlUcJpxpSjmJgo+myHeobCEvfJ2Qt
- HzG3AkRzIR5onUKFtxS5HhhMVBXZWhTz02Bz5inYUayML51cnXPsXTrskErRisHZyAqa
- ntY3uhbfssE4p5C5KqzBRuLniyCRKs/S04UKcb9j+LwYLE+/vVRHtcIluQqErLEINw3T
- iNbw==
+ bh=8LuQehIcg/MZhpGZIY3NZOC2EAieoCwUV3mZFeAzcog=;
+ b=R5ySRX9Kql4vUZDEClTYJktlSLXdBwhylvFCg31dU6kpnPPTYnO30liCxF37lGpmD6
+ lfhfPIl3M7jx/7uP04nUWzl2/v4wt//PY7VUM80Wcz4y4yNsDXvY8JCMhRIk6vudejmh
+ Ser7gsUviD8ulp+qel4mNFvblCVXm6xgDVD+FH7T3w8apNUSBfG/YLkhng9/05jXYja2
+ X2++YME+T4o6jmVwr+lvGatiI2OZnWH3nzUQ6RuW/K4j18FS7H0BhqKWyE88AmmL3xVP
+ CN6qLMlV3zUvew/S397FtIKFuYj0+DZk5uOfkvaFKVrxXnRTiCFrb2pu23g5cL47cUef
+ +oig==
 X-Forwarded-Encrypted: i=1;
- AFNElJ+lGZY/m2jXUzKcSgc0/2EOP98WTZ/SoZgLSSei7URU84Q1+BoozjPcLgmRfXA4idfXwTWgrYQ84ue9@nongnu.org
-X-Gm-Message-State: AOJu0YxUIgjU5d3BkTi5BFsInc3bNKba7D/twAX/bU7M3N+LRvhoUwRg
- AcKi3Rma/1caou3hnysjm6XKvR+DmXIUJv7uUAsRaUE9cUyrPx8fsHFehQdxql5PZAJg1qATl+I
- Ig9rDxqyJfbMiPYilhXg98q5ef7h7CczPGlfvg5mfa24TUkBOzUmlmQv5wd4QNlnR
-X-Gm-Gg: Acq92OFFSNTqvFJCkQ+FByw27m9f3eAMm10k/jJ6XvJX3T9GohFLyAlP6Np12gdsAWf
- XJ9hXoQ+rpZlDAFYQMafMr/ZiSoGIrs/4JIKpzXIg9NNNYTNgYobFLefCJ117sZ1SbP/AQoKTcT
- OcDjSy4dR/E+c5Dghp5TTSuFxLk6CivhKwlwpAEZAV2FM33FK/aM5z1XBvPZnxb51b6Meal6Sno
- ZXycMMxo1AdCaVB03/qEWVjFPBZVhzGE4fNPiC1eoHjQnIZQnpMhLxHlYgCA5WtQaGTj+nVCcR6
- tUurcgojiv9rFheGSZxZ2r3oiGqrifrWJIqlsyKSd7SWIm9voXDYIwOlx26vK0nMcAX7WlqTgqm
- JUPgeI+b7mqkN93JTgrZHkh79Lw7G6A==
-X-Received: by 2002:a05:6000:18a5:b0:460:1967:abed with SMTP id
- ffacd0b85a97d-4603063c55dmr27690096f8f.39.1780984967020; 
- Mon, 08 Jun 2026 23:02:47 -0700 (PDT)
-X-Received: by 2002:a05:6000:18a5:b0:460:1967:abed with SMTP id
- ffacd0b85a97d-4603063c55dmr27690048f8f.39.1780984966599; 
- Mon, 08 Jun 2026 23:02:46 -0700 (PDT)
+ AFNElJ8W9mvPNc9JGXzTRPuCwmTDsbJ5VZH9MDFsG2VSg11/sRvWTK9g1v7Px1QMpJ1I1RfP3Os7AJXW4xWM@nongnu.org
+X-Gm-Message-State: AOJu0Yzo6y1NFv1IYs0EF8ZP0Al3j0eBUIHDUoSzL2r1Yr5aTTdkxtYn
+ TxqZOnbkdZafxe6YRhXNRp33Zi91pc31vGEtxiCU/qXbExmWeELZsog4allvjQVE6lmBM3rug2F
+ KHTxhRaa+oitl6wj3JdkYy4HO/vPPCFljOfotWt4L6fhxPfO/Ytv9W92mb2Z68S9N
+X-Gm-Gg: Acq92OFSnRnGOZyzPcHuNiLEA4fjcM1oikn7+v7nlHCEzU8AMQjln9CBGS6ZxpKZP35
+ 1dNEAOjP5oWiztFFdR4heQJEyWcFJ1ou19vyF+3jZ/AjXBM7pbL+azBgaWuUoD9bIFGrqm1I5nT
+ dWhF0IX++EBJEHcXR1sk4OOfPMSeuHINT1ljaSlWjhmILXOG1ePs38BEtQkNN/4XHl/a8DCZKP+
+ vTzKqg5bJjqowe9usrOQUmhRy/3dI1TR1hJ7gxcxbhxynnY/oG8MH02DaSkBBzDJ1y8XGc4bRPc
+ vhRWS8QcrGIDlCgd27d5v32DZRqdNforoK7t6jRGrvzFjF9X1pDOewhcDc+uwUaSfeZVszqSpxs
+ jbg7T106zQL+n2ctZ8XSqlPFWmqPW2Q==
+X-Received: by 2002:a05:6000:2182:b0:45e:a225:6dfe with SMTP id
+ ffacd0b85a97d-4603061c65dmr19648515f8f.25.1780986146151; 
+ Mon, 08 Jun 2026 23:22:26 -0700 (PDT)
+X-Received: by 2002:a05:6000:2182:b0:45e:a225:6dfe with SMTP id
+ ffacd0b85a97d-4603061c65dmr19648482f8f.25.1780986145818; 
+ Mon, 08 Jun 2026 23:22:25 -0700 (PDT)
 Received: from [192.168.0.9] ([47.64.113.132])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-4601f360bd6sm63181988f8f.36.2026.06.08.23.02.45
+ ffacd0b85a97d-4601f2eadefsm60579144f8f.11.2026.06.08.23.22.24
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 08 Jun 2026 23:02:45 -0700 (PDT)
-Message-ID: <df7a091c-a8a1-416a-acf3-28a0cbd8dd2f@redhat.com>
-Date: Tue, 9 Jun 2026 08:02:44 +0200
+ Mon, 08 Jun 2026 23:22:25 -0700 (PDT)
+Message-ID: <9404eb90-9e83-4bd7-b061-6d1f700365cd@redhat.com>
+Date: Tue, 9 Jun 2026 08:22:23 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2] hw/sparc64/sun4u: Mark unusable PCI busses as full to
- ease device plugging
-To: Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>,
- Michael Tokarev <mjt@tls.msk.ru>, qemu-devel@nongnu.org
-Cc: Artyom Tarasenko <atar4qemu@gmail.com>,
- QEMU Trivial <qemu-trivial@nongnu.org>
-References: <20260309181452.83702-1-thuth@redhat.com>
- <00c4ab4b-a58b-4de4-8e41-566b2cb7f920@redhat.com>
- <124bd918-f2ab-43e2-bd2d-fc824de62c40@tls.msk.ru>
- <fcbe3d7f-64d4-4b13-b930-a81e77db4784@ilande.co.uk>
+Subject: Re: artifact download for qtest
+To: Ani Sinha <anisinha@redhat.com>
+Cc: Fabiano Rosas <farosas@suse.de>, qemu-devel <qemu-devel@nongnu.org>,
+ "Daniel P. Berrange" <berrange@redhat.com>
+References: <CAK3XEhMNqHbkL2P6Xg3_hJ8WAxhPQgurjvuZg-vXUDZ5=x-RRA@mail.gmail.com>
+ <f2516211-6fbc-4714-b674-4276464f94ff@redhat.com>
+ <CAK3XEhPdaVqi9nECrJrcRaCKK0bVcRXw=t6hXM=EVwbxpu5wLA@mail.gmail.com>
+ <CAK3XEhM3K1r3Q7zpqvQkLtuMEeXkb+nwDwN-j_+B0fwZpHhgkg@mail.gmail.com>
 Content-Language: en-US
 From: Thomas Huth <thuth@redhat.com>
 Autocrypt: addr=thuth@redhat.com; keydata=
@@ -142,17 +140,17 @@ Autocrypt: addr=thuth@redhat.com; keydata=
  oiT+z+/E59qj/EKfyce3sbC9XLjXv3mHMrq1tKX4G7IJGnS989E/fg6crv6NHae9Ckm7+lSs
  IQu4bBP2GxiRQ+NV3iV/KU3ebMRzqIC//DCOxzQNFNJAKldPe/bKZMCxEqtVoRkuJtNdp/5a
  yXFZ6TfE1hGKrDBYAm4vrnZ4CXFSBDllL59cFFOJCkn4Xboj/aVxxJxF30bn
-In-Reply-To: <fcbe3d7f-64d4-4b13-b930-a81e77db4784@ilande.co.uk>
+In-Reply-To: <CAK3XEhM3K1r3Q7zpqvQkLtuMEeXkb+nwDwN-j_+B0fwZpHhgkg@mail.gmail.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=thuth@redhat.com;
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=thuth@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -24
 X-Spam_score: -2.5
 X-Spam_bar: --
 X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.445,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
  SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -169,66 +167,27 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 08/06/2026 23.29, Mark Cave-Ayland wrote:
-> On 08/06/2026 09:26, Michael Tokarev wrote:
-> 
->> On 30.04.2026 12:50, Thomas Huth wrote:
->>> On 09/03/2026 19.14, Thomas Huth wrote:
->>>> From: Thomas Huth <thuth@redhat.com>
->>>>
->>>> When trying to plug a PCI device to a Sparc64 machine, you currently
->>>> have to specify the right bus ("bus=pciB"), otherwise you get this error:
->>>>
->>>>   $ qemu-system-sparc64 -device virtio-scsi-pci
->>>>   qemu-system-sparc64: -device virtio-scsi-pci: PCI: no slot/function
->>>>   available for virtio-scsi-pci, all in use or reserved
->>>>
->>>> This is quite annoying for the unexperienced users, and it also breaks
->>>> e.g. the iotests ("make check-block") when running with qemu-system- 
->>>> sparc64.
->>>>
->>>> Mark the non-usable PCI busses as full now, so that QEMU can automatically
->>>> plug new PCI devices to the right "pciB" bus.
->>>>
->>>> Signed-off-by: Thomas Huth <thuth@redhat.com>
->>>> ---
->>>>   v2: Do the change in the machine code, not in the sabre device
->>>>
->>>>   hw/sparc64/sun4u.c | 7 +++++++
->>>>   1 file changed, 7 insertions(+)
->>>>
->>>> diff --git a/hw/sparc64/sun4u.c b/hw/sparc64/sun4u.c
->>>> index b8bda1eb816..37539535c6c 100644
->>>> --- a/hw/sparc64/sun4u.c
->>>> +++ b/hw/sparc64/sun4u.c
->>>> @@ -723,6 +723,13 @@ static void sun4uv_init(MemoryRegion 
->>>> *address_space_mem,
->>>>       fw_cfg_add_i16(fw_cfg, FW_CFG_SPARC64_DEPTH, graphic_depth);
->>>>       qemu_register_boot_set(fw_cfg_boot_set, fw_cfg);
->>>> +
->>>> +    /*
->>>> +     * Mark internal PCI busses as full so that the plugging of additional
->>>> +     * PCI devices happens on the right bus that still has free slots:
->>>> +     */
->>>> +    qbus_mark_full(&pci_bus->qbus);
->>>> +    qbus_mark_full(&pci_busA->qbus);
->>>>   }
->>>>   enum {
->>>
->>> Friendly ping!
+On 09/06/2026 05.46, Ani Sinha wrote:
+> On Tue, Jun 9, 2026 at 7:54 AM Ani Sinha <anisinha@redhat.com> wrote:
 >>
->> This, being a simple change, somehow has not been reviewed still, so
->> it's sitting in the queue...
+>> On Mon, Jun 8, 2026 at 10:43 PM Thomas Huth <thuth@redhat.com> wrote:
+>>>
+>>> On 30/05/2026 16.56, Ani Sinha wrote:
+>>>> Hi,
+>>>>
+>>>> I am trying to write a qtest for which I need an IGVM file. I have the
+>>>> file, about 54 MiB in size.
+>>>
+>>> 54 MiB is quite big,
+>>
+>> I was able to reduce the combined size of 2 files to about 400K
+>> https://gitlab.com/anisinha/qemu/-/commit/6aef476b59443dd1bc570c29e8e5ca43140cfed4
 > 
-> Yes, apologies - I've been absolutely flat out recently, and I've got a note 
-> to take a look at this and Peter's patch as soon as I can.
-> 
-> Is this fixing an urgent issue with "make check-block" or similar?
+> Compressed size is about 100K but I don't want to introduce dependency
+> on libarchive preferrably if 400K size is ok.
 
-It's not urgent since this has been broken forever, but yes, it fixes "make 
-check-block" for the case where sparc64 is the only available target during 
-"configure --target-list=sparc64-softmmu" and thus the iotests run with 
-qemu-system-sparc64.
+We already have logic for libbzip2 in our main meson.build file, so maybe 
+you could use that?
 
   Thomas
 
