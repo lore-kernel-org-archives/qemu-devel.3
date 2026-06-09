@@ -4,73 +4,72 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id EE3F7CD8CB2
-	for <qemu-devel@archiver.kernel.org>; Tue,  9 Jun 2026 19:19:48 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9EAE0CD8CB2
+	for <qemu-devel@archiver.kernel.org>; Tue,  9 Jun 2026 19:19:58 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wX1xN-0006Qp-Dd; Tue, 09 Jun 2026 15:17:51 -0400
+	id 1wX1wp-00069r-Q2; Tue, 09 Jun 2026 15:17:22 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <filip.hejsek@gmail.com>)
- id 1wX1wb-00065y-BC
- for qemu-devel@nongnu.org; Tue, 09 Jun 2026 15:17:01 -0400
-Received: from mail-wm1-x334.google.com ([2a00:1450:4864:20::334])
+ id 1wX1wV-00062T-CU
+ for qemu-devel@nongnu.org; Tue, 09 Jun 2026 15:16:58 -0400
+Received: from mail-wm1-x330.google.com ([2a00:1450:4864:20::330])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <filip.hejsek@gmail.com>)
- id 1wX1wY-0006SF-Vf
- for qemu-devel@nongnu.org; Tue, 09 Jun 2026 15:17:01 -0400
-Received: by mail-wm1-x334.google.com with SMTP id
- 5b1f17b1804b1-490b7866869so66344755e9.2
- for <qemu-devel@nongnu.org>; Tue, 09 Jun 2026 12:16:58 -0700 (PDT)
+ id 1wX1wT-0006PV-A4
+ for qemu-devel@nongnu.org; Tue, 09 Jun 2026 15:16:54 -0400
+Received: by mail-wm1-x330.google.com with SMTP id
+ 5b1f17b1804b1-490ae94a89eso50998075e9.1
+ for <qemu-devel@nongnu.org>; Tue, 09 Jun 2026 12:16:52 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1781032618; x=1781637418; darn=nongnu.org;
+ d=gmail.com; s=20251104; t=1781032612; x=1781637412; darn=nongnu.org;
  h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
  :mime-version:subject:date:from:from:to:cc:subject:date:message-id
- :reply-to; bh=GE2kR1xeXVrOYrQ1L5yk3M3rSjJjGyLlFBLdmYC2OsI=;
- b=IwaCDbXkOmxe0iKq7Q/LUv7YCfTMApLAZVP0v99gQTSzsqXg5/5+1bfQ277uoVdpr6
- c70oPlp6RvwPnkSVfsAEYKf1KAER86HHcNrUhVmpst3Z3rgeseKnpJSRMKxJIlspgwCL
- lPwGP36iyrFMAyYtjOiYNfhHSxNqYjZJq+6IL1t11v4VTVOksdXo81Hvu2VMYnkA8WJI
- aUQ+nW86QFN5+V2rol4vb4nA/hXaScA9EaMcKhaazCt5uGGbuuRhmQQ+p3FP3cPNuFf+
- 9nag5sF8+NTxuIDqnzhulIm9t8SNog3cyg/n0RI0Bf7umT4poWEGwaeQhKNc5VVZenZQ
- GBKQ==
+ :reply-to; bh=S6jSm4Mi9XKgjjqZh5KQVJBGlx7yAY6ZGbKU8eIlcy0=;
+ b=sQReY5v3xxUK4pX8wVdA+62lE/zQJn77nEIaOcJRaW5O9dmzWnkKVDFgQ1yLMRDpn8
+ feC7U0fd2mCwR90p3tQbhqgaqneMFq1Fmz89STzBoRYg4D4LHQI0o7gv25Ht35ohS/B9
+ D5O0/hYuUSK+VA8ccNKqLFFen0iXpGIluBeHc4B2Id3O8DkKAT1DMKz8s9DQISrjnsA7
+ jjerd10X3U63p2W4LzxQE4WIbt2gemFqSvo5DvoEpvrf7LAllJqrEcG2beg7ZPGwlNYn
+ iwsM/l4a2asGjh9wQSXeXBb0iT8+qGZYk2GCIhC849+u8p1gLkEk+gW3ShWlcVIuUkDd
+ Qm8Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1781032618; x=1781637418;
+ d=1e100.net; s=20251104; t=1781032612; x=1781637412;
  h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
  :mime-version:subject:date:from:x-gm-gg:x-gm-message-state:from:to
  :cc:subject:date:message-id:reply-to;
- bh=GE2kR1xeXVrOYrQ1L5yk3M3rSjJjGyLlFBLdmYC2OsI=;
- b=otkptKa1bE2P2oRgcclDCZN3sBlsXUJkw7ROZZ8DaOmhxG4EzeVLgQWxgKSKV/bvgX
- dRjmckOwoAK5DBs8OPRBswSJoRPmkzAPMD7SjP2bw1+WYuFoGcmSRypGNsae7RpjKEX2
- N1DPwdbqVIGTLivkg4/5NnfKQKZ3T39WmeHWrjdvysXontgR7+gz2f6vx63vr/ORf0+f
- vM69dspJ5q3ggq3KpcP0+VOoSu2xZpwjqCm+SRLK2RBrnDTTAH6ly4cSMm012NtBURzt
- iXNhgqlspnpNnQoPFC5taHsVZAxSiesFIa7wZ7kSV+hz40wGqd2ZVD2NhrS0Lbxg+02R
- vUPw==
-X-Gm-Message-State: AOJu0YxYKnLPHXf6aRU8ZvnEABYWNvCm+HHmrYXJuOYhJkWPW2a31vbe
- A2wBxYqode2zkt7eygi2YpMJF0WSMwgGErF+zjTYWv+eST0W1910NYjE
-X-Gm-Gg: Acq92OFcRfSvgq/e6npBL3lYNeTC2S4xfJFiG9G0sT2LiVUCBPPNhoH5v+o4xbDjoFm
- WnbP5DQkBCNYWV60OUPVubwpV2B9nrgiFNj/p7kA8xqlJFfURxhzLTMQ7ye1/5Nyud166OFdnVI
- scaf8M8FitOxHjD7ll3QAIsP56XAhs2vK0HNkWwsBdnC5owbA9hFWA90qyjj8+6q+mG3KDN7G9H
- 55+9f41gWA+PpCGD6GeB/GcY1bBaiEyle2eZCUGjljDEq+vEKNjn9Qc39FEFRHofb1ai+xAyO3/
- 725CvOdBFQbOq31lmBXFkvpEglApyl3MI9wZi42o0xpHheT/8nAQWtTDdtPJRdz2DXdBvsNUaCa
- wX/HyRLMj1UpeQ59YF2ov8coHsyHBxFbe6Q5gW34ZWuQIeYBt+LDpUJ8gk99In6twNghVjSGLHJ
- GNnRZxVCOCQcop3DOBoVCHwVFw1reNSI+MPDIgRST4LrSDkx1MIpYljwx6RyIn+xs=
-X-Received: by 2002:a05:600c:3107:b0:490:9588:bdb6 with SMTP id
- 5b1f17b1804b1-490c264cc2emr364171355e9.33.1781032617606; 
- Tue, 09 Jun 2026 12:16:57 -0700 (PDT)
+ bh=S6jSm4Mi9XKgjjqZh5KQVJBGlx7yAY6ZGbKU8eIlcy0=;
+ b=tLg5hjB3h5AM9VwNHO+3sbH4f0c4JlbsdC8XMcPrqYSAPeLLRYFUvrEj5G5ocMdnuH
+ uZAU63TCpWMQTBhSUNMjCGKRcc49YNZudlbQEPZrbZFrKqtYtdKPff8Uk89LAN0CJ/DP
+ iC7eqhEoDWIIGHEKEQj90cJs/ZdeShV+W8UDFPnuC2DVfa8A5I/VCjnr2lr1dfXWZL41
+ JtLgSzLgjXe+F2yN67p2v0k6KZusvQFvNNcUfDd5MNz+rPiAbwON4iM1SvwMcbDjy6Gq
+ VvymMhcmi4eOkJVgHn+bjZ6G3lukNG85NwTIgA5VOOtqTcqiKpuGyqrdES84+D4P3iGP
+ kUzw==
+X-Gm-Message-State: AOJu0YxpgmUk7//a0P5lf/qRPeedLE1LqMj3b7/h/E0hVWVyX1NkhucZ
+ CSIaDJ+RcqJXSyHKzwQUIpDP56VNB/ciHxn30hULC1Fe6UThHrQl40MY
+X-Gm-Gg: Acq92OHc+Sme2xFcIQpjVubbuAOs5yYeJZguJFUMiNAO1tX3ZB7ITWUr8idsOqxK9yf
+ 86hmSSxhX66UiBiskSrD0iEs5WeFKfJFw8NItJ6BwKeOLr+c3yKdtOCAEX0+6/StCCUdFs/eW5Q
+ ypDff+wz68moM1I+5FnJakZd1p1vnDKYMJ/nn/be+4BIxwT9YH+ZtuoFzajA//oWYiqX5EmSFVn
+ OnR4RFaTrtJ5BtLomxqlUHiWwokFBCcCWgffDKsEqu2YSwN5Up2TdMBLCg/Fj4jp/v28SL+EL/F
+ HGqEGo5/h6QNr4rkiQNvGZD6XC0zTuAm5hN43LYwHKAHqSM9rngrIXoJo+TDBdwvzvcdG5mstrb
+ IyZJx9DEIzpQYUlKdeMApvMVqWgey8+UWSh00utIRvvvNg5bnKbpNzEyymPh1/NtT+kMXPyOWHK
+ HcJEhdhDBav11ISpBWLjfbW0OEgYtptr/aQUtmqNt/4xHuEtHT4/3iGYzEOXKi/J4=
+X-Received: by 2002:a05:600c:1908:b0:490:b5d0:598f with SMTP id
+ 5b1f17b1804b1-490c25b5f6cmr360246245e9.13.1781032611689; 
+ Tue, 09 Jun 2026 12:16:51 -0700 (PDT)
 Received: from localhost (mem-185.47.220.165.jmnet.cz. [185.47.220.165])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-4601f2f67c6sm62219375f8f.16.2026.06.09.12.16.56
+ ffacd0b85a97d-4601f2f67c6sm62218751f8f.16.2026.06.09.12.16.51
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 09 Jun 2026 12:16:57 -0700 (PDT)
+ Tue, 09 Jun 2026 12:16:51 -0700 (PDT)
 From: Filip Hejsek <filip.hejsek@gmail.com>
-Date: Tue, 09 Jun 2026 21:16:22 +0200
-Subject: [PATCH v7 12/12] virtio-console: notify the guest about terminal
- resizes
+Date: Tue, 09 Jun 2026 21:16:17 +0200
+Subject: [PATCH v7 07/12] char-win-stdio: add support for terminal size
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-Id: <20260609-console-resize-v7-12-0c550fdcec15@gmail.com>
+Content-Transfer-Encoding: 8bit
+Message-Id: <20260609-console-resize-v7-7-0c550fdcec15@gmail.com>
 References: <20260609-console-resize-v7-0-0c550fdcec15@gmail.com>
 In-Reply-To: <20260609-console-resize-v7-0-0c550fdcec15@gmail.com>
 To: qemu-devel@nongnu.org
@@ -83,18 +82,17 @@ Cc: =?utf-8?q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>,
  Yanan Wang <wangyanan55@huawei.com>, Zhao Liu <zhao1.liu@intel.com>, 
  =?utf-8?q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>, 
  Maximilian Immanuel Brandtner <maxbr@linux.ibm.com>, 
- =?utf-8?q?Philippe_Mathieu-Daud=C3=A9?= <philmd@mailo.com>, 
- Szymon Lukasz <noh4hss@gmail.com>
+ =?utf-8?q?Philippe_Mathieu-Daud=C3=A9?= <philmd@mailo.com>
 X-Mailer: b4 0.15.2
-X-Developer-Signature: v=1; a=ed25519-sha256; t=1781032602; l=3302;
+X-Developer-Signature: v=1; a=ed25519-sha256; t=1781032602; l=1838;
  i=filip.hejsek@gmail.com; s=20250912; h=from:subject:message-id;
- bh=S52O78eqfhcrqS9wQGdogkWPgjv5YHOanEgZT+Knbnk=;
- b=fGTEd/QoCbP4Oy1Sajn9ql36kt6eTL7rTTRbhn/3zRyOUvLBhZC19QDBjQYK3aHlwSyR4hONQ
- wzHzWfBr4elBE5aeCqEOdFRgvs1/E6x8jt0ifsBZO4+5RfrhPbHI3xR
+ bh=Zdzf8kR2p+Yk8aUvofodNOe4lBaihFirTsXeIEwC6zo=;
+ b=p0nIIgDOrrSGUiX+XVmiwnzqizlTpv5o406SXU+Fd6QxD1vPMnrW90yoAD4I8K5XLNnFhNY3j
+ mXNADHrd75kB4dGJr+jkaatu+94DAnk4roRor87s6RT+J1rIAKkfgvj
 X-Developer-Key: i=filip.hejsek@gmail.com; a=ed25519;
  pk=nakB8gEK3oi+Q/5dBTMCy/LgZL47NP60z1jeDR6O/WU=
-Received-SPF: pass client-ip=2a00:1450:4864:20::334;
- envelope-from=filip.hejsek@gmail.com; helo=mail-wm1-x334.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::330;
+ envelope-from=filip.hejsek@gmail.com; helo=mail-wm1-x330.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -117,91 +115,59 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Szymon Lukasz <noh4hss@gmail.com>
+Use GetConsoleScreenBufferInfo to obtain terminal size
+and set ENABLE_WINDOW_INPUT to receive resize notifications.
 
-If a virtio serial port is a console port, forward terminal resize
-messages from the chardev backend to the guest.
-
-Signed-off-by: Szymon Lukasz <noh4hss@gmail.com>
-[Filip: rename things, remove logic that is now handled in virtio-serial-bus.c]
+Reviewed-by: Daniel P. Berrangé <berrange@redhat.com>
 Signed-off-by: Filip Hejsek <filip.hejsek@gmail.com>
 ---
- hw/char/virtio-console.c | 34 +++++++++++++++++++++++++++++++---
- 1 file changed, 31 insertions(+), 3 deletions(-)
+ chardev/char-win-stdio.c | 19 +++++++++++++++++++
+ 1 file changed, 19 insertions(+)
 
-diff --git a/hw/char/virtio-console.c b/hw/char/virtio-console.c
-index 36ad2ddc3f..db9d8ca797 100644
---- a/hw/char/virtio-console.c
-+++ b/hw/char/virtio-console.c
-@@ -107,6 +107,15 @@ static ssize_t flush_buf(VirtIOSerialPort *port,
-     return ret;
- }
+diff --git a/chardev/char-win-stdio.c b/chardev/char-win-stdio.c
+index bb9c195a8b..188d26502d 100644
+--- a/chardev/char-win-stdio.c
++++ b/chardev/char-win-stdio.c
+@@ -44,6 +44,20 @@ typedef struct WinStdioChardev WinStdioChardev;
+ DECLARE_INSTANCE_CHECKER(WinStdioChardev, WIN_STDIO_CHARDEV,
+                          TYPE_CHARDEV_WIN_STDIO)
  
-+static void virtconsole_update_size(VirtIOSerialPort *port)
++static void win_stdio_chr_resize(Chardev *chr)
 +{
-+    uint16_t cols, rows;
-+    VirtConsole *vcon = VIRTIO_CONSOLE(port);
++    HANDLE hStdOut = GetStdHandle(STD_OUTPUT_HANDLE);
++    CONSOLE_SCREEN_BUFFER_INFO ScreenBufferInfo;
 +
-+    qemu_chr_fe_get_winsize(&vcon->chr, &cols, &rows);
-+    virtio_serial_resize_console(port, cols, rows);
-+}
-+
- /* Callback function that's called when the guest opens/closes the port */
- static void set_guest_connected(VirtIOSerialPort *port, int guest_connected)
- {
-@@ -171,6 +180,23 @@ static void chr_event(void *opaque, QEMUChrEvent event)
-     }
- }
- 
-+static void chr_event_console(void *opaque, QEMUChrEvent event)
-+{
-+    VirtConsole *vcon = opaque;
-+    VirtIOSerialPort *port = VIRTIO_SERIAL_PORT(vcon);
-+
-+    trace_virtio_console_chr_event(port->id, event);
-+    switch (event) {
-+    case CHR_EVENT_OPENED:
-+    case CHR_EVENT_MUX_IN:
-+    case CHR_EVENT_RESIZE:
-+        virtconsole_update_size(port);
-+        break;
-+    default:
-+        break;
++    if (GetConsoleScreenBufferInfo(hStdOut, &ScreenBufferInfo)) {
++        uint16_t cols = ScreenBufferInfo.srWindow.Right + 1
++                        - ScreenBufferInfo.srWindow.Left;
++        uint16_t rows = ScreenBufferInfo.srWindow.Bottom + 1
++                        - ScreenBufferInfo.srWindow.Top;
++        qemu_chr_resize(chr, cols, rows);
 +    }
 +}
 +
- static int chr_be_change(void *opaque)
+ static void win_stdio_wait_func(void *opaque)
  {
-     VirtConsole *vcon = opaque;
-@@ -179,7 +205,9 @@ static int chr_be_change(void *opaque)
+     Chardev *chr = CHARDEV(opaque);
+@@ -75,6 +89,9 @@ static void win_stdio_wait_func(void *opaque)
+                 }
+             }
+         }
++        if (buf[i].EventType == WINDOW_BUFFER_SIZE_EVENT) {
++            win_stdio_chr_resize(chr);
++        }
+     }
+ }
  
-     if (k->is_console) {
-         qemu_chr_fe_set_handlers(&vcon->chr, chr_can_read, chr_read,
--                                 NULL, chr_be_change, vcon, NULL, true);
-+                                 chr_event_console, chr_be_change,
-+                                 vcon, NULL, true);
-+        virtconsole_update_size(port);
-     } else {
-         qemu_chr_fe_set_handlers(&vcon->chr, chr_can_read, chr_read,
-                                  chr_event, chr_be_change, vcon, NULL, false);
-@@ -207,7 +235,7 @@ static void virtconsole_enable_backend(VirtIOSerialPort *port, bool enable)
-         VirtIOSerialPortClass *k = VIRTIO_SERIAL_PORT_GET_CLASS(port);
- 
-         qemu_chr_fe_set_handlers(&vcon->chr, chr_can_read, chr_read,
--                                 k->is_console ? NULL : chr_event,
-+                                 k->is_console ? chr_event_console : chr_event,
-                                  chr_be_change, vcon, NULL, false);
-     } else {
-         qemu_chr_fe_set_handlers(&vcon->chr, NULL, NULL, NULL,
-@@ -239,7 +267,7 @@ static void virtconsole_realize(DeviceState *dev, Error **errp)
-          */
-         if (k->is_console) {
-             qemu_chr_fe_set_handlers(&vcon->chr, chr_can_read, chr_read,
--                                     NULL, chr_be_change,
-+                                     chr_event_console, chr_be_change,
-                                      vcon, NULL, true);
-             virtio_serial_open(port);
+@@ -201,6 +218,8 @@ static bool win_stdio_chr_open(Chardev *chr,
          } else {
+             dwMode &= ~ENABLE_PROCESSED_INPUT;
+         }
++        dwMode |= ENABLE_WINDOW_INPUT;
++        win_stdio_chr_resize(chr);
+     }
+ 
+     SetConsoleMode(stdio->hStdIn, dwMode);
 
 -- 
 2.54.0
