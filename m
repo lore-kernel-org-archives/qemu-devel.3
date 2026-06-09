@@ -4,88 +4,89 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4AD27CD98C5
-	for <qemu-devel@archiver.kernel.org>; Tue,  9 Jun 2026 15:36:48 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D8AA9CD8CB9
+	for <qemu-devel@archiver.kernel.org>; Tue,  9 Jun 2026 15:36:47 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wWyUu-0004qv-S3; Tue, 09 Jun 2026 11:36:12 -0400
+	id 1wWyUx-0004st-0E; Tue, 09 Jun 2026 11:36:15 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <alex@shazbot.org>) id 1wWyUs-0004qT-58
- for qemu-devel@nongnu.org; Tue, 09 Jun 2026 11:36:10 -0400
-Received: from fhigh-a8-smtp.messagingengine.com ([103.168.172.159])
+ (Exim 4.90_1) (envelope-from <alex@shazbot.org>) id 1wWyUu-0004qs-MP
+ for qemu-devel@nongnu.org; Tue, 09 Jun 2026 11:36:12 -0400
+Received: from fout-a8-smtp.messagingengine.com ([103.168.172.151])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <alex@shazbot.org>) id 1wWyUo-00015v-2Q
- for qemu-devel@nongnu.org; Tue, 09 Jun 2026 11:36:09 -0400
-Received: from phl-compute-02.internal (phl-compute-02.internal [10.202.2.42])
- by mailfhigh.phl.internal (Postfix) with ESMTP id 7BE1814000BB;
- Tue,  9 Jun 2026 11:36:03 -0400 (EDT)
-Received: from phl-frontend-03 ([10.202.2.162])
- by phl-compute-02.internal (MEProxy); Tue, 09 Jun 2026 11:36:03 -0400
+ (Exim 4.90_1) (envelope-from <alex@shazbot.org>) id 1wWyUr-00016h-TM
+ for qemu-devel@nongnu.org; Tue, 09 Jun 2026 11:36:11 -0400
+Received: from phl-compute-04.internal (phl-compute-04.internal [10.202.2.44])
+ by mailfout.phl.internal (Postfix) with ESMTP id 9E854EC023E;
+ Tue,  9 Jun 2026 11:36:07 -0400 (EDT)
+Received: from phl-frontend-04 ([10.202.2.163])
+ by phl-compute-04.internal (MEProxy); Tue, 09 Jun 2026 11:36:07 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=shazbot.org; h=
  cc:cc:content-transfer-encoding:content-type:content-type:date
  :date:from:from:in-reply-to:in-reply-to:message-id:mime-version
- :references:reply-to:subject:subject:to:to; s=fm3; t=1781019363;
- x=1781105763; bh=0wIF04rCADL4FP/olrhMJI07G6x432e+F07/o7/Aeg8=; b=
- iNbiVLqKSMjXk3h9i0u2T+ykaKo+S7P1AoZKWxec7w4N5LSYuoRjAFfJupLV3ylp
- YIskuouE10wHItAIYh3/ICIYNAZ9NZ+qoYYgc+Ie2Z+JXF3BQqEz8luuwSgUf6Ih
- JB0NCIJ4/p8RlzLzNVyVmzjAg3ntaQBkL1ixaSaw8C4p0kzsgYY74lkENZGGtLH5
- rZGJ7r/oB3f7IN1xf+jjoxpHw5ffK0dQNQ9qWGa33XcT+NuYS565M3CT+CedMhhp
- BuIKL9nFppLYlhSXPCD9EmTqoDhcFdIiZK/0S11pD5Ei0JC+MtCnNgp99GlDuc+L
- ispukCgRrdIeCyZhkePueQ==
+ :references:reply-to:subject:subject:to:to; s=fm3; t=1781019367;
+ x=1781105767; bh=hF2IFSFBDpx+d12z93iCXasTHdzej0IuaPWBqz+ox9o=; b=
+ MZEj3v02BvG5MLVTMqm+BHFeFEi5999lH+MtJtK6hUhXvcfR52rlXBMzQE4pvxM9
+ IK097oRGUz+5ZzdfaR6IXSl7nswLlifrMNzZcuVHBxo4zuAnDH0H0q9XR3gqrLhx
+ 6geHd6oP51rs9N1rMSZIfbyDI7X9iaFT5oNyZivA8bNXIoWyLjxxqp7EirGISuHp
+ 1gdMuNxU4DV4F1jITV7d+s+ODISGTsXglLedxVBi4XRN1B87pNoBb3PnhpH4/DJa
+ PwL/2flObkTQsFBn1beyxbcdzbUgg3oxzENNVh/yGa3AWzpH82p/ED5pplRLCSHa
+ 8mf0RBXRFInEBM9TwXiUjQ==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
  messagingengine.com; h=cc:cc:content-transfer-encoding
  :content-type:content-type:date:date:feedback-id:feedback-id
  :from:from:in-reply-to:in-reply-to:message-id:mime-version
  :references:reply-to:subject:subject:to:to:x-me-proxy
- :x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=1781019363; x=
- 1781105763; bh=0wIF04rCADL4FP/olrhMJI07G6x432e+F07/o7/Aeg8=; b=A
- edOu2aDiU44Tq+TxyiEvkeKVriM2l35GLATEv5mW8QfL5863Sz/gQyZAFH1VQens
- /LiT2c61az3eonumBeNQYtv1vGZURe1crnnRmnkL6OWkOlzayf4/cKrXFHhn0Zr3
- 2PFLoxJgKUHN3OZbN4WF/RZhlowVyhOWaMWlETH7AyclRlP83mhXYnOrT5vaLVJO
- cD7Ba/NmmgxZjmbTnVdPOp7QS0L+RaGducysoj8gtAtdGwDltLvHSKYIN5CNKxn6
- UoEljnxYOot/bZFw+fU9KJB7yRnj9yHnDhtkgrn6fOKutqQ0Jytu6w2f0JR8DnBW
- TNJhIWN7KnUBL6jEeRd6w==
-X-ME-Sender: <xms:4zIoasjIyuPVvJCBfwy2CRhsd5_3N27ccS_fiR-HvjsvqjOyFMHHmg>
- <xme:4zIoat-GF7oX_QK9CXfYQVAy9fDmGMrErCFivAHPQcp5jiJ_FgzUDLFLCXqGnMT4A
- Go5nF39fqxT_CrrwXE0DO4yp5M4saTPQq4Iq1qqiVpDHTUuymcmpg>
-X-ME-Received: <xmr:4zIoavoO_my-lySUpRxbfzsIsqbMPp0qp3GTosINnAPQwds83WZyDJWD1_w>
-X-ME-Proxy-Cause: dmFkZTFFUpGjjmihIIHbNVLC/jR0MYDO7Yz1OcEbuBORzHZ9NSy7GLwyvtJEIWmvrsejZ1
- KpWUIfiguSPoaOW3F9uLeWY7U1klr1io6U9+xkTnKC5/1hoelE9k/JrotpkZd8u8wEFa1T
- NQBbePSslA/RQlQwTtihLuH+leq3wpoMoxJWfE8wmndDouNMP7or1+JjxjqEpU5QUZ/KUr
- Bq36d/sCtiHp4zBoFePrVBypm2lO3zlnzR8hkHDarSn7WMovMpeXt18AxD4aD0UkePHKAp
- 2UTxNTZgbjlEZDeR8AEOM3E1voYmKEwDzL0J8Ad9Ktz5VtWKraJjoouEul92Z80IN/5zKf
- RWGLIIs4+HUj8dc4erA/WnhmxHB8tmXHQCZvEWmee8f9qU6MDbfSbFRmvEs0EtfWL1OZSt
- V4QYHh7kWUErN9VOjCTpkFqMNlAaC2W52Eqr6wPawphDwwOidAaS0MUf/W1p/WhcBgjAgq
- Gkfn4O3B0K5WHK0XUQGccGE72w9Fil0bq7yion0XRiMKomFzWJWlPxrfck14AOJMy53Uz6
- AibU0+b18iHJrCNvCE2Dtg4t/zopK3W933wzQie6waSXMj8YqNSMWrr3Ig3yWS8jRx8pTb
- 05VVMqjAH6DLg/q7Wen9awFcUfnJvUJgAyrnzUGT5g/te6naTaAxU3CQn8rg
-X-ME-Proxy: <xmx:4zIoatU9ijtZbawko5FcqFL42HwpsfGRkh6N1Rv-fXg3g0kqhw8lNw>
- <xmx:4zIoamAMiYxcFcfTOeNlWQ3JEaIBqFlbx5JrVQuzw_fb9t1_JWPezA>
- <xmx:4zIoap305YOYFJK1oTEa_SHQI0XFMEjH_LRa_uSkwdTuTTmrWyBheA>
- <xmx:4zIoag0E4M8gP4nneGuYfa8eJnzAR32XaRuWDjBMSkqz_j0vI7oOnw>
- <xmx:4zIoaqwtwpchzvCkgLj3cYSBkZkcD8dTKZVNIFJeMraDF71yill3_8B4>
+ :x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=1781019367; x=
+ 1781105767; bh=hF2IFSFBDpx+d12z93iCXasTHdzej0IuaPWBqz+ox9o=; b=X
+ hpUpBAl/xfVXeiCUQFhbpHO3VGTi80yaBbzv6tZMGsYxFlozFl38pn/lT2FAL7MN
+ Wv5YWqHm32JQejOsZ/jJ8MoTXLHPNffyvFMRxOo5eRbywqfpz0/aj7ixdxRwQhwK
+ pXyf16vJvioGAkOxflJh9rLUGRchF/oQ2lsvv63lCayZRROhPpUlC1XuNrQZWm1F
+ nNXLUUgU3T4HFVvHhuwVP+qKOVfbP7drl8bYV0ARbzkUb7VFPxcv3wj/xWU3U980
+ x8JD+koPzHpnMgy2yhUApVm/CnfhEfvl2Sw82uysBYBeOpr6Yq4245y2cTkMyXxX
+ L+lYtxxBNk0X0ge6tevCg==
+X-ME-Sender: <xms:5zIoaqgy7-TDNHQeDeASCL7hqI1Al8erVWxhs2uBPyu4Rfvp16OYXQ>
+ <xme:5zIoaj_bN8jMFJlQweSytSVIP_vfJz07G-qKMLa8dFQ6scm4vllrxL2C4RXQwSN_I
+ BQoEsRiJOT990NJIToQor6Tl96mShWPGYbD0RiojUZrue5OnIaIhw>
+X-ME-Received: <xmr:5zIoato7EIXuTlHNL8DI63_0bt9YvCFoFIcP9bnkOaZXamvCu9Rsl2wq4Fc>
+X-ME-Proxy-Cause: dmFkZTFDp4hn9yJlTVOgAh1GbnLh12kIMdsGHUkCUPTOk7zXSzkdMPRTC77WP+iDJxzenq
+ vfTio6CT2pL7LrIyDKtsYZiHUluFLZ01APhc3NRWpgwVe17fxXZxa9LlMWHZoXWTfeLNcW
+ Q8AwUP65L4NVO+9/8XhJSte9b6uRwZZXUOBb9XSI+M8fVJCJAOvIwLTqlkmln2WDvjFnMU
+ K+X9BfIeX3snXkTTN1zH7ahjszSnwKZ83V6FpW7W4oiBhSUlek7RUCPcVuHjZEiEdGyar+
+ BHB8qsbnLDXjjLUz0eH3LPujw+NaxbXiCTQi/uS7gM/GzhlDgh+jmMKf5byElKhUIHydSQ
+ xDPwFp4VsH53DAyWnh5V8M//NHYg4EOBLpchBboqTp9KWmqUnzY96rqN7O96htvq/ZZ1yv
+ h8+u0qUvEN2AUh3SW+byAeb0jPblua2IHlpJz7bqis89p+mA5z/oObUdLv9cGGKPFOCnJB
+ eMWd/Oz8oC+MCxF+PYnIfQ+Tj+bS3+agjWrh458CkJDXqFejZjjV8i4eneeD01+l/YIqu9
+ jGs2kUuhfbarMF2EH8PYOoIzOgmSz2Q61uT0YgdKMLIbGIL7ZfdrO5qb0yMKv7sUoAC8rM
+ cIeyyZ2wLckCGnNFF9vO9kK7kutlPxKeQHUngaCgf67FKZTGcmfv+gbUmazA
+X-ME-Proxy: <xmx:5zIoajWZGG7EREFRp19RhoaJb73ft6e-7xejPT4R6sqMyOkJjUWNvw>
+ <xmx:5zIoakA0vnVeL4aYTZscinkRSIVVaeDt_2cQgmjyzU7RIZm8-y2Qdg>
+ <xmx:5zIoav0u25PweW1Lwb1T1KJ0Se5zYl5HETq-AGk9dpy6Wcn8kl3OlQ>
+ <xmx:5zIoau0ePP4UFf4S9wQvfQg_RAm-cuS_VndWMp5S70MWroqNyjUefw>
+ <xmx:5zIoagwjnsdWgoX4qlLrttvIoXFX_ldmbxiA841DXt1x2HuAkNWLrJUO>
 Feedback-ID: i03f14258:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
- 9 Jun 2026 11:36:02 -0400 (EDT)
-Date: Tue, 9 Jun 2026 09:36:01 -0600
+ 9 Jun 2026 11:36:07 -0400 (EDT)
+Date: Tue, 9 Jun 2026 09:36:06 -0600
 From: Alex Williamson <alex@shazbot.org>
 To: Tomita Moeko <tomitamoeko@gmail.com>
 Cc: qemu-devel@nongnu.org, =?UTF-8?B?Q8OpZHJpYw==?= Le Goater
  <clg@redhat.com>, "Michael S. Tsirkin" <mst@redhat.com>, K S Maan
  <kirandeepmaan45@gmail.com>, alex@shazbot.org
-Subject: Re: [PATCH v2 2/7] hw/pci: Skip EFI option ROM in pci_patch_ids()
-Message-ID: <20260609093601.59aa6fde@shazbot.org>
-In-Reply-To: <20260608134559.23971-3-tomitamoeko@gmail.com>
+Subject: Re: [PATCH v2 1/7] hw/pci: Recalculate option ROM checksum before
+ patching ID
+Message-ID: <20260609093606.1dbbd177@shazbot.org>
+In-Reply-To: <20260608134559.23971-2-tomitamoeko@gmail.com>
 References: <20260608134559.23971-1-tomitamoeko@gmail.com>
- <20260608134559.23971-3-tomitamoeko@gmail.com>
+ <20260608134559.23971-2-tomitamoeko@gmail.com>
 X-Mailer: Claws Mail 4.4.0 (GTK 3.24.52; x86_64-pc-linux-gnu)
 MIME-Version: 1.0
 Content-Type: text/plain; charset=US-ASCII
 Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=103.168.172.159; envelope-from=alex@shazbot.org;
- helo=fhigh-a8-smtp.messagingengine.com
+Received-SPF: pass client-ip=103.168.172.151; envelope-from=alex@shazbot.org;
+ helo=fout-a8-smtp.messagingengine.com
 X-Spam_score_int: -27
 X-Spam_score: -2.8
 X-Spam_bar: --
@@ -108,48 +109,110 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Mon,  8 Jun 2026 21:45:53 +0800
+On Mon,  8 Jun 2026 21:45:52 +0800
 Tomita Moeko <tomitamoeko@gmail.com> wrote:
 
-> pci_patch_ids() patches the checksum at the reserved 0x06 byte, but
-> for EFI option ROMs the 32 bits at 0x04 are the EFI signature and
-> must be 0x00000EF1. Since OVMF does not check vendor/device IDs in
-> the PCIR header or the checksum, skip patching for EFI ROMs.
+> pci_patch_ids() only adjusts checksum based on the new IDs. For an
+> option ROM with invalid checksum, the patched one will still have
+> an invalid checksum. Always calculate the checksum and patch it if
+> necessary to ensure the option ROM is valid.
+> 
+> This is intended for fixing the romfile used in IGD passthrough as
+> multiple IGD devices share the same rom with possible non-matching
+> device ID, and its checksum is known to be bogus [1].
+> 
+> A helper function pci_rom_calculate_checksum() is added and exported
+> for reusing in IGD-specific quirk later.
+> 
+> [1] hw/vfio/pci.c:1090
 > 
 > Reported-by: K S Maan <kirandeepmaan45@gmail.com>
 > Signed-off-by: Tomita Moeko <tomitamoeko@gmail.com>
 > ---
->  hw/pci/pci.c | 5 +++++
->  1 file changed, 5 insertions(+)
+>  hw/pci/pci.c         | 35 ++++++++++++++++++++++++++---------
+>  include/hw/pci/pci.h |  2 ++
+>  2 files changed, 28 insertions(+), 9 deletions(-)
 > 
 > diff --git a/hw/pci/pci.c b/hw/pci/pci.c
-> index 742917f79d..eb10e586d5 100644
+> index cec065d108..742917f79d 100644
 > --- a/hw/pci/pci.c
 > +++ b/hw/pci/pci.c
-> @@ -2521,6 +2521,11 @@ static void pci_patch_ids(PCIDevice *pdev, uint8_t *ptr, uint32_t size)
->          return;
->      }
+> @@ -2479,6 +2479,21 @@ static uint8_t pci_find_capability_at_offset(PCIDevice *pdev, uint8_t offset)
+>      return found;
+>  }
 >  
-> +    /* OVMF won't check IDs in PCIR header, skip EFI roms */
-> +    if (pci_get_byte(ptr + pcir_offset + 0x14) == 0x03) {
-> +        return;
+> +uint8_t pci_rom_calculate_checksum(const uint8_t *ptr, uint32_t size)
+> +{
+> +    uint8_t checksum = 0;
+> +    uint32_t i;
+> +
+> +    for (i = 0; i < size; i++) {
+> +        if (i == 6) {
+> +            continue;
+> +        }
+
+If we remove this continue branch...
+
+> +        checksum += ptr[i];
 > +    }
 > +
+> +    return checksum;
+> +}
+> +
+>  /* Patch the PCI vendor and device ids in a PCI rom image if necessary.
+>     This is needed for an option rom which is used for more than one device. */
+>  static void pci_patch_ids(PCIDevice *pdev, uint8_t *ptr, uint32_t size)
+> @@ -2514,25 +2529,27 @@ static void pci_patch_ids(PCIDevice *pdev, uint8_t *ptr, uint32_t size)
+>      trace_pci_rom_and_pci_ids(pdev->romfile, vendor_id, device_id,
+>                                rom_vendor_id, rom_device_id);
+>  
+> -    checksum = ptr[6];
+> +    /* In case the checksum is bogus */
+> +    checksum = pci_rom_calculate_checksum(ptr, size);
+>  
+>      if (vendor_id != rom_vendor_id) {
+>          /* Patch vendor id and checksum (at offset 6 for etherboot roms). */
+> -        checksum += (uint8_t)rom_vendor_id + (uint8_t)(rom_vendor_id >> 8);
+> -        checksum -= (uint8_t)vendor_id + (uint8_t)(vendor_id >> 8);
+> -        trace_pci_rom_checksum_change(ptr[6], checksum);
+> -        ptr[6] = checksum;
+> +        checksum += (uint8_t)vendor_id + (uint8_t)(vendor_id >> 8);
+> +        checksum -= (uint8_t)rom_vendor_id + (uint8_t)(rom_vendor_id >> 8);
+>          pci_set_word(ptr + pcir_offset + 4, vendor_id);
+>      }
+>  
+>      if (device_id != rom_device_id) {
+>          /* Patch device id and checksum (at offset 6 for etherboot roms). */
+> -        checksum += (uint8_t)rom_device_id + (uint8_t)(rom_device_id >> 8);
+> -        checksum -= (uint8_t)device_id + (uint8_t)(device_id >> 8);
+> -        trace_pci_rom_checksum_change(ptr[6], checksum);
+> -        ptr[6] = checksum;
+> +        checksum += (uint8_t)device_id + (uint8_t)(device_id >> 8);
+> +        checksum -= (uint8_t)rom_device_id + (uint8_t)(rom_device_id >> 8);
+>          pci_set_word(ptr + pcir_offset + 6, device_id);
+>      }
+> +
+> +    if (ptr[6] != (uint8_t)-checksum) {
+> +        trace_pci_rom_checksum_change(ptr[6], (uint8_t)-checksum);
+> +        ptr[6] = (uint8_t)-checksum;
+> +    }
 
-Just above this we have the sanity testing:
+Then this just becomes:
 
-    if (pcir_offset + 8 >= size || memcmp(ptr + pcir_offset, "PCIR", 4)) {
-        trace_pci_bad_pcir_offset(pcir_offset);
-        return;
+    if (checksum) {
+        trace_pci_rom_checksum_change(ptr[6], ptr[6] - checksum);
+        ptr[6] -= checksum;
     }
 
-+8 covers the vendor and device IDs, but now we're reaching deeper and
-should extend the validation to match.  s/8/0x14/  Thanks,
+The result is the same, but this avoids the uint8_t casts where
+checksum is promoted to an int for comparison.
+
+Patch 7 would require an equivalent change:
+
+  -    ((uint8_t *)vdev->rom)[6] = (uint8_t)-checksum;
+  +    ((uint8_t *)vdev->rom)[6] -= checksum;
+
+Minor change, slightly better form.  Thanks,
 
 Alex
-
->      vendor_id = pci_get_word(pdev->config + PCI_VENDOR_ID);
->      device_id = pci_get_word(pdev->config + PCI_DEVICE_ID);
->      rom_vendor_id = pci_get_word(ptr + pcir_offset + 4);
-
 
