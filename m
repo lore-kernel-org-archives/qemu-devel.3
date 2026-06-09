@@ -4,35 +4,35 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 01077CD8CB9
-	for <qemu-devel@archiver.kernel.org>; Tue,  9 Jun 2026 16:39:15 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 21145CD8CB2
+	for <qemu-devel@archiver.kernel.org>; Tue,  9 Jun 2026 16:39:23 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wWzTI-0002gZ-Ch; Tue, 09 Jun 2026 12:38:36 -0400
+	id 1wWzTA-0002eG-QO; Tue, 09 Jun 2026 12:38:28 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <deller@kernel.org>) id 1wWzT9-0002dV-IJ
- for qemu-devel@nongnu.org; Tue, 09 Jun 2026 12:38:27 -0400
-Received: from tor.source.kernel.org ([172.105.4.254])
+ (Exim 4.90_1) (envelope-from <deller@kernel.org>) id 1wWzT8-0002cw-7V
+ for qemu-devel@nongnu.org; Tue, 09 Jun 2026 12:38:26 -0400
+Received: from sea.source.kernel.org ([172.234.252.31])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <deller@kernel.org>) id 1wWzT7-0005Ey-HN
- for qemu-devel@nongnu.org; Tue, 09 Jun 2026 12:38:27 -0400
+ (Exim 4.90_1) (envelope-from <deller@kernel.org>) id 1wWzT6-0005E5-Pf
+ for qemu-devel@nongnu.org; Tue, 09 Jun 2026 12:38:25 -0400
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
- by tor.source.kernel.org (Postfix) with ESMTP id CC9226020B;
- Tue,  9 Jun 2026 16:38:24 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B60DD1F00893;
+ by sea.source.kernel.org (Postfix) with ESMTP id 608E142DFD;
  Tue,  9 Jun 2026 16:38:22 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 75CA91F00893;
+ Tue,  9 Jun 2026 16:38:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
- s=k20260515; t=1781023104;
- bh=Z1dfaMdDG1BHIABJPuyTvw9aGXsVucAwD1oVosQ69OE=;
+ s=k20260515; t=1781023102;
+ bh=J1AWjYZU/hD53VPk5IiZ2Jz6nUV+3nPhEWHBfOxyoTE=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References;
- b=YGUH+ZLkg2KEerfBADfkPXKHO9uvgysBpMHjxUx2mQ5kA3Tqm1jUCp7633Uea0M0/
- h1tdd1k3dULYNBPVX1AcLy2nUf/s1X4GnophSBdHpBZzy2e8D0Kcp5CNDsGvz/fBkO
- pBoVQMTLAOEjqiv7WJa9LwVCrb1YF+K5TPS5PcAqdSK/hb0/0R7TkCK7HfHCW/6Lbj
- 8zMLe1jMoXwr9wxCY1vtLy4W14pNpf47zEPlfhnlDfXXFM5Vv5zBNkB6BgkJ4eXmNf
- orLdMAz8puUI405R/2P05efWdvNyJWPOw+LxumtEuJBEEngfG3y+OYZsMwxDZeV9ce
- 3IFUgW9ncxY4g==
+ b=LgU967BqbIFIwvsDfu5073X9NrI2uj1W1+zUXev2FEWP/61e+qIKZfqA6NtdBq/cr
+ KksB1759LxJo/2++7mmX9cfezGtm2Sll2Dh/J+eZnFIBT2dTiHRuLxeulg2qlUzPro
+ fO4zrQt/kc8xkq9dXJonQFjKQF568Cjc8iMFJ3PIQ4zCqQ6wEa23YdwIxuiztF1BRt
+ K/rF7YKC930uCGkWjhpCZjT9f5xtxBDSAKnQpKbAeMxsUNI9fFwKxxXS1p7HgpTPQj
+ dGQdny/FOwJDxdNXKrMqVpKgpbUsLmeaK3Ve9wNcYqwiUOfNEfNRmPmj40qux58piY
+ KyBg6qzkzACfA==
 From: Helge Deller <deller@kernel.org>
 To: qemu-devel@nongnu.org
 Cc: deller@gmx.de, Yoshinori Sato <yoshinori.sato@nifty.com>,
@@ -40,17 +40,17 @@ Cc: deller@gmx.de, Yoshinori Sato <yoshinori.sato@nifty.com>,
  Laurent Vivier <laurent@vivier.eu>, Max Filippov <jcmvbkbc@gmail.com>,
  Matt Turner <mattst88@gmail.com>,
  Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>
-Subject: [PULL v2 6/8] linux-user/sparc: call block_signals() before
- set_sigmask() in setcontext
-Date: Tue,  9 Jun 2026 18:38:05 +0200
-Message-ID: <20260609163807.6083-7-deller@kernel.org>
+Subject: [PULL v2 5/8] linux-user/sparc: restore L/I registers from RSA in
+ sparc64_set_context
+Date: Tue,  9 Jun 2026 18:38:04 +0200
+Message-ID: <20260609163807.6083-6-deller@kernel.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260609163807.6083-1-deller@kernel.org>
 References: <20260609163807.6083-1-deller@kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=172.105.4.254; envelope-from=deller@kernel.org;
- helo=tor.source.kernel.org
+Received-SPF: pass client-ip=172.234.252.31; envelope-from=deller@kernel.org;
+ helo=sea.source.kernel.org
 X-Spam_score_int: -24
 X-Spam_score: -2.5
 X-Spam_bar: --
@@ -74,75 +74,47 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Matt Turner <mattst88@gmail.com>
 
-sparc64_set_context() emulates the kernel's `ta 0x6f` trap by calling
-set_sigmask() to install the mask supplied via the user's ucontext_t.
-The contract of set_sigmask() (see its comment in linux-user/signal.c)
-is that the caller must have first called block_signals(), which sets
-TaskState::signal_pending.
-
-Without block_signals(), if a guest signal is pending-and-blocked at
-the time setcontext is invoked and the new mask unblocks it,
-signal_pending stays 0 and the post-trap process_pending_signals()
-call in linux-user/sparc/cpu_loop.c never enters its while loop, so
-the now-deliverable signal is left undelivered indefinitely.
-
-This affects programs that use getcontext/setcontext to swap signal
-masks, including libunwind's unw_resume() out of a signal handler:
-without this fix, the test program below loops forever printing
-"calling setcontext" instead of delivering the pending SIGUSR2.
-
-  #define _GNU_SOURCE
-  #include <ucontext.h>
-  #include <signal.h>
-  #include <stdio.h>
-  #include <unistd.h>
-  static int got;
-  static void h(int s) { got = 1; }
-  int main(void) {
-      signal(SIGUSR2, h);
-      sigset_t m; sigemptyset(&m); sigaddset(&m, SIGUSR2);
-      sigprocmask(SIG_BLOCK, &m, NULL);
-      kill(getpid(), SIGUSR2);
-      ucontext_t uc;
-      getcontext(&uc);
-      if (got) return 0;
-      uc.uc_sigmask.__val[0] = 0;
-      setcontext(&uc);
-      return 1;
-  }
-
-The 32-bit sparc do_sigreturn / do_rt_sigreturn paths already get
-block_signals() from the rt_sigreturn syscall wrapper in
-linux-user/syscall.c, so only sparc64_set_context (invoked directly
-from cpu_loop) needs the addition.
+The kernel's do_rt_sigreturn loads L and I registers from the register
+save area (RSA) at the restored O6+STACK_BIAS.  QEMU lacks the kernel's
+window-fill path, so restore L0-L7 and I0-I5 explicitly from the RSA.
+I6 and I7 are already restored from mc_fp/mc_i7.
 
 Signed-off-by: Matt Turner <mattst88@gmail.com>
 Cc: Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>
 Signed-off-by: Helge Deller <deller@gmx.de>
 ---
- linux-user/sparc/signal.c | 9 +++++++++
- 1 file changed, 9 insertions(+)
+ linux-user/sparc/signal.c | 18 ++++++++++++++++++
+ 1 file changed, 18 insertions(+)
 
 diff --git a/linux-user/sparc/signal.c b/linux-user/sparc/signal.c
-index fda5508c48..ba692c3123 100644
+index d339f89928..fda5508c48 100644
 --- a/linux-user/sparc/signal.c
 +++ b/linux-user/sparc/signal.c
-@@ -619,6 +619,15 @@ void sparc64_set_context(CPUSPARCState *env)
-             }
-         }
-         target_to_host_sigset_internal(&set, &target_set);
-+        /*
-+         * set_sigmask() requires the caller to have first called
-+         * block_signals() so that process_pending_signals() is guaranteed
-+         * to run after the mask change.  Without this, a guest signal that
-+         * is pending-and-blocked at setcontext time is left undelivered
-+         * even after its mask bit is cleared, because signal_pending stays
-+         * 0 and the post-trap process_pending_signals() loop never enters.
-+         */
-+        block_signals();
-         set_sigmask(&set);
-     }
-     env->pc = pc;
+@@ -656,6 +656,24 @@ void sparc64_set_context(CPUSPARCState *env)
+     __get_user(env->regwptr[WREG_FP], &(ucp->tuc_mcontext.mc_fp));
+     __get_user(env->regwptr[WREG_I7], &(ucp->tuc_mcontext.mc_i7));
+ 
++    /*
++     * The kernel's do_rt_sigreturn loads L and I registers from the
++     * register save area (RSA) at the new O6+STACK_BIAS.  Unlike the
++     * kernel, QEMU has no kernel-mode path that triggers a window fill,
++     * so we must do it explicitly here.  I6 and I7 are already restored
++     * from mc_fp and mc_i7 above; restore L0-L7 and I0-I5 from the RSA.
++     */
++    {
++        abi_ulong sp_ptr = env->regwptr[WREG_O6];
++        /* LP64 O6 is biased (8-byte-aligned - 2047); low bit set. ILP32 O6 is 4-byte-aligned. */
++        if (sp_ptr & 3)
++            sp_ptr += TARGET_STACK_BIAS;
++        for (i = 0; i < 8; i++)
++            get_user_ual(env->regwptr[WREG_L0 + i], sp_ptr + i * 8);
++        for (i = 0; i < 6; i++)  /* I0-I5; I6=FP and I7 already restored */
++            get_user_ual(env->regwptr[WREG_I0 + i], sp_ptr + 64 + i * 8);
++    }
++
+     fpup = &ucp->tuc_mcontext.mc_fpregs;
+ 
+     __get_user(fenab, &(fpup->mcfpu_enab));
 -- 
 2.54.0
 
