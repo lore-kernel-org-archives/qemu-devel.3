@@ -4,56 +4,91 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 70C9FCD8CAA
-	for <qemu-devel@archiver.kernel.org>; Tue,  9 Jun 2026 14:55:23 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 19082CD8CA4
+	for <qemu-devel@archiver.kernel.org>; Tue,  9 Jun 2026 14:57:15 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wWxr4-0004qA-9Z; Tue, 09 Jun 2026 10:55:02 -0400
+	id 1wWxsj-0005nY-74; Tue, 09 Jun 2026 10:56:45 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jic23@kernel.org>) id 1wWxqv-0004kq-QS
- for qemu-devel@nongnu.org; Tue, 09 Jun 2026 10:54:54 -0400
-Received: from tor.source.kernel.org ([2600:3c04:e001:324:0:1991:8:25])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jic23@kernel.org>) id 1wWxqo-0005yU-K2
- for qemu-devel@nongnu.org; Tue, 09 Jun 2026 10:54:51 -0400
-Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
- by tor.source.kernel.org (Postfix) with ESMTP id 54B5F601D6;
- Tue,  9 Jun 2026 14:54:27 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 126CD1F00893;
- Tue,  9 Jun 2026 14:54:25 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
- s=k20260515; t=1781016867;
- bh=zwg1yz5SrCe8MtHJi6HoAs0QMdhtoo3YWLbvSz5VFSc=;
- h=Date:From:To:Cc:Subject:In-Reply-To:References;
- b=gZUNNH7X1f52bz9PZgwDgQ3HrX5aFDoJXGT+X0ekpvyumk2gzDNPgLJ+II/SW2r7q
- Jx9Ht3kuqFrj4Q5u0BCnrf7Q0MUJXEW+aax8Sykr7KlntLV9jMcZmASvcog6PxQZES
- GnsfUsmkujJVC08uBjSGZN/Lhtw8WSoIudv7LmPYYCJHTW1K4NpX8eLYkdeu1I4Cgc
- ZcQnTVhnqHbj1em5C8p3jKiV8/rg08fFSDor0POnIM2k+xQC+I6L5lA8NDWSMri3Ql
- B/gWx70olNFbYgmaMfQRB2odZQYmxPq3TvIghciOKa48AVdocr1chjgrDJPxNdHFYT
- fwgnmPTPS5FPQ==
-Date: Tue, 9 Jun 2026 15:54:22 +0100
-From: Jonathan Cameron <jic23@kernel.org>
-To: Junjie Cao <junjie.cao@intel.com>
-Cc: jonathan.cameron@huawei.com, fan.ni@samsung.com, qemu-devel@nongnu.org
-Subject: Re: [PATCH 2/3] hw/cxl: trace HDM decoder commit and CDAT load
-Message-ID: <20260609155422.4358e34a@jic23-huawei>
-In-Reply-To: <20260603013420.904749-3-junjie.cao@intel.com>
-References: <20260603013420.904749-1-junjie.cao@intel.com>
- <20260603013420.904749-3-junjie.cao@intel.com>
-X-Mailer: Claws Mail 4.4.0 (GTK 3.24.52; x86_64-pc-linux-gnu)
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1wWxsh-0005mw-Ti
+ for qemu-devel@nongnu.org; Tue, 09 Jun 2026 10:56:43 -0400
+Received: from mail-pl1-x62f.google.com ([2607:f8b0:4864:20::62f])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1wWxsg-0006gn-G5
+ for qemu-devel@nongnu.org; Tue, 09 Jun 2026 10:56:43 -0400
+Received: by mail-pl1-x62f.google.com with SMTP id
+ d9443c01a7336-2bf36a6905cso40044195ad.3
+ for <qemu-devel@nongnu.org>; Tue, 09 Jun 2026 07:56:42 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1781017001; x=1781621801; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:content-language:from
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=FTyRYlHDF4A+tpM5ZrsdMAFRIGvC7esWplDHNbgqS20=;
+ b=KR+U24Sy96VDu3dLhhdbQE/DuVpdHQ9WEyTX8Tx10gdbzcAz/lBLK1T7PfYhgMiq9R
+ xxSFI9WjYPTByi6eOAvY1de3PaUUVvUgy0hfNCMvhzlBDUuKp85BOE/KxDLXml63bc4s
+ pKnGVkNVOqJZEPB3Hk14N4WTSyAZF4hLdCfNiRMtwjFSgP+yKwrzW+f1CNrKdGSdreFT
+ qOp6mQmHOr+0QO4hds8IzA35gBQoMyn7fcTPiN871ZrS54Aqbk0X5xdNYCv66lHQ9EN+
+ 77473ks1HVnDeg5dG2GTb5zXwFJRGTORdcWRpRM3S84mjTIC5JEloiMoHodzmrR73wtK
+ TQqA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1781017001; x=1781621801;
+ h=content-transfer-encoding:in-reply-to:content-language:from
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=FTyRYlHDF4A+tpM5ZrsdMAFRIGvC7esWplDHNbgqS20=;
+ b=nfzxe7n/6K+9ghuoELi4Vuxd3OqhQmbHFnqTJ7KqtYd6iUBndY2tfjYBgEAwwmVUAq
+ pFgCGFMMxWGnzd4i09L1z9ftGx/BsTqwcal1KI5o07Y05uDWeQ2jPfS/X0rjoZNx1ZGo
+ dSSO1aZRSvYx7mBnOLxTOp65sI/E3fXsT2y58TriAAhHg84XltjCAQpye83YoFY9PE4Z
+ c9shcEI1AVmZsgGaoRiu5CtuBkhHDnSZHik2tnWpFFu1B0QFb77RMlwZrn+P7GnQXi97
+ 6gzb5b8Eqnx4SPatGSMpEaqHLOj20oV4tRmmL3/UetTXoYONdn5vyrsuUYGXKwtBlZep
+ uneg==
+X-Gm-Message-State: AOJu0YxSObX/kt3V8ii3DFGaGhOSRaZFqHJuykTX9eHT1PcT+0ERmU12
+ h7UtM++/bE8n7FwfubXFoHqjnJggwpBOw1GmD3yISeZFU0C3RGSs2ifihUSkmHaoOuI=
+X-Gm-Gg: Acq92OEW22i1tfcpjTilm0MB5LIhx3+/XADgJWlsyfLAUyBELELahfedgOaHbAS0djw
+ 4/HqucUBzihlVTkE3yVpdYgySMMVIxTxtoCf//6SvZ9gj+B50VTDsF97zN/bNivRKHk+9ZtfnNF
+ WBYx7BQyZ8V8q8Ch9F6pRx9WCvMvuWcojuXtJoTYW6fB1hbPoZLUyzvZL4zkqzd5ww00s4Szczg
+ Vqc+/cnfu5b7HZtSPfc9+ZSZiPHQ+y5AxM6LWJqFxgerXIj0/MrGG91gXpUlm5TPSr/TaIhTekb
+ i2M50PcxlCUBBq1LfBO/fHqLwoJCnM7cD09GJC7HVTX0YFu4hTzO8NMBKmATgAkxErQk7qPbimQ
+ 0h/asde2eAQgKMJXy87/isr0WJTaDnCA1WtMaNYnV65/KMyqa2qw9rWQpKB9lNMhEDj2/5G4Rta
+ sgOfE63IPSiMriT+95C8sbHvJngo/uG54hUUra+bYsaMIleMI=
+X-Received: by 2002:a17:902:da88:b0:2c1:ef9:450e with SMTP id
+ d9443c01a7336-2c2a1c86746mr42961455ad.27.1781016996300; 
+ Tue, 09 Jun 2026 07:56:36 -0700 (PDT)
+Received: from [192.168.0.4] ([71.212.142.33])
+ by smtp.gmail.com with ESMTPSA id
+ d9443c01a7336-2c16609e2e2sm211005955ad.49.2026.06.09.07.56.35
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Tue, 09 Jun 2026 07:56:35 -0700 (PDT)
+Message-ID: <0906ae00-b2f6-4530-b90f-5ff7f9b15ad5@linaro.org>
+Date: Tue, 9 Jun 2026 07:56:34 -0700
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2600:3c04:e001:324:0:1991:8:25;
- envelope-from=jic23@kernel.org; helo=tor.source.kernel.org
-X-Spam_score_int: -24
-X-Spam_score: -2.5
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v9 14/45] target/arm: Implement BFCVTN for SVE
+To: Peter Maydell <peter.maydell@linaro.org>
+Cc: qemu-devel@nongnu.org, qemu-arm@nongnu.org
+References: <20260603032855.106930-1-richard.henderson@linaro.org>
+ <20260603032855.106930-15-richard.henderson@linaro.org>
+ <CAFEAcA-RzkAX4k2xqN3pwfSUZ3LDmCa0Or9bKo-Rpwbk1aXQNg@mail.gmail.com>
+From: Richard Henderson <richard.henderson@linaro.org>
+Content-Language: en-US
+In-Reply-To: <CAFEAcA-RzkAX4k2xqN3pwfSUZ3LDmCa0Or9bKo-Rpwbk1aXQNg@mail.gmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::62f;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x62f.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.445,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -69,146 +104,31 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed,  3 Jun 2026 09:34:19 +0800
-Junjie Cao <junjie.cao@intel.com> wrote:
-
-> HDM decoder programming and CDAT table ingestion are two
-> debugging-prone paths in the CXL stack: the former drives
-> address-decoding behaviour, the latter is parsed before any guest
-> interaction so wrong inputs surface late.
+On 6/9/26 01:52, Peter Maydell wrote:
+> On Wed, 3 Jun 2026 at 04:32, Richard Henderson
+> <richard.henderson@linaro.org> wrote:
+>>
+>> Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
+>>
+>> diff --git a/target/arm/tcg/translate-sve.c b/target/arm/tcg/translate-sve.c
+>> index c47e79637e..eccb5b191c 100644
+>> --- a/target/arm/tcg/translate-sve.c
+>> +++ b/target/arm/tcg/translate-sve.c
+>> @@ -4100,6 +4100,9 @@ TRANS_FEAT_STREAMING_IF(BF1CVTLT, aa64_sme2_or_sve2_f8cvt, aa64_sme2,
+>>   TRANS_FEAT_STREAMING_IF(BF2CVTLT, aa64_sme2_or_sve2_f8cvt, aa64_sme2,
+>>                           do_f8cvt, a, gen_helper_sve2_bfcvt, true, true)
+>>
+>> +TRANS_FEAT(BFCVTN, aa64_sme2_or_sve2_f8cvt, do_f8cvt,
+>> +           a, gen_helper_sve2_bfcvtn_bh, false, false)
 > 
-> Add four trace points:
+> The pseudocode has
 > 
->   * cxl_hdm_decoder_write    - guest write to a decoder CTRL register,
->                                capturing the raw value and whether a
->                                commit is being requested
->   * cxl_hdm_decoder_commit   - actual commit, with the resolved base,
->                                size, IW and IG fields
->   * cxl_cdat_init            - CDAT initialisation, distinguishing the
->                                file-backed vs built-in source
->   * cxl_cdat_loaded          - successful file load with size and
->                                number of entries parsed
-
-The 'and' in the commit log suggests to me this is two largely unrelated
-things. Can we have one patch for hdm decoder actions and one for
-cdat actions.  I suspect the hdm decoder one will at least have
-some fuzz due to Alireza's work.  Ideally I'd like to get that in first
-given it's usefulness.  (not the DCD case probably as that may need more
-review but the static fast path case).
-
-I'm not really convinced the cdat ones provide as much value as the
-others you have added. Perhaps provide more info on why you find that one
-useful - unless we have a silly bug the source should be obvious as it
-is commandline controlled for instance.
-
+> if IsFeatureImplemented(FEAT_SME2) then CheckSVEEnabled(); else
+> CheckNonStreamingSVEEnabled(); end;
 > 
-> The hw/mem/cxl_type3.c trace points are declared in the existing
-> hw/mem/trace-events. The cxl_ prefix keeps the namespace unified for
-> filtering with -trace 'cxl_*'.
-> 
-> Signed-off-by: Junjie Cao <junjie.cao@intel.com>
-> ---
->  hw/cxl/cxl-cdat.c   |  3 +++
->  hw/cxl/trace-events |  4 ++++
->  hw/mem/cxl_type3.c  | 17 ++++++++++++++++-
->  hw/mem/trace-events |  4 ++++
->  4 files changed, 27 insertions(+), 1 deletion(-)
-> 
-> diff --git a/hw/cxl/cxl-cdat.c b/hw/cxl/cxl-cdat.c
-> index 959a55518e..5274ac8c12 100644
-> --- a/hw/cxl/cxl-cdat.c
-> +++ b/hw/cxl/cxl-cdat.c
-> @@ -12,6 +12,7 @@
->  #include "hw/cxl/cxl.h"
->  #include "qapi/error.h"
->  #include "qemu/error-report.h"
-> +#include "trace.h"
->  
->  static void cdat_len_check(CDATSubHeader *hdr, Error **errp)
->  {
-> @@ -186,6 +187,7 @@ static bool ct3_load_cdat(CDATObject *cdat, Error **errp)
->      cdat->entry_len = num_ent;
->      cdat->entry = g_steal_pointer(&cdat_st);
->      cdat->buf = g_steal_pointer(&buf);
-> +    trace_cxl_cdat_loaded(cdat->filename, file_size, num_ent);
->      return true;
->  }
->  
-> @@ -193,6 +195,7 @@ bool cxl_doe_cdat_init(CXLComponentState *cxl_cstate, Error **errp)
->  {
->      CDATObject *cdat = &cxl_cstate->cdat;
->  
-> +    trace_cxl_cdat_init(cdat->filename ?: "<built-in>");
->      if (cdat->filename) {
->          return ct3_load_cdat(cdat, errp);
->      } else {
-> diff --git a/hw/cxl/trace-events b/hw/cxl/trace-events
-> index abca116ed3..15977dce6e 100644
-> --- a/hw/cxl/trace-events
-> +++ b/hw/cxl/trace-events
-> @@ -6,3 +6,7 @@
->  cxl_mailbox_command(uint16_t opcode, size_t len_in) "opcode=0x%04x len_in=%zu"
->  cxl_mailbox_invalid_payload(uint16_t opcode, size_t len_in, size_t expected) "opcode=0x%04x len_in=%zu expected=%zu"
->  cxl_mailbox_handler_return(uint16_t opcode, int ret, size_t len_out) "opcode=0x%04x ret=%d len_out=%zu"
-> +
-> +# cxl-cdat.c
-> +cxl_cdat_init(const char *source) "source=%s"
-> +cxl_cdat_loaded(const char *filename, size_t length, int num_entries) "filename=%s length=%zu entries=%d"
-> diff --git a/hw/mem/cxl_type3.c b/hw/mem/cxl_type3.c
-> index 4739239da3..8130abeb37 100644
-> --- a/hw/mem/cxl_type3.c
-> +++ b/hw/mem/cxl_type3.c
-> @@ -30,6 +30,7 @@
->  #include "system/numa.h"
->  #include "hw/cxl/cxl.h"
->  #include "hw/pci/msix.h"
-> +#include "trace.h"
->  
->  /* type3 device private */
->  enum CXL_T3_MSIX_VECTOR {
-> @@ -419,9 +420,20 @@ static void hdm_decoder_commit(CXLType3Dev *ct3d, int which)
->      int hdm_inc = R_CXL_HDM_DECODER1_BASE_LO - R_CXL_HDM_DECODER0_BASE_LO;
->      ComponentRegisters *cregs = &ct3d->cxl_cstate.crb;
->      uint32_t *cache_mem = cregs->cache_mem_registers;
-> -    uint32_t ctrl;
-> +    uint32_t ctrl, low, high;
-> +    uint64_t base, size;
->  
->      ctrl = ldl_le_p(cache_mem + R_CXL_HDM_DECODER0_CTRL + which * hdm_inc);
-> +    low = ldl_le_p(cache_mem + R_CXL_HDM_DECODER0_BASE_LO + which * hdm_inc);
-> +    high = ldl_le_p(cache_mem + R_CXL_HDM_DECODER0_BASE_HI + which * hdm_inc);
-> +    base = (low & 0xf0000000) | ((uint64_t)high << 32);
-> +    low = ldl_le_p(cache_mem + R_CXL_HDM_DECODER0_SIZE_LO + which * hdm_inc);
-> +    high = ldl_le_p(cache_mem + R_CXL_HDM_DECODER0_SIZE_HI + which * hdm_inc);
-> +    size = (low & 0xf0000000) | ((uint64_t)high << 32);
-> +    trace_cxl_hdm_decoder_commit(which, base, size,
-> +                                 FIELD_EX32(ctrl, CXL_HDM_DECODER0_CTRL, IW),
-> +                                 FIELD_EX32(ctrl, CXL_HDM_DECODER0_CTRL, IG));
-> +
->      /* TODO: Sanity checks that the decoder is possible */
->      ctrl = FIELD_DP32(ctrl, CXL_HDM_DECODER0_CTRL, ERR, 0);
->      ctrl = FIELD_DP32(ctrl, CXL_HDM_DECODER0_CTRL, COMMITTED, 1);
-> @@ -623,6 +635,9 @@ static void ct3d_reg_write(void *opaque, hwaddr offset, uint64_t value,
->      }
->  
->      stl_le_p((uint8_t *)cache_mem + offset, value);
-> +    if (which_hdm >= 0) {
-> +        trace_cxl_hdm_decoder_write(which_hdm, value, should_commit);
-> +    }
->      if (should_commit) {
->          hdm_decoder_commit(ct3d, which_hdm);
->      } else if (should_uncommit) {
-> diff --git a/hw/mem/trace-events b/hw/mem/trace-events
-> index 8b6b02b5bf..770831f701 100644
-> --- a/hw/mem/trace-events
-> +++ b/hw/mem/trace-events
-> @@ -6,3 +6,7 @@ mhp_pc_dimm_assigned_slot(int slot) "%d"
->  memory_device_pre_plug(const char *id, uint64_t addr) "id=%s addr=0x%"PRIx64
->  memory_device_plug(const char *id, uint64_t addr) "id=%s addr=0x%"PRIx64
->  memory_device_unplug(const char *id, uint64_t addr) "id=%s addr=0x%"PRIx64
-> +
-> +# cxl_type3.c
-> +cxl_hdm_decoder_write(int which, uint32_t value, bool commit) "decoder=%d ctrl=0x%08x commit=%d"
-> +cxl_hdm_decoder_commit(int which, uint64_t base, uint64_t size, uint32_t iw_enc, uint32_t ig_enc) "decoder=%d base=0x%"PRIx64" size=0x%"PRIx64" iw_enc=0x%x ig_enc=0x%x"
+> so shouldn't this be TRANS_FEAT_STREAMING_IF(..., aa64_sme2, ...) ?
 
+Yep.
+
+r~
 
