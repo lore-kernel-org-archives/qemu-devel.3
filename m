@@ -4,90 +4,115 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7863CCD8CB2
-	for <qemu-devel@archiver.kernel.org>; Tue,  9 Jun 2026 22:54:30 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id CEA1CCD8CAD
+	for <qemu-devel@archiver.kernel.org>; Tue,  9 Jun 2026 22:55:26 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wX5KS-0006kO-Or; Tue, 09 Jun 2026 18:53:56 -0400
+	id 1wX5Lj-0007X2-6a; Tue, 09 Jun 2026 18:55:11 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1wX5KG-0006cU-CP
- for qemu-devel@nongnu.org; Tue, 09 Jun 2026 18:53:40 -0400
-Received: from mail-pf1-x435.google.com ([2607:f8b0:4864:20::435])
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1wX5Le-0007Vj-Ox
+ for qemu-devel@nongnu.org; Tue, 09 Jun 2026 18:55:07 -0400
+Received: from smtp-out1.suse.de ([2a07:de40:b251:101:10:150:64:1])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1wX5KE-0005o9-70
- for qemu-devel@nongnu.org; Tue, 09 Jun 2026 18:53:39 -0400
-Received: by mail-pf1-x435.google.com with SMTP id
- d2e1a72fcca58-8422a92b6d6so3234930b3a.1
- for <qemu-devel@nongnu.org>; Tue, 09 Jun 2026 15:53:36 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1781045615; x=1781650415; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:content-language:from
- :references:to:subject:user-agent:mime-version:date:message-id:from
- :to:cc:subject:date:message-id:reply-to;
- bh=Bix95w6wyKbo5l8Fq3BebeqByC+zcspubXm/BONPVs4=;
- b=rN2tsKSxOalkBJhMzTKELp3Cgbs2gShjn1YB/14JDdEQMFVbDZdQy2QqJPFjZ6BcqN
- qVL5YIavUmkbPN7JE423VIX9XX3n7x9+ripv0Y4z1cr7W/WmcRKjQA1qbubjBJZ8c/xf
- 3Ggh6a1GrpvCKoPI+EzehbPMJmXDaEa9UajhECsKf26pKFNnx0fFmltKQqkQz/t8wUIB
- LfuPSUFXPUorSUAdVjghZTuaTmTZn+W9+5HsNS8roK58Kx+WpWHWiz1+1YQzR5h85Nr/
- vHkrNY6J8EoWp+vrwxF3qfvFTFlgn7V50dqluu6eZevmZW5FHyBC/yMSL+DlkROzPf/s
- Ydmw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1781045615; x=1781650415;
- h=content-transfer-encoding:in-reply-to:content-language:from
- :references:to:subject:user-agent:mime-version:date:message-id
- :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=Bix95w6wyKbo5l8Fq3BebeqByC+zcspubXm/BONPVs4=;
- b=TqAHRgPjKhCK3p56eJAqtygrgbBbaSbnJed2iP+Rg8m7bxNRsp8ZcQIgjCgxedMB55
- a5MHRSXMTZpOlh5ApmtlvNuFWvEQuRXkgFuVqPT1dDQbLApymWV9L7XIjfWYjBxxuNky
- zFSFDy+7WnXNOQMqS5EFttzFZfoJP7JvsHXG8jsMgsDcu717Z3AlBxdj5DXehoelTkO0
- Bl9DpNw0mXXi2zvxxSgKX+hwQKCTFl+OgAF0P7FMdQnC7Og5WxbqzaixF+BdayxZWyWi
- aYOapdvASFxW1zqCko/hpS5SJ9vEzeHLe282M1zFcYEU5zkocaW0N6Jfh2KSycCbsNnA
- 8FsQ==
-X-Gm-Message-State: AOJu0Yz06xbm2+EvPYOr2206mGvBboDYNPID/1sP1Qc2qmJ3jOwMBO1d
- e+6nmnJmwDU+OlhIxBLW4UsvDu+z7xCVSqB2vSsRTnev7osyUDlU/Shx/rjM8B8VUDWozBQ2vcy
- b5Z3G9fM=
-X-Gm-Gg: Acq92OEt2Xi4jCZ6cbX3XyUm9nASSeGXD9qJFpdxNfCPnff00Ta1gX7XWYb1Hn4i9AC
- WQDOzgYa+pvvtk0Jq4lPi4E/EYCwqrzsVN638zs5z5szKuV9qW7WZAI4mIjbRNZpfmNZTShFJIa
- yXt9XVgK5LBpaEdFztAoQgGPWbDAhwnBImeUPXNfNcpg0Sq9g111KbPQQ2O7pVDCLiea+XQN5yy
- NbrfT6O/MExRNsvj0YN2LctBavr4+Zl5Eole/vcQGJSSxYjKyTyZHez9muanD+STLDghY4qRkgZ
- PaMNNvTdx9j3j+GC68aDkvhFXqYG8GcDETSGxVrOtcMUpAkApq6pj3QhuVsMm4YbjDRg1be2No4
- ZjKv1inuKgEpJz6eQcVL2JYZNtgUlzpCOdu6AD2mPzqqa7vgZDlTGHI0P5b320PIm2l1tDiL7wm
- D+NWUhuAW1NK+CvgY19dGbusf1EGsB4iTUeigX1s2I4hKmvSJODQWJ1EFJhg==
-X-Received: by 2002:a05:6a00:4295:b0:842:5bc8:ccf7 with SMTP id
- d2e1a72fcca58-842b685cee9mr16476600b3a.34.1781045615000; 
- Tue, 09 Jun 2026 15:53:35 -0700 (PDT)
-Received: from [192.168.0.4] ([71.212.142.33])
- by smtp.gmail.com with ESMTPSA id
- d2e1a72fcca58-842828e21c8sm26870216b3a.49.2026.06.09.15.53.34
- for <qemu-devel@nongnu.org>
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 09 Jun 2026 15:53:34 -0700 (PDT)
-Message-ID: <c293bc4b-930c-4514-ae97-9b83f5224adf@linaro.org>
-Date: Tue, 9 Jun 2026 15:53:32 -0700
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1wX5La-0006Xb-SW
+ for qemu-devel@nongnu.org; Tue, 09 Jun 2026 18:55:06 -0400
+Received: from imap1.dmz-prg2.suse.org (unknown [10.150.64.97])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+ (No client certificate requested)
+ by smtp-out1.suse.de (Postfix) with ESMTPS id 910FA6AC61;
+ Tue,  9 Jun 2026 22:54:59 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
+ t=1781045699; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=tmOmtU20WMisHai1MMUA/+8tbBa5Hfp+d5ToolWIypw=;
+ b=GGex46HWkeDjiCQSNMhY6ecefhTRUV/iltU/4X/ReeM7sQWGa3tCRWxGqWJGyx8WyIv5lx
+ OVqrHexuiiM3DChcs6xs1xis7Ez6xoX7o/B8IJhO6+YrUnSTJCaweRNPY/ofkg1DZEPijJ
+ HDBl5mhVO78WM2xqTH8L6wjwTv/zwe0=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
+ s=susede2_ed25519; t=1781045699;
+ h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=tmOmtU20WMisHai1MMUA/+8tbBa5Hfp+d5ToolWIypw=;
+ b=gS2rqV5BA9l0IwlAI8GAZgf0qvYjGDXBIL5yFmltVLtgH2/BDhGE+kjtb2CN9Yo42LeKbO
+ hUgOE9PL0PpLvZBw==
+Authentication-Results: smtp-out1.suse.de;
+	none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
+ t=1781045699; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=tmOmtU20WMisHai1MMUA/+8tbBa5Hfp+d5ToolWIypw=;
+ b=GGex46HWkeDjiCQSNMhY6ecefhTRUV/iltU/4X/ReeM7sQWGa3tCRWxGqWJGyx8WyIv5lx
+ OVqrHexuiiM3DChcs6xs1xis7Ez6xoX7o/B8IJhO6+YrUnSTJCaweRNPY/ofkg1DZEPijJ
+ HDBl5mhVO78WM2xqTH8L6wjwTv/zwe0=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
+ s=susede2_ed25519; t=1781045699;
+ h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=tmOmtU20WMisHai1MMUA/+8tbBa5Hfp+d5ToolWIypw=;
+ b=gS2rqV5BA9l0IwlAI8GAZgf0qvYjGDXBIL5yFmltVLtgH2/BDhGE+kjtb2CN9Yo42LeKbO
+ hUgOE9PL0PpLvZBw==
+Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+ (No client certificate requested)
+ by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id 2637D779A7;
+ Tue,  9 Jun 2026 22:54:58 +0000 (UTC)
+Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
+ by imap1.dmz-prg2.suse.org with ESMTPSA id X2nXOcKZKGppOAAAD6G6ig
+ (envelope-from <farosas@suse.de>); Tue, 09 Jun 2026 22:54:58 +0000
+From: Fabiano Rosas <farosas@suse.de>
+To: Peter Xu <peterx@redhat.com>, qemu-devel@nongnu.org
+Cc: qemu-arm@nongnu.org, =?utf-8?Q?C=C3=A9dric?= Le Goater <clg@redhat.com>,
+ Philippe
+ =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@mailo.com>, =?utf-8?Q?Daniel_P_=2E?=
+ =?utf-8?Q?_Berrang=C3=A9?=
+ <berrange@redhat.com>, Vladimir Sementsov-Ogievskiy
+ <vsementsov@yandex-team.ru>, Peter Maydell <peter.maydell@linaro.org>, "Dr
+ . David Alan Gilbert" <dave@treblig.org>, Eric Blake <eblake@redhat.com>,
+ Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>, Peter Xu
+ <peterx@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>, Kevin Wolf
+ <kwolf@redhat.com>, Sana Sharma <sansshar@redhat.com>, =?utf-8?Q?Marc-And?=
+ =?utf-8?Q?r=C3=A9?= Lureau
+ <marcandre.lureau@redhat.com>, Juraj Marcin <jmarcin@redhat.com>,
+ qemu-rust@nongnu.org, Markus Armbruster <armbru@redhat.com>, Mark
+ Cave-Ayland <mark.caveayland@nutanix.com>
+Subject: Re: [PATCH v2 00/10] migration/qom: Remove TYPE_DEVICE dependency
+ on migration object
+In-Reply-To: <20260609172514.2037645-1-peterx@redhat.com>
+References: <20260609172514.2037645-1-peterx@redhat.com>
+Date: Tue, 09 Jun 2026 19:54:56 -0300
+Message-ID: <87jys75npb.fsf@suse.de>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] linux-user: Implement /proc/cpuinfo for ppc cpus
-To: qemu-devel@nongnu.org
-References: <20260609220929.83951-1-deller@kernel.org>
-From: Richard Henderson <richard.henderson@linaro.org>
-Content-Language: en-US
-In-Reply-To: <20260609220929.83951-1-deller@kernel.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::435;
- envelope-from=richard.henderson@linaro.org; helo=mail-pf1-x435.google.com
+Content-Type: text/plain
+X-Spamd-Result: default: False [-4.30 / 50.00]; BAYES_HAM(-3.00)[100.00%];
+ NEURAL_HAM_LONG(-1.00)[-1.000];
+ NEURAL_HAM_SHORT(-0.20)[-1.000]; MIME_GOOD(-0.10)[text/plain];
+ ARC_NA(0.00)[]; MISSING_XM_UA(0.00)[]; RCVD_TLS_ALL(0.00)[];
+ MIME_TRACE(0.00)[0:+]; RCVD_VIA_SMTP_AUTH(0.00)[];
+ RCPT_COUNT_TWELVE(0.00)[20];
+ FUZZY_RATELIMITED(0.00)[rspamd.com];
+ MID_RHS_MATCH_FROM(0.00)[];
+ DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
+ FROM_HAS_DN(0.00)[]; TO_DN_SOME(0.00)[];
+ FROM_EQ_ENVFROM(0.00)[]; TO_MATCH_ENVRCPT_ALL(0.00)[];
+ RCVD_COUNT_TWO(0.00)[2];
+ DBL_BLOCKED_OPENRESOLVER(0.00)[gitlab.com:url, suse.de:email, suse.de:mid,
+ imap1.dmz-prg2.suse.org:helo]
+Received-SPF: pass client-ip=2a07:de40:b251:101:10:150:64:1;
+ envelope-from=farosas@suse.de; helo=smtp-out1.suse.de
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -103,69 +128,229 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 6/9/26 15:09, Helge Deller wrote:
-> From: Helge Deller <deller@gmx.de>
-> 
-> I've tried to mimic what I've seen on two debian porterboxes (ppc64 and
-> ppc64le), which are running via KVM/QEMU. I assume the model type of
-> pSeries and such doesn't make much sense for some older ppc chips, so
-> any better suggestions here are welcome.
-> 
-> Signed-off-by: Helge Deller <deller@gmx.de>
-> Cc: qemu-ppc@nongnu.org
-> ---
->   linux-user/ppc/target_proc.h | 38 +++++++++++++++++++++++++++++++++++-
->   1 file changed, 37 insertions(+), 1 deletion(-)
-> 
-> diff --git a/linux-user/ppc/target_proc.h b/linux-user/ppc/target_proc.h
-> index 43fe29ca72..fa965c0e69 100644
-> --- a/linux-user/ppc/target_proc.h
-> +++ b/linux-user/ppc/target_proc.h
-> @@ -1 +1,37 @@
-> -/* No target-specific /proc support */
-> +/*
-> + * ppc specific proc functions for linux-user
-> + *
-> + * SPDX-License-Identifier: GPL-2.0-or-later
-> + */
-> +#ifndef PPC_TARGET_PROC_H
-> +#define PPC_TARGET_PROC_H
-> +
-> +static int open_cpuinfo(CPUArchState *cpu_env, int fd)
-> +{
-> +    int i, num_cpus;
-> +
-> +    PowerPCCPUClass *pcc = POWERPC_CPU_GET_CLASS(env_cpu(cpu_env));
-> +    DeviceClass *dc = DEVICE_CLASS(ppc_cpu_get_family_class(pcc));
-> +
-> +    num_cpus = sysconf(_SC_NPROCESSORS_ONLN);
-> +    for (i = 0; i < num_cpus; i++) {
-> +        dprintf(fd, "processor:\t: %d\n", i);
-> +        dprintf(fd, "cpu:\t\t: %s%s\n",
+Peter Xu <peterx@redhat.com> writes:
 
-There are extra ':' here.  Should be
+> CI: https://gitlab.com/peterx/qemu/-/pipelines/2588717620
+>     (two irrelevant failures due to no runner)
+>
+> rfc: https://lore.kernel.org/r/20251209162857.857593-1-peterx@redhat.com
+> v1:  https://lore.kernel.org/r/20260604231118.1584889-1-peterx@redhat.com
+>
+> This v2 is a full rewrite of v1, changelog doesn't apply.
+>
+> This version majorly addressed the concern in v1 having object API exported
+> in qdev files. Instead of trying to expose qdev properties, this patchset
+> switched migration object to use the object property API to add properties.
+>
+> Not all QOM facilities are ready for it, there're a few prior patches to
+> improve QOM API to achieve it.
+>
+> The major concept that this series introduces that does not exist
+> previously is the default value mechanisms for object properties (rather
+> than object class properties).  Here migration object will rely on that to
+> set default values.
+>
+> Patch 1:   A cleanup to use OBJECT_DECLARE_SIMPLE_TYPE for migration
+> Patch 2-4: Qdev changes needed for the transition
+> Patch 5-9: Improve QOM API to prepare for the property switch
+> Patch 10:  Switch migration object to use TYPE_OBJECT and object props
+>
+> Comments welcomed, thanks.
+>
+> Peter Xu (10):
+>   migration: Use OBJECT_DECLARE_SIMPLE_TYPE
+>   qdev: Export global_props()
+>   qdev: Introduce DEFINE_PROP_*_NODEFAULT for bool/uint32
+>   hw/arm: Use nodefault version of qdev props when not needed
+>   qom: Create object-property-ptr.[ch]
+>   qom: Add object_property_add_bool_ptr()
+>   qom: Add object_property_add_size_ptr()
+>   qom: Add object_property_add_*_ptr_def()
+>   qom: Allow default values for instance properties
+>   migration: Switch to TYPE_OBJECT with object properties
+>
+>  include/hw/core/qdev-properties.h |   7 +
+>  include/qom/object-property-ptr.h | 162 +++++++++
+>  include/qom/object.h              |  99 +-----
+>  migration/migration.h             |   9 +-
+>  migration/options.h               |   8 +-
+>  hw/arm/bcm2836.c                  |   3 +-
+>  hw/core/qdev-properties.c         |   2 +-
+>  migration/migration.c             |  42 ++-
+>  migration/options.c               | 526 +++++++++++++++++++-----------
+>  qom/object-property-ptr.c         | 394 ++++++++++++++++++++++
+>  qom/object.c                      | 266 ++-------------
+>  target/arm/cpu64.c                |   3 +-
+>  qom/meson.build                   |   1 +
+>  rust/bindings/hwcore-sys/lib.rs   |   2 +-
+>  14 files changed, 957 insertions(+), 567 deletions(-)
+>  create mode 100644 include/qom/object-property-ptr.h
+>  create mode 100644 qom/object-property-ptr.c
 
-processor	:
-cpu		:
+Hi,
 
-not
+After we discussed your v1 I started playing with this in parallel and
+stumbled into pretty much all of the issues this series resolves. Nice
+work!
 
-processor:	:
-cpu:		:
+I applied a patch [0] on top of this series to allow using the
+command-line to create the migration object. It can set all (most)
+options with -object migration,id=mig1,key=val,...
 
-> +                    dc->desc,
-> +                    pcc->insns_flags & PPC_ALTIVEC ? ", altivec supported":"");
-> +        dprintf(fd, "clock\t\t: 3425.000000MHz\n");
+ $ ~/qemu-system-x86_64 -nodefaults -nographic -S \
+ -object migration,id=mig1,announce-initial=99,downtime-limit=99,multifd-channels=99,multifd-compression=zlib,multifd=on
+ ...
+ (qemu) info migrate_parameters
+ (qemu) info migrate_capabilities
+ ...
+ announce-initial: 99 ms
+ downtime-limit: 99 ms
+ multifd-channels: 99
+ multifd-compression: zlib
+ multifd: on
 
-Why hardcoded?  Is the clock not accessible to user-only?
+I'm not saying we should do that now. I just want to check with you to
+make sure we're not closing the door for future improvements:
+
+1) It seems the "help" option is tied to the class. Setting options
+work, but the help says otherwise:
+
+ $ ~/qemu-system-x86_64 -nographic -object migration,id=mig1,help                                                                            
+ There are no options for migration.
+
+2) user_creatable_add_qapi
+
+ The command line parsing goes through user_creatable_add_qapi() and
+ instantiates an object. Since migrate_params_init runs from inside
+ .instance_init, it cannot see any parameters that are set this way.
+
+ Moreover, the migration_object_init() call from vl.c will init a
+ second migration object.
+
+ In the patch below I have hacked the current_migration assignment to
+ first check if the object has already been created and use that
+ instead of creating a new one.
+
+ How does this work for normal objects? I suppose most of them have the
+ TYPE_DEVICE as a parent, so they're not hanging in the "objects"
+ container.
+
+3) TLS (of course)
+
+ With the patch below, setting TLS options from the cmdline asserts:
+ visit_start_alternate: Assertion `!(v->type & VISITOR_INPUT)' failed.
+ (just mentioning in case it can affect the design of this series)
+
+[0]
+-->8--
+From 8c6c0743f1659d9df45e80334e8dc5f068ff984e Mon Sep 17 00:00:00 2001
+From: Fabiano Rosas <farosas@suse.de>
+Date: Tue, 9 Jun 2026 16:00:21 -0300
+Subject: [PATCH] wip
+
+---
+ migration/migration.c | 11 ++++++++++-
+ migration/options.c   |  1 +
+ qapi/qom.json         | 29 +++++++++++++++++++++++++++++
+ 3 files changed, 40 insertions(+), 1 deletion(-)
+
+diff --git a/migration/migration.c b/migration/migration.c
+index ae0c373549..22c8ced766 100644
+--- a/migration/migration.c
++++ b/migration/migration.c
+@@ -297,7 +297,16 @@ void migration_object_init(void)
+ {
+     /* This can only be called once. */
+     assert(!current_migration);
+-    current_migration = MIGRATION(object_new(TYPE_MIGRATION));
++
++    Object *root = object_get_objects_root();
++    ObjectProperty *prop = g_hash_table_lookup(root->properties, "mig1");
++
++    if (prop->opaque) {
++        current_migration = prop->opaque;
++        object_ref(current_migration);
++    } else {
++        current_migration = MIGRATION(object_new(TYPE_MIGRATION));
++    }
+ 
+     /*
+      * Init the migrate incoming object as well no matter whether
+diff --git a/migration/options.c b/migration/options.c
+index 1cc99382d3..88f02c45a1 100644
+--- a/migration/options.c
++++ b/migration/options.c
+@@ -21,6 +21,7 @@
+ #include "qapi/qapi-visit-migration.h"
+ #include "qapi/qmp/qerror.h"
+ #include "qobject/qnull.h"
++#include "qom/object_interfaces.h"
+ #include "system/runstate.h"
+ #include "migration/colo.h"
+ #include "migration/cpr.h"
+diff --git a/qapi/qom.json b/qapi/qom.json
+index dd45ac1087..fe7dd4673c 100644
+--- a/qapi/qom.json
++++ b/qapi/qom.json
+@@ -8,6 +8,11 @@
+ { 'include': 'block-core.json' }
+ { 'include': 'common.json' }
+ { 'include': 'crypto.json' }
++# FIXME: this requires --disable-tools due to:
++# /usr/bin/ld.bfd: libqemuutil.a.p/meson-generated_.._qapi_qapi-commands-migration.c.o:
++# in function `qmp_marshal_query_migr: qemu/build/qapi/qapi-commands-migration.c:48:(.text+0x181c):
++# undefined reference to `qmp_query_migrate'
++{ 'include': 'migration.json' }
+ 
+ ##
+ # ***********************
+@@ -1187,6 +1192,28 @@
+   'data': { '*cpu-affinity': ['uint16'],
+             '*node-affinity': ['uint16'] } }
+ 
++
++##
++# @MigProperties:
++#
++# Properties for migration objects.
++#
++# @multifd: this is a capability and therefore is not part of
++#     MigrationParameters yet (WIP).  (default: 0)
++#
++# @store-global-state: this is a compat property and therefore is not
++#     part of MigrationParameters.  It's probably best to keep it like
++#     this so we don't have to deal with previously impossible
++#     scenarios if the user tries to set it via set-migrate  (default:
++#     0)
++#
++# Since: 11.1
++##
++{ 'struct': 'MigProperties',
++  'base': 'MigrationParameters',
++  'data': { '*multifd': 'bool',
++            '*store-global-state': 'bool' } }
++
+ ##
+ # @ObjectType:
+ #
+@@ -1237,6 +1264,7 @@
+     'memory-backend-ram',
+     { 'name': 'memory-backend-shm',
+       'if': 'CONFIG_POSIX' },
++    'migration',
+     'pef-guest',
+     { 'name': 'pr-manager-helper',
+       'if': 'CONFIG_LINUX' },
+@@ -1315,6 +1343,7 @@
+       'memory-backend-ram':         'MemoryBackendProperties',
+       'memory-backend-shm':         { 'type': 'MemoryBackendShmProperties',
+                                       'if': 'CONFIG_POSIX' },
++      'migration':                    'MigProperties',
+       'pr-manager-helper':          { 'type': 'PrManagerHelperProperties',
+                                       'if': 'CONFIG_LINUX' },
+       'qtest':                      'QtestProperties',
+-- 
+2.53.0
 
 
-> +        dprintf(fd, "revision\t: %d.%d (pvr %04x %04x)\n\n",
-> +                    (pcc->pvr >> 8) & 0x0f, pcc->pvr & 0x0f,
-> +                    pcc->pvr >> 16, pcc->pvr & 0xffff);
-
-There's quite a bit of decode of pvr for maj.min in the kernel.
-
-
-r~
 
