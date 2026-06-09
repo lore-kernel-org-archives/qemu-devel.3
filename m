@@ -4,42 +4,42 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A3ACBCD8CA8
-	for <qemu-devel@archiver.kernel.org>; Tue,  9 Jun 2026 09:55:33 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 83D57CD8CA4
+	for <qemu-devel@archiver.kernel.org>; Tue,  9 Jun 2026 09:55:34 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wWtB5-0006zq-Fe; Tue, 09 Jun 2026 05:55:23 -0400
+	id 1wWtB2-0006wh-Oc; Tue, 09 Jun 2026 05:55:20 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <gaosong@loongson.cn>)
- id 1wWtAm-0006lQ-CZ
- for qemu-devel@nongnu.org; Tue, 09 Jun 2026 05:55:05 -0400
+ id 1wWtAk-0006lL-Eb
+ for qemu-devel@nongnu.org; Tue, 09 Jun 2026 05:55:04 -0400
 Received: from mail.loongson.cn ([114.242.206.163])
  by eggs.gnu.org with esmtp (Exim 4.90_1)
- (envelope-from <gaosong@loongson.cn>) id 1wWtAh-0004tC-3P
- for qemu-devel@nongnu.org; Tue, 09 Jun 2026 05:55:03 -0400
+ (envelope-from <gaosong@loongson.cn>) id 1wWtAg-0004v9-Ht
+ for qemu-devel@nongnu.org; Tue, 09 Jun 2026 05:55:02 -0400
 Received: from loongson.cn (unknown [10.2.5.185])
- by gateway (Coremail) with SMTP id _____8Cx3enq4idqdDUSAA--.48336S3;
- Tue, 09 Jun 2026 17:54:50 +0800 (CST)
+ by gateway (Coremail) with SMTP id _____8BxDurt4idqhTUSAA--.47726S3;
+ Tue, 09 Jun 2026 17:54:53 +0800 (CST)
 Received: from localhost.localdomain (unknown [10.2.5.185])
- by front1 (Coremail) with SMTP id qMiowJDxSMHg4idqJrGgAA--.28412S3;
- Tue, 09 Jun 2026 17:54:49 +0800 (CST)
+ by front1 (Coremail) with SMTP id qMiowJDxSMHg4idqJrGgAA--.28412S11;
+ Tue, 09 Jun 2026 17:54:53 +0800 (CST)
 From: Song Gao <gaosong@loongson.cn>
 To: qemu-devel@nongnu.org
 Cc: Bibo Mao <maobibo@loongson.cn>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@mailo.com>
-Subject: [PULL 01/14] target/loongarch: Add new field curState in
- CPULoongArchState
-Date: Tue,  9 Jun 2026 17:28:11 +0800
-Message-Id: <20260609092824.227250-2-gaosong@loongson.cn>
+Subject: [PULL 09/14] target/loongarch: Use sys_state in op_helper.c when
+ accessing CSR registers
+Date: Tue,  9 Jun 2026 17:28:19 +0800
+Message-Id: <20260609092824.227250-10-gaosong@loongson.cn>
 X-Mailer: git-send-email 2.39.1
 In-Reply-To: <20260609092824.227250-1-gaosong@loongson.cn>
 References: <20260609092824.227250-1-gaosong@loongson.cn>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-X-CM-TRANSID: qMiowJDxSMHg4idqJrGgAA--.28412S3
+X-CM-TRANSID: qMiowJDxSMHg4idqJrGgAA--.28412S11
 X-CM-SenderInfo: 5jdr20tqj6z05rqj20fqof0/
 X-Coremail-Antispam: 1Uk129KBjDUn29KB7ZKAUJUUUUU529EdanIXcx71UUUUU7KY7
  ZEXasCq-sGcSsGvfJ3UbIjqfuFe4nvWSU5nxnvy29KBjDU0xBIdaVrnUUvcSsGvfC2Kfnx
@@ -68,77 +68,102 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Bibo Mao <maobibo@loongson.cn>
 
-New field sys_state is added in structure CPULoongArchState, it points
-to CPULoongArchState itself now.
+When accessing CSR registers in file op_helper.c, use sys_state rather
+than env. There is no function change.
 
 Signed-off-by: Bibo Mao <maobibo@loongson.cn>
 Reviewed-by: Philippe Mathieu-Daudé <philmd@mailo.com>
 Tested-by: Song Gao <gaosong@loongson.cn>
-Message-ID: <20260605082552.175336-2-maobibo@loongson.cn>
+Message-ID: <20260605083756.175598-1-maobibo@loongson.cn>
 Signed-off-by: Song Gao <gaosong@loongson.cn>
 ---
- target/loongarch/cpu.c |  2 ++
- target/loongarch/cpu.h | 13 +++++++++++++
- 2 files changed, 15 insertions(+)
+ target/loongarch/tcg/op_helper.c | 45 ++++++++++++++++++--------------
+ 1 file changed, 26 insertions(+), 19 deletions(-)
 
-diff --git a/target/loongarch/cpu.c b/target/loongarch/cpu.c
-index 8f277f7696..13de1722de 100644
---- a/target/loongarch/cpu.c
-+++ b/target/loongarch/cpu.c
-@@ -278,6 +278,7 @@ static void loongarch_la464_initfn(Object *obj)
-     uint32_t data = 0, field;
-     int i;
- 
-+    set_sys_state(env, env);
-     for (i = 0; i < 21; i++) {
-         env->cpucfg[i] = 0x0;
-     }
-@@ -406,6 +407,7 @@ static void loongarch_la132_initfn(Object *obj)
-     uint32_t data = 0;
-     int i;
- 
-+    set_sys_state(env, env);
-     for (i = 0; i < 21; i++) {
-         env->cpucfg[i] = 0x0;
-     }
-diff --git a/target/loongarch/cpu.h b/target/loongarch/cpu.h
-index 096d778928..b087548295 100644
---- a/target/loongarch/cpu.h
-+++ b/target/loongarch/cpu.h
-@@ -317,6 +317,8 @@ typedef struct  LoongArchBT {
- #define CPU_VENDOR_LOONGSON   "Loongson"
- #define CPU_MODEL_3A5000      "3A5000"
- #define CPU_MODEL_1C101       "1C101"
-+struct CPUArchState;
-+typedef struct CPUArchState CPUSysState;
- 
- typedef struct CPUArchState {
-     uint64_t gpr[32];
-@@ -415,6 +417,7 @@ typedef struct CPUArchState {
-     AddressSpace *address_space_iocsr;
-     uint32_t mp_state;
- #endif
-+    CPUSysState *sys_state;
- } CPULoongArchState;
- 
- typedef struct LoongArchCPUTopo {
-@@ -481,6 +484,16 @@ struct LoongArchCPUClass {
- #define MMU_USER_IDX     MMU_PLV_USER
- #define MMU_DA_IDX       4
- 
-+static inline CPUSysState *env_sys(CPULoongArchState *env)
-+{
-+    return env->sys_state;
-+}
-+
-+static inline void set_sys_state(CPULoongArchState *env, CPUSysState *sys)
-+{
-+    env->sys_state = sys;
-+}
-+
- static inline bool is_la64(CPULoongArchState *env)
+diff --git a/target/loongarch/tcg/op_helper.c b/target/loongarch/tcg/op_helper.c
+index 16ac0d43bc..e63ac66daa 100644
+--- a/target/loongarch/tcg/op_helper.c
++++ b/target/loongarch/tcg/op_helper.c
+@@ -46,16 +46,20 @@ target_ulong helper_bitswap(target_ulong v)
+ /* loongarch assert op */
+ void helper_asrtle_d(CPULoongArchState *env, target_ulong rj, target_ulong rk)
  {
-     return FIELD_EX32(env->cpucfg[1], CPUCFG1, ARCH) == CPUCFG1_ARCH_LA64;
++    CPUSysState *sys = env_sys(env);
++
+     if (rj > rk) {
+-        env->CSR_BADV = rj;
++        sys->CSR_BADV = rj;
+         do_raise_exception(env, EXCCODE_BCE, GETPC());
+     }
+ }
+ 
+ void helper_asrtgt_d(CPULoongArchState *env, target_ulong rj, target_ulong rk)
+ {
++    CPUSysState *sys = env_sys(env);
++
+     if (rj <= rk) {
+-        env->CSR_BADV = rj;
++        sys->CSR_BADV = rj;
+         do_raise_exception(env, EXCCODE_BCE, GETPC());
+     }
+ }
+@@ -91,9 +95,10 @@ uint64_t helper_rdtime_d(CPULoongArchState *env)
+ #else
+     uint64_t plv;
+     LoongArchCPU *cpu = env_archcpu(env);
++    CPUSysState *sys = env_sys(env);
+ 
+-    plv = FIELD_EX64(env->CSR_CRMD, CSR_CRMD, PLV);
+-    if (extract64(env->CSR_MISC, R_CSR_MISC_DRDTL_SHIFT + plv, 1)) {
++    plv = FIELD_EX64(sys->CSR_CRMD, CSR_CRMD, PLV);
++    if (extract64(sys->CSR_MISC, R_CSR_MISC_DRDTL_SHIFT + plv, 1)) {
+         do_raise_exception(env, EXCCODE_IPE, GETPC());
+     }
+ 
+@@ -105,26 +110,28 @@ uint64_t helper_rdtime_d(CPULoongArchState *env)
+ void helper_ertn(CPULoongArchState *env)
+ {
+     uint64_t csr_pplv, csr_pie;
+-    if (FIELD_EX64(env->CSR_TLBRERA, CSR_TLBRERA, ISTLBR)) {
+-        csr_pplv = FIELD_EX64(env->CSR_TLBRPRMD, CSR_TLBRPRMD, PPLV);
+-        csr_pie = FIELD_EX64(env->CSR_TLBRPRMD, CSR_TLBRPRMD, PIE);
+-
+-        env->CSR_TLBRERA = FIELD_DP64(env->CSR_TLBRERA, CSR_TLBRERA, ISTLBR, 0);
+-        env->CSR_CRMD = FIELD_DP64(env->CSR_CRMD, CSR_CRMD, DA, 0);
+-        env->CSR_CRMD = FIELD_DP64(env->CSR_CRMD, CSR_CRMD, PG, 1);
+-        set_pc(env, env->CSR_TLBRERA);
++    CPUSysState *sys = env_sys(env);
++
++    if (FIELD_EX64(sys->CSR_TLBRERA, CSR_TLBRERA, ISTLBR)) {
++        csr_pplv = FIELD_EX64(sys->CSR_TLBRPRMD, CSR_TLBRPRMD, PPLV);
++        csr_pie = FIELD_EX64(sys->CSR_TLBRPRMD, CSR_TLBRPRMD, PIE);
++
++        sys->CSR_TLBRERA = FIELD_DP64(sys->CSR_TLBRERA, CSR_TLBRERA, ISTLBR, 0);
++        sys->CSR_CRMD = FIELD_DP64(sys->CSR_CRMD, CSR_CRMD, DA, 0);
++        sys->CSR_CRMD = FIELD_DP64(sys->CSR_CRMD, CSR_CRMD, PG, 1);
++        set_pc(env, sys->CSR_TLBRERA);
+         qemu_log_mask(CPU_LOG_INT, "%s: TLBRERA " TARGET_FMT_lx "\n",
+-                      __func__, env->CSR_TLBRERA);
++                      __func__, sys->CSR_TLBRERA);
+     } else {
+-        csr_pplv = FIELD_EX64(env->CSR_PRMD, CSR_PRMD, PPLV);
+-        csr_pie = FIELD_EX64(env->CSR_PRMD, CSR_PRMD, PIE);
++        csr_pplv = FIELD_EX64(sys->CSR_PRMD, CSR_PRMD, PPLV);
++        csr_pie = FIELD_EX64(sys->CSR_PRMD, CSR_PRMD, PIE);
+ 
+-        set_pc(env, env->CSR_ERA);
++        set_pc(env, sys->CSR_ERA);
+         qemu_log_mask(CPU_LOG_INT, "%s: ERA " TARGET_FMT_lx "\n",
+-                      __func__, env->CSR_ERA);
++                      __func__, sys->CSR_ERA);
+     }
+-    env->CSR_CRMD = FIELD_DP64(env->CSR_CRMD, CSR_CRMD, PLV, csr_pplv);
+-    env->CSR_CRMD = FIELD_DP64(env->CSR_CRMD, CSR_CRMD, IE, csr_pie);
++    sys->CSR_CRMD = FIELD_DP64(sys->CSR_CRMD, CSR_CRMD, PLV, csr_pplv);
++    sys->CSR_CRMD = FIELD_DP64(sys->CSR_CRMD, CSR_CRMD, IE, csr_pie);
+ 
+     env->lladdr = 1;
+ }
 -- 
 2.54.0
 
