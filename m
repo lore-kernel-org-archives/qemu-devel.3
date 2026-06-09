@@ -4,83 +4,83 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 64AD7CD8CB9
-	for <qemu-devel@archiver.kernel.org>; Tue,  9 Jun 2026 17:26:07 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id ADDC1CD98C7
+	for <qemu-devel@archiver.kernel.org>; Tue,  9 Jun 2026 17:26:15 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wX0Cp-0007WB-AZ; Tue, 09 Jun 2026 13:25:41 -0400
+	id 1wX0D1-0007dr-UD; Tue, 09 Jun 2026 13:25:52 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1wX0Cd-0007Kw-Lh
- for qemu-devel@nongnu.org; Tue, 09 Jun 2026 13:25:29 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1wX0Cr-0007Xf-F6
+ for qemu-devel@nongnu.org; Tue, 09 Jun 2026 13:25:43 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1wX0Ca-0001p7-4e
- for qemu-devel@nongnu.org; Tue, 09 Jun 2026 13:25:25 -0400
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1wX0Cn-0001uN-3R
+ for qemu-devel@nongnu.org; Tue, 09 Jun 2026 13:25:40 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1781025922;
+ s=mimecast20190719; t=1781025935;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ to:to:cc:cc:mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=aVVARmJUwhep7oD37d2RCWN4JLy97YXNlME0a8arUGM=;
- b=Z01QdNG+wea6xfS2B3ZgWSRjIIym0Vfb89BPTFaf+zJ3K6DmQjhKcc4kRK76M2JcomK9oK
- 0IdL0hm16JtTobpBJc6NE/5IodR4tkts3vDw6niQlzv2sDWbyWVTxM/578xQtF7P6CboTm
- dM9yu1KJZ8BTGWIOokoNrR9BY5/nx4U=
-Received: from mail-qt1-f200.google.com (mail-qt1-f200.google.com
- [209.85.160.200]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=jwLp2AvTjapZW+/ErJH1EShXN1MPuQYDgyT1L5wHR6o=;
+ b=iZNdObHyQZPrVYzuCJR+k9MtDo4r3GkAUCabumDH2zNw8jB7GbplAXjVwA0VbPIDKuVEAk
+ qvBXTl443XmAhG439GZgz3T2D4baqsWOCKcR+SkQsKSKOnczxSCrYLwE0k6aobtT15uxMX
+ w07k1xyl5nNiMvJoxzKpmmUjKmMs178=
+Received: from mail-qv1-f71.google.com (mail-qv1-f71.google.com
+ [209.85.219.71]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-615-Mn3wGF-3M4eQafikD8vjMQ-1; Tue, 09 Jun 2026 13:25:21 -0400
-X-MC-Unique: Mn3wGF-3M4eQafikD8vjMQ-1
-X-Mimecast-MFC-AGG-ID: Mn3wGF-3M4eQafikD8vjMQ_1781025920
-Received: by mail-qt1-f200.google.com with SMTP id
- d75a77b69052e-51760f997fdso172884531cf.2
- for <qemu-devel@nongnu.org>; Tue, 09 Jun 2026 10:25:21 -0700 (PDT)
+ us-mta-6-m9XVQS3JPBu5BhyWvEKSwA-1; Tue, 09 Jun 2026 13:25:34 -0400
+X-MC-Unique: m9XVQS3JPBu5BhyWvEKSwA-1
+X-Mimecast-MFC-AGG-ID: m9XVQS3JPBu5BhyWvEKSwA_1781025933
+Received: by mail-qv1-f71.google.com with SMTP id
+ 6a1803df08f44-8cceb5a9686so70703076d6.0
+ for <qemu-devel@nongnu.org>; Tue, 09 Jun 2026 10:25:34 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1781025920; x=1781630720; darn=nongnu.org;
+ d=redhat.com; s=google; t=1781025933; x=1781630733; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=aVVARmJUwhep7oD37d2RCWN4JLy97YXNlME0a8arUGM=;
- b=jF0NpfXHA9T2ym3Cd1t/5cJ7w9+3nIVgghZosb0zGV5GHM8/GFbQDqhGk7UrmI1b9S
- rle+snf7xlwBAUyxz9pZKLXrVD4JQybYG0vKUFy+7jIgJtU9CUdRh1zLAODrJ6tVIEfT
- leNF3TmcNNq11cMQ9KDMJPNRYdZBVdjeNqsLHnPiA32b8h2K1DstM4SaVaqU9iiEtOY8
- 8Xg97b6/Me5un/93sL+/n+edVcsofu3tsUIks4wApv3l75uHffPp2K61nHeFeiwfXbfQ
- i+57yB0kZ3QFtsE+v/d73lz07bAt/Sl9mrkJ0hQNu09MoCzi5pRIFtmuFzJyfJOd3n++
- DugA==
+ bh=jwLp2AvTjapZW+/ErJH1EShXN1MPuQYDgyT1L5wHR6o=;
+ b=PlgwPHrnURK7QiaTwQwLu/kkNTvER11jsM7x3cHzd10vdl71CLv/+T6RoHLP7/1wde
+ MlMMIBSzogBDXleJ3TKmRyC4bh9P1B4hXTnwcm+zHGQtI4NUBFz5DrofeNBuE3quknGQ
+ T0gdypUDs0B6jpiN9z4duUPC8DxoHYlNYFE/B8t358gM9dyZ2EzYewWfXX3xBvj/UhnL
+ UxYV2Cv/Qd8I8ifKqCMqPCP4npOjm/kIKBOT+8SWWeHZ+JZfziQC3QGdDhp+EAaJdtxC
+ OCyE+DEFNqoh8PAmtJhIcX4Oav6qzKK/PytvbVya7qAdOhk4rCsZ4gwNiWzNAwl8BJmz
+ eYHg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1781025920; x=1781630720;
+ d=1e100.net; s=20251104; t=1781025933; x=1781630733;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to;
- bh=aVVARmJUwhep7oD37d2RCWN4JLy97YXNlME0a8arUGM=;
- b=pngTpbqpyCPdVO1/ihDrdTicn3rK8Eh/jgm4O8caFGlUxzhcKG97sd7/0dfBaSLcpU
- OHYqZC1K17fQXqcVXSWMNL4/Quab7RCZfz7rtnQucVxCeMd0pFsKyP9ybiyv4xqL2rRf
- L9MTc2CzLa59/PBs5/WYYiUgCaXIxtsL+VkTvsrg2LkVbM3cogc4WJPll3v/FoltKBJP
- KQIXFSjI/t1z7YSqll2Pa+U13qqHTeuGFkqekE0+OghBuVvUVV0wd+rHyE0qfU32hDRd
- f3H9ZRFFFkKizOyjJk4AUE/l9RuE5iHhCodYo3jYO1lNoTYYr0Oni7EqyRM3DHiUBRc+
- Ou7w==
-X-Gm-Message-State: AOJu0YxCSp/sGnAIb+TCWhFKeWxf00S9TBhJOvfE/uhA+PujthCRlLS7
- +NvC/IXtGTcLf9jmuPt89iwOAwka/onCoFMq21s4IWHhVw9YhN2Fe9Ka9LtNBdlA8K8G/9NWquv
- 8DlnvthfDI2/ab1g5O4fsAYtpXWfrjd88m57TF2/NpitjgmLAKnRBINT76XCA5wtfo+oR+DPDvj
- 7JNFxMl9YfLwCQW+TMuu0nDnS7rDlujXF+yk2XfA==
-X-Gm-Gg: Acq92OF3BOfithApu3Ok7AfTRJFYafUMuqKD4gkyDPt8DXq00sNlsMePWqQMYE8VsIr
- bgmJ+EGABdAsfhoV/tM5GCvjAdXrY/d8fHdwurxE3sg3rw8AliIO6nBeEY5bF5nqtD3eE8XVKsD
- AVn8ev/2C6GSafqxHEbD+1hZV5hDsOb6io7It0aQwsrMmM5VkSMqtIKCQ0azVXmafe7mlnJoJ/U
- gGr3poTFrUnd82LYTw6LkRcUQlNpO/LrBaWVjwoQeQ76wkSJ0AGAUoAWMd4aDw+13jer+vRZY72
- Di3UVp7aof7BaB7edq5a31Ti22bHaR0y+eL7ZySEh8pZCSehMPNBymlf8YH6LF8vPjKBdrP1FNm
- gsmhqfHgFogY4Q3M2fpkzles=
-X-Received: by 2002:a05:622a:47cf:b0:517:2c1e:8b6 with SMTP id
- d75a77b69052e-51795c66183mr278467501cf.38.1781025920373; 
- Tue, 09 Jun 2026 10:25:20 -0700 (PDT)
-X-Received: by 2002:a05:622a:47cf:b0:517:2c1e:8b6 with SMTP id
- d75a77b69052e-51795c66183mr278466621cf.38.1781025919664; 
- Tue, 09 Jun 2026 10:25:19 -0700 (PDT)
+ bh=jwLp2AvTjapZW+/ErJH1EShXN1MPuQYDgyT1L5wHR6o=;
+ b=Md2CfvNcXw8A8iF+7Da+w+HiBp25EfKvWkJHyP4CSAoX9gj3sc65x/1tIssKYoUBLv
+ 5+BAMnzro1ZG7mwM6ldGrvMjt5mTLDsvQTjQFdA2wG8lv8TV85apMmtO0HSbxTOfQfxK
+ LQ8lkjAWC0Bek/LCQSkO/slSAep7x+9y67ih2kXGHGy/HIUo8LaxSh/HQlC4xVQbE2QS
+ M4YlvOYeRjPFl0BGKxsmIXmD1PTRaQgrQ2dKvrK5A0MWL08hNZutVgSoGO7H8ByA7HIy
+ uEM8SSlYgJXwnSrhbGNA1Wt2ZFYiyzg2zBOErOBg1N/vVMZuC+QsZb2lYQg2FwtPp2ra
+ gT0g==
+X-Gm-Message-State: AOJu0Yzubw/X1emMmPjtZbpIvStr9k9CUQr92VFWsNO7oiqrIYXTZyox
+ d033nZ7j/Cv9E59RlRBGShm7Zf/atqgyoIOd3AKyAWtH2HFPILEPU2zWaj0xWm1spIitqpp67aj
+ /j0FmJ616VpBhfsFE8/42Z98iuOHnex/gtExbtG9p0IghjKY8hDI0aQPPWsBrd7odUjAUNyZPeD
+ CKNPtJxSDTHTVkUqdv9wTOscPlRjS6ycQRST5bsA==
+X-Gm-Gg: Acq92OFLVE6wJQQ3dZ9o7ICQ9vAH/L5k1zkf3Iqpf1iV64sgyFre2CSsFTxrczvczHl
+ fyVd8zVUUi3vx2kcd5jlch/+dfpKy12kcFPw06Za3SEzCeC6lR9rvYcHvHE6OnanrMg7YrnBrz0
+ 83dp3WaXmzbc4Xx5VAdIi209AN3GKGw8uwlg2rxFpgpTPoQF06ZSTfaTlaErYQ/7SJo608lmcbv
+ voCUeW2idc8FtIWhHqkuoY97SDxvyWLQKRX77mTf29eVwHE/3QySLUXkvCEYSIsRp11s7w0dTXX
+ XCyvN05v6YCBPgPV5GvYkxvId8q1Wd9NwbTqI2M/7+Jd5rcNLpmBmeKNTE49RhRZBQdTHykL2pk
+ fFi1p/wwyCOLW41W6RGZsae0=
+X-Received: by 2002:a05:622a:460d:b0:517:a9ef:ce23 with SMTP id
+ d75a77b69052e-517a9efd0c9mr162127391cf.16.1781025933335; 
+ Tue, 09 Jun 2026 10:25:33 -0700 (PDT)
+X-Received: by 2002:a05:622a:460d:b0:517:a9ef:ce23 with SMTP id
+ d75a77b69052e-517a9efd0c9mr162126561cf.16.1781025932578; 
+ Tue, 09 Jun 2026 10:25:32 -0700 (PDT)
 Received: from x1.com ([142.189.10.167]) by smtp.gmail.com with ESMTPSA id
- d75a77b69052e-51775da2c56sm187524711cf.21.2026.06.09.10.25.17
+ d75a77b69052e-51775da2c56sm187524711cf.21.2026.06.09.10.25.26
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 09 Jun 2026 10:25:19 -0700 (PDT)
+ Tue, 09 Jun 2026 10:25:27 -0700 (PDT)
 From: Peter Xu <peterx@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: qemu-arm@nongnu.org,
@@ -99,24 +99,23 @@ Cc: qemu-arm@nongnu.org,
  Juraj Marcin <jmarcin@redhat.com>, qemu-rust@nongnu.org,
  Markus Armbruster <armbru@redhat.com>,
  Mark Cave-Ayland <mark.caveayland@nutanix.com>
-Subject: [PATCH v2 01/10] migration: Use OBJECT_DECLARE_SIMPLE_TYPE
-Date: Tue,  9 Jun 2026 13:25:05 -0400
-Message-ID: <20260609172514.2037645-2-peterx@redhat.com>
+Subject: [PATCH v2 06/10] qom: Add object_property_add_bool_ptr()
+Date: Tue,  9 Jun 2026 13:25:10 -0400
+Message-ID: <20260609172514.2037645-7-peterx@redhat.com>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260609172514.2037645-1-peterx@redhat.com>
 References: <20260609172514.2037645-1-peterx@redhat.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=peterx@redhat.com;
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=peterx@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -24
 X-Spam_score: -2.5
 X-Spam_bar: --
 X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.445,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -132,75 +131,97 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Migration object's class has nothing special, switch to the newly
-introduced macro.
+Add a helper to set qom property via a bool pointer.
 
-Suggested-by: Daniel P. Berrangé <berrange@redhat.com>
 Signed-off-by: Peter Xu <peterx@redhat.com>
 ---
- migration/migration.h | 9 +--------
- migration/migration.c | 7 +++----
- 2 files changed, 4 insertions(+), 12 deletions(-)
+ include/qom/object-property-ptr.h | 15 ++++++++++++
+ qom/object-property-ptr.c         | 39 +++++++++++++++++++++++++++++++
+ 2 files changed, 54 insertions(+)
 
-diff --git a/migration/migration.h b/migration/migration.h
-index 841f49b215..293ad60e07 100644
---- a/migration/migration.h
-+++ b/migration/migration.h
-@@ -263,14 +263,7 @@ void fill_destination_postcopy_migration_info(MigrationInfo *info);
+diff --git a/include/qom/object-property-ptr.h b/include/qom/object-property-ptr.h
+index 6066c377fb..9cd8600094 100644
+--- a/include/qom/object-property-ptr.h
++++ b/include/qom/object-property-ptr.h
+@@ -16,6 +16,21 @@ typedef enum {
+     OBJ_PROP_FLAG_READWRITE = (OBJ_PROP_FLAG_READ | OBJ_PROP_FLAG_WRITE),
+ } ObjectPropertyFlags;
  
- #define TYPE_MIGRATION "migration"
++/**
++ * object_property_add_bool_ptr:
++ * @obj: the object to add a property to
++ * @name: the name of the property
++ * @v: pointer to value
++ * @flags: bitwise-or'd ObjectPropertyFlags
++ *
++ * Add a property of type 'bool' to the object.
++ *
++ * Returns: The newly added property on success, or %NULL on failure.
++ */
++ObjectProperty *
++object_property_add_bool_ptr(Object *obj, const char *name, const bool *v,
++                             ObjectPropertyFlags flags);
++
+ /**
+  * object_property_add_uint8_ptr:
+  * @obj: the object to add a property to
+diff --git a/qom/object-property-ptr.c b/qom/object-property-ptr.c
+index 02c01ed7f0..49f223da7b 100644
+--- a/qom/object-property-ptr.c
++++ b/qom/object-property-ptr.c
+@@ -7,6 +7,26 @@
+ #include "qom/object.h"
+ #include "qapi/visitor.h"
  
--typedef struct MigrationClass MigrationClass;
--DECLARE_OBJ_CHECKERS(MigrationState, MigrationClass,
--                     MIGRATION_OBJ, TYPE_MIGRATION)
--
--struct MigrationClass {
--    /*< private >*/
--    DeviceClass parent_class;
--};
-+OBJECT_DECLARE_SIMPLE_TYPE(MigrationState, MIGRATION);
- 
- struct MigrationState {
-     /*< private >*/
-diff --git a/migration/migration.c b/migration/migration.c
-index 074d3f2c69..278cad502a 100644
---- a/migration/migration.c
-+++ b/migration/migration.c
-@@ -297,7 +297,7 @@ void migration_object_init(void)
++static void property_get_bool_ptr(Object *obj, Visitor *v, const char *name,
++                                  void *opaque, Error **errp)
++{
++    bool value = *(bool *)opaque;
++    visit_type_bool(v, name, &value, errp);
++}
++
++static void property_set_bool_ptr(Object *obj, Visitor *v, const char *name,
++                                  void *opaque, Error **errp)
++{
++    bool *field = opaque;
++    bool value;
++
++    if (!visit_type_bool(v, name, &value, errp)) {
++        return;
++    }
++
++    *field = value;
++}
++
+ static void property_get_uint8_ptr(Object *obj, Visitor *v, const char *name,
+                                    void *opaque, Error **errp)
  {
-     /* This can only be called once. */
-     assert(!current_migration);
--    current_migration = MIGRATION_OBJ(object_new(TYPE_MIGRATION));
-+    current_migration = MIGRATION(object_new(TYPE_MIGRATION));
+@@ -87,6 +107,25 @@ static void property_set_uint64_ptr(Object *obj, Visitor *v, const char *name,
+     *field = value;
+ }
  
-     /*
-      * Init the migrate incoming object as well no matter whether
-@@ -3975,7 +3975,7 @@ static void migration_class_init(ObjectClass *klass, const void *data)
- 
- static void migration_instance_finalize(Object *obj)
- {
--    MigrationState *ms = MIGRATION_OBJ(obj);
-+    MigrationState *ms = MIGRATION(obj);
- 
-     qapi_free_BitmapMigrationNodeAliasList(ms->parameters.block_bitmap_mapping);
-     qapi_free_strList(ms->parameters.cpr_exec_command);
-@@ -3993,7 +3993,7 @@ static void migration_instance_finalize(Object *obj)
- 
- static void migration_instance_init(Object *obj)
- {
--    MigrationState *ms = MIGRATION_OBJ(obj);
-+    MigrationState *ms = MIGRATION(obj);
- 
-     ms->state = MIGRATION_STATUS_NONE;
-     ms->mbps = -1;
-@@ -4040,7 +4040,6 @@ static const TypeInfo migration_type = {
-      */
-     .parent = TYPE_DEVICE,
-     .class_init = migration_class_init,
--    .class_size = sizeof(MigrationClass),
-     .instance_size = sizeof(MigrationState),
-     .instance_init = migration_instance_init,
-     .instance_finalize = migration_instance_finalize,
++ObjectProperty *
++object_property_add_bool_ptr(Object *obj, const char *name,
++                             const bool *v, ObjectPropertyFlags flags)
++{
++    ObjectPropertyAccessor *getter = NULL;
++    ObjectPropertyAccessor *setter = NULL;
++
++    if ((flags & OBJ_PROP_FLAG_READ) == OBJ_PROP_FLAG_READ) {
++        getter = property_get_bool_ptr;
++    }
++
++    if ((flags & OBJ_PROP_FLAG_WRITE) == OBJ_PROP_FLAG_WRITE) {
++        setter = property_set_bool_ptr;
++    }
++
++    return object_property_add(obj, name, "bool",
++                               getter, setter, NULL, (void *)v);
++}
++
+ ObjectProperty *
+ object_property_add_uint8_ptr(Object *obj, const char *name,
+                               const uint8_t *v,
 -- 
 2.53.0
 
