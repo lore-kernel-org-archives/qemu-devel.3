@@ -4,128 +4,133 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 84410CD8CB2
-	for <qemu-devel@archiver.kernel.org>; Tue,  9 Jun 2026 18:57:08 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C1E46CD8CB2
+	for <qemu-devel@archiver.kernel.org>; Tue,  9 Jun 2026 18:58:31 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wX1cn-0006e8-30; Tue, 09 Jun 2026 14:56:33 -0400
+	id 1wX1eO-0007fO-MI; Tue, 09 Jun 2026 14:58:12 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <manos.pitsidianakis@linaro.org>)
- id 1wX1cf-0006cd-5H
- for qemu-devel@nongnu.org; Tue, 09 Jun 2026 14:56:25 -0400
-Received: from mail-wm1-x331.google.com ([2a00:1450:4864:20::331])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <manos.pitsidianakis@linaro.org>)
- id 1wX1cc-0007ux-S9
- for qemu-devel@nongnu.org; Tue, 09 Jun 2026 14:56:24 -0400
-Received: by mail-wm1-x331.google.com with SMTP id
- 5b1f17b1804b1-490ac10e337so51302735e9.3
- for <qemu-devel@nongnu.org>; Tue, 09 Jun 2026 11:56:21 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1781031380; cv=none;
+ (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1wX1eN-0007fD-GT
+ for qemu-devel@nongnu.org; Tue, 09 Jun 2026 14:58:11 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1wX1eL-000088-Dt
+ for qemu-devel@nongnu.org; Tue, 09 Jun 2026 14:58:11 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1781031487;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=bUz4z9xJm0sVo+7VV1gF6jdAjVdm+QQcpxU667lJY5w=;
+ b=HoTaI0ddgyIZsGq4WdedeGUDFHIkIti1E3eFjJW3Nic+YK86bUTfT7B3cIRXdfHPosY0p2
+ 8S/+FxW7PDUssD2r45rXZYE1m7akj5PFMzsC/ZwkzZZVj09866TbWaEaNqhGT5RkJHzUlB
+ a3NOjlU/6ir1InOkry+Y53wSl9H9asU=
+Received: from mail-qt1-f198.google.com (mail-qt1-f198.google.com
+ [209.85.160.198]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-589-MTeGtQqAM-Cl3J9dUq23Dg-1; Tue, 09 Jun 2026 14:58:04 -0400
+X-MC-Unique: MTeGtQqAM-Cl3J9dUq23Dg-1
+X-Mimecast-MFC-AGG-ID: MTeGtQqAM-Cl3J9dUq23Dg_1781031482
+Received: by mail-qt1-f198.google.com with SMTP id
+ d75a77b69052e-517c65c019bso36505111cf.0
+ for <qemu-devel@nongnu.org>; Tue, 09 Jun 2026 11:58:03 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1781031482; cv=none;
  d=google.com; s=arc-20240605;
- b=WvPiEIn3nStCznB15UTVbptjI5FDrbgQcwToVK6U4Da7HUZLmKLOJio1ZOK+QnmGBM
- DKM/FKoWJuYLcESm0V3XwrxDH/uo6n1wD7RfHCVEm7mcR4hE9QoepGVKf98BJyGXeycQ
- phpomUds5RWGOdCF+X4ePssXlo4qKJ0X5GYAMX3QBURdtWPwhi1pl8y7Xpr4rJKGRwRl
- gAvCobMkDnjPFqX3G4CoYFG1/Xs3MN6/F88r5yYlPf3lzwLYodSsooGRhgK3nFyHti8i
- 5j5GU9Qkv1DLONM7hZqUN07/AZx4G0JeA8yAGKkiOPjdwwfsH+fbtIWyhm/mMLd8dcjP
- xH9w==
+ b=QQ27BzPpYvb7HhshKR57qSvUOdbL9afmmF239jETlnogbO0MDAMyF53ZW2GTqcnGUY
+ FJ6STuFq18o7ETqZ2UKE8oxEFYL+zfBYMSStKPnIGGJGD0f0EFdRkzzcVKYUUdOxR/t1
+ asMDhKKKEbN5y1jrVxGTAMFbFjQADsiVVAxEa5eJ49YnF7WBFJzKT/fJ9mhi3BJMFOCE
+ cFCwVloMYSDc6HhGTdlVmy0QSJ2WY2Kv/Mgtsu7E0ZXybe/gT/Saqwgu7teVViwjNDe5
+ YzdMzesnBbQ+W6+E9TeMniSj1TWm/p+B0BBKPqoqTsaoJDgrVDZLVLSI9aeTG00OvYmW
+ nhWw==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
  s=arc-20240605; 
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:dkim-signature;
- bh=9jUp3iBPByccIet06cfjPUK09NvRBqzcZDFuywo9mHE=;
- fh=ROWYArGxYRxVBKQEsMYQsoqlDmWXiqpISk5IiH3K8ZU=;
- b=fHZhmDq87FmnhqUW8ijgkvr4UdCW/7wlIpMIwwP/53TQXT3vZfJvsr3IS0+Bhm/pmx
- L+jYJC8kBPK3mT79OfEydmG5TzTr62R3Lo9MsGnOYpXcafIpVhWoh9oUtZggcQ1oE2xm
- n0N5tKSv4vndKUNSASNeOeYzDvXpVTT+CXbBW+p1S1uNItxT5oDqQ0Lm3Xdj2JGLGoba
- /A9KGlnRMfgddNo3xbDt8mvogUXpGM1eiWzXpOuGcyqKvwwopls/HnkiZQXjvDvZEEpu
- ePvEFHF5+Gbqs8rHhPPfx+EkUrHft+9T1q/9Q1AxMqFi22UHnTpyuNMY21ggymac876w
- nWEg==; darn=nongnu.org
+ bh=bUz4z9xJm0sVo+7VV1gF6jdAjVdm+QQcpxU667lJY5w=;
+ fh=Ohhlf+kwivs7jyQv9LUTHNY6pEAdnCK0uS2X5z9ZBdU=;
+ b=aPfa7Tk0rOPyULDaz5/d4WGIUkDGa5u+dHY+tohFuwc6wtei9mpmBINfAGr6ZAAWyR
+ cTCkpveAGOa7qFFKcmx/wc1zauTfcw0UggbNEO0F0KyvKKcmCke0gjXuxLI9zmFKw8zv
+ 3GueFDYMtk/U5O/DVYYXl3RHSXdwK73rIzKhkB8Ow8suo+Zvm6zjMe7dScOP46EzzqYN
+ XFaA1DKosUgIigrLe0NQ7IeL35lN8GaJ9HXY1e3gwokIy9dojiObHrgTagVMdMPVG3qT
+ y/DtChhBvacgtEi7iF8f3lXWJhIlN2nucg99BHueNIaS6CE91Jk2+fDojSePfZtdeH99
+ auMQ==; darn=nongnu.org
 ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1781031380; x=1781636180; darn=nongnu.org;
+ d=redhat.com; s=google; t=1781031482; x=1781636282; darn=nongnu.org;
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:from:to:cc:subject:date
  :message-id:reply-to;
- bh=9jUp3iBPByccIet06cfjPUK09NvRBqzcZDFuywo9mHE=;
- b=MVIr9CrIzf44tV2pQQtJwXaDi8AY8euuAS23npmr1HGJpv8X4RvrZAE/33IOsOfwt9
- X/360dZ29RvQUV4BaAfcrwTDzOKBfFqhQxuSZHRFdoOd3WV46FDc9ce22miIFpSOg04m
- LogBYzcYKwwLT+dOWxLtvqUYwX6HLKGaXWxMZKYgVaI555WVmCrcdSK78wfS04vfRYlC
- NKNHir9pjpnsriaJb+CyIxxe1ZeCjlXhHVwcJGAwSsgc0TDKdtQq/HY0Cp2r4t4g7WTd
- hPBQTEdV2pxVxFEhQAn9FqvrzGeDsmeWyavhv3NL7423LWtV+6mhS2MVyFTbzG+W8tzf
- HEjw==
+ bh=bUz4z9xJm0sVo+7VV1gF6jdAjVdm+QQcpxU667lJY5w=;
+ b=ZadTtLF9070uG2YE+S9AfW3+8JTwucNOQvgXFI8r9Z/IaBGYXsfEZOQHf2MYeKosdo
+ CTFyPobyPqr6IWpv9Z2EimvU9nGwv/Lgt1mtVd2+8O6NyApHRaSUUPBDo4+27uwzKDwl
+ ScZjo1rgnSpXtOAJyk2oeLMckMYxEcAdUJEfbUBtIQv7ATCrHHGdr1AtqBAkyqMjAwnS
+ kQmKlvEuvvUsQLd5FndLIubIGKPeU3dadGi6NoQIMo9tiYhu6bjWKB7mUee3w5SWRt60
+ Otd8Y59EnxIFLZ1CR9mMklJogtzTS8iH2O/dNlmSWeI38JlNI2k3ODFzrKnBaP1yinzq
+ xnMQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1781031380; x=1781636180;
+ d=1e100.net; s=20251104; t=1781031482; x=1781636282;
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to;
- bh=9jUp3iBPByccIet06cfjPUK09NvRBqzcZDFuywo9mHE=;
- b=LryQjQHIHofRrgx9STdbWqnZPLIUbLX4jPyg1j7Q4k6mikiV9vkMXEt/cDPrTpXRWg
- 8G68wsLKwUEFzBvegFgdesE/ckJa9TDNQzQEBykkkqB8CRzCSrd0m+ywQR5O+6n7uI2x
- RZk/+TjaZfXqfmdyf2JdxFMZBdb60KfCD1sTClNwpZPJIuYn87a300WxiOkliqqvGCmY
- 17JQQXMhNbwXJyJaEn3ec8Ft8ZqyV6C4PBl92Hp4bmmiRIuUKRDdr70/e/7XPk0GJ06s
- 6CQASj2e/U+IavX6xaMStHM2wwj74R2CCNdAcIageqd+bK3bKdD3RQxDjhlJ0ZjFyT8i
- pGqQ==
-X-Forwarded-Encrypted: i=1;
- AFNElJ+maoRRxfKPpIVq/oKPvsJjxfpuJqD9sCyMLdKldjrG76MHcGN8bi+dbykucSRTNpBZ8uiouHtekEmC@nongnu.org
-X-Gm-Message-State: AOJu0YxvYLVkqm80C6SHwcxRKMl50hMS6xtQ5v7asiQC5tTVWxXRhoio
- TYviswFVtKzAyVVojkHb5faGlrT5kfJC/N6KiV8UVqukG/T+8ZntssFMi93fS9VHvVf9eP6P11Q
- vb70l5ziC7sC0ifhYrlixDyH0VhBwqC56wxFf5IPnKQ==
-X-Gm-Gg: Acq92OF3FH8aMnE/1SJ7iyM7NumW1X0WGulanOX/67OsleIGDvZEOY+X1SFHvyoiep5
- flDw903kD/G+YxaG56Nf2IVF4o0QtNW6VDtDFeUAaCta4TvihYm/Opsq+HWyJjiyGVx0RaWuufD
- E3VML/Tcvj0W3i+z9Zay/TpdVBJkZqOh43BxnNHvq2rUCwUAuC9LOkbvVDpQy0jYahGwqZC7D8W
- 9WmEJpP6KCmwaEc8MTcyk56D5NvL7W5Ns6ckcPWKAciUALG0cuXOHKUe8AhTxQXVBTdR0TtPS63
- 5NChcvpkW1UAqQWHNSUX1uA2Ytpb3BVHs+ajx2esDQ7WE69AJyt+zQYJZi4r
-X-Received: by 2002:a05:600c:609b:b0:490:5466:8576 with SMTP id
- 5b1f17b1804b1-490c259854emr346044955e9.1.1781031380105; Tue, 09 Jun 2026
- 11:56:20 -0700 (PDT)
+ bh=bUz4z9xJm0sVo+7VV1gF6jdAjVdm+QQcpxU667lJY5w=;
+ b=kpUY9pFpV65tMA45ZW2SDzRSyBPgpDw5ntIdTRZ/QeJJ+8BiWDvROcE99WgJ8wEnhF
+ R5uA3wuibaH+6iqhiwgJYfFhKEPoEQHp2bV7N8pS+IritciWDw7P+okVH/Q3ppFPFCAD
+ xoatteSldXu1QhBoZwoi+zDA6F2l1Nty/aKFZ2rqLP9SE4OxhHksKUi9/sSwrX0I+GiR
+ 2Eof9ze16Db8ZTotXisB/eQ8pDamKnw57kaOAeVHqGowZfxvUlTMgIns0a9O/5nc+WaQ
+ tUL/ERYxdYhA/tc50J5eGcVUNE7ZAwOlXsKr+ldCOzR++h+G2xo3/nQ4yAqdTqD/ZStT
+ humg==
+X-Gm-Message-State: AOJu0YxEOiKvOCe7lbeyYOKkxEPty5okkLrFkukqePE6EO8csUYG6O37
+ UOYd9Hv3jxE4pf1FGDT+MfnwDZtxQQwAqdKY6XprHJAfz9Mw7DuiH9o8zBQ/y6ol1dCUJv3KwfF
+ lN1jm50AUIOtOU8Bf5PeSob10XMUYzgKSmVumNoiAKOuCKOz8CPAJHPKH228j0op+hZCAQ/d7Fv
+ o5guBjcR6+OwKVE2US3UgVOKWyqZSia0k=
+X-Gm-Gg: Acq92OEuwOUaZyK/A1aFwQx47/ZkA3jw3NDFxVPEy5ICVBhAB7YsLu9yDHHZYoca+EV
+ c65SoGeVe6QRc0FlNKmnxjCwXUeqG4EL+/Q3lma21DGKJshJoDDTevLy7dmSB0GFFxOmgHq8URH
+ BF6apq0iS7vwbcOubEc1/pu/05kmKR/sqJI+BZvN5JrtqXj5eHfUHe/rA4aJx5gftqozEEvD28T
+ IyAWwIB9w+SpAM5RhYBvlVPNPk0rhmYdTX2Y7z0ed4+fkXu
+X-Received: by 2002:ac8:598d:0:b0:517:5bc1:e1f0 with SMTP id
+ d75a77b69052e-517959957a0mr324623001cf.0.1781031482325; 
+ Tue, 09 Jun 2026 11:58:02 -0700 (PDT)
+X-Received: by 2002:ac8:598d:0:b0:517:5bc1:e1f0 with SMTP id
+ d75a77b69052e-517959957a0mr324622421cf.0.1781031481868; Tue, 09 Jun 2026
+ 11:58:01 -0700 (PDT)
 MIME-Version: 1.0
-References: <874ijtz038.fsf@draig.linaro.org>
- <CADSE00+RdBUhFVBDSXtVd1J5SaccqWy+RBxqnxuLKUYcitFMPw@mail.gmail.com>
- <20260601083628-mutt-send-email-mst@kernel.org>
- <CADSE00+kRnEC08LLVu6H065u2KaxBm-KnSN_8y6+964-FLbJMA@mail.gmail.com>
- <20260601090953-mutt-send-email-mst@kernel.org>
- <CAJSP0QV4W=5MJsSGggACv-tqxDtiieKc0YzEn8t-R=RD94KJaQ@mail.gmail.com>
- <CADSE00+ziHc8W2FqNT-aJU0Lt4sZ=NfQLc65m16vpT++pZM+xQ@mail.gmail.com>
- <20260601151815.GC411459@fedora>
- <20260601160352-mutt-send-email-mst@kernel.org>
- <CACzuRyxedVMHNGkRf7AVyPWUTMgBMa6_DBnSHn+V6H7wN7XzWw@mail.gmail.com>
- <20260604162853.GC115597@fedora>
- <CAJSP0QXR6MyqoE1Uh-X7DzsOabbbN69TUyxf8r6ghUDCQnrP=w@mail.gmail.com>
-In-Reply-To: <CAJSP0QXR6MyqoE1Uh-X7DzsOabbbN69TUyxf8r6ghUDCQnrP=w@mail.gmail.com>
-From: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
-Date: Tue, 9 Jun 2026 21:55:53 +0300
-X-Gm-Features: AVVi8Cez7LrzR4UFcqFbMTZkIa6rqxqltEz6H7-ttHlixGU_miD6q2bZoE9M5-g
-Message-ID: <CAAjaMXb8tnDuBBgVkVk31AYaWKpWhas7APWtSyjcrMFMYc26jg@mail.gmail.com>
-Subject: Re: Where should the vhost-user specification live?
-To: Stefan Hajnoczi <stefanha@gmail.com>
-Cc: "Michael S. Tsirkin" <mst@redhat.com>, Dorinda Bassey <dbassey@redhat.com>,
- Albert Esteve <aesteve@redhat.com>,
- =?UTF-8?B?QWxleCBCZW5uw6ll?= <alex.bennee@linaro.org>, 
- qemu-devel <qemu-devel@nongnu.org>, virtio-comment@lists.linux.dev, 
- dev@lists.cloudhypervisor.org, rust-vmm@lists.opendev.org, 
- Stefano Garzarella <sgarzare@redhat.com>,
- Demi Marie Obenour <demi@invisiblethingslab.com>, 
- Alyssa Ross <hi@alyssa.is>, Mark Burton <MBURTON@qti.qualcomm.com>, 
- Matti Moell <matti@qti.qualcomm.com>, Viresh Kumar <viresh.kumar@linaro.org>, 
- Sergio Lopez <slp@redhat.com>, Vishwanath Seshagiri <vishs@meta.com>,
- Rob Bradford <rbradford@meta.com>, 
- Zhengyu Zhao <zhaozhengyu@bytedance.com>,
- "Jorge E. Moreira" <jemoreira@google.com>, 
- Stefan Hajnoczi <stefanha@redhat.com>
+References: <20260603032201.993015-1-jsnow@redhat.com>
+ <20260603032201.993015-13-jsnow@redhat.com>
+ <874ijboms6.fsf@pond.sub.org>
+In-Reply-To: <874ijboms6.fsf@pond.sub.org>
+From: John Snow <jsnow@redhat.com>
+Date: Tue, 9 Jun 2026 14:57:51 -0400
+X-Gm-Features: AVVi8CcmL5RcjMHoqmKCDwgyIh7PYamDdMOzM2lSQJRccGXaYGBtPFhkdtejFOs
+Message-ID: <CAFn=p-YJg_KhMf3vHZYP-4F1FVsA-MOE=ydRAmUv5srdVteuwQ@mail.gmail.com>
+Subject: Re: [PATCH v3 12/16] qapi/docs: add "Intro" section parsing
+To: Markus Armbruster <armbru@redhat.com>
+Cc: qemu-devel@nongnu.org, Ani Sinha <anisinha@redhat.com>, 
+ Michael Roth <michael.roth@amd.com>, Igor Mammedov <imammedo@redhat.com>, 
+ Peter Maydell <peter.maydell@linaro.org>, Eric Blake <eblake@redhat.com>, 
+ =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@mailo.com>, 
+ Mauro Carvalho Chehab <mchehab+huawei@kernel.org>,
+ "Michael S. Tsirkin" <mst@redhat.com>, 
+ =?UTF-8?B?TWFyYy1BbmRyw6kgTHVyZWF1?= <marcandre.lureau@redhat.com>, 
+ Paolo Bonzini <pbonzini@redhat.com>,
+ Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>, 
+ Richard Henderson <richard.henderson@linaro.org>,
+ Gerd Hoffmann <kraxel@redhat.com>, 
+ =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>, 
+ linux-edac@vger.kernel.org, Cleber Rosa <crosa@redhat.com>
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::331;
- envelope-from=manos.pitsidianakis@linaro.org; helo=mail-wm1-x331.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=jsnow@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -24
+X-Spam_score: -2.5
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.445,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -141,142 +146,93 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, Jun 9, 2026 at 8:59=E2=80=AFPM Stefan Hajnoczi <stefanha@gmail.com>=
- wrote:
+On Tue, Jun 9, 2026 at 9:39=E2=80=AFAM Markus Armbruster <armbru@redhat.com=
+> wrote:
 >
-> On Thu, Jun 4, 2026 at 12:39=E2=80=AFPM Stefan Hajnoczi <stefanha@redhat.=
-com> wrote:
-> >
-> > On Tue, Jun 02, 2026 at 12:38:27PM +0200, Dorinda Bassey wrote:
-> > > Hi All,
-> > >
-> > > Following up on this discussion: Albert, Stefano and I are organizing
-> > > a BoF session on vhost-user for Linux Plumbers Conference, so this
-> > > thread is very timely.
-> > >
-> > > > I get a sense that this is about politics in the end. Do people fee=
-l
-> > > > they are not represented and would like to have more influence in t=
-he
-> > > > vhost-user spec?
-> > >
-> > > I think the core issue is that vhost-user has grown beyond just QEMU.
-> > > The spec is now implemented by rust-vmm, cloud-hypervisor, crosvm,
-> > > libkrun, and others. All of these projects depend on the spec as thei=
-r
-> > > source of truth for interoperability.
-> >
-> > vhost-user was always an effort spanning multiple projects - that is
-> > fundamentally the purpose of the vhost-user protocol - so it bothers me
-> > when it is framed this way. CrosVM implemented a vhost-user front-end
-> > years ago. Features have been added to the spec that are not used by
-> > QEMU because the spec is for all front-ends and back-ends and their
-> > different use cases, not just QEMU.
-> >
-> > I'm fine with moving the spec to a separate project if it makes
-> > day-to-day work easier, but it's not accurate to portray vhost-user and
-> > the work that has been done by people from many projects in this way.
-> >
-> > > There are also concrete technical friction points. Let me share some
-> > > examples from rust-vmm:
-> > >
-> > > rust-vmm SHMEM PR https://github.com/rust-vmm/vhost/pull/251
-> > > We had to wait for QEMU spec acceptance before merging the
-> > > implementation. The spec update was delayed with the comment
-> > > "should get picked for the next round" after QEMU freeze.
-> >
-> > I am happy to merge a vhost-user spec PR into qemu.git during the freez=
-e
-> > if other projects need the spec change.
-> >
-> > > rust-vmm PR https://github.com/rust-vmm/vhost/pull/339 : was
-> > > kept as draft "waiting for QEMU spec changes to be finalized."
-> > > It was eventually merged when they decided the spec was
-> > > "stable enough" even though QEMU hadn't finalized it yet,
-> > > which felt awkward.
-> >
-> > In this particular case the QEMU patch series could have been split int=
-o
-> > just the spec change and the QEMU implementation with a note in the
-> > cover letter requesting to merge the spec change right away. I don't
-> > think anything was fundamentally blocking the spec change, although
-> > maintainers might be skeptical about rushing something that is still
-> > work in progress. There was a lack of communication here.
-> >
-> > > When multiple independent implementations wait on one
-> > > project's release cycles, it raises the question of whether the
-> > > governance model matches the ecosystem reality.
-> >
-> > If the experience with QEMU's release cycle is the main point of
-> > friction, then that is easy to solve by merging spec changes even durin=
-g
-> > freeze.
+> John Snow <jsnow@redhat.com> writes:
 >
-> Hi Michael,
-> It has been a few days and I want to make sure we don't forget this
-> discussion since rust-vmm was inconvenienced by waiting on QEMU's
-> development cycle.
+> > Add parsing for explicit Intro section syntax.
+> >
+> > A side effect of this patch is that we will (currently) always create
+> > an empty Intro section, similar to how we used to have an empty Plain
+> > section. The tests are adjusted accordingly, rendered document output
+> > does not change at all.
+> >
+> > Signed-off-by: John Snow <jsnow@redhat.com>
+> > ---
+> >  docs/devel/qapi-code-gen.rst   | 16 +++++++---------
+> >  scripts/qapi/parser.py         |  4 ++--
+> >  tests/qapi-schema/doc-good.out | 18 ++++++++++++++++++
+> >  3 files changed, 27 insertions(+), 11 deletions(-)
+> >
+> > diff --git a/docs/devel/qapi-code-gen.rst b/docs/devel/qapi-code-gen.rs=
+t
+> > index 3a632b4a648..b1cc5b5f0db 100644
+> > --- a/docs/devel/qapi-code-gen.rst
+> > +++ b/docs/devel/qapi-code-gen.rst
+> > @@ -984,11 +984,11 @@ definition it documents.
+> >  When documentation is required (see pragma_ 'doc-required'), every
+> >  definition must have documentation.
+> >
+> > -Definition documentation starts with a line naming the definition,
+> > -followed by an optional overview, a description of each argument (for
+> > -commands and events), member (for structs and unions), branch (for
+> > -alternates), or value (for enums), a description of each feature (if
+> > -any), and finally optional tagged sections.
+> > +Definition documentation starts with a description naming the
+> > +definition with an optional indented overview, a description of each
+> > +argument (for commands and events), member (for structs and unions),
+> > +branch (for alternates), or value (for enums), a description of each
+> > +feature (if any), and finally optional tagged sections.
+> >
+> >  Descriptions start with '\@name:'.  The description text must be
+> >  indented like this::
 >
-> I'm not sure if anyone brought up this topic on qemu-devel and with
-> Michael before. As I mentioned in my reply, there are ways to avoid
-> blocking vhost-user spec changes when qemu.git is frozen:
->
-> The simplest approach is to keep merging vhost-user.rst changes during
-> freeze since it does not jeopardize the release or introduce
-> instability.
->
-> Another approach is for Michael to merge patches and publish his vhost
-> subsystem branch. This is a common approach that Linux and QEMU
-> sub-maintainers use to share merged work before it reaches the final
-> repo.
+> This works if we convert the entire schema in the same series.  I guess
+> that's the plan.  Is it?
 
-> As long as there is a guarantee that vhost-user.rst changes
-> merged on Michael's vhost branch are stable, front-end and back-end
-> implementers can rely on spec changes in Michael's tree without
-> waiting for qemu.git/master.
+I still plan to do it piecemeal: I will probably send everything out
+in a big series, but you will be able to cherry-pick and stage those
+patches individually as you feel they are ready. This way, modules
+that need further revisions don't hold up the entire series and v2,
+v3, etc won't email bomb all of creation just to fix an indent in a
+single module somewhere.
 
-I think this is the sanest and simplest solution. vhost-user.rst
-changes do not need to go to master, a guarantee that they will get
-submitted as a PR against master is enough.
+I think this documentation still covers it just fine: "an optional
+indented overview". Technically the things we haven't converted just
+omit that indented overview. Those overviews just remain as
+"plaintext".
+
+It's not perfect documentation, but the expected window where we have
+two competing systems should be quite small in the grand scheme, so I
+don't think it's worth writing docs to cover the technicalities of the
+transition.
+
+--js
 
 >
-> Moving vhost-user.rst to its own repo also solves this.
->
-> Any preferences?
->
-> Stefan
->
+> > @@ -1093,8 +1093,7 @@ Examples of complete definition documentation::
 > >
-> > >
-> > > > Why is the current system not neutral and how will the new system s=
-olve
-> > > > that?
-> > >
-> > > For example the virtio-spec has OASIS governance where changes
-> > > are proposed and merged independently of any implementation's release
-> > > cycle. Whether that's the right model for vhost-user is worth discuss=
-ing.
-> > >
-> > > > You bring up project neutrality and a model where Michael is no lon=
-ger
-> > > > the sole maintainer. It will be necessary to propose a concrete roa=
-dmap
-> > > > and also to explain the concerns about neutrality more so it's clea=
-r
-> > > > they won't be an issue anymore in the future system.
-> > >
-> > > You're right that we need a concrete roadmap before making changes.
-> > > More reason to discuss in the BoF - to work this out with the people
-> > > actually doing the work: you, Michael, Albert, and others who've been
-> > > deeply involved. Maybe in the end the solution might be to "improve
-> > > QEMU's process" (like Michael's submodule suggestion) rather than
-> > > "move the spec." or something else? that's what we need to figure out
-> > > together.
-> > >
-> > > Would folks here be interested in joining the discussion at Plumbers?
+> >   ##
+> >   # @BlockStats:
+> > - #
+> > - # Statistics of a virtual block device or a block backing device.
+> > + #     Statistics of a virtual block device or a block backing device.
+> >   #
+> >   # @device: If the stats are for a virtual block device, the name
+> >   #     corresponding to the virtual block device.
+> > @@ -1111,8 +1110,7 @@ Examples of complete definition documentation::
 > >
-> > Plumbers in October? How about scheduling a video call in the next few
-> > days instead of waiting. That will allow anyone to attend.
-> >
-> > Stefan
+> >   ##
+> >   # @query-blockstats:
+> > - #
+> > - # Query the @BlockStats for all virtual block devices.
+> > + #     Query the @BlockStats for all virtual block devices.
+> >   #
+> >   # @query-nodes: If true, the command will query all the block nodes
+> >   #     ... explain, explain ...
+>
+> [...]
+>
+
 
