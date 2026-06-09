@@ -4,114 +4,96 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 71BFACD98C5
-	for <qemu-devel@archiver.kernel.org>; Tue,  9 Jun 2026 15:44:55 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 764B6CD98C5
+	for <qemu-devel@archiver.kernel.org>; Tue,  9 Jun 2026 15:46:47 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wWycm-0008AE-Bi; Tue, 09 Jun 2026 11:44:20 -0400
+	id 1wWyf1-0000mt-Cx; Tue, 09 Jun 2026 11:46:39 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <zycai@linux.ibm.com>)
- id 1wWyck-00089g-Dy; Tue, 09 Jun 2026 11:44:18 -0400
-Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
+ (Exim 4.90_1) (envelope-from <alex@shazbot.org>) id 1wWyex-0000mV-B3
+ for qemu-devel@nongnu.org; Tue, 09 Jun 2026 11:46:37 -0400
+Received: from fout-a8-smtp.messagingengine.com ([103.168.172.151])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <zycai@linux.ibm.com>)
- id 1wWych-0001Sy-Cr; Tue, 09 Jun 2026 11:44:18 -0400
-Received: from pps.filterd (m0356517.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 6595ehIE2843554; Tue, 9 Jun 2026 15:44:10 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
- :content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=pp1; bh=64sp+0
- OuuzUNDiXTlTkfpeazuHZ91VeaXxCN+cn/8KQ=; b=Z8m1/GFyVBk7j36ROwJ3F0
- qeEG0F7GQ2glhJK7o3XdOxJwdXzgW/E4/Advwn0eMLatSraTJrFnurIPQ0Zx8w/k
- un+HLBde1202Q9uJRnQ6oR8/C0EV/yVyEIQ2cLSgtiSouGlqxS84k+WSGvEJtTGd
- +ZlhMRGrWUzbuLRs+L7ml3uYlYveGKJkgelVyFb7wtx5QszLFaMo3V+S+aGLUIT0
- zog4Dbmbt+Q5RHuFE+9+l24hTRo40yVxmvDPpGZaG3aIAoOBkCjJSmQGvD2gpfCf
- Jqej71qRK8jGbD0P4MemMYsSEr6yispksoazKBrFNO0cIuDkFz3VmS9hEv5V67bA
- ==
-Received: from ppma22.wdc07v.mail.ibm.com
- (5c.69.3da9.ip4.static.sl-reverse.com [169.61.105.92])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4emb95cyd9-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Tue, 09 Jun 2026 15:44:09 +0000 (GMT)
-Received: from pps.filterd (ppma22.wdc07v.mail.ibm.com [127.0.0.1])
- by ppma22.wdc07v.mail.ibm.com (8.18.1.7/8.18.1.7) with ESMTP id 659FYdXR001786;
- Tue, 9 Jun 2026 15:44:08 GMT
-Received: from smtprelay02.wdc07v.mail.ibm.com ([172.16.1.69])
- by ppma22.wdc07v.mail.ibm.com (PPS) with ESMTPS id 4emx8w2sdm-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Tue, 09 Jun 2026 15:44:08 +0000 (GMT)
-Received: from smtpav03.dal12v.mail.ibm.com (smtpav03.dal12v.mail.ibm.com
- [10.241.53.102])
- by smtprelay02.wdc07v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 659Fi7Aa13107930
- (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Tue, 9 Jun 2026 15:44:07 GMT
-Received: from smtpav03.dal12v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id EC51658056;
- Tue,  9 Jun 2026 15:44:06 +0000 (GMT)
-Received: from smtpav03.dal12v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id A9DC95803F;
- Tue,  9 Jun 2026 15:44:05 +0000 (GMT)
-Received: from [9.61.111.145] (unknown [9.61.111.145])
- by smtpav03.dal12v.mail.ibm.com (Postfix) with ESMTP;
- Tue,  9 Jun 2026 15:44:05 +0000 (GMT)
-Message-ID: <251df87f-e0d5-4897-94ce-34dbf3dadf53@linux.ibm.com>
-Date: Tue, 9 Jun 2026 11:44:05 -0400
+ (Exim 4.90_1) (envelope-from <alex@shazbot.org>) id 1wWyeu-0005iS-OM
+ for qemu-devel@nongnu.org; Tue, 09 Jun 2026 11:46:34 -0400
+Received: from phl-compute-03.internal (phl-compute-03.internal [10.202.2.43])
+ by mailfout.phl.internal (Postfix) with ESMTP id 12C33EC011C;
+ Tue,  9 Jun 2026 11:46:32 -0400 (EDT)
+Received: from phl-frontend-03 ([10.202.2.162])
+ by phl-compute-03.internal (MEProxy); Tue, 09 Jun 2026 11:46:32 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=shazbot.org; h=
+ cc:cc:content-transfer-encoding:content-type:content-type:date
+ :date:from:from:in-reply-to:in-reply-to:message-id:mime-version
+ :references:reply-to:subject:subject:to:to; s=fm3; t=1781019992;
+ x=1781106392; bh=kdVDBYV+UidCgposyXyUTghejeRgGoECwQS90mD2rRg=; b=
+ anqf7ohfn/irCn2pY2IyW+ApnqrL+PN3XeWy5k6dWOHU7ZkUVWP/Av+pFXh9/lz2
+ kZzUQ9dUemchFCGzIzVWybwffAMoEljGLMwhIvzgOFVa4d5sYjCFScnzga9MRp0c
+ qQRpdy2caY88yldWMFUIqKg2pt0nVsOq6W+kNsQjTk8Xci+RBKwWlu8+3yFjZF1u
+ km7ObeXxI8baVpTcWuO0Gsm1MSLwHpxZVbZLY11jUrMqjtOXFwvyjKoVxlkWyKCq
+ k5jWsqz9nEW4QvymfxAMgKas9p7aVFt1anPgT2dd3OJ3Ai9Z1J3/Bdzvxa38gpKL
+ WG1juTeL3zaO303jeRS9bQ==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+ messagingengine.com; h=cc:cc:content-transfer-encoding
+ :content-type:content-type:date:date:feedback-id:feedback-id
+ :from:from:in-reply-to:in-reply-to:message-id:mime-version
+ :references:reply-to:subject:subject:to:to:x-me-proxy
+ :x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=1781019992; x=
+ 1781106392; bh=kdVDBYV+UidCgposyXyUTghejeRgGoECwQS90mD2rRg=; b=V
+ 8qe9dSt7V99FIp+HtQgDCigCUkuPqmWi0rjzLJjPaDWVdc/TbnFvzQc1ttFggsJP
+ H+hUbBcHovRgiW1XcD0Ho1WbaoWBOpC3b/ZXwAxSz4kIbVEuZyoh/mNpTdDgtnCz
+ eB941TtC+s3i5Lki2vW7afr1FJ0DgMn80vqNcC8ZxO/B577GseYGHgbbOOMUOcvm
+ N04x8W31IzrDEa0FVcuXP/M2ItSJvjDOayUYABoYs0dWUJsrcU8jC8omwbjLs/BA
+ bM7Uf0U+utgnrsXbjT7qMDHlord/8siFTicP4n2PmHHLHR0l11BaPgzPSGrEerIw
+ APn8VsNkT4B88Zn5TriZA==
+X-ME-Sender: <xms:VzUoaiSE33Eb0N53mGoWIA3cy0e-UUK0dYTC9VsPz1z4CSrtH-0WLg>
+ <xme:VzUoagv1D1rVrxj7bokelnj6EOGSQx8yqEtDVY_L-ydBNjCELknGMJUJQeHm9w34Z
+ a1OEbvg6Jm4Z_sxgEAMceqgpksEzOYEgkRpyCMUYqcF-jitDxuW1g>
+X-ME-Received: <xmr:VzUoarZ_UHUeVmqkAjE61sqffdFiGqgSRHrYWK205_Xm6r9zMZfa8FF22eA>
+X-ME-Proxy-Cause: dmFkZTGyncaCRguRlZG9LyaV9/0O0KLFossUPLK2ucsTZWYkincMBs2Dhz8X9M5p9fvb0P
+ VN4uF1yTYJgguyhRNU0BhBKY42iUm+GemXjM/COmaFVrq672jBZvZdjmFACH+WbGCFawzY
+ VrUDxsM2jdDYxHJEKX5oheXi0y4t0XEPO5TU1X7Ot7yS8gzHOrHGsJOMnRc09fF94gSaKA
+ SztFMIlP+wgPzaJTgw+ISLQl8StsCoQEXdlPeT1GrRtdFZSsBHhrNHQ9qY2u86dUwCmIGq
+ kaudiWUXysLJkOr9598Fo4OISCBRWiuzsJbF+Yxy9ULOd7IJ9d9cyne3W/YBUS7cm7MxV+
+ OdtAld74FJ7OIziKuj/W9qL4AQkMUxGfkfoh2Fbbj1irMFVj+dMP68qsu63CFBUuPfFL2i
+ Q5K5pIy9VhWkSRdissL97mnnfpY9cIvjiqx3ZtGSRFWT6ctmCUoMyDcUoaTPeKhZzY7WjD
+ hXI0Dpm+EfbinjmDP+NdVtVhPw542oKWyIDBjqoPZ0XHxekajzFtF2WchUKA0mgyFVOM/y
+ 4UjR/ifVh0m6R5UWuSwi6A5hbvr3NUn44zFgIF/a2B0PyD9J5oDWNF4YfDV4RRVqBFCbq3
+ uOnXy158EPPQippwzeIT/gRYzQiFlCcDvUUuaJzTAvivte5e98WALbZ4vfgw
+X-ME-Proxy: <xmx:VzUoauElPc2r9XsoMhhETMLvk-ryhJMNo2Oh5iV32ey7JeDuCKj_Lg>
+ <xmx:VzUoanyhQKXRj6eBIUdU7Hqk52G9PNgflEJIq8A3Eoc0iPcvYXEsbg>
+ <xmx:VzUoaomZ17d6r_q9mk_OQxNpsjQvz3uYHKCtDH2-aGXOSPX9kqa_5A>
+ <xmx:VzUoaolEf7ncXpSj8OszePj8HNJQVW_bVMOXFEVChK7cBER7uCMJdg>
+ <xmx:WDUoaviuXYyB_oaidk0M5tBFx217yYeB9mcmb78a6fiIXV6IERrI-BvR>
+Feedback-ID: i03f14258:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
+ 9 Jun 2026 11:46:31 -0400 (EDT)
+Date: Tue, 9 Jun 2026 09:46:30 -0600
+From: Alex Williamson <alex@shazbot.org>
+To: Tomita Moeko <tomitamoeko@gmail.com>
+Cc: qemu-devel@nongnu.org, =?UTF-8?B?Q8OpZHJpYw==?= Le Goater
+ <clg@redhat.com>, "Michael S. Tsirkin" <mst@redhat.com>, K S Maan
+ <kirandeepmaan45@gmail.com>, alex@shazbot.org
+Subject: Re: [PATCH v2 7/7] vfio/igd: Clear saved BDSM in legacy VBIOS ROM
+ at load time
+Message-ID: <20260609094630.5840f25e@shazbot.org>
+In-Reply-To: <20260609093554.534dc9a0@shazbot.org>
+References: <20260608134559.23971-1-tomitamoeko@gmail.com>
+ <20260608134559.23971-8-tomitamoeko@gmail.com>
+ <20260609093554.534dc9a0@shazbot.org>
+X-Mailer: Claws Mail 4.4.0 (GTK 3.24.52; x86_64-pc-linux-gnu)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v11 21/32] pc-bios/s390-ccw: Add signature verification
- for secure IPL in audit mode
-To: Jared Rossi <jrossi@linux.ibm.com>, qemu-s390x@nongnu.org,
- qemu-devel@nongnu.org
-Cc: cohuck@redhat.com, berrange@redhat.com, richard.henderson@linaro.org,
- david@kernel.org, walling@linux.ibm.com, jjherne@linux.ibm.com,
- pasic@linux.ibm.com, borntraeger@linux.ibm.com, farman@linux.ibm.com,
- mjrosato@linux.ibm.com, iii@linux.ibm.com, eblake@redhat.com,
- armbru@redhat.com, alifm@linux.ibm.com, brueckner@linux.ibm.com,
- pierrick.bouvier@oss.qualcomm.com, jdaley@linux.ibm.com
-References: <20260505201905.997996-1-zycai@linux.ibm.com>
- <20260505201905.997996-22-zycai@linux.ibm.com>
- <632db3ab-408a-4d0c-b8ce-be6d52bb9cad@linux.ibm.com>
-Content-Language: en-US
-From: Zhuoying Cai <zycai@linux.ibm.com>
-In-Reply-To: <632db3ab-408a-4d0c-b8ce-be6d52bb9cad@linux.ibm.com>
 Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-X-TM-AS-GCONF: 00
-X-Authority-Analysis: v=2.4 cv=N4UZ0W9B c=1 sm=1 tr=0 ts=6a2834c9 cx=c_pps
- a=5BHTudwdYE3Te8bg5FgnPg==:117 a=5BHTudwdYE3Te8bg5FgnPg==:17
- a=IkcTkHD0fZMA:10 a=FelO9ux0wxsA:10 a=VkNPw1HP01LnGYTKEx00:22
- a=RnoormkPH1_aCDwRdu11:22 a=U7nrCbtTmkRpXpFmAIza:22 a=VnNF1IyMAAAA:8
- a=A1-YhR8KWZWd19V_3qoA:9 a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
-X-Proofpoint-ORIG-GUID: oZIAhaqyF05keP1eFPr8mjFmJfbPP7-A
-X-Proofpoint-GUID: oZIAhaqyF05keP1eFPr8mjFmJfbPP7-A
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNjA5MDE0OCBTYWx0ZWRfX4zisS1e2FaO+
- 2T8HZyNEKUqywGJAbgccnLZ8ggTPoRaWIMaFYgM7dbXOMJZmYjMRvQFwIVN1EsBOQmSuyfK7nk1
- bEyCEfKNSst3A1NPFVhHvJF7eVmnqcqrQAjMHZQgEeFJ91+iiCK7Yts2OsRWj5AOnjkeodq1DSV
- JIFGgPFJ+ZmmsKpZEWmAjJ2lA/FM2KJTKW/mtHgccfwaUvCGfO0xMswDQYrA+Wt9+/nwnQy+6WI
- BHOcPhrUW7r56gFpJOO584mYgBjuwQYOPDX/32VDjTF524kZVJxRd1QZX9fZ2QuvEOxy6IedjOR
- SWBndDD1Jhn6A2sAIxsrRVm6LZANwPRxTQ3jQxcQExlPVuduI6QH4kXLHypUCEGZhkc+PBKmk/Z
- vFiMo+Fx1jNqtp9AE7HANj3zzfvsNw3NXhUf3YtVrxQCA+mUp9w1PmpqCmSLYXZAvEzAQghslx6
- HY2EiXb2qgJ1dvEvI6w==
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.125,FMLib:17.12.100.49
- definitions=2026-06-09_03,2026-06-09_02,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- bulkscore=0 malwarescore=0 spamscore=0 clxscore=1015 lowpriorityscore=0
- phishscore=0 impostorscore=0 adultscore=0 priorityscore=1501 suspectscore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2605210000 definitions=main-2606090148
-Received-SPF: pass client-ip=148.163.156.1; envelope-from=zycai@linux.ibm.com;
- helo=mx0a-001b2d01.pphosted.com
-X-Spam_score_int: -26
-X-Spam_score: -2.7
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=103.168.172.151; envelope-from=alex@shazbot.org;
+ helo=fout-a8-smtp.messagingengine.com
+X-Spam_score_int: -27
+X-Spam_score: -2.8
 X-Spam_bar: --
-X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
- RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
+X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_PASS=-0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -128,615 +110,163 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Thanks for the feedback and suggestion!
+On Tue, 9 Jun 2026 09:35:54 -0600
+Alex Williamson <alex@shazbot.org> wrote:
 
-On 6/1/26 4:24 PM, Jared Rossi wrote:
-> 
-> 
-> On 5/5/26 4:18 PM, Zhuoying Cai wrote:
->> Enable secure IPL in audit mode, which performs signature verification,
->> but any error does not terminate the boot process. Only warnings will be
->> logged to the console instead.
->>
->> Add a comp_len variable to store the length of a segment in
->> zipl_load_segment. comp_len variable is necessary to store the
->> calculated segment length and is used during signature verification.
->> Return the length on success, or a negative return code on failure.
->>
->> Secure IPL in audit mode requires at least one certificate provided in
->> the key store along with necessary facilities (Secure IPL Facility,
->> Certificate Store Facility and secure IPL extension support).
->>
->> Note: Secure IPL in audit mode is implemented for the SCSI scheme of
->> virtio-blk/virtio-scsi devices.
->>
->> Signed-off-by: Zhuoying Cai <zycai@linux.ibm.com>
->> ---
->>   docs/system/s390x/secure-ipl.rst |  15 ++
->>   pc-bios/s390-ccw/Makefile        |   2 +-
->>   pc-bios/s390-ccw/bootmap.c       |  16 ++
->>   pc-bios/s390-ccw/bootmap.h       |   9 +
->>   pc-bios/s390-ccw/main.c          |  10 +-
->>   pc-bios/s390-ccw/s390-ccw.h      |  24 ++
->>   pc-bios/s390-ccw/sclp.c          |  27 +++
->>   pc-bios/s390-ccw/sclp.h          |   6 +
->>   pc-bios/s390-ccw/secure-ipl.c    | 364 +++++++++++++++++++++++++++++++
->>   pc-bios/s390-ccw/secure-ipl.h    | 113 ++++++++++
->>   10 files changed, 584 insertions(+), 2 deletions(-)
->>   create mode 100644 pc-bios/s390-ccw/secure-ipl.c
->>   create mode 100644 pc-bios/s390-ccw/secure-ipl.h
->>
+> On Mon,  8 Jun 2026 21:45:58 +0800
+> Tomita Moeko <tomitamoeko@gmail.com> wrote:
+>=20
+> > IGD does not come with a ROM BAR [1], the ROM BAR read by default from
+> > kernel is actually the host VBIOS shadow RAM region that contains host
+> > modifications on boot. With AI-assisted reverse engineering on VBIOS
+> > binaries, it is observed that VBIOS saves BDSM register value on first
+> > access and uses saved value if present.
+> >=20
+> > When the image is executed in guest, since there is already a saved HPA
+> > in VBIOS, it keeps using that value instead of the GPA programmed by
+> > SeaBIOS in BDSM register in PCI config space, causing VBIOS to program
+> > GTT entries with wrong address, resulting in garbled output in BIOS
+> > POST and the error below detected by i915 driver.
+> >=20
+> > i915 0000:00:02.0: [drm] *ERROR* Initial plane programming using invali=
+d range, dma_addr=3D0x00000000db200000 ((null) [0x00000000baf00000-0x000000=
+00beefffff])
+> >=20
+> > The previous solution, c4c45e943e51 ("vfio/pci: Intel graphics legacy
+> > mode assignment"), adjusts GTT entry addresses to (addr - host BDSM +
+> > guest BDSM) to workaround that. But it is removed in 5aed8b0f0be2
+> > ("vfio/igd: Remove GTT write quirk in IO BAR 4") due to inconsistent
+> > values in MMIO BAR0 and IO BAR4.
+> >=20
+> > Considering it's unsafe to expose HPA to guest, a ROM quirk clearing
+> > the saved value in VBIOS image is introduced. It searches the BDSM
+> > accessor routine by matching a 19-byte signature anchored on the unique
+> > `mov $0x105e,%ax` instruction, then locate the offset of saved BDSM and
+> > clears it. This makes the routine fall through to the PCI config read
+> > on the first call inside the guest.
+> >=20
+> > The quirk is invoked in vfio_pci_load_rom(), and is gated on Gen 6-9
+> > IGD devices with VGA access enabled and legacy (non-UEFI) PCIR code
+> > type in the ROM header. A new trace event vfio_pci_igd_vbios_patched
+> > is also introduced.
+> >=20
+> > [1] 3.5.15, 4th Generation Intel Core Processor Family Datasheet Vol. 2
+> >     https://www.intel.com/content/dam/www/public/us/en/documents/datash=
+eets/4th-gen-core-family-desktop-vol-2-datasheet.pdf
+> >=20
+> > Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/3093
+> > Reported-by: K S Maan <kirandeepmaan45@gmail.com>
+> > Signed-off-by: Tomita Moeko <tomitamoeko@gmail.com>
+> > ---
+> >  hw/vfio/igd-stubs.c  |   5 ++
+> >  hw/vfio/igd.c        | 110 +++++++++++++++++++++++++++++++++++++++++++
+> >  hw/vfio/pci-quirks.c |   5 ++
+> >  hw/vfio/pci.c        |   2 +
+> >  hw/vfio/pci.h        |   3 ++
+> >  hw/vfio/trace-events |   1 +
+> >  6 files changed, 126 insertions(+)
+> >=20
+> > diff --git a/hw/vfio/igd-stubs.c b/hw/vfio/igd-stubs.c
+> > index f7687d9091..879a8aff56 100644
+> > --- a/hw/vfio/igd-stubs.c
+> > +++ b/hw/vfio/igd-stubs.c
+> > @@ -18,3 +18,8 @@ bool vfio_probe_igd_config_quirk(VFIOPCIDevice *vdev,=
+ Error **errp)
+> >  {
+> >      return true;
+> >  }
+> > +
+> > +void vfio_probe_igd_legacy_rom_quirk(VFIOPCIDevice *vdev)
+> > +{
+> > +    return;
+> > +}
+> > diff --git a/hw/vfio/igd.c b/hw/vfio/igd.c
+> > index 834539affb..4b49038753 100644
+> > --- a/hw/vfio/igd.c
+> > +++ b/hw/vfio/igd.c
+> > @@ -734,3 +734,113 @@ bool vfio_probe_igd_config_quirk(VFIOPCIDevice *v=
+dev, Error **errp)
+> > =20
+> >      return vfio_pci_igd_config_quirk(vdev, errp);
+> >  }
+> > +
+> > +/*
+> > + * IGD ROM BAR read from kernel is actually the host VBIOS shadow RAM =
+region,
+> > + * which contains host modifications. In Gen 6-9 VBIOS, the routine be=
+low is
+> > + * used to get BDSM value when programming the initial GTT.
+> > + *   xx xx xx xx           v: .long ?                  # saved value
+> > + *   66 53                    push  %ebx
+> > + *   66 2e 83 3e xx xx 00     cmpl  $0x0,%cs:v         # is saved valu=
+e empty?
+> > + *   74 07                    je    1f                 # if zero, go c=
+ompute
+> > + *   66 2e a1 xx xx           mov   %cs:v,%eax         # else return s=
+aved value
+> > + *   eb 0f                    jmp   2f
+> > + *   b8 5e 10              1: mov   $0x105e,%ax        # dev 00:02.0, =
+offset 5E
+> > + *   e8 xx xx                 call  pci_read_cfg_word
+> > + *   66 c1 e0 10              shl   $0x10,%eax         # left shift 16=
+ bits
+> > + *   66 2e a3 xx xx           mov   %eax,%cs:v         # save the resu=
+lt
+> > + *   66 5b                 2=EF=BC=9Apop   %ebx
+> > + *   c3                       ret
+> > + * When running the VBIOS in guest, saved value still reflects the hos=
+t stolen
+> > + * memory base address, which is not correct in guest. So we need to p=
+atch the
+> > + * VBIOS to clear the saved value.
+> > + *
+> > + * The unique 19-byte starts at `cmpl $0,%cs:v` and ends at `mov $0x10=
+5e,%ax`
+> > + * anchors the match to the routine. Both `cs:` displacements must ref=
+erence
+> > + * the same offset.
+> > + */
+> > +static int igd_vbios_find_saved_bdsm(const uint8_t *rom, size_t rom_si=
+ze,
+> > +                                     uint16_t *bdsm_offset)
+> > +{
+> > +    static const uint8_t start[] =3D { 0x66, 0x2e, 0x83, 0x3e };
+> > +    static const uint8_t middle[] =3D { 0x00, 0x74, 0x07, 0x66, 0x2e, =
+0xa1 };
+> > +    static const uint8_t end[] =3D { 0xeb, 0x0f, 0xb8, 0x5e, 0x10 };
+> > +    uint16_t val;
+> > +    size_t i;
+> > +    bool found =3D false;
+> > +
+> > +    if (rom_size < 19) {
+> > +        return -ENOENT;
+> > +    }
+> > +
+> > +    for (i =3D 0; i + 19 <=3D rom_size; i++) {
+> > +        if (memcmp(rom + i, start, sizeof(start)) !=3D 0 ||
+> > +            memcmp(rom + i + 6, middle, sizeof(middle)) !=3D 0 ||
+> > +            memcmp(rom + i + 14, end, sizeof(end)) !=3D 0) {
+> > +            continue;
+> > +        }
+> > +
+> > +        /* same saved value address? */
+> > +        if (rom[i + 4] !=3D rom[i + 12] || rom[i + 5] !=3D rom[i + 13]=
+) {
+> > +            continue;
+> > +        }
+> > +
+> > +        if (found) {
+> > +            return -EEXIST;
+> > +        }
+> > +
+> > +        val =3D rom[i + 4] | ((uint16_t)rom[i + 5] << 8);
+> > +        if (val < rom_size) { =20
+>=20
+> We write sizeof(uint32_t) to this offset, so this should be:
+>=20
+>         if (val + sizeof(uint32_t) < rom_size) {
 
-[...]
+Oops, the comparison should have become <=3D.  Thanks,
 
->> diff --git a/pc-bios/s390-ccw/secure-ipl.c b/pc-bios/s390-ccw/secure-ipl.c
->> new file mode 100644
->> index 0000000000..6e943446a7
->> --- /dev/null
->> +++ b/pc-bios/s390-ccw/secure-ipl.c
->> @@ -0,0 +1,364 @@
->> +/*
->> + * S/390 Secure IPL
->> + *
->> + * Functions to support IPL in secure boot mode (DIAG 320, DIAG 508,
->> + * signature verification, and certificate handling).
->> + *
->> + * For secure IPL overview: docs/system/s390x/secure-ipl.rst
->> + * For secure IPL technical: docs/specs/s390x-secure-ipl.rst
->> + *
->> + * Copyright 2025 IBM Corp.
->> + * Author(s): Zhuoying Cai <zycai@linux.ibm.com>
->> + *
->> + * SPDX-License-Identifier: GPL-2.0-or-later
->> + */
->> +
->> +#include <stdlib.h>
->> +#include <string.h>
->> +#include <stdio.h>
->> +#include "bootmap.h"
->> +#include "s390-ccw.h"
->> +#include "sclp.h"
->> +#include "secure-ipl.h"
->> +
->> +static VCStorageSizeBlock vcssb __attribute__((__aligned__(8)));
->> +
->> +VCStorageSizeBlock *zipl_secure_get_vcssb(void)
->> +{
->> +    /* avoid retrieving vcssb multiple times */
->> +    if (vcssb.length == VCSSB_MIN_LEN) {
->> +        return &vcssb;
->> +    }
-> I don't quite understand what is happening with the VCSSB_MIN_LENGTH 
-> here.  Why
-> is the minimum length significant, as opposed to simply non-zero?
-> 
-
-VCSSB must be set to VCSSB_MIN_LENGTH (128), as this represents the size
-of the VCSSB struct and indicates that it is present. Any other value
-would be considered an invalid length for VCSSB.
-
-To avoid confusion, we could consider renaming VCSSB_MIN_LENGTH to
-VCSSB_LEN.
-
->> +
->> +    vcssb.length = VCSSB_MIN_LEN;
->> +    if (_diag320(&vcssb, DIAG_320_SUBC_QUERY_VCSI) != DIAG_320_RC_OK) {
->> +        vcssb.length = 0;
->> +        return NULL;
->> +    }
->> +
->> +    return &vcssb;
->> +}
->> +
->> +static uint32_t get_total_certs_length(void)
->> +{
->> +    if (zipl_secure_get_vcssb() == NULL) {
->> +        return 0;
->> +    }
-> Should we check if vcssb.len == 4 for the early return?  I think it 
-> designates
-> an empty cert store and nothing else gets initialized.
-> 
-
-Yes, this check is currently in [PATCH v11 27/32] pc-bios/s390-ccw:
-Handle true secure IPL mode. I’ll refactor it so it can be performed
-earlier during the secure boot process.
-
->> +
->> +    return vcssb.total_vcb_len - sizeof(VCBlockHeader) -
->> +           vcssb.total_vc_ct * sizeof(VCEntryHeader);
->> +}
->> +
->> +static uint32_t request_certificate(uint8_t *cert_buf, uint8_t index)
->> +{
->> +    VCEntryHeader *vce_hdr;
->> +    struct vcb {
->> +        VCBlockHeader vcb_hdr;
->> +        struct vce {
->> +            VCEntryHeader vce_hdr;
->> +            uint8_t cert_buf[CERT_BUF_MAX_LEN];
->> +        } vce;
->> +    } __attribute__((__aligned__(4096))) vcb = { 0 };
-> Regarding Collin's comments about using CERT_BUF_MAX_LEN versus 
-> vcssb.max_single_vcb_len,
-> because the VCB must be 4k aligned we didn't want to malloc a variable 
-> length
-> buffer, which is why the constant max was used.  AFAIK malloc cannot enforce
-> any alignment requirements and we do not have the libraries for memalign 
-> in BIOS.
-> 
-> I thought I saw that the cert store does already reject certs exceeding 
-> this size,
-> but if not, I agree with Collin that it should.
-> 
-
-Maybe we could use vcssb.max_single_vcb_len - sizeof(VCBlockHeader) -
-sizeof(VCEntryHeader) instead of CERT_BUF_MAX_LEN when sizing cert_buf.
-
-The cert store already rejects anything larger than CERT_BUF_MAX_LEN, so
-the requested size is guaranteed to stay within bounds.
-
-Since vcssb.max_single_vcb_len is also used as the input length for the
-VCB, basing cert_buf on it would make the buffer size more accurate.
-
-Does this sound reasonable to you?
-
->> +
->> +    /* Get Verification Certificate Storage Size block with DIAG320 subcode 1 */
->> +    if (zipl_secure_get_vcssb() == NULL) {
->> +        return 0;
->> +    }
->> +
->> +    /*
->> +     * Request single entry
->> +     * Fill input fields of single-entry VCB
->> +     *
->> +     * First and last index must be equal because only one
->> +     * VCE per VCB is currently supported
->> +     */
->> +    vcb.vcb_hdr.in_len = ROUND_UP(vcssb.max_single_vcb_len, PAGE_SIZE);
->> +    vcb.vcb_hdr.first_vc_index = index;
->> +    vcb.vcb_hdr.last_vc_index = index;
->> +
->> +    if (_diag320(&vcb, DIAG_320_SUBC_STORE_VC) != DIAG_320_RC_OK) {
->> +        return 0;
->> +    }
->> +
->> +    if (vcb.vcb_hdr.out_len == sizeof(VCBlockHeader)) {
->> +        puts("No certificate entry");
->> +        return 0;
->> +    }
->> +
->> +    if (vcb.vcb_hdr.remain_ct != 0) {
->> +        panic("Not enough memory to store all requested certificates");
->> +    }
->> +
->> +    vce_hdr = &vcb.vce.vce_hdr;
->> +    if (!(vce_hdr->flags & DIAG_320_VCE_FLAGS_VALID)) {
->> +        puts("Invalid certificate");
->> +        return 0;
->> +    }
->> +
->> +    memcpy(cert_buf, (uint8_t *)&vcb.vce + vce_hdr->cert_offset, vce_hdr->cert_len);
->> +
->> +    return vce_hdr->cert_len;
->> +}
->> +
->> +static int cert_list_add(IplSignatureCertificateList *cert_list,
->> +                         uint8_t *cert_buf, uint64_t cert_len)
->> +{
->> +    static bool warned;
->> +    int cert_entry_idx;
->> +
->> +    cert_entry_idx = (cert_list->ipl_info_header.len - sizeof(IplInfoBlockHeader)) /
->> +                     sizeof(IplSignatureCertificateEntry);
->> +    if (cert_entry_idx > MAX_CERTIFICATES - 1) {
-> I think this is actually impossible because we terminate the IPL when 
-> building
-> the cert store if there are too many entries, right?
-> 
->> +        if (!warned) {
->> +            printf("Warning: only %d cert entries are supported;"
->> +                   " additional entries are ignored\n",
->> +                   MAX_CERTIFICATES);
->> +            warned = true;
->> +        }
->> +        return cert_entry_idx;
->> +    }
->> +
->> +    cert_list->cert_entries[cert_entry_idx].addr = (uint64_t)cert_buf;
->> +    cert_list->cert_entries[cert_entry_idx].len = cert_len;
->> +    cert_list->ipl_info_header.len += sizeof(IplSignatureCertificateEntry);
->> +
->> +    return cert_entry_idx;
->> +}
->> +
->> +static void comp_list_add(IplDeviceComponentList *comp_list,
->> +                          SecureIplCompEntryInfo comp_entry_info)
->> +{
->> +    int comp_entry_idx;
->> +
->> +    comp_entry_idx = (comp_list->ipl_info_header.len - sizeof(IplInfoBlockHeader)) /
->> +                     sizeof(IplDeviceComponentEntry);
->> +    if (comp_entry_idx > MAX_COMP_ENTRIES - 1) {
->> +        printf("Warning: only %d component entries are supported\n",
->> +                MAX_COMP_ENTRIES);
->> +        panic("The device component list has reached its maximum capacity");
->> +    }
->> +
->> +    comp_list->device_entries[comp_entry_idx].addr = comp_entry_info.addr;
->> +    comp_list->device_entries[comp_entry_idx].len = comp_entry_info.len;
->> +    comp_list->device_entries[comp_entry_idx].flags = comp_entry_info.flags;
->> +    /* cert index field is meaningful only when S390_IPL_DEV_COMP_FLAG_SC is set */
->> +    if (comp_entry_info.flags & S390_IPL_DEV_COMP_FLAG_SC) {
->> +        comp_list->device_entries[comp_entry_idx].cert_index =
->> +                                                  comp_entry_info.cert_index;
->> +    }
->> +    comp_list->ipl_info_header.len += sizeof(IplDeviceComponentEntry);
->> +}
->> +
->> +static void update_iirb(IplDeviceComponentList *comp_list,
->> +                        IplSignatureCertificateList *cert_list)
->> +{
->> +    IplInfoReportBlock *iirb;
->> +    IplDeviceComponentList *iirb_comps;
->> +    IplSignatureCertificateList *iirb_certs;
->> +    uint32_t iirb_hdr_len;
->> +    uint32_t comps_len;
->> +    uint32_t certs_len;
->> +
->> +    if (iplb->len % 8 != 0) {
->> +        panic("IPL parameter block length field value is not multiple of 8 bytes");
->> +    }
->> +
->> +    iirb_hdr_len = sizeof(IplInfoReportBlockHeader);
->> +    comps_len = comp_list->ipl_info_header.len;
->> +    certs_len = cert_list->ipl_info_header.len;
->> +    if ((comps_len + certs_len + iirb_hdr_len) > sizeof(IplInfoReportBlock)) {
->> +        panic("Not enough space to hold all components and certificates in IIRB");
->> +    }
->> +
->> +    /* IIRB immediately follows IPLB */
->> +    iirb = &ipl_data.iirb;
->> +    iirb->hdr.len = iirb_hdr_len;
->> +
->> +    /* Copy IPL device component list after IIRB Header */
->> +    iirb_comps = (IplDeviceComponentList *) iirb->info_blks;
->> +    memcpy(iirb_comps, comp_list, comps_len);
->> +
->> +    /* Update IIRB length */
->> +    iirb->hdr.len += comps_len;
->> +
->> +    /* Copy IPL sig cert list after IPL device component list */
->> +    iirb_certs = (IplSignatureCertificateList *) (iirb->info_blks +
->> +                                                  iirb_comps->ipl_info_header.len);
->> +    memcpy(iirb_certs, cert_list, certs_len);
->> +
->> +    /* Update IIRB length */
->> +    iirb->hdr.len += certs_len;
->> +}
->> +
->> +bool secure_ipl_supported(void)
->> +{
->> +    if (!sclp_is_fac_ipl_flag_on(SCCB_FAC_IPL_SIPL_BIT)) {
->> +        puts("Secure IPL Facility is not supported by the hypervisor!");
->> +        return false;
->> +    }
->> +
->> +    if (!is_signature_verif_supported()) {
->> +        puts("Secure IPL extensions are not supported by the hypervisor!");
->> +        return false;
->> +    }
->> +
->> +    if (!is_cert_store_facility_supported()) {
->> +        puts("Certificate Store Facility is not supported by the hypervisor!");
->> +        return false;
->> +    }
->> +
->> +    return true;
->> +}
->> +
->> +static void init_lists(IplDeviceComponentList *comp_list,
->> +                       IplSignatureCertificateList *cert_list)
->> +{
->> +    comp_list->ipl_info_header.type = IPL_INFO_BLOCK_TYPE_COMPONENTS;
->> +    comp_list->ipl_info_header.len = sizeof(IplInfoBlockHeader);
->> +
->> +    cert_list->ipl_info_header.type = IPL_INFO_BLOCK_TYPE_CERTIFICATES;
->> +    cert_list->ipl_info_header.len = sizeof(IplInfoBlockHeader);
->> +}
->> +
->> +static int zipl_load_signature(ComponentEntry *entry, uint64_t sig)
->> +{
->> +    if (entry->compdat.sig_info.format != DER_SIGNATURE_FORMAT) {
->> +        puts("Signature is not in DER format");
->> +        return -1;
->> +    }
->> +
->> +    if (zipl_load_segment(entry->data.blockno, sig) < 0) {
->> +        return -1;
->> +    }
->> +
->> +    return entry->compdat.sig_info.sig_len;
->> +}
->> +
->> +int zipl_run_secure(ComponentEntry **entry_ptr, uint8_t *tmp_sec)
->> +{
->> +    IplDeviceComponentList comp_list = { 0 };
->> +    IplSignatureCertificateList cert_list = { 0 };
->> +    SecureIplCompEntryInfo sig_entry_info = { 0 };
->> +    SecureIplCompEntryInfo comp_entry_info;
->> +    ComponentEntry *entry = *entry_ptr;
->> +    uint8_t *cert_buf = NULL;
->> +    int sig_len = 0;
->> +    int comp_len;
->> +    int cert_entry_idx;
->> +    uint64_t comp_addr;
->> +    uint64_t cert_len;
->> +    uint8_t cert_table_idx;
->> +    bool verified;
->> +    /*
->> +     * Keep track of which certificate store indices correspond to the
->> +     * certificate data entries within the IplSignatureCertificateList to
->> +     * prevent allocating space for the same certificate multiple times.
->> +     *
->> +     * The array index corresponds to the certificate's cert-store index.
->> +     *
->> +     * The array value corresponds to the certificate's entry within the
->> +     * IplSignatureCertificateList (with a value of -1 denoting no entry
->> +     * exists for the certificate).
->> +     */
->> +    int cert_list_table[MAX_CERTIFICATES] = { [0 ... MAX_CERTIFICATES - 1] = -1 };
->> +    int signed_count = 0;
->> +
->> +    init_lists(&comp_list, &cert_list);
->> +    cert_buf = malloc(get_total_certs_length());
->> +    sig_entry_info.addr = (uint64_t)malloc(MAX_SECTOR_SIZE);
-> I think we can reduce the memory footprint significantly, which will 
-> also help
-> with designating a safe spot for the components if we are worried about them
-> getting clobbered or lost.
-> 
-> Currently cert_buf is allocating enough space for the entire cert store, but
-> if I understand correctly, only 2 or possibly 3 certs can be used for 
-> any one
-> IPL.  So I don't think it is necessary to allocate more than 3x the max cert
-> size.
-> 
-> If we need a well defined place to put them, my first thought would be 
-> to use
-> the "next_iplb" field of the qipl struct.  This field points to the next 
-> IPLB
-> to be used when multiple boot devices are specified, but the address 
-> itself is
-> derived as an offset from the start of the kernel code in memory.
-> 
-> There are 8 4K pages that can be used for chained IPLBs, but that space 
-> is no
-> longer needed once we have identified our good IPLB and commit to 
-> booting it.
-> I think this space can safely be used to store the certs until the kernel
-> reads them during boot.
-> 
-> There might be a few other things that need adjustment, but in principle 
-> I think
-> writing to the pages previously occupied by an IPLB chain should be viable.
-> 
->> +
->> +    while (entry->component_type != ZIPL_COMP_ENTRY_EXEC) {
->> +        switch (entry->component_type) {
->> +        case ZIPL_COMP_ENTRY_SIGNATURE:
->> +            if (sig_entry_info.len) {
->> +                goto out;
->> +            }
->> +
->> +            sig_len = zipl_load_signature(entry, sig_entry_info.addr);
->> +            if (sig_len < 0) {
->> +                goto out;
->> +            }
->> +
->> +            sig_entry_info.len = sig_len;
->> +            break;
->> +        case ZIPL_COMP_ENTRY_LOAD:
->> +            comp_addr = entry->compdat.load_addr;
->> +            comp_len = zipl_load_segment(entry->data.blockno, comp_addr);
->> +            if (comp_len < 0) {
->> +                goto out;
->> +            }
->> +
->> +            comp_entry_info = (SecureIplCompEntryInfo){ 0 };
->> +            comp_entry_info.addr = comp_addr;
->> +            comp_entry_info.len = (uint64_t)comp_len;
->> +
->> +            /* no signature present (unsigned component) */
->> +            if (!sig_entry_info.len) {
->> +                break;
->> +            }
->> +
->> +            /*
->> +             * Initialize with SC flag (signed component)
->> +             * CSV flag set upon successful verification
->> +             */
->> +            comp_entry_info.flags = S390_IPL_DEV_COMP_FLAG_SC;
->> +
->> +            verified = verify_signature(comp_entry_info, sig_entry_info,
->> +                                        &cert_len, &cert_table_idx);
->> +
->> +            if (verified) {
->> +                if (cert_list_table[cert_table_idx] == -1) {
->> +                    if (!request_certificate(cert_buf, cert_table_idx)) {
->> +                        puts("Could not get certificate");
->> +                        goto out;
->> +                    }
->> +
->> +                    cert_entry_idx = cert_list_add(&cert_list, cert_buf, cert_len);
->> +                    /* map cert-store index to cert-list entry index */
->> +                    cert_list_table[cert_table_idx] = cert_entry_idx;
->> +                    /* increment for the next certificate */
->> +                    cert_buf += cert_len;
->> +                }
->> +
->> +                comp_entry_info.cert_index = cert_list_table[cert_table_idx];
->> +                comp_entry_info.flags |= S390_IPL_DEV_COMP_FLAG_CSV;
->> +                puts("Verified component");
->> +            } else {
->> +                zipl_secure_error("Could not verify component");
->> +            }
->> +
->> +            comp_list_add(&comp_list, comp_entry_info);
->> +
->> +            signed_count += 1;
->> +            /* After a signature is used another new one can be accepted */
->> +            sig_entry_info.len = 0;
->> +            break;
->> +        default:
->> +            puts("Unknown component entry type");
->> +            return -1;
->> +        }
->> +
->> +        entry++;
->> +
->> +        if ((uint8_t *)(&entry[1]) > tmp_sec + MAX_SECTOR_SIZE) {
->> +            puts("Wrong entry value");
->> +            return -EINVAL;
->> +        }
->> +    }
->> +
->> +    if (signed_count == 0) {
->> +        zipl_secure_error("Secure boot is on, but components are not signed");
->> +    }
->> +
->> +    update_iirb(&comp_list, &cert_list);
->> +
->> +    *entry_ptr = entry;
->> +    free((void *)sig_entry_info.addr);
->> +
->> +    return 0;
->> +out:
->> +    free(cert_buf);
->> +    free((void *)sig_entry_info.addr);
->> +
->> +    return -1;
->> +}
->> diff --git a/pc-bios/s390-ccw/secure-ipl.h b/pc-bios/s390-ccw/secure-ipl.h
->> new file mode 100644
->> index 0000000000..cc0302f56b
->> --- /dev/null
->> +++ b/pc-bios/s390-ccw/secure-ipl.h
->> @@ -0,0 +1,113 @@
->> +/*
->> + * S/390 Secure IPL
->> + *
->> + * Copyright 2025 IBM Corp.
->> + * Author(s): Zhuoying Cai <zycai@linux.ibm.com>
->> + *
->> + * SPDX-License-Identifier: GPL-2.0-or-later
->> + */
->> +
->> +#ifndef _PC_BIOS_S390_CCW_SECURE_IPL_H
->> +#define _PC_BIOS_S390_CCW_SECURE_IPL_H
->> +
->> +#include <diag320.h>
->> +#include <diag508.h>
->> +
->> +VCStorageSizeBlock *zipl_secure_get_vcssb(void);
->> +int zipl_run_secure(ComponentEntry **entry_ptr, uint8_t *tmp_sec);
->> +
->> +/* Custom struct for secure IPL component entry information */
->> +typedef struct SecureIplCompEntryInfo {
->> +    uint64_t addr;
->> +    uint64_t len;
->> +    uint16_t cert_index;
->> +    uint8_t  flags;
->> +} SecureIplCompEntryInfo;
->> +
->> +static inline void zipl_secure_error(const char *message)
->> +{
->> +    switch (boot_mode) {
->> +    case ZIPL_BOOT_MODE_SECURE_AUDIT:
->> +        printf("AUDIT MODE WARNING: %s\n", message);
->> +        break;
->> +    default:
->> +        break;
->> +    }
->> +}
->> +
->> +static inline uint64_t _diag320(void *data, unsigned long subcode)
->> +{
->> +    register unsigned long addr asm("0") = (unsigned long)data;
->> +    register unsigned long rc asm("1") = 0;
->> +
->> +    asm volatile ("diag %0,%2,0x320\n"
->> +                  : "+d" (addr), "+d" (rc)
->> +                  : "d" (subcode)
->> +                  : "memory", "cc");
->> +    return rc;
->> +}
->> +
->> +static inline bool is_cert_store_facility_supported(void)
->> +{
->> +    uint32_t d320_ism;
->> +
->> +    if (!sclp_is_diag320_on()) {
->> +        return false;
->> +    }
->> +
->> +    if (_diag320(&d320_ism, DIAG_320_SUBC_QUERY_ISM) != DIAG_320_RC_OK) {
->> +        return false;
->> +    }
->> +
->> +    return d320_ism & (DIAG_320_ISM_QUERY_VCSI | DIAG_320_ISM_STORE_VC);
->> +}
->> +
->> +static inline uint64_t _diag508(void *data, unsigned long subcode)
->> +{
->> +    register unsigned long addr asm("0") = (unsigned long)data;
->> +    register unsigned long rc asm("1") = 0;
->> +
->> +    asm volatile ("diag %0,%2,0x508\n"
->> +                  : "+d" (addr), "+d" (rc)
->> +                  : "d" (subcode)
->> +                  : "memory", "cc");
->> +    return rc;
->> +}
->> +
->> +static inline bool is_signature_verif_supported(void)
->> +{
->> +    uint64_t d508_subcodes;
->> +
->> +    d508_subcodes = _diag508(NULL, DIAG_508_SUBC_QUERY_SUBC);
->> +    return d508_subcodes & DIAG_508_SUBC_SIG_VERIF;
->> +}
->> +
->> +static inline bool verify_signature(SecureIplCompEntryInfo comp_entry_info,
->> +                                    SecureIplCompEntryInfo sig_entry_info,
->> +                                    uint64_t *cert_len, uint8_t *cert_idx)
->> +{
->> +    Diag508SigVerifBlock svb;
->> +
->> +    svb.length = sizeof(Diag508SigVerifBlock);
->> +    svb.version = 0;
->> +    svb.comp_len = comp_entry_info.len;
->> +    svb.comp_addr = comp_entry_info.addr;
->> +    svb.sig_len = sig_entry_info.len;
->> +    svb.sig_addr = sig_entry_info.addr;
->> +
->> +    if (_diag508(&svb, DIAG_508_SUBC_SIG_VERIF) == DIAG_508_RC_OK) {
->> +        *cert_len = svb.cert_len;
->> +        /*
->> +         * DIAG 508 utilizes an index origin of 0 when indexing the cert store.
->> +         * The cert_idx will be used for DIAG 320 data structures, which expects
->> +         * an index origin of 1. Account for the offset here so it's easier to
->> +         * manage later.
->> +         */
->> +        *cert_idx = svb.cert_store_index + 1;
->> +        return true;
->> +    }
->> +
->> +    return false;
->> +}
->> +
->> +#endif /* _PC_BIOS_S390_CCW_SECURE_IPL_H */
-> 
-
+Alex
 
