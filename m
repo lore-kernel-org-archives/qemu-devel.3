@@ -4,87 +4,129 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 14139CD8CAD
-	for <qemu-devel@archiver.kernel.org>; Tue,  9 Jun 2026 19:37:26 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id CFD35CD8CA8
+	for <qemu-devel@archiver.kernel.org>; Tue,  9 Jun 2026 19:46:05 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wX28V-0004wx-Im; Tue, 09 Jun 2026 15:29:21 -0400
+	id 1wX2OB-0002U2-ME; Tue, 09 Jun 2026 15:45:33 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1wX220-0003d3-Ua
- for qemu-devel@nongnu.org; Tue, 09 Jun 2026 15:22:43 -0400
-Received: from mail-pl1-x62c.google.com ([2607:f8b0:4864:20::62c])
+ (Exim 4.90_1) (envelope-from <stefanha@gmail.com>)
+ id 1wX2Nu-0002SU-OB
+ for qemu-devel@nongnu.org; Tue, 09 Jun 2026 15:45:19 -0400
+Received: from mail-ed1-x52c.google.com ([2a00:1450:4864:20::52c])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1wX21q-00045A-Pv
- for qemu-devel@nongnu.org; Tue, 09 Jun 2026 15:22:32 -0400
-Received: by mail-pl1-x62c.google.com with SMTP id
- d9443c01a7336-2bf237e1433so66139525ad.1
- for <qemu-devel@nongnu.org>; Tue, 09 Jun 2026 12:21:26 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <stefanha@gmail.com>)
+ id 1wX2Nr-0002vd-6I
+ for qemu-devel@nongnu.org; Tue, 09 Jun 2026 15:45:14 -0400
+Received: by mail-ed1-x52c.google.com with SMTP id
+ 4fb4d7f45d1cf-68c19f1f3ceso9545185a12.2
+ for <qemu-devel@nongnu.org>; Tue, 09 Jun 2026 12:45:05 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1781034303; cv=none;
+ d=google.com; s=arc-20240605;
+ b=M1IpgEJZlhGgMbgZj/3gjXNJQSL3w7WWpYQAzp8NTmjRYm1nvGvyzK9ASS7eZlxJ/k
+ tzyrfOC2Gl89G81KI3ayLtkrwM3LBeSzLj7/B3b8eHNWHUclGQvUP2URzRT8/j9Sj4u2
+ nX/BJDptMy3vFmlYH3/YDY5bjQOX97KWDcxW0stLVoNvOHEtfNZnKR0bTFItHf6KhsiS
+ VQ5oK7sUiRvqmwhO57nxNsXG9OF39rCsmqj5eyCpVscLduueo1FUOs/rros9NYFn7oZ/
+ DdpaBGp6SSkcn2eLPfXQemRIIk+X7FdtCnlLdfT8etCdPyni4DZjehDQpckYO+AnFTxL
+ Nfdg==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
+ s=arc-20240605; 
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:dkim-signature;
+ bh=BE7Ko1oGowdeONq1GamB/EWpz/mRKOMtMNEs4H2sugs=;
+ fh=vqrzZycoj7Zksn5GnGKdCDZ4+QtX1xf4W5pl4Axwslc=;
+ b=luSltoYFZbG84VwoClCBSpC7/1FXSRFvA64bJE2GfLAUPPqHSxFiRQhsOpeUV4H2fs
+ YBeDMAA3TJ8+OseL8NKSTiAQGppRJIqqu+VDskXOk7Age7vW9i4vOPOoTnBIqZszO9S7
+ a6KQr/JWKZLulURyIESOFx0Qq0IzAKfUoGGi5Bwfuz9kerc3KFAJIDZTNnE0Y2kTYyIs
+ 3fl9+2jNSpgNyY548ZahW7bd/91x13pWmiX/qtsUCZRCktOC8xA0WwUl+itNM0qZU9u3
+ qy9z4VIQyt+NWP4Dadr0OrmTGlSX7Lg55kQGw+zcFVYVBQuKhu/b/oXsh2le/Qxtn199
+ KB1Q==; darn=nongnu.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1781032885; x=1781637685; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+ d=gmail.com; s=20251104; t=1781034303; x=1781639103; darn=nongnu.org;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:from:to:cc:subject:date
  :message-id:reply-to;
- bh=ti3Lzz7ZpcUNrArVEJRLWhneqvaOUMGJ0jgbnQ7/QBQ=;
- b=iNVVRQ1JhxcrlioiljvsXjpg9hKwpZnQ5SSMjIdfeD1XrKzHN48M4ZBksZAY1sPqoF
- GCc6iWvAGw9z7v8lyxCerKN6JdEAkCVj+TOnevQTyAJei1vIun9Pr6p1tcpWOKuJcLh9
- NoaP55Kg1zHnjibhjz5HluLaB36cfWP0fOZDTG1SfFu+H6KokciZXimTxaLJ5MUAnlOG
- 0CpHYXMHF+TkSM3MQHHuggTs2n9wrvcYNYty51+Rs1YfSNCTPfIIKwcdl3Y7Kri5ZoD4
- wbg4HobJFlh8IfXa7uChm2nCa4Nl+teVqNX5vYfoI3Cdac+zNWmOp3xSUYAfUs7GmTHv
- inSQ==
+ bh=BE7Ko1oGowdeONq1GamB/EWpz/mRKOMtMNEs4H2sugs=;
+ b=I0015rtdMg/VcnOJemhwo+C4J2sGRluWCIfJWOv1wCH8NiLWqWbmxPnTYfKvfT/cgI
+ ovKSdiBKiHWbxJ9kuwpnl1cQKKyiQA0KdPTSae1sqkIBCOGfbiURj63wlzLkSiP+GU0K
+ UTPITeNMkuveHioF7u+ft+ma+iXOCgg90gOM70fXtFZoD6VTNOaHIMOQfSuvpMMGTPuN
+ 4oRqpZatSxKUSOqQTIuGX3UbNGyTlFj/6EfLrxvrKuA+V3gT1Vdget/qO9VzCOiQjGI5
+ Qs81BDIiJ21FCbwqX7+N8O1TdpOtyJncCtmbIJezqIxgbGghIL4ivHzK5wxoCfVBRX/c
+ DVWw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1781032885; x=1781637685;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
+ d=1e100.net; s=20251104; t=1781034303; x=1781639103;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to;
- bh=ti3Lzz7ZpcUNrArVEJRLWhneqvaOUMGJ0jgbnQ7/QBQ=;
- b=j18WLdqZDVvVZsvuIvV+h3YLsWpes8friL5lBiWenbQ2TsJJvw3yKcEmoQmfTTpj1o
- NG09xDXSQ7a2qnduvtcZUDR8W7axDxZKI3JcZoyMvCEvVA0kBa6p+i2I7MPp2xlJg3+r
- 1iE+/jyTN73o/7LWSd2C+3DtkWRXmKiAP/UyGGDJocdBSq5NT9NDenGM4AXaALouY6iD
- K8hQi+JGeuupRZ/epjcxe3bCaYkWSnOp9oxIRAOh3lAqzAa7om5VqfCXkgLr6/qOjNlH
- LD+3vGkSCvhyy0joKKG33Ic7CrjhbS5QuiWe9v9oQkLzd9QqGRqQqro2DgyDDcn+x/Mn
- Sfbw==
-X-Gm-Message-State: AOJu0YwMPGsyFnCF3z19ryMZ0ylRxwhqv00EkcFk21cyjhtRQNnjOstG
- p863/9a9o6OadqBzIvxpToOy1E5EgSRMZMCTfRhbaDorVfRFIutkXamvfR4I5BDMNrUnZ1zWzyh
- vhZ9xoKo=
-X-Gm-Gg: Acq92OExXxztbmBYvVuOthB5CKCrn+KtlIFQLMZETizG3qe9O6LYvhBw4i/EXwOzGUT
- +xWZetinvfNdSTvma0W+3apKsLJR9pnp6VDcq8b2IFpyyB4eUS4wN9xGVU4clHDVdwefjtYYnSv
- CDpwMJ8411Csq2fAHkxj3PQLrhs9NnaszsM+QXADMi1x7pTbM/430w6dxqqHoX5CyoKdMTExbhu
- ugpUT9yRLlnSgrVYv78mWl7AyXHQp2CVB1j7eUGiQaByoXU3G5wmnYkSs2cm3wXxi68XxZEIKdg
- X1+St1RAKLItnzlQZ7LR0T6eWM+i7Loi1+Iw+PNIiAeDtooy2JwOjWq60lJ7Q1C7nQbdy1S5nLY
- XfRNXpwK3Xu9ca4OUxXHa1NC0vzogGlJ6u06L47QJp/PkyA1Kg8VURoc+8oglan7g0GtV2RUOyd
- 8mkGy92QAH2oS5lw21FCp1fiY5UKGiknPx4kmj+Co=
-X-Received: by 2002:a17:902:f711:b0:2c0:ab82:6ba7 with SMTP id
- d9443c01a7336-2c1e85ad8d7mr257081585ad.33.1781032885143; 
- Tue, 09 Jun 2026 12:21:25 -0700 (PDT)
-Received: from stoup.. ([71.212.142.33]) by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-2c164f88473sm240806095ad.25.2026.06.09.12.21.24
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 09 Jun 2026 12:21:24 -0700 (PDT)
-From: Richard Henderson <richard.henderson@linaro.org>
-To: qemu-devel@nongnu.org
-Cc: qemu-arm@nongnu.org,
-	Peter Maydell <peter.maydell@linaro.org>
-Subject: [PATCH v10 19/45] target/arm: Implement FCVT (FP16 to FP8) for SME
-Date: Tue,  9 Jun 2026 12:20:43 -0700
-Message-ID: <20260609192110.752384-20-richard.henderson@linaro.org>
-X-Mailer: git-send-email 2.43.0
-In-Reply-To: <20260609192110.752384-1-richard.henderson@linaro.org>
-References: <20260609192110.752384-1-richard.henderson@linaro.org>
+ bh=BE7Ko1oGowdeONq1GamB/EWpz/mRKOMtMNEs4H2sugs=;
+ b=Y7+M5Li4C4CVaJhDSYYeCFkqoIoQeuUw6gVWUUsa0VKla7NIH5jWOF/FHayY+VBpvL
+ wv87DKcGJSwbwCw2mprWl9RmQoeGeDOjNceMG8+dzgkbVt0FrFEkH2Y1z0YobPvvIDKl
+ gwjk9N8/x4+2J/+mMx/NATXlyt3wPmKlUPqWTmTJ2Q/WPfWyeQFBUmYi95DnFFSqeKgJ
+ CDheiqvvMgFbFYRDlN/5VOgAtSndzsdRvl9a0OF+JwRJKH54vAfEyxznboucEHShYpJX
+ bvvS3lqpUBBFyfi2lBqi+fiaC3+hGuwtM0lY+yxLKsL/MSnV5V4qyz6IePpcqw8FLMHG
+ ZhIA==
+X-Forwarded-Encrypted: i=1;
+ AFNElJ8w9AEHbWyjroYLsHa+JBOcx/xF1ZuF7tvXVU/uGKh1royPcZG6J9UfzLpzHRS61lshnT98kkDV1JOL@nongnu.org
+X-Gm-Message-State: AOJu0Yx8pKT0iilmZXhBv2ofAzsLMBehg9oQ5/rVU8oXDXCvr+Uj3P21
+ k+mnU6NiwPqyVEY1OliIDIANaqtkedH+zFm0962D9j4OUmupQfQW75oPZzAElmSq9gEPiYX/jut
+ l2olCoGHAt6LqA+FPP9Yu3DRfYCAv4Qw=
+X-Gm-Gg: Acq92OGO2L3O2OUQLMixd+TRcOtqnKevL737wwhtloz3nCALm/iTAZxLTLickdChS4V
+ 7jTwOnHRkEXSoScfHmoW2HkZnLDrmpzOXoiVAyL3HDG6bY2Xpq5CS+5qSqOMejSwwAXr1IX2Spq
+ F8wDwRpxEcpSZsAbRuCVafeOW8vteihh5ELm2PXX5Zv4hLMfbObQ8IkYKmjDgipGfijuBBernUK
+ DwAseYMUyrkruxFsKQ7RvSPk7Ouys0ur77su4rWZn350OYFA+eqaJRvZgllaG2RX+H8DvCLl7Ow
+ Ot401uTlUWycksCdPA7w3XOulZt6alwYlAgCjQFhH7uiJarWGFBm
+X-Received: by 2002:a05:6402:1f4d:b0:66f:9f63:e537 with SMTP id
+ 4fb4d7f45d1cf-68fa514f190mr9485302a12.19.1781034302882; Tue, 09 Jun 2026
+ 12:45:02 -0700 (PDT)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::62c;
- envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x62c.google.com
+References: <874ijtz038.fsf@draig.linaro.org>
+ <CADSE00+RdBUhFVBDSXtVd1J5SaccqWy+RBxqnxuLKUYcitFMPw@mail.gmail.com>
+ <20260601083628-mutt-send-email-mst@kernel.org>
+ <CADSE00+kRnEC08LLVu6H065u2KaxBm-KnSN_8y6+964-FLbJMA@mail.gmail.com>
+ <20260601090953-mutt-send-email-mst@kernel.org>
+ <CAJSP0QV4W=5MJsSGggACv-tqxDtiieKc0YzEn8t-R=RD94KJaQ@mail.gmail.com>
+ <CADSE00+ziHc8W2FqNT-aJU0Lt4sZ=NfQLc65m16vpT++pZM+xQ@mail.gmail.com>
+ <20260601151815.GC411459@fedora>
+ <20260601160352-mutt-send-email-mst@kernel.org>
+ <CACzuRyxedVMHNGkRf7AVyPWUTMgBMa6_DBnSHn+V6H7wN7XzWw@mail.gmail.com>
+ <20260604162853.GC115597@fedora>
+ <CAJSP0QXR6MyqoE1Uh-X7DzsOabbbN69TUyxf8r6ghUDCQnrP=w@mail.gmail.com>
+ <CAFEAcA_Kd5_k+XyagUbB2+YVEMB0Sb0AB=oUZu6bGDot9TaFrQ@mail.gmail.com>
+In-Reply-To: <CAFEAcA_Kd5_k+XyagUbB2+YVEMB0Sb0AB=oUZu6bGDot9TaFrQ@mail.gmail.com>
+From: Stefan Hajnoczi <stefanha@gmail.com>
+Date: Tue, 9 Jun 2026 15:44:49 -0400
+X-Gm-Features: AVVi8CeOU_UjeX8pKpWwxfHWlT6xWKtHGFtnqCyuy53gNj7KSf-xnTNXUyj0Zfs
+Message-ID: <CAJSP0QVuSvVwa1szAy_3WVtWOjGK=oYAXjqAzbg5YoEvgybRjA@mail.gmail.com>
+Subject: Re: Where should the vhost-user specification live?
+To: Peter Maydell <peter.maydell@linaro.org>
+Cc: "Michael S. Tsirkin" <mst@redhat.com>, Dorinda Bassey <dbassey@redhat.com>,
+ Albert Esteve <aesteve@redhat.com>,
+ =?UTF-8?B?QWxleCBCZW5uw6ll?= <alex.bennee@linaro.org>, 
+ qemu-devel <qemu-devel@nongnu.org>, virtio-comment@lists.linux.dev, 
+ dev@lists.cloudhypervisor.org, rust-vmm@lists.opendev.org, 
+ Stefano Garzarella <sgarzare@redhat.com>,
+ Manos Pitsidianakis <manos.pitsidianakis@linaro.org>, 
+ Demi Marie Obenour <demi@invisiblethingslab.com>, Alyssa Ross <hi@alyssa.is>, 
+ Mark Burton <MBURTON@qti.qualcomm.com>, Matti Moell <matti@qti.qualcomm.com>, 
+ Viresh Kumar <viresh.kumar@linaro.org>, Sergio Lopez <slp@redhat.com>, 
+ Vishwanath Seshagiri <vishs@meta.com>, Rob Bradford <rbradford@meta.com>, 
+ Zhengyu Zhao <zhaozhengyu@bytedance.com>,
+ "Jorge E. Moreira" <jemoreira@google.com>, 
+ Stefan Hajnoczi <stefanha@redhat.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2a00:1450:4864:20::52c;
+ envelope-from=stefanha@gmail.com; helo=mail-ed1-x52c.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -100,54 +142,47 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
-Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
----
- target/arm/tcg/translate-sme.c | 16 ++++++++++++++++
- target/arm/tcg/sme.decode      |  2 ++
- 2 files changed, 18 insertions(+)
+On Tue, Jun 9, 2026 at 2:51=E2=80=AFPM Peter Maydell <peter.maydell@linaro.=
+org> wrote:
+>
+> On Tue, 9 Jun 2026 at 19:00, Stefan Hajnoczi <stefanha@gmail.com> wrote:
+> > I'm not sure if anyone brought up this topic on qemu-devel and with
+> > Michael before. As I mentioned in my reply, there are ways to avoid
+> > blocking vhost-user spec changes when qemu.git is frozen:
+> >
+> > The simplest approach is to keep merging vhost-user.rst changes during
+> > freeze since it does not jeopardize the release or introduce
+> > instability.
+>
+> I'm not enthusiastic about having "this one document is an
+> exception to our freeze and release process". Because it is
+> only documentation, it is in the same "we can be relatively
+> relaxed about allowing in documentation changes" boat as
+> most of the rest of the docs. But docs changes can break the
+> build (e.g. if you mess up a rST syntax thing), so as we
 
-diff --git a/target/arm/tcg/translate-sme.c b/target/arm/tcg/translate-sme.c
-index c0fe77242b..49eee95d88 100644
---- a/target/arm/tcg/translate-sme.c
-+++ b/target/arm/tcg/translate-sme.c
-@@ -1556,6 +1556,22 @@ TRANS_FEAT(BF2CVT, aa64_sme2_f8cvt, do_f8cvt, a, gen_helper_sme2_bfcvt_hb, 1)
- TRANS_FEAT(BF1CVTL, aa64_sme2_f8cvt, do_f8cvt, a, gen_helper_sme2_bfcvtl_hb, 0)
- TRANS_FEAT(BF2CVTL, aa64_sme2_f8cvt, do_f8cvt, a, gen_helper_sme2_bfcvtl_hb, 1)
- 
-+static bool trans_FCVT_bh(DisasContext *s, arg_zz_n *a)
-+{
-+    if (!dc_isar_feature(aa64_sme2_f8cvt, s)) {
-+        return false;
-+    }
-+    if (fpmr_access_check(s) && sme_sm_enabled_check(s)) {
-+        int svl = streaming_vec_reg_size(s);
-+        tcg_gen_gvec_3_ptr(vec_full_reg_offset(s, a->zd),
-+                           vec_full_reg_offset(s, a->zn),
-+                           vec_full_reg_offset(s, a->zn + 1),
-+                           tcg_env, svl, svl,
-+                           FPST_ZA << 2, gen_helper_gvec_fcvt_bh);
-+    }
-+    return true;
-+}
-+
- static bool do_zipuzp_4(DisasContext *s, arg_zz_e *a,
-                         gen_helper_gvec_2 * const fn[5])
- {
-diff --git a/target/arm/tcg/sme.decode b/target/arm/tcg/sme.decode
-index d6192eb59d..a02bcc0e22 100644
---- a/target/arm/tcg/sme.decode
-+++ b/target/arm/tcg/sme.decode
-@@ -863,6 +863,8 @@ BF2CVT          11000001 111 00110 111000 ..... ....0       @zz_2x1
- BF1CVTL         11000001 011 00110 111000 ..... ....1       @zz_2x1
- BF2CVTL         11000001 111 00110 111000 ..... ....1       @zz_2x1
- 
-+FCVT_bh         11000001 001 00100 111000 ....0 .....       @zz_1x2
-+
- ZIP_4           11000001 esz:2 1 10110 111000 ...00 ... 00   \
-                 &zz_e zd=%zd_ax4 zn=%zn_ax4
- ZIP_4           11000001 001     10111 111000 ...00 ... 00   \
--- 
-2.43.0
+CI prevents broken rST from being merged (there are multiple jobs with
+`--enable-docs`), so I'm not sure this can happen?
 
+> get closer to the final release we are going to get more
+> strict about "is this change really necessary or can it
+> wait a few weeks?", and they must at a minimum continue to obey
+> the "no changes of any kind between the last RC and the final
+> release" rule.
+
+Why is the final release candidate special?
+
+> And definitely if a patchseries has both
+> QEMU code changes and documentation updates then that is
+> going to not get applied during freeze if the code changes
+> don't follow the freeze rules.
+
+I agree that code changes cannot be merged.
+
+As long as the vhost-user maintainer is confident that the spec change
+is implementable and stable, they can merge the spec change on its own
+without code changes. If they are not confident, then the spec change
+isn't ready to be merged yet.
+
+Stefan
 
