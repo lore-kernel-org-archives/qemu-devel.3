@@ -4,70 +4,81 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E79A1CD8CAA
-	for <qemu-devel@archiver.kernel.org>; Tue,  9 Jun 2026 13:42:19 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B31A2CD8CB9
+	for <qemu-devel@archiver.kernel.org>; Tue,  9 Jun 2026 13:43:07 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wWwhr-000250-NJ; Tue, 09 Jun 2026 09:41:27 -0400
+	id 1wWwjH-0002aZ-ME; Tue, 09 Jun 2026 09:42:57 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
- id 1wWwhp-00024R-Ti; Tue, 09 Jun 2026 09:41:25 -0400
-Received: from mgamail.intel.com ([192.198.163.16])
+ (Exim 4.90_1) (envelope-from <kraxel@redhat.com>) id 1wWwjB-0002aK-Kz
+ for qemu-devel@nongnu.org; Tue, 09 Jun 2026 09:42:50 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
- id 1wWwhn-0004U4-Ez; Tue, 09 Jun 2026 09:41:25 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
- d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1781012483; x=1812548483;
- h=date:from:to:cc:subject:message-id:references:
- mime-version:in-reply-to;
- bh=0/cb6X+3/7WDEPBMpZS9PoJb9fPynqblASk+IpgSwBA=;
- b=h5SzogQ+qb4e3o1McZqKdnOJzPSuEkrmSnfxCDMy2uAbC/WOFZUzkSBD
- fAU7HuHMt+6RtnJKDcHSRJQhdlTu76+EBNSiciPTDh0CgrTOb1iof3ieG
- 7E0FPScY14vZHTZyon8drTYIG6+9KZWw4yqZPdGA+l5d//inOdDpY9jZc
- QIvmAJXd0ZOI1js2oZCkNNPWKdDwYXCzTmRB4ysbhmqGmIDSo8rP3d+QL
- nD21DpgDRvvYoI5bExDem4cF4hVYgzCeJ70yifAdImODr4Gl3mvBcqVzO
- AHd1cpvAdVWWjB2CenL/7je53Cv/8Oz2b8I4FiMbksaO7W8v1j2Z4QDFw Q==;
-X-CSE-ConnectionGUID: nRFf6ejGQD2GNNuAysUWxQ==
-X-CSE-MsgGUID: HUArv9P3Tk6IVWmlZPA3sg==
-X-IronPort-AV: E=McAfee;i="6800,10657,11811"; a="69305660"
-X-IronPort-AV: E=Sophos;i="6.24,196,1774335600"; d="scan'208";a="69305660"
-Received: from fmviesa009.fm.intel.com ([10.60.135.149])
- by fmvoesa110.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 09 Jun 2026 06:41:19 -0700
-X-CSE-ConnectionGUID: dI1afqVvRE2u2hWhsADygg==
-X-CSE-MsgGUID: 3S6CJqNqTUKf+M/aa9Mvvg==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.24,196,1774335600"; d="scan'208";a="239527819"
-Received: from liuzhao-optiplex-7080.sh.intel.com (HELO localhost)
- ([10.239.160.39])
- by fmviesa009.fm.intel.com with ESMTP; 09 Jun 2026 06:41:16 -0700
-Date: Tue, 9 Jun 2026 22:09:23 +0800
-From: Zhao Liu <zhao1.liu@intel.com>
-To: Dongli Zhang <dongli.zhang@oracle.com>
-Cc: qemu-devel@nongnu.org, kvm@vger.kernel.org, pbonzini@redhat.com,
- mtosatti@redhat.com, dapeng1.mi@linux.intel.com,
- sandipan.das@amd.com, zide.chen@intel.com, joe.jin@oracle.com,
- qemu-stable@nongnu.org
-Subject: Re: [PATCH 1/1] target/i386/kvm: Use logical counter index for AMD
- PMU getter
-Message-ID: <aigek5eqJr6DHZau@intel.com>
-References: <20260325021236.14574-1-dongli.zhang@oracle.com>
+ (Exim 4.90_1) (envelope-from <kraxel@redhat.com>) id 1wWwj8-0004eM-EC
+ for qemu-devel@nongnu.org; Tue, 09 Jun 2026 09:42:48 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1781012565;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=YC6m27dopR/SCj4M4b6UwzScY/thjJ7Wj2Z3x2ERl5o=;
+ b=QJx1Vqo+QnW6oCwc4TuKn/2I3NpDSEZscLXBK7W02XTTdgTK/joXHPE7g30iSpy7M44G2K
+ eVrzKHUzMXlgMX2nTaW83LdhYc0A1lsI3QTFSLn48Cdv8IQbieMFSIx5m1YI0LT04PdZLj
+ wj20fKxyrx5u3Lyu56A9ykTn5PZ8iWM=
+Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-628-uyBtlCFsNMifGQ2WVH496w-1; Tue,
+ 09 Jun 2026 09:42:42 -0400
+X-MC-Unique: uyBtlCFsNMifGQ2WVH496w-1
+X-Mimecast-MFC-AGG-ID: uyBtlCFsNMifGQ2WVH496w_1781012561
+Received: from mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.93])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 8489D185CEB0; Tue,  9 Jun 2026 13:42:41 +0000 (UTC)
+Received: from sirius.home.kraxel.org (unknown [10.44.48.153])
+ by mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id 988541800480; Tue,  9 Jun 2026 13:42:40 +0000 (UTC)
+Received: by sirius.home.kraxel.org (Postfix, from userid 1000)
+ id 850751800391; Tue, 09 Jun 2026 15:42:39 +0200 (CEST)
+Date: Tue, 9 Jun 2026 15:42:39 +0200
+From: Gerd Hoffmann <kraxel@redhat.com>
+To: Peter Maydell <peter.maydell@linaro.org>
+Cc: qemu-devel@nongnu.org, "Michael S. Tsirkin" <mst@redhat.com>, 
+ Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ qemu-arm@nongnu.org, Richard Henderson <richard.henderson@linaro.org>,
+ Paolo Bonzini <pbonzini@redhat.com>
+Subject: Re: [PATCH 0/3] hw/arm: add support for shim loading
+Message-ID: <aigTPdBzp0q4sbKc@sirius.home.kraxel.org>
+References: <aiE5LrpfnJRbkx-A@sirius.home.kraxel.org>
+ <CAFEAcA_ow2ro3h0nfhY3jA_XToAnjdVFNPrF25aWLd=X2cnmaw@mail.gmail.com>
+ <aia8iXGozAclWQCb@sirius.home.kraxel.org>
+ <CAFEAcA9oB_-ao5C8fGYonE7njUMWLHo5-iETeN_XtnFL4PzyvA@mail.gmail.com>
+ <aibALjyPTXVUDpDv@sirius.home.kraxel.org>
+ <CAFEAcA-VQWKzJ-aNnzYHZ7a+sVP1y6tkUnE3YCPydsqP0uVXvg@mail.gmail.com>
+ <aiflCrf0iDwcpj27@sirius.home.kraxel.org>
+ <CAFEAcA_+fZnFG_2xH2gXF7ZtGo-WVwAhwkz9ucuS5kXZOYShnw@mail.gmail.com>
+ <aif6QGPxr4oMhb94@sirius.home.kraxel.org>
+ <CAFEAcA_qjzLjdqi3NWfY3cTDfkE0HmuvxSV3yVuBb+O95zvV9w@mail.gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20260325021236.14574-1-dongli.zhang@oracle.com>
-Received-SPF: pass client-ip=192.198.163.16; envelope-from=zhao1.liu@intel.com;
- helo=mgamail.intel.com
-X-Spam_score_int: -47
-X-Spam_score: -4.8
-X-Spam_bar: ----
-X-Spam_report: (-4.8 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.445,
+In-Reply-To: <CAFEAcA_qjzLjdqi3NWfY3cTDfkE0HmuvxSV3yVuBb+O95zvV9w@mail.gmail.com>
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.93
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=kraxel@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -24
+X-Spam_score: -2.5
+X-Spam_bar: --
+X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.445,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_MED=-2.3, SPF_HELO_NONE=0.001,
- SPF_NONE=0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -83,54 +94,54 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Cc: qemu-stable@nongnu.org
+On Tue, Jun 09, 2026 at 01:44:25PM +0100, Peter Maydell wrote:
+> On Tue, 9 Jun 2026 at 13:00, Gerd Hoffmann <kraxel@redhat.com> wrote:
+> >
+> >   Hi,
+> >
+> > > > > #  - specify a firmware and pass a hint to the kernel to boot
+> > > > > #  - direct kernel image boot
+> > > >
+> > > > That is a technical detail which doesn't make much of a difference
+> > > > from the end user perspective.  And often people talk about "direct
+> > > > kernel boot" without drawing a line between these two cases, because the
+> > > > user-visible behavior is pretty much identical:  You pass a kernel to
+> > > > qemu via '-kernel', and it gets booted ...
+> > >
+> > > As an end user I find them majorly different -- I usually
+> > > don't want the firmware, because it takes forever to boot
+> > > if you do that.
+> >
+> > Not sure what exactly you are doing, but for me edk2 is done in less
+> > than a second (unless I turn on firmware debug logging), and that on
+> > a rpi4 host which isn't exactly fast hardware.  I wouldn't call that
+> > "forever".
+> 
+> If you're running TCG emulation then booting EDK2 is definitely not
+> that fast, and I think a lot of use of QEMU for aarch64 targets is TCG,
+> not KVM.
 
-On Tue, Mar 24, 2026 at 07:12:36PM -0700, Dongli Zhang wrote:
-> Date: Tue, 24 Mar 2026 19:12:36 -0700
-> From: Dongli Zhang <dongli.zhang@oracle.com>
-> Subject: [PATCH 1/1] target/i386/kvm: Use logical counter index for AMD PMU
->  getter
-> X-Mailer: git-send-email 2.43.5
-> 
-> For Intel PMU, the counter and selector MSR ranges are disjoint. AMD PMU
-> behaves the same way when PerfCore is unavailable.
-> 
-> However, once PerfCore is present, AMD PMU switches to an interleaved
-> layout in which selector and counter MSRs share a single alternating range.
-> 
-> MSR_F15H_PERF_CTL0 = 0xc0010200
-> MSR_F15H_PERF_CTR0 = 0xc0010201
-> ... ...
-> ... ...
-> MSR_F15H_PERF_CTL5 = 0xc001020a
-> MSR_F15H_PERF_CTR5 = 0xc001020b
-> 
-> The commit 4c7f05232c ("target/i386/kvm: reset AMD PMU registers during VM
-> reset") added the getter/putter pair for AMD PMU MSRs to clear them on
-> reset, but it ignored that, without PerfCore, AMD reuses alternating MSR
-> addresses for selectors and counters. env->msr_gp_counters[] holds the raw
-> counts and env->msr_gp_evtsel[] holds the selectors, so with the
-> interleaved layout we must translate the MSR address back to the logical
-> counter index instead of treating the interleaved slot as the array index.
-> 
-> The arrays are sized to MAX_GP_COUNTERS = 18, so the code never writes past
-> the end. And in the reset path QEMU simply zeroes everything, so that use
-> case still works.
-> 
-> However, the live migration is broken. The PMU state is stored at the
-> wrong indices, so the destination VM reloads mismatched selector/counter
-> pairs. Fix the getter to use the logical counter index rather than the raw
-> interleaved offset.
-> 
-> Fixes: 4c7f05232c ("target/i386/kvm: reset AMD PMU registers during VM reset")
-> Signed-off-by: Dongli Zhang <dongli.zhang@oracle.com>
-> ---
->  target/i386/kvm/kvm.c | 4 ++--
->  1 file changed, 2 insertions(+), 2 deletions(-)
+On my x86 workstation edk2 boot time on tcg is not very different from
+the rpi4 with kvm, also less than one second (until it complains that
+the kernel isn't arm ;).
 
-Sorry for late response, LGTM,
+The rpi4 with tcg takes quite some time indeed, but edk2 isn't
+exceptionally slow.  Booting until the kernel panics because there is no
+root filesystem takes ~30 seconds, and those are roughly 50% / 50%
+splitted between firmware and kernel.  A good chunk of the firmware time
+is probably the zboot efi stub for kernel self-decompression (would have
+to instrument the firmware for more details on that).
 
-Reviewed-by: Zhao Liu <zhao1.liu@intel.com>
+Comparing that to direct boot without firmware does not work for me:
 
+  unable to handle EFI zboot image with "zstd" compression
+  qemu-system-aarch64: could not load kernel '/boot/vmlinuz-7.0.11-200.fc44.aarch64'
+
+Anyway, I'll go over the comments and try to make the docs patch more
+clear for people with less UEFI background.  Update should come later
+this week.
+
+take care,
+  Gerd
 
 
