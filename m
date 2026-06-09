@@ -4,42 +4,42 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B6238CD8CA4
-	for <qemu-devel@archiver.kernel.org>; Tue,  9 Jun 2026 09:55:47 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0D70BCD8CA4
+	for <qemu-devel@archiver.kernel.org>; Tue,  9 Jun 2026 09:55:56 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wWtB3-0006xY-7C; Tue, 09 Jun 2026 05:55:21 -0400
+	id 1wWtB4-0006xh-Ny; Tue, 09 Jun 2026 05:55:22 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <gaosong@loongson.cn>)
- id 1wWtAm-0006lR-FC
- for qemu-devel@nongnu.org; Tue, 09 Jun 2026 05:55:05 -0400
+ id 1wWtAk-0006lN-Vs
+ for qemu-devel@nongnu.org; Tue, 09 Jun 2026 05:55:04 -0400
 Received: from mail.loongson.cn ([114.242.206.163])
  by eggs.gnu.org with esmtp (Exim 4.90_1)
- (envelope-from <gaosong@loongson.cn>) id 1wWtAh-0004tw-4a
- for qemu-devel@nongnu.org; Tue, 09 Jun 2026 05:55:04 -0400
+ (envelope-from <gaosong@loongson.cn>) id 1wWtAg-0004u4-Rx
+ for qemu-devel@nongnu.org; Tue, 09 Jun 2026 05:55:02 -0400
 Received: from loongson.cn (unknown [10.2.5.185])
- by gateway (Coremail) with SMTP id _____8AxvsDr4idqezUSAA--.24800S3;
- Tue, 09 Jun 2026 17:54:51 +0800 (CST)
+ by gateway (Coremail) with SMTP id _____8Cx3sDs4idqgjUSAA--.24750S3;
+ Tue, 09 Jun 2026 17:54:52 +0800 (CST)
 Received: from localhost.localdomain (unknown [10.2.5.185])
- by front1 (Coremail) with SMTP id qMiowJDxSMHg4idqJrGgAA--.28412S6;
- Tue, 09 Jun 2026 17:54:50 +0800 (CST)
+ by front1 (Coremail) with SMTP id qMiowJDxSMHg4idqJrGgAA--.28412S9;
+ Tue, 09 Jun 2026 17:54:52 +0800 (CST)
 From: Song Gao <gaosong@loongson.cn>
 To: qemu-devel@nongnu.org
 Cc: Bibo Mao <maobibo@loongson.cn>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@mailo.com>
-Subject: [PULL 04/14] target/loongarch: Use sys_state in file arch_dump.c when
+Subject: [PULL 07/14] target/loongarch: Use sys_state in tcg_cpu.c when
  accessing CSR registers
-Date: Tue,  9 Jun 2026 17:28:14 +0800
-Message-Id: <20260609092824.227250-5-gaosong@loongson.cn>
+Date: Tue,  9 Jun 2026 17:28:17 +0800
+Message-Id: <20260609092824.227250-8-gaosong@loongson.cn>
 X-Mailer: git-send-email 2.39.1
 In-Reply-To: <20260609092824.227250-1-gaosong@loongson.cn>
 References: <20260609092824.227250-1-gaosong@loongson.cn>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-X-CM-TRANSID: qMiowJDxSMHg4idqJrGgAA--.28412S6
+X-CM-TRANSID: qMiowJDxSMHg4idqJrGgAA--.28412S9
 X-CM-SenderInfo: 5jdr20tqj6z05rqj20fqof0/
 X-Coremail-Antispam: 1Uk129KBjDUn29KB7ZKAUJUUUUU529EdanIXcx71UUUUU7KY7
  ZEXasCq-sGcSsGvfJ3UbIjqfuFe4nvWSU5nxnvy29KBjDU0xBIdaVrnUUvcSsGvfC2Kfnx
@@ -68,134 +68,240 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Bibo Mao <maobibo@loongson.cn>
 
-When accessing CSR registers in file arch_dump.c, use sys_state rather
-than env.
+When accessing CSR registers in file tcg_cpu.c, use sys_state rather
+than env. There is no function change.
 
 Signed-off-by: Bibo Mao <maobibo@loongson.cn>
 Reviewed-by: Philippe Mathieu-Daudé <philmd@mailo.com>
 Tested-by: Song Gao <gaosong@loongson.cn>
-Message-ID: <20260605082552.175336-5-maobibo@loongson.cn>
+Message-ID: <20260605082552.175336-8-maobibo@loongson.cn>
 Signed-off-by: Song Gao <gaosong@loongson.cn>
 ---
- hw/intc/loongarch_dintc.c             |  4 +++-
- target/loongarch/arch_dump.c          |  5 +++--
- target/loongarch/cpu-mmu.h            |  4 +++-
- target/loongarch/gdbstub.c            |  3 ++-
- target/loongarch/tcg/constant_timer.c | 10 ++++++----
- 5 files changed, 17 insertions(+), 9 deletions(-)
+ target/loongarch/tcg/tcg_cpu.c | 107 +++++++++++++++++----------------
+ 1 file changed, 56 insertions(+), 51 deletions(-)
 
-diff --git a/hw/intc/loongarch_dintc.c b/hw/intc/loongarch_dintc.c
-index c42a919df4..c877a8003b 100644
---- a/hw/intc/loongarch_dintc.c
-+++ b/hw/intc/loongarch_dintc.c
-@@ -35,10 +35,12 @@ static void do_set_vcpu_dintc_irq(CPUState *cs, run_on_cpu_data data)
+diff --git a/target/loongarch/tcg/tcg_cpu.c b/target/loongarch/tcg/tcg_cpu.c
+index 31d3db6e8e..66b3f45807 100644
+--- a/target/loongarch/tcg/tcg_cpu.c
++++ b/target/loongarch/tcg/tcg_cpu.c
+@@ -77,34 +77,35 @@ void G_NORETURN do_raise_exception(CPULoongArchState *env,
+ static void loongarch_cpu_do_interrupt(CPUState *cs)
  {
-     int irq = data.host_int;
-     CPULoongArchState *env;
-+    CPUSysState *sys;
- 
-     env = &LOONGARCH_CPU(cs)->env;
-+    sys = env_sys(env);
-     cpu_synchronize_state(cs);
--    set_bit(irq, (unsigned long *)&env->CSR_MSGIS);
-+    set_bit(irq, (unsigned long *)&sys->CSR_MSGIS);
- }
- 
- static void loongarch_dintc_mem_write(void *opaque, hwaddr addr,
-diff --git a/target/loongarch/arch_dump.c b/target/loongarch/arch_dump.c
-index 2b0955a209..9d84faef96 100644
---- a/target/loongarch/arch_dump.c
-+++ b/target/loongarch/arch_dump.c
-@@ -116,6 +116,7 @@ int loongarch_cpu_write_elf64_note(WriteCoreDumpFunction f, CPUState *cs,
- {
-     struct loongarch_note note;
-     CPULoongArchState *env = &LOONGARCH_CPU(cs)->env;
+     CPULoongArchState *env = cpu_env(cs);
 +    CPUSysState *sys = env_sys(env);
-     int ret, i;
+     bool update_badinstr = 1;
+     int cause = -1;
+-    bool tlbfill = FIELD_EX64(env->CSR_TLBRERA, CSR_TLBRERA, ISTLBR);
+-    uint32_t vec_size = FIELD_EX64(env->CSR_ECFG, CSR_ECFG, VS);
++    bool tlbfill = FIELD_EX64(sys->CSR_TLBRERA, CSR_TLBRERA, ISTLBR);
++    uint32_t vec_size = FIELD_EX64(sys->CSR_ECFG, CSR_ECFG, VS);
+     uint64_t last_pc = env->pc;
  
-     loongarch_note_init(&note, s, "CORE", 5, NT_PRSTATUS,
-@@ -126,8 +127,8 @@ int loongarch_cpu_write_elf64_note(WriteCoreDumpFunction f, CPUState *cs,
-     for (i = 0; i < 32; ++i) {
-         note.prstatus.pr_reg.gpr[i] = cpu_to_dump64(s, env->gpr[i]);
+     if (cs->exception_index != EXCCODE_INT) {
+         qemu_log_mask(CPU_LOG_INT,
+                      "%s enter: pc " TARGET_FMT_lx " ERA " TARGET_FMT_lx
+                      " TLBRERA " TARGET_FMT_lx " exception: %d (%s)\n",
+-                     __func__, env->pc, env->CSR_ERA, env->CSR_TLBRERA,
++                     __func__, env->pc, sys->CSR_ERA, sys->CSR_TLBRERA,
+                      cs->exception_index,
+                      loongarch_exception_name(cs->exception_index));
      }
--    note.prstatus.pr_reg.csr_era  = cpu_to_dump64(s, env->CSR_ERA);
--    note.prstatus.pr_reg.csr_badv = cpu_to_dump64(s, env->CSR_BADV);
-+    note.prstatus.pr_reg.csr_era  = cpu_to_dump64(s, sys->CSR_ERA);
-+    note.prstatus.pr_reg.csr_badv = cpu_to_dump64(s, sys->CSR_BADV);
-     ret = f(&note, LOONGARCH_PRSTATUS_NOTE_SIZE, s);
-     if (ret < 0) {
-         return -1;
-diff --git a/target/loongarch/cpu-mmu.h b/target/loongarch/cpu-mmu.h
-index 2d7ebb2d72..54fb732d62 100644
---- a/target/loongarch/cpu-mmu.h
-+++ b/target/loongarch/cpu-mmu.h
-@@ -32,7 +32,9 @@ typedef struct MMUContext {
  
- static inline bool cpu_has_ptw(CPULoongArchState *env)
- {
--    return !!FIELD_EX64(env->CSR_PWCH, CSR_PWCH, HPTW_EN);
-+    CPUSysState *sys = env_sys(env);
-+
-+    return !!FIELD_EX64(sys->CSR_PWCH, CSR_PWCH, HPTW_EN);
- }
+     switch (cs->exception_index) {
+     case EXCCODE_DBP:
+-        env->CSR_DBG = FIELD_DP64(env->CSR_DBG, CSR_DBG, DCL, 1);
+-        env->CSR_DBG = FIELD_DP64(env->CSR_DBG, CSR_DBG, ECODE, 0xC);
++        sys->CSR_DBG = FIELD_DP64(sys->CSR_DBG, CSR_DBG, DCL, 1);
++        sys->CSR_DBG = FIELD_DP64(sys->CSR_DBG, CSR_DBG, ECODE, 0xC);
+         goto set_DERA;
+     set_DERA:
+-        env->CSR_DERA = env->pc;
+-        env->CSR_DBG = FIELD_DP64(env->CSR_DBG, CSR_DBG, DST, 1);
+-        set_pc(env, env->CSR_EENTRY + 0x480);
++        sys->CSR_DERA = env->pc;
++        sys->CSR_DBG = FIELD_DP64(sys->CSR_DBG, CSR_DBG, DST, 1);
++        set_pc(env, sys->CSR_EENTRY + 0x480);
+         break;
+     case EXCCODE_INT:
+-        if (FIELD_EX64(env->CSR_DBG, CSR_DBG, DST)) {
+-            env->CSR_DBG = FIELD_DP64(env->CSR_DBG, CSR_DBG, DEI, 1);
++        if (FIELD_EX64(sys->CSR_DBG, CSR_DBG, DST)) {
++            sys->CSR_DBG = FIELD_DP64(sys->CSR_DBG, CSR_DBG, DEI, 1);
+             goto set_DERA;
+         }
+         QEMU_FALLTHROUGH;
+@@ -115,7 +116,7 @@ static void loongarch_cpu_do_interrupt(CPUState *cs)
+         update_badinstr = 0;
+         break;
+     case EXCCODE_BCE:
+-        env->CSR_BADV = env->pc;
++        sys->CSR_BADV = env->pc;
+         QEMU_FALLTHROUGH;
+     case EXCCODE_SYS:
+     case EXCCODE_BRK:
+@@ -142,35 +143,35 @@ static void loongarch_cpu_do_interrupt(CPUState *cs)
+     if (update_badinstr) {
+         MemOpIdx oi = make_memop_idx(MO_LEUL, cpu_mmu_index(cs, true));
  
- static inline bool pte_present(CPULoongArchState *env, uint64_t entry)
-diff --git a/target/loongarch/gdbstub.c b/target/loongarch/gdbstub.c
-index 3e9bdfa8bb..e02354cdb9 100644
---- a/target/loongarch/gdbstub.c
-+++ b/target/loongarch/gdbstub.c
-@@ -34,6 +34,7 @@ void write_fcc(CPULoongArchState *env, uint64_t val)
- int loongarch_cpu_gdb_read_register(CPUState *cs, GByteArray *mem_buf, int n)
+-        env->CSR_BADI = cpu_ldl_code_mmu(env, env->pc, oi, 0);
++        sys->CSR_BADI = cpu_ldl_code_mmu(env, env->pc, oi, 0);
+     }
+ 
+     /* Save PLV and IE */
+     if (tlbfill) {
+-        env->CSR_TLBRPRMD = FIELD_DP64(env->CSR_TLBRPRMD, CSR_TLBRPRMD, PPLV,
+-                                       FIELD_EX64(env->CSR_CRMD,
++        sys->CSR_TLBRPRMD = FIELD_DP64(sys->CSR_TLBRPRMD, CSR_TLBRPRMD, PPLV,
++                                       FIELD_EX64(sys->CSR_CRMD,
+                                        CSR_CRMD, PLV));
+-        env->CSR_TLBRPRMD = FIELD_DP64(env->CSR_TLBRPRMD, CSR_TLBRPRMD, PIE,
+-                                       FIELD_EX64(env->CSR_CRMD, CSR_CRMD, IE));
++        sys->CSR_TLBRPRMD = FIELD_DP64(sys->CSR_TLBRPRMD, CSR_TLBRPRMD, PIE,
++                                       FIELD_EX64(sys->CSR_CRMD, CSR_CRMD, IE));
+         /* set the DA mode */
+-        env->CSR_CRMD = FIELD_DP64(env->CSR_CRMD, CSR_CRMD, DA, 1);
+-        env->CSR_CRMD = FIELD_DP64(env->CSR_CRMD, CSR_CRMD, PG, 0);
+-        env->CSR_TLBRERA = FIELD_DP64(env->CSR_TLBRERA, CSR_TLBRERA,
++        sys->CSR_CRMD = FIELD_DP64(sys->CSR_CRMD, CSR_CRMD, DA, 1);
++        sys->CSR_CRMD = FIELD_DP64(sys->CSR_CRMD, CSR_CRMD, PG, 0);
++        sys->CSR_TLBRERA = FIELD_DP64(sys->CSR_TLBRERA, CSR_TLBRERA,
+                                       PC, (env->pc >> 2));
+     } else {
+-        env->CSR_ESTAT = FIELD_DP64(env->CSR_ESTAT, CSR_ESTAT, ECODE,
++        sys->CSR_ESTAT = FIELD_DP64(sys->CSR_ESTAT, CSR_ESTAT, ECODE,
+                                     EXCODE_MCODE(cause));
+-        env->CSR_ESTAT = FIELD_DP64(env->CSR_ESTAT, CSR_ESTAT, ESUBCODE,
++        sys->CSR_ESTAT = FIELD_DP64(sys->CSR_ESTAT, CSR_ESTAT, ESUBCODE,
+                                     EXCODE_SUBCODE(cause));
+-        env->CSR_PRMD = FIELD_DP64(env->CSR_PRMD, CSR_PRMD, PPLV,
+-                                   FIELD_EX64(env->CSR_CRMD, CSR_CRMD, PLV));
+-        env->CSR_PRMD = FIELD_DP64(env->CSR_PRMD, CSR_PRMD, PIE,
+-                                   FIELD_EX64(env->CSR_CRMD, CSR_CRMD, IE));
+-        env->CSR_ERA = env->pc;
++        sys->CSR_PRMD = FIELD_DP64(sys->CSR_PRMD, CSR_PRMD, PPLV,
++                                   FIELD_EX64(sys->CSR_CRMD, CSR_CRMD, PLV));
++        sys->CSR_PRMD = FIELD_DP64(sys->CSR_PRMD, CSR_PRMD, PIE,
++                                   FIELD_EX64(sys->CSR_CRMD, CSR_CRMD, IE));
++        sys->CSR_ERA = env->pc;
+     }
+ 
+-    env->CSR_CRMD = FIELD_DP64(env->CSR_CRMD, CSR_CRMD, PLV, 0);
+-    env->CSR_CRMD = FIELD_DP64(env->CSR_CRMD, CSR_CRMD, IE, 0);
++    sys->CSR_CRMD = FIELD_DP64(sys->CSR_CRMD, CSR_CRMD, PLV, 0);
++    sys->CSR_CRMD = FIELD_DP64(sys->CSR_CRMD, CSR_CRMD, IE, 0);
+ 
+     if (vec_size) {
+         vec_size = (1 << vec_size) * 4;
+@@ -179,27 +180,27 @@ static void loongarch_cpu_do_interrupt(CPUState *cs)
+     if  (cs->exception_index == EXCCODE_INT) {
+         /* Interrupt */
+         uint32_t vector = 0;
+-        uint32_t pending = FIELD_EX64(env->CSR_ESTAT, CSR_ESTAT, IS);
+-        pending &= FIELD_EX64(env->CSR_ECFG, CSR_ECFG, LIE);
++        uint32_t pending = FIELD_EX64(sys->CSR_ESTAT, CSR_ESTAT, IS);
++        pending &= FIELD_EX64(sys->CSR_ECFG, CSR_ECFG, LIE);
+ 
+         /* Find the highest-priority interrupt. */
+         vector = 31 - clz32(pending);
+-        set_pc(env, env->CSR_EENTRY + \
++        set_pc(env, sys->CSR_EENTRY + \
+                (EXCCODE_EXTERNAL_INT + vector) * vec_size);
+         qemu_log_mask(CPU_LOG_INT,
+                       "%s: PC " TARGET_FMT_lx " ERA " TARGET_FMT_lx
+                       " cause %d\n" "    A " TARGET_FMT_lx " D "
+                       TARGET_FMT_lx " vector = %d ExC " TARGET_FMT_lx "ExS"
+                       TARGET_FMT_lx "\n",
+-                      __func__, env->pc, env->CSR_ERA,
+-                      cause, env->CSR_BADV, env->CSR_DERA, vector,
+-                      env->CSR_ECFG, env->CSR_ESTAT);
++                      __func__, env->pc, sys->CSR_ERA,
++                      cause, sys->CSR_BADV, sys->CSR_DERA, vector,
++                      sys->CSR_ECFG, sys->CSR_ESTAT);
+         qemu_plugin_vcpu_interrupt_cb(cs, last_pc);
+     } else {
+         if (tlbfill) {
+-            set_pc(env, env->CSR_TLBRENTRY);
++            set_pc(env, sys->CSR_TLBRENTRY);
+         } else {
+-            set_pc(env, env->CSR_EENTRY + EXCODE_MCODE(cause) * vec_size);
++            set_pc(env, sys->CSR_EENTRY + EXCODE_MCODE(cause) * vec_size);
+         }
+         qemu_log_mask(CPU_LOG_INT,
+                       "%s: PC " TARGET_FMT_lx " ERA " TARGET_FMT_lx
+@@ -207,12 +208,12 @@ static void loongarch_cpu_do_interrupt(CPUState *cs)
+                       " EXCFG " TARGET_FMT_lx " BADVA " TARGET_FMT_lx
+                       "BADI " TARGET_FMT_lx " SYS_NUM " TARGET_FMT_lu
+                       " cpu %d asid " TARGET_FMT_lx "\n", __func__, env->pc,
+-                      tlbfill ? env->CSR_TLBRERA : env->CSR_ERA,
+-                      cause, tlbfill ? "(refill)" : "", env->CSR_ESTAT,
+-                      env->CSR_ECFG,
+-                      tlbfill ? env->CSR_TLBRBADV : env->CSR_BADV,
+-                      env->CSR_BADI, env->gpr[11], cs->cpu_index,
+-                      env->CSR_ASID);
++                      tlbfill ? sys->CSR_TLBRERA : sys->CSR_ERA,
++                      cause, tlbfill ? "(refill)" : "", sys->CSR_ESTAT,
++                      sys->CSR_ECFG,
++                      tlbfill ? sys->CSR_TLBRBADV : sys->CSR_BADV,
++                      sys->CSR_BADI, env->gpr[11], cs->cpu_index,
++                      sys->CSR_ASID);
+         qemu_plugin_vcpu_exception_cb(cs, last_pc);
+     }
+     cs->exception_index = -1;
+@@ -226,8 +227,9 @@ static void loongarch_cpu_do_transaction_failed(CPUState *cs, hwaddr physaddr,
+                                                 uintptr_t retaddr)
  {
      CPULoongArchState *env = cpu_env(cs);
 +    CPUSysState *sys = env_sys(env);
  
-     if (0 <= n && n <= 34) {
-         uint64_t val;
-@@ -46,7 +47,7 @@ int loongarch_cpu_gdb_read_register(CPUState *cs, GByteArray *mem_buf, int n)
-         } else if (n == 33) {
-             val = env->pc;
-         } else /* if (n == 34) */ {
--            val = env->CSR_BADV;
-+            val = sys->CSR_BADV;
-         }
- 
-         if (is_la64(env)) {
-diff --git a/target/loongarch/tcg/constant_timer.c b/target/loongarch/tcg/constant_timer.c
-index 1851f53fd6..f56e76d482 100644
---- a/target/loongarch/tcg/constant_timer.c
-+++ b/target/loongarch/tcg/constant_timer.c
-@@ -34,9 +34,10 @@ void cpu_loongarch_store_constant_timer_config(LoongArchCPU *cpu,
-                                                uint64_t value)
- {
-     CPULoongArchState *env = &cpu->env;
-+    CPUSysState *sys = env_sys(env);
-     uint64_t now, next;
- 
--    env->CSR_TCFG = value;
-+    sys->CSR_TCFG = value;
-     if (value & CONSTANT_TIMER_ENABLE) {
-         now = qemu_clock_get_ns(QEMU_CLOCK_VIRTUAL);
-         next = now + (value & CONSTANT_TIMER_TICK_MASK) * TIMER_PERIOD;
-@@ -50,14 +51,15 @@ void loongarch_constant_timer_cb(void *opaque)
- {
-     LoongArchCPU *cpu  = opaque;
-     CPULoongArchState *env = &cpu->env;
-+    CPUSysState *sys = env_sys(env);
-     uint64_t now, next;
- 
--    if (FIELD_EX64(env->CSR_TCFG, CSR_TCFG, PERIODIC)) {
-+    if (FIELD_EX64(sys->CSR_TCFG, CSR_TCFG, PERIODIC)) {
-         now = qemu_clock_get_ns(QEMU_CLOCK_VIRTUAL);
--        next = now + (env->CSR_TCFG & CONSTANT_TIMER_TICK_MASK) * TIMER_PERIOD;
-+        next = now + (sys->CSR_TCFG & CONSTANT_TIMER_TICK_MASK) * TIMER_PERIOD;
-         timer_mod(&cpu->timer, next);
+-    env->CSR_BADV = addr;
++    sys->CSR_BADV = addr;
+     if (access_type == MMU_INST_FETCH) {
+         do_raise_exception(env, EXCCODE_ADEF, retaddr);
      } else {
--        env->CSR_TCFG = FIELD_DP64(env->CSR_TCFG, CSR_TCFG, EN, 0);
-+        sys->CSR_TCFG = FIELD_DP64(sys->CSR_TCFG, CSR_TCFG, EN, 0);
-     }
+@@ -238,9 +240,10 @@ static void loongarch_cpu_do_transaction_failed(CPUState *cs, hwaddr physaddr,
+ static inline bool cpu_loongarch_hw_interrupts_enabled(CPULoongArchState *env)
+ {
+     bool ret = 0;
++    CPUSysState *sys = env_sys(env);
  
-     loongarch_cpu_set_irq(opaque, IRQ_TIMER, 1);
+-    ret = (FIELD_EX64(env->CSR_CRMD, CSR_CRMD, IE) &&
+-          !(FIELD_EX64(env->CSR_DBG, CSR_DBG, DST)));
++    ret = (FIELD_EX64(sys->CSR_CRMD, CSR_CRMD, IE) &&
++          !(FIELD_EX64(sys->CSR_DBG, CSR_DBG, DST)));
+ 
+     return ret;
+ }
+@@ -271,12 +274,13 @@ static vaddr loongarch_pointer_wrap(CPUState *cs, int mmu_idx,
+ static TCGTBCPUState loongarch_get_tb_cpu_state(CPUState *cs)
+ {
+     CPULoongArchState *env = cpu_env(cs);
++    CPUSysState *sys = env_sys(env);
+     uint32_t flags;
+ 
+-    flags = env->CSR_CRMD & (R_CSR_CRMD_PLV_MASK | R_CSR_CRMD_PG_MASK);
+-    flags |= FIELD_EX64(env->CSR_EUEN, CSR_EUEN, FPE) * HW_FLAGS_EUEN_FPE;
+-    flags |= FIELD_EX64(env->CSR_EUEN, CSR_EUEN, SXE) * HW_FLAGS_EUEN_SXE;
+-    flags |= FIELD_EX64(env->CSR_EUEN, CSR_EUEN, ASXE) * HW_FLAGS_EUEN_ASXE;
++    flags = sys->CSR_CRMD & (R_CSR_CRMD_PLV_MASK | R_CSR_CRMD_PG_MASK);
++    flags |= FIELD_EX64(sys->CSR_EUEN, CSR_EUEN, FPE) * HW_FLAGS_EUEN_FPE;
++    flags |= FIELD_EX64(sys->CSR_EUEN, CSR_EUEN, SXE) * HW_FLAGS_EUEN_SXE;
++    flags |= FIELD_EX64(sys->CSR_EUEN, CSR_EUEN, ASXE) * HW_FLAGS_EUEN_ASXE;
+     flags |= is_va32(env) * HW_FLAGS_VA32;
+ 
+     return (TCGTBCPUState){ .pc = env->pc, .flags = flags };
+@@ -299,9 +303,10 @@ static void loongarch_restore_state_to_opc(CPUState *cs,
+ static int loongarch_cpu_mmu_index(CPUState *cs, bool ifetch)
+ {
+     CPULoongArchState *env = cpu_env(cs);
++    CPUSysState *sys = env_sys(env);
+ 
+-    if (FIELD_EX64(env->CSR_CRMD, CSR_CRMD, PG)) {
+-        return FIELD_EX64(env->CSR_CRMD, CSR_CRMD, PLV);
++    if (FIELD_EX64(sys->CSR_CRMD, CSR_CRMD, PG)) {
++        return FIELD_EX64(sys->CSR_CRMD, CSR_CRMD, PLV);
+     }
+     return MMU_DA_IDX;
+ }
 -- 
 2.54.0
 
