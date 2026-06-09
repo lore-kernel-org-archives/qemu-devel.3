@@ -4,108 +4,62 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 57A90CD8CA4
-	for <qemu-devel@archiver.kernel.org>; Tue,  9 Jun 2026 12:31:03 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 57958CD8C92
+	for <qemu-devel@archiver.kernel.org>; Tue,  9 Jun 2026 12:37:25 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wWvas-00012O-44; Tue, 09 Jun 2026 08:30:10 -0400
+	id 1wWvhI-0003j9-4Z; Tue, 09 Jun 2026 08:36:48 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <leonardi@redhat.com>)
- id 1wWvao-00011T-LH
- for qemu-devel@nongnu.org; Tue, 09 Jun 2026 08:30:06 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <jic23@kernel.org>)
+ id 1wWvhH-0003if-67; Tue, 09 Jun 2026 08:36:47 -0400
+Received: from sea.source.kernel.org ([2600:3c0a:e001:78e:0:1991:8:25])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <leonardi@redhat.com>)
- id 1wWvam-0000YM-2j
- for qemu-devel@nongnu.org; Tue, 09 Jun 2026 08:30:06 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1781008203;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=DoFYwybA10DFq3ugVnScCFTYt/rFymgVdzPwN+GTRCg=;
- b=eE22xJ5D0VoXlqFS3by+NwYjCRCw5dDeh7JkozsLxaOXNr/pfFIYGi+y9nwWTNBTqxXZJo
- ylof7+Hae8GR39/++23KJvy6nQEmKlFQNi42dM8mYtOlwdDxCyXBhPCazV9sIKShMQMXnR
- pDPsSNSAS2cEtbepvb6GLJlpn/v+rqY=
-Received: from mail-wr1-f70.google.com (mail-wr1-f70.google.com
- [209.85.221.70]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-663-KdmLxhVqM_2F7iqLJ6SkrA-1; Tue, 09 Jun 2026 08:29:59 -0400
-X-MC-Unique: KdmLxhVqM_2F7iqLJ6SkrA-1
-X-Mimecast-MFC-AGG-ID: KdmLxhVqM_2F7iqLJ6SkrA_1781008199
-Received: by mail-wr1-f70.google.com with SMTP id
- ffacd0b85a97d-45ef93c359fso4466290f8f.0
- for <qemu-devel@nongnu.org>; Tue, 09 Jun 2026 05:29:59 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1781008199; x=1781612999; darn=nongnu.org;
- h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
- :mime-version:subject:date:from:from:to:cc:subject:date:message-id
- :reply-to; bh=DoFYwybA10DFq3ugVnScCFTYt/rFymgVdzPwN+GTRCg=;
- b=QxYfVLmDSZOqGqIO8TIvCS4uPt1MJCYD/uZNG54iTQtBobtJMlwSNJtfTWRvMRjPtu
- wENCtZtUqohHTZfOPrt2H+PUqZS7xbJjoneKdRTGs5YI9HUDQjTiGXolc2gdRWe9NSEs
- weRIqhlTdeMICR/VwzJm54Ys0T1bQDhQb2URLldQoc4IUZk9JKw/GX9XwXHAqbOKpv3C
- fwtMXiZ/4MtkCnTDvsfov85yatrnTf4ajlI+F7fAUREOxLlkE5hwQ9iaEypB2dm0opf1
- 6piNqVZFKybkjdxxmfTxpPmotyyDTgwM9E1ktvLUzk5Gbb66p9NOM5ZrxVeE8DuwIqWQ
- VpIw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1781008199; x=1781612999;
- h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
- :mime-version:subject:date:from:x-gm-gg:x-gm-message-state:from:to
- :cc:subject:date:message-id:reply-to;
- bh=DoFYwybA10DFq3ugVnScCFTYt/rFymgVdzPwN+GTRCg=;
- b=OmtPX7N5RFV1uqL8q6evwM2KF1yIHC3m/vATB5DvuRJk88c9IAo5y8haE0HWt78N0e
- hCW9sOZfkU3fLRVoXZDg30hAsuL/qd5DdvRrdD34/a613yTzZ+/fb1c1/lZv83b2SA18
- j+/1Pnrv1GgfKXY1cRMHRwJRzsESVSISDRLSLxTCs6DgfKuEwdoYt9Hl3oOwPD5gVjEi
- QJLds9FA8laUeBLHpyPj6YqKoMzAdfFUNv4BzczwoUHvh/SKqRs5+Jvi1Q3lXQMqqBO2
- 9iAC14NpXB2VG/TV5d7E49paeO0lnx4QRYers4JkA0Ry7FPdk5qDYrB37WOTUq329drL
- 5bUQ==
-X-Gm-Message-State: AOJu0YzdERuLMSo68n30+e65HUwP6hwL+6XaDYdOtBDAg8p2CWI9L/4P
- Dmt7TxBEDykWWOC6v+mPiNQ0HsGq1s8qr3lWkVOURTPWQaBZgZygDa+dkJlAbU27H6bhP/kvgCQ
- X4CMWN8kXYPHDttjQr6uhO3vIUYHDQLIbRW1NSNiaogkhuumAPSeAImFo
-X-Gm-Gg: Acq92OHjZAMVwsjTz7c+JA3JKZSBi16FEj2i84y9qPOni3ZkoWxI+p1ainv8qFwPg4g
- UL7StqNtsmzJCQ8Xqj9SFg5jTTfi5OuVoAL8EAgbXvTN3btj2G2XBup6TXv8GNOsZMQsY6HyG/v
- XVxwmXzK1aRupprzgEwjLPbc0sZYgUxLUcnCUk10S7HnrXB24MZjAdZhUWmlgsMFMVStmUGAxtQ
- +O8nQB3/wlth0HCCHLXX/Ucse5mIzr2zci7t2LWK/ehVD2p/fPHVPlOxg7Ba8ik7MVahY5OfYyH
- 3C2sT6Mu1f8/sJB/QnCZsx3EjeQQ9HPIkNlLyizyHdJ9HpiaMCQK8G+zrFxYC5AxqgJjuyx2bDc
- NSGDd5bYkpWeQRB3WoYNFsnvlGpffr5Del/LwlrqxKueELEz6Iq/wy3bzV72EONqKFPdeRsdjaQ
- DcGUTVUd7M3hPDceiEc091XPkB0Hc=
-X-Received: by 2002:a05:600c:a117:b0:490:c2a3:23d0 with SMTP id
- 5b1f17b1804b1-490c2a32441mr238715505e9.35.1781008198747; 
- Tue, 09 Jun 2026 05:29:58 -0700 (PDT)
-X-Received: by 2002:a05:600c:a117:b0:490:c2a3:23d0 with SMTP id
- 5b1f17b1804b1-490c2a32441mr238714675e9.35.1781008198194; 
- Tue, 09 Jun 2026 05:29:58 -0700 (PDT)
-Received: from lleonard-thinkpadx1carbongen13.rmtit.csb ([176.206.19.176])
- by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-490c2d2d11asm423031295e9.1.2026.06.09.05.29.57
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 09 Jun 2026 05:29:57 -0700 (PDT)
-From: Luigi Leonardi <leonardi@redhat.com>
-Date: Tue, 09 Jun 2026 14:29:03 +0200
-Subject: [PATCH v2 1/2] igvm: replace raw uint32_t with igvm library types
+ (Exim 4.90_1) (envelope-from <jic23@kernel.org>)
+ id 1wWvhE-0002Ty-NV; Tue, 09 Jun 2026 08:36:46 -0400
+Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
+ by sea.source.kernel.org (Postfix) with ESMTP id 19C6143CA1;
+ Tue,  9 Jun 2026 12:36:41 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 576411F00893;
+ Tue,  9 Jun 2026 12:36:37 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
+ s=k20260515; t=1781008601;
+ bh=sDtzMRMvAl0fvlAZBIDiq1O2az4YurxD2A7Q83AuB9s=;
+ h=Date:From:To:Cc:Subject:In-Reply-To:References;
+ b=Tg4RzaL9TzyeNTB8+6WRXvmYrF7nLlxg4r3xEeHMedZaDYuxyjDbihoXkaCL4KTyQ
+ 9wiiNDiYis7mlcD9N8udqC6oJwBLSNZ2hOkgLk67pQLOBmeCYh28ebvsww9EY1IajZ
+ RbQ1yKfDaJ01XNL85ge1Y6gB+F0TR0GnCwwKPCl8p2Cx59tqPLKWtw6TFwEEjwC/1K
+ fYaJVpMaJOqhJbgD43UN/iAR7jsG43Bj989MHNpd2MCIrEw1Lv9POR/BQo7GTGw+jV
+ GWWF7QKddK7XtGj3AVJ37ZZbNRqd0ksKsejtlpCEe3PMBl4rD7aeK5sR/Zn7H40nhm
+ yR1yCq4eZ56LA==
+Date: Tue, 9 Jun 2026 13:36:34 +0100
+From: Jonathan Cameron <jic23@kernel.org>
+To: Chen Pei <cp0613@linux.alibaba.com>
+Cc: pbonzini@redhat.com, palmer@dabbelt.com, alistair.francis@wdc.com,
+ liwei1518@gmail.com, daniel.barboza@oss.qualcomm.com,
+ zhiwei_liu@linux.alibaba.com, chao.liu.zevorn@gmail.com,
+ sunilvl@ventanamicro.com, jonathan.cameron@huawei.com, fan.ni@samsung.com,
+ guoren@kernel.org, qemu-riscv@nongnu.org, qemu-devel@nongnu.org,
+ linux-cxl@vger.kernel.org
+Subject: Re: [PATCH 4/4] hw/cxl: Map committed HDM decoder ranges as RAM for
+ direct DMA
+Message-ID: <20260609133634.7dbb892c@jic23-huawei>
+In-Reply-To: <20260602074127.63819-5-cp0613@linux.alibaba.com>
+References: <20260602074127.63819-1-cp0613@linux.alibaba.com>
+ <20260602074127.63819-5-cp0613@linux.alibaba.com>
+X-Mailer: Claws Mail 4.4.0 (GTK 3.24.52; x86_64-pc-linux-gnu)
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
+Content-Type: text/plain; charset=US-ASCII
 Content-Transfer-Encoding: 7bit
-Message-Id: <20260609-igvm_optional-v2-1-b1f1f08dc40e@redhat.com>
-References: <20260609-igvm_optional-v2-0-b1f1f08dc40e@redhat.com>
-In-Reply-To: <20260609-igvm_optional-v2-0-b1f1f08dc40e@redhat.com>
-To: qemu-devel@nongnu.org
-Cc: Gerd Hoffmann <kraxel@redhat.com>, 
- Stefano Garzarella <sgarzare@redhat.com>, Ani Sinha <anisinha@redhat.com>, 
- Oliver Steffen <osteffen@redhat.com>, Luigi Leonardi <leonardi@redhat.com>
-X-Mailer: b4 0.14.3
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=leonardi@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
+Received-SPF: pass client-ip=2600:3c0a:e001:78e:0:1991:8:25;
+ envelope-from=jic23@kernel.org; helo=sea.source.kernel.org
 X-Spam_score_int: -24
 X-Spam_score: -2.5
 X-Spam_bar: --
 X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.445,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -121,43 +75,210 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Use IgvmVariableHeaderType and IgvmHeaderSection in QIGVMHandler and
-qigvm_handler() instead of plain uint32_t, so that each field's purpose
-is clear from its type.
+On Tue,  2 Jun 2026 15:41:27 +0800
+Chen Pei <cp0613@linux.alibaba.com> wrote:
 
-Reviewed-by: Stefano Garzarella <sgarzare@redhat.com>
-Reviewed-by: Ani Sinha <anisinha@redhat.com>
-Signed-off-by: Luigi Leonardi <leonardi@redhat.com>
----
- backends/igvm.c | 6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+> The CXL Fixed Memory Window (CFMW) is registered with
+> memory_region_init_io() and has no backing ram_block.  As a result
+> address_space_map() on a guest physical address inside the CFMW
+> takes the bounce-buffer path and is bounded by
+> DEFAULT_MAX_BOUNCE_BUFFER_SIZE (4 KiB by default for the system
+> AddressSpace).  Once a Type-3 device is brought online as system RAM
+> (daxctl online-memory), the kernel happily allocates DMA buffers from
+> the CFMW range and any virtio operation whose scatter list exceeds
+> 4 KiB or that overlaps with another in-flight transfer fails with:
+> 
+>     qemu-system-riscv64: virtio: bogus descriptor or out of resources
 
-diff --git a/backends/igvm.c b/backends/igvm.c
-index c347d0c17e..8bb5750768 100644
---- a/backends/igvm.c
-+++ b/backends/igvm.c
-@@ -102,8 +102,8 @@ static int qigvm_initialization_guest_policy(QIgvm *ctx,
-                                        Error **errp);
- 
- struct QIGVMHandler {
--    uint32_t type;
--    uint32_t section;
-+    IgvmVariableHeaderType type;
-+    IgvmHeaderSection section;
-     int (*handler)(QIgvm *ctx, const uint8_t *header_data, Error **errp);
- };
- 
-@@ -132,7 +132,7 @@ static struct QIGVMHandler handlers[] = {
-       qigvm_directive_madt },
- };
- 
--static int qigvm_handler(QIgvm *ctx, uint32_t type, Error **errp)
-+static int qigvm_handler(QIgvm *ctx, IgvmVariableHeaderType type, Error **errp)
- {
-     size_t handler;
-     IgvmHandle header_handle;
+This is half the bug if you are running without the stuff I talk about
+below - you can't run instructions out of that memory either.
 
--- 
-2.54.0
+As to the bonce buffer that should be larger anyway - there has
+been some discussion in the past on how to do that for the global one
+(there is support for PCI specific cases) but we never got to a
+standard solution.
+
+> 
+> The bug is not RISC-V specific: CFMW registration and the bounce
+> buffer limit are both arch-agnostic, so any guest that onlines CXL
+> memory and issues DMA larger than 4 KiB into it is affected.  It
+> shows up first on RISC-V virt because that is where the rest of
+> this series enables the daxctl + virtio path end-to-end.
+> 
+> Reproduce on RISC-V virt with cxl=on and a single Type-3 device:
+> 
+>     cxl create-region -m -t ram -d decoder0.0 -w 1 mem0 -s 4G
+>     daxctl online-memory dax0.0
+>     free -h    # triggers the error and stalls the guest
+> 
+> Fix it by overlaying a RAM alias of the device's memory backend
+> (hostvmem / hostpmem) at the committed HDM decoder's HPA range, with
+> higher priority than the CFMW I/O region.  flatview_translate() then
+> hits the alias, address_space_map() returns a direct host pointer,
+> and DMA proceeds without bouncing.  This mirrors the existing QEMU
+> pattern of PCI BAR and IOMMU MR overlays.  The alias is torn down on
+> hdm_decoder_uncommit() so subsequent region tear-down + re-creation
+> works.
+> 
+
++CC linux-cxl as that's where you are more likely to get feedback on 
+CXL aspects.
+
+For this one there is a more comprehensive solution that restricts this
+to the cases that are valid (no interleaving going on).
+https://lore.kernel.org/qemu-devel/20260318171918.146-1-alireza.sanaee@huawei.com/#t
+It is rather more complex as a result.
+
+For other cases we have always intentionally left it as not supporting
+what you have here because we want the interleave to be correct and testable.
+
+As far as I'm concerned that series of Alireza's has been ready to merge for
+a while. I've been a bit busy with other things so haven't been poking
+for that though.  Might be a week or two before I get back on top of things.
+
+Anyhow, please give Ali's series a go and see if that works for you.
+There may well be other corners we haven't thought of!
+
+Jonathan
+
+
+
+> Signed-off-by: Chen Pei <cp0613@linux.alibaba.com>
+
+
+
+> ---
+>  hw/mem/cxl_type3.c          | 81 +++++++++++++++++++++++++++++++++++++
+>  include/hw/cxl/cxl_device.h |  4 ++
+>  2 files changed, 85 insertions(+)
+> 
+> diff --git a/hw/mem/cxl_type3.c b/hw/mem/cxl_type3.c
+> index 4739239da3..f962bce66a 100644
+> --- a/hw/mem/cxl_type3.c
+> +++ b/hw/mem/cxl_type3.c
+> @@ -24,6 +24,7 @@
+>  #include "qemu/module.h"
+>  #include "qemu/pmem.h"
+>  #include "qemu/range.h"
+> +#include "system/address-spaces.h"
+>  #include "qemu/rcu.h"
+>  #include "qemu/guest-random.h"
+>  #include "system/hostmem.h"
+> @@ -420,6 +421,11 @@ static void hdm_decoder_commit(CXLType3Dev *ct3d, int which)
+>      ComponentRegisters *cregs = &ct3d->cxl_cstate.crb;
+>      uint32_t *cache_mem = cregs->cache_mem_registers;
+>      uint32_t ctrl;
+> +    uint32_t low, high;
+> +    uint64_t decoder_base, decoder_size;
+> +    MemoryRegion *mr = NULL;
+> +    uint64_t dpa_offset = 0;
+> +    char *alias_name;
+>  
+>      ctrl = ldl_le_p(cache_mem + R_CXL_HDM_DECODER0_CTRL + which * hdm_inc);
+>      /* TODO: Sanity checks that the decoder is possible */
+> @@ -427,6 +433,73 @@ static void hdm_decoder_commit(CXLType3Dev *ct3d, int which)
+>      ctrl = FIELD_DP32(ctrl, CXL_HDM_DECODER0_CTRL, COMMITTED, 1);
+>  
+>      stl_le_p(cache_mem + R_CXL_HDM_DECODER0_CTRL + which * hdm_inc, ctrl);
+> +
+> +    /*
+> +     * Create a RAM alias in system memory for the committed decoder range.
+> +     * This enables direct DMA mapping (address_space_map) for devices like
+> +     * virtio that need to DMA to/from CXL memory.  Without this, the CFMW
+> +     * I/O region would require bounce buffering which is limited to 4KB.
+> +     */
+> +    low = ldl_le_p(cache_mem + R_CXL_HDM_DECODER0_BASE_LO + which * hdm_inc);
+> +    high = ldl_le_p(cache_mem + R_CXL_HDM_DECODER0_BASE_HI + which * hdm_inc);
+> +    decoder_base = ((uint64_t)high << 32) | (low & 0xf0000000);
+> +
+> +    low = ldl_le_p(cache_mem + R_CXL_HDM_DECODER0_SIZE_LO + which * hdm_inc);
+> +    high = ldl_le_p(cache_mem + R_CXL_HDM_DECODER0_SIZE_HI + which * hdm_inc);
+> +    decoder_size = ((uint64_t)high << 32) | (low & 0xf0000000);
+> +
+> +    if (!decoder_base || !decoder_size) {
+> +        return;
+> +    }
+> +
+> +    /* Calculate DPA offset by summing sizes of preceding decoders */
+> +    for (int i = 0; i < which; i++) {
+> +        uint32_t prev_low, prev_high;
+> +        uint64_t prev_size;
+> +        uint32_t prev_ctrl;
+> +
+> +        prev_ctrl = ldl_le_p(cache_mem + R_CXL_HDM_DECODER0_CTRL +
+> +                             i * hdm_inc);
+> +        if (!FIELD_EX32(prev_ctrl, CXL_HDM_DECODER0_CTRL, COMMITTED)) {
+> +            continue;
+> +        }
+> +        prev_low = ldl_le_p(cache_mem + R_CXL_HDM_DECODER0_SIZE_LO +
+> +                            i * hdm_inc);
+> +        prev_high = ldl_le_p(cache_mem + R_CXL_HDM_DECODER0_SIZE_HI +
+> +                             i * hdm_inc);
+> +        prev_size = ((uint64_t)prev_high << 32) | (prev_low & 0xf0000000);
+> +        dpa_offset += prev_size;
+> +    }
+> +
+> +    /* Determine which memory backend to alias */
+> +    if (ct3d->hostvmem) {
+> +        MemoryRegion *vmr = host_memory_backend_get_memory(ct3d->hostvmem);
+> +        uint64_t vmr_size = memory_region_size(vmr);
+> +
+> +        if (dpa_offset < vmr_size) {
+> +            mr = vmr;
+> +        }
+> +    }
+> +    if (!mr && ct3d->hostpmem) {
+> +        MemoryRegion *pmr = host_memory_backend_get_memory(ct3d->hostpmem);
+> +        uint64_t vmr_size = ct3d->hostvmem ?
+> +            memory_region_size(
+> +                host_memory_backend_get_memory(ct3d->hostvmem)) : 0;
+> +        mr = pmr;
+> +        dpa_offset -= vmr_size;
+> +    }
+> +
+> +    if (!mr) {
+> +        return;
+> +    }
+> +
+> +    alias_name = g_strdup_printf("cxl-hdm%d-ram-alias", which);
+> +    memory_region_init_alias(&ct3d->hdm_ram_alias[which], OBJECT(ct3d),
+> +                             alias_name, mr, dpa_offset, decoder_size);
+> +    memory_region_add_subregion_overlap(get_system_memory(), decoder_base,
+> +                                        &ct3d->hdm_ram_alias[which], 1);
+> +    ct3d->hdm_ram_alias_valid[which] = true;
+> +    g_free(alias_name);
+>  }
+>  
+>  static void hdm_decoder_uncommit(CXLType3Dev *ct3d, int which)
+> @@ -442,6 +515,14 @@ static void hdm_decoder_uncommit(CXLType3Dev *ct3d, int which)
+>      ctrl = FIELD_DP32(ctrl, CXL_HDM_DECODER0_CTRL, COMMITTED, 0);
+>  
+>      stl_le_p(cache_mem + R_CXL_HDM_DECODER0_CTRL + which * hdm_inc, ctrl);
+> +
+> +    /* Remove the RAM alias if it was added during commit */
+> +    if (ct3d->hdm_ram_alias_valid[which]) {
+> +        memory_region_del_subregion(get_system_memory(),
+> +                                    &ct3d->hdm_ram_alias[which]);
+> +        object_unparent(OBJECT(&ct3d->hdm_ram_alias[which]));
+> +        ct3d->hdm_ram_alias_valid[which] = false;
+> +    }
+>  }
+>  
+>  static int ct3d_qmp_uncor_err_to_cxl(CxlUncorErrorType qmp_err)
+> diff --git a/include/hw/cxl/cxl_device.h b/include/hw/cxl/cxl_device.h
+> index 393f312217..07deef2e2c 100644
+> --- a/include/hw/cxl/cxl_device.h
+> +++ b/include/hw/cxl/cxl_device.h
+> @@ -714,6 +714,10 @@ struct CXLType3Dev {
+>      /* State */
+>      AddressSpace hostvmem_as;
+>      AddressSpace hostpmem_as;
+> +
+> +    /* RAM aliases for HDM decoders - enables direct DMA mapping */
+> +    MemoryRegion hdm_ram_alias[CXL_HDM_DECODER_COUNT];
+> +    bool hdm_ram_alias_valid[CXL_HDM_DECODER_COUNT];
+>      CXLComponentState cxl_cstate;
+>      CXLDeviceState cxl_dstate;
+>      CXLCCI cci; /* Primary PCI mailbox CCI */
 
 
