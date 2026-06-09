@@ -4,108 +4,110 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id BEFBBCD8CB2
-	for <qemu-devel@archiver.kernel.org>; Tue,  9 Jun 2026 18:07:23 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 917A6CD8CAD
+	for <qemu-devel@archiver.kernel.org>; Tue,  9 Jun 2026 18:45:27 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wX0qW-0000hg-5t; Tue, 09 Jun 2026 14:06:40 -0400
+	id 1wX1RS-0002AB-0W; Tue, 09 Jun 2026 14:44:50 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1wX0qN-0000fU-HE
- for qemu-devel@nongnu.org; Tue, 09 Jun 2026 14:06:36 -0400
+ (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1wX1RJ-00029i-9h
+ for qemu-devel@nongnu.org; Tue, 09 Jun 2026 14:44:44 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1wX0qL-00037o-73
- for qemu-devel@nongnu.org; Tue, 09 Jun 2026 14:06:30 -0400
+ (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1wX1RG-00027o-QM
+ for qemu-devel@nongnu.org; Tue, 09 Jun 2026 14:44:40 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1781028384;
+ s=mimecast20190719; t=1781030677;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=NuccWviCqF3gc4kByg4lj4eR1OAjDvjkjt3M9KaoiEA=;
- b=NzeYhId/K5Oc+jpSdJ0OCpVVhRvlrEIqSI3c5l/6X5gb9mSmglfohS7R9gC33xaF1Em/3s
- sACR22FHayA/BuDjelsXvNf2NYZwf2vM6QT6XTLipBJDWkDn0Qy+0ytrp+t9vMLxsUSU62
- 9R4g2bQcLYlseasU2jr08Z3F8R/D4OA=
-Received: from mail-qk1-f199.google.com (mail-qk1-f199.google.com
- [209.85.222.199]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=AByx2FtauF+8eI0JWwoZcYoW1uS/7f+DmdO9izDp8ZI=;
+ b=YG9MsLm39+bAlGdtVs/cESnsl6HBWvqLV014FRnOH3oGLLN12ABwBaigrtO8hRdOkWwc45
+ LDnEYWC41gg5tqjfIF1ROpaad5BrneBxltr0v2UQz8yJvZOgmPxalJHv5oJMJum04RF+2g
+ hYcpG7KeIhiA4XQvwfLV7PQCcl/jogc=
+Received: from mail-qt1-f197.google.com (mail-qt1-f197.google.com
+ [209.85.160.197]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-618-vVB3TmXbNW6Ba95dY9DLxg-1; Tue, 09 Jun 2026 14:06:20 -0400
-X-MC-Unique: vVB3TmXbNW6Ba95dY9DLxg-1
-X-Mimecast-MFC-AGG-ID: vVB3TmXbNW6Ba95dY9DLxg_1781028380
-Received: by mail-qk1-f199.google.com with SMTP id
- af79cd13be357-91578c374easo1203300985a.1
- for <qemu-devel@nongnu.org>; Tue, 09 Jun 2026 11:06:20 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1781028380; cv=none;
+ us-mta-592-pAJJJ2eNPS-85DVfOugV1w-1; Tue, 09 Jun 2026 14:44:35 -0400
+X-MC-Unique: pAJJJ2eNPS-85DVfOugV1w-1
+X-Mimecast-MFC-AGG-ID: pAJJJ2eNPS-85DVfOugV1w_1781030675
+Received: by mail-qt1-f197.google.com with SMTP id
+ d75a77b69052e-5176d949c58so147274551cf.0
+ for <qemu-devel@nongnu.org>; Tue, 09 Jun 2026 11:44:35 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1781030675; cv=none;
  d=google.com; s=arc-20240605;
- b=bGTlur657Tbv04kCUMPAgFrYbQaz3riJUZQ+xm5WUo33LkH86faxOYr8ai8kR9NkLT
- jMAT1GkRwGPEPKpvbY6qKiwKC1JV5Cpe7xaA/zeCZShbaR5SXyFmVMBrFhVt+s3adA63
- TaS1sI1LwBGwtAU77o4ipE7hkuCBKPJF4CimtMVXy3sNve56XkOxe60bk12gJFNc7zN2
- OgeWz0AR+B4jndBfq85SA9pQhANuncadItssYNnJEDYytSqAH9d2Yysh+dAqgp1POxzK
- jzSxcTPEXr92cPHpAHiLRQiovg2/20UwhEeD11PpRkG1U3cjZ/BpuyibzaysLNtkWGTk
- aPeA==
+ b=QPPzTWvSyjZ41tsr157uNfj2ovw4Yw1CI0OO7BFZEEVtYTBzVvQim/Tr+eTR76L5bk
+ mAfzSLyRZdEGCFuHVP2tGBEUtzBfCz4beABdmtE1QlLZ9RpCwcMGRVEhG0ou7uouk0lk
+ GemYIFw3SXii/p9aX37pKRDRE9S095NRRuSrEtTAEvne4PNmOhW6R7GpfzRG3wJiXnJ6
+ jqU25PW3wOToO1Epe010XZeiRHas8U71qtyM91+PvOLgjh8KK9n0ZS/gHDfgUB4hcDbl
+ cCOnAuI3hM1uNBWTGsGNzFFUDsFQIYOyCMBrOiQiFywFEJnFkiBbEEUdODZF24cwmIWm
+ m1vw==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
  s=arc-20240605; 
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:dkim-signature;
- bh=NuccWviCqF3gc4kByg4lj4eR1OAjDvjkjt3M9KaoiEA=;
+ bh=AByx2FtauF+8eI0JWwoZcYoW1uS/7f+DmdO9izDp8ZI=;
  fh=Ohhlf+kwivs7jyQv9LUTHNY6pEAdnCK0uS2X5z9ZBdU=;
- b=YYq5mInFZ1BCStyBpDsXm/ai6CZhFHwmhMvI7Fsyk9uhI7cdDYzfJXXiiYPHwDP60r
- CyvlydiB92wN7UtWvaG8vbmPI7yglpIvRgUwV3Hnbnr0c5M9uhuPUyYpy5fK5ns62031
- zbU8USXalnBcso3yi8703aZ5nidAuP6nXjQRVAwrfu9K52xe73Hwsvx7YpFvzUGoH2yj
- vUk9JCfGWWfb9gHZyo3nG8+gciEJ0k1eOj6S4Zvrgl8+gvdoPPq63crIVkB4GSVlBUPJ
- 5oUceV3exJQ3G/uTjsZEtHAIl5dQG4/2ImY76D5AxFN8hG9qzBJwU7UKJcWxDArYi9ER
- o+eQ==; darn=nongnu.org
+ b=LbTLn0kq/ixgpJX7lSmH2eBm4FBTbEhjGH6XX6dDiYnURVRY7Al9kt1EMCf++TU4Lx
+ ZvXkfiGdhg8ozA10FTnNG+ytljeKorEHYPlJeCApBPfkL4McWOK17hgzsinvO6NQtbJU
+ /w6ywOhgl6NdsOW0XBZFCM8LWtZBxbsacNZmbLin+kU5dYgk0n7EElNEesQuaDr2cJpX
+ o2DhbplMfOL75do6R6wCdkkN8EqXCMfL+nZoaGnW6nUfefio+4BVdTHK3UyZ12wNgRC2
+ Uvm48uDD013s2SR0CRjC6XfnE4KHGVzKRDxYNbswj1t/mJ4AHHzIRDmCTe+tcK/dhZps
+ BFfw==; darn=nongnu.org
 ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1781028380; x=1781633180; darn=nongnu.org;
+ d=redhat.com; s=google; t=1781030675; x=1781635475; darn=nongnu.org;
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:from:to:cc:subject:date
  :message-id:reply-to;
- bh=NuccWviCqF3gc4kByg4lj4eR1OAjDvjkjt3M9KaoiEA=;
- b=BO1iDbfvTH7xNNeYVP/70P4lkiyq5iWQB/5feNMqqEEmRg7KtfPLStnybqgzTpucZY
- C+io1muSmMkgwM/OrVcA5DjcFc7GBosaD5MeCP/E0oivSHOcG2QhClDJWcosxPDJL11u
- oskmZYfQ4vO0TmpSqGinb6sIX3xvrlYLN2Xo29pzI+4SN7ShUq3KL5B/fhlBXxUq4pPY
- 8Zr7hJkZmvZfjYsOxfv4yGtpY75fyO6uh7m49pYhbVwruG1Z3ZXUBb7yzpAu5gk4b1Kb
- T0gC3XJI+V4OOgW0m+HiyUSWYTl3GMp7Hl0h1r9XMK9s2CNzt1rU/VMtYWxa28jQcAs5
- PGgQ==
+ bh=AByx2FtauF+8eI0JWwoZcYoW1uS/7f+DmdO9izDp8ZI=;
+ b=EYsSDw6pGi7jB4lmtMxLoUQbKdsxOOnWdgHTbr1CDVw8otsSk5UE2Bc8eSfzqj850U
+ yWYlYZE2aIdcZkT0NXMMmSJd21ZEBoC/0vZ4qUIFpNSRLN9gkr6tOFNt43dgB5AlVynf
+ zQxt6ha3Amzu/Zn/xTo53En+bg/aDc45rxLSr556WEQFNVcuxbaYE4z1QpeQgzeVKME8
+ jaky/sDzqZxNQcyAz0C0oxTb7HO57683iqCdCm0b4chdS70a7WzSI8+LjiMBGxqym/9I
+ XhngFOEuwk3L1ApglUGZpT48+W96JWspb5CEP8Uez430XmIvS0+dD/iP/sOrP7/yZ/We
+ y0CQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1781028380; x=1781633180;
+ d=1e100.net; s=20251104; t=1781030675; x=1781635475;
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to;
- bh=NuccWviCqF3gc4kByg4lj4eR1OAjDvjkjt3M9KaoiEA=;
- b=hy4j0aUrUaqnsprm3M9AoFkdQllT3huj/FChsskF8TMjCvYJINM5clNkMIBY/gMcGP
- bMQ2j1FWFX7SSMirgfXK5QZbMbCh7wVf6b3hecZ7igTb6yX1jvYfv3ujgoH0eZX/yEaJ
- 19rVWAGZMJyapjKzI9zmD/UuAcCrj+Oc94wm5E+KEPsI+P0ndmbd+tiSMgn8E2n2ULhp
- qTluL+MQwoQjP1XcmWXHqV8Y22ICU0WuJV+2EL+VqotX2jp8K/EEDpSYSwQWWH11XO2b
- TrPif8YTvtNJ4ZuJvB36+PNXcb0ScwHezCx9eW9TofcFRAlPObX6zLfVotkf4ukLtz1m
- 36MQ==
-X-Gm-Message-State: AOJu0Yzugnv6SbAmKYXPaLOpsL5gDnBuJguLfOXFce3a4A9ajWYSw2nj
- 6CinCjn5Ed5ydMFV9GUYmnwMLzWmgFO83b04Ay//SYVLs+albzxmLCNEFglsI/GhZYI/779y3v3
- OUre54oCffq0WLBIYHskqmZPGkQl53sMQWE2zGLMy/Ks6ZrxtEcbni9yMpGN9LFXMqWkcCkCndG
- F7scmw/uwdc+gvk7prpfSYpz4GJERdH44=
-X-Gm-Gg: Acq92OFOH8BcTcrjDugmd3zvZBW5wTC7V1vK9SqidO3afIswO0CCSD4vVQ8i82WsS4q
- iIoiBLV0eN+KjRF4svqi1X/cK/N+Y331tG1bAHEsNXClWR2XG9ZTts0KQ4P1DKsTjRjY75uSv6c
- +WQxql6dceWZFXl5GOuGzznkZlxBMXSRTumfZ806v6YC2WC4BE0gq1a8EW8Hx79wgEIggECGq5p
- b27uDOEVuUvOlrxSjv8hRZDqRRv174zFHww6J6A91iJChx+
-X-Received: by 2002:a05:620a:371c:b0:915:c4de:7ab7 with SMTP id
- af79cd13be357-915c4de848fmr2187987985a.35.1781028379642; 
- Tue, 09 Jun 2026 11:06:19 -0700 (PDT)
-X-Received: by 2002:a05:620a:371c:b0:915:c4de:7ab7 with SMTP id
- af79cd13be357-915c4de848fmr2187979285a.35.1781028379107; Tue, 09 Jun 2026
- 11:06:19 -0700 (PDT)
+ bh=AByx2FtauF+8eI0JWwoZcYoW1uS/7f+DmdO9izDp8ZI=;
+ b=kcRIoGl3PY0/2+lpcJpl2Z1HWg5mIh3mGjkQkjCaukXu5FLIWuTsBOezvJqo5C/b8H
+ nDJtIv9MjzQXebSF1QTJyufw+OftfVDoJ9P/0aZmI/ZACFtGAs8F6WNXkO3PiPLqpy2n
+ +20P0uncnhSDgkFylYqAT1v/m1haUp0vQb18+VRUTqStGYHtQBAb/NHS1dnDwvQNh+fb
+ zZ7HSpOvYT1gSezD2VF7PKQaeXxrgDjIWZYFB1D6w/RTTISUgnb35JtkeROQnUQYmzp5
+ kHgMTR29GXZplzoQge893VB8eb51Ss5XhIJUUC6w3W7oI1B5CEJMugDHQ/fcxheRjQT3
+ leLA==
+X-Gm-Message-State: AOJu0YwUUrygYejnm5152TGCXFYEF5V+lGkjUGXbTAd3zYZqT5qsEY3w
+ 015NYPZHR5fw+L6mFD12YcMWD3qkp0vR/YeZKOLT3Vm0FTK7prrCik827SaRWeIS5k4Aj181XBI
+ dZzCZ5KwYhHow42tC1SncQY7CdUHql6jXI2JZDdAF9KNDi8qqNtmBH3m/Kux+Sf+wHbuqoa+SCc
+ 1Aw169YiK6v0WjNevSz6QR8voH65Fq5sI=
+X-Gm-Gg: Acq92OEZR/lwEjqVGy4aeqJPekfotSOFWcerxKJ88TRjEWvCF+Ot7cgHi4VdmDHm+/1
+ DGNnNhw6tt8QDLj7LktVHj094gItpWgmcG8qGr8NtYR06dOgMBJ2/sZtenaw9/Ar9KUA95kRWqv
+ zFqQyRviabLtOkcWOzyCOah1AseCqQ9bl3WMRIrLb8Y78svE0nfA2IMZKaloT3rvVaSHjmSvUwV
+ s94/0co/ZocUaABFQEcpNqJhMF6x/XO64mEJTyah+ZaldGF
+X-Received: by 2002:ac8:5788:0:b0:517:29c1:2b58 with SMTP id
+ d75a77b69052e-51795b674c4mr311254401cf.48.1781030674818; 
+ Tue, 09 Jun 2026 11:44:34 -0700 (PDT)
+X-Received: by 2002:ac8:5788:0:b0:517:29c1:2b58 with SMTP id
+ d75a77b69052e-51795b674c4mr311253601cf.48.1781030674294; Tue, 09 Jun 2026
+ 11:44:34 -0700 (PDT)
 MIME-Version: 1.0
 References: <20260603032201.993015-1-jsnow@redhat.com>
- <20260603032201.993015-8-jsnow@redhat.com>
- <87tsrcou8f.fsf@pond.sub.org>
-In-Reply-To: <87tsrcou8f.fsf@pond.sub.org>
+ <20260603032201.993015-10-jsnow@redhat.com>
+ <87ecinkgnv.fsf@pond.sub.org>
+ <CAFn=p-aXcHomC4r=Gh9yQhoQzFDqxqTc2YTpaE-NOgiYDQRx_g@mail.gmail.com>
+ <87h5nbon3y.fsf@pond.sub.org>
+In-Reply-To: <87h5nbon3y.fsf@pond.sub.org>
 From: John Snow <jsnow@redhat.com>
-Date: Tue, 9 Jun 2026 14:06:07 -0400
-X-Gm-Features: AVVi8CdGs4OrHPKjAfP53q3RBlJSXhZAiY3Vh7vq6DyRAALHZKTcBb555JiIBxY
-Message-ID: <CAFn=p-bJS7M9FV=Pa8JgpTi=jmSx24-J6uyFCWKvxwEsx4rM6w@mail.gmail.com>
-Subject: Re: [PATCH v3 07/16] qapi/docs: add "Intro" section
+Date: Tue, 9 Jun 2026 14:44:22 -0400
+X-Gm-Features: AVVi8CdTfPyMB5qd05xDjln5PEzohNNuyuVLB_fgaO3XbOny2JH-azy36Gfo3p0
+Message-ID: <CAFn=p-a8hhJ7AQpCJZ=C_P8SNdYuv0Hp301DeFLKg8mhkiRCyA@mail.gmail.com>
+Subject: Re: [PATCH v3 09/16] qapi/docs: adjust stub member insertion algorithm
 To: Markus Armbruster <armbru@redhat.com>
 Cc: qemu-devel@nongnu.org, Ani Sinha <anisinha@redhat.com>, 
  Michael Roth <michael.roth@amd.com>, Igor Mammedov <imammedo@redhat.com>, 
@@ -146,78 +148,183 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, Jun 9, 2026 at 6:59=E2=80=AFAM Markus Armbruster <armbru@redhat.com=
+On Tue, Jun 9, 2026 at 9:33=E2=80=AFAM Markus Armbruster <armbru@redhat.com=
 > wrote:
 >
 > John Snow <jsnow@redhat.com> writes:
 >
-> > This patch adds an "Intro" doc section, intended to eventually replace
-> > the "Plain" doc section alongside a forthcoming "Details" section.
+> > On Wed, Jun 3, 2026 at 7:27=E2=80=AFAM Markus Armbruster <armbru@redhat=
+.com> wrote:
+> >>
+> >> Quick first pass...
+> >>
+> >> John Snow <jsnow@redhat.com> writes:
+> >>
+> >> > A forthcoming patch removes the implicit PLAIN section that always
+> >> > starts a QAPIDoc section list. Further future changes begin converti=
+ng
+> >> > "PLAIN" sections to "INTRO" sections. To accommodate this, the
+> >> > insertion algorithm that places stub and dummy members must be
+> >> > adjusted to cope with not only the finished state, but temporary
+> >> > intermediate states while the series is merged.
+> >>
+> >> Perhaps:
+> >>
+> >>   A forthcoming patch removes the implicit PLAIN section that always
+> >>   starts a QAPIDoc section list. Further future changes begin converti=
+ng
+> >>   "PLAIN" sections to "INTRO" sections.
+> >>
+> >>   This will affect the code that inserts "Not documented" descriptions
+> >>   for undocumented members ("stub sections") and the dummy section tha=
+t
+> >>   marks the spot for "The members of ..." references.
+> >>
+> >>   Adjust the algorithm to cope with not only the finished state, but
+> >>   temporary intermediate states while the series is merged.
 > >
-> > For now, this section is not actually instantiated or used, but
-> > subsequent patches will slowly convert the leading introductory section=
+> > Sure.
+> >
+> >>
+> >> > This algorithm can handle zero-or-more PLAIN *or* INTRO sections at
+> >> > the beginning of a QAPIDoc object, in contrast to the previous
+> >> > algorithm which assumed and relied upon there being always one PLAIN
+> >> > section at the beginning of every QAPIDoc section list.
+> >> >
+> >> > In other words: (PLAIN | INTRO)* <EverythingElse>
+> >> >
+> >> > This does not impact what the parser itself will actually produce. A=
 s
-> > of QAPIDoc documentation to use this new section.
+> >> > of this patch, the parser will still always generate QAPIDoc section
+> >> > lists that start with precisely one PLAIN section (whether or not it
+> >> > is empty), followed by the remaining sections. Those remaining
+> >> > sections may or may not include additional PLAIN sections, but never
+> >> > two such sections contiguously as the parser will always treat that
+> >> > layout as one PLAIN section consisting of multiple paragraph(s).
+> >> >
+> >> > In other other words: This insertion algorithm is more lenient than
+> >> > the parser, but this is on purpose for flexibility mid-stream as we
+> >> > convert QAPI to using explicit introductory sections. The allowed
+> >> > order of sections will eventually become strictly enforced in the
+> >> > parser, which will in turn allow dramatic simplifications to the
+> >> > insertion algorithm. This only exists as transitory code until we ar=
+e
+> >> > able to enforce that order.
+> >> >
+> >> > Fear not: the intermediate rest output before and after this patch
+> >>
+> >> "ReST output"?
 > >
-> > A main motivation of this series of changes is to more explicitly
-> > delineate the "Introductory" documentation for each QAPI definition for
-> > the sake of the inliner. When inlining members, examples, and details
-> > from multiple QAPIDoc sections, we will want to omit the "Introductory"
-> > text from inlined definitions while keeping notes, caution boxes,
-> > examples, and so on. This new section facilitates that.
+> > Sure
 > >
-> > Signed-off-by: John Snow <jsnow@redhat.com>
-> > ---
-> >  docs/sphinx/qapidoc.py | 2 +-
-> >  scripts/qapi/parser.py | 3 ++-
-> >  2 files changed, 3 insertions(+), 2 deletions(-)
+> >>
+> >> > are byte identical, so failing all else, we at least know it doesn't
+> >> > make anything worse.
+> >> >
+> >> > Lastly, because we have three places in the code that need to insert
+> >> > stub/dummy sections, we take the opportunity to consolidate this cod=
+e
+> >> > to handle all three cases with one function. This winds up
+> >> > necessitating the qapidoc.py generator actually modify the section
+> >> > list to insert a "dummy" member that acts as a placeholder for "The
+> >> > members of ..." text. While it looks like a code smell to modify the
+> >> > caller's argument, it is ultimately safe because the QAPI Schema
+> >> > object is re-parsed and re-constructed in memory for each individual
+> >> > process that needs to operate on it. In other words, the Sphinx
+> >> > document generator already does have "its own copy" of the section
+> >> > lists, so it is "safe" to modify here without regards to other
+> >> > consumers of the QAPIDoc objects. It only *looks* like it smells
+> >> > bad. Ultimately, this code will also be removed once the inliner is
+> >> > merged, so it is only a temporary aesthetic issue regardless.
+> >>
+> >> Such trickery, even when safe, risks making attentive readers go
+> >> "WAT?!?"  I find it tolerable only because we plan to replace it fairl=
+y
+> >> soon.
+> >>
+> >> The code finding the spot to insert stub/dummy sections is more
+> >> complicated than it has any right to be, both before and after your
+> >> patch.  It reconstructs information the doc parser has, but doesn't pa=
+ss
+> >> on in usable form.  Passing that info on would likely be simpler and
+> >> cleaner.  However, you tell me your inliner patches also simplify
+> >> things, and they already exist.  So let's go with those.
 > >
-> > diff --git a/docs/sphinx/qapidoc.py b/docs/sphinx/qapidoc.py
-> > index c2f09bac16c..1f7c15b7075 100644
-> > --- a/docs/sphinx/qapidoc.py
-> > +++ b/docs/sphinx/qapidoc.py
-> > @@ -368,7 +368,7 @@ def visit_sections(self, ent: QAPISchemaDefinition)=
- -> None:
-> >          for i, section in enumerate(sections):
-> >              section.text =3D self.reformat_arobase(section.text)
+> > Right, the basic idea is this:
 > >
-> > -            if section.kind =3D=3D QAPIDoc.Kind.PLAIN:
-> > +            if section.kind.name in ("PLAIN", "INTRO"):
+> > - Differentiate INTRO with new syntax
+> > - Convert "PLAIN" into "DETAILS"
+> > - Enforce strict section ordering: INTRO only at the beginning,
+> > DETAILS only at or quite near to the end
+> >
+> > Once that is cemented, the insertion algorithm can become much simpler
+> > and dumber; e.g. using a map of regions where we can append to the end
+> > of a region without having to iterate through to find our sweet spot.
+> >
+> > Since that's the plan for the inliner anyway, some temporary ugliness
+> > here in order to ensure that we do not regress even one byte seems
+> > acceptable.
+> >
+> > Additionally, once the inliner is merged, we won't need the "dummy"
+> > sections at all, so those go away entirely, and all of the ugliness of
+> > that particular part of the hack with it - i.e. no more modifying the
+> > caller's argument to insert a bookmark.
+> >
+> > So, it's a little gross, but it's just a band-aid to get to where we
+> > want to be; and it isn't as gross as it looks.
+> >
+> > With your suggested commentary changes, do I have your blessing to
+> > push forward? In the interim, please review the rest of the series so
+> > I can send you a new version.
 >
-> Is the change from QAPIDoc.Kind.FOO to "FOO" just for brevity, or is
-> something going on I don't understand?
+> Yes, you do.
+>
+> In addition to the commit message changes, I'd like to have a comment in
+> the code.
+>
+> Perhaps as separate patch before your series:
 
-Just brevity, honestly. I'm using the .name attribute and checking
-against strings. Otherwise it didn't fit on a single line.
-Inconsistent style, but I guess I chose what I disliked least.
+It's easy enough to add it as a separate patch right before this one
+instead of in a separate series. Added in with no rebasing issues, so
+I'm going to do it that way just to avoid any potential merging
+issues.
 
 >
-> >                  self.visit_paragraph(section)
-> >              elif section.kind =3D=3D QAPIDoc.Kind.MEMBER:
-> >                  assert isinstance(section, QAPIDoc.ArgSection)
-> > diff --git a/scripts/qapi/parser.py b/scripts/qapi/parser.py
-> > index d8068bb1bf6..97e7dacb0fd 100644
-> > --- a/scripts/qapi/parser.py
-> > +++ b/scripts/qapi/parser.py
-> > @@ -681,6 +681,7 @@ class Kind(enum.Enum):
-> >          ERRORS =3D 4
-> >          SINCE =3D 5
-> >          TODO =3D 6
-> > +        INTRO =3D 7
+> diff --git a/scripts/qapi/parser.py b/scripts/qapi/parser.py
+> index c3cf33904e..844afc6e0e 100644
+> --- a/scripts/qapi/parser.py
+> +++ b/scripts/qapi/parser.py
+> @@ -852,6 +852,12 @@ def connect_feature(self, feature: 'QAPISchemaFeatur=
+e') -> None:
+>
+>      def ensure_returns(self, info: QAPISourceInfo) -> None:
+>
+> +        # This is more complicated than it ought to be.  The doc
+> +        # parser should already know where a generated RETURNS section
+> +        # should go.  It currently doesn't, mostly because it accepts
+> +        # tagged sections in any order.
+> +        # TODO Tighten doc syntax and simplify.
+> +
+>          def _insert_near_kind(
+>              kind: QAPIDoc.Kind,
+>              new_sect: QAPIDoc.Section,
+> --
+> 2.54.0
+>
+> We could adjust the comment within your series to also cover the new
+> uses of _insert_near_kind(), but I don't think that's necessary.  It
+> should serve as a reminder as is.
+>
+> If that works for you, I'll post the patch.
+>
 > >
-> >          @staticmethod
-> >          def from_string(kind: str) -> 'QAPIDoc.Kind':
-> > @@ -748,7 +749,7 @@ def has_features(self) -> bool:
-> >      def end(self) -> None:
-> >          for section in self.all_sections:
-> >              section.text =3D section.text.strip('\n')
-> > -            if section.kind !=3D QAPIDoc.Kind.PLAIN and section.text =
-=3D=3D '':
-> > +            if not (section.kind.name in ("INTRO", "PLAIN") or section=
-.text):
-> >                  raise QAPISemError(
-> >                      section.info, "text required after '%s:'" % sectio=
-n.kind)
+> > --js
+> >
+> >>
+> >> > That's my story and I'm sticking to it.
+> >> >
+> >> > Signed-off-by: John Snow <jsnow@redhat.com>
+> >>
 >
 
 
