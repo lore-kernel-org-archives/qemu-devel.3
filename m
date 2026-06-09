@@ -4,107 +4,114 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1A23ACD8CAA
-	for <qemu-devel@archiver.kernel.org>; Tue,  9 Jun 2026 15:26:36 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D7FA4CD8CB9
+	for <qemu-devel@archiver.kernel.org>; Tue,  9 Jun 2026 15:29:35 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wWyL2-0000e3-5C; Tue, 09 Jun 2026 11:26:00 -0400
+	id 1wWyO6-000237-4j; Tue, 09 Jun 2026 11:29:10 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1wWyKx-0000Wc-J5
- for qemu-devel@nongnu.org; Tue, 09 Jun 2026 11:25:55 -0400
-Received: from mail-ed1-x52e.google.com ([2a00:1450:4864:20::52e])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1wWyKu-0002Bs-Lu
- for qemu-devel@nongnu.org; Tue, 09 Jun 2026 11:25:55 -0400
-Received: by mail-ed1-x52e.google.com with SMTP id
- 4fb4d7f45d1cf-68ced97b6eeso7710331a12.0
- for <qemu-devel@nongnu.org>; Tue, 09 Jun 2026 08:25:52 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1781018751; cv=none;
- d=google.com; s=arc-20240605;
- b=TNq2L2al9Q5QBLxRiYspWwcMZ5A+u6FasRYHNkQ/CxbonpNjZO8qnV6pTFvfMBkwRH
- Lg8mul1iNj3iJF814mvkB5VJOyIsMZHqmDCS5arcHOWx2qE4eRvYjemXZyvT+TRip7Le
- UQqtbQm17PMseAYMWE08MWojPPk/Gdx3xssW1/PZfQAEI7xITkPC2KmQ/okR++8P0xDL
- ojXRyDGcfTXfyv67V1HoJRbgcvP2iy5A4s+HlXA/Pz3DWCvkC8k7tSRz0TFgxd8RJuF2
- 8db1j3hep+LFfxlM9f8lduR/wJm+r0mSRjSdy6pnwiZ6mUAEnAvLit5BPDm7+HXhCt+P
- ILLQ==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
- s=arc-20240605; 
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:dkim-signature;
- bh=o7hZxrOxQsSfFXsDoeNg7xAeFrfoXUdRu0/vaXFQ7xY=;
- fh=OMhF2zv/Q78szEeh4hotKOsfH7jZcIoksqjymd8fAkY=;
- b=QKdInQD4caWY/waa07u3My8128N0gglA/kHgn7PjfBbVRT+7x9VEnSb3D8Vacj1dbx
- 1SxucH97aXVNi0ppsC6zHn0W1F51rogd+P8cr0Ksy6f43/4L0r3hM3BqpH9XrTe3rtHX
- yX5VSibYZcXvUrJskZRlLmtyoG3cLk891oFRMEWSQggxxM12NQcQhTaYPFvxwlpKpgQ2
- r/brF0QNiOJx/gMkY3a/EMpPijvdvQ9AlJdBX79t5cAeFLt0TPYHggVYCyh6EOu+YH6U
- mSLa4r6mHT3URebVW3GWMEAD97xcPlLJynk4SRd1fxi7DzEg+8QWA2diyuW22kywe0hr
- sVMw==; darn=nongnu.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1781018751; x=1781623551; darn=nongnu.org;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=o7hZxrOxQsSfFXsDoeNg7xAeFrfoXUdRu0/vaXFQ7xY=;
- b=eqhVwtcdaKQeArCD6FtycGKL7q1qZQ6cQ1GmgGkzDpl50mzaFNd87uWORVrsEAa3S8
- grqqV1IA5c5hZF99TRecLJCxO5oAvwSO4YRJ7ceU3+pyHuV3hho3k5jPFAPEuiSIKVH6
- smtbqWI3pozrzX5NedRQS90irhd13VhIA9XbWkpr7D/XfuBCyA5L5w5PAVKTadZuPQ2a
- Ke/R5ICvfUH8AjMO4l8UIHreEbI4ur1Ha8dCdSLlnX204JkAn6suW01wX+mslYUEmgSO
- PW9gpoPWCVw9FhD9mNKmZQI+J1yA7tY4nt1CjPkadMkovMaDgI1VeTOMHhn5Bb8aIGTJ
- 5pJg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1781018751; x=1781623551;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=o7hZxrOxQsSfFXsDoeNg7xAeFrfoXUdRu0/vaXFQ7xY=;
- b=RfLTOvqzT1jTiWI+xW+MLy5ZOIh7gtFDSKu59BjwQwjqvdMdwgB59N1AgkGLarB9+m
- rv3LP4mr7bigfHJ0QxQKSOzpR6liDsL+LVrKhqGovXAUaObAUWqFZbvCE5s7E4Ro1liR
- AsfRECh/uC/zm8IcDBsm2huxyRwlKSLhEiBOQRHQUF/VPwEPHlfviZQfmXiO8SAjoTNR
- v+7Iv2EU0T14EbnrCFtuP32aF/gIFYjdb05RFW91s2JOx26wlZqLE5VmnSPbfhBpnS3N
- 35ya9Z32OqUMD/uPRlIB0cMAqdJZnnXF4T5o4pGG+GQKMvvfrLaMzQm8DyzEIghf7m5S
- vhaA==
-X-Forwarded-Encrypted: i=1;
- AFNElJ8E4x+MPc7puA2mEklh/jzYJDNjchMZovn54gQwlYgwtYYhCknuRcg1dOg66Qp6s7pyBerF6S/0Th1w@nongnu.org
-X-Gm-Message-State: AOJu0YyRHlTT1K6ELRqIOmhMgNyCnjv03mOP0FlVgPhzJTStbOs9uaSr
- RaA+BKF8M3npekPDJA9Y8aT8SBzPDHfIcDlqzREQ10SowwUVSqJCxEyjwyzJSgp7tCucIAjOnv1
- qX4ov+o7jC5dWRhK9vYqBVseIOzrgkT2v2SfV3rw6Sg==
-X-Gm-Gg: Acq92OE5hphGCixs8estpG4+toCWsz9J+lt2Qx7OCr18sZiySn5suJ0Z8L8hnQ2EME1
- xbK3S5h7Z2sEpBZdwPrHCzLTcuEqlwwig2Fb+LY4ddSVguQuMFIDmxr5H3cdOr8YnsVn6kuqHU5
- NEMjMtw+5oL4mQ0nSttX/Fo+g+V0/McWwYKQEteqTu9HwIYHzJdLUlKCVWjSRDvhr3y95ZvZu7K
- ZCk+yAHRQeYgZxh/D9tdbW2oKSWOxMwgI4GZ4eRw4hQc1X0UyzAUeMmEhRt3OEMkuRVUwnD98EX
- HDl/A08jEKCVtqkwPYEs9xKiye5qHxEpx/78pqgMgcn4g9V1R3o9OcAm+aR0kBi/SSJYQ4VSUBv
- CEg==
-X-Received: by 2002:a17:907:6e87:b0:bee:b5f2:639d with SMTP id
- a640c23a62f3a-bf370376bf2mr1047493266b.10.1781018750780; Tue, 09 Jun 2026
- 08:25:50 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <zycai@linux.ibm.com>)
+ id 1wWyO3-00022T-OE; Tue, 09 Jun 2026 11:29:07 -0400
+Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <zycai@linux.ibm.com>)
+ id 1wWyO0-0003yy-Vg; Tue, 09 Jun 2026 11:29:07 -0400
+Received: from pps.filterd (m0356517.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
+ 6595ehGZ2843554; Tue, 9 Jun 2026 15:29:00 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
+ :content-transfer-encoding:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to; s=pp1; bh=PuIHgg
+ dzAuaayEL49xjuR6Z9FJNa6ShgBjB7e033ZWU=; b=qnTWCHCRFltq7Tq3dKIuwy
+ Q3h6fjSP7zDW3jr6bibS6hS+BjxXMryIjc8eaDWGt/KCWRK/IhGI0rG3AWHffS2h
+ lt3LZpBh/gbDnMQDKSP+FQBdDn/fKlir5x0A4KE3u+TgnZ7qBcjJ8aOxYiY6yTky
+ MXzETbctXeDCNMPS7lQ5nMsE1AGdbjeBchL+j1B9xUfkX1JFjfUBoUGfD24B5lLQ
+ u9Zw3+eV5WJcZFnbEymCSec7vhb+qK0UsiW3sWPgWtmb6qQXvkA7xxBQH3rlxA92
+ d7Ha2HkJfv6eAfzUDBOdQnrJsbgv7gw+Pk4UKM9XwyyeofhaeribcC/Q61qL5Ueg
+ ==
+Received: from ppma11.dal12v.mail.ibm.com
+ (db.9e.1632.ip4.static.sl-reverse.com [50.22.158.219])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4emb95cw4b-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Tue, 09 Jun 2026 15:29:00 +0000 (GMT)
+Received: from pps.filterd (ppma11.dal12v.mail.ibm.com [127.0.0.1])
+ by ppma11.dal12v.mail.ibm.com (8.18.1.7/8.18.1.7) with ESMTP id 659FJaAn001891;
+ Tue, 9 Jun 2026 15:28:59 GMT
+Received: from smtprelay02.wdc07v.mail.ibm.com ([172.16.1.69])
+ by ppma11.dal12v.mail.ibm.com (PPS) with ESMTPS id 4en0jyac0v-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Tue, 09 Jun 2026 15:28:59 +0000 (GMT)
+Received: from smtpav03.dal12v.mail.ibm.com (smtpav03.dal12v.mail.ibm.com
+ [10.241.53.102])
+ by smtprelay02.wdc07v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 659FSvm445482370
+ (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Tue, 9 Jun 2026 15:28:57 GMT
+Received: from smtpav03.dal12v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 396A958056;
+ Tue,  9 Jun 2026 15:28:57 +0000 (GMT)
+Received: from smtpav03.dal12v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id D7E8D5803F;
+ Tue,  9 Jun 2026 15:28:55 +0000 (GMT)
+Received: from [9.61.111.145] (unknown [9.61.111.145])
+ by smtpav03.dal12v.mail.ibm.com (Postfix) with ESMTP;
+ Tue,  9 Jun 2026 15:28:55 +0000 (GMT)
+Message-ID: <053fe695-54a7-475e-b7f0-11a7eb34f67c@linux.ibm.com>
+Date: Tue, 9 Jun 2026 11:28:55 -0400
 MIME-Version: 1.0
-References: <20260609105626.1038690-1-thuth@redhat.com>
- <CAFEAcA9O6b02VMuto8VzaEsVi3zTqNtQKG_RcMaPnNdPXGUBhw@mail.gmail.com>
- <CAMvPwGpvpHD+Sx-HZR4FFMJB+W8Rk8LoU0256Q=vwKAdC96HSQ@mail.gmail.com>
-In-Reply-To: <CAMvPwGpvpHD+Sx-HZR4FFMJB+W8Rk8LoU0256Q=vwKAdC96HSQ@mail.gmail.com>
-From: Peter Maydell <peter.maydell@linaro.org>
-Date: Tue, 9 Jun 2026 16:25:37 +0100
-X-Gm-Features: AVVi8CdB3SImlFLR632tnSYS0KHxqTkH9TALVmIC-IdIEoCpYoimC7lGmw54OfM
-Message-ID: <CAFEAcA9N_O7RZRU+SPTfB_ePasjVZvUsFPhndfQDuHgQ+4Q-5A@mail.gmail.com>
-Subject: Re: [PATCH] hw/i2c/pmbus_device: Fix a possible crash when requesting
- too many bytes
-To: Titus Rwantare <titusr@google.com>
-Cc: Thomas Huth <thuth@redhat.com>, qemu-devel@nongnu.org,
- qemu-trivial@nongnu.org, qemu-arm@nongnu.org
-Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2a00:1450:4864:20::52e;
- envelope-from=peter.maydell@linaro.org; helo=mail-ed1-x52e.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v11 09/32] s390x/diag: Implement DIAG 320 subcode 2
+To: Jared Rossi <jrossi@linux.ibm.com>, qemu-s390x@nongnu.org,
+ qemu-devel@nongnu.org
+Cc: cohuck@redhat.com, berrange@redhat.com, richard.henderson@linaro.org,
+ david@kernel.org, walling@linux.ibm.com, jjherne@linux.ibm.com,
+ pasic@linux.ibm.com, borntraeger@linux.ibm.com, farman@linux.ibm.com,
+ mjrosato@linux.ibm.com, iii@linux.ibm.com, eblake@redhat.com,
+ armbru@redhat.com, alifm@linux.ibm.com, brueckner@linux.ibm.com,
+ pierrick.bouvier@oss.qualcomm.com, jdaley@linux.ibm.com
+References: <20260505201905.997996-1-zycai@linux.ibm.com>
+ <20260505201905.997996-10-zycai@linux.ibm.com>
+ <ce623f2a-9247-4a67-98a0-7a180fdb88ca@linux.ibm.com>
+Content-Language: en-US
+From: Zhuoying Cai <zycai@linux.ibm.com>
+In-Reply-To: <ce623f2a-9247-4a67-98a0-7a180fdb88ca@linux.ibm.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+X-TM-AS-GCONF: 00
+X-Authority-Analysis: v=2.4 cv=N4UZ0W9B c=1 sm=1 tr=0 ts=6a28313c cx=c_pps
+ a=aDMHemPKRhS1OARIsFnwRA==:117 a=aDMHemPKRhS1OARIsFnwRA==:17
+ a=IkcTkHD0fZMA:10 a=FelO9ux0wxsA:10 a=VkNPw1HP01LnGYTKEx00:22
+ a=RnoormkPH1_aCDwRdu11:22 a=U7nrCbtTmkRpXpFmAIza:22 a=pcX4bbNkKkv3Q70f72sA:9
+ a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
+X-Proofpoint-ORIG-GUID: HJmMn6b7CUNUIHKWBUPFc4VfcsivoiRU
+X-Proofpoint-GUID: HJmMn6b7CUNUIHKWBUPFc4VfcsivoiRU
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNjA5MDE0NCBTYWx0ZWRfX0qC9TXXtO9J0
+ ALrG9B+AHJTSdH+R7NB2nqYIU/IawTpCAbCGkt6tyrYpHHVMnDSGcidamAsFInxkajeH6yitqOV
+ +xhZs8QxueI+jHQUSOE4v3Ayl01AoxZH54f1iFwkvgvKvesXRjGKF2DQV8UXAe2HDPlpDAttwT7
+ JUWfJAEsQNoBmxng1Tpww2Vej5NxeVbgK2z94nk6jrKMX5eKMGVJ24fwAPA2LQXWjfNgJ/sxcfd
+ QCriLcndHwnRgQKG8gP7CkXpmHwTNHdmJjLwcdZevbDHRwUT5xJnc5Yq9TBapYbNDKOh7gqsh1+
+ ZJf8sGQ6EFUB51RiTXvg/IM9YOo+jrQHsGoHYQHd83X55kPMqOGyD6NINpYyEPftSoutbc9mZIs
+ HWL+VQLXDQ/SJErmHgoQc22e+bmYgR9UG7xIK4i7mlPJw0nOU7a69SBjfjpUlElUODJz6Bx17E0
+ PoBdqhoUaTv3jT4Tblg==
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.125,FMLib:17.12.100.49
+ definitions=2026-06-09_03,2026-06-09_02,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ bulkscore=0 malwarescore=0 spamscore=0 clxscore=1015 lowpriorityscore=0
+ phishscore=0 impostorscore=0 adultscore=0 priorityscore=1501 suspectscore=0
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.22.0-2605210000 definitions=main-2606090144
+Received-SPF: pass client-ip=148.163.156.1; envelope-from=zycai@linux.ibm.com;
+ helo=mx0a-001b2d01.pphosted.com
+X-Spam_score_int: -26
+X-Spam_score: -2.7
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
+ RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -120,33 +127,343 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, 9 Jun 2026 at 15:52, Titus Rwantare <titusr@google.com> wrote:
->
-> On Tue, 9 Jun 2026 at 04:01, Peter Maydell <peter.maydell@linaro.org> wrote:
-> > I had a look at this bug earlier, but was not sure that this is the
-> > right thing. What happens is that the guest does something that
-> > causes the device to queue up data X ready for the guest to
-> > read, but then instead of reading it, the guest does another
-> > "I would like data X please" action. My guess is that the way
-> > the hardware handles this is probably not "add the second
-> > copy of data X after the first one". Perhaps it is "drop the
-> > data the guest didn't read, so the next guest read gets the
-> > second lot of data, not the first". But maybe the spec really
-> > does say "you can do things in the order 'ask for A, ask for
-> > B, read data for A, read data for B".
-> >
-> > I couldn't conveniently find the pmbus spec to find out what
-> > the hardware is supposed to do here. We need some input from
-> > somebody who knows about pmbus.
+On 5/24/26 6:32 PM, Jared Rossi wrote:
+> 
+> 
+> On 5/5/26 4:18 PM, Zhuoying Cai wrote:
+>> [...]
+> 
+>> +}
+>> +
+>> +static int get_key_type(const S390IPLCertificate *cert)
+>> +{
+>> +    int rc;
+>> +    Error *err = NULL;
+>> +
+>> +    rc = qcrypto_x509_check_ecc_curve_p521(cert->raw, cert->size, &err);
+>> +    if (rc == -1) {
+>> +        error_report_err(err);
+>> +        return -1;
+>> +    }
+>> +
+>> +    return (rc == 1) ? DIAG_320_VCE_KEYTYPE_ECDSA_P521 :
+>> +                       DIAG_320_VCE_KEYTYPE_SELF_DESCRIBING;
+>> +}
+>> +
+>> +static int build_vce_header(VCEntry *vce, const S390IPLCertificate *cert, int idx)
+>> +{
+>> +    int key_type;
+>> +
+>> +    vce->vce_hdr.len = cpu_to_be32(sizeof(VCEntryHeader));
+>> +    vce->vce_hdr.cert_idx = cpu_to_be16(idx + 1);
+>> +    memcpy(vce->vce_hdr.name, cert->name, CERT_NAME_MAX_LEN);
+>> +
+>> +    key_type = get_key_type(cert);
+>> +    if (key_type == -1) {
+>> +        return -1;
+>> +    }
+>> +    vce->vce_hdr.key_type = key_type;
+>> +
+>> +    return 0;
+>> +}
+>> +
+>> +static int build_vce_data(VCEntry *vce, const S390IPLCertificate *cert)
+>> +{
+>> +    uint16_t keyid_field_len;
+>> +    uint16_t hash_field_len;
+>> +    uint32_t cert_field_len;
+>> +    uint32_t vce_len;
+>> +    int rc;
+>> +
+>> +    rc = handle_key_id(vce, cert);
+>> +    if (rc) {
+>> +        return -1;
+>> +    }
+>> +    keyid_field_len = ROUND_UP(be16_to_cpu(vce->vce_hdr.keyid_len), 4);
+> Maybe return the converted length from the handle_* functions, with 0 
+> being the
+> error condition?
+> 
+> e.g. (untested)
+>      keyid_len = handle_key_id(vce, cert);
+>      if (!keyid_len) {
+>          return -1;
+>      }
+> 
+> Just a nit, but I think it would improve readability.
+> 
+>> +
+>> +    rc = handle_hash(vce, cert, keyid_field_len);
+>> +    if (rc) {
+>> +        return -1;
+>> +    }
+>> +    hash_field_len = ROUND_UP(be16_to_cpu(vce->vce_hdr.hash_len), 4);
+>> +
+>> +    rc = handle_cert(vce, cert, hash_field_len);
+>> +    if (rc || !is_cert_valid(cert)) {
+>> +        return -1;
+>> +    }
+>> +    cert_field_len = ROUND_UP(be32_to_cpu(vce->vce_hdr.cert_len), 4);
+>> +
+>> +    vce_len = sizeof(VCEntryHeader) + keyid_field_len + hash_field_len + cert_field_len;
+>> +    if (vce_len > be32_to_cpu(vce->vce_hdr.len)) {
+>> +        return -1;
+>> +    }
+> We already used the maximum size when we allocated space for the VCE, so 
+> this
+> check is redundant I think?
+> 
+>> +
+>> +    vce->vce_hdr.flags |= DIAG_320_VCE_FLAGS_VALID;
+>> +
+>> +    /* Update vce length to reflect the actual size used by vce */
+>> +    vce->vce_hdr.len = cpu_to_be32(vce_len);
+>> +
+>> +    return 0;
+>> +}
+>> +
+>> +static VCEntry *diag_320_build_vce(const S390IPLCertificate *cert, int idx)
+>> +{
+>> +    g_autofree VCEntry *vce = NULL;
+>> +    uint32_t vce_max_size;
+>> +    int rc;
+>> +
+>> +    /*
+>> +     * Each field of the VCE is word-aligned.
+>> +     * Allocate enough space for the largest possible size for this VCE.
+>> +     * As the certificate fields (key-id, hash, data) are parsed, the
+>> +     * VCE's length field will be updated accordingly.
+>> +     */
+>> +    vce_max_size = sizeof(VCEntryHeader) +
+>> +                   ROUND_UP(CERT_KEY_ID_LEN, 4) +
+>> +                   ROUND_UP(CERT_HASH_LEN, 4) +
+>> +                   ROUND_UP(cert->der_size, 4);
+> In Patch 10, we define MAX_ENTRY_SIZE.  Is that something different than 
+> this?
+> Let's use the constant here unless there is a specific reason not to.
+> 
+>> +
+>> +    vce = g_malloc0(vce_max_size);
+>> +    rc = build_vce_header(vce, cert, idx);
+>> +    if (rc) {
+>> +        /*
+>> +         * Error occurs - VCE does not contain a valid certificate.
+>> +         * Bit 0 of the VCE flags is 0 and the VCE length is set.
+>> +         */
+>> +        vce->vce_hdr.len = cpu_to_be32(VCE_INVALID_LEN);
+>> +        goto out;
+>> +    }
+>> +
+>> +    vce->vce_hdr.len = cpu_to_be32(vce_max_size);
+> It is not obvious later in the code if the VCE length is a true value or a
+> place holder for the max size, so MAX_ENTRY_SIZE would help clarify also.
+> 
+>> +    rc = build_vce_data(vce, cert);
+>> +    if (rc) {
+>> +        vce->vce_hdr.len = cpu_to_be32(VCE_INVALID_LEN);
+>> +    }
+>> +
+>> +out:
+>> +    return g_steal_pointer(&vce);
+>> +}
+> Actually, I wonder if we might be able to remove the diag_320_build_vce()
+> function since it is basically just a wrapper for building the header 
+> and data.
+> 
+> If we introduce the MAX_ENTRY_SIZE constant and allocate memory before 
+> calling
+> the build functions, I think we can simplify the whole thing.
+> 
+> See notes below in the loop to build VCEs...
+> 
+>> +
+>> +static int handle_diag320_store_vc(S390CPU *cpu, uint64_t addr, uint64_t r1, uintptr_t ra,
+>> +                                   S390IPLCertificateStore *cs)
+>> +{
+>> +    g_autofree VCBlock *vcb = NULL;
+>> +    size_t remaining_space;
+>> +    uint16_t first_vc_index;
+>> +    uint16_t last_vc_index;
+>> +    int cs_start_index;
+>> +    int cs_end_index;
+>> +    uint32_t in_len;
+>> +
+>> +    vcb = g_new0(VCBlock, 1);
+>> +    if (s390_cpu_virt_mem_read(cpu, addr, r1, vcb, sizeof(*vcb))) {
+>> +        s390_cpu_virt_mem_handle_exc(cpu, ra);
+>> +        return -1;
+>> +    }
+> This is only the VCB header, right?  That's all the space is allocated for
+> anyway.  I find it confusing, here is my understanding, please correct 
+> if wrong:
+> 
+> We are allocating a VCB and updating the header values, but we never 
+> populate
+> the VCB's buffer area because each VCE being built has it's own malloc call?
+> 
+> Meaning when we read/write the VCB it is actually just the header, and 
+> the VCEs
+> are written independently?
+> 
+> If that is correct, then we never really build a full VCB right? Could 
+> we just
+> use the VCBHeader struct here instead to make that clear?
+> 
+>> +
+>> +    in_len = be32_to_cpu(vcb->vcb_hdr.in_len);
+>> +    first_vc_index = be16_to_cpu(vcb->vcb_hdr.first_vc_index);
+>> +    last_vc_index = be16_to_cpu(vcb->vcb_hdr.last_vc_index);
+>> +
+>> +    if (in_len % TARGET_PAGE_SIZE != 0) {
+>> +        return DIAG_320_RC_INVAL_VCB_LEN;
+>> +    }
+>> +
+>> +    if (first_vc_index > last_vc_index) {
+>> +        return DIAG_320_RC_BAD_RANGE;
+>> +    }
+>> +
+>> +    vcb->vcb_hdr.out_len = sizeof(VCBlockHeader);
+>> +
+>> +    /*
+>> +     * DIAG 320 subcode 2 expects to query a certificate store that
+>> +     * maintains an index origin of 1. However, the S390IPLCertificateStore
+>> +     * maintains an index origin of 0. Thus, the indices must be adjusted
+>> +     * for correct access into the cert store. A couple of special cases
+>> +     * must also be accounted for.
+>> +     */
+>> +
+>> +    /* Both indices are 0; return header with no certs */
+>> +    if (first_vc_index == 0 && last_vc_index == 0) {
+>> +        goto out;
+>> +    }
+>> +
+>> +    /* Normalize indices */
+>> +    cs_start_index = (first_vc_index == 0) ? 0 : first_vc_index - 1;
+>> +    cs_end_index = last_vc_index - 1;
+>> +
+>> +    /* Requested range is outside the cert store; return header with no certs */
+>> +    if (cs_start_index >= cs->count || cs_end_index >= cs->count) {
+>> +        goto out;
+>> +    }
+>> +
+>> +    remaining_space = in_len - sizeof(VCBlockHeader);
+>> +
+>> +    for (int i = cs_start_index; i <= cs_end_index; i++) {
+>> +        VCEntry *vce;
+> What about g_autofree VCEntry *vce = g_malloc0(MAX_ENTRY_SIZE);
+> 
 
-> Queueing reads are an implementation detail I decided on, not part of
-> the spec. How the data gets discarded is up to the device
-> manufacturer.
+    vce_max_size = sizeof(VCEntryHeader) +
+                   ROUND_UP(CERT_KEY_ID_LEN, 4) +
+                   ROUND_UP(CERT_HASH_LEN, 4) +
+                   ROUND_UP(cert->der_size, 4);
 
-So what *does* the spec say? Does it just say that if you don't
-read all the data before doing something else then it's all
-unpredictable? Is there a way for the guest to get the device
-back into a sane state after it's broken it like that?
+After thinking about this, I’m not entirely sure, but I think using the
+calculated vce_max_size might be a better choice than MAX_ENTRY_SIZE,
+since vce_max_size more closely reflects the size of the current VCE.
 
--- PMM
+MAX_ENTRY_SIZE is currently defined as 8192, which is significantly
+larger than the size of a single VCB that will be requested in a later
+patch. Although we check whether the remaining space is sufficient to
+store the VCE, allocating MAX_ENTRY_SIZE for each VCE might be unnecessary?
+
+Just wondering if this makes sense, or if you think we should keep using
+MAX_ENTRY_SIZE here?
+
+> Collin already mentioned using g_autofree, but in addition to that if we can
+> allocate the memory up front that would allow us to call the build
+> functions directly from here e.g. (untested)
+> 
+>      if (build_vce_header(vce, cert, i) || build_vce_data(vce, cert) {
+>          vce->vce_hdr.len = cpu_to_be32(VCE_INVALID_LEN);
+>      }
+> 
+> That would avoid the frees and steal pointer too.
+> 
+>> +        const S390IPLCertificate *cert = &cs->certs[i];
+>> +
+>> +        /*
+>> +         * Bit 0 of the VCE flags indicates whether the certificate is valid.
+>> +         * The caller of DIAG320 subcode 2 is responsible for verifying that
+>> +         * the VCE contains a valid certificate.
+>> +         */
+>> +        vce = diag_320_build_vce(cert, i);
+>> +
+>> +        /*
+>> +         * If there is no more space to store the cert,
+>> +         * set the remaining verification cert count and
+>> +         * break early.
+>> +         */
+>> +        if (remaining_space < vce->vce_hdr.len) {
+>> +            vcb->vcb_hdr.remain_ct = cpu_to_be16(last_vc_index - i);
+>> +            g_free(vce);
+>> +            break;
+>> +        }
+>> +
+>> +        /* Write VCE */
+>> +        if (s390_cpu_virt_mem_write(cpu, addr + vcb->vcb_hdr.out_len, r1,
+>> +                                    vce, vce->vce_hdr.len)) {
+>> +            s390_cpu_virt_mem_handle_exc(cpu, ra);
+>> +            g_free(vce);
+>> +            return -1;
+>> +        }
+>> +
+>> +        vcb->vcb_hdr.out_len += vce->vce_hdr.len;
+>> +        remaining_space -= vce->vce_hdr.len;
+>> +        vcb->vcb_hdr.stored_ct++;
+>> +
+>> +        g_free(vce);
+>> +    }
+>> +    vcb->vcb_hdr.stored_ct = cpu_to_be16(vcb->vcb_hdr.stored_ct);
+>> +
+>> +out:
+>> +    vcb->vcb_hdr.out_len = cpu_to_be32(vcb->vcb_hdr.out_len);
+>> +
+>> +    if (s390_cpu_virt_mem_write(cpu, addr, r1, vcb, sizeof(VCBlockHeader))) {
+>> +        s390_cpu_virt_mem_handle_exc(cpu, ra);
+>> +        return -1;
+>> +    }
+>> +
+>> +    return DIAG_320_RC_OK;
+>> +}
+>> +
+>>   QEMU_BUILD_BUG_MSG(sizeof(VCStorageSizeBlock) != VCSSB_MIN_LEN,
+>>                      "size of VCStorageSizeBlock is wrong");
+>> +QEMU_BUILD_BUG_MSG(sizeof(VCBlock) != 64, "size of VCBlock is wrong");
+>> +QEMU_BUILD_BUG_MSG(sizeof(VCEntry) != 128, "size of VCEntry is wrong");
+>>   
+>>   void handle_diag_320(CPUS390XState *env, uint64_t r1, uint64_t r3, uintptr_t ra)
+>>   {
+>> @@ -270,7 +594,8 @@ void handle_diag_320(CPUS390XState *env, uint64_t r1, uint64_t r3, uintptr_t ra)
+>>            * for now.
+>>            */
+>>           uint32_t ism_word0 = cpu_to_be32(DIAG_320_ISM_QUERY_SUBCODES |
+>> -                                         DIAG_320_ISM_QUERY_VCSI);
+>> +                                         DIAG_320_ISM_QUERY_VCSI |
+>> +                                         DIAG_320_ISM_STORE_VC);
+>>   
+>>           if (s390_cpu_virt_mem_write(cpu, addr, r1, &ism_word0, sizeof(ism_word0))) {
+>>               s390_cpu_virt_mem_handle_exc(cpu, ra);
+>> @@ -296,6 +621,18 @@ void handle_diag_320(CPUS390XState *env, uint64_t r1, uint64_t r3, uintptr_t ra)
+>>           }
+>>           env->regs[r1 + 1] = rc;
+>>           break;
+>> +    case DIAG_320_SUBC_STORE_VC:
+>> +        if (addr & ~TARGET_PAGE_MASK) {
+>> +            s390_program_interrupt(env, PGM_SPECIFICATION, ra);
+>> +            return;
+>> +        }
+>> +
+>> +        rc = handle_diag320_store_vc(cpu, addr, r1, ra, cs);
+>> +        if (rc == -1) {
+>> +            return;
+>> +        }
+>> +        env->regs[r1 + 1] = rc;
+>> +        break;
+>>       default:
+>>           env->regs[r1 + 1] = DIAG_320_RC_NOT_SUPPORTED;
+>>           break;
+> Regards,
+> Jared Rossi
+
 
