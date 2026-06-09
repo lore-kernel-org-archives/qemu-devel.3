@@ -4,121 +4,107 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8F107CD8CA8
-	for <qemu-devel@archiver.kernel.org>; Tue,  9 Jun 2026 11:39:27 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C22ABCD8CAA
+	for <qemu-devel@archiver.kernel.org>; Tue,  9 Jun 2026 11:53:23 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wWun7-0004TT-3p; Tue, 09 Jun 2026 07:38:45 -0400
+	id 1wWv0a-0006x2-G7; Tue, 09 Jun 2026 07:52:40 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <maxbr@linux.ibm.com>)
- id 1wWumy-0004SK-V5
- for qemu-devel@nongnu.org; Tue, 09 Jun 2026 07:38:37 -0400
-Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
+ (Exim 4.90_1) (envelope-from <imammedo@redhat.com>)
+ id 1wWv0Y-0006wZ-8q
+ for qemu-devel@nongnu.org; Tue, 09 Jun 2026 07:52:38 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <maxbr@linux.ibm.com>)
- id 1wWumv-0006ID-0Z
- for qemu-devel@nongnu.org; Tue, 09 Jun 2026 07:38:34 -0400
-Received: from pps.filterd (m0356516.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 65941sSV089638; Tue, 9 Jun 2026 11:38:19 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
- :content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=pp1; bh=r8JVpn
- wqXSJN2TSw7EGjhIbYRwNVChaKxZ3qi9nHrys=; b=oMzCMOmwpbFThiaZp3gfpJ
- UW9rj3a6i1T0GPnRfL6gQpOYJu9zNtMqQjQVgNdAS1iKHQbWqdUSE6HQ8OD8+tGG
- keqSLiqyWKv/DGkP0lEB+pj4FodbDckl4yds9nklZ0nTAVByM3Wg6uLJlehNBKeL
- Gdwc7obZ9A9SeDu3iZwY1cD6kbCmMbYdwOpWVkcP23/RZOcaC4sOgV/dsozm7tVW
- kCfP1K2tAQGliySwOVv2ZuF2ffvTNoCzioX2LzMXyDvqfJq63dPisd16r9S327xm
- NytKYGEJd2FtsJE3MoZlzTEDg2BBXvE4QCcUPJHsJuCOluCROQ0OixKTXHhJW+gw
- ==
-Received: from ppma11.dal12v.mail.ibm.com
- (db.9e.1632.ip4.static.sl-reverse.com [50.22.158.219])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4em8yhuvxp-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Tue, 09 Jun 2026 11:38:18 +0000 (GMT)
-Received: from pps.filterd (ppma11.dal12v.mail.ibm.com [127.0.0.1])
- by ppma11.dal12v.mail.ibm.com (8.18.1.7/8.18.1.7) with ESMTP id 659BYbkF016240;
- Tue, 9 Jun 2026 11:38:17 GMT
-Received: from smtprelay06.fra02v.mail.ibm.com ([9.218.2.230])
- by ppma11.dal12v.mail.ibm.com (PPS) with ESMTPS id 4en0jy9g96-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Tue, 09 Jun 2026 11:38:17 +0000 (GMT)
-Received: from smtpav02.fra02v.mail.ibm.com (smtpav02.fra02v.mail.ibm.com
- [10.20.54.101])
- by smtprelay06.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 659BcGJP24773116
- (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Tue, 9 Jun 2026 11:38:16 GMT
-Received: from smtpav02.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 26C0820043;
- Tue,  9 Jun 2026 11:38:16 +0000 (GMT)
-Received: from smtpav02.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id E740C20040;
- Tue,  9 Jun 2026 11:38:15 +0000 (GMT)
-Received: from li-9b52914c-2c8b-11b2-a85c-a36f6d484b4a.ibm.com (unknown
- [9.224.77.197]) by smtpav02.fra02v.mail.ibm.com (Postfix) with ESMTP;
- Tue,  9 Jun 2026 11:38:15 +0000 (GMT)
-Message-ID: <5ad91cd4c7ba500a56d8356100becffcfb3062a3.camel@linux.ibm.com>
-Subject: Re: [PATCH v6 00/12] virtio-console: notify about the terminal size
-From: Maximilian Immanuel Brandtner <maxbr@linux.ibm.com>
-To: Filip Hejsek <filip.hejsek@gmail.com>, "Michael S. Tsirkin"
- <mst@redhat.com>
-Cc: qemu-devel@nongnu.org, =?ISO-8859-1?Q?Marc-Andr=E9?= Lureau	
- <marcandre.lureau@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>, Laurent
- Vivier <lvivier@redhat.com>, Amit Shah <amit@kernel.org>, Markus Armbruster
- <armbru@redhat.com>, Eric Blake <eblake@redhat.com>, Eduardo Habkost
- <eduardo@habkost.net>, Marcel Apfelbaum	 <marcel.apfelbaum@gmail.com>,
- Philippe =?ISO-8859-1?Q?Mathieu-Daud=E9?=	 <philmd@linaro.org>, Yanan Wang
- <wangyanan55@huawei.com>, Zhao Liu	 <zhao1.liu@intel.com>, "Daniel P."
- =?ISO-8859-1?Q?Berrang=E9?=	 <berrange@redhat.com>, Szymon Lukasz
- <noh4hss@gmail.com>
-Date: Tue, 09 Jun 2026 13:38:15 +0200
-In-Reply-To: <ba34daea09f83601c88be90006ca28e3700910d9.camel@gmail.com>
-References: <20260119-console-resize-v6-0-33a7b0330a7a@gmail.com>
- <cc0b8cce5bf5763ace058270e9d80fb84873dbd7.camel@linux.ibm.com>
- <20260609040710-mutt-send-email-mst@kernel.org>
- <147cee86401993714fa94bd6cc79c4dbbdcaca52.camel@linux.ibm.com>
- <ba34daea09f83601c88be90006ca28e3700910d9.camel@gmail.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-User-Agent: Evolution 3.58.3 (3.58.3-1.fc43) 
+ (Exim 4.90_1) (envelope-from <imammedo@redhat.com>)
+ id 1wWv0W-0002e4-AE
+ for qemu-devel@nongnu.org; Tue, 09 Jun 2026 07:52:38 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1781005953;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=DJvXh2+BGEhLxZvKWssx0xtBdEKf7cnFzkS58uHwBjI=;
+ b=IDe1GpdqVnOSZ9MwmAnIcEmPtW2F3BpJ5p2Z2+X17dcXIxrhCwxZcIS/VAloyXpugfme/w
+ aDFX9S9gp1E2KjH9XT1cxR4gNOiHtA+GUrMtgA2x5BwkTPqpx2xnX95uPeEHvX2eFOJlmd
+ rWRUC4r9KtRPqB3ObVY+N/xMd1/vxPc=
+Received: from mail-wm1-f70.google.com (mail-wm1-f70.google.com
+ [209.85.128.70]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-9-hwZKlDbgPcOVCovilOP_dQ-1; Tue, 09 Jun 2026 07:52:30 -0400
+X-MC-Unique: hwZKlDbgPcOVCovilOP_dQ-1
+X-Mimecast-MFC-AGG-ID: hwZKlDbgPcOVCovilOP_dQ_1781005950
+Received: by mail-wm1-f70.google.com with SMTP id
+ 5b1f17b1804b1-490b93debc8so43139015e9.1
+ for <qemu-devel@nongnu.org>; Tue, 09 Jun 2026 04:52:30 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=redhat.com; s=google; t=1781005949; x=1781610749; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:subject:cc:to:from:date:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=DJvXh2+BGEhLxZvKWssx0xtBdEKf7cnFzkS58uHwBjI=;
+ b=lf4gjz/6zMcgSD12D9NDDrn5Fdt5ms/FTM6xpO8EmdI/A3MpWYsaTndHqXjtpwPmWO
+ NlAheBAVbYqYoDLlkNoDTw+t/5J7Do2T8VMHmgqW1TGplprbLclzweHOxPs8wlygoxIs
+ JpvKtXsb/ypbATj1yeI2UnrZIq57Gcmj4NU/kwJWFGk1NhLNRq/4KkF6A7lD7ef6hzWz
+ J128875C9tuF2tbIIAYUGdESbGtSH1utXg2FK7Gac/ZidO5UpgpQE+7sUFsC84PB0Dab
+ zVAVRVYvBUVtApWUYM1e7i6N5IHAwqdQvIkHigAfzgOrJkAYqT2g+TqfwlAPpja91H2a
+ 77Fg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1781005949; x=1781610749;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=DJvXh2+BGEhLxZvKWssx0xtBdEKf7cnFzkS58uHwBjI=;
+ b=np1+DZUCQwzmQLfJJrndgcwxHZ7XVpcP8uAec0TfnOncHUKBe0GBVN2b/JOHOogmVA
+ in5NEaxzL9Oq7wM24S/e6d3MJBoQDCzNoz+ygxDjMEE3uaDiEitcQ/zJTZa15A+LIDYN
+ Jm3y9HhqhSurYp+y/5Wt/EV15IhuJzkFL6T3FUUKT/DlJ7dT0zOACuU6NQVF3oz+Av0D
+ TfZtIhD6SX9OxL9PciPcImYro5f4vTtPAsAwm0RrbexBAA5mle+CAJCt23nfQY9SSWTK
+ g25os268Z2Nsw7ojiZB7lRnvcIakzYqdrI/LQKSogszhim5kIc/dH0xo4/0KK99lQh++
+ f5nQ==
+X-Gm-Message-State: AOJu0YwhhBJm1oUE5pOkUCWJrQeuO4N/YclvIv1ZPr/ooTNAFWLrFXzH
+ EY17IZUjKMsc2XbDjKcBDTloV1kEwOsmMT61ztwrXYzrCifeVWEuaQ9usj90SiwRKUBdutTkt2P
+ DcFlOXx0MnMJCbq/bW2A1hwFijRYctsIdGt72SDRxRvfHwjHWl4FV/sPD
+X-Gm-Gg: Acq92OFfxzACsYmWqZiXJI8O9k4SrVti2CMluWPL1jP193EP1YNJKpZCgAffus1fCum
+ 7/mfLfd969jVDYcrhvLc+4VYcZdESb4buOIygsq+QT7CxHwmspVDpKveBR3BrFNSgdJY/lB5l9z
+ 9YT0k5AfmW8f9syp6T9eQtId9neUF9t1N2caLl12XQYZnnAzU3QjKqoBpxrgHGjLjAeoMQFpjIm
+ nr2nshYNmzOejmGSPTOTPfl2/wwOtwyGV/ian/ogcro88BphOg9uEuDRhFju5xcJKHj7fkXNaLP
+ Yx6xztjVX5r2LiUdAeRbbnJ8W9AAedJRXAmKHkCoJyaCwSD9XBo33+8IhpubyZpQLt5nZ7vYEhF
+ nZryr6A/Ri3N2iE6i
+X-Received: by 2002:a05:600c:6094:b0:490:4b89:5362 with SMTP id
+ 5b1f17b1804b1-490c2609cecmr329492865e9.24.1781005949535; 
+ Tue, 09 Jun 2026 04:52:29 -0700 (PDT)
+X-Received: by 2002:a05:600c:6094:b0:490:4b89:5362 with SMTP id
+ 5b1f17b1804b1-490c2609cecmr329492325e9.24.1781005949176; 
+ Tue, 09 Jun 2026 04:52:29 -0700 (PDT)
+Received: from imammedo ([213.175.37.14]) by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-490c2d37edbsm378895495e9.2.2026.06.09.04.52.28
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Tue, 09 Jun 2026 04:52:28 -0700 (PDT)
+Date: Tue, 9 Jun 2026 13:52:27 +0200
+From: Igor Mammedov <imammedo@redhat.com>
+To: fanhuang <FangSheng.Huang@amd.com>
+Cc: <qemu-devel@nongnu.org>, <david@kernel.org>, <gourry@gourry.net>,
+ <philmd@mailo.com>, <Zhigang.Luo@amd.com>, <Lianjie.Shi@amd.com>
+Subject: Re: [PATCH v10 3/4] hw/i386: hook sp-mem into the pc machine plug path
+Message-ID: <20260609135227.6dd6eb99@imammedo>
+In-Reply-To: <20260605104609.1739911-4-FangSheng.Huang@amd.com>
+References: <20260605104609.1739911-1-FangSheng.Huang@amd.com>
+ <20260605104609.1739911-4-FangSheng.Huang@amd.com>
+X-Mailer: Claws Mail 4.4.0 (GTK 3.24.52; x86_64-redhat-linux-gnu)
 MIME-Version: 1.0
-X-TM-AS-GCONF: 00
-X-Proofpoint-Reinject: loops=2 maxloops=12
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNjA5MDExMCBTYWx0ZWRfXyhqyO+Ag8nfF
- bXYwp/z+P7JkV3PEJ9XeapDkOymF4hG3NyBMkqr70NoBiTyVgB5IUeTgVFCFtO4wPtK4JPthbzx
- 5PDkJhQmnGlQdBHuWufxQRgytskRPzhWiPu23CoTVu481AgZAp9QXxykOd5mq+5k2vF4mVDupmK
- CM/tr/Yxc/zbwW+KiB1DNO9q+QSyUsNBoOm3yZApx6pn8gGGmpP+CddwYiKFQAsSjjhwOr5C78W
- DEp8bD7qhRpx1DKQTuPS8/JBneN4BZPnbUCzRHbLU5lvBZxOqB66Z9Z7qyvfWbTOeOCa8MVaDft
- nV4Tx6zoHE3pGTTEWBdRh/y0MXmeTuG4WuKxwqc6x0M9F9UlLbDSiruW8wWiXF0uQq8Yerw0qeV
- mk4MeUNLPssmgrLPVlux1ppz72Zw1v7XkCY0f37NwhQLlhKGIlbbcyUCxxuI+IPWFUD/q3sZdnH
- oK8UrjUyCRJ1jTAQ7sA==
-X-Authority-Analysis: v=2.4 cv=HvFG3UTS c=1 sm=1 tr=0 ts=6a27fb2b cx=c_pps
- a=aDMHemPKRhS1OARIsFnwRA==:117 a=aDMHemPKRhS1OARIsFnwRA==:17
- a=IkcTkHD0fZMA:10 a=FelO9ux0wxsA:10 a=VkNPw1HP01LnGYTKEx00:22
- a=RnoormkPH1_aCDwRdu11:22 a=Y2IxJ9c9Rs8Kov3niI8_:22 a=vIXjsTuexS82xgykj9YA:9
- a=QEXdDO2ut3YA:10
-X-Proofpoint-ORIG-GUID: qhfAe9nokzr7avENkimaed864x4BgLeI
-X-Proofpoint-GUID: hu5mIc2nEdMjqpjfLG_qKBZGixniMnRo
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.125,FMLib:17.12.100.49
- definitions=2026-06-09_02,2026-06-09_02,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- impostorscore=0 clxscore=1015 lowpriorityscore=0 adultscore=0 suspectscore=0
- spamscore=0 priorityscore=1501 phishscore=0 malwarescore=0 bulkscore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2605210000 definitions=main-2606090110
-Received-SPF: pass client-ip=148.163.158.5; envelope-from=maxbr@linux.ibm.com;
- helo=mx0b-001b2d01.pphosted.com
-X-Spam_score_int: -26
-X-Spam_score: -2.7
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=imammedo@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -24
+X-Spam_score: -2.5
 X-Spam_bar: --
-X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
- RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.445,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -134,92 +120,153 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, 2026-06-09 at 13:13 +0200, Filip Hejsek wrote:
-> On Tue, 2026-06-09 at 10:26 +0200, Maximilian Immanuel Brandtner
-> wrote:
-> > On Tue, 2026-06-09 at 04:09 -0400, Michael S. Tsirkin wrote:
-> > > On Tue, Jun 09, 2026 at 10:02:40AM +0200, Maximilian Immanuel
-> > > Brandtner wrote:
-> > > > What's the status of this series? It seems to me to have
-> > > > somewhat
-> > > > stalled, because of the virtio resize event discrepancy that
-> > > > has
-> > > > been
-> > > > adressed by backporting the relevant patch. At this point it's
-> > > > been
-> > > > almost 6 months since any changes have been made to this patch-
-> > > > set,
-> > > > even though at this point it would have to be refactored to
-> > > > address
-> > > > changes that have been made to QEMU since. Has progress on this
-> > > > patch-
-> > > > set just stalled or are there any remaining concerns about the
-> > > > implementation of this patch-set I'm unaware of?
-> > > >=20
-> > > > Kind regards,
-> > > > Max Brandtner
-> > >=20
-> > > Whom are you asking?
-> > > There were comments on patches 7 and 8 and Filip seems to have
-> > > indicated
-> > > he intends to address them, and even posted diffs.
-> > > So now, I expect v7 with that.
-> > I suppose Filip for the most part. It's just that close to 6 months
-> > of
-> > inactivity is quite a while and sometimes as other stuff happens
-> > people
-> > can forget about a patch-series.
-> >=20
-> > Kind regards,
-> > Max Brandtner
->=20
-> Hi all,
->=20
-> Sorry, I did indeed forget about the series.
->=20
-> From what I remember, I was trying to address an issue with the size
-> not being updated after a migration, and it turned out fixing this
-> required adding the current size to the migration stream (in order to
-> avoid sending unnecessary resize events when the size doesn't change,
-> which MST pointed out would add guest performance overhead).
->=20
-> However, since virtio console serialization still uses save/load
-> methods rather than VMState macros, I couldn't simply add a
-> subsection,
-> so I wasn't quite sure how to proceed. It seemed like the right thing
-> to do was to migrate virtio-console to VMState, but that would have
-> taken more effort than I was willing to put in at that moment. And
-> then
-> some other stuff happened in my life and now here we are.
->=20
-> So anyway, in order to make progress on this, I see two approaches:
->=20
-> 1. Just bump the migration stream version. Makes the loading code
-> more
-> convoluted due to version checks and increases tech dept for future
-> VMState migration, but shouldn't be that hard to do.
->=20
-> 2. Do the VMState migration now. This is complicated by the fact the
-> on
-> load,=C2=A0some of the state shouldn't be restored back into the field
-> that
-> was saved, but instead should be compared and the guest notified if
-> it
-> is different. I'm also not quite sure how hard it will be to preserve
-> migration stream compatibility.
->=20
-> Which one would be preferable to do?
->=20
-> Kind regards,
-> Filip Hejsek
+On Fri, 5 Jun 2026 18:46:08 +0800
+fanhuang <FangSheng.Huang@amd.com> wrote:
 
-I have another patch in the pipeline to add resize support for another
-chardev backend. Would the migration issue affect any chardev backend
-that wants to support resizing or is it specific to virtio? I don't
-have a strong opinion either way regarding virtio-console, but I'd be
-quite interested to see the generic chardev resizing code rebased
-against the latest upstream QEMU sooner rather than later.
+> Add the pc machine hookup for TYPE_SP_MEM so each sp-mem instance is
+> placed by the memory-device framework and reported to the guest as
+> E820_SOFT_RESERVED.
+> 
+> Signed-off-by: FangSheng Huang <FangSheng.Huang@amd.com>
+> ---
+>  hw/i386/e820_memory_layout.h | 11 +++++-----
+>  hw/i386/pc.c                 | 42 ++++++++++++++++++++++++++++++++++++
+>  hw/i386/Kconfig              |  2 ++
+>  3 files changed, 50 insertions(+), 5 deletions(-)
+> 
+> diff --git a/hw/i386/e820_memory_layout.h b/hw/i386/e820_memory_layout.h
+> index b50acfa201..6ef169db9c 100644
+> --- a/hw/i386/e820_memory_layout.h
+> +++ b/hw/i386/e820_memory_layout.h
+> @@ -10,11 +10,12 @@
+>  #define HW_I386_E820_MEMORY_LAYOUT_H
+>  
+>  /* e820 types */
+> -#define E820_RAM        1
+> -#define E820_RESERVED   2
+> -#define E820_ACPI       3
+> -#define E820_NVS        4
+> -#define E820_UNUSABLE   5
+> +#define E820_RAM           1
+> +#define E820_RESERVED      2
+> +#define E820_ACPI          3
+> +#define E820_NVS           4
+> +#define E820_UNUSABLE      5
+> +#define E820_SOFT_RESERVED 0xefffffff
+>  
+>  struct e820_entry {
+>      uint64_t address;
+> diff --git a/hw/i386/pc.c b/hw/i386/pc.c
+> index 2ecad3c503..b538f49f23 100644
+> --- a/hw/i386/pc.c
+> +++ b/hw/i386/pc.c
+> @@ -63,6 +63,7 @@
+>  #include "hw/i386/kvm/xen_gnttab.h"
+>  #include "hw/i386/kvm/xen_xenstore.h"
+>  #include "hw/mem/memory-device.h"
+> +#include "hw/mem/sp-mem.h"
+>  #include "e820_memory_layout.h"
+>  #include "trace.h"
+>  #include "sev.h"
+> @@ -1283,11 +1284,49 @@ static void pc_hv_balloon_plug(HotplugHandler *hotplug_dev,
+>      memory_device_plug(MEMORY_DEVICE(dev), MACHINE(hotplug_dev));
+>  }
+>  
+> +static void pc_sp_mem_pre_plug(HotplugHandler *hotplug_dev,
+> +                               DeviceState *dev, Error **errp)
+> +{
+> +    MachineState *ms = MACHINE(hotplug_dev);
+> +    SpMemDevice *spm = SP_MEM(dev);
+> +
 
-Kind regards,
-Max Brandtner
+> +    if (host_memory_backend_is_mapped(spm->hostmem)) {
+> +        error_setg(errp, "memory backend '%s' is already in use",
+> +                   object_get_canonical_path_component(OBJECT(spm->hostmem)));
+> +        return;
+> +    }
+this belongs to sp_mem realize
+
+> +    if (ms->numa_state && spm->node >= ms->numa_state->num_nodes) {
+> +        error_setg(errp,
+> +                   "'node' property value %" PRIu32
+> +                   " exceeds the number of NUMA nodes (%d)",
+> +                   spm->node, ms->numa_state->num_nodes);
+> +        return;
+> +    }
+
+I think this the right place for this, despite what other mems do.
+Perhaps it is worth to consolidate/cleanup 1st. 
+
+I'd put it in memory_device_pre_plug():
+       if has_node_prop:
+          .....
+
+> +    memory_device_pre_plug(MEMORY_DEVICE(dev), ms, errp);
+> +}
+> +
+> +static void pc_sp_mem_plug(HotplugHandler *hotplug_dev,
+> +                               DeviceState *dev, Error **errp)
+> +{
+> +    SpMemDevice *spm = SP_MEM(dev);
+> +    MemoryDeviceClass *mdc = MEMORY_DEVICE_GET_CLASS(MEMORY_DEVICE(dev));
+> +    uint64_t addr, size;
+> +
+> +    host_memory_backend_set_mapped(spm->hostmem, true);
+dup? see above.
+
+> +    memory_device_plug(MEMORY_DEVICE(dev), MACHINE(hotplug_dev));
+> +
+> +    addr = mdc->get_addr(MEMORY_DEVICE(dev));
+> +    size = memory_region_size(host_memory_backend_get_memory(spm->hostmem));
+> +    e820_add_entry(addr, size, E820_SOFT_RESERVED);
+> +}
+> +
+>  static void pc_machine_device_pre_plug_cb(HotplugHandler *hotplug_dev,
+>                                            DeviceState *dev, Error **errp)
+>  {
+>      if (object_dynamic_cast(OBJECT(dev), TYPE_PC_DIMM)) {
+>          pc_memory_pre_plug(hotplug_dev, dev, errp);
+> +    } else if (object_dynamic_cast(OBJECT(dev), TYPE_SP_MEM)) {
+> +        pc_sp_mem_pre_plug(hotplug_dev, dev, errp);
+>      } else if (object_dynamic_cast(OBJECT(dev), TYPE_CPU)) {
+>          x86_cpu_pre_plug(hotplug_dev, dev, errp);
+>      } else if (object_dynamic_cast(OBJECT(dev), TYPE_VIRTIO_MD_PCI)) {
+> @@ -1324,6 +1363,8 @@ static void pc_machine_device_plug_cb(HotplugHandler *hotplug_dev,
+>  {
+>      if (object_dynamic_cast(OBJECT(dev), TYPE_PC_DIMM)) {
+>          pc_memory_plug(hotplug_dev, dev, errp);
+> +    } else if (object_dynamic_cast(OBJECT(dev), TYPE_SP_MEM)) {
+> +        pc_sp_mem_plug(hotplug_dev, dev, errp);
+>      } else if (object_dynamic_cast(OBJECT(dev), TYPE_CPU)) {
+>          x86_cpu_plug(hotplug_dev, dev, errp);
+>      } else if (object_dynamic_cast(OBJECT(dev), TYPE_VIRTIO_MD_PCI)) {
+> @@ -1368,6 +1409,7 @@ static HotplugHandler *pc_get_hotplug_handler(MachineState *machine,
+>                                               DeviceState *dev)
+>  {
+>      if (object_dynamic_cast(OBJECT(dev), TYPE_PC_DIMM) ||
+> +        object_dynamic_cast(OBJECT(dev), TYPE_SP_MEM) ||
+>          object_dynamic_cast(OBJECT(dev), TYPE_CPU) ||
+>          object_dynamic_cast(OBJECT(dev), TYPE_VIRTIO_MD_PCI) ||
+>          object_dynamic_cast(OBJECT(dev), TYPE_VIRTIO_IOMMU_PCI) ||
+> diff --git a/hw/i386/Kconfig b/hw/i386/Kconfig
+> index 12473acaa7..e27d8816e5 100644
+> --- a/hw/i386/Kconfig
+> +++ b/hw/i386/Kconfig
+> @@ -84,6 +84,7 @@ config I440FX
+>      select PCI_I440FX
+>      select PIIX
+>      select DIMM
+> +    select SP_MEM
+>      select SMBIOS
+>      select SMBIOS_LEGACY
+>      select FW_CFG_DMA
+> @@ -113,6 +114,7 @@ config Q35
+>      select LPC_ICH9
+>      select AHCI_ICH9
+>      select DIMM
+> +    select SP_MEM
+>      select SMBIOS
+>      select FW_CFG_DMA
+>  
+
 
