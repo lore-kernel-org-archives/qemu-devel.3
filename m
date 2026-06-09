@@ -4,35 +4,35 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A0398CD8CB9
-	for <qemu-devel@archiver.kernel.org>; Tue,  9 Jun 2026 16:38:59 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 01077CD8CB9
+	for <qemu-devel@archiver.kernel.org>; Tue,  9 Jun 2026 16:39:15 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wWzTM-0002jZ-F5; Tue, 09 Jun 2026 12:38:40 -0400
+	id 1wWzTI-0002gZ-Ch; Tue, 09 Jun 2026 12:38:36 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <deller@kernel.org>) id 1wWzTB-0002eY-UX
- for qemu-devel@nongnu.org; Tue, 09 Jun 2026 12:38:30 -0400
-Received: from sea.source.kernel.org ([2600:3c0a:e001:78e:0:1991:8:25])
+ (Exim 4.90_1) (envelope-from <deller@kernel.org>) id 1wWzT9-0002dV-IJ
+ for qemu-devel@nongnu.org; Tue, 09 Jun 2026 12:38:27 -0400
+Received: from tor.source.kernel.org ([172.105.4.254])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <deller@kernel.org>) id 1wWzTA-0005FT-3J
- for qemu-devel@nongnu.org; Tue, 09 Jun 2026 12:38:29 -0400
+ (Exim 4.90_1) (envelope-from <deller@kernel.org>) id 1wWzT7-0005Ey-HN
+ for qemu-devel@nongnu.org; Tue, 09 Jun 2026 12:38:27 -0400
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
- by sea.source.kernel.org (Postfix) with ESMTP id E27B2413C0;
- Tue,  9 Jun 2026 16:38:26 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 035091F00893;
+ by tor.source.kernel.org (Postfix) with ESMTP id CC9226020B;
  Tue,  9 Jun 2026 16:38:24 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B60DD1F00893;
+ Tue,  9 Jun 2026 16:38:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
- s=k20260515; t=1781023106;
- bh=gEmpbKVD9hDcSZqLWrik9HtYpOvGlKu3Ri0bvNo/FQk=;
+ s=k20260515; t=1781023104;
+ bh=Z1dfaMdDG1BHIABJPuyTvw9aGXsVucAwD1oVosQ69OE=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References;
- b=Y9fzUgO+wHk6+jo5J2m18oq7jEkKrB89f8M7s3DzQFvDQ0oZK847pLPjWSduLzN1P
- dLiLW5+/Sy2SuWOIK1F2YxqDah2UWuegQWvA0w4b0Z32R+B+nz91b1VL2cVqWCm8pV
- MN9o+i5hOLkKKyRf/xrp8PiAqbzaAasBVLKxonOK8ORN1oejAUQuFGW6Gv8PTz+EUn
- Oc8sMuxeyD1rzrcxEb9fJ9oVLcBglz9CrBpjXfyj7U5QE9UOtyL9CwzpWu2/NvKX2a
- DcCYBvwjLVRRXd7BRbr0YPeJKxLw3Eh43Fdqo+zGQSid64vGu/zrOSFjCWZFyHOu5P
- NWniE2zY/rXnQ==
+ b=YGUH+ZLkg2KEerfBADfkPXKHO9uvgysBpMHjxUx2mQ5kA3Tqm1jUCp7633Uea0M0/
+ h1tdd1k3dULYNBPVX1AcLy2nUf/s1X4GnophSBdHpBZzy2e8D0Kcp5CNDsGvz/fBkO
+ pBoVQMTLAOEjqiv7WJa9LwVCrb1YF+K5TPS5PcAqdSK/hb0/0R7TkCK7HfHCW/6Lbj
+ 8zMLe1jMoXwr9wxCY1vtLy4W14pNpf47zEPlfhnlDfXXFM5Vv5zBNkB6BgkJ4eXmNf
+ orLdMAz8puUI405R/2P05efWdvNyJWPOw+LxumtEuJBEEngfG3y+OYZsMwxDZeV9ce
+ 3IFUgW9ncxY4g==
 From: Helge Deller <deller@kernel.org>
 To: qemu-devel@nongnu.org
 Cc: deller@gmx.de, Yoshinori Sato <yoshinori.sato@nifty.com>,
@@ -40,17 +40,17 @@ Cc: deller@gmx.de, Yoshinori Sato <yoshinori.sato@nifty.com>,
  Laurent Vivier <laurent@vivier.eu>, Max Filippov <jcmvbkbc@gmail.com>,
  Matt Turner <mattst88@gmail.com>,
  Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>
-Subject: [PULL v2 7/8] linux-user/sparc: flush register windows before core
- dump
-Date: Tue,  9 Jun 2026 18:38:06 +0200
-Message-ID: <20260609163807.6083-8-deller@kernel.org>
+Subject: [PULL v2 6/8] linux-user/sparc: call block_signals() before
+ set_sigmask() in setcontext
+Date: Tue,  9 Jun 2026 18:38:05 +0200
+Message-ID: <20260609163807.6083-7-deller@kernel.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260609163807.6083-1-deller@kernel.org>
 References: <20260609163807.6083-1-deller@kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2600:3c0a:e001:78e:0:1991:8:25;
- envelope-from=deller@kernel.org; helo=sea.source.kernel.org
+Received-SPF: pass client-ip=172.105.4.254; envelope-from=deller@kernel.org;
+ helo=tor.source.kernel.org
 X-Spam_score_int: -24
 X-Spam_score: -2.5
 X-Spam_bar: --
@@ -74,181 +74,75 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Matt Turner <mattst88@gmail.com>
 
-Without this, only the crash frame's window is spilled to the
-stack; all deeper call frames remain in the register file and
-are absent from the core's memory segments. Stack unwinding
-fails past the first DWARF step because the callers' register
-save areas contain stale/garbage data.
+sparc64_set_context() emulates the kernel's `ta 0x6f` trap by calling
+set_sigmask() to install the mask supplied via the user's ucontext_t.
+The contract of set_sigmask() (see its comment in linux-user/signal.c)
+is that the caller must have first called block_signals(), which sets
+TaskState::signal_pending.
 
-The real kernel calls flush_all_user_windows() at the top of
-do_coredump(). Mirror that via a weak target_flush_windows()
-hook called from dump_core_and_abort(), with the SPARC override
-calling the existing flush_windows() in cpu_loop.c.
+Without block_signals(), if a guest signal is pending-and-blocked at
+the time setcontext is invoked and the new mask unblocks it,
+signal_pending stays 0 and the post-trap process_pending_signals()
+call in linux-user/sparc/cpu_loop.c never enters its while loop, so
+the now-deliverable signal is left undelivered indefinitely.
+
+This affects programs that use getcontext/setcontext to swap signal
+masks, including libunwind's unw_resume() out of a signal handler:
+without this fix, the test program below loops forever printing
+"calling setcontext" instead of delivering the pending SIGUSR2.
+
+  #define _GNU_SOURCE
+  #include <ucontext.h>
+  #include <signal.h>
+  #include <stdio.h>
+  #include <unistd.h>
+  static int got;
+  static void h(int s) { got = 1; }
+  int main(void) {
+      signal(SIGUSR2, h);
+      sigset_t m; sigemptyset(&m); sigaddset(&m, SIGUSR2);
+      sigprocmask(SIG_BLOCK, &m, NULL);
+      kill(getpid(), SIGUSR2);
+      ucontext_t uc;
+      getcontext(&uc);
+      if (got) return 0;
+      uc.uc_sigmask.__val[0] = 0;
+      setcontext(&uc);
+      return 1;
+  }
+
+The 32-bit sparc do_sigreturn / do_rt_sigreturn paths already get
+block_signals() from the rt_sigreturn syscall wrapper in
+linux-user/syscall.c, so only sparc64_set_context (invoked directly
+from cpu_loop) needs the addition.
 
 Signed-off-by: Matt Turner <mattst88@gmail.com>
 Cc: Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>
 Signed-off-by: Helge Deller <deller@gmx.de>
 ---
- linux-user/elfload.c          |  9 ++++++++
- linux-user/sparc/cpu_loop.c   |  3 ++-
- linux-user/sparc/cpu_loop.h   |  7 +++++++
- linux-user/sparc/elfload.c    | 39 +++++++++++++++++++++++++++++------
- linux-user/sparc/target_elf.h | 17 +++++++++++----
- 5 files changed, 64 insertions(+), 11 deletions(-)
- create mode 100644 linux-user/sparc/cpu_loop.h
+ linux-user/sparc/signal.c | 9 +++++++++
+ 1 file changed, 9 insertions(+)
 
-diff --git a/linux-user/elfload.c b/linux-user/elfload.c
-index f7625c0952..b05b8b0c6b 100644
---- a/linux-user/elfload.c
-+++ b/linux-user/elfload.c
-@@ -2445,6 +2445,9 @@ static int wmr_write_region(void *opaque, vaddr start,
-  * handler (provided that target process haven't registered
-  * handler for that) that does the dump when signal is received.
-  */
-+#ifdef TARGET_SPARC
-+#include "sparc/cpu_loop.h"
-+#endif
- static int elf_core_dump(int signr, const CPUArchState *env)
- {
-     const CPUState *cpu = env_cpu_const(env);
-@@ -2468,6 +2471,12 @@ static int elf_core_dump(int signr, const CPUArchState *env)
-     cpu_list_lock();
-     mmap_lock();
- 
-+#ifdef TARGET_SPARC
-+    CPU_FOREACH(cpu_iter) {
-+        flush_windows(cpu_env(cpu_iter));
-+    }
-+#endif
-+
-     /* By unprotecting, we merge vmas that might be split. */
-     walk_memory_regions(NULL, wmr_page_unprotect_regions);
- 
-diff --git a/linux-user/sparc/cpu_loop.c b/linux-user/sparc/cpu_loop.c
-index ab633eeae3..0aacda9448 100644
---- a/linux-user/sparc/cpu_loop.c
-+++ b/linux-user/sparc/cpu_loop.c
-@@ -22,6 +22,7 @@
- #include "user-internals.h"
- #include "user/cpu_loop.h"
- #include "signal-common.h"
-+#include "sparc/cpu_loop.h"
- 
- #define SPARC64_STACK_BIAS 2047
- 
-@@ -119,7 +120,7 @@ static void restore_window(CPUSPARCState *env)
- #endif
- }
- 
--static void flush_windows(CPUSPARCState *env)
-+void flush_windows(CPUSPARCState *env)
- {
-     int offset, cwp1;
- 
-diff --git a/linux-user/sparc/cpu_loop.h b/linux-user/sparc/cpu_loop.h
-new file mode 100644
-index 0000000000..fb6e82d372
---- /dev/null
-+++ b/linux-user/sparc/cpu_loop.h
-@@ -0,0 +1,7 @@
-+/* SPDX-License-Identifier: GPL-2.0-or-later */
-+#ifndef SPARC_CPU_LOOP_H
-+#define SPARC_CPU_LOOP_H
-+
-+void flush_windows(CPUSPARCState *env);
-+
-+#endif
-diff --git a/linux-user/sparc/elfload.c b/linux-user/sparc/elfload.c
-index e6387ec891..181f1e00b5 100644
---- a/linux-user/sparc/elfload.c
-+++ b/linux-user/sparc/elfload.c
-@@ -12,16 +12,41 @@ void elf_core_copy_regs(target_elf_gregset_t *r, const CPUArchState *env)
-     CPUSPARCState *e = (CPUSPARCState *)env;
-     int i;
- 
-+    memset(r, 0, sizeof(*r));
-+
- #if defined(TARGET_SPARC64) && !defined(TARGET_ABI32)
-+    /* Linux kernel layout for sparc64 (arch/sparc/include/asm/elf_64.h):
-+     *   [0..7]   G0-G7
-+     *   [8..15]  O0-O7
-+     *   [16..23] L0-L7
-+     *   [24..31] I0-I7
-+     *   [32]     TSTATE
-+     *   [33]     TPC
-+     *   [34]     TNPC
-+     *   [35]     Y
-+     */
-     for (i = 0; i < 8; i++) {
--        r->regs[i]     = tswap64(env->gregs[i]);
--        r->regs[8 + i] = tswap64(env->regwptr[WREG_O0 + i]);
-+        r->regs[i]      = tswap64(env->gregs[i]);
-+        r->regs[8 + i]  = tswap64(env->regwptr[WREG_O0 + i]);
-+        r->regs[16 + i] = tswap64(env->regwptr[WREG_L0 + i]);
-+        r->regs[24 + i] = tswap64(env->regwptr[WREG_I0 + i]);
+diff --git a/linux-user/sparc/signal.c b/linux-user/sparc/signal.c
+index fda5508c48..ba692c3123 100644
+--- a/linux-user/sparc/signal.c
++++ b/linux-user/sparc/signal.c
+@@ -619,6 +619,15 @@ void sparc64_set_context(CPUSPARCState *env)
+             }
+         }
+         target_to_host_sigset_internal(&set, &target_set);
++        /*
++         * set_sigmask() requires the caller to have first called
++         * block_signals() so that process_pending_signals() is guaranteed
++         * to run after the mask change.  Without this, a guest signal that
++         * is pending-and-blocked at setcontext time is left undelivered
++         * even after its mask bit is cleared, because signal_pending stays
++         * 0 and the post-trap process_pending_signals() loop never enters.
++         */
++        block_signals();
+         set_sigmask(&set);
      }
--    r->regs[16] = tswap64(sparc64_tstate(e));
--    r->regs[17] = tswap64(env->pc);
--    r->regs[18] = tswap64(env->npc);
--    r->regs[19] = tswap64(env->y);
-+    r->regs[32] = tswap64(sparc64_tstate(e));
-+    r->regs[33] = tswap64(env->pc);
-+    r->regs[34] = tswap64(env->npc);
-+    r->regs[35] = tswap64(env->y);
- #else
-+    /* Linux kernel layout for sparc32 (arch/sparc/include/asm/elf_32.h):
-+     *   [0]      PSR
-+     *   [1]      PC
-+     *   [2]      NPC
-+     *   [3]      Y
-+     *   [4..11]  G0-G7
-+     *   [12..19] O0-O7
-+     *   [20..27] L0-L7
-+     *   [28..35] I0-I7
-+     *   [36..37] reserved (stack_check)
-+     */
-     r->regs[0] = tswap32(cpu_get_psr(e));
-     r->regs[1] = tswap32(env->pc);
-     r->regs[2] = tswap32(env->npc);
-@@ -29,6 +54,8 @@ void elf_core_copy_regs(target_elf_gregset_t *r, const CPUArchState *env)
-     for (i = 0; i < 8; i++) {
-         r->regs[4 + i]  = tswap32(env->gregs[i]);
-         r->regs[12 + i] = tswap32(env->regwptr[WREG_O0 + i]);
-+        r->regs[20 + i] = tswap32(env->regwptr[WREG_L0 + i]);
-+        r->regs[28 + i] = tswap32(env->regwptr[WREG_I0 + i]);
-     }
- #endif
- }
-diff --git a/linux-user/sparc/target_elf.h b/linux-user/sparc/target_elf.h
-index edb0b3103c..365af864b0 100644
---- a/linux-user/sparc/target_elf.h
-+++ b/linux-user/sparc/target_elf.h
-@@ -24,12 +24,21 @@
- #define HAVE_ELF_CORE_DUMP      1
- 
- /*
-- * Matches the kernel's elf_gregset_t (ELF_NGREG = 20).
-- * sparc32/sparc32plus: psr, pc, npc, y, u_regs[16] (g0-g7, o0-o7)
-- * sparc64:             u_regs[16] (g0-g7, o0-o7), tstate, pc, npc, y
-+ * Matches the kernel's elf_gregset_t.
-+ *   sparc32/sparc32plus (ELF_NGREG = 38):
-+ *     psr, pc, npc, y, u_regs[16] (g0-g7, o0-o7),
-+ *     reg_window[16] (l0-l7, i0-i7), stack_check[2]
-+ *   sparc64             (ELF_NGREG = 36):
-+ *     u_regs[16] (g0-g7, o0-o7), reg_window[16] (l0-l7, i0-i7),
-+ *     tstate, tpc, tnpc, y
-  */
-+#if defined(TARGET_SPARC64) && !defined(TARGET_ABI32)
-+# define TARGET_ELF_NGREG       36
-+#else
-+# define TARGET_ELF_NGREG       38
-+#endif
- typedef struct target_elf_gregset_t {
--    abi_ulong regs[20];
-+    abi_ulong regs[TARGET_ELF_NGREG];
- } target_elf_gregset_t;
- 
- #endif
+     env->pc = pc;
 -- 
 2.54.0
 
