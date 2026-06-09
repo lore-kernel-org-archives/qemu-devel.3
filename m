@@ -4,131 +4,141 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 01E68CD8CAD
-	for <qemu-devel@archiver.kernel.org>; Tue,  9 Jun 2026 21:40:23 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 27368CD8CAD
+	for <qemu-devel@archiver.kernel.org>; Tue,  9 Jun 2026 21:48:35 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wX4AL-0003Bb-1x; Tue, 09 Jun 2026 17:39:21 -0400
+	id 1wX4Im-0006dK-Hg; Tue, 09 Jun 2026 17:48:07 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <daniel.barboza@oss.qualcomm.com>)
- id 1wX4AJ-0003BA-W1
- for qemu-devel@nongnu.org; Tue, 09 Jun 2026 17:39:20 -0400
+ (Exim 4.90_1) (envelope-from <pierrick.bouvier@oss.qualcomm.com>)
+ id 1wX4Ii-0006bJ-3E
+ for qemu-devel@nongnu.org; Tue, 09 Jun 2026 17:48:00 -0400
 Received: from mx0a-0031df01.pphosted.com ([205.220.168.131])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <daniel.barboza@oss.qualcomm.com>)
- id 1wX4AH-00041Y-Im
- for qemu-devel@nongnu.org; Tue, 09 Jun 2026 17:39:19 -0400
-Received: from pps.filterd (m0279865.ppops.net [127.0.0.1])
+ (Exim 4.90_1) (envelope-from <pierrick.bouvier@oss.qualcomm.com>)
+ id 1wX4Ig-00081K-5k
+ for qemu-devel@nongnu.org; Tue, 09 Jun 2026 17:47:59 -0400
+Received: from pps.filterd (m0279866.ppops.net [127.0.0.1])
  by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 659K4tNB1642698
- for <qemu-devel@nongnu.org>; Tue, 9 Jun 2026 21:39:13 GMT
+ 659K4ZJP3232142
+ for <qemu-devel@nongnu.org>; Tue, 9 Jun 2026 21:47:56 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
- cc:content-transfer-encoding:date:from:message-id:mime-version
- :subject:to; s=qcppdkim1; bh=cSpQ0J1y875fSpB49vEgLqLaggo7Wr2Vp4l
- umBVORXQ=; b=UsmvtjGMeWjoYRJD7zGKMXeb1pV0X6hfEv4I9f2Sg/5OfkkSyWi
- icPOq+WxySsyqWFMuXH22oWd8fRTLS9gJH4eT+1XQAS9QAlihzHWdkaCKhWf6t5i
- RuDBYjAvc7fVuznEnLAirJsdeSRe3YMyYOtmFIqw43ycY7++HFv1Twy/IzimZRF1
- 8N1mqVrsNSIRPnqPnHfPBWKfuDEgJm39G0yuL/ZcYv1mkiZMsPwZduWWiiOOEPbE
- j4dpXA8ORphYo1kbCgBDLuisJM3ojGKg50K3E2lIEyNVdlZDTSFSItfsd8aRiyUj
- eo1AaDgpEErWjWYk5mlGXDg6BRtgbXLk6kw==
-Received: from mail-dy1-f200.google.com (mail-dy1-f200.google.com
- [74.125.82.200])
- by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4epf0suusg-1
+ cc:content-transfer-encoding:date:from:in-reply-to:message-id
+ :mime-version:references:subject:to; s=qcppdkim1; bh=nTbgljNMQ9Y
+ jQjV9PiuA+KKFUINzblNmPx/UU1UN0dw=; b=E5dVultiH+i+XQYZW0A3G7BGjOi
+ 54g7PPLBxr/UADin7n9r9NSuvThjeUD2j6YOqmJqeRIOfCRHOA+xJiUC0BUhoBYB
+ tqS4Kr8IXwgQw0wCtDEM/w5gIpovljiBJmpzcdcAOCMOQ9hVgEjrNpY4/DTiP4DQ
+ QtmRo6GiZgDV8xY3wsX5i+tyOn0Nk0VGBa9urjAzLFGSF90bmpOqCWX9UerDU1IB
+ nWi/b/gQzJMGqroCbtD6SArwPrzGC8zXYzUMC6N6DIFJmfdJt3GSptWu3ezOsR2x
+ WJNmSeevAU0QF2Y7B9G22Vt0kdh+/aaaZ784Zrq2psmbe1ZxLCisPPz4o8A==
+Received: from mail-dl1-f71.google.com (mail-dl1-f71.google.com [74.125.82.71])
+ by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4epdeevb1h-1
  (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
- for <qemu-devel@nongnu.org>; Tue, 09 Jun 2026 21:39:13 +0000 (GMT)
-Received: by mail-dy1-f200.google.com with SMTP id
- 5a478bee46e88-304ed777a96so4185906eec.1
- for <qemu-devel@nongnu.org>; Tue, 09 Jun 2026 14:39:13 -0700 (PDT)
+ for <qemu-devel@nongnu.org>; Tue, 09 Jun 2026 21:47:56 +0000 (GMT)
+Received: by mail-dl1-f71.google.com with SMTP id
+ a92af1059eb24-138155294c4so36632c88.0
+ for <qemu-devel@nongnu.org>; Tue, 09 Jun 2026 14:47:56 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=oss.qualcomm.com; s=google; t=1781041153; x=1781645953; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:from:to:cc:subject:date:message-id:reply-to;
- bh=cSpQ0J1y875fSpB49vEgLqLaggo7Wr2Vp4lumBVORXQ=;
- b=W8aQaTvbiQIJmu8Nv/pTGH0r72YN4k7eypoXP65ae0KTIWPkAwLWqgvqg9VtMBIZ/f
- bTYLivjmDY1OawNEzjzzpzjUshtmBrdkvSo391h9rXK/4/bbjQHnGIePIZhiOJbzzaiz
- j1tKRb3Wsnaum/ceLiQG68wDwNy51q8UsBSOakJEeHUenalgEaauCZlms9mFmHvIGdfO
- uYgF3Y7ev2ErJft8HzhlalGbX2wErjjZRT3luxiKfyRe1BtB91on31m4RWcOf4pwtiG9
- kDnEOS1zP8xlV7K9OFvzGbgLeeLGQMFg2aRD1uwgdbiv4zYe6byAsnDE2U9FLOJywp8p
- /mVQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1781041153; x=1781645953;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ d=oss.qualcomm.com; s=google; t=1781041676; x=1781646476; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=cSpQ0J1y875fSpB49vEgLqLaggo7Wr2Vp4lumBVORXQ=;
- b=pyKM2NrrVdid5biwpgnYcpj6/C2BJjHmIjtg8Ns1ZzhM3Z2KiWGMatusedjN7COcjj
- E+r3OM1JGkg3kdTPPkpoOJtEiqfOw58JyzCpCazSHNhPvKcXJqVOY53qnpy463wH9t6s
- WhipR2z7kTX1UPuBtf/E6yjnGO3zHYXo8l4pL8CQePa8MbIM4RjNz8nXF6J4U0HQs7a2
- iIeQ3elVstfnLiLotv6C9nN80n6fGqas5vNvdbrk57cO0vag0qArQotd7BpJxLTFTl8x
- Twa/r7IX80iGyHqguXt4pxdfhIg956piUNwsNi41uQroiq9OkG8ALN+r4i4Ppy7TkXLH
- eNdA==
-X-Gm-Message-State: AOJu0Yzz2Y/hT2L8GiD4dGW7bHgLbvGjvTQLaS8oiGyXyXH1bgKKz3n5
- jzr8KVeBIaQHgDhWNtVpbqxSlTZZkSvO9HbEMNOJcBSr/rGa08+N4UyoyTp/f2cKkKhjttz3KQW
- BkB36kPxM/rTuOy0Xcky/5d98sx3lSt7UYCXDXf70ioI6AUwR+SNcv/NaIewn5VdaSQ==
-X-Gm-Gg: Acq92OGT082Z94ICDItizHnS3kfbgOmuoZqdNKhPOkjfZ6ylX5kadjV+ZigutIAg5+u
- 4+v6OE9dqgWvucbelGZMYVn8cpK/nr1dKZoOHhG6/7Nb6GxjnX2rAglRjVBIrx5XSGHyjOb5A0/
- J8meOT9nL0QLbZxZ8wvCN/oVityBTebYf+EJcEyUbp1L7ALIjfjJSoot2PomkvY2GiwFGeqTwAv
- 3/Xemp7tbSZZwWDi6n51nMTYQ5mWTlwxDfGK4ALnNr2EOy5/iJWMtXrOC4KwMT18NIeMJJrNdAE
- 87XxhopVZFRDxBjMcB9R+ViYZOh7csX+o4qt6mYHj4KNnXJ/+obV9L2pIhrBDUr+LVorFSJWUNW
- jia+SWACwLppwbz0RWrqhOukCa0y8jjiFPUXugFOjcxfZqPNfaTQm6MP9k2nZFPmRVayo7g==
-X-Received: by 2002:a05:7301:db08:b0:2d2:d5a3:e97c with SMTP id
- 5a478bee46e88-3077ffb5107mr7173650eec.12.1781041152480; 
- Tue, 09 Jun 2026 14:39:12 -0700 (PDT)
-X-Received: by 2002:a05:7301:db08:b0:2d2:d5a3:e97c with SMTP id
- 5a478bee46e88-3077ffb5107mr7173635eec.12.1781041151842; 
- Tue, 09 Jun 2026 14:39:11 -0700 (PDT)
-Received: from QCOM-UWl2o8bcGT.qualcomm.com ([177.170.117.62])
- by smtp.gmail.com with ESMTPSA id
- 5a478bee46e88-3074df77a0asm24401504eec.27.2026.06.09.14.39.08
+ bh=nTbgljNMQ9YjQjV9PiuA+KKFUINzblNmPx/UU1UN0dw=;
+ b=hfBk9JkwQFg1/HZhV22hYa3xtHzUfxkdQjJpUNG2pGlYhvBGUqqAx2bufAKewUSUkI
+ N65/N+wiHUOvT6aFS3hfWbM3EQZhf5W2OJnqgTOBT8QfTZvVKoSEmaDflo7ws8xP6IMP
+ 63e3wIWfI+u7HLCk8Gba8r2UhgY2wNNGkCBviUSHcny+rT7A3lhVZAa2RhWya1lNDmz2
+ l41F6KTD6QyTV7KkqSOfsdWFvobyTryyZjrAzP1ecE70oxEp/akQC77QMZmWBrGL/qks
+ 1Dxnm6C9ZUIwYO3Ub+ZHDY9fquD/UbQkwmdN9jsAIn3uh+6+Xg00S0UswMYuuWLnz31o
+ CfOg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1781041676; x=1781646476;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=nTbgljNMQ9YjQjV9PiuA+KKFUINzblNmPx/UU1UN0dw=;
+ b=GZtM5geOUMgS6bYtMW0bPubvq0CAKsRVdA17XfifxKp/Bu+ujgbPcDUf9yRlG2KKMd
+ 98ye5b6ShsPCklTD8yvZMJBH0HtCY/yNTZ37jxwobcwUy5zVi1LrUzREM/6xLnaUUj9W
+ i1p5oUi91NscNBUDMecXmtT4jOItdvqBkVK8Xv86y/O4t2bCEBtdI2SP5bNRFPCogFmM
+ zceDH9ZD4QP++G4RhxLi4ICz/lhiXAES5vmqQpB7VpkUu0I078jlIthUZSfRTqJ9r3d1
+ AVFlO4gH3vBFEcmoO9173fRQKhqH0fXahuN5XAwYRPWs0Y+byJ2b5CsRLToHdqkTHf57
+ XR0w==
+X-Gm-Message-State: AOJu0YyqRNgLug/EIii0v/EkHK4Mu6/QzRVKG5mh3BWAtB1K6LriESjx
+ IR9R93UXNicQSn+tIp345CzdJHTtsIT8Z+6aScuBka1GxL3kjHp1RaZMU0MMIEfb/H7v6TFVWZ/
+ ZXGWKpTcXkeXQRMy4YVh6srHbN3Cea7V4QUSIP/pCJd17eLB9Dqesm/KogdHVpGeZAwGL
+X-Gm-Gg: Acq92OHQTngp2g+uEibpoxQNE7MbbZ3D+R5UCwn07gDVhnYY76S5IgGlhVD722nU8VS
+ SxMzQ+ITzhZKBnHLrr/g7N2FhEVb9WpI/ZndiKTiTrKXyJvj1KiqdhHDjmEKjzkMUqt9bpmOkMd
+ IsIrcV7NSRB/XdvBI9Pno8auzisoOPpnkj12c0JgeMcHTZfCnci+fPmE0rvp4vkS4eirT8fmYnZ
+ 5KqGa7iLjE1NtGjmtvPXANJdCfwM0g6MTirL6ZOEvRMR2Q69b9M9fcjysdQgeJOAMhamiJAQXME
+ kJxptwrTlaCX116N0iS/zmWo+qRlzGoVU8XDDxus++39Ve2WbGMuyd1vXY0GwZ/MB20m96ZKOtt
+ 1NI9zi6YzRtmRjnXU5L+J+HhxF4FC80qvCup72VAq0byTDv0NYB5FpCM6xr7zaRct/zOK24OcOX
+ 7Y9xyWukiUdnvYWga9
+X-Received: by 2002:a05:701b:454a:20b0:137:f532:e342 with SMTP id
+ a92af1059eb24-13831a57485mr2179837c88.7.1781041675997; 
+ Tue, 09 Jun 2026 14:47:55 -0700 (PDT)
+X-Received: by 2002:a05:701b:454a:20b0:137:f532:e342 with SMTP id
+ a92af1059eb24-13831a57485mr2179809c88.7.1781041675329; 
+ Tue, 09 Jun 2026 14:47:55 -0700 (PDT)
+Received: from hu-pbouvier-lv.qualcomm.com (Global_NAT1.qualcomm.com.
+ [129.46.96.20]) by smtp.gmail.com with ESMTPSA id
+ a92af1059eb24-137f5550bcdsm17095895c88.14.2026.06.09.14.47.54
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 09 Jun 2026 14:39:11 -0700 (PDT)
-From: Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>
+ Tue, 09 Jun 2026 14:47:54 -0700 (PDT)
+From: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
 To: qemu-devel@nongnu.org
-Cc: qemu-riscv@nongnu.org, alistair.francis@wdc.com, liwei1518@gmail.com,
- zhiwei_liu@linux.alibaba.com, chao.liu.zevorn@gmail.com,
- Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>,
- Palmer Dabbelt <palmer@dabbelt.com>
-Subject: [PATCH] target/riscv: add 'trigger-count' debug property
-Date: Tue,  9 Jun 2026 18:39:05 -0300
-Message-ID: <20260609213905.1126795-1-daniel.barboza@oss.qualcomm.com>
+Cc: Thomas Huth <thuth@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>,
+ Manos Pitsidianakis <manos.pitsidianakis@linaro.org>,
+ =?UTF-8?q?Daniel=20P=20=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ qemu-arm@nongnu.org, Richard Henderson <richard.henderson@linaro.org>,
+ =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ Alexandre Iooss <erdnaxe@crans.org>,
+ Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
+ Peter Maydell <peter.maydell@linaro.org>,
+ Gustavo Romero <gustavo.romero@linaro.org>
+Subject: [PATCH 04/27] tests/tcg: introduce meson.build
+Date: Tue,  9 Jun 2026 14:47:22 -0700
+Message-ID: <20260609214745.772536-5-pierrick.bouvier@oss.qualcomm.com>
 X-Mailer: git-send-email 2.43.0
+In-Reply-To: <20260609214745.772536-1-pierrick.bouvier@oss.qualcomm.com>
+References: <20260609214745.772536-1-pierrick.bouvier@oss.qualcomm.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNjA5MDIwMyBTYWx0ZWRfXxbpIFnyCfuAc
- 2loSYcadlc/vyOBWQs3p8msNmV2fL0ZxrTtS7N3xQ8iWbuHleBfH7v5d98iQS5OmVjoSp/Iw6Lq
- Zz+3ydbERE6COuqCDjxuVepuiwKgI6/piveaoYf01HraAoZVdVUbo7QDKHAivFZBOOy2q7zOL+g
- VwAavC72wteephk7+BbWc9nNAUm2CJ8Dbn0h+DCVGMIWwYBAgs9bUKhU/px2SnvXCQ81ddHisyF
- aibeC9jeaxP7TLj0HOfVHNtCywzumhF+F2wvjCUMCKzYrdxeIY+9Q3s9UhvUcVIdLk7O2NjOjsp
- 22OhhiSNpGpgQqxh80+ZA09AexLRB9GLgDiTQd976PWWy5h5heGpfV5DcvF0Yk9iKdJmOMQybCT
- pPKRkWJ2tymNmbJ/McOty7qOXcF+mJgOjlGUGT/c0KMa81jWD80fRo52S5nDScLa1NOgNsdXRRO
- eLxDVjMvhh2v7TjPi4Q==
-X-Proofpoint-ORIG-GUID: ryzBeX4qTpstv-yDKvwKjQWAjp0gH9lc
-X-Proofpoint-GUID: ryzBeX4qTpstv-yDKvwKjQWAjp0gH9lc
-X-Authority-Analysis: v=2.4 cv=GeonWwXL c=1 sm=1 tr=0 ts=6a288801 cx=c_pps
- a=PfFC4Oe2JQzmKTvty2cRDw==:117 a=gdiugJE53z4H+vvYeRBHqw==:17
+X-Authority-Analysis: v=2.4 cv=H+DrBeYi c=1 sm=1 tr=0 ts=6a288a0c cx=c_pps
+ a=JYo30EpNSr/tUYqK9jHPoA==:117 a=ouPCqIW2jiPt+lZRy3xVPw==:17
  a=FelO9ux0wxsA:10 a=s4-Qcg_JpJYA:10 a=VkNPw1HP01LnGYTKEx00:22
- a=u7WPNUs3qKkmUXheDGA7:22 a=Um2Pa8k9VHT-vaBCBUpS:22 a=EUspDBNiAAAA:8
- a=ZX_15Imc85JVUawRZg0A:9 a=6Ab_bkdmUrQuMsNx7PHu:22
+ a=u7WPNUs3qKkmUXheDGA7:22 a=YMgV9FUhrdKAYTUUvYB2:22 a=EUspDBNiAAAA:8
+ a=v_12uhcQQg0w4xMxk_YA:9 a=Fk4IpSoW4aLDllm1B1p-:22
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNjA5MDIwNCBTYWx0ZWRfX68rCim6kgAJo
+ 96zRmx9jUMZqQePfbYxaodP4i+UVYMcOwkLvk1soHXVMXBv0Ib+uYIyy1XEoHB3HcHZdAXKpKlr
+ zrzpjBBU1WUMNGwbvQUVlm+nL87V6FRnDYZh4bPCT8cYVivnul4YOs/Z+LZNb85LwngiAl9L3Yr
+ 9YCZHgDFia+q3JW2Tsdr0CKG5H95D67XvoHPFuSw+dWOEaJhZ5rrr/jrk+o5Z5YH/NKfGiordDm
+ uW0dmx4c4lx4AYiIiG+L/sb5F4IuKyxlwwZRDDSCNgf+7Td7RXLknHZJja/xQ3wMBtUTMpyRCvF
+ 2qyb+DY38fewhrlO3tEMVjdoHsIKhsBwn0wtHLxO2q9FVz2v67N1tSRRcWifOoPn9yJD+u8hSry
+ p/BPFI2EyY+JcXdRdU6ObW+verPryBX2xI57pSheJY5dihQvlDR6ja/vB87USPphETLt97Z8uSs
+ Rxd/VLNOA/jB8Wc+v1A==
+X-Proofpoint-ORIG-GUID: W-R5mgqq3FATse3JH5SH8SXDlD55iYzL
+X-Proofpoint-GUID: W-R5mgqq3FATse3JH5SH8SXDlD55iYzL
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.125,FMLib:17.12.100.49
  definitions=2026-06-09_04,2026-06-09_02,2025-10-01_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- bulkscore=0 adultscore=0 malwarescore=0 clxscore=1015 spamscore=0
- lowpriorityscore=0 impostorscore=0 priorityscore=1501 suspectscore=0
+ suspectscore=0 bulkscore=0 clxscore=1015 adultscore=0 malwarescore=0
+ spamscore=0 lowpriorityscore=0 priorityscore=1501 impostorscore=0
  phishscore=0 classifier=typeunknown authscore=0 authtc= authcc=
  route=outbound adjust=0 reason=mlx scancount=1 engine=8.22.0-2605210000
- definitions=main-2606090203
+ definitions=main-2606090204
 Received-SPF: pass client-ip=205.220.168.131;
- envelope-from=daniel.barboza@oss.qualcomm.com; helo=mx0a-0031df01.pphosted.com
+ envelope-from=pierrick.bouvier@oss.qualcomm.com;
+ helo=mx0a-0031df01.pphosted.com
 X-Spam_score_int: -27
 X-Spam_score: -2.8
 X-Spam_bar: --
 X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -144,251 +154,137 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-All CPUs have the same amount of triggers: 2 triggers per hart, set via
-RV_MAX_TRIGGERS.  This is not enough anymore: we'll have at least one
-future CPU that will demand more triggers per hart when implementing the
-RISC-V Server Ref Platform, requiring at least 11 triggers per hart.
+Every target declare its tests, and add them in global tcg_tests
+dictionary, indexed by target name. See comment for full description.
 
-Parametrize the trigger amount using a new 'trigger_count' env property.
-The default amount is kept at 2.  Set the new maximum to an educated
-guess of 128 triggers per hart (which is less than 2^XLEN theoretical
-maximum by the spec).  All relevant callers (csr.c and debug.c) will now
-use env->trigger_count instead of RV_MAX_TRIGGERS.
+We make sure that if a user repeats a test several time it won't result
+in duplicated executables or tests. In next commits, we'll introduce
+what's needed to deal with that.
 
-We're also adding two ways of setting the property:
+A test is compiled from a single source file (and later, a single set of
+compile flags). We make sure dependencies are correctly handled by
+generating a depfile.
 
-- a '.trigger_count' CPU definition flag, allowing CPUs to set a custom
-  amount inside the CPU def in DEFINE_RISCV_CPU();
-- a new 'trigger-count' user property.  The user property has a higher
-  priority than an existing '.trigger_count' CPU def setting.
-
-Assuming a hypotetical case where a CPU 'X' is defined with
-'.trigger_count = 8':
-
-- -cpu X,trigger-count=30 => trigger_count set to 30
-- -cpu X (...)            => trigger_count set to 8
-
-For a CPU that doesn't set '.trigger_count':
-
-- -cpu rv64,trigger-count=30 => trigger_count set to 30
-- -cpu rv64 (...)            => trigger_count set to 2
-
-Signed-off-by: Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>
+Signed-off-by: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
 ---
- target/riscv/cpu.c         | 11 +++++++++++
- target/riscv/cpu.h         | 23 ++++++++++++++++++++++-
- target/riscv/csr.c         |  2 +-
- target/riscv/debug.c       | 16 ++++++++--------
- target/riscv/machine.c     |  4 ++--
- target/riscv/tcg/tcg-cpu.c |  7 +++++++
- 6 files changed, 51 insertions(+), 12 deletions(-)
+ tests/meson.build     |  2 +-
+ tests/tcg/meson.build | 94 +++++++++++++++++++++++++++++++++++++++++++
+ 2 files changed, 95 insertions(+), 1 deletion(-)
+ create mode 100644 tests/tcg/meson.build
 
-diff --git a/target/riscv/cpu.c b/target/riscv/cpu.c
-index c1b10cc7ef..56dc9ad644 100644
---- a/target/riscv/cpu.c
-+++ b/target/riscv/cpu.c
-@@ -1154,6 +1154,11 @@ static void riscv_cpu_init(Object *obj)
-                       IRQ_LOCAL_MAX + IRQ_LOCAL_GUEST_MAX);
-     qdev_init_gpio_in_named(DEVICE(cpu), riscv_cpu_set_nmi,
-                             "riscv.cpu.rnmi", RNMI_MAX);
+diff --git a/tests/meson.build b/tests/meson.build
+index 9ba04bbedd3..5877d2f60b1 100644
+--- a/tests/meson.build
++++ b/tests/meson.build
+@@ -74,7 +74,7 @@ subdir('decode')
+ 
+ if 'CONFIG_TCG' in config_all_accel
+   subdir('fp')
+-  subdir('tcg/plugins')
++  subdir('tcg')
+ endif
+ 
+ subdir('audio')
+diff --git a/tests/tcg/meson.build b/tests/tcg/meson.build
+new file mode 100644
+index 00000000000..72d1a9f8986
+--- /dev/null
++++ b/tests/tcg/meson.build
+@@ -0,0 +1,94 @@
++env = find_program('env')
 +
-+    if (mcc->def->trigger_count) {
-+        env->trigger_count = mcc->def->trigger_count;
-+    }
++tcg_tests = {}
++# tcg_tests is a dictionary with following structure:
++#
++# {
++#   'name_of_target': {
++#     'cc': cross_compiler,
++#     'folder': 'folder_for_test_src_files',
++#     'qemu': emulators['qemu-...'],
++#     'tests': [
++#       {
++#         'src_file': {
++#         }
++#       },
++#       ...
++#     ]
++#   }
++# }
++#
++# Every test executable, is built only once.
++# Tests for a given src use the same executable by default, and their definition
++# is guaranteed to be unique also.
++# Default name is derived from src.
 +
- #endif /* CONFIG_USER_ONLY */
- 
-     general_user_opts = g_hash_table_new(g_str_hash, g_str_equal);
-@@ -2606,6 +2611,8 @@ static const Property riscv_cpu_properties[] = {
-                        DEFAULT_RNMI_IRQVEC),
-     DEFINE_PROP_UINT64("rnmi-exception-vector", RISCVCPU, env.rnmi_excpvec,
-                        DEFAULT_RNMI_EXCPVEC),
-+    DEFINE_PROP_UINT16("trigger-count", RISCVCPU, env.trigger_count,
-+                       RV_DEFAULT_TRIGGER_COUNT),
- #endif
- 
-     DEFINE_PROP_BOOL("short-isa-string", RISCVCPU, cfg.short_isa_string, false),
-@@ -2749,6 +2756,10 @@ static void riscv_cpu_class_base_init(ObjectClass *c, const void *data)
-                 !valid_vm_1_10_32[mcc->def->cfg.max_satp_mode]) {
-                 mcc->def->cfg.max_satp_mode = VM_1_10_SV32;
-             }
++# plugins come first, as we need to build the list
++subdir('plugins')
 +
-+            if (def->trigger_count) {
-+                mcc->def->trigger_count = def->trigger_count;
-+            }
- #endif
-         }
-         if (def->priv_spec != RISCV_PROFILE_ATTR_UNUSED) {
-diff --git a/target/riscv/cpu.h b/target/riscv/cpu.h
-index c98652cd62..361f3cecf3 100644
---- a/target/riscv/cpu.h
-+++ b/target/riscv/cpu.h
-@@ -189,7 +189,26 @@ extern RISCVCPUImpliedExtsRule *riscv_multi_ext_implied_rules[];
- #define RV_VLEN_MAX 1024
- #define RV_MAX_MHPMEVENTS 32
- #define RV_MAX_MHPMCOUNTERS 32
--#define RV_MAX_TRIGGERS 2
++# Finally, we can create all test executables and test targets
++foreach target, plan: tcg_tests
++  # Detect duplicated executables/tests, and report an error to force user to
++  # choose how to deal with it.
++  built_tests = {}
++  added_tests = {}
 +
-+/*
-+ * The Debug 1.0 spec allows a humongous amount of triggers.  Section
-+ * "Enumeration" says: "The above algorithm reads back tselect so that
-+ * implementations which have 2^n triggers only need to implement n
-+ * bits of tselect.".  tselect can have up to XLEN bits, so the max
-+ * theoretical RV_MAX_TRIGGERS value is 2^XLEN.
-+ *
-+ * Alas, we need to carry over migration state for all these folks,
-+ * even if not utilized, so setting 2^XLEN isn't an option.
-+ *
-+ * We're setting a smaller default based on what we see current
-+ * hardware use (most chips uses 2-4 triggers per hart, RISC-V
-+ * Server Ref requires at least 11).
-+ *
-+ * 128 seems like a good amount for current and future usage without
-+ * a lot of footprint on our side.
-+ */
-+#define RV_MAX_TRIGGERS 128
-+#define RV_DEFAULT_TRIGGER_COUNT 2
- 
- FIELD(VTYPE, VLMUL, 0, 3)
- FIELD(VTYPE, VSEW, 3, 3)
-@@ -475,6 +494,7 @@ struct CPUArchState {
-     QEMUTimer *itrigger_timer[RV_MAX_TRIGGERS];
-     int64_t last_icount;
-     bool itrigger_enabled;
-+    uint16_t trigger_count;
- 
-     /* machine specific rdtime callback */
-     uint64_t (*rdtime_fn)(void *);
-@@ -570,6 +590,7 @@ typedef struct RISCVCPUDef {
-     RISCVCPUConfig cfg;
-     bool bare;
-     const RISCVCSR *custom_csrs;
-+    uint16_t trigger_count;
- } RISCVCPUDef;
- 
- /**
-diff --git a/target/riscv/csr.c b/target/riscv/csr.c
-index ec931a8c3d..6aa4a321c7 100644
---- a/target/riscv/csr.c
-+++ b/target/riscv/csr.c
-@@ -5436,7 +5436,7 @@ static RISCVException read_tdata(CPURISCVState *env, int csrno,
-                                  target_ulong *val)
- {
-     /* return 0 in tdata1 to end the trigger enumeration */
--    if (env->trigger_cur >= RV_MAX_TRIGGERS && csrno == CSR_TDATA1) {
-+    if (env->trigger_cur >= env->trigger_count && csrno == CSR_TDATA1) {
-         *val = 0;
-         return RISCV_EXCP_NONE;
-     }
-diff --git a/target/riscv/debug.c b/target/riscv/debug.c
-index 30d39ee5cd..78b84591b4 100644
---- a/target/riscv/debug.c
-+++ b/target/riscv/debug.c
-@@ -172,7 +172,7 @@ target_ulong tselect_csr_read(CPURISCVState *env)
- 
- void tselect_csr_write(CPURISCVState *env, target_ulong val)
- {
--    if (val < RV_MAX_TRIGGERS) {
-+    if (val < env->trigger_count) {
-         env->trigger_cur = val;
-     }
- }
-@@ -701,7 +701,7 @@ static bool check_itrigger_priv(CPURISCVState *env, int index)
- bool riscv_itrigger_enabled(CPURISCVState *env)
- {
-     int count;
--    for (int i = 0; i < RV_MAX_TRIGGERS; i++) {
-+    for (int i = 0; i < env->trigger_count; i++) {
-         if (get_trigger_type(env, i) != TRIGGER_TYPE_INST_CNT) {
-             continue;
-         }
-@@ -721,7 +721,7 @@ bool riscv_itrigger_enabled(CPURISCVState *env)
- void helper_itrigger_match(CPURISCVState *env)
- {
-     int count;
--    for (int i = 0; i < RV_MAX_TRIGGERS; i++) {
-+    for (int i = 0; i < env->trigger_count; i++) {
-         if (get_trigger_type(env, i) != TRIGGER_TYPE_INST_CNT) {
-             continue;
-         }
-@@ -750,7 +750,7 @@ static void riscv_itrigger_update_count(CPURISCVState *env)
-     int64_t last_icount = env->last_icount, current_icount;
-     current_icount = env->last_icount = icount_get_raw();
- 
--    for (int i = 0; i < RV_MAX_TRIGGERS; i++) {
-+    for (int i = 0; i < env->trigger_count; i++) {
-         if (get_trigger_type(env, i) != TRIGGER_TYPE_INST_CNT) {
-             continue;
-         }
-@@ -950,7 +950,7 @@ bool riscv_cpu_debug_check_breakpoint(CPUState *cs)
-     int i;
- 
-     QTAILQ_FOREACH(bp, &cs->breakpoints, entry) {
--        for (i = 0; i < RV_MAX_TRIGGERS; i++) {
-+        for (i = 0; i < env->trigger_count; i++) {
-             trigger_type = get_trigger_type(env, i);
- 
-             if (!trigger_common_match(env, trigger_type, i)) {
-@@ -996,7 +996,7 @@ bool riscv_cpu_debug_check_watchpoint(CPUState *cs, CPUWatchpoint *wp)
-     int flags;
-     int i;
- 
--    for (i = 0; i < RV_MAX_TRIGGERS; i++) {
-+    for (i = 0; i < env->trigger_count; i++) {
-         trigger_type = get_trigger_type(env, i);
- 
-         if (!trigger_common_match(env, trigger_type, i)) {
-@@ -1049,7 +1049,7 @@ void riscv_trigger_realize(CPURISCVState *env)
- {
-     int i;
- 
--    for (i = 0; i < RV_MAX_TRIGGERS; i++) {
-+    for (i = 0; i < env->trigger_count; i++) {
-         env->itrigger_timer[i] = timer_new_ns(QEMU_CLOCK_VIRTUAL,
-                                               riscv_itrigger_timer_cb, env);
-     }
-@@ -1061,7 +1061,7 @@ void riscv_trigger_reset_hold(CPURISCVState *env)
-     int i;
- 
-     /* init to type 2 triggers */
--    for (i = 0; i < RV_MAX_TRIGGERS; i++) {
-+    for (i = 0; i < env->trigger_count; i++) {
-         /*
-          * type = TRIGGER_TYPE_AD_MATCH
-          * dmode = 0 (both debug and M-mode can write tdata)
-diff --git a/target/riscv/machine.c b/target/riscv/machine.c
-index 6e70b145a5..a667c06b17 100644
---- a/target/riscv/machine.c
-+++ b/target/riscv/machine.c
-@@ -240,8 +240,8 @@ static int debug_post_load(void *opaque, int version_id)
- 
- static const VMStateDescription vmstate_debug = {
-     .name = "cpu/debug",
--    .version_id = 3,
--    .minimum_version_id = 3,
-+    .version_id = 4,
-+    .minimum_version_id = 4,
-     .needed = debug_needed,
-     .post_load = debug_post_load,
-     .fields = (const VMStateField[]) {
-diff --git a/target/riscv/tcg/tcg-cpu.c b/target/riscv/tcg/tcg-cpu.c
-index b73e3e9dd4..9b657a7544 100644
---- a/target/riscv/tcg/tcg-cpu.c
-+++ b/target/riscv/tcg/tcg-cpu.c
-@@ -1211,6 +1211,13 @@ void riscv_tcg_cpu_finalize_features(RISCVCPU *cpu, Error **errp)
-                                           riscv_pmu_timer_cb, cpu);
-         }
-     }
++  # return a clear error if user mispell a target entry
++  foreach key, _ : plan
++    if key not in ['cc', 'folder', 'qemu', 'tests']
++      error('unknown tcg test plan entry \'' + key + '\' for target ' + target)
++    endif
++  endforeach
 +
-+    if (env->trigger_count > RV_MAX_TRIGGERS) {
-+        error_setg(errp,
-+                "Invalid configuration: 'trigger-count' must be less than %u",
-+                RV_MAX_TRIGGERS);
-+        return;
-+    }
- #endif
- }
- 
++  cc = plan['cc']
++  folder = plan['folder']
++  qemu = plan['qemu']
++  tests = plan['tests']
++
++  foreach t : tests
++    foreach src, setup: t
++      # meson '/' operator drops left operand if right is an absolute path
++      src = folder / src
++      file = files(src)
++      test = fs.name(file)
++      exe_name = fs.stem(src)
++
++      exe_name = target + '-' + exe_name
++      test_name = exe_name
++
++      if test_name in added_tests
++        error('test ' + test_name + ' was already added: ' +
++              'specify a different \'test_name\'')
++      endif
++
++      # build executable if needed
++      if exe_name not in built_tests
++        exe = custom_target(exe_name,
++                            input: file,
++                            command: [cc, '@INPUT@',
++                                      '-o', '@OUTPUT@', '-static',
++                                      '-MMD', '-MF', '@DEPFILE@',
++                                      '-Wall', '-Werror',
++                                      '-O0', '-g', '-fno-strict-aliasing',
++                                      ],
++                            depfile: exe_name + '.d',
++                            output: exe_name + '.test',
++                            build_by_default: false)
++        built_tests += {exe_name: exe}
++      endif
++
++      depends = []
++
++      exe = built_tests[exe_name]
++      cmd = [qemu, exe]
++
++      # some tests expect QEMU env var to be set
++      cmd = ['QEMU=' + qemu.full_path(), cmd]
++
++      test(test_name, env, args: cmd,
++           depends: depends,
++           suite: ['tcg', 'tcg-' + target])
++      added_tests += {test_name: true}
++    endforeach
++  endforeach
++endforeach
 -- 
 2.43.0
 
