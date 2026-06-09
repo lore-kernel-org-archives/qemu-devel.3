@@ -4,56 +4,56 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 39C27CD8CA4
-	for <qemu-devel@archiver.kernel.org>; Tue,  9 Jun 2026 14:36:13 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 89B5FCD8CB9
+	for <qemu-devel@archiver.kernel.org>; Tue,  9 Jun 2026 14:36:14 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wWxYN-0002LZ-Tt; Tue, 09 Jun 2026 10:35:43 -0400
+	id 1wWxYm-0004Bm-Hf; Tue, 09 Jun 2026 10:36:08 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1wWxYL-0002K2-T8
- for qemu-devel@nongnu.org; Tue, 09 Jun 2026 10:35:41 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ id 1wWxYk-0003z8-TV
+ for qemu-devel@nongnu.org; Tue, 09 Jun 2026 10:36:07 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1wWxYK-00071A-Bx
- for qemu-devel@nongnu.org; Tue, 09 Jun 2026 10:35:41 -0400
+ id 1wWxYi-0007So-L9
+ for qemu-devel@nongnu.org; Tue, 09 Jun 2026 10:36:06 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1781015739;
+ s=mimecast20190719; t=1781015763;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=fGeD1zI3ggDIrCAmlMnK5fJi1wnvoZniFOpyG6WU/JE=;
- b=c+TDXmIDv8VSJ0aBq8nHJOl5AoNgjc0aD1WHdm2qJXqwkq0zLWtqRcfjS52LZZ5L5JLWVA
- 7z9ILUM7dOy3ZxrF7dnWgHroEPEcTTTZfJniGW1brIO2TNctGI/0o/fldC8NOg0ypvX0vo
- QgPCJv0AtkDguQhq0xlA0hmeatX/IwA=
-Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
+ bh=4Y8EBryG7J2AwkW2FnwDImop49e0w/lo+Q8d2a9jPH4=;
+ b=Trw9fIWgJeNaYiAANdceqfAt7dAQ+mw2cdJ6cWAXUGhvidAK2WIAkpFsMMVdRT8dkDqFFJ
+ 1itRWQWKrOTF1PZqz15ID4BxTAHjNK3jh1/wRgNHBzm5YjeK0ODBW7CZJEI1uKaz/O/fL7
+ khrqwSGgv8VfrgBe28qUyQnuqirWwAE=
+Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-610-Q8zQ7gqzO4-2VViSfnbn-Q-1; Tue,
- 09 Jun 2026 10:35:36 -0400
-X-MC-Unique: Q8zQ7gqzO4-2VViSfnbn-Q-1
-X-Mimecast-MFC-AGG-ID: Q8zQ7gqzO4-2VViSfnbn-Q_1781015735
-Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-623-SDABec3MNe2pllWkMVmbPQ-1; Tue,
+ 09 Jun 2026 10:35:59 -0400
+X-MC-Unique: SDABec3MNe2pllWkMVmbPQ-1
+X-Mimecast-MFC-AGG-ID: SDABec3MNe2pllWkMVmbPQ_1781015758
+Received: from mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.93])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 4C513195C248; Tue,  9 Jun 2026 14:35:35 +0000 (UTC)
+ by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id A1A75195F16D; Tue,  9 Jun 2026 14:35:58 +0000 (UTC)
 Received: from localhost (unknown [10.44.24.21])
- by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 01E593008B39; Tue,  9 Jun 2026 14:35:33 +0000 (UTC)
+ by mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id 564B71800583; Tue,  9 Jun 2026 14:35:56 +0000 (UTC)
 From: =?utf-8?q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>
-Date: Tue, 09 Jun 2026 18:34:29 +0400
-Subject: [PATCH 10/17] hw/input/ps2: keep QemuInputHandlerState in PS2State
+Date: Tue, 09 Jun 2026 18:34:33 +0400
+Subject: [PATCH 14/17] ui/vnc: switch LED handling to Notifier-based input API
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
-Message-Id: <20260609-ui-input-v1-10-42615deb818e@redhat.com>
+Message-Id: <20260609-ui-input-v1-14-42615deb818e@redhat.com>
 References: <20260609-ui-input-v1-0-42615deb818e@redhat.com>
 In-Reply-To: <20260609-ui-input-v1-0-42615deb818e@redhat.com>
 To: qemu-devel@nongnu.org
@@ -62,25 +62,25 @@ Cc: "Dr. David Alan Gilbert" <dave@treblig.org>,
  Richard Henderson <richard.henderson@linaro.org>, 
  "Michael S. Tsirkin" <mst@redhat.com>, Gerd Hoffmann <kraxel@redhat.com>, 
  =?utf-8?q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>
-X-Developer-Signature: v=1; a=openpgp-sha256; l=2869;
+X-Developer-Signature: v=1; a=openpgp-sha256; l=4414;
  i=marcandre.lureau@redhat.com; h=from:subject:message-id;
- bh=JMFo3VFOQuBSAxO/bJx1/IJb/8LPj7ALKGdmAiibs/8=;
- b=owEBbQKS/ZANAwAKAdro4Ql1lpzlAcsmYgBqKCR4KU3K78DfqR1oRXIcprh8lEBs9YWSC3pCU
- IxZUPNXezKJAjMEAAEKAB0WIQSHqb2TP4fGBtJ29i3a6OEJdZac5QUCaigkeAAKCRDa6OEJdZac
- 5Uv6D/sEqgFxcgLBE9GGOeEeU5uj6+ouomla2pWedO5C+KCEx2jx0kTsvcwgyiOxiceuHNRxBOc
- G09oSQLsFaH2zGysudTyoSyVcRtPeNc0kUy6lcTY0FARMKZB9zVPG2ElzGLddg6J3S/0uo7B/m9
- 9ezp6PNaSVxeWYWYbJDPGqp4t/9mK51Rwv08ZSMv5HmCkUOITMogo8puyGRgAtoUjI1UQ4KTphI
- Ck84EmmWMohGGnUs5+/OzX8QrMEH9LGZBAt/2GCMil0Lw/RZ3TwkKaPLDCBYttnILiFT43ifPm4
- gkIy5lM0Vn6KKMhKV1Q843cUL7qYTHCeKH3Fij+vedphTH8vWvj3O6CEuj3rGIvIotPi1Qxn1T8
- phLcoOsHnEpjDc81sCdoUKGakuAyvpwQsVtnIR4zxpC4YZ8JuVI6Iww18RIcAOm0dLXdyOgZD2z
- JkCGWowea+BRHHnvlLeouh7y2gg3uBecaXRwRTfm6+TK17dTJWTKITQ7kfR6kC8pd8smO/ZEYvy
- ekHIjpyhkUw6lfKV3/Cvtn7SLhf8C0RDlQ+kVV0HPGQKRPuGIC5HIDSBFL6OXVjTTFDbViWCTjs
- 378Wqoex7JQQwI9BiZRGQ5yID5thCPSHvZjIk4H7D4qczquY3GjkeS17ycWxgdDKInJhNL02aW0
- btwSKPfuWoE9qAA==
+ bh=9EvPEBUMG8vTwC/626zYm+fU5TkcgcDC/RHnOIaj7XQ=;
+ b=owEBbQKS/ZANAwAKAdro4Ql1lpzlAcsmYgBqKCR5coeyNYDPv55wRMLHnbwkfuJixi84xSfDB
+ PAvGw42qt+JAjMEAAEKAB0WIQSHqb2TP4fGBtJ29i3a6OEJdZac5QUCaigkeQAKCRDa6OEJdZac
+ 5YcAEACKAhbMnntnv/HrzWciY2NQtd8qEXc3rw/Fq6klHhhKbPfFlGGGNqW8RWbpohh9vBg/ZF7
+ hcB7xFlh/8+AwvFLsAORDlAOyp4c4LY9V/Kpm+v7UcnnOW/xHwOduTTSRmv3lEeuYIIz7A9eAFo
+ XwHLF9jDFMfxvRafKaIY87UqWn85S5x7Rm/RACjyJMtD8U/NBDOXH0TeV+Gt+fOJrF+pZTPEoLE
+ wFqFObwoP/xlOd5Uh8CLJSin4abOU706XVyXgo/zvChjCFkzacp2sPjnzDgOSxWnaltmggmj/8/
+ Xz67AwlztaLoXglv3CvU0V1jRIrKhSx9h+oG+7QfRGNj4ndoBhSA9hx2AFImciYWmpVYbwoB1hR
+ 179Bq2n6s3kGH1VoGJJXQtpW9/ap7GOdLx+jz7g37+ksObzyefY1+xOnCzS71ZBu95FKOJdrblN
+ fQg8774okMmKFkr2FY9xZirTM/H+T30kVQe4TTi9c+xrTt6+JNlr65dhhjHzaSPt1VMZmH3hcjJ
+ w17EQbLPvKs/cigCxLxFMgfbXXgMe7xDfeukF4F1b8U02AfflEmNIRvESwFxynQ+Gusc6xLsf0A
+ xugRMJ6wiaKA8Ur98jEGubDh32eQiYcfKDU3Kb/BJrt/gtxRDbecjtRRAEnpVTcKd+LEX7IXp5/
+ 9GUybLKFEZ9aC+w==
 X-Developer-Key: i=marcandre.lureau@redhat.com; a=openpgp;
  fpr=87A9BD933F87C606D276F62DDAE8E10975969CE5
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
-Received-SPF: pass client-ip=170.10.133.124;
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.93
+Received-SPF: pass client-ip=170.10.129.124;
  envelope-from=marcandre.lureau@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: 8
@@ -88,7 +88,7 @@ X-Spam_score: 0.8
 X-Spam_bar: /
 X-Spam_report: (0.8 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.445,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_SBL_CSS=3.335, SPF_HELO_PASS=-0.001,
  SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
@@ -106,90 +106,147 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Track the input handled state, and dispose it on unrealize.
+Replace QEMUPutLEDEntry with an embedded Notifier in VncDisplay.
+Use qemu_input_led_notifier_add/remove instead of the old
+qemu_add/remove_led_event_handler.
 
 Signed-off-by: Marc-André Lureau <marcandre.lureau@redhat.com>
 ---
- include/hw/input/ps2.h |  2 ++
- hw/input/ps2.c         | 24 ++++++++++++++++++++++--
- 2 files changed, 24 insertions(+), 2 deletions(-)
+ ui/vnc.h               |  2 +-
+ tools/qemu-vnc/input.c | 49 +++++++++++++++++--------------------------------
+ ui/vnc.c               | 11 ++++++-----
+ 3 files changed, 24 insertions(+), 38 deletions(-)
 
-diff --git a/include/hw/input/ps2.h b/include/hw/input/ps2.h
-index 058db3e0890..d0c532a38f2 100644
---- a/include/hw/input/ps2.h
-+++ b/include/hw/input/ps2.h
-@@ -26,6 +26,7 @@
- #define HW_PS2_H
+diff --git a/ui/vnc.h b/ui/vnc.h
+index c8d87cd5301..88293ef4971 100644
+--- a/ui/vnc.h
++++ b/ui/vnc.h
+@@ -147,7 +147,7 @@ struct VncDisplay
+     DisplayChangeListener dcl;
+     kbd_layout_t *kbd_layout;
+     int lock_key_sync;
+-    QEMUPutLEDEntry *led;
++    Notifier led_notifier;
+     int ledstate;
+     QKbdState *kbd;
+     QemuMutex mutex;
+diff --git a/tools/qemu-vnc/input.c b/tools/qemu-vnc/input.c
+index 6fb73b31248..b96ff741308 100644
+--- a/tools/qemu-vnc/input.c
++++ b/tools/qemu-vnc/input.c
+@@ -13,58 +13,43 @@
+ #include "trace.h"
+ #include "qemu-vnc.h"
  
- #include "hw/core/sysbus.h"
-+#include "ui/input.h"
+-struct QEMUPutLEDEntry {
+-    QEMUPutLEDEvent *put_led;
+-    void *opaque;
+-    QTAILQ_ENTRY(QEMUPutLEDEntry) next;
+-};
+-
+ static NotifierList mouse_mode_notifiers =
+     NOTIFIER_LIST_INITIALIZER(mouse_mode_notifiers);
+-static QTAILQ_HEAD(, QEMUPutLEDEntry) led_handlers =
+-    QTAILQ_HEAD_INITIALIZER(led_handlers);
++static NotifierList led_notifiers =
++    NOTIFIER_LIST_INITIALIZER(led_notifiers);
  
- #define PS2_MOUSE_BUTTON_LEFT   0x01
- #define PS2_MOUSE_BUTTON_RIGHT  0x02
-@@ -59,6 +60,7 @@ struct PS2State {
-     PS2Queue queue;
-     int32_t write_cmd;
-     qemu_irq irq;
-+    QemuInputHandlerState *hs;
- };
+ /* Track the target console for pending mouse events (used by sync) */
+ static QemuConsole *mouse_target;
  
- #define TYPE_PS2_DEVICE "ps2-device"
-diff --git a/hw/input/ps2.c b/hw/input/ps2.c
-index f2523ff4bc7..97df7a9a43e 100644
---- a/hw/input/ps2.c
-+++ b/hw/input/ps2.c
-@@ -1233,7 +1233,16 @@ static const QemuInputHandler ps2_keyboard_handler = {
- 
- static void ps2_kbd_realize(DeviceState *dev, Error **errp)
+-QEMUPutLEDEntry *qemu_add_led_event_handler(QEMUPutLEDEvent *func,
+-                                            void *opaque)
++/*
++ * The D-Bus Keyboard.Modifiers property uses the same
++ * bit layout as QEMU's LED constants.
++ */
++static guint modifiers;
++
++void qemu_input_led_notifier_add(Notifier *n)
  {
--    qemu_input_handler_register(dev, &ps2_keyboard_handler);
-+    PS2State *s = PS2_DEVICE(dev);
-+
-+    s->hs = qemu_input_handler_register(dev, &ps2_keyboard_handler);
+-    QEMUPutLEDEntry *s;
++    notifier_list_add(&led_notifiers, n);
 +}
-+
-+static void ps2_kbd_unrealize(DeviceState *dev)
+ 
+-    s = g_new0(QEMUPutLEDEntry, 1);
+-    s->put_led = func;
+-    s->opaque = opaque;
+-    QTAILQ_INSERT_TAIL(&led_handlers, s, next);
+-    return s;
++void qemu_input_led_notifier_remove(Notifier *n)
 +{
-+    PS2State *s = PS2_DEVICE(dev);
-+
-+    g_clear_pointer(&s->hs, qemu_input_handler_unregister);
++    notifier_remove(n);
  }
  
- static const QemuInputHandler ps2_mouse_handler = {
-@@ -1245,7 +1254,16 @@ static const QemuInputHandler ps2_mouse_handler = {
- 
- static void ps2_mouse_realize(DeviceState *dev, Error **errp)
+-void qemu_remove_led_event_handler(QEMUPutLEDEntry *entry)
++int qemu_input_get_led(QemuConsole *con)
  {
--    qemu_input_handler_register(dev, &ps2_mouse_handler);
-+    PS2State *s = PS2_DEVICE(dev);
-+
-+    s->hs = qemu_input_handler_register(dev, &ps2_mouse_handler);
-+}
-+
-+static void ps2_mouse_unrealize(DeviceState *dev)
-+{
-+    PS2State *s = PS2_DEVICE(dev);
-+
-+    g_clear_pointer(&s->hs, qemu_input_handler_unregister);
+-    if (!entry) {
+-        return;
+-    }
+-    QTAILQ_REMOVE(&led_handlers, entry, next);
+-    g_free(entry);
++    return modifiers;
  }
  
- static void ps2_kbd_class_init(ObjectClass *klass, const void *data)
-@@ -1255,6 +1273,7 @@ static void ps2_kbd_class_init(ObjectClass *klass, const void *data)
-     PS2DeviceClass *ps2dc = PS2_DEVICE_CLASS(klass);
+ static void
+ on_keyboard_modifiers_changed(GObject *gobject, GParamSpec *pspec,
+                               gpointer user_data)
+ {
+-    guint modifiers;
+-    QEMUPutLEDEntry *cursor;
+-
+     modifiers = qemu_dbus_display1_keyboard_get_modifiers(
+         QEMU_DBUS_DISPLAY1_KEYBOARD(gobject));
  
-     dc->realize = ps2_kbd_realize;
-+    dc->unrealize = ps2_kbd_unrealize;
-     resettable_class_set_parent_phases(rc, NULL, ps2_kbd_reset_hold, NULL,
-                                        &ps2dc->parent_phases);
-     dc->vmsd = &vmstate_ps2_keyboard;
-@@ -1274,6 +1293,7 @@ static void ps2_mouse_class_init(ObjectClass *klass, const void *data)
-     PS2DeviceClass *ps2dc = PS2_DEVICE_CLASS(klass);
+-    /*
+-     * The D-Bus Keyboard.Modifiers property uses the same
+-     * bit layout as QEMU's LED constants.
+-     */
+-    QTAILQ_FOREACH(cursor, &led_handlers, next) {
+-        cursor->put_led(cursor->opaque, modifiers);
+-    }
++    notifier_list_notify(&led_notifiers, NULL);
+ }
  
-     dc->realize = ps2_mouse_realize;
-+    dc->unrealize = ps2_mouse_unrealize;
-     resettable_class_set_parent_phases(rc, NULL, ps2_mouse_reset_hold, NULL,
-                                        &ps2dc->parent_phases);
-     dc->vmsd = &vmstate_ps2_mouse;
+ void qemu_add_mouse_mode_change_notifier(Notifier *notify)
+diff --git a/ui/vnc.c b/ui/vnc.c
+index 253b1a9f634..3b6765393e0 100644
+--- a/ui/vnc.c
++++ b/ui/vnc.c
+@@ -1820,9 +1820,10 @@ static void vnc_led_state_change(VncState *vs)
+     vnc_flush(vs);
+ }
+ 
+-static void kbd_leds(void *opaque, int ledstate)
++static void kbd_leds(Notifier *notifier, void *data)
+ {
+-    VncDisplay *vd = opaque;
++    VncDisplay *vd = container_of(notifier, VncDisplay, led_notifier);
++    int ledstate = qemu_input_get_led(vd->dcl.con);
+     VncState *client;
+ 
+     trace_vnc_key_guest_leds((ledstate & QEMU_CAPS_LOCK_LED),
+@@ -3489,8 +3490,7 @@ static void vnc_display_close(VncDisplay *vd)
+     g_free(vd->tlsauthzid);
+     vd->tlsauthzid = NULL;
+     if (vd->lock_key_sync) {
+-        qemu_remove_led_event_handler(vd->led);
+-        vd->led = NULL;
++        qemu_input_led_notifier_remove(&vd->led_notifier);
+     }
+ #ifdef CONFIG_VNC_SASL
+     if (vd->sasl.authz) {
+@@ -4221,7 +4221,8 @@ static bool vnc_display_open(VncDisplay *vd, Error **errp)
+ #endif
+     vd->lock_key_sync = lock_key_sync;
+     if (lock_key_sync) {
+-        vd->led = qemu_add_led_event_handler(kbd_leds, vd);
++        vd->led_notifier.notify = kbd_leds;
++        qemu_input_led_notifier_add(&vd->led_notifier);
+     }
+     vd->ledstate = 0;
+ 
 
 -- 
 2.54.0
