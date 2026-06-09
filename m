@@ -4,190 +4,85 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id DE886CD8CB9
-	for <qemu-devel@archiver.kernel.org>; Tue,  9 Jun 2026 16:29:36 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 05958CD8CB9
+	for <qemu-devel@archiver.kernel.org>; Tue,  9 Jun 2026 16:35:07 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wWzKF-00081T-2A; Tue, 09 Jun 2026 12:29:15 -0400
+	id 1wWzPF-00016Q-I0; Tue, 09 Jun 2026 12:34:25 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <deller@gmx.de>) id 1wWzKD-000815-NW
- for qemu-devel@nongnu.org; Tue, 09 Jun 2026 12:29:13 -0400
-Received: from mout.gmx.net ([212.227.17.21])
+ (Exim 4.90_1) (envelope-from <kirill@korins.ky>) id 1wWzPD-00015K-4V
+ for qemu-devel@nongnu.org; Tue, 09 Jun 2026 12:34:23 -0400
+Received: from mx1.catap.net ([162.55.82.72])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <deller@gmx.de>) id 1wWzKA-00084A-Px
- for qemu-devel@nongnu.org; Tue, 09 Jun 2026 12:29:13 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmx.de;
- s=s31663417; t=1781022548; x=1781627348; i=deller@gmx.de;
- bh=CmGxzLSkZIqqdhA8t/RHpBoPmawrMJgoxbDM3gc2BW0=;
- h=X-UI-Sender-Class:Message-ID:Date:MIME-Version:Subject:To:Cc:
- References:From:In-Reply-To:Content-Type:
- Content-Transfer-Encoding:cc:content-transfer-encoding:
- content-type:date:from:message-id:mime-version:reply-to:subject:
- to;
- b=gxtyvScm9XRrwXnkCBEAkVc3ZlAsFEPeMgXhm6NKlVPr8UzrRQRV2v8R4mHBtYVI
- B208eQsdkm2MqeoqHcmXVy0QvxwZEVbs5z8xMn+xEhkm58UR+yfhncb6xkjO2nQm/
- DuTXy3Y8MTFF9SQ0Kqsh2mJL0mHwje46CNbIKvjyo/OQs1paPlp2CQLKfNrT64LLr
- mOlhQDFxk/AzkZW4rMJjW6Da8MzTh1t7uwj8/WT1tB9bEP00RZYTdBBB4TMFZ7OQJ
- eY1l9XzifdkSfYP9MyA0ALkHPmVpS0EUK9kGVKcnqSIRV8z6xPGGrPLj2uySWn4ah
- lcojnzWI+wSYS/4I9Q==
-X-UI-Sender-Class: 724b4f7f-cbec-4199-ad4e-598c01a50d3a
-Received: from client.hidden.invalid by mail.gmx.net (mrgmx104
- [212.227.17.168]) with ESMTPSA (Nemesis) id 1N5GE1-1xGWjx3LVd-00sjvB; Tue, 09
- Jun 2026 18:29:08 +0200
-Message-ID: <44ccf6b8-1dea-4094-bb38-09719fcdcd1f@gmx.de>
-Date: Tue, 9 Jun 2026 18:29:06 +0200
+ (Exim 4.90_1) (envelope-from <kirill@korins.ky>) id 1wWzP8-00039V-3n
+ for qemu-devel@nongnu.org; Tue, 09 Jun 2026 12:34:22 -0400
+ARC-Seal: i=1; a=rsa-sha256; s=20240125rsa; cv=none; d=mx.catap.net; b=AS+Z+sh
+ dj4lFcPH/eC5pCm70ZVUm9tL4nvDumEv7RVRVCFcu8NRGFh9LVT8BWStI780Gvg3rgLfuQ
+ apfMtoU0GhaciTrAgeCTZGDXZ8tNFKwFXNr/qWz6bpVJD8gdXgMD7FIm8DhM5ra5bhi2fC
+ wx3Uy0iuJnlrhWqlyVWJxA5yWx3ohydxqdcSZbgznadK+rmFt7FjmyRtRPy7ZexS2BJTca
+ 3SLxlrXdpMqCIqoNniHgAm7NUzQmFGpahrtT2ruChJnqAajDxvMRRJeW3FxtjNl5Z7NGCS
+ +bC08ouSfe7tSgQxEQ2ZrwSKR5q6PGMyjae2RyzwTwRR5wTZ8Uy8WVA==
+ARC-Message-Signature: i=1; a=rsa-sha256; s=20240125rsa; c=simple/simple; bh=6
+ MX545HvzjG16fzHdmRvFu96rcRXl0JevJmNZ1l+QYI=;
+ h=references:in-reply-to:
+ subject:cc:to:from:date:dkim-signature:dkim-signature; d=mx.catap.net;
+ b=moWQHpxxFLNizGL0JQZm1ygymusV57gliVlOuqc7dApW4b+XrWl064FfA8PiFNg09c8n
+ m+bJDpefuQgKYDOA6jZxYyAK18EOan8dwOdqF7ysYc2PfLPAS5mKETVNM5NeEeqoHaQ8Xf
+ JaPkUuV6oLZHjbkusaaPE7zLnQo9yyDQQ1t1ZMXMZvAhLrRekNpdvRsIHKoNmvcZIJiZpO
+ Lsg4d4jdKACs3lIMpes6rDIALpW/lHBGrKS/hiLB61neFXASPThrxW7ZoFVknHVfplD3SF
+ IfqkW2LZhiIa3DHOUBYS1Z5geCVOXzXIZT0k40ZcidIYbTxtKu6jYN2ApWGpVUfw==
+ARC-Authentication-Results: i=1; mx.catap.net; dkim=pass
+ header.s=20240125rsa header.d=korins.ky header.a=rsa-sha256 
+ header.b=UnJsUkU+; dkim=pass header.s=20240125ed25519 
+ header.d=korins.ky header.a=ed25519-sha256 header.b=wEd+N7ey;
+ arc=none; iprev=pass; spf=none
+ smtp.helo=postmaster@matebook.home.arpa; spf=softfail
+ smtp.mailfrom=kirill@korins.ky
+DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple; s=20240125rsa; bh=6MX545Hv
+ zjG16fzHdmRvFu96rcRXl0JevJmNZ1l+QYI=; h=references:in-reply-to:
+ subject:cc:to:from:date; d=korins.ky;
+ b=UnJsUkU+2JkQF7E/cRUdlcTchw1KuV
+ 5cNRTisPo+GZ2e/aKrd9+cihH4cTidcBhm2+Oxf2u5g9QcxGVfbk8u06Fyjqw3q2ibNMW/
+ UufrG07fb6xQ02wFFpHMXpCZBP9crTY9UgCK7DXT+rHiJ9WFKZ+sBG3cz3jjlhYbD/QRn5
+ YOIqb2s3t8ed0dRow4tE6hWQyp2eBuBqBSprTnjE9Tc65hEnh8noF0q1MUJEBfuc3kHvt4
+ OqVtl1V4Eod2Rl80p2ia/IdXuuu+vh7Dt0p9r/xq4GsmJPSeTS8DDTIfDk33kHAofYTvQm
+ 8N4fWq3RSja5SPcOYxrzepakYBvZbE3A==
+DKIM-Signature: v=1; a=ed25519-sha256; c=simple/simple; s=20240125ed25519;
+ bh=6MX545HvzjG16fzHdmRvFu96rcRXl0JevJmNZ1l+QYI=; h=references:
+ in-reply-to:subject:cc:to:from:date; d=korins.ky; b=wEd+N7eyPqcCfiMi2Y
+ 03NYNpiAVDb9HotcXCC22KMsh6+G9nB1hqQU9Ga1fbGh0xxQScasvSSsWgPFynpqvgCA==
+Received: by mx1.catap.net (OpenSMTPD) with ESMTPSA id 90d44106
+ (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO); 
+ Tue, 9 Jun 2026 18:34:08 +0200 (CEST)
+Received: by matebook.home.arpa (OpenSMTPD) with ESMTP id a7220cb7;
+ Tue, 9 Jun 2026 18:34:07 +0200 (CEST)
+Date: Tue, 09 Jun 2026 18:34:07 +0200
+Message-ID: <87y0gnsmf4.wl-kirill@korins.ky>
+From: Kirill A. Korinsky <kirill@korins.ky>
+To: Philippe =?UTF-8?B?TWF0aGlldS1EYXVkw6k=?= <philmd@oss.qualcomm.com>
+Cc: qemu-devel@nongnu.org
+Subject: Re: [PATCH] powernv: boot OpenBSD on POWER9
+In-Reply-To: <d041c89f-8484-4405-b208-f2e8830a92a1@oss.qualcomm.com>
+References: <20260609021945.73632-1-kirill@korins.ky>
+ <8733ywtpgv.wl-kirill@korins.ky>
+ <d041c89f-8484-4405-b208-f2e8830a92a1@oss.qualcomm.com>
+User-Agent: Wanderlust
+Mail-Followup-To: philmd@oss.qualcomm.com, qemu-devel@nongnu.org,
+ Kirill A. Korinsky <kirill@korins.ky>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PULL 0/8] Linux user patches
-To: Stefan Hajnoczi <stefanha@gmail.com>, Helge Deller <deller@kernel.org>
-Cc: qemu-devel@nongnu.org,
- Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
- Max Filippov <jcmvbkbc@gmail.com>, Yoshinori Sato
- <yoshinori.sato@nifty.com>, Laurent Vivier <laurent@vivier.eu>
-References: <20260608194256.13794-1-deller@kernel.org>
- <CAJSP0QWtOGdNx-hQnmcDhagKdB7iEwoQyc9b1_YxP9RbQHYfJQ@mail.gmail.com>
-Content-Language: en-US
-From: Helge Deller <deller@gmx.de>
-Autocrypt: addr=deller@gmx.de; keydata=
- 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
-In-Reply-To: <CAJSP0QWtOGdNx-hQnmcDhagKdB7iEwoQyc9b1_YxP9RbQHYfJQ@mail.gmail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: quoted-printable
-X-Provags-ID: V03:K1:mxqvoKxV4U3XUKbVQJywybgH5iDt8EYz7LeXW9GO/Mu/53H8+g3
- gyvCw0g9Ye0ulaVZzLIt/gtTJ0dwIBOBx1j3nRwBc6TeONnzq/YRNR9mWHpPf84L10SUk4h
- CiGcd+vpsaJP/NyvBYlym5kvCdZ7YUE9GsViTu7U+Be8WmwBykrMVY3kOjj2QVj58R+X+A8
- max920I5a5eN6E2FV5s8A==
-UI-OutboundReport: notjunk:1;M01:P0:LZvJ02lqRlY=;T9JSPMUoMIACm3gxD6dEiJ0wqkf
- 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
- mwnjpD4LkoEPo2BlBc687LYEvRI=
-Received-SPF: pass client-ip=212.227.17.21; envelope-from=deller@gmx.de;
- helo=mout.gmx.net
-X-Spam_score_int: -27
-X-Spam_score: -2.8
-X-Spam_bar: --
-X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Type: multipart/mixed; boundary="Multipart_Tue_Jun__9_18:34:07_2026-1"
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=162.55.82.72; envelope-from=kirill@korins.ky;
+ helo=mx1.catap.net
+X-Spam_score_int: -43
+X-Spam_score: -4.4
+X-Spam_bar: ----
+X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_MED=-2.3, SPF_HELO_PASS=-0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -203,63 +98,278 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 6/9/26 17:16, Stefan Hajnoczi wrote:
-> On Mon, Jun 8, 2026 at 3:43=E2=80=AFPM Helge Deller <deller@kernel.org> =
-wrote:
->>
->> From: Helge Deller <deller@gmx.de>
->>
->> The following changes since commit 29c042c6e9d4a09d4a0ac3fa54aeb7ee08ce=
-0bdc:
->>
->>    lcitool: remove Cirrus CI support (2026-06-03 12:45:38 -0400)
->>
->> are available in the Git repository at:
->>
->>    https://github.com/hdeller/qemu-hppa.git tags/linux-user-pull-reques=
-t
->>
->> for you to fetch changes up to fd8da2844c4354ecf54bd73a2fa7babe669b7a12=
-:
->>
->>    target/sh4: decode_gusa: recognize add#imm with prior mov Rm, Rn (20=
-26-06-07 17:56:24 +0200)
->>
->> ----------------------------------------------------------------
->> linux-user patches for alpha, sparc and sh4
->>
->> Various linux-user related patches from Matt Turner with coredump suppo=
-rt for
->> alpha and sparc, as well as some fixes for the signal handler in sparc.
->>
->> The patches from Xinhui Yang add the missing fsmount series syscalls su=
-pport
->> for systemd.
->>
->> ----------------------------------------------------------------
->>
->> Matt Turner (6):
->>    linux-user/alpha: add coredump support
->>    linux-user/sparc: add coredump support
->>    linux-user/sparc: restore L/I registers from RSA in
->>      sparc64_set_context
->>    linux-user/sparc: call block_signals() before set_sigmask() in
->>      setcontext
->>    linux-user/sparc: flush register windows before core dump
->>    target/sh4: decode_gusa: recognize add#imm with prior mov Rm, Rn
->>
->> Xinhui Yang (2):
->>    linux-user: implement fsmount(2) series of syscalls
->>    linux-user/strace: add fsmount series of syscalls
->=20
-> Hi Xinhui Yang,
-> Please take a look at the CI failures below. It will probably be
-> necessary to detect the availability of the fs syscalls at build time
-> and avoid them when the host lacks support.
->=20
-> Please send a fixed patch series to the list so Helge can pick it up
-> again in a future pull request. Thanks!
-I'll fix and resend.
+--Multipart_Tue_Jun__9_18:34:07_2026-1
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 
-Helge
+On Tue, 09 Jun 2026 13:26:09 +0200,
+Philippe Mathieu-Daudé <philmd@oss.qualcomm.com> wrote:
+> 
+> Hi Kirill,
+> 
+> On 9/6/26 04:30, Kirill A. Korinsky wrote:
+> > On Tue, 09 Jun 2026 04:19:45 +0200,
+> > "Kirill A. Korinsky" <kirill@korins.ky> wrote:
+> >> 
+> >> OpenBSD/powernv programs PTCR for LPID 0 with a partition
+> >> table size exponent one smaller than QEMU's existing ISA v3.0
+> >> interpretation. Try QEMU's existing PATS interpretation first,
+> >> then fall back to the OpenBSD LPID 0 form; nonzero LPIDs keep
+> >> the old behaviour.
+> >> 
+> >> The PSI model now exposes POWER9 IRQ level and pending status
+> >> registers, and keeps both updated while delivering through the
+> >> existing XIVE LSI source. This lets guests that select the
+> >> POWER9 PSI LSI IRQ method continue to receive LPC interrupts.
+> >> 
+> >> The blast radius is probably minimal: the partition table
+> >> fallback is limited to bare metal LPID 0 after the original
+> >> lookup fails, while the PSI change only touches POWER9 PSI
+> >> state and reuses the existing delivery path.
+> >> 
+> >> Signed-off-by: Kirill A. Korinsky <kirill@korins.ky>
+> > 
+> > 
+> > It was tested as:
+> > 
+> > qemu-system-ppc64 \
+> >      -M powernv9 \
+> >      -cpu power9 \
+> >      -m 2G \
+> >      -nographic \
+> >      -kernel pnor.BOOTKERNEL \
+> >      -device ich9-ahci,id=sata0,bus=pcie.0,addr=0x0 \
+> >      -drive file=miniroot79.img,format=raw,if=none,id=bootdisk,snapshot=on \
+> >      -device ide-hd,bus=sata0.0,unit=0,drive=bootdisk,bootindex=1
+> 
+> Cool. Could you add as a functional test in tests/functional/ppc64/? See
+> examples around this directory.
+> 
+
+Sure, here I added functional test and I confirm that all old one passed.
+
+I host artifacts for test at my host because I have no idea where to host
+them, but feel free to move to the right place.
+
+Miniroot from 7.9 release which is available at:
+https://cdn.openbsd.org/pub/OpenBSD/7.9/powerpc64/miniroot79.img
+but in few years can be gone.
+
+pnor.BOOTKERNEL from talos-ii-v2.10.pnor which was extracted by my script.
+
+-- 
+wbr, Kirill
+
+--Multipart_Tue_Jun__9_18:34:07_2026-1
+Content-Type: text/plain; type=patch; name="0001-powernv-boot-OpenBSD-on-POWER9.patch"; charset=US-ASCII
+Content-Disposition: attachment; filename="0001-powernv-boot-OpenBSD-on-POWER9.patch"
+Content-Transfer-Encoding: 7bit
+
+From f3641d1db5e6a2ec78e89f333b5957064db9bdc6 Mon Sep 17 00:00:00 2001
+From: "Kirill A. Korinsky" <kirill@korins.ky>
+Date: Tue, 9 Jun 2026 18:29:44 +0200
+Subject: [PATCH] powernv: boot OpenBSD on POWER9
+
+OpenBSD/powernv programs PTCR for LPID 0 with a partition
+table size exponent one smaller than QEMU's existing ISA v3.0
+interpretation. Try QEMU's existing PATS interpretation first,
+then fall back to the OpenBSD LPID 0 form; nonzero LPIDs keep
+the old behaviour.
+
+The PSI model now exposes POWER9 IRQ level and pending status
+registers, and keeps both updated while delivering through the
+existing XIVE LSI source. This lets guests that select the
+POWER9 PSI LSI IRQ method continue to receive LPC interrupts.
+
+The blast radius is probably minimal: the partition table
+fallback is limited to bare metal LPID 0 after the original
+lookup fails, while the PSI change only touches POWER9 PSI
+state and reuses the existing delivery path.
+
+Signed-off-by: Kirill A. Korinsky <kirill@korins.ky>
+---
+ hw/ppc/pnv_psi.c                       | 17 ++++-----
+ target/ppc/mmu-book3s-v3.c             | 33 +++++++++++++---
+ tests/functional/ppc64/meson.build     |  2 +
+ tests/functional/ppc64/test_openbsd.py | 52 ++++++++++++++++++++++++++
+ 4 files changed, 90 insertions(+), 14 deletions(-)
+ create mode 100755 tests/functional/ppc64/test_openbsd.py
+
+diff --git hw/ppc/pnv_psi.c hw/ppc/pnv_psi.c
+index e8701c6100..941540df2d 100644
+--- hw/ppc/pnv_psi.c
++++ hw/ppc/pnv_psi.c
+@@ -688,6 +688,8 @@ static uint64_t pnv_psi_p9_mmio_read(void *opaque, hwaddr addr, unsigned size)
+     case PSIHB9_ESB_CI_BASE:
+     case PSIHB9_ESB_NOTIF_ADDR:
+     case PSIHB9_IVT_OFFSET:
++    case PSIHB9_IRQ_LEVEL:
++    case PSIHB9_IRQ_STAT:
+         val = psi->regs[reg];
+         break;
+     default:
+@@ -817,18 +819,15 @@ static const MemoryRegionOps pnv_psi_p9_xscom_ops = {
+ static void pnv_psi_power9_set_irq(void *opaque, int irq, int state)
+ {
+     PnvPsi *psi = opaque;
+-    uint64_t irq_method = psi->regs[PSIHB_REG(PSIHB9_INTERRUPT_CONTROL)];
++    uint64_t irq_bit = PPC_BIT(irq);
+ 
+-    if (irq_method & PSIHB9_IRQ_METHOD) {
+-        qemu_log_mask(LOG_GUEST_ERROR, "PSI: LSI IRQ method no supported\n");
+-        return;
+-    }
+-
+-    /* Update LSI levels */
++    /* Update LSI levels and pending status */
+     if (state) {
+-        psi->regs[PSIHB_REG(PSIHB9_IRQ_LEVEL)] |= PPC_BIT(irq);
++        psi->regs[PSIHB_REG(PSIHB9_IRQ_LEVEL)] |= irq_bit;
++        psi->regs[PSIHB_REG(PSIHB9_IRQ_STAT)] |= irq_bit;
+     } else {
+-        psi->regs[PSIHB_REG(PSIHB9_IRQ_LEVEL)] &= ~PPC_BIT(irq);
++        psi->regs[PSIHB_REG(PSIHB9_IRQ_LEVEL)] &= ~irq_bit;
++        psi->regs[PSIHB_REG(PSIHB9_IRQ_STAT)] &= ~irq_bit;
+     }
+ 
+     qemu_set_irq(psi->qirqs[irq], state);
+diff --git target/ppc/mmu-book3s-v3.c target/ppc/mmu-book3s-v3.c
+index 3865556310..4babe4c536 100644
+--- target/ppc/mmu-book3s-v3.c
++++ target/ppc/mmu-book3s-v3.c
+@@ -23,19 +23,21 @@
+ #include "mmu-hash64.h"
+ #include "mmu-book3s-v3.h"
+ 
+-bool ppc64_v3_get_pate(PowerPCCPU *cpu, target_ulong lpid, ppc_v3_pate_t *entry)
++static bool ppc64_v3_get_pate_from_size(PowerPCCPU *cpu, target_ulong lpid,
++                                        ppc_v3_pate_t *entry,
++                                        uint64_t table_size)
+ {
+     uint64_t patb = cpu->env.spr[SPR_PTCR] & PTCR_PATB;
+-    uint64_t pats = cpu->env.spr[SPR_PTCR] & PTCR_PATS;
++    uint64_t entries;
+ 
+     /* Check if partition table is properly aligned */
+-    if (patb & MAKE_64BIT_MASK(0, pats + 12)) {
++    if (patb & (table_size - 1)) {
+         return false;
+     }
+ 
+     /* Calculate number of entries */
+-    pats = 1ull << (pats + 12 - 4);
+-    if (pats <= lpid) {
++    entries = table_size / sizeof(*entry);
++    if (entries <= lpid) {
+         return false;
+     }
+ 
+@@ -45,3 +47,24 @@ bool ppc64_v3_get_pate(PowerPCCPU *cpu, target_ulong lpid, ppc_v3_pate_t *entry)
+     entry->dw1 = ldq_phys(CPU(cpu)->as, patb + 8);
+     return true;
+ }
++
++bool ppc64_v3_get_pate(PowerPCCPU *cpu, target_ulong lpid, ppc_v3_pate_t *entry)
++{
++    uint64_t pats = cpu->env.spr[SPR_PTCR] & PTCR_PATS;
++
++    /*
++     * Keep the existing ISA v3.0 PATS interpretation first.  OpenBSD/powernv
++     * uses the PATSIZE value it writes to PTCR as one exponent smaller, and it
++     * only needs that interpretation for the bare metal LPID 0 table.
++     */
++    if (ppc64_v3_get_pate_from_size(cpu, lpid, entry, 1ull << (pats + 12))) {
++        return true;
++    }
++
++    if (lpid == 0) {
++        return ppc64_v3_get_pate_from_size(cpu, lpid, entry,
++                                           1ull << (pats + 11));
++    }
++
++    return false;
++}
+diff --git tests/functional/ppc64/meson.build tests/functional/ppc64/meson.build
+index f0f8ab8f61..cb3c745624 100644
+--- tests/functional/ppc64/meson.build
++++ tests/functional/ppc64/meson.build
+@@ -4,6 +4,7 @@ test_ppc64_timeouts = {
+   'fadump' : 480,
+   'hv' : 1000,
+   'mac99' : 120,
++  'openbsd' : 240,
+   'powernv' : 480,
+   'pseries' : 480,
+   'replay' : 210,
+@@ -20,6 +21,7 @@ tests_ppc64_system_thorough = [
+   'fadump',
+   'hv',
+   'mac99',
++  'openbsd',
+   'powernv',
+   'pseries',
+   'replay',
+diff --git tests/functional/ppc64/test_openbsd.py tests/functional/ppc64/test_openbsd.py
+new file mode 100755
+index 0000000000..bdbef6bf82
+--- /dev/null
++++ tests/functional/ppc64/test_openbsd.py
+@@ -0,0 +1,52 @@
++#!/usr/bin/env python3
++#
++# Test that OpenBSD boots on a ppc powernv machine and reaches the installer.
++#
++# SPDX-License-Identifier: GPL-2.0-or-later
++
++from qemu_test import QemuSystemTest, Asset
++from qemu_test import wait_for_console_pattern
++
++
++class OpenBSDPowerNV(QemuSystemTest):
++
++    ASSET_MINIROOT = Asset(
++        'https://kirill.korins.ky/pub/qemu-powerpc64-openbsd/miniroot79.img',
++        '7829e42b75d81cafd732038b9d63228b79c1f5828d8375872a4bb655e1d6b13c')
++
++    ASSET_BOOTKERNEL = Asset(
++        'https://kirill.korins.ky/pub/qemu-powerpc64-openbsd/pnor.BOOTKERNEL',
++        '397ce43ce61910e1a2c4f13d301f957e61513a9ec5371bc3e87d3095411fae7b')
++
++    def test_powernv9_openbsd_installer(self):
++        self.set_machine('powernv9')
++        self.require_accelerator('tcg')
++
++        miniroot_path = self.ASSET_MINIROOT.fetch()
++        bootkernel_path = self.ASSET_BOOTKERNEL.fetch()
++
++        self.vm.set_console()
++        self.vm.add_args('-cpu', 'power9',
++                         '-accel', 'tcg,thread=single',
++                         '-smp', '1,cores=1,threads=1',
++                         '-m', '2g',
++                         '-kernel', bootkernel_path,
++                         '-device',
++                         'ich9-ahci,id=sata0,bus=pcie.0,addr=0x0',
++                         '-drive',
++                         f'file={miniroot_path},format=raw,if=none,'
++                         'id=bootdisk,snapshot=on',
++                         '-device',
++                         'ide-hd,bus=sata0.0,unit=0,drive=bootdisk,'
++                         'bootindex=1')
++        self.vm.launch()
++
++        wait_for_console_pattern(self, 'OpenBSD 7.9 (RAMDISK)', 'panic:')
++        wait_for_console_pattern(
++            self,
++            '(I)nstall, (U)pgrade, (A)utoinstall or (S)hell?',
++            'panic:')
++
++
++if __name__ == '__main__':
++    QemuSystemTest.main()
+-- 
+2.54.0
+
+
+--Multipart_Tue_Jun__9_18:34:07_2026-1--
 
