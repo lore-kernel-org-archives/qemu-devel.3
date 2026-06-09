@@ -4,126 +4,116 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 49D66CD6E79
-	for <qemu-devel@archiver.kernel.org>; Tue,  9 Jun 2026 03:48:37 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A589DCD8C85
+	for <qemu-devel@archiver.kernel.org>; Tue,  9 Jun 2026 03:59:16 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wWnRl-00078p-Pi; Mon, 08 Jun 2026 23:48:13 -0400
+	id 1wWnbl-0000TW-Cm; Mon, 08 Jun 2026 23:58:33 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <anisinha@redhat.com>)
- id 1wWnRl-00077k-0R
- for qemu-devel@nongnu.org; Mon, 08 Jun 2026 23:48:13 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <FangSheng.Huang@amd.com>)
+ id 1wWnbj-0000Si-JU
+ for qemu-devel@nongnu.org; Mon, 08 Jun 2026 23:58:31 -0400
+Received: from mail-westcentralusazon11010029.outbound.protection.outlook.com
+ ([40.93.198.29] helo=CY7PR03CU001.outbound.protection.outlook.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <anisinha@redhat.com>)
- id 1wWnRj-0000MG-GN
- for qemu-devel@nongnu.org; Mon, 08 Jun 2026 23:48:12 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1780976889;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=Qs5nGOKy6Cl45eEzyOq2a3dgg7ojdHXEG5J2g5ghe+I=;
- b=jNfD5iPr0VraSmsK3HvlNAXlO8R+jInVybNFiV/XF4aFKWr24b4NOGOUNDehBGd03TcLaZ
- Xa5C7X16zjJilGhxDjwiwJaN5+xSbUMTUAdmc5fsgR7CmbLp+g2YlNmyRsScXi+jKj8/24
- W85gqAnXPd4PKGeqvzeyXgmQtaE8T7s=
-Received: from mail-qv1-f69.google.com (mail-qv1-f69.google.com
- [209.85.219.69]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-509-T8Hduh2lN6alzluKBRWwvQ-1; Mon, 08 Jun 2026 23:47:54 -0400
-X-MC-Unique: T8Hduh2lN6alzluKBRWwvQ-1
-X-Mimecast-MFC-AGG-ID: T8Hduh2lN6alzluKBRWwvQ_1780976873
-Received: by mail-qv1-f69.google.com with SMTP id
- 6a1803df08f44-8ccdcd8dd3dso123559806d6.3
- for <qemu-devel@nongnu.org>; Mon, 08 Jun 2026 20:47:54 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1780976873; cv=none;
- d=google.com; s=arc-20240605;
- b=ff+MJMoGU9nGDdO7U5UpHgQzSyi1VLN9FrdIT1qRZktrcIgvVEnWYXbGlwrrNBAfie
- 0RmVV/VBbkghIUSjAq9Z9AM0pmC2NwTMXkLtpGAleakDoKduuudpsApcOV8odr1273fo
- M1Z3nnN2XMwm8xrk5OjbF5qEf6sPjV8YbDwcBCfUgr7aBRt3d1rgLrTFyogYtzzG/JUS
- 2nB9uXUavDdWExZC29OvghpeTKhWgm+Njg9GF4KSV3uAC7bpMVRG3C9SwnR5XZAEsI3H
- 1YZpGeni45Lnyh65/2teG5TN9gv2aWvnVTikMJFXU7PKYKs40YBZd3v+/I/zPpsFdXdl
- vKsw==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
- s=arc-20240605; 
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:dkim-signature;
- bh=Qs5nGOKy6Cl45eEzyOq2a3dgg7ojdHXEG5J2g5ghe+I=;
- fh=MLuei9TA3F1FMjFWE2GNpY1LHjP0MtNrq7n1WxKtb8Q=;
- b=W93TbwXxq6zEtB302MHU3pHCX+Ed3ZkXEN6kRiLP3IL5MXOHaCTMwc3njplO5V8zNQ
- QeJNfCdy4edOamPAYEpV/c7BY4eTA3FnNnc8F6atWGRn2Dso0uFeY/qVsON44YjeKMxc
- KLcf+n/Zvhb0XovF/CisV+Lt6FwPQZV0F+LibyfiqswPCVeuwwU9aO/Sf0X0J6BEaodK
- jQFVs0reE8lLN3Db2h9BV4C+LTQALRKhMDW1YarVhABVVK57AOpjUul7b7gqGARHfLGH
- /eoQprRKvxSlOa1FqLgqZPOCxQMr0OyRN1HIw+42FMifFPggPtYgvvzG3PWVOtKKJalW
- KkgQ==; darn=nongnu.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1780976873; x=1781581673; darn=nongnu.org;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:from:to:cc:subject:date
- :message-id:reply-to;
- bh=Qs5nGOKy6Cl45eEzyOq2a3dgg7ojdHXEG5J2g5ghe+I=;
- b=ROF1g7ovZvbBf6fmxDoyrxZO8jjHomwmP0IpYnGnrm+3lPM5TL5dlUFuPOzqDyEZ/D
- tiqQ6frjDQpN4POJVBMb88lsSNmnmF34VoVitR288COw0yNaL4Xag1rWuHXe4qrfuauv
- HAfR1VkacBUuIS4WZE6Ya/tQG/hwHLmXJw5l4linKg4Kh19kpSdRYhQPZvZt6IN+XsbK
- U0uIyaRAN/Um8+B0KCETX+Gk8J7WRrisV0pmvwTeTyulvY+wUMDrafuwQZSG18bgWIhT
- XNK4cIeTgP9w7KBOvdGNxBCRb4azdeEYIgK6JJd7lJ43h1pVYQqIbn7pKdfBgyeEybFd
- V65A==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1780976873; x=1781581673;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to;
- bh=Qs5nGOKy6Cl45eEzyOq2a3dgg7ojdHXEG5J2g5ghe+I=;
- b=asdldw5SQvvrqaUtxr/jX00u4IJ4gLeEIKhfMcYh035PLQp+mtpZX5LAwUOFCxic/1
- 41ZMpnvRe6SiAzzVqEotV6EMEsxWEspmZTIbxZKCBF/UK7oZb6l6fJOYQ5bgBonFMAKn
- PNLjQjLxT2Ril+/3srvrXxFqSrZKNQ5/9LVMaNgMYAGmm2hAk60NqqMaXeEEvhD1BMqF
- LN6c1PYl1ew65FfS7td9O5uk3wb5N5KFV2nQIJDyAqXzC489X+kwRlH2MicV4sTf8z5o
- 97gU4EB1NBiCp2msTqECO9RkUSsC7H6PP9fC53nN3zhjh46kduVIkNnXE4ZHLi9zMZr1
- Etdg==
-X-Forwarded-Encrypted: i=1;
- AFNElJ9S7raBy1T7JOnbhkwIOIQFT9/TZ6q5B7XK2NE3TkH7UrQtBPpJDCPUhgb7eRYN685DjerYybYnhQEQ@nongnu.org
-X-Gm-Message-State: AOJu0YxbdjXvdyZK1z5v8ol3EAyudEsXHKz8JT04hvYEx7V1FMdjtyhE
- T4dLcCnw4W0bqByBIID7CNRFO9iigNKEE+z0KO5meLBdh16L5TUcVfrvo9sg2qiecT7QPCJrTxi
- 1d0luPqaHv/HrMulwwAIivB2NCi+8mBuZfguK6XYQbQlR/n2TZWfyBM3O6Vz1u9DvxfCeKtiwvv
- MnPI3lYUl/TaEd0OGmPLTA4jJ8J68d/Uo=
-X-Gm-Gg: Acq92OFZP9PMk+UVGOuPfUuTRAf2Dzu3BGe72YvGyOfWWBmr7SL4B3ZST1yC6m7PKjf
- Jft+y5nreU0YmEzNS27o58jU3LrRpJdgKGRS7jw0/qJBJY0/S0JJ9p3wr4sbR83/WA2vZ+7Fs9I
- V1zQtFpVlFUfDFWtHA9NTJmTwTIc1ziOs0Q267cQko1sXsR0dmKMpBOV7Jw0ClVquOElesfKEnL
- hnUemeUuVIe2P0FJ/okirIf91WkUDJHf9MnvSuFyHi6SjN2Zw==
-X-Received: by 2002:a05:622a:40cb:b0:516:e152:7a59 with SMTP id
- d75a77b69052e-517ca5faa20mr15734371cf.42.1780976873430; 
- Mon, 08 Jun 2026 20:47:53 -0700 (PDT)
-X-Received: by 2002:a05:622a:40cb:b0:516:e152:7a59 with SMTP id
- d75a77b69052e-517ca5faa20mr15734181cf.42.1780976872991; Mon, 08 Jun 2026
- 20:47:52 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <FangSheng.Huang@amd.com>)
+ id 1wWnbf-0006h3-E7
+ for qemu-devel@nongnu.org; Mon, 08 Jun 2026 23:58:31 -0400
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=pC/uqMw/m11OKQRg9w/kY1CJ1lkuCCZSk/GASQEBiVrGrZc9/ne/j+5FboiGdEeS7ohBx9780TFTuO4HTD43gXvSGhmSrAVDXUy2dcDqZe6zY0+WP52LsNHMYVNv1cDb805Yjs3x6k46+tMBittQYPth+qdBhZWhDkAGu6B8qsVaBPIgI7P98VEW0FjL8WjyWg9L+AgxFxK4999NZlN6VXBwd765INUdFNQWwkkjybH1n+R/8awQmWcqc6Edz+t/8KV35zJ+2F7Fzt9dJ2MKWMIyoDYiVEG5dBj7e5qDu1VnWxd90jH8elH9cA6S8iLMKciMcaB2zUDdesTbZqM7Rw==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=oHJqD0OtOVfg4qiB78m2sFttEZmea0zrDrXetWx2beo=;
+ b=xTv0SbXf+Lv35EzV6Bn5dwLz71t481HWrcDbd9bgZ6jXT4v5V5rzZ8B17PonnkdYb1sCjeSEWOpdnas92biW8+g5Pa6EDOSUppp1/CO54u1y9ZDEZ1Lj5Rz8uYd/3aQRBOTS/+8WR/1+jYPr/wMKIc4qmMucaldU0xGFzyvaFCgDLk1xzEXJRKKAfp4MYM2no1/sEnGX2SjPJhzRfTksiw3QCWHpB75FYrdzdbD2XfwRO3OfJlPLKm6KqYuhN3EngwaK1YPSnbhBV8Z8GZbAeS+Dt6ApC3X/Ufe78okF3lKJnYp80su3vRXw9LHVyv63n3oPfaO9R5mCvKn2YfoWbA==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass (sender ip is
+ 165.204.84.17) smtp.rcpttodomain=gourry.net smtp.mailfrom=amd.com; dmarc=pass
+ (p=quarantine sp=quarantine pct=100) action=none header.from=amd.com;
+ dkim=none (message not signed); arc=none (0)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=amd.com; s=selector1; 
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=oHJqD0OtOVfg4qiB78m2sFttEZmea0zrDrXetWx2beo=;
+ b=QuGfk99DKOJDgT/Lk4+2o+ytjkfPUanMb6CAFbaeLhvh/7nKhiP9Uh3uCtHUVYOZ3TDdWwXUcfN2Rw5lga2+j4JR2r1nvms6qk+WgdfJYoA09rOewlCtLDBW6jLo9YmpriE8N7/B9wh5/CGC/H8uajGnjR2tzS3sDbG+rSZVFG4=
+Received: from SJ0PR05CA0051.namprd05.prod.outlook.com (2603:10b6:a03:33f::26)
+ by PH7PR12MB7426.namprd12.prod.outlook.com (2603:10b6:510:201::18)
+ with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.92.13; Tue, 9 Jun 2026
+ 03:53:11 +0000
+Received: from SJ1PEPF00001CDE.namprd05.prod.outlook.com
+ (2603:10b6:a03:33f:cafe::45) by SJ0PR05CA0051.outlook.office365.com
+ (2603:10b6:a03:33f::26) with Microsoft SMTP Server (version=TLS1_3,
+ cipher=TLS_AES_256_GCM_SHA384) id 15.21.113.7 via Frontend Transport; Tue, 9
+ Jun 2026 03:53:11 +0000
+X-MS-Exchange-Authentication-Results: spf=pass (sender IP is 165.204.84.17)
+ smtp.mailfrom=amd.com; dkim=none (message not signed)
+ header.d=none;dmarc=pass action=none header.from=amd.com;
+Received-SPF: Pass (protection.outlook.com: domain of amd.com designates
+ 165.204.84.17 as permitted sender) receiver=protection.outlook.com;
+ client-ip=165.204.84.17; helo=satlexmb08.amd.com; pr=C
+Received: from satlexmb08.amd.com (165.204.84.17) by
+ SJ1PEPF00001CDE.mail.protection.outlook.com (10.167.242.6) with Microsoft
+ SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.21.113.7 via Frontend Transport; Tue, 9 Jun 2026 03:53:10 +0000
+Received: from satlexmb08.amd.com (10.181.42.217) by satlexmb08.amd.com
+ (10.181.42.217) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.2562.41; Mon, 8 Jun
+ 2026 22:53:09 -0500
+Received: from [172.31.100.11] (10.180.168.240) by satlexmb08.amd.com
+ (10.181.42.217) with Microsoft SMTP Server id 15.2.2562.41 via Frontend
+ Transport; Mon, 8 Jun 2026 22:53:06 -0500
+Message-ID: <c10c48b9-59cb-45a8-b399-ecc8362653b8@amd.com>
+Date: Tue, 9 Jun 2026 11:53:01 +0800
 MIME-Version: 1.0
-References: <CAK3XEhMNqHbkL2P6Xg3_hJ8WAxhPQgurjvuZg-vXUDZ5=x-RRA@mail.gmail.com>
- <f2516211-6fbc-4714-b674-4276464f94ff@redhat.com>
- <CAK3XEhPdaVqi9nECrJrcRaCKK0bVcRXw=t6hXM=EVwbxpu5wLA@mail.gmail.com>
-In-Reply-To: <CAK3XEhPdaVqi9nECrJrcRaCKK0bVcRXw=t6hXM=EVwbxpu5wLA@mail.gmail.com>
-From: Ani Sinha <anisinha@redhat.com>
-Date: Tue, 9 Jun 2026 09:16:39 +0530
-X-Gm-Features: AVVi8CcXweN4JLbWesEs1bpo1VjKUiopjGVsOq33ZB3rxS5BXf5n5ZcZxHuMty0
-Message-ID: <CAK3XEhM3K1r3Q7zpqvQkLtuMEeXkb+nwDwN-j_+B0fwZpHhgkg@mail.gmail.com>
-Subject: Re: artifact download for qtest
-To: Thomas Huth <thuth@redhat.com>
-Cc: Fabiano Rosas <farosas@suse.de>, qemu-devel <qemu-devel@nongnu.org>, 
- "Daniel P. Berrange" <berrange@redhat.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=anisinha@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v10 2/4] i386/acpi-build: partition device_memory SRAT
+ umbrella for sp-mem
+To: Gregory Price <gourry@gourry.net>
+CC: <qemu-devel@nongnu.org>, <david@kernel.org>, <imammedo@redhat.com>,
+ <philmd@mailo.com>, <Zhigang.Luo@amd.com>, <Lianjie.Shi@amd.com>
+References: <20260605104609.1739911-1-FangSheng.Huang@amd.com>
+ <20260605104609.1739911-3-FangSheng.Huang@amd.com>
+ <aiM_NHx0a6x95KtP@gourry-fedora-PF4VCD3F>
+From: "Huang, FangSheng (Jerry)" <FangSheng.Huang@amd.com>
+In-Reply-To: <aiM_NHx0a6x95KtP@gourry-fedora-PF4VCD3F>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Transfer-Encoding: 8bit
+X-EOPAttributedMessage: 0
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: SJ1PEPF00001CDE:EE_|PH7PR12MB7426:EE_
+X-MS-Office365-Filtering-Correlation-Id: 5665d0b4-fa12-426c-9ae0-08dec5da9fd8
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam: BCL:0;
+ ARA:13230040|36860700016|1800799024|82310400026|376014|11063799006|4143699003|3023799007|56012099006|6133799003|22082099003|18002099003;
+X-Microsoft-Antispam-Message-Info: oxqX17ZGcDdf2X064w11hWhLBVEn4gOaAcHhOo6CbN7/MoJYAUhcfEF0jbaw1HAQmfTg2BsIuuK5qVVnoA/YkB9dAGxU5Y4QB6pQQZVVvhqZaqbPN7P516ANR/dhY/L3ZeqCaw57p7aQiZq+XJRFqUpCmVtDe+iyD82KSe4Dm/CSaS4RqGuEBHB1m5foSw+CxliAmXgRss2UWPrQ8CkqfYsAi5rRmQbcEmcsixrqtBrhZjjeGvaGC87tUSzJbpUv7fQfdlu/9AWX2NftkV6tSYp5foyI23u0mLRcuK2xWvpwWMREpLGVhqTkIC/bIQzfp0P/g+OfAuasoqNYwQuBtDnGKZuasNefWSxTESIhrQWXNrOUi7ObFP+DMDQoOVnd6HLeogvxerzXOaKR9kcG+ZN4LayYxVb97f9BKQwbKZK3vLsUUvmOakkQ8heGhlB+LSKFcKANusLQ+ax5iFRn9gtYM5l7c2MsL4F8JBOjyrVyZjA7WAw8aIIpca5+Yg85G91SzQZpTcZ1bB57O3EJymIpJT+ywvQACmvciojZh+Yj9YRp02cqMez4nNiBQj9WkRa7p1tK67dRuYRBn8BmSqV8K9/k+ZQ/JQgbT2+ZmwxLWRlD8T6BNG6R82yAD/MdGoJLTYXdeJvgnE+ImTULJ9XfL3xm8JHjUKvuRZY/k9Gc2RGxb6n6Odwund8o0+hL3mk00TTW1yEhFB2MpIG9c3KRuZI3QeDwYyEjfholamk=
+X-Forefront-Antispam-Report: CIP:165.204.84.17; CTRY:US; LANG:en; SCL:1; SRV:;
+ IPV:NLI; SFV:NSPM; H:satlexmb08.amd.com; PTR:InfoDomainNonexistent; CAT:NONE;
+ SFS:(13230040)(36860700016)(1800799024)(82310400026)(376014)(11063799006)(4143699003)(3023799007)(56012099006)(6133799003)(22082099003)(18002099003);
+ DIR:OUT; SFP:1101; 
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0: KZwpBilgHbGbZlGZopYI46vXZ0v9opHmSufeR0P9xlvuKUC1I6WdIJpB+A9JsFiphfz2Jhrk2/6DBBiaAqtqJTCPrak6Lt/40b6ylZfMFPvFn184MmPBTLbLfZYsSj+87oqEKYhjuq2ojBJLkEV+32h6foufFghS5v3OrELMS4Ip5+kPL5GM7RB+NX6yGEi/Cb4SPWQIM01apEnZHgoPKcNfpW4hdt839uEh3pYUDPp7NAxd5f/mIJ9clgqaEHD6l2QkJkhnBXL/9Xo9eBMQSVHeRmbtm/eVGgaPa7ojL+EpG5iG9uktMkrD+JJC75iCPMb0a8+439qWKAQMJmaRnzdF1gTMHZBP852Gue8bwBO2lWUPnzc0LYvTCwZ8pMEprNDlsbUsvca45xND3Z6svX3sdO6Bl3wsyfUU4YIiDulfKN+p+A0DLAojpCN+7upg
+X-OriginatorOrg: amd.com
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 09 Jun 2026 03:53:10.7500 (UTC)
+X-MS-Exchange-CrossTenant-Network-Message-Id: 5665d0b4-fa12-426c-9ae0-08dec5da9fd8
+X-MS-Exchange-CrossTenant-Id: 3dd8961f-e488-4e60-8e11-a82d994e183d
+X-MS-Exchange-CrossTenant-OriginalAttributedTenantConnectingIp: TenantId=3dd8961f-e488-4e60-8e11-a82d994e183d; Ip=[165.204.84.17];
+ Helo=[satlexmb08.amd.com]
+X-MS-Exchange-CrossTenant-AuthSource: SJ1PEPF00001CDE.namprd05.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Anonymous
+X-MS-Exchange-CrossTenant-FromEntityHeader: HybridOnPrem
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: PH7PR12MB7426
+Received-SPF: permerror client-ip=40.93.198.29;
+ envelope-from=FangSheng.Huang@amd.com;
+ helo=CY7PR03CU001.outbound.protection.outlook.com
 X-Spam_score_int: -24
 X-Spam_score: -2.5
 X-Spam_bar: --
 X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.445,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001, SPF_HELO_PASS=-0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -139,26 +129,165 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, Jun 9, 2026 at 7:54=E2=80=AFAM Ani Sinha <anisinha@redhat.com> wrot=
-e:
->
-> On Mon, Jun 8, 2026 at 10:43=E2=80=AFPM Thomas Huth <thuth@redhat.com> wr=
-ote:
-> >
-> > On 30/05/2026 16.56, Ani Sinha wrote:
-> > > Hi,
-> > >
-> > > I am trying to write a qtest for which I need an IGVM file. I have th=
-e
-> > > file, about 54 MiB in size.
-> >
-> > 54 MiB is quite big,
->
-> I was able to reduce the combined size of 2 files to about 400K
-> https://gitlab.com/anisinha/qemu/-/commit/6aef476b59443dd1bc570c29e8e5ca4=
-3140cfed4
 
-Compressed size is about 100K but I don't want to introduce dependency
-on libarchive preferrably if 400K size is ok.
+
+On 6/6/2026 5:27 AM, Gregory Price wrote:
+> On Fri, Jun 05, 2026 at 06:46:07PM +0800, fanhuang wrote:
+>> Restructure the device_memory SRAT umbrella entry into a per-kind
+>> partition: each TYPE_SP_MEM device gets an ENABLED entry at its own
+>> proximity_domain; the remaining sub-ranges get HOTPLUGGABLE | ENABLED
+>> placeholders at the highest PXM, preserving the existing umbrella
+>> convention.
+>>
+>> Signed-off-by: FangSheng Huang <FangSheng.Huang@amd.com>
+>> ---
+>>   hw/i386/acpi-build.c | 98 +++++++++++++++++++++++++++++++++++++++++---
+>>   1 file changed, 92 insertions(+), 6 deletions(-)
+>>
+>> diff --git a/hw/i386/acpi-build.c b/hw/i386/acpi-build.c
+>> index 0d7c83d5e9..76efa83808 100644
+>> --- a/hw/i386/acpi-build.c
+>> +++ b/hw/i386/acpi-build.c
+>> @@ -52,6 +52,7 @@
+>>   #include "migration/vmstate.h"
+>>   #include "hw/mem/memory-device.h"
+>>   #include "hw/mem/nvdimm.h"
+>> +#include "hw/mem/sp-mem.h"
+>>   #include "system/numa.h"
+>>   #include "system/reset.h"
+>>   #include "hw/hyperv/vmbus-bridge.h"
+>> @@ -1346,6 +1347,96 @@ build_tpm_tcpa(GArray *table_data, BIOSLinker *linker, GArray *tcpalog,
+>>   }
+>>   #endif
+>>   
+>> +typedef struct {
+>> +    uint64_t addr;
+>> +    uint64_t size;
+>> +    uint32_t node;
+>> +} SpMemRange;
+>> +
+>> +static int collect_sp_mem_ranges_cb(Object *obj, void *opaque)
+>> +{
+>> +    GArray *ranges = opaque;
+>> +    SpMemDevice *spm;
+>> +    MemoryDeviceClass *mdc;
+>> +    SpMemRange r;
+>> +
+>> +    if (!object_dynamic_cast(obj, TYPE_SP_MEM)) {
+>> +        return 0;
+>> +    }
+>> +    spm = SP_MEM(obj);
+>> +    mdc = MEMORY_DEVICE_GET_CLASS(MEMORY_DEVICE(spm));
+>> +    r.addr = mdc->get_addr(MEMORY_DEVICE(spm));
+>> +    r.size = memory_region_size(
+>> +                 host_memory_backend_get_memory(spm->hostmem));
+>> +    r.node = spm->node;
+>> +    g_array_append_val(ranges, r);
+>> +    return 0;
+>> +}
+>> +
+>> +static gint sp_mem_range_compare(gconstpointer a, gconstpointer b)
+>> +{
+>> +    const SpMemRange *range_a = a;
+>> +    const SpMemRange *range_b = b;
+>> +
+>> +    if (range_a->addr < range_b->addr) {
+>> +        return -1;
+>> +    }
+>> +    if (range_a->addr > range_b->addr) {
+>> +        return 1;
+>> +    }
+>> +    return 0;
+>> +}
+>> +
+>> +/*
+>> + * Emit SRAT memory-affinity entries covering the device_memory region.
+>> + *
+>> + * For each plugged TYPE_SP_MEM device, emit an ENABLED entry at the
+>> + * device's own proximity_domain.  All remaining sub-ranges (gaps
+>> + * between sp-mem devices, leading and trailing padding, and ranges
+>> + * occupied by other memory devices) are covered by HOTPLUGGABLE |
+>> + * ENABLED placeholder entries at PXM = nb_numa_nodes - 1.
+>> + */
+>> +static void build_srat_device_memory(GArray *table_data, MachineState *ms)
+>> +{
+>> +    g_autoptr(GArray) ranges = g_array_new(FALSE, TRUE, sizeof(SpMemRange));
+>> +    uint64_t cursor, end;
+>> +    int nb_nodes = ms->numa_state ? ms->numa_state->num_nodes : 0;
+>> +    uint32_t hotplug_pxm = nb_nodes > 0 ? nb_nodes - 1 : 0;
+>> +    guint i;
+>> +
+>> +    if (!ms->device_memory) {
+>> +        return;
+>> +    }
+>> +
+>> +    cursor = ms->device_memory->base;
+>> +    end = cursor + memory_region_size(&ms->device_memory->mr);
+>> +
+>> +    object_child_foreach_recursive(qdev_get_machine(),
+>> +                                   collect_sp_mem_ranges_cb, ranges);
+>> +    g_array_sort(ranges, sp_mem_range_compare);
+>> +
+>> +    for (i = 0; i < ranges->len; i++) {
+>> +        SpMemRange *r = &g_array_index(ranges, SpMemRange, i);
+>> +
+>> +        if (cursor < r->addr) {
+>> +            build_srat_memory(table_data, cursor, r->addr - cursor,
+>> +                              hotplug_pxm,
+>> +                              MEM_AFFINITY_HOTPLUGGABLE |
+>> +                              MEM_AFFINITY_ENABLED);
+>> +        }
+>> +        build_srat_memory(table_data, r->addr, r->size, r->node,
+>> +                          MEM_AFFINITY_ENABLED);
+>> +        cursor = r->addr + r->size;
+>> +    }
+>> +
+> 
+> Should we expect (cursor == end) here and fire a warning if there wasn't
+> a full range to cover the region?  If not - why set it all as
+> hotpluggable anyway?
+> 
+> (Maybe just worth a comment here what the last block is actually doing)
+>
+
+Thanks, Gregory.
+
+(cursor == end) is not an invariant — ms->device_memory is sized
+for the maxmem cap, so sp-mem typically leaves the rest of the
+window unused. The trailing HOTPLUGGABLE | ENABLED entry covers
+that remainder so future pc-dimm / virtio-mem hot-add into the same
+window still sees a properly-flagged SRAT range, preserving the
+prior umbrella behaviour.
+
+Agreed on the inline comment; will include if/when we respin.
+
+>> +    if (cursor < end) {
+>> +        build_srat_memory(table_data, cursor, end - cursor,
+>> +                          hotplug_pxm,
+>> +                          MEM_AFFINITY_HOTPLUGGABLE |
+>> +                          MEM_AFFINITY_ENABLED);
+>> +    }
+>> +}
+>> +
+>>   #define HOLE_640K_START  (640 * KiB)
+>>   #define HOLE_640K_END   (1 * MiB)
+>>   
+>> @@ -1481,12 +1572,7 @@ build_srat(GArray *table_data, BIOSLinker *linker, MachineState *machine)
+>>        * Memory devices may override proximity set by this entry,
+>>        * providing _PXM method if necessary.
+>>        */
+>> -    if (machine->device_memory) {
+>> -        build_srat_memory(table_data, machine->device_memory->base,
+>> -                          memory_region_size(&machine->device_memory->mr),
+>> -                          nb_numa_nodes - 1,
+>> -                          MEM_AFFINITY_HOTPLUGGABLE | MEM_AFFINITY_ENABLED);
+>> -    }
+>> +    build_srat_device_memory(table_data, machine);
+>>   
+>>       acpi_table_end(linker, &table);
+>>   }
+>> -- 
+>> 2.34.1
+>>
 
 
