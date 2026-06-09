@@ -4,42 +4,37 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 83D57CD8CA4
-	for <qemu-devel@archiver.kernel.org>; Tue,  9 Jun 2026 09:55:34 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C0ADCCD6E79
+	for <qemu-devel@archiver.kernel.org>; Tue,  9 Jun 2026 09:55:37 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wWtB2-0006wh-Oc; Tue, 09 Jun 2026 05:55:20 -0400
+	id 1wWtB2-0006wi-P9; Tue, 09 Jun 2026 05:55:20 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <gaosong@loongson.cn>)
- id 1wWtAk-0006lL-Eb
- for qemu-devel@nongnu.org; Tue, 09 Jun 2026 05:55:04 -0400
+ id 1wWtAj-0006kJ-1B
+ for qemu-devel@nongnu.org; Tue, 09 Jun 2026 05:55:01 -0400
 Received: from mail.loongson.cn ([114.242.206.163])
  by eggs.gnu.org with esmtp (Exim 4.90_1)
- (envelope-from <gaosong@loongson.cn>) id 1wWtAg-0004v9-Ht
- for qemu-devel@nongnu.org; Tue, 09 Jun 2026 05:55:02 -0400
+ (envelope-from <gaosong@loongson.cn>) id 1wWtAg-0004tG-As
+ for qemu-devel@nongnu.org; Tue, 09 Jun 2026 05:55:00 -0400
 Received: from loongson.cn (unknown [10.2.5.185])
- by gateway (Coremail) with SMTP id _____8BxDurt4idqhTUSAA--.47726S3;
- Tue, 09 Jun 2026 17:54:53 +0800 (CST)
+ by gateway (Coremail) with SMTP id _____8BxJenn4idqcjUSAA--.42230S3;
+ Tue, 09 Jun 2026 17:54:47 +0800 (CST)
 Received: from localhost.localdomain (unknown [10.2.5.185])
- by front1 (Coremail) with SMTP id qMiowJDxSMHg4idqJrGgAA--.28412S11;
- Tue, 09 Jun 2026 17:54:53 +0800 (CST)
+ by front1 (Coremail) with SMTP id qMiowJDxSMHg4idqJrGgAA--.28412S2;
+ Tue, 09 Jun 2026 17:54:40 +0800 (CST)
 From: Song Gao <gaosong@loongson.cn>
 To: qemu-devel@nongnu.org
-Cc: Bibo Mao <maobibo@loongson.cn>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@mailo.com>
-Subject: [PULL 09/14] target/loongarch: Use sys_state in op_helper.c when
- accessing CSR registers
-Date: Tue,  9 Jun 2026 17:28:19 +0800
-Message-Id: <20260609092824.227250-10-gaosong@loongson.cn>
+Subject: [PULL 00/14] loongarch queue
+Date: Tue,  9 Jun 2026 17:28:10 +0800
+Message-Id: <20260609092824.227250-1-gaosong@loongson.cn>
 X-Mailer: git-send-email 2.39.1
-In-Reply-To: <20260609092824.227250-1-gaosong@loongson.cn>
-References: <20260609092824.227250-1-gaosong@loongson.cn>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-X-CM-TRANSID: qMiowJDxSMHg4idqJrGgAA--.28412S11
+X-CM-TRANSID: qMiowJDxSMHg4idqJrGgAA--.28412S2
 X-CM-SenderInfo: 5jdr20tqj6z05rqj20fqof0/
 X-Coremail-Antispam: 1Uk129KBjDUn29KB7ZKAUJUUUUU529EdanIXcx71UUUUU7KY7
  ZEXasCq-sGcSsGvfJ3UbIjqfuFe4nvWSU5nxnvy29KBjDU0xBIdaVrnUUvcSsGvfC2Kfnx
@@ -66,105 +61,59 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Bibo Mao <maobibo@loongson.cn>
+The following changes since commit cc329c491768b2d91eb0b0984f3baa0bf805776d:
 
-When accessing CSR registers in file op_helper.c, use sys_state rather
-than env. There is no function change.
+  Merge tag 'block-pull-request' of https://gitlab.com/stefanha/qemu into staging (2026-06-08 09:30:30 -0400)
 
-Signed-off-by: Bibo Mao <maobibo@loongson.cn>
-Reviewed-by: Philippe Mathieu-Daudé <philmd@mailo.com>
-Tested-by: Song Gao <gaosong@loongson.cn>
-Message-ID: <20260605083756.175598-1-maobibo@loongson.cn>
-Signed-off-by: Song Gao <gaosong@loongson.cn>
----
- target/loongarch/tcg/op_helper.c | 45 ++++++++++++++++++--------------
- 1 file changed, 26 insertions(+), 19 deletions(-)
+are available in the Git repository at:
 
-diff --git a/target/loongarch/tcg/op_helper.c b/target/loongarch/tcg/op_helper.c
-index 16ac0d43bc..e63ac66daa 100644
---- a/target/loongarch/tcg/op_helper.c
-+++ b/target/loongarch/tcg/op_helper.c
-@@ -46,16 +46,20 @@ target_ulong helper_bitswap(target_ulong v)
- /* loongarch assert op */
- void helper_asrtle_d(CPULoongArchState *env, target_ulong rj, target_ulong rk)
- {
-+    CPUSysState *sys = env_sys(env);
-+
-     if (rj > rk) {
--        env->CSR_BADV = rj;
-+        sys->CSR_BADV = rj;
-         do_raise_exception(env, EXCCODE_BCE, GETPC());
-     }
- }
- 
- void helper_asrtgt_d(CPULoongArchState *env, target_ulong rj, target_ulong rk)
- {
-+    CPUSysState *sys = env_sys(env);
-+
-     if (rj <= rk) {
--        env->CSR_BADV = rj;
-+        sys->CSR_BADV = rj;
-         do_raise_exception(env, EXCCODE_BCE, GETPC());
-     }
- }
-@@ -91,9 +95,10 @@ uint64_t helper_rdtime_d(CPULoongArchState *env)
- #else
-     uint64_t plv;
-     LoongArchCPU *cpu = env_archcpu(env);
-+    CPUSysState *sys = env_sys(env);
- 
--    plv = FIELD_EX64(env->CSR_CRMD, CSR_CRMD, PLV);
--    if (extract64(env->CSR_MISC, R_CSR_MISC_DRDTL_SHIFT + plv, 1)) {
-+    plv = FIELD_EX64(sys->CSR_CRMD, CSR_CRMD, PLV);
-+    if (extract64(sys->CSR_MISC, R_CSR_MISC_DRDTL_SHIFT + plv, 1)) {
-         do_raise_exception(env, EXCCODE_IPE, GETPC());
-     }
- 
-@@ -105,26 +110,28 @@ uint64_t helper_rdtime_d(CPULoongArchState *env)
- void helper_ertn(CPULoongArchState *env)
- {
-     uint64_t csr_pplv, csr_pie;
--    if (FIELD_EX64(env->CSR_TLBRERA, CSR_TLBRERA, ISTLBR)) {
--        csr_pplv = FIELD_EX64(env->CSR_TLBRPRMD, CSR_TLBRPRMD, PPLV);
--        csr_pie = FIELD_EX64(env->CSR_TLBRPRMD, CSR_TLBRPRMD, PIE);
--
--        env->CSR_TLBRERA = FIELD_DP64(env->CSR_TLBRERA, CSR_TLBRERA, ISTLBR, 0);
--        env->CSR_CRMD = FIELD_DP64(env->CSR_CRMD, CSR_CRMD, DA, 0);
--        env->CSR_CRMD = FIELD_DP64(env->CSR_CRMD, CSR_CRMD, PG, 1);
--        set_pc(env, env->CSR_TLBRERA);
-+    CPUSysState *sys = env_sys(env);
-+
-+    if (FIELD_EX64(sys->CSR_TLBRERA, CSR_TLBRERA, ISTLBR)) {
-+        csr_pplv = FIELD_EX64(sys->CSR_TLBRPRMD, CSR_TLBRPRMD, PPLV);
-+        csr_pie = FIELD_EX64(sys->CSR_TLBRPRMD, CSR_TLBRPRMD, PIE);
-+
-+        sys->CSR_TLBRERA = FIELD_DP64(sys->CSR_TLBRERA, CSR_TLBRERA, ISTLBR, 0);
-+        sys->CSR_CRMD = FIELD_DP64(sys->CSR_CRMD, CSR_CRMD, DA, 0);
-+        sys->CSR_CRMD = FIELD_DP64(sys->CSR_CRMD, CSR_CRMD, PG, 1);
-+        set_pc(env, sys->CSR_TLBRERA);
-         qemu_log_mask(CPU_LOG_INT, "%s: TLBRERA " TARGET_FMT_lx "\n",
--                      __func__, env->CSR_TLBRERA);
-+                      __func__, sys->CSR_TLBRERA);
-     } else {
--        csr_pplv = FIELD_EX64(env->CSR_PRMD, CSR_PRMD, PPLV);
--        csr_pie = FIELD_EX64(env->CSR_PRMD, CSR_PRMD, PIE);
-+        csr_pplv = FIELD_EX64(sys->CSR_PRMD, CSR_PRMD, PPLV);
-+        csr_pie = FIELD_EX64(sys->CSR_PRMD, CSR_PRMD, PIE);
- 
--        set_pc(env, env->CSR_ERA);
-+        set_pc(env, sys->CSR_ERA);
-         qemu_log_mask(CPU_LOG_INT, "%s: ERA " TARGET_FMT_lx "\n",
--                      __func__, env->CSR_ERA);
-+                      __func__, sys->CSR_ERA);
-     }
--    env->CSR_CRMD = FIELD_DP64(env->CSR_CRMD, CSR_CRMD, PLV, csr_pplv);
--    env->CSR_CRMD = FIELD_DP64(env->CSR_CRMD, CSR_CRMD, IE, csr_pie);
-+    sys->CSR_CRMD = FIELD_DP64(sys->CSR_CRMD, CSR_CRMD, PLV, csr_pplv);
-+    sys->CSR_CRMD = FIELD_DP64(sys->CSR_CRMD, CSR_CRMD, IE, csr_pie);
- 
-     env->lladdr = 1;
- }
--- 
-2.54.0
+  https://github.com/gaosong715/qemu.git tags/pull-loongarch-20260609
+
+for you to fetch changes up to b653a954d427561fc563238af6b2feb8da209e41:
+
+  target/loongarch: Add new structure CPUSysState (2026-06-09 08:37:18 -0400)
+
+----------------------------------------------------------------
+pull-loongarch-20260609
+
+----------------------------------------------------------------
+Bibo Mao (14):
+      target/loongarch: Add new field curState in CPULoongArchState
+      target/loongarch: Use sys_state in cpu.c when accessing CSR registers
+      target/loongarch: Use sys_state in cpu_helper.c when accessing CSR registers
+      target/loongarch: Use sys_state in file arch_dump.c when accessing CSR registers
+      target/loongarch: Use sys_state in kvm.c when accessing CSR registers
+      target/loongarch: Use sys_state in tlb_helper.c when accessing CSR registers
+      target/loongarch: Use sys_state in tcg_cpu.c when accessing CSR registers
+      target/loongarch: Use sys_state in csr_helper.c when accessing CSR registers
+      target/loongarch: Use sys_state in op_helper.c when accessing CSR registers
+      linux-user/loongarch64: Use sys_state when accessing CSR registers
+      target/loongarch: Add default CSRFL_BASIC info with flags field
+      target/loongarch: Add wrapper function get_csr_offset()
+      target/loongarch: Add macro CSR_OFFSET and CPU_CSR_OFFSET
+      target/loongarch: Add new structure CPUSysState
+
+ hw/intc/loongarch_dintc.c                          |   4 +-
+ linux-user/loongarch64/cpu_loop.c                  |   5 +-
+ linux-user/loongarch64/elfload.c                   |   4 +-
+ linux-user/loongarch64/signal.c                    |  16 +-
+ target/loongarch/arch_dump.c                       |   5 +-
+ target/loongarch/cpu-mmu.h                         |   4 +-
+ target/loongarch/cpu.c                             | 120 ++++++-----
+ target/loongarch/cpu.h                             |  49 +++--
+ target/loongarch/cpu_helper.c                      |  41 ++--
+ target/loongarch/csr.c                             |  10 +-
+ target/loongarch/csr.h                             |  10 +
+ target/loongarch/gdbstub.c                         |   3 +-
+ target/loongarch/kvm/kvm.c                         | 228 +++++++++++----------
+ target/loongarch/machine.c                         | 118 +++++------
+ target/loongarch/tcg/constant_timer.c              |  10 +-
+ target/loongarch/tcg/csr_helper.c                  |  55 ++---
+ target/loongarch/tcg/insn_trans/trans_extra.c.inc  |   6 +-
+ .../tcg/insn_trans/trans_privileged.c.inc          |  16 +-
+ target/loongarch/tcg/op_helper.c                   |  45 ++--
+ target/loongarch/tcg/tcg_cpu.c                     | 107 +++++-----
+ target/loongarch/tcg/tlb_helper.c                  | 137 +++++++------
+ 21 files changed, 549 insertions(+), 444 deletions(-)
 
 
