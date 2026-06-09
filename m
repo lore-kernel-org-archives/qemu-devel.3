@@ -4,131 +4,116 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2BA50CD8CAD
-	for <qemu-devel@archiver.kernel.org>; Tue,  9 Jun 2026 08:02:55 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id DE39BCD8CBE
+	for <qemu-devel@archiver.kernel.org>; Tue,  9 Jun 2026 08:03:15 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wWrQA-0007Lq-56; Tue, 09 Jun 2026 04:02:50 -0400
+	id 1wWrQN-0007UO-Jw; Tue, 09 Jun 2026 04:03:03 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <avihaih@nvidia.com>)
- id 1wWrQ8-0007L5-80
- for qemu-devel@nongnu.org; Tue, 09 Jun 2026 04:02:48 -0400
-Received: from mail-westus3azlp170100009.outbound.protection.outlook.com
- ([2a01:111:f403:c107::9] helo=PH7PR06CU001.outbound.protection.outlook.com)
+ (Exim 4.90_1) (envelope-from <maxbr@linux.ibm.com>)
+ id 1wWrQJ-0007Tt-VG
+ for qemu-devel@nongnu.org; Tue, 09 Jun 2026 04:03:00 -0400
+Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <avihaih@nvidia.com>)
- id 1wWrQ6-000683-OH
- for qemu-devel@nongnu.org; Tue, 09 Jun 2026 04:02:48 -0400
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=MRBP2uI3G+esDbN3YDkuJMw+AaN8jGGmPZ8JWIXqlAp948XuXkHTiHI1oeAea8coSFLzjh/4DOh2SVloZT/HQxQ4hwptOn6FBRrUhSfFGfLCcOE6o7eqmJaYVN0gIqgA21EARgwoEDRgakjwrAMbauO5ZL6wdpBFTHmoz1rIYZsLt5g03wKQWwzZlilNr1AB13285nMMJ2BHtovjB370ONmRDu9xHpEanLLWTb3tZDRU3Tp+8/TCNbOvb5BoXcPIDB0eUbgUL96v3OkC/5WCZf1wHZZfnfROhp3mBIDLiNRMWRsLiXmRMVd2enmUkHuqWaoDtuwlB26WSbYjwOsEQg==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=uwipct43yTA/LXG4qb+DS18tbfvDcpVvyVNySaLkcnc=;
- b=J4V2MetUkzIBYDSXHzI52aOUI9BMA5W+Kcj8r4+iN2EtU92cSU9caykorIX00kPuDsYFBXIhmiT+ul2xXM5rJmFRYdC7PJqSS8khWkopttgRb8u4c5Nt067YuH1DaalKQuh5m9AfBsjkw3WWUomuMTMrrTgtmx3bhdxZgfqLGufqgP68adDgHB9FOtupBxXA7fmYJOt2Z5kzwdxa4WoDuANW4rXIeltSuVEBG1KSv+ZCSaypR1SAO5NHnhPPSWRBPWIQU17xoiIjgU+F0siCslD5ZBNdHLcogefGGCQABBUNV6Ft0YMR7n5/jV4uFB5FWTdbOQ1/6a3PunAJfqOAXg==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass (sender ip is
- 216.228.117.160) smtp.rcpttodomain=nongnu.org smtp.mailfrom=nvidia.com;
- dmarc=pass (p=reject sp=reject pct=100) action=none header.from=nvidia.com;
- dkim=none (message not signed); arc=none (0)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=Nvidia.com;
- s=selector2;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=uwipct43yTA/LXG4qb+DS18tbfvDcpVvyVNySaLkcnc=;
- b=STBvSIPqmrmVpy6la9O7nOqdHMnK1yK63/nfRgiZvskHG7R6xwkuM8BXiQkGsQKopxmFqF7HZdS9ExFKcleHFxKxiJIVIYAQHi6tc8/9msEeDVuenN81v29KXpukBXj4RPs35zyNSKf6MHwq2TpH/w5y5U5vwcclaJq/EkKGvLQWmi16gbrtqlX84cz+gKX0BTo0iogaEuxltA9/zYT+2PgSfQvA4lQTutJ96JmiJaAvuurHZArkh/WpKUECVx40vrOYsnioVPZnBMdBk9Rz3E3+jRCAV/tpcaW40Ndgeam9YyX6vZeLg0GYmzkcWmdvRYsdor/SX0nlXdkLDMa9HQ==
-Received: from MW4P221CA0025.NAMP221.PROD.OUTLOOK.COM (2603:10b6:303:8b::30)
- by DM4PR12MB8571.namprd12.prod.outlook.com (2603:10b6:8:187::13) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.92.13; Tue, 9 Jun 2026
- 08:00:57 +0000
-Received: from CO1PEPF00012E65.namprd05.prod.outlook.com
- (2603:10b6:303:8b:cafe::15) by MW4P221CA0025.outlook.office365.com
- (2603:10b6:303:8b::30) with Microsoft SMTP Server (version=TLS1_3,
- cipher=TLS_AES_256_GCM_SHA384) id 15.21.113.10 via Frontend Transport; Tue, 9
- Jun 2026 08:00:55 +0000
-X-MS-Exchange-Authentication-Results: spf=pass (sender IP is 216.228.117.160)
- smtp.mailfrom=nvidia.com;
- dkim=none (message not signed)
- header.d=none;dmarc=pass action=none header.from=nvidia.com;
-Received-SPF: Pass (protection.outlook.com: domain of nvidia.com designates
- 216.228.117.160 as permitted sender) receiver=protection.outlook.com;
- client-ip=216.228.117.160; helo=mail.nvidia.com; pr=C
-Received: from mail.nvidia.com (216.228.117.160) by
- CO1PEPF00012E65.mail.protection.outlook.com (10.167.249.74) with Microsoft
- SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.21.113.7 via Frontend Transport; Tue, 9 Jun 2026 08:00:55 +0000
-Received: from rnnvmail201.nvidia.com (10.129.68.8) by mail.nvidia.com
- (10.129.200.66) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.2562.20; Tue, 9 Jun
- 2026 01:00:34 -0700
-Received: from rnnvmail205.nvidia.com (10.129.68.10) by rnnvmail201.nvidia.com
- (10.129.68.8) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.2562.20; Tue, 9 Jun
- 2026 01:00:33 -0700
-Received: from vdi.nvidia.com (10.127.8.9) by mail.nvidia.com (10.129.68.10)
- with Microsoft SMTP Server id 15.2.2562.20 via Frontend Transport; Tue, 9 Jun
- 2026 01:00:27 -0700
-From: Avihai Horon <avihaih@nvidia.com>
-To: <qemu-devel@nongnu.org>
-CC: Alex Williamson <alex@shazbot.org>, =?UTF-8?q?C=C3=A9dric=20Le=20Goater?=
- <clg@redhat.com>, Peter Xu <peterx@redhat.com>, Fabiano Rosas
- <farosas@suse.de>, Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@mailo.com>, Zhao Liu
- <zhao1.liu@intel.com>, Halil Pasic <pasic@linux.ibm.com>, "Christian
- Borntraeger" <borntraeger@linux.ibm.com>, Jason Herne
- <jjherne@linux.ibm.com>, Richard Henderson <richard.henderson@linaro.org>,
- Ilya Leoshkevich <iii@linux.ibm.com>, David Hildenbrand <david@kernel.org>,
- Eric Farman <farman@linux.ibm.com>, Matthew Rosato <mjrosato@linux.ibm.com>,
- "Cornelia Huck" <cohuck@redhat.com>, Eric Blake <eblake@redhat.com>,
- "Vladimir Sementsov-Ogievskiy" <vsementsov@yandex-team.ru>, John Snow
- <jsnow@redhat.com>, Markus Armbruster <armbru@redhat.com>, Maor Gottlieb
- <maorg@nvidia.com>, Avihai Horon <avihaih@nvidia.com>
-Subject: [PATCH v3 09/14] vfio/migration: Extract
- VFIO_MIG_FLAG_DEV_INIT_DATA_SENT sending to helper
-Date: Tue, 9 Jun 2026 10:58:07 +0300
-Message-ID: <20260609075812.32067-10-avihaih@nvidia.com>
-X-Mailer: git-send-email 2.21.3
-In-Reply-To: <20260609075812.32067-1-avihaih@nvidia.com>
-References: <20260609075812.32067-1-avihaih@nvidia.com>
+ (Exim 4.90_1) (envelope-from <maxbr@linux.ibm.com>)
+ id 1wWrQH-00068U-Py
+ for qemu-devel@nongnu.org; Tue, 09 Jun 2026 04:02:58 -0400
+Received: from pps.filterd (m0353725.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
+ 658HF08f1423793; Tue, 9 Jun 2026 08:02:44 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
+ :content-transfer-encoding:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to; s=pp1; bh=PAYdUD
+ iO5bNLV5DWPP2LtvKadJD1VcM81xHQh8lf/tw=; b=NP00Yrh0GtTAuadk8Pk1sU
+ GQpY60RExeNkBy8Y6A03s4KFIsxLZroUEqUo+AIU9e5M+7A3sOW/Psromy2YcXt9
+ 1zfZBkwoNSZY7o3zaraqTBfXEofmKqfaVpfzLyLlJ9NUgiW+kWq259PSLRcCqAUJ
+ OUkZNLgK4lL5mQYuUQRAk5fzQqUSLGGMpAk5QXNFau3xXtpLE+Fzy3ys4UaYqxER
+ OkJL1u6eP0fAY5SEOVUYKGAFmaMjC2ah+XRJPVB41hRFdz9ZaDqBHwqLXczp78QR
+ cb6y8VxkjIoNSR2k0DgzOtznQydZtKAUQaEK0Go0Gn+TjuvU/P4mgMgkDavUIdkQ
+ ==
+Received: from ppma23.wdc07v.mail.ibm.com
+ (5d.69.3da9.ip4.static.sl-reverse.com [169.61.105.93])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4em9ye2yt4-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Tue, 09 Jun 2026 08:02:43 +0000 (GMT)
+Received: from pps.filterd (ppma23.wdc07v.mail.ibm.com [127.0.0.1])
+ by ppma23.wdc07v.mail.ibm.com (8.18.1.7/8.18.1.7) with ESMTP id 6597ndc2006193;
+ Tue, 9 Jun 2026 08:02:42 GMT
+Received: from smtprelay06.fra02v.mail.ibm.com ([9.218.2.230])
+ by ppma23.wdc07v.mail.ibm.com (PPS) with ESMTPS id 4emych0y22-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Tue, 09 Jun 2026 08:02:42 +0000 (GMT)
+Received: from smtpav02.fra02v.mail.ibm.com (smtpav02.fra02v.mail.ibm.com
+ [10.20.54.101])
+ by smtprelay06.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 65982ejR23658978
+ (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Tue, 9 Jun 2026 08:02:40 GMT
+Received: from smtpav02.fra02v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id A47812004B;
+ Tue,  9 Jun 2026 08:02:40 +0000 (GMT)
+Received: from smtpav02.fra02v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 71BBF20040;
+ Tue,  9 Jun 2026 08:02:40 +0000 (GMT)
+Received: from li-9b52914c-2c8b-11b2-a85c-a36f6d484b4a.ibm.com (unknown
+ [9.224.77.197]) by smtpav02.fra02v.mail.ibm.com (Postfix) with ESMTP;
+ Tue,  9 Jun 2026 08:02:40 +0000 (GMT)
+Message-ID: <cc0b8cce5bf5763ace058270e9d80fb84873dbd7.camel@linux.ibm.com>
+Subject: Re: [PATCH v6 00/12] virtio-console: notify about the terminal size
+From: Maximilian Immanuel Brandtner <maxbr@linux.ibm.com>
+To: Filip Hejsek <filip.hejsek@gmail.com>, qemu-devel@nongnu.org
+Cc: =?ISO-8859-1?Q?Marc-Andr=E9?= Lureau <marcandre.lureau@redhat.com>,
+ Paolo Bonzini <pbonzini@redhat.com>, "Michael S. Tsirkin" <mst@redhat.com>,
+ Laurent Vivier <lvivier@redhat.com>, Amit Shah <amit@kernel.org>, Markus
+ Armbruster <armbru@redhat.com>, Eric Blake <eblake@redhat.com>, Eduardo
+ Habkost <eduardo@habkost.net>, Marcel Apfelbaum
+ <marcel.apfelbaum@gmail.com>, Philippe =?ISO-8859-1?Q?Mathieu-Daud=E9?=	
+ <philmd@linaro.org>, Yanan Wang <wangyanan55@huawei.com>, Zhao Liu	
+ <zhao1.liu@intel.com>, "Daniel P." =?ISO-8859-1?Q?Berrang=E9?=	
+ <berrange@redhat.com>, Szymon Lukasz <noh4hss@gmail.com>
+Date: Tue, 09 Jun 2026 10:02:40 +0200
+In-Reply-To: <20260119-console-resize-v6-0-33a7b0330a7a@gmail.com>
+References: <20260119-console-resize-v6-0-33a7b0330a7a@gmail.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+User-Agent: Evolution 3.58.3 (3.58.3-1.fc43) 
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Content-Type: text/plain
-X-NV-OnPremToCloud: ExternallySecured
-X-EOPAttributedMessage: 0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: CO1PEPF00012E65:EE_|DM4PR12MB8571:EE_
-X-MS-Office365-Filtering-Correlation-Id: 83c93739-45c2-4c29-8e9c-08dec5fd3c01
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam: BCL:0;
- ARA:13230040|1800799024|82310400026|7416014|376014|36860700016|18002099003|22082099003|11063799006|56012099006;
-X-Microsoft-Antispam-Message-Info: NSuTkZB1UW4ne0Lj8vZV4APUPhfRA8lN3JTU6grt0MZf2H8sfFB+kkQRWimA+zPXOZWduacsF6mzmVyolhXWzKmL6oLVLvKyJFZTFQcdQ4emXosZYqHhkLoSWOndnNMuQKCceDzAxwzAwISwICDnj47fUslqBmGQN5qmJApVaApMywEb5K/asjYblmZWnuCKgkqiDPHFk5wrMtpu1OYCkD7zxrwtwDQpZAwC0MHjYWU9kgFOFfr25DF47Z7/FDrNHfv1DEiJClKuYghBgo7L9IqoNhzL9T+frejfnHDXosbOdqNksujpyKFzx+zzrOnhQk36B2rRPU0JapdCqLnFHimPJhPjPjYAuM9zpE4+Sj37k22CHUGyos9+48Y0zSM4xuPzEcCHgD26YnYDLsobT41kNfHetBnhDgLYak1iqYdZKE4Wz5jRdYkwmwfjN2oM5wsN8mEiAFhevSmiC405uxE7qdIM1Mq6df5tsas7zAta2OM58AFZNYsTPsoTOJOUUgVVStrECS0UHVL2jYykI6woSKuiavEzU3bHz6g/MS771AAHGManAXLTZi3U2e0PqlFpiERzCtVhTIneH2i/qcxiMkMuXy6x/dCfzzbIfDPXd6H6np2L2rtl//4aFR3l4wlsFPBvtgAGoWP6npsrHtN7bGXaguTOAkY5ZK5/4ylP+7njyg6qrps7LCAVR5Fg7wg9BxzyFX2OBJtrXh8FRrnDu/6qJLWiS6YyW6L3QHk=
-X-Forefront-Antispam-Report: CIP:216.228.117.160; CTRY:US; LANG:en; SCL:1; SRV:;
- IPV:NLI; SFV:NSPM; H:mail.nvidia.com; PTR:dc6edge1.nvidia.com; CAT:NONE;
- SFS:(13230040)(1800799024)(82310400026)(7416014)(376014)(36860700016)(18002099003)(22082099003)(11063799006)(56012099006);
- DIR:OUT; SFP:1101; 
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0: 4nCln7/KhJLCJ3KhKD8Apsy3SKrcm4Yp5HsALDMAj5HSifRNy492V2Iaf5LkYQ3lZuUkxVbVrFtugEJGrxdnSanDERhq5CKU4U5l9kzzstZ0s2KY3lNGLqVOpGZJnPdOmyZJtIEKsRur0CU5xMepzTlakuNK4EOwk+174HGUHArC7k1vs8yI5ZL6iE2K3MdkrzoK3e6ZHayY5ir76kOK5utfERcdWvLwbZ9IYOYkwoxo53qZRCu3ABYCYFmCV0sGlvLXrSkGV8UrprYk44lIurPpgORjhTAJWFgpktDpmyTWpi+VWFEMCjrBDNbe75HIXODyfsdlIa0WhK+O87gs4IVdyxXpNMBmFkXVNzl9Q9RqjQofo2kHBJ6ErgMcebYhbuHkPxm5gsRm6udu/KNhY0TbqalqfR6nOVDlJKlDLbR9CigUhkr/TwVq1/Pu1Bz/
-X-OriginatorOrg: Nvidia.com
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 09 Jun 2026 08:00:55.6392 (UTC)
-X-MS-Exchange-CrossTenant-Network-Message-Id: 83c93739-45c2-4c29-8e9c-08dec5fd3c01
-X-MS-Exchange-CrossTenant-Id: 43083d15-7273-40c1-b7db-39efd9ccc17a
-X-MS-Exchange-CrossTenant-OriginalAttributedTenantConnectingIp: TenantId=43083d15-7273-40c1-b7db-39efd9ccc17a; Ip=[216.228.117.160];
- Helo=[mail.nvidia.com]
-X-MS-Exchange-CrossTenant-AuthSource: CO1PEPF00012E65.namprd05.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Anonymous
-X-MS-Exchange-CrossTenant-FromEntityHeader: HybridOnPrem
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: DM4PR12MB8571
-Received-SPF: permerror client-ip=2a01:111:f403:c107::9;
- envelope-from=avihaih@nvidia.com;
- helo=PH7PR06CU001.outbound.protection.outlook.com
-X-Spam_score_int: -24
-X-Spam_score: -2.5
+X-TM-AS-GCONF: 00
+X-Proofpoint-Reinject: loops=2 maxloops=12
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNjA5MDA3MSBTYWx0ZWRfX90R0EgnsByuu
+ EdWGL188V44VzrG7/0EkyC9X3olacy0YoAjo/w2mvi4HLp95EzZKpFgQfzdndPCycnKcKzdQRdx
+ PoUHofmJAK2wQe+t5CpnPMUsslYYZJx6V9FK36Q34V7MkEaRRfZEncsLs35zitLOlSfeZd5VKl0
+ gyDqj0WvAGaq4ucNiP+eOig09c3zi2R6LK4R7UAnxuKpFGt9qtEelyKLML2Lnl7W+2RzJDcKNn7
+ EpsjHTyNI0G7JX9KVsVfOhOyZbKPFo1TPQU+wB7jv800IebmsGXzOv2M2jPxL3fJACEzqh/JvHn
+ boIiUh9Nv1smPe9PvJry6VXx0vmbQLxcLZms1dw3P/pFUU2BNOHeVsBF4JyjzF1OrkkNIFSk52V
+ cFKSG3HVTUJxG+1sZgmaFcYMro+eJMzOUU8Uet7+1vcIoXb1cGUtAyjbt8klegbPn7+hZqoh9ZH
+ j99L42xtC9DIUkfGhLw==
+X-Authority-Analysis: v=2.4 cv=QKhYgALL c=1 sm=1 tr=0 ts=6a27c8a3 cx=c_pps
+ a=3Bg1Hr4SwmMryq2xdFQyZA==:117 a=3Bg1Hr4SwmMryq2xdFQyZA==:17
+ a=IkcTkHD0fZMA:10 a=FelO9ux0wxsA:10 a=VkNPw1HP01LnGYTKEx00:22
+ a=RnoormkPH1_aCDwRdu11:22 a=V8glGbnc2Ofi9Qvn3v5h:22 a=ohnBKmd6VOgfx0W9Dn4A:9
+ a=QEXdDO2ut3YA:10
+X-Proofpoint-GUID: zM3w9YiNu8lA8GvCVf3LCL8YfdiHVuef
+X-Proofpoint-ORIG-GUID: ZEbDBRc4NqA-GLCM-OVeToWqy1kQffWU
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.125,FMLib:17.12.100.49
+ definitions=2026-06-09_01,2026-06-09_01,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ priorityscore=1501 lowpriorityscore=0 bulkscore=0 adultscore=0 phishscore=0
+ malwarescore=0 impostorscore=0 suspectscore=0 spamscore=0 clxscore=1011
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.22.0-2605210000 definitions=main-2606090071
+Received-SPF: pass client-ip=148.163.158.5; envelope-from=maxbr@linux.ibm.com;
+ helo=mx0b-001b2d01.pphosted.com
+X-Spam_score_int: -26
+X-Spam_score: -2.7
 X-Spam_bar: --
-X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.445,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- SPF_HELO_NONE=0.001, SPF_NONE=0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
+ RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -144,74 +129,15 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Extract the VFIO_MIG_FLAG_DEV_INIT_DATA_SENT flag sending logic from
-vfio_save_iterate() into vfio_send_init_data_flag() for clarity. Also
-add a trace while at it.
+What's the status of this series? It seems to me to have somewhat
+stalled, because of the virtio resize event discrepancy that has been
+adressed by backporting the relevant patch. At this point it's been
+almost 6 months since any changes have been made to this patch-set,
+even though at this point it would have to be refactored to address
+changes that have been made to QEMU since. Has progress on this patch-
+set just stalled or are there any remaining concerns about the
+implementation of this patch-set I'm unaware of?
 
-Reviewed-by: Peter Xu <peterx@redhat.com>
-Signed-off-by: Avihai Horon <avihaih@nvidia.com>
----
- hw/vfio/migration.c  | 26 +++++++++++++++++++++-----
- hw/vfio/trace-events |  1 +
- 2 files changed, 22 insertions(+), 5 deletions(-)
-
-diff --git a/hw/vfio/migration.c b/hw/vfio/migration.c
-index 6b7acb2fa1..45f8e346b4 100644
---- a/hw/vfio/migration.c
-+++ b/hw/vfio/migration.c
-@@ -480,6 +480,26 @@ static void vfio_update_estimated_pending_data(VFIOMigration *migration,
-                                          data_size);
- }
- 
-+/* Returns true if the init data flag was sent, false otherwise */
-+static bool vfio_send_init_data_flag(QEMUFile *f, VFIOMigration *migration)
-+{
-+    VFIODevice *vbasedev = migration->vbasedev;
-+
-+    if (!migrate_switchover_ack()) {
-+        return false;
-+    }
-+
-+    if (migration->precopy_init_size || migration->initial_data_sent) {
-+        return false;
-+    }
-+
-+    qemu_put_be64(f, VFIO_MIG_FLAG_DEV_INIT_DATA_SENT);
-+    migration->initial_data_sent = true;
-+    trace_vfio_send_init_data_flag(vbasedev->name);
-+
-+    return true;
-+}
-+
- static bool vfio_precopy_supported(VFIODevice *vbasedev)
- {
-     VFIOMigration *migration = vbasedev->migration;
-@@ -693,11 +713,7 @@ static int vfio_save_iterate(QEMUFile *f, void *opaque)
- 
-     vfio_update_estimated_pending_data(migration, data_size);
- 
--    if (migrate_switchover_ack() && !migration->precopy_init_size &&
--        !migration->initial_data_sent) {
--        qemu_put_be64(f, VFIO_MIG_FLAG_DEV_INIT_DATA_SENT);
--        migration->initial_data_sent = true;
--    } else {
-+    if (!vfio_send_init_data_flag(f, migration)) {
-         qemu_put_be64(f, VFIO_MIG_FLAG_END_OF_STATE);
-     }
- 
-diff --git a/hw/vfio/trace-events b/hw/vfio/trace-events
-index 8f57d0b7d8..411a306635 100644
---- a/hw/vfio/trace-events
-+++ b/hw/vfio/trace-events
-@@ -176,6 +176,7 @@ vfio_save_iterate(const char *name, uint64_t precopy_init_size, uint64_t precopy
- vfio_save_iterate_start(const char *name) " (%s)"
- vfio_save_setup(const char *name, uint64_t data_buffer_size) " (%s) data buffer size %"PRIu64
- vfio_state_pending(const char *name, uint64_t stopcopy_size, uint64_t precopy_init_size, uint64_t precopy_dirty_size, bool exact, bool final) " (%s) stopcopy size %"PRIu64", precopy initial size %"PRIu64", precopy dirty size %"PRIu64", exact %d, final %d"
-+vfio_send_init_data_flag(const char *name) " (%s)"
- vfio_vmstate_change(const char *name, int running, const char *reason, const char *dev_state) " (%s) running %d reason %s device state %s"
- vfio_vmstate_change_prepare(const char *name, int running, const char *reason, const char *dev_state) " (%s) running %d reason %s device state %s"
- 
--- 
-2.40.1
-
+Kind regards,
+Max Brandtner
 
