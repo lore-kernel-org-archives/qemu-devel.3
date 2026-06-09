@@ -4,83 +4,83 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 72591CD8CB9
-	for <qemu-devel@archiver.kernel.org>; Tue,  9 Jun 2026 17:27:34 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 514D3CD8CB9
+	for <qemu-devel@archiver.kernel.org>; Tue,  9 Jun 2026 17:27:48 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wX0Cx-0007b7-Kj; Tue, 09 Jun 2026 13:25:47 -0400
+	id 1wX0D3-0007ei-Qz; Tue, 09 Jun 2026 13:25:53 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1wX0Ch-0007Nr-Fq
- for qemu-devel@nongnu.org; Tue, 09 Jun 2026 13:25:33 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1wX0Cn-0007WL-C9
+ for qemu-devel@nongnu.org; Tue, 09 Jun 2026 13:25:37 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1wX0Cd-0001qH-CS
- for qemu-devel@nongnu.org; Tue, 09 Jun 2026 13:25:28 -0400
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1wX0Ch-0001rr-6t
+ for qemu-devel@nongnu.org; Tue, 09 Jun 2026 13:25:35 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1781025924;
+ s=mimecast20190719; t=1781025929;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=RTdK9UhiIM0qRwABF6UWGsM5x1elL2UrbbjIZlAcG7s=;
- b=DUsTE6YaEfAbqQmf4AwHlxPwL5AKx9QNIGqNmqiERrq2Pl1eg3PGzdDe55slE7B4cB476c
- ngQMwoomvfEk8RJ3vqiIvPIqcC2VvOQxemHUzOykTHrcaMM4yaGixiF72uZ1cp/YUEUYwb
- PIOy3SgYrAM591Ybb/X2KH0su5XaImU=
-Received: from mail-qt1-f197.google.com (mail-qt1-f197.google.com
- [209.85.160.197]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=+RIIsjklWbcutayG6SOK/nSI0TGaNMIJ0fYUtITssro=;
+ b=RjcvIJ0W5gENpcMLmHupCaUTcbiPaWKn4Q5JF8gx7EMGnouNz6bSXMqYpaQWDe+CpAO+b4
+ 6xsOo6T+//8hvkBrxBX5AbrG8O4HMMZA4MqOjfrttZ6JFhw82RzekUjDlqTyeyK+xIrqY3
+ FhknczvEd/KqJKQlweSA1SHhxlfMuZE=
+Received: from mail-qt1-f200.google.com (mail-qt1-f200.google.com
+ [209.85.160.200]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-677-N3zhHAT1PDKwOu4b-PNZng-1; Tue, 09 Jun 2026 13:25:22 -0400
-X-MC-Unique: N3zhHAT1PDKwOu4b-PNZng-1
-X-Mimecast-MFC-AGG-ID: N3zhHAT1PDKwOu4b-PNZng_1781025922
-Received: by mail-qt1-f197.google.com with SMTP id
- d75a77b69052e-5179e5ba14cso63547581cf.2
- for <qemu-devel@nongnu.org>; Tue, 09 Jun 2026 10:25:22 -0700 (PDT)
+ us-mta-408-6QdCOea9MDWMIPA4fy0Dqw-1; Tue, 09 Jun 2026 13:25:28 -0400
+X-MC-Unique: 6QdCOea9MDWMIPA4fy0Dqw-1
+X-Mimecast-MFC-AGG-ID: 6QdCOea9MDWMIPA4fy0Dqw_1781025928
+Received: by mail-qt1-f200.google.com with SMTP id
+ d75a77b69052e-517615db531so155818581cf.1
+ for <qemu-devel@nongnu.org>; Tue, 09 Jun 2026 10:25:28 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1781025922; x=1781630722; darn=nongnu.org;
+ d=redhat.com; s=google; t=1781025928; x=1781630728; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=RTdK9UhiIM0qRwABF6UWGsM5x1elL2UrbbjIZlAcG7s=;
- b=TktzWdHStHpw3i/M2RE3EtWX7Hd1r5VHiWRmq9fBniVILeIADPFthfxTvtBSyjzUkv
- 8GJiR8Ox/CIN0aUgRC8UJEywoskB0mpsCxVd8XgaJJIDxbXKpapyhyHe+He6qL94AsIL
- 7GE8LxFsGy2MgJbSaFSzxc7kx/Wn0UdBl3KUMEg5BIuE24XfzPQBAyiXYKQc+4VL2uwp
- pmSNLAl84wSrFbV3r03WtoPLbPOYMkZICW00ENuPLeNSwKJvimLZRGgTwFQ5gpDwksmQ
- S5fiXcDpMaY7mvLoEeUkMjwcZWhNAlD4Z3SrtWXW0KbAE1qrWaMK32moSqg60PrBLWaa
- MVDQ==
+ bh=+RIIsjklWbcutayG6SOK/nSI0TGaNMIJ0fYUtITssro=;
+ b=ZR7tPvI+8WqwWzUkRSlaYUJf9Wig8GKff9UK5D1vdHIhVTTtYoYebtWrbtiRHUXKC1
+ zqQ3gNGb6TPVP/bSu8QWJxBd0kPvoe34eLqY353cf7GVdwI9OO2NAp9X1gCG6P+KhuXM
+ wfKfKah3kHhcBGiw+UrJ/OeJ0sgyBz6CJJYz7TDvfaU2IAG78jeKGQRTg3luea33VdQg
+ d5hjNYliiQKszj0l+xiam+dbBXX1hiQrC3YbNtrwPo3yp0uuJFhIMESA6l0Tgpg+Bo17
+ Uo0v5LFE96UZ8vNrWT8FXgvpggcWiFXC56sO+elh987XYGSWz+xVkib5DhiLLRjMLF9r
+ pLvA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1781025922; x=1781630722;
+ d=1e100.net; s=20251104; t=1781025928; x=1781630728;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to;
- bh=RTdK9UhiIM0qRwABF6UWGsM5x1elL2UrbbjIZlAcG7s=;
- b=XKI4Zks2X0GfT2tNrdcLC/bbqSHX3EX/SLpHkX67rMGtAIiqvf+UxDSpO66rqi8Deb
- uctKhM0qIFizF8F+WqHrfiqgr/onWUl72KsY73m5TF+0eP5rhRe58xtBGGBaYyz5Hwpq
- 0CoY6RAohx67B1n+gbWxwwaJ57LI2/bo1IUBTt4EojlfA333OPXtW8i+2yss7Lx6LS+U
- OPgl7e1Vf0Skf63dXbKGIPuTxn2J8JiykStjuCh77qNs5Y3g75mlOcG6cq+0DArmzPW3
- +o0t8DHM26GavVAehPj3WflsjGgz/t7OGJ0315b0I5S0+nsGv1aof2nASJdxP/IoIz2R
- t8bg==
-X-Gm-Message-State: AOJu0YwDF4NgFZh+v65FGkEYGTxXk1ml2o7jEU/X866T7m1wbItJ1ba0
- cXj3IzQMQgkdYAMo4G/sRIYM73uTGMG+GXevnEF8IRuMo3EKxlSA8S6Quq8uFXx5QNmCQGdeK0d
- GbrcyoaBMxpvUW0X1EtnK9CvjELQ6CvWv2NgnSq/HVqJipAwdqaDhLUGkQX4nLfkPH63W6+/An5
- WoYR1mDi/spM3o86mpCXi3vGCY+0jIl8xda6l+5w==
-X-Gm-Gg: Acq92OHKBzAOiAOEHP5VLkOCR5OoOamSXLZqpCtgP1jFtS6TLPtpkTrf079L/O3ZkmP
- pDLSoQNgGWyI7HNToW7Ppa8jEaongH6IQrZVLuf6tS0lfYovLmNFhDAofxghhW3qjYNDKtU/DUv
- q4Iz3sXiW+nbxYYBJC4iPAqolujuCeoshTej9AA4DyTTLJxmjmyekuLX6bliRBLt7aqFEwBk9Ki
- g5IPY1GVYMuegv27mpBybxjbQ5RrRaFERUTpByENejU82up5XaKDgvKbsefPEt+aw5jmbLHg9lq
- Q/52c8cydcuf+0UXHeZOqGCT24fPxesDsCgo/pWKLavwBx+3ECbRZXAguD32+/gum0UJGsBTbaa
- oL6wODhR9hDKYEuvIN1xKKrQ=
-X-Received: by 2002:a05:622a:1b09:b0:50e:631c:c390 with SMTP id
- d75a77b69052e-51795c5be37mr317023091cf.44.1781025922107; 
- Tue, 09 Jun 2026 10:25:22 -0700 (PDT)
-X-Received: by 2002:a05:622a:1b09:b0:50e:631c:c390 with SMTP id
- d75a77b69052e-51795c5be37mr317022371cf.44.1781025921523; 
- Tue, 09 Jun 2026 10:25:21 -0700 (PDT)
+ bh=+RIIsjklWbcutayG6SOK/nSI0TGaNMIJ0fYUtITssro=;
+ b=qhVZifiBeV/lxlYQXW4Ex490jHIWDV5LW9dY4IbN0NDzAa1WeukDimSV/IvBdiGujv
+ CrePZ1BOdyhfLBSQUnU4M1d+jqUfvzki0IougLDvsLrY0LTujIbxQ0WGeMj8DLYVU7ZG
+ Kc183a0Vc2SfvOU6BjOVHWhfj99L8/hS2/xI71lqOM/9d8IfycLHotbQtZiIisK4lTiZ
+ DEB2YR3KqjVuIYGIA+1ptdrjm/7LFwuIuDgBL1zRHJe91LwqUkpetARiP+IrG5esxJDA
+ b/Um/7yYXRJQNn3m/NrTFlFOdNNVm73ZB9ggZRIN6ov1E6njbjisnF8uMLE3vvl3wolS
+ StsQ==
+X-Gm-Message-State: AOJu0YyCIbBvI2YKrfyaU4P/msOToRIkzuHXv5ubWvadZr3lG6aGRQUg
+ vAYRFS/Oq3T0Umqf95atTu8At2Ow5CuEWzrMwUdOy+atz7FkVDQgk2INuFlV9xY9rP5gHoOFreK
+ 3ZN5ez7n/1GIsmuphKEpnwnAxnkJBngHHxrZpFsVytUnC3FgvMcKcKgPy3WEVPMCYtEjFCAs8bu
+ 5WlldqPAzHmbuy0V60ApLxlX42+cTmxq/ueGP+VQ==
+X-Gm-Gg: Acq92OGZSCuXEEck7WSDSZmtTDl44EM9ehIaLGdzbHAWy9uLDmkRxh1D7Wv4QGEBhr5
+ aqSbHcg79eebuKLlu4TZEr2xLBISt8B8smdOYYt1z5HKPJv4EBBKWUeiS2BSyzcbp+7KimUAQ78
+ 2YP6Dl3diXLcdw+M7vsrzx3rILhiUC3u+IhoDx8WewmCSIY2CkwNjkQdhQuBsmSKHhLXSW/N8nN
+ eg+pdsnQ5Sroww88RvJa+JpXLf/x8fBsMd7ApoluTym/RIHnm/lE4pNAFxDdI7LhgWMQr2DHLIX
+ OrWFbYYIDXe8eIpZA/jO8k4ZhQ4OeWQQKh0yPFHSfm+T4iOtme3oIz4zVOGptn79S2tqt19s5pP
+ cb6GO4hr6upcioN6uwde+TvA=
+X-Received: by 2002:a05:622a:1808:b0:517:96f0:5658 with SMTP id
+ d75a77b69052e-51796f06eadmr297342271cf.14.1781025927452; 
+ Tue, 09 Jun 2026 10:25:27 -0700 (PDT)
+X-Received: by 2002:a05:622a:1808:b0:517:96f0:5658 with SMTP id
+ d75a77b69052e-51796f06eadmr297341161cf.14.1781025926446; 
+ Tue, 09 Jun 2026 10:25:26 -0700 (PDT)
 Received: from x1.com ([142.189.10.167]) by smtp.gmail.com with ESMTPSA id
- d75a77b69052e-51775da2c56sm187524711cf.21.2026.06.09.10.25.19
+ d75a77b69052e-51775da2c56sm187524711cf.21.2026.06.09.10.25.25
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 09 Jun 2026 10:25:21 -0700 (PDT)
+ Tue, 09 Jun 2026 10:25:25 -0700 (PDT)
 From: Peter Xu <peterx@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: qemu-arm@nongnu.org,
@@ -99,23 +99,23 @@ Cc: qemu-arm@nongnu.org,
  Juraj Marcin <jmarcin@redhat.com>, qemu-rust@nongnu.org,
  Markus Armbruster <armbru@redhat.com>,
  Mark Cave-Ayland <mark.caveayland@nutanix.com>
-Subject: [PATCH v2 02/10] qdev: Export global_props()
-Date: Tue,  9 Jun 2026 13:25:06 -0400
-Message-ID: <20260609172514.2037645-3-peterx@redhat.com>
+Subject: [PATCH v2 05/10] qom: Create object-property-ptr.[ch]
+Date: Tue,  9 Jun 2026 13:25:09 -0400
+Message-ID: <20260609172514.2037645-6-peterx@redhat.com>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260609172514.2037645-1-peterx@redhat.com>
 References: <20260609172514.2037645-1-peterx@redhat.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=peterx@redhat.com;
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=peterx@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -24
 X-Spam_score: -2.5
 X-Spam_bar: --
 X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.445,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -131,52 +131,770 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Make it accessible from outside (to apply -global properties).
+Create object-property-ptr.[ch] files to include all the helpers for
+object_property_add*_ptr().
+
+These set of helpers are handy because they look extremely familiar with
+qdev-properties, allowing the caller to provide a pointer and it will
+manage all the setters and getters.
+
+The follow up patches may introduce more of such helpers.  Since object.c
+has been already too big, split that part out.
+
+No functional change intended.
 
 Signed-off-by: Peter Xu <peterx@redhat.com>
 ---
- include/hw/core/qdev-properties.h | 2 ++
- hw/core/qdev-properties.c         | 2 +-
- rust/bindings/hwcore-sys/lib.rs   | 2 +-
- 3 files changed, 4 insertions(+), 2 deletions(-)
+ include/qom/object-property-ptr.h | 103 +++++++++++++
+ include/qom/object.h              |  99 +-----------
+ qom/object-property-ptr.c         | 248 ++++++++++++++++++++++++++++++
+ qom/object.c                      | 240 -----------------------------
+ qom/meson.build                   |   1 +
+ 5 files changed, 358 insertions(+), 333 deletions(-)
+ create mode 100644 include/qom/object-property-ptr.h
+ create mode 100644 qom/object-property-ptr.c
 
-diff --git a/include/hw/core/qdev-properties.h b/include/hw/core/qdev-properties.h
-index eba5436e53..248bbcbba7 100644
---- a/include/hw/core/qdev-properties.h
-+++ b/include/hw/core/qdev-properties.h
-@@ -321,4 +321,6 @@ void qdev_prop_allow_set_link_before_realize(const Object *obj,
-                                              const char *name,
-                                              Object *val, Error **errp);
+diff --git a/include/qom/object-property-ptr.h b/include/qom/object-property-ptr.h
+new file mode 100644
+index 0000000000..6066c377fb
+--- /dev/null
++++ b/include/qom/object-property-ptr.h
+@@ -0,0 +1,103 @@
++/*
++ * Object property helpers to operate on a pointer.
++ *
++ * SPDX-License-Identifier: GPL-2.0-or-later
++ */
++
++#ifndef QEMU_OBJECT_PROPERTY_PTR_H
++#define QEMU_OBJECT_PROPERTY_PTR_H
++
++typedef enum {
++    /* Automatically add a getter to the property */
++    OBJ_PROP_FLAG_READ = 1 << 0,
++    /* Automatically add a setter to the property */
++    OBJ_PROP_FLAG_WRITE = 1 << 1,
++    /* Automatically add a getter and a setter to the property */
++    OBJ_PROP_FLAG_READWRITE = (OBJ_PROP_FLAG_READ | OBJ_PROP_FLAG_WRITE),
++} ObjectPropertyFlags;
++
++/**
++ * object_property_add_uint8_ptr:
++ * @obj: the object to add a property to
++ * @name: the name of the property
++ * @v: pointer to value
++ * @flags: bitwise-or'd ObjectPropertyFlags
++ *
++ * Add an integer property in memory.  This function will add a
++ * property of type 'uint8'.
++ *
++ * Returns: The newly added property on success, or %NULL on failure.
++ */
++ObjectProperty *object_property_add_uint8_ptr(Object *obj, const char *name,
++                                              const uint8_t *v,
++                                              ObjectPropertyFlags flags);
++
++ObjectProperty *object_class_property_add_uint8_ptr(ObjectClass *klass,
++                                         const char *name,
++                                         const uint8_t *v,
++                                         ObjectPropertyFlags flags);
++
++/**
++ * object_property_add_uint16_ptr:
++ * @obj: the object to add a property to
++ * @name: the name of the property
++ * @v: pointer to value
++ * @flags: bitwise-or'd ObjectPropertyFlags
++ *
++ * Add an integer property in memory.  This function will add a
++ * property of type 'uint16'.
++ *
++ * Returns: The newly added property on success, or %NULL on failure.
++ */
++ObjectProperty *object_property_add_uint16_ptr(Object *obj, const char *name,
++                                    const uint16_t *v,
++                                    ObjectPropertyFlags flags);
++
++ObjectProperty *object_class_property_add_uint16_ptr(ObjectClass *klass,
++                                          const char *name,
++                                          const uint16_t *v,
++                                          ObjectPropertyFlags flags);
++
++/**
++ * object_property_add_uint32_ptr:
++ * @obj: the object to add a property to
++ * @name: the name of the property
++ * @v: pointer to value
++ * @flags: bitwise-or'd ObjectPropertyFlags
++ *
++ * Add an integer property in memory.  This function will add a
++ * property of type 'uint32'.
++ *
++ * Returns: The newly added property on success, or %NULL on failure.
++ */
++ObjectProperty *object_property_add_uint32_ptr(Object *obj, const char *name,
++                                    const uint32_t *v,
++                                    ObjectPropertyFlags flags);
++
++ObjectProperty *object_class_property_add_uint32_ptr(ObjectClass *klass,
++                                          const char *name,
++                                          const uint32_t *v,
++                                          ObjectPropertyFlags flags);
++
++/**
++ * object_property_add_uint64_ptr:
++ * @obj: the object to add a property to
++ * @name: the name of the property
++ * @v: pointer to value
++ * @flags: bitwise-or'd ObjectPropertyFlags
++ *
++ * Add an integer property in memory.  This function will add a
++ * property of type 'uint64'.
++ *
++ * Returns: The newly added property on success, or %NULL on failure.
++ */
++ObjectProperty *object_property_add_uint64_ptr(Object *obj, const char *name,
++                                    const uint64_t *v,
++                                    ObjectPropertyFlags flags);
++
++ObjectProperty *object_class_property_add_uint64_ptr(ObjectClass *klass,
++                                          const char *name,
++                                          const uint64_t *v,
++                                          ObjectPropertyFlags flags);
++
++#endif
+diff --git a/include/qom/object.h b/include/qom/object.h
+index 11f55613fc..6ea569d580 100644
+--- a/include/qom/object.h
++++ b/include/qom/object.h
+@@ -1931,99 +1931,6 @@ ObjectProperty *object_class_property_add_tm(ObjectClass *klass,
+                             const char *name,
+                             void (*get)(Object *, struct tm *, Error **));
  
-+GPtrArray *global_props(void);
+-typedef enum {
+-    /* Automatically add a getter to the property */
+-    OBJ_PROP_FLAG_READ = 1 << 0,
+-    /* Automatically add a setter to the property */
+-    OBJ_PROP_FLAG_WRITE = 1 << 1,
+-    /* Automatically add a getter and a setter to the property */
+-    OBJ_PROP_FLAG_READWRITE = (OBJ_PROP_FLAG_READ | OBJ_PROP_FLAG_WRITE),
+-} ObjectPropertyFlags;
+-
+-/**
+- * object_property_add_uint8_ptr:
+- * @obj: the object to add a property to
+- * @name: the name of the property
+- * @v: pointer to value
+- * @flags: bitwise-or'd ObjectPropertyFlags
+- *
+- * Add an integer property in memory.  This function will add a
+- * property of type 'uint8'.
+- *
+- * Returns: The newly added property on success, or %NULL on failure.
+- */
+-ObjectProperty *object_property_add_uint8_ptr(Object *obj, const char *name,
+-                                              const uint8_t *v,
+-                                              ObjectPropertyFlags flags);
+-
+-ObjectProperty *object_class_property_add_uint8_ptr(ObjectClass *klass,
+-                                         const char *name,
+-                                         const uint8_t *v,
+-                                         ObjectPropertyFlags flags);
+-
+-/**
+- * object_property_add_uint16_ptr:
+- * @obj: the object to add a property to
+- * @name: the name of the property
+- * @v: pointer to value
+- * @flags: bitwise-or'd ObjectPropertyFlags
+- *
+- * Add an integer property in memory.  This function will add a
+- * property of type 'uint16'.
+- *
+- * Returns: The newly added property on success, or %NULL on failure.
+- */
+-ObjectProperty *object_property_add_uint16_ptr(Object *obj, const char *name,
+-                                    const uint16_t *v,
+-                                    ObjectPropertyFlags flags);
+-
+-ObjectProperty *object_class_property_add_uint16_ptr(ObjectClass *klass,
+-                                          const char *name,
+-                                          const uint16_t *v,
+-                                          ObjectPropertyFlags flags);
+-
+-/**
+- * object_property_add_uint32_ptr:
+- * @obj: the object to add a property to
+- * @name: the name of the property
+- * @v: pointer to value
+- * @flags: bitwise-or'd ObjectPropertyFlags
+- *
+- * Add an integer property in memory.  This function will add a
+- * property of type 'uint32'.
+- *
+- * Returns: The newly added property on success, or %NULL on failure.
+- */
+-ObjectProperty *object_property_add_uint32_ptr(Object *obj, const char *name,
+-                                    const uint32_t *v,
+-                                    ObjectPropertyFlags flags);
+-
+-ObjectProperty *object_class_property_add_uint32_ptr(ObjectClass *klass,
+-                                          const char *name,
+-                                          const uint32_t *v,
+-                                          ObjectPropertyFlags flags);
+-
+-/**
+- * object_property_add_uint64_ptr:
+- * @obj: the object to add a property to
+- * @name: the name of the property
+- * @v: pointer to value
+- * @flags: bitwise-or'd ObjectPropertyFlags
+- *
+- * Add an integer property in memory.  This function will add a
+- * property of type 'uint64'.
+- *
+- * Returns: The newly added property on success, or %NULL on failure.
+- */
+-ObjectProperty *object_property_add_uint64_ptr(Object *obj, const char *name,
+-                                    const uint64_t *v,
+-                                    ObjectPropertyFlags flags);
+-
+-ObjectProperty *object_class_property_add_uint64_ptr(ObjectClass *klass,
+-                                          const char *name,
+-                                          const uint64_t *v,
+-                                          ObjectPropertyFlags flags);
+-
+ /**
+  * object_property_add_alias:
+  * @obj: the object to add a property to
+@@ -2141,4 +2048,10 @@ char *object_property_help(const char *name, const char *type,
+ 
+ G_DEFINE_AUTOPTR_CLEANUP_FUNC(Object, object_unref)
+ 
++/*
++ * Object property ptr helpers cannot be included at the beginning of the
++ * file, because it depends on QOM definitions in current header.
++ */
++#include "qom/object-property-ptr.h"
 +
  #endif
-diff --git a/hw/core/qdev-properties.c b/hw/core/qdev-properties.c
-index 34d7b26a73..1d531189ec 100644
---- a/hw/core/qdev-properties.c
-+++ b/hw/core/qdev-properties.c
-@@ -958,7 +958,7 @@ void qlist_append_link(QList *qlist, Object *obj)
-     qlist_append_str(qlist, path);
+diff --git a/qom/object-property-ptr.c b/qom/object-property-ptr.c
+new file mode 100644
+index 0000000000..02c01ed7f0
+--- /dev/null
++++ b/qom/object-property-ptr.c
+@@ -0,0 +1,248 @@
++/*
++ * Object property helpers to operate on a pointer.
++ *
++ * SPDX-License-Identifier: GPL-2.0-or-later
++ */
++#include "qemu/osdep.h"
++#include "qom/object.h"
++#include "qapi/visitor.h"
++
++static void property_get_uint8_ptr(Object *obj, Visitor *v, const char *name,
++                                   void *opaque, Error **errp)
++{
++    uint8_t value = *(uint8_t *)opaque;
++    visit_type_uint8(v, name, &value, errp);
++}
++
++static void property_set_uint8_ptr(Object *obj, Visitor *v, const char *name,
++                                   void *opaque, Error **errp)
++{
++    uint8_t *field = opaque;
++    uint8_t value;
++
++    if (!visit_type_uint8(v, name, &value, errp)) {
++        return;
++    }
++
++    *field = value;
++}
++
++static void property_get_uint16_ptr(Object *obj, Visitor *v, const char *name,
++                                    void *opaque, Error **errp)
++{
++    uint16_t value = *(uint16_t *)opaque;
++    visit_type_uint16(v, name, &value, errp);
++}
++
++static void property_set_uint16_ptr(Object *obj, Visitor *v, const char *name,
++                                    void *opaque, Error **errp)
++{
++    uint16_t *field = opaque;
++    uint16_t value;
++
++    if (!visit_type_uint16(v, name, &value, errp)) {
++        return;
++    }
++
++    *field = value;
++}
++
++static void property_get_uint32_ptr(Object *obj, Visitor *v, const char *name,
++                                    void *opaque, Error **errp)
++{
++    uint32_t value = *(uint32_t *)opaque;
++    visit_type_uint32(v, name, &value, errp);
++}
++
++static void property_set_uint32_ptr(Object *obj, Visitor *v, const char *name,
++                                    void *opaque, Error **errp)
++{
++    uint32_t *field = opaque;
++    uint32_t value;
++
++    if (!visit_type_uint32(v, name, &value, errp)) {
++        return;
++    }
++
++    *field = value;
++}
++
++static void property_get_uint64_ptr(Object *obj, Visitor *v, const char *name,
++                                    void *opaque, Error **errp)
++{
++    uint64_t value = *(uint64_t *)opaque;
++    visit_type_uint64(v, name, &value, errp);
++}
++
++static void property_set_uint64_ptr(Object *obj, Visitor *v, const char *name,
++                                    void *opaque, Error **errp)
++{
++    uint64_t *field = opaque;
++    uint64_t value;
++
++    if (!visit_type_uint64(v, name, &value, errp)) {
++        return;
++    }
++
++    *field = value;
++}
++
++ObjectProperty *
++object_property_add_uint8_ptr(Object *obj, const char *name,
++                              const uint8_t *v,
++                              ObjectPropertyFlags flags)
++{
++    ObjectPropertyAccessor *getter = NULL;
++    ObjectPropertyAccessor *setter = NULL;
++
++    if ((flags & OBJ_PROP_FLAG_READ) == OBJ_PROP_FLAG_READ) {
++        getter = property_get_uint8_ptr;
++    }
++
++    if ((flags & OBJ_PROP_FLAG_WRITE) == OBJ_PROP_FLAG_WRITE) {
++        setter = property_set_uint8_ptr;
++    }
++
++    return object_property_add(obj, name, "uint8",
++                               getter, setter, NULL, (void *)v);
++}
++
++ObjectProperty *
++object_class_property_add_uint8_ptr(ObjectClass *klass, const char *name,
++                                    const uint8_t *v,
++                                    ObjectPropertyFlags flags)
++{
++    ObjectPropertyAccessor *getter = NULL;
++    ObjectPropertyAccessor *setter = NULL;
++
++    if ((flags & OBJ_PROP_FLAG_READ) == OBJ_PROP_FLAG_READ) {
++        getter = property_get_uint8_ptr;
++    }
++
++    if ((flags & OBJ_PROP_FLAG_WRITE) == OBJ_PROP_FLAG_WRITE) {
++        setter = property_set_uint8_ptr;
++    }
++
++    return object_class_property_add(klass, name, "uint8",
++                                     getter, setter, NULL, (void *)v);
++}
++
++ObjectProperty *
++object_property_add_uint16_ptr(Object *obj, const char *name,
++                               const uint16_t *v,
++                               ObjectPropertyFlags flags)
++{
++    ObjectPropertyAccessor *getter = NULL;
++    ObjectPropertyAccessor *setter = NULL;
++
++    if ((flags & OBJ_PROP_FLAG_READ) == OBJ_PROP_FLAG_READ) {
++        getter = property_get_uint16_ptr;
++    }
++
++    if ((flags & OBJ_PROP_FLAG_WRITE) == OBJ_PROP_FLAG_WRITE) {
++        setter = property_set_uint16_ptr;
++    }
++
++    return object_property_add(obj, name, "uint16",
++                               getter, setter, NULL, (void *)v);
++}
++
++ObjectProperty *
++object_class_property_add_uint16_ptr(ObjectClass *klass, const char *name,
++                                     const uint16_t *v,
++                                     ObjectPropertyFlags flags)
++{
++    ObjectPropertyAccessor *getter = NULL;
++    ObjectPropertyAccessor *setter = NULL;
++
++    if ((flags & OBJ_PROP_FLAG_READ) == OBJ_PROP_FLAG_READ) {
++        getter = property_get_uint16_ptr;
++    }
++
++    if ((flags & OBJ_PROP_FLAG_WRITE) == OBJ_PROP_FLAG_WRITE) {
++        setter = property_set_uint16_ptr;
++    }
++
++    return object_class_property_add(klass, name, "uint16",
++                                     getter, setter, NULL, (void *)v);
++}
++
++ObjectProperty *
++object_property_add_uint32_ptr(Object *obj, const char *name,
++                               const uint32_t *v,
++                               ObjectPropertyFlags flags)
++{
++    ObjectPropertyAccessor *getter = NULL;
++    ObjectPropertyAccessor *setter = NULL;
++
++    if ((flags & OBJ_PROP_FLAG_READ) == OBJ_PROP_FLAG_READ) {
++        getter = property_get_uint32_ptr;
++    }
++
++    if ((flags & OBJ_PROP_FLAG_WRITE) == OBJ_PROP_FLAG_WRITE) {
++        setter = property_set_uint32_ptr;
++    }
++
++    return object_property_add(obj, name, "uint32",
++                               getter, setter, NULL, (void *)v);
++}
++
++ObjectProperty *
++object_class_property_add_uint32_ptr(ObjectClass *klass, const char *name,
++                                     const uint32_t *v,
++                                     ObjectPropertyFlags flags)
++{
++    ObjectPropertyAccessor *getter = NULL;
++    ObjectPropertyAccessor *setter = NULL;
++
++    if ((flags & OBJ_PROP_FLAG_READ) == OBJ_PROP_FLAG_READ) {
++        getter = property_get_uint32_ptr;
++    }
++
++    if ((flags & OBJ_PROP_FLAG_WRITE) == OBJ_PROP_FLAG_WRITE) {
++        setter = property_set_uint32_ptr;
++    }
++
++    return object_class_property_add(klass, name, "uint32",
++                                     getter, setter, NULL, (void *)v);
++}
++
++ObjectProperty *
++object_property_add_uint64_ptr(Object *obj, const char *name,
++                               const uint64_t *v,
++                               ObjectPropertyFlags flags)
++{
++    ObjectPropertyAccessor *getter = NULL;
++    ObjectPropertyAccessor *setter = NULL;
++
++    if ((flags & OBJ_PROP_FLAG_READ) == OBJ_PROP_FLAG_READ) {
++        getter = property_get_uint64_ptr;
++    }
++
++    if ((flags & OBJ_PROP_FLAG_WRITE) == OBJ_PROP_FLAG_WRITE) {
++        setter = property_set_uint64_ptr;
++    }
++
++    return object_property_add(obj, name, "uint64",
++                               getter, setter, NULL, (void *)v);
++}
++
++ObjectProperty *
++object_class_property_add_uint64_ptr(ObjectClass *klass, const char *name,
++                                     const uint64_t *v,
++                                     ObjectPropertyFlags flags)
++{
++    ObjectPropertyAccessor *getter = NULL;
++    ObjectPropertyAccessor *setter = NULL;
++
++    if ((flags & OBJ_PROP_FLAG_READ) == OBJ_PROP_FLAG_READ) {
++        getter = property_get_uint64_ptr;
++    }
++
++    if ((flags & OBJ_PROP_FLAG_WRITE) == OBJ_PROP_FLAG_WRITE) {
++        setter = property_set_uint64_ptr;
++    }
++
++    return object_class_property_add(klass, name, "uint64",
++                                     getter, setter, NULL, (void *)v);
++}
+diff --git a/qom/object.c b/qom/object.c
+index 0ac201de4c..fc738549dc 100644
+--- a/qom/object.c
++++ b/qom/object.c
+@@ -2673,246 +2673,6 @@ static char *object_get_type(Object *obj, Error **errp)
+     return g_strdup(object_get_typename(obj));
  }
  
--static GPtrArray *global_props(void)
-+GPtrArray *global_props(void)
- {
-     static GPtrArray *gp;
- 
-diff --git a/rust/bindings/hwcore-sys/lib.rs b/rust/bindings/hwcore-sys/lib.rs
-index 8cef4a7961..85e71f5145 100644
---- a/rust/bindings/hwcore-sys/lib.rs
-+++ b/rust/bindings/hwcore-sys/lib.rs
-@@ -20,7 +20,7 @@
- 
- use chardev_sys::Chardev;
- use common::Zeroable;
--use glib_sys::GSList;
-+use glib_sys::{GPtrArray, GSList};
- use migration_sys::VMStateDescription;
- use qom_sys::{
-     InterfaceClass, Object, ObjectClass, ObjectProperty, ObjectPropertyAccessor,
+-static void property_get_uint8_ptr(Object *obj, Visitor *v, const char *name,
+-                                   void *opaque, Error **errp)
+-{
+-    uint8_t value = *(uint8_t *)opaque;
+-    visit_type_uint8(v, name, &value, errp);
+-}
+-
+-static void property_set_uint8_ptr(Object *obj, Visitor *v, const char *name,
+-                                   void *opaque, Error **errp)
+-{
+-    uint8_t *field = opaque;
+-    uint8_t value;
+-
+-    if (!visit_type_uint8(v, name, &value, errp)) {
+-        return;
+-    }
+-
+-    *field = value;
+-}
+-
+-static void property_get_uint16_ptr(Object *obj, Visitor *v, const char *name,
+-                                    void *opaque, Error **errp)
+-{
+-    uint16_t value = *(uint16_t *)opaque;
+-    visit_type_uint16(v, name, &value, errp);
+-}
+-
+-static void property_set_uint16_ptr(Object *obj, Visitor *v, const char *name,
+-                                    void *opaque, Error **errp)
+-{
+-    uint16_t *field = opaque;
+-    uint16_t value;
+-
+-    if (!visit_type_uint16(v, name, &value, errp)) {
+-        return;
+-    }
+-
+-    *field = value;
+-}
+-
+-static void property_get_uint32_ptr(Object *obj, Visitor *v, const char *name,
+-                                    void *opaque, Error **errp)
+-{
+-    uint32_t value = *(uint32_t *)opaque;
+-    visit_type_uint32(v, name, &value, errp);
+-}
+-
+-static void property_set_uint32_ptr(Object *obj, Visitor *v, const char *name,
+-                                    void *opaque, Error **errp)
+-{
+-    uint32_t *field = opaque;
+-    uint32_t value;
+-
+-    if (!visit_type_uint32(v, name, &value, errp)) {
+-        return;
+-    }
+-
+-    *field = value;
+-}
+-
+-static void property_get_uint64_ptr(Object *obj, Visitor *v, const char *name,
+-                                    void *opaque, Error **errp)
+-{
+-    uint64_t value = *(uint64_t *)opaque;
+-    visit_type_uint64(v, name, &value, errp);
+-}
+-
+-static void property_set_uint64_ptr(Object *obj, Visitor *v, const char *name,
+-                                    void *opaque, Error **errp)
+-{
+-    uint64_t *field = opaque;
+-    uint64_t value;
+-
+-    if (!visit_type_uint64(v, name, &value, errp)) {
+-        return;
+-    }
+-
+-    *field = value;
+-}
+-
+-ObjectProperty *
+-object_property_add_uint8_ptr(Object *obj, const char *name,
+-                              const uint8_t *v,
+-                              ObjectPropertyFlags flags)
+-{
+-    ObjectPropertyAccessor *getter = NULL;
+-    ObjectPropertyAccessor *setter = NULL;
+-
+-    if ((flags & OBJ_PROP_FLAG_READ) == OBJ_PROP_FLAG_READ) {
+-        getter = property_get_uint8_ptr;
+-    }
+-
+-    if ((flags & OBJ_PROP_FLAG_WRITE) == OBJ_PROP_FLAG_WRITE) {
+-        setter = property_set_uint8_ptr;
+-    }
+-
+-    return object_property_add(obj, name, "uint8",
+-                               getter, setter, NULL, (void *)v);
+-}
+-
+-ObjectProperty *
+-object_class_property_add_uint8_ptr(ObjectClass *klass, const char *name,
+-                                    const uint8_t *v,
+-                                    ObjectPropertyFlags flags)
+-{
+-    ObjectPropertyAccessor *getter = NULL;
+-    ObjectPropertyAccessor *setter = NULL;
+-
+-    if ((flags & OBJ_PROP_FLAG_READ) == OBJ_PROP_FLAG_READ) {
+-        getter = property_get_uint8_ptr;
+-    }
+-
+-    if ((flags & OBJ_PROP_FLAG_WRITE) == OBJ_PROP_FLAG_WRITE) {
+-        setter = property_set_uint8_ptr;
+-    }
+-
+-    return object_class_property_add(klass, name, "uint8",
+-                                     getter, setter, NULL, (void *)v);
+-}
+-
+-ObjectProperty *
+-object_property_add_uint16_ptr(Object *obj, const char *name,
+-                               const uint16_t *v,
+-                               ObjectPropertyFlags flags)
+-{
+-    ObjectPropertyAccessor *getter = NULL;
+-    ObjectPropertyAccessor *setter = NULL;
+-
+-    if ((flags & OBJ_PROP_FLAG_READ) == OBJ_PROP_FLAG_READ) {
+-        getter = property_get_uint16_ptr;
+-    }
+-
+-    if ((flags & OBJ_PROP_FLAG_WRITE) == OBJ_PROP_FLAG_WRITE) {
+-        setter = property_set_uint16_ptr;
+-    }
+-
+-    return object_property_add(obj, name, "uint16",
+-                               getter, setter, NULL, (void *)v);
+-}
+-
+-ObjectProperty *
+-object_class_property_add_uint16_ptr(ObjectClass *klass, const char *name,
+-                                     const uint16_t *v,
+-                                     ObjectPropertyFlags flags)
+-{
+-    ObjectPropertyAccessor *getter = NULL;
+-    ObjectPropertyAccessor *setter = NULL;
+-
+-    if ((flags & OBJ_PROP_FLAG_READ) == OBJ_PROP_FLAG_READ) {
+-        getter = property_get_uint16_ptr;
+-    }
+-
+-    if ((flags & OBJ_PROP_FLAG_WRITE) == OBJ_PROP_FLAG_WRITE) {
+-        setter = property_set_uint16_ptr;
+-    }
+-
+-    return object_class_property_add(klass, name, "uint16",
+-                                     getter, setter, NULL, (void *)v);
+-}
+-
+-ObjectProperty *
+-object_property_add_uint32_ptr(Object *obj, const char *name,
+-                               const uint32_t *v,
+-                               ObjectPropertyFlags flags)
+-{
+-    ObjectPropertyAccessor *getter = NULL;
+-    ObjectPropertyAccessor *setter = NULL;
+-
+-    if ((flags & OBJ_PROP_FLAG_READ) == OBJ_PROP_FLAG_READ) {
+-        getter = property_get_uint32_ptr;
+-    }
+-
+-    if ((flags & OBJ_PROP_FLAG_WRITE) == OBJ_PROP_FLAG_WRITE) {
+-        setter = property_set_uint32_ptr;
+-    }
+-
+-    return object_property_add(obj, name, "uint32",
+-                               getter, setter, NULL, (void *)v);
+-}
+-
+-ObjectProperty *
+-object_class_property_add_uint32_ptr(ObjectClass *klass, const char *name,
+-                                     const uint32_t *v,
+-                                     ObjectPropertyFlags flags)
+-{
+-    ObjectPropertyAccessor *getter = NULL;
+-    ObjectPropertyAccessor *setter = NULL;
+-
+-    if ((flags & OBJ_PROP_FLAG_READ) == OBJ_PROP_FLAG_READ) {
+-        getter = property_get_uint32_ptr;
+-    }
+-
+-    if ((flags & OBJ_PROP_FLAG_WRITE) == OBJ_PROP_FLAG_WRITE) {
+-        setter = property_set_uint32_ptr;
+-    }
+-
+-    return object_class_property_add(klass, name, "uint32",
+-                                     getter, setter, NULL, (void *)v);
+-}
+-
+-ObjectProperty *
+-object_property_add_uint64_ptr(Object *obj, const char *name,
+-                               const uint64_t *v,
+-                               ObjectPropertyFlags flags)
+-{
+-    ObjectPropertyAccessor *getter = NULL;
+-    ObjectPropertyAccessor *setter = NULL;
+-
+-    if ((flags & OBJ_PROP_FLAG_READ) == OBJ_PROP_FLAG_READ) {
+-        getter = property_get_uint64_ptr;
+-    }
+-
+-    if ((flags & OBJ_PROP_FLAG_WRITE) == OBJ_PROP_FLAG_WRITE) {
+-        setter = property_set_uint64_ptr;
+-    }
+-
+-    return object_property_add(obj, name, "uint64",
+-                               getter, setter, NULL, (void *)v);
+-}
+-
+-ObjectProperty *
+-object_class_property_add_uint64_ptr(ObjectClass *klass, const char *name,
+-                                     const uint64_t *v,
+-                                     ObjectPropertyFlags flags)
+-{
+-    ObjectPropertyAccessor *getter = NULL;
+-    ObjectPropertyAccessor *setter = NULL;
+-
+-    if ((flags & OBJ_PROP_FLAG_READ) == OBJ_PROP_FLAG_READ) {
+-        getter = property_get_uint64_ptr;
+-    }
+-
+-    if ((flags & OBJ_PROP_FLAG_WRITE) == OBJ_PROP_FLAG_WRITE) {
+-        setter = property_set_uint64_ptr;
+-    }
+-
+-    return object_class_property_add(klass, name, "uint64",
+-                                     getter, setter, NULL, (void *)v);
+-}
+-
+ typedef struct {
+     Object *target_obj;
+     char *target_name;
+diff --git a/qom/meson.build b/qom/meson.build
+index bd6f4aadd7..2c746aaa9c 100644
+--- a/qom/meson.build
++++ b/qom/meson.build
+@@ -3,6 +3,7 @@ qom_ss.add(files(
+   'container.c',
+   'object.c',
+   'object_interfaces.c',
++  'object-property-ptr.c',
+   'qom-qobject.c',
+ ))
+ if have_system
 -- 
 2.53.0
 
