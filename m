@@ -4,157 +4,57 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7D5B1CD8CAA
-	for <qemu-devel@archiver.kernel.org>; Tue,  9 Jun 2026 15:09:50 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id EB8A0CD8CAA
+	for <qemu-devel@archiver.kernel.org>; Tue,  9 Jun 2026 15:12:03 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wWy4n-0001gW-47; Tue, 09 Jun 2026 11:09:13 -0400
+	id 1wWy7H-0003Rb-Cs; Tue, 09 Jun 2026 11:11:47 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <sunil.laxminarasimha@oss.qualcomm.com>)
- id 1wWy4b-0001fU-Cs
- for qemu-devel@nongnu.org; Tue, 09 Jun 2026 11:09:02 -0400
-Received: from mx0a-0031df01.pphosted.com ([205.220.168.131])
+ (Exim 4.90_1) (envelope-from <jic23@kernel.org>) id 1wWy7F-0003R9-Oz
+ for qemu-devel@nongnu.org; Tue, 09 Jun 2026 11:11:45 -0400
+Received: from sea.source.kernel.org ([2600:3c0a:e001:78e:0:1991:8:25])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <sunil.laxminarasimha@oss.qualcomm.com>)
- id 1wWy4Z-0001wc-IV
- for qemu-devel@nongnu.org; Tue, 09 Jun 2026 11:09:01 -0400
-Received: from pps.filterd (m0279862.ppops.net [127.0.0.1])
- by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 659ClchV2183230
- for <qemu-devel@nongnu.org>; Tue, 9 Jun 2026 15:08:57 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
- cc:content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:reply-to:subject:to; s=
- qcppdkim1; bh=XSJkJOkv5emanZXmVaBV5ypah2GhgL0GbaT9gE/zfj0=; b=aW
- YF7DKg4yapFbFb/23F9cDt8RYcBeYIiYu00sGX4f4VCY0o2eekhTu+uekWccPx1V
- mf5hcEUJ1kbPcN+VcOOtIdcc9AhVzBDaGEbpiWHbhgYe8HWgTA/gdlcjAT7LESC4
- 0cuMcSMHjUXFwO7lzWnRFkHyTxI0iazRk+2939cgA0TF454KVn7/75YAKUH9DclY
- V9LFec8y9vygEM3MtZ2BVVKCTMirbOfTAUNv0sDPWMPmFNXj8ZtL2lxQq1EGirrJ
- 4Ioh8ySpiatMtaKBht36/QDlaiTmeZwCYpEqqs0q2hoLEQMZS80JgrKcFpg/ZRtG
- CVX3+pp8THylqdPS6oOA==
-Received: from mail-yw1-f198.google.com (mail-yw1-f198.google.com
- [209.85.128.198])
- by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4epenra3uw-1
- (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
- for <qemu-devel@nongnu.org>; Tue, 09 Jun 2026 15:08:56 +0000 (GMT)
-Received: by mail-yw1-f198.google.com with SMTP id
- 00721157ae682-7dcd01ca614so111099297b3.0
- for <qemu-devel@nongnu.org>; Tue, 09 Jun 2026 08:08:56 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1781017736; cv=none;
- d=google.com; s=arc-20240605;
- b=km2E6ZkMm+78Fju7zGXSs5jn1vGsv+bAS9KDdqyEZxLCm/SVYidPTqlxiqDZwL4hSb
- 1s7hou4MD8lksrdKrTUrVNA+kaN3K8YQiiDYFiKEcFlNvmjXG5/62Hq9ymxb8r+lWX5K
- EjiTdLzvnUFy5y2I1PIVIpwz6by3O7SI68lQ1NLlTeunLH398OU1cMw/mto/rpon0m1Q
- sorQ3M01GFMjgLXS6GH6m4kr5ggjA5mMYMewnkAKembzK1TbN5gcF3hHnd0FFSWsWFGi
- RzDFGA8BPBq/wiaMlI9XcrW07Nq5YaTA1HyyqjOTZuy/RGyTuwwIBpxLTz2GQ/9H4BFI
- Dr7w==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
- s=arc-20240605; 
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :reply-to:in-reply-to:references:mime-version:dkim-signature;
- bh=XSJkJOkv5emanZXmVaBV5ypah2GhgL0GbaT9gE/zfj0=;
- fh=WTOzYAc+ZKuH6LS1VmVRLDW4tDZnD7sHjb6zYzkF+F4=;
- b=PKP2ylpX2rshqxOf7DgKZN68npofUYLwZcWwn5AHWCtuC34rVnzEawivVoH+wnFiDA
- 2h6LA7yTyrTNYpxqJuDFBWkbYvm/ih/c/J1vt//HR/C9YT9FL7lzW8XxLAMpD896CLE6
- Xn92KCx7rIiz+Ky29Onj/yavJ0QJ8GUHPV7T6S+Coon9i0pNmFoRb+u+mcpcG8/ETXdF
- Yc1Z3vXZ5KVMTZvXuLdkRMJxBiXKb2gVbVY6B2QMq2MxQil5u3TWB9Im7KB5fDIa5zDC
- DdG51cppVHT/Sra1JKYHc0kNAKNouC/2FwXE4mvbjb8a67c7LoltoZAsCH5Tx6qXwF+f
- jjXQ==; darn=nongnu.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=oss.qualcomm.com; s=google; t=1781017736; x=1781622536; darn=nongnu.org;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :reply-to:in-reply-to:references:mime-version:from:to:cc:subject
- :date:message-id:reply-to;
- bh=XSJkJOkv5emanZXmVaBV5ypah2GhgL0GbaT9gE/zfj0=;
- b=Drk6xOBScEr+M/YTRObls15xkm53k5lgUTzZ0+ttmYZA4ivud4Zzx5fvY4G6DZ6h19
- MvSIlzU+SaUHPbfd2Jkbp5pWZ1u5tV/90DC8wJZOd7SQaJcR9mFNDdJGL8zGiTQfBKBK
- U3gflx7n1jOjAluHtCIZbvqjmJ7O2WYgNZJuAAaObDjoR34IDAWGoS15hDx1aZ6a7lzv
- hdkzkhg2q/96iOEwNi6Hh64ABMgVbYVal//VkmBNC5eiljT1QfgEECWIAaQSb5k2O7x1
- 7VQRcAzgDg90XhbwRiWr/HWXHbc3Q717HPBjqbmoDgNEZLGigh6zxhkeWFOO81gMi6Ww
- 5kEg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1781017736; x=1781622536;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :reply-to:in-reply-to:references:mime-version:x-gm-gg
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=XSJkJOkv5emanZXmVaBV5ypah2GhgL0GbaT9gE/zfj0=;
- b=LpsJkNHls7/+PyimIcH/XWFfzmEC9eYswotOSubN+yKNuQMkYcGMaxbzQaDb5k0KSk
- EOcCJTyCuWU7tCPwz1SH4/VWZgl3rd2TlDg02BNi385IclF5hxtOW/OSG3ftWelCcFXT
- sJQvGyfXynrkq9wVeFVJuBWKNwfPEHKuxfvBkJvkCyiDgT0BRUaqeF7bgu27s5ihHfTG
- RQPa6yMOPt7c0RZ2y9nVAVGaYThXW0qTKQVW3exVhU4xf7wuLT2OqkPX62x8G4Nxr1uW
- s5GHBZD+/EgEBQZRht1infICeHRxL2wp3E5D5erLQ9Q5mQ/udNJtnJSie425mQlxjzTU
- yzzQ==
-X-Forwarded-Encrypted: i=1;
- AFNElJ+GE/s3Kkqj/hOx0hT3sgkrdVD6DIqcpJrFWJtyMSRSF9I0xcInAhSvs4lwozivgJwCdl6rInsZ3xSN@nongnu.org
-X-Gm-Message-State: AOJu0Ywseji6pdaijVkqXdX6mYLox7oE6WJiUc45Q9a9H0gUboukRp8x
- /Fb+GFvmEKkKn6w11yOud8V79Ke8bAGxPnCIbp5BheqO3qj3jbHaWQ1LisfZMX8+CQ8EUvAhpf4
- FebNIjbHnLitBJ3Iqo42uHO/b16b7kWP+2+Iah4OmBM4BOmOZrjcMxULDnPDMsSi10tWgOat8JC
- vs4iAAT/jH7g1tJASntGRiWeyJHN6bK7jG
-X-Gm-Gg: Acq92OGaSkVUQwk21Mgw7To0l74BmZlhT/Lgg8NoWxBYUmzyFX2kU9lK6f7rLv10u7P
- RPlihdd0o7l8Vt48mSGad7sqdpW3FfG7bCL6XStmf1yqZ0jm0eqv+lsejysN+ato5UM0vyZ3Uo8
- oknGGIkr1iNZRBYOBUyygh3R4ZvNisiHZqIyPT325UIeTnLE9DbmcjhWaoLYec8XI9nmfquRLKb
- 4Rk8OR3ibF3OyXqfg==
-X-Received: by 2002:a05:690e:169e:b0:651:bb21:e7fb with SMTP id
- 956f58d0204a3-66106fada73mr16754337d50.54.1781017735489; 
- Tue, 09 Jun 2026 08:08:55 -0700 (PDT)
-X-Received: by 2002:a05:690e:169e:b0:651:bb21:e7fb with SMTP id
- 956f58d0204a3-66106fada73mr16754286d50.54.1781017735028; Tue, 09 Jun 2026
- 08:08:55 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <jic23@kernel.org>) id 1wWy7D-0003Nd-N7
+ for qemu-devel@nongnu.org; Tue, 09 Jun 2026 11:11:45 -0400
+Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
+ by sea.source.kernel.org (Postfix) with ESMTP id C297E40351;
+ Tue,  9 Jun 2026 15:11:41 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A50CA1F00893;
+ Tue,  9 Jun 2026 15:11:39 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
+ s=k20260515; t=1781017901;
+ bh=1sZXlp8Gi6WChPLNyAEhS87z81+kdWGyl+V7rw7CMQE=;
+ h=Date:From:To:Cc:Subject:In-Reply-To:References;
+ b=ivtq1JsFPqdfxMvHLyClFk0jWXPyKm7TamouYESRpz/7RUiZ/YDo+mLzBXsN6LdeW
+ ZuvgJvEKbfW1xIPnI/H3In3uHri/ocKn+wGFIHFBW/zBKUtrnFxpOqrvbF1oITdWko
+ r9Xe9klCqgE3TlJRCW7twDcKsJsKnNMiEbl1knp7mqszfyk3y53tJUuPJDZI0/QPRI
+ QJuhJsE4oGDsPQjUbehY4wsY4XrAh7IZErVQgC9WhpgMcVgLcTnQtrSNKXgH6yjnDd
+ WCMsui7+GNcPQINkG6IJdEyXgk1KrZA1C/Ozf9PSfYpK2nsIefXiu0kBynfe+KRLVK
+ udTg8kUx8nMxg==
+Date: Tue, 9 Jun 2026 16:11:34 +0100
+From: Jonathan Cameron <jic23@kernel.org>
+To: Junjie Cao <junjie.cao@intel.com>
+Cc: jonathan.cameron@huawei.com, fan.ni@samsung.com, qemu-devel@nongnu.org
+Subject: Re: [PATCH 3/3] hw/cxl: trace event log activity and CFMWS address
+ decoding
+Message-ID: <20260609161134.30d5e1cf@jic23-huawei>
+In-Reply-To: <20260603013420.904749-4-junjie.cao@intel.com>
+References: <20260603013420.904749-1-junjie.cao@intel.com>
+ <20260603013420.904749-4-junjie.cao@intel.com>
+X-Mailer: Claws Mail 4.4.0 (GTK 3.24.52; x86_64-pc-linux-gnu)
 MIME-Version: 1.0
-References: <20260602074127.63819-1-cp0613@linux.alibaba.com>
- <20260602074127.63819-3-cp0613@linux.alibaba.com>
-In-Reply-To: <20260602074127.63819-3-cp0613@linux.alibaba.com>
-From: Sunil V L <sunilvl@oss.qualcomm.com>
-Date: Tue, 9 Jun 2026 20:38:43 +0530
-X-Gm-Features: AVVi8Cdle_VEyRYddsF24uH6tQLmZBOOPx2_3oluXiglzFIVuBVf9t38z5J41_M
-Message-ID: <CAB19ukHaz0xJrL7-WSdMaK+Sodk1mgbim_L=AQdsPaLg4Pf44g@mail.gmail.com>
-Subject: Re: [PATCH 2/4] hw/riscv/virt-acpi-build: Add _DEP to ACPI0017 for
- CXL host bridge dependency
-To: Chen Pei <cp0613@linux.alibaba.com>
-Cc: pbonzini@redhat.com, palmer@dabbelt.com, alistair.francis@wdc.com,
- liwei1518@gmail.com, daniel.barboza@oss.qualcomm.com,
- zhiwei_liu@linux.alibaba.com, chao.liu.zevorn@gmail.com,
- sunilvl@ventanamicro.com, jonathan.cameron@huawei.com,
- fan.ni@samsung.com, guoren@kernel.org, qemu-riscv@nongnu.org,
- qemu-devel@nongnu.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-X-Proofpoint-GUID: FsR1XbQ01389d_YY8VXUrKMybFiexGRa
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNjA5MDE0NCBTYWx0ZWRfX9TN2H0RorCP3
- 9BbKn7aw2o+8GNcwTZepWkPYbBzlrEAV3mznWVcrTTzrnBOZvg7j4KZpubySYMpnpASZM2nKWla
- 0+DGsMGCH4HFE2EitAZyWNXTawWpwtF2DNrkky9a4KqCHFkbvEm4mrqgSY/4ozCN/2Q3Utxw13A
- thhx6+EQve136WBdDU+rAxwR+IAK0xpKl6NmKT13NenXcUdIiy5XPfmSNeOM5wLLXCg6atcNPwv
- tyuWfrt0VUIHTss/WfHT3lFrpv/VuSMl76Q0R29ktBaxcxH94XyFSrvjJGcpJYPi3ZdhA6lI035
- D9MNtVVGWF6cL3A1XuADw1eWSDEzBPpCMSWq4aosKAD9hWICAQxDCAyT6I3f0XmfR3BssjHzPpJ
- +UUKk2AB3xhonOx+FvRX+L/KYennlJ8/mh2roXai5emLEMsP6r8q52sc12dOEr6NXDBiillFtwR
- VPz7mKbyyHRNnl4+2Sg==
-X-Authority-Analysis: v=2.4 cv=NKPlPU6g c=1 sm=1 tr=0 ts=6a282c88 cx=c_pps
- a=g1v0Z557R90hA0UpD/5Yag==:117 a=IkcTkHD0fZMA:10 a=FelO9ux0wxsA:10
- a=s4-Qcg_JpJYA:10 a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22
- a=_K5XuSEh1TEqbUxoQ0s3:22 a=SRrdq9N9AAAA:8 a=EUspDBNiAAAA:8
- a=65xJDWIeJbAoLFq9lykA:9 a=QEXdDO2ut3YA:10 a=MFSWADHSvvjO3QEy5MdX:22
-X-Proofpoint-ORIG-GUID: FsR1XbQ01389d_YY8VXUrKMybFiexGRa
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.125,FMLib:17.12.100.49
- definitions=2026-06-09_03,2026-06-09_02,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- bulkscore=0 adultscore=0 spamscore=0 priorityscore=1501 lowpriorityscore=0
- clxscore=1015 impostorscore=0 malwarescore=0 phishscore=0 suspectscore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2605210000 definitions=main-2606090144
-Received-SPF: pass client-ip=205.220.168.131;
- envelope-from=sunil.laxminarasimha@oss.qualcomm.com;
- helo=mx0a-0031df01.pphosted.com
-X-Spam_score_int: -27
-X-Spam_score: -2.8
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2600:3c0a:e001:78e:0:1991:8:25;
+ envelope-from=jic23@kernel.org; helo=sea.source.kernel.org
+X-Spam_score_int: -24
+X-Spam_score: -2.5
 X-Spam_bar: --
-X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.445,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -167,75 +67,166 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-To: sunilvl@oss.qualcomm.com
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, Jun 2, 2026 at 1:18=E2=80=AFPM Chen Pei <cp0613@linux.alibaba.com> =
-wrote:
->
-> On RISC-V QEMU virt platform with CXL enabled, the probe ordering
-> of acpi_pci_root (ACPI0016) and cxl_acpi (ACPI0017) is not
-> guaranteed. If cxl_acpi probes before acpi_pci_root has attached
-> the CXL host bridges, the CXL port topology will be incomplete
-> because to_cxl_host_bridge() silently skips devices whose PCI root
-> is not yet ready.
->
-> Add a _DEP object to the ACPI0017 device in the DSDT, declaring
-> its dependency on the ACPI0016 CXL host bridge devices. This tells
-> the OS to defer ACPI0017 enumeration until all ACPI0016 devices
-> have been attached by acpi_pci_root.
->
-> This requires a corresponding kernel change to call
-> acpi_dev_clear_dependencies() in acpi_pci_root_add().
->
-> Signed-off-by: Chen Pei <cp0613@linux.alibaba.com>
+On Wed,  3 Jun 2026 09:34:20 +0800
+Junjie Cao <junjie.cao@intel.com> wrote:
+
+> Two more debug-prone paths benefit from trace coverage. Event log
+> insertion and clearing are exercised on every error injection or
+> dynamic capacity event, but their interaction with the per-log
+> overflow counter is currently opaque. CFMWS address decoding
+> translates a host physical address through up to two HDM decoder
+> lookups (host bridge and optional switch USP).
+
+Again, two largely unrelated things - two patches please.
+
+> 
+> Add five trace points:
+> 
+>   * cxl_event_insert            - successful enqueue, log type and
+>                                   resulting depth
+>   * cxl_event_overflow          - the artificial overflow threshold
+>                                   was hit; an event was dropped
+>   * cxl_event_clear             - bulk clear, log type and request size
+> 
+>   * cxl_cfmws_lookup            - entry to address decoding, with
+>                                   the resolved fixed-window index
+>   * cxl_cfmws_target_resolved   - HDM decoder produced a target index
+>                                   (fires for both the host-bridge and
+>                                   switch USP lookups)
+> 
+> In non-passthrough topologies, a cxl_cfmws_lookup without a following
+> cxl_cfmws_target_resolved indicates the host-bridge HDM decode
+> failed. In passthrough mode the lookup resolves via
+> pcie_find_port_first() without an HDM target step, so no
+> target_resolved event is expected.
+
+Ah. Good to see you have noted these don't apply to pass through case.
+I think for that we should probably have an event that makes it
+clear it is enabled and we won't see these.  (Need's Ali's patches
+to go upstream first though).
+
+> 
+> In cxl_event_insert(), cxl_event_count() is hoisted into a local
+> variable so its O(n) queue walk is performed once per insert rather
+> than twice (once for the trace point, once for the existing return-
+> value comparison).
+> 
+> Signed-off-by: Junjie Cao <junjie.cao@intel.com>
 > ---
->  hw/riscv/virt-acpi-build.c | 32 ++++++++++++++++++++++++++++++++
->  1 file changed, 32 insertions(+)
->
-> diff --git a/hw/riscv/virt-acpi-build.c b/hw/riscv/virt-acpi-build.c
-> index 309d64b322..a5bafd1dcf 100644
-> --- a/hw/riscv/virt-acpi-build.c
-> +++ b/hw/riscv/virt-acpi-build.c
-> @@ -510,6 +510,38 @@ static void build_dsdt(GArray *table_data,
->      if (s->cxl_devices_state.is_enabled) {
->          Aml *cxl_dev =3D aml_device("CXLM");
->          aml_append(cxl_dev, aml_name_decl("_HID", aml_string("ACPI0017")=
-));
+>  hw/cxl/cxl-events.c | 8 +++++++-
+>  hw/cxl/cxl-host.c   | 4 ++++
+>  hw/cxl/trace-events | 9 +++++++++
+>  3 files changed, 20 insertions(+), 1 deletion(-)
+> 
+> diff --git a/hw/cxl/cxl-events.c b/hw/cxl/cxl-events.c
+> index 5356dfb5b3..f4aa419953 100644
+> --- a/hw/cxl/cxl-events.c
+> +++ b/hw/cxl/cxl-events.c
+> @@ -13,6 +13,7 @@
+>  #include "hw/pci/msix.h"
+>  #include "hw/cxl/cxl.h"
+>  #include "hw/cxl/cxl_events.h"
+> +#include "trace.h"
+>  
+>  /* Artificial limit on the number of events a log can hold */
+>  #define CXL_TEST_EVENT_OVERFLOW 8
+> @@ -98,6 +99,7 @@ bool cxl_event_insert(CXLDeviceState *cxlds, CXLEventLogType log_type,
+>      uint64_t time;
+>      CXLEventLog *log;
+>      CXLEvent *entry;
+> +    int depth;
+>  
+>      if (log_type >= CXL_EVENT_TYPE_MAX) {
+>          return false;
+> @@ -115,6 +117,7 @@ bool cxl_event_insert(CXLDeviceState *cxlds, CXLEventLogType log_type,
+>          }
+>          log->overflow_err_count++;
+>          log->last_overflow_timestamp = time;
+> +        trace_cxl_event_overflow(log_type, log->overflow_err_count);
+>          return false;
+>      }
+>  
+> @@ -133,8 +136,10 @@ bool cxl_event_insert(CXLDeviceState *cxlds, CXLEventLogType log_type,
+>      QSIMPLEQ_INSERT_TAIL(&log->events, entry, node);
+>      cxl_event_set_status(cxlds, log_type, true);
+>  
+> +    depth = cxl_event_count(log);
+
+Hmm. I wonder if we can name this more clearly. It is kind of
+queue depth, but I've not really seen that used with and people might
+think that's the maximum space.   Maybe occupancy is better?
+(Assisted by claude ;)
+
+> +    trace_cxl_event_insert(log_type, depth);
+>      /* Count went from 0 to 1 */
+> -    return cxl_event_count(log) == 1;
+> +    return depth == 1;
+>  }
+>  
+>  void cxl_discard_all_event_records(CXLDeviceState *cxlds)
+> @@ -234,6 +239,7 @@ CXLRetCode cxl_event_clear_records(CXLDeviceState *cxlds,
+>          entry = cxl_event_get_head(log);
+>      }
+>  
+> +    trace_cxl_event_clear(log_type, pl->nr_recs);
+>      return CXL_MBOX_SUCCESS;
+>  }
+>  
+> diff --git a/hw/cxl/cxl-host.c b/hw/cxl/cxl-host.c
+> index a94b893e99..4157377a95 100644
+> --- a/hw/cxl/cxl-host.c
+> +++ b/hw/cxl/cxl-host.c
+> @@ -21,6 +21,7 @@
+>  #include "hw/pci/pci_host.h"
+>  #include "hw/pci/pcie_port.h"
+>  #include "hw/pci-bridge/pci_expander_bridge.h"
+> +#include "trace.h"
+>  
+>  static void cxl_fixed_memory_window_config(CXLFixedMemoryWindowOptions *object,
+>                                             int index, Error **errp)
+> @@ -168,6 +169,7 @@ static PCIDevice *cxl_cfmws_find_device(CXLFixedWindow *fw, hwaddr addr)
+>      bool target_found;
+>      PCIDevice *rp, *d;
+>  
+> +    trace_cxl_cfmws_lookup(addr, fw->index);
+>      rb_index = (addr / cxl_decode_ig(fw->enc_int_gran)) % fw->num_targets;
+>      hb = PCI_HOST_BRIDGE(fw->target_hbs[rb_index]->cxl_host_bridge);
+>      if (!hb || !hb->bus || !pci_bus_is_cxl(hb->bus)) {
+> @@ -191,6 +193,7 @@ static PCIDevice *cxl_cfmws_find_device(CXLFixedWindow *fw, hwaddr addr)
+>          if (!target_found) {
+>              return NULL;
+>          }
+> +        trace_cxl_cfmws_target_resolved(addr, target);
+>  
+>          rp = pcie_find_port_by_pn(hb->bus, target);
+>          if (!rp) {
+> @@ -227,6 +230,7 @@ static PCIDevice *cxl_cfmws_find_device(CXLFixedWindow *fw, hwaddr addr)
+>      if (!target_found) {
+>          return NULL;
+>      }
+> +    trace_cxl_cfmws_target_resolved(addr, target);
+>  
+>      d = pcie_find_port_by_pn(&PCI_BRIDGE(d)->sec_bus, target);
+>      if (!d) {
+> diff --git a/hw/cxl/trace-events b/hw/cxl/trace-events
+> index 15977dce6e..e5f196787d 100644
+> --- a/hw/cxl/trace-events
+> +++ b/hw/cxl/trace-events
+> @@ -10,3 +10,12 @@ cxl_mailbox_handler_return(uint16_t opcode, int ret, size_t len_out) "opcode=0x%
+>  # cxl-cdat.c
+>  cxl_cdat_init(const char *source) "source=%s"
+>  cxl_cdat_loaded(const char *filename, size_t length, int num_entries) "filename=%s length=%zu entries=%d"
 > +
-> +        /*
-> +         * Declare a _DEP on every ACPI0016 CXL host bridge so the OS
-> +         * defers ACPI0017 enumeration until acpi_pci_root has attached
-> +         * the CXL host bridges. Without this, cxl_acpi may probe before
-> +         * to_cxl_host_bridge() can resolve the PCI root and the CXL
-> +         * port topology comes up empty.
-> +         */
-> +        if (s->bus) {
-> +            PCIBus *bus;
-> +            uint32_t num_cxl_hbs =3D 0;
+> +# cxl-events.c
+> +cxl_event_insert(int log_type, int depth) "log_type=%d depth=%d"
+> +cxl_event_overflow(int log_type, uint16_t overflow_err_count) "log_type=%d overflow_err_count=%u"
+> +cxl_event_clear(int log_type, int nr_recs) "log_type=%d nr_recs=%d"
 > +
-> +            QLIST_FOREACH(bus, &s->bus->child, sibling) {
-> +                if (pci_bus_is_root(bus) && pci_bus_is_cxl(bus)) {
-> +                    num_cxl_hbs++;
-> +                }
-> +            }
-> +
-> +            if (num_cxl_hbs > 0) {
-> +                Aml *dep_pkg =3D aml_package(num_cxl_hbs);
-> +
-> +                QLIST_FOREACH(bus, &s->bus->child, sibling) {
-> +                    if (pci_bus_is_root(bus) && pci_bus_is_cxl(bus)) {
-> +                        aml_append(dep_pkg,
-> +                                   aml_name("\\_SB.PC%.02X",
-> +                                            pci_bus_num(bus)));
-> +                    }
-> +                }
-> +                aml_append(cxl_dev, aml_name_decl("_DEP", dep_pkg));
-> +            }
-> +        }
-> +
->
-LGTM.
-Reviewed-by: Sunil V L <sunilvl@oss.qualcomm.com>
+> +# cxl-host.c
+> +cxl_cfmws_lookup(uint64_t addr, int fw_index) "addr=0x%"PRIx64" fw=%d"
+> +cxl_cfmws_target_resolved(uint64_t addr, uint8_t target) "addr=0x%"PRIx64" target=0x%02x"
+
 
