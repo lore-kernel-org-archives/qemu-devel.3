@@ -4,109 +4,101 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 97B8ECD8CB2
-	for <qemu-devel@archiver.kernel.org>; Tue,  9 Jun 2026 16:25:44 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id F37A5CD8CB9
+	for <qemu-devel@archiver.kernel.org>; Tue,  9 Jun 2026 16:26:13 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wWzGb-0006iS-AL; Tue, 09 Jun 2026 12:25:29 -0400
+	id 1wWzH3-00072Y-QD; Tue, 09 Jun 2026 12:25:59 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1wWzGZ-0006hw-Ei
- for qemu-devel@nongnu.org; Tue, 09 Jun 2026 12:25:27 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1wWzGW-0005XX-Vw
- for qemu-devel@nongnu.org; Tue, 09 Jun 2026 12:25:27 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1781022323;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=c7nlmOv0jY+GRSGZHhUf5P0eWiMNFxPkLVE4FQlgOKU=;
- b=GlUsHlKBq89ttEZiUoIxwqeEOYPQu2ULBUB03OBf0xKVE9t/eNCZ3saiThy6UQ/rusw/cl
- UpryqjiMz69WiadBrZb5vwvTIIpCkh97mBmoXtI6ALVx1d1mhDSDcI7J06ESXMWCYJYlzs
- MI9I6mCzh9Kd2EaadGEK6cfB4aOwTu4=
-Received: from mail-qt1-f198.google.com (mail-qt1-f198.google.com
- [209.85.160.198]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-578-0-Fl0c5cO3GzAw5nMYCdHA-1; Tue, 09 Jun 2026 12:25:22 -0400
-X-MC-Unique: 0-Fl0c5cO3GzAw5nMYCdHA-1
-X-Mimecast-MFC-AGG-ID: 0-Fl0c5cO3GzAw5nMYCdHA_1781022321
-Received: by mail-qt1-f198.google.com with SMTP id
- d75a77b69052e-517b75c1ee3so42421221cf.3
- for <qemu-devel@nongnu.org>; Tue, 09 Jun 2026 09:25:21 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1wWzGw-0006xJ-0O
+ for qemu-devel@nongnu.org; Tue, 09 Jun 2026 12:25:50 -0400
+Received: from mail-ej1-x636.google.com ([2a00:1450:4864:20::636])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1wWzGu-0005hd-HZ
+ for qemu-devel@nongnu.org; Tue, 09 Jun 2026 12:25:49 -0400
+Received: by mail-ej1-x636.google.com with SMTP id
+ a640c23a62f3a-bef47b1ac01so869332866b.2
+ for <qemu-devel@nongnu.org>; Tue, 09 Jun 2026 09:25:47 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1781022346; cv=none;
+ d=google.com; s=arc-20240605;
+ b=GsmXE5M3NZ9iIHItMfKptCYbEeE/rfu2jrl2tPWycNNkmXso/vI2nn5d03oqQBkTzj
+ ReZj77AcESm3PXmmee4yRIxzUCoZn1+f+L77G5fkIdrto9bNXiMwHqoJOLUE11pLewMg
+ TovHREV2Iy7pRZhl7HJapzzlar5NKG7/f7bdZH5tgECn/heK9/5A3t65lcIixBQ2QZV6
+ 6N9NSmF/E64Xzzaocuj6+D2TnwlbxeErdO/pV/5jaE7xDO+/IuK+XsXWjQp2cvLyMwqG
+ wCDWAxcpyCDqjsQBp+h9qUNIn9SkERoJmL3JWBBrENS4J1xUfuMC/cCCwPRLorKRXlZI
+ crYA==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
+ s=arc-20240605; 
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:dkim-signature;
+ bh=iZ6B5/5KFMGcml+yrVI24NNUjdE1+KahKb88orQukBM=;
+ fh=/ftcwOPYeEIhzseC7WF42kR+xVR/IJiWpLC1+A7SOWQ=;
+ b=Lue1Q3dW2AkwApoioTmwT0jPlIncBiBrW1ffBEo1pWQ6rtUZxgnvo1A0f+mwjaH57s
+ +DBTNzBWoV13VaClx4pHIhxoGgOw+xUdQXRm7eIdsspezkMoQT3OJGWRTnlLpxIq9JbL
+ nz42aWqWIDW2PFp4WOI0LBBZO0xqeNmgVDPRkEEUzmARj7yY+iahRJ/DQs6y2gqll4i1
+ J4pbxpJ+WkZWJ3L3VSYS10EoDMynIko7BF9Bze8kKnvVQfKNAFkDTfJS60q7+I6/aqts
+ 0afJ73g9sLJgpeZzTc37h+ha5FfZD4CLq7TPlTbV2ynnrNblC+j0oB2g4EUYDDVZjOgY
+ kpnQ==; darn=nongnu.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1781022321; x=1781627121; darn=nongnu.org;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
- bh=c7nlmOv0jY+GRSGZHhUf5P0eWiMNFxPkLVE4FQlgOKU=;
- b=MvHNkRftVsOGpRwvsEioMqPdq4/PACfOBTwkka/yr5u49uIfUGQk9q5eG4QtPe7d4x
- p+xe3Ei+yC4kRurAM37qQcQOe/PQHNuZYZ2xAPvKVrcCjbI8NaNmzVn9HC1Uf+ZlA3sZ
- B7GjMGxJq+S9IzxjA2Zwrd5G44ZczoFjAHThdLfLZQjHA3S9hOBOKR9Qs06jTaGW+mCX
- WULcTr9QMGhLdjKg3isApr0Jr9hoJTRUXykdzlmTBg5eudIO0FIHlmlEcFOPLmguIsb6
- M1uwBya1diUqTooWu9AG5cpl79EfhyIz0Wdb6J4wk88RiJpM1UoJXzXjWd2z5ZYUABp8
- uIwg==
+ d=linaro.org; s=google; t=1781022346; x=1781627146; darn=nongnu.org;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:from:to:cc:subject:date:message-id:reply-to;
+ bh=iZ6B5/5KFMGcml+yrVI24NNUjdE1+KahKb88orQukBM=;
+ b=GtTNMhEAJyzLG8iv6LLwZN0KaMIDGlqNOQnuYAmPZhQdJGQf16t0jaXLJvzIN3rjhk
+ vqAMiK2iFSifTk/bVDawkwTKEho1aEMIED1NiPNmssL/6ak3Oe8jRsvZtk45Yq0PPQGW
+ pQmlQ9Rw1T15t6skoko61NAEAFuRYGViMYg+w0FkKmkazPvNL3VRE63zU+ON2MIUyfF1
+ ChNiPFxHdnocPa7z8NzLCpEnyI4AIVF/vLFAfxvVfFHcRqKPwep7Q/8beuT3qF6MD7hM
+ 27quQzZI3jNm+TNw5PwRmRggfRhMpl91d7yQ6lbekDetSZXNl4aNxMgtk5fuiYw2tVt9
+ 5qsQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1781022321; x=1781627121;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=c7nlmOv0jY+GRSGZHhUf5P0eWiMNFxPkLVE4FQlgOKU=;
- b=fCyI1lNenit5XTEEoHNiwC3nbYILFLI3ZrY6DHXxSMfpkoIFFZ2KJdedg4L2wY514+
- mB6PNdkGXEVFKcWII25/7VeLVR0XwMyPq1JsZWYSOQqAszLGCmgB8xjPfd3xFxUzuf9T
- df8kbVwv4N5W26IAkhBYraWBlBZimgY8FUzmId/4in72+hYPH2nsVDbNuz9JJEYby5GV
- 6BQAZq2467BwhVH3bIMP3Dj8Zc8LDq6quLKaaseLtm9a6JySXXx9SXCmwu3XcKmbCcNy
- F9NraXyBCdkb+/BHSrfLrhE7UBYBGPTT/4U/sxLg/RWpFbATKMOUbF6cjI6l58jeJfAe
- oG5g==
-X-Forwarded-Encrypted: i=1;
- AFNElJ8l3OC/vG94sW4uxKdISULCJbhdzGKxfKyYB9a9wS39eQXibCfRBBcwZhqwjJB73SCYrJ1P3aQye+R1@nongnu.org
-X-Gm-Message-State: AOJu0YyTbvbdixHRF6cgbHqbKFf7gV4l1gpGvF0PgqZE3DyDJRhSJIec
- uyZwOKQpNUhPBJwC17ysyPuO7lZkqNfWoRjXCTM63pBBCLk2HqbY852fy+YrRrJhFMxQZVRHgBd
- eoLZFshvcI5RTOwLBhPwg5ZXfyqStdUzeJj1S/fSeA8VDMRDmLqaY6CG9
-X-Gm-Gg: Acq92OELzFZ96A70PwqfFnfADPM0GC8klGSUn+GRE12ji0b9dnCuvYZ9q3bj/yr8rEJ
- q6zPmbCipYYwUgiyEvVspOc2FdbR+IuZHuh37DLvxxHlxNrtkBYMOQc28g0cL2zMlEKxL+/2siL
- htKZrg16T1JYD6h3FA2YgtyUkuU+qkjNqMhfHws3suohgnNECXiqwhWvMSJRkHJmcT1z7A6BC1L
- jODBpz+QgeGd4eHF3qUpwaRCn3dU5iwQgxUQSqOhQLEeJw0ywjEteSLrszeySNSdNKkWOC3sRXP
- WETLenq33UZoaIEbaU5dN3bUDId81SFiBS6wkjmuQT3Q0rerKqxAfTECOcSYEhZBJH/gohk1OR2
- bEkUDJg+1vsa6K4dcov2YW4PZHg==
-X-Received: by 2002:a05:622a:4c0a:b0:516:e0bc:f485 with SMTP id
- d75a77b69052e-51795bccd78mr306221881cf.30.1781022321227; 
- Tue, 09 Jun 2026 09:25:21 -0700 (PDT)
-X-Received: by 2002:a05:622a:4c0a:b0:516:e0bc:f485 with SMTP id
- d75a77b69052e-51795bccd78mr306221081cf.30.1781022320584; 
- Tue, 09 Jun 2026 09:25:20 -0700 (PDT)
-Received: from x1.local ([142.189.10.167]) by smtp.gmail.com with ESMTPSA id
- d75a77b69052e-51775da6f41sm185983791cf.22.2026.06.09.09.25.19
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 09 Jun 2026 09:25:20 -0700 (PDT)
-Date: Tue, 9 Jun 2026 12:25:19 -0400
-From: Peter Xu <peterx@redhat.com>
-To: Gavin Shan <gshan@redhat.com>
-Cc: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>,
- qemu-devel@nongnu.org, qemu-arm@nongnu.org, mst@redhat.com,
- jugraham@redhat.com, shan.gavin@gmail.com
-Subject: Re: [PATCH RFCv1] virtio: Inherit max bounce buffer size from bus
- parent if possible
-Message-ID: <aig-b8zPDGGCfwTY@x1.local>
-References: <20260608001821.850921-1-gshan@redhat.com>
- <aiaDgG26a6TUrKuM@redhat.com>
- <07ca74b4-52a8-4187-a57c-7c3277e574d3@redhat.com>
- <aiapywnJY64G7nUK@redhat.com>
- <21664978-9a01-4ff5-8213-5bd5d93750ae@redhat.com>
+ d=1e100.net; s=20251104; t=1781022346; x=1781627146;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=iZ6B5/5KFMGcml+yrVI24NNUjdE1+KahKb88orQukBM=;
+ b=mYFLJBA+HxoAQS0dsq5TiFNevNdeq3yOiOdwNuexhJPNB1PE0fnXCpDcy+DWW3wGQS
+ nWQi9bXnBvX8NEExtJsKU4AZjSgoHSOcZzmBQPvG0gtPQoa26rp9zKre8BbE3IOJ7k8e
+ +4kDyfE4EjoPyuASQqraWBcpBeWspEB10sWVQKd9KT1JBrHjhCUSsw/NMZj/o8mr9vpz
+ LASuOE1CqfyaSh8vKN3yvwaveceCrDXzvbGMW8PVID1+y73OkErqO2fNxciRlTm9xl9S
+ 7QqMPkm06fxd0qMKvpOZCsye/L+v5BuakU80+cezlxmpDjcaul3zB9hesOvwDHz7D1/+
+ K3zw==
+X-Gm-Message-State: AOJu0YyCwmwLrBz68/cTUNeRn/E4VVcnUzHlPqT26cRs1HR6gsHDMaNx
+ gtA3Kf04lSPexEqemyQRBD7CDQ3WI5oORLNztZvjs7moIIA+rPW/eZHpo3sjlE6Qb/U+U/jn14x
+ 0TximlKAmHTMbru1jWLW6HFCPJKxtWFUrK60FsR8MSp9wLOp930O/
+X-Gm-Gg: Acq92OG7mD6EQOfm+31X/inviZDkr8as6KLpo1k2TEuJ4a6orhchT/T9CEaXaincCdY
+ lCx9TOXLOxYZTZkvRlZPT82Z20c3JTM3N5NkmA0vnHuDeN3McGONFs3Tpn7rIfl8ZZyYc2V6LhU
+ 9dTTIukW2cBVSWvYrQJZEfqbKQCk4zHyVtPU5PvYNbpRLB8nL29GDcKQe8lgUcL8epmzwIEf42Z
+ 9b9SlVtxkstpuC85KEdoiQTBCvL4unpfudvtTtyYKltv3KloXpNwZC4UACLIVJbx1AYUdHlKuoT
+ VzIM+AdOLVGv+DQRQkcsCU4dWo34ukUy/LHzQs1kGJ9PCCF5P6b7eBaVS/ujsL6PXGETHORcjjI
+ Qfg==
+X-Received: by 2002:a17:906:c10c:b0:be2:36d7:573b with SMTP id
+ a640c23a62f3a-bf370473fa6mr1106911366b.12.1781022346389; Tue, 09 Jun 2026
+ 09:25:46 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <21664978-9a01-4ff5-8213-5bd5d93750ae@redhat.com>
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=peterx@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -24
-X-Spam_score: -2.5
+References: <20260603032855.106930-1-richard.henderson@linaro.org>
+In-Reply-To: <20260603032855.106930-1-richard.henderson@linaro.org>
+From: Peter Maydell <peter.maydell@linaro.org>
+Date: Tue, 9 Jun 2026 17:25:32 +0100
+X-Gm-Features: AVVi8CdAQ7Fk6JHulkR9J9lseVEDqLuhdCvE_gpH0jljW8wuseJULhxdZPPzn2Y
+Message-ID: <CAFEAcA-4KZg4oPL2Dv-TWmkwV0won1+iBD_B6aLNphyZj=-1VQ@mail.gmail.com>
+Subject: Re: [PATCH v9 00/45] target/arm: Implement FEAT_FP8
+To: Richard Henderson <richard.henderson@linaro.org>
+Cc: qemu-devel@nongnu.org, qemu-arm@nongnu.org
+Content-Type: text/plain; charset="UTF-8"
+Received-SPF: pass client-ip=2a00:1450:4864:20::636;
+ envelope-from=peter.maydell@linaro.org; helo=mail-ej1-x636.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.445,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -122,61 +114,25 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, Jun 09, 2026 at 12:08:34PM +1000, Gavin Shan wrote:
-> Yeah. Apart from the option of adding a new property to MachineState to disable
-> the check on the max bounce buffer size, we also can make this existing option
-> "x-max-bounce-buffer-size" official and officially supported by renaming it to
-> "max-bounce-buffer-size". Lets see what comments Michael or Peter will have.
+On Wed, 3 Jun 2026 at 04:30, Richard Henderson
+<richard.henderson@linaro.org> wrote:
+>
+> Changes for v9:
+>   - Include 3 arm patches from the fp internals patch set.
+>   - Generalize TRANS_FEAT_STREAMING_SME2 to TRANS_FEAT_STREAMING_IF,
+>     pulled from an in-progress FEAT_SVE2p2 tree.
+>
+> Changes for v8:
+>   - 23 patches upstream
+>   - Rebase adjustments
+>   - Rewrite arm_init_fp_status per feedback
+>
+> r~
 
-IIUC updating max-bounce-buffer-size will be the last resort, because I
-don't know how to properly define what is the correct value.  When it's
-prefixed with x- it's indeed more problematic..
+I think I've reviewed all of this now (either unconditionally or
+"with this fix" r-bys); if you can get a respin out by Thursday
+I should be able to get it into a pullreq this week I think.
 
-Two pure questions..
-
-Question 1:
-
-I want to better understand the failure case.  I don't yet understand why
-it has anything to do with page size with the parameter.  Say, shouldn't
-virtio-blk's DMA requests in form of less-than-page-size, then normally it
-should work even for 64k psize (as long as the total of buffers to map goes
-beyond 4k)?
-
-Maybe it's because there're a lot of concurrent IOs/DMAs hence it did use
-more than that?
-
-Question 2:
-
-Quoting from commit message:
-
-        When the GPU's driver (NVidia open driver) is loaded on guest
-        bootup, the memory blocks residing in the PCI BAR can be presented
-        to the guest through memory hot-add. The page cache can be
-        allocated from the hot added memory blocks when cuda-samples is
-        being built. Afterwards, he page cache is sent to QEMU's virtio-blk
-        device as part of the DMA request, the bounce buffer is used to
-        accomodate the request as the corresponding memory region
-        (MemoryRegion) is a RAM DEVICE region in qemu. For this specific
-        case, false is returned from memory_access_is_direct() in the path
-        where the DMA request is handled.
-
-I don't think I know well in this case, but if you say the PCI bars have
-page cache in the back, does it mean that it should be directly accessible?
-Maybe it's about this line:
-
-    /*
-     * RAM DEVICE regions can be accessed directly using memcpy, but it might
-     * be MMIO and access using mempy can be wrong (e.g., using instructions not
-     * intended for MMIO access). So we treat this as IO.
-     */
-    return !memory_region_is_ram_device(mr);
-
-But then my question is if this is a legal case can we loose this check so
-that we don't need to use bounce buffers at all.
-
-Thanks,
-
--- 
-Peter Xu
-
+thanks
+-- PMM
 
