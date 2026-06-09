@@ -4,85 +4,64 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A12FFCD8CA4
-	for <qemu-devel@archiver.kernel.org>; Tue,  9 Jun 2026 12:57:40 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 57ADBCD8CA4
+	for <qemu-devel@archiver.kernel.org>; Tue,  9 Jun 2026 12:57:46 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wWw0p-00017L-39; Tue, 09 Jun 2026 08:56:59 -0400
+	id 1wWw0n-00014J-Hf; Tue, 09 Jun 2026 08:56:57 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <shrihari.s@samsung.com>)
- id 1wWtxh-00065x-Pv
- for qemu-devel@nongnu.org; Tue, 09 Jun 2026 06:45:42 -0400
-Received: from mailout3.samsung.com ([203.254.224.33])
+ (Exim 4.90_1) (envelope-from <jic23@kernel.org>)
+ id 1wWw0I-0000tv-0J; Tue, 09 Jun 2026 08:56:27 -0400
+Received: from tor.source.kernel.org ([172.105.4.254])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <shrihari.s@samsung.com>)
- id 1wWtxe-0005hw-Hn
- for qemu-devel@nongnu.org; Tue, 09 Jun 2026 06:45:37 -0400
-Received: from epcas5p4.samsung.com (unknown [182.195.41.42])
- by mailout3.samsung.com (KnoxPortal) with ESMTP id
- 20260609104529epoutp03836166d7464c1fe21e815f581b200bb5~3Y9GeLhhW0098100981epoutp03F
- for <qemu-devel@nongnu.org>; Tue,  9 Jun 2026 10:45:29 +0000 (GMT)
-DKIM-Filter: OpenDKIM Filter v2.11.0 mailout3.samsung.com
- 20260609104529epoutp03836166d7464c1fe21e815f581b200bb5~3Y9GeLhhW0098100981epoutp03F
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=samsung.com;
- s=mail20170921; t=1781001929;
- bh=T3oLqm2ktWU5/ab7VMykgacrbATWfIOyJxRsX55XZDo=;
- h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
- b=ZoaK+X2vlD7oCNFhN4CJ0AzLAKjcg+UmCp38vkxLtyL6YTz+u/MXVE0Pw+P6kRqgm
- sOrtVy8Wx+NNo6MacoD1+hocAJTKGwO/3kpUwQSpdOBnyMtOnLPhx8+pX9nhvGXbYY
- xEJZExwq0zQy9+UzdWVD4GMtTVA9LIHPaciEdbG0=
-Received: from epsnrtp02.localdomain (unknown [182.195.42.154]) by
- epcas5p4.samsung.com (KnoxPortal) with ESMTPS id
- 20260609104529epcas5p497b1312947ef611cc454ac0df4c2ada1~3Y9GM51nW3211032110epcas5p4T;
- Tue,  9 Jun 2026 10:45:29 +0000 (GMT)
-Received: from epcas5p4.samsung.com (unknown [182.195.38.95]) by
- epsnrtp02.localdomain (Postfix) with ESMTP id 4gZQY44R0Mz2SSKb; Tue,  9 Jun
- 2026 10:45:28 +0000 (GMT)
-Received: from epsmtip1.samsung.com (unknown [182.195.34.30]) by
- epcas5p4.samsung.com (KnoxPortal) with ESMTPA id
- 20260609104528epcas5p4b7379fbb5bcc8ee74461a039e88b1637~3Y9FBHaeE2265622656epcas5p4G;
- Tue,  9 Jun 2026 10:45:28 +0000 (GMT)
-Received: from unvme-SYS-221H-TN24R.samsungds.net (unknown [107.99.40.127])
- by epsmtip1.samsung.com (KnoxPortal) with ESMTPA id
- 20260609104526epsmtip13319bcd779781f7a72955366cc5108f6~3Y9DZhOhk2381023810epsmtip1W;
- Tue,  9 Jun 2026 10:45:26 +0000 (GMT)
-From: Shrihari E S <shrihari.s@samsung.com>
-To: jic23@kernel.org, linux-cxl@vger.kernel.org, linux-pci@vger.kernel.org,
- qemu-devel@nongnu.org, cpgs@samsung.com
-Cc: arun.george@samsung.com, vikash.k5@samsung.com, s.neeraj@samsung.com,
- shrihari.s@samsung.com, dongjoo.seo1@samsung.com, dave@stgolabs.net,
- gost.dev@samsung.com
-Subject: [RFC 6/8] hw/pci: Add PCIe Streamlined Virtual Channel (SVC)
- capability.
-Date: Tue,  9 Jun 2026 16:28:34 +0530
-Message-Id: <20260609105836.3702787-7-shrihari.s@samsung.com>
-X-Mailer: git-send-email 2.34.1
-In-Reply-To: <20260609105836.3702787-1-shrihari.s@samsung.com>
+ (Exim 4.90_1) (envelope-from <jic23@kernel.org>)
+ id 1wWw0F-00029H-SS; Tue, 09 Jun 2026 08:56:25 -0400
+Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
+ by tor.source.kernel.org (Postfix) with ESMTP id A3945601D6;
+ Tue,  9 Jun 2026 12:56:22 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 828AE1F00893;
+ Tue,  9 Jun 2026 12:56:16 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
+ s=k20260515; t=1781009782;
+ bh=eebyKTXI7M7ZomeyrwHDB0fKiasWrvtdjHN2irhwtOg=;
+ h=Date:From:To:Cc:Subject:In-Reply-To:References;
+ b=csa70ec6lrv9FgNKutBC9O9UUWyj5zaWcH1hxDbgbN7PzJg3Y2joJr9TVJnY26cbL
+ 6o1+OHTrEmLLMRQNCPpwS7Q5OkgfjVUgiqiVzzZbxPQfW33EhiGC/P2VizX74hJEtk
+ 8bkMoUKX/m9q8pVqSdsT45iUjyXpA/J0nJLO/17/9vzAKRRs07rMeTcLkAF35yx7MO
+ I/CFmTQjrCM4Ivfz59kxjDho3kFj2aXsgeKDnlNMVgzoVbiInEp26qze9sy30PiWCt
+ wwJ8+3AkYBeaHdQYTNum4vW2H55iL5oI0/0xiXKBpx+GkYcTYV2vM6xqFf8HGzx8Wj
+ z9UI7WN+rE4WQ==
+Date: Tue, 9 Jun 2026 13:56:11 +0100
+From: Jonathan Cameron <jic23@kernel.org>
+To: Chen Pei <cp0613@linux.alibaba.com>
+Cc: pbonzini@redhat.com, palmer@dabbelt.com, alistair.francis@wdc.com,
+ liwei1518@gmail.com, daniel.barboza@oss.qualcomm.com,
+ zhiwei_liu@linux.alibaba.com, chao.liu.zevorn@gmail.com,
+ sunilvl@ventanamicro.com, jonathan.cameron@huawei.com, fan.ni@samsung.com,
+ guoren@kernel.org, qemu-riscv@nongnu.org, qemu-devel@nongnu.org,
+ linux-cxl@vger.kernel.org, Dave Jiang <dave.jiang@intel.com>, "Michael S.
+ Tsirkin" <mst@redhat.com>, Igor Mammedov <imammedo@redhat.com>
+Subject: Re: [PATCH 3/4] hw/riscv/virt, gpex: Provide 32-bit MMIO window for
+ CXL host bridges
+Message-ID: <20260609135611.307122c8@jic23-huawei>
+In-Reply-To: <20260602074127.63819-4-cp0613@linux.alibaba.com>
+References: <20260602074127.63819-1-cp0613@linux.alibaba.com>
+ <20260602074127.63819-4-cp0613@linux.alibaba.com>
+X-Mailer: Claws Mail 4.4.0 (GTK 3.24.52; x86_64-pc-linux-gnu)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-CMS-MailID: 20260609104528epcas5p4b7379fbb5bcc8ee74461a039e88b1637
-X-Msg-Generator: CA
-Content-Type: text/plain; charset="utf-8"
-CMS-TYPE: 105P
-X-CPGSPASS: Y
-cpgsPolicy: CPGSC10-542,Y
-X-CFilter-Loop: Reflected
-X-CMS-RootMailID: 20260609104528epcas5p4b7379fbb5bcc8ee74461a039e88b1637
-References: <20260609105836.3702787-1-shrihari.s@samsung.com>
- <CGME20260609104528epcas5p4b7379fbb5bcc8ee74461a039e88b1637@epcas5p4.samsung.com>
-Received-SPF: pass client-ip=203.254.224.33;
- envelope-from=shrihari.s@samsung.com; helo=mailout3.samsung.com
-X-Spam_score_int: -31
-X-Spam_score: -3.2
-X-Spam_bar: ---
-X-Spam_report: (-3.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.445,
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=172.105.4.254; envelope-from=jic23@kernel.org;
+ helo=tor.source.kernel.org
+X-Spam_score_int: -24
+X-Spam_score: -2.5
+X-Spam_bar: --
+X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.445,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_PASS=-0.001, SPF_NONE=0.001 autolearn=ham autolearn_force=no
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
-X-Mailman-Approved-At: Tue, 09 Jun 2026 08:56:49 -0400
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -97,475 +76,205 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Dongjoo Seo <dongjoo.seo1@samsung.com>
+On Tue,  2 Jun 2026 15:41:26 +0800
+Chen Pei <cp0613@linux.alibaba.com> wrote:
 
-Implement the PCIe Streamlined Virtual Channel (SVC) Extended
-Capability by adding support of capability, control and status
-registers per PCIe 6.4 section 7.9.29. This capability is one
-of the main requisites for UIO support in both PCIe and CXL ports.
+> CXL component register BAR (BAR0 on CXL Root Port and Type3 device)
+> and the CXL device register BAR (BAR2 on Type3 device) are declared
+> as 64-bit non-prefetchable memory.  A standard PCIe-to-PCI bridge
+> exposes a 32-bit non-prefetchable memory window plus an (optional)
+> 64-bit prefetchable memory window, but no 64-bit non-prefetchable
+> window.
 
-Key changes include:
-    - New pcie_svc.c file for SVC capability management.
-    - Updated pcie_cap_fill_lnk() to handle flitmode signaling.
-    - Implement Lifecycle hooks (reset and config_write) to manage
-      SVC state.
+When you say 'standard' do you mean that is all the PCI spec allows
+for? (Right now I'm not working for a SIG member so don't have a copy
+to check)
 
-Signed-off-by: Dongjoo Seo <dongjoo.seo1@samsung.com>
-Signed-off-by: Shrihari E S <shrihari.s@samsung.com>
----
- hw/pci/meson.build         |   2 +-
- hw/pci/pci.c               |   4 +
- hw/pci/pcie.c              |  53 ++++++++++--
- hw/pci/pcie_svc.c          | 164 +++++++++++++++++++++++++++++++++++++
- include/hw/pci/pcie.h      |   7 ++
- include/hw/pci/pcie_regs.h |   1 +
- include/hw/pci/pcie_svc.h  |  91 ++++++++++++++++++++
- 7 files changed, 316 insertions(+), 6 deletions(-)
- create mode 100644 hw/pci/pcie_svc.c
- create mode 100644 include/hw/pci/pcie_svc.h
+>  Linux therefore places 64-bit non-prefetchable BARs in the
+> 32-bit non-prefetchable bridge window, which requires the bridge to
+> own enough address space below 4 GiB.
+> 
 
-diff --git a/hw/pci/meson.build b/hw/pci/meson.build
-index b9c34b2acf..d55882a0c9 100644
---- a/hw/pci/meson.build
-+++ b/hw/pci/meson.build
-@@ -14,7 +14,7 @@ pci_ss.add(files(
- # The functions in these modules can be used by devices too.  Since we
- # allow plugging PCIe devices into PCI buses, include them even if
- # CONFIG_PCI_EXPRESS=n.
--pci_ss.add(files('pcie.c', 'pcie_aer.c'))
-+pci_ss.add(files('pcie.c', 'pcie_aer.c', 'pcie_svc.c'))
- pci_ss.add(files('pcie_doe.c'))
- system_ss.add(when: 'CONFIG_PCI_EXPRESS', if_true: files('pcie_port.c', 'pcie_host.c'))
- system_ss.add_all(when: 'CONFIG_PCI', if_true: pci_ss)
-diff --git a/hw/pci/pci.c b/hw/pci/pci.c
-index 5996229c81..0469250f42 100644
---- a/hw/pci/pci.c
-+++ b/hw/pci/pci.c
-@@ -30,6 +30,7 @@
- #include "hw/pci/pci_bridge.h"
- #include "hw/pci/pci_bus.h"
- #include "hw/pci/pci_host.h"
-+#include "hw/pci/pcie_svc.h"
- #include "hw/core/qdev-properties.h"
- #include "hw/core/qdev-properties-system.h"
- #include "migration/cpr.h"
-@@ -568,6 +569,7 @@ static void pci_do_device_reset(PCIDevice *dev)
-     msi_reset(dev);
-     msix_reset(dev);
-     pcie_sriov_pf_reset(dev);
-+    pcie_svc_cap_reset(dev);
- }
- 
- /*
-@@ -1814,6 +1816,8 @@ void pci_default_write_config(PCIDevice *d, uint32_t addr, uint32_t val_in, int
-     msi_write_config(d, addr, val_in, l);
-     msix_write_config(d, addr, val_in, l);
-     pcie_sriov_config_write(d, addr, val_in, l);
-+    pcie_cap_flit_write_config(d, addr, val_in, l);
-+    pcie_svc_cap_write_config(d, addr, val_in, l);
- }
- 
- /***********************************************************/
-diff --git a/hw/pci/pcie.c b/hw/pci/pcie.c
-index d452199d85..7c7d948e00 100644
---- a/hw/pci/pcie.c
-+++ b/hw/pci/pcie.c
-@@ -112,8 +112,9 @@ pcie_cap_v1_fill(PCIDevice *dev, uint8_t port, uint8_t type, uint8_t version)
- }
- 
- /* Includes setting the target speed default */
--static void pcie_cap_fill_lnk(uint8_t *exp_cap, PCIExpLinkWidth width,
--                              PCIExpLinkSpeed speed, bool flitmode)
-+static void pcie_cap_fill_lnk(PCIDevice *dev, uint8_t *exp_cap,
-+                              PCIExpLinkWidth width, PCIExpLinkSpeed speed,
-+                              bool flitmode)
- {
-     /* Clear and fill LNKCAP from what was configured above */
-     pci_long_test_and_clear_mask(exp_cap + PCI_EXP_LNKCAP,
-@@ -160,8 +161,14 @@ static void pcie_cap_fill_lnk(uint8_t *exp_cap, PCIExpLinkWidth width,
-     }
- 
-     if (flitmode) {
--        pci_long_test_and_set_mask(exp_cap + PCI_EXP_LNKSTA2,
-+        uint32_t pos = dev->exp.exp_cap;
-+
-+        pci_word_test_and_set_mask(exp_cap + PCI_EXP_FLAGS,
-                                    PCI_EXP_LNKSTA2_FLIT);
-+        pci_word_test_and_set_mask(exp_cap + PCI_EXP_FLAGS,
-+                                   PCI_EXP_FLAGS_FLIT);
-+        pci_word_test_and_set_mask(dev->wmask + pos + PCI_EXP_LNKCTL,
-+                                   PCI_EXP_LNKCTL_FLIT_DIS);
-     }
- }
- 
-@@ -180,9 +187,44 @@ void pcie_cap_fill_link_ep_usp(PCIDevice *dev, PCIExpLinkWidth width,
-                                QEMU_PCI_EXP_LNKSTA_NLW(width) |
-                                QEMU_PCI_EXP_LNKSTA_CLS(speed));
- 
--    pcie_cap_fill_lnk(exp_cap, width, speed, flitmode);
-+    pcie_cap_fill_lnk(dev, exp_cap, width, speed, flitmode);
- }
- 
-+void pcie_cap_flit_write_config(PCIDevice *dev, uint32_t addr, uint32_t val,
-+                                int len)
-+{
-+    uint8_t *exp_cap;
-+    uint16_t lnksta2;
-+    uint16_t lnkctl;
-+    uint16_t flags;
-+
-+    if (!pci_is_express(dev) || !dev->exp.exp_cap) {
-+        return;
-+    }
-+
-+    if (!ranges_overlap(addr, len,
-+                        dev->exp.exp_cap + PCI_EXP_LNKCTL, 2)) {
-+        return;
-+    }
-+
-+    exp_cap = dev->config + dev->exp.exp_cap;
-+    flags = pci_get_word(exp_cap + PCI_EXP_FLAGS);
-+    if (!(flags & PCI_EXP_FLAGS_FLIT)) {
-+        return;
-+    }
-+
-+    lnkctl = pci_get_word(exp_cap + PCI_EXP_LNKCTL);
-+    lnksta2 = pci_get_word(exp_cap + PCI_EXP_LNKSTA2);
-+
-+    if (lnkctl & PCI_EXP_LNKCTL_FLIT_DIS) {
-+        lnksta2 &= ~PCI_EXP_LNKSTA2_FLIT;
-+    } else {
-+        lnksta2 |= PCI_EXP_LNKSTA2_FLIT;
-+    }
-+
-+    pci_set_word(exp_cap + PCI_EXP_LNKSTA2, lnksta2);
-+ }
-+
- static void pcie_cap_fill_slot_lnk(PCIDevice *dev)
- {
-     PCIESlot *s = (PCIESlot *)object_dynamic_cast(OBJECT(dev), TYPE_PCIE_SLOT);
-@@ -217,7 +259,8 @@ static void pcie_cap_fill_slot_lnk(PCIDevice *dev)
-         /* the PCI_EXP_LNKSTA_DLLLA will be set in the hotplug function */
-     }
- 
--    pcie_cap_fill_lnk(exp_cap, s->width, s->speed, s->parent_obj.flitmode);
-+    pcie_cap_fill_lnk(dev, exp_cap, s->width, s->speed,
-+                      s->parent_obj.flitmode);
- }
- 
- int pcie_cap_init(PCIDevice *dev, uint8_t offset,
-diff --git a/hw/pci/pcie_svc.c b/hw/pci/pcie_svc.c
-new file mode 100644
-index 0000000000..84db73de58
---- /dev/null
-+++ b/hw/pci/pcie_svc.c
-@@ -0,0 +1,164 @@
-+/*
-+ * SPDX-License-Identifier: GPL-2.0-or-later
-+ *
-+ * PCIe Streamlined Virtual Channel (SVC) Extended Capability
-+ *
-+ * Copyright (c) 2026 Samsung Electronics Co., Ltd.
-+ */
-+
-+#include "qemu/osdep.h"
-+#include "qemu/bitops.h"
-+#include "hw/pci/pci_device.h"
-+#include "hw/pci/pcie.h"
-+#include "hw/pci/pcie_svc.h"
-+#include "hw/pci/pcie_port.h"
-+
-+static void pcie_svc_update_map(PCIDevice *dev)
-+{
-+    uint32_t non_uio_ctrl = SVC_VC0_PROTOCOL | SVC_VC_ENABLE;
-+    uint32_t uio_ctrl = SVC_UIO_PROTOCOL_SELECTED | SVC_VC_ENABLE;
-+    int offset;
-+
-+    if (!pci_is_express(dev) || !dev->exp.svc_cap) {
-+        return;
-+    }
-+
-+    offset = pcie_find_capability(dev, PCI_EXT_CAP_ID_SVC);
-+
-+    /* SVC VC0 & VC3 initialization */
-+    pci_set_long(dev->config + offset + SVC_RES_CTRL(0), BIT(0) | non_uio_ctrl);
-+    pci_set_long(dev->config + offset + SVC_RES_CTRL(3), BIT(3) | uio_ctrl);
-+
-+    /* SVC VC4 initialization - optional */
-+    if (dev->exp.svc.uio_opt_svc) {
-+        pci_set_long(dev->config + offset + SVC_RES_CTRL(4), BIT(4) | uio_ctrl);
-+    }
-+}
-+
-+int pcie_config_uio_svc(PCIDevice *d, Error **errp)
-+{
-+    PCIEPort *p = PCIE_PORT(d);
-+
-+    if (!get_uio_mandatory_svc(p)
-+        || pcie_svc_cap_init(d, PCI_EXT_CAP_BASE_OFFSET, errp) < 0) {
-+        return -1;
-+    }
-+
-+    if (get_uio_optional_svc(p)) {
-+        pcie_svc_set_vc4(d, true);
-+    }
-+
-+    return 0;
-+}
-+
-+int pcie_svc_cap_init(PCIDevice *dev, uint16_t offset, Error **errp)
-+{
-+    uint32_t hdr;
-+
-+    if (!pci_is_express(dev)) {
-+        error_setg(errp, "SVC ECAP requires PCIe");
-+        return -EINVAL;
-+    }
-+
-+    /*
-+     * If no other ECAPs are present, make SVC the first at 0x100.
-+     * This avoids pcie_add_capability() asserting on a non-0x100 offset.
-+     */
-+    hdr = pci_get_long(dev->config + PCI_CONFIG_SPACE_SIZE);
-+    if (hdr == 0) {
-+        offset = PCI_CONFIG_SPACE_SIZE;
-+    }
-+
-+    pcie_add_capability(dev, PCI_EXT_CAP_ID_SVC, 1, offset,
-+                        PCI_EXT_CAP_SVC_SIZE);
-+    dev->exp.svc_cap = offset;
-+    dev->exp.svc.ctrl = 0;
-+    dev->exp.svc.status = 0;
-+    dev->exp.svc.uio_mand_svc = true;
-+    dev->exp.svc.uio_opt_svc = false;
-+
-+    pci_set_long(dev->config + offset + PCIE_SVC_CAP_HEAD_OFFSET,
-+                 (NEXT_CAP_OFF | PCIE_SVC_CAP_VER | PCI_EXT_CAP_ID_SVC));
-+    pci_set_long(dev->wmask + offset + PCIE_SVC_CTL_OFFSET,
-+                 PCIE_SVC_CTL_ENABLE);
-+    pci_set_long(dev->config + offset + PCIE_SVC_CAP_OFFSET,
-+                 PCIE_SVC_CAP1_EVCC);
-+
-+    for (int i = 0; i <= PCIE_SVC_CAP1_EVCC; i++) {
-+        uint32_t res_cap_value = (1U << 8) | SVC_VC_ID(i);
-+        uint32_t res_ctrl_value = SVC_TC_VC_MAP_ENABLE
-+                                  | SVC_VC_PROTOCOL_SELECTED
-+                                  | SHARED_FLOW_CONTROL_USAGE_LIMIT_ENABLE
-+                                  | SHARED_FLOW_CONTROL_USAGE_LIMIT
-+                                  | SVC_VC_ENABLE;
-+
-+        if (i == 0) {
-+            res_cap_value = SVC_VC0_PROTOCOL | SVC_VC_ID(i);
-+        } else if (i == 3) {
-+            res_cap_value = SVC_VC3_PROTOCOL | SVC_VC_ID(i);
-+        } else if (i == 4) {
-+            res_cap_value = SVC_VC4_PROTOCOL | SVC_VC_ID(i);
-+        }
-+
-+        pci_set_long(dev->config + offset + SVC_RES_CAP(i), res_cap_value);
-+        pci_set_long(dev->wmask + offset + SVC_RES_CTRL(i), res_ctrl_value);
-+        pci_set_long(dev->config + offset + SVC_RES_STATUS(i), 0);
-+    }
-+    pcie_svc_update_map(dev);
-+    return 0;
-+}
-+
-+void pcie_svc_cap_reset(PCIDevice *dev)
-+{
-+    uint32_t offset;
-+
-+    if (!pci_is_express(dev) || !dev->exp.svc_cap) {
-+        return;
-+    }
-+
-+    offset = dev->exp.svc_cap;
-+    dev->exp.svc.ctrl = 0;
-+    dev->exp.svc.status = 0;
-+    pcie_svc_update_map(dev);
-+    pci_set_long(dev->config + offset + PCIE_SVC_CTL_OFFSET, 0);
-+    pci_set_long(dev->config + offset + PCIE_SVC_STA_OFFSET, 0);
-+}
-+
-+void pcie_svc_set_vc4(PCIDevice *dev, bool enable)
-+{
-+    if (!pci_is_express(dev) || !dev->exp.svc_cap) {
-+        return;
-+    }
-+
-+    dev->exp.svc.uio_opt_svc = enable;
-+    pcie_svc_update_map(dev);
-+}
-+
-+static void pcie_svc_apply_gating(PCIDevice *dev)
-+{
-+    uint16_t offset = dev->exp.svc_cap;
-+    uint32_t ctrl, status;
-+
-+    if (!offset) {
-+        return;
-+    }
-+
-+    ctrl = pci_get_long(dev->config + offset + PCIE_SVC_CTL_OFFSET);
-+    status = pci_get_long(dev->config + offset + PCIE_SVC_STA_OFFSET);
-+    dev->exp.svc.ctrl = ctrl;
-+    dev->exp.svc.status = status;
-+}
-+
-+void pcie_svc_cap_write_config(PCIDevice *dev,
-+                               uint32_t addr, uint32_t val, int len)
-+{
-+    uint16_t offset = dev->exp.svc_cap;
-+
-+    if (!offset) {
-+        return;
-+    }
-+
-+    if (ranges_overlap(addr, len, offset + PCIE_SVC_CTL_OFFSET, 4)) {
-+        pcie_svc_apply_gating(dev);
-+    }
-+}
-diff --git a/include/hw/pci/pcie.h b/include/hw/pci/pcie.h
-index 79808126dc..35db0f0c5e 100644
---- a/include/hw/pci/pcie.h
-+++ b/include/hw/pci/pcie.h
-@@ -25,6 +25,7 @@
- #include "hw/pci/pcie_regs.h"
- #include "hw/pci/pcie_aer.h"
- #include "hw/pci/pcie_sriov.h"
-+#include "hw/pci/pcie_svc.h"
- #include "hw/core/hotplug.h"
- 
- typedef struct PCIEPort PCIEPort;
-@@ -82,6 +83,10 @@ struct PCIExpressDevice {
-     uint16_t sriov_cap;
-     PCIESriovPF sriov_pf;
-     PCIESriovVF sriov_vf;
-+
-+    /* Streamlined Virtual Channel (SVC) introduced from PCIe 6.1 */
-+    uint16_t svc_cap;
-+    PCIESvcCap svc;
- };
- 
- #define COMPAT_PROP_PCP "power_controller_present"
-@@ -143,6 +148,8 @@ void pcie_dev_ser_num_init(PCIDevice *dev, uint16_t offset, uint64_t ser_num);
- void pcie_ats_init(PCIDevice *dev, uint16_t offset, bool aligned);
- void pcie_cap_fill_link_ep_usp(PCIDevice *dev, PCIExpLinkWidth width,
-                                PCIExpLinkSpeed speed, bool flitmode);
-+void pcie_cap_flit_write_config(PCIDevice *dev,
-+                                uint32_t addr, uint32_t val, int len);
- 
- void pcie_cap_slot_pre_plug_cb(HotplugHandler *hotplug_dev, DeviceState *dev,
-                                Error **errp);
-diff --git a/include/hw/pci/pcie_regs.h b/include/hw/pci/pcie_regs.h
-index 33a22229fe..644da744b2 100644
---- a/include/hw/pci/pcie_regs.h
-+++ b/include/hw/pci/pcie_regs.h
-@@ -81,6 +81,7 @@ typedef enum PCIExpLinkWidth {
- #define PCI_EXP_DEVCAP2_EETLPP          0x200000
- 
- #define PCI_EXP_DEVCTL2_EETLPPB         0x8000
-+#define  PCI_EXP_LNKCTL_FLIT_DIS        0x2000
- 
- /* ARI */
- #define PCI_ARI_VER                     1
-diff --git a/include/hw/pci/pcie_svc.h b/include/hw/pci/pcie_svc.h
-new file mode 100644
-index 0000000000..4872905501
---- /dev/null
-+++ b/include/hw/pci/pcie_svc.h
-@@ -0,0 +1,91 @@
-+/*
-+ * SPDX-License-Identifier: GPL-2.0-or-later
-+ *
-+ * PCIe Streamlined Virtual Channel (SVC) Extended Capability
-+ *
-+ * Copyright (c) 2026 Samsung Electronics Co., Ltd.
-+ */
-+
-+#ifndef HW_PCIE_SVC_H
-+#define HW_PCIE_SVC_H
-+
-+#include "hw/pci/pci.h"
-+#include "qemu/bitops.h"
-+
-+/*
-+ * The PCIe config space starts from 0x00 till 0xFF. In that
-+ * extended capability starts from 0x100 and each extended capability
-+ * is of dword size (32 bit). So we have to give a proper base offset
-+ * value which should be >= 0x100 and <= 0xFF and in between other
-+ * capability will also be registerd. We might not know where exactly
-+ * SVC extended capability will sit, so to avoid the overlapping we have
-+ * to give a very high offset.
-+ */
-+#define PCI_EXT_CAP_BASE_OFFSET                0x200
-+#define PCI_EXT_CAP_ID_SVC                     0x35
-+#define PCI_EXT_CAP_SVC_SIZE                   0x74
-+
-+/* PCIe 6.4 section 7.9.29 */
-+#define PCIE_SVC_CAP_HEAD_OFFSET               0x00
-+#define PCIE_SVC_CAP_OFFSET                    0x04
-+#define PCIE_SVC_CTL_OFFSET                    0x0c
-+#define PCIE_SVC_STA_OFFSET                    0x10
-+#define PCIE_SVC_CTL_ENABLE                    BIT(0)
-+#define PCIE_SVC_CAP1_EVCC                     (0x7 << 0)
-+
-+/* 7.9.29.1 SVC extended capability header  */
-+#define PCIE_SVC_CAP_VER                       (1 << 16)
-+#define NEXT_CAP_OFF                           (0 << 20)
-+
-+/* 7.9.29.6 SVC Resource capability Register */
-+#define SVC_RES_CAP_BASE                       0x14
-+#define SVC_RES_CAP(n)                         (SVC_RES_CAP_BASE + (n) * 0x0c)
-+
-+/*
-+ * As per Specification SVC VC3 is dedicated to UIO and non-UIO traffic cannot
-+ * use that, so for SVC VC3 the value would be 0010. SVC VC4 is an optional VC
-+ * for UIO and VC4 can be used by non-UIO traffic as well. So the protocol for
-+ * VC4 would be 0011. For SVC VC0, the protocol is 0000. Rest are all reserved
-+ * asper table 2-46 in PCIe 6.4 specification.
-+ */
-+#define SVC_VC0_PROTOCOL                       (0x0 << 8)
-+#define SVC_VC3_PROTOCOL                       (0x2 << 8)
-+#define SVC_VC4_PROTOCOL                       (0x3 << 8)
-+#define SVC_VC_ID(n)                           ((n & 0x7) << 12)
-+
-+/* 7.9.27.7 SVC Resource Control Register */
-+#define SVC_RES_CTRL_BASE                      0x18
-+#define SVC_RES_CTRL(n)                        (SVC_RES_CTRL_BASE + (n) * 0x0c)
-+#define SVC_VC_ENABLE                          BIT(31)
-+#define SHARED_FLOW_CONTROL_USAGE_LIMIT_ENABLE BIT(30)
-+#define SVC_VC_PROTOCOL_SELECTED               (0xf << 8)
-+#define SVC_UIO_PROTOCOL_SELECTED              (0x2 << 8)
-+/*
-+ * As per Table 7-350 in 7.9.29.7 in PCIe 6.4 Specification, the protocol
-+ * selected should be 0010 for UIO enabled VCs
-+ */
-+#define SHARED_FLOW_CONTROL_USAGE_LIMIT        (0x7 << 27)
-+#define SVC_TC_VC_MAP_ENABLE                   (0xff << 0)
-+#define SVC_TC_VC_MAP(n)                       ((n & 0xff) << 0)
-+
-+/* 7.9.27.8 SVC Resource Status Register */
-+#define SVC_RES_STATUS_BASE                    0x1c
-+#define SVC_RES_STATUS(n)                      (SVC_RES_STATUS_BASE + \
-+                                                (n) * 0x0c)
-+#define SVC_VC_NEGO                            BIT(1)
-+
-+typedef struct PCIESvcCap {
-+    uint32_t ctrl;
-+    uint32_t status;
-+    bool uio_mand_svc;
-+    bool uio_opt_svc;
-+} PCIESvcCap;
-+
-+int pcie_config_uio_svc(PCIDevice *d, Error **errp);
-+int  pcie_svc_cap_init(PCIDevice *dev, uint16_t offset, Error **errp);
-+void pcie_svc_cap_reset(PCIDevice *dev);
-+void pcie_svc_set_vc4(PCIDevice *dev, bool enable);
-+void pcie_svc_cap_write_config(PCIDevice *dev,
-+                               uint32_t addr, uint32_t val, int len);
-+
-+#endif /* HW_PCIE_SVC_H */
--- 
-2.34.1
+This sounds a bit like the issue that Dave Jiang reported with recent
+EDK2 on x86 (fedora upgraded).  We don't see it with the older EDK2
+that ships with QEMU. I haven't yet figured out exactly why.
+Arguably whatever they changed is a regression but we don't have good
+enough testing in place to have detected it early enough.
+
+I'd like some input from PCI / ACPI experts on this. +CC Michael and
+Igor.
+
+Like the previous patch we'd definitely want some testing around this
+to make sure it doesn't accidentally get broken in future.
+
+
+> On RISC-V virt the 32-bit PCIe MMIO range (1 GiB at 0x40000000) is
+> currently consumed entirely by PCI0, so CXL host bridges (ACPI0016)
+> have no non-prefetchable window and Linux fails to assign these BARs.
+> Marking the BARs prefetchable would work around it, but the CXL
+> component registers have read/write side effects and are not
+> prefetchable per the PCIe specification.
+> 
+> Reserve the top 256 MiB of the 32-bit MMIO window exclusively for
+> CXL host bridges:
+> - Shrink PCI0's mmio32 window by 256 MiB in virt.c so that UEFI's
+>   PciHostBridgeDxe and the ACPI _CRS for PCI0 never claim that range
+> - Store the reserved range in a new gpex_cfg.cxl_mmio32 field
+> - In gpex-acpi.c, emit the cxl_mmio32 range as the Memory resource
+>   in the CXL host bridge _CRS instead of re-using build_crs() (which
+>   returns an empty set when UEFI has not assigned resources yet)
+> - Reduce the FDT 'ranges' for PCI0 by the same 256 MiB so that UEFI
+>   firmware driven by device-tree also respects the reservation
+> 
+> Signed-off-by: Chen Pei <cp0613@linux.alibaba.com>
+> ---
+>  hw/pci-host/gpex-acpi.c    | 36 +++++++++++++++++++++--
+>  hw/riscv/virt.c            | 58 +++++++++++++++++++++++++++++++-------
+>  include/hw/pci-host/gpex.h |  1 +
+>  3 files changed, 83 insertions(+), 12 deletions(-)
+> 
+> diff --git a/hw/pci-host/gpex-acpi.c b/hw/pci-host/gpex-acpi.c
+> index d9820f9b41..d8b943b665 100644
+> --- a/hw/pci-host/gpex-acpi.c
+> +++ b/hw/pci-host/gpex-acpi.c
+> @@ -158,9 +158,41 @@ void acpi_dsdt_add_gpex(Aml *scope, struct GPEXConfig *cfg)
+>               * Resources defined for PXBs are composed of the following parts:
+>               * 1. The resources the pci-bridge/pcie-root-port need.
+>               * 2. The resources the devices behind pxb need.
+> +             *
+> +             * For CXL host bridges on platforms where UEFI (driven by
+> +             * FDT 'ranges') does not assign PCI resources for the CXL
+> +             * root bridge before ACPI table construction, build_crs()
+> +             * would return an empty resource set.  When the platform
+> +             * has reserved a dedicated MMIO window for CXL host bridges
+> +             * (cfg->cxl_mmio32), emit that window as a static _CRS
+> +             * instead.  The platform is responsible for shrinking PCI0's
+> +             * mmio32 window so the two do not overlap.
+>               */
+> -            crs = build_crs(PCI_HOST_BRIDGE(BUS(bus)->parent), &crs_range_set,
+> -                            cfg->pio.base, 0, 0, 0);
+> +            if (is_cxl && cfg->cxl_mmio32.size) {
+> +                uint64_t cxl_base = cfg->cxl_mmio32.base;
+> +                uint64_t cxl_size = cfg->cxl_mmio32.size;
+> +
+> +                crs = aml_resource_template();
+> +
+> +                /* 32-bit MMIO range for CXL devices */
+> +                aml_append(crs,
+> +                    aml_dword_memory(AML_POS_DECODE, AML_MIN_FIXED,
+> +                                     AML_MAX_FIXED, AML_NON_CACHEABLE,
+> +                                     AML_READ_WRITE, 0,
+> +                                     cxl_base,
+> +                                     cxl_base + cxl_size - 1,
+> +                                     0, cxl_size));
+> +
+> +                /* Bus number range */
+> +                aml_append(crs,
+> +                    aml_word_bus_number(AML_MIN_FIXED, AML_MAX_FIXED,
+> +                                       AML_POS_DECODE, 0,
+> +                                       bus_num, bus_num + 15,
+> +                                       0, 16));
+> +            } else {
+> +                crs = build_crs(PCI_HOST_BRIDGE(BUS(bus)->parent),
+> +                                &crs_range_set, cfg->pio.base, 0, 0, 0);
+> +            }
+>              aml_append(dev, aml_name_decl("_CRS", crs));
+>  
+>              if (is_cxl) {
+> diff --git a/hw/riscv/virt.c b/hw/riscv/virt.c
+> index 899f632de7..929c01fb26 100644
+> --- a/hw/riscv/virt.c
+> +++ b/hw/riscv/virt.c
+> @@ -113,6 +113,9 @@ static const MemMapEntry virt_memmap[] = {
+>  /* PCIe high mmio for RV64, size is fixed but base depends on top of RAM */
+>  #define VIRT64_HIGH_PCIE_MMIO_SIZE  (16 * GiB)
+>  
+> +/* 32-bit MMIO range carved out of VIRT_PCIE_MMIO for CXL host bridges */
+> +#define VIRT_CXL_MMIO32_SIZE        (256 * MiB)
+> +
+>  static MemMapEntry virt_high_pcie_memmap;
+>  
+>  #define VIRT_FLASH_SECTOR_SIZE (256 * KiB)
+> @@ -890,15 +893,28 @@ static void create_fdt_pcie(RISCVVirtState *s,
+>      }
+>      qemu_fdt_setprop_sized_cells(ms->fdt, name, "reg", 2,
+>          s->memmap[VIRT_PCIE_ECAM].base, 2, s->memmap[VIRT_PCIE_ECAM].size);
+> -    qemu_fdt_setprop_sized_cells(ms->fdt, name, "ranges",
+> -        1, FDT_PCI_RANGE_IOPORT, 2, 0,
+> -        2, s->memmap[VIRT_PCIE_PIO].base, 2, s->memmap[VIRT_PCIE_PIO].size,
+> -        1, FDT_PCI_RANGE_MMIO,
+> -        2, s->memmap[VIRT_PCIE_MMIO].base,
+> -        2, s->memmap[VIRT_PCIE_MMIO].base, 2, s->memmap[VIRT_PCIE_MMIO].size,
+> -        1, FDT_PCI_RANGE_MMIO_64BIT,
+> -        2, virt_high_pcie_memmap.base,
+> -        2, virt_high_pcie_memmap.base, 2, virt_high_pcie_memmap.size);
+> +    {
+> +        /*
+> +         * When CXL is enabled, reserve the last 256 MiB of the 32-bit
+> +         * MMIO window for CXL host bridges and exclude it from the main
+> +         * PCIe host bridge's FDT 'ranges' so UEFI's PciHostBridgeDxe
+> +         * does not allocate that range to PCI0.  The CXL host bridge
+> +         * _CRS declares this range independently.
+> +         */
+> +        hwaddr mmio32_size = s->memmap[VIRT_PCIE_MMIO].size;
+> +        if (s->cxl_devices_state.is_enabled) {
+> +            mmio32_size -= VIRT_CXL_MMIO32_SIZE;
+> +        }
+> +        qemu_fdt_setprop_sized_cells(ms->fdt, name, "ranges",
+> +            1, FDT_PCI_RANGE_IOPORT, 2, 0,
+> +            2, s->memmap[VIRT_PCIE_PIO].base, 2, s->memmap[VIRT_PCIE_PIO].size,
+> +            1, FDT_PCI_RANGE_MMIO,
+> +            2, s->memmap[VIRT_PCIE_MMIO].base,
+> +            2, s->memmap[VIRT_PCIE_MMIO].base, 2, mmio32_size,
+> +            1, FDT_PCI_RANGE_MMIO_64BIT,
+> +            2, virt_high_pcie_memmap.base,
+> +            2, virt_high_pcie_memmap.base, 2, virt_high_pcie_memmap.size);
+> +    }
+>  
+>      if (virt_is_iommu_sys_enabled(s)) {
+>          qemu_fdt_setprop_cells(ms->fdt, name, "iommu-map",
+> @@ -1730,7 +1746,29 @@ static void virt_machine_init(MachineState *machine)
+>              qdev_get_gpio_in(virtio_irqchip, VIRTIO_IRQ + i));
+>      }
+>  
+> -    gpex_pcie_init(system_memory, pcie_irqchip, s);
+> +    DeviceState *pcie_dev = gpex_pcie_init(system_memory, pcie_irqchip, s);
+> +
+> +    /*
+> +     * If CXL is enabled, reserve the last 256 MiB of the 32-bit MMIO
+> +     * window for CXL host bridges so the bridge non-prefetchable window
+> +     * can hold CXL device BARs (component registers and similar 64-bit
+> +     * non-prefetchable BARs that need a < 4 GiB address).
+> +     *
+> +     * - Shrink PCI0's mmio32 advertised in the ACPI _CRS by the same
+> +     *   256 MiB so the two ranges do not overlap (the FDT 'ranges'
+> +     *   shrink happens in create_fdt_pcie()).
+> +     * - Store the reserved range in cxl_mmio32 so gpex-acpi.c can emit
+> +     *   a correct _CRS for the CXL host bridge (ACPI0016).
+> +     */
+> +    if (s->cxl_devices_state.is_enabled) {
+> +        GPEXHost *gpex = GPEX_HOST(pcie_dev);
+> +        gpex->gpex_cfg.cxl_mmio32.size = VIRT_CXL_MMIO32_SIZE;
+> +        gpex->gpex_cfg.cxl_mmio32.base =
+> +            s->memmap[VIRT_PCIE_MMIO].base +
+> +            s->memmap[VIRT_PCIE_MMIO].size - VIRT_CXL_MMIO32_SIZE;
+> +        /* Shrink PCI0's advertised 32-bit MMIO window to exclude CXL range */
+> +        gpex->gpex_cfg.mmio32.size -= VIRT_CXL_MMIO32_SIZE;
+> +    }
+>  
+>      create_platform_bus(s, mmio_irqchip);
+>  
+> diff --git a/include/hw/pci-host/gpex.h b/include/hw/pci-host/gpex.h
+> index 1da9c85bce..d38fbbacd6 100644
+> --- a/include/hw/pci-host/gpex.h
+> +++ b/include/hw/pci-host/gpex.h
+> @@ -43,6 +43,7 @@ struct GPEXConfig {
+>      MemMapEntry mmio32;
+>      MemMapEntry mmio64;
+>      MemMapEntry pio;
+> +    MemMapEntry cxl_mmio32;
+>      int         irq;
+>      PCIBus      *bus;
+>      bool        pci_native_hotplug;
 
 
