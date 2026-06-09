@@ -4,85 +4,85 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 09348CD8CB9
-	for <qemu-devel@archiver.kernel.org>; Tue,  9 Jun 2026 17:46:14 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 822CBCD8CB2
+	for <qemu-devel@archiver.kernel.org>; Tue,  9 Jun 2026 17:46:15 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wX0WE-00026Y-GE; Tue, 09 Jun 2026 13:45:44 -0400
+	id 1wX0Wf-0002Fp-9G; Tue, 09 Jun 2026 13:46:10 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1wX0Vs-0001x2-DH
- for qemu-devel@nongnu.org; Tue, 09 Jun 2026 13:45:25 -0400
-Received: from mail-pl1-x62a.google.com ([2607:f8b0:4864:20::62a])
+ id 1wX0WC-00024r-Fb
+ for qemu-devel@nongnu.org; Tue, 09 Jun 2026 13:45:42 -0400
+Received: from mail-pg1-x535.google.com ([2607:f8b0:4864:20::535])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1wX0Vp-0004l1-Em
- for qemu-devel@nongnu.org; Tue, 09 Jun 2026 13:45:19 -0400
-Received: by mail-pl1-x62a.google.com with SMTP id
- d9443c01a7336-2c0c379e8ffso40495145ad.3
- for <qemu-devel@nongnu.org>; Tue, 09 Jun 2026 10:45:15 -0700 (PDT)
+ id 1wX0W9-0004tq-JX
+ for qemu-devel@nongnu.org; Tue, 09 Jun 2026 13:45:38 -0400
+Received: by mail-pg1-x535.google.com with SMTP id
+ 41be03b00d2f7-c8589498839so2618529a12.2
+ for <qemu-devel@nongnu.org>; Tue, 09 Jun 2026 10:45:37 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1781027114; x=1781631914; darn=nongnu.org;
+ d=linaro.org; s=google; t=1781027136; x=1781631936; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:content-language:from
  :references:to:subject:user-agent:mime-version:date:message-id:from
  :to:cc:subject:date:message-id:reply-to;
- bh=gDgR+fLHzgPVmH7Ru+tngiq4o+CVo3m5uIZGU956Y6U=;
- b=sEQRySDJha6PqGhmiEHI0+Y9qwWy40KrE+WrtMjNc8H2pFRQx9X7Y12cbxrFhaxNRd
- XPMS0gCpUnUrP6Maip8CfuI0D5ask9fQf+qH+1jtsT/IjVFS72o03iGNQnJwubdkx7pt
- l9rq1DjxbfH5j+m4RMMO04UDywK2zuQbPgUF6Gr4qAbIjdoKXlThSbloWnjJ2h9s+M7l
- ihM6TJa3FCQzSOf4NkaAphGhJYLRQ1J7J/yRvrSy0te8gBIRvHubdEIFMiwnweUmcE36
- 8KX8vrpy33WoAOoJtgOYmReEUidc2A6+DcYV4xvaIZYH/VfhyGdtq/fDvg3uOOfJHQqS
- /74Q==
+ bh=26kw2NwentlM2Et7yRFb5t61zclxO0f8WsdX9RggmrA=;
+ b=NG2TU5zVZbizWE/bWE+JGsixOL4aH6S80sfp5YT7xJsbbXtQB4r/v679a/LTxat64P
+ BtTz3QiWpERqdWZzWEyQNwUHgm0cKAiaj0wvvQ03saJZ2IOgNL1wBKPUhf2Y5MW2IQ+Z
+ BRBtZgIHv4s2dRBN3WzW2bOdKiHrmvYuba9wGWs+RQJsHrzZyC5bwwRAiHeHr2yqKWqO
+ 13JdOHXcL9JvAAgj2R7PbfZvEy70dqxHdtuFCIJlnmXkY0pRzsUH0a925226hpNgzOG8
+ /E4RlXbWfom5flvTQKG7FFCUMDhzfK6Cy5bjwwYBrM8eF1utVTdG1YaSLoxo9icYllRa
+ m+8A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1781027114; x=1781631914;
+ d=1e100.net; s=20251104; t=1781027136; x=1781631936;
  h=content-transfer-encoding:in-reply-to:content-language:from
  :references:to:subject:user-agent:mime-version:date:message-id
  :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=gDgR+fLHzgPVmH7Ru+tngiq4o+CVo3m5uIZGU956Y6U=;
- b=GKEXAaxjfejNLal4sqbIoFd/ambZX8+xZogLThK7Im36bIgMwRLJ10StdwGGyRFdQN
- RV75yo5DktNGjH1riJnYTf8AkomHIas5P1uCX6UMUewqmh3qqmqOAnslTBToBnsElBvl
- fsFhds0AHmqCINDJmdlNQVhqbYAW657eCe+ZmIxRQZGMBr5JKD3doSScqaa0/lMHjAm9
- zUAZ0fh1yj22xNLP3Zqjl2DVHFckU9q3kTq8MQkci/6+GAJwAC8nizdH9EgZAvo3A7B6
- Y76eiW9inpVQx4AHlVi2sD9JGWCh3DDBtIC3PIWCKpj/tKAxz/x2Rh3A6E8YBPrtWZ67
- zImg==
-X-Gm-Message-State: AOJu0Yw2Z9wx9zUjigXl4zBj3w+hMCNJ2kbqYiZxKvFfR0BgubeSihzn
- 1HW5BBkZQDPvA+4+sk2+Ki+bVAF2JYwLcxtltdX0yuTviAhLa4sTfGFqETI6D26jboB20wkJifJ
- dhrUKM1w=
-X-Gm-Gg: Acq92OFIfqccm/HcCfOE1tqt8tCZq82staOfNjfxDftxNmdGoH1ATBu9NslGOosyMsh
- TQn4gVSHgweZSJT5HNrJRViNNtSl7PgRzLCEYTvUl0lzfRH6jK9Lu4UOxt4lvnBuXppOT2iSxs6
- C/+lIhDCHPKRUm+a8ZrVJD9B7S69McmTQwXl+5hToVln2qmmQmpZ3FA5zYRHt9vCwe5gp9fxgB2
- kNcIV4FZXZg1iOU2FJUZlWti1sk2LTFM4+Z5Z+DqcWA/GX4N5QVw4ooovcxWodepdM7VFbuNCUi
- ky/ghbNHGkS+dPDzyENJOd4yErpF9KEjub9NlgjnFBvsF131Vf15A7SEAkeO+BBxgXxauZkdFYc
- hEnc5PrSYB05iBBQIRD0jxqYLxsudSBOuW2QIXXcnW2DloZvnZR5XdZ8J/40K7dRcIh7Ch+VJ+E
- ceR8eobINRbX5/waPnuCJt6heWV/L10waWyJ3CfvvfAc4wA70=
-X-Received: by 2002:a17:903:b45:b0:2c1:ed61:36ab with SMTP id
- d9443c01a7336-2c1ed613816mr255509205ad.19.1781027113865; 
- Tue, 09 Jun 2026 10:45:13 -0700 (PDT)
+ bh=26kw2NwentlM2Et7yRFb5t61zclxO0f8WsdX9RggmrA=;
+ b=T0tHegQvuhbyGrijsIsNu41WKT+3XOXaaKSzJGwORrh2Vz9nxKEmZf87MJShyuIGVS
+ Es68J07lnVmVoqLrmKVHEBeSTDVLKV+tVz1OHO+EH1YoO+ENPJ5aX/HXolyHWcvFkpaT
+ TjSCl2qZFFCATlMOOYTMPYsjKcX1oHiKE3WYranPYb18uFYiuSJjMNfQmUqMoP+6D8ES
+ okAlncvQ5StUGCJ8gP82q0Q0AXBGEjdzV3TTkUIO8OtVpvav9fHrKEJf3AvWLZb4MUvd
+ CMUNRC8GP8J0qLAaCApRnEEk7KJnr6Erxh2G9QIwkRdxuDc4gM+W/Ktpm+GC3X/qN1bS
+ ACzw==
+X-Gm-Message-State: AOJu0Yw6wUGiSVeZkH/MtRFzIIQ489a+HXRnpfwjCyu5EaPNeMauj+QT
+ //i/vH6FUacOthMBRHH3bTBzMOFsuQBKQ6w661itax5TMWATmwGs5A9N+FCa/R8mX4+kjgI7Md3
+ esB1AZFU=
+X-Gm-Gg: Acq92OGUmrNxN1PIxFp5UGO4Npw7pStoLMihgYdGclxkFvEjhz5nAwKPcN8TwKdvm4V
+ DTTwSVkVVRoS3yUmnWvumWuCsgCbrcXW83j45VOKPpUukKB/NmkSIm/xIsjODK2lTqWGRMXBXii
+ cJ6MeXCQU/5akh1ecMFrPLNERh9L3E+Kf2kklJd/ztPnzPzvN2K4vQgFl9jDXOYfiCRH/b47HyX
+ NtAS7L/ByscyOEOfjS2YiRpityJyH0qIbfkLDf4GyjhcU7e8RU3vMIWkS9Td+VCSgqjas9t0jOl
+ d9MQm7iU5mUDKLLNSV36BBiNORTCUU90JQLevyWoxigXlXqjQm4CmDrZwwuftpnuJZXR/p4ZWoI
+ T3zldDL1HABOKUqt7fCL7n8mOuhW/HweFxtaB/w0DxsRyd1iWDOKZw91TUA++2RauztAIaxrSeZ
+ pSnMG1MJFt/jQKVKWZtc0wetDOUg+S0W1y8QW+SGqzSsPMvyA=
+X-Received: by 2002:a05:6a20:7289:b0:3b3:fce3:a7f8 with SMTP id
+ adf61e73a8af0-3b4ccd775f2mr24419156637.15.1781027135833; 
+ Tue, 09 Jun 2026 10:45:35 -0700 (PDT)
 Received: from [192.168.0.4] ([71.212.142.33])
  by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-2c1664ae328sm213161285ad.84.2026.06.09.10.45.12
+ 41be03b00d2f7-c85df034ab9sm18643671a12.5.2026.06.09.10.45.35
  for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 09 Jun 2026 10:45:13 -0700 (PDT)
-Message-ID: <ea18f6b8-7c43-4782-abeb-f7fd4a75928c@linaro.org>
-Date: Tue, 9 Jun 2026 10:45:11 -0700
+ Tue, 09 Jun 2026 10:45:35 -0700 (PDT)
+Message-ID: <41e90f99-ed99-40bd-bed1-4c425c75bd0e@linaro.org>
+Date: Tue, 9 Jun 2026 10:45:33 -0700
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 1/5] target/arm: split evaluation of CNTHCTL timer IRQ
- masks
+Subject: Re: [PATCH 2/5] target/arm: trigger timer recalculation when toggling
+ CNTHCTL:ECV
 To: qemu-devel@nongnu.org
 References: <20260609140008.3206970-1-alex.bennee@linaro.org>
- <20260609140008.3206970-2-alex.bennee@linaro.org>
+ <20260609140008.3206970-3-alex.bennee@linaro.org>
 From: Richard Henderson <richard.henderson@linaro.org>
 Content-Language: en-US
-In-Reply-To: <20260609140008.3206970-2-alex.bennee@linaro.org>
+In-Reply-To: <20260609140008.3206970-3-alex.bennee@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::62a;
- envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x62a.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::535;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pg1-x535.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -106,32 +106,29 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On 6/9/26 07:00, Alex Bennée wrote:
-> Whether the physical and virtual timer IRQs are masked are independent
-> of each other so the checking of CNTHCTL:CNTPMASK shouldn't depend of
-> not changing CNTVMASK.
-> 
-> While unlikely to be seen in real life we should still make sure we
-> behave correctly.
+> When toggling the state of ECV we affect the offset applied to timers.
+> As a result we should trigger a recalculation of the timer value to
+> take into account the new offset.
 > 
 > Signed-off-by: Alex Bennée <alex.bennee@linaro.org>
 > ---
->   target/arm/helper.c | 3 ++-
->   1 file changed, 2 insertions(+), 1 deletion(-)
+>   target/arm/helper.c | 3 +++
+>   1 file changed, 3 insertions(+)
 > 
 > diff --git a/target/arm/helper.c b/target/arm/helper.c
-> index 9dd8fdfa41b..f4aae0a4072 100644
+> index f4aae0a4072..5c640853060 100644
 > --- a/target/arm/helper.c
 > +++ b/target/arm/helper.c
-> @@ -1802,7 +1802,8 @@ static void gt_cnthctl_write(CPUARMState *env, const ARMCPRegInfo *ri,
->   
->       if ((oldval ^ value) & R_CNTHCTL_CNTVMASK_MASK) {
->           gt_update_irq(cpu, GTIMER_VIRT);
-> -    } else if ((oldval ^ value) & R_CNTHCTL_CNTPMASK_MASK) {
-> +    }
-> +    if ((oldval ^ value) & R_CNTHCTL_CNTPMASK_MASK) {
+> @@ -1806,6 +1806,9 @@ static void gt_cnthctl_write(CPUARMState *env, const ARMCPRegInfo *ri,
+>       if ((oldval ^ value) & R_CNTHCTL_CNTPMASK_MASK) {
 >           gt_update_irq(cpu, GTIMER_PHYS);
 >       }
+> +    if ((oldval ^ value) & R_CNTHCTL_ECV_MASK) {
+> +        gt_recalc_timer(cpu, GTIMER_PHYS);
+> +    }
 >   }
+>   
+>   static void gt_cntvoff_write(CPUARMState *env, const ARMCPRegInfo *ri,
 
 Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
 
