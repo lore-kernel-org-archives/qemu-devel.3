@@ -4,101 +4,52 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 81F22CD8CA4
-	for <qemu-devel@archiver.kernel.org>; Tue,  9 Jun 2026 09:49:36 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E7DB6CD6E79
+	for <qemu-devel@archiver.kernel.org>; Tue,  9 Jun 2026 09:55:32 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wWt59-0004nO-Vm; Tue, 09 Jun 2026 05:49:16 -0400
+	id 1wWtAw-0006mW-97; Tue, 09 Jun 2026 05:55:16 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1wWt57-0004ld-N8
- for qemu-devel@nongnu.org; Tue, 09 Jun 2026 05:49:14 -0400
-Received: from mail-yx1-xb132.google.com ([2607:f8b0:4864:20::b132])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1wWt52-00044E-BE
- for qemu-devel@nongnu.org; Tue, 09 Jun 2026 05:49:09 -0400
-Received: by mail-yx1-xb132.google.com with SMTP id
- 956f58d0204a3-6605469c263so427700d50.2
- for <qemu-devel@nongnu.org>; Tue, 09 Jun 2026 02:49:08 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1780998547; cv=none;
- d=google.com; s=arc-20240605;
- b=f6Txqio7wOYFXq+VX3Y0t8oquHc7FKZ9bF2nJWyv0+nEL+hWPDfTCQxG1VSwGJySyF
- LnevZCvOVX0zy9WymRllb+odYkfGli7VAOwSJk6/H3Z/pMDjnAlpy7kn+zYM3kWzCzpY
- TMDgQxA9WTxh4MRN3Md+twWrhOciLXsskSH3zKv0k0q8aw45b1mQ/D71903hubqXcxy1
- yNXIvXUBIqzg7CZi6bDDmDGU6Dqff4lxFmzZ9KQKc7QsJAh3PooAEndigXYFqvoPzEPZ
- BG0Dsw1MMmDlRVQtqhv3VUOJUQ5UqdYGmS+QueTilp6V0SmXjuN4atPVY+KXb+dbJWly
- s+VQ==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
- s=arc-20240605; 
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:dkim-signature;
- bh=s+0BfXHM21QnV4863C6uImYyGFFQDfVOWFUWijIqoLk=;
- fh=/ftcwOPYeEIhzseC7WF42kR+xVR/IJiWpLC1+A7SOWQ=;
- b=Dr4czM+e7iN0ziXcAj4sYb++YPg5ZjBTWwKT83Jyt5hU9E0lId3XwNuQEd8T/Npr5s
- 6igEy6e1bGe1hd23/6K/3IusdlvgHznWZAAudahuFzZELlXqqf8eT8xAbakjUgt2cgCx
- 22nKimR8sSMSDZ5SEHypdRoJdW1BVbjQvG2EvE3budswxFPIoilUx+F55xBNOdZRgNMb
- 9lwrXvjGnI+W/ezVdvH5669LZ56jD4eTzsEKGajL9/d8Ff8WpEp8Zt3/t0a+q1tsRiP/
- QVXCM7tK7Ecl1eheGnCujDXaEPDVZQ8fWI7fvVhW0FAHZ2GYf2AoLrsS7+tSnutUs/3L
- QAhg==; darn=nongnu.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1780998547; x=1781603347; darn=nongnu.org;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=s+0BfXHM21QnV4863C6uImYyGFFQDfVOWFUWijIqoLk=;
- b=FkQGq+19Wc9qoD95uLjQYzyJ1+zHYR5JDrg+GJLXf2MltRyurSTs+S9wb/RtLB//LJ
- 5sOfYegcDH3/F/ncWTG+MDf5q+VGyM4LNQRzqoX3sRPTvzLNeXY+PpURvIr2yTNtZjat
- lijhISC4dZRARmdJMTM6iydwsBazDaAxFP7R4QKjSRDgHADSx5qG6EBGB68RO9Td6ZAC
- y8TinvSlrR4aLEte4EoSaFx9yKmgKoubxy4T4oH/FAmGKpuhmop0v9MVpN2jUFJfBFQi
- GuIq4OD+09Apcx5hbhM07ztkWgazTCry9oq9ukGALJ00o9a+hlyklZau/VHJ+gNJbgO6
- +Gtw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1780998547; x=1781603347;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=s+0BfXHM21QnV4863C6uImYyGFFQDfVOWFUWijIqoLk=;
- b=KqeRwG7o3EqRjN4L3hswmiHv0UwdDVTr+S8FptRhPwNEd067wZ08lwVUBfOvju/CfW
- PHYmCX0tjIBE/SqE4eZrfvCkRqZo6VgrJQVZ2Z6yz08G8R2SDtRWogGhI7NYcwB2fPMh
- 7HKHzTxT8Fjm1S586efu8Lvv+/SSSCu0jzMgyFwTccn+fHgLfZmssMUSNXgvK9XIKy++
- pEqZf4e0gfyOYvO2kKStY3MYq7Lv/yohi2HBEqoU4t5IRpEv04B8GX2zHkZNP8oJXHMg
- sRsaKzbfd+mSGJkeT1u2evAIyapWpmKDMRGAz5+F/LPeynZyItG4SVKG5xrYiw4lPjTA
- 3MjA==
-X-Gm-Message-State: AOJu0YwUMtnS9wDzm8BQtua9gx5pbs2QTk4kdZF2Emnoi8pr7aKhugKB
- BRINOsKDAjfBF2qE3s2PROABNwAJuDs0Gn8VSlf9BWwLJtO4dNbwYgX6KjR1xqd/8ZeamsD94bX
- /0vsI7B2vQKJx1bialc6VTMG3e0LWcWNrNbf1U620sQ==
-X-Gm-Gg: Acq92OFRllsg4Czo43Zg1tSnfq15z7bsZzpIkVx59DFnr+AQLpwPS+oiWNTVKkqFakj
- e//uG8ldnH4HNKpsgUlihRbaRk5sREPTujWH73ZtyhNME8G32KXldTmRunZzQsqIMLlGaVCUjMC
- N05Sv9QNZdnWMGeC5d2xYUSCOR70kVMo565XYy7f7Gzz9hbm3EHGq3Gg6Z/xaYa0IVAmlw2zalK
- UxfKkDZpBTjCfqIliEfbViYMH0zEe8Mp/QODuGb2MD5yyPtAsM/c3dMBT/oL6N5gCsk6FXloTlY
- /bUTMuRaGWsdeBRd8EJ9YRfAh1BFUzvmeQuZC5ITQYRF/5r/vu56KhgPa0/7sIYL2fQ8WDkK7Tp
- TAg==
-X-Received: by 2002:a05:690e:144b:b0:65e:39d1:d9f4 with SMTP id
- 956f58d0204a3-661073da66emr15528379d50.9.1780998547122; Tue, 09 Jun 2026
- 02:49:07 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <gaosong@loongson.cn>)
+ id 1wWtAj-0006kN-9b
+ for qemu-devel@nongnu.org; Tue, 09 Jun 2026 05:55:01 -0400
+Received: from mail.loongson.cn ([114.242.206.163])
+ by eggs.gnu.org with esmtp (Exim 4.90_1)
+ (envelope-from <gaosong@loongson.cn>) id 1wWtAg-0004v7-FK
+ for qemu-devel@nongnu.org; Tue, 09 Jun 2026 05:55:00 -0400
+Received: from loongson.cn (unknown [10.2.5.185])
+ by gateway (Coremail) with SMTP id _____8Cx9Ojt4idqhDUSAA--.42436S3;
+ Tue, 09 Jun 2026 17:54:53 +0800 (CST)
+Received: from localhost.localdomain (unknown [10.2.5.185])
+ by front1 (Coremail) with SMTP id qMiowJDxSMHg4idqJrGgAA--.28412S10;
+ Tue, 09 Jun 2026 17:54:52 +0800 (CST)
+From: Song Gao <gaosong@loongson.cn>
+To: qemu-devel@nongnu.org
+Cc: Bibo Mao <maobibo@loongson.cn>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@mailo.com>
+Subject: [PULL 08/14] target/loongarch: Use sys_state in csr_helper.c when
+ accessing CSR registers
+Date: Tue,  9 Jun 2026 17:28:18 +0800
+Message-Id: <20260609092824.227250-9-gaosong@loongson.cn>
+X-Mailer: git-send-email 2.39.1
+In-Reply-To: <20260609092824.227250-1-gaosong@loongson.cn>
+References: <20260609092824.227250-1-gaosong@loongson.cn>
 MIME-Version: 1.0
-References: <20260603032855.106930-1-richard.henderson@linaro.org>
- <20260603032855.106930-29-richard.henderson@linaro.org>
-In-Reply-To: <20260603032855.106930-29-richard.henderson@linaro.org>
-From: Peter Maydell <peter.maydell@linaro.org>
-Date: Tue, 9 Jun 2026 10:48:55 +0100
-X-Gm-Features: AVVi8CdEcFVCjn8epcsPxry4PH7gTgmDMTbHXKlO2O8UV0_tWRrO27YClIzS3gA
-Message-ID: <CAFEAcA-PVFUVuZVyWQ_NEOh6byZfNef9nihRXq=NnH6XvbO_Ag@mail.gmail.com>
-Subject: Re: [PATCH v9 28/45] target/arm: Enable FEAT_SME_LUTv2 for -cpu max
-To: Richard Henderson <richard.henderson@linaro.org>
-Cc: qemu-devel@nongnu.org, qemu-arm@nongnu.org
-Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2607:f8b0:4864:20::b132;
- envelope-from=peter.maydell@linaro.org; helo=mail-yx1-xb132.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+X-CM-TRANSID: qMiowJDxSMHg4idqJrGgAA--.28412S10
+X-CM-SenderInfo: 5jdr20tqj6z05rqj20fqof0/
+X-Coremail-Antispam: 1Uk129KBjDUn29KB7ZKAUJUUUUU529EdanIXcx71UUUUU7KY7
+ ZEXasCq-sGcSsGvfJ3UbIjqfuFe4nvWSU5nxnvy29KBjDU0xBIdaVrnUUvcSsGvfC2Kfnx
+ nUUI43ZEXa7xR_UUUUUUUUU==
+Received-SPF: pass client-ip=114.242.206.163; envelope-from=gaosong@loongson.cn;
+ helo=mail.loongson.cn
+X-Spam_score_int: -18
+X-Spam_score: -1.9
+X-Spam_bar: -
+X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -115,14 +66,179 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, 3 Jun 2026 at 04:30, Richard Henderson
-<richard.henderson@linaro.org> wrote:
->
-> Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
-> ---
+From: Bibo Mao <maobibo@loongson.cn>
 
-Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
+When accessing CSR registers in file csr_helper.c, use sys_state rather
+than env. There is no function change.
 
-thanks
--- PMM
+Signed-off-by: Bibo Mao <maobibo@loongson.cn>
+Reviewed-by: Philippe Mathieu-Daudé <philmd@mailo.com>
+Tested-by: Song Gao <gaosong@loongson.cn>
+Message-ID: <20260605082552.175336-9-maobibo@loongson.cn>
+Signed-off-by: Song Gao <gaosong@loongson.cn>
+---
+ target/loongarch/tcg/csr_helper.c | 55 ++++++++++++++++++-------------
+ 1 file changed, 32 insertions(+), 23 deletions(-)
+
+diff --git a/target/loongarch/tcg/csr_helper.c b/target/loongarch/tcg/csr_helper.c
+index cd35ca93c7..7dc33bc180 100644
+--- a/target/loongarch/tcg/csr_helper.c
++++ b/target/loongarch/tcg/csr_helper.c
+@@ -20,7 +20,8 @@
+ 
+ target_ulong helper_csrwr_stlbps(CPULoongArchState *env, target_ulong val)
+ {
+-    int64_t old_v = env->CSR_STLBPS;
++    CPUSysState *sys = env_sys(env);
++    int64_t old_v = sys->CSR_STLBPS;
+ 
+     /*
+      * The real hardware only supports the min tlb_ps is 12
+@@ -33,7 +34,7 @@ target_ulong helper_csrwr_stlbps(CPULoongArchState *env, target_ulong val)
+     } else {
+         /* Only update PS field, reserved bit keeps zero */
+         val = FIELD_DP64(val, CSR_STLBPS, RESERVE, 0);
+-        env->CSR_STLBPS = val;
++        sys->CSR_STLBPS = val;
+     }
+ 
+     return old_v;
+@@ -42,17 +43,18 @@ target_ulong helper_csrwr_stlbps(CPULoongArchState *env, target_ulong val)
+ target_ulong helper_csrrd_pgd(CPULoongArchState *env)
+ {
+     int64_t v;
++    CPUSysState *sys = env_sys(env);
+ 
+-    if (env->CSR_TLBRERA & 0x1) {
+-        v = env->CSR_TLBRBADV;
++    if (sys->CSR_TLBRERA & 0x1) {
++        v = sys->CSR_TLBRBADV;
+     } else {
+-        v = env->CSR_BADV;
++        v = sys->CSR_BADV;
+     }
+ 
+     if ((v >> 63) & 0x1) {
+-        v = env->CSR_PGDH;
++        v = sys->CSR_PGDH;
+     } else {
+-        v = env->CSR_PGDL;
++        v = sys->CSR_PGDL;
+     }
+ 
+     return v;
+@@ -61,10 +63,11 @@ target_ulong helper_csrrd_pgd(CPULoongArchState *env)
+ target_ulong helper_csrrd_cpuid(CPULoongArchState *env)
+ {
+     LoongArchCPU *lac = env_archcpu(env);
++    CPUSysState *sys = env_sys(env);
+ 
+-    env->CSR_CPUID = CPU(lac)->cpu_index;
++    sys->CSR_CPUID = CPU(lac)->cpu_index;
+ 
+-    return env->CSR_CPUID;
++    return sys->CSR_CPUID;
+ }
+ 
+ target_ulong helper_csrrd_tval(CPULoongArchState *env)
+@@ -77,16 +80,17 @@ target_ulong helper_csrrd_tval(CPULoongArchState *env)
+ target_ulong helper_csrrd_msgir(CPULoongArchState *env)
+ {
+     int irq, new;
++    CPUSysState *sys = env_sys(env);
+ 
+-    irq = find_first_bit((unsigned long *)env->CSR_MSGIS, 256);
++    irq = find_first_bit((unsigned long *)sys->CSR_MSGIS, 256);
+     if (irq < 256) {
+-        clear_bit(irq, (unsigned long *)env->CSR_MSGIS);
+-        new = find_first_bit((unsigned long *)env->CSR_MSGIS, 256);
++        clear_bit(irq, (unsigned long *)sys->CSR_MSGIS);
++        new = find_first_bit((unsigned long *)sys->CSR_MSGIS, 256);
+         if (new < 256) {
+             return irq;
+         }
+ 
+-        env->CSR_ESTAT = FIELD_DP64(env->CSR_ESTAT, CSR_ESTAT, MSGINT, 0);
++        sys->CSR_ESTAT = FIELD_DP64(sys->CSR_ESTAT, CSR_ESTAT, MSGINT, 0);
+     } else {
+         /* bit 31 set 1 for no invalid irq */
+         irq = BIT(31);
+@@ -97,21 +101,23 @@ target_ulong helper_csrrd_msgir(CPULoongArchState *env)
+ 
+ target_ulong helper_csrwr_estat(CPULoongArchState *env, target_ulong val)
+ {
+-    int64_t old_v = env->CSR_ESTAT;
++    CPUSysState *sys = env_sys(env);
++    int64_t old_v = sys->CSR_ESTAT;
+ 
+     /* Only IS[1:0] can be written */
+-    env->CSR_ESTAT = deposit64(env->CSR_ESTAT, 0, 2, val);
++    sys->CSR_ESTAT = deposit64(sys->CSR_ESTAT, 0, 2, val);
+ 
+     return old_v;
+ }
+ 
+ target_ulong helper_csrwr_asid(CPULoongArchState *env, target_ulong val)
+ {
+-    int64_t old_v = env->CSR_ASID;
++    CPUSysState *sys = env_sys(env);
++    int64_t old_v = sys->CSR_ASID;
+ 
+     /* Only ASID filed of CSR_ASID can be written */
+-    env->CSR_ASID = deposit64(env->CSR_ASID, 0, 10, val);
+-    if (old_v != env->CSR_ASID) {
++    sys->CSR_ASID = deposit64(sys->CSR_ASID, 0, 10, val);
++    if (old_v != sys->CSR_ASID) {
+         tlb_flush(env_cpu(env));
+     }
+     return old_v;
+@@ -120,7 +126,8 @@ target_ulong helper_csrwr_asid(CPULoongArchState *env, target_ulong val)
+ target_ulong helper_csrwr_tcfg(CPULoongArchState *env, target_ulong val)
+ {
+     LoongArchCPU *cpu = env_archcpu(env);
+-    int64_t old_v = env->CSR_TCFG;
++    CPUSysState *sys = env_sys(env);
++    int64_t old_v = sys->CSR_TCFG;
+ 
+     cpu_loongarch_store_constant_timer_config(cpu, val);
+ 
+@@ -143,7 +150,8 @@ target_ulong helper_csrwr_ticlr(CPULoongArchState *env, target_ulong val)
+ target_ulong helper_csrwr_pwcl(CPULoongArchState *env, target_ulong val)
+ {
+     uint8_t shift, ptbase;
+-    int64_t old_v = env->CSR_PWCL;
++    CPUSysState *sys = env_sys(env);
++    int64_t old_v = sys->CSR_PWCL;
+ 
+     /*
+      * The real hardware only supports 64bit PTE width now, 128bit or others
+@@ -160,14 +168,15 @@ target_ulong helper_csrwr_pwcl(CPULoongArchState *env, target_ulong val)
+          qemu_log_mask(LOG_GUEST_ERROR,
+                       "Attempted set ptbase 2^%d\n", ptbase);
+     }
+-    env->CSR_PWCL = val;
++    sys->CSR_PWCL = val;
+     return old_v;
+ }
+ 
+ target_ulong helper_csrwr_pwch(CPULoongArchState *env, target_ulong val)
+ {
+     uint8_t has_ptw;
+-    int64_t old_v = env->CSR_PWCH;
++    CPUSysState *sys = env_sys(env);
++    int64_t old_v = sys->CSR_PWCH;
+ 
+     val = FIELD_DP64(val, CSR_PWCH, RESERVE, 0);
+     has_ptw = FIELD_EX32(env->cpucfg[2], CPUCFG2, HPTW);
+@@ -175,6 +184,6 @@ target_ulong helper_csrwr_pwch(CPULoongArchState *env, target_ulong val)
+         val = FIELD_DP64(val, CSR_PWCH, HPTW_EN, 0);
+     }
+ 
+-    env->CSR_PWCH = val;
++    sys->CSR_PWCH = val;
+     return old_v;
+  }
+-- 
+2.54.0
+
 
