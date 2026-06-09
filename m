@@ -4,115 +4,83 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id DB3C2CD8CA4
-	for <qemu-devel@archiver.kernel.org>; Tue,  9 Jun 2026 12:53:32 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 40D3ACD8CA4
+	for <qemu-devel@archiver.kernel.org>; Tue,  9 Jun 2026 12:57:08 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wWvx7-0008VL-GC; Tue, 09 Jun 2026 08:53:09 -0400
+	id 1wWw0q-0001Ar-BN; Tue, 09 Jun 2026 08:57:00 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <imammedo@redhat.com>)
- id 1wWvx6-0008VD-PI
- for qemu-devel@nongnu.org; Tue, 09 Jun 2026 08:53:08 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <shrihari.s@samsung.com>)
+ id 1wWu3G-0007jd-Lh
+ for qemu-devel@nongnu.org; Tue, 09 Jun 2026 06:51:22 -0400
+Received: from mailout1.samsung.com ([203.254.224.24])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <imammedo@redhat.com>)
- id 1wWvx4-0000kY-V4
- for qemu-devel@nongnu.org; Tue, 09 Jun 2026 08:53:08 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1781009585;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=kMMwEgErShRBIb55CFP/isB4KLkQHr5YpWFsXpTjQ8Y=;
- b=LeEDTP6yGncdUCen/esTgrdY+LHRPYbmxTEnaWwP77r7fjUPA4j+zOm43SVGiIEAcD1TNa
- l/vzXgviDApJosyB/1PC3lWqbtQ44B0uMPBuOCuDttTyHtqBq5X/6ErQITYWt+1AhWsgFB
- QLoP2AdvE+I/KbSEqbiWLRmnsEOz4K0=
-Received: from mail-wm1-f72.google.com (mail-wm1-f72.google.com
- [209.85.128.72]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-428-hAEAD6tbOl27Awn43_PWDw-1; Tue, 09 Jun 2026 08:53:03 -0400
-X-MC-Unique: hAEAD6tbOl27Awn43_PWDw-1
-X-Mimecast-MFC-AGG-ID: hAEAD6tbOl27Awn43_PWDw_1781009582
-Received: by mail-wm1-f72.google.com with SMTP id
- 5b1f17b1804b1-490aadb1386so29468795e9.0
- for <qemu-devel@nongnu.org>; Tue, 09 Jun 2026 05:53:03 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1781009582; x=1781614382; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:subject:cc:to:from:date:from:to:cc:subject:date
- :message-id:reply-to;
- bh=kMMwEgErShRBIb55CFP/isB4KLkQHr5YpWFsXpTjQ8Y=;
- b=sNRyMQGDlSqnM2hJGYcv+o4QI/1roLI6UBIMXwa6DgtY+Ml18UbJXWmf1+Ltj7RgE6
- lXu8ELElOLHS7nyOLggnaj5QZtd6xsfWAlyhgJz/hCJ3khzBbauHQ3LoZnerWGQCAwKY
- PiTwobp53Ev0XTJMNpQwajdKJLyu9OEq5vchzxR0V/8/YsdmtRO4meNwX4VbZ769gjBL
- +UBCH39tonGPu+hvYGMJhyhiz2qbXVa6QbHLLwNJ1btaQ7OzInd8mQWUtfIjC5W9ls/Y
- 9FbE0ov+miKwJq7gzNW9qEKm8PJty+df0YhVZDX7UCtD/Nyn+5feWF4ajXVznhsccB1j
- Cc1g==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1781009582; x=1781614382;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to;
- bh=kMMwEgErShRBIb55CFP/isB4KLkQHr5YpWFsXpTjQ8Y=;
- b=hxsh9bTJKh//vmBy18aIUqqdGXuZqo7A4upi5sGAT8cdxrxIdSDCHKqrFctjHphpIh
- dHwPAMkebYKbe1Lz6IgUjf6ZMbW+kzSzPH0Gc4TywayuhAyj3gyF0GtacsAc3tGclCgQ
- YbcF0VPE8B9FbB2DundzrC82DHYnr2gGvEO+8eN5Dre4qP9FOXH7fsEnjFz33k+fAfkY
- XVHsCOSyh8/iG7SVHb3pEiYU+lUPPguhr6iEC77LRL/a12Wj5KytfO3/gCl9MLo3q63K
- AaFpY3s8fNv3O9A/q4z0d2hQ1U2KIi6XG511Ra8ony7aY5pfalNDocT8K+B0TJM2AJzo
- /P5A==
-X-Forwarded-Encrypted: i=1;
- AFNElJ/akWxawfAqP/odjgcFbeTxoBv/CrG/djKuUGlH1OqRZTagaAip0NW00F2nOx2gDilqEuyPjbq5CqYW@nongnu.org
-X-Gm-Message-State: AOJu0YzMAw/Xzpy0raDhs1kWYgu0NjQZkWOn7fl0xyXeya0slYURHHRN
- MuOFtDHkX9VMtDazCOS/5qnrzhRsav4Lh7dC8I5/OtdAB3RiUGhw7wy6wHr3iLFrtP2gWRrRtcL
- 1+iHDeAEt5SzSpRNfdJFZNQVefjqKss6dM1krPu1ay6HB05OE6o739w/8
-X-Gm-Gg: Acq92OGv2odRvwnHR4MYjkB9wvY/CY+DRO1GX4+w1aTZTl3uv/btgkqqFdCQlmHpEcy
- PVtcss3W9pXIuM7V0/jer/eZJ00DJxaJt6BQyykfOES/QkFC2FNQ7yYEbYUokSlvhsrEPIoQNG+
- kV1KC202HMM9sEtq/rxI1h0UekzOeUxDrUbgy7sSU8lxIRp0e5A+PLuXO/8jlU5xbLecqLvu4im
- JkKSuB6VQSmOqAXgnAPuE3cGcCOBWKFF4u5nkg9wk5fcCkPOmvRV/6aLlUHfqgMYM7A++28f3Gn
- hDupQp3KmGOaQkxpYYN1qGFxnmmMYKrOePXOYw+6zJfHV4M1wGB5S2ZRyChit0xa3B6RBUdLSkC
- 1xhcr0gUkzl5NY5x8
-X-Received: by 2002:a05:600c:4689:b0:490:bbc1:c9be with SMTP id
- 5b1f17b1804b1-490c2c63f53mr250216215e9.0.1781009582361; 
- Tue, 09 Jun 2026 05:53:02 -0700 (PDT)
-X-Received: by 2002:a05:600c:4689:b0:490:bbc1:c9be with SMTP id
- 5b1f17b1804b1-490c2c63f53mr250216095e9.0.1781009582018; 
- Tue, 09 Jun 2026 05:53:02 -0700 (PDT)
-Received: from imammedo ([213.175.37.14]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-4601f35eae5sm62640530f8f.33.2026.06.09.05.53.01
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 09 Jun 2026 05:53:01 -0700 (PDT)
-Date: Tue, 9 Jun 2026 14:52:59 +0200
-From: Igor Mammedov <imammedo@redhat.com>
-To: Leonid Bloch <lb.workbox@gmail.com>
-Cc: "Michael S . Tsirkin" <mst@redhat.com>, Ani Sinha <anisinha@redhat.com>,
- Paolo Bonzini <pbonzini@redhat.com>, Richard Henderson
- <richard.henderson@linaro.org>, Eduardo Habkost <ehabkost@redhat.com>, Eric
- Blake <eblake@redhat.com>, Markus Armbruster <armbru@redhat.com>, Marcel
- Apfelbaum <marcel.apfelbaum@gmail.com>, Dmitry Fleytman
- <dmitry.fleytman@gmail.com>, qemu-devel@nongnu.org
-Subject: Re: [PATCH v4 1/8] hw/acpi: Support extended GPE handling for
- additional ACPI devices
-Message-ID: <20260609145259.680fae5a@imammedo>
-In-Reply-To: <20260526042928.9203-2-lb.workbox@gmail.com>
-References: <20260526042928.9203-1-lb.workbox@gmail.com>
- <20260526042928.9203-2-lb.workbox@gmail.com>
-X-Mailer: Claws Mail 4.4.0 (GTK 3.24.52; x86_64-redhat-linux-gnu)
+ (Exim 4.90_1) (envelope-from <shrihari.s@samsung.com>)
+ id 1wWu3D-0000jj-Jc
+ for qemu-devel@nongnu.org; Tue, 09 Jun 2026 06:51:22 -0400
+Received: from epcas5p1.samsung.com (unknown [182.195.41.39])
+ by mailout1.samsung.com (KnoxPortal) with ESMTP id
+ 20260609104456epoutp01f6353ba7312239f657efc46ccfeef250~3Y8nOVV9Z3153431534epoutp01Q
+ for <qemu-devel@nongnu.org>; Tue,  9 Jun 2026 10:44:56 +0000 (GMT)
+DKIM-Filter: OpenDKIM Filter v2.11.0 mailout1.samsung.com
+ 20260609104456epoutp01f6353ba7312239f657efc46ccfeef250~3Y8nOVV9Z3153431534epoutp01Q
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=samsung.com;
+ s=mail20170921; t=1781001896;
+ bh=LD8d5vmHP5Tmxkon0tBgZOgyWGJtg9xPIXNJ9p4pfUU=;
+ h=From:To:Cc:Subject:Date:References:From;
+ b=UEowRL/IO1mb1NFv6qonmwWKW7RD82awJOQ/5kXMBMwi5r+Mx2LHE/jnsmes3hRUI
+ IVUZqND9Fjq8rAJJJAaijCI0js6Qrq3currFXyMjtAt1eXA7sB6grujJcN4SnSc9yz
+ 4Q4oCJVqmUGnW9x+EFfvd5t1eIfDwKJ/yfwoL9fM=
+Received: from epsnrtp01.localdomain (unknown [182.195.42.153]) by
+ epcas5p1.samsung.com (KnoxPortal) with ESMTPS id
+ 20260609104454epcas5p1be3e2032128ca29ed7051659822a91bd~3Y8mI0_uf2102621026epcas5p1E;
+ Tue,  9 Jun 2026 10:44:54 +0000 (GMT)
+Received: from epcas5p2.samsung.com (unknown [182.195.38.90]) by
+ epsnrtp01.localdomain (Postfix) with ESMTP id 4gZQXQ0xqfz6B9m6; Tue,  9 Jun
+ 2026 10:44:54 +0000 (GMT)
+Received: from epsmtip1.samsung.com (unknown [182.195.34.30]) by
+ epcas5p3.samsung.com (KnoxPortal) with ESMTPA id
+ 20260609104453epcas5p327a974e978790e693c0660f27f9b43ef~3Y8kh5-iA0141601416epcas5p3R;
+ Tue,  9 Jun 2026 10:44:53 +0000 (GMT)
+Received: from unvme-SYS-221H-TN24R.samsungds.net (unknown [107.99.40.127])
+ by epsmtip1.samsung.com (KnoxPortal) with ESMTPA id
+ 20260609104451epsmtip192722d3df57cbe3b1616dcc4e762275c~3Y8i1PTG32095220952epsmtip1l;
+ Tue,  9 Jun 2026 10:44:51 +0000 (GMT)
+From: Shrihari E S <shrihari.s@samsung.com>
+To: jic23@kernel.org, linux-cxl@vger.kernel.org, linux-pci@vger.kernel.org,
+ qemu-devel@nongnu.org, cpgs@samsung.com
+Cc: arun.george@samsung.com, vikash.k5@samsung.com, s.neeraj@samsung.com,
+ shrihari.s@samsung.com, dongjoo.seo1@samsung.com, dave@stgolabs.net,
+ gost.dev@samsung.com
+Subject: [RFC 0/8] pci: cxl: Add enumeration support for Unordered I/O (UIO)
+ feature.
+Date: Tue,  9 Jun 2026 16:28:28 +0530
+Message-Id: <20260609105836.3702787-1-shrihari.s@samsung.com>
+X-Mailer: git-send-email 2.34.1
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=imammedo@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -24
-X-Spam_score: -2.5
-X-Spam_bar: --
-X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.445,
+Content-Transfer-Encoding: 8bit
+X-CMS-MailID: 20260609104453epcas5p327a974e978790e693c0660f27f9b43ef
+X-Msg-Generator: CA
+Content-Type: text/plain; charset="utf-8"
+CMS-TYPE: 105P
+X-CPGSPASS: Y
+cpgsPolicy: CPGSC10-542,Y
+X-CFilter-Loop: Reflected
+X-CMS-RootMailID: 20260609104453epcas5p327a974e978790e693c0660f27f9b43ef
+References: <CGME20260609104453epcas5p327a974e978790e693c0660f27f9b43ef@epcas5p3.samsung.com>
+Received-SPF: pass client-ip=203.254.224.24;
+ envelope-from=shrihari.s@samsung.com; helo=mailout1.samsung.com
+X-Spam_score_int: -31
+X-Spam_score: -3.2
+X-Spam_bar: ---
+X-Spam_report: (-3.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.445,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_PASS=-0.001, SPF_NONE=0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
+X-Mailman-Approved-At: Tue, 09 Jun 2026 08:56:52 -0400
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -127,80 +95,125 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, 26 May 2026 07:29:20 +0300
-Leonid Bloch <lb.workbox@gmail.com> wrote:
+This series introduces enumeration and configuration support for the
+PCIe Unordered I/O (UIO) feature across standard PCIe and CXL ports.
+UIO, introduced in PCIe 6.1, relaxes strict transaction ordering rules. UIO is
+a PCIe transaction layer enhancement which shifts the ordering control from
+fabric to the requester device.
 
-> This patch extends the GPE (General Purpose Event) handling to support
-> the maximum number of interrupts available based on the machine's GPE
-> register length, rather than being limited to the first 8 bits.
-> 
-> This change is needed to support additional ACPI devices that will be
-> introduced in subsequent patches (Battery, AC adapter, and button devices).
-> These new devices require GPE event bits beyond the first 8, which were
-> previously not being properly handled by the event sending and SCI
-> (System Control Interrupt) update mechanisms.
-> 
-> The actual number of available GPE interrupts varies by machine type:
-> - PIIX4: GPE_LEN = 4 (32 bits total across status and enable registers)
-> - ICH9: ICH9_PMIO_GPE0_LEN = 16 (128 bits total)
-> 
-> The patch modifies:
-> - acpi_send_gpe_event(): Now properly propagates status bits across all
->   available GPE registers based on the machine's gpe.len value
-> - acpi_update_sci(): Checks all GPE registers for pending interrupts,
->   not just the first byte
-> 
-> Note: A future enhancement could refactor the GPE handling to use the
-> bitmap API from bitops.h instead of the current manual bit manipulation,
-> which would provide a cleaner interface for these operations.
-> 
-> Signed-off-by: Leonid Bloch <lb.workbox@gmail.com>
-> ---
->  hw/acpi/core.c | 17 +++++++++++++++--
->  1 file changed, 15 insertions(+), 2 deletions(-)
-> 
-> diff --git a/hw/acpi/core.c b/hw/acpi/core.c
-> index a6a62a742d..ad7abe568d 100644
-> --- a/hw/acpi/core.c
-> +++ b/hw/acpi/core.c
-> @@ -733,19 +733,32 @@ uint32_t acpi_gpe_ioport_readb(ACPIREGS *ar, uint32_t addr)
->  void acpi_send_gpe_event(ACPIREGS *ar, qemu_irq irq,
->                           AcpiEventStatusBits status)
->  {
-> -    ar->gpe.sts[0] |= status;
-> +    int i;
-> +    AcpiEventStatusBits st = status;
-> +
-> +    for (i = 0; i < ar->gpe.len / 2; i++) {
-> +        ar->gpe.sts[i] |= st;
-> +        st >>= TYPE_WIDTH(ar->gpe.sts[0]);
-> +    }
+This implementation establishes the essential architectural foundation
+required for the OS to discover, negotiate, and configure UIO
+capabilities.
 
-Function is ever called with only one bit set at a time.
-I'd suggest to add assert to guard for multiple bits and
-use existing bitops instead of open-codding the loop.
+UIO in CXL follows CXL.io protocol, where a CXL device can send read/write
+request to peer .mem device's HDM decoder at fabric level.
 
->      acpi_update_sci(ar, irq);
->  }
->  
->  void acpi_update_sci(ACPIREGS *regs, qemu_irq irq)
->  {
->      int sci_level, pm1a_sts;
-> +    bool gpe_sci = false;
-> +    int i;
->  
->      pm1a_sts = acpi_pm1_evt_get_sts(regs);
->  
-> +    for (i = 0; i < regs->gpe.len / 2; i++) {
-> +        gpe_sci = gpe_sci || !!(regs->gpe.sts[i] & regs->gpe.en[i]);
-> +    }
-> +
->      sci_level = ((pm1a_sts &
->                    regs->pm1.evt.en & ACPI_BITMASK_PM1_COMMON_ENABLED) != 0) ||
-> -                ((regs->gpe.sts[0] & regs->gpe.en[0]) != 0);
-> +                gpe_sci;
->  
->      qemu_set_irq(irq, sci_level);
->  
+      __________________________________________
+     |                                          |
+     |              CXL Host Bridge             |
+     |              (Root Port/RC)              |
+     |__________________________________________|
+                         |
+      ___________________|______________________
+     |                                          |
+     |               CXL Switch                 |
+     |__________________________________________|
+        |                  |                 |
+     ___|____           ___|_____         ___|____
+    |        |         |         |       |        |
+    | Dev A  |         | Dev B   |       | Dev C  |
+    | (Req)  |         |(Target) |       |(Target)|
+    |________|         |_________|       |________|
+
+
+For example, consider the topology shown above, in that if the requester device
+(Dev A) wants to read data from the target device (Dev C), then Dev A can
+prepare UIO command with the targeted HPA of Dev C and can send directly to the
+Dev C's HDM decoder at switch level. Here host gets bypassed in the data path.
+For this to happen, both the devices and the intermediate fabrics should support
+UIO and its dependencies.
+
+The implementation relies on two key dependencies:
+    - 256B Flit Mode 
+    - Streamlined Virtual Channel (SVC) Extended Capability (from PCIe 6.1)
+
+Key changes include:
+
+SVC Capability: Introduced a new hw/pci/pcie_svc.c module to manage the SVC
+                extended capability. It handles the mapping of UIO traffic to
+                dedicated virtual channels-VC3 (mandatory) and VC4 (optional).
+
+Port Configuration: Added properties (x-uio-svc, x-uio-svc-opt, x-256b-flit) to
+                    PCIe and CXL ports to control UIO states.
+
+CXL Integration: Established a dependency chain in CXL root and upstream ports,
+                 where UIO is enabled only if both Flit Mode and SVC initialization
+                 succeed. The CXL HDM decoders now advertise UIO support per CXL 4.0
+                 specifications.
+
+Patch Layout:
+
+Patch 1 and 2: Refactoring: Move Flit mode handling from PCIe slot to PCIe port
+               and extend it to all port types.
+Patch 3: Properties: Add SVC capability fields and UIO-related properties
+         (x-uio-svc, x-uio-svc-opt) to the PCIe port hierarchy.
+Patch 4: CXL Properties: Extend SVC properties to CXL ports and add uio_capable
+         logic to root/upstream ports.
+Patch 5: CXL HDM Decoder: Integrate UIO capability advertising into CXL HDM 
+         decoders.
+Patch 6: SVC Module: Implement the core PCIe SVC Extended Capability logic
+         in pcie_svc.c.
+Patch 7: Integration: Hook SVC initialization into the realize functions
+         for all PCIe and CXL ports.
+Patch 8: Documentation: Add usage examples for UIO-enabled CXL topologies.
+
+Base commit: 3c99db7705c1a885c795b7c14f751c7a3ba29ed8
+Repository: https://gitlab.com/jic23/qemu
+Branch: cxl-2026-01-09-draft
+
+Testing: Verified through Linux kernel based enumeration and configuration.
+
+Future work: While the current series establishes the configuration
+infrastructure, the upcoming series focuses on UIO data transfer support.
+A subsequent patch series to be built on top of this series to add support for
+UIO data plane.
+
+Shrihari E S (8):
+  Refactor flitmode from PCIESlot to PCIEPort.
+  Move 'x-256b-flit' property from cxl_root_port to pcie_root_port.
+  Add SVC capability and UIO properties to PCIe ports
+  Add Streamlined Virtual Channel (SVC) property to CXL ports
+  Wire UIO capability into HDM decoder registers
+  Add PCIe Streamlined Virtual Channel (SVC) capability.
+  Wire SVC initialization into port realize functions.
+  Add documentation for UIO-enabled CXL devices
+
+ docs/system/devices/cxl.rst               |  50 +++++++
+ hw/cxl/cxl-component-utils.c              |  29 +++-
+ hw/mem/cxl_type3.c                        |   9 +-
+ hw/pci-bridge/cxl_downstream.c            |  11 +-
+ hw/pci-bridge/cxl_root_port.c             |  13 +-
+ hw/pci-bridge/cxl_upstream.c              |   9 +-
+ hw/pci-bridge/pci_expander_bridge.c       |   3 +-
+ hw/pci-bridge/pcie_root_port.c            |   4 +
+ hw/pci-bridge/xio3130_downstream.c        |   4 +
+ hw/pci-bridge/xio3130_upstream.c          |   9 ++
+ hw/pci/meson.build                        |   2 +-
+ hw/pci/pci.c                              |   4 +
+ hw/pci/pcie.c                             |  53 ++++++-
+ hw/pci/pcie_svc.c                         | 164 ++++++++++++++++++++++
+ include/hw/cxl/cxl_component.h            |   2 +-
+ include/hw/cxl/cxl_device.h               |   2 +
+ include/hw/pci-bridge/cxl_upstream_port.h |   1 +
+ include/hw/pci/pcie.h                     |   7 +
+ include/hw/pci/pcie_port.h                |  23 ++-
+ include/hw/pci/pcie_regs.h                |   1 +
+ include/hw/pci/pcie_svc.h                 |  91 ++++++++++++
+ 21 files changed, 466 insertions(+), 25 deletions(-)
+ create mode 100644 hw/pci/pcie_svc.c
+ create mode 100644 include/hw/pci/pcie_svc.h
+
+-- 
+2.34.1
 
 
