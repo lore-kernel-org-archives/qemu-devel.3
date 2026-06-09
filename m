@@ -4,114 +4,73 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D7FA4CD8CB9
-	for <qemu-devel@archiver.kernel.org>; Tue,  9 Jun 2026 15:29:35 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 50C46CD8CB9
+	for <qemu-devel@archiver.kernel.org>; Tue,  9 Jun 2026 15:32:31 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wWyO6-000237-4j; Tue, 09 Jun 2026 11:29:10 -0400
+	id 1wWyR5-0003pf-DN; Tue, 09 Jun 2026 11:32:15 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <zycai@linux.ibm.com>)
- id 1wWyO3-00022T-OE; Tue, 09 Jun 2026 11:29:07 -0400
-Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
+ (Exim 4.90_1) (envelope-from <kwolf@redhat.com>) id 1wWyR3-0003ow-Vf
+ for qemu-devel@nongnu.org; Tue, 09 Jun 2026 11:32:13 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <zycai@linux.ibm.com>)
- id 1wWyO0-0003yy-Vg; Tue, 09 Jun 2026 11:29:07 -0400
-Received: from pps.filterd (m0356517.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 6595ehGZ2843554; Tue, 9 Jun 2026 15:29:00 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
- :content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=pp1; bh=PuIHgg
- dzAuaayEL49xjuR6Z9FJNa6ShgBjB7e033ZWU=; b=qnTWCHCRFltq7Tq3dKIuwy
- Q3h6fjSP7zDW3jr6bibS6hS+BjxXMryIjc8eaDWGt/KCWRK/IhGI0rG3AWHffS2h
- lt3LZpBh/gbDnMQDKSP+FQBdDn/fKlir5x0A4KE3u+TgnZ7qBcjJ8aOxYiY6yTky
- MXzETbctXeDCNMPS7lQ5nMsE1AGdbjeBchL+j1B9xUfkX1JFjfUBoUGfD24B5lLQ
- u9Zw3+eV5WJcZFnbEymCSec7vhb+qK0UsiW3sWPgWtmb6qQXvkA7xxBQH3rlxA92
- d7Ha2HkJfv6eAfzUDBOdQnrJsbgv7gw+Pk4UKM9XwyyeofhaeribcC/Q61qL5Ueg
- ==
-Received: from ppma11.dal12v.mail.ibm.com
- (db.9e.1632.ip4.static.sl-reverse.com [50.22.158.219])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4emb95cw4b-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Tue, 09 Jun 2026 15:29:00 +0000 (GMT)
-Received: from pps.filterd (ppma11.dal12v.mail.ibm.com [127.0.0.1])
- by ppma11.dal12v.mail.ibm.com (8.18.1.7/8.18.1.7) with ESMTP id 659FJaAn001891;
- Tue, 9 Jun 2026 15:28:59 GMT
-Received: from smtprelay02.wdc07v.mail.ibm.com ([172.16.1.69])
- by ppma11.dal12v.mail.ibm.com (PPS) with ESMTPS id 4en0jyac0v-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Tue, 09 Jun 2026 15:28:59 +0000 (GMT)
-Received: from smtpav03.dal12v.mail.ibm.com (smtpav03.dal12v.mail.ibm.com
- [10.241.53.102])
- by smtprelay02.wdc07v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 659FSvm445482370
- (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Tue, 9 Jun 2026 15:28:57 GMT
-Received: from smtpav03.dal12v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 396A958056;
- Tue,  9 Jun 2026 15:28:57 +0000 (GMT)
-Received: from smtpav03.dal12v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id D7E8D5803F;
- Tue,  9 Jun 2026 15:28:55 +0000 (GMT)
-Received: from [9.61.111.145] (unknown [9.61.111.145])
- by smtpav03.dal12v.mail.ibm.com (Postfix) with ESMTP;
- Tue,  9 Jun 2026 15:28:55 +0000 (GMT)
-Message-ID: <053fe695-54a7-475e-b7f0-11a7eb34f67c@linux.ibm.com>
-Date: Tue, 9 Jun 2026 11:28:55 -0400
+ (Exim 4.90_1) (envelope-from <kwolf@redhat.com>) id 1wWyR0-0006Id-Tm
+ for qemu-devel@nongnu.org; Tue, 09 Jun 2026 11:32:13 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1781019129;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=6Tb38EhzxJ9FPHU99MtdRA+a7+nQt1AnFO8pAvKMGho=;
+ b=e8JBPHhrhCi6gZRyN1bAneLKiOuwfMShlvxbROfkekH/7exIwHw30JJfefKaO4QQ2jhnk2
+ rxpgdX/aGjjWiJmBb6jU2pyqEoU0zj9dCEPSZIpv8/vK57NMdELZk65xLZH9Yu84ohHLJU
+ PaBAW+5f3F4FroBmBNQK1gpffUrLHNo=
+Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-641-IeyeOY5KPN2iP3tbPFidLA-1; Tue,
+ 09 Jun 2026 11:32:06 -0400
+X-MC-Unique: IeyeOY5KPN2iP3tbPFidLA-1
+X-Mimecast-MFC-AGG-ID: IeyeOY5KPN2iP3tbPFidLA_1781019125
+Received: from mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.17])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id EE2C8195FCC8; Tue,  9 Jun 2026 15:32:04 +0000 (UTC)
+Received: from redhat.com (unknown [10.44.33.91])
+ by mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 199A41956053; Tue,  9 Jun 2026 15:32:02 +0000 (UTC)
+Date: Tue, 9 Jun 2026 17:32:00 +0200
+From: Kevin Wolf <kwolf@redhat.com>
+To: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
+Cc: Stefan Hajnoczi <stefanha@gmail.com>,
+ qemu-devel <qemu-devel@nongnu.org>, Eric Blake <eblake@redhat.com>,
+ qemu block <qemu-block@nongnu.org>
+Subject: Re: Race condition in qemu-iotests nbd 205?
+Message-ID: <aigx8G_jb7RLfbly@redhat.com>
+References: <CAJSP0QU6Ko87bYaaNm6DCB7krVZgbo_YohuVKSAunBpnDJFdHA@mail.gmail.com>
+ <457460b8-70ba-4edf-989d-5dca4d68bbea@yandex-team.ru>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v11 09/32] s390x/diag: Implement DIAG 320 subcode 2
-To: Jared Rossi <jrossi@linux.ibm.com>, qemu-s390x@nongnu.org,
- qemu-devel@nongnu.org
-Cc: cohuck@redhat.com, berrange@redhat.com, richard.henderson@linaro.org,
- david@kernel.org, walling@linux.ibm.com, jjherne@linux.ibm.com,
- pasic@linux.ibm.com, borntraeger@linux.ibm.com, farman@linux.ibm.com,
- mjrosato@linux.ibm.com, iii@linux.ibm.com, eblake@redhat.com,
- armbru@redhat.com, alifm@linux.ibm.com, brueckner@linux.ibm.com,
- pierrick.bouvier@oss.qualcomm.com, jdaley@linux.ibm.com
-References: <20260505201905.997996-1-zycai@linux.ibm.com>
- <20260505201905.997996-10-zycai@linux.ibm.com>
- <ce623f2a-9247-4a67-98a0-7a180fdb88ca@linux.ibm.com>
-Content-Language: en-US
-From: Zhuoying Cai <zycai@linux.ibm.com>
-In-Reply-To: <ce623f2a-9247-4a67-98a0-7a180fdb88ca@linux.ibm.com>
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-X-TM-AS-GCONF: 00
-X-Authority-Analysis: v=2.4 cv=N4UZ0W9B c=1 sm=1 tr=0 ts=6a28313c cx=c_pps
- a=aDMHemPKRhS1OARIsFnwRA==:117 a=aDMHemPKRhS1OARIsFnwRA==:17
- a=IkcTkHD0fZMA:10 a=FelO9ux0wxsA:10 a=VkNPw1HP01LnGYTKEx00:22
- a=RnoormkPH1_aCDwRdu11:22 a=U7nrCbtTmkRpXpFmAIza:22 a=pcX4bbNkKkv3Q70f72sA:9
- a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
-X-Proofpoint-ORIG-GUID: HJmMn6b7CUNUIHKWBUPFc4VfcsivoiRU
-X-Proofpoint-GUID: HJmMn6b7CUNUIHKWBUPFc4VfcsivoiRU
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNjA5MDE0NCBTYWx0ZWRfX0qC9TXXtO9J0
- ALrG9B+AHJTSdH+R7NB2nqYIU/IawTpCAbCGkt6tyrYpHHVMnDSGcidamAsFInxkajeH6yitqOV
- +xhZs8QxueI+jHQUSOE4v3Ayl01AoxZH54f1iFwkvgvKvesXRjGKF2DQV8UXAe2HDPlpDAttwT7
- JUWfJAEsQNoBmxng1Tpww2Vej5NxeVbgK2z94nk6jrKMX5eKMGVJ24fwAPA2LQXWjfNgJ/sxcfd
- QCriLcndHwnRgQKG8gP7CkXpmHwTNHdmJjLwcdZevbDHRwUT5xJnc5Yq9TBapYbNDKOh7gqsh1+
- ZJf8sGQ6EFUB51RiTXvg/IM9YOo+jrQHsGoHYQHd83X55kPMqOGyD6NINpYyEPftSoutbc9mZIs
- HWL+VQLXDQ/SJErmHgoQc22e+bmYgR9UG7xIK4i7mlPJw0nOU7a69SBjfjpUlElUODJz6Bx17E0
- PoBdqhoUaTv3jT4Tblg==
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.125,FMLib:17.12.100.49
- definitions=2026-06-09_03,2026-06-09_02,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- bulkscore=0 malwarescore=0 spamscore=0 clxscore=1015 lowpriorityscore=0
- phishscore=0 impostorscore=0 adultscore=0 priorityscore=1501 suspectscore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2605210000 definitions=main-2606090144
-Received-SPF: pass client-ip=148.163.156.1; envelope-from=zycai@linux.ibm.com;
- helo=mx0a-001b2d01.pphosted.com
-X-Spam_score_int: -26
-X-Spam_score: -2.7
-X-Spam_bar: --
-X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
- RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+In-Reply-To: <457460b8-70ba-4edf-989d-5dca4d68bbea@yandex-team.ru>
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.17
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=kwolf@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: 8
+X-Spam_score: 0.8
+X-Spam_bar: /
+X-Spam_report: (0.8 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.445,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_SBL_CSS=3.335, SPF_HELO_PASS=-0.001,
+ SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -127,343 +86,123 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 5/24/26 6:32 PM, Jared Rossi wrote:
+Am 09.06.2026 um 14:10 hat Vladimir Sementsov-Ogievskiy geschrieben:
+> 08.06.26 17:23, Stefan Hajnoczi пишет:
+> > Hi Vladimir,
+> > It looks like there is a race condition in qemu-iotests 205 when the
+> > NBD server is shutting down:
+> > 
+> > +FAIL: test_remove_during_connect_safe_hard (__main__.TestNbdServerRemove)
+> > +----------------------------------------------------------------------
+> > +Traceback (most recent call last):
+> > + File "/builds/qemu-project/qemu/tests/qemu-iotests/205", line 149,
+> > in test_remove_during_connect_safe_hard
+> > + self.assertExportNotFound('exp')
+> > + File "/builds/qemu-project/qemu/tests/qemu-iotests/205", line 63, in
+> > assertExportNotFound
+> > + self.assert_qmp(result, 'error/desc', "Export 'exp' is not found")
+> > + File "/builds/qemu-project/qemu/tests/qemu-iotests/iotests.py", line
+> > 1246, in assert_qmp
+> > + self.assertEqual(result, value,
+> > +AssertionError: "Export 'exp' is already shutting down" != "Export
+> > 'exp' is not found"
+> > +- Export 'exp' is already shutting down
+> > ++ Export 'exp' is not found
+> > + : "error/desc" is "Export 'exp' is already shutting down", expected
+> > "Export 'exp' is not found"
+> > 
+> > https://gitlab.com/qemu-project/qemu/-/jobs/14745043965#L328
+> > 
+> > I have not seen this CI failure before, so it might be rare and hard
+> > to reproduce.
+> > 
+> > Stefan
+> 
+> Hi! Looks like a degradation in commit
 > 
 > 
-> On 5/5/26 4:18 PM, Zhuoying Cai wrote:
->> [...]
+>     commit 3c3bc462adeb561f5dfdcbb84ae691c95ccef916
+>     Author: Kevin Wolf <kwolf@redhat.com>
+>     Date:   Thu Sep 24 17:27:06 2020 +0200
 > 
->> +}
->> +
->> +static int get_key_type(const S390IPLCertificate *cert)
->> +{
->> +    int rc;
->> +    Error *err = NULL;
->> +
->> +    rc = qcrypto_x509_check_ecc_curve_p521(cert->raw, cert->size, &err);
->> +    if (rc == -1) {
->> +        error_report_err(err);
->> +        return -1;
->> +    }
->> +
->> +    return (rc == 1) ? DIAG_320_VCE_KEYTYPE_ECDSA_P521 :
->> +                       DIAG_320_VCE_KEYTYPE_SELF_DESCRIBING;
->> +}
->> +
->> +static int build_vce_header(VCEntry *vce, const S390IPLCertificate *cert, int idx)
->> +{
->> +    int key_type;
->> +
->> +    vce->vce_hdr.len = cpu_to_be32(sizeof(VCEntryHeader));
->> +    vce->vce_hdr.cert_idx = cpu_to_be16(idx + 1);
->> +    memcpy(vce->vce_hdr.name, cert->name, CERT_NAME_MAX_LEN);
->> +
->> +    key_type = get_key_type(cert);
->> +    if (key_type == -1) {
->> +        return -1;
->> +    }
->> +    vce->vce_hdr.key_type = key_type;
->> +
->> +    return 0;
->> +}
->> +
->> +static int build_vce_data(VCEntry *vce, const S390IPLCertificate *cert)
->> +{
->> +    uint16_t keyid_field_len;
->> +    uint16_t hash_field_len;
->> +    uint32_t cert_field_len;
->> +    uint32_t vce_len;
->> +    int rc;
->> +
->> +    rc = handle_key_id(vce, cert);
->> +    if (rc) {
->> +        return -1;
->> +    }
->> +    keyid_field_len = ROUND_UP(be16_to_cpu(vce->vce_hdr.keyid_len), 4);
-> Maybe return the converted length from the handle_* functions, with 0 
-> being the
-> error condition?
+>         block/export: Add block-export-del
 > 
-> e.g. (untested)
->      keyid_len = handle_key_id(vce, cert);
->      if (!keyid_len) {
->          return -1;
->      }
+>         Implement a new QMP command block-export-del and make nbd-server-remove
+>         a wrapper around it.
 > 
-> Just a nit, but I think it would improve readability.
 > 
->> +
->> +    rc = handle_hash(vce, cert, keyid_field_len);
->> +    if (rc) {
->> +        return -1;
->> +    }
->> +    hash_field_len = ROUND_UP(be16_to_cpu(vce->vce_hdr.hash_len), 4);
->> +
->> +    rc = handle_cert(vce, cert, hash_field_len);
->> +    if (rc || !is_cert_valid(cert)) {
->> +        return -1;
->> +    }
->> +    cert_field_len = ROUND_UP(be32_to_cpu(vce->vce_hdr.cert_len), 4);
->> +
->> +    vce_len = sizeof(VCEntryHeader) + keyid_field_len + hash_field_len + cert_field_len;
->> +    if (vce_len > be32_to_cpu(vce->vce_hdr.len)) {
->> +        return -1;
->> +    }
-> We already used the maximum size when we allocated space for the VCE, so 
-> this
-> check is redundant I think?
+> Before that commit we search for export by nbd_export_find(), and it fails
+> with "Export 'exp' is not found" as expected, because prior
+> qmp_nbd_server_remove(mode=hard) does
 > 
->> +
->> +    vce->vce_hdr.flags |= DIAG_320_VCE_FLAGS_VALID;
->> +
->> +    /* Update vce length to reflect the actual size used by vce */
->> +    vce->vce_hdr.len = cpu_to_be32(vce_len);
->> +
->> +    return 0;
->> +}
->> +
->> +static VCEntry *diag_320_build_vce(const S390IPLCertificate *cert, int idx)
->> +{
->> +    g_autofree VCEntry *vce = NULL;
->> +    uint32_t vce_max_size;
->> +    int rc;
->> +
->> +    /*
->> +     * Each field of the VCE is word-aligned.
->> +     * Allocate enough space for the largest possible size for this VCE.
->> +     * As the certificate fields (key-id, hash, data) are parsed, the
->> +     * VCE's length field will be updated accordingly.
->> +     */
->> +    vce_max_size = sizeof(VCEntryHeader) +
->> +                   ROUND_UP(CERT_KEY_ID_LEN, 4) +
->> +                   ROUND_UP(CERT_HASH_LEN, 4) +
->> +                   ROUND_UP(cert->der_size, 4);
-> In Patch 10, we define MAX_ENTRY_SIZE.  Is that something different than 
-> this?
-> Let's use the constant here unless there is a specific reason not to.
+>   nbd_export_remove() -> nbd_export_request_shutdown() -> QTAILQ_REMOVE(&exports, exp, next);
 > 
->> +
->> +    vce = g_malloc0(vce_max_size);
->> +    rc = build_vce_header(vce, cert, idx);
->> +    if (rc) {
->> +        /*
->> +         * Error occurs - VCE does not contain a valid certificate.
->> +         * Bit 0 of the VCE flags is 0 and the VCE length is set.
->> +         */
->> +        vce->vce_hdr.len = cpu_to_be32(VCE_INVALID_LEN);
->> +        goto out;
->> +    }
->> +
->> +    vce->vce_hdr.len = cpu_to_be32(vce_max_size);
-> It is not obvious later in the code if the VCE length is a true value or a
-> place holder for the max size, so MAX_ENTRY_SIZE would help clarify also.
+> when nbd_export_find() searches for that export exactly in this "exports" list
+> (static global in nbd/server.c)
 > 
->> +    rc = build_vce_data(vce, cert);
->> +    if (rc) {
->> +        vce->vce_hdr.len = cpu_to_be32(VCE_INVALID_LEN);
->> +    }
->> +
->> +out:
->> +    return g_steal_pointer(&vce);
->> +}
-> Actually, I wonder if we might be able to remove the diag_320_build_vce()
-> function since it is basically just a wrapper for building the header 
-> and data.
 > 
-> If we introduce the MAX_ENTRY_SIZE constant and allocate memory before 
-> calling
-> the build functions, I think we can simplify the whole thing.
+> Starting with 3c3bc462adeb5
 > 
-> See notes below in the loop to build VCEs...
+> qmp_nbd_server_remove() searches for export by blk_export_find(), which searches in
+> block_exports list in block/export/export.c.
 > 
->> +
->> +static int handle_diag320_store_vc(S390CPU *cpu, uint64_t addr, uint64_t r1, uintptr_t ra,
->> +                                   S390IPLCertificateStore *cs)
->> +{
->> +    g_autofree VCBlock *vcb = NULL;
->> +    size_t remaining_space;
->> +    uint16_t first_vc_index;
->> +    uint16_t last_vc_index;
->> +    int cs_start_index;
->> +    int cs_end_index;
->> +    uint32_t in_len;
->> +
->> +    vcb = g_new0(VCBlock, 1);
->> +    if (s390_cpu_virt_mem_read(cpu, addr, r1, vcb, sizeof(*vcb))) {
->> +        s390_cpu_virt_mem_handle_exc(cpu, ra);
->> +        return -1;
->> +    }
-> This is only the VCB header, right?  That's all the space is allocated for
-> anyway.  I find it confusing, here is my understanding, please correct 
-> if wrong:
+> Previous qmp_nbd_server_remove(mode=hard) does
 > 
-> We are allocating a VCB and updating the header values, but we never 
-> populate
-> the VCB's buffer area because each VCE being built has it's own malloc call?
+>   qmp_block_export_del() -> blk_exp_request_shutdown() -> nbd_export_request_shutdown(),
 > 
-> Meaning when we read/write the VCB it is actually just the header, and 
-> the VCEs
-> are written independently?
+> which removes the export only from "exports" list in nbd/server.c.
 > 
-> If that is correct, then we never really build a full VCB right? Could 
-> we just
-> use the VCBHeader struct here instead to make that clear?
 > 
->> +
->> +    in_len = be32_to_cpu(vcb->vcb_hdr.in_len);
->> +    first_vc_index = be16_to_cpu(vcb->vcb_hdr.first_vc_index);
->> +    last_vc_index = be16_to_cpu(vcb->vcb_hdr.last_vc_index);
->> +
->> +    if (in_len % TARGET_PAGE_SIZE != 0) {
->> +        return DIAG_320_RC_INVAL_VCB_LEN;
->> +    }
->> +
->> +    if (first_vc_index > last_vc_index) {
->> +        return DIAG_320_RC_BAD_RANGE;
->> +    }
->> +
->> +    vcb->vcb_hdr.out_len = sizeof(VCBlockHeader);
->> +
->> +    /*
->> +     * DIAG 320 subcode 2 expects to query a certificate store that
->> +     * maintains an index origin of 1. However, the S390IPLCertificateStore
->> +     * maintains an index origin of 0. Thus, the indices must be adjusted
->> +     * for correct access into the cert store. A couple of special cases
->> +     * must also be accounted for.
->> +     */
->> +
->> +    /* Both indices are 0; return header with no certs */
->> +    if (first_vc_index == 0 && last_vc_index == 0) {
->> +        goto out;
->> +    }
->> +
->> +    /* Normalize indices */
->> +    cs_start_index = (first_vc_index == 0) ? 0 : first_vc_index - 1;
->> +    cs_end_index = last_vc_index - 1;
->> +
->> +    /* Requested range is outside the cert store; return header with no certs */
->> +    if (cs_start_index >= cs->count || cs_end_index >= cs->count) {
->> +        goto out;
->> +    }
->> +
->> +    remaining_space = in_len - sizeof(VCBlockHeader);
->> +
->> +    for (int i = cs_start_index; i <= cs_end_index; i++) {
->> +        VCEntry *vce;
-> What about g_autofree VCEntry *vce = g_malloc0(MAX_ENTRY_SIZE);
+> How the export is removed from block_exports list? It is done in blk_exp_delete_bh(),
+> scheduled by
 > 
+> void blk_exp_unref(BlockExport *exp)
+> {
+>     assert(exp->refcount > 0);
+>     if (--exp->refcount == 0) {
+>         /* Touch the block_exports list only in the main thread */
+>         aio_bh_schedule_oneshot(qemu_get_aio_context(), blk_exp_delete_bh,
+>                                 exp);
+>     }
+> }
+> 
+> ---
+> 
+> I think, all the references should be removed druing qmp nbd-server-remove(hard) call,
+> but probably, we still have a (small) chance of doing this check in test
+> 
+>    self.assertExportNotFound('exp')
+> 
+> and get unexpected answer _before_ scheduled removal actually done.
+> 
+> ---
+> 
+> blk_exp_unref() does scheduling to main thread since
+> 
+>     commit bc4ee65b8c309ed6a726e3ea1b73f7fa31b4bb95
+>     Author: Kevin Wolf <kwolf@redhat.com>
+>     Date:   Thu Sep 24 17:27:03 2020 +0200
+> 
+>         block/export: Add blk_exp_close_all(_type)
+> 
+> ---
+> 
+> Not sure, how to properly fix it... Of course, better is to support old behavior,
+> when action of nbd-server-remove(hard) was synchronous.
 
-    vce_max_size = sizeof(VCEntryHeader) +
-                   ROUND_UP(CERT_KEY_ID_LEN, 4) +
-                   ROUND_UP(CERT_HASH_LEN, 4) +
-                   ROUND_UP(cert->der_size, 4);
+I guess you can always add one more AIO_WAIT_WHILE(), this time to
+nbd-server-remove, but blocking QMP commands aren't really nice, so I'd
+rather avoid that. In the case of nbd-server-remove, if you analysis is
+correct, the current behaviour has been there for almost six years.
 
-After thinking about this, I’m not entirely sure, but I think using the
-calculated vce_max_size might be a better choice than MAX_ENTRY_SIZE,
-since vce_max_size more closely reflects the size of the current VCE.
+So my gut feeling is that it's better to fix the test case to wait for
+the BLOCK_EXPORT_DELETED event.
 
-MAX_ENTRY_SIZE is currently defined as 8192, which is significantly
-larger than the size of a single VCB that will be requested in a later
-patch. Although we check whether the remaining space is sufficient to
-store the VCE, allocating MAX_ENTRY_SIZE for each VCE might be unnecessary?
+And then I saw that nbd-server-add and nbd-server-remove have actually
+been deprecated since QEMU 5.2, so maybe the best way forward is really
+to just delete them? That will still require changing the test case, of
+course.
 
-Just wondering if this makes sense, or if you think we should keep using
-MAX_ENTRY_SIZE here?
-
-> Collin already mentioned using g_autofree, but in addition to that if we can
-> allocate the memory up front that would allow us to call the build
-> functions directly from here e.g. (untested)
-> 
->      if (build_vce_header(vce, cert, i) || build_vce_data(vce, cert) {
->          vce->vce_hdr.len = cpu_to_be32(VCE_INVALID_LEN);
->      }
-> 
-> That would avoid the frees and steal pointer too.
-> 
->> +        const S390IPLCertificate *cert = &cs->certs[i];
->> +
->> +        /*
->> +         * Bit 0 of the VCE flags indicates whether the certificate is valid.
->> +         * The caller of DIAG320 subcode 2 is responsible for verifying that
->> +         * the VCE contains a valid certificate.
->> +         */
->> +        vce = diag_320_build_vce(cert, i);
->> +
->> +        /*
->> +         * If there is no more space to store the cert,
->> +         * set the remaining verification cert count and
->> +         * break early.
->> +         */
->> +        if (remaining_space < vce->vce_hdr.len) {
->> +            vcb->vcb_hdr.remain_ct = cpu_to_be16(last_vc_index - i);
->> +            g_free(vce);
->> +            break;
->> +        }
->> +
->> +        /* Write VCE */
->> +        if (s390_cpu_virt_mem_write(cpu, addr + vcb->vcb_hdr.out_len, r1,
->> +                                    vce, vce->vce_hdr.len)) {
->> +            s390_cpu_virt_mem_handle_exc(cpu, ra);
->> +            g_free(vce);
->> +            return -1;
->> +        }
->> +
->> +        vcb->vcb_hdr.out_len += vce->vce_hdr.len;
->> +        remaining_space -= vce->vce_hdr.len;
->> +        vcb->vcb_hdr.stored_ct++;
->> +
->> +        g_free(vce);
->> +    }
->> +    vcb->vcb_hdr.stored_ct = cpu_to_be16(vcb->vcb_hdr.stored_ct);
->> +
->> +out:
->> +    vcb->vcb_hdr.out_len = cpu_to_be32(vcb->vcb_hdr.out_len);
->> +
->> +    if (s390_cpu_virt_mem_write(cpu, addr, r1, vcb, sizeof(VCBlockHeader))) {
->> +        s390_cpu_virt_mem_handle_exc(cpu, ra);
->> +        return -1;
->> +    }
->> +
->> +    return DIAG_320_RC_OK;
->> +}
->> +
->>   QEMU_BUILD_BUG_MSG(sizeof(VCStorageSizeBlock) != VCSSB_MIN_LEN,
->>                      "size of VCStorageSizeBlock is wrong");
->> +QEMU_BUILD_BUG_MSG(sizeof(VCBlock) != 64, "size of VCBlock is wrong");
->> +QEMU_BUILD_BUG_MSG(sizeof(VCEntry) != 128, "size of VCEntry is wrong");
->>   
->>   void handle_diag_320(CPUS390XState *env, uint64_t r1, uint64_t r3, uintptr_t ra)
->>   {
->> @@ -270,7 +594,8 @@ void handle_diag_320(CPUS390XState *env, uint64_t r1, uint64_t r3, uintptr_t ra)
->>            * for now.
->>            */
->>           uint32_t ism_word0 = cpu_to_be32(DIAG_320_ISM_QUERY_SUBCODES |
->> -                                         DIAG_320_ISM_QUERY_VCSI);
->> +                                         DIAG_320_ISM_QUERY_VCSI |
->> +                                         DIAG_320_ISM_STORE_VC);
->>   
->>           if (s390_cpu_virt_mem_write(cpu, addr, r1, &ism_word0, sizeof(ism_word0))) {
->>               s390_cpu_virt_mem_handle_exc(cpu, ra);
->> @@ -296,6 +621,18 @@ void handle_diag_320(CPUS390XState *env, uint64_t r1, uint64_t r3, uintptr_t ra)
->>           }
->>           env->regs[r1 + 1] = rc;
->>           break;
->> +    case DIAG_320_SUBC_STORE_VC:
->> +        if (addr & ~TARGET_PAGE_MASK) {
->> +            s390_program_interrupt(env, PGM_SPECIFICATION, ra);
->> +            return;
->> +        }
->> +
->> +        rc = handle_diag320_store_vc(cpu, addr, r1, ra, cs);
->> +        if (rc == -1) {
->> +            return;
->> +        }
->> +        env->regs[r1 + 1] = rc;
->> +        break;
->>       default:
->>           env->regs[r1 + 1] = DIAG_320_RC_NOT_SUPPORTED;
->>           break;
-> Regards,
-> Jared Rossi
+Kevin
 
 
