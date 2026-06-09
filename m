@@ -4,108 +4,107 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6B61FCD8CB9
-	for <qemu-devel@archiver.kernel.org>; Tue,  9 Jun 2026 16:00:29 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 683D3CD98C5
+	for <qemu-devel@archiver.kernel.org>; Tue,  9 Jun 2026 16:02:46 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wWyrm-0006nJ-Os; Tue, 09 Jun 2026 11:59:50 -0400
+	id 1wWysM-00070H-5Y; Tue, 09 Jun 2026 12:00:26 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1wWyrl-0006n8-2r
- for qemu-devel@nongnu.org; Tue, 09 Jun 2026 11:59:49 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1wWyri-0001fw-CN
- for qemu-devel@nongnu.org; Tue, 09 Jun 2026 11:59:48 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1781020783;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=XLTicZ1Ygyv0LrexYj2ncrk/NU58h5AWXiXKewzr9a4=;
- b=XwCHctJ47bge/lf7HJoFu4Y/5X4M8Vc0MzaUqNGxP7piGI+nXoiANoXHhJBWiWIP7AI/9u
- PU1yDLsjkr9CP7dGkf8cjRiKmNrJ2JPtyD6RMdxt+8kJzPvtLJIfNqkPs9fcabEamUK24l
- 1avo9Z/r3yf7vvM9i2xxQAvdJF8nALU=
-Received: from mail-wm1-f72.google.com (mail-wm1-f72.google.com
- [209.85.128.72]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-630-_fTPb0kgPEmXRwBqvNfQsA-1; Tue, 09 Jun 2026 11:59:42 -0400
-X-MC-Unique: _fTPb0kgPEmXRwBqvNfQsA-1
-X-Mimecast-MFC-AGG-ID: _fTPb0kgPEmXRwBqvNfQsA_1781020781
-Received: by mail-wm1-f72.google.com with SMTP id
- 5b1f17b1804b1-490d3f03883so12389075e9.1
- for <qemu-devel@nongnu.org>; Tue, 09 Jun 2026 08:59:42 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <titusr@google.com>) id 1wWysF-0006vq-Lh
+ for qemu-devel@nongnu.org; Tue, 09 Jun 2026 12:00:19 -0400
+Received: from mail-qt1-x829.google.com ([2607:f8b0:4864:20::829])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <titusr@google.com>) id 1wWysB-0001nJ-Rv
+ for qemu-devel@nongnu.org; Tue, 09 Jun 2026 12:00:19 -0400
+Received: by mail-qt1-x829.google.com with SMTP id
+ d75a77b69052e-5177d1ff061so2366731cf.1
+ for <qemu-devel@nongnu.org>; Tue, 09 Jun 2026 09:00:13 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1781020812; cv=none;
+ d=google.com; s=arc-20240605;
+ b=fc6WgDc6nv9frAp2ih6PZXql4BF9Fhdim/yiHPL6DiOSA2RpbLg2gX4y7TmWWN24tn
+ TnrIh8aCKOduLWQKQFa6ASyhWX3Ld1hBSJCLuH7vkqitijQSDMCqxqcGIeHqx1vF+/zc
+ qjvC6L7aqVkjLgyfhewA0EiKr2zSuAdumXEqkP05jXGMHOCVUTe6Mi8rkLNjyslhfQzO
+ EkD69Jk36L/qkpBMstF0gI6k61fKKMjh6NrQ+u3D1Nq6nSF8Yz49qWMbBSGCmYIVJ+vx
+ EwI4h16OTHjXMJRjBHBLmii5sNo5c9uhnYtNK+WBNDqrhAwvwhKrQOpHtYeI4oVI4Vaj
+ tfjg==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
+ s=arc-20240605; 
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:dkim-signature;
+ bh=TwwxK3FbqgNRzq9cSbI+NO5X1AaMIOH6AUHYNp5pS0c=;
+ fh=5Da6V1QLSAR2Opu1RwHe2xOwyhp2Iy8t/OL70bwIwWM=;
+ b=fwn3xku5IeGkT9B5kwxv+Zdj8C7oKWlX6kJMWpPTYkHmHACYKvBR7gWR4e3NjpwIU0
+ qn1MHXvYFLWLgx6aghmc8lSz/cHb8tnVSJpvL74S5CNk3VBE70GUl14RyA/vMCTnMTwb
+ xoyF6MCqGUK96fSwjE89dOECBfK2pFPZUEU0DW0Jdim7GQ+GYQSbwsWdMh0PcevZwOLE
+ q4MhfX0CMJ4KuwX1kPcBH9ZENg0egbte420mBdev85LdZAAd5wT0cxZaOUA2ZOQuS4+F
+ VxA8Y51921juNXNHsUqic3w5o8KOtdfmddqQZAXcNkP/FC8LSgy8xs1ZdvnE8eA1FCRG
+ /srg==; darn=nongnu.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1781020781; x=1781625581; darn=nongnu.org;
- h=in-reply-to:content-transfer-encoding:content-disposition
- :mime-version:references:message-id:subject:cc:to:from:date:from:to
- :cc:subject:date:message-id:reply-to;
- bh=XLTicZ1Ygyv0LrexYj2ncrk/NU58h5AWXiXKewzr9a4=;
- b=Syk04h0WxWmfIcypatSO6OTkgjy+UkVFVW5RcbI5XH0sqPeHnOiVkAWd8+sxXnT/RU
- wv6uLl768LRdk0QIbW1yIIIDlf8OmIg6whT7MdgP+XrmrYBPgaz9zqTRj4o4CcSXG6jn
- mFCdfH+lNOW/EwAd+VCWRaj81wOX1brcMNXHWOBWWkIva0ACkeryrqWzmqxFpzfhipKr
- qKMKfXIPnwAH+pFIBpbezYSGXuyuJwoUbfH0pXVZKrSdTByEM/zvGCAkfo1Rqh6AsyOr
- yujzWZ+S4ZxOjxzXoq+3wtSDSpwhRvJG8XC+aPxR7KrdNt8r9MwPfA3qEcd9hXxdzXvO
- 25Cw==
+ d=google.com; s=20251104; t=1781020812; x=1781625612; darn=nongnu.org;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:from:to:cc:subject:date:message-id:reply-to;
+ bh=TwwxK3FbqgNRzq9cSbI+NO5X1AaMIOH6AUHYNp5pS0c=;
+ b=btAnSso5POCSoY4yIiQJnib7tkbl2dtjrXveZE9tu9PWGJjCn58/kZsNVZZ7ht1jt5
+ iYiClrzWQt3gzV3uoRBBHAFe8tF39GR9RLnCWa9nry++3m2qkLWLYZ29IlDGq7ehFf1h
+ KFpZ8wrsV22HVu7cnslKxanbyOAt4Mnp/Y1FPy1x4Phjfv/2VxHUj8MPP7704lvaU0ta
+ Ahh0EQgoURxyIUt91cIvyFCiehPGnZyejVzxybsLTIT5cRKlzgNJuHzh7320PYIumd8W
+ OWOoRLQIvm+ZHugVmJIB4cZKGTyEqtgR58B8TmGRsPJyyQgrUBhBbSDl+UojujwKOz3C
+ r28g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1781020781; x=1781625581;
- h=in-reply-to:content-transfer-encoding:content-disposition
- :mime-version:references:message-id:subject:cc:to:from:date:x-gm-gg
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=XLTicZ1Ygyv0LrexYj2ncrk/NU58h5AWXiXKewzr9a4=;
- b=CNW0auN+I+finjdxNS/ygnKGYzvjKSNl31AToXPz5ONfJS7xc6IcIAN/+92Ug2ebm0
- L8EhXJNzpDc/0+/oCJNoBEWHHC0oFQaJgl5ZMJAzCCGppgpkMLdxkdBVpaWAgXgwbPd1
- ynUmiFHUMV33p0LrKUHHpRY4krGQXPEm7c0n+UaDCrg1KHGpM/TQbGylGsrjwPjLTX2l
- U6JVjfhbnbeLi6/HLTBReG+ca4sgUfw+vH5Yhu7aUzfgh2InENg8DJfg+omAqNjCxiKt
- Sz2IXlnIUXeaoBEHrJD5dNSmzOdsI3A/6qtG+Evd+JSN3VMeSbrwYxup8VK8NSZwhbJ5
- e8+Q==
-X-Gm-Message-State: AOJu0YxUXT5yLlayVC8LEOTSRJfa0fzKf22qSjXTTJ5RUrKEKcxcFx8/
- xRs9Kb9ce4YVAnPjT0Ieo360KQ/MTIvpKjaVuamQ+9RmV9nXUKJUq18sIMtPLmdJJ2EjKa6SMc1
- 0ne1BDuyAm/mrTSpNUI/MSr3u9NU0w1oxJnJG7G84EWNzh7JsUfIlw4d+
-X-Gm-Gg: Acq92OG+cp+1eBBwZLVgeBImBUgBUzMau4F+HDvCIrdNMCYA27LzMFffKRugEq2xwSE
- EDgky0fzTfdQ88dkMcKj2dTDHyrpNqfjy1aW0G1J4seGwV8RW5rnk18zwjbLVqmHTaMioFScQ07
- d3jNSjEQdU7/wNrfgGFSsrzA/Aa23wL46oPPTW6rgr/hlwVUTQzC79x9JpEy6izaaujMhTcDrYq
- 9rVskF1R33lkmh9pXskN6QzO5WCU07dFBj19E9VWONZVNDzbeWonoR0smdGnHjKWtJM1vPN+fxX
- kRzny4o1vQiHzIZwYBVn/7XuXN0vVdf2sIP3Jt+1k7D7U4EEA+6D9Y7MtqyiE5twki6Jofb8bC5
- GKUIvdoksbYpJyCpey1G0dxSesf58szOrZ4J7w9zp4aSaKZFA492Jmg==
-X-Received: by 2002:a05:600c:8183:b0:490:958c:46dc with SMTP id
- 5b1f17b1804b1-490c25b0a60mr311654585e9.17.1781020780875; 
- Tue, 09 Jun 2026 08:59:40 -0700 (PDT)
-X-Received: by 2002:a05:600c:8183:b0:490:958c:46dc with SMTP id
- 5b1f17b1804b1-490c25b0a60mr311653885e9.17.1781020780273; 
- Tue, 09 Jun 2026 08:59:40 -0700 (PDT)
-Received: from redhat.com (IGLD-80-230-85-71.inter.net.il. [80.230.85.71])
- by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-490bc3c1149sm432954125e9.4.2026.06.09.08.59.38
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 09 Jun 2026 08:59:39 -0700 (PDT)
-Date: Tue, 9 Jun 2026 11:59:36 -0400
-From: "Michael S. Tsirkin" <mst@redhat.com>
-To: helei <lhestz@163.com>
-Cc: qemu-devel@nongnu.org, arei.gonglei@huawei.com, zhenwei.pi@linux.dev
-Subject: Re: [PATCH 0/1] hw/virtio-crypto: add akcipher keylen validation
-Message-ID: <20260609115607-mutt-send-email-mst@kernel.org>
-References: <20260606074756.43804-1-lhestz@163.com>
- <20260606043251-mutt-send-email-mst@kernel.org>
- <392e03eb-63e4-4db0-89d2-b7ddc32b91e8@163.com>
- <20260606102015-mutt-send-email-mst@kernel.org>
- <9b5b6607-13f5-4b61-88be-d8386a0d1b00@163.com>
+ d=1e100.net; s=20251104; t=1781020812; x=1781625612;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=TwwxK3FbqgNRzq9cSbI+NO5X1AaMIOH6AUHYNp5pS0c=;
+ b=BHuyeDK+fsZ5YwjcaNbBCA+1iL9wg4Nqymwrmblr7crkhrKXUVGrWbMIUQuvT7qKax
+ E3Z7pwoecIOec+K3SYyaQx0fca3YXvyhblv/5vKuoeqCZ8gO0SK6PQcbRr2uxEdCP9KW
+ KikBIce5qjxVxGjJdvPHBxjnw7izMF796hY99dSGRFv6T+uTveRpg5nTQ0/VhWg6X282
+ vqyD6b13DUb0yhBmM2Vndkiev6mPg6CfTETLZ9hrgFZgpPHiJgk153xzRKmNvlQyeGYX
+ UTGSWy6J0w+wlOaQOhIcix1LDvkolAwaPOS/+z8ejsHwZpqjh61OsT61g6/oMhQFYm0B
+ YMCQ==
+X-Forwarded-Encrypted: i=1;
+ AFNElJ807sXD6fh6aUyskXYmpxvzyQo3XFZ67N2WsXqbxSUmD/XDONOzB28thszZHtLKLCfzW1OELoVMzJBM@nongnu.org
+X-Gm-Message-State: AOJu0YzfQqQQ/Rt5PFZepP2wI+fuGaUjs4CblHR2UkB18VAOMovGpO8V
+ 3ttrGvk93mGzWZDPvtEh8JPE5YZ0eoDlyyAQefKNJssrDCj+XtLFce63z4hxTPzp8YTKQrPB4+3
+ 3BLhpSRStfeJu7kX+Zz2oDO0K/K0DtI76FO7+gEef
+X-Gm-Gg: Acq92OHQ6VQLACQ4VYO1Rn2RZywcuEsmEzadEhtfz29v5kYwDASRm3qhC5bVpXd89Fo
+ buxgIQEcpL7DEFOtxQyn4slWqU7DI9+A153Dd5+g3mUTisB4kJYMDZCEFduF/MXxOFHGHULqkiK
+ 8R177I4NJqZKPuHqTAdHnX4F+QCZmtPbvNr5oG45LgE9ViZSRc1bPqJMBHsrbFRk3aHC/kub4P1
+ JB5qD6r7O2fK5EWfEein2I8uW9m8Z9ySfwSWP2V7fkwQ0kYPbG2GQ0LrTditjulx61BGADfVeMi
+ NW9bCsgY41yi3N5VB72g5O11Qbtvp/boMfHYqOqNhfrArK88qA==
+X-Received: by 2002:a05:622a:1b03:b0:50e:38f0:ccb2 with SMTP id
+ d75a77b69052e-5179826672fmr38760001cf.15.1781020807491; Tue, 09 Jun 2026
+ 09:00:07 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <9b5b6607-13f5-4b61-88be-d8386a0d1b00@163.com>
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=mst@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -24
-X-Spam_score: -2.5
-X-Spam_bar: --
-X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.445,
+References: <20260609105626.1038690-1-thuth@redhat.com>
+ <CAFEAcA9O6b02VMuto8VzaEsVi3zTqNtQKG_RcMaPnNdPXGUBhw@mail.gmail.com>
+ <CAMvPwGpvpHD+Sx-HZR4FFMJB+W8Rk8LoU0256Q=vwKAdC96HSQ@mail.gmail.com>
+ <CAFEAcA9N_O7RZRU+SPTfB_ePasjVZvUsFPhndfQDuHgQ+4Q-5A@mail.gmail.com>
+ <CAMvPwGpzAcDxeqSvQmOjzkQn6T91CAmTO31bNs0wmSMqQKG=Qg@mail.gmail.com>
+In-Reply-To: <CAMvPwGpzAcDxeqSvQmOjzkQn6T91CAmTO31bNs0wmSMqQKG=Qg@mail.gmail.com>
+From: Titus Rwantare <titusr@google.com>
+Date: Tue, 9 Jun 2026 08:59:26 -0700
+X-Gm-Features: AVVi8CfSCk7cpvbPjjjcictp7Y5ynWYI7fOzBypElkdPKdJ7m307ZuXjj3z5Npc
+Message-ID: <CAMvPwGrnh9-UMv5919bLXLF8oLcyTa=coTdqh+1ALNvCKLmOJQ@mail.gmail.com>
+Subject: Re: [PATCH] hw/i2c/pmbus_device: Fix a possible crash when requesting
+ too many bytes
+To: Peter Maydell <peter.maydell@linaro.org>
+Cc: Thomas Huth <thuth@redhat.com>, qemu-devel@nongnu.org,
+ qemu-trivial@nongnu.org, qemu-arm@nongnu.org
+Content-Type: text/plain; charset="UTF-8"
+Received-SPF: pass client-ip=2607:f8b0:4864:20::829;
+ envelope-from=titusr@google.com; helo=mail-qt1-x829.google.com
+X-Spam_score_int: -175
+X-Spam_score: -17.6
+X-Spam_bar: -----------------
+X-Spam_report: (-17.6 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_MED=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ ENV_AND_HDR_SPF_MATCH=-0.5, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001, USER_IN_DEF_DKIM_WL=-7.5,
+ USER_IN_DEF_SPF_WL=-7.5 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -121,94 +120,7 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Mon, Jun 08, 2026 at 10:35:14PM +0800, helei wrote:
-> 
-> 
-> On 6/7/26 10:18, Michael S. Tsirkin wrote:
-> > On Sun, Jun 07, 2026 at 08:15:19AM +0800, helei wrote:
-> >>
-> >> On 6/6/26 16:37, Michael S. Tsirkin wrote:
-> >>> On Sat, Jun 06, 2026 at 03:47:55PM +0800, helei wrote:
-> >>>> The virtio-crypto spec does not dictate a maximum length limit for
-> >>>> asymmetric cipher (akcipher) keys. We added a hard limit which mirrors
-> >>>> the linux kernels's internal limit for akcipher keys (see
-> >>>> keyctl framework and the add_key syscall).
-> >>> We have max_size - doesn't that apply?
-> >>> backends/cryptodev-builtin.c actually sets it:
-> >>> backends/cryptodev-builtin.c:#define CRYPTODEV_BUITLIN_MAX_REQUEST_SIZE  (1024 * 1024)
-> >>> backends/cryptodev-builtin.c:    backend->conf.max_size = CRYPTODEV_BUITLIN_MAX_REQUEST_SIZE;
-> >>
-> >> Thanks for your review!  I have verified via testing that all processing
-> >> requests in the dataq are strictly
-> >>
-> >> bounded by max_size, but session creation requests in the ctrlq are not.
-> > 
-> > 
-> > 
-> > well if we read the spec it's vague
-> > 
-> >   max_size is defined as "the maximum size of the variable-length parameters of data operation of
-> >   each crypto request's content." and
-> >   The driver SHOULD read max_size to discover the maximum size of the variable-length parameters of
-> >   data operation of the crypto request's content
-> > 
-> > 
-> >   so data operation.
-> > 
-> >   however:
-> > 
-> >   "The device MUST set max_size to show the
-> >   maximum size of crypto request the device supports".
-> > 
-> >   seems to cover all requests?
-> > 
-> the original architectural intent was almost certainly for max_size to
-> govern data-plane payloads, while control messages are handled by their
-> own independent limits (max_cipher_key_len and max_auth_key_len).
-> both upstream linux guest driver (virtio_crypto_skcipher_algs.c) and
-> qemu's builtin-backend actually implement it exactly this way:
-> - data path enforces max_size by checking it against payload length
-> (note that cryptodev-builtin recently capped this to 1MB via CVE-2025-14876)
-> - control path completely ignores max_size when creating sessions
+oops, the patch series that fixes this needs to be upstreamed.
 
-we can add akcipher key length feature but what to do about existing
-guests?
-
-could max_size be a way to fix it?
-
-> > 
-> > 
-> > btw vhost user sets max_size to max u64 - is that sane?
-> > 
-> this is sane for an out-of-process data plane from a transport
-> perspective, but it creates a practical catch when backed by a dpdk
-> implementation:
-> - in dpdk vhost_crypto.c, vhost_crypto_check_cipher_request() enforces a
-> strict check: src_data_len <= RTE_MBUF_DEFAULT_BUF_SIZE (2176 bytes)
-> - the guest kernel driver simply wraps the incoming sg list and passes
-> it to virtqueue directly.
-> this creates a tricky situation for users: because vhost-user claims
-> max_size is max_u64, the users has no way of knowing this 2KB ceiling
-> exists unless they explicitly know the host backend is dpdk and look at
-> its source code.
-
-worth fixing maybe.
-
-> >   
-> > 
-> >>>
-> >>>> Maybe we should update the virtio-spec and add a max_akcipher_key_len
-> >>>> field for virtio crypto devices.
-> >>> maybe
-> >>>
-> >>>> helei (1):
-> >>>>    hw/virtio-crypto: enforce max akcipher key length
-> >>>>
-> >>>>   hw/virtio/virtio-crypto.c | 13 +++++++++++++
-> >>>>   1 file changed, 13 insertions(+)
-> >>>>
-> >>>> -- 
-> >>>> 2.43.0
-> > 
-
+-Titus
 
