@@ -4,103 +4,99 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id DD787CD8CAA
-	for <qemu-devel@archiver.kernel.org>; Tue,  9 Jun 2026 11:02:57 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id DACB1CD8CA8
+	for <qemu-devel@archiver.kernel.org>; Tue,  9 Jun 2026 11:14:07 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wWuDi-0001z9-Cv; Tue, 09 Jun 2026 07:02:16 -0400
+	id 1wWuOb-0003JG-Fb; Tue, 09 Jun 2026 07:13:25 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1wWuDP-0001wZ-HE
- for qemu-devel@nongnu.org; Tue, 09 Jun 2026 07:01:54 -0400
-Received: from mail-yx1-xb131.google.com ([2607:f8b0:4864:20::b131])
+ (Exim 4.90_1) (envelope-from <filip.hejsek@gmail.com>)
+ id 1wWuOZ-0003J1-HG
+ for qemu-devel@nongnu.org; Tue, 09 Jun 2026 07:13:23 -0400
+Received: from mail-wr1-x42a.google.com ([2a00:1450:4864:20::42a])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1wWuDN-0005Tq-Jo
- for qemu-devel@nongnu.org; Tue, 09 Jun 2026 07:01:51 -0400
-Received: by mail-yx1-xb131.google.com with SMTP id
- 956f58d0204a3-660ea43107fso5240924d50.0
- for <qemu-devel@nongnu.org>; Tue, 09 Jun 2026 04:01:49 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1781002908; cv=none;
- d=google.com; s=arc-20240605;
- b=iWEFl7faQJRzJA9/xOQ2XSkyshtOhnqXTKUr76kqV7srF4oag52gIHCSJnUmfeiOWM
- SzBtfIVjtL2/ezntqroA7TiKx8PZroBampYJaJbJkpP8lV2A887Dn08N43BCJ/ekUFwb
- sptVh9j6wdGCOlxXngWFXlFYF1gVrChHQ+XEHm7Vw+fswab6YB2nwt3v2iWTdTw3j2nr
- hHOqmfYG5AGq2W684Plo6m9HM/V5M3aGQIfizPE0bqeOM8NYus6dQEbmM3dn54vrYSTE
- A42XoNsvoJv+LQyxOuJiYuilPWWkSMUmqjYkF8XwyliTVupjtsFFvwZ9x/W32hdOHBY0
- YTgw==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
- s=arc-20240605; 
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:dkim-signature;
- bh=IWvx6N/trd7GUv7lRQQJVJ/o7RKzQvf1YBdlMGaL8p0=;
- fh=R/1LKvM0o68i4KJVrUSNja+N6WhXTCc88rnpVqvVlCA=;
- b=AgGtnevVwjQBe/otUSqfyWzrq24qgfy5UsNQPXjlI9a0HDs91X1jloAbD2D/deRMaa
- 771lcl/8OmRfYCJyYnpmONsWPTu0S69568cW8piViJwqIkF63U/pOP/RPSin9cuPPVlE
- xNeixrUzrBkWx9mu8uUfj9i1jfhXYOwLylhZc6jb1Ku3jIRj2hx08kqgp+mrGvW+JC6p
- PNEE3/2LLJC/BG4hY6rSpkuc5O+Rf7O41GdtU8eM5ZHdQjDzinFXFTKVDrGyP7P9A6tM
- beMrVp8+beaMy7QWnKS8Yej10C/fsJkKslpp3Tmfz6rNfZP5NHjgmaPVaSsXu1QvwA6X
- GUag==; darn=nongnu.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
+ (Exim 4.90_1) (envelope-from <filip.hejsek@gmail.com>)
+ id 1wWuOU-00030E-Qj
+ for qemu-devel@nongnu.org; Tue, 09 Jun 2026 07:13:20 -0400
+Received: by mail-wr1-x42a.google.com with SMTP id
+ ffacd0b85a97d-46015dc517aso4349672f8f.2
+ for <qemu-devel@nongnu.org>; Tue, 09 Jun 2026 04:13:17 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1781002908; x=1781607708; darn=nongnu.org;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=IWvx6N/trd7GUv7lRQQJVJ/o7RKzQvf1YBdlMGaL8p0=;
- b=j982zha9PMd0YJB2FolzjXg8DnxZPgzYM+fNPO2h7b43IL/z1IuRFeFZsbN/oBWVyq
- vrVXgYoCQ6gbuGPTz8Pa/sif8FxanER3ffotZ9Jp3Jz069G7HK01Fnp4nZYfAlG9jBw2
- yFRdK8v5cNiSU2Mqex2hqMSgG4mlhsWWtK8TNkqdPsRWvr+0xdS0yt7oCfsGSl/6gICZ
- PPh+7fIR4sfr1Xxt7ZP44beVKq+mKS9evTxsdfnCxjNKOR1XIXAqy1IO8q+VBjeCCD90
- kYDo+aoDyotgdOOPfXIIqViM4OjPXALZ3FdfuHNaTtDwhMCjIVngQ6oS6pqcofyrBVYW
- TkQg==
+ d=gmail.com; s=20251104; t=1781003595; x=1781608395; darn=nongnu.org;
+ h=mime-version:user-agent:content-transfer-encoding:references
+ :in-reply-to:date:cc:to:from:subject:message-id:from:to:cc:subject
+ :date:message-id:reply-to;
+ bh=1IghAgosARcWbQQ3noBtNpja0F6Bfk2uPH/+nYNqAPo=;
+ b=hTbepnWRIdgxg5XTlClnTzZQ80sIrFVuSEJh0KrDQbIUA1LY1de37Ai+BfZN/Wkq9x
+ xA0jqOklp9Zsu0k1FhswQeQ+DQHDBT8hVbtGltRGL5mHhVpbwgO9rev2+sDko8p3ARpu
+ 7FL4SRimiBF/SekfbzB72mieKdXWIGr6fgIiJB2iN1nL4OaVvtiCHuocqnDN/L9nfUwV
+ s8OeaGKqz2pmOM9kHJd4Tsh4dpKaZkzPABSd5qqwGeKJ1fA/5O2mbhwuBI3V739Oby4a
+ kIUTfHwhI6NSOWbvysO63zkJKHPEx8GWsN6HwAh0thDXNg9tB1oCQ4yQfszcYbrvi7CX
+ uSBQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1781002908; x=1781607708;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=IWvx6N/trd7GUv7lRQQJVJ/o7RKzQvf1YBdlMGaL8p0=;
- b=rF7/ZhxSOlLrjF7fP9ybv1zzSwjVPODKXXyzmSQbLE99hgy+lenc1g5IILToysw4qu
- cTRenZlQ8pVLoZTeRf8fQpnsZW+WYzfLXdmXElABdFILIxQbHtocAE6pWfAG0AW6VQO8
- EiWhJ/YeFvNKXNTLKNnh/1dg4uiUyHGNHzMKHSoJuKw82mURI1T3+eo3MTDiGcwJ+UH0
- CpVXSifUdRdYNa+fIheOn5yzGadbZyIv8YGWfTmZ01nv+8bU4Dxrx8xUjWB11Tp4UGzG
- 6hG/i+IATWhwat3uDZ5kUmUHIXzrn8E7LPjPV68GMkhVqGALfZ87lKAn0FBPx5YF6j04
- z9EQ==
-X-Gm-Message-State: AOJu0Yy9r2n4yZB5Gs+4XpK+yPes3St2YD7Gmoi4sMlVsfPE2MScFHvt
- 1+dDgMRnTLPDrJnAQ/LqV/nYxU8TrK/UVp6M5EWxtG/uxuKOZ8MaRNhp/I+IP2+L/y22evQekm9
- DEa0ZvBdLbygcLD9j4blSRjObEqzvA5wJp5ZhBwQ/QA==
-X-Gm-Gg: Acq92OEJeQnejoUwJTWp04pF/fXq6686wTkG6p/A9ghN5BOUrP9/mJcYhz0jVgIOoKZ
- vg1AYf9GYiBlAETbxolVPlrw9N8C4dLEOP//vQ5iNRrenKnKSz1DsgVaHp/2zwdcBFx4YKR1xzf
- x/JX2ZGGfgoUihyq9Kx1wyeH3L8Yi7jWj5OG9XGiqKdcZrXd0Y3uvxfC9v/ZTxfSBKDY4GNQWF/
- W/YtZoVWZRCV/32RzoBwjWa6RbKyrJOAEsdxTwwu3ke8OWpIgEZ6bujPJGKKrJoaFTAydreit/s
- dLzJKEE2NPhQrwGlpNByUfJoruDWjzJSJIMUxgt9FEFGgSz84NPw5xbQqbizDAyOeSNMC2j5N9q
- oYW5hhXrNbqFj
-X-Received: by 2002:a05:690e:140d:b0:660:62e5:9300 with SMTP id
- 956f58d0204a3-6610779e02amr17201153d50.48.1781002908052; Tue, 09 Jun 2026
- 04:01:48 -0700 (PDT)
-MIME-Version: 1.0
-References: <20260609105626.1038690-1-thuth@redhat.com>
-In-Reply-To: <20260609105626.1038690-1-thuth@redhat.com>
-From: Peter Maydell <peter.maydell@linaro.org>
-Date: Tue, 9 Jun 2026 12:01:36 +0100
-X-Gm-Features: AVVi8Cc8oKQrydmGDQOBxXvHxwWMlyhEXLAqM4JoePjcSpmZv054gl6whVUi45E
-Message-ID: <CAFEAcA9O6b02VMuto8VzaEsVi3zTqNtQKG_RcMaPnNdPXGUBhw@mail.gmail.com>
-Subject: Re: [PATCH] hw/i2c/pmbus_device: Fix a possible crash when requesting
- too many bytes
-To: Thomas Huth <thuth@redhat.com>
-Cc: qemu-devel@nongnu.org, Titus Rwantare <titusr@google.com>,
- qemu-trivial@nongnu.org, qemu-arm@nongnu.org
+ d=1e100.net; s=20251104; t=1781003595; x=1781608395;
+ h=mime-version:user-agent:content-transfer-encoding:references
+ :in-reply-to:date:cc:to:from:subject:message-id:x-gm-gg
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=1IghAgosARcWbQQ3noBtNpja0F6Bfk2uPH/+nYNqAPo=;
+ b=DP/eEA4ganxMLrSV55ID69QBi7zW3/IkRXfJfNg196bJ1oE00/IUFmUBBHsa7tCsbj
+ qSMLhzjQzp0NgnrQzKU0ONyUbotwb42BbIgNJhIOlkL9F1S9NgOBwrP83dGQmN293b1s
+ eZhyGFUriE9wWiX+5PxPwGRMhcJnNICR/9pNIumzHh5QOSVM1QLM3OAR5Gdp1b8Y3m4I
+ 0Hj9ymzpVffJDWLT+7JQKKJRvWTo9DtSEFM2kIoKm+OF501gB432wusmUUhyTKA6O2wJ
+ MAeXN/YTilQ77hAqt08fh3Mq6GQdawTjwvl4jUMbSFPGmndEDCdCDNaJmUnaBX+BLkbh
+ XXtQ==
+X-Gm-Message-State: AOJu0Ywuck6eMLvnmHAGvDGO7mzyvnzQTkNAD8vBgzQ/oPd5+6pm1pHf
+ 0lO8m+6ESluEomJ4oroSXNQdJRsuGi8dj3+DWOO8u7H1r1t0SZ/qGg6f
+X-Gm-Gg: Acq92OFs8bOOmB6I77q9z012EV3QWO78pxVjfJfCI+1i0QULrYkpmuJ61DAl4xltbYc
+ EKks6LhuiCYjIvG/D/6chmgaQOOnc05rxUw4ntwIJ6BfeUj/V+j8BeontyDWRvWcjkBddXelyUW
+ yGrD4pcVo6mStGGH51PAq5jQsn/BtfctLeACRBRyKIEiwne75R26V2viAcpwAFHPn2QS/WdNf0B
+ /krpn7qLKHVnB7uFldki9yKbojDNEbqL/QRAM001f+CSS/krYTSw+/FF1i20j97F7Kj7f85sMYs
+ IiAyJO4izgNRJo4NihaMqnMq+4flOnA0/wwZPFtQmJAziXXlP7DmP0c901O1AaVkm3m9psypeI5
+ edjkRjsoKNyw6Bm1TfjIGom28owL5cpOfxJInizh1BRYUBALyscqPKsovvYHetqjoDlFwjD7cNz
+ L7FCpKyxNYolxNTNn/3nV2yx6QGyvfamtgkVMTqwSartrcskSfA6dCpYHSGjGoP31/oq1W
+X-Received: by 2002:adf:f750:0:b0:45e:d8dc:922e with SMTP id
+ ffacd0b85a97d-4603063a8ccmr22191925f8f.20.1781003595363; 
+ Tue, 09 Jun 2026 04:13:15 -0700 (PDT)
+Received: from [10.33.80.40] (mem-185.47.220.165.jmnet.cz. [185.47.220.165])
+ by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-4601f2dcae2sm64785026f8f.6.2026.06.09.04.13.14
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Tue, 09 Jun 2026 04:13:14 -0700 (PDT)
+Message-ID: <ba34daea09f83601c88be90006ca28e3700910d9.camel@gmail.com>
+Subject: Re: [PATCH v6 00/12] virtio-console: notify about the terminal size
+From: Filip Hejsek <filip.hejsek@gmail.com>
+To: Maximilian Immanuel Brandtner <maxbr@linux.ibm.com>, "Michael S.
+ Tsirkin"	 <mst@redhat.com>
+Cc: qemu-devel@nongnu.org, =?ISO-8859-1?Q?Marc-Andr=E9?= Lureau	
+ <marcandre.lureau@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>, Laurent
+ Vivier <lvivier@redhat.com>, Amit Shah <amit@kernel.org>, Markus Armbruster
+ <armbru@redhat.com>,  Eric Blake <eblake@redhat.com>, Eduardo Habkost
+ <eduardo@habkost.net>, Marcel Apfelbaum	 <marcel.apfelbaum@gmail.com>,
+ Philippe =?ISO-8859-1?Q?Mathieu-Daud=E9?=	 <philmd@linaro.org>, Yanan Wang
+ <wangyanan55@huawei.com>, Zhao Liu	 <zhao1.liu@intel.com>, "Daniel P."
+ =?ISO-8859-1?Q?Berrang=E9?=	 <berrange@redhat.com>, Szymon Lukasz
+ <noh4hss@gmail.com>
+Date: Tue, 09 Jun 2026 13:13:13 +0200
+In-Reply-To: <147cee86401993714fa94bd6cc79c4dbbdcaca52.camel@linux.ibm.com>
+References: <20260119-console-resize-v6-0-33a7b0330a7a@gmail.com>
+ <cc0b8cce5bf5763ace058270e9d80fb84873dbd7.camel@linux.ibm.com>
+ <20260609040710-mutt-send-email-mst@kernel.org>
+ <147cee86401993714fa94bd6cc79c4dbbdcaca52.camel@linux.ibm.com>
 Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2607:f8b0:4864:20::b131;
- envelope-from=peter.maydell@linaro.org; helo=mail-yx1-xb131.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Transfer-Encoding: quoted-printable
+User-Agent: Evolution 3.60.2 
+MIME-Version: 1.0
+Received-SPF: pass client-ip=2a00:1450:4864:20::42a;
+ envelope-from=filip.hejsek@gmail.com; helo=mail-wr1-x42a.google.com
+X-Spam_score_int: -10
+X-Spam_score: -1.1
+X-Spam_bar: -
+X-Spam_report: (-1.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FORGED_GMAIL_RCVD=1,
+ FREEMAIL_FROM=0.001, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -116,55 +112,67 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, 9 Jun 2026 at 11:56, Thomas Huth <thuth@redhat.com> wrote:
->
-> From: Thomas Huth <thuth@redhat.com>
->
-> The pmbus_send_string() function contains an assert() statement that
-> can be triggered by the guest code when requesting too many data
-> without reading from the device in between. This should not be possible.
-> pmbus_send() already has a similar logic, but it simply ignores the
-> error after logging a message with qemu_log_mask(), so do the same now
-> in pmbus_send_string() to fix the issue.
->
-> Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/3388
-> Signed-off-by: Thomas Huth <thuth@redhat.com>
-> ---
->  hw/i2c/pmbus_device.c | 7 ++++++-
->  1 file changed, 6 insertions(+), 1 deletion(-)
->
-> diff --git a/hw/i2c/pmbus_device.c b/hw/i2c/pmbus_device.c
-> index b1f9843f52e..6aa608a2998 100644
-> --- a/hw/i2c/pmbus_device.c
-> +++ b/hw/i2c/pmbus_device.c
-> @@ -104,7 +104,12 @@ void pmbus_send_string(PMBusDevice *pmdev, const char *data)
->      }
->
->      size_t len = strlen(data);
-> -    g_assert(len + pmdev->out_buf_len < SMBUS_DATA_MAX_LEN);
-> +    if (len + pmdev->out_buf_len >= SMBUS_DATA_MAX_LEN) {
-> +        qemu_log_mask(LOG_GUEST_ERROR,
-> +                      "%s: requested too much data from PMBus device\n",
-> +                      __func__);
-> +        return;
-> +    }
+On Tue, 2026-06-09 at 10:26 +0200, Maximilian Immanuel Brandtner wrote:
+> On Tue, 2026-06-09 at 04:09 -0400, Michael S. Tsirkin wrote:
+> > On Tue, Jun 09, 2026 at 10:02:40AM +0200, Maximilian Immanuel
+> > Brandtner wrote:
+> > > What's the status of this series? It seems to me to have somewhat
+> > > stalled, because of the virtio resize event discrepancy that has
+> > > been
+> > > adressed by backporting the relevant patch. At this point it's been
+> > > almost 6 months since any changes have been made to this patch-set,
+> > > even though at this point it would have to be refactored to address
+> > > changes that have been made to QEMU since. Has progress on this
+> > > patch-
+> > > set just stalled or are there any remaining concerns about the
+> > > implementation of this patch-set I'm unaware of?
+> > >=20
+> > > Kind regards,
+> > > Max Brandtner
+> >=20
+> > Whom are you asking?
+> > There were comments on patches 7 and 8 and Filip seems to have
+> > indicated
+> > he intends to address them, and even posted diffs.
+> > So now, I expect v7 with that.
+> I suppose Filip for the most part. It's just that close to 6 months of
+> inactivity is quite a while and sometimes as other stuff happens people
+> can forget about a patch-series.
+>=20
+> Kind regards,
+> Max Brandtner
 
-I had a look at this bug earlier, but was not sure that this is the
-right thing. What happens is that the guest does something that
-causes the device to queue up data X ready for the guest to
-read, but then instead of reading it, the guest does another
-"I would like data X please" action. My guess is that the way
-the hardware handles this is probably not "add the second
-copy of data X after the first one". Perhaps it is "drop the
-data the guest didn't read, so the next guest read gets the
-second lot of data, not the first". But maybe the spec really
-does say "you can do things in the order 'ask for A, ask for
-B, read data for A, read data for B".
+Hi all,
 
-I couldn't conveniently find the pmbus spec to find out what
-the hardware is supposed to do here. We need some input from
-somebody who knows about pmbus.
+Sorry, I did indeed forget about the series.
 
-thanks
--- PMM
+From what I remember, I was trying to address an issue with the size
+not being updated after a migration, and it turned out fixing this
+required adding the current size to the migration stream (in order to
+avoid sending unnecessary resize events when the size doesn't change,
+which MST pointed out would add guest performance overhead).
+
+However, since virtio console serialization still uses save/load
+methods rather than VMState macros, I couldn't simply add a subsection,
+so I wasn't quite sure how to proceed. It seemed like the right thing
+to do was to migrate virtio-console to VMState, but that would have
+taken more effort than I was willing to put in at that moment. And then
+some other stuff happened in my life and now here we are.
+
+So anyway, in order to make progress on this, I see two approaches:
+
+1. Just bump the migration stream version. Makes the loading code more
+convoluted due to version checks and increases tech dept for future
+VMState migration, but shouldn't be that hard to do.
+
+2. Do the VMState migration now. This is complicated by the fact the on
+load,=C2=A0some of the state shouldn't be restored back into the field that
+was saved, but instead should be compared and the guest notified if it
+is different. I'm also not quite sure how hard it will be to preserve
+migration stream compatibility.
+
+Which one would be preferable to do?
+
+Kind regards,
+Filip Hejsek
 
