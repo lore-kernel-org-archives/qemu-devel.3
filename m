@@ -4,87 +4,87 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D8AA9CD8CB9
-	for <qemu-devel@archiver.kernel.org>; Tue,  9 Jun 2026 15:36:47 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8EBFCCD98C7
+	for <qemu-devel@archiver.kernel.org>; Tue,  9 Jun 2026 15:36:48 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wWyUx-0004st-0E; Tue, 09 Jun 2026 11:36:15 -0400
+	id 1wWyUq-0004q5-75; Tue, 09 Jun 2026 11:36:08 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <alex@shazbot.org>) id 1wWyUu-0004qs-MP
- for qemu-devel@nongnu.org; Tue, 09 Jun 2026 11:36:12 -0400
+ (Exim 4.90_1) (envelope-from <alex@shazbot.org>) id 1wWyUm-0004pc-Fe
+ for qemu-devel@nongnu.org; Tue, 09 Jun 2026 11:36:04 -0400
 Received: from fout-a8-smtp.messagingengine.com ([103.168.172.151])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <alex@shazbot.org>) id 1wWyUr-00016h-TM
- for qemu-devel@nongnu.org; Tue, 09 Jun 2026 11:36:11 -0400
+ (Exim 4.90_1) (envelope-from <alex@shazbot.org>) id 1wWyUi-00014d-Ln
+ for qemu-devel@nongnu.org; Tue, 09 Jun 2026 11:36:03 -0400
 Received: from phl-compute-04.internal (phl-compute-04.internal [10.202.2.44])
- by mailfout.phl.internal (Postfix) with ESMTP id 9E854EC023E;
- Tue,  9 Jun 2026 11:36:07 -0400 (EDT)
-Received: from phl-frontend-04 ([10.202.2.163])
- by phl-compute-04.internal (MEProxy); Tue, 09 Jun 2026 11:36:07 -0400
+ by mailfout.phl.internal (Postfix) with ESMTP id 275C5EC021E;
+ Tue,  9 Jun 2026 11:35:57 -0400 (EDT)
+Received: from phl-frontend-03 ([10.202.2.162])
+ by phl-compute-04.internal (MEProxy); Tue, 09 Jun 2026 11:35:57 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=shazbot.org; h=
  cc:cc:content-transfer-encoding:content-type:content-type:date
  :date:from:from:in-reply-to:in-reply-to:message-id:mime-version
- :references:reply-to:subject:subject:to:to; s=fm3; t=1781019367;
- x=1781105767; bh=hF2IFSFBDpx+d12z93iCXasTHdzej0IuaPWBqz+ox9o=; b=
- MZEj3v02BvG5MLVTMqm+BHFeFEi5999lH+MtJtK6hUhXvcfR52rlXBMzQE4pvxM9
- IK097oRGUz+5ZzdfaR6IXSl7nswLlifrMNzZcuVHBxo4zuAnDH0H0q9XR3gqrLhx
- 6geHd6oP51rs9N1rMSZIfbyDI7X9iaFT5oNyZivA8bNXIoWyLjxxqp7EirGISuHp
- 1gdMuNxU4DV4F1jITV7d+s+ODISGTsXglLedxVBi4XRN1B87pNoBb3PnhpH4/DJa
- PwL/2flObkTQsFBn1beyxbcdzbUgg3oxzENNVh/yGa3AWzpH82p/ED5pplRLCSHa
- 8mf0RBXRFInEBM9TwXiUjQ==
+ :references:reply-to:subject:subject:to:to; s=fm3; t=1781019357;
+ x=1781105757; bh=UtTC19+3UZwKKZpStW5lRtwD9MnsBuy+I5Mlj0LMKos=; b=
+ izlzuJ3VHgjujxvZSf0YFRhphs8RfVxG72do3p8WkkiPgTHvHXf1PCYJhqfQW/3u
+ hFcXBgUOE3Vtt0glwePVNEvNoKVc0vWjmH7KjH0fh/CKjGgUmTosVZ/0OssRGqYz
+ lWuo5wIoS/SDjpZHw0zBqz8pR/oBWnaY7w3Kk7+20+pEeH+nHp9zYziweIRl3fZk
+ Peq1q5C2nlBRByU1pjTpVxPW7uIfsv5Aj7Ip7h++QrF13TwH61OVUGQ0I4+XmGwu
+ GMXnyNicqvA2NVL3Y6TEsJFYDmIQzdRoP3bPV4ESHo7Np3NCBCXwgdgjvSij9JBV
+ CtAiv/ZWI5LhuNePvrSSCw==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
  messagingengine.com; h=cc:cc:content-transfer-encoding
  :content-type:content-type:date:date:feedback-id:feedback-id
  :from:from:in-reply-to:in-reply-to:message-id:mime-version
  :references:reply-to:subject:subject:to:to:x-me-proxy
- :x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=1781019367; x=
- 1781105767; bh=hF2IFSFBDpx+d12z93iCXasTHdzej0IuaPWBqz+ox9o=; b=X
- hpUpBAl/xfVXeiCUQFhbpHO3VGTi80yaBbzv6tZMGsYxFlozFl38pn/lT2FAL7MN
- Wv5YWqHm32JQejOsZ/jJ8MoTXLHPNffyvFMRxOo5eRbywqfpz0/aj7ixdxRwQhwK
- pXyf16vJvioGAkOxflJh9rLUGRchF/oQ2lsvv63lCayZRROhPpUlC1XuNrQZWm1F
- nNXLUUgU3T4HFVvHhuwVP+qKOVfbP7drl8bYV0ARbzkUb7VFPxcv3wj/xWU3U980
- x8JD+koPzHpnMgy2yhUApVm/CnfhEfvl2Sw82uysBYBeOpr6Yq4245y2cTkMyXxX
- L+lYtxxBNk0X0ge6tevCg==
-X-ME-Sender: <xms:5zIoaqgy7-TDNHQeDeASCL7hqI1Al8erVWxhs2uBPyu4Rfvp16OYXQ>
- <xme:5zIoaj_bN8jMFJlQweSytSVIP_vfJz07G-qKMLa8dFQ6scm4vllrxL2C4RXQwSN_I
- BQoEsRiJOT990NJIToQor6Tl96mShWPGYbD0RiojUZrue5OnIaIhw>
-X-ME-Received: <xmr:5zIoato7EIXuTlHNL8DI63_0bt9YvCFoFIcP9bnkOaZXamvCu9Rsl2wq4Fc>
-X-ME-Proxy-Cause: dmFkZTFDp4hn9yJlTVOgAh1GbnLh12kIMdsGHUkCUPTOk7zXSzkdMPRTC77WP+iDJxzenq
- vfTio6CT2pL7LrIyDKtsYZiHUluFLZ01APhc3NRWpgwVe17fxXZxa9LlMWHZoXWTfeLNcW
- Q8AwUP65L4NVO+9/8XhJSte9b6uRwZZXUOBb9XSI+M8fVJCJAOvIwLTqlkmln2WDvjFnMU
- K+X9BfIeX3snXkTTN1zH7ahjszSnwKZ83V6FpW7W4oiBhSUlek7RUCPcVuHjZEiEdGyar+
- BHB8qsbnLDXjjLUz0eH3LPujw+NaxbXiCTQi/uS7gM/GzhlDgh+jmMKf5byElKhUIHydSQ
- xDPwFp4VsH53DAyWnh5V8M//NHYg4EOBLpchBboqTp9KWmqUnzY96rqN7O96htvq/ZZ1yv
- h8+u0qUvEN2AUh3SW+byAeb0jPblua2IHlpJz7bqis89p+mA5z/oObUdLv9cGGKPFOCnJB
- eMWd/Oz8oC+MCxF+PYnIfQ+Tj+bS3+agjWrh458CkJDXqFejZjjV8i4eneeD01+l/YIqu9
- jGs2kUuhfbarMF2EH8PYOoIzOgmSz2Q61uT0YgdKMLIbGIL7ZfdrO5qb0yMKv7sUoAC8rM
- cIeyyZ2wLckCGnNFF9vO9kK7kutlPxKeQHUngaCgf67FKZTGcmfv+gbUmazA
-X-ME-Proxy: <xmx:5zIoajWZGG7EREFRp19RhoaJb73ft6e-7xejPT4R6sqMyOkJjUWNvw>
- <xmx:5zIoakA0vnVeL4aYTZscinkRSIVVaeDt_2cQgmjyzU7RIZm8-y2Qdg>
- <xmx:5zIoav0u25PweW1Lwb1T1KJ0Se5zYl5HETq-AGk9dpy6Wcn8kl3OlQ>
- <xmx:5zIoau0ePP4UFf4S9wQvfQg_RAm-cuS_VndWMp5S70MWroqNyjUefw>
- <xmx:5zIoagwjnsdWgoX4qlLrttvIoXFX_ldmbxiA841DXt1x2HuAkNWLrJUO>
+ :x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=1781019357; x=
+ 1781105757; bh=UtTC19+3UZwKKZpStW5lRtwD9MnsBuy+I5Mlj0LMKos=; b=L
+ dlnFfuYKJb/7+XlkcUuhcd2YVAzXbb7tvfRA1I13GDuWVv+hcwwr/vJlTW6x6YoC
+ iyOfT1cziBsumD8r1hUdwVpKw10Oi53cBApbtaJPhSfG47ZlQQ1Sk1EY7ERBmXEK
+ 34udMiBO72FqR5lW5pBulSWRENRoiydlAjy/Qt3CCokreRWey3MLaN2GdC6F2D0m
+ 3U4xjnKUomZ26Y5JY49NiNhiX57cl8QVKMBskK9FR05UbC+J+xfBeEAVHN1mvtcR
+ UGZM3x5c3tK/NANu1rmkOISVoxmolH/UPeMQ/W32uERo+MSndk/mReDszB+TfNr1
+ g96V5jujSSFOWyfEKXYog==
+X-ME-Sender: <xms:3DIoaicpWmrS3z51CSqfl2xe8BymyLQUwWFoo_pVyiiNJw40BldvTQ>
+ <xme:3DIoalLpTA9NkTPb2RA-gpDWfez7auTF9Od1j4y5U8D5LlQi2LZGlz9q_7no-HXhu
+ FbaOCtmQn4qBWKwAseyL9uerGGFh9q_nZXvdyUs6gmc0yPcZrPxRg>
+X-ME-Received: <xmr:3DIoavFLMCdX5zQdYZJp-lw0HUexVz0TfAY1vgbqiopOWwWbu-FE52zIli4>
+X-ME-Proxy-Cause: dmFkZTFRpZRJOfQQzUY6vfAqZZBViRgKALOQtFrLJNvtWpFVGPY5DrtnrKjxkndlamJnjK
+ 7bwVgF+0VQ/M0qSRiIZQ8foAcIEbYKz/Npdkk3kNTKbFfild0wP9xpSOp7N5lk56sqGt6/
+ PTbWZDAObX18stWd+Weina/pZ6ApYVYbZtwX6CiEXl9C57KKCHa/KyvyggYtcXjN3OgpZG
+ ZuNWnUZVCo63gdgio/UnWGNtd0WhlrfrENyNSIMc9cBmpQIM57vlA8PDKJ4T1BZjSqWu4H
+ jdIhOUpNNIa9TcMS7Qgj4HXnk9LLgIXOxZYEwfrtlnLCdAEHFIKInJVMuFgpn4CyE2ThOS
+ jIbIXuIhUhTsnLmmqCgoR3p/9Nu/w/LzjTlskBYzXcEinis4tkdT4RQ0/LPy58/yJxtJ46
+ NRqCcOV9fGELEjs67M35L9ymjQoiYtCKUPqYJnV0GZrBgGaVe7kZ4z/1YCdeaMSvW4Gf8f
+ yAeefshIXoczAUyh/MgS+xeyJOmg6T2OzYp1r1WKHJ5wvUilXZYrxC8qLBI7XTBWXGqfcO
+ +eYEF0mf3O6y2i+t3Lz8wDfDgrQcL/aA5EhTgaT7k/an+cW+L+Af7pZ6BaC4LabZc7r4oa
+ IzKsdXiEmHh3nP7AHHIm0yOpF68JO1QwB7sCWKlPfu7vZu+k984UFqo7MAew
+X-ME-Proxy: <xmx:3DIoagAdaAtYkf34IZ8dR1_0fV59kSdE25ewBhcjYL-i9h2TCnjGtg>
+ <xmx:3DIoaq-zJWo0YJJbUd7-oKIF16S8rj1Guh66csthca9BHetuky7wOA>
+ <xmx:3DIoakArvlwJbeJqx4q0hIVBS3vWtV5idRvTA9oG-snocj0AkMpkzQ>
+ <xmx:3DIoanS5SR2INbhSpiPCSq5g_OKDRSsVWz9BzqFHXgyi3dBavqhLVw>
+ <xmx:3TIoaqcM_VjLahOtfV4PHEPVqqaV6K_8gqK2l8IqVJXeix-9XQB81qDe>
 Feedback-ID: i03f14258:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
- 9 Jun 2026 11:36:07 -0400 (EDT)
-Date: Tue, 9 Jun 2026 09:36:06 -0600
+ 9 Jun 2026 11:35:56 -0400 (EDT)
+Date: Tue, 9 Jun 2026 09:35:54 -0600
 From: Alex Williamson <alex@shazbot.org>
 To: Tomita Moeko <tomitamoeko@gmail.com>
 Cc: qemu-devel@nongnu.org, =?UTF-8?B?Q8OpZHJpYw==?= Le Goater
  <clg@redhat.com>, "Michael S. Tsirkin" <mst@redhat.com>, K S Maan
  <kirandeepmaan45@gmail.com>, alex@shazbot.org
-Subject: Re: [PATCH v2 1/7] hw/pci: Recalculate option ROM checksum before
- patching ID
-Message-ID: <20260609093606.1dbbd177@shazbot.org>
-In-Reply-To: <20260608134559.23971-2-tomitamoeko@gmail.com>
+Subject: Re: [PATCH v2 7/7] vfio/igd: Clear saved BDSM in legacy VBIOS ROM
+ at load time
+Message-ID: <20260609093554.534dc9a0@shazbot.org>
+In-Reply-To: <20260608134559.23971-8-tomitamoeko@gmail.com>
 References: <20260608134559.23971-1-tomitamoeko@gmail.com>
- <20260608134559.23971-2-tomitamoeko@gmail.com>
+ <20260608134559.23971-8-tomitamoeko@gmail.com>
 X-Mailer: Claws Mail 4.4.0 (GTK 3.24.52; x86_64-pc-linux-gnu)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: quoted-printable
 Received-SPF: pass client-ip=103.168.172.151; envelope-from=alex@shazbot.org;
  helo=fout-a8-smtp.messagingengine.com
 X-Spam_score_int: -27
@@ -109,110 +109,278 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Mon,  8 Jun 2026 21:45:52 +0800
+On Mon,  8 Jun 2026 21:45:58 +0800
 Tomita Moeko <tomitamoeko@gmail.com> wrote:
 
-> pci_patch_ids() only adjusts checksum based on the new IDs. For an
-> option ROM with invalid checksum, the patched one will still have
-> an invalid checksum. Always calculate the checksum and patch it if
-> necessary to ensure the option ROM is valid.
-> 
-> This is intended for fixing the romfile used in IGD passthrough as
-> multiple IGD devices share the same rom with possible non-matching
-> device ID, and its checksum is known to be bogus [1].
-> 
-> A helper function pci_rom_calculate_checksum() is added and exported
-> for reusing in IGD-specific quirk later.
-> 
-> [1] hw/vfio/pci.c:1090
-> 
+> IGD does not come with a ROM BAR [1], the ROM BAR read by default from
+> kernel is actually the host VBIOS shadow RAM region that contains host
+> modifications on boot. With AI-assisted reverse engineering on VBIOS
+> binaries, it is observed that VBIOS saves BDSM register value on first
+> access and uses saved value if present.
+>=20
+> When the image is executed in guest, since there is already a saved HPA
+> in VBIOS, it keeps using that value instead of the GPA programmed by
+> SeaBIOS in BDSM register in PCI config space, causing VBIOS to program
+> GTT entries with wrong address, resulting in garbled output in BIOS
+> POST and the error below detected by i915 driver.
+>=20
+> i915 0000:00:02.0: [drm] *ERROR* Initial plane programming using invalid =
+range, dma_addr=3D0x00000000db200000 ((null) [0x00000000baf00000-0x00000000=
+beefffff])
+>=20
+> The previous solution, c4c45e943e51 ("vfio/pci: Intel graphics legacy
+> mode assignment"), adjusts GTT entry addresses to (addr - host BDSM +
+> guest BDSM) to workaround that. But it is removed in 5aed8b0f0be2
+> ("vfio/igd: Remove GTT write quirk in IO BAR 4") due to inconsistent
+> values in MMIO BAR0 and IO BAR4.
+>=20
+> Considering it's unsafe to expose HPA to guest, a ROM quirk clearing
+> the saved value in VBIOS image is introduced. It searches the BDSM
+> accessor routine by matching a 19-byte signature anchored on the unique
+> `mov $0x105e,%ax` instruction, then locate the offset of saved BDSM and
+> clears it. This makes the routine fall through to the PCI config read
+> on the first call inside the guest.
+>=20
+> The quirk is invoked in vfio_pci_load_rom(), and is gated on Gen 6-9
+> IGD devices with VGA access enabled and legacy (non-UEFI) PCIR code
+> type in the ROM header. A new trace event vfio_pci_igd_vbios_patched
+> is also introduced.
+>=20
+> [1] 3.5.15, 4th Generation Intel Core Processor Family Datasheet Vol. 2
+>     https://www.intel.com/content/dam/www/public/us/en/documents/datashee=
+ts/4th-gen-core-family-desktop-vol-2-datasheet.pdf
+>=20
+> Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/3093
 > Reported-by: K S Maan <kirandeepmaan45@gmail.com>
 > Signed-off-by: Tomita Moeko <tomitamoeko@gmail.com>
 > ---
->  hw/pci/pci.c         | 35 ++++++++++++++++++++++++++---------
->  include/hw/pci/pci.h |  2 ++
->  2 files changed, 28 insertions(+), 9 deletions(-)
-> 
-> diff --git a/hw/pci/pci.c b/hw/pci/pci.c
-> index cec065d108..742917f79d 100644
-> --- a/hw/pci/pci.c
-> +++ b/hw/pci/pci.c
-> @@ -2479,6 +2479,21 @@ static uint8_t pci_find_capability_at_offset(PCIDevice *pdev, uint8_t offset)
->      return found;
+>  hw/vfio/igd-stubs.c  |   5 ++
+>  hw/vfio/igd.c        | 110 +++++++++++++++++++++++++++++++++++++++++++
+>  hw/vfio/pci-quirks.c |   5 ++
+>  hw/vfio/pci.c        |   2 +
+>  hw/vfio/pci.h        |   3 ++
+>  hw/vfio/trace-events |   1 +
+>  6 files changed, 126 insertions(+)
+>=20
+> diff --git a/hw/vfio/igd-stubs.c b/hw/vfio/igd-stubs.c
+> index f7687d9091..879a8aff56 100644
+> --- a/hw/vfio/igd-stubs.c
+> +++ b/hw/vfio/igd-stubs.c
+> @@ -18,3 +18,8 @@ bool vfio_probe_igd_config_quirk(VFIOPCIDevice *vdev, E=
+rror **errp)
+>  {
+>      return true;
 >  }
->  
-> +uint8_t pci_rom_calculate_checksum(const uint8_t *ptr, uint32_t size)
-> +{
-> +    uint8_t checksum = 0;
-> +    uint32_t i;
 > +
-> +    for (i = 0; i < size; i++) {
-> +        if (i == 6) {
+> +void vfio_probe_igd_legacy_rom_quirk(VFIOPCIDevice *vdev)
+> +{
+> +    return;
+> +}
+> diff --git a/hw/vfio/igd.c b/hw/vfio/igd.c
+> index 834539affb..4b49038753 100644
+> --- a/hw/vfio/igd.c
+> +++ b/hw/vfio/igd.c
+> @@ -734,3 +734,113 @@ bool vfio_probe_igd_config_quirk(VFIOPCIDevice *vde=
+v, Error **errp)
+> =20
+>      return vfio_pci_igd_config_quirk(vdev, errp);
+>  }
+> +
+> +/*
+> + * IGD ROM BAR read from kernel is actually the host VBIOS shadow RAM re=
+gion,
+> + * which contains host modifications. In Gen 6-9 VBIOS, the routine belo=
+w is
+> + * used to get BDSM value when programming the initial GTT.
+> + *   xx xx xx xx           v: .long ?                  # saved value
+> + *   66 53                    push  %ebx
+> + *   66 2e 83 3e xx xx 00     cmpl  $0x0,%cs:v         # is saved value =
+empty?
+> + *   74 07                    je    1f                 # if zero, go com=
+pute
+> + *   66 2e a1 xx xx           mov   %cs:v,%eax         # else return sav=
+ed value
+> + *   eb 0f                    jmp   2f
+> + *   b8 5e 10              1: mov   $0x105e,%ax        # dev 00:02.0, of=
+fset 5E
+> + *   e8 xx xx                 call  pci_read_cfg_word
+> + *   66 c1 e0 10              shl   $0x10,%eax         # left shift 16 b=
+its
+> + *   66 2e a3 xx xx           mov   %eax,%cs:v         # save the result
+> + *   66 5b                 2=EF=BC=9Apop   %ebx
+> + *   c3                       ret
+> + * When running the VBIOS in guest, saved value still reflects the host =
+stolen
+> + * memory base address, which is not correct in guest. So we need to pat=
+ch the
+> + * VBIOS to clear the saved value.
+> + *
+> + * The unique 19-byte starts at `cmpl $0,%cs:v` and ends at `mov $0x105e=
+,%ax`
+> + * anchors the match to the routine. Both `cs:` displacements must refer=
+ence
+> + * the same offset.
+> + */
+> +static int igd_vbios_find_saved_bdsm(const uint8_t *rom, size_t rom_size,
+> +                                     uint16_t *bdsm_offset)
+> +{
+> +    static const uint8_t start[] =3D { 0x66, 0x2e, 0x83, 0x3e };
+> +    static const uint8_t middle[] =3D { 0x00, 0x74, 0x07, 0x66, 0x2e, 0x=
+a1 };
+> +    static const uint8_t end[] =3D { 0xeb, 0x0f, 0xb8, 0x5e, 0x10 };
+> +    uint16_t val;
+> +    size_t i;
+> +    bool found =3D false;
+> +
+> +    if (rom_size < 19) {
+> +        return -ENOENT;
+> +    }
+> +
+> +    for (i =3D 0; i + 19 <=3D rom_size; i++) {
+> +        if (memcmp(rom + i, start, sizeof(start)) !=3D 0 ||
+> +            memcmp(rom + i + 6, middle, sizeof(middle)) !=3D 0 ||
+> +            memcmp(rom + i + 14, end, sizeof(end)) !=3D 0) {
 > +            continue;
 > +        }
+> +
+> +        /* same saved value address? */
+> +        if (rom[i + 4] !=3D rom[i + 12] || rom[i + 5] !=3D rom[i + 13]) {
+> +            continue;
+> +        }
+> +
+> +        if (found) {
+> +            return -EEXIST;
+> +        }
+> +
+> +        val =3D rom[i + 4] | ((uint16_t)rom[i + 5] << 8);
+> +        if (val < rom_size) {
 
-If we remove this continue branch...
+We write sizeof(uint32_t) to this offset, so this should be:
 
-> +        checksum += ptr[i];
+        if (val + sizeof(uint32_t) < rom_size) {
+
+> +            *bdsm_offset =3D val;
+> +            found =3D true;
+> +        }
 > +    }
 > +
-> +    return checksum;
+> +    if (!found) {
+> +        return -ENOENT;
+> +    }
+> +
+> +    return 0;
 > +}
 > +
->  /* Patch the PCI vendor and device ids in a PCI rom image if necessary.
->     This is needed for an option rom which is used for more than one device. */
->  static void pci_patch_ids(PCIDevice *pdev, uint8_t *ptr, uint32_t size)
-> @@ -2514,25 +2529,27 @@ static void pci_patch_ids(PCIDevice *pdev, uint8_t *ptr, uint32_t size)
->      trace_pci_rom_and_pci_ids(pdev->romfile, vendor_id, device_id,
->                                rom_vendor_id, rom_device_id);
->  
-> -    checksum = ptr[6];
-> +    /* In case the checksum is bogus */
-> +    checksum = pci_rom_calculate_checksum(ptr, size);
->  
->      if (vendor_id != rom_vendor_id) {
->          /* Patch vendor id and checksum (at offset 6 for etherboot roms). */
-> -        checksum += (uint8_t)rom_vendor_id + (uint8_t)(rom_vendor_id >> 8);
-> -        checksum -= (uint8_t)vendor_id + (uint8_t)(vendor_id >> 8);
-> -        trace_pci_rom_checksum_change(ptr[6], checksum);
-> -        ptr[6] = checksum;
-> +        checksum += (uint8_t)vendor_id + (uint8_t)(vendor_id >> 8);
-> +        checksum -= (uint8_t)rom_vendor_id + (uint8_t)(rom_vendor_id >> 8);
->          pci_set_word(ptr + pcir_offset + 4, vendor_id);
->      }
->  
->      if (device_id != rom_device_id) {
->          /* Patch device id and checksum (at offset 6 for etherboot roms). */
-> -        checksum += (uint8_t)rom_device_id + (uint8_t)(rom_device_id >> 8);
-> -        checksum -= (uint8_t)device_id + (uint8_t)(device_id >> 8);
-> -        trace_pci_rom_checksum_change(ptr[6], checksum);
-> -        ptr[6] = checksum;
-> +        checksum += (uint8_t)device_id + (uint8_t)(device_id >> 8);
-> +        checksum -= (uint8_t)rom_device_id + (uint8_t)(rom_device_id >> 8);
->          pci_set_word(ptr + pcir_offset + 6, device_id);
->      }
+> +void vfio_probe_igd_legacy_rom_quirk(VFIOPCIDevice *vdev)
+> +{
+> +    int ret, gen;
+> +    uint16_t pcir_offset, bdsm_offset =3D 0;
+> +    uint8_t checksum;
 > +
-> +    if (ptr[6] != (uint8_t)-checksum) {
-> +        trace_pci_rom_checksum_change(ptr[6], (uint8_t)-checksum);
-> +        ptr[6] = (uint8_t)-checksum;
+> +    if (!vfio_pci_is(vdev, PCI_VENDOR_ID_INTEL, PCI_ANY_ID) ||
+> +        !vfio_is_vga(vdev) || !vdev->vga) {
+> +        return;
 > +    }
+> +
+> +    /* Only Gen 6~9 devices have legacy VBIOS as Option ROM */
+> +    gen =3D igd_gen(vdev);
+> +    if (gen < 6 || gen > 9) {
+> +        return;
+> +    }
+> +
+> +    if (pci_get_word(vdev->rom) !=3D 0xaa55) {
+> +        return;
+> +    }
+> +
+> +    /* Must be a legacy ROM */
+> +    pcir_offset =3D pci_get_word(vdev->rom + 0x18);
+> +    if (pcir_offset + 0x14 >=3D vdev->rom_size ||
+> +        memcmp(vdev->rom + pcir_offset, "PCIR", 4) ||
+> +        pci_get_byte(vdev->rom + pcir_offset + 0x14) !=3D 0x00) {
+> +        return;
+> +    }
+> +
+> +    ret =3D igd_vbios_find_saved_bdsm(vdev->rom, vdev->rom_size, &bdsm_o=
+ffset);
+> +    if (ret < 0) {
+> +        return;
+> +    }
+> +
+> +    memset(vdev->rom + bdsm_offset, 0, sizeof(uint32_t));
+> +
+> +    checksum =3D pci_rom_calculate_checksum(vdev->rom, vdev->rom_size);
+> +    ((uint8_t *)vdev->rom)[6] =3D (uint8_t)-checksum;
 
-Then this just becomes:
+This gets updated to:
 
-    if (checksum) {
-        trace_pci_rom_checksum_change(ptr[6], ptr[6] - checksum);
-        ptr[6] -= checksum;
-    }
+    ((uint8_t *)vdev->rom)[6] -=3D checksum;
 
-The result is the same, but this avoids the uint8_t casts where
-checksum is promoted to an int for comparison.
-
-Patch 7 would require an equivalent change:
-
-  -    ((uint8_t *)vdev->rom)[6] = (uint8_t)-checksum;
-  +    ((uint8_t *)vdev->rom)[6] -= checksum;
-
-Minor change, slightly better form.  Thanks,
+if we take the earlier suggestion.  Thanks,
 
 Alex
+
+> +
+> +    trace_vfio_pci_igd_vbios_patched(vdev->vbasedev.name);
+> +}
+> diff --git a/hw/vfio/pci-quirks.c b/hw/vfio/pci-quirks.c
+> index bccf31751f..45db968681 100644
+> --- a/hw/vfio/pci-quirks.c
+> +++ b/hw/vfio/pci-quirks.c
+> @@ -1592,3 +1592,8 @@ bool vfio_add_virt_caps(VFIOPCIDevice *vdev, Error =
+**errp)
+> =20
+>      return true;
+>  }
+> +
+> +void vfio_rom_quirk_setup(VFIOPCIDevice *vdev)
+> +{
+> +    vfio_probe_igd_legacy_rom_quirk(vdev);
+> +}
+> diff --git a/hw/vfio/pci.c b/hw/vfio/pci.c
+> index 6cbd65126e..66d6315e6f 100644
+> --- a/hw/vfio/pci.c
+> +++ b/hw/vfio/pci.c
+> @@ -1088,6 +1088,8 @@ static void vfio_pci_load_rom(VFIOPCIDevice *vdev)
+>      if (pdev->rom_need_patch_id) {
+>          pci_rom_patch_ids(pdev, vdev->rom, vdev->rom_size);
+>      }
+> +
+> +    vfio_rom_quirk_setup(vdev);
+>  }
+> =20
+>  /* "Raw" read of underlying config space. */
+> diff --git a/hw/vfio/pci.h b/hw/vfio/pci.h
+> index c3a1f53d35..d8d6c09632 100644
+> --- a/hw/vfio/pci.h
+> +++ b/hw/vfio/pci.h
+> @@ -251,10 +251,13 @@ void vfio_bar_quirk_exit(VFIOPCIDevice *vdev, int n=
+r);
+>  void vfio_bar_quirk_finalize(VFIOPCIDevice *vdev, int nr);
+>  void vfio_setup_resetfn_quirk(VFIOPCIDevice *vdev);
+>  bool vfio_add_virt_caps(VFIOPCIDevice *vdev, Error **errp);
+> +void vfio_rom_quirk_setup(VFIOPCIDevice *vdev);
+>  void vfio_quirk_reset(VFIOPCIDevice *vdev);
+>  VFIOQuirk *vfio_quirk_alloc(int nr_mem);
+> +
+>  void vfio_probe_igd_bar0_quirk(VFIOPCIDevice *vdev, int nr);
+>  bool vfio_probe_igd_config_quirk(VFIOPCIDevice *vdev, Error **errp);
+> +void vfio_probe_igd_legacy_rom_quirk(VFIOPCIDevice *vdev);
+> =20
+>  extern const PropertyInfo qdev_prop_nv_gpudirect_clique;
+> =20
+> diff --git a/hw/vfio/trace-events b/hw/vfio/trace-events
+> index 2049159015..7dc334ccb3 100644
+> --- a/hw/vfio/trace-events
+> +++ b/hw/vfio/trace-events
+> @@ -90,6 +90,7 @@ vfio_pci_igd_bar4_write(const char *name, uint32_t inde=
+x, uint32_t data, uint32_
+>  vfio_pci_igd_bdsm_enabled(const char *name, int size) "%s %dMB"
+>  vfio_pci_igd_host_bridge_enabled(const char *name) "%s"
+>  vfio_pci_igd_lpc_bridge_enabled(const char *name) "%s"
+> +vfio_pci_igd_vbios_patched(const char *name) "%s"
+> =20
+>  # listener.c
+>  vfio_iommu_map_notify(const char *op, uint64_t iova_start, uint64_t iova=
+_end) "iommu %s @ 0x%"PRIx64" - 0x%"PRIx64
+
 
