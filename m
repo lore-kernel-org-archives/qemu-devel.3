@@ -4,84 +4,70 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id CBEC5CD6E79
-	for <qemu-devel@archiver.kernel.org>; Tue,  9 Jun 2026 00:29:01 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id BDEFFCD8C9D
+	for <qemu-devel@archiver.kernel.org>; Tue,  9 Jun 2026 01:34:45 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wWkK9-0005in-Mi; Mon, 08 Jun 2026 20:28:09 -0400
+	id 1wWlLi-0002nz-3C; Mon, 08 Jun 2026 21:33:50 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1wWkK8-0005iP-9D
- for qemu-devel@nongnu.org; Mon, 08 Jun 2026 20:28:08 -0400
-Received: from mail-pl1-x62c.google.com ([2607:f8b0:4864:20::62c])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1wWkK5-0003ed-IH
- for qemu-devel@nongnu.org; Mon, 08 Jun 2026 20:28:08 -0400
-Received: by mail-pl1-x62c.google.com with SMTP id
- d9443c01a7336-2c0c2c7d45eso44499105ad.1
- for <qemu-devel@nongnu.org>; Mon, 08 Jun 2026 17:28:05 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1780964884; x=1781569684; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:from:to:cc:subject:date:message-id:reply-to;
- bh=vUWzLhoNQN6qDYBOEFREVa00KlqDNxwqxrSzVXWzJg8=;
- b=c33PHnHVOZOWkt14KipMhPaSnYpWLp2UxtGEAFLa6OfqLp4U9rXVb7mmdzGcHvK7Mp
- CDB9T4LCBs5JHzNtUsStg9HyvOQYrjRKSE4sG0XRF9+hWca3FZD13sTwkz06mGS7eykU
- BZDFf4yGiufoq8xw5X4TGSspbVLctH9u8T/sO/LnzGg9iquR7omACqdO0210kwmANika
- hHgFY8hdqfzDO7Z0jJ1pLHXLRcytBzGzkHBgzlU923bp1zRZ9seSp/cbRdVBu2yY86Ef
- Z/QtvTSuDWcdUu7LQHCBZFRu9iLqLuYU1/LszoGOTIay8AMI40r4I7MUoAkxxHh/F8NA
- AQsg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1780964884; x=1781569684;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=vUWzLhoNQN6qDYBOEFREVa00KlqDNxwqxrSzVXWzJg8=;
- b=hQr/2FdNewJT8RW+93sA5yMjYrEkz9RDaVDo9wbS9qU/6Hc3is8nuW0NuM3F/pu5Yg
- CQevuELuOEgq9kBt24MIuJDCn9cSlGiFamT29NLio+USRHN/QaH7qEemaA6Qi/HOTIpY
- 1UjtW5yItCpFawl0hRU2XuU5i0Ny/AuvDx+cl9sRl53YBNikSYuSZEc684B36rZvQtdl
- zZV6IN96iSdf90I74kUIifS56kztzJ1L1U75mS84jsFpNm6vx5Mev69PmIvIrFc0sc0N
- HZASihPg0k4tna9N/Ol23l3aYigvK+ggTqYyG8QP2NOJ8p+ywVbsl0Xc040JManAwOuW
- FfJQ==
-X-Gm-Message-State: AOJu0YxTGFtmHNXFJqS4b26YIiOsq6IZFVfZu8WPvBSD4LmfVMRCVhY7
- smUYluhvucRL7oZ7zwtqFyspGxnwBcYwAWRmSZE31h5Wjt8DmO6bwBdGGQjqEWHukxm7y8ue5yJ
- JQqaWyHo=
-X-Gm-Gg: Acq92OEOJb/1om1luuHtDGhNwuuJFY7Cqs0BX7y3jnJFcHYeC49tGtdbRsqPaXBAndY
- mqJPKkH/w/+Ff1rVPmlLmKAwKnsSBKpzk31VAUX4fr4AgwdIJV/JUaALDOS0dhDFSfqtk8RtwOh
- /LAgjW/F7B7u1YxNtxHUy6pKi4fTaUTuH1sMrQygsGQEE/MoghajVeIJDAXeBdGeEIPKwK+msQh
- hjlGPYHMB9zWn8wbf1G5qn/7ZCTA4m4Suj5RFUapebt5umovK57BsDijn3WB+RzL4BHXLjmwINd
- KShKJEhLhMjJCc9CDVykKtk2RON4nzyTfu/ddOXQ6YgSRusiiOT4UxG6h3nwincjeTGNKA7jeoU
- RDcijklPDifMNYvswgm2WXhwUC8aVrSHWzsUBmCF3WxxSAeluH4y9e3oKoKFQEwXfQqu5aJL7Dr
- L/6xTHOI9HDSnKqdvp8/q458BvnMR8Gty621G6YFU=
-X-Received: by 2002:a17:903:3805:b0:2c1:98b7:ecf3 with SMTP id
- d9443c01a7336-2c1e849577emr179401765ad.23.1780964883762; 
- Mon, 08 Jun 2026 17:28:03 -0700 (PDT)
-Received: from stoup.. ([71.212.142.33]) by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-2c164f6d389sm188729435ad.16.2026.06.08.17.28.03
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 08 Jun 2026 17:28:03 -0700 (PDT)
-From: Richard Henderson <richard.henderson@linaro.org>
-To: qemu-devel@nongnu.org
-Cc: pbonzini@redhat.com,
-	qemu-stable@nongnu.org
-Subject: [PATCH] target/i386: Update cc_op for SAHF
-Date: Mon,  8 Jun 2026 17:28:02 -0700
-Message-ID: <20260609002802.729485-1-richard.henderson@linaro.org>
-X-Mailer: git-send-email 2.43.0
+ (Exim 4.90_1) (envelope-from <maobibo@loongson.cn>)
+ id 1wWlLe-0002m8-Rt
+ for qemu-devel@nongnu.org; Mon, 08 Jun 2026 21:33:46 -0400
+Received: from mail.loongson.cn ([114.242.206.163])
+ by eggs.gnu.org with esmtp (Exim 4.90_1)
+ (envelope-from <maobibo@loongson.cn>) id 1wWlLb-00077M-Fa
+ for qemu-devel@nongnu.org; Mon, 08 Jun 2026 21:33:46 -0400
+Received: from loongson.cn (unknown [10.20.42.62])
+ by gateway (Coremail) with SMTP id _____8CxHupsbSdq_xYSAA--.47405S3;
+ Tue, 09 Jun 2026 09:33:33 +0800 (CST)
+Received: from [10.20.42.62] (unknown [10.20.42.62])
+ by front1 (Coremail) with SMTP id qMiowJDxysFqbSdqyUqgAA--.39640S3;
+ Tue, 09 Jun 2026 09:33:30 +0800 (CST)
+Subject: Re: [PATCH] tests/qtest/migration: Add migration test on loongarch
+To: Peter Xu <peterx@redhat.com>
+Cc: Fabiano Rosas <farosas@suse.de>, Laurent Vivier <lvivier@redhat.com>,
+ Paolo Bonzini <pbonzini@redhat.com>, Song Gao <gaosong@loongson.cn>,
+ qemu-devel@nongnu.org
+References: <20260608065947.428141-1-maobibo@loongson.cn>
+ <aibTKGCz7vIS-fMH@x1.local>
+From: Bibo Mao <maobibo@loongson.cn>
+Message-ID: <f88e5be2-4b31-41b8-d5ed-c46a39a9e3f2@loongson.cn>
+Date: Tue, 9 Jun 2026 09:30:23 +0800
+User-Agent: Mozilla/5.0 (X11; Linux loongarch64; rv:68.0) Gecko/20100101
+ Thunderbird/68.7.0
 MIME-Version: 1.0
+In-Reply-To: <aibTKGCz7vIS-fMH@x1.local>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: en-US
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::62c;
- envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x62c.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+X-CM-TRANSID: qMiowJDxysFqbSdqyUqgAA--.39640S3
+X-CM-SenderInfo: xpdruxter6z05rqj20fqof0/
+X-Coremail-Antispam: 1Uk129KBj93XoW3Xr1fGF1xGw4UZr17KF13KFX_yoWfXryDpw
+ 1rCay8Ka1xGF17t3WxWFy5uFyFqr1xKFnI9FWxGr10yrZxAF10yw1agry2gFn3X3y0vF4I
+ v3Z5tr1ay3WqyrXCm3ZEXasCq-sJn29KB7ZKAUJUUUU5529EdanIXcx71UUUUU7KY7ZEXa
+ sCq-sGcSsGvfJ3Ic02F40EFcxC0VAKzVAqx4xG6I80ebIjqfuFe4nvWSU5nxnvy29KBjDU
+ 0xBIdaVrnRJUUUv0b4IE77IF4wAFF20E14v26r1j6r4UM7CY07I20VC2zVCF04k26cxKx2
+ IYs7xG6rWj6s0DM7CIcVAFz4kK6r1j6r18M28lY4IEw2IIxxk0rwA2F7IY1VAKz4vEj48v
+ e4kI8wA2z4x0Y4vE2Ix0cI8IcVAFwI0_JFI_Gr1l84ACjcxK6xIIjxv20xvEc7CjxVAFwI
+ 0_Gr0_Cr1l84ACjcxK6I8E87Iv67AKxVW8JVWxJwA2z4x0Y4vEx4A2jsIEc7CjxVAFwI0_
+ Gr0_Gr1UM2AIxVAIcxkEcVAq07x20xvEncxIr21l57IF6xkI12xvs2x26I8E6xACxx1l5I
+ 8CrVACY4xI64kE6c02F40Ex7xfMcIj6xIIjxv20xvE14v26r1Y6r17McIj6I8E87Iv67AK
+ xVWUJVW8JwAm72CE4IkC6x0Yz7v_Jr0_Gr1lF7xvr2IY64vIr41lc7I2V7IY0VAS07AlzV
+ AYIcxG8wCF04k20xvY0x0EwIxGrwCFx2IqxVCFs4IE7xkEbVWUJVW8JwC20s026c02F40E
+ 14v26r1j6r18MI8I3I0E7480Y4vE14v26r106r1rMI8E67AF67kF1VAFwI0_JF0_Jw1lIx
+ kGc2Ij64vIr41lIxAIcVC0I7IYx2IY67AKxVWUJVWUCwCI42IY6xIIjxv20xvEc7CjxVAF
+ wI0_Jr0_Gr1lIxAIcVCF04k26cxKx2IYs7xG6r1j6r1xMIIF0xvEx4A2jsIE14v26r1j6r
+ 4UMIIF0xvEx4A2jsIEc7CjxVAFwI0_Jr0_GrUvcSsGvfC2KfnxnUUI43ZEXa7IU1QVy3UU
+ UUU==
+Received-SPF: pass client-ip=114.242.206.163; envelope-from=maobibo@loongson.cn;
+ helo=mail.loongson.cn
+X-Spam_score_int: -48
+X-Spam_score: -4.9
+X-Spam_bar: ----
+X-Spam_report: (-4.9 / 5.0 requ) BAYES_00=-1.9, NICE_REPLY_A=-2.97,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -97,39 +83,249 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Removing the call to gen_compute_eflags meant we no longer
-updated cc_op after computing EFLAGS.
 
-Cc: qemu-stable@nongnu.org
-Fixes: da7649c6aeef ("target/i386/tcg: do not compute all flags for SAHF")
-Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/3537
-Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
----
- target/i386/tcg/emit.c.inc | 9 ++++++---
- 1 file changed, 6 insertions(+), 3 deletions(-)
 
-diff --git a/target/i386/tcg/emit.c.inc b/target/i386/tcg/emit.c.inc
-index ce636b6c56..59948fe64d 100644
---- a/target/i386/tcg/emit.c.inc
-+++ b/target/i386/tcg/emit.c.inc
-@@ -3768,10 +3768,13 @@ static void gen_SAHF(DisasContext *s, X86DecodedInsn *decode)
-         return gen_illegal_opcode(s);
-     }
-     tcg_gen_shri_tl(s->T0, cpu_regs[R_EAX], 8);
--    gen_neg_setcc(s, JCC_O << 1, cpu_cc_src);
--    tcg_gen_andi_tl(cpu_cc_src, cpu_cc_src, CC_O);
-+    gen_neg_setcc(s, JCC_O << 1, s->T1);
-+    tcg_gen_andi_tl(s->T1, s->T1, CC_O);
-     tcg_gen_andi_tl(s->T0, s->T0, CC_S | CC_Z | CC_A | CC_P | CC_C);
--    tcg_gen_or_tl(cpu_cc_src, cpu_cc_src, s->T0);
-+    tcg_gen_or_tl(s->T0, s->T0, s->T1);
-+
-+    decode->cc_src = s->T0;
-+    decode->cc_op = CC_OP_EFLAGS;
- }
- 
- static void gen_SALC(DisasContext *s, X86DecodedInsn *decode)
--- 
-2.43.0
+On 2026/6/8 下午10:35, Peter Xu wrote:
+> On Mon, Jun 08, 2026 at 02:59:47PM +0800, Bibo Mao wrote:
+>> Add migration qtest on loongarch64 system, the test passes to run with
+>> the following result:
+>>    qemu:qtest+qtest-loongarch64/qtest-loongarch64/migration-test OK 15.94s 9 subtests passed
+>>
+>> Signed-off-by: Bibo Mao <maobibo@loongson.cn>
+>> ---
+>>   MAINTAINERS                                   |  1 +
+>>   tests/qtest/meson.build                       |  3 +-
+>>   tests/qtest/migration/Makefile                |  2 +-
+>>   tests/qtest/migration/bootfile.c              |  4 ++
+>>   tests/qtest/migration/bootfile.h              |  4 ++
+>>   tests/qtest/migration/framework.c             |  6 +++
+>>   tests/qtest/migration/loongarch64/Makefile    | 20 ++++++++
+>>   .../qtest/migration/loongarch64/a-b-kernel.S  | 46 +++++++++++++++++++
+>>   .../qtest/migration/loongarch64/a-b-kernel.h  | 13 ++++++
+>>   9 files changed, 97 insertions(+), 2 deletions(-)
+>>   create mode 100644 tests/qtest/migration/loongarch64/Makefile
+>>   create mode 100644 tests/qtest/migration/loongarch64/a-b-kernel.S
+>>   create mode 100644 tests/qtest/migration/loongarch64/a-b-kernel.h
+>>
+>> diff --git a/MAINTAINERS b/MAINTAINERS
+>> index 79ecac16fe..2105db7155 100644
+>> --- a/MAINTAINERS
+>> +++ b/MAINTAINERS
+>> @@ -1368,6 +1368,7 @@ F: hw/intc/loongarch_*.c
+>>   F: hw/intc/loongson_ipi_common.c
+>>   F: hw/rtc/ls7a_rtc.c
+>>   F: gdbstub/gdb-xml/loongarch*.xml
+>> +F: tests/qtest/migration/loongarch64/
+>>   
+>>   M68K Machines
+>>   -------------
+>> diff --git a/tests/qtest/meson.build b/tests/qtest/meson.build
+>> index 45ea497fa5..1636b8616e 100644
+>> --- a/tests/qtest/meson.build
+>> +++ b/tests/qtest/meson.build
+>> @@ -154,7 +154,8 @@ qtests_loongarch64 = qtests_filter + \
+>>     (config_all_devices.has_key('CONFIG_LOONGARCH_VIRT') ? ['numa-test'] : []) + \
+>>     (unpack_edk2_blobs ? ['bios-tables-test'] : []) + \
+>>     ['boot-serial-test',
+>> -   'cpu-plug-test']
+>> +   'cpu-plug-test',
+>> +   'migration-test']
+>>   
+>>   qtests_m68k = ['boot-serial-test'] + \
+>>     qtests_filter
+>> diff --git a/tests/qtest/migration/Makefile b/tests/qtest/migration/Makefile
+>> index c183b69941..b94836eb0f 100644
+>> --- a/tests/qtest/migration/Makefile
+>> +++ b/tests/qtest/migration/Makefile
+>> @@ -5,7 +5,7 @@
+>>   # See the COPYING file in the top-level directory.
+>>   #
+>>   
+>> -TARGET_LIST = i386 aarch64 s390x ppc64
+>> +TARGET_LIST = i386 aarch64 s390x ppc64 loongarch64
+>>   
+>>   SRC_PATH = ../../../..
+>>   
+>> diff --git a/tests/qtest/migration/bootfile.c b/tests/qtest/migration/bootfile.c
+>> index 479c43231d..e46ad09de7 100644
+>> --- a/tests/qtest/migration/bootfile.c
+>> +++ b/tests/qtest/migration/bootfile.c
+>> @@ -19,6 +19,7 @@
+>>   #include "bootfile.h"
+>>   #include "i386/a-b-bootblock.h"
+>>   #include "aarch64/a-b-kernel.h"
+>> +#include "loongarch64/a-b-kernel.h"
+>>   #include "ppc64/a-b-kernel.h"
+>>   #include "s390x/a-b-bios.h"
+>>   
+>> @@ -57,6 +58,9 @@ char *bootfile_create(const char *arch, const char *dir, bool suspend_me)
+>>           content = aarch64_kernel;
+>>           len = sizeof(aarch64_kernel);
+>>           g_assert(sizeof(aarch64_kernel) <= ARM_TEST_MAX_KERNEL_SIZE);
+>> +    } else if (strcmp(arch, "loongarch64") == 0) {
+>> +        content = loongarch64_kernel;
+>> +        len = sizeof(loongarch64_kernel);
+>>       } else {
+>>           g_assert_not_reached();
+>>       }
+>> diff --git a/tests/qtest/migration/bootfile.h b/tests/qtest/migration/bootfile.h
+>> index 0ce5b34433..a4060ea4f7 100644
+>> --- a/tests/qtest/migration/bootfile.h
+>> +++ b/tests/qtest/migration/bootfile.h
+>> @@ -42,6 +42,10 @@
+>>    */
+>>   #define ARM_TEST_MAX_KERNEL_SIZE (512 * 1024)
+>>   
+>> +/* LoongArch64 */
+>> +#define LOONGARCH_TEST_MEM_START (32 * 1024 * 1024)
+>> +#define LOONGARCH_TEST_MEM_END   (100 * 1024 * 1024)
+>> +
+>>   #ifndef MIGRATION_GUEST_CODE
+>>   void bootfile_delete(void);
+>>   char *bootfile_create(const char *arch, const char *dir, bool suspend_me);
+>> diff --git a/tests/qtest/migration/framework.c b/tests/qtest/migration/framework.c
+>> index a9b58d03aa..a830b96f41 100644
+>> --- a/tests/qtest/migration/framework.c
+>> +++ b/tests/qtest/migration/framework.c
+>> @@ -360,6 +360,12 @@ int migrate_args(char **from, char **to, MigrateStart *args)
+>>           arch_opts = g_strdup_printf("-cpu max -kernel %s", bootpath);
+>>           start_address = ARM_TEST_MEM_START;
+>>           end_address = ARM_TEST_MEM_END;
+>> +    } else if (strcmp(arch, "loongarch64") == 0) {
+>> +        memory_size = "256M";
+>> +        machine_alias = "virt";
+>> +        arch_opts = g_strdup_printf("-bios %s", bootpath);
+>> +        start_address = LOONGARCH_TEST_MEM_START;
+>> +        end_address = LOONGARCH_TEST_MEM_END;
+>>       } else {
+>>           g_assert_not_reached();
+>>       }
+>> diff --git a/tests/qtest/migration/loongarch64/Makefile b/tests/qtest/migration/loongarch64/Makefile
+>> new file mode 100644
+>> index 0000000000..3c8cfeee86
+>> --- /dev/null
+>> +++ b/tests/qtest/migration/loongarch64/Makefile
+>> @@ -0,0 +1,20 @@
+>> +# SPDX-License-Identifier: GPL-2.0-or-later
+>> +
+>> +# To specify cross compiler prefix, use CROSS_PREFIX=
+>> +#   $ make CROSS_PREFIX=loongarch64-linux-gnu-
+>> +
+>> +.PHONY: all clean
+>> +all: a-b-kernel.h
+>> +
+>> +a-b-kernel.h: loongarch64.kernel
+>> +	echo "$$__note" > $@
+>> +	xxd -i $< | sed -e 's/.*int.*//' >> $@
+>> +
+>> +loongarch64.kernel: loongarch64.elf
+>> +	$(CROSS_PREFIX)objcopy -j .text -O binary $< $@
+>> +
+>> +loongarch64.elf: a-b-kernel.S
+>> +	$(CROSS_PREFIX)gcc -o $@ -nostdlib -Wl,--build-id=none $<
+>> +
+>> +clean:
+>> +	$(RM) *.kernel *.elf
+>> diff --git a/tests/qtest/migration/loongarch64/a-b-kernel.S b/tests/qtest/migration/loongarch64/a-b-kernel.S
+>> new file mode 100644
+>> index 0000000000..577d4b238c
+>> --- /dev/null
+>> +++ b/tests/qtest/migration/loongarch64/a-b-kernel.S
+>> @@ -0,0 +1,46 @@
+>> +/* SPDX-License-Identifier: GPL-2.0-or-later */
+>> +
+>> +#include "../bootfile.h"
+>> +
+>> +#define LOONGARCH_CSR_CRMD          0
+>> +#define LOONGARCH_VIRT_UART         0x1FE001E0
+>> +.section .text
+>> +
+>> +    .globl  _start
+>> +_start:
+>> +    /* output char 'A' to UART16550 */
+>> +    li.d    $t0, LOONGARCH_VIRT_UART
+>> +    li.w    $t1, 'A'
+>> +    st.b    $t1, $t0, 0
+>> +
+>> +    /* traverse test memory region */
+>> +    li.d    $t0, LOONGARCH_TEST_MEM_START
+>> +    li.d    $t1, LOONGARCH_TEST_MEM_END
+>> +    li.d    $t2, TEST_MEM_PAGE_SIZE
+>> +    li.d    $t4, LOONGARCH_VIRT_UART
+>> +    li.w    $t5, 'B'
+>> +
+>> +clean:
+>> +    st.b    $zero, $t0, 0
+>> +    add.d   $t0,   $t0, $t2
+>> +    bne     $t0,   $t1, clean
+>> +    /* keeps a counter so we can limit the output speed */
+>> +    addi.d  $t6,   $zero, 0
+>> +
+>> +mainloop:
+>> +    li.d    $t0, LOONGARCH_TEST_MEM_START
+>> +
+>> +innerloop:
+>> +    ld.bu   $t3, $t0, 0
+>> +    addi.w  $t3, $t3, 1
+>> +    ext.w.b $t3, $t3
+>> +    st.b    $t3, $t0, 0
+>> +    add.d   $t0, $t0, $t2
+>> +    bne     $t0, $t1, innerloop
+>> +
+>> +    addi.d  $t6, $t6, 1
+>> +    andi    $t6, $t6, 31
+>> +    bnez    $t6, mainloop
+>> +
+>> +    st.b    $t5, $t4, 0
+>> +    b       mainloop
+>> diff --git a/tests/qtest/migration/loongarch64/a-b-kernel.h b/tests/qtest/migration/loongarch64/a-b-kernel.h
+>> new file mode 100644
+>> index 0000000000..132db292b9
+>> --- /dev/null
+>> +++ b/tests/qtest/migration/loongarch64/a-b-kernel.h
+>> @@ -0,0 +1,13 @@
+>> +
+>> +unsigned char loongarch64_kernel[] = {
+>> +  0x0c, 0xc0, 0x3f, 0x14, 0x8c, 0x81, 0x87, 0x03, 0x0d, 0x04, 0x81, 0x03,
+>> +  0x8d, 0x01, 0x00, 0x29, 0x0c, 0x00, 0x04, 0x14, 0x0d, 0x80, 0x0c, 0x14,
+>> +  0x2e, 0x00, 0x00, 0x14, 0x10, 0xc0, 0x3f, 0x14, 0x10, 0x82, 0x87, 0x03,
+>> +  0x11, 0x08, 0x81, 0x03, 0x80, 0x01, 0x00, 0x29, 0x8c, 0xb9, 0x10, 0x00,
+>> +  0x8d, 0xf9, 0xff, 0x5f, 0x12, 0x00, 0xc0, 0x02, 0x0c, 0x00, 0x04, 0x14,
+>> +  0x8f, 0x01, 0x00, 0x2a, 0xef, 0x05, 0x80, 0x02, 0xef, 0x5d, 0x00, 0x00,
+>> +  0x8f, 0x01, 0x00, 0x29, 0x8c, 0xb9, 0x10, 0x00, 0x8d, 0xed, 0xff, 0x5f,
+>> +  0x52, 0x06, 0xc0, 0x02, 0x52, 0x7e, 0x40, 0x03, 0x5f, 0xde, 0xff, 0x47,
+>> +  0x11, 0x02, 0x00, 0x29, 0xff, 0xd7, 0xff, 0x53
+>> +};
+> 
+> The binary data matches with what I tested with this patch, but it misses
+> the __note, please re-generate with the current Makefile to make it aligned
+> with the rest headers; also it won't show up as modifications with
+> re-generations then.
+Hi Peter,
+
+Thanks for reviewing my patch.
+
+oh, there is notes if it is generated in directory 
+tests/qtest/migration, however no in directory 
+tests/qtest/migration/loongarch64 :( Will re-generate with notes added.
+> 
+> The other thing is I saw we added enforcements to use SPDX license
+> identifiers since last year (b36934063c5), IIUC we can add that line into
+> __note of the Makefile.
+yeap, will add SPDX license about __note in the Makefile in next version.
+
+Regards
+Bibo Mao
+> 
+> Thanks,
+> 
+>> +
+>>
+>> base-commit: 3390aba56c354637eccd2d5ab5fd6efc2f026f06
+>> -- 
+>> 2.54.0
+>>
+>>
+> 
 
 
