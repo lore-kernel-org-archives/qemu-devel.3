@@ -4,142 +4,105 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 25093CD8CA4
-	for <qemu-devel@archiver.kernel.org>; Tue,  9 Jun 2026 15:16:09 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id F186DCD8CA4
+	for <qemu-devel@archiver.kernel.org>; Tue,  9 Jun 2026 15:16:51 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wWyBN-0005A5-Sc; Tue, 09 Jun 2026 11:16:01 -0400
+	id 1wWyC2-0005ju-QU; Tue, 09 Jun 2026 11:16:42 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@oss.qualcomm.com>)
- id 1wWyBM-00059r-4w
- for qemu-devel@nongnu.org; Tue, 09 Jun 2026 11:16:00 -0400
-Received: from mx0a-0031df01.pphosted.com ([205.220.168.131])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@oss.qualcomm.com>)
- id 1wWyBK-0004y7-M9
- for qemu-devel@nongnu.org; Tue, 09 Jun 2026 11:15:59 -0400
-Received: from pps.filterd (m0279862.ppops.net [127.0.0.1])
- by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 659ClZfx2183119
- for <qemu-devel@nongnu.org>; Tue, 9 Jun 2026 15:15:57 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
- cc:content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
- +3vPeeDBgiCtrR2jVl1XaEvj3UXf8jqIHGEiFIxC0u4=; b=LuC6IXPJsb9op2az
- uzdmDIJSTmpSDnLA54dDG9jKnf7z5Vw8oI9RM8Fu1IWqCdYX3ltrRy0YAwzXn6ye
- BYqfN3JZLik9jbxMMxzP6riDkZmGBbVdZ0aXO7se+ZErjRJ45IW9bnUeesSTPoUl
- yXEmoGs1Km/Ud4nQB3x06gZSStRgkybz2oOOsqk5hUzHKSswS8JmgEqtcWk+tcIi
- 9WQ4fGKEVF5cllEOr77lLI9K7cOqY6Xk9v1xQkqc08LopODLlfKlb65ljOLLeZSl
- xbTmqv8VxmUYfAjtwHSmdMg/yHWE9GphEk/uoDcJJW7LU7AL3J8qp/ULJV4APQAJ
- Dtn9uw==
-Received: from mail-ua1-f69.google.com (mail-ua1-f69.google.com
- [209.85.222.69])
- by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4epenra53u-1
- (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
- for <qemu-devel@nongnu.org>; Tue, 09 Jun 2026 15:15:56 +0000 (GMT)
-Received: by mail-ua1-f69.google.com with SMTP id
- a1e0cc1a2514c-963907b1ddeso5807143241.2
- for <qemu-devel@nongnu.org>; Tue, 09 Jun 2026 08:15:56 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <stefanha@gmail.com>)
+ id 1wWyC0-0005jf-Nu
+ for qemu-devel@nongnu.org; Tue, 09 Jun 2026 11:16:40 -0400
+Received: from mail-ed1-x535.google.com ([2a00:1450:4864:20::535])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <stefanha@gmail.com>)
+ id 1wWyBx-00056W-QB
+ for qemu-devel@nongnu.org; Tue, 09 Jun 2026 11:16:40 -0400
+Received: by mail-ed1-x535.google.com with SMTP id
+ 4fb4d7f45d1cf-687ed9aabb3so11179950a12.1
+ for <qemu-devel@nongnu.org>; Tue, 09 Jun 2026 08:16:36 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1781018195; cv=none;
+ d=google.com; s=arc-20240605;
+ b=OdXTYIL9x8NEe3TCyqmrLYXNV6e0J2AQxQ5bbhEKcRET2DzntM8e12ZlUP5xtMRPqA
+ q/NtEfvasp2cCqkX1/yZJleGyoSqMmMiSFJZwYOjy9lMeq0zTQ3b2aXGT1qVsAtNG3NJ
+ ukByHeZtOzIhUBMORDl6Phn2cc5QZ0vlzsouLLIxMVsXuDA5DvkQKdvfSN/C9JfJJNjq
+ WqkRvrBAfNvGYa48QAEYTaRqmkMAw/HTwLeyZsiIAlk5jyevUUMYDxK6VX/ACFZtKg0u
+ rzp7DklcISoPwq2Ie9jD4FTvR2WIs6lDX3Sg9bf+rh6xlHvie6nMd0CK9HOdmwWS3RPX
+ Q/1A==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
+ s=arc-20240605; 
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:dkim-signature;
+ bh=s+E8yDRFz1fyPMeve3TBz2C1MR11wvL1X34BWx9enb0=;
+ fh=sFPVMsbhWLeSh/4moRRBHKaN/SwOlqH30sV3Ay3TTtM=;
+ b=d4dPUjUhiZtvodgiUU1EOUtg9Vi2TYUN6tLaNPa0g6qk+fVQHqwqIWth+gBb5PH8qc
+ TtKZ/FC7+DRTj1RNT6/jBGhhtzLiKIEGE5u4of8pheIU51ewazNCfVJ19FakZ9QmwAah
+ 2+HHuEZqLiqgEDSA4j4uAX3G1i+d6SQnlv7WXXSE/s3NUVm1x7i1Vp41f85IQx4FXH3t
+ dINDk7ATPhW1db6uWjwUCIZAHYXjaIdGsA4i4lFws8S9nTSk96lo6C5SGiNQo9wnLSHT
+ D5EfqNlfGG0VN5R64dgN0BfCVq99wUIlLVcrD4aSfXWjcnINUCKN1uoPlc27cItueJeg
+ vgYg==; darn=nongnu.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=oss.qualcomm.com; s=google; t=1781018156; x=1781622956; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=+3vPeeDBgiCtrR2jVl1XaEvj3UXf8jqIHGEiFIxC0u4=;
- b=NBnTGz88tSWtpeYdpbMIyPYnesCjA8onpLiA4CIM5VcIayvkeIbLE1Tj5MotVBys4Q
- ANYKFHm6YDzwL+qRKUkSLeQm0sEZhf3B932AQdswcJOSW71/3CC1U7azjke995VUbCDK
- CjFvku06EhxtMapp2LH7n3vhz631Tn97/bM/EUhjCVQuPxzJky9u54zxryHBLJj3b/A5
- NfVnQA57cPUrkLLwK1RhA9hvrhU79khpXEH7+EpwkVOhJI6Qd10kK1JsuDqchFOiu/iu
- pvGfWprc721f2Y2ht2s9Bx/kQgeKBGcichCc/V8K5ubN7QJd1br1xHi9EXBG0meHMK0+
- w43g==
+ d=gmail.com; s=20251104; t=1781018195; x=1781622995; darn=nongnu.org;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=s+E8yDRFz1fyPMeve3TBz2C1MR11wvL1X34BWx9enb0=;
+ b=NvbgWABMGIBYWySgrWL4Sy2bUTTt2ikPBdvXEaaevlibaYhwyxXOOHVg+5yU/5LrsI
+ 9Go6YmmhC3At83E0QKrlkqArPiTQA1F4IrtNzVKayoQhTq+jFWy4a2YB0wTxZGuPyQfh
+ HM9k27eYZTSz/ZoTJkZiLJCFW8jMnTpPYqCRcPJYRyZHBoDH7XQQT4+4Y3jrRbS/uhYf
+ MrMz8ZFv0PA75s6HYqd2+fy2UUT2ECS9lxu893FW2oc91HRDv/759FwI9Fl0jwYqsilJ
+ 7d8PWkj7ThG6F7vkIYc2JnpT0dTeFi6xFqDjIIpxAsfp+qoLGdlia9G7rjgdApvscy/s
+ HFeg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1781018156; x=1781622956;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=+3vPeeDBgiCtrR2jVl1XaEvj3UXf8jqIHGEiFIxC0u4=;
- b=VDQUVRadJqa1QGft+TeFfGo4do16XmcKaSLYSFDhGkUoMoZYzBDWfSDY6g8eKeLSBU
- V+hpPiomLO9/ekUghbptEIKi9VhPSjw0sD1uXeI3ulMJe1Kl+Exr2rTGQ3+o0QlW7z8e
- B92IL6OJaojcJeYjcfP4ZiB4DYo4tgG7SmBff9JSTkw2fHXOK1W2/qIdI1eqzxNKkwsK
- LJeJkDrH2r+whfmecKB+fLgcSgGv0w8EanL1/YwhIRnmEusD3n8DwuGCCQWtPTUuv996
- dEcdiy5NzBZkQW6El0w44Ok3SjEtomN9ZqjhFNyUdAbddhUNKZ54/gJNedmHTYOZMRgp
- JBbg==
-X-Forwarded-Encrypted: i=1;
- AFNElJ/ElaEfQHaLz3Ep92KU+zIFvR3okwlnfZe2m4yOLUurskAIYr3bqfGDx8akQ1ysjz7u26nIoNMzDcAC@nongnu.org
-X-Gm-Message-State: AOJu0YxhgkiNZgYbPSiUjP4RenmdIWJ+8z96JlocICUk+hUhAkMw2Vwc
- sNDcn6L0bUiI2Dk0pVSnPEATstWcYmmLAuhTEIWtpOVrr3UKz3jwmb4qeiDagfb462pDYw7m2on
- kHn3SxVZ7wyjPaSpa6ueUWGEtKLb6VNa1gMXR/bbnDJyA1Kx8Qyg1q3QQ25wqZIL+tsTqvjA=
-X-Gm-Gg: Acq92OHbM+GlTk93l823bKdpG8BVBZQu6qDbI/d27VBLw6TN+/DVJkrJJridwXN8eS8
- cpP2qpAU4rXvSFhQyW9mYxvG2BjHfgCR4/RiYGvMZkH4YTf98GTk0Lmia75SvmIrfUeSVxsoFWk
- QGnyYYl/AQ67f8LaG2LNRpaiYjWKu/+iEM/5NS+YBOm+xS4vIa83fg9mQjpCT35sdv49bzxdURH
- rVg1u10f2ltIKfPjyf7LsHuBAz+xJsabTy78T6qHFyZ6XK1xzhSTIOmoHZYxVBykA6FrYtdNKN4
- gRLDvAiw9fVM+cswczZ1OPr1CxFQtCZebRQgIB4g5//TurEHew1kXymyXbD9avoH1ROn0STbwbf
- J80O7+OHxmBXwvB7USUfRPXN0vScDCX2t3QafM3JIcgdsPoQKghbeoFhEkwF1eaGDPcA=
-X-Received: by 2002:a05:6102:8001:b0:618:442a:9e76 with SMTP id
- ada2fe7eead31-6feff813ee1mr11467698137.10.1781018155579; 
- Tue, 09 Jun 2026 08:15:55 -0700 (PDT)
-X-Received: by 2002:a05:6102:8001:b0:618:442a:9e76 with SMTP id
- ada2fe7eead31-6feff813ee1mr11467646137.10.1781018155138; 
- Tue, 09 Jun 2026 08:15:55 -0700 (PDT)
-Received: from [10.156.84.244] (113.170.88.92.rev.sfr.net. [92.88.170.113])
- by smtp.gmail.com with ESMTPSA id
- 4fb4d7f45d1cf-68e65b4d988sm8847946a12.25.2026.06.09.08.15.53
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 09 Jun 2026 08:15:54 -0700 (PDT)
-Message-ID: <b7053e5c-f2ef-4037-ae93-c75adfbe3d92@oss.qualcomm.com>
-Date: Tue, 9 Jun 2026 17:15:52 +0200
+ d=1e100.net; s=20251104; t=1781018195; x=1781622995;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=s+E8yDRFz1fyPMeve3TBz2C1MR11wvL1X34BWx9enb0=;
+ b=ffpMe+qc2AuMnLaxWfFoef6TZT1fpNM2aKNljeDiChyLsTO1/k7YczhRae56X9m704
+ /4bt6JeUTy4JHOQtT2QfW70eBk4Ras3iDH9toEO/4Sqv0Jzpky1rzERfAESNfg3+iDFF
+ /3JTDsyUsWbgYf/3h/k6YMrSIaEUWKN1xH3IyFsgn6apbFerhbkYIhZWSRy1sKiUE8gJ
+ tHuCyBhT182pURx9ku48beALCZp8QPm4w3KY07JSiljv+l2Y9wrNUeZC8MtcIq3JSDYo
+ MLaAxMYNo9o8LEUzUDP0MKZrT2yHICtip8KJcYQk3KluKtBjnKUJXDbsdKa/dBRnyxVM
+ KoMg==
+X-Gm-Message-State: AOJu0Yyoorwb1YKuS61elsg9u0LT0nPJcT2yZJGBP1xddGmvDuFbb3fT
+ e3Af4TUinTNGpqIVm245AmvPfLkfovfBnZ9cnWkBbl+TaDjB7gEqzNSSF1cghVSqkp6UOlJWwqz
+ vLAl7NCOy+gaiDF6xAVv97cW70OfY5p0=
+X-Gm-Gg: Acq92OHaq4hxHWmqNC5OMl7UcD4dYnNnuMMP3JmBuQDWd/7d5BtYldVRa5/8ho2xbJD
+ lanE429Pxsv0lWpTA3cl1gf1apGNyfe+NXWIjFBxa6Tq6R78wqn11X/gK2g+GKkrkYVzGN63HtW
+ F8jdvjDAjTzUtNqzCl1TboK+IK0KPJZRxvT6vWgaArSMF1oJWfCnakT2DlmOmG9JmaLsPjUqSAQ
+ MdEnzPadIthXFIFGLeDr+xJyi6UdudJbgusN6zFG7FvBhGZ90yKY6qiG2Wu20XC+rFYP24mKYTh
+ QwM/zD0u1v/feO0/2HK7XI94kmRMWZB5WZBpSffAMh9fEzRXeMyh
+X-Received: by 2002:a05:6402:4301:b0:691:5f30:37ec with SMTP id
+ 4fb4d7f45d1cf-6915f303b38mr7037816a12.25.1781018194793; Tue, 09 Jun 2026
+ 08:16:34 -0700 (PDT)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 08/17] ui/input: remove dead declaration
-Content-Language: en-US
-To: =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>,
- qemu-devel@nongnu.org
-Cc: "Dr. David Alan Gilbert" <dave@treblig.org>,
- Paolo Bonzini <pbonzini@redhat.com>,
- Richard Henderson <richard.henderson@linaro.org>,
- "Michael S. Tsirkin" <mst@redhat.com>, Gerd Hoffmann <kraxel@redhat.com>,
- Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
-References: <20260609-ui-input-v1-0-42615deb818e@redhat.com>
- <20260609-ui-input-v1-8-42615deb818e@redhat.com>
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>
-In-Reply-To: <20260609-ui-input-v1-8-42615deb818e@redhat.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-X-Proofpoint-GUID: QaDagiej6uK2jDe1huNyz0Spq2zjoKEQ
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNjA5MDE0NSBTYWx0ZWRfX7r3K1iRqO8F+
- jJRqv5v62UzLiJWR+wE+jbnGXN/6Q+rK2ulebUOneK1+aw3kjEMeY3tqyAo/sSM1G7we1bvgKUt
- 3QBJc8BkC2urUHmRS0h4Jty8fVjV1VDdSq874wGGAaccC6XLZEVkqvtT+Ejw0ZEt4d5BdVS6vxV
- QXiWYhCfCf14wQdhotFycHKJVktWRAuKDDZIbIuIZWALau6Zol/37x07rIUi2zmvMMV57+hCANn
- iwTb6APTsQVts36gBracDVusHHbpvFvaNEFa6lTgAA1E2UlgyBkcj4Cxqx1aMNqUHR0RBLEnIr2
- MffVQWLWGJY+wQhFHmq2oU0RwOg7pLz83jcNTGT3FkBbIM30j0g5jq7XgEgzaCMGT5gCeQwZARr
- ZHnstb/4V98K1pha9VQmIgOWPHZO9wF84GGQ36JRT7O/VIZTm215UzGFkYRmFR1eid+l5Inflf5
- KTR1hYZZRbFvAZEWd3A==
-X-Authority-Analysis: v=2.4 cv=NKPlPU6g c=1 sm=1 tr=0 ts=6a282e2c cx=c_pps
- a=UbhLPJ621ZpgOD2l3yZY1w==:117 a=ASywmo1ADVsXjDI2RVyDAw==:17
- a=IkcTkHD0fZMA:10 a=FelO9ux0wxsA:10 a=M51BFTxLslgA:10 a=s4-Qcg_JpJYA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=_K5XuSEh1TEqbUxoQ0s3:22
- a=EUspDBNiAAAA:8 a=20KFwNOVAAAA:8 a=6vZ8vHfjWn_lFSypSEYA:9 a=3ZKOabzyN94A:10
- a=QEXdDO2ut3YA:10 a=TOPH6uDL9cOC6tEoww4z:22
-X-Proofpoint-ORIG-GUID: QaDagiej6uK2jDe1huNyz0Spq2zjoKEQ
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.125,FMLib:17.12.100.49
- definitions=2026-06-09_03,2026-06-09_02,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- bulkscore=0 adultscore=0 spamscore=0 priorityscore=1501 lowpriorityscore=0
- clxscore=1015 impostorscore=0 malwarescore=0 phishscore=0 suspectscore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2605210000 definitions=main-2606090145
-Received-SPF: pass client-ip=205.220.168.131;
- envelope-from=philmd@oss.qualcomm.com; helo=mx0a-0031df01.pphosted.com
-X-Spam_score_int: -27
-X-Spam_score: -2.8
+References: <20260608194256.13794-1-deller@kernel.org>
+In-Reply-To: <20260608194256.13794-1-deller@kernel.org>
+From: Stefan Hajnoczi <stefanha@gmail.com>
+Date: Tue, 9 Jun 2026 11:16:21 -0400
+X-Gm-Features: AVVi8Ceu-w1zuis2qfRWbZ4Um4OBKEbTvyEnPPTuAH4CDb5c23r9cfytTDGKjXg
+Message-ID: <CAJSP0QWtOGdNx-hQnmcDhagKdB7iEwoQyc9b1_YxP9RbQHYfJQ@mail.gmail.com>
+Subject: Re: [PULL 0/8] Linux user patches
+To: Helge Deller <deller@kernel.org>
+Cc: qemu-devel@nongnu.org, 
+ Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
+ Max Filippov <jcmvbkbc@gmail.com>, 
+ Helge Deller <deller@gmx.de>, Yoshinori Sato <yoshinori.sato@nifty.com>, 
+ Laurent Vivier <laurent@vivier.eu>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2a00:1450:4864:20::535;
+ envelope-from=stefanha@gmail.com; helo=mail-ed1-x535.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001,
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -156,29 +119,193 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 9/6/26 16:34, Marc-AndrÃ© Lureau wrote:
+On Mon, Jun 8, 2026 at 3:43=E2=80=AFPM Helge Deller <deller@kernel.org> wro=
+te:
+>
+> From: Helge Deller <deller@gmx.de>
+>
+> The following changes since commit 29c042c6e9d4a09d4a0ac3fa54aeb7ee08ce0b=
+dc:
+>
+>   lcitool: remove Cirrus CI support (2026-06-03 12:45:38 -0400)
+>
+> are available in the Git repository at:
+>
+>   https://github.com/hdeller/qemu-hppa.git tags/linux-user-pull-request
+>
+> for you to fetch changes up to fd8da2844c4354ecf54bd73a2fa7babe669b7a12:
+>
+>   target/sh4: decode_gusa: recognize add#imm with prior mov Rm, Rn (2026-=
+06-07 17:56:24 +0200)
+>
+> ----------------------------------------------------------------
+> linux-user patches for alpha, sparc and sh4
+>
+> Various linux-user related patches from Matt Turner with coredump support=
+ for
+> alpha and sparc, as well as some fixes for the signal handler in sparc.
+>
+> The patches from Xinhui Yang add the missing fsmount series syscalls supp=
+ort
+> for systemd.
+>
+> ----------------------------------------------------------------
+>
+> Matt Turner (6):
+>   linux-user/alpha: add coredump support
+>   linux-user/sparc: add coredump support
+>   linux-user/sparc: restore L/I registers from RSA in
+>     sparc64_set_context
+>   linux-user/sparc: call block_signals() before set_sigmask() in
+>     setcontext
+>   linux-user/sparc: flush register windows before core dump
+>   target/sh4: decode_gusa: recognize add#imm with prior mov Rm, Rn
+>
+> Xinhui Yang (2):
+>   linux-user: implement fsmount(2) series of syscalls
+>   linux-user/strace: add fsmount series of syscalls
 
-Fixes: 0337e4123e6 ("input: Allow to choose console with 
-qemu_input_is_absolute")
-Reviewed-by: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
+Hi Xinhui Yang,
+Please take a look at the CI failures below. It will probably be
+necessary to detect the availability of the fs syscalls at build time
+and avoid them when the host lacks support.
 
-> Signed-off-by: Marc-André Lureau <marcandre.lureau@redhat.com>
-> ---
->   include/ui/input.h | 1 -
->   1 file changed, 1 deletion(-)
-> 
-> diff --git a/include/ui/input.h b/include/ui/input.h
-> index ea2d944a7ed..6df8ae3a8a3 100644
-> --- a/include/ui/input.h
-> +++ b/include/ui/input.h
-> @@ -100,7 +100,6 @@ void qemu_input_touch_event(QemuConsole *con,
->                               InputMultiTouchType type,
->                               Error **errp);
->   
-> -void qemu_input_check_mode_change(void);
->   void qemu_add_mouse_mode_change_notifier(Notifier *notify);
->   void qemu_remove_mouse_mode_change_notifier(Notifier *notify);
->   
-> 
+Please send a fixed patch series to the list so Helge can pick it up
+again in a future pull request. Thanks!
 
+- https://gitlab.com/qemu-project/qemu/-/jobs/14769379047#L3283
+
+../linux-user/syscall.c: In function =E2=80=98do_syscall1=E2=80=99:
+../linux-user/syscall.c:14422:29: error: implicit declaration of
+function =E2=80=98fsopen=E2=80=99; did you mean =E2=80=98fdopen=E2=80=99?
+[-Werror=3Dimplicit-function-declaration]
+14422 | ret =3D get_errno(fsopen(p, arg2));
+| ^~~~~~
+| fdopen
+../linux-user/syscall.c:14422:29: error: nested extern declaration of
+=E2=80=98fsopen=E2=80=99 [-Werror=3Dnested-externs]
+../linux-user/syscall.c:14457:33: error: implicit declaration of
+function =E2=80=98fsconfig=E2=80=99; did you mean =E2=80=98fscanf=E2=80=99?
+[-Werror=3Dimplicit-function-declaration]
+14457 | ret =3D get_errno(fsconfig(arg1, arg2, p3, p4, arg5));
+| ^~~~~~~~
+| fscanf
+../linux-user/syscall.c:14457:33: error: nested extern declaration of
+=E2=80=98fsconfig=E2=80=99 [-Werror=3Dnested-externs]
+../linux-user/syscall.c:14496:25: error: implicit declaration of
+function =E2=80=98fsmount=E2=80=99; did you mean =E2=80=98umount=E2=80=99?
+[-Werror=3Dimplicit-function-declaration]
+14496 | ret =3D get_errno(fsmount(arg1, arg2, arg3));
+| ^~~~~~~
+| umount
+../linux-user/syscall.c:14496:25: error: nested extern declaration of
+=E2=80=98fsmount=E2=80=99 [-Werror=3Dnested-externs]
+../linux-user/syscall.c:14501:29: error: implicit declaration of
+function =E2=80=98fspick=E2=80=99 [-Werror=3Dimplicit-function-declaration]
+14501 | ret =3D get_errno(fspick(arg1, p, arg3));
+| ^~~~~~
+../linux-user/syscall.c:14501:29: error: nested extern declaration of
+=E2=80=98fspick=E2=80=99 [-Werror=3Dnested-externs]
+
+- https://gitlab.com/qemu-project/qemu/-/jobs/14769379043#L4371
+
+../linux-user/strace.c:4352:10: error: use of undeclared identifier
+'FSCONFIG_SET_FLAG'
+case FSCONFIG_SET_FLAG:
+^
+../linux-user/strace.c:4355:10: error: use of undeclared identifier
+'FSCONFIG_SET_STRING'
+case FSCONFIG_SET_STRING:
+^
+../linux-user/strace.c:4358:10: error: use of undeclared identifier
+'FSCONFIG_SET_BINARY'
+case FSCONFIG_SET_BINARY:
+^
+../linux-user/strace.c:4361:10: error: use of undeclared identifier
+'FSCONFIG_SET_PATH'
+case FSCONFIG_SET_PATH:
+^
+../linux-user/strace.c:4364:10: error: use of undeclared identifier
+'FSCONFIG_SET_PATH_EMPTY'
+case FSCONFIG_SET_PATH_EMPTY:
+^
+../linux-user/strace.c:4367:10: error: use of undeclared identifier
+'FSCONFIG_SET_FD'
+case FSCONFIG_SET_FD:
+^
+../linux-user/strace.c:4370:10: error: use of undeclared identifier
+'FSCONFIG_CMD_CREATE'
+case FSCONFIG_CMD_CREATE:
+^
+../linux-user/strace.c:4373:10: error: use of undeclared identifier
+'FSCONFIG_CMD_RECONFIGURE'
+case FSCONFIG_CMD_RECONFIGURE:
+^
+../linux-user/strace.c:4408:10: error: use of undeclared identifier
+'FSCONFIG_SET_FLAG'
+case FSCONFIG_SET_FLAG:
+^
+../linux-user/strace.c:4409:10: error: use of undeclared identifier
+'FSCONFIG_SET_STRING'
+case FSCONFIG_SET_STRING:
+^
+../linux-user/strace.c:4410:10: error: use of undeclared identifier
+'FSCONFIG_SET_BINARY'
+case FSCONFIG_SET_BINARY:
+^
+../linux-user/strace.c:4411:10: error: use of undeclared identifier
+'FSCONFIG_SET_PATH'
+case FSCONFIG_SET_PATH:
+^
+../linux-user/strace.c:4412:10: error: use of undeclared identifier
+'FSCONFIG_SET_PATH_EMPTY'
+case FSCONFIG_SET_PATH_EMPTY:
+^
+../linux-user/strace.c:4413:10: error: use of undeclared identifier
+'FSCONFIG_SET_FD'
+case FSCONFIG_SET_FD:
+^
+../linux-user/strace.c:4422:10: error: use of undeclared identifier
+'FSCONFIG_SET_STRING'
+case FSCONFIG_SET_STRING:
+^
+../linux-user/strace.c:4423:10: error: use of undeclared identifier
+'FSCONFIG_SET_PATH'
+case FSCONFIG_SET_PATH:
+^
+../linux-user/strace.c:4424:10: error: use of undeclared identifier
+'FSCONFIG_SET_PATH_EMPTY'
+case FSCONFIG_SET_PATH_EMPTY:
+^
+../linux-user/strace.c:4440:10: error: use of undeclared identifier
+'FSCONFIG_SET_PATH'
+case FSCONFIG_SET_PATH:
+^
+../linux-user/strace.c:4441:10: error: use of undeclared identifier
+'FSCONFIG_SET_PATH_EMPTY'
+case FSCONFIG_SET_PATH_EMPTY:
+^
+
+Stefan
+
+>
+>  linux-user/alpha/elfload.c    |  12 ++++
+>  linux-user/alpha/target_elf.h |  13 +++++
+>  linux-user/elfload.c          |   9 +++
+>  linux-user/sparc/cpu_loop.c   |   3 +-
+>  linux-user/sparc/cpu_loop.h   |   7 +++
+>  linux-user/sparc/elfload.c    |  54 +++++++++++++++++
+>  linux-user/sparc/signal.c     |  27 +++++++++
+>  linux-user/sparc/target_elf.h |  20 +++++++
+>  linux-user/strace.c           | 105 ++++++++++++++++++++++++++++++++++
+>  linux-user/strace.list        |  15 +++++
+>  linux-user/syscall.c          |  91 +++++++++++++++++++++++++++++
+>  target/sh4/translate.c        |   2 +-
+>  12 files changed, 356 insertions(+), 2 deletions(-)
+>  create mode 100644 linux-user/sparc/cpu_loop.h
+>
+> --
+> 2.54.0
+>
+>
 
