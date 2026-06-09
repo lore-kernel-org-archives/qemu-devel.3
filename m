@@ -4,114 +4,98 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 00B16CD8CA8
-	for <qemu-devel@archiver.kernel.org>; Tue,  9 Jun 2026 10:17:54 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D5347CD8CAD
+	for <qemu-devel@archiver.kernel.org>; Tue,  9 Jun 2026 10:26:36 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wWtWH-00085r-6g; Tue, 09 Jun 2026 06:17:17 -0400
+	id 1wWtef-00022O-FC; Tue, 09 Jun 2026 06:26:02 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <zhangckid@gmail.com>)
- id 1wWtWG-00085b-4N
- for qemu-devel@nongnu.org; Tue, 09 Jun 2026 06:17:16 -0400
-Received: from mail-ed1-x52d.google.com ([2a00:1450:4864:20::52d])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <zhangckid@gmail.com>)
- id 1wWtWE-0006iC-Jm
- for qemu-devel@nongnu.org; Tue, 09 Jun 2026 06:17:15 -0400
-Received: by mail-ed1-x52d.google.com with SMTP id
- 4fb4d7f45d1cf-6924a68e3f3so482566a12.1
- for <qemu-devel@nongnu.org>; Tue, 09 Jun 2026 03:17:14 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1781000233; cv=none;
- d=google.com; s=arc-20240605;
- b=Vkq5PXkjd/vPCzNS6hlgSQQMYfj6ehDyHvoxNi1npPDivfB2wG0DDc+eT9e4JQPdEN
- TzoFP1SZK/JGPlFHKsXk4ZPZwF7FdYitA3X/s/Sea0XAUwhYX3K3BziBEWDxxxUty2/d
- dk6thnF8nmiiPOvy6XmnJ0Fz8JwUEUCc+oAz6w74V8TefMuksqfCk+cHwpXmZrYvNXJ5
- ISb1z8+woItpt0iTkGsGFAyMYl/Mfdf6Hwry7CS9dGeIwpe1/BtD4A6bnfFWyVs7g/ja
- uNvE8NHinZsY0YJMJNIhKGd4IKgCLhKtOpBnGR0xXzuaviEm1wLT8EKxWyV2XOtmLuc3
- ru9A==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
- s=arc-20240605; 
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:dkim-signature;
- bh=xehyUbJH+6vfLh121IWYfpkrzLzPHIxzfkuyAdwR42o=;
- fh=2vCTedxg5r0JPg5LnC8s7len6poc60rIFIIE/ngH4cY=;
- b=UPbej/GB2+ifJ6juq0pc6bPpEsYZX2+9GvdIOopbzx5zD3fh302R4h2387QxIjrFDY
- cUhyX8GlNpbQqcyi0hBxzK/jTpc1EMdBJqM0SFs7hlbLUtK8UouDNyR27ldKj9ILRsrE
- TQ58k19dPtPflisefoUrdFvsdr6plvdnM3smzRBafhOoAsaE29UdGfxPXupxeN5cMbMN
- UKlZe1Vsh0F5cW4Uo1mq/860JoPfhZEtMuGtG9sb0cYDkNwQbstO+o9kQY2pIGRPlzVM
- oi07JbgdZPWjmaLGHtg6c7C6ZRkyMlq3MxJjvf6MWv9cbteB7Mv1e7KzAAnqQNwdMT3J
- YBhQ==; darn=nongnu.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1781000233; x=1781605033; darn=nongnu.org;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:from:to:cc:subject:date
- :message-id:reply-to;
- bh=xehyUbJH+6vfLh121IWYfpkrzLzPHIxzfkuyAdwR42o=;
- b=CaEviArHMB6R/MYQuBk9OsE0PeAKGMV5H6m3JsRgKOm63YuT4MBtLWE7i2+3OkEas9
- Ahy6trafC+wySrlxEk0a08XZ3xhuoehaeHGOKyyfJlD8A3skLvcysgTY9Iraramv0snD
- GgOltAJ5frwIAy+DK10iPNrWTfBI7iu8Ikt6EBm0BSXVv9pZTsD8XJw1hsi+isnr9wnD
- NfAjCOVzYrRH3yZlyL91Vk7WigdRhFYJVzx1B6vvjpzBRmKmJtfkmx4f6XLNGPhrcTVQ
- 5g0/9FdGkIeqCJwnFTrVpKZWiiiQkObmBLk75V9xGsyyuPope9XlF0E/EowcxCM9FB/2
- hH9A==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1781000233; x=1781605033;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to;
- bh=xehyUbJH+6vfLh121IWYfpkrzLzPHIxzfkuyAdwR42o=;
- b=K/+f3CfoDZmGuea8HSygkhWcgIBm8x570K3j3wMTcrrQaFGjtnC/WyyMx0MkWVrarG
- 2EVmAfNkujcb0a0NS6Z61nhJ/i12XE4K4KCvsuTlvAhajgB+Ys7uFpiZOzQTVIgd1pUH
- 8DcGt/I1jYUevd3hhVCN8xhR0WmD2HlYBm8dk6aMtw+/hgnSb+53xpOFilmcA08dDg6G
- Oa7MR2gWBynEWa9s8Ox/h2N9B0rs1ZkfBf4iHHg4GWTmi4VEfZWj0AYhlBD64QhFW1E0
- Ybqn2LVQreecs6DYBeEB5j+4bWtsvIe6tPJWV8u+blaMWliIrliE0SyxjiEMzBJP63fT
- vQBw==
-X-Gm-Message-State: AOJu0Yy3FjfNttYAjBlKKRQ4uNr2Hu4tVgmwUDcHjJ6m3Zg193PFZvDR
- fS3gDAv9bTs5Q0UfP4moB2qWyTWwErqZRw79Dy93159uPBUn5FnpdWkgZazyie480OzjbOQb145
- c9YnpXRX+LMPacs2q2VanzLAUfRHuX1k=
-X-Gm-Gg: Acq92OH0i4PDFLqGo2PRVDhtDg5NIYEn3znLZOAfQQ1ma3s/aV5H8bZamRFzniS+5r2
- e0SKE2FQNqBnWHhYYkOXMJgjnE996mzIBjaOTMO1CA7NaIx/8Hr7/I+BDt3vmix5NptjL47VTU+
- JwGsbQegspWDnFJ8P4CQg6UdPufin++LjG7lY5FXiYpKC88mszPyWcouvIdAaQ2X2WT6fGx3rje
- LDr3Upi/uczuP5rjw2X78+Tm5DnUDS+vwZ0o7J1Kuuw7GJ7xY0coJaTNjlRPq3XLPgfDPI2O1QQ
- l7oqFSYdfbpHhWvO/us=
-X-Received: by 2002:a05:6402:3554:b0:683:75ec:c17c with SMTP id
- 4fb4d7f45d1cf-68fa4f29faamr9487086a12.10.1781000232816; Tue, 09 Jun 2026
- 03:17:12 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <noreply@launchpad.net>)
+ id 1wWtea-00021z-9f
+ for qemu-devel@nongnu.org; Tue, 09 Jun 2026 06:25:52 -0400
+Received: from smtp-relay-services-1.canonical.com ([185.125.188.251])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <noreply@launchpad.net>)
+ id 1wWteV-0007qn-PA
+ for qemu-devel@nongnu.org; Tue, 09 Jun 2026 06:25:50 -0400
+Received: from scripts.lp.internal (scripts.lp.internal [10.131.215.246])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by smtp-relay-services-1.canonical.com (Postfix) with ESMTPSA id 39BF340042
+ for <qemu-devel@nongnu.org>; Tue,  9 Jun 2026 10:25:46 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=launchpad.net;
+ s=20210803; t=1781000746;
+ bh=I8fekKZydOc9xc8F9qfhYpVdcZEKGLIe3CLtYN8697k=;
+ h=MIME-Version:Content-Type:Date:From:To:Reply-To:References:
+ Message-Id:Subject;
+ b=ImSUCyGeJB4g4pb9As/uiv7/tTXaFPVn1X6PVZr5CQW7E3Mae4GTOSmHT05KCCkwJ
+ 3JiG+F6xr0SzQSdNMTIq7eBfzUgH+uJOYTWPp94TywnrpdrFFTIGW+jKIdb9LbXddk
+ K3dOEXKvHrjGvILBF3vYeuc16NEy2D92EIwUMsl/9ntYaXf0BWukRnZ7Tcz6WS/XZ0
+ YzVzl4Q2+YPj9aU6BU1+ySvug+EeY+z3t+n97U+Z0rhrKJ7Drqu8FEAIZCpaI2u5ED
+ 00mJ535mvqOoYRM/fvHMizCdiGsqO6wzJgym5T1ewC1flnJzkhMERtqL3LNRNAeANf
+ WIQFEHR6Gbe+g==
+Received: from scripts.lp.internal (localhost [127.0.0.1])
+ by scripts.lp.internal (Postfix) with ESMTP id 2FCB57E284
+ for <qemu-devel@nongnu.org>; Tue,  9 Jun 2026 10:25:46 +0000 (UTC)
 MIME-Version: 1.0
-References: <20260529213321.96271-1-zhangckid@gmail.com>
- <20260529213321.96271-8-zhangckid@gmail.com>
- <87qzmorh9j.fsf@pond.sub.org>
- <CAK3tnv+okGDVvEL+rDrMrTbJfCDmnttCbQyXYeQ-b7bO99ZODw@mail.gmail.com>
- <87a4t5l6mr.fsf@pond.sub.org>
-In-Reply-To: <87a4t5l6mr.fsf@pond.sub.org>
-From: Zhang Chen <zhangckid@gmail.com>
-Date: Tue, 9 Jun 2026 18:16:36 +0800
-X-Gm-Features: AVVi8Ccii5XboV_lQ9G-BfKIU1UCQD5LVxNECJDPDwvspPSKmh3Zk-HYhTASujE
-Message-ID: <CAK3tnv+3ZO2zit4dp5hCp_1HNjYsgik3W1EkiKY075EgRYDSLA@mail.gmail.com>
-Subject: Re: [PATCH V8 07/15] monitor: Update tracking iothread users with
- holder
-To: Markus Armbruster <armbru@redhat.com>
-Cc: qemu-devel <qemu-devel@nongnu.org>,
- "Dr . David Alan Gilbert" <dave@treblig.org>, 
- Eric Blake <eblake@redhat.com>, "Michael S . Tsirkin" <mst@redhat.com>, 
- Stefan Hajnoczi <stefanha@redhat.com>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::52d;
- envelope-from=zhangckid@gmail.com; helo=mail-ed1-x52d.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Date: Tue, 09 Jun 2026 10:18:14 -0000
+From: Julian Andres Klode <2133804@bugs.launchpad.net>
+To: qemu-devel@nongnu.org
+X-Launchpad-Notification-Type: bug
+X-Launchpad-Bug: product=qemu; status=Fix Released; importance=Unknown;
+ assignee=None; 
+X-Launchpad-Bug: distribution=ubuntu; sourcepackage=qemu; component=main;
+ milestone=ubuntu-26.04; status=Fix Released; importance=High;
+ assignee=hector.cao@canonical.com; 
+X-Launchpad-Bug: distribution=ubuntu; distroseries=jammy; sourcepackage=qemu;
+ component=main; status=Fix Committed; importance=Medium;
+ assignee=hector.cao@canonical.com; 
+X-Launchpad-Bug: distribution=ubuntu; distroseries=noble; sourcepackage=qemu;
+ component=main; milestone=ubuntu-24.04.4; status=Fix Committed;
+ importance=Medium; assignee=hector.cao@canonical.com; 
+X-Launchpad-Bug: distribution=ubuntu; distroseries=plucky; sourcepackage=qemu;
+ component=main; status=Won't Fix; importance=Medium; assignee=None; 
+X-Launchpad-Bug: distribution=ubuntu; distroseries=questing; sourcepackage=qemu;
+ component=main; status=Fix Committed; importance=Medium;
+ assignee=hector.cao@canonical.com; 
+X-Launchpad-Bug: distribution=ubuntu; distroseries=resolute; sourcepackage=qemu;
+ component=main; milestone=ubuntu-26.04; status=Fix Released; importance=High;
+ assignee=hector.cao@canonical.com; 
+X-Launchpad-Bug-Tags: server-todo verification-done-questing
+ verification-needed-jammy verification-needed-noble
+X-Launchpad-Bug-Information-Type: Public
+X-Launchpad-Bug-Private: no
+X-Launchpad-Bug-Security-Vulnerability: no
+X-Launchpad-Bug-Commenters: ahasenack hectorcao janitor juliank lvoytek
+ mjt+launchpad-tls paelzer ubuntu-sru-bot utkarsh xypron
+X-Launchpad-Bug-Reporter: Heinrich Schuchardt (xypron)
+X-Launchpad-Bug-Modifier: Julian Andres Klode (juliank)
+References: <176477927666.3767208.4954653462090539439.malonedeb@juju-98d295-prod-launchpad-3>
+Message-Id: <178100029473.3479071.12602208707446029959.malone@juju-98d295-prod-launchpad-2>
+Subject: [Bug 2133804] Please test proposed package
+X-Launchpad-Message-Rationale: Subscriber (QEMU) @qemu-devel-ml
+X-Launchpad-Message-For: qemu-devel-ml
+Precedence: bulk
+X-Generated-By: Launchpad (canonical.com);
+ Revision="f85a4e13f5f1af0eb2d5aadecdf089bdd7783432";
+ Instance="launchpad-scripts"
+X-Launchpad-Hash: b7876a72398d1c54bca372271b186098a133d9df
+Received-SPF: pass client-ip=185.125.188.251;
+ envelope-from=noreply@launchpad.net; helo=smtp-relay-services-1.canonical.com
+X-Spam_score_int: -42
+X-Spam_score: -4.3
+X-Spam_bar: ----
+X-Spam_report: (-4.3 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_MED=-2.3,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
-Precedence: list
 List-Id: qemu development <qemu-devel.nongnu.org>
 List-Unsubscribe: <https://lists.nongnu.org/mailman/options/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=unsubscribe>
@@ -120,59 +104,160 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-To: Bug 2133804 <2133804@bugs.launchpad.net>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Mon, Jun 8, 2026 at 6:42=E2=80=AFPM Markus Armbruster <armbru@redhat.com=
-> wrote:
->
-> Zhang Chen <zhangckid@gmail.com> writes:
->
-> > On Wed, Jun 3, 2026 at 1:20=E2=80=AFAM Markus Armbruster <armbru@redhat=
-.com> wrote:
-> >>
-> >> Zhang Chen <zhangckid@gmail.com> writes:
-> >>
-> >> > Based on monitor ID tracking iothread users with holder.
-> >> > Introduce the AioContext in the Monitor struct to avoid repeated cal=
-ls to
-> >> > iothread_get_aio_context()
-> >>
-> >> iothread_get_aio_context(iothread) returns iothread->ctx.  I doubt
-> >> avoiding the call is worth the complexity yet another variable adds.
-> >>
-> >> >                            and ensure symmetrical ref/unref during
-> >> > monitor lifecycle.
-> >>
-> >> What do you mean by that?
-> >
-> > As we discussed with Stefan before, the iothread_ref/unref need to
-> > call in pairs, for example the virtio-blk. But the monitor implementati=
-on
-> > is special, it have the monitor_suspend/resume with iothread.
-> > So I try to introduce the mon->ctx to simplify it.
->
-> I appreciate your attempt to simplify things.  I'm having difficulties
-> seeing what exactly becomes simpler.  This is likely me being dense.
-> Can you explain it to me real slow, perhaps with examples?
+Hello Heinrich, or anyone else affected,
 
-In the original design, a module (QOM object/monitor/block node) call
-the iothread_ref() means it will use the iothread to do some jobs.
-And will call the iothread_unref() when a module does not touch the iothrea=
-d.
-For example the virtio-blk in this series [PATCH V8 09/15].
+Accepted qemu into jammy-proposed. The package will build now and be
+available at
+https://launchpad.net/ubuntu/+source/qemu/1:6.2+dfsg-2ubuntu6.31 in a
+few hours, and then in the -proposed repository.
 
-For the monitor, the monitor_suspend/resume just want to get the context,
-It's not an action of never touching the iothread or ctx.
-But would it be more appropriate to change it to
-'iothread_unsafe_get_aio_context()'
-for the monitor_suspend/resume?
+Please help us by testing this new package.  See
+https://wiki.ubuntu.com/Testing/EnableProposed for documentation on how
+to enable and use -proposed.  Your feedback will aid us getting this
+update out to other Ubuntu users.
 
-Thanks
-Chen
+If this package fixes the bug for you, please add a comment to this bug,
+mentioning the version of the package you tested, what testing has been
+performed on the package and change the tag from verification-needed-
+jammy to verification-done-jammy. If it does not fix the bug for you,
+please add a comment stating that, and change the tag to verification-
+failed-jammy. In either case, without details of your testing we will
+not be able to proceed.
 
+Further information regarding the verification process can be found at
+https://wiki.ubuntu.com/QATeam/PerformingSRUVerification .  Thank you in
+advance for helping!
 
->
-> [...]
->
+N.B. The updated package will be released to -updates after the bug(s)
+fixed by this package have been verified and the package has been in
+-proposed for a minimum of 7 days.
+
+--=20
+You received this bug notification because you are a member of qemu-
+devel-ml, which is subscribed to QEMU.
+https://bugs.launchpad.net/bugs/2133804
+
+Title:
+  QEMU does not emulate IOCTL TCGETS2
+
+Status in QEMU:
+  Fix Released
+Status in qemu package in Ubuntu:
+  Fix Released
+Status in qemu source package in Jammy:
+  Fix Committed
+Status in qemu source package in Noble:
+  Fix Committed
+Status in qemu source package in Plucky:
+  Won't Fix
+Status in qemu source package in Questing:
+  Fix Committed
+Status in qemu source package in Resolute:
+  Fix Released
+
+Bug description:
+  [ Impact ]
+
+  - Terminal prompt is missing for multiarch containers with qemu-user
+
+  - Users cannot see the prompt but still can type the commands
+  =C2=A0=C2=A0However the absence of the prompt can be misleading and make =
+users think that the container hangs.
+
+  - this fix implements the missing ioctl TERMIOS2
+
+  [ Test Plan ]
+
+  On an amd64 host
+
+  $ sudo apt install -y docker.io qemu-user-static
+  $ sudo usermod -aG docker ubuntu
+  $ newgrp docker
+  $ docker run --platform=3Dlinux/arm64 -it ubuntu:26.04 bash
+  =C2=A0(this runs on AMD64 host, if you are runnig on ARM64, use -platform=
+=3Dlinux/riscv64 instead)
+
+  After docker pulls the image and run the container, you cannot see the
+  prompt
+
+  ...
+  Status: Downloaded newer image for ubuntu:26.04
+  ...
+
+  $ docker run --platform=3Dlinux/arm64 -it ubuntu:24.04 bash
+
+  Doing the same for Ubuntu Noble image works.
+
+  $ docker run --platform=3Dlinux/arm64 -it ubuntu:24.04 bash
+  Unable to find image 'ubuntu:24.04' locally
+  24.04: Pulling from library/ubuntu
+  818154cda96d: Pull complete
+  352b2c3faa58: Download complete
+  Digest: sha256:c4a8d5503dfb2a3eb8ab5f807da5bc69a85730fb49b5cfca2330194ebc=
+c41c7b
+  Status: Downloaded newer image for ubuntu:24.04
+  root@bf8124075385:/#
+
+  With this fix, the users should see the prompt when they run bash
+  interactively in the container:
+
+  $ docker run --platform=3Dlinux/arm64 -it ubuntu:26.04 bash
+  root@bf8124075385:/#
+
+  [ Where problems could occur ]
+
+  The fix is around the termios managament so regressions can happen there.
+  There might be regressions on the prompt display.
+
+  The prompt display is widely used so potential regressions should be
+  visible quickly.
+
+  [ Other Info ]
+
+  None
+
+  -- Original bug report ---
+
+  In Ubuntu 25.10 we moved to glibc 2.42. Here glibc has changed the
+  implementation of isatty(). It now uses IOCTL TCGETS2 instead of
+  TCGETS. TCGETS2 is not emulated by static QEMU (qemu-riscv64, qemu-
+  arm64, ...).
+
+  This leads to failures in containers for foreign architectures. E.g. no c=
+onsole prompt is displayed.
+  A detailed analysis is contained in LP #2133188.
+
+  A proper implementation of the missing IOCTLs will include:
+
+  Functions:
+
+  in linux-user/syscall.c:
+  host_to_target_termios2()
+  target_to_host_termios2()
+  print_termios2()
+
+  Definitions:
+
+  in linux-user/syscall.c
+  #define termios2 host_termios2
+
+  in linux-user/syscall_types.h
+  STRUCT_SPECIAL(termios2)
+
+  in linux-user/ioctls.h:
+  IOCTL(TCGETS2, IOC_R, MK_PTR(MK_STRUCT(STRUCT_termios2)))
+  IOCTL(TCSETS2, IOC_W, MK_PTR(MK_STRUCT(STRUCT_termios2)))
+  IOCTL(TCSETSF2, IOC_W, MK_PTR(MK_STRUCT(STRUCT_termios2)))
+  IOCTL(TCSETSW2, IOC_W, MK_PTR(MK_STRUCT(STRUCT_termios2)))
+
+  in linux-user/user-internals.h:
+  void print_termios2(void *arg);
+
+To manage notifications about this bug go to:
+https://bugs.launchpad.net/qemu/+bug/2133804/+subscriptions
+
 
