@@ -4,57 +4,142 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id EB8A0CD8CAA
-	for <qemu-devel@archiver.kernel.org>; Tue,  9 Jun 2026 15:12:03 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1AF63CD8CAA
+	for <qemu-devel@archiver.kernel.org>; Tue,  9 Jun 2026 15:14:03 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wWy7H-0003Rb-Cs; Tue, 09 Jun 2026 11:11:47 -0400
+	id 1wWy97-00042W-Fh; Tue, 09 Jun 2026 11:13:42 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jic23@kernel.org>) id 1wWy7F-0003R9-Oz
- for qemu-devel@nongnu.org; Tue, 09 Jun 2026 11:11:45 -0400
-Received: from sea.source.kernel.org ([2600:3c0a:e001:78e:0:1991:8:25])
+ (Exim 4.90_1) (envelope-from <philmd@oss.qualcomm.com>)
+ id 1wWy95-00042C-9p
+ for qemu-devel@nongnu.org; Tue, 09 Jun 2026 11:13:39 -0400
+Received: from mx0b-0031df01.pphosted.com ([205.220.180.131])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jic23@kernel.org>) id 1wWy7D-0003Nd-N7
- for qemu-devel@nongnu.org; Tue, 09 Jun 2026 11:11:45 -0400
-Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
- by sea.source.kernel.org (Postfix) with ESMTP id C297E40351;
- Tue,  9 Jun 2026 15:11:41 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A50CA1F00893;
- Tue,  9 Jun 2026 15:11:39 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
- s=k20260515; t=1781017901;
- bh=1sZXlp8Gi6WChPLNyAEhS87z81+kdWGyl+V7rw7CMQE=;
- h=Date:From:To:Cc:Subject:In-Reply-To:References;
- b=ivtq1JsFPqdfxMvHLyClFk0jWXPyKm7TamouYESRpz/7RUiZ/YDo+mLzBXsN6LdeW
- ZuvgJvEKbfW1xIPnI/H3In3uHri/ocKn+wGFIHFBW/zBKUtrnFxpOqrvbF1oITdWko
- r9Xe9klCqgE3TlJRCW7twDcKsJsKnNMiEbl1knp7mqszfyk3y53tJUuPJDZI0/QPRI
- QJuhJsE4oGDsPQjUbehY4wsY4XrAh7IZErVQgC9WhpgMcVgLcTnQtrSNKXgH6yjnDd
- WCMsui7+GNcPQINkG6IJdEyXgk1KrZA1C/Ozf9PSfYpK2nsIefXiu0kBynfe+KRLVK
- udTg8kUx8nMxg==
-Date: Tue, 9 Jun 2026 16:11:34 +0100
-From: Jonathan Cameron <jic23@kernel.org>
-To: Junjie Cao <junjie.cao@intel.com>
-Cc: jonathan.cameron@huawei.com, fan.ni@samsung.com, qemu-devel@nongnu.org
-Subject: Re: [PATCH 3/3] hw/cxl: trace event log activity and CFMWS address
- decoding
-Message-ID: <20260609161134.30d5e1cf@jic23-huawei>
-In-Reply-To: <20260603013420.904749-4-junjie.cao@intel.com>
-References: <20260603013420.904749-1-junjie.cao@intel.com>
- <20260603013420.904749-4-junjie.cao@intel.com>
-X-Mailer: Claws Mail 4.4.0 (GTK 3.24.52; x86_64-pc-linux-gnu)
+ (Exim 4.90_1) (envelope-from <philmd@oss.qualcomm.com>)
+ id 1wWy93-000417-Fe
+ for qemu-devel@nongnu.org; Tue, 09 Jun 2026 11:13:39 -0400
+Received: from pps.filterd (m0279870.ppops.net [127.0.0.1])
+ by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
+ 659ClZdZ2706239
+ for <qemu-devel@nongnu.org>; Tue, 9 Jun 2026 15:13:35 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+ cc:content-transfer-encoding:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+ MHxXcpIrFuX3nUyCybBJcqQMX57QwRBjToHAnaRLuy4=; b=ERwU1BO9K6JHEFS2
+ m7MdBrHmDa5nJHQWr1USXUV1XaiV7lZSV8a/bdB7oH0qHLJrewMx40s1YSgQYYvm
+ +lL53eSGzWO9v2yCbsb2j4SF79nBqefXuv2ek9m0zCH8zAWTM1nJkHrYcZt4RRoE
+ KV4psJZfizvLn1kE0GkJluiYaAsVD8SHLNiousR3scJ4NfH6yb6XgLYM6nUcLAjb
+ Vokhb9P63qA5JJONRvqcc9CdAjjWtyGp8oBdtTBJyoTCArI0RmRql53nVtqay9TG
+ e3BBsTN6FTt0hc79PvuvK4n4IQ740gaDEePUkSihBLNcYeUQbg7DFkE7EI8ZJmpi
+ g7vjjg==
+Received: from mail-oa1-f70.google.com (mail-oa1-f70.google.com
+ [209.85.160.70])
+ by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4epfdt1w8k-1
+ (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
+ for <qemu-devel@nongnu.org>; Tue, 09 Jun 2026 15:13:35 +0000 (GMT)
+Received: by mail-oa1-f70.google.com with SMTP id
+ 586e51a60fabf-440fd88f521so6986630fac.0
+ for <qemu-devel@nongnu.org>; Tue, 09 Jun 2026 08:13:35 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=oss.qualcomm.com; s=google; t=1781018015; x=1781622815; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=MHxXcpIrFuX3nUyCybBJcqQMX57QwRBjToHAnaRLuy4=;
+ b=N4zRg67S/6zcCfhPewzySFsc2OSFj2GALLSB8DaeMrL+rXWpSHgkV2R8Q5q9//k7NA
+ VnhqaAd6711uFLYBoACVZeU3QJPUPfGzguVSmaym/7aFvPEQuwszqt1cRvOOi2M4xD/l
+ hp1sLYmCIh+Fjr4hny4zJRSuSvSzQ0/+0CW5K/WAm3+iXU3WCdRUaofDIfTBI1cQn7D9
+ 9NIaVyaYkS6MOtq27QVe816no3wr/7YgvfaFaDDXC1B6MO5FK7d6RbN9wwwYulZj4zpi
+ cDWNYMHkhDSArwtFK9N2tiAxEDVZfwpUeigdelV0HiQe4ZcCH79vfJPt0Y1tNt02mwX7
+ bHgA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1781018015; x=1781622815;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=MHxXcpIrFuX3nUyCybBJcqQMX57QwRBjToHAnaRLuy4=;
+ b=XInFh7C2whJnTs3DF3tJKQRz82aKiM7q/N41FmYtXXp0UMhyW2MZBXAxQhq+4XuERm
+ Pfzee+VWM93DFOh6Br7yI6Mc9/2UKGeY0nJr70W95iv3tLzF+X7Ef6usThKxZ7WZRhrh
+ xryl3wqGTLm5nzwIKX6T4AiXFgs8lfaCShj87kBqmQj3BKVZ1HF3fVFAsIAO8Zf5B4pO
+ Izo1ifFXoPLJ4ECik7AMj/vWXy8eQw56Msn4ltcaGulDqYLTpDSX8FjxMPrqoqkPnP0n
+ nQFv+VGMvoqu6ybs7wIKJP6WR6D4kXkMWeyPs5H7dQ5pzrQKb/0dl3zq3xHEoPibFUsi
+ 2AIg==
+X-Forwarded-Encrypted: i=1;
+ AFNElJ8cMzvqVg6Vie+yMRqObGwIJ43f6QAGymvPGzUH7bm6+XPhM6OOD5C/WpI7cTpOb/VzZASUeE7ZVf8O@nongnu.org
+X-Gm-Message-State: AOJu0Yzipqw7vzmS86P3G+QrvTXiJZWswRP0aD1ihEjYSs9qAmyXNVuB
+ za/8U7g8NnEG+R5APy/gsWWj+q9nJtEiq8G8PEJEBMDYK9PwkHS2DjNuWv6hN1+s0JNLaOgVoBj
+ vJu0hyQGdEED3mjxEIJmsCG44aMz9Cp1AkWrP7FgZCDA00/AoDr2Ev1n0FQ==
+X-Gm-Gg: Acq92OEuopHSzJrvLeWx2hFpaqahFxytpjdC4m7YmFyWrg8I0/lsNCDFlhdJ6H1qo4j
+ 7bYRcpBDdjQiESPATgNzP/H399zeh/+NtrgQHJj+mkL9uKhVA0z1Aj0q5dK3TU6LOxlA47iWCvK
+ 3z4AuGhJSo5o0vjVujEOButHMIG+5XJuvkCE0SFl3yRKA+23a1J5+cNs32R5WmiOte3JWEN4dbU
+ hL39AsRDnadzrmW9r4qzNBTz2mQUZOLa+2xks5rqkKF67ayRGAgVxxbVoh8ohWy5Lk8+KCsYkam
+ otztQYhJpy5rpMoxqrMn/+KjpFMSxX4N0CrXNdCDTS2RkykO25Mc9exWVBUTsbntfjpDuaXO1sA
+ 7PzD9VsJol+S8n4OZ5HGIrACDBY0MB5rUyisiHZNz091NSSLcjmtScP79lnEXZsb/Q2c=
+X-Received: by 2002:a05:6820:200f:b0:69e:3a55:a62a with SMTP id
+ 006d021491bc7-69e68b480fbmr12580207eaf.13.1781018014672; 
+ Tue, 09 Jun 2026 08:13:34 -0700 (PDT)
+X-Received: by 2002:a05:6820:200f:b0:69e:3a55:a62a with SMTP id
+ 006d021491bc7-69e68b480fbmr12580185eaf.13.1781018014302; 
+ Tue, 09 Jun 2026 08:13:34 -0700 (PDT)
+Received: from [10.156.84.244] (113.170.88.92.rev.sfr.net. [92.88.170.113])
+ by smtp.gmail.com with ESMTPSA id
+ a640c23a62f3a-bf055307aacsm1065251066b.47.2026.06.09.08.13.32
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Tue, 09 Jun 2026 08:13:33 -0700 (PDT)
+Message-ID: <49529ff5-e173-4df3-88e0-b07567ec238b@oss.qualcomm.com>
+Date: Tue, 9 Jun 2026 17:13:31 +0200
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2600:3c0a:e001:78e:0:1991:8:25;
- envelope-from=jic23@kernel.org; helo=sea.source.kernel.org
-X-Spam_score_int: -24
-X-Spam_score: -2.5
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 02/17] ui/hmp: move index_from_key() where it is used
+Content-Language: en-US
+To: =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>,
+ qemu-devel@nongnu.org
+Cc: "Dr. David Alan Gilbert" <dave@treblig.org>,
+ Paolo Bonzini <pbonzini@redhat.com>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ "Michael S. Tsirkin" <mst@redhat.com>, Gerd Hoffmann <kraxel@redhat.com>
+References: <20260609-ui-input-v1-0-42615deb818e@redhat.com>
+ <20260609-ui-input-v1-2-42615deb818e@redhat.com>
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>
+In-Reply-To: <20260609-ui-input-v1-2-42615deb818e@redhat.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+X-Proofpoint-ORIG-GUID: ZIcobDoHcubumLNoicLgut46rS-crXPF
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNjA5MDE0NSBTYWx0ZWRfX5CRWV6lInSJX
+ NWpxuXby6JGhetXoRCmzFXYcUPHRYI8wYsiDJgk2z2eyin+xcNYfH/YFmStu6/TgpF8mh0I7rjZ
+ +29ME6tFZaODaPVv/eIJ8TUzYuHbNPQrYIEGkooHwSKavCR/PNSMXUS9E10ggg2JhIK9FLiNDcn
+ oams4SoIjRkfvbBlbIu1tTp255KAI46EoBzzRZAaU/9L+L6Cxk56IoplkLECmXZ+CpMlaCN58RX
+ kvkPpNcj8wpnVrhRHPMVZlCg/L4QXkAHq2n31YjbdF1STc23W5I1gHO7GFgG0QqAirsQbgUw58Z
+ GPpdZYqDg/Y378iBzeK13d7qpGEpwyTq4oBR4/7zVWPNBe8dqhK0DVBTbQlQb9k8NyzdsmJraXd
+ AkcdP4TDQ1poKFpCJcfAWTcFv/mUJ2yXpUeh+VDV2in7xsR209tQBniG5LWmMKVfdy01OVupO4F
+ T91PCYbxXlFYih+DscA==
+X-Proofpoint-GUID: ZIcobDoHcubumLNoicLgut46rS-crXPF
+X-Authority-Analysis: v=2.4 cv=doTrzVg4 c=1 sm=1 tr=0 ts=6a282d9f cx=c_pps
+ a=nSjmGuzVYOmhOUYzIAhsAg==:117 a=ASywmo1ADVsXjDI2RVyDAw==:17
+ a=IkcTkHD0fZMA:10 a=FelO9ux0wxsA:10 a=M51BFTxLslgA:10 a=s4-Qcg_JpJYA:10
+ a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=gowsoOTTUOVcmtlkKump:22
+ a=20KFwNOVAAAA:8 a=EUspDBNiAAAA:8 a=1tSEMpTH9XP_W59IOagA:9 a=3ZKOabzyN94A:10
+ a=QEXdDO2ut3YA:10 a=1zu1i0D7hVQfj8NKfPKu:22
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.125,FMLib:17.12.100.49
+ definitions=2026-06-09_03,2026-06-09_02,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ suspectscore=0 spamscore=0 bulkscore=0 lowpriorityscore=0 priorityscore=1501
+ impostorscore=0 phishscore=0 clxscore=1015 malwarescore=0 adultscore=0
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.22.0-2605210000 definitions=main-2606090145
+Received-SPF: pass client-ip=205.220.180.131;
+ envelope-from=philmd@oss.qualcomm.com; helo=mx0b-0031df01.pphosted.com
+X-Spam_score_int: -27
+X-Spam_score: -2.8
 X-Spam_bar: --
-X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.445,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -70,163 +155,13 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed,  3 Jun 2026 09:34:20 +0800
-Junjie Cao <junjie.cao@intel.com> wrote:
-
-> Two more debug-prone paths benefit from trace coverage. Event log
-> insertion and clearing are exercised on every error injection or
-> dynamic capacity event, but their interaction with the per-log
-> overflow counter is currently opaque. CFMWS address decoding
-> translates a host physical address through up to two HDM decoder
-> lookups (host bridge and optional switch USP).
-
-Again, two largely unrelated things - two patches please.
-
-> 
-> Add five trace points:
-> 
->   * cxl_event_insert            - successful enqueue, log type and
->                                   resulting depth
->   * cxl_event_overflow          - the artificial overflow threshold
->                                   was hit; an event was dropped
->   * cxl_event_clear             - bulk clear, log type and request size
-> 
->   * cxl_cfmws_lookup            - entry to address decoding, with
->                                   the resolved fixed-window index
->   * cxl_cfmws_target_resolved   - HDM decoder produced a target index
->                                   (fires for both the host-bridge and
->                                   switch USP lookups)
-> 
-> In non-passthrough topologies, a cxl_cfmws_lookup without a following
-> cxl_cfmws_target_resolved indicates the host-bridge HDM decode
-> failed. In passthrough mode the lookup resolves via
-> pcie_find_port_first() without an HDM target step, so no
-> target_resolved event is expected.
-
-Ah. Good to see you have noted these don't apply to pass through case.
-I think for that we should probably have an event that makes it
-clear it is enabled and we won't see these.  (Need's Ali's patches
-to go upstream first though).
-
-> 
-> In cxl_event_insert(), cxl_event_count() is hoisted into a local
-> variable so its O(n) queue walk is performed once per insert rather
-> than twice (once for the trace point, once for the existing return-
-> value comparison).
-> 
-> Signed-off-by: Junjie Cao <junjie.cao@intel.com>
+On 9/6/26 16:34, Marc-AndrÃ© Lureau wrote:
+> Signed-off-by: Marc-André Lureau <marcandre.lureau@redhat.com>
 > ---
->  hw/cxl/cxl-events.c | 8 +++++++-
->  hw/cxl/cxl-host.c   | 4 ++++
->  hw/cxl/trace-events | 9 +++++++++
->  3 files changed, 20 insertions(+), 1 deletion(-)
-> 
-> diff --git a/hw/cxl/cxl-events.c b/hw/cxl/cxl-events.c
-> index 5356dfb5b3..f4aa419953 100644
-> --- a/hw/cxl/cxl-events.c
-> +++ b/hw/cxl/cxl-events.c
-> @@ -13,6 +13,7 @@
->  #include "hw/pci/msix.h"
->  #include "hw/cxl/cxl.h"
->  #include "hw/cxl/cxl_events.h"
-> +#include "trace.h"
->  
->  /* Artificial limit on the number of events a log can hold */
->  #define CXL_TEST_EVENT_OVERFLOW 8
-> @@ -98,6 +99,7 @@ bool cxl_event_insert(CXLDeviceState *cxlds, CXLEventLogType log_type,
->      uint64_t time;
->      CXLEventLog *log;
->      CXLEvent *entry;
-> +    int depth;
->  
->      if (log_type >= CXL_EVENT_TYPE_MAX) {
->          return false;
-> @@ -115,6 +117,7 @@ bool cxl_event_insert(CXLDeviceState *cxlds, CXLEventLogType log_type,
->          }
->          log->overflow_err_count++;
->          log->last_overflow_timestamp = time;
-> +        trace_cxl_event_overflow(log_type, log->overflow_err_count);
->          return false;
->      }
->  
-> @@ -133,8 +136,10 @@ bool cxl_event_insert(CXLDeviceState *cxlds, CXLEventLogType log_type,
->      QSIMPLEQ_INSERT_TAIL(&log->events, entry, node);
->      cxl_event_set_status(cxlds, log_type, true);
->  
-> +    depth = cxl_event_count(log);
+>   include/ui/console.h |  3 ---
+>   ui/input-legacy.c    | 15 ---------------
+>   ui/ui-hmp-cmds.c     | 15 +++++++++++++++
+>   3 files changed, 15 insertions(+), 18 deletions(-)
 
-Hmm. I wonder if we can name this more clearly. It is kind of
-queue depth, but I've not really seen that used with and people might
-think that's the maximum space.   Maybe occupancy is better?
-(Assisted by claude ;)
-
-> +    trace_cxl_event_insert(log_type, depth);
->      /* Count went from 0 to 1 */
-> -    return cxl_event_count(log) == 1;
-> +    return depth == 1;
->  }
->  
->  void cxl_discard_all_event_records(CXLDeviceState *cxlds)
-> @@ -234,6 +239,7 @@ CXLRetCode cxl_event_clear_records(CXLDeviceState *cxlds,
->          entry = cxl_event_get_head(log);
->      }
->  
-> +    trace_cxl_event_clear(log_type, pl->nr_recs);
->      return CXL_MBOX_SUCCESS;
->  }
->  
-> diff --git a/hw/cxl/cxl-host.c b/hw/cxl/cxl-host.c
-> index a94b893e99..4157377a95 100644
-> --- a/hw/cxl/cxl-host.c
-> +++ b/hw/cxl/cxl-host.c
-> @@ -21,6 +21,7 @@
->  #include "hw/pci/pci_host.h"
->  #include "hw/pci/pcie_port.h"
->  #include "hw/pci-bridge/pci_expander_bridge.h"
-> +#include "trace.h"
->  
->  static void cxl_fixed_memory_window_config(CXLFixedMemoryWindowOptions *object,
->                                             int index, Error **errp)
-> @@ -168,6 +169,7 @@ static PCIDevice *cxl_cfmws_find_device(CXLFixedWindow *fw, hwaddr addr)
->      bool target_found;
->      PCIDevice *rp, *d;
->  
-> +    trace_cxl_cfmws_lookup(addr, fw->index);
->      rb_index = (addr / cxl_decode_ig(fw->enc_int_gran)) % fw->num_targets;
->      hb = PCI_HOST_BRIDGE(fw->target_hbs[rb_index]->cxl_host_bridge);
->      if (!hb || !hb->bus || !pci_bus_is_cxl(hb->bus)) {
-> @@ -191,6 +193,7 @@ static PCIDevice *cxl_cfmws_find_device(CXLFixedWindow *fw, hwaddr addr)
->          if (!target_found) {
->              return NULL;
->          }
-> +        trace_cxl_cfmws_target_resolved(addr, target);
->  
->          rp = pcie_find_port_by_pn(hb->bus, target);
->          if (!rp) {
-> @@ -227,6 +230,7 @@ static PCIDevice *cxl_cfmws_find_device(CXLFixedWindow *fw, hwaddr addr)
->      if (!target_found) {
->          return NULL;
->      }
-> +    trace_cxl_cfmws_target_resolved(addr, target);
->  
->      d = pcie_find_port_by_pn(&PCI_BRIDGE(d)->sec_bus, target);
->      if (!d) {
-> diff --git a/hw/cxl/trace-events b/hw/cxl/trace-events
-> index 15977dce6e..e5f196787d 100644
-> --- a/hw/cxl/trace-events
-> +++ b/hw/cxl/trace-events
-> @@ -10,3 +10,12 @@ cxl_mailbox_handler_return(uint16_t opcode, int ret, size_t len_out) "opcode=0x%
->  # cxl-cdat.c
->  cxl_cdat_init(const char *source) "source=%s"
->  cxl_cdat_loaded(const char *filename, size_t length, int num_entries) "filename=%s length=%zu entries=%d"
-> +
-> +# cxl-events.c
-> +cxl_event_insert(int log_type, int depth) "log_type=%d depth=%d"
-> +cxl_event_overflow(int log_type, uint16_t overflow_err_count) "log_type=%d overflow_err_count=%u"
-> +cxl_event_clear(int log_type, int nr_recs) "log_type=%d nr_recs=%d"
-> +
-> +# cxl-host.c
-> +cxl_cfmws_lookup(uint64_t addr, int fw_index) "addr=0x%"PRIx64" fw=%d"
-> +cxl_cfmws_target_resolved(uint64_t addr, uint8_t target) "addr=0x%"PRIx64" target=0x%02x"
-
+Reviewed-by: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
 
