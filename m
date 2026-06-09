@@ -4,78 +4,81 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id EBE84CD8CB9
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E8C23CD8CAE
 	for <qemu-devel@archiver.kernel.org>; Tue,  9 Jun 2026 04:25:30 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wWo1G-0004eI-30; Tue, 09 Jun 2026 00:24:54 -0400
+	id 1wWo1G-0004fB-Gv; Tue, 09 Jun 2026 00:24:54 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <kirill@korins.ky>) id 1wWm4Q-0001ct-7f
- for qemu-devel@nongnu.org; Mon, 08 Jun 2026 22:20:03 -0400
-Received: from mx1.catap.net ([162.55.82.72])
+ (Exim 4.90_1) (envelope-from <kirill@korins.ky>) id 1wWmEq-0003kl-6l
+ for qemu-devel@nongnu.org; Mon, 08 Jun 2026 22:30:48 -0400
+Received: from mx2.catap.net ([65.21.79.163])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <kirill@korins.ky>) id 1wWm4M-0003Mk-BY
- for qemu-devel@nongnu.org; Mon, 08 Jun 2026 22:20:01 -0400
-ARC-Seal: i=1; a=rsa-sha256; s=20240125rsa; cv=none; d=mx.catap.net; b=mjiZm8H
- 7zEpzjKA3SWMSxWBVTXalb1tx1dYMur3KSYrc+ISLrY80cwPrxo+XcYEpt200IJkRSCdb8
- zko3i1Fkpm7P3CgiXqRTtXI1wrppFQpF/nYQsdvZN8aaGRMrPt8le1aDIOqGYL5L66Ie5i
- x19B3Z8G8w/FRp9HNTg2SlWsz1ghDfRIPwVGDdMWwbhfnmf6molFPIJcAFK5IWQwc0/Od4
- 6oGpb6BzR5IQFOLC1KzLOqtC1sFRGIPp/F0yy4t8allBbN2GeESePIGbjU/L3pGYNqY0FA
- Ad/khfGCuRskOx09WcuURsfa/eZCukWrYZePp02Xuo5/rf7mFYR10dA==
-ARC-Message-Signature: i=1; a=rsa-sha256; s=20240125rsa; c=simple/simple; bh=P
- JPAShit9jm++v6V4WGKHz1axdgnEFfRDSlf7Vm4TdE=;
- h=date:subject:cc:to:
- from:dkim-signature:dkim-signature; d=mx.catap.net; b=thrQTtEPmiFG37BA
- 9PrGM/wQaf6zPXqOtYtuUq2l19/QBhkv5/E/YaYnnpfrnMk0zBeuwZC30h2xddyR5Z0QZT
- GGPwsbFFWaXyaaNeWtRh+TayVCfRreiFf/9JqmCRzyB/IjVMi+wUp9/zVu5fafRWf5KRKh
- NKOZJgGdstif1nj7gF+/6ADj7hcnrnHxM27tABY8C+vp/IAHhRWKIqQoxBuYHgZQ0rIaXF
- bGYmZAmUKt8Z9XGEb7MSAnQHQ7VogoYTACEy0HRx/FIj8Buy8XnGBwQM29++U70Kqga2/R
- 9QfQMxsQ2uBVLdDNRTd1p3Q3e1HX3ZWABU8rfcN8c0qr6g==
+ (Exim 4.90_1) (envelope-from <kirill@korins.ky>) id 1wWmEm-0000xl-6U
+ for qemu-devel@nongnu.org; Mon, 08 Jun 2026 22:30:47 -0400
+ARC-Seal: i=1; a=rsa-sha256; s=20240125rsa; cv=none; d=mx.catap.net; b=CVwrygd
+ cHxmYYapxCfj0c0Z6IPQG1R8j37wtV5AUGIxBlohwyLHAGqd3af5wEBVAy1czxWwXRsWDa
+ zXqeT/wiqR0wRLHirAQtb6/DlrSj5K8DYZlrlFmwjbft3VB1MPHubHNAd7FM8PBnKAqULn
+ vuWzAvCc0Om4ed667yzu+dvSF8yYzZ4Ki2IKlGnaG0NZx4c41TPfWOeMx/LhyUuxOfOIFr
+ lOmLnbRM9WGSPeUvQDtYZ6+rOA51WnjbeL45RN6cf/kmDAQ2i4qHoTR53dPcmM/IoeiRHQ
+ nNaYV+NfKQTEutJjHqos+W8rKiKHTi18HDwGrQrK37jYuUR6ZGqzjnw==
+ARC-Message-Signature: i=1; a=rsa-sha256; s=20240125rsa; c=simple/simple; bh=a
+ peePpYgDu5cAlGMas75I4F8IWgzRY9YYITbh2BPboo=;
+ h=references:in-reply-to:
+ subject:to:from:date:dkim-signature:dkim-signature; d=mx.catap.net; b=
+ A/qzedBClCNzvYCTdJvB6MgoWlLTQMy06ja5JxHT/kHOWUGV10tBUnnT629VbtvzMMo5lW
+ mBeXhJ6xOGMBmVXondHDT8KPpq+YyM6AYJ/I63w9IvUIUGUHIXDNYAupzHJq+TStgu5gJV
+ 3WeyFy0tjsfTGySHFW1XyilPJmWWixgbMpLU8uomIIsTY/7bKJPOtJFwqgCUUHBVFeuRuC
+ ND8lbaaTEsxtHX5Top283b3mEHM+6gtEVu99H8v6KlkWrfU1OQjCxexp60b8hVJ15iqXra
+ XsvcUaEZpML5vaDJ38vnknr+8d8QOGutDj2xXOFkeQ0XIqa2UXDYgjlcrYV21Q==
 ARC-Authentication-Results: i=1; mx.catap.net; dkim=pass
  header.s=20240125rsa header.d=korins.ky header.a=rsa-sha256 
- header.b=uYEalUz3; dkim=pass header.s=20240125ed25519 
- header.d=korins.ky header.a=ed25519-sha256 header.b=jRK8kdfe;
+ header.b=IqAtY/+4; dkim=pass header.s=20240125ed25519 
+ header.d=korins.ky header.a=ed25519-sha256 header.b=SZUZd2kA;
  arc=none; iprev=pass; spf=none
  smtp.helo=postmaster@matebook.home.arpa; spf=softfail
  smtp.mailfrom=kirill@korins.ky
-DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple; s=20240125rsa; bh=PJPAShit
- 9jm++v6V4WGKHz1axdgnEFfRDSlf7Vm4TdE=; h=date:subject:cc:to:from;
- d=korins.ky; b=uYEalUz3AUJKW+LX7bxMYph/XXty/6oGuQ1koKRX0J6RIUPsKfG5ca6
- DvTs0GUnXqUwtvefpjiiPEUxwERX8vucprl9Sky9SuWgsxfYtdSyfjXsnEzSM+onAoaeYM
- WQw61goTUKAKqIiLFg5fn24wBcTiFJGvJ1IC7VzirYDpxu+mx/4N4VyP6MIrx1grb9Zx+l
- 1pjZnnVBQVO+6d1u+U1XptRs2qif0FluGbfcRv+VQNyNUh4dpeK6sO9gx4pFG/Tj8gLijl
- JvZMNLHGIZYXm9ltbdwZcx1rpemkMQ8xgE5eHEaktEy/vJtP/3+1B4XKEjw3E8k1gskaxT
- YosAmuQ==
+DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple; s=20240125rsa; bh=apeePpYg
+ Du5cAlGMas75I4F8IWgzRY9YYITbh2BPboo=; h=references:in-reply-to:
+ subject:to:from:date; d=korins.ky;
+ b=IqAtY/+4cBWXJ3EtNfx51cFVri0koT0b2
+ RY1RD7rBA/+B1MGC/d0gjm3Fg0+fmpYcpRpBAVsQw8TAvBogJI51oDAC8m+bt7l7ouRFuU
+ 9MeP827pwgTEdxe7eWMoXwxkzrCi4/r1gdziJfrlcbVBct67AegvESahoYm4yKgyRYc+ff
+ xo6hvzlAM++ynHIT7+iUSLDY4sa1ZSBmDvqlvS95AfzFC11dgCWPgDSQhR7EmxdVfsEz0J
+ bvXQ1YcSTUnQhxcka2SFMNrkq3ZTiMOenq7FgacxZQ7TguemSPdGnzbGzZjxH/YjcA5u1Y
+ 6xmydt/0vP0kiR3wsiT0CkSUIoktg==
 DKIM-Signature: v=1; a=ed25519-sha256; c=simple/simple; s=20240125ed25519;
- bh=PJPAShit9jm++v6V4WGKHz1axdgnEFfRDSlf7Vm4TdE=; h=date:subject:cc:to:
- from; d=korins.ky; b=jRK8kdfeXcMjtZWqlc2Uf8JY3FUhOmkvx5qb5SuhyYXAZOPdt
- W9ATeGj1ar036k0RlE6Ro16t5pFoUqFcHn0BQ==
-Received: by mx1.catap.net (OpenSMTPD) with ESMTPSA id 0eab6f1c
+ bh=apeePpYgDu5cAlGMas75I4F8IWgzRY9YYITbh2BPboo=; h=references:
+ in-reply-to:subject:to:from:date; d=korins.ky; b=SZUZd2kADiuDiUKQSZWrW
+ 6t5E5AsHJRnfWanvVbKbspHqB1zaOCV+9s9Hi1zgZgmdxRE1Gj+XYabQ7HJgYAkBA==
+Received: by mx2.catap.net (OpenSMTPD) with ESMTPSA id 86c52409
  (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO); 
- Tue, 9 Jun 2026 04:19:51 +0200 (CEST)
-Received: from localhost (matebook.home.arpa [local])
- by matebook.home.arpa (OpenSMTPD) with ESMTPA id 345dd43e;
- Tue, 9 Jun 2026 04:19:50 +0200 (CEST)
-From: "Kirill A. Korinsky" <kirill@korins.ky>
+ Tue, 9 Jun 2026 04:30:41 +0200 (CEST)
+Received: by matebook.home.arpa (OpenSMTPD) with ESMTP id 335e69fe;
+ Tue, 9 Jun 2026 04:30:40 +0200 (CEST)
+Date: Tue, 09 Jun 2026 04:30:40 +0200
+Message-ID: <8733ywtpgv.wl-kirill@korins.ky>
+From: Kirill A. Korinsky <kirill@korins.ky>
 To: qemu-devel@nongnu.org
-Cc: "Kirill A. Korinsky" <kirill@korins.ky>
-Subject: [PATCH] powernv: boot OpenBSD on POWER9
-Date: Tue,  9 Jun 2026 04:19:45 +0200
-Message-ID: <20260609021945.73632-1-kirill@korins.ky>
-X-Mailer: git-send-email 2.54.0
+Subject: Re: [PATCH] powernv: boot OpenBSD on POWER9
+In-Reply-To: <20260609021945.73632-1-kirill@korins.ky>
+References: <20260609021945.73632-1-kirill@korins.ky>
+User-Agent: Wanderlust
+Mail-Followup-To: qemu-devel@nongnu.org,
+ "Kirill A. Korinsky" <kirill@korins.ky>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=162.55.82.72; envelope-from=kirill@korins.ky;
- helo=mx1.catap.net
+Content-Type: multipart/mixed; boundary="Multipart_Tue_Jun__9_04:30:40_2026-1"
+Received-SPF: pass client-ip=65.21.79.163; envelope-from=kirill@korins.ky;
+ helo=mx2.catap.net
 X-Spam_score_int: -43
 X-Spam_score: -4.4
 X-Spam_bar: ----
 X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_MED=-2.3, SPF_HELO_PASS=-0.001, SPF_PASS=-0.001,
- UNPARSEABLE_RELAY=0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_MED=-2.3, SPF_HELO_PASS=-0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-Mailman-Approved-At: Tue, 09 Jun 2026 00:24:38 -0400
 X-BeenThere: qemu-devel@nongnu.org
@@ -92,123 +95,207 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-OpenBSD/powernv programs PTCR for LPID 0 with a partition
-table size exponent one smaller than QEMU's existing ISA v3.0
-interpretation. Try QEMU's existing PATS interpretation first,
-then fall back to the OpenBSD LPID 0 form; nonzero LPIDs keep
-the old behaviour.
+--Multipart_Tue_Jun__9_04:30:40_2026-1
+Content-Type: text/plain; charset=US-ASCII
 
-The PSI model now exposes POWER9 IRQ level and pending status
-registers, and keeps both updated while delivering through the
-existing XIVE LSI source. This lets guests that select the
-POWER9 PSI LSI IRQ method continue to receive LPC interrupts.
+On Tue, 09 Jun 2026 04:19:45 +0200,
+"Kirill A. Korinsky" <kirill@korins.ky> wrote:
+> 
+> OpenBSD/powernv programs PTCR for LPID 0 with a partition
+> table size exponent one smaller than QEMU's existing ISA v3.0
+> interpretation. Try QEMU's existing PATS interpretation first,
+> then fall back to the OpenBSD LPID 0 form; nonzero LPIDs keep
+> the old behaviour.
+> 
+> The PSI model now exposes POWER9 IRQ level and pending status
+> registers, and keeps both updated while delivering through the
+> existing XIVE LSI source. This lets guests that select the
+> POWER9 PSI LSI IRQ method continue to receive LPC interrupts.
+> 
+> The blast radius is probably minimal: the partition table
+> fallback is limited to bare metal LPID 0 after the original
+> lookup fails, while the PSI change only touches POWER9 PSI
+> state and reuses the existing delivery path.
+> 
+> Signed-off-by: Kirill A. Korinsky <kirill@korins.ky>
 
-The blast radius is probably minimal: the partition table
-fallback is limited to bare metal LPID 0 after the original
-lookup fails, while the PSI change only touches POWER9 PSI
-state and reuses the existing delivery path.
 
-Signed-off-by: Kirill A. Korinsky <kirill@korins.ky>
----
- hw/ppc/pnv_psi.c           | 17 ++++++++---------
- target/ppc/mmu-book3s-v3.c | 33 ++++++++++++++++++++++++++++-----
- 2 files changed, 36 insertions(+), 14 deletions(-)
+It was tested as:
 
-diff --git a/hw/ppc/pnv_psi.c b/hw/ppc/pnv_psi.c
-index e8701c6100..941540df2d 100644
---- a/hw/ppc/pnv_psi.c
-+++ b/hw/ppc/pnv_psi.c
-@@ -688,6 +688,8 @@ static uint64_t pnv_psi_p9_mmio_read(void *opaque, hwaddr addr, unsigned size)
-     case PSIHB9_ESB_CI_BASE:
-     case PSIHB9_ESB_NOTIF_ADDR:
-     case PSIHB9_IVT_OFFSET:
-+    case PSIHB9_IRQ_LEVEL:
-+    case PSIHB9_IRQ_STAT:
-         val = psi->regs[reg];
-         break;
-     default:
-@@ -817,18 +819,15 @@ static const MemoryRegionOps pnv_psi_p9_xscom_ops = {
- static void pnv_psi_power9_set_irq(void *opaque, int irq, int state)
- {
-     PnvPsi *psi = opaque;
--    uint64_t irq_method = psi->regs[PSIHB_REG(PSIHB9_INTERRUPT_CONTROL)];
-+    uint64_t irq_bit = PPC_BIT(irq);
- 
--    if (irq_method & PSIHB9_IRQ_METHOD) {
--        qemu_log_mask(LOG_GUEST_ERROR, "PSI: LSI IRQ method no supported\n");
--        return;
--    }
--
--    /* Update LSI levels */
-+    /* Update LSI levels and pending status */
-     if (state) {
--        psi->regs[PSIHB_REG(PSIHB9_IRQ_LEVEL)] |= PPC_BIT(irq);
-+        psi->regs[PSIHB_REG(PSIHB9_IRQ_LEVEL)] |= irq_bit;
-+        psi->regs[PSIHB_REG(PSIHB9_IRQ_STAT)] |= irq_bit;
-     } else {
--        psi->regs[PSIHB_REG(PSIHB9_IRQ_LEVEL)] &= ~PPC_BIT(irq);
-+        psi->regs[PSIHB_REG(PSIHB9_IRQ_LEVEL)] &= ~irq_bit;
-+        psi->regs[PSIHB_REG(PSIHB9_IRQ_STAT)] &= ~irq_bit;
-     }
- 
-     qemu_set_irq(psi->qirqs[irq], state);
-diff --git a/target/ppc/mmu-book3s-v3.c b/target/ppc/mmu-book3s-v3.c
-index 3865556310..4babe4c536 100644
---- a/target/ppc/mmu-book3s-v3.c
-+++ b/target/ppc/mmu-book3s-v3.c
-@@ -23,19 +23,21 @@
- #include "mmu-hash64.h"
- #include "mmu-book3s-v3.h"
- 
--bool ppc64_v3_get_pate(PowerPCCPU *cpu, target_ulong lpid, ppc_v3_pate_t *entry)
-+static bool ppc64_v3_get_pate_from_size(PowerPCCPU *cpu, target_ulong lpid,
-+                                        ppc_v3_pate_t *entry,
-+                                        uint64_t table_size)
- {
-     uint64_t patb = cpu->env.spr[SPR_PTCR] & PTCR_PATB;
--    uint64_t pats = cpu->env.spr[SPR_PTCR] & PTCR_PATS;
-+    uint64_t entries;
- 
-     /* Check if partition table is properly aligned */
--    if (patb & MAKE_64BIT_MASK(0, pats + 12)) {
-+    if (patb & (table_size - 1)) {
-         return false;
-     }
- 
-     /* Calculate number of entries */
--    pats = 1ull << (pats + 12 - 4);
--    if (pats <= lpid) {
-+    entries = table_size / sizeof(*entry);
-+    if (entries <= lpid) {
-         return false;
-     }
- 
-@@ -45,3 +47,24 @@ bool ppc64_v3_get_pate(PowerPCCPU *cpu, target_ulong lpid, ppc_v3_pate_t *entry)
-     entry->dw1 = ldq_phys(CPU(cpu)->as, patb + 8);
-     return true;
- }
-+
-+bool ppc64_v3_get_pate(PowerPCCPU *cpu, target_ulong lpid, ppc_v3_pate_t *entry)
-+{
-+    uint64_t pats = cpu->env.spr[SPR_PTCR] & PTCR_PATS;
-+
-+    /*
-+     * Keep the existing ISA v3.0 PATS interpretation first.  OpenBSD/powernv
-+     * uses the PATSIZE value it writes to PTCR as one exponent smaller, and it
-+     * only needs that interpretation for the bare metal LPID 0 table.
-+     */
-+    if (ppc64_v3_get_pate_from_size(cpu, lpid, entry, 1ull << (pats + 12))) {
-+        return true;
-+    }
-+
-+    if (lpid == 0) {
-+        return ppc64_v3_get_pate_from_size(cpu, lpid, entry,
-+                                           1ull << (pats + 11));
-+    }
-+
-+    return false;
-+}
+qemu-system-ppc64 \
+    -M powernv9 \
+    -cpu power9 \
+    -m 2G \
+    -nographic \
+    -kernel pnor.BOOTKERNEL \
+    -device ich9-ahci,id=sata0,bus=pcie.0,addr=0x0 \
+    -drive file=miniroot79.img,format=raw,if=none,id=bootdisk,snapshot=on \
+    -device ide-hd,bus=sata0.0,unit=0,drive=bootdisk,bootindex=1
+
+Where:
+
+1. miniroot79.img from https://cdn.openbsd.org/pub/OpenBSD/snapshots/powerpc64/
+
+2. pnor.BOOTKERNEL was extracted from talos-ii-v2.10.pnor which I get from
+https://wiki.raptorcs.com/wiki/File:Talos-ii-pnor-v2.10-bundle.tar by
+extract-pnor-bootkernel.pl which I attached.
+
 -- 
-2.54.0
+wbr, Kirill
 
+--Multipart_Tue_Jun__9_04:30:40_2026-1
+Content-Type: text/plain; type=perl; charset=LATIN1; name="extract-pnor-bootkernel.pl"
+Content-Disposition: attachment; filename="extract-pnor-bootkernel.pl"
+Content-Transfer-Encoding: 7bit
+
+#!/usr/bin/env perl
+
+use strict;
+use warnings;
+
+use Fcntl qw(SEEK_SET);
+use File::Basename qw(dirname);
+use File::Path qw(make_path);
+
+use constant FFS_MAGIC => "PART";
+use constant FFS_VERSION => 1;
+use constant FFS_MAGIC_SIZE => 4;
+use constant FFS_NAME_SIZE => 16;
+use constant FFS_UINT32_SIZE => 4;
+use constant FFS_RESERVED_SIZE => 16;
+use constant COPY_CHUNK => 1024 * 1024;
+
+use constant FFS_HEADER_SIZE =>
+    FFS_MAGIC_SIZE + 6 * FFS_UINT32_SIZE + FFS_RESERVED_SIZE +
+    FFS_UINT32_SIZE;
+use constant FFS_ENTRY_PREFIX_SIZE => FFS_NAME_SIZE + 7 * FFS_UINT32_SIZE;
+
+# OpenPOWER PNOR images use a big-endian FFS partition table.
+my @FFS_HEADER_FIELDS = (
+    [ magic        => "a" . FFS_MAGIC_SIZE ],
+    [ version      => "N" ],
+    [ table_blocks => "N" ],
+    [ entry_size   => "N" ],
+    [ entry_count  => "N" ],
+    [ block_size   => "N" ],
+    [ block_count  => "N" ],
+    [ reserved     => "x" . FFS_RESERVED_SIZE ],
+    [ checksum     => "N" ],
+);
+my @FFS_ENTRY_PREFIX_FIELDS = (
+    [ name   => "Z" . FFS_NAME_SIZE ],
+    [ base   => "N" ],
+    [ blocks => "N" ],
+    [ pid    => "N" ],
+    [ id     => "N" ],
+    [ type   => "N" ],
+    [ flags  => "N" ],
+    [ actual => "N" ],
+);
+
+my $FFS_HEADER_FORMAT = join " ", map { $_->[1] } @FFS_HEADER_FIELDS;
+my $FFS_ENTRY_PREFIX_FORMAT = join " ", map { $_->[1] } @FFS_ENTRY_PREFIX_FIELDS;
+
+sub usage {
+    die "usage: $0 talos-ii-vXXX.pnor pnor.BOOTKERNEL\n";
+}
+
+sub fail {
+    die "$0: @_\n";
+}
+
+sub read_exact {
+    my ($fh, $size, $what) = @_;
+    my $buf = "";
+
+    while (length($buf) < $size) {
+        my $n = read $fh, $buf, $size - length($buf), length($buf);
+        fail("$what: $!") unless defined $n;
+        fail("$what: unexpected EOF") if $n == 0;
+    }
+
+    return $buf;
+}
+
+sub copy_exact {
+    my ($in, $out, $size) = @_;
+
+    while ($size > 0) {
+        my $want = $size < COPY_CHUNK ? $size : COPY_CHUNK;
+        my $buf = read_exact($in, $want, "BOOTKERNEL data");
+        print {$out} $buf or fail("write: $!");
+        $size -= length($buf);
+    }
+}
+
+@ARGV == 2 or usage();
+my ($pnor, $output) = @ARGV;
+
+open my $fh, "<:raw", $pnor or fail("$pnor: $!");
+my $file_size = -s $fh;
+defined $file_size or fail("$pnor: cannot stat: $!");
+
+my $header = read_exact($fh, FFS_HEADER_SIZE, "PNOR FFS header");
+my ($magic, $version, $table_blocks, $entry_size, $entry_count, $block_size,
+    $block_count, undef) = unpack $FFS_HEADER_FORMAT, $header;
+
+fail("PNOR FFS magic not found") if $magic ne FFS_MAGIC;
+fail("unsupported PNOR FFS version $version") if $version != FFS_VERSION;
+fail("PNOR FFS entry size is too small")
+    if $entry_size < FFS_ENTRY_PREFIX_SIZE;
+
+my $table_size = $table_blocks * $block_size;
+my $entries_end = FFS_HEADER_SIZE + $entry_count * $entry_size;
+my $image_size = $block_count * $block_size;
+
+fail("PNOR FFS table extends past the file") if $table_size > $file_size;
+fail("PNOR FFS entries extend past the table") if $entries_end > $table_size;
+fail("PNOR FFS image size extends past the file") if $image_size > $file_size;
+
+my ($bootkernel_offset, $bootkernel_size);
+
+for my $i (0 .. $entry_count - 1) {
+    my $entry_offset = FFS_HEADER_SIZE + $i * $entry_size;
+    seek $fh, $entry_offset, SEEK_SET or fail("seek entry $i: $!");
+
+    my $entry = read_exact($fh, $entry_size, "PNOR FFS entry $i");
+    my ($name, $base, $blocks, undef, undef, undef, undef, $actual) =
+        unpack $FFS_ENTRY_PREFIX_FORMAT, $entry;
+
+    next if $name eq "";
+
+    my $offset = $base * $block_size;
+    my $size = $blocks * $block_size;
+    fail("PNOR FFS entry $name extends past the image")
+        if $offset + $size > $image_size;
+    fail("PNOR FFS entry $name actual size is too large")
+        if $actual > $size;
+
+    if ($name eq "BOOTKERNEL") {
+        ($bootkernel_offset, $bootkernel_size) = ($offset, $size);
+        last;
+    }
+}
+
+defined $bootkernel_offset or fail("BOOTKERNEL partition not found");
+
+my $dir = dirname($output);
+make_path($dir) if $dir ne "." && !-d $dir;
+
+my $tmp = "$output.tmp";
+open my $out, ">:raw", $tmp or fail("$tmp: $!");
+seek $fh, $bootkernel_offset, SEEK_SET or fail("seek BOOTKERNEL: $!");
+copy_exact($fh, $out, $bootkernel_size);
+close $out or fail("$tmp: $!");
+rename $tmp, $output or do {
+    my $err = $!;
+    unlink $tmp;
+    fail("rename $tmp to $output: $err");
+};
+
+printf "wrote %s from %s\n", $output, $pnor;
+printf "BOOTKERNEL offset=0x%x size=0x%x\n",
+    $bootkernel_offset, $bootkernel_size;
+
+--Multipart_Tue_Jun__9_04:30:40_2026-1--
 
