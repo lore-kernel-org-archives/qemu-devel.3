@@ -4,56 +4,104 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0C42CCD8CA4
-	for <qemu-devel@archiver.kernel.org>; Tue,  9 Jun 2026 14:50:19 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id EFFB0CD8CAA
+	for <qemu-devel@archiver.kernel.org>; Tue,  9 Jun 2026 14:52:42 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wWxlo-0001yc-64; Tue, 09 Jun 2026 10:49:36 -0400
+	id 1wWxoI-0003aR-BR; Tue, 09 Jun 2026 10:52:10 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jic23@kernel.org>) id 1wWxlm-0001yK-SM
- for qemu-devel@nongnu.org; Tue, 09 Jun 2026 10:49:34 -0400
-Received: from tor.source.kernel.org ([172.105.4.254])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jic23@kernel.org>) id 1wWxll-0003ny-1R
- for qemu-devel@nongnu.org; Tue, 09 Jun 2026 10:49:34 -0400
-Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
- by tor.source.kernel.org (Postfix) with ESMTP id D2B6060210;
- Tue,  9 Jun 2026 14:49:31 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A8D121F00893;
- Tue,  9 Jun 2026 14:49:29 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
- s=k20260515; t=1781016571;
- bh=Te0LevBJiQ9OTccx8kpXW1nl87SDEU/4kM239jNL6Rs=;
- h=Date:From:To:Cc:Subject:In-Reply-To:References;
- b=S4vqZWwBGwH3oEQDRWdmC1GfgIlfMD/GVZyICvKOZ1oSpO6X5oOwUpUwx/8d05PYw
- 1JiPIPWYrcpL4Iw/5IwhMxsUR6TqpNz0+bAiJ7M0LpCEPKL7rE8LmZdVOMLRoQDSJs
- rc15tSCPXDPOL3KQ7V5N6d53Qtu3IAeljGpaCNBFsWPcMuPilv7vvl2uv+X+JTDIyJ
- PA9OLbVlI0PR31KZbHHJIaiQU/sSSnEgz4HbTIVHAy7m6x8Weyt/fp6/Zoc/01Qo86
- EVg3IyAyY7mCwadhVFXtvrUGw3Icsi6mCyiawXkF98IVHzxZv84nDWH5ZTQKfvUGVx
- diL3AkLOdakkg==
-Date: Tue, 9 Jun 2026 15:49:25 +0100
-From: Jonathan Cameron <jic23@kernel.org>
-To: Junjie Cao <junjie.cao@intel.com>
-Cc: jonathan.cameron@huawei.com, fan.ni@samsung.com, qemu-devel@nongnu.org
-Subject: Re: [PATCH 1/3] hw/cxl: add trace-events for mailbox dispatch
-Message-ID: <20260609154925.61d81da1@jic23-huawei>
-In-Reply-To: <20260603013420.904749-2-junjie.cao@intel.com>
-References: <20260603013420.904749-1-junjie.cao@intel.com>
- <20260603013420.904749-2-junjie.cao@intel.com>
-X-Mailer: Claws Mail 4.4.0 (GTK 3.24.52; x86_64-pc-linux-gnu)
+ (Exim 4.90_1) (envelope-from <titusr@google.com>) id 1wWxoG-0003ZL-8g
+ for qemu-devel@nongnu.org; Tue, 09 Jun 2026 10:52:08 -0400
+Received: from mail-qt1-x82a.google.com ([2607:f8b0:4864:20::82a])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <titusr@google.com>) id 1wWxoE-0004ak-I3
+ for qemu-devel@nongnu.org; Tue, 09 Jun 2026 10:52:07 -0400
+Received: by mail-qt1-x82a.google.com with SMTP id
+ d75a77b69052e-51765531803so2685651cf.0
+ for <qemu-devel@nongnu.org>; Tue, 09 Jun 2026 07:52:05 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1781016724; cv=none;
+ d=google.com; s=arc-20240605;
+ b=COJ9ejJhjiqIFU7pUyNWHaZU6ulpZlIVH76zt3NIK3WB6985r1oDVxyBNTitEFOBiV
+ v63J9yMNUP5dKzyq7Qxugs6JD1y6pGQtS/uSfSEmckuclO1QiU5Qg+aoYj/Z/br5kXVn
+ rqH/m/go6UwOenkZgelwRvekfrM++HZkVmw2z8cinGjlwpOHJjqwQJ+idqN5zsXvWbHL
+ /7fhcD4xjjsxiuvCVJwI9zPYIC5jkrOoMMvIM7zh6TXDLQvK2ay3oG+Gp0pQilhWpv2T
+ 437g6gDWkOGVBvtw02PcOmHkH0HmaZ3SiXkkURktEGWTWJUgfBib24+aW+mk6CQOZm6u
+ 1YYQ==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
+ s=arc-20240605; 
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:dkim-signature;
+ bh=mT7L+1cUtlPaahWEj6bhvOX6q91ZJhOLDtmYP2cxvEQ=;
+ fh=NfmIKIb3UU8XuMY/9cWO9YgUz4g4wTahfFOqcpRp9GA=;
+ b=Yt8ZD5pGPbhgHq4YSjI35KfUOzwNdGM+MIGpqM1T+IPzekeAZvAS7IF4wJOvxBDETp
+ TB2xnR8Tv9wSF1PqsH+jFyFC6aTSfmcc8u1MdU6PTOOhPsddmTeJRA3oTbNChDF+pYX9
+ cGYmjv1ez29UYegyQRCvGUCpMhkchiG1Pkocfh5U1OFBZ8uJWAWdEJQPR4Onx41NT1xL
+ +JuqcoQTQSd52Mfap2vDDC1RPrICcTlVVXG9I82TWFA75O5EVIIpunUeE8xel7fihg9w
+ PnJLrwVWHZ+Mhy5bcb1Ujd/yTuz8UmJVs6km5skWiX0lR1HWw1hx6N6AHig5wS5yI79a
+ QoMw==; darn=nongnu.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=google.com; s=20251104; t=1781016724; x=1781621524; darn=nongnu.org;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:from:to:cc:subject:date:message-id:reply-to;
+ bh=mT7L+1cUtlPaahWEj6bhvOX6q91ZJhOLDtmYP2cxvEQ=;
+ b=guptycxe07D+Q47rkyJz8E6G1ni5nvujk9MaDtRU9zxbuC632g03ATblufsNM7Nqgo
+ Chnak9yjXXvinFHV4DlVziqv08nreyXkmLLhIRn4W+0CHmJri90QB3x8E6bi0G0sNriv
+ npLlX2SH1Htp9qpVm9Ydn6qFreiE/dqWHuhhmDu3Nu32K9zw4R4eDd2S9vMG0gmNaDMW
+ wNMY+EBSdtLjr2S0amoLLPzo2agmPLXVFNFo7cTx6J2ezyQFzw+elAz4iZC5F9Je8RFU
+ 1NKPmbMYzqYSlPZbc8VMNUD7o0R7HKAkWUEUBvNsUGX5vdDOkIqFtr46Rz9NdbLi3Ftj
+ 9HOQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1781016724; x=1781621524;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=mT7L+1cUtlPaahWEj6bhvOX6q91ZJhOLDtmYP2cxvEQ=;
+ b=DKaitLt4ZtCjvWi7bMs9n122ZfnNxRimo5ctUWQ+7ir/s3LFe61xTU2aKfDqyTmvg4
+ Sl01GSG8AhPWHXmBWv/4fhvPYuTcyxK+LxXldCyRXikjXqDhhCyMSB7MplfEVMp7A5pN
+ b7zowtYbnFyhRV/uL+3OZlyk+CfsGK0J4h0ts9zahfOmzWVKlhQrHFyTwqsXlhB80Ua+
+ KOhE++r9fyEOzVU1ZdSNS+xn76cLgSj9k4uvYvrU+sMsQEnJS70kbhNOC6iycW/Al/FN
+ 3xFYMjDQDIf6uh9rrwIelA6gWCwlh+uYHL9sUE+l3z4hC4aMIBoijg9neLF3LbAzkz7j
+ m/WA==
+X-Forwarded-Encrypted: i=1;
+ AFNElJ/3PMCXak3eowoguO9iFgS3ip2o0fnn6g8LW38IuONWWHC6EShRex4vUtn0KwsYsye2XuNsOBIxG+AR@nongnu.org
+X-Gm-Message-State: AOJu0YxVXJTYrIl0jkE6S64jSs5GzJEH6+4LZoYKE4v4hy65hBukrj1a
+ BscLznNpBI1T5aJzL5yOVCs/qZkSjI+4Zeedgq7VPkP1OyBfDVuKxrWRS09LTdXVJx1j747Y4E9
+ NqMs4I8zmZY95A3WwkuJEBHe7ayKV0F/JUe5DaVFQ
+X-Gm-Gg: Acq92OH8bw8FHtjmqwbDOqJIh7E+tdvCBrScHb9FWT+eCn7AUpRwV9oAWd8toR5UPY9
+ aZu8VAfgfgmvfqnYjNm0tSLS3zCxiC8q68Ck2fBEHAVooEz8rdTQ6RXMQNNz0VymbO4bmc5u2Tx
+ 1miHnK/R+aFcui3YUjT8HDDHi8wncxQXh9DRS6tq2iYCZ7JtxZq2SHAWkeFVfE/oKsxpyhepMGK
+ 98Zhy2YU8keKLhG9prmKAYpi8vRd57tdj8Oj0G6ZYepNpTu9PEtwRkuZmPNPAwyDbl0eri/nmIn
+ Idi4O8i3iC/XD9dvqaRsBDWBfTYvY39usS+oYUZhzroSKOANAQ==
+X-Received: by 2002:ac8:6610:0:b0:510:f9b:fb5f with SMTP id
+ d75a77b69052e-51798298a3cmr32128971cf.16.1781016723550; Tue, 09 Jun 2026
+ 07:52:03 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=172.105.4.254; envelope-from=jic23@kernel.org;
- helo=tor.source.kernel.org
-X-Spam_score_int: -24
-X-Spam_score: -2.5
-X-Spam_bar: --
-X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.445,
+References: <20260609105626.1038690-1-thuth@redhat.com>
+ <CAFEAcA9O6b02VMuto8VzaEsVi3zTqNtQKG_RcMaPnNdPXGUBhw@mail.gmail.com>
+In-Reply-To: <CAFEAcA9O6b02VMuto8VzaEsVi3zTqNtQKG_RcMaPnNdPXGUBhw@mail.gmail.com>
+From: Titus Rwantare <titusr@google.com>
+Date: Tue, 9 Jun 2026 07:51:20 -0700
+X-Gm-Features: AVVi8CcM3axo7mAEJOZp-nioF3imcVzHW2yLICbkWxeE6AKaOP-rr_nCCejynOc
+Message-ID: <CAMvPwGpvpHD+Sx-HZR4FFMJB+W8Rk8LoU0256Q=vwKAdC96HSQ@mail.gmail.com>
+Subject: Re: [PATCH] hw/i2c/pmbus_device: Fix a possible crash when requesting
+ too many bytes
+To: Peter Maydell <peter.maydell@linaro.org>
+Cc: Thomas Huth <thuth@redhat.com>, qemu-devel@nongnu.org,
+ qemu-trivial@nongnu.org, qemu-arm@nongnu.org
+Content-Type: text/plain; charset="UTF-8"
+Received-SPF: pass client-ip=2607:f8b0:4864:20::82a;
+ envelope-from=titusr@google.com; helo=mail-qt1-x82a.google.com
+X-Spam_score_int: -175
+X-Spam_score: -17.6
+X-Spam_bar: -----------------
+X-Spam_report: (-17.6 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_MED=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ ENV_AND_HDR_SPF_MATCH=-0.5, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001, USER_IN_DEF_DKIM_WL=-7.5,
+ USER_IN_DEF_SPF_WL=-7.5 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -69,131 +117,69 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed,  3 Jun 2026 09:34:18 +0800
-Junjie Cao <junjie.cao@intel.com> wrote:
+On Tue, 9 Jun 2026 at 04:01, Peter Maydell <peter.maydell@linaro.org> wrote:
+>
+> On Tue, 9 Jun 2026 at 11:56, Thomas Huth <thuth@redhat.com> wrote:
+> >
+> > From: Thomas Huth <thuth@redhat.com>
+> >
+> > The pmbus_send_string() function contains an assert() statement that
+> > can be triggered by the guest code when requesting too many data
+> > without reading from the device in between. This should not be possible.
+> > pmbus_send() already has a similar logic, but it simply ignores the
+> > error after logging a message with qemu_log_mask(), so do the same now
+> > in pmbus_send_string() to fix the issue.
+> >
+> > Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/3388
+> > Signed-off-by: Thomas Huth <thuth@redhat.com>
+> > ---
+> >  hw/i2c/pmbus_device.c | 7 ++++++-
+> >  1 file changed, 6 insertions(+), 1 deletion(-)
+> >
+> > diff --git a/hw/i2c/pmbus_device.c b/hw/i2c/pmbus_device.c
+> > index b1f9843f52e..6aa608a2998 100644
+> > --- a/hw/i2c/pmbus_device.c
+> > +++ b/hw/i2c/pmbus_device.c
+> > @@ -104,7 +104,12 @@ void pmbus_send_string(PMBusDevice *pmdev, const char *data)
+> >      }
+> >
+> >      size_t len = strlen(data);
+> > -    g_assert(len + pmdev->out_buf_len < SMBUS_DATA_MAX_LEN);
+> > +    if (len + pmdev->out_buf_len >= SMBUS_DATA_MAX_LEN) {
+> > +        qemu_log_mask(LOG_GUEST_ERROR,
+> > +                      "%s: requested too much data from PMBus device\n",
+> > +                      __func__);
+> > +        return;
+> > +    }
+>
+> I had a look at this bug earlier, but was not sure that this is the
+> right thing. What happens is that the guest does something that
+> causes the device to queue up data X ready for the guest to
+> read, but then instead of reading it, the guest does another
+> "I would like data X please" action. My guess is that the way
+> the hardware handles this is probably not "add the second
+> copy of data X after the first one". Perhaps it is "drop the
+> data the guest didn't read, so the next guest read gets the
+> second lot of data, not the first". But maybe the spec really
+> does say "you can do things in the order 'ask for A, ask for
+> B, read data for A, read data for B".
+>
+> I couldn't conveniently find the pmbus spec to find out what
+> the hardware is supposed to do here. We need some input from
+> somebody who knows about pmbus.
+>
+> thanks
+> -- PMM
 
-> The CXL subsystem currently has no trace coverage. Debugging mailbox
-> command flow requires either printf or qemu_log_mask, neither of which
-> is well suited for following the dispatch path that is exercised by
-> every guest driver probe.
-> 
-> Introduce a dedicated trace-events file under hw/cxl/ and wire it into
-> the build via the trace_events_subdirs list in the top-level
-> meson.build. Add three trace points covering command entry, payload
-> validation, and handler completion in cxl_process_cci_message():
-> 
->   * cxl_mailbox_command          - command entry (opcode, len_in)
->   * cxl_mailbox_invalid_payload  - payload length check rejection
->   * cxl_mailbox_handler_return   - handler completion with return code
->                                    and len_out
-> 
-> The early-exit paths for unimplemented commands, in-progress background
-> operations, and disabled media skip handler dispatch and are therefore
-> not paired with cxl_mailbox_handler_return; an absent return event for
-> a given cxl_mailbox_command identifies these cases in the trace stream.
-> 
-> Trace points use the cxl_ prefix so future patches in this subsystem
-> share a single namespace, allowing -trace 'cxl_*' to match all of them.
-> 
-> Signed-off-by: Junjie Cao <junjie.cao@intel.com>
-Seems likely to be a useful addition.  My main request is to make sure
-all possible places we might exit due to a given condition are covered
-rather than just the simplest one (for length checks that is!)
+Queueing reads are an implementation detail I decided on, not part of
+the spec. How the data gets discarded is up to the device
+manufacturer.
+There's a separate issue here though that I have a fix for.
+SMBUS_DATA_MAX_LEN in QEMU is for an older SMBus version and it needs
+to be increased.
 
-Jonathan
-
-> ---
->  hw/cxl/cxl-mailbox-utils.c | 5 +++++
->  hw/cxl/trace-events        | 8 ++++++++
->  hw/cxl/trace.h             | 4 ++++
->  meson.build                | 1 +
->  4 files changed, 18 insertions(+)
->  create mode 100644 hw/cxl/trace-events
->  create mode 100644 hw/cxl/trace.h
-> 
-> diff --git a/hw/cxl/cxl-mailbox-utils.c b/hw/cxl/cxl-mailbox-utils.c
-> index d8ba7e8625..521b8c6334 100644
-> --- a/hw/cxl/cxl-mailbox-utils.c
-> +++ b/hw/cxl/cxl-mailbox-utils.c
-> @@ -27,6 +27,7 @@
->  #include "system/hostmem.h"
->  #include "qemu/range.h"
->  #include "qapi/qapi-types-cxl.h"
-> +#include "trace.h"
->  
->  #define CXL_CAPACITY_MULTIPLIER   (256 * MiB)
->  #define CXL_DC_EVENT_LOG_SIZE 8
-> @@ -4580,6 +4581,7 @@ int cxl_process_cci_message(CXLCCI *cci, uint8_t set, uint8_t cmd,
->      CXLDeviceState *cxl_dstate;
->  
->      *len_out = 0;
-> +    trace_cxl_mailbox_command((set << 8) | cmd, len_in);
-
-Given the opcode is always made up of those two smaller fields, it might be nicer
-to just pass them as separate parameters?  Potentially combine them into
-the single print in the tracepoint, or do it as set:cmd  e.g 0x01:03
-or something like that?
-
-
->      cxl_cmd = &cci->cxl_cmd_set[set][cmd];
->      h = cxl_cmd->handler;
->      if (!h) {
-> @@ -4589,6 +4591,8 @@ int cxl_process_cci_message(CXLCCI *cci, uint8_t set, uint8_t cmd,
->      }
->  
->      if (len_in != cxl_cmd->in && cxl_cmd->in != ~0) {
-> +        trace_cxl_mailbox_invalid_payload((set << 8) | cmd, len_in,
-> +                                          cxl_cmd->in);
->          return CXL_MBOX_INVALID_PAYLOAD_LENGTH;
-
-This is one of a lot of places that we fail with that error code - because
-many commands have variable lengths. I'd want to see this on all of the
-places where we end up bailing out with that error code.
-
->  
-> @@ -4642,6 +4646,7 @@ int cxl_process_cci_message(CXLCCI *cci, uint8_t set, uint8_t cmd,
->          timer_mod(cci->bg.timer, now + CXL_MBOX_BG_UPDATE_FREQ);
->      }
->  
-> +    trace_cxl_mailbox_handler_return((set << 8) | cmd, ret, *len_out);
->      return ret;
->  }
->  
-> diff --git a/hw/cxl/trace-events b/hw/cxl/trace-events
-> new file mode 100644
-> index 0000000000..abca116ed3
-> --- /dev/null
-> +++ b/hw/cxl/trace-events
-> @@ -0,0 +1,8 @@
-> +# See docs/devel/tracing.rst for syntax documentation.
-> +#
-> +# SPDX-License-Identifier: GPL-2.0-or-later
-> +
-> +# cxl-mailbox-utils.c
-> +cxl_mailbox_command(uint16_t opcode, size_t len_in) "opcode=0x%04x len_in=%zu"
-> +cxl_mailbox_invalid_payload(uint16_t opcode, size_t len_in, size_t expected) "opcode=0x%04x len_in=%zu expected=%zu"
-> +cxl_mailbox_handler_return(uint16_t opcode, int ret, size_t len_out) "opcode=0x%04x ret=%d len_out=%zu"
-> diff --git a/hw/cxl/trace.h b/hw/cxl/trace.h
-> new file mode 100644
-> index 0000000000..84e79d50c0
-> --- /dev/null
-> +++ b/hw/cxl/trace.h
-> @@ -0,0 +1,4 @@
-> +/*
-> + * SPDX-License-Identifier: GPL-2.0-or-later
-> + */
-> +#include "trace/trace-hw_cxl.h"
-> diff --git a/meson.build b/meson.build
-> index 19e123423b..c229199d5d 100644
-> --- a/meson.build
-> +++ b/meson.build
-> @@ -3596,6 +3596,7 @@ if have_system
->      'hw/audio',
->      'hw/block',
->      'hw/char',
-> +    'hw/cxl',
->      'hw/display',
->      'hw/dma',
->      'hw/fsi',
-
+I can set aside some time to bring the SMBus implementation up to
+date, but for now increasing it to 255 will put QEMU in line SMBus
+v3.3.
+-Titus
 
