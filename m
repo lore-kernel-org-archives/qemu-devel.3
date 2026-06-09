@@ -4,103 +4,76 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 18DF5CD8CA4
-	for <qemu-devel@archiver.kernel.org>; Tue,  9 Jun 2026 09:00:51 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id CDBE8CD6E79
+	for <qemu-devel@archiver.kernel.org>; Tue,  9 Jun 2026 09:01:17 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wWsK9-0002HN-Q2; Tue, 09 Jun 2026 05:00:41 -0400
+	id 1wWsKb-0002tR-J0; Tue, 09 Jun 2026 05:01:09 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1wWsK7-0002ED-Il
- for qemu-devel@nongnu.org; Tue, 09 Jun 2026 05:00:39 -0400
-Received: from mail-yx1-xb12c.google.com ([2607:f8b0:4864:20::b12c])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1wWsK5-0006Mr-Qr
- for qemu-devel@nongnu.org; Tue, 09 Jun 2026 05:00:39 -0400
-Received: by mail-yx1-xb12c.google.com with SMTP id
- 956f58d0204a3-66039d3efcbso5376792d50.2
- for <qemu-devel@nongnu.org>; Tue, 09 Jun 2026 02:00:37 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1780995636; cv=none;
- d=google.com; s=arc-20240605;
- b=UttqVSQcRAW5APzs1xjmwHGSJq+dcmdcWOKjkvCU11x/7+EEzcWSPRTOcIjCT5vl5T
- fkIgf6od+m/T7b8pCNP2d3fo0vL6NrKdMluIWXjM+URdap0GxOHNihW5f1jq+DYl3Y1p
- aGdEj57KL9PR82Rs34u0TUf+tUbCLi+9+rJ3orXOR/Kx29pIGd3efUpcuN7quciVIAMT
- VHTGK6UNeEkStbdyRW4UAFu99+f1GwFkJdRdcYH7DyUgOZDqjnCl08HNC0JnmJFyEV0G
- eXL3URA5OMSmUFr56B0S5fn7dWqCbEqcQ0O5mbouc921uwR0wyqOvViHNaIQOoekeRv8
- xrtg==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
- s=arc-20240605; 
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:dkim-signature;
- bh=cdvyM+brOEXM6M8zyW6kbJRdYM5C4WyqiI8qJXr5MwU=;
- fh=/ftcwOPYeEIhzseC7WF42kR+xVR/IJiWpLC1+A7SOWQ=;
- b=ak7HyQJCcTqt/UK8Wq6Gi0VvABs2HgJG7XC8sTM8cNvIABtTQ8NwHsBTcAaHY5Y3EI
- n9Om7FVo1yPhKNea666x2NAkaKcqMEtbnIAPEPiQv13UeONw9VO3tRVEuOQm1idZqIaf
- LBFzg5pcgA9TXuo/JIswFOpQtVdcGxcFga+MtxN5Xpk/wMTut67jnW9TVOb1jjjn8gZo
- yGLZMGJNWaCtYsF641nfjH7krPyPdMUweqUHnfS0YTCxJ6kRGBOTzZqxt0pOqviJglZT
- SZlpNHVewG7BTsOn2WUQqRatBkxEcP5BFMLBgUR4PTt/j12ibRNvyq84rJyPljtsMnSm
- vt8A==; darn=nongnu.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1780995636; x=1781600436; darn=nongnu.org;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=cdvyM+brOEXM6M8zyW6kbJRdYM5C4WyqiI8qJXr5MwU=;
- b=Ty+WU62jgy6vTvvjSizZKJq/w0mn6illiV1pnFoiI8h5cuhM5u8pJeMyjSYOiIm1y+
- hGN0hJsmwVa94ARiYIJ7ddSaP05b9LUMBaum7XJ0wUjkt+zDXeC0nzXcS4+BlJZwx9Ge
- Sg/Dxxerlt8waWmZ3nhYLC8JCPcvmkRgzJScCUEJ9aYrI6F4/iJQTdFa50/pW0vtB40e
- fFW2bJkOMJ6M4CIETNBeNkHWuH2GGPrC/9u1+N4YM+5vb+ByOa/ghkHad9lNxjgrQNag
- 91JtZh1p55ZJ9FjJcJ8Ip/80ZCrxoQbhbmKrzB6c4Gwvb232jdIFgF5xFLAWrBXmEqhp
- yuYw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1780995636; x=1781600436;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=cdvyM+brOEXM6M8zyW6kbJRdYM5C4WyqiI8qJXr5MwU=;
- b=qwhs1PIReAScHrumZYq6B7WeS1mWwycS+b/IEJUUqvjy8TiUaOhuAO8cUJ/NsDRs4L
- 4flfuFgK18014yZUKlAmzYDFjoTiwsgPEbkAWSifWa/qTb6qLFueEbA82sAH9L5bNxVn
- rzhGHcNNlpsLLBzY29fjvt+zedJGhrWfCiEP0jjt32XruZlom4Grl5mH+wrjl+ydrQ7f
- +QtqBriOxsUFgWMBzY4YkUVjgCFvtDedmNm9vJJovPeyeKv/5KE0GCXKmb8VnzLzOec6
- NK6webtlORDuPEkX+DD7cETZk8P0p5OFjWugLEBsQLXDcqoL3/44TmQl+D8YjlL0Qfwg
- +Rcg==
-X-Gm-Message-State: AOJu0YxJ9uz00CpFD5xVtAtF4yrwI1vg4zb6T04jsIxCb7DAEXyZI1ly
- i9CnbYytl5jA3lOfxQrgSa+6/N4a5x3hfx7GFbX1Zlx00b0DRJHCjOv0cDmz9so+qVv2KIITH0N
- yEWU5m2u5C3iMqIwFFQZhiZXTe83eMEOQ6Zl9m/PUVQ==
-X-Gm-Gg: Acq92OFZDDt+O7x3SMlfbnlOptUlYeh4RW5ntSxWE7mubEOScjHVJv7UKzX/HqMjd3j
- WqyE5iR7UXLuH1AzeGg9cjbiERm4GHcS2/QgrJwiU/El/UdkGghG0p7TziRGbT+knkNNiO1n5oI
- o2zYBfmPJ5exzjpgVlBqiivNbPdKxsdP/3vcIcB2uS8V+NqY22+EKRchawZN2uHbxRJX1BlgkF4
- VafRxfcF0p3MZTBJwYXgTmjlFr3gYvMqbbmWvD2Ua9q1uoFcLVpBgIMJhhPok7RS6diS3Weorgo
- h43OrxvF3QoebQdgB3aErbbJFe7uW7YxqbFlcm/8h6XuIoxqmT9DKCXhu+4OBLN7Sg5aP8G9uCu
- KKXawrX9XYQ6x
-X-Received: by 2002:a05:690e:1908:b0:651:bf58:446b with SMTP id
- 956f58d0204a3-66106e004f2mr17374836d50.10.1780995636303; Tue, 09 Jun 2026
- 02:00:36 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <ewanhai-oc@zhaoxin.com>)
+ id 1wWsKZ-0002su-6j
+ for qemu-devel@nongnu.org; Tue, 09 Jun 2026 05:01:07 -0400
+Received: from mx2.zhaoxin.com ([61.152.208.219])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <ewanhai-oc@zhaoxin.com>)
+ id 1wWsKW-0006Ny-TZ
+ for qemu-devel@nongnu.org; Tue, 09 Jun 2026 05:01:06 -0400
+X-ASG-Debug-ID: 1780995648-1eb14e680eba550001-jgbH7p
+Received: from zhaoxin.com (zxmail.zhaoxin.com [10.28.208.166]) by
+ mx2.zhaoxin.com with ESMTP id yty3qPU1YxVu3J8f;
+ Tue, 09 Jun 2026 17:00:48 +0800 (CST)
+X-Barracuda-Envelope-From: ewanhai-oc@zhaoxin.com
+X-Barracuda-RBL-Trusted-Forwarder: 10.28.208.166
+Received: from ewan-server.tailb932da.ts.net (ewan-server.tailb932da.ts.net
+ [10.28.24.2])
+ by zhaoxin.com (8.30) with ESMTP31da6c6485e89d1230eb1cb1fbbf5085
+ Tue, 09 Jun 2026 17:00:47 +0800
+X-Eyou-Smtpauth: ewanhai-oc@zhaoxin.com
+X-Barracuda-RBL-Trusted-Forwarder: 10.28.24.2
+X-Eyou-EnvelopeSender: ewanhai-oc@zhaoxin.com
+X-Eyou-From: Ewan Hai <ewanhai-oc@zhaoxin.com>
+From: "=?UTF-8?B?RXdhbiBIYWktb2M=?=" <ewanhai-oc@zhaoxin.com>
+To: qemu-devel@nongnu.org
+Cc: pbonzini@redhat.com, zhao1.liu@intel.com, ewanhai@zhaoxin.com,
+ cobechen@zhaoxin.com
+Subject: [PATCH] target/i386/cpu: don't assert on out-of-range CPUID 0x1f
+ subleaf
+Date: Tue,  9 Jun 2026 17:00:46 +0800
+X-ASG-Orig-Subj: [PATCH] target/i386/cpu: don't assert on out-of-range CPUID
+ 0x1f subleaf
+Message-Id: <20260609090046.2376016-1-ewanhai-oc@zhaoxin.com>
+X-Mailer: git-send-email 2.34.1
 MIME-Version: 1.0
-References: <20260603032855.106930-1-richard.henderson@linaro.org>
- <20260603032855.106930-18-richard.henderson@linaro.org>
-In-Reply-To: <20260603032855.106930-18-richard.henderson@linaro.org>
-From: Peter Maydell <peter.maydell@linaro.org>
-Date: Tue, 9 Jun 2026 10:00:22 +0100
-X-Gm-Features: AVVi8Cd9N7Sfw0gLxceCieuEypaylimcYx9I5mZZWKr1e38oWm_Lk8R_TLN_iaU
-Message-ID: <CAFEAcA8C7Q+NaM2jaijD5PHDkkKiMbAuN_J6w=EGHXL2ZDkAMQ@mail.gmail.com>
-Subject: Re: [PATCH v9 17/45] target/arm: Implement FCVTN (16- to 8-bit fp)
- for SVE
-To: Richard Henderson <richard.henderson@linaro.org>
-Cc: qemu-devel@nongnu.org, qemu-arm@nongnu.org
-Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2607:f8b0:4864:20::b12c;
- envelope-from=peter.maydell@linaro.org; helo=mail-yx1-xb12c.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+Content-Transfer-Encoding: 8bit
+X-Eyou-Sender: <ewanhai-oc@zhaoxin.com>
+X-Barracuda-Connect: zxmail.zhaoxin.com[10.28.208.166]
+X-Barracuda-Start-Time: 1780995648
+X-Barracuda-URL: https://10.28.252.36:4443/cgi-mod/mark.cgi
+X-Virus-Scanned: by bsmtpd at zhaoxin.com
+X-Barracuda-Scan-Msg-Size: 1920
+X-Barracuda-BRTS-Status: 1
+X-Barracuda-Bayes: INNOCENT GLOBAL 0.0000 1.0000 -2.0210
+X-Barracuda-Spam-Score: -0.76
+X-Barracuda-Spam-Status: No,
+ SCORE=-0.76 using global scores of TAG_LEVEL=1000.0
+ QUARANTINE_LEVEL=1000.0 KILL_LEVEL=1000.0 tests=FROM_EXCESS_BASE64,
+ FROM_EXCESS_BASE64_2, PR0N_SUBJECT
+X-Barracuda-Spam-Report: Code version 3.2, rules version 3.2.3.159796
+ Rule breakdown below
+ pts rule name              description
+ ---- ---------------------- --------------------------------------------------
+ 0.01 FROM_EXCESS_BASE64     From: base64 encoded unnecessarily
+ 0.20 PR0N_SUBJECT Subject has letters around special characters (pr0n)
+ 1.05 FROM_EXCESS_BASE64_2   From: base64 encoded unnecessarily
+Received-SPF: pass client-ip=61.152.208.219;
+ envelope-from=ewanhai-oc@zhaoxin.com; helo=mx2.zhaoxin.com
+X-Spam_score_int: -18
+X-Spam_score: -1.9
+X-Spam_bar: -
+X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, FROM_EXCESS_BASE64=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -116,23 +89,51 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, 3 Jun 2026 at 04:30, Richard Henderson
-<richard.henderson@linaro.org> wrote:
->
-> Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
+encode_topo_cpuid1f() asserts count <= CPU_TOPOLOGY_LEVEL_SOCKET, but
+count is the subleaf index passed straight from the guest's ECX;
+cpu_x86_cpuid() does not clamp it for leaf 0x1f. On a TCG vCPU exposing
+0x1f, any CPUID(0x1f) with ECX > 5 aborts QEMU. SeaBIOS already trips
+this during POST (its cpuid() helper leaves a stale ECX from the
+EFLAGS.ID probe), and guests reach it too,the kernel walks 0x1f
+subleaves in a loop and /dev/cpu/*/cpuid forwards arbitrary subleaves.
 
-> @@ -4100,6 +4100,8 @@ TRANS_FEAT_STREAMING_IF(BF1CVTLT, aa64_sme2_or_sve2_f8cvt, aa64_sme2,
->  TRANS_FEAT_STREAMING_IF(BF2CVTLT, aa64_sme2_or_sve2_f8cvt, aa64_sme2,
->                          do_f8cvt, a, gen_helper_sve2_bfcvt, true, true)
->
-> +TRANS_FEAT(FCVTN, aa64_sme2_or_sve2_f8cvt, do_f8cvt,
-> +           a, gen_helper_sve2_fcvtn_bh, false, false)
+Per the SDM, CPUID never faults and a subleaf past the last topology
+level returns the invalid encoding (EAX=EBX=0, ECX level type 0, EDX the
+x2APIC ID), exactly as the legacy 0xB leaf already does. Return that
+instead of asserting. KVM is unaffected.
 
-This also I think should be streaming-if-SME2.
+Affected models: SapphireRapids (v4+), GraniteRapids (v3+), SierraForest
+(v3+), ClearwaterForest (v3+), DiamondRapids and YongFeng (v3+).
 
-Otherwise
-Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
+Fixes: 822bce9f58df ("i386/cpu: Decouple CPUID[0x1F] subleaf with specific topology level")
+Signed-off-by: Ewan Hai <ewanhai-oc@zhaoxin.com>
+---
+ target/i386/cpu.c | 9 ++++++++-
+ 1 file changed, 8 insertions(+), 1 deletion(-)
 
-thanks
--- PMM
+diff --git a/target/i386/cpu.c b/target/i386/cpu.c
+index 8929a75c7c..e035e4cf45 100644
+--- a/target/i386/cpu.c
++++ b/target/i386/cpu.c
+@@ -427,7 +427,14 @@ static void encode_topo_cpuid1f(CPUX86State *env, uint32_t count,
+     unsigned long level, base_level, next_level;
+     uint32_t num_threads_next_level, offset_next_level;
+ 
+-    assert(count <= CPU_TOPOLOGY_LEVEL_SOCKET);
++    /* Out-of-range subleaf: SDM mandates the invalid encoding, no fault. */
++    if (count > CPU_TOPOLOGY_LEVEL_SOCKET) {
++        *eax = 0;
++        *ebx = 0;
++        *ecx = count & 0xff;
++        *edx = cpu->apic_id;
++        return;
++    }
+ 
+     /*
+      * Find the No.(count + 1) topology level in avail_cpu_topo bitmap.
+
+base-commit: cc329c491768b2d91eb0b0984f3baa0bf805776d
+-- 
+2.34.1
+
 
