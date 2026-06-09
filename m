@@ -4,82 +4,138 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B78B6CD8CA8
-	for <qemu-devel@archiver.kernel.org>; Tue,  9 Jun 2026 12:00:59 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 61137CD8C92
+	for <qemu-devel@archiver.kernel.org>; Tue,  9 Jun 2026 12:01:21 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wWv8F-00010L-6d; Tue, 09 Jun 2026 08:00:35 -0400
+	id 1wWv8o-0001Gs-R6; Tue, 09 Jun 2026 08:01:10 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <kraxel@redhat.com>) id 1wWv8D-0000xm-Tp
- for qemu-devel@nongnu.org; Tue, 09 Jun 2026 08:00:33 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <philmd@oss.qualcomm.com>)
+ id 1wWv8n-0001GF-Jo
+ for qemu-devel@nongnu.org; Tue, 09 Jun 2026 08:01:09 -0400
+Received: from mx0b-0031df01.pphosted.com ([205.220.180.131])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <kraxel@redhat.com>) id 1wWv8B-0001PD-U6
- for qemu-devel@nongnu.org; Tue, 09 Jun 2026 08:00:33 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1781006429;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=btaxAmY4BzX3oZHfRuPur+KNlhZiUl8gnrHE+pBwSV0=;
- b=SBIuj/10+5KFGcpfjzym/tadGJc4wse7IvhykDmMKoSM3AnMnYEHkyY0Hqn/HWGrRmtkAP
- CwZL5PyZDSQw7WuFuzq03R0Un+h1Dr+Ssewm1Dl7nWFmP1M3KL2hDXvUkflSLK86/4hX+Q
- FuYceT/ZQoswg+f6yaKYaHyqoGJd0EQ=
-Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-10-A1KUCf2MNluHBr66fMi_Hw-1; Tue,
- 09 Jun 2026 08:00:26 -0400
-X-MC-Unique: A1KUCf2MNluHBr66fMi_Hw-1
-X-Mimecast-MFC-AGG-ID: A1KUCf2MNluHBr66fMi_Hw_1781006424
-Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 67AA019128BF; Tue,  9 Jun 2026 12:00:08 +0000 (UTC)
-Received: from sirius.home.kraxel.org (unknown [10.44.48.153])
- by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id BDC1A19560A2; Tue,  9 Jun 2026 12:00:07 +0000 (UTC)
-Received: by sirius.home.kraxel.org (Postfix, from userid 1000)
- id C07491800391; Tue, 09 Jun 2026 14:00:06 +0200 (CEST)
-Date: Tue, 9 Jun 2026 14:00:06 +0200
-From: Gerd Hoffmann <kraxel@redhat.com>
-To: Peter Maydell <peter.maydell@linaro.org>
-Cc: qemu-devel@nongnu.org, "Michael S. Tsirkin" <mst@redhat.com>, 
- Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- qemu-arm@nongnu.org, Richard Henderson <richard.henderson@linaro.org>,
- Paolo Bonzini <pbonzini@redhat.com>
-Subject: Re: [PATCH 0/3] hw/arm: add support for shim loading
-Message-ID: <aif6QGPxr4oMhb94@sirius.home.kraxel.org>
-References: <20260521112806.504961-1-kraxel@redhat.com>
- <CAFEAcA8hbObntY8Tp+kOV7btb-io92O9GW99-6SPxigPJUjPrw@mail.gmail.com>
- <aiE5LrpfnJRbkx-A@sirius.home.kraxel.org>
- <CAFEAcA_ow2ro3h0nfhY3jA_XToAnjdVFNPrF25aWLd=X2cnmaw@mail.gmail.com>
- <aia8iXGozAclWQCb@sirius.home.kraxel.org>
- <CAFEAcA9oB_-ao5C8fGYonE7njUMWLHo5-iETeN_XtnFL4PzyvA@mail.gmail.com>
- <aibALjyPTXVUDpDv@sirius.home.kraxel.org>
- <CAFEAcA-VQWKzJ-aNnzYHZ7a+sVP1y6tkUnE3YCPydsqP0uVXvg@mail.gmail.com>
- <aiflCrf0iDwcpj27@sirius.home.kraxel.org>
- <CAFEAcA_+fZnFG_2xH2gXF7ZtGo-WVwAhwkz9ucuS5kXZOYShnw@mail.gmail.com>
+ (Exim 4.90_1) (envelope-from <philmd@oss.qualcomm.com>)
+ id 1wWv8m-00025r-84
+ for qemu-devel@nongnu.org; Tue, 09 Jun 2026 08:01:09 -0400
+Received: from pps.filterd (m0279870.ppops.net [127.0.0.1])
+ by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
+ 659BnWPN2574418
+ for <qemu-devel@nongnu.org>; Tue, 9 Jun 2026 12:01:06 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+ content-transfer-encoding:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+ bfv8GiTsPV/rBrBZSlV+RKU3/qgEjkptTCRxzUkMAy0=; b=M3ECkCQCwkGsY9+N
+ Q9YXxAKU+ehX3Zi1m19Aq5NzzrjxtEEaj0KwQE177mAj+3sn+oy0y/LAg7JsYEj4
+ 5bZ2A2Td05zdiDEKv/7VPL84nmsVuLY1vVDPuo+hI6ICLNNQWYCCkeDzntzpoh7d
+ xJlmKr0GL4fXP57l/S5VcVEz0ol4zV+NKlagGeQxA7l1hCYRtsRUa/agTXRKyPZa
+ w7i1565pBniOG7cqlqEqt19Hj/YGoAI3Oc65nyACsLDf7vmk7zlOiGdSOiwdZmmy
+ TI1n/CGBJ4GiVnuTGc0scgGaG+I72bhidpu+mpbl9owqqvSAYSad8osvwPE7TDly
+ bVX9oQ==
+Received: from mail-qt1-f197.google.com (mail-qt1-f197.google.com
+ [209.85.160.197])
+ by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4epfdt0txw-1
+ (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
+ for <qemu-devel@nongnu.org>; Tue, 09 Jun 2026 12:01:06 +0000 (GMT)
+Received: by mail-qt1-f197.google.com with SMTP id
+ d75a77b69052e-5177b8df670so89140401cf.2
+ for <qemu-devel@nongnu.org>; Tue, 09 Jun 2026 05:01:06 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=oss.qualcomm.com; s=google; t=1781006466; x=1781611266; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:references:to
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=bfv8GiTsPV/rBrBZSlV+RKU3/qgEjkptTCRxzUkMAy0=;
+ b=Vjmj8asXNb7K2/NlrggVAn2u/t9YHmKdBp6ITl+ScvunHXgzY46AhWQbTaZA/SjV3A
+ 1yB2l2ow26v5PVbHzd7TKKi/vMF/Vt0G4vzj7j2OvfnwilV3cn5p+AOUu5xsy7RFvXUe
+ //M8pK+DkVzuMIAGe+GDLIH0Ky1IcT0gUtIBTC83SqGPPPJUWU11myAPtwuyJshHDMTA
+ lmmK91g+xy9C5bZL0jFIrBv/H4thnAAwUYgQ6HjcbVLW+xlgdVH0HJtpYVyv51AIm0k8
+ Z3hn5+ZXLgf8gcDLRip1t8DdjJjKxqo3uUnDqpRl65HjZZDBL8xqCOlfcH3zrvdxHUMk
+ ITyg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1781006466; x=1781611266;
+ h=content-transfer-encoding:in-reply-to:from:references:to
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=bfv8GiTsPV/rBrBZSlV+RKU3/qgEjkptTCRxzUkMAy0=;
+ b=gan2Pna2v+Q4JrvJ+Ni1VAgAHzeOCvLaouLnLeYO55tocTYhG0/oCc1MxQBEojFTNX
+ tKiwH9j3WBSEpa78UsE/HGJmqNrrqxAZWzxZFDVp8E02dAiPZa5HEIwK3jNleQdSMMj1
+ Wi+MjU1vsgbaK/lONr/3C6zzCjTYgJ21Of1Ihb9UvbUW9j8vwpTHdMXKekMqRpo+2HUA
+ IQymIZLZAl9PUPTOyBoCvFJ+4hJ/1j5BRTzfJN24PCqFaUWP4dFsXLKqZjYvGXagz/93
+ 13oUWo6y/bXJGt7hNzcQbz4UxdxpAM5D9Cgp4fcit2yB3Y+F7JWO9phhT9aXfuXgJc3o
+ 9ZCw==
+X-Forwarded-Encrypted: i=1;
+ AFNElJ9EySxxZaMy6m8qwo/ja1gRiSFUJGWCdCON0eZZ651eCkmqE601FCQs2JieKk8UQDPYlVD8EBw2jFFR@nongnu.org
+X-Gm-Message-State: AOJu0YzSo50JH7D9O8x8YN0bvxHNq1fyC+AXESxePMly3d9AUF2pe6CF
+ KVmaDFj9fG4fgA7phYbh/UUXWE17i5qYzzTMFvZgSFGFS74I0OXUHw7zultBSWGr5uAU9EHg5Wd
+ HkQ4uMTubR+MOPjVhnHmlIXPXncWHeDIK4Hi7Ojq4vyA5QH7MUaaIgTYm2Q==
+X-Gm-Gg: Acq92OHIwy1aFR7jSa1vRrAlXFaDvTsJYiAJ7D4MF1UQ4+ELi2HGQQHpZFUBogrwfrF
+ jGyAa2Rfi1JY29/zWgxP3+FMGZYe7eTdWRpusGuBC3agUEHSfEyB9m4cv6hG+A49UJ31lsK2MPU
+ IcMylgtBoRxDWNNbWap83xLfmpJZea7TfgWYGCf38cehI5r6wriV0wfL+y7/BDH1+XZDjvMW3sP
+ lQzyrb33VNKJLgo9lRnTyRkKyj+lem4Ag2VpOiWMThvL7FVjs+dVJet+y7fj27wAtuUKb7zGFiC
+ 5xHytIbqYrxHffFQR8viorYO6c/VzBxKW8M4kaIytAicCzCUnseyWAeUfG1YEtUXQpTyNY7YoBl
+ MWmRoPQg+sKPUmXKRoWD2FZFYS1cW2HUKuqqNrhoOB2AiMqkYARmdyx7FX/DfAw==
+X-Received: by 2002:a05:622a:1811:b0:50d:62d1:c3fa with SMTP id
+ d75a77b69052e-517959d5f02mr294374111cf.2.1781006454686; 
+ Tue, 09 Jun 2026 05:00:54 -0700 (PDT)
+X-Received: by 2002:a05:622a:1811:b0:50d:62d1:c3fa with SMTP id
+ d75a77b69052e-517959d5f02mr294342851cf.2.1781006434651; 
+ Tue, 09 Jun 2026 05:00:34 -0700 (PDT)
+Received: from [10.156.84.244] (113.170.88.92.rev.sfr.net. [92.88.170.113])
+ by smtp.gmail.com with ESMTPSA id
+ a640c23a62f3a-bf051770c7csm1035248066b.12.2026.06.09.05.00.32
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Tue, 09 Jun 2026 05:00:33 -0700 (PDT)
+Message-ID: <d122c197-a1d0-43a2-bb8a-812542cb9577@oss.qualcomm.com>
+Date: Tue, 9 Jun 2026 14:00:31 +0200
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <CAFEAcA_+fZnFG_2xH2gXF7ZtGo-WVwAhwkz9ucuS5kXZOYShnw@mail.gmail.com>
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.12
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=kraxel@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: 8
-X-Spam_score: 0.8
-X-Spam_bar: /
-X-Spam_report: (0.8 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.445,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_SBL_CSS=3.335, SPF_HELO_PASS=-0.001,
- SPF_PASS=-0.001 autolearn=no autolearn_force=no
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 2/2] fpu: Handle all rounding modes in
+ partsN_round_to_int_normal
+Content-Language: en-US
+To: Richard Henderson <richard.henderson@linaro.org>, qemu-devel@nongnu.org
+References: <20260608190155.637067-1-richard.henderson@linaro.org>
+ <20260608190155.637067-3-richard.henderson@linaro.org>
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>
+In-Reply-To: <20260608190155.637067-3-richard.henderson@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+X-Proofpoint-ORIG-GUID: x8klgSbFjnPpXfd7Is9NYwlEsiqT_nXf
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNjA5MDExMyBTYWx0ZWRfX9CcRpUZJKRWG
+ 22run5Fq0YUzDoT1IqhB78X1ti995M/Q6scNTK6k8tIVnOFuDQoDsVKTnQiDb7stBpgxDJ8zHBl
+ ranrq7RJXTB8CAPJDKWqJZs3/fU8hIVUq8RZYfZzb0Hm8J9MGASGRvqNfbS9JPJDdEOk/nVZa+I
+ 7iMxshsDFiUQU4rdbve9bAiSoCNLMrEKp7+gRhVQ8o2RBzSsy+qZtl6TOBzHF7rAxw9q19rFpVQ
+ bTgE5COUT084bK5RwsTHA38fwg/QTlE64OjoR9izV7SRWWb998+KWiCV8cc3wlt0c0odLOzHfJH
+ PJSxIXM8XoxgZg5o0WydzySQ7UVE3CVL5925NchRSBXrTLRLCKZmtLuu6x5DFuiIaT316qDM0TZ
+ 5Y8vA2meyf0ToiOf+CDN1r/uYtoBzB9YgKae9mNvQ1va82fimeFDiUF+U2iW1fm90ZBiJmkvpp8
+ 0ukyAu0ZVyzwVuDDMVQ==
+X-Proofpoint-GUID: x8klgSbFjnPpXfd7Is9NYwlEsiqT_nXf
+X-Authority-Analysis: v=2.4 cv=doTrzVg4 c=1 sm=1 tr=0 ts=6a280082 cx=c_pps
+ a=EVbN6Ke/fEF3bsl7X48z0g==:117 a=ASywmo1ADVsXjDI2RVyDAw==:17
+ a=IkcTkHD0fZMA:10 a=FelO9ux0wxsA:10 a=M51BFTxLslgA:10 a=s4-Qcg_JpJYA:10
+ a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=gowsoOTTUOVcmtlkKump:22
+ a=KKAkSRfTAAAA:8 a=EUspDBNiAAAA:8 a=1tSEMpTH9XP_W59IOagA:9 a=3ZKOabzyN94A:10
+ a=QEXdDO2ut3YA:10 a=a_PwQJl-kcHnX1M80qC6:22 a=cvBusfyB2V15izCimMoJ:22
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.125,FMLib:17.12.100.49
+ definitions=2026-06-09_02,2026-06-09_02,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ suspectscore=0 spamscore=0 bulkscore=0 lowpriorityscore=0 priorityscore=1501
+ impostorscore=0 phishscore=0 clxscore=1015 malwarescore=0 adultscore=0
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.22.0-2605210000 definitions=main-2606090113
+Received-SPF: pass client-ip=205.220.180.131;
+ envelope-from=philmd@oss.qualcomm.com; helo=mx0b-0031df01.pphosted.com
+X-Spam_score_int: -27
+X-Spam_score: -2.8
+X-Spam_bar: --
+X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -95,37 +151,14 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-  Hi,
-
-> > > #  - specify a firmware and pass a hint to the kernel to boot
-> > > #  - direct kernel image boot
-> >
-> > That is a technical detail which doesn't make much of a difference
-> > from the end user perspective.  And often people talk about "direct
-> > kernel boot" without drawing a line between these two cases, because the
-> > user-visible behavior is pretty much identical:  You pass a kernel to
-> > qemu via '-kernel', and it gets booted ...
+On 8/6/26 21:01, Richard Henderson wrote:
+> Missed float_round_nearest_even_max and float_round_to_odd_inf
+> in both switch statements.
 > 
-> As an end user I find them majorly different -- I usually
-> don't want the firmware, because it takes forever to boot
-> if you do that.
+> Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
+> ---
+>   fpu/softfloat-parts.c.inc | 4 ++++
+>   1 file changed, 4 insertions(+)
 
-Not sure what exactly you are doing, but for me edk2 is done in less
-than a second (unless I turn on firmware debug logging), and that on
-a rpi4 host which isn't exactly fast hardware.  I wouldn't call that
-"forever".
-
-> This is probably partly an x86 vs Arm difference: for x86 there
-> is always some kind of BIOS booted, but for Arm there
-> by default is not, and direct kernel boot is much more
-> common.
-
-Yes, on x86 you need something (be it ovmf or seabios or qboot) which
-places smbios and acpi tables properly in guest memory.  On arm the
-linux kernel is happy with the device tree, so it is possible to skip
-the firmware part (unless you want run the guest in acpi=on mode).
-
-take care,
-  Gerd
-
+Reviewed-by: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
 
