@@ -4,64 +4,84 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 57ADBCD8CA4
-	for <qemu-devel@archiver.kernel.org>; Tue,  9 Jun 2026 12:57:46 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4074DCD8CAA
+	for <qemu-devel@archiver.kernel.org>; Tue,  9 Jun 2026 12:57:47 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wWw0n-00014J-Hf; Tue, 09 Jun 2026 08:56:57 -0400
+	id 1wWw0p-00018T-4v; Tue, 09 Jun 2026 08:56:59 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jic23@kernel.org>)
- id 1wWw0I-0000tv-0J; Tue, 09 Jun 2026 08:56:27 -0400
-Received: from tor.source.kernel.org ([172.105.4.254])
+ (Exim 4.90_1) (envelope-from <shrihari.s@samsung.com>)
+ id 1wWtxd-00064c-0I
+ for qemu-devel@nongnu.org; Tue, 09 Jun 2026 06:45:33 -0400
+Received: from mailout1.samsung.com ([203.254.224.24])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jic23@kernel.org>)
- id 1wWw0F-00029H-SS; Tue, 09 Jun 2026 08:56:25 -0400
-Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
- by tor.source.kernel.org (Postfix) with ESMTP id A3945601D6;
- Tue,  9 Jun 2026 12:56:22 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 828AE1F00893;
- Tue,  9 Jun 2026 12:56:16 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
- s=k20260515; t=1781009782;
- bh=eebyKTXI7M7ZomeyrwHDB0fKiasWrvtdjHN2irhwtOg=;
- h=Date:From:To:Cc:Subject:In-Reply-To:References;
- b=csa70ec6lrv9FgNKutBC9O9UUWyj5zaWcH1hxDbgbN7PzJg3Y2joJr9TVJnY26cbL
- 6o1+OHTrEmLLMRQNCPpwS7Q5OkgfjVUgiqiVzzZbxPQfW33EhiGC/P2VizX74hJEtk
- 8bkMoUKX/m9q8pVqSdsT45iUjyXpA/J0nJLO/17/9vzAKRRs07rMeTcLkAF35yx7MO
- I/CFmTQjrCM4Ivfz59kxjDho3kFj2aXsgeKDnlNMVgzoVbiInEp26qze9sy30PiWCt
- wwJ8+3AkYBeaHdQYTNum4vW2H55iL5oI0/0xiXKBpx+GkYcTYV2vM6xqFf8HGzx8Wj
- z9UI7WN+rE4WQ==
-Date: Tue, 9 Jun 2026 13:56:11 +0100
-From: Jonathan Cameron <jic23@kernel.org>
-To: Chen Pei <cp0613@linux.alibaba.com>
-Cc: pbonzini@redhat.com, palmer@dabbelt.com, alistair.francis@wdc.com,
- liwei1518@gmail.com, daniel.barboza@oss.qualcomm.com,
- zhiwei_liu@linux.alibaba.com, chao.liu.zevorn@gmail.com,
- sunilvl@ventanamicro.com, jonathan.cameron@huawei.com, fan.ni@samsung.com,
- guoren@kernel.org, qemu-riscv@nongnu.org, qemu-devel@nongnu.org,
- linux-cxl@vger.kernel.org, Dave Jiang <dave.jiang@intel.com>, "Michael S.
- Tsirkin" <mst@redhat.com>, Igor Mammedov <imammedo@redhat.com>
-Subject: Re: [PATCH 3/4] hw/riscv/virt, gpex: Provide 32-bit MMIO window for
- CXL host bridges
-Message-ID: <20260609135611.307122c8@jic23-huawei>
-In-Reply-To: <20260602074127.63819-4-cp0613@linux.alibaba.com>
-References: <20260602074127.63819-1-cp0613@linux.alibaba.com>
- <20260602074127.63819-4-cp0613@linux.alibaba.com>
-X-Mailer: Claws Mail 4.4.0 (GTK 3.24.52; x86_64-pc-linux-gnu)
+ (Exim 4.90_1) (envelope-from <shrihari.s@samsung.com>)
+ id 1wWtxa-0005d6-AU
+ for qemu-devel@nongnu.org; Tue, 09 Jun 2026 06:45:32 -0400
+Received: from epcas5p1.samsung.com (unknown [182.195.41.39])
+ by mailout1.samsung.com (KnoxPortal) with ESMTP id
+ 20260609104526epoutp018ba289e1904d3b7d51a933599ecb68b3~3Y9DzqBlw3250632506epoutp01x
+ for <qemu-devel@nongnu.org>; Tue,  9 Jun 2026 10:45:26 +0000 (GMT)
+DKIM-Filter: OpenDKIM Filter v2.11.0 mailout1.samsung.com
+ 20260609104526epoutp018ba289e1904d3b7d51a933599ecb68b3~3Y9DzqBlw3250632506epoutp01x
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=samsung.com;
+ s=mail20170921; t=1781001926;
+ bh=Uxe8siGpeBw5SZONkkYNgM/0xKYIi23/sklb1yT+pj8=;
+ h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
+ b=pkqvXNQT/X4M3QJ6ekadT4738oNSD4VOnMvDDdvzwq9XPGS+cJ6pjNpe6tGA3r4BD
+ 5PdpuEMAldm7ga4GhKykY8ZchSjjMUV7kuSvukS35I8Ht050csiNIsVxitwQL+9ilX
+ 7VFzznH3FQxIm3BMnGf7HSGNqDtaG9b7jN3IOfaw=
+Received: from epsnrtp02.localdomain (unknown [182.195.42.154]) by
+ epcas5p4.samsung.com (KnoxPortal) with ESMTPS id
+ 20260609104526epcas5p45f5c777149e46322a4b50b4fad6dc0d4~3Y9DjH1J03211032110epcas5p4K;
+ Tue,  9 Jun 2026 10:45:26 +0000 (GMT)
+Received: from epcas5p1.samsung.com (unknown [182.195.38.94]) by
+ epsnrtp02.localdomain (Postfix) with ESMTP id 4gZQY15PjJz2SSKY; Tue,  9 Jun
+ 2026 10:45:25 +0000 (GMT)
+Received: from epsmtip1.samsung.com (unknown [182.195.34.30]) by
+ epcas5p1.samsung.com (KnoxPortal) with ESMTPA id
+ 20260609104525epcas5p151a4e745f5303e79a2a92432180a6af7~3Y9CORnbY1025210252epcas5p1g;
+ Tue,  9 Jun 2026 10:45:25 +0000 (GMT)
+Received: from unvme-SYS-221H-TN24R.samsungds.net (unknown [107.99.40.127])
+ by epsmtip1.samsung.com (KnoxPortal) with ESMTPA id
+ 20260609104523epsmtip1c14a135ce5ac2255ceb339b0299225c1~3Y9ArC0xG2221922219epsmtip1m;
+ Tue,  9 Jun 2026 10:45:23 +0000 (GMT)
+From: Shrihari E S <shrihari.s@samsung.com>
+To: jic23@kernel.org, linux-cxl@vger.kernel.org, linux-pci@vger.kernel.org,
+ qemu-devel@nongnu.org, cpgs@samsung.com
+Cc: arun.george@samsung.com, vikash.k5@samsung.com, s.neeraj@samsung.com,
+ shrihari.s@samsung.com, dongjoo.seo1@samsung.com, dave@stgolabs.net,
+ gost.dev@samsung.com
+Subject: [RFC 5/8] hw/cxl: Wire UIO capability into HDM decoder registers
+Date: Tue,  9 Jun 2026 16:28:33 +0530
+Message-Id: <20260609105836.3702787-6-shrihari.s@samsung.com>
+X-Mailer: git-send-email 2.34.1
+In-Reply-To: <20260609105836.3702787-1-shrihari.s@samsung.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=172.105.4.254; envelope-from=jic23@kernel.org;
- helo=tor.source.kernel.org
-X-Spam_score_int: -24
-X-Spam_score: -2.5
-X-Spam_bar: --
-X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.445,
+Content-Transfer-Encoding: 8bit
+X-CMS-MailID: 20260609104525epcas5p151a4e745f5303e79a2a92432180a6af7
+X-Msg-Generator: CA
+Content-Type: text/plain; charset="utf-8"
+CMS-TYPE: 105P
+X-CPGSPASS: Y
+cpgsPolicy: CPGSC10-542,Y
+X-CFilter-Loop: Reflected
+X-CMS-RootMailID: 20260609104525epcas5p151a4e745f5303e79a2a92432180a6af7
+References: <20260609105836.3702787-1-shrihari.s@samsung.com>
+ <CGME20260609104525epcas5p151a4e745f5303e79a2a92432180a6af7@epcas5p1.samsung.com>
+Received-SPF: pass client-ip=203.254.224.24;
+ envelope-from=shrihari.s@samsung.com; helo=mailout1.samsung.com
+X-Spam_score_int: -31
+X-Spam_score: -3.2
+X-Spam_bar: ---
+X-Spam_report: (-3.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.445,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_PASS=-0.001, SPF_NONE=0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
+X-Mailman-Approved-At: Tue, 09 Jun 2026 08:56:44 -0400
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -76,205 +96,222 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue,  2 Jun 2026 15:41:26 +0800
-Chen Pei <cp0613@linux.alibaba.com> wrote:
+Plumb the 'uio_capable' flag to CXL HDM decoder capability and
+control register interfaces. The UIO bit in the capability register
+is now set for CXL Type3 devices and ports when UIO support is
+advertised via 'x-uio-svc' property.
 
-> CXL component register BAR (BAR0 on CXL Root Port and Type3 device)
-> and the CXL device register BAR (BAR2 on Type3 device) are declared
-> as 64-bit non-prefetchable memory.  A standard PCIe-to-PCI bridge
-> exposes a 32-bit non-prefetchable memory window plus an (optional)
-> 64-bit prefetchable memory window, but no 64-bit non-prefetchable
-> window.
+Per CXL 4.0 specification Section 8.2.4.20.7, the decoder control
+UIO bit is validated against the advertised capability during
+HDM decoder commit operations.
 
-When you say 'standard' do you mean that is all the PCI spec allows
-for? (Right now I'm not working for a SIG member so don't have a copy
-to check)
+Additionally, replace hardcoded HDM decoder control write masks
+with spec-aligned 'WRMASK' definitions.
 
->  Linux therefore places 64-bit non-prefetchable BARs in the
-> 32-bit non-prefetchable bridge window, which requires the bridge to
-> own enough address space below 4 GiB.
-> 
+Signed-off-by: Shrihari E S <shrihari.s@samsung.com>
+Signed-off-by: Dongjoo Seo <dongjoo.seo1@samsung.com>
+---
+ hw/cxl/cxl-component-utils.c        | 29 +++++++++++++++++++++++------
+ hw/mem/cxl_type3.c                  |  9 ++++++++-
+ hw/pci-bridge/cxl_downstream.c      |  2 +-
+ hw/pci-bridge/cxl_root_port.c       |  2 +-
+ hw/pci-bridge/cxl_upstream.c        |  3 ++-
+ hw/pci-bridge/pci_expander_bridge.c |  3 ++-
+ include/hw/cxl/cxl_component.h      |  2 +-
+ include/hw/cxl/cxl_device.h         |  2 ++
+ 8 files changed, 40 insertions(+), 12 deletions(-)
 
-This sounds a bit like the issue that Dave Jiang reported with recent
-EDK2 on x86 (fedora upgraded).  We don't see it with the older EDK2
-that ships with QEMU. I haven't yet figured out exactly why.
-Arguably whatever they changed is a regression but we don't have good
-enough testing in place to have detected it early enough.
-
-I'd like some input from PCI / ACPI experts on this. +CC Michael and
-Igor.
-
-Like the previous patch we'd definitely want some testing around this
-to make sure it doesn't accidentally get broken in future.
-
-
-> On RISC-V virt the 32-bit PCIe MMIO range (1 GiB at 0x40000000) is
-> currently consumed entirely by PCI0, so CXL host bridges (ACPI0016)
-> have no non-prefetchable window and Linux fails to assign these BARs.
-> Marking the BARs prefetchable would work around it, but the CXL
-> component registers have read/write side effects and are not
-> prefetchable per the PCIe specification.
-> 
-> Reserve the top 256 MiB of the 32-bit MMIO window exclusively for
-> CXL host bridges:
-> - Shrink PCI0's mmio32 window by 256 MiB in virt.c so that UEFI's
->   PciHostBridgeDxe and the ACPI _CRS for PCI0 never claim that range
-> - Store the reserved range in a new gpex_cfg.cxl_mmio32 field
-> - In gpex-acpi.c, emit the cxl_mmio32 range as the Memory resource
->   in the CXL host bridge _CRS instead of re-using build_crs() (which
->   returns an empty set when UEFI has not assigned resources yet)
-> - Reduce the FDT 'ranges' for PCI0 by the same 256 MiB so that UEFI
->   firmware driven by device-tree also respects the reservation
-> 
-> Signed-off-by: Chen Pei <cp0613@linux.alibaba.com>
-> ---
->  hw/pci-host/gpex-acpi.c    | 36 +++++++++++++++++++++--
->  hw/riscv/virt.c            | 58 +++++++++++++++++++++++++++++++-------
->  include/hw/pci-host/gpex.h |  1 +
->  3 files changed, 83 insertions(+), 12 deletions(-)
-> 
-> diff --git a/hw/pci-host/gpex-acpi.c b/hw/pci-host/gpex-acpi.c
-> index d9820f9b41..d8b943b665 100644
-> --- a/hw/pci-host/gpex-acpi.c
-> +++ b/hw/pci-host/gpex-acpi.c
-> @@ -158,9 +158,41 @@ void acpi_dsdt_add_gpex(Aml *scope, struct GPEXConfig *cfg)
->               * Resources defined for PXBs are composed of the following parts:
->               * 1. The resources the pci-bridge/pcie-root-port need.
->               * 2. The resources the devices behind pxb need.
-> +             *
-> +             * For CXL host bridges on platforms where UEFI (driven by
-> +             * FDT 'ranges') does not assign PCI resources for the CXL
-> +             * root bridge before ACPI table construction, build_crs()
-> +             * would return an empty resource set.  When the platform
-> +             * has reserved a dedicated MMIO window for CXL host bridges
-> +             * (cfg->cxl_mmio32), emit that window as a static _CRS
-> +             * instead.  The platform is responsible for shrinking PCI0's
-> +             * mmio32 window so the two do not overlap.
->               */
-> -            crs = build_crs(PCI_HOST_BRIDGE(BUS(bus)->parent), &crs_range_set,
-> -                            cfg->pio.base, 0, 0, 0);
-> +            if (is_cxl && cfg->cxl_mmio32.size) {
-> +                uint64_t cxl_base = cfg->cxl_mmio32.base;
-> +                uint64_t cxl_size = cfg->cxl_mmio32.size;
-> +
-> +                crs = aml_resource_template();
-> +
-> +                /* 32-bit MMIO range for CXL devices */
-> +                aml_append(crs,
-> +                    aml_dword_memory(AML_POS_DECODE, AML_MIN_FIXED,
-> +                                     AML_MAX_FIXED, AML_NON_CACHEABLE,
-> +                                     AML_READ_WRITE, 0,
-> +                                     cxl_base,
-> +                                     cxl_base + cxl_size - 1,
-> +                                     0, cxl_size));
-> +
-> +                /* Bus number range */
-> +                aml_append(crs,
-> +                    aml_word_bus_number(AML_MIN_FIXED, AML_MAX_FIXED,
-> +                                       AML_POS_DECODE, 0,
-> +                                       bus_num, bus_num + 15,
-> +                                       0, 16));
-> +            } else {
-> +                crs = build_crs(PCI_HOST_BRIDGE(BUS(bus)->parent),
-> +                                &crs_range_set, cfg->pio.base, 0, 0, 0);
-> +            }
->              aml_append(dev, aml_name_decl("_CRS", crs));
->  
->              if (is_cxl) {
-> diff --git a/hw/riscv/virt.c b/hw/riscv/virt.c
-> index 899f632de7..929c01fb26 100644
-> --- a/hw/riscv/virt.c
-> +++ b/hw/riscv/virt.c
-> @@ -113,6 +113,9 @@ static const MemMapEntry virt_memmap[] = {
->  /* PCIe high mmio for RV64, size is fixed but base depends on top of RAM */
->  #define VIRT64_HIGH_PCIE_MMIO_SIZE  (16 * GiB)
->  
-> +/* 32-bit MMIO range carved out of VIRT_PCIE_MMIO for CXL host bridges */
-> +#define VIRT_CXL_MMIO32_SIZE        (256 * MiB)
-> +
->  static MemMapEntry virt_high_pcie_memmap;
->  
->  #define VIRT_FLASH_SECTOR_SIZE (256 * KiB)
-> @@ -890,15 +893,28 @@ static void create_fdt_pcie(RISCVVirtState *s,
->      }
->      qemu_fdt_setprop_sized_cells(ms->fdt, name, "reg", 2,
->          s->memmap[VIRT_PCIE_ECAM].base, 2, s->memmap[VIRT_PCIE_ECAM].size);
-> -    qemu_fdt_setprop_sized_cells(ms->fdt, name, "ranges",
-> -        1, FDT_PCI_RANGE_IOPORT, 2, 0,
-> -        2, s->memmap[VIRT_PCIE_PIO].base, 2, s->memmap[VIRT_PCIE_PIO].size,
-> -        1, FDT_PCI_RANGE_MMIO,
-> -        2, s->memmap[VIRT_PCIE_MMIO].base,
-> -        2, s->memmap[VIRT_PCIE_MMIO].base, 2, s->memmap[VIRT_PCIE_MMIO].size,
-> -        1, FDT_PCI_RANGE_MMIO_64BIT,
-> -        2, virt_high_pcie_memmap.base,
-> -        2, virt_high_pcie_memmap.base, 2, virt_high_pcie_memmap.size);
-> +    {
-> +        /*
-> +         * When CXL is enabled, reserve the last 256 MiB of the 32-bit
-> +         * MMIO window for CXL host bridges and exclude it from the main
-> +         * PCIe host bridge's FDT 'ranges' so UEFI's PciHostBridgeDxe
-> +         * does not allocate that range to PCI0.  The CXL host bridge
-> +         * _CRS declares this range independently.
-> +         */
-> +        hwaddr mmio32_size = s->memmap[VIRT_PCIE_MMIO].size;
-> +        if (s->cxl_devices_state.is_enabled) {
-> +            mmio32_size -= VIRT_CXL_MMIO32_SIZE;
-> +        }
-> +        qemu_fdt_setprop_sized_cells(ms->fdt, name, "ranges",
-> +            1, FDT_PCI_RANGE_IOPORT, 2, 0,
-> +            2, s->memmap[VIRT_PCIE_PIO].base, 2, s->memmap[VIRT_PCIE_PIO].size,
-> +            1, FDT_PCI_RANGE_MMIO,
-> +            2, s->memmap[VIRT_PCIE_MMIO].base,
-> +            2, s->memmap[VIRT_PCIE_MMIO].base, 2, mmio32_size,
-> +            1, FDT_PCI_RANGE_MMIO_64BIT,
-> +            2, virt_high_pcie_memmap.base,
-> +            2, virt_high_pcie_memmap.base, 2, virt_high_pcie_memmap.size);
-> +    }
->  
->      if (virt_is_iommu_sys_enabled(s)) {
->          qemu_fdt_setprop_cells(ms->fdt, name, "iommu-map",
-> @@ -1730,7 +1746,29 @@ static void virt_machine_init(MachineState *machine)
->              qdev_get_gpio_in(virtio_irqchip, VIRTIO_IRQ + i));
->      }
->  
-> -    gpex_pcie_init(system_memory, pcie_irqchip, s);
-> +    DeviceState *pcie_dev = gpex_pcie_init(system_memory, pcie_irqchip, s);
-> +
-> +    /*
-> +     * If CXL is enabled, reserve the last 256 MiB of the 32-bit MMIO
-> +     * window for CXL host bridges so the bridge non-prefetchable window
-> +     * can hold CXL device BARs (component registers and similar 64-bit
-> +     * non-prefetchable BARs that need a < 4 GiB address).
-> +     *
-> +     * - Shrink PCI0's mmio32 advertised in the ACPI _CRS by the same
-> +     *   256 MiB so the two ranges do not overlap (the FDT 'ranges'
-> +     *   shrink happens in create_fdt_pcie()).
-> +     * - Store the reserved range in cxl_mmio32 so gpex-acpi.c can emit
-> +     *   a correct _CRS for the CXL host bridge (ACPI0016).
-> +     */
-> +    if (s->cxl_devices_state.is_enabled) {
-> +        GPEXHost *gpex = GPEX_HOST(pcie_dev);
-> +        gpex->gpex_cfg.cxl_mmio32.size = VIRT_CXL_MMIO32_SIZE;
-> +        gpex->gpex_cfg.cxl_mmio32.base =
-> +            s->memmap[VIRT_PCIE_MMIO].base +
-> +            s->memmap[VIRT_PCIE_MMIO].size - VIRT_CXL_MMIO32_SIZE;
-> +        /* Shrink PCI0's advertised 32-bit MMIO window to exclude CXL range */
-> +        gpex->gpex_cfg.mmio32.size -= VIRT_CXL_MMIO32_SIZE;
-> +    }
->  
->      create_platform_bus(s, mmio_irqchip);
->  
-> diff --git a/include/hw/pci-host/gpex.h b/include/hw/pci-host/gpex.h
-> index 1da9c85bce..d38fbbacd6 100644
-> --- a/include/hw/pci-host/gpex.h
-> +++ b/include/hw/pci-host/gpex.h
-> @@ -43,6 +43,7 @@ struct GPEXConfig {
->      MemMapEntry mmio32;
->      MemMapEntry mmio64;
->      MemMapEntry pio;
-> +    MemMapEntry cxl_mmio32;
->      int         irq;
->      PCIBus      *bus;
->      bool        pci_native_hotplug;
+diff --git a/hw/cxl/cxl-component-utils.c b/hw/cxl/cxl-component-utils.c
+index 31bbedb502..9a5b382272 100644
+--- a/hw/cxl/cxl-component-utils.c
++++ b/hw/cxl/cxl-component-utils.c
+@@ -13,6 +13,19 @@
+ #include "hw/pci/pci.h"
+ #include "hw/cxl/cxl.h"
+ 
++/* CXL 4.0 specification 8.4.2.20.7 */
++#define CXL_HDM_DECODER_CTRL_WRMASK (    \
++    (0xfu << 0)   | /* IG */             \
++    (0xfu << 4)   | /* IW */             \
++    BIT(8)        | /* LOCK_ON_COMMIT */ \
++    BIT(9)        | /* COMMIT */         \
++    BIT(12)       | /* TYPE */           \
++    BIT(13)       | /* BI */             \
++    BIT(14)       | /* UIO */            \
++    (0xfu << 16)  | /* UIG */            \
++    (0xfu << 20)  | /* UIW */            \
++    (0xfu << 24))   /* ISP */
++
+ /* CXL r3.1 Section 8.2.4.20.1 CXL HDM Decoder Capability Register */
+ int cxl_decoder_count_enc(int count)
+ {
+@@ -305,7 +318,7 @@ static void ras_init_common(uint32_t *reg_state, uint32_t *write_msk)
+ }
+ 
+ static void hdm_init_common(uint32_t *reg_state, uint32_t *write_msk,
+-                            enum reg_type type, bool bi)
++                            enum reg_type type, bool bi, bool uio)
+ {
+     int decoder_count = CXL_HDM_DECODER_COUNT;
+     int hdm_inc = R_CXL_HDM_DECODER1_BASE_LO - R_CXL_HDM_DECODER0_BASE_LO;
+@@ -325,9 +338,12 @@ static void hdm_init_common(uint32_t *reg_state, uint32_t *write_msk,
+         ARRAY_FIELD_DP32(reg_state, CXL_HDM_DECODER_CAPABILITY, 3_6_12_WAY, 0);
+         ARRAY_FIELD_DP32(reg_state, CXL_HDM_DECODER_CAPABILITY, 16_WAY, 0);
+     }
+-    ARRAY_FIELD_DP32(reg_state, CXL_HDM_DECODER_CAPABILITY, UIO, 0);
++    ARRAY_FIELD_DP32(reg_state, CXL_HDM_DECODER_CAPABILITY, UIO,
++                     (type == CXL2_TYPE3_DEVICE || CXL2_UPSTREAM_PORT) && uio);
+     ARRAY_FIELD_DP32(reg_state, CXL_HDM_DECODER_CAPABILITY,
+-                     UIO_DECODER_COUNT, 0);
++                     UIO_DECODER_COUNT,
++                     (type == CXL2_TYPE3_DEVICE || CXL2_UPSTREAM_PORT) && uio ?
++                     decoder_count : 0);
+     ARRAY_FIELD_DP32(reg_state, CXL_HDM_DECODER_CAPABILITY, MEMDATA_NXM_CAP, 0);
+     ARRAY_FIELD_DP32(reg_state, CXL_HDM_DECODER_CAPABILITY,
+                      SUPPORTED_COHERENCY_MODEL,
+@@ -341,7 +357,8 @@ static void hdm_init_common(uint32_t *reg_state, uint32_t *write_msk,
+         write_msk[R_CXL_HDM_DECODER0_BASE_HI + i * hdm_inc] = 0xffffffff;
+         write_msk[R_CXL_HDM_DECODER0_SIZE_LO + i * hdm_inc] = 0xf0000000;
+         write_msk[R_CXL_HDM_DECODER0_SIZE_HI + i * hdm_inc] = 0xffffffff;
+-        write_msk[R_CXL_HDM_DECODER0_CTRL + i * hdm_inc] = 0x13ff;
++        write_msk[R_CXL_HDM_DECODER0_CTRL + i * hdm_inc] =
++                                             CXL_HDM_DECODER_CTRL_WRMASK;
+         if (type == CXL2_DEVICE ||
+             type == CXL2_TYPE3_DEVICE ||
+             type == CXL2_LOGICAL_DEVICE) {
+@@ -391,7 +408,7 @@ static void bi_decoder_init_common(uint32_t *reg_state, uint32_t *write_msk,
+ void cxl_component_register_init_common(uint32_t *reg_state,
+                                         uint32_t *write_msk,
+                                         enum reg_type type,
+-                                        bool bi)
++                                        bool bi, bool uio)
+ {
+     int caps = 0;
+ 
+@@ -431,7 +448,7 @@ void cxl_component_register_init_common(uint32_t *reg_state,
+     case CXL2_LOGICAL_DEVICE:
+         /* + HDM */
+         init_cap_reg(HDM, 5, 1);
+-        hdm_init_common(reg_state, write_msk, type, bi);
++        hdm_init_common(reg_state, write_msk, type, bi, uio);
+         /* fallthrough */
+     case CXL2_DOWNSTREAM_PORT:
+     case CXL2_DEVICE:
+diff --git a/hw/mem/cxl_type3.c b/hw/mem/cxl_type3.c
+index b7ad437cbc..4cdadc3e10 100644
+--- a/hw/mem/cxl_type3.c
++++ b/hw/mem/cxl_type3.c
+@@ -590,6 +590,11 @@ static void hdm_decoder_commit(CXLType3Dev *ct3d, int which)
+     /* TODO: Sanity checks that the decoder is possible */
+     ctrl = FIELD_DP32(ctrl, CXL_HDM_DECODER0_CTRL, ERR, 0);
+     ctrl = FIELD_DP32(ctrl, CXL_HDM_DECODER0_CTRL, COMMITTED, 1);
++    if (ct3d->uio_capable) {
++        ct3d->uio_enabled = FIELD_EX32(ctrl, CXL_HDM_DECODER0_CTRL, UIO);
++    } else {
++        ctrl = FIELD_DP32(ctrl, CXL_HDM_DECODER0_CTRL, UIO, 0);
++    }
+ 
+     /* Get interleave details for chmu */
+     ig = FIELD_EX32(ctrl, CXL_HDM_DECODER0_CTRL, IG);
+@@ -1512,7 +1517,8 @@ void ct3d_reset(DeviceState *dev)
+     pcie_cap_fill_link_ep_usp(PCI_DEVICE(dev), ct3d->width, ct3d->speed,
+                               ct3d->flitmode);
+     cxl_component_register_init_common(reg_state, write_msk,
+-                                       CXL2_TYPE3_DEVICE, ct3d->hdmdb);
++                                       CXL2_TYPE3_DEVICE, ct3d->hdmdb,
++                                       ct3d->uio_capable);
+     cxl_device_register_init_t3(ct3d, CXL_T3_MSIX_MBOX);
+ 
+     /*
+@@ -1552,6 +1558,7 @@ static const Property ct3_props[] = {
+                                 width, PCIE_LINK_WIDTH_16),
+     DEFINE_PROP_BOOL("x-256b-flit", CXLType3Dev, flitmode, false),
+     DEFINE_PROP_BOOL("hdm-db", CXLType3Dev, hdmdb, false),
++    DEFINE_PROP_BOOL("x-uio", CXLType3Dev, uio_capable, false),
+     DEFINE_PROP_UINT16("chmu-port", CXLType3Dev, cxl_dstate.chmu[0].port, 0),
+ };
+ 
+diff --git a/hw/pci-bridge/cxl_downstream.c b/hw/pci-bridge/cxl_downstream.c
+index 6f6f332c07..e0fa6cfdc4 100644
+--- a/hw/pci-bridge/cxl_downstream.c
++++ b/hw/pci-bridge/cxl_downstream.c
+@@ -42,7 +42,7 @@ static void latch_registers(CXLDownstreamPort *dsp)
+     uint32_t *write_msk = dsp->cxl_cstate.crb.cache_mem_regs_write_mask;
+ 
+     cxl_component_register_init_common(reg_state, write_msk,
+-                                       CXL2_DOWNSTREAM_PORT, true);
++                                       CXL2_DOWNSTREAM_PORT, true, false);
+ }
+ 
+ /* TODO: Look at sharing this code across all CXL port types */
+diff --git a/hw/pci-bridge/cxl_root_port.c b/hw/pci-bridge/cxl_root_port.c
+index 83fb5968b8..4be2b400f9 100644
+--- a/hw/pci-bridge/cxl_root_port.c
++++ b/hw/pci-bridge/cxl_root_port.c
+@@ -108,7 +108,7 @@ static void latch_registers(CXLRootPort *crp)
+     uint32_t *write_msk = crp->cxl_cstate.crb.cache_mem_regs_write_mask;
+ 
+     cxl_component_register_init_common(reg_state, write_msk, CXL2_ROOT_PORT,
+-                                       true);
++                                       true, crp->uio_capable);
+ }
+ 
+ static void build_dvsecs(PCIDevice *d, CXLComponentState *cxl)
+diff --git a/hw/pci-bridge/cxl_upstream.c b/hw/pci-bridge/cxl_upstream.c
+index dadad3e15c..a75d10e7b4 100644
+--- a/hw/pci-bridge/cxl_upstream.c
++++ b/hw/pci-bridge/cxl_upstream.c
+@@ -136,7 +136,8 @@ static void latch_registers(CXLUpstreamPort *usp)
+     uint32_t *write_msk = usp->cxl_cstate.crb.cache_mem_regs_write_mask;
+ 
+     cxl_component_register_init_common(reg_state, write_msk,
+-                                       CXL2_UPSTREAM_PORT, usp->flitmode);
++                                       CXL2_UPSTREAM_PORT, usp->flitmode,
++                                       usp->uio_capable);
+     ARRAY_FIELD_DP32(reg_state, CXL_HDM_DECODER_CAPABILITY, TARGET_COUNT, 8);
+ }
+ 
+diff --git a/hw/pci-bridge/pci_expander_bridge.c b/hw/pci-bridge/pci_expander_bridge.c
+index 25dfee6a9b..18b61eca20 100644
+--- a/hw/pci-bridge/pci_expander_bridge.c
++++ b/hw/pci-bridge/pci_expander_bridge.c
+@@ -301,7 +301,8 @@ static void pxb_cxl_dev_reset(DeviceState *dev)
+     uint32_t *write_msk = cxl_cstate->crb.cache_mem_regs_write_mask;
+     int dsp_count = 0;
+ 
+-    cxl_component_register_init_common(reg_state, write_msk, CXL2_RC, false);
++    cxl_component_register_init_common(reg_state, write_msk, CXL2_RC, false,
++                                       false);
+     /*
+      * The CXL specification allows for host bridges with no HDM decoders
+      * if they only have a single root port.
+diff --git a/include/hw/cxl/cxl_component.h b/include/hw/cxl/cxl_component.h
+index d734f88d2c..662fdb0833 100644
+--- a/include/hw/cxl/cxl_component.h
++++ b/include/hw/cxl/cxl_component.h
+@@ -315,7 +315,7 @@ void cxl_component_register_block_init(Object *obj,
+                                        const char *type);
+ void cxl_component_register_init_common(uint32_t *reg_state,
+                                         uint32_t *write_msk,
+-                                        enum reg_type type, bool bi);
++                                        enum reg_type type, bool bi, bool uio);
+ 
+ void cxl_component_create_dvsec(CXLComponentState *cxl_cstate,
+                                 enum reg_type cxl_dev_type, uint16_t length,
+diff --git a/include/hw/cxl/cxl_device.h b/include/hw/cxl/cxl_device.h
+index 3b5dcb5aec..20a1a90014 100644
+--- a/include/hw/cxl/cxl_device.h
++++ b/include/hw/cxl/cxl_device.h
+@@ -883,6 +883,8 @@ struct CXLType3Dev {
+     PCIExpLinkSpeed speed;
+     PCIExpLinkWidth width;
+     bool flitmode;
++    bool uio_capable;
++    bool uio_enabled;
+ 
+     /* DOE */
+     DOECap doe_cdat;
+-- 
+2.34.1
 
 
