@@ -4,91 +4,109 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 77623CD8CAA
-	for <qemu-devel@archiver.kernel.org>; Tue,  9 Jun 2026 14:02:24 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9EC4CCD8CAA
+	for <qemu-devel@archiver.kernel.org>; Tue,  9 Jun 2026 14:02:56 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wWx0G-0001PI-9C; Tue, 09 Jun 2026 10:00:28 -0400
+	id 1wWx2Z-0003O4-0Z; Tue, 09 Jun 2026 10:02:51 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1wWx06-0001NI-Ez
- for qemu-devel@nongnu.org; Tue, 09 Jun 2026 10:00:18 -0400
-Received: from mail-wm1-x32a.google.com ([2a00:1450:4864:20::32a])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1wWx03-0004K5-Jb
- for qemu-devel@nongnu.org; Tue, 09 Jun 2026 10:00:17 -0400
-Received: by mail-wm1-x32a.google.com with SMTP id
- 5b1f17b1804b1-490cf322ed0so19434565e9.1
- for <qemu-devel@nongnu.org>; Tue, 09 Jun 2026 07:00:15 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <leonardi@redhat.com>)
+ id 1wWx2B-0003DM-IP
+ for qemu-devel@nongnu.org; Tue, 09 Jun 2026 10:02:36 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <leonardi@redhat.com>)
+ id 1wWx29-0005Sr-PQ
+ for qemu-devel@nongnu.org; Tue, 09 Jun 2026 10:02:27 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1781013743;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=ljpn1/B0V7Hz3sE+FyD+JHRLoi83cYoioZk/6VTfguE=;
+ b=AovWtipjtVV46q5U4YwNPcGFoYGckL/dRmzVfAeuZi+jFPStIdO+UX0XG2+oTEybHd2jMd
+ RjlWZXOZ5s0T/n4IiFY74gp8ootQUaBX2orf787ya7o22vCZ1xVpbZAQOzFwMIZBEFu3Su
+ zwaRxxnnPC5LY0wRToGJp2nf3hIPv+Q=
+Received: from mail-wm1-f72.google.com (mail-wm1-f72.google.com
+ [209.85.128.72]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-399-KdFPvQfiMaCA518oeLnyfg-1; Tue, 09 Jun 2026 10:02:22 -0400
+X-MC-Unique: KdFPvQfiMaCA518oeLnyfg-1
+X-Mimecast-MFC-AGG-ID: KdFPvQfiMaCA518oeLnyfg_1781013741
+Received: by mail-wm1-f72.google.com with SMTP id
+ 5b1f17b1804b1-490b8adf8b8so51159505e9.0
+ for <qemu-devel@nongnu.org>; Tue, 09 Jun 2026 07:02:22 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1781013614; x=1781618414; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=1oXXuTiD5DdKEmPN02nna8Eq1chJAQm4tErgo+1RAZg=;
- b=i6GtFXNEGkOO9wREhfj8NEG5EuhOP3aw/3FbWShl4UUHvayyOmMKhoXDIFR4/hET5s
- u6NoWQHx+t5dWDu7xkU4o6xudDbIcgigEXi65b43+F1VTZEWzLoVUA6F8xkddu977bQA
- TCjTALxEHRHTm/L8nh8zvpCcc+g6Uk+4Zvb5QeIJw/gWnnPztymEy9rNrCiNP6XVGu0u
- qSIqgnlNpXdJgjyCNYocprFVbzIO/ejcI+MwtdRrf+47zyPzx+AuDF+m6qe1deXnZXJ4
- FmD8JXrUirup0SF9laRfmb131n/cBdHbpJe4sn6ZWjIKiUETaPpFMBZn5GTNeQE/wHop
- D4fg==
+ d=redhat.com; s=google; t=1781013741; x=1781618541; darn=nongnu.org;
+ h=in-reply-to:content-transfer-encoding:content-disposition
+ :mime-version:references:message-id:subject:cc:to:from:date:from:to
+ :cc:subject:date:message-id:reply-to;
+ bh=ljpn1/B0V7Hz3sE+FyD+JHRLoi83cYoioZk/6VTfguE=;
+ b=nXyFexNKy84QviXBq1vOhuPoiZvZmJyrXGwdNzGCgvDXTEL9ilSaRh0tWdmwGkYVeZ
+ 0DO6PMLppvhon5xgLjA4OVeM8Z0xWh9zDKB0CRKdwwY3vQHRuBxDskUh7H73OZ08xnIs
+ IqFg6u4f2C39M4yjZ16thOsjGrcs98vQ3CtzocZy4M9gnlgEa2HN8OE6JnPsLs+l1ILW
+ iRWOE9w4VI2fUuw1xx/VXBd5rsjqkouLY+m9cvBp97SAQk4BdJ3Kyw2LGBnPh2cn6cYt
+ fK/6SH4bma7jI9fAI3Rl9LK8HFJkkkqoCsBtU/yp/BRLn3cOtCaD0NTACherpqQcmqJW
+ P8vw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1781013614; x=1781618414;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to;
- bh=1oXXuTiD5DdKEmPN02nna8Eq1chJAQm4tErgo+1RAZg=;
- b=dstbZPjS/qzT8mILWvBc/LEA8oHFcBCVFIqRfvZe7k1ZvrFmgRjTRnb1E0lVkXMtOR
- RgCNYpGK2q3pJzoLxGbp2+YzkU49Klo0ZloPcoluBcxDPrSQxTOkvrvnmuOVyLRjcKme
- Ysd/12dEANX7piMs2L/I5Ef2zfSfxJmj6qYQ4lfgpuWIgbv/8cQ8+elGC6bLDTpqUrNN
- eHtDve3vQo+cKU6m00EW3CdgwPFrTHg+NqVooiJIYd2+k0oSfLYRq6EzfYR4j+skgDbQ
- Kw5XIjpyzqZlQ2mXYB48Ta28X7FDkMos10VBMYYl5wz0NfYZ5e75fHOd2EBmSZdkSLoY
- ZWSg==
-X-Gm-Message-State: AOJu0YyKQpvG1PUe9GkrkIcNKwpQ9DyR62INOs4kxAP/+9PdRpVDF4dH
- 4Gch+oaZ46tv6qWKnd0D7+vuqo4tL+EhVQEo588BFS0i/L17RncUrD8/XxbBy+eEaD0=
-X-Gm-Gg: Acq92OH6q32/jMHpdP5lXDtG5+MotwZYUP9ye8meUlDn2CYVlR6S97292D7Qhw7CWf6
- YjN4Ks0+lxbOlIjD8f5XboAA70YagI4Dt1OkSiQ75yk0EbRVHmrj4DOldifGDBk3T5UURNzeUOL
- w1BNUwSL6102fcAOB5P4mj+VqWNOqkNUn4mdLJw4fQgbsw9IvwId8TJZAKAE5XrYS3G0lsrivCS
- 8qQ2LVf3lOVlL++TmgZVbaKZDYhycgcLuewadEw6QpmUXPfk8qgogJJ+MOtFjECWDiU57onVm7i
- CDSoj6tOBvTN40zKeGdRsXMYK/2sWmHkZOoJX5/I047RN4uhe/xW8b9cdD5r4wfGWmWa5xxKEuL
- CbTYTzyohCTQUzmiPytlHXyRM4yn0tMBiy86RjmFsoMjnV51TSoPJ9smovRHqqzWO0gNUS/nIPh
- 2GDYzeq7eOMQAarpCSP/yJniwtQcBJncndbg==
-X-Received: by 2002:a05:600c:190b:b0:490:9804:afdc with SMTP id
- 5b1f17b1804b1-490c25ff35dmr352633735e9.23.1781013613566; 
- Tue, 09 Jun 2026 07:00:13 -0700 (PDT)
-Received: from draig.lan ([185.124.0.195]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-490bc3cc140sm576722315e9.9.2026.06.09.07.00.09
+ d=1e100.net; s=20251104; t=1781013741; x=1781618541;
+ h=in-reply-to:content-transfer-encoding:content-disposition
+ :mime-version:references:message-id:subject:cc:to:from:date:x-gm-gg
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=ljpn1/B0V7Hz3sE+FyD+JHRLoi83cYoioZk/6VTfguE=;
+ b=Pzcyv0niv7Q7+ucPuy50U5TUdLdmxII+Ab3FD/puxBWqHIAQffiC+/9RXbKM75Cibt
+ vSaFuHLpduwC8dPCOW8WQXjb62OxA3+lFJZPL2mz6Rrlkeb/+VTDyhBu5rwwTInxd247
+ ivLQ6nIRYDQDCHeDZ3tmmTipATUST3+BDpWJw7NhDrlEneuDC2KX9U0YBFEyN7HGG6sK
+ 6MXfaNbGTxNQrvNgQkh++oQ3maqplQ90GW1X3URt7n3L9J5ET5noKsXjdcqtI/cjzOXF
+ 4Dhv9rTJtXG0VDGjuzi8quaptM0G6nVH43MtG5+grS452ptXyu3vRu8Croifr/M53WH9
+ +0Dg==
+X-Gm-Message-State: AOJu0YzkjdKp21J16ry+rc6+aWA0vdPW75P3q0BswEOqmegYeEbPTbft
+ 2KdIpzBFQN0hfHevUpCA7LERdNZFRyisE1WW4CFW3sLSqgchbzd/69ZWCuPE1T/3PDuKFZKls1u
+ nVjDnnY3u1aM7TCmLSNCuHdd4tXEIPH5p69Tvjav9XbEp+DKmpZwq5XJs
+X-Gm-Gg: Acq92OGEGEzNp1NtYn011NTLYMg87BtGdCc/cSU5zvtAQfOJEpUG3phtNK22MxPzJME
+ YgmQAml9eAm4+1j2JSxS1T1JTDV/WvG1u5+DRf/WzIXbNG9IwA1+lZ6vH8bBgZOj6X6yClLvuVy
+ 9qdRKmb+naYmgIhnF2f9d8iJCWtzYw6vqj4tbty5Y9LW/Oa8EAJAlsn5VysyjZ95Tl5JD/AiS5O
+ ahCNk816dKM1238nsNj+w/8E9onpYj/nK6TKmVxz/5FdFzFzmdw2EzK3agX1Gy/5d7/hZVU1RGy
+ vzTdf4vqD1df8rYO+a/oWTnel+/pBtKVrsM299UawuvpMz7De6qC/sL1Xo+zV8meehj94/JaoTH
+ KW38ZErO2e3GuFqVLwp5bnDAFj+rAUXf5HhYjp5+bK0W6jg3LoZHqYvIGxAUHRLTerNTAyA==
+X-Received: by 2002:a05:600c:4e94:b0:490:9588:bdae with SMTP id
+ 5b1f17b1804b1-490c25e30e0mr342363365e9.18.1781013740875; 
+ Tue, 09 Jun 2026 07:02:20 -0700 (PDT)
+X-Received: by 2002:a05:600c:4e94:b0:490:9588:bdae with SMTP id
+ 5b1f17b1804b1-490c25e30e0mr342362775e9.18.1781013740330; 
+ Tue, 09 Jun 2026 07:02:20 -0700 (PDT)
+Received: from leonardi-redhat ([176.206.19.176])
+ by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-490bc3e59f5sm512624415e9.14.2026.06.09.07.02.19
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 09 Jun 2026 07:00:10 -0700 (PDT)
-Received: from draig.lan (localhost [IPv6:::1])
- by draig.lan (Postfix) with ESMTP id BBF115FC69;
- Tue, 09 Jun 2026 15:00:08 +0100 (BST)
-From: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>
-To: qemu-devel@nongnu.org
-Cc: qemu-arm@nongnu.org, Peter Maydell <peter.maydell@linaro.org>,
- Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
- =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>
-Subject: [PATCH 3/5] target/arm: trigger timer recalc on SCR:ECVEN change
-Date: Tue,  9 Jun 2026 15:00:06 +0100
-Message-ID: <20260609140008.3206970-4-alex.bennee@linaro.org>
-X-Mailer: git-send-email 2.47.3
-In-Reply-To: <20260609140008.3206970-1-alex.bennee@linaro.org>
-References: <20260609140008.3206970-1-alex.bennee@linaro.org>
+ Tue, 09 Jun 2026 07:02:19 -0700 (PDT)
+Date: Tue, 9 Jun 2026 16:02:17 +0200
+From: Luigi Leonardi <leonardi@redhat.com>
+To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
+Cc: qemu-devel@nongnu.org, Gerd Hoffmann <kraxel@redhat.com>, 
+ Stefano Garzarella <sgarzare@redhat.com>, Ani Sinha <anisinha@redhat.com>, 
+ Paolo Bonzini <pbonzini@redhat.com>
+Subject: Re: [PATCH] igvm: populate errp in stub functions
+Message-ID: <aigUdNYq0YRtAZKt@leonardi-redhat>
+References: <20260609-igvm_stubs-v1-1-5f39d6e0db4a@redhat.com>
+ <aigULaw73khPNxoR@redhat.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset=iso-8859-1; format=flowed
+Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32a;
- envelope-from=alex.bennee@linaro.org; helo=mail-wm1-x32a.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+In-Reply-To: <aigULaw73khPNxoR@redhat.com>
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=leonardi@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -24
+X-Spam_score: -2.5
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.445,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -104,43 +122,78 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Toggling the ECVEN state affects the offset calculated in
-gt_phys_raw_cnt_offset so we should trigger a re-calculation on its
-change.
+Hi Daniel,
 
-Signed-off-by: Alex BennÃ©e <alex.bennee@linaro.org>
----
- target/arm/helper.c | 9 +++++++++
- 1 file changed, 9 insertions(+)
+On Tue, Jun 09, 2026 at 02:25:01PM +0100, Daniel P. Berrangé wrote:
+>On Tue, Jun 09, 2026 at 03:20:14PM +0200, Luigi Leonardi wrote:
+>> Use error_setg() to report that IGVM is not available, matching
+>> the pattern used by other stubs in the tree.
+>>
+>> Suggested-by: Stefano Garzarella <sgarzare@redhat.com>
+>> Signed-off-by: Luigi Leonardi <leonardi@redhat.com>
+>> ---
+>>  stubs/igvm.c | 3 +++
+>>  1 file changed, 3 insertions(+)
+>>
+>> diff --git a/stubs/igvm.c b/stubs/igvm.c
+>> index 9e9f683fc9..dfb85eb548 100644
+>> --- a/stubs/igvm.c
+>> +++ b/stubs/igvm.c
+>> @@ -17,15 +17,18 @@ int qigvm_x86_get_mem_map_entry(int index,
+>>                                  ConfidentialGuestMemoryMapEntry *entry,
+>>                                  Error **errp)
+>>  {
+>> +    error_setg(errp, "IGVM not supported on this platform");
+>>      return -1;
+>>  }
+>>
+>>  int qigvm_x86_set_vp_context(void *data, int index, Error **errp)
+>>  {
+>> +    error_setg(errp, "IGVM not supported on this platform");
+>>      return -1;
+>>  }
+>>
+>>  int qigvm_directive_madt(QIgvm *ctx, const uint8_t *header_data, Error **errp)
+>>  {
+>> +    error_setg(errp, "IGVM not supported on this platform");
+>>      return -1;
+>>  }
+>
+>This is not wrong per-se, so on that  basis
+>
+>  Reviewed-by: Daniel P. Berrangé <berrange@redhat.com>
+>
+>but are any of these stubs actually reachable when IGVM is not
+>enabled in the build ? Usually with stubs we find that one
+>or two methods are the primary entrypoints which must return
+>an error, at which point everything else becomes unreachable.
+>The latter cases can just be g_assert_not_reached() as a sanity
+>check that some unexpected codepath isn't calling in without
+>checking status earlier. Those would thus would not need
+>error_setg, nor a 'return' statement.
 
-diff --git a/target/arm/helper.c b/target/arm/helper.c
-index 5c640853060..22f5117ee54 100644
---- a/target/arm/helper.c
-+++ b/target/arm/helper.c
-@@ -37,6 +37,9 @@
- #include "qemu/plugin.h"
- 
- static void switch_mode(CPUARMState *env, int mode);
-+#ifndef CONFIG_USER_ONLY
-+static void gt_recalc_timer(ARMCPU *cpu, int timeridx);
-+#endif
- 
- int compare_u64(const void *a, const void *b)
- {
-@@ -821,6 +824,12 @@ static void scr_write(CPUARMState *env, const ARMCPRegInfo *ri, uint64_t value)
-     changed = env->cp15.scr_el3 ^ value;
-     env->cp15.scr_el3 = value;
- 
-+#ifndef CONFIG_USER_ONLY
-+    if (changed & SCR_ECVEN) {
-+        gt_recalc_timer(cpu, GTIMER_PHYS);
-+    }
-+#endif
-+
-     /*
-      * If SCR_EL3.{NS,NSE} changes, i.e. change of security state,
-      * we must invalidate all TLBs below EL3.
--- 
-2.47.3
+No, when IGVM is not enabled in the build it's not possible to trigger
+any of these stubs. On top of that, I don't think it is possible to trigger
+these stubs even when igvm is enabled. This is because the only architecture
+that implements igvm support in qemu is x86.
+
+To give more context: the igvm code is split between `backends/igvm.c` and
+`target/i386/igvm.c`. The former contains arch-independent functions,
+while the latter, x86 related functions.
+
+Therefore, stubs will only become relevant when new architectures will be
+supported.
+
+I'm not sure about using asserts here, because with this patch [1] we'll
+handle optional igvm directives. So, when we support aarch64 in igvm,
+we could have some directives (eg: `IGVM_VHT_MADT`) that are
+implemented for one architecture but not for a different one, resulting
+in the stub being hit. So, if that directive is marked as optional in the
+igvm file, we should not crash qemu.
+
+[1] https://lore.kernel.org/all/20260609-igvm_optional-v2-2-b1f1f08dc40e@redhat.com/
+
+HTH,
+Luigi
 
 
