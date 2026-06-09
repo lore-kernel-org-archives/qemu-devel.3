@@ -4,104 +4,56 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id EFFB0CD8CAA
-	for <qemu-devel@archiver.kernel.org>; Tue,  9 Jun 2026 14:52:42 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 70C9FCD8CAA
+	for <qemu-devel@archiver.kernel.org>; Tue,  9 Jun 2026 14:55:23 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wWxoI-0003aR-BR; Tue, 09 Jun 2026 10:52:10 -0400
+	id 1wWxr4-0004qA-9Z; Tue, 09 Jun 2026 10:55:02 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <titusr@google.com>) id 1wWxoG-0003ZL-8g
- for qemu-devel@nongnu.org; Tue, 09 Jun 2026 10:52:08 -0400
-Received: from mail-qt1-x82a.google.com ([2607:f8b0:4864:20::82a])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <titusr@google.com>) id 1wWxoE-0004ak-I3
- for qemu-devel@nongnu.org; Tue, 09 Jun 2026 10:52:07 -0400
-Received: by mail-qt1-x82a.google.com with SMTP id
- d75a77b69052e-51765531803so2685651cf.0
- for <qemu-devel@nongnu.org>; Tue, 09 Jun 2026 07:52:05 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1781016724; cv=none;
- d=google.com; s=arc-20240605;
- b=COJ9ejJhjiqIFU7pUyNWHaZU6ulpZlIVH76zt3NIK3WB6985r1oDVxyBNTitEFOBiV
- v63J9yMNUP5dKzyq7Qxugs6JD1y6pGQtS/uSfSEmckuclO1QiU5Qg+aoYj/Z/br5kXVn
- rqH/m/go6UwOenkZgelwRvekfrM++HZkVmw2z8cinGjlwpOHJjqwQJ+idqN5zsXvWbHL
- /7fhcD4xjjsxiuvCVJwI9zPYIC5jkrOoMMvIM7zh6TXDLQvK2ay3oG+Gp0pQilhWpv2T
- 437g6gDWkOGVBvtw02PcOmHkH0HmaZ3SiXkkURktEGWTWJUgfBib24+aW+mk6CQOZm6u
- 1YYQ==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
- s=arc-20240605; 
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:dkim-signature;
- bh=mT7L+1cUtlPaahWEj6bhvOX6q91ZJhOLDtmYP2cxvEQ=;
- fh=NfmIKIb3UU8XuMY/9cWO9YgUz4g4wTahfFOqcpRp9GA=;
- b=Yt8ZD5pGPbhgHq4YSjI35KfUOzwNdGM+MIGpqM1T+IPzekeAZvAS7IF4wJOvxBDETp
- TB2xnR8Tv9wSF1PqsH+jFyFC6aTSfmcc8u1MdU6PTOOhPsddmTeJRA3oTbNChDF+pYX9
- cGYmjv1ez29UYegyQRCvGUCpMhkchiG1Pkocfh5U1OFBZ8uJWAWdEJQPR4Onx41NT1xL
- +JuqcoQTQSd52Mfap2vDDC1RPrICcTlVVXG9I82TWFA75O5EVIIpunUeE8xel7fihg9w
- PnJLrwVWHZ+Mhy5bcb1Ujd/yTuz8UmJVs6km5skWiX0lR1HWw1hx6N6AHig5wS5yI79a
- QoMw==; darn=nongnu.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=google.com; s=20251104; t=1781016724; x=1781621524; darn=nongnu.org;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=mT7L+1cUtlPaahWEj6bhvOX6q91ZJhOLDtmYP2cxvEQ=;
- b=guptycxe07D+Q47rkyJz8E6G1ni5nvujk9MaDtRU9zxbuC632g03ATblufsNM7Nqgo
- Chnak9yjXXvinFHV4DlVziqv08nreyXkmLLhIRn4W+0CHmJri90QB3x8E6bi0G0sNriv
- npLlX2SH1Htp9qpVm9Ydn6qFreiE/dqWHuhhmDu3Nu32K9zw4R4eDd2S9vMG0gmNaDMW
- wNMY+EBSdtLjr2S0amoLLPzo2agmPLXVFNFo7cTx6J2ezyQFzw+elAz4iZC5F9Je8RFU
- 1NKPmbMYzqYSlPZbc8VMNUD7o0R7HKAkWUEUBvNsUGX5vdDOkIqFtr46Rz9NdbLi3Ftj
- 9HOQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1781016724; x=1781621524;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=mT7L+1cUtlPaahWEj6bhvOX6q91ZJhOLDtmYP2cxvEQ=;
- b=DKaitLt4ZtCjvWi7bMs9n122ZfnNxRimo5ctUWQ+7ir/s3LFe61xTU2aKfDqyTmvg4
- Sl01GSG8AhPWHXmBWv/4fhvPYuTcyxK+LxXldCyRXikjXqDhhCyMSB7MplfEVMp7A5pN
- b7zowtYbnFyhRV/uL+3OZlyk+CfsGK0J4h0ts9zahfOmzWVKlhQrHFyTwqsXlhB80Ua+
- KOhE++r9fyEOzVU1ZdSNS+xn76cLgSj9k4uvYvrU+sMsQEnJS70kbhNOC6iycW/Al/FN
- 3xFYMjDQDIf6uh9rrwIelA6gWCwlh+uYHL9sUE+l3z4hC4aMIBoijg9neLF3LbAzkz7j
- m/WA==
-X-Forwarded-Encrypted: i=1;
- AFNElJ/3PMCXak3eowoguO9iFgS3ip2o0fnn6g8LW38IuONWWHC6EShRex4vUtn0KwsYsye2XuNsOBIxG+AR@nongnu.org
-X-Gm-Message-State: AOJu0YxVXJTYrIl0jkE6S64jSs5GzJEH6+4LZoYKE4v4hy65hBukrj1a
- BscLznNpBI1T5aJzL5yOVCs/qZkSjI+4Zeedgq7VPkP1OyBfDVuKxrWRS09LTdXVJx1j747Y4E9
- NqMs4I8zmZY95A3WwkuJEBHe7ayKV0F/JUe5DaVFQ
-X-Gm-Gg: Acq92OH8bw8FHtjmqwbDOqJIh7E+tdvCBrScHb9FWT+eCn7AUpRwV9oAWd8toR5UPY9
- aZu8VAfgfgmvfqnYjNm0tSLS3zCxiC8q68Ck2fBEHAVooEz8rdTQ6RXMQNNz0VymbO4bmc5u2Tx
- 1miHnK/R+aFcui3YUjT8HDDHi8wncxQXh9DRS6tq2iYCZ7JtxZq2SHAWkeFVfE/oKsxpyhepMGK
- 98Zhy2YU8keKLhG9prmKAYpi8vRd57tdj8Oj0G6ZYepNpTu9PEtwRkuZmPNPAwyDbl0eri/nmIn
- Idi4O8i3iC/XD9dvqaRsBDWBfTYvY39usS+oYUZhzroSKOANAQ==
-X-Received: by 2002:ac8:6610:0:b0:510:f9b:fb5f with SMTP id
- d75a77b69052e-51798298a3cmr32128971cf.16.1781016723550; Tue, 09 Jun 2026
- 07:52:03 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <jic23@kernel.org>) id 1wWxqv-0004kq-QS
+ for qemu-devel@nongnu.org; Tue, 09 Jun 2026 10:54:54 -0400
+Received: from tor.source.kernel.org ([2600:3c04:e001:324:0:1991:8:25])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <jic23@kernel.org>) id 1wWxqo-0005yU-K2
+ for qemu-devel@nongnu.org; Tue, 09 Jun 2026 10:54:51 -0400
+Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
+ by tor.source.kernel.org (Postfix) with ESMTP id 54B5F601D6;
+ Tue,  9 Jun 2026 14:54:27 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 126CD1F00893;
+ Tue,  9 Jun 2026 14:54:25 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
+ s=k20260515; t=1781016867;
+ bh=zwg1yz5SrCe8MtHJi6HoAs0QMdhtoo3YWLbvSz5VFSc=;
+ h=Date:From:To:Cc:Subject:In-Reply-To:References;
+ b=gZUNNH7X1f52bz9PZgwDgQ3HrX5aFDoJXGT+X0ekpvyumk2gzDNPgLJ+II/SW2r7q
+ Jx9Ht3kuqFrj4Q5u0BCnrf7Q0MUJXEW+aax8Sykr7KlntLV9jMcZmASvcog6PxQZES
+ GnsfUsmkujJVC08uBjSGZN/Lhtw8WSoIudv7LmPYYCJHTW1K4NpX8eLYkdeu1I4Cgc
+ ZcQnTVhnqHbj1em5C8p3jKiV8/rg08fFSDor0POnIM2k+xQC+I6L5lA8NDWSMri3Ql
+ B/gWx70olNFbYgmaMfQRB2odZQYmxPq3TvIghciOKa48AVdocr1chjgrDJPxNdHFYT
+ fwgnmPTPS5FPQ==
+Date: Tue, 9 Jun 2026 15:54:22 +0100
+From: Jonathan Cameron <jic23@kernel.org>
+To: Junjie Cao <junjie.cao@intel.com>
+Cc: jonathan.cameron@huawei.com, fan.ni@samsung.com, qemu-devel@nongnu.org
+Subject: Re: [PATCH 2/3] hw/cxl: trace HDM decoder commit and CDAT load
+Message-ID: <20260609155422.4358e34a@jic23-huawei>
+In-Reply-To: <20260603013420.904749-3-junjie.cao@intel.com>
+References: <20260603013420.904749-1-junjie.cao@intel.com>
+ <20260603013420.904749-3-junjie.cao@intel.com>
+X-Mailer: Claws Mail 4.4.0 (GTK 3.24.52; x86_64-pc-linux-gnu)
 MIME-Version: 1.0
-References: <20260609105626.1038690-1-thuth@redhat.com>
- <CAFEAcA9O6b02VMuto8VzaEsVi3zTqNtQKG_RcMaPnNdPXGUBhw@mail.gmail.com>
-In-Reply-To: <CAFEAcA9O6b02VMuto8VzaEsVi3zTqNtQKG_RcMaPnNdPXGUBhw@mail.gmail.com>
-From: Titus Rwantare <titusr@google.com>
-Date: Tue, 9 Jun 2026 07:51:20 -0700
-X-Gm-Features: AVVi8CcM3axo7mAEJOZp-nioF3imcVzHW2yLICbkWxeE6AKaOP-rr_nCCejynOc
-Message-ID: <CAMvPwGpvpHD+Sx-HZR4FFMJB+W8Rk8LoU0256Q=vwKAdC96HSQ@mail.gmail.com>
-Subject: Re: [PATCH] hw/i2c/pmbus_device: Fix a possible crash when requesting
- too many bytes
-To: Peter Maydell <peter.maydell@linaro.org>
-Cc: Thomas Huth <thuth@redhat.com>, qemu-devel@nongnu.org,
- qemu-trivial@nongnu.org, qemu-arm@nongnu.org
-Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2607:f8b0:4864:20::82a;
- envelope-from=titusr@google.com; helo=mail-qt1-x82a.google.com
-X-Spam_score_int: -175
-X-Spam_score: -17.6
-X-Spam_bar: -----------------
-X-Spam_report: (-17.6 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_MED=-0.001,
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2600:3c04:e001:324:0:1991:8:25;
+ envelope-from=jic23@kernel.org; helo=tor.source.kernel.org
+X-Spam_score_int: -24
+X-Spam_score: -2.5
+X-Spam_bar: --
+X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.445,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- ENV_AND_HDR_SPF_MATCH=-0.5, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001, USER_IN_DEF_DKIM_WL=-7.5,
- USER_IN_DEF_SPF_WL=-7.5 autolearn=ham autolearn_force=no
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -117,69 +69,146 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, 9 Jun 2026 at 04:01, Peter Maydell <peter.maydell@linaro.org> wrote:
->
-> On Tue, 9 Jun 2026 at 11:56, Thomas Huth <thuth@redhat.com> wrote:
-> >
-> > From: Thomas Huth <thuth@redhat.com>
-> >
-> > The pmbus_send_string() function contains an assert() statement that
-> > can be triggered by the guest code when requesting too many data
-> > without reading from the device in between. This should not be possible.
-> > pmbus_send() already has a similar logic, but it simply ignores the
-> > error after logging a message with qemu_log_mask(), so do the same now
-> > in pmbus_send_string() to fix the issue.
-> >
-> > Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/3388
-> > Signed-off-by: Thomas Huth <thuth@redhat.com>
-> > ---
-> >  hw/i2c/pmbus_device.c | 7 ++++++-
-> >  1 file changed, 6 insertions(+), 1 deletion(-)
-> >
-> > diff --git a/hw/i2c/pmbus_device.c b/hw/i2c/pmbus_device.c
-> > index b1f9843f52e..6aa608a2998 100644
-> > --- a/hw/i2c/pmbus_device.c
-> > +++ b/hw/i2c/pmbus_device.c
-> > @@ -104,7 +104,12 @@ void pmbus_send_string(PMBusDevice *pmdev, const char *data)
-> >      }
-> >
-> >      size_t len = strlen(data);
-> > -    g_assert(len + pmdev->out_buf_len < SMBUS_DATA_MAX_LEN);
-> > +    if (len + pmdev->out_buf_len >= SMBUS_DATA_MAX_LEN) {
-> > +        qemu_log_mask(LOG_GUEST_ERROR,
-> > +                      "%s: requested too much data from PMBus device\n",
-> > +                      __func__);
-> > +        return;
-> > +    }
->
-> I had a look at this bug earlier, but was not sure that this is the
-> right thing. What happens is that the guest does something that
-> causes the device to queue up data X ready for the guest to
-> read, but then instead of reading it, the guest does another
-> "I would like data X please" action. My guess is that the way
-> the hardware handles this is probably not "add the second
-> copy of data X after the first one". Perhaps it is "drop the
-> data the guest didn't read, so the next guest read gets the
-> second lot of data, not the first". But maybe the spec really
-> does say "you can do things in the order 'ask for A, ask for
-> B, read data for A, read data for B".
->
-> I couldn't conveniently find the pmbus spec to find out what
-> the hardware is supposed to do here. We need some input from
-> somebody who knows about pmbus.
->
-> thanks
-> -- PMM
+On Wed,  3 Jun 2026 09:34:19 +0800
+Junjie Cao <junjie.cao@intel.com> wrote:
 
-Queueing reads are an implementation detail I decided on, not part of
-the spec. How the data gets discarded is up to the device
-manufacturer.
-There's a separate issue here though that I have a fix for.
-SMBUS_DATA_MAX_LEN in QEMU is for an older SMBus version and it needs
-to be increased.
+> HDM decoder programming and CDAT table ingestion are two
+> debugging-prone paths in the CXL stack: the former drives
+> address-decoding behaviour, the latter is parsed before any guest
+> interaction so wrong inputs surface late.
+> 
+> Add four trace points:
+> 
+>   * cxl_hdm_decoder_write    - guest write to a decoder CTRL register,
+>                                capturing the raw value and whether a
+>                                commit is being requested
+>   * cxl_hdm_decoder_commit   - actual commit, with the resolved base,
+>                                size, IW and IG fields
+>   * cxl_cdat_init            - CDAT initialisation, distinguishing the
+>                                file-backed vs built-in source
+>   * cxl_cdat_loaded          - successful file load with size and
+>                                number of entries parsed
 
-I can set aside some time to bring the SMBus implementation up to
-date, but for now increasing it to 255 will put QEMU in line SMBus
-v3.3.
--Titus
+The 'and' in the commit log suggests to me this is two largely unrelated
+things. Can we have one patch for hdm decoder actions and one for
+cdat actions.  I suspect the hdm decoder one will at least have
+some fuzz due to Alireza's work.  Ideally I'd like to get that in first
+given it's usefulness.  (not the DCD case probably as that may need more
+review but the static fast path case).
+
+I'm not really convinced the cdat ones provide as much value as the
+others you have added. Perhaps provide more info on why you find that one
+useful - unless we have a silly bug the source should be obvious as it
+is commandline controlled for instance.
+
+> 
+> The hw/mem/cxl_type3.c trace points are declared in the existing
+> hw/mem/trace-events. The cxl_ prefix keeps the namespace unified for
+> filtering with -trace 'cxl_*'.
+> 
+> Signed-off-by: Junjie Cao <junjie.cao@intel.com>
+> ---
+>  hw/cxl/cxl-cdat.c   |  3 +++
+>  hw/cxl/trace-events |  4 ++++
+>  hw/mem/cxl_type3.c  | 17 ++++++++++++++++-
+>  hw/mem/trace-events |  4 ++++
+>  4 files changed, 27 insertions(+), 1 deletion(-)
+> 
+> diff --git a/hw/cxl/cxl-cdat.c b/hw/cxl/cxl-cdat.c
+> index 959a55518e..5274ac8c12 100644
+> --- a/hw/cxl/cxl-cdat.c
+> +++ b/hw/cxl/cxl-cdat.c
+> @@ -12,6 +12,7 @@
+>  #include "hw/cxl/cxl.h"
+>  #include "qapi/error.h"
+>  #include "qemu/error-report.h"
+> +#include "trace.h"
+>  
+>  static void cdat_len_check(CDATSubHeader *hdr, Error **errp)
+>  {
+> @@ -186,6 +187,7 @@ static bool ct3_load_cdat(CDATObject *cdat, Error **errp)
+>      cdat->entry_len = num_ent;
+>      cdat->entry = g_steal_pointer(&cdat_st);
+>      cdat->buf = g_steal_pointer(&buf);
+> +    trace_cxl_cdat_loaded(cdat->filename, file_size, num_ent);
+>      return true;
+>  }
+>  
+> @@ -193,6 +195,7 @@ bool cxl_doe_cdat_init(CXLComponentState *cxl_cstate, Error **errp)
+>  {
+>      CDATObject *cdat = &cxl_cstate->cdat;
+>  
+> +    trace_cxl_cdat_init(cdat->filename ?: "<built-in>");
+>      if (cdat->filename) {
+>          return ct3_load_cdat(cdat, errp);
+>      } else {
+> diff --git a/hw/cxl/trace-events b/hw/cxl/trace-events
+> index abca116ed3..15977dce6e 100644
+> --- a/hw/cxl/trace-events
+> +++ b/hw/cxl/trace-events
+> @@ -6,3 +6,7 @@
+>  cxl_mailbox_command(uint16_t opcode, size_t len_in) "opcode=0x%04x len_in=%zu"
+>  cxl_mailbox_invalid_payload(uint16_t opcode, size_t len_in, size_t expected) "opcode=0x%04x len_in=%zu expected=%zu"
+>  cxl_mailbox_handler_return(uint16_t opcode, int ret, size_t len_out) "opcode=0x%04x ret=%d len_out=%zu"
+> +
+> +# cxl-cdat.c
+> +cxl_cdat_init(const char *source) "source=%s"
+> +cxl_cdat_loaded(const char *filename, size_t length, int num_entries) "filename=%s length=%zu entries=%d"
+> diff --git a/hw/mem/cxl_type3.c b/hw/mem/cxl_type3.c
+> index 4739239da3..8130abeb37 100644
+> --- a/hw/mem/cxl_type3.c
+> +++ b/hw/mem/cxl_type3.c
+> @@ -30,6 +30,7 @@
+>  #include "system/numa.h"
+>  #include "hw/cxl/cxl.h"
+>  #include "hw/pci/msix.h"
+> +#include "trace.h"
+>  
+>  /* type3 device private */
+>  enum CXL_T3_MSIX_VECTOR {
+> @@ -419,9 +420,20 @@ static void hdm_decoder_commit(CXLType3Dev *ct3d, int which)
+>      int hdm_inc = R_CXL_HDM_DECODER1_BASE_LO - R_CXL_HDM_DECODER0_BASE_LO;
+>      ComponentRegisters *cregs = &ct3d->cxl_cstate.crb;
+>      uint32_t *cache_mem = cregs->cache_mem_registers;
+> -    uint32_t ctrl;
+> +    uint32_t ctrl, low, high;
+> +    uint64_t base, size;
+>  
+>      ctrl = ldl_le_p(cache_mem + R_CXL_HDM_DECODER0_CTRL + which * hdm_inc);
+> +    low = ldl_le_p(cache_mem + R_CXL_HDM_DECODER0_BASE_LO + which * hdm_inc);
+> +    high = ldl_le_p(cache_mem + R_CXL_HDM_DECODER0_BASE_HI + which * hdm_inc);
+> +    base = (low & 0xf0000000) | ((uint64_t)high << 32);
+> +    low = ldl_le_p(cache_mem + R_CXL_HDM_DECODER0_SIZE_LO + which * hdm_inc);
+> +    high = ldl_le_p(cache_mem + R_CXL_HDM_DECODER0_SIZE_HI + which * hdm_inc);
+> +    size = (low & 0xf0000000) | ((uint64_t)high << 32);
+> +    trace_cxl_hdm_decoder_commit(which, base, size,
+> +                                 FIELD_EX32(ctrl, CXL_HDM_DECODER0_CTRL, IW),
+> +                                 FIELD_EX32(ctrl, CXL_HDM_DECODER0_CTRL, IG));
+> +
+>      /* TODO: Sanity checks that the decoder is possible */
+>      ctrl = FIELD_DP32(ctrl, CXL_HDM_DECODER0_CTRL, ERR, 0);
+>      ctrl = FIELD_DP32(ctrl, CXL_HDM_DECODER0_CTRL, COMMITTED, 1);
+> @@ -623,6 +635,9 @@ static void ct3d_reg_write(void *opaque, hwaddr offset, uint64_t value,
+>      }
+>  
+>      stl_le_p((uint8_t *)cache_mem + offset, value);
+> +    if (which_hdm >= 0) {
+> +        trace_cxl_hdm_decoder_write(which_hdm, value, should_commit);
+> +    }
+>      if (should_commit) {
+>          hdm_decoder_commit(ct3d, which_hdm);
+>      } else if (should_uncommit) {
+> diff --git a/hw/mem/trace-events b/hw/mem/trace-events
+> index 8b6b02b5bf..770831f701 100644
+> --- a/hw/mem/trace-events
+> +++ b/hw/mem/trace-events
+> @@ -6,3 +6,7 @@ mhp_pc_dimm_assigned_slot(int slot) "%d"
+>  memory_device_pre_plug(const char *id, uint64_t addr) "id=%s addr=0x%"PRIx64
+>  memory_device_plug(const char *id, uint64_t addr) "id=%s addr=0x%"PRIx64
+>  memory_device_unplug(const char *id, uint64_t addr) "id=%s addr=0x%"PRIx64
+> +
+> +# cxl_type3.c
+> +cxl_hdm_decoder_write(int which, uint32_t value, bool commit) "decoder=%d ctrl=0x%08x commit=%d"
+> +cxl_hdm_decoder_commit(int which, uint64_t base, uint64_t size, uint32_t iw_enc, uint32_t ig_enc) "decoder=%d base=0x%"PRIx64" size=0x%"PRIx64" iw_enc=0x%x ig_enc=0x%x"
+
 
