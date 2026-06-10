@@ -4,49 +4,49 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3FC23CD8CB9
-	for <qemu-devel@archiver.kernel.org>; Wed, 10 Jun 2026 12:37:03 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 95EBDCD8CB2
+	for <qemu-devel@archiver.kernel.org>; Wed, 10 Jun 2026 12:37:06 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wXI9c-0008P2-Tg; Wed, 10 Jun 2026 08:35:32 -0400
+	id 1wXIA8-0002FP-RZ; Wed, 10 Jun 2026 08:36:04 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1wXI9a-0008Eo-Kc
- for qemu-devel@nongnu.org; Wed, 10 Jun 2026 08:35:30 -0400
+ id 1wXIA6-00024o-Do
+ for qemu-devel@nongnu.org; Wed, 10 Jun 2026 08:36:02 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1wXI9Z-0002qX-1c
- for qemu-devel@nongnu.org; Wed, 10 Jun 2026 08:35:30 -0400
+ id 1wXIA4-0003jK-Bt
+ for qemu-devel@nongnu.org; Wed, 10 Jun 2026 08:36:01 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1781094928;
+ s=mimecast20190719; t=1781094959;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=MaMWRjyZYUUPTPFOn1LnPGcTEvTlXTfzo1u9azJFcgA=;
- b=N9cz1/uoQNcEFX8+hxG301A3O7URr9D7bw4Fj7oncO3c1IOk2ILeIpOSss1PLuPvDJO+0h
- IG3kpgpxfipPXNLoqIkBF0e7biXlabrX1oKz9uOEsjlzSxB/cRsBsjnIcSZsOxGAK0yf+Z
- 8kglFYAWgPefmK8Jz9/1tp7sPxxVfB8=
-Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ bh=rMIxMWlmbrmcCAkb3nAuFYSG9OyohMzp6/A3KmkV0lw=;
+ b=f05BAqgPnuAa3lLh1I/ykrpZWEBzCaqKPQPZS1se3OeQsoe3oD/lzW1qssXN5RgdfUER8H
+ XtNsRz8DpVrIqLiI/2gSPB2s/78bCcCvMZyXS10eCixPXPpNg1+MDlI45sqKyW1TPTSADf
+ seLDbU2oj64jMo2XmUYQVLQqEziP92U=
+Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-495-Nfa0VQ1IPTKkr2YAUgD4sw-1; Wed,
- 10 Jun 2026 08:35:23 -0400
-X-MC-Unique: Nfa0VQ1IPTKkr2YAUgD4sw-1
-X-Mimecast-MFC-AGG-ID: Nfa0VQ1IPTKkr2YAUgD4sw_1781094922
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-589-vQFRtqSMNMe8eFa2T4GZSw-1; Wed,
+ 10 Jun 2026 08:35:55 -0400
+X-MC-Unique: vQFRtqSMNMe8eFa2T4GZSw-1
+X-Mimecast-MFC-AGG-ID: vQFRtqSMNMe8eFa2T4GZSw_1781094954
 Received: from mx-prod-int-10.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-10.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.95])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 76EA4195C274; Wed, 10 Jun 2026 12:35:22 +0000 (UTC)
+ by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 071A6180A8C7; Wed, 10 Jun 2026 12:35:54 +0000 (UTC)
 Received: from berrange.com (unknown [10.44.50.112])
  by mx-prod-int-10.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id D71A336512; Wed, 10 Jun 2026 12:35:18 +0000 (UTC)
+ id 7F65631D2; Wed, 10 Jun 2026 12:35:50 +0000 (UTC)
 From: =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
@@ -57,10 +57,10 @@ Cc: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
  "Dr. David Alan Gilbert" <dave@treblig.org>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@mailo.com>,
  =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>
-Subject: [PATCH v2 15/35] monitor: use dynamic cast in
- monitor_qmp_requests_pop_any_with_lock
-Date: Wed, 10 Jun 2026 13:33:55 +0100
-Message-ID: <20260610123415.2883603-16-berrange@redhat.com>
+Subject: [PATCH v2 23/35] qemu-options: document new monitor-hmp and
+ monitor-qmp objects
+Date: Wed, 10 Jun 2026 13:34:03 +0100
+Message-ID: <20260610123415.2883603-24-berrange@redhat.com>
 In-Reply-To: <20260610123415.2883603-1-berrange@redhat.com>
 References: <20260610123415.2883603-1-berrange@redhat.com>
 MIME-Version: 1.0
@@ -91,33 +91,71 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-This eliminates a use of monitor_is_qmp() from the QMP coroutine
-dispatch path.
+Add new docs for the `-object monitor-hmp` and `-object monitor-qmp`
+options, updating `-mon` to state that it is legacy syntax sugar
+for the new `-object` args.
 
 Signed-off-by: Daniel P. Berrangé <berrange@redhat.com>
 ---
- monitor/qmp.c | 5 +++--
- 1 file changed, 3 insertions(+), 2 deletions(-)
+ qemu-options.hx | 38 ++++++++++++++++++++++++++++++++++++++
+ 1 file changed, 38 insertions(+)
 
-diff --git a/monitor/qmp.c b/monitor/qmp.c
-index 95b2c02497..5cf38c6273 100644
---- a/monitor/qmp.c
-+++ b/monitor/qmp.c
-@@ -277,11 +277,12 @@ static QMPRequest *monitor_qmp_requests_pop_any_with_lock(void)
-     MonitorQMP *qmp_mon;
+diff --git a/qemu-options.hx b/qemu-options.hx
+index 96ae41f787..031417b79d 100644
+--- a/qemu-options.hx
++++ b/qemu-options.hx
+@@ -4959,6 +4959,16 @@ SRST
+       -mon chardev=mon1,mode=control,pretty=on
  
-     QTAILQ_FOREACH(mon, &mon_list, entry) {
--        if (!monitor_is_qmp(mon)) {
-+        qmp_mon = MONITOR_QMP(
-+            object_dynamic_cast(OBJECT(mon), TYPE_MONITOR_QMP));
-+        if (!qmp_mon) {
-             continue;
-         }
+     enables the QMP monitor on localhost port 4444 with pretty-printing.
++
++    The use of ``-mon mode=readline`` is historical syntax sugar
++    for the new ``-object monitor-hmp`` option, each use of which
++    creates an object with the ID ``hmpcompatNNN`` where ``NNN`` is
++    a counter starting from 0.
++
++    The use of ``-mon mode=control`` is historical syntax sugar
++    for the new ``-object monitor-qmp`` option, each use of which
++    creates an object with the ID ``qmpcompatNNN`` where ``NNN`` is
++    a counter starting from 0.
+ ERST
  
--        qmp_mon = container_of(mon, MonitorQMP, parent_obj);
-         qemu_mutex_lock(&qmp_mon->qmp_queue_lock);
-         req_obj = g_queue_pop_head(qmp_mon->qmp_requests);
-         if (req_obj) {
+ DEF("debugcon", HAS_ARG, QEMU_OPTION_debugcon, \
+@@ -5709,6 +5719,34 @@ SRST
+     they are specified. Note that the 'id' property must be set. These
+     objects are placed in the '/objects' path.
+ 
++    ``-object monitor-hmp,id=id,chardev=chardv_id,readline=on|off``
++        Set up a monitor running the Human Monitor Protocol,
++        connected to the chardev ``chrid``.
++
++        The ``id`` parameter is a unique ID that can be used
++        to dynamically delete the monitor at runtime.
++
++        The ``readline`` parameter, which defaults to ``on``,
++        controls whether the monitor provides interactive
++        prompts
++
++    ``-object monitor-qmp,id=id,chardev=chardev_id,pretty=on|off``
++        Set up a monitor running the QEMU Monitor Protocol,
++        connected to the chardev ``chrid``.
++
++        The ``id`` parameter is a unique ID that can be used
++        to dynamically delete the monitor at runtime. Note
++        that monitors created using the historical syntax
++        will be allocated IDs following the pattern ``monNN``.
++        Mixing ``-object`` with the historical monitor syntax is
++        discouraged.
++
++        The ``pretty`` parameter, which defaults to ``off``,
++        controls whether the monitor responses are pretty
++        printed as multi-line indented JSON, as opposed to
++        constrained to a single line without extraneous
++        whitespace.
++
+     ``-object memory-backend-file,id=id,size=size,mem-path=dir,share=on|off,discard-data=on|off,merge=on|off,dump=on|off,prealloc=on|off,host-nodes=host-nodes,policy=default|preferred|bind|interleave,align=align,offset=offset,readonly=on|off,rom=on|off|auto``
+         Creates a memory file backend object, which can be used to back
+         the guest RAM with huge pages.
 -- 
 2.54.0
 
