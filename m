@@ -4,119 +4,148 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id CCFE2CD98CC
-	for <qemu-devel@archiver.kernel.org>; Wed, 10 Jun 2026 18:40:05 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2ECECCD98CE
+	for <qemu-devel@archiver.kernel.org>; Wed, 10 Jun 2026 18:40:24 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wXNpg-0004GL-IC; Wed, 10 Jun 2026 14:39:20 -0400
+	id 1wXNqX-0004oR-Bb; Wed, 10 Jun 2026 14:40:13 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1wXNpe-0004Fu-Ic
- for qemu-devel@nongnu.org; Wed, 10 Jun 2026 14:39:18 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <pierrick.bouvier@oss.qualcomm.com>)
+ id 1wXNqV-0004gj-Mg
+ for qemu-devel@nongnu.org; Wed, 10 Jun 2026 14:40:11 -0400
+Received: from mx0a-0031df01.pphosted.com ([205.220.168.131])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1wXNpb-0003HG-QZ
- for qemu-devel@nongnu.org; Wed, 10 Jun 2026 14:39:18 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1781116754;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=lJwNW4jNLb07h1epy/AdnMNeLVnkIKT5Qgw/rd9Nvn0=;
- b=agJDveOCp96FM0vyotrVdKw5PN/ej+VURCZztuYgCGlsS3uFnm10JsAswhryKbNUeG8NFm
- mva25w6LC6gC/USIcJz6R0HnsjrTd3NXwtS4Elqfl9ypRsmwwiFWipAllfe4moHR1TBBRk
- GFmZ/rRHGJsci91gvyOAZohFsB7TO5A=
-Received: from mail-qk1-f200.google.com (mail-qk1-f200.google.com
- [209.85.222.200]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-669-jmMDAdqwPTe95NU9HGY8VQ-1; Wed, 10 Jun 2026 14:39:13 -0400
-X-MC-Unique: jmMDAdqwPTe95NU9HGY8VQ-1
-X-Mimecast-MFC-AGG-ID: jmMDAdqwPTe95NU9HGY8VQ_1781116753
-Received: by mail-qk1-f200.google.com with SMTP id
- af79cd13be357-9156cb14b1cso586983385a.1
- for <qemu-devel@nongnu.org>; Wed, 10 Jun 2026 11:39:13 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <pierrick.bouvier@oss.qualcomm.com>)
+ id 1wXNqR-0003zF-U8
+ for qemu-devel@nongnu.org; Wed, 10 Jun 2026 14:40:11 -0400
+Received: from pps.filterd (m0279863.ppops.net [127.0.0.1])
+ by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
+ 65AFwr4g1665606
+ for <qemu-devel@nongnu.org>; Wed, 10 Jun 2026 18:40:05 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+ cc:content-transfer-encoding:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+ rgJuudJJ3h3f46ppjCm3V15d8HmyFlPifhJNxucGFYo=; b=J5oOuABLelzmCa+r
+ AKFcsVsCnqRyIoABrtmzMtzbGV60jIEygT6CN8u6QRKzd+zSitmzxwmv6awc+YmR
+ ZbzcgEl+qJSeae0FFOEyrKDKbF5GSjr62YTQH+TtcL3ZPmi4DbjVNm67f8ACuxic
+ dCyE0RbAfswLh6XFLRsRIuf8Zi7p6+1xF2BbYgEBZMh3ReFAuSecVZN3iUiRVDoH
+ HPG/HWk3X5cUgu0Y1R73fKABIcvtQwNSJAONLIGmD4ICd1sbfu9KQdH0fVKqeMDw
+ StqgiVJSAJEBph6cYdExeuKyfAmwk8cqsNJpKKrZvM8Jl/wj31NOBByu4ZGv/5G+
+ g62jOg==
+Received: from mail-dy1-f199.google.com (mail-dy1-f199.google.com
+ [74.125.82.199])
+ by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4epwr2m2xh-1
+ (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
+ for <qemu-devel@nongnu.org>; Wed, 10 Jun 2026 18:40:05 +0000 (GMT)
+Received: by mail-dy1-f199.google.com with SMTP id
+ 5a478bee46e88-3074d4102a9so5434679eec.0
+ for <qemu-devel@nongnu.org>; Wed, 10 Jun 2026 11:40:05 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1781116753; x=1781721553; darn=nongnu.org;
- h=in-reply-to:content-transfer-encoding:content-disposition
- :mime-version:references:message-id:subject:cc:to:from:date:from:to
- :cc:subject:date:message-id:reply-to;
- bh=lJwNW4jNLb07h1epy/AdnMNeLVnkIKT5Qgw/rd9Nvn0=;
- b=GYQYFHpz+EOZkzSJt3BoxAdqI0FqAqjf9u1PI7BKpLuP3TBU2MM6kkCjFbUnWm9v/x
- FFRMuR4S5E8HwP7nq4jvZkvFFdzcFezH3S/+AXsX6u95dFXrrLLl5raMBURcnhKJdY8q
- /tWZTF41JsQNPOsGyjt5oSf7Jc2OHdtZI8rRTV463qJCixsJWh9To4ShgdOdUmtX5ek2
- NtwaQf5QlBk6+9gsxbWYBIcsh5T24dMikGuDeusvRL0aFRDgG9rJYCqhW4BDAX6j0/mP
- s/Lq51k/4aYSSMC8WT5N+gX55teMPFycmCYSbSkBk0kxPs3wNz9xuliMQ6tIQn8ee3SE
- heAg==
+ d=oss.qualcomm.com; s=google; t=1781116805; x=1781721605; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:content-language:from
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=rgJuudJJ3h3f46ppjCm3V15d8HmyFlPifhJNxucGFYo=;
+ b=GhKbmo6x89aVfn//AE4rybNlCRX1hGLRzbNBXoKqoEPimZC9dTT4qFu3ruB6j4KXC5
+ xmPgOK4/nrMxTPj+GW/3ww56HrFeTnzO+43N2lIBY2eeocOtsC7K4gXHr/eGZgrIcl18
+ qPepvkD8IH4qCkwl7Git3hdBYuoRJOilZS4gM7Er7FK0N59/GcBvqvwSP2PXtafekTwa
+ wHDmMCh1Dupp0dIMUuXFbX9D6ZJmij9jGjoX7K9WGRQ/VMmIxreqsnm2PfPjbpbY9SuJ
+ TcmrmOStpZjSVs0Xdj+gj6/eMySYqCsjo6P/rJW0EWE2UG7gQP9+Vnf/9VOvosScVogw
+ QVKg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1781116753; x=1781721553;
- h=in-reply-to:content-transfer-encoding:content-disposition
- :mime-version:references:message-id:subject:cc:to:from:date:x-gm-gg
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=lJwNW4jNLb07h1epy/AdnMNeLVnkIKT5Qgw/rd9Nvn0=;
- b=rw0xLRihLFVSrxNJJiLbIz3e3a+0kedlQrvsccaEhcbfdGw19QW5LweJLeIZAvQwwG
- C7sprp8nTW3zhkkL7Doq+Vu1qFCHSCqhbMPysXMHroN6oDEJYuHEf5uiCFHAlOeuls4M
- SY5a1UOqVNqomDMB7pm3ECr4uWTjEnrv4TT95tK8h9SQYVQZvdrpomvbEPfiAOQUhtUb
- sWRPbJ0tVWc1cl+XAbJCZTpbougHANNm5rmduS2HMzIPc7TXnh9f/yYEjnV/H1PQomjx
- 13RlCstAV/+cQaeHp6TRWw/L1rCocHW0KOwaFSk75LkCrb7HCyKJn/XJNh5cw7h46oVh
- /37Q==
-X-Gm-Message-State: AOJu0Yy+Hjw1M3PR/jV1JbTJjNa7v0gjHwio3xQQLvbG+kt6xnqwbyEW
- Rq7jYXOZ7gYaFi2/Hd8eyDu7WXwDWOTRskXWUVZ4eVjMsoiI1LuM2mvOxpMhNO9Y7XSEMThDDoM
- 3odxxF5hKbkD+ADZacdb8QWTvtRcwd9aEj5oFnr23h0AMK/eQC6bC9m2T
-X-Gm-Gg: Acq92OHh8aWygi6cvQHMlXYyLkKvRWkXnvgWgfIexaMExcQbfEX6bzLEpFetCq+Fj96
- NW43lLENXl0LZQ+eW5RCQAp+/7lE8j45dAagLJvSE7uAfE06IXwXut7ew8na0AHwnSo0s05IVFi
- jsxu1kofnNNFPW50BUAxqu9UTkE4u4EAL511/FriEXBLy+lKgkowK9TWwONb41pLEO+Vp+QEtfV
- ePhFlfCn9ppL8nToxVG7uIRImF2oatzE3hyoSiXIbIrf+5y+NZuPo8ba3NtxF9WfoV6NSMfqy/x
- tYZs3h6ZcmZQMEd5jrHKAV8GSi4b60FFfP5atF7tfgHzDzoyDEkMo2FYbCNXZW28cXKLFnc0F6E
- jSpEMfVojMVHoBbqUsswGypcubA==
-X-Received: by 2002:a05:620a:2808:b0:912:1:b415 with SMTP id
- af79cd13be357-915a9cdf822mr4378469785a.26.1781116752846; 
- Wed, 10 Jun 2026 11:39:12 -0700 (PDT)
-X-Received: by 2002:a05:620a:2808:b0:912:1:b415 with SMTP id
- af79cd13be357-915a9cdf822mr4378461385a.26.1781116752271; 
- Wed, 10 Jun 2026 11:39:12 -0700 (PDT)
-Received: from x1.local ([142.189.10.167]) by smtp.gmail.com with ESMTPSA id
- af79cd13be357-9158a37cab6sm2491634285a.22.2026.06.10.11.39.10
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 10 Jun 2026 11:39:11 -0700 (PDT)
-Date: Wed, 10 Jun 2026 14:39:09 -0400
-From: Peter Xu <peterx@redhat.com>
-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
-Cc: qemu-devel@nongnu.org, qemu-arm@nongnu.org,
- =?utf-8?Q?C=C3=A9dric?= Le Goater <clg@redhat.com>,
- Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@mailo.com>,
- Fabiano Rosas <farosas@suse.de>,
- Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>,
- Peter Maydell <peter.maydell@linaro.org>,
- "Dr . David Alan Gilbert" <dave@treblig.org>,
- Eric Blake <eblake@redhat.com>,
- Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>,
- Paolo Bonzini <pbonzini@redhat.com>, Kevin Wolf <kwolf@redhat.com>,
- Sana Sharma <sansshar@redhat.com>,
- =?utf-8?Q?Marc-Andr=C3=A9?= Lureau <marcandre.lureau@redhat.com>,
- Juraj Marcin <jmarcin@redhat.com>, qemu-rust@nongnu.org,
- Markus Armbruster <armbru@redhat.com>,
- Mark Cave-Ayland <mark.caveayland@nutanix.com>
-Subject: Re: [PATCH v2 05/10] qom: Create object-property-ptr.[ch]
-Message-ID: <aimvTYDsv_-Xsboy@x1.local>
-References: <20260609172514.2037645-1-peterx@redhat.com>
- <20260609172514.2037645-6-peterx@redhat.com>
- <aimNv51iMZ_yEgDG@redhat.com>
+ d=1e100.net; s=20251104; t=1781116805; x=1781721605;
+ h=content-transfer-encoding:in-reply-to:content-language:from
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=rgJuudJJ3h3f46ppjCm3V15d8HmyFlPifhJNxucGFYo=;
+ b=D6F24CslMlobNBLlCy2TjXYWglooXY4Sv+bjNKQj82h7UYHTnvzp76kcIrxNTLxdwF
+ orkD4/iz1gpdyrLlzRAtaYHoGWL0Cyy0wvqn5KZFkDnyM0GXa/N+Yo6U9eryXWMwwSHn
+ /7S/J3G/SG6z78A7Pq5nir4iMXlwyJHf6zn4pe03r0ifg4vtl6umZWuYV4gg/wqK+4bN
+ AVQOvffTB98fIF6DGnA0DHvJg4UIcxly0zkVtzylGyWdzP4ecqWgsb1IyK1giIYY3Yry
+ 7VtTGGP9OEcst77Bo6W/Yr27nKYz+kBuUsqRMskmOsye7/+Uz03rxZ4ta73eqIuFTiZl
+ PoIg==
+X-Forwarded-Encrypted: i=1;
+ AFNElJ8BedlnFVXfYkjbiAS3nRfFRPYuWz7FcZgB9t+mwZ4Et1P3HIqr0cZ0s3bhHUKfhPBwh3pUUCt43CxP@nongnu.org
+X-Gm-Message-State: AOJu0YySvWfg/wXFmk6QJ5YtWpGVAiKFZ4cPTg1g2zCJACErATBIq0jG
+ W5lZSQfUQcF9WHOh22DjQnIDmnQAHM1Oi4tXjtzCEFR+Nyfo99g+4gp5dT5SLVqGns0qB3251j8
+ B3HEk/GcdcO9QoPoU2t6EW/+pi2hQkXxnHBEpHg/FOdQhUVzh5mW1hgpJqA==
+X-Gm-Gg: Acq92OG97yAmKdtVe/UlHu4HBan6bWOGi91U0TW4T1xNFXm+NBM5dc86P5vBgAWpNCH
+ L5XGdFcxamN9qfnClLjGTmd/s6cNoLGe3aJOyscyt+Pkb+53+nZglmwNssWQQ3fExLWiMZEEhLG
+ YunX/xqEOrFaQKZRqgE9pI0Uw1vB1agPZINWrqVgyAkJmbz7zUgbV6l5zCOgX7dH2Zt3bSgY9Nr
+ lyNK0m5pKym3yyjRYUGT1LGtA59Fv5aT1WEBV+NMhvSKWwD+mjAxwivoWue3t+lKsfKtcXXoF5Z
+ nUN80tdey7dGUo41DVi/45uFTY7HBh0Qoh2n1f0f8VHVRc+3s6u2CMgbq6NHWT40vbg0bNmh7SU
+ 8NRLvDkycO3408UurpQPWTZXxxw5DY3ZbsxU6w5bgALE2/Y+xFhiwuMW1gdx1MNcA/mn7HVIgGC
+ k+ieOf6n/FC6mYjgTztlScTC2R
+X-Received: by 2002:a05:7300:8ba3:b0:304:5644:f97a with SMTP id
+ 5a478bee46e88-307ff5f79e4mr248112eec.21.1781116804614; 
+ Wed, 10 Jun 2026 11:40:04 -0700 (PDT)
+X-Received: by 2002:a05:7300:8ba3:b0:304:5644:f97a with SMTP id
+ 5a478bee46e88-307ff5f79e4mr248090eec.21.1781116804072; 
+ Wed, 10 Jun 2026 11:40:04 -0700 (PDT)
+Received: from [192.168.1.170] (216-71-219-44.dyn.novuscom.net.
+ [216.71.219.44]) by smtp.gmail.com with ESMTPSA id
+ 5a478bee46e88-3074df77a0asm28483425eec.27.2026.06.10.11.40.02
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Wed, 10 Jun 2026 11:40:03 -0700 (PDT)
+Message-ID: <af320c95-e1af-4a8b-bbee-3763cc619808@oss.qualcomm.com>
+Date: Wed, 10 Jun 2026 11:40:02 -0700
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 16/27] tests/tcg/meson.build: introduce expected_output
+To: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>, qemu-devel@nongnu.org
+Cc: Thomas Huth <thuth@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>,
+ =?UTF-8?Q?Daniel_P_=2E_Berrang=C3=A9?= <berrange@redhat.com>,
+ =?UTF-8?Q?Philippe_Mathieu-Daud_=C3=A9?= <philmd@linaro.org>,
+ qemu-arm@nongnu.org, Richard Henderson <richard.henderson@linaro.org>,
+ =?UTF-8?Q?Alex_Benn_=C3=A9_e?= <alex.bennee@linaro.org>,
+ Alexandre Iooss <erdnaxe@crans.org>, Peter Maydell
+ <peter.maydell@linaro.org>, Gustavo Romero <gustavo.romero@linaro.org>
+References: <20260609214745.772536-1-pierrick.bouvier@oss.qualcomm.com>
+ <20260609214745.772536-17-pierrick.bouvier@oss.qualcomm.com>
+ <b7ab8f6e-7600-40ca-947f-e7e357055272@oss.qualcomm.com>
+ <tgenec.cusd1nl68lj9@linaro.org>
+From: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
+Content-Language: en-US
+In-Reply-To: <tgenec.cusd1nl68lj9@linaro.org>
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <aimNv51iMZ_yEgDG@redhat.com>
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=peterx@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -24
-X-Spam_score: -2.5
+X-Authority-Analysis: v=2.4 cv=Gu1yPE1C c=1 sm=1 tr=0 ts=6a29af85 cx=c_pps
+ a=cFYjgdjTJScbgFmBucgdfQ==:117 a=iLqgmErQAxjCjdq5jj1Aqg==:17
+ a=IkcTkHD0fZMA:10 a=FelO9ux0wxsA:10 a=s4-Qcg_JpJYA:10
+ a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=yOCtJkima9RkubShWh1s:22
+ a=EUspDBNiAAAA:8 a=vtDBMp4bDa5AtHrscMQA:9 a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
+ a=scEy_gLbYbu1JhEsrz4S:22
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNjEwMDE3NiBTYWx0ZWRfX975xOEIYkzZS
+ vCYc00OWOwLC+ujgQTxQj8ojmXEpMW6VQRdfre62llik9wypkyyX61YaXItfugmDZI8A90PsRA1
+ yPciYsrp6NCc/8D6VENs+5xSIhue3wsfxRxSh4BDjI2oC/N3FIsRp3Ws67NMEHz0duw0hhdn2q4
+ 16FklrA9XkNgnrY9hxovmihDz92/p7U/TaswMDV16wJSTnMcF4ix+IZOlaDiP5nxNrIU+ySUuZ5
+ 9n7e5z91KI3hpMuAjWzvUdaI3hAX2YPg4z1mYFSW4DXD9Cvjf3q1N+2+ZQ9BiR9iduZ/PLbBO82
+ vXC872lBmcVsNnHsLGkT5P/JYLyESW0hDlnXc1LdaedOp0/6RUXxguWOEfyZziOlbe0+M6SdwYN
+ 6wngDAv60UYUlaizV1mi964lH9Wthx/2ajWRwF5Y6DlDqENxbe7ovt8u8QKHpV/iU1l8d2mmR6i
+ EGVs82X+lkJmpkwtrnw==
+X-Proofpoint-ORIG-GUID: yE2S9nYhyGuDd2zIDbJU4S5MJI7T_JQq
+X-Proofpoint-GUID: yE2S9nYhyGuDd2zIDbJU4S5MJI7T_JQq
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.125,FMLib:17.12.100.49
+ definitions=2026-06-10_03,2026-06-09_02,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ impostorscore=0 lowpriorityscore=0 suspectscore=0 phishscore=0 adultscore=0
+ clxscore=1015 spamscore=0 bulkscore=0 malwarescore=0 priorityscore=1501
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.22.0-2605210000 definitions=main-2606100176
+Received-SPF: pass client-ip=205.220.168.131;
+ envelope-from=pierrick.bouvier@oss.qualcomm.com;
+ helo=mx0a-0031df01.pphosted.com
+X-Spam_score_int: -27
+X-Spam_score: -2.8
 X-Spam_bar: --
-X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.445,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -132,43 +161,96 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, Jun 10, 2026 at 05:15:59PM +0100, Daniel P. Berrangé wrote:
-> On Tue, Jun 09, 2026 at 01:25:09PM -0400, Peter Xu wrote:
-> > Create object-property-ptr.[ch] files to include all the helpers for
-> > object_property_add*_ptr().
-> > 
-> > These set of helpers are handy because they look extremely familiar with
-> > qdev-properties, allowing the caller to provide a pointer and it will
-> > manage all the setters and getters.
-> > 
-> > The follow up patches may introduce more of such helpers.  Since object.c
-> > has been already too big, split that part out.
+On 6/10/2026 12:25 AM, Manos Pitsidianakis wrote:
+> On Wed, 10 Jun 2026 07:30, Pierrick Bouvier
+> <pierrick.bouvier@oss.qualcomm.com> wrote:
+>> On 6/9/2026 2:47 PM, Pierrick Bouvier wrote:
+>>> A test can declare it expects a specific output on stdout. In this case,
+>>> we compare it to a reference file. We implement this instead of relying
+>>> on a wrapper because we need the flexibility to resolve name of
+>>> reference file per target.
+>>>
+>>> For instance, multiarch float tests expect different ref files for each
+>>> target, which is something we can't express with a test wrapper.
+>>>
+>>> Signed-off-by: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
+>>> ---
+>>>  tests/tcg/meson.build             |  9 ++++++++-
+>>>  tests/tcg/scripts/run_and_diff.sh | 12 ++++++++++++
+>>>  2 files changed, 20 insertions(+), 1 deletion(-)
+>>>  create mode 100755 tests/tcg/scripts/run_and_diff.sh
+>>>
+>>> diff --git a/tests/tcg/meson.build b/tests/tcg/meson.build
+>>> index 5380a360830..3d2c0d6583b 100644
+>>> --- a/tests/tcg/meson.build
+>>> +++ b/tests/tcg/meson.build
+>>> @@ -7,6 +7,7 @@ if config_host.has_key('GDB')
+>>>  endif
+>>>  gdb = find_program(gdb_progs, required: false)
+>>>  prog_gdb_test = find_program('../guest-debug/run-test.py')
+>>> +prog_run_and_diff = find_program('./scripts/run_and_diff.sh')
+>>>  
+>>>  tcg_tests = {}
+>>>  # tcg_tests is a dictionary with following structure:
+>>> @@ -24,6 +25,7 @@ tcg_tests = {}
+>>>  #           'test_name': ['provide an alternative test name'],
+>>>  #           'cflags': ['cflags to compile test', ...],
+>>>  #           'qemu_args': ['qemu command line flags', ...],
+>>> +#           'expected_output': 'file_to_compare_output',
+>>>  #           'gdb_test': ['gdb test args'],
+>>>  #           'env_var': ['VAR=value', ...],
+>>>  #           'wrapper': [program_to_launch_test, 'args'...],
+>>> @@ -84,7 +86,7 @@ foreach target, plan: tcg_tests
+>>>      foreach src, setup: t
+>>>        # return a clear error if user mispell a setup entry
+>>>        foreach key, _ : setup
+>>> -        if key not in ['cflags', 'qemu_args', 'gdb_test',
+>>> +        if key not in ['cflags', 'qemu_args', 'expected_output',
+>>> 'gdb_test',
+>>>                         'exe_name', 'test_name', 'env_var',
+>>> 'plugin_test',
+>>>                         'wrapper']
+>>>            error('unknown tcg setup entry \'' + key + '\' for test '
+>>> + src)
+>>> @@ -197,6 +199,11 @@ foreach target, plan: tcg_tests
+>>>                ]
+>>>        endif
+>>>  
+>>> +      if 'expected_output' in setup
+>>> +        expected = files(folder / setup['expected_output'])
+>>> +        cmd = [prog_run_and_diff, expected, cmd]
+>>> +      endif
+>>> +
+>>>        if 'wrapper' in setup
+>>>          cmd = [setup['wrapper'], cmd]
+>>>        endif
+>>> diff --git a/tests/tcg/scripts/run_and_diff.sh b/tests/tcg/scripts/
+>>> run_and_diff.sh
+>>> new file mode 100755
+>>> index 00000000000..d1e9243c49d
+>>> --- /dev/null
+>>> +++ b/tests/tcg/scripts/run_and_diff.sh
+>>> @@ -0,0 +1,12 @@
+>>> +#!/usr/bin/env bash
+>>> +# SPDX-License-Identifier: GPL-2.0-or-later
+>>> +
+>>> +set -euo pipefail
+>>> +
+>>> +if [ $# -lt 2 ]; then
+>>> +    echo "run_and_diff: expected_output_file cmd [args]..." 1>&2
+>>> +    exit 1
+>>> +fi
+>>> +expected="$1";shift
+>>> +set -x
+>>> +diff <("$@") $expected
+>>
+>> Fixed this line, since it hides return code of program.
+>> Write to a temporary file, then diff.
 > 
-> The "ptr" helpers are all instance level properties which is a concept
-> we discourage from new usage, in favour of class level properties.
+> Also, consider if using #!/bin/sh is possible, since it's universally
+> portable.
 > 
-> I don't think we should be adding more "ptr" helpers, but rather
-> planning to eliminiate the (surprisingly little) usage of the
-> existing ones.
 
-The other way to do similar thing is qdev's offset way, but IMHO that's
-more awkward to remember an offset of a pointer then do math everytime.
-Essentially, from technical pov we need at least one uintptr_t to store
-either (1) offset, or (2) field pointer when there's a field that is bound
-to a prop.  IMHO (2) can be better otherwise we'll need to do all the maths
-to calculate offsets then when access we add the offset back and do a force
-cast.  It seems not necessary.
-
-OTOH, I still see value on non-class instance properties (that sometimes we
-don't even want to have some props avail for the class, but conditional to
-some instances when created dynamically).  If that is needed, IMHO it's
-fine we still provide per-instance properties.
-
-Is there any pointer I can read about the discussion previously on this?
-
-Thanks,
-
--- 
-Peter Xu
-
+Probably will move this to python instead.
+sh does not have equivalent for set -euo pipefail.
 
