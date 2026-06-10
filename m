@@ -4,80 +4,81 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 62DBACD8CB9
-	for <qemu-devel@archiver.kernel.org>; Wed, 10 Jun 2026 16:14:28 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8895CCD8CB2
+	for <qemu-devel@archiver.kernel.org>; Wed, 10 Jun 2026 16:14:45 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wXLYJ-0002EN-W5; Wed, 10 Jun 2026 12:13:16 -0400
+	id 1wXLXz-0000Gp-DZ; Wed, 10 Jun 2026 12:12:55 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1wXLYH-00024B-FI
- for qemu-devel@nongnu.org; Wed, 10 Jun 2026 12:13:13 -0400
-Received: from mail-wm1-x333.google.com ([2a00:1450:4864:20::333])
+ id 1wXLXf-0007xn-IT
+ for qemu-devel@nongnu.org; Wed, 10 Jun 2026 12:12:38 -0400
+Received: from mail-wr1-x431.google.com ([2a00:1450:4864:20::431])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1wXLYF-0005yb-UQ
- for qemu-devel@nongnu.org; Wed, 10 Jun 2026 12:13:13 -0400
-Received: by mail-wm1-x333.google.com with SMTP id
- 5b1f17b1804b1-490af320e2aso76642725e9.2
- for <qemu-devel@nongnu.org>; Wed, 10 Jun 2026 09:13:11 -0700 (PDT)
+ id 1wXLXd-0005Xe-Og
+ for qemu-devel@nongnu.org; Wed, 10 Jun 2026 12:12:35 -0400
+Received: by mail-wr1-x431.google.com with SMTP id
+ ffacd0b85a97d-45eecb8bf67so5279923f8f.2
+ for <qemu-devel@nongnu.org>; Wed, 10 Jun 2026 09:12:33 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1781107990; x=1781712790; darn=nongnu.org;
+ d=linaro.org; s=google; t=1781107952; x=1781712752; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
- :reply-to; bh=r8wjXZ/QtpVzCx8ETVlJ4ncbyArSk6MsrV2vSYfscQI=;
- b=HBWcPZI0ZlCWjD8odjXXbC06n2VB0M229d9+Hs3DlLmYK8iGwT4QCqxZSP57/KEQVe
- 7seM+dPltTQ0EEQP/u0HhEpvwv8YXQZlbP164vp1oKNzBOA8FTGQuYeL3i3AHinzqLa5
- iMq3bAhs2rV9jo+Dqw2aVx/EkzomhhdHT0meOPF5IBvMvTJuZYeYEDqSR6uCFItHZAld
- NS5OFkZEUMmwdXVJyWMUxyDZlx24ZgPle86eZMO/EZQzL1BqZI2npudoSCqqh2phBD+L
- 2OF+oy4Af2BXf1BoQnToiHEt8bT5YWIVdPV8YNcPpOQCMhxOUU7n/A6Owylgi1h04sjU
- uvew==
+ :reply-to; bh=emZi/jwxDyfSmnVHZEDPcSupdD6XjFSln0KsNJdhnnU=;
+ b=OR5ns8/DBK2lX3MsStubQtfVyi+fnGPRvGUu9lkq3/PyO1DYMy1TrMg2Bo8jVq3FzP
+ /1sjM4pP0XSzPl7Xi2bZXLOHQVfms37OZxlTqkXXCfXXbiYJsneAFApIlWcVIMBmbvQZ
+ PvRotAj0LSdW34GQQLTnuloYCklZD4PWrErhVhjd+JTJziYIt3DeGl4FPsBQIaODZ2+1
+ OY0Tgsj2m+DdMoqEe4tZiMpia/2TxKkLc38iQGPcAEBcjOqylhRCtVUiXHvz44VPDbhA
+ 5/Zx7rmpwitptCLsaPZbmcj3e6b3xN7+VJBz5VDHmG+uHMi2aByWpRGjzzjjyqLqP1Yb
+ lgbQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1781107990; x=1781712790;
+ d=1e100.net; s=20251104; t=1781107952; x=1781712752;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:x-gm-gg:x-gm-message-state:from:to
  :cc:subject:date:message-id:reply-to;
- bh=r8wjXZ/QtpVzCx8ETVlJ4ncbyArSk6MsrV2vSYfscQI=;
- b=Xc0AjFW1xnA9u7HzwqsiO4c/gP7zQRcYSXZGu/lppEmG2Q9ESBnaq1MQns0OhD7339
- A0qiy1w+UPoqMQYOYJuShTdoMBOCbAb/t46UYwD4pP4TLDhvgVO3jRBF/LTcrCXDrwou
- Aj7LN3xlw1Rq9rTfGATe5sX/8VfGHHfWUW9ot0ZXyWhAThZrmjnsyj1x4W5jD4i5+cGB
- SA7r6pCXSNjuiycSNBGBCrw7e7olrIHIzTmxOsn/VFx9isGs0FpeKUVrean7p/Y3b3ii
- JwILGbFi/eAp6CTRNt84Kqkmmkwao2pcEnlNSiuPdHGhbRAXbDjK3xGa8Y01Mm5kVZkt
- uBwA==
-X-Gm-Message-State: AOJu0Yx4m60x2M5LJyJJpJrfYNUNFopyDjWcZ+qZAAaF+LU121QrAZyJ
- BHPDVySnUo3juvQJYCswAurOUu2bTLRObDABGt5l7jgK/7mrHnm1lFn5SF7bjoIF7a/Ovk7HhuO
- xqact
-X-Gm-Gg: Acq92OEEqGqwVmOIAYUa5ANJzEMJRvW3U44YcOA5bvGB3PwBjbsh4bF9gcgq5I63Uwl
- cy9cfoBNw+104Wb1ipmc4b8MB4DRwKTxrH4bO9jKSESfx86yb6DoleJf+MkPYgBfUiWQfwZdZ4a
- Uc29wTnWMTAjd1UuSIFXJ5uUnSm1nsEiqnWtafUgO2lYu0tm5mi0x9CF70iPAqoBotVFD7F7LQu
- FDMqRbCY2FS78cXN2keluTP2/HJIQzi/91boYCJzuhrtGHJ/8lJIuhP+TZQHM4mYTPoALkF3VCf
- H5L/mlyFUai2hnRRJpjNJ4PkMfdCBG2bUAuRqRXtePobicojFFatXuzwh+9/aRVkPQYhIjZYAH1
- I+ewmpW+rWLqyFD0fOBW9Uvn6us8LoCIgSungbF3rdzGPT9VFFUQVEPkQE+4/RQTkUWLR+MPspG
- 1O5gq+Ac5G+asIRlaRFDjm+ESONbcPedmKj6F75Xatl7A+Zh96J56/2nAbbmQBOKnnLnN7zk0Ix
- nSNtmDC72+Z8M1KZ6IbKYrMaBITX+rMr3dHEaRdc84=
-X-Received: by 2002:a05:600c:1549:b0:490:c7dd:7cc2 with SMTP id
- 5b1f17b1804b1-490c7dd7defmr331549205e9.24.1781107990467; 
- Wed, 10 Jun 2026 09:13:10 -0700 (PDT)
+ bh=emZi/jwxDyfSmnVHZEDPcSupdD6XjFSln0KsNJdhnnU=;
+ b=KAMyusvHJOgZse2SW95vj1HD6Zt1/gUiIjqcAHyYkqXADtDu6QNPmXLcuzY4GZqLj1
+ D4w3bU/+ukJ71tmg/V3bvdAgovViQ6vlcMxCyKRp5WtUHBnSQpBmkojNxrPF80QtVU2Y
+ XG12oibYUifqck3sADZ13NuRp70JL9OfKJuWzqnsMEkuCySk1O2XfQqIAaI4oKbsWEFw
+ 9I3b5k+MKoS03jjOyZnnO9fD/lttZ85K/nLQVGbOKfa0MNFv0waHF2K4re4NqBAKdEmD
+ YtQX7CSZmrgTFaM+25ToSqpO8s0Zbsk/4Xoa+aS1UD9NqMih+wKuCZEy+uArmCpwyslk
+ Y+MA==
+X-Gm-Message-State: AOJu0Yxzbgjob5+dcNzQU/EcbWPrST52cIfaPKUgcRG/EY1WkrOgtmhO
+ 7aIw7xApI1QJ9Sp2YwQ+2I8fNR/8LGE90YFcVwBoFYfG0jg6rT5dXhDVwK0quDcH64LuFi5kRCB
+ JiMnY
+X-Gm-Gg: Acq92OFnSCjpSLkJO4u7+rN87S2c8Wzn3RhS8G27mer3T4BxcyIgKuQCzcSzzCw6Twb
+ XwCUi34PKpJJSMIjy7pl2r6u/N5hfU97kob8D441l/BZlSdUzz2gACuksgUTemMAuVmPVyZNZkC
+ w2Ham0dbFhVqAldkuHfoYsjFWU07w0OyqwrIVqWSRrraYZBffzAerZGHkpqImgX09WRMyOYG2dh
+ P0dZ7LX5wjGBhdIzpncNQzqATlJS9jmA7nfs6KkLWEjHv4kBr/QzWcv+lY7KOffaFyIUw0tVcuo
+ 7K284sQHBrIoWzkqT1AHaZzUMfEM4GHm9TL12f70kLIxwu/UCi1OcqlFJMyqiNGuGUwB2MIglvm
+ H1NCStrDqZrHkiG3aPdn0TcmNSsQfM1vKAZcXJA8CjjjoLyKQD5FZ1NO84QbNs9vyjF313USltn
+ JJj87l4n/b/KrcFmoOVGw+Qyf9vcegGiSd/IlZqIAMB1zIsOFEhDdnCqKWq8Q9Ru97yQXHZ/uye
+ dDSoLDFZ/M0H+GZWAFKC4F7bQGsbKvpWjD97ygje+Y=
+X-Received: by 2002:adf:fa89:0:b0:453:e3a1:6580 with SMTP id
+ ffacd0b85a97d-46030501f74mr27229916f8f.25.1781107952133; 
+ Wed, 10 Jun 2026 09:12:32 -0700 (PDT)
 Received: from lanath.. (wildly.archaic.org.uk. [81.2.115.145])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-4601f2dcbe3sm67911360f8f.8.2026.06.10.09.13.09
+ ffacd0b85a97d-4601f2dcbe3sm67911360f8f.8.2026.06.10.09.12.31
  for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 10 Jun 2026 09:13:09 -0700 (PDT)
+ Wed, 10 Jun 2026 09:12:31 -0700 (PDT)
 From: Peter Maydell <peter.maydell@linaro.org>
 To: qemu-devel@nongnu.org
-Subject: [PULL 49/71] target/arm: Enable FEAT_LUT for -cpu max
-Date: Wed, 10 Jun 2026 17:11:40 +0100
-Message-ID: <20260610161202.2235298-50-peter.maydell@linaro.org>
+Subject: [PULL 21/71] target/arm: redefine event stream fields
+Date: Wed, 10 Jun 2026 17:11:12 +0100
+Message-ID: <20260610161202.2235298-22-peter.maydell@linaro.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20260610161202.2235298-1-peter.maydell@linaro.org>
 References: <20260610161202.2235298-1-peter.maydell@linaro.org>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::333;
- envelope-from=peter.maydell@linaro.org; helo=mail-wm1-x333.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::431;
+ envelope-from=peter.maydell@linaro.org; helo=mail-wr1-x431.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -100,53 +101,83 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Richard Henderson <richard.henderson@linaro.org>
+From: Alex Bennée <alex.bennee@linaro.org>
 
-Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
-Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
-Message-id: 20260609192110.752384-24-richard.henderson@linaro.org
+The event stream control bits are the same for both CNTHCTL and
+CNTKCTL so rather than duplicating the definitions rename them to be
+useful in both cases.
+
+We will need these in a later commit when we start implementing event
+streams.
+
+Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+Signed-off-by: Alex Bennée <alex.bennee@linaro.org>
+Message-id: 20260529082948.363931-4-alex.bennee@linaro.org
 Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
 ---
- docs/system/arm/emulation.rst | 1 +
- linux-user/aarch64/elfload.c  | 1 +
- target/arm/tcg/cpu64.c        | 1 +
- 3 files changed, 3 insertions(+)
+ target/arm/helper.c    |  8 ++++----
+ target/arm/internals.h | 11 +++++++----
+ 2 files changed, 11 insertions(+), 8 deletions(-)
 
-diff --git a/docs/system/arm/emulation.rst b/docs/system/arm/emulation.rst
-index df82b7f44b..1328cce15c 100644
---- a/docs/system/arm/emulation.rst
-+++ b/docs/system/arm/emulation.rst
-@@ -102,6 +102,7 @@ the following architecture extensions:
- - FEAT_LSE (Large System Extensions)
- - FEAT_LSE2 (Large System Extensions v2)
- - FEAT_LSE128 (128-bit Atomics)
-+- FEAT_LUT (Lookup table instructions with 2-bit and 4-bit indices)
- - FEAT_LVA (Large Virtual Address space)
- - FEAT_MEC (Memory Encryption Contexts)
- 
-diff --git a/linux-user/aarch64/elfload.c b/linux-user/aarch64/elfload.c
-index 228b593316..5ed7a7badb 100644
---- a/linux-user/aarch64/elfload.c
-+++ b/linux-user/aarch64/elfload.c
-@@ -221,6 +221,7 @@ abi_ulong get_elf_hwcap2(CPUState *cs)
-     GET_FEATURE_ID(aa64_lse128, ARM_HWCAP2_A64_LSE128);
-     GET_FEATURE_ID(aa64_faminmax, ARM_HWCAP2_A64_FAMINMAX);
-     GET_FEATURE_ID(aa64_fpmr, ARM_HWCAP2_A64_FPMR);
-+    GET_FEATURE_ID(aa64_lut, ARM_HWCAP2_A64_LUT);
- 
-     return hwcaps;
- }
-diff --git a/target/arm/tcg/cpu64.c b/target/arm/tcg/cpu64.c
-index c7b1dd2e90..234368ba7a 100644
---- a/target/arm/tcg/cpu64.c
-+++ b/target/arm/tcg/cpu64.c
-@@ -1263,6 +1263,7 @@ void aarch64_max_tcg_initfn(Object *obj)
-     t = FIELD_DP64(t, ID_AA64ISAR2, BC, 1);       /* FEAT_HBC */
-     t = FIELD_DP64(t, ID_AA64ISAR2, WFXT, 2);     /* FEAT_WFxT */
-     t = FIELD_DP64(t, ID_AA64ISAR2, CSSC, 2);     /* FEAT_CSSC, FEAT_CMPBR */
-+    t = FIELD_DP64(t, ID_AA64ISAR2, LUT, 1);      /* FEAT_LUT */
-     t = FIELD_DP64(t, ID_AA64ISAR2, ATS1A, 1);    /* FEAT_ATS1A */
-     SET_IDREG(isar, ID_AA64ISAR2, t);
+diff --git a/target/arm/helper.c b/target/arm/helper.c
+index c9536d2d10..22e71a2804 100644
+--- a/target/arm/helper.c
++++ b/target/arm/helper.c
+@@ -1772,9 +1772,9 @@ static void gt_cnthctl_write(CPUARMState *env, const ARMCPRegInfo *ri,
+     uint32_t valid_mask =
+         R_CNTHCTL_EL0PCTEN_E2H1_MASK |
+         R_CNTHCTL_EL0VCTEN_E2H1_MASK |
+-        R_CNTHCTL_EVNTEN_MASK |
+-        R_CNTHCTL_EVNTDIR_MASK |
+-        R_CNTHCTL_EVNTI_MASK |
++        R_CNTxCTL_EVNTEN_MASK |
++        R_CNTxCTL_EVNTDIR_MASK |
++        R_CNTxCTL_EVNTI_MASK |
+         R_CNTHCTL_EL0VTEN_MASK |
+         R_CNTHCTL_EL0PTEN_MASK |
+         R_CNTHCTL_EL1PCTEN_E2H1_MASK |
+@@ -1789,7 +1789,7 @@ static void gt_cnthctl_write(CPUARMState *env, const ARMCPRegInfo *ri,
+             R_CNTHCTL_EL1TVCT_MASK |
+             R_CNTHCTL_EL1NVPCT_MASK |
+             R_CNTHCTL_EL1NVVCT_MASK |
+-            R_CNTHCTL_EVNTIS_MASK;
++            R_CNTxCTL_EVNTIS_MASK;
+     }
+     if (cpu_isar_feature(aa64_ecv, cpu)) {
+         valid_mask |= R_CNTHCTL_ECV_MASK;
+diff --git a/target/arm/internals.h b/target/arm/internals.h
+index b2035b9417..f7a57d3ea7 100644
+--- a/target/arm/internals.h
++++ b/target/arm/internals.h
+@@ -272,14 +272,17 @@ FIELD(VSTCR, SA, 30, 1)
+  * have different bit definitions, and EL1PCTEN might be
+  * bit 0 or bit 10. We use _E2H1 and _E2H0 suffixes to
+  * disambiguate if necessary.
++ *
++ * The event stream bits (EVN*) are in the same position for
++ * CNTKCTL_EL1/CTNKCTL.
+  */
+ FIELD(CNTHCTL, EL0PCTEN_E2H1, 0, 1)
+ FIELD(CNTHCTL, EL0VCTEN_E2H1, 1, 1)
+ FIELD(CNTHCTL, EL1PCTEN_E2H0, 0, 1)
+ FIELD(CNTHCTL, EL1PCEN_E2H0, 1, 1)
+-FIELD(CNTHCTL, EVNTEN, 2, 1)
+-FIELD(CNTHCTL, EVNTDIR, 3, 1)
+-FIELD(CNTHCTL, EVNTI, 4, 4)
++FIELD(CNTxCTL, EVNTEN, 2, 1)
++FIELD(CNTxCTL, EVNTDIR, 3, 1)
++FIELD(CNTxCTL, EVNTI, 4, 4)
+ FIELD(CNTHCTL, EL0VTEN, 8, 1)
+ FIELD(CNTHCTL, EL0PTEN, 9, 1)
+ FIELD(CNTHCTL, EL1PCTEN_E2H1, 10, 1)
+@@ -289,7 +292,7 @@ FIELD(CNTHCTL, EL1TVT, 13, 1)
+ FIELD(CNTHCTL, EL1TVCT, 14, 1)
+ FIELD(CNTHCTL, EL1NVPCT, 15, 1)
+ FIELD(CNTHCTL, EL1NVVCT, 16, 1)
+-FIELD(CNTHCTL, EVNTIS, 17, 1)
++FIELD(CNTxCTL, EVNTIS, 17, 1)
+ FIELD(CNTHCTL, CNTVMASK, 18, 1)
+ FIELD(CNTHCTL, CNTPMASK, 19, 1)
  
 -- 
 2.43.0
