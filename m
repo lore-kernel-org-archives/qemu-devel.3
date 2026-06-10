@@ -4,189 +4,119 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 24DEBCD8CB9
-	for <qemu-devel@archiver.kernel.org>; Wed, 10 Jun 2026 15:33:07 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id EE028CD8CB9
+	for <qemu-devel@archiver.kernel.org>; Wed, 10 Jun 2026 15:37:58 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wXKuk-00067X-6Y; Wed, 10 Jun 2026 11:32:22 -0400
+	id 1wXKzM-00005f-0S; Wed, 10 Jun 2026 11:37:08 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mark.caveayland@nutanix.com>)
- id 1wXKuf-00066l-Sz; Wed, 10 Jun 2026 11:32:18 -0400
-Received: from mx0a-002c1b01.pphosted.com ([148.163.151.68])
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1wXKzK-00005R-MO
+ for qemu-devel@nongnu.org; Wed, 10 Jun 2026 11:37:06 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mark.caveayland@nutanix.com>)
- id 1wXKuc-0000Xr-VI; Wed, 10 Jun 2026 11:32:17 -0400
-Received: from pps.filterd (m0127839.ppops.net [127.0.0.1])
- by mx0a-002c1b01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 65AC7bvi774525; Wed, 10 Jun 2026 08:31:59 -0700
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=nutanix.com; h=
- cc:content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=
- proofpoint20171006; bh=x2uBJTwPW/mxJwCaO3JZBwEvXRGN1uKEI6GZSrdfC
- ok=; b=PjJUCqeSquy4WShTLFLsdKtpcy//Ko37nKPnREnLcB8P7exEt3ommDRxz
- SXIlQonw7W6vAeY89ybzcdj+ZLsrfCovXLqkW6l7bki5R2zFBzIzxV0/PeXiNLaP
- q+L7pHs25kg1KYxNmqQMmwkGScEoNC3uKaCm+BGCbc774z40TDsDSpdGa+o6WOvG
- 4oiPpT+SoOaOvGqrtvO1dXr69jVHVaLGJVaJq4jLTQT+wpF19a8yfwA0F1Aum9yD
- Cfbv1ycIqX3soxG+pEZ/CxPxi1xqSJYEVDurJZUPPttX0P+AYXkFCQx9w1nbwHDN
- QgCzXYSVZ8zjRoC7nGWt7c1VWBZbA==
-Received: from sa9pr02cu001.outbound.protection.outlook.com
- (mail-southcentralusazon11023122.outbound.protection.outlook.com
- [40.93.196.122])
- by mx0a-002c1b01.pphosted.com (PPS) with ESMTPS id 4ept6vagux-1
- (version=TLSv1.3 cipher=TLS_AES_256_GCM_SHA384 bits=256 verify=NOT);
- Wed, 10 Jun 2026 08:31:59 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=o3ymQdl1Vsj5XX2bUJiv45abj24aNZHNlNqWhhzStas0vLyEoM5IEp1mnIjqWiu90YkWxRUnMPlMgFFhb6WKMLBSlktxouq/2Lh3Wdfd+0c5H+U7s45q5gOXXpxK0GY7HOufNer53593AsxGQDS9lDrsFbtF03kHyBDSJ9KzuoUbsWoXlOumZwSwwLOePyhgEKbirMq/cKEydMzI/4j5m/clA4kqpw31HRYChrFmmB+EXnd3O4Mcd7S4VzynAHWJidMADWo1yd7i8Y/sz9Zvi8Td5Fuot/VFu3dljVFOv6435zmHcqd2VizQEJhBPPcRwCF/JCDguCWHaxKiidd1VQ==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=x2uBJTwPW/mxJwCaO3JZBwEvXRGN1uKEI6GZSrdfCok=;
- b=ZxpYW6LfA+92Wbrct80dcvaocFaUmYDuh/VwlXttSRNs3SyZu80JV83shUt4BH/MW8uDxU3Rk6WXpUgzj4KLxKtfxCX+ii1b55tLBTtuoV1OhO8f4akC5qaDwJksBBPkbxJYCbrW1R9tryiO8pUXE3SOhcrkPd4mbhe6MxgWlZdv4kPqBGIfceo3aWqCN1YyhJl3bBOBwskgG5FxUXzf+jSIomCRBUWWr2dOILGdXa2oTpYif8NhpMXoIfSs1WdMfwdWM2d4M90IGXrzhSRjtpVyel9+XKgMP7AT75Xxs+w9EXvOMZACgNWcuMJsd9PE5aWkfk0pdaDTM7Ej2Pfb2g==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=nutanix.com; dmarc=pass action=none header.from=nutanix.com;
- dkim=pass header.d=nutanix.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=nutanix.com;
- s=selector1;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=x2uBJTwPW/mxJwCaO3JZBwEvXRGN1uKEI6GZSrdfCok=;
- b=b1u0WSX9E2FDtSsDXo6JiSSW9o132+42QGVQM3F28UbWcLqNL4QoFSLVunHmGzFDephnu/Utr9QNBzzeg6fvJJkbbYfdquQdq0axVJ5nFzD3bdeC5QDuhxDqfvTRAiEBqP6G6RR44HTePkTsZQn6WJiSNbCIGuuj8OErsxLYnNX7HV6ePnA9QNITpik+KHptchK/nImcCi0ase2sspm6DwW8zmyWpx4V6R4Jm5I8QN+p+nR0yVQYn8EYNOZFQLwFWmGkYpELHSNCrijtW3J5vuvDy+g60LQv6eK6B17wpog9RGf7cZYK6q8igQFTivYrb9zT3DpahVb4vO0VLxyN1Q==
-Received: from MW4PR02MB7153.namprd02.prod.outlook.com (2603:10b6:303:65::11)
- by DM4PR02MB9262.namprd02.prod.outlook.com (2603:10b6:8:106::20) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.113.11; Wed, 10 Jun
- 2026 15:31:56 +0000
-Received: from MW4PR02MB7153.namprd02.prod.outlook.com
- ([fe80::2d8:c73a:b2f9:f1dd]) by MW4PR02MB7153.namprd02.prod.outlook.com
- ([fe80::2d8:c73a:b2f9:f1dd%5]) with mapi id 15.21.0092.011; Wed, 10 Jun 2026
- 15:31:56 +0000
-Message-ID: <be759bf4-727a-4b14-bef0-80ec83b22c7d@nutanix.com>
-Date: Wed, 10 Jun 2026 16:31:49 +0100
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 04/10] hw/arm: Use nodefault version of qdev props when
- not needed
-To: Peter Xu <peterx@redhat.com>, qemu-devel@nongnu.org
-Cc: qemu-arm@nongnu.org, =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>,
- =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@mailo.com>,
- =?UTF-8?Q?Daniel_P_=2E_Berrang=C3=A9?= <berrange@redhat.com>,
- Fabiano Rosas <farosas@suse.de>,
- Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>,
- Peter Maydell <peter.maydell@linaro.org>,
- "Dr . David Alan Gilbert" <dave@treblig.org>, Eric Blake
- <eblake@redhat.com>, Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>,
- Paolo Bonzini <pbonzini@redhat.com>, Kevin Wolf <kwolf@redhat.com>,
- Sana Sharma <sansshar@redhat.com>,
- =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>,
- Juraj Marcin <jmarcin@redhat.com>, qemu-rust@nongnu.org,
- Markus Armbruster <armbru@redhat.com>, Marc Zyngier <maz@kernel.org>
-References: <20260609172514.2037645-1-peterx@redhat.com>
- <20260609172514.2037645-5-peterx@redhat.com>
-Content-Language: en-US
-From: Mark Cave-Ayland <mark.caveayland@nutanix.com>
-In-Reply-To: <20260609172514.2037645-5-peterx@redhat.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-X-ClientProxiedBy: CYXPR03CA0093.namprd03.prod.outlook.com
- (2603:10b6:930:d3::13) To MW4PR02MB7153.namprd02.prod.outlook.com
- (2603:10b6:303:65::11)
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1wXKzI-0002eM-L5
+ for qemu-devel@nongnu.org; Wed, 10 Jun 2026 11:37:06 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1781105823;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=uEZDTqsn8krWhkTZt+TENJLHy87QaCq53mNIE3fmL98=;
+ b=Op3N/QvAPuWLZesahVQze5jyLw4UdniSk6dq/aE3FFzcAK8DxWMDS5g9CuKV75DCXrWYAk
+ KTYGtEOpGtemnW0axENEfNnXxo3tkiBYOHT0NtUKWfdN+JMU6aTIw6qLJ2ggAuqnK63EJF
+ S3//U3EvlmDO6ucWUmZqQ5bEJGkh4tc=
+Received: from mail-qv1-f72.google.com (mail-qv1-f72.google.com
+ [209.85.219.72]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-342-pdC0Tc4mMvKrq0weWJk1mw-1; Wed, 10 Jun 2026 11:37:00 -0400
+X-MC-Unique: pdC0Tc4mMvKrq0weWJk1mw-1
+X-Mimecast-MFC-AGG-ID: pdC0Tc4mMvKrq0weWJk1mw_1781105820
+Received: by mail-qv1-f72.google.com with SMTP id
+ 6a1803df08f44-8cce1cc8cb2so15621796d6.1
+ for <qemu-devel@nongnu.org>; Wed, 10 Jun 2026 08:37:00 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=redhat.com; s=google; t=1781105820; x=1781710620; darn=nongnu.org;
+ h=in-reply-to:content-transfer-encoding:content-disposition
+ :mime-version:references:message-id:subject:cc:to:from:date:from:to
+ :cc:subject:date:message-id:reply-to;
+ bh=uEZDTqsn8krWhkTZt+TENJLHy87QaCq53mNIE3fmL98=;
+ b=PPlucNxtGo4S6KsZP5ZEd6KYlhRHN9E2wp6TrpriX/fczbdrqIdJEKL5jIM2QCabXp
+ v1n9tJI+/nAyCd3bKwUjigRGiohiqJYyHrnLGh2MYnJKRo6UHYUradMM7dz5SABNmDlg
+ Nvdxc166taZFQ+BLzShiqOPTXghoBFsEgBGYvTsjeC9xtXNF4tNZpx9Hj4vhf6HKL+v6
+ rx3pXKrJn5RJTHlz3IHmBl42hz4E5HDKHR+0PfUxuAQzHSxO+tRTb8GGjTYQguvSxmjS
+ XiZrCQbRaErlNCFEEpIWuOXt6ag/9xHqdCN1n2fPR7p2y77OaKMICERLFdXL3jtV6xeC
+ mmiw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1781105820; x=1781710620;
+ h=in-reply-to:content-transfer-encoding:content-disposition
+ :mime-version:references:message-id:subject:cc:to:from:date:x-gm-gg
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=uEZDTqsn8krWhkTZt+TENJLHy87QaCq53mNIE3fmL98=;
+ b=d6B9V16IPH9E28uIZJpu1K4FZuP9NY1BU/YmTi3losBApPJO1pW2AoHL4goMARaLYw
+ QEqAF4kLZ1Z7dGnDRxSZQSJciQ7tG98i+axic4ZzFcX9BmYuQxT08c4/6VRxMFAk3i/M
+ xBkGDJxMUyGc4rN97XgjjbycfcmIgUx05vQkICK0DGKGUOMpngvbtcyeUAFOvXpIn/1/
+ VZISP1yl1g3Yk5SMGS/bugXjcK13xGqaVf1xeZq8qVELTMwZ8jgcy91iEGDaKWbT5Gms
+ tijMPJjQdlXeTUJ6zEq4KfN+Bu7T3aZTJAxRjcFMZlv+n2xg0AGLonAQ9kmzBRUgFUyz
+ nzFA==
+X-Forwarded-Encrypted: i=1;
+ AFNElJ/r59T8MKkHyywEIqPEMoXBeiKtXzvfA2gybnfaO+PLMjdW3ifVX63nDV81s8gI4QtNlJqqsfE9apq0@nongnu.org
+X-Gm-Message-State: AOJu0Yw5vJtC9RpFa/Y2Kk1UF7rG4bQzmBQQnFY6I+eBDCeCskeZkyEf
+ 9VfnWduRH6J4xkXINkkCYq3qxO9hhNtu/fNM+Ra6ZxJDA1Qu4CwhHMW0oRb+kkENa8QJ5GEHajS
+ kjeiPNgkEdoHjs5k2aQRQQCgjzj0en+FIrTMc3MMQSbfoeqOHjFqUunCa
+X-Gm-Gg: Acq92OGAJ60FLM02XEIyISJrrtEQ7ioYkWmxMKQRtZgZW08w8xFIUYrGbReyQOLveld
+ wqS1949jMlTUkEDm92T03m+GsblpEFHzOa6g6Rfyi57aOr7VeOSLmOekWRvHB9vXhS4mFVoiVhx
+ Yv3oiG0onjfuDOQL2gmHC6w51vTjnPH7xmFIEcspuxJ2KfN+fef6lMhb4m81VJx9/TEmmcpqAO3
+ jB6QDAb6tP2+npib3dTeimuaTl3aftf5jZ/Nn+VM0a9mP1LJ1CsdjH6eo7MvnXxqUCKn4NwTEnw
+ Or0ajtpabTU2KlU5qx5gSCt6wnIb8aycYXtjjrVJiqFeK2LDWfQ/1q1j4yMwVJK52yJfuKpiwxS
+ u6ItsgeFf9hHV0tCj2mDlDx1S/w==
+X-Received: by 2002:a05:622a:1e14:b0:516:e39a:8540 with SMTP id
+ d75a77b69052e-517ca609a24mr114591981cf.48.1781105819515; 
+ Wed, 10 Jun 2026 08:36:59 -0700 (PDT)
+X-Received: by 2002:a05:622a:1e14:b0:516:e39a:8540 with SMTP id
+ d75a77b69052e-517ca609a24mr114591191cf.48.1781105818760; 
+ Wed, 10 Jun 2026 08:36:58 -0700 (PDT)
+Received: from x1.local ([142.189.10.167]) by smtp.gmail.com with ESMTPSA id
+ d75a77b69052e-51775d8161csm220992421cf.17.2026.06.10.08.36.57
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Wed, 10 Jun 2026 08:36:57 -0700 (PDT)
+Date: Wed, 10 Jun 2026 11:36:55 -0400
+From: Peter Xu <peterx@redhat.com>
+To: "Michael S. Tsirkin" <mst@redhat.com>
+Cc: Gavin Shan <gshan@redhat.com>, Pavel Hrdina <phrdina@redhat.com>,
+ Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>,
+ qemu-devel@nongnu.org, qemu-arm@nongnu.org, jugraham@redhat.com,
+ shan.gavin@gmail.com, Alex Williamson <alex@shazbot.org>,
+ David Hildenbrand <david@kernel.org>
+Subject: Re: [PATCH RFCv1] virtio: Inherit max bounce buffer size from bus
+ parent if possible
+Message-ID: <aimEl9QQ_LTRPLtd@x1.local>
+References: <aiaDgG26a6TUrKuM@redhat.com>
+ <07ca74b4-52a8-4187-a57c-7c3277e574d3@redhat.com>
+ <aiky9d9IwACIyKEC@phrdina-thinkpadt14gen4.rmtcz.csb>
+ <674d5e21-88fa-4a10-a83c-eb6f7ce7032f@redhat.com>
+ <20260610080947-mutt-send-email-mst@kernel.org>
+ <eb0f0da1-11dd-4437-94fd-a65af55851e1@redhat.com>
+ <20260610082637-mutt-send-email-mst@kernel.org>
+ <5d8cbd4b-3725-437e-88a3-e0af32164815@redhat.com>
+ <e7cc9f2d-ccb4-442f-a1ed-7c5474395099@redhat.com>
+ <20260610095712-mutt-send-email-mst@kernel.org>
 MIME-Version: 1.0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: MW4PR02MB7153:EE_|DM4PR02MB9262:EE_
-X-MS-Office365-Filtering-Correlation-Id: ca30c030-cb4a-4b40-226a-08dec70567a4
-x-proofpoint-crosstenant: true
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam: BCL:0;
- ARA:13230040|1800799024|7416014|23010399003|366016|376014|56012099006|22082099003|18002099003|4143699003|6133799003;
-X-Microsoft-Antispam-Message-Info: umoeNfltxtmap5IXsXEJkIVMQh6u+2FYFqNH9JuSqMdMkr7sUyZX+QEA81nRVqkOzI+9M2sHkGFtC7TEe3JK30AJt4cCv96LBHykkqRCGOX/olHY5djoRpKDQucMVeu/b3ja7pb1Ecxx4CGBFnsghVdVCx2TNLL/LKinTYpLMd+Y/AkvMxiVpPtJ5tVuxtVQwsa6XfHnxmgOFddul1PXiby33F3NsGWi8fixaPg6x6GM0yvcza9ljxb2e7pIc1KDXneYFs2SPuR6EK4eRHxXMg6lQvZhlMOwE6icEGaMfJZ6MMu7OMOJTvCvA3QVrUbdo4REEkpw6e/oYT2H6BtdYGZ+YjzHqqhyaVQafMLS76fvw/31+0F2M5N5ZlpqnAH+NxU2Ql6XpscUttmAsTskMhayYVxhI+9yfhNnHcjEXvsg3ZDcidAVqKpokil3XoBHRJlSSSFDBnA6QMEtsG/SbhaLVOS4V1TduAMt83BTc1h7NvkC5qWgiqvI5IgDXPG5W/F7wa7n59ODodi18pjM1UxLQ0+2v4+SxEOvhUbPJDbYPk5etieQywJ3i9BUmKsfQY2nhRP84PsKFdUtnm/zQEtBBaAyd5omxOohMNHBqCB7fo3G+ba/y7um6l3CKew3LUVGINwRLo1ZACP9gm1DwosCzIKvIKIcBqkgvnwVxcPVM/YCLJJaZ40frXyT0PIf
-X-Forefront-Antispam-Report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
- IPV:NLI; SFV:NSPM; H:MW4PR02MB7153.namprd02.prod.outlook.com; PTR:; CAT:NONE;
- SFS:(13230040)(1800799024)(7416014)(23010399003)(366016)(376014)(56012099006)(22082099003)(18002099003)(4143699003)(6133799003);
- DIR:OUT; SFP:1102; 
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0: =?utf-8?B?MStldEJvN3hFa0ZqeUUreFV3QWw1OTc3WlpMZDJJK015U08vRjdZUGJraXRV?=
- =?utf-8?B?cVAvZmhPVlRKSVY5WDl2cHdrMmVYVlE4L0tJdGxKdVdzakxjaUkxM3JpcjhR?=
- =?utf-8?B?eVpaNGw3WVZLalJYTkxRcE1XY014aFBHUzZKUFpqeXRlMXUrMDluNUpsbDEr?=
- =?utf-8?B?NGU2RmtmcE04SHB3V1JHRUd3MnpmOWlwNkY2LzdRU2ZvT0lOaVg4UWoxMWhl?=
- =?utf-8?B?VUtjQmE2N25oekZRL0xqNjhkdWRVQXdPV1lPUHhaNWFienRCQnE2Y1BFU2pa?=
- =?utf-8?B?elJvYVdydnZ2Z08yYldPQlgvN3l4UDZCTERPOURWV2pvSHo2UXBXQXVaWElE?=
- =?utf-8?B?RVVReVR2ZUFPNFlDWXlBbTEyRDFwbCtBamp5RDRxa0xWbFQvU0Mxc25jUHVS?=
- =?utf-8?B?YjFiWllXVGJwVThLYm0xYXFOblJnWU1IbmVTbEdHSXlTelp4aFZqVnNuVEcx?=
- =?utf-8?B?SElLWk43U21KcWNMT2hwNVVqUUI1eGU4dml3TU5IUS9VcW8vdTZxRVFKc0ho?=
- =?utf-8?B?S0ovMW91dkdTc2c2N2plOXB2L0JrY0c4VytsSHZ3YUxuTW1tK2xzRU9TWDV5?=
- =?utf-8?B?K3IxUGdkUlpFa1hJbUxka1h4amhFL1ZhMVBmL2dsb3VKUlZ3dFBVSzJRN0JF?=
- =?utf-8?B?RG1WbU96Z1NGSzRyN2prNktLS1lTOGxDa2VIeE0zSDZsSHlBWW84Y0UzT2JV?=
- =?utf-8?B?bDh1WjBNbTIyL1RQcWtseE9BbHRRM3BRQ2xqTW9TSDJEa0tZYUdLeFplUndM?=
- =?utf-8?B?R0xmc09nekp5QitoY2dPSmtMdEdoYnBxYlFOR2pJQy9CWlhrTThScnlyR0xx?=
- =?utf-8?B?dmw0RkdOVjk4L0s1WXhPMU9rbFFWbVNrWCs1dExoMXBvalRtRFVBUXZLOG1t?=
- =?utf-8?B?WjAyYUN6V05qNi9jUnh5S0pXNHpzWlZPUE44Z25xaEJiY0Evdnh3SkxrTnZ6?=
- =?utf-8?B?SlFGRGFGckFGTTRXYSt6Yi9tNVUyTUpPTHBrczkvbENqaHR0YnluTjVQMFhi?=
- =?utf-8?B?S3FPY2FFekRGTURFRlpCTW5lMkdwMU9hK1QvREtqVHFtbmViMFB0cGkxVG8y?=
- =?utf-8?B?c29BTVhFa3MzZFljbzFkQW9lT2t0N3h1ajBOYVZISkVzdjhMVjRKZTM3TGxW?=
- =?utf-8?B?Q1BQUXhzeERvR0ljVFNVS1Z3WUR3dGxIR0tFK0M4Z0MzMVJBUTNmQk9NVG93?=
- =?utf-8?B?UmR6SmpmUzYwRjdpVXBzN2FhMUhXWTlXRU5ZT1Y3cHA2eXFpY212OVcweExv?=
- =?utf-8?B?SXYwOUczLzh0MW1KOXN5dWJXNlU0MExaNC9Sdis2UmRLSVllaFdRSGR2K0c2?=
- =?utf-8?B?TWpMNXcxamRZTXRtZEtFV3B5YXZxYXY0aU9kd2RQMlRJMHJvRXFRTjZqazMz?=
- =?utf-8?B?bDNJMzZ0S2pvSkw2bS9UUFZBOEgreCtReEFYWEtnbkNhK0hObEoyOXpXelh6?=
- =?utf-8?B?bjM4ek1OQThyWEMvYVNscVA3bHdJSWJiSlZtczJYaHIxd3RJWkN1ZEUwTFAw?=
- =?utf-8?B?MFNtbFM2eXRLSTNBdHlCOWtOL0xNVlBnR3R1WG82bVlpMUpoVVJpQjhMWHFK?=
- =?utf-8?B?Smx3VUJYbWdRNVpSZU5QT1pCbzVBL3NQZENPQzU1cllFZGdWdVo1WDZVWHAy?=
- =?utf-8?B?NTFGT1VlMWMxRDI2N3REYW50R1JHTlJHVm5idjJLdGJWS2FpZktRUlVVTUxN?=
- =?utf-8?B?VkJBYUd3WlYycnY1bVRidHU2aGJhZmQ3RmRLTTM1L3U5TmxYZkd2dVZWZi8y?=
- =?utf-8?B?ajBRemVMRjUzc0FBRERDUllwNk9sQU9tWm5HQTJYbWhKc091dWRlZWppQjBu?=
- =?utf-8?B?ZEFwdjBBQUdhTWhMS2c2L1NZZmdpeE1hdGg5Y0FyNXFvYU1UN2ZMMlJYR2lM?=
- =?utf-8?B?WTRKS2JmL1N3Mm9GRnVSVVZwclcwUTJiVEg5T2pwYVkrT1E4eFlSZWtDTU5U?=
- =?utf-8?B?THE3V2FJTm9oQnVWalFwUXF0SXJHaGRYcEpPZy9TUzNxaXhicEJBdFA3ZXI3?=
- =?utf-8?B?WXYwMlpGN0tsOG95NFc3K2trL0tobWhJeWh1Z3c3YjNxSExFWHJEMkY0NDBl?=
- =?utf-8?B?ZWo3UzlCS2o2bU9rSUJ2TTNwMFRDR3ZWNDBweDBnOENYcVZaNVlWbHRyWVRG?=
- =?utf-8?B?VXNwYW4wRlhvOUNQQWNIaVlVQ0tFejBuVGt3Y3AzMWQxZWxmOFZuRStKUm5i?=
- =?utf-8?B?MmpoNDhZVjhqYitUVmZXbmsyZ3BTb0dRZFBBZmRBWkhGUC9Ua2pEcWtsMWRQ?=
- =?utf-8?B?L2gwN0p0VlYxL3lEZ3Y3Qi82a3k0NjZWa0M4NTRWR3c1d1Z5U2EvaVQyMlov?=
- =?utf-8?B?MHB6REpqd2ZIaThIcXdsTVJKbTFDMXplK2dtVHVrNGZkMlVDU3FycklHbk1Q?=
- =?utf-8?Q?la8A5Vd6BBr/aM9k=3D?=
-X-Exchange-RoutingPolicyChecked: bZOnhFCWxyVmgY9HUPRRqooYIYy9z83VIM4tJfLECIGMGbVuujhwVqFZk+WJxR7C38cwdBYc6Z18+DAgx6VyZNCV640m8ADlzmmI+6px1F45aiWbhPzOK20YXKb0RjSWNp/SlLvcqrX2BGjsSLJtk1ef/dlTiZG9TLrAtRTIlh7v7not7PTjuBxpIQC82zgYPOSuQlUGv1TZKhQ9C2kVTKTKcq82TeeOBoYUqFrKVoMfZ2AdbZO0Fy7bN4LaF0rmEbX3n4t/A07in/wlNcrlvoVdLz+OuuADy3mv8kf1Jk/2fB6VgZkhA8wlIJmQ8r9YghDNGcf0yuckKolTU5fTnQ==
-X-OriginatorOrg: nutanix.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: ca30c030-cb4a-4b40-226a-08dec70567a4
-X-MS-Exchange-CrossTenant-AuthSource: MW4PR02MB7153.namprd02.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 10 Jun 2026 15:31:56.1945 (UTC)
-X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
-X-MS-Exchange-CrossTenant-Id: bb047546-786f-4de1-bd75-24e5b6f79043
-X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: EDF+PUbYPLAdq70fP36mRDRs5QiBRW2F1q2hkx17aaZTcskxAwvGZ1NqVwk9QRHkxNxsEBZ6V0igkf905hYYL7VromHrXWwdWTR4vTb92Dc=
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: DM4PR02MB9262
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNjEwMDE0NyBTYWx0ZWRfX5DxGegBBNN0o
- ydDzyz1Mkqf4mxUsPSBwsLYkY39qu2kJgCEMWJcW0f2nhQJcll2exNzUZZBlQyp5mDF7FLEYLEp
- fuLC64hPLzu9O9If4eYIm9eEGp39sj4SFVEUW+xghzSH1+ETJRPc3eueQAJNyFy/+gxRBPxqwzo
- szIL5BM4+DuHFNTbRn8Orn6pc1Tqdq6iymm38ePxTBiC1Jcb7y92C/4B7BCjgo+HLFT5W2bRsfO
- WnhkrVZS6MbXXo/18Tb/dmfodlZyIp6xdTxa/BOWSUAqsEKpZgmGdBQJpIlnqCFlnkajrFeBZAV
- Q1+yvxs4lCKRvM4SkOngBfAwc1REgnfZE31S06u2zyZoR1b1BwgWU83a3lXTsjQz4t4IsLxxxQ5
- ifqyjINC1U/EdkTt1yM/WIoLB8UhIXiQAvM2MiUk4CLrdEU7izUHIZsHiIbpjbLDJi+AXfw1mMg
- BmNGphZIJlj0f/tGE5g==
-X-Authority-Analysis: v=2.4 cv=N5QZ0W9B c=1 sm=1 tr=0 ts=6a29836f cx=c_pps
- a=+8ozu11IBk2Dcx/W9SapsQ==:117 a=6eWqkTHjU83fiwn7nKZWdM+Sl24=:19
- a=z/mQ4Ysz8XfWz/Q5cLBRGdckG28=:19 a=lCpzRmAYbLLaTzLvsPZ7Mbvzbb8=:19
- a=xqWC_Br6kY4A:10 a=IkcTkHD0fZMA:10 a=FelO9ux0wxsA:10 a=0kUYKlekyDsA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=VofLwUrZ8Iiv6rRUPXIb:22 a=y4UcunY2MAxhM4LwGdWI:22
- a=VwQbUJbxAAAA:8 a=S56xvJB5AAAA:8 a=20KFwNOVAAAA:8 a=64Cc0HZtAAAA:8
- a=oA5VVhga_OJsqttTzQsA:9 a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
- a=MH9Ivq0PDQRhlrFuIVvX:22
-X-Proofpoint-GUID: 9l29LoNYyqEHg5vreplGAOLMeHL6C3jp
-X-Proofpoint-ORIG-GUID: 9l29LoNYyqEHg5vreplGAOLMeHL6C3jp
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.125,FMLib:17.12.100.49
- definitions=2026-06-10_03,2026-06-09_02,2025-10-01_01
-X-Proofpoint-Spam-Reason: safe
-Received-SPF: pass client-ip=148.163.151.68;
- envelope-from=mark.caveayland@nutanix.com; helo=mx0a-002c1b01.pphosted.com
-X-Spam_score_int: -31
-X-Spam_score: -3.2
-X-Spam_bar: ---
-X-Spam_report: (-3.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.445,
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <20260610095712-mutt-send-email-mst@kernel.org>
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=peterx@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -24
+X-Spam_score: -2.5
+X-Spam_bar: --
+X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.445,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -202,96 +132,182 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 09/06/2026 18:25, Peter Xu wrote:
+On Wed, Jun 10, 2026 at 10:06:24AM -0400, Michael S. Tsirkin wrote:
+> On Wed, Jun 10, 2026 at 11:54:47PM +1000, Gavin Shan wrote:
+> > Hi Michael and Peter,
+> > 
+> > On 6/10/26 11:00 PM, Gavin Shan wrote:
+> > > On 6/10/26 10:27 PM, Michael S. Tsirkin wrote:
+> > > > On Wed, Jun 10, 2026 at 10:19:31PM +1000, Gavin Shan wrote:
+> > > > > On 6/10/26 10:12 PM, Michael S. Tsirkin wrote:
+> > > > > > On Wed, Jun 10, 2026 at 08:55:10PM +1000, Gavin Shan wrote:
+> > > > > > > On 6/10/26 7:54 PM, Pavel Hrdina wrote:
+> > > > > 
+> > > > > [...]
+> > > > > 
+> > > > > > > > 
+> > > > > > > > You did not answer the question that Daniel was asking, how will user
+> > > > > > > > know that max-bounce-buffer-size should be used if it's necessary to fix
+> > > > > > > > guest system hangs and how will user know what magic value should be set?
+> > > > > > > > 
+> > > > > > > 
+> > > > > > > Sorry that I missed to answer Daniel's questions. For this specific case,
+> > > > > > > user need to enlarge the bounce buffer size when seeing the following error
+> > > > > > > message. We can add an explicit one in address_space_map() if the existing
+> > > > > > > error message isn't obvious.
+> > > > > > > 
+> > > > > > >     qemu-system-aarch64: virtio: bogus descriptor or out of resources
+> > > > > > > 
+> > > > > > >     void *address_space_map(AddressSpace *as,
+> > > > > > >                           hwaddr addr,
+> > > > > > >                           hwaddr *plen,
+> > > > > > >                           bool is_write,
+> > > > > > >                           MemTxAttrs attrs)
+> > > > > > >     {
+> > > > > > >         if (!memory_access_is_direct(mr, is_write, attrs)) {
+> > > > > > >             if (l == 0) {
+> > > > > > >                 error_report("Running out of bounce buffer size , enlarge it with max-bounce-buffer-size");
+> > > > > > >                 *plen = 0;
+> > > > > > >                 return NULL;
+> > > > > > >             }
+> > > > > > >         }
+> > > > > > > 
+> > > > > > > As to the value user should take for max-bounce-buffer-size, it is really case by case
+> > > > > > > and decided by user. User needs to try 4096, 8192, ..., 0xFFFFFFFF to figure out the
+> > > > > > > smallest value works for them. The worst case is to set 0xFFFFFFFF.
+> > > > > > > 
+> > > > > > 
+> > > > > > 
+> > > > > > This is not at all reasonable. All kind of fixes are possible but
+> > > > > > fundamentally, bounce buffering data path is by itself already a
+> > > > > > bad idea.
+> > > > > > 
+> > > > > > I have no idea what does bounce buffering device ram accomplish.
+> > > > > > 
+> > > > > > In the end, qemu still simply reads the memory from/to the buffer.
+> > > > > > 
+> > > > > > My suggestion is to first of all look for ways to mark the
+> > > > > > memory as direct.
+> > > > > > 
+> > > > > 
+> > > > > As I explained to Peter Xu in another reply, we can't simply mark the (RAM
+> > > > > DEVICE) memory region is directly accessible. The memory region is initialized
+> > > > > by memory_region_init_ram_device_ptr() in hw/vfio/region.c::vfio_region_mmap().
+> > > > > 
+> > > > > The  accesses to the memory region is handled by 'ram_device_mem_ops' where
+> > > > > {ldn, stn}_he_p() are used in its read/write handler. They're different
+> > > > > from memcpy() since the data endianness is well handled in {ldn, stn}_he_p().
+> > > > > 
+> > > > > Thanks,
+> > > > > Gavin
+> > > > > 
+> > > > 
+> > > > What is endianness set to, for this region?
+> > > > 
+> > > 
+> > > The endianness of the memory region is set to that for the host.
+> > > 
+> > > static const MemoryRegionOps ram_device_mem_ops = {
+> > >      .read = memory_region_ram_device_read,
+> > >      .write = memory_region_ram_device_write,
+> > >      .endianness = HOST_BIG_ENDIAN ? DEVICE_BIG_ENDIAN : DEVICE_LITTLE_ENDIAN,
+> > > };
+> > > 
+> 
+> So there is never any endianness translation.
+> I think the reason qemu does the bounce buffer is more
+> to prevent things like vector access from MMIO.
+> 
+> 
+> > How about to treat the RAM DEVICE memory region directly accessible in
+> > address_space_map() only when HOST_BIG_ENDIAN is false,
+> > something like
+> > below and I don't hit the guest hang issue with the changes.
+> > 
+> > diff --git a/include/system/memory.h b/include/system/memory.h
+> > index 1417132f6d..9daca55251 100644
+> > --- a/include/system/memory.h
+> > +++ b/include/system/memory.h
+> > @@ -2908,7 +2908,8 @@ void *qemu_map_ram_ptr(RAMBlock *ram_block, ram_addr_t addr);
+> >  int memory_access_size(MemoryRegion *mr, unsigned l, hwaddr addr);
+> >  bool prepare_mmio_access(MemoryRegion *mr);
+> > -static inline bool memory_region_supports_direct_access(const MemoryRegion *mr)
+> > +static inline bool memory_region_supports_direct_access(const MemoryRegion *mr,
+> > +                                                        bool check_ram_device)
+> >  {
+> >      /* ROM DEVICE regions only allow direct access if in ROMD mode. */
+> >      if (memory_region_is_romd(mr)) {
+> > @@ -2922,13 +2923,14 @@ static inline bool memory_region_supports_direct_access(const MemoryRegion *mr)
+> >       * be MMIO and access using mempy can be wrong (e.g., using instructions not
+> >       * intended for MMIO access). So we treat this as IO.
+> >       */
+> > -    return !memory_region_is_ram_device(mr);
+> > +    return (!check_ram_device || !memory_region_is_ram_device(mr));
+> >  }
+> >  static inline bool memory_access_is_direct(const MemoryRegion *mr,
+> > +                                           bool check_ram_device,
+> >                                             bool is_write, MemTxAttrs attrs)
+> >  {
+> > -    if (!memory_region_supports_direct_access(mr)) {
+> > +    if (!memory_region_supports_direct_access(mr, check_ram_device)) {
+> >          return false;
+> >      }
+> > diff --git a/system/physmem.c b/system/physmem.c
+> > index 7bcbf87573..2e6b72b124 100644
+> > --- a/system/physmem.c
+> > +++ b/system/physmem.c
+> > @@ -3724,7 +3724,7 @@ void *address_space_map(AddressSpace *as,
+> >      fv = address_space_to_flatview(as);
+> >      mr = flatview_translate(fv, addr, &xlat, &l, is_write, attrs);
+> > -    if (!memory_access_is_direct(mr, is_write, attrs)) {
+> > +    if (!memory_access_is_direct(mr, HOST_BIG_ENDIAN, is_write, attrs)) {
+> >          size_t used = qatomic_read(&as->bounce_buffer_size);
+> >          for (;;) {
+> >              hwaddr alloc = MIN(as->max_bounce_buffer_size - used, l);
+> > 
+> > Thanks,
+> > Gavin
+> > 
+> 
+> I do not think it has anything to do with host endian-ness.
+> 
+> 
+> This is the change that broke it I think?
+> 
+> 
+> commit 4a2e242bbb306ef5c16ce9e7bb2da3bd8a4eb098
+> Author: Alex Williamson <alex@shazbot.org>
+> Date:   Mon Oct 31 09:53:03 2016 -0600
+> 
+>     memory: Don't use memcpy for ram_device regions
+>     
+> 
+> Maybe Alex has an opinion on what to do.
 
-> We're going to introduce defvars for object properties just like qdev-props
-> defvars.  It work slightly differently in that props can be added in
-> instance_init() with default values, then the default values can only apply
-> after instance_init() completes.
-> 
-> It means any explicit set of property values within instance_init() when
-> used together with object property's default value (or qdev-prop, which
-> builts the default value framework on top) will stop working.
-> 
-> This patch touches two of such use cases where the device may add qdev
-> properties with a default value first, then quickly set another value
-> within instance_init().
-> 
-> These are the only two outliers I found across the QEMU tree that do it
-> this way.  Switch them to use qdev-prop's NODEFAULT APIs, and always
-> initialize the values manually.
-> 
-> Example 1:
-> 
-> bcm283x_base_init() adds qdev prop bcm2836_enabled_cores_property with a
-> default value 0, then it immediately set another value inside the same
-> instance_init() hook.
-> 
-> Example 2:
-> 
-> aarch64_add_pauth_properties() adds qdev prop arm_cpu_pauth_property, but
-> then it will immediately update the same field (cpu->prop_pauth)
-> conditionally when hwaccel_enabled()==true.
-> 
-> Without the change, some arm test may fail (boot-serial-test) after
-> introducing object property's default value framework, because devices'
-> values will be overwritten by the properties' later.
-> 
-> OTOH, this patch itself should introduce no functional change.
-> 
-> Cc: Marc Zyngier <maz@kernel.org>
-> Cc: Philippe Mathieu-Daudé <philmd@mailo.com>
-> Signed-off-by: Peter Xu <peterx@redhat.com>
-> ---
->   hw/arm/bcm2836.c   | 3 ++-
->   target/arm/cpu64.c | 3 ++-
->   2 files changed, 4 insertions(+), 2 deletions(-)
-> 
-> diff --git a/hw/arm/bcm2836.c b/hw/arm/bcm2836.c
-> index f4ecea908b..9e4d30c99c 100644
-> --- a/hw/arm/bcm2836.c
-> +++ b/hw/arm/bcm2836.c
-> @@ -19,7 +19,8 @@
->   #include "target/arm/gtimer.h"
->   
->   static const Property bcm2836_enabled_cores_property =
-> -    DEFINE_PROP_UINT32("enabled-cpus", BCM283XBaseState, enabled_cpus, 0);
-> +    DEFINE_PROP_UINT32_NODEFAULT(
-> +        "enabled-cpus", BCM283XBaseState, enabled_cpus);
->   
->   static void bcm283x_base_init(Object *obj)
->   {
-> diff --git a/target/arm/cpu64.c b/target/arm/cpu64.c
-> index 2816735577..a3a014a994 100644
-> --- a/target/arm/cpu64.c
-> +++ b/target/arm/cpu64.c
-> @@ -635,7 +635,7 @@ void aarch64_cpu_pauth_finalize(ARMCPU *cpu, Error **errp)
->   }
->   
->   static const Property arm_cpu_pauth_property =
-> -    DEFINE_PROP_BOOL("pauth", ARMCPU, prop_pauth, true);
-> +    DEFINE_PROP_BOOL_NODEFAULT("pauth", ARMCPU, prop_pauth);
->   static const Property arm_cpu_pauth_impdef_property =
->       DEFINE_PROP_BOOL("pauth-impdef", ARMCPU, prop_pauth_impdef, false);
->   static const Property arm_cpu_pauth_qarma3_property =
-> @@ -660,6 +660,7 @@ void aarch64_add_pauth_properties(Object *obj)
->            */
->           cpu->prop_pauth = cpu_isar_feature(aa64_pauth, cpu);
->       } else {
-> +        cpu->prop_pauth = true;
->           qdev_property_add_static(DEVICE(obj), &arm_cpu_pauth_impdef_property);
->           qdev_property_add_static(DEVICE(obj), &arm_cpu_pauth_qarma3_property);
->           qdev_property_add_static(DEVICE(obj), &arm_cpu_pauth_qarma5_property);
+I can offer one idea here..
 
-I checked against the commit message for 5cc56cc687 ("qdev: support 
-properties which don't set a default value") and this is exactly what 
-_NODEFAULT() is intended for, so:
+IIUC the major issue was vector ops but the mr ops might be too heavy, then
+another way to fix it is in memory API instead of using memcpy()/memmove(),
+we always use a helper (say, memmove_no_vector()) to do the split and
+properly aligned IOs as what ram_device_mem_ops does right now, this should
+only applies to ram_device.
 
-Reviewed-by: Mark Cave-Ayland <mark.caveayland@nutanix.com>
+With that, IIUC we can remove the current ram_device_mem_ops, then in
+Gavin's case mmap() will go through and guest will not need to vmexit at
+all.  Best perf, issue solve.
 
+We just need to be careful to trap all possible memcpy()/memmove() used in
+memory core.. if I didn't miss any, IMO below four should needs to be
+replaced by memmove_no_vector():
 
-ATB,
+  flatview_write_continue_step()
+  flatview_read_continue_step()
+  address_space_read()
+  address_space_write_rom()
 
-Mark.
+Thanks,
+
+-- 
+Peter Xu
 
 
