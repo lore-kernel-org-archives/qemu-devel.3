@@ -4,75 +4,88 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C1086CD8CB2
-	for <qemu-devel@archiver.kernel.org>; Wed, 10 Jun 2026 12:21:58 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 71B83CD98C5
+	for <qemu-devel@archiver.kernel.org>; Wed, 10 Jun 2026 12:23:22 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wXHwJ-0006K4-UT; Wed, 10 Jun 2026 08:21:47 -0400
+	id 1wXHxe-0006rQ-KT; Wed, 10 Jun 2026 08:23:10 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <kwolf@redhat.com>) id 1wXHwI-0006Jc-6J
- for qemu-devel@nongnu.org; Wed, 10 Jun 2026 08:21:46 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <kwolf@redhat.com>) id 1wXHwG-0005Zh-2b
- for qemu-devel@nongnu.org; Wed, 10 Jun 2026 08:21:45 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1781094103;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=mwN0/1nK2kDBPwldWHk4XGeggj5eDpbUUPH0UOdkauM=;
- b=WV6IhtfqiHdRS+6rraU2ITURRuY+GGU75gQd6HPLcFoI/FWkiuNLchMDnq5C7A45FitWt8
- F1IiyzG+Gb7ge+SL+wPSLYHHoB19AyyxGrCxAsEGAA1JZyCtCuKgGy2kVziROKxlfliPQr
- s8KMvNpxUF+Hpu82t2vdHXqGvwfuGh8=
-Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-679-AvljUsKJPT2NZ40kQf4QYA-1; Wed,
- 10 Jun 2026 08:21:40 -0400
-X-MC-Unique: AvljUsKJPT2NZ40kQf4QYA-1
-X-Mimecast-MFC-AGG-ID: AvljUsKJPT2NZ40kQf4QYA_1781094099
-Received: from mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.111])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 852961845446; Wed, 10 Jun 2026 12:21:38 +0000 (UTC)
-Received: from redhat.com (unknown [10.44.33.216])
- by mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 161F718005B3; Wed, 10 Jun 2026 12:21:35 +0000 (UTC)
-Date: Wed, 10 Jun 2026 14:21:33 +0200
-From: Kevin Wolf <kwolf@redhat.com>
-To: Daniel =?iso-8859-1?Q?P=2E_Berrang=E9?= <berrange@redhat.com>
-Cc: Fiona Ebner <f.ebner@proxmox.com>, Stefan Hajnoczi <stefanha@gmail.com>,
- qemu-block@nongnu.org, stefanha@redhat.com, qemu-devel@nongnu.org
-Subject: Re: [PULL 0/8] Block layer patches
-Message-ID: <ailWzRwN2AfIZjjF@redhat.com>
-References: <20260608165207.307488-1-kwolf@redhat.com>
- <CAJSP0QXjj32djLOFPNg2jKjNN6eB7VvRXVfz3XiNkWYjR0-S2A@mail.gmail.com>
- <aik5Ox9cX_5FQbO4@redhat.com>
- <3982600a-61a1-406a-b1b9-246ae6d9a606@proxmox.com>
- <ailHvv4_bSZDQfUD@redhat.com> <ailM5OtknbaXuDOn@redhat.com>
- <ailPBVrN32VFpR6y@redhat.com>
+ (Exim 4.90_1) (envelope-from <alexander.hansen@9elements.com>)
+ id 1wXHxd-0006rI-EK
+ for qemu-devel@nongnu.org; Wed, 10 Jun 2026 08:23:09 -0400
+Received: from mail-wr1-x435.google.com ([2a00:1450:4864:20::435])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <alexander.hansen@9elements.com>)
+ id 1wXHxb-0005r5-KP
+ for qemu-devel@nongnu.org; Wed, 10 Jun 2026 08:23:09 -0400
+Received: by mail-wr1-x435.google.com with SMTP id
+ ffacd0b85a97d-45eea68dd6fso3594041f8f.2
+ for <qemu-devel@nongnu.org>; Wed, 10 Jun 2026 05:23:06 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=9elements.com; s=google; t=1781094185; x=1781698985; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:from:to:cc:subject:date:message-id:reply-to;
+ bh=cjBwYepmjSvQ6jukhT3XfMOwNq9BqshO0Vaowzj8bx4=;
+ b=hfiVRCNaMW2jHH2GOPT9YWZwuutyO1dr6Mami/FqxmymClja6xRwxeIqcaOMxTKhRH
+ XpHLlvZhD0HxmBYXn3Q1y18qKnexubOFVJ/5JdHIRJeXxcze6SHDhv4daQjoaSkTPWcV
+ 7pnksVV/hkrwGF0nHlGgOWTt0YsgpEl5sCl/Tkl4Cuwd1r1hOFvnNjRqmp8Jg3RhpeNw
+ t3CYK9BsRQmLVQngONIM2u/z+R8KSb21zUJa1jcG9Lb57tKuzULoC4qBv84e2sb2UyxZ
+ hUX3xSdQqjtqMbTB8IUxMIjBjleqypFp8tY+MJxJ5fA5zRIg4yXeUd9dzxzR4qZUnTAL
+ KmIQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1781094185; x=1781698985;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=cjBwYepmjSvQ6jukhT3XfMOwNq9BqshO0Vaowzj8bx4=;
+ b=V5AmHlt10fEPL809Ittz8JNsv/JMlmNlikSTUEsfdKHiuSv7UqUMq1OZeeB/PBHtPY
+ xr/i+ST8A62O+cyF6/MhlT/BTHBkzhSUu3VPJFCdB8Nwsr7cvw8SxCqUvD/ZUzdEprXI
+ sND+glu0UBQ2JFy2kE2Xtx36UtnAqityP5gMvPqtyu4021K/apoS6HUqSKBcD86MNfCf
+ VbkAb/clRpZ0xfo3rOnQnEvyaH30utD85KF309daSPz5NO7A8fJXhzDUNYCZdC7MzuE/
+ jQMaQom68vp7fMfOLZQsmikwnT27rzZ2Fm2kvlIQ84Chprps+3GhSiavBaoEJEv505rq
+ xpvQ==
+X-Gm-Message-State: AOJu0YwCm4L3YyQRTVTMJPQgh1aPwqyYr++UzrP02u6m6z2F35uaKsO2
+ dl7HPpPfYi6q9hhcDULGI2nXdTLbLF/+mqfz857sYcR1L9E+CrPPtoEfHGKqoIgFRlJmj3zknIV
+ oIZydkNQ=
+X-Gm-Gg: Acq92OFGSJhuoAx1JKyp7KiKiHS5Ib5AL/SaNUBUGwxUQtEoHd9MaZNSzaAel91V2m2
+ dejkGp1Atxl6uEz/e/Z2+gclShCtfQkSp8TdepvIm5sNR6cv//LJBQbgnd+wC9uw9C507jenGas
+ 3pfZsZGWE6PFH3ux+lNjROsFB6CLQ1rlWe/q/zrWIi4vmqv8RfMf2Y9nNHY6CzbBBiAasFPS9Xo
+ jYTQXh+zV9Tz5ZZMYSUdH469TsNq7sCxGv9vovQVE08JdgNfK1DVCTQRgF65qu+QKnWOJW9WXRe
+ gtoecS+bKu9HL73e8M4OXrH1BkddqMycJcS353e4pxeDo2JSark6Vp6byeeFbZk0YaZ/c2l9JnE
+ Qzj4un1dcVDn64Zk7aNpi9bn4nAAGQtw8ofUtogJmPZmB1l3XJ8OmCkIIUeJ08Wv6qXa2tC2zNr
+ iD03vpGJq3C+y+bZKRMnMCmT1LP31Jmq6WLqlpyi0hsEcgroK3Qbk/pr22lFjKjUwo4A==
+X-Received: by 2002:a05:6000:c01:b0:45e:ed10:8dff with SMTP id
+ ffacd0b85a97d-4603050f573mr29196031f8f.24.1781094185386; 
+ Wed, 10 Jun 2026 05:23:05 -0700 (PDT)
+Received: from alexanderarchlinux ([188.111.3.154])
+ by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-4601f0a43e9sm70995963f8f.0.2026.06.10.05.23.04
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Wed, 10 Jun 2026 05:23:04 -0700 (PDT)
+From: Alexander Hansen <alexander.hansen@9elements.com>
+To: qemu-devel@nongnu.org
+Cc: Alexander Hansen <alexander.hansen@9elements.com>,
+ Titus Rwantare <titusr@google.com>,
+ =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@kaod.org>,
+ Jonathan Cameron <jonathan.cameron@huawei.com>
+Subject: [PATCH v6 0/5] initial support for yosemite4
+Date: Wed, 10 Jun 2026 14:20:57 +0200
+Message-ID: <20260610122252.349321-1-alexander.hansen@9elements.com>
+X-Mailer: git-send-email 2.54.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Disposition: inline
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <ailPBVrN32VFpR6y@redhat.com>
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.111
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=kwolf@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -24
-X-Spam_score: -2.5
+Received-SPF: pass client-ip=2a00:1450:4864:20::435;
+ envelope-from=alexander.hansen@9elements.com; helo=mail-wr1-x435.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.445,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -88,55 +101,109 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Am 10.06.2026 um 13:48 hat Daniel P. Berrangé geschrieben:
-> On Wed, Jun 10, 2026 at 01:39:16PM +0200, Kevin Wolf wrote:
-> > Am 10.06.2026 um 13:17 hat Daniel P. Berrangé geschrieben:
-> > > You just got unlucky with the new expanded CI testing introduced when
-> > > my pull request was merged a few days ago.  Previously gitlab CI only
-> > > tested qcow2 and raw, and so compat with other drivers was "best effort"
-> > > after the fact.
-> > > 
-> > > Now the gitlab CI runs I/O tests across 10 drivers, so it needs to
-> > > work before merge, which is something contributors didn't need to
-> > > think about before now.
-> > > 
-> > > If you push a branch to your gitlab fork and trigger CI, you'll see
-> > > the results in the "block" job in the pipeline results. 
-> > 
-> > Technically true, but who has the CI minutes to actually do this?
-> 
-> Pretty much everyone IMHO.
-> 
-> > I don't think we've figured out a solution yet how people (or at least
-> > maintainers) can use QEMU's minutes from the open source program prior
-> > to sending a patch series or pull request. Or have we?
-> 
-> GitLab user accounts get 400 minutes of CI credits.
-> 
-> Forks of QEMU though are only charged at a cost fact or 0.008 since
-> we are a member of the OSS program
-> 
->   https://docs.gitlab.com/ci/pipelines/compute_minutes/#cost-factors-of-hosted-runners-for-gitlabcom
-> 
-> IOW, you're charged 1 minute per 125 minutes of job time.
-> 
-> A single QEMU pipline run in my fork today cost 4.5 credits. That's
-> enough for 87 pipeline runs per month, if I was not contributing to
-> anything outside QEMU on gitlab.com.
-> 
-> If you run a pipeline to sanity check before sending a patch series
-> I don't think most people will ever run out of credits.
-> 
-> If you run multiple pipelines a day during development then you might
-> be pushing your luck. Better to use the local "make docker-...."
-> targets for day-to-day testing during dev, and just use gitlab
-> pipelines before submission.
 
-Did this change at some point? Because I'm quite sure I stopped doing
-full CI runs only after running out of minutes with very moderate use.
-Ever since then, I've only manually started individual jobs when I had
-reason to suspect there could be a problem with them.
+Thanks to Cedric for reviewing
 
-Kevin
+Summary of changes from v5:
+
+machine:
+- add documentation to docs/system/arm/aspeed.rst
+- inline fby4_i2c_init_multiple_blade_chassis
+
+machine functional test:
+- no changes
+
+max31790:
+- max31790_set_rpm: clamp to maximum value instead of overflowing
+  when writing the uint16_t value
+
+- max31790_reset: fix out of bounds write through max31790_pwm_write.
+  The loop was going over MAX31790_NUM_TACHS when it should be
+  MAX31790_NUM_FANS
+
+ > How does the 0x4444 value relates to the one used in the tests ?
+
+There is something in the image which is writing the pwm, if you look at the traces
+it should be more obvious in the latest patchset
+
+max31790_pwm_write i2c_addr: 0x2f, index: 5, value: 0xb200
+max31790_rpm_write i2c_addr: 0x2f, index: 5, value: 0x1c34
+max31790_tach_count_reg i2c_addr: 0x2f, index: 5, value: 0x0440
+max31790_send i2c_addr: 0x2f, data: 0x80
+max31790_pwm_write i2c_addr: 0x2f, index: 5, value: 0xb280
+max31790_rpm_write i2c_addr: 0x2f, index: 5, value: 0x1c48
+max31790_tach_count_reg i2c_addr: 0x2f, index: 5, value: 0x0420
+
+Looking then at the latest fan dynamics read from the driver
+
+max31790_fan_dynamics_read i2c_addr: 0x20, channel: 0, value: 0x0000
+max31790_recv_return i2c_addr: 0x20, reg_addr: 0x08, returns: 0x00
+
+and plugging that into the equation
+
+ >>> (60 * 1 * 8192) / (0x0420 >> 4)
+7447.272727272727
+
+we get the value found in the test.
+
+However the fan dynamics did not match the POR value so i noticed the reset function needs to be called from realize function to set the initial values.
+
+Then the values read by the driver are as expected.
+Also added some example calculation to the functional test to showcase
+how the rpm read by the driver is created from the initial pwm write.
+
+- fix redundant import and extra newline in functional test
+
+- consolidate 2 trace logs in recv function and add more useful traces
+
+max11615:
+
+- remove "qemu/osdep.h" include from include/hw/sensor/max11615.h as requested
+- fix missing '\n' in log message
+- call reset function on realize to set initial POR register values.
+  Wrong reset flow caused the configured value to be overwritten before.
+- review test values and linux driver, adjust the test to the correct value
+
+adc128d818:
+
+- no changes for now, focusing on getting the machine
+  and the first 2 sensors done.
+
+Alexander Hansen (5):
+  ast2600: yosemite4 initial support
+  ast2600: yosemite4 functional test
+  hw/sensor: MAX31790 support
+  hw/sensor: support MAX11615
+  hw/sensor: support Texas Instruments ADC128D818
+
+ MAINTAINERS                              |   3 +
+ docs/system/arm/aspeed.rst               |   3 +-
+ include/hw/sensor/adc128d818.h           |  23 +
+ include/hw/sensor/max11615.h             |  19 +
+ hw/arm/aspeed_ast2600_fby4.c             | 273 +++++++++++
+ hw/sensor/adc128d818.c                   | 433 ++++++++++++++++++
+ hw/sensor/max11615.c                     | 322 +++++++++++++
+ hw/sensor/max31790.c                     | 556 +++++++++++++++++++++++
+ hw/arm/Kconfig                           |   3 +
+ hw/arm/meson.build                       |   1 +
+ hw/sensor/Kconfig                        |  12 +
+ hw/sensor/meson.build                    |   3 +
+ hw/sensor/trace-events                   |  30 ++
+ tests/functional/arm/meson.build         |   2 +
+ tests/functional/arm/test_aspeed_fby4.py | 110 +++++
+ 15 files changed, 1792 insertions(+), 1 deletion(-)
+ create mode 100644 include/hw/sensor/adc128d818.h
+ create mode 100644 include/hw/sensor/max11615.h
+ create mode 100644 hw/arm/aspeed_ast2600_fby4.c
+ create mode 100644 hw/sensor/adc128d818.c
+ create mode 100644 hw/sensor/max11615.c
+ create mode 100644 hw/sensor/max31790.c
+ create mode 100755 tests/functional/arm/test_aspeed_fby4.py
+
+Cc: Titus Rwantare <titusr@google.com>
+Cc: "CÃ©dric Le Goater" <clg@kaod.org> (maintainer:ASPEED BMCs)
+Cc: Jonathan Cameron <jonathan.cameron@huawei.com>
+-- 
+2.54.0
 
 
