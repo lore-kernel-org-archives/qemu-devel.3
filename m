@@ -4,80 +4,81 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 88D90CD8CB2
-	for <qemu-devel@archiver.kernel.org>; Wed, 10 Jun 2026 16:20:12 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 19B74CD8CB2
+	for <qemu-devel@archiver.kernel.org>; Wed, 10 Jun 2026 16:20:32 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wXLXx-0008W8-L8; Wed, 10 Jun 2026 12:12:53 -0400
+	id 1wXLY2-0000mA-Sh; Wed, 10 Jun 2026 12:12:58 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1wXLXT-0007fw-Vv
- for qemu-devel@nongnu.org; Wed, 10 Jun 2026 12:12:25 -0400
-Received: from mail-wr1-x42a.google.com ([2a00:1450:4864:20::42a])
+ id 1wXLXy-0000FB-Em
+ for qemu-devel@nongnu.org; Wed, 10 Jun 2026 12:12:54 -0400
+Received: from mail-wm1-x332.google.com ([2a00:1450:4864:20::332])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1wXLXR-0005Ul-Tu
- for qemu-devel@nongnu.org; Wed, 10 Jun 2026 12:12:23 -0400
-Received: by mail-wr1-x42a.google.com with SMTP id
- ffacd0b85a97d-45eea68dd6fso3775021f8f.2
- for <qemu-devel@nongnu.org>; Wed, 10 Jun 2026 09:12:21 -0700 (PDT)
+ id 1wXLXw-0005cI-38
+ for qemu-devel@nongnu.org; Wed, 10 Jun 2026 12:12:54 -0400
+Received: by mail-wm1-x332.google.com with SMTP id
+ 5b1f17b1804b1-490d1e54b3bso32600565e9.1
+ for <qemu-devel@nongnu.org>; Wed, 10 Jun 2026 09:12:51 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1781107940; x=1781712740; darn=nongnu.org;
+ d=linaro.org; s=google; t=1781107970; x=1781712770; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
- :reply-to; bh=uaSjLoOO4/Sgg3fbIePE2QqdKW6IQ7ptA28s3E+x4i8=;
- b=WH7vAQd+z0QjD6WxHunvEGIIB7x6fQA86Lk6XQin48cilu7qNdvTtvNFHx17ToNSl/
- D9DxfJwKR8jUtgtVy+l/zsHwhyskCqpTGPx2Kb0q/YifW9TiuS7PcpHfGWC71RgnlYRQ
- OJNdhc19ND6Ploly4Cr6ZD2PK8tVHBVtyfJ6M3lmQc9Q4FyIrReZh8/912dgyrnzBwjr
- UQ/aUjk3GXPNpBSwab34XYbrY/SLdAi/6krywcUxeIfo5IfXecu+nxIrjHLu+4NvRQwh
- gc7XL9hHCpHthwMtTvvYusLC0mN7FqL2P3gZCliZT/qy3739+qZCUWMzG4eb/dj0cynC
- pEsg==
+ :reply-to; bh=5MAq/+zOPquUvnjQyptIkEBsY5qNKxyao34ulQ4Vi+M=;
+ b=Fdzh/Vv1yy1Q6lp0q9ass+TsaTsrrPwg9Fo5tUaTVn4/J8hE4m4B6I27idL0jqXDwz
+ MBm0VQ3s5wAG5PPV+PgjT5/4KYyWImlMdc1CMew+5i6v3q6Yl4ybC/hshQ7wd7KnFeuH
+ 8IxOBGDjRgljltkwZ9Jr9MH/48X4jNpEjqJP0oMcyPyLhZK1cKo4tF4vqbKBG7ObSF6e
+ GYxCz7AKY8x1CenHowlhvMpJO45ygI9Rmb1F6MVD8mROvk1s/6DF3K5J8F6gMghAU8jm
+ hM5T2vaEMUuptdEFmFCHcnOJ1cRPrV8jVT7fz+ddc0t9Iy9zcQZxU/dQRq8q38afZeRM
+ 1qWQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1781107940; x=1781712740;
+ d=1e100.net; s=20251104; t=1781107970; x=1781712770;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:x-gm-gg:x-gm-message-state:from:to
  :cc:subject:date:message-id:reply-to;
- bh=uaSjLoOO4/Sgg3fbIePE2QqdKW6IQ7ptA28s3E+x4i8=;
- b=YqoYhZ9lMlD1HDXR6NPzcQ0415r17Dx35qqIb7+tZeug8LTm/6oUyTiqDZ20NJHK/g
- 53DK0+h0NoeOx38+vrpsPywS3ikTaiJ6Zs4KCmLx+4MKimEHHt1zzU6/4N+WQbh4jtJC
- 2A5j+NTPxxyRixGz/rRiwQsdC70iXuOJxDmNCz6L4hsFuBeLPdSDjdGW0UzFR164XqSs
- vlB9ch6EqLf6OzjYNB8ZudwszkYGi9d1deUqig7u+r9G3RUjsUm4icLPf6xEeDk4b6DQ
- PUulbbPiIMp6JFjF6fikawEiA/I62246EthXu7lo8Jw2SyYfxCqj7ha4sJBRxtHRVRWx
- +xMA==
-X-Gm-Message-State: AOJu0Yw/3A89JdRyV15V4h2fqdAvJEHDQyXY0hXZ7uZ5Jw6WaHU4cyuV
- gXitpvwbVF+ZEK8gEFfOOFkIL1FeoNtk3vtwpBj/WMJX6W+8iHrYRSdn6a49WPnfSZYm5PJuz8O
- 7zumy
-X-Gm-Gg: Acq92OFMsXAKJwI3KwrSXT/adaXM0jEbHJQIgXOpBL/MyL+x7X/4AOISg3dD6hHojsd
- 3qToUenB02cAnYVqGZUWT+YZkGi8F3OZD73sUNWGiGiUoZoST8LLohYnjoDShTc+nhb9LjZkmLD
- 16NuKQRIYzn2Vl3AigL17BKsU6BDJQ6aP8cYBahMUocFcl2RGuL0HtUu6zSLdfh0hLisY5aJLL+
- Yf0eibX7elXBUCvx0mfODSjSTQzfcw79XDLIAloctPnAcLc9DY56//IIshwmsIFWNwOxOoLEz32
- YxBJewiyl0QtGCKX1K8zwgboSuE6Iael5NpehV7H/H5UkRx8arLOeif7rDYWD0KZXEYZGSf6Sq6
- iXM/zlfBtrTwooQDd8Sw91ImzeDOkMjuA1NKF/K75Y6bz8ZLK91GU9JkYrYqrQ5jm9tHCxkp+Oj
- M4gtQAt4n3rOo4jfyMzAK6WbjiLLz4muq/LdsH2UC5EOPD+15MIQgTZAFmwoFmVFjEp41YYJltj
- /BTaf/nquYBJNZjEieJYZJXJM+nmua3oHXH/EI2vrQ=
-X-Received: by 2002:adf:f282:0:b0:45e:da57:be33 with SMTP id
- ffacd0b85a97d-46030502271mr29612963f8f.23.1781107940473; 
- Wed, 10 Jun 2026 09:12:20 -0700 (PDT)
+ bh=5MAq/+zOPquUvnjQyptIkEBsY5qNKxyao34ulQ4Vi+M=;
+ b=hfqXbvOGBcoW2W1aDEpmGuVoclFb3qW8VoqA6q1DJ6Vlm6E+9IgvMpd6Ahy9xkj7dK
+ i8K/7b4k9zFQ0hLMRne3QsleIFHciFgQ0Ud8iQQSfhkjSI0tGJQqrTxa5gckLtAw1w2P
+ 6B3nmYhTGJYPxkCyt93yEiwaB7avsSmdVup0Dqoq585rCxAfYkY6pS0Z48gFBZEySu4f
+ RgU9SiOjZDgXK4Da+LZUXuyCltG6jsv0yBqKFz9C+3Qwskgi2LjhI0gft4UEZEPFFKjI
+ o9ZKchW1lShiZqWVQ9ajQ0I2LxhNh+BL++I11qB9GJAFQNX8bmKQ0wUyqRntR9BAXR4x
+ zQ7g==
+X-Gm-Message-State: AOJu0Yxoo8EUv0PxT13taitAECvTvGygjIHkMdKguBZ4F/cMBA9L+w3d
+ JVcsUQPcLsytNY2vMS2UlTHpj4CURUa/N49XqHsGL/e0nHHfZFYFH003j4KR9v/99soluvoX2Yo
+ swmAB
+X-Gm-Gg: Acq92OHUAveqjFQNl3T/e+/W7HFWNzOOEjKPeJusuvGw/mWsX6Sj5YC4EMsR2RiblBp
+ 27YXgZIzdUVa7otxqyTx30FVvgQFoZn0cBQ8l+vJIjsWw1HDtqzoGwEEz+kzKqkmJmkCzw/pO1D
+ /+yjKMKtkQKk7A3/rvaDyPkSCneoGLiGnRoqlQqnNjcWNKYY2AFsC+5M/wmtt51FJqAtAlOVAuC
+ YtSzJz3Qa7culCsJOn2PTyMDHEOTzeFDw61clp2C2yNsX9kt3WkVwnZ1WznM/oGoRFWc+j4a5ap
+ XARXJ1fFeYgSaqbIw6mhtbvC0Yzz1RKAhUTSDvOlDEuY1w9nq4oqo2LiwqMqCWFuJbb8GWkIIR3
+ Gy15dx4jdrmwlcJdnt9CzgRQW28oc5UQHdxBnLUFVlHQG9oUsKH003lDmu2DLH98IK9AhlhLGVu
+ +yfNr2dsitqnn/WjCbqiIg2dNlAEA+dPyQoNnV/U96/S8O1zR0Z73RKBy8TqONk1zsAJf420ClS
+ W0Elr2ZBYIlTDM0AkzkzXWEbHBAA2crGyTMeyjlkak=
+X-Received: by 2002:a05:600c:468c:b0:490:469c:556b with SMTP id
+ 5b1f17b1804b1-490c257c3c8mr429905225e9.12.1781107970327; 
+ Wed, 10 Jun 2026 09:12:50 -0700 (PDT)
 Received: from lanath.. (wildly.archaic.org.uk. [81.2.115.145])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-4601f2dcbe3sm67911360f8f.8.2026.06.10.09.12.19
+ ffacd0b85a97d-4601f2dcbe3sm67911360f8f.8.2026.06.10.09.12.48
  for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 10 Jun 2026 09:12:19 -0700 (PDT)
+ Wed, 10 Jun 2026 09:12:49 -0700 (PDT)
 From: Peter Maydell <peter.maydell@linaro.org>
 To: qemu-devel@nongnu.org
-Subject: [PULL 12/71] target/arm: skip tag bit bounds check if MTX is on
-Date: Wed, 10 Jun 2026 17:11:03 +0100
-Message-ID: <20260610161202.2235298-13-peter.maydell@linaro.org>
+Subject: [PULL 34/71] target/arm: Implement BF1CVT, BF1CVTLT, BF2CVT,
+ BF2CVTLT for SVE
+Date: Wed, 10 Jun 2026 17:11:25 +0100
+Message-ID: <20260610161202.2235298-35-peter.maydell@linaro.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20260610161202.2235298-1-peter.maydell@linaro.org>
 References: <20260610161202.2235298-1-peter.maydell@linaro.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::42a;
- envelope-from=peter.maydell@linaro.org; helo=mail-wr1-x42a.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::332;
+ envelope-from=peter.maydell@linaro.org; helo=mail-wm1-x332.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -100,139 +101,135 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Gabriel Brookman <brookmangabriel@gmail.com>
+From: Richard Henderson <richard.henderson@linaro.org>
 
-Virtual address canonicity checks should ignore mismatch in tag bits
-during translation step if MTX is set. This mismatch is checked during
-the tag check instead, in that case.
-
-Signed-off-by: Gabriel Brookman <brookmangabriel@gmail.com>
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
-Message-id: 20260529-feat-mte4-v7-11-ccbd3c14eb3c@gmail.com
+Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
+Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
+Message-id: 20260609192110.752384-9-richard.henderson@linaro.org
 Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
 ---
- target/arm/helper.c    |  6 +++++-
- target/arm/internals.h |  1 +
- target/arm/ptw.c       | 35 ++++++++++++++++++++++++++++++-----
- 3 files changed, 36 insertions(+), 6 deletions(-)
+ target/arm/cpu-features.h        |  6 ++++++
+ target/arm/tcg/fp8_helper.c      | 16 ++++++++++++++++
+ target/arm/tcg/helper-fp8-defs.h |  1 +
+ target/arm/tcg/sve.decode        |  6 ++++++
+ target/arm/tcg/translate-sve.c   | 23 +++++++++++++++++++++++
+ 5 files changed, 52 insertions(+)
 
-diff --git a/target/arm/helper.c b/target/arm/helper.c
-index b989acd0f5..c9536d2d10 100644
---- a/target/arm/helper.c
-+++ b/target/arm/helper.c
-@@ -9795,7 +9795,7 @@ ARMVAParameters aa64_va_parameters(CPUARMState *env, uint64_t va,
- {
-     uint64_t tcr = regime_tcr(env, mmu_idx);
-     bool epd, hpd, tsz_oob, ds, ha, hd, pie = false;
--    bool aie = false;
-+    bool mtx, aie = false;
-     int select, tsz, tbi, max_tsz, min_tsz, ps, sh;
-     ARMGranuleSize gran;
-     ARMCPU *cpu = env_archcpu(env);
-@@ -9832,6 +9832,7 @@ ARMVAParameters aa64_va_parameters(CPUARMState *env, uint64_t va,
-         ha = extract32(tcr, 21, 1) && cpu_isar_feature(aa64_hafs, cpu);
-         hd = extract32(tcr, 22, 1) && cpu_isar_feature(aa64_hdbs, cpu);
-         ds = extract64(tcr, 32, 1);
-+        mtx = extract64(tcr, 33, 1) && cpu_isar_feature(aa64_mte_mtx, cpu);
-     } else {
-         bool e0pd;
- 
-@@ -9847,6 +9848,7 @@ ARMVAParameters aa64_va_parameters(CPUARMState *env, uint64_t va,
-             sh = extract32(tcr, 12, 2);
-             hpd = extract64(tcr, 41, 1);
-             e0pd = extract64(tcr, 55, 1);
-+            mtx = extract64(tcr, 60, 1) && cpu_isar_feature(aa64_mte_mtx, cpu);
-         } else {
-             tsz = extract32(tcr, 16, 6);
-             gran = tg1_to_gran_size(extract32(tcr, 30, 2));
-@@ -9854,6 +9856,7 @@ ARMVAParameters aa64_va_parameters(CPUARMState *env, uint64_t va,
-             sh = extract32(tcr, 28, 2);
-             hpd = extract64(tcr, 42, 1);
-             e0pd = extract64(tcr, 56, 1);
-+            mtx = extract64(tcr, 61, 1) && cpu_isar_feature(aa64_mte_mtx, cpu);
-         }
-         ps = extract64(tcr, 32, 3);
-         ha = extract64(tcr, 39, 1) && cpu_isar_feature(aa64_hafs, cpu);
-@@ -9953,6 +9956,7 @@ ARMVAParameters aa64_va_parameters(CPUARMState *env, uint64_t va,
-         .gran = gran,
-         .pie = pie,
-         .aie = aie,
-+        .mtx = mtx,
-     };
+diff --git a/target/arm/cpu-features.h b/target/arm/cpu-features.h
+index 13453bd8f4..e285f57d25 100644
+--- a/target/arm/cpu-features.h
++++ b/target/arm/cpu-features.h
+@@ -1668,6 +1668,12 @@ isar_feature_aa64_sme2_or_sve2_faminmax(const ARMISARegisters *id)
+     return isar_feature_aa64_sme2_or_sve2(id) && isar_feature_aa64_faminmax(id);
  }
  
-diff --git a/target/arm/internals.h b/target/arm/internals.h
-index f8cbefec7a..cd93499307 100644
---- a/target/arm/internals.h
-+++ b/target/arm/internals.h
-@@ -1430,6 +1430,7 @@ typedef struct ARMVAParameters {
-     ARMGranuleSize gran : 2;
-     bool pie        : 1;
-     bool aie        : 1;
-+    bool mtx        : 1;
- } ARMVAParameters;
++static inline bool
++isar_feature_aa64_sme2_or_sve2_f8cvt(const ARMISARegisters *id)
++{
++    return isar_feature_aa64_sme2_or_sve2(id) && isar_feature_aa64_f8cvt(id);
++}
++
+ /*
+  * Feature tests for "does this exist in either 32-bit or 64-bit?"
+  */
+diff --git a/target/arm/tcg/fp8_helper.c b/target/arm/tcg/fp8_helper.c
+index bb3e8dae5f..c62fb2ffd6 100644
+--- a/target/arm/tcg/fp8_helper.c
++++ b/target/arm/tcg/fp8_helper.c
+@@ -122,3 +122,19 @@ void HELPER(advsimd_bfcvtl)(void *vd, void *vn, CPUARMState *env, uint32_t desc)
+     fp8_cvt_finish(env, &ctx);
+     clear_tail(vd, 16, simd_maxsz(desc));
+ }
++
++void HELPER(sve2_bfcvt)(void *vd, void *vn, CPUARMState *env, uint32_t desc)
++{
++    FP8Context ctx = fp8_src_start(env, desc, 0x3f);
++    fp8_input_fn *input_fmt = fp8_input_fmt[ctx.f8fmt];
++    uint8_t *n = vn;
++    uint16_t *d = vd;
++    size_t nelem = simd_oprsz(desc) / 2;
++
++    for (size_t i = 0; i < nelem; ++i) {
++        d[H2(i)] = fcvt_fp8_to_b16(n[H1(2 * i + ctx.high)],
++                                   input_fmt, ctx.scale, &ctx.stat);
++    }
++
++    fp8_cvt_finish(env, &ctx);
++}
+diff --git a/target/arm/tcg/helper-fp8-defs.h b/target/arm/tcg/helper-fp8-defs.h
+index 0caaf63749..18ff483bb0 100644
+--- a/target/arm/tcg/helper-fp8-defs.h
++++ b/target/arm/tcg/helper-fp8-defs.h
+@@ -4,3 +4,4 @@
+  */
  
- /**
-diff --git a/target/arm/ptw.c b/target/arm/ptw.c
-index 6cb0fe5645..8b54018c98 100644
---- a/target/arm/ptw.c
-+++ b/target/arm/ptw.c
-@@ -1951,9 +1951,18 @@ static bool get_phys_addr_lpae(CPUARMState *env, S1Translate *ptw,
-      * validation to do here.
-      */
-     if (inputsize < addrsize) {
--        uint64_t top_bits = sextract64(address, inputsize,
--                                           addrsize - inputsize);
--        if (-top_bits != param.select) {
-+        /*
-+         * If MTX is enabled, bits 56-59 aren't checked for canonicity
-+         * during translation, since they will later be checked during
-+         * the tag check step.
-+         */
-+
-+        uint64_t cmp_mask = MAKE_64BIT_MASK(inputsize, addrsize - inputsize);
-+
-+        if (param.mtx) {
-+            cmp_mask &= ~MAKE_64BIT_MASK(56, 4);
-+        }
-+        if ((address ^ -param.select) & cmp_mask) {
-             /* The gap between the two regions is a Translation fault */
-             goto do_translation_fault;
-         }
-@@ -3514,15 +3523,31 @@ static bool get_phys_addr_disabled(CPUARMState *env,
-             int pamax = arm_pamax(env_archcpu(env));
-             uint64_t tcr = env->cp15.tcr_el[r_el];
-             int addrtop, tbi;
-+            bool bit55;
+ DEF_HELPER_FLAGS_4(advsimd_bfcvtl, TCG_CALL_NO_RWG, void, ptr, ptr, env, i32)
++DEF_HELPER_FLAGS_4(sve2_bfcvt, TCG_CALL_NO_RWG, void, ptr, ptr, env, i32)
+diff --git a/target/arm/tcg/sve.decode b/target/arm/tcg/sve.decode
+index 078a085a79..e7984fa8e0 100644
+--- a/target/arm/tcg/sve.decode
++++ b/target/arm/tcg/sve.decode
+@@ -108,6 +108,7 @@
+ # Two operand
+ @pd_pn          ........ esz:2 .. .... ....... rn:4 . rd:4      &rr_esz
+ @rd_rn          ........ esz:2 ...... ...... rn:5 rd:5          &rr_esz
++@rd_rn_e0       ........ .. ...... ...... rn:5 rd:5             &rr_esz esz=0
+ @rd_rnx2        ........ ... ..... ...... ..... rd:5            &rr_esz rn=%rn_ax2
  
-             tbi = aa64_va_parameter_tbi(tcr, mmu_idx);
-             if (access_type == MMU_INST_FETCH) {
-                 tbi &= ~aa64_va_parameter_tbid(tcr, mmu_idx);
-             }
--            tbi = (tbi >> extract64(address, 55, 1)) & 1;
-+            bit55 = extract64(address, 55, 1);
-+            tbi = (tbi >> bit55) & 1;
-             addrtop = (tbi ? 55 : 63);
+ # Two operand with governing predicate, flags setting
+@@ -1090,6 +1091,11 @@ FMINQV          01100100 .. 010 111 101 ... ..... .....         @rd_pg_rn
+ FRECPE          01100101 .. 001 110 001100 ..... .....          @rd_rn
+ FRSQRTE         01100101 .. 001 111 001100 ..... .....          @rd_rn
  
--            if (extract64(address, pamax, addrtop - pamax + 1) != 0) {
-+            /*
-+             * With MTX enabled, bits 56-59 are not checked according to
-+             * AArch64.S1DisabledOutput.
-+             */
-+            uint64_t cmp_mask = MAKE_64BIT_MASK(pamax, addrtop - pamax + 1);
++BF1CVT          01100101 00 001 000 001110 ..... .....          @rd_rn_e0
++BF2CVT          01100101 00 001 000 001111 ..... .....          @rd_rn_e0
++BF1CVTLT        01100101 00 001 001 001110 ..... .....          @rd_rn_e0
++BF2CVTLT        01100101 00 001 001 001111 ..... .....          @rd_rn_e0
 +
-+            if (access_type != MMU_INST_FETCH &&
-+                cpu_isar_feature(aa64_mte_mtx, env_archcpu(env))) {
-+                int mtx = aa64_va_parameter_mtx(tcr, mmu_idx);
-+                if (mtx & (1 << bit55)) {
-+                    cmp_mask &= ~MAKE_64BIT_MASK(56, 4);
-+                }
-+            }
+ ### SVE FP Compare with Zero Group
+ 
+ FCMGE_ppz0      01100101 .. 0100 00 001 ... ..... 0 ....        @pd_pg_rn
+diff --git a/target/arm/tcg/translate-sve.c b/target/arm/tcg/translate-sve.c
+index 997d6b0451..718a21de70 100644
+--- a/target/arm/tcg/translate-sve.c
++++ b/target/arm/tcg/translate-sve.c
+@@ -21,6 +21,7 @@
+ #include "cpu.h"
+ #include "helper-sme.h"
+ #include "helper-sve.h"
++#include "helper-fp8.h"
+ #include "translate.h"
+ #include "translate-a64.h"
+ #include "tcg/tcg-op.h"
+@@ -4068,6 +4069,28 @@ TRANS_FEAT(FRSQRTE, aa64_sme_or_sve, gen_gvec_fpst_ah_arg_zz,
+            s->fpcr_ah && dc_isar_feature(aa64_rpres, s) ?
+            frsqrte_rpres_fns[a->esz] : frsqrte_fns[a->esz], a, 0)
+ 
++static bool do_f8cvt(DisasContext *s, arg_rr_esz *a,
++                     gen_helper_gvec_2_ptr *fn, bool issrc2, bool isodd)
++{
++    if (fpmr_access_check(s) && sve_access_check(s)) {
++        unsigned vsz = vec_full_reg_size(s);
++        tcg_gen_gvec_2_ptr(vec_full_reg_offset(s, a->rd),
++                           vec_full_reg_offset(s, a->rn),
++                           tcg_env, vsz, vsz,
++                           issrc2 | (isodd << 1) | (FPST_A64 << 2), fn);
++    }
++    return true;
++}
 +
-+            if (address & cmp_mask) {
-                 fi->type = ARMFault_AddressSize;
-                 fi->level = 0;
-                 fi->stage2 = false;
++TRANS_FEAT_STREAMING_IF(BF1CVT, aa64_sme2_or_sve2_f8cvt, aa64_sme2,
++                        do_f8cvt, a, gen_helper_sve2_bfcvt, false, false)
++TRANS_FEAT_STREAMING_IF(BF2CVT, aa64_sme2_or_sve2_f8cvt, aa64_sme2,
++                        do_f8cvt, a, gen_helper_sve2_bfcvt, true, false)
++TRANS_FEAT_STREAMING_IF(BF1CVTLT, aa64_sme2_or_sve2_f8cvt, aa64_sme2,
++                        do_f8cvt, a, gen_helper_sve2_bfcvt, false, true)
++TRANS_FEAT_STREAMING_IF(BF2CVTLT, aa64_sme2_or_sve2_f8cvt, aa64_sme2,
++                        do_f8cvt, a, gen_helper_sve2_bfcvt, true, true)
++
+ /*
+  *** SVE Floating Point Compare with Zero Group
+  */
 -- 
 2.43.0
 
