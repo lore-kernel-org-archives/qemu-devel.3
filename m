@@ -4,87 +4,89 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id EEEFDCD98CC
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 00800CD98CE
 	for <qemu-devel@archiver.kernel.org>; Wed, 10 Jun 2026 19:23:46 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wXOVb-0002tO-Sk; Wed, 10 Jun 2026 15:22:39 -0400
+	id 1wXOVi-0002vA-DE; Wed, 10 Jun 2026 15:22:46 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pierrick.bouvier@oss.qualcomm.com>)
- id 1wXOVZ-0002sN-5l
- for qemu-devel@nongnu.org; Wed, 10 Jun 2026 15:22:37 -0400
+ id 1wXOVe-0002tv-CB
+ for qemu-devel@nongnu.org; Wed, 10 Jun 2026 15:22:42 -0400
 Received: from mx0a-0031df01.pphosted.com ([205.220.168.131])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pierrick.bouvier@oss.qualcomm.com>)
- id 1wXOVV-0008Or-Vq
- for qemu-devel@nongnu.org; Wed, 10 Jun 2026 15:22:36 -0400
-Received: from pps.filterd (m0279862.ppops.net [127.0.0.1])
+ id 1wXOVa-0000Ay-Pq
+ for qemu-devel@nongnu.org; Wed, 10 Jun 2026 15:22:42 -0400
+Received: from pps.filterd (m0279864.ppops.net [127.0.0.1])
  by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 65AJIkG52438327
- for <qemu-devel@nongnu.org>; Wed, 10 Jun 2026 19:22:31 GMT
+ 65AJJdEX2557838
+ for <qemu-devel@nongnu.org>; Wed, 10 Jun 2026 19:22:37 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
- cc:content-transfer-encoding:content-type:date:from:message-id
- :mime-version:subject:to; s=qcppdkim1; bh=sYk5WTmfajFjwWgI9Gdmyi
- tQpj7sjy49cmn4l3W4A2c=; b=TALz/MnDi1hBxl2jErH3v7Y8mbb1fci5LZUm+m
- R0nSJsVNrOmteQ7ARMMmVl7dMr3tzNqi/u4ohCDDJDZYWm5iU/S16aqqC7mv0qD0
- pP/PE3AdeiMyEcV5aMT+TYdViD4Qk9jtodRkgE4JE0S50E4aPgxWZkxcMph8ZB/X
- IsX9MDjr/bJTM18rPlnZ9uP7FdogTYe/Nkf4Ma9zDsmU0thCH2x1aJZGgXM8Xrb5
- wDaJoozhv46Gi3I0MX84FnRB6Iuv2woAJbY7kjBGkrA+1cGfNMa2HRFAS6gxOE02
- 9o8LJgZRfCGziG7KI2T0xi8Rqj7SAWlYvhhSJ/k2Yq0jN86w==
-Received: from mail-dy1-f200.google.com (mail-dy1-f200.google.com
- [74.125.82.200])
- by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4epxuvkxnp-1
+ cc:content-transfer-encoding:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+ /6DLFc0G95l8pBdW3yxzNC3vA4QxUFcSOA4U1Sxgs/E=; b=HrLv2ZVSi4jCWoww
+ 9Gx8NPJGPE1efYQvNo7w+s/5zfVZ7fsVWwW1ARxRBF9jMsx1lWQMp6z00rzaemVM
+ Gm0UtMAy8j1pl19hwS81yZUs5S04yaCy7x5bDwykx+A+jCNrUuiAZPLLKKy6eSBd
+ bzVHB9iuA65DCZJRqOqB3EnSvAUcnnhIfzm+a04AlGIHnbGntNimB9vlAzo2xqFR
+ zQYLyLYqmmvttTvTAB4VjLZTP9rd9iQplxZyJhbRD+krkd3G0fGaVt6D/29S1EqA
+ 69HbR73Yu31EfHnotVY5kMFhkgd6EJBVFtpIzOgVZ/0p/GZQro1WEbEVHwWhrx6v
+ LDIZJA==
+Received: from mail-dy1-f198.google.com (mail-dy1-f198.google.com
+ [74.125.82.198])
+ by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4eq4w1thqn-1
  (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
- for <qemu-devel@nongnu.org>; Wed, 10 Jun 2026 19:22:31 +0000 (GMT)
-Received: by mail-dy1-f200.google.com with SMTP id
- 5a478bee46e88-307625ee07fso9663047eec.1
- for <qemu-devel@nongnu.org>; Wed, 10 Jun 2026 12:22:31 -0700 (PDT)
+ for <qemu-devel@nongnu.org>; Wed, 10 Jun 2026 19:22:36 +0000 (GMT)
+Received: by mail-dy1-f198.google.com with SMTP id
+ 5a478bee46e88-304f1820babso9093232eec.1
+ for <qemu-devel@nongnu.org>; Wed, 10 Jun 2026 12:22:36 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=oss.qualcomm.com; s=google; t=1781119351; x=1781724151; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:from:to:cc:subject:date:message-id:reply-to;
- bh=sYk5WTmfajFjwWgI9GdmyitQpj7sjy49cmn4l3W4A2c=;
- b=D5mwTlDPjTWLQf4/QVzhQAfQpFxmCjNuWUbqXilPdFUyHQjytzsXyBNLJUUmo4oJQo
- w9MgLtme3NcM8tKP68iYV27ok3AwencsQqigEZDtZkDUF0FqFECs7vIx4QGpPFu3sFq1
- V7MwO4HPgAvkQvBwFwW/88ml5Hh0NxrkPymDakYUVBvagTvNRTskPbYIxt0IgvrfXzTz
- iUt+TMpoMh66o8w/BpCREROf7ZQGUoU+wv0gUhzpWsdyLlzZUnZOglu+1cGHdbWf/c02
- r0F6cbxAF5r6pCq8I01Qkh2MNhmkf1+2AyqZckIoTh4xJlaeQgeAY//aMVmE/5ZUb5+p
- K3kQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1781119351; x=1781724151;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ d=oss.qualcomm.com; s=google; t=1781119356; x=1781724156; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=sYk5WTmfajFjwWgI9GdmyitQpj7sjy49cmn4l3W4A2c=;
- b=H96jVNXOk4yCzQuuX4L7I0R3asIvNLC+QT3mdvKUYWyMC30kS5gDb9c1TlVxNJBmqs
- +E5XYoEdsLbYxdFmr+JoY3/27pwfpxe43r2Gm74i3i19M5PvBFcd8QUbEosC8lb8uFLV
- +z8l4D8iWIGiKrHTU59g+XdxvjlC3pZSs4ad/5y9w1/rkZs0fTpu4P9ooCPNswrVOoC/
- Quv6qlyFgfVlFfuqsELdgBS6urcOzymHQ5V4ERylwZEcqhXbFZ3DVPBivQtNjs1VJuGN
- FNB/KOr/0EmMjUk2BZ+fccDSm9aP6xyFAqpKLSWhxjDTwYO7PSaf10uK9eu5L8nwtObM
- HgIw==
-X-Gm-Message-State: AOJu0YxT3YSldYI2pyPYqC4kg2grJFY0eBEXL2gKLE1eZzIQ6f0NTMLS
- LDSRckMfytOZvrfIy1WZ+lsnZ66fp5nvf9OBLnn6TEQ0qvhNfWWQ1LOfwwSK1NcryN/RmGFN3be
- SOSG7owCuz22PS5ksGsswECLWfhmExDndfpgD1XLgPJJFm7oTnjSn9SfiMRN8Zm60lrlb
-X-Gm-Gg: Acq92OGXqR9+j/241BiHmKV8QPOWl7rfynLjcPAtMmRs/oJ4v3Fkz6r0FvFfAEkqM3Y
- Qg7RBUdvuZZ+ByDU/tveySv4TPq6eeRwkrOKI2HoDk5YN4JbMO6WxbHKclC6BJpDbAUCcKcv0BM
- geS1O33ABFrERXZjqC127LhWm1nyZDOkmTMVu8qq5ao0VOMcF686KFLdBjQMQcr7jz67JLvfO4D
- Alg3G3WEZ9+P8J5TkFHbFFic6cegGOpOyvLzyxCeGKbSAqmDipfhu4F0/mfr1W0fO6u99Tv3Nrr
- jIGzHNwvNKiBMkSez7f0BXwZKE8Y9pGhSFI7OmFr8mRU8MfBkaU1sGh1/hSk9GRo9OkmeWsST6J
- JhlF1hOFx3XsKSDh+auApFI7W44McUiZgioV3rmNjTh3nH4QxkOsET4yef1v/z6HZ4FThWV33y2
- 3pTYg6CQezveMqv/o3
-X-Received: by 2002:a05:7300:3c04:b0:304:641b:12fd with SMTP id
- 5a478bee46e88-307ff61a686mr362330eec.27.1781119350635; 
- Wed, 10 Jun 2026 12:22:30 -0700 (PDT)
-X-Received: by 2002:a05:7300:3c04:b0:304:641b:12fd with SMTP id
- 5a478bee46e88-307ff61a686mr362295eec.27.1781119350066; 
- Wed, 10 Jun 2026 12:22:30 -0700 (PDT)
+ bh=/6DLFc0G95l8pBdW3yxzNC3vA4QxUFcSOA4U1Sxgs/E=;
+ b=GatEZ4+6yj1+XatBIbLZ4hszvjHSOf3DlaChWOn7bPYXOzL/ymFaUG+VPq3dSk/HO7
+ P1HqRBsT7E3MphjZ1l1mQX65MAlnUd4iqBQaL6BwWZv0cITYVJ535eS0gwAGQ74VGgz5
+ lUUPC2Wa5yqv5T5/+BF7Ntd9ypecsHkEHvcPnDljhJrJsqe7L2+NQ2eVlUgv+n9tS3tu
+ 1KwFVc/iZYqHKr1AOXBk8NfS0hEfJrJAJ8QA1X+gcolFEztnzWOAZrRcSxHKnK2Dx+oZ
+ 8QcR5mxsQqXKk2D0ve7eQmjBj/UEf1pcrZg8MHbtbIEyNIy640PmsEz/D07nbdRxMp2/
+ M6AA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1781119356; x=1781724156;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=/6DLFc0G95l8pBdW3yxzNC3vA4QxUFcSOA4U1Sxgs/E=;
+ b=LmO20fyNBKHH4oaiHZ5S3v2Dc0Dhtt6D5vtMHJYWG3wfuANKkT83Dc5kJtg8qr3rYa
+ Dyv6vO3MtJyKGpFHJS1g6unvf9wfF0t4Wq7nOCo2pqZxRWKwmJ6xTUTY+SkYc05Y7wgF
+ Z+HU7pfi4XqVfQkA/doj5oxX0WugT520s5YRMEm3aJcBUWQV6AN+g6fYMjgwr85/2kWi
+ UWzis5ARSkDMhH25404C2WzpRKXxgMb4UD5yRAN6YJqaBXEZDCm9B44Hr7Xtmsz5agiH
+ btxwv6Gu01E66uFEJQuu/S8TWw7LcRnJR7242GaBu3FQWzcQz9DRlQ8gBgWz1TTvTcTz
+ URQA==
+X-Gm-Message-State: AOJu0YxrcUSvBQTA0fYNgIWX1GcQq8gHYQfgA9Md2fajUknrR8wMAx8/
+ 6ixo310R81REnyExvGpuhmCCzbPyeq0FRF7BVU4319E5QmLmJ1fdJOjTEjmk7cgg50hz5nnANox
+ v2Ab9+Uq0ukgOfItqnWMw5EO2Rz89chWweHPzRLXXMUwWosUXYcG/zRqla/9bq9Wzq25a
+X-Gm-Gg: Acq92OEYtchjpDPhBQh4ruRceu/bHJXeo8nhFZodvCwNga5+j6iNzrpNNfNufyE2LJu
+ 6GcReMP0FALDvjiQMLNbNje9ulHptlaPjmPle6BmjGfdxKZFCN+hqH07ME8pX1DNEPYFJjmfshy
+ bXDIrlU3w3KuT762HLQo+mZbBgn/dfbbjcPa6my4ctgZeTYZ/I9tosZ8uwcrhHPdCkie497uvIS
+ wN2lNJfykHciAe3lC8lDLmKjmHFTyKqoGuoTtPPq4dBZF9R7UX2jKivMiba/1vWtFPVjzcFGGUs
+ Xk3SMr7ZHOrD5uuEh6jGSOd+PZUzwmw0Rl8ash32lYPJd94otll3EBjLCZcFetMaZPoVEgDCjuH
+ 44vCSZI95fLtqNAYJZbNfYyv0Fkj9+BwgtPeCpcwdlV9mm/Pifl/MJXqjmjCm2o9ZF5ITV3j1yd
+ CagO2Ln9dj2HrsDqxJ
+X-Received: by 2002:a05:693c:37c8:b0:304:5a9c:644c with SMTP id
+ 5a478bee46e88-3077b3cf48emr17871037eec.15.1781119356057; 
+ Wed, 10 Jun 2026 12:22:36 -0700 (PDT)
+X-Received: by 2002:a05:693c:37c8:b0:304:5a9c:644c with SMTP id
+ 5a478bee46e88-3077b3cf48emr17871009eec.15.1781119355501; 
+ Wed, 10 Jun 2026 12:22:35 -0700 (PDT)
 Received: from hu-pbouvier-lv.qualcomm.com (Global_NAT1.qualcomm.com.
  [129.46.96.20]) by smtp.gmail.com with ESMTPSA id
- 5a478bee46e88-3074df3b234sm34128986eec.23.2026.06.10.12.22.29
+ 5a478bee46e88-3074df3b234sm34128986eec.23.2026.06.10.12.22.34
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 10 Jun 2026 12:22:29 -0700 (PDT)
+ Wed, 10 Jun 2026 12:22:34 -0700 (PDT)
 From: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
 To: qemu-devel@nongnu.org
 Cc: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
@@ -93,37 +95,43 @@ Cc: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
  =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
  Stefan Hajnoczi <stefanha@redhat.com>,
  =?UTF-8?q?Daniel=20P=20=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
- Jason Wang <jasowang@redhat.com>, Ilya Maximets <i.maximets@ovn.org>
-Subject: [PATCH v2 0/5] tests: update ubuntu2204 to ubuntu2404
-Date: Wed, 10 Jun 2026 12:22:17 -0700
-Message-ID: <20260610192222.2709135-1-pierrick.bouvier@oss.qualcomm.com>
+ Jason Wang <jasowang@redhat.com>, Ilya Maximets <i.maximets@ovn.org>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@mailo.com>
+Subject: [PATCH v2 5/5] tests: remove ubuntu2204 container
+Date: Wed, 10 Jun 2026 12:22:22 -0700
+Message-ID: <20260610192222.2709135-6-pierrick.bouvier@oss.qualcomm.com>
 X-Mailer: git-send-email 2.43.0
+In-Reply-To: <20260610192222.2709135-1-pierrick.bouvier@oss.qualcomm.com>
+References: <20260610192222.2709135-1-pierrick.bouvier@oss.qualcomm.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-X-Proofpoint-GUID: vRwnED3eHvR7nR-wN12zg0fkUPLy3SeG
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNjEwMDE4MyBTYWx0ZWRfX5zVjyPRyat1U
- WNiTMxX7/EhjRxUELTpaDLv+G1Nejcm5wRuzBeguTENLJ5cvuqfQ0zkNkG04ypSbjbD+C0IUGkh
- pQKbNwiMJ5PJBbLs1tVPfAPe+DB7YnvpK6b2UL0nUPKXIIezPSvrP1PIZWeebUOmUkBPJCfELos
- beA7OQg+bLo2A/ZBTs5LiQgnFXgjNBRmweirDzgyRUzciJ2fC1ZvTGWB5ZuWm0Da3spv/0aMiFr
- dH9ulAROXqN6MlwjH/8dghr0LRnNIATccTZ4bf0/lYWQ1tTGjgyigGQrWMZ+0jtLCngFwaD5QZl
- SeOoDtiLB5rWR1nQzWax/82eR2PSEGt3BkNiAypbOYHogSBNUI05npL+cpUYyM8+hVcb4E41ExU
- BNDOaqaiBB2lh2/H0fEqzKfRhWT3GXbMfXJTE73EdXYXTvFSg5gg8b9pIhzRse144dT61kDBnY9
- E0fvVUDmnofvBjGEyDg==
-X-Authority-Analysis: v=2.4 cv=Co+PtH4D c=1 sm=1 tr=0 ts=6a29b977 cx=c_pps
- a=PfFC4Oe2JQzmKTvty2cRDw==:117 a=ouPCqIW2jiPt+lZRy3xVPw==:17
+X-Proofpoint-ORIG-GUID: vTSTSFj02XZfVF84PEHEWUn9gNYVJesZ
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNjEwMDE4MyBTYWx0ZWRfXwGLPclJgQP+Z
+ T5ODQyQdi3NupfXQXUZTBtinHJMptFMNiCG6yeeNXkGCFHd+i+Vfdv6XsQVzbN0Y1k13D+x7x0P
+ hnCwjwyoTs3umquSII4egtjPusBL7nrBlzQQeAEzemdxeiujGnn+hsE9Kd0049C54p0kbYzFiyf
+ HEcUeaSmsb3uj3nEeiEIay62C15/vk/g4oZ49oEeD0LinacSti2QEKt4OExK4zd9289herDIRD+
+ 7KLsrcuDo92JyzfcnfAXYn0kfh6kvLYrrCsDDeZf66nw8AwCwyLaRxbaEHlDfXq1IZw4CofObos
+ twfdSXF4K4XeKM8yWk9yw3LQUdmh+xyqvhAhQQTPvidR3jFreJYziSsUqJ++MIvZz29oIMp2ct2
+ dKM70s8Vgld/H1iorlnuVEHJM8PFiHD0oouRelN+nSTpeVnsDvi6wdn5zbvcKCJIzmFH8n6vkym
+ rn9+CkJijDAJvtiU/4w==
+X-Proofpoint-GUID: vTSTSFj02XZfVF84PEHEWUn9gNYVJesZ
+X-Authority-Analysis: v=2.4 cv=ZfEt8MVA c=1 sm=1 tr=0 ts=6a29b97c cx=c_pps
+ a=wEP8DlPgTf/vqF+yE6f9lg==:117 a=ouPCqIW2jiPt+lZRy3xVPw==:17
  a=IkcTkHD0fZMA:10 a=FelO9ux0wxsA:10 a=s4-Qcg_JpJYA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=_K5XuSEh1TEqbUxoQ0s3:22
- a=9MlDViEfR6zZWpE_CGcA:9 a=QEXdDO2ut3YA:10 a=6Ab_bkdmUrQuMsNx7PHu:22
-X-Proofpoint-ORIG-GUID: vRwnED3eHvR7nR-wN12zg0fkUPLy3SeG
+ a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=DJpcGTmdVt4CTyJn9g5Z:22
+ a=p0WdMEafAAAA:8 a=danhDmx_AAAA:8 a=S56xvJB5AAAA:8 a=EUspDBNiAAAA:8
+ a=hrA9KEnTT8eVkNhlHiQA:9 a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
+ a=bBxd6f-gb0O0v-kibOvt:22 a=MH9Ivq0PDQRhlrFuIVvX:22
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.125,FMLib:17.12.100.49
  definitions=2026-06-10_04,2026-06-09_02,2025-10-01_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- phishscore=0 lowpriorityscore=0 bulkscore=0 priorityscore=1501 adultscore=0
- spamscore=0 clxscore=1015 impostorscore=0 suspectscore=0 malwarescore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2605210000 definitions=main-2606100183
+ malwarescore=0 adultscore=0 clxscore=1015 spamscore=0 phishscore=0
+ lowpriorityscore=0 priorityscore=1501 impostorscore=0 suspectscore=0
+ bulkscore=0 classifier=typeunknown authscore=0 authtc= authcc= route=outbound
+ adjust=0 reason=mlx scancount=1 engine=8.22.0-2605210000
+ definitions=main-2606100183
 Received-SPF: pass client-ip=205.220.168.131;
  envelope-from=pierrick.bouvier@oss.qualcomm.com;
  helo=mx0a-0031df01.pphosted.com
@@ -149,33 +157,203 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Ubuntu 26.04 LTS is now available since April 2026.
-If I followed correctly, we support latest two LTS releases, so we should be
-able to update. If not, feel free to correct me :).
+Reviewed-by: Philippe Mathieu-Daudé <philmd@mailo.com>
+Signed-off-by: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
+---
+ tests/docker/dockerfiles/ubuntu2204.docker | 168 ---------------------
+ tests/lcitool/refresh                      |   4 -
+ 2 files changed, 172 deletions(-)
+ delete mode 100644 tests/docker/dockerfiles/ubuntu2204.docker
 
-v2
---
-
-- edit warning fix patch to explain in description why it's a false positive.
-- edit doc patch to mention all host images s
-
-Pierrick Bouvier (5):
-  net/af-xdp.c: maybe-uninitialized warning with gcov build on
-    ubuntu2404
-  tests: add ubuntu 2404
-  docs: update mention to ubuntu2204
-  ci: update to ubuntu2404
-  tests: remove ubuntu2204 container
-
- .gitlab-ci.d/buildtest.yml                       | 16 ++++++++--------
- .gitlab-ci.d/containers.yml                      |  6 +++---
- docs/devel/testing/main.rst                      |  4 ++--
- net/af-xdp.c                                     |  2 +-
- .../{ubuntu2204.docker => ubuntu2404.docker}     | 12 ++++++++----
- tests/lcitool/refresh                            |  8 +++-----
- 6 files changed, 25 insertions(+), 23 deletions(-)
- rename tests/docker/dockerfiles/{ubuntu2204.docker => ubuntu2404.docker} (95%)
-
+diff --git a/tests/docker/dockerfiles/ubuntu2204.docker b/tests/docker/dockerfiles/ubuntu2204.docker
+deleted file mode 100644
+index 4617bbe1f65..00000000000
+--- a/tests/docker/dockerfiles/ubuntu2204.docker
++++ /dev/null
+@@ -1,168 +0,0 @@
+-# THIS FILE WAS AUTO-GENERATED
+-#
+-#  $ lcitool dockerfile --layers all ubuntu-2204 qemu
+-#
+-# https://gitlab.com/libvirt/libvirt-ci
+-
+-FROM docker.io/library/ubuntu:22.04
+-
+-RUN export DEBIAN_FRONTEND=noninteractive && \
+-    apt-get update && \
+-    apt-get install -y eatmydata && \
+-    eatmydata apt-get dist-upgrade -y && \
+-    eatmydata apt-get install --no-install-recommends -y \
+-                      bash \
+-                      bc \
+-                      bison \
+-                      bsdextrautils \
+-                      bzip2 \
+-                      ca-certificates \
+-                      ccache \
+-                      clang \
+-                      coreutils \
+-                      dbus \
+-                      debianutils \
+-                      diffutils \
+-                      exuberant-ctags \
+-                      findutils \
+-                      flex \
+-                      gcc \
+-                      gcovr \
+-                      gettext \
+-                      git \
+-                      hostname \
+-                      libaio-dev \
+-                      libasan6 \
+-                      libasound2-dev \
+-                      libattr1-dev \
+-                      libbpf-dev \
+-                      libbrlapi-dev \
+-                      libbz2-dev \
+-                      libc6-dev \
+-                      libcacard-dev \
+-                      libcap-ng-dev \
+-                      libcapstone-dev \
+-                      libcbor-dev \
+-                      libclang-dev \
+-                      libcmocka-dev \
+-                      libcurl4-gnutls-dev \
+-                      libdaxctl-dev \
+-                      libdrm-dev \
+-                      libepoxy-dev \
+-                      libfdt-dev \
+-                      libffi-dev \
+-                      libfuse3-dev \
+-                      libgbm-dev \
+-                      libgcrypt20-dev \
+-                      libglib2.0-dev \
+-                      libgnutls28-dev \
+-                      libgtk-3-dev \
+-                      libgtk-vnc-2.0-dev \
+-                      libibverbs-dev \
+-                      libiscsi-dev \
+-                      libjemalloc-dev \
+-                      libjpeg-turbo8-dev \
+-                      libjson-c-dev \
+-                      liblttng-ust-dev \
+-                      liblzo2-dev \
+-                      libncursesw5-dev \
+-                      libnfs-dev \
+-                      libnuma-dev \
+-                      libpam0g-dev \
+-                      libpcre2-dev \
+-                      libpipewire-0.3-dev \
+-                      libpixman-1-dev \
+-                      libpmem-dev \
+-                      libpng-dev \
+-                      libpulse-dev \
+-                      librbd-dev \
+-                      librdmacm-dev \
+-                      libsasl2-dev \
+-                      libsdl2-dev \
+-                      libsdl2-image-dev \
+-                      libseccomp-dev \
+-                      libselinux1-dev \
+-                      libslirp-dev \
+-                      libsnappy-dev \
+-                      libsndio-dev \
+-                      libspice-protocol-dev \
+-                      libspice-server-dev \
+-                      libssh-dev \
+-                      libstd-rust-dev \
+-                      libsystemd-dev \
+-                      libtasn1-6-dev \
+-                      libubsan1 \
+-                      libudev-dev \
+-                      liburing-dev \
+-                      libusb-1.0-0-dev \
+-                      libusbredirhost-dev \
+-                      libvdeplug-dev \
+-                      libvirglrenderer-dev \
+-                      libvte-2.91-dev \
+-                      libxen-dev \
+-                      libzstd-dev \
+-                      llvm \
+-                      locales \
+-                      make \
+-                      mtools \
+-                      multipath-tools \
+-                      nettle-dev \
+-                      ninja-build \
+-                      openssh-client \
+-                      pkgconf \
+-                      python3 \
+-                      python3-numpy \
+-                      python3-opencv \
+-                      python3-pillow \
+-                      python3-pip \
+-                      python3-setuptools \
+-                      python3-sphinx \
+-                      python3-sphinx-rtd-theme \
+-                      python3-tomli \
+-                      python3-venv \
+-                      python3-wheel \
+-                      python3-yaml \
+-                      rpm2cpio \
+-                      rustc-1.83 \
+-                      sed \
+-                      socat \
+-                      sparse \
+-                      swtpm \
+-                      systemtap-sdt-dev \
+-                      tar \
+-                      tesseract-ocr \
+-                      tesseract-ocr-eng \
+-                      vulkan-tools \
+-                      xorriso \
+-                      zlib1g-dev \
+-                      zstd && \
+-    eatmydata apt-get autoremove -y && \
+-    eatmydata apt-get autoclean -y && \
+-    sed -Ei 's,^# (en_US\.UTF-8 .*)$,\1,' /etc/locale.gen && \
+-    dpkg-reconfigure locales && \
+-    rm -f /usr/lib*/python3*/EXTERNALLY-MANAGED && \
+-    dpkg-query --showformat '${Package}_${Version}_${Architecture}\n' --show > /packages.txt && \
+-    mkdir -p /usr/libexec/ccache-wrappers && \
+-    ln -s /usr/bin/ccache /usr/libexec/ccache-wrappers/cc && \
+-    ln -s /usr/bin/ccache /usr/libexec/ccache-wrappers/clang && \
+-    ln -s /usr/bin/ccache /usr/libexec/ccache-wrappers/gcc
+-
+-RUN /usr/bin/pip3 install meson==1.8.1
+-
+-ENV CCACHE_WRAPPERSDIR="/usr/libexec/ccache-wrappers"
+-ENV LANG="en_US.UTF-8"
+-ENV MAKE="/usr/bin/make"
+-ENV NINJA="/usr/bin/ninja"
+-ENV PYTHON="/usr/bin/python3"
+-ENV RUSTC=/usr/bin/rustc-1.83
+-ENV RUSTDOC=/usr/bin/rustdoc-1.83
+-ENV CARGO_HOME=/usr/local/cargo
+-ENV PATH=$CARGO_HOME/bin:$PATH
+-RUN DEBIAN_FRONTEND=noninteractive eatmydata \
+-  apt install -y --no-install-recommends cargo
+-RUN cargo install --locked bindgen-cli
+-# As a final step configure the user (if env is defined)
+-ARG USER
+-ARG UID
+-RUN if [ "${USER}" ]; then \
+-  id ${USER} 2>/dev/null || useradd -u ${UID} -U ${USER}; fi
+diff --git a/tests/lcitool/refresh b/tests/lcitool/refresh
+index 26abc695735..e0da0d2de1d 100755
+--- a/tests/lcitool/refresh
++++ b/tests/lcitool/refresh
+@@ -231,10 +231,6 @@ try:
+     generate_dockerfile("opensuse-leap", "opensuse-leap-16")
+     generate_dockerfile("ubuntu2404", "ubuntu-2404",
+                         trailer="".join(ubuntu2404_rust_extras))
+-    generate_dockerfile("ubuntu2204", "ubuntu-2204",
+-                        trailer="".join(ubuntu2404_rust_extras),
+-                        # https://bugs.launchpad.net/ubuntu/+source/rustc-1.83/+bug/2120318
+-                        enable_rust=False)
+ 
+     #
+     # Non-fatal Rust-enabled build
 -- 
 2.43.0
 
