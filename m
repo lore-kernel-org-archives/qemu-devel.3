@@ -4,111 +4,101 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id EE028CD8CB9
-	for <qemu-devel@archiver.kernel.org>; Wed, 10 Jun 2026 15:37:58 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 89FABCD8CB9
+	for <qemu-devel@archiver.kernel.org>; Wed, 10 Jun 2026 15:48:34 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wXKzM-00005f-0S; Wed, 10 Jun 2026 11:37:08 -0400
+	id 1wXL9b-0005C6-5I; Wed, 10 Jun 2026 11:47:46 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1wXKzK-00005R-MO
- for qemu-devel@nongnu.org; Wed, 10 Jun 2026 11:37:06 -0400
+ (Exim 4.90_1) (envelope-from <leonardi@redhat.com>)
+ id 1wXL9U-0005B8-KY
+ for qemu-devel@nongnu.org; Wed, 10 Jun 2026 11:47:36 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1wXKzI-0002eM-L5
- for qemu-devel@nongnu.org; Wed, 10 Jun 2026 11:37:06 -0400
+ (Exim 4.90_1) (envelope-from <leonardi@redhat.com>)
+ id 1wXL9S-0004pN-1F
+ for qemu-devel@nongnu.org; Wed, 10 Jun 2026 11:47:36 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1781105823;
+ s=mimecast20190719; t=1781106452;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=uEZDTqsn8krWhkTZt+TENJLHy87QaCq53mNIE3fmL98=;
- b=Op3N/QvAPuWLZesahVQze5jyLw4UdniSk6dq/aE3FFzcAK8DxWMDS5g9CuKV75DCXrWYAk
- KTYGtEOpGtemnW0axENEfNnXxo3tkiBYOHT0NtUKWfdN+JMU6aTIw6qLJ2ggAuqnK63EJF
- S3//U3EvlmDO6ucWUmZqQ5bEJGkh4tc=
-Received: from mail-qv1-f72.google.com (mail-qv1-f72.google.com
- [209.85.219.72]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=CzYGT+uGNzkc2cwsc1SQmdTaEZP5jUXMfs98MSYX37c=;
+ b=Fnr4C69qXJusfDXFdlaKEu8acTRmgZFEx8EIxFR7tbN/Km6nFJDLtT63YlRQjUyts+ghjX
+ UzSYsy9Lk1n7Vz45q+xTkvTwADqQ8GjTkafEvLEBBHX2t+Rg7WBSMrstxTMF44pIBkwX7g
+ DSWvXMstS+KYog3QQkCq6bQamVyXIIU=
+Received: from mail-wr1-f70.google.com (mail-wr1-f70.google.com
+ [209.85.221.70]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-342-pdC0Tc4mMvKrq0weWJk1mw-1; Wed, 10 Jun 2026 11:37:00 -0400
-X-MC-Unique: pdC0Tc4mMvKrq0weWJk1mw-1
-X-Mimecast-MFC-AGG-ID: pdC0Tc4mMvKrq0weWJk1mw_1781105820
-Received: by mail-qv1-f72.google.com with SMTP id
- 6a1803df08f44-8cce1cc8cb2so15621796d6.1
- for <qemu-devel@nongnu.org>; Wed, 10 Jun 2026 08:37:00 -0700 (PDT)
+ us-mta-530-mHyYzxm3OM2o_DDVdn4YAA-1; Wed, 10 Jun 2026 11:47:31 -0400
+X-MC-Unique: mHyYzxm3OM2o_DDVdn4YAA-1
+X-Mimecast-MFC-AGG-ID: mHyYzxm3OM2o_DDVdn4YAA_1781106450
+Received: by mail-wr1-f70.google.com with SMTP id
+ ffacd0b85a97d-45eec2badc4so3534768f8f.2
+ for <qemu-devel@nongnu.org>; Wed, 10 Jun 2026 08:47:31 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1781105820; x=1781710620; darn=nongnu.org;
- h=in-reply-to:content-transfer-encoding:content-disposition
- :mime-version:references:message-id:subject:cc:to:from:date:from:to
- :cc:subject:date:message-id:reply-to;
- bh=uEZDTqsn8krWhkTZt+TENJLHy87QaCq53mNIE3fmL98=;
- b=PPlucNxtGo4S6KsZP5ZEd6KYlhRHN9E2wp6TrpriX/fczbdrqIdJEKL5jIM2QCabXp
- v1n9tJI+/nAyCd3bKwUjigRGiohiqJYyHrnLGh2MYnJKRo6UHYUradMM7dz5SABNmDlg
- Nvdxc166taZFQ+BLzShiqOPTXghoBFsEgBGYvTsjeC9xtXNF4tNZpx9Hj4vhf6HKL+v6
- rx3pXKrJn5RJTHlz3IHmBl42hz4E5HDKHR+0PfUxuAQzHSxO+tRTb8GGjTYQguvSxmjS
- XiZrCQbRaErlNCFEEpIWuOXt6ag/9xHqdCN1n2fPR7p2y77OaKMICERLFdXL3jtV6xeC
- mmiw==
+ d=redhat.com; s=google; t=1781106450; x=1781711250; darn=nongnu.org;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+ bh=CzYGT+uGNzkc2cwsc1SQmdTaEZP5jUXMfs98MSYX37c=;
+ b=q21xkAyhY/P2PQAPX6fI58CScjOOspzvn35ZvvVdL4nUmEwTTpEM7xk3kzoIgYd2vd
+ D592JwMlH7V0BHjvv5QGpBS2TsOJa+5+rYXEIMtT/F4/dKFEeHWy7sNxdDsxx3Rob7PW
+ gpJeEP6KU6LAn7HOf0cH9kUYiF7uG9jwlBRcRKXsdwTuk3jWyvpkfKLJCa4/ckqUi4QG
+ a/nepW4w+nq3o1kd4LKQDG0D9GdKMe6yYIbngb+cHNJXUFQlMJ0LMXFDcTitBlx36fTG
+ Sm81sVCeyYoZ7MK4WMVQze9478m4NdhHFXMkxS5tqd1EDvT1G3mWN4zukWreNNG2+3Hg
+ 63MA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1781105820; x=1781710620;
- h=in-reply-to:content-transfer-encoding:content-disposition
- :mime-version:references:message-id:subject:cc:to:from:date:x-gm-gg
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=uEZDTqsn8krWhkTZt+TENJLHy87QaCq53mNIE3fmL98=;
- b=d6B9V16IPH9E28uIZJpu1K4FZuP9NY1BU/YmTi3losBApPJO1pW2AoHL4goMARaLYw
- QEqAF4kLZ1Z7dGnDRxSZQSJciQ7tG98i+axic4ZzFcX9BmYuQxT08c4/6VRxMFAk3i/M
- xBkGDJxMUyGc4rN97XgjjbycfcmIgUx05vQkICK0DGKGUOMpngvbtcyeUAFOvXpIn/1/
- VZISP1yl1g3Yk5SMGS/bugXjcK13xGqaVf1xeZq8qVELTMwZ8jgcy91iEGDaKWbT5Gms
- tijMPJjQdlXeTUJ6zEq4KfN+Bu7T3aZTJAxRjcFMZlv+n2xg0AGLonAQ9kmzBRUgFUyz
- nzFA==
-X-Forwarded-Encrypted: i=1;
- AFNElJ/r59T8MKkHyywEIqPEMoXBeiKtXzvfA2gybnfaO+PLMjdW3ifVX63nDV81s8gI4QtNlJqqsfE9apq0@nongnu.org
-X-Gm-Message-State: AOJu0Yw5vJtC9RpFa/Y2Kk1UF7rG4bQzmBQQnFY6I+eBDCeCskeZkyEf
- 9VfnWduRH6J4xkXINkkCYq3qxO9hhNtu/fNM+Ra6ZxJDA1Qu4CwhHMW0oRb+kkENa8QJ5GEHajS
- kjeiPNgkEdoHjs5k2aQRQQCgjzj0en+FIrTMc3MMQSbfoeqOHjFqUunCa
-X-Gm-Gg: Acq92OGAJ60FLM02XEIyISJrrtEQ7ioYkWmxMKQRtZgZW08w8xFIUYrGbReyQOLveld
- wqS1949jMlTUkEDm92T03m+GsblpEFHzOa6g6Rfyi57aOr7VeOSLmOekWRvHB9vXhS4mFVoiVhx
- Yv3oiG0onjfuDOQL2gmHC6w51vTjnPH7xmFIEcspuxJ2KfN+fef6lMhb4m81VJx9/TEmmcpqAO3
- jB6QDAb6tP2+npib3dTeimuaTl3aftf5jZ/Nn+VM0a9mP1LJ1CsdjH6eo7MvnXxqUCKn4NwTEnw
- Or0ajtpabTU2KlU5qx5gSCt6wnIb8aycYXtjjrVJiqFeK2LDWfQ/1q1j4yMwVJK52yJfuKpiwxS
- u6ItsgeFf9hHV0tCj2mDlDx1S/w==
-X-Received: by 2002:a05:622a:1e14:b0:516:e39a:8540 with SMTP id
- d75a77b69052e-517ca609a24mr114591981cf.48.1781105819515; 
- Wed, 10 Jun 2026 08:36:59 -0700 (PDT)
-X-Received: by 2002:a05:622a:1e14:b0:516:e39a:8540 with SMTP id
- d75a77b69052e-517ca609a24mr114591191cf.48.1781105818760; 
- Wed, 10 Jun 2026 08:36:58 -0700 (PDT)
-Received: from x1.local ([142.189.10.167]) by smtp.gmail.com with ESMTPSA id
- d75a77b69052e-51775d8161csm220992421cf.17.2026.06.10.08.36.57
+ d=1e100.net; s=20251104; t=1781106450; x=1781711250;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=CzYGT+uGNzkc2cwsc1SQmdTaEZP5jUXMfs98MSYX37c=;
+ b=d+/NnpG4EjB5oUlSE60Is8oxikg8cTTavEPFfiFJlmEvC2o/jB2lDzE7al5QwvR5u+
+ mv7TdXaaIP7f28vgPcwTIO2HjXdngTw9Qye5LWls6Z2NmnW7xMTqMztLzOqyR4Gx/6br
+ Uq0l2C8fjnix8ceUQKcy7pDU88+t64ESBD65mfmSvqjdD1BnkRPfCHEdzuZE1qHwlQ3u
+ PfAo2b9af4PHBE2iluVS3nLDoFMONSeFEMiKH7I3OyrVFbylOQD0Q+720oa4O8kscrTC
+ FwfPHueE6afsxW447hUu+cHgjQ2sTUJCaAI8jbOwYEnyGva8TAIwQWMjCTOIWxrWAxD5
+ FaXQ==
+X-Gm-Message-State: AOJu0YzfutaJAd6wFVbCuLLendYUJWZrsOcxNJvVMpkO8/KVA1AYcL68
+ faSp/uQ/Fi6r4TU/wXMoVU8+MChMNSXLWSjrEVe+VABE1S7k2PCBS8vEma6XX9Z8oMouPng9+Gl
+ Kj8GwxRd+Oe1IE/IJFS80O3nbjjfqu+z9uhQlC3t/8sG4gkg9+ioU3EZc
+X-Gm-Gg: Acq92OHzNirEzYidZBoAhQkdLvDNE/B2rPzDJSUw6LU/WE2RqtDGklKNlYc2O6lg95w
+ mkz2A71h6aFBbFAx5tyirO3kGImgM+vLO3vlSCoSEvEcjJ2ckzb9eon2CXYnDzI1NSUjmpLTuBY
+ q1XvCG9RuKiohZQZaXFsvtW5tT5jHEglZm/cd/uoMt6DZpIt3c4swbmVw/Jvn83gkiViL6F1iL5
+ yVo2raGMvRHu0JuMEbQSOdLsOxhZcR4SJfVyrKVPjkv3QC406BQKRO+kpap1yt5Wz9lFFGGMJbw
+ SVT52gku1o7CxHbFywDDKkokLjjYgBP1nXYz9i5B7VsoG13abO+eSfco09a4BhFHPCP/Xr8B3ve
+ 0B7fhI3n5gLosOupcOk+OTtMSsYqMivykOYKP9lyksaWOLyPwpoAJbroG0ihEwC/On67yow==
+X-Received: by 2002:a05:6000:b82:b0:460:1301:dec8 with SMTP id
+ ffacd0b85a97d-460302dc4a8mr27394039f8f.3.1781106450153; 
+ Wed, 10 Jun 2026 08:47:30 -0700 (PDT)
+X-Received: by 2002:a05:6000:b82:b0:460:1301:dec8 with SMTP id
+ ffacd0b85a97d-460302dc4a8mr27393999f8f.3.1781106449721; 
+ Wed, 10 Jun 2026 08:47:29 -0700 (PDT)
+Received: from leonardi-redhat ([176.206.19.176])
+ by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-4601f2f67c6sm70106416f8f.16.2026.06.10.08.47.28
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 10 Jun 2026 08:36:57 -0700 (PDT)
-Date: Wed, 10 Jun 2026 11:36:55 -0400
-From: Peter Xu <peterx@redhat.com>
-To: "Michael S. Tsirkin" <mst@redhat.com>
-Cc: Gavin Shan <gshan@redhat.com>, Pavel Hrdina <phrdina@redhat.com>,
- Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>,
- qemu-devel@nongnu.org, qemu-arm@nongnu.org, jugraham@redhat.com,
- shan.gavin@gmail.com, Alex Williamson <alex@shazbot.org>,
- David Hildenbrand <david@kernel.org>
-Subject: Re: [PATCH RFCv1] virtio: Inherit max bounce buffer size from bus
- parent if possible
-Message-ID: <aimEl9QQ_LTRPLtd@x1.local>
-References: <aiaDgG26a6TUrKuM@redhat.com>
- <07ca74b4-52a8-4187-a57c-7c3277e574d3@redhat.com>
- <aiky9d9IwACIyKEC@phrdina-thinkpadt14gen4.rmtcz.csb>
- <674d5e21-88fa-4a10-a83c-eb6f7ce7032f@redhat.com>
- <20260610080947-mutt-send-email-mst@kernel.org>
- <eb0f0da1-11dd-4437-94fd-a65af55851e1@redhat.com>
- <20260610082637-mutt-send-email-mst@kernel.org>
- <5d8cbd4b-3725-437e-88a3-e0af32164815@redhat.com>
- <e7cc9f2d-ccb4-442f-a1ed-7c5474395099@redhat.com>
- <20260610095712-mutt-send-email-mst@kernel.org>
+ Wed, 10 Jun 2026 08:47:29 -0700 (PDT)
+Date: Wed, 10 Jun 2026 17:47:26 +0200
+From: Luigi Leonardi <leonardi@redhat.com>
+To: Gerd Hoffmann <kraxel@redhat.com>
+Cc: qemu-devel@nongnu.org, "Michael S. Tsirkin" <mst@redhat.com>, 
+ Paolo Bonzini <pbonzini@redhat.com>,
+ Richard Henderson <richard.henderson@linaro.org>, 
+ Stefano Garzarella <sgarzare@redhat.com>, Ani Sinha <anisinha@redhat.com>,
+ Zhao Liu <zhao1.liu@intel.com>, Oliver Steffen <osteffen@redhat.com>
+Subject: Re: [PATCH v2 1/2] hw/i386/microvm: pack device tree
+Message-ID: <aimFZtN9qURC4Reg@leonardi-redhat>
+References: <20260610-microvm_device_tree-v2-0-4fb44730c49f@redhat.com>
+ <20260610-microvm_device_tree-v2-1-4fb44730c49f@redhat.com>
+ <ail7WyMwmEBIquoM@dobby.home.kraxel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=us-ascii; format=flowed
 Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <20260610095712-mutt-send-email-mst@kernel.org>
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=peterx@redhat.com;
+In-Reply-To: <ail7WyMwmEBIquoM@dobby.home.kraxel.org>
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=leonardi@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -24
 X-Spam_score: -2.5
@@ -116,7 +106,7 @@ X-Spam_bar: --
 X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.445,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -132,182 +122,24 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, Jun 10, 2026 at 10:06:24AM -0400, Michael S. Tsirkin wrote:
-> On Wed, Jun 10, 2026 at 11:54:47PM +1000, Gavin Shan wrote:
-> > Hi Michael and Peter,
-> > 
-> > On 6/10/26 11:00 PM, Gavin Shan wrote:
-> > > On 6/10/26 10:27 PM, Michael S. Tsirkin wrote:
-> > > > On Wed, Jun 10, 2026 at 10:19:31PM +1000, Gavin Shan wrote:
-> > > > > On 6/10/26 10:12 PM, Michael S. Tsirkin wrote:
-> > > > > > On Wed, Jun 10, 2026 at 08:55:10PM +1000, Gavin Shan wrote:
-> > > > > > > On 6/10/26 7:54 PM, Pavel Hrdina wrote:
-> > > > > 
-> > > > > [...]
-> > > > > 
-> > > > > > > > 
-> > > > > > > > You did not answer the question that Daniel was asking, how will user
-> > > > > > > > know that max-bounce-buffer-size should be used if it's necessary to fix
-> > > > > > > > guest system hangs and how will user know what magic value should be set?
-> > > > > > > > 
-> > > > > > > 
-> > > > > > > Sorry that I missed to answer Daniel's questions. For this specific case,
-> > > > > > > user need to enlarge the bounce buffer size when seeing the following error
-> > > > > > > message. We can add an explicit one in address_space_map() if the existing
-> > > > > > > error message isn't obvious.
-> > > > > > > 
-> > > > > > >     qemu-system-aarch64: virtio: bogus descriptor or out of resources
-> > > > > > > 
-> > > > > > >     void *address_space_map(AddressSpace *as,
-> > > > > > >                           hwaddr addr,
-> > > > > > >                           hwaddr *plen,
-> > > > > > >                           bool is_write,
-> > > > > > >                           MemTxAttrs attrs)
-> > > > > > >     {
-> > > > > > >         if (!memory_access_is_direct(mr, is_write, attrs)) {
-> > > > > > >             if (l == 0) {
-> > > > > > >                 error_report("Running out of bounce buffer size , enlarge it with max-bounce-buffer-size");
-> > > > > > >                 *plen = 0;
-> > > > > > >                 return NULL;
-> > > > > > >             }
-> > > > > > >         }
-> > > > > > > 
-> > > > > > > As to the value user should take for max-bounce-buffer-size, it is really case by case
-> > > > > > > and decided by user. User needs to try 4096, 8192, ..., 0xFFFFFFFF to figure out the
-> > > > > > > smallest value works for them. The worst case is to set 0xFFFFFFFF.
-> > > > > > > 
-> > > > > > 
-> > > > > > 
-> > > > > > This is not at all reasonable. All kind of fixes are possible but
-> > > > > > fundamentally, bounce buffering data path is by itself already a
-> > > > > > bad idea.
-> > > > > > 
-> > > > > > I have no idea what does bounce buffering device ram accomplish.
-> > > > > > 
-> > > > > > In the end, qemu still simply reads the memory from/to the buffer.
-> > > > > > 
-> > > > > > My suggestion is to first of all look for ways to mark the
-> > > > > > memory as direct.
-> > > > > > 
-> > > > > 
-> > > > > As I explained to Peter Xu in another reply, we can't simply mark the (RAM
-> > > > > DEVICE) memory region is directly accessible. The memory region is initialized
-> > > > > by memory_region_init_ram_device_ptr() in hw/vfio/region.c::vfio_region_mmap().
-> > > > > 
-> > > > > The  accesses to the memory region is handled by 'ram_device_mem_ops' where
-> > > > > {ldn, stn}_he_p() are used in its read/write handler. They're different
-> > > > > from memcpy() since the data endianness is well handled in {ldn, stn}_he_p().
-> > > > > 
-> > > > > Thanks,
-> > > > > Gavin
-> > > > > 
-> > > > 
-> > > > What is endianness set to, for this region?
-> > > > 
-> > > 
-> > > The endianness of the memory region is set to that for the host.
-> > > 
-> > > static const MemoryRegionOps ram_device_mem_ops = {
-> > >      .read = memory_region_ram_device_read,
-> > >      .write = memory_region_ram_device_write,
-> > >      .endianness = HOST_BIG_ENDIAN ? DEVICE_BIG_ENDIAN : DEVICE_LITTLE_ENDIAN,
-> > > };
-> > > 
-> 
-> So there is never any endianness translation.
-> I think the reason qemu does the bounce buffer is more
-> to prevent things like vector access from MMIO.
-> 
-> 
-> > How about to treat the RAM DEVICE memory region directly accessible in
-> > address_space_map() only when HOST_BIG_ENDIAN is false,
-> > something like
-> > below and I don't hit the guest hang issue with the changes.
-> > 
-> > diff --git a/include/system/memory.h b/include/system/memory.h
-> > index 1417132f6d..9daca55251 100644
-> > --- a/include/system/memory.h
-> > +++ b/include/system/memory.h
-> > @@ -2908,7 +2908,8 @@ void *qemu_map_ram_ptr(RAMBlock *ram_block, ram_addr_t addr);
-> >  int memory_access_size(MemoryRegion *mr, unsigned l, hwaddr addr);
-> >  bool prepare_mmio_access(MemoryRegion *mr);
-> > -static inline bool memory_region_supports_direct_access(const MemoryRegion *mr)
-> > +static inline bool memory_region_supports_direct_access(const MemoryRegion *mr,
-> > +                                                        bool check_ram_device)
-> >  {
-> >      /* ROM DEVICE regions only allow direct access if in ROMD mode. */
-> >      if (memory_region_is_romd(mr)) {
-> > @@ -2922,13 +2923,14 @@ static inline bool memory_region_supports_direct_access(const MemoryRegion *mr)
-> >       * be MMIO and access using mempy can be wrong (e.g., using instructions not
-> >       * intended for MMIO access). So we treat this as IO.
-> >       */
-> > -    return !memory_region_is_ram_device(mr);
-> > +    return (!check_ram_device || !memory_region_is_ram_device(mr));
-> >  }
-> >  static inline bool memory_access_is_direct(const MemoryRegion *mr,
-> > +                                           bool check_ram_device,
-> >                                             bool is_write, MemTxAttrs attrs)
-> >  {
-> > -    if (!memory_region_supports_direct_access(mr)) {
-> > +    if (!memory_region_supports_direct_access(mr, check_ram_device)) {
-> >          return false;
-> >      }
-> > diff --git a/system/physmem.c b/system/physmem.c
-> > index 7bcbf87573..2e6b72b124 100644
-> > --- a/system/physmem.c
-> > +++ b/system/physmem.c
-> > @@ -3724,7 +3724,7 @@ void *address_space_map(AddressSpace *as,
-> >      fv = address_space_to_flatview(as);
-> >      mr = flatview_translate(fv, addr, &xlat, &l, is_write, attrs);
-> > -    if (!memory_access_is_direct(mr, is_write, attrs)) {
-> > +    if (!memory_access_is_direct(mr, HOST_BIG_ENDIAN, is_write, attrs)) {
-> >          size_t used = qatomic_read(&as->bounce_buffer_size);
-> >          for (;;) {
-> >              hwaddr alloc = MIN(as->max_bounce_buffer_size - used, l);
-> > 
-> > Thanks,
-> > Gavin
-> > 
-> 
-> I do not think it has anything to do with host endian-ness.
-> 
-> 
-> This is the change that broke it I think?
-> 
-> 
-> commit 4a2e242bbb306ef5c16ce9e7bb2da3bd8a4eb098
-> Author: Alex Williamson <alex@shazbot.org>
-> Date:   Mon Oct 31 09:53:03 2016 -0600
-> 
->     memory: Don't use memcpy for ram_device regions
->     
-> 
-> Maybe Alex has an opinion on what to do.
+Hi Gerd,
 
-I can offer one idea here..
+On Wed, Jun 10, 2026 at 05:04:39PM +0200, Gerd Hoffmann wrote:
+>  Hi,
+>
+>> +    ret = fdt_pack(ms->fdt);
+>
+>I'm wondering whenever this is the best place to do it, or whenever the
+>igvm code should make a copy + pack it + place it in the directive, so
+>we do not depend on the machine code to do the packing for us.  When
+>doing a quick grep the packing seems to be a rare thing, there isn't a
+>single call in all arm code for example ...
+>
 
-IIUC the major issue was vector ops but the mr ops might be too heavy, then
-another way to fix it is in memory API instead of using memcpy()/memmove(),
-we always use a helper (say, memmove_no_vector()) to do the split and
-properly aligned IOs as what ram_device_mem_ops does right now, this should
-only applies to ram_device.
+True, it's rather rare throughout the codebase. If we do this here, when
+we will support other archs we would have to add `fdt_pack` to them as well.
+Is this your concern?
 
-With that, IIUC we can remove the current ram_device_mem_ops, then in
-Gavin's case mmap() will go through and guest will not need to vmexit at
-all.  Best perf, issue solve.
-
-We just need to be careful to trap all possible memcpy()/memmove() used in
-memory core.. if I didn't miss any, IMO below four should needs to be
-replaced by memmove_no_vector():
-
-  flatview_write_continue_step()
-  flatview_read_continue_step()
-  address_space_read()
-  address_space_write_rom()
-
-Thanks,
-
--- 
-Peter Xu
+Luigi
 
 
