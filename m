@@ -4,80 +4,80 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id BB8A6CD8CB2
-	for <qemu-devel@archiver.kernel.org>; Wed, 10 Jun 2026 16:14:00 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3D325CD8CB9
+	for <qemu-devel@archiver.kernel.org>; Wed, 10 Jun 2026 16:14:11 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wXLXM-0007aR-Uw; Wed, 10 Jun 2026 12:12:17 -0400
+	id 1wXLYM-0002Oc-Nt; Wed, 10 Jun 2026 12:13:18 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1wXLXK-0007aA-UV
- for qemu-devel@nongnu.org; Wed, 10 Jun 2026 12:12:14 -0400
-Received: from mail-wr1-x434.google.com ([2a00:1450:4864:20::434])
+ id 1wXLYK-0002Gq-HI
+ for qemu-devel@nongnu.org; Wed, 10 Jun 2026 12:13:16 -0400
+Received: from mail-wm1-x32a.google.com ([2a00:1450:4864:20::32a])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1wXLXJ-0005Si-4n
- for qemu-devel@nongnu.org; Wed, 10 Jun 2026 12:12:14 -0400
-Received: by mail-wr1-x434.google.com with SMTP id
- ffacd0b85a97d-4600cbb06deso13662f8f.1
- for <qemu-devel@nongnu.org>; Wed, 10 Jun 2026 09:12:12 -0700 (PDT)
+ id 1wXLYI-00061b-KM
+ for qemu-devel@nongnu.org; Wed, 10 Jun 2026 12:13:16 -0400
+Received: by mail-wm1-x32a.google.com with SMTP id
+ 5b1f17b1804b1-490d1e54b3bso32605325e9.1
+ for <qemu-devel@nongnu.org>; Wed, 10 Jun 2026 09:13:14 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1781107931; x=1781712731; darn=nongnu.org;
+ d=linaro.org; s=google; t=1781107993; x=1781712793; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
- :reply-to; bh=LfgEtjEofemnb9oUGlzyFUFatDRuSkVWaWombKIzix0=;
- b=CWngeCRUipOlycukfzuobU7W7eIt6N81BBjnGjNtbUPDY5FJh2Mz+sMJtuRsK3L8tR
- pdeUEXqhkOJv4N5aIJBJpOx5cfDAhqrAY/9EMWnsmm/bzkbEzcbTdrByDV6Au/d37Q/a
- 6D292GleYVQE2KIVAgDyiOtuwN354r6dM9lrw9EE5C1zJkobx56+ZtPbeM/y4C7YpS/x
- XwpCk5a3Ax/EvEy9nToJTSZJ5yHKk1LnFBpI73ze2HobrYKqy706UHhcv+0Jid/LYcZx
- VfbwE0x7p1Px37Ngd3pcVFwaBNAUMpIK0kmfRNdOPcyW4u5xzX3RWXb76vDAwAFOJRYb
- Qtuw==
+ :reply-to; bh=FRF391YCQ0UAguZPavBxOGhsGfFlsAqW1hPgkjHxr10=;
+ b=PKRfy+YuG4VhSYly/9Oett65Pr8+AujtZb8+Okn9/jZptKACCZFO9V6j0dY0EArRLy
+ IwZWU8epCPWURTWapyTGPWICmY9tKkc/eyFPTAf2+BydBq5ZddYtdzSlgsaHwpXsRhjN
+ Hqc/Ok6gVrD+ZQf8HjXitjAbV1c14GbrGXg2ZAAgPHNRLIUg1qwkejpuZlk6qVtVaH8/
+ ydckBw6a232Oq+7U3iyX4rptM60YBAgkfpfU/uEozJp701gqiuF2IhmgHh/J4gb1HIXJ
+ p5AQVar40hqxjS2/xYZOfws0OU5kS0L8JeKKrIOk6+pJgBi0zTUTUpiFieYS60pcWOAL
+ aqnQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1781107931; x=1781712731;
+ d=1e100.net; s=20251104; t=1781107993; x=1781712793;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:x-gm-gg:x-gm-message-state:from:to
  :cc:subject:date:message-id:reply-to;
- bh=LfgEtjEofemnb9oUGlzyFUFatDRuSkVWaWombKIzix0=;
- b=KOCkt3rMguKKFA/nsDMDsWY1QggO6OWLSpSycD8gdjWc/YPi7iCSv8y1ZgEotWIB7E
- pghakHYv2ntZBb6nYiGdaMNLmhCEVuVwSyBivDL+ASDxYtNeBVPGPaKnb1SQcdANRbvG
- fUaF+lSH8cq/6/y/2+7rqUuHTDwDJlT6E89Api7HD1OeUMDhp9/r8N1T4KRlh3unODup
- 8hDMk8Q9QnMsHhBXXFvv6JVKxHqUOg9FUSmvIEPTTDviY7EucW4Ns0a6QEK9N5rlH0tU
- qmUJb6PbW7uYPEqTVdX+q2+/FtcdjvtItI18jEkYYXAFEoEsZgRV9aELPYgTL2Vxi4Wr
- VLog==
-X-Gm-Message-State: AOJu0Yyu7AIqo0Jxh1pPMvnCLzAUJgpXjh6A8Mou0UJzGp3aY2/Hk5eq
- izgAmejikCFnMqEZAn5QthvW8XOzQC7ELU9lg4Q8vk8WANIiMtTZvMvWRVVBxN+clsQTRsEeO35
- xDoe7
-X-Gm-Gg: Acq92OHcf0UnBshcD4ihcru3RhqYWs+Gzm4yUv4j5LMFoVrc13BUKp39HnQOJyhroBm
- JCA41zA34K9G0KNYt+oQCIuYtJKshkcI4ZRKTs4X+ymg5moTdwa8/bwXX34KdFp3LTHyc3FgXGw
- wPdhvbKHbEYktrv5trKJqxs265jlS7vJlsLg7wiRhOqF7nY4kTmc3eDMPOQ0ahloZbvCv/XkX4t
- zGF9RCdUZCtd26coXuVVCfIjMSRp/DFeqHa2WUq685mKRjNgFl4RWeee51BOBJVMtZjRMI946nd
- U1YYwS0Aykav6huYsKrZJaCQBAjKEl+pJucV/9XdCMsO0pqSRZnuWILZHdL3YxI/fOVzoU69smf
- dVreMIa5VjT1c2Y05+2woaIFc0nT6wRum1XXQSfyJ6eBn30Lh8gy/H9D5YyMa+SMvKdDDmbV4Lg
- 1mNEybxjH0adTiL0GD6CAVS1T20Jk1un1b1CBt7q7BBIU7wSQhCAaVYFpbpNTGsVVbftF/BgDgl
- Ncq+QDhMiwPo/fdsFtOzOTToJbi/1l4Ws+hnQe0rYo=
-X-Received: by 2002:a05:6000:400d:b0:45e:dd32:92fa with SMTP id
- ffacd0b85a97d-46032b81e04mr38155673f8f.12.1781107930880; 
- Wed, 10 Jun 2026 09:12:10 -0700 (PDT)
+ bh=FRF391YCQ0UAguZPavBxOGhsGfFlsAqW1hPgkjHxr10=;
+ b=qZoSWE/oFzmIgjnKAu37gSprUzLpt8pX9rgPaq4oe0/aZ1ne7RMx45oz2LzHBvsHtm
+ /QkcDGo8lTyckOLvPN9JOcLdZCnyLKHzOMrcaot0GAIyfAXXOns3HoANqmE/FPh4EnPQ
+ Jwxof+pzvKNiTC6GpOJL4hN5oUvyo6qnqVW5yc5AnUu73xu85YuEOnsD83YK+h/jd3fx
+ u49X2D8y7VavrH0SooqNloLyPED8HzYy+nhwzGesbz8a968CsN4u3UB6B9wj8g8FKqbt
+ LHoHEHTqljp1NAcXMLuKokPb7NjlGzMsuVjym+fV6i/jw3E66v9WLNxV5Q1OwC83hAbI
+ +83g==
+X-Gm-Message-State: AOJu0YyNDGCM4MrbmNfWYcEQaVGDmQgZufLYDtpfqhVkpXn0vuIDtO+I
+ T1WInqxCedAPuQLau8w5jlpwte3OwWDV12sveHyhCYtSe4bDZ/egsNd0maeAvavdTA6wLzxMP/r
+ as1PY
+X-Gm-Gg: Acq92OFNW7a+qgAVQC3ngeyZWxTbRR7V5ArT8iDBkIQNn8TbTcYNnN4W+7ch5fDN3Pm
+ X91dsxHIbt/cI9mGlV3OyboDYOOWmQYZpbsOURB/xHeWUYmUvyas97ymkLRraD6BTWYJkg3ySX2
+ KV8qRqDIiu7AbWoaFEPYSN2DrjfVCultOHG7JkiU4rGsj9sT5t3k+iaXotpQc4VaCjaG9Pt5waX
+ Teo+yLJHI4YWTKShaJ9IGVN6sEprLIkcj9N4gQeERcSXCdvgAffw3m5R8k6wrLj4GlYMl4v1VSZ
+ K7PoL98bt/bcFI00sI45PjJsh+w9WttLYRVT1N8hSNu2KRMLual2uKI5xChT8uJpe56wJhlNUkO
+ y8aelIgWCWBCkb8721EjmTdDfv1vPz1oOdyLCdeeVO0RyEBf32RV9DFvcURx4nUYI3ZqjDjQ6Ku
+ +Rtz8XseDf7xHnkts0DQpiM6RTCufsiMDOnV2lBPopNCsxGg7VxeLeqv7dy1xMCJtBpapiwkJ4+
+ 75xKcozVBjQda621H+Vlimr+ULoukvQ5gg1ZEtxPdQ=
+X-Received: by 2002:a05:600c:468c:b0:490:469c:556b with SMTP id
+ 5b1f17b1804b1-490c257c3c8mr429928625e9.12.1781107993119; 
+ Wed, 10 Jun 2026 09:13:13 -0700 (PDT)
 Received: from lanath.. (wildly.archaic.org.uk. [81.2.115.145])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-4601f2dcbe3sm67911360f8f.8.2026.06.10.09.12.09
+ ffacd0b85a97d-4601f2dcbe3sm67911360f8f.8.2026.06.10.09.13.12
  for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 10 Jun 2026 09:12:09 -0700 (PDT)
+ Wed, 10 Jun 2026 09:13:12 -0700 (PDT)
 From: Peter Maydell <peter.maydell@linaro.org>
 To: qemu-devel@nongnu.org
-Subject: [PULL 05/71] linux-user: add MTE_STORE_ONLY to prctl
-Date: Wed, 10 Jun 2026 17:10:56 +0100
-Message-ID: <20260610161202.2235298-6-peter.maydell@linaro.org>
+Subject: [PULL 51/71] target/arm: Update ID_AA64SMFR0_EL1 fields to ARM M.b
+Date: Wed, 10 Jun 2026 17:11:42 +0100
+Message-ID: <20260610161202.2235298-52-peter.maydell@linaro.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20260610161202.2235298-1-peter.maydell@linaro.org>
 References: <20260610161202.2235298-1-peter.maydell@linaro.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::434;
- envelope-from=peter.maydell@linaro.org; helo=mail-wr1-x434.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::32a;
+ envelope-from=peter.maydell@linaro.org; helo=mail-wm1-x32a.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -100,137 +100,49 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Gabriel Brookman <brookmangabriel@gmail.com>
+From: Richard Henderson <richard.henderson@linaro.org>
 
-Linux-user processes can now control whether MTE_STORE_ONLY is enabled
-using the prctl syscall.
-
-Signed-off-by: Gabriel Brookman <brookmangabriel@gmail.com>
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
-Message-id: 20260529-feat-mte4-v7-4-ccbd3c14eb3c@gmail.com
+Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
+Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
+Message-id: 20260609192110.752384-26-richard.henderson@linaro.org
 Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
 ---
- linux-user/aarch64/mte_user_helper.c | 11 ++++++++++-
- linux-user/aarch64/mte_user_helper.h | 14 +++++++++-----
- linux-user/aarch64/target_prctl.h    |  6 +++++-
- target/arm/gdbstub64.c               |  2 +-
- tests/tcg/aarch64/mte.h              |  3 +++
- 5 files changed, 28 insertions(+), 8 deletions(-)
+ target/arm/cpu-features.h | 11 +++++++++++
+ 1 file changed, 11 insertions(+)
 
-diff --git a/linux-user/aarch64/mte_user_helper.c b/linux-user/aarch64/mte_user_helper.c
-index a5b1c8503b..b5c4dafcda 100644
---- a/linux-user/aarch64/mte_user_helper.c
-+++ b/linux-user/aarch64/mte_user_helper.c
-@@ -10,7 +10,7 @@
- #include "qemu.h"
- #include "mte_user_helper.h"
+diff --git a/target/arm/cpu-features.h b/target/arm/cpu-features.h
+index 8770fce2fa..f85368a002 100644
+--- a/target/arm/cpu-features.h
++++ b/target/arm/cpu-features.h
+@@ -397,17 +397,28 @@ FIELD(ID_AA64ZFR0, F16MM, 48, 4)
+ FIELD(ID_AA64ZFR0, F32MM, 52, 4)
+ FIELD(ID_AA64ZFR0, F64MM, 56, 4)
  
--void arm_set_mte_tcf0(CPUArchState *env, abi_long value)
-+void arm_set_tagged_addr_ctrl(CPUArchState *env, abi_long value)
- {
-     /*
-      * Write PR_MTE_TCF to SCTLR_EL1[TCF0].
-@@ -32,4 +32,13 @@ void arm_set_mte_tcf0(CPUArchState *env, abi_long value)
-         tcf = 2;
-     }
-     env->cp15.sctlr_el[1] = deposit64(env->cp15.sctlr_el[1], 38, 2, tcf);
-+
-+    /*
-+     * If MTE_STORE_ONLY is enabled, set the corresponding sctlr_el1 bit
-+     */
-+    if (value & PR_MTE_STORE_ONLY) {
-+        env->cp15.sctlr_el[1] |= SCTLR_TCSO0;
-+    } else {
-+        env->cp15.sctlr_el[1] &= ~SCTLR_TCSO0;
-+    }
- }
-diff --git a/linux-user/aarch64/mte_user_helper.h b/linux-user/aarch64/mte_user_helper.h
-index 0c53abda22..8a46f743f4 100644
---- a/linux-user/aarch64/mte_user_helper.h
-+++ b/linux-user/aarch64/mte_user_helper.h
-@@ -20,15 +20,19 @@
- # define PR_MTE_TAG_SHIFT       3
- # define PR_MTE_TAG_MASK        (0xffffUL << PR_MTE_TAG_SHIFT)
- #endif
-+#ifndef PR_MTE_STORE_ONLY
-+# define PR_MTE_STORE_ONLY      (1UL << 19)
-+#endif
++FIELD(ID_AA64SMFR0, SMOP4, 0, 1)
++FIELD(ID_AA64SMFR0, STMOP, 16, 1)
++FIELD(ID_AA64SMFR0, SFEXPA, 23, 1)
++FIELD(ID_AA64SMFR0, AES, 24, 1)
++FIELD(ID_AA64SMFR0, SBITPERM, 25, 1)
++FIELD(ID_AA64SMFR0, SF8DP2, 28, 1)
++FIELD(ID_AA64SMFR0, SF8DP4, 29, 1)
++FIELD(ID_AA64SMFR0, SF8FMA, 30, 1)
+ FIELD(ID_AA64SMFR0, F32F32, 32, 1)
+ FIELD(ID_AA64SMFR0, BI32I32, 33, 1)
+ FIELD(ID_AA64SMFR0, B16F32, 34, 1)
+ FIELD(ID_AA64SMFR0, F16F32, 35, 1)
+ FIELD(ID_AA64SMFR0, I8I32, 36, 4)
++FIELD(ID_AA64SMFR0, F8F32, 40, 1)
++FIELD(ID_AA64SMFR0, F8F16, 41, 1)
+ FIELD(ID_AA64SMFR0, F16F16, 42, 1)
+ FIELD(ID_AA64SMFR0, B16B16, 43, 1)
+ FIELD(ID_AA64SMFR0, I16I32, 44, 4)
+ FIELD(ID_AA64SMFR0, F64F64, 48, 1)
+ FIELD(ID_AA64SMFR0, I16I64, 52, 4)
+ FIELD(ID_AA64SMFR0, SMEVER, 56, 4)
++FIELD(ID_AA64SMFR0, LUTv2, 60, 1)
+ FIELD(ID_AA64SMFR0, FA64, 63, 1)
  
- /**
-- * arm_set_mte_tcf0 - Set TCF0 field in SCTLR_EL1 register
-+ * arm_set_tagged_addr_ctrl - Set TCF0 and TCSO0 fields in SCTLR_EL1 register
-  * @env: The CPU environment
-- * @value: The value to be set for the Tag Check Fault in EL0 field.
-+ * @value: The value to be set for the Tag Check Fault and Tag Check Store Only
-+ * in EL0 field.
-  *
-- * Only SYNC and ASYNC modes can be selected. If ASYMM mode is given, the SYNC
-- * mode is selected instead. So, there is no way to set the ASYMM mode.
-+ * Only SYNC and ASYNC modes can be selected for TCF0. If ASYMM mode is given,
-+ * the SYNC mode is selected instead. So, there is no way to set the ASYMM mode.
-  */
--void arm_set_mte_tcf0(CPUArchState *env, abi_long value);
-+void arm_set_tagged_addr_ctrl(CPUArchState *env, abi_long value);
- 
- #endif /* AARCH64_MTE_USER_HELPER_H */
-diff --git a/linux-user/aarch64/target_prctl.h b/linux-user/aarch64/target_prctl.h
-index 621be5727f..d91e75d60d 100644
---- a/linux-user/aarch64/target_prctl.h
-+++ b/linux-user/aarch64/target_prctl.h
-@@ -168,6 +168,9 @@ static abi_long do_prctl_set_tagged_addr_ctrl(CPUArchState *env, abi_long arg2)
-     if (cpu_isar_feature(aa64_mte, cpu)) {
-         valid_mask |= PR_MTE_TCF_MASK;
-         valid_mask |= PR_MTE_TAG_MASK;
-+        if (cpu_isar_feature(aa64_mte_store_only, cpu)) {
-+            valid_mask |= PR_MTE_STORE_ONLY;
-+        }
-     }
- 
-     if (arg2 & ~valid_mask) {
-@@ -176,7 +179,7 @@ static abi_long do_prctl_set_tagged_addr_ctrl(CPUArchState *env, abi_long arg2)
-     env->tagged_addr_enable = arg2 & PR_TAGGED_ADDR_ENABLE;
- 
-     if (cpu_isar_feature(aa64_mte, cpu)) {
--        arm_set_mte_tcf0(env, arg2);
-+        arm_set_tagged_addr_ctrl(env, arg2);
- 
-         /*
-          * Write PR_MTE_TAG to GCR_EL1[Exclude].
-@@ -185,6 +188,7 @@ static abi_long do_prctl_set_tagged_addr_ctrl(CPUArchState *env, abi_long arg2)
-          */
-         env->cp15.gcr_el1 =
-             deposit64(env->cp15.gcr_el1, 0, 16, ~arg2 >> PR_MTE_TAG_SHIFT);
-+
-         arm_rebuild_hflags(env);
-     }
-     return 0;
-diff --git a/target/arm/gdbstub64.c b/target/arm/gdbstub64.c
-index a4fa740caf..0c3e5b30bd 100644
---- a/target/arm/gdbstub64.c
-+++ b/target/arm/gdbstub64.c
-@@ -684,7 +684,7 @@ int aarch64_gdb_set_tag_ctl_reg(CPUState *cs, uint8_t *buf, int reg)
-      * expose options regarding the type of MTE fault that can be controlled at
-      * runtime.
-      */
--    arm_set_mte_tcf0(env, tcf);
-+    arm_set_tagged_addr_ctrl(env, tcf);
- 
-     return 1;
- #else
-diff --git a/tests/tcg/aarch64/mte.h b/tests/tcg/aarch64/mte.h
-index 0805676b11..17b932f3f1 100644
---- a/tests/tcg/aarch64/mte.h
-+++ b/tests/tcg/aarch64/mte.h
-@@ -20,6 +20,9 @@
- #ifndef PR_TAGGED_ADDR_ENABLE
- # define PR_TAGGED_ADDR_ENABLE    (1UL << 0)
- #endif
-+#ifndef PR_MTE_STORE_ONLY
-+# define PR_MTE_STORE_ONLY        (1UL << 19)
-+#endif
- #ifndef PR_MTE_TCF_SHIFT
- # define PR_MTE_TCF_SHIFT         1
- # define PR_MTE_TCF_NONE          (0UL << PR_MTE_TCF_SHIFT)
+ FIELD(ID_AA64FPFR0, F8E5M2, 0, 1)
 -- 
 2.43.0
 
