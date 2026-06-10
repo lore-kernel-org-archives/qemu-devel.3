@@ -4,54 +4,54 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4F576CD98CC
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 85C15CD98C5
 	for <qemu-devel@archiver.kernel.org>; Wed, 10 Jun 2026 21:16:30 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wXQH9-0004jm-LP; Wed, 10 Jun 2026 17:15:51 -0400
+	id 1wXQHZ-0005op-TR; Wed, 10 Jun 2026 17:16:17 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1wXQGq-0004Hk-Fg
- for qemu-devel@nongnu.org; Wed, 10 Jun 2026 17:15:34 -0400
+ id 1wXQHA-0004pL-2r
+ for qemu-devel@nongnu.org; Wed, 10 Jun 2026 17:15:52 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1wXQGm-0006ny-ML
- for qemu-devel@nongnu.org; Wed, 10 Jun 2026 17:15:31 -0400
+ id 1wXQH7-0006yj-4G
+ for qemu-devel@nongnu.org; Wed, 10 Jun 2026 17:15:51 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1781126116;
+ s=mimecast20190719; t=1781126148;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=V4iM2b/uUe5vvhsI9W3EdaSytqkD4evkjRTtpMP6ec8=;
- b=c8paRBeVqD5Tg9pCGFfAj4YQ8qzfB5mQYKfv7fcbKkzid0czL24nweYUdlXd9V3E8k9rjc
- OX0Ehgz5NL/PJgLIMNE+HZ/Wn5RltHy0v8j2wYRON0ElYgiotKvM0t/XGVxUuBXIx/egM4
- YeB7ObA5fuq0WTdEwfjRTb5Gi2Vinac=
+ bh=pHlHaiE7Jpu2auw9z6L5cVdnkLo0ia4QwebOZZSpxvU=;
+ b=eVFxKmbcnoz+EHj+tTuPWXq0oBu3lsTf/4NDFxYMaNNXvdYOphodIvQ2b523PE4t0f5gOF
+ YMvZ4obC2y0tc4THpvTmUjVKLfT+ClT9WXNMTGdqAcxPNLs+DpEFWzI1Y1yYjkFjOV2XAd
+ 93CVSnjz5shNlcjC8+EqE29dzrMm0LM=
 Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-407-RkqwfHWxNsqaQsC1soTwAw-1; Wed,
- 10 Jun 2026 17:15:12 -0400
-X-MC-Unique: RkqwfHWxNsqaQsC1soTwAw-1
-X-Mimecast-MFC-AGG-ID: RkqwfHWxNsqaQsC1soTwAw_1781126111
-Received: from mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.93])
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-265-LQmtWysoNX2QVc6olgmehQ-1; Wed,
+ 10 Jun 2026 17:15:44 -0400
+X-MC-Unique: LQmtWysoNX2QVc6olgmehQ-1
+X-Mimecast-MFC-AGG-ID: LQmtWysoNX2QVc6olgmehQ_1781126143
+Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
  by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id B670518600E3; Wed, 10 Jun 2026 21:15:10 +0000 (UTC)
+ id 04C9E186D55D; Wed, 10 Jun 2026 21:15:43 +0000 (UTC)
 Received: from localhost (unknown [10.44.24.21])
- by mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 763DE180029C; Wed, 10 Jun 2026 21:15:08 +0000 (UTC)
+ by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id 1066E1954B10; Wed, 10 Jun 2026 21:15:41 +0000 (UTC)
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
-Subject: Re: [PATCH v2 15/35] monitor: use dynamic cast in
- monitor_qmp_requests_pop_any_with_lock
+Subject: Re: [PATCH v2 21/35] monitor: eliminate
+ monitor_is_hmp_non_interactive method
 From: marcandre.lureau@redhat.com
 To: =?utf-8?q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>
 Cc: qemu-devel@nongnu.org, 
@@ -62,29 +62,29 @@ Cc: qemu-devel@nongnu.org,
  Paolo Bonzini <pbonzini@redhat.com>, 
  "Dr. David Alan Gilbert" <dave@treblig.org>, 
  =?utf-8?q?Philippe_Mathieu-Daud=C3=A9?= <philmd@mailo.com>
-In-Reply-To: <20260610123415.2883603-16-berrange@redhat.com>
+In-Reply-To: <20260610123415.2883603-22-berrange@redhat.com>
 References: <20260610123415.2883603-1-berrange@redhat.com>
- <20260610123415.2883603-16-berrange@redhat.com>
+ <20260610123415.2883603-22-berrange@redhat.com>
 Date: Thu, 11 Jun 2026 01:13:23 +0400
-Message-Id: <178112600352.209622.3677633262934026439.b4-review@b4>
-X-Developer-Signature: v=1; a=openpgp-sha256; l=294;
+Message-Id: <178112600365.209622.12161913708760129363.b4-review@b4>
+X-Developer-Signature: v=1; a=openpgp-sha256; l=509;
  i=marcandre.lureau@redhat.com; h=from:subject:message-id;
- bh=fD3GGrBft5F702x1HW04+Q+uFjaLGADtECAT06phtQY=;
- b=owEBbQKS/ZANAwAKAdro4Ql1lpzlAcsmYgBqKdOB4y+va1cUQGitEkmBscb/TYLWJfD6wf+Jt
- nMnZYnRPxmJAjMEAAEKAB0WIQSHqb2TP4fGBtJ29i3a6OEJdZac5QUCainTgQAKCRDa6OEJdZac
- 5SphD/9x7knxsTW2paA5UZZnrSFQ8imWOYpEqnGYGf6DrdPZQMsU2E07+io2cqPg8owN1HgtBnE
- r44MjBbHk6KMVp0y/DgH96Yg/V14zN+G7KBqZBUGfvvsMRxCsspYs6eRp/VdiH6iPb14+aKgzEl
- K35SmJoZkd1780UEFp4ZFyafx8SNhonLOttAsACMoY70lt5ajvH/zIWdWgMYEz0UjBqd1Ind9hJ
- zHYbCfIk2tVzPC6D08UZEDf9F42MJsqCCmjsRsK08cGeyMeeLtqIS2VqQyg8IdjhQESW9USXbUZ
- olskFQhFn38GH9RTpyiFpTxL+e5ZFsmgBYgARanQ8587Tt5bgEgsm1vPo8+vq0OQkv/aGfrRwRS
- 49NEGgbYrdSGRyQWkzuFyaO2+lGmKttuPLcrR/+A8J3cMB0RnHtBoQftQiMvOExGG5Z2kV9S6Kt
- GvO3Rdd2x+wWYvevizvdh1k0d5v82FdipMEOmTHVn0Y2QWB4eQZFi9gHscIYu6paPuOM/iNWQ98
- ZsVZjaNdlZmmtzQb0ic+fPaUoFD13DshD+uslaTLubxN9qGUMMXF6svjEIuGhrX5cTHKpU9rU8r
- VX1u+tet4RmGzu+R2AvSKsLXgnqwQJRyJwX/2FDsoQ+yvWZkLzAa5LNPo2nC+8VlO9AZCaf0QmA
- 5cu7ouIWx046fKg==
+ bh=maIrWP2aeAL1bVlqT311Hc3rDrh/onOO2bEBPaJmfW0=;
+ b=owEBbQKS/ZANAwAKAdro4Ql1lpzlAcsmYgBqKdODFupu2s6SObThDWLDAl3ALhADpxZtSeDGD
+ WyC00YHRWaJAjMEAAEKAB0WIQSHqb2TP4fGBtJ29i3a6OEJdZac5QUCainTgwAKCRDa6OEJdZac
+ 5aUoD/sGJEKN2epb1lV/2dZeXmL4Hkz6WXr/JA91/VmhE7FWQCbr8dY6ye0+mfwgnyj84/CefvX
+ wZYi05h+LoC1BLxdmExn7otJ1uCYL73LTSZmdurxCS+8BT1NfenptbLnZsm4XMZafJ1lqpIk9WB
+ 0JTBcZtSAK7AmJCJ4AmE0aPynxFWm4H2YC4qF9AbRqP+rdjIuNCBLA41Nxs1ONvEeD8GbyHV3a9
+ WVNLv8HYE30aJasAjawU0oIuHdv075Y5ldOULSQ8HownZYqReppZYOoRGzcYe2B9/rE/ZV2BfbS
+ E5HCmd1B/SrPP/ZlYxpi7PXHVe6F2XnHyS/vK7r0D3g8C8gC5mvd0jLTULvQoaB6WJtcTUssdM6
+ VrMbHLhhAX+3tVH0pXGWrvISiD9Dh2fLIXw46gaGxNctcLntq8jLgr4sqxquFgDj6HmSwuhJQrd
+ 54qLtH0k3MUNPJzLuSpB0LkVjC06TQCbP/rw80sXQpSExFV8uajmmqswBj4bJheC/4Pi4X+6Xiq
+ vw0ub5iMHcmhqA9jY1/GNExg8VBeKmn9YR+FIZ5c4bYBcpmqMSBQqNtPavGnIlbUUMyThA3O5up
+ YBLcySY5XxbhKqE2DO/7GXabSjBjXFh+ln0+XnitsMg9lOCJXe2tiZ+G0b6Kl/LDIBI692XbFM3
+ 6yUz8RcjiB+Rm4g==
 X-Developer-Key: i=marcandre.lureau@redhat.com; a=openpgp;
  fpr=87A9BD933F87C606D276F62DDAE8E10975969CE5
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.93
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.12
 Received-SPF: pass client-ip=170.10.129.124;
  envelope-from=marcandre.lureau@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
@@ -110,9 +110,16 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, 10 Jun 2026 13:33:55 +0100, Daniel P. Berrangé <berrange@redhat.com> wrote:
-> This eliminates a use of monitor_is_qmp() from the QMP coroutine
-> dispatch path.
+On Wed, 10 Jun 2026 13:34:01 +0100, Daniel P. Berrangé <berrange@redhat.com> wrote:
+> The monitor_is_hmp_non_interactive method is used by
+> monitor_suspend and monitor_resume, to make them a no-op
+> if the HMP does not use readline.
+> 
+> There are only a handful of callers of suspend/resume and
+> they can be made to skip the call when readline is not
+> present.
+> 
+> [...]
 
 Reviewed-by: Marc-André Lureau <marcandre.lureau@redhat.com>
 
