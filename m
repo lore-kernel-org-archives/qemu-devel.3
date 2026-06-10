@@ -4,122 +4,97 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D7FA8CD8CB2
-	for <qemu-devel@archiver.kernel.org>; Tue,  9 Jun 2026 23:21:52 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2AD55CD8CAD
+	for <qemu-devel@archiver.kernel.org>; Wed, 10 Jun 2026 00:18:50 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wX5lD-0000dC-CN; Tue, 09 Jun 2026 19:21:31 -0400
+	id 1wX6e9-0004L9-4J; Tue, 09 Jun 2026 20:18:20 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1wX5lC-0000ae-3c
- for qemu-devel@nongnu.org; Tue, 09 Jun 2026 19:21:30 -0400
-Received: from smtp-out1.suse.de ([195.135.223.130])
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1wX6e6-0004Ke-Su
+ for qemu-devel@nongnu.org; Tue, 09 Jun 2026 20:18:14 -0400
+Received: from mail-pl1-x629.google.com ([2607:f8b0:4864:20::629])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1wX5l9-00023o-U0
- for qemu-devel@nongnu.org; Tue, 09 Jun 2026 19:21:29 -0400
-Received: from imap1.dmz-prg2.suse.org (imap1.dmz-prg2.suse.org
- [IPv6:2a07:de40:b281:104:10:150:64:97])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
- (No client certificate requested)
- by smtp-out1.suse.de (Postfix) with ESMTPS id 1A9346A932;
- Tue,  9 Jun 2026 23:21:25 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1781047286; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=JiQT306ZsYyNGqJaI9bEIqWY1UM6yQRkTaUZ21idcrI=;
- b=uZUMebOz6fmuBtGm4beGVRFsWS35xiPAbgK2cXLG+Mx/vGxpeQSLKLo+mIj1j/fo0DclS5
- EZHST8MfIGz9tyA4LqGsmC1QOajSNUbFmPHSHi944y8iBcVXsR3Y96vVpg9wCbvm+6Mm2f
- 1pFBzIS90NOjD/V+s0xpPT0aI4qCdnM=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1781047286;
- h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=JiQT306ZsYyNGqJaI9bEIqWY1UM6yQRkTaUZ21idcrI=;
- b=dUAVzg8XNicLTL76NYd8UGWBxn7tT52ReSh/PUsfp0lbQWpOdhWGV8uin6E+aJsH6UKyYx
- sBTVqne3dU+SR4DA==
-Authentication-Results: smtp-out1.suse.de;
- dkim=pass header.d=suse.de header.s=susede2_rsa header.b=Qz+TqjoA;
- dkim=pass header.d=suse.de header.s=susede2_ed25519 header.b="NwJX/2NT"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1781047285; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=JiQT306ZsYyNGqJaI9bEIqWY1UM6yQRkTaUZ21idcrI=;
- b=Qz+TqjoAjNVDjlSqpeKBz2g5oJIcy3joY/Vk4y7GaKxBoo6yYt09txahPu2XWL0QbkI17y
- +L44wCp8SjwAA2uWMK7yj/CKVgShQbw+fvEJYfCKkU7Otr0lRYnHM8YRLuH98veKcuG3WC
- HDjiOlZ/R+A3Q4U6FJbLNf0MSNrpzUE=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1781047285;
- h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=JiQT306ZsYyNGqJaI9bEIqWY1UM6yQRkTaUZ21idcrI=;
- b=NwJX/2NT2TV3d1bL++Ya8/Epc6ihOPUUL1Mro1PrXYsZ/GsRRmQexP8p3mLjMT+MkbGRrb
- rpJrYgFTZMVZH4Cw==
-Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
- (No client certificate requested)
- by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id AACA1779A7;
- Tue,  9 Jun 2026 23:21:24 +0000 (UTC)
-Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
- by imap1.dmz-prg2.suse.org with ESMTPSA id 2AEoHvSfKGoMUAAAD6G6ig
- (envelope-from <farosas@suse.de>); Tue, 09 Jun 2026 23:21:24 +0000
-From: Fabiano Rosas <farosas@suse.de>
-To: Peter Xu <peterx@redhat.com>, qemu-devel@nongnu.org
-Cc: qemu-arm@nongnu.org, =?utf-8?Q?C=C3=A9dric?= Le Goater <clg@redhat.com>,
- Philippe
- =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@mailo.com>, =?utf-8?Q?Daniel_P_=2E?=
- =?utf-8?Q?_Berrang=C3=A9?=
- <berrange@redhat.com>, Vladimir Sementsov-Ogievskiy
- <vsementsov@yandex-team.ru>, Peter Maydell <peter.maydell@linaro.org>, "Dr
- . David Alan Gilbert" <dave@treblig.org>, Eric Blake <eblake@redhat.com>,
- Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>, Peter Xu
- <peterx@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>, Kevin Wolf
- <kwolf@redhat.com>, Sana Sharma <sansshar@redhat.com>, =?utf-8?Q?Marc-And?=
- =?utf-8?Q?r=C3=A9?= Lureau
- <marcandre.lureau@redhat.com>, Juraj Marcin <jmarcin@redhat.com>,
- qemu-rust@nongnu.org, Markus Armbruster <armbru@redhat.com>, Mark
- Cave-Ayland <mark.caveayland@nutanix.com>
-Subject: Re: [PATCH v2 08/10] qom: Add object_property_add_*_ptr_def()
-In-Reply-To: <20260609172514.2037645-9-peterx@redhat.com>
-References: <20260609172514.2037645-1-peterx@redhat.com>
- <20260609172514.2037645-9-peterx@redhat.com>
-Date: Tue, 09 Jun 2026 20:21:18 -0300
-Message-ID: <875x3r5mhd.fsf@suse.de>
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1wX6e5-0007G7-BJ
+ for qemu-devel@nongnu.org; Tue, 09 Jun 2026 20:18:14 -0400
+Received: by mail-pl1-x629.google.com with SMTP id
+ d9443c01a7336-2c0c2d792c8so41335755ad.1
+ for <qemu-devel@nongnu.org>; Tue, 09 Jun 2026 17:18:12 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1781050691; x=1781655491; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:content-language:from
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=KgyRmT6XiT2z2kerw8LLABkwWb8/4HFcILLuqJsOx4M=;
+ b=o4P9ms+ksTc3lSw8nzHSXG+qXiikuMsCnNRzVND70Y/SHoTmLGLfTdLUZjoo9u5b72
+ wAtt0pbDb1wsywDd27s3CvmGaDp6w4q+WSYSvpsI74Y4S7Xo6LY1CNo70+OCctQ21aIo
+ IQloYpDbOpLU7TIZU2Bt/MDKHYBVo7PfOdae+q3AlNG4UW+c2bHF6XjnwO0iYN4sk5/0
+ 1Sdu8LBAr5+RFXQnnYutojT/ZJlJGJn5DY2+CeXnbpJMtpBW0+/9plPmtN2vep9Rf94n
+ 8sv2Szs3++Fl9DrYaXhQYk6jJ9PLkXE0hMFhm+YuTtO+ojx/xJQ2vBWOqtOWfwz7TaTv
+ VGvA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1781050691; x=1781655491;
+ h=content-transfer-encoding:in-reply-to:content-language:from
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=KgyRmT6XiT2z2kerw8LLABkwWb8/4HFcILLuqJsOx4M=;
+ b=q4t9R59tOjMGNxe7vcGZuExmaxNedNMwg7R5cdoVc7At0wHiZ5NHih8UUQMC+SFo8J
+ v74Cvrr6zrTROEvlx42ab2d81p35QsotzLGHfMiYgVsHhvWJXYIarHa64qyh0TAJN/LT
+ YenYoCO2AFmGZkw9uxEvZv65vEnDx7Lk56GiRViuLaE9QBt5ALyyFtng0h7nhVahr1xB
+ 97li4GrfCRDWnnlguTA7nfwBHGJsFp6wLQZ5OEf7+GESFZWVAVvk3MJ+Lh34Egh5hPKq
+ itdriOm0P5vLsemZpBfQv+3rPFj61Hq6i4iGiAa1N0kAGBp8iXc0CpAotC92pWi6zs05
+ cFrg==
+X-Forwarded-Encrypted: i=1;
+ AFNElJ/hA+H7H/wBwqNLv1mZwkpsv8M/ICh4m+/BPKcgDM+pzidNGacXkurgxeSujGRPX27lMbUB5f+Lxi17@nongnu.org
+X-Gm-Message-State: AOJu0Ywiu4DySedOWiLBUChey/tM/pUDKWgUMwVO9HUQ7h7oCuCOuKxw
+ 8EN54gbb87LlSkQKet3KS1aknKdwoDurZMyEIwUXHSSbl/WeZkS7SefFqqkbFwn13SQ=
+X-Gm-Gg: Acq92OG+qqY5A8ACA4cUgaHlpUy1/39a3L/fyHnu8yQj6O9ky41bLRh7ludTnghmVT4
+ TtQhse3DV87HfOdwzGQWKKx2jY1iJt0BuhmmQzOCUJvlPPqv6XvIZCybTjwZvTTXcZJ5xTyO6Ik
+ F9+qLDrunY6DBUFx4pfNQYNptG3oLXCVcDPvUS8xUNQqXVK1/QjPt6XZozEXllac5EDavrHLO4A
+ Ed/fU+gfb3ai3jMIoC/uSTCALUGMNEW54n52h30wjBaiksrj1wuxUmFaJPEILkN32N4POPeEIfy
+ kk0Qmtboj+rBldIZUQIUd+AVgTDHVKFALnMOYETiM5R8RZBhlN8kI4a1vJS1+/SiCeiW74zYtQ9
+ 5Wwmfrw5qX/840qbXltKZj/9kIKni7R0xzUC3ytgFB3uN3XDsuJHt8mghH8dAMYqHWxii60x3Dx
+ 4MULEbGxu8kPUl7slUDt+pUL7EaM4PVy0hh+3FyLjMmMH/gwk=
+X-Received: by 2002:a17:903:a46:b0:2c0:c37d:dfc1 with SMTP id
+ d9443c01a7336-2c1e820e316mr172532735ad.34.1781050691446; 
+ Tue, 09 Jun 2026 17:18:11 -0700 (PDT)
+Received: from [192.168.0.4] ([71.212.142.33])
+ by smtp.gmail.com with ESMTPSA id
+ d9443c01a7336-2c166396fa9sm226229245ad.66.2026.06.09.17.18.10
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Tue, 09 Jun 2026 17:18:10 -0700 (PDT)
+Message-ID: <3d519b95-595a-4a5e-97cb-6116eb577e09@linaro.org>
+Date: Tue, 9 Jun 2026 17:18:08 -0700
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Rspamd-Action: no action
-X-Spamd-Result: default: False [-4.51 / 50.00]; BAYES_HAM(-3.00)[100.00%];
- NEURAL_HAM_LONG(-1.00)[-1.000];
- R_DKIM_ALLOW(-0.20)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
- NEURAL_HAM_SHORT(-0.20)[-1.000]; MIME_GOOD(-0.10)[text/plain];
- MX_GOOD(-0.01)[]; ARC_NA(0.00)[]; RCVD_VIA_SMTP_AUTH(0.00)[];
- RCVD_TLS_ALL(0.00)[]; MISSING_XM_UA(0.00)[];
- RCPT_COUNT_TWELVE(0.00)[20]; MIME_TRACE(0.00)[0:+];
- TO_DN_SOME(0.00)[]; FUZZY_RATELIMITED(0.00)[rspamd.com];
- MID_RHS_MATCH_FROM(0.00)[];
- RBL_SPAMHAUS_BLOCKED_OPENRESOLVER(0.00)[2a07:de40:b281:104:10:150:64:97:from]; 
- FROM_EQ_ENVFROM(0.00)[]; FROM_HAS_DN(0.00)[];
- RECEIVED_SPAMHAUS_BLOCKED_OPENRESOLVER(0.00)[2a07:de40:b281:106:10:150:64:167:received];
- RCVD_COUNT_TWO(0.00)[2]; TO_MATCH_ENVRCPT_ALL(0.00)[];
- DBL_BLOCKED_OPENRESOLVER(0.00)[imap1.dmz-prg2.suse.org:helo,imap1.dmz-prg2.suse.org:rdns,suse.de:email,suse.de:dkim,suse.de:mid];
- DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
- DKIM_TRACE(0.00)[suse.de:+]
-X-Rspamd-Server: rspamd2.dmz-prg2.suse.org
-X-Rspamd-Queue-Id: 1A9346A932
-Received-SPF: pass client-ip=195.135.223.130; envelope-from=farosas@suse.de;
- helo=smtp-out1.suse.de
-X-Spam_score_int: -43
-X-Spam_score: -4.4
-X-Spam_bar: ----
-X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 21/27] tests/tcg/aarch64: add user tests
+To: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>, qemu-devel@nongnu.org
+Cc: Thomas Huth <thuth@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>,
+ Manos Pitsidianakis <manos.pitsidianakis@linaro.org>,
+ =?UTF-8?Q?Daniel_P_=2E_Berrang=C3=A9?= <berrange@redhat.com>,
+ =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ qemu-arm@nongnu.org, =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ Alexandre Iooss <erdnaxe@crans.org>, Peter Maydell
+ <peter.maydell@linaro.org>, Gustavo Romero <gustavo.romero@linaro.org>
+References: <20260609214745.772536-1-pierrick.bouvier@oss.qualcomm.com>
+ <20260609214745.772536-22-pierrick.bouvier@oss.qualcomm.com>
+From: Richard Henderson <richard.henderson@linaro.org>
+Content-Language: en-US
+In-Reply-To: <20260609214745.772536-22-pierrick.bouvier@oss.qualcomm.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::629;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x629.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_MED=-2.3, SPF_HELO_NONE=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -136,133 +111,21 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Peter Xu <peterx@redhat.com> writes:
+On 6/9/26 14:47, Pierrick Bouvier wrote:
+> +++ b/tests/tcg/aarch64/meson.build
+> @@ -0,0 +1,213 @@
+> +cc = find_program('aarch64-linux-gnu-gcc', required : false)
+> +
+> +if not cc.found()
+> +  subdir_done()
+> +endif
 
-> Add sister functions for existing pointer versions, to make it even easier
-> to use by:
->
-> - always make properties to be rw-able
-> - allowing to specify default values
-> - no retcode needed (assert on failure, always)
->
-> Signed-off-by: Peter Xu <peterx@redhat.com>
-> ---
->  include/qom/object-property-ptr.h | 28 +++++++++++++
->  qom/object-property-ptr.c         | 67 +++++++++++++++++++++++++++++++
->  2 files changed, 95 insertions(+)
->
-> diff --git a/include/qom/object-property-ptr.h b/include/qom/object-property-ptr.h
-> index be467c64af..ecd6f7819b 100644
-> --- a/include/qom/object-property-ptr.h
-> +++ b/include/qom/object-property-ptr.h
-> @@ -131,4 +131,32 @@ object_property_add_size_ptr(Object *obj, const char *name,
->                               const uint64_t *v,
->                               ObjectPropertyFlags flags);
->  
-> +/*
-> + * Below are sister helpers of above, except that:
-> + *
-> + * (1) nothing is returned
-> + * (2) always make the property to be both readable and writeable
-> + * (3) allow setting default value
-> + *
-> + * Please refer to the sister functions for the documentation.
-> + */
-> +void
-> +object_property_add_bool_ptr_def(Object *obj, const char *name,
-> +                                 const bool *v, bool def);
-> +void
-> +object_property_add_uint8_ptr_def(Object *obj, const char *name,
-> +                                  const uint8_t *v, uint8_t def);
-> +void
-> +object_property_add_uint16_ptr_def(Object *obj, const char *name,
-> +                                   const uint16_t *v, uint16_t def);
-> +void
-> +object_property_add_uint32_ptr_def(Object *obj, const char *name,
-> +                                   const uint32_t *v, uint32_t def);
-> +void
-> +object_property_add_uint64_ptr_def(Object *obj, const char *name,
-> +                                   const uint64_t *v, uint64_t def);
-> +void
-> +object_property_add_size_ptr_def(Object *obj, const char *name,
-> +                                 const uint64_t *v, uint64_t def);
-> +
->  #endif
-> diff --git a/qom/object-property-ptr.c b/qom/object-property-ptr.c
-> index 21ceb2510d..ae9081d2d8 100644
-> --- a/qom/object-property-ptr.c
-> +++ b/qom/object-property-ptr.c
-> @@ -325,3 +325,70 @@ object_property_add_size_ptr(Object *obj, const char *name,
->      return object_property_add(obj, name, "size",
->                                 getter, setter, NULL, (void *)v);
->  }
-> +
-> +void
-> +object_property_add_bool_ptr_def(Object *obj, const char *name,
-> +                                 const bool *v, bool def)
-> +{
-> +    ObjectProperty *prop;
-> +
-> +    prop = object_property_add_bool_ptr(obj, name, v,
-> +                                        OBJ_PROP_FLAG_READWRITE);
-> +    object_property_set_default_bool(prop, def);
-> +}
-> +
-> +
-> +void
-> +object_property_add_uint8_ptr_def(Object *obj, const char *name,
-> +                                  const uint8_t *v, uint8_t def)
-> +{
-> +    ObjectProperty *prop;
-> +
-> +    prop = object_property_add_uint8_ptr(obj, name, v,
-> +                                         OBJ_PROP_FLAG_READWRITE);
-> +    object_property_set_default_uint(prop, def);
-> +}
-> +
-> +void
-> +object_property_add_uint16_ptr_def(Object *obj, const char *name,
-> +                                   const uint16_t *v, uint16_t def)
-> +{
-> +    ObjectProperty *prop;
-> +
-> +    prop = object_property_add_uint16_ptr(obj, name, v,
-> +                                          OBJ_PROP_FLAG_READWRITE);
-> +    object_property_set_default_uint(prop, def);
-> +}
-> +
-> +void
-> +object_property_add_uint32_ptr_def(Object *obj, const char *name,
-> +                                   const uint32_t *v, uint32_t def)
-> +{
-> +    ObjectProperty *prop;
-> +
-> +    prop = object_property_add_uint32_ptr(obj, name, v,
-> +                                          OBJ_PROP_FLAG_READWRITE);
-> +    object_property_set_default_uint(prop, def);
-> +}
-> +
-> +void
-> +object_property_add_uint64_ptr_def(Object *obj, const char *name,
-> +                                   const uint64_t *v, uint64_t def)
-> +{
-> +    ObjectProperty *prop;
-> +
-> +    prop = object_property_add_uint64_ptr(obj, name, v,
-> +                                          OBJ_PROP_FLAG_READWRITE);
-> +    object_property_set_default_uint(prop, def);
-> +}
-> +
-> +void
-> +object_property_add_size_ptr_def(Object *obj, const char *name,
-> +                                 const uint64_t *v, uint64_t def)
-> +{
-> +    ObjectProperty *prop;
-> +
-> +    prop = object_property_add_size_ptr(obj, name, v,
-> +                                        OBJ_PROP_FLAG_READWRITE);
-> +    object_property_set_default_uint(prop, def);
-> +}
+The primary thing we lose here is the ability to use containers for the cross-compile.
 
-Reviewed-by: Fabiano Rosas <farosas@suse.de>
+We detect cross-compilers in configure.  We currently write them to 
+build/tests/tcg/${target}/config-target.mak.  It's not very meson to parse a file like 
+that, but I imagine we could use scripts or meson variables somehow.
+
+
+r~
 
