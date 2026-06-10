@@ -4,54 +4,54 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 35482CD98C7
-	for <qemu-devel@archiver.kernel.org>; Wed, 10 Jun 2026 21:17:38 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7A90CCD98C5
+	for <qemu-devel@archiver.kernel.org>; Wed, 10 Jun 2026 21:17:40 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wXQIA-0001CO-Om; Wed, 10 Jun 2026 17:16:54 -0400
+	id 1wXQII-0002Ky-Mv; Wed, 10 Jun 2026 17:17:02 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1wXQI6-0000zy-Me
- for qemu-devel@nongnu.org; Wed, 10 Jun 2026 17:16:51 -0400
+ id 1wXQIE-0001fu-25
+ for qemu-devel@nongnu.org; Wed, 10 Jun 2026 17:16:58 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1wXQI5-0007MK-7H
- for qemu-devel@nongnu.org; Wed, 10 Jun 2026 17:16:50 -0400
+ id 1wXQIC-0007Qm-F8
+ for qemu-devel@nongnu.org; Wed, 10 Jun 2026 17:16:57 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1781126208;
+ s=mimecast20190719; t=1781126215;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=VvEPChZ155x1NJdWQu98uRjmdrKZGF6eCimVuLDplAQ=;
- b=g0iVvckDj1//Qd6CvNENj1kG76c7hk5WRIdPWV7I2Nlq7nSqxHunvd0/MlGMlj8t68ZqGF
- GqGjZrBP7DNQC/qnwJVxRW1BVgCG5bW1nbCwDx4S5/wKwdhLIH+UHuF4MWoRKvr5wi2dMb
- 8h8PZauzIWuEChUj6dI6qi1AHh6M/88=
+ bh=kwrB2yeRKJ5/wwIGnb74b2F5/Kib9gybbFLtk385kIQ=;
+ b=Sf5zifva18ATJbS6UZPxqKS5wYKGe6rcnBsnDIZi1dg4efBNYbOsuF1kKM3nIvpEmCreOi
+ uu9NcPuP+Ep08SknU0h0LbDBfZjzRnDN8eSjvKH5V97fIfD8YI9ohdLoM9Dg/wvnM1La6T
+ 1paXrSUMTerqtmJBYEilvQDZnrD4Oek=
 Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-477-O9N25UDwNdKa4dA0OiRP4Q-1; Wed,
- 10 Jun 2026 17:16:44 -0400
-X-MC-Unique: O9N25UDwNdKa4dA0OiRP4Q-1
-X-Mimecast-MFC-AGG-ID: O9N25UDwNdKa4dA0OiRP4Q_1781126203
-Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-81-hrM2YSNgPo6nNW2Wwd5GJA-1; Wed,
+ 10 Jun 2026 17:16:50 -0400
+X-MC-Unique: hrM2YSNgPo6nNW2Wwd5GJA-1
+X-Mimecast-MFC-AGG-ID: hrM2YSNgPo6nNW2Wwd5GJA_1781126209
+Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
  by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 5592C18601F6; Wed, 10 Jun 2026 21:16:43 +0000 (UTC)
+ id 21D60186D577; Wed, 10 Jun 2026 21:16:49 +0000 (UTC)
 Received: from localhost (unknown [10.44.24.21])
- by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 0DA761954B06; Wed, 10 Jun 2026 21:16:41 +0000 (UTC)
+ by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id DE98B3008B35; Wed, 10 Jun 2026 21:16:47 +0000 (UTC)
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
-Subject: Re: [PATCH v2 32/35] qom: add trace events for user creatable
- create/delete APIs
+Subject: Re: [PATCH v2 33/35] monitor: add support for auto-deleting
+ monitors upon close
 From: marcandre.lureau@redhat.com
 To: =?utf-8?q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>
 Cc: qemu-devel@nongnu.org, 
@@ -62,29 +62,29 @@ Cc: qemu-devel@nongnu.org,
  Paolo Bonzini <pbonzini@redhat.com>, 
  "Dr. David Alan Gilbert" <dave@treblig.org>, 
  =?utf-8?q?Philippe_Mathieu-Daud=C3=A9?= <philmd@mailo.com>
-In-Reply-To: <20260610123415.2883603-33-berrange@redhat.com>
+In-Reply-To: <20260610123415.2883603-34-berrange@redhat.com>
 References: <20260610123415.2883603-1-berrange@redhat.com>
- <20260610123415.2883603-33-berrange@redhat.com>
+ <20260610123415.2883603-34-berrange@redhat.com>
 Date: Thu, 11 Jun 2026 01:13:24 +0400
-Message-Id: <178112600402.209622.3204230739046437579.b4-review@b4>
-X-Developer-Signature: v=1; a=openpgp-sha256; l=214;
+Message-Id: <178112600406.209622.17677163019319157418.b4-review@b4>
+X-Developer-Signature: v=1; a=openpgp-sha256; l=800;
  i=marcandre.lureau@redhat.com; h=from:subject:message-id;
- bh=7SjlH1bQz2/9Il7ARFALmdI5RJ+r1oYDLUNVO6gd+Qk=;
- b=owEBbQKS/ZANAwAKAdro4Ql1lpzlAcsmYgBqKdOGyl18+ynDFZ8in/5XI1hC+9m+gA6wVX5iB
- Jmvvon8Ip+JAjMEAAEKAB0WIQSHqb2TP4fGBtJ29i3a6OEJdZac5QUCainThgAKCRDa6OEJdZac
- 5VxTD/wMzK0hQwP6QK/9v0i0NgJprV6LN/Ow+ZtIqnrJtq0LdrjUsMVN7pLPmKfpJuMHXZr9Qav
- P1NL05YDiUbyMvPMITdIBxkhH5M+m9zeJfk0IWPney/A5/I0DCbkSXf+y8KsJFj/ewA4TVgHwg9
- 6q/P8IdSf9sL5YKZbp/3Rcj9JNWuRYWjwU3cmWu6vGij86qeTEnK+pATcO8sfWBuwItb5tYLrZT
- oNA309gRpnz4MBfRSzgbQQltDiVdwoVNJt2H+rpiUMQyk9QCgaR2Gp3OQ6WPrYgIJXyoq65oTe7
- jMiQGLpb9lR4WqrTX0l2S7u4twu+sGWZRsvhjfuvn+z7cRX6MEu0V9cvn9xKH/6f2tox4w/7j2J
- NBDb+nKjmEqv4is0n+j4Y0I+r5tSbJ12OB/JtBOIUEySrcybM7QIJLqTNIYV3XN/t62qFUPRuGB
- pkWfmJ5ZrQWsVnQj+QPRAUQ3sG9AqcfE/HZsEnaDmIsOUYoMgYH8IQdq9bVzg6Avs027pUvbJvT
- jYf573M6IIqy89S0W7GcOj75N2eOZ0I9g4URrFSC6OfA82eXvOTqCJqH6JuqwK7H10T0yyV6iHT
- 5+Ju451n+LG5dAvev010uRibqhIVpconXZ3B1quoq8nObxN5iNHiL7UA8lFrwvbthnFupGYnC6N
- YKLZXXfzlwCbRbQ==
+ bh=TCD0RzTj9XvwcqaUmQI/2b2danoARt1XMV+8Gxk6D/U=;
+ b=owEBbQKS/ZANAwAKAdro4Ql1lpzlAcsmYgBqKdOGczlD6K56S2w5xEBPyStet17ikT3Op1FsR
+ elemTXshkaJAjMEAAEKAB0WIQSHqb2TP4fGBtJ29i3a6OEJdZac5QUCainThgAKCRDa6OEJdZac
+ 5YJqD/0eTS06mE2Vh9r4Zfl4SIxCth0zGribAlKYC0H3HNVLDFlHIBdEvfndHVIs/YRCD+IG0xl
+ hRcXq4Ja4LskbU6vdCbGOM/wUXxYvMxlalzKrWwP3kzwqVFFB9HXgPcl27EVhjvTNGpWyosXNul
+ eR9G/E7Y1w5LeX4aGuxaUUEtbB2GcDq1K6PWT5UjanqNB/DXoor11e/JGG0Q3l/dSU91zvcBnGT
+ G3/5cy5GAsqarb50gOresVJ5m511ObI/hohbi/lJo3V287vUkKJOOY/4g1l50h2pm9RIFr82AwX
+ F0CSNoV+YLR36yxtjYIvOR/0+QQY9dbXnN+vy75b6jOt0YO1UW+xqN6l4ig12PhErHU2B+QhKL0
+ /Vb2Lndqx2O0AoS5J5RHtojHsK5IPAci4OTR2gVIRlm9GmoelOMbNBArZa7MNTlN6nL0bnTshuJ
+ 3XoxVGpJjZRdpI+rbxxtV66IyICbgcOR8AauUsC3wiwNZ+2pIr1yfZ6ZiINxtN8bqj4SmZupWQk
+ EY1Atu9+e1+zs4sRmCwlYYjp2cu6rm30JkXr0p7bA8QkpCivxlo8skshtfqkb7MQVXp4DSBlxD9
+ 47jjqB1Hg1lLUsur6A8TsqcZwkUTa4ZM88b23rfByaRrnyujNBn82rsHTOxK1GeTRab75Uk+Pqx
+ usqaW7HW8TqOo0A==
 X-Developer-Key: i=marcandre.lureau@redhat.com; a=openpgp;
  fpr=87A9BD933F87C606D276F62DDAE8E10975969CE5
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.12
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
 Received-SPF: pass client-ip=170.10.129.124;
  envelope-from=marcandre.lureau@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
@@ -110,11 +110,21 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, 10 Jun 2026 13:34:12 +0100, Daniel P. Berrangé <berrange@redhat.com> wrote:
-> 
+On Wed, 10 Jun 2026 13:34:13 +0100, Daniel P. Berrangé <berrange@redhat.com> wrote:
+> diff --git a/tests/functional/generic/test_monitor_hotplug.py b/tests/functional/generic/test_monitor_hotplug.py
+> index 03087faafc3..f7d72a77c2e 100755
+> --- a/tests/functional/generic/test_monitor_hotplug.py
+> +++ b/tests/functional/generic/test_monitor_hotplug.py
+> @@ -118,6 +124,45 @@ def test_self_removal(self):
+> [ ... skip 30 lines ... ]
+> +        for i in range(10):
+> +            cdevs = [c["label"] for c in self.vm.cmd('query-chardev')]
+> +            if 'hotplug-chr' not in cdevs:
+> +                break
+> +            # Sleep upto 1/2 second to vary the races
+> +            time.sleep(random.random() / 0.5)
 
-
-Reviewed-by: Marc-André Lureau <marcandre.lureau@redhat.com>
+/2 or *0.5
 
 -- 
 Marc-André Lureau <marcandre.lureau@redhat.com>
