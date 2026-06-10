@@ -4,56 +4,56 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6A911CD8CB9
-	for <qemu-devel@archiver.kernel.org>; Wed, 10 Jun 2026 10:59:06 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id DD8C8CD8CB9
+	for <qemu-devel@archiver.kernel.org>; Wed, 10 Jun 2026 10:59:22 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wXGcv-00025q-LB; Wed, 10 Jun 2026 06:57:41 -0400
+	id 1wXGdy-0004YT-HG; Wed, 10 Jun 2026 06:58:46 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1wXGcu-00025f-MB
- for qemu-devel@nongnu.org; Wed, 10 Jun 2026 06:57:40 -0400
+ id 1wXGdw-0004T3-FD
+ for qemu-devel@nongnu.org; Wed, 10 Jun 2026 06:58:44 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1wXGcr-0004PW-UT
- for qemu-devel@nongnu.org; Wed, 10 Jun 2026 06:57:40 -0400
+ id 1wXGdt-0007N0-Gv
+ for qemu-devel@nongnu.org; Wed, 10 Jun 2026 06:58:44 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1781089057;
+ s=mimecast20190719; t=1781089120;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=iigtK5jQySpzmNZYscoufMj5Qgow6LaU8KkOX7BSx7I=;
- b=hiBU56jUWk1ZHt4lAPIj3pAqRhcX38kogYtgUP65kjfITqmhv8M6nZPXgNcR4duc9yzPfE
- lhDs6bHFR/UZ4bCxgpkLZtN1pOCWiJ7ukvqkufMrftlkire6hQDt0UXMQbkUR388YQIa3D
- K5E8wuiQc0WiGYkgPhxojKs0Ds/Zu5A=
-Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
+ bh=lginq05kULLa0WOrt+nJYrmjrMyTghx9mx56okfUJWI=;
+ b=i1UWofO7S+QfxIIZ13HBH+rk6Ji7VdcB30naB0TWt3g3J6vpXrK/aht8WNOH/FjukUiWHT
+ 9IB7MDx7jd1spJXHe9Rw1Df0XdsG+9SAA3EqgfoUXdaDGne+tyH6CYSbbXoM6oupe9vagP
+ n9EOXvLIhj11/uXBjVcYNFJ0zVF3Gv0=
+Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-621-MYja2EbQPo-E4FGswIDG6w-1; Wed,
- 10 Jun 2026 06:57:35 -0400
-X-MC-Unique: MYja2EbQPo-E4FGswIDG6w-1
-X-Mimecast-MFC-AGG-ID: MYja2EbQPo-E4FGswIDG6w_1781089054
-Received: from mx-prod-int-10.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-10.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.95])
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-605-Nf_PqFIqNKKuTM2MkA_xsw-1; Wed,
+ 10 Jun 2026 06:58:37 -0400
+X-MC-Unique: Nf_PqFIqNKKuTM2MkA_xsw-1
+X-Mimecast-MFC-AGG-ID: Nf_PqFIqNKKuTM2MkA_xsw_1781089115
+Received: from mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.93])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id CEC56180ACD4; Wed, 10 Jun 2026 10:57:33 +0000 (UTC)
+ by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id C7BD119540CC; Wed, 10 Jun 2026 10:58:35 +0000 (UTC)
 Received: from localhost (unknown [10.44.24.21])
- by mx-prod-int-10.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id DA693414; Wed, 10 Jun 2026 10:57:30 +0000 (UTC)
+ by mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id 8D5B1180057F; Wed, 10 Jun 2026 10:58:34 +0000 (UTC)
 From: =?utf-8?q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>
-Date: Wed, 10 Jun 2026 14:56:45 +0400
-Subject: [PATCH v2 03/22] hw/i386/vmmouse: convert to QemuInputHandler API
+Date: Wed, 10 Jun 2026 14:56:55 +0400
+Subject: [PATCH v2 13/22] hw/input: keep QemuInputHandlerState in stellaris
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
-Message-Id: <20260610-ui-input-v2-3-f68452dd6a22@redhat.com>
+Message-Id: <20260610-ui-input-v2-13-f68452dd6a22@redhat.com>
 References: <20260610-ui-input-v2-0-f68452dd6a22@redhat.com>
 In-Reply-To: <20260610-ui-input-v2-0-f68452dd6a22@redhat.com>
 To: qemu-devel@nongnu.org
@@ -66,24 +66,24 @@ Cc: "Dr. David Alan Gilbert" <dave@treblig.org>,
  Jan Kiszka <jan.kiszka@web.de>, Peter Maydell <peter.maydell@linaro.org>, 
  qemu-arm@nongnu.org, Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>, 
  qemu-ppc@nongnu.org, Thomas Huth <th.huth+qemu@posteo.eu>
-X-Developer-Signature: v=1; a=openpgp-sha256; l=6661;
+X-Developer-Signature: v=1; a=openpgp-sha256; l=2258;
  i=marcandre.lureau@redhat.com; h=from:subject:message-id;
- bh=ok6DMbp8gZxQxXT21UM+2t0aNckeLotDFTlxwjH+kCQ=;
- b=owEBbQKS/ZANAwAKAdro4Ql1lpzlAcsmYgBqKUL/9xzPdgdw6nJj494Guw2if4yXwoA2o1mAf
- GmJzEvJbfmJAjMEAAEKAB0WIQSHqb2TP4fGBtJ29i3a6OEJdZac5QUCailC/wAKCRDa6OEJdZac
- 5aIJD/97a2enkFQSGCELifRyVvyped06EiLzGV2L5JDamoaqZxgwKDL6ePU6XhzcWkaibyXUm5e
- JcDwvMker0H46nQMsmVvUXh+RS37CqIyUs0N53qecBAYSBnS8IXDJVqZa5Iw6fPapuedGC3YkqK
- dDs55bT6XXLqTtUhRLJ4gPbqIA63uA0nV7hDZHzBinFbaRjHMAwnUDAomeHgibbYdEqd1UjLkKT
- KBeH5ShWciRkgRnLtXrLKowRRe/kKRo61/kIzOzniNL0a5zyW1DAnYo3IsNtLGweKbVsAtx0HWr
- X4htAjk+VPHpYjYErqKZDltZzQROjOFr+POCJGqsObuNiwYi50ziouNIxST+y3VsOUW0ODK65Co
- OIMtQGHir1EwS3mnSVk7E9XPMurhUeMuZ+5fAK/TW0PwT0bEhjcsJbQXyrxy/qwhGHcco2ZOEhY
- vHs5A1nGQr2wI8TzIRsWPPPr3sSVhRo70SmG4daf7ipTgKpm8VBAU1HzVrfWthxH1ULnc0AJMwn
- Z0esMos7u07WuouPMmj5DHPikw4aJ0AB9jgEX5Tgv5c3JXzA0SYCJonb3nZUJcD8AgBupWocNJg
- pRUAcFFXze2nDx2QW14zMewhQAF9ttDgL2KldfE9E5jYjRXbbCtNv6ciwqU5FVdsEldUGhoatIb
- RGjFoljLYUf/1gg==
+ bh=31dKGmjQ0ucYg8DBaj+bqrZrM6KhG0cYtmReIw9YdWs=;
+ b=owEBbQKS/ZANAwAKAdro4Ql1lpzlAcsmYgBqKUMANB/B1BjoTx7etAXnd+O/dqm0zB8rk16v+
+ gQvRkPtKVCJAjMEAAEKAB0WIQSHqb2TP4fGBtJ29i3a6OEJdZac5QUCailDAAAKCRDa6OEJdZac
+ 5d41D/9ha7dg3IdRYdl7vrNGf5174Zn+VxVT+Ipo8GLzqKuTeABvkPNT8sueEPatQUJpvG7gzMb
+ hXBY3ysve+Mzzc/CiSmBqf02eW3Ej3kkxKeQ46AQDZsFVKltPpfhwctJXonLV1K6B2wSt93k59U
+ hi7TAYPd2YHRz5aiSd0IPIXEehFgAji1x6/m/XN9TWRSY/9KKKchyQrKRAIMY3A+RTcctkimMc/
+ W6sHQPHB3VOaZTzjKZQgx8pLH+NdEXF5oNbYU7dvZBrZR0irUjAPeDZXzOLwR7gnKLaH88no+Z1
+ KrdJ1td19/7oh24XYWiC6tTdxBo+T33YvtweEG5DeRmKCFyz6Ym8dnRozXrPYlRFLKPK5bYQiqE
+ HQSbnWyMdMuYBltM0zhCx+jR2zduaX8pbO08/WQL8rCxbX5OpemyH548c0MF9tU/Q+e2RCRbB8j
+ YI82kv8GiXSCONSxs6wOB5fWJ54LcXwpC6VmzSMWiG2/hDpmBgP5K6Y47oW3s0Y8Fjbvv7PPOyp
+ lSi3ExruBE/Fdl8P5gRvyeljjrcl+DcpIjReFwvshQx2iGTcsSnQnrXfH04h0+VIht2E/El0pPO
+ nnhyhkQLdzGg/A67ZJEt6DTHK8cwf8Y9qcYUn5UhkBkvXfJTIj17h5j8jafwXPuDUyXtklM5EFP
+ NTCfJX5qGVjbLNw==
 X-Developer-Key: i=marcandre.lureau@redhat.com; a=openpgp;
  fpr=87A9BD933F87C606D276F62DDAE8E10975969CE5
-X-Scanned-By: MIMEDefang 3.6 on 10.30.177.95
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.93
 Received-SPF: pass client-ip=170.10.129.124;
  envelope-from=marcandre.lureau@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
@@ -93,7 +93,7 @@ X-Spam_bar: --
 X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.445,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -109,192 +109,66 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Replace the legacy QEMUPutMouseEvent callback with a proper
-QemuInputHandler registration. This eliminates one of the two
-remaining users of the legacy input adapter in ui/input-legacy.c.
+Track the input handled state, and dispose it on unrealize.
+
+Also free some allocated fields during unrealize.
 
 Signed-off-by: Marc-André Lureau <marcandre.lureau@redhat.com>
 ---
- hw/i386/vmmouse.c    | 115 +++++++++++++++++++++++++++++++++++++--------------
- hw/i386/trace-events |   2 +-
- 2 files changed, 85 insertions(+), 32 deletions(-)
+ include/hw/input/stellaris_gamepad.h |  2 ++
+ hw/input/stellaris_gamepad.c         | 12 +++++++++++-
+ 2 files changed, 13 insertions(+), 1 deletion(-)
 
-diff --git a/hw/i386/vmmouse.c b/hw/i386/vmmouse.c
-index d54adb34a88..e289bce8e2e 100644
---- a/hw/i386/vmmouse.c
-+++ b/hw/i386/vmmouse.c
-@@ -68,7 +68,10 @@ struct VMMouseState {
-     uint16_t nb_queue;
-     uint16_t status;
-     uint8_t absolute;
--    QEMUPutMouseEntry *entry;
+diff --git a/include/hw/input/stellaris_gamepad.h b/include/hw/input/stellaris_gamepad.h
+index e011482646f..c1069735010 100644
+--- a/include/hw/input/stellaris_gamepad.h
++++ b/include/hw/input/stellaris_gamepad.h
+@@ -13,6 +13,7 @@
+ 
+ #include "hw/core/sysbus.h"
+ #include "qom/object.h"
++#include "ui/input.h"
+ 
+ /*
+  * QEMU interface:
+@@ -28,6 +29,7 @@ OBJECT_DECLARE_SIMPLE_TYPE(StellarisGamepad, STELLARIS_GAMEPAD)
+ struct StellarisGamepad {
+     SysBusDevice parent_obj;
+ 
 +    QemuInputHandlerState *hs;
-+    int axis[INPUT_AXIS__MAX];
-+    int dz;
-+    bool btns[INPUT_BUTTON__MAX];
-     ISAKBDState *i8042;
- };
- 
-@@ -99,39 +102,78 @@ static uint32_t vmmouse_get_status(VMMouseState *s)
-     return (s->status << 16) | s->nb_queue;
- }
- 
--static void vmmouse_mouse_event(void *opaque, int x, int y, int dz, int buttons_state)
-+static void vmmouse_input_event(DeviceState *dev, QemuConsole *src,
-+                                QemuInputEvent *evt)
- {
--    VMMouseState *s = opaque;
-+    VMMouseState *s = VMMOUSE(dev);
-+
-+    switch (evt->type) {
-+    case INPUT_EVENT_KIND_BTN:
-+        if (evt->btn.down) {
-+            if (evt->btn.button == INPUT_BUTTON_WHEEL_UP) {
-+                s->dz--;
-+            } else if (evt->btn.button == INPUT_BUTTON_WHEEL_DOWN) {
-+                s->dz++;
-+            }
-+        }
-+        s->btns[evt->btn.button] = evt->btn.down;
-+        break;
-+    case INPUT_EVENT_KIND_ABS:
-+        if (evt->abs.axis == INPUT_AXIS_X) {
-+            s->axis[INPUT_AXIS_X] =
-+                qemu_input_scale_axis(evt->abs.value,
-+                                      INPUT_EVENT_ABS_MIN, INPUT_EVENT_ABS_MAX,
-+                                      VMMOUSE_MIN_X, VMMOUSE_MAX_X);
-+        } else if (evt->abs.axis == INPUT_AXIS_Y) {
-+            s->axis[INPUT_AXIS_Y] =
-+                qemu_input_scale_axis(evt->abs.value,
-+                                      INPUT_EVENT_ABS_MIN, INPUT_EVENT_ABS_MAX,
-+                                      VMMOUSE_MIN_Y, VMMOUSE_MAX_Y);
-+        }
-+        break;
-+    case INPUT_EVENT_KIND_REL:
-+        s->axis[evt->rel.axis] += evt->rel.value;
-+        break;
-+    default:
-+        break;
-+    }
+     uint32_t num_buttons;
+     qemu_irq *irqs;
+     uint32_t *keycodes;
+diff --git a/hw/input/stellaris_gamepad.c b/hw/input/stellaris_gamepad.c
+index 25769fc2616..376d91abad7 100644
+--- a/hw/input/stellaris_gamepad.c
++++ b/hw/input/stellaris_gamepad.c
+@@ -59,7 +59,16 @@ static void stellaris_gamepad_realize(DeviceState *dev, Error **errp)
+     s->irqs = g_new0(qemu_irq, s->num_buttons);
+     s->pressed = g_new0(uint8_t, s->num_buttons);
+     qdev_init_gpio_out(dev, s->irqs, s->num_buttons);
+-    qemu_input_handler_register(dev, &stellaris_gamepad_handler);
++    s->hs = qemu_input_handler_register(dev, &stellaris_gamepad_handler);
 +}
 +
-+static void vmmouse_input_sync(DeviceState *dev)
++static void stellaris_gamepad_unrealize(DeviceState *dev)
 +{
-+    VMMouseState *s = VMMOUSE(dev);
-     int buttons = 0;
- 
--    if (s->nb_queue > (VMMOUSE_QUEUE_SIZE - 4))
-+    if (s->nb_queue > (VMMOUSE_QUEUE_SIZE - 4)) {
-         return;
-+    }
- 
--    trace_vmmouse_mouse_event(x, y, dz, buttons_state);
--
--    if ((buttons_state & MOUSE_EVENT_LBUTTON))
-+    if (s->btns[INPUT_BUTTON_LEFT]) {
-         buttons |= VMMOUSE_LEFT_BUTTON;
--    if ((buttons_state & MOUSE_EVENT_RBUTTON))
-+    }
-+    if (s->btns[INPUT_BUTTON_RIGHT]) {
-         buttons |= VMMOUSE_RIGHT_BUTTON;
--    if ((buttons_state & MOUSE_EVENT_MBUTTON))
-+    }
-+    if (s->btns[INPUT_BUTTON_MIDDLE]) {
-         buttons |= VMMOUSE_MIDDLE_BUTTON;
--
--    if (s->absolute) {
--        x = qemu_input_scale_axis(x,
--                                  INPUT_EVENT_ABS_MIN, INPUT_EVENT_ABS_MAX,
--                                  VMMOUSE_MIN_X, VMMOUSE_MAX_X);
--        y = qemu_input_scale_axis(y,
--                                  INPUT_EVENT_ABS_MIN, INPUT_EVENT_ABS_MAX,
--                                  VMMOUSE_MIN_Y, VMMOUSE_MAX_Y);
--    } else{
--        /* add for guest vmmouse driver to judge this is a relative packet. */
-+    }
-+    if (!s->absolute) {
-         buttons |= VMMOUSE_RELATIVE_PACKET;
-     }
- 
-+    trace_vmmouse_queue_event(s->axis[INPUT_AXIS_X], s->axis[INPUT_AXIS_Y],
-+                              s->dz, buttons);
++    StellarisGamepad *s = STELLARIS_GAMEPAD(dev);
 +
-     s->queue[s->nb_queue++] = buttons;
--    s->queue[s->nb_queue++] = x;
--    s->queue[s->nb_queue++] = y;
--    s->queue[s->nb_queue++] = dz;
-+    s->queue[s->nb_queue++] = s->axis[INPUT_AXIS_X];
-+    s->queue[s->nb_queue++] = s->axis[INPUT_AXIS_Y];
-+    s->queue[s->nb_queue++] = s->dz;
-+    s->dz = 0;
-+
-+    if (!s->absolute) {
-+        s->axis[INPUT_AXIS_X] = 0;
-+        s->axis[INPUT_AXIS_Y] = 0;
-+    }
- 
-     /* need to still generate PS2 events to notify driver to
-        read from queue */
-@@ -140,14 +182,25 @@ static void vmmouse_mouse_event(void *opaque, int x, int y, int dz, int buttons_
- 
- static void vmmouse_remove_handler(VMMouseState *s)
- {
--    if (s->entry) {
--        qemu_remove_mouse_event_handler(s->entry);
--        s->entry = NULL;
--    }
++    g_clear_pointer(&s->irqs, g_free);
++    g_clear_pointer(&s->pressed, g_free);
 +    g_clear_pointer(&s->hs, qemu_input_handler_unregister);
  }
  
- static void vmmouse_update_handler(VMMouseState *s, int absolute)
- {
-+    static const QemuInputHandler vmmouse_abs_handler = {
-+        .name  = "vmmouse",
-+        .mask  = INPUT_EVENT_MASK_BTN | INPUT_EVENT_MASK_ABS,
-+        .event = vmmouse_input_event,
-+        .sync  = vmmouse_input_sync,
-+    };
-+
-+    static const QemuInputHandler vmmouse_rel_handler = {
-+        .name  = "vmmouse",
-+        .mask  = INPUT_EVENT_MASK_BTN | INPUT_EVENT_MASK_REL,
-+        .event = vmmouse_input_event,
-+        .sync  = vmmouse_input_sync,
-+    };
-+
-     if (s->status != 0) {
-         return;
-     }
-@@ -155,11 +208,11 @@ static void vmmouse_update_handler(VMMouseState *s, int absolute)
-         s->absolute = absolute;
-         vmmouse_remove_handler(s);
-     }
--    if (s->entry == NULL) {
--        s->entry = qemu_add_mouse_event_handler(vmmouse_mouse_event,
--                                                s, s->absolute,
--                                                "vmmouse");
--        qemu_activate_mouse_event_handler(s->entry);
-+    if (s->hs == NULL) {
-+        const QemuInputHandler *h = s->absolute ?
-+            &vmmouse_abs_handler : &vmmouse_rel_handler;
-+        s->hs = qemu_input_handler_register(DEVICE(s), h);
-+        qemu_input_handler_activate(s->hs);
-     }
+ static void stellaris_gamepad_reset_enter(Object *obj, ResetType type)
+@@ -81,6 +90,7 @@ static void stellaris_gamepad_class_init(ObjectClass *klass, const void *data)
+ 
+     rc->phases.enter = stellaris_gamepad_reset_enter;
+     dc->realize = stellaris_gamepad_realize;
++    dc->unrealize = stellaris_gamepad_unrealize;
+     dc->vmsd = &vmstate_stellaris_gamepad;
+     device_class_set_props(dc, stellaris_gamepad_properties);
  }
- 
-diff --git a/hw/i386/trace-events b/hw/i386/trace-events
-index 5fa5e93b68d..1920212332a 100644
---- a/hw/i386/trace-events
-+++ b/hw/i386/trace-events
-@@ -133,7 +133,7 @@ port92_write(uint8_t val) "port92: write 0x%02x"
- 
- # vmmouse.c
- vmmouse_get_status(void) ""
--vmmouse_mouse_event(int x, int y, int dz, int buttons_state) "event: x=%d y=%d dz=%d state=%d"
-+vmmouse_queue_event(int x, int y, int dz, int buttons_state) "event: x=%d y=%d dz=%d state=%d"
- vmmouse_init(void) ""
- vmmouse_read_id(void) ""
- vmmouse_request_relative(void) ""
 
 -- 
 2.54.0
