@@ -4,80 +4,80 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9B69DCD8CB9
-	for <qemu-devel@archiver.kernel.org>; Wed, 10 Jun 2026 16:22:10 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9158ECD8CB9
+	for <qemu-devel@archiver.kernel.org>; Wed, 10 Jun 2026 16:22:13 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wXLY0-0000VJ-Nk; Wed, 10 Jun 2026 12:12:56 -0400
+	id 1wXLYm-0003w2-JV; Wed, 10 Jun 2026 12:13:44 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1wXLXt-0008FK-O7
- for qemu-devel@nongnu.org; Wed, 10 Jun 2026 12:12:49 -0400
-Received: from mail-wm1-x331.google.com ([2a00:1450:4864:20::331])
+ id 1wXLYk-0003sb-Pm
+ for qemu-devel@nongnu.org; Wed, 10 Jun 2026 12:13:42 -0400
+Received: from mail-wr1-x42d.google.com ([2a00:1450:4864:20::42d])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1wXLXs-0005b2-4k
- for qemu-devel@nongnu.org; Wed, 10 Jun 2026 12:12:49 -0400
-Received: by mail-wm1-x331.google.com with SMTP id
- 5b1f17b1804b1-490b613a17bso68572695e9.3
- for <qemu-devel@nongnu.org>; Wed, 10 Jun 2026 09:12:47 -0700 (PDT)
+ id 1wXLYj-0006eT-3N
+ for qemu-devel@nongnu.org; Wed, 10 Jun 2026 12:13:42 -0400
+Received: by mail-wr1-x42d.google.com with SMTP id
+ ffacd0b85a97d-45fd464d51fso3865913f8f.3
+ for <qemu-devel@nongnu.org>; Wed, 10 Jun 2026 09:13:40 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1781107966; x=1781712766; darn=nongnu.org;
+ d=linaro.org; s=google; t=1781108020; x=1781712820; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
- :reply-to; bh=wJCeBrpEENm6xQJkJZv3yaCpjhQMSJugeFLYjZ19DHM=;
- b=FhnHlvmT/6+Q5ScIoKuMWS7+liVs7FSI5+V97EkbXyaenq3vrQt/mZooQkny62ALkg
- 4DmNT7chRv6Wd9jJUdaSXAkgiouylSsc7qKBSTvQcbNgLuXkf/9OzAtHteTEUp5FlTZH
- hudU9y+rLZNLVWgmHzsYStjoyZuxkIyDlSWjd5yVyIWapHkx8xpINDQf8o6D7ZIOsw67
- o6bm9GGrnKsANdXen5bvYaP7yZ/fxNsKabCVy/bJkk5WaZvVdOw1qmTk8QTlzr9rAWME
- kHO0LtwhTbL7nOZaLAmzbKWm4yzTpW7TZnAXqIzVM0C7ZkaFlR2O1TjSNUHXPWtgpRNr
- q6Vw==
+ :reply-to; bh=+YtsUEuR5GKlGLLBe3tBqRfFqbJQ+oyTxTM3hrgCUTw=;
+ b=dx3jdDqPsxY8zzHMGSFmdKXxYxG1hQFTfNiwxVOX5Vh1aCk45bkRXxhrPF9Ci7sGCn
+ aodvZz4jVhcRnCG9aC44MO+4mPYd5w0Sd+uTfC+n0iu6YTBu3uTBQxnhJ6Bn3JSs6wI7
+ VqFRyAB4ywO4nzzYmMD1/56XR+45ib/3UudoGkmJxReAhtOxDVw4VQlrNy/tj6Cv/fz8
+ gwyZ/wr4kUigF2V7hqB98rijnI1HhmgBgiLGUglLQH29J1a7Bj5IR4mdhY9I0PBiss+J
+ utBDVUOraJ0WCUAdUjXOwMq6VF3mtAovHSLm/4mtYjLJ8EngLY9ftkklL9d89ijAYqo6
+ TEiw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1781107966; x=1781712766;
+ d=1e100.net; s=20251104; t=1781108020; x=1781712820;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:x-gm-gg:x-gm-message-state:from:to
  :cc:subject:date:message-id:reply-to;
- bh=wJCeBrpEENm6xQJkJZv3yaCpjhQMSJugeFLYjZ19DHM=;
- b=bI4dsEzeNkt6vIg0qegDutlz7X4C5yygEJHpEqOq+cAdk6G1fr/Q9oAoxKsbxPh0nD
- o3lvJuI91OXkswU1KJnV//G5z6H2IyI2GMTwpo4FzMwi/5GCxXCcVyTM71SbifyO5Q5a
- s+KPOSKaIhQi5K1GuMGquwHW6upmE2AEFc4efdKYP2Qn1l+CWsX1wUf/rYUlaaS4TABj
- J/krumJ3d4HDA9Bx1l05N8iXukhy2T5Gz7PrVq940Gz8/Gp2XjU/JSpV0NsP1PF4WnvF
- 6TWIwfYUjm1aLtyLn55kDHok4Ol2c1KMZ9SMZSc2kr7dBmm3PG8Z1mEZz0DyGQJqqNSs
- +ATA==
-X-Gm-Message-State: AOJu0YwbDWZWLyyPlX3OFepSMG23Z/MomSxpZbXszbYRz8cvsnj9idYp
- dVQI5iZZY3nEXnlaBvY/Dd4l6aZAmUxNK8eDPhXlLiHRB+B5I/awfNCso05bI+9N0R1UC/GBhJr
- fF+DO
-X-Gm-Gg: Acq92OF97txEfR6KT0ArSuCl+MVl7NkyLbIHypOw49c+pr0cmrRekYvvAJ78UBRM2k+
- oq9eoWcPQzIKN/TNkP/YFbob66WrM1gOAe9cu0sOwJUhJEzJZ71aARhkTC35omHugM9YxbqT7ei
- N7NKKTy8C58uLCjmaDl/uX8saMlAKet1S/txGkGdCRywoV280qtgSu0ZJ3a7tlXow7ZefMO0qgn
- 93u7P5bPNTAU09g175YahIwargGyMFL2MFT2JH9AHg3E9DmMxEtwkpkgol/ZkKSJnIWW227mXWa
- /wqWzPmCIuVB4spEIrXCombHy3wjxYOtakM3qR7Ka+yzverwvPc/iyYsGcstTc4AxhQC3G/AlZH
- jLU8oRfFbUk32bpYO49S6GQXdvRT/wTMeY+9q60mP9C9/pVzf8/WdT6E+XSf9SI2Gch3jnqQIo9
- C1EEO0WY7ui5gBfhohhCPE0BgonGwsRq28DGi/fl0upCcWYi3KNlGxSwUz/mTDCjpHgva01Hq+/
- gB9jIx1xGE5xxVcyHg4CmJV5NDB8uUpE5kbzozTesM=
-X-Received: by 2002:a05:600c:821a:b0:490:4973:91a0 with SMTP id
- 5b1f17b1804b1-490d71fa976mr102376305e9.10.1781107966265; 
- Wed, 10 Jun 2026 09:12:46 -0700 (PDT)
+ bh=+YtsUEuR5GKlGLLBe3tBqRfFqbJQ+oyTxTM3hrgCUTw=;
+ b=dxgr4LzCy0lfOn1wCDPYl6PsEB7bfXnqz3v5cLxtI8zUtEq5fMJJ+/zLECVHVGwzp0
+ WJVmh140W0y9bPEXmozTAPlaAk8DCQsjGA6fH3hYxx9LYONHBkGHyjjkbDOf8mvM22Zd
+ 8jyguOFvFWrPVugZPNOXZQUZjvUp6CzQ1kKl3HY+vaWSaiSPnAQ9erG3PtlvxUfalfQ5
+ Y46IRdXtOFcw4RH7Ti46iSGT2Pb1/4wy9OoUTSkOs5H7xeYU9VK4o+xCGSN6Iif+5QUo
+ fqAXKXNyOLbhhnkVCg3Zu6/brDrkShhaqaS86SG2NiEgo/C8dCtPViUk0ZOnA6+1ykfo
+ PcPw==
+X-Gm-Message-State: AOJu0YySmqwGwqweQi1CEptUIcJ1guA1EmyNBXe47RrT3khHXpz24hKO
+ RnSoiKk84f+b9gqeavB4QmgVHFuSzLlQxUDVNxEo8OokIg27umqvM7kMy2XWBmOPiHlmgctRiIN
+ JqsWu
+X-Gm-Gg: Acq92OH09P3mAGxc2gek6pe1h5bs1vMZ1kwD3Lj51TR/baiD1UGMGQ7m/uD6Ab2uz1E
+ 7YUWPjZnvQx01aYwycC8usMxzaDg5Ruh8V07lJOn2yulT2l4q/No8N5rO2bLqETthn08uWZuM3B
+ g0uxEtiyguguvFwnxw4/g4iygkM8KgBMU95tVACgplUvjM49Wuem/AckCLXLg6VojNlrE+OQ29u
+ 516V8NvzmTPpCD5/GJ77mm4Nq1PcnwqzRhO06yAFGW9njLmRql6GyjU/pP07kqOtov71Rkdo5Qs
+ kRFoiYCevRp5NSvIs4Fn+5i/6RRSpUU4N+Bly5IRRqU1u63LaPzvx4MkmksjtcXhrINeaYl+rgn
+ S2eXGLHg36TN5ypAlWMsqCfdl5PaB7002G74MzImGIlHOvNoBqb0MUom6ozrZxCfafmQdq/gbo9
+ msMgdnDu8Eb1deyywpwfL51yv+1QTXRT+AWeiX6JrKurf9WPi4vgF7rPla0LhwRisZfSnVrCOhB
+ uUnTkWvlzbLdcIX8pvvNG0Sg8GeNta7+HOzllOLPGPxtT3iQ6hGcA==
+X-Received: by 2002:a05:6000:b82:b0:460:1301:dec8 with SMTP id
+ ffacd0b85a97d-460302dc4a8mr27540315f8f.3.1781108019634; 
+ Wed, 10 Jun 2026 09:13:39 -0700 (PDT)
 Received: from lanath.. (wildly.archaic.org.uk. [81.2.115.145])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-4601f2dcbe3sm67911360f8f.8.2026.06.10.09.12.44
+ ffacd0b85a97d-4601f2dcbe3sm67911360f8f.8.2026.06.10.09.13.38
  for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 10 Jun 2026 09:12:45 -0700 (PDT)
+ Wed, 10 Jun 2026 09:13:38 -0700 (PDT)
 From: Peter Maydell <peter.maydell@linaro.org>
 To: qemu-devel@nongnu.org
-Subject: [PULL 31/71] target/arm: Introduce arm_init_fp_status
-Date: Wed, 10 Jun 2026 17:11:22 +0100
-Message-ID: <20260610161202.2235298-32-peter.maydell@linaro.org>
+Subject: [PULL 70/71] target/arm: Implement FMMLA (FP8 to FP16) for SVE
+Date: Wed, 10 Jun 2026 17:12:01 +0100
+Message-ID: <20260610161202.2235298-71-peter.maydell@linaro.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20260610161202.2235298-1-peter.maydell@linaro.org>
 References: <20260610161202.2235298-1-peter.maydell@linaro.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::331;
- envelope-from=peter.maydell@linaro.org; helo=mail-wm1-x331.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::42d;
+ envelope-from=peter.maydell@linaro.org; helo=mail-wr1-x42d.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -102,60 +102,54 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Richard Henderson <richard.henderson@linaro.org>
 
-Create a function to set all default controls for a float_status.
-Other settings for specific FPST will be set afterward.
-
 Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
 Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
-Message-id: 20260609192110.752384-6-richard.henderson@linaro.org
+Message-id: 20260609192110.752384-45-richard.henderson@linaro.org
 Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
 ---
- target/arm/cpu.c | 19 +++++++++++--------
- 1 file changed, 11 insertions(+), 8 deletions(-)
+ target/arm/cpu-features.h      | 5 +++++
+ target/arm/tcg/sve.decode      | 1 +
+ target/arm/tcg/translate-sve.c | 2 ++
+ 3 files changed, 8 insertions(+)
 
-diff --git a/target/arm/cpu.c b/target/arm/cpu.c
-index 8771b695d9..10daca0ad6 100644
---- a/target/arm/cpu.c
-+++ b/target/arm/cpu.c
-@@ -322,6 +322,13 @@ static void cp_reg_check_reset(gpointer key, gpointer value,  gpointer opaque)
-     assert(oldvalue == newvalue);
+diff --git a/target/arm/cpu-features.h b/target/arm/cpu-features.h
+index 753799008c..9e70d30964 100644
+--- a/target/arm/cpu-features.h
++++ b/target/arm/cpu-features.h
+@@ -1728,6 +1728,11 @@ static inline bool isar_feature_aa64_sve2_f8mm8(const ARMISARegisters *id)
+     return isar_feature_aa64_sve2(id) && isar_feature_aa64_f8mm8(id);
  }
  
-+static void arm_init_fp_status(float_status *s)
++static inline bool isar_feature_aa64_sve2_f8mm4(const ARMISARegisters *id)
 +{
-+    memset(s, 0, sizeof(*s));
-+    arm_set_default_fp_behaviours(s);
-+    /* We want 0 for all other settings. */
++    return isar_feature_aa64_sve2(id) && isar_feature_aa64_f8mm4(id);
 +}
 +
- static void arm_cpu_reset_hold(Object *obj, ResetType type)
+ static inline bool
+ isar_feature_aa64_sme2_or_sve2_faminmax(const ARMISARegisters *id)
  {
-     CPUState *cs = CPU(obj);
-@@ -644,20 +651,16 @@ static void arm_cpu_reset_hold(Object *obj, ResetType type)
-         env->sau.ctrl = 0;
-     }
+diff --git a/target/arm/tcg/sve.decode b/target/arm/tcg/sve.decode
+index 6610432528..b53fe6a58f 100644
+--- a/target/arm/tcg/sve.decode
++++ b/target/arm/tcg/sve.decode
+@@ -1809,6 +1809,7 @@ FMMLA_s         01100100 10 1 ..... 111 001 ..... .....  @rda_rn_rm_ex esz=2
+ FMMLA_d         01100100 11 1 ..... 111 001 ..... .....  @rda_rn_rm_ex esz=3
  
-+    for (int i = 0; i < FPST_COUNT; i++) {
-+        arm_init_fp_status(&env->vfp.fp_status[i]);
-+    }
-+
-     set_flush_to_zero(1, &env->vfp.fp_status[FPST_STD]);
-     set_flush_inputs_to_zero(1, &env->vfp.fp_status[FPST_STD]);
-     set_default_nan_mode(1, &env->vfp.fp_status[FPST_STD]);
-     set_default_nan_mode(1, &env->vfp.fp_status[FPST_STD_F16]);
-     set_default_nan_mode(1, &env->vfp.fp_status[FPST_ZA]);
-     set_default_nan_mode(1, &env->vfp.fp_status[FPST_ZA_F16]);
--    arm_set_default_fp_behaviours(&env->vfp.fp_status[FPST_A32]);
--    arm_set_default_fp_behaviours(&env->vfp.fp_status[FPST_A64]);
--    arm_set_default_fp_behaviours(&env->vfp.fp_status[FPST_ZA]);
--    arm_set_default_fp_behaviours(&env->vfp.fp_status[FPST_STD]);
--    arm_set_default_fp_behaviours(&env->vfp.fp_status[FPST_A32_F16]);
--    arm_set_default_fp_behaviours(&env->vfp.fp_status[FPST_A64_F16]);
--    arm_set_default_fp_behaviours(&env->vfp.fp_status[FPST_ZA_F16]);
--    arm_set_default_fp_behaviours(&env->vfp.fp_status[FPST_STD_F16]);
-     arm_set_ah_fp_behaviours(&env->vfp.fp_status[FPST_AH]);
-     set_flush_to_zero(1, &env->vfp.fp_status[FPST_AH]);
-     set_flush_inputs_to_zero(1, &env->vfp.fp_status[FPST_AH]);
+ FMMLA_sb        01100100 00 1 ..... 111 000 ..... .....  @rda_rn_rm_ex esz=2
++FMMLA_hb        01100100 01 1 ..... 111 000 ..... .....  @rda_rn_rm_ex esz=1
+ 
+ ### SVE2 Memory Gather Load Group
+ 
+diff --git a/target/arm/tcg/translate-sve.c b/target/arm/tcg/translate-sve.c
+index f6705ee95d..a85558bdaa 100644
+--- a/target/arm/tcg/translate-sve.c
++++ b/target/arm/tcg/translate-sve.c
+@@ -8477,3 +8477,5 @@ static bool do_fmmla_fp8(DisasContext *s, arg_rrrr_esz *a,
+ 
+ TRANS_FEAT_NONSTREAMING(FMMLA_sb, aa64_sve2_f8mm8, do_fmmla_fp8, a,
+                         gen_helper_gvec_fmmla_sb)
++TRANS_FEAT_NONSTREAMING(FMMLA_hb, aa64_sve2_f8mm4, do_fmmla_fp8, a,
++                        gen_helper_gvec_fmmla_hb)
 -- 
 2.43.0
 
