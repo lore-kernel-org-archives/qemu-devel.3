@@ -4,91 +4,120 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 14C2BCD98C7
-	for <qemu-devel@archiver.kernel.org>; Wed, 10 Jun 2026 18:50:53 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B65AACD98CC
+	for <qemu-devel@archiver.kernel.org>; Wed, 10 Jun 2026 18:51:46 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wXO05-0001F4-VB; Wed, 10 Jun 2026 14:50:06 -0400
+	id 1wXO1Y-00025b-Dn; Wed, 10 Jun 2026 14:51:36 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1wXO03-0001E6-Q5
- for qemu-devel@nongnu.org; Wed, 10 Jun 2026 14:50:03 -0400
-Received: from mail-pj1-x1030.google.com ([2607:f8b0:4864:20::1030])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1wXO01-0001UJ-Ef
- for qemu-devel@nongnu.org; Wed, 10 Jun 2026 14:50:03 -0400
-Received: by mail-pj1-x1030.google.com with SMTP id
- 98e67ed59e1d1-37474afe908so1713720a91.1
- for <qemu-devel@nongnu.org>; Wed, 10 Jun 2026 11:50:00 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1wXO1W-00025I-5G
+ for qemu-devel@nongnu.org; Wed, 10 Jun 2026 14:51:34 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1wXO1T-0002Mz-Ct
+ for qemu-devel@nongnu.org; Wed, 10 Jun 2026 14:51:33 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1781117488;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=GJizkvEeQr5W24xg9kyOBmTnK/HoAg1GDQLvaHCll9A=;
+ b=G3Hy6DtIUZAEv0BSP1MHRiHWIu1Gkdy/byMiqrjePz7YQbPQbA8t7+Do6wPeVFGNRTWEq3
+ Yq9DeqkGSACD5SGvyJoHL/4cyUB6cLJrnCFmSYW0w7R+MhcqK21PilP56AeRi1gXZMGStr
+ oINlUHmZrY/sht3hlDcOU2V8ot5VJek=
+Received: from mail-qv1-f71.google.com (mail-qv1-f71.google.com
+ [209.85.219.71]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-107-e52fIci3POW8biEXfof5dw-1; Wed, 10 Jun 2026 14:51:27 -0400
+X-MC-Unique: e52fIci3POW8biEXfof5dw-1
+X-Mimecast-MFC-AGG-ID: e52fIci3POW8biEXfof5dw_1781117487
+Received: by mail-qv1-f71.google.com with SMTP id
+ 6a1803df08f44-8ccf3d72081so105454716d6.3
+ for <qemu-devel@nongnu.org>; Wed, 10 Jun 2026 11:51:27 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1781117400; x=1781722200; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:content-language:from
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=7m6KrAPD4rXQG/wWXko1HPt1/0bD5isu1abW+qBhWjI=;
- b=ukCWr6aaP/LW3fiRvKJwCJDKIoBROcWMxrXXAYaU5hACO7un3K9GCmv1fbLe0sGJPQ
- DF2qaelqrkogPtbvO6LOfPDSeJfHBHPcv5nwje1KgF36cDiGU8ETJiqV+9iXlKTZlrsJ
- /cnGtkeIvZWeJVrv/03TT3o4R8cz9wIZi31sJe7Rt0A1EsoKR821mVQiikW3EGWwbWLK
- r+BDNNi5+qAjlsP1EVVRZc29SUHxQ77jDBmtc1hsl2GYHAj6lOHO4hzvBPQdNbQvztXX
- ojIvTQ6F8zxDAQ0hlXWrtSu+oe4uWvGZ8fJwaBX1tt8LDNm8wIJ422LbvTr1strfHYmC
- WdXw==
+ d=redhat.com; s=google; t=1781117487; x=1781722287; darn=nongnu.org;
+ h=in-reply-to:content-transfer-encoding:content-disposition
+ :mime-version:references:message-id:subject:cc:to:from:date:from:to
+ :cc:subject:date:message-id:reply-to;
+ bh=GJizkvEeQr5W24xg9kyOBmTnK/HoAg1GDQLvaHCll9A=;
+ b=F3nnw1dkhgesv31kgkBNCaK9OOvw9C1QR+Idv9uKNzWEVWSHl4eXJgu5lL8LR0Ilxm
+ ychg+SWO1Eaz5h7DNAWhVh5kvK7SPUPS1iiuNIKiqMRMgGZkKysTvro8RZCWkHgOqEGY
+ siabeTwPvQEOd0NdSd6RgDFn+mcWSHyXh63LqabueFHMzqtmXyFOE6NWI5UkOE5vrxvX
+ bfSxQIlUkLWimkHE8f5nhy7jYYB/5b77OPoOPUb6NOTB1dOqoUDc4HDp8BrmFNYivyfM
+ ZJh+SHt2hYOsFkgkdocVrLFiHISvOsgobe7OC6fNzup5F75nsVROnGse652u47YnrKW0
+ PabQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1781117400; x=1781722200;
- h=content-transfer-encoding:in-reply-to:content-language:from
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=7m6KrAPD4rXQG/wWXko1HPt1/0bD5isu1abW+qBhWjI=;
- b=VxbGnTrRKMTMXiw0EzWNrg4TRc4QM+RIa85dYQzhu+2CFRuOjOB5urBzg3nrw20VCz
- lLlgWkdaHBvZOPiRoJS1ZKPz+yuXgg8w6LGNXz+vL/cwFsj0hFVZI41/mP7FXKpAm2w9
- z6D5KDisyr989L0K91TkdCXEV7WePCB5isD2i3Pc1G04MAPaBAh5mDz+NtxXLG5XvPdj
- 6L7Za+YqekFGmSq4NPPhgPKvIq2sSAXZly4diliXIEY2R3SweE31JGvkMPqKHXbUo7PV
- l/PLLeo7Sa8V9c6h4lCE9tQEmsoIVPjYvxoKQ58cV7QXBZkkX5a9G9soMnj9dJfMyels
- mGAw==
-X-Forwarded-Encrypted: i=1;
- AFNElJ//7n3yk1c0yJLvqdRT3AacgNihGt8cwDAn4G60UNJWSLmobIXUfbVB5ccU1IZIE5pXhjwYCHaVTpZ6@nongnu.org
-X-Gm-Message-State: AOJu0YzvEpcab8UslS8ckgz43o+KaC8JiUyUbR1IlqIlwg7M7hcLD2DJ
- fUC2+53GpcDn/y4pvAt8XZ9Owt9Fb0IwfoE52yOswsiskYZpOw04jcmIlkWls7dp4e4=
-X-Gm-Gg: Acq92OGfRlouxsBLHTu+ErAF8YhoVsP1+6ai6+dKPLaz6N4jO8WvzrAPitypIti6ODq
- 0VHaFUwx/qH2INM80LhE9YjBu857ruop+mqVBkk67W+/EYmnUXynA0X8klgxcwSVcytLuzxiZ3F
- wn4fjokcspoxK58dSbF7tEoSg8HymM8xH9VkDvuB/MLXpFotf9/9dLoyHb5I7TtGzXElfYe8uCm
- Cn8+ahZaP0SAcs/LxMNCqcMf5AcI7zd0GEco4pMLilvkQ81LW9EoEYaFus3iRXCxf1doSnCpGkR
- eMzbSb/rssdg4mFTWVeSfeXdNQcvu++BSWkIu/2FecIo0go+nDXzzFgqPYt1BHabzAwmygcsaRH
- ZlQGmnjLO8r6n9gq/zGMN7RaV65F46cBDmn2eXMEJSzhy4kMIOOhrEjvhG3n/0Ix7m//sL9QQL0
- C7RN6b6g8/Zc9PVJecqbXVl45vBID7ck8Cp8uxWSVf1FXeckw=
-X-Received: by 2002:a17:90b:570e:b0:36d:dfe4:387c with SMTP id
- 98e67ed59e1d1-370eed08b30mr28439659a91.10.1781117399594; 
- Wed, 10 Jun 2026 11:49:59 -0700 (PDT)
-Received: from [192.168.0.4] ([71.212.142.33])
- by smtp.gmail.com with ESMTPSA id
- 98e67ed59e1d1-37752b5a9d5sm103406a91.6.2026.06.10.11.49.58
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 10 Jun 2026 11:49:59 -0700 (PDT)
-Message-ID: <4853852b-015f-4e16-aee3-7750a35b9c78@linaro.org>
-Date: Wed, 10 Jun 2026 11:49:57 -0700
+ d=1e100.net; s=20251104; t=1781117487; x=1781722287;
+ h=in-reply-to:content-transfer-encoding:content-disposition
+ :mime-version:references:message-id:subject:cc:to:from:date:x-gm-gg
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=GJizkvEeQr5W24xg9kyOBmTnK/HoAg1GDQLvaHCll9A=;
+ b=iuYp5XmarsAifsOEee24Jww5n0tRH4e8bRNMG4c/8I4GM7X6mF1qUK5TZUfzSFNs0N
+ qiRbgI2waj7gmdpZctsRJN7Orhw8NYQtrzeCYLkDk02bTbqGAQ2sGEsrM8ckOGWSd2va
+ VRR8ihz9M3LlETBca+pFB+1OXtWTzw9VB29ZFU193+s2XfJo78XmedmAH3Ah3tZbY6jS
+ GMwBpo7iCF722QPPNDWSrCR4OdzoR99qT6gBI/b9PWc34B02klRRzGSHCQjmf7nbK/JP
+ KPeAVmazeWFtSDdyja2yVrZHmpiycpCfjNm2lIL1+F3fvnLwB0g6iAbrxSfYSYS4HE0j
+ PyCg==
+X-Gm-Message-State: AOJu0Yz/lEdNKy/qRj6OStF/cBz1jtyY7X4jmcjg4lgDiCiCHk29Q6z5
+ EyM0b+AsfxW53nXzmQDUj2hJ0WMEj349I0JGOAaeNcXg4AAYA1vvA3gjNTghcARit2gTnSJHDA+
+ xLyDKgfJ1hyi1ygXz9HdV2yd2RJXV70gC3YvI/TWA3nV2LG+ofNhAeilK
+X-Gm-Gg: Acq92OGSTv8MjtHJ5TAJQvqy4Iwohd88QHVNCqyCYh5CpM+iwqiUDLXWEvW8Ndt87+X
+ zZPU5yvslJUErBF82PA/WS6+bci/sWhr5fagp6Kv0Yip5O09LjcZm4K3kA3H7a8YGMLfu+9q6RD
+ VPddBORqiGkMSJ710rfG9cKxveBo+s4gVKomK8ibIGhPSs6qxbiwRcBAn/Yj+kZ/XnChaWRFhdO
+ mLtllP7kmTYX0Jdye2kilEUesQo5GLDWAh1nqWx2+0JUzIq5qVU5CK7SmpprC6QJdYnrWFXwHI+
+ avgwSfUIs2g8sZyh8dN1oug9YoHLGup84aorkwb/jlb8Woc8uAr4gL388sAXFWYOcUlsf0/zCou
+ +s/EIyeBBNFjBMF95EbbI4+qCiQ==
+X-Received: by 2002:a05:6214:1d0d:b0:8ce:eaf7:dbe7 with SMTP id
+ 6a1803df08f44-8d18a00f4d9mr8732396d6.33.1781117486612; 
+ Wed, 10 Jun 2026 11:51:26 -0700 (PDT)
+X-Received: by 2002:a05:6214:1d0d:b0:8ce:eaf7:dbe7 with SMTP id
+ 6a1803df08f44-8d18a00f4d9mr8731826d6.33.1781117486102; 
+ Wed, 10 Jun 2026 11:51:26 -0700 (PDT)
+Received: from x1.local ([142.189.10.167]) by smtp.gmail.com with ESMTPSA id
+ 6a1803df08f44-8cecc8222bcsm246008466d6.0.2026.06.10.11.51.24
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Wed, 10 Jun 2026 11:51:25 -0700 (PDT)
+Date: Wed, 10 Jun 2026 14:51:23 -0400
+From: Peter Xu <peterx@redhat.com>
+To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
+Cc: qemu-devel@nongnu.org, qemu-arm@nongnu.org,
+ =?utf-8?Q?C=C3=A9dric?= Le Goater <clg@redhat.com>,
+ Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@mailo.com>,
+ Fabiano Rosas <farosas@suse.de>,
+ Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>,
+ Peter Maydell <peter.maydell@linaro.org>,
+ "Dr . David Alan Gilbert" <dave@treblig.org>,
+ Eric Blake <eblake@redhat.com>,
+ Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>,
+ Paolo Bonzini <pbonzini@redhat.com>, Kevin Wolf <kwolf@redhat.com>,
+ Sana Sharma <sansshar@redhat.com>,
+ =?utf-8?Q?Marc-Andr=C3=A9?= Lureau <marcandre.lureau@redhat.com>,
+ Juraj Marcin <jmarcin@redhat.com>, qemu-rust@nongnu.org,
+ Markus Armbruster <armbru@redhat.com>,
+ Mark Cave-Ayland <mark.caveayland@nutanix.com>
+Subject: Re: [PATCH v2 10/10] migration: Switch to TYPE_OBJECT with object
+ properties
+Message-ID: <aimyK31EgOJICi_X@x1.local>
+References: <20260609172514.2037645-1-peterx@redhat.com>
+ <20260609172514.2037645-11-peterx@redhat.com>
+ <aimRB5Uv2XtTE4Xy@redhat.com>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2] linux-user: Implement /proc/cpuinfo for ppc cpus
-To: Helge Deller <deller@kernel.org>, qemu-devel@nongnu.org
-Cc: Helge Deller <deller@gmx.de>, qemu-ppc@nongnu.org
-References: <20260610180749.10883-1-deller@kernel.org>
-From: Richard Henderson <richard.henderson@linaro.org>
-Content-Language: en-US
-In-Reply-To: <20260610180749.10883-1-deller@kernel.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::1030;
- envelope-from=richard.henderson@linaro.org; helo=mail-pj1-x1030.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <aimRB5Uv2XtTE4Xy@redhat.com>
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=peterx@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -24
+X-Spam_score: -2.5
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.445,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -104,108 +133,52 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 6/10/26 11:06, Helge Deller wrote:
-> From: Helge Deller <deller@gmx.de>
+On Wed, Jun 10, 2026 at 05:29:59PM +0100, Daniel P. Berrangé wrote:
+> -global is/was intended for devices, primarily those which
+> are created by default as part of the machine. For dynamically
+> created devices the docs recommend use of -device instead
+> of -global.
+
+I wished it was called -device-global then it'll be clearer, otherwise from
+an API perspective it really shouldn't be limited to qdev..
+
+It makes sense to not call it -device-global, IMHO essentially because we
+don't necessarily need to restrict it to -device.
+
 > 
-> I've tried to mimic what I've seen on two debian porterboxes (ppc64 and
-> ppc64le), which are running via KVM/QEMU. I assume the model type of
-> pSeries and such doesn't make much sense for some older ppc chips, so
-> any better suggestions here are welcome.
+> I get that -global was exposed for migration via the inappropriate
+> use of TYPE_DEVICE as a parent for TYPE_MIGRATION, but I don't
+> think we should be prolonging that misuse by exposing use of
+> -global for things which are QOM rather than QDev.
 > 
-> v2: drop colon, add clock output, refine pvr calculation
-> (@Richard: I suggest to completely drop the clock for v3 ?!?!)
+> If we want todo that for the sake of backcompat, IMHO it should
+> be deprecated so it only lives for a short while after the
+> conversion to QOM.
 > 
-> Signed-off-by: Helge Deller <deller@gmx.de>
-> Cc: qemu-ppc@nongnu.org
-> Cc: Richard Henderson <richard.henderson@linaro.org>
-> ---
->   linux-user/ppc/target_proc.h | 91 +++++++++++++++++++++++++++++++++++-
->   1 file changed, 90 insertions(+), 1 deletion(-)
-> 
-> diff --git a/linux-user/ppc/target_proc.h b/linux-user/ppc/target_proc.h
-> index 43fe29ca72..6d78c0f543 100644
-> --- a/linux-user/ppc/target_proc.h
-> +++ b/linux-user/ppc/target_proc.h
-> @@ -1 +1,90 @@
-> -/* No target-specific /proc support */
-> +/*
-> + * ppc specific proc functions for linux-user
-> + *
-> + * SPDX-License-Identifier: GPL-2.0-or-later
-> + */
-> +#ifndef PPC_TARGET_PROC_H
-> +#define PPC_TARGET_PROC_H
-> +
-> +#include <time.h>
-> +
-> +#define PVR_VER(pvr)    (((pvr) >>  16) & 0xFFFF)      /* Version field */
-> +#define PVR_REV(pvr)    (((pvr) >>   0) & 0xFFFF)      /* Revison field */
-> +#define PVR_MAJ(pvr)    (((pvr) >>  4) & 0xF)   /* Major revision field */
-> +#define PVR_MIN(pvr)    (((pvr) >>  0) & 0xF)   /* Minor revision field */
-> +
-> +static int open_cpuinfo(CPUArchState *cpu_env, int fd)
-> +{
-> +    struct timespec res;
-> +    double freq_mhz;
-> +    int i, num_cpus;
-> +    unsigned int maj, min, pvr;
-> +
-> +    PowerPCCPUClass *pcc = POWERPC_CPU_GET_CLASS(env_cpu(cpu_env));
-> +    DeviceClass *dc = DEVICE_CLASS(ppc_cpu_get_family_class(pcc));
-> +
-> +    pvr = pcc->pvr;
-> +
-> +    /* Taken from Linux kernel: */
-> +    /* If we are a Freescale core do a simple check so
-> +     * we don't have to keep adding cases in the future */
-> +    if (PVR_VER(pvr) & 0x8000) {
-> +            switch (PVR_VER(pvr)) {
-> +            case 0x8000:	/* 7441/7450/7451, Voyager */
-> +            case 0x8001:	/* 7445/7455, Apollo 6 */
-> +            case 0x8002:	/* 7447/7457, Apollo 7 */
-> +            case 0x8003:	/* 7447A, Apollo 7 PM */
-> +            case 0x8004:	/* 7448, Apollo 8 */
-> +            case 0x800c:	/* 7410, Nitro */
-> +                    maj = ((pvr >> 8) & 0xF);
-> +                    min = PVR_MIN(pvr);
-> +                    break;
-> +            default:	/* e500/book-e */
-> +                    maj = PVR_MAJ(pvr);
-> +                    min = PVR_MIN(pvr);
-> +                    break;
-> +            }
-> +    } else {
-> +            switch (PVR_VER(pvr)) {
-> +                    case 0x1008:	/* 740P/750P ?? */
-> +                            maj = ((pvr >> 8) & 0xFF) - 1;
-> +                            min = pvr & 0xFF;
-> +                            break;
-> +                    case 0x004e: /* POWER9 bits 12-15 give chip type */
-> +                    case 0x0080: /* POWER10 bit 12 gives SMT8/4 */
-> +                            maj = (pvr >> 8) & 0x0F;
-> +                            min = pvr & 0xFF;
-> +                            break;
-> +                    default:
-> +                            maj = (pvr >> 8) & 0xFF;
-> +                            min = pvr & 0xFF;
-> +                            break;
-> +            }
-> +    }
+> This makes me realize that this does not implement the UserCreatable
+> interface on TYPE_MIGRATION, so I'm presuming the MigrationState is
+> still created internally. Perhaps we should switch to making it a
+> full UserCreatable, such that -object can be used to set all migration
+> parameters on the command line and -global won't be required ? 
 
-Reindent for qemu style.
+This is what Fabiano suggested in his reply here:
 
-> +
-> +    if (clock_getres(CLOCK_REALTIME, &res) == -1) {
-> +        res.tv_nsec = 1;
-> +    }
-> +    freq_mhz = 1000.0 / res.tv_nsec;
+https://lore.kernel.org/qemu-devel/87jys75npb.fsf@suse.de/
 
-Seems ok.
+I wonder what's your view on that when put together the singleton series I
+used to post, where I also mentioned in the reply:
 
-> +        dprintf(fd, "processor:\t: %d\n", i);
+https://lore.kernel.org/qemu-devel/aimtYbka4GB9Qyk6@x1.local/
 
-Still have an extra : here.
+If you think that's the right approach, we can try to have it to replace
+-global.  -global is debug API for migration, we don't need to obsolete it.
+Compat property is, which is unaffected by this.  So we can remove -global
+support for migration, but it'll always be good to have a replacement for
+scripts.
 
+Thanks,
 
-r~
+-- 
+Peter Xu
+
 
