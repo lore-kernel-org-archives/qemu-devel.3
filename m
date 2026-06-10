@@ -4,80 +4,81 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id BB138CD8CB2
-	for <qemu-devel@archiver.kernel.org>; Wed, 10 Jun 2026 16:22:05 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 396BECD98C6
+	for <qemu-devel@archiver.kernel.org>; Wed, 10 Jun 2026 16:22:06 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wXLYZ-0002t6-Le; Wed, 10 Jun 2026 12:13:31 -0400
+	id 1wXLY6-0001K6-TI; Wed, 10 Jun 2026 12:13:02 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1wXLYV-0002hH-EH
- for qemu-devel@nongnu.org; Wed, 10 Jun 2026 12:13:27 -0400
-Received: from mail-wr1-x429.google.com ([2a00:1450:4864:20::429])
+ id 1wXLXc-0007qG-0Q
+ for qemu-devel@nongnu.org; Wed, 10 Jun 2026 12:12:33 -0400
+Received: from mail-wr1-x42a.google.com ([2a00:1450:4864:20::42a])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1wXLYS-0006Gh-QN
- for qemu-devel@nongnu.org; Wed, 10 Jun 2026 12:13:26 -0400
-Received: by mail-wr1-x429.google.com with SMTP id
- ffacd0b85a97d-45ef372c58aso3692545f8f.0
- for <qemu-devel@nongnu.org>; Wed, 10 Jun 2026 09:13:24 -0700 (PDT)
+ id 1wXLXa-0005WQ-B2
+ for qemu-devel@nongnu.org; Wed, 10 Jun 2026 12:12:31 -0400
+Received: by mail-wr1-x42a.google.com with SMTP id
+ ffacd0b85a97d-45ef56d9b67so5457472f8f.2
+ for <qemu-devel@nongnu.org>; Wed, 10 Jun 2026 09:12:29 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1781108003; x=1781712803; darn=nongnu.org;
+ d=linaro.org; s=google; t=1781107949; x=1781712749; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
- :reply-to; bh=E7sTj5GGvMXsa58aM6RuD2LvPBXO6b0NVjqEMZ4vVUI=;
- b=ZYecxsqOisyd33wDEEqKonP502F0YLc3G3lg2uEJK3IdK1NG8sYv5syHdW6MEoSOW1
- oBZvktGRii7au40QqDyE6uXstbPhbko9BSIt0nAeLt2llrpXzTbXdAvvPYM60XfitgZm
- t/itz4hl72W5eoX9+DD5vbxNCb5zARt+1Pbh2ImvcO8tTx5d3Oxb2dDbkT0P7uiqD5wF
- FeC3t4ad7unAm3RlhrtQ85dUEXiKwzY8VBalCMruIj4Vp6EhSFNI2ip1DJJFsHmeTq2m
- 3+50Awfh7/49KYocwUAqAuGYe1Mb07mnh48YON8uyTUEfAUbKUTLxwKfaK7eEYXMZF5D
- NVHg==
+ :reply-to; bh=GZKxoyMSnbKsvfb5DvITG7DMsLNBYfuh4Rm0/Eix71Q=;
+ b=B387Fdj/8e7jwpLEn+KBqMiybkNpJm1K4IsmvGVk/fcA9yxCWGTagNr7oQIWHYOkhG
+ GfgEWl6M8bvYFU3lPfsqwTmZKtCOhVtlX6XKpGtxsktOeTVrm2PtO/kJ/Ybpxhwwt71z
+ 4JducUc078Os//D4GXpa3W6TcD0wCbzEop3JUEpYsCwOs9KZ41zt/LGqZlHJHzcICBSH
+ f3KH5WNSY08iLViDwxQdHncdh6EcAGCja8YpkNQzTDMhm/kqa3hqL1m/xhaf/ploiTwi
+ Zht7CMWH9YMlulgvqJ20EE5yjDyBBjiQ/lnQntBzhGrRYuI9J3dQLWOkAjfhi7ios5y4
+ C+FQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1781108003; x=1781712803;
+ d=1e100.net; s=20251104; t=1781107949; x=1781712749;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:x-gm-gg:x-gm-message-state:from:to
  :cc:subject:date:message-id:reply-to;
- bh=E7sTj5GGvMXsa58aM6RuD2LvPBXO6b0NVjqEMZ4vVUI=;
- b=J/5htww7RB/1JWOn2Mn2qrzNJLQMZ3K3cwWR8i1UWw/iUWQ/XcaqTE4iMe8wbhO+kP
- hYvEMNrmjiNlXKDwf6BxZBRxUuBsRvge13jmU73xlWRWdRfTVC+JRzsgn34X4z6BNmNt
- UZo5gVsFVwIpFzOC4NUxUQFBIDsrkawlRAiPWULDWmiO11PCmmOeNCAc2a+tMxEkE60d
- dzMk4stvcgvFZUhK7x6NUzyKqgyxWiKY206J0hRsVoH35aFtCCfUV9zTy7fB1IlO54FB
- P3dMkR26UOZNRM+8u6XcgqXrj66l8ekZtxg3TVDYuebkIlQtPlYCLZ67e5mom3W6SFdX
- cIVg==
-X-Gm-Message-State: AOJu0YymXM61CJCaicbVRaa4NPBbaFhyp3UpIxiLjSgmplksA11UUh22
- pK7JDzoQnEpwpwQuM0su8xyYdqOpWF0pb+AVt3DD+prisOqeRI/gZLFNHBWifmqSDVpGlSw6WDx
- imyAK
-X-Gm-Gg: Acq92OHsp6c/KiImX+RB7g52GxeO43A9gk65Qmnj6rQwPUTCaXcALTHNihXxpg0qX4E
- 9S80e0xxxqZs1OWgt8lDGysE5ZV3XTheg0dWUJmGBHI3Cyqp2vmgw+PHtkTCG7Rca9xo2Ygojbc
- Oo6JgLGhIVvd2yl7xZVl2PIrD5XG2QpLCdBedDL1GevAFfAyjYeNkOaSoP2YviG0R4d0sm+Xz9O
- QwnnqtrzvdiQ7b0qYh9VdbHLv7+f+H0tQ7MsUUjIKdUA43zO14XrnDRPMGDhLajRnnEg34iboOt
- Z+g+zWPjD7DpdzemwtwdarC13yIR+UYg9BRfPSGVpiBFmFeAg9LBpl1gR1Jk/kT2kQsuaXBKxEX
- 2BbZiTfLBPfOoox3jvwWGxKhM2BjRncCsnU8O6Dw7SPxQNGRd07s5E7RdsTZzyd1UInOaXK5F4F
- NSeIzaURVc5u0gtJESFj6lB6ZyPhcTI1SCGdUvK56/Lo9i7q9YJoXldXhTxCmlrxUozqghxBy1m
- IIq7A9COzRPwQlqZKSVfT45eKOjg51Zv6RHhM7e754=
-X-Received: by 2002:adf:fe01:0:b0:43c:ffee:ee94 with SMTP id
- ffacd0b85a97d-460304fae00mr32249911f8f.11.1781108003333; 
- Wed, 10 Jun 2026 09:13:23 -0700 (PDT)
+ bh=GZKxoyMSnbKsvfb5DvITG7DMsLNBYfuh4Rm0/Eix71Q=;
+ b=NQBFNJca21tHQ8//t+qgHTBywfWrmJxU9ZhrhlBjU1tYDJ81Pi4xvjFC/mihWinkNo
+ DWp8g8Jd73o7Xy0Sdi417AAjNVAqcuskbQ6toxwT765/Fr4oTs7dIBbv2AuinuY/vzrk
+ RAiVayE07mjK40sH44KmDkgYApUCqekRhQggcpftTzzX+QXV+8mgTqV1qXJ3RH3QUEu1
+ rykioJFJPy0tOzuM25422O2xVjfcDKPDbjZOVVnLa5fcI+eZyo6fpulGrfxqgskuP89j
+ itw5HRD7UxGdWivYNwyOyc3m+T/rQ+9AXp0tSIAjtfOvWwz6JSyZfWVt+YQ0etHNDSsq
+ h6GA==
+X-Gm-Message-State: AOJu0Yy5BwXEOM0By9BNBBk5YIMVS1hbm5Tsrz91gz0DW8x60LP3f8cN
+ +4JsmGN0qfF6Gq1vae6oDfO24AlCejFgQZEycmroRgP+Tl+7+JUM4QrVF0f1bg06QEbwGGeYZR1
+ 88380
+X-Gm-Gg: Acq92OE7VmYnFvDHCONHcogCsLfNvZmqYk4jAKzxZdbnEvzuWk1/vVzoAcwIqjNrnno
+ 74bU7scWjl6ToYC1iH18Wxpcq1D4tqU/3So+iG3+Fph1L/atiVIiQvJ/GR6xQQBZ04SKGPFlbCQ
+ gUdb4Q0XTJB0PStngNWJ0cxK9Oc2NmgS2qrt5ifeO4D6MNR+FLiOm5LhUWH1supYZh8DJQQp6Wa
+ RMiz52a8YMS6oEhve+84y+/6VQVYWGV7fEqn3VQyIUrnNl5RzuKZk3SbdOYm/zofk3z8SJEwcAc
+ jHjiZFLLoghZuQ1du8iHKTNrdxPzfw1Q1v3gMAOLqC7QcTBOxsNiLRzhxMLmSwpQRbbdJDFZKCf
+ zUJrSylwiIJ7AL1j22bbpeBJlud0wXm838lNxeROWwrctOBqeczr/ChuUaA/w5afQpYLt3gag0x
+ KiPjD6mjSJ+7hhXhn0YmJTPLmu+7IZZ1V/00MaSgqqgCKle4i8QplWE5KF4MPn9pQZa+4RbVNnd
+ Wm/MEWIu0drfylKKN2+OWFdTP8fftj/nq/A0Ssg7ys=
+X-Received: by 2002:a05:6000:15d2:b0:45e:f228:830d with SMTP id
+ ffacd0b85a97d-460305061f8mr25792069f8f.23.1781107948644; 
+ Wed, 10 Jun 2026 09:12:28 -0700 (PDT)
 Received: from lanath.. (wildly.archaic.org.uk. [81.2.115.145])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-4601f2dcbe3sm67911360f8f.8.2026.06.10.09.13.22
+ ffacd0b85a97d-4601f2dcbe3sm67911360f8f.8.2026.06.10.09.12.27
  for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 10 Jun 2026 09:13:22 -0700 (PDT)
+ Wed, 10 Jun 2026 09:12:27 -0700 (PDT)
 From: Peter Maydell <peter.maydell@linaro.org>
 To: qemu-devel@nongnu.org
-Subject: [PULL 58/71] target/arm: Implement FMLALL{BB,BT,TB,TT} for SVE
-Date: Wed, 10 Jun 2026 17:11:49 +0100
-Message-ID: <20260610161202.2235298-59-peter.maydell@linaro.org>
+Subject: [PULL 18/71] hw/usb/hcd-ohci: Clean up USBPacket before freeing ISO
+ TD packet
+Date: Wed, 10 Jun 2026 17:11:09 +0100
+Message-ID: <20260610161202.2235298-19-peter.maydell@linaro.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20260610161202.2235298-1-peter.maydell@linaro.org>
 References: <20260610161202.2235298-1-peter.maydell@linaro.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::429;
- envelope-from=peter.maydell@linaro.org; helo=mail-wr1-x429.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::42a;
+ envelope-from=peter.maydell@linaro.org; helo=mail-wr1-x42a.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -100,51 +101,35 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Richard Henderson <richard.henderson@linaro.org>
+From: Munkhbaatar Enkhbaatar <munkhuu0825@gmail.com>
 
+ohci_service_iso_td() allocates a USBPacket and frees it after synchronous
+completion, but it does not call usb_packet_cleanup() first.
+
+Call usb_packet_cleanup() before g_free() so resources owned by USBPacket
+are released.
+
+Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/3463
+
+Signed-off-by: Munkhbaatar Enkhbaatar <munkhuu0825@gmail.com>
 Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
-Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
-Message-id: 20260609192110.752384-33-richard.henderson@linaro.org
 Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
 ---
- target/arm/tcg/sve.decode      | 5 +++++
- target/arm/tcg/translate-sve.c | 3 +++
- 2 files changed, 8 insertions(+)
+ hw/usb/hcd-ohci.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/target/arm/tcg/sve.decode b/target/arm/tcg/sve.decode
-index 71ec09393c..06bbd7fa63 100644
---- a/target/arm/tcg/sve.decode
-+++ b/target/arm/tcg/sve.decode
-@@ -1868,6 +1868,8 @@ BFMLSLT_zzzw    01100100 11 1 ..... 10 1 00 1 ..... .....  @rda_rn_rm_ex esz=2
+diff --git a/hw/usb/hcd-ohci.c b/hw/usb/hcd-ohci.c
+index 8f4de0066e..40ebafb4dd 100644
+--- a/hw/usb/hcd-ohci.c
++++ b/hw/usb/hcd-ohci.c
+@@ -755,6 +755,7 @@ static int ohci_service_iso_td(OHCIState *ohci, struct ohci_ed *ed)
+     } else {
+         ret = pkt->status;
+     }
++    usb_packet_cleanup(pkt);
+     g_free(pkt);
  
- FMLAL_hb        01100100 10 1 rm:5 100 idxn:1 10 rn:5 rd:5 &rxx idxm=0
- 
-+FMLALL_sb       01100100 00 1 rm:5 10 idxn:2  10 rn:5 rd:5 &rxx idxm=0
-+
- ### SVE2 floating-point dot-product
- FDOT_zzzz       01100100 00 1 ..... 10 0 00 0 ..... .....  @rda_rn_rm_ex esz=2
- BFDOT_zzzz      01100100 01 1 ..... 10 0 00 0 ..... .....  @rda_rn_rm_ex esz=2
-@@ -1887,6 +1889,9 @@ BFMLSLT_zzxw    01100100 11 1 ..... 0110.1 ..... .....     @rrxr_3a esz=2
- FMLAL_idx_hb    01100100 idxn:1 01 .. rm:3 0101 .. rn:5 rd:5 \
-                 &rxx idxm=%index4_19_10
- 
-+FMLALL_idx_sb   01100100 idxn:2  1 .. rm:3 1100 .. rn:5 rd:5 \
-+                &rxx idxm=%index4_19_10
-+
- ### SVE2 floating-point dot-product (indexed)
- 
- FDOT_zzxz       01100100 00 1 ..... 010000 ..... .....     @rrxr_2 esz=2
-diff --git a/target/arm/tcg/translate-sve.c b/target/arm/tcg/translate-sve.c
-index 453bae3a0e..9f207a32b9 100644
---- a/target/arm/tcg/translate-sve.c
-+++ b/target/arm/tcg/translate-sve.c
-@@ -8388,3 +8388,6 @@ static bool do_fmla_fp8(DisasContext *s, arg_rxx *a, gen_helper_gvec_3_ptr *fn)
- 
- TRANS(FMLAL_hb, do_fmla_fp8, a, gen_helper_gvec_fmla_hb)
- TRANS(FMLAL_idx_hb, do_fmla_fp8, a, gen_helper_gvec_fmla_idx_hb)
-+
-+TRANS(FMLALL_sb, do_fmla_fp8, a, gen_helper_gvec_fmla_sb)
-+TRANS(FMLALL_idx_sb, do_fmla_fp8, a, gen_helper_gvec_fmla_idx_sb)
+     trace_usb_ohci_iso_td_so(start_offset, end_offset, start_addr, end_addr,
 -- 
 2.43.0
 
