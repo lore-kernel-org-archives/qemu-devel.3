@@ -4,98 +4,94 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2EECECD98CF
-	for <qemu-devel@archiver.kernel.org>; Wed, 10 Jun 2026 21:14:48 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6447ECD98C5
+	for <qemu-devel@archiver.kernel.org>; Wed, 10 Jun 2026 21:15:00 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wXQFZ-0002tV-9R; Wed, 10 Jun 2026 17:14:13 -0400
+	id 1wXQFa-0002u7-FL; Wed, 10 Jun 2026 17:14:14 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1wXQFX-0002t3-VN
- for qemu-devel@nongnu.org; Wed, 10 Jun 2026 17:14:12 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1wXQFW-0005fk-IW
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1wXQFW-0002sY-VT
  for qemu-devel@nongnu.org; Wed, 10 Jun 2026 17:14:11 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1781126049;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=BZPGPoVnsLUfCRv/C4NjbWUGkZZDcyFWlx51AVqilzw=;
- b=al1EJ8hqz83mvHIUXrDieR9phogwUqrJgNJ9T9BKIMWO8qfVmDwrin4nwAUuuOey/oVSb4
- HBsUnWD0TtCHd/RZF8/9YhimFie+/zHPob8XBQ1+E+WxL5jyeDI8h6kPpQCj6rzBYLzpKP
- ClnEOcdINAakLeeFbwghT5Ud8TRfYGA=
-Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-642--PhYjhhkO_q77zgJT3m3hg-1; Wed,
- 10 Jun 2026 17:14:06 -0400
-X-MC-Unique: -PhYjhhkO_q77zgJT3m3hg-1
-X-Mimecast-MFC-AGG-ID: -PhYjhhkO_q77zgJT3m3hg_1781126045
-Received: from mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.111])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 307C81955F06; Wed, 10 Jun 2026 21:14:04 +0000 (UTC)
-Received: from localhost (unknown [10.44.24.21])
- by mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id AEE78180028B; Wed, 10 Jun 2026 21:14:02 +0000 (UTC)
+Received: from mail-pg1-x534.google.com ([2607:f8b0:4864:20::534])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1wXQFV-0005fL-E9
+ for qemu-devel@nongnu.org; Wed, 10 Jun 2026 17:14:10 -0400
+Received: by mail-pg1-x534.google.com with SMTP id
+ 41be03b00d2f7-c8585cd8400so2827164a12.3
+ for <qemu-devel@nongnu.org>; Wed, 10 Jun 2026 14:14:08 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1781126047; x=1781730847; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:content-language:from
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=MCxOlDbh55cYOPjTNWzgocd1shUMh8BOeKaBm52uNiI=;
+ b=hFRef4KONlCQnUXTbwjoCCKl5OoiIuSdDJ6Gu8bL8T5IRcvi4IYcNpF/7XomdPMIDn
+ SsE4MM9rPYpwZxLBT340t8pYhsHsxCodzZ8iIzl/6cpmQXZt2m7csacGu4tDLpNR6nmp
+ GZW4F4mwac4JnfnWCaCnfCKE1ntj+PWu6LwtDDwboW3gG4KrGsvwQ8oHcAx199fU68UW
+ dy3lx3iIRxbKxG6B2CT8WFdAx2iMpa7dYrsgSAs76WXbxAa3ZDnVwxhmen9VzZPVEeLN
+ YKVd68fWVByTltxgV7/hfCLw4Ia66i/8RWtBfB72PzoFDu0Gy4L3K5upMsUfO9Hl9wNT
+ eC0w==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1781126047; x=1781730847;
+ h=content-transfer-encoding:in-reply-to:content-language:from
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=MCxOlDbh55cYOPjTNWzgocd1shUMh8BOeKaBm52uNiI=;
+ b=eRD+WG+8kfkMFS/b/uR4JTBynymjRXl34L8TjQaDcyhrTx/nQzuJ48i79gPqHe4sG3
+ jmPaiI0bV1BrbiM+2k/sDK8aETm8FHqmjjWq0pnAk+fw8n6fxPA8NQAbHeyCBhc/7fkA
+ t3Cvsd4EuXZbBqYNclOIXoUJe2W6zS/sY+SaKj/XdKTgle3ZNlu/rs+gxJAvdiyAlAkf
+ cI7QSLfPBx2zjzzxjtv30Q8q1T2hiLk6MyBloES6m+RcSBOX6VboW+8xhemu39K1xnJv
+ yn8t5KEbS/ork/cDBEbVZqhTS2+x92awSj7TNnGQnCXl7elQzEbbg2Ll1XDZ8OwWIV/v
+ SQVg==
+X-Forwarded-Encrypted: i=1;
+ AFNElJ/6gc1b2ZX+zJe0PmAvyIww2kD0PEDLXjS9cSsEDA9L9sGnSeCKZWfKLYowMoqYULISZ+mUlX9Y0Pln@nongnu.org
+X-Gm-Message-State: AOJu0Yyusz1XhTj+st3UXwldyqByFLgkEMLXgW3ua7uY0eQUK1QFZEBL
+ LXAyQ903uZ5S3YSDng+vefcgeXnOelZJvS382T9F5SveQcFGhJQlwTqyPy8c5vAO3Y4=
+X-Gm-Gg: Acq92OFqfCdxaYLX/PLZxbsz/OpIono8hoh+MM4OSHh5Tb1qCM7VqnMNe2BgtboBX1y
+ brqbI8b6ec1C8TPdCTF8EdMfJH/pWTZdF9WMErDnCkKcaJvCge5+7mA7Im/w+Zbspq+CspdXYzR
+ Ch5OyV2bI3mFaP0ACu8HzSa4bjfqbjUh4XgN88JvQgMK1erIBV0JIGXFKz2LpddgaMaB7HCTCmL
+ 5e33OLxDXXNb+bS+BiU43djRBTY+uzsbu1mCkexLKVEB5i0Rt3wz2QRO9gNAYMhYZVsh7lHsYg2
+ bIfaP2jj+wzp4xE+GwRR/0G2vw5I/2uhZWE+Yl+bYc0OnHJqUDsn9p5Tja4qBRtiYfIhmYrYLxY
+ Nb5qfUjUuX4Scc55Aqk94BUkuJ07/ZQXG0VVpTkCUhXCEbMctgCrj64YXldiv6MmpP8UgJmoyOe
+ cUfJ9XH9ezSer7cvmJM6mEkcMx1dNO3WVgisPL1BhPpgSI43E=
+X-Received: by 2002:a05:6a20:c793:b0:3aa:f2c7:fd87 with SMTP id
+ adf61e73a8af0-3b4ccf46acfmr31355606637.31.1781126047165; 
+ Wed, 10 Jun 2026 14:14:07 -0700 (PDT)
+Received: from [192.168.0.4] ([71.212.142.33])
+ by smtp.gmail.com with ESMTPSA id
+ 41be03b00d2f7-c85df04a0e9sm19113459a12.13.2026.06.10.14.14.05
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Wed, 10 Jun 2026 14:14:06 -0700 (PDT)
+Message-ID: <7f61632a-cb7a-43c8-8d21-620049e0fd4d@linaro.org>
+Date: Wed, 10 Jun 2026 14:14:04 -0700
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v2] linux-user: Implement /proc/cpuinfo for ppc cpus
+To: Helge Deller <deller@gmx.de>, Helge Deller <deller@kernel.org>,
+ qemu-devel@nongnu.org
+Cc: qemu-ppc@nongnu.org
+References: <20260610180749.10883-1-deller@kernel.org>
+ <4853852b-015f-4e16-aee3-7750a35b9c78@linaro.org>
+ <a0d36607-035a-44f3-9750-397364a83059@gmx.de>
+From: Richard Henderson <richard.henderson@linaro.org>
+Content-Language: en-US
+In-Reply-To: <a0d36607-035a-44f3-9750-397364a83059@gmx.de>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Subject: Re: [PATCH v2 03/35] monitor: replace 'common' with 'parent_obj'
- in MonitorQMP
-From: marcandre.lureau@redhat.com
-To: =?utf-8?q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>
-Cc: qemu-devel@nongnu.org, 
- =?utf-8?q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>, 
- Christian Brauner <brauner@kernel.org>, 
- =?utf-8?q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>, 
- devel@lists.libvirt.org, Markus Armbruster <armbru@redhat.com>, 
- Paolo Bonzini <pbonzini@redhat.com>, 
- "Dr. David Alan Gilbert" <dave@treblig.org>, 
- =?utf-8?q?Philippe_Mathieu-Daud=C3=A9?= <philmd@mailo.com>
-In-Reply-To: <20260610123415.2883603-4-berrange@redhat.com>
-References: <20260610123415.2883603-1-berrange@redhat.com>
- <20260610123415.2883603-4-berrange@redhat.com>
-Date: Thu, 11 Jun 2026 01:13:23 +0400
-Message-Id: <178112600316.209622.15081502555680071388.b4-review@b4>
-X-Developer-Signature: v=1; a=openpgp-sha256; l=305;
- i=marcandre.lureau@redhat.com; h=from:subject:message-id;
- bh=LQm8+t9VRiww5jnmT1CEHz0Jff/lFx/A4KkM02X8uOA=;
- b=owEBbQKS/ZANAwAKAdro4Ql1lpzlAcsmYgBqKdN9KUhigYel/D+9+AK8iuXxIuCMPPEi9mJVX
- WmhElYEGKGJAjMEAAEKAB0WIQSHqb2TP4fGBtJ29i3a6OEJdZac5QUCainTfQAKCRDa6OEJdZac
- 5c10D/9/oX801ZDQw9IhaK9kSxDg9Ho5yPkgyIb/60/u/fRcxewhJy2SxJGt1kSMgZAx45xNV9k
- QEhfB+lebcP6IkuxCzdqrlC+9Agu4jI9MGqbnMsmzhcUxeRxfJ4untpFxh/jlVtATCa6azMk6/n
- iGeo8JV3huG4pG1Fd2HJ9JnEAUNLzNcHkLJZHfRpe5z+JVHBm4Srz6S8bfhNokiF4iOlfoOLjhS
- Xk8VTsCRvjb5mve0r5I6ERRrdrRVDjc9Vzf4trhynCRGsk6UNWkbWX2Pi8okKunRsKHvk/mcUJR
- RhvgydudKqzKs9rRl6GjaXHs6/Y5Qw5kGEYBpepkITAZ9VW2OsPeKre2tc63R19Eq6SKkt1oo3U
- rUlKaMq4MuFtBJM3r4KPD3aByLFj2LzEhsI/B+MQRYA1yic0jOmddK60hHkeWwZbW18jecrIVP1
- 3kl4SXjaO0iQqPkPySOYV3TM0PSZ8Z2p6mSEvvnJwGs8dRHtQtzuyGQL3st+wjOHu0fVELUJDpn
- Y3/e2Wu14sjqCDdhXoXDnRyos+p/ENwCXqIvv9GkBGzncaav/uimyccwSQTuQ6MQflhruZh31fk
- JCKx5dAVoJXm/8FENkZ59FZctJ/gr4b+fEbtdFnCbEuWhLHsW4yWOuQVmoVrX5YTyP0PZPuY34G
- hWkPw6ZIcQoANGQ==
-X-Developer-Key: i=marcandre.lureau@redhat.com; a=openpgp;
- fpr=87A9BD933F87C606D276F62DDAE8E10975969CE5
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.111
-Received-SPF: pass client-ip=170.10.133.124;
- envelope-from=marcandre.lureau@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: 8
-X-Spam_score: 0.8
-X-Spam_bar: /
-X-Spam_report: (0.8 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.445,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_SBL_CSS=3.335, SPF_HELO_PASS=-0.001,
- SPF_PASS=-0.001 autolearn=no autolearn_force=no
+Received-SPF: pass client-ip=2607:f8b0:4864:20::534;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pg1-x534.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -111,13 +107,28 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, 10 Jun 2026 13:33:43 +0100, Daniel P. Berrangé <berrange@redhat.com> wrote:
-> The field name 'parent_obj' is standard practice for QOM structs
-> so align the QMP monitor.
+On 6/10/26 12:13, Helge Deller wrote:
+>>> +    if (clock_getres(CLOCK_REALTIME, &res) == -1) {
+>>> +        res.tv_nsec = 1;
+>>> +    }
+>>> +    freq_mhz = 1000.0 / res.tv_nsec;
+>>
+>> Seems ok.
+> 
+> Yes. But it will allways print 1000.000MHz, which isn't that useful either.
+> Shall I keep it nevertheless?
 
-Reviewed-by: Marc-André Lureau <marcandre.lureau@redhat.com>
+Well, depends on the host, I suppose.  Perhaps we can get away with omitting it, though I 
+suppose it all depends on why you're implementing /proc/cpuinfo in the first place.
 
--- 
-Marc-André Lureau <marcandre.lureau@redhat.com>
+I'll note that unlike "clock", "timebase" *is* used by glibc, but only if we don't 
+implement the __kernel_get_tbfreq vdso call.  For linux-user, cpu_ppc_load_tbl() uses 
+cpu_get_host_ticks().  Ideally we'd report the host_ticks frequency for timebase, but we 
+don't have a function for that.
 
+Perhaps we should switch cpu_ppc_load_tbl() to get_clock(), and then report timebase = 
+1GHz.  That would certainly make the vdso implementation simple.
+
+
+r~
 
