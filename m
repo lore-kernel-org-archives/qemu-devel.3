@@ -4,120 +4,93 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2017CCD98C7
-	for <qemu-devel@archiver.kernel.org>; Wed, 10 Jun 2026 20:38:59 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id CC41ACD98C5
+	for <qemu-devel@archiver.kernel.org>; Wed, 10 Jun 2026 20:44:34 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wXPgh-0004Yj-0r; Wed, 10 Jun 2026 16:38:11 -0400
+	id 1wXPlq-0005mv-WF; Wed, 10 Jun 2026 16:43:31 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1wXPga-0004W2-GD
- for qemu-devel@nongnu.org; Wed, 10 Jun 2026 16:38:04 -0400
-Received: from smtp-out2.suse.de ([195.135.223.131])
+ (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
+ id 1wXPlp-0005kv-5j
+ for qemu-devel@nongnu.org; Wed, 10 Jun 2026 16:43:29 -0400
+Received: from mail-wm1-x32b.google.com ([2a00:1450:4864:20::32b])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1wXPgX-0005jA-Le
- for qemu-devel@nongnu.org; Wed, 10 Jun 2026 16:38:04 -0400
-Received: from imap1.dmz-prg2.suse.org (unknown [10.150.64.97])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
- (No client certificate requested)
- by smtp-out2.suse.de (Postfix) with ESMTPS id 716C775D5E;
- Wed, 10 Jun 2026 20:37:59 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1781123879; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=mpdZXVO3jlCGnfaH6s77jIoCVRX3D9kae9H03tCDqy4=;
- b=blwTDnT1y1Ox7tzdaVZXZUz9cChGdSYLlMRhf9ut61vlpk7K2gMVXvN0y6wDlAUaX8I9Y+
- D+jjID3GIGiXqdvv40Vvz0Rav9eCcuXUHOqK8ceA2VU51yYFzrktKJ2jsDv+aqnPzLIHom
- vvfI6piYE8eIl8yLcO0HspBaXU80sVw=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1781123879;
- h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=mpdZXVO3jlCGnfaH6s77jIoCVRX3D9kae9H03tCDqy4=;
- b=hKPpb0ejLCg4sDnG99M2lpQxK8XDmwW2BxnmL2p9DmD3DqZDp7sxkMRJ5m1qlsGRazogB8
- tOBg8ZELwg+Ja9Ag==
-Authentication-Results: smtp-out2.suse.de;
-	none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1781123879; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=mpdZXVO3jlCGnfaH6s77jIoCVRX3D9kae9H03tCDqy4=;
- b=blwTDnT1y1Ox7tzdaVZXZUz9cChGdSYLlMRhf9ut61vlpk7K2gMVXvN0y6wDlAUaX8I9Y+
- D+jjID3GIGiXqdvv40Vvz0Rav9eCcuXUHOqK8ceA2VU51yYFzrktKJ2jsDv+aqnPzLIHom
- vvfI6piYE8eIl8yLcO0HspBaXU80sVw=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1781123879;
- h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=mpdZXVO3jlCGnfaH6s77jIoCVRX3D9kae9H03tCDqy4=;
- b=hKPpb0ejLCg4sDnG99M2lpQxK8XDmwW2BxnmL2p9DmD3DqZDp7sxkMRJ5m1qlsGRazogB8
- tOBg8ZELwg+Ja9Ag==
-Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
- (No client certificate requested)
- by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id E4F34779A7;
- Wed, 10 Jun 2026 20:37:58 +0000 (UTC)
-Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
- by imap1.dmz-prg2.suse.org with ESMTPSA id 8VzZKSbLKWqZRwAAD6G6ig
- (envelope-from <farosas@suse.de>); Wed, 10 Jun 2026 20:37:58 +0000
-From: Fabiano Rosas <farosas@suse.de>
-To: Peter Xu <peterx@redhat.com>, =?utf-8?Q?Daniel_P=2E_Berrang=C3=A9?=
- <berrange@redhat.com>
-Cc: qemu-devel@nongnu.org, qemu-arm@nongnu.org, =?utf-8?Q?C=C3=A9dric?= Le
- Goater <clg@redhat.com>, Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?=
- <philmd@mailo.com>, Vladimir
- Sementsov-Ogievskiy <vsementsov@yandex-team.ru>, Peter Maydell
- <peter.maydell@linaro.org>, "Dr . David Alan Gilbert" <dave@treblig.org>,
- Eric Blake <eblake@redhat.com>, Akihiko Odaki
- <odaki@rsg.ci.i.u-tokyo.ac.jp>, Paolo Bonzini <pbonzini@redhat.com>, Kevin
- Wolf <kwolf@redhat.com>, Sana Sharma <sansshar@redhat.com>, =?utf-8?Q?Mar?=
- =?utf-8?Q?c-Andr=C3=A9?=
- Lureau <marcandre.lureau@redhat.com>, Juraj Marcin <jmarcin@redhat.com>,
- qemu-rust@nongnu.org, Markus Armbruster <armbru@redhat.com>, Mark
- Cave-Ayland <mark.caveayland@nutanix.com>
-Subject: Re: [PATCH v2 05/10] qom: Create object-property-ptr.[ch]
-In-Reply-To: <aimvTYDsv_-Xsboy@x1.local>
-References: <20260609172514.2037645-1-peterx@redhat.com>
- <20260609172514.2037645-6-peterx@redhat.com> <aimNv51iMZ_yEgDG@redhat.com>
- <aimvTYDsv_-Xsboy@x1.local>
-Date: Wed, 10 Jun 2026 17:37:56 -0300
-Message-ID: <87pl1y3zdn.fsf@suse.de>
+ (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
+ id 1wXPlm-0003kt-UZ
+ for qemu-devel@nongnu.org; Wed, 10 Jun 2026 16:43:28 -0400
+Received: by mail-wm1-x32b.google.com with SMTP id
+ 5b1f17b1804b1-490cdae130cso25792405e9.0
+ for <qemu-devel@nongnu.org>; Wed, 10 Jun 2026 13:43:26 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1781124205; x=1781729005; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=BjVdjpfOdad/VHaFqOII69qjP1mCIpEc8kf1f/xpvbs=;
+ b=fsqwzxMlTzoygIm/FxNDijG4xGiN1A+EYV4RaCWFBKolRhkjVdqU0qur5kie5fNZ8r
+ 35JgqMYCOciPyJ0J9v1wF3utedZWs86GuTWcrx+cr5rpTrPhfG//xgrOxVoc4MwsurcQ
+ sgQ52EcZjNYJV2tiKL0EB511s2wvjoYKSiIt46iw4txzSsoz8VzivXnWSGb8LGVyEme1
+ XlQeUO1tQkosewIBlXaUsjgk4YfirR4dAtHitu4wfXcUhRw3mo3WB6LUD1cKgRe1fOxD
+ idKpCMViaQlVBoZB8OkwTmBfo5OTHMVSD6kEsJxdsprJne2gkIw0avGgnNMkhh/HrceK
+ JeGw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1781124205; x=1781729005;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=BjVdjpfOdad/VHaFqOII69qjP1mCIpEc8kf1f/xpvbs=;
+ b=W1E6bRDUs5vjuC4tpaYOmzo3fR1XAGEWcl9KluH43iKoXuhFkdPZd6wKtC8yLQ0XqU
+ AiSFoGdLx6l23YHmEvSqPtxYk4M1UZSrNYhfE7dNRa6hMxMZ4Ijgb7VePw2r3K2qebCL
+ vM6FFRs7vu30kCr0hRx2x2sm9RSfdXXJnadCqD7GONbp96sRKl//Hvri74JsHy1IWtKY
+ RVMVJi7yaJOr82F+pblSWk4D0UoCFXn+ebUo3tF9eyYcP5ew6VWYQmY30fkDi7DPN66g
+ 2ANgopVUPWWx5oU2CnV/0sBsavEsug+phSPxceXKN2Yp5Jzutb9xsTdonvxJney/1xTH
+ Kjng==
+X-Gm-Message-State: AOJu0Yy5MHusChrpCm0b6cB9Qqq6+oHbsVBK/vqBBZSqXxHus9mIF5CW
+ fscuUfGMg5P7TxDx1BTj476PWbw2bhAWhJlvJ17bCYCjsV6oWnbViML7WkOAqpWIpUs=
+X-Gm-Gg: Acq92OFJZksqPV2Q+SKPbEOw9I3MGrzG+pPVYF8qXen6OJoy5plN7KKOKaaU49q+a8W
+ cqaVDMRBHPbQ0nDu1StUZ5j16B3tnKK2P/s1oh+K67wY/uxwCHJqfszMDztXf4m5wZKf8tYNOyO
+ JpVKZ4zSctLYu1wc02nCCxGbonFWzDLM7movOrugnl6a2dyetyu8CgcvVEhZg96xQW2/fX/cglA
+ ypnFkhswNPqjaSEGlI1wq5unslUJ2Kijpkw07B6Nfhf0/ZMw1rynshx69lOTQsEK89RjUUrDAki
+ /qzkoZTzVSsQ8sztk7nc5oPFnD11aDWGcl7UzHO0106Y879RKOn9TAD7btprIgjZItxIXNHKGET
+ DPjxldT0LDFrDuYpGUUdysLimEYfQZER/9BVfTOPc4fys5iaW0iPSOUmPlYQVY35nO36nM3zJPF
+ +BP+doR54XudTBpeqFiBDFU0ooxHrG9yKjduwaIPduu2EU
+X-Received: by 2002:a05:600c:c0d3:b0:490:b0e0:3de2 with SMTP id
+ 5b1f17b1804b1-490c265c148mr302919585e9.33.1781124204639; 
+ Wed, 10 Jun 2026 13:43:24 -0700 (PDT)
+Received: from draig.lan ([185.124.0.195]) by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-4601f2ec711sm72388472f8f.12.2026.06.10.13.43.23
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Wed, 10 Jun 2026 13:43:24 -0700 (PDT)
+Received: from draig.lan (localhost [IPv6:::1])
+ by draig.lan (Postfix) with ESMTP id 370555FA43;
+ Wed, 10 Jun 2026 21:43:23 +0100 (BST)
+From: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>
+To: qemu-devel@nongnu.org
+Cc: qemu-arm@nongnu.org, Peter Maydell <peter.maydell@linaro.org>,
+ Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
+ =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ Richard Henderson <richard.henderson@linaro.org>
+Subject: [PATCH v2 2/6] target/arm: trigger timer recalculation when toggling
+ CNTHCTL:ECV
+Date: Wed, 10 Jun 2026 21:43:18 +0100
+Message-ID: <20260610204322.828645-3-alex.bennee@linaro.org>
+X-Mailer: git-send-email 2.47.3
+In-Reply-To: <20260610204322.828645-1-alex.bennee@linaro.org>
+References: <20260610204322.828645-1-alex.bennee@linaro.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-X-Spamd-Result: default: False [-4.30 / 50.00]; BAYES_HAM(-3.00)[100.00%];
- NEURAL_HAM_LONG(-1.00)[-1.000];
- NEURAL_HAM_SHORT(-0.20)[-1.000]; MIME_GOOD(-0.10)[text/plain];
- ARC_NA(0.00)[]; MISSING_XM_UA(0.00)[]; RCVD_TLS_ALL(0.00)[];
- MIME_TRACE(0.00)[0:+]; RCVD_VIA_SMTP_AUTH(0.00)[];
- RCPT_COUNT_TWELVE(0.00)[19];
- FUZZY_RATELIMITED(0.00)[rspamd.com];
- MID_RHS_MATCH_FROM(0.00)[];
- DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
- FROM_HAS_DN(0.00)[]; TO_DN_SOME(0.00)[];
- FROM_EQ_ENVFROM(0.00)[]; TO_MATCH_ENVRCPT_ALL(0.00)[];
- RCVD_COUNT_TWO(0.00)[2];
- DBL_BLOCKED_OPENRESOLVER(0.00)[suse.de:mid,imap1.dmz-prg2.suse.org:helo]
-Received-SPF: pass client-ip=195.135.223.131; envelope-from=farosas@suse.de;
- helo=smtp-out2.suse.de
-X-Spam_score_int: -43
-X-Spam_score: -4.4
-X-Spam_bar: ----
-X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::32b;
+ envelope-from=alex.bennee@linaro.org; helo=mail-wm1-x32b.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_MED=-2.3, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -133,74 +106,31 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Peter Xu <peterx@redhat.com> writes:
+When toggling the state of ECV we affect the offset applied to timers.
+As a result we should trigger a recalculation of the timer value to
+take into account the new offset.
 
-> On Wed, Jun 10, 2026 at 05:15:59PM +0100, Daniel P. Berrang=C3=A9 wrote:
->> On Tue, Jun 09, 2026 at 01:25:09PM -0400, Peter Xu wrote:
->> > Create object-property-ptr.[ch] files to include all the helpers for
->> > object_property_add*_ptr().
->> >=20
->> > These set of helpers are handy because they look extremely familiar wi=
-th
->> > qdev-properties, allowing the caller to provide a pointer and it will
->> > manage all the setters and getters.
->> >=20
->> > The follow up patches may introduce more of such helpers.  Since objec=
-t.c
->> > has been already too big, split that part out.
->>=20
->> The "ptr" helpers are all instance level properties which is a concept
->> we discourage from new usage, in favour of class level properties.
->>=20
->> I don't think we should be adding more "ptr" helpers, but rather
->> planning to eliminiate the (surprisingly little) usage of the
->> existing ones.
->
-> The other way to do similar thing is qdev's offset way, but IMHO that's
-> more awkward to remember an offset of a pointer then do math everytime.
-> Essentially, from technical pov we need at least one uintptr_t to store
-> either (1) offset, or (2) field pointer when there's a field that is bound
-> to a prop.  IMHO (2) can be better otherwise we'll need to do all the mat=
-hs
-> to calculate offsets then when access we add the offset back and do a for=
-ce
-> cast.  It seems not necessary.
->
+Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+Signed-off-by: Alex Bennée <alex.bennee@linaro.org>
+---
+ target/arm/helper.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
-The more limiting aspect of using the offset is that MigrationParameters
-needs to be embedded into MigrationState because the Object is
-MigrationState and not MigrationParameters. We could try to solve that
-issue specifically by making MigrationParameters a standalone object.
+diff --git a/target/arm/helper.c b/target/arm/helper.c
+index f4aae0a4072..5c640853060 100644
+--- a/target/arm/helper.c
++++ b/target/arm/helper.c
+@@ -1806,6 +1806,9 @@ static void gt_cnthctl_write(CPUARMState *env, const ARMCPRegInfo *ri,
+     if ((oldval ^ value) & R_CNTHCTL_CNTPMASK_MASK) {
+         gt_update_irq(cpu, GTIMER_PHYS);
+     }
++    if ((oldval ^ value) & R_CNTHCTL_ECV_MASK) {
++        gt_recalc_timer(cpu, GTIMER_PHYS);
++    }
+ }
+ 
+ static void gt_cntvoff_write(CPUARMState *env, const ARMCPRegInfo *ri,
+-- 
+2.47.3
 
-The main issue is that we would need to figure out how to set the compat
-properties that are not part of MigrationParameters.
-
-The other main issue =3D) is that we'd need to wrap this in another
-structure because MigrationParameters is generated by QAPI.
-
-A minor issue is that -object migration and -global migration use the
-"migration" word from TYPE_MIGRATION, so the MigrationState would have
-to be renamed.
-
-We could actually solve the first two by doing similarly to what I did
-in qom.json in my reply to the cover-letter:
-
-struct MigrationOptions {
-   MigrationParameters params;
-   <compat props>
-}
-
-... then access it by offset. This is fine because we can then do
-whatever we want with the MigrationOptions pointer without having to
-follow the lifetime of MigrationState.
-
-> OTOH, I still see value on non-class instance properties (that sometimes =
-we
-> don't even want to have some props avail for the class, but conditional to
-> some instances when created dynamically).  If that is needed, IMHO it's
-> fine we still provide per-instance properties.
->
-> Is there any pointer I can read about the discussion previously on this?
->
-> Thanks,
 
