@@ -4,118 +4,166 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 30EF7CD98CC
-	for <qemu-devel@archiver.kernel.org>; Wed, 10 Jun 2026 21:04:39 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 43554CD98C7
+	for <qemu-devel@archiver.kernel.org>; Wed, 10 Jun 2026 21:06:58 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wXQ5r-00081w-Fz; Wed, 10 Jun 2026 17:04:11 -0400
+	id 1wXQ8E-0000mc-RM; Wed, 10 Jun 2026 17:06:38 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1wXQ5q-00081K-Kz
- for qemu-devel@nongnu.org; Wed, 10 Jun 2026 17:04:10 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1wXQ5o-0001Y8-Rg
- for qemu-devel@nongnu.org; Wed, 10 Jun 2026 17:04:10 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1781125446;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=8EBlXT8ZT3cbqCRoXecK6CqTgg9SqaxiG6QyZjxjFC4=;
- b=YVXLie9+O7ZRmR3Cm1DtnUC2W4VOJ098yCv4LNzwA/OyCaTZrS8LBIO2WvrA5ANExrfYL+
- 8wCyJpjfahDGYVQPBdSraxTdZ2IMfRVdTeS5N6z+qUBqDdCCp8DiiVWM3EQBH0Pxuz7Mv6
- 47xYb3wL0kDbrFOnTo17j9kff+Zh5Do=
-Received: from mail-wm1-f70.google.com (mail-wm1-f70.google.com
- [209.85.128.70]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-379-1inzzv4sPZiI252EiwE59w-1; Wed, 10 Jun 2026 17:04:05 -0400
-X-MC-Unique: 1inzzv4sPZiI252EiwE59w-1
-X-Mimecast-MFC-AGG-ID: 1inzzv4sPZiI252EiwE59w_1781125443
-Received: by mail-wm1-f70.google.com with SMTP id
- 5b1f17b1804b1-490b7959b9fso72111355e9.2
- for <qemu-devel@nongnu.org>; Wed, 10 Jun 2026 14:04:04 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <jim.cromie@gmail.com>)
+ id 1wXQ8C-0000mM-2P
+ for qemu-devel@nongnu.org; Wed, 10 Jun 2026 17:06:36 -0400
+Received: from mail-yw1-x112c.google.com ([2607:f8b0:4864:20::112c])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <jim.cromie@gmail.com>)
+ id 1wXQ88-0002rx-Ms
+ for qemu-devel@nongnu.org; Wed, 10 Jun 2026 17:06:35 -0400
+Received: by mail-yw1-x112c.google.com with SMTP id
+ 00721157ae682-7f5eb760240so6968387b3.0
+ for <qemu-devel@nongnu.org>; Wed, 10 Jun 2026 14:06:30 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1781125589; cv=none;
+ d=google.com; s=arc-20240605;
+ b=kJSJEInWjCrvRQe6rCN/1cBG2fSHHRUd6YEQfxiseG6XTIBx+ZnxNZOtKL2IFCJFyi
+ /J1ArlaD+ROvZVFaAmn1FgV+MY8iCUOB9zuYWpUAA5tGZ2a9kuG0yJJAUZvD+nYrudHf
+ feRrsmVIoz1nYMfNy0ZmzNgNbZcpwewAGWSTq+6PYlOvrlIUaOHanpZQnrHJ5zTldXU7
+ WhccptA6nWZpE18RSo6rB6VEP951zwvarGlkkj11AJuRRrOF1DpaO2pF2HJKyaazeonw
+ LmtGenc4848RRCLXQJJAF18HEoSYfVBP+q3QxGzmnJ+Jv7Tj2yPIExp3lDuQaNHGrMCZ
+ iE2g==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
+ s=arc-20240605; 
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:dkim-signature;
+ bh=96czj6yri6D29TEjjpnrX0Ms962E0G1MVyGNh2o55HQ=;
+ fh=PpOhKISkIJi/h96gWKi+mfaSfM6y8W6NaZqRAf+J8bk=;
+ b=iMlPObSrTP4c4jWTRABQBAvXLLwZACKosYLtmrBXS+qzTK37I9UWD/RviCr2ZxTqjK
+ norwzUDYB+FhDxDZuks0IM6RgZXCk+FM30F4E92mvxmj5HpV6qNnjYXl2PlCaltZiKt9
+ S3a2amjKVPQAC9pT5JXkZXBnDu0H1sgwSgQ8AL+fCCK7xXNxsfSX8+CwukUvMRrMaFyk
+ 9pyVxy/JZsxUwKtEUABX7SYM9iVikwc9kREarySRp8Yv+zvdw8FD/vQfSkghenjmyKsH
+ D5lUgzdr1zx5o+W37kPxQLvaA7HRXeYB+30kb/gRhQmBp5WpF9Q5v8UO0l0U8tVJPijm
+ Is9w==; darn=nongnu.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1781125443; x=1781730243; darn=nongnu.org;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
- bh=8EBlXT8ZT3cbqCRoXecK6CqTgg9SqaxiG6QyZjxjFC4=;
- b=K2HJc+sj3MHPH0XSnX2hMrYZo4eSz9V5VxJ1v/frQR8VuseAsnd4VB5Ef4H2K/YTg5
- 7xyi15jTSrJJ1AUkknQv9lv40KdyuA3LehdwLYPe3NMPAchhS2KflhwRLKwvouAtTRdR
- eHtUTJC68ZU5NBb/PxN2puVWZTS8WTarPgouDGnEw6iXhkAg+YIVrWMo5nDNv2JWTay+
- jD7W0YpO3o7KUxjfK23zpcEMqEqEWXL6wqP4vTv4dHIO9mJJeyWHa2HSSfSTch9UueWk
- 7iX2mvZ4GORqQC3Cp4LcRRhrHDv+DgVvvLITZJDZvFxYHGh9BzigqUcHHZ4wXUc6Op3X
- IAdw==
+ d=gmail.com; s=20251104; t=1781125589; x=1781730389; darn=nongnu.org;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=96czj6yri6D29TEjjpnrX0Ms962E0G1MVyGNh2o55HQ=;
+ b=bXcT3h2teYdIFzXgGGkPMBF6Hfz7C4JPfPpbAU345KgEKQrDq9785uWeF/EiryAAFc
+ RHIhVGUBQRS0aJgTf4xtctm2Pde6vsHMnjVVbz3W/TWx0hgTpZaFQ4Ce7EIC20Co7RpD
+ 7Qpq3Y3NhT+mGTadj5wgtoIvzkLf8bGJMJAxbIBDOKNOMji+6OTNtWe57p+i8Nzga/SA
+ Wjt8bS5UoIoq/Q2BXUtlTL38CDxGsbO0s6by3rH5TS/YWFdubJIN6SuohPKuM+KyHoE4
+ dAGJ1qYuW3L6F3y/B4Vng2iEIiFsrqbbGiPJO+MSMGaD3aOG9sNL41xAl5GGbt+n0spT
+ Bbuw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1781125443; x=1781730243;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=8EBlXT8ZT3cbqCRoXecK6CqTgg9SqaxiG6QyZjxjFC4=;
- b=ek4XmkTFJ/r5xN7oAWwDz6Dq0TsP2c9EknBqmikXG4DZMRC85SpDoFScZhSUeNtqd2
- +ddCQ5b6CN/EWPmLWoKDq3mFj+8Nw+Q7lNXRbskKe0e7ODuff1f1oM9okFt53skoqLld
- PD7IDL1TWaj31+RD0XNnieAAUu7R1Ze+Ng+jtSOZwtaMupEkykNWs6RrB8Y/9ZtusdY/
- Dk6AfXHm36VxSx63/EG6Rsw8Da5dA5z+ZOJJSmQoV8hmkXAt/STB0s4+5afh4QjQqXaU
- k4BE3f4yP76w+zF70m6WKkFgoxRN6trvIiBIRMVnCHeCe2Gc2gDSwlaJcYZorWrYl67Q
- tUPw==
+ d=1e100.net; s=20251104; t=1781125589; x=1781730389;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=96czj6yri6D29TEjjpnrX0Ms962E0G1MVyGNh2o55HQ=;
+ b=S7lCaWefjj4hvO5aQLMkikOprrqMTgTa49dicDY7H7wyLiCIT1yAi1xfJNq4p00wo+
+ RU2GHItZqq9ex1BMpZdg7KY5jD/r0zkkc9eY2mJ/ah3Pmqa+uzJEG5ngQmCWpkB31pGW
+ h0pvmOtPWOnWWbc5rMNqNJDEX+3B1bhJgXEqruHnHDZB+Wx4Y7iyFae7V9gboBhV5I3O
+ s8+xjsNCUT9ezwhpG4mWgC2aMyEFN8CXd7l59OQ/BLXELfCoI70voXbaX9y+jExbbVY8
+ ioBs8YA7riHVK8jKzsbfVJV/qFABPh4ud7dl16H0bfz1ob3Cdl8FK1TK7VapcU/Lmclb
+ 05PA==
 X-Forwarded-Encrypted: i=1;
- AFNElJ/V5JnaJG8tHHDQZoEKX3NxJYE4x0cJ8QcIQ1VGvQjCuwdeDO7S7mh9c5XZJHTfpNKkjACO8f8mJI3y@nongnu.org
-X-Gm-Message-State: AOJu0Yz85DUNNQj1dzXppTjSDRydFTpxmxJNS54x2RqYijAF6yqsCvYR
- b/WzUIdaTTXaeuAoGyV7D5eRUauV2KO3nAOZE7EBCTaLPozECPOYGOKTJohTziSBCeDCde1KN7j
- wXULEjFri0czNW71OSL3WadDIdtN1MI+UG3Up7cqVlOoUJec5dEdZNj/C
-X-Gm-Gg: Acq92OFTTMuB1aAW74OTrNisTKMSrYFrPu4c30HQbY1eOzGlfRNNFqXZ00jFbrWVhCj
- ahYI/Bau99cJl7VqVbj3TR6t/U3tkxwPCuf0sSjHVgb0+Bu8lzcN3XcltmGNzTt3MwdhTx4A9yj
- s/m10h7iH06zM3Xs28YUVxt/552lWB5BOUv57p8zQQBen8wknVR5zaTYvKFQFJzlx04OzWjPSgz
- Us3akom6zoUZdVSNCCxxmFSqTN+qYIZv6xW3vaGWknTvbtA1l6SoEexHTOqikrIqLfhi4pIHCBM
- q5RNtMiez7yysgzz4Nsm3rcwBD4z8n+FKXrg93uivkO78EINeOm3AfYdXOzqaIlDgVBqtd0cEsf
- bs2KNz+GjGqVNV47iEQB23iA6+ZRH5fwowfmo+P1/cfvQJbKPjyq6Bg==
-X-Received: by 2002:a05:600c:35d4:b0:490:b8d3:5dcc with SMTP id
- 5b1f17b1804b1-490c25e4634mr452192495e9.19.1781125443020; 
- Wed, 10 Jun 2026 14:04:03 -0700 (PDT)
-X-Received: by 2002:a05:600c:35d4:b0:490:b8d3:5dcc with SMTP id
- 5b1f17b1804b1-490c25e4634mr452192185e9.19.1781125442520; 
- Wed, 10 Jun 2026 14:04:02 -0700 (PDT)
-Received: from redhat.com (IGLD-80-230-85-71.inter.net.il. [80.230.85.71])
- by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-490e2c84110sm13393955e9.4.2026.06.10.14.04.00
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 10 Jun 2026 14:04:02 -0700 (PDT)
-Date: Wed, 10 Jun 2026 17:03:59 -0400
-From: "Michael S. Tsirkin" <mst@redhat.com>
-To: Peter Xu <peterx@redhat.com>
-Cc: Peter Maydell <peter.maydell@linaro.org>, Gavin Shan <gshan@redhat.com>,
- Pavel Hrdina <phrdina@redhat.com>,
- Daniel =?iso-8859-1?Q?P=2E_Berrang=E9?= <berrange@redhat.com>,
- qemu-devel@nongnu.org, qemu-arm@nongnu.org, jugraham@redhat.com,
- shan.gavin@gmail.com, Alex Williamson <alex@shazbot.org>,
- David Hildenbrand <david@kernel.org>
-Subject: Re: [PATCH RFCv1] virtio: Inherit max bounce buffer size from bus
- parent if possible
-Message-ID: <20260610170146-mutt-send-email-mst@kernel.org>
-References: <20260610080947-mutt-send-email-mst@kernel.org>
- <eb0f0da1-11dd-4437-94fd-a65af55851e1@redhat.com>
- <20260610082637-mutt-send-email-mst@kernel.org>
- <5d8cbd4b-3725-437e-88a3-e0af32164815@redhat.com>
- <e7cc9f2d-ccb4-442f-a1ed-7c5474395099@redhat.com>
- <20260610095712-mutt-send-email-mst@kernel.org>
- <aimEl9QQ_LTRPLtd@x1.local>
- <CAFEAcA8HhC-=KwdbNE5jgqdP+H1VF1aJXdGaME8KsaDHhnBG9Q@mail.gmail.com>
- <20260610121846-mutt-send-email-mst@kernel.org>
- <aim2tpHiev3iOkDE@x1.local>
+ AFNElJ9a4vgUteuOgGQOb0QaOg0jW9xL1QoT5lZpkW5i/Ttgcw5C4gW3zfSQYY8Vr7ipWWYqng3kegg0Un+X@nongnu.org
+X-Gm-Message-State: AOJu0Yzx0V9jBF86fdvVR9CN4wz6H0Z5eW3MfxfWj8UxTkuNJE7KRee6
+ OpCL8KKizQZZiGbRKJNKSFi917x4Cfv3vGCzFHOG2In65OV0znWuOOsqfMaD2seM9u5fNqX7kqw
+ YAHtj8yEecWFc9MQKJ6jTh4T2nC2jSxo=
+X-Gm-Gg: Acq92OGA113YxdZHZuBLz2XJO2t/Lx9IRAQUPW3vEcgu72VUMF6RNfd5i7BNNsyXCUh
+ 99n03Fmg2pg6h9rkLwXm3kqr6scjo8p2YYHFCWmJ+OZEpcDNDfNz1tjzc8uA9k2/TcFyKdMV/Ma
+ x5lO1IAm2Zrd86szNZzfFdh6bk1rxIr7wUeDoiutncgz9Q3edGboxy7NP/r3UkfMPo6CnDkc96v
+ KgqPetKvzWPHjV6AU6e2NRqPoQcZjMxZ+l9cJ6MPtmEtxq+llRYdJ/63Ovitj55cm4Yy7AjODzR
+ 0XJkmiFQ0xrlZXwD1Cw4NmqpgA==
+X-Received: by 2002:a05:690c:45c5:b0:7e9:ab56:3c99 with SMTP id
+ 00721157ae682-7ed0adbb616mr276188567b3.6.1781125589039; Wed, 10 Jun 2026
+ 14:06:29 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <aim2tpHiev3iOkDE@x1.local>
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=mst@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -24
-X-Spam_score: -2.5
+References: <20260521133315.work.845-kees@kernel.org>
+ <20260521133326.2465264-4-kees@kernel.org>
+ <da358ae1-91b4-4a16-ac76-ffab99c230b9@suse.com>
+In-Reply-To: <da358ae1-91b4-4a16-ac76-ffab99c230b9@suse.com>
+From: jim.cromie@gmail.com
+Date: Wed, 10 Jun 2026 15:06:02 -0600
+X-Gm-Features: AVVi8CcLXClq9Fijm8VjZF47hQWmos5q_iXrehNZDw9kSOby-E_cMxEQI0SK-hU
+Message-ID: <CAJfuBxwRuT1K=rjPX+sdNyYurEJ=OjqbJaSa_S6JnY6yzTwTvQ@mail.gmail.com>
+Subject: Re: [PATCH 04/11] treewide: Convert struct kernel_param_ops
+ initializers to DEFINE_KERNEL_PARAM_OPS
+To: Petr Pavlu <petr.pavlu@suse.com>
+Cc: Kees Cook <kees@kernel.org>, Luis Chamberlain <mcgrof@kernel.org>, 
+ Pengpeng Hou <pengpeng@iscas.ac.cn>, Richard Weinberger <richard@nod.at>, 
+ Anton Ivanov <anton.ivanov@cambridgegreys.com>,
+ Johannes Berg <johannes@sipsolutions.net>, 
+ "Rafael J. Wysocki" <rafael@kernel.org>, Len Brown <lenb@kernel.org>,
+ Corey Minyard <corey@minyard.net>, 
+ Gabriel Somlo <somlo@cmu.edu>, "Michael S. Tsirkin" <mst@redhat.com>, 
+ Jani Nikula <jani.nikula@linux.intel.com>, 
+ Joonas Lahtinen <joonas.lahtinen@linux.intel.com>,
+ Rodrigo Vivi <rodrigo.vivi@intel.com>, 
+ Tvrtko Ursulin <tursulin@ursulin.net>, David Airlie <airlied@gmail.com>, 
+ Simona Vetter <simona@ffwll.ch>, Bart Van Assche <bvanassche@acm.org>,
+ Jason Gunthorpe <jgg@ziepe.ca>, Leon Romanovsky <leon@kernel.org>,
+ Laurent Pinchart <laurent.pinchart@ideasonboard.com>, 
+ Hans de Goede <hansg@kernel.org>, Mauro Carvalho Chehab <mchehab@kernel.org>, 
+ Bjorn Helgaas <bhelgaas@google.com>, Hannes Reinecke <hare@suse.de>, 
+ "James E.J. Bottomley" <James.Bottomley@hansenpartnership.com>, 
+ "Martin K. Petersen" <martin.petersen@oracle.com>,
+ Daniel Lezcano <daniel.lezcano@kernel.org>, 
+ Zhang Rui <rui.zhang@intel.com>, Lukasz Luba <lukasz.luba@arm.com>, 
+ Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+ Jiri Slaby <jirislaby@kernel.org>, 
+ Alan Stern <stern@rowland.harvard.edu>, Jason Wang <jasowang@redhat.com>, 
+ Xuan Zhuo <xuanzhuo@linux.alibaba.com>,
+ =?UTF-8?Q?Eugenio_P=C3=A9rez?= <eperezma@redhat.com>, 
+ Jason Baron <jbaron@akamai.com>, Tiwei Bie <tiwei.btw@antgroup.com>, 
+ Benjamin Berg <benjamin.berg@intel.com>,
+ =?UTF-8?Q?Ilpo_J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>, 
+ "David E. Box" <david.e.box@linux.intel.com>,
+ "Maciej W. Rozycki" <macro@orcam.me.uk>, 
+ Srinivas Pandruvada <srinivas.pandruvada@linux.intel.com>,
+ Peter Zijlstra <peterz@infradead.org>, 
+ Heiko Carstens <hca@linux.ibm.com>, Vasily Gorbik <gor@linux.ibm.com>, 
+ Sean Christopherson <seanjc@google.com>, Paolo Bonzini <pbonzini@redhat.com>, 
+ Thomas Gleixner <tglx@kernel.org>, Ingo Molnar <mingo@redhat.com>,
+ Borislav Petkov <bp@alien8.de>, 
+ Dave Hansen <dave.hansen@linux.intel.com>, x86@kernel.org, 
+ "H. Peter Anvin" <hpa@zytor.com>, Vinod Koul <vkoul@kernel.org>,
+ Frank Li <Frank.Li@kernel.org>, 
+ Daniel Gomez <da.gomez@kernel.org>, Sami Tolvanen <samitolvanen@google.com>, 
+ Aaron Tomlin <atomlin@atomlin.com>, Alexander Potapenko <glider@google.com>,
+ Marco Elver <elver@google.com>, 
+ Dmitry Vyukov <dvyukov@google.com>, Andrew Morton <akpm@linux-foundation.org>, 
+ John Johansen <john.johansen@canonical.com>, Paul Moore <paul@paul-moore.com>, 
+ James Morris <jmorris@namei.org>, "Serge E. Hallyn" <serge@hallyn.com>, 
+ Andy Shevchenko <andriy.shevchenko@linux.intel.com>, 
+ Georgia Garcia <georgia.garcia@canonical.com>, kvm@vger.kernel.org, 
+ dmaengine@vger.kernel.org, linux-modules@vger.kernel.org, 
+ kasan-dev@googlegroups.com, linux-mm@kvack.org, apparmor@lists.ubuntu.com, 
+ linux-security-module@vger.kernel.org, linux-um@lists.infradead.org, 
+ linux-acpi@vger.kernel.org, openipmi-developer@lists.sourceforge.net, 
+ qemu-devel@nongnu.org, intel-gfx@lists.freedesktop.org, 
+ dri-devel@lists.freedesktop.org, linux-rdma@vger.kernel.org, 
+ linux-media@vger.kernel.org, linux-pci@vger.kernel.org, 
+ linux-scsi@vger.kernel.org, linux-pm@vger.kernel.org, 
+ linuxppc-dev@lists.ozlabs.org, linux-serial@vger.kernel.org, 
+ linux-usb@vger.kernel.org, usb-storage@lists.one-eyed-alien.net, 
+ virtualization@lists.linux.dev, linux-kernel@vger.kernel.org, 
+ linux-arch@vger.kernel.org, netdev@vger.kernel.org, 
+ linux-fsdevel@vger.kernel.org, linux-hardening@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2607:f8b0:4864:20::112c;
+ envelope-from=jim.cromie@gmail.com; helo=mail-yw1-x112c.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.445,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -131,97 +179,40 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, Jun 10, 2026 at 03:10:46PM -0400, Peter Xu wrote:
-> On Wed, Jun 10, 2026 at 12:19:39PM -0400, Michael S. Tsirkin wrote:
-> > On Wed, Jun 10, 2026 at 05:11:40PM +0100, Peter Maydell wrote:
-> > > On Wed, 10 Jun 2026 at 16:37, Peter Xu <peterx@redhat.com> wrote:
-> > > >
-> > > > On Wed, Jun 10, 2026 at 10:06:24AM -0400, Michael S. Tsirkin wrote:
-> > > > > This is the change that broke it I think?
-> > > > >
-> > > > >
-> > > > > commit 4a2e242bbb306ef5c16ce9e7bb2da3bd8a4eb098
-> > > > > Author: Alex Williamson <alex@shazbot.org>
-> > > > > Date:   Mon Oct 31 09:53:03 2016 -0600
-> > > > >
-> > > > >     memory: Don't use memcpy for ram_device regions
-> > > > >
-> > > > >
-> > > > > Maybe Alex has an opinion on what to do.
-> > > >
-> > > > I can offer one idea here..
-> > > >
-> > > > IIUC the major issue was vector ops but the mr ops might be too heavy, then
-> > > > another way to fix it is in memory API instead of using memcpy()/memmove(),
-> > > > we always use a helper (say, memmove_no_vector()) to do the split and
-> > > > properly aligned IOs as what ram_device_mem_ops does right now, this should
-> > > > only applies to ram_device.
-> > > 
-> > > If the underlying memory needs to be accessed only with specific
-> > > alignment/size, as the 4a2e242bbb30 commit message suggests, then
-> > > we cannot expose it via address_space_map(), so we must have
-> > > a bounce-buffer.
-> 
-> I get the point; this is technically a concern, but IMHO it's still
-> slightly different, and I expect it non-issue in reality.
-> 
-> Essentially we can have two ways to iteract with the pci bar:
-> 
-> 1) via vCPU / CPU access
-> 2) via DMA targets
-> 
-> Alex can correct me, but IIUC that problem was when the CPU accesses the
-> mapped region with memcpy(), rather than making that bar to be DMA target.
-> Hence, use case 1) only.  So my current understanding is the proposal
-> shouldn't (hopefully..) regress that realtek problem because use case 1) is
-> properly covered.
-> 
-> I always think it is very bogus to have any register-like MMIO regions to
-> be passed over, maybe it's a bug already?  It's because I don't know any
-> way to guarantee DMA performs in a way that will be compatible with a pci
-> bar that is register-based and will not have any side effect.  Say, if some
-> pci bar (real register-backed) must be accessed in 4B and aligned, how
-> would a DMA request guarantee that?
-> 
-> >From that perspective, IMHO it's a guest (driver or app, I'm not sure..)
-> bug to make such region to be DMA target in the first place.  The outcome
-> of such setup should be undefined.  It'll be the same after applying the
-> proposal I raised, that QEMU will have undefined behavior for such pci bars
-> to be used as DMA targets.
-> 
+On Mon, May 25, 2026 at 7:35=E2=80=AFAM Petr Pavlu <petr.pavlu@suse.com> wr=
+ote:
+>
+> On 5/21/26 3:33 PM, Kees Cook wrote:
+> > Using Coccinelle, rewrite every struct kernel_param_ops initializer tha=
+t
+> > sets .get into a DEFINE_KERNEL_PARAM_OPS-family macro invocation,
+> > for example:
+> >
+> > @@
+> > declarer name DEFINE_KERNEL_PARAM_OPS;
+> > identifier OPS;
+> > expression SET, GET;
+> > @@
+> > - const struct kernel_param_ops OPS =3D {
+> > -       .set =3D SET,
+> > -       .get =3D GET,
+> > - };
+> > + DEFINE_KERNEL_PARAM_OPS(OPS, SET, GET);
+> >
+> > Using the macro for initialization means future changes can manipulate
+> > the struct layout and callback prototypes without having to change ever=
+y
+> > initializer.
+>
+> Nit: For consistency, I suggest also converting the few remaining
+> kernel_param_ops instances that specify only .set and no .get, such as
+> simdisk_param_ops_filename.
+>
+> --
 > Thanks,
+> Petr
 
-Sorry, wasting gibabytes and GB/s of main
-RAM and PCI BW just to shuffle data back out the PCI bus
-is out of the question.
+for the dynamic-debug changes
 
-You don't have to like it)
-
-> > 
-> > Right. And virtio currently isn't friendly to the bounce buffer.
-> > We can fix that but I worry about the perf impact.
-> > 
-> > > The address_space_map() function says
-> > > "here's a host pointer to  memory, do what you like to it", and
-> > > the caller is entitled to memcpy to/from it or otherwise
-> > > access it with any C operations, which are not guaranteed to
-> > > respect any kind of alignment or similar restrictions.
-> > > 
-> > > My guess from commit 4a2e242bbb30 is that that applied an
-> > > overly broad "don't do direct access" hammer to all
-> > > vfio assigned devices, and that there needs to be some
-> > > concept of "this vfio assigned device's region is OK for
-> > > direct access" vs "this other one is not", such that if
-> > > this GH100 card's BAR guarantees it can be treated entirely
-> > > as RAM then we can have memory_region_supports_direct_access()
-> > > return true for it.
-> > > 
-> > > thanks
-> > > -- PMM
-> > 
-> 
-> -- 
-> Peter Xu
-
-
+Reviewed-by: Jim Cromie <jim.cromie@gmail.com>
 
