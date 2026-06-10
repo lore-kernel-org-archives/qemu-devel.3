@@ -4,92 +4,86 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D4164CD8CB9
-	for <qemu-devel@archiver.kernel.org>; Wed, 10 Jun 2026 16:19:59 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E3EB7CD8CB2
+	for <qemu-devel@archiver.kernel.org>; Wed, 10 Jun 2026 16:20:00 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wXLcX-00022F-Eb; Wed, 10 Jun 2026 12:17:37 -0400
+	id 1wXLZD-0005IC-9P; Wed, 10 Jun 2026 12:14:11 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1wXLcV-00021D-Ep
- for qemu-devel@nongnu.org; Wed, 10 Jun 2026 12:17:35 -0400
-Received: from mail-pl1-x62b.google.com ([2607:f8b0:4864:20::62b])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1wXLcT-0001lE-Ef
- for qemu-devel@nongnu.org; Wed, 10 Jun 2026 12:17:35 -0400
-Received: by mail-pl1-x62b.google.com with SMTP id
- d9443c01a7336-2bf114b0cf9so64811615ad.2
- for <qemu-devel@nongnu.org>; Wed, 10 Jun 2026 09:17:32 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1781108252; x=1781713052; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:content-language:from
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=jQ6eBmS4m9+eIVxpKApBcTK2xl/OEnuu93Yd4iL+9CU=;
- b=ZTDo57CAH+OCM64L2duJlnbd7aOCcwZeFQO+EAQXHfBR2ZP04Uk40UI+RddvIP8Mti
- gx2qz3chZcD4zXgiD9SOz9CKOqWsdcaDPYTr1ELaSENGv+k2sA5TrGVCMMhdglQ6SE8U
- 6VAoU6uLwcwMX6CV26aCzigupWbi5WtlvYtQlzDj0lod8ylh1hM0CtyZlbm+aVClSnkH
- RkN2ZtNhbR4zYtuvO7FqH9WpTSkek7iQbLO1UkIlwu4vhIDvwlR2zIlqgd+YbJrHA0dh
- BKDrVr0HzGyMPoPHOBi9hFBkVcqn+jm+0YoUWWFofscWhRITfAa9mlOFlfbna8S/N0Np
- uN1Q==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1781108252; x=1781713052;
- h=content-transfer-encoding:in-reply-to:content-language:from
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=jQ6eBmS4m9+eIVxpKApBcTK2xl/OEnuu93Yd4iL+9CU=;
- b=i3Ddj4YhVBnPJVB7w22LJ8JsHvtfZUknJ8ix9pSA/169u6NzR/kaQ7PR8hQ6BiZRhj
- r/AQ5C1VojjZlKWb6bBiGKxU1cIotMZt/OF2MeUgFWfWs4jAkgFu8LBDREiZuOU5bszG
- XLIw3/OK1glWo1L1Fdx/uen/q85tbflvS/CzjosODkRJlSn8fG1qs9bsv4HbpklI4agW
- B2Gf62JiMNUogboxdZ4KxegFphcfUgBHNtxruC5q8XnqfU5Q5Yg7TSAe5mPHIVEwEado
- quoNHEl2H+JaFoRefgpaG4rulxZ0DRHTCBhgOG0whwUBM23+yCVX3sLX0yOfa3GZupNu
- kWkA==
-X-Forwarded-Encrypted: i=1;
- AFNElJ+wwRYunJLDzwSzCpb+41RfEovjP08poIgF5dwupb/QKvHA3tCnuJp3HGrki0BZBry6VZbN1//Bqy3Z@nongnu.org
-X-Gm-Message-State: AOJu0YxQu1fjLlyFd9EtPeDIMezl6JeEjeOFRfn+H7ebkJHmVI27mrbT
- Vss4Pv7c9gKPKS/Tq0ukLvY48MeAur7A2Pc4V2vAIvlM9gMIS0Fe1TR5ZEq24HRjFCY=
-X-Gm-Gg: Acq92OGCPyTC+YUhMrWO5dF13zahlU+nkHbZgHWVBCbjUuHjVCZNk1JgPD1uawwCb54
- blbZk5JbD1w/UvGNcumHbVRwCBoyMOENO+cMUvWEfM3jwoXA65B4xWgX0H/OCSxMrpjUcFc5SZv
- GhWfeJQx4fzpnSrsMKuQZz7a7xPZbstZqX8wmTOoOLBbuq5d2rZNURRITUKtEGZC8plfvtavstp
- XZY6ztk7SdNDfJgSefLEIB/6Q9kw7X61F7xHBpr3oHyLWjtMqYmS7WdlDCLfheiZTCjdcLxPIqZ
- c58QlOhFuA0NhwsMNuzdPEf/4etJajSprRDigds9GIj5wsTRmpQRAWemB03RJ2aj83/KpGzQpRX
- xMWMkODnvjQJr2bSAETKe3LNoWreiAZAz3OGkblVD/QTV91En4CF7QUmA0kyqTh2uAlMHgoUxcg
- CZknD7GZ6hYYiU/Sj9Q8tBAfFhZ6Ttf2pG1L/mrulArIxkVf4=
-X-Received: by 2002:a17:902:e78f:b0:2c0:a373:89bf with SMTP id
- d9443c01a7336-2c1e80f9975mr288427405ad.1.1781108251634; 
- Wed, 10 Jun 2026 09:17:31 -0700 (PDT)
-Received: from [192.168.0.4] ([71.212.142.33])
- by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-2c2da386d07sm367725ad.62.2026.06.10.09.17.30
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 10 Jun 2026 09:17:31 -0700 (PDT)
-Message-ID: <07fb4b71-623f-4106-b85f-801902d0e9a2@linaro.org>
-Date: Wed, 10 Jun 2026 09:17:29 -0700
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1wXLZC-0005FW-0s
+ for qemu-devel@nongnu.org; Wed, 10 Jun 2026 12:14:10 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1wXLZ9-00078e-1d
+ for qemu-devel@nongnu.org; Wed, 10 Jun 2026 12:14:09 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1781108046;
+ h=from:from:reply-to:reply-to:subject:subject:date:date:
+ message-id:message-id:to:to:cc:cc:mime-version:mime-version:
+ content-type:content-type:in-reply-to:in-reply-to:  references:references;
+ bh=5UaEU4+BaDuPjrl/JW705Nct5RnzLpt0GzsvI6jg94M=;
+ b=MojtmjVQaDzMT5VwuALADQXlDR8Tz/Rgasd3tsTPS1/o1tGN48FL0Cie3uxAdth4mQOT1L
+ 1pt178G8MC7qnu7xKDvA9I739wjep9oGgP48X6+n7mwkxkvEmjcTUzk/ACsKHsO3a1uHO9
+ iugIVvpZL4YEssAx7SeZZ2oq+3wraCk=
+Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-553-GHe8yqeRP0i8KVAetRAU8g-1; Wed,
+ 10 Jun 2026 12:14:00 -0400
+X-MC-Unique: GHe8yqeRP0i8KVAetRAU8g-1
+X-Mimecast-MFC-AGG-ID: GHe8yqeRP0i8KVAetRAU8g_1781108039
+Received: from mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.17])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 2CF41195FDE9; Wed, 10 Jun 2026 16:13:58 +0000 (UTC)
+Received: from redhat.com (unknown [10.44.50.112])
+ by mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 45FBF1954102; Wed, 10 Jun 2026 16:13:50 +0000 (UTC)
+Date: Wed, 10 Jun 2026 17:13:47 +0100
+From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
+To: Peter Xu <peterx@redhat.com>
+Cc: qemu-devel@nongnu.org, qemu-arm@nongnu.org,
+ =?utf-8?Q?C=C3=A9dric?= Le Goater <clg@redhat.com>,
+ Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@mailo.com>,
+ Fabiano Rosas <farosas@suse.de>,
+ Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>,
+ Peter Maydell <peter.maydell@linaro.org>,
+ "Dr . David Alan Gilbert" <dave@treblig.org>,
+ Eric Blake <eblake@redhat.com>,
+ Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>,
+ Paolo Bonzini <pbonzini@redhat.com>, Kevin Wolf <kwolf@redhat.com>,
+ Sana Sharma <sansshar@redhat.com>,
+ =?utf-8?Q?Marc-Andr=C3=A9?= Lureau <marcandre.lureau@redhat.com>,
+ Juraj Marcin <jmarcin@redhat.com>, qemu-rust@nongnu.org,
+ Markus Armbruster <armbru@redhat.com>,
+ Mark Cave-Ayland <mark.caveayland@nutanix.com>
+Subject: Re: [PATCH v2 10/10] migration: Switch to TYPE_OBJECT with object
+ properties
+Message-ID: <aimNOxqrmmXPQTfS@redhat.com>
+References: <20260609172514.2037645-1-peterx@redhat.com>
+ <20260609172514.2037645-11-peterx@redhat.com>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 2/6] target/arm: Setup new registers for GPC3
-To: Jim MacArthur <jim.macarthur@linaro.org>, qemu-devel@nongnu.org
-Cc: Peter Maydell <peter.maydell@linaro.org>, qemu-arm@nongnu.org
-References: <20260603-jmac-gpc3b-v2-0-115c51936962@linaro.org>
- <20260603-jmac-gpc3b-v2-2-115c51936962@linaro.org>
-From: Richard Henderson <richard.henderson@linaro.org>
-Content-Language: en-US
-In-Reply-To: <20260603-jmac-gpc3b-v2-2-115c51936962@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::62b;
- envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x62b.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <20260609172514.2037645-11-peterx@redhat.com>
+User-Agent: Mutt/2.3.2 (2026-04-26)
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.17
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=berrange@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -24
+X-Spam_score: -2.5
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.445,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -102,67 +96,224 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 6/3/26 11:26, Jim MacArthur wrote:
-> Adds GPCBW_EL3. A custom write function is necessary to flush TLBs
-> when this register is written. Also allows write to the GPCBW bit of
-> GPCCR_EL3.
+On Tue, Jun 09, 2026 at 01:25:14PM -0400, Peter Xu wrote:
+> The migration object used to depend on TYPE_DEVICE due to:
 > 
-> Signed-off-by: Jim MacArthur <jim.macarthur@linaro.org>
+> - Usage of qdev properties
+> - Apply compat properties and global properties
+> 
+> This patch re-based the object to TYPE_OBJECT with the changes:
+> 
+> - Switch to object properties API
+> - Manually apply both compat and global properties in post_init()
+> 
+> Note that to avoid too many property getter/setter helpers, this patch used
+> the object_property_add_*_ptr_def() APIs so that an pointer is passed to
+> bind to the property.  Such API is used for most of the conversions.
+> 
+> After patch, the migration object initializes instance properties within
+> its instance_init() callback, in migrate_params_init().
+> 
+> One side effect of this change is, since we switched to a loop to add all
+> capabilities, the name of the properties representing a migration
+> capability may chance from previously hard-coded ones (many with x-).  It's
+> fine since it's only used in -global so it's only for debugging.
+> 
+> Similarly, I removed "x-" from other properites that used to start with
+> "x-" but actually are not experimental.
+
+Mixing such a change into a refactoring commit is bad practice,
+can you keep property changes separated.
+
+> After the whole conversion, we don't need migration_properties or the count
+> anymore, hence can be removed.  While at it, we can also remove two
+> DEFINE_PROP*() API that only migration uses (DEFINE_PROP_STR_OR_NULL, and
+> DEFINE_PROP_MIG_CAP).
+> 
+> Signed-off-by: Peter Xu <peterx@redhat.com>
 > ---
->   target/arm/cpu.h    |  7 +++++++
->   target/arm/helper.c | 19 +++++++++++++++++++
->   2 files changed, 26 insertions(+)
-> 
-> diff --git a/target/arm/cpu.h b/target/arm/cpu.h
-> index 85552b573c..9944dc9727 100644
-> --- a/target/arm/cpu.h
-> +++ b/target/arm/cpu.h
-> @@ -546,6 +546,7 @@ typedef struct CPUArchState {
->           /* RME registers */
->           uint64_t gpccr_el3;
->           uint64_t gptbr_el3;
-> +        uint64_t gpcbw_el3;
->           uint64_t mfar_el3;
->   
->           /* NV2 register */
-> @@ -1228,6 +1229,8 @@ void arm_v7m_cpu_do_interrupt(CPUState *cpu);
->   typedef struct ARMGranuleProtectionConfig {
->       /* GPCCR_EL3 */
->       uint64_t gpccr;
-> +    /* GPCBW_EL3 */
-> +    uint64_t gpcbw;
->       /* GPTBR_EL3 */
->       uint64_t gptbr;
->       /* ID_AA64MMFR0_EL1.PARange */
-> @@ -2098,6 +2101,10 @@ FIELD(GPCCR, NA6, 27, 1)
->   FIELD(GPCCR, NA7, 28, 1)
->   FIELD(GPCCR, GPCBW, 29, 1)
->   
-> +FIELD(GPCBW, BWSIZE, 37, 2)
-> +FIELD(GPCBW, BWSTRIDE, 32, 5)
-> +FIELD(GPCBW, BWADDR, 0, 25)
+>  migration/options.h   |   8 +-
+>  migration/migration.c |  35 ++-
+>  migration/options.c   | 526 ++++++++++++++++++++++++++----------------
+>  3 files changed, 351 insertions(+), 218 deletions(-)
+
+
+> diff --git a/migration/options.c b/migration/options.c
+> index 5cbfd29099..1cc99382d3 100644
+> --- a/migration/options.c
+> +++ b/migration/options.c
+> @@ -54,7 +54,7 @@
+
+
+> +static void migration_object_init_props_bool(MigrationState *s)
+>  {
+> -    const Property *prop = opaque;
+> -    StrOrNull **ptr = object_field_prop_ptr(obj, prop);
+> -    StrOrNull *str_or_null = *ptr;
+> +    Object *obj = OBJECT(s);
+> +    int i;
+>  
+> -    /*
+> -     * The property should never be NULL because it's part of
+> -     * s->parameters and a default value is always set by qdev. It
+> -     * should also never be QNULL as the setter doesn't allow it.
+> -     */
+> -    assert(str_or_null && str_or_null->type != QTYPE_QNULL);
+> -    visit_type_str(v, name, &str_or_null->u.s, errp);
+> +    struct MigPropBool {
+> +        const char *name;
+> +        void *ptr;
+> +        bool defvar;
+> +    } bool_list[] = {
+> +        {
+> +            "store-global-state",
+> +            &s->store_global_state,
+> +            true,
+> +        },
+> +        {
+> +            "send-configuration",
+> +            &s->send_configuration,
+> +            true,
+> +        },
+> +        {
+> +            "send-section-footer",
+> +            &s->send_section_footer,
+> +            true,
+> +        },
+> +        {
+> +            "send-switchover-start",
+> +            &s->send_switchover_start,
+> +            true,
+> +        },
+> +        {
+> +            "x-preempt-pre-7-2",
+> +            &s->preempt_pre_7_2,
+> +            false,
+> +        },
+> +        {
+> +            "x-cpu-throttle-tailslow",
+> +            &s->parameters.cpu_throttle_tailslow,
+> +            false,
+> +        },
+> +        {
+> +            "multifd-clean-tls-termination",
+> +            &s->multifd_clean_tls_termination,
+> +            true,
+> +        },
+> +        {
+> +            "multifd-flush-after-each-section",
+> +            &s->multifd_flush_after_each_section,
+> +            false,
+> +        },
+> +    };
+> +    struct MigPropBool *prop;
+
+This approach to declaring properties is pretty unpleasant
+to follow IMHO. Being a custom different approach from every
+other object impl is not a good thing.
+
 > +
->   FIELD(MFAR, FPA, 12, 40)
->   FIELD(MFAR, NSE, 62, 1)
->   FIELD(MFAR, NS, 63, 1)
-> diff --git a/target/arm/helper.c b/target/arm/helper.c
-> index 9dd8fdfa41..05fca2a271 100644
-> --- a/target/arm/helper.c
-> +++ b/target/arm/helper.c
-> @@ -4993,6 +4993,10 @@ static void gpccr_write(CPUARMState *env, const ARMCPRegInfo *ri,
->                      R_GPCCR_SPAD_MASK | R_GPCCR_NSPAD_MASK | R_GPCCR_RLPAD_MASK;
->       }
->   
-> +    if (cpu_isar_feature(aa64_rme_gpc3 , env_archcpu(env))) {
+> +    for (i = 0; i < ARRAY_SIZE(bool_list); i++) {
+> +        prop = &bool_list[i];
+> +        object_property_add_bool_ptr_def(obj, prop->name,
+> +                                         prop->ptr, prop->defvar);
+> +    }
 
-Space before ,
+Using instance level properties is the old way to do things,
+it is preferred to use class level properties instead.
 
-Otherwise,
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+This means you can't use the "ptr" concept to directly reference
+the instance fields and have to provide setters / getters explicitly
+instead, but as you've shown with the TLS properties,  a macro can
+make it simple to define the repetitive getters/setters.
 
 
-r~
+
+> +static void migration_object_init_props_enum(MigrationState *s)
+> +{
+> +    Object *obj = OBJECT(s);
+> +    ObjectProperty *prop;
+> +
+> +    prop = object_property_add_enum(obj, "multifd-compression",
+> +                                    "MultiFDCompression",
+> +                                    &MultiFDCompression_lookup,
+> +                                    mig_prop_multifd_compression_get,
+> +                                    mig_prop_multifd_compression_set);
+> +    object_property_set_default_str(prop, DEFAULT_MIGRATE_MULTIFD_COMPRESSION);
+> +
+> +    prop = object_property_add_enum(obj, "mode", "MigMode", &MigMode_lookup,
+> +                                    mig_prop_mode_get, mig_prop_mode_set);
+> +    object_property_set_default_str(prop, "normal");
+> +
+> +    prop = object_property_add_enum(obj, "zero-page-detection",
+> +                                    "ZeroPageDetection",
+> +                                    &ZeroPageDetection_lookup,
+> +                                    mig_prop_zero_page_detection_get,
+> +                                    mig_prop_zero_page_detection_set);
+> +    object_property_set_default_str(prop, "multifd");
+> +}
+
+Perhaps I'm missing something, but I'm not seeing the point in
+using the set_default methods - in fact I'm not really sure why
+they exist in QOM at all.
+
+I'd expect all defaults to be set in the instance _init method.
+ie why isn't this done as:
+
+   void migrate_params_init(MigrationState *s)
+   {
+      s->parameters.mode = MIG_MODE_NORMAL;
+      s->parameters.zero_page_detection = ZERO_PAGE_DETECTION_MULTIFD;
+      .... all other defaults...
+   }
+
+
+> +
+> +static void migration_object_init_properties(MigrationState *s)
+> +{
+> +    migration_object_init_props_bool(s);
+> +    migration_object_init_props_uint8(s);
+> +    migration_object_init_props_uint32(s);
+> +    migration_object_init_props_uint64(s);
+> +    migration_object_init_props_size(s);
+> +    migration_object_init_props_caps(s);
+> +    migration_object_init_props_tls(s);
+> +    migration_object_init_props_enum(s);
+> +}
+
+...and class properties be registered in migrate_params_class_init()
+and the grouping per type isn't helpful IMHO, just put all the
+object_class_property_add calls inline in one place.
+
+>  
+>  bool migrate_auto_converge(void)
+>  {
+> @@ -1107,9 +1246,10 @@ MigrationParameters *qmp_query_migrate_parameters(Error **errp)
+>      return params;
+>  }
+>  
+> -void migrate_params_init(MigrationParameters *params)
+> +void migrate_params_init(MigrationState *s)
+>  {
+> -    migrate_mark_all_params_present(params);
+> +    migration_object_init_properties(s);
+> +    migrate_mark_all_params_present(&s->parameters);
+>  }
+>  
+>  static void migrate_post_update_params(MigrationParameters *new, Error **errp)
+> -- 
+> 2.53.0
+> 
+
+With regards,
+Daniel
+-- 
+|: https://berrange.com       ~~        https://hachyderm.io/@berrange :|
+|: https://libvirt.org          ~~          https://entangle-photo.org :|
+|: https://pixelfed.art/berrange   ~~    https://fstop138.berrange.com :|
+
 
