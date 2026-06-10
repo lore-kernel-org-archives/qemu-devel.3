@@ -4,75 +4,75 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3FC34CD8CAD
-	for <qemu-devel@archiver.kernel.org>; Wed, 10 Jun 2026 00:35:16 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A537BCD8CB2
+	for <qemu-devel@archiver.kernel.org>; Wed, 10 Jun 2026 00:39:31 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wX6uS-0000Uv-LO; Tue, 09 Jun 2026 20:35:08 -0400
+	id 1wX6yG-0001R1-4A; Tue, 09 Jun 2026 20:39:04 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1wX6uR-0000UL-MA
- for qemu-devel@nongnu.org; Tue, 09 Jun 2026 20:35:07 -0400
-Received: from mail-pg1-x52a.google.com ([2607:f8b0:4864:20::52a])
+ id 1wX6yE-0001Qh-Ol
+ for qemu-devel@nongnu.org; Tue, 09 Jun 2026 20:39:03 -0400
+Received: from mail-pf1-x436.google.com ([2607:f8b0:4864:20::436])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1wX6uQ-0006Oj-4L
- for qemu-devel@nongnu.org; Tue, 09 Jun 2026 20:35:07 -0400
-Received: by mail-pg1-x52a.google.com with SMTP id
- 41be03b00d2f7-c858b5de728so3943316a12.0
- for <qemu-devel@nongnu.org>; Tue, 09 Jun 2026 17:35:05 -0700 (PDT)
+ id 1wX6yC-00087M-I3
+ for qemu-devel@nongnu.org; Tue, 09 Jun 2026 20:39:02 -0400
+Received: by mail-pf1-x436.google.com with SMTP id
+ d2e1a72fcca58-8421f0e9c5bso2827436b3a.3
+ for <qemu-devel@nongnu.org>; Tue, 09 Jun 2026 17:38:59 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1781051704; x=1781656504; darn=nongnu.org;
+ d=linaro.org; s=google; t=1781051938; x=1781656738; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:content-language:from
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=OwyS1Wiic2VNAU1rCFnLe+H3c+LW6I/Om6kCehcZheY=;
- b=FoXwtlvmLB9yoTE1aUF9PySf0aeXk7h2CxiS8ltr0dRpNo7mS+lhNpdV6TvoU7LnkI
- qb0KHnZWzoeHMp+JzLok9Nmo/rpEDPNB50wir/2Xo7/Eh/qIlj3KF8RGBxt0qp0djAgo
- Z2y+BxabGXll9b1AEqZCne/5cutpyfcdT90mgicEnuZ50+pQ+jUaIOqniaoKI/Awi2kv
- ByTd50y/uAJNNHhinaSGvoQa+nmFCjBLKdd2IgG12erx+msL9OcltxFyNjVHfYf/RnFD
- 0InjVy0bm25QQcoergzPepvfZumAVMopoHqCFGp/bDMSviSyFDn9kyWGpo6h6pWvls2C
- 7Cpg==
+ bh=+FY52UL9ljOj+o26zMfRGfGB94OLL9pcUszNxj/CUss=;
+ b=RoFlJy6rZhEOOZx0hOAWsovEck1cAxf4zKJwQ14JJuIF5+oLWPBdiMWmkdm5Zs32a9
+ FXHaDuWL4JXv8qbJk5/D16t9XsciIcUQuC1NfhPT43zEUjBWYjOaaKk2YpbZ3jgczY3v
+ i/U3Ih+GCVvuYmoHFg92/IW6rJG5vPggy2Pusjxd40a1YFzJcbwfYVQ1sEdtp834q+wX
+ Kqt1oZ7Rv2dFNez8ADSo5etDUa3t83qfpMnigzM9kd0Gl+0/4FmOmP0Irg9AQwcPfjbA
+ XkGqhO0YtrnDAEi+OtRk9cZW+kD2yBypyHiaJu8WayPylhHrpkcJ+p793nutvKCxP+Nd
+ Izjg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1781051704; x=1781656504;
+ d=1e100.net; s=20251104; t=1781051938; x=1781656738;
  h=content-transfer-encoding:in-reply-to:content-language:from
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=OwyS1Wiic2VNAU1rCFnLe+H3c+LW6I/Om6kCehcZheY=;
- b=nWFugDunfL0NPFVtucLFQEGxAoty1d3/M5wOFZal54HP5WRtysIa9dGw+XoW8iYFm6
- cwBZ/fZJHFC+IPBE1VRYeHOBRBaHXQY1AhFfICBix5Ukw0nwzy9S1tUSMucSe2DFCuxf
- DoHVWd44jG5LTSkEBYqpFw0s0kkPeRL/tZtLfzkyQrPpc88cmcASqE5oyMkTP95rn9Qs
- EUrwpAym3mA7kqCOu1Ro4ublx/P+CXI3MUyFsmsAgop2crJN5z/F2g0fEagv16wCyQV0
- L3VFnD+hKj515gHJ9HCGdAOEbidOpa7tyXrorYJfBpouj70WOmQkCI3lLqceNsbn7LUO
- 86kw==
+ bh=+FY52UL9ljOj+o26zMfRGfGB94OLL9pcUszNxj/CUss=;
+ b=Zp6Qw7lUZWzFZ3Urq4voIfOFxoNwz1IdvTuuWhHiesuGdQlokYoy1s/EJCDDzJ4FYm
+ k4tpMItcKvjG0r7//hmmX8V9olgt5XA0mUZg+hWZ1uKFwFq9NSRSUozvTYm4hVoCwJll
+ /u6lgZcEJ4c8y8MIodg1uyDIKRTSKYs4lZc+yavkVXnbijaTNLBKDVKoN3e1195Nidgx
+ blUIOtntoOnhnVo3UcnFtPHno+rktq4eJ0OsBK5SvRy77QDCZGGFHWCIUCrwyUfRJdx2
+ Pfj6ZghJBBjxg/xloi8kJYxqcm5wQo9CEChPBacMgsYsjEqt5xSfYXdaQ5wzlktc65Vr
+ aLKA==
 X-Forwarded-Encrypted: i=1;
- AFNElJ+SJyHsogCwucCu3VZJb/7vCqxuOgY6HjIuskSPpnIgo8o1LYc2ekkjyiI8Dp4JhL02PY6W96GIiApp@nongnu.org
-X-Gm-Message-State: AOJu0Ywl8/g8RzVK5IaIjq34RCN+7PCDHfVMr18aNe8P6vF/JDGDgWuS
- fuhx4IszjOWiZOQD75bfMEoZCJxULXmJr1zdaglOEWJ22czXsAvXJEig/sIJ+2jlHxw=
-X-Gm-Gg: Acq92OGeiFSC2ql4l2coTwZs2Lr5oQeG1CWIc8XvJvdfOi4rHJ0CBKWXoxKLWlpqT2+
- 9vYnvUSRt3OvbT7J9oItGNIwu+mjY140aX/9d+3rwHkT+tJKLwMGcQ53Qev9Y5gV93zj6ySV1ey
- PKcgrKShNSipXerTSVtNfQiKsojehifkKSYBLXZCO1268HIwq6l/N2ms47cYYhQghR+tc03l14O
- IOuTkRTAY4ADe6M0We3KidKI3JeZAQweItidoEgqB3M8Eq5sa7kbLlBF1gWxSnDnD4qHCrzK7Sq
- G+5WrZs1B/sdSp6cFdgOgEZdycZW2JERn+IuLXFeH2Lu6Dl2YwarpaRbZLbOtHBDlAQBI2fjrpb
- YzwECuyuSjYlvo5eeyHn6NRRd76Zp+zVi98VCOjV5iu9K6kCug9Unuw09lICzQtFzLmVSFLk9x8
- sE2JVkJRrjBCF+thfHeumI9rIu/f3qhW9j6T8Hl4tSHprpNxU=
-X-Received: by 2002:a05:6a00:9093:b0:827:3d52:5d1a with SMTP id
- d2e1a72fcca58-842b0a880f2mr22791657b3a.0.1781051703917; 
- Tue, 09 Jun 2026 17:35:03 -0700 (PDT)
+ AFNElJ/rdDZYk9dY/PFdLnxxyBrJ/piWoJqHqR4W00TZ6qmKu9/1e2kI8KIG8XM8XOFGqbhP23DyVuhTsseJ@nongnu.org
+X-Gm-Message-State: AOJu0Yx1vGQ31PH0J3any2ZkgoU6CClsnu/39DgJ+p0JVQ81ik+Hf6AU
+ lPHoZ+CXv/1UO3Nhom92iJCqeCf+N3wQdKZpGOlggDygueqTOC7je32pnpRAhk1rRTw=
+X-Gm-Gg: Acq92OE4NpHiVxR/OWB0emgSK5rPfm3UDPYAzwMtBXZ7L39dZvLX58aiuk35xgGg7MN
+ LihyNqfCjmSwiHjJfz1wjC++dt/jcw1NyTmJYbb1zblLUDNKAjZpgRbiM+Gwe9+W36yzf4wb/v+
+ 0ijgLQs4fXHCcqbS+RH3/bubwvCD/o12TKvq/OZZynrXRWVezvhyoSy8L9CxzCRAd8yoZbfMwiu
+ ev0u1qyu+49zEIcOC8pn1bPi9D9DUKWL/dz5BRtFH4g5S/wlHrmcv43u6tPAG6p/AmFq6AXqnEH
+ dyqBZAq4tnS1lbwGG9YCNOT7Z6I3mNk99X06OtX8Mh/zgOSxsiTPVXGq4qkdVFh1UmRV5SW0Sy0
+ Zwvyb6sysOTOHccecdmGpsHdbzDm5x74ppLFORqXhYDDG3VFawqVQFpctZLGk8RUwNIA+7ykeb4
+ kr6cbZV/w27kNKMyM1Coj7RgROhvpzXPC9kDdR4/z3VuLgkYo=
+X-Received: by 2002:a05:6a00:1304:b0:83e:f208:b113 with SMTP id
+ d2e1a72fcca58-842b0e1c959mr24170802b3a.7.1781051937919; 
+ Tue, 09 Jun 2026 17:38:57 -0700 (PDT)
 Received: from [192.168.0.4] ([71.212.142.33])
  by smtp.gmail.com with ESMTPSA id
- d2e1a72fcca58-84282883647sm26291191b3a.36.2026.06.09.17.35.03
+ d2e1a72fcca58-84282915fe8sm22827891b3a.54.2026.06.09.17.38.57
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 09 Jun 2026 17:35:03 -0700 (PDT)
-Message-ID: <bb67f565-e26c-48af-bc0e-121b17464a5d@linaro.org>
-Date: Tue, 9 Jun 2026 17:35:01 -0700
+ Tue, 09 Jun 2026 17:38:57 -0700 (PDT)
+Message-ID: <da486ab5-9745-48d4-99ec-2c40b5eb7dae@linaro.org>
+Date: Tue, 9 Jun 2026 17:38:55 -0700
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 01/27] tests/tcg/multiarch/system/memory.c: remove unused
- variable
+Subject: Re: [PATCH 02/27] tests/tcg/multiarch/plugin/check-plugin-output.sh:
+ take test output as input
 To: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>, qemu-devel@nongnu.org
 Cc: Thomas Huth <thuth@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>,
  Manos Pitsidianakis <manos.pitsidianakis@linaro.org>,
@@ -82,14 +82,14 @@ Cc: Thomas Huth <thuth@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>,
  Alexandre Iooss <erdnaxe@crans.org>, Peter Maydell
  <peter.maydell@linaro.org>, Gustavo Romero <gustavo.romero@linaro.org>
 References: <20260609214745.772536-1-pierrick.bouvier@oss.qualcomm.com>
- <20260609214745.772536-2-pierrick.bouvier@oss.qualcomm.com>
+ <20260609214745.772536-3-pierrick.bouvier@oss.qualcomm.com>
 From: Richard Henderson <richard.henderson@linaro.org>
 Content-Language: en-US
-In-Reply-To: <20260609214745.772536-2-pierrick.bouvier@oss.qualcomm.com>
+In-Reply-To: <20260609214745.772536-3-pierrick.bouvier@oss.qualcomm.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::52a;
- envelope-from=richard.henderson@linaro.org; helo=mail-pg1-x52a.google.com
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::436;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pf1-x436.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -113,22 +113,16 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On 6/9/26 14:47, Pierrick Bouvier wrote:
-> Caught this since by compiling this file with -Wall, -Werror.
+> Instead of executing test, just read it's output from a file. This
+> allows to standardize how to call check plugins scripts.
 > 
-> ../tests/tcg/aarch64/system/../../multiarch/system/memory.c: In function ‘init_test_data_s8’:
-> ../tests/tcg/aarch64/system/../../multiarch/system/memory.c:97:18: error: unused variable ‘bottom’ [-Werror=unused-variable]
->     97 |     uint8_t top, bottom, *ptr = &test_data[0];
->        |                  ^~~~~~
-> ../tests/tcg/aarch64/system/../../multiarch/system/memory.c:97:13: error: unused variable ‘top’ [-Werror=unused-variable]
->     97 |     uint8_t top, bottom, *ptr = &test_data[0];
->        |             ^~~
-> ../tests/tcg/aarch64/system/../../multiarch/system/memory.c: In function ‘read_test_data_s8’:
-> ../tests/tcg/aarch64/system/../../multiarch/system/memory.c:384:14: error: unused variable ‘ok’ [-Werror=unused-variable]
->    384 |         bool ok;
->        |
-> 
-> Signed-off-by: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
+> Signed-off-by: Pierrick Bouvier<pierrick.bouvier@oss.qualcomm.com>
+> ---
+>   tests/tcg/multiarch/Makefile.target           |  3 +--
+>   .../multiarch/plugin/check-plugin-output.sh   | 22 ++++++-------------
+>   2 files changed, 8 insertions(+), 17 deletions(-)
 
+Could use "done < $test_output" instead of cat, but
 
 Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
 
