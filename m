@@ -4,90 +4,97 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9373FCD98C7
-	for <qemu-devel@archiver.kernel.org>; Wed, 10 Jun 2026 21:50:56 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E0985CD98C7
+	for <qemu-devel@archiver.kernel.org>; Thu, 11 Jun 2026 00:09:07 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wXQoU-00048I-Ow; Wed, 10 Jun 2026 17:50:23 -0400
+	id 1wXSyB-0005RU-7i; Wed, 10 Jun 2026 20:08:27 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <eduardoaugustoabc@gmail.com>)
- id 1wXQiv-0002Ss-Jn
- for qemu-devel@nongnu.org; Wed, 10 Jun 2026 17:44:33 -0400
-Received: from mail-qt1-x82d.google.com ([2607:f8b0:4864:20::82d])
+ (Exim 4.90_1) (envelope-from <cupidazul@gmail.com>)
+ id 1wXS9T-0005RS-2k
+ for qemu-devel@nongnu.org; Wed, 10 Jun 2026 19:16:03 -0400
+Received: from mail-ua1-x933.google.com ([2607:f8b0:4864:20::933])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <eduardoaugustoabc@gmail.com>)
- id 1wXQis-0005Tv-KL
- for qemu-devel@nongnu.org; Wed, 10 Jun 2026 17:44:33 -0400
-Received: by mail-qt1-x82d.google.com with SMTP id
- d75a77b69052e-51788280e71so78505751cf.0
- for <qemu-devel@nongnu.org>; Wed, 10 Jun 2026 14:44:29 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <cupidazul@gmail.com>)
+ id 1wXS9R-00032J-IT
+ for qemu-devel@nongnu.org; Wed, 10 Jun 2026 19:16:02 -0400
+Received: by mail-ua1-x933.google.com with SMTP id
+ a1e0cc1a2514c-9640111c168so2519701241.2
+ for <qemu-devel@nongnu.org>; Wed, 10 Jun 2026 16:15:58 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1781133357; cv=none;
+ d=google.com; s=arc-20240605;
+ b=EN3pxHNX5FCNTSoKnKpYqqd2aoBAWiysLzLtysw4Ez7gAty3oS/JJ2risBfOy9tkaV
+ ovzn7d2pje2QqMkXx2EwgunWuJaaqPA1WBlb3CsrdY9xVBii9ec4krRYFqSHss6YX5+g
+ 69Uo19iLx5TZrrYi/77nQcQQlp2pyRnkq/IqVlshRu5kxvn461DWo0FITrIV3KSrF1Mq
+ DsRl9cGHuW5C689HEpdq6Yx/daudf56YFgqmA/uuWVJrqA2ltjMLQlGb0g8BxPy7AsI6
+ ND0UJPbfUfhnv7iK+MLclBRPnk4EumUQo4O3T4MRH372xWw5YwhJQlg7qV8s73/P7sqB
+ 5hFQ==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
+ s=arc-20240605; 
+ h=to:subject:message-id:date:from:mime-version:dkim-signature;
+ bh=d94HJddahxxFvyKpbs9he4TMhK9zwAeO1hC7BvIt+AY=;
+ fh=PnYt+qEB9tAfMKoqBm2xjKOFpYyFFGPudh5cVIoieJM=;
+ b=cHxD3xOGEsi8O4h09rmsDhxeUgptpxhlmTyqDw+FrbMuMa/erc5gZ2M6k6Koyt+nEs
+ aZ9x0qeZ5Dv72KKfl6+ecBMDlk+GyVwd7h4S4M7QL3Zx77rAg2thgjxNjAcydhI8AZPd
+ 3q6wS9gE+MpYJ+tYbs/mfU4SkF4mQu0rUMODtNciQot2yNTt0jZ2TfRU2ZrtiORB76rg
+ WsdiItDQLpvjBoyhpkCK9nHQT1Z3CSwSG2VeEfxvzLZnxIIXyep7XeX1nVzIckBSFsI/
+ /RuxbpBE9HLEvOenbSLcpMLgMbksuJW8Q3AEk4aOz0u+gh5HxB3ebPzhH0iAULgA97Tz
+ 1KiQ==; darn=nongnu.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1781127869; x=1781732669; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:from:to:cc:subject:date:message-id:reply-to;
- bh=dlv+8Imj57oONK12MPkAjhVurrOAgyR3W0zf0Sr0KSo=;
- b=UPc2I8NxS9bhnnDGPBVQWXkSZ+TqxPuv2yAKVpuBaFfQMN8UNYniC7WVwKQrMaT9Hj
- rnHcIEtkVOq9MVGTuL0ICh1NJ/bnHtFqqxkMDc+t+vaT/RgusqliFcYoUt3siJ8nf3Fw
- G/H0VZH8NOJTjA4F1JrvE7pJS7GjQCp1yNfwvRvt/ZaP4sosnVOw73aczoMgqMbUW4OH
- 1y4zq1a0OtvBEsqy3HW2mZJA4vuPvHXOu91sGLQaXKCNTDphs/GSCE4fKJgvSu3xHIJK
- mLJxOnqVFUV4erBbDl+ZSED65koZBVz4/KM6qd6bW6AgfTILLfEGThN1TyzeFdidLD0t
- 9VSg==
+ d=gmail.com; s=20251104; t=1781133357; x=1781738157; darn=nongnu.org;
+ h=to:subject:message-id:date:from:mime-version:from:to:cc:subject
+ :date:message-id:reply-to;
+ bh=d94HJddahxxFvyKpbs9he4TMhK9zwAeO1hC7BvIt+AY=;
+ b=NdtCRH9U5uBfmZu+QE3ldwNmiy88nlyMYp4XboV9y3hhVFiUq8HlwB/ht3ySNRqAPC
+ 0Mq+ih1vvb/HmL3uCInKpUC+/+zQ6uua2Uw1+9oOohubPkfY6cW/nmdLQhtaJnnsJg7W
+ 63KUM+AN0GmXYhSq+FVLZx9EFZu1WjCkTeClyB/cAR8bEIL9yOiUEb4wC5WazKWP46hI
+ nN5laqHP6VEs5H7cXVxn8oBLmxaf3KROFBcuT5fF8w8M2YX9HE6PdBPtSqGkuTGU7oi1
+ 34XpSmvqRIv03aQ6t1eVt2GUAqz7AK/0TtUUV/iq+8AV6nOS8PwnaGifD8m6d2+puKHw
+ igKg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1781127869; x=1781732669;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=dlv+8Imj57oONK12MPkAjhVurrOAgyR3W0zf0Sr0KSo=;
- b=QdGCxK9B/yXJKvB5qgNh1vprWYOJM8J3ymvX45nZq4Q2AVYd3Pq0UFDZjVHkrRlgtw
- 1nPL4h9AXjc3fXVKMHAAGAIZSlFf0OnnEJtz0NZWu72kGuN5DcEjW6jUgPOaKyGRaW8P
- 2xIkVRGFFpOFDrNeKsZSlyS9IEtlwruc6Kp+O+wGFIg49Se/8Uptu9S94q1/eKJ4WGiE
- NY9zPvuvGEfOzRyqi5KXvUcyFT//C/wfa36Cx3o6Ryottp+5M6BylitDbQWBLdBrpPNF
- az8BCNccHN+iLoeFCwXTmUOM8RUP1CJHp0CwdKu2enpUylFUJM/DFuthbwPfXm3L8VK8
- 5p3Q==
-X-Gm-Message-State: AOJu0Yy0f8kyrTLfJooq0/eQJALmHiQus4qgGAkuQkrXLkK4oW/lrURV
- Q+RFuE7Vc7FMMaeqPq9srjuVqG9pV0BZRn0W+IKTBlecQmg6oNGCowfG7IHgKWzm
-X-Gm-Gg: Acq92OG1kob3xB7n4QhcLVHv/TdOcO4lTx3w1B5ELyCxwR9FMBYeLqNialSKlqGq1qr
- Fisk+HdodQ9+I+KqVZOqGNg9T5TxDOoj8qJyqUVAhuMEkHJXTo/FIQvRLpj53UjzZaUyadIBke3
- WT6x/jDs9Ka4saZjtUJWrhplVk59iTrfgqlH4teKk7+BIpMjbJsF1RIZbu0e7Nt+R9Ld732YIOp
- BwC6df/Ur4iRq8TT9K2sszXyNskxZwqqOLAycx+rlXIW9KTsCn94L7WAiLR1LOUZ38a3ZN2AFLr
- SGN3HFblcf3637GfHTPfxT/N71jMEfJEJ0CZyDSfgqYdDQhauXcAIpIARfWg3ZkwlYO+x+XBpht
- 7vq28kNrWI+gLF2bLUtcHW2PB75ZQ9dhXjXy0k4Om38qoNG3oCl4y5yoEblVvuLQQgCLo2D5UHX
- 9r6BGIw2N8WankR5seeagNwYKx302d0Zk+0l4nBjuhsxEE1+JoyAD8uic4ps/3eTHMjRZyp8u1A
- sc5ERmDrVeJdq/5dhM1HU5Nf/cKt0xscQaQBlKNHHm3rDF/PKnkbMKCDY8dWmGdX1fpT3LBEH4o
- azcB/4kkUa8=
-X-Received: by 2002:a05:622a:96:b0:517:7a6b:52ca with SMTP id
- d75a77b69052e-517ee1bf564mr1050981cf.33.1781127868971; 
- Wed, 10 Jun 2026 14:44:28 -0700 (PDT)
-Received: from eduardo-Inspiron-3583.semfio.usp.br (nat.ime.usp.br.
- [143.107.45.1]) by smtp.gmail.com with ESMTPSA id
- 71dfb90a1353d-5a6dc44da2fsm21372037e0c.9.2026.06.10.14.44.26
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 10 Jun 2026 14:44:28 -0700 (PDT)
-From: Eduardo Augusto <eduardoaugustoabc@gmail.com>
-X-Google-Original-From: Eduardo Augusto <eduardoaugustoabc@ime.usp.br>
-To: qemu-devel@nongnu.org
-Cc: qemu-block@nongnu.org, Keith Busch <kbusch@kernel.org>,
- Klaus Jensen <its@irrelevant.dk>, Jesper Devantier <foss@defmacro.it>,
- Eduardo Augusto <eduardoaugustoabc@gmail.com>
-Subject: [PATCH] hw/nvme: Remove unreachable directive receive code
-Date: Wed, 10 Jun 2026 18:44:08 -0300
-Message-Id: <20260610214408.82442-1-eduardoaugustoabc@ime.usp.br>
-X-Mailer: git-send-email 2.34.1
+ d=1e100.net; s=20251104; t=1781133357; x=1781738157;
+ h=to:subject:message-id:date:from:mime-version:x-gm-gg
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=d94HJddahxxFvyKpbs9he4TMhK9zwAeO1hC7BvIt+AY=;
+ b=oIsOhvUWsGiye368xxUO/4Xu4vNETImNPPbl6dYsGczRbOnaWZQR7Hf+bpcaaePntD
+ qMU/HB8Y8I/0zd0bzsAY6WJ5N/F5dA11WYigm4hMWq5INs7peJPgPvx9I1cmJD6TCz7X
+ 8HOgyw/jRRBQaPyU9jBqiNwSIX4Wjpw2Jkvdbjl5Ii+2qpsYsaGBpYBCk5fZ//cc1gw3
+ mvrqn3P0KxL6qaMCJHukCHKrYtl44IvnzZZIReEflMSpHmVQrFzjITaCh5H/6Yu/c4U/
+ 6jfrmNVvnU3rD7XO43o937PjnKmEmgHGlwldc11XbvFnzroC6yfCzqCHkBbmxePvvNTK
+ RSZg==
+X-Gm-Message-State: AOJu0YwHVkuCJV+PsPf/1MM8NP/afqAwRscs05FuoEX8sxrG7PhMaAKL
+ f+OJh9Nagx8U/sNcon5x336b12ZjmAUP6dn2kPiQnXVznShN9VFDkPqUN5rFO8Jzzz3HvGDJHjQ
+ 7hkO5RKGfCXFYbICRmgAPqy8dlexLVFplLw==
+X-Gm-Gg: Acq92OFGQMxUmZ10tUPQuxdABm79dima/e/y02wHdYdoN6RotzJ/qLEn3kzNn8hZ+a8
+ Af/Be4Lm6Br5Wx105Ulwfut4Mjlp0R/hHFPjOQVucnnRo/86yCrZkEMJzzEd5VQMHyDdc6LoBZc
+ qJ2ApsrUlVkg21+SbKrwubLMGSGqxNXK9QCjfJ2l74FOYUjhrNfMKEy/JvyV+QtnyyI/C7cNllK
+ ukEN1E88gk8E8wYl9Z+jPSsrg23UDDErniHjqD5ZNQrXfevVgERXjge0Rp6VdT78EyjwVFTIc6h
+ LWTsOEG/Cpt+Mesffqs=
+X-Received: by 2002:a05:6122:3293:b0:575:fea0:559 with SMTP id
+ 71dfb90a1353d-5b634d49010mr6038705e0c.4.1781133357045; Wed, 10 Jun 2026
+ 16:15:57 -0700 (PDT)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::82d;
- envelope-from=eduardoaugustoabc@gmail.com; helo=mail-qt1-x82d.google.com
+From: =?UTF-8?Q?Ant=C3=B3nio_Pedro_Santos?= <cupidazul@gmail.com>
+Date: Thu, 11 Jun 2026 00:15:43 +0100
+X-Gm-Features: AVVi8CfP-6-8hMIszEMRWXCkVkpr1nSVo_-0B5Wkyhf7275OpYmsX7NW4yK4CsI
+Message-ID: <CABS7-FOxBfVg5Y2CERMFRVdH8D-1Y99u_JHVFA+FGixqR2zurQ@mail.gmail.com>
+Subject: Qube1.0
+To: qemu-devel@nongnu.org
+Content-Type: multipart/alternative; boundary="0000000000000b5cf80653ee6dc7"
+Received-SPF: pass client-ip=2607:f8b0:4864:20::933;
+ envelope-from=cupidazul@gmail.com; helo=mail-ua1-x933.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ HTML_MESSAGE=0.001, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
-X-Mailman-Approved-At: Wed, 10 Jun 2026 17:49:38 -0400
+X-Mailman-Approved-At: Wed, 10 Jun 2026 20:08:23 -0400
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -102,56 +109,26 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Eduardo Augusto <eduardoaugustoabc@gmail.com>
+--0000000000000b5cf80653ee6dc7
+Content-Type: text/plain; charset="UTF-8"
 
-nvme_directive_receive() rejects unsupported directive types and
-operations before reaching the switch statement.
+Hi team.
 
-Remove the redundant switch blocks and keep the valid identify return
-parameters path directly.
+I've developed a cli for qemu:
+https://github.com/MagicWond/qube
 
-Signed-off-by: Eduardo Augusto <eduardoaugustoabc@gmail.com>
----
- hw/nvme/ctrl.c | 24 ++++++------------------
- 1 file changed, 6 insertions(+), 18 deletions(-)
+Let me know what you think.
+Pedro
 
-diff --git a/hw/nvme/ctrl.c b/hw/nvme/ctrl.c
-index 815f39173c..175daf8a5d 100644
---- a/hw/nvme/ctrl.c
-+++ b/hw/nvme/ctrl.c
-@@ -7554,25 +7554,13 @@ static uint16_t nvme_directive_receive(NvmeCtrl *n, NvmeRequest *req)
-         return NVME_INVALID_FIELD | NVME_DNR;
-     }
- 
--    switch (dtype) {
--    case NVME_DIRECTIVE_IDENTIFY:
--        switch (doper) {
--        case NVME_DIRECTIVE_RETURN_PARAMS:
--            if (ns->endgrp && ns->endgrp->fdp.enabled) {
--                id.supported |= 1 << NVME_DIRECTIVE_DATA_PLACEMENT;
--                id.enabled |= 1 << NVME_DIRECTIVE_DATA_PLACEMENT;
--                id.persistent |= 1 << NVME_DIRECTIVE_DATA_PLACEMENT;
--            }
--
--            return nvme_c2h(n, (uint8_t *)&id, trans_len, req);
--
--        default:
--            return NVME_INVALID_FIELD | NVME_DNR;
--        }
--
--    default:
--        return NVME_INVALID_FIELD;
-+    if (ns->endgrp && ns->endgrp->fdp.enabled) {
-+        id.supported |= 1 << NVME_DIRECTIVE_DATA_PLACEMENT;
-+        id.enabled |= 1 << NVME_DIRECTIVE_DATA_PLACEMENT;
-+        id.persistent |= 1 << NVME_DIRECTIVE_DATA_PLACEMENT;
-     }
-+
-+    return nvme_c2h(n, (uint8_t *)&id, trans_len, req);
- }
- 
- static uint16_t nvme_admin_cmd(NvmeCtrl *n, NvmeRequest *req)
--- 
-2.34.1
+--0000000000000b5cf80653ee6dc7
+Content-Type: text/html; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
+<div dir=3D"auto">Hi team.<div dir=3D"auto"><br></div><div dir=3D"auto">I&#=
+39;ve developed a cli for qemu:</div><div dir=3D"auto"><a href=3D"https://g=
+ithub.com/MagicWond/qube">https://github.com/MagicWond/qube</a></div><div d=
+ir=3D"auto"><br></div><div dir=3D"auto">Let me know what you think.</div><d=
+iv dir=3D"auto">Pedro</div></div>
+
+--0000000000000b5cf80653ee6dc7--
 
