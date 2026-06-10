@@ -4,117 +4,110 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3B008CD8CB9
-	for <qemu-devel@archiver.kernel.org>; Wed, 10 Jun 2026 08:57:07 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id F3464CD98CC
+	for <qemu-devel@archiver.kernel.org>; Wed, 10 Jun 2026 09:03:50 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wXEjL-0000Eh-3t; Wed, 10 Jun 2026 04:56:11 -0400
+	id 1wXEqB-0001lw-8S; Wed, 10 Jun 2026 05:03:15 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1wXEjK-0000EK-6s
- for qemu-devel@nongnu.org; Wed, 10 Jun 2026 04:56:10 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <adityag@linux.ibm.com>)
+ id 1wXEq6-0001jf-GQ; Wed, 10 Jun 2026 05:03:10 -0400
+Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1wXEjI-0002sE-L2
- for qemu-devel@nongnu.org; Wed, 10 Jun 2026 04:56:09 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1781081767;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=oURNCPigh5OJSKJyhKYr8JW7jymEwuLSIC1LRThUnl8=;
- b=iFqVn1K6t24Tem/BWCaeLqdbWTozIJo8xlKESbjom96f0onyGdMTWxwZXH33/kfFXDCFQg
- P+rDbUp6XJuoGh9FQKBaul8vk+gHRkw65NmDxQKxVDQwbylW1apKWe47re0Q/EDP27m2r0
- wLm5Q7pxn6+h1mMZ8Cl4XA+96klOi1Y=
-Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-589-exhWM3biP-iSF0rSCuiqCw-1; Wed,
- 10 Jun 2026 04:56:03 -0400
-X-MC-Unique: exhWM3biP-iSF0rSCuiqCw-1
-X-Mimecast-MFC-AGG-ID: exhWM3biP-iSF0rSCuiqCw_1781081762
-Received: from mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.17])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 802831955F0C; Wed, 10 Jun 2026 08:56:01 +0000 (UTC)
-Received: from [10.44.34.108] (unknown [10.44.34.108])
- by mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 68700195410A; Wed, 10 Jun 2026 08:55:57 +0000 (UTC)
-Message-ID: <1471079b-7cb6-46d6-a856-e4015cfb894f@redhat.com>
-Date: Wed, 10 Jun 2026 10:55:55 +0200
+ (Exim 4.90_1) (envelope-from <adityag@linux.ibm.com>)
+ id 1wXEq5-0005jM-5U; Wed, 10 Jun 2026 05:03:10 -0400
+Received: from pps.filterd (m0353725.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
+ 65A8UEm8458596; Wed, 10 Jun 2026 09:03:08 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
+ :content-transfer-encoding:date:from:in-reply-to:message-id
+ :mime-version:references:subject:to; s=pp1; bh=LGNgZMw1UEgMoxoYi
+ supKjhdJLZKr9GILaxiozmZ6es=; b=LDH+136IiUXFLARyyNd+7NeIJBgX+P+pb
+ 6HQZcdo3KPNR/9WECmEKEWnBnDmjnKmLcefMCJwFvYf0SrL9GH2Zf4EMxzv+oZIv
+ MLmkEHbnx6a6VtB7bc0iymBUFrBIUBSJQdSDli/If6PClhszXw5Fj9zT/azs4n2z
+ FZ8Xo4OTenS4s1eJrbagMbmSsSRtrNSeV/2fK5CmTgpzXaxZLgw4XCGmWZOlMr8l
+ Xwx8lqZecBy3ngq//v/Ops60ZA3XbHQgEq0YksXA3/vu82vRVMZvZR3UPdQ1iRuR
+ IsAz7hmV2GkVzoaiZQTBxLPRHSUOutfenmCA6yWARN9L17f3IBqsg==
+Received: from ppma11.dal12v.mail.ibm.com
+ (db.9e.1632.ip4.static.sl-reverse.com [50.22.158.219])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4em9ye7yk9-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Wed, 10 Jun 2026 09:03:07 +0000 (GMT)
+Received: from pps.filterd (ppma11.dal12v.mail.ibm.com [127.0.0.1])
+ by ppma11.dal12v.mail.ibm.com (8.18.1.7/8.18.1.7) with ESMTP id 65A8ngLS023987;
+ Wed, 10 Jun 2026 09:03:06 GMT
+Received: from smtprelay04.fra02v.mail.ibm.com ([9.218.2.228])
+ by ppma11.dal12v.mail.ibm.com (PPS) with ESMTPS id 4en0jydphp-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Wed, 10 Jun 2026 09:03:06 +0000 (GMT)
+Received: from smtpav02.fra02v.mail.ibm.com (smtpav02.fra02v.mail.ibm.com
+ [10.20.54.101])
+ by smtprelay04.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 65A933fG29491738
+ (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Wed, 10 Jun 2026 09:03:03 GMT
+Received: from smtpav02.fra02v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 4CC9620043;
+ Wed, 10 Jun 2026 09:03:03 +0000 (GMT)
+Received: from smtpav02.fra02v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id C4BF220040;
+ Wed, 10 Jun 2026 09:02:58 +0000 (GMT)
+Received: from li-3c92a0cc-27cf-11b2-a85c-b804d9ca68fa.ibm.com (unknown
+ [9.39.29.92]) by smtpav02.fra02v.mail.ibm.com (Postfix) with ESMTP;
+ Wed, 10 Jun 2026 09:02:58 +0000 (GMT)
+From: Aditya Gupta <adityag@linux.ibm.com>
+To: <qemu-devel@nongnu.org>, <qemu-ppc@nongnu.org>,
+ Harsh Prateek Bora <harshpb@linux.ibm.com>
+Cc: Sourabh Jain <sourabhjain@linux.ibm.com>,
+ Hari Bathini <hbathini@linux.ibm.com>, Nicholas Piggin <npiggin@gmail.com>,
+ Miles Glenn <milesg@linux.ibm.com>, Fabiano Rosas <farosas@suse.de>,
+ Laurent Vivier <lvivier@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>,
+ Misbah Anjum N <misanjum@linux.ibm.com>,
+ Shivang Upadhyay <shivangu@linux.ibm.com>
+Subject: [PATCH 4/4] tests/functional: Use default powernv machine instead of
+ power10
+Date: Wed, 10 Jun 2026 14:32:35 +0530
+Message-ID: <20260610090235.3665904-5-adityag@linux.ibm.com>
+X-Mailer: git-send-email 2.54.0
+In-Reply-To: <20260610090235.3665904-1-adityag@linux.ibm.com>
+References: <20260610090235.3665904-1-adityag@linux.ibm.com>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 21/27] tests/tcg/aarch64: add user tests
-To: Richard Henderson <richard.henderson@linaro.org>,
- Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>, qemu-devel@nongnu.org
-Cc: Thomas Huth <thuth@redhat.com>,
- Manos Pitsidianakis <manos.pitsidianakis@linaro.org>,
- =?UTF-8?Q?Daniel_P_=2E_Berrang=C3=A9?= <berrange@redhat.com>,
- =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- qemu-arm@nongnu.org, =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
- Alexandre Iooss <erdnaxe@crans.org>, Peter Maydell
- <peter.maydell@linaro.org>, Gustavo Romero <gustavo.romero@linaro.org>
-References: <20260609214745.772536-1-pierrick.bouvier@oss.qualcomm.com>
- <20260609214745.772536-22-pierrick.bouvier@oss.qualcomm.com>
- <3d519b95-595a-4a5e-97cb-6116eb577e09@linaro.org>
-Content-Language: en-US
-From: Paolo Bonzini <pbonzini@redhat.com>
-Autocrypt: addr=pbonzini@redhat.com; keydata=
- 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
-In-Reply-To: <3d519b95-595a-4a5e-97cb-6116eb577e09@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.17
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=pbonzini@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: 8
-X-Spam_score: 0.8
-X-Spam_bar: /
-X-Spam_report: (0.8 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.445,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_SBL_CSS=3.335, SPF_HELO_PASS=-0.001,
- SPF_PASS=-0.001 autolearn=no autolearn_force=no
+X-TM-AS-GCONF: 00
+X-Proofpoint-Reinject: loops=2 maxloops=12
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNjEwMDA4MSBTYWx0ZWRfX60iCNvVGH/Ob
+ hV+rI6T4uQiHrnvMNWwZeGnLMqVWQzOUWTZzjWmZpHVQN6MsYO4Jkv3ltHpeQPfOQSrFkeJnjFO
+ Fpx6Zy/odNp/tFadmF1fZzt+zUBv1YtqwW9stf1owdAZYhKj1EqZXBGOV7wzY/zGbFfIuaSV7Nm
+ pI8VtY/2LzI4kTjW5V6sUYNiiKzHY+RPSXlZNv61vBQYM498vg938Oae0UIxtg0luMuHuhAZmJN
+ ODatm1GABMratV3dIWoXlNwyEm5Xy2uThG7D8vjAO9s7fWWwiVy9p0uqLpqKs+V3uKb/HpRfGZy
+ A0gGKF8JQdSd8VZp4AcO5EyLdLUfP8oRlXDSjDT6fTwDqZoBOs7Ta825UtR8A9P0VjyUKfJFBo9
+ LQ4czQXFct/R1C7Cy9LMedmn1ALNYGRdCMyecP6Ki/asOYRMGAgyiOPVSK948K2rtcJzMkezZG5
+ eJrJW2pA3V8Jqwr7C7Q==
+X-Authority-Analysis: v=2.4 cv=QKhYgALL c=1 sm=1 tr=0 ts=6a29284c cx=c_pps
+ a=aDMHemPKRhS1OARIsFnwRA==:117 a=aDMHemPKRhS1OARIsFnwRA==:17
+ a=FelO9ux0wxsA:10 a=VkNPw1HP01LnGYTKEx00:22 a=RnoormkPH1_aCDwRdu11:22
+ a=V8glGbnc2Ofi9Qvn3v5h:22 a=VnNF1IyMAAAA:8 a=MGuuq5ZBRx0t7b6k6EIA:9
+X-Proofpoint-GUID: MHeabSfWoesisJoPKflcb35fvXZnnGAJ
+X-Proofpoint-ORIG-GUID: nEEv8naOYaLOJMwHyTVDnrm-0qLG1r4w
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.125,FMLib:17.12.100.49
+ definitions=2026-06-10_02,2026-06-09_02,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ priorityscore=1501 lowpriorityscore=0 bulkscore=0 adultscore=0 phishscore=0
+ malwarescore=0 impostorscore=0 suspectscore=0 spamscore=0 clxscore=1015
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.22.0-2605210000 definitions=main-2606100081
+Received-SPF: pass client-ip=148.163.158.5; envelope-from=adityag@linux.ibm.com;
+ helo=mx0b-001b2d01.pphosted.com
+X-Spam_score_int: -26
+X-Spam_score: -2.7
+X-Spam_bar: --
+X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
+ RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -130,28 +123,31 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 6/10/26 02:18, Richard Henderson wrote:
-> On 6/9/26 14:47, Pierrick Bouvier wrote:
->> +++ b/tests/tcg/aarch64/meson.build
->> @@ -0,0 +1,213 @@
->> +cc = find_program('aarch64-linux-gnu-gcc', required : false)
->> +
->> +if not cc.found()
->> +  subdir_done()
->> +endif
-> 
-> The primary thing we lose here is the ability to use containers for the 
-> cross-compile.
-> 
-> We detect cross-compilers in configure.  We currently write them to 
-> build/tests/tcg/${target}/config-target.mak.  It's not very meson to 
-> parse a file like that, but I imagine we could use scripts or meson 
-> variables somehow.
+The default powernv machine has been recently changed to powernv11,
+though fadump functional test used powernv10
 
-That's not a problem, we can write them in [binaries] and find_program() 
-will pick it up automatically.  I'm a bit more worried about having to 
-reinvent cross compilation altogether, I'll reply elsewhere.
+Change it to use default 'powernv' machine for the tests instead of
+being fixed to powernv10
 
-Paolo
+Signed-off-by: Aditya Gupta <adityag@linux.ibm.com>
+---
+ tests/functional/ppc64/test_fadump.py | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/tests/functional/ppc64/test_fadump.py b/tests/functional/ppc64/test_fadump.py
+index 7ea65974e0ea..c75095076b52 100755
+--- a/tests/functional/ppc64/test_fadump.py
++++ b/tests/functional/ppc64/test_fadump.py
+@@ -53,7 +53,7 @@ def do_test_fadump(self, is_kvm=False, is_powernv=False):
+             self.require_accelerator("tcg")
+ 
+         if is_powernv:
+-            self.set_machine("powernv10")
++            self.set_machine("powernv")
+         else:
+             # SLOF takes upto >20s in startup time, use VOF
+             self.set_machine("pseries")
+-- 
+2.54.0
 
 
