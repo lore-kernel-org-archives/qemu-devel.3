@@ -4,63 +4,84 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E61B6CD8CB2
-	for <qemu-devel@archiver.kernel.org>; Wed, 10 Jun 2026 13:31:27 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1C171CD8CB9
+	for <qemu-devel@archiver.kernel.org>; Wed, 10 Jun 2026 13:32:31 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wXJ1C-0003YQ-7O; Wed, 10 Jun 2026 09:30:54 -0400
+	id 1wXJ2S-0003nb-RG; Wed, 10 Jun 2026 09:32:16 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <alanosong@163.com>) id 1wXJ16-0003Y1-Gm
- for qemu-devel@nongnu.org; Wed, 10 Jun 2026 09:30:48 -0400
-Received: from m16.mail.163.com ([220.197.31.3])
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1wXJ2A-0003lJ-Pt
+ for qemu-devel@nongnu.org; Wed, 10 Jun 2026 09:31:56 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <alanosong@163.com>) id 1wXJ11-0008Ns-Ck
- for qemu-devel@nongnu.org; Wed, 10 Jun 2026 09:30:48 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=163.com;
- s=s110527; h=Date:From:To:Subject:Content-Type:MIME-Version:
- Message-ID; bh=8mi+Gjl17Mg56nnUXdJyzVEcC2tARuxkRxmNQl23tnI=; b=a
- IKYb8UBvzU6axnXmTnDdf1qcY9VFjP59r70mwyYzFVKijB4Tbv/RKIh/2D4lsMjX
- hr32SLOXhu/XuVL6pVHOty1H9NYatgMHEl8xc94VRANa+Iw7ks/WM4sQH8FWxNMN
- wZsBZnOO9BWMpz+4Q2RYMQ5QqFfwsUMnaxjWhslLmo=
-Received: from alanosong$163.com ( [59.173.202.243] ) by
- ajax-webmail-wmsvr-40-136 (Coremail) ; Wed, 10 Jun 2026 21:30:09 +0800
- (CST)
-X-Originating-IP: [59.173.202.243]
-Date: Wed, 10 Jun 2026 21:30:09 +0800 (CST)
-From: "Alano Song" <alanosong@163.com>
-To: "Dr. David Alan Gilbert" <dave@treblig.org>
-Cc: =?GBK?Q?Philippe_Mathieu-Daud=A8=A6?= <philmd@linaro.org>,
- qemu-devel@nongnu.org, pbonzini@redhat.com, zhao1.liu@intel.com
-Subject: Re: [PATCH] target/i386/monitor: Refine `info tlb` command logic
-X-Priority: 3
-X-Mailer: Coremail Webmail Server Version 2023.4-cmXT build
- 20260403(27802f6d) Copyright (c) 2002-2026 www.mailtech.cn 163com
-In-Reply-To: <aiQoP29Y4DVr-CBR@gallifrey>
-References: <20260524124129.174254-1-AlanoSong@163.com>
- <2e90e85b-a8cb-4f6c-b7d4-f2f6159b6d55@linaro.org>
- <5f951c07.4fa.19e7679781f.Coremail.alanosong@163.com>
- <aiQoP29Y4DVr-CBR@gallifrey>
-X-NTES-SC: AL_Qu2TA/ySt0or7ySaZekcm0wQgOk5XsCwu/wk3YNec+gGoBjh2ykiRmVxLGTu0uCqKRqMuxaufzlWz8BzTJl6WO8klN0BWqOCNq2/NlbeBw==
-Content-Type: multipart/alternative; 
- boundary="----=_Part_153833_453921963.1781098209435"
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1wXJ28-0000qj-2E
+ for qemu-devel@nongnu.org; Wed, 10 Jun 2026 09:31:53 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1781098310;
+ h=from:from:reply-to:reply-to:subject:subject:date:date:
+ message-id:message-id:to:to:cc:cc:mime-version:mime-version:
+ content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=ONd7lsQTUMTNVEIj+JZpJjUkZ7lSPDjBXfGMxFHXdPQ=;
+ b=ipjiep2Pe4LOdhyba+Ik4yW/etOgmTmEgrLjIUe8+kdQPTwgTQsUqc09VSSptcvjIuRlfc
+ ZI1JO2bPCrjN5V1ubYq9m9jhhVHkmX1LIiOg2gTU2WtD1W87fNKXV+QumMyJ5XliQOCx/u
+ +pwpkJzrNuGt67lbAEfNbfl9aBcDQ/c=
+Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-641-qdMRLVnGNri0od0tSC-Ecg-1; Wed,
+ 10 Jun 2026 09:31:45 -0400
+X-MC-Unique: qdMRLVnGNri0od0tSC-Ecg-1
+X-Mimecast-MFC-AGG-ID: qdMRLVnGNri0od0tSC-Ecg_1781098301
+Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 45072195E926; Wed, 10 Jun 2026 13:31:41 +0000 (UTC)
+Received: from redhat.com (unknown [10.44.50.112])
+ by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 8AF911955BE0; Wed, 10 Jun 2026 13:31:35 +0000 (UTC)
+Date: Wed, 10 Jun 2026 14:31:31 +0100
+From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
+To: Filip Hejsek <filip.hejsek@gmail.com>
+Cc: qemu-devel@nongnu.org,
+ =?utf-8?Q?Marc-Andr=C3=A9?= Lureau <marcandre.lureau@redhat.com>,
+ Paolo Bonzini <pbonzini@redhat.com>, "Michael S. Tsirkin" <mst@redhat.com>,
+ Laurent Vivier <lvivier@redhat.com>, Amit Shah <amit@kernel.org>,
+ Markus Armbruster <armbru@redhat.com>, Eric Blake <eblake@redhat.com>,
+ Eduardo Habkost <eduardo@habkost.net>,
+ Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
+ Yanan Wang <wangyanan55@huawei.com>, Zhao Liu <zhao1.liu@intel.com>,
+ Maximilian Immanuel Brandtner <maxbr@linux.ibm.com>,
+ Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@mailo.com>,
+ Szymon Lukasz <noh4hss@gmail.com>
+Subject: Re: [PATCH v7 11/12] virtio-serial-bus: add terminal resize messages
+Message-ID: <ailnM0cDE6fdIouj@redhat.com>
+References: <20260609-console-resize-v7-0-0c550fdcec15@gmail.com>
+ <20260609-console-resize-v7-11-0c550fdcec15@gmail.com>
 MIME-Version: 1.0
-Message-ID: <162c633.a00e.19eb1b9e09c.Coremail.alanosong@163.com>
-X-Coremail-Locale: zh_CN
-X-CM-TRANSID: iCgvCgD3f3zhZilq384GAA--.15786W
-X-CM-SenderInfo: xdod00pvrqwqqrwthudrp/xtbC9QG2ymopZuHj5wAA3I
-X-Coremail-Antispam: 1U5529EdanIXcx71UUUUU7vcSsGvfC2KfnxnUU==
-Received-SPF: pass client-ip=220.197.31.3; envelope-from=alanosong@163.com;
- helo=m16.mail.163.com
-X-Spam_score_int: 4
-X-Spam_score: 0.4
-X-Spam_bar: /
-X-Spam_report: (0.4 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1, DKIM_VALID=-0.1,
- DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
- HTML_MESSAGE=0.001, MIME_CHARSET_FARAWAY=2.45, RCVD_IN_DNSWL_NONE=-0.0001,
- RCVD_IN_MSPIKE_H2=0.001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <20260609-console-resize-v7-11-0c550fdcec15@gmail.com>
+User-Agent: Mutt/2.3.2 (2026-04-26)
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.12
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=berrange@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -24
+X-Spam_score: -2.5
+X-Spam_bar: --
+X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.445,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -73,158 +94,49 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-------=_Part_153833_453921963.1781098209435
-Content-Type: text/plain; charset=GBK
-Content-Transfer-Encoding: base64
+On Tue, Jun 09, 2026 at 09:16:21PM +0200, Filip Hejsek wrote:
+> Implement the part of the virtio spec that allows to notify the virtio
+> driver about terminal resizes. Gate the new resize support behind the
+> console-size property, which defaults to off. To implement the property,
+> restore VirtIOSerial::host_features (previously removed by commit
+> d0660e5b7fc7e97926232d13d2500a16df32b310).
+> 
+> The virtio spec contains two methods to inform the guest about console
+> size:
+> 
+> For legacy drivers, we have only one port and we put the terminal size
+> in the config space and inject the config changed interrupt.
+> 
+> For multiport devices, we use the control virtqueue to send a
+> packet containing the terminal size. Unfortunately, old versions
+> of the Linux kernel used an incorrect order for the fields (rows
+> then cols instead of cols then rows), until it was fixed by commit
+> 5326ab737a47278dbd16ed3ee7380b26c7056ddd. As a result, when running an
+> old guest kernel, the number of rows and columns will be swapped.
+> 
+> Based on a patch originally written by Szymon Lukasz <noh4hss@gmail.com>,
+> but partially rewritten to fix various corner cases.
+> 
+> Signed-off-by: Szymon Lukasz <noh4hss@gmail.com>
+> Signed-off-by: Filip Hejsek <filip.hejsek@gmail.com>
+> ---
+>  hw/char/trace-events              |  1 +
+>  hw/char/virtio-serial-bus.c       | 81 ++++++++++++++++++++++++++++++++++++++-
+>  include/hw/virtio/virtio-serial.h |  7 ++++
+>  3 files changed, 87 insertions(+), 2 deletions(-)
 
-CgpBdCAyMDI2LTA2LTA2IDIyOjAxOjM1LCAiRHIuIERhdmlkIEFsYW4gR2lsYmVydCIgPGRhdmVA
-dHJlYmxpZy5vcmc+IHdyb3RlOgo+KiBBbGFubyBTb25nIChhbGFub3NvbmdAMTYzLmNvbSkgd3Jv
-dGU6Cj4+IAo+PiAKPj4gCj4+IEF0IDIwMjYtMDUtMjggMjM6MjQ6NTYsICJQaGlsaXBwZSBNYXRo
-aWV1LURhdWSopiIgPHBoaWxtZEBsaW5hcm8ub3JnPiB3cm90ZToKPj4gPkhpLAo+PiA+Cj4+ID5P
-biAyNC81LzI2IDE0OjQxLCBBbGFub1NvbmdAMTYzLmNvbSB3cm90ZToKPj4gPj4gV2hlbiBib290
-aW5nIGFuIGkzODYgZ3Vlc3QsIHRoZSBgaW5mbyB0bGJgIGNvbW1hbmQKPj4gPj4gbWF5IHdhbGsg
-dGhlIGVudGlyZSBwYWdlIHRhYmxlIGhpZXJhcmNoeSBhbmQgZW1pdAo+PiA+PiBhbiBlbm9ybW91
-cyBhbW91bnQgb2Ygb3V0cHV0IChhcyBtYW55IGFzIDgwMCsgbWlsbGlvbgo+PiA+PiBlbnRyaWVz
-IHVuZGVyIG15IHRlc3QpLgo+PiA+PiBJdCB3aWxsIHRha2UgZG96ZW5zIG9mIG1pbnV0ZXMgdG8g
-cHJpbnQgYWxsIHRoZSBpbmZvLAo+PiA+PiBiZWNhdXNlIGVhY2ggbW9uaXRvciBwcmludCBmdW5j
-dGlvbiB3aWxsIGhvbGRzICdtb25fbG9jaycuCj4+ID4+IFRoaXMgZWZmZWN0aXZlbHkgaGFuZ3Mg
-dGhlIHFlbXUgbW9uaXRvciwgYW5kIGV2ZW4gbGVhZGluZwo+PiA+PiB0byBwcm9ncmFtIGV4aXQg
-ZHVlIHRvIHRpbWVvdXQuCj4+ID4+IAo+PiA+PiBTbyBpdCBtYXkgYmUgYmV0dGVyIHRvIHNob3cg
-b25seSB0aGUgZmlyc3QgMzIgZW50cmllcwo+PiA+PiBhbmQgdGhlIGxhc3QgZW50cnkgYnkgZGVm
-YXVsdC4KPj4gPj4gCj4+ID4+IEFuZCBpZiBmdWxsIG91dHB1dCBpcyByZXF1aXJlZCwgdGhlIHVz
-ZXIgY2FuIHJlZGlyZWN0Cj4+ID4+IHRoZSBvdXRwdXQgdG8gYSBmaWxlIGJ5IHNwZWNpZnlpbmcg
-YSBmaWxlIG5hbWUsIGUuZy46Cj4+ID4+IGBpbmZvIHRsYiB4eHgudHh0YC4KPj4gPj4gCj4+ID4+
-IFNpZ25lZC1vZmYtYnk6IEFsYW5vIFNvbmcgPEFsYW5vU29uZ0AxNjMuY29tPgo+PiA+PiAtLS0K
-Pj4gPj4gICBobXAtY29tbWFuZHMtaW5mby5oeCAgfCAgMTAgKy0KPj4gPj4gICB0YXJnZXQvaTM4
-Ni9tb25pdG9yLmMgfCAyMzAgKysrKysrKysrKysrKysrKysrKysrKysrKysrKysrKysrKy0tLS0t
-LS0tCj4+ID4+ICAgMiBmaWxlcyBjaGFuZ2VkLCAxOTUgaW5zZXJ0aW9ucygrKSwgNDUgZGVsZXRp
-b25zKC0pCj4+ID4+IAo+PiA+PiBkaWZmIC0tZ2l0IGEvaG1wLWNvbW1hbmRzLWluZm8uaHggYi9o
-bXAtY29tbWFuZHMtaW5mby5oeAo+PiA+PiBpbmRleCA4MjEzNGViNmMyLi4zM2I0NjA0ZDExIDEw
-MDY0NAo+PiA+PiAtLS0gYS9obXAtY29tbWFuZHMtaW5mby5oeAo+PiA+PiArKysgYi9obXAtY29t
-bWFuZHMtaW5mby5oeAo+PiA+PiBAQCAtMTg4LDE3ICsxODgsMTkgQEAgRVJTVAo+PiA+PiAgIAo+
-PiA+PiAgICAgICB7Cj4+ID4+ICAgICAgICAgICAubmFtZSAgICAgICA9ICJ0bGIiLAo+PiA+PiAt
-ICAgICAgICAuYXJnc190eXBlICA9ICIiLAo+PiA+PiAtICAgICAgICAucGFyYW1zICAgICA9ICIi
-LAo+PiA+PiAtICAgICAgICAuaGVscCAgICAgICA9ICJzaG93IHZpcnR1YWwgdG8gcGh5c2ljYWwg
-bWVtb3J5IG1hcHBpbmdzIiwKPj4gPj4gKyAgICAgICAgLmFyZ3NfdHlwZSAgPSAiZmlsZTpzPyIs
-Cj4+ID4+ICsgICAgICAgIC5wYXJhbXMgICAgID0gIltmaWxlXSIsCj4+ID4+ICsgICAgICAgIC5o
-ZWxwICAgICAgID0gInNob3cgdmlydHVhbCB0byBwaHlzaWNhbCBtZW1vcnkgbWFwcGluZ3MgKG9w
-dGlvbmFsbHkgc2F2ZSB0byBmaWxlKSIsCj4+ID4+ICAgICAgICAgICAuY21kICAgICAgICA9IGht
-cF9pbmZvX3RsYiwKPj4gPj4gICAgICAgICAgIC5hcmNoX2JpdG1hc2sgPSBRRU1VX0FSQ0hfSTM4
-NiB8IFFFTVVfQVJDSF9TSDQgfCBRRU1VX0FSQ0hfU1BBUkMgXAo+PiA+PiAgICAgICAgICAgICAg
-ICAgICAgICAgICAgIHwgUUVNVV9BUkNIX1BQQyB8IFFFTVVfQVJDSF9YVEVOU0EgfCBRRU1VX0FS
-Q0hfTTY4SywKPj4gPj4gICAgICAgfSwKPj4gPj4gICAKPj4gPj4gICBTUlNUCj4+ID4+IC0gIGBg
-aW5mbyB0bGJgYAo+PiA+PiArICBgYGluZm8gdGxiYGAgWypmaWxlKl0KPj4gPj4gICAgICAgU2hv
-dyB2aXJ0dWFsIHRvIHBoeXNpY2FsIG1lbW9yeSBtYXBwaW5ncy4KPj4gPj4gKyAgICBJZiAqZmls
-ZSogaXMgc3BlY2lmaWVkLCB0aGUgb3V0cHV0IGlzIHNhdmVkIHRvIHRoZSBnaXZlbiBmaWxlCj4+
-ID4+ICsgICAgaW5zdGVhZCBvZiBiZWluZyBwcmludGVkIHRvIHRoZSBtb25pdG9yLgo+PiA+PiAg
-IEVSU1QKPj4gPgo+PiA+V2hhdCBhYm91dCBwYXNzaW5nIGNvdW50IG9yIHJhbmdlIGJ5IGFyZ3Vt
-ZW50IGluc3RlYWQsIGtlZXBpbmcgdGhlCj4+IAo+PiA+ZGVmYXVsdCBiZWhhdmlvcj8KPj4gCj4+
-IAo+PiBIaSwgUGhpbGlwcGU6Cj4+IAo+PiAKPj4gWW91ciBzdWdnZXN0aW9uIGlzIGdvb2QsCj4+
-IEkgY2FuIGFkZCBzZXZlcmFsIG9wdGlvbnMsCj4+IHNvIHRoYXQgdXNlcnMgY2FuIGNvbnRyb2wg
-dGhlIG91dHB1dCByYW5nZSBhbmQgY291bnQuCj4+IAo+PiAKPj4gQW5kIGp1c3QgYXMgSSBkZXNj
-cmliZWQgZWFybGllciwgd2Ugc2hvdWxkIG1vZGlmeSB0aGUgZGVmYXVsdCBiZWhhdmlvcjoKPj4g
-b25seSBwcmludCB0aGUgZmlyc3QgMzIgZW50cmllcyBhbmQgdGhlIGxhc3QgZW50cnkuCj4+IHNv
-IHRoYXQgdXNlcnMgY2FuIGtub3cgdGhlIHJhbmdlIHdoaWxlIGF2b2lkaW5nCj4+IHRoZSBvdXRw
-dXQgb2YgYWxsIHRoZSBlbnRyaWVzICh0aGVyZSBhcmUgdG9vIG1hbnkpLgo+Cj5BIGNvbW1lbnQg
-aW4gdGhlIGhlbHAgd2FybmluZyB0aGF0IHRoZXknbGwgZ2V0IGEgbG90IG9mIG91dHB1dCB3b3Vs
-ZAo+YmUgZ29vZCBhcyB3ZWxsLgo+Cj5EYXZlCgo+CkhpLCBEci5HaWxiZXJ0LAoKR29vZCBwb2lu
-dCwKSSB3aWxsIGFkZCBhIG5vdGUgdG8gdGhlIGhlbHBlciBkb2N1bWVudGF0aW9uLgoKQWxzbywg
-cGVyIFBoaWxpcHBlJ3MgZmVlZGJhY2sgb24gdGhpcyBwYXRjaCBzZXQsCkkgd2lsbCBhbHNvIHBh
-c3MgYSByYW5nZSBieSBhcmd1bWVudCwKc28gdGhhdCB1c2VyIGNhbiBjb250cm9sIHRoZSBudW1i
-ZXIgb2Ygb3V0cHV0IGl0ZW1zLgoKQWxhbm8uCj4+IAo+PiBBbGFuby4KPj4gCj4+IAo+PiAKPi0t
-IAo+IC0tLS0tT3BlbiB1cCB5b3VyIGV5ZXMsIG9wZW4gdXAgeW91ciBtaW5kLCBvcGVuIHVwIHlv
-dXIgY29kZSAtLS0tLS0tICAgCj4vIERyLiBEYXZpZCBBbGFuIEdpbGJlcnQgICAgfCAgICAgICBS
-dW5uaW5nIEdOVS9MaW51eCAgICAgICB8IEhhcHB5ICBcIAo+XCAgICAgICAgZGF2ZSBAIHRyZWJs
-aWcub3JnIHwgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgfCBJbiBIZXggLwo+IFwgX19f
-X19fX19fX19fX19fX19fX19fX19fX3xfX19fXyBodHRwOi8vd3d3LnRyZWJsaWcub3JnICAgfF9f
-X19fX18vCg==
-------=_Part_153833_453921963.1781098209435
-Content-Type: text/html; charset=GBK
-Content-Transfer-Encoding: base64
+Reviewed-by: Daniel P. Berrangé <berrange@redhat.com>
 
-PGRpdiBkYXRhLW50ZXM9Im50ZXNfbWFpbF9ib2R5X3Jvb3QiIHN0eWxlPSJsaW5lLWhlaWdodDox
-Ljc7Y29sb3I6IzAwMDAwMDtmb250LXNpemU6MTRweDtmb250LWZhbWlseTpBcmlhbCI+PGRpdiBz
-dHlsZT0ibWFyZ2luOiAwOyI+PGJyPjwvZGl2PjxwcmU+QXQgMjAyNi0wNi0wNiAyMjowMTozNSwg
-IkRyLiBEYXZpZCBBbGFuIEdpbGJlcnQiICZsdDtkYXZlQHRyZWJsaWcub3JnJmd0OyB3cm90ZToK
-Jmd0OyogQWxhbm8gU29uZyAoYWxhbm9zb25nQDE2My5jb20pIHdyb3RlOgomZ3Q7Jmd0OyAKJmd0
-OyZndDsgCiZndDsmZ3Q7IAomZ3Q7Jmd0OyBBdCAyMDI2LTA1LTI4IDIzOjI0OjU2LCAiUGhpbGlw
-cGUgTWF0aGlldS1EYXVkqKYiICZsdDtwaGlsbWRAbGluYXJvLm9yZyZndDsgd3JvdGU6CiZndDsm
-Z3Q7ICZndDtIaSwKJmd0OyZndDsgJmd0OwomZ3Q7Jmd0OyAmZ3Q7T24gMjQvNS8yNiAxNDo0MSwg
-QWxhbm9Tb25nQDE2My5jb20gd3JvdGU6CiZndDsmZ3Q7ICZndDsmZ3Q7IFdoZW4gYm9vdGluZyBh
-biBpMzg2IGd1ZXN0LCB0aGUgYGluZm8gdGxiYCBjb21tYW5kCiZndDsmZ3Q7ICZndDsmZ3Q7IG1h
-eSB3YWxrIHRoZSBlbnRpcmUgcGFnZSB0YWJsZSBoaWVyYXJjaHkgYW5kIGVtaXQKJmd0OyZndDsg
-Jmd0OyZndDsgYW4gZW5vcm1vdXMgYW1vdW50IG9mIG91dHB1dCAoYXMgbWFueSBhcyA4MDArIG1p
-bGxpb24KJmd0OyZndDsgJmd0OyZndDsgZW50cmllcyB1bmRlciBteSB0ZXN0KS4KJmd0OyZndDsg
-Jmd0OyZndDsgSXQgd2lsbCB0YWtlIGRvemVucyBvZiBtaW51dGVzIHRvIHByaW50IGFsbCB0aGUg
-aW5mbywKJmd0OyZndDsgJmd0OyZndDsgYmVjYXVzZSBlYWNoIG1vbml0b3IgcHJpbnQgZnVuY3Rp
-b24gd2lsbCBob2xkcyAnbW9uX2xvY2snLgomZ3Q7Jmd0OyAmZ3Q7Jmd0OyBUaGlzIGVmZmVjdGl2
-ZWx5IGhhbmdzIHRoZSBxZW11IG1vbml0b3IsIGFuZCBldmVuIGxlYWRpbmcKJmd0OyZndDsgJmd0
-OyZndDsgdG8gcHJvZ3JhbSBleGl0IGR1ZSB0byB0aW1lb3V0LgomZ3Q7Jmd0OyAmZ3Q7Jmd0OyAK
-Jmd0OyZndDsgJmd0OyZndDsgU28gaXQgbWF5IGJlIGJldHRlciB0byBzaG93IG9ubHkgdGhlIGZp
-cnN0IDMyIGVudHJpZXMKJmd0OyZndDsgJmd0OyZndDsgYW5kIHRoZSBsYXN0IGVudHJ5IGJ5IGRl
-ZmF1bHQuCiZndDsmZ3Q7ICZndDsmZ3Q7IAomZ3Q7Jmd0OyAmZ3Q7Jmd0OyBBbmQgaWYgZnVsbCBv
-dXRwdXQgaXMgcmVxdWlyZWQsIHRoZSB1c2VyIGNhbiByZWRpcmVjdAomZ3Q7Jmd0OyAmZ3Q7Jmd0
-OyB0aGUgb3V0cHV0IHRvIGEgZmlsZSBieSBzcGVjaWZ5aW5nIGEgZmlsZSBuYW1lLCBlLmcuOgom
-Z3Q7Jmd0OyAmZ3Q7Jmd0OyBgaW5mbyB0bGIgeHh4LnR4dGAuCiZndDsmZ3Q7ICZndDsmZ3Q7IAom
-Z3Q7Jmd0OyAmZ3Q7Jmd0OyBTaWduZWQtb2ZmLWJ5OiBBbGFubyBTb25nICZsdDtBbGFub1NvbmdA
-MTYzLmNvbSZndDsKJmd0OyZndDsgJmd0OyZndDsgLS0tCiZndDsmZ3Q7ICZndDsmZ3Q7ICAgaG1w
-LWNvbW1hbmRzLWluZm8uaHggIHwgIDEwICstCiZndDsmZ3Q7ICZndDsmZ3Q7ICAgdGFyZ2V0L2kz
-ODYvbW9uaXRvci5jIHwgMjMwICsrKysrKysrKysrKysrKysrKysrKysrKysrKysrKysrKystLS0t
-LS0tLQomZ3Q7Jmd0OyAmZ3Q7Jmd0OyAgIDIgZmlsZXMgY2hhbmdlZCwgMTk1IGluc2VydGlvbnMo
-KyksIDQ1IGRlbGV0aW9ucygtKQomZ3Q7Jmd0OyAmZ3Q7Jmd0OyAKJmd0OyZndDsgJmd0OyZndDsg
-ZGlmZiAtLWdpdCBhL2htcC1jb21tYW5kcy1pbmZvLmh4IGIvaG1wLWNvbW1hbmRzLWluZm8uaHgK
-Jmd0OyZndDsgJmd0OyZndDsgaW5kZXggODIxMzRlYjZjMi4uMzNiNDYwNGQxMSAxMDA2NDQKJmd0
-OyZndDsgJmd0OyZndDsgLS0tIGEvaG1wLWNvbW1hbmRzLWluZm8uaHgKJmd0OyZndDsgJmd0OyZn
-dDsgKysrIGIvaG1wLWNvbW1hbmRzLWluZm8uaHgKJmd0OyZndDsgJmd0OyZndDsgQEAgLTE4OCwx
-NyArMTg4LDE5IEBAIEVSU1QKJmd0OyZndDsgJmd0OyZndDsgICAKJmd0OyZndDsgJmd0OyZndDsg
-ICAgICAgewomZ3Q7Jmd0OyAmZ3Q7Jmd0OyAgICAgICAgICAgLm5hbWUgICAgICAgPSAidGxiIiwK
-Jmd0OyZndDsgJmd0OyZndDsgLSAgICAgICAgLmFyZ3NfdHlwZSAgPSAiIiwKJmd0OyZndDsgJmd0
-OyZndDsgLSAgICAgICAgLnBhcmFtcyAgICAgPSAiIiwKJmd0OyZndDsgJmd0OyZndDsgLSAgICAg
-ICAgLmhlbHAgICAgICAgPSAic2hvdyB2aXJ0dWFsIHRvIHBoeXNpY2FsIG1lbW9yeSBtYXBwaW5n
-cyIsCiZndDsmZ3Q7ICZndDsmZ3Q7ICsgICAgICAgIC5hcmdzX3R5cGUgID0gImZpbGU6cz8iLAom
-Z3Q7Jmd0OyAmZ3Q7Jmd0OyArICAgICAgICAucGFyYW1zICAgICA9ICJbZmlsZV0iLAomZ3Q7Jmd0
-OyAmZ3Q7Jmd0OyArICAgICAgICAuaGVscCAgICAgICA9ICJzaG93IHZpcnR1YWwgdG8gcGh5c2lj
-YWwgbWVtb3J5IG1hcHBpbmdzIChvcHRpb25hbGx5IHNhdmUgdG8gZmlsZSkiLAomZ3Q7Jmd0OyAm
-Z3Q7Jmd0OyAgICAgICAgICAgLmNtZCAgICAgICAgPSBobXBfaW5mb190bGIsCiZndDsmZ3Q7ICZn
-dDsmZ3Q7ICAgICAgICAgICAuYXJjaF9iaXRtYXNrID0gUUVNVV9BUkNIX0kzODYgfCBRRU1VX0FS
-Q0hfU0g0IHwgUUVNVV9BUkNIX1NQQVJDIFwKJmd0OyZndDsgJmd0OyZndDsgICAgICAgICAgICAg
-ICAgICAgICAgICAgICB8IFFFTVVfQVJDSF9QUEMgfCBRRU1VX0FSQ0hfWFRFTlNBIHwgUUVNVV9B
-UkNIX002OEssCiZndDsmZ3Q7ICZndDsmZ3Q7ICAgICAgIH0sCiZndDsmZ3Q7ICZndDsmZ3Q7ICAg
-CiZndDsmZ3Q7ICZndDsmZ3Q7ICAgU1JTVAomZ3Q7Jmd0OyAmZ3Q7Jmd0OyAtICBgYGluZm8gdGxi
-YGAKJmd0OyZndDsgJmd0OyZndDsgKyAgYGBpbmZvIHRsYmBgIFsqZmlsZSpdCiZndDsmZ3Q7ICZn
-dDsmZ3Q7ICAgICAgIFNob3cgdmlydHVhbCB0byBwaHlzaWNhbCBtZW1vcnkgbWFwcGluZ3MuCiZn
-dDsmZ3Q7ICZndDsmZ3Q7ICsgICAgSWYgKmZpbGUqIGlzIHNwZWNpZmllZCwgdGhlIG91dHB1dCBp
-cyBzYXZlZCB0byB0aGUgZ2l2ZW4gZmlsZQomZ3Q7Jmd0OyAmZ3Q7Jmd0OyArICAgIGluc3RlYWQg
-b2YgYmVpbmcgcHJpbnRlZCB0byB0aGUgbW9uaXRvci4KJmd0OyZndDsgJmd0OyZndDsgICBFUlNU
-CiZndDsmZ3Q7ICZndDsKJmd0OyZndDsgJmd0O1doYXQgYWJvdXQgcGFzc2luZyBjb3VudCBvciBy
-YW5nZSBieSBhcmd1bWVudCBpbnN0ZWFkLCBrZWVwaW5nIHRoZQomZ3Q7Jmd0OyAKJmd0OyZndDsg
-Jmd0O2RlZmF1bHQgYmVoYXZpb3I/CiZndDsmZ3Q7IAomZ3Q7Jmd0OyAKJmd0OyZndDsgSGksIFBo
-aWxpcHBlOgomZ3Q7Jmd0OyAKJmd0OyZndDsgCiZndDsmZ3Q7IFlvdXIgc3VnZ2VzdGlvbiBpcyBn
-b29kLAomZ3Q7Jmd0OyBJIGNhbiBhZGQgc2V2ZXJhbCBvcHRpb25zLAomZ3Q7Jmd0OyBzbyB0aGF0
-IHVzZXJzIGNhbiBjb250cm9sIHRoZSBvdXRwdXQgcmFuZ2UgYW5kIGNvdW50LgomZ3Q7Jmd0OyAK
-Jmd0OyZndDsgCiZndDsmZ3Q7IEFuZCBqdXN0IGFzIEkgZGVzY3JpYmVkIGVhcmxpZXIsIHdlIHNo
-b3VsZCBtb2RpZnkgdGhlIGRlZmF1bHQgYmVoYXZpb3I6CiZndDsmZ3Q7IG9ubHkgcHJpbnQgdGhl
-IGZpcnN0IDMyIGVudHJpZXMgYW5kIHRoZSBsYXN0IGVudHJ5LgomZ3Q7Jmd0OyBzbyB0aGF0IHVz
-ZXJzIGNhbiBrbm93IHRoZSByYW5nZSB3aGlsZSBhdm9pZGluZwomZ3Q7Jmd0OyB0aGUgb3V0cHV0
-IG9mIGFsbCB0aGUgZW50cmllcyAodGhlcmUgYXJlIHRvbyBtYW55KS4KJmd0OwomZ3Q7QSBjb21t
-ZW50IGluIHRoZSBoZWxwIHdhcm5pbmcgdGhhdCB0aGV5J2xsIGdldCBhIGxvdCBvZiBvdXRwdXQg
-d291bGQKJmd0O2JlIGdvb2QgYXMgd2VsbC4KJmd0OwomZ3Q7RGF2ZQo8L3ByZT48ZGl2PiZndDs8
-L2Rpdj48ZGl2PjxwcmU+SGksIERyLkdpbGJlcnQsPGJyPjxicj48c3BhbiBjbGFzcz0ieWJjLWxp
-LWNvbXBvbmVudF9jb250ZW50Ij5Hb29kIHBvaW50PC9zcGFuPiw8YnI+SSB3aWxsIGFkZCBhIG5v
-dGUgdG8gdGhlIGhlbHBlciBkb2N1bWVudGF0aW9uLjxicj48YnI+QWxzbywgcGVyIFBoaWxpcHBl
-J3MgZmVlZGJhY2sgb24gdGhpcyBwYXRjaCBzZXQsPGJyPkkgd2lsbCBhbHNvIDxzcGFuIGNsYXNz
-PSJxIj5wYXNzIGEgcmFuZ2UgYnkgYXJndW1lbnQsPGJyPnNvIHRoYXQgdXNlciBjYW4gY29udHJv
-bCB0aGUgbnVtYmVyIG9mIG91dHB1dCBpdGVtcy48YnI+PGJyPkFsYW5vLjwvc3Bhbj48L3ByZT48
-L2Rpdj48cHJlPiZndDsmZ3Q7IAomZ3Q7Jmd0OyBBbGFuby4KJmd0OyZndDsgCiZndDsmZ3Q7IAom
-Z3Q7Jmd0OyAKJmd0Oy0tIAomZ3Q7IC0tLS0tT3BlbiB1cCB5b3VyIGV5ZXMsIG9wZW4gdXAgeW91
-ciBtaW5kLCBvcGVuIHVwIHlvdXIgY29kZSAtLS0tLS0tICAgCiZndDsvIERyLiBEYXZpZCBBbGFu
-IEdpbGJlcnQgICAgfCAgICAgICBSdW5uaW5nIEdOVS9MaW51eCAgICAgICB8IEhhcHB5ICBcIAom
-Z3Q7XCAgICAgICAgZGF2ZSBAIHRyZWJsaWcub3JnIHwgICAgICAgICAgICAgICAgICAgICAgICAg
-ICAgICAgfCBJbiBIZXggLwomZ3Q7IFwgX19fX19fX19fX19fX19fX19fX19fX19fX3xfX19fXyBo
-dHRwOi8vd3d3LnRyZWJsaWcub3JnICAgfF9fX19fX18vCjwvcHJlPjwvZGl2Pg==
-------=_Part_153833_453921963.1781098209435--
+
+With regards,
+Daniel
+-- 
+|: https://berrange.com       ~~        https://hachyderm.io/@berrange :|
+|: https://libvirt.org          ~~          https://entangle-photo.org :|
+|: https://pixelfed.art/berrange   ~~    https://fstop138.berrange.com :|
 
 
