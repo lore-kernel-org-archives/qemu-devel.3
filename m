@@ -4,113 +4,108 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 836ABCD98C7
-	for <qemu-devel@archiver.kernel.org>; Wed, 10 Jun 2026 10:23:10 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B0B23CD8CB9
+	for <qemu-devel@archiver.kernel.org>; Wed, 10 Jun 2026 10:29:28 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wXG5B-0002WR-G7; Wed, 10 Jun 2026 06:22:49 -0400
+	id 1wXGAw-0004Io-9h; Wed, 10 Jun 2026 06:28:46 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1wXG5A-0002VF-BE
- for qemu-devel@nongnu.org; Wed, 10 Jun 2026 06:22:48 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1wXGAu-0004Hq-5m
+ for qemu-devel@nongnu.org; Wed, 10 Jun 2026 06:28:44 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1wXG58-0007HZ-N7
- for qemu-devel@nongnu.org; Wed, 10 Jun 2026 06:22:48 -0400
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1wXGAs-0001IS-An
+ for qemu-devel@nongnu.org; Wed, 10 Jun 2026 06:28:43 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1781086965;
+ s=mimecast20190719; t=1781087320;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=zFB/ObjHPAnJc5QswfRNKCS4+BR0D4qsn13IjvxU0+4=;
- b=eTB/nTUc8BiPfKAn5qHDvKtWZP9q7hzeS0NoKXxHcoxpi0jnP/8H53klNz0FwUjuq/2eY5
- x/dcSmZ7XH0b/TT75I2m6kn1Qrb+Sk142ucXdkwwQcoA667wkkF3V1X5QW/JOKOS1jth6P
- BHhKsbPRrmmHIRxn1fvQQgYNrV8x1ts=
-Received: from mail-ej1-f72.google.com (mail-ej1-f72.google.com
- [209.85.218.72]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=oMXnR2dWWFIW58+CNVLgGxcEKMTDoW5SAM5OH8H4ZdY=;
+ b=LesEvLYnRXKIWuX0iEi+OAKFgxty+wGK+iXxu3QcNfE4750ITSsDCDD/rfjiOpuw9EpCUa
+ ttk+yBsobXf1/GfIw1Zn9m19/pKMG+CZigVRq55KA9LA4x+kgSoFbVL6l0+Ar3115wSuBT
+ g1ST+0GBtnDkqd5NnM2lAXAyK1dKYss=
+Received: from mail-wm1-f71.google.com (mail-wm1-f71.google.com
+ [209.85.128.71]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-654-ra3UsfOjPnm6wTbx-oQFBA-1; Wed, 10 Jun 2026 06:22:43 -0400
-X-MC-Unique: ra3UsfOjPnm6wTbx-oQFBA-1
-X-Mimecast-MFC-AGG-ID: ra3UsfOjPnm6wTbx-oQFBA_1781086963
-Received: by mail-ej1-f72.google.com with SMTP id
- a640c23a62f3a-beddb45de58so572777266b.1
- for <qemu-devel@nongnu.org>; Wed, 10 Jun 2026 03:22:43 -0700 (PDT)
+ us-mta-75-r9gGNPj1O3umDj16QLkPDA-1; Wed, 10 Jun 2026 06:28:39 -0400
+X-MC-Unique: r9gGNPj1O3umDj16QLkPDA-1
+X-Mimecast-MFC-AGG-ID: r9gGNPj1O3umDj16QLkPDA_1781087318
+Received: by mail-wm1-f71.google.com with SMTP id
+ 5b1f17b1804b1-490ab3f6e55so26891935e9.0
+ for <qemu-devel@nongnu.org>; Wed, 10 Jun 2026 03:28:39 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1781086962; x=1781691762; darn=nongnu.org;
+ d=redhat.com; s=google; t=1781087318; x=1781692118; darn=nongnu.org;
  h=in-reply-to:content-transfer-encoding:content-disposition
  :mime-version:references:message-id:subject:cc:to:from:date:from:to
  :cc:subject:date:message-id:reply-to;
- bh=zFB/ObjHPAnJc5QswfRNKCS4+BR0D4qsn13IjvxU0+4=;
- b=Ufy3XLLE/LMsjPjWOPQYp5YGL1+6jSK0RpcPzi/wNxOzPGpi6vPqmfI2eZIx0gVEw1
- dX33/QE6CEsa8VTttVFHji4GlxkNrmbbikke6qB+1KiJCNBwsTnyK2dbx6fUgwUpniDK
- 5PD/ZCf+S4wS9bCT6qY3py2eoyNG8i8PdspKPmqOIttUgZVU8Cewg/ES5Zj+DFVxXAI5
- mHWR+bILCfiF/sGzF5B22xJMhP7bfhCh5dEbmrvdnoqPu907G1ud3CTuy5E9pOk+6MJQ
- Q5xVZlhNm6h+EbZwFI/Zh9FQgKKLOOAyQMx51F6lO8oQUJxqPVOe3elP30XKULSd9IRC
- kQ+A==
+ bh=oMXnR2dWWFIW58+CNVLgGxcEKMTDoW5SAM5OH8H4ZdY=;
+ b=Ug9TQRy/XqwR81hfiEZQs+4OFIT600vvz00ApJxXwaBQKsvOwGgg3pjdph5zbTGNYk
+ 0T3Q8wCR7phkfBmIxrMhb9ab6QUNQnkDb0jgwHEpX1RkQ3J2nfrcYO7jV41xDKY6WpbL
+ o4tNCRjfqmA6kPGOpoPgOG9gFnr9ulwUtC2+NtWV7d9cTtLjKy+XGobymHM0r/mi0wAK
+ thuVIQLq0i8hsV2NGvPBSTD4FkoNPmI1QtzhYvLvI9L/sM31N6jgoeWFRR7U0t5u20JF
+ 1UxGSVDN0M0jxFFETrWzSsSLJHlCol9Hab/DLZraM8Jtnf4h48x+GcXDiYJ+fu9Ne10z
+ rcIA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1781086962; x=1781691762;
+ d=1e100.net; s=20251104; t=1781087318; x=1781692118;
  h=in-reply-to:content-transfer-encoding:content-disposition
  :mime-version:references:message-id:subject:cc:to:from:date:x-gm-gg
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=zFB/ObjHPAnJc5QswfRNKCS4+BR0D4qsn13IjvxU0+4=;
- b=LDSIYfI9N8a3ea8bVCGjwgKQ2euaI9hSVQnenbthcQqrgUItClAluU5IQRCIOmkOi5
- 7+j5rryIblH/uYZ13GfL23bTWh3RGsvYxPhryy9LFoQ2XjDqZD7ar5Yl5o+nEyQXDIb/
- R9f6DDrSXcsOJ4INCwfJ/hMcrmNJvNO7V7luhTMp1jaUGOySbvzC4RCkBfDpIuBHJ2s6
- fiF58vcAZSCSblorwWCA7wjkPQ/ibfnYhISpUbj3PKfU3W0pCDUXGVkwbcSJfCC1paKU
- 8HPpqIJiXi6F+YJCE5LRPd4VGirkX15LXSvB5HVwfCaFYOH7kgrlb3TJDS/xK1Zemjtr
- Cqbg==
-X-Forwarded-Encrypted: i=1;
- AFNElJ96s57y6vahe3jT1sdlinNsZgzdv6TxLwhednMUHC9pSzlZQlJxCiMHQoxOKNBWkONtw34cpdcBsea6@nongnu.org
-X-Gm-Message-State: AOJu0YxFsCQqrZOWlpkTkmaIkJr0ClEqNIvE/RuIdUOLmg/hUdW/f9TZ
- d1PpJv8szlwQwECW21d3/WP8GisXOfNVyyAKUCTu2+HnKyj2JnRN3xyGq+LUg4czw3zyiSjQx+V
- 67qyg5s9a52skCxVJuYejYiGMsXTS+5V6Q9fcuZFDqj2t15khwk8tmrL6
-X-Gm-Gg: Acq92OFy34iD8SuKavHobLRErzXQP16xu7Sj8AiwTkWucXU4Gjfoc8qyNO9GXEvvkot
- 3ddVCEtQ5ULFXI7hwTAfUv2xdEllPY/rvDCephqXC7ai0eHDIzmasdaYCIRR6g5gdPcsqCPI+xk
- orLIVQWopAOcbVbTrTfU4skIrYH/BmgTuma9wJriAvOmJUDxzAlTvi8ii6rznPfyvnsTGV0tMa7
- F8VcHMfcW3N5uAyy8Rbgy20xBtiwaYrGzXeOodMSauaBJVxGXJbdnxcZTCJrIak790sTHB0SopT
- ND2MTNciyG0Aie7xpBbw87yeaA3XdjhqPJs93aY/NfKh0ZKTsklXFJ2pS1DeQJsHky3TvQozsYY
- aSDr3iqPDomdozmjqyeMCG6ZVyz2A7mp4UPB4Uk6v8Oku2AyZdX+0nw==
-X-Received: by 2002:a17:906:8444:b0:bec:4a86:938d with SMTP id
- a640c23a62f3a-bf36cecd439mr944155366b.0.1781086962474; 
- Wed, 10 Jun 2026 03:22:42 -0700 (PDT)
-X-Received: by 2002:a17:906:8444:b0:bec:4a86:938d with SMTP id
- a640c23a62f3a-bf36cecd439mr944153866b.0.1781086961794; 
- Wed, 10 Jun 2026 03:22:41 -0700 (PDT)
+ bh=oMXnR2dWWFIW58+CNVLgGxcEKMTDoW5SAM5OH8H4ZdY=;
+ b=r1w9CadZLR83xLatZwi+Jt7qgxtCA73sViYvEssyt3Tr48f4WkbAP85EWqZAYKuwIr
+ RIGMDsoWJyoHJc2d7JmgGBJYx38I6h3gBRPzVJalguuVI9cOvDqXcVEnAoTbcYIEO7Nt
+ DudH2Mmgo7n9BOcFXA07v0bEuAWylQjShLjRoG+o29JJSndIuFggH4OhughdXofpy3bV
+ 44AM61+ZeLXptuR3WkgVtzBb09S1U3WqzR6VSmOdoI6p515eLwm/Rfiw+QyE+Bkl5Xx6
+ r87pRKy0lTCUcnYEch3/SquT2mxhXVHO56Wl4qf2dqjoenyd0WIqBPbwAVrx+kq/iWwY
+ MWuw==
+X-Gm-Message-State: AOJu0YxOlQhFmiMoRVhHY/l87Y1qNZEELlQvM/D3CB9Up4Ya1nmLR+Ei
+ IKh5oY7LXO+V9mhmyy2ekhyTr7ljaPUqV+2DlMQJVcVWV+A4YdOJlGHlLd6u7e+IkO1+E5IguEg
+ z128QwbxPBgUC04JPvdK47c8ZmNUHERksI2YqxaYc8oXPq+IlturlItoL
+X-Gm-Gg: Acq92OHGnwnYC0XQG7LGWaabkejiY6NuZShLvA7B8l/MXc08vFFTBteVupHtucK8Jo3
+ zqvZS2ml4+F2DKQN9hgN9G1J6xog8lhaE4CUyLIoJqp+KLbJB8OjUkgTERo9EMNUi5xCWFU0p3a
+ nO6r4RNIKiD8gxBytEJY6lWarMZ1KEngwXkV+Vf0K6L8pjaGNH1ArqaJC0domZjsnI/7Td1vZIp
+ hFzPapK707EzRC+4QI25qWdDwmcebkthpeXBeBU8JcBE0gkklHI6n+VpsWSWCIB+PNzQbhaM5e/
+ DewemYsDYCqe2H0wPv8kEX3a0iU+mfOpRDzcHDPqtIkhZtWy64uzEOK+384Bggc58bdK5zum5LU
+ wziWBxkUW922yy5R89eOLoMqXixFWPtmZNWHXrgQocci6WrFw3OQnOw==
+X-Received: by 2002:a05:600c:34c1:b0:485:4388:3492 with SMTP id
+ 5b1f17b1804b1-490c25716dcmr361560465e9.11.1781087318088; 
+ Wed, 10 Jun 2026 03:28:38 -0700 (PDT)
+X-Received: by 2002:a05:600c:34c1:b0:485:4388:3492 with SMTP id
+ 5b1f17b1804b1-490c25716dcmr361560045e9.11.1781087317563; 
+ Wed, 10 Jun 2026 03:28:37 -0700 (PDT)
 Received: from redhat.com (IGLD-80-230-85-71.inter.net.il. [80.230.85.71])
  by smtp.gmail.com with ESMTPSA id
- a640c23a62f3a-bf05208e897sm1155911766b.25.2026.06.10.03.22.39
+ 5b1f17b1804b1-490bc3918d7sm520738245e9.2.2026.06.10.03.28.35
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 10 Jun 2026 03:22:40 -0700 (PDT)
-Date: Wed, 10 Jun 2026 06:22:37 -0400
+ Wed, 10 Jun 2026 03:28:36 -0700 (PDT)
+Date: Wed, 10 Jun 2026 06:28:34 -0400
 From: "Michael S. Tsirkin" <mst@redhat.com>
-To: Peter Maydell <peter.maydell@linaro.org>
-Cc: Daniel =?iso-8859-1?Q?P=2E_Berrang=E9?= <berrange@redhat.com>,
- qemu-devel@nongnu.org,
+To: Daniel =?iso-8859-1?Q?P=2E_Berrang=E9?= <berrange@redhat.com>
+Cc: qemu-devel@nongnu.org,
  Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
  Alex =?iso-8859-1?Q?Benn=E9e?= <alex.bennee@linaro.org>,
  Mauro Matteo Cascella <mcascell@redhat.com>,
  Paolo Bonzini <pbonzini@redhat.com>, Thomas Huth <thuth@redhat.com>
-Subject: Re: [qemu-web RFC 3/3] contribute: switch security process to gitlab
- confidential issues
-Message-ID: <20260610061846-mutt-send-email-mst@kernel.org>
+Subject: Re: [qemu-web RFC 0/3] switch to GitLab confidential issues for
+ security disclosure
+Message-ID: <20260610062358-mutt-send-email-mst@kernel.org>
 References: <20260604165048.457860-1-berrange@redhat.com>
- <20260604165048.457860-4-berrange@redhat.com>
- <CAFEAcA_4sKbosaDRSStAWdD73jTvXGnEraRDR1FbfWXun7oLkg@mail.gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=iso-8859-1
 Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <CAFEAcA_4sKbosaDRSStAWdD73jTvXGnEraRDR1FbfWXun7oLkg@mail.gmail.com>
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=mst@redhat.com;
+In-Reply-To: <20260604165048.457860-1-berrange@redhat.com>
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=mst@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -24
 X-Spam_score: -2.5
 X-Spam_bar: --
 X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.445,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
  SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -127,90 +122,122 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Mon, Jun 08, 2026 at 02:39:06PM +0100, Peter Maydell wrote:
-> On Thu, 4 Jun 2026 at 17:51, Daniel P. Berrangé <berrange@redhat.com> wrote:
-> >
-> > It is no longer viable to handle the incredible volumes of
-> > AI assisted security disclosures via email, nor are extended
-> > embargos practical or useful.
-> >
-> > Remove all information about the current security process and
-> > instruct reporters to use 'confidential' issues. In contrast
-> > to the old highly restrictive "need to know" approach, the
-> > new approach makes all security issues visible to all QEMU
-> > maintainers immediately.
-> >
-> > The focus is on making issues public as soon as possible with
-> > a viable patch. Co-ordinated disclosure will no longer be
-> > attempted and nor will requests to embargoes be accepted.
-> >
-> > Signed-off-by: Daniel P. Berrangé <berrange@redhat.com>
+On Thu, Jun 04, 2026 at 05:50:45PM +0100, Daniel P. Berrangé wrote:
+> I previously raised the idea of using GitLab issues for security
+> disclosures:
 > 
-> Since I'm not directly involved with the security process, I
-> don't have a strong view here and I trust your judgement that
-> this is going to work better. I have a couple of minor
-> suggestions below.
-> 
-> > +## How to disclosure a potential issues
-> 
-> "How to disclose potential issues"
-> 
-> > +
-> > +**The QEMU project no longer accepts security issue disclosures via email.**
-> > +
-> > +New disclosures must follow the [report a bug](report-a-bug.html)
-> > +process to file a GitLab work item for each potential issue, ***marking
-> > +it as "*confidential*" prior to submission.***
-> > +
-> > +If unsure of the security implications of an issue, err on the side
-> > +of caution and mark it as "*confidential*" initially.
-> 
-> "err on the side of caution" doesn't seem to me to interact
-> very well with "we get a ton of not very well filtered AI reports".
-> I think we should probably emphasise here that we expect the
-> submitter to read our description of the virtualization vs
-> non-virtualization use cases and not report bugs that clearly
-> don't fall under the virtualization case as confidential.
+>   https://lists.gnu.org/archive/html/qemu-devel/2026-05/msg04582.html
 
 
-Sadly it seems that only maintainers of specific piece of code
-really know if it's non-virtualization use case.
+Thanks a lot for posting this!
 
-E.g. nvme emulation is non virtualization, I find out.
-Wouldn't have guessed.
+Do we want a special
 
-> At the moment the text below says that it's the people on the
-> receiving end that do that as part of triage.
+.gitlab/issue_templates/security_bug.md
+
+For this?
+
+It can include guidance in a friendly way.
+
+
+> This patch proposal formalizes that into a concrete proposal:
 > 
-> The old text started up-front with:
+>  * qemu-security is entirely discontinued
 > 
-> -Note that not all areas of QEMU are considered to provide a security
-> -boundary. Consult the guidance [...]
+>  * "confidential" GitLab issues are to be used
 > 
-> "People who send us bad security reports" and "people who don't
-> read the documentation about our security process and policy"
-> probably has a strong overlap, but I think it's still worth
-> making sure we have the emphasis pretty strongly on "you as
-> the submitter are expected to not report things we're going to
-> instantly triage out as not-security-bugs".
+>  * The priority is to have a low overhead process that is
+>    as close to normal bug & development workflow as
+>    possible.
 > 
-> > +## Triage process
-> > +
-> > + * A maintainer will evaluate the circumstances of the issue
-> > +   to determine if it can be misused for malicious purposes.
-> > +
-> > + * If there is no potential for meaningful exploit, the disclosure
-> > +   should be switched to the public bug report process by removing
-> > +   the "*confidential*" marker.
-> > +
-> > + * If confirmed as a security flaw, a maintainer will request
+>  * No embargoes will be accepted, beyond the time needed
+>    for a maintainer to develop a patch, unless extenuating
+>    scenarios apply. A vendor's/user's desire to delay to
+>    suit their arbitrary software upgrade schedule is NOT
+>    an extenuating scenario.
 > 
-> "request" seems a stray word here ?
+>  * All confidential issues will be expected to be made
+>    public, either when the patch is proposed to qemu-devel,
+>    or sooner if a issue is low severity and a patch is not
+>    a priority for the manitainer
 > 
-> > +   add the **"cve::required"** GitLab label to the GitLab work item,
-> > +   which indicates the need for a CNA to allocate a CVE.
+>  * Eliminate dependency on any single maintainer/person to
+>    the greatest extent practical
 > 
-> thanks
-> -- PMM
+> Some open questions
+> 
+>  * I describe using "cve::required" as a gitlab label to
+>    track issues that need CVEs allocating. I'm unclear what
+>    the best way is to actually do the allocation. This is
+>    where it is hardest to eliminate the single person
+>    bottleneck / burden.
+> 
+>    Traditionally I would email Red Hat product security via
+>    Mauro (CC'd) but that's still a single point of failure.
+> 
+>    I'm personally not willing to sign up for QEMU to be a
+>    CNA, because they have unreasonable expectations for
+>    volunteer projects. I'm not going to give them my phone
+>    number nor agree to any SLAs for response to query.
+> 
+>    From a selfish QEMU upstream maintainer POV, I would say
+>    that CVEs are largely devoid of value. The people who
+>    care most about them are the downstream vendors who
+>    ship old QEMU versions and track bugs for backporting.
+>    If we want to pull a security fix into our stable release
+>    branches we can do that easily without a CVE.
+> 
+>    Thus one nuclear option is to say "not our problem" and
+>    no longer assign CVEs at all. Instead assign a unique ID
+>    of QEMU's invention "QEMU-SEC-nnnnn", and let downstream
+>    vendors take the pain of allocating and mapping QEMU's
+>    identifiers to CVE identifiers.
+> 
+>  * We have >100 disclosed issues to qemu-security
+>    that were classed as non-virtualization bugs which
+>    I asked the reporter to file gitlab issues for.
+>    Almost no one followed up to do that. I don't want
+>    these bugs to go into a black-hole as they are all
+>    basically valid, but I also don't fancy bulk filing
+>    100's of issues from my own account.
+> 
+>    There are also more non-triaged issues some of which
+>    are valid security bugs which ought to be tracked
+>    rather than sucked into a black-hole. Again that
+>    implies more bulk filing of bugs :-(
+> 
+>  * Moving away from a small dedicated group of people
+>    handling security reports, to a distributed
+>    responsbility has a notable risk - every maintainer
+>    may consider it "someone else's problem" and ignore
+>    security disclosures. Some poor sucker then gets to
+>    run triage across an ever increasing set of issues
+>    and try to encourage maintainers into responding.
+> 
+>    Based on our experience with normal bug triage work,
+>    I'd say it is a near certainty that this will happen
+>    to some extent.
+> 
+>    I don't have any answer here other than even this
+>    bad outcome will probably be less bad that the status
+>    quo with qemu-security email disclosure. Personally
+>    I can/will not continue with the email workflow any
+>    more.
+> 
+>    IMHO this mostly points towards the downstream vendors
+>    needing to invest more in QEMU if they want to have a
+>    guaranteed security SLA upstream.
+> 
+> Daniel P. Berrangé (3):
+>   contribute: reformat/restructure bug report guidance
+>   contribute: add automate tool disclosure to bug reporting
+>   contribute: switch security process to gitlab confidential issues
+> 
+>  contribute/report-a-bug.md     |  63 +++++---
+>  contribute/security-process.md | 280 ++++++++++++++-------------------
+>  2 files changed, 155 insertions(+), 188 deletions(-)
+> 
+> -- 
+> 2.54.0
 
 
