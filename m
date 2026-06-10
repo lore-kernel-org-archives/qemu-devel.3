@@ -4,84 +4,112 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E2458CD98C6
-	for <qemu-devel@archiver.kernel.org>; Wed, 10 Jun 2026 16:09:17 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 697BBCD8CB9
+	for <qemu-devel@archiver.kernel.org>; Wed, 10 Jun 2026 16:12:20 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wXLTh-0005MC-C6; Wed, 10 Jun 2026 12:08:29 -0400
+	id 1wXLX5-0007Uk-V4; Wed, 10 Jun 2026 12:11:59 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1wXLTe-0005Li-77
- for qemu-devel@nongnu.org; Wed, 10 Jun 2026 12:08:27 -0400
-Received: from mail-pg1-x531.google.com ([2607:f8b0:4864:20::531])
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1wXLX3-0007Nu-2S
+ for qemu-devel@nongnu.org; Wed, 10 Jun 2026 12:11:57 -0400
+Received: from mail-ej1-x636.google.com ([2a00:1450:4864:20::636])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1wXLTc-0003B4-5q
- for qemu-devel@nongnu.org; Wed, 10 Jun 2026 12:08:25 -0400
-Received: by mail-pg1-x531.google.com with SMTP id
- 41be03b00d2f7-c858961a8efso2639288a12.2
- for <qemu-devel@nongnu.org>; Wed, 10 Jun 2026 09:08:23 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1wXLX1-000599-6t
+ for qemu-devel@nongnu.org; Wed, 10 Jun 2026 12:11:56 -0400
+Received: by mail-ej1-x636.google.com with SMTP id
+ a640c23a62f3a-bf84a2b2077so394532166b.2
+ for <qemu-devel@nongnu.org>; Wed, 10 Jun 2026 09:11:54 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1781107913; cv=none;
+ d=google.com; s=arc-20240605;
+ b=WfIA42OU7Hqm5qSNa9K0b4UqRYaWM4YFSUpMjyX7rnvcA1ro40H/y5Q48f/QDP/8lj
+ 6mpsWVGfmzP5MYQErUoHZuTig13qvVcI4tQt7pVk0DsEmwCqHdamr0FMBBaetusYQ8ZZ
+ IHzEfI0arY9b+P8herNFteoPg64uPZ00NZkqL5OOWd6mvd1MJ1EZdbKkO2JfHr5y+p2G
+ IBeFn5HdPTYTHW1ZWDqDYBTQ/ePiGsjNQ5V9TF0M92JimWzP8kKVZPW/BG1BPgn9lULg
+ fS0UQXjhZ1G+33YeREjJcXm/4ls81po8UZxq+6Qic9209/uaHV3UOPpeVffKwMKQRgrH
+ mLpQ==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
+ s=arc-20240605; 
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:dkim-signature;
+ bh=ZZ8zjx9zZtk18xXgGEBK9YE+Y2wE7QAaghjDUbU5LFg=;
+ fh=jw9DXqzxbFLNbotWYExY8Ojxy57L0QGPIvV2cD6hoFg=;
+ b=Hq9+3Im6mkUt/P04LJUpeatjKh4IeYShamkzOKdpgKrSvKjc27Om3LNHg+gm/EcnwM
+ Bm/dOGGMKT7g2ygYmi08kvktNVS70z5J40zXzONXsE5mPPh/FmfCTKZWudgHUrGtt7/n
+ UO+Fa6O34I8fPNh3eGCBucghDMb81n3MkUzxS8Gt0P7NcMThH412ORhn/ZT78d46Nl/Y
+ BZEsA7KiTAX3e0asfvE+RCgaEB3u9Q/Iyl+YqPUQDzabPKUEchztTUuW6vYr1YzblEWG
+ mmbjKCr6C5tEPMiPGSuQiARdf7HqsYqNjCkDYMbd6fSjRmx0s6261flvcvfxWgJZL0oh
+ Xdhg==; darn=nongnu.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1781107702; x=1781712502; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:content-language:from
- :references:to:subject:user-agent:mime-version:date:message-id:from
- :to:cc:subject:date:message-id:reply-to;
- bh=gq8DAg4Feau7b1dXBbjHkIzWr9vVwEwPhbRB8dEP/wI=;
- b=SSMfHhofR1ETmoHfFeFgVivduZ9z3iakz3Z86uYXgPKJpRHz84UkTlap02yYlDzgFh
- T7RSyeovXqiEXMuo7VDzUHaEOGUdgAwgGyFNp8yqzahktCZeP8FsHQ6vqxXaio0OdwlE
- UC9CcBV654mI+jAEu3MGzqA88ot3FlK6SuOzi0Jz5THkPf4YEuWQ4W/ha2UU4qATYP5V
- dWyZxKKhwsses4UB53EYdVum8yQ2youkXP2x6izR+/PpsQwTMXxpZkwMnPcdBVwVEMri
- vA26AOolaVFoTZxhl9o6KdrMXX21psMmrx4LVRG8HBaBWuwcAdXi874wBbq9E9v2wkR3
- qf0Q==
+ d=linaro.org; s=google; t=1781107913; x=1781712713; darn=nongnu.org;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:from:to:cc:subject:date:message-id:reply-to;
+ bh=ZZ8zjx9zZtk18xXgGEBK9YE+Y2wE7QAaghjDUbU5LFg=;
+ b=xRdkxV3WTgT0nQ3BGChxF1a7ee6Ytt7QHCmK3AYzAYW5BemD8fCBoHF2qOHeb6hswz
+ Ystl9pdSjPe5QZipytgKdz9kjqCz4lr2ANrj7Hx//yb3Cp0sNb42HxEoItlFVUoarNti
+ tHo5TKLzRadnaPmzarth3jmIHEL+QWyXv+ZUaIdl8snwPAbj96mZm7yWUtSX9xXyds2R
+ kE0IbL0izuG8t/D89dL+MIlpydFB4m4uIrIkxfXza1cC27SjGn+uxnacG5s9/bGZC56F
+ rmV+ZOd3/7lwTGcU22/BFR3Eutpln2QwujRStENF5V97lRVtMTrCV8FMmvvdGvaolKQi
+ vLIw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1781107702; x=1781712502;
- h=content-transfer-encoding:in-reply-to:content-language:from
- :references:to:subject:user-agent:mime-version:date:message-id
- :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=gq8DAg4Feau7b1dXBbjHkIzWr9vVwEwPhbRB8dEP/wI=;
- b=OfjEawUjAHwkUObZe/aOLi5Kv39WWyxyUMaxkgfiDp/sbTxsWN54xNkUje2ts1mRfE
- NRZ6iU2Ry7ttauB1Nz3xLDAsp3diZHErbua5IYhI23y8UjBybtRzk/woFb83K0JgPuSu
- qSqR3EMXOWDC4UBjp0YUhKTzQjs+IQ5VRSsJEcFMXB6520612e69waG3i3oKyBQhLUQM
- Wdbv8jtcNdAZ5ogKlJM4UhGatSJgccmSUsFHcdrucP/4m2ANbXBLBgdxT2Y20JkqpmwT
- HikfQX+Q4xja63rO/dR/AQ0t8Sg8GOatI7p9K8vJnuFPwYasFM3QqxKdUwse+hFgWI3q
- pIvA==
-X-Gm-Message-State: AOJu0Yw1gU62vlOBHe4HcRN6B1hhMS6nMishAPidLH/PZ0lJ1qRDyx5w
- A/gRXRTcEi4pTvUyC2IUeQKRslmq4WBWdOQT2AtmECBLUhDmTk1RVYlgpYhd4bVGg24eF+XpHr7
- ARtFdOW8=
-X-Gm-Gg: Acq92OHKeLPS6ElO4M+ddZ066h5vTXz4gEP87VN9nZKzbx2bbl/2js1cV9miX8t2mGj
- RWNlXR+PXKrsN3oRHeTPWF694nX7235ZNz7t7IjnhOAEMjFiPoNZGjhf2Ly9+y9J4SauaewlYjS
- 6+nxd34QIsp3eO2jY79zSZOvMaIjVkgvkTwb8VkigYgI7GR/MaT7otMNVUr/kbLfFPzGo1Ueo8Y
- X60CduJhTi4lMUFLCyIHzPR9qghHN2N6ShS6nPbvqr1JngPxWvsWYY9KNTyNucVLHj1GgZiyQYe
- IbFYmNHuvWG6O9xT0c+PJcCYYpvqU8kpuMXaUc/x4U3gkoHApVW7TncnQjCNdGFEtUPKAF3rluO
- M61WcOXMRLL3Zf2GjX8KL3l3SDzWm8rC6JMl0W6A/QchCXPIPOXUNHCvcWP43Mx55NjUHgeNpfz
- qqQQiZpjD3+Y7ZvUnl3qPXvMzyiB3vc38+hW4f6MF0yRqp5wc=
-X-Received: by 2002:a05:6a21:68e:b0:3aa:f9cb:d41a with SMTP id
- adf61e73a8af0-3b4ccdc76admr32904662637.19.1781107701854; 
- Wed, 10 Jun 2026 09:08:21 -0700 (PDT)
-Received: from [192.168.0.4] ([71.212.142.33])
- by smtp.gmail.com with ESMTPSA id
- 41be03b00d2f7-c85df032df5sm21201326a12.6.2026.06.10.09.08.21
- for <qemu-devel@nongnu.org>
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 10 Jun 2026 09:08:21 -0700 (PDT)
-Message-ID: <1f711172-1800-4919-866b-e9fb19f91f48@linaro.org>
-Date: Wed, 10 Jun 2026 09:08:19 -0700
+ d=1e100.net; s=20251104; t=1781107913; x=1781712713;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=ZZ8zjx9zZtk18xXgGEBK9YE+Y2wE7QAaghjDUbU5LFg=;
+ b=ETnYvQJN3iEcIbaV7QcZJfSa9E7sPDcnMy8wlaj+WMBJ4NE4Uxb+qw2fc5ort7dD8X
+ xpgrX5/SEiNWIm7LUamxPCg9M/oIfiSbgc7IWM5bVTuV07Hnv8/iE5ied/bRx91wRDkS
+ 0ujrLlLFHXcifAZYS98PKcdTXXGm0dXyblHnYHpe4vCTO8RERPoam7BpS4SwbE4p434A
+ IQTteKm0f+HVA34yGOzOzYCLwVbW+VJfEWNO9NcIsQg4suW13TzKHCSMWVrm96RjCL2L
+ I/OiL9s7YcWhjUyHjFxCR5W0J3V+LNzk0HOM2CV+mMSK5Y2gjbizfCldDll/95C2OFUe
+ A98g==
+X-Forwarded-Encrypted: i=1;
+ AFNElJ+7p3hxqerKjYEnK9me2DUtYQXZDkzJe0pF1vkddaJgJ1G1TekSDyKaRUPlgoj4WDPQaU+0pTzLzqZ+@nongnu.org
+X-Gm-Message-State: AOJu0YxLJp5i7tpy4VHTkrTqOyOTXsY1pbico4oN0LMNaSiBSGMJaW9/
+ 0+ZskOXglqYOrrn8Ezsmgq8Dep9VyC5GNNrYY1HLUwqIU+7vouStL5ACxS9lIubKfmG4zuILtqg
+ iQujXfi1tkFzTBawrRoSNIdeeMcrJ2cMGvRHNvlXEqA==
+X-Gm-Gg: Acq92OExk3wPu3zZQDSxnM2CmhIeRlVt8GxTmcO9d5M4YNRTfCA3aVS4I1/+MSDG9lQ
+ 9m9DR/wftJrppUpVQzLcT2XhTr8l28y3eZkPoCF/6dTomHoBDCYPh/TGBB2UNKQ7SFx7iPDPBD5
+ nOoBrlbuRUN4yaee/xmZNu6NXPxU4dCenbwG2vBmiXmBhoPWnHRVHUCn6iEB8FydgaUy8lq754v
+ Lx4OU+K030qLdgy5NrdpBxyqz1XSPYJuFVnkZaXvZJc9RvvNxWVJWOAaRzTg5Vr+MWFMm5tN+b8
+ DfOpmyL0ijd7bXLDV/1M9ZVOnQwD7OwWC2PIj38BOROCcM2cFzcLae8AmSy0rpOd6EOA9eMxAtl
+ hYg==
+X-Received: by 2002:a17:907:1c2a:b0:bed:38b8:9b55 with SMTP id
+ a640c23a62f3a-bf370e62acfmr1341147466b.4.1781107913368; Wed, 10 Jun 2026
+ 09:11:53 -0700 (PDT)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 1/6] target/arm/tcg/cpu64.c: Extra test for GPC3.
-To: qemu-devel@nongnu.org
-References: <20260603-jmac-gpc3b-v2-0-115c51936962@linaro.org>
- <20260603-jmac-gpc3b-v2-1-115c51936962@linaro.org>
-From: Richard Henderson <richard.henderson@linaro.org>
-Content-Language: en-US
-In-Reply-To: <20260603-jmac-gpc3b-v2-1-115c51936962@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::531;
- envelope-from=richard.henderson@linaro.org; helo=mail-pg1-x531.google.com
+References: <aiaDgG26a6TUrKuM@redhat.com>
+ <07ca74b4-52a8-4187-a57c-7c3277e574d3@redhat.com>
+ <aiky9d9IwACIyKEC@phrdina-thinkpadt14gen4.rmtcz.csb>
+ <674d5e21-88fa-4a10-a83c-eb6f7ce7032f@redhat.com>
+ <20260610080947-mutt-send-email-mst@kernel.org>
+ <eb0f0da1-11dd-4437-94fd-a65af55851e1@redhat.com>
+ <20260610082637-mutt-send-email-mst@kernel.org>
+ <5d8cbd4b-3725-437e-88a3-e0af32164815@redhat.com>
+ <e7cc9f2d-ccb4-442f-a1ed-7c5474395099@redhat.com>
+ <20260610095712-mutt-send-email-mst@kernel.org>
+ <aimEl9QQ_LTRPLtd@x1.local>
+In-Reply-To: <aimEl9QQ_LTRPLtd@x1.local>
+From: Peter Maydell <peter.maydell@linaro.org>
+Date: Wed, 10 Jun 2026 17:11:40 +0100
+X-Gm-Features: AVVi8CeCs8w8cPJXBR9CpDH2uXDXW3VSGKThd8cy8WMP5mejkCvbFeeiPi4GKu4
+Message-ID: <CAFEAcA8HhC-=KwdbNE5jgqdP+H1VF1aJXdGaME8KsaDHhnBG9Q@mail.gmail.com>
+Subject: Re: [PATCH RFCv1] virtio: Inherit max bounce buffer size from bus
+ parent if possible
+To: Peter Xu <peterx@redhat.com>
+Cc: "Michael S. Tsirkin" <mst@redhat.com>, Gavin Shan <gshan@redhat.com>,
+ Pavel Hrdina <phrdina@redhat.com>, 
+ =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>, 
+ qemu-devel@nongnu.org, qemu-arm@nongnu.org, jugraham@redhat.com, 
+ shan.gavin@gmail.com, Alex Williamson <alex@shazbot.org>, 
+ David Hildenbrand <david@kernel.org>
+Content-Type: text/plain; charset="UTF-8"
+Received-SPF: pass client-ip=2a00:1450:4864:20::636;
+ envelope-from=peter.maydell@linaro.org; helo=mail-ej1-x636.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -104,31 +132,47 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 6/3/26 11:26, Jim MacArthur wrote:
-> Signed-off-by: Jim MacArthur <jim.macarthur@linaro.org>
-> ---
->   target/arm/cpu-features.h | 5 +++++
->   1 file changed, 5 insertions(+)
-> 
-> diff --git a/target/arm/cpu-features.h b/target/arm/cpu-features.h
-> index 38a695ded7..ad1b1ddc9b 100644
-> --- a/target/arm/cpu-features.h
-> +++ b/target/arm/cpu-features.h
-> @@ -1148,6 +1148,11 @@ static inline bool isar_feature_aa64_rme_gpc2(const ARMISARegisters *id)
->       return FIELD_EX64_IDREG(id, ID_AA64PFR0, RME) >= 2;
->   }
->   
-> +static inline bool isar_feature_aa64_rme_gpc3(const ARMISARegisters *id)
-> +{
-> +    return FIELD_EX64_IDREG(id, ID_AA64PFR0, RME) >= 3;
-> +}
-> +
->   static inline bool isar_feature_aa64_dit(const ARMISARegisters *id)
->   {
->       return FIELD_EX64_IDREG(id, ID_AA64PFR0, DIT) != 0;
-> 
+On Wed, 10 Jun 2026 at 16:37, Peter Xu <peterx@redhat.com> wrote:
+>
+> On Wed, Jun 10, 2026 at 10:06:24AM -0400, Michael S. Tsirkin wrote:
+> > This is the change that broke it I think?
+> >
+> >
+> > commit 4a2e242bbb306ef5c16ce9e7bb2da3bd8a4eb098
+> > Author: Alex Williamson <alex@shazbot.org>
+> > Date:   Mon Oct 31 09:53:03 2016 -0600
+> >
+> >     memory: Don't use memcpy for ram_device regions
+> >
+> >
+> > Maybe Alex has an opinion on what to do.
+>
+> I can offer one idea here..
+>
+> IIUC the major issue was vector ops but the mr ops might be too heavy, then
+> another way to fix it is in memory API instead of using memcpy()/memmove(),
+> we always use a helper (say, memmove_no_vector()) to do the split and
+> properly aligned IOs as what ram_device_mem_ops does right now, this should
+> only applies to ram_device.
 
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+If the underlying memory needs to be accessed only with specific
+alignment/size, as the 4a2e242bbb30 commit message suggests, then
+we cannot expose it via address_space_map(), so we must have
+a bounce-buffer. The address_space_map() function says
+"here's a host pointer to  memory, do what you like to it", and
+the caller is entitled to memcpy to/from it or otherwise
+access it with any C operations, which are not guaranteed to
+respect any kind of alignment or similar restrictions.
 
-r~
+My guess from commit 4a2e242bbb30 is that that applied an
+overly broad "don't do direct access" hammer to all
+vfio assigned devices, and that there needs to be some
+concept of "this vfio assigned device's region is OK for
+direct access" vs "this other one is not", such that if
+this GH100 card's BAR guarantees it can be treated entirely
+as RAM then we can have memory_region_supports_direct_access()
+return true for it.
+
+thanks
+-- PMM
 
