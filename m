@@ -4,73 +4,142 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9FFACCD8CB9
-	for <qemu-devel@archiver.kernel.org>; Wed, 10 Jun 2026 09:19:45 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0C886CD98C7
+	for <qemu-devel@archiver.kernel.org>; Wed, 10 Jun 2026 09:38:38 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wXF64-0001Kj-3g; Wed, 10 Jun 2026 05:19:40 -0400
+	id 1wXFNS-0004q2-2m; Wed, 10 Jun 2026 05:37:38 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <kwolf@redhat.com>) id 1wXF61-0001KK-8h
- for qemu-devel@nongnu.org; Wed, 10 Jun 2026 05:19:37 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <daniel.barboza@oss.qualcomm.com>)
+ id 1wXFNQ-0004pU-DJ
+ for qemu-devel@nongnu.org; Wed, 10 Jun 2026 05:37:36 -0400
+Received: from mx0b-0031df01.pphosted.com ([205.220.180.131])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <kwolf@redhat.com>) id 1wXF5z-0007Fn-Jc
- for qemu-devel@nongnu.org; Wed, 10 Jun 2026 05:19:37 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1781083174;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=ZiIbcAe7HOT2y9jnZh45Ut8CECG0t8YVbo++JEXlZ2U=;
- b=dMyS7ZDiFD7lBeLTnQB4tN1hh7MQnzmFFmJCSVZVDOk38JtKzQdh2enF0+dR3oq86T4qqU
- 1wqT+KsGsR1KcN2k6bAIotBIcevQ6cjIXAYTspPQTiuVAk1XKND7QU63U2GzVpQWYSdLqN
- A8QjqwyX+t3LyjjR2TyfqXkKCdzbz0A=
-Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-169-yD-DmEO5OBOwjmVzZqG5zw-1; Wed,
- 10 Jun 2026 05:19:33 -0400
-X-MC-Unique: yD-DmEO5OBOwjmVzZqG5zw-1
-X-Mimecast-MFC-AGG-ID: yD-DmEO5OBOwjmVzZqG5zw_1781083172
-Received: from mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.17])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 2E10E19352E2; Wed, 10 Jun 2026 09:19:32 +0000 (UTC)
-Received: from redhat.com (unknown [10.44.33.216])
- by mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 104A31954112; Wed, 10 Jun 2026 09:19:29 +0000 (UTC)
-Date: Wed, 10 Jun 2026 11:19:27 +0200
-From: Kevin Wolf <kwolf@redhat.com>
-To: Stefan Hajnoczi <stefanha@redhat.com>
-Cc: Boudewijn van der Heide <boudewijn@delta-utec.com>,
- qemu-block@nongnu.org, qemu-devel@nongnu.org, hreitz@redhat.com,
- pbonzini@redhat.com
-Subject: Re: [PATCH] block: switch to co_wrapper_mixed for blk_lock_medium()
- and blk_eject()
-Message-ID: <aiksHyfQnJIs_1OH@redhat.com>
-References: <20260530175822.10321-1-boudewijn@delta-utec.com>
- <aiay6pgFEurQMtrx@redhat.com> <20260609154900.GC57581@fedora>
+ (Exim 4.90_1) (envelope-from <daniel.barboza@oss.qualcomm.com>)
+ id 1wXFNO-00020q-Oa
+ for qemu-devel@nongnu.org; Wed, 10 Jun 2026 05:37:36 -0400
+Received: from pps.filterd (m0279873.ppops.net [127.0.0.1])
+ by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
+ 65A7ipR6997567
+ for <qemu-devel@nongnu.org>; Wed, 10 Jun 2026 09:37:33 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+ cc:content-transfer-encoding:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+ lM5UWcwDDxSAAYu0W+ChEIVwJmkj+A9RIiZ34ZrORdQ=; b=V1FbUH6sZ3gPxPfa
+ oC8B4Dyn90UOWXN42bLVnJK6Jf/DxDNHpXd4CDMsEMOD0dMqi0aNCm17nGJPT9pN
+ ksaJo06ARi/NuIky+V2WnfXbQkxwcdbFVr/OUHFYAVHhKuwqk15QgL8pgT84RmDN
+ dqI4vZp3mvEfp96sq3Ey06vNBqlbq2gcSw5geVecWXcCQZCW0DIhtpkRxp0733a0
+ 9Ub5lmBv8A7hwoY8xVpNft78OzzzP+ihgXAPhlebdjToVpsql9qi3xgpdxjiJM/v
+ NXbWebTkfB06gA5BKZqo4blJ33NPcmwARTZd1X2GouC89BpIMzOO7+oDMjOAvRLI
+ Zefodw==
+Received: from mail-vs1-f72.google.com (mail-vs1-f72.google.com
+ [209.85.217.72])
+ by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4eq10a94b1-1
+ (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
+ for <qemu-devel@nongnu.org>; Wed, 10 Jun 2026 09:37:32 +0000 (GMT)
+Received: by mail-vs1-f72.google.com with SMTP id
+ ada2fe7eead31-6cfe512e871so3035770137.2
+ for <qemu-devel@nongnu.org>; Wed, 10 Jun 2026 02:37:32 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=oss.qualcomm.com; s=google; t=1781084252; x=1781689052; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:content-language:from
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=lM5UWcwDDxSAAYu0W+ChEIVwJmkj+A9RIiZ34ZrORdQ=;
+ b=LyKOssQor7tft0jHa7hPjb0qp85LxDcu5ibBl7VmLM3qwM/fW16K46JBnc8JuqACht
+ 9ikZcWqJr62XuoKB0vPlVZy98Wz3jE169jQXjcC/pWmn1AAURUQDzLbyRmIE6lDbzk54
+ km5mp9bV7ufP/chSc90zPw0CvV/hcYcXC/CAclGeINov4TfVH0VwEZ1iyeTOxDAyI5K7
+ WAriScO/95mQMAFh70LPQq6BFW7JIVluGJq82LRByJA1NZnofC7zSDLi7zTHnxniwB2x
+ vhtDA4PA6yZM9oqAU3mHA713vB67xueEOTcVSVsi8j6GUFJV+X6M4WJFlmPB33dh9D+N
+ Uzxg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1781084252; x=1781689052;
+ h=content-transfer-encoding:in-reply-to:content-language:from
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=lM5UWcwDDxSAAYu0W+ChEIVwJmkj+A9RIiZ34ZrORdQ=;
+ b=l2AUitSjvWXHz9vWv7y0hBXcKJdhR0ZlRR0RHCMTqTv+3zN+p4RXJ9DFmEjCRzqDWP
+ 0Mm/yukZvr+0nD2FzejfV3rxwUO3Pu0wrydk4u2Z/taxuYR33QjPZ4pmtVpsq7MByUty
+ BZlE5PnZUFNapULPXYxI7RYmy6nGS1gPo88dtFViXICA7IuRX5qIYCBs/SHW89Kv0B0f
+ H8V75iKzfpYngJxEj9uO5ZXtnNrcPB/4V2UkFxTf7iDaZQnqUxd+lI/LwP2THc1ylXcK
+ qXFXgtU7ZYC9mns5GfjyVPuC0cAx3J37MmSYvSm/2Jb6vtp+9aA6B+WDvGfE+uTfwWNz
+ wCSQ==
+X-Forwarded-Encrypted: i=1;
+ AFNElJ+QREdNTtGdKnKElWUucdA/wYlYbxhOPXvkwIrivIZi+UVpk0PiyyVZK/Vz4KYI86xztdnLS21Q5+SE@nongnu.org
+X-Gm-Message-State: AOJu0YwreCmQAEWSwJhgEq97QRypF8+R5R/Yn3116OZ7tIGiF6Uq+42U
+ DFxhIL5Mk8Ldt4eMjHQ4phiKRllDCH8Y9ZT9O8HnIRkzf1GQQOuO1TIJaDEbRX86wkz6TuWKKdq
+ GRmZopxLfYYCyUl1kvq5c70Q2fCPBHIQsy62V5At91ASBdd033BDalKfA6Q==
+X-Gm-Gg: Acq92OHr9nUq4hE3AxCC4VXJ8lIhDnkcra21anWEpKJd8IHcjHdZkL/xyg9LycFWgnj
+ XPMdgchZWTS66msVFKlFG5o/s3j6Phd+/tXSXM1gRbGopTylAoTAYly7KPrymUXgzrs9Jp0OL5N
+ t/Ll8bHRUa6HizNdEM5ZUDpG9ZO5CubV/SGUjqGh7OfZrIuzXBChn0xDtXdjuoFZScunDHiYUbh
+ kjBW5rsiK60bNab3v7Zao74rxnJqFewuNQUtSlaeDrnwpasXX6NI4OhHew4uqwboD80FnOk+LZ/
+ uoaTHyjre0K+9D9w80NW3NUdqmBJ2TZKWZHfBAM8WrvZgbyJBikonanu6ArltWkCBqM7OW/yziV
+ tDtYm38oWd/+SFJ+a6kmG9BJalY2lqP1N0AVXHItmJfryL7QzYX85IlgqqRy6xT772VWT
+X-Received: by 2002:a05:6102:554c:b0:6a2:b2a1:f16a with SMTP id
+ ada2fe7eead31-6feef09ad62mr12605333137.2.1781084252222; 
+ Wed, 10 Jun 2026 02:37:32 -0700 (PDT)
+X-Received: by 2002:a05:6102:554c:b0:6a2:b2a1:f16a with SMTP id
+ ada2fe7eead31-6feef09ad62mr12605323137.2.1781084251777; 
+ Wed, 10 Jun 2026 02:37:31 -0700 (PDT)
+Received: from [192.168.68.106] ([177.170.117.62])
+ by smtp.gmail.com with ESMTPSA id
+ ada2fe7eead31-6eb5549144csm19475478137.3.2026.06.10.02.37.28
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Wed, 10 Jun 2026 02:37:31 -0700 (PDT)
+Message-ID: <25dc379c-7421-44e2-98a7-15593db4f93c@oss.qualcomm.com>
+Date: Wed, 10 Jun 2026 06:37:26 -0300
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
- protocol="application/pgp-signature"; boundary="CBmt52kjtlu3iVKi"
-Content-Disposition: inline
-In-Reply-To: <20260609154900.GC57581@fedora>
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.17
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=kwolf@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: 8
-X-Spam_score: 0.8
-X-Spam_bar: /
-X-Spam_report: (0.8 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.445,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_SBL_CSS=3.335, SPF_HELO_PASS=-0.001,
- SPF_PASS=-0.001 autolearn=no autolearn_force=no
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH] target/riscv: add 'trigger-count' debug property
+To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>,
+ qemu-devel@nongnu.org
+Cc: qemu-riscv@nongnu.org, alistair.francis@wdc.com, liwei1518@gmail.com,
+ zhiwei_liu@linux.alibaba.com, chao.liu.zevorn@gmail.com,
+ Palmer Dabbelt <palmer@dabbelt.com>
+References: <20260609213905.1126795-1-daniel.barboza@oss.qualcomm.com>
+ <6db02c91-83fb-4021-91ec-72e6b56afeb3@oss.qualcomm.com>
+From: Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>
+Content-Language: en-US
+In-Reply-To: <6db02c91-83fb-4021-91ec-72e6b56afeb3@oss.qualcomm.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+X-Authority-Analysis: v=2.4 cv=GoFyPE1C c=1 sm=1 tr=0 ts=6a29305c cx=c_pps
+ a=DUEm7b3gzWu7BqY5nP7+9g==:117 a=gdiugJE53z4H+vvYeRBHqw==:17
+ a=IkcTkHD0fZMA:10 a=FelO9ux0wxsA:10 a=s4-Qcg_JpJYA:10
+ a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=rJkE3RaqiGZ5pbrm-msn:22
+ a=EUspDBNiAAAA:8 a=C11olbwvBXIHrrjHZpIA:9 a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
+ a=-aSRE8QhW-JAV6biHavz:22
+X-Proofpoint-ORIG-GUID: lsO1RDrL8YkaEbuIbBXoGMD_bA9FZPew
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNjEwMDA5MCBTYWx0ZWRfXynYojGXdRSTk
+ NHP0DVpCY1eCgZv76q2lLtFkKTq3O7TkZrhX5R9JeZUVqPVG/1mPHAuPpqwqJruLIukx1B8hSL2
+ DUr1ZMQxi6wRY0745Z1OC0zsj1UL4li/f7BHn9mtYPmydPBJ/a8ZwThJVAO7lEOqDRVczV68aLP
+ xbVG9lNIUZmkWrPs5CJrDFv7yRNBg6p5JiEePo3UNg05YN703jOyrG6M80PQqdqR7Q2c4DfSqvB
+ 93QLXmDiCyH5NYEQr/qEftmb0e+FW1vhE3EtAehrAIomvqdlKbSpRANX8rL3GQgjYj+Oc8ew+5/
+ Cx6DjqErSchuFbyjdnESDyriFPZ+6oCT/yJpPZF70HcNr+y/R+pxZaPK6Ovx42eaGr+d3rYOJoY
+ SPFMZjPI0Qyh1edUgdFlDYzCm+7QwJUcv7NWlGQDtKa6FuQCxpGx5hlwzl2Wa/lOsEaiM+P92jI
+ tGK9lrwJBX4464z+y/w==
+X-Proofpoint-GUID: lsO1RDrL8YkaEbuIbBXoGMD_bA9FZPew
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.125,FMLib:17.12.100.49
+ definitions=2026-06-10_02,2026-06-09_02,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ lowpriorityscore=0 bulkscore=0 impostorscore=0 priorityscore=1501
+ suspectscore=0 adultscore=0 clxscore=1015 spamscore=0 phishscore=0
+ malwarescore=0 classifier=typeunknown authscore=0 authtc= authcc=
+ route=outbound adjust=0 reason=mlx scancount=1 engine=8.22.0-2605210000
+ definitions=main-2606100090
+Received-SPF: pass client-ip=205.220.180.131;
+ envelope-from=daniel.barboza@oss.qualcomm.com; helo=mx0b-0031df01.pphosted.com
+X-Spam_score_int: -27
+X-Spam_score: -2.8
+X-Spam_bar: --
+X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -87,165 +156,99 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 
---CBmt52kjtlu3iVKi
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
 
-Am 09.06.2026 um 17:49 hat Stefan Hajnoczi geschrieben:
-> On Mon, Jun 08, 2026 at 02:17:46PM +0200, Kevin Wolf wrote:
-> > [Cc: Paolo, Stefan]
-> >=20
-> > Am 30.05.2026 um 19:58 hat Boudewijn van der Heide geschrieben:
-> > > scsi_disk_emulate_command() can be called from a coroutine;
-> > > when req->cmd.buf[0] is ALLOW_MEDIUM_REMOVAL, the synchronous
-> > > blk_lock_medium() is called, which hits assert(!qemu_in_coroutine()),
-> > > and crashes:
-> > >=20
-> > > 	qemu-system-hppa: block/block-gen.c:1692: blk_lock_medium:
-> > > 	Assertion `!qemu_in_coroutine()' failed.
-> > >=20
-> > > blk_eject() has the same problem, it can be called from coroutine,
-> > > because the same vtable entry (SCSIReqOps.send_command,
-> > > scsi_disk_emulate_command() here) calls blk_eject when req->cmd.buf[0]
-> > > is START_STOP.
-> > >=20
-> > > Fix by switching to co_wrapper_mixed for blk_lock_medium() and
-> > > blk_eject() instead of just co_wrapper.
-> > >=20
-> > > Signed-off-by: Boudewijn van der Heide <boudewijn@delta-utec.com>
-> >=20
-> > Yes, that will fix your immediate symptoms. I'm not completely sure if
-> > that's the level where we want to fix things, though, which is why I
-> > added Paolo and Stefan to Cc.
-> >=20
-> > > ---
-> > > Observed crash on fedora qemu-10.1.5-1.fc43 on x86_64 host using qemu=
--system-hppa.
-> > >=20
-> > > trace:
-> > >=20
-> > > Thread 1 (...):
-> > >         # 5 __assert_fail (...) at assert.c
-> > >         # 6 blk_lock_medium (...) at block/block-gen.c
-> > >         # 7 scsi_disk_emulate_command (...) at ../hw/scsi/scsi-disk.c
-> > >         # 8 scsi_req_enqueue (...) at ../hw/scsi/scsi-bus.c
-> > >         # 9 lsi_do_command (...) at ../hw/scsi/lsi53c895a.c
-> > >         # 10 lsi_execute_script (...) at ../hw/scsi/lsi53c895a.c
-> > >         # 11 scsi_read_complete_noio (...) at ../hw/scsi/scsi-disk.c
-> > >         # 12 blk_aio_complete (...) at ../block/block-backend.c
-> > >         # 14 blk_aio_read_entry (...) at ../block/block-backend.c
-> > >         # 15 in coroutine_trampoline (...) at ../util/coroutine-ucont=
-ext.c
-> > >=20
-> > > blk_eject() has the same path, but req->cmd.buf[0] is START_STOP inst=
-ead
-> > > of ALLOW_MEDIUM_REMOVAL inside scsi_disk_emulate_command(),
-> > > so fix that aswell.
-> >=20
-> > This would be useful information to have in the commit message proper.
-> >=20
-> > The step from #10 to #11 seems to be a rather big one that left out
-> > intermediate function calls, so I'm not sure if I fully understand it.
-> >=20
-> > Either way, I don't think lsi_execute_script() and the functions called
-> > by it were ever written with the intention to run in a coroutine. I'm
-> > almost sure that problems can be in more than just the two functions
-> > you're changing here. So my question is mostly, should the path involve
-> > a BH somewhere to break out of coroutine context, instead of making one
-> > or two specific cases work?
->=20
-> The code path in this bug is from the block layer (blk_aio_read_entry ->
-> blk_aio_complete) to scsi-disk (scsi_read_complete_noio) into the LSI
-> device (probably lsi_command_complete -> lsi_resume_script ->
-> lsi_execute_script).
->=20
-> I'm not sure if the LSI device, which is unaware of coroutines, should
-> have to work around this. It seems cleaner for blk_aio_preadv() to
-> invoke cb() from outside coroutine context since that API does not say
-> anything about coroutine contexts.
->=20
-> On the other hand, there will be a performance overhead for leaving
-> coroutine context even when it would be fine to run in a coroutine...
+On 6/10/2026 6:04 AM, Philippe Mathieu-Daudé wrote:
+> Hi Daniel,
+> 
+> On 9/6/26 23:39, Daniel Henrique Barboza wrote:
+>> All CPUs have the same amount of triggers: 2 triggers per hart, set via
+>> RV_MAX_TRIGGERS.  This is not enough anymore: we'll have at least one
+>> future CPU that will demand more triggers per hart when implementing the
+>> RISC-V Server Ref Platform, requiring at least 11 triggers per hart.
+>>
+>> Parametrize the trigger amount using a new 'trigger_count' env property.
+>> The default amount is kept at 2.  Set the new maximum to an educated
+>> guess of 128 triggers per hart (which is less than 2^XLEN theoretical
+>> maximum by the spec).  All relevant callers (csr.c and debug.c) will now
+>> use env->trigger_count instead of RV_MAX_TRIGGERS.
+>>
+>> We're also adding two ways of setting the property:
+>>
+>> - a '.trigger_count' CPU definition flag, allowing CPUs to set a custom
+>>    amount inside the CPU def in DEFINE_RISCV_CPU();
+>> - a new 'trigger-count' user property.  The user property has a higher
+>>    priority than an existing '.trigger_count' CPU def setting.
+>>
+>> Assuming a hypotetical case where a CPU 'X' is defined with
+>> '.trigger_count = 8':
+>>
+>> - -cpu X,trigger-count=30 => trigger_count set to 30
+>> - -cpu X (...)            => trigger_count set to 8
+>>
+>> For a CPU that doesn't set '.trigger_count':
+>>
+>> - -cpu rv64,trigger-count=30 => trigger_count set to 30
+>> - -cpu rv64 (...)            => trigger_count set to 2
+>>
+>> Signed-off-by: Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>
+>> ---
+>>   target/riscv/cpu.c         | 11 +++++++++++
+>>   target/riscv/cpu.h         | 23 ++++++++++++++++++++++-
+>>   target/riscv/csr.c         |  2 +-
+>>   target/riscv/debug.c       | 16 ++++++++--------
+>>   target/riscv/machine.c     |  4 ++--
+>>   target/riscv/tcg/tcg-cpu.c |  7 +++++++
+>>   6 files changed, 51 insertions(+), 12 deletions(-)
+> 
+> 
+>> diff --git a/target/riscv/machine.c b/target/riscv/machine.c
+>> index 6e70b145a5..a667c06b17 100644
+>> --- a/target/riscv/machine.c
+>> +++ b/target/riscv/machine.c
+>> @@ -240,8 +240,8 @@ static int debug_post_load(void *opaque, int version_id)
+>>   static const VMStateDescription vmstate_debug = {
+>>       .name = "cpu/debug",
+>> -    .version_id = 3,
+>> -    .minimum_version_id = 3,
+>> +    .version_id = 4,
+>> +    .minimum_version_id = 4,
+> 
+> Since you bump the migration version, we can also change the array size
+> to only serialize the number of trigger used:
+> 
+> @@ -246,9 +246,9 @@ static const VMStateDescription vmstate_debug = {
+>       .post_load = debug_post_load,
+>       .fields = (const VMStateField[]) {
+>           VMSTATE_UINTTL(env.trigger_cur, RISCVCPU),
+> -        VMSTATE_UINTTL_ARRAY(env.tdata1, RISCVCPU, RV_MAX_TRIGGERS),
+> -        VMSTATE_UINTTL_ARRAY(env.tdata2, RISCVCPU, RV_MAX_TRIGGERS),
+> -        VMSTATE_UINTTL_ARRAY(env.tdata3, RISCVCPU, RV_MAX_TRIGGERS),
+> +        VMSTATE_UINTTL_ARRAY(env.tdata1, RISCVCPU, env.trigger_count),
+> +        VMSTATE_UINTTL_ARRAY(env.tdata2, RISCVCPU, env.trigger_count),
+> +        VMSTATE_UINTTL_ARRAY(env.tdata3, RISCVCPU, env.trigger_count),
 
-Yes, I don't think it should be done by the block layer when most
-callbacks are just fine with running in a coroutine. I was thinking that
-maybe something in the SCSI layer should do it, or even scsi-disk
-specifically. Though of course, if virtio-scsi doesn't have the problem
-(does it?), taking the performance overhead for fixing LSI is probably
-also not what we want.
+Good stuff.  I searched a bit yesterday to see if there was a way of putting a
+variable in the array size of this macro and figured this wasn't possible.
+Didn't find any example after searching for like 2 minutes, then convinced
+myself that the vmstate array should have a static size.
 
-Another, more radical solution, could be to move SCSI requests as a
-whole into coroutines, changing the assumption everywhere from
-no_coroutine_fn to coroutine_fn without bothering with mixed functions
-at all. The SCSI state machine is quite complex and I often find the
-control flow in the current callback-based code hard to understand, so I
-think this has the potential to improve the code, though of course it
-would also be a big change.
-
-Or, of course, we just take this patch, and keep fixing instances of
-the problem as they come up.
-
-Kevin
-
-> > If the general feeling is that we do want to make essentially all of the
-> > SCSI code coroutine_mixed_fn and are prepared to fix any issues arising
-> > from it, then this patch is fine as far as I am concerned.
-> >=20
-> > Kevin
-> >=20
-> > > ---
-> > >  include/system/block-backend-io.h | 4 ++--
-> > >  1 file changed, 2 insertions(+), 2 deletions(-)
-> > >=20
-> > > diff --git a/include/system/block-backend-io.h b/include/system/block=
--backend-io.h
-> > > index fd84723d9d..7368ad5c09 100644
-> > > --- a/include/system/block-backend-io.h
-> > > +++ b/include/system/block-backend-io.h
-> > > @@ -81,10 +81,10 @@ bool coroutine_fn GRAPH_RDLOCK blk_co_is_availabl=
-e(BlockBackend *blk);
-> > >  bool co_wrapper_mixed_bdrv_rdlock blk_is_available(BlockBackend *blk=
-);
-> > > =20
-> > >  void coroutine_fn blk_co_lock_medium(BlockBackend *blk, bool locked);
-> > > -void co_wrapper blk_lock_medium(BlockBackend *blk, bool locked);
-> > > +void co_wrapper_mixed blk_lock_medium(BlockBackend *blk, bool locked=
-);
-> > > =20
-> > >  void coroutine_fn blk_co_eject(BlockBackend *blk, bool eject_flag);
-> > > -void co_wrapper blk_eject(BlockBackend *blk, bool eject_flag);
-> > > +void co_wrapper_mixed blk_eject(BlockBackend *blk, bool eject_flag);
-> > > =20
-> > >  int64_t coroutine_fn blk_co_getlength(BlockBackend *blk);
-> > >  int64_t co_wrapper_mixed blk_getlength(BlockBackend *blk);
-> > > --=20
-> > > 2.54.0
-> > >=20
-> >=20
+I'll send a v2.
 
 
 
---CBmt52kjtlu3iVKi
-Content-Type: application/pgp-signature; name=signature.asc
+>           VMSTATE_END_OF_LIST()
+>       }
+>   };
+> 
+> Orthogonal, we'd need to replace these target_ulong at some point
+> (likely bumping the version number again).
 
------BEGIN PGP SIGNATURE-----
+I suppose we should do that in a separated patch that handles all ulongs
+from all vmstate objects of this file.  Then we can do a mass bump on
+everything.
 
-iQIzBAEBCgAdFiEE3D3rFZqa+V09dFb+fwmycsiPL9YFAmopLB8ACgkQfwmycsiP
-L9Ym/w//dEVUFuaWQwd96hyYgMc3ml8cWzbSF0Z09EbsuX8PMAZ7osds83lh1agc
-6HSbFAv9DkDZk+EkSrVB/2kQZSPbGjyWCtS+l7JM/HQ/YE34HSZj7RZ3SGv+lEsu
-6LdKKFEWWvdurFYFDeWtb9b0nTeVcLSAoJnrHyJCyjwyNwpbZOGJ0B6iRLtBAeK1
-Urb7CTTpRJSAOpdS2mEOfiJWuvEFDoZoVpCVjSZZVBUa2jr5CCpgZwM7vqRF01S5
-KylF0tgs8Cv8/KaH5S0dI98WTgxfgicvIZUX902cw1vEgPCMBvldma/28631UGEM
-bfaRpi3gxXNjF6eKAbfLrFo41POKcPdAHGVHLCU5KpjmPCELH3El70u92oz7pnGs
-EVoykAuo9Z8VoMtW8QeMUsZczn8JZiP0qjS9iSZAznCGRTT4hDosUvx+TKb6iKDU
-ayY49/nZ69u54gR42jHbMXQFrnQBeRDLIW2e/3bYTL+HzIRJRhCjDqdJcl5PMTbd
-U5BnfAyVDV7EMDeWYIo21A5Q2t1Le2UW/p27DWKEcbXvYMkei1RAw0qW7v8FQmgp
-fPfYywuoiAnSHPYFnZtIHfwp2iMxzTQvV2dntV0rEqO3XdywrY6qHAK8dzNRwJ3p
-X+9qsfViFpbuU2fCliaw5FItobazT/QQi1ksX72X9WOIhRmc6wk=
-=I/kf
------END PGP SIGNATURE-----
 
---CBmt52kjtlu3iVKi--
+Thanks,
+Daniel
 
 
