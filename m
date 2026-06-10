@@ -4,137 +4,108 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 86308CD98C5
-	for <qemu-devel@archiver.kernel.org>; Wed, 10 Jun 2026 20:56:45 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 19BBACD98C7
+	for <qemu-devel@archiver.kernel.org>; Wed, 10 Jun 2026 21:01:49 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wXPxx-0004rC-HV; Wed, 10 Jun 2026 16:56:02 -0400
+	id 1wXQ2r-0007B5-PV; Wed, 10 Jun 2026 17:01:05 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <daniel.barboza@oss.qualcomm.com>)
- id 1wXPxp-0004oy-CY
- for qemu-devel@nongnu.org; Wed, 10 Jun 2026 16:55:54 -0400
-Received: from mx0a-0031df01.pphosted.com ([205.220.168.131])
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1wXQ2p-0007AJ-Kv
+ for qemu-devel@nongnu.org; Wed, 10 Jun 2026 17:01:03 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <daniel.barboza@oss.qualcomm.com>)
- id 1wXPxj-0005VU-KD
- for qemu-devel@nongnu.org; Wed, 10 Jun 2026 16:55:50 -0400
-Received: from pps.filterd (m0279866.ppops.net [127.0.0.1])
- by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 65AJY9ef2568416
- for <qemu-devel@nongnu.org>; Wed, 10 Jun 2026 20:55:46 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
- cc:content-transfer-encoding:date:from:in-reply-to:message-id
- :mime-version:references:subject:to; s=qcppdkim1; bh=8pbLeg/5VJ7
- 6MMw8N01K5CxqXwEoRhaLEcjx+9ySdas=; b=PNG5dkCqfxEUxxo8OkZa1sr61Im
- /BSjnznqCnrL1ycntCBovnU5Bh8TtnBVUpkNHfybConQMHNUxWk6/okAHuamja1+
- E2qslZuFkFoMbvqHlreSfXfjmWrT/sq48WDiwZWX5cMSYiVtHf/YIbwg+xSjsUcO
- Bf4e+OBayB/ovc3KXwX4L92p2VJa7elYD7/3/CcSZyplAeZURSh/ElivcQ9zTAdr
- eIobwp/sx0qbxlb+hcagy1yqpz/qbu/mfuweSV8qLH07NQ6OFD/RbaYOtmvePX3A
- h1zybBl4zOTcQOWWdif0CSK3wpH2pxX7uz1NNt3++XqwKUgQHWpB7LPWgpQ==
-Received: from mail-vk1-f198.google.com (mail-vk1-f198.google.com
- [209.85.221.198])
- by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4eqe6u09dm-1
- (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
- for <qemu-devel@nongnu.org>; Wed, 10 Jun 2026 20:55:45 +0000 (GMT)
-Received: by mail-vk1-f198.google.com with SMTP id
- 71dfb90a1353d-59f0ad4461eso10417497e0c.2
- for <qemu-devel@nongnu.org>; Wed, 10 Jun 2026 13:55:45 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1wXQ2n-0000yA-JZ
+ for qemu-devel@nongnu.org; Wed, 10 Jun 2026 17:01:03 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1781125259;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=7kffMNPo7Vcq5I9EW/XMk0pRt0sVo3NtWbpiMoqnqpY=;
+ b=Zqqeua37DnFAp1knAc5Bzomj60DNn6ZPrw3jmaALvqd3BBqTfuTKitfCAT/EXHy/ht8wL0
+ tybKLwkjoByXXIXGjrq9uxo9K3LmV2lqD7zVuw4IhMB0h71hOBFneB+gp9q7EZoP7ORv8v
+ 0ysan327H0mOrjS5Av427VNj1hyevV8=
+Received: from mail-wm1-f72.google.com (mail-wm1-f72.google.com
+ [209.85.128.72]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-8-uijazsPcOfuVwhTUCeNeyw-1; Wed, 10 Jun 2026 17:00:58 -0400
+X-MC-Unique: uijazsPcOfuVwhTUCeNeyw-1
+X-Mimecast-MFC-AGG-ID: uijazsPcOfuVwhTUCeNeyw_1781125257
+Received: by mail-wm1-f72.google.com with SMTP id
+ 5b1f17b1804b1-490b37e1f48so57556465e9.0
+ for <qemu-devel@nongnu.org>; Wed, 10 Jun 2026 14:00:57 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=oss.qualcomm.com; s=google; t=1781124945; x=1781729745; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=8pbLeg/5VJ76MMw8N01K5CxqXwEoRhaLEcjx+9ySdas=;
- b=Jv4DFF9QwpEpI0zH5X2nyY+IIHZLUfl6i1zM+uILAIkLoUxhCDNSn1Txbj8P/aexdf
- 7mrM2t8Aqxmz6wiiBe+rMbZgtugngM9TcqMUbWUmqK/T7AzPaWa8VqQlOyIDbqlkQCc7
- YMjbeMSKGKsQQPk1LPKSmCfL6EUPLQMRs12qADhfbBe7BmQSaex8PjTGJsecFN35uH6n
- vLSmUn99zaYBMDEGKkUVBMaNgZZJl8lPAe+g9PQBChRiL3WsgGrhQezgrPn0q3JW1Un4
- QM5PC8Nps0GJ2TeQka/ITGRqp+DQAVsNA7OQcX7rz8+HYz12DNfIncohcyasGwN72GHw
- aIeA==
+ d=redhat.com; s=google; t=1781125257; x=1781730057; darn=nongnu.org;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+ bh=7kffMNPo7Vcq5I9EW/XMk0pRt0sVo3NtWbpiMoqnqpY=;
+ b=YPvwqQVlpoj9kmbgPrlDRRdB06FFWFd7aSZ/n54kacyoB3DHtta8eRNJlLpnnJ1WTf
+ yqyKjUOUm9Cq+BZ45QLsoDTsMchoX3eQZZOlsD8unhAtxYFUvTdklhJtfZrxQ18cLRgM
+ PgOpLebfCMaYJTTLlc+PJmD2GA24E0p8SQV7/9j6KfDVuKXmMMCeXw/5jPKJfVgPypv7
+ npDKbCMr5187PUT6WXDYTWwl2m4mFVON6ueisGe1P7TE4UDoqGadE287qFZrT2YIJZ00
+ /wtH2mJTzoL4jaVh/oVGzkXgYP9cu0ijpI85YVBsnqpDpBwoYX3o4AjUJvj7ERq3cyDo
+ ktaw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1781124945; x=1781729745;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to;
- bh=8pbLeg/5VJ76MMw8N01K5CxqXwEoRhaLEcjx+9ySdas=;
- b=PgJsj28ybjkkv3wznssssL9NOnxHI7vMKJ6mId7clR3G2lKoJcbtXCzmGBfCDhUt/t
- jL/HEl6Id/MfF/FoYRtJvCaR/M2JJ+j9enxd+FhmBF25iLNiyZJXa/nzxmqLlaDQKafk
- krcxaiOz2+14X6JAsrJEHU53pRVYAsFdyTB07cX9BPOrPB30bJFWmMMpCkyr5pFNvQWQ
- B1IlLQlVhFYB/M0UmQcLTRKSCq2Sg2YS7NvMwvFyWz03+ZHM42rFtKavPRm3ByAca464
- /fk5B7SX3DOVI9gu7xYVd32MD6zxxwFMLb6As5xB7bx2kCbUYcVAuunee6BsS9qeUlTl
- OgGA==
-X-Gm-Message-State: AOJu0Yyf5C96cEWoYQacnC8gwK3JBkqw0MCADz2V/QcoJks7Dsg1N2FW
- BECwtBubNM3pCuxe03KRfaLJLRhlCnpuwlg37dX4kFbchtAJ1hS15B3qNmi55WgqvuyllI3Nk3e
- uw8EYnt9eveGpKqBP6d1rPeFsamvjAYn+o2+Ckziu2ARTyBsWffKBNyjzTDAZORmK8Q==
-X-Gm-Gg: Acq92OGOY0Rw3awutHquTlVri328A6ZJvqB4jPcKNdz6CVmf6ignUQHvXgxLP6v8uos
- l3txDIzkFx85R1hyUemwjuJQnkUVk0z1IS5Qf2D3ryM37DMsBpp2RmQkMmQZaoOKWepr7BbLZgN
- rKWCenm5+d20qCBy/Y+ofyFsvoXomTgnqkvqoqpmDI+YNi3S6t6Z8iFr49xkixFyLXYz/h1a0TP
- UM06z+GlkrOPDk4NCxsmmT9bpwCP7EKpeDd/5nHsqZFbxzBol4jkLfMildOe2klVidi1JFX/h1x
- dZD0iUJeNPdFJDXDGaKkgsfln6da976gh4zaLFV+vqhVPponu+d1TZ/17aeSlsf0nlTo5bJiyp1
- Dp9uAJj6eTwqKGHn37uGqMhlagZzcMpDyp5efvoPVdHu03FAByBtwmXE5ITMJHkyEhe8eMQ==
-X-Received: by 2002:a05:6122:da4:b0:59e:f988:51e with SMTP id
- 71dfb90a1353d-5ac4fa4a4aamr16673385e0c.5.1781124944810; 
- Wed, 10 Jun 2026 13:55:44 -0700 (PDT)
-X-Received: by 2002:a05:6122:da4:b0:59e:f988:51e with SMTP id
- 71dfb90a1353d-5ac4fa4a4aamr16672714e0c.5.1781124931421; 
- Wed, 10 Jun 2026 13:55:31 -0700 (PDT)
-Received: from QCOM-UWl2o8bcGT.qualcomm.com ([177.170.117.62])
+ d=1e100.net; s=20251104; t=1781125257; x=1781730057;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=7kffMNPo7Vcq5I9EW/XMk0pRt0sVo3NtWbpiMoqnqpY=;
+ b=FodZIr267nFQ8MfSQsxaZNiLNTLWSfNOP4aCYcAU9kva6adKR7wpsH/83ZomzNKjUY
+ Nz8QiLamgazJ5YVV8caIZv4yvYKUi+K6K3Nx/8ZBZghppDqxhGUYzVzCDThgD+aijKtI
+ 3KimpViz+E7s7RWJauGj9ksPAQf5effXFW02m1PI8W/IeQpkWjDg+bxbw3MZNRyfUke2
+ mtKlaXMnsFtlQKMs0fbhGXBX6HSxtlqq6IyOuJmKfWoO8veSpSs/rsLKB19RXILtIRqr
+ XXQx26ZYixuW8Smwi68rwAc/5u4UOlHixCzLRU6xwtxie0bjHzB8pd/vfwzGzj0J3Vdi
+ 1wJg==
+X-Forwarded-Encrypted: i=1;
+ AFNElJ+9b7eYIFEpuhrhtfW64olm1xh2+RsHSJa3TXByfheEFwWjdUyjmm8IUFw2gNzbWLlpgrr8SS7VjfNy@nongnu.org
+X-Gm-Message-State: AOJu0YzKuQnmy8ZIVqOPkvzLAm9Z4VRj55Jg6mUWgHI8UV21vAY7whF3
+ ig1NLS1MHXkImpro6rQ2nvBaIOygHQ/yHziHUteqSxMDsRUyzZMXnuesvH1NgxMZYjdkSE5gJpq
+ wUFJcVqZ4gTC8OPbfiY99LDCdElcDCMPUSrNIjOMFZo6UDa81j+nHL/yz
+X-Gm-Gg: Acq92OH6H0judqEPTO4xFA0eAodQxK556S1NGlxbgu7EOrARUpIdJXAQiFoY9SLdSqA
+ i/u/dU/yM4GxUGxkjZyU5B9mr6Nc90ecsd6KYA7I0nNo9rvRazJ7FKBJtN8370pSxtAna9POVZk
+ ZqbSLJ69uSE+0vsa2Bv8RnwFtd9sgMOChaneCpuFBzRom7CN5adoxpl9wS6zV6pHWoDH/+uw2be
+ +vxIo6ohXM2H4APdF7+xLqgvtTo6i/wVyIk2FUYOh9w92ZGA0FJD1jWo+tLpJnMlgsscQDwcG4o
+ cGLDQioZ6kyqXEl61sufQbavfgu7FRDmQhJU6l6UCCZsHwnHACalqN228qAAuM3wIcfLqytYrWM
+ Vs+PJiXhDIHc7gig8B3O/KSDJeyG1o87F6uUykQhfB99mtUkwH/nGnw==
+X-Received: by 2002:a05:600c:4744:b0:490:e342:127 with SMTP id
+ 5b1f17b1804b1-490e342106amr4616785e9.34.1781125256577; 
+ Wed, 10 Jun 2026 14:00:56 -0700 (PDT)
+X-Received: by 2002:a05:600c:4744:b0:490:e342:127 with SMTP id
+ 5b1f17b1804b1-490e342106amr4616465e9.34.1781125256043; 
+ Wed, 10 Jun 2026 14:00:56 -0700 (PDT)
+Received: from redhat.com (IGLD-80-230-85-71.inter.net.il. [80.230.85.71])
  by smtp.gmail.com with ESMTPSA id
- a1e0cc1a2514c-96413f91f2esm19548084241.4.2026.06.10.13.55.28
+ 5b1f17b1804b1-490e2d09a85sm10877425e9.14.2026.06.10.14.00.54
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 10 Jun 2026 13:55:30 -0700 (PDT)
-From: Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>
-To: qemu-devel@nongnu.org
-Cc: qemu-riscv@nongnu.org, alistair.francis@wdc.com, liwei1518@gmail.com,
- zhiwei_liu@linux.alibaba.com, chao.liu.zevorn@gmail.com,
- philmd@oss.qualcomm.com,
- Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>,
- Palmer Dabbelt <palmer@dabbelt.com>
-Subject: [PATCH v2 2/2] target/riscv: add 'num-triggers' debug property
-Date: Wed, 10 Jun 2026 17:54:57 -0300
-Message-ID: <20260610205457.1868701-3-daniel.barboza@oss.qualcomm.com>
-X-Mailer: git-send-email 2.43.0
-In-Reply-To: <20260610205457.1868701-1-daniel.barboza@oss.qualcomm.com>
-References: <20260610205457.1868701-1-daniel.barboza@oss.qualcomm.com>
+ Wed, 10 Jun 2026 14:00:55 -0700 (PDT)
+Date: Wed, 10 Jun 2026 17:00:51 -0400
+From: "Michael S. Tsirkin" <mst@redhat.com>
+To: Stefan Hajnoczi <stefanha@redhat.com>
+Cc: Gavin Shan <gshan@redhat.com>, qemu-devel@nongnu.org,
+ qemu-arm@nongnu.org, jugraham@redhat.com, shan.gavin@gmail.com,
+ qemu-block@nongnu.org
+Subject: Re: [PATCH RFCv1] virtio: Inherit max bounce buffer size from bus
+ parent if possible
+Message-ID: <20260610165710-mutt-send-email-mst@kernel.org>
+References: <20260608001821.850921-1-gshan@redhat.com>
+ <20260610041036-mutt-send-email-mst@kernel.org>
+ <20260610183046.GB121666@fedora>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-Proofpoint-GUID: GtvyVlVnvsqsOFZ1uSuZEMm90Sv-nZ7s
-X-Proofpoint-Spam-Info: AW1haW4tMjYwNjEwMDIwMCBTYWx0ZWRfX4yps/egf9hss
- ROR62OsvvGHl4JopYO8+O5Nk0e2dmlQdziFY7SNucHzpFYCW+mxBovuJDF5fkJsc1iuOFGCcjBy
- tV/SGA73eN10VuMvI/qZtZF30+45Kck=
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNjEwMDIwMCBTYWx0ZWRfXxKVHJJmpXSPI
- U3ovV8n1mz9oyDxIQ4/lqzs1c3Q8sSmfzBKa6n4fCnsSmFcM/3MzptTgvjHu2+Udu6edqB4ONjD
- Ixvowe/9MhjsgWBUaA2fvCQ0RIfR6OoUCWHP2YwJf+o88rEPh4uQ/0ASpjzhJvarsUp0VU1L8TT
- rJVbrm0kFMi+8HtcUnOyXOeYHv5SUk/vVyJyFka2XhY3ng24UyRZkUk8a3NqY063tDRqZKn+988
- N00ML8iM92rOO2xPALCFLhx5oBayRgKIzeD7TNP608nZUIFTgmX4m/dyCJBlvJQpslXMz8/7S8r
- S73fY6GIsxENJ08VyCw54VyRC3u7fJcb2rMYx0JHG2ytWxgxogM8i9XmbPpLkXZRXuKUyxMSafc
- cK6WG25e3FKxQTwWr/FiaPEGo0tBnWBFIvmeLoZ3G2b/YnuU7GeAVDaPYD5iMEOblrzVwsL6VeZ
- tnBr9vlKfjOFPGBub5w==
-X-Authority-Analysis: v=2.4 cv=F5lnsKhN c=1 sm=1 tr=0 ts=6a29cf51 cx=c_pps
- a=1Os3MKEOqt8YzSjcPV0cFA==:117 a=gdiugJE53z4H+vvYeRBHqw==:17
- a=FelO9ux0wxsA:10 a=s4-Qcg_JpJYA:10 a=VkNPw1HP01LnGYTKEx00:22
- a=u7WPNUs3qKkmUXheDGA7:22 a=YMgV9FUhrdKAYTUUvYB2:22 a=EUspDBNiAAAA:8
- a=eePdtxGNxnJlWOecZfgA:9 a=hhpmQAJR8DioWGSBphRh:22
-X-Proofpoint-ORIG-GUID: GtvyVlVnvsqsOFZ1uSuZEMm90Sv-nZ7s
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.125,FMLib:17.12.100.49
- definitions=2026-06-10_04,2026-06-09_02,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- lowpriorityscore=0 malwarescore=0 clxscore=1015 adultscore=0 bulkscore=0
- suspectscore=0 impostorscore=0 priorityscore=1501 spamscore=0 phishscore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2606040000 definitions=main-2606100200
-Received-SPF: pass client-ip=205.220.168.131;
- envelope-from=daniel.barboza@oss.qualcomm.com; helo=mx0a-0031df01.pphosted.com
-X-Spam_score_int: -27
-X-Spam_score: -2.8
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20260610183046.GB121666@fedora>
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=mst@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -24
+X-Spam_score: -2.5
 X-Spam_bar: --
-X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_MSPIKE_H2=0.001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.445,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -150,165 +121,154 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-All CPUs have the same amount of triggers: 2 triggers per hart, set via
-RV_MAX_TRIGGERS.  This is not enough anymore: we'll have at least one
-future CPU that will demand more triggers per hart when implementing the
-RISC-V Server Ref Platform, requiring at least 11 triggers per hart.
+On Wed, Jun 10, 2026 at 02:30:46PM -0400, Stefan Hajnoczi wrote:
+> On Wed, Jun 10, 2026 at 05:49:21AM -0400, Michael S. Tsirkin wrote:
+> > On Mon, Jun 08, 2026 at 10:18:21AM +1000, Gavin Shan wrote:
+> > > On the guest where a NVidia's GH100 card is passed from the host, the
+> > > guest system hang can be observed on attempt to compile 'cuda-samples',
+> > > as reported by Julia.
+> > > 
+> > >    host$ lspci | grep GH100
+> > >    0009:01:00.0 3D controller: NVIDIA Corporation GH100 [GH200 120GB / 480GB] (rev a1)
+> > >    host$ /home/sandbox/gavin/qemu.main/build/qemu-system-aarch64 -accel kvm \
+> > >          -machine virt,gic-version=host,ras=on,highmem-mmio-size=4T         \
+> > >          -cpu host -smp cpus=32 -m size=8G                                  \
+> > >          -drive file=/home/gavin/sandbox/images/disk.qcow2,if=none,id=d0    \
+> > >          -device virtio-blk-pci,id=vb0,bus=pcie.0,drive=d0,num-queues=4     \
+> > >          -device vfio-pci-nohotplug,host=0009:01:00.0,bus=pcie.1.0
+> > > 
+> > >    guest$ cd cuda-samples/build
+> > >    guest$ make -j 20 clean
+> > >    guest$ make -j 20
+> > >                :
+> > >    [ 54%] Linking CUDA executable graphMemoryNodes
+> > >    [ 54%] Built target graphMemoryNodes
+> > >    <no more output afterwards, guest becomes frozen here>
+> > > 
+> > >    guest$ qemu-system-aarch64: virtio: bogus descriptor or out of resources
+> > >    [  555.814025] virtio_blk virtio0: [vda] new size: 268435456 512-byte logical blocks (137 GB/128 GiB)
+> > > 
+> > > When the GPU's driver (NVidia open driver) is loaded on guest bootup,
+> > > the memory blocks residing in the PCI BAR can be presented to the guest
+> > > through memory hot-add. The page cache can be allocated from the hot added
+> > > memory blocks when cuda-samples is being built. Afterwards, he page cache
+> > > is sent to QEMU's virtio-blk device as part of the DMA request, the bounce
+> > > buffer is used to accomodate the request as the corresponding memory
+> > > region (MemoryRegion) is a RAM DEVICE region in qemu. For this specific
+> > > case, false is returned from memory_access_is_direct() in the path where
+> > > the DMA request is handled.
+> > > 
+> > >   QEMU
+> > >   ====
+> > >   virtio_blk_handle_output
+> > >     virtio_blk_handle_vq
+> > >       virtio_blk_get_request
+> > >         virtqueue_pop
+> > >           virtqueue_split_pop
+> > >             virtqueue_map_desc
+> > >               address_space_map
+> > >                 memory_access_is_direct         # Return false
+> > >                   memory_region_supports_direct_access
+> > > 
+> > >   (qemu) info mtree
+> > >           :
+> > >   memory-region: pci_bridge_pci
+> > >     0000000000000000-ffffffffffffffff (prio 0, container): pci_bridge_pci
+> > >       0000042000000000-0000043fffffffff (prio 1, i/o): 0009:01:00.0 base BAR 4
+> > >         0000042000000000-0000043fffffffff (prio 0, i/o): 0009:01:00.0 BAR 4
+> > >           0000042000000000-000004379fffffff (prio 0, ramd): 0009:01:00.0 BAR 4 mmaps[0]
+> > > 
+> > > By default, the max bounce buffer size is only 4096 bytes, even less
+> > > than one page when the guest page is 64KB. This tries to fix the issue
+> > > by inheriting the customized max bounce buffer size of the virtio bus's
+> > > parent through property 'x-max-bounce-buffer-size' when the customized
+> > > size is a larger one. With this applied, no guest system hang is seen
+> > > with '-device virtio-blk-pci,...,x-max-bounce-buffer-size=268435456'.
+> > > 
+> > > Reported-by: Julia Graham <jugraham@redhat.com>
+> > > Signed-off-by: Gavin Shan <gshan@redhat.com>
+> > > ---
+> > >  hw/virtio/virtio-bus.c | 14 ++++++++++++++
+> > >  1 file changed, 14 insertions(+)
+> > > 
+> > > diff --git a/hw/virtio/virtio-bus.c b/hw/virtio/virtio-bus.c
+> > > index cef944e015..e0933823f3 100644
+> > > --- a/hw/virtio/virtio-bus.c
+> > > +++ b/hw/virtio/virtio-bus.c
+> > > @@ -42,6 +42,7 @@ do { printf("virtio_bus: " fmt , ## __VA_ARGS__); } while (0)
+> > >  /* A VirtIODevice is being plugged */
+> > >  void virtio_bus_device_plugged(VirtIODevice *vdev, Error **errp)
+> > >  {
+> > > +    AddressSpace *as;
+> > >      DeviceState *qdev = DEVICE(vdev);
+> > >      BusState *qbus = BUS(qdev_get_parent_bus(qdev));
+> > >      VirtioBusState *bus = VIRTIO_BUS(qbus);
+> > > @@ -100,6 +101,19 @@ void virtio_bus_device_plugged(VirtIODevice *vdev, Error **errp)
+> > >                  return;
+> > >              }
+> > >          }
+> > > +    } else {
+> > > +        /*
+> > > +         * The maximal bounce buffer size of the virtio bus's parent may
+> > > +         * have been customized by property 'x-max-bounce-buffer-size'.
+> > > +         * Lets inherit the customized size if it's larger than the
+> > > +         * current one.
+> > > +         */
+> > > +        as = klass->get_dma_as ? klass->get_dma_as(qbus->parent) : NULL;
+> > > +        if (as) {
+> > > +            vdev->dma_as->max_bounce_buffer_size = MAX(
+> > > +                    vdev->dma_as->max_bounce_buffer_size,
+> > > +                    as->max_bounce_buffer_size);
+> > > +        }
+> > >      }
+> > >  }
+> > >  
+> > > -- 
+> > > 2.54.0
+> > 
+> > 
+> > Problem with all this is, users would not know how to size this.
+> > 
+> > So fundamentally, is not the issue that virtio blk (and scsi!) maps
+> > all of the buffer all the time?
+> >
+> > It's not hard to add something like virtio_pop_unmapped that would not map,
+> > then build QEMUSGLists out of addr/len pairs and submit these.
+> > 
+> > Stefan, do you think doing it like this would be bad for perf? Good for
+> > perf?
+> 
+> I'd like to first make sure that the BAR really cannot be mmapped.
 
-Parametrize the trigger amount using a new 'num_triggers' property.  The
-default amount is kept at 2 for backwards compatibility.  The new
-maximum is bumped to a generous 1024 triggers per hart, which hopefully
-will be enough for the foreseeable future.
+The issue is that qemu has no way to know, up front.
 
-The property can be set in two ways:
+What we could thinkably do, is map it and do the
+accesses from QEMU through the bounce buffer, while
+DMA through mmap.
 
-- a '.num_triggers' CPU definition flag, allowing CPUs to set a custom
-  amount inside the CPU def in DEFINE_RISCV_CPU();
-- a new 'num-triggers' user property.  The user property has a higher
-  priority than an existing '.num_triggers' CPU def setting.
 
-Assuming a hypothetical case where a CPU 'X' is defined with
-'.num_triggers = 8':
+> A bounce buffer is necessary when QEMU has no way of mmapping the memory
+> (e.g. it needs to invoke a device model's callback to read/write the
+> MemoryRegion).
+> 
+> The reason why the bounce buffer size is low is because it's normally
+> only used on emulated machines where MMIO registers or similar small
+> MemoryRegions are accessed by DMA. If we ran into this on modern
+> machines there would also be other consequences like vhost devices would
+> be unable to access that memory since it cannot be shared/mmapped.
+> 
+> This is why I think we need to understand why this BAR is a RAM DEVICE.
 
-- -cpu X,num-triggers=30 => num_triggers set to 30
-- -cpu X (...)           => num_triggers set to 8
 
-For a CPU that doesn't set '.num_triggers':
+VFIO maps all memory BARS like this.
 
-- -cpu rv64,num-triggers=30 => num_triggers set to 30
-- -cpu rv64 (...)           => num_triggers set to 2
+> If it can support mmap then this issue, plus anything else like vhost,
+> would work.
+> 
+> Gavin, can you share the output of `lspci -vv -s 0009:01:00.0`?
+> 
+> Thanks,
+> Stefan
 
-Signed-off-by: Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>
----
- target/riscv/cpu.c     | 11 +++++++++++
- target/riscv/cpu.h     | 19 ++++++++++++++++++-
- target/riscv/debug.c   | 16 ++++++++--------
- target/riscv/machine.c |  4 ++--
- 4 files changed, 39 insertions(+), 11 deletions(-)
-
-diff --git a/target/riscv/cpu.c b/target/riscv/cpu.c
-index c1b10cc7ef..eed7b0b76e 100644
---- a/target/riscv/cpu.c
-+++ b/target/riscv/cpu.c
-@@ -1154,6 +1154,11 @@ static void riscv_cpu_init(Object *obj)
-                       IRQ_LOCAL_MAX + IRQ_LOCAL_GUEST_MAX);
-     qdev_init_gpio_in_named(DEVICE(cpu), riscv_cpu_set_nmi,
-                             "riscv.cpu.rnmi", RNMI_MAX);
-+
-+    if (mcc->def->num_triggers) {
-+        env->num_triggers = mcc->def->num_triggers;
-+    }
-+
- #endif /* CONFIG_USER_ONLY */
- 
-     general_user_opts = g_hash_table_new(g_str_hash, g_str_equal);
-@@ -2606,6 +2611,8 @@ static const Property riscv_cpu_properties[] = {
-                        DEFAULT_RNMI_IRQVEC),
-     DEFINE_PROP_UINT64("rnmi-exception-vector", RISCVCPU, env.rnmi_excpvec,
-                        DEFAULT_RNMI_EXCPVEC),
-+    DEFINE_PROP_UINT32("num-triggers", RISCVCPU, env.num_triggers,
-+                       RV_DEFAULT_NUM_TRIGGERS),
- #endif
- 
-     DEFINE_PROP_BOOL("short-isa-string", RISCVCPU, cfg.short_isa_string, false),
-@@ -2749,6 +2756,10 @@ static void riscv_cpu_class_base_init(ObjectClass *c, const void *data)
-                 !valid_vm_1_10_32[mcc->def->cfg.max_satp_mode]) {
-                 mcc->def->cfg.max_satp_mode = VM_1_10_SV32;
-             }
-+
-+            if (def->num_triggers) {
-+                mcc->def->num_triggers = def->num_triggers;
-+            }
- #endif
-         }
-         if (def->priv_spec != RISCV_PROFILE_ATTR_UNUSED) {
-diff --git a/target/riscv/cpu.h b/target/riscv/cpu.h
-index 8345b9a207..726a79f03a 100644
---- a/target/riscv/cpu.h
-+++ b/target/riscv/cpu.h
-@@ -189,7 +189,22 @@ extern RISCVCPUImpliedExtsRule *riscv_multi_ext_implied_rules[];
- #define RV_VLEN_MAX 1024
- #define RV_MAX_MHPMEVENTS 32
- #define RV_MAX_MHPMCOUNTERS 32
--#define RV_MAX_TRIGGERS 2
-+
-+/*
-+ * The Debug 1.0 spec allows a humongous amount of triggers.  Section
-+ * "Enumeration" says: "The above algorithm reads back tselect so that
-+ * implementations which have 2^n triggers only need to implement n
-+ * bits of tselect.".  tselect can have up to XLEN bits, so the max
-+ * theoretical RV_MAX_TRIGGERS value is 2^XLEN.
-+ *
-+ * Allowing 2^XLEN triggers per hart is silly so we'll set a max to a
-+ * modest 1024 triggers, which is way more than what we see current
-+ * hardware use (most chips uses 2-4 triggers per hart, RISC-V Server
-+ * Ref requires at least 11).  With a 1024 max per hart we'll be set
-+ * for a long time ... hopefully.
-+ */
-+#define RV_MAX_TRIGGERS 1024
-+#define RV_DEFAULT_NUM_TRIGGERS 2
- 
- FIELD(VTYPE, VLMUL, 0, 3)
- FIELD(VTYPE, VSEW, 3, 3)
-@@ -576,6 +591,8 @@ typedef struct RISCVCPUDef {
-     RISCVCPUConfig cfg;
-     bool bare;
-     const RISCVCSR *custom_csrs;
-+    /* This is just a setter for env->num_triggers.  */
-+    uint32_t num_triggers;
- } RISCVCPUDef;
- 
- /**
-diff --git a/target/riscv/debug.c b/target/riscv/debug.c
-index 8b31efdbc6..9578e3e913 100644
---- a/target/riscv/debug.c
-+++ b/target/riscv/debug.c
-@@ -26,6 +26,7 @@
- #include "qemu/osdep.h"
- #include "qemu/log.h"
- #include "qapi/error.h"
-+#include "qemu/error-report.h"
- #include "cpu.h"
- #include "target/riscv/debug.h"
- #include "trace.h"
-@@ -1049,14 +1050,13 @@ void riscv_trigger_realize(CPURISCVState *env)
- {
-     int i;
- 
--    /*
--     * Alloc env->tdata1/2/3, cpu_breakpoint, cpu_watchpoint and
--     * itrigger_timer dynamically.  This is overkill now
--     * given that they could be static arrays with RV_MAX_TRIGGERS
--     * but we'll parametrize the trigger number later, i.e. the
--     * array length won't be static.
--     */
--    env->num_triggers = RV_MAX_TRIGGERS;
-+    if (env->num_triggers > RV_MAX_TRIGGERS) {
-+        error_report(
-+                "Invalid configuration: 'num-triggers' must be less than %u",
-+                RV_MAX_TRIGGERS);
-+        exit(1);
-+    }
-+
-     env->tdata1 = g_new0(uint64_t, env->num_triggers);
-     env->tdata2 = g_new0(uint64_t, env->num_triggers);
-     env->tdata3 = g_new0(uint64_t, env->num_triggers);
-diff --git a/target/riscv/machine.c b/target/riscv/machine.c
-index b6b53a4840..ba96ceceef 100644
---- a/target/riscv/machine.c
-+++ b/target/riscv/machine.c
-@@ -240,8 +240,8 @@ static int debug_post_load(void *opaque, int version_id)
- 
- static const VMStateDescription vmstate_debug = {
-     .name = "cpu/debug",
--    .version_id = 3,
--    .minimum_version_id = 3,
-+    .version_id = 4,
-+    .minimum_version_id = 4,
-     .needed = debug_needed,
-     .post_load = debug_post_load,
-     .fields = (const VMStateField[]) {
--- 
-2.43.0
 
 
