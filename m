@@ -4,87 +4,115 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3B89CCD8CB9
-	for <qemu-devel@archiver.kernel.org>; Wed, 10 Jun 2026 16:22:53 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id AD205CD8CB2
+	for <qemu-devel@archiver.kernel.org>; Wed, 10 Jun 2026 16:23:08 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wXLYm-0003vi-Fl; Wed, 10 Jun 2026 12:13:44 -0400
+	id 1wXLf9-0008Ol-N9; Wed, 10 Jun 2026 12:20:19 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1wXLYi-0003h9-Ky
- for qemu-devel@nongnu.org; Wed, 10 Jun 2026 12:13:40 -0400
-Received: from mail-wm1-x331.google.com ([2a00:1450:4864:20::331])
+ (Exim 4.90_1) (envelope-from <faithilikerun@gmail.com>)
+ id 1wXLf7-0008L6-BW
+ for qemu-devel@nongnu.org; Wed, 10 Jun 2026 12:20:18 -0400
+Received: from mail-pl1-x629.google.com ([2607:f8b0:4864:20::629])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1wXLYg-0006Zy-MM
- for qemu-devel@nongnu.org; Wed, 10 Jun 2026 12:13:40 -0400
-Received: by mail-wm1-x331.google.com with SMTP id
- 5b1f17b1804b1-490b64c8311so77046995e9.3
- for <qemu-devel@nongnu.org>; Wed, 10 Jun 2026 09:13:38 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <faithilikerun@gmail.com>)
+ id 1wXLf5-0002vX-Ol
+ for qemu-devel@nongnu.org; Wed, 10 Jun 2026 12:20:17 -0400
+Received: by mail-pl1-x629.google.com with SMTP id
+ d9443c01a7336-2c0c2a68d01so47084295ad.1
+ for <qemu-devel@nongnu.org>; Wed, 10 Jun 2026 09:20:15 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1781108414; cv=none;
+ d=google.com; s=arc-20240605;
+ b=alf3PuiJ0oAXeP2/8Xpfh71HZ6UFR8lPs+j+FbPXmn5JE9NeM8QXy+Ia1w7NK3FUW8
+ apEP9VRnLQSUXiTKJVBXsqASa7kDjdbS/3+TYZMx/8YiConvFVUfTlFOjBMy5n8dL06U
+ kEG6T6djR7ROlPd8bwk1Z+PKsKm8NezD1cBNJdqiH07P33ghbWjawrpWDpGHXI5/BT7T
+ tB+784A23n0ZsLmEUqAVOgo43m65f5Xz17pDN/xAueqwNkOF1k+E8YH7xwbWWxghhtfr
+ QEF3oCXmc1wgV4rex2C+HApyL1Qo44swz97Yz5kKDAeCfUrqk0ZVq0cNZKheCIvDMqDJ
+ 1oPA==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
+ s=arc-20240605; 
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:dkim-signature;
+ bh=+xO/2NRLzNcs6sdLxEWN6LoFasKv0n2MeVQbqgQY9FU=;
+ fh=r6UoY7UuKJ04V6juxpFT9n9+09wmYwpKZede0we4tNc=;
+ b=QR6tBHmuQjZFSOcwxHitJdIiS0RKmSp2n+J9Ir/muMcYlU5YL1otU46fwo1O2xvGlk
+ 09SvejVv2Wx34Jnt8siffer1l/oRDu37SHQM7y9ZBzJ0wlhoOKCe0TDcBUa+OIfLgTUG
+ jIXQrE20En79CvMOo6oOjWLFxs0knul/AayuVBWIjcdLQJneuMLGEpjEKsBiVW3YhNe2
+ WaZJFqkQINQ++vb2GshT54sevgr1K52/CUJd3rImwzVgmfxBwbbOnVgeYYRj8C4w5ph5
+ JE5vkcb7UHnL5HVrcttcYHYyI3Mpi969ug9bfx0m88XtpKyiw9i+H8LQHG48SWfHdKLv
+ vE9A==; darn=nongnu.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1781108017; x=1781712817; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
- :reply-to; bh=jN+G7kW7HtjYl4CpSe9tEzemlao0jVQgi+tpXzHZFao=;
- b=radEHNFWjxCbrRHJz+ih6mz+nKJtF6rPMQfhvaKOpU2jyIa2uFXZYGgaiApMe+UJd4
- hXrDwFzOx16VcqXQh6kVjnD1ZHD2+lRuiX4s0tlqmFn8HkSsjHud6+Opi7JiZ9cDVWzT
- ToJhN4osbvgW2jh9fTqRg1NTPFkkCb4t5KuPndxWu6B+sTfqGDa+fDnTcOqYxhUnWeQ2
- ERctOoqll9ksuL5WevjgbE7K0ZOIcTkANcX6KTEVd63kMDgNzShn8CR6/dQJjU82JhOy
- 6PZO3VtpcS7V0IIEQztZIwcn4v3Gvyz6YxPGf4mbqZUTsGmNgAqVzl2ah8A1D0XlFk1U
- FE0g==
+ d=gmail.com; s=20251104; t=1781108414; x=1781713214; darn=nongnu.org;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=+xO/2NRLzNcs6sdLxEWN6LoFasKv0n2MeVQbqgQY9FU=;
+ b=hR3f1wPAdnFHwFPjUPADXo2RMUJgv85xxUtu7ojth1WcmjJgOkgncu1oCLifT55cBX
+ y9FcLHY7sMU6oOxBuT7U6zjJxc05OE0LlaWGn6MGG119d1DCksA1r4uIwByyfI4qXVW0
+ lvpalXlYn/uxzRnHt/Za1gfKHjqbg2KFvigSW42UC2t8GomnnYNZS6CY61Yu0zGVLYZR
+ AUA/y0RYpXwHXc+tW55VI2qWkscTmSTAJat0dwadbkb+nfWuJpTbxoLLr41A3I/dcliv
+ Yw4RxjvqULTHvnpEX5ZTY5VxEX2p69S7bdUKAMBetjC4Xl761GkRxwon9OMXkx00FH7K
+ PDCA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1781108017; x=1781712817;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:to:from:x-gm-gg:x-gm-message-state:from:to
- :cc:subject:date:message-id:reply-to;
- bh=jN+G7kW7HtjYl4CpSe9tEzemlao0jVQgi+tpXzHZFao=;
- b=Ns6pIehkJEVqcnpUPdLexpSzgwPq0ve6OYQrzaDPjVb6qVcjKZHlyLUtCucF6nPnoY
- PxT96/s3mTeEQ03RVgND1YL8g/JpkkETmzEo2ny6Wlh/wsdcIMzGGjTREq3b2saDVAVE
- sDZ8HQnWqT30jGoCNS1H2GYnbcwVIKGCufqH2hpx6ir4U0q8v4RpzDyOpGNcIcl7EwKC
- aaiIsb8mVKvrDIKhxPp3TqH3enjikbfGue+xQkzhAkyQrjPnoTz9ZnWkWJxWsUcB+mHM
- vx0Y0UEgzFe6eO21i+ZeB03O+8J5Btvlvm9hDzkvho6o3jHtwzbePQP4cVmx/t7DbIig
- bkUA==
-X-Gm-Message-State: AOJu0YxJcHMETttP5jCcnleZCirxTVTIyqB6mr+ASYGzRWyzZyI68FbX
- JnTn9jfcMyGWl+LEx1GwBsas00XsokFfsL4/E3YvuXUQJIUVB2kkfGuEKUqfUbGHewKNKGXvmF8
- 9j7x1
-X-Gm-Gg: Acq92OFxJYXRamASxgaQu1yLSKD6lhWv2yW7OTmtGSGdXYKtHhJW40qjcaECq5QxxU/
- TQsHsK4fnsgoz2q4SHQ3+VqtRvR4klBKxC7N7QpI7aPrymeEigJkyb6hm6kmUWfAhuqD40tjxQw
- kDf96kDcCYXP7MbSBQBVvsAZQ1pqWorBtnLZZkppMURK6kOo8mMLgr3Pi7ecCxC3MBg2HnkSr/i
- 4aXJuVZEhPofxiCUPig/8RrA73P3+fwa7diFSG+uJQXG4QzqNA7TddMFRhuIHlpwKkzahNgwVvi
- eUrlNNgF9mVnQcCIq6f3e1SklyaoJjd7MbR/i5xK480rYQVhieAKfmxNDo6jmjRzaVUzdmkqwIE
- i2JVlCW1NuPw599Jou+E6AZv34f4yvXwCGGesNIK5c/PdjjkVIuT/bw8/QmlNzH3/OHMAjSv9tI
- JklBAtFpoWXo8Khur5DEXynAuX1G/32vPQac6Mb0FA6nf6mFhaph8rE4sY4hUmP+3FEqF2o/kjB
- 1Q1lF6bT0lX2ySQ9Vm8BVbj/Qz2riBxtro0dbKhy2E=
-X-Received: by 2002:a05:600c:5248:b0:490:cb90:3e00 with SMTP id
- 5b1f17b1804b1-490cb903f1emr268505775e9.14.1781108017275; 
- Wed, 10 Jun 2026 09:13:37 -0700 (PDT)
-Received: from lanath.. (wildly.archaic.org.uk. [81.2.115.145])
- by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-4601f2dcbe3sm67911360f8f.8.2026.06.10.09.13.36
- for <qemu-devel@nongnu.org>
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 10 Jun 2026 09:13:36 -0700 (PDT)
-From: Peter Maydell <peter.maydell@linaro.org>
-To: qemu-devel@nongnu.org
-Subject: [PULL 68/71] target/arm: Enable FEAT_F8F32MM for -cpu max
-Date: Wed, 10 Jun 2026 17:11:59 +0100
-Message-ID: <20260610161202.2235298-69-peter.maydell@linaro.org>
-X-Mailer: git-send-email 2.43.0
-In-Reply-To: <20260610161202.2235298-1-peter.maydell@linaro.org>
-References: <20260610161202.2235298-1-peter.maydell@linaro.org>
+ d=1e100.net; s=20251104; t=1781108414; x=1781713214;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=+xO/2NRLzNcs6sdLxEWN6LoFasKv0n2MeVQbqgQY9FU=;
+ b=VAOR7cPClVojKPPR+fVGN//AtgOzwQMlmeA30PDMEKni8eZsj1+gXCaFIO96vpZwtZ
+ 2NQxdNpf3vgaSoTB+MHHItCdDGbt4tgu68YfOR44Y+oTK4UrvZAbT3l5RT/QejfeSGwx
+ HP6HnhZOAVpDzs4WIh0HC9+RXBhOfHJxSM+8XDzAZoWHKh9Bw9nZeK4IgYNZS329SBg5
+ bA6+JYhqs2+9yamIxqFAp2x4RMATK6z57XRf1zuKkBKHUnLBE9cTHmFKee5T6PU8zR8K
+ AdUksGFxThuw/epMpzQ3IjWIwKtyTepdm/HXyv8m/ePC+QkGarkOs3cA1su161GgyvXK
+ gfmw==
+X-Forwarded-Encrypted: i=1;
+ AFNElJ8axnCIV6lYdHjnuNBjJLB/2S4eskSTyFCmIK3hOLwarB4LvNjPHX4PeimGYq6WXUZmt6UqM/8Z4dO/@nongnu.org
+X-Gm-Message-State: AOJu0YztWTxt4Fso5uZdH2Ywemz4Vb2SjLKkqswGMMcJRBxuUDDeP44M
+ VNqAxf3ZQqOjHhglStXdSs30MFb2JspuuEJ7QfktVyvyec8R1avP8QLMP/fD2ga1uUHTcsJUrRb
+ Gl+ZZfamLKpD/cHDDUC3rnipNjddyV8U=
+X-Gm-Gg: Acq92OFVnaMVlMTFP9+FbEVg/70Rm8iD95A7CGHz6WdgdhQ3XYoKH85jfoPwcaQDm6P
+ hJQxHCdJMbtbulp6TvgTL3haBtWlOLecEKSf+5uRcVLthye5I17pyT/KspTb0+NlHxTCfTK+AZy
+ dUkbO5r8v057LEW0lDVOveV1C1TTZ2KGENMnbl+nplhtHhXnx0ksc3y2Fgx930q0LMhjfbcZOUe
+ HS+V+UTyNFYNPL6A87XRMbQ7kVAzvd8lPBTowJVAyoEHz8aUa9U3P0phtvt/2AlB334qR9rs6LC
+ U/EOHw1/uG+pIJ2Tn+AgGU1BGFix7ihC93if4IL6rRa8GH/orHE7s6R9f4F4mS9EJFN35Ot9Lf2
+ 1b8cnT1JD
+X-Received: by 2002:a17:902:f24d:b0:2c0:d9b7:b7b0 with SMTP id
+ d9443c01a7336-2c1e8220afbmr195760645ad.31.1781108413706; Wed, 10 Jun 2026
+ 09:20:13 -0700 (PDT)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::331;
- envelope-from=peter.maydell@linaro.org; helo=mail-wm1-x331.google.com
+References: <20260601214405.252818-1-faithilikerun@gmail.com>
+ <20260601214405.252818-4-faithilikerun@gmail.com>
+ <20260603204150.GD78072@fedora>
+ <aiauw3nKDRHXJESV@ryzen> <20260609160112.GD57581@fedora>
+In-Reply-To: <20260609160112.GD57581@fedora>
+From: Sam Li <faithilikerun@gmail.com>
+Date: Wed, 10 Jun 2026 18:19:47 +0200
+X-Gm-Features: AVVi8CeuXQEb2jf9oOS8CC8ma3qoAKunZSdvO5EWuYC_J32BJ1WX40IeK2F-jPI
+Message-ID: <CAAAx-8JMZxMbxa0_ACJLW8kiqEZizJcjiKbgskHuXXyS0tixMg@mail.gmail.com>
+Subject: Re: [PATCH v11 3/5] virtio-blk: do not merge writes across a zone
+ boundary
+To: Stefan Hajnoczi <stefanha@redhat.com>
+Cc: Niklas Cassel <cassel@kernel.org>, qemu-devel@nongnu.org, 
+ Markus Armbruster <armbru@redhat.com>, qemu-block@nongnu.org,
+ Eric Blake <eblake@redhat.com>, 
+ Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>, dmitry.fomichev@wdc.com, 
+ Hanna Reitz <hreitz@redhat.com>, hare@suse.de,
+ "Michael S. Tsirkin" <mst@redhat.com>, 
+ Kevin Wolf <kwolf@redhat.com>, dlemoal@kernel.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2607:f8b0:4864:20::629;
+ envelope-from=faithilikerun@gmail.com; helo=mail-pl1-x629.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -100,55 +128,57 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Richard Henderson <richard.henderson@linaro.org>
+On Tue, Jun 9, 2026 at 6:01=E2=80=AFPM Stefan Hajnoczi <stefanha@redhat.com=
+> wrote:
+>
+> On Mon, Jun 08, 2026 at 02:00:03PM +0200, Niklas Cassel wrote:
+> > Hello Stefan,
+> >
+> > On Wed, Jun 03, 2026 at 04:41:50PM -0400, Stefan Hajnoczi wrote:
+> > > On Mon, Jun 01, 2026 at 11:44:03PM +0200, Sam Li wrote:
+> > > > diff --git a/hw/block/virtio-blk.c b/hw/block/virtio-blk.c
+> > > > index 9cb9f1fb2b..285db19ac7 100644
+> > > > --- a/hw/block/virtio-blk.c
+> > > > +++ b/hw/block/virtio-blk.c
+> > > > @@ -303,17 +306,34 @@ static void virtio_blk_submit_multireq(VirtIO=
+Block *s, MultiReqBuffer *mrb)
+> > > >      for (i =3D 0; i < mrb->num_reqs; i++) {
+> > > >          VirtIOBlockReq *req =3D mrb->reqs[i];
+> > > >          if (num_reqs > 0) {
+> > > > +            zone_cross =3D false;
+> > > > +
+> > > > +            /*
+> > > > +             * On zoned backends, a single backend write must not =
+span a zone
+> > >
+> > > This code handles both reads and writes but the comment only mentions
+> > > writes. I think reads are allowed to span zones, so should there be a
+> > > check that mrb->is_write?
+> >
+> > From the Virtual I/O Device (VIRTIO) Version 1.4 specification:
+> >
+> > "If a VIRTIO_BLK_T_ZONE_APPEND request, a VIRTIO_BLK_T_IN request or a
+> > VIRTIO_BLK_T_OUT request issued to a SWR zone has the range that has
+> > sectors in more than one zone, then the request SHALL be completed with
+> > VIRTIO_BLK_S_ZONE_INVALID_CMD value in the field status."
+> >
+> >
+> > Thus, while this is allowed to read past the zone boundary in many zone=
+d
+> > specifications, e.g. in both ZAC and ZBC, when the "Read Across Zone
+> > Boundaries bit" is set, is seems like it is never allowed to do so in
+> > VIRTIO.
+>
+> Hi Niklas,
+> Thanks for pointing this out. So no change is needed here.
+>
+> I noticed that NVMe has a Read Across Zone Boundaries bit to indicate
+> whether or not this is allowed. virtio-blk could add a feature bit to
+> offer the same functionality in the future. This would come in handy if
+> existing applications depend on reading across zones.
 
-Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
-Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
-Message-id: 20260609192110.752384-43-richard.henderson@linaro.org
-Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
----
- docs/system/arm/emulation.rst | 1 +
- linux-user/aarch64/elfload.c  | 1 +
- target/arm/tcg/cpu64.c        | 1 +
- 3 files changed, 3 insertions(+)
+Sounds like a good addition to the persistent metadata for ZNS emulation se=
+ries?
 
-diff --git a/docs/system/arm/emulation.rst b/docs/system/arm/emulation.rst
-index 0bcd707fc1..56da6baed9 100644
---- a/docs/system/arm/emulation.rst
-+++ b/docs/system/arm/emulation.rst
-@@ -67,6 +67,7 @@ the following architecture extensions:
- - FEAT_EPAC (Enhanced pointer authentication)
- - FEAT_ETS2 (Enhanced Translation Synchronization)
- - FEAT_EVT (Enhanced Virtualization Traps)
-+- FEAT_F8F32MM (8-bit floating-point matrix multiply-accumulate to single-precision)
- - FEAT_F32MM (Single-precision Matrix Multiplication)
- - FEAT_F64MM (Double-precision Matrix Multiplication)
- - FEAT_FAMINMAX (Floating-point maximum and minimum absolute value instructions)
-diff --git a/linux-user/aarch64/elfload.c b/linux-user/aarch64/elfload.c
-index d40e39169b..7864765ba0 100644
---- a/linux-user/aarch64/elfload.c
-+++ b/linux-user/aarch64/elfload.c
-@@ -171,6 +171,7 @@ abi_ulong get_elf_hwcap(CPUState *cs)
-     GET_FEATURE_ID(aa64_rcpc_8_4, ARM_HWCAP_A64_ILRCPC);
-     GET_FEATURE_ID(aa64_gcs, ARM_HWCAP_A64_GCS);
-     GET_FEATURE_ID(aa64_cmpbr, ARM_HWCAP_A64_CMPBR);
-+    GET_FEATURE_ID(aa64_f8mm8, ARM_HWCAP_A64_F8MM8);
- 
-     return hwcaps;
- }
-diff --git a/target/arm/tcg/cpu64.c b/target/arm/tcg/cpu64.c
-index 3d73977f1e..0f2ce592d1 100644
---- a/target/arm/tcg/cpu64.c
-+++ b/target/arm/tcg/cpu64.c
-@@ -1404,6 +1404,7 @@ void aarch64_max_tcg_initfn(Object *obj)
-     t = GET_IDREG(isar, ID_AA64FPFR0);
-     t = FIELD_DP64(t, ID_AA64FPFR0, F8E5M2, 1);   /* FEAT_FP8 */
-     t = FIELD_DP64(t, ID_AA64FPFR0, F8E4M3, 1);   /* FEAT_FP8 */
-+    t = FIELD_DP64(t, ID_AA64FPFR0, F8MM8, 1);    /* FEAT_F8F32MM */
-     t = FIELD_DP64(t, ID_AA64FPFR0, F8DP2, 1);    /* FEAT_FP8DOT2 */
-     t = FIELD_DP64(t, ID_AA64FPFR0, F8DP4, 1);    /* FEAT_FP8DOT4 */
-     t = FIELD_DP64(t, ID_AA64FPFR0, F8FMA, 1);    /* FEAT_FP8FMA */
--- 
-2.43.0
-
+Sam
 
