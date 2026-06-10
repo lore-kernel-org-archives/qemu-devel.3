@@ -4,56 +4,57 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0456CCD8CB2
-	for <qemu-devel@archiver.kernel.org>; Wed, 10 Jun 2026 10:59:53 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A2B87CD8CB2
+	for <qemu-devel@archiver.kernel.org>; Wed, 10 Jun 2026 11:00:15 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wXGdv-0004OL-Ma; Wed, 10 Jun 2026 06:58:43 -0400
+	id 1wXGeb-0005um-QR; Wed, 10 Jun 2026 06:59:29 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1wXGdp-0004Ag-Vb
- for qemu-devel@nongnu.org; Wed, 10 Jun 2026 06:58:38 -0400
+ id 1wXGeS-0005jc-7M
+ for qemu-devel@nongnu.org; Wed, 10 Jun 2026 06:59:17 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1wXGdn-0007FB-V9
- for qemu-devel@nongnu.org; Wed, 10 Jun 2026 06:58:37 -0400
+ id 1wXGeN-0000Al-Jf
+ for qemu-devel@nongnu.org; Wed, 10 Jun 2026 06:59:12 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1781089115;
+ s=mimecast20190719; t=1781089151;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=Z8c1FIMKwaYoOTZE7vyDECq+aVQ4SBC6fnh/QYsxx+g=;
- b=USgKzrE6k0ZgQK7BsT+3zuWvASSbz2XNtQ+gtxusw7qbhI2oKq+mDdOAR20sQjD01hmbgB
- w4Q0qSNajz+dvd4deifaVkE60uPmsfJOBBSqEVG/LsN3Vu97Omv9UppHJ/oHGyI0ksVn2r
- IK5X1Is7wPyZ/6uHzHQAuAzMZ7Oghyc=
+ bh=v/g5jfTi2AD+hzkWtUUyAkv+WqHTfhObwkFPbXFeULU=;
+ b=EfO/yg5B0lEwO2sXPNCc3kf0YGdDvy7bTipAe7bWIfIAHgdUXuxEypEIZwH8sSxTqaTtoN
+ faR8iKbQdMboT7PHaz4G68J05/bgtkaiGHv3Qywvry1ZR5a0cTNQ3fndzl/fUcjvHdnK0J
+ V6EDM2v/THuttOifEXVy9J2CFvybGcE=
 Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-484-Q58_Y8iIM-e2yTrXT9NGXw-1; Wed,
- 10 Jun 2026 06:58:32 -0400
-X-MC-Unique: Q58_Y8iIM-e2yTrXT9NGXw-1
-X-Mimecast-MFC-AGG-ID: Q58_Y8iIM-e2yTrXT9NGXw_1781089110
-Received: from mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.17])
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-632-OgAhiXmnM1OdayB5g7ISIw-1; Wed,
+ 10 Jun 2026 06:59:04 -0400
+X-MC-Unique: OgAhiXmnM1OdayB5g7ISIw-1
+X-Mimecast-MFC-AGG-ID: OgAhiXmnM1OdayB5g7ISIw_1781089143
+Received: from mx-prod-int-10.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-10.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.95])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
  by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 8870F1800656; Wed, 10 Jun 2026 10:58:30 +0000 (UTC)
+ id E67301800D9F; Wed, 10 Jun 2026 10:59:02 +0000 (UTC)
 Received: from localhost (unknown [10.44.24.21])
- by mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 566E3195410A; Wed, 10 Jun 2026 10:58:28 +0000 (UTC)
+ by mx-prod-int-10.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id 47359414; Wed, 10 Jun 2026 10:59:00 +0000 (UTC)
 From: =?utf-8?q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>
-Date: Wed, 10 Jun 2026 14:56:54 +0400
-Subject: [PATCH v2 12/22] hw/input: keep QemuInputHandlerState in adb-kbd
+Date: Wed, 10 Jun 2026 14:57:00 +0400
+Subject: [PATCH v2 18/22] hw/input/virtio-input-hid: use
+ qemu_input_handler_set_led() for LED state
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
-Message-Id: <20260610-ui-input-v2-12-f68452dd6a22@redhat.com>
+Message-Id: <20260610-ui-input-v2-18-f68452dd6a22@redhat.com>
 References: <20260610-ui-input-v2-0-f68452dd6a22@redhat.com>
 In-Reply-To: <20260610-ui-input-v2-0-f68452dd6a22@redhat.com>
 To: qemu-devel@nongnu.org
@@ -66,24 +67,24 @@ Cc: "Dr. David Alan Gilbert" <dave@treblig.org>,
  Jan Kiszka <jan.kiszka@web.de>, Peter Maydell <peter.maydell@linaro.org>, 
  qemu-arm@nongnu.org, Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>, 
  qemu-ppc@nongnu.org, Thomas Huth <th.huth+qemu@posteo.eu>
-X-Developer-Signature: v=1; a=openpgp-sha256; l=1946;
+X-Developer-Signature: v=1; a=openpgp-sha256; l=877;
  i=marcandre.lureau@redhat.com; h=from:subject:message-id;
- bh=GmSCc22GoNS7ltH+XjMYln3CZYqrnxab3Gc6bVadlm8=;
- b=owEBbQKS/ZANAwAKAdro4Ql1lpzlAcsmYgBqKUMAeVO6phufymg1FE2Gm2zCMJQDr4SGwKDHi
- AgmekUOyL2JAjMEAAEKAB0WIQSHqb2TP4fGBtJ29i3a6OEJdZac5QUCailDAAAKCRDa6OEJdZac
- 5ZY2D/9SXPuumnO54wQdrMTwm8IVIjtwAGJt7btxM3rYRNkNZ0AlK18Z5sSntjdgEwEL2GIaucX
- nUx0cEE6gnQVXCh451qWyuw7Ya03AadcRfUaDhljXHfzLIUzs4dfALLMGoPrR8P0fEd3Iai3j7q
- xx06KikaBIcsxdmxMB9o8JSnb0JwQ06nz15NXDTxE6xoR12+h6NjqcnlMdm2AUPoZ4Tf04tzvVf
- uut/vCWs8SlPyNyw71a8WOHfaJsBtAlUx3sdypgnTHwXenT+YnqZXDVDdz858b1yr3kCfEQP4R5
- szPrX7g1nyaWfsnYXv6IMzQeWg8Cwc+1QXJs5pfvjYAfvuJtFLDxGehOICCo1p1e6/5qcdOaWPS
- 6qZcjNySeOP5/UOMbQ+kwbbY23fo48mL7KZydGNHzCkKbJ2HWCm+IvhVbdozqSLX02MU1GfBJUn
- TOAxkaC7UdRrLEPRk0ZY8+1HGIOF11oNFGg1MCMbzzHREM31wCBDkKZ9rJxn2GY+ct+/9ALpSr/
- GQO8quxUwnVo8q+H+RGmJyy5XoKz9tzziXHdXkhZw0Iq2JKDFseScDTivIaCjqlWFiJpI8I22E5
- WKCdbMtbG2s3u9L1S/RBpCPTmuYGHWsFQbCBxn+X0IDcud+EfB369Ze4I0d9rShQ0Gr/SS37eCv
- vXaiZKZn65ji92A==
+ bh=FxrGAwrXr2ksjrfGyAaKoh9XtsL3mW3yFUW3RWHGSfA=;
+ b=owEBbQKS/ZANAwAKAdro4Ql1lpzlAcsmYgBqKUMBz9ffM6aA0FJXHn0z0skUON0T+m7CTRgHY
+ dTiozAR1g6JAjMEAAEKAB0WIQSHqb2TP4fGBtJ29i3a6OEJdZac5QUCailDAQAKCRDa6OEJdZac
+ 5YHMD/96MdKXukgMZzsVd2DozlfLB5BTGOVrDUuhQ78MTgBTgmVQs2tOJVDRfhFG3qBQd759/h4
+ WRX5oeJmG/VMlPtrJp6hcwm7+Vex+q0AukJMUb9AUrQTtmbN5TFNfreIxrlhnLmcMod+K8q6PFa
+ 3flmt/c5Blj0Nwm4951JH/3CqzHDWkB2Iwwr72+b9cscKmBpsBJlCq7JztU2n3bMMbvR76njdT+
+ YfQv3LwcUcV5TkV6gxsvW0741Np2sW0mD1ew4p7KOojPFRfYLR5yQYq8Flq276vKlU0n1WY534I
+ 8Q8hkfa8iRWaTilUxQCxALh4YyjEo6njknZl+HMzHLdbOnN/5/1r58TVAP63NAaZ3709UuNh2yN
+ YX3A+HgYeePYR0THTVobBuXojVK0/DbSKdXeeaulklH9Iz/2cr/mYIqHN8TrN42XakRnxC5zcIH
+ 0AIkG5ZNFCX5+Dag69YETGtU5IhdRdgKWXvFRpXwa3c17MrZNmklSps8ddX1ts4vFKII6TWBgGn
+ mTZXRT4pqaUAgxc2+6Z9LcyUB5Fd/uFcWCmSpzUIOcBIxpbuiXM8RlMoCZDCiRkN+8j10XKVDFl
+ jCnIwWfDbjHXAeoOjjrmhsJWxsIQf8XUMydohdQGjFcQe2bILylJ216Gj34xxyMNIb/+71fhAjj
+ aqGXr7M6h6QfLiQ==
 X-Developer-Key: i=marcandre.lureau@redhat.com; a=openpgp;
  fpr=87A9BD933F87C606D276F62DDAE8E10975969CE5
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.17
+X-Scanned-By: MIMEDefang 3.6 on 10.30.177.95
 Received-SPF: pass client-ip=170.10.133.124;
  envelope-from=marcandre.lureau@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
@@ -109,64 +110,32 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Track the input handled state, and dispose it on unrealize.
-
 Signed-off-by: Marc-André Lureau <marcandre.lureau@redhat.com>
 ---
- hw/input/adb-kbd.c | 17 ++++++++++++++++-
- 1 file changed, 16 insertions(+), 1 deletion(-)
+ hw/input/virtio-input-hid.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/hw/input/adb-kbd.c b/hw/input/adb-kbd.c
-index c4ef9ebb90c..ece51d5df72 100644
---- a/hw/input/adb-kbd.c
-+++ b/hw/input/adb-kbd.c
-@@ -40,6 +40,7 @@ struct KBDState {
-     ADBDevice parent_obj;
-     /*< public >*/
+diff --git a/hw/input/virtio-input-hid.c b/hw/input/virtio-input-hid.c
+index 73423ac0c73..d3062809a13 100644
+--- a/hw/input/virtio-input-hid.c
++++ b/hw/input/virtio-input-hid.c
+@@ -12,6 +12,7 @@
+ #include "hw/virtio/virtio.h"
+ #include "hw/core/qdev-properties.h"
+ #include "hw/virtio/virtio-input.h"
++#include "ui/input.h"
  
-+    QemuInputHandlerState *hs;
-     uint8_t data[128];
-     int rptr, wptr, count;
- };
-@@ -51,6 +52,7 @@ struct ADBKeyboardClass {
-     /*< public >*/
+ #include "ui/console.h"
  
-     DeviceRealize parent_realize;
-+    DeviceUnrealize parent_unrealize;
- };
- 
- /* The adb keyboard doesn't have every key imaginable */
-@@ -361,9 +363,20 @@ static const QemuInputHandler adb_keyboard_handler = {
- 
- static void adb_kbd_realizefn(DeviceState *dev, Error **errp)
- {
-+    KBDState *s = ADB_KEYBOARD(dev);
-     ADBKeyboardClass *akc = ADB_KEYBOARD_GET_CLASS(dev);
-+
-     akc->parent_realize(dev, errp);
--    qemu_input_handler_register(dev, &adb_keyboard_handler);
-+    s->hs = qemu_input_handler_register(dev, &adb_keyboard_handler);
-+}
-+
-+static void adb_kbd_unrealizefn(DeviceState *dev)
-+{
-+    KBDState *s = ADB_KEYBOARD(dev);
-+    ADBKeyboardClass *akc = ADB_KEYBOARD_GET_CLASS(dev);
-+
-+    g_clear_pointer(&s->hs, qemu_input_handler_unregister);
-+    akc->parent_unrealize(dev);
- }
- 
- static void adb_kbd_initfn(Object *obj)
-@@ -381,6 +394,8 @@ static void adb_kbd_class_init(ObjectClass *oc, const void *data)
- 
-     device_class_set_parent_realize(dc, adb_kbd_realizefn,
-                                     &akc->parent_realize);
-+    device_class_set_parent_unrealize(dc, adb_kbd_unrealizefn,
-+                                    &akc->parent_unrealize);
-     set_bit(DEVICE_CATEGORY_INPUT, dc->categories);
- 
-     adc->devreq = adb_kbd_request;
+@@ -208,7 +209,7 @@ static void virtio_input_hid_handle_status(VirtIOInput *vinput,
+         } else {
+             vhid->ledstate &= ~ledbit;
+         }
+-        kbd_put_ledstate(vhid->ledstate);
++        qemu_input_handler_set_led(vhid->hs, vhid->ledstate);
+         break;
+     default:
+         qemu_log_mask(LOG_GUEST_ERROR,
 
 -- 
 2.54.0
