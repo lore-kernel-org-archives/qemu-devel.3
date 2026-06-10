@@ -4,35 +4,35 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5C889CD8CB9
-	for <qemu-devel@archiver.kernel.org>; Wed, 10 Jun 2026 16:47:30 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2B050CD8CB2
+	for <qemu-devel@archiver.kernel.org>; Wed, 10 Jun 2026 16:47:43 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wXM4C-0003L2-Ky; Wed, 10 Jun 2026 12:46:12 -0400
+	id 1wXM4O-0003WC-Ov; Wed, 10 Jun 2026 12:46:24 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <deller@kernel.org>) id 1wXM4A-0003KQ-U6
- for qemu-devel@nongnu.org; Wed, 10 Jun 2026 12:46:10 -0400
-Received: from tor.source.kernel.org ([2600:3c04:e001:324:0:1991:8:25])
+ (Exim 4.90_1) (envelope-from <deller@kernel.org>) id 1wXM4L-0003Rc-G5
+ for qemu-devel@nongnu.org; Wed, 10 Jun 2026 12:46:22 -0400
+Received: from sea.source.kernel.org ([2600:3c0a:e001:78e:0:1991:8:25])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <deller@kernel.org>) id 1wXM49-0000mF-DY
- for qemu-devel@nongnu.org; Wed, 10 Jun 2026 12:46:10 -0400
+ (Exim 4.90_1) (envelope-from <deller@kernel.org>) id 1wXM4H-0000oT-Q2
+ for qemu-devel@nongnu.org; Wed, 10 Jun 2026 12:46:19 -0400
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
- by tor.source.kernel.org (Postfix) with ESMTP id D5555601DC;
- Wed, 10 Jun 2026 16:46:07 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0DCE51F00893;
- Wed, 10 Jun 2026 16:46:04 +0000 (UTC)
+ by sea.source.kernel.org (Postfix) with ESMTP id 731E8439C7;
+ Wed, 10 Jun 2026 16:46:16 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9FE951F00893;
+ Wed, 10 Jun 2026 16:46:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
- s=k20260515; t=1781109967;
- bh=J1AWjYZU/hD53VPk5IiZ2Jz6nUV+3nPhEWHBfOxyoTE=;
+ s=k20260515; t=1781109976;
+ bh=jX18zqXFA+LNSDjlxcNAVPph0zpvwfV3CNTKM9znobo=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References;
- b=AEI29t0OJatCDPFeE3GcPHEPhaybpikQ0xApcmL4hSIsg6K9VazZ37W4p9v7Ox+Tb
- f5p4kvRHGb1bOjIrJ6oyF3RX+eDc0uQJK9In3fVcjmgDyfLdUwQQ3pjF5OHTMXaJNz
- BpI6vuYlvqK9AintsSpKT74Zywum+GDAN+yrtwvGqtGqfJmo7wmMrSdsZm1U7LbQNN
- JP0vtoDkX4xCWZ8Dycbf3x0jT+aHt3m9IHw02lEZn0JSUTotSwnqxJ/g5b7vKFupOV
- rJxdDMRY02xMP8Yq15vi10J8sjBagLejmZU7P5tTFy3GyyvAhhD2RpmCSUf8EYz40t
- Jz5jB2xIGIYJw==
+ b=c9M+Ykr/WwX4IFRkyhaOEdOQ/xIiKAl4tdcpwnQ5MRgx8JyOOJwaxy6I/MMTSIZ4e
+ vPJeKwrxct9RGOfBuxFzQsRT+qS5l5hfT6mcDns2VTzD4mEmC+RA9Sy/cef8NhSKHI
+ jDZ8X/gGvV/gBM1dHxt8WSX4ZOyrumgyp37FjH8H3MMQkPuqx70MX6aoXzW5wzoKbX
+ 8POKZloryQn3eIoL3BVSNF/KynPw5mfcLsUAjHySqnavgGOqME/3fINVbFWHgAjVpL
+ PJey4mdPo5jMEIkU45QjJzQIA9mtv3WgBsaFtdX7OHPp4MUFQ164pWKzGBpbgAPCVf
+ rq2/dcNQBy5UA==
 From: Helge Deller <deller@kernel.org>
 To: Stefan Hajnoczi <stefanha@gmail.com>,
 	qemu-devel@nongnu.org
@@ -40,18 +40,18 @@ Cc: Yoshinori Sato <yoshinori.sato@nifty.com>,
  Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
  Laurent Vivier <laurent@vivier.eu>, Helge Deller <deller@gmx.de>,
  Max Filippov <jcmvbkbc@gmail.com>, Matt Turner <mattst88@gmail.com>,
- Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>
-Subject: [PULL v3 5/8] linux-user/sparc: restore L/I registers from RSA in
- sparc64_set_context
-Date: Wed, 10 Jun 2026 18:45:46 +0200
-Message-ID: <20260610164549.5699-6-deller@kernel.org>
+ Richard Henderson <richard.henderson@linaro.org>
+Subject: [PULL v3 8/8] target/sh4: decode_gusa: recognize add#imm with prior
+ mov Rm, Rn
+Date: Wed, 10 Jun 2026 18:45:49 +0200
+Message-ID: <20260610164549.5699-9-deller@kernel.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260610164549.5699-1-deller@kernel.org>
 References: <20260610164549.5699-1-deller@kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2600:3c04:e001:324:0:1991:8:25;
- envelope-from=deller@kernel.org; helo=tor.source.kernel.org
+Received-SPF: pass client-ip=2600:3c0a:e001:78e:0:1991:8:25;
+ envelope-from=deller@kernel.org; helo=sea.source.kernel.org
 X-Spam_score_int: -24
 X-Spam_score: -2.5
 X-Spam_bar: --
@@ -75,47 +75,42 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Matt Turner <mattst88@gmail.com>
 
-The kernel's do_rt_sigreturn loads L and I registers from the register
-save area (RSA) at the restored O6+STACK_BIAS.  QEMU lacks the kernel's
-window-fill path, so restore L0-L7 and I0-I5 explicitly from the RSA.
-I6 and I7 are already restored from mc_fp/mc_i7.
+The gUSA pattern matcher rejected `add #imm, Rn` whenever any prior
+`mov Rm, Rn` appeared (mv_src >= 0), forcing a fallback to
+cpu_exec_step_atomic for sequences like:
+
+  mov.l  @r2, r3      ; load
+  mov    r3, r7       ; save old value (mv_src == ld_dst)
+  add    #1, r7       ; increment copy
+  mov.l  r7, @r2      ; store
+
+When mv_src == ld_dst the move merely copies the loaded value to
+preserve it -- exactly the situation already accepted for the
+`add Rm, Rn` form. The immediate form can be handled identically with
+tcg_gen_atomic_fetch_add_i32 + tcg_gen_add_i32, so translate it inline
+instead of taking the slower single-step atomic fallback.
 
 Signed-off-by: Matt Turner <mattst88@gmail.com>
-Cc: Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>
+Cc: Yoshinori Sato <yoshinori.sato@nifty.com>
+Cc: Richard Henderson <richard.henderson@linaro.org>
 Signed-off-by: Helge Deller <deller@gmx.de>
 ---
- linux-user/sparc/signal.c | 18 ++++++++++++++++++
- 1 file changed, 18 insertions(+)
+ target/sh4/translate.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/linux-user/sparc/signal.c b/linux-user/sparc/signal.c
-index d339f89928..fda5508c48 100644
---- a/linux-user/sparc/signal.c
-+++ b/linux-user/sparc/signal.c
-@@ -656,6 +656,24 @@ void sparc64_set_context(CPUSPARCState *env)
-     __get_user(env->regwptr[WREG_FP], &(ucp->tuc_mcontext.mc_fp));
-     __get_user(env->regwptr[WREG_I7], &(ucp->tuc_mcontext.mc_i7));
+diff --git a/target/sh4/translate.c b/target/sh4/translate.c
+index 5adf650744..d38a6bd352 100644
+--- a/target/sh4/translate.c
++++ b/target/sh4/translate.c
+@@ -1974,7 +1974,7 @@ static void decode_gusa(DisasContext *ctx, CPUSH4State *env)
+         break;
  
-+    /*
-+     * The kernel's do_rt_sigreturn loads L and I registers from the
-+     * register save area (RSA) at the new O6+STACK_BIAS.  Unlike the
-+     * kernel, QEMU has no kernel-mode path that triggers a window fill,
-+     * so we must do it explicitly here.  I6 and I7 are already restored
-+     * from mc_fp and mc_i7 above; restore L0-L7 and I0-I5 from the RSA.
-+     */
-+    {
-+        abi_ulong sp_ptr = env->regwptr[WREG_O6];
-+        /* LP64 O6 is biased (8-byte-aligned - 2047); low bit set. ILP32 O6 is 4-byte-aligned. */
-+        if (sp_ptr & 3)
-+            sp_ptr += TARGET_STACK_BIAS;
-+        for (i = 0; i < 8; i++)
-+            get_user_ual(env->regwptr[WREG_L0 + i], sp_ptr + i * 8);
-+        for (i = 0; i < 6; i++)  /* I0-I5; I6=FP and I7 already restored */
-+            get_user_ual(env->regwptr[WREG_I0 + i], sp_ptr + 64 + i * 8);
-+    }
-+
-     fpup = &ucp->tuc_mcontext.mc_fpregs;
- 
-     __get_user(fenab, &(fpup->mcfpu_enab));
+     case 0x7000 ... 0x700f: /* add #imm,Rn */
+-        if (op_dst != B11_8 || mv_src >= 0) {
++        if (op_dst != B11_8 || (mv_src >= 0 && mv_src != ld_dst)) {
+             goto fail;
+         }
+         op_opc = INDEX_op_add;
 -- 
 2.54.0
 
