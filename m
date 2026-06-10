@@ -4,95 +4,79 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8E76BCD8CB9
-	for <qemu-devel@archiver.kernel.org>; Wed, 10 Jun 2026 12:24:30 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id CFF77CD8CB2
+	for <qemu-devel@archiver.kernel.org>; Wed, 10 Jun 2026 12:24:36 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wXHxx-00074K-99; Wed, 10 Jun 2026 08:23:29 -0400
+	id 1wXHyW-0008FS-4N; Wed, 10 Jun 2026 08:24:04 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <alexander.hansen@9elements.com>)
- id 1wXHxj-0006sg-Ls
- for qemu-devel@nongnu.org; Wed, 10 Jun 2026 08:23:15 -0400
-Received: from mail-wr1-x431.google.com ([2a00:1450:4864:20::431])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <alexander.hansen@9elements.com>)
- id 1wXHxh-0005ri-Ky
- for qemu-devel@nongnu.org; Wed, 10 Jun 2026 08:23:15 -0400
-Received: by mail-wr1-x431.google.com with SMTP id
- ffacd0b85a97d-45efb698ef2so3281234f8f.3
- for <qemu-devel@nongnu.org>; Wed, 10 Jun 2026 05:23:12 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=9elements.com; s=google; t=1781094191; x=1781698991; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=ZhogzhFO7uDRTLBEbud3mZouqlv1sTkvv/Oi6WwVzrM=;
- b=WWyzemEy2tZOXtUQmJPHnO32mgshJLGz7UPmztZTfL8njFQlZjTUOlF4Js33AWuOoH
- vIj75IBRTR0HwJelw8qcDOShV/JmC0wOHRKGnM81ex0RpM3DYWrZZXcyMxC6ult8nt3M
- 8LZvFh6PEE0heXhkqkeR5GL33KaWbKDkYpm8wWjoyv5nGY0AsuDXxm1PhU/MuYbpa4Ws
- l/b9btqWVCDLYpIFEU7rue/Bh3whKDqnwn4+IZr/yz/8ouI3U5jDhUwCuFl6Pc/hnpoX
- +hxkb+VbAUJaKMcLEf9zIyF1SwJxItrH7grwc68Fnyy3afW5X2U8cMJ00RrRNFqkCk00
- RWXg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1781094191; x=1781698991;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to;
- bh=ZhogzhFO7uDRTLBEbud3mZouqlv1sTkvv/Oi6WwVzrM=;
- b=YHxnS9aYNjE9061nIhW1m1AOUXqg5BLwHHnvzMjwjYv8wQwHm/XsRJebpNpt14yINH
- 0fwGFJivkLqjnjCul6Eppf8x1A055+pPHIfmRdubU/jW8T3VmrAI8j+gV1xDG6z8Nqjv
- ggt1mEgmViHl+AxcLp2nmqOiNLL0qWcFFuQ1PDUGONoowFzCMw6ryPJQO4eOGEudzWpt
- aPgnzYK4R41dSpQ16cgiLU3L34s7R4SA7MYNSxVX7sP7sSmAckFVzLd5D8trncNKGzCj
- hOAy2JPh5iKtBzElsm65ue/YIMooLkvok5d9xVQOoERvjFWocKjS5Ljedm/FIjd7Phj1
- MgSg==
-X-Gm-Message-State: AOJu0Yy5vswprTJTKENx9EbHvTJmyhvXfbei3HjWWf7x0Si57eZlhXIQ
- pyZqskjYiNtzdDnt2ZKvWgIMS1xsBaMkUO4IBRpduSlWWV4Et+rAol50aoxNlTvxMTEbPdTUrIE
- fwluKW+M=
-X-Gm-Gg: Acq92OGla1krdjctodwJ1TiBkQ5ruu5zrrWcaFRBmhViOXQcqh26lswmP4p5v/pi9pp
- egABedvIn1xxz/UdSWVCchTTJ9XbRXckZ3wrp6SCwFHZjtcADnAc0isSu+lTxp8dJTWLUj/9Vgd
- 36RSuA3enPevxgr6TKCgGnOT7MsNUAuCraXJAuNCOrz8pE3kcy7TT+SMQ75Cns8JdDvCwscKRX/
- +io2mmlyKjD2KBlVFY2iU5lxlALrso+4etPkTTmSej0fJyi0LWLHHaERROX50b8RYJJavnnP7AH
- ZYCgowlseVitBJD/RKknq2mKCpOuHowejlFpuGcr17VxGZQMvY0awzNia0GGlIkfErgayixcbcU
- HuhCsAU7ksOWK+Obf886k+Ejcc8vG2TndFeYJc6zl1f0NdpHwam2X1quEJFpuzucQnf0zUi+qLG
- LL84yAB4obfVyp+1mjXMP3i/U0wUqYlO4ayWj7mmuGEAMlG9noH+3lRgg=
-X-Received: by 2002:a5d:4574:0:b0:43d:733f:aee6 with SMTP id
- ffacd0b85a97d-460302ec8dbmr29296978f8f.10.1781094191044; 
- Wed, 10 Jun 2026 05:23:11 -0700 (PDT)
-Received: from alexanderarchlinux ([188.111.3.154])
- by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-4601f0a43e9sm70995963f8f.0.2026.06.10.05.23.10
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 10 Jun 2026 05:23:10 -0700 (PDT)
-From: Alexander Hansen <alexander.hansen@9elements.com>
-To: qemu-devel@nongnu.org
-Cc: Alexander Hansen <alexander.hansen@9elements.com>,
- Titus Rwantare <titusr@google.com>,
- =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@kaod.org>,
- Peter Maydell <peter.maydell@linaro.org>,
- Steven Lee <steven_lee@aspeedtech.com>, Troy Lee <leetroy@gmail.com>,
- Jamin Lin <jamin_lin@aspeedtech.com>, Kane Chen <kane_chen@aspeedtech.com>,
- Andrew Jeffery <andrew@codeconstruct.com.au>,
- Joel Stanley <joel@jms.id.au>, qemu-arm@nongnu.org
-Subject: [PATCH v6 2/5] ast2600: yosemite4 functional test
-Date: Wed, 10 Jun 2026 14:20:59 +0200
-Message-ID: <20260610122252.349321-3-alexander.hansen@9elements.com>
-X-Mailer: git-send-email 2.54.0
-In-Reply-To: <20260610122252.349321-1-alexander.hansen@9elements.com>
-References: <20260610122252.349321-1-alexander.hansen@9elements.com>
+ (Exim 4.90_1) (envelope-from <phrdina@redhat.com>)
+ id 1wXHyU-00089n-RT
+ for qemu-devel@nongnu.org; Wed, 10 Jun 2026 08:24:02 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <phrdina@redhat.com>)
+ id 1wXHyS-0006zl-Si
+ for qemu-devel@nongnu.org; Wed, 10 Jun 2026 08:24:02 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1781094240;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=JDvJXTncnIKlXCZX6pqrNuhjcrFGzDHai7cw2yadke8=;
+ b=islnVF3rUN7VtWi/3jjuSHsfu1l3GZF+yQdEiQuIdHUuSE5NBa+QjFHogn7+a/Ksbyrruw
+ T/9R73bB0UhgXqDdEfChmAQggl9RfR3kwbE+PDwenyzdvZcga3DZ6/10WUTkTo2TjROf/x
+ lYgoJd3Isluq8LDteFPCz/N96Ob1iAI=
+Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-93-e1iKrnymMr20ERg3XoaZ8A-1; Wed,
+ 10 Jun 2026 08:23:58 -0400
+X-MC-Unique: e1iKrnymMr20ERg3XoaZ8A-1
+X-Mimecast-MFC-AGG-ID: e1iKrnymMr20ERg3XoaZ8A_1781094237
+Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 9F95218DB42C; Wed, 10 Jun 2026 12:23:57 +0000 (UTC)
+Received: from phrdina-thinkpadt14gen4.rmtcz.csb
+ (headnet01.pony-001.prod.rdu2.dc.redhat.com [10.11.142.86])
+ by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 72FD91954B09; Wed, 10 Jun 2026 12:23:54 +0000 (UTC)
+Date: Wed, 10 Jun 2026 14:23:51 +0200
+From: Pavel Hrdina <phrdina@redhat.com>
+To: Gavin Shan <gshan@redhat.com>
+Cc: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>, 
+ Peter Xu <peterx@redhat.com>, qemu-devel@nongnu.org, qemu-arm@nongnu.org,
+ mst@redhat.com, jugraham@redhat.com, shan.gavin@gmail.com
+Subject: Re: [PATCH RFCv1] virtio: Inherit max bounce buffer size from bus
+ parent if possible
+Message-ID: <ailU5beAUVJ1Fdpt@phrdina-thinkpadt14gen4.rmtcz.csb>
+References: <20260608001821.850921-1-gshan@redhat.com>
+ <aiaDgG26a6TUrKuM@redhat.com>
+ <07ca74b4-52a8-4187-a57c-7c3277e574d3@redhat.com>
+ <aiky9d9IwACIyKEC@phrdina-thinkpadt14gen4.rmtcz.csb>
+ <674d5e21-88fa-4a10-a83c-eb6f7ce7032f@redhat.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::431;
- envelope-from=alexander.hansen@9elements.com; helo=mail-wr1-x431.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+In-Reply-To: <674d5e21-88fa-4a10-a83c-eb6f7ce7032f@redhat.com>
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.12
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=phrdina@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -24
+X-Spam_score: -2.5
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.445,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -108,103 +92,106 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Add a functional test for the Yosemite V4 (fby4-bmc) machine
-that validates:
-- U-Boot initialization and kernel boot sequence
+On Wed, Jun 10, 2026 at 08:55:10PM +1000, Gavin Shan wrote:
+> Hi Pavel,
+> 
+> On 6/10/26 7:54 PM, Pavel Hrdina wrote:
+> > On Mon, Jun 08, 2026 at 09:11:50PM +1000, Gavin Shan wrote:
+> > > Hi Daniel,
+> > > 
+> > > On 6/8/26 6:55 PM, Daniel P. Berrangé wrote:
+> > > > On Mon, Jun 08, 2026 at 10:18:21AM +1000, Gavin Shan wrote:
+> > > > > On the guest where a NVidia's GH100 card is passed from the host, the
+> > > > > guest system hang can be observed on attempt to compile 'cuda-samples',
+> > > > > as reported by Julia.
+> > > > 
+> > > > snip
+> > > > 
+> > > 
+> > > Thanks for looking into this.
+> > > 
+> > > > > By default, the max bounce buffer size is only 4096 bytes, even less
+> > > > > than one page when the guest page is 64KB. This tries to fix the issue
+> > > > > by inheriting the customized max bounce buffer size of the virtio bus's
+> > > > > parent through property 'x-max-bounce-buffer-size' when the customized
+> > > > > size is a larger one. With this applied, no guest system hang is seen
+> > > > > with '-device virtio-blk-pci,...,x-max-bounce-buffer-size=268435456'.
+> > > > 
+> > > > "x-max-bounce-buffer-size"  is an experimental / unsupported property.
+> > > > 
+> > > > We really shouldn't be expecting users to have to set this in a production
+> > > > deployment in order to stop a guest from hanging.  Even if we dropped the
+> > > > experimental marker from this property, users would still need to know to
+> > > > provide this magic setting, so it would still be broken out of the box.
+> > > > 
+> > > > How can we  get a solution that "just works" out of the box, which is
+> > > > fully supported, not relying on experimental properties ?
+> > > > 
+> > > 
+> > > How do we know that "x-max-bounce-buffer-size" is an experimental or unsupported
+> > > property? I guess the properties whose names start with "x-" are all treated as
+> > > experimental and unsupported?
+> > > 
+> > > For this case, the bounce buffer is inevitable as the memory region can't be
+> > > directly accessed. The memory region is initialized by memory_region_init_ram_device_ptr()
+> > > in hw/vfio/region.c::vfio_region_mmap(). So the question is how the allowed
+> > > bounce buffer size can be specified by users, and it's why the existing property
+> > > "x-max-bounce-buffer-size" is reused.
+> > > 
+> > > I even thought of a new property for MachineState (e.g. "limited-bounce-buffer"),
+> > > which is set to on by default, following the existing behavior. When it's set to
+> > > off by users, the max (allowed) buffer size won't be checked at all. However, I'm
+> > > not sure if this makes sense at all.
+> > 
+> > Hi Gavin,
+> > 
+> > You did not answer the question that Daniel was asking, how will user
+> > know that max-bounce-buffer-size should be used if it's necessary to fix
+> > guest system hangs and how will user know what magic value should be set?
+> > 
+> 
+> Sorry that I missed to answer Daniel's questions. For this specific case,
+> user need to enlarge the bounce buffer size when seeing the following error
+> message. We can add an explicit one in address_space_map() if the existing
+> error message isn't obvious.
+> 
+>   qemu-system-aarch64: virtio: bogus descriptor or out of resources
+> 
+>   void *address_space_map(AddressSpace *as,
+>                         hwaddr addr,
+>                         hwaddr *plen,
+>                         bool is_write,
+>                         MemTxAttrs attrs)
+>   {
+>       if (!memory_access_is_direct(mr, is_write, attrs)) {
+>           if (l == 0) {
+>               error_report("Running out of bounce buffer size , enlarge it with max-bounce-buffer-size");
+>               *plen = 0;
+>               return NULL;
+>           }
+>       }
 
-The test uses an OpenBMC image built for the yosemite4 board and
-validates console output through the boot process.
+This may work when using qemu directly but users will not see this error
+when using libvirt or management tools like kubevirt.
 
-Cc: Titus Rwantare <titusr@google.com>
-Cc: "Cédric Le Goater" <clg@kaod.org> (maintainer:ASPEED BMCs)
-Cc: Peter Maydell <peter.maydell@linaro.org> (maintainer:ASPEED BMCs)
-Cc: Steven Lee <steven_lee@aspeedtech.com> (reviewer:ASPEED BMCs)
-Cc: Troy Lee <leetroy@gmail.com> (reviewer:ASPEED BMCs)
-Cc: Jamin Lin <jamin_lin@aspeedtech.com> (reviewer:ASPEED BMCs)
-Cc: Kane Chen <kane_chen@aspeedtech.com> (reviewer:ASPEED BMCs)
-Cc: Andrew Jeffery <andrew@codeconstruct.com.au> (reviewer:ASPEED BMCs)
-Cc: Joel Stanley <joel@jms.id.au> (reviewer:ASPEED BMCs)
-Cc: qemu-arm@nongnu.org (open list:ASPEED BMCs)
-Cc: qemu-devel@nongnu.org (open list:All patches CC here)
-Signed-off-by: Alexander Hansen <alexander.hansen@9elements.com>
----
- tests/functional/arm/meson.build         |  2 ++
- tests/functional/arm/test_aspeed_fby4.py | 45 ++++++++++++++++++++++++
- 2 files changed, 47 insertions(+)
- create mode 100755 tests/functional/arm/test_aspeed_fby4.py
+> As to the value user should take for max-bounce-buffer-size, it is really case by case
+> and decided by user. User needs to try 4096, 8192, ..., 0xFFFFFFFF to figure out the
+> smallest value works for them. The worst case is to set 0xFFFFFFFF.
 
-diff --git a/tests/functional/arm/meson.build b/tests/functional/arm/meson.build
-index 61b00932db..19331b3f16 100644
---- a/tests/functional/arm/meson.build
-+++ b/tests/functional/arm/meson.build
-@@ -15,6 +15,7 @@ test_arm_timeouts = {
-   'aspeed_anacapa' : 480,
-   'aspeed_bletchley' : 480,
-   'aspeed_catalina' : 480,
-+  'aspeed_fby4': 480,
-   'aspeed_gb200nvl_bmc' : 480,
-   'aspeed_rainier' : 480,
-   'bpim2u' : 500,
-@@ -50,6 +51,7 @@ tests_arm_system_thorough = [
-   'aspeed_anacapa',
-   'aspeed_bletchley',
-   'aspeed_catalina',
-+  'aspeed_fby4',
-   'aspeed_gb200nvl_bmc',
-   'aspeed_rainier',
-   'bpim2u',
-diff --git a/tests/functional/arm/test_aspeed_fby4.py b/tests/functional/arm/test_aspeed_fby4.py
-new file mode 100755
-index 0000000000..a521834f79
---- /dev/null
-+++ b/tests/functional/arm/test_aspeed_fby4.py
-@@ -0,0 +1,45 @@
-+#!/usr/bin/env python3
-+#
-+# Functional test that boots the ASPEED machines
-+#
-+# SPDX-License-Identifier: GPL-2.0-or-later
-+
-+from qemu_test import Asset
-+from qemu_test import wait_for_console_pattern
-+from aspeed import AspeedTest
-+
-+
-+class YosemiteV4Machine(AspeedTest):
-+
-+    ASSET_YOSEMITE_V4_FLASH = Asset(
-+        'https://github.com/legoater/qemu-aspeed-boot/raw/refs/heads/master/images/yosemite4-bmc/openbmc-20260505132843/obmc-phosphor-image-yosemite4-20260505132843.static.mtd.xz',
-+        'dff6946363b41f952b15cfc3156482b89fcfc1b0ecfc3ec8b3ed496a5f001ef9')
-+
-+    def do_test_arm_aspeed_openbmc_no_network(self, machine, image, uboot,
-+                                   cpu_id, soc):
-+
-+        self.set_machine(machine)
-+        self.vm.set_console()
-+        self.vm.add_args('-drive', f'file={image},if=mtd,format=raw',
-+                         '-snapshot')
-+        self.vm.launch()
-+
-+        self.wait_for_console_pattern(f'U-Boot {uboot}')
-+        self.wait_for_console_pattern('## Loading kernel from FIT Image')
-+        self.wait_for_console_pattern('Starting kernel ...')
-+        self.wait_for_console_pattern(f'Booting Linux on physical CPU {cpu_id}')
-+        self.wait_for_console_pattern(f'ASPEED {soc}')
-+        self.wait_for_console_pattern('/init as init process')
-+        # yosemite v4 does not emit the hostname log which is
-+        # different from the other machines.
-+        self.wait_for_console_pattern('yosemite4 login:')
-+
-+    def test_arm_ast2600_yosemitev4_openbmc(self):
-+        image_path = self.uncompress(self.ASSET_YOSEMITE_V4_FLASH)
-+
-+        self.do_test_arm_aspeed_openbmc_no_network('fby4-bmc', image=image_path,
-+                                        uboot='2019.04', cpu_id='0xf00',
-+                                        soc='AST2600 rev A3')
-+
-+if __name__ == '__main__':
-+    AspeedTest.main()
--- 
-2.54.0
+Doesn't sound like pleasant user experience playing guessing game to
+figure out how to make a VM work and again will most likely not work for
+kubevirt where users are usually not exposed to these low level properties.
+
+I'm not familiar with the internals but isn't there a better way how to
+solve it without requiring users to figure out by guessing what value works?
+
+Pavel
+
+> > Pavel
+> > 
+> 
+> Thanks,
+> Gavin
+> 
 
 
