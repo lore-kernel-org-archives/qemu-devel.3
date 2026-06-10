@@ -4,77 +4,81 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5A470CD98C6
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6CBE8CD98C7
 	for <qemu-devel@archiver.kernel.org>; Thu, 11 Jun 2026 01:15:12 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wXU07-0006zm-Ce; Wed, 10 Jun 2026 21:14:31 -0400
+	id 1wXU0D-000740-R6; Wed, 10 Jun 2026 21:14:37 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <infra.ai.cloud@bitdeer.com>)
- id 1wXU05-0006ze-FZ
- for qemu-devel@nongnu.org; Wed, 10 Jun 2026 21:14:29 -0400
-Received: from mail-pf1-x436.google.com ([2607:f8b0:4864:20::436])
+ id 1wXU0C-00071w-FD
+ for qemu-devel@nongnu.org; Wed, 10 Jun 2026 21:14:36 -0400
+Received: from mail-pj1-x102a.google.com ([2607:f8b0:4864:20::102a])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <infra.ai.cloud@bitdeer.com>)
- id 1wXU04-0005M8-04
- for qemu-devel@nongnu.org; Wed, 10 Jun 2026 21:14:29 -0400
-Received: by mail-pf1-x436.google.com with SMTP id
- d2e1a72fcca58-8423efad617so4245538b3a.0
- for <qemu-devel@nongnu.org>; Wed, 10 Jun 2026 18:14:25 -0700 (PDT)
+ id 1wXU0A-0005Ng-PD
+ for qemu-devel@nongnu.org; Wed, 10 Jun 2026 21:14:36 -0400
+Received: by mail-pj1-x102a.google.com with SMTP id
+ 98e67ed59e1d1-36d98c9b596so4681152a91.3
+ for <qemu-devel@nongnu.org>; Wed, 10 Jun 2026 18:14:34 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=bitdeer.com; s=google; t=1781140464; x=1781745264; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:from:to:cc:subject:date:message-id:reply-to;
- bh=vUWHKuHaOiEQMQWoEi+YsZJzu+zFq0unpWL7PaWlfcg=;
- b=m8FV2wPz9Ob3Q1vA1clH+vNf53EQLPY56X5flhZ8Dn+IDvAAWyR+WvDv24pUjRcCvr
- xmglfYmofqgRwPXdmEb/Wu8i3qa0VFNaGYUhbq4tO9DxdM0lEp/k0LljjWGOV2uhphnm
- UbTCtxpcasR1Gjey22QoY3oL/loUqs/69+hcVOg8Vc7Ba40ufCBl4f/eV9QvTV+02I31
- JFRW7Mm1lJYXLgUvr2G35rLb4fDqJgfSoAuHC3g3Gahnu8wq3fgrxTYnvFmtCDckJiwP
- qv+J/Yt2D7SM40oGqgcN+BHWBQyhbcmcDxSgjbBuPWpgPENpiCQPaHQPLLBQ6aYNybw1
- x9Ww==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1781140464; x=1781745264;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ d=bitdeer.com; s=google; t=1781140473; x=1781745273; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=vUWHKuHaOiEQMQWoEi+YsZJzu+zFq0unpWL7PaWlfcg=;
- b=BRO4HpM+Ljsh9IlxwvAjNjBdZTKGtfKozPVcLNR9u/yBmZgSjkvyK7ODisVhHOfSrX
- I2R1OxCf1RLL5gMsbwJjppuLkC128GVNkZyPCG9CMxBn13SnrYd2dwSNHODIXQaPqSnO
- RY1JiQk6szJcc0zAFWvbhmxMoXsA/tEi8rtxd9vsXFn6eKSo0Zd2Y39RyznzYCFc39ju
- HbKi3+WScSIFzSK4eGMTnwLJVBw2X2ylTXsLNzbvAK0uQte/GOWUmM3p/W9o/AjHSWyY
- e9de1ZOxw+4FYvDA0lgK3N86R2I5agMlBVKqllk6Hw+cmgUa1O1zto1wOyHGtQEiCRb0
- vZVw==
-X-Gm-Message-State: AOJu0YwlUgH4Xj0djvtnU3JiGOscWD+jQwV6lOGxUtygK1SIa1wLNxww
- 71aduySuZITzzGVxjGaB1h1JcYREpLnERy1gTXpJH8iz1SxCegPfbL8KLW7oA7jX6/GoFOqmhFq
- T9bAqf2I=
-X-Gm-Gg: Acq92OEB7xRDDgxalA9/jIzyZussTEnW5wiYNRTlZBaZjI4yy4kc5B8Rgf2jq9o6I/N
- UUN7jWr5DamZfuHC2D/CfSqVfq7H6KyEl3OdOgRDnv731h1CSevTkcX+xdIRJJtrI57RqDDpNEt
- G+2cFLqca8c+Yei5VLGnkbyHqixpmjfa01DNbEyAJlp30otn8eQuwMtqphbRTOh520MdDVZxLJz
- De0sScc21mqEkz5/2e51dGACCXEKIhPEP7YlQVKObTq7HZ7f5d9pHNL6GjXAdM44GcS/l+4Anfu
- u4YHj/NLlwD+/iWMn8sDNThwJsqi6YEJSjvi6irv8jqqBOqMsK1AbM53lBU4i1BYVtE6LVmK3Lv
- bPWo2CTKVzleN0TZfVZKE38ne6Gu3U1uqIoKPSu0FzGr+JXFdHknfM+f3YlNgdezFCPoY56JmGC
- RFT6yAt4YqGWwdODASzk5DBO985AJgFaXunCp+Gm6YVrS9VM2PzotiTVTDnrxtA3/XuEe47rUZ
-X-Received: by 2002:a05:6a00:1818:b0:835:3949:3c22 with SMTP id
- d2e1a72fcca58-84336bc644bmr425918b3a.27.1781140464122; 
- Wed, 10 Jun 2026 18:14:24 -0700 (PDT)
+ bh=Z0E+INEFYhKvusoqL8t6A2F3paWL5r7PM2RouYJXRrU=;
+ b=Sb7jCMWIcCupq9nOdnmS9ykSJyeh9T6Pm1iYXZNlBoV/qlKPNV0RJPqGM8rbUnBBoa
+ moT5J4j/gj/msgm7wslx2yub/wRT1fToRFXJXJKYxhnQP4K192S8y+/oUYtm3wAk3ajQ
+ rzScAisqGrAZnlEekLdbwxJtAidWMWo+AYfsbPz2Wox9Lmd8+FLwILlDfYoWUYkaAzfF
+ SqRdTIVu+d2th+Eimqc3p0XlmiTsZoQVQQJl62UcMvO0oyRXoYau5hu3G8a2UFSfyHFN
+ weHpsqQ8zhVmuazwe5gj5ONgsVRf+//octJtv/KNt2MX38IAF6XFueynOffJPLHgT75x
+ Tcjw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1781140473; x=1781745273;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=Z0E+INEFYhKvusoqL8t6A2F3paWL5r7PM2RouYJXRrU=;
+ b=V3YVpO/5rdJ4PDNFDluYharzLSbOvypYzU7fmrmh1VpyD54aTVUAz84jnCnETM+wOm
+ 23UcvOOd+ujF5k4+o0lp/qcd8fQK4vZdV5ojYLXdGT+E7pd7PLPA9vKFbYsED7BMY0z5
+ giURrXgh1ui9Ymj7ade4xgZ0E9vjxAkwTqsszEuuKNvvthUajVi+R6V3/43ze+smOVkD
+ 608WkK1yrRmaPE7036CpqyhM7/xIUsqGEWoYGNzlT/ya4aJp68oDpwPtoRO28ws3JYrG
+ M2CZrLreFQ/VOBfXGEJutZ9Dt/FS9DX048OpV49Ealq4rooDmUCJ178F1ypY8ILt46zZ
+ aUkA==
+X-Gm-Message-State: AOJu0Yxz1lIUV/0W1+VOC8jVgdjX9AqUIkLc9aaPBly7OnpsSBTjJ2uJ
+ V8CVd7nIvUKRTcbSchVl8pH0XLAIkQM9+aJcA8cW0PcWQfw88nlhwPVpkss9dZckMTMo7sw8XTH
+ 13AqATDVecQ==
+X-Gm-Gg: Acq92OGLHV2BGa2M4NcEssc3jbMRcZTqrsxFmng7NSdNg5EDi4aTerZ7XnsAfjtY0S+
+ KcX2PSIhnOpiElzpI30JXC+rv61N3LPVB68iPL4FJelwRWKoVFbCY7yBUi4tyzWYbu2dUcubdzO
+ /MxuetLEE1TcGYXCFcS0rc9wcZ5IxwwMdEDYpLphSoe96rii1Y8MMjztEK7FMoBhicasMwc43VE
+ 4NqlMSf4Y2zk+8y83lb3Zb5/u4tuscKZMFf4JfTHttiVEzDp4R9Es0aA7noDhmpMJJt026vrwdP
+ YHZTX4spR3TGhgxYEWzAKX+yWPyvCkkmOGBQYHxnSpwcJK7kEPmELooMLHGULpBs9qD0PqGRlBd
+ xBgYzR1i/lP3mb6pb7X0/Q1bU99epJKOzlIxhgOioX4qp1acSdzTM+8OEqs2b6erNkTbLTr/44J
+ zHOrqgU5LazFLOzxXa476RDV7a4TgpFNMv7gcwpzTHElJHQmKaHi7ufJFB9ynVHvdKjPjRBxMT
+X-Received: by 2002:a17:90b:4ac9:b0:368:6998:b49d with SMTP id
+ 98e67ed59e1d1-3779e7f0788mr678367a91.10.1781140473126; 
+ Wed, 10 Jun 2026 18:14:33 -0700 (PDT)
 Received: from localhost.localdomain ([103.114.192.234])
  by smtp.gmail.com with ESMTPSA id
- d2e1a72fcca58-84337b916cesm98217b3a.8.2026.06.10.18.14.22
+ d2e1a72fcca58-84337b916cesm98217b3a.8.2026.06.10.18.14.31
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 10 Jun 2026 18:14:23 -0700 (PDT)
+ Wed, 10 Jun 2026 18:14:32 -0700 (PDT)
 From: infra.ai.cloud@bitdeer.com
 To: qemu-devel@nongnu.org
-Cc: Hyman Huang <yong.huang@bitdeer.com>
-Subject: [PULL 0/1] dirtylimit improvement
-Date: Wed, 10 Jun 2026 21:01:51 +0800
-Message-ID: <cover.1781095539.git.yong.huang@bitdeer.com>
+Cc: Bin Guo <guobin@linux.alibaba.com>,
+ Hyman Huang <infra.ai.cloud@bitdeer.com>
+Subject: [PULL 1/1] accel/kvm: event-driven wakeup for dirty ring reaper thread
+Date: Wed, 10 Jun 2026 21:01:52 +0800
+Message-ID: <42994dfcb25f6de9bb72d012265a6f996cfb69a6.1781095539.git.yong.huang@bitdeer.com>
 X-Mailer: git-send-email 2.43.0
+In-Reply-To: <cover.1781095539.git.yong.huang@bitdeer.com>
+References: <cover.1781095539.git.yong.huang@bitdeer.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::436;
- envelope-from=infra.ai.cloud@bitdeer.com; helo=mail-pf1-x436.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::102a;
+ envelope-from=infra.ai.cloud@bitdeer.com; helo=mail-pj1-x102a.google.com
 X-Spam_score_int: -10
 X-Spam_score: -1.1
 X-Spam_bar: -
@@ -97,27 +101,31 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Hyman Huang <yong.huang@bitdeer.com>
+From: Bin Guo <guobin@linux.alibaba.com>
 
-The following changes since commit de5d8bfd6105d3dd3ae668df9762df244a6d1506:
+The reaper polls with sleep(1) (TODO in the code) and only notices
+dirty-limit teardown at the next 1s tick.
 
-  Merge tag 'pull-loongarch-20260609' of https://github.com/gaosong715/qemu into staging (2026-06-09 14:00:28 -0400)
+Replace the sleep with qemu_poll_ns() on an EventNotifier, kicked
+from dirtylimit_state_finalize() after dirtylimit_state has been
+cleared.  The kick must follow the NULL assignment: kicking earlier
+wakes the reaper while dirtylimit_in_service() still returns true,
+so it just loops back to wait.  A 1s fallback timeout remains as a
+liveness backstop.
 
-are available in the Git repository at:
+20 set-/cancel-vcpu-dirty-limit cycles via QMP, |reaper-wake -
+cancel-ack| measured with strace on the reaper TID:
 
-  https://github.com/newfriday/qemu.git tags/dirtylimit-dirtyrate-pull-request-20260611
+    before: median 255 ms, max 502 ms
+    after:  median 0.6 ms, max  27 ms
 
-for you to fetch changes up to 3b224b1c7df1ddefd6bca34f201264d72846c397:
+kvm_dirty_ring_reaper_init() returns int again (was made void in
+commit 43a5e377f4) to propagate event_notifier_init() failure.
 
-  accel/kvm: event-driven wakeup for dirty ring reaper thread (2026-06-11 08:22:50 +0800)
-
-----------------------------------------------------------------
-dirtylimit: refactor dirty ring reaper thread with event-driven wakeup
-
-----------------------------------------------------------------
-Bin Guo (1):
-      accel/kvm: event-driven wakeup for dirty ring reaper thread
-
+Signed-off-by: Bin Guo <guobin@linux.alibaba.com>
+Reviewed-by: Hyman Huang <infra.ai.cloud@bitdeer.com>
+Message-Id: <20260604070029.34982-1-guobin@linux.alibaba.com>
+---
  accel/kvm/kvm-all.c      | 42 ++++++++++++++++++++++++++++++++++------
  accel/stubs/kvm-stub.c   |  4 ++++
  include/system/kvm.h     |  7 +++++++
@@ -125,6 +133,155 @@ Bin Guo (1):
  system/dirtylimit.c      |  2 ++
  5 files changed, 52 insertions(+), 6 deletions(-)
 
+diff --git a/accel/kvm/kvm-all.c b/accel/kvm/kvm-all.c
+index 96f90ebb24..be005832bc 100644
+--- a/accel/kvm/kvm-all.c
++++ b/accel/kvm/kvm-all.c
+@@ -1754,6 +1754,8 @@ static void kvm_set_phys_mem(KVMMemoryListener *kml,
+     } while (size);
+ }
+ 
++#define KVM_DIRTY_RING_REAPER_FALLBACK_NS  (1 * NANOSECONDS_PER_SECOND)
++
+ static void *kvm_dirty_ring_reaper_thread(void *data)
+ {
+     KVMState *s = data;
+@@ -1764,12 +1766,18 @@ static void *kvm_dirty_ring_reaper_thread(void *data)
+     trace_kvm_dirty_ring_reaper("init");
+ 
+     while (true) {
++        GPollFD pfd = {
++            .fd = event_notifier_get_fd(&r->reaper_notifier),
++            .events = G_IO_IN,
++        };
++
+         r->reaper_state = KVM_DIRTY_RING_REAPER_WAIT;
+         trace_kvm_dirty_ring_reaper("wait");
+-        /*
+-         * TODO: provide a smarter timeout rather than a constant?
+-         */
+-        sleep(1);
++
++        qemu_poll_ns(&pfd, 1, KVM_DIRTY_RING_REAPER_FALLBACK_NS);
++
++        /* Drain unconditionally so a stale event can't spin the next loop. */
++        event_notifier_test_and_clear(&r->reaper_notifier);
+ 
+         /* keep sleeping so that dirtylimit not be interfered by reaper */
+         if (dirtylimit_in_service()) {
+@@ -1789,13 +1797,32 @@ static void *kvm_dirty_ring_reaper_thread(void *data)
+     g_assert_not_reached();
+ }
+ 
+-static void kvm_dirty_ring_reaper_init(KVMState *s)
++static int kvm_dirty_ring_reaper_init(KVMState *s)
+ {
+     struct KVMDirtyRingReaper *r = &s->reaper;
++    int ret;
++
++    ret = event_notifier_init(&r->reaper_notifier, 0);
++    if (ret < 0) {
++        error_report("Failed to initialize dirty ring reaper notifier: %s",
++                     strerror(-ret));
++        return ret;
++    }
+ 
+     qemu_thread_create(&r->reaper_thr, "kvm-reaper",
+                        kvm_dirty_ring_reaper_thread,
+                        s, QEMU_THREAD_JOINABLE);
++    return 0;
++}
++
++void kvm_dirty_ring_reaper_kick(void)
++{
++    KVMState *s = kvm_state;
++
++    if (!s || !s->kvm_dirty_ring_size) {
++        return;
++    }
++    event_notifier_set(&s->reaper.reaper_notifier);
+ }
+ 
+ static int kvm_dirty_ring_init(KVMState *s)
+@@ -3097,7 +3124,10 @@ static int kvm_init(AccelState *as, MachineState *ms)
+     }
+ 
+     if (s->kvm_dirty_ring_size) {
+-        kvm_dirty_ring_reaper_init(s);
++        ret = kvm_dirty_ring_reaper_init(s);
++        if (ret < 0) {
++            goto err;
++        }
+     }
+ 
+     if (kvm_check_extension(kvm_state, KVM_CAP_BINARY_STATS_FD)) {
+diff --git a/accel/stubs/kvm-stub.c b/accel/stubs/kvm-stub.c
+index c4617caac6..b878598552 100644
+--- a/accel/stubs/kvm-stub.c
++++ b/accel/stubs/kvm-stub.c
+@@ -134,6 +134,10 @@ uint32_t kvm_dirty_ring_size(void)
+     return 0;
+ }
+ 
++void kvm_dirty_ring_reaper_kick(void)
++{
++}
++
+ bool kvm_hwpoisoned_mem(void)
+ {
+     return false;
+diff --git a/include/system/kvm.h b/include/system/kvm.h
+index 5fa33eddda..e127a5eb37 100644
+--- a/include/system/kvm.h
++++ b/include/system/kvm.h
+@@ -553,6 +553,13 @@ bool kvm_dirty_ring_enabled(void);
+ 
+ uint32_t kvm_dirty_ring_size(void);
+ 
++/**
++ * kvm_dirty_ring_reaper_kick - wake the background dirty ring reaper.
++ *
++ * Safe from any thread; no-op when the dirty ring is not in use.
++ */
++void kvm_dirty_ring_reaper_kick(void);
++
+ void kvm_mark_guest_state_protected(void);
+ 
+ /**
+diff --git a/include/system/kvm_int.h b/include/system/kvm_int.h
+index 0876aac938..c14ebc927f 100644
+--- a/include/system/kvm_int.h
++++ b/include/system/kvm_int.h
+@@ -12,6 +12,7 @@
+ #include "system/memory.h"
+ #include "qapi/qapi-types-common.h"
+ #include "qemu/accel.h"
++#include "qemu/event_notifier.h"
+ #include "qemu/queue.h"
+ #include "system/kvm.h"
+ #include "accel/accel-ops.h"
+@@ -100,6 +101,8 @@ struct KVMDirtyRingReaper {
+     QemuThread reaper_thr;
+     volatile uint64_t reaper_iteration; /* iteration number of reaper thr */
+     volatile enum KVMDirtyRingReaperState reaper_state; /* reap thr state */
++    /* Wakeup channel: kicked when dirty-limit is torn down. */
++    EventNotifier reaper_notifier;
+ };
+ struct KVMState
+ {
+diff --git a/system/dirtylimit.c b/system/dirtylimit.c
+index 50fa67f3d6..5a44b4c138 100644
+--- a/system/dirtylimit.c
++++ b/system/dirtylimit.c
+@@ -222,6 +222,8 @@ void dirtylimit_state_finalize(void)
+     g_free(dirtylimit_state);
+     dirtylimit_state = NULL;
+ 
++    kvm_dirty_ring_reaper_kick();
++
+     trace_dirtylimit_state_finalize();
+ }
+ 
 -- 
 2.43.0
 
