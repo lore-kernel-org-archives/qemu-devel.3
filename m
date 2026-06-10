@@ -4,49 +4,49 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 03702CD98C5
-	for <qemu-devel@archiver.kernel.org>; Wed, 10 Jun 2026 12:38:15 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3BE63CD8CB9
+	for <qemu-devel@archiver.kernel.org>; Wed, 10 Jun 2026 12:38:26 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wXIAZ-00043B-8N; Wed, 10 Jun 2026 08:36:31 -0400
+	id 1wXIAs-000610-0L; Wed, 10 Jun 2026 08:36:50 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1wXIAX-0003sV-55
- for qemu-devel@nongnu.org; Wed, 10 Jun 2026 08:36:29 -0400
+ id 1wXIAq-0005tx-Mo
+ for qemu-devel@nongnu.org; Wed, 10 Jun 2026 08:36:48 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1wXIAV-0004z3-BT
- for qemu-devel@nongnu.org; Wed, 10 Jun 2026 08:36:28 -0400
+ id 1wXIAo-0005dB-K0
+ for qemu-devel@nongnu.org; Wed, 10 Jun 2026 08:36:48 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1781094986;
+ s=mimecast20190719; t=1781095005;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=r8Kn9Qr2WAiqGtt6C771wk8o9x0d0nEex2Nw28eE3vw=;
- b=GDFQeIF97k0hdof9aBqYm5yTqgxcBSuDBy4riUZ45AxN7JAUHRELTCM2/X+IBAlZTU0WYU
- 3npZFxa0IJGfBmZlY/huMUyTHu5v6GMj/d+mMmhpfIhZy2dv/82993W/bb+YYq4Oyy/g7W
- pZiURWoskhtFxCjmRbDWtH1/WgsmA9Y=
-Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
+ bh=3yKJSc+oWtag7hzwfOKsn1o2TiUJ6bR+rc4hGY+JS+w=;
+ b=HcFOI8NbPRT/GIhxivFt8sD9tXDWezSRQsnytcwqLe/mT8YNuarlmET1GDZOHIlTNy7nLH
+ SfrKIZf+ELfDJSzbTbUZK5m9BozF58wf/vqSeDfa2A0PnSHFb9i71rVCRuGk47d8PKfnsl
+ ezZ1KI+PgtjjPF1fpNBoE0nTCw3hTs8=
+Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-375-gSVYCsrMNHKx6_TZHdQvPg-1; Wed,
- 10 Jun 2026 08:36:23 -0400
-X-MC-Unique: gSVYCsrMNHKx6_TZHdQvPg-1
-X-Mimecast-MFC-AGG-ID: gSVYCsrMNHKx6_TZHdQvPg_1781094981
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-591-faMzxegzMfGARBGCrJ0h_Q-1; Wed,
+ 10 Jun 2026 08:36:42 -0400
+X-MC-Unique: faMzxegzMfGARBGCrJ0h_Q-1
+X-Mimecast-MFC-AGG-ID: faMzxegzMfGARBGCrJ0h_Q_1781095001
 Received: from mx-prod-int-10.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-10.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.95])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id C925B18DB41F; Wed, 10 Jun 2026 12:36:21 +0000 (UTC)
+ by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 6F705195C277; Wed, 10 Jun 2026 12:36:41 +0000 (UTC)
 Received: from berrange.com (unknown [10.44.50.112])
  by mx-prod-int-10.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 6CDA336917; Wed, 10 Jun 2026 12:36:18 +0000 (UTC)
+ id 991F936512; Wed, 10 Jun 2026 12:36:37 +0000 (UTC)
 From: =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
@@ -57,10 +57,9 @@ Cc: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
  "Dr. David Alan Gilbert" <dave@treblig.org>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@mailo.com>,
  =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>
-Subject: [PATCH v2 30/35] tests/functional: add a stress test for monitor hot
- unplug
-Date: Wed, 10 Jun 2026 13:34:10 +0100
-Message-ID: <20260610123415.2883603-31-berrange@redhat.com>
+Subject: [PATCH v2 35/35] docs: mark '-mon' as deprecated in favour of -object
+Date: Wed, 10 Jun 2026 13:34:15 +0100
+Message-ID: <20260610123415.2883603-36-berrange@redhat.com>
 In-Reply-To: <20260610123415.2883603-1-berrange@redhat.com>
 References: <20260610123415.2883603-1-berrange@redhat.com>
 MIME-Version: 1.0
@@ -91,103 +90,163 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-When unplugging a monitor there is a careful synchronization dance
-between the monitor handling the "object-del" command and the
-command processing for the monitor being deleted.
-
-The stress test runs a busy loop of 'query-qmp-schema' on a second
-monitor, while the primary monitor requests its deletion.
+The high level `-qmp` and `-monitor` options can remain as convenience
+wrappers, but the low level `-mon` is completed obsoleted by the new
+`-object` support with 'monitor-qmp' and 'monitor-hmp' types.
 
 Signed-off-by: Daniel P. Berrangé <berrange@redhat.com>
 ---
- .../generic/test_monitor_hotplug.py           | 62 +++++++++++++++++++
- 1 file changed, 62 insertions(+)
+ docs/about/deprecated.rst               | 10 ++++++++++
+ docs/devel/writing-monitor-commands.rst |  4 ++--
+ docs/system/arm/xenpvh.rst              |  4 ++--
+ docs/system/i386/xen.rst                |  3 ++-
+ docs/system/i386/xenpvh.rst             |  4 ++--
+ qemu-options.hx                         | 11 ++++++-----
+ system/vl.c                             |  2 ++
+ 7 files changed, 26 insertions(+), 12 deletions(-)
 
-diff --git a/tests/functional/generic/test_monitor_hotplug.py b/tests/functional/generic/test_monitor_hotplug.py
-index 5d8a159eb0..03087faafc 100755
---- a/tests/functional/generic/test_monitor_hotplug.py
-+++ b/tests/functional/generic/test_monitor_hotplug.py
-@@ -6,11 +6,16 @@
- #
- # Copyright (c) 2026 Christian Brauner
+diff --git a/docs/about/deprecated.rst b/docs/about/deprecated.rst
+index 97750f5edc..fdd1f0a141 100644
+--- a/docs/about/deprecated.rst
++++ b/docs/about/deprecated.rst
+@@ -61,6 +61,16 @@ The ``debug-threads`` option of the ``-name`` argument is now
+ ignored. Thread naming is unconditionally enabled for all platforms
+ where it is supported.
  
-+import asyncio
- import os
-+import random
-+import threading
-+import time
- 
- from qemu_test import QemuSystemTest
- 
- from qemu.qmp.legacy import QEMUMonitorProtocol
-+from qemu.qmp import QMPClient
- 
- 
- class MonitorHotplug(QemuSystemTest):
-@@ -163,6 +168,63 @@ def test_events_after_negotiation(self):
-         qmp.close()
-         self._remove_monitor()
- 
-+    def stress_mon(self, sock):
-+        async def main():
-+            qmp = QMPClient('testvm')
-+            await qmp.connect(sock)
-+            # Run query-version in a tight loop so that the
-+            # monitor thread/dispatcher is very busy at the
-+            # time we try to delete the monitor
-+            while True:
-+                try:
-+                    # A command which returns alot of data to make
-+                    # it more likely we're in the I/O reply path
-+                    # when deleting the monitor
-+                    res = await qmp.execute('query-qmp-schema')
-+                    # Some commands which generate async events
-+                    # as those can trigger different code paths
-+                    res = await qmp.execute('stop')
-+                    res = await qmp.execute('cont')
-+                except:
-+                    # we'll get here if the monitor is terminated
-+                    # by QEMU in which case we must disconnect
-+                    # out side, but....
-+                    try:
-+                        await qmp.disconnect()
-+                    except (ConnectionResetError, EOFError, BrokenPipeError):
-+                        # ... disconnect() will probably see
-+                        # errors too, but we must try to call it
-+                        # regardless to cleanup asyncio state
-+                        # and prevent python warnings at GC time
-+                        pass
-+                    return
-+        asyncio.run(main())
++``-mon`` option (since 11.1)
++''''''''''''''''''''''''''''
 +
-+    def test_hotplug_stress(self):
-+        """
-+        Repeatedly hotplug and unplug a monitor, while another thread
-+        concurrently issues commands on that monitor. This stresses
-+        the synchronization with the monitor thread during cleanup
-+        """
-+        self.set_machine('none')
-+        self.vm.add_args('-nodefaults')
-+        self.vm.launch()
++The ``-mon`` option was the generic mechanism for creating monitor objects
++if the convenience ``-qmp`` or ``-monitor`` options were not flexible
++enough. The momitor objects have been converted to QOM, so ``-mon mode=readline``
++is replaced by ``-object monitor-hmp`` and ``-mon mode=control`` is replaced
++by ``-object monitor-qmp``. The short convenience options are not deprecated,
++only ``-mon``.
 +
-+        # Each loop sleeps at most 0.5 seconds, so this should
-+        # give an upper bound of approx 5 seconds execution
-+        # time which is reasonable to run by default
-+        repeat = 10
-+        for i in range(repeat):
-+            # First cycle
-+            sock = self._add_monitor()
-+            print ("# stress cycle %02d/%02d" % (i, repeat))
-+            stress = threading.Thread(target=self.stress_mon, args=[sock])
-+            stress.start()
-+            # Sleep upto 1/2 second to vary the races
-+            time.sleep(random.random() / 0.5)
-+            self._remove_monitor()
-+            stress.join()
-+
+ QEMU Machine Protocol (QMP) commands
+ ------------------------------------
  
- if __name__ == '__main__':
-     QemuSystemTest.main()
+diff --git a/docs/devel/writing-monitor-commands.rst b/docs/devel/writing-monitor-commands.rst
+index 930da5cd06..7ae7efe327 100644
+--- a/docs/devel/writing-monitor-commands.rst
++++ b/docs/devel/writing-monitor-commands.rst
+@@ -52,8 +52,8 @@ shown here.
+ First, QEMU should be started like this::
+ 
+  # qemu-system-TARGET [...] \
+-     -chardev socket,id=qmp,port=4444,host=localhost,server=on \
+-     -mon chardev=qmp,mode=control,pretty=on
++     -chardev socket,id=chrqmp0,port=4444,host=localhost,server=on \
++     -object monitor-qmp,chardev=chrqmp0,pretty=on,id=qmp0
+ 
+ Then, in a different terminal::
+ 
+diff --git a/docs/system/arm/xenpvh.rst b/docs/system/arm/xenpvh.rst
+index 430ac2c02e..511af63e3d 100644
+--- a/docs/system/arm/xenpvh.rst
++++ b/docs/system/arm/xenpvh.rst
+@@ -27,9 +27,9 @@ Sample QEMU xenpvh commands for running and connecting with Xen:
+ 
+     qemu-system-aarch64 -xen-domid 1 \
+       -chardev socket,id=libxl-cmd,path=qmp-libxl-1,server=on,wait=off \
+-      -mon chardev=libxl-cmd,mode=control \
++      -object monitor-qmp,id=qmp0,chardev=libxl-cmd \
+       -chardev socket,id=libxenstat-cmd,path=qmp-libxenstat-1,server=on,wait=off \
+-      -mon chardev=libxenstat-cmd,mode=control \
++      -object monitor-qmp,id=qmp1,chardev=libxenstat-cmd \
+       -xen-attach -name guest0 -vnc none -display none -nographic \
+       -machine xenpvh -m 1301 \
+       -chardev socket,id=chrtpm,path=tmp/vtpm2/swtpm-sock \
+diff --git a/docs/system/i386/xen.rst b/docs/system/i386/xen.rst
+index 46db5f34c1..6ff5cdb1e4 100644
+--- a/docs/system/i386/xen.rst
++++ b/docs/system/i386/xen.rst
+@@ -79,7 +79,8 @@ of type ``xen-console`` to connect to it. For the Xen console equivalent of
+ the handy ``-serial mon:stdio`` option, for example:
+ 
+ .. parsed-literal::
+-   -chardev stdio,mux=on,id=char0,signal=off -mon char0 \\
++   -chardev stdio,mux=on,id=char0,signal=off \\
++   -object monitor-hmp,chardev=char0,id=hmp0 \\
+    -device xen-console,chardev=char0
+ 
+ The Xen network device is ``xen-net-device``, which becomes the default NIC
+diff --git a/docs/system/i386/xenpvh.rst b/docs/system/i386/xenpvh.rst
+index 354250f073..904778e3f5 100644
+--- a/docs/system/i386/xenpvh.rst
++++ b/docs/system/i386/xenpvh.rst
+@@ -33,9 +33,9 @@ case you need to construct one manually:
+ 
+     qemu-system-i386 -xen-domid 3 -no-shutdown        \
+       -chardev socket,id=libxl-cmd,path=/var/run/xen/qmp-libxl-3,server=on,wait=off \
+-      -mon chardev=libxl-cmd,mode=control             \
++      -object monitor-qmp,id=qmp0,chardev=libxl-cmd   \
+       -chardev socket,id=libxenstat-cmd,path=/var/run/xen/qmp-libxenstat-3,server=on,wait=off \
+-      -mon chardev=libxenstat-cmd,mode=control        \
++      -object monitor-qmp,id=qmp1,chardev=libxenstat-cmd \
+       -nodefaults                                     \
+       -no-user-config                                 \
+       -xen-attach -name g0                            \
+diff --git a/qemu-options.hx b/qemu-options.hx
+index 848a53ea34..3c18903f49 100644
+--- a/qemu-options.hx
++++ b/qemu-options.hx
+@@ -4116,7 +4116,7 @@ The general form of a character device option is:
+     ::
+ 
+         -chardev stdio,mux=on,id=char0 \
+-        -mon chardev=char0,mode=readline \
++        -object monitor-hmp,id=hmp0,chardev=char0 \
+         -serial chardev:char0 \
+         -serial chardev:char0
+ 
+@@ -4128,7 +4128,7 @@ The general form of a character device option is:
+     ::
+ 
+         -chardev stdio,mux=on,id=char0 \
+-        -mon chardev=char0,mode=readline \
++        -object monitor-hmp,id=hmp0,chardev=char0 \
+         -parallel chardev:char0 \
+         -chardev tcp,...,mux=on,id=char1 \
+         -serial chardev:char1 \
+@@ -4929,7 +4929,8 @@ SRST
+         -qmp tcp:localhost:4444,server=on,wait=off
+ 
+     Not all options are configurable via this syntax; for maximum
+-    flexibility use the ``-mon`` option and an accompanying ``-chardev``.
++    flexibility use ``-object monitor-qmp`` and an accompanying
++    ``-chardev``.
+ 
+ ERST
+ DEF("qmp-pretty", HAS_ARG, QEMU_OPTION_qmp_pretty, \
+@@ -4960,12 +4961,12 @@ SRST
+ 
+     enables the QMP monitor on localhost port 4444 with pretty-printing.
+ 
+-    The use of ``-mon mode=readline`` is historical syntax sugar
++    The use of ``-mon mode=readline`` is deprecated syntax sugar
+     for the new ``-object monitor-hmp`` option, each use of which
+     creates an object with the ID ``hmpcompatNNN`` where ``NNN`` is
+     a counter starting from 0.
+ 
+-    The use of ``-mon mode=control`` is historical syntax sugar
++    The use of ``-mon mode=control`` is deprecated syntax sugar
+     for the new ``-object monitor-qmp`` option, each use of which
+     creates an object with the ID ``qmpcompatNNN`` where ``NNN`` is
+     a counter starting from 0.
+diff --git a/system/vl.c b/system/vl.c
+index 86f09a8b5c..9a71eb409a 100644
+--- a/system/vl.c
++++ b/system/vl.c
+@@ -3239,6 +3239,8 @@ void qemu_init(int argc, char **argv)
+                 default_monitor = 0;
+                 break;
+             case QEMU_OPTION_mon:
++                warn_report_once("'-mon' is deprecated, use '-object' with "
++                                 "'monitor-hmp' or 'monitor-qmp' types instead");
+                 if (!qemu_opts_parse_noisily(qemu_find_opts("mon"), optarg,
+                                              true)) {
+                     exit(1);
 -- 
 2.54.0
 
