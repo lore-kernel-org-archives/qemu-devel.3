@@ -4,68 +4,70 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9DB09CD98CC
-	for <qemu-devel@archiver.kernel.org>; Wed, 10 Jun 2026 12:38:26 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9D9E9CD8CB9
+	for <qemu-devel@archiver.kernel.org>; Wed, 10 Jun 2026 12:40:27 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wXIAL-0002vR-1J; Wed, 10 Jun 2026 08:36:17 -0400
+	id 1wXIDw-0004BM-2W; Wed, 10 Jun 2026 08:40:02 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1wXIAI-0002lO-I1
- for qemu-devel@nongnu.org; Wed, 10 Jun 2026 08:36:14 -0400
+ id 1wXIDr-0004B4-Oc
+ for qemu-devel@nongnu.org; Wed, 10 Jun 2026 08:39:56 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1wXIAG-0004GT-Es
- for qemu-devel@nongnu.org; Wed, 10 Jun 2026 08:36:14 -0400
+ id 1wXIDp-0008P6-Vp
+ for qemu-devel@nongnu.org; Wed, 10 Jun 2026 08:39:55 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1781094971;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ s=mimecast20190719; t=1781095192;
+ h=from:from:reply-to:reply-to:subject:subject:date:date:
+ message-id:message-id:to:to:cc:cc:mime-version:mime-version:
+ content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=sn74qOoT3A6vXh88DecTPnRQL5OF0zycVkWhpU2MxuI=;
- b=XImRfHVP+IMeJKE0Ip1/F0uKfcP0BBj/Gf7Y5j5jw0Q1MRCbXyYXC+m8Vts2d/ANwUF1to
- TWkVMVgszsbFMNR8dhTbB/tTgtCaN+Brv0dNv9eqjeTgI9PHu/KWFvurCMl2vPXTbN2/s4
- Fv1f9f98BFHiRosu6XqeuDEL7+tcgic=
-Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
+ bh=FErA/UX6taS3UaWsezSQa9yIH2W6NL5kexQlfaNzDzQ=;
+ b=SHzSnzmzHLeZYRAQYj4zE4G+U6N+6BsXdsYSvG0bjIi2sOBuld5e8ZfnPXp0Se3LKke8an
+ FOxDPAS0NZRHU2RQiMfR/p/LFcLJkUzUW8nHDJ87oXaZAWMQ49l9Wub/ouaSBQ1dz6Ow56
+ EDgm9nMBPNnMEwJcFYcwIcGdYkWMwpA=
+Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-216-Srylg7HIP4yBVpEUuuhAmA-1; Wed,
- 10 Jun 2026 08:36:10 -0400
-X-MC-Unique: Srylg7HIP4yBVpEUuuhAmA-1
-X-Mimecast-MFC-AGG-ID: Srylg7HIP4yBVpEUuuhAmA_1781094969
-Received: from mx-prod-int-10.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-10.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.95])
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-504-VII256zJOnWrAw3qIH6V5g-1; Wed,
+ 10 Jun 2026 08:39:51 -0400
+X-MC-Unique: VII256zJOnWrAw3qIH6V5g-1
+X-Mimecast-MFC-AGG-ID: VII256zJOnWrAw3qIH6V5g_1781095190
+Received: from mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.93])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 3CB15184EB7B; Wed, 10 Jun 2026 12:36:09 +0000 (UTC)
-Received: from berrange.com (unknown [10.44.50.112])
- by mx-prod-int-10.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id E1FF736535; Wed, 10 Jun 2026 12:36:05 +0000 (UTC)
-From: =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>
-To: qemu-devel@nongnu.org
-Cc: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
- Christian Brauner <brauner@kernel.org>,
- =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
- devel@lists.libvirt.org, Markus Armbruster <armbru@redhat.com>,
- Paolo Bonzini <pbonzini@redhat.com>,
- "Dr. David Alan Gilbert" <dave@treblig.org>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@mailo.com>,
- =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>
-Subject: [PATCH v2 27/35] monitor: implement support for deleting QMP objects
-Date: Wed, 10 Jun 2026 13:34:07 +0100
-Message-ID: <20260610123415.2883603-28-berrange@redhat.com>
-In-Reply-To: <20260610123415.2883603-1-berrange@redhat.com>
-References: <20260610123415.2883603-1-berrange@redhat.com>
+ by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 6A2DE195D027; Wed, 10 Jun 2026 12:39:50 +0000 (UTC)
+Received: from redhat.com (unknown [10.44.50.112])
+ by mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 5B8D41800598; Wed, 10 Jun 2026 12:39:47 +0000 (UTC)
+Date: Wed, 10 Jun 2026 13:39:43 +0100
+From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
+To: Kevin Wolf <kwolf@redhat.com>
+Cc: Fiona Ebner <f.ebner@proxmox.com>, Stefan Hajnoczi <stefanha@gmail.com>,
+ qemu-block@nongnu.org, stefanha@redhat.com, qemu-devel@nongnu.org
+Subject: Re: [PULL 0/8] Block layer patches
+Message-ID: <ailbD_yvOQqsEZPX@redhat.com>
+References: <20260608165207.307488-1-kwolf@redhat.com>
+ <CAJSP0QXjj32djLOFPNg2jKjNN6eB7VvRXVfz3XiNkWYjR0-S2A@mail.gmail.com>
+ <aik5Ox9cX_5FQbO4@redhat.com>
+ <3982600a-61a1-406a-b1b9-246ae6d9a606@proxmox.com>
+ <ailHvv4_bSZDQfUD@redhat.com> <ailM5OtknbaXuDOn@redhat.com>
+ <ailPBVrN32VFpR6y@redhat.com> <ailWzRwN2AfIZjjF@redhat.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 3.6 on 10.30.177.95
+In-Reply-To: <ailWzRwN2AfIZjjF@redhat.com>
+User-Agent: Mutt/2.3.2 (2026-04-26)
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.93
 Received-SPF: pass client-ip=170.10.133.124; envelope-from=berrange@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -24
@@ -87,178 +89,85 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Christian Brauner <brauner@kernel.org>
+On Wed, Jun 10, 2026 at 02:21:33PM +0200, Kevin Wolf wrote:
+> Am 10.06.2026 um 13:48 hat Daniel P. Berrangé geschrieben:
+> > On Wed, Jun 10, 2026 at 01:39:16PM +0200, Kevin Wolf wrote:
+> > > Am 10.06.2026 um 13:17 hat Daniel P. Berrangé geschrieben:
+> > > > You just got unlucky with the new expanded CI testing introduced when
+> > > > my pull request was merged a few days ago.  Previously gitlab CI only
+> > > > tested qcow2 and raw, and so compat with other drivers was "best effort"
+> > > > after the fact.
+> > > > 
+> > > > Now the gitlab CI runs I/O tests across 10 drivers, so it needs to
+> > > > work before merge, which is something contributors didn't need to
+> > > > think about before now.
+> > > > 
+> > > > If you push a branch to your gitlab fork and trigger CI, you'll see
+> > > > the results in the "block" job in the pipeline results. 
+> > > 
+> > > Technically true, but who has the CI minutes to actually do this?
+> > 
+> > Pretty much everyone IMHO.
+> > 
+> > > I don't think we've figured out a solution yet how people (or at least
+> > > maintainers) can use QEMU's minutes from the open source program prior
+> > > to sending a patch series or pull request. Or have we?
+> > 
+> > GitLab user accounts get 400 minutes of CI credits.
+> > 
+> > Forks of QEMU though are only charged at a cost fact or 0.008 since
+> > we are a member of the OSS program
+> > 
+> >   https://docs.gitlab.com/ci/pipelines/compute_minutes/#cost-factors-of-hosted-runners-for-gitlabcom
+> > 
+> > IOW, you're charged 1 minute per 125 minutes of job time.
+> > 
+> > A single QEMU pipline run in my fork today cost 4.5 credits. That's
+> > enough for 87 pipeline runs per month, if I was not contributing to
+> > anything outside QEMU on gitlab.com.
+> > 
+> > If you run a pipeline to sanity check before sending a patch series
+> > I don't think most people will ever run out of credits.
+> > 
+> > If you run multiple pipelines a day during development then you might
+> > be pushing your luck. Better to use the local "make docker-...."
+> > targets for day-to-day testing during dev, and just use gitlab
+> > pipelines before submission.
+> 
+> Did this change at some point? Because I'm quite sure I stopped doing
+> full CI runs only after running out of minutes with very moderate use.
+> Ever since then, I've only manually started individual jobs when I had
+> reason to suspect there could be a problem with them.
 
-The removal sequence is:
+Yes, there was a time window when QEMU was *not* part of the OSS
+program and so forks would get charged at the full 1:1 rate. At the
+same time gitlab was transitioning personal accounts from two different
+CI limits, so those with newer accounts would run out much faster
+due to a lower limit than other people with older accounts like myself.
+Everyone now has the same 400 minute limit, with the 0.008 cost factor
+inherited.
 
- 1. Mark dead and remove from mon_list under monitor_lock.  This
-    must happen before disconnecting chardev handlers to prevent
-    event broadcast from calling monitor_flush_locked() after the
-    gcontext reset, which would create an out_watch on the wrong
-    GMainContext (see monitor_cancel_out_watch()).
- 2. Cancel any pending out_watch while gcontext still points to the
-    correct context.
- 3. Disconnect chardev handlers, passing context=NULL and close
-    the connection.
- 4. Drain pending requests from any in-flight monitor_qmp_read().
- 5. Destroy the monitor object
+The only caveat is that your git repo *MUST* be a direct fork of
+qemu-project/qemu.git in order to inherit the cost factor.
 
-Signed-off-by: Christian Brauner (Amutable) <brauner@kernel.org>
-[DB: extracted from a larger commit and refactored to apply
-     to the new monitor class structure. Remove 'self delete'
-     feature which requires complex special-case code]
-Signed-off-by: Daniel P. Berrangé <berrange@redhat.com>
----
- monitor/monitor-internal.h |  3 +++
- monitor/monitor.c          | 22 ++++++++++++++++
- monitor/qmp.c              | 53 ++++++++++++++++++++++++++++++++++++--
- 3 files changed, 76 insertions(+), 2 deletions(-)
+So, yes, there were problems in the past, but it should be much
+better for most people today.
 
-diff --git a/monitor/monitor-internal.h b/monitor/monitor-internal.h
-index a82e1aacb6..2e8e5ec721 100644
---- a/monitor/monitor-internal.h
-+++ b/monitor/monitor-internal.h
-@@ -134,6 +134,7 @@ struct Monitor {
-     char *chardev_id;
-     CharFrontend chr;
-     int suspend_cnt;            /* Needs to be accessed atomically */
-+    bool dead;                  /* awaiting drain after monitor-remove */
-     QEMUBH *accept_input_bh;    /* persistent BH for monitor_accept_input */
-     char *mon_cpu_path;
-     QTAILQ_ENTRY(Monitor) entry;
-@@ -178,6 +179,7 @@ struct MonitorQMP {
-     Monitor parent_obj;
-     JSONMessageParser parser;
-     bool pretty;
-+    bool setup_pending; /* iothread BH has not yet set up chardev handlers */
-     /*
-      * When a client connects, we're in capabilities negotiation mode.
-      * @commands is &qmp_cap_negotiation_commands then.  When command
-@@ -206,6 +208,7 @@ extern MonitorList mon_list;
- 
- bool monitor_requires_iothread(const Monitor *mon);
- int monitor_can_read(void *opaque);
-+void monitor_cancel_out_watch(Monitor *mon);
- void monitor_list_append(Monitor *mon);
- void monitor_fdsets_cleanup(void);
- int monitor_set_cpu(Monitor *mon, int cpu_index);
-diff --git a/monitor/monitor.c b/monitor/monitor.c
-index 909f4f6052..6017d486af 100644
---- a/monitor/monitor.c
-+++ b/monitor/monitor.c
-@@ -176,6 +176,28 @@ static gboolean monitor_unblocked(void *do_not_use, GIOCondition cond,
-     return G_SOURCE_REMOVE;
- }
- 
-+/* Cancel a pending out_watch GSource.  Caller must hold mon_lock. */
-+void monitor_cancel_out_watch(Monitor *mon)
-+{
-+    if (mon->out_watch) {
-+        GMainContext *ctx = NULL;
-+        GSource *src;
-+
-+        if (monitor_requires_iothread(mon)) {
-+            ctx = iothread_get_g_main_context(mon_iothread);
-+        }
-+        src = g_main_context_find_source_by_id(ctx, mon->out_watch);
-+        if (!src && ctx) {
-+            /* Handler disconnect may have reset gcontext to NULL. */
-+            src = g_main_context_find_source_by_id(NULL, mon->out_watch);
-+        }
-+        if (src) {
-+            g_source_destroy(src);
-+        }
-+        mon->out_watch = 0;
-+    }
-+}
-+
- /* Caller must hold mon->mon_lock */
- void monitor_flush_locked(Monitor *mon)
- {
-diff --git a/monitor/qmp.c b/monitor/qmp.c
-index 3f3d5b9d1c..d471428488 100644
---- a/monitor/qmp.c
-+++ b/monitor/qmp.c
-@@ -184,6 +184,12 @@ static void monitor_qmp_cleanup_req_queue_locked(MonitorQMP *mon)
-     }
- }
- 
-+static void monitor_qmp_drain_queue(MonitorQMP *mon)
-+{
-+    QEMU_LOCK_GUARD(&mon->qmp_queue_lock);
-+    monitor_qmp_cleanup_req_queue_locked(mon);
-+}
-+
- static void monitor_qmp_cleanup_queue_and_resume(MonitorQMP *mon)
- {
-     QEMU_LOCK_GUARD(&mon->qmp_queue_lock);
-@@ -655,8 +661,14 @@ static void monitor_qmp_complete(UserCreatable *uc, Error **errp)
-     }
- }
- 
-+static void monitor_qmp_iothread_quiesce(void *opaque)
-+{
-+    /* No-op: synchronization point only */
-+}
-+
- static bool monitor_qmp_prepare_delete(UserCreatable *uc, Error **errp)
- {
-+    Monitor *mon = MONITOR(uc);
-     MonitorQMP *qmp = MONITOR_QMP(uc);
- 
-     if (monitor_qmp_dispatcher_is_servicing(qmp)) {
-@@ -664,8 +676,45 @@ static bool monitor_qmp_prepare_delete(UserCreatable *uc, Error **errp)
-         return false;
-     }
- 
--    error_setg(errp, "Deleting QMP monitors is not supported");
--    return false;
-+    if (qatomic_read(&qmp->setup_pending)) {
-+        error_setg(errp, "monitor is still initializing");
-+        return false;
-+    }
-+
-+    /* Remove from mon_list before chardev disconnect. */
-+    WITH_QEMU_LOCK_GUARD(&monitor_lock) {
-+        mon->dead = true;
-+        QTAILQ_REMOVE(&mon_list, mon, entry);
-+    }
-+
-+    /* Cancel out_watch while gcontext still points to the right ctx. */
-+    WITH_QEMU_LOCK_GUARD(&mon->mon_lock) {
-+        monitor_cancel_out_watch(mon);
-+    }
-+
-+    qemu_chr_fe_set_handlers(&mon->chr, NULL, NULL, NULL, NULL,
-+                             NULL, NULL, true);
-+
-+    /* Drain requests from any in-flight monitor_qmp_read(). */
-+    monitor_qmp_drain_queue(qmp);
-+
-+    WITH_QEMU_LOCK_GUARD(&mon->mon_lock) {
-+        /* Disable flushes before cancel -- gcontext is already wrong. */
-+        qemu_chr_fe_set_open(&mon->chr, false);
-+        monitor_cancel_out_watch(mon);
-+    }
-+
-+    /* Synchronize with in-flight iothread callbacks. */
-+    if (monitor_requires_iothread(mon)) {
-+        aio_wait_bh_oneshot(iothread_get_aio_context(mon_iothread),
-+                            monitor_qmp_iothread_quiesce, NULL);
-+    }
-+
-+    /* Catch requests from a racing monitor_qmp_read(). */
-+    monitor_qmp_drain_queue(qmp);
-+    monitor_fdsets_cleanup();
-+
-+    return true;
- }
- 
- static void monitor_qmp_accept_input(Monitor *mon)
+
+And we do have the "QEMU_CI=1" push option to trigger individual
+jobs manually vs  "QEMU_CI=2" run unleashes the whole pipeline,
+so users can conserve CI credits if debugging a specific job
+over & over again.
+
+With regards,
+Daniel
 -- 
-2.54.0
+|: https://berrange.com       ~~        https://hachyderm.io/@berrange :|
+|: https://libvirt.org          ~~          https://entangle-photo.org :|
+|: https://pixelfed.art/berrange   ~~    https://fstop138.berrange.com :|
 
 
