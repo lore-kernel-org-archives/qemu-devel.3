@@ -4,50 +4,47 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1445DCD8CB9
-	for <qemu-devel@archiver.kernel.org>; Wed, 10 Jun 2026 16:46:30 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6D732CD8CB2
+	for <qemu-devel@archiver.kernel.org>; Wed, 10 Jun 2026 16:46:36 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wXM4F-0003Ln-Vb; Wed, 10 Jun 2026 12:46:15 -0400
+	id 1wXM43-0003Gg-QG; Wed, 10 Jun 2026 12:46:03 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <deller@kernel.org>) id 1wXM4D-0003LM-6w
- for qemu-devel@nongnu.org; Wed, 10 Jun 2026 12:46:13 -0400
+ (Exim 4.90_1) (envelope-from <deller@kernel.org>) id 1wXM3y-0003Fr-3B
+ for qemu-devel@nongnu.org; Wed, 10 Jun 2026 12:45:58 -0400
 Received: from tor.source.kernel.org ([2600:3c04:e001:324:0:1991:8:25])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <deller@kernel.org>) id 1wXM4B-0000nb-P7
- for qemu-devel@nongnu.org; Wed, 10 Jun 2026 12:46:12 -0400
+ (Exim 4.90_1) (envelope-from <deller@kernel.org>) id 1wXM3v-0000ig-Ua
+ for qemu-devel@nongnu.org; Wed, 10 Jun 2026 12:45:57 -0400
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
- by tor.source.kernel.org (Postfix) with ESMTP id D5D36601DC;
- Wed, 10 Jun 2026 16:46:10 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 700721F00893;
- Wed, 10 Jun 2026 16:46:08 +0000 (UTC)
+ by tor.source.kernel.org (Postfix) with ESMTP id C0B04601DC;
+ Wed, 10 Jun 2026 16:45:53 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 556121F00893;
+ Wed, 10 Jun 2026 16:45:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
- s=k20260515; t=1781109970;
- bh=Z1dfaMdDG1BHIABJPuyTvw9aGXsVucAwD1oVosQ69OE=;
- h=From:To:Cc:Subject:Date:In-Reply-To:References;
- b=GQk9j8nPbFH2CxyiRN3bCjbJv28QYW6vV2+b01hzpn36mmtkjv3I2pcTyfKS1PPI/
- Q1+mBlfzz40orrCs6MBFcCiFqglUUqyTq2TcGPKA9xX8imruA7HwOA7JCe+qu7BYnc
- 7Hz7tZsjmrssvHLviarb6xrVvD1ESSUbRRcPeI0ezFxjr8TWLX3H7Pqe8pehvLUkJ4
- E88AcGNSUv03jioLJondk0kix3SzvqghB3imnVhw0N57qCCNfvn4+uXajjYHuZ0n+F
- yXInF9h3IzH2bpRDvyTBPNUoji030dLIZMjCf2ddZ2D5VyNo3Fky5mdrFyT3oaPM7+
- 7+EDFzTSLZf6g==
+ s=k20260515; t=1781109953;
+ bh=L2vwRNf8oYbUrdVxqRg4C55cQjUo916Dd+nC/fxuzaA=;
+ h=From:To:Cc:Subject:Date;
+ b=VAAtLUCvZGeM1AY4t7p2Se1grlfTp2lLsKZcQvGsIYVXQDmfpYNn6L+fB7X9LK8o1
+ 0ngkCO3v1yU6MQD5HotLXY4sZe+qFe5Yc2J6IY3bBHckfQXrG11hSmDspk2lMFUIST
+ ZPebR3wtghbEZL85tJ1Q/5JTORSfd3Y2pg2PoewGkKaHPPI9Kyb7YAucZueB7HzPn+
+ B5eoBZMJJr7As04TvgpMdzsbTN8LUjPvOYkU1Z1+0IOJOiDRkwxi2pb7vJ3FNUkj4p
+ 2+f4pSnb8NmWciUxlhU4+gpMP8CKkSL1XQK9HmUvIzCgfdOjQVfQauyR3KTeOav/Lu
+ 0NHTad/LWyUNQ==
 From: Helge Deller <deller@kernel.org>
 To: Stefan Hajnoczi <stefanha@gmail.com>,
 	qemu-devel@nongnu.org
 Cc: Yoshinori Sato <yoshinori.sato@nifty.com>,
  Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
  Laurent Vivier <laurent@vivier.eu>, Helge Deller <deller@gmx.de>,
- Max Filippov <jcmvbkbc@gmail.com>, Matt Turner <mattst88@gmail.com>,
- Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>
-Subject: [PULL v3 6/8] linux-user/sparc: call block_signals() before
- set_sigmask() in setcontext
-Date: Wed, 10 Jun 2026 18:45:47 +0200
-Message-ID: <20260610164549.5699-7-deller@kernel.org>
+ Max Filippov <jcmvbkbc@gmail.com>
+Subject: [PULL v3 0/8] Linux user patches
+Date: Wed, 10 Jun 2026 18:45:41 +0200
+Message-ID: <20260610164549.5699-1-deller@kernel.org>
 X-Mailer: git-send-email 2.54.0
-In-Reply-To: <20260610164549.5699-1-deller@kernel.org>
-References: <20260610164549.5699-1-deller@kernel.org>
+Content-Type: text/plain; charset="utf-8"
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=2600:3c04:e001:324:0:1991:8:25;
@@ -73,77 +70,60 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Matt Turner <mattst88@gmail.com>
+From: Helge Deller <deller@gmx.de>
 
-sparc64_set_context() emulates the kernel's `ta 0x6f` trap by calling
-set_sigmask() to install the mask supplied via the user's ucontext_t.
-The contract of set_sigmask() (see its comment in linux-user/signal.c)
-is that the caller must have first called block_signals(), which sets
-TaskState::signal_pending.
+The following changes since commit 29c042c6e9d4a09d4a0ac3fa54aeb7ee08ce0bdc:
 
-Without block_signals(), if a guest signal is pending-and-blocked at
-the time setcontext is invoked and the new mask unblocks it,
-signal_pending stays 0 and the post-trap process_pending_signals()
-call in linux-user/sparc/cpu_loop.c never enters its while loop, so
-the now-deliverable signal is left undelivered indefinitely.
+  lcitool: remove Cirrus CI support (2026-06-03 12:45:38 -0400)
 
-This affects programs that use getcontext/setcontext to swap signal
-masks, including libunwind's unw_resume() out of a signal handler:
-without this fix, the test program below loops forever printing
-"calling setcontext" instead of delivering the pending SIGUSR2.
+are available in the Git repository at:
 
-  #define _GNU_SOURCE
-  #include <ucontext.h>
-  #include <signal.h>
-  #include <stdio.h>
-  #include <unistd.h>
-  static int got;
-  static void h(int s) { got = 1; }
-  int main(void) {
-      signal(SIGUSR2, h);
-      sigset_t m; sigemptyset(&m); sigaddset(&m, SIGUSR2);
-      sigprocmask(SIG_BLOCK, &m, NULL);
-      kill(getpid(), SIGUSR2);
-      ucontext_t uc;
-      getcontext(&uc);
-      if (got) return 0;
-      uc.uc_sigmask.__val[0] = 0;
-      setcontext(&uc);
-      return 1;
-  }
+  https://github.com/hdeller/qemu-hppa.git tags/linux-user-pull-request
 
-The 32-bit sparc do_sigreturn / do_rt_sigreturn paths already get
-block_signals() from the rt_sigreturn syscall wrapper in
-linux-user/syscall.c, so only sparc64_set_context (invoked directly
-from cpu_loop) needs the addition.
+for you to fetch changes up to 2d0ef7323ea0f80d169b27858260ce590ca95a34:
 
-Signed-off-by: Matt Turner <mattst88@gmail.com>
-Cc: Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>
-Signed-off-by: Helge Deller <deller@gmx.de>
----
- linux-user/sparc/signal.c | 9 +++++++++
- 1 file changed, 9 insertions(+)
+  target/sh4: decode_gusa: recognize add#imm with prior mov Rm, Rn (2026-06-10 18:42:59 +0200)
 
-diff --git a/linux-user/sparc/signal.c b/linux-user/sparc/signal.c
-index fda5508c48..ba692c3123 100644
---- a/linux-user/sparc/signal.c
-+++ b/linux-user/sparc/signal.c
-@@ -619,6 +619,15 @@ void sparc64_set_context(CPUSPARCState *env)
-             }
-         }
-         target_to_host_sigset_internal(&set, &target_set);
-+        /*
-+         * set_sigmask() requires the caller to have first called
-+         * block_signals() so that process_pending_signals() is guaranteed
-+         * to run after the mask change.  Without this, a guest signal that
-+         * is pending-and-blocked at setcontext time is left undelivered
-+         * even after its mask bit is cleared, because signal_pending stays
-+         * 0 and the post-trap process_pending_signals() loop never enters.
-+         */
-+        block_signals();
-         set_sigmask(&set);
-     }
-     env->pc = pc;
+----------------------------------------------------------------
+linux-user patches for alpha, sparc and sh4
+
+Various linux-user related patches from Matt Turner with coredump support for
+alpha and sparc, as well as some fixes for the signal handler in sparc.
+
+The patches from Xinhui Yang add the missing fsmount series syscalls support
+for systemd.
+
+----------------------------------------------------------------
+
+Matt Turner (6):
+  linux-user/alpha: add coredump support
+  linux-user/sparc: add coredump support
+  linux-user/sparc: restore L/I registers from RSA in
+    sparc64_set_context
+  linux-user/sparc: call block_signals() before set_sigmask() in
+    setcontext
+  linux-user/sparc: flush register windows before core dump
+  target/sh4: decode_gusa: recognize add#imm with prior mov Rm, Rn
+
+Xinhui Yang (2):
+  linux-user: implement fsmount(2) series of syscalls
+  linux-user/strace: add fsmount series of syscalls
+
+ linux-user/alpha/elfload.c    |  12 ++++
+ linux-user/alpha/target_elf.h |  13 +++++
+ linux-user/elfload.c          |   9 +++
+ linux-user/sparc/cpu_loop.c   |   3 +-
+ linux-user/sparc/cpu_loop.h   |   7 +++
+ linux-user/sparc/elfload.c    |  54 +++++++++++++++++
+ linux-user/sparc/signal.c     |  27 +++++++++
+ linux-user/sparc/target_elf.h |  20 +++++++
+ linux-user/strace.c           | 105 ++++++++++++++++++++++++++++++++++
+ linux-user/strace.list        |  15 +++++
+ linux-user/syscall.c          | 104 +++++++++++++++++++++++++++++++++
+ target/sh4/translate.c        |   2 +-
+ 12 files changed, 369 insertions(+), 2 deletions(-)
+ create mode 100644 linux-user/sparc/cpu_loop.h
+
 -- 
 2.54.0
 
