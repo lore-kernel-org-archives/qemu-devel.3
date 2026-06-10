@@ -4,49 +4,49 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4DB98CD8CB9
-	for <qemu-devel@archiver.kernel.org>; Wed, 10 Jun 2026 12:37:21 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6C7F7CD8CB2
+	for <qemu-devel@archiver.kernel.org>; Wed, 10 Jun 2026 12:37:57 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wXI9P-0007p5-06; Wed, 10 Jun 2026 08:35:19 -0400
+	id 1wXIAb-0004MO-Mr; Wed, 10 Jun 2026 08:36:33 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1wXI9N-0007oI-P3
- for qemu-devel@nongnu.org; Wed, 10 Jun 2026 08:35:17 -0400
+ id 1wXIAS-0003T3-5a
+ for qemu-devel@nongnu.org; Wed, 10 Jun 2026 08:36:24 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1wXI9M-0002Mz-1A
- for qemu-devel@nongnu.org; Wed, 10 Jun 2026 08:35:17 -0400
+ id 1wXIAP-0004ke-D8
+ for qemu-devel@nongnu.org; Wed, 10 Jun 2026 08:36:23 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1781094915;
+ s=mimecast20190719; t=1781094980;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=fWfK/fFXbAecmn/ph7PTb4bRIPPG3hRHhZrrFlpkGmg=;
- b=Gp3fLkYU0LH+aCFqTTiZe2ikOWISyXvJEz6dN6FGrh8tb8F9LlI/MQWMbkcDcR4am1Gct1
- RWt0YH/ItHYM3YmX4Ree2xKAnawl5PCyeVDJ6tJbwLpgnk5VP8GxASwx8y5KZcOosP+iWg
- XyC2vwrR00yLV3N75lf93OuB/MXx7ak=
+ bh=zfequBWKYLQzM6JWggBPoNgBBfISv4CP2AMEjeqKvRw=;
+ b=fzzJvR7iBoNH953TzanCgLPMCLaiMRlXhvOCnpNyXnwG2/3DZGkkxTvBjI6PMAME8H5yKg
+ 5Lm7HFKxk7LlkcH/WO0/+BxB/U8Gxa4VOJELQYOAKD/O8p/FBGL+XbY+GyWs/YbcZWsK8B
+ fE5leYvrzv8TIsut5LlJAIPk5Qvbrg0=
 Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-265-1fqHJNO4OgalvIimuLosbw-1; Wed,
- 10 Jun 2026 08:35:11 -0400
-X-MC-Unique: 1fqHJNO4OgalvIimuLosbw-1
-X-Mimecast-MFC-AGG-ID: 1fqHJNO4OgalvIimuLosbw_1781094910
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-677-a3baC2X_NFGEFCEj02jHDg-1; Wed,
+ 10 Jun 2026 08:36:14 -0400
+X-MC-Unique: a3baC2X_NFGEFCEj02jHDg-1
+X-Mimecast-MFC-AGG-ID: a3baC2X_NFGEFCEj02jHDg_1781094973
 Received: from mx-prod-int-10.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-10.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.95])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
  by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 63AEE184EB64; Wed, 10 Jun 2026 12:35:10 +0000 (UTC)
+ id A6BC4184EB7C; Wed, 10 Jun 2026 12:36:13 +0000 (UTC)
 Received: from berrange.com (unknown [10.44.50.112])
  by mx-prod-int-10.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id A9A3F31D2; Wed, 10 Jun 2026 12:35:06 +0000 (UTC)
+ id D5DFC31D2; Wed, 10 Jun 2026 12:36:09 +0000 (UTC)
 From: =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
@@ -57,10 +57,9 @@ Cc: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
  "Dr. David Alan Gilbert" <dave@treblig.org>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@mailo.com>,
  =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>
-Subject: [PATCH v2 12/35] monitor: use class methods for
- monitor_qapi_event_emit
-Date: Wed, 10 Jun 2026 13:33:52 +0100
-Message-ID: <20260610123415.2883603-13-berrange@redhat.com>
+Subject: [PATCH v2 28/35] tests/qtest: add tests for dynamic monitor add/remove
+Date: Wed, 10 Jun 2026 13:34:08 +0100
+Message-ID: <20260610123415.2883603-29-berrange@redhat.com>
 In-Reply-To: <20260610123415.2883603-1-berrange@redhat.com>
 References: <20260610123415.2883603-1-berrange@redhat.com>
 MIME-Version: 1.0
@@ -91,118 +90,218 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-This removes the need for using monitor_is_qmp() to check the
-subclass type, which is an anti-pattern.
+From: Christian Brauner <brauner@kernel.org>
 
+Test the object-add/object-del QMP commands with the monitor-qmp
+object type.
+
+- Basic lifecycle: chardev-add -> object-add -> object-del -> chardev-remove
+- Error: object-add with nonexistent chardev
+- Error: second monitor on same chardev (chardev already in use)
+- Removal of CLI-created QMP monitor succeeds
+- Error: object-remove on HMP monitor
+- Re-add after remove: same id and chardev reusable after removal
+
+Signed-off-by: Christian Brauner (Amutable) <brauner@kernel.org>
+[DB: modified to use object-add/object-del, removing redundant
+     scenarios already handled by object-add/del code]
 Signed-off-by: Daniel P. Berrangé <berrange@redhat.com>
 ---
- include/monitor/monitor.h  |  1 +
- monitor/monitor-internal.h |  5 +++++
- monitor/monitor.c          | 15 +++------------
- monitor/qmp.c              | 20 ++++++++++++++++++++
- 4 files changed, 29 insertions(+), 12 deletions(-)
+ tests/qtest/qmp-test.c | 174 +++++++++++++++++++++++++++++++++++++++++
+ 1 file changed, 174 insertions(+)
 
-diff --git a/include/monitor/monitor.h b/include/monitor/monitor.h
-index a135b3a590..8cb3db677b 100644
---- a/include/monitor/monitor.h
-+++ b/include/monitor/monitor.h
-@@ -3,6 +3,7 @@
- 
- #include "block/block.h"
- #include "qapi/qapi-types-misc.h"
-+#include "qapi/qapi-emit-events.h"
- #include "qemu/readline.h"
- #include "exec/hwaddr.h"
- #include "qom/object.h"
-diff --git a/monitor/monitor-internal.h b/monitor/monitor-internal.h
-index 23cef68153..763b5c9625 100644
---- a/monitor/monitor-internal.h
-+++ b/monitor/monitor-internal.h
-@@ -111,6 +111,11 @@ struct MonitorClass {
-      */
-     int (*vprintf)(Monitor *mon, const char *fmt, va_list ap)
-         G_GNUC_PRINTF(2, 0);
-+    /*
-+     * If non-NULL, the monitor is able to send event
-+     * notifications back to the client
-+     */
-+    void (*emit_event)(Monitor *mon, QAPIEvent event, QDict *qdict);
- };
- 
- struct Monitor {
-diff --git a/monitor/monitor.c b/monitor/monitor.c
-index 1ab04a19fa..93fe542f23 100644
---- a/monitor/monitor.c
-+++ b/monitor/monitor.c
-@@ -345,22 +345,13 @@ static inline QEMUClockType monitor_get_event_clock(void)
- static void monitor_qapi_event_emit(QAPIEvent event, QDict *qdict)
- {
-     Monitor *mon;
--    MonitorQMP *qmp_mon;
- 
-     trace_monitor_protocol_event_emit(event, qdict);
-     QTAILQ_FOREACH(mon, &mon_list, entry) {
--        if (!monitor_is_qmp(mon)) {
--            continue;
-+        MonitorClass *cls = MONITOR_GET_CLASS(mon);
-+        if (cls->emit_event) {
-+            cls->emit_event(mon, event, qdict);
-         }
--
--        qmp_mon = container_of(mon, MonitorQMP, parent_obj);
--        {
--            QEMU_LOCK_GUARD(&mon->mon_lock);
--            if (qmp_mon->commands == &qmp_cap_negotiation_commands) {
--                continue;
--            }
--        }
--        qmp_send_response(qmp_mon, qdict);
-     }
+diff --git a/tests/qtest/qmp-test.c b/tests/qtest/qmp-test.c
+index edf0886787..3a325a04e0 100644
+--- a/tests/qtest/qmp-test.c
++++ b/tests/qtest/qmp-test.c
+@@ -337,6 +337,174 @@ static void test_qmp_missing_any_arg(void)
+     qtest_quit(qts);
  }
  
-diff --git a/monitor/qmp.c b/monitor/qmp.c
-index 6e23f7f4ed..b21dfbe578 100644
---- a/monitor/qmp.c
-+++ b/monitor/qmp.c
-@@ -99,11 +99,17 @@ static void monitor_qmp_set_pretty(Object *obj, bool val, Error **errp)
-     mon->pretty = val;
- }
- 
-+static void monitor_qmp_emit_event(Monitor *mon, QAPIEvent event, QDict *qdict);
-+
- static void monitor_qmp_class_init(ObjectClass *cls, const void *data)
- {
-+    MonitorClass *moncls = MONITOR_CLASS(cls);
-+
-     object_class_property_add_bool(cls, "pretty",
-                                    monitor_qmp_get_pretty,
-                                    monitor_qmp_set_pretty);
-+
-+    moncls->emit_event = monitor_qmp_emit_event;
- }
- 
- static void handle_qmp_command(void *opaque, QObject *req, Error *err);
-@@ -117,6 +123,20 @@ static void monitor_qmp_init(Object *obj)
-     json_message_parser_init(&mon->parser, handle_qmp_command, mon, NULL);
- }
- 
-+static void monitor_qmp_emit_event(Monitor *mon, QAPIEvent event, QDict *qdict)
++static void test_qmp_monitor_add_remove(void)
 +{
-+    MonitorQMP *qmp = MONITOR_QMP(mon);
++    QTestState *qts;
++    QDict *resp;
 +
-+    WITH_QEMU_LOCK_GUARD(&mon->mon_lock) {
-+        if (qmp->commands == &qmp_cap_negotiation_commands) {
-+            return;
-+        }
-+    }
++    qts = qtest_init(common_args);
 +
-+    qmp_send_response(qmp, qdict);
++    /* Create a null chardev for the dynamic monitor */
++    resp = qtest_qmp(qts,
++                     "{'execute': 'chardev-add',"
++                     " 'arguments': {'id': 'monitor-chardev',"
++                     "               'backend': {'type': 'null',"
++                     "                           'data': {}}}}");
++    g_assert(qdict_haskey(resp, "return"));
++    qobject_unref(resp);
++
++    /* Add a dynamic monitor */
++    resp = qtest_qmp(qts,
++                     "{'execute': 'object-add',"
++                     " 'arguments': {'qom-type': 'monitor-qmp',"
++                     "               'id': 'dyn-mon',"
++                     "               'chardev': 'monitor-chardev'}}");
++    g_assert(qdict_haskey(resp, "return"));
++    qobject_unref(resp);
++
++    /* Remove the dynamic monitor */
++    resp = qtest_qmp(qts,
++                     "{'execute': 'object-del',"
++                     " 'arguments': {'id': 'dyn-mon'}}");
++    g_assert(qdict_haskey(resp, "return"));
++    qobject_unref(resp);
++
++    /* Add again after remove -- same id and chardev should work */
++    resp = qtest_qmp(qts,
++                     "{'execute': 'object-add',"
++                     " 'arguments': {'qom-type': 'monitor-qmp',"
++                     "               'id': 'dyn-mon',"
++                     "               'chardev': 'monitor-chardev'}}");
++    g_assert(qdict_haskey(resp, "return"));
++    qobject_unref(resp);
++
++    /* Clean up */
++    resp = qtest_qmp(qts,
++                     "{'execute': 'object-del',"
++                     " 'arguments': {'id': 'dyn-mon'}}");
++    g_assert(qdict_haskey(resp, "return"));
++    qobject_unref(resp);
++
++    resp = qtest_qmp(qts,
++                     "{'execute': 'chardev-remove',"
++                     " 'arguments': {'id': 'monitor-chardev'}}");
++    g_assert(qdict_haskey(resp, "return"));
++    qobject_unref(resp);
++
++    qtest_quit(qts);
 +}
 +
++static void test_qmp_monitor_error_paths(void)
++{
++    QTestState *qts;
++    QDict *resp;
 +
- static bool qmp_oob_enabled(MonitorQMP *mon)
++    qts = qtest_init(common_args);
++
++    /* Error: chardev does not exist */
++    resp = qtest_qmp(qts,
++                     "{'execute': 'object-add',"
++                     " 'arguments': {'qom-type': 'monitor-qmp',"
++                     "               'id': 'bad-mon',"
++                     "               'chardev': 'nonexistent'}}");
++    qmp_expect_error_and_unref(resp, "GenericError");
++
++    qtest_quit(qts);
++}
++
++static void test_qmp_monitor_chardev_in_use(void)
++{
++    QTestState *qts;
++    QDict *resp;
++
++    qts = qtest_init(common_args);
++
++    /* Create a null chardev */
++    resp = qtest_qmp(qts,
++                     "{'execute': 'chardev-add',"
++                     " 'arguments': {'id': 'shared-chr',"
++                     "               'backend': {'type': 'null',"
++                     "                           'data': {}}}}");
++    g_assert(qdict_haskey(resp, "return"));
++    qobject_unref(resp);
++
++    /* Attach first monitor */
++    resp = qtest_qmp(qts,
++                     "{'execute': 'object-add',"
++                     " 'arguments': {'qom-type': 'monitor-qmp',"
++                     "               'id': 'mon-1',"
++                     "               'chardev': 'shared-chr'}}");
++    g_assert(qdict_haskey(resp, "return"));
++    qobject_unref(resp);
++
++    /* Error: second monitor on the same chardev */
++    resp = qtest_qmp(qts,
++                     "{'execute': 'object-add',"
++                     " 'arguments': {'qom-type': 'monitor-qmp',"
++                     "               'id': 'mon-2',"
++                     "               'chardev': 'shared-chr'}}");
++    qmp_expect_error_and_unref(resp, "GenericError");
++
++    /* Clean up */
++    resp = qtest_qmp(qts,
++                     "{'execute': 'object-del',"
++                     " 'arguments': {'id': 'mon-1'}}");
++    g_assert(qdict_haskey(resp, "return"));
++    qobject_unref(resp);
++
++    resp = qtest_qmp(qts,
++                     "{'execute': 'chardev-remove',"
++                     " 'arguments': {'id': 'shared-chr'}}");
++    g_assert(qdict_haskey(resp, "return"));
++    qobject_unref(resp);
++
++    qtest_quit(qts);
++}
++
++static void test_qmp_monitor_remove_cli(void)
++{
++    QTestState *qts;
++    QDict *resp;
++
++    /* Launch with a named CLI monitor on a null chardev */
++    qts = qtest_initf("%s -chardev null,id=cli-chr"
++                      " -object monitor-qmp,id=cli-mon,chardev=cli-chr",
++                      common_args);
++
++    /* CLI-created QMP monitors can be removed */
++    resp = qtest_qmp(qts,
++                     "{'execute': 'object-del',"
++                     " 'arguments': {'id': 'cli-mon'}}");
++    g_assert(qdict_haskey(resp, "return"));
++    qobject_unref(resp);
++
++    resp = qtest_qmp(qts,
++                     "{'execute': 'chardev-remove',"
++                     " 'arguments': {'id': 'cli-chr'}}");
++    g_assert(qdict_haskey(resp, "return"));
++    qobject_unref(resp);
++
++    qtest_quit(qts);
++}
++
++static void test_qmp_monitor_remove_hmp(void)
++{
++    QTestState *qts;
++    QDict *resp;
++
++    qts = qtest_initf("%s -chardev null,id=hmp-chr"
++                      " -object monitor-hmp,id=hmp-mon,chardev=hmp-chr",
++                      common_args);
++
++    /* Error: object_del must reject HMP monitors */
++    resp = qtest_qmp(qts,
++                     "{'execute': 'object-del',"
++                     " 'arguments': {'id': 'hmp-mon'}}");
++    qmp_expect_error_and_unref(resp, "GenericError");
++
++    qtest_quit(qts);
++}
++
+ int main(int argc, char *argv[])
  {
-     return mon->capab[QMP_CAPABILITY_OOB];
+     g_test_init(&argc, &argv, NULL);
+@@ -348,6 +516,12 @@ int main(int argc, char *argv[])
+ #endif
+     qtest_add_func("qmp/preconfig", test_qmp_preconfig);
+     qtest_add_func("qmp/missing-any-arg", test_qmp_missing_any_arg);
++    qtest_add_func("qmp/monitor-add-remove", test_qmp_monitor_add_remove);
++    qtest_add_func("qmp/monitor-error-paths", test_qmp_monitor_error_paths);
++    qtest_add_func("qmp/monitor-chardev-in-use",
++                    test_qmp_monitor_chardev_in_use);
++    qtest_add_func("qmp/monitor-remove-cli", test_qmp_monitor_remove_cli);
++    qtest_add_func("qmp/monitor-remove-hmp", test_qmp_monitor_remove_hmp);
+ 
+     return g_test_run();
+ }
 -- 
 2.54.0
 
