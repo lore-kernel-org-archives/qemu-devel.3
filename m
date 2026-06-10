@@ -4,109 +4,91 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 89FABCD8CB9
-	for <qemu-devel@archiver.kernel.org>; Wed, 10 Jun 2026 15:48:34 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E2458CD98C6
+	for <qemu-devel@archiver.kernel.org>; Wed, 10 Jun 2026 16:09:17 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wXL9b-0005C6-5I; Wed, 10 Jun 2026 11:47:46 -0400
+	id 1wXLTh-0005MC-C6; Wed, 10 Jun 2026 12:08:29 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <leonardi@redhat.com>)
- id 1wXL9U-0005B8-KY
- for qemu-devel@nongnu.org; Wed, 10 Jun 2026 11:47:36 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <leonardi@redhat.com>)
- id 1wXL9S-0004pN-1F
- for qemu-devel@nongnu.org; Wed, 10 Jun 2026 11:47:36 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1781106452;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=CzYGT+uGNzkc2cwsc1SQmdTaEZP5jUXMfs98MSYX37c=;
- b=Fnr4C69qXJusfDXFdlaKEu8acTRmgZFEx8EIxFR7tbN/Km6nFJDLtT63YlRQjUyts+ghjX
- UzSYsy9Lk1n7Vz45q+xTkvTwADqQ8GjTkafEvLEBBHX2t+Rg7WBSMrstxTMF44pIBkwX7g
- DSWvXMstS+KYog3QQkCq6bQamVyXIIU=
-Received: from mail-wr1-f70.google.com (mail-wr1-f70.google.com
- [209.85.221.70]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-530-mHyYzxm3OM2o_DDVdn4YAA-1; Wed, 10 Jun 2026 11:47:31 -0400
-X-MC-Unique: mHyYzxm3OM2o_DDVdn4YAA-1
-X-Mimecast-MFC-AGG-ID: mHyYzxm3OM2o_DDVdn4YAA_1781106450
-Received: by mail-wr1-f70.google.com with SMTP id
- ffacd0b85a97d-45eec2badc4so3534768f8f.2
- for <qemu-devel@nongnu.org>; Wed, 10 Jun 2026 08:47:31 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1wXLTe-0005Li-77
+ for qemu-devel@nongnu.org; Wed, 10 Jun 2026 12:08:27 -0400
+Received: from mail-pg1-x531.google.com ([2607:f8b0:4864:20::531])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1wXLTc-0003B4-5q
+ for qemu-devel@nongnu.org; Wed, 10 Jun 2026 12:08:25 -0400
+Received: by mail-pg1-x531.google.com with SMTP id
+ 41be03b00d2f7-c858961a8efso2639288a12.2
+ for <qemu-devel@nongnu.org>; Wed, 10 Jun 2026 09:08:23 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1781106450; x=1781711250; darn=nongnu.org;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
- bh=CzYGT+uGNzkc2cwsc1SQmdTaEZP5jUXMfs98MSYX37c=;
- b=q21xkAyhY/P2PQAPX6fI58CScjOOspzvn35ZvvVdL4nUmEwTTpEM7xk3kzoIgYd2vd
- D592JwMlH7V0BHjvv5QGpBS2TsOJa+5+rYXEIMtT/F4/dKFEeHWy7sNxdDsxx3Rob7PW
- gpJeEP6KU6LAn7HOf0cH9kUYiF7uG9jwlBRcRKXsdwTuk3jWyvpkfKLJCa4/ckqUi4QG
- a/nepW4w+nq3o1kd4LKQDG0D9GdKMe6yYIbngb+cHNJXUFQlMJ0LMXFDcTitBlx36fTG
- Sm81sVCeyYoZ7MK4WMVQze9478m4NdhHFXMkxS5tqd1EDvT1G3mWN4zukWreNNG2+3Hg
- 63MA==
+ d=linaro.org; s=google; t=1781107702; x=1781712502; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:content-language:from
+ :references:to:subject:user-agent:mime-version:date:message-id:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=gq8DAg4Feau7b1dXBbjHkIzWr9vVwEwPhbRB8dEP/wI=;
+ b=SSMfHhofR1ETmoHfFeFgVivduZ9z3iakz3Z86uYXgPKJpRHz84UkTlap02yYlDzgFh
+ T7RSyeovXqiEXMuo7VDzUHaEOGUdgAwgGyFNp8yqzahktCZeP8FsHQ6vqxXaio0OdwlE
+ UC9CcBV654mI+jAEu3MGzqA88ot3FlK6SuOzi0Jz5THkPf4YEuWQ4W/ha2UU4qATYP5V
+ dWyZxKKhwsses4UB53EYdVum8yQ2youkXP2x6izR+/PpsQwTMXxpZkwMnPcdBVwVEMri
+ vA26AOolaVFoTZxhl9o6KdrMXX21psMmrx4LVRG8HBaBWuwcAdXi874wBbq9E9v2wkR3
+ qf0Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1781106450; x=1781711250;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=CzYGT+uGNzkc2cwsc1SQmdTaEZP5jUXMfs98MSYX37c=;
- b=d+/NnpG4EjB5oUlSE60Is8oxikg8cTTavEPFfiFJlmEvC2o/jB2lDzE7al5QwvR5u+
- mv7TdXaaIP7f28vgPcwTIO2HjXdngTw9Qye5LWls6Z2NmnW7xMTqMztLzOqyR4Gx/6br
- Uq0l2C8fjnix8ceUQKcy7pDU88+t64ESBD65mfmSvqjdD1BnkRPfCHEdzuZE1qHwlQ3u
- PfAo2b9af4PHBE2iluVS3nLDoFMONSeFEMiKH7I3OyrVFbylOQD0Q+720oa4O8kscrTC
- FwfPHueE6afsxW447hUu+cHgjQ2sTUJCaAI8jbOwYEnyGva8TAIwQWMjCTOIWxrWAxD5
- FaXQ==
-X-Gm-Message-State: AOJu0YzfutaJAd6wFVbCuLLendYUJWZrsOcxNJvVMpkO8/KVA1AYcL68
- faSp/uQ/Fi6r4TU/wXMoVU8+MChMNSXLWSjrEVe+VABE1S7k2PCBS8vEma6XX9Z8oMouPng9+Gl
- Kj8GwxRd+Oe1IE/IJFS80O3nbjjfqu+z9uhQlC3t/8sG4gkg9+ioU3EZc
-X-Gm-Gg: Acq92OHzNirEzYidZBoAhQkdLvDNE/B2rPzDJSUw6LU/WE2RqtDGklKNlYc2O6lg95w
- mkz2A71h6aFBbFAx5tyirO3kGImgM+vLO3vlSCoSEvEcjJ2ckzb9eon2CXYnDzI1NSUjmpLTuBY
- q1XvCG9RuKiohZQZaXFsvtW5tT5jHEglZm/cd/uoMt6DZpIt3c4swbmVw/Jvn83gkiViL6F1iL5
- yVo2raGMvRHu0JuMEbQSOdLsOxhZcR4SJfVyrKVPjkv3QC406BQKRO+kpap1yt5Wz9lFFGGMJbw
- SVT52gku1o7CxHbFywDDKkokLjjYgBP1nXYz9i5B7VsoG13abO+eSfco09a4BhFHPCP/Xr8B3ve
- 0B7fhI3n5gLosOupcOk+OTtMSsYqMivykOYKP9lyksaWOLyPwpoAJbroG0ihEwC/On67yow==
-X-Received: by 2002:a05:6000:b82:b0:460:1301:dec8 with SMTP id
- ffacd0b85a97d-460302dc4a8mr27394039f8f.3.1781106450153; 
- Wed, 10 Jun 2026 08:47:30 -0700 (PDT)
-X-Received: by 2002:a05:6000:b82:b0:460:1301:dec8 with SMTP id
- ffacd0b85a97d-460302dc4a8mr27393999f8f.3.1781106449721; 
- Wed, 10 Jun 2026 08:47:29 -0700 (PDT)
-Received: from leonardi-redhat ([176.206.19.176])
+ d=1e100.net; s=20251104; t=1781107702; x=1781712502;
+ h=content-transfer-encoding:in-reply-to:content-language:from
+ :references:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=gq8DAg4Feau7b1dXBbjHkIzWr9vVwEwPhbRB8dEP/wI=;
+ b=OfjEawUjAHwkUObZe/aOLi5Kv39WWyxyUMaxkgfiDp/sbTxsWN54xNkUje2ts1mRfE
+ NRZ6iU2Ry7ttauB1Nz3xLDAsp3diZHErbua5IYhI23y8UjBybtRzk/woFb83K0JgPuSu
+ qSqR3EMXOWDC4UBjp0YUhKTzQjs+IQ5VRSsJEcFMXB6520612e69waG3i3oKyBQhLUQM
+ Wdbv8jtcNdAZ5ogKlJM4UhGatSJgccmSUsFHcdrucP/4m2ANbXBLBgdxT2Y20JkqpmwT
+ HikfQX+Q4xja63rO/dR/AQ0t8Sg8GOatI7p9K8vJnuFPwYasFM3QqxKdUwse+hFgWI3q
+ pIvA==
+X-Gm-Message-State: AOJu0Yw1gU62vlOBHe4HcRN6B1hhMS6nMishAPidLH/PZ0lJ1qRDyx5w
+ A/gRXRTcEi4pTvUyC2IUeQKRslmq4WBWdOQT2AtmECBLUhDmTk1RVYlgpYhd4bVGg24eF+XpHr7
+ ARtFdOW8=
+X-Gm-Gg: Acq92OHKeLPS6ElO4M+ddZ066h5vTXz4gEP87VN9nZKzbx2bbl/2js1cV9miX8t2mGj
+ RWNlXR+PXKrsN3oRHeTPWF694nX7235ZNz7t7IjnhOAEMjFiPoNZGjhf2Ly9+y9J4SauaewlYjS
+ 6+nxd34QIsp3eO2jY79zSZOvMaIjVkgvkTwb8VkigYgI7GR/MaT7otMNVUr/kbLfFPzGo1Ueo8Y
+ X60CduJhTi4lMUFLCyIHzPR9qghHN2N6ShS6nPbvqr1JngPxWvsWYY9KNTyNucVLHj1GgZiyQYe
+ IbFYmNHuvWG6O9xT0c+PJcCYYpvqU8kpuMXaUc/x4U3gkoHApVW7TncnQjCNdGFEtUPKAF3rluO
+ M61WcOXMRLL3Zf2GjX8KL3l3SDzWm8rC6JMl0W6A/QchCXPIPOXUNHCvcWP43Mx55NjUHgeNpfz
+ qqQQiZpjD3+Y7ZvUnl3qPXvMzyiB3vc38+hW4f6MF0yRqp5wc=
+X-Received: by 2002:a05:6a21:68e:b0:3aa:f9cb:d41a with SMTP id
+ adf61e73a8af0-3b4ccdc76admr32904662637.19.1781107701854; 
+ Wed, 10 Jun 2026 09:08:21 -0700 (PDT)
+Received: from [192.168.0.4] ([71.212.142.33])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-4601f2f67c6sm70106416f8f.16.2026.06.10.08.47.28
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 10 Jun 2026 08:47:29 -0700 (PDT)
-Date: Wed, 10 Jun 2026 17:47:26 +0200
-From: Luigi Leonardi <leonardi@redhat.com>
-To: Gerd Hoffmann <kraxel@redhat.com>
-Cc: qemu-devel@nongnu.org, "Michael S. Tsirkin" <mst@redhat.com>, 
- Paolo Bonzini <pbonzini@redhat.com>,
- Richard Henderson <richard.henderson@linaro.org>, 
- Stefano Garzarella <sgarzare@redhat.com>, Ani Sinha <anisinha@redhat.com>,
- Zhao Liu <zhao1.liu@intel.com>, Oliver Steffen <osteffen@redhat.com>
-Subject: Re: [PATCH v2 1/2] hw/i386/microvm: pack device tree
-Message-ID: <aimFZtN9qURC4Reg@leonardi-redhat>
-References: <20260610-microvm_device_tree-v2-0-4fb44730c49f@redhat.com>
- <20260610-microvm_device_tree-v2-1-4fb44730c49f@redhat.com>
- <ail7WyMwmEBIquoM@dobby.home.kraxel.org>
+ 41be03b00d2f7-c85df032df5sm21201326a12.6.2026.06.10.09.08.21
+ for <qemu-devel@nongnu.org>
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Wed, 10 Jun 2026 09:08:21 -0700 (PDT)
+Message-ID: <1f711172-1800-4919-866b-e9fb19f91f48@linaro.org>
+Date: Wed, 10 Jun 2026 09:08:19 -0700
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii; format=flowed
-Content-Disposition: inline
-In-Reply-To: <ail7WyMwmEBIquoM@dobby.home.kraxel.org>
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=leonardi@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -24
-X-Spam_score: -2.5
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v2 1/6] target/arm/tcg/cpu64.c: Extra test for GPC3.
+To: qemu-devel@nongnu.org
+References: <20260603-jmac-gpc3b-v2-0-115c51936962@linaro.org>
+ <20260603-jmac-gpc3b-v2-1-115c51936962@linaro.org>
+From: Richard Henderson <richard.henderson@linaro.org>
+Content-Language: en-US
+In-Reply-To: <20260603-jmac-gpc3b-v2-1-115c51936962@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::531;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pg1-x531.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.445,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -122,24 +104,31 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi Gerd,
+On 6/3/26 11:26, Jim MacArthur wrote:
+> Signed-off-by: Jim MacArthur <jim.macarthur@linaro.org>
+> ---
+>   target/arm/cpu-features.h | 5 +++++
+>   1 file changed, 5 insertions(+)
+> 
+> diff --git a/target/arm/cpu-features.h b/target/arm/cpu-features.h
+> index 38a695ded7..ad1b1ddc9b 100644
+> --- a/target/arm/cpu-features.h
+> +++ b/target/arm/cpu-features.h
+> @@ -1148,6 +1148,11 @@ static inline bool isar_feature_aa64_rme_gpc2(const ARMISARegisters *id)
+>       return FIELD_EX64_IDREG(id, ID_AA64PFR0, RME) >= 2;
+>   }
+>   
+> +static inline bool isar_feature_aa64_rme_gpc3(const ARMISARegisters *id)
+> +{
+> +    return FIELD_EX64_IDREG(id, ID_AA64PFR0, RME) >= 3;
+> +}
+> +
+>   static inline bool isar_feature_aa64_dit(const ARMISARegisters *id)
+>   {
+>       return FIELD_EX64_IDREG(id, ID_AA64PFR0, DIT) != 0;
+> 
 
-On Wed, Jun 10, 2026 at 05:04:39PM +0200, Gerd Hoffmann wrote:
->  Hi,
->
->> +    ret = fdt_pack(ms->fdt);
->
->I'm wondering whenever this is the best place to do it, or whenever the
->igvm code should make a copy + pack it + place it in the directive, so
->we do not depend on the machine code to do the packing for us.  When
->doing a quick grep the packing seems to be a rare thing, there isn't a
->single call in all arm code for example ...
->
+Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
 
-True, it's rather rare throughout the codebase. If we do this here, when
-we will support other archs we would have to add `fdt_pack` to them as well.
-Is this your concern?
-
-Luigi
-
+r~
 
