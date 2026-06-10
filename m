@@ -4,49 +4,49 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id CE693CD98C5
-	for <qemu-devel@archiver.kernel.org>; Wed, 10 Jun 2026 12:36:04 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 92A7CCD8CB9
+	for <qemu-devel@archiver.kernel.org>; Wed, 10 Jun 2026 12:36:09 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wXI9m-0000OG-Ti; Wed, 10 Jun 2026 08:35:43 -0400
+	id 1wXI9L-0007g8-9S; Wed, 10 Jun 2026 08:35:15 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1wXI9g-0000Bj-1x
- for qemu-devel@nongnu.org; Wed, 10 Jun 2026 08:35:36 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ id 1wXI9J-0007Ps-0D
+ for qemu-devel@nongnu.org; Wed, 10 Jun 2026 08:35:13 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1wXI9e-000340-50
- for qemu-devel@nongnu.org; Wed, 10 Jun 2026 08:35:35 -0400
+ id 1wXI9H-0002Ds-85
+ for qemu-devel@nongnu.org; Wed, 10 Jun 2026 08:35:12 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1781094933;
+ s=mimecast20190719; t=1781094910;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=NOqanyUGGxifH1aj6LTS65c3b7sF5AF44sDMgFnFY+A=;
- b=LWLY1bgJeYi0Gd1sL4+8/YS277wxbyVyLqS5+cYmKETqyj6w22e7vY+U0gzO0O4QhBVYZ/
- fUeQhGtE1Rj7gwl+QBCo8JLt6E3trZlC3cD3fMXy4Gkk4bVY7h80mvwtAHR3GBYYr2mWlX
- 6SyCO1T+jOUb7AcMceEaLdwmr0OvcyQ=
-Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ bh=MqUwXLxRrUVzOuBFkRQYnqpeYFwn/YKoi40tF2t2jR4=;
+ b=YxbfiYddb86DpmyGIGgTIkHEMUjTfNRr32pKeV9oIPlYZqw82iqH012gFnCL3XVQnxQaD8
+ KPQyZ/RhErfscSE918YVhKWmpgQdUIvOnFIENVmTOPtrCQ0YLYOsqSgF6dbQgKM5lhCyt/
+ uk2ZRtK95AQSgSAzZFeb++A3bBPwORM=
+Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-322-sBk71C-VOo-PZK0Xe_DWEw-1; Wed,
- 10 Jun 2026 08:35:31 -0400
-X-MC-Unique: sBk71C-VOo-PZK0Xe_DWEw-1
-X-Mimecast-MFC-AGG-ID: sBk71C-VOo-PZK0Xe_DWEw_1781094930
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-517-nJGrUFxFOHmPtaRzvQyMjw-1; Wed,
+ 10 Jun 2026 08:35:07 -0400
+X-MC-Unique: nJGrUFxFOHmPtaRzvQyMjw-1
+X-Mimecast-MFC-AGG-ID: nJGrUFxFOHmPtaRzvQyMjw_1781094906
 Received: from mx-prod-int-10.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-10.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.95])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 5B260195608A; Wed, 10 Jun 2026 12:35:30 +0000 (UTC)
+ by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 1EC541845420; Wed, 10 Jun 2026 12:35:06 +0000 (UTC)
 Received: from berrange.com (unknown [10.44.50.112])
  by mx-prod-int-10.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id ECBDF31D2; Wed, 10 Jun 2026 12:35:26 +0000 (UTC)
+ id BDA653652A; Wed, 10 Jun 2026 12:35:02 +0000 (UTC)
 From: =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
@@ -57,23 +57,23 @@ Cc: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
  "Dr. David Alan Gilbert" <dave@treblig.org>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@mailo.com>,
  =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>
-Subject: [PATCH v2 17/35] monitor: drop unused monitor_cur_is_qmp
-Date: Wed, 10 Jun 2026 13:33:57 +0100
-Message-ID: <20260610123415.2883603-18-berrange@redhat.com>
+Subject: [PATCH v2 11/35] monitor: use class methods for monitor_vprintf
+Date: Wed, 10 Jun 2026 13:33:51 +0100
+Message-ID: <20260610123415.2883603-12-berrange@redhat.com>
 In-Reply-To: <20260610123415.2883603-1-berrange@redhat.com>
 References: <20260610123415.2883603-1-berrange@redhat.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 X-Scanned-By: MIMEDefang 3.6 on 10.30.177.95
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=berrange@redhat.com;
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=berrange@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -24
 X-Spam_score: -2.5
 X-Spam_bar: --
 X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.445,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
  SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -90,95 +90,101 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The previous patch dropped the only remaining use of
-monitor_cur_is_qmp.
+This removes the need for using monitor_is_qmp() to check the
+subclass type, which is an anti-pattern.
 
+Reviewed-by: Dr. David Alan Gilbert <dave@treblig.org>
 Signed-off-by: Daniel P. Berrangé <berrange@redhat.com>
 ---
- include/monitor/monitor.h      |  1 -
- monitor/monitor.c              | 10 ----------
- stubs/monitor-core.c           |  5 -----
- tests/unit/test-util-sockets.c |  1 -
- tools/qemu-vnc/stubs.c         |  5 -----
- 5 files changed, 22 deletions(-)
+ monitor/hmp.c              | 13 +++++++++++++
+ monitor/monitor-internal.h |  7 +++++++
+ monitor/monitor.c          | 11 ++++-------
+ 3 files changed, 24 insertions(+), 7 deletions(-)
 
-diff --git a/include/monitor/monitor.h b/include/monitor/monitor.h
-index 8cb3db677b..3f730cffee 100644
---- a/include/monitor/monitor.h
-+++ b/include/monitor/monitor.h
-@@ -25,7 +25,6 @@ extern QemuOptsList qemu_mon_opts;
+diff --git a/monitor/hmp.c b/monitor/hmp.c
+index 2bb2333da5..08055839a4 100644
+--- a/monitor/hmp.c
++++ b/monitor/hmp.c
+@@ -68,11 +68,18 @@ static void monitor_hmp_set_readline(Object *obj, bool val, Error **errp)
+     mon->use_readline = val;
+ }
  
- Monitor *monitor_cur(void);
- Monitor *monitor_set_cur(Coroutine *co, Monitor *mon);
--bool monitor_cur_is_qmp(void);
++int monitor_hmp_vprintf(Monitor *mon, const char *fmt, va_list ap)
++    G_GNUC_PRINTF(2, 0);
++
+ static void monitor_hmp_class_init(ObjectClass *cls, const void *data)
+ {
++    MonitorClass *moncls = MONITOR_CLASS(cls);
++
+     object_class_property_add_bool(cls, "readline",
+                                    monitor_hmp_get_readline,
+                                    monitor_hmp_set_readline);
++
++    moncls->vprintf = monitor_hmp_vprintf;
+ }
  
- void monitor_init_globals(void);
- void monitor_init_globals_core(void);
+ static void monitor_hmp_init(Object *obj)
+@@ -87,6 +94,12 @@ static void monitor_hmp_init(Object *obj)
+     hmp->use_readline = true;
+ }
+ 
++int monitor_hmp_vprintf(Monitor *mon, const char *fmt, va_list ap)
++{
++    g_autofree char *buf = g_strdup_vprintf(fmt, ap);
++    return monitor_puts(mon, buf);
++}
++
+ static void monitor_command_cb(void *opaque, const char *cmdline,
+                                void *readline_opaque)
+ {
+diff --git a/monitor/monitor-internal.h b/monitor/monitor-internal.h
+index 6a4c3b0f37..23cef68153 100644
+--- a/monitor/monitor-internal.h
++++ b/monitor/monitor-internal.h
+@@ -104,6 +104,13 @@ typedef struct HMPCommand {
+ 
+ struct MonitorClass {
+     ObjectClass parent_class;
++
++    /*
++     * If non-NULL, the monitor is able to print messages
++     * for attention of the client user
++     */
++    int (*vprintf)(Monitor *mon, const char *fmt, va_list ap)
++        G_GNUC_PRINTF(2, 0);
+ };
+ 
+ struct Monitor {
 diff --git a/monitor/monitor.c b/monitor/monitor.c
-index a700d747fa..44b1d5ea7f 100644
+index ae36e996e9..1ab04a19fa 100644
 --- a/monitor/monitor.c
 +++ b/monitor/monitor.c
-@@ -149,16 +149,6 @@ Monitor *monitor_set_cur(Coroutine *co, Monitor *mon)
-     return old_monitor;
+@@ -261,21 +261,18 @@ int monitor_puts(Monitor *mon, const char *str)
+ 
+ int monitor_vprintf(Monitor *mon, const char *fmt, va_list ap)
+ {
+-    char *buf;
+-    int n;
++    MonitorClass *moncls;
+ 
+     if (!mon) {
+         return -1;
+     }
+ 
+-    if (monitor_is_qmp(mon)) {
++    moncls = MONITOR_GET_CLASS(mon);
++    if (!moncls->vprintf) {
+         return -1;
+     }
+ 
+-    buf = g_strdup_vprintf(fmt, ap);
+-    n = monitor_puts(mon, buf);
+-    g_free(buf);
+-    return n;
++    return moncls->vprintf(mon, fmt, ap);
  }
  
--/**
-- * Is the current monitor, if any, a QMP monitor?
-- */
--bool monitor_cur_is_qmp(void)
--{
--    Monitor *cur_mon = monitor_cur();
--
--    return cur_mon && monitor_is_qmp(cur_mon);
--}
--
- bool monitor_requires_iothread(const Monitor *mon)
- {
-     MonitorClass *cls = MONITOR_GET_CLASS(mon);
-diff --git a/stubs/monitor-core.c b/stubs/monitor-core.c
-index 078a5012e9..a7c32297c9 100644
---- a/stubs/monitor-core.c
-+++ b/stubs/monitor-core.c
-@@ -7,11 +7,6 @@ Monitor *monitor_cur(void)
-     return NULL;
- }
- 
--bool monitor_cur_is_qmp(void)
--{
--    return false;
--}
--
- Monitor *monitor_set_cur(Coroutine *co, Monitor *mon)
- {
-     return NULL;
-diff --git a/tests/unit/test-util-sockets.c b/tests/unit/test-util-sockets.c
-index b9f2453e29..ee66d727c3 100644
---- a/tests/unit/test-util-sockets.c
-+++ b/tests/unit/test-util-sockets.c
-@@ -74,7 +74,6 @@ int monitor_get_fd(Monitor *mon, const char *fdname, Error **errp)
- Monitor *monitor_cur(void) { return cur_mon; }
- Monitor *monitor_set_cur(Coroutine *co, Monitor *mon) { abort(); }
- int monitor_vprintf(Monitor *mon, const char *fmt, va_list ap) { abort(); }
--bool monitor_cur_is_qmp(void) { abort(); };
- 
- #ifndef _WIN32
- static void test_socket_fd_pass_name_good(void)
-diff --git a/tools/qemu-vnc/stubs.c b/tools/qemu-vnc/stubs.c
-index a865ce85f0..1c82d8cff4 100644
---- a/tools/qemu-vnc/stubs.c
-+++ b/tools/qemu-vnc/stubs.c
-@@ -36,11 +36,6 @@ Monitor *monitor_cur(void)
-     return NULL;
- }
- 
--bool monitor_cur_is_qmp(void)
--{
--    return false;
--}
--
- Monitor *monitor_set_cur(Coroutine *co, Monitor *mon)
- {
-     return NULL;
+ int monitor_printf(Monitor *mon, const char *fmt, ...)
 -- 
 2.54.0
 
