@@ -4,70 +4,70 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4AC40CD98C7
-	for <qemu-devel@archiver.kernel.org>; Wed, 10 Jun 2026 07:30:21 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C687DCD8CB9
+	for <qemu-devel@archiver.kernel.org>; Wed, 10 Jun 2026 07:32:02 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wXDNn-0001O3-5o; Wed, 10 Jun 2026 03:29:51 -0400
+	id 1wXDPc-0002Q1-61; Wed, 10 Jun 2026 03:31:44 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <manos.pitsidianakis@linaro.org>)
- id 1wXDNl-0001Ni-IC
- for qemu-devel@nongnu.org; Wed, 10 Jun 2026 03:29:49 -0400
-Received: from mail-wm1-x32f.google.com ([2a00:1450:4864:20::32f])
+ id 1wXDPa-0002PY-Iw
+ for qemu-devel@nongnu.org; Wed, 10 Jun 2026 03:31:42 -0400
+Received: from mail-wr1-x433.google.com ([2a00:1450:4864:20::433])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <manos.pitsidianakis@linaro.org>)
- id 1wXDNj-00036z-6M
- for qemu-devel@nongnu.org; Wed, 10 Jun 2026 03:29:48 -0400
-Received: by mail-wm1-x32f.google.com with SMTP id
- 5b1f17b1804b1-490af320e2aso69779745e9.2
- for <qemu-devel@nongnu.org>; Wed, 10 Jun 2026 00:29:46 -0700 (PDT)
+ id 1wXDPY-0006k0-Tw
+ for qemu-devel@nongnu.org; Wed, 10 Jun 2026 03:31:42 -0400
+Received: by mail-wr1-x433.google.com with SMTP id
+ ffacd0b85a97d-45eeba68948so4575217f8f.1
+ for <qemu-devel@nongnu.org>; Wed, 10 Jun 2026 00:31:40 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1781076585; x=1781681385; darn=nongnu.org;
+ d=linaro.org; s=google; t=1781076699; x=1781681499; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:message-id:in-reply-to
  :references:user-agent:subject:cc:to:from:date:from:to:cc:subject
  :date:message-id:reply-to;
- bh=LGyQYmG/YkOTpjwVkiBCXy9OpSXaLYNGWwD6griOt00=;
- b=fnxz4g1aOv/TWK5Z1aivs3p+7M1V9vlrzOpG90fmMrHEaSODV05QEYYtiEU8i/AKZk
- RBfefSGvCJfUaOJ3H9zqzI2f7z9fspIUetd2wWBAWl+SJoBw2+DXLIzA+ZUR1viiz3jC
- aQ/8FJ+b6Rrd8OsU+W2EP5ZbNHcXZ9mVvl/CR2yY7+SHkso4DHYp1Go3dxeUlKoxoS7l
- aDtcbCECUOkEeRzMyYCGYs2Mm+T5NUEc0wbQLZbfei7BVxqRyt10zDzS6yB96EK6h2HC
- tDYgI41gVj+Ls2pTL5m561zevyIuEtMfw0VtbCRCiB5qjsMu2nXFKsysQExsPvayrBtE
- QuFA==
+ bh=UaztTtXKGjQvISAQdOR+p8Z5RioQFI+ci6eiPAPncNY=;
+ b=FjJhw3HsrhmIuLhJyToEHbIVhsQlR2Ny4oxvzimDhLJeyIhdy6ZOpi1i2HXLoIxc07
+ dnIEy4whyC2NeWIwCi9g9Oz8To0yKNeuQ8YZ/Lovj3eGw/4g/Rnqp2FnuUUgn0zU9ueY
+ 60VQJWHhsI0iWnG/RnCRZ09VA55BpQy9Yq2CNre5OjBVviV+FM2+5cGKGaHqdLp2me6V
+ uG1Etftkq+IvodXMv33atqNPL3+5PJRZIUYYC1RDWyZTbLO87F6NtubhvqvAGm77DjRN
+ 9aaFOfoz9/sbVx/VBR8FsvmCyKEiKEq8AY8FCN8U9OI4YT7oxKzMmge3QM0tBlTz841N
+ QPeg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1781076585; x=1781681385;
+ d=1e100.net; s=20251104; t=1781076699; x=1781681499;
  h=content-transfer-encoding:mime-version:message-id:in-reply-to
  :references:user-agent:subject:cc:to:from:date:x-gm-gg
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=LGyQYmG/YkOTpjwVkiBCXy9OpSXaLYNGWwD6griOt00=;
- b=HjfL7iXVBXGqDki0k+nrGQNh3P8LGK4ZSN9veSFblKrJOU3Ej2Exm8ZqbLGUaDprM8
- WdT5bZSCwlJ+vVEjM3i0Vza1xWotsZBYSJrNEmD6ZvOmslKQ7croD4mW3G5I7czPPaS9
- qgF1xDptZ6q68SJ2Uoc5OSMYMpHny8UZwRwVqLXJoc+68VgzW6BUQYNnrmXaF66ffnjb
- edBgxebJ1woHgQT1jl4XTYNFCtMbAhdCsEmBQTCJ6O9r/MqkdBoxpBLdEHG+BngLz5Mt
- 0MpuPoIdtxIYDY5LIG4PVk1UVF84U/AKCtDWiTXaJRprwQSQIhm/Y7/KG15/i7JjaJoA
- Q5WQ==
+ bh=UaztTtXKGjQvISAQdOR+p8Z5RioQFI+ci6eiPAPncNY=;
+ b=mPbYEZj3r34Bfwx+/OG0cUne/WCgbSKNto5BvoqUMcLvmL9Mz1MZVOf6KgMYC56aD9
+ 33cVe75akdeJZy/FAEvol83AfUW6Iw7Rn+OhdydHxWH9UH3b+MibtGFEtqwrBC8GTpjW
+ I5DxxvbFsXUU6edil1R/acQ87Rie+CErITuF3CisUQQV7k4InaU+bnn3bG05fxwr2iDD
+ dPVGQZo/pAd4Ot9dUMbp7GPmAt4vqWfc00vT2tysgDoHdSZYs6kTMh0Y09i+mp4Tdw3U
+ EKp+cUh5awOxotcZsGmfB4On+F8NQghJq34h5nNIZgDiioR4TaZ3grdxUFVb8Pglg66T
+ TtqA==
 X-Forwarded-Encrypted: i=1;
- AFNElJ/X6CfCG2PQh1jXAS8F3cHnihVicfEuwvY9llNVlCAYavrCOw6UHVIINTL0REkahRPfMVpk06pO+FpS@nongnu.org
-X-Gm-Message-State: AOJu0YyPXYzXUY3nAE3Qi5J634gXuwG1jE+HsrsRRQqvOXVwONWLwDzK
- FsJNXBVrXiz1n0wHTqn8MhFI+ixnJv6nIWWoq8EdJPT2tJyO4MM8cp5m0+0UxF1QiR0=
-X-Gm-Gg: Acq92OGXbD1kLept7hkiuLDz+FU+z1h7MH8w59dXL5Kg7xDiDME+cvGhYxjO9xmvItR
- omWy05MRYgU6hc71ZUKn2pH5r3njI61/eG8ajcsez4hhHQy9d1mPVYJdZa+DwpJIgrhAojaB12e
- Bwjm0nrp2W49EsIq7IuCxWgZ/t5nAEAarvLDZ8QCwiwO+USPygJaNvgeh3m+OYiSGs30pNg5qvq
- XE0de9a4HkE8k/GdOJr0149CmpkEDs3cdinDwjLmQG3IgNYo5tt8ai5ZeR3DTrAbFTrtAI8R25V
- jR6eQ/NhRsUwKQQUvgSs78WfZg1Tp9QXWY7y+AAzU2x9iI+Qg2ywu1TfSVoMMQiiBSp3ZnbcWJt
- 0rheAaLRqA9Zk2lcZgmeBQwqooe9px9R9aHMrM9GP5ojjEE4ZScUMBx500+fpC5/CJadSrJ5oJa
- 4RDs1Uesm4wgyyQF3r7KPLRD/oaN4/W4YrvPEA55AgE9vzDnG2vwLqk908wmx0v6MIjsFshvm4j
- PPiObbXuSYnpZKz/RjwQuNkbP+3Tp1yEXr0AxTSSdm1xLk0e8s50QjdoyFSROgw
-X-Received: by 2002:a05:600c:8216:b0:490:c2a3:23cf with SMTP id
- 5b1f17b1804b1-490c2a323f0mr356502485e9.34.1781076585365; 
- Wed, 10 Jun 2026 00:29:45 -0700 (PDT)
+ AFNElJ9hjLJQRB8h8UG1ePEIAlGIGv14K6u/DD8YrnjjrxbHEOSW8z6zzSMH1VJ+CjjXqFE8BvT2mNzp0Ztj@nongnu.org
+X-Gm-Message-State: AOJu0YwQnUAgrKD5iQRH9MfQ5ThRglyQF0es2axU1YFbrcG098BqLRjt
+ j0Jhgqa6u4xTVXaNIcQuv6gVg2GFw/ZOr5/apWUXwMDyfkgT2xC3RfjLVXtb6aLokhc=
+X-Gm-Gg: Acq92OExjKJSIQ0e99WBQcKsH2yX1yqWYLaU2mVpY8jwcQFLPFdofgvJjj91DVKTFUF
+ WLYfe+sXe+EyxhFJJpTFrrbub3dwpgRv1PK7RHHHzJYlTgZXqx8WK7a7eD/bjGbsd/YNPOGf2G1
+ RXvaty/TdPyj+/5ru8G5q0sWhjHbHUzIrmuK69pneozxRlhoWBovMJ21R/2R23DiCxTMeODfi62
+ 9Zz0Y/g7Wa9GjNQq/kFHK4RPsvfeBlUOy8aJ8UZtKUP4VEXF3U78pmalJmeaEVPF+0z10M4Cz8b
+ /vM3tay3w/jkMU6LFbixrsV0eWTOXlur5hbqiuMU3lcOTXeoi8BqGNnNAQXOht9Ga5j9iAipzgt
+ 9MBixbVTDgxaExJUAyFbZO3O6SMZJEdpBCy3O3co6Kq1hGtSPOScUlkQaNQaAj0cF3kyBdffdGg
+ w/2J5Q5ha0q9YKB8GQka5W5L5AgdH3sVgszH/bmuD0i6unmeoib4pFQkUZmRbRFWQyaOgzjKeUb
+ mfw11d5c/Dm7pjfj6/WMWw15lSOslLC5tRcyejz9jPIsfHEESJqN54zj3aRsmiu
+X-Received: by 2002:a05:6000:178e:b0:460:3234:293e with SMTP id
+ ffacd0b85a97d-46032342a79mr36036560f8f.41.1781076699136; 
+ Wed, 10 Jun 2026 00:31:39 -0700 (PDT)
 Received: from meli-email.org (ppp-2-86-144-251.home.otenet.gr. [2.86.144.251])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-4601f345209sm74301947f8f.17.2026.06.10.00.29.44
+ ffacd0b85a97d-4601f2dcbe3sm64829520f8f.8.2026.06.10.00.31.38
  (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
- Wed, 10 Jun 2026 00:29:45 -0700 (PDT)
-Date: Wed, 10 Jun 2026 10:28:59 +0300
+ Wed, 10 Jun 2026 00:31:38 -0700 (PDT)
+Date: Wed, 10 Jun 2026 10:30:31 +0300
 From: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
 To: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>, qemu-devel@nongnu.org
 Cc: Thomas Huth <thuth@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>,
@@ -80,17 +80,18 @@ Cc: Thomas Huth <thuth@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>,
  Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
  Peter Maydell <peter.maydell@linaro.org>,
  Gustavo Romero <gustavo.romero@linaro.org>
-Subject: Re: [PATCH 18/27] tests/tcg/meson.build: add wrapper run_with_input
+Subject: Re: [PATCH 20/27] tests/tcg/meson.build: add wrapper
+ check_plugin_output
 User-Agent: meli/0.8.13
 References: <20260609214745.772536-1-pierrick.bouvier@oss.qualcomm.com>
- <20260609214745.772536-19-pierrick.bouvier@oss.qualcomm.com>
-In-Reply-To: <20260609214745.772536-19-pierrick.bouvier@oss.qualcomm.com>
-Message-ID: <tgenhk.1crggx28eg1me@linaro.org>
+ <20260609214745.772536-21-pierrick.bouvier@oss.qualcomm.com>
+In-Reply-To: <20260609214745.772536-21-pierrick.bouvier@oss.qualcomm.com>
+Message-ID: <tgenkp.crsxljvbliqb@linaro.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 Content-Type: text/plain; charset=utf-8; format=flowed
-Received-SPF: pass client-ip=2a00:1450:4864:20::32f;
- envelope-from=manos.pitsidianakis@linaro.org; helo=mail-wm1-x32f.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::433;
+ envelope-from=manos.pitsidianakis@linaro.org; helo=mail-wr1-x433.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -114,52 +115,60 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On Wed, 10 Jun 2026 00:47, Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com> wrote:
->Semihosting console tests require console interaction, and were flagged
->as manual because of this. This wrapper automates interaction, by
->sending a specific string on stdin.
+>This wrapper runs a qemu command, record command output and plugin
+>output, and forward both to a check script.
+>We use this pattern in several plugin tests (for instance, with
+>validate-memory-counts.py).
 >
 >Signed-off-by: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
 >---
-
-Fyi there is also expect(1) https://packages.debian.org/trixie/expect 
-but is kind of arcane.
-
-> tests/tcg/meson.build               |  1 +
-> tests/tcg/scripts/run_with_input.sh | 12 ++++++++++++
-> 2 files changed, 13 insertions(+)
-> create mode 100755 tests/tcg/scripts/run_with_input.sh
+> tests/tcg/meson.build                    |  1 +
+> tests/tcg/scripts/check_plugin_output.sh | 19 +++++++++++++++++++
+> 2 files changed, 20 insertions(+)
+> create mode 100755 tests/tcg/scripts/check_plugin_output.sh
 >
 >diff --git a/tests/tcg/meson.build b/tests/tcg/meson.build
->index f379449e582..7201a7809e1 100644
+>index f0efd46ee3e..6e46c121fda 100644
 >--- a/tests/tcg/meson.build
 >+++ b/tests/tcg/meson.build
->@@ -8,6 +8,7 @@ endif
+>@@ -6,6 +6,7 @@ if config_host.has_key('GDB')
+>   gdb_progs = [config_host['GDB'], gdb_progs]
+> endif
 > gdb = find_program(gdb_progs, required: false)
+>+prog_check_plugin_output = find_program('./scripts/check_plugin_output.sh')
 > prog_gdb_test = find_program('../guest-debug/run-test.py')
+> prog_record_replay = find_program('./scripts/record_replay.sh')
 > prog_run_and_diff = find_program('./scripts/run_and_diff.sh')
->+prog_run_with_input = find_program('./scripts/run_with_input.sh')
-> prog_run_and_check_forbidden_output = find_program(
->   './scripts/run_and_check_forbidden_output.sh'
-> )
->diff --git a/tests/tcg/scripts/run_with_input.sh b/tests/tcg/scripts/run_with_input.sh
+>diff --git a/tests/tcg/scripts/check_plugin_output.sh b/tests/tcg/scripts/check_plugin_output.sh
 >new file mode 100755
->index 00000000000..3d280547c3a
+>index 00000000000..4d12e23ad60
 >--- /dev/null
->+++ b/tests/tcg/scripts/run_with_input.sh
->@@ -0,0 +1,12 @@
+>+++ b/tests/tcg/scripts/check_plugin_output.sh
+>@@ -0,0 +1,19 @@
 >+#!/usr/bin/env bash
 >+# SPDX-License-Identifier: GPL-2.0-or-later
 >+
 >+set -euo pipefail
 >+
->+if [ $# -lt 2 ]; then
->+    echo "run_with_input: input_string cmd [args]..." 1>&2
+>+if [ $# -lt 3 ]; then
+>+    echo "check_plugin_output: check_cmd qemu_bin [args]..." 1>&2
 >+    exit 1
 >+fi
->+input="$1";shift
+>+check_cmd="$1"; shift
+>+qemu="$1"; shift
+>+tmp=$(mktemp -d)
+>+trap "rm -rf $tmp" EXIT
+>+
 >+set -x
->+echo "$input" | "$@"
+>+
+>+$qemu -d plugin -D $tmp/plugin "$@" |& tee $tmp/output
+>+cat $tmp/plugin
+>+$check_cmd $tmp/output $tmp/plugin
 >-- 
->2.43.0
->
+
+Could we write a single python script for all the shell script wrappers 
+and use a different kind of wrapper depending on its command line 
+flags/subcommand we invoke it with? 
+
+Maybe this could be better? WDYT?
 
