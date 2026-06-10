@@ -4,149 +4,64 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 708FBCD8CB9
-	for <qemu-devel@archiver.kernel.org>; Wed, 10 Jun 2026 11:30:19 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 31F9ACD8CB2
+	for <qemu-devel@archiver.kernel.org>; Wed, 10 Jun 2026 11:32:34 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wXH8A-0003Cc-Oy; Wed, 10 Jun 2026 07:29:58 -0400
+	id 1wXHAT-0004AW-18; Wed, 10 Jun 2026 07:32:21 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@oss.qualcomm.com>)
- id 1wXH86-0003Bu-SD
- for qemu-devel@nongnu.org; Wed, 10 Jun 2026 07:29:55 -0400
-Received: from mx0a-0031df01.pphosted.com ([205.220.168.131])
+ (Exim 4.90_1) (envelope-from <odaki@rsg.ci.i.u-tokyo.ac.jp>)
+ id 1wXHAJ-00049s-S3
+ for qemu-devel@nongnu.org; Wed, 10 Jun 2026 07:32:13 -0400
+Received: from www3579.sakura.ne.jp ([49.212.243.89])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@oss.qualcomm.com>)
- id 1wXH85-0007dz-AT
- for qemu-devel@nongnu.org; Wed, 10 Jun 2026 07:29:54 -0400
-Received: from pps.filterd (m0279865.ppops.net [127.0.0.1])
- by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 65ABNgOL3657961
- for <qemu-devel@nongnu.org>; Wed, 10 Jun 2026 11:29:52 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
- cc:content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
- okXBiK4eKvcq4Rk7imeR5oQ1kv1MyaAvdTZabkUpJYY=; b=hsnkE9Wth3O6MRVD
- 7uynxJhGIpZXRAfoc1PRLIYxidoS12JXHRLiKArPrqb6e/gQ+HBc+gpolumznEK1
- cqWnfcoZk9dgnFMQitHsr0N+y9sxnkg6P9n5m4r8oR9BWSX4yDxRQgpUe61FVVCq
- JrMoW5BRIw7VrY0Azfr4XnNwEp3x30oriLpTdF6ClFB6ezt+pJ8Mn4IXfV3MjVQ2
- kfzoope6QDUOo/VyGcqm4FrT6gQ15YvyCp9g5VeZlWDcvbcCRHbLvewZfD9JwwlF
- iIDmLXdH0zrorRV3FMfUZwzNnFP13KrHfDPXWmYWX6u1Ma0WulkRiHfOKs4JMzW5
- bR1KFQ==
-Received: from mail-qt1-f200.google.com (mail-qt1-f200.google.com
- [209.85.160.200])
- by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4epwnet7vt-1
- (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
- for <qemu-devel@nongnu.org>; Wed, 10 Jun 2026 11:29:51 +0000 (GMT)
-Received: by mail-qt1-f200.google.com with SMTP id
- d75a77b69052e-517c65e497eso12568211cf.2
- for <qemu-devel@nongnu.org>; Wed, 10 Jun 2026 04:29:51 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=oss.qualcomm.com; s=google; t=1781090991; x=1781695791; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=okXBiK4eKvcq4Rk7imeR5oQ1kv1MyaAvdTZabkUpJYY=;
- b=HMQMbI7ItHv4JECBvkKGxaWRRI7mHcYQBkvr71wvL2eqmsOxfJrnCEw72nlBeLPigN
- v74Vw+hPnfv+rGht5nydD0la0LMnrkqpaCgc9lxKqmOpuWIR94RZUrH1GYcxQjxKk/Wz
- LCE0Dcuv2wEybEdSxLi5bB7AjAzgCtE4vlJIs1v17CIgxuimzzL6C3Mwogf1p4lqrUjt
- 38V4yRHnkIlOLfdcuBKCO8zDafeKFcT+XsyzCWED8m8Ad+4r/h0cVWTIct1DA1uYz5fV
- ntH/rVnrcZ0W3Kh/3vZoibjdwBaLsujE9GkVtqXqOIsdMySQm1UGq0sQXkn4mW+xxB23
- RLiA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1781090991; x=1781695791;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=okXBiK4eKvcq4Rk7imeR5oQ1kv1MyaAvdTZabkUpJYY=;
- b=me0jel8dbgNzyQoWQycoNsHgLVzxGx7x0v+WETA2pi3gj3mbHB78fz8HZJVgalJB+C
- evrNIeOMEBk7fyO4BIL0oDR5h6aOX8TVrvWFqYj4/62mc5/Svw1sxWPS0UvKf4yhh5CB
- OYWx9i8FH3AaJ2BdY5zRlf52KQFahj0naiGXsdplU1qiA8ATEWLsvy6PnHGoiyDZqp4t
- WX7/D8wM/6sZQPemXOJouxihTes2toYKf6Fubl3u2RD+xfHnx5AQPx35j1+D2sahquZJ
- EZ/HmtKrK8txh/CHvtHunvGtzrL/HnsRw2Z09WmGhxdNsfTBbyOBzsRSiV8M7nMvN9JQ
- 4WaQ==
-X-Forwarded-Encrypted: i=1;
- AFNElJ+nieFGcQAquiZw4eoyavtCCIcPmk0l4iimhLy0pd4KeiKgO7U9WeW64g1WINcEy+pn/V/ZBJlEVkK4@nongnu.org
-X-Gm-Message-State: AOJu0Yz+MGZS1baQftahiZNar4C2oy7l0vtyDvMgW54tQfFxorB2Erod
- MiCEC3QbNL3OsYaRjOX+7RVPQk+6xwPHuEB4oW61nNKxIcS6QeJszRzzPPk2RtnowCrdPhMuMRB
- BKQ3iH+dXHi1bHmGEGIwPDlJJV3ItPC3TXllx2IOSsWkGaS7bJ0sli3B8UA==
-X-Gm-Gg: Acq92OGdN7UqXII7b1omvzXr8g5aWNHkPx6Az3b78dMlRWefMvWBcL2EkhvsRxdyH56
- 4E6zF2+YGnvOFbQ0CUXFErmB51L9/1SuYLMiQl9KrDkv3PfkqdOixxlKw7XBuYTGlz1QgjXqt1D
- xzA34zbYbvtj0jkWnIBaVlb0K4eySEavMHFr75lYHuz23FfVqs2e45bDOUeJ2UnTo0ofOBdkUKZ
- aqqPR35A4FVp++21ps0uiES9Y7L8R/QiRcraOWX0GvBrB7tKIzjjjayUMxZsFJwAleUcSphjPn0
- B/mZG3IzNxSPQ8WQHusJw850+bqQbgI+0jKecC76oSO3st9T+Vk3bntcKOT6+TrnjvJI64/P1MK
- 5OKCz5/4zYnItEVDv2Mx5U4hsesd6KPmKfteAdhH9mNN6AJ5Pwcb3CYHNxAiGD+n1sbDjiQ7k/0
- qHuEQ=
-X-Received: by 2002:a05:622a:608c:b0:517:8242:5bc1 with SMTP id
- d75a77b69052e-517ca552787mr97935831cf.15.1781090990963; 
- Wed, 10 Jun 2026 04:29:50 -0700 (PDT)
-X-Received: by 2002:a05:622a:608c:b0:517:8242:5bc1 with SMTP id
- d75a77b69052e-517ca552787mr97935521cf.15.1781090990622; 
- Wed, 10 Jun 2026 04:29:50 -0700 (PDT)
-Received: from [10.156.84.244] (49.170.88.92.rev.sfr.net. [92.88.170.49])
- by smtp.gmail.com with ESMTPSA id
- a640c23a62f3a-bf054e05199sm1149115266b.29.2026.06.10.04.29.48
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 10 Jun 2026 04:29:49 -0700 (PDT)
-Message-ID: <efff6e73-c922-4431-b662-4fbba7c8b92d@oss.qualcomm.com>
-Date: Wed, 10 Jun 2026 13:29:48 +0200
+ (Exim 4.90_1) (envelope-from <odaki@rsg.ci.i.u-tokyo.ac.jp>)
+ id 1wXHAG-000826-OI
+ for qemu-devel@nongnu.org; Wed, 10 Jun 2026 07:32:11 -0400
+Received: from [133.11.54.183] (h183.csg.ci.i.u-tokyo.ac.jp [133.11.54.183])
+ (authenticated bits=0)
+ by www3579.sakura.ne.jp (8.16.1/8.16.1) with ESMTPSA id 65ABViBS026848
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NO);
+ Wed, 10 Jun 2026 20:31:45 +0900 (JST)
+ (envelope-from odaki@rsg.ci.i.u-tokyo.ac.jp)
+DKIM-Signature: a=rsa-sha256; bh=FAoOcSvRYN2kQuQkL4o0pAxU0TiG/7SbK4b0rii4Sno=; 
+ c=relaxed/relaxed; d=rsg.ci.i.u-tokyo.ac.jp;
+ h=From:Message-ID:To:Subject:Date;
+ s=rs20250326; t=1781091105; v=1;
+ b=rGV06O5LudMYBwdSZW/Cnkqed9MxmhEiMTHrlP1zTy5wB7ycnan95OUj9RDMQnYy
+ QatpnF7GJFeMBCnffVUxTzvAFR5bWKpMZPx90VK4MAOqGfbztMbBrPoJ7cWK+rWG
+ 1gKynYXuftihADMBFmAHydy92f2OrxmL9P1eaiwvFp2IdwIlr+lMO76savlzoxed
+ rkfkUjjgSiV8vErewbmmGUEXmOtqYo4JWfpsR0TiLQHLYBD8R+7rKzsm9kmkh+q7
+ wgISdFYm2VzTkMQcObW/XQbYZapEhpRSXp7V0dHAIQGtneSPK1iHj5s7W3ZgEPin
+ Y2HmdHntj0L4agjozacGKw==
+Message-ID: <fb963da2-2369-41d4-a510-cfd470a4054f@rsg.ci.i.u-tokyo.ac.jp>
+Date: Wed, 10 Jun 2026 20:31:44 +0900
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 07/22] ui/input: remove double-notification on
- qemu_mouse_set()
+Subject: Re: [PATCH v2] memory/ramblock: Fix clear of mru_block on possible
+ race condition
+To: Peter Xu <peterx@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>
+Cc: qemu-devel@nongnu.org, Juraj Marcin <jmarcin@redhat.com>,
+ =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@mailo.com>,
+ =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ Fabiano Rosas <farosas@suse.de>
+References: <20260604133429.1268084-1-peterx@redhat.com>
+ <c189e708-f9ac-4ed1-ad93-04d8916afac3@redhat.com> <aicUjHfCBdXEczsN@x1.local>
 Content-Language: en-US
-To: =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>,
- qemu-devel@nongnu.org
-Cc: "Dr. David Alan Gilbert" <dave@treblig.org>,
- Paolo Bonzini <pbonzini@redhat.com>,
- Richard Henderson <richard.henderson@linaro.org>,
- "Michael S. Tsirkin" <mst@redhat.com>,
- Gerd Hoffmann <kraxel@redhat.com>, Jan Kiszka <jan.kiszka@web.de>,
- Peter Maydell <peter.maydell@linaro.org>, qemu-arm@nongnu.org,
- Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>, qemu-ppc@nongnu.org,
- Thomas Huth <th.huth+qemu@posteo.eu>
-References: <20260610-ui-input-v2-0-f68452dd6a22@redhat.com>
- <20260610-ui-input-v2-7-f68452dd6a22@redhat.com>
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>
-In-Reply-To: <20260610-ui-input-v2-7-f68452dd6a22@redhat.com>
+From: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
+In-Reply-To: <aicUjHfCBdXEczsN@x1.local>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-X-Proofpoint-GUID: kfM6PTFDb1l3GVPspWJ5bwnn_MQbtoX7
-X-Authority-Analysis: v=2.4 cv=ebYNubEH c=1 sm=1 tr=0 ts=6a294aaf cx=c_pps
- a=JbAStetqSzwMeJznSMzCyw==:117 a=YLXAUxGLE6hMr2F5uSHVqQ==:17
- a=IkcTkHD0fZMA:10 a=FelO9ux0wxsA:10 a=M51BFTxLslgA:10 a=s4-Qcg_JpJYA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=Um2Pa8k9VHT-vaBCBUpS:22
- a=20KFwNOVAAAA:8 a=EUspDBNiAAAA:8 a=GW2pR1Yr4Io_S7K71m4A:9 a=3ZKOabzyN94A:10
- a=QEXdDO2ut3YA:10 a=1k1Y3PzgwnwA:10 a=uxP6HrT_eTzRwkO_Te1X:22
-X-Proofpoint-ORIG-GUID: kfM6PTFDb1l3GVPspWJ5bwnn_MQbtoX7
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNjEwMDEwOSBTYWx0ZWRfXw+nXwBIfF4Ft
- y9RMqChVJti+4w5Sja2N5jAlzt/eOJcuU5h9K35Rg83DSoKsu3mNhEPd4cSqhc4MahKDT1AxAZV
- qLQX9XbMOavBAy7CNR6F0lF6SHgJo+qVPULNa6aOORoIPrcxfTNOfxqTuun6wfPEJPIL6dW2H1q
- fJyPEAWHkyedxJfkQ5ZHAUJi5DCplo45iWT0GmpFJtlHw5lvrX690npEb9FGbJlZRBQA8DUv40V
- JrR4bgqZ1Vad2V9PTbRMq+bq5mYieKkc93DLFn/SMO6QjBb6DD8IsAM2LaV+JQlHaa3fyOXfM2Z
- gByN5XTmdnmLvgN44U+P6+0xyqZ8cGP8slLYHNyFRjCPCvJTj6bobPqTRY1Kpb8mNRy6dmoeJm2
- zXGE4KIq7gUOwQeB8pCoEIgSodxobjMNul84iCruAcEzR2WU389ze756230Ij69q2j6vYtYdRay
- Fe9ydY47qPKFjv3D7hA==
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.125,FMLib:17.12.100.49
- definitions=2026-06-10_02,2026-06-09_02,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- malwarescore=0 impostorscore=0 spamscore=0 bulkscore=0 clxscore=1015
- suspectscore=0 phishscore=0 adultscore=0 lowpriorityscore=0
- priorityscore=1501 classifier=typeunknown authscore=0 authtc= authcc=
- route=outbound adjust=0 reason=mlx scancount=1 engine=8.22.0-2605210000
- definitions=main-2606100109
-Received-SPF: pass client-ip=205.220.168.131;
- envelope-from=philmd@oss.qualcomm.com; helo=mx0a-0031df01.pphosted.com
-X-Spam_score_int: -27
-X-Spam_score: -2.8
-X-Spam_bar: --
-X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=49.212.243.89;
+ envelope-from=odaki@rsg.ci.i.u-tokyo.ac.jp; helo=www3579.sakura.ne.jp
+X-Spam_score_int: -16
+X-Spam_score: -1.7
+X-Spam_bar: -
+X-Spam_report: (-1.7 / 5.0 requ) BAYES_00=-1.9, DKIM_INVALID=0.1,
+ DKIM_SIGNED=0.1, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -162,13 +77,304 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 10/6/26 12:56, Marc-André Lureau wrote:
-> qemu_input_handler_activate() already notifies.
+On 2026/06/09 4:14, Peter Xu wrote:
+> On Mon, Jun 08, 2026 at 06:05:34PM +0200, Paolo Bonzini wrote:
+>> On 6/4/26 15:34, Peter Xu wrote:
+>>> The race condition was not reported in any real bug, but I found it while
+>>> reviewing some relevant chnages from Akihiko [1].  It's not clear if
+>>> there's any way to reproduce it, so far it's only theoretical.  Hence
+>>> there's also no Fixes tag attached.  There's also no need to copy stable
+>>> until we have a solid reproducer.
+>>>
+>>> Currently, mru_block might still points to ramblocks that are removed if
+>>> below race condition happens:
+>>>
+>>>     Reader A                              Writer
+>>>     --------                              ------
+>>>     rcu_read_lock()
+>>>     walk list, find block X
+>>>                                           QLIST_REMOVE_RCU(X)
+>>>                                           qatomic_set(&mru_block, NULL)
+>>>                                           call_rcu(X, reclaim_ramblock)
+>>>     qatomic_set(&mru_block, X)  <----------- overwrites NULL
+>>>     rcu_read_unlock()
+>>>                                           grace period ends, X freed
+>>>
+>>>     Reader C
+>>>     --------
+>>>     rcu_read_lock()
+>>>     qatomic_rcu_read(&mru_block) -> X
+>>>     Read X's block->offset ...  <----------- UAF
+>>>
+>>> To fix it, we can introduce a nested RCU free for reset of the mru_block
+>>> field, and only free the ramblock until the 2nd RCU call.
+>>
+>> There is a version field in RAMList.  Maybe we need mru_version too?
+>>
+>> - reader A reads version before starting the list walk, then writes
+>> mru_version and mru_block
+>>
+>> - writers update version and do not even have to clear mru_block
+>>
+>> - new readers ignore mru_block if mru_version != version
+>>
+>> This works, but there is a snag:
+>>
+>>      reader A (MRU parts elided, assuming a miss)
+>>      --------------------------------------------
+>>      load_acquire version // load version before walking list
+>>      walk list
+>>      ...
+>>
+>>              writer B
+>>              -----------------------
+>>              // like seqcount_write_begin
+>>              store version++
+>>              smp_wmb();
+>>              // ----
+>>              QLIST_REMOVE_RCU
+>>              store release version++  // like seqcount_write_end
+>>
+>>      // these two must be atomic!
+>>      store release mru_version = version & ~1, mru_block = block
+>>
+>>      reader C (MRU parts shown)
+>>      --------------------
+>>      load_acquire mru_version    // like seqcount_read_begin
+>>      load mru_block
+>>      // like seqcount_read_retry
+>>      smp_rmb()
+>>      load_acquire version
+>>      // ----
+>>      if block == NULL || version != mru_version || block mismatch
+>>        walk list
+>>
+>> In other words, the seqcount retry check compares the current version of the
+>> list against the one *stored by the previous reader*.
+>>
+>> The snag is that torn writes of the (version, block) pair are a problem, so
+>> the store of mru_version and mru_block must be atomic and that requires
+>> CONFIG_ATOMIC128.  Maybe avoid MRU altogether if it's not available, and if
+>> it is use qatomic_read__nocheck/qatomic_set__nocheck?
 > 
-> Signed-off-by: Marc-André Lureau <marcandre.lureau@redhat.com>
-> ---
->   ui/input.c | 1 -
->   1 file changed, 1 deletion(-)
+> Indeed looks like having mru_version is another possible solution, but I
+> also don't see how we can avoid using 128b atomic..  Besides, the logic
+> seems to be slightly involved: I tried to write another patch with
+> QemuSeqLock which seems cleaner, and I've attached it at the end.. only
+> pesudo code and I left a comment for the atomic 128b update.
+> 
+> NOTE: in that patch I also removed version update for adding new ramblocks
+> because IIUC we don't need it.  If anyone thinks that's a good idea that
+> can be done separately.. but it shouldn't matter a lot with current master.
+> 
+> Shall we just stick with the RCU nested free approach?  Personally I think
+> it's still straightforward and less overhead (no penalty on reader at all).
 
-Reviewed-by: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
+I agree. I think the RCU nested free approach unless there is an 
+advantage of having mru_version I missed.
+
+Regards,
+Akihiko Odaki
+
+> 
+> Thanks,
+> 
+> ===8<===
+> 
+>  From a04e925f5b9c82b07a38f801b73095cd3a71e91b Mon Sep 17 00:00:00 2001
+> From: Peter Xu <peterx@redhat.com>
+> Date: Mon, 8 Jun 2026 14:45:01 -0400
+> Subject: [PATCH] fix mru_block
+> 
+> Signed-off-by: Peter Xu <peterx@redhat.com>
+> ---
+>   include/system/ramlist.h |  9 +++++-
+>   migration/ram.c          | 11 ++++---
+>   system/physmem.c         | 63 +++++++++++++++++++++++++---------------
+>   3 files changed, 54 insertions(+), 29 deletions(-)
+> 
+> diff --git a/include/system/ramlist.h b/include/system/ramlist.h
+> index c7f388f487..b2b4403e13 100644
+> --- a/include/system/ramlist.h
+> +++ b/include/system/ramlist.h
+> @@ -5,6 +5,7 @@
+>   #include "qemu/thread.h"
+>   #include "qemu/rcu.h"
+>   #include "qemu/rcu_queue.h"
+> +#include "qemu/seqlock.h"
+>   #include "system/ram_addr.h"
+>   
+>   typedef struct RAMBlockNotifier RAMBlockNotifier;
+> @@ -42,12 +43,18 @@ typedef struct {
+>   
+>   typedef struct RAMList {
+>       QemuMutex mutex;
+> +    /* Version of the ram_list that found mru_block, must be an even number */
+> +    unsigned mru_version;
+>       RAMBlock *mru_block;
+>       /* RCU-enabled, writes protected by the ramlist lock. */
+>       QLIST_HEAD(, RAMBlock) blocks;
+>       DirtyMemoryBlocks *dirty_memory[DIRTY_MEMORY_NUM];
+>       unsigned int num_dirty_blocks;
+> -    uint32_t version;
+> +    /*
+> +     * Version of the ram_list.  NOTE: currently we only boost this when
+> +     * ramblocks are removed.
+> +     */
+> +    QemuSeqLock version;
+>       QLIST_HEAD(, RAMBlockNotifier) ramblock_notifiers;
+>   } RAMList;
+>   extern RAMList ram_list;
+> diff --git a/migration/ram.c b/migration/ram.c
+> index 6da24d7258..14bce73f75 100644
+> --- a/migration/ram.c
+> +++ b/migration/ram.c
+> @@ -380,7 +380,7 @@ struct RAMState {
+>       /* Last dirty target page we have sent */
+>       ram_addr_t last_page;
+>       /* last ram version we have seen */
+> -    uint32_t last_version;
+> +    unsigned last_version;
+>       /* How many times we have dirty too many pages */
+>       int dirty_rate_high_cnt;
+>       /* these variables are used for bitmap sync */
+> @@ -2487,6 +2487,7 @@ static void ram_page_hint_reset(PageLocationHint *hint)
+>   
+>   static void ram_state_reset(RAMState *rs)
+>   {
+> +    unsigned version;
+>       int i;
+>   
+>       for (i = 0; i < RAM_CHANNEL_MAX; i++) {
+> @@ -2497,10 +2498,12 @@ static void ram_state_reset(RAMState *rs)
+>       rs->last_page = 0;
+>   
+>       /* Read version before ram_list.blocks */
+> -    rs->last_version = qatomic_load_acquire(&ram_list.version);
+> +    do {
+> +        version = seqlock_read_begin(&ram_list.version);
+> +    } while (seqlock_read_retry(&ram_list.version, version));
+>   
+> +    rs->last_version = version;
+>       rs->xbzrle_started = false;
+> -
+>       ram_page_hint_reset(&rs->page_hint);
+>   }
+>   
+> @@ -3273,7 +3276,7 @@ static int ram_save_iterate(QEMUFile *f, void *opaque)
+>        */
+>       WITH_QEMU_LOCK_GUARD(&rs->bitmap_mutex) {
+>           WITH_RCU_READ_LOCK_GUARD() {
+> -            if (qatomic_read(&ram_list.version) != rs->last_version) {
+> +            if (seqlock_read_retry(&ram_list.version, rs->last_version)) {
+>                   ram_state_reset(rs);
+>               }
+>   
+> diff --git a/system/physmem.c b/system/physmem.c
+> index 9e1ac13e82..1960dc64a7 100644
+> --- a/system/physmem.c
+> +++ b/system/physmem.c
+> @@ -821,11 +821,29 @@ AddressSpace *cpu_get_address_space(CPUState *cpu, int asidx)
+>   static RAMBlock *qemu_get_ram_block(ram_addr_t addr)
+>   {
+>       RAMBlock *block;
+> +    unsigned version = ram_list.mru_version;
+>   
+>       block = qatomic_rcu_read(&ram_list.mru_block);
+> -    if (block && addr - block->offset < block->max_length) {
+> +    /*
+> +     * Don't use MRU one if ramblock might be removed or being removed.
+> +     * While if we see the version hasn't incremented it means even if
+> +     * there's a concurrent writer it needs to wait for this rcu reader to
+> +     * finish using the ramblock, hence it's still safe.
+> +     *
+> +     * Also due to above, we must check seqlock_read_retry() first before
+> +     * de-referencing block pointer here to make sure it's still not freed.
+> +     */
+> +    if (!seqlock_read_retry(&ram_list.version, version) &&
+> +        block && addr - block->offset < block->max_length) {
+>           return block;
+>       }
+> +
+> +    /*
+> +     * Read the current ram_list version. This is only needed for updating
+> +     * mru_block; it's always safe to walk ram_list under RCU read lock.
+> +     */
+> +    version = seqlock_read_begin(&ram_list.version);
+> +
+>       RAMBLOCK_FOREACH(block) {
+>           if (addr - block->offset < block->max_length) {
+>               goto found;
+> @@ -836,23 +854,10 @@ static RAMBlock *qemu_get_ram_block(ram_addr_t addr)
+>       abort();
+>   
+>   found:
+> -    /* It is safe to write mru_block outside the BQL.  This
+> -     * is what happens:
+> -     *
+> -     *     qatomic_set(&mru_block, xxx)
+> -     *     rcu_read_unlock()
+> -     *                                        xxx removed from list
+> -     *                  rcu_read_lock()
+> -     *                  read mru_block
+> -     *                                        qatomic_set(&mru_block, NULL);
+> -     *                                        call_rcu(reclaim_ramblock, xxx);
+> -     *                  rcu_read_unlock()
+> -     *
+> -     * qatomic_rcu_set is not needed here.  The block was already published
+> -     * when it was placed into the list.  Here we're just making an extra
+> -     * copy of the pointer.
+> -     */
+> -    qatomic_set(&ram_list.mru_block, block);
+> +    /* Only update mru_block if no ramblock is removed or being removed */
+> +    if (!seqlock_read_retry(&ram_list.version, version)) {
+> +        // atomic set both ram_list.mru_version/mru_block...
+> +    }
+>       return block;
+>   }
+>   
+> @@ -2260,10 +2265,12 @@ static void ram_block_add(RAMBlock *new_block, Error **errp)
+>       } else { /* list is empty */
+>           QLIST_INSERT_HEAD_RCU(&ram_list.blocks, new_block, next);
+>       }
+> -    qatomic_set(&ram_list.mru_block, NULL);
+>   
+> -    /* Write list before version */
+> -    qatomic_store_release(&ram_list.version, ram_list.version + 1);
+> +    /*
+> +     * NOTE: we don't update ram_list.version when adding new ramblocks,
+> +     * because the version is currently only used to invalidate cached
+> +     * pointers to removed ramblocks.  No user cares about additions.
+> +     */
+>       qemu_mutex_unlock_ramlist();
+>   
+>       physical_memory_set_dirty_range(new_block->offset,
+> @@ -2603,15 +2610,23 @@ void qemu_ram_free(RAMBlock *block)
+>                                   block->max_length);
+>       }
+>   
+> +    /*
+> +     * We can use seqlock_write_[un]lock(), however stick with the helpers
+> +     * when they're available to make it easier to track writers.
+> +     */
+>       qemu_mutex_lock_ramlist();
+> +    seqlock_write_begin(&ram_list.version);
+> +
+>       name = cpr_name(block->mr);
+>       cpr_delete_fd(name, 0);
+>       QLIST_REMOVE_RCU(block, next);
+> +    /* while version is odd, nobody will be updating this.. */
+>       qatomic_set(&ram_list.mru_block, NULL);
+> -    /* Write list before version */
+> -    qatomic_store_release(&ram_list.version, ram_list.version + 1);
+> -    call_rcu(block, reclaim_ramblock, rcu);
+> +
+> +    seqlock_write_end(&ram_list.version);
+>       qemu_mutex_unlock_ramlist();
+> +
+> +    call_rcu(block, reclaim_ramblock, rcu);
+>   }
+>   
+>   #ifndef _WIN32
+
 
