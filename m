@@ -4,79 +4,80 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 34442CD8CB2
-	for <qemu-devel@archiver.kernel.org>; Wed, 10 Jun 2026 16:12:53 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 667BECD8CB9
+	for <qemu-devel@archiver.kernel.org>; Wed, 10 Jun 2026 16:13:04 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wXLXG-0007YZ-8o; Wed, 10 Jun 2026 12:12:10 -0400
+	id 1wXLXo-00083W-DR; Wed, 10 Jun 2026 12:12:45 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1wXLXE-0007Xt-EB
- for qemu-devel@nongnu.org; Wed, 10 Jun 2026 12:12:08 -0400
-Received: from mail-wm1-x32b.google.com ([2a00:1450:4864:20::32b])
+ id 1wXLXV-0007iE-DW
+ for qemu-devel@nongnu.org; Wed, 10 Jun 2026 12:12:27 -0400
+Received: from mail-wm1-x32f.google.com ([2a00:1450:4864:20::32f])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1wXLXC-0005ON-20
- for qemu-devel@nongnu.org; Wed, 10 Jun 2026 12:12:08 -0400
-Received: by mail-wm1-x32b.google.com with SMTP id
- 5b1f17b1804b1-490b2b037d2so61172345e9.3
- for <qemu-devel@nongnu.org>; Wed, 10 Jun 2026 09:12:05 -0700 (PDT)
+ id 1wXLXT-0005VJ-P0
+ for qemu-devel@nongnu.org; Wed, 10 Jun 2026 12:12:25 -0400
+Received: by mail-wm1-x32f.google.com with SMTP id
+ 5b1f17b1804b1-490aaeabdb4so45681165e9.1
+ for <qemu-devel@nongnu.org>; Wed, 10 Jun 2026 09:12:23 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1781107924; x=1781712724; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:subject:to
- :from:from:to:cc:subject:date:message-id:reply-to;
- bh=vQGFDL4RYImetriXO4xxE5fhZKedj1I/7twE8lmv9iQ=;
- b=sk7JY5kE25bMmT431qfICJ7OQx3DQbifGS40eHnmPPG4ZWaidboCX8OJjjXGJ2QZ3m
- dFPnW0E8s5DXEGzcq3JO11aAVrxcF8U+MS2GXshKtpJ9TuywMN9UD8x2wn21gkxIJ0mw
- eh/bGDz1gylU0FwqPBwYf3Ftm4jtMKTJA7RWksBUwNGDQzAw9vDRXbC/FhrVaEWjej0j
- SsQ3eLTMQvoGz2yKUHfnKdteP5WHvef4miJhxKDRmYrfVZxIw13j5W4qxkWMhasMdbL5
- PGjhtYy8UDi+dvlAqptvVfSPpUoIzfzSgd8tAPVfwlcE5AcIEVSq0NY4RZEe64oXLF8N
- a9QQ==
+ d=linaro.org; s=google; t=1781107942; x=1781712742; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
+ :reply-to; bh=y9bfY6SZ7Mqytp3KNtRVErbMA8CaOzHhsEk9wJ/yFSQ=;
+ b=d/Adjsy48LTqwkrli7FVK+CNOKyDuMI/g5/BfoxzA6pQus4wie1t9uqzlzUic2qRaC
+ CrFnyk3IScEucWjOEQrxhvxFCGWT7KA+QN6DomTYD7dHH+AqRwvg/px13x7ECcDMZweV
+ QOhJObtlwvJWDi9woK/M+YBvAMrWQ1zTynt/sPoTK97QgPbcUvf0MsY3iTckulcmVZ/u
+ iV4WM4cWnvsyjlz1BGlB/KLy+1D1E040TUQ/z2mHYr/3ZJzGrNwZlMKCDPnz6qxsxFnd
+ cOn39v2r2FfDdLxOM9Z6qd153AJpBIySpB+GA/0wefizUp9ljVUtoUAyzhdh+4e5ZIoY
+ AXeg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1781107924; x=1781712724;
- h=content-transfer-encoding:mime-version:message-id:date:subject:to
- :from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=vQGFDL4RYImetriXO4xxE5fhZKedj1I/7twE8lmv9iQ=;
- b=lCQDJh/McrbAInV9N1zz1vWTZSm7RoK1aEvZOqQ/eb0cMohZRzEt7/uQ6wLnApgvjt
- 4RnmfaZlmuMMMjU5CXkr15ZoTX0gvhMLIIhIEMGEezN0wruXDLjGnSkPSpeIjp9y6UDS
- +gyrXOlRZSHntQXn632oWWL3bQ79weHCtuxIa1234Z1zCbfkWd+6nkTinPgzdQibG2Jg
- HH62ODb1qUI5X6Qo+glqkD/zNHWRbYlUOy7wmCU8vybvrZIOT1hSMrHdZNc4ua9YR6ml
- /hPL0kdVMDTs+Pkat/6+GFGxt/IDsZq3DaWv5WQip3402MANquO9m+zYfd8UfhSop56R
- RGfQ==
-X-Gm-Message-State: AOJu0YzvxHnt2Y5KtEo2LygByYwa3jAQxzKhYZ/pS1EA63QMvwBPyoUA
- IC9Sw05o819Xq0Z8+wdz01aqqH0Lh/AT6OLbJVQ12iPi0GVqpnLAkkM8yn6PdmKDuh4MTAsGFu0
- xzGc0
-X-Gm-Gg: Acq92OEU1nfoqrGNClJj+sez9UovQVxTL1o6KCQpSBpIgUkPVQJ//zk94jM+QNShOXb
- FLAureURXSgU0SIH5PC30aPuu76vx0D7rvmOUN9qBW/As6gAfK1umacCqFo+4VLSwtZ9HEjmQ8t
- +V8OJ44cBStvIDHSPUqXW6FVDZRzTgUkEhAiiFQbWA3yWXzDga4nUmzr9cI9zr4Ony7qWagb4op
- XloBumakMo8QnFHGSuDqQpv6JdjNNO4V9wV3hr9fd+ENkEWOKkkOSUDmFBWK3RJSK/Vt7Iepf2a
- qu7w9o7qfxoGiLRZRTw+ppj7CWdkE5lGlu5D5rKqWN58Xsz17IeDvXOrjE31ykHp9R5U/uDHClg
- z5xZdz+WnK01vzQctBYw5qBhlUSzg5oAMNJi8AUPPVwwFOjoEwimcfpw5wkJ0Lw57IdhdM8h9Me
- sP7i5Lw6/W6h3CJvkLoyWPRTVmy0M53ybsR1fQgDXqdQTejjbV6+VIxGA8SamL4+oJxhDnHr5zD
- rBkhhY9SfSo1IXIzM/h5VyLGqd+59cEHyoRBhaTRiw=
-X-Received: by 2002:a05:600c:6096:b0:48f:e3e7:3d39 with SMTP id
- 5b1f17b1804b1-490c25c70cfmr426545475e9.11.1781107924378; 
- Wed, 10 Jun 2026 09:12:04 -0700 (PDT)
+ d=1e100.net; s=20251104; t=1781107942; x=1781712742;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:to:from:x-gm-gg:x-gm-message-state:from:to
+ :cc:subject:date:message-id:reply-to;
+ bh=y9bfY6SZ7Mqytp3KNtRVErbMA8CaOzHhsEk9wJ/yFSQ=;
+ b=Gi08aczM+S+xB2fIMQlrbdzK5bIQWB7CMLz85ZTjKfHPFLBY4QbcQt76GPODJuxqG8
+ 8HsB3UBVdKcgvPgIDnOhNplz3fR1VBP0U4srBdcVpAEjFfQaR367QjmbOWkInjO0Yu33
+ 965+r7/PrXZKkbR2/+G3yW6xs4t9P+IyzdJJJcJttnQs/0nRjiIokoGijPV1cEQnzSVS
+ lYFeZ2Xddqgz/9U35BLbxIo+zBRgEOINf9+n6yNJg60QUGxA31m7zIInxLLHhSayhj67
+ rs0eq+HvwT0+LFD/eFxniZTzyVXiwdr4S9xyfqoh1VNNtsxi2zsvU1Rj7pF2fxhIObEM
+ e/aA==
+X-Gm-Message-State: AOJu0YxXErA2rGKrohiT5pd937uzP1gWVLVoJKKsWtv/cGhvroYifRiv
+ ddzpz+BdTv/ZFhQnwgokxUQ+eJSWz1ruNyZ5125Q8wgj1ja0ImNzFrfYS4DK9tJnEPuDY3mvEET
+ ynCyH
+X-Gm-Gg: Acq92OGprsiC7ImfbeL7BddPF1oXW0fs7wXDrPJA9WW9sLrR7SgHh+b35vdSUTjCYQI
+ ehsFq2J4uJa/yP/jNCtWxtK+tsv7oOHdOyqaJmadetU+EwzwFtJajPG+yMJdjbU65sMF+VcfZea
+ HvibZ56/Zkv5KpLgZMpesuAgemlXxaEgaofJ07h58klioYihH6bdOe+8XoY/jD0ymz5MxeDPJDQ
+ BDeDODARCel5XUUCUQ8/ABlDGz+SRDA0EAwHy2iN20VzOVg3mOJB/Y9tLsgis3S/XmQE1GVZ/Jf
+ js+O5IMgEwYF6lKlWvPg+NZvaMPD2FK4GKwcEslC1wYZjp6lPpd0HhZ/g3LIP1nG8GvotXR8tYh
+ RoQ7C2R+09g4QK7io6Vz+KrGTW+y96gytV066Cq7pFm8fjHUwUiUc81o4/YEWmCrjX9YRCCzPrU
+ l6zmHmkdutYai7E3Mq6m5HQtA7zUjkyihIXchRwqixgdBoom11URJH7xmR2/wkVgssDNNBhRdKf
+ fS1V7tF4xCXWfXFy/7HotLwvSTANucPVPJAwCUu328=
+X-Received: by 2002:a05:600c:1d27:b0:490:add9:7f88 with SMTP id
+ 5b1f17b1804b1-490c25dd709mr444817285e9.21.1781107942067; 
+ Wed, 10 Jun 2026 09:12:22 -0700 (PDT)
 Received: from lanath.. (wildly.archaic.org.uk. [81.2.115.145])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-4601f2dcbe3sm67911360f8f.8.2026.06.10.09.12.03
+ ffacd0b85a97d-4601f2dcbe3sm67911360f8f.8.2026.06.10.09.12.20
  for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 10 Jun 2026 09:12:03 -0700 (PDT)
+ Wed, 10 Jun 2026 09:12:20 -0700 (PDT)
 From: Peter Maydell <peter.maydell@linaro.org>
 To: qemu-devel@nongnu.org
-Subject: [PULL 00/71] target-arm queue
-Date: Wed, 10 Jun 2026 17:10:51 +0100
-Message-ID: <20260610161202.2235298-1-peter.maydell@linaro.org>
+Subject: [PULL 13/71] target/arm: tag is not a part of PAuth with MTX
+Date: Wed, 10 Jun 2026 17:11:04 +0100
+Message-ID: <20260610161202.2235298-14-peter.maydell@linaro.org>
 X-Mailer: git-send-email 2.43.0
+In-Reply-To: <20260610161202.2235298-1-peter.maydell@linaro.org>
+References: <20260610161202.2235298-1-peter.maydell@linaro.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32b;
- envelope-from=peter.maydell@linaro.org; helo=mail-wm1-x32b.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::32f;
+ envelope-from=peter.maydell@linaro.org; helo=mail-wm1-x32f.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -99,178 +100,90 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi; here's an arm pullreq. The biggest part of this is RTH's
-patches implementing FEAT_FP8 and related features. Gabriel
-Brookman's MTE4 emulation is also in here.
+From: Gabriel Brookman <brookmangabriel@gmail.com>
 
-thanks
--- PMM
+As described in the section on MTX, tag bits should not be used to store
+or compute the PAC when MTX is set. See also Authenticate(),
+InsertPAC(), and Strip().
 
-The following changes since commit de5d8bfd6105d3dd3ae668df9762df244a6d1506:
+Signed-off-by: Gabriel Brookman <brookmangabriel@gmail.com>
+Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+Message-id: 20260529-feat-mte4-v7-12-ccbd3c14eb3c@gmail.com
+Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
+---
+ target/arm/internals.h        | 12 +++++++++++-
+ target/arm/tcg/pauth_helper.c | 18 +++++++++++++++++-
+ 2 files changed, 28 insertions(+), 2 deletions(-)
 
-  Merge tag 'pull-loongarch-20260609' of https://github.com/gaosong715/qemu into staging (2026-06-09 14:00:28 -0400)
+diff --git a/target/arm/internals.h b/target/arm/internals.h
+index cd93499307..21cbd2b1db 100644
+--- a/target/arm/internals.h
++++ b/target/arm/internals.h
+@@ -1840,7 +1840,17 @@ static inline uint64_t pauth_ptr_mask(ARMVAParameters param)
+     int bot_pac_bit = 64 - param.tsz;
+     int top_pac_bit = 64 - 8 * param.tbi;
+ 
+-    return MAKE_64BIT_MASK(bot_pac_bit, top_pac_bit - bot_pac_bit);
++    uint64_t mask = MAKE_64BIT_MASK(bot_pac_bit, top_pac_bit - bot_pac_bit);
++
++    /*
++     * If mtx is enabled, second nibble is not part of PAC. See
++     * InsertPAC().
++     */
++    if (param.mtx) {
++        mask &= ~MAKE_64BIT_MASK(56, 4);
++    }
++
++    return mask;
+ }
+ 
+ /* Add the cpreg definitions for debug related system registers */
+diff --git a/target/arm/tcg/pauth_helper.c b/target/arm/tcg/pauth_helper.c
+index 67c0d59d9e..3d83ca4c3c 100644
+--- a/target/arm/tcg/pauth_helper.c
++++ b/target/arm/tcg/pauth_helper.c
+@@ -342,9 +342,16 @@ static uint64_t pauth_addpac(CPUARMState *env, uint64_t ptr, uint64_t modifier,
+     }
+ 
+     /* Build a pointer with known good extension bits.  */
+-    top_bit = 64 - 8 * param.tbi;
++    top_bit = 64 - 8 * (param.tbi || param.mtx);
+     bot_bit = 64 - param.tsz;
+     ext_ptr = deposit64(ptr, bot_bit, top_bit - bot_bit, ext);
++    /*
++     * If mtx is active but not tbi, then the top 4 bits are replaced with the
++     * ext bit, while leaving bits 56-59 alone. See InsertPAC().
++     */
++    if (param.mtx && !param.tbi) {
++        ext_ptr = deposit64(ext_ptr, 60, 4, ext);
++    }
+ 
+     pac = pauth_computepac(env, ext_ptr, modifier, *key);
+ 
+@@ -377,6 +384,11 @@ static uint64_t pauth_addpac(CPUARMState *env, uint64_t ptr, uint64_t modifier,
+     if (param.tbi) {
+         ptr &= ~MAKE_64BIT_MASK(bot_bit, 55 - bot_bit + 1);
+         pac &= MAKE_64BIT_MASK(bot_bit, 54 - bot_bit + 1);
++    } else if (param.mtx) {
++        ptr &= ~(MAKE_64BIT_MASK(60, 4) |
++                 MAKE_64BIT_MASK(bot_bit, 55 - bot_bit + 1));
++        pac &= MAKE_64BIT_MASK(60, 4) |
++               MAKE_64BIT_MASK(bot_bit, 54 - bot_bit + 1);
+     } else {
+         ptr &= MAKE_64BIT_MASK(0, bot_bit);
+         pac &= ~(MAKE_64BIT_MASK(55, 1) | MAKE_64BIT_MASK(0, bot_bit));
+@@ -424,6 +436,10 @@ static uint64_t pauth_auth(CPUARMState *env, uint64_t ptr, uint64_t modifier,
+     cmp_mask = MAKE_64BIT_MASK(bot_bit, top_bit - bot_bit);
+     cmp_mask &= ~MAKE_64BIT_MASK(55, 1);
+ 
++    if (param.mtx) {
++        cmp_mask &= ~MAKE_64BIT_MASK(56, 4);
++    }
++
+     if (pauth_feature >= PauthFeat_2) {
+         ARMPauthFeature fault_feature =
+             is_combined ? PauthFeat_FPACCOMBINED : PauthFeat_FPAC;
+-- 
+2.43.0
 
-are available in the Git repository at:
-
-  https://gitlab.com/pm215/qemu.git tags/pull-target-arm-20260610
-
-for you to fetch changes up to c45b02cb24ee20ffee2508f50278b392526427eb:
-
-  target/arm: Enable FEAT_F8F16MM for -cpu max (2026-06-10 16:54:40 +0100)
-
-----------------------------------------------------------------
-target-arm queue:
- * Emulate various FP8 related features: FEAT_F8F16MM, FEAT_F8F32MM,
-   FEAT_FP8DOT2, FEAT_SSVE_FP8DOT2, FEAT_FP8DOT4, FEAT_SSVE_FP8DOT4,
-   FEAT_FP8FMA, FEAT_SSVE_FP8FMA, FEAT_SME_LUTv2, FEAT_FP8, FEAT_LUT
- * Emulate MTE4 features: FEAT_MTE_CANONICAL_TAGS,
-   FEAT_MTE_NO_ADDRESS_TAGS, FEAT_MTE_PERM,FEAT_MTE_STORE_ONLY,
-   FEAT_MTE_TAGGED_FAR
- * target/arm: fix WFET typo in syndrome
- * target/arm: Preparatory patches for implementing WFE
- * hw/dma/pl080: Don't use hw_error() for unimplemented features
- * hw/intc/exynos4210_combiner: Avoid hw_error for guest errors
- * hw/usb/hcd-ohci: Clean up USBPacket before freeing ISO TD packet
- * hw/core/qdev-clock: Fix potential null pointer dereference
-
-----------------------------------------------------------------
-Alex Bennée (4):
-      target/arm: fix WFET typo in syndrome
-      target/arm: teach arm_cpu_has_work about halting reasons
-      target/arm: redefine event stream fields
-      target/arm: ensure aarch64 DISAS_WFE will exit
-
-Gabriel Brookman (15):
-      target/arm: implement MTE_PERM
-      target/arm: add TCSO bitmasks to SCTLR
-      target/arm: mte_check unemitted on STORE_ONLY load
-      linux-user: add MTE_STORE_ONLY to prctl
-      target/arm: emit tag check when MTX without TBI
-      target/arm: add MTX to MTEDESC and DisasContext
-      target/arm: add canonical tag check helper
-      target/arm: add canonical MTE check logic
-      target/arm: load on canonical tag loads ext bits
-      target/arm: fault on tag store to canonical tag
-      target/arm: skip tag bit bounds check if MTX is on
-      target/arm: tag is not a part of PAuth with MTX
-      docs: add MTE4 features to docs
-      tests/tcg: add test for MTE FAR
-      tests/tcg: add test for MTE_STORE_ONLY
-
-Munkhbaatar Enkhbaatar (2):
-      hw/usb/hcd-ohci: Assert isochronous TDs are never deferred
-      hw/usb/hcd-ohci: Clean up USBPacket before freeing ISO TD packet
-
-Peter Maydell (2):
-      hw/intc/exynos4210_combiner: Avoid hw_error for guest errors
-      hw/dma/pl080: Don't use hw_error() for unimplemented features
-
-Richard Henderson (47):
-      fpu: Handle all rounding modes in partsN_uncanon_normal
-      fpu: Handle all rounding modes in partsN_round_to_int_normal
-      target/arm: Use FloatParts64 in bfdotadd_ebf
-      target/arm: Drop oddstatus from is_ebf and bfdotadd_ebf
-      target/arm: Use FloatParts64 in f16_dotadd
-      target/arm: Generalize TRANS_FEAT_STREAMING_SME2
-      target/arm: Introduce arm_init_fp_status
-      target/arm: Set e4m3_nan_is_snan
-      target/arm: Implement BF1CVTL, BF1CVTL2, BF2CVTL, BF2CVTL2 for AdvSIMD
-      target/arm: Implement BF1CVT, BF1CVTLT, BF2CVT, BF2CVTLT for SVE
-      target/arm: Rename SME BFCVT patterns to BFCVT_hs
-      target/arm: Implement BF1CVT, BF1CVTL, BF2CVT, BF2CVTL for SME
-      target/arm: Implement F1CVTL, F1CVTL2, F2CVTL, F2CVTL2 for AdvSIMD
-      target/arm: Implement F1CVT, F1CVTLT, F2CVT, F2CVTLT for SVE
-      target/arm: Implement F1CVT, F1CVTL, F2CVT, F2CVTL for SME
-      target/arm: Implement BFCVTN for SVE
-      target/arm: Implement FCVTN (16- to 8-bit fp) for AdvSIMD
-      target/arm: Implement FCVTN, FCVTN2 (32- to 8-bit fp) for AdvSIMD
-      target/arm: Implement FCVTN (16- to 8-bit fp) for SVE
-      target/arm: Implement FCVTNB, FCVTNT for SVE
-      target/arm: Implement FCVT (FP16 to FP8) for SME
-      target/arm: Implement FCVT, FCVTN (FP32 to FP8) for SME
-      target/arm: Implement LUTI2, LUTI4 for AdvSIMD
-      target/arm: Implement LUTI2, LUTI4 for SVE
-      target/arm: Enable FEAT_LUT for -cpu max
-      target/arm: Enable FEAT_FP8 for -cpu max
-      target/arm: Update ID_AA64SMFR0_EL1 fields to ARM M.b
-      target/arm: Implement MOVT (vector to table)
-      target/arm: Implement LUTI4 (four registers, 8-bit)
-      target/arm: Enable FEAT_SME_LUTv2 for -cpu max
-      target/arm: Implement FMLALB, FMLALT for AdvSIMD
-      target/arm: Implement FMLALB, FMLALT (FP8 to FP16) for SVE
-      target/arm: Implement FMLALL{BB, BT, TB, TT} for AdvSIMD
-      target/arm: Implement FMLALL{BB,BT,TB,TT} for SVE
-      target/arm: Enable FEAT_FP8FMA, FEAT_SSVE_FP8FMA for -cpu max
-      target/arm: Implement FDOT (FP8 to FP32) for AdvSIMD
-      target/arm: Implement FDOT (FP8 to FP32) for SVE
-      target/arm: Enable FEAT_FP8DOT4, FEAT_SSVE_FP8DOT4 for -cpu max
-      target/arm: Implement FDOT (FP8 to FP16) for AdvSIMD
-      target/arm: Implement FDOT (FP8 to FP16) for SVE
-      target/arm: Enable FEAT_FP8DOT2, FEAT_SSVE_FP8DOT2 for -cpu max
-      target/arm: Implement FMMLA (FP8 to FP32) for AdvSIMD
-      target/arm: Implement FMMLA (FP8 to FP32) for SVE
-      target/arm: Enable FEAT_F8F32MM for -cpu max
-      target/arm: Implement FMMLA (FP8 to FP16) for AdvSIMD
-      target/arm: Implement FMMLA (FP8 to FP16) for SVE
-      target/arm: Enable FEAT_F8F16MM for -cpu max
-
-hemanshu.khilari.foss (1):
-      hw/core/qdev-clock: Fix potential null pointer dereference
-
- docs/system/arm/emulation.rst        |  16 +
- fpu/softfloat-parts.c.inc            |   5 +
- hw/core/qdev-clock.c                 |   9 +-
- hw/dma/pl080.c                       |   6 +-
- hw/intc/exynos4210_combiner.c        |  29 +-
- hw/usb/hcd-ohci.c                    |  10 +-
- linux-user/aarch64/elfload.c         |  13 +
- linux-user/aarch64/mte_user_helper.c |  11 +-
- linux-user/aarch64/mte_user_helper.h |  14 +-
- linux-user/aarch64/target_prctl.h    |   6 +-
- target/arm/arm-powerctl.c            |   6 +-
- target/arm/cpu-features.h            |  98 ++++
- target/arm/cpu.c                     |  60 ++-
- target/arm/cpu.h                     |  21 +
- target/arm/gdbstub64.c               |   2 +-
- target/arm/helper-fp8.h              |  14 +
- target/arm/helper.c                  |  44 +-
- target/arm/internals.h               |  62 ++-
- target/arm/kvm.c                     |   5 +-
- target/arm/machine.c                 |   2 +-
- target/arm/ptw.c                     |  60 ++-
- target/arm/syndrome.h                |   2 +-
- target/arm/tcg/a64.decode            |  39 ++
- target/arm/tcg/cpu64.c               |  21 +
- target/arm/tcg/fp8_helper.c          | 859 +++++++++++++++++++++++++++++++++++
- target/arm/tcg/helper-a64-defs.h     |  16 +-
- target/arm/tcg/helper-a64.c          |   7 +-
- target/arm/tcg/helper-defs.h         |   6 +
- target/arm/tcg/helper-fp8-defs.h     |  40 ++
- target/arm/tcg/helper-sme-defs.h     |   2 +-
- target/arm/tcg/hflags.c              |  25 +-
- target/arm/tcg/meson.build           |   1 +
- target/arm/tcg/mte_helper.c          | 146 +++++-
- target/arm/tcg/op_helper.c           |   3 +
- target/arm/tcg/pauth_helper.c        |  18 +-
- target/arm/tcg/sme.decode            |  25 +-
- target/arm/tcg/sme_helper.c          | 109 ++---
- target/arm/tcg/sve.decode            |  48 +-
- target/arm/tcg/sve_helper.c          |   6 +-
- target/arm/tcg/translate-a64.c       | 229 ++++++++--
- target/arm/tcg/translate-a64.h       |   1 +
- target/arm/tcg/translate-sme.c       |  71 ++-
- target/arm/tcg/translate-sve.c       | 245 +++++++++-
- target/arm/tcg/translate.h           |  10 +-
- target/arm/tcg/vec_helper.c          | 194 +++++---
- target/arm/tcg/vec_internal.h        |  12 +-
- tests/tcg/aarch64/Makefile.target    |   2 +-
- tests/tcg/aarch64/mte-10.c           |  49 ++
- tests/tcg/aarch64/mte-9.c            |  48 ++
- tests/tcg/aarch64/mte.h              |   7 +-
- 50 files changed, 2428 insertions(+), 306 deletions(-)
- create mode 100644 target/arm/helper-fp8.h
- create mode 100644 target/arm/tcg/fp8_helper.c
- create mode 100644 target/arm/tcg/helper-fp8-defs.h
- create mode 100644 tests/tcg/aarch64/mte-10.c
- create mode 100644 tests/tcg/aarch64/mte-9.c
 
