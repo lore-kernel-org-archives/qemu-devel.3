@@ -4,60 +4,63 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id BBFBCCD98C8
-	for <qemu-devel@archiver.kernel.org>; Wed, 10 Jun 2026 08:07:04 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E91E6CD8CB2
+	for <qemu-devel@archiver.kernel.org>; Wed, 10 Jun 2026 08:07:16 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wXDvw-00011Z-IM; Wed, 10 Jun 2026 04:05:08 -0400
+	id 1wXDwH-0001GU-Kh; Wed, 10 Jun 2026 04:05:29 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1wXDvp-0000sS-Pq
- for qemu-devel@nongnu.org; Wed, 10 Jun 2026 04:05:01 -0400
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1wXDvy-00013g-J1
+ for qemu-devel@nongnu.org; Wed, 10 Jun 2026 04:05:10 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1wXDvn-0000Zx-QT
- for qemu-devel@nongnu.org; Wed, 10 Jun 2026 04:05:01 -0400
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1wXDvs-0000dv-Et
+ for qemu-devel@nongnu.org; Wed, 10 Jun 2026 04:05:10 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1781078699;
+ s=mimecast20190719; t=1781078703;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=rwmfgE5w6+4e17J1Wyl3r4miu2V9/8gGZbKcODwwfPs=;
- b=a6JbaLhwY7mOdBm/6tZp8G+JBtR4DJIBwl+axIVU6SGreuowKAl1fhE3zbodA0+Pe7qEuO
- 3fsgkK+RvGGKKQ/Bcnu9sjLqhs3kjf2aUaprxFDrXl8F7Q8FJY4D6V7Cb5ZMRZ5dG4ToGS
- u43sZ8Tss0AHgpdkZsRCDWM7Mum1GmE=
-Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
+ bh=hgF/cRf/8jDwq5MkZfHfyRfU7qOHYfnP2oDSwZuvaNQ=;
+ b=FaaJRGqFGdl+uvZVHAPi277blISHw014s0/2ZkDgHBE2/iOW5q55aj9ZxaLP0Y5Gm5E8U1
+ aTRwetNESTzJEnteBOfKndi6OBB+Mx6ECr2/VQnOPMLf22E2LO3BnNTF/wXmWY+WybTaJK
+ Z/mqsEc9FUpovK2okUIfR/WBMHK2s/E=
+Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-339-JYoQlC5dNmaajSCdwWaG2w-1; Wed,
- 10 Jun 2026 04:04:57 -0400
-X-MC-Unique: JYoQlC5dNmaajSCdwWaG2w-1
-X-Mimecast-MFC-AGG-ID: JYoQlC5dNmaajSCdwWaG2w_1781078696
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-371-Bkv5ZvyhOsul_3oGdnhEvw-1; Wed,
+ 10 Jun 2026 04:04:58 -0400
+X-MC-Unique: Bkv5ZvyhOsul_3oGdnhEvw-1
+X-Mimecast-MFC-AGG-ID: Bkv5ZvyhOsul_3oGdnhEvw_1781078697
 Received: from mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.111])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 3D33819560BA; Wed, 10 Jun 2026 08:04:56 +0000 (UTC)
+ by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id D5B3D1954B2C; Wed, 10 Jun 2026 08:04:56 +0000 (UTC)
 Received: from blackfin.pond.sub.org (unknown [10.44.22.28])
  by mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id E5E18180034F; Wed, 10 Jun 2026 08:04:55 +0000 (UTC)
+ id 4133718005B3; Wed, 10 Jun 2026 08:04:56 +0000 (UTC)
 Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
- id E7DC021E657C; Wed, 10 Jun 2026 10:04:47 +0200 (CEST)
+ id 0B22B21E649D; Wed, 10 Jun 2026 10:04:48 +0200 (CEST)
 From: Markus Armbruster <armbru@redhat.com>
 To: qemu-devel@nongnu.org
-Cc: stefanha@redhat.com, Mauro Carvalho Chehab <mchehab+huawei@kernel.org>,
- linux-edac@vger.kernel.org, qemu-arm@nongnu.org
-Subject: [PULL 22/42] MAINTAINERS: Fix F: typo in "ACPI/HEST/GHES/ARM
- processor CPER"
-Date: Wed, 10 Jun 2026 10:04:27 +0200
-Message-ID: <20260610080447.1156502-23-armbru@redhat.com>
+Cc: stefanha@redhat.com, Gerd Hoffmann <kraxel@redhat.com>,
+ Manos Pitsidianakis <manos.pitsidianakis@linaro.org>,
+ =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>,
+ Dmitry Osipenko <dmitry.osipenko@collabora.com>
+Subject: [PULL 28/42] MAINTAINERS: Fix F: in "virtio-snd" and "virtio-gpu"
+Date: Wed, 10 Jun 2026 10:04:33 +0200
+Message-ID: <20260610080447.1156502-29-armbru@redhat.com>
 In-Reply-To: <20260610080447.1156502-1-armbru@redhat.com>
 References: <20260610080447.1156502-1-armbru@redhat.com>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.111
 Received-SPF: pass client-ip=170.10.129.124; envelope-from=armbru@redhat.com;
@@ -85,29 +88,49 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Fixes: ddd8f3baa2 (qapi/acpi-hest: add an interface to do generic CPER error injection, 2025-09-23)
-Cc: Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
-Cc: linux-edac@vger.kernel.org
-Cc: qemu-arm@nongnu.org
+We neglected to update MAINTAINERS when we moved
+docs/system/devices/virtio-snd.rst and
+docs/system/devices/virtio-gpu.rst to docs/system/devices/virtio/.
+Update it now.
+
+Fixes: 487ce6ce99 (docs/system: split VirtIO devices from the rest, 2025-10-16)
+Cc: Gerd Hoffmann <kraxel@redhat.com>
+Cc: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
+Cc: Alex Bennée <alex.bennee@linaro.org>
+Cc: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
+Cc: Dmitry Osipenko <dmitry.osipenko@collabora.com>
 Signed-off-by: Markus Armbruster <armbru@redhat.com>
-Message-ID: <20260603064032.3733394-19-armbru@redhat.com>
+Reviewed-by: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
+Reviewed-by: Alex Bennée <alex.bennee@linaro.org>
+Reviewed-by: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
+Reviewed-by: Dmitry Osipenko <dmitry.osipenko@collabora.com>
+Message-ID: <20260603064032.3733394-25-armbru@redhat.com>
 ---
- MAINTAINERS | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ MAINTAINERS | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
 diff --git a/MAINTAINERS b/MAINTAINERS
-index 39414f727e..d6a32be0a9 100644
+index 3d646b64a9..8932556d29 100644
 --- a/MAINTAINERS
 +++ b/MAINTAINERS
-@@ -2235,7 +2235,7 @@ ACPI/HEST/GHES/ARM processor CPER
- M: Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
- L: linux-edac@vger.kernel.org
- S: Maintained
--F: hw/arm/ghes_cper.c
-+F: hw/acpi/ghes_cper.c
- F: hw/acpi/ghes_cper_stub.c
- F: qapi/acpi-hest.json
- F: scripts/ghes_inject.py
+@@ -2611,7 +2611,7 @@ S: Supported
+ F: hw/audio/virtio-snd.c
+ F: hw/audio/virtio-snd-pci.c
+ F: include/hw/audio/virtio-snd.h
+-F: docs/system/devices/virtio-snd.rst
++F: docs/system/devices/virtio/virtio-snd.rst
+ 
+ nvme
+ M: Keith Busch <kbusch@kernel.org>
+@@ -2800,7 +2800,7 @@ S: Odd Fixes
+ F: hw/display/virtio-gpu*
+ F: hw/display/virtio-vga.*
+ F: include/hw/virtio/virtio-gpu.h
+-F: docs/system/devices/virtio-gpu.rst
++F: docs/system/devices/virtio/virtio-gpu.rst
+ F: tests/functional/aarch64/test_virt_gpu.py
+ F: tests/functional/x86_64/test_virtio_gpu.py
+ 
 -- 
 2.54.0
 
