@@ -4,49 +4,49 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id EBA41CD8CB2
-	for <qemu-devel@archiver.kernel.org>; Wed, 10 Jun 2026 12:36:45 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B02BFCD8CB2
+	for <qemu-devel@archiver.kernel.org>; Wed, 10 Jun 2026 12:36:48 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wXIAG-0002gE-5g; Wed, 10 Jun 2026 08:36:12 -0400
+	id 1wXIAg-0004sd-Ed; Wed, 10 Jun 2026 08:36:38 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1wXIAF-0002d3-6H
- for qemu-devel@nongnu.org; Wed, 10 Jun 2026 08:36:11 -0400
+ id 1wXIAe-0004em-24
+ for qemu-devel@nongnu.org; Wed, 10 Jun 2026 08:36:36 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1wXIAC-00045h-H2
- for qemu-devel@nongnu.org; Wed, 10 Jun 2026 08:36:10 -0400
+ id 1wXIAc-0005BL-DJ
+ for qemu-devel@nongnu.org; Wed, 10 Jun 2026 08:36:35 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1781094967;
+ s=mimecast20190719; t=1781094993;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=sidpFeYe/RZ8h7P0yTx9z9ixll42kVl8jlyhzYUFN1I=;
- b=iOmvT+oQSPZ/iOtcldbEhnNVEpsPHSZxKv32dEsxRNKbTPgW3JmHjqPtBBLsDHDp1kuxJW
- 5PTKbqEydvY5/xKDRP7Xa3p5q1vVACSemD7hOkljPWuD+AuUccds5wI9J2bCGEj6CCAFl/
- zhkkqJJlEMEUXSo2z3sF6bwzr2EpQ3k=
-Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ bh=VhqhTJFLZh3M5NsQoKVQM5WgkJYYNLhVWxplZsJQlHY=;
+ b=Hg0MOmPZ1ELMFJXgd/D8s91plmZqjYk117JQAkaBRXziCQLJKrXYNP9U7Q2F5FkbtdC01z
+ 1c2gpNrfw8DuuXUweA90lEoda1ncvV2u5mtXMjY/97nf5oH/0UqpJWYyhIHn7J2PXRuWYO
+ g1gpSP2C/hUmBiwaxhYGevXUoJCYsms=
+Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-504-ZReCEr55MieIhip0i7E4Wg-1; Wed,
- 10 Jun 2026 08:36:06 -0400
-X-MC-Unique: ZReCEr55MieIhip0i7E4Wg-1
-X-Mimecast-MFC-AGG-ID: ZReCEr55MieIhip0i7E4Wg_1781094965
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-56-E81XfwVTOZa6OQKl_VpawA-1; Wed,
+ 10 Jun 2026 08:36:30 -0400
+X-MC-Unique: E81XfwVTOZa6OQKl_VpawA-1
+X-Mimecast-MFC-AGG-ID: E81XfwVTOZa6OQKl_VpawA_1781094989
 Received: from mx-prod-int-10.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-10.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.95])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 72783195DE58; Wed, 10 Jun 2026 12:36:05 +0000 (UTC)
+ by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 570291845447; Wed, 10 Jun 2026 12:36:29 +0000 (UTC)
 Received: from berrange.com (unknown [10.44.50.112])
  by mx-prod-int-10.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 625B031D2; Wed, 10 Jun 2026 12:36:02 +0000 (UTC)
+ id 2F9F036535; Wed, 10 Jun 2026 12:36:25 +0000 (UTC)
 From: =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
@@ -57,10 +57,10 @@ Cc: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
  "Dr. David Alan Gilbert" <dave@treblig.org>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@mailo.com>,
  =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>
-Subject: [PATCH v2 26/35] monitor: protect qemu_chr_fe_accept_input with
- monitor lock
-Date: Wed, 10 Jun 2026 13:34:06 +0100
-Message-ID: <20260610123415.2883603-27-berrange@redhat.com>
+Subject: [PATCH v2 32/35] qom: add trace events for user creatable
+ create/delete APIs
+Date: Wed, 10 Jun 2026 13:34:12 +0100
+Message-ID: <20260610123415.2883603-33-berrange@redhat.com>
 In-Reply-To: <20260610123415.2883603-1-berrange@redhat.com>
 References: <20260610123415.2883603-1-berrange@redhat.com>
 MIME-Version: 1.0
@@ -91,90 +91,58 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Christian Brauner <brauner@kernel.org>
-
-The monitor_accept_input API is called from a bottom half, and will
-invoke qemu_chr_fe_accept_input().
-
-When a following patch introduces the ability to delete monitors, it
-will be neccesary to delete the bottom half. Protecting the call to
-qemu_chr_fe_accept_input with the monitor lock will allow for
-synchronization with the deletion process.
-
-Signed-off-by: Christian Brauner (Amutable) <brauner@kernel.org>
-[DB: extracted from a larger commit and refactored to apply
-     to the new monitor class structure]
 Signed-off-by: Daniel P. Berrangé <berrange@redhat.com>
 ---
- monitor/hmp.c     | 2 ++
- monitor/monitor.c | 6 +-----
- monitor/qmp.c     | 9 +++++++++
- 3 files changed, 12 insertions(+), 5 deletions(-)
+ qom/object_interfaces.c | 6 ++++++
+ qom/trace-events        | 5 +++++
+ 2 files changed, 11 insertions(+)
 
-diff --git a/monitor/hmp.c b/monitor/hmp.c
-index 2cd508f1ee..7b084c6ff8 100644
---- a/monitor/hmp.c
-+++ b/monitor/hmp.c
-@@ -116,9 +116,11 @@ static void monitor_hmp_accept_input(Monitor *mon)
-         MonitorHMP *hmp = MONITOR_HMP(mon);
-         assert(hmp->rs);
-         readline_restart(hmp->rs);
-+        qemu_chr_fe_accept_input(&mon->chr);
-         qemu_mutex_unlock(&mon->mon_lock);
-         readline_show_prompt(hmp->rs);
-     } else {
-+        qemu_chr_fe_accept_input(&mon->chr);
-         qemu_mutex_unlock(&mon->mon_lock);
-     }
- }
-diff --git a/monitor/monitor.c b/monitor/monitor.c
-index 19a119fc71..909f4f6052 100644
---- a/monitor/monitor.c
-+++ b/monitor/monitor.c
-@@ -559,11 +559,7 @@ static void monitor_accept_input(void *opaque)
-     Monitor *mon = opaque;
-     MonitorClass *cls = MONITOR_GET_CLASS(mon);
+diff --git a/qom/object_interfaces.c b/qom/object_interfaces.c
+index 6faa0b2fd9..2e618a7623 100644
+--- a/qom/object_interfaces.c
++++ b/qom/object_interfaces.c
+@@ -20,12 +20,14 @@
+ #include "qapi/opts-visitor.h"
+ #include "qemu/config-file.h"
+ #include "qemu/keyval.h"
++#include "trace.h"
  
--    if (cls->accept_input) {
--        cls->accept_input(mon);
--    }
--
--    qemu_chr_fe_accept_input(&mon->chr);
-+    cls->accept_input(mon);
- }
- 
- void monitor_resume(Monitor *mon)
-diff --git a/monitor/qmp.c b/monitor/qmp.c
-index 7d80a9bd57..3f3d5b9d1c 100644
---- a/monitor/qmp.c
-+++ b/monitor/qmp.c
-@@ -107,6 +107,7 @@ static void monitor_qmp_emit_event(Monitor *mon, QAPIEvent event, QDict *qdict);
- static bool monitor_qmp_requires_iothread(const Monitor *mon);
- static void monitor_qmp_complete(UserCreatable *uc, Error **errp);
- static bool monitor_qmp_prepare_delete(UserCreatable *uc, Error **errp);
-+static void monitor_qmp_accept_input(Monitor *mon);
- 
- static void monitor_qmp_class_init(ObjectClass *cls, const void *data)
+ bool user_creatable_complete(UserCreatable *uc, Error **errp)
  {
-@@ -119,6 +120,7 @@ static void monitor_qmp_class_init(ObjectClass *cls, const void *data)
+     UserCreatableClass *ucc = USER_CREATABLE_GET_CLASS(uc);
+     ERRP_GUARD();
  
-     moncls->emit_event = monitor_qmp_emit_event;
-     moncls->requires_iothread = monitor_qmp_requires_iothread;
-+    moncls->accept_input = monitor_qmp_accept_input;
++    trace_user_creatable_complete(uc, object_get_typename(OBJECT(uc)));
+     if (ucc->complete) {
+         ucc->complete(uc, errp);
+     }
+@@ -37,9 +39,13 @@ bool user_creatable_prepare_delete(UserCreatable *uc, Error **errp)
+     UserCreatableClass *ucc = USER_CREATABLE_GET_CLASS(uc);
+     ERRP_GUARD();
  
-     ucc->complete = monitor_qmp_complete;
-     ucc->prepare_delete = monitor_qmp_prepare_delete;
-@@ -665,3 +667,10 @@ static bool monitor_qmp_prepare_delete(UserCreatable *uc, Error **errp)
-     error_setg(errp, "Deleting QMP monitors is not supported");
-     return false;
++    trace_user_creatable_prepare_delete(uc, object_get_typename(OBJECT(uc)));
+     if (ucc->prepare_delete) {
+         ucc->prepare_delete(uc, errp);
+     }
++    trace_user_creatable_prepare_delete_result(
++        uc, object_get_typename(OBJECT(uc)),
++        *errp ? error_get_pretty(*errp) : NULL);
+     return !*errp;
  }
+ 
+diff --git a/qom/trace-events b/qom/trace-events
+index 44c63e72af..bac8472618 100644
+--- a/qom/trace-events
++++ b/qom/trace-events
+@@ -11,3 +11,8 @@ object_property_del_child(void *obj, const char *type, void *child, const char *
+ object_property_parse(void *obj, const char *type, const char *name, const char *value) "obj=%p type=%s prop=%s value=%s"
+ object_class_dynamic_cast_assert(const char *type, const char *target, const char *file, int line, const char *func) "type=%s->%s (%s:%d:%s)"
+ object_class_property_add(const char *type, const char *name, void *value) "type=%s name=%s value=%p"
 +
-+static void monitor_qmp_accept_input(Monitor *mon)
-+{
-+    WITH_QEMU_LOCK_GUARD(&mon->mon_lock) {
-+        qemu_chr_fe_accept_input(&mon->chr);
-+    }
-+}
++# object_interfaces.c
++user_creatable_complete(void *obj, const char *type) "obj=%p type=%s"
++user_creatable_prepare_delete(void *obj, const char *type) "obj=%p type=%s"
++user_creatable_prepare_delete_result(void *obj, const char *type, const char *msg) "obj=%p type=%s msg=%s"
 -- 
 2.54.0
 
