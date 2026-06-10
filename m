@@ -4,54 +4,54 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3CC6FCD98C7
-	for <qemu-devel@archiver.kernel.org>; Wed, 10 Jun 2026 21:15:25 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4FA98CD98CC
+	for <qemu-devel@archiver.kernel.org>; Wed, 10 Jun 2026 21:15:27 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wXQFN-0002pp-4z; Wed, 10 Jun 2026 17:14:01 -0400
+	id 1wXQFj-0002vE-N4; Wed, 10 Jun 2026 17:14:23 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1wXQFM-0002pQ-4P
- for qemu-devel@nongnu.org; Wed, 10 Jun 2026 17:14:00 -0400
+ id 1wXQFi-0002v5-BG
+ for qemu-devel@nongnu.org; Wed, 10 Jun 2026 17:14:22 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1wXQFK-0005bS-D4
- for qemu-devel@nongnu.org; Wed, 10 Jun 2026 17:13:59 -0400
+ id 1wXQFh-0005lN-4F
+ for qemu-devel@nongnu.org; Wed, 10 Jun 2026 17:14:22 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1781126036;
+ s=mimecast20190719; t=1781126060;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=RWMaYlnULLjFtE1hpHpoJMs1duj1XR4U9CVMyAIxB8U=;
- b=dyJCFfaXp2oYfMu6DFg9qE0mE3IagkPGrwlj2oWFq0nye5R8G+gKrD4muTZAyOhHUnwS8s
- tHRp5MU7FHjJqklSJOVtThX+CbWPozxJpYPQE7rnT63JnCwZ15Ow4OwQvvqsR6j152NGld
- Cf8RyTxtxmS6L9ebKv6KmWnFmMIbZ48=
-Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
+ bh=PuU0I9XAvTmYqFHc8X7m7whP96Q2c3RRpEwTI2CGjdU=;
+ b=Q/Y4nsevkjo642ANsrS4hHqBJGz/PIQREIjHcd/OSTTmS/pe1sIK+8BScwRw3/wRR26nFn
+ roWe2JtAYEGo108YfhmLVXiRz74rC+jeX9XIgmxAvotc0GO65YjPg9x187YArRkXolXnCh
+ 9uoRrSVDXQXcdj97tBBLVfqXdnLxkt8=
+Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-342-4O6uq6WtOP2efJ6vEGynRw-1; Wed,
- 10 Jun 2026 17:13:53 -0400
-X-MC-Unique: 4O6uq6WtOP2efJ6vEGynRw-1
-X-Mimecast-MFC-AGG-ID: 4O6uq6WtOP2efJ6vEGynRw_1781126032
-Received: from mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.111])
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-194-GmAc0bPHNP-6ZbIbbPC7dA-1; Wed,
+ 10 Jun 2026 17:14:17 -0400
+X-MC-Unique: GmAc0bPHNP-6ZbIbbPC7dA-1
+X-Mimecast-MFC-AGG-ID: GmAc0bPHNP-6ZbIbbPC7dA_1781126056
+Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id C90301956062; Wed, 10 Jun 2026 21:13:51 +0000 (UTC)
+ by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id DDA2C195E923; Wed, 10 Jun 2026 21:14:15 +0000 (UTC)
 Received: from localhost (unknown [10.44.24.21])
- by mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 3AF24180028B; Wed, 10 Jun 2026 21:13:49 +0000 (UTC)
+ by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id 7E16F1954B10; Wed, 10 Jun 2026 21:14:14 +0000 (UTC)
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
-Subject: Re: [PATCH v2 01/35] qom: replace 'can_be_deleted' with
- 'prepare_delete'
+Subject: Re: [PATCH v2 05/35] monitor: minimal conversion of monitors to
+ QOM
 From: marcandre.lureau@redhat.com
 To: =?utf-8?q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>
 Cc: qemu-devel@nongnu.org, 
@@ -62,29 +62,29 @@ Cc: qemu-devel@nongnu.org,
  Paolo Bonzini <pbonzini@redhat.com>, 
  "Dr. David Alan Gilbert" <dave@treblig.org>, 
  =?utf-8?q?Philippe_Mathieu-Daud=C3=A9?= <philmd@mailo.com>
-In-Reply-To: <20260610123415.2883603-2-berrange@redhat.com>
+In-Reply-To: <20260610123415.2883603-6-berrange@redhat.com>
 References: <20260610123415.2883603-1-berrange@redhat.com>
- <20260610123415.2883603-2-berrange@redhat.com>
+ <20260610123415.2883603-6-berrange@redhat.com>
 Date: Thu, 11 Jun 2026 01:13:23 +0400
-Message-Id: <178112600312.209622.10566667142398391587.b4-review@b4>
-X-Developer-Signature: v=1; a=openpgp-sha256; l=725;
+Message-Id: <178112600321.209622.16634493309970876174.b4-review@b4>
+X-Developer-Signature: v=1; a=openpgp-sha256; l=424;
  i=marcandre.lureau@redhat.com; h=from:subject:message-id;
- bh=7Zu0+HfLCqXbC/O0QEH2KBeun5+A4qM5GdDXl0LRBMU=;
- b=owEBbQKS/ZANAwAKAdro4Ql1lpzlAcsmYgBqKdN8mgVEzi+mMMWlwvmaNY1DWlIAskxNMJKHK
- Qpn4HiNY9mJAjMEAAEKAB0WIQSHqb2TP4fGBtJ29i3a6OEJdZac5QUCainTfAAKCRDa6OEJdZac
- 5RgxEACO2g20j8nAY3FNdEfDRq/TLpCuYRjJivdWQ/Sj2P00bZeOaGJq1ZQ/qzG9660kBzZgK9e
- EozBhslG/vWIqHJ5UF0gzjNzDLc5qnMRHHYFIdWQC7do8OM+XdMAENW7z0qHyzORbR0rZQrqIZS
- hcDO+cQOM+Z3ghLLN9P+yyENs8Z4qBaQ91Px0Sjyg6PTqHzkdTXQmYPUTR7pK5kOzUVupuoelFO
- gTtueBSWZUMF5vf9OBSCyBGH3QKuoKz2YKt7mf0/fncNE4L97e2WEGw0POIdBSlUcXKpeug3WIA
- eHXa2PkRYSBmM63Riu8yaKrlgtzqbsgEd4QUdrVslcorjxxPXlos1ITwU2sSiGlhrEK0gf/RdGA
- jFayAl/kCp3TswRD5uEiq1yHY0d0E62KDSUxU7G8YVrXqeG7PIN0UQlP+6IVSEZ1LoI7X7sXQBx
- EBAx+1stu3BWCVij+yG4BcFeQHK5s43NINSiX20uxoRRBdjJzxiZxdg3FjoqBx2NO5ItalkmVEQ
- efjhJNwR6AMo8PFhdNdRIXnifVgMy3kXult+7MwC7rDKsX07xKOSU5cp4ZgDKXvyYVfJbXLg5Ov
- AFD8OkpkJ9Cna96QRFmn8u/OtRj2QEJBDXTv6Y9gUI0pIF5IKLCCbuUtdeX06ECCbqLVnzFsNYH
- d5GNd7TP9aYh86g==
+ bh=dUW4lRiZ4qAmawoEOMOy8e8XHTdiu/Q2IILyflAZqh8=;
+ b=owEBbQKS/ZANAwAKAdro4Ql1lpzlAcsmYgBqKdN+A47u1twatzpL35PMcBU5sNo8T30RobiAF
+ oAHJSWGr9GJAjMEAAEKAB0WIQSHqb2TP4fGBtJ29i3a6OEJdZac5QUCainTfgAKCRDa6OEJdZac
+ 5UHmEACyZ3JUSV1fSKCWjsy6FU0lMcmRaq+srHBSmg+VDn9mW3SUiABS7fdjDlAQDsDi6lZV2JI
+ GUHXfM0nKsK/UbRtMP2zXUnnKVGTwRDDEWNzuZ9Wo+wnC74z/v7qFaoi20qx91SQPoq90lJfLvb
+ 69L7YBc7illqZzIreyz0OdDUX9ZO1fsneHshbXnQOy6SEZ/aXoUF2ICVYaZ6T50YvhZs1aus02Q
+ 1imO+08Xs0ALQt9Qw1Q8I2Io0FYluSiS6wMYRU3oGKLFftMgaDhbH7CoAVVhGbRi7C/LmnZuTwx
+ RIJojYB8+F3mouUnkhzXjqqJ5T2kLfYLjNp1N3UWIis3XI9IE53sfvaRonkMUYJfCwZK5vFDLSF
+ SB4XUwppHtH/1562mxy1JXU11mHQz/EiaS6o2ceJQ7Hb+89nfaQjWoEjG0gwHMOfVhRRiIltVEY
+ IZPqWsiJhn/iIOEbO7sJ26GECDzfvRJswNrDzsi7dZhA50ROLCy9yLsWhXte+bKmrHqaHuow8i7
+ x4uwxOyr2921QINKCyOB3aHxBkNM81yJ/I2ApNH4DwJ3k08nDeBS32coCCzZR3ikqaV8Q+Hh9b6
+ bmjwbvVM77zqytbziQ0EGDIx3987JSfY0gqSV6NcdnrYaXs7PoLWPDRqMTq2fzkQ+OyJUq/rtYh
+ zztIhvfAbufDNiQ==
 X-Developer-Key: i=marcandre.lureau@redhat.com; a=openpgp;
  fpr=87A9BD933F87C606D276F62DDAE8E10975969CE5
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.111
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.12
 Received-SPF: pass client-ip=170.10.133.124;
  envelope-from=marcandre.lureau@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
@@ -111,18 +111,11 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, 10 Jun 2026 13:33:41 +0100, Daniel P. Berrangé <berrange@redhat.com> wrote:
-> While most objects can perform all their cleanup in the finalizer
-> method, there can be interactions with other resources / subsystems
-> / threads which require that some cleanup be performed on an user
-> creatable object before unparenting it and entering finalization.
-> 
-> The current 'can_be_deleted' method runs in the deletion path and
-> is intended to be used to block deletion. While it could be used
-> to perform cleanup tasks, its name suggests it should be free of
-> side-effects.
-> 
-> [...]
+On Wed, 10 Jun 2026 13:33:45 +0100, Daniel P. Berrangé <berrange@redhat.com> wrote:
+> This introduces a Monitor QOM object, with MonitorHMP and
+> MonitorQMP subclasses. This is the bare minimum conversion
+> of just the type declarations and replacing g_new/g_free
+> with object_new/object_unref.
 
 Reviewed-by: Marc-André Lureau <marcandre.lureau@redhat.com>
 
