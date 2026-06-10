@@ -4,93 +4,89 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id CC41ACD98C5
-	for <qemu-devel@archiver.kernel.org>; Wed, 10 Jun 2026 20:44:34 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 77298CD98C7
+	for <qemu-devel@archiver.kernel.org>; Wed, 10 Jun 2026 20:44:35 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wXPlq-0005mv-WF; Wed, 10 Jun 2026 16:43:31 -0400
+	id 1wXPlp-0005lQ-Gr; Wed, 10 Jun 2026 16:43:29 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1wXPlp-0005kv-5j
- for qemu-devel@nongnu.org; Wed, 10 Jun 2026 16:43:29 -0400
-Received: from mail-wm1-x32b.google.com ([2a00:1450:4864:20::32b])
+ id 1wXPlo-0005ke-CP
+ for qemu-devel@nongnu.org; Wed, 10 Jun 2026 16:43:28 -0400
+Received: from mail-wr1-x431.google.com ([2a00:1450:4864:20::431])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1wXPlm-0003kt-UZ
+ id 1wXPlm-0003lN-Ox
  for qemu-devel@nongnu.org; Wed, 10 Jun 2026 16:43:28 -0400
-Received: by mail-wm1-x32b.google.com with SMTP id
- 5b1f17b1804b1-490cdae130cso25792405e9.0
+Received: by mail-wr1-x431.google.com with SMTP id
+ ffacd0b85a97d-46066e640easo18705f8f.1
  for <qemu-devel@nongnu.org>; Wed, 10 Jun 2026 13:43:26 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
  d=linaro.org; s=google; t=1781124205; x=1781729005; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=BjVdjpfOdad/VHaFqOII69qjP1mCIpEc8kf1f/xpvbs=;
- b=fsqwzxMlTzoygIm/FxNDijG4xGiN1A+EYV4RaCWFBKolRhkjVdqU0qur5kie5fNZ8r
- 35JgqMYCOciPyJ0J9v1wF3utedZWs86GuTWcrx+cr5rpTrPhfG//xgrOxVoc4MwsurcQ
- sgQ52EcZjNYJV2tiKL0EB511s2wvjoYKSiIt46iw4txzSsoz8VzivXnWSGb8LGVyEme1
- XlQeUO1tQkosewIBlXaUsjgk4YfirR4dAtHitu4wfXcUhRw3mo3WB6LUD1cKgRe1fOxD
- idKpCMViaQlVBoZB8OkwTmBfo5OTHMVSD6kEsJxdsprJne2gkIw0avGgnNMkhh/HrceK
- JeGw==
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:from:to:cc:subject:date:message-id:reply-to;
+ bh=DxqTgQRW/DnHgUDBeoM9Pu7HLTkaDba+3CcvLV5ohHE=;
+ b=OoSajsLtdGdRmvxD1Uwjtsf8aH2EtZ008Ii881qDga5WtKODFxJOC17OmvshFtWo4B
+ JQumSHQ5t8UqCdS86GtBA53ms5bDD/Y+YzjsZJAg78we/YPeCYqOA8t5y08uyU87ZUJr
+ 2X3p2I3bO9Bt28tPcnG8KOwq7bydkZrPWxrJ2XMFFSrv9+dzpoAakB+A50HBM0nj6YHq
+ /MHz7Efg+bm7HRbm6K3lFQKJcyf4TpAepSkBm6gZuWMGfP64VCysb/e3jsqXLhhuL3Si
+ V0ACMLcIzLR5rU36LsWegCcDdFmLQdOoxKoE3YtehKDstNUqpOic/o8TkFd3QkDNKcII
+ QXmw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
  d=1e100.net; s=20251104; t=1781124205; x=1781729005;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to;
- bh=BjVdjpfOdad/VHaFqOII69qjP1mCIpEc8kf1f/xpvbs=;
- b=W1E6bRDUs5vjuC4tpaYOmzo3fR1XAGEWcl9KluH43iKoXuhFkdPZd6wKtC8yLQ0XqU
- AiSFoGdLx6l23YHmEvSqPtxYk4M1UZSrNYhfE7dNRa6hMxMZ4Ijgb7VePw2r3K2qebCL
- vM6FFRs7vu30kCr0hRx2x2sm9RSfdXXJnadCqD7GONbp96sRKl//Hvri74JsHy1IWtKY
- RVMVJi7yaJOr82F+pblSWk4D0UoCFXn+ebUo3tF9eyYcP5ew6VWYQmY30fkDi7DPN66g
- 2ANgopVUPWWx5oU2CnV/0sBsavEsug+phSPxceXKN2Yp5Jzutb9xsTdonvxJney/1xTH
- Kjng==
-X-Gm-Message-State: AOJu0Yy5MHusChrpCm0b6cB9Qqq6+oHbsVBK/vqBBZSqXxHus9mIF5CW
- fscuUfGMg5P7TxDx1BTj476PWbw2bhAWhJlvJ17bCYCjsV6oWnbViML7WkOAqpWIpUs=
-X-Gm-Gg: Acq92OFJZksqPV2Q+SKPbEOw9I3MGrzG+pPVYF8qXen6OJoy5plN7KKOKaaU49q+a8W
- cqaVDMRBHPbQ0nDu1StUZ5j16B3tnKK2P/s1oh+K67wY/uxwCHJqfszMDztXf4m5wZKf8tYNOyO
- JpVKZ4zSctLYu1wc02nCCxGbonFWzDLM7movOrugnl6a2dyetyu8CgcvVEhZg96xQW2/fX/cglA
- ypnFkhswNPqjaSEGlI1wq5unslUJ2Kijpkw07B6Nfhf0/ZMw1rynshx69lOTQsEK89RjUUrDAki
- /qzkoZTzVSsQ8sztk7nc5oPFnD11aDWGcl7UzHO0106Y879RKOn9TAD7btprIgjZItxIXNHKGET
- DPjxldT0LDFrDuYpGUUdysLimEYfQZER/9BVfTOPc4fys5iaW0iPSOUmPlYQVY35nO36nM3zJPF
- +BP+doR54XudTBpeqFiBDFU0ooxHrG9yKjduwaIPduu2EU
-X-Received: by 2002:a05:600c:c0d3:b0:490:b0e0:3de2 with SMTP id
- 5b1f17b1804b1-490c265c148mr302919585e9.33.1781124204639; 
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=DxqTgQRW/DnHgUDBeoM9Pu7HLTkaDba+3CcvLV5ohHE=;
+ b=oGTWcoGJ8lUE1qWXYjLK5d70rLv2TM7EWBKRJwJO2cK+uRswcN92d8zggAeOv/i/+6
+ Iq5tgvnBxGjdJtAMesTHbagzk39DfrKgV+0Jk9HyWVtToGePV/pHnjRjZ5d65pwBg3Ch
+ qTtYpCl92LLamDIPeqvkldIVkgfVvS+wx5kAb6AnCj2kTTPCMpb1wM1TFfTz2Dm8WH8F
+ any+8qWUVRhMKjexkA9/kwFHU4U23T5KIvW8LRvYNx4+TaWZ4cuiIjLuBNwMIiuQF14c
+ Z2c9BdaSLGllS28XWWRjMrIgynwCLX8wV3Yd8nS7Y/F1XYCaQTavJAahOAdZRMM6ilGf
+ pRdg==
+X-Gm-Message-State: AOJu0YygWKcaPkdXEj5XcEprFHHrNmGsoBW/hUXhBK9pNoiAmUQDGmaG
+ Xu07aRZxjctml+DC2MAlm2Tb17DoXpNytL9tUXKbH74zH2T+jqppZMsmbaLz0lC5brA=
+X-Gm-Gg: Acq92OFiq8jPWT7YgU5NO0He2Nt1imJqsNHIni+aYX1QcfTL3SIv8p8pBAGnpR1mv3S
+ zlwS1fxeIZgqHnhp+jliz/HZatmf1Eavu91B7TLPd73KjknnBGunkvCAtyznyNG7g5vpl8LJKnS
+ ci2LmhIeYHDCqGgopLfJjcT06L61YZri6UPqBxcKtQ4gfsvVTVehhKB0rp0VNE3z8ZyPa2BNHBx
+ RhQbX3uIHzK2Kk4e5SN8i0zg0shusHYsCrNBmieo9cyo6+CZUugHL+zkjwwHR98f2myhWMCPnvD
+ 87B9WqwzE5acgMtAr617IShxdQx9QTkx0T8P4eg2w5cPwsDzfh+WlaHzuAt8P4pGugr24sQOtLD
+ YKtnbAyZDd9zjOaiaOble9ZhJcWQ6N3pZuAiyo7ysgGy38+MFirRcN5E3VgeV5ar5tYYvrr2del
+ 75aqJeDIayfbb7OfP/17TbO/BpQCRZf5H35Q==
+X-Received: by 2002:a5d:458d:0:b0:460:e4d:bd46 with SMTP id
+ ffacd0b85a97d-46030631c25mr33130163f8f.21.1781124204942; 
  Wed, 10 Jun 2026 13:43:24 -0700 (PDT)
 Received: from draig.lan ([185.124.0.195]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-4601f2ec711sm72388472f8f.12.2026.06.10.13.43.23
+ ffacd0b85a97d-4601f3444fesm74424117f8f.20.2026.06.10.13.43.23
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
  Wed, 10 Jun 2026 13:43:24 -0700 (PDT)
 Received: from draig.lan (localhost [IPv6:::1])
- by draig.lan (Postfix) with ESMTP id 370555FA43;
+ by draig.lan (Postfix) with ESMTP id 0D7845F7C6;
  Wed, 10 Jun 2026 21:43:23 +0100 (BST)
 From: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: qemu-arm@nongnu.org, Peter Maydell <peter.maydell@linaro.org>,
  Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
- =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
- Richard Henderson <richard.henderson@linaro.org>
-Subject: [PATCH v2 2/6] target/arm: trigger timer recalculation when toggling
- CNTHCTL:ECV
-Date: Wed, 10 Jun 2026 21:43:18 +0100
-Message-ID: <20260610204322.828645-3-alex.bennee@linaro.org>
+ =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>
+Subject: [PATCH v2 0/6] target/arm: a few timer fixes while checking
+ FEAT_ECV_POFF
+Date: Wed, 10 Jun 2026 21:43:16 +0100
+Message-ID: <20260610204322.828645-1-alex.bennee@linaro.org>
 X-Mailer: git-send-email 2.47.3
-In-Reply-To: <20260610204322.828645-1-alex.bennee@linaro.org>
-References: <20260610204322.828645-1-alex.bennee@linaro.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32b;
- envelope-from=alex.bennee@linaro.org; helo=mail-wm1-x32b.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::431;
+ envelope-from=alex.bennee@linaro.org; helo=mail-wr1-x431.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -106,30 +102,32 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-When toggling the state of ECV we affect the offset applied to timers.
-As a result we should trigger a recalculation of the timer value to
-take into account the new offset.
+While I was checking what was needed for FEAT_ECV_POFF I discovered a
+few potential correctness issues. We had actually already done the
+work for the feature so the final patch is just documentation.
 
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
-Signed-off-by: Alex Bennée <alex.bennee@linaro.org>
----
- target/arm/helper.c | 3 +++
- 1 file changed, 3 insertions(+)
+v2
+  - added target/arm: gate check on scr_el3 behind ARM_FEATURE_EL3 check
+  - ensure gt_recalc_timer has updated hcr_el2
 
-diff --git a/target/arm/helper.c b/target/arm/helper.c
-index f4aae0a4072..5c640853060 100644
---- a/target/arm/helper.c
-+++ b/target/arm/helper.c
-@@ -1806,6 +1806,9 @@ static void gt_cnthctl_write(CPUARMState *env, const ARMCPRegInfo *ri,
-     if ((oldval ^ value) & R_CNTHCTL_CNTPMASK_MASK) {
-         gt_update_irq(cpu, GTIMER_PHYS);
-     }
-+    if ((oldval ^ value) & R_CNTHCTL_ECV_MASK) {
-+        gt_recalc_timer(cpu, GTIMER_PHYS);
-+    }
- }
- 
- static void gt_cntvoff_write(CPUARMState *env, const ARMCPRegInfo *ri,
+The following still need review:
+
+ target/arm: gate check on scr_el3 behind ARM_FEATURE_EL3 check
+
+Alex.
+
+Alex Bennée (6):
+  target/arm: split evaluation of CNTHCTL timer IRQ masks
+  target/arm: trigger timer recalculation when toggling CNTHCTL:ECV
+  target/arm: trigger timer recalc on SCR:ECVEN change
+  target/arm: gate check on scr_el3 behind ARM_FEATURE_EL3 check
+  target/arm: trigger timer recalc on HCR:(E2H|TGE) changes
+  docs/system: add FEAT_ECV_POFF to the emulation list
+
+ docs/system/arm/emulation.rst |  1 +
+ target/arm/helper.c           | 29 ++++++++++++++++++++++++++++-
+ 2 files changed, 29 insertions(+), 1 deletion(-)
+
 -- 
 2.47.3
 
