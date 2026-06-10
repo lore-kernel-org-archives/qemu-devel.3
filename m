@@ -4,79 +4,61 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9D9E9CD8CB9
-	for <qemu-devel@archiver.kernel.org>; Wed, 10 Jun 2026 12:40:27 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3C3B2CD8CB9
+	for <qemu-devel@archiver.kernel.org>; Wed, 10 Jun 2026 12:47:54 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wXIDw-0004BM-2W; Wed, 10 Jun 2026 08:40:02 -0400
+	id 1wXIKn-0006QD-5n; Wed, 10 Jun 2026 08:47:05 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1wXIDr-0004B4-Oc
- for qemu-devel@nongnu.org; Wed, 10 Jun 2026 08:39:56 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <cp0613@linux.alibaba.com>)
+ id 1wXIKh-0006Pz-L0; Wed, 10 Jun 2026 08:46:59 -0400
+Received: from [115.124.30.100] (helo=out30-100.freemail.mail.aliyun.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1wXIDp-0008P6-Vp
- for qemu-devel@nongnu.org; Wed, 10 Jun 2026 08:39:55 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1781095192;
- h=from:from:reply-to:reply-to:subject:subject:date:date:
- message-id:message-id:to:to:cc:cc:mime-version:mime-version:
- content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=FErA/UX6taS3UaWsezSQa9yIH2W6NL5kexQlfaNzDzQ=;
- b=SHzSnzmzHLeZYRAQYj4zE4G+U6N+6BsXdsYSvG0bjIi2sOBuld5e8ZfnPXp0Se3LKke8an
- FOxDPAS0NZRHU2RQiMfR/p/LFcLJkUzUW8nHDJ87oXaZAWMQ49l9Wub/ouaSBQ1dz6Ow56
- EDgm9nMBPNnMEwJcFYcwIcGdYkWMwpA=
-Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-504-VII256zJOnWrAw3qIH6V5g-1; Wed,
- 10 Jun 2026 08:39:51 -0400
-X-MC-Unique: VII256zJOnWrAw3qIH6V5g-1
-X-Mimecast-MFC-AGG-ID: VII256zJOnWrAw3qIH6V5g_1781095190
-Received: from mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.93])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 6A2DE195D027; Wed, 10 Jun 2026 12:39:50 +0000 (UTC)
-Received: from redhat.com (unknown [10.44.50.112])
- by mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 5B8D41800598; Wed, 10 Jun 2026 12:39:47 +0000 (UTC)
-Date: Wed, 10 Jun 2026 13:39:43 +0100
-From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
-To: Kevin Wolf <kwolf@redhat.com>
-Cc: Fiona Ebner <f.ebner@proxmox.com>, Stefan Hajnoczi <stefanha@gmail.com>,
- qemu-block@nongnu.org, stefanha@redhat.com, qemu-devel@nongnu.org
-Subject: Re: [PULL 0/8] Block layer patches
-Message-ID: <ailbD_yvOQqsEZPX@redhat.com>
-References: <20260608165207.307488-1-kwolf@redhat.com>
- <CAJSP0QXjj32djLOFPNg2jKjNN6eB7VvRXVfz3XiNkWYjR0-S2A@mail.gmail.com>
- <aik5Ox9cX_5FQbO4@redhat.com>
- <3982600a-61a1-406a-b1b9-246ae6d9a606@proxmox.com>
- <ailHvv4_bSZDQfUD@redhat.com> <ailM5OtknbaXuDOn@redhat.com>
- <ailPBVrN32VFpR6y@redhat.com> <ailWzRwN2AfIZjjF@redhat.com>
+ (Exim 4.90_1) (envelope-from <cp0613@linux.alibaba.com>)
+ id 1wXIKb-0001LL-35; Wed, 10 Jun 2026 08:46:59 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linux.alibaba.com; s=default;
+ t=1781095583; h=From:To:Subject:Date:Message-ID:MIME-Version;
+ bh=Ngv3xXarhR2caHB2jbwy1oqPuF9c2mWLpXtG40CGJo0=;
+ b=jHaguGJqHvWy/Mh+RUEMEXU68yfHDldctRX6TX9g2bXa8GZ9FLeTAUifp0Dk40X0pco+b0OlyHLjl3HrK5LTRc9Kl6CArmdgmGWrmJJU25vVdNgdppWmzxUV9tasT+kJaj5eXhrYU5/L2mjRAEk/wT2J8lkW4iPEzjRgvtz/Soc=
+X-Alimail-AntiSpam: AC=PASS; BC=-1|-1; BR=01201311R901e4; CH=green; DM=||false|;
+ DS=||; FP=0|-1|-1|-1|0|-1|-1|-1; HT=maildocker-contentspam033037009110;
+ MF=cp0613@linux.alibaba.com; NM=1; PH=DS; RN=15; SR=0;
+ TI=SMTPD_---0X4ajnDB_1781095577; 
+Received: from DESKTOP-S9E58SO.localdomain(mailfrom:cp0613@linux.alibaba.com
+ fp:SMTPD_---0X4ajnDB_1781095577 cluster:ay36) by smtp.aliyun-inc.com;
+ Wed, 10 Jun 2026 20:46:21 +0800
+From: Chen Pei <cp0613@linux.alibaba.com>
+To: jic23@kernel.org
+Cc: alistair.francis@wdc.com, chao.liu.zevorn@gmail.com,
+ cp0613@linux.alibaba.com, daniel.barboza@oss.qualcomm.com,
+ fan.ni@samsung.com, guoren@kernel.org, jonathan.cameron@huawei.com,
+ liwei1518@gmail.com, palmer@dabbelt.com, pbonzini@redhat.com,
+ qemu-devel@nongnu.org, qemu-riscv@nongnu.org, sunilvl@ventanamicro.com,
+ zhiwei_liu@linux.alibaba.com
+Subject: Re: [PATCH 1/4] hw/riscv/virt: Add CXL support to the RISC-V virt
+ machine
+Date: Wed, 10 Jun 2026 20:46:18 +0800
+Message-ID: <20260610124618.131421-1-cp0613@linux.alibaba.com>
+X-Mailer: git-send-email 2.43.0
+In-Reply-To: <20260609134101.1dd53f93@jic23-huawei>
+References: <20260609134101.1dd53f93@jic23-huawei>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <ailWzRwN2AfIZjjF@redhat.com>
-User-Agent: Mutt/2.3.2 (2026-04-26)
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.93
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=berrange@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -24
-X-Spam_score: -2.5
-X-Spam_bar: --
-X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.445,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Host-Lookup-Failed: Reverse DNS lookup failed for 115.124.30.100 (deferred)
+Received-SPF: pass client-ip=115.124.30.100;
+ envelope-from=cp0613@linux.alibaba.com;
+ helo=out30-100.freemail.mail.aliyun.com
+X-Spam_score_int: -166
+X-Spam_score: -16.7
+X-Spam_bar: ----------------
+X-Spam_report: (-16.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, ENV_AND_HDR_SPF_MATCH=-0.5,
+ RCVD_IN_DNSWL_NONE=-0.0001, RDNS_NONE=0.793, SPF_PASS=-0.001,
+ T_SPF_HELO_TEMPERROR=0.01, UNPARSEABLE_RELAY=0.001, USER_IN_DEF_DKIM_WL=-7.5,
+ USER_IN_DEF_SPF_WL=-7.5 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -89,85 +71,39 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, Jun 10, 2026 at 02:21:33PM +0200, Kevin Wolf wrote:
-> Am 10.06.2026 um 13:48 hat Daniel P. Berrangé geschrieben:
-> > On Wed, Jun 10, 2026 at 01:39:16PM +0200, Kevin Wolf wrote:
-> > > Am 10.06.2026 um 13:17 hat Daniel P. Berrangé geschrieben:
-> > > > You just got unlucky with the new expanded CI testing introduced when
-> > > > my pull request was merged a few days ago.  Previously gitlab CI only
-> > > > tested qcow2 and raw, and so compat with other drivers was "best effort"
-> > > > after the fact.
-> > > > 
-> > > > Now the gitlab CI runs I/O tests across 10 drivers, so it needs to
-> > > > work before merge, which is something contributors didn't need to
-> > > > think about before now.
-> > > > 
-> > > > If you push a branch to your gitlab fork and trigger CI, you'll see
-> > > > the results in the "block" job in the pipeline results. 
-> > > 
-> > > Technically true, but who has the CI minutes to actually do this?
-> > 
-> > Pretty much everyone IMHO.
-> > 
-> > > I don't think we've figured out a solution yet how people (or at least
-> > > maintainers) can use QEMU's minutes from the open source program prior
-> > > to sending a patch series or pull request. Or have we?
-> > 
-> > GitLab user accounts get 400 minutes of CI credits.
-> > 
-> > Forks of QEMU though are only charged at a cost fact or 0.008 since
-> > we are a member of the OSS program
-> > 
-> >   https://docs.gitlab.com/ci/pipelines/compute_minutes/#cost-factors-of-hosted-runners-for-gitlabcom
-> > 
-> > IOW, you're charged 1 minute per 125 minutes of job time.
-> > 
-> > A single QEMU pipline run in my fork today cost 4.5 credits. That's
-> > enough for 87 pipeline runs per month, if I was not contributing to
-> > anything outside QEMU on gitlab.com.
-> > 
-> > If you run a pipeline to sanity check before sending a patch series
-> > I don't think most people will ever run out of credits.
-> > 
-> > If you run multiple pipelines a day during development then you might
-> > be pushing your luck. Better to use the local "make docker-...."
-> > targets for day-to-day testing during dev, and just use gitlab
-> > pipelines before submission.
+On Tue, 9 Jun 2026 13:41:01 +0100, Jonathan Cameron <jic23@kernel.org> wrote:
+
+Hi Jonathan,
+
+Thanks for the review.
+
+> > @@ -1426,6 +1446,15 @@ static void virt_machine_done(Notifier *notifier, void *data)
+> >                                       machine_done);
+> >      MachineState *machine = MACHINE(s);
+> >      hwaddr start_addr = s->memmap[VIRT_DRAM].base;
+> > +
+> > +    if (s->bus) {
 > 
-> Did this change at some point? Because I'm quite sure I stopped doing
-> full CI runs only after running out of minutes with very moderate use.
-> Ever since then, I've only manually started individual jobs when I had
-> reason to suspect there could be a problem with them.
+> There is a guard against !s->bus inside the function so you should be
+> able to do this unconditionally.
 
-Yes, there was a time window when QEMU was *not* part of the OSS
-program and so forks would get charged at the full 1:1 rate. At the
-same time gitlab was transitioning personal accounts from two different
-CI limits, so those with newer accounts would run out much faster
-due to a lower limit than other people with older accounts like myself.
-Everyone now has the same 400 minute limit, with the 0.008 cost factor
-inherited.
+You're right. Will drop the outer if (s->bus) guard in v2.
 
-The only caveat is that your git repo *MUST* be a direct fork of
-qemu-project/qemu.git in order to inherit the cost factor.
+> > @@ -64,6 +65,8 @@ struct RISCVVirtState {
+> >      struct GPEXHost *gpex_host;
+> >      OnOffAuto iommu_sys;
+> >      uint16_t pci_iommu_bdf;
+> > +    CXLState cxl_devices_state;
+> > +    PCIBus *bus;
+> 
+> That's a very vague bit of naming.  I'd make it explicit what PCIBus this is.
 
-So, yes, there were problems in the past, but it should be much
-better for most people today.
+Agreed. Will rename it to `pci_bus` in v2 to make it clear this is
+the root bus of the PCIe host bridge (PCI0).
 
-
-And we do have the "QEMU_CI=1" push option to trigger individual
-jobs manually vs  "QEMU_CI=2" run unleashes the whole pipeline,
-so users can conserve CI credits if debugging a specific job
-over & over again.
-
-With regards,
-Daniel
--- 
-|: https://berrange.com       ~~        https://hachyderm.io/@berrange :|
-|: https://libvirt.org          ~~          https://entangle-photo.org :|
-|: https://pixelfed.art/berrange   ~~    https://fstop138.berrange.com :|
-
+Best,
+Pei
 
