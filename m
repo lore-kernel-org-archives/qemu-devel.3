@@ -4,144 +4,115 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 57879CD8CB9
-	for <qemu-devel@archiver.kernel.org>; Wed, 10 Jun 2026 10:55:31 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6EE6ACD8CB9
+	for <qemu-devel@archiver.kernel.org>; Wed, 10 Jun 2026 10:55:58 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wXGa0-0000pj-PH; Wed, 10 Jun 2026 06:54:40 -0400
+	id 1wXGaj-0000rh-7F; Wed, 10 Jun 2026 06:55:25 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@oss.qualcomm.com>)
- id 1wXGZy-0000pA-UX
- for qemu-devel@nongnu.org; Wed, 10 Jun 2026 06:54:38 -0400
-Received: from mx0b-0031df01.pphosted.com ([205.220.180.131])
+ (Exim 4.90_1) (envelope-from <gshan@redhat.com>) id 1wXGai-0000rQ-6k
+ for qemu-devel@nongnu.org; Wed, 10 Jun 2026 06:55:24 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@oss.qualcomm.com>)
- id 1wXGZx-0001Rp-2x
- for qemu-devel@nongnu.org; Wed, 10 Jun 2026 06:54:38 -0400
-Received: from pps.filterd (m0279870.ppops.net [127.0.0.1])
- by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 65A7hxwW990993
- for <qemu-devel@nongnu.org>; Wed, 10 Jun 2026 10:54:34 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
- cc:content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
- df7M030d6wKw1VUNf+82BdLwSkH0OHfHpc+clGG6SQM=; b=ZQGkUzF5NmNoqZjH
- CF/Es/ZmABRU5untYGn0ocnUT2G1QW3OJZHzw/167NWfZMX5CVoMmnm7f7jw5NpA
- zXZxXB9Fdz8AVNr+5JRlEYwHuNBntemZ6ebRhyDUb1WbdoSjQniqAOJrTHcZpeeB
- jbAVBBqOj7gYblKfuBmSEjbZJv6r9y4W8QgQ7WM0WOeriw7yffqUSPJh6PJ7xtBS
- K/1UzbmrY63+Lpx/6e13i99HE5PQxXSvhV/1rcBJkt2/+S6UizvvsWOtjpNNntfO
- fUprDvgdyJJccerY9bUNa7XIbE+35omQnhKg5dirw+mFONlT/5EfCJWLA8hLol0I
- oX9/9w==
-Received: from mail-qt1-f197.google.com (mail-qt1-f197.google.com
- [209.85.160.197])
- by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4eq1tg17p0-1
- (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
- for <qemu-devel@nongnu.org>; Wed, 10 Jun 2026 10:54:34 +0000 (GMT)
-Received: by mail-qt1-f197.google.com with SMTP id
- d75a77b69052e-5174a23afcbso81006921cf.3
- for <qemu-devel@nongnu.org>; Wed, 10 Jun 2026 03:54:34 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <gshan@redhat.com>) id 1wXGag-000373-AA
+ for qemu-devel@nongnu.org; Wed, 10 Jun 2026 06:55:23 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1781088919;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=m0J+RJppz2U69gfioEgmnWduX6kml7jg1af9oTlbIFU=;
+ b=QQ+uyKtuyIJwFqqRaWnAW0v5UUQTGJA/LxGmzY4/gmVEdTU5YU7Hxvu3AdCMjo18n8s8A5
+ sIPLyxb9hH/DNQUtSfio6hxe+v9/bBLAPloR/lRhV/o8w8TDSDL/y7AcOib1m9cy7cCpBg
+ mmn+Pw4N47VchOcHuqjb6YlKBI09Nvg=
+Received: from mail-pj1-f70.google.com (mail-pj1-f70.google.com
+ [209.85.216.70]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-259-Ru0Fjox9PkaFYon8DZbN3g-1; Wed, 10 Jun 2026 06:55:18 -0400
+X-MC-Unique: Ru0Fjox9PkaFYon8DZbN3g-1
+X-Mimecast-MFC-AGG-ID: Ru0Fjox9PkaFYon8DZbN3g_1781088917
+Received: by mail-pj1-f70.google.com with SMTP id
+ 98e67ed59e1d1-36d97955899so6316853a91.0
+ for <qemu-devel@nongnu.org>; Wed, 10 Jun 2026 03:55:18 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=oss.qualcomm.com; s=google; t=1781088874; x=1781693674; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
+ d=redhat.com; s=google; t=1781088917; x=1781693717; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=df7M030d6wKw1VUNf+82BdLwSkH0OHfHpc+clGG6SQM=;
- b=IKI/iPsnT1JGpBwyW0LwtwePXK11rSE/AKJcfCcNwQ5CU7+rD6lSSbujHETM8cB/2Z
- LPAFEWtu89Qm4/738b038lqI4keOhfpyXdJg619WqFFzegxA2Ps2Dua8wbg6mGZ7V7If
- pAJoJQjijJrVSuEx7vV7HVqDuQ2JsbsEff3A8hTgudDTS+izhPq8HKu0ivWMv4f/cbJa
- d8Y19ECyNgCQ7a33mFNE4ZTczMpdQJkIoqt9+vmBzNJpkC/YGg6QzEcVJT5Lq82n+QQs
- M4Lg8oEZdUuhQxk2RcNFWqSSbccK6OuqSvZIx2cS2nJbTdBJ6927VX55Q37jfvWhSnWg
- 4RMQ==
+ bh=m0J+RJppz2U69gfioEgmnWduX6kml7jg1af9oTlbIFU=;
+ b=hsX1EoLYVp3kpW2mUHbFZuZ7EsJB5ri19arIlj60upXzoxrQTl8/co/+hB0PiYl7eL
+ LoWs/QJTpQ+S4swU4pDWVeY82afipW6Tnpg5/+sGP7PA+4pxJwq/reTmNjUlMHWSv5w+
+ OvGzAAsm+5dxRHiPe6JW+LpYlXJS0Ha+NYiNqYHTahVQLvm9cgMr3+AUnezI4b7lH6e6
+ k7NDDturJgBfrb/rt1ugmH5/Ngx6I+xOCtL6fIwnoDXB03Vh2EKKOihIrRsN9ly81fDL
+ Q7FVsbjVIIIUK4vU2jL0pXLZLynv6Dm2ft/KjjBcj1SaJ80/INeCASZYpluM3IrE4spG
+ jDzw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1781088874; x=1781693674;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
+ d=1e100.net; s=20251104; t=1781088917; x=1781693717;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
  :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=df7M030d6wKw1VUNf+82BdLwSkH0OHfHpc+clGG6SQM=;
- b=boVcit6EaBA8GTZPJBRJ8JGhhMWD/Cd8m0tOnrSOLgvgZz++GL+teziObG3sMGC51j
- rn4KU6Yt2A9TDvRRiRS3bzpaJEgo9HAl6IRo8PioA157RrWCaLvDDdtP/usm0FyJy7nh
- g7dIahVtu/vetZoH/DFwKUJdbSaeDUSwJwvoxARxp+B9ctOUPiH+c95BDAl/QFWP6noU
- q8yG4erKcdtUSyBhxVJyGechcSwWyuagVi3EAU6vaObS6kQtOTct8zzGvSgTaFYvP3/J
- +qUrE6rr5tfLlls0kdos6t0r5iEF/443UTYye9Sc4trlEfe5t1RYfC9oTcdg/bfu2oqW
- yiVw==
+ bh=m0J+RJppz2U69gfioEgmnWduX6kml7jg1af9oTlbIFU=;
+ b=EG0PZaGKq0vx2l6Pi1Igff6QC77JmTOwHcjqLaXcaMVIsXGERCZX8j36CsznPznB7i
+ zNKjahoivCHpa/553bBI876BS7LQIYM4osb39PEhAHJzYvRAk+iEWKKYAFy0Nq8dbTaT
+ Q2SY3ehTKrwFy+WBBX/ZAIP3LU+x2qtdZQpd2aOHgmHNVRIsJRHvkpDYTl+6S9JZZIhf
+ Mn/GqTDLYRTV1FLE+Vi5jeCIAhghyrS7uxfssBN/0d/9AAAGg74KbL360mamouSD/7BB
+ wfk2e33ceoyNzuLa3tRSMPIfBfY2QaZTGKPAs6ZFiCMEzFRpAnysuDtANU4t3BpYAGKG
+ aGcg==
 X-Forwarded-Encrypted: i=1;
- AFNElJ8krgNcwE9nJz4kYw1vD1yhah/z4pfdlxnjc+7ZI+SSzwaK85FA7vxbg6YPk7Gf9hZtCkXglexQTZf2@nongnu.org
-X-Gm-Message-State: AOJu0Yw+Fgstey47Qxa+Rkpx2SePvfFxsZrDqw214GpdcvT3c0WU48pg
- ki+U4apHJJKW34Tia+vjbd0HNkhQGfezLfAe1I//uUvu738LwyEpWaHucmPMPe8j0knFLC6NGro
- vYTVELJ+NRzOxJAhw7GGldOZxgZV0pQIWh4pLEPdgkhQzW5qJbrZOwTo8CA==
-X-Gm-Gg: Acq92OFhlpKclzyFSn26h72u+PX0gGqQhUfU3ntO9zc9icaxje0wT1oxkKTMO5S+AkK
- 4tFJHgy9YWDcOgjqkCLe08NNTiY/pFEK401BVpfUWwlsbVuOaQMg80xcuYCgiEWhnCSrt/EXA5K
- yEJkBvDricDyFKnPFOPJ+KZbWuFHIopYoMW6GHkmMpJLyC41bVxkx0O4MEQ/mSL6mW1uKGHCtOM
- op1MMJUxIE6rj0fmZwRAjoAOnsZnkyWBIcHz5EglsmHVylNrvzHuiT1A02icj3jD6y585GfNPuc
- PteyBsdMoBOx6UzSJYfsAd2ouWInjz/8XQt4JGkPxq3PvZtmyCZ+lCWeUydlxBQxBv4ZZNLOnCN
- k5ammLPEAHqxEUk8WE9xBTY88QVAtyuIlmtHThpfvjNsbWeaJ4qdWjmxXWE3EoMrx7xgWSKffVA
- ==
-X-Received: by 2002:a05:622a:1a9b:b0:517:9157:ecf0 with SMTP id
- d75a77b69052e-51795be13abmr330472091cf.29.1781088873684; 
- Wed, 10 Jun 2026 03:54:33 -0700 (PDT)
-X-Received: by 2002:a05:622a:1a9b:b0:517:9157:ecf0 with SMTP id
- d75a77b69052e-51795be13abmr330471771cf.29.1781088873116; 
- Wed, 10 Jun 2026 03:54:33 -0700 (PDT)
-Received: from [10.156.84.244] (49.170.88.92.rev.sfr.net. [92.88.170.49])
- by smtp.gmail.com with ESMTPSA id
- a640c23a62f3a-bf0559f1f97sm1203213966b.60.2026.06.10.03.54.31
+ AFNElJ+rdwDOjK7CY40p09WlZYmch0RG3eDVmjmn+iMpvoVmxrA4nlWrcjI/CMRTzw/G5u0ggq7oHmNAYvLE@nongnu.org
+X-Gm-Message-State: AOJu0Yx7LgXdOgyM9mQx++ntLKydZ8vXvOu5pbdbcULrtthfPNCf1nOC
+ 7GrzZ74Tvw88iO6nc/G0OHoJp9Iru4dapetirJyXfMYTLJwhMDYPcpVXBijwxT/waTtz4Z7LzWH
+ VzSE6cSF8cLAf6socd9IxW0UqYL0aLK9j7tRp3n6ofTkafMKUFh4rjSBn
+X-Gm-Gg: Acq92OG4lhxEya94o9AGkZP5KcPN3Id+KDM43RSawWbpsoBO+F08eAB53FsCQ1nnh7A
+ 2KU+OG4OTcYx26hMrobd/M0wRjwmdu0HhSnuaifDVbaYBqYp07AvTIPUdC4Mp8wc8BYOl5nJ0Zh
+ ZvtkKnEbPea6gTnZ/tnzAPDX1n4B/KavZ5i3uo44gtuan6/Rgmk2iZ3AC1eJ4NevMrO9mMlpiqm
+ 6BSulUEOWaJEKcksf/ABFEkV0exhCy9FpMkgh2tWqRpv1iSDA6nXgcbLgV4o0FDBJSAq3NyRcDs
+ TDA0Aze2daQQ+n6sUlRtOJSbgjrPa+GFDmroRliYwxHrsebBLiL9vbqm9g8zY5SnRjohwpne9Z/
+ JQ6Fel78yS9wIsr3YNk0ntXQoAqbRDNYrXdM9WrA6Aw960E2BNFSpzQZ1kEdhBLRvhNKEVMozf+
+ 0=
+X-Received: by 2002:a17:902:fc85:b0:2ba:bfb5:9cc with SMTP id
+ d9443c01a7336-2c2a1c87479mr86015925ad.26.1781088917159; 
+ Wed, 10 Jun 2026 03:55:17 -0700 (PDT)
+X-Received: by 2002:a17:902:fc85:b0:2ba:bfb5:9cc with SMTP id
+ d9443c01a7336-2c2a1c87479mr86015535ad.26.1781088916612; 
+ Wed, 10 Jun 2026 03:55:16 -0700 (PDT)
+Received: from [192.168.68.51] (n175-34-8-244.mrk21.qld.optusnet.com.au.
+ [175.34.8.244]) by smtp.gmail.com with ESMTPSA id
+ d9443c01a7336-2c16649ca4dsm240517215ad.76.2026.06.10.03.55.12
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 10 Jun 2026 03:54:32 -0700 (PDT)
-Message-ID: <affa4048-c00e-44b9-b06b-06a5e38df47b@oss.qualcomm.com>
-Date: Wed, 10 Jun 2026 12:54:30 +0200
+ Wed, 10 Jun 2026 03:55:16 -0700 (PDT)
+Message-ID: <674d5e21-88fa-4a10-a83c-eb6f7ce7032f@redhat.com>
+Date: Wed, 10 Jun 2026 20:55:10 +1000
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] target/riscv: add 'trigger-count' debug property
+Subject: Re: [PATCH RFCv1] virtio: Inherit max bounce buffer size from bus
+ parent if possible
+To: Pavel Hrdina <phrdina@redhat.com>
+Cc: =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>,
+ Peter Xu <peterx@redhat.com>, qemu-devel@nongnu.org, qemu-arm@nongnu.org,
+ mst@redhat.com, jugraham@redhat.com, shan.gavin@gmail.com
+References: <20260608001821.850921-1-gshan@redhat.com>
+ <aiaDgG26a6TUrKuM@redhat.com>
+ <07ca74b4-52a8-4187-a57c-7c3277e574d3@redhat.com>
+ <aiky9d9IwACIyKEC@phrdina-thinkpadt14gen4.rmtcz.csb>
 Content-Language: en-US
-To: Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>,
- =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>,
- qemu-devel@nongnu.org
-Cc: qemu-riscv@nongnu.org, alistair.francis@wdc.com, liwei1518@gmail.com,
- zhiwei_liu@linux.alibaba.com, chao.liu.zevorn@gmail.com,
- Palmer Dabbelt <palmer@dabbelt.com>
-References: <20260609213905.1126795-1-daniel.barboza@oss.qualcomm.com>
- <6db02c91-83fb-4021-91ec-72e6b56afeb3@oss.qualcomm.com>
- <25dc379c-7421-44e2-98a7-15593db4f93c@oss.qualcomm.com>
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>
-In-Reply-To: <25dc379c-7421-44e2-98a7-15593db4f93c@oss.qualcomm.com>
+From: Gavin Shan <gshan@redhat.com>
+In-Reply-To: <aiky9d9IwACIyKEC@phrdina-thinkpadt14gen4.rmtcz.csb>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-X-Proofpoint-GUID: 4zE1wL4rcWOKrvQD7AjT5LZPK0dFpGYJ
-X-Authority-Analysis: v=2.4 cv=dLmWXuZb c=1 sm=1 tr=0 ts=6a29426a cx=c_pps
- a=EVbN6Ke/fEF3bsl7X48z0g==:117 a=YLXAUxGLE6hMr2F5uSHVqQ==:17
- a=IkcTkHD0fZMA:10 a=FelO9ux0wxsA:10 a=M51BFTxLslgA:10 a=s4-Qcg_JpJYA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=gowsoOTTUOVcmtlkKump:22
- a=EUspDBNiAAAA:8 a=ozpIENw6cf2SYRR5OSYA:9 a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
- a=a_PwQJl-kcHnX1M80qC6:22
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNjEwMDEwNCBTYWx0ZWRfXx5oOrK+RD66c
- x8tmYv8j/8EKHLnvSaoAonEnITKCluSqjhrbCPNf6I5I9A1uCwYbFA7P9o29PY4CqGe1FGeG6w/
- FI5Khn9J4bGtQap+9gNDwdw9UZG5Ax0m6mjANC7jwO8m7Kw6MsTiF/Ds28alxB4oD3JzPK282Dx
- IdyXFuncyw0kGj9B9m6NC4zyrhaGaT1v6c2ZRZcOHKehlLyemfbkoS08rM5a10XH6vG7sDlf3W7
- rz0rbtqg/+CN0HbsAUhAdh5FcQmqjPm7yGH1zDbbWcIffpbxeDwvkwlyISpjm1sDoqUbjbLRqXc
- 37TmDrnachwmGgv2Hy0kgPXTQOfxUjHZ9VULhOjIggajj2kFxuc0qKc3wvnQ8bm5uuBHdPS2h9B
- AfqyRAN8ZS1g5sBOUMmkSMpR0gXtIctVHuay+gkrp2ByFtmCL4bINqv16DYu/Jx+uMeeGCAJFqV
- th8Vaq7wGQqM+4qT01Q==
-X-Proofpoint-ORIG-GUID: 4zE1wL4rcWOKrvQD7AjT5LZPK0dFpGYJ
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.125,FMLib:17.12.100.49
- definitions=2026-06-10_02,2026-06-09_02,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- malwarescore=0 impostorscore=0 spamscore=0 clxscore=1015 lowpriorityscore=0
- phishscore=0 adultscore=0 suspectscore=0 priorityscore=1501 bulkscore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2605210000 definitions=main-2606100104
-Received-SPF: pass client-ip=205.220.180.131;
- envelope-from=philmd@oss.qualcomm.com; helo=mx0b-0031df01.pphosted.com
-X-Spam_score_int: -27
-X-Spam_score: -2.8
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=gshan@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -24
+X-Spam_score: -2.5
 X-Spam_bar: --
-X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.445,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -157,111 +128,92 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 10/6/26 11:37, Daniel Henrique Barboza wrote:
-> 
-> 
-> On 6/10/2026 6:04 AM, Philippe Mathieu-Daudé wrote:
+Hi Pavel,
+
+On 6/10/26 7:54 PM, Pavel Hrdina wrote:
+> On Mon, Jun 08, 2026 at 09:11:50PM +1000, Gavin Shan wrote:
 >> Hi Daniel,
 >>
->> On 9/6/26 23:39, Daniel Henrique Barboza wrote:
->>> All CPUs have the same amount of triggers: 2 triggers per hart, set via
->>> RV_MAX_TRIGGERS.  This is not enough anymore: we'll have at least one
->>> future CPU that will demand more triggers per hart when implementing the
->>> RISC-V Server Ref Platform, requiring at least 11 triggers per hart.
+>> On 6/8/26 6:55 PM, Daniel P. Berrangé wrote:
+>>> On Mon, Jun 08, 2026 at 10:18:21AM +1000, Gavin Shan wrote:
+>>>> On the guest where a NVidia's GH100 card is passed from the host, the
+>>>> guest system hang can be observed on attempt to compile 'cuda-samples',
+>>>> as reported by Julia.
 >>>
->>> Parametrize the trigger amount using a new 'trigger_count' env property.
->>> The default amount is kept at 2.  Set the new maximum to an educated
->>> guess of 128 triggers per hart (which is less than 2^XLEN theoretical
->>> maximum by the spec).  All relevant callers (csr.c and debug.c) will now
->>> use env->trigger_count instead of RV_MAX_TRIGGERS.
+>>> snip
 >>>
->>> We're also adding two ways of setting the property:
->>>
->>> - a '.trigger_count' CPU definition flag, allowing CPUs to set a custom
->>>    amount inside the CPU def in DEFINE_RISCV_CPU();
->>> - a new 'trigger-count' user property.  The user property has a higher
->>>    priority than an existing '.trigger_count' CPU def setting.
->>>
->>> Assuming a hypotetical case where a CPU 'X' is defined with
->>> '.trigger_count = 8':
->>>
->>> - -cpu X,trigger-count=30 => trigger_count set to 30
->>> - -cpu X (...)            => trigger_count set to 8
->>>
->>> For a CPU that doesn't set '.trigger_count':
->>>
->>> - -cpu rv64,trigger-count=30 => trigger_count set to 30
->>> - -cpu rv64 (...)            => trigger_count set to 2
->>>
->>> Signed-off-by: Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>
->>> ---
->>>   target/riscv/cpu.c         | 11 +++++++++++
->>>   target/riscv/cpu.h         | 23 ++++++++++++++++++++++-
->>>   target/riscv/csr.c         |  2 +-
->>>   target/riscv/debug.c       | 16 ++++++++--------
->>>   target/riscv/machine.c     |  4 ++--
->>>   target/riscv/tcg/tcg-cpu.c |  7 +++++++
->>>   6 files changed, 51 insertions(+), 12 deletions(-)
 >>
+>> Thanks for looking into this.
 >>
->>> diff --git a/target/riscv/machine.c b/target/riscv/machine.c
->>> index 6e70b145a5..a667c06b17 100644
->>> --- a/target/riscv/machine.c
->>> +++ b/target/riscv/machine.c
->>> @@ -240,8 +240,8 @@ static int debug_post_load(void *opaque, int 
->>> version_id)
->>>   static const VMStateDescription vmstate_debug = {
->>>       .name = "cpu/debug",
->>> -    .version_id = 3,
->>> -    .minimum_version_id = 3,
->>> +    .version_id = 4,
->>> +    .minimum_version_id = 4,
+>>>> By default, the max bounce buffer size is only 4096 bytes, even less
+>>>> than one page when the guest page is 64KB. This tries to fix the issue
+>>>> by inheriting the customized max bounce buffer size of the virtio bus's
+>>>> parent through property 'x-max-bounce-buffer-size' when the customized
+>>>> size is a larger one. With this applied, no guest system hang is seen
+>>>> with '-device virtio-blk-pci,...,x-max-bounce-buffer-size=268435456'.
+>>>
+>>> "x-max-bounce-buffer-size"  is an experimental / unsupported property.
+>>>
+>>> We really shouldn't be expecting users to have to set this in a production
+>>> deployment in order to stop a guest from hanging.  Even if we dropped the
+>>> experimental marker from this property, users would still need to know to
+>>> provide this magic setting, so it would still be broken out of the box.
+>>>
+>>> How can we  get a solution that "just works" out of the box, which is
+>>> fully supported, not relying on experimental properties ?
+>>>
 >>
->> Since you bump the migration version, we can also change the array size
->> to only serialize the number of trigger used:
+>> How do we know that "x-max-bounce-buffer-size" is an experimental or unsupported
+>> property? I guess the properties whose names start with "x-" are all treated as
+>> experimental and unsupported?
 >>
->> @@ -246,9 +246,9 @@ static const VMStateDescription vmstate_debug = {
->>       .post_load = debug_post_load,
->>       .fields = (const VMStateField[]) {
->>           VMSTATE_UINTTL(env.trigger_cur, RISCVCPU),
->> -        VMSTATE_UINTTL_ARRAY(env.tdata1, RISCVCPU, RV_MAX_TRIGGERS),
->> -        VMSTATE_UINTTL_ARRAY(env.tdata2, RISCVCPU, RV_MAX_TRIGGERS),
->> -        VMSTATE_UINTTL_ARRAY(env.tdata3, RISCVCPU, RV_MAX_TRIGGERS),
->> +        VMSTATE_UINTTL_ARRAY(env.tdata1, RISCVCPU, env.trigger_count),
->> +        VMSTATE_UINTTL_ARRAY(env.tdata2, RISCVCPU, env.trigger_count),
->> +        VMSTATE_UINTTL_ARRAY(env.tdata3, RISCVCPU, env.trigger_count),
+>> For this case, the bounce buffer is inevitable as the memory region can't be
+>> directly accessed. The memory region is initialized by memory_region_init_ram_device_ptr()
+>> in hw/vfio/region.c::vfio_region_mmap(). So the question is how the allowed
+>> bounce buffer size can be specified by users, and it's why the existing property
+>> "x-max-bounce-buffer-size" is reused.
+>>
+>> I even thought of a new property for MachineState (e.g. "limited-bounce-buffer"),
+>> which is set to on by default, following the existing behavior. When it's set to
+>> off by users, the max (allowed) buffer size won't be checked at all. However, I'm
+>> not sure if this makes sense at all.
 > 
-> Good stuff.  I searched a bit yesterday to see if there was a way of 
-> putting a
-> variable in the array size of this macro and figured this wasn't possible.
-> Didn't find any example after searching for like 2 minutes, then convinced
-> myself that the vmstate array should have a static size.
+> Hi Gavin,
+> 
+> You did not answer the question that Daniel was asking, how will user
+> know that max-bounce-buffer-size should be used if it's necessary to fix
+> guest system hangs and how will user know what magic value should be set?
+> 
 
-Same happened to me, unfortunately there is no documentation at all.
+Sorry that I missed to answer Daniel's questions. For this specific case,
+user need to enlarge the bounce buffer size when seeing the following error
+message. We can add an explicit one in address_space_map() if the existing
+error message isn't obvious.
 
-> 
-> I'll send a v2.
-> 
-> 
-> 
->>           VMSTATE_END_OF_LIST()
->>       }
->>   };
->>
->> Orthogonal, we'd need to replace these target_ulong at some point
->> (likely bumping the version number again).
-> 
-> I suppose we should do that in a separated patch that handles all ulongs
-> from all vmstate objects of this file.  Then we can do a mass bump on
-> everything.
+   qemu-system-aarch64: virtio: bogus descriptor or out of resources
 
-Sure :)
+   void *address_space_map(AddressSpace *as,
+                         hwaddr addr,
+                         hwaddr *plen,
+                         bool is_write,
+                         MemTxAttrs attrs)
+   {
+       if (!memory_access_is_direct(mr, is_write, attrs)) {
+           if (l == 0) {
+               error_report("Running out of bounce buffer size , enlarge it with max-bounce-buffer-size");
+               *plen = 0;
+               return NULL;
+           }
+       }
 
+As to the value user should take for max-bounce-buffer-size, it is really case by case
+and decided by user. User needs to try 4096, 8192, ..., 0xFFFFFFFF to figure out the
+smallest value works for them. The worst case is to set 0xFFFFFFFF.
+
+> Pavel
 > 
-> 
-> Thanks,
-> Daniel
-> 
-> 
+
+Thanks,
+Gavin
 
 
