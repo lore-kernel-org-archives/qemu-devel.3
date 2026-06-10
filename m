@@ -4,45 +4,46 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 660A5CD8CB9
-	for <qemu-devel@archiver.kernel.org>; Wed, 10 Jun 2026 16:46:49 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id ABD80CD8CB9
+	for <qemu-devel@archiver.kernel.org>; Wed, 10 Jun 2026 16:47:00 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wXM45-0003IF-Gv; Wed, 10 Jun 2026 12:46:05 -0400
+	id 1wXM49-0003JW-I4; Wed, 10 Jun 2026 12:46:09 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <deller@kernel.org>) id 1wXM44-0003Hi-JE
- for qemu-devel@nongnu.org; Wed, 10 Jun 2026 12:46:04 -0400
+ (Exim 4.90_1) (envelope-from <deller@kernel.org>) id 1wXM47-0003Iw-MR
+ for qemu-devel@nongnu.org; Wed, 10 Jun 2026 12:46:07 -0400
 Received: from sea.source.kernel.org ([172.234.252.31])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <deller@kernel.org>) id 1wXM40-0000jR-9n
- for qemu-devel@nongnu.org; Wed, 10 Jun 2026 12:46:01 -0400
+ (Exim 4.90_1) (envelope-from <deller@kernel.org>) id 1wXM43-0000kJ-KB
+ for qemu-devel@nongnu.org; Wed, 10 Jun 2026 12:46:05 -0400
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
- by sea.source.kernel.org (Postfix) with ESMTP id BEB2E43263;
- Wed, 10 Jun 2026 16:45:56 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5D25F1F00898;
- Wed, 10 Jun 2026 16:45:53 +0000 (UTC)
+ by sea.source.kernel.org (Postfix) with ESMTP id 1FF0143CB2;
+ Wed, 10 Jun 2026 16:46:02 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 82ACB1F00893;
+ Wed, 10 Jun 2026 16:45:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
- s=k20260515; t=1781109956;
- bh=uJYohCP5AnuX7NPUMRjtL6qY4Sdy/K2vE+H1RS4C8dU=;
+ s=k20260515; t=1781109962;
+ bh=7yYTiLNsF0Ma6LBU7IM8obbatVSGeWaX23IU43WW7R0=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References;
- b=efwiRbkCv0rDMF1KYSyx3mIFYiXmac1eNa8I6/E8FvrVUZ/6hD63nsBYpf2Mcqd2J
- BBRYpl5dbMtkfntyiDzQgHD8nn4M9MNOYkIr7l8s5acuBxF3UMUyVMnCEql8Wulm1r
- gP6a4iwSNQI/QdDGMM+c8okZV/VKHoCuXpwxvfabKUQgEKIFtJSGptHnU3YkyiLEsl
- cU3bsx1/Wq5goQW7KwePHdFgBjUYYpW8x5gclimZva2Ce3+FzbbA/MwIATDS5s9g8Z
- sR5426xgRBVRv1IGH9OJj73s6SvOD4YsC0GAJ9EvKxrX7yD37BYCcXSfA8CwlsB3bt
- jLh7OPPBJLSbg==
+ b=io8YFkpg/WjZaC/DCLZZs52IwMpfCwXjLAKfQ4Xg35iGWBtMrx3R0aW7o+wWGeEMb
+ WEQyBy61KNbMWUMok/Aj/zh05UuS50HHGi2oIw1aPcdPif9MTzW9OZGgwhXiBIlVFY
+ uoVMX/FmZ1p/cFteJ3Sqz6PT5gQVtLDb/+b5HobgtIkG+qUgNDROIJ6lD7WsDZq+6V
+ bK1yjqKLU1smlbaMg+PRj1VPzjnHOQOnbBjh4HRvT5MVWPEw28Vc0hXViOhAzReGTf
+ 819MtnPTjKy/NNohpYbf4XM4+lzMiDkXBtovI8pzUXxQHkdjcRe7b5oQWe7mewAchj
+ BOk9BtPNC/V+g==
 From: Helge Deller <deller@kernel.org>
 To: Stefan Hajnoczi <stefanha@gmail.com>,
 	qemu-devel@nongnu.org
 Cc: Yoshinori Sato <yoshinori.sato@nifty.com>,
  Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
  Laurent Vivier <laurent@vivier.eu>, Helge Deller <deller@gmx.de>,
- Max Filippov <jcmvbkbc@gmail.com>, Xinhui Yang <cyan@cyano.uk>
-Subject: [PULL v3 1/8] linux-user: implement fsmount(2) series of syscalls
-Date: Wed, 10 Jun 2026 18:45:42 +0200
-Message-ID: <20260610164549.5699-2-deller@kernel.org>
+ Max Filippov <jcmvbkbc@gmail.com>, Matt Turner <mattst88@gmail.com>,
+ Richard Henderson <richard.henderson@linaro.org>
+Subject: [PULL v3 3/8] linux-user/alpha: add coredump support
+Date: Wed, 10 Jun 2026 18:45:44 +0200
+Message-ID: <20260610164549.5699-4-deller@kernel.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260610164549.5699-1-deller@kernel.org>
 References: <20260610164549.5699-1-deller@kernel.org>
@@ -71,150 +72,78 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Xinhui Yang <cyan@cyano.uk>
+From: Matt Turner <mattst88@gmail.com>
 
-This series of syscalls replaces the old mount(2) syscall with a series
-of syscalls that operates around a filesystem context. This series of
-syscalls is available since Linux 5.2 and glibc 2.36+.
+Define HAVE_ELF_CORE_DUMP and target_elf_gregset_t in target_elf.h,
+mirroring the kernel's elf_gregset_t (ELF_NGREG = 66): r0-r31
+[0..31], f0-f31 [32..63], pc [64], unique [65].  Implement
+elf_core_copy_regs() in elfload.c to populate the gregset from
+CPUAlphaState.
 
-Their users include systemd since v259 and libmount from util-linux, and
-possibly other widely used projects.
+Without this, bprm->core_dump is NULL for Alpha targets.  When a
+guest signal goes unhandled, dump_core_and_abort() skips the core
+write and falls through to die_with_signal(), which re-raises the
+signal to the host.  The host kernel then writes an x86-64 core file
+for the qemu-alpha process instead of an Alpha guest core.
 
-Preliminary checks are implemented to ensure the validity of the
-interface.
+v2: Store thread unique field, same as in Linux kernel. Added by Helge &
+suggested by Richard.
 
-v2: Add syscall wrappers in case the build machine does not
-support the fsmount() syscalls. (added by Helge Deller)
-
-Signed-off-by: Xinhui Yang <cyan@cyano.uk>
-Reviewed-by: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
+Signed-off-by: Matt Turner <mattst88@gmail.com>
 Signed-off-by: Helge Deller <deller@gmx.de>
+Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
 ---
- linux-user/syscall.c | 104 +++++++++++++++++++++++++++++++++++++++++++
- 1 file changed, 104 insertions(+)
+ linux-user/alpha/elfload.c    | 12 ++++++++++++
+ linux-user/alpha/target_elf.h | 13 +++++++++++++
+ 2 files changed, 25 insertions(+)
 
-diff --git a/linux-user/syscall.c b/linux-user/syscall.c
-index 7d7a7b489c..37ede95510 100644
---- a/linux-user/syscall.c
-+++ b/linux-user/syscall.c
-@@ -9713,6 +9713,19 @@ _syscall5(int, sys_move_mount, int, __from_dfd, const char *, __from_pathname,
-            int, __to_dfd, const char *, __to_pathname, unsigned int, flag)
- #endif
+diff --git a/linux-user/alpha/elfload.c b/linux-user/alpha/elfload.c
+index 1e44475c47..1969f620a5 100644
+--- a/linux-user/alpha/elfload.c
++++ b/linux-user/alpha/elfload.c
+@@ -3,8 +3,20 @@
+ #include "qemu/osdep.h"
+ #include "qemu.h"
+ #include "loader.h"
++#include "target_elf.h"
  
-+#if defined(TARGET_NR_fsopen) && defined(NR_fsopen)
-+#define __NR_sys_fsopen __NR_fsopen
-+_syscall2(int, sys_fsopen, const char *, fs_name, unsigned int, flags);
-+#define __NR_sys_fsconfig __NR_fsconfig
-+_syscall5(int, sys_fsconfig, int, fs_fd, unsigned int, cmd, const char *, key,
-+          const void *, value, int, aux)
-+#define __NR_sys_fsmount __NR_fsmount
-+_syscall3(int, sys_fsmount, int, fs_fd, unsigned int, flags,
-+          unsigned int, ms_flags)
-+#define __NR_sys_fspick __NR_fspick
-+_syscall3(int, sys_fspick, int, dfd, const char *, path, unsigned int, flags)
-+#endif
-+
- /* This is an internal helper for do_syscall so that it is easier
-  * to have a single return point, so that actions, such as logging
-  * of syscall results, can be performed.
-@@ -14412,6 +14425,97 @@ static abi_long do_syscall1(CPUArchState *cpu_env, int num, abi_long arg1,
-         return do_map_shadow_stack(cpu_env, arg1, arg2, arg3);
- #endif
  
-+#if defined(TARGET_NR_fsopen) && defined(NR_fsopen)
-+    case TARGET_NR_fsopen:
-+        {
-+            p = lock_user_string(arg1);
-+            if (!p) {
-+                return -TARGET_EFAULT;
-+            }
-+            ret = get_errno(sys_fsopen(p, arg2));
-+            unlock_user(p, arg1, 0);
-+        }
-+        return ret;
-+    case TARGET_NR_fsconfig:
-+        {
-+            /*
-+             * fsconfig(int, int, char *, void *, int)
-+             * NOTE: p4 is nullable and its type might not be a string.
-+             */
-+            void *p3, *p4;
-+            int cmd = (int) arg2;
-+            switch (cmd) {
-+            case FSCONFIG_SET_BINARY:
-+            case FSCONFIG_SET_STRING:
-+            case FSCONFIG_SET_PATH:
-+            case FSCONFIG_SET_PATH_EMPTY:
-+                p3 = lock_user_string(arg3);
-+                if (!p3) {
-+                    return -TARGET_EFAULT;
-+                }
-+                if (cmd != FSCONFIG_SET_BINARY) {
-+                    /* key and value must be strings. */
-+                    p4 = lock_user_string(arg4);
-+                } else {
-+                    /*
-+                     * Otherwise the value must be a raw buffer with its
-+                     * length specified in arg5 (aux).
-+                     */
-+                    p4 = lock_user(VERIFY_READ, arg4, arg5, 1);
-+                }
-+                if (!p4) {
-+                    unlock_user(p3, arg3, 0);
-+                    return -TARGET_EFAULT;
-+                }
-+                ret = get_errno(sys_fsconfig(arg1, arg2, p3, p4, arg5));
-+                unlock_user(p3, arg3, 0);
-+                unlock_user(p4, arg4, 0);
-+                break;
++void elf_core_copy_regs(target_elf_gregset_t *r, const CPUAlphaState *env)
++{
++    int i;
 +
-+            case FSCONFIG_SET_FLAG:
-+            case FSCONFIG_SET_FD:
-+                /* arg4 (value) must be NULL. */
-+                if (arg4) {
-+                    return -TARGET_EFAULT;
-+                }
-+                p3 = lock_user_string(arg3);
-+                if (!p3) {
-+                    return -TARGET_EFAULT;
-+                }
-+                ret = get_errno(sys_fsconfig(arg1, arg2, p3, NULL, arg5));
-+                unlock_user(p3, arg3, 0);
-+                break;
-+            case FSCONFIG_CMD_CREATE:
-+            case FSCONFIG_CMD_RECONFIGURE:
-+#ifdef FSCONFIG_CMD_CREATE_EXCL
-+            /*
-+             * FSCONFIG_CMD_CREATE_EXCL is only available since Linux
-+             * 6.6. Guarding it to allow building with pre-6.6 headers.
-+             */
-+            case FSCONFIG_CMD_CREATE_EXCL:
-+#endif
-+                /* key and value must be NULL, aux must be 0. */
-+                if (arg3 || arg4 || arg5) {
-+                    return -TARGET_EFAULT;
-+                }
-+                ret = get_errno(sys_fsconfig(arg1, arg2, NULL, NULL, 0));
-+                break;
-+            default:
-+                return -TARGET_EFAULT;
-+            }
-+        }
-+        return ret;
-+    case TARGET_NR_fsmount:
-+        ret = get_errno(sys_fsmount(arg1, arg2, arg3));
-+        return ret;
-+    case TARGET_NR_fspick:
-+        {
-+            p = lock_user_string(arg2);
-+            ret = get_errno(sys_fspick(arg1, p, arg3));
-+            unlock_user(p, arg2, 0);
-+        }
-+        return ret;
-+#endif
-     default:
-         qemu_log_mask(LOG_UNIMP, "Unsupported syscall: %d\n", num);
-         return -TARGET_ENOSYS;
++    for (i = 0; i < 31; i++) {
++        r->regs[i] = tswap64(env->ir[i]);
++    }
++    r->pc = tswap64(env->pc);
++    r->unique = tswap64(env->unique);
++}
++
+ const char *get_elf_cpu_model(uint32_t eflags)
+ {
+     return "ev67";
+diff --git a/linux-user/alpha/target_elf.h b/linux-user/alpha/target_elf.h
+index 864dc6e2e6..4987ae3944 100644
+--- a/linux-user/alpha/target_elf.h
++++ b/linux-user/alpha/target_elf.h
+@@ -11,4 +11,17 @@
+ #define ELF_CLASS               ELFCLASS64
+ #define ELF_MACHINE             EM_ALPHA
+ 
++#define HAVE_ELF_CORE_DUMP      1
++
++/*
++ * Matches the kernel's elf_gregset_t (ELF_NGREG = 33):
++ *   r0-r30 at indices 0-30, pc at 31, ps at 32.
++ * r31 (hardwired zero) is not stored; pc occupies index 31.
++ */
++typedef struct target_elf_gregset_t {
++    abi_ulong regs[31];  /* integer registers r0-r30  [0..30] */
++    abi_ulong pc;        /* program counter           [31]    */
++    abi_ulong unique;    /* thread's UNIQUE field     [32]    */
++} target_elf_gregset_t;
++
+ #endif
 -- 
 2.54.0
 
