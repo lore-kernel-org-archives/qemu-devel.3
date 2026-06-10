@@ -4,70 +4,70 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 89B2CCD8CB9
-	for <qemu-devel@archiver.kernel.org>; Wed, 10 Jun 2026 07:16:13 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D30C8CD8CB9
+	for <qemu-devel@archiver.kernel.org>; Wed, 10 Jun 2026 07:17:43 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wXDAK-0004Na-EQ; Wed, 10 Jun 2026 03:15:58 -0400
+	id 1wXDBj-0004q4-SG; Wed, 10 Jun 2026 03:17:25 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <manos.pitsidianakis@linaro.org>)
- id 1wXDA6-0004Jy-Fg
- for qemu-devel@nongnu.org; Wed, 10 Jun 2026 03:15:45 -0400
-Received: from mail-wm1-x333.google.com ([2a00:1450:4864:20::333])
+ id 1wXDBU-0004li-6y
+ for qemu-devel@nongnu.org; Wed, 10 Jun 2026 03:17:10 -0400
+Received: from mail-wr1-x433.google.com ([2a00:1450:4864:20::433])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <manos.pitsidianakis@linaro.org>)
- id 1wXDA4-0000vw-T0
- for qemu-devel@nongnu.org; Wed, 10 Jun 2026 03:15:42 -0400
-Received: by mail-wm1-x333.google.com with SMTP id
- 5b1f17b1804b1-490b64c8311so71118935e9.3
- for <qemu-devel@nongnu.org>; Wed, 10 Jun 2026 00:15:40 -0700 (PDT)
+ id 1wXDBS-0001WY-O0
+ for qemu-devel@nongnu.org; Wed, 10 Jun 2026 03:17:07 -0400
+Received: by mail-wr1-x433.google.com with SMTP id
+ ffacd0b85a97d-45ee5cdbd28so4347952f8f.1
+ for <qemu-devel@nongnu.org>; Wed, 10 Jun 2026 00:17:06 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1781075739; x=1781680539; darn=nongnu.org;
+ d=linaro.org; s=google; t=1781075825; x=1781680625; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:message-id:in-reply-to
  :references:user-agent:subject:cc:to:from:date:from:to:cc:subject
  :date:message-id:reply-to;
- bh=3TDiUy2PzzCOyt5mHH6+W/zA3yy1jiRXqY3YKvb0zPo=;
- b=txvnijpe+QD2ka6aIkV7WCmUoXtBIlnYD9rZubDNAQKEiHUkoAWn1TS78Y8phTskBE
- N7cchhp9Z1iLLo1nbIjWVQcUWPU0uVSBz+udaK2LBpg2VttGZlAGkmyg+XVOo1YWtufB
- 9ApzWMGDiu3cQ1i7YCLRP5Lg31IqOSR2BLtw5+gaksN/wu+oliqpWDIAIfdymiIJLWZM
- wsOo5xpwisrDps89RiBeFeW46qHt/eiAW9v6fuTrrjtw/ERnnOab0HtxmVZSpYAfA1ca
- 9dbh0Z+D4JZZ1Sh4E6iKo5rCLxxM4OWyBOnrxe6hDXJrt6VRZ6nPMaaUJsGXwVY4eCk4
- suBQ==
+ bh=wdU1404k+TxR02ItnBlHj6oYFXSCi4F+DlqFcTTJ4j0=;
+ b=VcphJb5NTHn2MqfzEz+oly90a062xMms37ZVEGY+02f/Dq4N2LjpgwAqVV6ehNdedA
+ qDD95O7wKP1IydhMKxOViS/mtsD4Eu3Cs5mlja1aPoWmRXvCfKUD0ISig2lWMayaGIo3
+ FTHJn+IUgE+BYXyoUIW2MMH7wmyq/VF31ZCYn19EWljuW9PIaLQV/hLYw4EMdrj4ZOBT
+ awia7x2jcbWRRoBKGbwGORtvGwgXKTE0PGJKlFyc0yvS34BFWM8/n/kxPU9CnMT87hbC
+ q6MdTqv3IZONpw2Wl+nDqCbw5BaQNl58sHUDdwiFQNxG2eMAfZUR1w1nnawAbecnfHgC
+ 67/A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1781075739; x=1781680539;
+ d=1e100.net; s=20251104; t=1781075825; x=1781680625;
  h=content-transfer-encoding:mime-version:message-id:in-reply-to
  :references:user-agent:subject:cc:to:from:date:x-gm-gg
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=3TDiUy2PzzCOyt5mHH6+W/zA3yy1jiRXqY3YKvb0zPo=;
- b=FEvKaTP9kQh+PDaMcyLDjjTW+8clii+6wxn6DJyuWSjW6/J2pdjI0vz2iRUmoVjUR4
- uB3qxgQjwfs5XBhoChz7n7d0pUGTaBIAm0sLPr+S3zRqaHdHWxHZ/0EmZYJIuzJdvIbM
- 4Z/3HSMfR7adbyNdApMogamttDb1pDgdbQCPNTLcVScup420oQx31etqOFfJMscG3kww
- y/gILZvY/Sko8vKpsRqBZD9kkW2vNwXPNFl0ACOXtBhZqIm5pYKntLPD4VWxczbOvy5b
- W4sc+wrNiJJ03fvZFoKZdaBpB//6dSlNj/TnZh6r0A1kA9hpqqdRDAaCsM/OhNXt3npm
- QgSw==
+ bh=wdU1404k+TxR02ItnBlHj6oYFXSCi4F+DlqFcTTJ4j0=;
+ b=p5iim8wEfZpsAlzuxSRdVBDDTEjhEC+8cszICCekrAKGnTLI0Guf86KNiLTkltbwpt
+ pBx6KYanTi1I4YxGsWhg52hxfKYZQMcl5mzlVz8Cc/mjD1sofMf7hh+ORaDz2pez9Q0j
+ 4cKQB0715H0KbMRnfcGdEmxO7mOSEZayvHIvqqU4MKXrAzUImGXNlaLeYUxTcEqY6TPF
+ FrzS0nUbaDwvubnVvlVLk2AvxBRiM67Gx4d2ReGgKFI37wgqkOcIowXV/BU2vlM9Q2PS
+ Rqr9dSmVqHwpP63N62vpMl9xXl17L2Y6V2C9AtaCTK92FJ45w/MM13Nyh8vjyBpZOYJm
+ zT+w==
 X-Forwarded-Encrypted: i=1;
- AFNElJ/ilLCRAAcwT6CnQj/rIKeRCIAHnymkhP0LNJEELoJ4zl6Cy/LPXcV7cbmd5iDkua9Ds+OOzWpnB+k6@nongnu.org
-X-Gm-Message-State: AOJu0YwSFyv/5PzT5MX8zdz5Zm+dtkVN8dr+AU6f8R7Umy4aU8ycNlkm
- aOJwf/V5IhDiEm9K0ib3qM5ouv0BsY5uMuFSeBFzrhSNH6TQIsM95F37ADRNSuaSejY=
-X-Gm-Gg: Acq92OGMlINBCvC952dT4A+RCFVhJingdJeUAhNIV2uEP3xvK572Fjiwd2a11cQoSSO
- I0tuveAY5BAnHbQEjMBRlvpnjfglBK8K8ymn9XV5QkiShxRB/bQ2Z34h3NJsJSHlTbDBr1x6JvU
- 0moOmDITvF9X/Nxe4x3WgfL1A9+2hzE12tzv59DvkMhPzDtLAAiDMS2dQz6KwDPVQAAh13CUC4G
- 71p+nejQQsajBOnTfFVe8qmNSyQ2DSJT2leSQaUnZwt3F5GEIkFZfnzmJTNGHG41Rw5wLF/iZ7X
- gSGTHKfiGgdtY/U6lQ/W3Hiwj9H8RLktgQ7FNvpGiVGbOtWGz1oVjKHKGZpv5+s05yNlq+ypwic
- OTfqnKPfH+lA1lytwqtaJKh+YKKfle/geXCUqQoCN5hT4q12pmIu+fRq9AwKzam6huTNu2KB/2Y
- OaqVTnXPv5WvAIlcsVgD3+FZfEFnEMzzexX+QP7uK1DwRdmlSYMBhchM+ul9q5u6c5+VNB7j+gl
- vfdxdXW3pVX0FIjjHYtUJubdSSb1d8PqtemAQWJKvScHJvNSwesJ9IzcP8NzUVt
-X-Received: by 2002:a05:600c:3e15:b0:490:adb6:793d with SMTP id
- 5b1f17b1804b1-490c25f67d9mr376796345e9.26.1781075739275; 
- Wed, 10 Jun 2026 00:15:39 -0700 (PDT)
+ AFNElJ9JzXrAJ+sVlFuiSVLIV/9k5efA3kWd0Oq+zhdWWc/mqZggDfflS9pz192N0PhyvjS7KQM+BhtEwxQk@nongnu.org
+X-Gm-Message-State: AOJu0Yx11Xu+zDcjgvnTn43YsVZTyvQoxUf0CFuArDxtyNgON72a7Ygv
+ zA8wUCyp4KP7KV886YkHQcgzMo8ZLr90eKnm+snecCrZaCFp6VxH68hltBgqPBc1CVE=
+X-Gm-Gg: Acq92OHX9VsUva4lO7leJKBQfZBLmKGQ+vs/4FCzsRGWDAiGcYf/Ws3RcYd0CqJNZG4
+ /yEvxQpCgLw9V6AzeyMWOewBhONSoLRuQ2u+HypRG4qV8S8D/xR1i4gTk4DWm0eOcfxug02izMV
+ sG4xMQGi9/hAH9Vi79i9cTw0Yh0Sfv6I0IcWpHOG9V2vwXjVSMCSFv2vtdUSLx28Uc4eVcn4Xl8
+ 2OwuACko1cDiExZbpiROjrZbJ9EBu66ND7XWs/eI6v2NtWXqpDNgJup2lLNf3IzsxRg6fXZvNuu
+ FGJC03XbPVt7DK9vjvw384EnmdChidivFvXz4gka30Ujwdalytwkuhw2C9qaMe6NP936LVkzGD7
+ 6+HDXIEz+qq5SzYjf03TBEx5+yumA+4ih3LBzghVLW1fatRodPXlIZa5sCxsEKLZtJol2Ton/km
+ U0fLQQ11yuAM/Qu5iWdcXA/ZCDcjbqpFtjbBtLIte516M9X0fK+aX6L0yz0jDViVcJmmQTrskHR
+ GYhVw3KZwKLR27Y1i3L/miaF0nrclgwr1ap/23x/JwDCFMUEXXT4xjhCirulqiE
+X-Received: by 2002:a05:6000:400e:b0:460:18cf:d49b with SMTP id
+ ffacd0b85a97d-46032dabbc0mr31051349f8f.15.1781075824696; 
+ Wed, 10 Jun 2026 00:17:04 -0700 (PDT)
 Received: from meli-email.org (ppp-2-86-144-251.home.otenet.gr. [2.86.144.251])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-490bc3d66c8sm515825105e9.10.2026.06.10.00.15.38
+ ffacd0b85a97d-4602cda3651sm57712647f8f.32.2026.06.10.00.17.03
  (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
- Wed, 10 Jun 2026 00:15:38 -0700 (PDT)
-Date: Wed, 10 Jun 2026 10:14:43 +0300
+ Wed, 10 Jun 2026 00:17:04 -0700 (PDT)
+Date: Wed, 10 Jun 2026 10:15:50 +0300
 From: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
 To: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>, qemu-devel@nongnu.org
 Cc: Thomas Huth <thuth@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>,
@@ -80,24 +80,24 @@ Cc: Thomas Huth <thuth@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>,
  Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
  Peter Maydell <peter.maydell@linaro.org>,
  Gustavo Romero <gustavo.romero@linaro.org>
-Subject: Re: [PATCH 09/27] tests/tcg/meson.build: introduce env_var
+Subject: Re: [PATCH 10/27] tests/tcg/plugins: build list of test_plugins
 User-Agent: meli/0.8.13
 References: <20260609214745.772536-1-pierrick.bouvier@oss.qualcomm.com>
- <20260609214745.772536-10-pierrick.bouvier@oss.qualcomm.com>
-In-Reply-To: <20260609214745.772536-10-pierrick.bouvier@oss.qualcomm.com>
-Message-ID: <tgemu1.1usbqbq5v5b36@linaro.org>
+ <20260609214745.772536-11-pierrick.bouvier@oss.qualcomm.com>
+In-Reply-To: <20260609214745.772536-11-pierrick.bouvier@oss.qualcomm.com>
+Message-ID: <tgemwf.258tji04enkpa@linaro.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 Content-Type: text/plain; charset=utf-8; format=flowed
-Received-SPF: pass client-ip=2a00:1450:4864:20::333;
- envelope-from=manos.pitsidianakis@linaro.org; helo=mail-wm1-x333.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::433;
+ envelope-from=manos.pitsidianakis@linaro.org; helo=mail-wr1-x433.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -114,50 +114,57 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On Wed, 10 Jun 2026 00:47, Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com> wrote:
->We add possibility to set an environment variable when running a test.
->An example of a test requiring this is
->tests/tcg/multiarch/linux/linux-sigrtminmax.c.
+>We previously had list of test_plugins sources, but not the target
+>themselves. Create this list, so tests can then reference a plugin by
+>its name from there.
 >
 >Signed-off-by: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
 >---
 
 Reviewed-by: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
 
-> tests/tcg/meson.build | 7 ++++++-
-> 1 file changed, 6 insertions(+), 1 deletion(-)
+> tests/tcg/meson.build         |  1 +
+> tests/tcg/plugins/meson.build | 11 +++++++----
+> 2 files changed, 8 insertions(+), 4 deletions(-)
 >
 >diff --git a/tests/tcg/meson.build b/tests/tcg/meson.build
->index 28a7e529c7e..b6a375e9eee 100644
+>index b6a375e9eee..5cd80f3c030 100644
 >--- a/tests/tcg/meson.build
 >+++ b/tests/tcg/meson.build
->@@ -15,6 +15,7 @@ tcg_tests = {}
-> #           'test_name': ['provide an alternative test name'],
-> #           'cflags': ['cflags to compile test', ...],
-> #           'qemu_args': ['qemu command line flags', ...],
->+#           'env_var': ['VAR=value', ...],
-> #         }
-> #       },
-> #       ...
->@@ -55,7 +56,7 @@ foreach target, plan: tcg_tests
->       # return a clear error if user mispell a setup entry
->       foreach key, _ : setup
->         if key not in ['cflags', 'qemu_args',
->-                       'exe_name', 'test_name',
->+                       'exe_name', 'test_name', 'env_var',
->                        ]
->           error('unknown tcg setup entry \'' + key + '\' for test ' + src)
->         endif
->@@ -120,6 +121,10 @@ foreach target, plan: tcg_tests
->       # some tests expect QEMU env var to be set
->       cmd = ['QEMU=' + qemu.full_path(), cmd]
+>@@ -30,6 +30,7 @@ tcg_tests = {}
+> # Default name is derived from src if 'exe_name' and 'test_name' are omitted.
 > 
->+      if 'env_var' in setup
->+        cmd = [setup['env_var'], cmd]
->+      endif
->+
->       test(test_name, env, args: cmd,
->            depends: depends,
->            suite: ['tcg', 'tcg-' + target])
+> # plugins come first, as we need to build the list
+>+test_plugins = {}
+> subdir('plugins')
+> 
+> # Finally, we can create all test executables and test targets
+>diff --git a/tests/tcg/plugins/meson.build b/tests/tcg/plugins/meson.build
+>index d7f8f0ae0ad..2abc317d1e7 100644
+>--- a/tests/tcg/plugins/meson.build
+>+++ b/tests/tcg/plugins/meson.build
+>@@ -1,4 +1,4 @@
+>-test_plugins = [
+>+test_plugins_src = [
+> 'bb.c',
+> 'discons.c',
+> 'empty.c',
+>@@ -14,9 +14,12 @@ test_plugins = [
+> 
+> t = []
+> if get_option('plugins')
+>-  foreach i : test_plugins
+>-    t += shared_module(fs.stem(i), files(i),
+>-                       dependencies: plugins_deps)
+>+  foreach i : test_plugins_src
+>+    name = fs.stem(i)
+>+    plugin = shared_module(name, files(i),
+>+                           dependencies: plugins_deps)
+>+    t += plugin
+>+    test_plugins += {name: plugin}
+>   endforeach
+> endif
+> if t.length() > 0
 >-- 
 >2.43.0
 >
