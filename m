@@ -4,120 +4,91 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3095DCD98C7
-	for <qemu-devel@archiver.kernel.org>; Wed, 10 Jun 2026 18:47:33 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 14C2BCD98C7
+	for <qemu-devel@archiver.kernel.org>; Wed, 10 Jun 2026 18:50:53 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wXNx7-0007ss-3W; Wed, 10 Jun 2026 14:47:01 -0400
+	id 1wXO05-0001F4-VB; Wed, 10 Jun 2026 14:50:06 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1wXNx4-0007sR-N3
- for qemu-devel@nongnu.org; Wed, 10 Jun 2026 14:46:58 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1wXNx1-0007kN-VN
- for qemu-devel@nongnu.org; Wed, 10 Jun 2026 14:46:58 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1781117214;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=x4sycvDnjXZCal6+QgBRKRenAqYyProEsIldQ62GmvQ=;
- b=XtBxt7ooLruCMW3AzI1R/qZ95uz4nJpgvWSd4N51EIN/z0RcqNheh5ePUsW2tC7xK0hZG1
- 0rtS86k6UMoon6f/xXyFkJi9gCk69BbiPY1BoznSqn0+p2eqsi4JzjFMljLuD66xOX4bET
- uvYRh7lRE07oLS5yTez1yUBDLVk4RsE=
-Received: from mail-qk1-f200.google.com (mail-qk1-f200.google.com
- [209.85.222.200]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-256-sfJj270ROoGsWq-HrMRthg-1; Wed, 10 Jun 2026 14:46:53 -0400
-X-MC-Unique: sfJj270ROoGsWq-HrMRthg-1
-X-Mimecast-MFC-AGG-ID: sfJj270ROoGsWq-HrMRthg_1781117213
-Received: by mail-qk1-f200.google.com with SMTP id
- af79cd13be357-915f7c37734so215431185a.1
- for <qemu-devel@nongnu.org>; Wed, 10 Jun 2026 11:46:53 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1wXO03-0001E6-Q5
+ for qemu-devel@nongnu.org; Wed, 10 Jun 2026 14:50:03 -0400
+Received: from mail-pj1-x1030.google.com ([2607:f8b0:4864:20::1030])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1wXO01-0001UJ-Ef
+ for qemu-devel@nongnu.org; Wed, 10 Jun 2026 14:50:03 -0400
+Received: by mail-pj1-x1030.google.com with SMTP id
+ 98e67ed59e1d1-37474afe908so1713720a91.1
+ for <qemu-devel@nongnu.org>; Wed, 10 Jun 2026 11:50:00 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1781117213; x=1781722013; darn=nongnu.org;
- h=in-reply-to:content-transfer-encoding:content-disposition
- :mime-version:references:message-id:subject:cc:to:from:date:from:to
- :cc:subject:date:message-id:reply-to;
- bh=x4sycvDnjXZCal6+QgBRKRenAqYyProEsIldQ62GmvQ=;
- b=PiDUqpajh4TdpzkrhThn9Z83qh461KHk92Zw5WDDcC9TiZwiTopPfD2V2DXn79o2fk
- WlqO4ACe2M1M+7+geRl4zcC2tkGQ0ufjJmNejGclCFPW/tiyd5ROMqAVZr4bvU0UWS4V
- 2nHHaJ6ZnNmo0OIgfDfWhLgvSVqV3sqqbucp8eWkqJEGMi8knzMea2fsD7jZCtph/GHg
- Pgn0JY0FmPWVyZk+5C2ZQw69uRoNfWWKzfUBdVrNDVAk/FZcBsqTbW/WH2pUdV0hbEC5
- xmS5AseaXrkcviz5/2yyH/y5l/w9W3NBZ1938tgjj7d2cazjrTboujY+0XujB3tb1Rdi
- MgyA==
+ d=linaro.org; s=google; t=1781117400; x=1781722200; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:content-language:from
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=7m6KrAPD4rXQG/wWXko1HPt1/0bD5isu1abW+qBhWjI=;
+ b=ukCWr6aaP/LW3fiRvKJwCJDKIoBROcWMxrXXAYaU5hACO7un3K9GCmv1fbLe0sGJPQ
+ DF2qaelqrkogPtbvO6LOfPDSeJfHBHPcv5nwje1KgF36cDiGU8ETJiqV+9iXlKTZlrsJ
+ /cnGtkeIvZWeJVrv/03TT3o4R8cz9wIZi31sJe7Rt0A1EsoKR821mVQiikW3EGWwbWLK
+ r+BDNNi5+qAjlsP1EVVRZc29SUHxQ77jDBmtc1hsl2GYHAj6lOHO4hzvBPQdNbQvztXX
+ ojIvTQ6F8zxDAQ0hlXWrtSu+oe4uWvGZ8fJwaBX1tt8LDNm8wIJ422LbvTr1strfHYmC
+ WdXw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1781117213; x=1781722013;
- h=in-reply-to:content-transfer-encoding:content-disposition
- :mime-version:references:message-id:subject:cc:to:from:date:x-gm-gg
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=x4sycvDnjXZCal6+QgBRKRenAqYyProEsIldQ62GmvQ=;
- b=gP7RZ3KmU66cugITJrNmszdHWv37PJQ00ZpPee3PL5Jkzh1TU7wfIxTaFhVVx+TXwo
- LzBnoLoiq1QByUppsB5ecZ4LtvNqK3tJY53cy9bts5096nzJGDNnzwGeYl8mxrDaHAt1
- JM6KtIGNyvlXt74wU1/VTaYxy+BZI/Zem7CV4MDvgGOP4ER0oEP+VMSp9GshPmvoSmPZ
- utximUTPbh/pxlM5mLCdXDnDD/q3kyu7WDeeEJ+BVa08UyBPOGbdyP+CKOshrjvRI3Nf
- 9P9xnh30Ke3VjXTryfsiXZJoRNe0Skznwx7XFqivVN2QJwSceZdBX86wFz20ijtKIGxj
- uzWA==
-X-Gm-Message-State: AOJu0YwaW9vgU7v66zXdwYzZejrdBcqceCpTLIiVxq8OGEB8qYmZ6hSv
- s3BY8mZqhGTkf6qj30VBIFBHeMFFoRKo7pgw5rGyf+lms+NvlAg5Ci3Tt6IsnqlB6GB8nDZLIzr
- uvF7HydD+5XpY6z7KI7QjvVUYEtTwE8QOv8bVO/iMYIt1/76ddW/pF0Ry
-X-Gm-Gg: Acq92OEtOOl6bFGVY1QNKrXtaXjfep0dCHS0ybmdQYxgqe2w0cL5c+y+krQeJ3Qqgcq
- NOrWkTYm3f2rmgaEKiccSWo1WeuOmLKJV8tfZhPL4xnUMPCmPa8pOHaBdXqK1PpmwxYHS2Y+5V0
- UaXgU1acS0P38wAHS6DFUxzbbjlQcpDpKTORYsYOErPIP628vQcf+8vpjpIGMqCxoIG1ktJWjzl
- 6FLS1S5vqoX1u93SUpa5aPlW1Dx3zStKVxVWUCl7+u3u9Hy8QJtOOjoofEHcLwG42OQhhFqmk9k
- u3g0XMtsFvAT8kuckMOk0GIt9hfw1pIvaLgKx6qFCMDEI4TL0dw8YHmwV4Sr4CHo32qcTNOatZQ
- 06N5lStE2NGLy9gNiutMAAiMweA==
-X-Received: by 2002:a05:620a:4048:b0:915:c4de:7ada with SMTP id
- af79cd13be357-915e82e7feemr1473599385a.27.1781117212586; 
- Wed, 10 Jun 2026 11:46:52 -0700 (PDT)
-X-Received: by 2002:a05:620a:4048:b0:915:c4de:7ada with SMTP id
- af79cd13be357-915e82e7feemr1473590285a.27.1781117211879; 
- Wed, 10 Jun 2026 11:46:51 -0700 (PDT)
-Received: from x1.local ([142.189.10.167]) by smtp.gmail.com with ESMTPSA id
- af79cd13be357-9158a3d3a0esm2544893785a.40.2026.06.10.11.46.50
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 10 Jun 2026 11:46:51 -0700 (PDT)
-Date: Wed, 10 Jun 2026 14:46:46 -0400
-From: Peter Xu <peterx@redhat.com>
-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
-Cc: qemu-devel@nongnu.org, qemu-arm@nongnu.org,
- =?utf-8?Q?C=C3=A9dric?= Le Goater <clg@redhat.com>,
- Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@mailo.com>,
- Fabiano Rosas <farosas@suse.de>,
- Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>,
- Peter Maydell <peter.maydell@linaro.org>,
- "Dr . David Alan Gilbert" <dave@treblig.org>,
- Eric Blake <eblake@redhat.com>,
- Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>,
- Paolo Bonzini <pbonzini@redhat.com>, Kevin Wolf <kwolf@redhat.com>,
- Sana Sharma <sansshar@redhat.com>,
- =?utf-8?Q?Marc-Andr=C3=A9?= Lureau <marcandre.lureau@redhat.com>,
- Juraj Marcin <jmarcin@redhat.com>, qemu-rust@nongnu.org,
- Markus Armbruster <armbru@redhat.com>,
- Mark Cave-Ayland <mark.caveayland@nutanix.com>
-Subject: Re: [PATCH v2 10/10] migration: Switch to TYPE_OBJECT with object
- properties
-Message-ID: <aimxFsY_B0-slXjC@x1.local>
-References: <20260609172514.2037645-1-peterx@redhat.com>
- <20260609172514.2037645-11-peterx@redhat.com>
- <aimNOxqrmmXPQTfS@redhat.com>
+ d=1e100.net; s=20251104; t=1781117400; x=1781722200;
+ h=content-transfer-encoding:in-reply-to:content-language:from
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=7m6KrAPD4rXQG/wWXko1HPt1/0bD5isu1abW+qBhWjI=;
+ b=VxbGnTrRKMTMXiw0EzWNrg4TRc4QM+RIa85dYQzhu+2CFRuOjOB5urBzg3nrw20VCz
+ lLlgWkdaHBvZOPiRoJS1ZKPz+yuXgg8w6LGNXz+vL/cwFsj0hFVZI41/mP7FXKpAm2w9
+ z6D5KDisyr989L0K91TkdCXEV7WePCB5isD2i3Pc1G04MAPaBAh5mDz+NtxXLG5XvPdj
+ 6L7Za+YqekFGmSq4NPPhgPKvIq2sSAXZly4diliXIEY2R3SweE31JGvkMPqKHXbUo7PV
+ l/PLLeo7Sa8V9c6h4lCE9tQEmsoIVPjYvxoKQ58cV7QXBZkkX5a9G9soMnj9dJfMyels
+ mGAw==
+X-Forwarded-Encrypted: i=1;
+ AFNElJ//7n3yk1c0yJLvqdRT3AacgNihGt8cwDAn4G60UNJWSLmobIXUfbVB5ccU1IZIE5pXhjwYCHaVTpZ6@nongnu.org
+X-Gm-Message-State: AOJu0YzvEpcab8UslS8ckgz43o+KaC8JiUyUbR1IlqIlwg7M7hcLD2DJ
+ fUC2+53GpcDn/y4pvAt8XZ9Owt9Fb0IwfoE52yOswsiskYZpOw04jcmIlkWls7dp4e4=
+X-Gm-Gg: Acq92OGfRlouxsBLHTu+ErAF8YhoVsP1+6ai6+dKPLaz6N4jO8WvzrAPitypIti6ODq
+ 0VHaFUwx/qH2INM80LhE9YjBu857ruop+mqVBkk67W+/EYmnUXynA0X8klgxcwSVcytLuzxiZ3F
+ wn4fjokcspoxK58dSbF7tEoSg8HymM8xH9VkDvuB/MLXpFotf9/9dLoyHb5I7TtGzXElfYe8uCm
+ Cn8+ahZaP0SAcs/LxMNCqcMf5AcI7zd0GEco4pMLilvkQ81LW9EoEYaFus3iRXCxf1doSnCpGkR
+ eMzbSb/rssdg4mFTWVeSfeXdNQcvu++BSWkIu/2FecIo0go+nDXzzFgqPYt1BHabzAwmygcsaRH
+ ZlQGmnjLO8r6n9gq/zGMN7RaV65F46cBDmn2eXMEJSzhy4kMIOOhrEjvhG3n/0Ix7m//sL9QQL0
+ C7RN6b6g8/Zc9PVJecqbXVl45vBID7ck8Cp8uxWSVf1FXeckw=
+X-Received: by 2002:a17:90b:570e:b0:36d:dfe4:387c with SMTP id
+ 98e67ed59e1d1-370eed08b30mr28439659a91.10.1781117399594; 
+ Wed, 10 Jun 2026 11:49:59 -0700 (PDT)
+Received: from [192.168.0.4] ([71.212.142.33])
+ by smtp.gmail.com with ESMTPSA id
+ 98e67ed59e1d1-37752b5a9d5sm103406a91.6.2026.06.10.11.49.58
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Wed, 10 Jun 2026 11:49:59 -0700 (PDT)
+Message-ID: <4853852b-015f-4e16-aee3-7750a35b9c78@linaro.org>
+Date: Wed, 10 Jun 2026 11:49:57 -0700
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <aimNOxqrmmXPQTfS@redhat.com>
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=peterx@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -24
-X-Spam_score: -2.5
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v2] linux-user: Implement /proc/cpuinfo for ppc cpus
+To: Helge Deller <deller@kernel.org>, qemu-devel@nongnu.org
+Cc: Helge Deller <deller@gmx.de>, qemu-ppc@nongnu.org
+References: <20260610180749.10883-1-deller@kernel.org>
+From: Richard Henderson <richard.henderson@linaro.org>
+Content-Language: en-US
+In-Reply-To: <20260610180749.10883-1-deller@kernel.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::1030;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pj1-x1030.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.445,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -133,251 +104,108 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, Jun 10, 2026 at 05:13:47PM +0100, Daniel P. Berrangé wrote:
-> On Tue, Jun 09, 2026 at 01:25:14PM -0400, Peter Xu wrote:
-> > The migration object used to depend on TYPE_DEVICE due to:
-> > 
-> > - Usage of qdev properties
-> > - Apply compat properties and global properties
-> > 
-> > This patch re-based the object to TYPE_OBJECT with the changes:
-> > 
-> > - Switch to object properties API
-> > - Manually apply both compat and global properties in post_init()
-> > 
-> > Note that to avoid too many property getter/setter helpers, this patch used
-> > the object_property_add_*_ptr_def() APIs so that an pointer is passed to
-> > bind to the property.  Such API is used for most of the conversions.
-> > 
-> > After patch, the migration object initializes instance properties within
-> > its instance_init() callback, in migrate_params_init().
-> > 
-> > One side effect of this change is, since we switched to a loop to add all
-> > capabilities, the name of the properties representing a migration
-> > capability may chance from previously hard-coded ones (many with x-).  It's
-> > fine since it's only used in -global so it's only for debugging.
-> > 
-> > Similarly, I removed "x-" from other properites that used to start with
-> > "x-" but actually are not experimental.
+On 6/10/26 11:06, Helge Deller wrote:
+> From: Helge Deller <deller@gmx.de>
 > 
-> Mixing such a change into a refactoring commit is bad practice,
-> can you keep property changes separated.
+> I've tried to mimic what I've seen on two debian porterboxes (ppc64 and
+> ppc64le), which are running via KVM/QEMU. I assume the model type of
+> pSeries and such doesn't make much sense for some older ppc chips, so
+> any better suggestions here are welcome.
+> 
+> v2: drop colon, add clock output, refine pvr calculation
+> (@Richard: I suggest to completely drop the clock for v3 ?!?!)
+> 
+> Signed-off-by: Helge Deller <deller@gmx.de>
+> Cc: qemu-ppc@nongnu.org
+> Cc: Richard Henderson <richard.henderson@linaro.org>
+> ---
+>   linux-user/ppc/target_proc.h | 91 +++++++++++++++++++++++++++++++++++-
+>   1 file changed, 90 insertions(+), 1 deletion(-)
+> 
+> diff --git a/linux-user/ppc/target_proc.h b/linux-user/ppc/target_proc.h
+> index 43fe29ca72..6d78c0f543 100644
+> --- a/linux-user/ppc/target_proc.h
+> +++ b/linux-user/ppc/target_proc.h
+> @@ -1 +1,90 @@
+> -/* No target-specific /proc support */
+> +/*
+> + * ppc specific proc functions for linux-user
+> + *
+> + * SPDX-License-Identifier: GPL-2.0-or-later
+> + */
+> +#ifndef PPC_TARGET_PROC_H
+> +#define PPC_TARGET_PROC_H
+> +
+> +#include <time.h>
+> +
+> +#define PVR_VER(pvr)    (((pvr) >>  16) & 0xFFFF)      /* Version field */
+> +#define PVR_REV(pvr)    (((pvr) >>   0) & 0xFFFF)      /* Revison field */
+> +#define PVR_MAJ(pvr)    (((pvr) >>  4) & 0xF)   /* Major revision field */
+> +#define PVR_MIN(pvr)    (((pvr) >>  0) & 0xF)   /* Minor revision field */
+> +
+> +static int open_cpuinfo(CPUArchState *cpu_env, int fd)
+> +{
+> +    struct timespec res;
+> +    double freq_mhz;
+> +    int i, num_cpus;
+> +    unsigned int maj, min, pvr;
+> +
+> +    PowerPCCPUClass *pcc = POWERPC_CPU_GET_CLASS(env_cpu(cpu_env));
+> +    DeviceClass *dc = DEVICE_CLASS(ppc_cpu_get_family_class(pcc));
+> +
+> +    pvr = pcc->pvr;
+> +
+> +    /* Taken from Linux kernel: */
+> +    /* If we are a Freescale core do a simple check so
+> +     * we don't have to keep adding cases in the future */
+> +    if (PVR_VER(pvr) & 0x8000) {
+> +            switch (PVR_VER(pvr)) {
+> +            case 0x8000:	/* 7441/7450/7451, Voyager */
+> +            case 0x8001:	/* 7445/7455, Apollo 6 */
+> +            case 0x8002:	/* 7447/7457, Apollo 7 */
+> +            case 0x8003:	/* 7447A, Apollo 7 PM */
+> +            case 0x8004:	/* 7448, Apollo 8 */
+> +            case 0x800c:	/* 7410, Nitro */
+> +                    maj = ((pvr >> 8) & 0xF);
+> +                    min = PVR_MIN(pvr);
+> +                    break;
+> +            default:	/* e500/book-e */
+> +                    maj = PVR_MAJ(pvr);
+> +                    min = PVR_MIN(pvr);
+> +                    break;
+> +            }
+> +    } else {
+> +            switch (PVR_VER(pvr)) {
+> +                    case 0x1008:	/* 740P/750P ?? */
+> +                            maj = ((pvr >> 8) & 0xFF) - 1;
+> +                            min = pvr & 0xFF;
+> +                            break;
+> +                    case 0x004e: /* POWER9 bits 12-15 give chip type */
+> +                    case 0x0080: /* POWER10 bit 12 gives SMT8/4 */
+> +                            maj = (pvr >> 8) & 0x0F;
+> +                            min = pvr & 0xFF;
+> +                            break;
+> +                    default:
+> +                            maj = (pvr >> 8) & 0xFF;
+> +                            min = pvr & 0xFF;
+> +                            break;
+> +            }
+> +    }
 
-Sure.
+Reindent for qemu style.
 
-> 
-> > After the whole conversion, we don't need migration_properties or the count
-> > anymore, hence can be removed.  While at it, we can also remove two
-> > DEFINE_PROP*() API that only migration uses (DEFINE_PROP_STR_OR_NULL, and
-> > DEFINE_PROP_MIG_CAP).
-> > 
-> > Signed-off-by: Peter Xu <peterx@redhat.com>
-> > ---
-> >  migration/options.h   |   8 +-
-> >  migration/migration.c |  35 ++-
-> >  migration/options.c   | 526 ++++++++++++++++++++++++++----------------
-> >  3 files changed, 351 insertions(+), 218 deletions(-)
-> 
-> 
-> > diff --git a/migration/options.c b/migration/options.c
-> > index 5cbfd29099..1cc99382d3 100644
-> > --- a/migration/options.c
-> > +++ b/migration/options.c
-> > @@ -54,7 +54,7 @@
-> 
-> 
-> > +static void migration_object_init_props_bool(MigrationState *s)
-> >  {
-> > -    const Property *prop = opaque;
-> > -    StrOrNull **ptr = object_field_prop_ptr(obj, prop);
-> > -    StrOrNull *str_or_null = *ptr;
-> > +    Object *obj = OBJECT(s);
-> > +    int i;
-> >  
-> > -    /*
-> > -     * The property should never be NULL because it's part of
-> > -     * s->parameters and a default value is always set by qdev. It
-> > -     * should also never be QNULL as the setter doesn't allow it.
-> > -     */
-> > -    assert(str_or_null && str_or_null->type != QTYPE_QNULL);
-> > -    visit_type_str(v, name, &str_or_null->u.s, errp);
-> > +    struct MigPropBool {
-> > +        const char *name;
-> > +        void *ptr;
-> > +        bool defvar;
-> > +    } bool_list[] = {
-> > +        {
-> > +            "store-global-state",
-> > +            &s->store_global_state,
-> > +            true,
-> > +        },
-> > +        {
-> > +            "send-configuration",
-> > +            &s->send_configuration,
-> > +            true,
-> > +        },
-> > +        {
-> > +            "send-section-footer",
-> > +            &s->send_section_footer,
-> > +            true,
-> > +        },
-> > +        {
-> > +            "send-switchover-start",
-> > +            &s->send_switchover_start,
-> > +            true,
-> > +        },
-> > +        {
-> > +            "x-preempt-pre-7-2",
-> > +            &s->preempt_pre_7_2,
-> > +            false,
-> > +        },
-> > +        {
-> > +            "x-cpu-throttle-tailslow",
-> > +            &s->parameters.cpu_throttle_tailslow,
-> > +            false,
-> > +        },
-> > +        {
-> > +            "multifd-clean-tls-termination",
-> > +            &s->multifd_clean_tls_termination,
-> > +            true,
-> > +        },
-> > +        {
-> > +            "multifd-flush-after-each-section",
-> > +            &s->multifd_flush_after_each_section,
-> > +            false,
-> > +        },
-> > +    };
-> > +    struct MigPropBool *prop;
-> 
-> This approach to declaring properties is pretty unpleasant
-> to follow IMHO. Being a custom different approach from every
-> other object impl is not a good thing.
+> +
+> +    if (clock_getres(CLOCK_REALTIME, &res) == -1) {
+> +        res.tv_nsec = 1;
+> +    }
+> +    freq_mhz = 1000.0 / res.tv_nsec;
 
-[I asked this question elsewhere, I'll keep the discussion there]
+Seems ok.
 
-> 
-> > +
-> > +    for (i = 0; i < ARRAY_SIZE(bool_list); i++) {
-> > +        prop = &bool_list[i];
-> > +        object_property_add_bool_ptr_def(obj, prop->name,
-> > +                                         prop->ptr, prop->defvar);
-> > +    }
-> 
-> Using instance level properties is the old way to do things,
-> it is preferred to use class level properties instead.
-> 
-> This means you can't use the "ptr" concept to directly reference
-> the instance fields and have to provide setters / getters explicitly
-> instead, but as you've shown with the TLS properties,  a macro can
-> make it simple to define the repetitive getters/setters.
+> +        dprintf(fd, "processor:\t: %d\n", i);
 
-If pointer is unwanted, I can switch to some more macro magic.  But since
-this series got rewrote the 3rd time..  I'll make sure it's extremely
-required before doing it..
+Still have an extra : here.
 
-> > +static void migration_object_init_props_enum(MigrationState *s)
-> > +{
-> > +    Object *obj = OBJECT(s);
-> > +    ObjectProperty *prop;
-> > +
-> > +    prop = object_property_add_enum(obj, "multifd-compression",
-> > +                                    "MultiFDCompression",
-> > +                                    &MultiFDCompression_lookup,
-> > +                                    mig_prop_multifd_compression_get,
-> > +                                    mig_prop_multifd_compression_set);
-> > +    object_property_set_default_str(prop, DEFAULT_MIGRATE_MULTIFD_COMPRESSION);
-> > +
-> > +    prop = object_property_add_enum(obj, "mode", "MigMode", &MigMode_lookup,
-> > +                                    mig_prop_mode_get, mig_prop_mode_set);
-> > +    object_property_set_default_str(prop, "normal");
-> > +
-> > +    prop = object_property_add_enum(obj, "zero-page-detection",
-> > +                                    "ZeroPageDetection",
-> > +                                    &ZeroPageDetection_lookup,
-> > +                                    mig_prop_zero_page_detection_get,
-> > +                                    mig_prop_zero_page_detection_set);
-> > +    object_property_set_default_str(prop, "multifd");
-> > +}
-> 
-> Perhaps I'm missing something, but I'm not seeing the point in
-> using the set_default methods - in fact I'm not really sure why
-> they exist in QOM at all.
-> 
-> I'd expect all defaults to be set in the instance _init method.
-> ie why isn't this done as:
-> 
->    void migrate_params_init(MigrationState *s)
->    {
->       s->parameters.mode = MIG_MODE_NORMAL;
->       s->parameters.zero_page_detection = ZERO_PAGE_DETECTION_MULTIFD;
->       .... all other defaults...
->    }
 
-Yes frankly I asked myself the same question when looking at this.
-
-I still saw quite some defvar references, type_print_class_properties() can
-be one example where we dump help message with default values but without
-the need to apply.  I didn't check the rest.  If the concept exists and if
-we will be using qobj props, IMHO sticking with it is defintely safer so
-that all qom future defvar changes will apply and it'll just work there.
-
-> 
-> 
-> > +
-> > +static void migration_object_init_properties(MigrationState *s)
-> > +{
-> > +    migration_object_init_props_bool(s);
-> > +    migration_object_init_props_uint8(s);
-> > +    migration_object_init_props_uint32(s);
-> > +    migration_object_init_props_uint64(s);
-> > +    migration_object_init_props_size(s);
-> > +    migration_object_init_props_caps(s);
-> > +    migration_object_init_props_tls(s);
-> > +    migration_object_init_props_enum(s);
-> > +}
-> 
-> ...and class properties be registered in migrate_params_class_init()
-> and the grouping per type isn't helpful IMHO, just put all the
-> object_class_property_add calls inline in one place.
-
-I still want to avoid long functions, one way or another.
-
-Hopefully it makes sense when I have those arrays to init different type of
-props it makes sense to split with this, but I'm open to other way to
-split.  I still want to not make it a extremely long function.
-
-Thanks,
-
-> 
-> >  
-> >  bool migrate_auto_converge(void)
-> >  {
-> > @@ -1107,9 +1246,10 @@ MigrationParameters *qmp_query_migrate_parameters(Error **errp)
-> >      return params;
-> >  }
-> >  
-> > -void migrate_params_init(MigrationParameters *params)
-> > +void migrate_params_init(MigrationState *s)
-> >  {
-> > -    migrate_mark_all_params_present(params);
-> > +    migration_object_init_properties(s);
-> > +    migrate_mark_all_params_present(&s->parameters);
-> >  }
-> >  
-> >  static void migrate_post_update_params(MigrationParameters *new, Error **errp)
-> > -- 
-> > 2.53.0
-> > 
-> 
-> With regards,
-> Daniel
-> -- 
-> |: https://berrange.com       ~~        https://hachyderm.io/@berrange :|
-> |: https://libvirt.org          ~~          https://entangle-photo.org :|
-> |: https://pixelfed.art/berrange   ~~    https://fstop138.berrange.com :|
-> 
-
--- 
-Peter Xu
-
+r~
 
