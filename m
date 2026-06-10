@@ -4,111 +4,103 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id DFED5CD8CB9
-	for <qemu-devel@archiver.kernel.org>; Wed, 10 Jun 2026 09:45:18 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0A8FCCD98C7
+	for <qemu-devel@archiver.kernel.org>; Wed, 10 Jun 2026 09:50:12 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wXFUC-0007hC-6t; Wed, 10 Jun 2026 05:44:36 -0400
+	id 1wXFYy-0000x7-VP; Wed, 10 Jun 2026 05:49:33 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <leonardi@redhat.com>)
- id 1wXFUA-0007fz-5M
- for qemu-devel@nongnu.org; Wed, 10 Jun 2026 05:44:34 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1wXFYx-0000u6-BC
+ for qemu-devel@nongnu.org; Wed, 10 Jun 2026 05:49:31 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <leonardi@redhat.com>)
- id 1wXFU8-0002zy-EO
- for qemu-devel@nongnu.org; Wed, 10 Jun 2026 05:44:33 -0400
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1wXFYv-00048s-CV
+ for qemu-devel@nongnu.org; Wed, 10 Jun 2026 05:49:31 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1781084670;
+ s=mimecast20190719; t=1781084967;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding;
- bh=f0XyjkV+4pftUsJVnvIYp47/Q6T0AROHTUKZuonvPLY=;
- b=PP6uSKt4PMlCkwHTJFbvtqS+uQO0GEhqLCCChhcLD7ZQmRUBBxG+HwLZXyHkeTar3I6EWz
- GEWn1FXbd6DLVL/0s+xpKAIa5WswmVIGBL4QQMJV17qH2EqmU0UkSi4pgr8vOrbM7wNkWk
- CbTnkN0uq5OYTz2Lnb5ddxiMMhUvdPY=
-Received: from mail-wm1-f69.google.com (mail-wm1-f69.google.com
- [209.85.128.69]) by relay.mimecast.com with ESMTP with STARTTLS
+ in-reply-to:in-reply-to:references:references;
+ bh=HJpIq4DO8bdfcDx0wh13Foq0nFERFPIB0/DgZ0IKkY4=;
+ b=KF+YLDa4YZO9Xc+v6k+dAqB9TviLFlJzMAvlO32jqPrsrskm4Kr03AM+NzS7FCVNRI4wZi
+ jEQNDDOwp17nG0Lkfsa8eaYslyaiqceoWfZbqxzYQwUupL3aDdnUDb0uV6Rwn82fw7vuJx
+ vOPIjIcWQLIYfOxv3BTLxBtLRSOlPc4=
+Received: from mail-wr1-f72.google.com (mail-wr1-f72.google.com
+ [209.85.221.72]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-645-Ffs94SS0McqvwSYglE9uWQ-1; Wed, 10 Jun 2026 05:44:28 -0400
-X-MC-Unique: Ffs94SS0McqvwSYglE9uWQ-1
-X-Mimecast-MFC-AGG-ID: Ffs94SS0McqvwSYglE9uWQ_1781084668
-Received: by mail-wm1-f69.google.com with SMTP id
- 5b1f17b1804b1-490afe64f26so32694425e9.0
- for <qemu-devel@nongnu.org>; Wed, 10 Jun 2026 02:44:28 -0700 (PDT)
+ us-mta-154-7E9ZkYymPiu0EP5ea1VyHg-1; Wed, 10 Jun 2026 05:49:26 -0400
+X-MC-Unique: 7E9ZkYymPiu0EP5ea1VyHg-1
+X-Mimecast-MFC-AGG-ID: 7E9ZkYymPiu0EP5ea1VyHg_1781084965
+Received: by mail-wr1-f72.google.com with SMTP id
+ ffacd0b85a97d-460198535bcso4235111f8f.3
+ for <qemu-devel@nongnu.org>; Wed, 10 Jun 2026 02:49:26 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1781084667; x=1781689467; darn=nongnu.org;
- h=cc:to:message-id:content-transfer-encoding:mime-version:subject
- :date:from:from:to:cc:subject:date:message-id:reply-to;
- bh=f0XyjkV+4pftUsJVnvIYp47/Q6T0AROHTUKZuonvPLY=;
- b=DFTQ/gjtwxVAAj3VjMTNa5IZgDpYv89+46HeyLZ4kiqK9NlR/UAS3hMj3hgZ3+oPNy
- ReAs30Qnb0zlrDIp7ZMqGH0YCzvg4Dva52pvN1gS3e7i+MU8CU1/Tf3L/XndxIWImr7u
- 7Yf7yqnJ2otTgehw7wUc0IAnwB4hoZqsZ4CGNGruoMJ+HN+18KGjl/VefX8a80p3mZ19
- YBvrsIGBm1Uqca7TQ6fuhsD+SosF9ILHyS3XDbb5iDAqHI6cbsD2IemNFZVBiuRPkzNM
- GkmkDSrEvuNZP1slp4ygNiyKlIFPFDw78fadIkdhCIm7kYlj+ZkoBSTxc+7NBo9BvudE
- 54eA==
+ d=redhat.com; s=google; t=1781084965; x=1781689765; darn=nongnu.org;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+ bh=HJpIq4DO8bdfcDx0wh13Foq0nFERFPIB0/DgZ0IKkY4=;
+ b=eoXcp251mbU+0TrRCbTuPh1Kq6k6zec/32FovBVTZHYoFX804uFOshqN94mVyhQIuO
+ DBJ5R2eWyZf2HLeew/4vqA4alJflGLPojoztOosES/PHZ5nOA7+Zzgb3/MF2cZltZM8K
+ yLwyPVJ2AMY1qJs1RCqZzm4BOApPrXdD2V2BSGziAon1GHsqCInass8u6tiCqvgG2Jqu
+ SXRY8oC7TwEAVDnHm6iXvgRz3ZSjMclp+f9i3GKg79kQOY0DPFs2jx+2GcFCwBJGjHB+
+ 7RKLTHbtGg32i2t3wzNUI2N5v0a4XPocZgf4KM8csFLQyCV52ju11ta8OFpUuPMBZLZE
+ DOJA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1781084667; x=1781689467;
- h=cc:to:message-id:content-transfer-encoding:mime-version:subject
- :date:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=f0XyjkV+4pftUsJVnvIYp47/Q6T0AROHTUKZuonvPLY=;
- b=qa8x3ssRtK/QyDk31ZnsN3dfNK8eAg04C7KCdwpw7WuHgWrIqQv63N8/w6dWzKXkUy
- 3gMSU2bmU2plMQcC35B8e+13LxHz8nGEgTdGrPBvZ6JucRGuzmYuW17V57YnqcFXlHrK
- Sn/JCSAzYMgwh+g2yyjoGT6EYUbx1B3PyRgVLzdB67E55mhuFGbUOTQSTRYKcN+oGZxW
- 0EOrRKuwPlc0EZS7uiFgPXA3wtRKHMfLxyQqhrF461jRXRzrurSw0LQ+S+Rgw05VCi7L
- zaZ4x9onTC3wdir1iqzuMM8owOfODaNqjudx5nY2XSEH0Pc9jGScHzTziFVcoTkI5tHx
- K47A==
-X-Gm-Message-State: AOJu0YzyBEvHq9DHhU9E3x1P4Wz8DhjJM5mHTHg3iYRosBGi3EtCB8Vx
- GY/9MTpY4pmzA8kOZF2g0HiWVPQBvi0SrIR9GTsckmL3OiF8ra/vgIehGL+Wb4t5MFBKGS/brKP
- GA5QR9orAu2f60ncKVFMRBdqi8YWdzGcf5S+149B01bQyO1tYZtjLr4wU
-X-Gm-Gg: Acq92OHd1/1IvnAICy2W1dXX8/ZzHIhLKsYEyJvGNiqEzRI0wTqASntcl/pXcVan5Uf
- kLtW76KTjtPD4/feULxBT3xojLrt6xklmB5hB+j/1kNCNx6Fbo2qc9nBOob51eLJVm+qPzsEgPN
- M+IsOQuzKFbVCn5TU0oG6S2EStv01RfQy62NbNh3Zdvgf937kIzeYOY+tO/z3bS2B4FlfiXCYG6
- 1jUkzu28Etd5//TyHR/AvoKHyNrFQH0SYSE2EHQyiLxJcLr63ckq0ILNoi4FY1Q7CxvDIDeFvZN
- HRGHkBrwB3qLMrDjDMjBGXCDglFE+8dFZfatQzuYmtO6MY/cLlql6Z7BQepfzxGJ2YRdX0nKp33
- DRAWwcgSnBahLs3DbLXpQJ0Jx9/4Z64pk/Y5IuELIBF7DY27h0OkXrnVKiQ/itRDpPNYmrZp/y4
- BgR3RYuCxCvSwUfUHaj4QEFLN+P8c=
-X-Received: by 2002:a05:600c:1986:b0:489:32b:ac0b with SMTP id
- 5b1f17b1804b1-490c2cc27bdmr327074875e9.6.1781084667661; 
- Wed, 10 Jun 2026 02:44:27 -0700 (PDT)
-X-Received: by 2002:a05:600c:1986:b0:489:32b:ac0b with SMTP id
- 5b1f17b1804b1-490c2cc27bdmr327074545e9.6.1781084667320; 
- Wed, 10 Jun 2026 02:44:27 -0700 (PDT)
-Received: from lleonard-thinkpadx1carbongen13.rmtit.csb ([176.206.19.176])
+ d=1e100.net; s=20251104; t=1781084965; x=1781689765;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=HJpIq4DO8bdfcDx0wh13Foq0nFERFPIB0/DgZ0IKkY4=;
+ b=Ij+HTtJ+p5ymV1z79I+9lqnRtDISCBM3MUB48coi2Bh0F18mbSHUgTJhcVOiLwvmya
+ 6JiCTonC8skPvCZsHR9SQmWdjAVPASoJQPe4HwMkbaM1dFXchQZe02XVSjpG1csR/vfo
+ 5JSnScE6K2ZvFVKif6VySqL4cEGEiVsQqL/yAi1FOQJcuCowMZmuyZMkYXbItoUwNJ/o
+ +dneHfEod8+8mwtXXrZaaHMO33O2oCJpw8dT7GbfJoKsJUhYpzkWCCc5t1iHD6+P6EF+
+ J7EFYWtZJz7CI4qmohyIfOroVwtP1piJBPCasdWjyh44gNJReAFI9YCxYBTzWC6lvMAI
+ cMqA==
+X-Gm-Message-State: AOJu0YxjCkCSk9SUhfDM0cScdGC1JnDoqXU6oEvhbqWEQZdbAo64B+zI
+ OsU4hlITQE5VfkkK8uiA4a1/mSe4on24HC/dH7zZR77D+6/uhH1hi2wOfqv/8Jfj3esSu9X3Fle
+ N0KdSpg3TPPwQvuvXV/UDitR+sBP+gxStqlIVQseeIuAssjqggr6kykeX
+X-Gm-Gg: Acq92OG5pP6SLsmbZCCzRDeVl1rrtEtR0MxFnhXTZDItGkPQ6fXFlU2ASjZ3I/Bwsds
+ Jzg/z14h4YjKqSkFbfE1Zi/iuzmCxOkDypxvY9OQ7hLtZzDJ6Hs1dvVbByOm3ugexprmxwbiOaI
+ 9ixOTXM+oKojoAaFEnCfHNDgC0iaHNKQ5d0FsRU6Jw5NNHArsf38iNFxRk8gJ6LOhhHtTOJGiGr
+ CG+nNJu3eXZrwMe8nyDz0VadUNHc4BBXn3I91Ps9UkhNA6cbwR8TQGZK6LQEK4SkX4fzbjEWz29
+ ewDV8YpD/Nl3ioEbDkxgHpcGXTobsM4dEIa0ThDia7JL3JGhPiNjqctKcH/MLJBom4dIHspGjIs
+ +CF5/FFfqpvlDaQ5gVKk/MqxP7qLBq99Y0R2Zim8tzQi7ShslbQMq9Q==
+X-Received: by 2002:a5d:4b41:0:b0:45e:f3b2:122a with SMTP id
+ ffacd0b85a97d-46030652fcemr29809773f8f.26.1781084965235; 
+ Wed, 10 Jun 2026 02:49:25 -0700 (PDT)
+X-Received: by 2002:a5d:4b41:0:b0:45e:f3b2:122a with SMTP id
+ ffacd0b85a97d-46030652fcemr29809736f8f.26.1781084964737; 
+ Wed, 10 Jun 2026 02:49:24 -0700 (PDT)
+Received: from redhat.com (IGLD-80-230-85-71.inter.net.il. [80.230.85.71])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-490bc3b59f0sm629416475e9.2.2026.06.10.02.44.26
+ ffacd0b85a97d-4602cda3651sm58967771f8f.32.2026.06.10.02.49.23
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 10 Jun 2026 02:44:26 -0700 (PDT)
-From: Luigi Leonardi <leonardi@redhat.com>
-Date: Wed, 10 Jun 2026 11:44:21 +0200
-Subject: [PATCH] igvm: Report error on missing parameter area in directive
- handlers
+ Wed, 10 Jun 2026 02:49:24 -0700 (PDT)
+Date: Wed, 10 Jun 2026 05:49:21 -0400
+From: "Michael S. Tsirkin" <mst@redhat.com>
+To: Gavin Shan <gshan@redhat.com>
+Cc: qemu-devel@nongnu.org, qemu-arm@nongnu.org, jugraham@redhat.com,
+ shan.gavin@gmail.com, stefanha@redhat.com, qemu-block@nongnu.org
+Subject: Re: [PATCH RFCv1] virtio: Inherit max bounce buffer size from bus
+ parent if possible
+Message-ID: <20260610041036-mutt-send-email-mst@kernel.org>
+References: <20260608001821.850921-1-gshan@redhat.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 8bit
-Message-Id: <20260610-igvm_error-v1-1-59d133a69f2f@redhat.com>
-X-B4-Tracking: v=1; b=H4sIAAAAAAAC/x3MQQqAIBBG4avErBPUhUlXiYiyP5tFGiNEEN09a
- fkt3nuoQBiF+uYhwcWFc6owbUNhn1OE4rWarLZOO6MVx+uYIJJFBXj4xWLrNKgGp2Dj+58N4/t
- +OPMyR1wAAAA=
-X-Change-ID: 20260610-igvm_error-ce8e8b2ef70e
-To: qemu-devel@nongnu.org
-Cc: Gerd Hoffmann <kraxel@redhat.com>, 
- Stefano Garzarella <sgarzare@redhat.com>, Ani Sinha <anisinha@redhat.com>, 
- Paolo Bonzini <pbonzini@redhat.com>, Zhao Liu <zhao1.liu@intel.com>, 
- Oliver Steffen <osteffen@redhat.com>, Luigi Leonardi <leonardi@redhat.com>
-X-Mailer: b4 0.14.3
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=leonardi@redhat.com;
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20260608001821.850921-1-gshan@redhat.com>
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=mst@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -24
 X-Spam_score: -2.5
 X-Spam_bar: --
 X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.445,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -124,110 +116,122 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Parameter areas are how an IGVM file tells QEMU to allocate buffers
-for runtime information the guest needs — VP count, memory map,
-MADT and so on. Usage directives reference a parameter area by index
-to tell QEMU where to write each piece of data. If the index doesn't
-match any declared parameter area, the data has nowhere to go and it
-should be treated as an error.
+On Mon, Jun 08, 2026 at 10:18:21AM +1000, Gavin Shan wrote:
+> On the guest where a NVidia's GH100 card is passed from the host, the
+> guest system hang can be observed on attempt to compile 'cuda-samples',
+> as reported by Julia.
+> 
+>    host$ lspci | grep GH100
+>    0009:01:00.0 3D controller: NVIDIA Corporation GH100 [GH200 120GB / 480GB] (rev a1)
+>    host$ /home/sandbox/gavin/qemu.main/build/qemu-system-aarch64 -accel kvm \
+>          -machine virt,gic-version=host,ras=on,highmem-mmio-size=4T         \
+>          -cpu host -smp cpus=32 -m size=8G                                  \
+>          -drive file=/home/gavin/sandbox/images/disk.qcow2,if=none,id=d0    \
+>          -device virtio-blk-pci,id=vb0,bus=pcie.0,drive=d0,num-queues=4     \
+>          -device vfio-pci-nohotplug,host=0009:01:00.0,bus=pcie.1.0
+> 
+>    guest$ cd cuda-samples/build
+>    guest$ make -j 20 clean
+>    guest$ make -j 20
+>                :
+>    [ 54%] Linking CUDA executable graphMemoryNodes
+>    [ 54%] Built target graphMemoryNodes
+>    <no more output afterwards, guest becomes frozen here>
+> 
+>    guest$ qemu-system-aarch64: virtio: bogus descriptor or out of resources
+>    [  555.814025] virtio_blk virtio0: [vda] new size: 268435456 512-byte logical blocks (137 GB/128 GiB)
+> 
+> When the GPU's driver (NVidia open driver) is loaded on guest bootup,
+> the memory blocks residing in the PCI BAR can be presented to the guest
+> through memory hot-add. The page cache can be allocated from the hot added
+> memory blocks when cuda-samples is being built. Afterwards, he page cache
+> is sent to QEMU's virtio-blk device as part of the DMA request, the bounce
+> buffer is used to accomodate the request as the corresponding memory
+> region (MemoryRegion) is a RAM DEVICE region in qemu. For this specific
+> case, false is returned from memory_access_is_direct() in the path where
+> the DMA request is handled.
+> 
+>   QEMU
+>   ====
+>   virtio_blk_handle_output
+>     virtio_blk_handle_vq
+>       virtio_blk_get_request
+>         virtqueue_pop
+>           virtqueue_split_pop
+>             virtqueue_map_desc
+>               address_space_map
+>                 memory_access_is_direct         # Return false
+>                   memory_region_supports_direct_access
+> 
+>   (qemu) info mtree
+>           :
+>   memory-region: pci_bridge_pci
+>     0000000000000000-ffffffffffffffff (prio 0, container): pci_bridge_pci
+>       0000042000000000-0000043fffffffff (prio 1, i/o): 0009:01:00.0 base BAR 4
+>         0000042000000000-0000043fffffffff (prio 0, i/o): 0009:01:00.0 BAR 4
+>           0000042000000000-000004379fffffff (prio 0, ramd): 0009:01:00.0 BAR 4 mmaps[0]
+> 
+> By default, the max bounce buffer size is only 4096 bytes, even less
+> than one page when the guest page is 64KB. This tries to fix the issue
+> by inheriting the customized max bounce buffer size of the virtio bus's
+> parent through property 'x-max-bounce-buffer-size' when the customized
+> size is a larger one. With this applied, no guest system hang is seen
+> with '-device virtio-blk-pci,...,x-max-bounce-buffer-size=268435456'.
+> 
+> Reported-by: Julia Graham <jugraham@redhat.com>
+> Signed-off-by: Gavin Shan <gshan@redhat.com>
+> ---
+>  hw/virtio/virtio-bus.c | 14 ++++++++++++++
+>  1 file changed, 14 insertions(+)
+> 
+> diff --git a/hw/virtio/virtio-bus.c b/hw/virtio/virtio-bus.c
+> index cef944e015..e0933823f3 100644
+> --- a/hw/virtio/virtio-bus.c
+> +++ b/hw/virtio/virtio-bus.c
+> @@ -42,6 +42,7 @@ do { printf("virtio_bus: " fmt , ## __VA_ARGS__); } while (0)
+>  /* A VirtIODevice is being plugged */
+>  void virtio_bus_device_plugged(VirtIODevice *vdev, Error **errp)
+>  {
+> +    AddressSpace *as;
+>      DeviceState *qdev = DEVICE(vdev);
+>      BusState *qbus = BUS(qdev_get_parent_bus(qdev));
+>      VirtioBusState *bus = VIRTIO_BUS(qbus);
+> @@ -100,6 +101,19 @@ void virtio_bus_device_plugged(VirtIODevice *vdev, Error **errp)
+>                  return;
+>              }
+>          }
+> +    } else {
+> +        /*
+> +         * The maximal bounce buffer size of the virtio bus's parent may
+> +         * have been customized by property 'x-max-bounce-buffer-size'.
+> +         * Lets inherit the customized size if it's larger than the
+> +         * current one.
+> +         */
+> +        as = klass->get_dma_as ? klass->get_dma_as(qbus->parent) : NULL;
+> +        if (as) {
+> +            vdev->dma_as->max_bounce_buffer_size = MAX(
+> +                    vdev->dma_as->max_bounce_buffer_size,
+> +                    as->max_bounce_buffer_size);
+> +        }
+>      }
+>  }
+>  
+> -- 
+> 2.54.0
 
-The directive handlers that look up a parameter area all return 0
-(success) when `qigvm_find_param_entry()` can't find it. Therefore,
-the load succeeds but the guest never gets the expected parameters.
 
-Note that the IGVM library already validates parameter area indices
-when the file is loaded, so this path should only be reachable with
-a malformed file that bypassed library validation. See it as a form
-of defensive programming.
+Problem with all this is, users would not know how to size this.
 
-Report the error with error_setg() and return -1 instead.
-Also remove the warn_report() from `qigvm_find_param_entry()`
-to avoid double error reporting.
+So fundamentally, is not the issue that virtio blk (and scsi!) maps
+all of the buffer all the time?
 
-Signed-off-by: Luigi Leonardi <leonardi@redhat.com>
----
- backends/igvm.c    | 17 ++++++++++++-----
- target/i386/igvm.c |  4 +++-
- 2 files changed, 15 insertions(+), 6 deletions(-)
+It's not hard to add something like virtio_pop_unmapped that would not map,
+then build QEMUSGLists out of addr/len pairs and submit these.
 
-diff --git a/backends/igvm.c b/backends/igvm.c
-index c347d0c17e..2569c4a9f2 100644
---- a/backends/igvm.c
-+++ b/backends/igvm.c
-@@ -71,7 +71,6 @@ qigvm_find_param_entry(QIgvm *igvm, uint32_t parameter_area_index)
-             return param_entry;
-         }
-     }
--    warn_report("IGVM: No parameter area for index %u", parameter_area_index);
-     return NULL;
- }
- 
-@@ -502,7 +501,9 @@ static int qigvm_directive_parameter_insert(QIgvm *ctx,
- 
-     param_entry = qigvm_find_param_entry(ctx, param->parameter_area_index);
-     if (param_entry == NULL) {
--        return 0;
-+        error_setg(errp, "IGVM: parameter area index %u not found",
-+                   param->parameter_area_index);
-+        return -1;
-     }
- 
-     region = qigvm_prepare_memory(ctx, param->gpa, param_entry->size,
-@@ -575,7 +576,9 @@ static int qigvm_directive_memory_map(QIgvm *ctx, const uint8_t *header_data,
-     /* Find the parameter area that should hold the memory map */
-     param_entry = qigvm_find_param_entry(ctx, param->parameter_area_index);
-     if (param_entry == NULL) {
--        return 0;
-+        error_setg(errp, "IGVM: parameter area index %u not found",
-+                   param->parameter_area_index);
-+        return -1;
-     }
- 
-     max_entry_count = param_entry->size / sizeof(IGVM_VHS_MEMORY_MAP_ENTRY);
-@@ -634,7 +637,9 @@ static int qigvm_directive_vp_count(QIgvm *ctx, const uint8_t *header_data,
- 
-     param_entry = qigvm_find_param_entry(ctx, param->parameter_area_index);
-     if (param_entry == NULL) {
--        return 0;
-+        error_setg(errp, "IGVM: parameter area index %u not found",
-+                   param->parameter_area_index);
-+        return -1;
-     }
- 
-     vp_count = (uint32_t *)(param_entry->data + param->byte_offset);
-@@ -657,7 +662,9 @@ static int qigvm_directive_environment_info(QIgvm *ctx,
- 
-     param_entry = qigvm_find_param_entry(ctx, param->parameter_area_index);
-     if (param_entry == NULL) {
--        return 0;
-+        error_setg(errp, "IGVM: parameter area index %u not found",
-+                   param->parameter_area_index);
-+        return -1;
-     }
- 
-     environmental_state =
-diff --git a/target/i386/igvm.c b/target/i386/igvm.c
-index f41b498b89..e59511a2aa 100644
---- a/target/i386/igvm.c
-+++ b/target/i386/igvm.c
-@@ -193,7 +193,9 @@ int qigvm_directive_madt(QIgvm *ctx, const uint8_t *header_data, Error **errp)
-     /* Find the parameter area that should hold the MADT data */
-     param_entry = qigvm_find_param_entry(ctx, param->parameter_area_index);
-     if (param_entry == NULL) {
--        return 0;
-+        error_setg(errp, "IGVM: parameter area index %u not found",
-+                   param->parameter_area_index);
-+        return -1;
-     }
- 
-     GArray *madt = acpi_build_madt_standalone(ctx->machine_state);
+Stefan, do you think doing it like this would be bad for perf? Good for
+perf?
 
----
-base-commit: 29c042c6e9d4a09d4a0ac3fa54aeb7ee08ce0bdc
-change-id: 20260610-igvm_error-ce8e8b2ef70e
-
-Best regards,
 -- 
-Luigi Leonardi <leonardi@redhat.com>
+MST
 
 
