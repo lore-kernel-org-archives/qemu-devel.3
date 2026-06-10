@@ -4,82 +4,80 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 22C9BCD8CB9
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3D79BCD98C6
 	for <qemu-devel@archiver.kernel.org>; Wed, 10 Jun 2026 16:13:42 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wXLXy-0000Ay-BZ; Wed, 10 Jun 2026 12:12:54 -0400
+	id 1wXLYD-0001xr-Go; Wed, 10 Jun 2026 12:13:09 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1wXLXk-00083X-5F
- for qemu-devel@nongnu.org; Wed, 10 Jun 2026 12:12:42 -0400
-Received: from mail-wm1-x32c.google.com ([2a00:1450:4864:20::32c])
+ id 1wXLY6-0001N5-R7
+ for qemu-devel@nongnu.org; Wed, 10 Jun 2026 12:13:02 -0400
+Received: from mail-wm1-x334.google.com ([2a00:1450:4864:20::334])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1wXLXi-0005Yk-3c
- for qemu-devel@nongnu.org; Wed, 10 Jun 2026 12:12:39 -0400
-Received: by mail-wm1-x32c.google.com with SMTP id
- 5b1f17b1804b1-490b4a8e28bso59015855e9.1
- for <qemu-devel@nongnu.org>; Wed, 10 Jun 2026 09:12:37 -0700 (PDT)
+ id 1wXLY4-0005gB-Ja
+ for qemu-devel@nongnu.org; Wed, 10 Jun 2026 12:13:02 -0400
+Received: by mail-wm1-x334.google.com with SMTP id
+ 5b1f17b1804b1-490c1915793so49983425e9.2
+ for <qemu-devel@nongnu.org>; Wed, 10 Jun 2026 09:13:00 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1781107957; x=1781712757; darn=nongnu.org;
+ d=linaro.org; s=google; t=1781107979; x=1781712779; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
- :reply-to; bh=cvP8aOq+dkmxUYFr9yBP2ILGw50KTwLpfscjHW38iRg=;
- b=oyl1PyjfgnzN0ZH2G6A+Le+udO8G1kO3f3trTqdsQ5HwxYwaFA99p2vX3n7fPmr8Vn
- oiwyJX3yENdSIjxUEXhpJxfZX25xS6Vct4aVKDLVKGJwH9J+e+Gu+kk24RmUYareRqmx
- JQVLygjtarDGq87SVJxrHrl+904q7HOEKmlYFh0v1fFyXSPwSiZBKXITYWhdobkfCm8i
- LfNHXU38O6V/cqIIxzcYoN/GQBDaDIdapp5EYXndcqX4rFd4nSsS0SmvALOuT6+7iFNE
- 2hcbD2h7CKILwgg2o53DmZD2ENx81AuP+mWHYYAl7RPWSHsnVaeCexweOW/kZdzrKDZH
- 25RQ==
+ :reply-to; bh=ldD7uq8CtKbO8z66zG95Ud/dRrfQ003dYkJ1EjnaVvY=;
+ b=BjJwpqNcioS216DWhCDPPfUcJX0ywDgpapZ4cl+FdCEpuYUuRWZNTiSdqjWKP7wjda
+ 54Hr+Gpg37nU5vLdfyvIBmVbILZYyaYGrqA9XcbuyTTolrd2bzDOPomKalmyV1jTMk17
+ rD6ihAQirOj5tvmPYk/zJ2Oiju4QGyQUa8IKg0Ly/gFStgGa7O5KsGpKPKkng3W++Ntp
+ s/owqBppnhugEDIztb3o8Xb9vPZVjcSqTsriKV0yYXVPz7ZBqhepmoKneN6GALmfhe7V
+ JglEE2OJEVxsQFhg06QSfPcybKttPP+KWW+3rfE5jh0BKRJD37FWgpfl5hv8mFRkQLHy
+ K+Kw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1781107957; x=1781712757;
+ d=1e100.net; s=20251104; t=1781107979; x=1781712779;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:x-gm-gg:x-gm-message-state:from:to
  :cc:subject:date:message-id:reply-to;
- bh=cvP8aOq+dkmxUYFr9yBP2ILGw50KTwLpfscjHW38iRg=;
- b=QzAe2CJ2f4OtPxNF75C7zyLD2NW7CyVETC3pdg2d9amkfC0xOhMBQ7yOZjj6WYBtS1
- 1psnVWiCIZLUKxrhZ4YeguBSm9IbhfPzeOF53TcM2K61bJOGRiTUVXAUMabjMAQK+vk9
- hWuSMtl7fhCiMCplC0PLEyBOOFycwhr3rAY3enpN23e0ZR20us3RUsqcwtl67X3xHjUX
- KgQj1WxJ2tY0Ccz9huiD4nWQGWiyZVIWqOlrCkXRiW3WojZ22cvbYAHwd9y/8omxQ5cb
- +eGUukYNpJ78i4fiwrftNQRnXxvNpDDBhHbd0VbE2Y0gNTfHIee6NoCtnGxQyTu7ORlP
- uAjQ==
-X-Gm-Message-State: AOJu0Yycaja89nR1WwWroUoYLE3pwXhEbFUGeuHUWzp0PQW5ZoEv3krI
- tTV5lZVmjN/mQWZQWGq21TSFhMBp5epdJoN22tnbOGw1VBF+H5Ijf8qVRomko7y4UhqjBuocvSh
- Imo8P
-X-Gm-Gg: Acq92OG3i219+f3f3gc7PXwlQnft6lQNMc6K5PYew/icrs19BE/PKOLcrDLGV35cEhH
- Frf5tXp1pkSaANToBXLAFb93pQhMfWTpJ/uCzbVbE179xJGhHvgIoHgGAp2nKQ+qbZY6HUyfdz7
- zDeWRJuTBzUFeHHRID9WTpJjlEC1lyDiD/1hcaIvjO0o9bbRkZtqSvy5bCVasTedlgdnpFjKBQT
- +OCVV/TEpJsWZQuyClmLf+ariupDiIoa4t4MHJNR/Dd1VNdFWHjJ//ASO87IG57rW7xpSkEFOr1
- V4UIBzSi6K3j6RGsfpQTLPWVn6OU3WuQm6RWI5IIAZTHr9NcDDjpVFMNrN5L483o7UXNofOkldF
- mYstuBXQrvCD5+3JqZe/5r/7H9Vf/rX+A1APgh4yGyf55L18g8OcA/iU2u40XCOZSltki0ZcChl
- tbIQw9IHReBpr0usns3R223Rob88cstRWDxf17cPxsy6+GOcSrtWrPPeo0oAKN4LqqxjynZN4WM
- xlDFYlNGuoOt9E1Dahwm/180HF81f0H8nRIzH7wrhQ5N5SrkMhFKg==
-X-Received: by 2002:a05:600c:8705:b0:488:ac01:72de with SMTP id
- 5b1f17b1804b1-490c25898efmr474061165e9.5.1781107956661; 
- Wed, 10 Jun 2026 09:12:36 -0700 (PDT)
+ bh=ldD7uq8CtKbO8z66zG95Ud/dRrfQ003dYkJ1EjnaVvY=;
+ b=Lkm0C0G6tmCkAtPPHPDC70LHj8hA0tHtCjpUNLQyx9kMbGMs1xh7hivVByhzXwhne9
+ xIE4kYO92sJK9jgbgvTowfpkH04PDuD83EqcJ1mlIxtCLtxaYL8sNYNW3AgOHgMZOcn8
+ T7B0Dbhe+sOfloZyjNG3N/cfw3UILmByMcUTKOMF75DHhzOPmi810VANuIeIk3IV4Jn4
+ tAwzu/snGEQIhWpsoH3EgJZsIFf35NOnElD9hGv9YzpcXrmShZGvfNsjZ75eSdvNEofp
+ X17LKdqXgAQmd1Tc+in6pfGaSSnSEttIFdWS1R4ya+8IZqVjBEn27ouNjgENK0IJUmCk
+ F28g==
+X-Gm-Message-State: AOJu0YyZrknWniBrsnN/XE7fd6IyQdnEB2izbwLuhRbqBibaSpfn0R71
+ Vwocmvnbe1tvhnseTSU64oDrtS1RTcAPvvMzyH6IQ3C+YSRamNgCsmlhVBwhsoWkPCTqpNSAcEJ
+ nhOEs
+X-Gm-Gg: Acq92OFezkfV0JpYf4A+iv+dSa6I53DD0lFiTZTqwd8WMYqnlU6f5ZhK8FiiXnDXOZx
+ VRs/RJF/JrVHZj5MIOiUED3FiftrWXAMwO/yNwcEhBFx1YhZ/j4B/Gq52hZF5lCUS06K6HJX3eC
+ L595C/rdT5C08u/e3JAAw2xvNszLaoNJO5Seeyu8HxWeQMkyOFW9cfU5qx5pn/EkLLvs+xBWRsy
+ aHdeZQ21fDMgyaEJqBEClA1ejOykndYdsoUEwqUMm7xei6V1pXVTZCw22Dqkd2FHCRgQvteBiC2
+ YUnk7m5BcwmGUe20+xZrjbdMQdVAnd8bBQAB1A01qdp0Q98XFrRISJ6mX7bkVBu9Ifdu5sKWS4t
+ BH1Pn0BcFC/H/bxKp4CBZCev+G7UoPpEPfk5JaSCGTYrNxeKeXI71KlcrlyoA6OJaC/l9XXAGa7
+ 1NADlZ2HRRAnu33owxrOYLi96BzYJm5e4pMo8hNirWmS6/UbXwNUGlliV5XPues7tNxFMMuIKGc
+ Jje2ckBTxmtmuwuwLo41pdt/AKFmxWzSr4AuVegg4Q=
+X-Received: by 2002:a05:600c:620f:b0:490:5074:651e with SMTP id
+ 5b1f17b1804b1-490c2612cb7mr361383875e9.25.1781107978826; 
+ Wed, 10 Jun 2026 09:12:58 -0700 (PDT)
 Received: from lanath.. (wildly.archaic.org.uk. [81.2.115.145])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-4601f2dcbe3sm67911360f8f.8.2026.06.10.09.12.35
+ ffacd0b85a97d-4601f2dcbe3sm67911360f8f.8.2026.06.10.09.12.57
  for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 10 Jun 2026 09:12:35 -0700 (PDT)
+ Wed, 10 Jun 2026 09:12:57 -0700 (PDT)
 From: Peter Maydell <peter.maydell@linaro.org>
 To: qemu-devel@nongnu.org
-Subject: [PULL 24/71] hw/dma/pl080: Don't use hw_error() for unimplemented
- features
-Date: Wed, 10 Jun 2026 17:11:15 +0100
-Message-ID: <20260610161202.2235298-25-peter.maydell@linaro.org>
+Subject: [PULL 40/71] target/arm: Implement BFCVTN for SVE
+Date: Wed, 10 Jun 2026 17:11:31 +0100
+Message-ID: <20260610161202.2235298-41-peter.maydell@linaro.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20260610161202.2235298-1-peter.maydell@linaro.org>
 References: <20260610161202.2235298-1-peter.maydell@linaro.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32c;
- envelope-from=peter.maydell@linaro.org; helo=mail-wm1-x32c.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::334;
+ envelope-from=peter.maydell@linaro.org; helo=mail-wm1-x334.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -102,49 +100,170 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-In the pl080 device, we don't implement "peripheral flow control",
-which is where the DMA engine can be programmed to transfer data
-until a source or destination peripheral tells it to stop.  We
-currently call hw_error() if the guest tries to use this missing
-feature, which prints a register dump and aborts QEMU.
+From: Richard Henderson <richard.henderson@linaro.org>
 
-Change the hw_error() call to the LOG_UNIMP log-and-continue,
-which is how we prefer to report guest attempts to use
-unimplemented features these days.
-
-Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/3409
+Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
+Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
+Message-id: 20260609192110.752384-15-richard.henderson@linaro.org
 Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Message-id: 20260529143624.158935-3-peter.maydell@linaro.org
 ---
- hw/dma/pl080.c | 6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ target/arm/tcg/fp8_helper.c      | 92 ++++++++++++++++++++++++++++++++
+ target/arm/tcg/helper-fp8-defs.h |  2 +
+ target/arm/tcg/sve.decode        |  2 +
+ target/arm/tcg/translate-sve.c   |  3 ++
+ 4 files changed, 99 insertions(+)
 
-diff --git a/hw/dma/pl080.c b/hw/dma/pl080.c
-index 4a90c7bb27..f9f1e3e931 100644
---- a/hw/dma/pl080.c
-+++ b/hw/dma/pl080.c
-@@ -13,7 +13,6 @@
- #include "qemu/log.h"
- #include "qemu/module.h"
- #include "hw/dma/pl080.h"
--#include "hw/core/hw-error.h"
- #include "hw/core/irq.h"
- #include "hw/core/qdev-properties.h"
- #include "qapi/error.h"
-@@ -132,8 +131,9 @@ again:
-                 continue;
-             flow = (ch->conf >> 11) & 7;
-             if (flow >= 4) {
--                hw_error(
--                    "pl080_run: Peripheral flow control not implemented\n");
-+                qemu_log_mask(LOG_UNIMP,
-+                              "pl080_run: Peripheral flow control not implemented\n");
-+                continue;
-             }
-             src_id = (ch->conf >> 1) & 0x1f;
-             dest_id = (ch->conf >> 6) & 0x1f;
+diff --git a/target/arm/tcg/fp8_helper.c b/target/arm/tcg/fp8_helper.c
+index e2330177ec..ffeaf02f97 100644
+--- a/target/arm/tcg/fp8_helper.c
++++ b/target/arm/tcg/fp8_helper.c
+@@ -72,6 +72,17 @@ static FP8Context fp8_src_start(CPUARMState *env, uint32_t desc, int scale_mask)
+     return fp8_start(env, desc, f8fmt, scale);
+ }
+ 
++static FP8Context fp8_dst_start(CPUARMState *env, uint32_t desc, bool is_f16)
++{
++    uint64_t fpmr = env->vfp.fpmr;
++    FPMRType f8fmt = FIELD_EX64(fpmr, FPMR, F8D);
++    int scale = (is_f16
++                 ? FIELD_SEX64(fpmr, FPMR, NSCALE_F16)
++                 : FIELD_SEX64(fpmr, FPMR, NSCALE));
++
++    return fp8_start(env, desc, f8fmt, scale);
++}
++
+ /*
+  * Invalid input format: we could take one of the usual set of
+  * CONSTRAINED UNPREDICTABLE options for use of a reserved value,
+@@ -111,6 +122,64 @@ static float16 fcvt_fp8_to_f16(uint8_t x, fp8_input_fn *f8fmt,
+     return float16_round_pack_canonical(&p, s);
+ }
+ 
++/*
++ * Invalid output format: we could take one of the usual set of
++ * CONSTRAINED UNPREDICTABLE options for use of a reserved value,
++ * but choose to take the additional option provided by the FPMR
++ * register specification, of setting the result to 0xff and
++ * signaling Invalid Operation.
++ */
++static uint8_t fcvt_fp8_invalid_output(FloatParts64 *p, int scale,
++                                       bool saturate, float_status *s)
++{
++    float_raise(float_flag_invalid, s);
++    return 0xff;
++}
++
++static uint8_t fcvt_fp8_e4m3_output(FloatParts64 *p, int scale,
++                                    bool saturate, float_status *s)
++{
++    *p = parts64_scalbn(p, scale, s);
++    /*
++     * Saturating Inf -> Max handled in uncanon_e4m3_overflow
++     * because there is no infinity encoding.
++     */
++    return float8_e4m3_round_pack_canonical(p, s, saturate);
++}
++
++static uint8_t fcvt_fp8_e5m2_output(FloatParts64 *p, int scale,
++                                    bool saturate, float_status *s)
++{
++    /*
++     * Because e5m2 has an infinity encoding, we need to handle
++     * saturation conversion of Inf -> Max manually.
++     */
++    if (unlikely(p->cls == float_class_inf)) {
++        if (saturate) {
++            /* maximum or minimum normal value for E5M2 */
++            return 0x7b | (p->sign << 7);
++        }
++    } else {
++        *p = parts64_scalbn(p, scale, s);
++    }
++    return float8_e5m2_round_pack_canonical(p, s, saturate);
++}
++
++typedef uint8_t fcvt_fp8_output_fn(FloatParts64 *, int, bool, float_status *);
++
++static fcvt_fp8_output_fn * const fcvt_fp8_output_fmt[8] = {
++    [0 ... 7] = fcvt_fp8_invalid_output,
++    [OFP8_E5M2] = fcvt_fp8_e5m2_output,
++    [OFP8_E4M3] = fcvt_fp8_e4m3_output,
++};
++
++static uint8_t fcvt_b16_to_fp8(bfloat16 x, fcvt_fp8_output_fn *f8fmt,
++                               int scale, bool saturate, float_status *s)
++{
++    FloatParts64 p = bfloat16_unpack_canonical(x, s);
++    return f8fmt(&p, scale, saturate, s);
++}
++
+ void HELPER(advsimd_bfcvtl)(void *vd, void *vn, CPUARMState *env, uint32_t desc)
+ {
+     FP8Context ctx = fp8_src_start(env, desc, 0x3f);
+@@ -277,3 +346,26 @@ void HELPER(sme2_fcvtl_hb)(void *vd, void *vn, CPUARMState *env, uint32_t desc)
+ 
+     fp8_cvt_finish(env, &ctx);
+ }
++
++void HELPER(sve2_bfcvtn_bh)(void *vd, void *vn, CPUARMState *env, uint32_t desc)
++{
++    FP8Context ctx = fp8_dst_start(env, desc, false);
++    fcvt_fp8_output_fn *output_fmt = fcvt_fp8_output_fmt[ctx.f8fmt];
++    uint16_t *n0 = vn;
++    uint16_t *n1 = vn + sizeof(ARMVectorReg);
++    uint8_t *d = vd;
++    size_t oprsz = simd_oprsz(desc);
++    size_t nelem = oprsz / 2;
++    bool osc = FIELD_EX64(env->vfp.fpmr, FPMR, OSC);
++
++    for (size_t i = 0; i < nelem; ++i) {
++        bfloat16 e0 = n0[H2(i)];
++        bfloat16 e1 = n1[H2(i)];
++        d[H1(2 * i + 0)] = fcvt_b16_to_fp8(e0, output_fmt,
++                                           ctx.scale, osc, &ctx.stat);
++        d[H1(2 * i + 1)] = fcvt_b16_to_fp8(e1, output_fmt,
++                                           ctx.scale, osc, &ctx.stat);
++    }
++
++    fp8_cvt_finish(env, &ctx);
++}
+diff --git a/target/arm/tcg/helper-fp8-defs.h b/target/arm/tcg/helper-fp8-defs.h
+index b5dc2b7064..bbc8d69e28 100644
+--- a/target/arm/tcg/helper-fp8-defs.h
++++ b/target/arm/tcg/helper-fp8-defs.h
+@@ -12,3 +12,5 @@ DEF_HELPER_FLAGS_4(advsimd_fcvtl_hb, TCG_CALL_NO_RWG, void, ptr, ptr, env, i32)
+ DEF_HELPER_FLAGS_4(sve2_fcvt_hb, TCG_CALL_NO_RWG, void, ptr, ptr, env, i32)
+ DEF_HELPER_FLAGS_4(sme2_fcvt_hb, TCG_CALL_NO_RWG, void, ptr, ptr, env, i32)
+ DEF_HELPER_FLAGS_4(sme2_fcvtl_hb, TCG_CALL_NO_RWG, void, ptr, ptr, env, i32)
++
++DEF_HELPER_FLAGS_4(sve2_bfcvtn_bh, TCG_CALL_NO_RWG, void, ptr, ptr, env, i32)
+diff --git a/target/arm/tcg/sve.decode b/target/arm/tcg/sve.decode
+index ca110f4bc1..b6ef8ed8de 100644
+--- a/target/arm/tcg/sve.decode
++++ b/target/arm/tcg/sve.decode
+@@ -1101,6 +1101,8 @@ BF2CVT          01100101 00 001 000 001111 ..... .....          @rd_rn_e0
+ BF1CVTLT        01100101 00 001 001 001110 ..... .....          @rd_rn_e0
+ BF2CVTLT        01100101 00 001 001 001111 ..... .....          @rd_rn_e0
+ 
++BFCVTN          01100101 00 001 010 001110 ....0 .....          @rd_rnx2 esz=1
++
+ ### SVE FP Compare with Zero Group
+ 
+ FCMGE_ppz0      01100101 .. 0100 00 001 ... ..... 0 ....        @pd_pg_rn
+diff --git a/target/arm/tcg/translate-sve.c b/target/arm/tcg/translate-sve.c
+index c47e79637e..6b2875a451 100644
+--- a/target/arm/tcg/translate-sve.c
++++ b/target/arm/tcg/translate-sve.c
+@@ -4100,6 +4100,9 @@ TRANS_FEAT_STREAMING_IF(BF1CVTLT, aa64_sme2_or_sve2_f8cvt, aa64_sme2,
+ TRANS_FEAT_STREAMING_IF(BF2CVTLT, aa64_sme2_or_sve2_f8cvt, aa64_sme2,
+                         do_f8cvt, a, gen_helper_sve2_bfcvt, true, true)
+ 
++TRANS_FEAT_STREAMING_IF(BFCVTN, aa64_sme2_or_sve2_f8cvt, aa64_sme2,
++                        do_f8cvt, a, gen_helper_sve2_bfcvtn_bh, false, false)
++
+ /*
+  *** SVE Floating Point Compare with Zero Group
+  */
 -- 
 2.43.0
 
