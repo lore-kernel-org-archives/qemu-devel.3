@@ -4,114 +4,73 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 466E5CD98CC
-	for <qemu-devel@archiver.kernel.org>; Wed, 10 Jun 2026 09:17:52 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9FFACCD8CB9
+	for <qemu-devel@archiver.kernel.org>; Wed, 10 Jun 2026 09:19:45 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wXF3v-00009i-78; Wed, 10 Jun 2026 05:17:27 -0400
+	id 1wXF64-0001Kj-3g; Wed, 10 Jun 2026 05:19:40 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1wXF3t-00009B-Bf
- for qemu-devel@nongnu.org; Wed, 10 Jun 2026 05:17:25 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <kwolf@redhat.com>) id 1wXF61-0001KK-8h
+ for qemu-devel@nongnu.org; Wed, 10 Jun 2026 05:19:37 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1wXF3r-0006FV-E9
- for qemu-devel@nongnu.org; Wed, 10 Jun 2026 05:17:25 -0400
+ (Exim 4.90_1) (envelope-from <kwolf@redhat.com>) id 1wXF5z-0007Fn-Jc
+ for qemu-devel@nongnu.org; Wed, 10 Jun 2026 05:19:37 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1781083042;
+ s=mimecast20190719; t=1781083174;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=4xZMSY2cY3V0vU5SGZLBx2sj76ShEiouLQ1+dt8AKPQ=;
- b=P1A06+A89sIgbpooqDWNK00CxxQLxoF5NJEwfSYQJGX8YUo+WtHHccn7lsfDwVgNIkMEhq
- Ad06h9bnXoCcwgiMHRrwsIR40OlRbMRFyQVtSRzaiQMkm5IL9PAAPJu+bGq11NYBJKsEfQ
- jxsJx6/p/+0HxrQUe6vfkd3kHMfsxzI=
-Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
+ in-reply-to:in-reply-to:references:references;
+ bh=ZiIbcAe7HOT2y9jnZh45Ut8CECG0t8YVbo++JEXlZ2U=;
+ b=dMyS7ZDiFD7lBeLTnQB4tN1hh7MQnzmFFmJCSVZVDOk38JtKzQdh2enF0+dR3oq86T4qqU
+ 1wqT+KsGsR1KcN2k6bAIotBIcevQ6cjIXAYTspPQTiuVAk1XKND7QU63U2GzVpQWYSdLqN
+ A8QjqwyX+t3LyjjR2TyfqXkKCdzbz0A=
+Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-250-XHH6dIVFNB6ImMxGHOrwBA-1; Wed,
- 10 Jun 2026 05:17:17 -0400
-X-MC-Unique: XHH6dIVFNB6ImMxGHOrwBA-1
-X-Mimecast-MFC-AGG-ID: XHH6dIVFNB6ImMxGHOrwBA_1781083035
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-169-yD-DmEO5OBOwjmVzZqG5zw-1; Wed,
+ 10 Jun 2026 05:19:33 -0400
+X-MC-Unique: yD-DmEO5OBOwjmVzZqG5zw-1
+X-Mimecast-MFC-AGG-ID: yD-DmEO5OBOwjmVzZqG5zw_1781083172
 Received: from mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.17])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id C48681801BEF; Wed, 10 Jun 2026 09:17:14 +0000 (UTC)
-Received: from [10.44.34.108] (unknown [10.44.34.108])
- by mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 70351195410A; Wed, 10 Jun 2026 09:17:10 +0000 (UTC)
-Message-ID: <0a0a1116-a5f3-45f2-b079-f66e6b17f672@redhat.com>
-Date: Wed, 10 Jun 2026 11:17:08 +0200
+ by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 2E10E19352E2; Wed, 10 Jun 2026 09:19:32 +0000 (UTC)
+Received: from redhat.com (unknown [10.44.33.216])
+ by mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 104A31954112; Wed, 10 Jun 2026 09:19:29 +0000 (UTC)
+Date: Wed, 10 Jun 2026 11:19:27 +0200
+From: Kevin Wolf <kwolf@redhat.com>
+To: Stefan Hajnoczi <stefanha@redhat.com>
+Cc: Boudewijn van der Heide <boudewijn@delta-utec.com>,
+ qemu-block@nongnu.org, qemu-devel@nongnu.org, hreitz@redhat.com,
+ pbonzini@redhat.com
+Subject: Re: [PATCH] block: switch to co_wrapper_mixed for blk_lock_medium()
+ and blk_eject()
+Message-ID: <aiksHyfQnJIs_1OH@redhat.com>
+References: <20260530175822.10321-1-boudewijn@delta-utec.com>
+ <aiay6pgFEurQMtrx@redhat.com> <20260609154900.GC57581@fedora>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 00/27] tests/tcg: run tests with meson
-To: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>, qemu-devel@nongnu.org
-Cc: Thomas Huth <thuth@redhat.com>,
- Manos Pitsidianakis <manos.pitsidianakis@linaro.org>,
- =?UTF-8?Q?Daniel_P_=2E_Berrang=C3=A9?= <berrange@redhat.com>,
- =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- qemu-arm@nongnu.org, Richard Henderson <richard.henderson@linaro.org>,
- =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
- Alexandre Iooss <erdnaxe@crans.org>, Peter Maydell
- <peter.maydell@linaro.org>, Gustavo Romero <gustavo.romero@linaro.org>
-References: <20260609214745.772536-1-pierrick.bouvier@oss.qualcomm.com>
-Content-Language: en-US
-From: Paolo Bonzini <pbonzini@redhat.com>
-Autocrypt: addr=pbonzini@redhat.com; keydata=
- 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
-In-Reply-To: <20260609214745.772536-1-pierrick.bouvier@oss.qualcomm.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Type: multipart/signed; micalg=pgp-sha512;
+ protocol="application/pgp-signature"; boundary="CBmt52kjtlu3iVKi"
+Content-Disposition: inline
+In-Reply-To: <20260609154900.GC57581@fedora>
 X-Scanned-By: MIMEDefang 3.0 on 10.30.177.17
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=pbonzini@redhat.com;
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=kwolf@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -24
-X-Spam_score: -2.5
-X-Spam_bar: --
-X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.445,
+X-Spam_score_int: 8
+X-Spam_score: 0.8
+X-Spam_bar: /
+X-Spam_report: (0.8 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.445,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_SBL_CSS=3.335, SPF_HELO_PASS=-0.001,
+ SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -127,135 +86,166 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 6/9/26 23:47, Pierrick Bouvier wrote:
-> This series is an experiment to replace TCG tests makefiles with meson, with the
-> goal of having something more readable and maintainable in the long term.
-> Also it closes the gap that tcg tests had with the rest of tests, by integrating
-> them with meson directly.
-> 
-> It covers all existing tests for aarch64 architecture, including
-> user/system/multiarch-user/multiarch-system. I'll carry the effort to port all
-> other architectures once we agree on a base. We agreed with Alex to not merge
-> anything before all arch are covered.
-> 
-> Series first declare the global infrastructure, then add aarch64 and multiarch
-> tests, and finally plugin tests.
-> 
-> For review, I would suggest to start with aarch64 patches (end of the series) to
-> get an idea of what they will look like, before the implementation itself. You
-> can also compare that to existing Makefiles, they follow the same order.
-> 
-> It implements all requirements listed on original thread [1], except cross
-> container support, which can be easily added on top once we agree on the base.
-> [1] https://lore.kernel.org/qemu-devel/87wlwfsay4.fsf@draig.linaro.org/
 
-> We also have for free:
-> - correct and complete dependencies for any test, including:
->    scripts, c.inc, headers, reference files and binaries/plugins.
-> - catch test declaration issues at configure time vs test time.
-> - proper data types for variables instead of string expansion with make.
-> - we could now build tests binaries by default with 'all' target.
-> - hopefully, better readability to your taste.
+--CBmt52kjtlu3iVKi
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-Yes there is absolutely a readability improvement!  At most, one could 
-say that it's not a very high bar. :)
+Am 09.06.2026 um 17:49 hat Stefan Hajnoczi geschrieben:
+> On Mon, Jun 08, 2026 at 02:17:46PM +0200, Kevin Wolf wrote:
+> > [Cc: Paolo, Stefan]
+> >=20
+> > Am 30.05.2026 um 19:58 hat Boudewijn van der Heide geschrieben:
+> > > scsi_disk_emulate_command() can be called from a coroutine;
+> > > when req->cmd.buf[0] is ALLOW_MEDIUM_REMOVAL, the synchronous
+> > > blk_lock_medium() is called, which hits assert(!qemu_in_coroutine()),
+> > > and crashes:
+> > >=20
+> > > 	qemu-system-hppa: block/block-gen.c:1692: blk_lock_medium:
+> > > 	Assertion `!qemu_in_coroutine()' failed.
+> > >=20
+> > > blk_eject() has the same problem, it can be called from coroutine,
+> > > because the same vtable entry (SCSIReqOps.send_command,
+> > > scsi_disk_emulate_command() here) calls blk_eject when req->cmd.buf[0]
+> > > is START_STOP.
+> > >=20
+> > > Fix by switching to co_wrapper_mixed for blk_lock_medium() and
+> > > blk_eject() instead of just co_wrapper.
+> > >=20
+> > > Signed-off-by: Boudewijn van der Heide <boudewijn@delta-utec.com>
+> >=20
+> > Yes, that will fix your immediate symptoms. I'm not completely sure if
+> > that's the level where we want to fix things, though, which is why I
+> > added Paolo and Stefan to Cc.
+> >=20
+> > > ---
+> > > Observed crash on fedora qemu-10.1.5-1.fc43 on x86_64 host using qemu=
+-system-hppa.
+> > >=20
+> > > trace:
+> > >=20
+> > > Thread 1 (...):
+> > >         # 5 __assert_fail (...) at assert.c
+> > >         # 6 blk_lock_medium (...) at block/block-gen.c
+> > >         # 7 scsi_disk_emulate_command (...) at ../hw/scsi/scsi-disk.c
+> > >         # 8 scsi_req_enqueue (...) at ../hw/scsi/scsi-bus.c
+> > >         # 9 lsi_do_command (...) at ../hw/scsi/lsi53c895a.c
+> > >         # 10 lsi_execute_script (...) at ../hw/scsi/lsi53c895a.c
+> > >         # 11 scsi_read_complete_noio (...) at ../hw/scsi/scsi-disk.c
+> > >         # 12 blk_aio_complete (...) at ../block/block-backend.c
+> > >         # 14 blk_aio_read_entry (...) at ../block/block-backend.c
+> > >         # 15 in coroutine_trampoline (...) at ../util/coroutine-ucont=
+ext.c
+> > >=20
+> > > blk_eject() has the same path, but req->cmd.buf[0] is START_STOP inst=
+ead
+> > > of ALLOW_MEDIUM_REMOVAL inside scsi_disk_emulate_command(),
+> > > so fix that aswell.
+> >=20
+> > This would be useful information to have in the commit message proper.
+> >=20
+> > The step from #10 to #11 seems to be a rather big one that left out
+> > intermediate function calls, so I'm not sure if I fully understand it.
+> >=20
+> > Either way, I don't think lsi_execute_script() and the functions called
+> > by it were ever written with the intention to run in a coroutine. I'm
+> > almost sure that problems can be in more than just the two functions
+> > you're changing here. So my question is mostly, should the path involve
+> > a BH somewhere to break out of coroutine context, instead of making one
+> > or two specific cases work?
+>=20
+> The code path in this bug is from the block layer (blk_aio_read_entry ->
+> blk_aio_complete) to scsi-disk (scsi_read_complete_noio) into the LSI
+> device (probably lsi_command_complete -> lsi_resume_script ->
+> lsi_execute_script).
+>=20
+> I'm not sure if the LSI device, which is unaware of coroutines, should
+> have to work around this. It seems cleaner for blk_aio_preadv() to
+> invoke cb() from outside coroutine context since that API does not say
+> anything about coroutine contexts.
+>=20
+> On the other hand, there will be a performance overhead for leaving
+> coroutine context even when it would be fine to run in a coroutine...
 
-Having to reinvent cross compilation (cc_has_feat, custom_targets for 
-compilation) is not great and the only part I'm not super convinced 
-about; I wonder what it would be like to make TCG tests their own 
-standalone meson projects.  While the Makefiles are awful I do like 
-being able to do "make -C tests/tcg/x86_64-softmmu", and in that respect 
-this would be a half step backwards (and a big step forwards in many 
-other respects, mind).
+Yes, I don't think it should be done by the block layer when most
+callbacks are just fine with running in a coroutine. I was thinking that
+maybe something in the SCSI layer should do it, or even scsi-disk
+specifically. Though of course, if virtio-scsi doesn't have the problem
+(does it?), taking the performance overhead for fixing LSI is probably
+also not what we want.
 
-I can help with the integration of the individual test suites into 
-tests/tcg/Makefile.include.
+Another, more radical solution, could be to move SCSI requests as a
+whole into coroutines, changing the assumption everywhere from
+no_coroutine_fn to coroutine_fn without bothering with mixed functions
+at all. The SCSI state machine is quite complex and I often find the
+control flow in the current callback-based code hard to understand, so I
+think this has the potential to improve the code, though of course it
+would also be a big change.
 
-Paolo
+Or, of course, we just take this patch, and keep fixing instances of
+the problem as they come up.
 
-> Main ideas for the current design are:
-> - make arch files as simple and explicit as possible. If it conflicts,
->    always pick explicit, as long as we don't expose meson details.
->    remove any kind of "skip, override, filter" logic.
-> - never expose custom_target and meson details in arch files.
-> - catch any spelling mistake on test or any dependency.
-> - keep complexity contained in tests/tcg/meson.build.
-> 
-> Usage:
-> 
-> ```
-> make check-tcg
-> make check-tcg-aarch64-linux-user
-> make check-tcg-aarch64-softmmu
-> 
-> from build folder:
-> ./pyvenv/bin/meson test --list --suite tcg
-> ninja clean
-> ./pyvenv/bin/meson test aarch64-softmmu-asid2 --verbose
-> ```
-> 
-> Pierrick Bouvier (27):
->    tests/tcg/multiarch/system/memory.c: remove unused variable
->    tests/tcg/multiarch/plugin/check-plugin-output.sh: take test output as
->      input
->    tests/tcg/multiarch/plugin: rename check-plugin-output to
->      regex-compare
->    tests/tcg: introduce meson.build
->    tests/tcg/meson.build: introduce exe_name
->    tests/tcg/meson.build: introduce test_name
->    tests/tcg/meson.build: introduce cflags
->    tests/tcg/meson.build: introduce qemu_args
->    tests/tcg/meson.build: introduce env_var
->    tests/tcg/plugins: build list of test_plugins
->    tests/tcg/meson.build: introduce plugin_test
->    tests/tcg/meson.build: test gdb support and introduce gdb_arch
->    tests/tcg/meson.build: introduce gdb_test
->    tests/tcg/meson.build: add default flag for testing compiler support
->    tests/tcg/meson.build: introduce wrapper
->    tests/tcg/meson.build: introduce expected_output
->    tests/tcg/meson.build: add wrapper run_and_check_forbidden_output
->    tests/tcg/meson.build: add wrapper run_with_input
->    tests/tcg/meson.build: add wrapper record_replay
->    tests/tcg/meson.build: add wrapper check_plugin_output
->    tests/tcg/aarch64: add user tests
->    tests/tcg/aarch64: add system tests
->    tests/tcg/multiarch: declare user tests
->    tests/tcg/aarch64: add multiarch user tests
->    tests/tcg/multiarch: declare system tests
->    tests/tcg/aarch64: add multiarch system tests
->    tests/tcg/meson.build: add generic plugin tests
-> 
->   tests/meson.build                             |   2 +-
->   tests/tcg/aarch64/meson.build                 | 248 ++++++++++++++++
->   tests/tcg/aarch64/system/meson.build          | 100 +++++++
->   tests/tcg/meson.build                         | 276 ++++++++++++++++++
->   tests/tcg/multiarch/Makefile.target           |   3 +-
->   tests/tcg/multiarch/meson.build               | 149 ++++++++++
->   .../multiarch/plugin/check-plugin-output.sh   |  36 ---
->   tests/tcg/multiarch/plugin/regex-compare.sh   |  28 ++
->   tests/tcg/multiarch/sha1.ref                  |   1 +
->   tests/tcg/multiarch/system/memory.c           |   3 +-
->   tests/tcg/multiarch/system/meson.build        |  53 ++++
->   tests/tcg/plugins/meson.build                 |  11 +-
->   tests/tcg/scripts/check_plugin_output.sh      |  19 ++
->   tests/tcg/scripts/record_replay.sh            |  16 +
->   .../scripts/run_and_check_forbidden_output.sh |  19 ++
->   tests/tcg/scripts/run_and_diff.sh             |  12 +
->   tests/tcg/scripts/run_with_input.sh           |  12 +
->   17 files changed, 943 insertions(+), 45 deletions(-)
->   create mode 100644 tests/tcg/aarch64/meson.build
->   create mode 100644 tests/tcg/aarch64/system/meson.build
->   create mode 100644 tests/tcg/meson.build
->   create mode 100644 tests/tcg/multiarch/meson.build
->   delete mode 100755 tests/tcg/multiarch/plugin/check-plugin-output.sh
->   create mode 100755 tests/tcg/multiarch/plugin/regex-compare.sh
->   create mode 100644 tests/tcg/multiarch/sha1.ref
->   create mode 100644 tests/tcg/multiarch/system/meson.build
->   create mode 100755 tests/tcg/scripts/check_plugin_output.sh
->   create mode 100755 tests/tcg/scripts/record_replay.sh
->   create mode 100755 tests/tcg/scripts/run_and_check_forbidden_output.sh
->   create mode 100755 tests/tcg/scripts/run_and_diff.sh
->   create mode 100755 tests/tcg/scripts/run_with_input.sh
-> 
+Kevin
+
+> > If the general feeling is that we do want to make essentially all of the
+> > SCSI code coroutine_mixed_fn and are prepared to fix any issues arising
+> > from it, then this patch is fine as far as I am concerned.
+> >=20
+> > Kevin
+> >=20
+> > > ---
+> > >  include/system/block-backend-io.h | 4 ++--
+> > >  1 file changed, 2 insertions(+), 2 deletions(-)
+> > >=20
+> > > diff --git a/include/system/block-backend-io.h b/include/system/block=
+-backend-io.h
+> > > index fd84723d9d..7368ad5c09 100644
+> > > --- a/include/system/block-backend-io.h
+> > > +++ b/include/system/block-backend-io.h
+> > > @@ -81,10 +81,10 @@ bool coroutine_fn GRAPH_RDLOCK blk_co_is_availabl=
+e(BlockBackend *blk);
+> > >  bool co_wrapper_mixed_bdrv_rdlock blk_is_available(BlockBackend *blk=
+);
+> > > =20
+> > >  void coroutine_fn blk_co_lock_medium(BlockBackend *blk, bool locked);
+> > > -void co_wrapper blk_lock_medium(BlockBackend *blk, bool locked);
+> > > +void co_wrapper_mixed blk_lock_medium(BlockBackend *blk, bool locked=
+);
+> > > =20
+> > >  void coroutine_fn blk_co_eject(BlockBackend *blk, bool eject_flag);
+> > > -void co_wrapper blk_eject(BlockBackend *blk, bool eject_flag);
+> > > +void co_wrapper_mixed blk_eject(BlockBackend *blk, bool eject_flag);
+> > > =20
+> > >  int64_t coroutine_fn blk_co_getlength(BlockBackend *blk);
+> > >  int64_t co_wrapper_mixed blk_getlength(BlockBackend *blk);
+> > > --=20
+> > > 2.54.0
+> > >=20
+> >=20
+
+
+
+--CBmt52kjtlu3iVKi
+Content-Type: application/pgp-signature; name=signature.asc
+
+-----BEGIN PGP SIGNATURE-----
+
+iQIzBAEBCgAdFiEE3D3rFZqa+V09dFb+fwmycsiPL9YFAmopLB8ACgkQfwmycsiP
+L9Ym/w//dEVUFuaWQwd96hyYgMc3ml8cWzbSF0Z09EbsuX8PMAZ7osds83lh1agc
+6HSbFAv9DkDZk+EkSrVB/2kQZSPbGjyWCtS+l7JM/HQ/YE34HSZj7RZ3SGv+lEsu
+6LdKKFEWWvdurFYFDeWtb9b0nTeVcLSAoJnrHyJCyjwyNwpbZOGJ0B6iRLtBAeK1
+Urb7CTTpRJSAOpdS2mEOfiJWuvEFDoZoVpCVjSZZVBUa2jr5CCpgZwM7vqRF01S5
+KylF0tgs8Cv8/KaH5S0dI98WTgxfgicvIZUX902cw1vEgPCMBvldma/28631UGEM
+bfaRpi3gxXNjF6eKAbfLrFo41POKcPdAHGVHLCU5KpjmPCELH3El70u92oz7pnGs
+EVoykAuo9Z8VoMtW8QeMUsZczn8JZiP0qjS9iSZAznCGRTT4hDosUvx+TKb6iKDU
+ayY49/nZ69u54gR42jHbMXQFrnQBeRDLIW2e/3bYTL+HzIRJRhCjDqdJcl5PMTbd
+U5BnfAyVDV7EMDeWYIo21A5Q2t1Le2UW/p27DWKEcbXvYMkei1RAw0qW7v8FQmgp
+fPfYywuoiAnSHPYFnZtIHfwp2iMxzTQvV2dntV0rEqO3XdywrY6qHAK8dzNRwJ3p
+X+9qsfViFpbuU2fCliaw5FItobazT/QQi1ksX72X9WOIhRmc6wk=
+=I/kf
+-----END PGP SIGNATURE-----
+
+--CBmt52kjtlu3iVKi--
 
 
