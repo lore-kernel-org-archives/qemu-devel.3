@@ -4,114 +4,149 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1C755CD8CB2
-	for <qemu-devel@archiver.kernel.org>; Wed, 10 Jun 2026 11:20:43 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 169AACD8CB9
+	for <qemu-devel@archiver.kernel.org>; Wed, 10 Jun 2026 11:30:08 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wXGz3-0001et-0E; Wed, 10 Jun 2026 07:20:33 -0400
+	id 1wXH7j-0003A4-99; Wed, 10 Jun 2026 07:29:31 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1wXGz0-0001cR-UY
- for qemu-devel@nongnu.org; Wed, 10 Jun 2026 07:20:31 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <philmd@oss.qualcomm.com>)
+ id 1wXH7i-00039X-6h
+ for qemu-devel@nongnu.org; Wed, 10 Jun 2026 07:29:30 -0400
+Received: from mx0a-0031df01.pphosted.com ([205.220.168.131])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1wXGyy-0001iq-Ow
- for qemu-devel@nongnu.org; Wed, 10 Jun 2026 07:20:30 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1781090427;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=HHYEgjF6Zt+eqWir4uq/rrz90imO+9uQzmik8cUFSIA=;
- b=fZJQNC3ys3Qkf3bBz07zJcd6+LrB+sOBmD6RPSwlRUOkkVHOUKlNVLhfgxQ4pw3IuBrmWq
- SPdKBxvFoP2x5m6jz23o1xQwHhnr7GP93AwDWQrAlUJN/2g3vfNnABCKWZQVLbbvAFy73u
- FZO9QqtOPAwCGqJXb0AOoredmLShDLc=
-Received: from mail-wm1-f71.google.com (mail-wm1-f71.google.com
- [209.85.128.71]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-230-Oh_QM3mEMLqpSckoz_mcVA-1; Wed, 10 Jun 2026 07:20:25 -0400
-X-MC-Unique: Oh_QM3mEMLqpSckoz_mcVA-1
-X-Mimecast-MFC-AGG-ID: Oh_QM3mEMLqpSckoz_mcVA_1781090425
-Received: by mail-wm1-f71.google.com with SMTP id
- 5b1f17b1804b1-490b9318944so47380335e9.1
- for <qemu-devel@nongnu.org>; Wed, 10 Jun 2026 04:20:25 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@oss.qualcomm.com>)
+ id 1wXH7g-0007aF-24
+ for qemu-devel@nongnu.org; Wed, 10 Jun 2026 07:29:29 -0400
+Received: from pps.filterd (m0279865.ppops.net [127.0.0.1])
+ by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
+ 65ABNgur3658111
+ for <qemu-devel@nongnu.org>; Wed, 10 Jun 2026 11:29:26 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+ cc:content-transfer-encoding:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+ uJpcZhLQl4fnlrQI3ykh7EKN8qsHXibmIORY8RY4aQE=; b=bCWBoIVVK/2AJ2dw
+ QV6gUtkRDtkn/ezB0cVlzAWyWHKWJS5eumPomrbq+tqVNr1+2KSbgXGB+pP0hOWn
+ Z7rhCnetIQMp0ZfscnhSwpspa3tZLezR2K9vkRmAk3kGPMb8viRFRTycNVR+hnpX
+ rDVLwSFMZnrEj67ZkgD/LuSpWOH/fdsVqSV9Ry7oVkvGRNmv3TWbNQXryKnYcu3d
+ 3WEZsiNOdM3TFSezeYAzb03+NAON5VyGeboUlaLud3GMCGIFMbTXwXqEWzGgr02K
+ oLtZHfhg6auE52BohNXpxO1FbsffyYGpIBH8gcqD9WHthHhwv0jJrfFmuL+RBO1x
+ 13TE4g==
+Received: from mail-qv1-f70.google.com (mail-qv1-f70.google.com
+ [209.85.219.70])
+ by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4epwnet7ut-1
+ (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
+ for <qemu-devel@nongnu.org>; Wed, 10 Jun 2026 11:29:26 +0000 (GMT)
+Received: by mail-qv1-f70.google.com with SMTP id
+ 6a1803df08f44-8cea4854fe3so134892156d6.1
+ for <qemu-devel@nongnu.org>; Wed, 10 Jun 2026 04:29:26 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1781090424; x=1781695224; darn=nongnu.org;
- h=in-reply-to:content-transfer-encoding:content-disposition
- :mime-version:references:message-id:subject:cc:to:from:date:from:to
- :cc:subject:date:message-id:reply-to;
- bh=HHYEgjF6Zt+eqWir4uq/rrz90imO+9uQzmik8cUFSIA=;
- b=lOkfB0P527fV+mHKTy7L4CzeLDthJaNdK63xWB29AY3DI+YhuH9kJapbgMjz9/5b0P
- 4ULlqRrGvkUGxWw+aqf7YDyGLog7YygirVaB1Lm51S+Tj/TRPiiDg/zcPqxeI1k2ajB8
- ke10Pwz4TKdYYHlFEtBAcfThqBPZlBWzDVxCLSkZZWQE/aBv889GoJjkBEmCQF0Zjyf7
- /ugyDLZURnOlw5NlSJ9YZ6Dt3xijxVckQGkC0IpG3skyEgsrTOiZFwq8QVvZ7HQ9BaLw
- dBvHlLR+a6S/XA4Xh6rWw1kRLwt52cQ/IGAXYRuAW8SHMKAcKsIJnO4yvFQ/Aad3TGCb
- aDIQ==
+ d=oss.qualcomm.com; s=google; t=1781090965; x=1781695765; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=uJpcZhLQl4fnlrQI3ykh7EKN8qsHXibmIORY8RY4aQE=;
+ b=jL15twagLhTrTw+UlqdWHPg/vBONN++jAXApa7LZD+OnolGSnOlOVovlkZErv398Vr
+ suk+AlaxMUmFI7m+iAfdkelEwbG1nc1HxnjSciU1PIlNHv0FyQvEIDKUKBffAdkM0kBC
+ hrE4qL8iLQBCU57Cj8bAzEQezeyKBvdrMQiwEDtuV/sGIYycre0VKgGp/Oh2gFOcLeO7
+ UF/PkxadIxU2mh8iT/poFYzuU5YomwbP0c7Z7gLhg+QqjgzN/EJcgyaGtckJp4ildsYk
+ ILLM71oRzszYT46sFwcWF/iMY+B491fGlmSx3cWj1Rh1L92rS4wWnpccteiW3ShY9sui
+ AmNg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1781090424; x=1781695224;
- h=in-reply-to:content-transfer-encoding:content-disposition
- :mime-version:references:message-id:subject:cc:to:from:date:x-gm-gg
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=HHYEgjF6Zt+eqWir4uq/rrz90imO+9uQzmik8cUFSIA=;
- b=lXk9sAXX/bAOztoX7F49UW2bC3iECUi/2Zl9cY4hIWuoDZhcION+fYvOwuSkZLjpSq
- 0V1kWh/AlvKIOIi2ADARjEEEkfqDo2DDCEqrxZGPlTrupbUmgFHJuYYaUAz3b57zhNHB
- 9/eZBNxGojwpKd9ITKpigGv65b7w0dt4Dns7/1Gw1yg+XAjLcsImlbHtaXM9JxGzjFj5
- OvHjAPxyc/3y6F7eCyBKEMywgID/cIGfHFcedEb8t6KVEpKrM/nnSn779pwuALWMpMng
- DE9LnmqzkuSv4o7Z2gb2Hkq/Ytoxe98d5jkxgWaKZkY+W3y1eo9OKuA936asxgGUzzVz
- h5DA==
-X-Gm-Message-State: AOJu0YwriYe8yoLkddH9EcyIqEKI9v7s0vrRG5MIFl7ih0N1y6trx+tN
- UJfcmT4lp3BxyuRtNOgJPKsRKao80DNW5HnH7L6JBo4b43yxr/dAs42IFHcgwsB0lJ7+TzuGC0n
- z+KZ4XDFKRlk3BDdCmxk0EHvOLBlGR2sOY099ersgZ2uHcgPpz1rKu5nv
-X-Gm-Gg: Acq92OGTznpORj7myg9SYw0Ot/2G8vjz+hkzYL6vmhclx419ynxj7DIrg1pZOtCo2iF
- S9r1Lq9ek+2Y4vR9hjn6J2l6LtiWIJPv2mPhLUqtkCDm50STlsZCEsTK8bxtT2DZ4KgY+FsuxRB
- c74XQ2C6VO/iZvx9jtj5q48g9e+gX5UA3Qej1BoAXCxpVpmc5pWkXAqt6t50PlQ6WV9hkmNygTK
- 38Ipu0WIM7m67KSfA0Oon5cGIUSsTWznjuycC2ksvRDpU+JKUeYLBYlG1JrZvAJb+sxAcUYU1km
- 4YUkT7BmqYenEstujyunOvhpvAthvabvXZhK/0i2pKFc27rPYBBV4lV2zDD2AyDmG7pbjJTfRgs
- 0myD5xvEcO8nF0LzPFfkqo3ojY4l3srLzT3eVFdweXfgJ54XI3gUwGw==
-X-Received: by 2002:a05:600c:5394:b0:490:c2a2:e91f with SMTP id
- 5b1f17b1804b1-490d724bc47mr98007625e9.35.1781090424389; 
- Wed, 10 Jun 2026 04:20:24 -0700 (PDT)
-X-Received: by 2002:a05:600c:5394:b0:490:c2a2:e91f with SMTP id
- 5b1f17b1804b1-490d724bc47mr98007085e9.35.1781090423944; 
- Wed, 10 Jun 2026 04:20:23 -0700 (PDT)
-Received: from redhat.com (IGLD-80-230-85-71.inter.net.il. [80.230.85.71])
+ d=1e100.net; s=20251104; t=1781090965; x=1781695765;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=uJpcZhLQl4fnlrQI3ykh7EKN8qsHXibmIORY8RY4aQE=;
+ b=PjY97ien8aqD2YKJlRLC5SzP5YRhgTRjjCtnWgg0akC5Q1Qdw2lmCMAJkP7FwtuUDi
+ aexbhAxzoq0DaTGCQRXIMKn79IYJ8vLbh2+qqI7ScIqyTuPwzGWZwZS8c8jcVD4MDnrU
+ qXOD3D6H4tCG8oI0nDGmMm6V4/DJTlwl2dZU8sepOBrF+PYaZdWmItgqfSZEDiEcg4Nh
+ XLbjF6CWwny5EMOBQ360gcIgX0cdPirysHQURdqsFZemNlnHhf6HJqR8xSfWLOn2sX2P
+ HhxheoNf/Ti1dWjzC15V2bjoim1+tXNFPFPwQyM26jEWyLGqteq7LlMlKUmiL/Ky/FCi
+ Putg==
+X-Forwarded-Encrypted: i=1;
+ AFNElJ+5dIxOSldpO0BQ28Uip/w3BLSk0GL5TdjFSHzoDbHLzkGLSzl6oTMMgcAyywkxdTyHamq4XDmnyMRU@nongnu.org
+X-Gm-Message-State: AOJu0YyuZu/C8Q65SVXnJThZ26ZRP8VhdHZoxPXIqJKJ/BMNKcUKPXB6
+ mfipyFul//wr7h8xiANr1AF7be4BPNt++0L59z4TT5uEj+Cg7mHD5GL/1xPVVfEQzNp7z6Y4w6A
+ f3U6IYN9J2VejHgogbrbhL4zcLalAqp4yUb9GCmlZW1hYVaJz/HmeWGPlYQ==
+X-Gm-Gg: Acq92OFKCMwxOIidnKK/LrYiU7gQRsJKSmpjYK4kHrrtXzT+Xo4SW+Ymu4NpcI3XCbr
+ PmDNq6So62zEyEyhqecQzXAWRdXKcKdLoawl/fEbK70XFnHBa0t/sa/ontiWddwG1gDYkMDF48s
+ r7isC77EICwRN0F3x9+cwwb8xY6ElOoiovRCn7MJ38KaRtQEfrwT1YeBuS+sAn48mdFnt3+kI1t
+ qklU0EQ55ZsDMR9lkJCLY0H/UFcvI5uArzNYijAv0sJ5drPy/IBc2IoTmRR108FLRFC9FyYS8Sl
+ l8WVKuei3AtQHVUeLcOXBiiKlY97pst2HscWbswSkYZnVPUszOwdb+NycruphmklajP9UG+9vvS
+ OPwJyCHb78p1wGXDl75JfTIbB5oMxlrl7+KDDArgGZZVrBi/+QvNh87qBFb7UoCHwY82mYxMRk3
+ fIH/E=
+X-Received: by 2002:a05:622a:558f:b0:517:b750:628 with SMTP id
+ d75a77b69052e-517b7500a63mr198648341cf.45.1781090965185; 
+ Wed, 10 Jun 2026 04:29:25 -0700 (PDT)
+X-Received: by 2002:a05:622a:558f:b0:517:b750:628 with SMTP id
+ d75a77b69052e-517b7500a63mr198647311cf.45.1781090964268; 
+ Wed, 10 Jun 2026 04:29:24 -0700 (PDT)
+Received: from [10.156.84.244] (49.170.88.92.rev.sfr.net. [92.88.170.49])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-490dc4715e4sm40501525e9.0.2026.06.10.04.20.22
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 10 Jun 2026 04:20:22 -0700 (PDT)
-Date: Wed, 10 Jun 2026 07:20:20 -0400
-From: "Michael S. Tsirkin" <mst@redhat.com>
-To: Daniel =?iso-8859-1?Q?P=2E_Berrang=E9?= <berrange@redhat.com>
-Cc: qemu-devel@nongnu.org,
- Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
- Alex =?iso-8859-1?Q?Benn=E9e?= <alex.bennee@linaro.org>,
- Mauro Matteo Cascella <mcascell@redhat.com>,
- Paolo Bonzini <pbonzini@redhat.com>, Thomas Huth <thuth@redhat.com>
-Subject: Re: [qemu-web RFC 3/3] contribute: switch security process to gitlab
- confidential issues
-Message-ID: <20260610071756-mutt-send-email-mst@kernel.org>
-References: <20260604165048.457860-1-berrange@redhat.com>
- <20260604165048.457860-4-berrange@redhat.com>
- <20260610061728-mutt-send-email-mst@kernel.org>
- <ailEU05AQzlm1fTl@redhat.com>
- <20260610070452-mutt-send-email-mst@kernel.org>
- <ailGDPPj-YfGepTk@redhat.com>
+ a640c23a62f3a-bf0517714c5sm1189192066b.2.2026.06.10.04.29.22
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Wed, 10 Jun 2026 04:29:23 -0700 (PDT)
+Message-ID: <b5d9527d-9295-46c0-9259-31fe7323f1b5@oss.qualcomm.com>
+Date: Wed, 10 Jun 2026 13:29:21 +0200
 MIME-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Disposition: inline
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v2 05/22] ui: move LED and key utilities to input.c,
+ delete input-legacy.c
+Content-Language: en-US
+To: =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>,
+ qemu-devel@nongnu.org
+Cc: "Dr. David Alan Gilbert" <dave@treblig.org>,
+ Paolo Bonzini <pbonzini@redhat.com>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ "Michael S. Tsirkin" <mst@redhat.com>,
+ Gerd Hoffmann <kraxel@redhat.com>, Jan Kiszka <jan.kiszka@web.de>,
+ Peter Maydell <peter.maydell@linaro.org>, qemu-arm@nongnu.org,
+ Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>, qemu-ppc@nongnu.org,
+ Thomas Huth <th.huth+qemu@posteo.eu>
+References: <20260610-ui-input-v2-0-f68452dd6a22@redhat.com>
+ <20260610-ui-input-v2-5-f68452dd6a22@redhat.com>
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>
+In-Reply-To: <20260610-ui-input-v2-5-f68452dd6a22@redhat.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <ailGDPPj-YfGepTk@redhat.com>
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=mst@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -24
-X-Spam_score: -2.5
+X-Proofpoint-GUID: LKoeeV_SmRzoIcXlpedHo1z8KBEEeh0Y
+X-Authority-Analysis: v=2.4 cv=ebYNubEH c=1 sm=1 tr=0 ts=6a294a96 cx=c_pps
+ a=oc9J++0uMp73DTRD5QyR2A==:117 a=YLXAUxGLE6hMr2F5uSHVqQ==:17
+ a=IkcTkHD0fZMA:10 a=FelO9ux0wxsA:10 a=M51BFTxLslgA:10 a=s4-Qcg_JpJYA:10
+ a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=Um2Pa8k9VHT-vaBCBUpS:22
+ a=20KFwNOVAAAA:8 a=EUspDBNiAAAA:8 a=1tSEMpTH9XP_W59IOagA:9 a=3ZKOabzyN94A:10
+ a=QEXdDO2ut3YA:10 a=iYH6xdkBrDN1Jqds4HTS:22
+X-Proofpoint-ORIG-GUID: LKoeeV_SmRzoIcXlpedHo1z8KBEEeh0Y
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNjEwMDEwOSBTYWx0ZWRfX2PwHDFkLO9lk
+ ppcs/ci01KVB5LAsCukpc1mcLA0PS8uvRlSWlBnSQw4WlAyJ36BqqhlgzjKbObbyoI4SuU0usp3
+ 4TyfZX8AJyuQt3de1qBjBB5b3Q/hSrkIm79ZO15RR843DqO39NiHxnffyy2axxyukx90ux7+4rD
+ WnwTNAPyPQY5jv21zDPfNllhjdUYsyYbRBWOyqPS44lpNmuAvgMHPKS3cUmNhQ39WmPsc+DO9sj
+ wcz3h5mdhf+E0pmKS9xV+jYxxic9R+PtszeSsUN2T5Tx/WgWxxhXhgE5SwBMeIz8cBBcrewDLp3
+ fYv8ERT9SqWmrE8RNE+/vgJdqGiZuZq4Uuxe82UDA3EHbQjNAL49RXXXCGq8sS40PtQD+7N12sF
+ SoBn2/kZSM8IoolmU8/BFqJuVTxBiruqvrPMWEQB2h3tsa8V2DYr1bT6nz7LXdYb8h5cMneC69a
+ ddflJYLgqIgiSd/T8ew==
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.125,FMLib:17.12.100.49
+ definitions=2026-06-10_02,2026-06-09_02,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ malwarescore=0 impostorscore=0 spamscore=0 bulkscore=0 clxscore=1015
+ suspectscore=0 phishscore=0 adultscore=0 lowpriorityscore=0
+ priorityscore=1501 classifier=typeunknown authscore=0 authtc= authcc=
+ route=outbound adjust=0 reason=mlx scancount=1 engine=8.22.0-2605210000
+ definitions=main-2606100109
+Received-SPF: pass client-ip=205.220.168.131;
+ envelope-from=philmd@oss.qualcomm.com; helo=mx0a-0031df01.pphosted.com
+X-Spam_score_int: -27
+X-Spam_score: -2.8
 X-Spam_bar: --
-X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.445,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -127,91 +162,23 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, Jun 10, 2026 at 12:10:04PM +0100, Daniel P. BerrangÈ wrote:
-> On Wed, Jun 10, 2026 at 07:06:38AM -0400, Michael S. Tsirkin wrote:
-> > On Wed, Jun 10, 2026 at 12:02:43PM +0100, Daniel P. BerrangÈ wrote:
-> > > On Wed, Jun 10, 2026 at 06:18:39AM -0400, Michael S. Tsirkin wrote:
-> > > > On Thu, Jun 04, 2026 at 05:50:48PM +0100, Daniel P. BerrangÈ wrote:
-> > > > > It is no longer viable to handle the incredible volumes of
-> > > > > AI assisted security disclosures via email, nor are extended
-> > > > > embargos practical or useful.
-> > > > > 
-> > > > > Remove all information about the current security process and
-> > > > > instruct reporters to use 'confidential' issues. In contrast
-> > > > > to the old highly restrictive "need to know" approach, the
-> > > > > new approach makes all security issues visible to all QEMU
-> > > > > maintainers immediately.
-> > > > > 
-> > > > > The focus is on making issues public as soon as possible with
-> > > > > a viable patch. Co-ordinated disclosure will no longer be
-> > > > > attempted and nor will requests to embargoes be accepted.
-> > > > > 
-> > > > > Signed-off-by: Daniel P. BerrangÈ <berrange@redhat.com>
-> > > > > ---
-> > > > >  contribute/report-a-bug.md     |   9 +-
-> > > > >  contribute/security-process.md | 280 ++++++++++++++-------------------
-> > > > >  2 files changed, 119 insertions(+), 170 deletions(-)
-> > > > > 
-> > > > > diff --git a/contribute/report-a-bug.md b/contribute/report-a-bug.md
-> > > > > index fd3bc6b..b506f9f 100644
-> > > > > --- a/contribute/report-a-bug.md
-> > > > > +++ b/contribute/report-a-bug.md
-> > > > > @@ -11,6 +11,11 @@ on GitLab, taking into account the following guidance.
-> > > > >    requested pieces of information that are relevant to the
-> > > > >    discovered bug.
-> > > > >  
-> > > > > +* Bugs which are suspected, or known, to have security implications
-> > > > > +  **must** be marked as "*confidential*" prior to submitting the
-> > > > > +  disclosure. Consult the [security process](../security-process)
-> > > > > +  for further guidance on security issue handling.
-> > > > > +
-> > > > 
-> > > > Do we want to do like linux does, and make AI found issues public,
-> > > > on the assumption that bad guys can find them just as easily?
-> > > 
-> > > I'm pretty sympathetic to the idea that AI discovered issues
-> > > are "effectively public", but IMHO that's not quite the same
-> > > as "actually public".
-> > > 
-> > > While people can re-discover things, that doesn't mean we should
-> > > do the job for them by publicising everything immediately.
-> > > 
-> > > To me, the main implications of the "effectively public" view
-> > > point are
-> > > 
-> > >  * Minimizing time-to-fix is the core priority
-> > >  * Process needs to be low cost minimal external dependencies
-> > > 
-> > > Delaying disclosure to suit arbitrary downstream vendor's or user's
-> > > update schedules is not helpful. The only delays to publication should
-> > > be to allow a maintainer to get a patch prepared, nothing beyond that.
-> > > "Low" severity bugs can be public immediately regardless of a patch.
-> > > 
-> > > With regards,
-> > > Daniel
-> > 
-> > 
-> > Ok so you are saying the process will be: 
-> > - patch posted on public list -> maintainer makes the bug public?
+On 10/6/26 12:56, Marc-Andr√© Lureau wrote:
+> With both legacy mouse API consumers converted, the remaining
+> code in input-legacy.c (LED broadcast, index_from_key, qmp_send_key)
+> is not legacy-specific. Move it to ui/input.c and delete the file.
 > 
-> Yes, I even wrote that in this patch :-)
+> Clean up include/ui/console.h by removing the now-unused legacy
+> mouse API declarations (QEMUPutMouseEvent, QEMUPutMouseEntry,
+> QEMUPutKBDEvent, QEMUPutKbdEntry) and MOUSE_EVENT_* constants.
 > 
->  + * At the time the proposed patches are sent to qemu-devel, the
->  +   maintainers should remove the "*confidential*" marker from the
->  +   GitLab issue.
-> 
+> Signed-off-by: Marc-Andr√© Lureau <marcandre.lureau@redhat.com>
+> ---
+>   include/ui/console.h |  18 -----
+>   ui/input-legacy.c    | 221 ---------------------------------------------------
+>   ui/input.c           |  66 +++++++++++++++
+>   ui/ui-hmp-cmds.c     |   7 +-
+>   ui/meson.build       |   1 -
+>   5 files changed, 70 insertions(+), 243 deletions(-)
 
-Right, you did.
-
-> > and if the issue is coming with a patch?
-> 
-> If the reporter provides a patch, the maintainer merely needs to
-> review it. If happy, either the reporter or maintainer can send
-> it to qemu-devel immediately.
-> 
-> With regards,
-> Daniel
-
-Presumably with a Fixes tag.
-
+Reviewed-by: Philippe Mathieu-Daud√© <philmd@oss.qualcomm.com>
 
