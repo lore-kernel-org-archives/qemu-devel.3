@@ -4,54 +4,54 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C2FD7CD98C5
-	for <qemu-devel@archiver.kernel.org>; Wed, 10 Jun 2026 21:17:02 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D04F4CD98C5
+	for <qemu-devel@archiver.kernel.org>; Wed, 10 Jun 2026 21:17:05 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wXQHb-00061I-4X; Wed, 10 Jun 2026 17:16:19 -0400
+	id 1wXQI1-0000kq-E7; Wed, 10 Jun 2026 17:16:47 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1wXQHM-0005PD-AX
- for qemu-devel@nongnu.org; Wed, 10 Jun 2026 17:16:04 -0400
+ id 1wXQHv-0000Yo-R5
+ for qemu-devel@nongnu.org; Wed, 10 Jun 2026 17:16:41 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1wXQHK-00075f-UO
- for qemu-devel@nongnu.org; Wed, 10 Jun 2026 17:16:04 -0400
+ id 1wXQHu-0007FN-D7
+ for qemu-devel@nongnu.org; Wed, 10 Jun 2026 17:16:39 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1781126159;
+ s=mimecast20190719; t=1781126197;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=9pK7gQpvQUXVW+deSujPMwablsHH/lBUG/WlwpTc7Ic=;
- b=hki1jLVGokShv4ptGctH1mQ8ykCKLswILetdp7nOkmAv1rLbj8rgjuuiRhrve9J6LNTvGo
- pfsufI4LDbqL68ZJtIhJQOCs3h2KcRjGNV12XSV1YIpM68Ps82883u+sPYDHHFkzCgiFul
- XhXgYxIHbetRG9trrJb7I6oE+dvjXnI=
+ bh=xnA3veJdbm0ZMoe5CdAWd75WI/uqHc19rMhfFOVeoOo=;
+ b=abUQxFmVioRBuXqLzIt+d9O4TG+tAoYlzTzfJ39JfQuiNKzTC77+yfUVmOethULc0uwtwI
+ dugoqEPHRDyWLQ+ujc4qvi0nbwoWLHMClewbiaZSyYDlBrBfkvAWa4Lpj+1P4Slgz7ibTY
+ g2D0cifeIGHGECF8eNPcvdS3NYxEGJY=
 Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-141-sbKXkxphPQ65FBISR_t2Ow-1; Wed,
- 10 Jun 2026 17:15:56 -0400
-X-MC-Unique: sbKXkxphPQ65FBISR_t2Ow-1
-X-Mimecast-MFC-AGG-ID: sbKXkxphPQ65FBISR_t2Ow_1781126154
-Received: from mx-prod-int-10.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-10.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.95])
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-179-OMuLfB84MQa507YOEb3ilQ-1; Wed,
+ 10 Jun 2026 17:16:33 -0400
+X-MC-Unique: OMuLfB84MQa507YOEb3ilQ-1
+X-Mimecast-MFC-AGG-ID: OMuLfB84MQa507YOEb3ilQ_1781126192
+Received: from mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.111])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
  by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 09642187BE10; Wed, 10 Jun 2026 21:15:54 +0000 (UTC)
+ id 4168D18600E3; Wed, 10 Jun 2026 21:16:32 +0000 (UTC)
 Received: from localhost (unknown [10.44.24.21])
- by mx-prod-int-10.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 8BC063692B; Wed, 10 Jun 2026 21:15:52 +0000 (UTC)
+ by mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id C66AB1800347; Wed, 10 Jun 2026 21:16:30 +0000 (UTC)
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
-Subject: Re: [PATCH v2 23/35] qemu-options: document new monitor-hmp and
- monitor-qmp objects
+Subject: Re: [PATCH v2 30/35] tests/functional: add a stress test for
+ monitor hot unplug
 From: marcandre.lureau@redhat.com
 To: =?utf-8?q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>
 Cc: qemu-devel@nongnu.org, 
@@ -62,29 +62,29 @@ Cc: qemu-devel@nongnu.org,
  Paolo Bonzini <pbonzini@redhat.com>, 
  "Dr. David Alan Gilbert" <dave@treblig.org>, 
  =?utf-8?q?Philippe_Mathieu-Daud=C3=A9?= <philmd@mailo.com>
-In-Reply-To: <20260610123415.2883603-24-berrange@redhat.com>
+In-Reply-To: <20260610123415.2883603-31-berrange@redhat.com>
 References: <20260610123415.2883603-1-berrange@redhat.com>
- <20260610123415.2883603-24-berrange@redhat.com>
+ <20260610123415.2883603-31-berrange@redhat.com>
 Date: Thu, 11 Jun 2026 01:13:23 +0400
-Message-Id: <178112600376.209622.16416561470304910231.b4-review@b4>
-X-Developer-Signature: v=1; a=openpgp-sha256; l=1505;
+Message-Id: <178112600396.209622.4725663320926497079.b4-review@b4>
+X-Developer-Signature: v=1; a=openpgp-sha256; l=1405;
  i=marcandre.lureau@redhat.com; h=from:subject:message-id;
- bh=7kaI08a7x9lvn5PGZZsE1fjSkctiW32QjGd3MyjBM0E=;
- b=owEBbQKS/ZANAwAKAdro4Ql1lpzlAcsmYgBqKdODfjJ3+/klQHki0OcZr1dyqdqLvllMN5+cb
- cWx1p8B50+JAjMEAAEKAB0WIQSHqb2TP4fGBtJ29i3a6OEJdZac5QUCainTgwAKCRDa6OEJdZac
- 5QFJD/wPmOVPqf7sxXqIkZPuHkCNuajP/kIb5lva80sE6X3L0upPl0/AN3RyZTyqfoH8wMV5eqz
- XI3PqHEYZulTBo7K0yIcvFlD+lNj5lFgmtK6xjzbQXQ4equRL6aznryCbsIaR124FgJ6wDsa9kO
- vSJD6l8UpaJ8H9ujA2KxIU+ALD6it+xcmVYJAoj0NOy8Yci1QY+dfWsdP0RiZX8lqcTvWUwCO7V
- TUnFbuqLbrCLDdnEowBAyNKVVYP4n0JDg4jczNhUOL38CDDdS0VoRsfF8JfGmndwbI9FjWHYsm6
- LlydJGPeBte+xZ5XfoT2w18xac3LoZBkKpYAD03xYdEucqgiGnK9WGO3tZjitfa7HUetygUUbN3
- sePz5gGMVtTy+rEJPSdI8VXzLbUHhZ0Bx5nwtC5B2w5L4/R/TRgM33Eh316/ILLu/EzXGIDQAFZ
- EpGfHXXN4/JtG7pkOAPx0VPEdlrdTOairaxrNTrBTz6uo21xg/D6wDLz7uKvnjGHqh5Hye6QGYI
- BMxe8UjLFRhkM5hO8U3OI5kIi5cMpSQoO+wl9R9h2iJ7tmZlaI4eMb029HPS80SznauInxaHEkK
- bpZqtZLuGxWVYEJwDojoEJRFOw4AahEWQtLWc6VM8dzIhMKsBQWW9uqhNJ7vbAth0RRgkkOeoiu
- snZ9l1m1Y+ankog==
+ bh=J0KztrMyE/g2dB6yK6G74N8AQnMtijiW9UEHvm8J4QY=;
+ b=owEBbQKS/ZANAwAKAdro4Ql1lpzlAcsmYgBqKdOFG5fkfg0gbuqcZBDT5u7HCj90R0hnd5c3u
+ Zi8+5FnbM2JAjMEAAEKAB0WIQSHqb2TP4fGBtJ29i3a6OEJdZac5QUCainThQAKCRDa6OEJdZac
+ 5bm/EACTwlqDcUM0Yl6cU4NObxYXN/Im9EopIRoo8meeXnPA+LnLr8eC4H28/Xf0ftDH30w7MgF
+ azE81JygU0pnUkLTbVOGOVB0yp0TTGs9bSsZEh9mgr8EgBQ0Qu+UtWRR8ztSw9UNGMCit/bMidY
+ 8n+/ncBeHjV1M4qnp3i1o1nnX5eX7QLukjywSsdXO9pOZ9O20ly/+yrQ0ndzfzkDUhti4Y1tZ7K
+ 0rok5kTJlD59WJGxXlTanfD1coEd4Fy6HKNFl8NK4/+pVpK8s9o+jKJ1nfxRk4m26LlDICVI3iZ
+ hSfABEqfBMPpf6IFwcCH2rONuGky7ZRc8kq2NxQnVYEBeewWlzo5NXnofJw7bBYwjVOQr+2p6Cy
+ HFAnvJnPlGVmFDrxw9qoMg4mmOiLjVcJ8dVcBUT+hbPOHldrR4eGZeINxpubNWzWk2MCeQ28MHo
+ jLI0ncxO7pPapRJvPrvGp6vxJwWm+Cdg+IGeFcq3osx0itH6e+v6IY4WRyVDWLy8Yhs0hIe9RrK
+ V25DEIPLQNmnduvPkXUSNVv3lxJBaoXQZZ1+BGgl22vfH/wfULrNTE573wyRGmkayK90Hcn/6ya
+ oxDa6d3VQKBp5duL/vDKg/7HHN2KI4lO8726i4v8sEUKZ76BKi6MUsXoGe+grnnV2gXNPmt4wT4
+ prYLN8M9pxw5Zcw==
 X-Developer-Key: i=marcandre.lureau@redhat.com; a=openpgp;
  fpr=87A9BD933F87C606D276F62DDAE8E10975969CE5
-X-Scanned-By: MIMEDefang 3.6 on 10.30.177.95
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.111
 Received-SPF: pass client-ip=170.10.129.124;
  envelope-from=marcandre.lureau@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
@@ -110,51 +110,37 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, 10 Jun 2026 13:34:03 +0100, Daniel P. Berrangé <berrange@redhat.com> wrote:
-> diff --git a/qemu-options.hx b/qemu-options.hx
-> index 96ae41f787b..031417b79d2 100644
-> --- a/qemu-options.hx
-> +++ b/qemu-options.hx
-> @@ -5709,6 +5719,34 @@ SRST
->      they are specified. Note that the 'id' property must be set. These
->      objects are placed in the '/objects' path.
+On Wed, 10 Jun 2026 13:34:10 +0100, Daniel P. Berrangé <berrange@redhat.com> wrote:
+> diff --git a/tests/functional/generic/test_monitor_hotplug.py b/tests/functional/generic/test_monitor_hotplug.py
+> index 5d8a159eb00..03087faafc3 100755
+> --- a/tests/functional/generic/test_monitor_hotplug.py
+> +++ b/tests/functional/generic/test_monitor_hotplug.py
+> @@ -163,6 +168,63 @@ def test_events_after_negotiation(self):
+>          qmp.close()
+>          self._remove_monitor()
 >  
-> +    ``-object monitor-hmp,id=id,chardev=chardv_id,readline=on|off``
+> +    def stress_mon(self, sock):
+> +        async def main():
+> +            qmp = QMPClient('testvm')
+> +            await qmp.connect(sock)
+> +            # Run query-version in a tight loop so that the
+> +            # monitor thread/dispatcher is very busy at the
+> +            # time we try to delete the monitor
+> +            while True:
+> +                try:
+> +                    # A command which returns alot of data to make
 
-chardev_id
+"a lot"
 
-> +        Set up a monitor running the Human Monitor Protocol,
-> +        connected to the chardev ``chrid``.
+> [ ... skip 38 lines ... ]
+> +            sock = self._add_monitor()
+> +            print ("# stress cycle %02d/%02d" % (i, repeat))
+> +            stress = threading.Thread(target=self.stress_mon, args=[sock])
+> +            stress.start()
+> +            # Sleep upto 1/2 second to vary the races
+> +            time.sleep(random.random() / 0.5)
 
-chardev_id
-
-> +
-> +        The ``id`` parameter is a unique ID that can be used
-> +        to dynamically delete the monitor at runtime.
-
-Maybe update the doc at last patch of the series?
-
-> +
-> +        The ``readline`` parameter, which defaults to ``on``,
-> +        controls whether the monitor provides interactive
-> +        prompts
-
-.
-
-> +
-> +    ``-object monitor-qmp,id=id,chardev=chardev_id,pretty=on|off``
-> +        Set up a monitor running the QEMU Monitor Protocol,
-> +        connected to the chardev ``chrid``.
-
-chardev_id
-
-> +
-> +        The ``id`` parameter is a unique ID that can be used
-> +        to dynamically delete the monitor at runtime. Note
-> +        that monitors created using the historical syntax
-> +        will be allocated IDs following the pattern ``monNN``.
-
-"qmpcompatN" and "hmpcompatN"
+* 0.5 or / 2  for the intended sleep
 
 -- 
 Marc-André Lureau <marcandre.lureau@redhat.com>
