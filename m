@@ -4,110 +4,147 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 801C1CD8CB9
-	for <qemu-devel@archiver.kernel.org>; Wed, 10 Jun 2026 16:59:51 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 10A87CD8CB2
+	for <qemu-devel@archiver.kernel.org>; Wed, 10 Jun 2026 17:02:21 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wXMGh-0000Hb-BH; Wed, 10 Jun 2026 12:59:07 -0400
+	id 1wXMJZ-0001nP-VG; Wed, 10 Jun 2026 13:02:06 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <anushree.mathur@linux.ibm.com>)
- id 1wXMGf-0000H5-VC; Wed, 10 Jun 2026 12:59:05 -0400
-Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
+ (Exim 4.90_1) (envelope-from <pierrick.bouvier@oss.qualcomm.com>)
+ id 1wXMJX-0001m9-41
+ for qemu-devel@nongnu.org; Wed, 10 Jun 2026 13:02:03 -0400
+Received: from mx0b-0031df01.pphosted.com ([205.220.180.131])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <anushree.mathur@linux.ibm.com>)
- id 1wXMGZ-0002Nq-6b; Wed, 10 Jun 2026 12:59:05 -0400
-Received: from pps.filterd (m0360072.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 65AFdiJG2217938; Wed, 10 Jun 2026 16:58:57 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
- :content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=pp1; bh=7qI34F
- wuibIi7TJ70SOYArbqpBQsfrGi34Ma9iS5pWs=; b=YROfWZrJseunmr7jD9L3Uf
- fDJAFUPJ/vjvoWQpmKKDF5W+pcaX/hkDYw6Iee57rQxaqiWGLJJuJiOotNbdowRx
- KQwB0VB2KuQGk/PfTVaLv+KAEfHNvGhQngkVeKlafqT69g9NX/Tek55g8ci0QQjD
- djiRzj9jleUsvs4udimlcVydN+RcgTVsF6nkqEkvq4s5ZnKhnOS8nY44NlBWih3u
- cm7jyaFppBoPtsXXKQYIszBXRVoxfAtPrgPW+tHFcFqgWhDoMfD50v6xsoqfRL8D
- K1Ldn9Nf8pwalyS1+SYDfX0EUuNTqZw/bdbtbQzBZ02TiRMJekysjYUWhhbB5lfg
- ==
-Received: from ppma23.wdc07v.mail.ibm.com
- (5d.69.3da9.ip4.static.sl-reverse.com [169.61.105.93])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4emb6t1p3s-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Wed, 10 Jun 2026 16:58:57 +0000 (GMT)
-Received: from pps.filterd (ppma23.wdc07v.mail.ibm.com [127.0.0.1])
- by ppma23.wdc07v.mail.ibm.com (8.18.1.7/8.18.1.7) with ESMTP id 65AGna8p005783;
- Wed, 10 Jun 2026 16:58:56 GMT
-Received: from smtprelay06.dal12v.mail.ibm.com ([172.16.1.8])
- by ppma23.wdc07v.mail.ibm.com (PPS) with ESMTPS id 4emych7e7f-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Wed, 10 Jun 2026 16:58:56 +0000 (GMT)
-Received: from smtpav05.wdc07v.mail.ibm.com (smtpav05.wdc07v.mail.ibm.com
- [10.39.53.232])
- by smtprelay06.dal12v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 65AGveME5964414
- (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Wed, 10 Jun 2026 16:57:40 GMT
-Received: from smtpav05.wdc07v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 2CABD58053;
- Wed, 10 Jun 2026 16:57:40 +0000 (GMT)
-Received: from smtpav05.wdc07v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 0899858043;
- Wed, 10 Jun 2026 16:57:37 +0000 (GMT)
-Received: from [9.61.247.186] (unknown [9.61.247.186])
- by smtpav05.wdc07v.mail.ibm.com (Postfix) with ESMTP;
- Wed, 10 Jun 2026 16:57:36 +0000 (GMT)
-Message-ID: <8ac01d0e-effc-4c73-aedd-925e9a43dd4d@linux.ibm.com>
-Date: Wed, 10 Jun 2026 22:27:35 +0530
+ (Exim 4.90_1) (envelope-from <pierrick.bouvier@oss.qualcomm.com>)
+ id 1wXMJS-0006hK-6v
+ for qemu-devel@nongnu.org; Wed, 10 Jun 2026 13:02:01 -0400
+Received: from pps.filterd (m0279869.ppops.net [127.0.0.1])
+ by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
+ 65AFxDS32128025
+ for <qemu-devel@nongnu.org>; Wed, 10 Jun 2026 17:01:50 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+ cc:content-transfer-encoding:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+ Pb4SXf2TrJRTOkvR1vHM5n9z7McSwsbPvtNMJAvm3+4=; b=aNJS0q3qA3pekNiG
+ ke3xNYuM+99ZQnhZk9NtdVyxHsPJCAfovCtCNYfbQgNEpOiyAGvTzQI2HTtDnfhI
+ BvTCI18SpHlODphd0cO2lPvU5la/Thxud8YndZ2LrAMzGWSbR1JMaDjsj+OfJIAv
+ r7dS+Cf6y6FYdbA5Di+/w4fuEOIlcCerft6okutnxS9LMiPq0lr6/XB6CMarhO4x
+ +lKMM3eNc6qXdUSGRXb5FyYNNSI91lsL21B8KjRS5SpXojYgnaKZYQPTr9O3yApD
+ ihrRiIYKYBA0qauMBPfcO/g0lAJw1KSz1aeOGSCxyIm3VHlI0+MxCV+EG72nm8eN
+ 8iIQNg==
+Received: from mail-dy1-f200.google.com (mail-dy1-f200.google.com
+ [74.125.82.200])
+ by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4eq2sejn1k-1
+ (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
+ for <qemu-devel@nongnu.org>; Wed, 10 Jun 2026 17:01:50 +0000 (GMT)
+Received: by mail-dy1-f200.google.com with SMTP id
+ 5a478bee46e88-307fd7138b1so177713eec.0
+ for <qemu-devel@nongnu.org>; Wed, 10 Jun 2026 10:01:50 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=oss.qualcomm.com; s=google; t=1781110909; x=1781715709; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:content-language:from
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=Pb4SXf2TrJRTOkvR1vHM5n9z7McSwsbPvtNMJAvm3+4=;
+ b=gTviRqSUcpUTrBrDd+boTRwv4c6W/jgRxs2t2s0BPNfqF4aIDmZpoH0KIrllQqgUQf
+ 16/fkslR7NltB1Xig+Qer2jFcJqKemf3cf3TLvXxpIF1s+7aoNRsMon26aL0Rfy58ZuI
+ SIoG/ZxL7fH4XFrYfppYH8VmV0gbm4gHlRb4fbjycGXgIvyYI9mNMb8JvS0rQbxTRsLT
+ ukJl726P+eITl1FyrYh0MGD4LjO9B5jud5XU/c0hUkEnKIWjRyXEfD6TYSSl7GuyXz8Y
+ mJoyyENN4dIvBIcS8/cytYoG6qzx1ngjWzIikKTeMzDQOP9GKt2R8E5jHNPrtYHJKvUP
+ xy4w==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1781110909; x=1781715709;
+ h=content-transfer-encoding:in-reply-to:content-language:from
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=Pb4SXf2TrJRTOkvR1vHM5n9z7McSwsbPvtNMJAvm3+4=;
+ b=ZDCzk2cRNfsLLJu9RlvZAVnR2lNRrN9kNUfy7eFUcEFHLZfJrSTspAh/YuUQyr021O
+ nJNy4FewTq7voZNWdLvfA3ItvkhejP9O9hO5gNXH6noBXk6RSSH/vC9WVdzP4VlldE5X
+ ONoiJs+dT0A0bNo6+jRzeEycWAWaltn28D6T0JtIz4A8MWHpv85bFlF/TSoxKgAvZz65
+ F7H/NATvnUIVddgFLiqrXDfAg43S+k/5qsxQC/dHCXlxDvG9jKeSTFlFHld/V0VWyGYF
+ jMlM87L5HuEfn1EKvjIt1PrAWKAeMp/hVRoJokD0+GMU5PPC1wsQNbdBXDBH9SFP09KB
+ NZpQ==
+X-Forwarded-Encrypted: i=1;
+ AFNElJ9J+C+OjPs0Zb58nLOX2GfqMEf8KTNXEtf4JbHwb1jFKXWRL6fPJvQg2Li+hlYNTNhtVIAfmSvtfPtl@nongnu.org
+X-Gm-Message-State: AOJu0YxEAqX9/2uMaq+fwHZzGxJXz/N9vq8KsKpAsD4zdjho8trdTWk8
+ MVtpvP3O1eaP7kyEGk2XyLDa4+NL2zL7Gploi0wnIR6o/gQhcjD9BEWdXL98Xni9ufL516MBnsh
+ OlMaZe+KgMS+GLijz7LyBjbdFLYjMaAHZJeCuObAKIeM9wbRBLuYXh6GZ9g==
+X-Gm-Gg: Acq92OGU9SVIXZ0+z0SoFonhiaG5L3NAmtniteLqf5h0FYSJN8eHM0hoWz3eGUe7YQj
+ eQWxXxdgMILst8zirE0497qbn8tWq/HAFLfUv//28zoIk1WvlYXhMt8Qfm5X5nbr6KR0mCIfs7U
+ eEahx8M/bsmSaEyp+/xTJiXqkkCPjNbLjJSQyuemtnJJcuPIW1yxbq6NYuOoT+GInhDpp3QnYSU
+ /v4BLtW6FLtVbFEkk4WdaF9TScnLKG3sgwlfJbyfL9du3YN/tWVbIy3odSyfvovsz7aI/BLycdG
+ Tgd0fxIwxqZugJEaw67gyckdEE+tapE0zBNszcnQ9PK/VDhrMxIoZ/ePJrx250St9kyl/T8Jchb
+ qJBwrX0mgYVA4KVflsvS9zv2mlxlceR8WUs5cAMlcBkSZHXALZaayKyuuokvlwGQbvsrSSCSu68
+ JLZ3riNRkYM4/wlOmch7CmmsLU
+X-Received: by 2002:a05:693c:2c17:b0:304:cf6c:4cfe with SMTP id
+ 5a478bee46e88-3077aeba998mr16251590eec.9.1781110908517; 
+ Wed, 10 Jun 2026 10:01:48 -0700 (PDT)
+X-Received: by 2002:a05:693c:2c17:b0:304:cf6c:4cfe with SMTP id
+ 5a478bee46e88-3077aeba998mr16251474eec.9.1781110907462; 
+ Wed, 10 Jun 2026 10:01:47 -0700 (PDT)
+Received: from [192.168.1.170] (216-71-219-44.dyn.novuscom.net.
+ [216.71.219.44]) by smtp.gmail.com with ESMTPSA id
+ 5a478bee46e88-3074dea9226sm26235176eec.19.2026.06.10.10.01.45
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Wed, 10 Jun 2026 10:01:46 -0700 (PDT)
+Message-ID: <c5945f76-ae18-4a8c-ae58-d22be7a7f6bd@oss.qualcomm.com>
+Date: Wed, 10 Jun 2026 10:01:44 -0700
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2] ppc/spapr: make fadump collect regs for maxcpus
-To: Shivang Upadhyay <shivangu@linux.ibm.com>, qemu-devel@nongnu.org,
- qemu-ppc@nongnu.org
-Cc: adityag@linux.ibm.com, anushree.mathur@linux.vnet.ibm.com,
- harshpb@linux.ibm.com, mahesh@linux.ibm.com, sourabhjain@linux.ibm.com
-References: <20260429065127.366813-1-shivangu@linux.ibm.com>
- <20260520092857.1079193-1-shivangu@linux.ibm.com>
+Subject: Re: [PATCH 00/27] tests/tcg: run tests with meson
+To: Paolo Bonzini <pbonzini@redhat.com>, qemu-devel@nongnu.org
+Cc: Thomas Huth <thuth@redhat.com>,
+ Manos Pitsidianakis <manos.pitsidianakis@linaro.org>,
+ =?UTF-8?Q?Daniel_P_=2E_Berrang=C3=A9?= <berrange@redhat.com>,
+ =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ qemu-arm@nongnu.org, Richard Henderson <richard.henderson@linaro.org>,
+ =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ Alexandre Iooss <erdnaxe@crans.org>, Peter Maydell
+ <peter.maydell@linaro.org>, Gustavo Romero <gustavo.romero@linaro.org>
+References: <20260609214745.772536-1-pierrick.bouvier@oss.qualcomm.com>
+ <0a0a1116-a5f3-45f2-b079-f66e6b17f672@redhat.com>
+From: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
 Content-Language: en-US
-From: Anushree Mathur <anushree.mathur@linux.ibm.com>
-In-Reply-To: <20260520092857.1079193-1-shivangu@linux.ibm.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-TM-AS-GCONF: 00
-X-Proofpoint-ORIG-GUID: -hwDbRipd8yzj-UqcekTMGWhpzzZMKd_
-X-Proofpoint-GUID: -hwDbRipd8yzj-UqcekTMGWhpzzZMKd_
-X-Authority-Analysis: v=2.4 cv=ZbEt8MVA c=1 sm=1 tr=0 ts=6a2997d1 cx=c_pps
- a=3Bg1Hr4SwmMryq2xdFQyZA==:117 a=3Bg1Hr4SwmMryq2xdFQyZA==:17
- a=IkcTkHD0fZMA:10 a=FelO9ux0wxsA:10 a=VkNPw1HP01LnGYTKEx00:22
- a=RnoormkPH1_aCDwRdu11:22 a=RzCfie-kr_QcCd8fBx8p:22 a=VwQbUJbxAAAA:8
- a=VnNF1IyMAAAA:8 a=LN4uOt-VkPGlo72ylhkA:9 a=QEXdDO2ut3YA:10
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNjEwMDE1NiBTYWx0ZWRfX9/F0RNRw88fu
- 6cnefE7JSPlfEdX/ULe2l6zIDZoH8swwkqNMS9yg2OT3qOrFgTi6qZ4Qim4vyxWk/Meu/fOI82N
- mD4ybUSSbI7ivTfMzq1QDmTQqo/4VrhqwVVr957BU9X3sG397uaym3xJouMeniGDWhQbU6XcR/+
- q7ZM62uuTFlzYHHJfD5oH/6sthtFXXRmGtbOohYAYD91gqHpBA/O9dFGJmo+lLrNYDqQ16mYqrQ
- vKKoaAJ7wy0CabScKTx1QAJWbpziUbAqjpoqTWS6RAekJSBK0z3hf1YApg+SzzU9zEHy0MW3jft
- 9xjhTB1PNdBaellSlCAlHr3EvBBJoxrd1eI0MbbLszel0olVaMj/j73g6b78MfTErhQcc4uKAdc
- RWfetxDgcu3Xpxa/WQWRnb5Bkx8yx44yo5ZiIawla0iSzgBORk+CzjC37an4ygeb4ATBpwtmLaj
- ljZyaNhEoGC/lXaTw4Q==
+In-Reply-To: <0a0a1116-a5f3-45f2-b079-f66e6b17f672@redhat.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+X-Proofpoint-GUID: pPcraisqgwNpH8WMNhnbECI0ASK5PVcP
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNjEwMDE1OSBTYWx0ZWRfX4FuGarmOwAPa
+ 49f78EudmtDTXjDA+kRU7xfX1qMLa20bp6itQAkV4qxAr7ePh/dvEy6msiLESMpWM3+PKeZjclq
+ Dno+cTZzCuF/Ttm0N3UZUNPYgOOG2TC1gWU8TMPdHsT2/ZXGZntQW9qyAXhkWP8SGYd+uzX7YBL
+ vLCT3ilLXnaaQhDmV28bvjvLGDDHrKJO/tDS/tklfQQ8ttCe3dTs/0MvA3GiMohUZRPMM3e463o
+ ZG4ZdmS4yZ3A9NZi9RKv1QkyO0HBvcICuHA0raefLfQIN4X+aYHcbSXRv1ZvCWuD2hG8DsjZhnR
+ Evcf7FYbNzJUj7edRT8tT8jeXmvKZCSu5w49pNcqxPAmgte/IBwI9UiVheL4m3f/ppNsI1Br9/q
+ 9aDmnvfwXjCW08JGuTs0/S3VpWJ+et/l4cvyvJ8mj35qxIEeGZWJKBrghqOkrzXI6sEFH39+FyF
+ +uNQq1ExqCiBhVDVIDw==
+X-Proofpoint-ORIG-GUID: pPcraisqgwNpH8WMNhnbECI0ASK5PVcP
+X-Authority-Analysis: v=2.4 cv=Md1cfZ/f c=1 sm=1 tr=0 ts=6a29987e cx=c_pps
+ a=PfFC4Oe2JQzmKTvty2cRDw==:117 a=iLqgmErQAxjCjdq5jj1Aqg==:17
+ a=IkcTkHD0fZMA:10 a=FelO9ux0wxsA:10 a=s4-Qcg_JpJYA:10
+ a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=_glEPmIy2e8OvE2BGh3C:22
+ a=NIpcAeuaKk_nj2ePdRYA:9 a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
+ a=6Ab_bkdmUrQuMsNx7PHu:22
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.125,FMLib:17.12.100.49
  definitions=2026-06-10_03,2026-06-09_02,2025-10-01_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- suspectscore=0 impostorscore=0 malwarescore=0 lowpriorityscore=0
- clxscore=1015 adultscore=0 spamscore=0 priorityscore=1501 bulkscore=0
- phishscore=0 classifier=typeunknown authscore=0 authtc= authcc=
- route=outbound adjust=0 reason=mlx scancount=1 engine=8.22.0-2605210000
- definitions=main-2606100156
-Received-SPF: pass client-ip=148.163.158.5;
- envelope-from=anushree.mathur@linux.ibm.com; helo=mx0b-001b2d01.pphosted.com
-X-Spam_score_int: -26
-X-Spam_score: -2.7
+ lowpriorityscore=0 phishscore=0 priorityscore=1501 adultscore=0 bulkscore=0
+ impostorscore=0 spamscore=0 malwarescore=0 clxscore=1015 suspectscore=0
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.22.0-2605210000 definitions=main-2606100159
+Received-SPF: pass client-ip=205.220.180.131;
+ envelope-from=pierrick.bouvier@oss.qualcomm.com;
+ helo=mx0b-0031df01.pphosted.com
+X-Spam_score_int: -27
+X-Spam_score: -2.8
 X-Spam_bar: --
-X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
- RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -123,196 +160,59 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi Shivang,
+On 6/10/2026 2:17 AM, Paolo Bonzini wrote:
+> On 6/9/26 23:47, Pierrick Bouvier wrote:
+> 
+>> We also have for free:
+>> - correct and complete dependencies for any test, including:
+>>    scripts, c.inc, headers, reference files and binaries/plugins.
+>> - catch test declaration issues at configure time vs test time.
+>> - proper data types for variables instead of string expansion with make.
+>> - we could now build tests binaries by default with 'all' target.
+>> - hopefully, better readability to your taste.
+> 
+> Yes there is absolutely a readability improvement!  At most, one could
+> say that it's not a very high bar. :)
+> 
+> Having to reinvent cross compilation (cc_has_feat, custom_targets for
+> compilation) is not great and the only part I'm not super convinced
+> about; I wonder what it would be like to make TCG tests their own
+> standalone meson projects.  While the Makefiles are awful I do like
+> being able to do "make -C tests/tcg/x86_64-softmmu", and in that respect
+> this would be a half step backwards (and a big step forwards in many
+> other respects, mind).
+>
 
-I have tested this v2 patch for different smt values as 1/2/4/8 and this 
-patch is working totally fine for all the scenarios now!
-Now it is not failing as I mentioned earlier 
-https://lore.kernel.org/qemu-devel/baf613df-3139-48e0-9311-11d5f1bcc28f@linux.ibm.com/ 
+Your idea is to have one project per target, and use meson cross compile
+support for this?
 
+`make check-tcg-aarch64-softmu` is supported out of the box with this
+series, without having to write a single line of Makefile. You can still
+do what you like: see cover letter usage, to run a suite or a single test.
 
-Thanks for working on the issue.
+I don't see rewriting the cc_feat part in meson directly as a problem to
+be honest. Not all architectures needs to check specific feat (only
+aarch64, arm, i386, ppc64 and s390x).
 
-Please feel free to add:
+Also, calling:
+  supported = run_command[cc, check_cflags, flags].returncode() == 0
+vs
+  cc.get_supported_arguments(flags)
+is not really much more complex IMHO, and not a huge reinvention.
 
-Tested-by: Anushree Mathur <anushree.mathur@linux.ibm.com>
+Also, the custom target is hidden inside tcg/tests/meson.build and not
+exposed to arch files. Even if we had multiple projects, I would stick
+to not exposing test() and executable() in arch files.
 
-Thank you,
-Anushree Mathur
+> I can help with the integration of the individual test suites into
+> tests/tcg/Makefile.include.
+>
 
-On 20/05/26 2:58 PM, Shivang Upadhyay wrote:
-> When a ppc machine is started with maxcpus greater than the number of
-> present CPUs (e.g., -smp cpus=2,maxcpus=8), firmware allocates the CPU
-> state data buffer based on maxcpus and advertises this size to the
-> kernel during fadump registration.
->
-> However, fadump currently fails to generate a vmcore during the
-> rebooted kernel because:
->
-> 1. The CPU state buffer length does not match what firmware advertised
->     (QEMU only populates entries for present CPUs, not maxcpus)
-> 2. The kernel cannot find CPU data for all maxcpus slots
->
-> This patch adds placeholder entries for the unrealized cpus.
-> The placeholder entries contain only the CPUSTRT and CPUEND markers
-> with the CPU ID, which is sufficient for the kernel to recognize the
-> CPU slot exists even though the CPU was never realized.
->
-> This ensures the CPU state buffer size and structure matches what
-> firmware advertised to the kernel, allowing fadump to successfully
-> generate vmcore.
->
-> Cc: Aditya Gupta <adityag@linux.ibm.com>
-> Cc: Sourabh Jain <sourabhjain@linux.ibm.com>
-> Cc: Mahesh J Salgaonkar <mahesh@linux.ibm.com>
-> Cc: Harsh Prateek Bora <harshpb@linux.ibm.com>
-> Reported-by: Anushree Mathur <anushree.mathur@linux.vnet.ibm.com>
-> Signed-off-by: Shivang Upadhyay <shivangu@linux.ibm.com>
-> ---
->
-> Changelog:
-> V2:
->   * change reservation size from maxcpus to possible_cpu_arch_ids. (Thanks Anushree for test case).
->   * added a small change regarding interger ceil calculation.
->
-> V1:
->   * link: https://lore.kernel.org/all/20260429065127.366813-1-shivangu@linux.ibm.com/
->
-> ---
->   hw/ppc/spapr_fadump.c | 60 +++++++++++++++++++++++++++++++++----------
->   1 file changed, 46 insertions(+), 14 deletions(-)
->
-> diff --git a/hw/ppc/spapr_fadump.c b/hw/ppc/spapr_fadump.c
-> index 13cab0cfe1..77339129ed 100644
-> --- a/hw/ppc/spapr_fadump.c
-> +++ b/hw/ppc/spapr_fadump.c
-> @@ -237,7 +237,7 @@ static bool do_preserve_region(FadumpSection *region)
->           return false;
->       }
->   
-> -    num_chunks = ceil((src_len * 1.0f) / FADUMP_CHUNK_SIZE);
-> +    num_chunks = ((src_len + FADUMP_CHUNK_SIZE - 1) / FADUMP_CHUNK_SIZE);
->       for (uint64_t chunk_id = 0; chunk_id < num_chunks; ++chunk_id) {
->           /* Take minimum of bytes left to copy, and chunk size */
->           uint64_t copy_len = MIN(
-> @@ -309,6 +309,30 @@ static bool do_preserve_region(FadumpSection *region)
->       return true;
->   }
->   
-> +/*
-> + * Populate placeholder register entries for an unrealized CPU
-> + *
-> + * For CPUs that are not realized (cpu_index < maxcpus), we need to
-> + * create minimal register entries containing only CPUSTRT and CPUEND
-> + * markers to maintain the expected buffer structure.
-> + *
-> + * Returns pointer just past the placeholder entries, which can be used
-> + * as the start address for the next CPU's register entries
-> + */
-> +static FadumpRegEntry *populate_cpu_reg_entries_placeholder(int cpu_id,
-> +                                                             FadumpRegEntry *curr_reg_entry)
-> +{
-> +    curr_reg_entry->reg_id = cpu_to_be64(fadump_str_to_u64("CPUSTRT"));
-> +    curr_reg_entry->reg_value = cpu_to_be64(cpu_id & FADUMP_CPU_ID_MASK);
-> +    ++curr_reg_entry;
-> +
-> +    curr_reg_entry->reg_id = cpu_to_be64(fadump_str_to_u64("CPUEND"));
-> +    curr_reg_entry->reg_value = cpu_to_be64(cpu_id & FADUMP_CPU_ID_MASK);
-> +    ++curr_reg_entry;
-> +
-> +    return curr_reg_entry;
-> +}
-> +
->   /*
->    * Populate the passed CPUs register entries, in the buffer starting at
->    * the argument 'curr_reg_entry'
-> @@ -450,24 +474,21 @@ static FadumpRegEntry *populate_cpu_reg_entries(CPUState *cpu,
->    * callers), and sets the size of this buffer in the argument
->    * 'cpu_state_len'
->    */
-> -static void *get_cpu_state_data(uint64_t *cpu_state_len)
-> +static void *get_cpu_state_data(uint64_t *cpu_state_len, MachineState *ms)
->   {
->       FadumpRegSaveAreaHeader reg_save_hdr;
->       g_autofree FadumpRegEntry *reg_entries = NULL;
->       FadumpRegEntry *curr_reg_entry;
->       CPUState *cpu;
-> +    MachineClass *mc = MACHINE_GET_CLASS(ms);
->   
->       uint32_t num_reg_entries;
->       uint32_t reg_entries_size;
-> -    uint32_t num_cpus = 0;
-> +    uint32_t num_cpus = mc->possible_cpu_arch_ids(ms)->len;
->   
->       void *cpu_state_buffer = NULL;
->       uint64_t offset = 0;
->   
-> -    CPU_FOREACH(cpu) {
-> -        ++num_cpus;
-> -    }
-> -
->       reg_save_hdr.version = cpu_to_be32(0);
->       reg_save_hdr.magic_number =
->           cpu_to_be64(fadump_str_to_u64("REGSAVE"));
-> @@ -484,10 +505,20 @@ static void *get_cpu_state_data(uint64_t *cpu_state_len)
->       /* Pointer to current CPU's registers */
->       curr_reg_entry = reg_entries;
->   
-> -    /* Populate register entries for all CPUs */
-> -    CPU_FOREACH(cpu) {
-> -        cpu_synchronize_state(cpu);
-> -        curr_reg_entry = populate_cpu_reg_entries(cpu, curr_reg_entry);
-> +    /*
-> +     * Populate register entries for all CPU slots (0 to maxcpus-1)
-> +     */
-> +    for (int i = 0; i < num_cpus; i++) {
-> +        cpu = qemu_get_cpu(i);
-> +        if (cpu) {
-> +            /* CPU is realized - populate full register entries */
-> +            cpu_synchronize_state(cpu);
-> +            curr_reg_entry = populate_cpu_reg_entries(cpu, curr_reg_entry);
-> +        } else {
-> +            /* CPU slot is empty - populate placeholder entries */
-> +            curr_reg_entry = populate_cpu_reg_entries_placeholder(i,
-> +                                                                   curr_reg_entry);
-> +        }
->       }
->   
->       *cpu_state_len = 0;
-> @@ -526,7 +557,7 @@ static void *get_cpu_state_data(uint64_t *cpu_state_len)
->    * such as invalid destination address or non-fatal error errors likely
->    * caused due to invalid parameters, return true and set region->error_flags
->    */
-> -static bool do_populate_cpu_state(FadumpSection *region)
-> +static bool do_populate_cpu_state(FadumpSection *region, MachineState *ms)
->   {
->       uint64_t dest_addr = be64_to_cpu(region->destination_address);
->       uint64_t cpu_state_len = 0;
-> @@ -541,7 +572,7 @@ static bool do_populate_cpu_state(FadumpSection *region)
->       attrs.user = 0;
->       attrs.memory = 1;
->   
-> -    cpu_state_buffer  = get_cpu_state_data(&cpu_state_len);
-> +    cpu_state_buffer  = get_cpu_state_data(&cpu_state_len, ms);
->   
->       io_result = address_space_write(default_as, dest_addr, attrs,
->               cpu_state_buffer, cpu_state_len);
-> @@ -597,6 +628,7 @@ static bool do_populate_cpu_state(FadumpSection *region)
->   static bool fadump_preserve_mem(SpaprMachineState *spapr)
->   {
->       FadumpMemStruct *fdm = &spapr->registered_fdm;
-> +    MachineState *ms = MACHINE(spapr);
->       uint16_t dump_num_sections, data_type;
->   
->       assert(spapr->fadump_registered);
-> @@ -627,7 +659,7 @@ static bool fadump_preserve_mem(SpaprMachineState *spapr)
->   
->           switch (data_type) {
->           case FADUMP_CPU_STATE_DATA:
-> -            if (!do_populate_cpu_state(&fdm->rgn[i])) {
-> +            if (!do_populate_cpu_state(&fdm->rgn[i], ms)) {
->                   qemu_log_mask(LOG_GUEST_ERROR,
->                       "FADump: Failed to store CPU State Data");
->                   fdm->header.dump_status_flag |=
+I would expect this file to disappear completely, and to rely on make
+check-tcg-arch-* targets at top level instead. Would that work for you?
 
+> Paolo
+>
+Regards,
+Pierrick
 
