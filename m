@@ -4,82 +4,80 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D5485CD8CB2
-	for <qemu-devel@archiver.kernel.org>; Wed, 10 Jun 2026 15:27:10 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 22438CD8CB9
+	for <qemu-devel@archiver.kernel.org>; Wed, 10 Jun 2026 15:27:25 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wXKpX-0004Gs-Bq; Wed, 10 Jun 2026 11:26:59 -0400
+	id 1wXKpW-0004Gd-Ap; Wed, 10 Jun 2026 11:26:58 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mattst88@gmail.com>)
- id 1wXKpV-0004GI-RY
- for qemu-devel@nongnu.org; Wed, 10 Jun 2026 11:26:57 -0400
-Received: from mail-yw1-x112a.google.com ([2607:f8b0:4864:20::112a])
+ id 1wXKpU-0004G0-RJ
+ for qemu-devel@nongnu.org; Wed, 10 Jun 2026 11:26:56 -0400
+Received: from mail-yx1-xb136.google.com ([2607:f8b0:4864:20::b136])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <mattst88@gmail.com>)
- id 1wXKpU-0006PC-6X
- for qemu-devel@nongnu.org; Wed, 10 Jun 2026 11:26:57 -0400
-Received: by mail-yw1-x112a.google.com with SMTP id
- 00721157ae682-7dc6fbf3e86so73682097b3.3
- for <qemu-devel@nongnu.org>; Wed, 10 Jun 2026 08:26:55 -0700 (PDT)
+ id 1wXKpT-0006Ov-67
+ for qemu-devel@nongnu.org; Wed, 10 Jun 2026 11:26:56 -0400
+Received: by mail-yx1-xb136.google.com with SMTP id
+ 956f58d0204a3-66077e90382so6317027d50.3
+ for <qemu-devel@nongnu.org>; Wed, 10 Jun 2026 08:26:54 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1781105215; x=1781710015; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=/heamZD5FySft1PPbwb+WuDt6wl2aG464IoZc2T/Ivg=;
- b=SoCoQ9CGRXQmlIXsULllp1ExR0bOIHaZMtxVvd3hDGMRCywrKT8hs7FlKts0C1i9dj
- 5O4/tf94MjPKf48KweJVSDH7T7/e8zRHiukkr4ZFicaLXWGdmzZrA595XdNRoODOPx0v
- qtSKRSIFQblbz3Uo9lsOAHVTJPqou68LhATPn9G6JWlnRX2o2vZjmLdbqotlpz+shFWN
- mbndc9Vir4Xt9xkXi+N7g9oB3B9D3yLdeUBaW7xxpFdXFcRfCPvDrwqUMC3cAdNKnh1u
- feELiqz8+jPd5lHAXF83xX1ljqEJdPixlFnQ5pHO2UXUwm5myOC9nnGu8ICJa7a7yBOw
- O2SA==
+ d=gmail.com; s=20251104; t=1781105213; x=1781710013; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:from:to:cc:subject:date:message-id:reply-to;
+ bh=KDNP88INBAI3S9CuXBwCUOV/zjTeUMEtUojHhGSOqpA=;
+ b=LufkP4gjaoF/u0Uqa1tleahVoEQf5AEt5HLPkakQftEabN3h/p6KfueILG5RoHKF3e
+ OJyIdWRIoOFk9eiP7w3I78sqAVMAHDrRjblirwz+qRC+Q7WCO015R2hsSmJswAWTfMgC
+ qb2bAKNiF56IUkrAmVOoR8HSmKw9BU+zC9jrRUCLa5qIkV23PIQoo6acCNbauf8n5szz
+ iDUid3u1fQoxthQqh6KsOLJLRSKTPlHkOyYt9IPbw4T0eLld5W8/ifmOYp7QLMWOfuja
+ 73tJH9U+tppBZsTq3G6Jh1LzMMNdLmbal/9Vr1ZmULdotnmOn5E0qW76Us6W3A2Ozl8f
+ kIMw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1781105215; x=1781710015;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to;
- bh=/heamZD5FySft1PPbwb+WuDt6wl2aG464IoZc2T/Ivg=;
- b=mwMRkVy8HHvIiLt5LMbGely19CFuUsL+RIzxrzfoD6YA9L7VvTp18sRh5GZIx8Rcg2
- NcLNkFy2SgmeGNwTj7Pam4ojanFSV4iqwcFxJsrp0aqYZpyFAkdPNZlLMTgO1rlzlhtZ
- F50pO69EQyNItcWCRk2XtIyCKR5uPA1ik0fjWEMzFIcG1iQfWPjXL1Q/6UVOAHFHms4q
- YsA1Q6jjwBoMSNy5hShQboyP/vkz+34XxmsGU3zTzJMGY61QyoiQwAwM2cRMmliUbjvx
- d5NQ31Pv3VjpxdNpv3vAr8X8c2D0TCshzSb1zhwtR/iruHZO8b3jGDh2xRMmirPzxEf9
- no1Q==
-X-Gm-Message-State: AOJu0YwYt9wNbV9omTcLO6H1aU20ncRdtuXBjTD8wcc5OsmLWIiMgpbO
- WieidXi1txUh38lFyczFGTTNOzLmgCPm2yl3/1l2L/OfUKMKq2W8+oUSCf7fiQ==
-X-Gm-Gg: Acq92OFwt3Hnbx3Bww460MvB+6HDq3fi/vuCaMG3ARod++XcjAolvsprwDtOB9XIrX3
- 8WPP8Evxzc0XBag/RaSa5Z3iFRg3CsFtKzqj43se2ZR5e800+ND3uAxFoJATS/cS0M612lAbrfs
- 8mJy7wyMyQG6WtGkQH2EbaR1HIAGJi8OA+EIU+fNXChZ+qTn35uHp/F8T/XWPRDXrPbLr0Cq0A6
- 0CP8knx+ldHMj4AkwS20amkZigqv9XoCgQurKGqhIwBl67KTi3uhrWfbV6lhZ9rFKXU3hBjjP+K
- nBzsEX6qLU8gW5CTwRhEQpLZxAPbdcT0Dy1FBJxNkIYC1mGiPeRO3jd75YPFI3gIMKXVtSZBptB
- HFYq/uk+LGpVN35KiRNUZzAa7w2HzpxtnaumYtcVAT+qCkjW+8uBmo0bwsey77PyGpujjjvFLi1
- 0GdG9ZS7lig4Tg3bpS3ijMAw+vUB0cKUQZ/w==
-X-Received: by 2002:a05:690c:dc4:b0:7db:ccda:a40a with SMTP id
- 00721157ae682-7ed0ef49f3bmr278061387b3.15.1781105214702; 
- Wed, 10 Jun 2026 08:26:54 -0700 (PDT)
+ d=1e100.net; s=20251104; t=1781105213; x=1781710013;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=KDNP88INBAI3S9CuXBwCUOV/zjTeUMEtUojHhGSOqpA=;
+ b=Nwvx3oH5ms+RKBEUvLg0EouToCDEjvnf7/Ea8gRbtORrx4jh7eV3aZAJ+U7ZExLCNB
+ +tolhU2mN8vgz8rZ2xBE1L5pO3ft6MHZtDAFMW4k4yQLfajU7u/8yJmuqBid6Vf74KDU
+ StguvD+m96GGSJAWHeS9bdBUu2grnjARy02HtEKlp+L49YPZjYHUyCfZOzEsEkN9T++8
+ sSLbCOZbCTOzg2NlnlGAxjJhPzdcLvx3pEI+/BHaQ9AMYeA7y0tq0AQTScDY+MkP8CXa
+ bvHvtvham4+mUatRzrrGI5YgZTIPJFKYBbcVhTcvSf1n29kwiPVGm/xAq5Ump3I2IJ07
+ mN7g==
+X-Gm-Message-State: AOJu0Yzt62bGiKRkXo7pLDWmawzlWb0QtGnQlFkl9Qf20QyMZctShHOp
+ Q80sAFkk4ccst0NSSceu0fECZ3lCD+Iku1+qWcU9+fu197UFsRN6fWha0gHJqQ==
+X-Gm-Gg: Acq92OFzxVyE1qrs63+CsdY+z1PofSb7hRwDCq3K5EIN8VS3njsA3xh706IpQfAMAHf
+ J8T1qXcU548bIIQZCFWjXiwC2iHyK2ZW4lX9h+z+d+1pJbkjgKiiaeuD2sJvJrq+XdVKowZb/IN
+ 8kHmdrglg8Nk5OdPi03mrHLGrA6mCjrbLM9tKkXgannQQogImoF2NTb4fC0Zvpj5k66O4ycnfXo
+ AYNnb6G1iZbwI5VmS3sDHK84qkxWlmNWKvkFJrA3WR80GWd5iZ7AZK+7hsxqjnLBJigDS8y7iPI
+ wknuLqBrqR9ybM7YQCMAdl8fNP2XNQcD92IK1ji/scpdLqRPGEs26SHrhiXCyvmNxhOkNSbeBGs
+ SP/lLwweTs0WSChl5w+NQxenGV+g0WUccR8cXjbWJ70cMQi49nd6yeazwcDgV4zJNucWuUYkwOA
+ X7Mch18sa/1Slj+3gZU/9rr6hoi04vs2xx1EfzJKM8lT2e
+X-Received: by 2002:a05:690e:1386:b0:65e:18a4:3021 with SMTP id
+ 956f58d0204a3-6614f80a5b0mr8771414d50.52.1781105213360; 
+ Wed, 10 Jun 2026 08:26:53 -0700 (PDT)
 Received: from localhost ([2600:1702:7a90:6f9f:8bc4:8aec:108d:7a04])
  by smtp.gmail.com with ESMTPSA id
- 00721157ae682-7ea23a9a421sm111981727b3.39.2026.06.10.08.26.53
+ 956f58d0204a3-660d64409e9sm12417648d50.15.2026.06.10.08.26.51
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 10 Jun 2026 08:26:54 -0700 (PDT)
+ Wed, 10 Jun 2026 08:26:52 -0700 (PDT)
 From: Matt Turner <mattst88@gmail.com>
 To: qemu-devel@nongnu.org
 Cc: Laurent Vivier <laurent@vivier.eu>, Helge Deller <deller@gmx.de>,
  Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
  Max Filippov <jcmvbkbc@gmail.com>, Matt Turner <mattst88@gmail.com>
-Subject: [PATCH 2/2] linux-user/xtensa: save/restore FP registers across
- signal delivery
-Date: Wed, 10 Jun 2026 11:25:37 -0400
-Message-ID: <20260610152648.677463-2-mattst88@gmail.com>
+Subject: [PATCH 1/2] target/xtensa: add cpu_set_fcr/fsr helpers to sync
+ fp_status
+Date: Wed, 10 Jun 2026 11:25:36 -0400
+Message-ID: <20260610152648.677463-1-mattst88@gmail.com>
 X-Mailer: git-send-email 2.53.0
-In-Reply-To: <20260610152648.677463-1-mattst88@gmail.com>
-References: <20260610152648.677463-1-mattst88@gmail.com>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::112a;
- envelope-from=mattst88@gmail.com; helo=mail-yw1-x112a.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::b136;
+ envelope-from=mattst88@gmail.com; helo=mail-yx1-xb136.google.com
 X-Spam_score_int: -17
 X-Spam_score: -1.8
 X-Spam_bar: -
@@ -103,160 +101,169 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The Xtensa FCR rounding-mode (RM) bits are not held only in
-env->uregs[FCR]: they are also reflected into env->fp_status via
-set_float_rounding_mode().  Similarly, FSR exception flags are mirrored
-into env->fp_status.  Every write to FCR/FSR goes through
-helper_wur_fpu{2k,}_fcr / helper_wur_fpu_fsr which keep the two in sync.
+Factor FCR→fp_status and FSR→fp_status synchronisation out of the
+wur_fpu{2k,}_fcr/wur_fpu_fsr helpers into cpu_set_fcr(), cpu_set_fsr(),
+and cpu_get_fsr(). Signal delivery code needs to restore the FP rounding
+mode and exception flags without duplicating the flag-mapping tables.
 
-restore_sigcontext() previously wrote nothing back for xtregs, leaving
-env->fp_status with whatever rounding mode and exception flags the
-signal handler last installed.  Any FP instruction in the interrupted
-code could then operate with the wrong mode.  FP data registers f0-f15
-were also not saved, so any FP operation in the signal handler would
-silently corrupt them.
-
-Add target_xtensa_xtregs_fp (f[16] as float32, FCR, FSR) for
-XTENSA_OPTION_FP_COPROCESSOR cores (e.g. dsp3400) and
-target_xtensa_xtregs_dfp (f[16] as float64, FCR, FSR) for
-XTENSA_OPTION_DFP_COPROCESSOR cores (e.g. de233_fpu), unioned in the
-signal frame.  setup_sigcontext() saves all FP registers and points
-sc_xtregs at the sub-frame.  restore_sigcontext() restores f0-f15 then
-calls cpu_set_fcr()/cpu_set_fsr() so fp_status round-trips correctly
-across signal delivery.
+cpu_set_fcr() applies the union mask 0xfffff07f (superset of the
+wur_fpu_fcr mask 0x0000007f and the wur_fpu2k_fcr mask 0xfffff07f) so
+that FCR bits valid only on fpu2k configs are preserved while MBZ bits
+7-11 are always cleared.
 
 Signed-off-by: Matt Turner <mattst88@gmail.com>
 ---
-Worth noting that the ABI layout issue remains open: QEMU's xtregs
-structure is self-consistent but doesn't match the real kernel's
-core-specific opt+user+cp layout, and fixing it properly would require
-exposing the XCHAL SA list sizes in XtensaConfig.
+ target/xtensa/cpu.h        |   4 ++
+ target/xtensa/fpu_helper.c | 111 ++++++++++++++++++++-----------------
+ 2 files changed, 64 insertions(+), 51 deletions(-)
 
- linux-user/xtensa/signal.c | 73 +++++++++++++++++++++++++++++++++++---
- 1 file changed, 68 insertions(+), 5 deletions(-)
-
-diff --git ./linux-user/xtensa/signal.c ./linux-user/xtensa/signal.c
-index ef8b0c3a27..b8d73468d0 100644
---- ./linux-user/xtensa/signal.c
-+++ ./linux-user/xtensa/signal.c
-@@ -21,6 +21,7 @@
- #include "user-internals.h"
- #include "signal-common.h"
- #include "linux-user/trace.h"
-+#include "target/xtensa/cpu.h"
+diff --git ./target/xtensa/cpu.h ./target/xtensa/cpu.h
+index 75cfeee6e3..442e98bd1b 100644
+--- ./target/xtensa/cpu.h
++++ ./target/xtensa/cpu.h
+@@ -642,6 +642,10 @@ static inline void xtensa_select_static_vectors(CPUXtensaState *env,
+ }
+ void xtensa_runstall(CPUXtensaState *env, bool runstall);
  
- struct target_sigcontext {
-     abi_ulong sc_pc;
-@@ -43,10 +44,25 @@ struct target_ucontext {
-     target_sigset_t tuc_sigmask;
- };
++uint32_t cpu_get_fsr(CPUXtensaState *env);
++void cpu_set_fcr(CPUXtensaState *env, uint32_t v);
++void cpu_set_fsr(CPUXtensaState *env, uint32_t v);
++
+ #define XTENSA_OPTION_BIT(opt) (((uint64_t)1) << (opt))
+ #define XTENSA_OPTION_ALL (~(uint64_t)0)
  
-+struct target_xtensa_xtregs_fp {
-+    uint32_t f[16];
-+    uint32_t fcr;
-+    uint32_t fsr;
-+};
-+
-+struct target_xtensa_xtregs_dfp {
-+    uint64_t f[16];
-+    uint32_t fcr;
-+    uint32_t fsr;
-+};
-+
- struct target_rt_sigframe {
-     target_siginfo_t info;
-     struct target_ucontext uc;
--    /* TODO: xtregs */
-+    union {
-+        struct target_xtensa_xtregs_fp fp;
-+        struct target_xtensa_xtregs_dfp dfp;
-+    } xtregs;
-     uint8_t retcode[6];
-     abi_ulong window[4];
- };
-@@ -107,6 +123,7 @@ static int flush_window_regs(CPUXtensaState *env)
+diff --git ./target/xtensa/fpu_helper.c ./target/xtensa/fpu_helper.c
+index 5358060c50..2e51cabe3f 100644
+--- ./target/xtensa/fpu_helper.c
++++ ./target/xtensa/fpu_helper.c
+@@ -64,56 +64,7 @@ void xtensa_use_first_nan(CPUXtensaState *env, bool use_first)
+                              &env->fp_status);
  }
  
- static int setup_sigcontext(struct target_rt_sigframe *frame,
-+                            abi_ulong frame_addr,
-                             CPUXtensaState *env)
+-void HELPER(wur_fpu2k_fcr)(CPUXtensaState *env, uint32_t v)
+-{
+-    static const int rounding_mode[] = {
+-        float_round_nearest_even,
+-        float_round_to_zero,
+-        float_round_up,
+-        float_round_down,
+-    };
+-
+-    env->uregs[FCR] = v & 0xfffff07f;
+-    set_float_rounding_mode(rounding_mode[v & 3], &env->fp_status);
+-}
+-
+-void HELPER(wur_fpu_fcr)(CPUXtensaState *env, uint32_t v)
+-{
+-    static const int rounding_mode[] = {
+-        float_round_nearest_even,
+-        float_round_to_zero,
+-        float_round_up,
+-        float_round_down,
+-    };
+-
+-    if (v & 0xfffff000) {
+-        qemu_log_mask(LOG_GUEST_ERROR,
+-                      "MBZ field of FCR is written non-zero: %08x\n", v);
+-    }
+-    env->uregs[FCR] = v & 0x0000007f;
+-    set_float_rounding_mode(rounding_mode[v & 3], &env->fp_status);
+-}
+-
+-void HELPER(wur_fpu_fsr)(CPUXtensaState *env, uint32_t v)
+-{
+-    uint32_t flags = v >> XTENSA_FSR_FLAGS_SHIFT;
+-    int fef = 0;
+-    unsigned i;
+-
+-    if (v & 0xfffff000) {
+-        qemu_log_mask(LOG_GUEST_ERROR,
+-                      "MBZ field of FSR is written non-zero: %08x\n", v);
+-    }
+-    env->uregs[FSR] = v & 0x00000f80;
+-    for (i = 0; i < ARRAY_SIZE(xtensa_fp_flag_map); ++i) {
+-        if (flags & xtensa_fp_flag_map[i].xtensa_fp_flag) {
+-            fef |= xtensa_fp_flag_map[i].softfloat_fp_flag;
+-        }
+-    }
+-    set_float_exception_flags(fef, &env->fp_status);
+-}
+-
+-uint32_t HELPER(rur_fpu_fsr)(CPUXtensaState *env)
++uint32_t cpu_get_fsr(CPUXtensaState *env)
  {
-     struct target_sigcontext *sc = &frame->uc.tuc_mcontext;
-@@ -123,8 +140,25 @@ static int setup_sigcontext(struct target_rt_sigframe *frame,
-     for (i = 0; i < 16; ++i) {
-         __put_user(env->regs[i], sc->sc_a + i);
+     uint32_t flags = 0;
+     int fef = get_float_exception_flags(&env->fp_status);
+@@ -124,10 +75,68 @@ uint32_t HELPER(rur_fpu_fsr)(CPUXtensaState *env)
+             flags |= xtensa_fp_flag_map[i].xtensa_fp_flag;
+         }
      }
--    __put_user(0, &sc->sc_xtregs);
--    /* TODO: xtregs */
-+    if (xtensa_option_enabled(env->config, XTENSA_OPTION_DFP_COPROCESSOR)) {
-+        for (i = 0; i < 16; ++i) {
-+            __put_user(env->fregs[i].f64, &frame->xtregs.dfp.f[i]);
-+        }
-+        __put_user(env->uregs[FCR], &frame->xtregs.dfp.fcr);
-+        __put_user(cpu_get_fsr(env), &frame->xtregs.dfp.fsr);
-+        __put_user(frame_addr + offsetof(struct target_rt_sigframe, xtregs),
-+                   &sc->sc_xtregs);
-+    } else if (xtensa_option_enabled(env->config, XTENSA_OPTION_FP_COPROCESSOR)) {
-+        for (i = 0; i < 16; ++i) {
-+            __put_user(env->fregs[i].f32[FP_F32_LOW], &frame->xtregs.fp.f[i]);
-+        }
-+        __put_user(env->uregs[FCR], &frame->xtregs.fp.fcr);
-+        __put_user(cpu_get_fsr(env), &frame->xtregs.fp.fsr);
-+        __put_user(frame_addr + offsetof(struct target_rt_sigframe, xtregs),
-+                   &sc->sc_xtregs);
-+    } else {
-+        __put_user(0, &sc->sc_xtregs);
-+    }
-     return 1;
+-    env->uregs[FSR] = flags << XTENSA_FSR_FLAGS_SHIFT;
+     return flags << XTENSA_FSR_FLAGS_SHIFT;
  }
  
-@@ -190,7 +224,7 @@ void setup_rt_frame(int sig, struct target_sigaction *ka,
-     __put_user(0, &frame->uc.tuc_flags);
-     __put_user(0, &frame->uc.tuc_link);
-     target_save_altstack(&frame->uc.tuc_stack, env);
--    if (!setup_sigcontext(frame, env)) {
-+    if (!setup_sigcontext(frame, frame_addr, env)) {
-         unlock_user_struct(frame, frame_addr, 0);
-         goto give_sigsegv;
-     }
-@@ -266,7 +300,36 @@ static void restore_sigcontext(CPUXtensaState *env,
-     for (i = 0; i < 16; ++i) {
-         __get_user(env->regs[i], sc->sc_a + i);
-     }
--    /* TODO: xtregs */
-+    {
-+        abi_ulong xtregs_addr;
++void cpu_set_fcr(CPUXtensaState *env, uint32_t v)
++{
++    static const FloatRoundMode rounding_mode[] = {
++        float_round_nearest_even,
++        float_round_to_zero,
++        float_round_up,
++        float_round_down,
++    };
 +
-+        __get_user(xtregs_addr, &sc->sc_xtregs);
-+        if (xtregs_addr) {
-+            if (xtensa_option_enabled(env->config,
-+                                      XTENSA_OPTION_DFP_COPROCESSOR)) {
-+                uint32_t fcr, fsr;
++    env->uregs[FCR] = v & 0xfffff07f;
++    set_float_rounding_mode(rounding_mode[v & 3], &env->fp_status);
++}
 +
-+                for (i = 0; i < 16; ++i) {
-+                    __get_user(env->fregs[i].f64, &frame->xtregs.dfp.f[i]);
-+                }
-+                __get_user(fcr, &frame->xtregs.dfp.fcr);
-+                __get_user(fsr, &frame->xtregs.dfp.fsr);
-+                cpu_set_fcr(env, fcr);
-+                cpu_set_fsr(env, fsr);
-+            } else if (xtensa_option_enabled(env->config,
-+                                             XTENSA_OPTION_FP_COPROCESSOR)) {
-+                uint32_t fcr, fsr;
++void cpu_set_fsr(CPUXtensaState *env, uint32_t v)
++{
++    uint32_t flags = v >> XTENSA_FSR_FLAGS_SHIFT;
++    int fef = 0;
++    unsigned i;
 +
-+                for (i = 0; i < 16; ++i) {
-+                    __get_user(env->fregs[i].f32[FP_F32_LOW], &frame->xtregs.fp.f[i]);
-+                }
-+                __get_user(fcr, &frame->xtregs.fp.fcr);
-+                __get_user(fsr, &frame->xtregs.fp.fsr);
-+                cpu_set_fcr(env, fcr);
-+                cpu_set_fsr(env, fsr);
-+            }
++    env->uregs[FSR] = v & 0x00000f80;
++    for (i = 0; i < ARRAY_SIZE(xtensa_fp_flag_map); ++i) {
++        if (flags & xtensa_fp_flag_map[i].xtensa_fp_flag) {
++            fef |= xtensa_fp_flag_map[i].softfloat_fp_flag;
 +        }
 +    }
- }
- 
- long do_rt_sigreturn(CPUXtensaState *env)
++    set_float_exception_flags(fef, &env->fp_status);
++}
++
++void HELPER(wur_fpu2k_fcr)(CPUXtensaState *env, uint32_t v)
++{
++    cpu_set_fcr(env, v);
++}
++
++void HELPER(wur_fpu_fcr)(CPUXtensaState *env, uint32_t v)
++{
++    if (v & 0xfffff000) {
++        qemu_log_mask(LOG_GUEST_ERROR,
++                      "MBZ field of FCR is written non-zero: %08x\n", v);
++    }
++    cpu_set_fcr(env, v & 0x0000007f);
++}
++
++void HELPER(wur_fpu_fsr)(CPUXtensaState *env, uint32_t v)
++{
++    if (v & 0xfffff000) {
++        qemu_log_mask(LOG_GUEST_ERROR,
++                      "MBZ field of FSR is written non-zero: %08x\n", v);
++    }
++    cpu_set_fsr(env, v);
++}
++
++uint32_t HELPER(rur_fpu_fsr)(CPUXtensaState *env)
++{
++    uint32_t fsr = cpu_get_fsr(env);
++
++    env->uregs[FSR] = fsr;
++    return fsr;
++}
++
+ float64 HELPER(abs_d)(float64 v)
+ {
+     return float64_abs(v);
 -- 
 2.53.0
 
