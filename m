@@ -4,49 +4,49 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8103BCD8CB2
-	for <qemu-devel@archiver.kernel.org>; Wed, 10 Jun 2026 12:36:10 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 52765CD8CB9
+	for <qemu-devel@archiver.kernel.org>; Wed, 10 Jun 2026 12:36:17 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wXI9V-00084Q-Uy; Wed, 10 Jun 2026 08:35:26 -0400
+	id 1wXIA0-0001dC-Lb; Wed, 10 Jun 2026 08:35:56 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1wXI9T-0007uH-Cy
- for qemu-devel@nongnu.org; Wed, 10 Jun 2026 08:35:23 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ id 1wXI9x-0001Na-Hn
+ for qemu-devel@nongnu.org; Wed, 10 Jun 2026 08:35:53 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1wXI9R-0002Yn-QH
- for qemu-devel@nongnu.org; Wed, 10 Jun 2026 08:35:23 -0400
+ id 1wXI9v-0003Xr-I9
+ for qemu-devel@nongnu.org; Wed, 10 Jun 2026 08:35:53 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1781094921;
+ s=mimecast20190719; t=1781094950;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=jJdT/N4bo8RHR280HsNsSa/5IjBVIg3jrd9e9K3S4yk=;
- b=GP22/+C71lhv9MjddeMO9nTrJhKPX/Z9y1m9Lvn3BQ5JdQsydGRqHbEf7OoxmyLILEdXvb
- 9e4ZOK/gGwNe0VtD+X7luXxN9Gi7JFW/Zb5G9xOxnD1ams0GZV9+I82Zh09eDKsouYQEu+
- UngBMbzWO3aOkToINj2Ec1hk/gJd3WI=
+ bh=ajYNF16N3H4a6xBI6IKMJFceq89WOUN+S97kQFCgeKc=;
+ b=ePfWNgJGZZBFzjc1tjY2U5X2VRziycmwx+OGJdgmpAL6icMgWdz+do0TDJ0UnLTl68wFCN
+ il8M/yq7yEK2ZKtY1BPznkZhJOjsWHTxAJ9qaOOXA/LAY1A14WZeFI2Ox4hEIPMwN3qxIw
+ 3I3RveAhclKLUFau4FO4Ur02GZVp48A=
 Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-393-YjzBWC_dPA61WgCNS8Degw-1; Wed,
- 10 Jun 2026 08:35:15 -0400
-X-MC-Unique: YjzBWC_dPA61WgCNS8Degw-1
-X-Mimecast-MFC-AGG-ID: YjzBWC_dPA61WgCNS8Degw_1781094914
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-602-VQv4ZHIMOs2DnmIiQJk_rA-1; Wed,
+ 10 Jun 2026 08:35:47 -0400
+X-MC-Unique: VQv4ZHIMOs2DnmIiQJk_rA-1
+X-Mimecast-MFC-AGG-ID: VQv4ZHIMOs2DnmIiQJk_rA_1781094946
 Received: from mx-prod-int-10.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-10.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.95])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
  by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 484DD18E68FB; Wed, 10 Jun 2026 12:35:14 +0000 (UTC)
+ id EDADE18DB40A; Wed, 10 Jun 2026 12:35:45 +0000 (UTC)
 Received: from berrange.com (unknown [10.44.50.112])
  by mx-prod-int-10.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id D37C7364CC; Wed, 10 Jun 2026 12:35:10 +0000 (UTC)
+ id 8B26031D2; Wed, 10 Jun 2026 12:35:42 +0000 (UTC)
 From: =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
@@ -57,23 +57,24 @@ Cc: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
  "Dr. David Alan Gilbert" <dave@treblig.org>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@mailo.com>,
  =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>
-Subject: [PATCH v2 13/35] monitor: use class methods for monitor_accept_input
-Date: Wed, 10 Jun 2026 13:33:53 +0100
-Message-ID: <20260610123415.2883603-14-berrange@redhat.com>
+Subject: [PATCH v2 21/35] monitor: eliminate monitor_is_hmp_non_interactive
+ method
+Date: Wed, 10 Jun 2026 13:34:01 +0100
+Message-ID: <20260610123415.2883603-22-berrange@redhat.com>
 In-Reply-To: <20260610123415.2883603-1-berrange@redhat.com>
 References: <20260610123415.2883603-1-berrange@redhat.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 X-Scanned-By: MIMEDefang 3.6 on 10.30.177.95
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=berrange@redhat.com;
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=berrange@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -24
 X-Spam_score: -2.5
 X-Spam_bar: --
 X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.445,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
  SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -90,97 +91,185 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-This removes the need for using monitor_is_qmp() to check the
-subclass type, which is an anti-pattern.
+The monitor_is_hmp_non_interactive method is used by
+monitor_suspend and monitor_resume, to make them a no-op
+if the HMP does not use readline.
+
+There are only a handful of callers of suspend/resume and
+they can be made to skip the call when readline is not
+present.
 
 Signed-off-by: Daniel P. Berrangé <berrange@redhat.com>
 ---
- monitor/hmp.c              | 16 ++++++++++++++++
- monitor/monitor-internal.h |  5 +++++
- monitor/monitor.c          | 12 +++---------
- 3 files changed, 24 insertions(+), 9 deletions(-)
+ include/monitor/monitor.h      |  2 +-
+ migration/migration-hmp-cmds.c |  5 ++++-
+ monitor/hmp-cmds.c             |  5 ++++-
+ monitor/hmp.c                  | 11 ++++++++---
+ monitor/monitor.c              | 30 +-----------------------------
+ 5 files changed, 18 insertions(+), 35 deletions(-)
 
+diff --git a/include/monitor/monitor.h b/include/monitor/monitor.h
+index 3f730cffee..ffda343585 100644
+--- a/include/monitor/monitor.h
++++ b/include/monitor/monitor.h
+@@ -34,7 +34,7 @@ int monitor_new(MonitorOptions *opts, bool allow_hmp, Error **errp);
+ int monitor_new_opts(QemuOpts *opts, Error **errp);
+ void monitor_cleanup(void);
+ 
+-int monitor_suspend(Monitor *mon);
++void monitor_suspend(Monitor *mon);
+ void monitor_resume(Monitor *mon);
+ 
+ int monitor_get_fd(Monitor *mon, const char *fdname, Error **errp);
+diff --git a/migration/migration-hmp-cmds.c b/migration/migration-hmp-cmds.c
+index 8b385f560e..502ca704da 100644
+--- a/migration/migration-hmp-cmds.c
++++ b/migration/migration-hmp-cmds.c
+@@ -19,6 +19,7 @@
+ #include "monitor/hmp.h"
+ #include "monitor/hmp-completion.h"
+ #include "monitor/monitor.h"
++#include "monitor/monitor-internal.h"
+ #include "qapi/error.h"
+ #include "qapi/qapi-commands-migration.h"
+ #include "qapi/qapi-visit-migration.h"
+@@ -853,12 +854,14 @@ void hmp_migrate(Monitor *mon, const QDict *qdict)
+ 
+     if (!detach) {
+         HMPMigrationStatus *status;
++        MonitorHMP *hmp = MONITOR_HMP(mon);
+ 
+-        if (monitor_suspend(mon) < 0) {
++        if (!hmp->use_readline) {
+             monitor_printf(mon, "terminal does not allow synchronous "
+                            "migration, continuing detached\n");
+             return;
+         }
++        monitor_suspend(mon);
+ 
+         status = g_malloc0(sizeof(*status));
+         status->mon = mon;
+diff --git a/monitor/hmp-cmds.c b/monitor/hmp-cmds.c
+index e139caeba9..e9fb8d827a 100644
+--- a/monitor/hmp-cmds.c
++++ b/monitor/hmp-cmds.c
+@@ -129,7 +129,10 @@ void hmp_info_version(Monitor *mon, const QDict *qdict)
+ 
+ void hmp_quit(Monitor *mon, const QDict *qdict)
+ {
+-    monitor_suspend(mon);
++    MonitorHMP *hmp = MONITOR_HMP(mon);
++    if (hmp->use_readline) {
++        monitor_suspend(mon);
++    }
+     qmp_quit(NULL);
+ }
+ 
 diff --git a/monitor/hmp.c b/monitor/hmp.c
-index 08055839a4..1da9370ead 100644
+index 1da9370ead..b8cccdcde3 100644
 --- a/monitor/hmp.c
 +++ b/monitor/hmp.c
-@@ -70,6 +70,7 @@ static void monitor_hmp_set_readline(Object *obj, bool val, Error **errp)
- 
- int monitor_hmp_vprintf(Monitor *mon, const char *fmt, va_list ap)
-     G_GNUC_PRINTF(2, 0);
-+static void monitor_hmp_accept_input(Monitor *mon);
- 
- static void monitor_hmp_class_init(ObjectClass *cls, const void *data)
- {
-@@ -80,6 +81,7 @@ static void monitor_hmp_class_init(ObjectClass *cls, const void *data)
-                                    monitor_hmp_set_readline);
- 
-     moncls->vprintf = monitor_hmp_vprintf;
-+    moncls->accept_input = monitor_hmp_accept_input;
- }
- 
- static void monitor_hmp_init(Object *obj)
-@@ -100,6 +102,20 @@ int monitor_hmp_vprintf(Monitor *mon, const char *fmt, va_list ap)
-     return monitor_puts(mon, buf);
- }
- 
-+static void monitor_hmp_accept_input(Monitor *mon)
-+{
-+    qemu_mutex_lock(&mon->mon_lock);
-+    if (mon->reset_seen) {
-+        MonitorHMP *hmp = MONITOR_HMP(mon);
-+        assert(hmp->rs);
-+        readline_restart(hmp->rs);
-+        qemu_mutex_unlock(&mon->mon_lock);
-+        readline_show_prompt(hmp->rs);
-+    } else {
-+        qemu_mutex_unlock(&mon->mon_lock);
-+    }
-+}
-+
- static void monitor_command_cb(void *opaque, const char *cmdline,
-                                void *readline_opaque)
- {
-diff --git a/monitor/monitor-internal.h b/monitor/monitor-internal.h
-index 763b5c9625..592f146331 100644
---- a/monitor/monitor-internal.h
-+++ b/monitor/monitor-internal.h
-@@ -116,6 +116,11 @@ struct MonitorClass {
-      * notifications back to the client
-      */
-     void (*emit_event)(Monitor *mon, QAPIEvent event, QDict *qdict);
-+    /*
-+     * If non-NULL, perform any actions needed to prepare
-+     * the monitor to accept further client input
-+     */
-+    void (*accept_input)(Monitor *mon);
- };
- 
- struct Monitor {
-diff --git a/monitor/monitor.c b/monitor/monitor.c
-index 93fe542f23..4928e5201e 100644
---- a/monitor/monitor.c
-+++ b/monitor/monitor.c
-@@ -575,16 +575,10 @@ int monitor_suspend(Monitor *mon)
- static void monitor_accept_input(void *opaque)
+@@ -1528,13 +1528,16 @@ static void monitor_read(void *opaque, const uint8_t *buf, int size)
+ static void monitor_event(void *opaque, QEMUChrEvent event)
  {
      Monitor *mon = opaque;
-+    MonitorClass *cls = MONITOR_GET_CLASS(mon);
++    MonitorHMP *hmp = MONITOR_HMP(mon);
  
--    qemu_mutex_lock(&mon->mon_lock);
--    if (!monitor_is_qmp(mon) && mon->reset_seen) {
--        MonitorHMP *hmp_mon = container_of(mon, MonitorHMP, parent_obj);
--        assert(hmp_mon->rs);
--        readline_restart(hmp_mon->rs);
--        qemu_mutex_unlock(&mon->mon_lock);
--        readline_show_prompt(hmp_mon->rs);
--    } else {
--        qemu_mutex_unlock(&mon->mon_lock);
-+    if (cls->accept_input) {
-+        cls->accept_input(mon);
+     switch (event) {
+     case CHR_EVENT_MUX_IN:
+         qemu_mutex_lock(&mon->mon_lock);
+         if (mon->mux_out) {
+             mon->mux_out = 0;
+-            monitor_resume(mon);
++            if (hmp->use_readline) {
++                monitor_resume(mon);
++            }
+         }
+         qemu_mutex_unlock(&mon->mon_lock);
+         break;
+@@ -1547,7 +1550,9 @@ static void monitor_event(void *opaque, QEMUChrEvent event)
+             } else {
+                 monitor_flush_locked(mon);
+             }
+-            monitor_suspend(mon);
++            if (hmp->use_readline) {
++                monitor_suspend(mon);
++            }
+             mon->mux_out = 1;
+         }
+         qemu_mutex_unlock(&mon->mon_lock);
+@@ -1558,7 +1563,7 @@ static void monitor_event(void *opaque, QEMUChrEvent event)
+                        "information\n", QEMU_VERSION);
+         qemu_mutex_lock(&mon->mon_lock);
+         mon->reset_seen = 1;
+-        if (!mon->mux_out) {
++        if (!mon->mux_out && hmp->use_readline) {
+             /* Suspend-resume forces the prompt to be printed.  */
+             monitor_suspend(mon);
+             monitor_resume(mon);
+diff --git a/monitor/monitor.c b/monitor/monitor.c
+index 0cace985f0..c401e23b7b 100644
+--- a/monitor/monitor.c
++++ b/monitor/monitor.c
+@@ -154,25 +154,6 @@ bool monitor_requires_iothread(const Monitor *mon)
+     return cls->requires_iothread && cls->requires_iothread(mon);
+ }
+ 
+-/**
+- * Is @mon is using readline?
+- * Note: not all HMP monitors use readline, e.g., gdbserver has a
+- * non-interactive HMP monitor, so readline is not used there.
+- */
+-static inline bool monitor_uses_readline(const MonitorHMP *mon)
+-{
+-    return mon->use_readline;
+-}
+-
+-static inline bool monitor_is_hmp_non_interactive(const Monitor *mon)
+-{
+-    if (!object_dynamic_cast(OBJECT(mon), TYPE_MONITOR_HMP)) {
+-        return false;
+-    }
+-
+-    return !monitor_uses_readline(container_of(mon, MonitorHMP, parent_obj));
+-}
+-
+ static gboolean monitor_unblocked(void *do_not_use, GIOCondition cond,
+                                   void *opaque)
+ {
+@@ -547,12 +528,8 @@ static gboolean qapi_event_throttle_equal(const void *a, const void *b)
+     return TRUE;
+ }
+ 
+-int monitor_suspend(Monitor *mon)
++void monitor_suspend(Monitor *mon)
+ {
+-    if (monitor_is_hmp_non_interactive(mon)) {
+-        return -ENOTTY;
+-    }
+-
+     qatomic_inc(&mon->suspend_cnt);
+ 
+     if (monitor_requires_iothread(mon)) {
+@@ -564,7 +541,6 @@ int monitor_suspend(Monitor *mon)
      }
  
-     qemu_chr_fe_accept_input(&mon->chr);
+     trace_monitor_suspend(mon, 1);
+-    return 0;
+ }
+ 
+ static void monitor_accept_input(void *opaque)
+@@ -581,10 +557,6 @@ static void monitor_accept_input(void *opaque)
+ 
+ void monitor_resume(Monitor *mon)
+ {
+-    if (monitor_is_hmp_non_interactive(mon)) {
+-        return;
+-    }
+-
+     if (qatomic_dec_fetch(&mon->suspend_cnt) == 0) {
+         AioContext *ctx;
+ 
 -- 
 2.54.0
 
