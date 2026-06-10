@@ -4,85 +4,85 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 43EDACD8CB9
-	for <qemu-devel@archiver.kernel.org>; Wed, 10 Jun 2026 17:12:41 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id F02D5CD8C90
+	for <qemu-devel@archiver.kernel.org>; Wed, 10 Jun 2026 17:16:27 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wXMTW-0005rq-1u; Wed, 10 Jun 2026 13:12:22 -0400
+	id 1wXMWa-0006xN-LF; Wed, 10 Jun 2026 13:15:32 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1wXMTU-0005rd-CS
- for qemu-devel@nongnu.org; Wed, 10 Jun 2026 13:12:20 -0400
-Received: from mail-pf1-x42b.google.com ([2607:f8b0:4864:20::42b])
+ id 1wXMWO-0006wT-7K
+ for qemu-devel@nongnu.org; Wed, 10 Jun 2026 13:15:20 -0400
+Received: from mail-pf1-x432.google.com ([2607:f8b0:4864:20::432])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1wXMTS-0004an-Qy
- for qemu-devel@nongnu.org; Wed, 10 Jun 2026 13:12:20 -0400
-Received: by mail-pf1-x42b.google.com with SMTP id
- d2e1a72fcca58-84236f9b638so3371593b3a.2
- for <qemu-devel@nongnu.org>; Wed, 10 Jun 2026 10:12:17 -0700 (PDT)
+ id 1wXMWI-0006dG-TG
+ for qemu-devel@nongnu.org; Wed, 10 Jun 2026 13:15:16 -0400
+Received: by mail-pf1-x432.google.com with SMTP id
+ d2e1a72fcca58-842848fd613so5973121b3a.3
+ for <qemu-devel@nongnu.org>; Wed, 10 Jun 2026 10:15:14 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1781111537; x=1781716337; darn=nongnu.org;
+ d=linaro.org; s=google; t=1781111713; x=1781716513; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:content-language:from
  :references:to:subject:user-agent:mime-version:date:message-id:from
  :to:cc:subject:date:message-id:reply-to;
- bh=gsD4xx5787ciVUey6AHYJvcKtxawArOofQB+aUx/aGQ=;
- b=vatxd18kkMcOJBbmlKSJw0prRnnHQ1NHxS4yiyBeR0eh6eO0MKzS8+JT9o/ahE9D9M
- a6slIlzMk7CooQ4x+vqICPqfmDZVxVBWt+UukB3tlW7mNDyR/Az/MJeqnINtV0bnRwaE
- 5/Z2KfuQKuA3gPHeYHa7r22F2CUYEYQ9ero2KeiM/dO+rOLRn4uUz+E7wNesxq0rYhEq
- UA5R3MLxok260ZAU8xiuOdtYwhoy9KbZ4LCanNDNKB3vIXf1ibLPOfdhdeWMDu2+PH4o
- MsPm/lB42t5XhI1yXLt4LV3DAQRFJuoY0nAyfx6joIiUhk5HqkpULOuy1v8WW/i6EDWG
- OeUA==
+ bh=XQNsnyhKrOGPdcBiPMU11qWwYsamY32jQDLnCcgPa1Y=;
+ b=WQ/evULNJWEjdnUsObr7Axm86UF5p4h/txPTsSu3aQN1GVEKNdGatpZPbRL9LUhzwP
+ gFm7uD2hZyhz+mhURTGRAlMRdGjK8X0SWDc6cDQ+ioSi2KZO9taqsO7cu5pJbaudYkH/
+ YiuxWR3iCguS4f/JKPO+WrYwcctZlQcAtHbffB07N4//hpfdMv1PiaRENlvs1Wc9Ilfp
+ t1AL+auSrAU8if1TFxb+EvYY+GhSVL65Q2iZclZ7ePkoTytR1QucgDiYS6JpyLjyf2EE
+ MfGTACHlc9LPCuOmY4yCm19D6EhIT0GcW92o/koJQOSvD3gonpDZX4B1bGKPDjlbcoP0
+ qtjA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1781111537; x=1781716337;
+ d=1e100.net; s=20251104; t=1781111713; x=1781716513;
  h=content-transfer-encoding:in-reply-to:content-language:from
  :references:to:subject:user-agent:mime-version:date:message-id
  :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=gsD4xx5787ciVUey6AHYJvcKtxawArOofQB+aUx/aGQ=;
- b=GgSeEMccin6v3TZvvn3usFsMr24t2wpteDIFZ71PUI0n9u88qqjmFObh6r2DTP4Iu9
- 9qMfhviBbQ7Z3OyXBLdkWDfgJ8Hzz7QsxBEC1spsvrOZgmogh+PKn9fG8LXtqJTCn0dq
- UvDh43yWBVMbwsAvL1+5a6GOuiwtHEjujUmG0KTr6ppJchQjx1CV0WgeuJFwOB9zLAtw
- WZ/3hQHAz3t6yoawxz4mYVJyrVXwrMEpZpGhlvaaBdNz1cyeBwdrbryEF5s1rcLTTjNQ
- VIFwZEdkD6NzjcMU+2LQKsapObCTimp+PzyUQxw3ir/LrzutJH/yAqGOkpSBJaTmIYPp
- IGbA==
-X-Gm-Message-State: AOJu0Yw4HXBFKFSWShxkWIcAbSd6UsJ0DmUcJWrdpq3j185j9mzg2obA
- GaLhUNKfwlj/Zc3JRoGRgw97+GZ9pmzLnVBvmCFziHSap5THTpO873ph987g/QrAQtjglVTcvs2
- hp81sTHE=
-X-Gm-Gg: Acq92OHXWa4NjpDTSiRpd8hZobYSfA/VK99sjn0fATgpnPow+SSZWw/ac7KKoYpH0jR
- aIImKnMNSuPmlqG+VcduoR4yCChN4tI9YtFzlSojqqZ1fCRTaTaGSQXsZIwh5T6G1zLaTaqfLnk
- Xr57/3NIvOmk0CIEqnOmAE0M2jBnpsqv0m/9MTZvWKmhsQVZR5Mu6eKRAXtVlSzO8L5+X/AbwOP
- 7UIH5Y9hRVaei8zxP7ROVa1WsyfHsVg+Bm2/YWkFDfxkZGLHoiLmS3b9A0e5neFVtO2fM96qwDc
- NabvIzstYVAbuJq6kdQ397MJ9z2AYMCyHpIAetN28bsaH+NpMOfT8o0gDvzKC+n75EIvRq9Ts7c
- q6wx5OZ0QYjI22RsV91owBkNRLKfxyjNiO9kC0RHWww/8Hs6Cm5IAIIl3pET4qyzW2Xt3Mz0BL1
- aOJ2Uifkn0PzzcY8wSk1yhN7gAu/+/TzS06fl56lH95Chsv3o=
-X-Received: by 2002:a05:6a00:32c7:b0:842:422b:259f with SMTP id
- d2e1a72fcca58-842b0e30c6dmr24759872b3a.10.1781111536759; 
- Wed, 10 Jun 2026 10:12:16 -0700 (PDT)
+ bh=XQNsnyhKrOGPdcBiPMU11qWwYsamY32jQDLnCcgPa1Y=;
+ b=i7A0jrBUNohFxdkOVJ0ANH4KzR26jR/RaZPpcjjVg4kgPaN04HSF6AGSOJRHCCGc4O
+ MOEyp4bYlW4ni5iq9xqseWV8ceywhWvdkMxz1k/hFXjr70maco5CqPu4ki02rILFWrWr
+ /EjAcMIMUUdC1AH01aKLlvFyWFfV4fMw4gW3jcOlQgl7CSCVFHjnqaAYhmVc9ZsBkuiu
+ O2WaXjZ8SP2amPv+uXYW3eDN7DbExHoR1vbwnCpBHvysY8nTDZGONYOxKmU4k+iy9dak
+ rCIo13FSxNlWVXRii2ykMX9DUrd4ijdPMi3oudYdwttPukPP1vcMlOM9sXQcO2NTcGbl
+ Xciw==
+X-Gm-Message-State: AOJu0Yw2quZcKZ7xt9K56uFyGRDrmb4BLhTHD99Hk+5hr7Vfq1H9V/jS
+ GFN6kKp7Wjwlb1nLCtwvTmIvgWuC2Bz9h0IQbaatPK/eiIDn9VWYDQu5vPgcAOF9/ARB6vObRFG
+ QrwphHZM=
+X-Gm-Gg: Acq92OHj2TXHQhy8+XDCl2MTeaSoAx52SJd0ThsCedosV6s4zZ25HDUr3NsTGPoQCK9
+ hUM2xkRfl63ljIZOc+AZUYwc7oqWEY3xYp9X6oZ/kdhN4N/vS0JD8Tf2il3rklNPlWUDVckl8SP
+ nTRdWpZ4go2V7buzgFDFSpLGXX0E18cS42vzNvsmnquqF+cS4fyrdwY38jWJXMrFdnk1n1mb8OU
+ JzlyfcuNk+E8bALY38DuzunagZR+nl1GzBULOLbPCPVskPXpor/jJEGLpz1DziJDlcIjdcT73oR
+ p1KC+uJdsZ1l+yXFgbtZhv2Kh4siZ60fJDSJeKgURMG6T7lOwkfY/EjIaMDQyTKE6/KS36zVlWO
+ O1hTMi9aIQyLv1g7vhIz6XqcgAlKmpoUZ9s18DF9Ar1o55i7UT2G1VijCtF3J4Jb55G3Aav+thy
+ kUEhWp0ARzpZr4nPZB1RwmI9NvbI/1kdKDp715ARnbC739Dy8=
+X-Received: by 2002:a05:6a00:8d6:b0:842:80c5:c420 with SMTP id
+ d2e1a72fcca58-8430a784da1mr9545308b3a.40.1781111708357; 
+ Wed, 10 Jun 2026 10:15:08 -0700 (PDT)
 Received: from [192.168.0.4] ([71.212.142.33])
  by smtp.gmail.com with ESMTPSA id
- d2e1a72fcca58-842828cb2bdsm25692032b3a.41.2026.06.10.10.12.16
+ d2e1a72fcca58-842824a1cb4sm30453809b3a.26.2026.06.10.10.15.07
  for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 10 Jun 2026 10:12:16 -0700 (PDT)
-Message-ID: <412b9efe-fe48-4e30-bbc0-762aae4a19f4@linaro.org>
-Date: Wed, 10 Jun 2026 10:12:14 -0700
+ Wed, 10 Jun 2026 10:15:07 -0700 (PDT)
+Message-ID: <58db6024-1d80-4320-b92b-673f8d09ac5d@linaro.org>
+Date: Wed, 10 Jun 2026 10:15:06 -0700
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 5/6] tests/tcg/aarch64/system: Alternative boot object
- for exception logging
+Subject: Re: [PATCH v2 6/6] tests/tcg/aarch64/system/gpc-test.c: Basic test
+ for granule protection check
 To: qemu-devel@nongnu.org
 References: <20260603-jmac-gpc3b-v2-0-115c51936962@linaro.org>
- <20260603-jmac-gpc3b-v2-5-115c51936962@linaro.org>
+ <20260603-jmac-gpc3b-v2-6-115c51936962@linaro.org>
 From: Richard Henderson <richard.henderson@linaro.org>
 Content-Language: en-US
-In-Reply-To: <20260603-jmac-gpc3b-v2-5-115c51936962@linaro.org>
+In-Reply-To: <20260603-jmac-gpc3b-v2-6-115c51936962@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::42b;
- envelope-from=richard.henderson@linaro.org; helo=mail-pf1-x42b.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::432;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pf1-x432.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -106,55 +106,18 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On 6/3/26 11:26, Jim MacArthur wrote:
-> --- a/tests/tcg/aarch64/system/boot.S
-> +++ b/tests/tcg/aarch64/system/boot.S
-> @@ -60,6 +60,40 @@ curr_sp0_irq:
->   curr_sp0_fiq:
->   curr_sp0_serror:
->   curr_spx_sync:
-> +#ifdef ALT_VECTOR_TABLE
+> * Sets up granule protection tables
+> * Enables GPC and bypass windows
+> * Performs memory accesses in the protected region to
+>    check for allowed and disallowed reads.
+> 
+> Signed-off-by: Jim MacArthur<jim.macarthur@linaro.org>
+> ---
+>   tests/tcg/aarch64/Makefile.softmmu-target |  11 +-
+>   tests/tcg/aarch64/system/gpc-test.c       | 165 ++++++++++++++++++++++++++++++
+>   2 files changed, 175 insertions(+), 1 deletion(-)
 
-This is pretty gpc specific, so "alt" feels too generic.  We could probably come up with 
-something generic, but let's wait until we have a second test with which to do so. 
-Perhaps rename to "GPC" for now?
-
-Some asm improvements:
-
-> +	sub     sp, sp, #16
-> +	stp     x0, x1, [sp, #0]
-
-	stp	x0, x1, [sp, -16]!
-
-> +	lsr 	x0, x0, #26
-> +	and 	x0, x0, #0x3f
-
-	bfxil	x0, x0, #26, #6
-
-> +	ldr     x0, =0x1001
-
-	mov	x0, #0x1001
-
-> +	ldp     x0, x1, [sp, #0]
-> +	add     sp, sp, #16
-
-	ldp	x0, x1, [sp], 16
-
-> +#ifdef ALT_VECTOR_TABLE
-> +	.align 12
-> +	.global exception_log
-> +	.global exception_fault_address
-> +	.global exception_type_code
-> +exception_log:
-
-You don't need to export exception_log.
-
-Slightly better with
-
-	.type exception_fault_address, @object
-	.size exception_fault_address, 8
-
-etc, for the 4 symbols being exported.
-
+Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
 
 r~
 
