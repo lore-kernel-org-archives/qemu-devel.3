@@ -4,49 +4,48 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id ACBCCCD8CB9
-	for <qemu-devel@archiver.kernel.org>; Wed, 10 Jun 2026 12:35:14 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A0066CD98CE
+	for <qemu-devel@archiver.kernel.org>; Wed, 10 Jun 2026 12:35:16 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wXI93-0006e3-HC; Wed, 10 Jun 2026 08:34:57 -0400
+	id 1wXI8f-0006Y4-C7; Wed, 10 Jun 2026 08:34:33 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1wXI92-0006dh-6o
- for qemu-devel@nongnu.org; Wed, 10 Jun 2026 08:34:56 -0400
+ id 1wXI8b-0006Ws-Tj
+ for qemu-devel@nongnu.org; Wed, 10 Jun 2026 08:34:29 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1wXI90-0001IV-R1
- for qemu-devel@nongnu.org; Wed, 10 Jun 2026 08:34:55 -0400
+ id 1wXI8Z-0007Uc-7C
+ for qemu-devel@nongnu.org; Wed, 10 Jun 2026 08:34:29 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1781094894;
+ s=mimecast20190719; t=1781094865;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=Vv3W4KiQxyrOkoV81y2rGJb0T7Wv858x8X679c/6hnw=;
- b=hPNlBEO+UGQYx2LBpAMJBt3oF2FECwhdQOyj7ARxIN6t4e8BDM98mutyCrAZrEZ/lrXGO7
- tpYxWP7385KwHYfcls0pb4RJLbJ28YKkeM4hPwVO7eNqFZhXStPrT/zms/oDNXjFRZ7mlq
- 3QDFV8w1MlHI26w7PxeHE3BjhUhSFSY=
-Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
+ content-transfer-encoding:content-transfer-encoding;
+ bh=Z8Qo1yq1fNj7ObRzSRd7sV3Dla+xt9y9z+/39LFQMCs=;
+ b=HFQR4zZG8K/PIMpwSG+J3T4GgLSIIfhE4YP8HLj4bMneqE36ZXrQV4TXMDyT8/DfGATUOW
+ PO1FyvMbC0hxE8zdvop63R0XSV4FSDFsJPMK56VCG2H0BFWMcarsAemPp1yBqGLOT9imHY
+ gcXz8qln3/2EPr5K7iRijh/TYkQ1FAU=
+Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-599-SygAPAzmPpqDmEnRTo4acQ-1; Wed,
- 10 Jun 2026 08:34:51 -0400
-X-MC-Unique: SygAPAzmPpqDmEnRTo4acQ-1
-X-Mimecast-MFC-AGG-ID: SygAPAzmPpqDmEnRTo4acQ_1781094890
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-619-qRPXTKuBM-6p79JH5siMKQ-1; Wed,
+ 10 Jun 2026 08:34:23 -0400
+X-MC-Unique: qRPXTKuBM-6p79JH5siMKQ-1
+X-Mimecast-MFC-AGG-ID: qRPXTKuBM-6p79JH5siMKQ_1781094862
 Received: from mx-prod-int-10.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-10.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.95])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 753DC18501D0; Wed, 10 Jun 2026 12:34:50 +0000 (UTC)
+ by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id D3D10195E90D; Wed, 10 Jun 2026 12:34:21 +0000 (UTC)
 Received: from berrange.com (unknown [10.44.50.112])
  by mx-prod-int-10.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 2A3A931D2; Wed, 10 Jun 2026 12:34:46 +0000 (UTC)
+ id E11F531D2; Wed, 10 Jun 2026 12:34:17 +0000 (UTC)
 From: =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
@@ -57,13 +56,11 @@ Cc: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
  "Dr. David Alan Gilbert" <dave@treblig.org>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@mailo.com>,
  =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>
-Subject: [PATCH v2 07/35] monitor: add 'readline' property to HMP Monitor class
-Date: Wed, 10 Jun 2026 13:33:47 +0100
-Message-ID: <20260610123415.2883603-8-berrange@redhat.com>
-In-Reply-To: <20260610123415.2883603-1-berrange@redhat.com>
-References: <20260610123415.2883603-1-berrange@redhat.com>
+Subject: [PATCH v2 00/35] monitor: turn QMP and HMP into QOM objects
+Date: Wed, 10 Jun 2026 13:33:40 +0100
+Message-ID: <20260610123415.2883603-1-berrange@redhat.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
 X-Scanned-By: MIMEDefang 3.6 on 10.30.177.95
 Received-SPF: pass client-ip=170.10.129.124; envelope-from=berrange@redhat.com;
@@ -90,73 +87,161 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-This determines whether a human monitor runs with readline for
-interactive use, or without readline for non-interactive use by
-the GDB stub.
+Conceptually -object and object_add/object_del should be sufficient
+for essentially all QEMU configuration....if only we ported all our
+internal custom backends/devices/etc to QOM. That is of course a big
+job which is why it hasn't happened.
 
-Signed-off-by: Daniel P. Berrangé <berrange@redhat.com>
----
- monitor/hmp.c | 27 ++++++++++++++++++++++++++-
- 1 file changed, 26 insertions(+), 1 deletion(-)
+This series started with the premise that the monitor is one of the
+easier areas to convert since we have no more than three classes,
+a common base, and QMP and HMP subclasses[1]. So why not give it a
+go and thus unlock the ability to dynamically create/delete monitors
+in QMP/HMP.
 
-diff --git a/monitor/hmp.c b/monitor/hmp.c
-index 4ab81b5904..d5905e2279 100644
---- a/monitor/hmp.c
-+++ b/monitor/hmp.c
-@@ -50,12 +50,37 @@ static void monitor_hmp_finalize(Object *obj)
- {
- }
- 
-+static bool monitor_hmp_get_readline(Object *obj, Error **errp)
-+{
-+    MonitorHMP *mon = MONITOR_HMP(obj);
-+
-+    return mon->use_readline;
-+}
-+
-+static void monitor_hmp_set_readline(Object *obj, bool val, Error **errp)
-+{
-+    MonitorHMP *mon = MONITOR_HMP(obj);
-+
-+    mon->use_readline = val;
-+}
-+
- static void monitor_hmp_class_init(ObjectClass *cls, const void *data)
- {
-+    object_class_property_add_bool(cls, "readline",
-+                                   monitor_hmp_get_readline,
-+                                   monitor_hmp_set_readline);
- }
- 
- static void monitor_hmp_init(Object *obj)
- {
-+    MonitorHMP *hmp = MONITOR_HMP(obj);
-+
-+    /*
-+     * Default to common case for external HMP use,
-+     * as opposed to non-interactive internal use
-+     * from gdbstub
-+     */
-+    hmp->use_readline = true;
- }
- 
- static void monitor_command_cb(void *opaque, const char *cmdline,
-@@ -1550,6 +1575,7 @@ void monitor_new_hmp(const char *chardev_id, bool use_readline, Error **errp)
-                                         id,
-                                         errp,
-                                         "chardev", chardev_id,
-+                                        "readline", use_readline ? "yes" : "no",
-                                         NULL);
- 
-     if (!obj) {
-@@ -1566,7 +1592,6 @@ void monitor_new_hmp(const char *chardev_id, bool use_readline, Error **errp)
- 
-     monitor_data_init(&mon->parent_obj, false, false, false);
- 
--    mon->use_readline = use_readline;
-     if (mon->use_readline) {
-         mon->rs = readline_init(monitor_readline_printf,
-                                 monitor_readline_flush,
+This series does the conversion in a great many small steps to better
+understand the implications at each stage.
+
+The high level outcome of this series is
+
+ * HMP and QMP monitors are QOM objects, 'monitor-hmp' and
+   'monitor-qmp' respectively
+
+ * Both can be cold plugged and hot plugged. QMP only, can
+   also be hot unplugged.
+
+ * '-mon' is obsolete, deprecated and replaced by '-object',
+   but -monitor, -qmp and kept  as high level syntax sugar
+
+ * QMP gains a concept of "close-action" which makes it
+   possible to mark a monitor for auto-delete.
+
+The monitor hot-unplug code and the qtest and functional testing
+code is heavily derived from a series sent by Christian Brauner
+which proposed new monitor_add/monitor_del commands:
+
+  https://lists.nongnu.org/archive/html/qemu-devel/2026-04/msg01349.html
+
+I left Christian's authorship & SoB on the patches which were
+derived from his code, though the code has been refactored quite
+a bit in places, so bugs are quite possibly my own. Christian,
+if you prefer any changes in attribution here let me know.
+
+Note that Christian's series allowed the use of "monitor_del"
+commands against the current monitor session. ie a client could
+delete the very monitor it was using. This is an awkward concept
+as it needs special casing to delay the deletion to happen in
+the background, such that that the QMP response to 'monitor_del'
+could still be sent back. This also left the chardev was orphaned
+as there's no way to run 'chardev_dev' in that usage pattern.
+
+To provide an alternative mechanism to address the same use case,
+this series introduces the 'close-action' concept mentioned above,
+that allows hotplugging a monitor to service a specific task,
+with the monitor being purged when the script closes its connection.
+This avoids the special casing that an explicit "self deletion"
+paradigm required.
+
+While supporting hotplug of HMP was trivial, I didn't do any work
+to think about hotunplug of HMP, since IMHO it is of limited value
+given HMP's typical use cases.
+
+While -mon is deprecated in favour of -object, given '-mon' is
+such a significant CLI option, it is likely wise to not remove
+it as quickly as our deprecation policy would otherwise allow
+given the disruption that's liable to cause. It isn't a big
+burden to keep it around for a long time.
+
+[1] ~~~ we did all this not because it was easy,
+        but because we thought it would be easy ~~~
+
+Christian Brauner (6):
+  monitor: convert from oneshot BH to persistent BH
+  monitor: reject attempts to delete the current monitor
+  monitor: protect qemu_chr_fe_accept_input with monitor lock
+  monitor: implement support for deleting QMP objects
+  tests/qtest: add tests for dynamic monitor add/remove
+  tests/functional: add e2e test for dynamic QMP monitor hotplug
+
+Daniel P. Berrangé (29):
+  qom: replace 'can_be_deleted' with 'prepare_delete'
+  monitor: replace 'common' with 'parent_obj' in MonitorHMP
+  monitor: replace 'common' with 'parent_obj' in MonitorQMP
+  monitor: rename monitor_init* to monitor_new*
+  monitor: minimal conversion of monitors to QOM
+  monitor: add 'chardev' property to Monitor base class
+  monitor: add 'readline' property to HMP Monitor class
+  monitor: add 'pretty' property to QMP Monitor class
+  monitor: remove 'skip_flush' field
+  monitor: move monitor_data_(init|destroy) into QOM init/finalize
+  monitor: use class methods for monitor_vprintf
+  monitor: use class methods for monitor_qapi_event_emit
+  monitor: use class methods for monitor_accept_input
+  monitor: use class method for I/O thread request
+  monitor: use dynamic cast in monitor_qmp_requests_pop_any_with_lock
+  util: use dynamic cast in error vreport
+  monitor: drop unused monitor_cur_is_qmp
+  monitor: use dynamic cast in QMP commands
+  monitor: use dynamic cast in monitor_is_hmp_non_interactive
+  monitor: drop unused monitor_is_qmp method
+  monitor: eliminate monitor_is_hmp_non_interactive method
+  monitor: implement "user creatable" interface for adding monitors
+  qemu-options: document new monitor-hmp and monitor-qmp objects
+  tests/functional: add a stress test for monitor hot unplug
+  qom: add method for getting the "id" of a QOM object
+  qom: add trace events for user creatable create/delete APIs
+  monitor: add support for auto-deleting monitors upon close
+  tests: switch from -mon to -object monitor-qmp
+  docs: mark '-mon' as deprecated in favour of -object
+
+ MAINTAINERS                                   |   1 +
+ backends/cryptodev.c                          |  10 +-
+ backends/hostmem.c                            |   5 +-
+ backends/iommufd.c                            |  10 +-
+ block/throttle-groups.c                       |  10 +-
+ chardev/char.c                                |   3 +-
+ docs/about/deprecated.rst                     |  10 +
+ docs/devel/writing-monitor-commands.rst       |   4 +-
+ docs/system/arm/xenpvh.rst                    |   4 +-
+ docs/system/i386/xen.rst                      |   3 +-
+ docs/system/i386/xenpvh.rst                   |   4 +-
+ event-loop-base.c                             |   8 +-
+ gdbstub/system.c                              |   4 +-
+ include/monitor/monitor.h                     |  23 +-
+ include/qom/object.h                          |  10 +
+ include/qom/object_interfaces.h               |  26 +-
+ include/system/event-loop-base.h              |   2 +-
+ migration/migration-hmp-cmds.c                |   5 +-
+ monitor/hmp-cmds.c                            |   7 +-
+ monitor/hmp.c                                 | 181 +++++++++--
+ monitor/monitor-internal.h                    |  74 +++--
+ monitor/monitor.c                             | 261 +++++++--------
+ monitor/qmp-cmds-control.c                    |  12 +-
+ monitor/qmp-cmds.c                            |  14 +-
+ monitor/qmp.c                                 | 301 +++++++++++++++---
+ net/can/can_core.c                            |   5 +-
+ python/qemu/machine/machine.py                |   4 +-
+ qapi/qom.json                                 |  62 ++++
+ qemu-options.hx                               |  53 ++-
+ qom/object.c                                  |  17 +
+ qom/object_interfaces.c                       |  20 +-
+ qom/trace-events                              |   5 +
+ storage-daemon/qemu-storage-daemon.c          |   2 +-
+ stubs/monitor-core.c                          |   5 -
+ stubs/monitor-internal.c                      |   3 +-
+ system/vl.c                                   |  12 +-
+ tests/functional/generic/meson.build          |   1 +
+ .../generic/test_monitor_hotplug.py           | 275 ++++++++++++++++
+ tests/qemu-iotests/245                        |   4 +-
+ tests/qtest/libqtest.c                        |   2 +-
+ tests/qtest/qmp-test.c                        | 174 ++++++++++
+ tests/unit/test-util-sockets.c                |   1 -
+ tools/qemu-vnc/stubs.c                        |   5 -
+ ui/ui-hmp-cmds.c                              |   2 +-
+ util/error-report.c                           |  13 +-
+ util/main-loop.c                              |   5 +-
+ 46 files changed, 1335 insertions(+), 327 deletions(-)
+ create mode 100755 tests/functional/generic/test_monitor_hotplug.py
+
 -- 
 2.54.0
 
