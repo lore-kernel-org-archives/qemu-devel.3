@@ -4,46 +4,45 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id ABD80CD8CB9
-	for <qemu-devel@archiver.kernel.org>; Wed, 10 Jun 2026 16:47:00 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 03AA3CD8CB9
+	for <qemu-devel@archiver.kernel.org>; Wed, 10 Jun 2026 16:47:25 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wXM49-0003JW-I4; Wed, 10 Jun 2026 12:46:09 -0400
+	id 1wXM47-0003Ig-2D; Wed, 10 Jun 2026 12:46:07 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <deller@kernel.org>) id 1wXM47-0003Iw-MR
- for qemu-devel@nongnu.org; Wed, 10 Jun 2026 12:46:07 -0400
+ (Exim 4.90_1) (envelope-from <deller@kernel.org>) id 1wXM44-0003Hh-Iq
+ for qemu-devel@nongnu.org; Wed, 10 Jun 2026 12:46:04 -0400
 Received: from sea.source.kernel.org ([172.234.252.31])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <deller@kernel.org>) id 1wXM43-0000kJ-KB
- for qemu-devel@nongnu.org; Wed, 10 Jun 2026 12:46:05 -0400
+ (Exim 4.90_1) (envelope-from <deller@kernel.org>) id 1wXM40-0000jt-Al
+ for qemu-devel@nongnu.org; Wed, 10 Jun 2026 12:46:01 -0400
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
- by sea.source.kernel.org (Postfix) with ESMTP id 1FF0143CB2;
- Wed, 10 Jun 2026 16:46:02 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 82ACB1F00893;
+ by sea.source.kernel.org (Postfix) with ESMTP id 2B0BA4043C;
  Wed, 10 Jun 2026 16:45:59 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 26AF01F00898;
+ Wed, 10 Jun 2026 16:45:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
- s=k20260515; t=1781109962;
- bh=7yYTiLNsF0Ma6LBU7IM8obbatVSGeWaX23IU43WW7R0=;
+ s=k20260515; t=1781109959;
+ bh=fjd0o77VDDEjqSE2I8LinZtck7DDkgHKVhpWYZ6jkMc=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References;
- b=io8YFkpg/WjZaC/DCLZZs52IwMpfCwXjLAKfQ4Xg35iGWBtMrx3R0aW7o+wWGeEMb
- WEQyBy61KNbMWUMok/Aj/zh05UuS50HHGi2oIw1aPcdPif9MTzW9OZGgwhXiBIlVFY
- uoVMX/FmZ1p/cFteJ3Sqz6PT5gQVtLDb/+b5HobgtIkG+qUgNDROIJ6lD7WsDZq+6V
- bK1yjqKLU1smlbaMg+PRj1VPzjnHOQOnbBjh4HRvT5MVWPEw28Vc0hXViOhAzReGTf
- 819MtnPTjKy/NNohpYbf4XM4+lzMiDkXBtovI8pzUXxQHkdjcRe7b5oQWe7mewAchj
- BOk9BtPNC/V+g==
+ b=hAsRWg7MoMMRgQYWzC5vj3oIVm4R+M/+ZBZ8DKs5F5YrkxnolMiIir31RWAGfMs5j
+ BJZIO3UtuQYSV2D2G9IX6xiKYXSIxF6/4lpb3KP5SEBfAg25b/zUft6l2UiB3P3OFa
+ ZQzbEBqrMMgFK4/u+4jVCWUy4CIpkRMnolyauOv/Py7URFSiHg3N5P1bjrKPnJqYxj
+ maskblOQfLP0dd9It171tN6v/7iq19Aczb633v3lTeSChTjtEHiY8w+qCX0m7FLuEx
+ 5M0iDNCz6kxgryPD1EOb+gPTstXY181Iw5/eFBXbfD4jDxP7WcnZOPVV/cRT7oE1W7
+ NpbGo2Y47LnqQ==
 From: Helge Deller <deller@kernel.org>
 To: Stefan Hajnoczi <stefanha@gmail.com>,
 	qemu-devel@nongnu.org
 Cc: Yoshinori Sato <yoshinori.sato@nifty.com>,
  Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
  Laurent Vivier <laurent@vivier.eu>, Helge Deller <deller@gmx.de>,
- Max Filippov <jcmvbkbc@gmail.com>, Matt Turner <mattst88@gmail.com>,
- Richard Henderson <richard.henderson@linaro.org>
-Subject: [PULL v3 3/8] linux-user/alpha: add coredump support
-Date: Wed, 10 Jun 2026 18:45:44 +0200
-Message-ID: <20260610164549.5699-4-deller@kernel.org>
+ Max Filippov <jcmvbkbc@gmail.com>, Xinhui Yang <cyan@cyano.uk>
+Subject: [PULL v3 2/8] linux-user/strace: add fsmount series of syscalls
+Date: Wed, 10 Jun 2026 18:45:43 +0200
+Message-ID: <20260610164549.5699-3-deller@kernel.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260610164549.5699-1-deller@kernel.org>
 References: <20260610164549.5699-1-deller@kernel.org>
@@ -72,78 +71,178 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Matt Turner <mattst88@gmail.com>
+From: Xinhui Yang <cyan@cyano.uk>
 
-Define HAVE_ELF_CORE_DUMP and target_elf_gregset_t in target_elf.h,
-mirroring the kernel's elf_gregset_t (ELF_NGREG = 66): r0-r31
-[0..31], f0-f31 [32..63], pc [64], unique [65].  Implement
-elf_core_copy_regs() in elfload.c to populate the gregset from
-CPUAlphaState.
+Following the addition of fsmount(2) series of syscalls in the syscall
+handler, strace support is added, with a dedicated function to print the
+parameters of fsconfig(2), which contains parameters that can be
+interpreted as multiple types.
 
-Without this, bprm->core_dump is NULL for Alpha targets.  When a
-guest signal goes unhandled, dump_core_and_abort() skips the core
-write and falls through to die_with_signal(), which re-raises the
-signal to the host.  The host kernel then writes an x86-64 core file
-for the qemu-alpha process instead of an Alpha guest core.
+Snippet of the strace dump when running `mount -t tmpfs tmpfs /media`:
 
-v2: Store thread unique field, same as in Linux kernel. Added by Helge &
-suggested by Richard.
+18 fsopen(tmpfs,1) = 3
+18 read(3,0x407fcf1c,8191) = -1 errno=61 (No data available)
+18 fsconfig(3,FSCONFIG_SET_STRING,"source","tmpfs",0) = 0
+18 read(3,0x407fce3c,8191) = -1 errno=61 (No data available)
+18 fsconfig(3,FSCONFIG_CMD_CREATE,NULL,NULL,0) = 0
+18 read(3,0x407fce3c,8191) = -1 errno=61 (No data available)
+18 fsmount(3,1,0) = 4
+18 read(3,0x407fce3c,8191) = -1 errno=61 (No data available)
+18 statx(4,"",AT_EMPTY_PATH|AT_STATX_SYNC_AS_STAT,0x1000,0x407fee98) = 0
+18 move_mount(4,,-100,/media,4) = 0
+18 read(3,0x407fcfcc,8191) = -1 errno=61 (No data available)
+18 close(3) = 0
+18 close(4) = 0
 
-Signed-off-by: Matt Turner <mattst88@gmail.com>
+v2: Fixed build on RHEL9 due to missing syscalls (Helge)
+
+Signed-off-by: Xinhui Yang <cyan@cyano.uk>
+Reviewed-by: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
 Signed-off-by: Helge Deller <deller@gmx.de>
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
 ---
- linux-user/alpha/elfload.c    | 12 ++++++++++++
- linux-user/alpha/target_elf.h | 13 +++++++++++++
- 2 files changed, 25 insertions(+)
+ linux-user/strace.c    | 105 +++++++++++++++++++++++++++++++++++++++++
+ linux-user/strace.list |  15 ++++++
+ 2 files changed, 120 insertions(+)
 
-diff --git a/linux-user/alpha/elfload.c b/linux-user/alpha/elfload.c
-index 1e44475c47..1969f620a5 100644
---- a/linux-user/alpha/elfload.c
-+++ b/linux-user/alpha/elfload.c
-@@ -3,8 +3,20 @@
- #include "qemu/osdep.h"
- #include "qemu.h"
- #include "loader.h"
-+#include "target_elf.h"
+diff --git a/linux-user/strace.c b/linux-user/strace.c
+index 2cbaf94c89..3a81cc95f4 100644
+--- a/linux-user/strace.c
++++ b/linux-user/strace.c
+@@ -4344,6 +4344,111 @@ print_statx(CPUArchState *cpu_env, const struct syscallname *name,
+ }
+ #endif
  
- 
-+void elf_core_copy_regs(target_elf_gregset_t *r, const CPUAlphaState *env)
++#if defined(TARGET_NR_fsconfig) && defined(NR_fsconfig)
++static void
++print_fsconfig_cmd_name(int cmd)
 +{
-+    int i;
-+
-+    for (i = 0; i < 31; i++) {
-+        r->regs[i] = tswap64(env->ir[i]);
++    switch (cmd) {
++    case FSCONFIG_SET_FLAG:
++        qemu_log("%s%s", "FSCONFIG_SET_FLAG", get_comma(0));
++        break;
++    case FSCONFIG_SET_STRING:
++        qemu_log("%s%s", "FSCONFIG_SET_STRING", get_comma(0));
++        break;
++    case FSCONFIG_SET_BINARY:
++        qemu_log("%s%s", "FSCONFIG_SET_BINARY", get_comma(0));
++        break;
++    case FSCONFIG_SET_PATH:
++        qemu_log("%s%s", "FSCONFIG_SET_PATH", get_comma(0));
++        break;
++    case FSCONFIG_SET_PATH_EMPTY:
++        qemu_log("%s%s", "FSCONFIG_SET_PATH_EMPTY", get_comma(0));
++        break;
++    case FSCONFIG_SET_FD:
++        qemu_log("%s%s", "FSCONFIG_SET_FD", get_comma(0));
++        break;
++    case FSCONFIG_CMD_CREATE:
++        qemu_log("%s%s", "FSCONFIG_CMD_CREATE", get_comma(0));
++        break;
++    case FSCONFIG_CMD_RECONFIGURE:
++        qemu_log("%s%s", "FSCONFIG_CMD_RECONFIGURE", get_comma(0));
++        break;
++#ifdef FSCONFIG_CMD_CREATE_EXCL
++    case FSCONFIG_CMD_CREATE_EXCL:
++        /* Only available since Linux 6.6. */
++        qemu_log("%s%s", "FSCONFIG_CMD_CREATE_EXCL", get_comma(0));
++        break;
++#endif
++    default:
++        qemu_log("%s (%d)%s", "UNKNOWN_CMD", cmd, get_comma(0));
++        break;
 +    }
-+    r->pc = tswap64(env->pc);
-+    r->unique = tswap64(env->unique);
 +}
 +
- const char *get_elf_cpu_model(uint32_t eflags)
- {
-     return "ev67";
-diff --git a/linux-user/alpha/target_elf.h b/linux-user/alpha/target_elf.h
-index 864dc6e2e6..4987ae3944 100644
---- a/linux-user/alpha/target_elf.h
-+++ b/linux-user/alpha/target_elf.h
-@@ -11,4 +11,17 @@
- #define ELF_CLASS               ELFCLASS64
- #define ELF_MACHINE             EM_ALPHA
- 
-+#define HAVE_ELF_CORE_DUMP      1
++static void
++print_fsconfig(CPUArchState *cpu_env, const struct syscallname *name,
++            abi_long arg0, abi_long arg1, abi_long arg2,
++            abi_long arg3, abi_long arg4, abi_long arg5)
++{
++    /*
++     * fsconfig(int fd, int cmd, char* key, void* value, int aux)
++     * Where:
++     * fd: file descriptor returned by fsopen().
++     * cmd: integer constant specifying a command.
++     * key: a string, can be NULL on certain commands.
++     * value: any data in a buffer, can be NULL, raw buffer or a string.
++     * aux: axillary values such as flags for FSCONFIG_SET_PATH.
++     */
++    int cmd = (int) arg1;
++    print_syscall_prologue(name);
++    print_raw_param("%d", arg0, 0);
++    print_fsconfig_cmd_name(cmd);
++    /* Process arg2 (key). */
++    switch (cmd) {
++    case FSCONFIG_SET_FLAG:
++    case FSCONFIG_SET_STRING:
++    case FSCONFIG_SET_BINARY:
++    case FSCONFIG_SET_PATH:
++    case FSCONFIG_SET_PATH_EMPTY:
++    case FSCONFIG_SET_FD:
++        print_string(arg2, 0);
++        break;
++    default:
++        print_pointer(arg2, 0);
++        break;
++    }
++    /* Process arg3 (value). */
++    switch (cmd) {
++    case FSCONFIG_SET_STRING:
++    case FSCONFIG_SET_PATH:
++    case FSCONFIG_SET_PATH_EMPTY:
++        print_string(arg3, 0);
++        break;
++    default:
++        print_pointer(arg3, 0);
++        break;
++    }
++    /*
++     * Process arg4 (aux).
++     * On FSCONFIG_SET_PATH and FSCONFIG_SET_PATH_EMPTY, aux can
++     * be either 0 or AT_FDCWD.
++     * On FSCONFIG_SET_BINARY, aux is an integer to state the length
++     * of the buffer pointed by arg3.
++     * Otherwise, it must be 0.
++     */
++    switch (cmd) {
++    case FSCONFIG_SET_PATH:
++    case FSCONFIG_SET_PATH_EMPTY:
++        print_at_dirfd(arg4, 1);
++        break;
++    default:
++        print_raw_param("%d", arg4, 1);
++        break;
++    }
++    print_syscall_epilogue(name);
++}
++#endif
 +
-+/*
-+ * Matches the kernel's elf_gregset_t (ELF_NGREG = 33):
-+ *   r0-r30 at indices 0-30, pc at 31, ps at 32.
-+ * r31 (hardwired zero) is not stored; pc occupies index 31.
-+ */
-+typedef struct target_elf_gregset_t {
-+    abi_ulong regs[31];  /* integer registers r0-r30  [0..30] */
-+    abi_ulong pc;        /* program counter           [31]    */
-+    abi_ulong unique;    /* thread's UNIQUE field     [32]    */
-+} target_elf_gregset_t;
-+
+ #ifdef TARGET_NR_ioctl
+ static void
+ print_ioctl(CPUArchState *cpu_env, const struct syscallname *name,
+diff --git a/linux-user/strace.list b/linux-user/strace.list
+index 6162a407f9..e363892e0a 100644
+--- a/linux-user/strace.list
++++ b/linux-user/strace.list
+@@ -1722,3 +1722,18 @@
+ #ifdef TARGET_NR_rseq
+ { TARGET_NR_rseq, "rseq" , "%s(%p,%u,%d,%#x)", NULL, NULL },
  #endif
++#ifdef TARGET_NR_fsopen
++{ TARGET_NR_fsopen, "fsopen", "%s(%s,%d)", NULL, NULL },
++#endif
++#if defined(TARGET_NR_fsconfig) && defined(NR_fsconfig)
++{ TARGET_NR_fsconfig, "fsconfig", NULL, print_fsconfig, NULL },
++#endif
++#ifdef TARGET_NR_fsmount
++{ TARGET_NR_fsmount, "fsmount", "%s(%d,%d,%d)", NULL, NULL },
++#endif
++#ifdef TARGET_NR_move_mount
++{ TARGET_NR_move_mount, "move_mount", "%s(%d,%s,%d,%s,%d)", NULL, NULL },
++#endif
++#ifdef TARGET_NR_fspick
++{ TARGET_NR_fspick, "fspick", "%s(%d,%s,%d)", NULL, NULL },
++#endif
 -- 
 2.54.0
 
