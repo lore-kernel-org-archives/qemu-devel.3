@@ -4,97 +4,97 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 19334CD98C7
-	for <qemu-devel@archiver.kernel.org>; Wed, 10 Jun 2026 18:32:21 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 69B39CD98C7
+	for <qemu-devel@archiver.kernel.org>; Wed, 10 Jun 2026 18:34:22 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wXNil-0000wY-9s; Wed, 10 Jun 2026 14:32:13 -0400
+	id 1wXNkh-0001jW-DW; Wed, 10 Jun 2026 14:34:11 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pierrick.bouvier@oss.qualcomm.com>)
- id 1wXNii-0000ut-Gn
- for qemu-devel@nongnu.org; Wed, 10 Jun 2026 14:32:08 -0400
+ id 1wXNkf-0001j7-QG
+ for qemu-devel@nongnu.org; Wed, 10 Jun 2026 14:34:09 -0400
 Received: from mx0a-0031df01.pphosted.com ([205.220.168.131])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pierrick.bouvier@oss.qualcomm.com>)
- id 1wXNig-0000VA-Mu
- for qemu-devel@nongnu.org; Wed, 10 Jun 2026 14:32:08 -0400
-Received: from pps.filterd (m0279867.ppops.net [127.0.0.1])
+ id 1wXNkd-0000wt-UG
+ for qemu-devel@nongnu.org; Wed, 10 Jun 2026 14:34:09 -0400
+Received: from pps.filterd (m0279866.ppops.net [127.0.0.1])
  by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 65AFwfGv1666380
- for <qemu-devel@nongnu.org>; Wed, 10 Jun 2026 18:32:04 GMT
+ 65AFxJbQ1670870
+ for <qemu-devel@nongnu.org>; Wed, 10 Jun 2026 18:34:06 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
  cc:content-transfer-encoding:content-type:date:from:in-reply-to
  :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
- zIGwmWeL8iRJJrHwbg3axlJZu6twmPBrRTM1hEbJsQo=; b=fjVB32/e5n4DQlHN
- HebEmTk7PLaRW86wlKaenvSebbkBy8u2c9yIJE9IIsxX8P5AzxGxMjsyjBKkhmew
- yotgkDmBqu375GfYsreM3/sSDYb0kKv81GRwsyYhorWN+f2FQinLoa5XLWYkJ8hd
- BN4+XFrx1IyZ5Uj3EFCkP7XY+lFCNEoFvttECMPnzf794paL6vVZ/i3ii+IaDY61
- EqHzEctkiqG0J1/S/AFpNfZHdG5etMk6JF3J09hefHkxN1aaLd1Z2UvnxQ3/QEgf
- unNolwRwZ45sYOZapajwMJptQwDUY0U2VSaPHGiUpELXQaEQArOYeaN/i9rkQALo
- c5i5AA==
-Received: from mail-dy1-f198.google.com (mail-dy1-f198.google.com
- [74.125.82.198])
- by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4epwnh44f8-1
+ k+VdZDN7nN2rbWE/EdYwbq7066wgL91r+hU5Xxsgat4=; b=R7JFe8x7vtCgEjUm
+ +aSe7glnifbvEBXKooxhTlhcccW/l+1DjMvLb1iCXgy3gymDguuMUjeYdOi3fzTK
+ r5CC9cTqhk2remKztHNjnKTNFJ6hLcbL0ZPDBEOCoaM1htGI0OnH2WJGXDoc2CDU
+ 6fqewZFNsKjXIWh/Zrvxp4C4ReKAbOMn887hhDTgkLhxr3GXnCjfQGnAjaNE1LSX
+ YQCx/oErr7nAt4uelUn24qaVpWugkDFGqdrzJfL/7Va6vpIYm84mDo9txDOzMcaE
+ 6lTF18sArI39W99/SdTRCIoIdJHl9+YD8sd1De3f7M02Foh8n5U9s47ITG46j9iw
+ K14zvg==
+Received: from mail-dy1-f199.google.com (mail-dy1-f199.google.com
+ [74.125.82.199])
+ by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4eq0m1ud0x-1
  (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
- for <qemu-devel@nongnu.org>; Wed, 10 Jun 2026 18:32:04 +0000 (GMT)
-Received: by mail-dy1-f198.google.com with SMTP id
- 5a478bee46e88-304d0d0b28eso9345096eec.0
- for <qemu-devel@nongnu.org>; Wed, 10 Jun 2026 11:32:04 -0700 (PDT)
+ for <qemu-devel@nongnu.org>; Wed, 10 Jun 2026 18:34:05 +0000 (GMT)
+Received: by mail-dy1-f199.google.com with SMTP id
+ 5a478bee46e88-307625ee07fso9485049eec.1
+ for <qemu-devel@nongnu.org>; Wed, 10 Jun 2026 11:34:05 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=oss.qualcomm.com; s=google; t=1781116324; x=1781721124; darn=nongnu.org;
+ d=oss.qualcomm.com; s=google; t=1781116445; x=1781721245; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:content-language:from
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=zIGwmWeL8iRJJrHwbg3axlJZu6twmPBrRTM1hEbJsQo=;
- b=YNpfiFHL9sN1LzGPCGG7Ddyyh6JZD/MO/LOOCaK373/QflGuvocyjuKjXJ6R1b4ZOf
- 0YvWOj1x0cUNTFBe99HiLzLhdKw5kk2xxGg45Pp0alKOIMCW2f2c2UG/mGZ+ZibGqC+H
- tSVA2a+NFUTBqoSmKWE0AhA0q+ksnO3ePTWVVuN2AC2QMWjLSkxzmSPUCQlcjYlljm5T
- QbVtQDcBiEmRyBTwNdaScZg3i9qh6y4ANFHkMBjZk+Wn3bV8wJ1lKBtDsonZmmGjaWfa
- nn3G4eQxuQVXOi1rLNiM8ynmNaLvxmPKSMj32joXfJobAY4fPTm3JnswTB6hOyrTSaaS
- rPDA==
+ bh=k+VdZDN7nN2rbWE/EdYwbq7066wgL91r+hU5Xxsgat4=;
+ b=M6XShhEQCUk+1jyPPBxB5+93t2jquZE4QUo83cMVV5lLgxvSUA0oEuy9m4jerPrZfs
+ WweMK+QuSI80qhfk1wegfnP/8+zDnrj316B22U0vMLO7bzoCPhRhxZM3BK+k0r61u0GU
+ EOgxmkXppbJdMUh79Qc1AZaGeJd9F8b8YD4a/IL88wVFGjHNVyJEHJPQvctfg9ADdz+y
+ 7P5PFl4sirvr+mHTMV1g2QKXM2WCyzwtx/RNXM31QJLylYbKbrcOAfgDW1ePNSCna2O3
+ bFb4rjcMk7O1/M4+j0TlaN5shoBB7n0PLYQckhly61EQ/dDGLuiugI7semY/mFvg7dII
+ Rn2g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1781116324; x=1781721124;
+ d=1e100.net; s=20251104; t=1781116445; x=1781721245;
  h=content-transfer-encoding:in-reply-to:content-language:from
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=zIGwmWeL8iRJJrHwbg3axlJZu6twmPBrRTM1hEbJsQo=;
- b=lPM44pkqsmgqynaBnTS8y/KwR+WyKT2seD2BzAyfI2BLsTEDqylq57lH8agE+TclM2
- 3jeGvt400y5nUhfRWY/y4njF0lHt7CX2S+hgROLxBsjFfZXH07dvtHhO2gMuO9uGs0s1
- aGOhVK/w1DvwmsJN+bN6kx0Enn1xl5FNNn8p+77FHB562/4dRjOooiVKyvjuFUEpR6VQ
- XNrgDsF5vjFO70wqVV6kdoL0YM+0ESzpTDqBE2o5/c/gqh71OYOTSp+LOchh4Wb//q5R
- n3xaK9OJ2FtYl1zlP/ntngTcd7mhgx0RMC0Jg9UAlm9LtZV0WD/vMGnJdYGrAEH0ENbL
- ZLTA==
+ bh=k+VdZDN7nN2rbWE/EdYwbq7066wgL91r+hU5Xxsgat4=;
+ b=P/O4J+NhIE4L+gGROe9JfH1BfHyaDsRQdb9bQ41f9W9GbEMHHoAblF8TJbBiepwb2v
+ HPXDj64g6tMTg969/Ku6RfEeiDqiDbaYiFqnaACnAVJrWN6q6l5HTFEChmoEHKOxDl8t
+ SH8ahL4dluACuEqy2YiIQwnYBKmp3dyK4Hh62REO2PTQ/5wjd+ZNL78LPxeYFR5FRpYN
+ 7vrNzFcqfs8Zobr8h/nyIBGm5y0c3pFPgEuKQHR656yajM4r+cfxpelIoTfvs7tVDwph
+ rGosf2r+jKD8Aqbt2Ug0NkjU899LolKR3tBD/sDFemz5ashpH6mVwHJzau8HIy+r3QEC
+ i/fQ==
 X-Forwarded-Encrypted: i=1;
- AFNElJ9fbhdNCgSTL/HxssWD0q8wb+y9ftJx6t4wEf08+kvilxcv2IzN7QNaIdk9pkIfbfKQc2PdkM0Z05q4@nongnu.org
-X-Gm-Message-State: AOJu0YzQAsc0QLQDkRgaLlbrqg2aIKEvJAkqia0QI2QgJ4th1jDv2LuT
- wHHvD2dq3+FZljfC6akxNOmmhTZiEmWOLftpH1ehzSXEf+GRAPY50Pr2DXUimiofOKg8ebAn49W
- H/LZLdAitKukJIWhDcvKlLocnSOjXJZq4zouRo8cNv6QgyMDlHIemPmaz7g==
-X-Gm-Gg: Acq92OEJKO9PYOpWb9TD8t576/evTqcl3wJxbaKZo66rcR+ygt4Z1sAGK8UQYWgTQdy
- wT2zxNUVCK1Yvfa42ctGzSXAingyPgAb+nOLt+tFmH38NXernGycTd4PB07tSVBKrorPacb1S7i
- Dou6NVrRPcZVTebRk1F7wi1v8YdOZKfMO3VQxvHcYhRSCdjlTliVgGNaEiGxq8zRY2GF6zi8rRy
- 7QZNbx2GfsPVDlkzqK6MECEcTtWpkLY+FkU69fB/Q27tUC0P/3hUqa/YH1ia11A3e+g3aeH0Nyk
- zBvVATWCwm318XG6YGLp8oa8hl2iE6j7XAcvss+D9xvS64CQhoKixOd/kIxoCIB7/xJxRy/ipDW
- 6wRGz9ckvrgisk4wbSchXRJVH+NTCU4Y9Cptb8EN0Bi5HEissrrdh+1S5rODdFNX/NoRMRE50Ga
- sqLBnMrGM7nn6yEvYQVqcIkNqG
-X-Received: by 2002:a05:7300:7fa8:b0:304:e450:67e0 with SMTP id
- 5a478bee46e88-3077b3c30famr18412587eec.10.1781116323944; 
- Wed, 10 Jun 2026 11:32:03 -0700 (PDT)
-X-Received: by 2002:a05:7300:7fa8:b0:304:e450:67e0 with SMTP id
- 5a478bee46e88-3077b3c30famr18412556eec.10.1781116323349; 
- Wed, 10 Jun 2026 11:32:03 -0700 (PDT)
+ AFNElJ+ZPJXtHOtqPFjf2ikSUOIUvtc4kWm9r+dnqsvIiAbfKj9uraYRH7fJSm/fAh6ld3orwbNwcKaEK5eB@nongnu.org
+X-Gm-Message-State: AOJu0YyrX3ugGKIqjDQPaGFCLrD2oPVI/TZ2XGPZcb5cxcR+tD8uEbCE
+ Xf4XcQSV85wvD8EYXAlYIOploqET3itpYRM2zOO3GyBit4MsxZko5rmyFWMyy5vibjAlprd06p9
+ RpniFxZS7sg7pXLByVq8tPHCCM17TyayJqmXlnHPKZj5totopco6l89a7aw==
+X-Gm-Gg: Acq92OFW/Z+ISNg1yVrT2X4KqxIeQ0woZvVQCU+H8jH9ZO8LGO7ZztxkkBHw4fY9NRB
+ 11MaoGNFXDVC74qG/ukq6FSxvrV4kgFYzRtYo+5Qk4Ep24yrDjT1c9AMIrYd5GnqKkGsMo16Fz8
+ /lTwFR9gzoYs2FNZYoaL8ncEA3+34CM+cbRPQJazR154TTkrrOlprXW98sRfL44DiZ/K/6RRuc9
+ canNxAex7Qns06tFOe4rq/Ic5agiPUamce0O6od6/mJfGMjIQwuJhn7KWlIjS0ERyoh3fQHaTas
+ NseEOrfB9jtBaMcYJhygS9JlsC282iuO4LetZdH97SvuVRxLU4sFO0k3xToEoaFsZw/GKnAYwQY
+ FxDufKGWY10yI6uOtfQX+nKgsC1DuRhCRzlnvTWha2k+VKjeqBlXYbtkqukF8iKYF6Z+qdRdh9n
+ lu4679LIe77NN4S3Nfe9NpM3D8
+X-Received: by 2002:a05:7022:61a0:b0:12c:6a24:a24f with SMTP id
+ a92af1059eb24-13840b962bbmr208446c88.33.1781116444976; 
+ Wed, 10 Jun 2026 11:34:04 -0700 (PDT)
+X-Received: by 2002:a05:7022:61a0:b0:12c:6a24:a24f with SMTP id
+ a92af1059eb24-13840b962bbmr208426c88.33.1781116444447; 
+ Wed, 10 Jun 2026 11:34:04 -0700 (PDT)
 Received: from [192.168.1.170] (216-71-219-44.dyn.novuscom.net.
  [216.71.219.44]) by smtp.gmail.com with ESMTPSA id
- 5a478bee46e88-3074dea8708sm28287408eec.15.2026.06.10.11.32.02
+ a92af1059eb24-137f54c9c12sm19328093c88.6.2026.06.10.11.34.03
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 10 Jun 2026 11:32:02 -0700 (PDT)
-Message-ID: <215e273a-1910-4788-ab68-a76734d9eefe@oss.qualcomm.com>
-Date: Wed, 10 Jun 2026 11:32:01 -0700
+ Wed, 10 Jun 2026 11:34:04 -0700 (PDT)
+Message-ID: <525beb88-c311-498a-aa52-4eb188eac008@oss.qualcomm.com>
+Date: Wed, 10 Jun 2026 11:34:02 -0700
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 05/27] tests/tcg/meson.build: introduce exe_name
+Subject: Re: [PATCH 06/27] tests/tcg/meson.build: introduce test_name
 To: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>, qemu-devel@nongnu.org
 Cc: Thomas Huth <thuth@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>,
  =?UTF-8?Q?Daniel_P_=2E_Berrang=C3=A9?= <berrange@redhat.com>,
@@ -104,37 +104,37 @@ Cc: Thomas Huth <thuth@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>,
  Alexandre Iooss <erdnaxe@crans.org>, Peter Maydell
  <peter.maydell@linaro.org>, Gustavo Romero <gustavo.romero@linaro.org>
 References: <20260609214745.772536-1-pierrick.bouvier@oss.qualcomm.com>
- <20260609214745.772536-6-pierrick.bouvier@oss.qualcomm.com>
- <tgemg6.297pm0qzw7mjt@linaro.org>
+ <20260609214745.772536-7-pierrick.bouvier@oss.qualcomm.com>
+ <tgemmc.ymcxyhiodn9w@linaro.org>
 From: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
 Content-Language: en-US
-In-Reply-To: <tgemg6.297pm0qzw7mjt@linaro.org>
+In-Reply-To: <tgemmc.ymcxyhiodn9w@linaro.org>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNjEwMDE3NSBTYWx0ZWRfXwWZKuxKsLPUS
- lmOc/8j1bcMuHTTQw7elByKVexLv91RbVs1nHLfoUk/NZ+w0FZPKD8Ctatw45zM2X8cVD7a/cm2
- 2Y2Syet/vUZTg05LLwGNkKt+qSiW+5GuyLVuW2cuJv8Dp5riI65W3utyI9oaIRhfmUCs5Dxo4g4
- R6YSv2pSTQOS9CVxQBY07fg6byaukL7+EXxswSsAtKSMfW20b9RobtHjxEnMtNRH55WgGvKVvbp
- d7g2YDTboJagSDTQ7jhNRpFZiCPrledsQPUoSjURgmMf6b7eSTGIwr1+oC98JEjr74/vAkxJrPX
- jUECfKx6JQQLchuVcyix1F0/vCBxOZ+XrVHxBguj1PESa2HTyXfPJ4Cal2BQaIZxfy5cKcyUxw2
- pqgut+YQ2/ZpcTpWBFyDsICCc/4rDq0NeYOTeZr1PF++0bASCZu2ZYT/j20HrZat63RuJTDe4FR
- C/R39D9xZXohvOVamiw==
-X-Authority-Analysis: v=2.4 cv=Xce5Co55 c=1 sm=1 tr=0 ts=6a29ada4 cx=c_pps
- a=wEP8DlPgTf/vqF+yE6f9lg==:117 a=iLqgmErQAxjCjdq5jj1Aqg==:17
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNjEwMDE3NiBTYWx0ZWRfX+EWCJLmWolip
+ DPZE8wL1eeU4oJGzG/7AJxiMNqcrCec8XBZj64tJ0TxROiG7k+83aWOiqwY/4Kc1Pnz/hFKJ44u
+ fXREfMNlPbPbZtfmKGj7rDundsU37+Fx40q3K1TpsGLmVHrlpRlEbab/zwz5e8n/0raENb1iZXY
+ wpadna09UiRwRk7yd/AdLtBEzzdo8PFeTdtoozL0TUF8D/Wh0MOu3sL5c3tIqxa+2z/ahqtdb3/
+ IDOZkULdQU1OOC4w+9G4jUsMNJPUBFNWCjI8j4WcOAfb1EmsEyMW0AH8D17OQaOB35l2aqLSE3e
+ zNGvRT0vS6zpfpUHik2dqvjYjy6nQUOdzll9rsImeV9waVOh0KNdlGunI4URFB7LFxfk79Ll48x
+ z4htf9iGETIYENZ9GqcHhdjXXZ8aTIWZh8CtjLqmbXjXIbplKVJumDZGgHEWMJ4Hv+OgE8N1G1x
+ +OTs1t4VQMFpPORg3BA==
+X-Proofpoint-GUID: tfuoNgmScBCxdrgnb0MKNKAEMjqQKMPU
+X-Authority-Analysis: v=2.4 cv=UdJhjqSN c=1 sm=1 tr=0 ts=6a29ae1d cx=c_pps
+ a=cFYjgdjTJScbgFmBucgdfQ==:117 a=iLqgmErQAxjCjdq5jj1Aqg==:17
  a=IkcTkHD0fZMA:10 a=FelO9ux0wxsA:10 a=s4-Qcg_JpJYA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=eoimf2acIAo5FJnRuUoq:22
- a=EUspDBNiAAAA:8 a=KKAkSRfTAAAA:8 a=5yw_3auFD0dBBNfgJhAA:9 a=3ZKOabzyN94A:10
- a=QEXdDO2ut3YA:10 a=bBxd6f-gb0O0v-kibOvt:22 a=cvBusfyB2V15izCimMoJ:22
-X-Proofpoint-ORIG-GUID: F_oIJNnkkqI4GvtT3WXbOfmLyV1x07kQ
-X-Proofpoint-GUID: F_oIJNnkkqI4GvtT3WXbOfmLyV1x07kQ
+ a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=YMgV9FUhrdKAYTUUvYB2:22
+ a=EUspDBNiAAAA:8 a=KKAkSRfTAAAA:8 a=5r5wm9yo4xwGGYzd8k8A:9 a=3ZKOabzyN94A:10
+ a=QEXdDO2ut3YA:10 a=scEy_gLbYbu1JhEsrz4S:22 a=cvBusfyB2V15izCimMoJ:22
+X-Proofpoint-ORIG-GUID: tfuoNgmScBCxdrgnb0MKNKAEMjqQKMPU
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.125,FMLib:17.12.100.49
  definitions=2026-06-10_03,2026-06-09_02,2025-10-01_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- clxscore=1015 phishscore=0 malwarescore=0 impostorscore=0 adultscore=0
- priorityscore=1501 lowpriorityscore=0 suspectscore=0 bulkscore=0 spamscore=0
+ adultscore=0 suspectscore=0 phishscore=0 priorityscore=1501 bulkscore=0
+ malwarescore=0 clxscore=1015 lowpriorityscore=0 impostorscore=0 spamscore=0
  classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2605210000 definitions=main-2606100175
+ reason=mlx scancount=1 engine=8.22.0-2605210000 definitions=main-2606100176
 Received-SPF: pass client-ip=205.220.168.131;
  envelope-from=pierrick.bouvier@oss.qualcomm.com;
  helo=mx0a-0031df01.pphosted.com
@@ -160,82 +160,97 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 6/10/2026 12:03 AM, Manos Pitsidianakis wrote:
+On 6/10/2026 12:08 AM, Manos Pitsidianakis wrote:
 > On Wed, 10 Jun 2026 00:47, Pierrick Bouvier
 > <pierrick.bouvier@oss.qualcomm.com> wrote:
->> We add possibility to duplicate a test executable for a given source
->> file. This is needed when different cflags need to be used (like
->> vectorized vs non-vectorized for instance, like sve tests in aarch64).
+>> We add possibility to duplicate a test for a given src. This allows to
+>> declare several tests that still share the same executable, thus saving
+>> space and compile time.
+>>
+>> A side note to mention that meson perfectly supports declaring several
+>> tests with the same name. However, we prevent that to force dev to
+>> clarify what is the intent of each individual test.
 >>
 >> Signed-off-by: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
 >> ---
->> tests/tcg/meson.build | 17 +++++++++++++++--
->> 1 file changed, 15 insertions(+), 2 deletions(-)
+>> tests/tcg/meson.build | 14 ++++++++++----
+>> 1 file changed, 10 insertions(+), 4 deletions(-)
 >>
 >> diff --git a/tests/tcg/meson.build b/tests/tcg/meson.build
->> index 72d1a9f8986..2c6d85c586a 100644
+>> index 2c6d85c586a..bb0184732fd 100644
 >> --- a/tests/tcg/meson.build
 >> +++ b/tests/tcg/meson.build
->> @@ -11,6 +11,7 @@ tcg_tests = {}
->> #     'tests': [
+>> @@ -12,6 +12,7 @@ tcg_tests = {}
 >> #       {
 >> #         'src_file': {
->> +#           'exe_name': ['provide an alternative binary name'],
+>> #           'exe_name': ['provide an alternative binary name'],
+>> +#           'test_name': ['provide an alternative test name'],
 >> #         }
 >> #       },
 >> #       ...
->> @@ -18,10 +19,10 @@ tcg_tests = {}
->> #   }
->> # }
+>> @@ -21,8 +22,8 @@ tcg_tests = {}
 >> #
->> -# Every test executable, is built only once.
->> +# Every test executable, identified by 'exe_name' is built only once.
+>> # Every test executable, identified by 'exe_name' is built only once.
 >> # Tests for a given src use the same executable by default, and their
 >> definition
->> # is guaranteed to be unique also.
->> -# Default name is derived from src.
->> +# Default name is derived from src if 'exe_name' is omitted.
+>> -# is guaranteed to be unique also.
+>> -# Default name is derived from src if 'exe_name' is omitted.
+>> +# is guaranteed to be unique also. They can be duplicated by setting
+>> 'test_name'.
+> 
+> While it's clear in the patch description, it might be a good idea to
+> explain that "duplication" means using the same executable here, for
+> clarity, if you respin this series.
+>
+
+Sure, I can add this.
+
+>> +# Default name is derived from src if 'exe_name' and 'test_name' are
+>> omitted.
 >>
 >> # plugins come first, as we need to build the list
 >> subdir('plugins')
->> @@ -47,11 +48,23 @@ foreach target, plan: tcg_tests
->>
->>   foreach t : tests
->>     foreach src, setup: t
->> +      # return a clear error if user mispell a setup entry
+>> @@ -51,7 +52,7 @@ foreach target, plan: tcg_tests
+>>       # return a clear error if user mispell a setup entry
+>>       foreach key, _ : setup
+>>         if key not in [
+>> -                       'exe_name',
+>> +                       'exe_name', 'test_name',
+>>                        ]
+>>           error('unknown tcg setup entry \'' + key + '\' for test ' +
+>> src)
 > 
-> Minor typo:
 > 
->  If user misspells*
+> Unrelated to this patch, but you could refactor the ['exe_name',
+> 'test_name'] etc key set outside and print the list of valid keys in the
+> error message as well for UX.
 >
 
-Thanks for the english fix, I'll check other places also.
+Good idea.
 
-> Reviewed-by: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
-> 
->> +      foreach key, _ : setup
->> +        if key not in [
->> +                       'exe_name',
->> +                       ]
->> +          error('unknown tcg setup entry \'' + key + '\' for test ' +
->> src)
->> +        endif
->> +      endforeach
->> +
->>       # meson '/' operator drops left operand if right is an absolute
->> path
->>       src = folder / src
->>       file = files(src)
->>       test = fs.name(file)
->>       exe_name = fs.stem(src)
->> +      if 'exe_name' in setup
->> +        exe_name = setup['exe_name']
->> +      endif
+>>         endif
+>> @@ -66,8 +67,13 @@ foreach target, plan: tcg_tests
+>>         exe_name = setup['exe_name']
+>>       endif
 >>
->>       exe_name = target + '-' + exe_name
+>> -      exe_name = target + '-' + exe_name
 >>       test_name = exe_name
+>> +      if 'test_name' in setup
+>> +        test_name = setup['test_name']
+>> +      endif
+>> +
+>> +      exe_name = target + '-' + exe_name
+>> +      test_name = target + '-' + test_name
+>>
+>>       if test_name in added_tests
+>>         error('test ' + test_name + ' was already added: ' +
 >> -- 
 >> 2.43.0
 >>
+> 
+> 
+> LGTM (feel free to ignore the comments)
+> 
+> Reviewed-by: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
 
 
