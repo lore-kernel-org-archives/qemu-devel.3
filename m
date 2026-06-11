@@ -4,56 +4,56 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3B2E4CD98D2
-	for <qemu-devel@archiver.kernel.org>; Thu, 11 Jun 2026 09:06:54 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7F23ECD98D2
+	for <qemu-devel@archiver.kernel.org>; Thu, 11 Jun 2026 09:07:01 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wXbKs-0000OJ-Hx; Thu, 11 Jun 2026 05:04:26 -0400
+	id 1wXbLb-0002bj-QQ; Thu, 11 Jun 2026 05:05:12 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1wXbKr-0000O0-Hh
- for qemu-devel@nongnu.org; Thu, 11 Jun 2026 05:04:25 -0400
+ id 1wXbLa-0002Vj-EL
+ for qemu-devel@nongnu.org; Thu, 11 Jun 2026 05:05:10 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1wXbKq-0004dn-7H
- for qemu-devel@nongnu.org; Thu, 11 Jun 2026 05:04:25 -0400
+ id 1wXbLY-0004p0-O9
+ for qemu-devel@nongnu.org; Thu, 11 Jun 2026 05:05:10 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1781168663;
+ s=mimecast20190719; t=1781168708;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=9Uq/YOD4Tyc0jQlm9DPacra4GuZK8eNHou9efZzgg2Y=;
- b=D7KVuheOyHTWPG3L7vuvHpCSWl7nfMf0WernMa/QRuKZzdn0z1BLZerNESqjXUVAL4xUTr
- gojvQbSL1YuGiydPH4RndYwcwNkYGZ9k5Tn5aFG61XVrDQo7BVOZ83L4HjRF+vdGP5xTv3
- uAAatYnz4PhgiebdZH00rgKYr42Kk40=
+ bh=mBrMf6sgce6eqalfbiLawauqWyu0Pfl9VQff8GIECLs=;
+ b=KfP7k55DarGxijoMuXWOSQi34nzqSdVVCKbubdB1yU4TEPdJVH+dNnRNA/N/9gkuxDhqnP
+ 9bZ1VgCyQCG4oIorcJe+BrmC2aRHkibWgf5WcYa1fXzEcwYIoGU5S9jm3cGDjcltSeG6rJ
+ MXoJCfa5VGPEOLjXdatIlmDj/7nrGK4=
 Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-111-gutft811ObqBsC0Ib2jKYg-1; Thu,
- 11 Jun 2026 05:04:18 -0400
-X-MC-Unique: gutft811ObqBsC0Ib2jKYg-1
-X-Mimecast-MFC-AGG-ID: gutft811ObqBsC0Ib2jKYg_1781168657
-Received: from mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.93])
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-529-We_ee5WyO863Vwp-monISQ-1; Thu,
+ 11 Jun 2026 05:05:06 -0400
+X-MC-Unique: We_ee5WyO863Vwp-monISQ-1
+X-Mimecast-MFC-AGG-ID: We_ee5WyO863Vwp-monISQ_1781168705
+Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
  by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 7BB011800378; Thu, 11 Jun 2026 09:04:17 +0000 (UTC)
+ id 66CAD1800591; Thu, 11 Jun 2026 09:05:05 +0000 (UTC)
 Received: from localhost (unknown [10.44.24.21])
- by mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 3E21B180029C; Thu, 11 Jun 2026 09:04:15 +0000 (UTC)
+ by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id 762253008B34; Thu, 11 Jun 2026 09:05:04 +0000 (UTC)
 From: =?utf-8?q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>
-Date: Thu, 11 Jun 2026 13:03:22 +0400
-Subject: [PATCH v3 07/35] glib-compat: add fallback for g_clear_fd/g_autofd
+Date: Thu, 11 Jun 2026 13:03:31 +0400
+Subject: [PATCH v3 16/35] ui: add display cleanup infrastructure
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
-Message-Id: <20260611-b4-ui-v3-7-72bcbbea0fae@redhat.com>
+Message-Id: <20260611-b4-ui-v3-16-72bcbbea0fae@redhat.com>
 References: <20260611-b4-ui-v3-0-72bcbbea0fae@redhat.com>
 In-Reply-To: <20260611-b4-ui-v3-0-72bcbbea0fae@redhat.com>
 To: qemu-devel@nongnu.org
@@ -67,24 +67,24 @@ Cc: Paolo Bonzini <pbonzini@redhat.com>,
  Peter Maydell <peter.maydell@linaro.org>, 
  Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>, 
  =?utf-8?q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>
-X-Developer-Signature: v=1; a=openpgp-sha256; l=1464;
+X-Developer-Signature: v=1; a=openpgp-sha256; l=3294;
  i=marcandre.lureau@redhat.com; h=from:subject:message-id;
- bh=Oc6bYtbmoQuSGvRLMjbnGE3Qy+VIBvYlZ2fSX7bu/zw=;
- b=owEBbQKS/ZANAwAKAdro4Ql1lpzlAcsmYgBqKnndJS3U8ds+2xrkI61RwjnGLXrpSNf13PGyS
- M57Wl52yh6JAjMEAAEKAB0WIQSHqb2TP4fGBtJ29i3a6OEJdZac5QUCaip53QAKCRDa6OEJdZac
- 5UWnD/wM854nGLRh4wNJWnYDe2QKcyIg5vZLMVPQtAWXLsGTs+2hdf8jAZkXXzcY/kqxNciKXCU
- Ln3cq1FWxUWUNwVkneBx5UuFKmy8aRl/RbhMbT+imv4EFaR/FTkccrt1FGDivuhIMsbNrJLFGnF
- i9ruQM4jA/XD2sumz0LJlzBxskX0gDPS/aRy1sm8CMyeH1D5eWrA0DEkco7CGQxLROMNIjUQCbF
- e6PUav9nMG430kJpUjwvp2DogbkJV4jL/SaqTSE67rwueiebcULzlMSMq14TEitWUGIfuFD53Of
- 16h0bN0prRKQZ8EBWzl5tXsep414Yju26DSDkR9k4I68h5wcpPAj2P9SO/yahtm1V1V/NdineEO
- +EpkhDxtXxKaOvBOjsKa9IqaRY2oksF1c1aeVU/k69L8ZmWjvV8fl9NNaQbGJHgpA6UWzBTrntt
- 6or1PwtSa9NoghAAc0GnTFgI4oaCY1AinOySo7YiUfPZTvRgXb7KxDVgQLiiCPae4oTZcZqlHcc
- K/cLTt7BYriUyeJh6hQ6yid7LGaBGmXFA76VCPXxBEudf0MvpUJM4AtsDbnqQTYb/+s19jKjkC5
- yDikjeV3fk9WfuF6TwAwrtKyiWgRny3tx3QV7VyWnAwyxkrBFGgkSMerBg4ygFkYNwl9gQEldzW
- 7wYKP/HaVxSTOJQ==
+ bh=lwX43CcKsWPglzBRxIi4xAYVtk1qkhgPHDupwvecx6A=;
+ b=owEBbQKS/ZANAwAKAdro4Ql1lpzlAcsmYgBqKnnfUQzBhIHyAdF99G+/IXkXobrUr6LlEgHUw
+ nJpoxSjv4GJAjMEAAEKAB0WIQSHqb2TP4fGBtJ29i3a6OEJdZac5QUCaip53wAKCRDa6OEJdZac
+ 5WJOD/0YHO3hmtGgBJ2aUUwI3GDwq70yibHqNgShIgCz5sE7dPpxYktVGisWB6jjdKK6PONpktY
+ 6Qrh74dlOrmsTHiUuhe5/xVvDttcDJwI3ha7n7Gc5MlIBpFKG7rAom/bxcsj+IBWCULqGxLPv7Q
+ bZn6Pfdkn36m95jPLH1I+Xp+U9ui4nvuWCIEEovvKhZStQER6STvTLgjzuTU2x/iF3BI9uqlupY
+ m2jHq2TxjMjhizhmVZsivuKW+pATNgm9DfMHJ+c8jiyBCJU1GCFN5FHiWjEUbaJ66Mm+IObCm3a
+ aEHG/cdEIPEDINxeTWtYEO/U/5P39QFD+56d2LUDgLzc6VGhGW5gEgCubJXn7yzZba/5PeczJIW
+ 1KyY+KHbzkGxKP2pTXFY2ybjD3AP5wC55uytc8aiUgef7sDXLtn70kPFeBUrtbcDze0GUDsSWXq
+ 0EFndz5lmU6tB18ht8JMFwOcBoKB17lwmGXiPiiEZXTwvPX3yvYEPNDwORQjJox4vur6Iibi56I
+ ToSIo5QIQOlHx2etsEP3kkw1cx6KvP8oqIMKGg92cIzzWF9pwQ0NNPQzhVl305sGOB1uzELkBhn
+ +gwiGl1O0NtoH9G7GyfMHwcPGjAgx1SykY87kvnRfeJlcqUrvAG7uir4VNBNvIE9c/sjlLaeS8H
+ ikZALUPOyTkyfbg==
 X-Developer-Key: i=marcandre.lureau@redhat.com; a=openpgp;
  fpr=87A9BD933F87C606D276F62DDAE8E10975969CE5
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.93
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
 Received-SPF: pass client-ip=170.10.129.124;
  envelope-from=marcandre.lureau@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
@@ -110,61 +110,116 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Those helpers were added in glib 2.76.
+Add a cleanup callback to QemuDisplay and a qemu_display_cleanup()
+function that iterates all registered display types and calls their
+cleanup handler. Wire it into qemu_cleanup() in runstate.c, replacing
+the ad-hoc vnc_cleanup() call.
 
-Reviewed-by: Daniel P. Berrangé <berrange@redhat.com>
+This provides a structured alternative to atexit() handlers, giving
+deterministic teardown ordering and making resource leaks visible to
+sanitizers.
+
+The cleanup should happen before user_creatable_cleanup(), since some
+display have weak user-creatable references to cleanup before.
+
 Signed-off-by: Marc-André Lureau <marcandre.lureau@redhat.com>
 ---
- include/glib-compat.h | 29 +++++++++++++++++++++++++++++
- 1 file changed, 29 insertions(+)
+ include/ui/console.h |  2 ++
+ system/runstate.c    |  8 +-------
+ ui/console.c         | 20 +++++++++++++++++++-
+ 3 files changed, 22 insertions(+), 8 deletions(-)
 
-diff --git a/include/glib-compat.h b/include/glib-compat.h
-index 2e32b90f051..32ee2afdcdf 100644
---- a/include/glib-compat.h
-+++ b/include/glib-compat.h
-@@ -30,6 +30,7 @@
- #pragma GCC diagnostic ignored "-Wdeprecated-declarations"
+diff --git a/include/ui/console.h b/include/ui/console.h
+index a31c5a4995c..1c7f7e62c1a 100644
+--- a/include/ui/console.h
++++ b/include/ui/console.h
+@@ -430,6 +430,7 @@ struct QemuDisplay {
+     DisplayType type;
+     void (*early_init)(DisplayOptions *opts);
+     void (*init)(DisplayState *ds, DisplayOptions *opts);
++    void (*cleanup)(void);
+     const char *vc;
+ };
  
- #include <glib.h>
-+#include <glib/gstdio.h>
- #if defined(G_OS_UNIX)
- #include <glib-unix.h>
- #include <sys/types.h>
-@@ -129,6 +130,34 @@ qemu_g_test_slow(void)
- #define g_test_thorough() qemu_g_test_slow()
- #define g_test_quick() (!qemu_g_test_slow())
+@@ -438,6 +439,7 @@ bool qemu_display_find_default(DisplayOptions *opts);
+ void qemu_display_early_init(DisplayOptions *opts);
+ void qemu_display_init(DisplayState *ds, DisplayOptions *opts);
+ const char *qemu_display_get_vc(DisplayOptions *opts);
++void qemu_display_cleanup(void);
+ void qemu_display_help(void);
  
-+static inline gboolean g_clear_fd_qemu(int *fd_ptr, GError **error)
+ /* vnc.c */
+diff --git a/system/runstate.c b/system/runstate.c
+index d35fa270bd6..18e585be47f 100644
+--- a/system/runstate.c
++++ b/system/runstate.c
+@@ -62,7 +62,6 @@
+ #include "system/system.h"
+ #include "system/tpm.h"
+ #include "ui/console.h"
+-#include "ui/qemu-spice-module.h"
+ 
+ #include "trace.h"
+ 
+@@ -1046,12 +1045,7 @@ void qemu_cleanup(int status)
+     audio_cleanup();
+     monitor_cleanup();
+     qemu_chr_cleanup();
++    qemu_display_cleanup();
+     user_creatable_cleanup();
+-#ifdef CONFIG_VNC
+-    vnc_cleanup();
+-#endif
+-#ifdef CONFIG_SPICE
+-    qemu_spice.cleanup();
+-#endif
+     /* TODO: unref root container, check all devices are ok */
+ }
+diff --git a/ui/console.c b/ui/console.c
+index 58f29e82c85..1fe3e3a3a6c 100644
+--- a/ui/console.c
++++ b/ui/console.c
+@@ -42,6 +42,7 @@
+ #include "qemu/memfd.h"
+ #include "ui/vt100.h"
+ #include "vgafont.h"
++#include "ui/qemu-spice.h"
+ 
+ #include "console-priv.h"
+ 
+@@ -575,7 +576,7 @@ void qemu_console_set_display_gl_ctx(QemuConsole *con, DisplayGLCtx *gl)
+ {
+     /* display has opengl support */
+     assert(con);
+-    if (con->gl) {
++    if (gl && con->gl) {
+         error_report("The console already has an OpenGL context.");
+         exit(1);
+     }
+@@ -1414,6 +1415,23 @@ void qemu_display_init(DisplayState *ds, DisplayOptions *opts)
+     dpys[opts->type]->init(ds, opts);
+ }
+ 
++void qemu_display_cleanup(void)
 +{
-+#if GLIB_CHECK_VERSION(2, 76, 0)
-+    return g_clear_fd(fd_ptr, error);
-+#else
-+    int fd = *fd_ptr;
++    int i;
 +
-+    *fd_ptr = -1;
-+
-+    if (fd < 0) {
-+        return TRUE;
++    for (i = 0; i < DISPLAY_TYPE__MAX; i++) {
++        if (dpys[i] && dpys[i]->cleanup) {
++            dpys[i]->cleanup();
++        }
 +    }
-+
-+    return g_close(fd, error);
++#ifdef CONFIG_VNC
++    vnc_cleanup();
++#endif
++#ifdef CONFIG_SPICE
++    qemu_spice.cleanup();
 +#endif
 +}
-+#define g_clear_fd(fd, err) g_clear_fd_qemu(fd, err)
 +
-+#if !GLIB_CHECK_VERSION(2, 76, 0)
-+static inline void _g_clear_fd_ignore_error(int *fd_ptr)
-+{
-+    int errsv = errno;
-+    g_clear_fd(fd_ptr, NULL);
-+    errno = errsv;
-+}
-+#define g_autofd __attribute__((cleanup(_g_clear_fd_ignore_error)))
-+#endif
-+
- #pragma GCC diagnostic pop
- 
- #ifndef G_NORETURN
+ const char *qemu_display_get_vc(DisplayOptions *opts)
+ {
+ #ifdef CONFIG_PIXMAN
 
 -- 
 2.54.0
