@@ -4,107 +4,112 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C1298CD98CC
-	for <qemu-devel@archiver.kernel.org>; Thu, 11 Jun 2026 13:40:08 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C1B3FCD98CF
+	for <qemu-devel@archiver.kernel.org>; Thu, 11 Jun 2026 13:47:16 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wXfd8-0001OO-Tj; Thu, 11 Jun 2026 09:39:34 -0400
+	id 1wXfjx-00030B-CS; Thu, 11 Jun 2026 09:46:37 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <stefanha@gmail.com>)
- id 1wXfd7-0001NV-IF
- for qemu-devel@nongnu.org; Thu, 11 Jun 2026 09:39:33 -0400
-Received: from mail-ed1-x532.google.com ([2a00:1450:4864:20::532])
+ (Exim 4.90_1) (envelope-from <marcandre.lureau@gmail.com>)
+ id 1wXfjr-0002zf-MZ
+ for qemu-devel@nongnu.org; Thu, 11 Jun 2026 09:46:31 -0400
+Received: from mail-dl1-x1229.google.com ([2607:f8b0:4864:20::1229])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <stefanha@gmail.com>)
- id 1wXfd5-0005Za-Pu
- for qemu-devel@nongnu.org; Thu, 11 Jun 2026 09:39:33 -0400
-Received: by mail-ed1-x532.google.com with SMTP id
- 4fb4d7f45d1cf-6914a658115so7693157a12.0
- for <qemu-devel@nongnu.org>; Thu, 11 Jun 2026 06:39:30 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1781185170; cv=none;
+ (Exim 4.90_1) (envelope-from <marcandre.lureau@gmail.com>)
+ id 1wXfjq-0000ir-39
+ for qemu-devel@nongnu.org; Thu, 11 Jun 2026 09:46:31 -0400
+Received: by mail-dl1-x1229.google.com with SMTP id
+ a92af1059eb24-13832028e9fso3295970c88.1
+ for <qemu-devel@nongnu.org>; Thu, 11 Jun 2026 06:46:29 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1781185588; cv=none;
  d=google.com; s=arc-20240605;
- b=SD36qHzw05MzC1RPpRbtRv9lLNVhZaIvw3PtWbaso9gtJfkYrNtAgy+PZ+ljc88MzT
- gRY1PjQV9pgAUjn9L184Tnj6xcBgij3ODabTh6xIB27TnwRlZXCRkOHbRUpRFyq9Lfiz
- CwozuwJ58PFXibc/xgVFL9JYtcczbeGuuwz9caxGAfva/DyoFIMN88ARw8kzFLXy6FOB
- f8RK2fGSZMLqPhnJl/ayFumqcyan4J63sGxlX77HFh8UNA+kGu039A4QF3JR8DVFOQRC
- 3opjOBaM8iG9U47HCpsEVXAkw00HIL/MGfIn+lDfZyadsWdmAht0obI8MRKz2bRJ7pBB
- 1jcQ==
+ b=EjgG9i37AYSWuk3P1c6HS97cCJhLPQrY+/KBnU1UhcoA2prdONl08Fiec1h2lYDCCx
+ uFycHwnXLkuh7dObpOv6SfQJu17z1a037hz8yS/q8ioBAmJxGTRsVctt9P4d9lit7tg2
+ rF38raJvJ3yReaT+qOkKBZ5vlrNM9feB1oWxjVsWvUgLanPafokVd8aG04k6RbEJSrOF
+ laVszlLsq9uc7PKAGtUM5K80khoVwi8fNaJfVpqKZwRnPOtcwq2hOURLvS8IgoIuXMqH
+ +g7lS2o0bClOUlrZ/V8hITm05vF3f5q5jU0wL3v+C+CwWqpW0TkSv7eZtKJy8wmm3Az6
+ MlJg==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
  s=arc-20240605; 
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:dkim-signature;
- bh=d843nBiDtDCTxzQ8Jv4xQNcAeQVgmuNxcgSIK3lLSHo=;
- fh=BJxahEH8suyfbByZfu9o6Xn8V/V1E8GSMTtT013s50M=;
- b=WZJ6BNVfaqSE3Tk41dgPckGy1eQSgBU84cMeI4/VTWHlaAHDvJTmhA9djd/dV1ZMj4
- /1byj17xwnc5zgd3aeZHt6lAX/l7VwKEEyIvLO2tnDY3mh3UrFd1GB30/wFuVJIe9sGu
- NcIgsyauz1aD1pqZBDYuOtDkPvXyAhpjTGOsh6Ddv+JOJu9B+RXd3J11NZDj3t01VQk9
- 73O7zz7WzNhhCHyUQRiVedvbh/97waQH+n3uRjcSHW0Efb1+utSQl3nXfxQFuID7SIfT
- ytoePy4nGXbRwr7dmF/35gKSWC17t65UkgGd1p3gEFMGHsqK2E9ZP/YyjOUKk/T4DxLV
- UmAA==; darn=nongnu.org
+ bh=kPomZFA3khv8E1I+KmB7TmRo1R6PA6pXARWIvgmr9qs=;
+ fh=AZkZ0b1lNOWrPAvx6utUMPvNnVTPoQb/VE06IgS7KRU=;
+ b=dV3digqd01FdZSKm7si7NSyCXgUcMgHRPqicDMijlNGW/a3aFt/S8dcAAXzhp0OwVC
+ fF/7U2uJVoHbt35M3boT0y87MobKAVePRZT2DblKb5MtA/RgxM0uHryWgk5ayxkEsCAQ
+ 0D7fi4ecQCea1gmDUkIa6/BCVBMn+pm+fur9UReSnUqMPEkzJOOuFJrT7GdZwSIO37PB
+ qqizWWjPTdCYWFp4uPEZfbt9jMOAW7EmjygaKxYbaORnH4dU4qZTVsfbdDa3zI+GLtp5
+ KlEEWWbxFcl3nTZ+jzuS7itgfaRAhPi1v6RscTFvK4fiYsxPY5VVpI03E2/QjOAC9C2Y
+ Glvg==; darn=nongnu.org
 ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1781185170; x=1781789970; darn=nongnu.org;
+ d=redhat.com; s=google; t=1781185588; x=1781790388; darn=nongnu.org;
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:from:to:cc:subject:date
  :message-id:reply-to;
- bh=d843nBiDtDCTxzQ8Jv4xQNcAeQVgmuNxcgSIK3lLSHo=;
- b=sk4KN+0zao5sG4irGxVLH1YLnEFn1qxY7bjIUNqiN3swxBeezWxm/2FsxZrmWYwNo4
- IiRY9J/elHGSX+T+2aNAtgtkvkai6KZ4d4Gf8xXSOioPGDYZ94jhPfiLSknWPh+mb6qO
- Dx6nspk21qslf3QJfmxiv/esV7WN/8CxQvsxf1qXVq4oUdCLX5Kl8GAU422/dkRO9WGc
- dIVGUxgJwRjQ8rI72qkkMtcafYrWBVFWjCXUzg9GeXEpBF05Qow60zN4W1HKbPtYbU7B
- 0+9MpUPPWSSjCLiK0wVxzZjr5U6KCPbCS3cQ96Z1x1N7tnjGP29lusffewty1qx2ho3V
- q+WA==
+ bh=kPomZFA3khv8E1I+KmB7TmRo1R6PA6pXARWIvgmr9qs=;
+ b=sENqtKJC+ldvgLeA0logTw0WA3W7izFYqwgUnVUvqPIxiuS4yLz4qF18a37RT0SuOs
+ jHNXAAB7dQWasbpvqTUfLW4Wygssk4W5H6yccGcjjZPPZrHUK+worOR53TgDYAZEKA4E
+ M201/0Gk+grkhwKa4vt4hVtjTjLIXC2v1R2LJUOGCV1ip8i1vW697IsTxMhu38Of50um
+ ZzHTsj3OuYlUyw49OzqGwWogqcLPW8BYU8sh9cwzAPmac6MhTQlpeJM3zLn49TwLOIc2
+ y1dprh5nC4rBfR4ngioXaNslZSzTWfbYLJBOd6sQZXey4q3HD5/Cknbx+JRI05Tirh34
+ lrcQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1781185170; x=1781789970;
+ d=1e100.net; s=20251104; t=1781185588; x=1781790388;
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to;
- bh=d843nBiDtDCTxzQ8Jv4xQNcAeQVgmuNxcgSIK3lLSHo=;
- b=IYyR0gW8cGzXYqgyGlyjVu6f4LBA9xSoSRbhawcCE53Fga5aQTaH6isv6FMK+2JK5e
- WUWl0PYj3gV8eioDUakCBGB33TEAcOHQNn38VdYZZYmTm9rhwWYs7LrUUq307RIwVypM
- gGvx24i9Rbh6yRNR03zgnir++Yv+ZRPHWf4Kkx+UEHvjGXFPTZB+M6Xm1NPkf9w2rXh4
- Z0iUfkse6dtrffG69Zxsg5PwsrgHeKsfXXQkPwdcp+Pu7asSdBmP/J/nMRm+Oo14rr4Z
- bO6auhZLnjWRdBju6G2UO+fx40jXgay6PG6Gy6C+MWKqjdLz1iLq8kX3pohymYXWl8wa
- FRNA==
-X-Forwarded-Encrypted: i=1;
- AFNElJ+HFroqPLwxs0/65Oy59xmKhRk1Y0rUrUYWi1VOSqjoWdXpWcT6f1DTd3m/0tEJp/os6LmC23RHJYCp@nongnu.org
-X-Gm-Message-State: AOJu0YwUGKcm+u41YWsKMwx9KzFlM8JPDp6AUbIpOR3G4+HLtw7cEGm4
- pvrYqxz9D9nXol7FgBGeHGiZderCC7XREwiRMJ5bDs0AiRWD/GNiKqzi54fxCfsi75uFNK0Oj6E
- Q12pSfQ9lu0eZ4iDb4I9msrjj7gAJd2g=
-X-Gm-Gg: Acq92OEtK3AkVhSQu9kDQFeLv5o57uVjufbwqEG8b94J0B6JiMTzJqBM1cKDubVBJbE
- PkCHQkhG6F/j5AR6Yrfde0FXE0JhBfza6Pxr8rOrwyp7HjZOeneW45TOThfqHJyNC1S7zqJLBuX
- Fm/94vqFiVuT2sh4YXDGvTPUZs+VFpNTMKLbA6a5APutYk4yUuuPKrZTgIHCyCK+CWqvZkfSwbs
- Kiu0G5KSmHhqK8YqNEnkd5/QGTIAVpmXtX28BiaAaRfbuFMkGxm0twhBnnYNFtX2589WUluh59L
- 9Q5YXoEHrBCvhl2rP7pax3IXw787SohP6c7x/SHC/7l7xhW+Db7K
-X-Received: by 2002:a05:6402:1f85:b0:687:285d:44a3 with SMTP id
- 4fb4d7f45d1cf-6930e31ff26mr1877729a12.15.1781185169505; Thu, 11 Jun 2026
- 06:39:29 -0700 (PDT)
+ bh=kPomZFA3khv8E1I+KmB7TmRo1R6PA6pXARWIvgmr9qs=;
+ b=CysD0hO8wZnbMiPrZ7xybwR95g+OCSC4oc9ORTGunxjEdg60oT5UMp65/usokrACgw
+ uxvnfZpM615dJrEWZVHLZ8PqH8T/RKEkPLQMOphRk2Lao557h/a+B50v9Ao/P5UyWJR7
+ QY1UVEqhyp7+3CGT/W1mAJ+gMvDTjiU2I/vCvnX4lAAgViG0XRxX6KL0t8hQcDU2mW4l
+ Rt3icx7IufP7zi7a6Or/vsENFJfbeyy6vcaVnSWdoEsUdOrZ7QAzIqXNuC3s2xpK70w1
+ tiCl+4oL+KbTxj1YsSt3wyaL5pugjiAuF0bJi8P1g0/BdZQJa7m4tN+agc+EyRB/x8LM
+ UQNw==
+X-Gm-Message-State: AOJu0Yyl8jtjYhqNTF/2toPeKF34Tf1tX3IbsQepOmPjmEWAtBGKV2G9
+ orWpt2kY+VJNqxHrSg2NbMj+DarzPIVTdrXrIK23TrznKP0nUA6IsoQdLDnT/Zor8nadQsBAZXz
+ Iv0Bc0vqosvA+xrr/i9JjhDMjBvgnTzo=
+X-Gm-Gg: Acq92OFoEHRMKTZVeyVK9p1+NIR8cEyOraIARGNS9Of/BGhZbtIIltBdbCYEXFShhUH
+ RCqYcOwLG91gun8u5r4YN8J/+ugsinRJPQSmXgzQgRht1duwfTvHQWpWXUDFcFYOsPGB1uBX/bG
+ gNHnyZzLAi/lqpW3wGD/sQ0yF7TbzZS7jx+KRnXaoawl9NPR+6LFpPtkBC/ksOH6h7rc1BJu9w4
+ 2jx+z+bgw89tKay6kF/fEenOkEMJl83IJOsQVeXEqe+Lg66ImkPzAyzWWE49/xHp7C2vg5P3a9i
+ /gM2Gl6rDjfnXP4p1gSt9B5P+BMTbKX3j/rbdpTddk3j1IvH6w==
+X-Received: by 2002:a05:7300:fd0b:b0:304:d92a:e60a with SMTP id
+ 5a478bee46e88-30804b75e04mr2387242eec.31.1781185587755; Thu, 11 Jun 2026
+ 06:46:27 -0700 (PDT)
 MIME-Version: 1.0
-References: <20260603193813.2327596-1-farosas@suse.de>
- <0e8ad49f-1d0e-467e-88b9-5a8462eac6a7@tls.msk.ru>
-In-Reply-To: <0e8ad49f-1d0e-467e-88b9-5a8462eac6a7@tls.msk.ru>
-From: Stefan Hajnoczi <stefanha@gmail.com>
-Date: Thu, 11 Jun 2026 09:39:16 -0400
-X-Gm-Features: AVVi8Cf1o_PMspjyeLhfGfpHpnDtMeglqe47jjbdoYu_4XPABor833JXzlFjcAA
-Message-ID: <CAJSP0QX-01g9EH5dtXMOUuzscPTYspaWnUFjT08oXq78oVgScA@mail.gmail.com>
-Subject: Re: [PATCH v2] qed: Don't try to flush during incoming migration
-To: Michael Tokarev <mjt@tls.msk.ru>
-Cc: Fabiano Rosas <farosas@suse.de>, qemu-devel@nongnu.org, berrange@redhat.com,
- Stefan Hajnoczi <stefanha@redhat.com>, Kevin Wolf <kwolf@redhat.com>,
- Hanna Reitz <hreitz@redhat.com>, qemu-stable <qemu-stable@nongnu.org>
+References: <20260611-b4-ui-v3-0-72bcbbea0fae@redhat.com>
+ <20260611-b4-ui-v3-22-72bcbbea0fae@redhat.com>
+ <ec625143-875e-41a3-b6f7-f3e23aa4b71b@rsg.ci.i.u-tokyo.ac.jp>
+In-Reply-To: <ec625143-875e-41a3-b6f7-f3e23aa4b71b@rsg.ci.i.u-tokyo.ac.jp>
+From: =?UTF-8?B?TWFyYy1BbmRyw6kgTHVyZWF1?= <marcandre.lureau@redhat.com>
+Date: Thu, 11 Jun 2026 17:46:15 +0400
+X-Gm-Features: AVVi8CcyTA6mic_W7RndEkCp3rwtapYoI31l8UZuuNYDH4Hdp440b6GkQPUduKk
+Message-ID: <CAJ+F1CLyz0Bo=_pqVh2c854VXrDdSF0HSBMbjfBCxZ5xGeUfXQ@mail.gmail.com>
+Subject: Re: [PATCH v3 22/35] ui/dbus: implement display cleanup
+To: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
+Cc: qemu-devel@nongnu.org, Paolo Bonzini <pbonzini@redhat.com>, 
+ =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>, 
+ =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@mailo.com>, 
+ Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
+ Fabiano Rosas <farosas@suse.de>, 
+ Laurent Vivier <lvivier@redhat.com>, Alex Williamson <alex@shazbot.org>, 
+ =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>, 
+ Peter Maydell <peter.maydell@linaro.org>
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::532;
- envelope-from=stefanha@gmail.com; helo=mail-ed1-x532.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+Received-SPF: pass client-ip=2607:f8b0:4864:20::1229;
+ envelope-from=marcandre.lureau@gmail.com; helo=mail-dl1-x1229.google.com
+X-Spam_score_int: -16
+X-Spam_score: -1.7
+X-Spam_bar: -
+X-Spam_report: (-1.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, FREEMAIL_FORGED_FROMDOMAIN=0.001,
+ FREEMAIL_FROM=0.001, HEADER_FROM_DIFFERENT_DOMAINS=0.249,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -120,56 +125,48 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, Jun 11, 2026 at 12:08=E2=80=AFAM Michael Tokarev <mjt@tls.msk.ru> w=
-rote:
+Hi
+
+On Thu, Jun 11, 2026 at 5:19=E2=80=AFPM Akihiko Odaki
+<odaki@rsg.ci.i.u-tokyo.ac.jp> wrote:
 >
-> On 03.06.2026 22:38, Fabiano Rosas wrote:
-> > It's not possible to access the image file while there is an incoming
-> > migration in progress, the QEMU process doesn't hold any locks to the
-> > storage at this point so nodes are inactive. Attempting to flush leads
-> > to an assert at bdrv_co_write_req_prepare():
+> On 2026/06/11 18:03, Marc-Andr=C3=A9 Lureau wrote:
+> > Add dbus_cleanup() to unparent the D-Bus display object, ensuring
+> > proper teardown before user_creatable_cleanup() runs.
 > >
-> >     assert(!(bs->open_flags & BDRV_O_INACTIVE))
-> >
-> > The issue is reproducible by running iotest 181 on a host under cpu
-> > load. The migration must coincide with the header already containing
-> > the QED_F_NEED_CHECK flag.
-> >
-> > The sequence of events is as follows, with the respective call stacks
-> > referenced below:
-> >
-> > During block device init, bdrv_qed_attach_aio_context() starts the
-> > 'need_check' timer. The timer will not fire during incoming migration
-> > as it uses QEMU_CLOCK_VIRTUAL (to avoid this very issue, as the code
-> > comment indicates).                                                   (=
-0)
-> >
-> > However, there's still bdrv_qed_drain_begin() which uses the fact that
-> > the timer is live to decide whether to start the
-> > qed_need_check_timer_entry() directly.                                (=
-1)
-> >
-> > The qed_need_check_timer_entry() eventually calls into
-> > qed_write_header() -> bdrv_co_pwrite() leading to the assert.         (=
-2)
-> >
-> > Skip creating the 'need_check' timer whenever the image is inactive.
-> ...
-> > Note that this issue is not exactly the same as what's been reported
-> > in Gitlab, but given how easily this reproduces, I imagine it has to
-> > be happening in that setup as well.
-> >
-> > Link: https://gitlab.com/qemu-project/qemu/-/work_items/3515
-> > Signed-off-by: Fabiano Rosas <farosas@suse.de>
+> > Signed-off-by: Marc-Andr=C3=A9 Lureau <marcandre.lureau@redhat.com>
 > > ---
-> >   block/qed.c | 16 +++++++++++-----
-> >   1 file changed, 11 insertions(+), 5 deletions(-)
+> >   ui/dbus-console.c |  3 +++
+> >   ui/dbus.c         | 13 +++++++++++++
+> >   2 files changed, 16 insertions(+)
+> >
+> > diff --git a/ui/dbus-console.c b/ui/dbus-console.c
+> > index 742bf9639a4..63d21493101 100644
+> > --- a/ui/dbus-console.c
+> > +++ b/ui/dbus-console.c
+> > @@ -152,6 +152,9 @@ dbus_display_console_dispose(GObject *object)
+> >       DBusDisplayConsole *ddc =3D DBUS_DISPLAY_CONSOLE(object);
+> >
+> >       qemu_console_unregister_listener(&ddc->dcl);
+> > +    if (ddc->dcl.con) {
+> > +        qemu_console_set_display_gl_ctx(ddc->dcl.con, NULL);
 >
-> I'm picking this one up for the active qemu-stable series.
-> Dunno how popular qed is these days, though - back in the day it was
-> a useful alternative to qcow2, now it feels more like a toy :)
+> Somewhat weird, but theoretically this may clear a console GL context
+> registered by another display. Below is an example I let an LLM generate
+> (not tested):
+>
+> qemu-system-x86_64 \
+>    -machine q35 \
+>    -device virtio-vga-gl \
+>    -display dbus,p2p=3Dyes,gl=3Doff \
+>    -spice unix=3Don,addr=3D/tmp/qemu-spice.sock,disable-ticketing=3Don,gl=
+=3Don
+>
 
-I'm not aware of users based on the lack of bug reports and patches.
+Right, it's a bit embarassing. I think spice should be a display (and
+vnc too eventually..), so we wouldn't have 2 competing console/display
+handlers that have their own GL.
 
-Stefan
+I think the safest for now is to simply prevent spice with a display
+providing GL. I'll work on a patch.
 
