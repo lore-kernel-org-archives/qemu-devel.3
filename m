@@ -4,62 +4,107 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id AAB5CCD98C7
-	for <qemu-devel@archiver.kernel.org>; Thu, 11 Jun 2026 08:42:03 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id DF180CD98C7
+	for <qemu-devel@archiver.kernel.org>; Thu, 11 Jun 2026 08:43:06 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wXaz2-0002Sg-Fz; Thu, 11 Jun 2026 04:41:52 -0400
+	id 1wXb00-0003VU-O8; Thu, 11 Jun 2026 04:42:52 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <maobibo@loongson.cn>)
- id 1wXaz0-0002SR-2e
- for qemu-devel@nongnu.org; Thu, 11 Jun 2026 04:41:50 -0400
-Received: from mail.loongson.cn ([114.242.206.163])
- by eggs.gnu.org with esmtp (Exim 4.90_1)
- (envelope-from <maobibo@loongson.cn>) id 1wXayx-0004d2-Io
- for qemu-devel@nongnu.org; Thu, 11 Jun 2026 04:41:49 -0400
-Received: from loongson.cn (unknown [10.40.46.54])
- by gateway (Coremail) with SMTP id _____8Dx13jCdCpqeAMTAA--.25585S3;
- Thu, 11 Jun 2026 16:41:39 +0800 (CST)
-Received: from fedora.loongson.cn (unknown [10.40.46.54])
- by front1 (Coremail) with SMTP id qMiowJCxWeC8dCpqKbuiAA--.47266S2;
- Thu, 11 Jun 2026 16:41:33 +0800 (CST)
-From: Bibo Mao <maobibo@loongson.cn>
-To: Fabiano Rosas <farosas@suse.de>, Laurent Vivier <lvivier@redhat.com>,
- Peter Xu <peterx@redhat.com>
-Cc: Paolo Bonzini <pbonzini@redhat.com>, Song Gao <gaosong@loongson.cn>,
- qemu-devel@nongnu.org
-Subject: [PATCH v2] tests/qtest/migration: Add migration test on loongarch
-Date: Thu, 11 Jun 2026 16:43:12 +0800
-Message-ID: <20260611084312.70042-1-maobibo@loongson.cn>
-X-Mailer: git-send-email 2.54.0
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1wXazy-0003V8-Q6
+ for qemu-devel@nongnu.org; Thu, 11 Jun 2026 04:42:50 -0400
+Received: from mail-yx1-xb12f.google.com ([2607:f8b0:4864:20::b12f])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1wXazx-00056C-33
+ for qemu-devel@nongnu.org; Thu, 11 Jun 2026 04:42:50 -0400
+Received: by mail-yx1-xb12f.google.com with SMTP id
+ 956f58d0204a3-66062a414fcso8551801d50.1
+ for <qemu-devel@nongnu.org>; Thu, 11 Jun 2026 01:42:48 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1781167367; cv=none;
+ d=google.com; s=arc-20240605;
+ b=CHDbhV+SWzoa0rDM6KC8ORHw77J28RhspPZL/BtiIe3diyU9JLFShqArV6tHTPVPI0
+ m54jGBZKzXJM9VKHVb3wFjWuIkRAVpF8NZvMWJ7NaLPDD/SItNQBIECpKPMco3Wr0HfP
+ YNjwVaSjg4tXNQTfCqeKf5raLJuqTMj2x1Ounlu/qDm+pvBKegxIoiProK2BTT1Z5NEC
+ XREzRjA3bNDeqZN41XMyN022JLN0IVMybJ56TEpHrUCe/1cpqyd1nEJa70WYWGxIQX5N
+ pKOjnfK6tSVgY5koEMHxOt2x01uLuws4C6d17RAd547nDtKwtNmOanYzOjYLX1mrdHFx
+ dLyg==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
+ s=arc-20240605; 
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:dkim-signature;
+ bh=mWWhH03T5VRWIBwRbGmz9d1HPX4OId+5W+QZjs7c6TQ=;
+ fh=TpNiJu7eWjoj/sj8B9ppLGSr7HqVokMiQY3poZNBRDg=;
+ b=ItiTTtDqS6EKg2zRzNofW99xzxOzk6oXQm40hi5VTwWIVSdFeM3vQQyq/p3PwbzQea
+ 7TkkiqcoihRUUhDd2dIAq8nZ+sLUqtybasqjIVBwi6aB2PFuQimIzMkP6X+rdnzQabCj
+ kHSuriXW/c872aHr30uor5VTwLhldodCWknUoN1HRECPaJLn0UfAlahjUu9ETuVWdx9O
+ Pjm0gqWdVwrWdz+F8LkT6t51FfvyyuAR9DVJyS/oQ9pfrgmrwLTSd01XCXqvOhiV5/I5
+ VTD6hkrC1sT7iESVPPyxakfhMUDlJV1XSIfnsKRttH4qhmWtFa8Vm0ahop60Z0mzs6ub
+ Bxaw==; darn=nongnu.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1781167367; x=1781772167; darn=nongnu.org;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=mWWhH03T5VRWIBwRbGmz9d1HPX4OId+5W+QZjs7c6TQ=;
+ b=rHw1LJuWDre1Wo+nCdYcvLXH+4Zi1MVRmdJuCINtYP7iVqMLPKfXb4pE31scz3vjQt
+ UGfht9gvBGan2ZLTaWWxp87xdrd9lZPxhESDkLshLgTcuRSPpgvmTOkOLbIBS0FL2MWK
+ jpQ/zlq4zZ3pT5lOrh/PxuCObJDLYZKUQ6HRYcGkiOWtNK2k9IR2vFw2GtxCk304QgCV
+ m+B+Vsd1GnFcGGkspWny0giBh7WSSHa2B+VLaO+aQymFRQADyTw28hl8gwMl54urwjaV
+ gXv96M53zvc+Lui6Nt2Hr99mj26B8QWON6rJeqDITLHsGJIlXVIia9WmfNHbSAsiULhg
+ iiNg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1781167367; x=1781772167;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=mWWhH03T5VRWIBwRbGmz9d1HPX4OId+5W+QZjs7c6TQ=;
+ b=YYtYXH33bJoCVShHYNRy6Hsvlg7xTy0DiRRO1jI7MPt10z2gE2nGReG5yLZCUsjRZ7
+ 9GaE3hTnr70dFdYlNtdswFJItt7LVf8uKRGr5T8QkJcJ++ZNkNvSQp8elqZjJ230tQkx
+ 2RTTFfrdosCnIBVdS6c/WBCnfvcORry/0zKp2kky3ou6Ok36UriGK+jtwkhdB3DzehOc
+ fjdzyt/KA5vbWjRied9/5gUDDOO7L5OHd5aHrcBBlfrTkXYRUhajFD24+lhwYJFJ8Fk5
+ tjOUSu7BNr4MF9IgIZ3DxSb4j9lGBIhehMC6CybJR1hU3em+ztPh87eGpp6OfTRpQQi9
+ ClCw==
+X-Gm-Message-State: AOJu0YwSiAPhov0S2t/mQfKSITw+tz7xKgA+dkHEEQOXh5S374hN1tff
+ oV/UiMl6wsR66YF+Lzf/PgElpuNkwkpeM4yb54NrSygRk+AHF/0UvSrOFGCccDJbOPe6YehTH9D
+ B5lpiUuWCrS5V679B07x8wsGfUdIR0dtOGRBAIotLAw8eB07OaOsX
+X-Gm-Gg: Acq92OECpTSo7Vr72A2k7O5N4guOEru+UgwgXcfpGb6Aa+JufLu32zuN22Uo+SlMQH6
+ LSjrSAhBySibSUE+HVLma3ZGhU8YVQDB6MouormKJNN323/e0MraIB2P8S8jDzmxjtUoX2LFmQj
+ h9RkAmgHdLtdaBoTSY62bmtWcZT7C8zTKy18y8G6guFQf2rsnhXqCoQkYzvVL3mi8FCKZIdOWAf
+ 6eSbUP89jnGB7Vp8RRnkY7taQG1curh4h8rGrP2osSOMLuHx+HgfjHj7IgXQczPt/0tI39SgCnm
+ pd41LFBZCrJlbXa2T7OdrqRBqzjO452+40PHLuH65LOC92ACQu9ZxifSOLxTBUNzmrgQLf+LmB6
+ /J05mYIe2Weef
+X-Received: by 2002:a53:d00a:0:b0:660:8fc2:cba0 with SMTP id
+ 956f58d0204a3-662699ff617mr1391689d50.58.1781167367074; Thu, 11 Jun 2026
+ 01:42:47 -0700 (PDT)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-CM-TRANSID: qMiowJCxWeC8dCpqKbuiAA--.47266S2
-X-CM-SenderInfo: xpdruxter6z05rqj20fqof0/
-X-Coremail-Antispam: 1Uk129KBj93XoWxKFyDtFyxJw13WFyfJw15Jrc_yoW3uw1xpw
- 1rC3yxKa1xGF12q3WxWFyUWryrGw4xKFnxua9rGr10krsxJF10yw1agrW2qFnxX3y0vF40
- 9wn5tw13t3WqyrcCm3ZEXasCq-sJn29KB7ZKAUJUUUU5529EdanIXcx71UUUUU7KY7ZEXa
- sCq-sGcSsGvfJ3Ic02F40EFcxC0VAKzVAqx4xG6I80ebIjqfuFe4nvWSU5nxnvy29KBjDU
- 0xBIdaVrnRJUUUkFb4IE77IF4wAFF20E14v26r1j6r4UM7CY07I20VC2zVCF04k26cxKx2
- IYs7xG6rWj6s0DM7CIcVAFz4kK6r106r15M28lY4IEw2IIxxk0rwA2F7IY1VAKz4vEj48v
- e4kI8wA2z4x0Y4vE2Ix0cI8IcVAFwI0_Gr0_Xr1l84ACjcxK6xIIjxv20xvEc7CjxVAFwI
- 0_Gr0_Cr1l84ACjcxK6I8E87Iv67AKxVW8Jr0_Cr1UM28EF7xvwVC2z280aVCY1x0267AK
- xVW8Jr0_Cr1UM2AIxVAIcxkEcVAq07x20xvEncxIr21l57IF6xkI12xvs2x26I8E6xACxx
- 1l5I8CrVACY4xI64kE6c02F40Ex7xfMcIj6xIIjxv20xvE14v26r1Y6r17McIj6I8E87Iv
- 67AKxVWUJVW8JwAm72CE4IkC6x0Yz7v_Jr0_Gr1lF7xvr2IYc2Ij64vIr41l42xK82IYc2
- Ij64vIr41l4I8I3I0E4IkC6x0Yz7v_Jr0_Gr1lx2IqxVAqx4xG67AKxVWUJVWUGwC20s02
- 6x8GjcxK67AKxVWUGVWUWwC2zVAF1VAY17CE14v26r126r1DMIIYrxkI7VAKI48JMIIF0x
- vE2Ix0cI8IcVAFwI0_Jr0_JF4lIxAIcVC0I7IYx2IY6xkF7I0E14v26r1j6r4UMIIF0xvE
- 42xK8VAvwI8IcIk0rVWUJVWUCwCI42IY6I8E87Iv67AKxVWUJVW8JwCI42IY6I8E87Iv6x
- kF7I0E14v26r1j6r4UYxBIdaVFxhVjvjDU0xZFpf9x07j1YL9UUUUU=
-Received-SPF: pass client-ip=114.242.206.163; envelope-from=maobibo@loongson.cn;
- helo=mail.loongson.cn
-X-Spam_score_int: -18
-X-Spam_score: -1.9
-X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, SPF_HELO_NONE=0.001,
+References: <20241014133935.470709-1-marcandre.lureau@redhat.com>
+ <20241014133935.470709-19-marcandre.lureau@redhat.com>
+ <CAFEAcA9kBAUESA+ATfYLM8bPuNJ6xB_HLPAp9SrsuQ4LP4m_dA@mail.gmail.com>
+In-Reply-To: <CAFEAcA9kBAUESA+ATfYLM8bPuNJ6xB_HLPAp9SrsuQ4LP4m_dA@mail.gmail.com>
+From: Peter Maydell <peter.maydell@linaro.org>
+Date: Thu, 11 Jun 2026 09:42:35 +0100
+X-Gm-Features: AVVi8Cf3b8XUaCuY0-BDoxaDJ17CcA9Y_hdJD8d8usLCc1KbQKdbixIJ9EYkuu8
+Message-ID: <CAFEAcA-wuhdRVc44HSOdQnGP05sCg3Ngt7KsZS3EOa7duQLJOw@mail.gmail.com>
+Subject: Re: [PULL 18/20] ui: refactor using a common qemu_pixman_shareable
+To: qemu-devel@nongnu.org
+Cc: =?UTF-8?B?TWFyYy1BbmRyw6kgTHVyZWF1?= <marcandre.lureau@redhat.com>, 
+ "Michael S. Tsirkin" <mst@redhat.com>,
+ Alistair Francis <alistair@alistair23.me>, 
+ "Edgar E. Iglesias" <edgar.iglesias@gmail.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2607:f8b0:4864:20::b12f;
+ envelope-from=peter.maydell@linaro.org; helo=mail-yx1-xb12f.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -76,240 +121,129 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Add migration qtest on loongarch64 system, the test passes to run with
-the following result:
-  qemu:qtest+qtest-loongarch64/qtest-loongarch64/migration-test OK 15.94s 9 subtests passed
+Ping -- does anybody have suggestions for the best fix
+for this regression ?
 
-Signed-off-by: Bibo Mao <maobibo@loongson.cn>
----
-v1 ... v2:
-  1. Add SPDX-License in __note in file tests/qtest/migration/Makefile
-  2. Regerate file tests/qtest/migration/loongarch64/a-b-kernel.h with
-     __note information
----
- MAINTAINERS                                   |  1 +
- tests/qtest/meson.build                       |  3 +-
- tests/qtest/migration/Makefile                |  4 +-
- tests/qtest/migration/bootfile.c              |  4 ++
- tests/qtest/migration/bootfile.h              |  4 ++
- tests/qtest/migration/framework.c             |  6 +++
- tests/qtest/migration/loongarch64/Makefile    | 20 ++++++++
- .../qtest/migration/loongarch64/a-b-kernel.S  | 46 +++++++++++++++++++
- .../qtest/migration/loongarch64/a-b-kernel.h  | 20 ++++++++
- 9 files changed, 106 insertions(+), 2 deletions(-)
- create mode 100644 tests/qtest/migration/loongarch64/Makefile
- create mode 100644 tests/qtest/migration/loongarch64/a-b-kernel.S
- create mode 100644 tests/qtest/migration/loongarch64/a-b-kernel.h
+thanks
+-- PMM
 
-diff --git a/MAINTAINERS b/MAINTAINERS
-index 2b5b581e17..91d72feebe 100644
---- a/MAINTAINERS
-+++ b/MAINTAINERS
-@@ -1359,6 +1359,7 @@ F: hw/intc/loongarch_*.c
- F: hw/intc/loongson_ipi_common.c
- F: hw/rtc/ls7a_rtc.c
- F: gdbstub/gdb-xml/loongarch*.xml
-+F: tests/qtest/migration/loongarch64/
- 
- M68K Machines
- -------------
-diff --git a/tests/qtest/meson.build b/tests/qtest/meson.build
-index 45ea497fa5..1636b8616e 100644
---- a/tests/qtest/meson.build
-+++ b/tests/qtest/meson.build
-@@ -154,7 +154,8 @@ qtests_loongarch64 = qtests_filter + \
-   (config_all_devices.has_key('CONFIG_LOONGARCH_VIRT') ? ['numa-test'] : []) + \
-   (unpack_edk2_blobs ? ['bios-tables-test'] : []) + \
-   ['boot-serial-test',
--   'cpu-plug-test']
-+   'cpu-plug-test',
-+   'migration-test']
- 
- qtests_m68k = ['boot-serial-test'] + \
-   qtests_filter
-diff --git a/tests/qtest/migration/Makefile b/tests/qtest/migration/Makefile
-index c183b69941..626e3974f7 100644
---- a/tests/qtest/migration/Makefile
-+++ b/tests/qtest/migration/Makefile
-@@ -5,7 +5,7 @@
- # See the COPYING file in the top-level directory.
- #
- 
--TARGET_LIST = i386 aarch64 s390x ppc64
-+TARGET_LIST = i386 aarch64 s390x ppc64 loongarch64
- 
- SRC_PATH = ../../../..
- 
-@@ -23,6 +23,8 @@ help:
- 	@echo " Possible targets are: $(TARGET_LIST)"
- 
- override define __note
-+/* SPDX-License-Identifier: GPL-2.0-or-later */
-+
- /*
-  * This file is automatically generated from the assembly file in
-  * tests/qtest/migration/$@. Edit that file and then run "make"
-diff --git a/tests/qtest/migration/bootfile.c b/tests/qtest/migration/bootfile.c
-index 479c43231d..e46ad09de7 100644
---- a/tests/qtest/migration/bootfile.c
-+++ b/tests/qtest/migration/bootfile.c
-@@ -19,6 +19,7 @@
- #include "bootfile.h"
- #include "i386/a-b-bootblock.h"
- #include "aarch64/a-b-kernel.h"
-+#include "loongarch64/a-b-kernel.h"
- #include "ppc64/a-b-kernel.h"
- #include "s390x/a-b-bios.h"
- 
-@@ -57,6 +58,9 @@ char *bootfile_create(const char *arch, const char *dir, bool suspend_me)
-         content = aarch64_kernel;
-         len = sizeof(aarch64_kernel);
-         g_assert(sizeof(aarch64_kernel) <= ARM_TEST_MAX_KERNEL_SIZE);
-+    } else if (strcmp(arch, "loongarch64") == 0) {
-+        content = loongarch64_kernel;
-+        len = sizeof(loongarch64_kernel);
-     } else {
-         g_assert_not_reached();
-     }
-diff --git a/tests/qtest/migration/bootfile.h b/tests/qtest/migration/bootfile.h
-index 0ce5b34433..a4060ea4f7 100644
---- a/tests/qtest/migration/bootfile.h
-+++ b/tests/qtest/migration/bootfile.h
-@@ -42,6 +42,10 @@
-  */
- #define ARM_TEST_MAX_KERNEL_SIZE (512 * 1024)
- 
-+/* LoongArch64 */
-+#define LOONGARCH_TEST_MEM_START (32 * 1024 * 1024)
-+#define LOONGARCH_TEST_MEM_END   (100 * 1024 * 1024)
-+
- #ifndef MIGRATION_GUEST_CODE
- void bootfile_delete(void);
- char *bootfile_create(const char *arch, const char *dir, bool suspend_me);
-diff --git a/tests/qtest/migration/framework.c b/tests/qtest/migration/framework.c
-index a9b58d03aa..a830b96f41 100644
---- a/tests/qtest/migration/framework.c
-+++ b/tests/qtest/migration/framework.c
-@@ -360,6 +360,12 @@ int migrate_args(char **from, char **to, MigrateStart *args)
-         arch_opts = g_strdup_printf("-cpu max -kernel %s", bootpath);
-         start_address = ARM_TEST_MEM_START;
-         end_address = ARM_TEST_MEM_END;
-+    } else if (strcmp(arch, "loongarch64") == 0) {
-+        memory_size = "256M";
-+        machine_alias = "virt";
-+        arch_opts = g_strdup_printf("-bios %s", bootpath);
-+        start_address = LOONGARCH_TEST_MEM_START;
-+        end_address = LOONGARCH_TEST_MEM_END;
-     } else {
-         g_assert_not_reached();
-     }
-diff --git a/tests/qtest/migration/loongarch64/Makefile b/tests/qtest/migration/loongarch64/Makefile
-new file mode 100644
-index 0000000000..3c8cfeee86
---- /dev/null
-+++ b/tests/qtest/migration/loongarch64/Makefile
-@@ -0,0 +1,20 @@
-+# SPDX-License-Identifier: GPL-2.0-or-later
-+
-+# To specify cross compiler prefix, use CROSS_PREFIX=
-+#   $ make CROSS_PREFIX=loongarch64-linux-gnu-
-+
-+.PHONY: all clean
-+all: a-b-kernel.h
-+
-+a-b-kernel.h: loongarch64.kernel
-+	echo "$$__note" > $@
-+	xxd -i $< | sed -e 's/.*int.*//' >> $@
-+
-+loongarch64.kernel: loongarch64.elf
-+	$(CROSS_PREFIX)objcopy -j .text -O binary $< $@
-+
-+loongarch64.elf: a-b-kernel.S
-+	$(CROSS_PREFIX)gcc -o $@ -nostdlib -Wl,--build-id=none $<
-+
-+clean:
-+	$(RM) *.kernel *.elf
-diff --git a/tests/qtest/migration/loongarch64/a-b-kernel.S b/tests/qtest/migration/loongarch64/a-b-kernel.S
-new file mode 100644
-index 0000000000..577d4b238c
---- /dev/null
-+++ b/tests/qtest/migration/loongarch64/a-b-kernel.S
-@@ -0,0 +1,46 @@
-+/* SPDX-License-Identifier: GPL-2.0-or-later */
-+
-+#include "../bootfile.h"
-+
-+#define LOONGARCH_CSR_CRMD          0
-+#define LOONGARCH_VIRT_UART         0x1FE001E0
-+.section .text
-+
-+    .globl  _start
-+_start:
-+    /* output char 'A' to UART16550 */
-+    li.d    $t0, LOONGARCH_VIRT_UART
-+    li.w    $t1, 'A'
-+    st.b    $t1, $t0, 0
-+
-+    /* traverse test memory region */
-+    li.d    $t0, LOONGARCH_TEST_MEM_START
-+    li.d    $t1, LOONGARCH_TEST_MEM_END
-+    li.d    $t2, TEST_MEM_PAGE_SIZE
-+    li.d    $t4, LOONGARCH_VIRT_UART
-+    li.w    $t5, 'B'
-+
-+clean:
-+    st.b    $zero, $t0, 0
-+    add.d   $t0,   $t0, $t2
-+    bne     $t0,   $t1, clean
-+    /* keeps a counter so we can limit the output speed */
-+    addi.d  $t6,   $zero, 0
-+
-+mainloop:
-+    li.d    $t0, LOONGARCH_TEST_MEM_START
-+
-+innerloop:
-+    ld.bu   $t3, $t0, 0
-+    addi.w  $t3, $t3, 1
-+    ext.w.b $t3, $t3
-+    st.b    $t3, $t0, 0
-+    add.d   $t0, $t0, $t2
-+    bne     $t0, $t1, innerloop
-+
-+    addi.d  $t6, $t6, 1
-+    andi    $t6, $t6, 31
-+    bnez    $t6, mainloop
-+
-+    st.b    $t5, $t4, 0
-+    b       mainloop
-diff --git a/tests/qtest/migration/loongarch64/a-b-kernel.h b/tests/qtest/migration/loongarch64/a-b-kernel.h
-new file mode 100644
-index 0000000000..6d5d811f79
---- /dev/null
-+++ b/tests/qtest/migration/loongarch64/a-b-kernel.h
-@@ -0,0 +1,20 @@
-+/* SPDX-License-Identifier: GPL-2.0-or-later */
-+
-+/*
-+ * This file is automatically generated from the assembly file in
-+ * tests/qtest/migration/loongarch64. Edit that file and then run "make"
-+ * inside tests/qtest/migration to update, and then remember to send both
-+ * the header and the assembler differences in your patch submission.
-+ */
-+unsigned char loongarch64_kernel[] = {
-+  0x0c, 0xc0, 0x3f, 0x14, 0x8c, 0x81, 0x87, 0x03, 0x0d, 0x04, 0x81, 0x03,
-+  0x8d, 0x01, 0x00, 0x29, 0x0c, 0x00, 0x04, 0x14, 0x0d, 0x80, 0x0c, 0x14,
-+  0x2e, 0x00, 0x00, 0x14, 0x10, 0xc0, 0x3f, 0x14, 0x10, 0x82, 0x87, 0x03,
-+  0x11, 0x08, 0x81, 0x03, 0x80, 0x01, 0x00, 0x29, 0x8c, 0xb9, 0x10, 0x00,
-+  0x8d, 0xf9, 0xff, 0x5f, 0x12, 0x00, 0xc0, 0x02, 0x0c, 0x00, 0x04, 0x14,
-+  0x8f, 0x01, 0x00, 0x2a, 0xef, 0x05, 0x80, 0x02, 0xef, 0x5d, 0x00, 0x00,
-+  0x8f, 0x01, 0x00, 0x29, 0x8c, 0xb9, 0x10, 0x00, 0x8d, 0xed, 0xff, 0x5f,
-+  0x52, 0x06, 0xc0, 0x02, 0x52, 0x7e, 0x40, 0x03, 0x5f, 0xde, 0xff, 0x47,
-+  0x11, 0x02, 0x00, 0x29, 0xff, 0xd7, 0xff, 0x53
-+};
-+
-
-base-commit: 10a9fa0065a3cd3dcf12e2eae6b8caaac6ecdec7
--- 
-2.54.0
-
+On Fri, 29 May 2026 at 14:34, Peter Maydell <peter.maydell@linaro.org> wrot=
+e:
+>
+> On Mon, 14 Oct 2024 at 14:41, <marcandre.lureau@redhat.com> wrote:
+> >
+> > From: Marc-Andr=C3=A9 Lureau <marcandre.lureau@redhat.com>
+> >
+> > Use a common shareable type for win32 & unix, and helper functions.
+> > This simplify the code as it avoids a lot of #ifdef'ery.
+> >
+> > Note: if it helps review, commits could be reordered to introduce the
+> > common type before introducing shareable memory for unix.
+> >
+> > Suggested-by: Akihiko Odaki <akihiko.odaki@daynix.com>
+> > Signed-off-by: Marc-Andr=C3=A9 Lureau <marcandre.lureau@redhat.com>
+> > Reviewed-by: Akihiko Odaki <akihiko.odaki@daynix.com>
+> > Message-ID: <20241008125028.1177932-19-marcandre.lureau@redhat.com>
+>
+> Hi; this is a rather old commit (now 1ff788db9781615b in git),
+> but I have just noticed that it seems to break the usage of
+> qemu_create_displaysurface_from() by hw/display/xlnx_dp.c.
+>
+>
+> > @@ -517,14 +482,25 @@ DisplaySurface *qemu_create_displaysurface_from(i=
+nt width, int height,
+> >      DisplaySurface *surface =3D g_new0(DisplaySurface, 1);
+> >
+> >      trace_displaysurface_create_from(surface, width, height, format);
+> > -#ifndef WIN32
+> > -    surface->shmfd =3D -1;
+> > -#endif
+> > -    surface->image =3D pixman_image_create_bits(format,
+> > -                                              width, height,
+> > -                                              (void *)data, linesize);
+>
+> Before this refactoring, qemu_create_displaysurface_from() always
+> calls pixman_image_create_bits(). That pixman function allows
+> you to pass NULL to mean "allocate me the memory for the data".
+> If you do that, pixman will always compute the stride for the
+> data (by looking at the pixel format and the width), so the
+> input linesize here is ignored. The xlnx_dp.c code takes
+> advantage of this in calls like:
+>
+>         s->g_plane.surface
+>                 =3D qemu_create_displaysurface_from(width, height,
+>                                                   s->g_plane.format, 0, N=
+ULL);
+>
+> > -    assert(surface->image !=3D NULL);
+> > +    surface->share_handle =3D SHAREABLE_NONE;
+> >
+> > +    if (data) {
+> > +        surface->image =3D pixman_image_create_bits(format,
+> > +                                                  width, height,
+> > +                                                  (void *)data, linesi=
+ze);
+> > +    } else {
+> > +        qemu_pixman_image_new_shareable(&surface->image,
+> > +                                        &surface->share_handle,
+> > +                                        "displaysurface",
+> > +                                        format,
+> > +                                        width,
+> > +                                        height,
+> > +                                        linesize,
+> > +                                        &error_abort);
+> > +        surface->flags =3D QEMU_ALLOCATED_FLAG;
+> > +    }
+>
+> In the refactored version, although non-NULL data still
+> results in a call to pixman_image_create_bits(), now a NULL
+> data pointer means we call qemu_pixman_image_new_shareable().
+>
+> > +bool
+> > +qemu_pixman_image_new_shareable(pixman_image_t **image,
+> > +                                qemu_pixman_shareable *handle,
+> > +                                const char *name,
+> > +                                pixman_format_code_t format,
+> > +                                int width,
+> > +                                int height,
+> > +                                int rowstride_bytes,
+> > +                                Error **errp)
+> > +{
+> > +    ERRP_GUARD();
+> > +    size_t size =3D height * rowstride_bytes;
+>
+> This function assumes that rowstride_bytes is not zero,
+> so the previously-working "pass 0, NULL" now results in
+> a size value of 0 here and an attempt to allocate 0 bytes
+> in qemu_pixman_shareable_alloc(), which winds up triggering
+> an abort in qemu_memfd_alloc().
+>
+> Presumably:
+> (1) qemu_pixman_image_new_shareable() should calculate the
+> rowstride_bytes as pixman does, rather than requiring it
+> to be passed in
+> (2) qemu_memfd_alloc() ought not to abort on zero size
+>
+>
+> For a repro case:
+>
+> $ cat /tmp/xlnx-dp.txt
+> writel 0xfd4a0194 0x00000780
+> writel 0xfd4a0198 0x00000438
+> $ ./build/arm/qemu-system-aarch64 -accel qtest -M xlnx-zcu102
+> -display none -chardev
+> file,id=3Drepro,path=3D/dev/null,input-path=3D/tmp/xlnx-dp.txt -qtest
+> chardev:repro
+> [I 0.000000] OPENED
+> pulseaudio: set_sink_input_volume() failed Reason: Invalid argument
+> pulseaudio: set_sink_input_mute() failed Reason: Invalid argument
+> [R +0.121066] writel 0xfd4a0194 0x00000780
+> [S +0.121092] OK
+> [R +0.121096] writel 0xfd4a0198 0x00000438
+> Unexpected error in qemu_memfd_alloc() at ../../util/memfd.c:143:
+> qemu-system-aarch64: failed to allocate shared memory: Invalid argument
+> Aborted (core dumped)
+>
+> thanks
+> -- PMM
 
