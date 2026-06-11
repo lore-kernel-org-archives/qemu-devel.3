@@ -4,103 +4,136 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D96FACD98CC
-	for <qemu-devel@archiver.kernel.org>; Thu, 11 Jun 2026 11:48:44 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 10BC9CD98D5
+	for <qemu-devel@archiver.kernel.org>; Thu, 11 Jun 2026 11:48:45 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wXdt3-0005Az-O3; Thu, 11 Jun 2026 07:47:53 -0400
+	id 1wXdt6-0005Bs-Ml; Thu, 11 Jun 2026 07:47:56 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <marcandre.lureau@gmail.com>)
- id 1wXdt1-0005Ac-LF
- for qemu-devel@nongnu.org; Thu, 11 Jun 2026 07:47:51 -0400
-Received: from mail-dy1-x1333.google.com ([2607:f8b0:4864:20::1333])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <marcandre.lureau@gmail.com>)
- id 1wXdt0-0005WL-5q
- for qemu-devel@nongnu.org; Thu, 11 Jun 2026 07:47:51 -0400
-Received: by mail-dy1-x1333.google.com with SMTP id
- 5a478bee46e88-304d0ac5e3cso3646231eec.0
- for <qemu-devel@nongnu.org>; Thu, 11 Jun 2026 04:47:49 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1781178468; cv=none;
- d=google.com; s=arc-20240605;
- b=AuY6tM497Y2PEi6UCuMWdAozwaaMVsaDXY54NMKWCs5WHPN7WmMQLTbVUAA7u+8fUo
- 0EGyXMFmztKw5NT7Nr/u0JcB6+DI8RFC0sQyyGCdjEnxJD7VLOSiMV+kKq7+6bXUu9Kt
- Vciv6DEONyT26eXiRj68LUKnymGsN3mqKVd9eReKKSm6jPEGQE7aF+q2IhQoGv4A4v/+
- nCAeDphN2E0AUjVCFMgXb2KhGW5oUZe47rZCZgJ5aQ/B9nenhmlJKaYU9Dp5wMBoNhSg
- CfyHuTuE987MdScyAoMx2L8clvn7X4dSizVdl6bWIM/Mh2VSy2nOIoZOq5DhT5MeFC+/
- y2xQ==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
- s=arc-20240605; 
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:dkim-signature;
- bh=1jAZK5SwB7E4BWIl6CEflk7RSK48WyCigyVzo6e6V/k=;
- fh=3XcdnKPPujWCgsoSlfyTIC7mLtr3DNVpLRjg7tPS1Nk=;
- b=ZLEbl2BpQJAc82EC3/jp7QzsXBhVyxUARmsRB5gkHc58ZCfatWFCKspKVb6zAK2Pjo
- kb8XLtbZi7q0pi/50yy9/5gWRZVUg9329LEu1fJWPs3M0OVDKatdF+/9KUCztg56WzCs
- o2ZHtulb14A+8U7okAlV2fkMd3gtto2yjHyxjOrulV0i5ZblzMJJ27yXta/tgex8ldqW
- pSQGU9ciai1jpieIql9zBQTzg6kB2LpEei35MNYFnX+RkLapAyHGhGoCD06wRZ2+Dg3z
- 9fGA9NXnZuuXDKFwCjN/0GE0+C3XCMLM4f4opP5SK5yQwUeQ1maWGGZjwuEJhR+DXbxz
- ohoQ==; darn=nongnu.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1781178468; x=1781783268; darn=nongnu.org;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:from:to:cc:subject:date
- :message-id:reply-to;
- bh=1jAZK5SwB7E4BWIl6CEflk7RSK48WyCigyVzo6e6V/k=;
- b=a0C0HdIWPAvQxXfpTUDVRuWxVw3gtXe5ZVzf0xqaPDnho8cHLAsDIoLkTkQLcGubB4
- 22rjCAm9EOdf6WMS7BA+FFVt7EPblhM1IC5mjx2W8LA+JT1jhocTy7yr2F1whAq8RzGq
- 1bbgf4ZNvSLrmMGQcYX9ZrLHbMGTjxBklrIp48FDeTR/HKjbqzyiqowERU4qWml55UrS
- 2TE36EMDIBiH/mfNZWbRThFHkIb5NAJmJpRHAB+8Q98+WsLpS0i7tZXglWF1CEWQSvG9
- 8hyRZ9U6TdPMHIjXeXTmuHjgoL1gAiHOdShIUZGdjAs7C8XhmOCQZr8xmAHIOebyr4cF
- WKUA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1781178468; x=1781783268;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to;
- bh=1jAZK5SwB7E4BWIl6CEflk7RSK48WyCigyVzo6e6V/k=;
- b=NLRFzBXLu3o+pymAMwQ/hEWmCUww+BkgVMEc5dxQjqVHw7u5ccUX8at3lgYE6ZLAeX
- FqzhUMmfBV9YQSxlHq122cSf+M/5QyKarw1HPuHR2mxTY4eIP8e7JzrTgTbd652EI+r+
- fKynABhbq4xTdgDP0M8xHmvNNZlz4n726Sh8Wkc03llAgG978RtJFV6sTPlVBj2rARis
- U/HU4wF9g9dDfE15z+utXrdSHfQ3ujtIpMU4DybDTya8G9yl5BrA9p1tz4vB0PYMX664
- stA4lSyNEHVwJxVMS7ydnpIqHUoPjewQGGDdWddx0AfF8VXkR86R9i8sxtnz30/KlAB4
- UfOg==
-X-Gm-Message-State: AOJu0YwOFKxx6yWImnkVBoEHIPCpAiENDDaU5QNmdEKYREFJjwaRUaMC
- 18J519D7L22OIvD56HLuPx9xtf7H/u4XfB4jGCsLZhTuur0SvASw3l4oTQglEM8gbamRWT5we7R
- o+jIgUEeKg8WHNMpYavjTrDJ9dy/RT4s1uyNU9uA=
-X-Gm-Gg: Acq92OGDF4e8vGQz6xASVEGYq+hXSlh45kwLjbhO7ZuKNzdlhOyckpLBJMTJx4eP+zR
- 9yyOJi2s41Dx0sIOZ7p6xZMA2lr8NU5GGzfP+X7YDt+HGXEAsrgDZpSrZmqd0C4J/S9gBes5TOM
- 9YOC9gYwWBaViKEZCIkxvsaJBLgBaga4VR3QX3DoSepjsZQ4CHQxTiGaXp6fJdwzENd7B4DPt6d
- IhQe9sbCprTbqcnPZzo4LDT/LOMGvbZegyGONMocql2Y32ziD2ePRU/1NR1XUNJ5LFCG8B/bO3J
- D19vrXHeA6AlpDryg7KfIKsKX07oWUB4YzeetV1T1+5a8DL/6A==
-X-Received: by 2002:a05:7300:8606:b0:2da:4216:7ea3 with SMTP id
- 5a478bee46e88-3080478daefmr2088013eec.14.1781178468447; Thu, 11 Jun 2026
- 04:47:48 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <laurent@vivier.eu>)
+ id 1wXdt5-0005BY-7D; Thu, 11 Jun 2026 07:47:55 -0400
+Received: from mout.kundenserver.de ([212.227.17.13])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <laurent@vivier.eu>)
+ id 1wXdt3-0005WS-EX; Thu, 11 Jun 2026 07:47:54 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=vivier.eu;
+ s=s1-ionos; t=1781178462; x=1781783262; i=laurent@vivier.eu;
+ bh=a3rgsEVTjnkM8bvPXdn9XVig3H6AHH7jbbeCXkkT4e0=;
+ h=X-UI-Sender-Class:Message-ID:Date:MIME-Version:Subject:To:Cc:
+ References:From:In-Reply-To:Content-Type:
+ Content-Transfer-Encoding:cc:content-transfer-encoding:
+ content-type:date:from:message-id:mime-version:reply-to:subject:
+ to;
+ b=treaTyfcn/LSCZmE8CpewkG8YewVzp3Ud7znl7n5swNu0QUORLiis/M4dUJkvalm
+ 9YGlS2X0p2qzGFzRPj7x5Z8XrfvCNDaGPVQ2RfUyZBGusLYFa4XVO1x0CoH/fB1Uy
+ wg8t/foCFT2Ynukkc4Yk3Zp62zNp6GPlaranrXiK8Qy0Sv94mpaXCvdkF6JsMe8+2
+ CCPGkmFiEVBrNsi2h6a4ujW7vu2iXFHS3EYrkrc5hG2KY+jJDxGnk5cvBVt0i5g9z
+ vNMg2PVVdOluo4iEPcs40GRrMJ3B+hGCU99a5hgJ7fjwgc5v1gPlo9V07mnt9pmsf
+ tyJIgkSF4acLaD/jtA==
+X-UI-Sender-Class: 55c96926-9e95-11ee-ae09-1f7a4046a0f6
+Received: from client.hidden.invalid by mrelayeu.kundenserver.de (mreue106
+ [212.227.15.152]) with ESMTPSA (Nemesis) id 1MlO9r-1wx3gJ1e8b-00ntbV; Thu, 11
+ Jun 2026 13:47:42 +0200
+Message-ID: <cdbeba99-980a-41b0-bb7d-a264b76c5716@vivier.eu>
+Date: Thu, 11 Jun 2026 13:47:40 +0200
 MIME-Version: 1.0
-References: <20260611114212.27472-1-philmd@oss.qualcomm.com>
-In-Reply-To: <20260611114212.27472-1-philmd@oss.qualcomm.com>
-From: =?UTF-8?B?TWFyYy1BbmRyw6kgTHVyZWF1?= <marcandre.lureau@redhat.com>
-Date: Thu, 11 Jun 2026 15:47:36 +0400
-X-Gm-Features: AVVi8Cf3kDX3vOix7rVFvqN3FHY4mYqZ-DTZ0QKmQgsiBrwqCSeJLhEiGrIKYDM
-Message-ID: <CAJ+F1CKAjy9QQ6rq5z4AN5VmgNevFpOq9-4-eSWS2AW6N4sY6A@mail.gmail.com>
-Subject: Re: [PATCH 0/2] ui/input: Constify qemu_input_is_absolute()
-To: =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@oss.qualcomm.com>
-Cc: qemu-devel@nongnu.org
-Content-Type: text/plain; charset="UTF-8"
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH] qemu-options: fix typo in spelling of 'scheduler'
+To: Fiona Ebner <f.ebner@proxmox.com>, qemu-devel@nongnu.org
+Cc: qemu-trivial@nongnu.org
+References: <20260611113547.651075-1-f.ebner@proxmox.com>
+Content-Language: fr
+From: Laurent Vivier <laurent@vivier.eu>
+Autocrypt: addr=laurent@vivier.eu; keydata=
+ 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
+In-Reply-To: <20260611113547.651075-1-f.ebner@proxmox.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2607:f8b0:4864:20::1333;
- envelope-from=marcandre.lureau@gmail.com; helo=mail-dy1-x1333.google.com
-X-Spam_score_int: -16
-X-Spam_score: -1.7
-X-Spam_bar: -
-X-Spam_report: (-1.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, FREEMAIL_FORGED_FROMDOMAIN=0.001,
- FREEMAIL_FROM=0.001, HEADER_FROM_DIFFERENT_DOMAINS=0.249,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=no autolearn_force=no
+X-Provags-ID: V03:K1:+U/eRgvWK65ZuaoqMA8CjHdRGNgLjuaaPqGNs3LG/yTNY2Tzu6D
+ W3H/HD/v2iayKGCz9KjSfruBjUc31Ajy3rnZesgJFpXqf2TYOceu2DmMQi+JcoClx6A63Y3
+ aFICdysja2YEOCeaVHU1SH10oZcCD7Db8kaTPHtUStblq+hVB+Sr8oe1l9oVWLM4YtIaQQd
+ q4FFzkdgJSZKh1zll8Biw==
+UI-OutboundReport: notjunk:1;M01:P0:/KXAwXhHRkQ=;/kqjc/z37/IMB1l04ycYK77HEmT
+ 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
+Received-SPF: pass client-ip=212.227.17.13; envelope-from=laurent@vivier.eu;
+ helo=mout.kundenserver.de
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_MSPIKE_H2=0.001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -116,31 +149,40 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, Jun 11, 2026 at 3:43=E2=80=AFPM Philippe Mathieu-Daud=C3=A9
-<philmd@oss.qualcomm.com> wrote:
->
-> Notes while reviewing Marc-Andr=C3=A9's "ui: retire input-legacy.c" serie=
-s
-> (20260610-ui-input-v2-0-f68452dd6a22@redhat.com).
->
-> Philippe Mathieu-Daud=C3=A9 (2):
->   tools/qemu-vnc: Have console_get_mouse/keyboard take const QemuConsole
->   ui/input: Have qemu_input_is_absolute() take a const QemuConsole
->
+Le 11/06/2026 =C3=A0 13:34, Fiona Ebner a =C3=A9crit=C2=A0:
+> Signed-off-by: Fiona Ebner <f.ebner@proxmox.com>
+> ---
+>   qemu-options.hx | 4 ++--
+>   1 file changed, 2 insertions(+), 2 deletions(-)
+>=20
+> diff --git a/qemu-options.hx b/qemu-options.hx
+> index 96ae41f787..2fd21519b2 100644
+> --- a/qemu-options.hx
+> +++ b/qemu-options.hx
+> @@ -5517,7 +5517,7 @@ DEF("sandbox", HAS_ARG, QEMU_OPTION_sandbox, \
+>       "                    main QEMU process but will allow forks and ex=
+ecves to run unprivileged\n" \
+>       "                use 'spawn' to avoid QEMU to spawn new threads or=
+ processes by\n" \
+>       "                     blocking *fork and execve\n" \
+> -    "                use 'resourcecontrol' to disable process affinity =
+and schedular priority\n",
+> +    "                use 'resourcecontrol' to disable process affinity =
+and scheduler priority\n",
+>       QEMU_ARCH_ALL)
+>   SRST
+>   ``-sandbox arg[,obsolete=3Dstring][,elevateprivileges=3Dstring][,spawn=
+=3Dstring][,resourcecontrol=3Dstring]``
+> @@ -5534,7 +5534,7 @@ SRST
+>           Disable \*fork and execve
+>  =20
+>       ``resourcecontrol=3Dstring``
+> -        Disable process affinity and schedular priority
+> +        Disable process affinity and scheduler priority
+>   ERST
+>  =20
+>   DEF("readconfig", HAS_ARG, QEMU_OPTION_readconfig,
 
-thanks
+Reviewed-by: Laurent Vivier <laurent@vivier.eu>
 
-Reviewed-by: Marc-Andr=C3=A9 Lureau <marcandre.lureau@redhat.com>
-
->  include/ui/input.h        | 2 +-
->  tools/qemu-vnc/qemu-vnc.h | 4 ++--
->  tools/qemu-vnc/display.c  | 4 ++--
->  tools/qemu-vnc/input.c    | 2 +-
->  ui/input.c                | 4 ++--
->  5 files changed, 8 insertions(+), 8 deletions(-)
->
-> --
-> 2.53.0
->
->
 
