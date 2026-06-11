@@ -4,86 +4,96 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D7D15CD98C7
-	for <qemu-devel@archiver.kernel.org>; Thu, 11 Jun 2026 16:54:49 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8088DCD98C7
+	for <qemu-devel@archiver.kernel.org>; Thu, 11 Jun 2026 17:03:48 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wXifU-0001wv-Vc; Thu, 11 Jun 2026 12:54:12 -0400
+	id 1wXino-0004kH-O1; Thu, 11 Jun 2026 13:02:48 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1wXifS-0001vW-1A
- for qemu-devel@nongnu.org; Thu, 11 Jun 2026 12:54:10 -0400
-Received: from mail-yw1-x1131.google.com ([2607:f8b0:4864:20::1131])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1wXifQ-0006m2-7B
- for qemu-devel@nongnu.org; Thu, 11 Jun 2026 12:54:09 -0400
-Received: by mail-yw1-x1131.google.com with SMTP id
- 00721157ae682-7e2fc11088dso527387b3.2
- for <qemu-devel@nongnu.org>; Thu, 11 Jun 2026 09:54:07 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1781196847; cv=none;
- d=google.com; s=arc-20240605;
- b=Pq/yyQJZM4qSEdj2laVrvafRKWlhFDfm0YCD7Rtgykv0LLSABLgY3M5MZtIXAKPcji
- 87hoiHZ6kSx5zMFQpTeQqCH2EAaEdkOOSbpfkMNDbb5FJavGHLIhPmGkXiOpjxIlqJX8
- 4qM3tyd6wE6N1FpBfBR0XwTZ/XUhe+REcrT87OEXWccSfb3gs2AWN9XY5UhMJxLRqYtT
- S0/fGU2L1FmnhQY0cULu77nTb7gIT+UnCnxGb8+q/DRKL8lxuxCtcJ6flPwQ7gyuZx/5
- HmItbqYNkf42Y+Ip35i2uqz2V7Edu6KnM9OvtArF4LD4bkkRoDxGtAyhTrUoFUkYQLGg
- 3rQw==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
- s=arc-20240605; 
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:dkim-signature;
- bh=QaqbYXHxzpGu3QvISyD4fmu8tEvOHjOFgehRi8Xo7QA=;
- fh=XN9Oh5CJ51bIkKbKLfsBg6zM8uQiBy0ZVlSSriHUUNA=;
- b=GYD1yK60nUbHaKeDMzjTaYmo6IxmhnHQnzC+4Hko6HbbMOIyFxtcPOUj3Wm0mzPqHF
- nn5oey80ovowbAl5944bl9VzkrMNKxBYY9tA6vLdFEaUePFv074jVpZmUuE5t9+Zktxr
- 0kkcQ3JNwQbf06xuxHvr0iqf5zXBhkvKeF3DtoIMzj6+z+A1rTwrdkzbL/oYRmTMg59Q
- DYfeeTQCTmdgF7XvmE4NodiByxNBUqpjZLSHfMb1eOXoitgnzh3Ioi0l0mX0TSy+ncfj
- q8pCRVoppt9p3n2yx7e+erJDp5poeUslebUgV520n2jhBWiCsddbPNMYdzRoN3Z3Ip0S
- kyUg==; darn=nongnu.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1wXinm-0004jO-0U
+ for qemu-devel@nongnu.org; Thu, 11 Jun 2026 13:02:46 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1wXink-0002Jj-IO
+ for qemu-devel@nongnu.org; Thu, 11 Jun 2026 13:02:45 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1781197362;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=VAAK/oJCvYGOuk4pT/pqWPhKdpt/6wdkEIqS/6g4LEI=;
+ b=bx4k/X5j7dxsLDxJCZIK3sNYg+w1ggx4wUA2TN3gWs0raDcBbsOqSnChuxb6DZzi0P5Ova
+ dz0LyEHmzDrmA6KB+GmOEBJ9SpLN5h0P+3uIjiPsgm3S5lXLzCAWEf//OECZJ9GMcTDHPj
+ C9BBNsPghR2n16xTsF10qzKov+v63q8=
+Received: from mail-wm1-f71.google.com (mail-wm1-f71.google.com
+ [209.85.128.71]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-711-MsU-jBxuPHS2a8BG4Xvz8A-1; Thu, 11 Jun 2026 13:02:40 -0400
+X-MC-Unique: MsU-jBxuPHS2a8BG4Xvz8A-1
+X-Mimecast-MFC-AGG-ID: MsU-jBxuPHS2a8BG4Xvz8A_1781197360
+Received: by mail-wm1-f71.google.com with SMTP id
+ 5b1f17b1804b1-490bae3a39bso254775e9.1
+ for <qemu-devel@nongnu.org>; Thu, 11 Jun 2026 10:02:40 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1781196847; x=1781801647; darn=nongnu.org;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=QaqbYXHxzpGu3QvISyD4fmu8tEvOHjOFgehRi8Xo7QA=;
- b=s2DFtvcgDQfglQKeic9d+tdwEZntrICk0NXcFjfYNWOgWraZGZhn+jPeVKsR0d4rSc
- MoSvxa7aeltfuRLS5QDyXNbTbqt9lrvHss4KONoADGAHWZFjtPmG53FaVRMmwGnNC+g5
- 3QUglZewXj7eJMosICrn97FQeUCEGRnEdy0WumAWLQtJcNze1nkJ2S1JCN1I0T3mMSAS
- jcGy9qDbGWgw4J7oRy6qnUayZT6Rj+ldZHBkJCh/ESibuoaZl8X5alywYk0TguCP2vxL
- 8huRd4uMkeOeU4P2N1sL/MuOXItYxb19daS51h6ctPrZgTr++6mcZjs9Tnk9yIoW5QF+
- iFFA==
+ d=redhat.com; s=google; t=1781197359; x=1781802159; darn=nongnu.org;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+ bh=VAAK/oJCvYGOuk4pT/pqWPhKdpt/6wdkEIqS/6g4LEI=;
+ b=O2w64xGZ/OrCz+Ddc0JZKML5SGaBf4g1yRoe+57usOZy60nZSVxEwKXhobse6nmfh8
+ 3YqaLLwj5hrE+H/vlMJagSu7Fdy9Tmr1ne8aNaInHtQk4E0f0KKZwUXizuQJ5G06QYBr
+ E4Fd0PUKxi64BI7GfsJ7M4c7hP/3+cIjd1FTduhKrIG06AbeT2OOexLpAFO0IPSuj4ye
+ OeJ2wjv4z+sbLeap6lkKsTU5yiW1LXBUvmWdRfvQChIbYgr7j/1CXNgjsxGG5c14Y9YK
+ udt48dxro09ND9I3WB8swuPPP/3CmlkEuZDETwDVwfxpSj8e6yhz4dJ9We0coB1YyEfB
+ Ukng==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1781196847; x=1781801647;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=QaqbYXHxzpGu3QvISyD4fmu8tEvOHjOFgehRi8Xo7QA=;
- b=H57JgpI0hyZik2+DhZfh0mTILyH/jOAhzab/8qlIubDbKdlZnGUrxoHh/LMlYHJm65
- ojMm7mhl9v5O8EJ/IQy7g5BfUOO387GH02LhFxYbI9h4Gff9ozRSgLxkhNTMscNIWfS+
- Xs4rkCGmrBFA9gEw5FLukZe1rSFkf9ziOKVCjiy0qOwaGxLjAN3V9rb2hacjy6+wQGS/
- uTxbDGPh6RkAnbr7wTNZjjcYFjRc9S26+kAinwMHCmDL/4qYNqlVS3SxJ6iqqhN5Kegg
- vRWsvlnIzmEbIe/6bssF/vBVnGk3et8BD1K3q7kcslvauB+d4VTklUbVVKys/MIXLAWo
- P/8A==
+ d=1e100.net; s=20251104; t=1781197359; x=1781802159;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=VAAK/oJCvYGOuk4pT/pqWPhKdpt/6wdkEIqS/6g4LEI=;
+ b=rUwbMD9QL7si53WhtJYWeS2nEa1mkiarYen5eX0Wlt453PXlTMqHkvW9cBKZxrXMRa
+ AMTa1/HlbI2p146ScNapn50BLbnD71cX9ZSTb3uP6+2Br5GMqJGTzFlHcq37MNskXjuH
+ FXvzU+jXJVWemdkuE0olsi3FCdEE0oGSwuTExzQczJ65WlPbvMEBAFB5lGbmWw1rULJF
+ MXcPY0TUas+XQS17xiAotoyxyr7Vf/Klh3TPLUgTaBF1xEWwxCFWyCruRe8mqXhKBpMh
+ sbqxaotiH9TtdNdMy0Msmf1EwUkxPXjq1WmltfQW4znfO+qB3YgUAqEUsZfugDhtmSgo
+ gqtQ==
 X-Forwarded-Encrypted: i=1;
- AFNElJ9TzOcUt3GODLaNHYngqT/RLrka86dXz2WxslCtvUDSw7gNwePVq9AlPT+HlHP9MF0Fdapq5DpPplP8@nongnu.org
-X-Gm-Message-State: AOJu0YzfWnrFIkdknSM7IWGWKnoVo1lb5tLkxuJN3ZsYovrHdaeaCnU6
- CaSRpmbdxj52tw+uxueHSJqfxavcFNoetugO17U87VolgsjhPtgcooj+eWdA6pMMypP6ZjJJeKr
- 1I8sDB8MMP0F+HfEd/27kBLa96M5mdOLZbCL82u9oiA==
-X-Gm-Gg: Acq92OGRnTSwLYnpJTO1M/6d0YRpme7QnAnuy9ijbBXPIbCFXLGA2tcR2DNannyXuxX
- W0ynXnj0TZZO765+3bOIDmXoJ+fYjxRb4j3G2xFiObUAPHk3oHqCjcw6kDN5tEYnpWwsR8OwWBn
- Qmpjl+Dpt011E8IOQJ0AvH3TQ5IVBEFlZSqmgpbAAzO4rtpWn94da8C1s/hv1tnX19Jlj/Xq4SP
- 2qIYM0GrsvidbeIpGZTjJpcbfDq0Eu2U9ANs+zy2hECHhifw+yGYaurkSaGo2WovVOmq4gLQoWm
- LmV4xgURlEwiTPlwO6M4dZQq4R2bKqp3IWZYkUHD/LSRnYekY3rWa3H3fspjZ/obz0U=
-X-Received: by 2002:a53:ac91:0:b0:662:5e4d:2bd1 with SMTP id
- 956f58d0204a3-66269651897mr3148022d50.23.1781196846777; Thu, 11 Jun 2026
- 09:54:06 -0700 (PDT)
-MIME-Version: 1.0
-References: <3726a607-6cac-41f1-b402-0eed7c4e3fe3@redhat.com>
- <20260611023428-mutt-send-email-mst@kernel.org>
- <0c3f1dba-3b2c-43c5-b181-1426f6da0951@redhat.com>
+ AFNElJ8ffsWm5DKfBQISKLqFCIxvG+HjsUIYn4nzyy2lxePHhVyib44STPwNb5eCUM4sYryyb/ubFBwinfcQ@nongnu.org
+X-Gm-Message-State: AOJu0Yw3MdltaNm4PZCtVRS6zZM5NnazcIY+dw/Buq64LX3cKN7Da1yW
+ 1dJt/8dgFw8qQ+ATOFrzfEI1hz4d/qaAKx4dwtbBpJnU4/LziYdLQEenZM/L1DOeql8hgYjenmT
+ 9+K4ufiF5s0mknJeBprCOFe93Y3ntAhg5rTDcwZhNZCLf/ennNuoWc/V9
+X-Gm-Gg: Acq92OF5n4qvQFS7hmjE36WSFk2JXM/u5GkBojceBGeaXblMY+RVL7ftwFV8fJBbAvI
+ BRXNOZLlrshlNI+zkQZSvEDQXU8VZiF3vyhbeEnaxrbjrEdgvg/TolOAYSCc07ZIL1MkJbiachK
+ jUSc4KwE4tW5QYuZ+JPqPO7Ao07IeQXOIDYb5ZeNLrAi+1QTd/oMkiQjonrjsDVf/HpcCaZSA5y
+ M/3rggf7UId7tW6sUS/bYkVEeJuBoGLNduJsSq2I+VNApBtsXRV8fmUJ4rjVvWkuzS4RQcjKd65
+ vAy/k0CllNlxbjBTKTY7Wwd4Fion0sy6EmoXKHXPtQrc5TUylNOb1yM3paIl1qpXQneMNVNcoEB
+ PTNuf7EnzNE2InuXiKWyJ+iiudvZAtscscFqSviCzYzQ=
+X-Received: by 2002:a05:600c:15c3:b0:490:bccf:2bd6 with SMTP id
+ 5b1f17b1804b1-490e5613dccmr34993255e9.15.1781197359419; 
+ Thu, 11 Jun 2026 10:02:39 -0700 (PDT)
+X-Received: by 2002:a05:600c:15c3:b0:490:bccf:2bd6 with SMTP id
+ 5b1f17b1804b1-490e5613dccmr34992685e9.15.1781197358628; 
+ Thu, 11 Jun 2026 10:02:38 -0700 (PDT)
+Received: from redhat.com (IGLD-80-230-85-71.inter.net.il. [80.230.85.71])
+ by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-490e2cf5542sm76318205e9.11.2026.06.11.10.02.36
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Thu, 11 Jun 2026 10:02:37 -0700 (PDT)
+Date: Thu, 11 Jun 2026 13:02:34 -0400
+From: "Michael S. Tsirkin" <mst@redhat.com>
+To: Peter Maydell <peter.maydell@linaro.org>
+Cc: Gavin Shan <gshan@redhat.com>, Peter Xu <peterx@redhat.com>,
+ Pavel Hrdina <phrdina@redhat.com>,
+ Daniel =?iso-8859-1?Q?P=2E_Berrang=E9?= <berrange@redhat.com>,
+ qemu-devel@nongnu.org, qemu-arm@nongnu.org, jugraham@redhat.com,
+ shan.gavin@gmail.com, Alex Williamson <alex@shazbot.org>,
+ David Hildenbrand <david@kernel.org>
+Subject: Re: [PATCH RFCv1] virtio: Inherit max bounce buffer size from bus
+ parent if possible
+Message-ID: <20260611130037-mutt-send-email-mst@kernel.org>
+References: <0c3f1dba-3b2c-43c5-b181-1426f6da0951@redhat.com>
  <CAFEAcA8Q9qEaZS8wCpZQ-4jpAnQ9JXvnb7iSeRTdhJ9Y3BcCRg@mail.gmail.com>
  <20260611093049-mutt-send-email-mst@kernel.org>
  <CAFEAcA-8Hv0o3PibjH=8jixsHyunH2HkOAMQVqHkGr34b1Ascg@mail.gmail.com>
@@ -92,30 +102,20 @@ References: <3726a607-6cac-41f1-b402-0eed7c4e3fe3@redhat.com>
  <20260611114811-mutt-send-email-mst@kernel.org>
  <CAFEAcA9HUGfDgHjvCemPPNkp6FfvQp+4y7qCnw+ROFpG3+ybMw@mail.gmail.com>
  <20260611123952-mutt-send-email-mst@kernel.org>
-In-Reply-To: <20260611123952-mutt-send-email-mst@kernel.org>
-From: Peter Maydell <peter.maydell@linaro.org>
-Date: Thu, 11 Jun 2026 17:53:54 +0100
-X-Gm-Features: AVVi8CcsPdd0mVQrbwuS3FL1IDbLwGAE2HTdEThBo87ET2mLg8p8Yo-q4T0Ywt4
-Message-ID: <CAFEAcA8vOMd64cCkfCyc1wNbjEY+bnhFPce-V_WbAuXrUnP8cw@mail.gmail.com>
-Subject: Re: [PATCH RFCv1] virtio: Inherit max bounce buffer size from bus
- parent if possible
-To: "Michael S. Tsirkin" <mst@redhat.com>
-Cc: Gavin Shan <gshan@redhat.com>, Peter Xu <peterx@redhat.com>, 
- Pavel Hrdina <phrdina@redhat.com>,
- =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>, 
- qemu-devel@nongnu.org, qemu-arm@nongnu.org, jugraham@redhat.com, 
- shan.gavin@gmail.com, Alex Williamson <alex@shazbot.org>, 
- David Hildenbrand <david@kernel.org>
-Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2607:f8b0:4864:20::1131;
- envelope-from=peter.maydell@linaro.org; helo=mail-yw1-x1131.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+ <CAFEAcA8vOMd64cCkfCyc1wNbjEY+bnhFPce-V_WbAuXrUnP8cw@mail.gmail.com>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <CAFEAcA8vOMd64cCkfCyc1wNbjEY+bnhFPce-V_WbAuXrUnP8cw@mail.gmail.com>
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=mst@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -24
+X-Spam_score: -2.5
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.445,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -131,26 +131,35 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, 11 Jun 2026 at 17:42, Michael S. Tsirkin <mst@redhat.com> wrote:
->
-> On Thu, Jun 11, 2026 at 05:16:09PM +0100, Peter Maydell wrote:
-> > On Thu, 11 Jun 2026 at 16:57, Michael S. Tsirkin <mst@redhat.com> wrote:
-> > > Then I'd like to see an example where we have an actual good reason
-> > > to do execute arbitrary width accesses on device RAM when the
-> > > driver does not execute them, please.
+On Thu, Jun 11, 2026 at 05:53:54PM +0100, Peter Maydell wrote:
+> On Thu, 11 Jun 2026 at 17:42, Michael S. Tsirkin <mst@redhat.com> wrote:
 > >
-> > That's the case we started with, with this GPU where the
-> > virtio data structures are in this PCI BAR. We want the
-> > virtio backend to have the freedom to say "I'm just going
-> > to assume the ring buffer etc is in RAM, and I don't need to
-> > care about carefully ensuring that I only do word accesses".
->
-> virtio backend does not need to assume anything. any spec
-> compliant guest guarantees it. any address given to
-> a virtio device is ram.
+> > On Thu, Jun 11, 2026 at 05:16:09PM +0100, Peter Maydell wrote:
+> > > On Thu, 11 Jun 2026 at 16:57, Michael S. Tsirkin <mst@redhat.com> wrote:
+> > > > Then I'd like to see an example where we have an actual good reason
+> > > > to do execute arbitrary width accesses on device RAM when the
+> > > > driver does not execute them, please.
+> > >
+> > > That's the case we started with, with this GPU where the
+> > > virtio data structures are in this PCI BAR. We want the
+> > > virtio backend to have the freedom to say "I'm just going
+> > > to assume the ring buffer etc is in RAM, and I don't need to
+> > > care about carefully ensuring that I only do word accesses".
+> >
+> > virtio backend does not need to assume anything. any spec
+> > compliant guest guarantees it. any address given to
+> > a virtio device is ram.
+> 
+> OK, but how do we tell if the mmap() PCI BAR we have is RAM
+> or not ? Some of them are, some of them aren't...
+> 
+> -- PMM
 
-OK, but how do we tell if the mmap() PCI BAR we have is RAM
-or not ? Some of them are, some of them aren't...
+We don't care? If guest asked a virtio device to access
+memory then that memory better support accesses guest
+requested, and on virtio that means any width.
 
--- PMM
+-- 
+MST
+
 
