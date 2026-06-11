@@ -4,119 +4,118 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1EA95CD98C7
-	for <qemu-devel@archiver.kernel.org>; Thu, 11 Jun 2026 20:48:32 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6F8BECD98C7
+	for <qemu-devel@archiver.kernel.org>; Thu, 11 Jun 2026 20:53:04 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wXmJo-0001oX-4c; Thu, 11 Jun 2026 16:48:04 -0400
+	id 1wXmO8-0003hi-G4; Thu, 11 Jun 2026 16:52:32 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1wXmJn-0001oO-9U
- for qemu-devel@nongnu.org; Thu, 11 Jun 2026 16:48:03 -0400
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1wXmO7-0003ha-EE
+ for qemu-devel@nongnu.org; Thu, 11 Jun 2026 16:52:31 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1wXmJm-00088K-1M
- for qemu-devel@nongnu.org; Thu, 11 Jun 2026 16:48:03 -0400
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1wXmO4-0001lz-Cb
+ for qemu-devel@nongnu.org; Thu, 11 Jun 2026 16:52:31 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1781210881;
+ s=mimecast20190719; t=1781211146;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=z3cTRovsyUNa19KnWeFz9K5XakrkwaK1HWY59r4lU8c=;
- b=J1GEyDYoKpC3BWYHwUUQe93FZadScgfE/uHvhnd/St7JxIjxiYONUnNQ6RiJlbjC3nWW/K
- oXwq06idCTw669Sr5G2cji1FcWYn80cIC0awtreCAHmCjBB7wEbEKIf3LcnIWGOX93vGc7
- dYmBaNpZ7UKCzWp0Ygc+R9cAZW+tOiQ=
-Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-643-2Mgoy6b6MYaQOb4nxvR0dw-1; Thu,
- 11 Jun 2026 16:47:57 -0400
-X-MC-Unique: 2Mgoy6b6MYaQOb4nxvR0dw-1
-X-Mimecast-MFC-AGG-ID: 2Mgoy6b6MYaQOb4nxvR0dw_1781210875
-Received: from mx-prod-int-10.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-10.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.95])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id DCDAF19540F1; Thu, 11 Jun 2026 20:47:54 +0000 (UTC)
-Received: from [10.44.32.5] (unknown [10.44.32.5])
- by mx-prod-int-10.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 5BC9F403; Thu, 11 Jun 2026 20:47:49 +0000 (UTC)
-Message-ID: <f6fcb7a0-dfdc-409d-9fdf-50b17e765431@redhat.com>
-Date: Thu, 11 Jun 2026 22:47:47 +0200
+ in-reply-to:in-reply-to:references:references;
+ bh=C0vhcoTFIC+ddov7CaJ6rewHgDFN6M5JFyVBN+p38zg=;
+ b=UYMAlOF7v+yGP0m5OVTkxAa0RMbxknIWVaLhDEK2x5z9MeHhsDSWrt44nMl6gju8fOXfLQ
+ ZjB0TrMG89RZ5Bb7PNPA9T/lYYZlp8y0Xg3JEOXDJKknWi5l0aWHnWiSHZk8PK1wRsQRNO
+ UoVqCCMI53X/p6RWkle5oFDHi25KxmM=
+Received: from mail-wr1-f69.google.com (mail-wr1-f69.google.com
+ [209.85.221.69]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-627-9pDAfWl5OtG6wpWRjbpwiA-1; Thu, 11 Jun 2026 16:52:25 -0400
+X-MC-Unique: 9pDAfWl5OtG6wpWRjbpwiA-1
+X-Mimecast-MFC-AGG-ID: 9pDAfWl5OtG6wpWRjbpwiA_1781211144
+Received: by mail-wr1-f69.google.com with SMTP id
+ ffacd0b85a97d-45eebc943bfso794531f8f.0
+ for <qemu-devel@nongnu.org>; Thu, 11 Jun 2026 13:52:25 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=redhat.com; s=google; t=1781211144; x=1781815944; darn=nongnu.org;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+ bh=C0vhcoTFIC+ddov7CaJ6rewHgDFN6M5JFyVBN+p38zg=;
+ b=ZqKxuPc3KX9ZcXvHRtyOGEsjZXKK+IiHf/jAettvTN1b3me1dj0IBUGWFXOAvL0D1W
+ 0tP7fj/iatBNItD6h4PWo3PX6upZiE+wstDF8HW1d7rsyTraApCqNUBVKqH4oBk1Y35T
+ 9SV4IRHQZ+d7i2H46Pn6KSwmYOIHyJRbP4T72Qd957wIPALK/mTJUILEnX9qLssoJOR7
+ rkO2kjGL7r3Ar9ucZFBmhosjQrZ7wWmq5eSbCTIbwJ0CO8MaSZ0s4zCpk+IN8PM88eut
+ h5eahwq63zoUs30KhETZ0xa1byeMUrF1r7pp2jphXDjluLpYN6Odjj8nv0O62gSTUfog
+ SdaA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1781211144; x=1781815944;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=C0vhcoTFIC+ddov7CaJ6rewHgDFN6M5JFyVBN+p38zg=;
+ b=NL28bd3F6FYKi6sU46bxL5kbsiCjOBcTl9Hvn/GRbr5vvWG8ngY/N6gkkPurkpewAF
+ kD5Ym4XEZLQozWdhxUvDZWCXRAIDiPtvOhjRLjtNNZNUxQUgibwu7S/Mhkcf6qyPsxov
+ E7ZaCOpnvgBDycHDBA1WNvou8MQjCcGvJpOmH7AFoU5Dcq8vigVFCuxKyGey/GpBqzL8
+ 4fzqwJ0lIl28rCilFsRKes4skiL1J40FHFf/0WaR076fh60Ks2N1Ok5Mkaq4TZE2VLuk
+ X73jqRFXZVrNouiJGdQdXOz9rYFYrsRX/8aJ+EuaM8pkg+qmwfhwVB/Zq1HDbdvtCCwZ
+ e5Zw==
+X-Forwarded-Encrypted: i=1;
+ AFNElJ84iT6rRweQ5NJFd+BQAVGxF51HVoD+CKwSMEsUBV7PfG7E58V97eBjpO/DUs4RlnWa+rJ4tH/7G8j4@nongnu.org
+X-Gm-Message-State: AOJu0YzwZX8hENRlaHAUHH1Hl0J1zz3gQk6C12iV5Qy9uAVRj0zNhLcv
+ zAZd623ezQbbVbs6OE4oDU9o5b21szTU+jbXU1l3gW+rB41usm6Te4a1nE7deWUP8CMSg4tmzsn
+ dnoULEB2wiOk0rUCMNvg6iezFfcZV6UpZ5W8XQt37Yz2LD0OWVqrQlSPl
+X-Gm-Gg: Acq92OFUsr11zkSYT69IwZv43EepS+3UPR+rsx8McoLAQzoKHH9SwlUvyQfZL3qLpwe
+ L8Ooy5F4FS9m2lb5zXLY1aPh+IGO0iowLwrp0eU0QRtcEBnA9ChB2nNtzacolOEJcNZOiZSoKDB
+ Y4oEhsfRKgAuDk7ZHba66/JJVSIk9JxykAwbJkjr1pe9Z5lpTPugq14TW2gaGcbyTAcmRYlNY2J
+ OU/82AcIYBRpalkNgxjKJQPVMJak5jthZXm5gkHQIMCPw0FeedPBOfigHh8z+hQ4YL2nNXsbDuk
+ xUOcu3hhrtPj7oh3QmhPgapR8LRPdnT6BmX7BBfwIKk5b7NqjLOSrhLOPFAl9pPLyWaH10ax6oC
+ JZCS9sN4NMYwyA9bUJfti92yro2+iKZa2cssj3CjFz+8=
+X-Received: by 2002:a5d:5848:0:b0:460:1c93:6eb6 with SMTP id
+ ffacd0b85a97d-4606d0239femr390978f8f.20.1781211144153; 
+ Thu, 11 Jun 2026 13:52:24 -0700 (PDT)
+X-Received: by 2002:a5d:5848:0:b0:460:1c93:6eb6 with SMTP id
+ ffacd0b85a97d-4606d0239femr390955f8f.20.1781211143615; 
+ Thu, 11 Jun 2026 13:52:23 -0700 (PDT)
+Received: from redhat.com (IGLD-80-230-85-71.inter.net.il. [80.230.85.71])
+ by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-4606c0fc493sm1745039f8f.25.2026.06.11.13.52.21
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Thu, 11 Jun 2026 13:52:23 -0700 (PDT)
+Date: Thu, 11 Jun 2026 16:52:20 -0400
+From: "Michael S. Tsirkin" <mst@redhat.com>
+To: Peter Xu <peterx@redhat.com>
+Cc: Peter Maydell <peter.maydell@linaro.org>, Gavin Shan <gshan@redhat.com>,
+ Pavel Hrdina <phrdina@redhat.com>,
+ Daniel =?iso-8859-1?Q?P=2E_Berrang=E9?= <berrange@redhat.com>,
+ qemu-devel@nongnu.org, qemu-arm@nongnu.org, jugraham@redhat.com,
+ shan.gavin@gmail.com, Alex Williamson <alex@shazbot.org>,
+ David Hildenbrand <david@kernel.org>
+Subject: Re: [PATCH RFCv1] virtio: Inherit max bounce buffer size from bus
+ parent if possible
+Message-ID: <20260611164624-mutt-send-email-mst@kernel.org>
+References: <20260611093049-mutt-send-email-mst@kernel.org>
+ <CAFEAcA-8Hv0o3PibjH=8jixsHyunH2HkOAMQVqHkGr34b1Ascg@mail.gmail.com>
+ <20260611110156-mutt-send-email-mst@kernel.org>
+ <CAFEAcA_2oZepwCoPS+cMgdnrSTj=mCGzdFZf5gGRHJK13yqaKQ@mail.gmail.com>
+ <20260611114811-mutt-send-email-mst@kernel.org>
+ <CAFEAcA9HUGfDgHjvCemPPNkp6FfvQp+4y7qCnw+ROFpG3+ybMw@mail.gmail.com>
+ <20260611123952-mutt-send-email-mst@kernel.org>
+ <CAFEAcA8vOMd64cCkfCyc1wNbjEY+bnhFPce-V_WbAuXrUnP8cw@mail.gmail.com>
+ <20260611130037-mutt-send-email-mst@kernel.org>
+ <air8hrlhrkaoJ4wi@x1.local>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 00/27] tests/tcg: run tests with meson
-To: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
-Cc: qemu-devel@nongnu.org, Thomas Huth <thuth@redhat.com>,
- Manos Pitsidianakis <manos.pitsidianakis@linaro.org>,
- =?UTF-8?Q?Daniel_P_=2E_Berrang=C3=A9?= <berrange@redhat.com>,
- =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- qemu-arm@nongnu.org, Richard Henderson <richard.henderson@linaro.org>,
- =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
- Alexandre Iooss <erdnaxe@crans.org>, Peter Maydell
- <peter.maydell@linaro.org>, Gustavo Romero <gustavo.romero@linaro.org>
-References: <20260609214745.772536-1-pierrick.bouvier@oss.qualcomm.com>
- <0a0a1116-a5f3-45f2-b079-f66e6b17f672@redhat.com>
- <c5945f76-ae18-4a8c-ae58-d22be7a7f6bd@oss.qualcomm.com>
- <CABgObfYy48HzQmJTJ4r_dswGjmgMkeuy=1OiY_VbEupC1UX6ww@mail.gmail.com>
- <49ef4614-1d8d-44c7-bdbf-485d971be02c@oss.qualcomm.com>
-Content-Language: en-US
-From: Paolo Bonzini <pbonzini@redhat.com>
-Autocrypt: addr=pbonzini@redhat.com; keydata=
- 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
-In-Reply-To: <49ef4614-1d8d-44c7-bdbf-485d971be02c@oss.qualcomm.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Scanned-By: MIMEDefang 3.6 on 10.30.177.95
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=pbonzini@redhat.com;
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <air8hrlhrkaoJ4wi@x1.local>
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=mst@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: 8
-X-Spam_score: 0.8
-X-Spam_bar: /
-X-Spam_report: (0.8 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.445,
+X-Spam_score_int: -24
+X-Spam_score: -2.5
+X-Spam_bar: --
+X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.445,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_SBL_CSS=3.335, SPF_HELO_PASS=-0.001,
- SPF_PASS=-0.001 autolearn=no autolearn_force=no
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -132,16 +131,128 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 6/11/26 21:23, Pierrick Bouvier wrote:
-> Sure, that's a good idea.
-> I was wondering as well if we should build those tests by default (as
-> part of 'all' target). We should do this only if cross compiler is not
-> using any container, to avoid triggering a confusing container build.
-> Any opinion?
+On Thu, Jun 11, 2026 at 02:20:54PM -0400, Peter Xu wrote:
+> On Thu, Jun 11, 2026 at 01:02:34PM -0400, Michael S. Tsirkin wrote:
+> > On Thu, Jun 11, 2026 at 05:53:54PM +0100, Peter Maydell wrote:
+> > > On Thu, 11 Jun 2026 at 17:42, Michael S. Tsirkin <mst@redhat.com> wrote:
+> > > >
+> > > > On Thu, Jun 11, 2026 at 05:16:09PM +0100, Peter Maydell wrote:
+> > > > > On Thu, 11 Jun 2026 at 16:57, Michael S. Tsirkin <mst@redhat.com> wrote:
+> > > > > > Then I'd like to see an example where we have an actual good reason
+> > > > > > to do execute arbitrary width accesses on device RAM when the
+> > > > > > driver does not execute them, please.
+> > > > >
+> > > > > That's the case we started with, with this GPU where the
+> > > > > virtio data structures are in this PCI BAR. We want the
+> > > > > virtio backend to have the freedom to say "I'm just going
+> > > > > to assume the ring buffer etc is in RAM, and I don't need to
+> > > > > care about carefully ensuring that I only do word accesses".
+> > > >
+> > > > virtio backend does not need to assume anything. any spec
+> > > > compliant guest guarantees it. any address given to
+> > > > a virtio device is ram.
+> > > 
+> > > OK, but how do we tell if the mmap() PCI BAR we have is RAM
+> > > or not ? Some of them are, some of them aren't...
+> > > 
+> > > -- PMM
+> > 
+> > We don't care? If guest asked a virtio device to access
+> > memory then that memory better support accesses guest
+> > requested, and on virtio that means any width.
+> 
+> Yes that's also my understanding that QEMU shouldn't care, if on bare metal
+> if it is a grey area with undefined behavior, then QEMU should also be fine
+> to make it undefined.
+> 
+> Only one (IMHO, very slight..) concern is, if such "undefined behavior"
+> operation may crash QEMU rather than causing a sigbus like what normally
+> would happen on a bare metal.
 
-Definitely not if using docker/podman... but if not go for it - nobody 
-will notice, they are really small.
+bus errors are uncommon on bare metal. they aren't usually
+handled all that well.
 
-Paolo
+>  I'll put that discussion at last since I
+> don't know if it's that important.
+> 
+> So taking that e1000 bug into account,
+
+Won't the patch I sent resolve e1000 too?
+
+> looks like we have more of such user
+> that wants explicit control over the memory operations, likely with
+> attibutes:
+> 
+> - Aligned only
+> 
+> - No vectored inst
+> 
+> - No possible duplication (perhaps it means, only use atomic access??? per
+>   PeterM's explanation in another email)
+> 
+> I wonder if we should do this by default to all IOs, I think it might have
+> an unwanted impact on general perf.  One idea is we can introduce a new bit
+> in MemTxAttrs: say, mmio_strict, which will follow above stricter rule of
+> doing IO.
+> 
+> Then for ram_device, when doing memory access we should also use the same
+> set, hence something like:
+> 
+>   if (memory_access_is_direct(mr, ...)) {
+>     if (MemTxAttrs.mmio_strict || memory_region_is_ram_device(mr)) {
+>         memmove_strict_mmio(); // or memmove_no_vector(), or ...
+>     }
+>   }
+> 
+> I also want to bring us to the same page on differenciating two things:
+> 
+> - about direct access definition: so far, I want to define this almost as
+>   "it is directly accessible from host virtual address space".  It means
+>   ram_device definitely falls into this category, so it's a sub-category
+>   only but enforces strict mmio as above
+> 
+> - bounce buffer: I want to make sure we're on the same page this is
+>   something totally solving different problem of what we're looking at for
+>   ram_device.  Essentially this is only needed if mem is not "direct
+>   access".  Otherwise we shouldn't need it (including ram_device).
+
+
+I think ram_device_direct_access is a hack that should go away.
+It's a work around for a memory core bug that we should just fix.
+
+
+
+> I'm not sure if above sounds reasonable.  The hope is with that we should
+> fix both this GPU and e1000 issues (e1000, and maybe other places, needs to
+> start passing MemTxAttrs.mmio_strict, though, if we want to keep the
+> default to be still fast-path to use memcpy()/memmove()?).
+> 
+> Thanks,
+> 
+> =========================
+> 
+> Two cases here on the concern:
+> 
+> (1) if fully emulated device, non-issue afaiu because whatever DMA does
+> (with vectored ops) will only apply to QEMU process (like a bounce
+> buffer..) so it won't crash,
+> 
+> (2) if it's a VFIO device (not the GPU case, but when like realtek and some
+> guest driver registers it as a DMA target), logically the guest should
+> receive a bus error, but for QEMU's case it may crash QEMU with SIGBUS:
+
+what and why would crash qemu?
+
+> sigbus_handler() doesn't process anything except memory failures so far, it
+> seems.  The right thing might be that we forward this sigbus to guest, but
+> I didn't check further.
+> 
+> But I don't know if it would really happen, better verify it, and even if
+> it will happen I still think it's a very niche security use case to cover
+> so far.  Doesn't seem to be a blocker to fix a real perf problem first with
+> RAM-like GPU devices.
+> 
+> -- 
+> Peter Xu
 
 
