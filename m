@@ -4,89 +4,107 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5D68FCD98CF
-	for <qemu-devel@archiver.kernel.org>; Thu, 11 Jun 2026 14:41:23 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9FEF3CD98CC
+	for <qemu-devel@archiver.kernel.org>; Thu, 11 Jun 2026 14:45:54 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wXgaQ-0006vo-Es; Thu, 11 Jun 2026 10:40:50 -0400
+	id 1wXgeZ-0007eJ-KK; Thu, 11 Jun 2026 10:45:07 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1wXgaP-0006vQ-2N
- for qemu-devel@nongnu.org; Thu, 11 Jun 2026 10:40:49 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1wXgaN-0004ml-3Q
- for qemu-devel@nongnu.org; Thu, 11 Jun 2026 10:40:48 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1781188845;
- h=from:from:reply-to:reply-to:subject:subject:date:date:
- message-id:message-id:to:to:cc:cc:mime-version:mime-version:
- content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=yEMuqITMRnonbxZfVVuHpn72mlrZTUq47IZKLZXnhwM=;
- b=cJwvOk45vt7/0OMc0skwuvQlHOPS/ESjPBkRZkxmhxs3KbBnLnwJg1qsaj0iLORirpD8yB
- xTxQHEeP4I1DysiyBjqkETFVDKoCbN+GIzGPlbGA3mxCKf6uBevCatFtEY8wqXT9n2Va0D
- TvXUD0cuzLF3hHQZWyL/Js17us5dhQA=
-Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-639-Q-owXLSvOq-mZDY45WX6Zw-1; Thu,
- 11 Jun 2026 10:40:42 -0400
-X-MC-Unique: Q-owXLSvOq-mZDY45WX6Zw-1
-X-Mimecast-MFC-AGG-ID: Q-owXLSvOq-mZDY45WX6Zw_1781188840
-Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id ABFA6180A8EB; Thu, 11 Jun 2026 14:40:39 +0000 (UTC)
-Received: from redhat.com (unknown [10.44.50.8])
- by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id B9FE51955BE0; Thu, 11 Jun 2026 14:40:32 +0000 (UTC)
-Date: Thu, 11 Jun 2026 15:40:29 +0100
-From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
-To: Fabiano Rosas <farosas@suse.de>
-Cc: Peter Xu <peterx@redhat.com>, qemu-devel@nongnu.org, qemu-arm@nongnu.org,
- =?utf-8?Q?C=C3=A9dric?= Le Goater <clg@redhat.com>,
- Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@mailo.com>,
- Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>,
- Peter Maydell <peter.maydell@linaro.org>,
- "Dr . David Alan Gilbert" <dave@treblig.org>,
- Eric Blake <eblake@redhat.com>,
- Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>,
- Paolo Bonzini <pbonzini@redhat.com>, Kevin Wolf <kwolf@redhat.com>,
- Sana Sharma <sansshar@redhat.com>,
- =?utf-8?Q?Marc-Andr=C3=A9?= Lureau <marcandre.lureau@redhat.com>,
- Juraj Marcin <jmarcin@redhat.com>, qemu-rust@nongnu.org,
- Markus Armbruster <armbru@redhat.com>,
- Mark Cave-Ayland <mark.caveayland@nutanix.com>
-Subject: Re: [PATCH v2 05/10] qom: Create object-property-ptr.[ch]
-Message-ID: <airI3UKeVVRUdQHq@redhat.com>
-References: <20260609172514.2037645-1-peterx@redhat.com>
- <20260609172514.2037645-6-peterx@redhat.com>
- <aimNv51iMZ_yEgDG@redhat.com> <aimvTYDsv_-Xsboy@x1.local>
- <aiq9g60bOnvsOQOy@redhat.com> <87h5n94001.fsf@suse.de>
+ (Exim 4.90_1) (envelope-from <alex.kanavin@gmail.com>)
+ id 1wXgeV-0007dv-2y
+ for qemu-devel@nongnu.org; Thu, 11 Jun 2026 10:45:04 -0400
+Received: from mail-qv1-xf2f.google.com ([2607:f8b0:4864:20::f2f])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <alex.kanavin@gmail.com>)
+ id 1wXgeT-0006z6-Lj
+ for qemu-devel@nongnu.org; Thu, 11 Jun 2026 10:45:02 -0400
+Received: by mail-qv1-xf2f.google.com with SMTP id
+ 6a1803df08f44-8ccd1f57b32so86378006d6.2
+ for <qemu-devel@nongnu.org>; Thu, 11 Jun 2026 07:45:01 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1781189100; cv=none;
+ d=google.com; s=arc-20240605;
+ b=T+iGWrfQEhX+4kLMSfmKR9fq5MxGdxP2M8FuCsts1VKCTNO9FUpFtBS3+FdW/P/IsR
+ Rd5lOtn+yudNXujbt8hf7nFGOVWRkIB+53ZSrdFjn87Wx5Iq2UfqPAn1w+4ZOXWNxiRk
+ R9h4P4nyNbJLomBMtrvY2lzCM2iyDmiUfI0y0wZyNn/4wc2CL6APOYz91XRWvT8tQtee
+ AL7V5z81mv2rgkooh2TAohyMut8S52Q6/Fym9ewFItMyfU1wDSEx1uc1vFojkdbfhCIt
+ JMvyB+7A/91wYzkZS0vos5kBGvxGOQWRFJP2Lz+ZfE/m6j+oPshhjPATchszifzohx6q
+ C5Rg==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
+ s=arc-20240605; 
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:dkim-signature;
+ bh=vaFnOHMrhfpbN5F7uWMNmfp/QzRhcwZoalWl4szkMx8=;
+ fh=jjLbwR6Ie9ezVMM2sJN0+2jpxoQWZvctPdqcKVN/6SI=;
+ b=F3muFYsCc0Fw9qX+925mqo+C5keXTLai9QVWCrqDm4wOcmhXPK1dauXQZCgbqrRpET
+ 5kPi6O0zAGFmaojtYDaebTFCS+4/Ed/zeBwa2fR2qTarHxW9z5rPbBRw8cvOtpAGIIjt
+ qDX8Jzo5/pJx+j+cMhGsqR/Sh9i3sBPT0eAGVJmFvNAR2K7qFI2ge3ug9sUnJ8nnKeWE
+ dsSFlZsD9hM5W3k+A6I1Im5YfQ4ZzcZzCh2B1xDGeCOsDJdOkho4jMetbKIyGdyFP+Wf
+ KU/g/Bc/pSvlI2Kn27ZUfXcVNRXyHOa8kCszkK4kZU9pw6wNyzJx7ijJ5UItuxw4V7i8
+ G5tg==; darn=nongnu.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=gmail.com; s=20251104; t=1781189100; x=1781793900; darn=nongnu.org;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:from:to:cc:subject:date:message-id:reply-to;
+ bh=vaFnOHMrhfpbN5F7uWMNmfp/QzRhcwZoalWl4szkMx8=;
+ b=NigjTWtvUv7VQXkdPyZp+9xNFijuvAxNNrs5u4kvs4wFmgHPG46VhE3BU9H6xMnvAy
+ cme9pj+eankTiOCkpTe0edY5tfcs+kBWOaiwiz1JMBmHQ0pHVkksnHJH0u+hwbtPEfoR
+ xschUIM6dY6GdD2VJLmnowtTp6fLZtKDHWsZw+0JI9r4cGiOUdcaom+PTVkn/AP+y+4l
+ p9sB//rbqXiGhQF8f9OEsbdoB6saKNAfF2EItMvaQYQ66qpmWZLLlHnlEqdVsasxey48
+ 1OTUP2JuqkWNKTmHNvA7Pw9FjQYSK+gQN/SOOCpNaEcrihOdADrxGnWMMCjX+1k29sqL
+ yHWQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1781189100; x=1781793900;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=vaFnOHMrhfpbN5F7uWMNmfp/QzRhcwZoalWl4szkMx8=;
+ b=OY3mlH6E8IXfEqMaGT6XTxBfLj7/rqE94kTIxbVwxixiArFU7+LEWjU6X5KYdb0wvO
+ zJ3+STroHFjF+46Kc3ydwCzAOwb62+5Ru8nDtVWRjuWd8nWMehHmmvTOgBunrZ4X3Ti5
+ ak2uKVk3pHjz+H5mJJnnUIOitPcSAFDwwXJqK6B8j4GUV7CVzLJ9RzK2h0YN11i/SHZF
+ dR9JUHpNCNQ6/K2JqauITRfXXs2WVTYk7fhLIWQAm1K9I4VzLOpMoD8IjjY0uThVBbzk
+ nB014e1HGCVLqQkca7vkOItf7qjEdbCuEWFKBfDPhHeo0t04EHp/0dSk9DBDGGfY3r4C
+ j6pQ==
+X-Gm-Message-State: AOJu0YyU5HIV/1P+FZ+14Ag6HpIDWNBiY+CeK5/cnOIerQRZvNfrwwbF
+ 97Xt/6LOEcq0eHQ7l5+6SEIKj3yZ5lwpizvBjuQlpT9t4wcHkEM+A/J8AeCXrLVwZmZWBJdP2cX
+ cH8CxpQQ2x+LYNt17hK9LkR733poSJF/obA==
+X-Gm-Gg: Acq92OHDdq/VTxMcSnIhj/nZjOPv95LuccbfsQ2o1Ua5a/ke9yLhzD7ZKRijBjQuiyo
+ z254KckY/UoQLecQJ+UtxzjYCSE3MzC2BKRUmoEIi6d+wj99p0IRTX8S7xiPvbjh1usIRotLBm/
+ G2qC8bnOVNGZk53ZNk+o8EGZ+nche+qpS9TvCydDO2l6ISWkMatmAIODIw2GhCiFdimQIC+iL2I
+ 9/tXkWYI/f0IRaOsTZoKQsoUP6BahorBMW9rGtLqFI8VbMIY9WpQvkNmIZrUB+c8b+BNTd2n+Gz
+ feJlSdCRZtn+B+NjV0ddrNcq0B/C8RxHMaSI7wfrb/uSR7xAlsKk1wLMqvwhSA==
+X-Received: by 2002:a05:6214:f24:b0:8ce:d302:f069 with SMTP id
+ 6a1803df08f44-8d1d7a78ad9mr48807876d6.3.1781189099996; Thu, 11 Jun 2026
+ 07:44:59 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <87h5n94001.fsf@suse.de>
-User-Agent: Mutt/2.3.2 (2026-04-26)
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.12
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=berrange@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -24
-X-Spam_score: -2.5
+References: <20260611-sdl-v1-1-93d4a51684bb@rsg.ci.i.u-tokyo.ac.jp>
+In-Reply-To: <20260611-sdl-v1-1-93d4a51684bb@rsg.ci.i.u-tokyo.ac.jp>
+From: Alexander Kanavin <alex.kanavin@gmail.com>
+Date: Thu, 11 Jun 2026 16:44:48 +0200
+X-Gm-Features: AVVi8CcWa2YkSwfnUuxblsN3mVrm8ciRI9QycibNWau89urBanhBUimj_n9I5Hc
+Message-ID: <CANNYZj_tg=DTXW3mdUGyifCDpeLAE5YWHLCNuuwQV_Y4fUsTpQ@mail.gmail.com>
+Subject: Re: [PATCH] ui/sdl2: Explicitly specify EGL platform
+To: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
+Cc: qemu-devel@nongnu.org,
+ =?UTF-8?B?TWFyYy1BbmRyw6kgTHVyZWF1?= <marcandre.lureau@redhat.com>, 
+ =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>, 
+ =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@mailo.com>, 
+ Richard Purdie <richard.purdie@linuxfoundation.org>, 
+ Mathieu Dubois-Briand <mathieu.dubois-briand@bootlin.com>, 
+ openembedded-core@lists.openembedded.org, Quan.Sun@windriver.com, 
+ Pierre-Eric Pelloux-Prayer <pierre-eric.pelloux-prayer@amd.com>
+Content-Type: text/plain; charset="UTF-8"
+Received-SPF: pass client-ip=2607:f8b0:4864:20::f2f;
+ envelope-from=alex.kanavin@gmail.com; helo=mail-qv1-xf2f.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.445,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -99,143 +117,17 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, Jun 11, 2026 at 11:36:46AM -0300, Fabiano Rosas wrote:
-> Daniel P. Berrangé <berrange@redhat.com> writes:
-> 
-> > On Wed, Jun 10, 2026 at 02:39:09PM -0400, Peter Xu wrote:
-> >> On Wed, Jun 10, 2026 at 05:15:59PM +0100, Daniel P. Berrangé wrote:
-> >> > On Tue, Jun 09, 2026 at 01:25:09PM -0400, Peter Xu wrote:
-> >> > > Create object-property-ptr.[ch] files to include all the helpers for
-> >> > > object_property_add*_ptr().
-> >> > > 
-> >> > > These set of helpers are handy because they look extremely familiar with
-> >> > > qdev-properties, allowing the caller to provide a pointer and it will
-> >> > > manage all the setters and getters.
-> >> > > 
-> >> > > The follow up patches may introduce more of such helpers.  Since object.c
-> >> > > has been already too big, split that part out.
-> >> > 
-> >> > The "ptr" helpers are all instance level properties which is a concept
-> >> > we discourage from new usage, in favour of class level properties.
-> >> > 
-> >> > I don't think we should be adding more "ptr" helpers, but rather
-> >> > planning to eliminiate the (surprisingly little) usage of the
-> >> > existing ones.
-> >> 
-> >> The other way to do similar thing is qdev's offset way, but IMHO that's
-> >> more awkward to remember an offset of a pointer then do math everytime.
-> >> Essentially, from technical pov we need at least one uintptr_t to store
-> >> either (1) offset, or (2) field pointer when there's a field that is bound
-> >> to a prop.  IMHO (2) can be better otherwise we'll need to do all the maths
-> >> to calculate offsets then when access we add the offset back and do a force
-> >> cast.  It seems not necessary.
-> >
-> > There shouldn't be any need to play with field offsets either. Just
-> > define the setters & getters to directly access the fields.
-> >
-> > Take some samples from the "machine_class_init" in hw/core/machine.c
-> > as an example of the normal design pattern:
-> >
-> >     object_class_property_add_str(oc, "dumpdtb",
-> >         machine_get_dumpdtb, machine_set_dumpdtb);
-> >     object_class_property_set_description(oc, "dumpdtb",
-> >         "Dump current dtb to a file and quit");
-> >
-> >    ..snip..
-> >
-> >     object_class_property_add_bool(oc, "dump-guest-core",
-> >         machine_get_dump_guest_core, machine_set_dump_guest_core);
-> >     object_class_property_set_description(oc, "dump-guest-core",
-> >         "Include guest memory in a core dump");
-> >
-> > These are paired with:
-> >
-> >   static char *machine_get_dumpdtb(Object *obj, Error **errp)
-> >   {
-> >       MachineState *ms = MACHINE(obj);
-> >
-> >       return g_strdup(ms->dumpdtb);
-> >   }
-> >
-> >   static void machine_set_dumpdtb(Object *obj, const char *value, Error **errp)
-> >   {
-> >       MachineState *ms = MACHINE(obj);
-> >
-> >       g_free(ms->dumpdtb);
-> >       ms->dumpdtb = g_strdup(value);
-> >   }
-> >
-> > and
-> >
-> >   static bool machine_get_dump_guest_core(Object *obj, Error **errp)
-> >   {
-> >       MachineState *ms = MACHINE(obj);
-> >
-> >       return ms->dump_guest_core;
-> >   }
-> >
-> >   static void machine_set_dump_guest_core(Object *obj, bool value, Error **errp)
-> >   {
-> >       MachineState *ms = MACHINE(obj);
-> >
-> >       if (!value && QEMU_MADV_DONTDUMP == QEMU_MADV_INVALID) {
-> >           error_setg(errp, "Dumping guest memory cannot be disabled on this host");
-> >           return;
-> >       }
-> >       ms->dump_guest_core = value;
-> >   }
-> >
-> >
-> > and defaults (if needed) are set in  the instance init method:
-> >
-> >   static void machine_initfn(Object *obj)
-> >   {
-> >       MachineState *ms = MACHINE(obj);
-> >       MachineClass *mc = MACHINE_GET_CLASS(obj);
-> >
-> >       ms->dump_guest_core = true;
-> >       ms->mem_merge = (QEMU_MADV_MERGEABLE != QEMU_MADV_INVALID);
-> >       ...
-> >   }
-> >
-> 
-> Thanks for the practical example. In this usage, do you think there
-> would be a way to avoid having 53 getters and setters? We often run into
-> this issue of the rest of QEMU having just a handful of options and
-> migration having a ton. Anything we can do to streamline this would be
-> good.
+On Thu, 11 Jun 2026 at 13:58, Akihiko Odaki
+<odaki@rsg.ci.i.u-tokyo.ac.jp> wrote:
+> Resolving the issue described in the GitLab work item also requires:
+> https://github.com/libsdl-org/SDL/pull/15806
 
-There's nothing standard in QOM, but in patch 10 in this series
-Peter has a DEFINE_TLS_PROP_HELPERS() which macro-ized the
-repetitive getters/setters for the TLS string properties. The
-duplicate code still exists in the binary of course, just hidden
-from the source.
+Thanks! The pull request is only towards SDL2. I believe SDL3 (via
+sdl2 compat layer) isn't affected (it sets the platform correctly in
+my testing). Is that right?
 
-
-> >> Is there any pointer I can read about the discussion previously on this?
-> >
-> > I don't know that there's a particular thread in recent times
-> > that I'd point to, just my ancient series from when I introduced
-> > class properties for QOM back in 2015 and started the effort to
-> > convert away from instances properties.
-> >
-> >   https://lists.gnu.org/archive/html/qemu-devel/2015-08/msg03112.html
-> >
-> 
-> Anything we can do to avoid stumbling into this again? Should we add
-> some words to object_property_add() discouraging instance properties?
-
-Yeah, it is probably worth adding some guidance to the docs there.
-
-With regards,
-Daniel
--- 
-|: https://berrange.com       ~~        https://hachyderm.io/@berrange :|
-|: https://libvirt.org          ~~          https://entangle-photo.org :|
-|: https://pixelfed.art/berrange   ~~    https://fstop138.berrange.com :|
-
+Alex
 
