@@ -4,144 +4,153 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C2BBACD98C7
-	for <qemu-devel@archiver.kernel.org>; Thu, 11 Jun 2026 18:38:24 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 19F1ECD98C7
+	for <qemu-devel@archiver.kernel.org>; Thu, 11 Jun 2026 18:49:50 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wXkIA-00025U-U1; Thu, 11 Jun 2026 14:38:14 -0400
+	id 1wXkSp-0003k3-4y; Thu, 11 Jun 2026 14:49:15 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@oss.qualcomm.com>)
- id 1wXkI9-000256-8H
- for qemu-devel@nongnu.org; Thu, 11 Jun 2026 14:38:13 -0400
-Received: from mx0a-0031df01.pphosted.com ([205.220.168.131])
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1wXkSm-0003jg-Fe
+ for qemu-devel@nongnu.org; Thu, 11 Jun 2026 14:49:12 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@oss.qualcomm.com>)
- id 1wXkI7-0004sf-6a
- for qemu-devel@nongnu.org; Thu, 11 Jun 2026 14:38:13 -0400
-Received: from pps.filterd (m0279863.ppops.net [127.0.0.1])
- by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 65BIQFdE1398287
- for <qemu-devel@nongnu.org>; Thu, 11 Jun 2026 18:38:08 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
- cc:content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
- N+M3p5J9REGJXDuMEogfBCLafrrolYGy/B45Yp8mflM=; b=icU82okUU2WduMAS
- bydJhToZfkA9aqPDjmVvvpqCQ6jcRCSe9oqtIPFR0LLDtjztZ4TvpPg9o6wr623/
- dW1gpphYaXvd+cIA+8AIzS6bJCJKiL8CUMU3VrBXgodAY/kn4mxjm6DjQiEU4RaV
- TzncnFqOy8tXioEnVBUH88B6U/QWHaZfSmwNcn14ooiUBoBE1K7l7qfKfTPEhBiN
- lKLrigsLltvqUYehqwf/uciC4yUdUblw7mwOhdSgCl7O5MPcvK59p/mn2G9K5kjO
- EU2nfERBJ6OBSBShi7AwTOc7xhMMnviaWS61qwjG52uL05VWJtpoJ7XGFkIUM+pS
- kQzUOA==
-Received: from mail-qt1-f198.google.com (mail-qt1-f198.google.com
- [209.85.160.198])
- by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4er0x7gfw0-1
- (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
- for <qemu-devel@nongnu.org>; Thu, 11 Jun 2026 18:38:08 +0000 (GMT)
-Received: by mail-qt1-f198.google.com with SMTP id
- d75a77b69052e-5174a23afcbso1006851cf.3
- for <qemu-devel@nongnu.org>; Thu, 11 Jun 2026 11:38:08 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1wXkSl-0002sh-1H
+ for qemu-devel@nongnu.org; Thu, 11 Jun 2026 14:49:12 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1781203748;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
+ bh=tgwf+mpwEnrSFTrxZ7HbnVYhySd6W7lXhagpSCyASwo=;
+ b=M6/S1+5FUu7E21TzHgAJ6By5B063WB+4m+oYLxKmSrD1nd7TNdeUILkyFMz8YLTpYMVveD
+ Y9yrDRF7QQenTV/ESQoLri3S5qdKUTc6aFyPxzVmKv1pLAytsTUTUL0kils7P2Jxy7sX4/
+ aBP8u0lTY0cTYUba4UNestIOeHbiByk=
+Received: from mail-wr1-f70.google.com (mail-wr1-f70.google.com
+ [209.85.221.70]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-463-mRQ9WGPRNkyUD_tTWKBhQg-1; Thu, 11 Jun 2026 14:49:07 -0400
+X-MC-Unique: mRQ9WGPRNkyUD_tTWKBhQg-1
+X-Mimecast-MFC-AGG-ID: mRQ9WGPRNkyUD_tTWKBhQg_1781203746
+Received: by mail-wr1-f70.google.com with SMTP id
+ ffacd0b85a97d-45ef66cc579so58894f8f.3
+ for <qemu-devel@nongnu.org>; Thu, 11 Jun 2026 11:49:07 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=oss.qualcomm.com; s=google; t=1781203087; x=1781807887; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=N+M3p5J9REGJXDuMEogfBCLafrrolYGy/B45Yp8mflM=;
- b=BsYt45iIcfAFHhGnqxx7v7zEcOSQ7rDbWnTyGw4fwkeB2rwpEiZWT5ie6kTXAZ0q9a
- tOEe+U8Fzsk7ESRqNnsedO0hUJDzu9ASxsxTi8eXgYOZgEYc/LWFT/AjaDKfZNFLYZo7
- YhHyeo3tdsCa7fpPr6K5FXttP2rIcUooNy5fnui1KKMgNh64eJ91NJ5CkAyr1nkMMjnx
- k/4srC3sa37BWcn+6QP4ixX5kxgEwMHZbg9gAoBk6aygAeTZ/1mviKzbtbKxKlUSBSNj
- rwMLjAWhRJvU9KE0T2KTxuB135wk0AGWY04zuIvPN+cOyX73XhYQc9ntZ4ZwJCZw1Fcf
- FR8A==
+ d=redhat.com; s=google; t=1781203746; x=1781808546; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:autocrypt:from
+ :content-language:references:cc:to:subject:user-agent:mime-version
+ :date:message-id:from:to:cc:subject:date:message-id:reply-to;
+ bh=tgwf+mpwEnrSFTrxZ7HbnVYhySd6W7lXhagpSCyASwo=;
+ b=qehnw0hYOU/qoHwWGh1Cx6z7JgpGxm/kS0WUtQObG6C68i19AyL44Ad8lojp+0vBXI
+ bE3eLhn29WLD1uVYS1jJUar76mqmoiQzCfotQteeO+gHNLUHej8dHXONYKuKdjcDrdXS
+ jcEbrjJYxrIHNhq7JUauqShdUCtLcvj3kn4tLqUs98hW8Zm99QIKQXZ/3NvS+7iwuW/O
+ oWcsDAT8CG0yDySHvhK0CrkZqy15kXLCjHt34flQPemZrVMdogVmi5WpKjguH3if3sdp
+ +rnDUDwKmaxp2MQf3qMnws9rfRiRH+c2W28UDz2KBIiYu2WaBzEuKPpQsQOtmwHpre/s
+ Ljdg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1781203087; x=1781807887;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=N+M3p5J9REGJXDuMEogfBCLafrrolYGy/B45Yp8mflM=;
- b=kP87UvfZNSnTwFWw3uSCDL048Wklw0b1DJH6J8PN3RPAjVTffV3HY5zFaKPRFWDIX4
- JQ1Z/8o2CkvKjqJGLWfV9UURl4d8SjE8ardGK+8eKEedxS5j0vTEp+1idgR/Yy+fGVDm
- GpmByN/18F5mFXHh+22TshJEL7POb/bRP82xHBmHvNAfrvPXkfTzl9xtpCPVAOE1u3Td
- tCd/HKxb/0QbG6j8/VAQy34JfQL2alVpn7glOcTtRUmqXmfQjObspH09ayXMA8jSkmIM
- ddFy6AGS9F3g+/ARgUPnDxzzsBjtKcst0sWqpRRiXnj7//IKUMsc1XBDrYpev7g8ILmw
- TqZQ==
+ d=1e100.net; s=20251104; t=1781203746; x=1781808546;
+ h=content-transfer-encoding:in-reply-to:autocrypt:from
+ :content-language:references:cc:to:subject:user-agent:mime-version
+ :date:message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=tgwf+mpwEnrSFTrxZ7HbnVYhySd6W7lXhagpSCyASwo=;
+ b=P/2+i9tat1hdVRz7rP5s7Cfnf09MKNiYjVgfOdXkGSQmnvVejTr++rjBMsKUIcPACN
+ /JjiMl9DqNQ6cVc5ZGH1ZlriSD9/dbrYKcb3+cmj6oyWE02sKoCx4yBj3CaufknhV5eJ
+ BW/hfVgHRZXTWugmyDJvIEROHsYqdhIgHdPr81h90xGm8YNILP5dafiyVvM+hWV8SDqj
+ Dl2V2UxyRY0T6JSmv/CNAJ3ryDPU9JDLPRyqPcRNruvuqoytEkERY0oOka/2u3v3tX2P
+ eUB6c8eItHpWef3B2sy2j7LCLxJiZPyHgnqO84XZ31UCOPLmgVZkKJx+0l8Cv5vF/s9Y
+ vLAw==
 X-Forwarded-Encrypted: i=1;
- AFNElJ/XXC8bFgAa4e0/M81nioMJi3obdP73BbsSSZdzOkrjSp/H6GCJTVV1TqFhrPaWMoIW9Q4EmC1a2mh4@nongnu.org
-X-Gm-Message-State: AOJu0YyPQmUajpiQZoOjEe4ZgK4su2T2TQyJdTDhbWhJtRZ7lPJeXn6u
- SQiLnk8Ay5I/1glrKGeK3eeCCsIkvTBXyLpox3OWbRG1YakihvEU6veiZ20MxYv0hk09kpozfn4
- I7B7TwhB032cPje7zaxIlLpvS5Ma3AWg+9zgAZHI4PscUGVk6xZj/q4VUVQ==
-X-Gm-Gg: Acq92OFdFNe2Wnl7rvUfiNi0vwfcowjlliupEQyhV78Ldsai/mkdsuSMALVZ7Xtiz2a
- EXBxqw4yME9jQP30FlJMmGl1AFJnURPC3mqoyYVvfo6ZjuE8BqqXHUKjLZGCQdFRdAaoQIxfFzo
- BpFasBdh9rIIgR0Ut32Om99Ln4ojGicDwgpofSf+ZwQrgdb0Ts0ho86OcTYVqYQXKMzSb2Bi4tG
- VsN4QSgW/Q/PP78A/4EI5FsOQcRAhZI2Th8+es9svbmkA10covKN4cu6VCmbkPQXcWxqH+B5lDa
- cNgH0Fjqvs+zsrpr0bhN6Gt0NsUPgdyonoAU1xtpdYojbGUEvsgFcYhGMnlSN7q/c7IlJFjMhIE
- BhsKMu6YSpXYc2kEDTVnAWOl4+xpgrJff1WoPYPwHKljEhIIBoPqgMvrnLbO1yxBFSHk12RBPc9
- XvoQ==
-X-Received: by 2002:a05:622a:130a:b0:517:75d8:b95d with SMTP id
- d75a77b69052e-517ee2141d3mr57914611cf.40.1781203087421; 
- Thu, 11 Jun 2026 11:38:07 -0700 (PDT)
-X-Received: by 2002:a05:622a:130a:b0:517:75d8:b95d with SMTP id
- d75a77b69052e-517ee2141d3mr57913961cf.40.1781203086766; 
- Thu, 11 Jun 2026 11:38:06 -0700 (PDT)
-Received: from [192.168.69.232] (88-187-86-199.subs.proxad.net.
- [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-490e2c7ea52sm91407815e9.2.2026.06.11.11.38.05
+ AFNElJ87zZZt86LQVQtDzR+QEuIP19vP4gXZo0FLlwOBMECI1+bsDZTjVdAziDObQ/yaZKwQ2iS7K5FowlsI@nongnu.org
+X-Gm-Message-State: AOJu0YxV+/FNQmn/CIjzXgjO5BrvYgXnxNYsK0d92A47oKnrN85M+Knp
+ NjjyTGfkkGeWZDJ5gnD5bKwY8jxRRHd+PZ3JlvjNxvVLionVX5i8+3AQsh1kZWq/qk11EkqA+2q
+ GMHfgZ5V7lTyVlQcLY/utONH+xrEjtoIvxQRsZTShs6TElTiAdHp8ZEic
+X-Gm-Gg: Acq92OGfa0P/QD6Bc8md3y5ei9HFA3BisfZ63NFKr1Q8GNal2CZbhIwHjcwKcQCPHTX
+ ps/ZgtjurdoNnujppe/byy8yu938xDjcHTGyEjhj4+FZmnESxG9bBhJKEuLecbBGWS3nG0wfR1W
+ A/nVQyDYaamRhIfcG44D05iq/AOpb4LWu1dFdtzXEGzQCCqXAvYaYcekZ/ze/SfgzZ5EGmfXo21
+ qAg9QhYN13hAHJIUMv7Ejqxb+IpzaAuXAEgm16KGVELXWSaiWfhV8zugppXM/Un2wgOM7B/hLPB
+ swdWpQfMrUYmXpYBuOLzC4WahCOQmDUVuqIYgJy3l3lCEysbTbk2joCfgDPXbLdEJND5kEQrYIS
+ PyV8LrcV748U0lSB6Plw=
+X-Received: by 2002:a05:6000:240f:b0:45e:da57:be33 with SMTP id
+ ffacd0b85a97d-460677a646emr6208336f8f.23.1781203746197; 
+ Thu, 11 Jun 2026 11:49:06 -0700 (PDT)
+X-Received: by 2002:a05:6000:240f:b0:45e:da57:be33 with SMTP id
+ ffacd0b85a97d-460677a646emr6208309f8f.23.1781203745840; 
+ Thu, 11 Jun 2026 11:49:05 -0700 (PDT)
+Received: from [192.168.0.9] ([47.64.113.132])
+ by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-4606c0c2239sm1017669f8f.7.2026.06.11.11.49.03
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 11 Jun 2026 11:38:06 -0700 (PDT)
-Message-ID: <9b3384bd-bf7f-433e-8427-7b278bb7ff8d@oss.qualcomm.com>
-Date: Thu, 11 Jun 2026 20:38:04 +0200
+ Thu, 11 Jun 2026 11:49:04 -0700 (PDT)
+Message-ID: <544ac437-5dfd-4cf0-8332-16cf8bd56260@redhat.com>
+Date: Thu, 11 Jun 2026 20:49:02 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v11 1/4] hw/mem: add sp-mem device for Specific Purpose
- Memory
+Subject: Re: [RFC PATCH] tests/functional: allow pylint to introspect cv2
+To: =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ qemu-devel@nongnu.org
+Cc: Thomas Huth <th.huth+qemu@posteo.eu>,
+ =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@mailo.com>,
+ =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>
+References: <20260611162536.2184620-1-alex.bennee@linaro.org>
 Content-Language: en-US
-To: fanhuang <FangSheng.Huang@amd.com>, qemu-devel@nongnu.org,
- david@kernel.org, imammedo@redhat.com, gourry@gourry.net
-Cc: Zhigang.Luo@amd.com, Lianjie.Shi@amd.com
-References: <20260611100637.2460507-1-FangSheng.Huang@amd.com>
- <20260611100637.2460507-2-FangSheng.Huang@amd.com>
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>
-In-Reply-To: <20260611100637.2460507-2-FangSheng.Huang@amd.com>
+From: Thomas Huth <thuth@redhat.com>
+Autocrypt: addr=thuth@redhat.com; keydata=
+ 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
+In-Reply-To: <20260611162536.2184620-1-alex.bennee@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Proofpoint-GUID: gLN2mrmE1LJZjE9e27hEupMxg-EjFFqF
-X-Authority-Analysis: v=2.4 cv=c4abhx9l c=1 sm=1 tr=0 ts=6a2b0090 cx=c_pps
- a=mPf7EqFMSY9/WdsSgAYMbA==:117 a=4s3hRJSeHn4rkQlkrse1kQ==:17
- a=IkcTkHD0fZMA:10 a=FelO9ux0wxsA:10 a=M51BFTxLslgA:10 a=s4-Qcg_JpJYA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=yOCtJkima9RkubShWh1s:22
- a=zd2uoN0lAAAA:8 a=FmMMexCXBUatOKZlFeEA:9 a=QEXdDO2ut3YA:10
- a=dawVfQjAaf238kedN5IG:22
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNjExMDE4NyBTYWx0ZWRfXxktCs07Kqw7P
- aAyIQKISFTa7O2p3Kp772dpYFItteKv/1j+/WXx27seKIOgpJy4f7iQXfqRTZMZAKTdyn4OkDH3
- 0CBCdfEARPht2HxnEM0dzlRMxTm0osh5ePJey8kH08Ji3GfxhOKdy3ZlvQ76mVm1SUwBnprL7Ix
- sxvcZPd+k688XdSQ2SKbHn7H2sei8lZx6N91DfkVdjcVJ3G5VxiHl253QAysUKfCCuZ/+VHoeK9
- ppHN8uCBMA80zVke4e50mziMME1eHaWB6kjbzIyhchxoKmN/ExnvchqtEmt2pEiRsUPrSnGCBjb
- D1vHap4bkb9ybrcz3DH6QRcxKOjhpTEJb7mFfGs3lG+2EqLMJanxWYeuQwX9f9OiQLIxkc7UCeq
- 8lhpAdRuhq5JWfFBHASimGQvJCSOwpORQL87wFlzmU5Ow38am2fB6NkNMv32DTfd0+cD1ZQSxt6
- 10h4h7gRvM95T0hO/Ug==
-X-Proofpoint-ORIG-GUID: gLN2mrmE1LJZjE9e27hEupMxg-EjFFqF
-X-Proofpoint-Spam-Info: AW1haW4tMjYwNjExMDE4NyBTYWx0ZWRfX+jfKTdKBgsqT
- ueQWleyKbSqRPBs2hFtYnVEmu/9dMrDitm5mbfDFlOdnEAMjadLbZC6Rt9h6um03XGgCDJ2HmPG
- /Q5A2SmCpxJd4fegCbmB0GOewhKoOK8=
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.125,FMLib:17.12.100.49
- definitions=2026-06-11_04,2026-06-11_01,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- lowpriorityscore=0 adultscore=0 clxscore=1015 phishscore=0 priorityscore=1501
- malwarescore=0 bulkscore=0 suspectscore=0 impostorscore=0 spamscore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2606040000 definitions=main-2606110187
-Received-SPF: pass client-ip=205.220.168.131;
- envelope-from=philmd@oss.qualcomm.com; helo=mx0a-0031df01.pphosted.com
-X-Spam_score_int: -27
-X-Spam_score: -2.8
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=thuth@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -24
+X-Spam_score: -2.5
 X-Spam_bar: --
-X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_MSPIKE_H2=0.001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.445,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -157,203 +166,34 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi,
+On 11/06/2026 18.25, Alex Bennée wrote:
+> To fix:
+> 
+>    qemu-test.test_pylint "/home/alex/lsrc/qemu.git/tests/functional/arm/test_integratorcp.py:83: I1101: Module 'cv2' has no 'imread' member, but source is unavailable. Consider adding this module to extension-pkg-allow-list if you want to perform analysis based on run-time introspection of living objects. (c-extension-no-member)"
 
-On 11/6/26 12:06, fanhuang wrote:
-> Introduce a TYPE_MEMORY_DEVICE subclass `sp-mem` for boot-time
-> SOFT_RESERVED memory exposed to the guest with a per-device NUMA
-> proximity domain.
+Which pylint version are you using? I don't get this with my pylint here 
+(version 4.0.4)...
+
+  Thomas
+
+
+> Manually running python3 showed I could indeed import cv2 and call
+> those functions.
 > 
-> The device targets accelerator memory (HBM and similar) that the
-> firmware hands to the guest OS as SOFT_RESERVED memory, so a driver
-> in the guest -- rather than the kernel's general allocator -- owns
-> the range.
-> 
-> Usage:
-> 
->      -object memory-backend-ram,id=spm0,size=$SIZE
->      -numa node,nodeid=$N
->      -device sp-mem,id=dev0,memdev=spm0,node=$N[,addr=$GPA]
-> 
-> The device is boot-time only (no hotplug).
-> 
-> Signed-off-by: FangSheng Huang <FangSheng.Huang@amd.com>
+> Signed-off-by: Alex Bennée <alex.bennee@linaro.org>
 > ---
->   qapi/machine.json          |  43 +++++++++++-
->   include/hw/mem/sp-mem.h    |  35 ++++++++++
->   hw/core/machine-hmp-cmds.c |  11 +++
->   hw/mem/sp-mem.c            | 136 +++++++++++++++++++++++++++++++++++++
->   hw/mem/Kconfig             |   4 ++
->   hw/mem/meson.build         |   1 +
->   6 files changed, 228 insertions(+), 2 deletions(-)
->   create mode 100644 include/hw/mem/sp-mem.h
->   create mode 100644 hw/mem/sp-mem.c
+>   tests/functional/pylintrc | 2 ++
+>   1 file changed, 2 insertions(+)
+> 
+> diff --git a/tests/functional/pylintrc b/tests/functional/pylintrc
+> index 049c3e76f12..c4c5237aa9d 100644
+> --- a/tests/functional/pylintrc
+> +++ b/tests/functional/pylintrc
+> @@ -82,3 +82,5 @@ disable=bad-inline-option,
+>   
+>   # Minimum lines number of a similarity.
+>   min-similarity-lines=20
+> +
+> +extension-pkg-allow-list = cv2
 
-
-> diff --git a/include/hw/mem/sp-mem.h b/include/hw/mem/sp-mem.h
-> new file mode 100644
-> index 0000000000..5c0b6ec4f8
-> --- /dev/null
-> +++ b/include/hw/mem/sp-mem.h
-> @@ -0,0 +1,35 @@
-> +/*
-> + * Specific Purpose Memory (SPM) device
-> + *
-> + * TYPE_MEMORY_DEVICE subclass for boot-time-only memory exposed to the
-> + * guest as an E820 SOFT_RESERVED range with a SRAT memory-affinity entry.
-> + *
-> + * Copyright (c) 2026 Advanced Micro Devices, Inc.
-> + *
-> + * Authors:
-> + *  FangSheng Huang <FangSheng.Huang@amd.com>
-> + *
-> + * SPDX-License-Identifier: GPL-2.0-or-later
-> + */
-> +
-> +#ifndef QEMU_SP_MEM_H
-> +#define QEMU_SP_MEM_H
-> +
-> +#include "hw/mem/memory-device.h"
-
-Not needed AFAICT.
-
-> +#include "hw/core/qdev.h"
-> +#include "qom/object.h"
-> +#include "system/hostmem.h"
-
-Not needed (HostMemoryBackend is forward declared in "qemu/typedefs.h").
-
-> +
-> +#define TYPE_SP_MEM "sp-mem"
-> +
-> +OBJECT_DECLARE_SIMPLE_TYPE(SpMemDevice, SP_MEM)
-> +
-> +struct SpMemDevice {
-> +    DeviceState parent_obj;
-> +
-> +    HostMemoryBackend *hostmem;
-> +    uint32_t node;
-> +    uint64_t addr;
-> +};
-
-
-> diff --git a/hw/mem/sp-mem.c b/hw/mem/sp-mem.c
-> new file mode 100644
-> index 0000000000..d0244a8f70
-> --- /dev/null
-> +++ b/hw/mem/sp-mem.c
-> @@ -0,0 +1,136 @@
-> +/*
-> + * Specific Purpose Memory (SPM) device
-> + *
-> + * Copyright (c) 2026 Advanced Micro Devices, Inc.
-> + *
-> + * Authors:
-> + *  FangSheng Huang <FangSheng.Huang@amd.com>
-> + *
-> + * SPDX-License-Identifier: GPL-2.0-or-later
-> + */
-> +
-> +#include "qemu/osdep.h"
-> +#include "qemu/module.h"
-> +#include "qapi/error.h"
-> +#include "hw/core/qdev-properties.h"
-> +#include "hw/core/qdev.h"
-> +#include "hw/mem/sp-mem.h"
-> +#include "hw/mem/memory-device.h"
-> +#include "migration/vmstate.h"
-> +#include "system/hostmem.h"
-> +
-> +#define SP_MEM_MEMDEV_PROP    "memdev"
-> +#define SP_MEM_NODE_PROP      "node"
-> +#define SP_MEM_ADDR_PROP      "addr"
-> +
-> +static const Property sp_mem_properties[] = {
-> +    DEFINE_PROP_LINK(SP_MEM_MEMDEV_PROP, SpMemDevice, hostmem,
-> +                     TYPE_MEMORY_BACKEND, HostMemoryBackend *),
-> +    DEFINE_PROP_UINT32(SP_MEM_NODE_PROP, SpMemDevice, node, 0),
-> +    DEFINE_PROP_UINT64(SP_MEM_ADDR_PROP, SpMemDevice, addr, 0),
-> +};
-> +
-> +static uint64_t sp_mem_get_addr(const MemoryDeviceState *md)
-> +{
-> +    return object_property_get_uint(OBJECT(md), SP_MEM_ADDR_PROP,
-> +                                    &error_abort);
-> +}
-> +
-> +static void sp_mem_set_addr(MemoryDeviceState *md, uint64_t addr,
-> +                            Error **errp)
-> +{
-> +    object_property_set_uint(OBJECT(md), SP_MEM_ADDR_PROP, addr, errp);
-> +}
-> +
-> +static MemoryRegion *sp_mem_get_memory_region(MemoryDeviceState *md,
-> +                                              Error **errp)
-> +{
-> +    SpMemDevice *spm = SP_MEM(md);
-> +
-> +    if (!spm->hostmem) {
-> +        error_setg(errp, "'memdev' property must be set");
-
-Already checked in Realize? Or is this for the introspection test?
-If so, use SP_MEM_MEMDEV_PROP like in Realize.
-
-> +        return NULL;
-> +    }
-> +    return host_memory_backend_get_memory(spm->hostmem);
-> +}
-> +
-> +static void sp_mem_fill_device_info(const MemoryDeviceState *md,
-> +                                    MemoryDeviceInfo *info)
-> +{
-> +    SpMemDeviceInfo *di = g_new0(SpMemDeviceInfo, 1);
-> +    SpMemDevice *spm = SP_MEM(md);
-> +    DeviceState *dev = DEVICE(md);
-> +
-> +    di->id = dev->id ? g_strdup(dev->id) : NULL;
-> +    di->addr = spm->addr;
-> +    di->size = memory_region_size(
-> +                   host_memory_backend_get_memory(spm->hostmem));
-> +    di->node = spm->node;
-> +    di->memdev = object_get_canonical_path(OBJECT(spm->hostmem));
-> +
-> +    info->u.sp_mem.data = di;
-> +    info->type = MEMORY_DEVICE_INFO_KIND_SP_MEM;
-> +}
-> +
-> +static void sp_mem_realize(DeviceState *dev, Error **errp)
-> +{
-> +    SpMemDevice *spm = SP_MEM(dev);
-> +
-> +    if (!spm->hostmem) {
-> +        error_setg(errp, "'%s' property is required", SP_MEM_MEMDEV_PROP);
-> +        return;
-> +    }
-> +    if (host_memory_backend_is_mapped(spm->hostmem)) {
-> +        error_setg(errp, "memory backend '%s' is already in use",
-> +                   object_get_canonical_path_component(OBJECT(spm->hostmem)));
-> +        return;
-> +    }
-> +    host_memory_backend_set_mapped(spm->hostmem, true);
-> +}
-> +
-> +static void sp_mem_unrealize(DeviceState *dev)
-> +{
-> +    SpMemDevice *spm = SP_MEM(dev);
-> +
-> +    host_memory_backend_set_mapped(spm->hostmem, false);
-> +}
-> +
-> +/* boot-time only; no plug/unplug state to migrate */
-
-Please move that comment ...
-
-> +static const VMStateDescription vmstate_sp_mem = {
-> +    .name = TYPE_SP_MEM,
-
-... here.
-
-> +    .unmigratable = 1,
-> +};
-Only minor comments, patch LGTM otherwise!
 
