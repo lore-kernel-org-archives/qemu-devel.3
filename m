@@ -4,98 +4,115 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B7457CD98C6
-	for <qemu-devel@archiver.kernel.org>; Thu, 11 Jun 2026 04:08:32 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D80E3CD98C6
+	for <qemu-devel@archiver.kernel.org>; Thu, 11 Jun 2026 04:09:29 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wXWi6-0000n8-MB; Thu, 11 Jun 2026 00:08:06 -0400
+	id 1wXWjF-0001Fb-QZ; Thu, 11 Jun 2026 00:09:17 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wXWi3-0000mu-QV; Thu, 11 Jun 2026 00:08:03 -0400
-Received: from isrv.corpit.ru ([212.248.84.144])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wXWhz-0000Z8-8C; Thu, 11 Jun 2026 00:08:02 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1781150854; bh=gHY3iTAoSrrIZ8tLNMa4BmXZ0K4MJ2DjppMCggTFHVs=;
- h=Date:Subject:To:Cc:References:From:In-Reply-To;
- b=kG8m43OqHIEB1O4MyzRmT4DaYt3UBj+7jeK1Z0SKiulDGYSIrAJlh8TJ7I5QJTWns
- 7No1f5zEGjVi1aohvjMkG7Bt6JtvqFadfUz1FOxbgBU+HU1Rjk1gMtBMD6OUjOpd1v
- w6uj3pUuc4iEQChvOcdfUfSgBv6DGtcGJ2k+JdOKR6TUEkdryq4yQGqCZoXr1zQP7l
- f2JAE3EKIR/pOe9Fp7UzP1WQVb0OLwYPu+YpIKMaNkMa8omR+CN9XvWVXNjDrDHZK+
- CrdGDgeZ0xBwTpzQivhqP5txzldvtQ9rLlScZWckTbN27UJQxrvzLX5E6AtcF57fcx
- o5DuHwHt04WNg==
-Received: from [192.168.177.146] (mjtthink.wg.tls.msk.ru [192.168.177.146])
- by isrv.corpit.ru (Postfix) with ESMTP id A080B1B6583;
- Thu, 11 Jun 2026 07:07:34 +0300 (MSK)
-Message-ID: <0e8ad49f-1d0e-467e-88b9-5a8462eac6a7@tls.msk.ru>
-Date: Thu, 11 Jun 2026 07:07:47 +0300
+ (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
+ id 1wXWjB-0001Ev-Vm
+ for qemu-devel@nongnu.org; Thu, 11 Jun 2026 00:09:14 -0400
+Received: from mail-ed1-x530.google.com ([2a00:1450:4864:20::530])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
+ id 1wXWj9-00012r-Ix
+ for qemu-devel@nongnu.org; Thu, 11 Jun 2026 00:09:13 -0400
+Received: by mail-ed1-x530.google.com with SMTP id
+ 4fb4d7f45d1cf-68d23396ed3so13328114a12.1
+ for <qemu-devel@nongnu.org>; Wed, 10 Jun 2026 21:09:10 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1781150949; cv=none;
+ d=google.com; s=arc-20240605;
+ b=IOfo+ehdB9/kFZxvfydHJySpIECDae2is9QW6enr5IVnjTVQXBWujilmjKYXBGc2eE
+ Upsrj/vu1dIYxMIqfDpA6FWdxPYupg9mNqyz7F73tXbewS4ylSvklSk46PudrTlOU0gi
+ dXV0+MKFY/OoAIKWBvpthUxcr/ZLhobSL49FSSlzQoh/IqR4wQeUrgNr03Y4WEL9DHMY
+ O+k48sQTcBbxVZRkdBhzmS6GU7V4ZEqfzonzMV1gsb/39e58oCwNJbCfe7RMrwbeLhFn
+ RYAugaV68c6WMKZtkfaxKH7eb1NztpkyFjSXqDqV+2KfJuV35T/a79m515DbwNzZWwKN
+ jymw==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
+ s=arc-20240605; 
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:dkim-signature;
+ bh=CyPO7afjoreQRD08qvBZdXR9qcILMHIlG62N59OKvFM=;
+ fh=nO+eQewWF6KHcFxPGVUzEVHFNh36sGgno02vM6A0n9o=;
+ b=YbjLFWEPZ3mtrfYxSukQoytbWuI788vIkuxRkhjdxv4sxtruHc0oYwqUYnNNDwo+PO
+ p6uMi+vm23Zo4lIGYtTfbMR9eKjCpohIWsO4YmYxtVQq0Uh41eZ2YLKohe5XiNoYkv5c
+ 9+DpZ7mkfAwVD/LDCPLxbJMNgcZ/sNyaiOP20ISJpf4FjYVB5foBLiVTpWEoTYylOj/m
+ 2/vqyxSIhA+PxUweaHSo7aiIpI10RevpblU3MMGzuz7uYunE/yGEDOHoR8CUD5189nYA
+ fhjWMVhQYrVf+AH4yPlFg78+8i2S4UJL61txyOMmY9riIM7yGKmmuGqloYJ18OHxYCFf
+ Oidg==; darn=nongnu.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=gmail.com; s=20251104; t=1781150949; x=1781755749; darn=nongnu.org;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=CyPO7afjoreQRD08qvBZdXR9qcILMHIlG62N59OKvFM=;
+ b=biOZw9s6FxPi6s0p4HVqDCPaVD/mBA6bpGCyTLrrz4TUjjM/w+VDEjeswFq/df74Ju
+ Vn3sru1hjG1AZzyYeBP22lF5Aabv/uwfIBKw8XqIV+LnVJSiaWiqpgZEGaLD1UruE+tq
+ db6AbTu/s4R+bSlxPJoyPdkP8QI+N/Pgd24GW1iv+s25PLEyUxbeiwSq9s1azMUrLTNa
+ 8Y0Y+9+v9CmYCG0sLihaaEAPsYFK+UFuQfdsRoDnOS/SB7wrJVJImSRs6M0Tp6baxi2X
+ QvDblzSoBKghKwDKt9zb6ZYdxYDxuFSFXglWDAeGI1GVdCbVUrurt4Pbq4KiwMsvPZMF
+ rihw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1781150949; x=1781755749;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=CyPO7afjoreQRD08qvBZdXR9qcILMHIlG62N59OKvFM=;
+ b=FcI25jqI+QKD/qf8Bbrer0Q4JMMCKIe/RzHuNys4scs7P9q+xEKVvsKrIPya0eLX5d
+ M9Heg5kXKCornGZp3lKWYnbMurvSHfFkqXiwpe+N4rflHp49NMYCu697eC2iSuvL7HdJ
+ fnuJpr4mOQ2WqKdpQl8b8a0+7hUN/Jwp3pQh94p3ixjg6zJgOI8NFJeP6pQxtKIO91al
+ Nih9kmDq6c9uQAd3ejVAQ+oMc8OCwiGCNZl47nX2FKCece7KHWqdfGit84h7zgwOsMBj
+ HCNcei3nCbF0pkt8RLYhyrI6bmB3Rmziyqgnw2YXbbZoQvRZ/z4leRX/6S/SXsJ0K//c
+ caNA==
+X-Forwarded-Encrypted: i=1;
+ AFNElJ9rP1QTjwKHO89BwitBpUh4ZBQFd9IdeopASMH9z4jLr44jPBvONq/z0Z4iLIXdbIRDySAWsc6FMk5J@nongnu.org
+X-Gm-Message-State: AOJu0YyvjdKGkzmaSKLPeIWaoVuRrCDF0AtObSMRzWS3GQbxxZwL3pez
+ 7OnHKqjj1MqglM3IkXyiIXTloqel8jXHDa7oueDp7UQSvG4kwNq+kS9Z9QNsnDK2NB2m7URJtwP
+ JXLgPxCfn07S81YfeXxr5Q2JhANgPJDs=
+X-Gm-Gg: Acq92OGdOfCpW2UDsndm/BZ6fcvGw6RPR7GUDXEf5jwDmpW5SF1qHKMPDchz2NbEsTd
+ kpoCCkHHIG5AXlDal8AOTQSL1xmZ1h61ZOyRHbBgzXQvAKbQqKvjtYZnmJzC5v554gW7qzdhsou
+ msVzOWrdBKjwo0BBvVFGPeA5fAeZhY8L4wFeNjQtq+7sy0H3hSgRbCr627R3Wd3O8kmU/pdPpch
+ VA/3aAphmQ2iLAu1JEDYD923nr49leralDH9XbiH+4a5SaqqMR/VafHfPNP8vTdzg8FfLRjPypL
+ 0/dPKaEPB138/dHsr6U21/Rb9d7ThJAHXxrQKkx5ADwdkuLWtCc6rKQFk7E=
+X-Received: by 2002:a05:6402:27c8:b0:68c:bf82:884c with SMTP id
+ 4fb4d7f45d1cf-6930e26f9b7mr438372a12.6.1781150949527; Wed, 10 Jun 2026
+ 21:09:09 -0700 (PDT)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2] qed: Don't try to flush during incoming migration
-To: Fabiano Rosas <farosas@suse.de>, qemu-devel@nongnu.org
-Cc: berrange@redhat.com, Stefan Hajnoczi <stefanha@redhat.com>,
- Kevin Wolf <kwolf@redhat.com>, Hanna Reitz <hreitz@redhat.com>,
- qemu-stable <qemu-stable@nongnu.org>
-References: <20260603193813.2327596-1-farosas@suse.de>
-Content-Language: en-US, ru-RU
-From: Michael Tokarev <mjt@tls.msk.ru>
-Autocrypt: addr=mjt@tls.msk.ru; keydata=
- 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
-In-Reply-To: <20260603193813.2327596-1-farosas@suse.de>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=212.248.84.144; envelope-from=mjt@tls.msk.ru;
- helo=isrv.corpit.ru
-X-Spam_score_int: -19
-X-Spam_score: -2.0
-X-Spam_bar: --
-X-Spam_report: (-2.0 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+References: <cover.1778516731.git.chao.liu.zevorn@gmail.com>
+ <b3dc23332a8a6f02a15012308fe79f5a172a3837.1778516731.git.chao.liu.zevorn@gmail.com>
+In-Reply-To: <b3dc23332a8a6f02a15012308fe79f5a172a3837.1778516731.git.chao.liu.zevorn@gmail.com>
+From: Alistair Francis <alistair23@gmail.com>
+Date: Thu, 11 Jun 2026 14:08:43 +1000
+X-Gm-Features: AVVi8CeDP6aSf6g0NuthVeX0saJTUFhHzpqt2ItKBDWh54ZYds3EEqRYxL1OQ9c
+Message-ID: <CAKmqyKPF2kGM_CnUpZO7a8rTbZr_UZa2gTbOQH2Tthxm_K6SJw@mail.gmail.com>
+Subject: Re: [PATCH v7 5/5] docs/system/riscv: add documentation for k230
+ machine
+To: Chao Liu <chao.liu.zevorn@gmail.com>
+Cc: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
+ Palmer Dabbelt <palmer@dabbelt.com>, 
+ Alistair Francis <alistair.francis@wdc.com>, Weiwei Li <liwei1518@gmail.com>, 
+ Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>,
+ Liu Zhiwei <zhiwei_liu@linux.alibaba.com>, 
+ Paolo Bonzini <pbonzini@redhat.com>,
+ Christoph Muellner <christoph.muellner@vrull.eu>, 
+ Fabiano Rosas <farosas@suse.de>, Laurent Vivier <lvivier@redhat.com>,
+ qemu-devel@nongnu.org, qemu-riscv@nongnu.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2a00:1450:4864:20::530;
+ envelope-from=alistair23@gmail.com; helo=mail-ed1-x530.google.com
+X-Spam_score_int: -17
+X-Spam_score: -1.8
+X-Spam_bar: -
+X-Spam_report: (-1.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -111,50 +128,191 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 03.06.2026 22:38, Fabiano Rosas wrote:
-> It's not possible to access the image file while there is an incoming
-> migration in progress, the QEMU process doesn't hold any locks to the
-> storage at this point so nodes are inactive. Attempting to flush leads
-> to an assert at bdrv_co_write_req_prepare():
-> 
->     assert(!(bs->open_flags & BDRV_O_INACTIVE))
-> 
-> The issue is reproducible by running iotest 181 on a host under cpu
-> load. The migration must coincide with the header already containing
-> the QED_F_NEED_CHECK flag.
-> 
-> The sequence of events is as follows, with the respective call stacks
-> referenced below:
-> 
-> During block device init, bdrv_qed_attach_aio_context() starts the
-> 'need_check' timer. The timer will not fire during incoming migration
-> as it uses QEMU_CLOCK_VIRTUAL (to avoid this very issue, as the code
-> comment indicates).                                                   (0)
-> 
-> However, there's still bdrv_qed_drain_begin() which uses the fact that
-> the timer is live to decide whether to start the
-> qed_need_check_timer_entry() directly.                                (1)
-> 
-> The qed_need_check_timer_entry() eventually calls into
-> qed_write_header() -> bdrv_co_pwrite() leading to the assert.         (2)
-> 
-> Skip creating the 'need_check' timer whenever the image is inactive.
-...
-> Note that this issue is not exactly the same as what's been reported
-> in Gitlab, but given how easily this reproduces, I imagine it has to
-> be happening in that setup as well.
-> 
-> Link: https://gitlab.com/qemu-project/qemu/-/work_items/3515
-> Signed-off-by: Fabiano Rosas <farosas@suse.de>
+On Tue, May 12, 2026 at 2:32=E2=80=AFAM Chao Liu <chao.liu.zevorn@gmail.com=
+> wrote:
+>
+> Signed-off-by: Chao Liu <chao.liu.zevorn@gmail.com>
+
+Acked-by: Alistair Francis <alistair.francis@wdc.com>
+
+Alistair
+
 > ---
->   block/qed.c | 16 +++++++++++-----
->   1 file changed, 11 insertions(+), 5 deletions(-)
-
-I'm picking this one up for the active qemu-stable series.
-Dunno how popular qed is these days, though - back in the day it was
-a useful alternative to qcow2, now it feels more like a toy :)
-
-Thanks,
-
-/mjt
+>  MAINTAINERS                  |   1 +
+>  docs/system/riscv/k230.rst   | 113 +++++++++++++++++++++++++++++++++++
+>  docs/system/target-riscv.rst |   1 +
+>  3 files changed, 115 insertions(+)
+>  create mode 100644 docs/system/riscv/k230.rst
+>
+> diff --git a/MAINTAINERS b/MAINTAINERS
+> index e7e3ed0c5c..6a752b1a0a 100644
+> --- a/MAINTAINERS
+> +++ b/MAINTAINERS
+> @@ -1784,6 +1784,7 @@ K230 Machines
+>  M: Chao Liu <chao.liu.zevorn@gmail.com>
+>  L: qemu-riscv@nongnu.org
+>  S: Maintained
+> +F: docs/system/riscv/k230.rst
+>  F: hw/riscv/k230.c
+>  F: hw/watchdog/k230_wdt.c
+>  F: include/hw/riscv/k230.h
+> diff --git a/docs/system/riscv/k230.rst b/docs/system/riscv/k230.rst
+> new file mode 100644
+> index 0000000000..cea8202e55
+> --- /dev/null
+> +++ b/docs/system/riscv/k230.rst
+> @@ -0,0 +1,113 @@
+> +Kendryte K230 virt reference platform (``k230``)
+> +=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
+> +The ``k230`` machine is compatible with the Kendryte K230 SDK.
+> +
+> +The K230 is a chip from the AIoT SoC series made by Kendryte =C2=AE =E2=
+=80=94 a part of
+> +Canaan Inc. It uses a brand-new multi-heterogeneous unit accelerated com=
+puting
+> +structure.
+> +
+> +This chip has 2 RISC-V computing cores and a new-generation KPU (Knowled=
+ge
+> +Process Unit) smart computing unit.
+> +
+> +For more information, see <https://www.kendryte.com/en/proDetail/230>
+> +
+> +Supported devices
+> +-----------------
+> +The ``k230`` machine supports the following devices:
+> +
+> +* 1 c908 cores (little core)
+> +* Core Local Interruptor (CLINT)
+> +* Platform-Level Interrupt Controller (PLIC)
+> +* 2 K230 Watchdog Timer
+> +* 5 UART
+> +
+> +Boot options
+> +------------
+> +The ``k230`` machine supports K230 SDK boot through M-mode U-Boot, which=
+ then
+> +starts OpenSBI/Linux with ``bootm``. It also supports direct Linux boot.
+> +
+> +K230 SDK Linux kernels use T-HEAD C9xx private MAEE page table attribute=
+s. QEMU
+> +does not implement MAEE in the generic RISC-V MMU, so such kernels need =
+to be
+> +built with standard RISC-V PTE bits before they can boot under QEMU.
+> +
+> +Running
+> +-------
+> +
+> +Direct Linux boot
+> +~~~~~~~~~~~~~~~~~
+> +
+> +This flow lets QEMU load OpenSBI, Linux, initrd, and DTB directly, witho=
+ut
+> +running SDK U-Boot. The Linux Image must be rebuilt with standard RISC-V=
+ PTE
+> +bits before running under QEMU.
+> +
+> +.. code-block:: bash
+> +
+> +   $ SDK=3Dk230_sdk/output/k230_canmv_defconfig
+> +   $ qemu-system-riscv64 -machine k230 \
+> +      -kernel "$SDK/images/little-core/Image" \
+> +      -dtb "/tmp/user-k230-qemu.dtb" \
+> +      -initrd "$SDK/images/little-core/rootfs.cpio.gz" \
+> +      -append "console=3DttyS0,115200 earlycon=3Dsbi cma=3D0" \
+> +      -nographic
+> +
+> +Direct boot uses the SDK little-core RAM layout for OpenSBI at
+> +``0x08000000``, Linux at ``0x08200000``, and the DTB at ``0x0a000000``. =
+The
+> +initrd is placed by QEMU's generic RISC-V boot helper, and QEMU writes t=
+he
+> +initrd range and kernel command line into ``/chosen``. The DTB passed wi=
+th
+> +``-dtb`` should be derived from ``$SDK/images/little-core/k230.dtb`` and=
+ must
+> +describe that initrd location as usable memory and disable any devices t=
+hat are
+> +not emulated by this machine.
+> +
+> +U-Boot boot
+> +~~~~~~~~~~~
+> +
+> +This flow starts SDK U-Boot in M-mode with ``-bios``. Until the SDK stor=
+age
+> +path is modeled, place OpenSBI, Linux, initrd, and DTB in RAM with loade=
+r
+> +devices and run ``bootm`` manually. The Linux Image must be rebuilt with
+> +standard RISC-V PTE bits before running under QEMU.
+> +
+> +.. code-block:: bash
+> +
+> +   $ SDK=3Dk230_sdk/output/k230_canmv_defconfig
+> +   $ IMAGE=3D$SDK/images/little-core/Image
+> +   $ INITRD=3D$SDK/images/little-core/rootfs.cpio.gz
+> +   $ DTB=3D$SDK/images/little-core/k230.dtb
+> +   $ FWJUMP_UIMAGE=3D/tmp/k230-fw-jump.uImage
+> +   $ INITRD_END=3D$(printf "0x%x" $((0x0a100000 + $(stat -c %s "$INITRD"=
+))))
+> +   $ "$SDK/little/buildroot-ext/host/bin/mkimage" \
+> +      -A riscv -O linux -T kernel -C none \
+> +      -a 0x8000000 -e 0x8000000 -n opensbi \
+> +      -d "$SDK/images/little-core/fw_jump.bin" "$FWJUMP_UIMAGE"
+> +   $ qemu-system-riscv64 -machine k230 \
+> +      -bios "$SDK/little/uboot/u-boot" \
+> +      -device loader,file=3D"$FWJUMP_UIMAGE",addr=3D0xc100000,force-raw=
+=3Don \
+> +      -device loader,file=3D"$IMAGE",addr=3D0x8200000,force-raw=3Don \
+> +      -device loader,file=3D"$INITRD",addr=3D0xa100000,force-raw=3Don \
+> +      -device loader,file=3D"$DTB",addr=3D0xa000000,force-raw=3Don \
+> +      -nographic
+> +
+> +The loader addresses mirror the SDK ``k230_canmv_defconfig`` output. Rea=
+d the
+> +U-Boot addresses from the generated environment, and read the Linux RAM =
+base
+> +from the generated ``hw/k230.dts.txt``. This replaces the SDK storage an=
+d
+> +decompression steps.
+> +
+> +Press Enter to stop autoboot. At the U-Boot prompt, run these commands:
+> +
+> +.. code-block:: bash
+> +
+> +   K230# setenv bootargs console=3DttyS0,115200 earlycon=3Dsbi cma=3D0
+> +   K230# fdt addr 0xa000000
+> +   K230# fdt resize 8192
+> +   K230# fdt set /chosen linux,initrd-start <0x0 0xa100000>
+> +   K230# fdt set /chosen linux,initrd-end <0x0 ${INITRD_END}>
+> +   K230# fdt set /soc/sdhci0@91580000 status disabled
+> +   K230# fdt set /soc/sdhci1@91581000 status disabled
+> +   K230# bootm 0xc100000 - 0xa000000
+> +
+> +Use ``setenv`` so ``bootm`` writes the kernel command line into
+> +``/chosen/bootargs``. The ``fdt`` commands select the loaded DTB, add sp=
+ace for
+> +edits, describe the initrd range in ``/chosen``, and disable SDHCI nodes=
+ because
+> +this machine does not emulate those controllers yet. Replace ``${INITRD_=
+END}``
+> +with the host-calculated value above when typing the command. ``cma=3D0`=
+` avoids
+> +the SDK kernel reserving too much of the little-core memory window for i=
+nitramfs
+> +boot.
+> diff --git a/docs/system/target-riscv.rst b/docs/system/target-riscv.rst
+> index 3ad5d1ddaf..b0b2f9584f 100644
+> --- a/docs/system/target-riscv.rst
+> +++ b/docs/system/target-riscv.rst
+> @@ -66,6 +66,7 @@ undocumented; you can get a complete list by running
+>  .. toctree::
+>     :maxdepth: 1
+>
+> +   riscv/k230
+>     riscv/microblaze-v-generic
+>     riscv/microchip-icicle-kit
+>     riscv/mips
+>
 
