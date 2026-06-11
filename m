@@ -4,104 +4,100 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id BEB1ACD98D2
-	for <qemu-devel@archiver.kernel.org>; Thu, 11 Jun 2026 11:15:53 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id BA5EBCD98D2
+	for <qemu-devel@archiver.kernel.org>; Thu, 11 Jun 2026 11:17:42 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wXdNJ-0007C8-8D; Thu, 11 Jun 2026 07:15:05 -0400
+	id 1wXdPg-0007qL-2F; Thu, 11 Jun 2026 07:17:32 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <leonardi@redhat.com>)
- id 1wXdNH-0007Bs-JV
- for qemu-devel@nongnu.org; Thu, 11 Jun 2026 07:15:03 -0400
+ id 1wXdPe-0007qC-Vt
+ for qemu-devel@nongnu.org; Thu, 11 Jun 2026 07:17:31 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <leonardi@redhat.com>)
- id 1wXdNF-0004Gu-Gm
- for qemu-devel@nongnu.org; Thu, 11 Jun 2026 07:15:03 -0400
+ id 1wXdPb-0005vu-QO
+ for qemu-devel@nongnu.org; Thu, 11 Jun 2026 07:17:30 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1781176499;
+ s=mimecast20190719; t=1781176646;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding;
- bh=e05Y74bqj4LuPcuNyrGYpBQ2Db1rYe3gnWJlN54b0Rg=;
- b=WmrqB9CCboJOYtlEwdvh/RuC67nTZMNvhwueOz+ZpJXHmXRJdzyS70S5zz+9OvAzr47nbi
- ml1PBZTR5+0y3EAQ77BDJ+EgZ9tEZOmzu+p1gbzfKcFPE9nxoJ7YEmSG37ALw+h7FAiuOl
- cF+HJzH40J/dPNsKAjvdUJHQ9dujZ8o=
-Received: from mail-wm1-f69.google.com (mail-wm1-f69.google.com
- [209.85.128.69]) by relay.mimecast.com with ESMTP with STARTTLS
+ in-reply-to:in-reply-to:references:references;
+ bh=7qcbo9Um2tsGYWOv/UswD+5S096bTkRZ87+AruqpHGw=;
+ b=gTwpxRscQLUXyPenFWxS5k9+Ye62QlfxhLaGijfQ/QT6LEtlQ8qhTRFO8sXjLPlXvKeOMP
+ X+R1AFKFOol3rgaltWIcxUewYcb2fAptrpzYlU1pcoBQ/ZXqC0m9tpykuzcR+mmgJkER+S
+ QuEiz+Y6JwkyUftXWaXAII0Mh922U+c=
+Received: from mail-wr1-f71.google.com (mail-wr1-f71.google.com
+ [209.85.221.71]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-199--MB4ZIjfPTuvoxPDI3JmqQ-1; Thu, 11 Jun 2026 07:14:55 -0400
-X-MC-Unique: -MB4ZIjfPTuvoxPDI3JmqQ-1
-X-Mimecast-MFC-AGG-ID: -MB4ZIjfPTuvoxPDI3JmqQ_1781176495
-Received: by mail-wm1-f69.google.com with SMTP id
- 5b1f17b1804b1-490b3f53c81so35799715e9.3
- for <qemu-devel@nongnu.org>; Thu, 11 Jun 2026 04:14:55 -0700 (PDT)
+ us-mta-343-mkiTFMhyMNiwzzbwA9Ri6w-1; Thu, 11 Jun 2026 07:17:24 -0400
+X-MC-Unique: mkiTFMhyMNiwzzbwA9Ri6w-1
+X-Mimecast-MFC-AGG-ID: mkiTFMhyMNiwzzbwA9Ri6w_1781176644
+Received: by mail-wr1-f71.google.com with SMTP id
+ ffacd0b85a97d-45ef2bd566bso4463236f8f.0
+ for <qemu-devel@nongnu.org>; Thu, 11 Jun 2026 04:17:24 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1781176494; x=1781781294; darn=nongnu.org;
- h=cc:to:message-id:content-transfer-encoding:mime-version:subject
- :date:from:from:to:cc:subject:date:message-id:reply-to;
- bh=e05Y74bqj4LuPcuNyrGYpBQ2Db1rYe3gnWJlN54b0Rg=;
- b=aycw0ttkzcU7vqLnav+/qbg4a8llVjYJ0KBmkaUDquj2SzZgW503+QwhwYBAh4pA6Y
- iGE4pvQ7YVl4FFYHtJ6n6JMx/qcSPggM3sbFmh9tU85JlZtL1CfBRSbqwLrafvdyWUeA
- zFGlfuLtA5wYD2T/FnAK+IVVQIvM7b4JLAmNxgEYh5mjgU3a62eN6vAdJJydTOU+vLTe
- mzfAPsXD7jmsiJF7pcPDKVw5HImL7ydnymlWucDDZqealSMJqbiBSdYTKbRo32DZXU1U
- 10kA7wAq28w8nTcNpADPJxmhzGUfHO6SVRrKLbpccoOB1GVsXfPQpu3Q/x1yHTvVzcSO
- 9yZw==
+ d=redhat.com; s=google; t=1781176644; x=1781781444; darn=nongnu.org;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+ bh=7qcbo9Um2tsGYWOv/UswD+5S096bTkRZ87+AruqpHGw=;
+ b=Zb9vZg92TYmjogNHdTEgC4sOfcG0mbpvH6tqtb2t88GuRk63XXXomW1MAULd+5te2/
+ 27FRpKFNi9Mdqdx+O21NZiANX8pn0jaSB8ExtXRqou08g0rouQyGzGFSuGU1CE8BVr0Z
+ S0gXWRde1IfJ2ZTyKGlB1oTw6pDA69aLEhUHzBWjkB3w5BSlWoGP5W1zs3WoqIn9Lnzx
+ uVV1iVT06r0mO8Ug7sUzlGTW/GmAf5Zp/APYiZrpgW2gku0D8TYSyhtOJBvd2ZNoxJmQ
+ Qe1uoJgK2R13ZG0tmPvSdYz6+qqI1OaZRBczDkRqgvE8Uo57jQszE7M6lWhmjP/mvV/I
+ y/Lg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1781176494; x=1781781294;
- h=cc:to:message-id:content-transfer-encoding:mime-version:subject
- :date:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=e05Y74bqj4LuPcuNyrGYpBQ2Db1rYe3gnWJlN54b0Rg=;
- b=YxJc6jI1FhHJ2taOSUdnSqb4pdBHoGBApfQ1Piji+8MZvitGKs1BPgpHrZ+EnDHX7L
- /aXfPCq/LlqEBtP46RbURyl8X9ugL2ZozKKakFfOVdSiV7k2MxdwgddXr4Jfq9Z99Inc
- kH6AjWV2ov/+BdpcqO904l0ACJM6gWRmeiCHbG4ATs+ShlRbYBseMwiNGXvGREYoVzXR
- ppBpYGSBduoNVXS1Q40Uzp44Oj2/nmnTU8NS70daZOw5AvBpHEiJ/QBtGQvnGFgPHuig
- HVcIVL8Daj03JTgCASxNJLWaGDXqXX+AGYhtQ6JSoh/xeAU6HX9UdRr2d8pC2r6dgYdN
- a+DQ==
-X-Gm-Message-State: AOJu0YxPNdGddmtNk7zpK80HbB4kVauXxm8EoYqIYiCqXUV2dnnOJk9B
- vkPBeVqemBsG2afOUPqfyMhmgpgFUe+xa6yFPHKEPA4YufROPDfspojfcKUusS4t80Y19CppqcY
- 9P8KfwYaUC778RA4KO4TWgQ+s2WTiW1tCMyUYfsl0bsGQBKNvt+1lgj8A
-X-Gm-Gg: Acq92OFsm1CagIs2a7sGpjabdN8cAAPXroiHL7OYIqIptdRVMy/QXRZCqxX2bd5UYpx
- IUERSsJS9U2i4Th9NSI7hbEsgaT48otTo8V2tZIHGxZlBlZdK9dL3TvZ9mGar7bG7dpxPx0zXgi
- rDhOo2hTJex71QN0v5YJd7L3CamAL4pLwHUECQ/gqKBPut6OQOzM41O61SV0Q7pFvuu03SrVOOv
- UvWGEMECkaHtoUxyrMPWzD0KYO6uGqL0b/UinkPl9sMxY95f/vZ4urXUOhBuey5pZiPLA54y02Y
- 68ogq+RSd6K7S3HSUj8ZsdrCmDFzli8IrlrgpogxurqSt02UsM32hy3S7tKJLnYeWZ0MLFtVm2D
- DtDvcHTLTtNnhHPJxzVRysX3XfcvYSLZa3m1xNK0TseixFQFCC73tlwLcn+9XhI15Ldyy0+l/ko
- aXxXjam6aEGJOiRLM1smb1bCUNBoQ=
-X-Received: by 2002:a05:600c:8b23:b0:490:9bc2:bf8b with SMTP id
- 5b1f17b1804b1-490e55bd82bmr30479675e9.5.1781176494537; 
- Thu, 11 Jun 2026 04:14:54 -0700 (PDT)
-X-Received: by 2002:a05:600c:8b23:b0:490:9bc2:bf8b with SMTP id
- 5b1f17b1804b1-490e55bd82bmr30479035e9.5.1781176494084; 
- Thu, 11 Jun 2026 04:14:54 -0700 (PDT)
-Received: from lleonard-thinkpadx1carbongen13.rmtit.csb ([176.206.19.176])
+ d=1e100.net; s=20251104; t=1781176644; x=1781781444;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=7qcbo9Um2tsGYWOv/UswD+5S096bTkRZ87+AruqpHGw=;
+ b=E4Jf6PR3nKsjtZYcDeg/upTerJ3vLFNi7SWVd3589CLUaPp25H9yAtV4Lu0UxqFB2K
+ r995ZysuERIOLpqQxBDbvFCn1PKtMcbH+xE8iIFGeVaNQTaDDbRemPnwAcPgCqaMYjAn
+ MkxagxKoElzvoVFkYbFYrtqbraO6pBU1Q08/sqqLldy10Z5B21zc5bUpvPmk3Tm9PlMu
+ J1YTRscw7Rbr1i7Q76tNJl1wDlGAoZgJVBi4+TxIULVyVKsKrtFyReuLjZI3tTBKQZKD
+ F5xdfe4XHEBdL+wpgd8R0wTT3OhA8ZcMQUGHGXw21BQZ82oV4qLMIhTmxgooRdtXpFLd
+ z5CA==
+X-Forwarded-Encrypted: i=1;
+ AFNElJ+oJhv7IdUjtX3D4kd5t+slJ2VS0RBJFIKOJYugZGeNykY7rJ+mPF0RhyhMAueZ9KNuvj8xb8LtbMvf@nongnu.org
+X-Gm-Message-State: AOJu0YwZv5oGzCoqnP47oVzQmaCGvEtOWdK5UWPn7PsqWRWyzMsRTQ6n
+ rJojMi62TBFXQHSkRxmv8dStUJOgvbLWSarxtyLYSMR0YFHKXkDED6jORZCtzRoR7sG53ktVxf+
+ GpikQz1RotwfaqVtdzvyb7y2g80Sx6CAteU8mvLaWR+fQ/jDIOH6Z7qLN
+X-Gm-Gg: Acq92OHO/dUhu9DCKTgD0LuDF8I/tlb7N/5FBLpejfT6z6ZQxbfwWG7PJRhVajqvd1G
+ DoFcvzGFmah9N6MDqwZIFMEadI6HCHkc51aa2JR3YC3RzQX8Y+rwwU+YrZLNY6J7Ts6+Z1gUbSo
+ Rgzc7txD1by/behIoB2ZRzsNKbbZ6TF8oT+PbSv/aDzhv5waSi+SUM8jkbBfS5wkLuc5PFaud0B
+ N8PJRbPDrEk/8PlSBjp8IWcGpBHKwjILQ3uiOQUSWMaUuVsT8b5Huc4yRQfiQduCsSPPBj+kAm+
+ zRWiYdhUM2ZZG1y7A1xLg+xhdSLWebsSbL082hDpGK61uML/qJbCjzjYQlSvF9Wm00WdSAOHvGO
+ kLFucpZTQm8/isPsLrgzs0EH6kzyMmBCQZGZCik53wdWY6VCrmSoOm53hw37TxAJ+F1x8nw==
+X-Received: by 2002:a05:6000:4013:b0:460:3234:77d4 with SMTP id
+ ffacd0b85a97d-460677eeb17mr3592346f8f.42.1781176643749; 
+ Thu, 11 Jun 2026 04:17:23 -0700 (PDT)
+X-Received: by 2002:a05:6000:4013:b0:460:3234:77d4 with SMTP id
+ ffacd0b85a97d-460677eeb17mr3592282f8f.42.1781176643171; 
+ Thu, 11 Jun 2026 04:17:23 -0700 (PDT)
+Received: from leonardi-redhat ([176.206.19.176])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-490e2c7ead0sm64662605e9.3.2026.06.11.04.14.52
+ ffacd0b85a97d-4601f351ac0sm138396728f8f.27.2026.06.11.04.17.22
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 11 Jun 2026 04:14:53 -0700 (PDT)
+ Thu, 11 Jun 2026 04:17:22 -0700 (PDT)
+Date: Thu, 11 Jun 2026 13:17:20 +0200
 From: Luigi Leonardi <leonardi@redhat.com>
-Date: Thu, 11 Jun 2026 13:14:47 +0200
-Subject: [PATCH v3] igvm: add device tree parameter support
+To: Gerd Hoffmann <kraxel@redhat.com>
+Cc: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>, 
+ qemu-devel@nongnu.org, Stefano Garzarella <sgarzare@redhat.com>, 
+ Ani Sinha <anisinha@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>
+Subject: Re: [PATCH] igvm: populate errp in stub functions
+Message-ID: <aiqYzfMjIMheO7kC@leonardi-redhat>
+References: <20260609-igvm_stubs-v1-1-5f39d6e0db4a@redhat.com>
+ <aigULaw73khPNxoR@redhat.com> <aigUdNYq0YRtAZKt@leonardi-redhat>
+ <ailrwxbi1i-xy37h@dobby.home.kraxel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-Id: <20260611-microvm_device_tree-v3-1-dfb9cf0000b8@redhat.com>
-X-B4-Tracking: v=1; b=H4sIAAAAAAAC/33NTQ6CMBAF4KuQrq2Z/gSqK+9hDIF2kC6gpm0aD
- eHuDqw0MS7fzJtvFpYwekzsXC0sYvHJh5mCOlTMjt18R+4dZSZB1lCD4ZO3MZSpdVS22OaIyGm
- nrOpFj6ZmdPmIOPjnrl5vlEefcoiv/UkR2/S/VwQH3igwje4cAJhLRDd2+WjDxDawyA9EwG9EE
- qKHXmuSrD4NX8i6rm/axATC/AAAAA==
-X-Change-ID: 20260608-microvm_device_tree-0263c3b1be86
-To: qemu-devel@nongnu.org
-Cc: Luigi Leonardi <leonardi@redhat.com>, 
- "Michael S. Tsirkin" <mst@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>, 
- Richard Henderson <richard.henderson@linaro.org>, 
- Gerd Hoffmann <kraxel@redhat.com>, Stefano Garzarella <sgarzare@redhat.com>, 
- Ani Sinha <anisinha@redhat.com>, Zhao Liu <zhao1.liu@intel.com>, 
- Oliver Steffen <osteffen@redhat.com>
-X-Mailer: b4 0.14.3
+Content-Type: text/plain; charset=us-ascii; format=flowed
+Content-Disposition: inline
+In-Reply-To: <ailrwxbi1i-xy37h@dobby.home.kraxel.org>
 Received-SPF: pass client-ip=170.10.129.124; envelope-from=leonardi@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -24
@@ -126,146 +122,45 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Coconut SVSM, with the upcoming device tree support [1], will use
-the IGVM device tree parameter to discover virtio-mmio and ISA serial
-devices instead of relying on the fw_cfg interface, which is
-QEMU-specific.
+Hi,
 
-The device tree is packed before copying into the IGVM parameter area
-to reduce its size, since IGVM files can define tighter memory
-constraints for parameter areas. Packing is done in the generic IGVM
-backend rather than in per-architecture device tree setup code, so
-that each architecture does not need to handle it individually.
+On Wed, Jun 10, 2026 at 04:27:18PM +0200, Gerd Hoffmann wrote:
+>  Hi,
+>
+>> No, when IGVM is not enabled in the build it's not possible to trigger
+>> any of these stubs. On top of that, I don't think it is possible to trigger
+>> these stubs even when igvm is enabled. This is because the only architecture
+>> that implements igvm support in qemu is x86.
+>
+>We have these stubs mainly to avoid linker errors when compiling igvm
+>support on !x86 architectures.  So we do compile igvm support for other
+>architectures (or, to be exact, we compile the core igvm code once and
+>link it into all qemu-system-$arch variants).
+>
+>Nevertheless I think that the stubs should not be reachable.  The igvm
+>code already has checks like this ...
+>
+>    } else if (target_arch() == SYS_EMU_TARGET_X86_64) {
+>        result = qigvm_x86_set_vp_context(data, vp_context->vp_index, errp);
+>
+>... so it should never try to call x86 support code on
+>qemu-system-$somethingelse.
+>
+>On that base I think switching to asserts should be fine.  If we
+>actually hit any assert the core code lacks a sanity check.
+>
+>take care,
+>  Gerd
+>
 
-[1] https://github.com/coconut-svsm/svsm/pull/1006
+Right, I got confused by madt function not checking the arch.
 
-Signed-off-by: Luigi Leonardi <leonardi@redhat.com>
----
-This device tree will be consumed by Coconut SVSM with the upcoming device
-tree support [1]. This will allow SVSM to run on a normal CPU
-(not AMD SEV-SNP) and execute all its tests using upstream QEMU.
+Ignore this patch, I'll send a new series that improves madt and switches
+to asserts.
 
-Eventually edk2 will also be able to consume DT via IGVM, but the work
-has not started yet.
+Sorry for the confusion.
 
-[1] https://github.com/coconut-svsm/svsm/pull/1006
-
-To: qemu-devel@nongnu.org
-Cc: Michael S. Tsirkin <mst@redhat.com>
-Cc: Paolo Bonzini <pbonzini@redhat.com>
-Cc: Richard Henderson <richard.henderson@linaro.org>
-Cc: Gerd Hoffmann <kraxel@redhat.com>
-Cc: Stefano Garzarella <sgarzare@redhat.com>
-Cc: Ani Sinha <anisinha@redhat.com>
-Cc: Zhao Liu <zhao1.liu@intel.com>
-Cc: Oliver Steffen <osteffen@redhat.com>
----
-Changes in v3:
-- Device tree is packed in igvm core code. [Gerd]
-- Dropped microvm patch.
-- Link to v2: https://lore.kernel.org/qemu-devel/20260610-microvm_device_tree-v2-0-4fb44730c49f@redhat.com
-
-Changes in v2:
-- First patch introduced a shadowed variable, fixed.
-- When parameter area is not found return -1.
-- Moved `qigvm_directive_device_tree` to backends/igvm.c
-- Link to v1: https://lore.kernel.org/qemu-devel/20260608-microvm_device_tree-v1-0-730874ad0008@redhat.com
----
-
-Error handling on qigvm_find_param_entry will change once [2] is
-merged. I am already using the new approach here.
-
-[2] https://lore.kernel.org/qemu-devel/20260610-igvm_error-v1-1-59d133a69f2f@redhat.com
----
- backends/igvm.c | 47 +++++++++++++++++++++++++++++++++++++++++++++++
- 1 file changed, 47 insertions(+)
-
-diff --git a/backends/igvm.c b/backends/igvm.c
-index c347d0c17e..452715b105 100644
---- a/backends/igvm.c
-+++ b/backends/igvm.c
-@@ -25,6 +25,7 @@
- 
- #include <igvm/igvm.h>
- #include <igvm/igvm_defs.h>
-+#include <libfdt.h>
- 
- 
- /*
-@@ -100,6 +101,8 @@ static int qigvm_directive_snp_id_block(QIgvm *ctx, const uint8_t *header_data,
- static int qigvm_initialization_guest_policy(QIgvm *ctx,
-                                        const uint8_t *header_data,
-                                        Error **errp);
-+static int qigvm_directive_device_tree(QIgvm *ctx, const uint8_t *header_data,
-+                                       Error **errp);
- 
- struct QIGVMHandler {
-     uint32_t type;
-@@ -130,6 +133,8 @@ static struct QIGVMHandler handlers[] = {
-       qigvm_initialization_guest_policy },
-     { IGVM_VHT_MADT, IGVM_HEADER_SECTION_DIRECTIVE,
-       qigvm_directive_madt },
-+    { IGVM_VHT_DEVICE_TREE, IGVM_HEADER_SECTION_DIRECTIVE,
-+      qigvm_directive_device_tree },
- };
- 
- static int qigvm_handler(QIgvm *ctx, uint32_t type, Error **errp)
-@@ -752,6 +757,48 @@ static int qigvm_directive_snp_id_block(QIgvm *ctx, const uint8_t *header_data,
-     return 0;
- }
- 
-+static int qigvm_directive_device_tree(QIgvm *ctx, const uint8_t *header_data,
-+                                       Error **errp)
-+{
-+    const IGVM_VHS_PARAMETER *param = (const IGVM_VHS_PARAMETER *)header_data;
-+    g_autofree void *fdt_packed = NULL;
-+    QIgvmParameterData *param_entry;
-+    uint32_t fdt_size;
-+
-+    param_entry = qigvm_find_param_entry(ctx, param->parameter_area_index);
-+    if (param_entry == NULL) {
-+        error_setg(errp, "IGVM: parameter area index %u not found",
-+                   param->parameter_area_index);
-+        return -1;
-+    }
-+
-+    if (ctx->machine_state->fdt == NULL) {
-+        error_setg(errp, "IGVM: device tree not available");
-+        return -1;
-+    }
-+
-+    fdt_size = fdt_totalsize(ctx->machine_state->fdt);
-+    fdt_packed = g_malloc(fdt_size);
-+    memcpy(fdt_packed, ctx->machine_state->fdt, fdt_size);
-+
-+    if (fdt_pack(fdt_packed)) {
-+        error_setg(errp, "IGVM: failed to pack device tree");
-+        return -1;
-+    }
-+
-+    fdt_size = fdt_totalsize(fdt_packed);
-+    if (fdt_size > param_entry->size) {
-+        error_setg(errp,
-+                   "IGVM: device tree size exceeds parameter area"
-+                   " defined in IGVM file");
-+        return -1;
-+    }
-+
-+    memcpy(param_entry->data, fdt_packed, fdt_size);
-+
-+    return 0;
-+}
-+
- static int qigvm_initialization_guest_policy(QIgvm *ctx,
-                                        const uint8_t *header_data, Error **errp)
- {
-
----
-base-commit: cc329c491768b2d91eb0b0984f3baa0bf805776d
-change-id: 20260608-microvm_device_tree-0263c3b1be86
-
-Best regards,
--- 
-Luigi Leonardi <leonardi@redhat.com>
+Thanks,
+Luigi
 
 
