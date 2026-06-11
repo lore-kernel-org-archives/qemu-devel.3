@@ -4,90 +4,150 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7ECA4CD8CB9
-	for <qemu-devel@archiver.kernel.org>; Thu, 11 Jun 2026 06:40:33 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 79FE8CD98C6
+	for <qemu-devel@archiver.kernel.org>; Thu, 11 Jun 2026 06:42:18 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wXZ5E-00052E-Me; Thu, 11 Jun 2026 02:40:08 -0400
+	id 1wXZ6y-0005mn-QL; Thu, 11 Jun 2026 02:41:56 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <chao.liu.zevorn@gmail.com>)
- id 1wXZ57-0004xT-2d
- for qemu-devel@nongnu.org; Thu, 11 Jun 2026 02:40:02 -0400
-Received: from mail-dl1-x1241.google.com ([2607:f8b0:4864:20::1241])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <chao.liu.zevorn@gmail.com>)
- id 1wXZ55-0003X5-7o
- for qemu-devel@nongnu.org; Thu, 11 Jun 2026 02:40:00 -0400
-Received: by mail-dl1-x1241.google.com with SMTP id
- a92af1059eb24-137dd4cc208so453118c88.1
- for <qemu-devel@nongnu.org>; Wed, 10 Jun 2026 23:39:58 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@oss.qualcomm.com>)
+ id 1wXZ6w-0005m8-4U
+ for qemu-devel@nongnu.org; Thu, 11 Jun 2026 02:41:54 -0400
+Received: from mx0b-0031df01.pphosted.com ([205.220.180.131])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <philmd@oss.qualcomm.com>)
+ id 1wXZ6u-00049x-QO
+ for qemu-devel@nongnu.org; Thu, 11 Jun 2026 02:41:53 -0400
+Received: from pps.filterd (m0279868.ppops.net [127.0.0.1])
+ by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
+ 65B5GVii3712178
+ for <qemu-devel@nongnu.org>; Thu, 11 Jun 2026 06:41:51 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+ cc:content-transfer-encoding:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+ j6xoN9s2k2z6WBjErH2B5a4ve+qKzH72nuHagBkgw7o=; b=Xyr9xpaCmjKMKv1g
+ XbgKl34KARoqGMIHM5Xl+Q8rYjdzHgw1ypsA/ZQ1H61HajOcIWUNUgw5zDtrSQT7
+ twIuqElAbNwe3EI11j7MOZyEfQhZij5TZWb2YYFdYWUbVxwrEiXIPAc+nr0esuSd
+ kKz8CYEkoOrVmQl9pPhA5YUUp73RkeZAgrlSvjk75zfX1hyHqWdcZFitBibtJwDy
+ ernWVnug0jWLN0k0oWLtcShC18uNXcBTHPeCIfHMihEbrC63M8xIRpOWFL6ZC7Yg
+ MfN5rlcwCaXYa0LoF02tXCU8e2FXXgh7l8ao5WgDbT0MaygpWlLXrWH3pVsR2cqt
+ KNfIQQ==
+Received: from mail-qt1-f199.google.com (mail-qt1-f199.google.com
+ [209.85.160.199])
+ by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4eqe6ua0q9-1
+ (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
+ for <qemu-devel@nongnu.org>; Thu, 11 Jun 2026 06:41:51 +0000 (GMT)
+Received: by mail-qt1-f199.google.com with SMTP id
+ d75a77b69052e-517878a92c5so168995071cf.3
+ for <qemu-devel@nongnu.org>; Wed, 10 Jun 2026 23:41:51 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1781159997; x=1781764797; darn=nongnu.org;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
- bh=TR5Yj+jnC+eI/ZZxaHf3fwGoW6DrtKmYIMhR0sP7/ww=;
- b=rp+kPTYjJRaNTzMmDmlg5g8Z7PvOhViHHngK1JZCv5PzvNQsiWZi3lEe7rC3JIm/0u
- UoxX6Sbx+axUA5MToJZH+3+5tibOS/6CeRDrja+cw7M7GLVEZJdlZZlt+HZfEeFt8wnn
- nbtzsXMLzWSa5RWBjLz65OBkJHJc/5vgZnn1s03cgi7K9OkPUm8D4GhhRDM9QqKjeIQo
- WefJ4DYYRwnHtgTdXJ9f0iFL//giRfJKMS69GIv+N+BeydXD4OvQml0fWtV9jZFqCzqL
- T77XiDKEtauH7jwACr2GHpVXoyd3Z6ran+wucXzA8X2O8DcNvLRXDHNOOGw5H7qpvjs4
- ajQQ==
+ d=oss.qualcomm.com; s=google; t=1781160110; x=1781764910; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=j6xoN9s2k2z6WBjErH2B5a4ve+qKzH72nuHagBkgw7o=;
+ b=jgJhyySJ56kS3xTuJk8pDLk2gXLM2+z2BnQfQeNaGIo2WStyp1IMYCFDbJKNhIrvsc
+ WSTR55lNYlTOEU6OMuwdK/YHzXhhkji57oFemI1uOPl1I54JGbWGLvT9R/vepN+wLKWC
+ ttFCcqk+ZxpV4Ji0kn6B/YEOMh92BwzLQwDeGxdhZSrrfrDpy3ggQPhAjeMaMSxssOLN
+ fWtxergAr3ucXjENKaIOl01ZbmiDRcdnTkfnA2zml+NdRMfUUoUNH3oInp5XAOG+Rx0x
+ Wvminj8+OFAkB2/lHjbJCQvRcBLBYVYn6SKabMuxqpDMRgewUalHo/7xxuVw6UAjQwrg
+ ZPLA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1781159997; x=1781764797;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=TR5Yj+jnC+eI/ZZxaHf3fwGoW6DrtKmYIMhR0sP7/ww=;
- b=W7MQjHJtJkzAYgbRoasOuRpifB5r88bSoS+9nm8p+cEw7i4eXoeY8suVamV9xzDA6h
- Ew4OpqkipjJcW/7oCBJle3ICXY8tmmWeC+GH6lpPUiU4JnGPpf/F9KsWUFOvqRuKqFs/
- /f27AfH1d6u3JCYzB2AEwlyERG8/vdMS5cpUANlur3W8Uvb+BtUY/gGoXa/Ri28D6gD2
- 1oQ8ho6o3ru7wukLQnJkfweB51ExM5ayYpvjwep0sg8LemzoPTyBqZWVUKZv6ETKtVNn
- KYrvAR9bTZc7pXl7GYP+7jeBHZxL1lfO9x8BCLQk8+07QH2f6GhhHdy7sL9/SHAnyDw4
- fcxA==
-X-Gm-Message-State: AOJu0YzkHQMJb83waaG8x3vABnNtd+/x43XkY7/grUYiR1G2Tq/Midwf
- RqMyW2XhRINA/obzebtjJX9YA9jAgJNbOHlVTla2DctQJa/WwvFKwPDZ
-X-Gm-Gg: Acq92OG9KjssyWZLe4gcVh0RwKtAS+L9u/C2UHfh4iNM6gGrDd1Zbkha2rFf8X5gCtl
- Sboie5flUhULYSPQrkY+i7sF5D7KUOE8YnoDMKvxs8mk/Ud7LGTDtnApCGifzaX31ll5D6LUuBg
- jxTIKXkrCfoC7fP0+vIfLAfA9asFazl+IyuaUXJXjLcoR7A33yEBr47VnusO00OSmJVmodieJQd
- 1+VKcDkXy8RWljpBT+DZb/jdBBCG5GHKWQkheRRO/DSmWgeLKuUKXgWCblUEkreTs+ONY36KSPl
- Vce4t7ECXump9ydtk+GLl2Yeofhca9UzDiIK6Leh6I0t2mnerGo9NFdrl0fRuwSGdj3ko5d4N3N
- l7dbJ6vqZNfSlkuI3Sr0olr3eikW6NDgdhvAWgHuGCY6/UcFI5WfKSVMeR1PVEFagXsnDJHLGd6
- GHigPZDeIfHjel208mzXrHup+UsnpI1HKGFxxIPaf7dEp9+LTeueEFCH23outfDK3TrMufHA==
-X-Received: by 2002:a05:7022:798:b0:135:e781:74af with SMTP id
- a92af1059eb24-138430725d3mr918450c88.18.1781159997272; 
- Wed, 10 Jun 2026 23:39:57 -0700 (PDT)
-Received: from localhost ([64.186.250.142]) by smtp.gmail.com with ESMTPSA id
- a92af1059eb24-13842ed1ccdsm935060c88.0.2026.06.10.23.39.55
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 10 Jun 2026 23:39:56 -0700 (PDT)
-Date: Thu, 11 Jun 2026 14:39:53 +0800
-From: Chao Liu <chao.liu.zevorn@gmail.com>
-To: Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>
-Cc: qemu-devel@nongnu.org, qemu-riscv@nongnu.org, alistair.francis@wdc.com, 
- liwei1518@gmail.com, zhiwei_liu@linux.alibaba.com,
- andrew.jones@oss.qualcomm.com, 
- leif.lindholm@oss.qualcomm.com, uwu@icenowy.me,
- Palmer Dabbelt <palmer@dabbelt.com>
-Subject: Re: [PATCH v8 4/7] tests/functional/riscv64: add riscv-server-ref
- tests
-Message-ID: <aipYH_C3poIESMok@ChaodeMacBook-Pro.local>
-References: <20260610214133.1882563-1-daniel.barboza@oss.qualcomm.com>
- <20260610214133.1882563-5-daniel.barboza@oss.qualcomm.com>
+ d=1e100.net; s=20251104; t=1781160110; x=1781764910;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=j6xoN9s2k2z6WBjErH2B5a4ve+qKzH72nuHagBkgw7o=;
+ b=FwvwKIuoypDRUw0t6FtJICfLIpdpkRHbLw35faqwL1JvcAuMmctLH/cean+xlX3FXr
+ f6EonBm/O8CwKXum1hgm2BfWGlHPP+VZO6UGOA/vXiKLUodbmg8VL1lny4Us1l9vwGXi
+ spaJVNryBjpamoUWUuhbn05smdSVXD0SZ2quXZQlq667iKklRNm1kxVksrM4cOSqX5n0
+ umH8fSqKahpjKvEB4ffHZQ1IvhloZlD4UZzvyAxiSCjsVntMbG4/OLPQSqN9s4WcdWmW
+ SesZROaowqwL/1oD/E+XgUVzApSv7xYzMJZXSH2d9J02aR1h2bP+XMD4wB4JEKjuU1Xo
+ nbpg==
+X-Forwarded-Encrypted: i=1;
+ AFNElJ9zbFL61aLJAZvOGQgmidf10/s6FZ3311S0lio68zvZ9zTqQHNDdBRhzX8aCrw8cxzom2VRoQyV63qm@nongnu.org
+X-Gm-Message-State: AOJu0YxL02kA73XYXj2nBhgA45Ryf1isVmYtk1svDKU0gCqzGk74WMsy
+ 0TlNYZFDMsCLOkmuCHY/a85SF+ToXbCVbgAu27So99JHQPalpR7APYiGulMTcCsjnkCt0DmajYn
+ zJ/AiqWYBYyH17x6sSekvaTN9DTzr8rz/fXlRbjLdhcLyPoBij3S//sozcw==
+X-Gm-Gg: Acq92OH+cefTowygUFd/RZSqoiKr9nylmpj1JN4rWi1HzSwogupDUsOTYoG+9JVVRw6
+ jTl3CTaVsuc1Zv+gXXXHCwiWKBw0IkDRQFr5PlFc2f27jDtXCN3lJoPCxkLv9Uqwp7KsCSth/6S
+ cNfkNgc364OypXcY7/2Df7qdYjpdiHlOpYl3FOjvHB+43G1Y/bsY4LEE1uY5EgMdqmFneZFGJNF
+ iE1alc0Eqo2waldhYwtihjC4qq2SPTM+cS2Opx36cdAx9DrbIrDk1tlBIdbG/ndJcDlng4cPnAw
+ 7uyB2eDeBg032PouOb6vCLAcPoDaYY+sS76NFc0l2ubZ3Fn8+CJhWZbTJyRzErGDuj+eDOzI5sx
+ 5H2wv/v1we2KwwpsXdcOh5yTt6XpGAH2HrIOmMnGcceb5CNVKc97E3RLkFZaahf55ezr43AbvMN
+ gGdD2RJQ==
+X-Received: by 2002:ac8:5915:0:b0:517:6d75:a2cf with SMTP id
+ d75a77b69052e-517ee204de9mr24562541cf.43.1781160110643; 
+ Wed, 10 Jun 2026 23:41:50 -0700 (PDT)
+X-Received: by 2002:ac8:5915:0:b0:517:6d75:a2cf with SMTP id
+ d75a77b69052e-517ee204de9mr24562131cf.43.1781160110164; 
+ Wed, 10 Jun 2026 23:41:50 -0700 (PDT)
+Received: from [10.156.84.244] (218.170.88.92.rev.sfr.net. [92.88.170.218])
+ by smtp.gmail.com with ESMTPSA id
+ a640c23a62f3a-bfcb0f14edbsm17924666b.3.2026.06.10.23.41.46
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Wed, 10 Jun 2026 23:41:49 -0700 (PDT)
+Message-ID: <6c41aedd-9862-4b42-832c-cd0f706bb855@oss.qualcomm.com>
+Date: Thu, 11 Jun 2026 08:41:44 +0200
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20260610214133.1882563-5-daniel.barboza@oss.qualcomm.com>
-Received-SPF: pass client-ip=2607:f8b0:4864:20::1241;
- envelope-from=chao.liu.zevorn@gmail.com; helo=mail-dl1-x1241.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 2/4] ppc/pnv: Remove Power8E and Power8NVL pnv chips
+Content-Language: en-US
+To: Aditya Gupta <adityag@linux.ibm.com>, qemu-devel@nongnu.org,
+ qemu-ppc@nongnu.org, Harsh Prateek Bora <harshpb@linux.ibm.com>
+Cc: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
+ Nicholas Piggin <npiggin@gmail.com>,
+ Miles Glenn <milesg@linux.ibm.com>, Fabiano Rosas <farosas@suse.de>,
+ Laurent Vivier <lvivier@redhat.com>,
+ Paolo Bonzini <pbonzini@redhat.com>, devel@lists.libvirt.org,
+ kvm@vger.kernel.org, Misbah Anjum N <misanjum@linux.ibm.com>,
+ Shivang Upadhyay <shivangu@linux.ibm.com>
+References: <20260610090800.3672832-1-adityag@linux.ibm.com>
+ <20260610090800.3672832-3-adityag@linux.ibm.com>
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>
+In-Reply-To: <20260610090800.3672832-3-adityag@linux.ibm.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+X-Proofpoint-Spam-Info: AW1haW4tMjYwNjExMDA2MyBTYWx0ZWRfXymgM/gF9bPy4
+ 6jSf9W2aBoY9tBys2vg+ykTNlxmcez68srGtNS3RMncidER66uAQ3936MXEdH44qROzojlXGFUa
+ i/hLs0kIeLY6cVTlFtwMt72YA0BjuiY=
+X-Authority-Analysis: v=2.4 cv=atOCzyZV c=1 sm=1 tr=0 ts=6a2a58af cx=c_pps
+ a=WeENfcodrlLV9YRTxbY/uA==:117 a=/nYmEve+L4YsDi96RCWAbw==:17
+ a=IkcTkHD0fZMA:10 a=FelO9ux0wxsA:10 a=M51BFTxLslgA:10 a=s4-Qcg_JpJYA:10
+ a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=ZpdpYltYx_vBUK5n70dp:22
+ a=VnNF1IyMAAAA:8 a=EUspDBNiAAAA:8 a=1tSEMpTH9XP_W59IOagA:9 a=3ZKOabzyN94A:10
+ a=QEXdDO2ut3YA:10 a=kacYvNCVWA4VmyqE58fU:22
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNjExMDA2MyBTYWx0ZWRfXwvH4ixDZHyGB
+ WGrQfjMqU/6S068M8/+LdPaC6FkaqxnzgjuQ2AokpU+M/j3eZ5IGdVJavbwye59ZSQbTi0+0mCs
+ 1wQtJy96BRsVBeUe7EsGfi0HHMrTRFf7eOPmT+ZMR4JayXQoKlMnJY0o/sSm7mOPRxTbVOCDD/3
+ IIDJgTAYaBA+zrOinSgowUeX9Zi3rCPwZs1G+C6NrnuKVmXMll9HNA8V1q+4fOAG0n4sdXaZ4yS
+ JYGfWhwD2j3O6zCpR0WOGNSGDvFGwjV2IV+KuqDg/iyghR2H5hcW8NusG/NWaDXgvkAIGT/bsWT
+ d9b50Qn123Veh+sQ94MOF+/ICsqLhbjzOB23s724+I1BuVkgMecSQzW5jV0hFGjIjRU9nLvdC8d
+ NsPUqIzsWk2QWkLRIpUAvCiQI98v+p5Njt6e9i7yW8s3rxG/qHtmQr1GJY4pp9RqnNzIbtlQ1wo
+ AD2Na+PEpgWBVnyxqIg==
+X-Proofpoint-GUID: 4aCdLtXpOQS49kPF2sisxaHkgM9pfrmL
+X-Proofpoint-ORIG-GUID: 4aCdLtXpOQS49kPF2sisxaHkgM9pfrmL
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.125,FMLib:17.12.100.49
+ definitions=2026-06-11_01,2026-06-09_02,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ adultscore=0 impostorscore=0 bulkscore=0 clxscore=1015 spamscore=0
+ malwarescore=0 phishscore=0 priorityscore=1501 lowpriorityscore=0
+ suspectscore=0 classifier=typeunknown authscore=0 authtc= authcc=
+ route=outbound adjust=0 reason=mlx scancount=1 engine=8.22.0-2606040000
+ definitions=main-2606110063
+Received-SPF: pass client-ip=205.220.180.131;
+ envelope-from=philmd@oss.qualcomm.com; helo=mx0b-0031df01.pphosted.com
+X-Spam_score_int: -17
+X-Spam_score: -1.8
+X-Spam_bar: -
+X-Spam_report: (-1.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ TVD_SUBJ_WIPE_DEBT=1.004 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -103,124 +163,21 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, Jun 10, 2026 at 06:41:30PM +0800, Daniel Henrique Barboza wrote:
-> Add two tests for the recently added riscv-server-ref machine:
+On 10/6/26 11:07, Aditya Gupta wrote:
+> Power8E and Power8NVL were deprecated since QEMU 10.1, with
+> commit 264a604e7163 ("target/ppc: Deprecate Power8E and Power8NVL")
 > 
-> - a new test_opensbi.py test.  The idea is to have a quick test that can
-> catch trivial regressions that would prevent OpenSBI to finish;
-> - a new Linux boot "thorough" test that will boot the machine up to the
-> buildroot prompt.
+> Accordingly, remove usage of 8E and 8NVL chips from powernv, as it's old
+> and unmaintained now.
 > 
-> Signed-off-by: Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>
-Reviewed-by: Chao Liu <chao.liu.zevorn@gmail.com>
-
+> Signed-off-by: Aditya Gupta <adityag@linux.ibm.com>
 > ---
->  tests/functional/riscv64/meson.build        |  2 +
->  tests/functional/riscv64/test_opensbi.py    |  4 ++
->  tests/functional/riscv64/test_server_ref.py | 59 +++++++++++++++++++++
->  3 files changed, 65 insertions(+)
->  create mode 100755 tests/functional/riscv64/test_server_ref.py
-> 
-> diff --git a/tests/functional/riscv64/meson.build b/tests/functional/riscv64/meson.build
-> index 5871211e89..2eb12586bf 100644
-> --- a/tests/functional/riscv64/meson.build
-> +++ b/tests/functional/riscv64/meson.build
-> @@ -2,6 +2,7 @@
->  
->  test_riscv64_timeouts = {
->    'boston' : 120,
-> +  'server_ref' : 120,
->    'tuxrun' : 120,
->  }
->  
-> @@ -13,6 +14,7 @@ tests_riscv64_system_quick = [
->  tests_riscv64_system_thorough = [
->    'endianness',
->    'boston',
-> +  'server_ref',
->    'sifive_u',
->    'tuxrun',
->  ]
-> diff --git a/tests/functional/riscv64/test_opensbi.py b/tests/functional/riscv64/test_opensbi.py
-> index d077e40f42..057f55f90b 100755
-> --- a/tests/functional/riscv64/test_opensbi.py
-> +++ b/tests/functional/riscv64/test_opensbi.py
-> @@ -32,5 +32,9 @@ def test_riscv_virt(self):
->          self.set_machine('virt')
->          self.boot_opensbi()
->  
-> +    def test_riscv_server_ref(self):
-> +        self.set_machine('riscv-server-ref')
-> +        self.boot_opensbi()
-> +
->  if __name__ == '__main__':
->      QemuSystemTest.main()
-> diff --git a/tests/functional/riscv64/test_server_ref.py b/tests/functional/riscv64/test_server_ref.py
-> new file mode 100755
-> index 0000000000..2ecfcf60ad
-> --- /dev/null
-> +++ b/tests/functional/riscv64/test_server_ref.py
-> @@ -0,0 +1,59 @@
-> +#!/usr/bin/env python3
-> +#
-> +# Copyright (c) Qualcomm Technologies, Inc. and/or its subsidiaries.
-> +#
-> +# SPDX-License-Identifier: GPL-2.0-or-later
-> +#
-> +"""
-> +riscv-server-ref board test
-> +"""
-> +
-> +from qemu_test import QemuSystemTest, Asset
-> +from qemu_test import wait_for_console_pattern
-> +
-> +class RiscvServerRefTest(QemuSystemTest):
-> +    """
-> +    Test the riscv-server-ref board
-> +    """
-> +
-> +    ASSET_KERNEL = Asset(
-> +        ('https://github.com/danielhb/qemu-machine-boot/raw/refs/heads/'
-> +         'master/riscv/images/virt64/buildroot/Image'),
-> +        '6bacc876c769c1bb6057d2bf549eba67fbe83916e8223f9fe21c8e8fff665a36')
-> +
-> +    ASSET_ROOTFS = Asset(
-> +        ('https://github.com/danielhb/qemu-machine-boot/raw/refs/heads/'
-> +         'master/riscv/images/virt64/buildroot/rootfs.ext2'),
-> +        'f00bb88749f945d80675540a1338bd1ccb226574685a5b6c65ab44027d0411a8')
-> +
-> +    def test_boot_linux_test(self):
-> +        self.set_machine('riscv-server-ref')
-> +        kernel_path = self.ASSET_KERNEL.fetch()
-> +        rootfs_path = self.ASSET_ROOTFS.fetch()
-> +
-> +        self.vm.add_args('-kernel', kernel_path)
-> +        self.vm.add_args('-append', 'rw rootwait root=/dev/sda')
-> +        self.vm.add_args('-drive',
-> +            f'file={rootfs_path},format=raw,id=hd0,snapshot=on,if=none')
-> +        self.vm.add_args('-device', 'ahci,id=ahci')
-> +        self.vm.add_args('-device', 'ide-hd,drive=hd0,bus=ahci.0')
-> +
-> +        self.vm.set_console()
-> +        self.vm.launch()
-> +
-> +        # Wait for OpenSBI
-> +        wait_for_console_pattern(self, 'OpenSBI')
-> +
-> +        # Wait for Linux kernel boot
-> +        wait_for_console_pattern(self, 'Linux version')
-> +        wait_for_console_pattern(self, 'Machine model: qemu,riscv-server-ref')
-> +
-> +        # Test e1000e network card functionality
-> +        wait_for_console_pattern(self, 'e1000e')
-> +        wait_for_console_pattern(self, 'Network Connection')
-> +
-> +        # Wait for boot to complete - system reaches login prompt
-> +        wait_for_console_pattern(self, 'Run /sbin/init as init process')
-> +
-> +if __name__ == '__main__':
-> +    QemuSystemTest.main()
-> -- 
-> 2.43.0
-> 
+>   docs/system/ppc/powernv.rst |  2 +-
+>   hw/ppc/pnv.c                | 62 -------------------------------------
+>   hw/ppc/pnv_core.c           |  2 --
+>   include/hw/ppc/pnv.h        |  8 -----
+>   tests/qtest/pnv-xscom.h     |  9 ------
+>   5 files changed, 1 insertion(+), 82 deletions(-)
+
+Reviewed-by: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
 
