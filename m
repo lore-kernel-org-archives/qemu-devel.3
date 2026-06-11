@@ -4,74 +4,90 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D8CE3CD8CB9
-	for <qemu-devel@archiver.kernel.org>; Thu, 11 Jun 2026 06:39:13 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7ECA4CD8CB9
+	for <qemu-devel@archiver.kernel.org>; Thu, 11 Jun 2026 06:40:33 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wXZ4J-0004Uv-60; Thu, 11 Jun 2026 02:39:11 -0400
+	id 1wXZ5E-00052E-Me; Thu, 11 Jun 2026 02:40:08 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1wXZ4H-0004Ug-CT
- for qemu-devel@nongnu.org; Thu, 11 Jun 2026 02:39:09 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1wXZ4G-0003Gs-4T
- for qemu-devel@nongnu.org; Thu, 11 Jun 2026 02:39:09 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1781159946;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=4OHBsff89JWjzBR93uz5oGEknLQXgqpb/pCWV6t4m44=;
- b=JXjmLLsaDVEnmRFUWZtUtDwUM0s/Sb00utIDk4lrU6zXmHHtqImGId3LwJLQnUKDQ22iqq
- JGplPnyL+meT7WVxIGZmy0n46F19LwJnyRjF5hW76estuyift9ryeC4alUru+HU7GU6OiW
- 9gmOvK7NCPedYF5Lg0thAwLPEnqcQis=
-Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-496-UL6vQwdeNYKZWKntwSlMbw-1; Thu,
- 11 Jun 2026 02:39:01 -0400
-X-MC-Unique: UL6vQwdeNYKZWKntwSlMbw-1
-X-Mimecast-MFC-AGG-ID: UL6vQwdeNYKZWKntwSlMbw_1781159940
-Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id B7454180AC4F; Thu, 11 Jun 2026 06:38:59 +0000 (UTC)
-Received: from blackfin.pond.sub.org (unknown [10.44.22.28])
- by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 473861954B10; Thu, 11 Jun 2026 06:38:59 +0000 (UTC)
-Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
- id E197421E6A01; Thu, 11 Jun 2026 08:38:56 +0200 (CEST)
-From: Markus Armbruster <armbru@redhat.com>
-To: John Snow <jsnow@redhat.com>
-Cc: qemu-devel@nongnu.org,  Michael Roth <michael.roth@amd.com>,  Mauro
- Carvalho Chehab <mchehab+huawei@kernel.org>,  Pierrick Bouvier
- <pierrick.bouvier@oss.qualcomm.com>,  Cleber Rosa <crosa@redhat.com>,
- Peter Maydell <peter.maydell@linaro.org>
-Subject: Re: [PATCH v4 00/13] qapi: add formal "intro" section
-In-Reply-To: <87o6hhfw4z.fsf@pond.sub.org> (Markus Armbruster's message of
- "Thu, 11 Jun 2026 08:07:08 +0200")
-References: <20260611042332.482979-1-jsnow@redhat.com>
- <87o6hhfw4z.fsf@pond.sub.org>
-Date: Thu, 11 Jun 2026 08:38:56 +0200
-Message-ID: <878q8lfunz.fsf@pond.sub.org>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+ (Exim 4.90_1) (envelope-from <chao.liu.zevorn@gmail.com>)
+ id 1wXZ57-0004xT-2d
+ for qemu-devel@nongnu.org; Thu, 11 Jun 2026 02:40:02 -0400
+Received: from mail-dl1-x1241.google.com ([2607:f8b0:4864:20::1241])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <chao.liu.zevorn@gmail.com>)
+ id 1wXZ55-0003X5-7o
+ for qemu-devel@nongnu.org; Thu, 11 Jun 2026 02:40:00 -0400
+Received: by mail-dl1-x1241.google.com with SMTP id
+ a92af1059eb24-137dd4cc208so453118c88.1
+ for <qemu-devel@nongnu.org>; Wed, 10 Jun 2026 23:39:58 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=gmail.com; s=20251104; t=1781159997; x=1781764797; darn=nongnu.org;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+ bh=TR5Yj+jnC+eI/ZZxaHf3fwGoW6DrtKmYIMhR0sP7/ww=;
+ b=rp+kPTYjJRaNTzMmDmlg5g8Z7PvOhViHHngK1JZCv5PzvNQsiWZi3lEe7rC3JIm/0u
+ UoxX6Sbx+axUA5MToJZH+3+5tibOS/6CeRDrja+cw7M7GLVEZJdlZZlt+HZfEeFt8wnn
+ nbtzsXMLzWSa5RWBjLz65OBkJHJc/5vgZnn1s03cgi7K9OkPUm8D4GhhRDM9QqKjeIQo
+ WefJ4DYYRwnHtgTdXJ9f0iFL//giRfJKMS69GIv+N+BeydXD4OvQml0fWtV9jZFqCzqL
+ T77XiDKEtauH7jwACr2GHpVXoyd3Z6ran+wucXzA8X2O8DcNvLRXDHNOOGw5H7qpvjs4
+ ajQQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1781159997; x=1781764797;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=TR5Yj+jnC+eI/ZZxaHf3fwGoW6DrtKmYIMhR0sP7/ww=;
+ b=W7MQjHJtJkzAYgbRoasOuRpifB5r88bSoS+9nm8p+cEw7i4eXoeY8suVamV9xzDA6h
+ Ew4OpqkipjJcW/7oCBJle3ICXY8tmmWeC+GH6lpPUiU4JnGPpf/F9KsWUFOvqRuKqFs/
+ /f27AfH1d6u3JCYzB2AEwlyERG8/vdMS5cpUANlur3W8Uvb+BtUY/gGoXa/Ri28D6gD2
+ 1oQ8ho6o3ru7wukLQnJkfweB51ExM5ayYpvjwep0sg8LemzoPTyBqZWVUKZv6ETKtVNn
+ KYrvAR9bTZc7pXl7GYP+7jeBHZxL1lfO9x8BCLQk8+07QH2f6GhhHdy7sL9/SHAnyDw4
+ fcxA==
+X-Gm-Message-State: AOJu0YzkHQMJb83waaG8x3vABnNtd+/x43XkY7/grUYiR1G2Tq/Midwf
+ RqMyW2XhRINA/obzebtjJX9YA9jAgJNbOHlVTla2DctQJa/WwvFKwPDZ
+X-Gm-Gg: Acq92OG9KjssyWZLe4gcVh0RwKtAS+L9u/C2UHfh4iNM6gGrDd1Zbkha2rFf8X5gCtl
+ Sboie5flUhULYSPQrkY+i7sF5D7KUOE8YnoDMKvxs8mk/Ud7LGTDtnApCGifzaX31ll5D6LUuBg
+ jxTIKXkrCfoC7fP0+vIfLAfA9asFazl+IyuaUXJXjLcoR7A33yEBr47VnusO00OSmJVmodieJQd
+ 1+VKcDkXy8RWljpBT+DZb/jdBBCG5GHKWQkheRRO/DSmWgeLKuUKXgWCblUEkreTs+ONY36KSPl
+ Vce4t7ECXump9ydtk+GLl2Yeofhca9UzDiIK6Leh6I0t2mnerGo9NFdrl0fRuwSGdj3ko5d4N3N
+ l7dbJ6vqZNfSlkuI3Sr0olr3eikW6NDgdhvAWgHuGCY6/UcFI5WfKSVMeR1PVEFagXsnDJHLGd6
+ GHigPZDeIfHjel208mzXrHup+UsnpI1HKGFxxIPaf7dEp9+LTeueEFCH23outfDK3TrMufHA==
+X-Received: by 2002:a05:7022:798:b0:135:e781:74af with SMTP id
+ a92af1059eb24-138430725d3mr918450c88.18.1781159997272; 
+ Wed, 10 Jun 2026 23:39:57 -0700 (PDT)
+Received: from localhost ([64.186.250.142]) by smtp.gmail.com with ESMTPSA id
+ a92af1059eb24-13842ed1ccdsm935060c88.0.2026.06.10.23.39.55
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Wed, 10 Jun 2026 23:39:56 -0700 (PDT)
+Date: Thu, 11 Jun 2026 14:39:53 +0800
+From: Chao Liu <chao.liu.zevorn@gmail.com>
+To: Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>
+Cc: qemu-devel@nongnu.org, qemu-riscv@nongnu.org, alistair.francis@wdc.com, 
+ liwei1518@gmail.com, zhiwei_liu@linux.alibaba.com,
+ andrew.jones@oss.qualcomm.com, 
+ leif.lindholm@oss.qualcomm.com, uwu@icenowy.me,
+ Palmer Dabbelt <palmer@dabbelt.com>
+Subject: Re: [PATCH v8 4/7] tests/functional/riscv64: add riscv-server-ref
+ tests
+Message-ID: <aipYH_C3poIESMok@ChaodeMacBook-Pro.local>
+References: <20260610214133.1882563-1-daniel.barboza@oss.qualcomm.com>
+ <20260610214133.1882563-5-daniel.barboza@oss.qualcomm.com>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.12
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=armbru@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -24
-X-Spam_score: -2.5
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20260610214133.1882563-5-daniel.barboza@oss.qualcomm.com>
+Received-SPF: pass client-ip=2607:f8b0:4864:20::1241;
+ envelope-from=chao.liu.zevorn@gmail.com; helo=mail-dl1-x1241.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.445,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -87,6 +103,124 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Queued.  Thanks!
+On Wed, Jun 10, 2026 at 06:41:30PM +0800, Daniel Henrique Barboza wrote:
+> Add two tests for the recently added riscv-server-ref machine:
+> 
+> - a new test_opensbi.py test.  The idea is to have a quick test that can
+> catch trivial regressions that would prevent OpenSBI to finish;
+> - a new Linux boot "thorough" test that will boot the machine up to the
+> buildroot prompt.
+> 
+> Signed-off-by: Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>
+Reviewed-by: Chao Liu <chao.liu.zevorn@gmail.com>
 
+> ---
+>  tests/functional/riscv64/meson.build        |  2 +
+>  tests/functional/riscv64/test_opensbi.py    |  4 ++
+>  tests/functional/riscv64/test_server_ref.py | 59 +++++++++++++++++++++
+>  3 files changed, 65 insertions(+)
+>  create mode 100755 tests/functional/riscv64/test_server_ref.py
+> 
+> diff --git a/tests/functional/riscv64/meson.build b/tests/functional/riscv64/meson.build
+> index 5871211e89..2eb12586bf 100644
+> --- a/tests/functional/riscv64/meson.build
+> +++ b/tests/functional/riscv64/meson.build
+> @@ -2,6 +2,7 @@
+>  
+>  test_riscv64_timeouts = {
+>    'boston' : 120,
+> +  'server_ref' : 120,
+>    'tuxrun' : 120,
+>  }
+>  
+> @@ -13,6 +14,7 @@ tests_riscv64_system_quick = [
+>  tests_riscv64_system_thorough = [
+>    'endianness',
+>    'boston',
+> +  'server_ref',
+>    'sifive_u',
+>    'tuxrun',
+>  ]
+> diff --git a/tests/functional/riscv64/test_opensbi.py b/tests/functional/riscv64/test_opensbi.py
+> index d077e40f42..057f55f90b 100755
+> --- a/tests/functional/riscv64/test_opensbi.py
+> +++ b/tests/functional/riscv64/test_opensbi.py
+> @@ -32,5 +32,9 @@ def test_riscv_virt(self):
+>          self.set_machine('virt')
+>          self.boot_opensbi()
+>  
+> +    def test_riscv_server_ref(self):
+> +        self.set_machine('riscv-server-ref')
+> +        self.boot_opensbi()
+> +
+>  if __name__ == '__main__':
+>      QemuSystemTest.main()
+> diff --git a/tests/functional/riscv64/test_server_ref.py b/tests/functional/riscv64/test_server_ref.py
+> new file mode 100755
+> index 0000000000..2ecfcf60ad
+> --- /dev/null
+> +++ b/tests/functional/riscv64/test_server_ref.py
+> @@ -0,0 +1,59 @@
+> +#!/usr/bin/env python3
+> +#
+> +# Copyright (c) Qualcomm Technologies, Inc. and/or its subsidiaries.
+> +#
+> +# SPDX-License-Identifier: GPL-2.0-or-later
+> +#
+> +"""
+> +riscv-server-ref board test
+> +"""
+> +
+> +from qemu_test import QemuSystemTest, Asset
+> +from qemu_test import wait_for_console_pattern
+> +
+> +class RiscvServerRefTest(QemuSystemTest):
+> +    """
+> +    Test the riscv-server-ref board
+> +    """
+> +
+> +    ASSET_KERNEL = Asset(
+> +        ('https://github.com/danielhb/qemu-machine-boot/raw/refs/heads/'
+> +         'master/riscv/images/virt64/buildroot/Image'),
+> +        '6bacc876c769c1bb6057d2bf549eba67fbe83916e8223f9fe21c8e8fff665a36')
+> +
+> +    ASSET_ROOTFS = Asset(
+> +        ('https://github.com/danielhb/qemu-machine-boot/raw/refs/heads/'
+> +         'master/riscv/images/virt64/buildroot/rootfs.ext2'),
+> +        'f00bb88749f945d80675540a1338bd1ccb226574685a5b6c65ab44027d0411a8')
+> +
+> +    def test_boot_linux_test(self):
+> +        self.set_machine('riscv-server-ref')
+> +        kernel_path = self.ASSET_KERNEL.fetch()
+> +        rootfs_path = self.ASSET_ROOTFS.fetch()
+> +
+> +        self.vm.add_args('-kernel', kernel_path)
+> +        self.vm.add_args('-append', 'rw rootwait root=/dev/sda')
+> +        self.vm.add_args('-drive',
+> +            f'file={rootfs_path},format=raw,id=hd0,snapshot=on,if=none')
+> +        self.vm.add_args('-device', 'ahci,id=ahci')
+> +        self.vm.add_args('-device', 'ide-hd,drive=hd0,bus=ahci.0')
+> +
+> +        self.vm.set_console()
+> +        self.vm.launch()
+> +
+> +        # Wait for OpenSBI
+> +        wait_for_console_pattern(self, 'OpenSBI')
+> +
+> +        # Wait for Linux kernel boot
+> +        wait_for_console_pattern(self, 'Linux version')
+> +        wait_for_console_pattern(self, 'Machine model: qemu,riscv-server-ref')
+> +
+> +        # Test e1000e network card functionality
+> +        wait_for_console_pattern(self, 'e1000e')
+> +        wait_for_console_pattern(self, 'Network Connection')
+> +
+> +        # Wait for boot to complete - system reaches login prompt
+> +        wait_for_console_pattern(self, 'Run /sbin/init as init process')
+> +
+> +if __name__ == '__main__':
+> +    QemuSystemTest.main()
+> -- 
+> 2.43.0
+> 
 
