@@ -4,44 +4,43 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B9825CD98C7
-	for <qemu-devel@archiver.kernel.org>; Thu, 11 Jun 2026 07:50:48 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 00B8CCD98C7
+	for <qemu-devel@archiver.kernel.org>; Thu, 11 Jun 2026 07:56:50 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wXaBP-0005LJ-G9; Thu, 11 Jun 2026 03:50:36 -0400
+	id 1wXaH5-0007Zx-4f; Thu, 11 Jun 2026 03:56:27 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <odaki@rsg.ci.i.u-tokyo.ac.jp>)
- id 1wXaBM-0005L1-9I
- for qemu-devel@nongnu.org; Thu, 11 Jun 2026 03:50:32 -0400
+ id 1wXaH3-0007Z8-Sh
+ for qemu-devel@nongnu.org; Thu, 11 Jun 2026 03:56:25 -0400
 Received: from www3579.sakura.ne.jp ([49.212.243.89])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <odaki@rsg.ci.i.u-tokyo.ac.jp>)
- id 1wXaBI-0001EX-SX
- for qemu-devel@nongnu.org; Thu, 11 Jun 2026 03:50:31 -0400
+ id 1wXaH2-0004K6-1L
+ for qemu-devel@nongnu.org; Thu, 11 Jun 2026 03:56:25 -0400
 Received: from [133.11.54.183] (h183.csg.ci.i.u-tokyo.ac.jp [133.11.54.183])
  (authenticated bits=0)
- by www3579.sakura.ne.jp (8.16.1/8.16.1) with ESMTPSA id 65B7o9hS061311
+ by www3579.sakura.ne.jp (8.16.1/8.16.1) with ESMTPSA id 65B7uARf063713
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NO);
- Thu, 11 Jun 2026 16:50:10 +0900 (JST)
+ Thu, 11 Jun 2026 16:56:11 +0900 (JST)
  (envelope-from odaki@rsg.ci.i.u-tokyo.ac.jp)
-DKIM-Signature: a=rsa-sha256; bh=S0aO5pH9MERwtJ+2252kq6QaebGVJXwQpnOxCvdQvx0=; 
+DKIM-Signature: a=rsa-sha256; bh=bRIQvu8nvfrQyv85hqgel75sgyXN3tH+ywLO/kw4iro=; 
  c=relaxed/relaxed; d=rsg.ci.i.u-tokyo.ac.jp;
  h=From:Message-ID:To:Subject:Date;
- s=rs20250326; t=1781164210; v=1;
- b=j+XexPL6U+12gP+d2/hWeyQqUYDa9weOfDi2FYwpLz7FiEM8WX/sdeeLPWt4qsnS
- mvORLnbnybd/ajLpLO2v/4gA6icB0VsGgPEBTiyL4XlrtsL5CPreYfINM1ctfzKK
- L7PA2IELxkup1+QcdElAcM8ReN0hksOi18V1PbdxiyxtsGXQG7yHeV8S9tiUQZXt
- hR/ryNfTiWcX86U1A9ytYvbfIkmmAZNV9MZpRgqFdMvteiuVoebnVqpZZxJLWXZw
- su+ylm/zWJ+RM4+5aTjeDQwzGv6Lem9AQxibxboJCOt3xX5miVE2l2D/3M+ZysCd
- 4OJG82LOOz514KjvTgUOEw==
-Message-ID: <ab53b726-97dc-48e4-93c3-7a32eacf65a5@rsg.ci.i.u-tokyo.ac.jp>
-Date: Thu, 11 Jun 2026 16:50:09 +0900
+ s=rs20250326; t=1781164571; v=1;
+ b=Pe1qUDTlj3UQoN7zitU5fKp+Wy4t3bbCgjsAMFynhovTOugVP7ek1e2k+Ni0i0hf
+ tcb7NIRWTCC17CMiTrLC2cPPT6lBuBBlHdjJ9K2ibOgemYWq+nnOSCLgycy/Wr5B
+ vp8g2iqdgsb/Zh/0IB6fmhN3hOqikTz8MLr8PnA9A5dpfdcOGPLDt7QueCa+Yxrh
+ VPjHcUx6Us4PPKbNADu5Jeyu5FHxhPqfxEvLMj9NBbaIX3BZxMlkW4lnkMNFGqsc
+ QVPPGNGiDrUF+ShNZ6SYMWv/fk04vjGU/Dp9EuFBuLu1qTUfiDDEHp6vonsElz/j
+ psDaCbcOcUnQtYpI7BYoHA==
+Message-ID: <a75178b2-de9d-4c63-89c6-74938ea13fa4@rsg.ci.i.u-tokyo.ac.jp>
+Date: Thu, 11 Jun 2026 16:56:09 +0900
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 30/33] ui/console: register console in QOM tree
- dynamically
+Subject: Re: [PATCH v2 21/33] ui/gtk: implement display cleanup
 To: =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>,
  qemu-devel@nongnu.org
 Cc: Paolo Bonzini <pbonzini@redhat.com>,
@@ -52,10 +51,10 @@ Cc: Paolo Bonzini <pbonzini@redhat.com>,
  Alex Williamson <alex@shazbot.org>, =?UTF-8?Q?C=C3=A9dric_Le_Goater?=
  <clg@redhat.com>, Peter Maydell <peter.maydell@linaro.org>
 References: <20260608-b4-ui-v2-0-9ea6355ea08f@redhat.com>
- <20260608-b4-ui-v2-30-9ea6355ea08f@redhat.com>
+ <20260608-b4-ui-v2-21-9ea6355ea08f@redhat.com>
 Content-Language: en-US
 From: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
-In-Reply-To: <20260608-b4-ui-v2-30-9ea6355ea08f@redhat.com>
+In-Reply-To: <20260608-b4-ui-v2-21-9ea6355ea08f@redhat.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=49.212.243.89;
@@ -82,85 +81,104 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On 2026/06/08 16:16, Marc-André Lureau wrote:
-> Consoles created after init_displaystate() (e.g. hotplugged
-> display devices) were never added to the /backend/console[N]
-> QOM tree. Extract qemu_console_add_to_qom() and call it from
-> qemu_console_register() when the display is already initialized.
+> Add gtk_display_cleanup() to properly tear down GTK display state:
+> remove console and mouse notifiers, unregister clipboard peer,
+> destroy the main window and virtual consoles.
 > 
 > Signed-off-by: Marc-André Lureau <marcandre.lureau@redhat.com>
 > ---
->   ui/console.c | 17 ++++++++++++-----
->   1 file changed, 12 insertions(+), 5 deletions(-)
+>   include/ui/gtk.h   |  1 +
+>   ui/gtk-clipboard.c | 15 +++++++++++++++
+>   ui/gtk.c           | 18 ++++++++++++++++++
+>   3 files changed, 34 insertions(+)
 > 
-> diff --git a/ui/console.c b/ui/console.c
-> index 975eaf15706..e01d893df4b 100644
-> --- a/ui/console.c
-> +++ b/ui/console.c
-> @@ -376,6 +376,13 @@ void qemu_text_console_put_string(QemuTextConsole *s, const char *str, int len)
->       }
+> diff --git a/include/ui/gtk.h b/include/ui/gtk.h
+> index 3e6ce3cb48c..5156a049509 100644
+> --- a/include/ui/gtk.h
+> +++ b/include/ui/gtk.h
+> @@ -225,6 +225,7 @@ int gd_gl_area_make_current(DisplayGLCtx *dgc,
+>   
+>   /* gtk-clipboard.c */
+>   void gd_clipboard_init(GtkDisplayState *gd);
+> +void gd_clipboard_cleanup(GtkDisplayState *gd);
+>   
+>   void gd_update_scale(VirtualConsole *vc, int ww, int wh, int fbw, int fbh);
+>   
+> diff --git a/ui/gtk-clipboard.c b/ui/gtk-clipboard.c
+> index ea9444be70f..476e6b8303c 100644
+> --- a/ui/gtk-clipboard.c
+> +++ b/ui/gtk-clipboard.c
+> @@ -235,3 +235,18 @@ void gd_clipboard_init(GtkDisplayState *gd)
+>       g_signal_connect(gd->gtkcb[QEMU_CLIPBOARD_SELECTION_SECONDARY],
+>                        "owner-change", G_CALLBACK(gd_owner_change), gd);
+>   }
+> +
+> +void gd_clipboard_cleanup(GtkDisplayState *gd)
+> +{
+> +    if (!gd->cbpeer.name) {
+> +        return;
+> +    }
+> +    qemu_clipboard_peer_unregister(&gd->cbpeer);
+> +    g_signal_handlers_disconnect_by_data(
+> +        gd->gtkcb[QEMU_CLIPBOARD_SELECTION_CLIPBOARD], gd);
+> +    g_signal_handlers_disconnect_by_data(
+> +        gd->gtkcb[QEMU_CLIPBOARD_SELECTION_PRIMARY], gd);
+> +    g_signal_handlers_disconnect_by_data(
+> +        gd->gtkcb[QEMU_CLIPBOARD_SELECTION_SECONDARY], gd);
+> +    gd->cbpeer.name = NULL;
+> +}
+> diff --git a/ui/gtk.c b/ui/gtk.c
+> index 2ee826b56fb..c26dc83ac3e 100644
+> --- a/ui/gtk.c
+> +++ b/ui/gtk.c
+> @@ -2505,6 +2505,7 @@ static void gd_create_menus(GtkDisplayState *s, DisplayOptions *opts)
 >   }
 >   
-> +static void qemu_console_add_to_qom(QemuConsole *con)
-> +{
-> +    g_autofree gchar *name = g_strdup_printf("console[%d]", con->index);
-> +    object_property_add_child(object_get_container("backend"),
-> +                              name, OBJECT(con));
-> +}
-> +
->   static void
->   qemu_console_register(QemuConsole *c)
->   {
-> @@ -413,6 +420,10 @@ qemu_console_register(QemuConsole *c)
->               }
->           }
+>   
+> +static GtkDisplayState *gtk_display_state;
+>   static gboolean gtkinit;
+>   
+>   static void gtk_display_init(DisplayState *ds, DisplayOptions *opts)
+> @@ -2523,6 +2524,7 @@ static void gtk_display_init(DisplayState *ds, DisplayOptions *opts)
 >       }
+>       assert(opts->type == DISPLAY_TYPE_GTK);
+>       s = g_malloc0(sizeof(*s));
+> +    gtk_display_state = s;
+>       s->opts = opts;
+>   
+>       theme = gtk_icon_theme_get_default();
+> @@ -2681,10 +2683,26 @@ static void early_gtk_display_init(DisplayOptions *opts)
+>   #endif
+>   }
+>   
+> +static void gtk_display_cleanup(void)
+> +{
+> +    GtkDisplayState *s = gtk_display_state;
 > +
-> +    if (phase_check(PHASE_MACHINE_READY)) {
-> +        qemu_console_add_to_qom(c);
+> +    if (!s) {
+> +        return;
 > +    }
+> +
+> +    qemu_remove_mouse_mode_change_notifier(&s->mouse_mode_notifier);
 
-Coldplugged consoles are not added to the QOM tree when -preconfig is 
-specified because x-exit-preconfig will happen after init_displaystate() 
-but before phase_advance(PHASE_MACHINE_READY). Below is an LLM-written 
-reproduction case:
-
-build/qemu-system-x86_64 \
-   -machine q35 -nodefaults -display none -S -preconfig \
-   -device bochs-display,id=gfx0 -qmp stdio <<'EOF'
-{"execute":"qmp_capabilities"}
-{"execute":"qom-list","arguments":{"path":"/backend"}}
-{"execute":"x-exit-preconfig"}
-{"execute":"qom-list","arguments":{"path":"/backend"}}
-{"execute":"qom-list","arguments":{"path":"/machine/peripheral"}}
-{"execute":"qom-list","arguments":{"path":"/backend/console[0]"}}
-{"execute":"quit"}
-EOF
+qemu_del_vm_change_state_handler() should be called too.
 
 Regards,
 Akihiko Odaki
 
->   }
+> +    gd_clipboard_cleanup(s);
+> +    g_clear_pointer(&s->window, gtk_widget_destroy);
+> +    g_clear_object(&s->null_cursor);
+> +    g_clear_pointer(&gtk_display_state, g_free);
+> +}
+> +
+>   static QemuDisplay qemu_display_gtk = {
+>       .type       = DISPLAY_TYPE_GTK,
+>       .early_init = early_gtk_display_init,
+>       .init       = gtk_display_init,
+> +    .cleanup    = gtk_display_cleanup,
+>       .vc         = "vc",
+>   };
 >   
->   static void
-> @@ -1089,17 +1100,13 @@ void qemu_console_remove_notifier(Notifier *notifier)
->    */
->   DisplayState *init_displaystate(void)
->   {
-> -    gchar *name;
->       QemuConsole *con;
->   
->       QTAILQ_FOREACH(con, &consoles, next) {
->           /* Hook up into the qom tree here (not in object_new()), once
->            * all QemuConsoles are created and the order / numbering
->            * doesn't change any more */
-> -        name = g_strdup_printf("console[%d]", con->index);
-> -        object_property_add_child(object_get_container("backend"),
-> -                                  name, OBJECT(con));
-> -        g_free(name);
-> +        qemu_console_add_to_qom(con);
->       }
->   
->       return display_state;
 > 
-
 
