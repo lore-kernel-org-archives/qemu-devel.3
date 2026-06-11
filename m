@@ -4,81 +4,86 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 37444CD98C6
-	for <qemu-devel@archiver.kernel.org>; Thu, 11 Jun 2026 04:25:16 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7DAC4CD8C9D
+	for <qemu-devel@archiver.kernel.org>; Thu, 11 Jun 2026 04:28:30 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wXWyW-0007TI-8s; Thu, 11 Jun 2026 00:25:04 -0400
+	id 1wXX1m-0001ZF-K0; Thu, 11 Jun 2026 00:28:26 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1wXWyV-0007M4-36
- for qemu-devel@nongnu.org; Thu, 11 Jun 2026 00:25:03 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1wXWyT-0005d0-Fh
- for qemu-devel@nongnu.org; Thu, 11 Jun 2026 00:25:02 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1781151900;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=VwOBoDaGDJlIZ921Yr5vzll8ZG1QrMqqed9kC3sj/2k=;
- b=iNuKASZoXM0tmy3ZTazKK+aEbP0XvkhHvGw6NL1RGA6pbQ+LvKia/iwBxpMarK0sx7/Mqn
- XwPueNsWTueWh6gLnsFZj8l4JDKXfQV15o5ol35xMVUIz0wB0EPsFJMUQ2VC8AuKkzxd8j
- 5I01lvuCFrwdw8o5f9+NqatP8lqNJkI=
-Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-564-9M_ZRV-BOqWacLhqf3XTVQ-1; Thu,
- 11 Jun 2026 00:24:51 -0400
-X-MC-Unique: 9M_ZRV-BOqWacLhqf3XTVQ-1
-X-Mimecast-MFC-AGG-ID: 9M_ZRV-BOqWacLhqf3XTVQ_1781151890
-Received: from mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.93])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id C27BC195FE1B; Thu, 11 Jun 2026 04:24:48 +0000 (UTC)
-Received: from jsnow-thinkpadp16vgen1.westford.csb (unknown [10.22.80.2])
- by mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id F20361800480; Thu, 11 Jun 2026 04:24:42 +0000 (UTC)
-From: John Snow <jsnow@redhat.com>
-To: qemu-devel@nongnu.org
-Cc: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@mailo.com>,
- Michael Roth <michael.roth@amd.com>, Eric Blake <eblake@redhat.com>,
- "Michael S. Tsirkin" <mst@redhat.com>,
- Markus Armbruster <armbru@redhat.com>, linux-edac@vger.kernel.org,
- John Snow <jsnow@redhat.com>, Gerd Hoffmann <kraxel@redhat.com>,
- Mauro Carvalho Chehab <mchehab+huawei@kernel.org>,
- Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
- Igor Mammedov <imammedo@redhat.com>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Paolo Bonzini <pbonzini@redhat.com>, Ani Sinha <anisinha@redhat.com>,
- =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
- Cleber Rosa <crosa@redhat.com>, Peter Maydell <peter.maydell@linaro.org>,
- Richard Henderson <richard.henderson@linaro.org>
-Subject: [PATCH v4 13/13] qapi/docs: add "Intro" section parsing
-Date: Thu, 11 Jun 2026 00:23:32 -0400
-Message-ID: <20260611042332.482979-14-jsnow@redhat.com>
-In-Reply-To: <20260611042332.482979-1-jsnow@redhat.com>
-References: <20260611042332.482979-1-jsnow@redhat.com>
-MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.93
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=jsnow@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: 8
-X-Spam_score: 0.8
-X-Spam_bar: /
-X-Spam_report: (0.8 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.445,
+ (Exim 4.90_1) (envelope-from
+ <33x0qagcKChwBJ9ADC68GG8D6.4GEI6EM-56N6DFGF8FM.GJ8@flex--jrhilke.bounces.google.com>)
+ id 1wXVC7-0002py-Kb
+ for qemu-devel@nongnu.org; Wed, 10 Jun 2026 22:30:59 -0400
+Received: from mail-pg1-x549.google.com ([2607:f8b0:4864:20::549])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from
+ <33x0qagcKChwBJ9ADC68GG8D6.4GEI6EM-56N6DFGF8FM.GJ8@flex--jrhilke.bounces.google.com>)
+ id 1wXVC6-0005Kf-4t
+ for qemu-devel@nongnu.org; Wed, 10 Jun 2026 22:30:59 -0400
+Received: by mail-pg1-x549.google.com with SMTP id
+ 41be03b00d2f7-c8604fbe71eso9643955a12.3
+ for <qemu-devel@nongnu.org>; Wed, 10 Jun 2026 19:30:57 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=google.com; s=20251104; t=1781145056; x=1781749856; darn=nongnu.org;
+ h=cc:to:from:subject:message-id:references:mime-version:in-reply-to
+ :date:from:to:cc:subject:date:message-id:reply-to;
+ bh=DupDPf3zjnimHKk0qNnF/Yif/Q4lejob3y1l9qRuulE=;
+ b=WNPk5PONAej11leaHAC7yf8lUzOI3thryqLDfqIUJ10qwVxZz0bKtCfDffAUMvoSm5
+ RMeylxu5ZwGm0dNGD8ib2PY/j/u3bnq33qliulpQblEbZMVQFcfBZaqVlukWr/PZedWe
+ GNdw+gXGqdtAGRJCYfHjeQh5NFtVSxluy5K0lRoz55ZO5r7txny60ZvxtJ2z6X5wEVjP
+ rgGVqH1NcYPoyipObnN0HgnHGoSerrwyelQJ9C2o6lQd8NJ62hEyzP2KhBgd9qmSy2Tu
+ /Hiep7wZT8gu1/lA6rSGDEDElJ8rAGLg9lCtbTcT16Ul5iD4J6uPEuEgrxee/nPd7TKz
+ xt3g==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1781145056; x=1781749856;
+ h=cc:to:from:subject:message-id:references:mime-version:in-reply-to
+ :date:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=DupDPf3zjnimHKk0qNnF/Yif/Q4lejob3y1l9qRuulE=;
+ b=pFDATXLj75d/HGnSS6PRBSXILEnt0CwVwkCo4vABr1OMiRgk+z67mVBc8G2CJuJbCi
+ 1GNUNvGe+R/WF/hLTpgjSh3/GTEieVzB76VQ/S/PQU6ribS8/8kbGHebPQB+DmGcoHRR
+ bt283QsxePIurHSEqWoDurfBP67yrqzfr7F0KywXf43IWx4+EqRHZIjZ63q0ctsis8E/
+ zsr2ftaVuqYz/yBrCqW5SfwA+C4Uokjj657Kw35VCYBx7HPifcCW/QaxAmJk08T1gTa/
+ ucYSz582N0USB/xvCy4DWbI/MuCAMsChP6SfP5pv9UtwAf3UZChaHkDEKjIMOX2IIxFG
+ VWtA==
+X-Gm-Message-State: AOJu0Yw85cRltaR235fTLCP44I7VXrb2LJOUkskYbfQN4P3pJeDeowOf
+ CZ/mk7bikbELdVkXIDH2NdwGQsMDhWqiB/3veiTK+poH2dORDnTHcFbpUPwQUC6BppfpetZtDeR
+ jOUJXzX1+Bi574MUc+0Q0M4hkVRTCJxLuGIAmOoqT9A7R9y5vVaWu34/IgoppGh/O0HysWAe8Bv
+ L0Nb9M0je7Xb6GJ6QxgwMZMGakkK2KHwxtdXwOmgQ=
+X-Received: from pgww20.prod.google.com ([2002:a05:6a02:2c94:b0:c86:21eb:a0c2])
+ (user=jrhilke job=prod-delivery.src-stubby-dispatcher) by
+ 2002:a05:6a20:cc8e:b0:3a0:b781:4c78
+ with SMTP id adf61e73a8af0-3b5e31003f1mr708011637.15.1781145055663; Wed, 10
+ Jun 2026 19:30:55 -0700 (PDT)
+Date: Thu, 11 Jun 2026 02:30:27 +0000
+In-Reply-To: <20260611023028.102071-1-jrhilke@google.com>
+Mime-Version: 1.0
+References: <20260611023028.102071-1-jrhilke@google.com>
+X-Mailer: git-send-email 2.54.0.1136.gdb2ca164c4-goog
+Message-ID: <20260611023028.102071-5-jrhilke@google.com>
+Subject: [PATCH 4/5] igb: Implement TRL throttling and timer resumption
+From: Josh Hilke <jrhilke@google.com>
+To: qemu-devel@nongnu.org, Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
+Cc: Josh Hilke <jrhilke@google.com>,
+ Sriram Yagnaraman <sriram.yagnaraman@ericsson.com>, 
+ Jason Wang <jasowang@redhat.com>, Fabiano Rosas <farosas@suse.de>, 
+ Laurent Vivier <lvivier@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>, 
+ David Matlack <dmatlack@google.com>,
+ Alex Williamson <alex.williamson@nvidia.com>
+Content-Type: text/plain; charset="UTF-8"
+Received-SPF: pass client-ip=2607:f8b0:4864:20::549;
+ envelope-from=33x0qagcKChwBJ9ADC68GG8D6.4GEI6EM-56N6DFGF8FM.GJ8@flex--jrhilke.bounces.google.com;
+ helo=mail-pg1-x549.google.com
+X-Spam_score_int: -95
+X-Spam_score: -9.6
+X-Spam_bar: ---------
+X-Spam_report: (-9.6 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_MED=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_SBL_CSS=3.335, SPF_HELO_PASS=-0.001,
- SPF_PASS=-0.001 autolearn=no autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ USER_IN_DEF_DKIM_WL=-7.5 autolearn=ham autolearn_force=no
 X-Spam_action: no action
+X-Mailman-Approved-At: Thu, 11 Jun 2026 00:28:25 -0400
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -93,148 +98,102 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Add parsing for explicit Intro section syntax.
+Integrate throttling logic into the transmission path. In
+`igb_start_xmit`, check if the queue is currently throttled.  Accumulate
+bytes sent, calculate the transmission delay based on the configured
+target rate, and if a throttle is triggered, set the virtual timer, mark
+the queue as throttled, and defer remaining packets.  Implement the
+timer callback to clear the throttled state and resume transmission when
+the timer expires.
 
-A side effect of this patch is that we will (currently) always create
-an empty Intro section, similar to how we used to have an empty Plain
-section. The tests are adjusted accordingly, rendered document output
-does not change at all.
-
-Signed-off-by: John Snow <jsnow@redhat.com>
+Signed-off-by: Josh Hilke <jrhilke@google.com>
 ---
- docs/devel/qapi-code-gen.rst   | 16 +++++++---------
- scripts/qapi/parser.py         |  4 ++--
- tests/qapi-schema/doc-good.out | 18 ++++++++++++++++++
- 3 files changed, 27 insertions(+), 11 deletions(-)
+ hw/net/igb_core.c | 37 +++++++++++++++++++++++++++++++++++--
+ 1 file changed, 35 insertions(+), 2 deletions(-)
 
-diff --git a/docs/devel/qapi-code-gen.rst b/docs/devel/qapi-code-gen.rst
-index 3a632b4a648..b1cc5b5f0db 100644
---- a/docs/devel/qapi-code-gen.rst
-+++ b/docs/devel/qapi-code-gen.rst
-@@ -984,11 +984,11 @@ definition it documents.
- When documentation is required (see pragma_ 'doc-required'), every
- definition must have documentation.
+diff --git a/hw/net/igb_core.c b/hw/net/igb_core.c
+index 9ed0e78..b8c0500 100644
+--- a/hw/net/igb_core.c
++++ b/hw/net/igb_core.c
+@@ -875,6 +875,14 @@ igb_tx_enabled(IGBCore *core, const E1000ERingInfo *txi)
+         (core->mac[TXDCTL0 + (qn * 16)] & E1000_TXDCTL_QUEUE_ENABLE);
+ }
  
--Definition documentation starts with a line naming the definition,
--followed by an optional overview, a description of each argument (for
--commands and events), member (for structs and unions), branch (for
--alternates), or value (for enums), a description of each feature (if
--any), and finally optional tagged sections.
-+Definition documentation starts with a description naming the
-+definition with an optional indented overview, a description of each
-+argument (for commands and events), member (for structs and unions),
-+branch (for alternates), or value (for enums), a description of each
-+feature (if any), and finally optional tagged sections.
++static uint64_t igb_trl_calculate_delay(IGBCore *core, int qidx,
++                                        size_t bytes_sent)
++{
++    uint64_t ns_per_sec = 1000000000ULL;
++
++    return (uint64_t)bytes_sent * ns_per_sec / core->trl_target_rate[qidx];
++}
++
+ static void
+ igb_start_xmit(IGBCore *core, const IGB_TxRing *txr)
+ {
+@@ -883,17 +891,23 @@ igb_start_xmit(IGBCore *core, const IGB_TxRing *txr)
+     union e1000_adv_tx_desc desc;
+     const E1000ERingInfo *txi = txr->i;
+     uint32_t eic = 0;
++    size_t bytes_sent;
  
- Descriptions start with '\@name:'.  The description text must be
- indented like this::
-@@ -1093,8 +1093,7 @@ Examples of complete definition documentation::
+     if (!igb_tx_enabled(core, txi)) {
+         trace_e1000e_tx_disabled();
+         return;
+     }
  
-  ##
-  # @BlockStats:
-- #
-- # Statistics of a virtual block device or a block backing device.
-+ #     Statistics of a virtual block device or a block backing device.
-  #
-  # @device: If the stats are for a virtual block device, the name
-  #     corresponding to the virtual block device.
-@@ -1111,8 +1110,7 @@ Examples of complete definition documentation::
++    if (core->trl_throttled[txi->idx]) {
++        return;
++    }
++
+     d = pcie_sriov_get_vf_at_index(core->owner, txi->idx % 8);
+     if (!d) {
+         d = core->owner;
+     }
  
-  ##
-  # @query-blockstats:
-- #
-- # Query the @BlockStats for all virtual block devices.
-+ #     Query the @BlockStats for all virtual block devices.
-  #
-  # @query-nodes: If true, the command will query all the block nodes
-  #     ... explain, explain ...
-diff --git a/scripts/qapi/parser.py b/scripts/qapi/parser.py
-index b7a7b9465a9..9e14c2f7921 100644
---- a/scripts/qapi/parser.py
-+++ b/scripts/qapi/parser.py
-@@ -542,8 +542,8 @@ def get_doc(self) -> 'QAPIDoc':
-             if not symbol:
-                 raise QAPIParseError(self, "name required after '@'")
-             doc = QAPIDoc(info, symbol)
--            self.accept(False)
--            line = self.get_doc_line()
-+            doc.all_sections.append(QAPIDoc.Section(info, QAPIDoc.Kind.INTRO))
-+            line = self.get_doc_indented(doc)
-             no_more_args = False
++    bytes_sent = 0;
+     while (!igb_ring_empty(core, txi)) {
+         base = igb_ring_head_descr(core, txi);
  
-             while line is not None:
-diff --git a/tests/qapi-schema/doc-good.out b/tests/qapi-schema/doc-good.out
-index 16f44221771..371dd25ffc7 100644
---- a/tests/qapi-schema/doc-good.out
-+++ b/tests/qapi-schema/doc-good.out
-@@ -106,6 +106,8 @@ Examples:
- - *verbatim*
- - {braces}
- doc symbol=Enum
-+    Intro
-+
-     Member=one
- The _one_ {and only}, description on the same line
-     Member=two
-@@ -117,10 +119,14 @@ a member feature
-     Plain
- @two is undocumented
- doc symbol=Base
-+    Intro
-+
-     Member=base1
-  description starts on a new line,
-  minimally indented
- doc symbol=Variant1
-+    Intro
-+
-     Plain
- A paragraph
+@@ -902,9 +916,20 @@ igb_start_xmit(IGBCore *core, const IGB_TxRing *txr)
+         trace_e1000e_tx_descr((void *)(intptr_t)desc.read.buffer_addr,
+                               desc.read.cmd_type_len, desc.wb.status);
  
-@@ -134,10 +140,16 @@ a feature
-     Feature=member-feat
- a member feature
- doc symbol=Variant2
-+    Intro
+-        igb_process_tx_desc(core, d, txr->tx, &desc, txi->idx);
++        bytes_sent += igb_process_tx_desc(core, d, txr->tx, &desc, txi->idx);
+         igb_ring_advance(core, txi, 1);
+         eic |= igb_txdesc_writeback(core, base, &desc, txi);
 +
- doc symbol=Object
-+    Intro
-+
-     Feature=union-feat1
- a feature
- doc symbol=Alternate
-+    Intro
-+
-     Member=i
- description starts on the same line
-     remainder indented the same
-@@ -151,6 +163,8 @@ doc freeform
- Another subsection
- ==================
- doc symbol=cmd
-+    Intro
-+
-     Member=arg1
-     description starts on a new line,
-     indented
-@@ -198,6 +212,8 @@ Note::
-     Since
- 2.10
- doc symbol=cmd-boxed
-+    Intro
-+
-     Plain
- If you're bored enough to read this, go see a video of boxed cats
-     Feature=cmd-feat1
-@@ -211,5 +227,7 @@ another feature
++        if (core->trl_target_rate[txi->idx] > 0) {
++            uint64_t delay_ns =
++                igb_trl_calculate_delay(core, txi->idx, bytes_sent);
++            if (delay_ns > 0) {
++                core->trl_throttled[txi->idx] = true;
++                timer_mod(core->trl_timer[txi->idx].timer,
++                          qemu_clock_get_ns(QEMU_CLOCK_VIRTUAL) + delay_ns);
++                break;
++            }
++        }
+     }
  
-    <- ... has no title ...
- doc symbol=EVT_BOXED
-+    Intro
+     if (eic) {
+@@ -4358,7 +4383,15 @@ igb_autoneg_resume(IGBCore *core)
+ 
+ static void igb_trl_timer_cb(void *opaque)
+ {
+-    /* Stub */
++    IGBTrlTimer *trl_timer = opaque;
++    IGBCore *core = trl_timer->core;
++    int qidx = trl_timer->queue_idx;
++    IGB_TxRing txr;
 +
-     Feature=feat3
- a feature
++    core->trl_throttled[qidx] = false;
++
++    igb_tx_ring_init(core, &txr, qidx);
++    igb_start_xmit(core, &txr);
+ }
+ 
+ void
 -- 
-2.54.0
+2.54.0.1136.gdb2ca164c4-goog
 
 
