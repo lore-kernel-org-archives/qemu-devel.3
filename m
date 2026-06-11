@@ -4,119 +4,123 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 56CE9CD8C9D
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6C166CD98D5
 	for <qemu-devel@archiver.kernel.org>; Thu, 11 Jun 2026 18:04:40 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wXjkZ-0003s5-QV; Thu, 11 Jun 2026 14:03:31 -0400
+	id 1wXjkv-0003uP-KF; Thu, 11 Jun 2026 14:03:53 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <philmd@oss.qualcomm.com>)
- id 1wXjkX-0003ru-VW
- for qemu-devel@nongnu.org; Thu, 11 Jun 2026 14:03:30 -0400
+ id 1wXjkt-0003u2-IB
+ for qemu-devel@nongnu.org; Thu, 11 Jun 2026 14:03:51 -0400
 Received: from mx0a-0031df01.pphosted.com ([205.220.168.131])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <philmd@oss.qualcomm.com>)
- id 1wXjkW-0006wM-AG
- for qemu-devel@nongnu.org; Thu, 11 Jun 2026 14:03:29 -0400
+ id 1wXjks-00077X-2P
+ for qemu-devel@nongnu.org; Thu, 11 Jun 2026 14:03:51 -0400
 Received: from pps.filterd (m0279864.ppops.net [127.0.0.1])
  by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 65BErYqv942536
- for <qemu-devel@nongnu.org>; Thu, 11 Jun 2026 18:03:25 GMT
+ 65BErZPd942551
+ for <qemu-devel@nongnu.org>; Thu, 11 Jun 2026 18:03:49 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
- cc:content-transfer-encoding:content-type:date:from:message-id
- :mime-version:subject:to; s=qcppdkim1; bh=lbRWp0ZdLzDp4A2aV5R1Bo
- T6gHpNuq/2uz5o0kuvqKI=; b=FMVO97PwGJE5mXDAuhbWOteLOMVNt+zWRP4nL6
- vbNbz5ie48DDM8XCm6W+tGx+VovklflwxcnGOoOIPTP1HHAqSJ0DWWMZYiUzsvIA
- HXhwL6iai43+iX+ixucn9ELN+EzdiruuG0y+0hLXXefUtFsqWdxeF4dFKL9usCWz
- h+pc3HCTWTUdoujhsDtYnB69Yl/5o52O2/p/z4JOX5fdLtb4qYpHHy7qWpRO9mub
- Eh4ilU6P+GqXMydREfZw1UgF/btxwokci0bsf4TkTRkMp9XZy2Y7OuX7oX6DBz8/
- B+0sMPph4GIWd3Fm+wqY8fyY4zS9GIT3F9xVV6b4xx+FrIUA==
-Received: from mail-dy1-f200.google.com (mail-dy1-f200.google.com
- [74.125.82.200])
- by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4eqe6tmyg0-1
+ cc:content-transfer-encoding:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+ IamlN+f3YPmjeRp4ERR0lSCRMrxkjHdMyzlbXgjcTgw=; b=pUFl0h61vhLZfIJ+
+ vt2ruLZ4MDso08Swb26p0Yk83t3rDcVclkLZVYmUZCP4y/UW5cJW/i0IfWW15Hxf
+ xjPVBLGPLyy1o04s5V6Dkkm03JPVunB6/nvyFaWbE5HnCxxepWLzdg6VWuOYwVOC
+ jKsTGMx5hOnyr/YmFH8iF5Gza8rMBP1MsAW8Ouc5CJHHeuACiIjAMEookq/ZJOm/
+ ItqilAFzluE0LN8m8ZOV0B0XIcl/Fd9UEDH/ao5YyLllmFk24TIzDGxFwBXhIDDH
+ QyFIQgtuSw4PkJc0AJZsYEqE+ynZnc8flZA3PeJs4shuwFGuMQGqIRVGEFFsht1z
+ CV3ffA==
+Received: from mail-dy1-f199.google.com (mail-dy1-f199.google.com
+ [74.125.82.199])
+ by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4eqe6tmyhu-1
  (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
- for <qemu-devel@nongnu.org>; Thu, 11 Jun 2026 18:03:25 +0000 (GMT)
-Received: by mail-dy1-f200.google.com with SMTP id
- 5a478bee46e88-3075fa5a407so558267eec.1
- for <qemu-devel@nongnu.org>; Thu, 11 Jun 2026 11:03:25 -0700 (PDT)
+ for <qemu-devel@nongnu.org>; Thu, 11 Jun 2026 18:03:48 +0000 (GMT)
+Received: by mail-dy1-f199.google.com with SMTP id
+ 5a478bee46e88-30761ab3483so611268eec.0
+ for <qemu-devel@nongnu.org>; Thu, 11 Jun 2026 11:03:48 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=oss.qualcomm.com; s=google; t=1781201005; x=1781805805; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:from:to:cc:subject:date:message-id:reply-to;
- bh=lbRWp0ZdLzDp4A2aV5R1BoT6gHpNuq/2uz5o0kuvqKI=;
- b=LtiKkT9haMJddxb0B8xK21ATj8EGrebq6nEclP3OVJExAhKESLTw/gvGTaW81ykMxB
- gUQowYpzKZA2Nrf89H3vSRR2FAjHy+7VGFZ1ZrF9QNy0lpZyaXRujo6fwCYgOegwHbYe
- 9SBKk9GZfHtcxLyuVRdLyFtrB+5RwlGm2nihhXDMUPeBsyRUlW1GOk5Ygv369/98nFmD
- 7RmVlbw0GcGR9aCF6XwBtHMewrFz1NXC5Iy4AFCGIk5Vth+Mk0LvRrMu4DvzN2tFhnFk
- J1Pa5jwITer6KwWPvQaO7kJlX9cKTgA5ws6dEk4BhN+Ekn0vkaGBG9pNfeZetEyi2Ltt
- 2YJA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1781201005; x=1781805805;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ d=oss.qualcomm.com; s=google; t=1781201028; x=1781805828; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=lbRWp0ZdLzDp4A2aV5R1BoT6gHpNuq/2uz5o0kuvqKI=;
- b=nhQUARca2mWyTCGVFgL/BrXckBY82gdN4NjDvzASnSpb870U62CjxiYyUr7kmEYaaK
- CPsETDXGx3EEpzfYOJJjXD6IGO8VYAxRjQF/9KCA2T2T71x0MgGP2S3LTM4NPG/Z/umO
- yHz688tV+hzVEC+crke5jx3CGDzXyxS3wn6+uo197z+MWS0GjfztpAUjQNCsxlno9B6P
- QaL66ddawCVOShlcRHezKLlkGWRlCNzz/1pdO6UbkJEi0L/ncROvtOq7gVb6sF9HEnDT
- I4Uu/xpoRSMuJFWyEFHu32e5ehjPMtRFTHpoFjnQcKnw7JbKo6FTkCHwNzKZ7ZL/MoxU
- xktA==
-X-Gm-Message-State: AOJu0YyZLgQX0sfBUW10PKmafwa4BdZdageMJeM7vVWLOSqRgF1g4eK7
- 8L8YmUWeO1H5gIqMqFRi5ERY4pu3Y9Zd0U2lExneAaBowP4hacLE2H1qEeZaf3AqMrO0Alz+S+n
- UsWCugFM5cF+0gril5uOV5Gwi91NbrEnzAkHcTtIIcaiIc/EKZh7C29TC9jURXYekuTgi
-X-Gm-Gg: Acq92OEVKETPOU1J0ooA0K986YyFV8ocewHKzvslqL1hYfWyIvY4QGz254VlVKnthOr
- JNcnW9RLwpL1M7dlh/PsTht+icbxxt2I9vH4VacpBmye7TU1tjSdJJ2M/Rb6njwtP3JaHjmwXXW
- InOBUyTL4wofRBIAGVzmUyw+rohO7jkDbVTOMASJVOs6bNf0/zXRmx9XA6WRok0Fmill0bs9zjM
- ehBChACX8rQ4uM4jDFuDHIp2OhCmY0rPQ5Ptg3YHgtWGRk2fY5BruP/HIVi1Z1aysuX1kG1roR6
- B7WhrZrXG0y216bOA7Iylc9+yj2yaBlYH+U0l0Ym3tiF3qllNL7sJ2JVwnsYsHRT8ZX300fzLjM
- hVUOTSKGOWvCRR1OH6ybXWl+8spruU3l78nHxUhl7AdsRusY5q00htpDGInVbVIEJZvLIXBMCzV
- qNumKTxiHN
-X-Received: by 2002:a05:7300:df44:b0:307:3a6c:ecea with SMTP id
- 5a478bee46e88-3080461f742mr3155396eec.1.1781201004529; 
- Thu, 11 Jun 2026 11:03:24 -0700 (PDT)
-X-Received: by 2002:a05:7300:df44:b0:307:3a6c:ecea with SMTP id
- 5a478bee46e88-3080461f742mr3155333eec.1.1781201003968; 
- Thu, 11 Jun 2026 11:03:23 -0700 (PDT)
+ bh=IamlN+f3YPmjeRp4ERR0lSCRMrxkjHdMyzlbXgjcTgw=;
+ b=DnG6RhDvRYb6RRvcro40SF3ytPdTQ5fcthYkBXH7vXCfyQGFM2qe0nwQDaY2fvJhqi
+ +SCmnW73hAzg86nN4kXDOslCReqg74XWwFk0WeVfhDJOn+luZMVnjBDYDHZTZnpXi7k+
+ TTcjm8FEaMNRkN8P2Ov1PSLJz0puV6dcd89f0pPWtIqkObS/xoygYfNu83Y2zjxOJrDX
+ 0Vq3hSxqsJ0pQt8CH1cLNHzqP7C75EgoIu+7DKDUWDpYWbMy2kI7aBHZYhGrE2REBcg4
+ RVcSoewLif9AakVTud8aQk1oeQ1EauMubvMfrrzkpnmHgaeK9rFYbakfiWmqemvL1ln2
+ 2sXw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1781201028; x=1781805828;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=IamlN+f3YPmjeRp4ERR0lSCRMrxkjHdMyzlbXgjcTgw=;
+ b=rVjqVdbSsWB6gPV3TIK2wAV6YnR7s9Sy5R0jOycIy4FA3/PM6eskpv2nXwsza54g2W
+ ua1I34JegvxKzeur4T42IFLVINB2hblfhXVUg9EPNgthap9RN+4DQy+jfSzajWJmqf7O
+ hzbbaUR7ztbtc0ROZmbl2ieDbR5qscVaVTelU67idWhMAHOZyvcld8OHbkImHQZ8UcMM
+ LLTtGwhlidREUGNS1qF5009xRe1QCq438JEv9WQpolNITDgtns/Rz7bsFvZierSjg6Ro
+ o2r9hscrKFOnsROLJlSeVGJs6SoEIiJbOFfPCkMs8K/Ig/D+9z/p3ekH2M+7jbUk3X47
+ WMCw==
+X-Gm-Message-State: AOJu0YxX0ylgQPA8loplfK/3l5DAY16QLhWdBWieRfwCdlANqah28Q9e
+ XeA6xzJU6BnUM1gN2Ek8px9D2rsqUCWB9Pr7URorfw/8SrrgHxxX/3hmmjRZ31uHNvgkpGsYzkM
+ iYssPyl5FNcpFu6GmQNU6tiUIbhETazA72WZurSPDQIdK8RdFEthbI/sVLeTn6MarZ5aK
+X-Gm-Gg: Acq92OHzeELiDapFCh0m5ddlmnpzpshYSPgb0Qk5eRttfOCWxqBNWX9KKbvxhhaqqFR
+ fcAhfi02oh73WdY1K1TXlrI0Rl2ICUmMUTo/Cwyjjk82rNm23b4+pZqEcW18ZYy9whBTFPRKZyy
+ iJimaygMv71wduuhi+dQ9ASrfG/evq6vW/qBILtq4AzdoT68iWkTMuVCkUdr8YDtajXVf+y6ppu
+ ErOc4qs+B7RiVE+coiI7eQPmRfONIoOnlgcLCx/Ec6dNBv/Ok6bPfFFjW8jjg0ZxgefFeO/YmKD
+ YlOQkzCIztzDKn+d2OmuRCVF0WnbhQ6rTmqoDYJj/OADR1ZnuM47RF/oicLZNOkAva3r3lZmg0u
+ QF/+qzgxosmaWdgz18R3z1YQTbLfDL2UCATi3wVdX6uvL4h+SQXLsR3y/8iHMThohphy0bQbpWd
+ FU2LbHXdh3
+X-Received: by 2002:a05:7300:4352:b0:2ef:9961:27fa with SMTP id
+ 5a478bee46e88-30804b8a64emr3143577eec.18.1781201027849; 
+ Thu, 11 Jun 2026 11:03:47 -0700 (PDT)
+X-Received: by 2002:a05:7300:4352:b0:2ef:9961:27fa with SMTP id
+ 5a478bee46e88-30804b8a64emr3143532eec.18.1781201027272; 
+ Thu, 11 Jun 2026 11:03:47 -0700 (PDT)
 Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-4606c0fc40csm559036f8f.29.2026.06.11.11.03.21
+ ffacd0b85a97d-4606c10414csm556171f8f.36.2026.06.11.11.03.45
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Thu, 11 Jun 2026 11:03:22 -0700 (PDT)
+ Thu, 11 Jun 2026 11:03:46 -0700 (PDT)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>
 To: qemu-devel@nongnu.org
 Cc: Paolo Bonzini <pbonzini@redhat.com>,
  Peter Maydell <peter.maydell@linaro.org>, Peter Xu <peterx@redhat.com>,
  Richard Henderson <richard.henderson@linaro.org>
-Subject: [PATCH 0/6] system: Clarify legacy
- physical_memory_read/write/map/unmap API
-Date: Thu, 11 Jun 2026 20:03:14 +0200
-Message-ID: <20260611180320.30320-1-philmd@oss.qualcomm.com>
+Subject: [PATCH 3/6] gdbstub/system: Replace legacy
+ cpu_physical_memory_read/write() calls
+Date: Thu, 11 Jun 2026 20:03:17 +0200
+Message-ID: <20260611180320.30320-4-philmd@oss.qualcomm.com>
 X-Mailer: git-send-email 2.53.0
+In-Reply-To: <20260611180320.30320-1-philmd@oss.qualcomm.com>
+References: <20260611180320.30320-1-philmd@oss.qualcomm.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNjExMDE4MSBTYWx0ZWRfX2TmNfmr3Ocqi
- vWJnfo6qaRijl7J5RYyGKryWTxWjH7bwIN9jVBaJUWnqi6dAHug/wYsXsAYCoHdHvJO2x4nIqdM
- XO3qSCFqoFUuTinE5x1/OfA/DOI6TE6ClnvV5VTWy4ehRS48cAJC2xfVHi6B3AleORbu3S4aUfg
- mJc5Q61jnkzBcHFVeb1BRxokZkDGZN7yGf88luOIWkhqLuxq5YdVRrg6up5OHMfqsATGuYnrwBa
- Pb78ve/urlfgszjVtxFN6Nzs8f2G6pT/taynuCWdB1Rox60SmJMB3g3ODtZKJit79UruvWmRMxM
- xxit8Gcak3dRE8nz4JY56oiWozfTP56gZegYuVxuCZkgtGgCwyA2p6yTI1fpGlafEQNeVESIJP2
- 3exdESO11thjfIMG+HxCI4ggZcVCRd+8kmJ4nuLE/7ZfTUZu1lm0SBUuGsQvQCCj0UCVlc8V72W
- kay7CUi1AwdcU/MfQfA==
-X-Proofpoint-Spam-Info: AW1haW4tMjYwNjExMDE4MSBTYWx0ZWRfX3wQ8Ix2f/xxa
- VM8iCf2NJVhrQ3Zpe/tF4xI7Ma+tLaZ9C0gulUVYbNqFdRaVa+m0T/4BUiouKW7PME3uia51U53
- /EYglb92ZssnHTPbWb+IDeanNLn5TwQ=
-X-Authority-Analysis: v=2.4 cv=AaiB2XXG c=1 sm=1 tr=0 ts=6a2af86d cx=c_pps
- a=PfFC4Oe2JQzmKTvty2cRDw==:117 a=4s3hRJSeHn4rkQlkrse1kQ==:17
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNjExMDE4MSBTYWx0ZWRfX3C/u7xZiJBZe
+ mhTw1EK2CvOnUlXAzTmI6qoYhscboqxNg47/kkMT6pIHxd2La8DWLfMtIsrdCXU8TpKOBlMKpEs
+ 3FwKzsRZYVyqxd9ZfCSdmaMrGfBZ3Ut+c54s2wTRyuXgOPmFmUsM2uiANjskan/9UfSx/MPIGjJ
+ gVasG437IjW0budMB9Ul1ourem2OyrRoKDyK+8O4BwhaEe3eiEixi73pEBxg2fp5RVzPwdpgHHP
+ iu7iGWH+SrGCaIXnCYx60Xpa6FRFHNW+o9ubSpXby85oHuccDPQeYRO9UYQq1md2/pYrEq11o/+
+ UuqbYey4Q4Yns7DC863oSB/QUDWdwOwGwWYJxBsmWLcYgxHgfSZ6RPLlsll1jTLlsy1kzzxsHrL
+ HIs0/f/3H69g+9yBqd9raLqljvx3DRcsEUIJwCA3pqq02MV/cKIrFdyJ9xujMPSsR7+xvyh3M73
+ NQ+WJRiu0xba1ETZPZQ==
+X-Proofpoint-Spam-Info: AW1haW4tMjYwNjExMDE4MSBTYWx0ZWRfXyZ814jL2LK4n
+ asZicfBui4nIVkUm4y+jxWr0H/DUvYAGRtxRFR0ZzwD5UsgV+fTkNvDjEJlxXw2QYoxeVrRzCq/
+ rhg/xYNT/UGzbdp4uU7BvofJLZmLFzM=
+X-Authority-Analysis: v=2.4 cv=AaiB2XXG c=1 sm=1 tr=0 ts=6a2af884 cx=c_pps
+ a=cFYjgdjTJScbgFmBucgdfQ==:117 a=4s3hRJSeHn4rkQlkrse1kQ==:17
  a=IkcTkHD0fZMA:10 a=FelO9ux0wxsA:10 a=M51BFTxLslgA:10 a=s4-Qcg_JpJYA:10
  a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=DJpcGTmdVt4CTyJn9g5Z:22
- a=XEOm3FV0vn0os_yc_hoA:9 a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
- a=6Ab_bkdmUrQuMsNx7PHu:22
-X-Proofpoint-ORIG-GUID: gTtP_XY4ssUWKx_ubRQGuWXe6UbeE7ma
-X-Proofpoint-GUID: gTtP_XY4ssUWKx_ubRQGuWXe6UbeE7ma
+ a=EUspDBNiAAAA:8 a=KKAkSRfTAAAA:8 a=xNtUyv5i_auiJddU4oEA:9 a=3ZKOabzyN94A:10
+ a=QEXdDO2ut3YA:10 a=scEy_gLbYbu1JhEsrz4S:22 a=cvBusfyB2V15izCimMoJ:22
+X-Proofpoint-ORIG-GUID: cpPDPmShXraUMedKRNG1WR_qwjUrdbGZ
+X-Proofpoint-GUID: cpPDPmShXraUMedKRNG1WR_qwjUrdbGZ
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.125,FMLib:17.12.100.49
  definitions=2026-06-11_03,2026-06-11_01,2025-10-01_01
@@ -149,82 +153,49 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-It is not obvious the cpu_physical_memory_read/write/map/unmap()
-methods do not involve vCPU at all and use the legacy global
-address space. Document that, because this is an issue for some
-board which doesn't use it at all. Rename the methods stripping
-the 'cpu_' prefix.
+cpu_physical_memory_read() and cpu_physical_memory_write() are
+legacy (see commit b7ecba0f6f6), replace the two calls by a single
+one to address_space_rw(). So far there is no logical change, but
+stop ignoring these functions returned value and propagate it,
+respecting the *memory_rw_debug() family error path. Thus this is
+effectively a logical change.
 
-Clean a pair of dubious uses out of hw/.
+Signed-off-by: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
+---
+Cc: "Alex Bennée" <alex.bennee@linaro.org>
+---
+ gdbstub/system.c | 11 +++++------
+ 1 file changed, 5 insertions(+), 6 deletions(-)
 
-Philippe Mathieu-Daudé (6):
-  system: Document cpu_physical_memory_*() declarations
-  accel/kvm: Replace legacy cpu_physical_memory_write() call
-  gdbstub/system: Replace legacy cpu_physical_memory_read/write() calls
-  target/s390x: Factor common s390_ipl_read/write() helpers
-  target/s390x: Replace legacy cpu_physical_memory_read/write() calls
-  system: Move cpu_physical_memory_*() declarations to
-    'system/physmem.h'
-
- docs/devel/loads-stores.rst            | 18 +++++-----
- scripts/coccinelle/exec_rw_const.cocci | 16 ++++-----
- hw/xtensa/bootparam.h                  |  6 ++--
- include/exec/cpu-common.h              |  8 -----
- include/system/physmem.h               | 50 ++++++++++++++++++++++++++
- accel/kvm/kvm-all.c                    | 12 +++----
- dump/dump.c                            |  3 +-
- dump/win_dump-x86.c                    |  5 +--
- gdbstub/system.c                       | 11 +++---
- hw/acpi/ghes.c                         | 24 ++++++-------
- hw/acpi/nvdimm.c                       | 13 +++----
- hw/acpi/vmgenid.c                      |  3 +-
- hw/audio/marvell_88w8618.c             |  3 +-
- hw/char/riscv_htif.c                   |  5 +--
- hw/display/exynos4210_fimd.c           |  7 ++--
- hw/display/omap_lcdc.c                 |  5 +--
- hw/display/ramfb.c                     |  7 ++--
- hw/dma/i8257.c                         |  9 ++---
- hw/dma/omap_dma.c                      |  6 ++--
- hw/dma/rc4030.c                        |  3 +-
- hw/dma/sifive_pdma.c                   |  9 ++---
- hw/hyperv/hyperv.c                     | 25 ++++++-------
- hw/hyperv/syndbg.c                     | 13 +++----
- hw/hyperv/vmbus.c                      |  9 ++---
- hw/i386/kvm/clock.c                    |  3 +-
- hw/i386/vapic.c                        | 21 +++++------
- hw/intc/apic.c                         |  3 +-
- hw/intc/xive2.c                        |  3 +-
- hw/m68k/next-cube.c                    |  3 +-
- hw/microblaze/boot.c                   |  3 +-
- hw/misc/pc-testdev.c                   |  5 +--
- hw/net/fsl_etsec/rings.c               | 13 +++----
- hw/net/mcf_fec.c                       | 11 +++---
- hw/net/opencores_eth.c                 |  9 ++---
- hw/nvram/spapr_nvram.c                 |  9 ++---
- hw/ppc/amigaone.c                      |  5 +--
- hw/ppc/e500.c                          |  3 +-
- hw/ppc/pegasos.c                       | 11 +++---
- hw/ppc/pnv.c                           |  5 +--
- hw/ppc/ppc440_uc.c                     |  9 ++---
- hw/ppc/spapr.c                         |  3 +-
- hw/ppc/spapr_drc.c                     |  3 +-
- hw/ppc/spapr_events.c                  |  9 ++---
- hw/ppc/spapr_hcall.c                   | 17 ++++-----
- hw/ppc/spapr_rtas.c                    |  5 +--
- hw/ppc/spapr_tpm_proxy.c               |  5 +--
- hw/ppc/virtex_ml507.c                  |  3 +-
- hw/s390x/css.c                         |  5 +--
- hw/s390x/ipl.c                         |  9 ++---
- hw/s390x/s390-pci-bus.c                |  5 +--
- hw/s390x/virtio-ccw.c                  |  5 +--
- hw/scsi/vmw_pvscsi.c                   | 12 +++----
- hw/xen/xen_pt_graphics.c               |  4 +--
- hw/xtensa/xtfpga.c                     |  5 +--
- system/cpus.c                          |  3 +-
- system/physmem.c                       | 12 +++----
- target/s390x/diag.c                    | 43 ++++++++++++----------
- 57 files changed, 310 insertions(+), 224 deletions(-)
-
+diff --git a/gdbstub/system.c b/gdbstub/system.c
+index e86c5870abc..2063b63b2f8 100644
+--- a/gdbstub/system.c
++++ b/gdbstub/system.c
+@@ -20,6 +20,7 @@
+ #include "exec/hwaddr.h"
+ #include "accel/accel-ops.h"
+ #include "accel/accel-cpu-ops.h"
++#include "system/address-spaces.h"
+ #include "system/cpus.h"
+ #include "system/runstate.h"
+ #include "system/replay.h"
+@@ -453,12 +454,10 @@ int gdb_target_memory_rw_debug(CPUState *cpu, hwaddr addr,
+                                uint8_t *buf, int len, bool is_write)
+ {
+     if (phy_memory_mode) {
+-        if (is_write) {
+-            cpu_physical_memory_write(addr, buf, len);
+-        } else {
+-            cpu_physical_memory_read(addr, buf, len);
+-        }
+-        return 0;
++        MemTxResult res = address_space_rw(&address_space_memory, addr,
++                                           MEMTXATTRS_UNSPECIFIED, buf, len,
++                                           is_write);
++        return res == MEMTX_OK ? 0 : -1;
+     }
+ 
+     if (cpu->cc->memory_rw_debug) {
 -- 
 2.53.0
 
