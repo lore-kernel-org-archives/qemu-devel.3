@@ -4,132 +4,108 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 70B5CCD98CE
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id AC8CECD98CF
 	for <qemu-devel@archiver.kernel.org>; Thu, 11 Jun 2026 16:22:51 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wXiAu-0001mL-CL; Thu, 11 Jun 2026 12:22:36 -0400
+	id 1wXiAS-0001i1-OK; Thu, 11 Jun 2026 12:22:08 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <daniel.barboza@oss.qualcomm.com>)
- id 1wXiAs-0001ly-Sl
- for qemu-devel@nongnu.org; Thu, 11 Jun 2026 12:22:34 -0400
-Received: from mx0b-0031df01.pphosted.com ([205.220.180.131])
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1wXiAR-0001hs-Bi
+ for qemu-devel@nongnu.org; Thu, 11 Jun 2026 12:22:07 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <daniel.barboza@oss.qualcomm.com>)
- id 1wXiAr-0006ZP-8p
- for qemu-devel@nongnu.org; Thu, 11 Jun 2026 12:22:34 -0400
-Received: from pps.filterd (m0279870.ppops.net [127.0.0.1])
- by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 65BEradh954621
- for <qemu-devel@nongnu.org>; Thu, 11 Jun 2026 16:22:32 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
- cc:content-transfer-encoding:date:from:message-id:mime-version
- :subject:to; s=qcppdkim1; bh=M5qTzV+flpGhSX5RyOdBUPL1/rjE6dooWys
- 3uXVSKeA=; b=hDnhxDGt9Jr8+1GinlncO8INTLe2GvZqhUrOerUQ5tAZFDnq9ke
- vbdLwlNCDTtg3vAVw35AlnPgBg9KfisckUJUIDURss9mqkc/Ij16Atkl+F0XEaMR
- lmpzWw6rqWZI7EaqzJNHiICs+UYkmUcDVJ99cY7rmU02H4EU4p5I1U5j2PfuwNL9
- Kh/ZDEXHlG9RI2QzSPheaHTNE0OARpgJ2s45caZUJuD/cLxi0z97LN82u+qZL9gE
- AnRSIKHWbXXJf21zD0aClA6YtnknGDiClbCCxcX/V+QW7cCnP5YuGgMelkXEqKql
- 0gTKnpAv4GhukYc+xtOGmsP5e3qFZrjwdlw==
-Received: from mail-qv1-f70.google.com (mail-qv1-f70.google.com
- [209.85.219.70])
- by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4eqtb5hr2v-1
- (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
- for <qemu-devel@nongnu.org>; Thu, 11 Jun 2026 16:22:31 +0000 (GMT)
-Received: by mail-qv1-f70.google.com with SMTP id
- 6a1803df08f44-8ccd83d58d9so1359676d6.0
- for <qemu-devel@nongnu.org>; Thu, 11 Jun 2026 09:22:31 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1wXiAP-0006WQ-Ko
+ for qemu-devel@nongnu.org; Thu, 11 Jun 2026 12:22:07 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1781194923;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=ldkCrgwh3yGpQp8T55KrgPd/6vnsGDVpj7qCK6x+D0k=;
+ b=aBKXDWIQ+WG49Fp2ItevTYOy/FPljuJgIpAWc1moWpwmKmS020ZVTQG6gZ5puhtbFZNe/7
+ 7M2jvim8NptePWJLvSDpT+wguww9Qdj9mIsI7V2QJlkPBHZbhobd5sws+mhWV/Hgmo4y/R
+ QfsxRo7k85s3FRcofuTfuCfYCeqt7xA=
+Received: from mail-ua1-f70.google.com (mail-ua1-f70.google.com
+ [209.85.222.70]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-622-Mp4kLehVNuOeLhY7P0bHpA-1; Thu, 11 Jun 2026 12:22:02 -0400
+X-MC-Unique: Mp4kLehVNuOeLhY7P0bHpA-1
+X-Mimecast-MFC-AGG-ID: Mp4kLehVNuOeLhY7P0bHpA_1781194922
+Received: by mail-ua1-f70.google.com with SMTP id
+ a1e0cc1a2514c-963d7e5ac77so3487045241.2
+ for <qemu-devel@nongnu.org>; Thu, 11 Jun 2026 09:22:02 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=oss.qualcomm.com; s=google; t=1781194951; x=1781799751; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:from:to:cc:subject:date:message-id:reply-to;
- bh=M5qTzV+flpGhSX5RyOdBUPL1/rjE6dooWys3uXVSKeA=;
- b=jzephUHuIOGC1stgB1rNXFk41yWpB5d2b9jLeR82K4P9YznAujdi/e31HbGrmqAvBO
- xA0/8xko0zBNoTEIOILLubVt7yCz8Foi2d+50HQyc0kQT2/4p62JipCbJc7KUG7aAG/W
- ecGWDVmIRZTgn1H8QhQA2sr4Oc6CwnytiFp7wIQAJ8l7wEXBQWSqTBDomgd+YDEjuhY+
- yyAfF6A4AGprk61CyX54VxdoJUfKo4tn0cNDhM9xM/P6NwUlWWstX70+0x2fzp8zJsLf
- quFh73OmFk2G1LhZGkprYqu/3PS7dHM+SVFFXJRRwFQ7xczfRuvrwmq5+AFE0112ykfR
- cXFg==
+ d=redhat.com; s=google; t=1781194921; x=1781799721; darn=nongnu.org;
+ h=in-reply-to:content-transfer-encoding:content-disposition
+ :mime-version:references:message-id:subject:cc:to:from:date:from:to
+ :cc:subject:date:message-id:reply-to;
+ bh=ldkCrgwh3yGpQp8T55KrgPd/6vnsGDVpj7qCK6x+D0k=;
+ b=OPwpaRBuWEgKbt0RNP+/9z/IqKBaqJKZAiNEKE0mHdSkP52ZufwIVVUk9TVD2tW1dZ
+ qmO2B6+Ru+xyMSt6Y9pStxiYmvcbUSg1JA9IfF7dBaoKZlTj5cBKJAZtX2J/3OPJkcAw
+ 38NJeRCxE5Z6qc9jFT/51O2omFuJ6Bz8+nwVno4Ofzeo65vpdt4n4RJZBwabldORvzhy
+ 13k+pYCRW6xNNX3jY1DczMdAFsFXOiQDsUB3/SCW68gmYUk+BjLRRlH6Rx5zOWZ3HvhY
+ LJW1QHbTvdntEh3cr2PEliK9RZ8VrXim1dZczXPRhno9+kVAA32pxLJfc0qqu2L+gJqJ
+ PzOA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1781194951; x=1781799751;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=M5qTzV+flpGhSX5RyOdBUPL1/rjE6dooWys3uXVSKeA=;
- b=W4Wo9lNsS0YU6hS9h+lx/KjCDXvP9hLJ7kmoM7Y9sAslsDZ++ZStN+FDmSvEDtta6z
- fezWRNIFmxkAQ0P5p5Bq7SsVJ3bQv1ligHZ4UXUr4fnIprbCnRGn379N1QKX4lS7A6Zn
- s/KH4cNPKsQACmEQ4vVAO+ybk/XM7NCtcAcqY93d01dy4eXVC8DDLsMMhKnPfkKpwbt0
- oa6/N85ffn4QnapQnUIkZYcD6Yfl//KyspDoTVPJivUoXnsQkAvr3PK2qVqV2AnhPq9A
- fNHrtXBl46oWbqkLELDUjRLLl8WxyaXYJkGQxwinICbdT1ya5EwsTJfcwk25AnNSTkQ3
- 5V6w==
-X-Gm-Message-State: AOJu0Yx4Q9P7NDoDf4iegj8pDUxWDh3WCI2+Rpa4Byg/ERATXRASoCa3
- tHlST3T61DPrFckOanrzFAlLTDhCWy93sRlXf2FnjATJ+e3HRXR8R4eQ8VABOI0BofGJVmZRHqd
- PYGwMcbZEbGrPI02UGYn3hKnjZAlyKWBCBzlq0SoO40ebK+JjCKITzGmb9bYf8CHODA==
-X-Gm-Gg: Acq92OFJ4lVQN+VSRGo1IxCdtIiL1uBrTl3+ZezFmatgDHgjhrfiIub38mOqVs0oKP1
- dZvcM8AMX5gSpYLJs45YHkQmI0j0HnDZXdMXke1SFlPAaGyIIvcChLsb2io8XerFmBZZ979hC0h
- 6mdo8wtpNcz7WR1wP1ZNcyf/m7OfwlfcKpIw1N5Ej/ndx8J+h+v++KG4rqTTTpc3Zw1bPFtAKDp
- RITcERUZxkmNO/nQpVTbghbxXfPdzArTd/DDDw9s3nbkOv7r9a3sR5ReVPxY1k5FhLZC/akHArV
- J2s+eJz9TKpxIreV7ZzQrG3+jJ1onEOFqsqFYHCp8p4afJuJWBIU9en0Wo0iXOrhqPGp+7xjX0p
- yiQFhjS/6qFhJ6hQcXaaL1YGJjPExralOJa15VyP0ik+t5KXteBCx6kB71zE=
-X-Received: by 2002:a05:6214:20a5:b0:8cc:e6fe:c77 with SMTP id
- 6a1803df08f44-8d1d8246c61mr52256436d6.7.1781194951275; 
- Thu, 11 Jun 2026 09:22:31 -0700 (PDT)
-X-Received: by 2002:a05:6214:20a5:b0:8cc:e6fe:c77 with SMTP id
- 6a1803df08f44-8d1d8246c61mr52255656d6.7.1781194950649; 
- Thu, 11 Jun 2026 09:22:30 -0700 (PDT)
-Received: from QCOM-UWl2o8bcGT.qualcomm.com ([177.170.117.62])
- by smtp.gmail.com with ESMTPSA id
- 6a1803df08f44-8d1eadaea6asm21879526d6.40.2026.06.11.09.22.27
+ d=1e100.net; s=20251104; t=1781194921; x=1781799721;
+ h=in-reply-to:content-transfer-encoding:content-disposition
+ :mime-version:references:message-id:subject:cc:to:from:date:x-gm-gg
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=ldkCrgwh3yGpQp8T55KrgPd/6vnsGDVpj7qCK6x+D0k=;
+ b=NbkTyNOg7wSxdAjFQDrptm6mTvJFnmoKkwZ5emF4yUAJ/1t6DXREL8n0bWAA7+jzfR
+ kHukvZsoDy83p23Gp2L2w0zkkvPQadzFm0VslP7iuwNLYjtPtYSKla73iwlJznU1gOOM
+ 3MBnX4nETbsMyCm7vLyD6C1sZ0tgSkVIrqSfh4KWsDiDpfi1I4oBaMGqW2Y2zY4zyqe+
+ LJk6oRdsdg7ferJQb1FrUCKpMYuCU5XNg+GWZj/0tOkQOwlS8VovEwZtTf15vdApESc4
+ yJZRZsmzzg7gLY0HdM4vJ+nFKbYYalC4Yu33kaVI2QzP+zDUUdNodQq6HfhouMbUra16
+ fPGg==
+X-Forwarded-Encrypted: i=1;
+ AFNElJ8GP2ynCgd4MHC5uO/v2ZoJ+g9+6GJKJPEQlcx9NoKidIZ5dLUsd9Ezdc/6wXMoBw1U93QrPZBDFo3x@nongnu.org
+X-Gm-Message-State: AOJu0YyH4EdBURmjybMX97H/NTmc5gmoqn6JDEVIQUjzyoFAJzMOqkrQ
+ w0KgOJ1r8XfvXGbnhb+iH4SeLRXofaIMg+8BtzarGR7Nl8hNrkgh7jBaRIQXXA8MQ2rTnztSjac
+ YRTCX9QXj5RoSkmoPtz2GxY9mPtLVkmKnX3iDd69QAL5PJJ+NOU3siaMv
+X-Gm-Gg: Acq92OFnJ1DxeHiol/SG5+WSWliQcQDl+cgpBwNt5x/Nw1QlLLYr9CvhSo12v/Rkhrc
+ JyYhNYVJEjj14zpipmwsRZoDXdbU9GHu1ITKJVx22cN4Yjq71pkMJvJCD5LyscCDEaNpecDvYxw
+ R3fzc+Jcz7u82U/DO/Fbvr/2EGh0DM4VSCppOyL9zve07PXOiXt3oeT+ceyFIB6OxOwUf8vFBFr
+ h0P2ZfjErFw7w4UEO0ruQbaWh9Ic7LtWi21Huy7EX1lfZjYjf5GsI7nfIYd7qdcj6BJ6yuFDZJf
+ I0T589Lo6GtZM4WVsH8589yn3TNLacdYoQ4TJFqApvQZfx/mXAXkLgiDFu7GOXYftccUclIwTbi
+ tGWUlc6AHpNCcepU=
+X-Received: by 2002:a05:6102:4bc5:b0:631:af51:7d8e with SMTP id
+ ada2fe7eead31-71d5b83eaa9mr2004922137.17.1781194921500; 
+ Thu, 11 Jun 2026 09:22:01 -0700 (PDT)
+X-Received: by 2002:a05:6102:4bc5:b0:631:af51:7d8e with SMTP id
+ ada2fe7eead31-71d5b83eaa9mr2004813137.17.1781194920599; 
+ Thu, 11 Jun 2026 09:22:00 -0700 (PDT)
+Received: from x1.local ([142.189.10.167]) by smtp.gmail.com with ESMTPSA id
+ 6a1803df08f44-8d1e7bc2707sm21911176d6.8.2026.06.11.09.21.59
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 11 Jun 2026 09:22:30 -0700 (PDT)
-From: Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>
-To: qemu-devel@nongnu.org
-Cc: qemu-riscv@nongnu.org, alistair.francis@wdc.com, liwei1518@gmail.com,
- zhiwei_liu@linux.alibaba.com, chao.liu.zevorn@gmail.com,
- Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>
-Subject: [PATCH 0/2] target/riscv/cpu.c: satp-mode=bare changes
-Date: Thu, 11 Jun 2026 13:22:21 -0300
-Message-ID: <20260611162223.2361941-1-daniel.barboza@oss.qualcomm.com>
-X-Mailer: git-send-email 2.43.0
+ Thu, 11 Jun 2026 09:21:59 -0700 (PDT)
+Date: Thu, 11 Jun 2026 12:21:58 -0400
+From: Peter Xu <peterx@redhat.com>
+To: Stefan Hajnoczi <stefanha@gmail.com>
+Cc: infra.ai.cloud@bitdeer.com, qemu-devel@nongnu.org,
+ Hyman Huang <yong.huang@bitdeer.com>, Fabiano Rosas <farosas@suse.de>,
+ Paolo Bonzini <pbonzini@redhat.com>
+Subject: Re: [PULL 0/1] dirtylimit improvement
+Message-ID: <airgpjWeo4bHHve-@x1.local>
+References: <cover.1781095539.git.yong.huang@bitdeer.com>
+ <CAJSP0QU_tx+ygBJZG-vWdTK0ec+NVtiSaVnt-6FMdV1nsw9tpQ@mail.gmail.com>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNjExMDE2NCBTYWx0ZWRfX7goCMq/jGMNT
- 2xbTNcm59yfVIWnAcYyclXaQ6lPkMZ/f4lQ3kcit5/JYCV0ScVMe2H5Og5ZjBFW96ZHklf7+r+K
- 4FdNVvcUUynjLrFPVr6Q5LnVPwM/rTpmr4UMkaMoX9/jEtBIvRKSLQfdeSBCwEXLaGPS85t53CL
- mXGKCB6nTbp9MOgWvWMm/otpSTCaY1qHdObE5E+rh7OJcyFphgU03ipNi7RXxyhQWKRDzO85ULO
- DNb46UDIcQB/fsQkBfX3hKEiwBDbx+O0v3HjSWNTtXZPTR/VfniftRt0+Z9yTkM9PXF0XyMtO0t
- B48kzQMtXbcrqzwO0VZ5dDR6NSOwO2kSjVFjMTMGQBuT89AOmn9/MQPYNIFe1lJZ0awzPwXevpY
- MSELCRhVLa+J8SRY8exOPQq+LEMm+s3FhvfnctaIJTIMYoWDkzn9fFrGex7218PFEhUkHKQODnY
- M0i7debMeBozNuMarlg==
-X-Proofpoint-ORIG-GUID: -3jtIkMQj2MvWhTwIln7mOdmeu-F8kkZ
-X-Proofpoint-Spam-Info: AW1haW4tMjYwNjExMDE2NCBTYWx0ZWRfX8KeJCr/rSuZf
- dpGTXCSMVizxKGtyBoLcjvyqiu4dCEOjim9EmPfv5u4lsZwAjyPa3F0xZqNE/C2dKVNcL5VyrAy
- q/UpSGFuL0QoYILZZbRJvD1pi3vC74E=
-X-Authority-Analysis: v=2.4 cv=e6g2j6p/ c=1 sm=1 tr=0 ts=6a2ae0c7 cx=c_pps
- a=oc9J++0uMp73DTRD5QyR2A==:117 a=gdiugJE53z4H+vvYeRBHqw==:17
- a=FelO9ux0wxsA:10 a=s4-Qcg_JpJYA:10 a=VkNPw1HP01LnGYTKEx00:22
- a=u7WPNUs3qKkmUXheDGA7:22 a=gowsoOTTUOVcmtlkKump:22 a=BzRXYrBwBYCcU0ehAu8A:9
- a=iYH6xdkBrDN1Jqds4HTS:22
-X-Proofpoint-GUID: -3jtIkMQj2MvWhTwIln7mOdmeu-F8kkZ
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.125,FMLib:17.12.100.49
- definitions=2026-06-11_03,2026-06-11_01,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- spamscore=0 suspectscore=0 bulkscore=0 priorityscore=1501 lowpriorityscore=0
- phishscore=0 clxscore=1015 impostorscore=0 adultscore=0 malwarescore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2606040000 definitions=main-2606110164
-Received-SPF: pass client-ip=205.220.180.131;
- envelope-from=daniel.barboza@oss.qualcomm.com; helo=mx0b-0031df01.pphosted.com
-X-Spam_score_int: -27
-X-Spam_score: -2.8
+In-Reply-To: <CAJSP0QU_tx+ygBJZG-vWdTK0ec+NVtiSaVnt-6FMdV1nsw9tpQ@mail.gmail.com>
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=peterx@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -24
+X-Spam_score: -2.5
 X-Spam_bar: --
-X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.445,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -145,21 +121,83 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Greetings,
+On Thu, Jun 11, 2026 at 11:18:53AM -0400, Stefan Hajnoczi wrote:
+> On Wed, Jun 10, 2026 at 9:15 PM <infra.ai.cloud@bitdeer.com> wrote:
+> >
+> > From: Hyman Huang <yong.huang@bitdeer.com>
+> 
+> Hi Hyman Huang,
+> Is this pull request intended for qemu.git/master?
+> 
+> I did not see any previous pull requests from you in QEMU's git log.
+> It looks like your previous dirtylimit work went through the migration
+> tree. Do you intend to start sending pull requests now and are the
+> migration maintainers aware?
 
-Here are two mostly trivial patches related to satp-mode=bare support.
+We're not..
 
-Patches based on alistair/riscv-to-apply.next.
+Since dirtylimit is almost only used with migration, Hyman, do you want us
+to keep sending pulls for you?  I think it's better we're copied on all
+these changes at the very minimum.
 
+The other thing about the pull I want to say is, that patch changed most on
+KVM not dirtylimit: v2 sent on June 4th and planned to be merged today
+without maintainer's ACK (in this case Paolo, I added into the loop), I
+think that's a bit too rush.  Shall we still at least give Paolo some time
+in case he wants to say something?
 
-Daniel Henrique Barboza (2):
-  target/riscv/cpu.c: add 'svbare' satp-mode
-  target/riscv/cpu.c: do not default to svbare for bare CPUs
+Paolo might be busy and may respond slow, normally what I do is keep
+pinging if the patch is important; if not, I leave a patch there until it
+becomes more important..  I suggest we do the same for this patch rather
+than merging it without Paolo even noticing.
 
- target/riscv/cpu.c | 25 +++++--------------------
- 1 file changed, 5 insertions(+), 20 deletions(-)
+Logically the bare minimum is that patch gets an A-b from Paolo to merge
+it.
+
+Thanks,
+
+> 
+> Please follow the pull request process and sign your pull request with
+> your GPG key:
+> https://www.qemu.org/docs/master/devel/submitting-a-pull-request.html
+> 
+> Thanks,
+> Stefan
+> 
+> >
+> > The following changes since commit de5d8bfd6105d3dd3ae668df9762df244a6d1506:
+> >
+> >   Merge tag 'pull-loongarch-20260609' of https://github.com/gaosong715/qemu into staging (2026-06-09 14:00:28 -0400)
+> >
+> > are available in the Git repository at:
+> >
+> >   https://github.com/newfriday/qemu.git tags/dirtylimit-dirtyrate-pull-request-20260611
+> >
+> > for you to fetch changes up to 3b224b1c7df1ddefd6bca34f201264d72846c397:
+> >
+> >   accel/kvm: event-driven wakeup for dirty ring reaper thread (2026-06-11 08:22:50 +0800)
+> >
+> > ----------------------------------------------------------------
+> > dirtylimit: refactor dirty ring reaper thread with event-driven wakeup
+> >
+> > ----------------------------------------------------------------
+> > Bin Guo (1):
+> >       accel/kvm: event-driven wakeup for dirty ring reaper thread
+> >
+> >  accel/kvm/kvm-all.c      | 42 ++++++++++++++++++++++++++++++++++------
+> >  accel/stubs/kvm-stub.c   |  4 ++++
+> >  include/system/kvm.h     |  7 +++++++
+> >  include/system/kvm_int.h |  3 +++
+> >  system/dirtylimit.c      |  2 ++
+> >  5 files changed, 52 insertions(+), 6 deletions(-)
+> >
+> > --
+> > 2.43.0
+> >
+> >
+> 
 
 -- 
-2.43.0
+Peter Xu
 
 
