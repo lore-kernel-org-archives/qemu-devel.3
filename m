@@ -4,144 +4,112 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D820ECD98D2
-	for <qemu-devel@archiver.kernel.org>; Thu, 11 Jun 2026 10:07:33 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id CEDE4CD98D2
+	for <qemu-devel@archiver.kernel.org>; Thu, 11 Jun 2026 10:07:36 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wXcJ5-0001We-3H; Thu, 11 Jun 2026 06:06:39 -0400
+	id 1wXcJc-0001go-3U; Thu, 11 Jun 2026 06:07:12 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <nutty.liu@hotmail.com>)
- id 1wXcJ4-0001WS-Ap; Thu, 11 Jun 2026 06:06:38 -0400
-Received: from mail-japaneastazolkn190120002.outbound.protection.outlook.com
- ([2a01:111:f403:d405::2] helo=TYPPR03CU001.outbound.protection.outlook.com)
+ (Exim 4.90_1) (envelope-from <FangSheng.Huang@amd.com>)
+ id 1wXcJa-0001gW-45
+ for qemu-devel@nongnu.org; Thu, 11 Jun 2026 06:07:10 -0400
+Received: from mail-eastusazlp170120007.outbound.protection.outlook.com
+ ([2a01:111:f403:c101::7] helo=BL0PR03CU003.outbound.protection.outlook.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <nutty.liu@hotmail.com>)
- id 1wXcJ2-0006vQ-NH; Thu, 11 Jun 2026 06:06:38 -0400
+ (Exim 4.90_1) (envelope-from <FangSheng.Huang@amd.com>)
+ id 1wXcJX-0006yU-5a
+ for qemu-devel@nongnu.org; Thu, 11 Jun 2026 06:07:09 -0400
 ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=GTDW/Z541pDAYuUXaNOuvr0APWW0kzV5rXKuEMYhHCeJWlsXwW4j94kqqLcsxIeKmkMIThA0gGGaaubXbclhjRmerpPYkCrmkOEu5uiPs0SrrYmvZPLIBsww14ObqifePDsPQ8Qvyyvn1ip8I13VcOFFEKDY/HjrBhd/7EcYF3b2rvLxsh9ytF0POywW1yldTcRsKV94c0rwJdEdwIOqD4e8yrfKVR0b4Tks4/GY1hmLRoDR8bY9DhudBx0uK1+MExLFMoh20umbzignlXVLdW3ebCe1vjA9hGrn5Tw2AXZUqbSQIeqn/T383Tjq6wbaUg0L0pedhbNwgLx/Jeiuaw==
+ b=thN14xZRZ0mkaXbbyPIej2xcyUQ4FpmocBYLKG6AV1vfPImjurFeKJFnjSrof8ktPRcUanU7jJn9dMb+8a1edkhWNTj8HJ37COkVx9HhSXhABA+o1B/uKS6yIVVXw8dEnOcnLb9koWT2eqEzZfKa4Bij/QT/cXukuKuCt0uMQm+CiNYbj82j0JxUeIzf+ROroLd1FMHqWnyyTyW8t26u7s2C6s7RyN1suRFnh80y63vKY62CWkR7XTFlNt9JnInKQKzWzunaePHJjxaT3VLSJBbpYzzkbNIc/AXCiC2vuq5fu7YUnzIojkRRBY4Bu9IeXlJUtbx4j7kMwgl43hMvGw==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
  s=arcselector10001;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=6229FYuDhqLQc/dMps29OthbEvyBcxohdqbTftR/MdI=;
- b=YI6a61YTGCtZygc14H92Ay/vlQO4mV7MnCuTpXiJQCmAKa1dzv26oY/wUDT/BMzINXMTGCS01WbfDxLl3/cVQQmyzD6IMqvpbV4ARivIsA9VcLZApQs1Os1HPS2UWJT0r8bSNZLSC2XjDpHksNNp7INyhneIM8r294DP4j4Na5CPDiUELMAxYHuy+kmQVBpejbfBqkr4anMf0fSEam9vCqfChFAxIiRKok2t6RyKWhdaHQt3mHMh43CP0JCUIJsFwFMWMdYVNa6BNUFQS/eqAZwf+anPc5k7KaDhTh5wM9cXqm3dpVmxmtNmiNmOr3GU1I6aHmJQwuq6ecCtGhbCvw==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=none; dmarc=none;
- dkim=none; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=hotmail.com;
- s=selector1;
+ bh=pDNthiw5trlRIdvRYQrwU5v90i61Tr7CJBijqEbXibQ=;
+ b=FoRmlY2hq7xxO3Ngbk/HB3Y61sVk6frU8ou5IqB8nadDCykbG0CNvEjDfx2aQ4ZYvH159QRBn/zwjLXa2/8V4XRqS4rzBXNWw2Z49dxWYcQMw58GGqsHuL8QXEgsjC0JcUhnb5RXJeTCvodkgIDZS57hfUnugMDsHGIjApoGbL6zP79Y8dxc6uNJBD4X7W5ZVu6uolIhEjX+3f2kl1I4sMnflIHt30hzw6jBdgTQBuj1M4cPPFUXmbA6fVRLvTxy+e8kPLdqs9ltXdszPK8oXtBIeqfjwfE5gkCG99GRbBeb0bPqfhHgFCHQMyErabdmpKTtyr73Os2JB6v0CSGjtg==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass (sender ip is
+ 165.204.84.17) smtp.rcpttodomain=nongnu.org smtp.mailfrom=amd.com; dmarc=pass
+ (p=quarantine sp=quarantine pct=100) action=none header.from=amd.com;
+ dkim=none (message not signed); arc=none (0)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=amd.com; s=selector1; 
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=6229FYuDhqLQc/dMps29OthbEvyBcxohdqbTftR/MdI=;
- b=mtKjTLz7hxlie9TU29itIehjKfSWEiRUDrBfuyge271nLeuWI7raBjFg1TQDD1wol2CrhnurtAUvGMmg9DNujyt6ygLP895mWQ6/QN2sb8LfgHsKmiCl9lGxKRSLlzvT+HNbFNG1yE5usZqAYtoLG8e0LvajvmDzHdCbYUQkqwN+6AJCGcVFacUdc/A5Hqdg4j4kR6hvMmqNuBnis9dhZw5xLBy1bX91wl1JNUHRx4ApqlFUJoKvcjlLNlbhArvsOZ7iA2YjYvtfwAGolLaq1Z1m1J77ql0gDspNo7FMiVQ73OcR7ZUc0ethm/ovKQooiiuTbQyiTDsnyDsEnLjZKA==
-Received: from SE3PR04MB8922.apcprd04.prod.outlook.com (2603:1096:101:2e9::7)
- by KL1PR04MB6980.apcprd04.prod.outlook.com (2603:1096:820:d6::16)
+ bh=pDNthiw5trlRIdvRYQrwU5v90i61Tr7CJBijqEbXibQ=;
+ b=WE1bJADJ2caNjoeXItpdOzXpAFCl6+QvaelSB1CjEOMMpW8yF1BYBS1U59MvRIuhvxqudSIotZMwLTL2VIawsKk5tHiTCUVU9hfG9xRFZYihd2kfW5+dzfcrLjDraOhrdEUHdhgHZGjuRW0mRTC6NivbnXYpOczHd9jomPeV0X8=
+Received: from BN9PR03CA0697.namprd03.prod.outlook.com (2603:10b6:408:ef::12)
+ by MW4PR12MB5665.namprd12.prod.outlook.com (2603:10b6:303:187::17)
  with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.113.13; Thu, 11 Jun
- 2026 10:06:27 +0000
-Received: from SE3PR04MB8922.apcprd04.prod.outlook.com
- ([fe80::3450:f139:5238:8f58]) by SE3PR04MB8922.apcprd04.prod.outlook.com
- ([fe80::3450:f139:5238:8f58%6]) with mapi id 15.21.0113.013; Thu, 11 Jun 2026
- 10:06:27 +0000
-Message-ID: <SE3PR04MB89223BFA19CAED63F7C799EFF31B2@SE3PR04MB8922.apcprd04.prod.outlook.com>
-Date: Thu, 11 Jun 2026 18:06:21 +0800
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] hw/intc: riscv_aia: Skip reset for KVM irqchip
-To: Qingwei Hu <qingwei.hu@bytedance.com>, qemu-devel@nongnu.org
-Cc: qemu-riscv@nongnu.org, palmer@dabbelt.com, alistair.francis@wdc.com,
- liwei1518@gmail.com, daniel.barboza@oss.qualcomm.com,
- zhiwei_liu@linux.alibaba.com, chao.liu.zevorn@gmail.com, jim.shu@sifive.com
-References: <20260605110621.644997-1-qingwei.hu@bytedance.com>
-Content-Language: en-US
-From: "Nutty.Liu" <nutty.liu@hotmail.com>
-In-Reply-To: <20260605110621.644997-1-qingwei.hu@bytedance.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-ClientProxiedBy: TP0P295CA0036.TWNP295.PROD.OUTLOOK.COM
- (2603:1096:910:4::15) To SE3PR04MB8922.apcprd04.prod.outlook.com
- (2603:1096:101:2e9::7)
-X-Microsoft-Original-Message-ID: <585f629d-2873-48fd-b44a-52fcf643deb8@hotmail.com>
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.92.9; Thu, 11 Jun 2026
+ 10:06:58 +0000
+Received: from BN1PEPF00004684.namprd03.prod.outlook.com
+ (2603:10b6:408:ef:cafe::10) by BN9PR03CA0697.outlook.office365.com
+ (2603:10b6:408:ef::12) with Microsoft SMTP Server (version=TLS1_3,
+ cipher=TLS_AES_256_GCM_SHA384) id 15.21.113.11 via Frontend Transport; Thu,
+ 11 Jun 2026 10:06:58 +0000
+X-MS-Exchange-Authentication-Results: spf=pass (sender IP is 165.204.84.17)
+ smtp.mailfrom=amd.com; dkim=none (message not signed)
+ header.d=none;dmarc=pass action=none header.from=amd.com;
+Received-SPF: Pass (protection.outlook.com: domain of amd.com designates
+ 165.204.84.17 as permitted sender) receiver=protection.outlook.com;
+ client-ip=165.204.84.17; helo=satlexmb07.amd.com; pr=C
+Received: from satlexmb07.amd.com (165.204.84.17) by
+ BN1PEPF00004684.mail.protection.outlook.com (10.167.243.90) with Microsoft
+ SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.21.113.7 via Frontend Transport; Thu, 11 Jun 2026 10:06:57 +0000
+Received: from k-Super-Server.amd.com (10.180.168.240) by satlexmb07.amd.com
+ (10.181.42.216) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.2562.41; Thu, 11 Jun
+ 2026 05:06:55 -0500
+From: fanhuang <FangSheng.Huang@amd.com>
+To: <qemu-devel@nongnu.org>, <david@kernel.org>, <imammedo@redhat.com>,
+ <gourry@gourry.net>, <philmd@mailo.com>
+CC: <Zhigang.Luo@amd.com>, <Lianjie.Shi@amd.com>, fanhuang
+ <FangSheng.Huang@amd.com>
+Subject: [PATCH v11 0/4] hw/mem: add sp-mem device for Specific Purpose Memory
+Date: Thu, 11 Jun 2026 18:06:33 +0800
+Message-ID: <20260611100637.2460507-1-FangSheng.Huang@amd.com>
+X-Mailer: git-send-email 2.34.1
 MIME-Version: 1.0
-X-MS-Exchange-MessageSentRepresentingType: 1
+Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
+X-Originating-IP: [10.180.168.240]
+X-ClientProxiedBy: satlexmb08.amd.com (10.181.42.217) To satlexmb07.amd.com
+ (10.181.42.216)
+X-EOPAttributedMessage: 0
 X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: SE3PR04MB8922:EE_|KL1PR04MB6980:EE_
-X-MS-Office365-Filtering-Correlation-Id: 27c7a4c2-42d4-43f6-9cdc-08dec7a11906
+X-MS-TrafficTypeDiagnostic: BN1PEPF00004684:EE_|MW4PR12MB5665:EE_
+X-MS-Office365-Filtering-Correlation-Id: 3fb0c338-0f55-4d7a-d984-08dec7a12c2c
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
 X-Microsoft-Antispam: BCL:0;
- ARA:14566002|41001999006|51005399006|21061999006|6090799003|23021999003|19110799012|15080799012|5072599009|8060799015|19101099003|440099028|3412199025|40105399003;
-X-Microsoft-Antispam-Message-Info: =?utf-8?B?VmZzVERtMm1xdVVDTUlXaWFTT295Zlo4Mm84OU4yb3BkY1VLRVZveXducnlZ?=
- =?utf-8?B?RmFTWGVBNTRGcEhVSUJwZ2dQek9nNk9Ta1BnNnlMczNOVWE1M1VxQjEyUjBo?=
- =?utf-8?B?RUU0TGNiMGNqZkVybDdjMCtHcE1mYklTd05jcTUvMWg5VnArUjlvRlFXT3RZ?=
- =?utf-8?B?RER0UEYwVm0yVjJOL05FV0VPR2xpTkxEc0pQeUV2SFhBL2xnZzk3bGU2Ykl5?=
- =?utf-8?B?azdvOGJTRjFBd0JPbDhzeWZTQjJ0MnFxS3dCMlVjRWlzOU82eXZQTFlzNnJa?=
- =?utf-8?B?Q3JXQ24raXNFNkJrR0E3ZmlFdGduSWE3NS9HZmgyQUNjR3NMSzI2NUQyMzVT?=
- =?utf-8?B?cUthRUoxT29sUENWQUNSek5qWm9uUkZyaWRiQXBtZWp0TnpTNlNVRFpEMmFn?=
- =?utf-8?B?UFNOaTVkeG9WSnlwSC9tbGtkd2R0NEVDR3BJdXVNTHJFdnRkVjlYMUZxVmtp?=
- =?utf-8?B?QXdneGZVQUVaQXoweXV6UW5keUFkcmR2d0NkNUhMcWN5N1NLNWRZRE5uV0FE?=
- =?utf-8?B?dFByVThjOWVkUm5PV244YWFlSFJQeDRrdjVnYUtjamYxTUVxaHlDYTdQM080?=
- =?utf-8?B?MzJDVFVvdXZraGFtTE42elViTFVUL0JReFFTdFQ1VjJpcUQ4Ri9nWDIyNmJj?=
- =?utf-8?B?dXJwcUNKbURkN2xrQk5GM21zZGozU2RPNDZuVzA3L0Y2TmpibWR6dFpQdkh1?=
- =?utf-8?B?bDZldFU1eGNKUWZsOElVT1FrRWxiTXdyeTh4VUxiRjYzZFg1NDQ1MjRHSmhN?=
- =?utf-8?B?UG9VeW5wTGNwZFlZTDA5cEhDZUpBRkY1TDVKQ2lZVlhXeks3VVZVNmJJYXgy?=
- =?utf-8?B?ek0yNGVMOWxXaGZzYzJUSmY1cXo3cXZlN0owVzQ2akY3ZTkyenlqL2lhSHY1?=
- =?utf-8?B?UmJXVVJWSm5CQzNieEcvMEdIYkxXdlJ5VFU4REhSLy9JU1YrbzZlMHlvL1pS?=
- =?utf-8?B?TTUxQjZhUGQzVkhkTno1ZUtrMlJyMHhUVzAyK1VUNDZkT2d0UGVkNWc5YzZP?=
- =?utf-8?B?cC82SDhVUDk4Nnk3YkRQUEtDUTlpVzNuNWRDWDVUUlpiMWpRMm5rSmN1bGF3?=
- =?utf-8?B?cDhKakFoclhSVlNGa2Y2MHVhQjd2MFpZZFdwazVHWHdDUldabWY5WHRaa2xD?=
- =?utf-8?B?N2wwWXpHZTR0OUNKRCtqeU1ubWJId21NQ2cyMjFHZHZrbUUrN0J2WVc2dDZI?=
- =?utf-8?B?M0E3T0V3bi9yQXp5aFJPMDJoWGp1ZmwxbEhEeU1uYTVRelpkY25Ub0JHK0Zi?=
- =?utf-8?B?cnN5Y0pkMnV4ZzljUEhxVVlBMXNkZXEzdzNEdXNjdUpWNzB0bTJjTmZoRk81?=
- =?utf-8?B?Rzk0bS8xK1dWMjArMnhROXY0cFpmTEJOZ1pwdWkvci9HVitNT1M3ZnpoNitk?=
- =?utf-8?Q?DSo7H2VkyetDUvJQR9jqSnHCqLjVU9Ws=3D?=
+ ARA:13230040|376014|23010399003|1800799024|82310400026|36860700016|11063799006|18002099003|56012099006|13003099007|43062017;
+X-Microsoft-Antispam-Message-Info: pWPaQW82Rbj1yPqwIzqt/e5uzlilVbDyejAMmIV6V1CtoZ8c71rDrzW+om1aFV8CDjEmHMlomJz8c4lhKHmYWlc7i1ERaCGydfUZIc0s3PBEDJGVCWsPRg2VoTFLaPmJjvr3FHrezaqhipJYbjLBec2LSb6rPpDVPFVc5Fpr6KdQp/+cm//iuycDVAC40qGink6iivbO2wLIWXRjXuqf4dwS03eFy9ULPkerdR8Vrh8OUBFE+nIdt8SYQS301cXDtlUft14Zsj1V3xGx67atzcW9a4Y9tV7vl04jH08Ca/l8SJrmjlFo0L3FpUzSuot30IqKRsy2VpdE/l2C0Co1YUXiomL+r9dhbRy7Ov+meGFl/xJl3ngT67YHWpS5AdHP7cCiV42Yq5aLV/qmXpBU942k6S/E8XpqzBUDS8Q+TWUFgGw0Wxl+gwPFt/bfUF6aHIjJ2Irqmqm6soZpt6t2PEqShKNDsMxHyzbTCbk0qMn9EgM3L649I8gwx3Db4kMj+WUQMzTw4nujX5iDdVFYt3w3PwwVyysh8d7akivdAZIXh7hC83ZGpXGAbSfRtXS+Rde7Kb5ZVM09hFRmFIn0BKYSRifN/jRj+ELlTDhcQJpVznHztK4GJxhTvL5KJHvFV3v2+e3o1nDsdDuLsj2K2Y0JU03aF2YTHxLCHMzkJnaPgXoCvm8t62gXkcsTCVp1be34gQDV4vMuJNB4ScpIoqdgCmK5r7JmhPs7sZDUC4JkZdLZ7RAO2JCDTZDI5uj3hQaJwCQebVejc4WyRS1In9k2dVQKVnDwtPjmlTzmTow=
+X-Forefront-Antispam-Report: CIP:165.204.84.17; CTRY:US; LANG:en; SCL:1; SRV:;
+ IPV:NLI; SFV:NSPM; H:satlexmb07.amd.com; PTR:InfoDomainNonexistent; CAT:NONE;
+ SFS:(13230040)(376014)(23010399003)(1800799024)(82310400026)(36860700016)(11063799006)(18002099003)(56012099006)(13003099007)(43062017);
+ DIR:OUT; SFP:1101; 
 X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0: =?utf-8?B?MzAzTEo2SWlYOHBMVFJBTkhwUjhVVkZZa0dkSEFOdS9LMkt6M2RPUE5RaVRB?=
- =?utf-8?B?akhJWDFzOXhIelZXa3h2ZERYMGExRkUrVnF3bzZGc3E3V1lsYk45cUhlblNV?=
- =?utf-8?B?cE1sekJkN2R1K05PaVlmZU1kL2twYTdUODY0b0JaTGgxU09RdDhsNVFzUll6?=
- =?utf-8?B?NGJvTUFpcDZzbUlEUE50ZW9VaUpUNTJCcS93UnBuS2hxNHh5cXJtZWNLUzZx?=
- =?utf-8?B?NjVFU1FFMk1GZEFPdU9yS1pONHlYa1VZVXUvYjNiOHJQTjFuMnZSaVRvSnF0?=
- =?utf-8?B?L3FTNkJ4ejBvemRJc2psOHJTTTZ3OWlDbWkrc05xZzBHVW9FVy9nbDJRM3V1?=
- =?utf-8?B?L0R2UVU5UzNRNEhKRnJrTzM3L3EvVWJ6cCsveHBNbjVCZUVOajFpVG8xYWhC?=
- =?utf-8?B?TVplbHIvMlpCVjdHclVEZEM4OEU2aHprUE5wSGlyV0RyeW80WGFlaTFHWk56?=
- =?utf-8?B?eGQrNmoyN1BpV0M2a0hMWXNsMDlvQmRHNkErVS83UFEyTllseEtDNDlYRXZl?=
- =?utf-8?B?WGgyeklKT3VlTE1UUTZqT2J0ZDZwbWdTL2RkT1JTcnBYUlJva3RjTHBMMGtq?=
- =?utf-8?B?d2JodjhNTU0xZUttdDNhZXBSNXBpQ1g4c0p2dFEvUmZLZFdQYzR5bGRRQkN5?=
- =?utf-8?B?L1UrRzB6SXZScVBWRVFveTgxeTBacUdaN0Fjd3VNQVRDNW1Pdmh3c3RJb0ho?=
- =?utf-8?B?NUFEbXhQajhHWTJTZG1US05ocG52VmlhQ1QwdXZEUjFJSmJaZVFXVFZ1cFJ0?=
- =?utf-8?B?VFhwUUIwalhsREVvZDJsK2VJemxLS1FneDVYeVg0cytsN3hLaTRPYVFCRWNr?=
- =?utf-8?B?VktxTVZaRTFXcTVGempDc1JEeWM4K1RFSHpvaHhzSC82cEtnaG9rK2cxcWty?=
- =?utf-8?B?bFhTWDBad3N0Ry9jRXZZN2xyOEw3MjhNUk0rencwWDBUbnFXWGhVTnhDTGtY?=
- =?utf-8?B?VmlHdmFMN241R1RpTk9lbndkVStwZERvZnBOeGhQUjcrWTNabExqUm43dWxs?=
- =?utf-8?B?YUxoVWttRVB5MGw3WVN3MSszaVhtWmZ3WGhsYjRlTWNvQmJhSGdqQy9qRWJC?=
- =?utf-8?B?Q1JHSXliNFZ2VnJPTitBL3liRGlKL1JKLzdlWW0zV3ArL0tzUmYxMFduZlV2?=
- =?utf-8?B?QTF4NGQ2VGRkZ2plVHhaMHZkZW5GRDlYVUdjMEJxRTRqbzI2Wm9JY01HY1hS?=
- =?utf-8?B?YmVPaFd6L0JnRkl2ZVA4MTV1Ym15eXA5a3NwazZLdVlSREVLK3FJMVRDUllm?=
- =?utf-8?B?aUphbW1CSGxiV1dwNU1aQ25HRzF2OGxMdHdMNjBQM002LzhRZHB5TTBXRDJj?=
- =?utf-8?B?S3Y1ZUlkWFBNTVpockJXNXhrdmtIMnI3bkZoTGpuZWs4U0phdmxmV2UyR2xy?=
- =?utf-8?B?eXovRzJKWDl0WnY3L0ZVdlkvQ3V4NTdwVXdUa3VLMm1ETDQva0JFaWtUOW16?=
- =?utf-8?B?Z3FLNWN1YXhEU2l4d0tLYjl1c2ZYL0F3RGo3cDRhbDNSZHpMcGNXY1dTVi9V?=
- =?utf-8?B?VHFWN1krdFdNNXZ4WVVBY0JCVUE4Y0JGbmgvMTg3dFlyd2w3dU14dnpzRVEy?=
- =?utf-8?B?RXNGcGFPQUJRbStXVjZ5dFdpMmtrV2lGYmlURW5qT1A1NUYwamlmRVhBTWlT?=
- =?utf-8?B?dHkwcTdtY3ZtTG5ETnpnMEIzNnFVS0ZRY3Ywd1VLaGRkdTBteStHcmlsSG9o?=
- =?utf-8?B?KzhINThVenUwUm1ERFp1VzBWNDBZbWFUdHBCTXA1VDROZktlZUFrWUxkM3Rk?=
- =?utf-8?B?OVlzWkhERFI5TlRYZ3llR0lSZkhVaUdUY3NTZHhWZ1B6WDg0aEM2a05VZC84?=
- =?utf-8?B?OU1VaWl5NXJRTVFURmFNL0JOVWdxZFRtVXNaVTEzaWpjSTJGOVZrYlg1VjZX?=
- =?utf-8?Q?PcFpBFxPdtnnp?=
-X-OriginatorOrg: sct-15-20-9412-4-msonline-outlook-c3e7a.templateTenant
-X-MS-Exchange-CrossTenant-Network-Message-Id: 27c7a4c2-42d4-43f6-9cdc-08dec7a11906
-X-MS-Exchange-CrossTenant-AuthSource: SE3PR04MB8922.apcprd04.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 11 Jun 2026 10:06:26.7679 (UTC)
-X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
-X-MS-Exchange-CrossTenant-Id: 84df9e7f-e9f6-40af-b435-aaaaaaaaaaaa
-X-MS-Exchange-CrossTenant-RMS-PersistedConsumerOrg: 00000000-0000-0000-0000-000000000000
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: KL1PR04MB6980
-Received-SPF: pass client-ip=2a01:111:f403:d405::2;
- envelope-from=nutty.liu@hotmail.com;
- helo=TYPPR03CU001.outbound.protection.outlook.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+X-MS-Exchange-AntiSpam-MessageData-0: dXNOb8WinIeGlFbsDt0kLBAMQ6MW0GpYHSNNP7LQOuWPlLvJcTGbvqtUjuuF3VMTp9nkqjDiE9qTfzCkxEvH0mkaVa1wGYYcAwna0u97Yb1bPAgAdXTxiaPz4+HtOtvRMjNWbCuYJvrzOkzVfqlq7eHrNxf5VTy/DjgTp6xmCPpTSuhhZ+g3P+ToOVJ/eUwUswc0FddBXgIEd3EqJ1UInJRx72e4NrFdVJ9FNYuC6mQfxQWxsXqFdCWaBI27Zr5FdgEEt4QOzKieTWCIVTTBK2CHPCdywTRbJtC+9yV30D4evgCWy0Tk0ywAfPkx6q4DFRvH+rIGfHduxtE0ZruECf3/QZqt9dBGVSUF2BF9UOXTKwRqcR5+j1rl+Tl5IxFR/xLdjqa3XXX2uZAyccJSe324McLl9ZVzbcB2armXja4+/RwAWvsGKhPI65s/Fy3G
+X-OriginatorOrg: amd.com
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 11 Jun 2026 10:06:57.7564 (UTC)
+X-MS-Exchange-CrossTenant-Network-Message-Id: 3fb0c338-0f55-4d7a-d984-08dec7a12c2c
+X-MS-Exchange-CrossTenant-Id: 3dd8961f-e488-4e60-8e11-a82d994e183d
+X-MS-Exchange-CrossTenant-OriginalAttributedTenantConnectingIp: TenantId=3dd8961f-e488-4e60-8e11-a82d994e183d; Ip=[165.204.84.17];
+ Helo=[satlexmb07.amd.com]
+X-MS-Exchange-CrossTenant-AuthSource: BN1PEPF00004684.namprd03.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Anonymous
+X-MS-Exchange-CrossTenant-FromEntityHeader: HybridOnPrem
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: MW4PR12MB5665
+Received-SPF: permerror client-ip=2a01:111:f403:c101::7;
+ envelope-from=FangSheng.Huang@amd.com;
+ helo=BL0PR03CU003.outbound.protection.outlook.com
+X-Spam_score_int: -24
+X-Spam_score: -2.5
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.445,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -157,64 +125,129 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+This series adds a TYPE_MEMORY_DEVICE subclass `sp-mem` for boot-time
+SOFT_RESERVED guest memory, following the direction from the v7
+thread [1] and the v8 / v9 / v10 reviews [2][3][4].
 
-On 6/5/2026 7:06 PM, Qingwei Hu wrote:
-> The emulated APLIC and IMSIC state arrays are only allocated when QEMU
-> handles the interrupt controller state itself. With KVM AIA/APLIC-IMSIC,
-> the interrupt controller state is owned by the KVM in-kernel irqchip, so
-> these emulated state arrays are not allocated.
->
-> The reset handlers added for APLIC and IMSIC still clear those arrays
-> unconditionally. This makes qemu_system_reset(), which runs during machine
-> creation, dereference NULL pointers with -machine virt,aia=aplic-imsic and
-> KVM.
->
-> Skip the emulated APLIC and IMSIC reset paths when the interrupt controller
-> is handled by KVM. The emulated paths are unchanged for TCG and for
-> configurations that use QEMU emulation.
->
-> Fixes: 99bfcd329a ("hw/intc: riscv_aplic: Add reset API to APLIC")
-> Fixes: 766391483b ("hw/intc: riscv_imsic: Add reset API to IMSIC")
-> Signed-off-by: Qingwei Hu <qingwei.hu@bytedance.com>
-It would be better to split it into two fix patches.
-Otherwise,
-Reviewed-by: Nutty Liu <nutty.liu@hotmail.com>
+Background
+----------
 
-Thanks,
-Nutty
-> ---
->   hw/intc/riscv_aplic.c | 4 ++++
->   hw/intc/riscv_imsic.c | 4 ++++
->   2 files changed, 8 insertions(+)
->
-> diff --git a/hw/intc/riscv_aplic.c b/hw/intc/riscv_aplic.c
-> index c2c67c29e6..84606e9f3d 100644
-> --- a/hw/intc/riscv_aplic.c
-> +++ b/hw/intc/riscv_aplic.c
-> @@ -910,6 +910,10 @@ static void riscv_aplic_reset_enter(Object *obj, ResetType type)
->       RISCVAPLICState *aplic = RISCV_APLIC(obj);
->       int i;
->   
-> +    if (!riscv_use_emulated_aplic(aplic->msimode)) {
-> +        return;
-> +    }
-> +
->       aplic->domaincfg = 0;
->       memset(aplic->sourcecfg, 0, sizeof(uint32_t) * aplic->num_irqs);
->       memset(aplic->target, 0, sizeof(uint32_t) * aplic->num_irqs);
-> diff --git a/hw/intc/riscv_imsic.c b/hw/intc/riscv_imsic.c
-> index ac59496c22..f1f23c3a3e 100644
-> --- a/hw/intc/riscv_imsic.c
-> +++ b/hw/intc/riscv_imsic.c
-> @@ -347,6 +347,10 @@ static void riscv_imsic_reset_enter(Object *obj, ResetType type)
->       RISCVIMSICState *imsic = RISCV_IMSIC(obj);
->       int i;
->   
-> +    if (kvm_irqchip_in_kernel()) {
-> +        return;
-> +    }
-> +
->       memset(imsic->eidelivery, 0, sizeof(uint32_t) * imsic->num_pages);
->       memset(imsic->eithreshold, 0, sizeof(uint32_t) * imsic->num_pages);
->   
+This series targets coherent CPU + accelerator shared-address-space
+systems, where the accelerator's HBM is not a device-private
+framebuffer behind a PCIe BAR but a tier of host system memory:
+visible to the CPU in the platform physical address space, shared
+coherently with the accelerator over the platform fabric, and bound
+to a NUMA proximity domain set by platform firmware at boot fabric
+training.
+
+For such a region to function correctly in the guest, two things
+must hold simultaneously: the CPU memory subsystem has to see it in
+the system memory map (so the CPU side can address it), and it has
+to be reserved exclusively for the accelerator's driver (so the
+kernel's general allocator does not hand SPM pages to unrelated
+workloads). The SOFT_RESERVED memory type in E820 plus a matching
+SRAT memory-affinity entry is the mechanism that delivers both: a
+firmware-produced topology that the CPU memory subsystem honors and
+the accelerator's driver consumes for its own range.
+
+Approach
+--------
+
+The series introduces a new TYPE_MEMORY_DEVICE subclass `sp-mem`.
+Each instance binds one host memory backend to a single NUMA
+proximity domain and is boot-time only; placement, mapped-state
+enforcement, and QMP introspection come from the existing
+memory-device framework.
+
+Testing
+-------
+
+Verified end-to-end on q35 + KVM, with both SeaBIOS and OVMF, for:
+
+- single sp-mem instance
+- two sp-mem instances on different NUMA nodes
+
+Guest observations: /proc/iomem shows one SOFT_RESERVED entry per
+sp-mem device, dmesg SRAT parsing reports the matching
+memory_affinity entries with correct PXM, and the umbrella
+HOTPLUGGABLE entry covers the remaining hotplug-memory window
+without overlapping the sp-mem ranges.
+
+Changes since v10
+-----------------
+
+  - QAPI: rename SpMemDeviceInfo's `memaddr` to `addr` (match
+    PCDIMMDeviceInfo).
+  - sp_mem_get_addr/set_addr go through object_property_get/set_uint
+    instead of dereferencing the struct directly (match pc-dimm).
+  - Drop the hostmem conditionals in fill_device_info (hostmem is set
+    by the time the device is realized).
+  - Use memory_device_get_region_size for get_plugged_size instead of
+    a custom helper.
+  - Add the sp-mem case to the HMP "info memory-devices" printer
+    (hw/core/machine-hmp-cmds.c), which otherwise hit
+    g_assert_not_reached() for the new device kind.
+  - Rename collect_sp_mem_ranges_cb to sp_mem_collect_ranges_cb;
+    rename the local cursor/end to region_start/region_end.
+  - Drop the redundant numa_state guard and the duplicate
+    device_memory guard inside build_srat_device_memory(); keep a
+    single device_memory guard at the build_srat() call site.
+  - Add an inline comment on the trailing placeholder range
+    (HOTPLUGGABLE remainder of the device_memory window).
+  - Move the is_mapped check and host_memory_backend_set_mapped() into
+    sp_mem_realize()/sp_mem_unrealize(), matching pc-dimm; the pc plug
+    handler keeps only the NUMA node-range check, which needs
+    MachineState.
+
+Patch 4 (MAINTAINERS) is unchanged and retains the v10 Acked-by.
+
+Previous versions
+-----------------
+
+  v1: https://lore.kernel.org/qemu-devel/20250924103324.2074819-1-FangSheng.Huang@amd.com/
+  v2: https://lore.kernel.org/qemu-devel/20251020090701.4036748-1-FangSheng.Huang@amd.com/
+  v3: https://lore.kernel.org/qemu-devel/20251208105137.2058928-1-FangSheng.Huang@amd.com/
+  v4: https://lore.kernel.org/qemu-devel/20251209093841.2250527-1-FangSheng.Huang@amd.com/
+  v5: https://lore.kernel.org/qemu-devel/20260123024312.1601732-1-FangSheng.Huang@amd.com/
+  v6: https://lore.kernel.org/qemu-devel/20260226105023.256568-1-FangSheng.Huang@amd.com/
+  v7: https://lore.kernel.org/qemu-devel/20260306082735.1106690-1-FangSheng.Huang@amd.com/
+  v8: https://lore.kernel.org/qemu-devel/20260527074215.229119-1-FangSheng.Huang@amd.com/
+  v9: https://lore.kernel.org/qemu-devel/20260602084447.1100554-1-FangSheng.Huang@amd.com/
+  v10: https://lore.kernel.org/qemu-devel/20260605104609.1739911-1-FangSheng.Huang@amd.com/
+
+  [1] v7 thread closeout:
+      https://lore.kernel.org/qemu-devel/666a7ba1-5d3a-4732-b872-0d9fb2fe8461@amd.com/
+  [2] v8 review:
+      https://lore.kernel.org/qemu-devel/20260601105057.2d764e55@imammedo/
+  [3] v9 review:
+      https://lore.kernel.org/qemu-devel/20260602084447.1100554-1-FangSheng.Huang@amd.com/T/
+  [4] v10 review:
+      https://lore.kernel.org/qemu-devel/20260605104609.1739911-1-FangSheng.Huang@amd.com/T/
+
+fanhuang (4):
+  hw/mem: add sp-mem device for Specific Purpose Memory
+  i386/acpi-build: partition device_memory SRAT umbrella for sp-mem
+  hw/i386: hook sp-mem into the pc machine plug path
+  MAINTAINERS: cover sp-mem under Memory devices, add R: tag
+
+ MAINTAINERS                  |   3 +
+ qapi/machine.json            |  43 ++++++++++-
+ hw/i386/e820_memory_layout.h |  11 +--
+ include/hw/mem/sp-mem.h      |  35 +++++++++
+ hw/core/machine-hmp-cmds.c   |  11 +++
+ hw/i386/acpi-build.c         |  96 +++++++++++++++++++++++--
+ hw/i386/pc.c                 |  36 ++++++++++
+ hw/mem/sp-mem.c              | 136 +++++++++++++++++++++++++++++++++++
+ hw/i386/Kconfig              |   2 +
+ hw/mem/Kconfig               |   4 ++
+ hw/mem/meson.build           |   1 +
+ 11 files changed, 367 insertions(+), 11 deletions(-)
+ create mode 100644 include/hw/mem/sp-mem.h
+ create mode 100644 hw/mem/sp-mem.c
+
+
+base-commit: de5d8bfd6105d3dd3ae668df9762df244a6d1506
+--
+2.34.1
+
 
