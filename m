@@ -4,97 +4,97 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6D56ACD98C6
-	for <qemu-devel@archiver.kernel.org>; Thu, 11 Jun 2026 06:42:34 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1AC2BCD8CB9
+	for <qemu-devel@archiver.kernel.org>; Thu, 11 Jun 2026 06:42:44 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wXZ7M-0005wv-Kg; Thu, 11 Jun 2026 02:42:20 -0400
+	id 1wXZ7Y-0006H1-CZ; Thu, 11 Jun 2026 02:42:32 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <philmd@oss.qualcomm.com>)
- id 1wXZ7K-0005rX-GX
- for qemu-devel@nongnu.org; Thu, 11 Jun 2026 02:42:18 -0400
+ id 1wXZ7W-0006F9-UP
+ for qemu-devel@nongnu.org; Thu, 11 Jun 2026 02:42:30 -0400
 Received: from mx0b-0031df01.pphosted.com ([205.220.180.131])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <philmd@oss.qualcomm.com>)
- id 1wXZ7I-0004Iu-Su
- for qemu-devel@nongnu.org; Thu, 11 Jun 2026 02:42:17 -0400
+ id 1wXZ7V-0004RF-C1
+ for qemu-devel@nongnu.org; Thu, 11 Jun 2026 02:42:30 -0400
 Received: from pps.filterd (m0279869.ppops.net [127.0.0.1])
  by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 65B5GCue3843632
- for <qemu-devel@nongnu.org>; Thu, 11 Jun 2026 06:42:16 GMT
+ 65B5GCB03843609
+ for <qemu-devel@nongnu.org>; Thu, 11 Jun 2026 06:42:28 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
  cc:content-transfer-encoding:content-type:date:from:in-reply-to
  :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
- YECmlo7aJiRbP47VD/l+b+/MFnM13XFMeUDH51iOGxE=; b=VTmUZis8tWDhTt8U
- VeZckeFr8v5SnZZfR+NBoi8gkkReLBu+i6IXrZd3+FA7e5Esb/Dq2hdwg68BNa8l
- 5Z1ujChsqvbIHsYUnI5JHvZsuxkuvjJnWGT/WcZ4hmt+Zip87kzKRdFiwqMJVpOX
- GHrZb/WUDTVdJv6VIJJUL0W2FZMZRiSWl5hUhsqqJ75o6/EUwCDBcVy2Y7G/Q4Ln
- eZmuuwyAIDvuU6GndY0e/8RYDeuDI5bD0y1kaw97egMBzsCIP2UzcL1Jk6Il9Hlt
- 4pECnA5LhpiKdVD95LOqVYhLLPKkJzXj/nuiMV+7zOyVOYz/Bm1MJMhabHCpqsnD
- wLrg7Q==
+ gmzzsIqFmZoYfm8M0rjp/DD25RwJE352GmJYRit/whg=; b=My5NhvqIJyjd63qk
+ uxf/+atoeZIiDZXubWdOAwrTtRYVZBnobm69JNdG4QyOqDlbUlH9gvZwJ2Gbxjar
+ trn27P2VpEzcwgUacPr+Mk5c9AZMnVszNbe7eFb6lR3lHFirCF3CJbCtVvN3sN5z
+ Ndk0vTABwsKb2N77UFLWSqQsEUJp1kpgx7GhPsMsryRWn+ZGFRxjAxnZJ4TMWbqB
+ sCjN3Bo02/Uv8cvP+FJ46hD7zVq0mwbcVC4ZTDfS2VqPU+mf/9QcWsiQkEcI1Okx
+ m12dvF4hTQOVYR7K0dkHYT1vxEqpZhpkMXQLuTe9WTBmn+JrG74s4cXu+wmIMEQ7
+ 0Du0pQ==
 Received: from mail-qt1-f198.google.com (mail-qt1-f198.google.com
  [209.85.160.198])
- by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4eqe7020kk-1
+ by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4eqe7020mq-1
  (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
- for <qemu-devel@nongnu.org>; Thu, 11 Jun 2026 06:42:15 +0000 (GMT)
+ for <qemu-devel@nongnu.org>; Thu, 11 Jun 2026 06:42:28 +0000 (GMT)
 Received: by mail-qt1-f198.google.com with SMTP id
- d75a77b69052e-51768072950so104822331cf.1
- for <qemu-devel@nongnu.org>; Wed, 10 Jun 2026 23:42:15 -0700 (PDT)
+ d75a77b69052e-517e054fe07so38785981cf.1
+ for <qemu-devel@nongnu.org>; Wed, 10 Jun 2026 23:42:28 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=oss.qualcomm.com; s=google; t=1781160135; x=1781764935; darn=nongnu.org;
+ d=oss.qualcomm.com; s=google; t=1781160148; x=1781764948; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:references:cc:to
  :content-language:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=YECmlo7aJiRbP47VD/l+b+/MFnM13XFMeUDH51iOGxE=;
- b=f/bbIbfE4cY5Wi1xLxE77t1GSGLC1FrvCUVemRr3fpq7rwWekMCZIXYFvYK9qscbXO
- 9r1Y/teHHBEQ9fTuJLU8ARANeHE70mXnN9wTt7F9IpOd9PD9PNXoAkvqpm0nNBHfzfnw
- QzDzWU9vy3HOblYbPv8AZklsHDSXTgOnSfkeV8jikDLvG9Ki0+Jb+z6dlrnzEjORBvDR
- TpG/Wxdy4jjN/DZRUtn8CrVLzIadgfm8zMT/bopWJNsVvBEdQqRXPXt611RsDdV/yb5I
- XtK3w82K1t2ODKe+tl07kCK4anDha/6JnajjaT4sm8QReS6kunCk7X2qA3BnFxnTXRS/
- 8D6w==
+ bh=gmzzsIqFmZoYfm8M0rjp/DD25RwJE352GmJYRit/whg=;
+ b=PHojJjP4FNAqNpp/IeUBw0a9PkbsaYN0m5A3hrbsY5RhXREQcxnW082dGt3VsLIIeO
+ Usz/FwwzoYVf0ZRueBuBSdzAmvg7U7T92FpoMYIhMvmp+XhwrWDgB6kp6k+qerKBpezP
+ 2WkRyIJIXbY1p8vHcGEmqHDz/v9b2K/Wiw4KLob6QmF+Vs39QWSkNypQ4D0Plp35VEBV
+ gWpABlqVZRbDu9k4jUh/QGcFTq6Wzq2af3/UaDXVEvekYl7xezbFAnQup7aoLPpNYAEB
+ B0sr7hB3Ge7yb0eXqxh65Mfu5zAMxaOnq5OeKt/Pz2J5T+V3ED7rG30feNz8TYv9M+ZE
+ 4hGQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1781160135; x=1781764935;
+ d=1e100.net; s=20251104; t=1781160148; x=1781764948;
  h=content-transfer-encoding:in-reply-to:from:references:cc:to
  :content-language:subject:user-agent:mime-version:date:message-id
  :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=YECmlo7aJiRbP47VD/l+b+/MFnM13XFMeUDH51iOGxE=;
- b=YtmWAOrVscsBiBxgCI0gitFlD4cBouysPhrypuiFFqsIt0OouIO8RY0+tYUSv6dGRA
- ma178DfXcdYlbFajsLVXRsC+HmHpdCbWBiqc0cPKEqVp0II5CoXn4userr5zHvrDbjcn
- eHk7L4atwvaJ3+0mK/K8xf9H+Fk/b7HFEseVH3cebfQdikoENNrveLfC2hOHe2h2fFDM
- te91K3NerSBbU9TlsqfH7UR+DOR4wEnRu0s6atTMVYfJY7pYZeBx6dMa5Wxnx9mz42Ls
- /UXy+SCdpFlw/tjwvt1Eg17OhzUIor2LOgpI7xLzkcTaY917uxnn9NS5cFZ+ZL4rrD1T
- 5/Vw==
+ bh=gmzzsIqFmZoYfm8M0rjp/DD25RwJE352GmJYRit/whg=;
+ b=eoQEfm0puSN46hN7YLXh1/tFPC8pkrlh7I6lW/BmZG6a/ZEAi8pI9sstKVzUutApN0
+ ftN4grivIfdFXg0YCBmx+m5ET/oxWzeXxUjqJl+gkXCbIqcboqYIYgEyas3s8f1AzRgQ
+ U3a1tQNVMch4t5c2d2/TxmDKeRzWVVrB6cgLKsJXq0ONA01r7ejudRFecvNBdu7vpFbC
+ gFStzJ0OHSrjGroduzYOQAf/qvH+wyNZTxDbW2iMh3sx7Mp50uWQhAzGYRCJ8G3x3kdJ
+ Pp1JZ2NJHPjQB9qV3ZEjhRbccL9JxC2fd7URxVdbIv6SACYnrdX5Vi2j13xPvpO+ECpE
+ /BCg==
 X-Forwarded-Encrypted: i=1;
- AFNElJ+UXMBiGEnGGxOVxVJrl0poz+YTILhUEJ7gOvoVeE+HlgtzMTx7JsSCAP54wEtAZAgXAvtqMbyIKp+j@nongnu.org
-X-Gm-Message-State: AOJu0Yw1KIHfZyahetq5q2o1rCuK0xpMsTTtSNfYETynyziXJtPSDBSS
- U2r9k6CViSnHomHZNG7CF9Li1dTD6EkH9shkn2p2jO2BJw1W8e4mdbG5L4IEDoEJ+bENPxfZwbt
- qWEUTZGTrphYRtuSM5vRpdvjnsQUUdYQAoh/XXBS7lwEH+jL6mKCA0xNnJA==
-X-Gm-Gg: Acq92OEAcgreOghNd7B3BcprcH640r2vaWAeme1pXpU589nGAd+rg4jSoVM7paUiKZh
- ym4kLno0V3q9r3FPIYC88VvmBM46Vf0ZfniJte0rBoGVW4n9+NUfLG+w+fWcM2j5yI4VCAD0Bt9
- z5Q+pyDQ8uQObhokU2VK2XqySd/g86DUO8qtQicAtMkH0P5Yi9B9tmYFVIK7ogm93ATSmskYUvX
- 4x27z4m+wjCi+cDCh9Tbf8rz7ndwfuVtBh6UwBeda1xx++eA/Mzhk044kjcqVCUd5vEWgVky6O4
- X/Vzm6cR5J7p/PLcX4/qyzN636y1UffT7X3aCRefAyjUPvnsU7iisJdWpqF2XvvhxgoijlXDijc
- 6dM++lOk9OjOgPf6P8IXbt+LT3X73UvOwR48fe0jkxO79j+W686s1aHvMwYEOsXDGrL0t1kW6Q8
- QGp63wsQ==
-X-Received: by 2002:a05:622a:6:b0:517:899b:7f76 with SMTP id
- d75a77b69052e-517ee1d5fa6mr22342401cf.35.1781160135075; 
- Wed, 10 Jun 2026 23:42:15 -0700 (PDT)
-X-Received: by 2002:a05:622a:6:b0:517:899b:7f76 with SMTP id
- d75a77b69052e-517ee1d5fa6mr22342181cf.35.1781160134634; 
- Wed, 10 Jun 2026 23:42:14 -0700 (PDT)
+ AFNElJ83QaQs5LMFy6foKBiDCwu8ScilXABPwlWwLB1JFgvZNkmCW0JAM4gNTHjjnCnFoTt2raXgjOs43ISb@nongnu.org
+X-Gm-Message-State: AOJu0YzfI+MsvyIoPC1jBIKkg8AJW0DG8o8k/j/zyoQCk92y3ytmifZJ
+ /64WyH+PYUuJ79FJD8giDxPSIQfLIDu892BI30xKVmo60H8vksAcn8wnqE3KeKiWdAaBuX6VZCw
+ DybnF9+qxhq3Vr/scdI3vktSmHqOWwiZcKaSxZeBliXDd+MzGE1vYpUO3yQ==
+X-Gm-Gg: Acq92OE5a+YlRvhwmLStsnW359MRyxh9rubEv9aOafOoAXYGXSf7pl+ZJQTV6GJ0qlP
+ Bl3NcY1aXsCq5cALCWAObhThPQ9JnLpQQuuPSe50WMykFjarandiC8QZ+TXDcFLcVBjXtsmbrTX
+ H8AYur8mcdreOERr1gRkJcu8oSaADl2dWg47f3oq9/0Rd43Vn/xlU4flGWB0UDHvP2SLogx0TWt
+ pYhK8E/z6ybQTDJkebQ6gIl8KuE/RFhkkdE9Y3Wl5d011Ji/xgI0qGBW9FgGIjWDt4U6LksU22Y
+ teE27TkTfM+Fypi9QOejJmgs0Z1wWchU2zCGkORPHRkLUv6Stwkymipzh0xHlujYqplb30Dsf2j
+ eDXfLgU2/zZKTFaaOQjxxG4q1PGOvKGuhAnjlRSzZn9q0449korBBZFm9/vlaQ7a3ouc4laNXCT
+ InfkBHJg==
+X-Received: by 2002:a05:622a:28b:b0:517:6e5b:ebd9 with SMTP id
+ d75a77b69052e-517ee244a94mr23003381cf.31.1781160147634; 
+ Wed, 10 Jun 2026 23:42:27 -0700 (PDT)
+X-Received: by 2002:a05:622a:28b:b0:517:6e5b:ebd9 with SMTP id
+ d75a77b69052e-517ee244a94mr23003101cf.31.1781160147148; 
+ Wed, 10 Jun 2026 23:42:27 -0700 (PDT)
 Received: from [10.156.84.244] (218.170.88.92.rev.sfr.net. [92.88.170.218])
  by smtp.gmail.com with ESMTPSA id
- 4fb4d7f45d1cf-68e65868049sm10401516a12.24.2026.06.10.23.42.10
+ a640c23a62f3a-bfcb668c9f4sm17602766b.56.2026.06.10.23.42.23
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 10 Jun 2026 23:42:12 -0700 (PDT)
-Message-ID: <2610e4bd-7ddc-4880-808d-3f55bb166938@oss.qualcomm.com>
-Date: Thu, 11 Jun 2026 08:42:09 +0200
+ Wed, 10 Jun 2026 23:42:25 -0700 (PDT)
+Message-ID: <d92662fc-5483-4505-9330-7271d666bc37@oss.qualcomm.com>
+Date: Thu, 11 Jun 2026 08:42:22 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 3/4] ppc/pnv: Remove Power8E and Power8NVL spapr cores
+Subject: Re: [PATCH 4/4] ppc/pnv: Remove Power8E and Power8NVL CPUs
 Content-Language: en-US
 To: Aditya Gupta <adityag@linux.ibm.com>, qemu-devel@nongnu.org,
  qemu-ppc@nongnu.org, Harsh Prateek Bora <harshpb@linux.ibm.com>
@@ -106,30 +106,30 @@ Cc: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
  kvm@vger.kernel.org, Misbah Anjum N <misanjum@linux.ibm.com>,
  Shivang Upadhyay <shivangu@linux.ibm.com>
 References: <20260610090800.3672832-1-adityag@linux.ibm.com>
- <20260610090800.3672832-4-adityag@linux.ibm.com>
+ <20260610090800.3672832-5-adityag@linux.ibm.com>
 From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>
-In-Reply-To: <20260610090800.3672832-4-adityag@linux.ibm.com>
+In-Reply-To: <20260610090800.3672832-5-adityag@linux.ibm.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Proofpoint-GUID: tZA1m5nx3AMwk3ZLJ2clrhY6HbHxJVOa
-X-Authority-Analysis: v=2.4 cv=B9eJFutM c=1 sm=1 tr=0 ts=6a2a58c7 cx=c_pps
+Content-Transfer-Encoding: 8bit
+X-Proofpoint-GUID: EGP9m1awgImDcOqZCMub0LeeEWJ-Frse
+X-Authority-Analysis: v=2.4 cv=B9eJFutM c=1 sm=1 tr=0 ts=6a2a58d4 cx=c_pps
  a=mPf7EqFMSY9/WdsSgAYMbA==:117 a=/nYmEve+L4YsDi96RCWAbw==:17
  a=IkcTkHD0fZMA:10 a=FelO9ux0wxsA:10 a=M51BFTxLslgA:10 a=s4-Qcg_JpJYA:10
  a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=_glEPmIy2e8OvE2BGh3C:22
- a=VnNF1IyMAAAA:8 a=-EoAAwLr4A5xMGHcZ-0A:9 a=QEXdDO2ut3YA:10
- a=dawVfQjAaf238kedN5IG:22
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNjExMDA2MyBTYWx0ZWRfX2z5x0OpQBbMT
- fT156rhmcoQnqJi+CgOWo8Hbtanto8k8hRya9rU+H9nbAPja2w/Hsty3EQMxJCEqHOUDXc4qc9U
- BWi1Ud2jU0DviZEjYSdrukE2vufi7yma06GpC0ntMvkVDSuZxU3toRVf0cdzBobf53tX+a+p/II
- qPKejQPTsPdK/czQocVwqDDsMFCVY8zZ0NCNgb/pVq4JTPOlyoYxckl9tvqUbrAS6xtXyFU+EUb
- DrOI7HEIRMLlJyWVG/+tUyz8dhsj3EM2uS78X1OrM8FevnF6tBg5y3eR+6HDLsrUMlzAJiomZE3
- k8fJvgJmZW4DWCD2buNjQ39rEQR/FD+ZoPcn08xoC521IxlK+gY5wOvvm8RZO0RjAWexgM1Nhmg
- uza0hk75mJqdfwQoCcU7OH1lU1w4p8Rn5nPNk+nsaxaKKyvBVqjLXzkZfm7t9dwhrul2EA+ESTX
- EPZiVA1Qr512Jvs5WEA==
-X-Proofpoint-Spam-Info: AW1haW4tMjYwNjExMDA2MyBTYWx0ZWRfXx1nDos8JGl5z
- A9VR5zZ0Dm5edHwfI/LOAzckFkFIyNE12SYcA+PmZdw+eIPwQo41VRYn085qIjRmq+tOWKMvuEe
- zX87bD9x5Q4Y2/fqSTn9zct5A5ajutM=
-X-Proofpoint-ORIG-GUID: tZA1m5nx3AMwk3ZLJ2clrhY6HbHxJVOa
+ a=VnNF1IyMAAAA:8 a=EUspDBNiAAAA:8 a=QKpl30L47EuW14pftawA:9 a=3ZKOabzyN94A:10
+ a=QEXdDO2ut3YA:10 a=dawVfQjAaf238kedN5IG:22
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNjExMDA2MyBTYWx0ZWRfX0e/Fc0+kGu1H
+ y2oA51H4+LMCMQFGRtH10iGPbhAonqa7GlolOCrgBiOCXTbQSb1Nzw78NXIdSFwbbsT9PLwA9TY
+ 3NNkYcq+Fsc5qVDMtkudvFfih3fw+f1BsTMZ/Cbq38yMtBsg1mwVPU0Mz4Oe5KFMAcbztmEQvom
+ w6LrzyHZkKahqIF/Ij/xNWbAo9HgTzt85pw7mhrYGOqv4omSc84q7kf2NKkuuHlqDg7HK2D94hs
+ RflmPzaifCNgKk8+/pjaE75aAS5nVcY+u6v5t1w/QZFTdR80YT1tBprd+7Eh5yZWCo0ZQpKZWzK
+ 2EK/jJDgifaEv5M6Cu/XtZSLDdTmMBUCIAovt+lx/Qab4rGA+7KR83RQwNdk20QqPk9xFvKXM7v
+ Ko+WA0OqFpbqhIIh8GqEJ2u8u0JkZCiQm45W+ioqxTs0XPljLRMOIYcU1K08IiaYjrDJY4P06pt
+ 5LNLwhyURhkLkNc8Z0g==
+X-Proofpoint-Spam-Info: AW1haW4tMjYwNjExMDA2MyBTYWx0ZWRfXy58pumqDkSA5
+ n5HRas5f4bvlnc8jW9nIpbT0P8bUcTDkO/p6XrTBGAY8svLPy5/MJ3eCoUOGki8ec2oU5ViXpgk
+ p/+XOp+m9Stg1k8XdVnD/Ul2wgD7z0s=
+X-Proofpoint-ORIG-GUID: EGP9m1awgImDcOqZCMub0LeeEWJ-Frse
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.125,FMLib:17.12.100.49
  definitions=2026-06-11_01,2026-06-09_02,2025-10-01_01
@@ -162,18 +162,21 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 10/6/26 11:07, Aditya Gupta wrote:
+On 10/6/26 11:08, Aditya Gupta wrote:
 > Power8E and Power8NVL were deprecated since QEMU 10.1, with
 > commit 264a604e7163 ("target/ppc: Deprecate Power8E and Power8NVL")
 > 
-> Remove the corresponding 8E and 8NVL CPU cores from spapr/pseries
+> With no use of 8E and 8NVL, in powernv chips or spapr cores, remove the
+> CPU definitions for the cores
 > 
 > Signed-off-by: Aditya Gupta <adityag@linux.ibm.com>
 > ---
->   docs/system/ppc/pseries.rst | 2 +-
->   hw/ppc/spapr_cpu_core.c     | 2 --
->   2 files changed, 1 insertion(+), 3 deletions(-)
+>   docs/about/deprecated.rst | 9 ---------
+>   target/ppc/cpu-models.c   | 6 ------
+>   target/ppc/cpu-models.h   | 4 ----
+>   target/ppc/cpu_init.c     | 6 ------
+>   target/ppc/kvm.c          | 4 +---
+>   5 files changed, 1 insertion(+), 28 deletions(-)
 
-Squash with following?
-
+Reviewed-by: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
 
