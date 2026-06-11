@@ -4,104 +4,140 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id DFF27CD8C9D
-	for <qemu-devel@archiver.kernel.org>; Thu, 11 Jun 2026 17:56:58 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C4884CD98C7
+	for <qemu-devel@archiver.kernel.org>; Thu, 11 Jun 2026 18:04:28 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wXjdZ-0001mT-Ld; Thu, 11 Jun 2026 13:56:17 -0400
+	id 1wXjkm-0003tX-C6; Thu, 11 Jun 2026 14:03:44 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1wXjdY-0001mD-Bo
- for qemu-devel@nongnu.org; Thu, 11 Jun 2026 13:56:16 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <philmd@oss.qualcomm.com>)
+ id 1wXjkk-0003sz-BE
+ for qemu-devel@nongnu.org; Thu, 11 Jun 2026 14:03:42 -0400
+Received: from mx0b-0031df01.pphosted.com ([205.220.180.131])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1wXjdW-0002Ub-LI
- for qemu-devel@nongnu.org; Thu, 11 Jun 2026 13:56:16 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1781200573;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=0APqX4pqiUkphtQmWTZ80G/2Du4D1Xrbspassh8B6eE=;
- b=YBf3xm94Vyp3LzCZNEJAMz5n6fl14JrA7gv9EOBm5i/ATaw5R2KtZXWexVKUwSNgab43LS
- qQ5sLjAs3hPCQm70X7W/WPhI3U9Wu/ux/TLkh4oF+PPJDtEtfRGqZwdl/Igz4ntQMYQ2iA
- SJLKrW8VI1EesVisgXKmLfLW/iweJ8g=
-Received: from mail-qt1-f197.google.com (mail-qt1-f197.google.com
- [209.85.160.197]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-534-bXOgtpUOOK6cQOjCuGqBpg-1; Thu, 11 Jun 2026 13:56:11 -0400
-X-MC-Unique: bXOgtpUOOK6cQOjCuGqBpg-1
-X-Mimecast-MFC-AGG-ID: bXOgtpUOOK6cQOjCuGqBpg_1781200570
-Received: by mail-qt1-f197.google.com with SMTP id
- d75a77b69052e-5175a1e32e3so1408921cf.0
- for <qemu-devel@nongnu.org>; Thu, 11 Jun 2026 10:56:10 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@oss.qualcomm.com>)
+ id 1wXjki-000737-Jn
+ for qemu-devel@nongnu.org; Thu, 11 Jun 2026 14:03:42 -0400
+Received: from pps.filterd (m0279868.ppops.net [127.0.0.1])
+ by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
+ 65BErnHl823169
+ for <qemu-devel@nongnu.org>; Thu, 11 Jun 2026 18:03:39 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+ cc:content-transfer-encoding:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+ z9WJv6VOnE5WwFpRSGuXGHpfVT6AmepQWzkkQ0o13pk=; b=kQWNE8QJPlo8MKB0
+ ScjrTTWnVEAlz5DH+IiRzRtPjVN1SL6XSHTnMmwDkUdnMaD0WQEm9rBQ2zk0oqUx
+ kMGYX1XK/SWxN02zUC9XUSSToSlarwB2Zy5E0QgconfRp7tpcJKZ/oBo8MsuDyvA
+ MJTrYLT4LkEwUr5JyL+u25ZJGNZLyNzDsJbSe3Ae0NrS/3U1TXmoAUkCCe3KMKm9
+ Y+Aftw2kCyEsz4y9fvuZX/oELZiZkFbphzxX9gi+YUwZZQV2eE4kOOqDxnGNDbfu
+ H+WX7dkMNAZ4jlaltQ3AvjgEMmpukmn6cz8kSP92+zJkG63VlTEJuB1iKe3DZo6s
+ ML4q9Q==
+Received: from mail-ot1-f72.google.com (mail-ot1-f72.google.com
+ [209.85.210.72])
+ by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4eqe6ucy6q-1
+ (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
+ for <qemu-devel@nongnu.org>; Thu, 11 Jun 2026 18:03:38 +0000 (GMT)
+Received: by mail-ot1-f72.google.com with SMTP id
+ 46e09a7af769-7e6db734d48so208747a34.2
+ for <qemu-devel@nongnu.org>; Thu, 11 Jun 2026 11:03:38 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1781200570; x=1781805370; darn=nongnu.org;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
- bh=0APqX4pqiUkphtQmWTZ80G/2Du4D1Xrbspassh8B6eE=;
- b=Gib4PsDJK11+fivzwUdsqOvLXGAFLzeOei3v23I4tL7D9QtA+/ssvT6MajlPuvt5Wv
- b2uRYk0nk20/1lpO7fQWvqzsfxarA06+0keBuQNO3slQ6lk3BLoTuWOCVcW8HIj/NS60
- MuluB6kNcJ+EI5K8N2kmmORHR8VpqG48TcTcyeQriquOE7O/WpjdIRzUq9CZL5uyWHou
- L1DThidI1o9etOB2Jfu1k68XxU/ATYb+/DdRF1UEvVyg3vO8Ri85zbghRJmnEC/hbeMq
- STMnhvMzWbOqnDj30qb+gLJLh7rIERUrJUjlUuiOKjzcqrBf3jmmI8xQEtCON43DSgDp
- 9bhA==
+ d=oss.qualcomm.com; s=google; t=1781201018; x=1781805818; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=z9WJv6VOnE5WwFpRSGuXGHpfVT6AmepQWzkkQ0o13pk=;
+ b=GIoaMyaZVO5UASgIstniAz/ty/qDJSnPLnjCJr/JCZL6uodUX9DYpMQk679Q+lavms
+ JLjxr4a6epaV/AsKIlsAdINnppU6p2krycTivCQkM0zVznW7Fc/s1w23VxSIrdI6Nk90
+ eC6m4QP4xVmSPIZf28glaUPUfMWnpAGPzeluCb3Bs7+1pCLB8RE6BMLUm394xesRWXy3
+ SQjGpatNpvf7rrTa4navjTMwC1/MbBcRd4mWpmwH+KmYBrLXrjhd/J76OeGALds9bHEx
+ too2EngC5c2RuxcT0yAluRh6x8ubKwLZ4MP43WnUuAWgR0qC8TRvidPWRyHJ7kI3O8Ht
+ +cCA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1781200570; x=1781805370;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=0APqX4pqiUkphtQmWTZ80G/2Du4D1Xrbspassh8B6eE=;
- b=kI9Ti2IDf7qaBEEYseYbtf/aqBXOTOXJLycEtcZNRhBLR3Rbz0wtHfl8Qa1sOxsRYP
- ac7qHyKpCoZL+ZTRlO7qQQCh45HXYLg9DtGfya+qs6WycXglPCLKKGpNVaiD1+/rYHCs
- NrssDHcLjFLHNKLoaxGezW5tYleOXni+vwawI7AxDbwe9dOAB+dSXGQUhkOZjPmFuRx/
- TXoDuVEy8LD8adEZIY9hNmOEdtzuoKwM3JlCKNpEjXmtwusUNJ52fLKBRROIVslqyJIx
- Lf4hrJCrcif2RwbH6vWwccd2fVE4/LkC/NOmPz094+Mink8/NV6dV20r8MAmS3lMzeCb
- l0nA==
-X-Forwarded-Encrypted: i=1;
- AFNElJ+nQ9BJNuA/awkY4Qx8jxI73OxK64WfnSXm/EDZOkWJ+c6MwH3pjyWqvmpzIDIYfWngb2YtT+vKnJL2@nongnu.org
-X-Gm-Message-State: AOJu0YzGkMS4C+yOyE64uwuvzKp3hU7/0+lnko28TtKk/geZ4iU3rU8d
- WlMU3Kxc4792O0smqj6cgzOMIRdII9CLUTW5UXb15bt7968ofoU0ot8BlctoUBwjIElAdSZK7sL
- ytmBRVUw1+LU6bukz+6uWG/QqusRaZYp/hGceeurnm21Wi3rzPsHaYuP7
-X-Gm-Gg: Acq92OH0ViMiOnJPqPSfTmugDgYpBxpVMKjU2A6cb54awUjY0wQeBojwUdHgyLYpP/O
- 7TY89A4aZ3tLAnaV57HdENjgU2Cu4tDeBzkbRhi4aNgHTnOm+lpva4V8vJ/5r2BEnnIjalxkdp3
- BnrfLcSrW0iV/FRyAVhDPkQbZIoNPj3ExP+pFyPB+3xbFLXTfskihmuGLoPPNiH94SIyu3+AZxz
- FrZ9VfHb0JzLFivApIn5sSDtqx1if4K9qPFbLkoOBygvA9gOWiv+2TqQqoke2KMxW4WRj2v/g2S
- 9VEg57ikk10VjZK5DciuFIfIkmlkdcWK7OTGFTAj3x1Y78tqJGOEWx3C/9fW3PKuGjvUEFHz5hA
- yy3FkhyVNJ89OpbA=
-X-Received: by 2002:a05:622a:1e9b:b0:517:282c:b894 with SMTP id
- d75a77b69052e-517ee3d306dmr58574461cf.53.1781200569829; 
- Thu, 11 Jun 2026 10:56:09 -0700 (PDT)
-X-Received: by 2002:a05:622a:1e9b:b0:517:282c:b894 with SMTP id
- d75a77b69052e-517ee3d306dmr58573691cf.53.1781200569189; 
- Thu, 11 Jun 2026 10:56:09 -0700 (PDT)
-Received: from x1.local ([142.189.10.167]) by smtp.gmail.com with ESMTPSA id
- d75a77b69052e-517ef69fc4csm23361231cf.29.2026.06.11.10.56.08
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 11 Jun 2026 10:56:08 -0700 (PDT)
-Date: Thu, 11 Jun 2026 13:56:07 -0400
-From: Peter Xu <peterx@redhat.com>
-To: Bibo Mao <maobibo@loongson.cn>
-Cc: Fabiano Rosas <farosas@suse.de>, Laurent Vivier <lvivier@redhat.com>,
- Paolo Bonzini <pbonzini@redhat.com>, Song Gao <gaosong@loongson.cn>,
- qemu-devel@nongnu.org
-Subject: Re: [PATCH v2] tests/qtest/migration: Add migration test on loongarch
-Message-ID: <air2t3bsG19h_A86@x1.local>
-References: <20260611084312.70042-1-maobibo@loongson.cn>
+ d=1e100.net; s=20251104; t=1781201018; x=1781805818;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=z9WJv6VOnE5WwFpRSGuXGHpfVT6AmepQWzkkQ0o13pk=;
+ b=eHhrswVXISIB065oHYq5JmE1+y1GjsGopLQLWUAwi3RA0Q/tHO3huQI/7JTisNE8pz
+ zqqBAnDbvK2jajlNW/nnXy7ZZmiZesXqf89svbqqv+bbSMF9rv8YLhqoP11JXKiIx+ux
+ V6GhL2NX8Ln4tI5cJ53qzvegXv/kI1ahWU5VdiSnZjpYuaCxndKQGgQDSLFINbv6DnHy
+ NDiv3YWo2EHppq33EC3yR0kFJN7Eh4/rFIKbuOEbKOdm2X4NtZcqCsoU+0k/v/UZYazq
+ vogtPax/DcDCLcLlWTTx5r+vDihs1LTr7Ey2FuoYeoEdkA9hdXTln9b0gYyZGXpkZB0z
+ LECQ==
+X-Gm-Message-State: AOJu0Yz5QYJRMeXBSMnPaQwgupJfp+UeWDEr7wfNYv2ec5Df4stSerI4
+ tOxCclrQJvjksjvWPHtFohhJsmUkOarhxf2VyjDsPILL19F9HTg4JjCCcjb0DBR9DegFo+5k+36
+ dl1r9F6dpxjK4b9ZgEL+mLudEOrLgWqczanOw5Vrvr2t7zBcMcTIq7G8cDqZTU7IDxN1L
+X-Gm-Gg: Acq92OH6XfMxiNdzbWTvoAV2SgTfD1W61JNiRIHYzlturQun9mFbZM4BWXuEETbT6+z
+ jxGdcNmWZFeUodc+Vm/ln9JlBPKbqKrlBLPI3FvxtzUqY7a9L6PU3odlKagHUQYMGD/WjXW4TaA
+ s+8XSKnRWVGuUqSumaHvXUOlh1lr1D4GTXF0qgjHVOA+etZkbDAHO5nNOSrwk1srKqHKMtHouH1
+ 0PxP/9BWYqGkPPu7lGhpWToIm4d6BCS8wND8x/3JWpaNLkznfp/C1oCs4MlcGHnjzTrPwdZBCm1
+ H+lrlRt039mU911VXA5PUef+S3Nmp7OEw1ymxc1njvydOyPnzWMa5MAZc8q3wTD7azzOYmi5AOO
+ LlQ7du/0ZIem9bq8qm6ZfuzP5c13wj2DsoOjTvhZ/0uGkHjwzIHvVVUyYIUkN0ZGN+S8WVhSA6X
+ k5plvq2EV9
+X-Received: by 2002:a05:6830:681c:b0:7e5:6d2e:acd9 with SMTP id
+ 46e09a7af769-7e77351b830mr3268681a34.12.1781201015943; 
+ Thu, 11 Jun 2026 11:03:35 -0700 (PDT)
+X-Received: by 2002:a05:6830:681c:b0:7e5:6d2e:acd9 with SMTP id
+ 46e09a7af769-7e77351b830mr3268309a34.12.1781201011875; 
+ Thu, 11 Jun 2026 11:03:31 -0700 (PDT)
+Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
+ [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-4606c0c2239sm740928f8f.7.2026.06.11.11.03.30
+ (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
+ Thu, 11 Jun 2026 11:03:30 -0700 (PDT)
+From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>
+To: qemu-devel@nongnu.org
+Cc: Paolo Bonzini <pbonzini@redhat.com>,
+ Peter Maydell <peter.maydell@linaro.org>, Peter Xu <peterx@redhat.com>,
+ Richard Henderson <richard.henderson@linaro.org>
+Subject: [PATCH 1/6] system: Document cpu_physical_memory_*() declarations
+Date: Thu, 11 Jun 2026 20:03:15 +0200
+Message-ID: <20260611180320.30320-2-philmd@oss.qualcomm.com>
+X-Mailer: git-send-email 2.53.0
+In-Reply-To: <20260611180320.30320-1-philmd@oss.qualcomm.com>
+References: <20260611180320.30320-1-philmd@oss.qualcomm.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <20260611084312.70042-1-maobibo@loongson.cn>
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=peterx@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -24
-X-Spam_score: -2.5
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+X-Proofpoint-Spam-Info: AW1haW4tMjYwNjExMDE4MSBTYWx0ZWRfXw31lZ06fUL5I
+ ZZ4sVBdY3QAvcP2Wtrzsnwu1SCDzXPIa7KFyekzJHdCBx4LKQ5ZhF1eST4bSKY6e3XhevPVZ2S4
+ ETyTy5ak538wVJOpssXmquPZ1Z7QQcE=
+X-Authority-Analysis: v=2.4 cv=atOCzyZV c=1 sm=1 tr=0 ts=6a2af87a cx=c_pps
+ a=+3WqYijBVYhDct2f5Fivkw==:117 a=4s3hRJSeHn4rkQlkrse1kQ==:17
+ a=IkcTkHD0fZMA:10 a=FelO9ux0wxsA:10 a=M51BFTxLslgA:10 a=s4-Qcg_JpJYA:10
+ a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=ZpdpYltYx_vBUK5n70dp:22
+ a=EUspDBNiAAAA:8 a=ur4Lqk0a5foQtgUicssA:9 a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
+ a=eYe2g0i6gJ5uXG_o6N4q:22
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNjExMDE4MSBTYWx0ZWRfX9OT3haDeKV2f
+ 3Pf0WTi5n71PxFOXAnK5C46PIYxHhWzn3Pd0zi9mEKq3TI56RvcizfjaOBccWgo/3ITDNfsw5rL
+ SkEoilAG1fWng5k2Q4qG3Un3Z29AQIIbOh1vsUj4zXCSLsKg9h3P+yDgBofYFZDLBjiewoSw3LZ
+ 8Oe2Z7UgI9WKHgfbgBe2mLSsH1NFT1il4dq6c9XzEGyKuegHdRzb8+9+mFscPjIRg5MUI4qvf8i
+ iM4AqOocp4JklmtVV1GjIXVJ12TjT3XLLImwW5ZAy0qTHKw/y5y7scNJ4BgOsvc7vohpwVoc8uB
+ XqAmapB7dC+CIMAJBiFKLxbY3Qh0NSLATvSd+HeLf0KRlEnX+FGz5A8xziZKzyq0vfh140gMb6u
+ NF0r574zOiwMWaRtJiDy2gRQNewKpk57MyuEGx4jB6AHVNSXDDrSvIRcFdDBcGIYr4eNJoANBT1
+ E91pxRBa623iJHfJrXw==
+X-Proofpoint-GUID: eFWsRJyaHUJosO6lG9MwJJTSXCdG3a_h
+X-Proofpoint-ORIG-GUID: eFWsRJyaHUJosO6lG9MwJJTSXCdG3a_h
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.125,FMLib:17.12.100.49
+ definitions=2026-06-11_03,2026-06-11_01,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ adultscore=0 impostorscore=0 bulkscore=0 clxscore=1015 spamscore=0
+ malwarescore=0 phishscore=0 priorityscore=1501 lowpriorityscore=0
+ suspectscore=0 classifier=typeunknown authscore=0 authtc= authcc=
+ route=outbound adjust=0 reason=mlx scancount=1 engine=8.22.0-2606040000
+ definitions=main-2606110181
+Received-SPF: pass client-ip=205.220.180.131;
+ envelope-from=philmd@oss.qualcomm.com; helo=mx0b-0031df01.pphosted.com
+X-Spam_score_int: -27
+X-Spam_score: -2.8
 X-Spam_bar: --
-X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.445,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -117,83 +153,106 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, Jun 11, 2026 at 04:43:12PM +0800, Bibo Mao wrote:
-> Add migration qtest on loongarch64 system, the test passes to run with
-> the following result:
->   qemu:qtest+qtest-loongarch64/qtest-loongarch64/migration-test OK 15.94s 9 subtests passed
-> 
-> Signed-off-by: Bibo Mao <maobibo@loongson.cn>
-> ---
-> v1 ... v2:
->   1. Add SPDX-License in __note in file tests/qtest/migration/Makefile
->   2. Regerate file tests/qtest/migration/loongarch64/a-b-kernel.h with
->      __note information
-> ---
->  MAINTAINERS                                   |  1 +
->  tests/qtest/meson.build                       |  3 +-
->  tests/qtest/migration/Makefile                |  4 +-
->  tests/qtest/migration/bootfile.c              |  4 ++
->  tests/qtest/migration/bootfile.h              |  4 ++
->  tests/qtest/migration/framework.c             |  6 +++
->  tests/qtest/migration/loongarch64/Makefile    | 20 ++++++++
->  .../qtest/migration/loongarch64/a-b-kernel.S  | 46 +++++++++++++++++++
->  .../qtest/migration/loongarch64/a-b-kernel.h  | 20 ++++++++
->  9 files changed, 106 insertions(+), 2 deletions(-)
->  create mode 100644 tests/qtest/migration/loongarch64/Makefile
->  create mode 100644 tests/qtest/migration/loongarch64/a-b-kernel.S
->  create mode 100644 tests/qtest/migration/loongarch64/a-b-kernel.h
-> 
-> diff --git a/MAINTAINERS b/MAINTAINERS
-> index 2b5b581e17..91d72feebe 100644
-> --- a/MAINTAINERS
-> +++ b/MAINTAINERS
-> @@ -1359,6 +1359,7 @@ F: hw/intc/loongarch_*.c
->  F: hw/intc/loongson_ipi_common.c
->  F: hw/rtc/ls7a_rtc.c
->  F: gdbstub/gdb-xml/loongarch*.xml
-> +F: tests/qtest/migration/loongarch64/
->  
->  M68K Machines
->  -------------
-> diff --git a/tests/qtest/meson.build b/tests/qtest/meson.build
-> index 45ea497fa5..1636b8616e 100644
-> --- a/tests/qtest/meson.build
-> +++ b/tests/qtest/meson.build
-> @@ -154,7 +154,8 @@ qtests_loongarch64 = qtests_filter + \
->    (config_all_devices.has_key('CONFIG_LOONGARCH_VIRT') ? ['numa-test'] : []) + \
->    (unpack_edk2_blobs ? ['bios-tables-test'] : []) + \
->    ['boot-serial-test',
-> -   'cpu-plug-test']
-> +   'cpu-plug-test',
-> +   'migration-test']
->  
->  qtests_m68k = ['boot-serial-test'] + \
->    qtests_filter
-> diff --git a/tests/qtest/migration/Makefile b/tests/qtest/migration/Makefile
-> index c183b69941..626e3974f7 100644
-> --- a/tests/qtest/migration/Makefile
-> +++ b/tests/qtest/migration/Makefile
-> @@ -5,7 +5,7 @@
->  # See the COPYING file in the top-level directory.
->  #
->  
-> -TARGET_LIST = i386 aarch64 s390x ppc64
-> +TARGET_LIST = i386 aarch64 s390x ppc64 loongarch64
->  
->  SRC_PATH = ../../../..
->  
-> @@ -23,6 +23,8 @@ help:
->  	@echo " Possible targets are: $(TARGET_LIST)"
->  
->  override define __note
-> +/* SPDX-License-Identifier: GPL-2.0-or-later */
+Document the following methods use the global address space
+and discard success/failure access information:
 
-Maybe this'll need a regeneration of headers just to inject this line
-all over.. I'll do that when I pick this up.
+     - cpu_physical_memory_read()
+     - cpu_physical_memory_write()
+     - cpu_physical_memory_map()
+     - cpu_physical_memory_unmap()
 
-Thanks,
+Signed-off-by: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
+---
+Cc: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
+---
+ docs/devel/loads-stores.rst | 10 +++++----
+ include/exec/cpu-common.h   | 41 +++++++++++++++++++++++++++++++++++++
+ 2 files changed, 47 insertions(+), 4 deletions(-)
 
+diff --git a/docs/devel/loads-stores.rst b/docs/devel/loads-stores.rst
+index c719241a7f5..f2c66e44454 100644
+--- a/docs/devel/loads-stores.rst
++++ b/docs/devel/loads-stores.rst
+@@ -443,15 +443,17 @@ Regexes for git grep:
+ ~~~~~~~~~~~~~~~~~~~~~~~~~
+ 
+ These are convenience functions which are identical to
+-``address_space_*`` but operate specifically on the system address space,
+-always pass a ``MEMTXATTRS_UNSPECIFIED`` set of memory attributes and
+-ignore whether the memory transaction succeeded or failed.
+-For new code they are better avoided:
++``address_space_*`` but operate specifically on the legacy global
++``&address_space_memory`` address space (which might not be used by all
++machines), always pass a ``MEMTXATTRS_UNSPECIFIED`` set of memory attributes
++and ignore whether the memory transaction succeeded or failed. Expected
++users are hardware device models. For new code they are better avoided:
+ 
+ * there is likely to be behaviour you need to model correctly for a
+   failed read or write operation
+ * a device should usually perform operations on its own AddressSpace
+   rather than using the system address space
++* some machines do not use this global address space at all
+ 
+ ``cpu_physical_memory_read``
+ 
+diff --git a/include/exec/cpu-common.h b/include/exec/cpu-common.h
+index 1eb28734601..271736dc53e 100644
+--- a/include/exec/cpu-common.h
++++ b/include/exec/cpu-common.h
+@@ -64,11 +64,52 @@ void cpu_address_space_init(CPUState *cpu, int asidx,
+  */
+ void cpu_destroy_address_spaces(CPUState *cpu);
+ 
++/**
++ * cpu_physical_memory_read: Read from the legacy global address space.
++ *
++ * This function access the legacy global #address_space_memory address
++ * space and does not say whether the operation succeeded or failed.
++ *
++ * @addr: address within the legacy global address space
++ * @buf: buffer with the data transferred
++ * @len: length of the data transferred
++ */
+ void cpu_physical_memory_read(hwaddr addr, void *buf, hwaddr len);
++/**
++ * cpu_physical_memory_write: Write to the legacy global address space.
++ *
++ * This function access the legacy global #address_space_memory address
++ * space and does not say whether the operation succeeded or failed.
++ *
++ * @addr: address within the legacy global address space
++ * @buf: buffer with the data transferred
++ * @len: the number of bytes to write
++ */
+ void cpu_physical_memory_write(hwaddr addr, const void *buf, hwaddr len);
++/**
++ * cpu_physical_memory_map: Map guest physical memory region into host virtual
++ *                          address.
++ *
++ * Map a memory region into the legacy global #address_space_memory address
++ * space. May return %NULL and set *@plen to zero(0), if resources needed to
++ * perform the mapping are exhausted.
++ *
++ * @addr: address within that address space
++ * @len: pointer to length of buffer; updated on return
++ * @is_write: whether the translation operation is for write
++ */
+ void *cpu_physical_memory_map(hwaddr addr,
+                               hwaddr *plen,
+                               bool is_write);
++/**
++ * cpu_physical_memory_unmap: Unmaps a memory region previously mapped by
++ *                            cpu_physical_memory_map()
++ *
++ * @buffer: host pointer as returned by cpu_physical_memory_map()
++ * @len: buffer length as returned by cpu_physical_memory_map()
++ * @is_write: whether the translation operation is for write
++ * @access_len: amount of data actually transferred
++ */
+ void cpu_physical_memory_unmap(void *buffer, hwaddr len,
+                                bool is_write, hwaddr access_len);
+ 
 -- 
-Peter Xu
+2.53.0
 
 
