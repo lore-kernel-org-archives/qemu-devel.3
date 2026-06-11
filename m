@@ -4,112 +4,63 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 78AB6CD98D4
-	for <qemu-devel@archiver.kernel.org>; Thu, 11 Jun 2026 08:41:27 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id AAB5CCD98C7
+	for <qemu-devel@archiver.kernel.org>; Thu, 11 Jun 2026 08:42:03 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wXayF-0002Jm-8v; Thu, 11 Jun 2026 04:41:03 -0400
+	id 1wXaz2-0002Sg-Fz; Thu, 11 Jun 2026 04:41:52 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <marcandre.lureau@gmail.com>)
- id 1wXayC-0002JQ-JF
- for qemu-devel@nongnu.org; Thu, 11 Jun 2026 04:41:00 -0400
-Received: from mail-dl1-x122c.google.com ([2607:f8b0:4864:20::122c])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <marcandre.lureau@gmail.com>)
- id 1wXay9-0003zF-Qo
- for qemu-devel@nongnu.org; Thu, 11 Jun 2026 04:40:59 -0400
-Received: by mail-dl1-x122c.google.com with SMTP id
- a92af1059eb24-135e7f4a295so477754c88.0
- for <qemu-devel@nongnu.org>; Thu, 11 Jun 2026 01:40:57 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1781167256; cv=none;
- d=google.com; s=arc-20240605;
- b=ifoBZojSmQH+DLVQ0X5HTeGvJr/+qD+9xCWXQcQqQCt58hhrSk74NhTmPMSA3jS8jA
- S6sfgRLUhrLfIFNTSZd+Cgb1tfPqCf+0kPNeuLWUHMNrSTMhrR1vg58yN3npLshP+Ple
- HiTsPcZ0vj+Jl6Dv2lW2BmAtiO7rlKnfYRo+/T64VUdla73YtS2aB2xrei0/C0hm0npB
- BbV6QmBz4+4WR47FC15mbQYG/U1q+38bE0hQ0EKBtATCuDDdNTpSyks5EXV9MT6S9KbQ
- OcqbP7AUe5GAtNYqsVhJJvfr3IcUlTDBV9G7+Z3W8zP7MaKj8ZQQvYLjWmaqBV2pWDoB
- YEWg==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
- s=arc-20240605; 
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:dkim-signature;
- bh=JEjDFfS7s3rmGjv0aDT1jmW7c1PhCjpXYp/T57O1E9Q=;
- fh=AZkZ0b1lNOWrPAvx6utUMPvNnVTPoQb/VE06IgS7KRU=;
- b=CWPUWDycRujrkok4YTiUn3FomHeZTH1ObJ6VgyHbseCPThm27dwTvLx1BMt7MmqGEA
- zs5bms1BsvUTPUfrc2G2nweNXtoSKoiJnJe1pvG8lMYDWPJ1Y4fCxO0L4S8UJdrPuQmC
- QeJhxbQTPp+8R57MHQL4RwqLVJfjCPQHXArjyMb0J8B16nr9y9r00u/eQPqR+EVasoFH
- mENtm/8VYfEcGZG/EEP80MxNpUGg06rPNIkUnM7qKQI8MQeYElECU+dy6HAoMrZVFpYJ
- 5eHdAE8uBr96Y76IZNtqpEH1yJQ/ylaOhC+b+jP1N9rgN6Mbmh5XAPQUn6Y1qyny8o+G
- oHpg==; darn=nongnu.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1781167256; x=1781772056; darn=nongnu.org;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:from:to:cc:subject:date
- :message-id:reply-to;
- bh=JEjDFfS7s3rmGjv0aDT1jmW7c1PhCjpXYp/T57O1E9Q=;
- b=Ab38WDDGnL6qA0NLdqQKU8Ws27Rsw38WDf6ZK7kq8qeYAiDvEVfAAt9fd5C2ApCrU8
- nJv2Jr8cciX8YKwSaR29BXug2MCVcTCkvnzSpnwqYTn2hICmyEOvaMtNPFkckA1Dm8z+
- AghbGEg9gVzqJOeMJ/M+c+mljacieyIjyVAGgw8KByH6oxwVwyeIu5fCFZ6WDiRiGFq8
- vIAMCDkP6nOdGC8amjoCXWiNQlVMAIdBxqAeRvBNIy9zQA4qdUEyup30odxrbDN9D8xw
- oT+P/MSb1/EIDJYQEmuAX6QNmIAVrNoBteiA8ydkjxEcMN/gH7WNRcVQJ/8vH2aZjOAI
- IL3A==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1781167256; x=1781772056;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to;
- bh=JEjDFfS7s3rmGjv0aDT1jmW7c1PhCjpXYp/T57O1E9Q=;
- b=PHc8u1KbItrUgCG8Z89gJbKFfNDIZRRYdc1lCqZvbNAbeixxYokAfjoLZ2oMyVunjL
- BZTpMiZ7eki+jYwGKLeycxUK2GSEAMvDRlrAV2Ru0HJy9Y7jjjIHWi8bSpv6fr/h4pyN
- /3VbFfO5zy3I6QtTYKCKfNdCBd7OjYD/9iQBof4GI6mn/Z1LVDF6DabBdcTpA+trLWfl
- lJs54fa99mmgOvLG7PsZ3Z1QPk+MwEHq9KdOtG/CKCRBZk19NC9pZcnZuxKskTcodLxv
- WUrqgGF7t5zeJ2+dtDBD5C64Q3qmWZL8Ks4p5oHfDeaLRPTeZURaLRvqGhmRtt3JFg+A
- Pn2w==
-X-Gm-Message-State: AOJu0Yyc+6tqE0yg8D1SYPjjvxyRwreF1NAF8mU3Ox1HugUcKtxtG1D9
- eUUV46htmsiUB2/PDVghj7wJQw9pJ8Dx3ykNLskl3CPRe20trPYEuuNBRJSci57pcV4yQ4Ud/cJ
- vmzJSSGPpuKAD9+8CHfNf+us6tA8i/YE=
-X-Gm-Gg: Acq92OFwXjkWA1V6aZhYQ48QXdDAYKz3KubrZpeifSbicJ9pAwsPGd1xfEDpNxxnw+j
- nwYvWFQ391pq584H4WylicuIPUOp5cIRcyCk+UKh72DYH1PROsindlTkl7pG3VmWmEMEhqQ3RZE
- m6A/e/AnkD+ho0aRjYKDDYYlfw3WE6NeyDLYCW5rjqTbTTBWxeaxMIeyajEiqEclSr3DADfqsSL
- YfOhYw9hay/GTVpApVYbW9rS/qz5GdDd2878gOBPJRW3ywuLaEG17jyu7WFwQi+/z6DMBzy/qpW
- PcOixHZgpxXufTwmXjXK7eHQa2J2MTlidiPHzmVtfAyw9FAy9g==
-X-Received: by 2002:a05:7022:38f:b0:136:4faf:eb09 with SMTP id
- a92af1059eb24-13842e36306mr955771c88.7.1781167256031; Thu, 11 Jun 2026
- 01:40:56 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <maobibo@loongson.cn>)
+ id 1wXaz0-0002SR-2e
+ for qemu-devel@nongnu.org; Thu, 11 Jun 2026 04:41:50 -0400
+Received: from mail.loongson.cn ([114.242.206.163])
+ by eggs.gnu.org with esmtp (Exim 4.90_1)
+ (envelope-from <maobibo@loongson.cn>) id 1wXayx-0004d2-Io
+ for qemu-devel@nongnu.org; Thu, 11 Jun 2026 04:41:49 -0400
+Received: from loongson.cn (unknown [10.40.46.54])
+ by gateway (Coremail) with SMTP id _____8Dx13jCdCpqeAMTAA--.25585S3;
+ Thu, 11 Jun 2026 16:41:39 +0800 (CST)
+Received: from fedora.loongson.cn (unknown [10.40.46.54])
+ by front1 (Coremail) with SMTP id qMiowJCxWeC8dCpqKbuiAA--.47266S2;
+ Thu, 11 Jun 2026 16:41:33 +0800 (CST)
+From: Bibo Mao <maobibo@loongson.cn>
+To: Fabiano Rosas <farosas@suse.de>, Laurent Vivier <lvivier@redhat.com>,
+ Peter Xu <peterx@redhat.com>
+Cc: Paolo Bonzini <pbonzini@redhat.com>, Song Gao <gaosong@loongson.cn>,
+ qemu-devel@nongnu.org
+Subject: [PATCH v2] tests/qtest/migration: Add migration test on loongarch
+Date: Thu, 11 Jun 2026 16:43:12 +0800
+Message-ID: <20260611084312.70042-1-maobibo@loongson.cn>
+X-Mailer: git-send-email 2.54.0
 MIME-Version: 1.0
-References: <20260608-b4-ui-v2-0-9ea6355ea08f@redhat.com>
- <20260608-b4-ui-v2-8-9ea6355ea08f@redhat.com>
- <bf524c77-f300-4ec3-867a-e3a6882c72e0@rsg.ci.i.u-tokyo.ac.jp>
-In-Reply-To: <bf524c77-f300-4ec3-867a-e3a6882c72e0@rsg.ci.i.u-tokyo.ac.jp>
-From: =?UTF-8?B?TWFyYy1BbmRyw6kgTHVyZWF1?= <marcandre.lureau@redhat.com>
-Date: Thu, 11 Jun 2026 12:40:43 +0400
-X-Gm-Features: AVVi8CdfzDlvWkVMkJrQM3LOkAgYhlum6ciDu_oOruhO1oTUzY9NEbKSHsej-uE
-Message-ID: <CAJ+F1CJmvfZ9ig1zUB4cv0kVmnZ9RGvFMBYLEfMiYGdpTA3rmA@mail.gmail.com>
-Subject: Re: [PATCH v2 08/33] ui/dbus: remove led handler
-To: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
-Cc: qemu-devel@nongnu.org, Paolo Bonzini <pbonzini@redhat.com>, 
- =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>, 
- =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@mailo.com>, 
- Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
- Fabiano Rosas <farosas@suse.de>, 
- Laurent Vivier <lvivier@redhat.com>, Alex Williamson <alex@shazbot.org>, 
- =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>, 
- Peter Maydell <peter.maydell@linaro.org>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2607:f8b0:4864:20::122c;
- envelope-from=marcandre.lureau@gmail.com; helo=mail-dl1-x122c.google.com
-X-Spam_score_int: -16
-X-Spam_score: -1.7
+Content-Transfer-Encoding: 8bit
+X-CM-TRANSID: qMiowJCxWeC8dCpqKbuiAA--.47266S2
+X-CM-SenderInfo: xpdruxter6z05rqj20fqof0/
+X-Coremail-Antispam: 1Uk129KBj93XoWxKFyDtFyxJw13WFyfJw15Jrc_yoW3uw1xpw
+ 1rC3yxKa1xGF12q3WxWFyUWryrGw4xKFnxua9rGr10krsxJF10yw1agrW2qFnxX3y0vF40
+ 9wn5tw13t3WqyrcCm3ZEXasCq-sJn29KB7ZKAUJUUUU5529EdanIXcx71UUUUU7KY7ZEXa
+ sCq-sGcSsGvfJ3Ic02F40EFcxC0VAKzVAqx4xG6I80ebIjqfuFe4nvWSU5nxnvy29KBjDU
+ 0xBIdaVrnRJUUUkFb4IE77IF4wAFF20E14v26r1j6r4UM7CY07I20VC2zVCF04k26cxKx2
+ IYs7xG6rWj6s0DM7CIcVAFz4kK6r106r15M28lY4IEw2IIxxk0rwA2F7IY1VAKz4vEj48v
+ e4kI8wA2z4x0Y4vE2Ix0cI8IcVAFwI0_Gr0_Xr1l84ACjcxK6xIIjxv20xvEc7CjxVAFwI
+ 0_Gr0_Cr1l84ACjcxK6I8E87Iv67AKxVW8Jr0_Cr1UM28EF7xvwVC2z280aVCY1x0267AK
+ xVW8Jr0_Cr1UM2AIxVAIcxkEcVAq07x20xvEncxIr21l57IF6xkI12xvs2x26I8E6xACxx
+ 1l5I8CrVACY4xI64kE6c02F40Ex7xfMcIj6xIIjxv20xvE14v26r1Y6r17McIj6I8E87Iv
+ 67AKxVWUJVW8JwAm72CE4IkC6x0Yz7v_Jr0_Gr1lF7xvr2IYc2Ij64vIr41l42xK82IYc2
+ Ij64vIr41l4I8I3I0E4IkC6x0Yz7v_Jr0_Gr1lx2IqxVAqx4xG67AKxVWUJVWUGwC20s02
+ 6x8GjcxK67AKxVWUGVWUWwC2zVAF1VAY17CE14v26r126r1DMIIYrxkI7VAKI48JMIIF0x
+ vE2Ix0cI8IcVAFwI0_Jr0_JF4lIxAIcVC0I7IYx2IY6xkF7I0E14v26r1j6r4UMIIF0xvE
+ 42xK8VAvwI8IcIk0rVWUJVWUCwCI42IY6I8E87Iv67AKxVWUJVW8JwCI42IY6I8E87Iv6x
+ kF7I0E14v26r1j6r4UYxBIdaVFxhVjvjDU0xZFpf9x07j1YL9UUUUU=
+Received-SPF: pass client-ip=114.242.206.163; envelope-from=maobibo@loongson.cn;
+ helo=mail.loongson.cn
+X-Spam_score_int: -18
+X-Spam_score: -1.9
 X-Spam_bar: -
-X-Spam_report: (-1.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, FREEMAIL_FORGED_FROMDOMAIN=0.001,
- FREEMAIL_FROM=0.001, HEADER_FROM_DIFFERENT_DOMAINS=0.249,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=no autolearn_force=no
+X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -125,63 +76,240 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi
+Add migration qtest on loongarch64 system, the test passes to run with
+the following result:
+  qemu:qtest+qtest-loongarch64/qtest-loongarch64/migration-test OK 15.94s 9 subtests passed
 
-On Thu, Jun 11, 2026 at 12:01=E2=80=AFPM Akihiko Odaki
-<odaki@rsg.ci.i.u-tokyo.ac.jp> wrote:
->
-> On 2026/06/08 16:16, Marc-Andr=C3=A9 Lureau wrote:
-> > Reported-by: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
-> > Signed-off-by: Marc-Andr=C3=A9 Lureau <marcandre.lureau@redhat.com>
-> > ---
-> >   ui/dbus-console.c | 5 ++++-
-> >   1 file changed, 4 insertions(+), 1 deletion(-)
-> >
-> > diff --git a/ui/dbus-console.c b/ui/dbus-console.c
-> > index 0813a08f85e..f784ccbe572 100644
-> > --- a/ui/dbus-console.c
-> > +++ b/ui/dbus-console.c
-> > @@ -53,6 +53,7 @@ struct _DBusDisplayConsole {
-> >       guint last_x;
-> >       guint last_y;
-> >       Notifier mouse_mode_notifier;
-> > +    QEMUPutLEDEntry *kbd_leds_updated;
-> >   };
-> >
-> >   G_DEFINE_TYPE(DBusDisplayConsole,
-> > @@ -152,6 +153,7 @@ dbus_display_console_dispose(GObject *object)
-> >
-> >       qemu_console_unregister_listener(&ddc->dcl);
-> >       qemu_remove_mouse_mode_change_notifier(&ddc->mouse_mode_notifier)=
-;
-> > +    qemu_remove_led_event_handler(ddc->kbd_leds_updated);
->
-> It is better to avoid call qemu_remove_led_event_handler() here because
-> GObject.ObjectClass.dispose is documented as it may be run multiple
-> times and qemu_remove_led_event_handler() will cause double free if that
-> happens.
->
+Signed-off-by: Bibo Mao <maobibo@loongson.cn>
+---
+v1 ... v2:
+  1. Add SPDX-License in __note in file tests/qtest/migration/Makefile
+  2. Regerate file tests/qtest/migration/loongarch64/a-b-kernel.h with
+     __note information
+---
+ MAINTAINERS                                   |  1 +
+ tests/qtest/meson.build                       |  3 +-
+ tests/qtest/migration/Makefile                |  4 +-
+ tests/qtest/migration/bootfile.c              |  4 ++
+ tests/qtest/migration/bootfile.h              |  4 ++
+ tests/qtest/migration/framework.c             |  6 +++
+ tests/qtest/migration/loongarch64/Makefile    | 20 ++++++++
+ .../qtest/migration/loongarch64/a-b-kernel.S  | 46 +++++++++++++++++++
+ .../qtest/migration/loongarch64/a-b-kernel.h  | 20 ++++++++
+ 9 files changed, 106 insertions(+), 2 deletions(-)
+ create mode 100644 tests/qtest/migration/loongarch64/Makefile
+ create mode 100644 tests/qtest/migration/loongarch64/a-b-kernel.S
+ create mode 100644 tests/qtest/migration/loongarch64/a-b-kernel.h
 
-right, I will use g_clear_pointer (remove NULL is guarded)
+diff --git a/MAINTAINERS b/MAINTAINERS
+index 2b5b581e17..91d72feebe 100644
+--- a/MAINTAINERS
++++ b/MAINTAINERS
+@@ -1359,6 +1359,7 @@ F: hw/intc/loongarch_*.c
+ F: hw/intc/loongson_ipi_common.c
+ F: hw/rtc/ls7a_rtc.c
+ F: gdbstub/gdb-xml/loongarch*.xml
++F: tests/qtest/migration/loongarch64/
+ 
+ M68K Machines
+ -------------
+diff --git a/tests/qtest/meson.build b/tests/qtest/meson.build
+index 45ea497fa5..1636b8616e 100644
+--- a/tests/qtest/meson.build
++++ b/tests/qtest/meson.build
+@@ -154,7 +154,8 @@ qtests_loongarch64 = qtests_filter + \
+   (config_all_devices.has_key('CONFIG_LOONGARCH_VIRT') ? ['numa-test'] : []) + \
+   (unpack_edk2_blobs ? ['bios-tables-test'] : []) + \
+   ['boot-serial-test',
+-   'cpu-plug-test']
++   'cpu-plug-test',
++   'migration-test']
+ 
+ qtests_m68k = ['boot-serial-test'] + \
+   qtests_filter
+diff --git a/tests/qtest/migration/Makefile b/tests/qtest/migration/Makefile
+index c183b69941..626e3974f7 100644
+--- a/tests/qtest/migration/Makefile
++++ b/tests/qtest/migration/Makefile
+@@ -5,7 +5,7 @@
+ # See the COPYING file in the top-level directory.
+ #
+ 
+-TARGET_LIST = i386 aarch64 s390x ppc64
++TARGET_LIST = i386 aarch64 s390x ppc64 loongarch64
+ 
+ SRC_PATH = ../../../..
+ 
+@@ -23,6 +23,8 @@ help:
+ 	@echo " Possible targets are: $(TARGET_LIST)"
+ 
+ override define __note
++/* SPDX-License-Identifier: GPL-2.0-or-later */
++
+ /*
+  * This file is automatically generated from the assembly file in
+  * tests/qtest/migration/$@. Edit that file and then run "make"
+diff --git a/tests/qtest/migration/bootfile.c b/tests/qtest/migration/bootfile.c
+index 479c43231d..e46ad09de7 100644
+--- a/tests/qtest/migration/bootfile.c
++++ b/tests/qtest/migration/bootfile.c
+@@ -19,6 +19,7 @@
+ #include "bootfile.h"
+ #include "i386/a-b-bootblock.h"
+ #include "aarch64/a-b-kernel.h"
++#include "loongarch64/a-b-kernel.h"
+ #include "ppc64/a-b-kernel.h"
+ #include "s390x/a-b-bios.h"
+ 
+@@ -57,6 +58,9 @@ char *bootfile_create(const char *arch, const char *dir, bool suspend_me)
+         content = aarch64_kernel;
+         len = sizeof(aarch64_kernel);
+         g_assert(sizeof(aarch64_kernel) <= ARM_TEST_MAX_KERNEL_SIZE);
++    } else if (strcmp(arch, "loongarch64") == 0) {
++        content = loongarch64_kernel;
++        len = sizeof(loongarch64_kernel);
+     } else {
+         g_assert_not_reached();
+     }
+diff --git a/tests/qtest/migration/bootfile.h b/tests/qtest/migration/bootfile.h
+index 0ce5b34433..a4060ea4f7 100644
+--- a/tests/qtest/migration/bootfile.h
++++ b/tests/qtest/migration/bootfile.h
+@@ -42,6 +42,10 @@
+  */
+ #define ARM_TEST_MAX_KERNEL_SIZE (512 * 1024)
+ 
++/* LoongArch64 */
++#define LOONGARCH_TEST_MEM_START (32 * 1024 * 1024)
++#define LOONGARCH_TEST_MEM_END   (100 * 1024 * 1024)
++
+ #ifndef MIGRATION_GUEST_CODE
+ void bootfile_delete(void);
+ char *bootfile_create(const char *arch, const char *dir, bool suspend_me);
+diff --git a/tests/qtest/migration/framework.c b/tests/qtest/migration/framework.c
+index a9b58d03aa..a830b96f41 100644
+--- a/tests/qtest/migration/framework.c
++++ b/tests/qtest/migration/framework.c
+@@ -360,6 +360,12 @@ int migrate_args(char **from, char **to, MigrateStart *args)
+         arch_opts = g_strdup_printf("-cpu max -kernel %s", bootpath);
+         start_address = ARM_TEST_MEM_START;
+         end_address = ARM_TEST_MEM_END;
++    } else if (strcmp(arch, "loongarch64") == 0) {
++        memory_size = "256M";
++        machine_alias = "virt";
++        arch_opts = g_strdup_printf("-bios %s", bootpath);
++        start_address = LOONGARCH_TEST_MEM_START;
++        end_address = LOONGARCH_TEST_MEM_END;
+     } else {
+         g_assert_not_reached();
+     }
+diff --git a/tests/qtest/migration/loongarch64/Makefile b/tests/qtest/migration/loongarch64/Makefile
+new file mode 100644
+index 0000000000..3c8cfeee86
+--- /dev/null
++++ b/tests/qtest/migration/loongarch64/Makefile
+@@ -0,0 +1,20 @@
++# SPDX-License-Identifier: GPL-2.0-or-later
++
++# To specify cross compiler prefix, use CROSS_PREFIX=
++#   $ make CROSS_PREFIX=loongarch64-linux-gnu-
++
++.PHONY: all clean
++all: a-b-kernel.h
++
++a-b-kernel.h: loongarch64.kernel
++	echo "$$__note" > $@
++	xxd -i $< | sed -e 's/.*int.*//' >> $@
++
++loongarch64.kernel: loongarch64.elf
++	$(CROSS_PREFIX)objcopy -j .text -O binary $< $@
++
++loongarch64.elf: a-b-kernel.S
++	$(CROSS_PREFIX)gcc -o $@ -nostdlib -Wl,--build-id=none $<
++
++clean:
++	$(RM) *.kernel *.elf
+diff --git a/tests/qtest/migration/loongarch64/a-b-kernel.S b/tests/qtest/migration/loongarch64/a-b-kernel.S
+new file mode 100644
+index 0000000000..577d4b238c
+--- /dev/null
++++ b/tests/qtest/migration/loongarch64/a-b-kernel.S
+@@ -0,0 +1,46 @@
++/* SPDX-License-Identifier: GPL-2.0-or-later */
++
++#include "../bootfile.h"
++
++#define LOONGARCH_CSR_CRMD          0
++#define LOONGARCH_VIRT_UART         0x1FE001E0
++.section .text
++
++    .globl  _start
++_start:
++    /* output char 'A' to UART16550 */
++    li.d    $t0, LOONGARCH_VIRT_UART
++    li.w    $t1, 'A'
++    st.b    $t1, $t0, 0
++
++    /* traverse test memory region */
++    li.d    $t0, LOONGARCH_TEST_MEM_START
++    li.d    $t1, LOONGARCH_TEST_MEM_END
++    li.d    $t2, TEST_MEM_PAGE_SIZE
++    li.d    $t4, LOONGARCH_VIRT_UART
++    li.w    $t5, 'B'
++
++clean:
++    st.b    $zero, $t0, 0
++    add.d   $t0,   $t0, $t2
++    bne     $t0,   $t1, clean
++    /* keeps a counter so we can limit the output speed */
++    addi.d  $t6,   $zero, 0
++
++mainloop:
++    li.d    $t0, LOONGARCH_TEST_MEM_START
++
++innerloop:
++    ld.bu   $t3, $t0, 0
++    addi.w  $t3, $t3, 1
++    ext.w.b $t3, $t3
++    st.b    $t3, $t0, 0
++    add.d   $t0, $t0, $t2
++    bne     $t0, $t1, innerloop
++
++    addi.d  $t6, $t6, 1
++    andi    $t6, $t6, 31
++    bnez    $t6, mainloop
++
++    st.b    $t5, $t4, 0
++    b       mainloop
+diff --git a/tests/qtest/migration/loongarch64/a-b-kernel.h b/tests/qtest/migration/loongarch64/a-b-kernel.h
+new file mode 100644
+index 0000000000..6d5d811f79
+--- /dev/null
++++ b/tests/qtest/migration/loongarch64/a-b-kernel.h
+@@ -0,0 +1,20 @@
++/* SPDX-License-Identifier: GPL-2.0-or-later */
++
++/*
++ * This file is automatically generated from the assembly file in
++ * tests/qtest/migration/loongarch64. Edit that file and then run "make"
++ * inside tests/qtest/migration to update, and then remember to send both
++ * the header and the assembler differences in your patch submission.
++ */
++unsigned char loongarch64_kernel[] = {
++  0x0c, 0xc0, 0x3f, 0x14, 0x8c, 0x81, 0x87, 0x03, 0x0d, 0x04, 0x81, 0x03,
++  0x8d, 0x01, 0x00, 0x29, 0x0c, 0x00, 0x04, 0x14, 0x0d, 0x80, 0x0c, 0x14,
++  0x2e, 0x00, 0x00, 0x14, 0x10, 0xc0, 0x3f, 0x14, 0x10, 0x82, 0x87, 0x03,
++  0x11, 0x08, 0x81, 0x03, 0x80, 0x01, 0x00, 0x29, 0x8c, 0xb9, 0x10, 0x00,
++  0x8d, 0xf9, 0xff, 0x5f, 0x12, 0x00, 0xc0, 0x02, 0x0c, 0x00, 0x04, 0x14,
++  0x8f, 0x01, 0x00, 0x2a, 0xef, 0x05, 0x80, 0x02, 0xef, 0x5d, 0x00, 0x00,
++  0x8f, 0x01, 0x00, 0x29, 0x8c, 0xb9, 0x10, 0x00, 0x8d, 0xed, 0xff, 0x5f,
++  0x52, 0x06, 0xc0, 0x02, 0x52, 0x7e, 0x40, 0x03, 0x5f, 0xde, 0xff, 0x47,
++  0x11, 0x02, 0x00, 0x29, 0xff, 0xd7, 0xff, 0x53
++};
++
 
-> Regards,
-> Akihiko Odaki
->
-> >       g_clear_object(&ddc->iface_touch);
-> >       g_clear_object(&ddc->iface_mouse);
-> >       g_clear_object(&ddc->iface_kbd);
-> > @@ -578,7 +580,8 @@ dbus_display_console_new(DBusDisplay *display, Qemu=
-Console *con)
-> >
-> >       ddc->kbd =3D qkbd_state_init(con);
-> >       ddc->iface_kbd =3D qemu_dbus_display1_keyboard_skeleton_new();
-> > -    qemu_add_led_event_handler(dbus_kbd_qemu_leds_updated, ddc);
-> > +    ddc->kbd_leds_updated =3D qemu_add_led_event_handler(
-> > +        dbus_kbd_qemu_leds_updated, ddc);
-> >       g_object_connect(ddc->iface_kbd,
-> >           "swapped-signal::handle-press", dbus_kbd_press, ddc,
-> >           "swapped-signal::handle-release", dbus_kbd_release, ddc,
-> >
->
->
+base-commit: 10a9fa0065a3cd3dcf12e2eae6b8caaac6ecdec7
+-- 
+2.54.0
+
 
