@@ -4,43 +4,44 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 95B9DCD8CB9
-	for <qemu-devel@archiver.kernel.org>; Thu, 11 Jun 2026 06:37:28 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 67304CD8CB9
+	for <qemu-devel@archiver.kernel.org>; Thu, 11 Jun 2026 06:37:35 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wXZ25-0002hC-Fw; Thu, 11 Jun 2026 02:36:53 -0400
+	id 1wXZ25-0002h4-F3; Thu, 11 Jun 2026 02:36:53 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <odaki@rsg.ci.i.u-tokyo.ac.jp>)
- id 1wXZ1s-0002Zq-5Z; Thu, 11 Jun 2026 02:36:40 -0400
+ id 1wXZ1t-0002a3-0C; Thu, 11 Jun 2026 02:36:41 -0400
 Received: from www3579.sakura.ne.jp ([49.212.243.89])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <odaki@rsg.ci.i.u-tokyo.ac.jp>)
- id 1wXZ1o-0002at-PF; Thu, 11 Jun 2026 02:36:39 -0400
+ id 1wXZ1o-0002av-OF; Thu, 11 Jun 2026 02:36:40 -0400
 Received: from h183.csg.ci.i.u-tokyo.ac.jp (h183.csg.ci.i.u-tokyo.ac.jp
  [133.11.54.183]) (authenticated bits=0)
- by www3579.sakura.ne.jp (8.16.1/8.16.1) with ESMTPSA id 65B6ZnFN023462
+ by www3579.sakura.ne.jp (8.16.1/8.16.1) with ESMTPSA id 65B6ZnFM023462
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NO);
  Thu, 11 Jun 2026 15:35:59 +0900 (JST)
  (envelope-from odaki@rsg.ci.i.u-tokyo.ac.jp)
-DKIM-Signature: a=rsa-sha256; bh=3u8QwhLa+X7Oh5rryZcKTj0YlBRGjYHqyTP8c2+QAnA=; 
+DKIM-Signature: a=rsa-sha256; bh=aXY+9PaZ9XaHKvBSIeH+b5AgPj/NnaHzLDwsmvH8hlQ=; 
  c=relaxed/relaxed; d=rsg.ci.i.u-tokyo.ac.jp;
  h=From:Message-Id:To:Subject:Date;
- s=rs20250326; t=1781159760; v=1;
- b=l3MckvaR+jjB+gxr4qMCvp0L4HDZC7yXAakbX0+Hf6h+bX1npV2VIT3hGCaWQnec
- 6azY+OdaWeTxSM/bLJzfaCtkpnZeYFzPTyJqf8p1/JnaHwWarTCqRZE4TfPWyHXk
- 67xYNTe6V9EnbW3t2qdDswyGtIHXaG6kVISnymqUEjg6L68EyshP7OT+iXTNpw0k
- jzquwB9O4VIryFX5y8y3Ibf/tiiRrURCUMMrgt5XJ9j2ui0BDIuaZmm7TdUHrsqx
- LlWIqVgf3waBxgJ6tjpBKdWH8dRM96gsiTf6iBq9Zp/9gimanF3XL4Sd14AtMI6L
- yBa84PPAiDNLNwMxwuZkxg==
+ s=rs20250326; t=1781159759; v=1;
+ b=abu4GAEI/P1NSGdIuUf+LkZxJ9arCs1yM0WmvQC22lVukFMsafVQiyBskXulpTEa
+ QFlcZDFxcxcLBuXmNOqo2ulBDLK9Zop1QUDuKIm+ZDQ3+cpnTBKOtwLi6RLg7PFO
+ 46vO1YoXM9DePYwhUsZdMFmUB87WBxv3fblz9fiJstitAdb5lr6LBpTGtgpwzk9e
+ FnD1lKU9Zd4bRui5tRKhB6km+2fFNZGaiEgTIrl7bvZQ2/FMgziCYDvr9cS5xuxz
+ msA2DGW9Si7chAeX3eKHvXpIjzKbJ46q/YigcI2DjnOKOZ5AOAHtjkSFRQagRJ51
+ +GeF8IppeFQtrtMu6KA62g==
 From: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
-Date: Thu, 11 Jun 2026 15:35:50 +0900
-Subject: [PATCH 3/3] migration/ram: Abort on unsupported migratable RAM changes
+Date: Thu, 11 Jun 2026 15:35:49 +0900
+Subject: [PATCH 2/3] system/physmem: Notify RAMBlock migratable and idstr
+ changes
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20260611-ram-v1-3-a2dacf699718@rsg.ci.i.u-tokyo.ac.jp>
+Message-Id: <20260611-ram-v1-2-a2dacf699718@rsg.ci.i.u-tokyo.ac.jp>
 References: <20260611-ram-v1-0-a2dacf699718@rsg.ci.i.u-tokyo.ac.jp>
 In-Reply-To: <20260611-ram-v1-0-a2dacf699718@rsg.ci.i.u-tokyo.ac.jp>
 To: qemu-devel@nongnu.org
@@ -57,13 +58,13 @@ Cc: Kevin Wolf <kwolf@redhat.com>, Hanna Reitz <hreitz@redhat.com>,
  qemu-block@nongnu.org, xen-devel@lists.xenproject.org,
  kvm@vger.kernel.org, Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
 X-Mailer: b4 0.16-dev-16047
-X-Developer-Signature: v=1; a=openpgp-sha256; l=9885;
+X-Developer-Signature: v=1; a=openpgp-sha256; l=4261;
  i=odaki@rsg.ci.i.u-tokyo.ac.jp; h=from:subject:message-id;
- bh=+TuMv/ELGdVJRpszAAUj/bwg+XvQHvHbSPOG4nbU0t8=;
- b=owGbwMvMwCWmMbc20y1CyJDxtFoSQ5ZWuO+MtKV+dtUsMla1ZbMW7amT33K7Nbh7Xc+UJLsI7
- 8y1tns7SlkYxLgYZMUUWVKKdnNrRNd+KkyIb4GZw8oEMoSBi1MAJlKzmuF/vTTnxG7WhVrMVW5K
- mS/XOeT++JzFNUV3cq5fv++dRo4SRoZeo7n35FndvdiffJJJu/PEJbFaW7vTeUnkS4N37zWlZ/E
- CAA==
+ bh=QBBxWW4P2EOIbBSc38NXTlVjZmTEVPegIdLf55t33Pg=;
+ b=owGbwMvMwCWmMbc20y1CyJDxtFoSQ5ZWuE/SPP21AppC647OfWojwvszKfyx32yd33uyFScEF
+ XTz6j7qKGVhEONikBVTZEkp2s2tEV37qTAhvgVmDisTyBAGLk4BmEjYa4b/iXJikZXL8vYxWvQ9
+ 73hUPLtWf8ISdZ6ZnA38Df0NWlGrGBm2SB7ytVy0e8HWD4+/PitSz5ZfwHeh+UPomqS/1vtm12z
+ hAwA=
 X-Developer-Key: i=odaki@rsg.ci.i.u-tokyo.ac.jp; a=openpgp;
  fpr=AEDC03C9AF734F2EC26A7BFFA4BAEAA73536753C
 Received-SPF: pass client-ip=49.212.243.89;
@@ -89,279 +90,122 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-ram_mig_ram_block_resized() already aborts migration when migratable RAM
-is resized. Extend the same handling to other unsupported changes to the
-migratable RAMBlock set, such as removing a migratable RAMBlock, changing
-a RAMBlock's migratable state, or setting a RAMBlock's idstr.
+The RAM migration code assumes that the set of migratable RAMBlocks and
+their idstr values do not change while migration is running. Add
+RAMBlockNotifier callbacks for RAM_MIGRATABLE flag and idstr changes so
+migration can detect attempts to make such changes at runtime and abort
+with a clear error.
 
 Signed-off-by: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
 ---
- include/migration/misc.h |   2 +-
- migration/ram.c          | 117 ++++++++++++++++++++++++++++++++++++++++-------
- 2 files changed, 102 insertions(+), 17 deletions(-)
+ include/system/ramlist.h |  6 ++++++
+ hw/core/numa.c           | 36 ++++++++++++++++++++++++++++++++++++
+ system/physmem.c         |  9 +++++++++
+ 3 files changed, 51 insertions(+)
 
-diff --git a/include/migration/misc.h b/include/migration/misc.h
-index 3159a5e53c3c..91015524a83d 100644
---- a/include/migration/misc.h
-+++ b/include/migration/misc.h
-@@ -40,7 +40,7 @@ void precopy_remove_notifier(NotifierWithReturn *n);
- int precopy_notify(PrecopyNotifyReason reason, Error **errp);
+diff --git a/include/system/ramlist.h b/include/system/ramlist.h
+index 32157cc84305..e96de5573eed 100644
+--- a/include/system/ramlist.h
++++ b/include/system/ramlist.h
+@@ -66,6 +66,9 @@ struct RAMBlockNotifier {
+                             void *host, size_t size, size_t max_size);
+     void (*ram_block_removed)(RAMBlockNotifier *n, const RAMBlock *rb,
+                               void *host, size_t size, size_t max_size);
++    void (*ram_block_set_migratable)(RAMBlockNotifier *n, const RAMBlock *rb);
++    void (*ram_block_unset_migratable)(RAMBlockNotifier *n, const RAMBlock *rb);
++    void (*ram_block_set_idstr)(RAMBlockNotifier *n, const RAMBlock *rb);
+     void (*ram_block_resized)(RAMBlockNotifier *n, RAMBlock *rb,
+                               size_t new_size);
+     QLIST_ENTRY(RAMBlockNotifier) next;
+@@ -81,6 +84,9 @@ void ram_block_notify_add(const RAMBlock *rb,
+                           void *host, size_t size, size_t max_size);
+ void ram_block_notify_remove(const RAMBlock *rb,
+                              void *host, size_t size, size_t max_size);
++void ram_block_notify_set_migratable(const RAMBlock *rb);
++void ram_block_notify_unset_migratable(const RAMBlock *rb);
++void ram_block_notify_set_idstr(const RAMBlock *rb);
+ void ram_block_notify_resize(RAMBlock *rb, size_t new_size);
  
- void qemu_guest_free_page_hint(void *addr, size_t len);
--bool migrate_ram_is_ignored(RAMBlock *block);
-+bool migrate_ram_is_ignored(const RAMBlock *block);
- 
- /* migration/block.c */
- 
-diff --git a/migration/ram.c b/migration/ram.c
-index 6bc7f705d31a..eb761644520f 100644
---- a/migration/ram.c
-+++ b/migration/ram.c
-@@ -224,7 +224,7 @@ static bool postcopy_preempt_active(void)
-     return migrate_postcopy_preempt() && migration_in_postcopy();
+ GString *ram_block_format(void);
+diff --git a/hw/core/numa.c b/hw/core/numa.c
+index 40acb98bdd0b..0685cd1c6ccc 100644
+--- a/hw/core/numa.c
++++ b/hw/core/numa.c
+@@ -887,6 +887,42 @@ void ram_block_notify_remove(const RAMBlock *rb,
+     }
  }
  
--bool migrate_ram_is_ignored(RAMBlock *block)
-+bool migrate_ram_is_ignored(const RAMBlock *block)
++void ram_block_notify_set_migratable(const RAMBlock *rb)
++{
++    RAMBlockNotifier *notifier;
++    RAMBlockNotifier *next;
++
++    QLIST_FOREACH_SAFE(notifier, &ram_list.ramblock_notifiers, next, next) {
++        if (notifier->ram_block_set_migratable) {
++            notifier->ram_block_set_migratable(notifier, rb);
++        }
++    }
++}
++
++void ram_block_notify_unset_migratable(const RAMBlock *rb)
++{
++    RAMBlockNotifier *notifier;
++    RAMBlockNotifier *next;
++
++    QLIST_FOREACH_SAFE(notifier, &ram_list.ramblock_notifiers, next, next) {
++        if (notifier->ram_block_unset_migratable) {
++            notifier->ram_block_unset_migratable(notifier, rb);
++        }
++    }
++}
++
++void ram_block_notify_set_idstr(const RAMBlock *rb)
++{
++    RAMBlockNotifier *notifier;
++    RAMBlockNotifier *next;
++
++    QLIST_FOREACH_SAFE(notifier, &ram_list.ramblock_notifiers, next, next) {
++        if (notifier->ram_block_set_idstr) {
++            notifier->ram_block_set_idstr(notifier, rb);
++        }
++    }
++}
++
+ void ram_block_notify_resize(RAMBlock *rb, size_t new_size)
  {
-     MigMode mode = migrate_mode();
-     return !qemu_ram_is_migratable(block) ||
-@@ -364,6 +364,12 @@ struct RAMSrcPageRequest {
-     QSIMPLEQ_ENTRY(RAMSrcPageRequest) next_req;
- };
+     RAMBlockNotifier *notifier;
+diff --git a/system/physmem.c b/system/physmem.c
+index 6d00e99270c7..83c9243236a5 100644
+--- a/system/physmem.c
++++ b/system/physmem.c
+@@ -1911,11 +1911,17 @@ bool qemu_ram_is_migratable(const RAMBlock *rb)
  
-+typedef enum RAMStateStage {
-+    RAM_STATE_STAGE_ITERATING,
-+    RAM_STATE_STAGE_COMPLETING,
-+    RAM_STATE_STAGE_COMPLETED,
-+} RAMStateStage;
-+
- /* State of RAM for migration */
- struct RAMState {
-     /*
-@@ -398,8 +404,8 @@ struct RAMState {
-     uint64_t xbzrle_bytes_prev;
-     /* Are we really using XBZRLE (e.g., after the first round). */
-     bool xbzrle_started;
--    /* Are we on the last stage of migration */
--    bool last_stage;
-+    /* Migration stage */
-+    RAMStateStage stage;
- 
-     /* total handled target pages at the beginning of period */
-     uint64_t target_page_count_prev;
-@@ -635,7 +641,7 @@ static int save_xbzrle_page(RAMState *rs, PageSearchStatus *pss,
- 
-     if (!cache_is_cached(XBZRLE.cache, current_addr, generation)) {
-         xbzrle_counters.cache_miss++;
--        if (!rs->last_stage) {
-+        if (rs->stage == RAM_STATE_STAGE_ITERATING) {
-             if (cache_insert(XBZRLE.cache, current_addr, *current_data,
-                              generation) == -1) {
-                 return -1;
-@@ -674,7 +680,7 @@ static int save_xbzrle_page(RAMState *rs, PageSearchStatus *pss,
-      * Update the cache contents, so that it corresponds to the data
-      * sent, in all cases except where we skip the page.
-      */
--    if (!rs->last_stage && encoded_len != 0) {
-+    if (rs->stage == RAM_STATE_STAGE_ITERATING && encoded_len != 0) {
-         memcpy(prev_cached_page, XBZRLE.current_buf, TARGET_PAGE_SIZE);
-         /*
-          * In the case where we couldn't compress, ensure that the caller
-@@ -840,7 +846,8 @@ static inline bool migration_bitmap_clear_dirty(RAMState *rs,
-      *
-      * Do the same for postcopy due to the same reason.
-      */
--    if (!rs->last_stage && !migration_in_postcopy()) {
-+    if (rs->stage == RAM_STATE_STAGE_ITERATING &&
-+        !migration_in_postcopy()) {
-         /*
-          * Clear dirty bitmap if needed.  This _must_ be called before we
-          * send any of the page in the chunk because we need to make sure
-@@ -1316,7 +1323,7 @@ static int ram_save_page(RAMState *rs, PageSearchStatus *pss)
-     if (rs->xbzrle_started && !migration_in_postcopy()) {
-         pages = save_xbzrle_page(rs, pss, &p, current_addr,
-                                  block, offset);
--        if (!rs->last_stage) {
-+        if (rs->stage == RAM_STATE_STAGE_ITERATING) {
-             /* Can't send this cached data async, since the cache page
-              * might get updated before it gets to the wire
-              */
-@@ -2920,6 +2927,8 @@ static void ram_state_resume_prepare(RAMState *rs, QEMUFile *out)
-     RAMBlock *block;
-     uint64_t pages = 0;
- 
-+    rs->stage = RAM_STATE_STAGE_ITERATING;
-+
-     /*
-      * Postcopy is not using xbzrle/compression, so no need for that.
-      * Also, since source are already halted, we don't need to care
-@@ -3373,7 +3382,9 @@ static int ram_save_complete(QEMUFile *f, void *opaque)
- 
-     trace_ram_save_complete(rs->migration_dirty_pages, 0);
- 
--    rs->last_stage = !migration_in_colo_state();
-+    if (!migration_in_colo_state()) {
-+        rs->stage = RAM_STATE_STAGE_COMPLETING;
-+    }
- 
-     WITH_RCU_READ_LOCK_GUARD() {
-         if (!migration_in_postcopy()) {
-@@ -3383,7 +3394,7 @@ static int ram_save_complete(QEMUFile *f, void *opaque)
-         ret = rdma_registration_start(f, RAM_CONTROL_FINISH);
-         if (ret < 0) {
-             qemu_file_set_error(f, ret);
--            return ret;
-+            goto err;
-         }
- 
-         /* try transferring iterative blocks of memory */
-@@ -3400,7 +3411,8 @@ static int ram_save_complete(QEMUFile *f, void *opaque)
-             }
-             if (pages < 0) {
-                 qemu_mutex_unlock(&rs->bitmap_mutex);
--                return pages;
-+                ret = pages;
-+                goto err;
-             }
-         }
-         qemu_mutex_unlock(&rs->bitmap_mutex);
-@@ -3408,7 +3420,7 @@ static int ram_save_complete(QEMUFile *f, void *opaque)
-         ret = rdma_registration_stop(f, RAM_CONTROL_FINISH);
-         if (ret < 0) {
-             qemu_file_set_error(f, ret);
--            return ret;
-+            goto err;
-         }
-     }
- 
-@@ -3419,7 +3431,7 @@ static int ram_save_complete(QEMUFile *f, void *opaque)
-          */
-         ret = multifd_ram_flush_and_sync(f);
-         if (ret < 0) {
--            return ret;
-+            goto err;
-         }
-     }
- 
-@@ -3428,10 +3440,10 @@ static int ram_save_complete(QEMUFile *f, void *opaque)
- 
-         if (qemu_file_get_error(f)) {
-             Error *local_err = NULL;
--            int err = qemu_file_get_error_obj(f, &local_err);
-+            ret = -qemu_file_get_error_obj(f, &local_err);
- 
-             error_reportf_err(local_err, "Failed to write bitmap to file: ");
--            return -err;
-+            goto err;
-         }
-     }
- 
-@@ -3439,7 +3451,14 @@ static int ram_save_complete(QEMUFile *f, void *opaque)
- 
-     trace_ram_save_complete(rs->migration_dirty_pages, 1);
- 
--    return qemu_fflush(f);
-+    ret = qemu_fflush(f);
-+
-+err:
-+    if (!migration_in_colo_state()) {
-+        rs->stage = RAM_STATE_STAGE_COMPLETED;
-+    }
-+
-+    return ret;
- }
- 
- static void ram_state_pending(void *opaque, MigPendingData *pending,
-@@ -4699,6 +4718,68 @@ static SaveVMHandlers savevm_ram_handlers = {
-     .save_postcopy_prepare = ram_save_postcopy_prepare,
- };
- 
-+static bool ram_migration_is_running(void)
-+{
-+    return ram_state && ram_state->stage != RAM_STATE_STAGE_COMPLETED;
-+}
-+
-+static void ram_mig_ram_block_set_migratable(RAMBlockNotifier *n,
-+                                             const RAMBlock *rb)
-+{
-+    Error *err = NULL;
-+
-+    if (!ram_migration_is_running()) {
-+        return;
-+    }
-+
-+    error_setg(&err, "RAM block '%s' set migratable during precopy.",
-+               rb->idstr);
-+    migrate_error_propagate(migrate_get_current(), err);
-+    migration_cancel();
-+}
-+
-+static void ram_mig_ram_block_unset_migratable(RAMBlockNotifier *n,
-+                                               const RAMBlock *rb)
-+{
-+    Error *err = NULL;
-+
-+    if (!ram_migration_is_running()) {
-+        return;
-+    }
-+
-+    error_setg(&err, "RAM block '%s' unset migratable during precopy.",
-+               rb->idstr);
-+    migrate_error_propagate(migrate_get_current(), err);
-+    migration_cancel();
-+}
-+
-+static void ram_mig_ram_block_set_idstr(RAMBlockNotifier *n, const RAMBlock *rb)
-+{
-+    Error *err = NULL;
-+
-+    if (!ram_migration_is_running() || migrate_ram_is_ignored(rb)) {
-+        return;
-+    }
-+
-+    error_setg(&err, "RAM block idstr set during precopy.");
-+    migrate_error_propagate(migrate_get_current(), err);
-+    migration_cancel();
-+}
-+
-+static void ram_mig_ram_block_removed(RAMBlockNotifier *n, const RAMBlock *rb,
-+                                      void *host, size_t size, size_t max_size)
-+{
-+    Error *err = NULL;
-+
-+    if (!rb || !ram_migration_is_running() || migrate_ram_is_ignored(rb)) {
-+        return;
-+    }
-+
-+    error_setg(&err, "RAM block '%s' removed during precopy.", rb->idstr);
-+    migrate_error_propagate(migrate_get_current(), err);
-+    migration_cancel();
-+}
-+
- static void ram_mig_ram_block_resized(RAMBlockNotifier *n, RAMBlock *rb,
-                                       size_t new_size)
+ void qemu_ram_set_migratable(RAMBlock *rb)
  {
-@@ -4710,7 +4791,7 @@ static void ram_mig_ram_block_resized(RAMBlockNotifier *n, RAMBlock *rb,
-         return;
-     }
- 
--    if (migration_is_running()) {
-+    if (ram_migration_is_running()) {
-         /*
-          * Precopy code on the source cannot deal with the size of RAM blocks
-          * changing at random points in time - especially after sending the
-@@ -4754,6 +4835,10 @@ static void ram_mig_ram_block_resized(RAMBlockNotifier *n, RAMBlock *rb,
++    /* Notify before modifying the ram block. */
++    ram_block_notify_set_migratable(rb);
++
+     rb->flags |= RAM_MIGRATABLE;
  }
  
- static RAMBlockNotifier ram_mig_ram_notifier = {
-+    .ram_block_removed = ram_mig_ram_block_removed,
-+    .ram_block_set_migratable = ram_mig_ram_block_set_migratable,
-+    .ram_block_unset_migratable = ram_mig_ram_block_unset_migratable,
-+    .ram_block_set_idstr = ram_mig_ram_block_set_idstr,
-     .ram_block_resized = ram_mig_ram_block_resized,
- };
+ void qemu_ram_unset_migratable(RAMBlock *rb)
+ {
++    /* Notify before modifying the ram block. */
++    ram_block_notify_unset_migratable(rb);
++
+     rb->flags &= ~RAM_MIGRATABLE;
+ }
  
+@@ -1937,6 +1943,9 @@ void qemu_ram_set_idstr(RAMBlock *new_block, const char *name, DeviceState *dev)
+     assert(new_block);
+     assert(!new_block->idstr[0]);
+ 
++    /* Notify before modifying the ram block. */
++    ram_block_notify_set_idstr(new_block);
++
+     if (dev) {
+         char *id = qdev_get_dev_path(dev);
+         if (id) {
 
 -- 
 2.54.0
