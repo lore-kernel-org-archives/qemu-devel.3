@@ -4,69 +4,69 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8DCEFCD98D2
-	for <qemu-devel@archiver.kernel.org>; Thu, 11 Jun 2026 10:51:56 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A0F47CD98D5
+	for <qemu-devel@archiver.kernel.org>; Thu, 11 Jun 2026 10:52:17 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wXd00-0006OL-I5; Thu, 11 Jun 2026 06:51:00 -0400
+	id 1wXczu-0006N1-DQ; Thu, 11 Jun 2026 06:50:54 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <max.chou@sifive.com>)
- id 1wXczt-0006N0-Q0
- for qemu-devel@nongnu.org; Thu, 11 Jun 2026 06:50:54 -0400
-Received: from mail-pg1-x534.google.com ([2607:f8b0:4864:20::534])
+ id 1wXczr-0006Mc-PZ
+ for qemu-devel@nongnu.org; Thu, 11 Jun 2026 06:50:52 -0400
+Received: from mail-pf1-x431.google.com ([2607:f8b0:4864:20::431])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <max.chou@sifive.com>)
- id 1wXczr-0002Zn-HX
- for qemu-devel@nongnu.org; Thu, 11 Jun 2026 06:50:53 -0400
-Received: by mail-pg1-x534.google.com with SMTP id
- 41be03b00d2f7-c8585ecdd71so2826124a12.0
- for <qemu-devel@nongnu.org>; Thu, 11 Jun 2026 03:50:50 -0700 (PDT)
+ id 1wXczo-0002ZI-OI
+ for qemu-devel@nongnu.org; Thu, 11 Jun 2026 06:50:51 -0400
+Received: by mail-pf1-x431.google.com with SMTP id
+ d2e1a72fcca58-8424b6792efso2979078b3a.3
+ for <qemu-devel@nongnu.org>; Thu, 11 Jun 2026 03:50:47 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=sifive.com; s=google; t=1781175049; x=1781779849; darn=nongnu.org;
+ d=sifive.com; s=google; t=1781175046; x=1781779846; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=2Xf9EbghDu/+zZl90ZvHLbea7KFL5XQwN2Ha8WN4yyc=;
- b=Db4wstDhd+zZIABxHrcKVtSfqpN6vb3oCrDdcs2+4Gf4T3vtIypvwK++pc46Hr3nEg
- OT5RJH01Rz3Zbir32L1o11etodDAskvpvl2d2oE6zd9FW843fj5c/lfiB2H3DQ5e8/9v
- YibeKfosTUDtidozDxYBr4iNj/qrsj/a8RhlUgzYOBG1yTKXwXTnq1Wwg8QfDWBuGuEb
- UvLr7/K0yaXOW9lcdy2zuOh5SlBXha10B8bbEWoOSJfDtAGCdD87zBrTo7DZJ37YWmyv
- BKbsGA5oSeULRHjQXfC8bgqNqnTLPi9BLHLwIlEMxuFZwPsGdrCXr93dZ12Vd7q0U55b
- thmg==
+ bh=EB4vUS8V/rcoRmWn/J7LdW4MRxw5jGr7RoFTkTMk0Uo=;
+ b=OmjijoichJr8hWj4EZhmQQCS5qnsHVSjowsTpe0bPBcmw2NohFeXhHzzpiUePQRklg
+ U+8CjO04X5SIuNiyXrlME6AeN5oyrprLDlWWuwiG2J1p7sb9Ors5OXI50+phIWbrO+uA
+ m9HtASg8nSm9ljdZlMup3UQF6lKuS34KcCH9KsksS+Z9/8sYAKQT4AfJazWo4ZJfFLgl
+ l051xwOVoCxlTjsjc3InXYjVhYuXMMkoD/+IurGBIrN5ZmjIl7oMYGCJIYC8v+ePiQoN
+ XlH9PGww61IPFhFeh7oTyc2uILIvlWdsuuea57AyCtmO9aSXrLs+/OKT/Zk07hYh2woy
+ +eiQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1781175049; x=1781779849;
+ d=1e100.net; s=20251104; t=1781175046; x=1781779846;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to;
- bh=2Xf9EbghDu/+zZl90ZvHLbea7KFL5XQwN2Ha8WN4yyc=;
- b=EJcxuSfKJqJRN88vrgiYmCFV+EfW3NQPqKwHDpqh3DDQjc0dF/+rTeafqvC2/sS3wi
- UH+DZJqzZewNFvo2fl+6tdSKHVQ6MpZYOQSncNfOGFk+QHRykCZLy/yJ9YKOcgBpoYXR
- i7zCgSESo9AYhMwg4SIcyoVe3bz5QO7vG9mFIz+7yXP5bJOB1VAEubCc51uRekUm67/b
- Q61657ByubLCUfXznwW4gDHMtFkCdy/pPFLyUZ2apoXMhLeH2JbLVilghy8YrJwtc7Pa
- YqUBJUhQSwyReBY9vE2ItTyS+p3MuUvsfaE/GMv5FZz0aj7x70YeGHbhLXqIqdnTO4vV
- MRlA==
-X-Gm-Message-State: AOJu0YwweAMl5Bmqlhuie2rBL3H6GhPb6Uqh9KhLnNCYsudky1iO6GwK
- OATOloHNSPaKVQqYu0Ne3ReXnZ5o5rvp4wKR1e0VD3QhshdgXoZl2UgMH7CwTS41kxtueR7G4n+
- D1HOyWTXgW9OKOhoTz+H1y7W4+X7qnEz6KLGPZaDXyUcXnXxM9RPSfQ2/8pR2tqAB/fhYGrucb9
- VgJXHVcR8RGmLyv/Llc0B/ga/pRILeVsRhbZ+JJqM=
-X-Gm-Gg: Acq92OGPXeqAlVc3CQrH1ubN0bSy+9XYaPto4rjFUXUuXiaZbcoQ0O4hyfulmGqSyD6
- QhsW5+sZMlB5s4FNfVRc0EAKc8cSwlCoXZvbj4k5UdVkKUyI60MzMWaSoL0vM2pqx3vieLVPUKo
- RQrRInRLmP1baALacuE65lu3W4PzbIdUM50gWTafELRrbTBDiC1eZg2ZlpfLpsG8kdacoUBs93e
- ebrzGSaQQeGTPu5t8fnrbs7F4mLlDCZPE7BgmQOBYYHKYg3vH3joeS33seGfeCgmOYGk+gpEBUX
- 50Hke0aYv/Met0/yP8UR0yCpeVEaKLQq0S+5l5dW3gG+X/Td5X8XVoYzGF82QWfTcP1EiDzgcaA
- ShnaRFP+7hvZ2i5p6mecEtQZqWwaNEVHDD0UHZKYWYcD7KxWYi0qcJrMq1weBvy9P3udwGKmaPM
- eQY/yc8MNNIoMdNEoP6SmFtuOEz4IY8E219LEG6ERfC3NugCbf9WqHyTYQRQJEcWUlKQGJBymg0
- stYajjo1eaSR98t1c6op6fVBR3AzhaZNdCfKVedx+aPOKoT
-X-Received: by 2002:a05:6a00:8087:b0:842:4982:82a with SMTP id
- d2e1a72fcca58-84336bcdfe8mr2560978b3a.45.1781175048752; 
- Thu, 11 Jun 2026 03:50:48 -0700 (PDT)
+ bh=EB4vUS8V/rcoRmWn/J7LdW4MRxw5jGr7RoFTkTMk0Uo=;
+ b=LEqakizs435O2B3jt9Ami5EwhP5DFDw33oYoQk0i3IMJd7PlntXxvhObnXdwvGPgrJ
+ 9DrfyMFiTXP/Fi1u6r5GAp/W83uE2RlA4DYVbt1/u6yIPX1cBZN1jhUFSL713CDP+MFy
+ N9jpq2DEZ3Blj1y+gurhdZ4adB9GEDxai8ORwf8bAU3mEKvfReOyFxR0AIljE8HimqNn
+ ND1TY5jgjA/oYfX1b5t+VHU8j2q47hJVWmKc1pdFwd6/7E+FiwnZqOsks2ELFhD2Q9NL
+ OzC5v2uFlfKtyQjwfQnmj6R99QXWQJlpoS/sTMt2R97kFq2WHkNDeeWKtFUxm4gPHI9C
+ AGeQ==
+X-Gm-Message-State: AOJu0Yx9H7hI0Wd3jxyx4BEHe+qf/Qw/azFqRBoIJH3EiXzqCo/CQeel
+ zMuDwpAwd3qsTykCTiDMU6kTJVt6ADtePXd29JXDC1k3f7nGl/60pGSCwv+Q3vW63hhmWqY7gRx
+ rNghMGkkAF8nUG3SV31KUANHwwewptTEvFNNo6Yv62H3i5AnH76X6HM78VHw7pgioXxKYKhTa4T
+ 25DAgirTqrvwt7+nIttvn5xJLxAZ/LtkrVDF5kAdI=
+X-Gm-Gg: Acq92OFveicJDfE97s4gEeIjJjGFdB4ErKZmvFTF+k6oGblIAL2ZuZpd6hFshqEMYWs
+ ppmPf6NMRuX8cKorR9yLrR6FP5OtktOi0p1zdlZg6l2O4HUGZ/I4l7XqWS5H7aYQmc00Nm4t+zq
+ R2Rsb+nQHTqpcTrQ953Ebm9Q9s16qvxQka5f41Xm/ck4i3DfGen8PDlD7kypR8sBXX1eFE91dIg
+ 6CvSd4KePnuj9+czNSV3iIfF0IRLDvp95fg95onXEraS11ktHP+z+thD9Ux3/Gaa7plHdYIZDJA
+ I4aQR5ExxiU55rvBL3UAwtIWr+4zclIYhz/AW5aNlxRz3jL/66x6ZpAJ1N1sAbvrqxSFi4OCYWI
+ 5dkdNrhjQqcsBOzhjbhJyaekX90QSxhv+GtzyKyAi91m0PlqceNje9LHcZh818pX4nUs4r5DL7c
+ 8oMRibzU/P+8gJ+ubYT8jPYHbr6m9hzqdTAsmSaTdRRsZuvZqXvcEElEHK8bWbYaJ58pb4I2f+q
+ 1EXn9D45NvFtspynkAEfY9CoSI68/VR7eHVxg==
+X-Received: by 2002:a05:6a00:3997:b0:83a:78ac:edb7 with SMTP id
+ d2e1a72fcca58-843367c7b55mr2742516b3a.5.1781175046267; 
+ Thu, 11 Jun 2026 03:50:46 -0700 (PDT)
 Received: from duncan.localdomain (114-35-142-126.hinet-ip.hinet.net.
  [114.35.142.126]) by smtp.gmail.com with ESMTPSA id
- d2e1a72fcca58-843383197e5sm1657818b3a.52.2026.06.11.03.50.46
+ d2e1a72fcca58-843383197e5sm1657818b3a.52.2026.06.11.03.50.43
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 11 Jun 2026 03:50:48 -0700 (PDT)
+ Thu, 11 Jun 2026 03:50:45 -0700 (PDT)
 From: Max Chou <max.chou@sifive.com>
 To: qemu-devel@nongnu.org,
 	qemu-riscv@nongnu.org
@@ -76,17 +76,18 @@ Cc: Palmer Dabbelt <palmer@dabbelt.com>,
  Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>,
  Liu Zhiwei <zhiwei_liu@linux.alibaba.com>,
  Chao Liu <chao.liu.zevorn@gmail.com>, Max Chou <max.chou@sifive.com>
-Subject: [PATCH 2/2] target/riscv: rvv: Set mstatus.FS dirty when vector FP
- raises exceptions
-Date: Thu, 11 Jun 2026 18:50:37 +0800
-Message-ID: <20260611105037.157773-3-max.chou@sifive.com>
+Subject: [PATCH 1/2] target/riscv: Set mstatus.FS dirty when scalar FP raises
+ exceptions
+Date: Thu, 11 Jun 2026 18:50:36 +0800
+Message-ID: <20260611105037.157773-2-max.chou@sifive.com>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20260611105037.157773-1-max.chou@sifive.com>
 References: <20260611105037.157773-1-max.chou@sifive.com>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::534;
- envelope-from=max.chou@sifive.com; helo=mail-pg1-x534.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::431;
+ envelope-from=max.chou@sifive.com; helo=mail-pf1-x431.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -114,320 +115,356 @@ modifies FP extension state (FP CSRs including fflags, or f registers)
 must set mstatus.FS to Dirty.  Raising fflags bits is modifying fcsr
 (an FP CSR).
 
-When a vector FP instruction raises a floating-point exception, it
-modifies fflags (an FP CSR), but current implementation was not marking
-mstatus.FS dirty in this case.
+Scalar FP instructions that write integer registers (FP comparisons and
+FP-to-integer conversions) never call mark_fs_dirty at translation time
+to set mstatus.FS to dirty.  However, they can raise FP exception flags
+via softfloat functions, which modifies fflags without any mechanism to
+dirty mstatus.FS.
 
-Fix the issue by snapshot fflags before the element loop and OR
-MSTATUS_FS into env->mstatus if any new exception bits are set
-afterwards.
+The affected helpers:
+- Comparisons: fle/fleq/flt/fltq/feq
+  — raise NV on NaN operands
+- FP-to-integer: fcvt.[w|wu|l|lu]/fcvtmod.w.d
+  — raise NX on inexact or NV on out-of-range
+
+Fix this issue by
+1. Save float_exception_flags before the softfloat operation
+2. Perform the operation
+3. If any new exception bits are set, set fs to dirty
 
 Signed-off-by: Max Chou <max.chou@sifive.com>
 ---
- target/riscv/vector_helper.c | 241 +++++++++++++++++++----------------
- 1 file changed, 128 insertions(+), 113 deletions(-)
+ target/riscv/cpu.h        |   1 +
+ target/riscv/fpu_helper.c | 157 +++++++++++++++++++++++++++++++-------
+ 2 files changed, 130 insertions(+), 28 deletions(-)
 
-diff --git a/target/riscv/vector_helper.c b/target/riscv/vector_helper.c
-index 89012fccb3..e321ca2616 100644
---- a/target/riscv/vector_helper.c
-+++ b/target/riscv/vector_helper.c
-@@ -3172,34 +3172,36 @@ static void do_##NAME(void *vd, void *vs1, void *vs2, int i,   \
-     *((TD *)vd + HD(i)) = OP(s2, s1, &env->fp_status);         \
+diff --git a/target/riscv/cpu.h b/target/riscv/cpu.h
+index c98652cd62..9961815ec3 100644
+--- a/target/riscv/cpu.h
++++ b/target/riscv/cpu.h
+@@ -675,6 +675,7 @@ G_NORETURN void riscv_raise_exception(CPURISCVState *env,
+ 
+ uint8_t riscv_cpu_get_fflags(CPURISCVState *env);
+ void riscv_cpu_set_fflags(CPURISCVState *env, uint8_t);
++void riscv_cpu_check_fflags(CPURISCVState *env, FloatExceptionFlags);
+ 
+ #ifndef CONFIG_USER_ONLY
+ void cpu_set_exception_base(int vp_index, uint64_t address);
+diff --git a/target/riscv/fpu_helper.c b/target/riscv/fpu_helper.c
+index e6d1ffb1d6..db1475271b 100644
+--- a/target/riscv/fpu_helper.c
++++ b/target/riscv/fpu_helper.c
+@@ -50,6 +50,22 @@ void riscv_cpu_set_fflags(CPURISCVState *env, uint8_t hard)
+     set_float_exception_flags(soft, &env->fp_status);
  }
  
--#define GEN_VEXT_VV_ENV(NAME, ESZ)                        \
--void HELPER(NAME)(void *vd, void *v0, void *vs1,          \
--                  void *vs2, CPURISCVState *env,          \
--                  uint32_t desc)                          \
--{                                                         \
--    uint32_t vm = vext_vm(desc);                          \
--    uint32_t vl = env->vl;                                \
--    uint32_t total_elems =                                \
--        vext_get_total_elems(env, desc, ESZ);             \
--    uint32_t vta = vext_vta(desc);                        \
--    uint32_t vma = vext_vma(desc);                        \
--    uint32_t i;                                           \
--                                                          \
--    VSTART_CHECK_EARLY_EXIT(env, vl);                     \
--                                                          \
--    for (i = env->vstart; i < vl; i++) {                  \
--        if (!vm && !vext_elem_mask(v0, i)) {              \
--            /* set masked-off elements to 1s */           \
--            vext_set_elems_1s(vd, vma, i * ESZ,           \
--                              (i + 1) * ESZ);             \
--            continue;                                     \
--        }                                                 \
--        do_##NAME(vd, vs1, vs2, i, env);                  \
--    }                                                     \
--    env->vstart = 0;                                      \
--    /* set tail elements to 1s */                         \
--    vext_set_elems_1s(vd, vta, vl * ESZ,                  \
--                      total_elems * ESZ);                 \
-+#define GEN_VEXT_VV_ENV(NAME, ESZ)                           \
-+void HELPER(NAME)(void *vd, void *v0, void *vs1, void *vs2,  \
-+                  CPURISCVState *env, uint32_t desc)         \
-+{                                                            \
-+    uint32_t vm = vext_vm(desc);                             \
-+    uint32_t vl = env->vl;                                   \
-+    uint32_t total_elems =                                   \
-+        vext_get_total_elems(env, desc, ESZ);                \
-+    uint32_t vta = vext_vta(desc);                           \
-+    uint32_t vma = vext_vma(desc);                           \
-+    uint32_t i;                                              \
-+    FloatExceptionFlags pre_fflag =                          \
-+        get_float_exception_flags(&env->fp_status);          \
-+                                                             \
-+    VSTART_CHECK_EARLY_EXIT(env, vl);                        \
-+                                                             \
-+    for (i = env->vstart; i < vl; i++) {                     \
-+        if (!vm && !vext_elem_mask(v0, i)) {                 \
-+            /* set masked-off elements to 1s */              \
-+            vext_set_elems_1s(vd, vma, i * ESZ,              \
-+                              (i + 1) * ESZ);                \
-+            continue;                                        \
-+        }                                                    \
-+        do_##NAME(vd, vs1, vs2, i, env);                     \
-+    }                                                        \
-+    env->vstart = 0;                                         \
-+    /* set tail elements to 1s */                            \
-+    vext_set_elems_1s(vd, vta, vl * ESZ,                     \
-+                      total_elems * ESZ);                    \
-+    riscv_cpu_check_fflags(env, pre_fflag);                  \
++#ifndef CONFIG_USER_ONLY
++void riscv_cpu_check_fflags(CPURISCVState *env,
++                            FloatExceptionFlags pre_fflag)
++{
++    if (get_float_exception_flags(&env->fp_status) & ~pre_fflag) {
++        env->mstatus |= MSTATUS_FS;
++        if (env->virt_enabled) {
++            env->mstatus_hs |= MSTATUS_FS;
++        }
++    }
++}
++#else
++void riscv_cpu_check_fflags(CPURISCVState *env,
++                            FloatExceptionFlags pre_fflag) {}
++#endif
++
+ void helper_set_rounding_mode(CPURISCVState *env, uint32_t rm)
+ {
+     FloatRoundMode softrm;
+@@ -286,59 +302,86 @@ target_ulong helper_fle_s(CPURISCVState *env, uint64_t rs1, uint64_t rs2)
+ {
+     float32 frs1 = check_nanbox_s(env, rs1);
+     float32 frs2 = check_nanbox_s(env, rs2);
+-    return float32_le(frs1, frs2, &env->fp_status);
++    FloatExceptionFlags pre_fflag = get_float_exception_flags(&env->fp_status);
++    target_ulong ret = float32_le(frs1, frs2, &env->fp_status);
++    riscv_cpu_check_fflags(env, pre_fflag);
++    return ret;
  }
  
- RVVCALL(OPFVV2, vfadd_vv_h_bf16, OP_UUU_H, H2, H2, H2, bfloat16_add)
-@@ -3219,34 +3221,36 @@ static void do_##NAME(void *vd, uint64_t s1, void *vs2, int i, \
-     *((TD *)vd + HD(i)) = OP(s2, (TX1)(T1)s1, &env->fp_status);\
+ target_ulong helper_fleq_s(CPURISCVState *env, uint64_t rs1, uint64_t rs2)
+ {
+     float32 frs1 = check_nanbox_s(env, rs1);
+     float32 frs2 = check_nanbox_s(env, rs2);
+-    return float32_le_quiet(frs1, frs2, &env->fp_status);
++    FloatExceptionFlags pre_fflag = get_float_exception_flags(&env->fp_status);
++    target_ulong ret = float32_le_quiet(frs1, frs2, &env->fp_status);
++    riscv_cpu_check_fflags(env, pre_fflag);
++    return ret;
  }
  
--#define GEN_VEXT_VF(NAME, ESZ)                            \
--void HELPER(NAME)(void *vd, void *v0, uint64_t s1,        \
--                  void *vs2, CPURISCVState *env,          \
--                  uint32_t desc)                          \
--{                                                         \
--    uint32_t vm = vext_vm(desc);                          \
--    uint32_t vl = env->vl;                                \
--    uint32_t total_elems =                                \
--        vext_get_total_elems(env, desc, ESZ);             \
--    uint32_t vta = vext_vta(desc);                        \
--    uint32_t vma = vext_vma(desc);                        \
--    uint32_t i;                                           \
--                                                          \
--    VSTART_CHECK_EARLY_EXIT(env, vl);                     \
--                                                          \
--    for (i = env->vstart; i < vl; i++) {                  \
--        if (!vm && !vext_elem_mask(v0, i)) {              \
--            /* set masked-off elements to 1s */           \
--            vext_set_elems_1s(vd, vma, i * ESZ,           \
--                              (i + 1) * ESZ);             \
--            continue;                                     \
--        }                                                 \
--        do_##NAME(vd, s1, vs2, i, env);                   \
--    }                                                     \
--    env->vstart = 0;                                      \
--    /* set tail elements to 1s */                         \
--    vext_set_elems_1s(vd, vta, vl * ESZ,                  \
--                      total_elems * ESZ);                 \
-+#define GEN_VEXT_VF(NAME, ESZ)                                   \
-+void HELPER(NAME)(void *vd, void *v0, uint64_t s1, void *vs2,    \
-+                  CPURISCVState *env, uint32_t desc)             \
-+{                                                                \
-+    uint32_t vm = vext_vm(desc);                                 \
-+    uint32_t vl = env->vl;                                       \
-+    uint32_t total_elems =                                       \
-+        vext_get_total_elems(env, desc, ESZ);                    \
-+    uint32_t vta = vext_vta(desc);                               \
-+    uint32_t vma = vext_vma(desc);                               \
-+    uint32_t i;                                                  \
-+    FloatExceptionFlags pre_fflag =                              \
-+        get_float_exception_flags(&env->fp_status);              \
-+                                                                 \
-+    VSTART_CHECK_EARLY_EXIT(env, vl);                            \
-+                                                                 \
-+    for (i = env->vstart; i < vl; i++) {                         \
-+        if (!vm && !vext_elem_mask(v0, i)) {                     \
-+            /* set masked-off elements to 1s */                  \
-+            vext_set_elems_1s(vd, vma, i * ESZ,                  \
-+                              (i + 1) * ESZ);                    \
-+            continue;                                            \
-+        }                                                        \
-+        do_##NAME(vd, s1, vs2, i, env);                          \
-+    }                                                            \
-+    env->vstart = 0;                                             \
-+    /* set tail elements to 1s */                                \
-+    vext_set_elems_1s(vd, vta, vl * ESZ,                         \
-+                      total_elems * ESZ);                        \
-+    riscv_cpu_check_fflags(env, pre_fflag);                      \
+ target_ulong helper_flt_s(CPURISCVState *env, uint64_t rs1, uint64_t rs2)
+ {
+     float32 frs1 = check_nanbox_s(env, rs1);
+     float32 frs2 = check_nanbox_s(env, rs2);
+-    return float32_lt(frs1, frs2, &env->fp_status);
++    FloatExceptionFlags pre_fflag = get_float_exception_flags(&env->fp_status);
++    target_ulong ret = float32_lt(frs1, frs2, &env->fp_status);
++    riscv_cpu_check_fflags(env, pre_fflag);
++    return ret;
  }
  
- RVVCALL(OPFVF2, vfadd_vf_h_bf16, OP_UUU_H, H2, H2, bfloat16_add)
-@@ -3993,35 +3997,38 @@ static void do_##NAME(void *vd, void *vs2, int i,      \
-     *((TD *)vd + HD(i)) = OP(s2, &env->fp_status);     \
+ target_ulong helper_fltq_s(CPURISCVState *env, uint64_t rs1, uint64_t rs2)
+ {
+     float32 frs1 = check_nanbox_s(env, rs1);
+     float32 frs2 = check_nanbox_s(env, rs2);
+-    return float32_lt_quiet(frs1, frs2, &env->fp_status);
++    FloatExceptionFlags pre_fflag = get_float_exception_flags(&env->fp_status);
++    target_ulong ret = float32_lt_quiet(frs1, frs2, &env->fp_status);
++    riscv_cpu_check_fflags(env, pre_fflag);
++    return ret;
  }
  
--#define GEN_VEXT_V_ENV(NAME, ESZ)                      \
--void HELPER(NAME)(void *vd, void *v0, void *vs2,       \
--                  CPURISCVState *env, uint32_t desc)   \
--{                                                      \
--    uint32_t vm = vext_vm(desc);                       \
--    uint32_t vl = env->vl;                             \
--    uint32_t total_elems =                             \
--        vext_get_total_elems(env, desc, ESZ);          \
--    uint32_t vta = vext_vta(desc);                     \
--    uint32_t vma = vext_vma(desc);                     \
--    uint32_t i;                                        \
--                                                       \
--    VSTART_CHECK_EARLY_EXIT(env, vl);                  \
--                                                       \
--    if (vl == 0) {                                     \
--        return;                                        \
--    }                                                  \
--    for (i = env->vstart; i < vl; i++) {               \
--        if (!vm && !vext_elem_mask(v0, i)) {           \
--            /* set masked-off elements to 1s */        \
--            vext_set_elems_1s(vd, vma, i * ESZ,        \
--                              (i + 1) * ESZ);          \
--            continue;                                  \
--        }                                              \
--        do_##NAME(vd, vs2, i, env);                    \
--    }                                                  \
--    env->vstart = 0;                                   \
--    vext_set_elems_1s(vd, vta, vl * ESZ,               \
--                      total_elems * ESZ);              \
-+#define GEN_VEXT_V_ENV(NAME, ESZ)                            \
-+void HELPER(NAME)(void *vd, void *v0, void *vs2,             \
-+                  CPURISCVState *env, uint32_t desc)         \
-+{                                                            \
-+    uint32_t vm = vext_vm(desc);                             \
-+    uint32_t vl = env->vl;                                   \
-+    uint32_t total_elems =                                   \
-+        vext_get_total_elems(env, desc, ESZ);                \
-+    uint32_t vta = vext_vta(desc);                           \
-+    uint32_t vma = vext_vma(desc);                           \
-+    uint32_t i;                                              \
-+    FloatExceptionFlags pre_fflag =                          \
-+        get_float_exception_flags(&env->fp_status);          \
-+                                                             \
-+    VSTART_CHECK_EARLY_EXIT(env, vl);                        \
-+                                                             \
-+    if (vl == 0) {                                           \
-+        return;                                              \
-+    }                                                        \
-+    for (i = env->vstart; i < vl; i++) {                     \
-+        if (!vm && !vext_elem_mask(v0, i)) {                 \
-+            /* set masked-off elements to 1s */              \
-+            vext_set_elems_1s(vd, vma, i * ESZ,              \
-+                              (i + 1) * ESZ);                \
-+            continue;                                        \
-+        }                                                    \
-+        do_##NAME(vd, vs2, i, env);                          \
-+    }                                                        \
-+    env->vstart = 0;                                         \
-+    vext_set_elems_1s(vd, vta, vl * ESZ,                     \
-+                      total_elems * ESZ);                    \
-+    riscv_cpu_check_fflags(env, pre_fflag);                  \
+ target_ulong helper_feq_s(CPURISCVState *env, uint64_t rs1, uint64_t rs2)
+ {
+     float32 frs1 = check_nanbox_s(env, rs1);
+     float32 frs2 = check_nanbox_s(env, rs2);
+-    return float32_eq_quiet(frs1, frs2, &env->fp_status);
++    FloatExceptionFlags pre_fflag = get_float_exception_flags(&env->fp_status);
++    target_ulong ret = float32_eq_quiet(frs1, frs2, &env->fp_status);
++    riscv_cpu_check_fflags(env, pre_fflag);
++    return ret;
  }
  
- RVVCALL(OPFVV1, vfsqrt_v_h, OP_UU_H, H2, H2, float16_sqrt)
-@@ -4610,6 +4617,8 @@ void HELPER(NAME)(void *vd, void *v0, void *vs1, void *vs2,   \
-     uint32_t vta_all_1s = vext_vta_all_1s(desc);              \
-     uint32_t vma = vext_vma(desc);                            \
-     uint32_t i;                                               \
-+    FloatExceptionFlags pre_fflag =                           \
-+        get_float_exception_flags(&env->fp_status);           \
-                                                               \
-     VSTART_CHECK_EARLY_EXIT(env, vl);                         \
-                                                               \
-@@ -4636,6 +4645,7 @@ void HELPER(NAME)(void *vd, void *v0, void *vs1, void *vs2,   \
-             vext_set_elem_mask(vd, i, 1);                     \
-         }                                                     \
-     }                                                         \
-+    riscv_cpu_check_fflags(env, pre_fflag);                   \
+ target_ulong helper_fcvt_w_s(CPURISCVState *env, uint64_t rs1)
+ {
+     float32 frs1 = check_nanbox_s(env, rs1);
+-    return float32_to_int32(frs1, &env->fp_status);
++    FloatExceptionFlags pre_fflag = get_float_exception_flags(&env->fp_status);
++    target_ulong ret = float32_to_int32(frs1, &env->fp_status);
++    riscv_cpu_check_fflags(env, pre_fflag);
++    return ret;
  }
  
- GEN_VEXT_CMP_VV_ENV(vmfeq_vv_h_bf16, uint16_t, H2, bfloat16_eq_quiet)
-@@ -4653,6 +4663,8 @@ void HELPER(NAME)(void *vd, void *v0, uint64_t s1, void *vs2,       \
-     uint32_t vta_all_1s = vext_vta_all_1s(desc);                    \
-     uint32_t vma = vext_vma(desc);                                  \
-     uint32_t i;                                                     \
-+    FloatExceptionFlags pre_fflag =                                 \
-+        get_float_exception_flags(&env->fp_status);                 \
-                                                                     \
-     VSTART_CHECK_EARLY_EXIT(env, vl);                               \
-                                                                     \
-@@ -4678,6 +4690,7 @@ void HELPER(NAME)(void *vd, void *v0, uint64_t s1, void *vs2,       \
-             vext_set_elem_mask(vd, i, 1);                           \
-         }                                                           \
-     }                                                               \
-+    riscv_cpu_check_fflags(env, pre_fflag);                         \
+ target_ulong helper_fcvt_wu_s(CPURISCVState *env, uint64_t rs1)
+ {
+     float32 frs1 = check_nanbox_s(env, rs1);
+-    return (int32_t)float32_to_uint32(frs1, &env->fp_status);
++    FloatExceptionFlags pre_fflag = get_float_exception_flags(&env->fp_status);
++    target_ulong ret = (int32_t)float32_to_uint32(frs1, &env->fp_status);
++    riscv_cpu_check_fflags(env, pre_fflag);
++    return ret;
  }
  
- GEN_VEXT_CMP_VF(vmfeq_vf_h_bf16, uint16_t, H2, bfloat16_eq_quiet)
-@@ -5151,34 +5164,36 @@ GEN_VEXT_RED(vwredsumu_vs_h, uint32_t, uint16_t, H4, H2, DO_ADD)
- GEN_VEXT_RED(vwredsumu_vs_w, uint64_t, uint32_t, H8, H4, DO_ADD)
- 
- /* Vector Single-Width Floating-Point Reduction Instructions */
--#define GEN_VEXT_FRED(NAME, TD, TS2, HD, HS2, OP)          \
--void HELPER(NAME)(void *vd, void *v0, void *vs1,           \
--                  void *vs2, CPURISCVState *env,           \
--                  uint32_t desc)                           \
--{                                                          \
--    uint32_t vm = vext_vm(desc);                           \
--    uint32_t vl = env->vl;                                 \
--    uint32_t esz = sizeof(TD);                             \
--    uint32_t vlenb = simd_maxsz(desc);                     \
--    uint32_t vta = vext_vta(desc);                         \
--    uint32_t i;                                            \
--    TD s1 =  *((TD *)vs1 + HD(0));                         \
--                                                           \
--    VSTART_CHECK_EARLY_EXIT(env, vl);                      \
--                                                           \
--    for (i = env->vstart; i < vl; i++) {                   \
--        TS2 s2 = *((TS2 *)vs2 + HS2(i));                   \
--        if (!vm && !vext_elem_mask(v0, i)) {               \
--            continue;                                      \
--        }                                                  \
--        s1 = OP(s1, (TD)s2, &env->fp_status);              \
--    }                                                      \
--    if (vl > 0) {                                          \
--        *((TD *)vd + HD(0)) = s1;                          \
--    }                                                      \
--    env->vstart = 0;                                       \
--    /* set tail elements to 1s */                          \
--    vext_set_elems_1s(vd, vta, esz, vlenb);                \
-+#define GEN_VEXT_FRED(NAME, TD, TS2, HD, HS2, OP)            \
-+void HELPER(NAME)(void *vd, void *v0, void *vs1, void *vs2,  \
-+                  CPURISCVState *env, uint32_t desc)         \
-+{                                                            \
-+    uint32_t vm = vext_vm(desc);                             \
-+    uint32_t vl = env->vl;                                   \
-+    uint32_t esz = sizeof(TD);                               \
-+    uint32_t vlenb = simd_maxsz(desc);                       \
-+    uint32_t vta = vext_vta(desc);                           \
-+    uint32_t i;                                              \
-+    FloatExceptionFlags pre_fflag =                          \
-+        get_float_exception_flags(&env->fp_status);          \
-+    TD s1 =  *((TD *)vs1 + HD(0));                           \
-+                                                             \
-+    VSTART_CHECK_EARLY_EXIT(env, vl);                        \
-+                                                             \
-+    for (i = env->vstart; i < vl; i++) {                     \
-+        TS2 s2 = *((TS2 *)vs2 + HS2(i));                     \
-+        if (!vm && !vext_elem_mask(v0, i)) {                 \
-+            continue;                                        \
-+        }                                                    \
-+        s1 = OP(s1, (TD)s2, &env->fp_status);                \
-+    }                                                        \
-+    if (vl > 0) {                                            \
-+        *((TD *)vd + HD(0)) = s1;                            \
-+    }                                                        \
-+    env->vstart = 0;                                         \
-+    /* set tail elements to 1s */                            \
-+    vext_set_elems_1s(vd, vta, esz, vlenb);                  \
-+    riscv_cpu_check_fflags(env, pre_fflag);                  \
+ target_ulong helper_fcvt_l_s(CPURISCVState *env, uint64_t rs1)
+ {
+     float32 frs1 = check_nanbox_s(env, rs1);
+-    return float32_to_int64(frs1, &env->fp_status);
++    FloatExceptionFlags pre_fflag = get_float_exception_flags(&env->fp_status);
++    target_ulong ret = float32_to_int64(frs1, &env->fp_status);
++    riscv_cpu_check_fflags(env, pre_fflag);
++    return ret;
  }
  
- /* Unordered sum */
+ target_ulong helper_fcvt_lu_s(CPURISCVState *env, uint64_t rs1)
+ {
+     float32 frs1 = check_nanbox_s(env, rs1);
+-    return float32_to_uint64(frs1, &env->fp_status);
++    FloatExceptionFlags pre_fflag = get_float_exception_flags(&env->fp_status);
++    target_ulong ret = float32_to_uint64(frs1, &env->fp_status);
++    riscv_cpu_check_fflags(env, pre_fflag);
++    return ret;
+ }
+ 
+ uint64_t helper_fcvt_s_w(CPURISCVState *env, target_ulong rs1)
+@@ -453,52 +496,83 @@ uint64_t helper_fsqrt_d(CPURISCVState *env, uint64_t frs1)
+ 
+ target_ulong helper_fle_d(CPURISCVState *env, uint64_t frs1, uint64_t frs2)
+ {
+-    return float64_le(frs1, frs2, &env->fp_status);
++    FloatExceptionFlags pre_fflag = get_float_exception_flags(&env->fp_status);
++    target_ulong ret = float64_le(frs1, frs2, &env->fp_status);
++    riscv_cpu_check_fflags(env, pre_fflag);
++    return ret;
+ }
+ 
+ target_ulong helper_fleq_d(CPURISCVState *env, uint64_t frs1, uint64_t frs2)
+ {
+-    return float64_le_quiet(frs1, frs2, &env->fp_status);
++    FloatExceptionFlags pre_fflag = get_float_exception_flags(&env->fp_status);
++    target_ulong ret = float64_le_quiet(frs1, frs2, &env->fp_status);
++    riscv_cpu_check_fflags(env, pre_fflag);
++    return ret;
+ }
+ 
+ target_ulong helper_flt_d(CPURISCVState *env, uint64_t frs1, uint64_t frs2)
+ {
+-    return float64_lt(frs1, frs2, &env->fp_status);
++    FloatExceptionFlags pre_fflag = get_float_exception_flags(&env->fp_status);
++    target_ulong ret = float64_lt(frs1, frs2, &env->fp_status);
++    riscv_cpu_check_fflags(env, pre_fflag);
++    return ret;
+ }
+ 
+ target_ulong helper_fltq_d(CPURISCVState *env, uint64_t frs1, uint64_t frs2)
+ {
+-    return float64_lt_quiet(frs1, frs2, &env->fp_status);
++    FloatExceptionFlags pre_fflag = get_float_exception_flags(&env->fp_status);
++    target_ulong ret = float64_lt_quiet(frs1, frs2, &env->fp_status);
++    riscv_cpu_check_fflags(env, pre_fflag);
++    return ret;
+ }
+ 
+ target_ulong helper_feq_d(CPURISCVState *env, uint64_t frs1, uint64_t frs2)
+ {
+-    return float64_eq_quiet(frs1, frs2, &env->fp_status);
++    FloatExceptionFlags pre_fflag = get_float_exception_flags(&env->fp_status);
++    target_ulong ret = float64_eq_quiet(frs1, frs2, &env->fp_status);
++    riscv_cpu_check_fflags(env, pre_fflag);
++    return ret;
+ }
+ 
+ target_ulong helper_fcvt_w_d(CPURISCVState *env, uint64_t frs1)
+ {
+-    return float64_to_int32(frs1, &env->fp_status);
++    FloatExceptionFlags pre_fflag = get_float_exception_flags(&env->fp_status);
++    target_ulong ret = float64_to_int32(frs1, &env->fp_status);
++    riscv_cpu_check_fflags(env, pre_fflag);
++    return ret;
+ }
+ 
+ uint64_t helper_fcvtmod_w_d(CPURISCVState *env, uint64_t value)
+ {
+-    return float64_to_int32_modulo(value, float_round_to_zero, &env->fp_status);
++    FloatExceptionFlags pre_fflag = get_float_exception_flags(&env->fp_status);
++    uint64_t ret = float64_to_int32_modulo(value, float_round_to_zero,
++                                           &env->fp_status);
++    riscv_cpu_check_fflags(env, pre_fflag);
++    return ret;
+ }
+ 
+ target_ulong helper_fcvt_wu_d(CPURISCVState *env, uint64_t frs1)
+ {
+-    return (int32_t)float64_to_uint32(frs1, &env->fp_status);
++    FloatExceptionFlags pre_fflag = get_float_exception_flags(&env->fp_status);
++    target_ulong ret = (int32_t)float64_to_uint32(frs1, &env->fp_status);
++    riscv_cpu_check_fflags(env, pre_fflag);
++    return ret;
+ }
+ 
+ target_ulong helper_fcvt_l_d(CPURISCVState *env, uint64_t frs1)
+ {
+-    return float64_to_int64(frs1, &env->fp_status);
++    FloatExceptionFlags pre_fflag = get_float_exception_flags(&env->fp_status);
++    target_ulong ret = float64_to_int64(frs1, &env->fp_status);
++    riscv_cpu_check_fflags(env, pre_fflag);
++    return ret;
+ }
+ 
+ target_ulong helper_fcvt_lu_d(CPURISCVState *env, uint64_t frs1)
+ {
+-    return float64_to_uint64(frs1, &env->fp_status);
++    FloatExceptionFlags pre_fflag = get_float_exception_flags(&env->fp_status);
++    target_ulong ret = float64_to_uint64(frs1, &env->fp_status);
++    riscv_cpu_check_fflags(env, pre_fflag);
++    return ret;
+ }
+ 
+ uint64_t helper_fcvt_d_w(CPURISCVState *env, target_ulong rs1)
+@@ -619,35 +693,50 @@ target_ulong helper_fle_h(CPURISCVState *env, uint64_t rs1, uint64_t rs2)
+ {
+     float16 frs1 = check_nanbox_h(env, rs1);
+     float16 frs2 = check_nanbox_h(env, rs2);
+-    return float16_le(frs1, frs2, &env->fp_status);
++    FloatExceptionFlags pre_fflag = get_float_exception_flags(&env->fp_status);
++    target_ulong ret = float16_le(frs1, frs2, &env->fp_status);
++    riscv_cpu_check_fflags(env, pre_fflag);
++    return ret;
+ }
+ 
+ target_ulong helper_fleq_h(CPURISCVState *env, uint64_t rs1, uint64_t rs2)
+ {
+     float16 frs1 = check_nanbox_h(env, rs1);
+     float16 frs2 = check_nanbox_h(env, rs2);
+-    return float16_le_quiet(frs1, frs2, &env->fp_status);
++    FloatExceptionFlags pre_fflag = get_float_exception_flags(&env->fp_status);
++    target_ulong ret = float16_le_quiet(frs1, frs2, &env->fp_status);
++    riscv_cpu_check_fflags(env, pre_fflag);
++    return ret;
+ }
+ 
+ target_ulong helper_flt_h(CPURISCVState *env, uint64_t rs1, uint64_t rs2)
+ {
+     float16 frs1 = check_nanbox_h(env, rs1);
+     float16 frs2 = check_nanbox_h(env, rs2);
+-    return float16_lt(frs1, frs2, &env->fp_status);
++    FloatExceptionFlags pre_fflag = get_float_exception_flags(&env->fp_status);
++    target_ulong ret = float16_lt(frs1, frs2, &env->fp_status);
++    riscv_cpu_check_fflags(env, pre_fflag);
++    return ret;
+ }
+ 
+ target_ulong helper_fltq_h(CPURISCVState *env, uint64_t rs1, uint64_t rs2)
+ {
+     float16 frs1 = check_nanbox_h(env, rs1);
+     float16 frs2 = check_nanbox_h(env, rs2);
+-    return float16_lt_quiet(frs1, frs2, &env->fp_status);
++    FloatExceptionFlags pre_fflag = get_float_exception_flags(&env->fp_status);
++    target_ulong ret = float16_lt_quiet(frs1, frs2, &env->fp_status);
++    riscv_cpu_check_fflags(env, pre_fflag);
++    return ret;
+ }
+ 
+ target_ulong helper_feq_h(CPURISCVState *env, uint64_t rs1, uint64_t rs2)
+ {
+     float16 frs1 = check_nanbox_h(env, rs1);
+     float16 frs2 = check_nanbox_h(env, rs2);
+-    return float16_eq_quiet(frs1, frs2, &env->fp_status);
++    FloatExceptionFlags pre_fflag = get_float_exception_flags(&env->fp_status);
++    target_ulong ret = float16_eq_quiet(frs1, frs2, &env->fp_status);
++    riscv_cpu_check_fflags(env, pre_fflag);
++    return ret;
+ }
+ 
+ target_ulong helper_fclass_h(CPURISCVState *env, uint64_t rs1)
+@@ -683,25 +772,37 @@ uint64_t helper_froundnx_h(CPURISCVState *env, uint64_t rs1)
+ target_ulong helper_fcvt_w_h(CPURISCVState *env, uint64_t rs1)
+ {
+     float16 frs1 = check_nanbox_h(env, rs1);
+-    return float16_to_int32(frs1, &env->fp_status);
++    FloatExceptionFlags pre_fflag = get_float_exception_flags(&env->fp_status);
++    target_ulong ret = float16_to_int32(frs1, &env->fp_status);
++    riscv_cpu_check_fflags(env, pre_fflag);
++    return ret;
+ }
+ 
+ target_ulong helper_fcvt_wu_h(CPURISCVState *env, uint64_t rs1)
+ {
+     float16 frs1 = check_nanbox_h(env, rs1);
+-    return (int32_t)float16_to_uint32(frs1, &env->fp_status);
++    FloatExceptionFlags pre_fflag = get_float_exception_flags(&env->fp_status);
++    target_ulong ret = (int32_t)float16_to_uint32(frs1, &env->fp_status);
++    riscv_cpu_check_fflags(env, pre_fflag);
++    return ret;
+ }
+ 
+ target_ulong helper_fcvt_l_h(CPURISCVState *env, uint64_t rs1)
+ {
+     float16 frs1 = check_nanbox_h(env, rs1);
+-    return float16_to_int64(frs1, &env->fp_status);
++    FloatExceptionFlags pre_fflag = get_float_exception_flags(&env->fp_status);
++    target_ulong ret = float16_to_int64(frs1, &env->fp_status);
++    riscv_cpu_check_fflags(env, pre_fflag);
++    return ret;
+ }
+ 
+ target_ulong helper_fcvt_lu_h(CPURISCVState *env, uint64_t rs1)
+ {
+     float16 frs1 = check_nanbox_h(env, rs1);
+-    return float16_to_uint64(frs1, &env->fp_status);
++    FloatExceptionFlags pre_fflag = get_float_exception_flags(&env->fp_status);
++    target_ulong ret = float16_to_uint64(frs1, &env->fp_status);
++    riscv_cpu_check_fflags(env, pre_fflag);
++    return ret;
+ }
+ 
+ uint64_t helper_fcvt_h_w(CPURISCVState *env, target_ulong rs1)
 -- 
 2.43.7
 
