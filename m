@@ -4,69 +4,69 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2A515CD98C6
-	for <qemu-devel@archiver.kernel.org>; Thu, 11 Jun 2026 06:09:09 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E4902CD98C6
+	for <qemu-devel@archiver.kernel.org>; Thu, 11 Jun 2026 06:10:50 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wXYay-0001ed-9v; Thu, 11 Jun 2026 02:08:52 -0400
+	id 1wXYcn-0002XS-6M; Thu, 11 Jun 2026 02:10:45 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <manos.pitsidianakis@linaro.org>)
- id 1wXYav-0001e3-89
- for qemu-devel@nongnu.org; Thu, 11 Jun 2026 02:08:49 -0400
-Received: from mail-wm1-x32b.google.com ([2a00:1450:4864:20::32b])
+ id 1wXYcl-0002X5-J9
+ for qemu-devel@nongnu.org; Thu, 11 Jun 2026 02:10:43 -0400
+Received: from mail-wm1-x336.google.com ([2a00:1450:4864:20::336])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <manos.pitsidianakis@linaro.org>)
- id 1wXYat-0000IT-6e
- for qemu-devel@nongnu.org; Thu, 11 Jun 2026 02:08:48 -0400
-Received: by mail-wm1-x32b.google.com with SMTP id
- 5b1f17b1804b1-490b3637b90so64540055e9.3
- for <qemu-devel@nongnu.org>; Wed, 10 Jun 2026 23:08:46 -0700 (PDT)
+ id 1wXYcj-0001Ls-UN
+ for qemu-devel@nongnu.org; Thu, 11 Jun 2026 02:10:43 -0400
+Received: by mail-wm1-x336.google.com with SMTP id
+ 5b1f17b1804b1-490b211ee6aso58526115e9.3
+ for <qemu-devel@nongnu.org>; Wed, 10 Jun 2026 23:10:41 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1781158125; x=1781762925; darn=nongnu.org;
+ d=linaro.org; s=google; t=1781158240; x=1781763040; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:message-id:in-reply-to
  :references:user-agent:subject:cc:to:from:date:from:to:cc:subject
  :date:message-id:reply-to;
- bh=FIr2yMuOOMQWppG8XucJQKnlIaSkIpqdZulk4cYkXKM=;
- b=vKMK06gWnSJC0Mb+ns00EPmrlLDL3lM7snfxo6N+sA98lyMISC/u9+ZrI/njhBZjmM
- kOz6VFHszrSMcXWXTjQ66vUEdg1LVGHsRZgAR9erox8p5TrJqRu9ztiMCroxeyZAKQp6
- R5y/D52z8wwM69DkB7dyu3l1GpEpmMDJRJfxUDHwrx+YHWDzSDaDeREsti01NLSWd+66
- IGdD2OpuRqkbSkB54Kr8KEX0FMShhkZuhQYEnzdayqiXkuQs961LVAODawtuc9dLK4Uf
- xcvgcl/BQuroXboaVztZXnQ/hLGFfEqrZqeKPxaNIHYLzGnsDcjjC7W9LNyLD/MrjbII
- FmQw==
+ bh=cMM27LJvP4daElGz0dSOuPffP5CA7tU4Qd1Qy3evlTk=;
+ b=SAGr+l1TzMhJsDkXzRwfravTwsQNS9QTwy5I3GYwIU9AUv1jCXydti2zqCspEMj/0p
+ uKogmf8OrGiQTSqZxzrZIzqC25bUZK0JjWrDl4Mbq+12BlyeOwOLrixxe/b0tSO1Y1J1
+ X4U8aqLneL+Tw4JOee4addVumVsXTkKls0aQ3Z4tKSs3Vt6X8EntYWyUNnyGt2UULZka
+ /2X8dCF3zzur/wQKgbyX2JqMBrMYJNxJjCIQkRhOJi0qXoeegwv+sQ5a/HPXqyS0J3R5
+ o0fF5MOybcWoKPhhCALjuTaRRyvMvFZ3ANGuCjPmrHhF4b9SOXg7wdtueyi5jqk6lDpl
+ FUxA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1781158125; x=1781762925;
+ d=1e100.net; s=20251104; t=1781158240; x=1781763040;
  h=content-transfer-encoding:mime-version:message-id:in-reply-to
  :references:user-agent:subject:cc:to:from:date:x-gm-gg
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=FIr2yMuOOMQWppG8XucJQKnlIaSkIpqdZulk4cYkXKM=;
- b=F1OrQuyODHIw9m9X+3K6sscI+DZwKGLzvUVkcf/5/EtmoyzacC3zEbgDFFQsDppzrr
- aVj3udcV+f72U7y8aeHuuIHpKGapfl7hgcwkbAxNkqXzzp1YWuzhlH5KrlDHGpGPjbwL
- Zuy888U9UqpjtVedkVFcMEhljkNGTNCvkF26L1rRf7WKHmRSOIX/V/JWjPKcidzBgOws
- 5EjaoBm8Q+llmDjoV3nZV9GbQSbc4wmO1L7f8HEt2Rcj6LcmhAH2yMpjUKknNfrl/4rl
- d0eWyW0KI+mBddysY34YHSCMN9gykeF+F/4EtjZ2Bpbc6LhIqp0FoQBAtjcujaITivyn
- cqgg==
-X-Gm-Message-State: AOJu0YwPIK5vwaRnPE/OQ0l5hHwVilXcd2H8KaCGFq7z9U3Ibl7ATFgg
- elIKaBc/SGc84Mj+IiBqhRp3Den6gWoeT054F3LIvL8T4uG4vdLBs2MspMON4zX/kZFL54MN5zA
- qiYOp62Y=
-X-Gm-Gg: Acq92OFPyt+aOpxUqgz3QCO3FkzItLTwIS839CSSzByvn+aROpNrespfKmUAW21h2Lq
- 2ScLTgM4pOILkmLl/5qjFvY7v3mVSDQHXfUKIF7ubeb0QaELD2EwJb16TMlWPqlGheosM5kriDv
- BrimfQyMGzGxDDCugZsfoHrmWNufxMIiF82QebbBZkTt0LqZ7aZeQue6+jOBHua7dJVNeUPjCZF
- 1YAQ26LYGiiJxIQpg4crrhdbU6tpcKDAPy/Fa2olFvJU/J1HGjZSsdsMGMhbZ6DSxFcVgO/sTbC
- HGPY4Ybj6LLVXika+iE9XAwWn72oAQEZ99GXgRP2J7I7Vfi7gDIsWMCx3g202orVA4dVU1QOb0Q
- 8NqkUaw4s39U6mcTxQF6xEfnvTNVPUerzJNlaXhnfxU7cRYf6vibRwOK5fhK3hG0cVPr9OmJz+d
- t9LqnEy2JHnHXoGm3jOG+7MbKrp8sMuh/a0WDzeBtHjlb5c9odutMThTvEEkwgdsn/vbNvoIBaD
- rtifsMQmmC/LSZVQfRbuIHIqKKhyMgxe/53jPUNURBKYPIMDdK5JkEk0TVWxw==
-X-Received: by 2002:a05:600c:8b5c:b0:490:8fd1:72a with SMTP id
- 5b1f17b1804b1-490e55b8667mr14895345e9.3.1781158125358; 
- Wed, 10 Jun 2026 23:08:45 -0700 (PDT)
+ bh=cMM27LJvP4daElGz0dSOuPffP5CA7tU4Qd1Qy3evlTk=;
+ b=mfriJnp7LV2JCh0N3d2hfeyu1JMOLuMl9e8q7ZH90Pckp1Nzx0pWpZqQEJ2m6T3elK
+ NdgGYRjsDG7/EFgXpiWPxaJ96Y1r0i6O3KkG1TAJPfNrJdCCgO3zzGRcZFb0qOlMwUGq
+ IAfYfqQrMUOy5pVRbILQ71ipkVV7fDvvqJ2bBMIXzpf1e91LyqzBrdS5g24ev3lKhfL0
+ zmiOOQn3fVfAK1jO9PxcqCA+Nd6JmF+S9Mu7sLqvW7k0Vl+bIrU4p1doDlm7PnKVBjC5
+ eyqu5Ki/R9WpRysqw+ClzbPkNC2Qb1zBmc8p9R8CFa6EcUcFgH6OO0Gh8ORp3AK/DFbg
+ Le2w==
+X-Gm-Message-State: AOJu0YzkrC42M+7aEZ3FhJfZ8zgdfKIBGKu6HnGqPTrkGJdcfdJd3PN5
+ y1dzWT26o4yPU2gSGvkMMSdutRFLyMokiGuMiKcmd7g3FnIoM0mR0cTttv4fDxucCBCY0ip7Jnf
+ nuIICNTY=
+X-Gm-Gg: Acq92OHijnuIfNGLH0RWCNjESm6qtbeylqrDrjouyfiQdLoNt647DgZxyMJXJb1at3Q
+ sO3gthVQHXH2oL0Lon1FrpgLGiqqjRi7gjgoKbrXJ4HJXZjoU9W1DxEml02irPaIIFZqSLh1FdO
+ f3oDZZasNChHgozbYy+EVw+RFNgcu5xmwP0WQaTpVakbz3XW6kudwsQPZlIFGkVTsn8Wwb8yuRY
+ pZYbu4ZidgWc6uWKTdHt72EIDD8X6gLmfV/LazrCgPl4YpDVEw3j/UduIVoK/qbgkqKmC4/tK9A
+ YydOlbJGEIrJUSnVhY/VLy5vEnHb+AEXyaJPk90FxT+66cPdVx6ln1N+5sf0LbRDJpprm/FMfGZ
+ mh649PPBUJVC4Qa7K8/8RTqVuL/afH4UKIgGUUQMdx7HxQdtLGhAoOiRVp6STYVpDbLFsoNsRsK
+ IDFFbApsNc53EoaxK4HeBCNgszxeanQg6thbYl/fuA/X0iEbHp6L2ex2J8Mo/6gxajUlshkWw4r
+ w78Oxt9cyZQtTmB3kkGU+Z4tS1UU1e2iq27f/ReR7gM2ky6MO2HusTFTd/c4g==
+X-Received: by 2002:a05:600c:3ba4:b0:485:4388:3492 with SMTP id
+ 5b1f17b1804b1-490e55df6d1mr14760765e9.11.1781158240363; 
+ Wed, 10 Jun 2026 23:10:40 -0700 (PDT)
 Received: from meli-email.org (ppp-2-86-135-61.home.otenet.gr. [2.86.135.61])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-490e422e321sm17080575e9.0.2026.06.10.23.08.44
+ ffacd0b85a97d-4601f2dcad5sm86088733f8f.5.2026.06.10.23.10.39
  (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
- Wed, 10 Jun 2026 23:08:44 -0700 (PDT)
-Date: Thu, 11 Jun 2026 09:08:20 +0300
+ Wed, 10 Jun 2026 23:10:40 -0700 (PDT)
+Date: Thu, 11 Jun 2026 09:10:15 +0300
 From: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
 To: qemu-devel@nongnu.org, Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
 Cc: Chao Liu <chao.liu.zevorn@gmail.com>,
@@ -76,18 +76,18 @@ Cc: Chao Liu <chao.liu.zevorn@gmail.com>,
  Alex Benn=?UTF-8?B?w6k=?=e <alex.bennee@linaro.org>,
  Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
  Alexandre Iooss <erdnaxe@crans.org>
-Subject: Re: [PATCH 22/25] plugins: add userdata to
- qemu_plugin_register_vcpu_syscall_ret_cb
+Subject: Re: [PATCH 21/25] plugins: remove qemu_plugin_id from
+ qemu_plugin_vcpu_syscall_ret_cb_t
 User-Agent: meli/0.8.13
 References: <20260603205152.1440291-1-pierrick.bouvier@oss.qualcomm.com>
- <20260603205152.1440291-23-pierrick.bouvier@oss.qualcomm.com>
-In-Reply-To: <20260603205152.1440291-23-pierrick.bouvier@oss.qualcomm.com>
-Message-ID: <tggeej.15z2n7kiq1np3@linaro.org>
+ <20260603205152.1440291-22-pierrick.bouvier@oss.qualcomm.com>
+In-Reply-To: <20260603205152.1440291-22-pierrick.bouvier@oss.qualcomm.com>
+Message-ID: <tggehr.3c4mygss4okxc@linaro.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 Content-Type: text/plain; charset=utf-8; format=flowed
-Received-SPF: pass client-ip=2a00:1450:4864:20::32b;
- envelope-from=manos.pitsidianakis@linaro.org; helo=mail-wm1-x32b.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::336;
+ envelope-from=manos.pitsidianakis@linaro.org; helo=mail-wm1-x336.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -116,101 +116,57 @@ On Wed, 03 Jun 2026 23:51, Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com> 
 
 Reviewed-by: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
 
-> include/plugins/qemu-plugin.h | 8 ++++++--
-> plugins/api.c                 | 5 +++--
+> include/plugins/qemu-plugin.h | 4 +---
 > plugins/core.c                | 2 +-
-> tests/tcg/plugins/syscall.c   | 5 +++--
-> 4 files changed, 13 insertions(+), 7 deletions(-)
+> tests/tcg/plugins/syscall.c   | 2 +-
+> 3 files changed, 3 insertions(+), 5 deletions(-)
 >
 >diff --git a/include/plugins/qemu-plugin.h b/include/plugins/qemu-plugin.h
->index 4f0c73c7b33..50a39e51d46 100644
+>index 33d6f8e0b7d..4f0c73c7b33 100644
 >--- a/include/plugins/qemu-plugin.h
 >+++ b/include/plugins/qemu-plugin.h
->@@ -882,10 +882,12 @@ typedef bool
+>@@ -879,14 +879,12 @@ typedef bool
+> /**
+>  * typedef qemu_plugin_vcpu_syscall_ret_cb_t - vCPU syscall return callback
+>  * function type
+>- * @id: plugin id
 >  * @vcpu_index: the executing vCPU
 >  * @num: the syscall number
 >  * @ret: the syscall return value
->+ * @userdata: user data for callback
 >  */
 > typedef void
-> (*qemu_plugin_vcpu_syscall_ret_cb_t)(unsigned int vcpu_index,
->-                                     int64_t num, int64_t ret);
->+                                     int64_t num, int64_t ret,
->+                                     void *userdata);
+>-(*qemu_plugin_vcpu_syscall_ret_cb_t)(qemu_plugin_id_t id,
+>-                                     unsigned int vcpu_index,
+>+(*qemu_plugin_vcpu_syscall_ret_cb_t)(unsigned int vcpu_index,
+>                                      int64_t num, int64_t ret);
 > 
 > /**
->  * qemu_plugin_register_vcpu_syscall_cb() - register a syscall entry callback
->@@ -925,6 +927,7 @@ qemu_plugin_register_vcpu_syscall_filter_cb(qemu_plugin_id_t id,
->  * callback
->  * @id: plugin id
->  * @cb: callback of type qemu_plugin_vcpu_syscall_ret_cb_t
->+ * @userdata: user data for callback
->  *
->  * This registers a callback for every syscall executed by the guest. The @cb
->  * function is executed upon return from the host syscall before execution is
->@@ -933,7 +936,8 @@ qemu_plugin_register_vcpu_syscall_filter_cb(qemu_plugin_id_t id,
-> QEMU_PLUGIN_API
-> void
-> qemu_plugin_register_vcpu_syscall_ret_cb(qemu_plugin_id_t id,
->-                                         qemu_plugin_vcpu_syscall_ret_cb_t cb);
->+                                         qemu_plugin_vcpu_syscall_ret_cb_t cb,
->+                                         void *userdata);
-> 
-> /**
->  * qemu_plugin_insn_disas() - return disassembly string for instruction
->diff --git a/plugins/api.c b/plugins/api.c
->index f2176be5304..0038da6d706 100644
->--- a/plugins/api.c
->+++ b/plugins/api.c
->@@ -210,9 +210,10 @@ void qemu_plugin_register_vcpu_syscall_cb(qemu_plugin_id_t id,
-> 
-> void
-> qemu_plugin_register_vcpu_syscall_ret_cb(qemu_plugin_id_t id,
->-                                         qemu_plugin_vcpu_syscall_ret_cb_t cb)
->+                                         qemu_plugin_vcpu_syscall_ret_cb_t cb,
->+                                         void *userdata)
-> {
->-    plugin_register_cb(id, QEMU_PLUGIN_EV_VCPU_SYSCALL_RET, cb);
->+    plugin_register_cb_udata(id, QEMU_PLUGIN_EV_VCPU_SYSCALL_RET, cb, userdata);
-> }
-> 
-> void
 >diff --git a/plugins/core.c b/plugins/core.c
->index 887267f8174..7a58fb537c9 100644
+>index fe292a098da..887267f8174 100644
 >--- a/plugins/core.c
 >+++ b/plugins/core.c
 >@@ -557,7 +557,7 @@ void qemu_plugin_vcpu_syscall_ret(CPUState *cpu, int64_t num, int64_t ret)
 >         qemu_plugin_vcpu_syscall_ret_cb_t func = cb->f.vcpu_syscall_ret;
 > 
 >         qemu_plugin_set_cb_flags(cpu, QEMU_PLUGIN_CB_RW_REGS_PC);
->-        func(cpu->cpu_index, num, ret);
->+        func(cpu->cpu_index, num, ret, cb->udata);
+>-        func(cb->ctx->id, cpu->cpu_index, num, ret);
+>+        func(cpu->cpu_index, num, ret);
 >         qemu_plugin_set_cb_flags(cpu, QEMU_PLUGIN_CB_NO_REGS);
 >     }
 > }
 >diff --git a/tests/tcg/plugins/syscall.c b/tests/tcg/plugins/syscall.c
->index 1bc737824ce..a28d1087840 100644
+>index 410fe617804..1bc737824ce 100644
 >--- a/tests/tcg/plugins/syscall.c
 >+++ b/tests/tcg/plugins/syscall.c
->@@ -152,7 +152,8 @@ static void vcpu_syscall(unsigned int vcpu_index,
+>@@ -151,7 +151,7 @@ static void vcpu_syscall(unsigned int vcpu_index,
+>     }
 > }
 > 
-> static void vcpu_syscall_ret(unsigned int vcpu_idx,
->-                             int64_t num, int64_t ret)
->+                             int64_t num, int64_t ret,
->+                             void *userdata)
+>-static void vcpu_syscall_ret(qemu_plugin_id_t id, unsigned int vcpu_idx,
+>+static void vcpu_syscall_ret(unsigned int vcpu_idx,
+>                              int64_t num, int64_t ret)
 > {
 >     if (statistics) {
->         SyscallStats *entry;
->@@ -273,7 +274,7 @@ QEMU_PLUGIN_EXPORT int qemu_plugin_install(qemu_plugin_id_t id,
->     }
-> 
->     qemu_plugin_register_vcpu_syscall_cb(id, vcpu_syscall, NULL);
->-    qemu_plugin_register_vcpu_syscall_ret_cb(id, vcpu_syscall_ret);
->+    qemu_plugin_register_vcpu_syscall_ret_cb(id, vcpu_syscall_ret, NULL);
->     qemu_plugin_register_vcpu_syscall_filter_cb(id, vcpu_syscall_filter, NULL);
->     qemu_plugin_register_atexit_cb(id, plugin_exit, NULL);
->     return 0;
 >-- 
 >2.43.0
 >
