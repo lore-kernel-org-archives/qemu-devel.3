@@ -4,138 +4,96 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id EC436CD98C6
-	for <qemu-devel@archiver.kernel.org>; Thu, 11 Jun 2026 05:36:03 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C6D90CD8CB2
+	for <qemu-devel@archiver.kernel.org>; Thu, 11 Jun 2026 05:36:16 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wXY3E-0002O1-Op; Thu, 11 Jun 2026 01:34:02 -0400
+	id 1wXY2Y-00019y-8w; Thu, 11 Jun 2026 01:33:18 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <brian.cain@oss.qualcomm.com>)
- id 1wXY2o-0001cg-EN
- for qemu-devel@nongnu.org; Thu, 11 Jun 2026 01:33:34 -0400
-Received: from mx0a-0031df01.pphosted.com ([205.220.168.131])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <brian.cain@oss.qualcomm.com>)
- id 1wXY2l-0002et-M9
- for qemu-devel@nongnu.org; Thu, 11 Jun 2026 01:33:34 -0400
-Received: from pps.filterd (m0279867.ppops.net [127.0.0.1])
- by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 65B5GIbq3791680
- for <qemu-devel@nongnu.org>; Thu, 11 Jun 2026 05:33:20 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
- cc:content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
- ty/tA69kdT3qwefOUDstB5gezYmZn16SypwyYTX8xbg=; b=i8n0Px3xgkC+Qbd0
- nnZI0+kT2JKJgld1+0DRwx37nGi0gqLFvgx+iV8KKNVKnfGeyUG0bv1kxhPdHI5r
- 6UsH007PudClLK1F0f+nWkmaGLtEc9UulAz1y108nAL+qsjJoWBmJmRdS5NaD37j
- K8d4a5GsSkqPPfNTweGc7OPnBtNx4rVUGcHVQuuc9fK6TZyqCRBqWgO/g/98sw7u
- ewuAyemLXYn/V5I0wkOJW6TIISxUmC+d8UM0ANrvC//zAp4egcRWL4Qe/mQCF0E4
- V2umNQi4A2SISOqduT0YPg97JC4Ir7NILx2YqS/TUWQjRyHb8i07ksFDn46B+/yk
- Liu3og==
-Received: from mail-dy1-f198.google.com (mail-dy1-f198.google.com
- [74.125.82.198])
- by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4eqe701skn-1
- (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
- for <qemu-devel@nongnu.org>; Thu, 11 Jun 2026 05:33:20 +0000 (GMT)
-Received: by mail-dy1-f198.google.com with SMTP id
- 5a478bee46e88-307625ee07fso11482764eec.1
- for <qemu-devel@nongnu.org>; Wed, 10 Jun 2026 22:33:20 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <manos.pitsidianakis@linaro.org>)
+ id 1wXY2V-0000uA-NJ
+ for qemu-devel@nongnu.org; Thu, 11 Jun 2026 01:33:15 -0400
+Received: from mail-wm1-x32d.google.com ([2a00:1450:4864:20::32d])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <manos.pitsidianakis@linaro.org>)
+ id 1wXY2T-0002bC-RM
+ for qemu-devel@nongnu.org; Thu, 11 Jun 2026 01:33:15 -0400
+Received: by mail-wm1-x32d.google.com with SMTP id
+ 5b1f17b1804b1-490bb83a3f6so60669855e9.0
+ for <qemu-devel@nongnu.org>; Wed, 10 Jun 2026 22:33:13 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=oss.qualcomm.com; s=google; t=1781156000; x=1781760800; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=ty/tA69kdT3qwefOUDstB5gezYmZn16SypwyYTX8xbg=;
- b=PEEn3CHYO2D5exZihnJMSmM2SvqMmHK4MMv4ojoU7WHcC/3SgdMkIdtf+4rXlbVl13
- 9mieHT6fqKTJkFnrvWcewqKuwRvhSxdNRcafH4ncNiFOkrUZlAy7dvTn0SQe+xLhnSW6
- siBJ/ShmBuyKdmKaN7MpeA46cGhMsRWypbImZ85cq2ppRZWoLsq0mNDOq5OMSaYK1OTc
- 2lmd+/08+VAOxkmXgaASyjUnGEDJyF3sYTAh77EJlKRFQju9tJ3F2jAlmDVnLsiTyoGH
- 2/RYd7znGfHjuMLMZM8aKPinhhGKrQY6As8xWe5IhgBrKLRMI2HwQBvLpM4WhJbCD9qQ
- SDOA==
+ d=linaro.org; s=google; t=1781155992; x=1781760792; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:in-reply-to
+ :references:user-agent:subject:cc:to:from:date:from:to:cc:subject
+ :date:message-id:reply-to;
+ bh=UTomzcQYyDcSf6r5p/brk+6+tJAztvHHV8asoukVCnk=;
+ b=znOjVk+l5XT5W8pDu0xxzU4kmXgAwBXnDl6oQF8e4iKKr/Tzs5JFQdV/eDHxcEo+8Q
+ sNn5CnJilVj9KyvkDub0aRUGBS2cMA1lwfeNL2oyE3DoC32qnA+L+Lh4inc/PUCYKQgY
+ gIvAHkly39h2THeO8j4qUC0C3RcrEHdLnS2ISEmmiZPmAKWlTovoVTud49Hq/SVpIkDK
+ G8JGHkCgYD/s2Czk6JtKC0B48Mh8hfORisCDkJXN0XywG5d1ceFEZvUUQogGfG9bDuoj
+ kfmqr62oI+c4lUT1yvHwZOxgKNv5rStv/OuM2dhOWPlljghqE9+LwAgRF5p7OwScITT+
+ rG7g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1781156000; x=1781760800;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to;
- bh=ty/tA69kdT3qwefOUDstB5gezYmZn16SypwyYTX8xbg=;
- b=N2DnBYDhDEvhKGLuoT10YKE8uE/eAopcHyDt567aK7KQOJjmVJ8VJKXhKU27tAO9Jt
- fSYbhf1G/rKoM2EWrpm9Ea0sSc9Mwo960kcJ2RlbtXL3Dv+cq8oiQgQL/tOZ04mdZsnR
- s0HyxIes2pR1sDasOiWTVFQF8KtddfCB1yzyUCEjNuqZv7zUQzA7ilBXmil1VlI6vJxC
- q7D9C8O9r3ogG56rCn4Xn0gkT8QhEkbQav4NL+lKfmTKvYkOffl3tFQ1rKqoinTGXdGa
- BJseqnKmZ2SGF1Qhbw1P+6DcNmA6yg3g7AavGfus8wAW6JlXdGqBBAITzzcm2GysXzQr
- HnUA==
-X-Gm-Message-State: AOJu0Yz1d1hxjcXJ1f3dlxMS5VtmQFbIIKbjnZqzKErJjyuFVh/VkHRJ
- gluEG0vGyoujbT58JvZGa+vq3yt0EpRPul+nczK3kMRiR/tVOZ7OPzWBFQb9oc76yFfzfbVcDTO
- 4mEt4rl3L97vO2oi9kuDTL6KMakOmkejSOGMyBE9UweS+VZRLmcNvv8yyg1IsYDOXDw==
-X-Gm-Gg: Acq92OGIr0Syf2pXg7w/q7DQOC2J8nmCijCit+zrZUmBF7DpxDoHpgns9PSZ96vvlcb
- /bLe2eSKJr3QgWi/VZoofoXwqZDL4qqrxLi1yy58C21DOG1Px+Rtumkl8dUgsNX5QqR9a0JCO/3
- dEkWugog+6HSyQhEboI11TC8u0rTkal61s9QiecyWPEI/OdbfHWfNkqJPzQOYLyTuZyxYq7kvTb
- YTFakBd5zlTT/dHzHGVM6wU29m8JCIDzwSdme8dQrUzzdm+w459Pgg5FdlPeuZ+y5U1RoUI0PEI
- MVZO21fNWe1h4s9oRIAbG/Yue0ue0+yRHRDeO8s/vlaiLBn01+8ew+J1t428ud4bnKcVkHXH9HO
- chV++l0dltJkol1h8F2/j3eKDA3/fH2i8u0KI5WCCKZa5jB5LGXiXnwBpBj+y+O99MkEvFIaTMQ
- WFHsyK
-X-Received: by 2002:a05:7301:168f:b0:302:e560:afb5 with SMTP id
- 5a478bee46e88-308049ebddfmr1108179eec.18.1781155999147; 
- Wed, 10 Jun 2026 22:33:19 -0700 (PDT)
-X-Received: by 2002:a05:7301:168f:b0:302:e560:afb5 with SMTP id
- 5a478bee46e88-308049ebddfmr1108144eec.18.1781155998534; 
- Wed, 10 Jun 2026 22:33:18 -0700 (PDT)
-Received: from hu-bcain-lv.qualcomm.com (Global_NAT1.qualcomm.com.
- [129.46.96.20]) by smtp.gmail.com with ESMTPSA id
- 5a478bee46e88-30806ee207asm720800eec.29.2026.06.10.22.33.17
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 10 Jun 2026 22:33:17 -0700 (PDT)
-From: Brian Cain <brian.cain@oss.qualcomm.com>
-To: qemu-devel@nongnu.org
-Cc: brian.cain@oss.qualcomm.com, matheus.bernardino@oss.qualcomm.com,
- pierrick.bouvier@oss.qualcomm.com, ltaylorsimpson@gmail.com,
- philmd@mailo.org, philmd@oss.qualcomm.com, Brian Cain <bcain@quicinc.com>
-Subject: [PATCH v6] target/hexagon: Implement setprio, resched
-Date: Wed, 10 Jun 2026 22:32:36 -0700
-Message-Id: <20260611053249.3918491-16-brian.cain@oss.qualcomm.com>
-X-Mailer: git-send-email 2.34.1
-In-Reply-To: <20260611053249.3918491-1-brian.cain@oss.qualcomm.com>
-References: <20260611053249.3918491-1-brian.cain@oss.qualcomm.com>
+ d=1e100.net; s=20251104; t=1781155992; x=1781760792;
+ h=content-transfer-encoding:mime-version:message-id:in-reply-to
+ :references:user-agent:subject:cc:to:from:date:x-gm-gg
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=UTomzcQYyDcSf6r5p/brk+6+tJAztvHHV8asoukVCnk=;
+ b=IxVyFDheJU083TF7N114TJiilESTpBPeT0aC4by3YunqsFC+/K41SJFBJt4FQBcqxK
+ OSnfXD9JGWo2Y+l8NU0LTdY+KcKG18GszSkO4Hfqs5hXdKeT6JkmtBJBFSq3kis8lV49
+ 2j4m9efLQ/bNnnAQYIfo3KHtJT0NLgsxoNsxci7cR2OLLk0T6avp0ht6AIFBdReHIvGs
+ Cb5+hPvN54BuWfFqZKc/RssNlVBaBD5k1Tv6JAmpL0T2bBVQYBrTuwHO1t4PNlZERfNd
+ vGa16hhV2x50VU00gXWjneWIhNrAvRhKjXeEs1dqG2xV016s7s3TFdZ8YWZUb0BzKV+o
+ ViTA==
+X-Gm-Message-State: AOJu0Yz8rijAU8PSN3gdiLA+6g8THZQp4pXFwzMTBu5btKX1pYPhGegU
+ P7EudM9jSy7eXfTAHN2c7gArwdEN8NFY3wXtlx4XP7ZS9Wj9DK1QF4CusN4KHCs6r7WFIZGgt54
+ 3Zorgm0w=
+X-Gm-Gg: Acq92OHtj61JlP9ZFP0ne+0htelTWPngQ6E7EwnSYphfBWg7Ddgb0DUzkmG90JDakX5
+ +TAxpG04CzmdNinYO5MSFCM4XXnlZE1I07GFe1Lpn/mVsI2lV4jo56m0CjLbQB1JbpOqVJWyAr8
+ zLHuUbCsJQZ5EvfvkRAz24Aw35EKUo7hk/3Em3D45yix4Dh2M4y51PZwfyzqZh+FMsj1YNWgMXu
+ zMIAhviEjfhWm3+QY0VMTaKbkdE8zMTxZA+5q9U90fcAJ+EkVxQKpquxWV1VaBAbWXkEV6EFwSV
+ 0QGkzjVqLqYam1iAWhExi4ozWpQ3UiBMPyF7yX8WVgZB1eeYXz87RVq/KBnkm9kdQIJE5XkVXob
+ XrIdUz59P5uctrjiD1UXagccyKUavL72+jfzbI10upOCWrkgS83O0TfVx1IqamEaudYGEE++Ufu
+ KqpUr5Gs1pU8329d+rou2Z+w6hGuLWW9M0RTkbUHu18+kKNYsAQfHyFiwK5KqhKqsUDIwNCIX3R
+ lQqsMhWUrIhMYzMUnfHM/6VVzreEHTyOswEALyq9y7uSI3yGCwRidxmpJG7zKS02aMVKUDW
+X-Received: by 2002:a05:600c:a39b:b0:490:ccf2:6dca with SMTP id
+ 5b1f17b1804b1-490e561048bmr5640155e9.20.1781155991999; 
+ Wed, 10 Jun 2026 22:33:11 -0700 (PDT)
+Received: from meli-email.org (ppp-2-86-135-61.home.otenet.gr. [2.86.135.61])
+ by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-490e5314dedsm20808945e9.9.2026.06.10.22.33.11
+ (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
+ Wed, 10 Jun 2026 22:33:11 -0700 (PDT)
+Date: Thu, 11 Jun 2026 08:32:30 +0300
+From: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
+To: qemu-devel@nongnu.org, Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
+Cc: Chao Liu <chao.liu.zevorn@gmail.com>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ Brian Cain <brian.cain@oss.qualcomm.com>,
+ Philippe Mathieu-Daud=?UTF-8?B?w6kg?=<philmd@linaro.org>,
+ Alex Benn=?UTF-8?B?w6k=?=e <alex.bennee@linaro.org>,
+ Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
+ Alexandre Iooss <erdnaxe@crans.org>
+Subject: Re: [PATCH 09/25] plugins: add userdata to
+ qemu_plugin_register_vcpu_idle_cb
+User-Agent: meli/0.8.13
+References: <20260603205152.1440291-1-pierrick.bouvier@oss.qualcomm.com>
+ <20260603205152.1440291-10-pierrick.bouvier@oss.qualcomm.com>
+In-Reply-To: <20260603205152.1440291-10-pierrick.bouvier@oss.qualcomm.com>
+Message-ID: <tggcra.2d2iw2yderw14@linaro.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: base64
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNjExMDA1MiBTYWx0ZWRfX31kLvUArNlvA
- BZ1/p3zx35eUulIZwG15kjBru8tQ6MvVg34rONCDQMHuV/X+HV/FF7FFJ/h8bvn5Tp93uLCSii5
- QxG9D3YsMq8Rkd7lszj6S/9iMTvo/t+cNx2xalm1Q3+r/wsW6vQZigsrv0eKR/jupfFsScAGUaP
- 6HxIbYngXTAESalYt1m0oiJbnayaGVGc2bd7oVCrvdAqA6lAAH2NHEJcCpAjzSNkJ5eVz/s9c5J
- keIkHdbMeF6X8h9c65HUi9a5Vp8D9TeOwsvHfJ8hzkQmktLkJxh8fvYkO/4O5sVVY0D6nOqcr+9
- iKyDlU+WHrnmBVzQn9IdxR2q2dAMeQ0UJeSszs4gQePg1fUtQTgfJUh3iU24MQtjyK2BLrFCiqq
- bEqUk0vh+3OBG5AwDJMxNJ69+Gi73RTbEu6CURFdVeey61/jhLtfjBwFQJsU8kSfUgbrsfYQ9//
- f9lnM6qPMJ5lvQ46WaA==
-X-Proofpoint-Spam-Info: AW1haW4tMjYwNjExMDA1MiBTYWx0ZWRfXwGDema5LFID2
- td+vbaaul03mAyycBzTM07y0aY3HSTTHciqSWXlf00zoCht8M+BZPUJEjAgieOuW+AWSa/RZivq
- jj1Fn/VREqQOrfrpyaIB3mw1+IUZsCA=
-X-Proofpoint-GUID: SHvohswYXIaaEvnjp1SdZdfXDAaNYAGY
-X-Proofpoint-ORIG-GUID: SHvohswYXIaaEvnjp1SdZdfXDAaNYAGY
-X-Authority-Analysis: v=2.4 cv=Z5Tc2nRA c=1 sm=1 tr=0 ts=6a2a48a0 cx=c_pps
- a=wEP8DlPgTf/vqF+yE6f9lg==:117 a=ouPCqIW2jiPt+lZRy3xVPw==:17
- a=IkcTkHD0fZMA:10 a=FelO9ux0wxsA:10 a=s4-Qcg_JpJYA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=eoimf2acIAo5FJnRuUoq:22
- a=COk6AnOGAAAA:8 a=EUspDBNiAAAA:8 a=9hY_xzidxOicKg_qOOkA:9 a=QEXdDO2ut3YA:10
- a=bBxd6f-gb0O0v-kibOvt:22 a=TjNXssC_j7lpFel5tvFf:22
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.125,FMLib:17.12.100.49
- definitions=2026-06-11_01,2026-06-09_02,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- clxscore=1015 bulkscore=0 adultscore=0 impostorscore=0 malwarescore=0
- spamscore=0 lowpriorityscore=0 phishscore=0 priorityscore=1501 suspectscore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2606040000 definitions=main-2606110052
-Received-SPF: pass client-ip=205.220.168.131;
- envelope-from=brian.cain@oss.qualcomm.com; helo=mx0a-0031df01.pphosted.com
-X-Spam_score_int: -27
-X-Spam_score: -2.8
+Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=utf-8; format=flowed
+Received-SPF: pass client-ip=2a00:1450:4864:20::32d;
+ envelope-from=manos.pitsidianakis@linaro.org; helo=mail-wm1-x32d.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_MSPIKE_H2=0.001, SPF_HELO_NONE=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -152,68 +110,103 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-RnJvbTogQnJpYW4gQ2FpbiA8YmNhaW5AcXVpY2luYy5jb20+CgpUaGUgaGFyZHdhcmUtYXNzaXN0
-ZWQgc2NoZWR1bGVyIGhlbHBzIG1hbmFnZSB0YXNrcyBvbiB0aGUgcnVuIHF1ZXVlCmFuZCBpbnRl
-cnJ1cHQgc3RlZXJpbmcuCgpSZXZpZXdlZC1ieTogUGllcnJpY2sgQm91dmllciA8cGllcnJpY2su
-Ym91dmllckBvc3MucXVhbGNvbW0uY29tPgpTaWduZWQtb2ZmLWJ5OiBCcmlhbiBDYWluIDxicmlh
-bi5jYWluQG9zcy5xdWFsY29tbS5jb20+Ci0tLQogdGFyZ2V0L2hleGFnb24vb3BfaGVscGVyLmMg
-fCA3NyArKysrKysrKysrKysrKysrKysrKysrKysrKysrKysrKysrKysrKwogMSBmaWxlIGNoYW5n
-ZWQsIDc3IGluc2VydGlvbnMoKykKCmRpZmYgLS1naXQgYS90YXJnZXQvaGV4YWdvbi9vcF9oZWxw
-ZXIuYyBiL3RhcmdldC9oZXhhZ29uL29wX2hlbHBlci5jCmluZGV4IDJiYzFmMGQzMTNiLi5jYmM1
-YTYwNGMyZSAxMDA2NDQKLS0tIGEvdGFyZ2V0L2hleGFnb24vb3BfaGVscGVyLmMKKysrIGIvdGFy
-Z2V0L2hleGFnb24vb3BfaGVscGVyLmMKQEAgLTE1ODksNiArMTU4OSw2NCBAQCBzdGF0aWMgdm9p
-ZCBoZXhhZ29uX3dhaXRfdGhyZWFkKENQVUhleGFnb25TdGF0ZSAqZW52LCB1aW50MzJfdCBQQykK
-ICAgICBjcHVfaW50ZXJydXB0KGNzLCBDUFVfSU5URVJSVVBUX0hBTFQpOwogfQogCitzdGF0aWMg
-aW5saW5lIFFFTVVfQUxXQVlTX0lOTElORSB2b2lkIHJlc2NoZWQoQ1BVSGV4YWdvblN0YXRlICpl
-bnYpCit7CisgICAgdWludDMyX3Qgc2NoZWRjZmc7CisgICAgdWludDMyX3Qgc2NoZWRjZmdfZW47
-CisgICAgaW50IGludF9udW1iZXI7CisgICAgQ1BVU3RhdGUgKmNzOworICAgIHVpbnQzMl90IGxv
-d2VzdF90aF9wcmlvID0gMDsgLyogMCBpcyBoaWdoZXN0IHByaW8gKi8KKyAgICB1aW50MzJfdCBi
-ZXN0d2FpdF9yZWc7CisgICAgdWludDMyX3QgYmVzdF9wcmlvOworICAgIEhleGFnb25DUFUgKmNw
-dTsKKworICAgIEJRTF9MT0NLX0dVQVJEKCk7CisgICAgcWVtdV9sb2dfbWFzayhDUFVfTE9HX0lO
-VCwgIiVzOiBjaGVjayByZXNjaGVkXG4iLCBfX2Z1bmNfXyk7CisgICAgY3B1ID0gZW52X2FyY2hj
-cHUoZW52KTsKKyAgICBzY2hlZGNmZyA9IGNwdS0+Z2xvYmFscmVncyA/CisgICAgICAgIGhleGFn
-b25fZ2xvYmFscmVnX3JlYWQoY3B1LT5nbG9iYWxyZWdzLCBIRVhfU1JFR19TQ0hFRENGRywKKyAg
-ICAgICAgICAgICAgICAgICAgICAgICAgICAgICBlbnYtPnRocmVhZElkKSA6IDA7CisgICAgc2No
-ZWRjZmdfZW4gPSBHRVRfRklFTEQoU0NIRURDRkdfRU4sIHNjaGVkY2ZnKTsKKyAgICBpbnRfbnVt
-YmVyID0gR0VUX0ZJRUxEKFNDSEVEQ0ZHX0lOVE5PLCBzY2hlZGNmZyk7CisKKyAgICBpZiAoIXNj
-aGVkY2ZnX2VuKSB7CisgICAgICAgIHJldHVybjsKKyAgICB9CisKKyAgICBDUFVfRk9SRUFDSChj
-cykgeworICAgICAgICBIZXhhZ29uQ1BVICp0aHJlYWQgPSBIRVhBR09OX0NQVShjcyk7CisgICAg
-ICAgIENQVUhleGFnb25TdGF0ZSAqdGhyZWFkX2VudiA9ICYodGhyZWFkLT5lbnYpOworICAgICAg
-ICB1aW50MzJfdCB0aF9wcmlvID0gR0VUX0ZJRUxEKAorICAgICAgICAgICAgU1RJRF9QUklPLCB0
-aHJlYWRfZW52LT50X3NyZWdbSEVYX1NSRUdfU1RJRF0pOworICAgICAgICBpZiAoIWhleGFnb25f
-dGhyZWFkX2lzX2VuYWJsZWQodGhyZWFkX2VudikpIHsKKyAgICAgICAgICAgIGNvbnRpbnVlOwor
-ICAgICAgICB9CisKKyAgICAgICAgbG93ZXN0X3RoX3ByaW8gPSAobG93ZXN0X3RoX3ByaW8gPiB0
-aF9wcmlvKQorICAgICAgICAgICAgPyBsb3dlc3RfdGhfcHJpbworICAgICAgICAgICAgOiB0aF9w
-cmlvOworICAgIH0KKworICAgIGJlc3R3YWl0X3JlZyA9IGNwdS0+Z2xvYmFscmVncyA/CisgICAg
-ICAgIGhleGFnb25fZ2xvYmFscmVnX3JlYWQoY3B1LT5nbG9iYWxyZWdzLCBIRVhfU1JFR19CRVNU
-V0FJVCwKKyAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICBlbnYtPnRocmVhZElkKSA6IDA7
-CisgICAgYmVzdF9wcmlvID0gR0VUX0ZJRUxEKEJFU1RXQUlUX1BSSU8sIGJlc3R3YWl0X3JlZyk7
-CisKKyAgICAvKgorICAgICAqIElmIHRoZSBsb3dlc3QgcHJpb3JpdHkgdGhyZWFkIGlzIGxvd2Vy
-IHByaW9yaXR5IHRoYW4gdGhlCisgICAgICogdmFsdWUgaW4gdGhlIEJFU1RXQUlUIHJlZ2lzdGVy
-LCB3ZSBtdXN0IHJhaXNlIHRoZSByZXNjaGVkdWxlCisgICAgICogaW50ZXJydXB0IG9uIHRoZSBs
-b3dlc3QgcHJpb3JpdHkgdGhyZWFkLgorICAgICAqLworICAgIGlmIChsb3dlc3RfdGhfcHJpbyA+
-IGJlc3RfcHJpbykgeworICAgICAgICBxZW11X2xvZ19tYXNrKENQVV9MT0dfSU5ULAorICAgICAg
-ICAgICAgICAgICIlczogcmFpc2luZyByZXNjaGVkIGludCAldSwiCisgICAgICAgICAgICAgICAg
-IiBjdXIgUEMgMHglIiBQUkl4MzIgIlxuIiwKKyAgICAgICAgICAgICAgICBfX2Z1bmNfXywgKHVu
-c2lnbmVkKWludF9udW1iZXIsIGVudi0+Z3ByW0hFWF9SRUdfUENdKTsKKyAgICAgICAgU0VUX1NZ
-U1RFTV9GSUVMRChlbnYsIEhFWF9TUkVHX0JFU1RXQUlULCBCRVNUV0FJVF9QUklPLCB+MCk7Cisg
-ICAgICAgIGhleF9yYWlzZV9pbnRlcnJ1cHRzKGVudiwgMSA8PCBpbnRfbnVtYmVyLCBDUFVfSU5U
-RVJSVVBUX1NXSSk7CisgICAgfQorfQorCiB2b2lkIEhFTFBFUih3YWl0KShDUFVIZXhhZ29uU3Rh
-dGUgKmVudiwgdWludDMyX3QgUEMpCiB7CiAgICAgQlFMX0xPQ0tfR1VBUkQoKTsKQEAgLTE2OTcs
-OCArMTc1NSwyNyBAQCB1aW50NjRfdCBIRUxQRVIoZ3JlZ19yZWFkX3BhaXIpKENQVUhleGFnb25T
-dGF0ZSAqZW52LCB1aW50MzJfdCByZWcpCiAgICAgZ19hc3NlcnRfbm90X3JlYWNoZWQoKTsKIH0K
-IAorLyoKKyAqIHNldHByaW8vcmVzY2hlZCAtIGhhcmR3YXJlLWFzc2lzdGVkIHNjaGVkdWxlciBo
-ZWxwZXJzIGZvciBtYW5hZ2luZworICogdGhlIHJ1biBxdWV1ZSBhbmQgaW50ZXJydXB0IHN0ZWVy
-aW5nLgorICovCiB2b2lkIEhFTFBFUihzZXRwcmlvKShDUFVIZXhhZ29uU3RhdGUgKmVudiwgdWlu
-dDMyX3QgdGhyZWFkLCB1aW50MzJfdCBwcmlvKQogeworICAgIENQVVN0YXRlICpjczsKKworICAg
-IEJRTF9MT0NLX0dVQVJEKCk7CisgICAgQ1BVX0ZPUkVBQ0goY3MpIHsKKyAgICAgICAgSGV4YWdv
-bkNQVSAqZm91bmRfY3B1ID0gSEVYQUdPTl9DUFUoY3MpOworICAgICAgICBDUFVIZXhhZ29uU3Rh
-dGUgKmZvdW5kX2VudiA9ICZmb3VuZF9jcHUtPmVudjsKKyAgICAgICAgaWYgKHRocmVhZCA9PSBm
-b3VuZF9lbnYtPnRocmVhZElkKSB7CisgICAgICAgICAgICBTRVRfU1lTVEVNX0ZJRUxEKGZvdW5k
-X2VudiwgSEVYX1NSRUdfU1RJRCwgU1RJRF9QUklPLCBwcmlvKTsKKyAgICAgICAgICAgIHFlbXVf
-bG9nX21hc2soQ1BVX0xPR19JTlQsCisgICAgICAgICAgICAgICAgICAgICAgICAgICIlczogdGlk
-ICUiIFBSSXUzMiAiIHByaW8gPSAweCUiIFBSSXgzMiAiXG4iLAorICAgICAgICAgICAgICAgICAg
-ICAgICAgICBfX2Z1bmNfXywgZm91bmRfZW52LT50aHJlYWRJZCwgcHJpbyk7CisgICAgICAgICAg
-ICByZXNjaGVkKGVudik7CisgICAgICAgICAgICByZXR1cm47CisgICAgICAgIH0KKyAgICB9CiAg
-ICAgZ19hc3NlcnRfbm90X3JlYWNoZWQoKTsKIH0KIAotLSAKMi4zNC4xCgo=
+On Wed, 03 Jun 2026 23:51, Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com> wrote:
+>Signed-off-by: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
+>---
+
+Reviewed-by: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
+
+> include/plugins/qemu-plugin.h | 4 +++-
+> plugins/core.c                | 9 +++++----
+> tests/tcg/plugins/bb.c        | 4 ++--
+> 3 files changed, 10 insertions(+), 7 deletions(-)
+>
+>diff --git a/include/plugins/qemu-plugin.h b/include/plugins/qemu-plugin.h
+>index d4f8a99027e..75d2a69a3bd 100644
+>--- a/include/plugins/qemu-plugin.h
+>+++ b/include/plugins/qemu-plugin.h
+>@@ -272,12 +272,14 @@ void qemu_plugin_register_vcpu_exit_cb(qemu_plugin_id_t id,
+>  * qemu_plugin_register_vcpu_idle_cb() - register a vCPU idle callback
+>  * @id: plugin ID
+>  * @cb: callback function
+>+ * @userdata: any plugin data to pass to the @cb
+>  *
+>  * The @cb function is called every time a vCPU idles.
+>  */
+> QEMU_PLUGIN_API
+> void qemu_plugin_register_vcpu_idle_cb(qemu_plugin_id_t id,
+>-                                       qemu_plugin_vcpu_simple_cb_t cb);
+>+                                       qemu_plugin_vcpu_udata_cb_t cb,
+>+                                       void *userdata);
+> 
+> /**
+>  * qemu_plugin_register_vcpu_resume_cb() - register a vCPU resume callback
+>diff --git a/plugins/core.c b/plugins/core.c
+>index 15fb548f68c..111ceeea285 100644
+>--- a/plugins/core.c
+>+++ b/plugins/core.c
+>@@ -89,7 +89,6 @@ static void plugin_vcpu_cb__simple(CPUState *cpu, enum qemu_plugin_event ev)
+>     struct qemu_plugin_cb *cb, *next;
+> 
+>     switch (ev) {
+>-    case QEMU_PLUGIN_EV_VCPU_IDLE:
+>     case QEMU_PLUGIN_EV_VCPU_RESUME:
+>         /* iterate safely; plugins might uninstall themselves at any time */
+>         QLIST_FOREACH_SAFE_RCU(cb, &plugin.cb_lists[ev], entry, next) {
+>@@ -114,6 +113,7 @@ static void plugin_vcpu_cb__udata(CPUState *cpu, enum qemu_plugin_event ev)
+> 
+>     switch (ev) {
+>     case QEMU_PLUGIN_EV_VCPU_INIT:
+>+    case QEMU_PLUGIN_EV_VCPU_IDLE:
+>     case QEMU_PLUGIN_EV_VCPU_EXIT:
+>         QLIST_FOREACH_SAFE_RCU(cb, &plugin.cb_lists[ev], entry, next) {
+>             qemu_plugin_vcpu_udata_cb_t func = cb->f.vcpu_udata;
+>@@ -626,7 +626,7 @@ void qemu_plugin_vcpu_idle_cb(CPUState *cpu)
+>     /* idle and resume cb may be called before init, ignore in this case */
+>     if (cpu->cpu_index < plugin.num_vcpus) {
+>         qemu_plugin_set_cb_flags(cpu, QEMU_PLUGIN_CB_RW_REGS_PC);
+>-        plugin_vcpu_cb__simple(cpu, QEMU_PLUGIN_EV_VCPU_IDLE);
+>+        plugin_vcpu_cb__udata(cpu, QEMU_PLUGIN_EV_VCPU_IDLE);
+>         qemu_plugin_set_cb_flags(cpu, QEMU_PLUGIN_CB_NO_REGS);
+>     }
+> }
+>@@ -659,9 +659,10 @@ void qemu_plugin_vcpu_hostcall_cb(CPUState *cpu, uint64_t from)
+> }
+> 
+> void qemu_plugin_register_vcpu_idle_cb(qemu_plugin_id_t id,
+>-                                       qemu_plugin_vcpu_simple_cb_t cb)
+>+                                       qemu_plugin_vcpu_udata_cb_t cb,
+>+                                       void *userdata)
+> {
+>-    plugin_register_cb(id, QEMU_PLUGIN_EV_VCPU_IDLE, cb);
+>+    plugin_register_cb_udata(id, QEMU_PLUGIN_EV_VCPU_IDLE, cb, userdata);
+> }
+> 
+> void qemu_plugin_register_vcpu_resume_cb(qemu_plugin_id_t id,
+>diff --git a/tests/tcg/plugins/bb.c b/tests/tcg/plugins/bb.c
+>index f29b466dab2..ba605246eb0 100644
+>--- a/tests/tcg/plugins/bb.c
+>+++ b/tests/tcg/plugins/bb.c
+>@@ -56,7 +56,7 @@ static void plugin_exit(void *p)
+>     qemu_plugin_scoreboard_free(counts);
+> }
+> 
+>-static void vcpu_idle(unsigned int cpu_index)
+>+static void vcpu_idle(unsigned int cpu_index, void *userdata)
+> {
+>     CPUCount *count = qemu_plugin_scoreboard_find(counts, cpu_index);
+>     g_autoptr(GString) report = g_string_new("");
+>@@ -124,7 +124,7 @@ QEMU_PLUGIN_EXPORT int qemu_plugin_install(qemu_plugin_id_t id,
+>         counts, CPUCount, insn_count);
+> 
+>     if (idle_report) {
+>-        qemu_plugin_register_vcpu_idle_cb(id, vcpu_idle);
+>+        qemu_plugin_register_vcpu_idle_cb(id, vcpu_idle, NULL);
+>     }
+> 
+>     qemu_plugin_register_vcpu_tb_trans_cb(id, vcpu_tb_trans);
+>-- 
+>2.43.0
+>
+>
 
