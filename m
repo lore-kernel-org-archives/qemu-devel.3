@@ -4,38 +4,36 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9DFB5CD98D5
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9A3FECD98D2
 	for <qemu-devel@archiver.kernel.org>; Thu, 11 Jun 2026 10:23:45 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wXcZ6-0001lo-7j; Thu, 11 Jun 2026 06:23:12 -0400
+	id 1wXcZ3-0001jo-Td; Thu, 11 Jun 2026 06:23:09 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <f.ebner@proxmox.com>)
- id 1wXcYz-0001gY-Bq; Thu, 11 Jun 2026 06:23:05 -0400
+ id 1wXcYz-0001gT-9U; Thu, 11 Jun 2026 06:23:05 -0400
 Received: from proxmox-new.maurer-it.com ([94.136.29.106])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <f.ebner@proxmox.com>)
- id 1wXcYw-0002RM-Qz; Thu, 11 Jun 2026 06:23:05 -0400
+ id 1wXcYw-0002RN-OC; Thu, 11 Jun 2026 06:23:04 -0400
 Received: from proxmox-new.maurer-it.com (localhost.localdomain [127.0.0.1])
- by proxmox-new.maurer-it.com (Proxmox) with ESMTP id 06EDF44ED0;
- Thu, 11 Jun 2026 12:22:53 +0200 (CEST)
+ by proxmox-new.maurer-it.com (Proxmox) with ESMTP id A4CCC45913;
+ Thu, 11 Jun 2026 12:22:52 +0200 (CEST)
 From: Fiona Ebner <f.ebner@proxmox.com>
 To: qemu-devel@nongnu.org
 Cc: qemu-block@nongnu.org,
 	hreitz@redhat.com,
 	kwolf@redhat.com
-Subject: [PATCH 3/3] iotests/041: add tests for mirroring below throttle node
-Date: Thu, 11 Jun 2026 12:22:28 +0200
-Message-ID: <20260611102247.622275-4-f.ebner@proxmox.com>
+Subject: [PATCH 0/3] blockdev: mirror: do not require a root block node
+Date: Thu, 11 Jun 2026 12:22:25 +0200
+Message-ID: <20260611102247.622275-1-f.ebner@proxmox.com>
 X-Mailer: git-send-email 2.47.3
-In-Reply-To: <20260611102247.622275-1-f.ebner@proxmox.com>
-References: <20260611102247.622275-1-f.ebner@proxmox.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 X-Bm-Milter-Handled: 55990f41-d878-4baa-be0a-ee34c49e34d2
-X-Bm-Transport-Timestamp: 1781173324036
+X-Bm-Transport-Timestamp: 1781173323854
 Received-SPF: pass client-ip=94.136.29.106; envelope-from=f.ebner@proxmox.com;
  helo=proxmox-new.maurer-it.com
 X-Spam_score_int: -18
@@ -58,90 +56,26 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Test mirror with a non-root node as a source. This restriction was
-dropped with commit "blockdev: mirror: do not require a root block
-node".
+The mirror block job currently only operates on a root block node. It
+might be desired to use a throttle node as the root node for limiting
+the guest IO, without also limiting mirror operations.
 
-Signed-off-by: Fiona Ebner <f.ebner@proxmox.com>
----
- tests/qemu-iotests/041     | 40 ++++++++++++++++++++++++++++++++++++++
- tests/qemu-iotests/041.out |  4 ++--
- 2 files changed, 42 insertions(+), 2 deletions(-)
+There is no obvious reason why mirror should only be able to operate
+on a root block node.
 
-diff --git a/tests/qemu-iotests/041 b/tests/qemu-iotests/041
-index 3eda59db8e..38a207a724 100755
---- a/tests/qemu-iotests/041
-+++ b/tests/qemu-iotests/041
-@@ -1434,10 +1434,19 @@ class TestThrottle(iotests.QMPTestCase):
-                     bus='vio-scsi.0',
-                     drive='throttle')
- 
-+        self.drive_qdev = '/machine/peripheral/virtio'
-+
-     def tearDown(self):
-         os.remove(test_img)
-         os.remove(target_img)
- 
-+    def blockstats(self, device):
-+        result = self.vm.qmp("query-blockstats")
-+        for r in result['return']:
-+            if r['node-name'] == device:
-+                return r['stats']
-+        raise Exception(f'Device {device} not found when querying blockstats')
-+
-     def test_throttled(self):
-         self.mirror_command('throttle')
- 
-@@ -1451,6 +1460,37 @@ class TestThrottle(iotests.QMPTestCase):
-         self.assertTrue(iotests.compare_images(test_img, target_img),
-                         'target image does not match source after mirroring')
- 
-+    def test_below_throttle(self):
-+        self.mirror_command('source')
-+
-+        # The throttling above should not block the mirror from completing.
-+        self.complete_and_wait('mirror')
-+        self.vm.shutdown()
-+        self.assertTrue(iotests.compare_images(test_img, target_img),
-+                        'target image does not match source after mirroring')
-+
-+    def test_below_throttle_with_io_on_throttle(self):
-+        self.mirror_command('source')
-+
-+        reqs = 3
-+        req_len = 1 * 1024
-+
-+        for i in range(0, reqs):
-+            req = f'aio_write -P 7 {i}M {req_len}'
-+            self.vm.hmp_qemu_io(self.drive_qdev, req, qdev=True)
-+
-+        self.wait_ready('mirror')
-+        # The throttle node above should still have in-flight requests.
-+        assert self.blockstats('throttle')['wr_bytes'] <= 1 * req_len
-+
-+        self.complete_and_wait('mirror', wait_ready=False)
-+        assert self.blockstats('throttle')['wr_bytes'] == reqs * req_len
-+        self.vm.shutdown()
-+        # The throttle node above is drained too when the mirror finishes, so
-+        # the images should match.
-+        self.assertTrue(iotests.compare_images(test_img, target_img),
-+                        'target image does not match source after mirroring')
-+
- class TestThrottleDriveMirror(TestThrottle):
-     attachTargetImage = False
- 
-diff --git a/tests/qemu-iotests/041.out b/tests/qemu-iotests/041.out
-index 96a0752f44..ec055a9915 100644
---- a/tests/qemu-iotests/041.out
-+++ b/tests/qemu-iotests/041.out
-@@ -1,5 +1,5 @@
--.............................................................................................................
-+.................................................................................................................
- ----------------------------------------------------------------------
--Ran 109 tests
-+Ran 113 tests
- 
- OK
+For a related discussion see here:
+https://lore.kernel.org/qemu-devel/9f516c2f-7dd3-446a-8495-56adac267cfe@proxmox.com/
+
+Fiona Ebner (3):
+  iotests/041: add test for mirror with throttle node as source
+  blockdev: mirror: do not require a root block node
+  iotests/041: add tests for mirroring below throttle node
+
+ blockdev.c                 |  20 +++++-
+ tests/qemu-iotests/041     | 128 +++++++++++++++++++++++++++++++++++++
+ tests/qemu-iotests/041.out |   4 +-
+ 3 files changed, 147 insertions(+), 5 deletions(-)
+
 -- 
 2.47.3
 
