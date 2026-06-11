@@ -4,98 +4,113 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 921E0CD98CC
-	for <qemu-devel@archiver.kernel.org>; Thu, 11 Jun 2026 10:57:08 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id BEB1ACD98D2
+	for <qemu-devel@archiver.kernel.org>; Thu, 11 Jun 2026 11:15:53 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wXd5W-0000Yn-9b; Thu, 11 Jun 2026 06:56:42 -0400
+	id 1wXdNJ-0007C8-8D; Thu, 11 Jun 2026 07:15:05 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <alexander@mihalicyn.com>)
- id 1wXd5U-0000YW-Ho
- for qemu-devel@nongnu.org; Thu, 11 Jun 2026 06:56:40 -0400
-Received: from mail-wm1-x32a.google.com ([2a00:1450:4864:20::32a])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <alexander@mihalicyn.com>)
- id 1wXd5R-00050f-RI
- for qemu-devel@nongnu.org; Thu, 11 Jun 2026 06:56:40 -0400
-Received: by mail-wm1-x32a.google.com with SMTP id
- 5b1f17b1804b1-490b2b037d2so68076435e9.3
- for <qemu-devel@nongnu.org>; Thu, 11 Jun 2026 03:56:36 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <leonardi@redhat.com>)
+ id 1wXdNH-0007Bs-JV
+ for qemu-devel@nongnu.org; Thu, 11 Jun 2026 07:15:03 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <leonardi@redhat.com>)
+ id 1wXdNF-0004Gu-Gm
+ for qemu-devel@nongnu.org; Thu, 11 Jun 2026 07:15:03 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1781176499;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding;
+ bh=e05Y74bqj4LuPcuNyrGYpBQ2Db1rYe3gnWJlN54b0Rg=;
+ b=WmrqB9CCboJOYtlEwdvh/RuC67nTZMNvhwueOz+ZpJXHmXRJdzyS70S5zz+9OvAzr47nbi
+ ml1PBZTR5+0y3EAQ77BDJ+EgZ9tEZOmzu+p1gbzfKcFPE9nxoJ7YEmSG37ALw+h7FAiuOl
+ cF+HJzH40J/dPNsKAjvdUJHQ9dujZ8o=
+Received: from mail-wm1-f69.google.com (mail-wm1-f69.google.com
+ [209.85.128.69]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-199--MB4ZIjfPTuvoxPDI3JmqQ-1; Thu, 11 Jun 2026 07:14:55 -0400
+X-MC-Unique: -MB4ZIjfPTuvoxPDI3JmqQ-1
+X-Mimecast-MFC-AGG-ID: -MB4ZIjfPTuvoxPDI3JmqQ_1781176495
+Received: by mail-wm1-f69.google.com with SMTP id
+ 5b1f17b1804b1-490b3f53c81so35799715e9.3
+ for <qemu-devel@nongnu.org>; Thu, 11 Jun 2026 04:14:55 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=mihalicyn.com; s=mihalicyn; t=1781175395; x=1781780195; darn=nongnu.org;
- h=mime-version:user-agent:content-transfer-encoding:references
- :in-reply-to:date:cc:to:from:subject:message-id:from:to:cc:subject
- :date:message-id:reply-to;
- bh=VtwHaLfCnHyHiJG+UD9PmpqS9ZcpqJ06sNwHvYyeQW0=;
- b=Ph4fMU4PGHA/3r/15fPgQFrqBbXYngmW+LzzIFwwF9h0QCPbAztM0n7qu4O1WQEd2N
- txcpQ963gcLMi3KgYgvRQz0vNaAnXrJqIZq+qtGfusXOe9wqIA0l0rDvE8oDXmuX7hLT
- 0mWIO1qGSB4JI+OsGvW5I5uE5wU1M6UbprEM0=
+ d=redhat.com; s=google; t=1781176494; x=1781781294; darn=nongnu.org;
+ h=cc:to:message-id:content-transfer-encoding:mime-version:subject
+ :date:from:from:to:cc:subject:date:message-id:reply-to;
+ bh=e05Y74bqj4LuPcuNyrGYpBQ2Db1rYe3gnWJlN54b0Rg=;
+ b=aycw0ttkzcU7vqLnav+/qbg4a8llVjYJ0KBmkaUDquj2SzZgW503+QwhwYBAh4pA6Y
+ iGE4pvQ7YVl4FFYHtJ6n6JMx/qcSPggM3sbFmh9tU85JlZtL1CfBRSbqwLrafvdyWUeA
+ zFGlfuLtA5wYD2T/FnAK+IVVQIvM7b4JLAmNxgEYh5mjgU3a62eN6vAdJJydTOU+vLTe
+ mzfAPsXD7jmsiJF7pcPDKVw5HImL7ydnymlWucDDZqealSMJqbiBSdYTKbRo32DZXU1U
+ 10kA7wAq28w8nTcNpADPJxmhzGUfHO6SVRrKLbpccoOB1GVsXfPQpu3Q/x1yHTvVzcSO
+ 9yZw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1781175395; x=1781780195;
- h=mime-version:user-agent:content-transfer-encoding:references
- :in-reply-to:date:cc:to:from:subject:message-id:x-gm-gg
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=VtwHaLfCnHyHiJG+UD9PmpqS9ZcpqJ06sNwHvYyeQW0=;
- b=eNww2WkpNaNMT8Yw6QfWgUdW/VGrvuQpKbM/5Z0dRiAsTsDIVCpmztLUNLPXlDRH30
- oxAd/oYWrsbBOcMK3DJ8bS4i1s4XBa2kx3XX7QRKX/EG4Y38f2Y+ZBwSMcIVinDNgRvZ
- SRE+X4KBeE01tzE9zmliaB3mT0FAusZ+IuKl31Io0xXNw5S2c8IDU+2AsF/zLD14aMw6
- xdGeAt+F71eZsmiWORuhIrOv9CcK00+QTuzQ/NdPBaP2HVyW+dnXC1hzbiXqsH/we6Fe
- WMx9flI06ewWoHS1plAoQ7EXlajLyFFUjPARPrUIjh4eF2mJyXSYIkBCJsFGxULz8dnn
- MDJA==
-X-Forwarded-Encrypted: i=1;
- AFNElJ/smb38Hi0R/hJPXr6f7aew4+VcVvAiYz7hKS7DDS85CRz5y3x1JswUVeoYxZI/MyguK8FQG4EH757e@nongnu.org
-X-Gm-Message-State: AOJu0YwabUaRa1Upk80ocXjjN8fDNDddJj+Kh5aj30Cpc2Y4vX/fLuLP
- sjgpo0v4lvT7zRarjwBDYrqaHDveYYYf57cviS9l/01mDcP5MFf6/8tX4ooH1/krobw=
-X-Gm-Gg: Acq92OEhXKDu8tcl28ItySrspmPQoheuntHDQVIX/lYfb1gwaSYuS2aZUrcMs49fJt4
- HSlumsfCQLnfsCXuaRhO1y0zLwPXXGxqmfTdfU1FbaZ1GnCX5WFU3YT8MfsYJ95YGJaou98ahjw
- zHN916m2zYp2XXEEw57dtsFWQvVl2AtN/9f+4oVqZMThuYBuzGz5UpEyXrQwDff2H+4dRJJDDYF
- jzBeGNj0eHoeVkEv/B06iggIaKEbOABpy08SqHrUk5RTViAhRpIsRzSPpupCKeaQfErqkzi/KrE
- db7+m0ZkF+748oH0bFSoYaQTTWw/buf78pBrY+d7pjVc6RW8mhDmHWzJpUk7zbrIG/S2rCucIb3
- m3EvDNQHcJOSy+PjXBQKssXevCeCboSHZ2mhZcHf4cSMiA4xRtCkgjHqgIJ55ky8FnfvfHZuaN5
- K3iNl7ysQEhwCSjx4spmTfGUeeF+Cuad3EpWPxogZf5uNKKTEnOK8/ykVGDd7qOrfwIstWeTaAc
- XV831g7/iGAEyrCy02ChjmD/mZ5Mt/SNqN0V8bMigu4eztFcZEaRLpLy6eBlcjiNlkksET2FTzJ
- L/Xz
-X-Received: by 2002:a05:600c:3550:b0:490:e5c1:b897 with SMTP id
- 5b1f17b1804b1-490e5d0fe68mr25476445e9.20.1781175395132; 
- Thu, 11 Jun 2026 03:56:35 -0700 (PDT)
-Received: from ?IPv6:2003:cf:570f:fe00:65c9:7c06:8cb4:c6f?
- (p200300cf570ffe0065c97c068cb40c6f.dip0.t-ipconnect.de.
- [2003:cf:570f:fe00:65c9:7c06:8cb4:c6f])
+ d=1e100.net; s=20251104; t=1781176494; x=1781781294;
+ h=cc:to:message-id:content-transfer-encoding:mime-version:subject
+ :date:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=e05Y74bqj4LuPcuNyrGYpBQ2Db1rYe3gnWJlN54b0Rg=;
+ b=YxJc6jI1FhHJ2taOSUdnSqb4pdBHoGBApfQ1Piji+8MZvitGKs1BPgpHrZ+EnDHX7L
+ /aXfPCq/LlqEBtP46RbURyl8X9ugL2ZozKKakFfOVdSiV7k2MxdwgddXr4Jfq9Z99Inc
+ kH6AjWV2ov/+BdpcqO904l0ACJM6gWRmeiCHbG4ATs+ShlRbYBseMwiNGXvGREYoVzXR
+ ppBpYGSBduoNVXS1Q40Uzp44Oj2/nmnTU8NS70daZOw5AvBpHEiJ/QBtGQvnGFgPHuig
+ HVcIVL8Daj03JTgCASxNJLWaGDXqXX+AGYhtQ6JSoh/xeAU6HX9UdRr2d8pC2r6dgYdN
+ a+DQ==
+X-Gm-Message-State: AOJu0YxPNdGddmtNk7zpK80HbB4kVauXxm8EoYqIYiCqXUV2dnnOJk9B
+ vkPBeVqemBsG2afOUPqfyMhmgpgFUe+xa6yFPHKEPA4YufROPDfspojfcKUusS4t80Y19CppqcY
+ 9P8KfwYaUC778RA4KO4TWgQ+s2WTiW1tCMyUYfsl0bsGQBKNvt+1lgj8A
+X-Gm-Gg: Acq92OFsm1CagIs2a7sGpjabdN8cAAPXroiHL7OYIqIptdRVMy/QXRZCqxX2bd5UYpx
+ IUERSsJS9U2i4Th9NSI7hbEsgaT48otTo8V2tZIHGxZlBlZdK9dL3TvZ9mGar7bG7dpxPx0zXgi
+ rDhOo2hTJex71QN0v5YJd7L3CamAL4pLwHUECQ/gqKBPut6OQOzM41O61SV0Q7pFvuu03SrVOOv
+ UvWGEMECkaHtoUxyrMPWzD0KYO6uGqL0b/UinkPl9sMxY95f/vZ4urXUOhBuey5pZiPLA54y02Y
+ 68ogq+RSd6K7S3HSUj8ZsdrCmDFzli8IrlrgpogxurqSt02UsM32hy3S7tKJLnYeWZ0MLFtVm2D
+ DtDvcHTLTtNnhHPJxzVRysX3XfcvYSLZa3m1xNK0TseixFQFCC73tlwLcn+9XhI15Ldyy0+l/ko
+ aXxXjam6aEGJOiRLM1smb1bCUNBoQ=
+X-Received: by 2002:a05:600c:8b23:b0:490:9bc2:bf8b with SMTP id
+ 5b1f17b1804b1-490e55bd82bmr30479675e9.5.1781176494537; 
+ Thu, 11 Jun 2026 04:14:54 -0700 (PDT)
+X-Received: by 2002:a05:600c:8b23:b0:490:9bc2:bf8b with SMTP id
+ 5b1f17b1804b1-490e55bd82bmr30479035e9.5.1781176494084; 
+ Thu, 11 Jun 2026 04:14:54 -0700 (PDT)
+Received: from lleonard-thinkpadx1carbongen13.rmtit.csb ([176.206.19.176])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-490e52ac9aasm41531355e9.4.2026.06.11.03.56.34
+ 5b1f17b1804b1-490e2c7ead0sm64662605e9.3.2026.06.11.04.14.52
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 11 Jun 2026 03:56:34 -0700 (PDT)
-Message-ID: <25c00af8f9b54c9c39ff3bf806744d2c2ec745c5.camel@mihalicyn.com>
-Subject: Re: [PATCH v5 04/11] tests/qtest: Enable spapr dma with linear
- iommu map
-From: Alexander Mikhalitsyn <alexander@mihalicyn.com>
-To: Nicholas Piggin <npiggin@gmail.com>, qemu-devel@nongnu.org
-Cc: stgraber@stgraber.org, aleksandr.mikhalitsyn@futurfusion.io, Akihiko
- Odaki	 <akihiko.odaki@daynix.com>, Fabiano Rosas <farosas@suse.de>, Harsh
- Prateek Bora	 <harshpb@linux.ibm.com>, John Snow <jsnow@redhat.com>,
- Laurent Vivier	 <lvivier@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>,
- "Michael S . Tsirkin" <mst@redhat.com>, Marcel Apfelbaum
- <marcel.apfelbaum@gmail.com>, Philippe =?ISO-8859-1?Q?Mathieu-Daud=E9?=	
- <philmd@linaro.org>, qemu-block@nongnu.org, qemu-ppc@nongnu.org
-Date: Thu, 11 Jun 2026 12:56:33 +0200
-In-Reply-To: <20250502030446.88310-5-npiggin@gmail.com>
-References: <20250502030446.88310-1-npiggin@gmail.com>
- <20250502030446.88310-5-npiggin@gmail.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-User-Agent: Evolution 3.56.2-0+deb13u1 
+ Thu, 11 Jun 2026 04:14:53 -0700 (PDT)
+From: Luigi Leonardi <leonardi@redhat.com>
+Date: Thu, 11 Jun 2026 13:14:47 +0200
+Subject: [PATCH v3] igvm: add device tree parameter support
 MIME-Version: 1.0
-Received-SPF: pass client-ip=2a00:1450:4864:20::32a;
- envelope-from=alexander@mihalicyn.com; helo=mail-wm1-x32a.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+Message-Id: <20260611-microvm_device_tree-v3-1-dfb9cf0000b8@redhat.com>
+X-B4-Tracking: v=1; b=H4sIAAAAAAAC/33NTQ6CMBAF4KuQrq2Z/gSqK+9hDIF2kC6gpm0aD
+ eHuDqw0MS7fzJtvFpYwekzsXC0sYvHJh5mCOlTMjt18R+4dZSZB1lCD4ZO3MZSpdVS22OaIyGm
+ nrOpFj6ZmdPmIOPjnrl5vlEefcoiv/UkR2/S/VwQH3igwje4cAJhLRDd2+WjDxDawyA9EwG9EE
+ qKHXmuSrD4NX8i6rm/axATC/AAAAA==
+X-Change-ID: 20260608-microvm_device_tree-0263c3b1be86
+To: qemu-devel@nongnu.org
+Cc: Luigi Leonardi <leonardi@redhat.com>, 
+ "Michael S. Tsirkin" <mst@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>, 
+ Richard Henderson <richard.henderson@linaro.org>, 
+ Gerd Hoffmann <kraxel@redhat.com>, Stefano Garzarella <sgarzare@redhat.com>, 
+ Ani Sinha <anisinha@redhat.com>, Zhao Liu <zhao1.liu@intel.com>, 
+ Oliver Steffen <osteffen@redhat.com>
+X-Mailer: b4 0.14.3
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=leonardi@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -24
+X-Spam_score: -2.5
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.445,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -111,375 +126,146 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi Nicholas,
+Coconut SVSM, with the upcoming device tree support [1], will use
+the IGVM device tree parameter to discover virtio-mmio and ISA serial
+devices instead of relying on the fw_cfg interface, which is
+QEMU-specific.
 
-I was working on a qtest for a NVMe emulated device [1] and noticed
-that test fails on ppc64 with spapr bus. After small research I found out t=
-hat
-the issue is that pci_dma_read() fails on a perfectly valid physical addres=
-s...
+The device tree is packed before copying into the IGVM parameter area
+to reduce its size, since IGVM files can define tighter memory
+constraints for parameter areas. Packing is done in the generic IGVM
+backend rather than in per-architecture device tree setup code, so
+that each architecture does not need to handle it individually.
 
-I wonder if you are going to continue working on this patchset?
+[1] https://github.com/coconut-svsm/svsm/pull/1006
 
-It looks like this change is what I need to fix it (haven't yet tried, but =
-happy to do so).
+Signed-off-by: Luigi Leonardi <leonardi@redhat.com>
+---
+This device tree will be consumed by Coconut SVSM with the upcoming device
+tree support [1]. This will allow SVSM to run on a normal CPU
+(not AMD SEV-SNP) and execute all its tests using upstream QEMU.
 
-[1] https://lore.kernel.org/qemu-devel/20260526113301.91492-9-alexander@mih=
-alicyn.com/
+Eventually edk2 will also be able to consume DT via IGVM, but the work
+has not started yet.
 
-Kind regards,
-Alex
+[1] https://github.com/coconut-svsm/svsm/pull/1006
 
-On Fri, 2025-05-02 at 13:04 +1000, Nicholas Piggin wrote:
-> qtests spapr dma was broken because the iommu was not set up.
->=20
-> spapr requires hypercalls to set up the iommu (TCE tables), but
-> there is no support for that or a side-channel to the iommu in
-> qtests at the moment, so add a quick workaround in QEMU to have
-> the spapr iommu provide a linear map to memory when running
-> qtests.
->=20
-> The buggy msix checks can all be removed since the tests all work
-> now.
->=20
-> Reviewed-by: Fabiano Rosas <farosas@suse.de>
-> Signed-off-by: Nicholas Piggin <npiggin@gmail.com>
-> ---
-> =C2=A0tests/qtest/libqos/pci.h=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=
-=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 |=C2=A0 4 ----
-> =C2=A0hw/ppc/spapr_iommu.c=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=
-=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 | 10 +++++++++-
-> =C2=A0tests/qtest/e1000e-test.c=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=
-=C2=A0=C2=A0=C2=A0=C2=A0 | 21 ---------------------
-> =C2=A0tests/qtest/igb-test.c=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=
-=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 | 21 ---------------------
-> =C2=A0tests/qtest/libqos/generic-pcihost.c |=C2=A0 1 -
-> =C2=A0tests/qtest/libqos/pci-pc.c=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=
-=A0=C2=A0=C2=A0 |=C2=A0 3 ---
-> =C2=A0tests/qtest/libqos/pci-spapr.c=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 =
-|=C2=A0 7 ++++---
-> =C2=A0tests/qtest/libqos/pci.c=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=
-=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 | 14 --------------
-> =C2=A0tests/qtest/vhost-user-blk-test.c=C2=A0=C2=A0=C2=A0 |=C2=A0 6 -----=
--
-> =C2=A0tests/qtest/virtio-blk-test.c=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=
-=C2=A0 | 12 ------------
-> =C2=A010 files changed, 13 insertions(+), 86 deletions(-)
->=20
-> diff --git a/tests/qtest/libqos/pci.h b/tests/qtest/libqos/pci.h
-> index 9f8f154c301..ef40a6917d3 100644
-> --- a/tests/qtest/libqos/pci.h
-> +++ b/tests/qtest/libqos/pci.h
-> @@ -51,7 +51,6 @@ struct QPCIBus {
-> =C2=A0=C2=A0=C2=A0=C2=A0 QTestState *qts;
-> =C2=A0=C2=A0=C2=A0=C2=A0 uint64_t pio_alloc_ptr, pio_limit;
-> =C2=A0=C2=A0=C2=A0=C2=A0 uint64_t mmio_alloc_ptr, mmio_limit;
-> -=C2=A0=C2=A0=C2=A0 bool has_buggy_msi; /* TRUE for spapr, FALSE for pci =
-*/
-> =C2=A0=C2=A0=C2=A0=C2=A0 bool not_hotpluggable; /* TRUE if devices cannot=
- be hotplugged */
-> =C2=A0
-> =C2=A0};
-> @@ -83,9 +82,6 @@ QPCIDevice *qpci_device_find(QPCIBus *bus, int devfn);
-> =C2=A0void qpci_device_init(QPCIDevice *dev, QPCIBus *bus, QPCIAddress *a=
-ddr);
-> =C2=A0int qpci_secondary_buses_init(QPCIBus *bus);
-> =C2=A0
-> -bool qpci_has_buggy_msi(QPCIDevice *dev);
-> -bool qpci_check_buggy_msi(QPCIDevice *dev);
-> -
-> =C2=A0void qpci_device_enable(QPCIDevice *dev);
-> =C2=A0uint8_t qpci_find_capability(QPCIDevice *dev, uint8_t id, uint8_t s=
-tart_addr);
-> =C2=A0void qpci_msix_enable(QPCIDevice *dev);
-> diff --git a/hw/ppc/spapr_iommu.c b/hw/ppc/spapr_iommu.c
-> index c2432a0c00c..c89ccc87d71 100644
-> --- a/hw/ppc/spapr_iommu.c
-> +++ b/hw/ppc/spapr_iommu.c
-> @@ -22,6 +22,8 @@
-> =C2=A0#include "qemu/log.h"
-> =C2=A0#include "qemu/module.h"
-> =C2=A0#include "system/kvm.h"
-> +#include "system/qtest.h"
-> +#include "exec/target_page.h"
-> =C2=A0#include "kvm_ppc.h"
-> =C2=A0#include "migration/vmstate.h"
-> =C2=A0#include "system/dma.h"
-> @@ -125,7 +127,13 @@ static IOMMUTLBEntry spapr_tce_translate_iommu(IOMMU=
-MemoryRegion *iommu,
-> =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 .perm =3D IOMMU_NONE,
-> =C2=A0=C2=A0=C2=A0=C2=A0 };
-> =C2=A0
-> -=C2=A0=C2=A0=C2=A0 if ((addr >> tcet->page_shift) < tcet->nb_table) {
-> +=C2=A0=C2=A0=C2=A0 if (qtest_enabled()) {
-> +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 /* spapr qtests does not set =
-up the IOMMU, shortcut a linear map */
-> +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 ret.iova =3D addr & TARGET_PA=
-GE_MASK;
-> +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 ret.translated_addr =3D addr =
-& TARGET_PAGE_MASK;
-> +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 ret.addr_mask =3D ~TARGET_PAG=
-E_MASK;
-> +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 ret.perm =3D IOMMU_RW;
-> +=C2=A0=C2=A0=C2=A0 } else if ((addr >> tcet->page_shift) < tcet->nb_tabl=
-e) {
-> =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 /* Check if we are in bo=
-und */
-> =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 hwaddr page_mask =3D IOM=
-MU_PAGE_MASK(tcet->page_shift);
-> =C2=A0
-> diff --git a/tests/qtest/e1000e-test.c b/tests/qtest/e1000e-test.c
-> index de9738fdb74..8300bf5a5b3 100644
-> --- a/tests/qtest/e1000e-test.c
-> +++ b/tests/qtest/e1000e-test.c
-> @@ -139,13 +139,6 @@ static void test_e1000e_tx(void *obj, void *data, QG=
-uestAllocator * alloc)
-> =C2=A0{
-> =C2=A0=C2=A0=C2=A0=C2=A0 QE1000E_PCI *e1000e =3D obj;
-> =C2=A0=C2=A0=C2=A0=C2=A0 QE1000E *d =3D &e1000e->e1000e;
-> -=C2=A0=C2=A0=C2=A0 QOSGraphObject *e_object =3D obj;
-> -=C2=A0=C2=A0=C2=A0 QPCIDevice *dev =3D e_object->get_driver(e_object, "p=
-ci-device");
-> -
-> -=C2=A0=C2=A0=C2=A0 /* FIXME: add spapr support */
-> -=C2=A0=C2=A0=C2=A0 if (qpci_check_buggy_msi(dev)) {
-> -=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 return;
-> -=C2=A0=C2=A0=C2=A0 }
-> =C2=A0
-> =C2=A0=C2=A0=C2=A0=C2=A0 e1000e_send_verify(d, data, alloc);
-> =C2=A0}
-> @@ -154,13 +147,6 @@ static void test_e1000e_rx(void *obj, void *data, QG=
-uestAllocator * alloc)
-> =C2=A0{
-> =C2=A0=C2=A0=C2=A0=C2=A0 QE1000E_PCI *e1000e =3D obj;
-> =C2=A0=C2=A0=C2=A0=C2=A0 QE1000E *d =3D &e1000e->e1000e;
-> -=C2=A0=C2=A0=C2=A0 QOSGraphObject *e_object =3D obj;
-> -=C2=A0=C2=A0=C2=A0 QPCIDevice *dev =3D e_object->get_driver(e_object, "p=
-ci-device");
-> -
-> -=C2=A0=C2=A0=C2=A0 /* FIXME: add spapr support */
-> -=C2=A0=C2=A0=C2=A0 if (qpci_check_buggy_msi(dev)) {
-> -=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 return;
-> -=C2=A0=C2=A0=C2=A0 }
-> =C2=A0
-> =C2=A0=C2=A0=C2=A0=C2=A0 e1000e_receive_verify(d, data, alloc);
-> =C2=A0}
-> @@ -173,13 +159,6 @@ static void test_e1000e_multiple_transfers(void *obj=
-, void *data,
-> =C2=A0
-> =C2=A0=C2=A0=C2=A0=C2=A0 QE1000E_PCI *e1000e =3D obj;
-> =C2=A0=C2=A0=C2=A0=C2=A0 QE1000E *d =3D &e1000e->e1000e;
-> -=C2=A0=C2=A0=C2=A0 QOSGraphObject *e_object =3D obj;
-> -=C2=A0=C2=A0=C2=A0 QPCIDevice *dev =3D e_object->get_driver(e_object, "p=
-ci-device");
-> -
-> -=C2=A0=C2=A0=C2=A0 /* FIXME: add spapr support */
-> -=C2=A0=C2=A0=C2=A0 if (qpci_check_buggy_msi(dev)) {
-> -=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 return;
-> -=C2=A0=C2=A0=C2=A0 }
-> =C2=A0
-> =C2=A0=C2=A0=C2=A0=C2=A0 for (i =3D 0; i < iterations; i++) {
-> =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 e1000e_send_verify(d, da=
-ta, alloc);
-> diff --git a/tests/qtest/igb-test.c b/tests/qtest/igb-test.c
-> index 3d397ea6973..1b3b5aa6c76 100644
-> --- a/tests/qtest/igb-test.c
-> +++ b/tests/qtest/igb-test.c
-> @@ -142,13 +142,6 @@ static void test_igb_tx(void *obj, void *data, QGues=
-tAllocator * alloc)
-> =C2=A0{
-> =C2=A0=C2=A0=C2=A0=C2=A0 QE1000E_PCI *e1000e =3D obj;
-> =C2=A0=C2=A0=C2=A0=C2=A0 QE1000E *d =3D &e1000e->e1000e;
-> -=C2=A0=C2=A0=C2=A0 QOSGraphObject *e_object =3D obj;
-> -=C2=A0=C2=A0=C2=A0 QPCIDevice *dev =3D e_object->get_driver(e_object, "p=
-ci-device");
-> -
-> -=C2=A0=C2=A0=C2=A0 /* FIXME: add spapr support */
-> -=C2=A0=C2=A0=C2=A0 if (qpci_check_buggy_msi(dev)) {
-> -=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 return;
-> -=C2=A0=C2=A0=C2=A0 }
-> =C2=A0
-> =C2=A0=C2=A0=C2=A0=C2=A0 igb_send_verify(d, data, alloc);
-> =C2=A0}
-> @@ -157,13 +150,6 @@ static void test_igb_rx(void *obj, void *data, QGues=
-tAllocator * alloc)
-> =C2=A0{
-> =C2=A0=C2=A0=C2=A0=C2=A0 QE1000E_PCI *e1000e =3D obj;
-> =C2=A0=C2=A0=C2=A0=C2=A0 QE1000E *d =3D &e1000e->e1000e;
-> -=C2=A0=C2=A0=C2=A0 QOSGraphObject *e_object =3D obj;
-> -=C2=A0=C2=A0=C2=A0 QPCIDevice *dev =3D e_object->get_driver(e_object, "p=
-ci-device");
-> -
-> -=C2=A0=C2=A0=C2=A0 /* FIXME: add spapr support */
-> -=C2=A0=C2=A0=C2=A0 if (qpci_check_buggy_msi(dev)) {
-> -=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 return;
-> -=C2=A0=C2=A0=C2=A0 }
-> =C2=A0
-> =C2=A0=C2=A0=C2=A0=C2=A0 igb_receive_verify(d, data, alloc);
-> =C2=A0}
-> @@ -176,13 +162,6 @@ static void test_igb_multiple_transfers(void *obj, v=
-oid *data,
-> =C2=A0
-> =C2=A0=C2=A0=C2=A0=C2=A0 QE1000E_PCI *e1000e =3D obj;
-> =C2=A0=C2=A0=C2=A0=C2=A0 QE1000E *d =3D &e1000e->e1000e;
-> -=C2=A0=C2=A0=C2=A0 QOSGraphObject *e_object =3D obj;
-> -=C2=A0=C2=A0=C2=A0 QPCIDevice *dev =3D e_object->get_driver(e_object, "p=
-ci-device");
-> -
-> -=C2=A0=C2=A0=C2=A0 /* FIXME: add spapr support */
-> -=C2=A0=C2=A0=C2=A0 if (qpci_check_buggy_msi(dev)) {
-> -=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 return;
-> -=C2=A0=C2=A0=C2=A0 }
-> =C2=A0
-> =C2=A0=C2=A0=C2=A0=C2=A0 for (i =3D 0; i < iterations; i++) {
-> =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 igb_send_verify(d, data,=
- alloc);
-> diff --git a/tests/qtest/libqos/generic-pcihost.c b/tests/qtest/libqos/ge=
-neric-pcihost.c
-> index 4bbeb5ff508..568897e0ecc 100644
-> --- a/tests/qtest/libqos/generic-pcihost.c
-> +++ b/tests/qtest/libqos/generic-pcihost.c
-> @@ -182,7 +182,6 @@ void qpci_init_generic(QGenericPCIBus *qpci, QTestSta=
-te *qts,
-> =C2=A0
-> =C2=A0=C2=A0=C2=A0=C2=A0 qpci->gpex_pio_base =3D 0x3eff0000;
-> =C2=A0=C2=A0=C2=A0=C2=A0 qpci->bus.not_hotpluggable =3D !hotpluggable;
-> -=C2=A0=C2=A0=C2=A0 qpci->bus.has_buggy_msi =3D false;
-> =C2=A0
-> =C2=A0=C2=A0=C2=A0=C2=A0 qpci->bus.pio_readb =3D qpci_generic_pio_readb;
-> =C2=A0=C2=A0=C2=A0=C2=A0 qpci->bus.pio_readw =3D qpci_generic_pio_readw;
-> diff --git a/tests/qtest/libqos/pci-pc.c b/tests/qtest/libqos/pci-pc.c
-> index 147009f4f44..8b79d858bd5 100644
-> --- a/tests/qtest/libqos/pci-pc.c
-> +++ b/tests/qtest/libqos/pci-pc.c
-> @@ -124,9 +124,6 @@ void qpci_init_pc(QPCIBusPC *qpci, QTestState *qts, Q=
-GuestAllocator *alloc)
-> =C2=A0{
-> =C2=A0=C2=A0=C2=A0=C2=A0 assert(qts);
-> =C2=A0
-> -=C2=A0=C2=A0=C2=A0 /* tests can use pci-bus */
-> -=C2=A0=C2=A0=C2=A0 qpci->bus.has_buggy_msi =3D false;
-> -
-> =C2=A0=C2=A0=C2=A0=C2=A0 qpci->bus.pio_readb =3D qpci_pc_pio_readb;
-> =C2=A0=C2=A0=C2=A0=C2=A0 qpci->bus.pio_readw =3D qpci_pc_pio_readw;
-> =C2=A0=C2=A0=C2=A0=C2=A0 qpci->bus.pio_readl =3D qpci_pc_pio_readl;
-> diff --git a/tests/qtest/libqos/pci-spapr.c b/tests/qtest/libqos/pci-spap=
-r.c
-> index 0f1023e4a73..dfa2087a599 100644
-> --- a/tests/qtest/libqos/pci-spapr.c
-> +++ b/tests/qtest/libqos/pci-spapr.c
-> @@ -20,6 +20,10 @@
-> =C2=A0 * PCI devices are always little-endian
-> =C2=A0 * SPAPR by default is big-endian
-> =C2=A0 * so PCI accessors need to swap data endianness
-> + *
-> + * The spapr iommu model has a qtest_enabled() check that short-cuts
-> + * the TCE table and provides a linear map for DMA, since qtests does
-> + * not have a way to make hcalls to set up the TCE table.
-> =C2=A0 */
-> =C2=A0
-> =C2=A0static uint8_t qpci_spapr_pio_readb(QPCIBus *bus, uint32_t addr)
-> @@ -155,9 +159,6 @@ void qpci_init_spapr(QPCIBusSPAPR *qpci, QTestState *=
-qts,
-> =C2=A0{
-> =C2=A0=C2=A0=C2=A0=C2=A0 assert(qts);
-> =C2=A0
-> -=C2=A0=C2=A0=C2=A0 /* tests cannot use spapr, needs to be fixed first */
-> -=C2=A0=C2=A0=C2=A0 qpci->bus.has_buggy_msi =3D true;
-> -
-> =C2=A0=C2=A0=C2=A0=C2=A0 qpci->alloc =3D alloc;
-> =C2=A0
-> =C2=A0=C2=A0=C2=A0=C2=A0 qpci->bus.pio_readb =3D qpci_spapr_pio_readb;
-> diff --git a/tests/qtest/libqos/pci.c b/tests/qtest/libqos/pci.c
-> index 773fd1fb6cf..2bae119bfca 100644
-> --- a/tests/qtest/libqos/pci.c
-> +++ b/tests/qtest/libqos/pci.c
-> @@ -53,20 +53,6 @@ void qpci_device_foreach(QPCIBus *bus, int vendor_id, =
-int device_id,
-> =C2=A0=C2=A0=C2=A0=C2=A0 }
-> =C2=A0}
-> =C2=A0
-> -bool qpci_has_buggy_msi(QPCIDevice *dev)
-> -{
-> -=C2=A0=C2=A0=C2=A0 return dev->bus->has_buggy_msi;
-> -}
-> -
-> -bool qpci_check_buggy_msi(QPCIDevice *dev)
-> -{
-> -=C2=A0=C2=A0=C2=A0 if (qpci_has_buggy_msi(dev)) {
-> -=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 g_test_skip("Skipping due to =
-incomplete support for MSI");
-> -=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 return true;
-> -=C2=A0=C2=A0=C2=A0 }
-> -=C2=A0=C2=A0=C2=A0 return false;
-> -}
-> -
-> =C2=A0static void qpci_device_set(QPCIDevice *dev, QPCIBus *bus, int devf=
-n)
-> =C2=A0{
-> =C2=A0=C2=A0=C2=A0=C2=A0 g_assert(dev);
-> diff --git a/tests/qtest/vhost-user-blk-test.c b/tests/qtest/vhost-user-b=
-lk-test.c
-> index ea90d41232e..3e71fdb9d78 100644
-> --- a/tests/qtest/vhost-user-blk-test.c
-> +++ b/tests/qtest/vhost-user-blk-test.c
-> @@ -554,14 +554,8 @@ static void idx(void *obj, void *u_data, QGuestAlloc=
-ator *t_alloc)
-> =C2=A0=C2=A0=C2=A0=C2=A0 uint32_t desc_idx;
-> =C2=A0=C2=A0=C2=A0=C2=A0 uint8_t status;
-> =C2=A0=C2=A0=C2=A0=C2=A0 char *data;
-> -=C2=A0=C2=A0=C2=A0 QOSGraphObject *blk_object =3D obj;
-> -=C2=A0=C2=A0=C2=A0 QPCIDevice *pci_dev =3D blk_object->get_driver(blk_ob=
-ject, "pci-device");
-> =C2=A0=C2=A0=C2=A0=C2=A0 QTestState *qts =3D global_qtest;
-> =C2=A0
-> -=C2=A0=C2=A0=C2=A0 if (qpci_check_buggy_msi(pci_dev)) {
-> -=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 return;
-> -=C2=A0=C2=A0=C2=A0 }
-> -
-> =C2=A0=C2=A0=C2=A0=C2=A0 qpci_msix_enable(pdev->pdev);
-> =C2=A0=C2=A0=C2=A0=C2=A0 qvirtio_pci_set_msix_configuration_vector(pdev, =
-t_alloc, 0);
-> =C2=A0
-> diff --git a/tests/qtest/virtio-blk-test.c b/tests/qtest/virtio-blk-test.=
-c
-> index 98c906ebb4a..3a005d600c1 100644
-> --- a/tests/qtest/virtio-blk-test.c
-> +++ b/tests/qtest/virtio-blk-test.c
-> @@ -474,14 +474,8 @@ static void msix(void *obj, void *u_data, QGuestAllo=
-cator *t_alloc)
-> =C2=A0=C2=A0=C2=A0=C2=A0 uint32_t free_head;
-> =C2=A0=C2=A0=C2=A0=C2=A0 uint8_t status;
-> =C2=A0=C2=A0=C2=A0=C2=A0 char *data;
-> -=C2=A0=C2=A0=C2=A0 QOSGraphObject *blk_object =3D obj;
-> -=C2=A0=C2=A0=C2=A0 QPCIDevice *pci_dev =3D blk_object->get_driver(blk_ob=
-ject, "pci-device");
-> =C2=A0=C2=A0=C2=A0=C2=A0 QTestState *qts =3D global_qtest;
-> =C2=A0
-> -=C2=A0=C2=A0=C2=A0 if (qpci_check_buggy_msi(pci_dev)) {
-> -=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 return;
-> -=C2=A0=C2=A0=C2=A0 }
-> -
-> =C2=A0=C2=A0=C2=A0=C2=A0 qpci_msix_enable(pdev->pdev);
-> =C2=A0=C2=A0=C2=A0=C2=A0 qvirtio_pci_set_msix_configuration_vector(pdev, =
-t_alloc, 0);
-> =C2=A0
-> @@ -584,14 +578,8 @@ static void idx(void *obj, void *u_data, QGuestAlloc=
-ator *t_alloc)
-> =C2=A0=C2=A0=C2=A0=C2=A0 uint32_t desc_idx;
-> =C2=A0=C2=A0=C2=A0=C2=A0 uint8_t status;
-> =C2=A0=C2=A0=C2=A0=C2=A0 char *data;
-> -=C2=A0=C2=A0=C2=A0 QOSGraphObject *blk_object =3D obj;
-> -=C2=A0=C2=A0=C2=A0 QPCIDevice *pci_dev =3D blk_object->get_driver(blk_ob=
-ject, "pci-device");
-> =C2=A0=C2=A0=C2=A0=C2=A0 QTestState *qts =3D global_qtest;
-> =C2=A0
-> -=C2=A0=C2=A0=C2=A0 if (qpci_check_buggy_msi(pci_dev)) {
-> -=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 return;
-> -=C2=A0=C2=A0=C2=A0 }
-> -
-> =C2=A0=C2=A0=C2=A0=C2=A0 qpci_msix_enable(pdev->pdev);
-> =C2=A0=C2=A0=C2=A0=C2=A0 qvirtio_pci_set_msix_configuration_vector(pdev, =
-t_alloc, 0);
-> =C2=A0
+To: qemu-devel@nongnu.org
+Cc: Michael S. Tsirkin <mst@redhat.com>
+Cc: Paolo Bonzini <pbonzini@redhat.com>
+Cc: Richard Henderson <richard.henderson@linaro.org>
+Cc: Gerd Hoffmann <kraxel@redhat.com>
+Cc: Stefano Garzarella <sgarzare@redhat.com>
+Cc: Ani Sinha <anisinha@redhat.com>
+Cc: Zhao Liu <zhao1.liu@intel.com>
+Cc: Oliver Steffen <osteffen@redhat.com>
+---
+Changes in v3:
+- Device tree is packed in igvm core code. [Gerd]
+- Dropped microvm patch.
+- Link to v2: https://lore.kernel.org/qemu-devel/20260610-microvm_device_tree-v2-0-4fb44730c49f@redhat.com
+
+Changes in v2:
+- First patch introduced a shadowed variable, fixed.
+- When parameter area is not found return -1.
+- Moved `qigvm_directive_device_tree` to backends/igvm.c
+- Link to v1: https://lore.kernel.org/qemu-devel/20260608-microvm_device_tree-v1-0-730874ad0008@redhat.com
+---
+
+Error handling on qigvm_find_param_entry will change once [2] is
+merged. I am already using the new approach here.
+
+[2] https://lore.kernel.org/qemu-devel/20260610-igvm_error-v1-1-59d133a69f2f@redhat.com
+---
+ backends/igvm.c | 47 +++++++++++++++++++++++++++++++++++++++++++++++
+ 1 file changed, 47 insertions(+)
+
+diff --git a/backends/igvm.c b/backends/igvm.c
+index c347d0c17e..452715b105 100644
+--- a/backends/igvm.c
++++ b/backends/igvm.c
+@@ -25,6 +25,7 @@
+ 
+ #include <igvm/igvm.h>
+ #include <igvm/igvm_defs.h>
++#include <libfdt.h>
+ 
+ 
+ /*
+@@ -100,6 +101,8 @@ static int qigvm_directive_snp_id_block(QIgvm *ctx, const uint8_t *header_data,
+ static int qigvm_initialization_guest_policy(QIgvm *ctx,
+                                        const uint8_t *header_data,
+                                        Error **errp);
++static int qigvm_directive_device_tree(QIgvm *ctx, const uint8_t *header_data,
++                                       Error **errp);
+ 
+ struct QIGVMHandler {
+     uint32_t type;
+@@ -130,6 +133,8 @@ static struct QIGVMHandler handlers[] = {
+       qigvm_initialization_guest_policy },
+     { IGVM_VHT_MADT, IGVM_HEADER_SECTION_DIRECTIVE,
+       qigvm_directive_madt },
++    { IGVM_VHT_DEVICE_TREE, IGVM_HEADER_SECTION_DIRECTIVE,
++      qigvm_directive_device_tree },
+ };
+ 
+ static int qigvm_handler(QIgvm *ctx, uint32_t type, Error **errp)
+@@ -752,6 +757,48 @@ static int qigvm_directive_snp_id_block(QIgvm *ctx, const uint8_t *header_data,
+     return 0;
+ }
+ 
++static int qigvm_directive_device_tree(QIgvm *ctx, const uint8_t *header_data,
++                                       Error **errp)
++{
++    const IGVM_VHS_PARAMETER *param = (const IGVM_VHS_PARAMETER *)header_data;
++    g_autofree void *fdt_packed = NULL;
++    QIgvmParameterData *param_entry;
++    uint32_t fdt_size;
++
++    param_entry = qigvm_find_param_entry(ctx, param->parameter_area_index);
++    if (param_entry == NULL) {
++        error_setg(errp, "IGVM: parameter area index %u not found",
++                   param->parameter_area_index);
++        return -1;
++    }
++
++    if (ctx->machine_state->fdt == NULL) {
++        error_setg(errp, "IGVM: device tree not available");
++        return -1;
++    }
++
++    fdt_size = fdt_totalsize(ctx->machine_state->fdt);
++    fdt_packed = g_malloc(fdt_size);
++    memcpy(fdt_packed, ctx->machine_state->fdt, fdt_size);
++
++    if (fdt_pack(fdt_packed)) {
++        error_setg(errp, "IGVM: failed to pack device tree");
++        return -1;
++    }
++
++    fdt_size = fdt_totalsize(fdt_packed);
++    if (fdt_size > param_entry->size) {
++        error_setg(errp,
++                   "IGVM: device tree size exceeds parameter area"
++                   " defined in IGVM file");
++        return -1;
++    }
++
++    memcpy(param_entry->data, fdt_packed, fdt_size);
++
++    return 0;
++}
++
+ static int qigvm_initialization_guest_policy(QIgvm *ctx,
+                                        const uint8_t *header_data, Error **errp)
+ {
+
+---
+base-commit: cc329c491768b2d91eb0b0984f3baa0bf805776d
+change-id: 20260608-microvm_device_tree-0263c3b1be86
+
+Best regards,
+-- 
+Luigi Leonardi <leonardi@redhat.com>
+
 
