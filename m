@@ -4,57 +4,56 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8541DCD98D2
-	for <qemu-devel@archiver.kernel.org>; Thu, 11 Jun 2026 09:06:50 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3B2E4CD98D2
+	for <qemu-devel@archiver.kernel.org>; Thu, 11 Jun 2026 09:06:54 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wXbMZ-00069t-Nj; Thu, 11 Jun 2026 05:06:11 -0400
+	id 1wXbKs-0000OJ-Hx; Thu, 11 Jun 2026 05:04:26 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1wXbMY-000687-Jx
- for qemu-devel@nongnu.org; Thu, 11 Jun 2026 05:06:10 -0400
+ id 1wXbKr-0000O0-Hh
+ for qemu-devel@nongnu.org; Thu, 11 Jun 2026 05:04:25 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1wXbMW-0005FI-SF
- for qemu-devel@nongnu.org; Thu, 11 Jun 2026 05:06:10 -0400
+ id 1wXbKq-0004dn-7H
+ for qemu-devel@nongnu.org; Thu, 11 Jun 2026 05:04:25 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1781168768;
+ s=mimecast20190719; t=1781168663;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=4OdAzLtMXCE0KbwWonpJ6vMVm6YZX4iARVIMehN4nRo=;
- b=SDNAXKcH7vyAdEvv2MHRoX757oMELi8fZ08JYbSeWIdvhntVdkIxkcj+g9J3LsMyATLIUA
- 8TWVpvs3UF3cxAKcOcbqcsHsA0rB3wAI7oZb946cuyhUhpw5XNB/qJezWIkyNCoRPYhHpN
- in2pfqr1HL7F+qwvDK+Wb0ka30anExs=
-Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
+ bh=9Uq/YOD4Tyc0jQlm9DPacra4GuZK8eNHou9efZzgg2Y=;
+ b=D7KVuheOyHTWPG3L7vuvHpCSWl7nfMf0WernMa/QRuKZzdn0z1BLZerNESqjXUVAL4xUTr
+ gojvQbSL1YuGiydPH4RndYwcwNkYGZ9k5Tn5aFG61XVrDQo7BVOZ83L4HjRF+vdGP5xTv3
+ uAAatYnz4PhgiebdZH00rgKYr42Kk40=
+Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-221-swdp4dLPMxqfDqMUPdU4Kg-1; Thu,
- 11 Jun 2026 05:06:05 -0400
-X-MC-Unique: swdp4dLPMxqfDqMUPdU4Kg-1
-X-Mimecast-MFC-AGG-ID: swdp4dLPMxqfDqMUPdU4Kg_1781168763
-Received: from mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.111])
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-111-gutft811ObqBsC0Ib2jKYg-1; Thu,
+ 11 Jun 2026 05:04:18 -0400
+X-MC-Unique: gutft811ObqBsC0Ib2jKYg-1
+X-Mimecast-MFC-AGG-ID: gutft811ObqBsC0Ib2jKYg_1781168657
+Received: from mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.93])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id AB06E180AE15; Thu, 11 Jun 2026 09:06:03 +0000 (UTC)
+ by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 7BB011800378; Thu, 11 Jun 2026 09:04:17 +0000 (UTC)
 Received: from localhost (unknown [10.44.24.21])
- by mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id B78F41800347; Thu, 11 Jun 2026 09:06:02 +0000 (UTC)
+ by mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id 3E21B180029C; Thu, 11 Jun 2026 09:04:15 +0000 (UTC)
 From: =?utf-8?q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>
-Date: Thu, 11 Jun 2026 13:03:42 +0400
-Subject: [PATCH v3 27/35] ui/gtk: convert VirtualConsole storage from fixed
- array to GPtrArray
+Date: Thu, 11 Jun 2026 13:03:22 +0400
+Subject: [PATCH v3 07/35] glib-compat: add fallback for g_clear_fd/g_autofd
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
-Message-Id: <20260611-b4-ui-v3-27-72bcbbea0fae@redhat.com>
+Message-Id: <20260611-b4-ui-v3-7-72bcbbea0fae@redhat.com>
 References: <20260611-b4-ui-v3-0-72bcbbea0fae@redhat.com>
 In-Reply-To: <20260611-b4-ui-v3-0-72bcbbea0fae@redhat.com>
 To: qemu-devel@nongnu.org
@@ -68,24 +67,24 @@ Cc: Paolo Bonzini <pbonzini@redhat.com>,
  Peter Maydell <peter.maydell@linaro.org>, 
  Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>, 
  =?utf-8?q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>
-X-Developer-Signature: v=1; a=openpgp-sha256; l=7432;
+X-Developer-Signature: v=1; a=openpgp-sha256; l=1464;
  i=marcandre.lureau@redhat.com; h=from:subject:message-id;
- bh=pYkHf4xuhYrughcwER53jaOYI+5mKVTp6HoXtiFTfzo=;
- b=owEBbQKS/ZANAwAKAdro4Ql1lpzlAcsmYgBqKnnhk4rPbt5aHMiwTmhgQHbw399YLWRoTdbA/
- iqzb0f8WhaJAjMEAAEKAB0WIQSHqb2TP4fGBtJ29i3a6OEJdZac5QUCaip54QAKCRDa6OEJdZac
- 5SfWD/0YxGaIiFa28GB//PGUd0EiYXFkSR6onOjbXMnnN9ooc71iLbNNU2YteWrwD0CjhzHXKKZ
- R3JPEc/oXL2c9F+WwdcaSIiZkfVBn0Sy4y+ZsoI5KjvTt7EU71szlLnrCYT2Nm+Mm5SR1PeQK+M
- 6aAE6cp+jT1+UIFW1+fXxejKJrz92+2rx/YXf99SHctS/VXsgVdtYOemeME5tDw4I5YZmNTXUWf
- qvdXWSUzf18IR/mKR4Kg2v1wXh0QVT/5p+S8OFLmeGL/BYOiHP2DULGE7lGxR5voCD8uz/yGUqx
- 9CyKAzDNYIK1mh8qYvt+YCX34+KwfvEDnbTiHyyGMcJwL0k8PPgC5dh+jtgL7puBU8Hn56rvOKB
- 0k5xBbgDah0YSGA5P8dOaSsLsNU/18NL87Lw/4NAqnzYJVvVwwb4O3wr3lLe/mVPioqa0fykBD6
- znYWZTCFSvFrHMBnT2JR0SzKX0WG/dEt5U/k4fq18YoykN8m3CbF9fmx+YWdaIQU4zpbmtkh3Nl
- xppwzNbZ7WEpdBHERDCBWjJzsT+gJKfs8mBk5CfpjAonxNHCJrneAJGUYIbwhcO537JfC4tkD7S
- XHxvWbijlYTUj8aFf6lCJBq6Hv9G2UoRBMPm7JRioJL1dDFaAQYLyH1ex7SR+QnuU0wcq/xVZfc
- Zw9r0fKD5NeccFg==
+ bh=Oc6bYtbmoQuSGvRLMjbnGE3Qy+VIBvYlZ2fSX7bu/zw=;
+ b=owEBbQKS/ZANAwAKAdro4Ql1lpzlAcsmYgBqKnndJS3U8ds+2xrkI61RwjnGLXrpSNf13PGyS
+ M57Wl52yh6JAjMEAAEKAB0WIQSHqb2TP4fGBtJ29i3a6OEJdZac5QUCaip53QAKCRDa6OEJdZac
+ 5UWnD/wM854nGLRh4wNJWnYDe2QKcyIg5vZLMVPQtAWXLsGTs+2hdf8jAZkXXzcY/kqxNciKXCU
+ Ln3cq1FWxUWUNwVkneBx5UuFKmy8aRl/RbhMbT+imv4EFaR/FTkccrt1FGDivuhIMsbNrJLFGnF
+ i9ruQM4jA/XD2sumz0LJlzBxskX0gDPS/aRy1sm8CMyeH1D5eWrA0DEkco7CGQxLROMNIjUQCbF
+ e6PUav9nMG430kJpUjwvp2DogbkJV4jL/SaqTSE67rwueiebcULzlMSMq14TEitWUGIfuFD53Of
+ 16h0bN0prRKQZ8EBWzl5tXsep414Yju26DSDkR9k4I68h5wcpPAj2P9SO/yahtm1V1V/NdineEO
+ +EpkhDxtXxKaOvBOjsKa9IqaRY2oksF1c1aeVU/k69L8ZmWjvV8fl9NNaQbGJHgpA6UWzBTrntt
+ 6or1PwtSa9NoghAAc0GnTFgI4oaCY1AinOySo7YiUfPZTvRgXb7KxDVgQLiiCPae4oTZcZqlHcc
+ K/cLTt7BYriUyeJh6hQ6yid7LGaBGmXFA76VCPXxBEudf0MvpUJM4AtsDbnqQTYb/+s19jKjkC5
+ yDikjeV3fk9WfuF6TwAwrtKyiWgRny3tx3QV7VyWnAwyxkrBFGgkSMerBg4ygFkYNwl9gQEldzW
+ 7wYKP/HaVxSTOJQ==
 X-Developer-Key: i=marcandre.lureau@redhat.com; a=openpgp;
  fpr=87A9BD933F87C606D276F62DDAE8E10975969CE5
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.111
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.93
 Received-SPF: pass client-ip=170.10.129.124;
  envelope-from=marcandre.lureau@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
@@ -111,224 +110,61 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Replace the fixed-size vc[MAX_VCS] with GPtrArray.
+Those helpers were added in glib 2.76.
 
-This is a preparatory refactoring for console hotplug support, which
-needs to add/remove VCs dynamically.
-
+Reviewed-by: Daniel P. Berrangé <berrange@redhat.com>
 Signed-off-by: Marc-André Lureau <marcandre.lureau@redhat.com>
 ---
- include/ui/gtk.h |   3 +-
- ui/gtk.c         | 108 +++++++++++++++++++++++++++++++++++++++++++------------
- 2 files changed, 87 insertions(+), 24 deletions(-)
+ include/glib-compat.h | 29 +++++++++++++++++++++++++++++
+ 1 file changed, 29 insertions(+)
 
-diff --git a/include/ui/gtk.h b/include/ui/gtk.h
-index f4c8e6a9f00..fb60cbfda5d 100644
---- a/include/ui/gtk.h
-+++ b/include/ui/gtk.h
-@@ -118,8 +118,7 @@ struct GtkDisplayState {
-     GtkWidget *grab_item;
-     GtkWidget *grab_on_hover_item;
+diff --git a/include/glib-compat.h b/include/glib-compat.h
+index 2e32b90f051..32ee2afdcdf 100644
+--- a/include/glib-compat.h
++++ b/include/glib-compat.h
+@@ -30,6 +30,7 @@
+ #pragma GCC diagnostic ignored "-Wdeprecated-declarations"
  
--    int nb_vcs;
--    VirtualConsole vc[MAX_VCS];
-+    GPtrArray *vcs;
+ #include <glib.h>
++#include <glib/gstdio.h>
+ #if defined(G_OS_UNIX)
+ #include <glib-unix.h>
+ #include <sys/types.h>
+@@ -129,6 +130,34 @@ qemu_g_test_slow(void)
+ #define g_test_thorough() qemu_g_test_slow()
+ #define g_test_quick() (!qemu_g_test_slow())
  
-     GtkWidget *show_tabs_item;
-     GtkWidget *untabify_item;
-diff --git a/ui/gtk.c b/ui/gtk.c
-index dfef1b10fe3..b4dcdcd9a44 100644
---- a/ui/gtk.c
-+++ b/ui/gtk.c
-@@ -150,8 +150,8 @@ static VirtualConsole *gd_vc_find_by_menu(GtkDisplayState *s)
-     VirtualConsole *vc;
-     gint i;
- 
--    for (i = 0; i < s->nb_vcs; i++) {
--        vc = &s->vc[i];
-+    for (i = 0; i < s->vcs->len; i++) {
-+        vc = g_ptr_array_index(s->vcs, i);
-         if (gtk_check_menu_item_get_active
-             (GTK_CHECK_MENU_ITEM(vc->menu_item))) {
-             return vc;
-@@ -165,8 +165,11 @@ static VirtualConsole *gd_vc_find_by_page(GtkDisplayState *s, gint page)
-     VirtualConsole *vc;
-     gint i, p;
- 
--    for (i = 0; i < s->nb_vcs; i++) {
--        vc = &s->vc[i];
-+    if (!s->vcs) {
-+        return NULL;
-+    }
-+    for (i = 0; i < s->vcs->len; i++) {
-+        vc = g_ptr_array_index(s->vcs, i);
-         p = gtk_notebook_page_num(GTK_NOTEBOOK(s->notebook), vc->tab_item);
-         if (p == page) {
-             return vc;
-@@ -247,8 +250,8 @@ static void gd_update_caption(GtkDisplayState *s)
-     gtk_window_set_title(GTK_WINDOW(s->window), title);
-     g_free(title);
- 
--    for (i = 0; i < s->nb_vcs; i++) {
--        VirtualConsole *vc = &s->vc[i];
-+    for (i = 0; i < s->vcs->len; i++) {
-+        VirtualConsole *vc = g_ptr_array_index(s->vcs, i);
- 
-         if (!vc->window) {
-             continue;
-@@ -357,7 +360,7 @@ static void gtk_release_modifiers(GtkDisplayState *s)
- {
-     VirtualConsole *vc = gd_vc_find_current(s);
- 
--    if (vc->type != GD_VC_GFX ||
-+    if (!vc || vc->type != GD_VC_GFX ||
-         !qemu_console_is_graphic(vc->gfx.dcl.con)) {
-         return;
-     }
-@@ -702,8 +705,8 @@ static void gd_mouse_mode_change(Notifier *notify, void *data)
-             gd_ungrab_pointer(s);
-         }
-     }
--    for (i = 0; i < s->nb_vcs; i++) {
--        VirtualConsole *vc = &s->vc[i];
-+    for (i = 0; i < s->vcs->len; i++) {
-+        VirtualConsole *vc = g_ptr_array_index(s->vcs, i);
-         gd_update_cursor(vc);
-     }
- }
-@@ -2114,9 +2117,10 @@ static void gd_vcs_init(GtkDisplayState *s, GSList *group,
-     int i;
- 
-     for (i = 0; i < nb_vcs; i++) {
--        VirtualConsole *vc = &s->vc[s->nb_vcs];
--        group = gd_vc_vte_init(s, vc, vcs[i], s->nb_vcs, group, view_menu);
--        s->nb_vcs++;
-+        VirtualConsole *vc = g_new0(VirtualConsole, 1);
-+        g_ptr_array_add(s->vcs, vc);
-+        group = gd_vc_vte_init(s, vc, vcs[i], s->vcs->len - 1,
-+                               group, view_menu);
-     }
- }
- #endif /* CONFIG_VTE */
-@@ -2441,13 +2445,14 @@ static GtkWidget *gd_create_menu_view(GtkDisplayState *s, DisplayOptions *opts)
- 
-     /* gfx */
-     for (vc = 0;; vc++) {
-+        VirtualConsole *v;
-         con = qemu_console_lookup_by_index(vc);
-         if (!con) {
-             break;
-         }
--        group = gd_vc_gfx_init(s, &s->vc[vc], con,
--                               vc, group, view_menu);
--        s->nb_vcs++;
-+        v = g_new0(VirtualConsole, 1);
-+        g_ptr_array_add(s->vcs, v);
-+        group = gd_vc_gfx_init(s, v, con, vc, group, view_menu);
-     }
- 
- #if defined(CONFIG_VTE)
-@@ -2505,6 +2510,64 @@ static void gd_create_menus(GtkDisplayState *s, DisplayOptions *opts)
- }
- 
- 
-+static void gd_vc_free(void *p)
++static inline gboolean g_clear_fd_qemu(int *fd_ptr, GError **error)
 +{
-+    VirtualConsole *vc = p;
++#if GLIB_CHECK_VERSION(2, 76, 0)
++    return g_clear_fd(fd_ptr, error);
++#else
++    int fd = *fd_ptr;
 +
-+    switch (vc->type) {
-+    case GD_VC_GFX:
-+        qemu_console_unregister_listener(&vc->gfx.dcl);
-+#if defined(CONFIG_OPENGL)
-+        if (display_opengl) {
-+            qemu_console_set_display_gl_ctx(vc->gfx.dcl.con, NULL);
-+        }
-+        if (vc->gfx.ectx) {
-+            eglMakeCurrent(qemu_egl_display, vc->gfx.esurface,
-+                           vc->gfx.esurface, vc->gfx.ectx);
-+        } else if (gtk_use_gl_area) {
-+            gtk_gl_area_make_current(GTK_GL_AREA(vc->gfx.drawing_area));
-+        }
-+        if (vc->gfx.gls) {
-+            surface_gl_destroy_texture(vc->gfx.gls, vc->gfx.ds);
-+            qemu_gl_fini_shader(vc->gfx.gls);
-+        }
-+        egl_fb_destroy(&vc->gfx.guest_fb);
-+        egl_fb_destroy(&vc->gfx.win_fb);
-+        egl_fb_destroy(&vc->gfx.cursor_fb);
-+        if (vc->gfx.esurface) {
-+            eglDestroySurface(qemu_egl_display, vc->gfx.esurface);
-+        }
-+        if (vc->gfx.ectx) {
-+            eglDestroyContext(qemu_egl_display, vc->gfx.ectx);
-+        }
-+#endif
-+        qkbd_state_free(vc->gfx.kbd);
-+        if (vc->gfx.surface) {
-+            cairo_surface_destroy(vc->gfx.surface);
-+        }
-+        if (vc->gfx.convert) {
-+            pixman_image_unref(vc->gfx.convert);
-+        }
-+        break;
-+    case GD_VC_VTE:
-+#ifdef CONFIG_VTE
-+        fifo8_destroy(&vc->vte.out_fifo);
-+#endif
-+        break;
++    *fd_ptr = -1;
++
++    if (fd < 0) {
++        return TRUE;
 +    }
 +
-+    if (vc->window) {
-+        gtk_widget_destroy(vc->window);
-+    } else if (vc->tab_item) {
-+        gtk_widget_destroy(vc->tab_item);
-+    }
-+    if (vc->menu_item) {
-+        gtk_widget_destroy(vc->menu_item);
-+    }
-+    g_free(vc->label);
-+    g_free(vc);
++    return g_close(fd, error);
++#endif
 +}
++#define g_clear_fd(fd, err) g_clear_fd_qemu(fd, err)
 +
- static GtkDisplayState *gtk_display_state;
- static gboolean gtkinit;
++#if !GLIB_CHECK_VERSION(2, 76, 0)
++static inline void _g_clear_fd_ignore_error(int *fd_ptr)
++{
++    int errsv = errno;
++    g_clear_fd(fd_ptr, NULL);
++    errno = errsv;
++}
++#define g_autofd __attribute__((cleanup(_g_clear_fd_ignore_error)))
++#endif
++
+ #pragma GCC diagnostic pop
  
-@@ -2525,6 +2588,7 @@ static void gtk_display_init(DisplayState *ds, DisplayOptions *opts)
-     assert(opts->type == DISPLAY_TYPE_GTK);
-     s = g_malloc0(sizeof(*s));
-     gtk_display_state = s;
-+    s->vcs = g_ptr_array_new_with_free_func(gd_vc_free);
-     s->opts = opts;
- 
-     theme = gtk_icon_theme_get_default();
-@@ -2582,13 +2646,10 @@ static void gtk_display_init(DisplayState *ds, DisplayOptions *opts)
- 
-     gtk_widget_show_all(s->window);
- 
--    for (idx = 0;; idx++) {
--        QemuConsole *con = qemu_console_lookup_by_index(idx);
--        if (!con) {
--            break;
--        }
--        if (s->vc[idx].type == GD_VC_GFX) {
--            gtk_widget_realize(s->vc[idx].gfx.drawing_area);
-+    for (idx = 0; idx < s->vcs->len; idx++) {
-+        VirtualConsole *v = g_ptr_array_index(s->vcs, idx);
-+        if (v->type == GD_VC_GFX) {
-+            gtk_widget_realize(v->gfx.drawing_area);
-         }
-     }
- 
-@@ -2693,6 +2754,9 @@ static void gtk_display_cleanup(void)
-     qemu_del_vm_change_state_handler(s->vmse);
-     qemu_remove_mouse_mode_change_notifier(&s->mouse_mode_notifier);
-     gd_clipboard_cleanup(s);
-+    g_signal_handlers_disconnect_by_func(s->notebook,
-+                                         G_CALLBACK(gd_change_page), s);
-+    g_clear_pointer(&s->vcs, g_ptr_array_unref);
-     g_clear_pointer(&s->window, gtk_widget_destroy);
-     g_clear_object(&s->null_cursor);
-     g_clear_pointer(&gtk_display_state, g_free);
+ #ifndef G_NORETURN
 
 -- 
 2.54.0
