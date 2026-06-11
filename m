@@ -4,108 +4,136 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id AC8CECD98CF
-	for <qemu-devel@archiver.kernel.org>; Thu, 11 Jun 2026 16:22:51 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9C6FCCD98CE
+	for <qemu-devel@archiver.kernel.org>; Thu, 11 Jun 2026 16:23:08 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wXiAS-0001i1-OK; Thu, 11 Jun 2026 12:22:08 -0400
+	id 1wXiB3-0001nf-2A; Thu, 11 Jun 2026 12:22:45 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1wXiAR-0001hs-Bi
- for qemu-devel@nongnu.org; Thu, 11 Jun 2026 12:22:07 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <daniel.barboza@oss.qualcomm.com>)
+ id 1wXiB0-0001nT-F4
+ for qemu-devel@nongnu.org; Thu, 11 Jun 2026 12:22:42 -0400
+Received: from mx0a-0031df01.pphosted.com ([205.220.168.131])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1wXiAP-0006WQ-Ko
- for qemu-devel@nongnu.org; Thu, 11 Jun 2026 12:22:07 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1781194923;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=ldkCrgwh3yGpQp8T55KrgPd/6vnsGDVpj7qCK6x+D0k=;
- b=aBKXDWIQ+WG49Fp2ItevTYOy/FPljuJgIpAWc1moWpwmKmS020ZVTQG6gZ5puhtbFZNe/7
- 7M2jvim8NptePWJLvSDpT+wguww9Qdj9mIsI7V2QJlkPBHZbhobd5sws+mhWV/Hgmo4y/R
- QfsxRo7k85s3FRcofuTfuCfYCeqt7xA=
-Received: from mail-ua1-f70.google.com (mail-ua1-f70.google.com
- [209.85.222.70]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-622-Mp4kLehVNuOeLhY7P0bHpA-1; Thu, 11 Jun 2026 12:22:02 -0400
-X-MC-Unique: Mp4kLehVNuOeLhY7P0bHpA-1
-X-Mimecast-MFC-AGG-ID: Mp4kLehVNuOeLhY7P0bHpA_1781194922
-Received: by mail-ua1-f70.google.com with SMTP id
- a1e0cc1a2514c-963d7e5ac77so3487045241.2
- for <qemu-devel@nongnu.org>; Thu, 11 Jun 2026 09:22:02 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <daniel.barboza@oss.qualcomm.com>)
+ id 1wXiAy-0006ak-BV
+ for qemu-devel@nongnu.org; Thu, 11 Jun 2026 12:22:42 -0400
+Received: from pps.filterd (m0279863.ppops.net [127.0.0.1])
+ by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
+ 65BEs4SE923215
+ for <qemu-devel@nongnu.org>; Thu, 11 Jun 2026 16:22:39 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+ cc:content-transfer-encoding:date:from:in-reply-to:message-id
+ :mime-version:references:subject:to; s=qcppdkim1; bh=aWYEWQoXXsz
+ q2CCnDXDZh6Lgo7kjM26o3yuxkKVq0FM=; b=GjoBGq2fIuNIeA6LO8QjwTQzqL0
+ WP1qVlPgrfOOP4xIs1UCU+IyeLMmcW/fS7kxJW6P66e/G1uk4rTyBeu+LaaeBWpd
+ KhUcTtObd7P7A20EFtX+40q9YGUZieBg9D6081om4RqyLUiHw9y/fz20qg+lmBIv
+ JwORy53tGBZDZWAyL28hu/sWY7Oz1ndONT+iCf14Wzl2Zuqacyt0wdNGD1+F1k9b
+ bFv/h5zLzHgBfX3WQspdXwH/IhOic/t1y6ZYQrccCHAFtiTPH7jm8o7TugSVWvBn
+ PImVsFw5UTfb4dI3+WIbN3tSVSwbyGO/Dt27w/Omq3EMi8AKNYNFOWrWMjQ==
+Received: from mail-vk1-f197.google.com (mail-vk1-f197.google.com
+ [209.85.221.197])
+ by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4eqe6uvdyx-1
+ (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
+ for <qemu-devel@nongnu.org>; Thu, 11 Jun 2026 16:22:38 +0000 (GMT)
+Received: by mail-vk1-f197.google.com with SMTP id
+ 71dfb90a1353d-5a77f8bdc24so6115997e0c.3
+ for <qemu-devel@nongnu.org>; Thu, 11 Jun 2026 09:22:38 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1781194921; x=1781799721; darn=nongnu.org;
- h=in-reply-to:content-transfer-encoding:content-disposition
- :mime-version:references:message-id:subject:cc:to:from:date:from:to
- :cc:subject:date:message-id:reply-to;
- bh=ldkCrgwh3yGpQp8T55KrgPd/6vnsGDVpj7qCK6x+D0k=;
- b=OPwpaRBuWEgKbt0RNP+/9z/IqKBaqJKZAiNEKE0mHdSkP52ZufwIVVUk9TVD2tW1dZ
- qmO2B6+Ru+xyMSt6Y9pStxiYmvcbUSg1JA9IfF7dBaoKZlTj5cBKJAZtX2J/3OPJkcAw
- 38NJeRCxE5Z6qc9jFT/51O2omFuJ6Bz8+nwVno4Ofzeo65vpdt4n4RJZBwabldORvzhy
- 13k+pYCRW6xNNX3jY1DczMdAFsFXOiQDsUB3/SCW68gmYUk+BjLRRlH6Rx5zOWZ3HvhY
- LJW1QHbTvdntEh3cr2PEliK9RZ8VrXim1dZczXPRhno9+kVAA32pxLJfc0qqu2L+gJqJ
- PzOA==
+ d=oss.qualcomm.com; s=google; t=1781194958; x=1781799758; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=aWYEWQoXXszq2CCnDXDZh6Lgo7kjM26o3yuxkKVq0FM=;
+ b=DJT5HfMsnXgnBeNGO5uidAPaLo5YyF5N3TnD7CsQ6fp3bl3qtbeWDmwWaQyiPn3SXh
+ PghdO7OT4ALDWykdDeMybiBp+b0PR0T/UdNpDeT/0UCM3SVBRKJP59KxU9r5yLswzv+J
+ oPwyR/V0E/RU+w1JPfZnNe+duXOTPTbPKkTNnKI6txARSQZ3U6vuICsxFhaaaizMhge4
+ aRiIHIa78g6GQ4yXRoXOLbv6ywFWGm8OTrRrRs8q7b21wXJq6OD26nrcE2bVMZLCUyGn
+ fChEMRygSKIMMAr2Kfz4otuHT/eORmxH2XNNzZkf6LPb0AJhpb5asGEgM6aRgC7Ghlhl
+ wXVg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1781194921; x=1781799721;
- h=in-reply-to:content-transfer-encoding:content-disposition
- :mime-version:references:message-id:subject:cc:to:from:date:x-gm-gg
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=ldkCrgwh3yGpQp8T55KrgPd/6vnsGDVpj7qCK6x+D0k=;
- b=NbkTyNOg7wSxdAjFQDrptm6mTvJFnmoKkwZ5emF4yUAJ/1t6DXREL8n0bWAA7+jzfR
- kHukvZsoDy83p23Gp2L2w0zkkvPQadzFm0VslP7iuwNLYjtPtYSKla73iwlJznU1gOOM
- 3MBnX4nETbsMyCm7vLyD6C1sZ0tgSkVIrqSfh4KWsDiDpfi1I4oBaMGqW2Y2zY4zyqe+
- LJk6oRdsdg7ferJQb1FrUCKpMYuCU5XNg+GWZj/0tOkQOwlS8VovEwZtTf15vdApESc4
- yJZRZsmzzg7gLY0HdM4vJ+nFKbYYalC4Yu33kaVI2QzP+zDUUdNodQq6HfhouMbUra16
- fPGg==
-X-Forwarded-Encrypted: i=1;
- AFNElJ8GP2ynCgd4MHC5uO/v2ZoJ+g9+6GJKJPEQlcx9NoKidIZ5dLUsd9Ezdc/6wXMoBw1U93QrPZBDFo3x@nongnu.org
-X-Gm-Message-State: AOJu0YyH4EdBURmjybMX97H/NTmc5gmoqn6JDEVIQUjzyoFAJzMOqkrQ
- w0KgOJ1r8XfvXGbnhb+iH4SeLRXofaIMg+8BtzarGR7Nl8hNrkgh7jBaRIQXXA8MQ2rTnztSjac
- YRTCX9QXj5RoSkmoPtz2GxY9mPtLVkmKnX3iDd69QAL5PJJ+NOU3siaMv
-X-Gm-Gg: Acq92OFnJ1DxeHiol/SG5+WSWliQcQDl+cgpBwNt5x/Nw1QlLLYr9CvhSo12v/Rkhrc
- JyYhNYVJEjj14zpipmwsRZoDXdbU9GHu1ITKJVx22cN4Yjq71pkMJvJCD5LyscCDEaNpecDvYxw
- R3fzc+Jcz7u82U/DO/Fbvr/2EGh0DM4VSCppOyL9zve07PXOiXt3oeT+ceyFIB6OxOwUf8vFBFr
- h0P2ZfjErFw7w4UEO0ruQbaWh9Ic7LtWi21Huy7EX1lfZjYjf5GsI7nfIYd7qdcj6BJ6yuFDZJf
- I0T589Lo6GtZM4WVsH8589yn3TNLacdYoQ4TJFqApvQZfx/mXAXkLgiDFu7GOXYftccUclIwTbi
- tGWUlc6AHpNCcepU=
-X-Received: by 2002:a05:6102:4bc5:b0:631:af51:7d8e with SMTP id
- ada2fe7eead31-71d5b83eaa9mr2004922137.17.1781194921500; 
- Thu, 11 Jun 2026 09:22:01 -0700 (PDT)
-X-Received: by 2002:a05:6102:4bc5:b0:631:af51:7d8e with SMTP id
- ada2fe7eead31-71d5b83eaa9mr2004813137.17.1781194920599; 
- Thu, 11 Jun 2026 09:22:00 -0700 (PDT)
-Received: from x1.local ([142.189.10.167]) by smtp.gmail.com with ESMTPSA id
- 6a1803df08f44-8d1e7bc2707sm21911176d6.8.2026.06.11.09.21.59
+ d=1e100.net; s=20251104; t=1781194958; x=1781799758;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=aWYEWQoXXszq2CCnDXDZh6Lgo7kjM26o3yuxkKVq0FM=;
+ b=Qqw3oldeoxcSoRBKQJU799j0t+dCNeKLxgr0GukD9IQlKHarmtNz95nsnkUOraY7pB
+ ZP1SynC2Upv+UYaSLP30xzN5ekDsAtISlwXqD+imKEsLBr3M7oy8LTOhnVL4hJywPTRO
+ rZvQ0uOo4+TWkBQaWFSdmygQ2OyV8YotlKLitcpvySf8PzHVCVEUMOcqEgqqoVWkQiK+
+ 07Y2MEQFpPrBUJPDurC4cX2ezpMPPdFSO0C08hnxPjdNbMp+EH+vs+EjtUy324E83Ms3
+ vkWdJXu+Jlsk32MiB9+ZPsJMqGE+i51LbRZkIW5txWapcwA9vb4SwMk8HaaAsFJrZQid
+ tnrw==
+X-Gm-Message-State: AOJu0YyY6n4/kcTet0mXN8WuHf7xqnM70fjn5o8z7at6lfVwVPrwWd5N
+ jiJN+0G/CWowZdCueEqC3/pEg5Q/r3sCipftH+Uy9eCz2X04DUIUFQI08+WeyIACpbq05C1x718
+ qFZipdAyZxcmrBBmwGPdUZWpcgKEc4GQApnndCCclHNBib2c+tBCJgkm3GkzlZAu7Nw==
+X-Gm-Gg: Acq92OHCcM5LG4gn1GPoKh7z0Y9ZfdiNp30cdpuxzCEHiABPmy87Sa5e03k1pu5/soZ
+ ScQuefMetnb639cqaLjnvy5tOt7dVDyR2MJ0UX/3YdCq5iN7JaKj58yKeQnNDVE98OllpYTsXlA
+ 0AKHgMdLbJRLWz+viqLG8t6CgzHcwKsVhpJTQL+3iLfr54dL7UthUPOhVU/MeLRiK5/U/78SuAp
+ +sWP4ewCheiaAS5I2hXvVVybaqjxcOG+p/cB6LspnYiRA1LFFZnPsClokTk6GDDxU9Llw3r0tIQ
+ F1c8cIFsb0cA1QFrDx1NqWsmzaTZ5WCs9AKQZ8XLXUO09651w9GGp4zyF3rHOetYD/VcEIJIfyl
+ 0UnsBwvdv6dDvivsboITQE0ZZ9T/WVi47ammhYQyFItMeJA4uru5aYTpA9NE=
+X-Received: by 2002:a05:6122:1c8e:b0:56d:451b:e4dd with SMTP id
+ 71dfb90a1353d-5bb0231e205mr2023262e0c.12.1781194957951; 
+ Thu, 11 Jun 2026 09:22:37 -0700 (PDT)
+X-Received: by 2002:a05:6122:1c8e:b0:56d:451b:e4dd with SMTP id
+ 71dfb90a1353d-5bb0231e205mr2023219e0c.12.1781194957559; 
+ Thu, 11 Jun 2026 09:22:37 -0700 (PDT)
+Received: from QCOM-UWl2o8bcGT.qualcomm.com ([177.170.117.62])
+ by smtp.gmail.com with ESMTPSA id
+ 6a1803df08f44-8d1eadaea6asm21879526d6.40.2026.06.11.09.22.34
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 11 Jun 2026 09:21:59 -0700 (PDT)
-Date: Thu, 11 Jun 2026 12:21:58 -0400
-From: Peter Xu <peterx@redhat.com>
-To: Stefan Hajnoczi <stefanha@gmail.com>
-Cc: infra.ai.cloud@bitdeer.com, qemu-devel@nongnu.org,
- Hyman Huang <yong.huang@bitdeer.com>, Fabiano Rosas <farosas@suse.de>,
- Paolo Bonzini <pbonzini@redhat.com>
-Subject: Re: [PULL 0/1] dirtylimit improvement
-Message-ID: <airgpjWeo4bHHve-@x1.local>
-References: <cover.1781095539.git.yong.huang@bitdeer.com>
- <CAJSP0QU_tx+ygBJZG-vWdTK0ec+NVtiSaVnt-6FMdV1nsw9tpQ@mail.gmail.com>
+ Thu, 11 Jun 2026 09:22:36 -0700 (PDT)
+From: Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>
+To: qemu-devel@nongnu.org
+Cc: qemu-riscv@nongnu.org, alistair.francis@wdc.com, liwei1518@gmail.com,
+ zhiwei_liu@linux.alibaba.com, chao.liu.zevorn@gmail.com,
+ Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>,
+ Palmer Dabbelt <palmer@dabbelt.com>
+Subject: [PATCH 2/2] target/riscv/cpu.c: do not default to svbare for bare CPUs
+Date: Thu, 11 Jun 2026 13:22:23 -0300
+Message-ID: <20260611162223.2361941-3-daniel.barboza@oss.qualcomm.com>
+X-Mailer: git-send-email 2.43.0
+In-Reply-To: <20260611162223.2361941-1-daniel.barboza@oss.qualcomm.com>
+References: <20260611162223.2361941-1-daniel.barboza@oss.qualcomm.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <CAJSP0QU_tx+ygBJZG-vWdTK0ec+NVtiSaVnt-6FMdV1nsw9tpQ@mail.gmail.com>
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=peterx@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -24
-X-Spam_score: -2.5
+X-Authority-Analysis: v=2.4 cv=FJ8rAeos c=1 sm=1 tr=0 ts=6a2ae0ce cx=c_pps
+ a=JIY1xp/sjQ9K5JH4t62bdg==:117 a=gdiugJE53z4H+vvYeRBHqw==:17
+ a=FelO9ux0wxsA:10 a=s4-Qcg_JpJYA:10 a=VkNPw1HP01LnGYTKEx00:22
+ a=u7WPNUs3qKkmUXheDGA7:22 a=yOCtJkima9RkubShWh1s:22 a=EUspDBNiAAAA:8
+ a=rku2gE6GsbCemJvB6G0A:9 a=tNoRWFLymzeba-QzToBc:22
+X-Proofpoint-Spam-Info: AW1haW4tMjYwNjExMDE2NCBTYWx0ZWRfX7wymN2G3FF3E
+ 6aZELeQxTixwP11bTAB4HuRgCxBrjkaDb1rMoXcxzXYhfWnKiCLOlDN5sQWUFnnV+Tslnp/oiiM
+ 0atNU81PlrZ25RWR7jQmD9iwfD+DH9Q=
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNjExMDE2NCBTYWx0ZWRfXxGS3cweR0ytu
+ OBN4Khfx15KU46xA9u1qgb4940ACUGXCwFoHXfCH1nzMhZRa4+0N5E7gRvrJpeVp5FXWhszWoVJ
+ jRNfWHTOWYDZIz4k29MKFlTadukVD8RHWBK2msMnVO1mNpZJ8z7rtRPoHBXO5+eih5zzWvce2Gc
+ uvItfhO0Rhl8Zz0g81CJgD/V8RLlU4/R0uETS4JEg6iO0olxcGyBOWL8J34W4Dei36zC7mk6P3K
+ SgKnlDGQkzX4uGw8Jb/+nPf02y0eFf6C2HiCE4s92DanpEExRHB5o30yQbcQUQls9VzCcgZ9Ep9
+ AlRGK3yjcRpCOmIcPK6ZNVkkiffhWJMw+Vcvsu8hBWbd9NAXv93XGzckVpSZBuX+AJztiQzW9eU
+ HbiL34znN6INoiVpBNpcfdcRR3HXXb8tT6RUGJqsIfWID+VZvGmiyrNY/h+TVUcRUwugPYUFYsH
+ bwDABXnTx9SwmbpcvYQ==
+X-Proofpoint-GUID: bOQdE7l0piSR9SnhsQbd3y8RORNWNZh7
+X-Proofpoint-ORIG-GUID: bOQdE7l0piSR9SnhsQbd3y8RORNWNZh7
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.125,FMLib:17.12.100.49
+ definitions=2026-06-11_03,2026-06-11_01,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ malwarescore=0 clxscore=1015 adultscore=0 lowpriorityscore=0 bulkscore=0
+ impostorscore=0 priorityscore=1501 spamscore=0 phishscore=0 suspectscore=0
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.22.0-2606040000 definitions=main-2606110164
+Received-SPF: pass client-ip=205.220.168.131;
+ envelope-from=daniel.barboza@oss.qualcomm.com; helo=mx0a-0031df01.pphosted.com
+X-Spam_score_int: -27
+X-Spam_score: -2.8
 X-Spam_bar: --
-X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.445,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_MSPIKE_H2=0.001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -121,83 +149,66 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, Jun 11, 2026 at 11:18:53AM -0400, Stefan Hajnoczi wrote:
-> On Wed, Jun 10, 2026 at 9:15 PM <infra.ai.cloud@bitdeer.com> wrote:
-> >
-> > From: Hyman Huang <yong.huang@bitdeer.com>
-> 
-> Hi Hyman Huang,
-> Is this pull request intended for qemu.git/master?
-> 
-> I did not see any previous pull requests from you in QEMU's git log.
-> It looks like your previous dirtylimit work went through the migration
-> tree. Do you intend to start sending pull requests now and are the
-> migration maintainers aware?
+Back when we added bare CPUs (rv64i and friends) we didn't had a way of
+easily setting satp-mode to 'bare' in the command line, so we decided
+that if the user didn't specify a satp-mode we would limit the CPU to
+max_satp_mode = bare.
 
-We're not..
+We don't need to do that anymore now that we can set 'svbare' in the
+command line, thus users can confortably set 'svbare=on' if they want.
 
-Since dirtylimit is almost only used with migration, Hyman, do you want us
-to keep sending pulls for you?  I think it's better we're copied on all
-these changes at the very minimum.
+Besides, setting svbare if no satp-mode is provided in the command line
+just for bare CPUs, while every other CPU will default to its
+max_satp_mode value, is yet another random stuff users have to deal with
+for no good reason.  And, on top of all that, this will make it weirder
+to use CPUs that uses bare CPUs as their parent type.
 
-The other thing about the pull I want to say is, that patch changed most on
-KVM not dirtylimit: v2 sent on June 4th and planned to be merged today
-without maintainer's ACK (in this case Paolo, I added into the loop), I
-think that's a bit too rush.  Shall we still at least give Paolo some time
-in case he wants to say something?
+Remove this special handling for bare CPUs.
 
-Paolo might be busy and may respond slow, normally what I do is keep
-pinging if the patch is important; if not, I leave a patch there until it
-becomes more important..  I suggest we do the same for this patch rather
-than merging it without Paolo even noticing.
+Signed-off-by: Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>
+---
+ target/riscv/cpu.c | 20 +-------------------
+ 1 file changed, 1 insertion(+), 19 deletions(-)
 
-Logically the bare minimum is that patch gets an A-b from Paolo to merge
-it.
-
-Thanks,
-
-> 
-> Please follow the pull request process and sign your pull request with
-> your GPG key:
-> https://www.qemu.org/docs/master/devel/submitting-a-pull-request.html
-> 
-> Thanks,
-> Stefan
-> 
-> >
-> > The following changes since commit de5d8bfd6105d3dd3ae668df9762df244a6d1506:
-> >
-> >   Merge tag 'pull-loongarch-20260609' of https://github.com/gaosong715/qemu into staging (2026-06-09 14:00:28 -0400)
-> >
-> > are available in the Git repository at:
-> >
-> >   https://github.com/newfriday/qemu.git tags/dirtylimit-dirtyrate-pull-request-20260611
-> >
-> > for you to fetch changes up to 3b224b1c7df1ddefd6bca34f201264d72846c397:
-> >
-> >   accel/kvm: event-driven wakeup for dirty ring reaper thread (2026-06-11 08:22:50 +0800)
-> >
-> > ----------------------------------------------------------------
-> > dirtylimit: refactor dirty ring reaper thread with event-driven wakeup
-> >
-> > ----------------------------------------------------------------
-> > Bin Guo (1):
-> >       accel/kvm: event-driven wakeup for dirty ring reaper thread
-> >
-> >  accel/kvm/kvm-all.c      | 42 ++++++++++++++++++++++++++++++++++------
-> >  accel/stubs/kvm-stub.c   |  4 ++++
-> >  include/system/kvm.h     |  7 +++++++
-> >  include/system/kvm_int.h |  3 +++
-> >  system/dirtylimit.c      |  2 ++
-> >  5 files changed, 52 insertions(+), 6 deletions(-)
-> >
-> > --
-> > 2.43.0
-> >
-> >
-> 
-
+diff --git a/target/riscv/cpu.c b/target/riscv/cpu.c
+index d968daa404..c2f79a1ca0 100644
+--- a/target/riscv/cpu.c
++++ b/target/riscv/cpu.c
+@@ -510,21 +510,6 @@ static bool get_satp_mode_supported(RISCVCPU *cpu, uint16_t *supported)
+     }
+     return true;
+ }
+-
+-/* Set the satp mode to the max supported */
+-static void set_satp_mode_default_map(RISCVCPU *cpu)
+-{
+-    /*
+-     * Bare CPUs do not default to the max available.
+-     * Users must set a valid satp_mode in the command
+-     * line.  Otherwise, leave the existing max_satp_mode
+-     * in place.
+-     */
+-    if (object_dynamic_cast(OBJECT(cpu), TYPE_RISCV_BARE_CPU) != NULL) {
+-        warn_report("No satp mode set. Defaulting to 'bare'");
+-        cpu->cfg.max_satp_mode = VM_1_10_MBARE;
+-    }
+-}
+ #endif
+ 
+ #ifndef CONFIG_USER_ONLY
+@@ -896,10 +881,7 @@ static void riscv_cpu_satp_mode_finalize(RISCVCPU *cpu, Error **errp)
+     }
+ 
+     if (cpu->satp_modes.map == 0) {
+-        if (cpu->satp_modes.init == 0) {
+-            /* If unset by the user, we fallback to the default satp mode. */
+-            set_satp_mode_default_map(cpu);
+-        } else {
++        if (cpu->satp_modes.init != 0) {
+             /*
+              * Find the lowest level that was disabled and then enable the
+              * first valid level below which can be found in
 -- 
-Peter Xu
+2.43.0
 
 
