@@ -4,66 +4,144 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 217D3CD98D2
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 35BF2CD98D6
 	for <qemu-devel@archiver.kernel.org>; Thu, 11 Jun 2026 12:04:29 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wXe8X-00015s-0e; Thu, 11 Jun 2026 08:03:53 -0400
+	id 1wXe8k-00016n-1H; Thu, 11 Jun 2026 08:04:06 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <naveen@kernel.org>) id 1wXe8U-00015R-0q
- for qemu-devel@nongnu.org; Thu, 11 Jun 2026 08:03:50 -0400
-Received: from tor.source.kernel.org ([2600:3c04:e001:324:0:1991:8:25])
+ (Exim 4.90_1) (envelope-from <philmd@oss.qualcomm.com>)
+ id 1wXe8i-00016D-7Y
+ for qemu-devel@nongnu.org; Thu, 11 Jun 2026 08:04:04 -0400
+Received: from mx0b-0031df01.pphosted.com ([205.220.180.131])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <naveen@kernel.org>) id 1wXe8S-0005re-3B
- for qemu-devel@nongnu.org; Thu, 11 Jun 2026 08:03:49 -0400
-Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
- by tor.source.kernel.org (Postfix) with ESMTP id A52756001A;
- Thu, 11 Jun 2026 12:03:46 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6742E1F00893;
- Thu, 11 Jun 2026 12:03:45 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
- s=k20260515; t=1781179426;
- bh=RNVcN/VujjYFB5nyvNG6F+/3nKsmKdNfzojfxyMYLZg=;
- h=Date:From:To:Cc:Subject:References:In-Reply-To;
- b=QgvCytS7lk0ptLuT5UkPX5E92/+Jy8fIw+XzB/mu6J5EyrEBHEiEwZv19Mv1f2zYM
- BUMs0XDlZbl+kTN+cnwoZy+Y3C0hW+e3t/h/Se1dwOPht2A5dyObg7gLOeZTJqdRTU
- QxWQOzGfoBFo7pKZOVz9aPd2P/gCHKqJzMOBHyrRxXpJEfLx/Uo7nC+YSMVxoTj4Qw
- h6hY3cON39qH9fsWHOGG/7szK4iXikVX/ZlAYr0spTMhT2uy/tQQOJGfFDoosIII+G
- mgYJh6jnwfOdq2nsYcQbAWeZiygwi8TajAx435wl8J/pWt0tbX7WPTbYUl66omlvRQ
- /gzrhPHNifYmQ==
-Date: Thu, 11 Jun 2026 17:25:45 +0530
-From: Naveen N Rao <naveen@kernel.org>
-To: Michael Roth <michael.roth@amd.com>
-Cc: Sean Christopherson <seanjc@google.com>, 
- Paolo Bonzini <pbonzini@redhat.com>, qemu-devel <qemu-devel@nongnu.org>, 
- Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>,
- Eduardo Habkost <eduardo@habkost.net>, 
- Eric Blake <eblake@redhat.com>, Markus Armbruster <armbru@redhat.com>, 
- Marcelo Tosatti <mtosatti@redhat.com>, Zhao Liu <zhao1.liu@intel.com>, 
- Nikunj A Dadhania <nikunj@amd.com>, Tom Lendacky <thomas.lendacky@amd.com>, 
- Roy Hopkins <roy.hopkins@randomman.co.uk>,
- Srikanth Aithal <srikanth.aithal@amd.com>, Joerg Roedel <joro@8bytes.org>
-Subject: Re: [RFC PATCH] target/i386: SEV: Allow pflash devices with SEV-ES
- guests
-Message-ID: <aiqgcGahFs1vtvJg@blrnaveerao1>
-References: <20260602071213.2084388-1-naveen@kernel.org>
- <b7xwzrdt4zg5g45ufhqj46d3f4uezpy733gnsc7bv4cploxevz@rw327aciq2cg>
- <ailAARL2xS7qSNzL@blrnaveerao1>
- <etsmb632acnswvmkkwrjuzzqpxkiw3tac4rkyuadnmquylibhs@5gscftwr7cyv>
+ (Exim 4.90_1) (envelope-from <philmd@oss.qualcomm.com>)
+ id 1wXe8g-0005ub-Ik
+ for qemu-devel@nongnu.org; Thu, 11 Jun 2026 08:04:03 -0400
+Received: from pps.filterd (m0279868.ppops.net [127.0.0.1])
+ by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
+ 65BA1SJM168109
+ for <qemu-devel@nongnu.org>; Thu, 11 Jun 2026 12:03:59 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+ cc:content-transfer-encoding:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+ EwFOXqeGjSKblpF/kyuw6m1BTKw8ZYmbGGLlgvNDhcI=; b=NKQpQ2kAOMRdVBvd
+ cxS6QG60A5n2qUp0sevOSQKh0/KtMYqyU71AEOX4/s0KBUItBm8w05Z8ifQTpyae
+ GtimNVzAdUYUbxE4/wmHYarHZy2FyGl55hrOwGxyEfUVQ38ID09YFTsJRHPy8+Gp
+ 8WtTdzntyAUmO6VRFg74Btru4oqv3VVUc22lpMEtYVD4whQnIXKTdZSmiiTKukdz
+ JKKT10BmsM1v8TTESe4mT2LP1xBCQnYPBucHgcChpVakYKvwn2B/ZkNFAwu8cKF/
+ zLVBrXrSo8pyFH7IDXeOA72yNp5dVLLNITeAjDdGMUNDTFoevqgiPfIx1ZzxiQ15
+ 1PfrjQ==
+Received: from mail-oo1-f70.google.com (mail-oo1-f70.google.com
+ [209.85.161.70])
+ by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4eqe6ub9bt-1
+ (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
+ for <qemu-devel@nongnu.org>; Thu, 11 Jun 2026 12:03:58 +0000 (GMT)
+Received: by mail-oo1-f70.google.com with SMTP id
+ 006d021491bc7-69e3464b1afso10423616eaf.0
+ for <qemu-devel@nongnu.org>; Thu, 11 Jun 2026 05:03:58 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=oss.qualcomm.com; s=google; t=1781179438; x=1781784238; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=EwFOXqeGjSKblpF/kyuw6m1BTKw8ZYmbGGLlgvNDhcI=;
+ b=e53xkqPPPyWuER+pwRl4b3FEcnlRYHcBNJO5txRZbAZM/SPf1GcvwRICXT5CYYQdsn
+ 9yF8adENstyWdSYl1QoVYM2J9x3m5XuDhY2vi6CuBhy0derqJQ27Srxo1ej4g4NWY1rf
+ NE5En/OsHxKd4T8edsPza5xBAjvHIjLLwBUUdCe3x2/2S/sG98f9J1kF+IaA+8LEJysK
+ 7Z7zap4hhk7gTtqHUE2hzmhUKOvdL/mHp+JGeZuP2jtSfWzsY/SUZmyLZyo/J0beYzyt
+ 05r7hgfM8t9o5pmlwbB/FgY3tyhVwC9hspBiNvSIjLd/gq8j5Kc9payVTqj++4xGRSp1
+ kx0A==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1781179438; x=1781784238;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=EwFOXqeGjSKblpF/kyuw6m1BTKw8ZYmbGGLlgvNDhcI=;
+ b=tU1X3CNKeZreDq4xMbn3ccHHRjkRdEk7FfKSFDsnpAEnQE1tVUvVOdh4ECjmyWANtT
+ FO6DYURxuCkMaDEao6485B+T/4Qkfk9hb73jhGxr73csUb/jtk1VoBtZTOov1Z6p8S0q
+ FJZ46oXkZDTKX6gCiItUgzcNObZF+zibnf8dnpXXzZAN8DnbLwa6AUVXGhGRoW4uJrqK
+ mYcFSzOoTljavdL/GT7c4Iscb6bulrc6GTSSIJVgZVOiTVRayPBIJEKBa54HbVZ+5m5g
+ TC95KAQvrxUdQKZ+s/2F5p80gEgbeCh35emofQFmCRt5qpWzt0YA0kypz4ALQ/GB/wGV
+ /B+A==
+X-Forwarded-Encrypted: i=1;
+ AFNElJ+W/zYl7WGh2UQSs+3/lkOJTG8P55ojgLn7nYS60OR/oysQmpFylTpXNQ2SIMegkCAalQN2CjFneIDP@nongnu.org
+X-Gm-Message-State: AOJu0Yzio4zbbU0lkb4Qx83AzNsncQuxpqknj3jAUX654L+sOSd/e/c8
+ FNphjjMfvU3Tt+xT4w2EMzS2j/5lUMtil5Dle1eO8AW1gA5w8yFNFGaYSk/2IedrwoDjGSpxmeH
+ pwQpen7qqk3M9y3iJWxAC9HNXJxaVYOhbpDb5Nb6zqU1XwqTdd2F0Vq2/CA==
+X-Gm-Gg: Acq92OF3ZO4tYLoFmcMgvqrR25vBfM9Du8lNhlovjyvNk5rBjL9+ldgdEaimKxnNI+m
+ o+9QdAHSTHN9zUuNVcMWzYk9MNGkVNIZhxK0Nkkjv4ua6pDT6vsXR7wY4TdiJhGygm5HZIW6MGb
+ 3LhGFypZraAzn3AGMa9oI0gBd3BKYOHb5Bn1oFI55bUG800TEBxSjrIk9Fb4jmZYDIgporD1rqx
+ GUhlojsRFtfsXW2urNfzZzT1XUaz3oKdu1CiRDrS6ECKS9V6mvlN09MyjJoK1J0fNDnBhMbWZeD
+ nfMB/T/xGrGUJum/RcHsrzOclMfolqT5YnoxpYZIfBw60lymq40SoFl9qgQzpqdkr1mEHdGBgD9
+ NFwPF3VmojQwHffksptdPnOkas4XZbFGNcwtuMWY/3DNvVPmF8/BsmWuUwbwvMYkbpr12LIyhtZ
+ UqSrOtjXg=
+X-Received: by 2002:a05:6820:2917:b0:69e:424a:8df1 with SMTP id
+ 006d021491bc7-69ecae16727mr2021277eaf.19.1781179438248; 
+ Thu, 11 Jun 2026 05:03:58 -0700 (PDT)
+X-Received: by 2002:a05:6820:2917:b0:69e:424a:8df1 with SMTP id
+ 006d021491bc7-69ecae16727mr2021253eaf.19.1781179437795; 
+ Thu, 11 Jun 2026 05:03:57 -0700 (PDT)
+Received: from [192.168.69.208] (88-187-86-199.subs.proxad.net.
+ [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
+ a640c23a62f3a-bfcb5abeed8sm56379366b.45.2026.06.11.05.03.56
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Thu, 11 Jun 2026 05:03:56 -0700 (PDT)
+Message-ID: <60908171-fd6f-482b-aa0d-72e694c277a1@oss.qualcomm.com>
+Date: Thu, 11 Jun 2026 14:03:55 +0200
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <etsmb632acnswvmkkwrjuzzqpxkiw3tac4rkyuadnmquylibhs@5gscftwr7cyv>
-Received-SPF: pass client-ip=2600:3c04:e001:324:0:1991:8:25;
- envelope-from=naveen@kernel.org; helo=tor.source.kernel.org
-X-Spam_score_int: -24
-X-Spam_score: -2.5
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH] ui/pixman: fix zero rowstride in
+ qemu_pixman_image_new_shareable()
+Content-Language: en-US
+To: marcandre.lureau@redhat.com, qemu-devel@nongnu.org
+Cc: peter.maydell@linaro.org
+References: <20260611113614.1935094-1-marcandre.lureau@redhat.com>
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>
+In-Reply-To: <20260611113614.1935094-1-marcandre.lureau@redhat.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+X-Proofpoint-Spam-Info: AW1haW4tMjYwNjExMDEyMSBTYWx0ZWRfX04BXQXJAWYQE
+ fAxQqzPBaOXkq2jLKAoYINKftbMkiFW5pupS13YBkFcUlEckAEbcto6Zz39agL62msEsAreHhPY
+ pB/Q0W1faOANrbQFCerpgtSO1U9pJyc=
+X-Authority-Analysis: v=2.4 cv=atOCzyZV c=1 sm=1 tr=0 ts=6a2aa42e cx=c_pps
+ a=lkkFf9KBb43tY3aOjL++dA==:117 a=4s3hRJSeHn4rkQlkrse1kQ==:17
+ a=IkcTkHD0fZMA:10 a=FelO9ux0wxsA:10 a=M51BFTxLslgA:10 a=s4-Qcg_JpJYA:10
+ a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=ZpdpYltYx_vBUK5n70dp:22
+ a=20KFwNOVAAAA:8 a=KKAkSRfTAAAA:8 a=EUspDBNiAAAA:8 a=LfsA7Cq2GQzuzbZ-N0YA:9
+ a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10 a=k4UEASGLJojhI9HsvVT1:22
+ a=cvBusfyB2V15izCimMoJ:22
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNjExMDEyMSBTYWx0ZWRfXykIZO7ffLwar
+ lAo+d7VM/B9nKsOPgyOVeZRqkT5vIyftFs96NcslekyYO5OOAEmtkCuDh1FQy5v+iwwfyceQdQl
+ 5DoAVrZDaACPBYKTwfbw4UOFOKzv9qGRrvCVBL2+xM4+SnlA7onOHMdKoGjXZzDTulPxzInhBef
+ lQOnU+ayhlT05MU1oS91XQVwUCKw8PBxhFuj9aMnNGYqcY2W4113RGYr+kI2fd9sWYQL7v3nFzO
+ FYg5jrjddSXEks2YeSyrvxUGiEGw/sIjAKgehafh1SjmMRIqM87DbiyT9bMIxqy42V9KHYL7eeG
+ q1U9JkjVndolaBq5S7QhXaWJQe7ZALkcUkenBnLm5xyCYh5InsJ8gXMUHEjafcL6iqp5/M0eLSL
+ WaHEo7zrdOtrHts+k95A1evnJtWr9rkP1AirsSc19HEyQ5XmjJIS0cWGiyXGdNP/8Vvbft3WIxb
+ qkPR7j7nhJ6z50oc/2Q==
+X-Proofpoint-GUID: fc1K1xCReLMtnmwZ0qU0bqaGPwZQcCBF
+X-Proofpoint-ORIG-GUID: fc1K1xCReLMtnmwZ0qU0bqaGPwZQcCBF
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.125,FMLib:17.12.100.49
+ definitions=2026-06-11_02,2026-06-09_02,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ adultscore=0 impostorscore=0 bulkscore=0 clxscore=1015 spamscore=0
+ malwarescore=0 phishscore=0 priorityscore=1501 lowpriorityscore=0
+ suspectscore=0 classifier=typeunknown authscore=0 authtc= authcc=
+ route=outbound adjust=0 reason=mlx scancount=1 engine=8.22.0-2606040000
+ definitions=main-2606110121
+Received-SPF: pass client-ip=205.220.180.131;
+ envelope-from=philmd@oss.qualcomm.com; helo=mx0b-0031df01.pphosted.com
+X-Spam_score_int: -27
+X-Spam_score: -2.8
 X-Spam_bar: --
-X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.445,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -79,131 +157,33 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, Jun 10, 2026 at 02:41:58PM -0500, Michael Roth wrote:
-> On Wed, Jun 10, 2026 at 05:00:11PM +0530, Naveen N Rao wrote:
-> > [+Sean]
-> > 
-> > Hi Mike,
-> > 
-> > On Tue, Jun 09, 2026 at 07:35:46PM -0500, Michael Roth wrote:
-> > > On Tue, Jun 02, 2026 at 12:42:13PM +0530, Naveen N Rao (AMD) wrote:
-> > > > KVM commit 66155de93bcf ("KVM: x86: Disallow read-only memslots for
-> > > > SEV-ES and SEV-SNP (and TDX)"), and the subsequent commit d30d9ee94cc0
-> > > > ("KVM: x86: Only advertise KVM_CAP_READONLY_MEM when supported by VM")
-> > > > stopped advertising KVM_CAP_READONLY_MEM support for encrypted guests
-> > > > (KVM_X86_SEV_ES_VM and KVM_X86_SNP_VM), but not for KVM_X86_DEFAULT_VM
-> > > > type SEV-ES guests. As a result of this, it is no longer possible to
-> > > > start SEV-ES guests with any SEV feature enabled (in particular,
-> > > > debug-swap) with pflash devices.
-> > > > 
-> > > > This is an issue since SEV-ES guests have historically used pflash
-> > > > devices for OVMF. Guests on older KVM+Qemu are able to enable debug-swap
-> > > > while using pflash devices, so work around the KVM limitation by
-> > > > switching to using a VMA-based write protection. This allows
-> > > > well-behaved SEV-ES guests to continue to work with pflash devices and
-> > > > enable debug-swap. Mis-behaving guests trying to write to the protected
-> > > > OVMF area will be killed.
-> > > 
-> > > Based on Sean's description, a write access to a read-only memslot would
-> > > cause the vCPU to permanently spin on #NPFs if trying to write to it as
-> > > MMIO due to #VC handler not triggering, and that's why we don't support
-> > > read-only memslots. But since SEV-ES was previously working with pflash,
-> > > it seems like it does not rely on this functionality...
-> > 
-> > Right, normal well-behaved SEV-ES/SNP guests work just fine as they 
-> > don't write to any of the read-only areas.
-> > 
-> > > 
-> > > So if OVMF isn't writing to write-protected memory, then it wouldn't be
-> > > triggering the MMIO emulation path in the first place. And if we don't
-> > > care about enabling the emulation path in this case... then I'm not sure
-> > > the original reasons for not allowing it for SEV-ES/SNP are applicable.
-> > 
-> > Guest (not just OVMF) could try and write to the read-only area 
-> > triggering this issue. A simple write to 0xc0000 from within the guest 
-> > triggers this.
+On 11/6/26 13:36, marcandre.lureau@redhat.com wrote:
+> From: Marc-André Lureau <marcandre.lureau@redhat.com>
 > 
-> Is that still true even with this patch?
+> qemu_create_displaysurface_from() callers such as xlnx_dp.c pass
+> linesize=0 with data=NULL, relying on pixman to compute the stride.
+> Since 1ff788db978 ("ui: use a shareable type"), the data=NULL path
+> goes through qemu_pixman_image_new_shareable() which computes
+> size = height * rowstride_bytes, resulting in a zero-size allocation
+> and an abort in qemu_memfd_alloc().
 > 
->   commit 0f4a1e80989aca185d955fcd791d7750082044a2
->   Author: Kevin Loughlin <kevinloughlin@google.com>
->   Date:   Wed Mar 13 12:15:46 2024 +0000
->   
->       x86/sev: Skip ROM range scans and validation for SEV-SNP guests
->       
->       SEV-SNP requires encrypted memory to be validated before access.
->       Because the ROM memory range is not part of the e820 table, it is not
->       pre-validated by the BIOS. Therefore, if a SEV-SNP guest kernel wishes
->       to access this range, the guest must first validate the range.
->       
->       The current SEV-SNP code does indeed scan the ROM range during early
->       boot and thus attempts to validate the ROM range in probe_roms().
->       However, this behavior is neither sufficient nor necessary for the
->       following reasons:
+> Introduce qemu-pixman-helpers.h with overflow-safe stride and buffer
+> size computation (matching pixman's create_bits() formula), and use it
+> from both qemu_pixman_image_new_shareable() and pixman-minimal's
+> create_bits().
 > 
->       ...
+> Reported-by: Peter Maydell <peter.maydell@linaro.org>
+> Fixes: 1ff788db9781 ("ui: use a shareable type")
+> Signed-off-by: Marc-André Lureau <marcandre.lureau@redhat.com>
+> ---
+>   include/ui/pixman-minimal.h      | 25 +++-------------
+>   include/ui/qemu-pixman-helpers.h | 49 ++++++++++++++++++++++++++++++++
+>   include/ui/qemu-pixman.h         |  1 +
+>   ui/qemu-pixman.c                 |  8 +++++-
+>   4 files changed, 61 insertions(+), 22 deletions(-)
+>   create mode 100644 include/ui/qemu-pixman-helpers.h
 
-Yes, that was mostly a change for SEV-SNP guests, and only to not have 
-the kernel access those regions. Userspace is still free to access 
-through /dev/mem.
-
-> 
-> but in that case, those private accesses didn't work because they were
-> accessing legacy MMIO regions as private/encrypted even though none of the
-> option ROMs were loaded into memory as encrypted, so they're basically just
-> garbage/legacy regions we try to completely ignore on the guest-side now and
-> any lingering cases should probably get the same treatment.
-> 
-> It would be nice to still be able to catch write accesses....but I think we
-> still could (with the kernel changes discussed in my reply to Tom) if we
-> really wanted that. But is that really a hard requirement? Personally, the
-> -bios vs pflash argument thing makes this feel justified since -bios also
-> let's the writes through silently, but maybe we can do better with kernel
-> changes.
-
-Indeed.
-
-> 
-> > 
-> > > 
-> > > It feels like KVM_CAP_READONLY_MEM is more like KVM_CAP_EMULATE_ON_WRITE,
-> > > whereas we literally just need as actually slot that's permanently mapped
-> > > in the NPT without write access.
-> > > 
-> > > Is that an accurate summary of the situation?
-> > 
-> > Yes, that sounds right to me.
-> > 
-> > > 
-> > > If so, maybe we can introduce a KVM_CAP_READONLY_NO_MMIO that captures
-> > > this and simply errors out if it hits the KVM_PFN_ERR_RO_FAULT.
-> > 
-> > That would certainly work.
-> > 
-> > > Or, for
-> > > a QEMU-specific workaround, just have a pflash implementation that doesn't
-> > > rely on KVM_MEM_READONLY for cases like this where we don't need MMIO
-> > > emulation.
-> > 
-> > Not sure I follow that... are you suggesting that pflash use regular RW 
-> > memslots and just let the write through?
-> 
-> Yes, isn't that basically what we're getting with -bios? At least this
-> way we don't have the awkwardness of needing to randomly switch from -bios
-> to pflash based on what SEV features the user selects, which is pretty
-> bad.
-> 
-> But that was more of a last resort, maybe we haven't yet bottomed out on
-> whether we could do things a bit more nicely with some kernel help as
-> discussed elsewhere in this thread.
-
-Yes, letting the writes through is simple enough as a last resort. The 
-VMA based protection I have implemented here is the other option if we 
-want to be able to prevent writes without KVM's help (but will likely 
-need more work overall).
-
-
-Thanks,
-Naveen
+Nice.
+Reviewed-by: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
 
 
