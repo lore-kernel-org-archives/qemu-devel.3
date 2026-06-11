@@ -4,109 +4,143 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E1E1CCD98D2
-	for <qemu-devel@archiver.kernel.org>; Thu, 11 Jun 2026 12:11:18 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0218CCD98D2
+	for <qemu-devel@archiver.kernel.org>; Thu, 11 Jun 2026 12:19:33 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wXeF9-0003PA-0i; Thu, 11 Jun 2026 08:10:43 -0400
+	id 1wXeN6-0004co-HJ; Thu, 11 Jun 2026 08:18:56 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <marcandre.lureau@gmail.com>)
- id 1wXeF6-0003Ok-Tf
- for qemu-devel@nongnu.org; Thu, 11 Jun 2026 08:10:40 -0400
-Received: from mail-dy1-x1329.google.com ([2607:f8b0:4864:20::1329])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <marcandre.lureau@gmail.com>)
- id 1wXeF5-0000uC-2g
- for qemu-devel@nongnu.org; Thu, 11 Jun 2026 08:10:40 -0400
-Received: by mail-dy1-x1329.google.com with SMTP id
- 5a478bee46e88-304d0ac5e3cso3681177eec.0
- for <qemu-devel@nongnu.org>; Thu, 11 Jun 2026 05:10:38 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1781179837; cv=none;
- d=google.com; s=arc-20240605;
- b=D0FvZOrqIqezVNghXMf/WZ+h5y6PZBqRUzBqA2j16HnjAOcwLGMBEbWwFz7Z9RYnsk
- ScGTClKTzNgvySFD/cgb6NcZaqugS7da0WNr8hLiepu4AbzAhK8jM8rdIII0OVsa9ztV
- N3mwygaog/PrXP+MXueWpT2ote0wNoQbJRk5Hhu/nwKykJsqFIn0IBJkf8UkVBkckD1I
- JZtSVugmOom0Y3cnZTWWDagQRAVMsTj40mzoKxFmuuvFcz2ChAbjk1Jjr8j4rewLgkXN
- be5c6LLsS5K7CoAjD8yL5VbWaRBR6RnWuklYzq7xttJIXMa14lDlNo8umSVI2DHwuK8u
- yGbw==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
- s=arc-20240605; 
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:dkim-signature;
- bh=yEHPNMUtuJVFhsfZw0PGpQB8RdCznX2EEXKGdRKxTP4=;
- fh=Klr0oso4nYcLYZzLj8DXUbfDse3EWGslCrZOPoSTp1k=;
- b=FdVzNPbH32Af89sGXWGKfEkae3wEDCV/SyNrRtrjqUsPmKQP+h36l9n1aZ0Px8UTWy
- lDMRUy6FGWjkLupljlgniOp/13W9eS1xeN63W5qCm29AFgUxfb5B/oYgTxcq1uw1PZ20
- MuqktmIeOIEJBgCdxJIr+ptSbX80FztPKZpNpxw4hwkPnDjvj+M3gEKzX/hw+XtxjMPQ
- CNab7gBW2J43KbHeemo0WXMidqc/qF4XUuUv2sd1pSzs4354PkqPZB9LDQfxop1bwJIw
- 8ELJpPycw+eHW3zsypfktIqYGzeWnmBXEMreeIIiUIJQ9m08kcPE7B+xfTHnBsBMx90w
- L9Cw==; darn=nongnu.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
+ (Exim 4.90_1) (envelope-from <philmd@oss.qualcomm.com>)
+ id 1wXeN5-0004cZ-LF
+ for qemu-devel@nongnu.org; Thu, 11 Jun 2026 08:18:55 -0400
+Received: from mx0a-0031df01.pphosted.com ([205.220.168.131])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <philmd@oss.qualcomm.com>)
+ id 1wXeN3-0004Vi-Ou
+ for qemu-devel@nongnu.org; Thu, 11 Jun 2026 08:18:55 -0400
+Received: from pps.filterd (m0279864.ppops.net [127.0.0.1])
+ by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
+ 65B9xLAg284247
+ for <qemu-devel@nongnu.org>; Thu, 11 Jun 2026 12:18:51 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+ cc:content-transfer-encoding:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+ nG4RhqVXR235qoZp0sPWB2W+eCUDUcUi5suoW/ior0Q=; b=OP5MW1tuB9Lblq05
+ WhCJ9Nmtai2VQHeTXr1jLcDKX+POlEywbgN6J0NAml2wUlB3saXwDqsLYQqzEtqN
+ lk7wrHgNBCmJcBVLSa+V2jy0psbjnuq+TfIZgpFDNnFS4ikrF6b4iVqIf/+3+Q16
+ XXOcGqaVRBqhdWTCgILWAG4DYRUZPtDmX/w1fJyqUEW1hgR1q4kY5zrKG2EribH4
+ ZfJPOzKCdq5oK8DHFus5wKkP4I8kZTbYTQs269u4l91aZM7H9t3oIxfr3twRX7Ni
+ hcY7MucDDsNSxdYhV6Qp81NUKy4O5hclLw1/msJjPKjoWkTbMF2J+77t1xXf2Gml
+ aLEThQ==
+Received: from mail-qt1-f199.google.com (mail-qt1-f199.google.com
+ [209.85.160.199])
+ by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4eqe6tkbre-1
+ (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
+ for <qemu-devel@nongnu.org>; Thu, 11 Jun 2026 12:18:51 +0000 (GMT)
+Received: by mail-qt1-f199.google.com with SMTP id
+ d75a77b69052e-5174a23afcbso97911301cf.3
+ for <qemu-devel@nongnu.org>; Thu, 11 Jun 2026 05:18:51 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1781179837; x=1781784637; darn=nongnu.org;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:from:to:cc:subject:date
- :message-id:reply-to;
- bh=yEHPNMUtuJVFhsfZw0PGpQB8RdCznX2EEXKGdRKxTP4=;
- b=pquZyI7DtoJLcKHv+Ux6d6hTXlwM5ZmT2HXAx7eOgDCQGIal3aVmIi4qEn4bxF/ri6
- wFMSJDDRsiKMfG4VZVkwIjixgCZcQOnPBUpYu8f/8iVz2dlvr6rm2RlEAXynCeyYBqdk
- hm3/yR2sKzagGO4rU7mQtakM0UJQlDsU+UbwVO/6lnOUfrZ56sLn5aDDM2wIAuTgl7nq
- M5pEUFhuBOuaS/4ZHIyIs0s+L8IA4OGT5+uzhJEDP6V+iacgWVeq8652pMz/2ijo5MPu
- b/us4cTCammQ2XGwHmFUddg+PU1E4MCyRo916LYbPpavEV9hsd/F15imz7skS/ktlts7
- 0Ceg==
+ d=oss.qualcomm.com; s=google; t=1781180330; x=1781785130; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=nG4RhqVXR235qoZp0sPWB2W+eCUDUcUi5suoW/ior0Q=;
+ b=gMa/8/TG0T9m+xf2W+WtFOKgyTWEfhBHu09AkpZij1Szt+pnW4xc3XzKGM7eblap2l
+ 7UaspAPNZTzi2f+yvmQSaUtbKx9pT4oEIcqj5B/ZaDgoqbWZBfiSgrZjmaSLezM9lIbx
+ qeZK5ch3jF3+XEZhwyRffQCDbAthakuTSVMPOPuqfIbditZ/i6rkHLrLnEvv1BZuC3J+
+ G7YL5FWg+F6X4t7F/7hNaWyc0ra8Iq5VKRTz9QEX8Qbni1tpPTfNOCfhuUhJ5mPmAbKt
+ +sB137XO4x4kjbmeT/zHt8LTptkaVmecVF8Vh+PSzSgmk6Yk+VUMnW0qIeHTB7R0OLqa
+ 0prA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1781179837; x=1781784637;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to;
- bh=yEHPNMUtuJVFhsfZw0PGpQB8RdCznX2EEXKGdRKxTP4=;
- b=bvLRJnbu693CafDx2O1MsdSjhBx1IXB/FZB55XGZfcAERaMwbhTKIo7ln4NF+qGFD5
- y1sRnfhFAzV8Mr6PqrMpNtom5HpqrMZ/6TuOzwscBIrQvmsBdjnVuaje332ZcI9512nT
- 7OE/KJ/fc1vAI7C1HpFvGPtRugO7fCA1e+7SD0m15ewn435w5mj1PySyejCDYIYxkNEz
- VXTMcukSPX4QrSfmcg8seZUUy07I0Ee4tZqASZwcZAgZwoY4kygHcOX9agM0Ef5nguDE
- nft/lSVpPDsQqQiJNLjpYD13SBBt4jitBRO8gUrPAdrRAu7D94CjoQOfdmjmmhEUtC86
- vmkg==
-X-Gm-Message-State: AOJu0YzZE2/tEZnhBctUpGXwKHdNZwkXov4e/x7l0OhNxt9NoR381smE
- ykysJFvML12wSl1AjjvoR9h1uoqlaS7ePp9VTMvj+Kmm2GXTpNENaeDmbVAlkMFo8ebJgMG7BJy
- wJ1ektxN+k1IHkAKbfOrMZmrmznwp4XY=
-X-Gm-Gg: Acq92OHUPSxu6gm+83PxDM3kmpzk+4hcglaNt5UccMGdSmYahPQyi4M7uDI0sQOOcCx
- HPMP5mB34P7VjcekbJtMhYPBMujYLCsIKXVM7VR/rHD7MiOjdaic7JfEpeRBB2/inLy0MxZbE32
- 90qXRFC1TqwQirOoHzLEppsKFMQuhZwkWF8GwhbxEgymRFypZSAf6zMzWXsXKEmfhiWtvNiKQN6
- InzhdOJjXR9TcgftobnIwoIqSdJKvrm2ky3Zm0EIlPtAoUHSHImzjeGk7zJuu4FflhLRDsDj602
- E3XtfPlnuD4F4Wz8zf//KOOOi/T1/cCn3rnk1IBbKYMGPwidxg==
-X-Received: by 2002:a05:7300:3b07:b0:2c8:6361:ab2e with SMTP id
- 5a478bee46e88-3080464d07bmr2042695eec.8.1781179837103; Thu, 11 Jun 2026
- 05:10:37 -0700 (PDT)
+ d=1e100.net; s=20251104; t=1781180330; x=1781785130;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=nG4RhqVXR235qoZp0sPWB2W+eCUDUcUi5suoW/ior0Q=;
+ b=YuhYvDrJ26hKGoEVS0BxyrHbR6DuwBRUOI8AAzXqbFM3yBPraYzXswIM/5cAxe97Pw
+ hdINRs0X5+jE00JcodBtfCnTgXiZXxBkaW9HnDvvxRO1jh3UGLYW+UKLq9JMmMok7w34
+ TSkvIEwPbHtCOFs8F9drGr54Q7bgYXc6qdw4hKLXu+CFGe6GW6hgn62adBJtBCXL/iiu
+ +8pFvK5EWLBDux8y3x+EMKDhJmTNb3glNhrW7ll9ZXWPqCfSB+3MrFB1VUdIujJv5JdS
+ 4rL5YeDWIGk1Sj3z6v9Dm/ocJBZq04pjN9iP+e2qam9c7ik799r0HWMWciwe42hOEPFG
+ LvwA==
+X-Forwarded-Encrypted: i=1;
+ AFNElJ9mAPHarpG5QFxxGz2O76Gz31Ndp3gkLmI4wCMk4y9ttLq2ahO4f8La3OpkfBrA+5HgMhzb5Njr5r+M@nongnu.org
+X-Gm-Message-State: AOJu0YwlZRTc07xBlBOXNwlfkT4EAHEtCAbui5PeWhgJFZqCgy/XHuCo
+ Q9ocfQdXoyewIy295TFiIvIfXjAFwabEo9QOH8kTVQFPu5Xm30xvtjpawOvSE3d/fUw18HdS+ky
+ AQkbrJwZfbEfjgipTnMZSFoll/BycLgmcFOxVAojOTo7gY5EQBAXzTSkh2Q==
+X-Gm-Gg: Acq92OE699THRByeDJxwhoG0FTm2F3ZLOhT8pqLDN36UatHAg8dg0YdZ+AbTQ2FrbYz
+ 0efnZ8Zp9QXCgAvgAOSR+Z6UnDjVrXctGS8IjRPhboyLqrHU1Z2odSIdsV8rqMQxkoK9ViTpsfm
+ cNPMQ1wWvbHmnpcoT9cMc2nWaM6VNP1htxpIJ9z2RZWtkwxjk2RQ8954EsOuSsEGkkmtPGg1ecd
+ 1ah49GzlIbo7YBWLrxRsB6my6EkJD60oKVrl9P+B5jckqVEtXN3nDuLLVR7oH0psxJ4npUsVdxI
+ XLTEmRntMLU+0lNYlFY3avjIvuUpq5m2AHgkX0DSgTuKxNrP2AUfZKRwGbefPgQrF5P+v0D2ejk
+ myCkiGNa4P2m2jdOlqjxyOTdwJlbqLBcwvYOm3mgQ2kQj5CFtUBKwDETW33JcPYajrQJjqJFsPt
+ KfSB1yGHs=
+X-Received: by 2002:ac8:7f95:0:b0:517:8f52:2724 with SMTP id
+ d75a77b69052e-517ee21847cmr39883621cf.43.1781180330081; 
+ Thu, 11 Jun 2026 05:18:50 -0700 (PDT)
+X-Received: by 2002:ac8:7f95:0:b0:517:8f52:2724 with SMTP id
+ d75a77b69052e-517ee21847cmr39883021cf.43.1781180329588; 
+ Thu, 11 Jun 2026 05:18:49 -0700 (PDT)
+Received: from [192.168.69.208] (88-187-86-199.subs.proxad.net.
+ [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-490e52a553csm49355205e9.2.2026.06.11.05.18.48
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Thu, 11 Jun 2026 05:18:48 -0700 (PDT)
+Message-ID: <300c48cd-7523-4cbd-86b0-90cbb36b92da@oss.qualcomm.com>
+Date: Thu, 11 Jun 2026 14:18:47 +0200
 MIME-Version: 1.0
-References: <20260611-sdl-v1-1-93d4a51684bb@rsg.ci.i.u-tokyo.ac.jp>
-In-Reply-To: <20260611-sdl-v1-1-93d4a51684bb@rsg.ci.i.u-tokyo.ac.jp>
-From: =?UTF-8?B?TWFyYy1BbmRyw6kgTHVyZWF1?= <marcandre.lureau@redhat.com>
-Date: Thu, 11 Jun 2026 16:10:24 +0400
-X-Gm-Features: AVVi8CeKktUtG17zkQ_sDczcJ1uN6ZntoJuZlpWgGNef4bldB48X-Fg4-i4orcc
-Message-ID: <CAJ+F1CKF+89hT57ekdhQutecCteH4Z1Sbd16Hgwj+0Q26Sfqpw@mail.gmail.com>
-Subject: Re: [PATCH] ui/sdl2: Explicitly specify EGL platform
-To: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
-Cc: qemu-devel@nongnu.org, Alexander Kanavin <alex.kanavin@gmail.com>, 
- =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>, 
- =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@mailo.com>, 
- Richard Purdie <richard.purdie@linuxfoundation.org>, 
- Mathieu Dubois-Briand <mathieu.dubois-briand@bootlin.com>, 
- openembedded-core@lists.openembedded.org, Quan.Sun@windriver.com, 
- Pierre-Eric Pelloux-Prayer <pierre-eric.pelloux-prayer@amd.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2607:f8b0:4864:20::1329;
- envelope-from=marcandre.lureau@gmail.com; helo=mail-dy1-x1329.google.com
-X-Spam_score_int: -16
-X-Spam_score: -1.7
-X-Spam_bar: -
-X-Spam_report: (-1.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, FREEMAIL_FORGED_FROMDOMAIN=0.001,
- FREEMAIL_FROM=0.001, HEADER_FROM_DIFFERENT_DOMAINS=0.249,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=no autolearn_force=no
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v2] tests/qtest/migration: Add migration test on loongarch
+Content-Language: en-US
+To: Bibo Mao <maobibo@loongson.cn>, Fabiano Rosas <farosas@suse.de>,
+ Laurent Vivier <lvivier@redhat.com>, Peter Xu <peterx@redhat.com>
+Cc: Paolo Bonzini <pbonzini@redhat.com>, Song Gao <gaosong@loongson.cn>,
+ qemu-devel@nongnu.org
+References: <20260611084312.70042-1-maobibo@loongson.cn>
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>
+In-Reply-To: <20260611084312.70042-1-maobibo@loongson.cn>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNjExMDEyNCBTYWx0ZWRfX91htFxdO8s6c
+ BNHOWsSebMjYcvhZgq+H/V9vAYece1oK5LYm/VcJH933iqEo+FnibG+XMwvUoaN4l9KdhHMoT7/
+ Tlhru/+cUdDWWxwRqD3/70Q5Q7FgWsel5cC/IDtGi9dkmGrb02zXYUl4/PPx3QGj9VCXQ8o254/
+ 0S2WKl2TH7MAHD6bdFHrx9/xywP8SiXNINbEyhG+DLZ0UJenOEU3R/2jV/kSVS3rNhHuzNXOsmN
+ Z5NNqZKuGleAAc1ZDnMoroxgCxbZUaLZHv11IV5AXg6ifYZiLu2g6eXi0B75SGRmwcC6KAAR02K
+ 1eOqDVIKKYw6DJChxtPNZUEw2kMucKBx64lWdMEYhdfkH15cxVoYW1fWiofJYADA479YlykvkiL
+ Rz2w2l0d33Uj2SjQfs2+87kcLQ81JtvzKUaLBcfBX0tUB7d5ZCAMfDzwCWN6DvbPnA1ZEchyX2K
+ glbXzvqCokG/qXuKyVQ==
+X-Proofpoint-Spam-Info: AW1haW4tMjYwNjExMDEyNCBTYWx0ZWRfX0IA49NuyxTIl
+ CnrSqImv/Vd1MWqZFf7t/fYBvsbi2wubWA3+Gq5KAz97rt9iQ/e6kPzHj/0Dk2xX8PzRWPst9dN
+ hRLA5suttcAxYGGD8S/gOupNIOho6uA=
+X-Authority-Analysis: v=2.4 cv=AaiB2XXG c=1 sm=1 tr=0 ts=6a2aa7ab cx=c_pps
+ a=WeENfcodrlLV9YRTxbY/uA==:117 a=4s3hRJSeHn4rkQlkrse1kQ==:17
+ a=IkcTkHD0fZMA:10 a=FelO9ux0wxsA:10 a=M51BFTxLslgA:10 a=s4-Qcg_JpJYA:10
+ a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=DJpcGTmdVt4CTyJn9g5Z:22
+ a=EUspDBNiAAAA:8 a=wjZwgo66gYYFnpJaAzMA:9 a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
+ a=kacYvNCVWA4VmyqE58fU:22
+X-Proofpoint-ORIG-GUID: ZVDcmYT0SecTkMAF7Lnv_u1DwXidpXRt
+X-Proofpoint-GUID: ZVDcmYT0SecTkMAF7Lnv_u1DwXidpXRt
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.125,FMLib:17.12.100.49
+ definitions=2026-06-11_02,2026-06-09_02,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ malwarescore=0 phishscore=0 impostorscore=0 priorityscore=1501 bulkscore=0
+ clxscore=1015 adultscore=0 suspectscore=0 lowpriorityscore=0 spamscore=0
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.22.0-2606040000 definitions=main-2606110124
+Received-SPF: pass client-ip=205.220.168.131;
+ envelope-from=philmd@oss.qualcomm.com; helo=mx0a-0031df01.pphosted.com
+X-Spam_score_int: -27
+X-Spam_score: -2.8
+X-Spam_bar: --
+X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_MSPIKE_H2=0.001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -122,88 +156,53 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, Jun 11, 2026 at 4:00=E2=80=AFPM Akihiko Odaki
-<odaki@rsg.ci.i.u-tokyo.ac.jp> wrote:
->
-> Mesa's eglGetDisplay() chooses the native EGL platform from
-> EGL_PLATFORM, limited autodetection, or the build-time default. If that
-> selects Wayland while SDL is using the X11 video backend, Mesa can treat
-> the X11 Display pointer as a wl_display and crash during eglInitialize().
->
-> Probe EGL with the X11 platform explicitly before enabling
-> SDL_HINT_VIDEO_X11_FORCE_EGL.
->
-> Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/3540
-> Signed-off-by: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
-
-Reviewed-by: Marc-Andr=C3=A9 Lureau <marcandre.lureau@redhat.com>
-
+On 11/6/26 10:43, Bibo Mao wrote:
+> Add migration qtest on loongarch64 system, the test passes to run with
+> the following result:
+>    qemu:qtest+qtest-loongarch64/qtest-loongarch64/migration-test OK 15.94s 9 subtests passed
+> 
+> Signed-off-by: Bibo Mao <maobibo@loongson.cn>
 > ---
-> Resolving the issue described in the GitLab work item also requires:
-> https://github.com/libsdl-org/SDL/pull/15806
+> v1 ... v2:
+>    1. Add SPDX-License in __note in file tests/qtest/migration/Makefile
+>    2. Regerate file tests/qtest/migration/loongarch64/a-b-kernel.h with
+>       __note information
 > ---
->  include/ui/egl-helpers.h | 5 +++++
->  ui/egl-helpers.c         | 4 ++--
->  ui/sdl2.c                | 3 ++-
->  3 files changed, 9 insertions(+), 3 deletions(-)
->
-> diff --git a/include/ui/egl-helpers.h b/include/ui/egl-helpers.h
-> index acf993fcf52f..c97a0d5c248f 100644
-> --- a/include/ui/egl-helpers.h
-> +++ b/include/ui/egl-helpers.h
-> @@ -61,6 +61,11 @@ void egl_dmabuf_create_fence(QemuDmaBuf *dmabuf);
->
->  EGLSurface qemu_egl_init_surface_x11(EGLContext ectx, EGLNativeWindowTyp=
-e win);
->
-> +#if defined(CONFIG_X11) || defined(CONFIG_GBM) || defined(WIN32)
-> +EGLDisplay qemu_egl_get_display(EGLNativeDisplayType native,
-> +                                EGLenum platform);
-> +#endif
+>   MAINTAINERS                                   |  1 +
+>   tests/qtest/meson.build                       |  3 +-
+>   tests/qtest/migration/Makefile                |  4 +-
+>   tests/qtest/migration/bootfile.c              |  4 ++
+>   tests/qtest/migration/bootfile.h              |  4 ++
+>   tests/qtest/migration/framework.c             |  6 +++
+>   tests/qtest/migration/loongarch64/Makefile    | 20 ++++++++
+>   .../qtest/migration/loongarch64/a-b-kernel.S  | 46 +++++++++++++++++++
+>   .../qtest/migration/loongarch64/a-b-kernel.h  | 20 ++++++++
+>   9 files changed, 106 insertions(+), 2 deletions(-)
+>   create mode 100644 tests/qtest/migration/loongarch64/Makefile
+>   create mode 100644 tests/qtest/migration/loongarch64/a-b-kernel.S
+>   create mode 100644 tests/qtest/migration/loongarch64/a-b-kernel.h
+
+
+> diff --git a/tests/qtest/migration/loongarch64/Makefile b/tests/qtest/migration/loongarch64/Makefile
+> new file mode 100644
+> index 0000000000..3c8cfeee86
+> --- /dev/null
+> +++ b/tests/qtest/migration/loongarch64/Makefile
+> @@ -0,0 +1,20 @@
+> +# SPDX-License-Identifier: GPL-2.0-or-later
 > +
->  #if defined(CONFIG_X11) || defined(CONFIG_GBM)
->
->  int qemu_egl_init_dpy_x11(EGLNativeDisplayType dpy, DisplayGLMode mode);
-> diff --git a/ui/egl-helpers.c b/ui/egl-helpers.c
-> index e3f2872cc14b..069a52495541 100644
-> --- a/ui/egl-helpers.c
-> +++ b/ui/egl-helpers.c
-> @@ -520,8 +520,8 @@ EGLSurface qemu_egl_init_surface_x11(EGLContext ectx,=
- EGLNativeWindowType win)
->   * platform extensions (EGL_KHR_platform_gbm and friends) yet it doesn't=
- seem
->   * like mesa will be able to advertise these (even though it can do EGL =
-1.5).
->   */
-> -static EGLDisplay qemu_egl_get_display(EGLNativeDisplayType native,
-> -                                       EGLenum platform)
-> +EGLDisplay qemu_egl_get_display(EGLNativeDisplayType native,
-> +                                EGLenum platform)
->  {
->      EGLDisplay dpy =3D EGL_NO_DISPLAY;
->
-> diff --git a/ui/sdl2.c b/ui/sdl2.c
-> index 4fcdbd79d3c0..ce14bd1f4e15 100644
-> --- a/ui/sdl2.c
-> +++ b/ui/sdl2.c
-> @@ -862,7 +862,8 @@ static void sdl2_set_hint_x11_force_egl(void)
->      }
->
->      /* Prefer EGL over GLX to get dma-buf support. */
-> -    egl_display =3D eglGetDisplay((EGLNativeDisplayType)x_disp);
-> +    egl_display =3D qemu_egl_get_display((EGLNativeDisplayType)x_disp,
-> +                                       EGL_PLATFORM_X11_KHR);
->
->      if (egl_display !=3D EGL_NO_DISPLAY) {
->          /*
->
-> ---
-> base-commit: 2db91528542672cf0db78b3f2cc0e22b36302b38
-> change-id: 20260611-sdl-a148cd469727
->
-> Best regards,
-> --
-> Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
->
->
+> +# To specify cross compiler prefix, use CROSS_PREFIX=
+> +#   $ make CROSS_PREFIX=loongarch64-linux-gnu-
+> +
+> +.PHONY: all clean
+> +all: a-b-kernel.h
+> +
+> +a-b-kernel.h: loongarch64.kernel
+> +	echo "$$__note" > $@
+> +	xxd -i $< | sed -e 's/.*int.*//' >> $@
+
+  xxd -g4 -e -i ...
+
+Reviewed-by: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
+
 
