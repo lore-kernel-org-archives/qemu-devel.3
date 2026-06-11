@@ -4,113 +4,118 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 007D4CD98C7
-	for <qemu-devel@archiver.kernel.org>; Thu, 11 Jun 2026 18:19:17 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id F0A84CD98C7
+	for <qemu-devel@archiver.kernel.org>; Thu, 11 Jun 2026 18:20:47 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wXjze-0005WK-TJ; Thu, 11 Jun 2026 14:19:06 -0400
+	id 1wXk0v-00068V-Em; Thu, 11 Jun 2026 14:20:26 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1wXjzc-0005TT-Px
- for qemu-devel@nongnu.org; Thu, 11 Jun 2026 14:19:04 -0400
-Received: from smtp-out1.suse.de ([195.135.223.130])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1wXjzb-0001MD-4u
- for qemu-devel@nongnu.org; Thu, 11 Jun 2026 14:19:04 -0400
-Received: from imap1.dmz-prg2.suse.org (unknown [10.150.64.97])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
- (No client certificate requested)
- by smtp-out1.suse.de (Postfix) with ESMTPS id 7B88C6B095;
- Thu, 11 Jun 2026 18:19:00 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1781201941; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=LivA167kLtZ7oqtKHGiodu+Vi3dz0rjQ7Zf5Rn0b3S8=;
- b=ycH1GIgyySOSOr5qORwDv5GCg9DE1Fek9RtzNcZfHrP8qO4c5twXbvbnL9L57PDB+olb+z
- HlJmgvcaLZNgEzLwERhKlrxcNWsc3hHdQUFK4IxZbb6cN15INMht0wZEkc9yZWtM3lv7W3
- XrjdUqFCtHQ7o3Vi3jqP7aKpeWlZjpM=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1781201941;
- h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=LivA167kLtZ7oqtKHGiodu+Vi3dz0rjQ7Zf5Rn0b3S8=;
- b=225Ls5nw8cY6IaoEIcHktNvgQpFro9mosOTsU7rQQ3Y9lyKt6IbggQ1C58D+WX5FwqYfAD
- kYD18wWGz1mJ60Aw==
-Authentication-Results: smtp-out1.suse.de;
-	none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1781201940; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=LivA167kLtZ7oqtKHGiodu+Vi3dz0rjQ7Zf5Rn0b3S8=;
- b=cFhJQFmqr6eXhb3repXtI0KNSmLzBmhRngOesfpnZw01HuNboCJlT/12Bgn6olg1lYiwZq
- gw/aD36+NGjCMDu2TLuJL0zcyFVxurnxspsJoXECsuoGGx7X0/Ff1rrj47gAy/wqfWNlZ8
- Rc0Gez+JejmLKbX/yKreOPmY2n1YJRk=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1781201940;
- h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=LivA167kLtZ7oqtKHGiodu+Vi3dz0rjQ7Zf5Rn0b3S8=;
- b=9jKX86Pb7JKoNmGZl8gWImAQ6pilvVYVAV1U5jJfHoRWSnHZDOFqXPrH1iFiq1kDIEKeYQ
- hmzH8NmnWPlgBYCw==
-Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
- (No client certificate requested)
- by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id 11BC6779A7;
- Thu, 11 Jun 2026 18:18:59 +0000 (UTC)
-Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
- by imap1.dmz-prg2.suse.org with ESMTPSA id t5q/NBP8KmpGMAAAD6G6ig
- (envelope-from <farosas@suse.de>); Thu, 11 Jun 2026 18:18:59 +0000
-From: Fabiano Rosas <farosas@suse.de>
-To: Alexander Mikhalitsyn <alexander@mihalicyn.com>, qemu-devel@nongnu.org
-Cc: Klaus Jensen <its@irrelevant.dk>, Peter Xu <peterx@redhat.com>, Kevin
- Wolf <kwolf@redhat.com>, Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?=
- <philmd@linaro.org>, Keith
- Busch <kbusch@kernel.org>, =?utf-8?Q?St=C3=A9phane?= Graber
- <stgraber@stgraber.org>, Zhao
- Liu <zhao1.liu@intel.com>, Alexander Mikhalitsyn
- <alexander@mihalicyn.com>, qemu-block@nongnu.org, Laurent Vivier
- <lvivier@redhat.com>, Stefan Hajnoczi <stefanha@redhat.com>, Paolo Bonzini
- <pbonzini@redhat.com>, Hanna Reitz <hreitz@redhat.com>, Jesper Devantier
- <foss@defmacro.it>, Fam Zheng <fam@euphon.net>, Alexander Mikhalitsyn
- <aleksandr.mikhalitsyn@futurfusion.io>
-Subject: Re: [PATCH v10 8/8] tests/qtest/nvme-test: add migration test with
- full CQ
-In-Reply-To: <20260611180842.6390-9-alexander@mihalicyn.com>
-References: <20260611180842.6390-1-alexander@mihalicyn.com>
- <20260611180842.6390-9-alexander@mihalicyn.com>
-Date: Thu, 11 Jun 2026 15:18:49 -0300
-Message-ID: <87a4t1j5yu.fsf@suse.de>
+ (Exim 4.90_1) (envelope-from <zycai@linux.ibm.com>)
+ id 1wXk0n-00067n-HG; Thu, 11 Jun 2026 14:20:17 -0400
+Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <zycai@linux.ibm.com>)
+ id 1wXk0l-0002gJ-LN; Thu, 11 Jun 2026 14:20:17 -0400
+Received: from pps.filterd (m0360083.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
+ 65BCe6om722246; Thu, 11 Jun 2026 18:20:11 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
+ :content-transfer-encoding:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to; s=pp1; bh=6IUnld
+ lvbwm9SKC+zVm9a5j0UYy9JpxQQ+uCv9Qifog=; b=WSVGOZChdImkLbJxrOxsl+
+ rxK/phcMlX6CAaML5PZUvefV5Roft+adb0cyqH8US/aF+fBUFYvgmsoXW4AzAh4e
+ tswnYvjxz8Z6GNGtXqa1R/s+3fStUW4jSp7/HXYmGHS/y+SiwXvuPj64VvzAXHxU
+ zPzp1ScPXpsKdR8KH5r6GSnAt1TyFFQ3u3wksEqXt5ae+q6ti+ISogZwi437Glao
+ zWAEXX2DI0hiScqjEezhJ1f1kCSQrqjNjC5pboI8bqjCdSfFbH4mqcV8jZGsmn/O
+ mUNlK0ylf0KYclhYvgb6ulF93IrAQgWRz1mJe68pqnEjFOGuSAN5pDkfXxxHakZA
+ ==
+Received: from ppma13.dal12v.mail.ibm.com
+ (dd.9e.1632.ip4.static.sl-reverse.com [50.22.158.221])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4eqe8ddb74-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Thu, 11 Jun 2026 18:20:11 +0000 (GMT)
+Received: from pps.filterd (ppma13.dal12v.mail.ibm.com [127.0.0.1])
+ by ppma13.dal12v.mail.ibm.com (8.18.1.7/8.18.1.7) with ESMTP id 65BIJicB017963;
+ Thu, 11 Jun 2026 18:20:10 GMT
+Received: from smtprelay01.wdc07v.mail.ibm.com ([172.16.1.68])
+ by ppma13.dal12v.mail.ibm.com (PPS) with ESMTPS id 4eqe09vdk7-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Thu, 11 Jun 2026 18:20:10 +0000 (GMT)
+Received: from smtpav06.wdc07v.mail.ibm.com (smtpav06.wdc07v.mail.ibm.com
+ [10.39.53.233])
+ by smtprelay01.wdc07v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 65BIK8SZ61014346
+ (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Thu, 11 Jun 2026 18:20:08 GMT
+Received: from smtpav06.wdc07v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 924B35803F;
+ Thu, 11 Jun 2026 18:20:08 +0000 (GMT)
+Received: from smtpav06.wdc07v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id B573958055;
+ Thu, 11 Jun 2026 18:20:06 +0000 (GMT)
+Received: from [9.61.99.146] (unknown [9.61.99.146])
+ by smtpav06.wdc07v.mail.ibm.com (Postfix) with ESMTP;
+ Thu, 11 Jun 2026 18:20:06 +0000 (GMT)
+Message-ID: <4b0b8f0f-1a12-4c7f-a591-3e7ea662a42e@linux.ibm.com>
+Date: Thu, 11 Jun 2026 14:20:06 -0400
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Spamd-Result: default: False [-2.80 / 50.00]; BAYES_HAM(-3.00)[99.99%];
- SUSPICIOUS_RECIPS(1.50)[]; NEURAL_HAM_LONG(-1.00)[-1.000];
- NEURAL_HAM_SHORT(-0.20)[-1.000]; MIME_GOOD(-0.10)[text/plain];
- RCVD_VIA_SMTP_AUTH(0.00)[]; ARC_NA(0.00)[];
- MIME_TRACE(0.00)[0:+]; MISSING_XM_UA(0.00)[];
- RCPT_COUNT_TWELVE(0.00)[18];
- FUZZY_RATELIMITED(0.00)[rspamd.com]; RCVD_TLS_ALL(0.00)[];
- TO_DN_SOME(0.00)[]; FROM_EQ_ENVFROM(0.00)[];
- FROM_HAS_DN(0.00)[]; MID_RHS_MATCH_FROM(0.00)[];
- TO_MATCH_ENVRCPT_ALL(0.00)[];
- DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
- RCVD_COUNT_TWO(0.00)[2];
- DBL_BLOCKED_OPENRESOLVER(0.00)[futurfusion.io:email, mihalicyn.com:email,
- imap1.dmz-prg2.suse.org:helo, suse.de:email, suse.de:mid]
-Received-SPF: pass client-ip=195.135.223.130; envelope-from=farosas@suse.de;
- helo=smtp-out1.suse.de
-X-Spam_score_int: -43
-X-Spam_score: -4.4
-X-Spam_bar: ----
-X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_MED=-2.3, SPF_HELO_NONE=0.001,
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v11 30/32] tests/functional/s390x: Add secure IPL
+ functional test
+To: Thomas Huth <thuth@redhat.com>, Eric Farman <farman@linux.ibm.com>,
+ qemu-s390x@nongnu.org, qemu-devel@nongnu.org
+Cc: jrossi@linux.ibm.com, cohuck@redhat.com, berrange@redhat.com,
+ richard.henderson@linaro.org, david@kernel.org, walling@linux.ibm.com,
+ jjherne@linux.ibm.com, pasic@linux.ibm.com, borntraeger@linux.ibm.com,
+ mjrosato@linux.ibm.com, iii@linux.ibm.com, eblake@redhat.com,
+ armbru@redhat.com, alifm@linux.ibm.com, brueckner@linux.ibm.com,
+ pierrick.bouvier@oss.qualcomm.com, jdaley@linux.ibm.com
+References: <20260505201905.997996-1-zycai@linux.ibm.com>
+ <20260505201905.997996-31-zycai@linux.ibm.com>
+ <ba1b75db4c3c110a7edae5a1753c32e5854a3ee5.camel@linux.ibm.com>
+ <daaab4f1-2ddb-4189-b705-2be3907d1e77@redhat.com>
+Content-Language: en-US
+From: Zhuoying Cai <zycai@linux.ibm.com>
+In-Reply-To: <daaab4f1-2ddb-4189-b705-2be3907d1e77@redhat.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+X-TM-AS-GCONF: 00
+X-Proofpoint-Spam-Info: AW1haW4tMjYwNjExMDE4MiBTYWx0ZWRfXyJ41rvw4L1sb
+ t39viJ0ZIWqxmnGcQrIW7N9AmyyV8sLBCUWUjEEuB+EDfa34fjsYuju/4R7SkUbY9Im/MipnxpR
+ BopxGvkl1jdROJijKN1lgEgRJP8bYPI=
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNjExMDE4MiBTYWx0ZWRfXwHzRk94ggyFj
+ zy3MYI1s9G2mEFNTChKs+16rdoEPKQrhYm/mq97mhWMV9RfoMsX+wFLuVFou2GHEyFtQHFBfDZj
+ 5EYK+q37BCxASRIjiZGr5fYP/1X6RtYlrmS43brCf33U3kOMrXmfT/b4U+/z4FIsB/Z9eqLNIi0
+ j8CCLV4QO/A2nYlM+itM3dvoc8MJgjSxGkx3OfYpXbOIdlyL8XP6BbLM9iuLS5Zhbm1Q6KBnfog
+ V0Uuf0xdoyJ8Otx8FV9t5dErbsriZC67NmC4xTDKnAIzNzlv+qfvIYl2UnJx7SXLP3N11bw3IcN
+ ycyOiJhD7RYMTT4BkpdsMIKszINXG5hP9rtoBgAW6rEJlxTCP/YrSQQN975USnnk1KBJcMOYjAf
+ uLQmrrzIiTrrpk+D37nm2i4auGjJC1Ozgl8IbalPU5WHKGq6vr+fCVhQpFPgme7SCSaOzO5tEpM
+ Stn/5WjX+tWxY0FvNDA==
+X-Proofpoint-ORIG-GUID: Hm4BvIb4wxctatw36RhR_gQVvQMkLEpK
+X-Authority-Analysis: v=2.4 cv=GIM41ONK c=1 sm=1 tr=0 ts=6a2afc5b cx=c_pps
+ a=AfN7/Ok6k8XGzOShvHwTGQ==:117 a=AfN7/Ok6k8XGzOShvHwTGQ==:17
+ a=IkcTkHD0fZMA:10 a=FelO9ux0wxsA:10 a=VkNPw1HP01LnGYTKEx00:22
+ a=RnoormkPH1_aCDwRdu11:22 a=iQ6ETzBq9ecOQQE5vZCe:22 a=BnHzzpFj9uJG--qHjwwA:9
+ a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
+X-Proofpoint-GUID: Hm4BvIb4wxctatw36RhR_gQVvQMkLEpK
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.125,FMLib:17.12.100.49
+ definitions=2026-06-11_03,2026-06-11_01,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ clxscore=1015 suspectscore=0 impostorscore=0 spamscore=0 phishscore=0
+ adultscore=0 lowpriorityscore=0 bulkscore=0 priorityscore=1501 malwarescore=0
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.22.0-2606040000 definitions=main-2606110182
+Received-SPF: pass client-ip=148.163.156.1; envelope-from=zycai@linux.ibm.com;
+ helo=mx0a-001b2d01.pphosted.com
+X-Spam_score_int: -26
+X-Spam_score: -2.7
+X-Spam_bar: --
+X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
+ RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -127,21 +132,35 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Alexander Mikhalitsyn <alexander@mihalicyn.com> writes:
+On 6/8/26 7:49 AM, Thomas Huth wrote:
+> On 03/06/2026 20.50, Eric Farman wrote:
+>> On Tue, 2026-05-05 at 16:19 -0400, Zhuoying Cai wrote:
+>>> Add functional test for secure IPL.
+> ...
+>>> diff --git a/tests/functional/s390x/test_secure_ipl.py b/tests/functional/s390x/test_secure_ipl.py
+>>> new file mode 100755
+>>> index 0000000000..0980daace1
+>>> --- /dev/null
+>>> +++ b/tests/functional/s390x/test_secure_ipl.py
+>>> @@ -0,0 +1,148 @@
+>>> +#!/usr/bin/env python3
+>>> +#
+>>> +# s390x Secure IPL functional test: validates secure-boot verification results
+>>> +#
+>>> +# SPDX-License-Identifier: GPL-2.0-or-later
+>>
+>> A general comment, you'll need some form of docstring for the entire file, and any classes/methods
+>> defined later on.
+> 
+> Yes, please make sure that the "pylint" does not complain about your file 
+> (minimum is "pylint --rcfile tests/functional/pylintrc ...", better is 
+> without the rc file).
+> 
+>   Thanks,
+>    Thomas
+> 
 
-> From: Alexander Mikhalitsyn <aleksandr.mikhalitsyn@futurfusion.io>
->
-> As suggested by Stefan [1], let's add a migration test to cover
-> rare scenario when CQ is full of non-processed CQEs and migration
-> happens.
->
-> To run this test:
-> $ meson test -C build 'qtest-x86_64/qos-test'
->
-> Link: https://lore.kernel.org/qemu-devel/20260408183529.GB319710@fedora/ [1]
-> Suggested-by: Stefan Hajnoczi <stefanha@redhat.com>
-> Acked-by: Stefan Hajnoczi <stefanha@redhat.com>
-> Signed-off-by: Alexander Mikhalitsyn <aleksandr.mikhalitsyn@futurfusion.io>
+Thank you for the feedback! I’ll add docstrings to all classes and
+methods and make sure the file passes pylint checks in the next version.
 
-Acked-by: Fabiano Rosas <farosas@suse.de>
 
