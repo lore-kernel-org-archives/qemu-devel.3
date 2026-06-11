@@ -4,97 +4,97 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 940EFCD8CB9
-	for <qemu-devel@archiver.kernel.org>; Thu, 11 Jun 2026 07:10:22 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 25B82CD8CB9
+	for <qemu-devel@archiver.kernel.org>; Thu, 11 Jun 2026 07:12:50 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wXZY0-00058k-4R; Thu, 11 Jun 2026 03:09:52 -0400
+	id 1wXZa4-0005sH-8D; Thu, 11 Jun 2026 03:12:00 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <philmd@oss.qualcomm.com>)
- id 1wXZXy-00058U-Th
- for qemu-devel@nongnu.org; Thu, 11 Jun 2026 03:09:50 -0400
+ id 1wXZa1-0005ru-CS
+ for qemu-devel@nongnu.org; Thu, 11 Jun 2026 03:11:58 -0400
 Received: from mx0b-0031df01.pphosted.com ([205.220.180.131])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <philmd@oss.qualcomm.com>)
- id 1wXZXx-0003KL-0o
- for qemu-devel@nongnu.org; Thu, 11 Jun 2026 03:09:50 -0400
-Received: from pps.filterd (m0279871.ppops.net [127.0.0.1])
+ id 1wXZZz-00047c-PJ
+ for qemu-devel@nongnu.org; Thu, 11 Jun 2026 03:11:57 -0400
+Received: from pps.filterd (m0279868.ppops.net [127.0.0.1])
  by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 65B5GYps3812648
- for <qemu-devel@nongnu.org>; Thu, 11 Jun 2026 07:09:47 GMT
+ 65B5GPNI3712057
+ for <qemu-devel@nongnu.org>; Thu, 11 Jun 2026 07:11:54 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
  cc:content-transfer-encoding:content-type:date:from:in-reply-to
  :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
- NtHiAaWhHlAMHu+Gvv15GI/pF2yR42QIx0sL18LJS3M=; b=OlLs3bweLtiYIhzJ
- whWB6EMsf1i/jVaZP5E+kMUO2lGF17tN3sB+wwyIkizjwLZefmlPVXqnPFi5BH0e
- mcWlPvxI4d4MzwStklqqYdm4w3oO/fdqVDQnVJUvNIwF0EkOOl/uYZ9HVa4Ag/Xw
- FOuNpvXmtZk69U2RVVfnzRqpAYRgeJG2BYplpzXJLfZLjnm0iNK9avBVJ4KsMH1B
- zx6/vq1Yo1Q71Xx2v/8iajQoCBr/uyGbieOCHhambjtVfC6VfdGES7QDdGC9RDjx
- Gc7UHHE8Nhhugzf3NBhoiCBy7/ZBUbKySQYHGepLQ8Ihs7hv7Im5W1OTSChlPDSn
- 1bNbmA==
-Received: from mail-qt1-f199.google.com (mail-qt1-f199.google.com
- [209.85.160.199])
- by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4eqe71j7yf-1
+ kPDQTWPZXD9meNkKHM237Ej4RJDreylbxJrul+rDyTw=; b=Igxs9ih4632u6NPP
+ Rf2B4xUNpQHknrWPi8U7grfOw4l+jm75HMEEM7E/qkA6QW/MoC5F168ZT37VKoAg
+ TPROqreqAD7NTM8a7JM8FbG4ME8Xqv0VbqC16kQrC4x7hpRrAZ+hGqtDNsnzeRmm
+ 2lP/zCtFGCkHf5OBKIACw4zYfY/rZMfnOZJ01fnN9RjdwZVKdrixk+uxJWG+dTwI
+ GbyNnsuBwDnR2YhyfTyeQO5t/Fsu4UvTUS/6bzPxE5dZSObdL5qkETHYsiKaPchF
+ mwFhM6l/F3kMrBpww6FZSZfKVcfS20RX4BOxwNNcp9zSwsshA3Ls8sCy+m23ZCdg
+ ny4sIw==
+Received: from mail-qt1-f198.google.com (mail-qt1-f198.google.com
+ [209.85.160.198])
+ by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4eqe6ua4qj-1
  (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
- for <qemu-devel@nongnu.org>; Thu, 11 Jun 2026 07:09:46 +0000 (GMT)
-Received: by mail-qt1-f199.google.com with SMTP id
- d75a77b69052e-517c65e497eso32217541cf.2
- for <qemu-devel@nongnu.org>; Thu, 11 Jun 2026 00:09:46 -0700 (PDT)
+ for <qemu-devel@nongnu.org>; Thu, 11 Jun 2026 07:11:54 +0000 (GMT)
+Received: by mail-qt1-f198.google.com with SMTP id
+ d75a77b69052e-517b75c1ee3so76877911cf.3
+ for <qemu-devel@nongnu.org>; Thu, 11 Jun 2026 00:11:54 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=oss.qualcomm.com; s=google; t=1781161786; x=1781766586; darn=nongnu.org;
+ d=oss.qualcomm.com; s=google; t=1781161914; x=1781766714; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:references:cc:to
  :content-language:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=NtHiAaWhHlAMHu+Gvv15GI/pF2yR42QIx0sL18LJS3M=;
- b=AKKsapYJcLjT32+YBHbLa4urz9o7nvYcaCe5kvD8PfVVGBxvt9BbAEHK/BMFYuwXdX
- F0euKOL68k1ButEoeroDbQaHJpDp1yVFekBN3IEgH1TGXRTfccI1Uxmx5UvhkvZy9Glz
- iQ9YyxM0OqKaLgr5Y8/dNArSa8hLYOpliYWt2nBJKZoL/GX9HgQOIsWTrcUoxVvl62u1
- h++D9egZjJY6nRq/LDpl5SrCG25HQu9PYv38szSGpApUP7QrEPV+i2+r7dDixsCOLwRH
- Xtz87mUxmZhkLI/QO827OFAZd+vmPfnvML6opYmHhTwKxCnSSOc7g/t9UvEXTmFD2oAV
- U3Eg==
+ bh=kPDQTWPZXD9meNkKHM237Ej4RJDreylbxJrul+rDyTw=;
+ b=MWydQqdw3O3ZL6VXth2aeWIrWbWNEou3lw0efxIcSXHh5/u15U9mIjME6x8fwy8hgQ
+ 97tM0wvFH4Hq/CQtQbXPrsRCcgiR23d4MuxkWzk+6ouiJya8iH95XxP170s9t3QVLmLC
+ A3Gig5lgtpy3LXODoY5iZNXKBs3QTWf9KMRHztfV/BjMLKkZGOYBtzMxfa/53GXBD72x
+ RzhzrLnO7/fJ3SpGijVvP8D13e8hHqU2Sytj9HfXtAObGuNxcN+0o1I9IXuKmj5DfbNu
+ Jkcj1kiiJU9xmxujGnV97bAJtjegiz+wTdVKLhSFech3FUkLPHI33Qi/SHQ4dmPTymSI
+ jGzA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1781161786; x=1781766586;
+ d=1e100.net; s=20251104; t=1781161914; x=1781766714;
  h=content-transfer-encoding:in-reply-to:from:references:cc:to
  :content-language:subject:user-agent:mime-version:date:message-id
  :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=NtHiAaWhHlAMHu+Gvv15GI/pF2yR42QIx0sL18LJS3M=;
- b=oUmsDydEax52bI8A0z78N1uPzBqV3Z1Erk7GYq/RCxpKbEkBiPyU9x4eUVS5A+4Z3x
- lqWbpOore/SQyJ11QeRzXU7Tk7AwM9OP66jv92hFHh5Hg5wqxOBX8sXGl8VHGVTVpeXP
- vjkttPDwsehrzmE3nNn+qeNsXqrBhzb8ASYrDNiC0q8V7BDLKnGGNrscdvnzSFAmuezq
- 2SKaGknDso6h3uituIPcACxQBwl96nNzXaQt0LPJjNO+f8n56wYjpHARxJal9amj1grQ
- VmQQLAQHKARBOzlsFc1S/OWaYHgpom2marzU3hh8siGFmE22oyYRf6Wjw/0u9q11MnTZ
- lmSQ==
+ bh=kPDQTWPZXD9meNkKHM237Ej4RJDreylbxJrul+rDyTw=;
+ b=cvRO3CU4RMuD6t7W7nWx1QW0f38gyOsaDTzWjNLUQXWh5Dgx1KWs6SExYmrGuZdfGg
+ 5EnsbfgI/YgUVcJMYvcW3BtxSRNViR+amv+km6YGkusQJ7Tkx1nkO6FcJucTfmGkrz/4
+ MNj0oB/KmUAkAGPWlJSYAbesFt8GCp9+98SGNapNWWhmWsQNQ0SlfsxYI16atP7ZJ+AI
+ S09v5cyDINATrCgSQ8dGAZSh3DyYN/DCYY49nCIqr7jHdqttOEqDSGzkjrgLxPTf8v5V
+ iA+o3ia+qe8lyf+PK8TkzlYrev1em+iy1ddEBOQa17SpjB7NIX08rKCv3wnm2Ps/zamE
+ 5cPQ==
 X-Forwarded-Encrypted: i=1;
- AFNElJ92t+VJx1wMalPXSozgLlXYBCeKxLLybQihNkYBGnLVhq4I5fEkt8/gHAkDoJPVZYrmdwyD5a66lKfF@nongnu.org
-X-Gm-Message-State: AOJu0Yxy8/Da97AbUHFBcnTx9wT7a6q9PNojOuTebjUPI6jcobYXSRFL
- Z4H63CYe4Ol3ICx6a1kd6Z2g8fpVy8BfLz21N0quz5KbnDwwyPFokIpIpF5rJg51/P4BmRjYrk/
- O2DlDnXCahtfj20kRxqGaylkoa1am4F3/CI/sZAs6rznyLkrE0df5UttzYw==
-X-Gm-Gg: Acq92OF223dbvDK5Vx5oqp2EwbTb5miM6jU3hAK0REBn/HdqriyOhfOEqMFTN+Y0eu3
- A90WxNhGPXNOy/cjAhkqVXrK2oT4JTfnTVDTvcB8zLy0KLS90Y1IhOu306JtO9kQs/aHzwdmcjq
- b1WbuBnnwjsuj4dPOLDZPt+rRttlxaeGLUmNXdDMXnxBZzmK9PmlmICzo1U/5F1kOAOMSrTqO/q
- LI+g0uUJCbPwbpzN97CcTQJa7hKBypSgc15wQk+ggvMCUHjeMeVbtm/fEaXvh+s4qg8SdT2QQyN
- 6NTsdUETv6053K1LNTHqEhXhNqMG43I1iqVVocTYVgcPdhnJyVlFEUDxkC2KhMM7AFRt+Vk/Kj5
- W8HWQ7Nnq+eJB7nN6P+BMIdymLUpiwltFMALC9lM6Dne9MSpDwIathDRzS6nliIm52k0IjWjlB8
- OX
-X-Received: by 2002:a05:622a:17c8:b0:516:e39a:8540 with SMTP id
- d75a77b69052e-517ee25746fmr24490771cf.48.1781161786211; 
- Thu, 11 Jun 2026 00:09:46 -0700 (PDT)
-X-Received: by 2002:a05:622a:17c8:b0:516:e39a:8540 with SMTP id
- d75a77b69052e-517ee25746fmr24490391cf.48.1781161785724; 
- Thu, 11 Jun 2026 00:09:45 -0700 (PDT)
+ AFNElJ8+Xp8reAMYyGpyarIRszFg6Qh64Rk1C2AdQqD6R/texADBMcZ+8ntAsHKR0HO02yexyDzFXuhl7rsv@nongnu.org
+X-Gm-Message-State: AOJu0YzSYbF7vcmxSN7YK5OM3AEIZakGmAXu7diQ2Wj1U1VeAxEsmLSi
+ BYE+GV1pM/At7hwCJ5wBE7hkdIL1jb3+Uo8Rd9k4Qrjt/10loOxPmiKZpzOEi50djq55GN7BNpJ
+ t1ZRA8bOTqkARgeygLQWSZByrKc+PxVxBTCpnH3E2NB5cfJP9xbfyicAC7w==
+X-Gm-Gg: Acq92OGfHeGln3tmk3r0zCiiHH8Z4VU1kD1Cksdnb1tGxhNKCxN1liBh5WLvA/FYXv9
+ jxOKe24lPgzNLXoY8gwrqyr7UdNWSBfKDeGhnO7LB0w8qoYFEW9QWmw0lYBIOASnWTvARU7MX3V
+ Km3FFhzhOJBwpw9rmh6Cl4L+17zt60Y0O1JdVX384KNY7r+FtX1YexJQ0CZWZc3kpjVcm12qhSJ
+ Oxa2Hl73RuWwbx6dBYnP6Ithb7ykSTPEZ6VHPoGBBF3HRFpLSFCpakgXoSOWCD0C+SAClpnfUiT
+ e6+dK3tGvMHiEkzY2fIzz2AspheQ9iAqMqC1KvkuHfQwIlRVKJ70vze6ueox1irATkr34j4/IdD
+ dcF276cmThNuhbRD6/XYGcXDC8TfkJtwwXIGbFWOHfPZMetv0vU1Euak3x3GC8P3w8sU2Ej5rVA
+ E6
+X-Received: by 2002:a05:622a:2c4:b0:517:b58e:a1e3 with SMTP id
+ d75a77b69052e-517ee26715amr25442791cf.50.1781161914010; 
+ Thu, 11 Jun 2026 00:11:54 -0700 (PDT)
+X-Received: by 2002:a05:622a:2c4:b0:517:b58e:a1e3 with SMTP id
+ d75a77b69052e-517ee26715amr25442471cf.50.1781161913474; 
+ Thu, 11 Jun 2026 00:11:53 -0700 (PDT)
 Received: from [10.156.84.244] (218.170.88.92.rev.sfr.net. [92.88.170.218])
  by smtp.gmail.com with ESMTPSA id
- 4fb4d7f45d1cf-68e65027662sm10722132a12.11.2026.06.11.00.09.43
+ a640c23a62f3a-bfcb53c3435sm20061566b.39.2026.06.11.00.11.50
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 11 Jun 2026 00:09:43 -0700 (PDT)
-Message-ID: <380995c0-fbf5-4f1a-a996-fbf39513c166@oss.qualcomm.com>
-Date: Thu, 11 Jun 2026 09:09:42 +0200
+ Thu, 11 Jun 2026 00:11:52 -0700 (PDT)
+Message-ID: <0d879628-5250-460d-aa22-021085ebff7b@oss.qualcomm.com>
+Date: Thu, 11 Jun 2026 09:11:49 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 1/2] target/riscv: dynamic alloc of debug trigger arrays
+Subject: Re: [PATCH v2 2/2] target/riscv: add 'num-triggers' debug property
 Content-Language: en-US
 To: Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>,
  qemu-devel@nongnu.org
@@ -102,38 +102,39 @@ Cc: qemu-riscv@nongnu.org, alistair.francis@wdc.com, liwei1518@gmail.com,
  zhiwei_liu@linux.alibaba.com, chao.liu.zevorn@gmail.com,
  Palmer Dabbelt <palmer@dabbelt.com>
 References: <20260610205457.1868701-1-daniel.barboza@oss.qualcomm.com>
- <20260610205457.1868701-2-daniel.barboza@oss.qualcomm.com>
+ <20260610205457.1868701-3-daniel.barboza@oss.qualcomm.com>
 From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>
-In-Reply-To: <20260610205457.1868701-2-daniel.barboza@oss.qualcomm.com>
+In-Reply-To: <20260610205457.1868701-3-daniel.barboza@oss.qualcomm.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-X-Proofpoint-ORIG-GUID: XvYXqRCyNYp7azVh7xKGWdsKB0jrKrlV
-X-Proofpoint-GUID: XvYXqRCyNYp7azVh7xKGWdsKB0jrKrlV
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNjExMDA2OSBTYWx0ZWRfX0ff2VLt1Bc1S
- PqInz1kN5KanuBAVtn9rFfPSX4NOXeM/wph3CV7ov7p3vCQPT7visUXrgdUej1IUXUg0QJJiFK1
- s8sBzIwg8jUjkiNPCGHDIsQdJ2SuKpR254p7fBunMxBTMVRHwc3M6b8wqeB3C4QgRO3+equpt1o
- +t324DVg1ftvrMwVK7zBvgCUNJlZdDBLf1bjPsTSRdhgxAA8GTJsL2LrY4WIugAhZYQfa1oyN61
- imNVywE+waf6HVvEiLPf3hwv5psr9PvwOC0mqSOpB/1k2+hMpMoRTQwfbrO0LJOq4KGO9Fc6vmv
- ahOE269VCErVr7GL3SuC3dxAg9bfkfxprhICimnVx4cJhvflzE9Y2K2h9F+cbS6Elyp4QSM89kw
- PlYKKku7NB2a3nILtOtFrIAxAyTpyW8d31+yvPyy9kPIranhhwMl1iAgy0Y3I8BZfowhMpBAocA
- fjEkmSJZu9F9+N9sCWQ==
-X-Proofpoint-Spam-Info: AW1haW4tMjYwNjExMDA2OSBTYWx0ZWRfXwyhApHKWK1KI
- JCbZMILKjYF8u9ChfmTYf1V9h3CY2Xxz6m7N2TXG3dnyPXOBwtPsdkFInNTEkQYyCiSP32s4r4w
- YZSxbyRBrkpny/1+NyLzYZjQRoxTk4I=
-X-Authority-Analysis: v=2.4 cv=Lf0MLDfi c=1 sm=1 tr=0 ts=6a2a5f3a cx=c_pps
- a=WeENfcodrlLV9YRTxbY/uA==:117 a=/nYmEve+L4YsDi96RCWAbw==:17
+X-Proofpoint-Spam-Info: AW1haW4tMjYwNjExMDA2OSBTYWx0ZWRfX91XGEEp48ORY
+ X8WbWxpeo2v+x8v4LT6ft7Z06EStfsIMhjHkbt5/6H6FZd2JWg30IjlBPl6SVIUKXIdCwlRfi3k
+ Wdu+8w2YbA9QusJQVvklbh0p/GYGZ8A=
+X-Authority-Analysis: v=2.4 cv=atOCzyZV c=1 sm=1 tr=0 ts=6a2a5fba cx=c_pps
+ a=mPf7EqFMSY9/WdsSgAYMbA==:117 a=/nYmEve+L4YsDi96RCWAbw==:17
  a=IkcTkHD0fZMA:10 a=FelO9ux0wxsA:10 a=M51BFTxLslgA:10 a=s4-Qcg_JpJYA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=3WHJM1ZQz_JShphwDgj5:22
- a=VwQbUJbxAAAA:8 a=EUspDBNiAAAA:8 a=MWUFoOrsk-nuDVzXGLsA:9 a=3ZKOabzyN94A:10
- a=QEXdDO2ut3YA:10 a=kacYvNCVWA4VmyqE58fU:22
+ a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=ZpdpYltYx_vBUK5n70dp:22
+ a=EUspDBNiAAAA:8 a=kD1aHXNoiUmW-fgF_RsA:9 a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
+ a=dawVfQjAaf238kedN5IG:22
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNjExMDA2OSBTYWx0ZWRfX7CJEMGxWxWh9
+ aY6qCZqvk/IvD0LnwWJ1HbtGpArVZnx6GVxFnHJ0rulPnlMCvh5mV/JBKrjjZa2nvYbWFAO2U9T
+ kHal9U8/oC1nIAGnnUvG4JQzHu26jfHvUGQMKq/+lEpBwQc59VomlPhGRSDCz+yJZEJ54E90qqK
+ BCLupJNgrFaaCyFCXxcR56Uihb6mDM2gGASy/vW5RsAZwSWDKL0eHzsfkcIqGv9t35mGkREA40Q
+ kXDCO7BEhj9iTJYLTDmhy6qCW+Z9oUdq9O6oY9CGR1zUNlPeT81EJX67RHSuqTVtRazvswcyHdG
+ KlS8y18WhclLbpAv5joonVeDVS8dUYbPa4GllTvBfg45cKxBicmJcCzkCMrBd/nWn6YUY/ZBN80
+ iAjAj5xFw8nq5r58Ox47MbqiYjf6v6OLENdqUphlttO7n9G7jTuLDvQXumTDDgcnP14u44N+mX2
+ ClGxqaVYwiBrZE772Jg==
+X-Proofpoint-GUID: 1qvJgcOB-mxGC5q4QbdjXldep8kgOkNW
+X-Proofpoint-ORIG-GUID: 1qvJgcOB-mxGC5q4QbdjXldep8kgOkNW
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.125,FMLib:17.12.100.49
  definitions=2026-06-11_01,2026-06-09_02,2025-10-01_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- adultscore=0 priorityscore=1501 spamscore=0 lowpriorityscore=0 malwarescore=0
- suspectscore=0 phishscore=0 clxscore=1015 bulkscore=0 impostorscore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2606040000 definitions=main-2606110069
+ adultscore=0 impostorscore=0 bulkscore=0 clxscore=1015 spamscore=0
+ malwarescore=0 phishscore=0 priorityscore=1501 lowpriorityscore=0
+ suspectscore=0 classifier=typeunknown authscore=0 authtc= authcc=
+ route=outbound adjust=0 reason=mlx scancount=1 engine=8.22.0-2606040000
+ definitions=main-2606110069
 Received-SPF: pass client-ip=205.220.180.131;
  envelope-from=philmd@oss.qualcomm.com; helo=mx0b-0031df01.pphosted.com
 X-Spam_score_int: -27
@@ -159,75 +160,57 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On 10/6/26 22:54, Daniel Henrique Barboza wrote:
-> The debug trigger facility consists of a set of arrays: tdata1-3,
-> cpu_breakpoint, cpu_watchpoint and itrigger_timer.  All of them are
-> static allocated with RV_MAX_TRIGGERS (2).  This means that all RISC-V
-> cpus will have 2 triggers per hart.
+> All CPUs have the same amount of triggers: 2 triggers per hart, set via
+> RV_MAX_TRIGGERS.  This is not enough anymore: we'll have at least one
+> future CPU that will demand more triggers per hart when implementing the
+> RISC-V Server Ref Platform, requiring at least 11 triggers per hart.
 > 
-> The RISC-V Server Ref demands at least 11 triggers per hart, and several
-> CPUs in the wild works with 4+ triggers.  We need more flexibility, ergo
-> we need to parametrize the amount of triggers and make it configurable.
+> Parametrize the trigger amount using a new 'num_triggers' property.  The
+> default amount is kept at 2 for backwards compatibility.  The new
+> maximum is bumped to a generous 1024 triggers per hart, which hopefully
+> will be enough for the foreseeable future.
 > 
-> Before doing that we need to handle a situation faced in a previous
-> attempt [1].  We were unable to set the tdataN array length in
-> vmstate_debug, meaning that we would always migrate RV_MAX_TRIGGERS
-> regardless of the actual amount of triggers in play. To fix that we need
-> to change the tdata arrays from static to dynamic, allowing us to use
-> VMSTATE_VARRAY_UINT32().  This also means that, in contrast with [1], we
-> have the opportunity to turn all trigger arrays into dynamic allocation
-> and reduce the amount of stuff being carried by CPURISCVState, or in
-> other words, we can carry just what we're using instead of a static max
-> value.
+> The property can be set in two ways:
 > 
-> All the forementioned trigger facility arrays are now dynamic.  They are
-> allocated during realize time in riscv_trigger_realize(), and their size
-> is expressed by env->num_triggers.  All relevant code is changed to use
-> env->num_triggers instead of the RV_MAX_TRIGGERS to loop through each
-> array.
+> - a '.num_triggers' CPU definition flag, allowing CPUs to set a custom
+>    amount inside the CPU def in DEFINE_RISCV_CPU();
+> - a new 'num-triggers' user property.  The user property has a higher
+>    priority than an existing '.num_triggers' CPU def setting.
 > 
-> This will make it easier for the next patch to parametrize
-> env->num_triggers.
+> Assuming a hypothetical case where a CPU 'X' is defined with
+> '.num_triggers = 8':
 > 
-> [1] https://lore.kernel.org/qemu-devel/94c772b0-5231-40e4-9cab-6ac39b9e4d45@oss.qualcomm.com/
+> - -cpu X,num-triggers=30 => num_triggers set to 30
+> - -cpu X (...)           => num_triggers set to 8
+> 
+> For a CPU that doesn't set '.num_triggers':
+> 
+> - -cpu rv64,num-triggers=30 => num_triggers set to 30
+> - -cpu rv64 (...)           => num_triggers set to 2
 > 
 > Signed-off-by: Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>
 > ---
->   target/riscv/cpu.h     | 18 ++++++++++++------
->   target/riscv/csr.c     |  2 +-
->   target/riscv/debug.c   | 31 +++++++++++++++++++++++--------
->   target/riscv/machine.c | 12 +++++++++---
->   4 files changed, 45 insertions(+), 18 deletions(-)
+>   target/riscv/cpu.c     | 11 +++++++++++
+>   target/riscv/cpu.h     | 19 ++++++++++++++++++-
+>   target/riscv/debug.c   | 16 ++++++++--------
+>   target/riscv/machine.c |  4 ++--
+>   4 files changed, 39 insertions(+), 11 deletions(-)
 
 
-> @@ -1049,7 +1049,22 @@ void riscv_trigger_realize(CPURISCVState *env)
->   {
->       int i;
+> diff --git a/target/riscv/machine.c b/target/riscv/machine.c
+> index b6b53a4840..ba96ceceef 100644
+> --- a/target/riscv/machine.c
+> +++ b/target/riscv/machine.c
+> @@ -240,8 +240,8 @@ static int debug_post_load(void *opaque, int version_id)
 >   
-> -    for (i = 0; i < RV_MAX_TRIGGERS; i++) {
-> +    /*
-> +     * Alloc env->tdata1/2/3, cpu_breakpoint, cpu_watchpoint and
-> +     * itrigger_timer dynamically.  This is overkill now
-> +     * given that they could be static arrays with RV_MAX_TRIGGERS
-> +     * but we'll parametrize the trigger number later, i.e. the
-> +     * array length won't be static.
-> +     */
-> +    env->num_triggers = RV_MAX_TRIGGERS;
-> +    env->tdata1 = g_new0(uint64_t, env->num_triggers);
-> +    env->tdata2 = g_new0(uint64_t, env->num_triggers);
-> +    env->tdata3 = g_new0(uint64_t, env->num_triggers);
-> +    env->cpu_breakpoint = g_new0(struct CPUBreakpoint *, env->num_triggers);
-> +    env->cpu_watchpoint = g_new0(struct CPUWatchpoint *, env->num_triggers);
-> +    env->itrigger_timer = g_new0(QEMUTimer *, env->num_triggers);
-> +
-> +    for (i = 0; i < env->num_triggers; i++) {
->           env->itrigger_timer[i] = timer_new_ns(QEMU_CLOCK_VIRTUAL,
->                                                 riscv_itrigger_timer_cb, env);
->       }
+>   static const VMStateDescription vmstate_debug = {
+>       .name = "cpu/debug",
+> -    .version_id = 3,
+> -    .minimum_version_id = 3,
+> +    .version_id = 4,
+> +    .minimum_version_id = 4,
 
-Ideally we'd implement riscv_cpu_unrealize() first, so
-in this patch you could fill the riscv_trigger_unrealize()
-cleaning path. Can be done later, but the sooner the
-better IMHO.
-
+This change belong to the previous patch, otherwise:
 Reviewed-by: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
+
 
