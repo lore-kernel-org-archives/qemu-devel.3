@@ -4,142 +4,109 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 07F4BCD98CC
-	for <qemu-devel@archiver.kernel.org>; Thu, 11 Jun 2026 12:05:16 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E1E1CCD98D2
+	for <qemu-devel@archiver.kernel.org>; Thu, 11 Jun 2026 12:11:18 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wXe9e-0001o1-0z; Thu, 11 Jun 2026 08:05:02 -0400
+	id 1wXeF9-0003PA-0i; Thu, 11 Jun 2026 08:10:43 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@oss.qualcomm.com>)
- id 1wXe9X-0001lD-NT
- for qemu-devel@nongnu.org; Thu, 11 Jun 2026 08:04:56 -0400
-Received: from mx0a-0031df01.pphosted.com ([205.220.168.131])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@oss.qualcomm.com>)
- id 1wXe9U-0006Gu-NP
- for qemu-devel@nongnu.org; Thu, 11 Jun 2026 08:04:54 -0400
-Received: from pps.filterd (m0279862.ppops.net [127.0.0.1])
- by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 65B9xTX6174218
- for <qemu-devel@nongnu.org>; Thu, 11 Jun 2026 12:04:50 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
- cc:content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
- ERxTYedAuezs5cwoqs3WIu2N6PL3h70KNlsKrDOuXJ0=; b=TrbI4wx5SJRJkSq4
- dVCE9xiMAeSJ4A3l/fMzVCsCw4lhzuaHK35xUZWABB43L4XbeI8zykHWlYhb+pJ+
- nCX5b5CjrM6LxiZegLETkN74PN7nixB6WAIooEGWPhmr90deYyh5EDgjbB/7MQbd
- yiPQ3DuUD+73DV9fDFaMuM8iiRRia/KGNtj9/EKhmqBvlOqWD3kh0w4TTeeA8Ohr
- SWd+rQpCDL4P8f8d7HuBmwUeqZFuSxkAs2OeIWZqsKyPpRwYLyldVc/9dt/daKFI
- +Xbg8tLXQz7lFZxMSL5d7igqPKODhGbzKuY4SthYZ4XTY4q2nTCMubXwkZRRrV4S
- kDo1Dg==
-Received: from mail-vs1-f71.google.com (mail-vs1-f71.google.com
- [209.85.217.71])
- by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4eqe6vb77h-1
- (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
- for <qemu-devel@nongnu.org>; Thu, 11 Jun 2026 12:04:50 +0000 (GMT)
-Received: by mail-vs1-f71.google.com with SMTP id
- ada2fe7eead31-6cfc66167c4so2968219137.1
- for <qemu-devel@nongnu.org>; Thu, 11 Jun 2026 05:04:50 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <marcandre.lureau@gmail.com>)
+ id 1wXeF6-0003Ok-Tf
+ for qemu-devel@nongnu.org; Thu, 11 Jun 2026 08:10:40 -0400
+Received: from mail-dy1-x1329.google.com ([2607:f8b0:4864:20::1329])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <marcandre.lureau@gmail.com>)
+ id 1wXeF5-0000uC-2g
+ for qemu-devel@nongnu.org; Thu, 11 Jun 2026 08:10:40 -0400
+Received: by mail-dy1-x1329.google.com with SMTP id
+ 5a478bee46e88-304d0ac5e3cso3681177eec.0
+ for <qemu-devel@nongnu.org>; Thu, 11 Jun 2026 05:10:38 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1781179837; cv=none;
+ d=google.com; s=arc-20240605;
+ b=D0FvZOrqIqezVNghXMf/WZ+h5y6PZBqRUzBqA2j16HnjAOcwLGMBEbWwFz7Z9RYnsk
+ ScGTClKTzNgvySFD/cgb6NcZaqugS7da0WNr8hLiepu4AbzAhK8jM8rdIII0OVsa9ztV
+ N3mwygaog/PrXP+MXueWpT2ote0wNoQbJRk5Hhu/nwKykJsqFIn0IBJkf8UkVBkckD1I
+ JZtSVugmOom0Y3cnZTWWDagQRAVMsTj40mzoKxFmuuvFcz2ChAbjk1Jjr8j4rewLgkXN
+ be5c6LLsS5K7CoAjD8yL5VbWaRBR6RnWuklYzq7xttJIXMa14lDlNo8umSVI2DHwuK8u
+ yGbw==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
+ s=arc-20240605; 
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:dkim-signature;
+ bh=yEHPNMUtuJVFhsfZw0PGpQB8RdCznX2EEXKGdRKxTP4=;
+ fh=Klr0oso4nYcLYZzLj8DXUbfDse3EWGslCrZOPoSTp1k=;
+ b=FdVzNPbH32Af89sGXWGKfEkae3wEDCV/SyNrRtrjqUsPmKQP+h36l9n1aZ0Px8UTWy
+ lDMRUy6FGWjkLupljlgniOp/13W9eS1xeN63W5qCm29AFgUxfb5B/oYgTxcq1uw1PZ20
+ MuqktmIeOIEJBgCdxJIr+ptSbX80FztPKZpNpxw4hwkPnDjvj+M3gEKzX/hw+XtxjMPQ
+ CNab7gBW2J43KbHeemo0WXMidqc/qF4XUuUv2sd1pSzs4354PkqPZB9LDQfxop1bwJIw
+ 8ELJpPycw+eHW3zsypfktIqYGzeWnmBXEMreeIIiUIJQ9m08kcPE7B+xfTHnBsBMx90w
+ L9Cw==; darn=nongnu.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=oss.qualcomm.com; s=google; t=1781179489; x=1781784289; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=ERxTYedAuezs5cwoqs3WIu2N6PL3h70KNlsKrDOuXJ0=;
- b=eTWQsudpStY3ogOuXT4vPDqUEWclz6Uc5NadR/cBtBxdm5vyUS2Yd0JwliuFAYtXjf
- FXuOVtP2zYDvBtp4TxdZq3bq7W6QVB0kmH/iQsqkpa7cnAd+c74pr8JWoc+Dsv+6QO9C
- fZ0U7kSY6OfVrZf+XtnbcaxQcrSuhJWnIfU7IdkgWyq+a9WptWr/6c+O5nXlRLpZJA8C
- inadm4dKGdd+mVJn8m6VDVpm31dmE9n37MZzwd8exBXDIcxkWcohFb90iSZ72MTQMxWD
- ajWmUz6LlEer3YaAsuFQR/3brcrFQFuAKywW4/7ELkcVOvurlE1yaVXT9zEkYgnMbCdr
- 0hvQ==
+ d=redhat.com; s=google; t=1781179837; x=1781784637; darn=nongnu.org;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=yEHPNMUtuJVFhsfZw0PGpQB8RdCznX2EEXKGdRKxTP4=;
+ b=pquZyI7DtoJLcKHv+Ux6d6hTXlwM5ZmT2HXAx7eOgDCQGIal3aVmIi4qEn4bxF/ri6
+ wFMSJDDRsiKMfG4VZVkwIjixgCZcQOnPBUpYu8f/8iVz2dlvr6rm2RlEAXynCeyYBqdk
+ hm3/yR2sKzagGO4rU7mQtakM0UJQlDsU+UbwVO/6lnOUfrZ56sLn5aDDM2wIAuTgl7nq
+ M5pEUFhuBOuaS/4ZHIyIs0s+L8IA4OGT5+uzhJEDP6V+iacgWVeq8652pMz/2ijo5MPu
+ b/us4cTCammQ2XGwHmFUddg+PU1E4MCyRo916LYbPpavEV9hsd/F15imz7skS/ktlts7
+ 0Ceg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1781179489; x=1781784289;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=ERxTYedAuezs5cwoqs3WIu2N6PL3h70KNlsKrDOuXJ0=;
- b=XyzPcdqzssmuCpduIPjOUZGKYXvSVfi+VqH2/jdAUnK8lajVSDD3OV6UM1OT6FM7Mc
- RTHaOcn3XxRjN/eiP3ImMIZcLuXmNRrd3FJd7e7maYy9yZOkwVJaOpuIskr8fmQgdP0h
- M2IDbLz+9iCC+z4fG9ASdWdNzZLSPOrp548WEaNVVI/xaYDQr+9iBH/xKh9xAzK35GPM
- HGkgOsZAwim9+wEoRBd0iFVa805teQDd90ISsxqPQGTNf4+P6JGyYpgUtOb2tWbHT/FO
- +RojqQeHksQPTAtQ4TbHKmZXtFfAQ2G2r+uLoJszy5RBFRIEJINjWQA9R0Rwao6EQU9y
- 6DyA==
-X-Forwarded-Encrypted: i=1;
- AFNElJ8Te+oxxFtge5RqBpqC3CuF9LTwuUbe8qDJ4IlMMtMm0Tj/qIVIwkxFz/d+Jm8uXrvF9+O6IjeRObfZ@nongnu.org
-X-Gm-Message-State: AOJu0Yz2zfaoMCq7VosS8epNp7WMHCQVdgh4+/IwmJ3Mp5IVWacwJvrF
- msVdPeNv7AknxQwPVmjJaj7p5V+iRve+JKjt0PxJi/zaADRT6/56GO7NJ7OSXScbspmlj0MOe69
- Rl7jpFUHHZd0M03hClyWStgYqo1Z+/bI7GKIWfzugFtFERBdNq6dvEiI4Jg==
-X-Gm-Gg: Acq92OEgH1IB+DcEydSFyvHlJRzeE9aVOwEUqA9vh+i1PV68OkeyLuFyjsx+uxtxa07
- DtS7ieTH5yL5VgAJ9KLB+4rUjNLOKkTbX6jxB0kBibHIZK+CcKEQiqwiP5J9A3oInfG6iPHtQLu
- T532f2A9ojycOwblAtY/j4pcGcfuKc4X3N+MMopld+fnCnXNSMHdJ/s7O+SfymiGyNusXlymS/x
- /vIyEu9NBp13/X0G5I8Bs0vc72f7pyQyzlt5E6J6q7w12r0poYzuENGthsqE8rHWfq62u/U0//6
- HAxvjKEWj6SmrXfqjYH/cY3ay8/xohScRXavB+fwAe5k5XaiF2cDa2ra6ALh4TcSSDJgQ9TqWw9
- hpN4bfM/oB4CB3aCkp85fzAb3xj7w+odrTYSP+N++ROhEjW2S5HBAefemgh+G5O2g7H2+/5YRFK
- FVq6VNSug=
-X-Received: by 2002:a05:6102:5086:b0:6e0:3d72:3044 with SMTP id
- ada2fe7eead31-71d601cffb2mr716473137.28.1781179489639; 
- Thu, 11 Jun 2026 05:04:49 -0700 (PDT)
-X-Received: by 2002:a05:6102:5086:b0:6e0:3d72:3044 with SMTP id
- ada2fe7eead31-71d601cffb2mr716408137.28.1781179489035; 
- Thu, 11 Jun 2026 05:04:49 -0700 (PDT)
-Received: from [192.168.69.208] (88-187-86-199.subs.proxad.net.
- [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 4fb4d7f45d1cf-68e64c2d2fasm11079451a12.3.2026.06.11.05.04.46
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 11 Jun 2026 05:04:47 -0700 (PDT)
-Message-ID: <7ac5c98b-1840-4735-b30a-2c4707e4233b@oss.qualcomm.com>
-Date: Thu, 11 Jun 2026 14:04:46 +0200
+ d=1e100.net; s=20251104; t=1781179837; x=1781784637;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=yEHPNMUtuJVFhsfZw0PGpQB8RdCznX2EEXKGdRKxTP4=;
+ b=bvLRJnbu693CafDx2O1MsdSjhBx1IXB/FZB55XGZfcAERaMwbhTKIo7ln4NF+qGFD5
+ y1sRnfhFAzV8Mr6PqrMpNtom5HpqrMZ/6TuOzwscBIrQvmsBdjnVuaje332ZcI9512nT
+ 7OE/KJ/fc1vAI7C1HpFvGPtRugO7fCA1e+7SD0m15ewn435w5mj1PySyejCDYIYxkNEz
+ VXTMcukSPX4QrSfmcg8seZUUy07I0Ee4tZqASZwcZAgZwoY4kygHcOX9agM0Ef5nguDE
+ nft/lSVpPDsQqQiJNLjpYD13SBBt4jitBRO8gUrPAdrRAu7D94CjoQOfdmjmmhEUtC86
+ vmkg==
+X-Gm-Message-State: AOJu0YzZE2/tEZnhBctUpGXwKHdNZwkXov4e/x7l0OhNxt9NoR381smE
+ ykysJFvML12wSl1AjjvoR9h1uoqlaS7ePp9VTMvj+Kmm2GXTpNENaeDmbVAlkMFo8ebJgMG7BJy
+ wJ1ektxN+k1IHkAKbfOrMZmrmznwp4XY=
+X-Gm-Gg: Acq92OHUPSxu6gm+83PxDM3kmpzk+4hcglaNt5UccMGdSmYahPQyi4M7uDI0sQOOcCx
+ HPMP5mB34P7VjcekbJtMhYPBMujYLCsIKXVM7VR/rHD7MiOjdaic7JfEpeRBB2/inLy0MxZbE32
+ 90qXRFC1TqwQirOoHzLEppsKFMQuhZwkWF8GwhbxEgymRFypZSAf6zMzWXsXKEmfhiWtvNiKQN6
+ InzhdOJjXR9TcgftobnIwoIqSdJKvrm2ky3Zm0EIlPtAoUHSHImzjeGk7zJuu4FflhLRDsDj602
+ E3XtfPlnuD4F4Wz8zf//KOOOi/T1/cCn3rnk1IBbKYMGPwidxg==
+X-Received: by 2002:a05:7300:3b07:b0:2c8:6361:ab2e with SMTP id
+ 5a478bee46e88-3080464d07bmr2042695eec.8.1781179837103; Thu, 11 Jun 2026
+ 05:10:37 -0700 (PDT)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] qemu-options: fix typo in spelling of 'scheduler'
-Content-Language: en-US
-To: Fiona Ebner <f.ebner@proxmox.com>, qemu-devel@nongnu.org
-Cc: qemu-trivial@nongnu.org
-References: <20260611113547.651075-1-f.ebner@proxmox.com>
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>
-In-Reply-To: <20260611113547.651075-1-f.ebner@proxmox.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-X-Proofpoint-ORIG-GUID: aM-z2hlATjO1W2REhD6-SWmkBYGjLbn_
-X-Proofpoint-Spam-Info: AW1haW4tMjYwNjExMDEyMSBTYWx0ZWRfXwrYiukyCkgE/
- N134FqH/+c2oCx8xIpPyc0urhwKoSPssMEfr9zTSdVDPmD3Vmu6iWh5v9/BG19OMcAu8V8TNohc
- GuQd4zf0Z4SE6NlUVnp9MN6NrOw3EdY=
-X-Proofpoint-GUID: aM-z2hlATjO1W2REhD6-SWmkBYGjLbn_
-X-Authority-Analysis: v=2.4 cv=UsRT8ewB c=1 sm=1 tr=0 ts=6a2aa462 cx=c_pps
- a=P2rfLEam3zuxRRdjJWA2cw==:117 a=4s3hRJSeHn4rkQlkrse1kQ==:17
- a=IkcTkHD0fZMA:10 a=FelO9ux0wxsA:10 a=M51BFTxLslgA:10 a=s4-Qcg_JpJYA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=_K5XuSEh1TEqbUxoQ0s3:22
- a=Qm8iP6mkAAAA:8 a=EUspDBNiAAAA:8 a=1tSEMpTH9XP_W59IOagA:9 a=3ZKOabzyN94A:10
- a=QEXdDO2ut3YA:10 a=aoPmF-vobCUA:10 a=ODZdjJIeia2B_SHc_B0f:22
- a=kDhhxE42lZnxL3pOKqYK:22
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNjExMDEyMSBTYWx0ZWRfX0rB3Ev5HkmHl
- qw7kujYqLxJHLHJvo/6hPNYL4xrF74nRojUPSUuCFvYgylNC2Tku7uvY3r0BHmMnmLQ8TcldRv+
- JZP6vXCkXEdZuG5TgMUdhsW0HRi1chpXCZ0riIZlgpIcatZApiSrWmARtFi+UC8vhtEfQc4ik1D
- mhrVTqq/FZ+ZMKIWS3uaTcbqh3OuIK9G+yHFYhZoxw38ijQ8rjkLuVurHWD1BJr1LPYkzYJ4qfx
- 4ks1lu98XVYMDxS5DwEEMqrFk8aYOuO/MZfhhNidUgGPk2zilBpBjG1KKYjcaDOdr6ljh9dENdJ
- t2+62YdGhTa5Wg+JikVWQDaWg5F9R6rEuSpaVhGVraISk8cBt4X9rrFNiho3cYNHHu4n7ZzDLZO
- uoxhifdPs51PwJkDTrj/cj8iZhTnEZno5d1FCTUj1IsLcwjoh/NvaySZO8b4esgz/2KTxfcnN2e
- 8dYStIEUHEQ9+WvVXzg==
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.125,FMLib:17.12.100.49
- definitions=2026-06-11_02,2026-06-09_02,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- priorityscore=1501 phishscore=0 clxscore=1015 lowpriorityscore=0 spamscore=0
- adultscore=0 bulkscore=0 suspectscore=0 impostorscore=0 malwarescore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2606040000 definitions=main-2606110121
-Received-SPF: pass client-ip=205.220.168.131;
- envelope-from=philmd@oss.qualcomm.com; helo=mx0a-0031df01.pphosted.com
-X-Spam_score_int: -27
-X-Spam_score: -2.8
-X-Spam_bar: --
-X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_MSPIKE_H2=0.001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+References: <20260611-sdl-v1-1-93d4a51684bb@rsg.ci.i.u-tokyo.ac.jp>
+In-Reply-To: <20260611-sdl-v1-1-93d4a51684bb@rsg.ci.i.u-tokyo.ac.jp>
+From: =?UTF-8?B?TWFyYy1BbmRyw6kgTHVyZWF1?= <marcandre.lureau@redhat.com>
+Date: Thu, 11 Jun 2026 16:10:24 +0400
+X-Gm-Features: AVVi8CeKktUtG17zkQ_sDczcJ1uN6ZntoJuZlpWgGNef4bldB48X-Fg4-i4orcc
+Message-ID: <CAJ+F1CKF+89hT57ekdhQutecCteH4Z1Sbd16Hgwj+0Q26Sfqpw@mail.gmail.com>
+Subject: Re: [PATCH] ui/sdl2: Explicitly specify EGL platform
+To: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
+Cc: qemu-devel@nongnu.org, Alexander Kanavin <alex.kanavin@gmail.com>, 
+ =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>, 
+ =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@mailo.com>, 
+ Richard Purdie <richard.purdie@linuxfoundation.org>, 
+ Mathieu Dubois-Briand <mathieu.dubois-briand@bootlin.com>, 
+ openembedded-core@lists.openembedded.org, Quan.Sun@windriver.com, 
+ Pierre-Eric Pelloux-Prayer <pierre-eric.pelloux-prayer@amd.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2607:f8b0:4864:20::1329;
+ envelope-from=marcandre.lureau@gmail.com; helo=mail-dy1-x1329.google.com
+X-Spam_score_int: -16
+X-Spam_score: -1.7
+X-Spam_bar: -
+X-Spam_report: (-1.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, FREEMAIL_FORGED_FROMDOMAIN=0.001,
+ FREEMAIL_FROM=0.001, HEADER_FROM_DIFFERENT_DOMAINS=0.249,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -155,11 +122,88 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 11/6/26 13:34, Fiona Ebner wrote:
-> Signed-off-by: Fiona Ebner <f.ebner@proxmox.com>
-> ---
->   qemu-options.hx | 4 ++--
->   1 file changed, 2 insertions(+), 2 deletions(-)
+On Thu, Jun 11, 2026 at 4:00=E2=80=AFPM Akihiko Odaki
+<odaki@rsg.ci.i.u-tokyo.ac.jp> wrote:
+>
+> Mesa's eglGetDisplay() chooses the native EGL platform from
+> EGL_PLATFORM, limited autodetection, or the build-time default. If that
+> selects Wayland while SDL is using the X11 video backend, Mesa can treat
+> the X11 Display pointer as a wl_display and crash during eglInitialize().
+>
+> Probe EGL with the X11 platform explicitly before enabling
+> SDL_HINT_VIDEO_X11_FORCE_EGL.
+>
+> Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/3540
+> Signed-off-by: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
 
-Reviewed-by: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
+Reviewed-by: Marc-Andr=C3=A9 Lureau <marcandre.lureau@redhat.com>
+
+> ---
+> Resolving the issue described in the GitLab work item also requires:
+> https://github.com/libsdl-org/SDL/pull/15806
+> ---
+>  include/ui/egl-helpers.h | 5 +++++
+>  ui/egl-helpers.c         | 4 ++--
+>  ui/sdl2.c                | 3 ++-
+>  3 files changed, 9 insertions(+), 3 deletions(-)
+>
+> diff --git a/include/ui/egl-helpers.h b/include/ui/egl-helpers.h
+> index acf993fcf52f..c97a0d5c248f 100644
+> --- a/include/ui/egl-helpers.h
+> +++ b/include/ui/egl-helpers.h
+> @@ -61,6 +61,11 @@ void egl_dmabuf_create_fence(QemuDmaBuf *dmabuf);
+>
+>  EGLSurface qemu_egl_init_surface_x11(EGLContext ectx, EGLNativeWindowTyp=
+e win);
+>
+> +#if defined(CONFIG_X11) || defined(CONFIG_GBM) || defined(WIN32)
+> +EGLDisplay qemu_egl_get_display(EGLNativeDisplayType native,
+> +                                EGLenum platform);
+> +#endif
+> +
+>  #if defined(CONFIG_X11) || defined(CONFIG_GBM)
+>
+>  int qemu_egl_init_dpy_x11(EGLNativeDisplayType dpy, DisplayGLMode mode);
+> diff --git a/ui/egl-helpers.c b/ui/egl-helpers.c
+> index e3f2872cc14b..069a52495541 100644
+> --- a/ui/egl-helpers.c
+> +++ b/ui/egl-helpers.c
+> @@ -520,8 +520,8 @@ EGLSurface qemu_egl_init_surface_x11(EGLContext ectx,=
+ EGLNativeWindowType win)
+>   * platform extensions (EGL_KHR_platform_gbm and friends) yet it doesn't=
+ seem
+>   * like mesa will be able to advertise these (even though it can do EGL =
+1.5).
+>   */
+> -static EGLDisplay qemu_egl_get_display(EGLNativeDisplayType native,
+> -                                       EGLenum platform)
+> +EGLDisplay qemu_egl_get_display(EGLNativeDisplayType native,
+> +                                EGLenum platform)
+>  {
+>      EGLDisplay dpy =3D EGL_NO_DISPLAY;
+>
+> diff --git a/ui/sdl2.c b/ui/sdl2.c
+> index 4fcdbd79d3c0..ce14bd1f4e15 100644
+> --- a/ui/sdl2.c
+> +++ b/ui/sdl2.c
+> @@ -862,7 +862,8 @@ static void sdl2_set_hint_x11_force_egl(void)
+>      }
+>
+>      /* Prefer EGL over GLX to get dma-buf support. */
+> -    egl_display =3D eglGetDisplay((EGLNativeDisplayType)x_disp);
+> +    egl_display =3D qemu_egl_get_display((EGLNativeDisplayType)x_disp,
+> +                                       EGL_PLATFORM_X11_KHR);
+>
+>      if (egl_display !=3D EGL_NO_DISPLAY) {
+>          /*
+>
+> ---
+> base-commit: 2db91528542672cf0db78b3f2cc0e22b36302b38
+> change-id: 20260611-sdl-a148cd469727
+>
+> Best regards,
+> --
+> Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
+>
+>
 
