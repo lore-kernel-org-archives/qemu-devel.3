@@ -4,69 +4,69 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5940ACD8CB2
-	for <qemu-devel@archiver.kernel.org>; Thu, 11 Jun 2026 05:57:39 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 85B8DCD8CB2
+	for <qemu-devel@archiver.kernel.org>; Thu, 11 Jun 2026 05:58:43 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wXYPh-0005ex-SG; Thu, 11 Jun 2026 01:57:15 -0400
+	id 1wXYQy-000658-Ux; Thu, 11 Jun 2026 01:58:32 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <manos.pitsidianakis@linaro.org>)
- id 1wXYPW-0005eY-Gw
- for qemu-devel@nongnu.org; Thu, 11 Jun 2026 01:57:02 -0400
-Received: from mail-wm1-x330.google.com ([2a00:1450:4864:20::330])
+ id 1wXYQx-00064z-Gl
+ for qemu-devel@nongnu.org; Thu, 11 Jun 2026 01:58:31 -0400
+Received: from mail-wr1-x42d.google.com ([2a00:1450:4864:20::42d])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <manos.pitsidianakis@linaro.org>)
- id 1wXYPT-0004HJ-SX
- for qemu-devel@nongnu.org; Thu, 11 Jun 2026 01:57:02 -0400
-Received: by mail-wm1-x330.google.com with SMTP id
- 5b1f17b1804b1-490b3e03939so4050905e9.1
- for <qemu-devel@nongnu.org>; Wed, 10 Jun 2026 22:56:59 -0700 (PDT)
+ id 1wXYQt-0004kG-Rm
+ for qemu-devel@nongnu.org; Thu, 11 Jun 2026 01:58:31 -0400
+Received: by mail-wr1-x42d.google.com with SMTP id
+ ffacd0b85a97d-45ef189aa1cso5543786f8f.0
+ for <qemu-devel@nongnu.org>; Wed, 10 Jun 2026 22:58:27 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1781157418; x=1781762218; darn=nongnu.org;
+ d=linaro.org; s=google; t=1781157506; x=1781762306; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:message-id:in-reply-to
  :references:user-agent:subject:cc:to:from:date:from:to:cc:subject
  :date:message-id:reply-to;
- bh=xLqQqMRD2/bSeNrGESUubzPc12bOU3WwBnXrT9eV7OM=;
- b=BHd4QWUnv7Iqg3zvLJdpeBvtgA55Ao9tgkaHPAzl1MMHJXoi/8kOOYzo0Jpax3TKfR
- EnnpB81J4h/W0GA4bXwqC9YVliDMZrZBOuq5dISn/iyAnWb8Q6qCoZpJXB0NA/0Xn5Lb
- fxHjUMtFhUIXyv4YY2Jo5D3m5DGCuqWeSItKiv7c4Ui1Am5lUHAUVnfRSXig5sXcj9/6
- Z/OR5quLyHGvVUWHKkyDCHiPboq86MbLbkZQ69ego+WqeNj9nRIpPRSuiqrIMVWL1+la
- nzsmARsyv89LUeuWx/ilWBkRJgtEJZLmFdOm8ddl3g4+OLdp8hktJffSD4iHUx4lkUNh
- hqBQ==
+ bh=6Tjdy6dlmyDWdlff3235c98sDRmsj9Vnka1uRXEr6VM=;
+ b=Pzg+G5dDBoQqXzbfnXfZqxvx5z95GG1kVsdRQn3CwNsLUePboknsX7dz2b0GNoZy3c
+ Iz7kQ5G5bK8mfAa71ofk1gDDQKw6sIZTn20EF+5ts5dB4uVN03DMe278O9hUTEtVEI1k
+ r5su7ihxl4a6YYuzvnIDcn+F5Ngxhdw531n2hAAajIiUzOUHQcHzRsVykGUJN/o3ePih
+ vmpGTf5p9e/C1BMyHKM7QNfAFt0mMCgze5ex8zGH4K+CAyYWhMuU0kBF41BP2knu6/Nq
+ wVQFrHfCwnenCwqng1f7sWCZnGNcT3+DM0aPfIPtt62JulxDSo8YDtdQN03o5KAGxOgJ
+ WYyQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1781157418; x=1781762218;
+ d=1e100.net; s=20251104; t=1781157506; x=1781762306;
  h=content-transfer-encoding:mime-version:message-id:in-reply-to
  :references:user-agent:subject:cc:to:from:date:x-gm-gg
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=xLqQqMRD2/bSeNrGESUubzPc12bOU3WwBnXrT9eV7OM=;
- b=iGBEN7ANmmenU9tEximH/b7RZ3husjE63RxhFwTWQyOCcY0gI9laO8E/tu52xQyxW7
- kIs2HnPCmjNpxcLG3azqn4UrbrhtlYt11CL4LrPy2QrRXe0b3woJBXuA9d1Fn81HBkP0
- NDrqQzRrCLsHAJh0H6nTyu3b/ovKmRfUZmqsgVP6lGRuSAKe8CJtHSE4iuUuG5VXQ8jx
- OccLUsxL4mPxfA757f8/4CvmtmsMsS0ha+pZzqXbujgsU218FxzRtTbpJeeQmXMRKAh8
- P4KkImo05YDeg7mMDSjrLbeT/5IPt5n56u5LSoQYjcz4f1AhZfdl3MQbynx5tOwUkgen
- 8X5A==
-X-Gm-Message-State: AOJu0Yx2WXGThDSP70cjSqrKCAup5kPAgnoAfpVyyo+YtHHiG+3yQveA
- aJDNfS+wE13O5BHXl4pQgi0DF/F809ZjMc6iq/fDlS325fGNlmNSdBzhGLKNPIPevoXprc6rcAz
- TbEIj1KI=
-X-Gm-Gg: Acq92OGeJwHJxkwmRnPvGGjNPQ5CSHXEp9lbm89CdT9ytnoeV1Mbfn0+PXJXXdfIMKh
- /bsPGnB7LSY+JpFR4Km92RfZmdpuX7oT+ALqFxHkg+D6G1Luy82BQ2nLO17Bdes+eWhDJWA4PQH
- GFfQQM5b0yhI7gr5qm1Pt/Xbeo7dWSwxl7W+kpfmebmoXXpgS4JBxypJQPF3aPIDgA00CTxbI5V
- ypWyUpndivIEj7fZo+6tJfHmzNNnFQ+N0g4sCtww4v/Vo4r/W8Or6KIoeEH9IcR7WkWNwZytpjc
- V6Y+n6noOrxyL1myQtyEH3hvnWa6tT0dBJZZ6Ymf9QnsYe+Nl8fXSMecv7kJPKz/YJ7Gf81ol9d
- W3JtFdfPtLQippU2Tw4EtkMnjduSOmhw1qmyIdxLkeoKH+hKBRnruapBH4yPdlVooHlws5siXnu
- IQ00zRUxLgm1QhOGs3+qbwFC2NLh4pfBILmVOCozoHVXwJzGAX5kIEqz5rwTi7Mu4gLJmumap3p
- sEC5XKJxID/wNOReMl58kvisR6IxNWK/iMo5HQRnUeL9Ivs+Up9MUATurTQ7LkRCfIFzBD6
-X-Received: by 2002:a05:600c:c490:b0:490:3cf0:8d81 with SMTP id
- 5b1f17b1804b1-490e5302fb2mr11166845e9.13.1781157417895; 
- Wed, 10 Jun 2026 22:56:57 -0700 (PDT)
+ bh=6Tjdy6dlmyDWdlff3235c98sDRmsj9Vnka1uRXEr6VM=;
+ b=FG/7cBWxv7psBeMif+aa+EoqwCBmDC6VuoHDxXiQxInTpj0ZaJ22uUu7oUWRRuxe72
+ gv0OuwAOgfMCVVqB2ObhENkukcjEz/TZdfIUzlagflZVrXDxVMVNEAndiBxFvxpybbV+
+ /bN0ZzSF+48anZcFrNccGNNFWwaz0zL6rwzHKvMlF2XsD7OQRDREBFtAm4CHuGTmCker
+ 49KyFoiqybRXnVqZ5AqpM2gPRg6NnKwvZlguDT6/Ofge1VjU8tLCCP8ewWqzMznn3dyV
+ 53210LZaAV6wXGIs3hPlOyPLNSXaOpYpaqYttLEEVrAUrCupKn0+rF9XJjAv1A7RcHPj
+ 4gfQ==
+X-Gm-Message-State: AOJu0YyD5Cu3bRXgkj+chP7lNeATSH1ik+oXdOv16ZEpDLi8iKFSiewV
+ rPKqwc7unMo+2m+OUBNYw/1Nc5GxnHe5oGkW+BiiueGU8J4LAb4mx+Gh7Awo2be8C2/NITi5Orm
+ WCv45qyw=
+X-Gm-Gg: Acq92OHePpVahh6DfZqf8Pnzn0vN8gySF5Krtlr2OJHAqRjpEwXiohUO1694u2pIwiY
+ odoI3k3+1Uv+tpiQeLiWsSThHEE2WNQ2ndjqaX2/h2RV0fXf+Fra/m/UH7sxpKtBZYAtkBUxoIw
+ YWfSyWju36U3nfY4i/ZCxSwENhdgayu4k2myeZ8e45vNskZUtuB94pITkLL5yEONmOBjjcL7+wd
+ /nKjU5HZrt9HD06UWN2iNlBwMGOvtBfNgNAIgu5GAzLSY0Ni7zH6OXwB0+BAFI7yhyvpQ34L5vV
+ yW632YOnoJ3AE4j8eduSJQN8dRAErD6UBuVgPt4mG4DeP/altEQB0d5RZtYchNquORglzbtSHHR
+ tfscgsW+Ef4ZEA9seEqqkOFO1iFD+pUnUnknoBpr9mu1s+/y9YbIhJQj/uTLZaOReKqcwfk3W7o
+ Z2yjCSzh0YfYfKHz9xmjdfi0D3ZugGG6THHoDS8jNVea0oDxxdP7pXBl8tBfzZRm2v2blWvpXzX
+ LSBnJWoR48lp4Il6h+jAOoneZRr5FV4nLUfHHI4AMZDcLrfMrfgNR1YPIziTw==
+X-Received: by 2002:a5d:5d86:0:b0:460:67e0:563c with SMTP id
+ ffacd0b85a97d-46067e0570fmr1540875f8f.38.1781157505931; 
+ Wed, 10 Jun 2026 22:58:25 -0700 (PDT)
 Received: from meli-email.org (ppp-2-86-135-61.home.otenet.gr. [2.86.135.61])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-490e2ca21f4sm36778155e9.7.2026.06.10.22.56.57
+ ffacd0b85a97d-4601f34413csm76691739f8f.21.2026.06.10.22.58.25
  (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
- Wed, 10 Jun 2026 22:56:57 -0700 (PDT)
-Date: Thu, 11 Jun 2026 08:55:47 +0300
+ Wed, 10 Jun 2026 22:58:25 -0700 (PDT)
+Date: Thu, 11 Jun 2026 08:57:33 +0300
 From: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
 To: qemu-devel@nongnu.org, Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
 Cc: Chao Liu <chao.liu.zevorn@gmail.com>,
@@ -76,18 +76,18 @@ Cc: Chao Liu <chao.liu.zevorn@gmail.com>,
  Alex Benn=?UTF-8?B?w6k=?=e <alex.bennee@linaro.org>,
  Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
  Alexandre Iooss <erdnaxe@crans.org>
-Subject: Re: [PATCH 15/25] plugins: remove qemu_plugin_id from
+Subject: Re: [PATCH 16/25] plugins: add userdata to
  qemu_plugin_vcpu_tb_trans_cb_t
 User-Agent: meli/0.8.13
 References: <20260603205152.1440291-1-pierrick.bouvier@oss.qualcomm.com>
- <20260603205152.1440291-16-pierrick.bouvier@oss.qualcomm.com>
-In-Reply-To: <20260603205152.1440291-16-pierrick.bouvier@oss.qualcomm.com>
-Message-ID: <tggduw.1izhhvc1x07sz@linaro.org>
+ <20260603205152.1440291-17-pierrick.bouvier@oss.qualcomm.com>
+In-Reply-To: <20260603205152.1440291-17-pierrick.bouvier@oss.qualcomm.com>
+Message-ID: <tggdxc.1dpccfc9pplai@linaro.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 Content-Type: text/plain; charset=utf-8; format=flowed
-Received-SPF: pass client-ip=2a00:1450:4864:20::330;
- envelope-from=manos.pitsidianakis@linaro.org; helo=mail-wm1-x330.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::42d;
+ envelope-from=manos.pitsidianakis@linaro.org; helo=mail-wr1-x42d.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -116,371 +116,616 @@ On Wed, 03 Jun 2026 23:51, Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com> 
 
 Reviewed-by: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
 
-> contrib/plugins/bbv.c         | 2 +-
-> contrib/plugins/cache.c       | 2 +-
-> contrib/plugins/cflow.c       | 2 +-
-> contrib/plugins/cpp.cpp       | 2 +-
-> contrib/plugins/drcov.c       | 2 +-
-> contrib/plugins/execlog.c     | 2 +-
-> contrib/plugins/hotblocks.c   | 2 +-
-> contrib/plugins/hotpages.c    | 2 +-
-> contrib/plugins/howvec.c      | 2 +-
-> contrib/plugins/hwprofile.c   | 2 +-
-> contrib/plugins/ips.c         | 2 +-
-> contrib/plugins/lockstep.c    | 2 +-
-> contrib/plugins/stoptrigger.c | 2 +-
-> contrib/plugins/uftrace.c     | 2 +-
-> include/plugins/qemu-plugin.h | 4 +---
+> contrib/plugins/bbv.c         | 4 ++--
+> contrib/plugins/cache.c       | 4 ++--
+> contrib/plugins/cflow.c       | 4 ++--
+> contrib/plugins/cpp.cpp       | 4 ++--
+> contrib/plugins/drcov.c       | 4 ++--
+> contrib/plugins/execlog.c     | 4 ++--
+> contrib/plugins/hotblocks.c   | 4 ++--
+> contrib/plugins/hotpages.c    | 4 ++--
+> contrib/plugins/howvec.c      | 4 ++--
+> contrib/plugins/hwprofile.c   | 4 ++--
+> contrib/plugins/ips.c         | 4 ++--
+> contrib/plugins/lockstep.c    | 4 ++--
+> contrib/plugins/stoptrigger.c | 4 ++--
+> contrib/plugins/uftrace.c     | 4 ++--
+> include/plugins/qemu-plugin.h | 8 ++++++--
+> plugins/api.c                 | 5 +++--
 > plugins/core.c                | 2 +-
-> tests/tcg/plugins/bb.c        | 2 +-
-> tests/tcg/plugins/discons.c   | 2 +-
-> tests/tcg/plugins/empty.c     | 2 +-
-> tests/tcg/plugins/inline.c    | 2 +-
-> tests/tcg/plugins/insn.c      | 2 +-
-> tests/tcg/plugins/mem.c       | 2 +-
-> tests/tcg/plugins/patch.c     | 2 +-
-> tests/tcg/plugins/reset.c     | 4 ++--
-> tests/tcg/plugins/setpc.c     | 2 +-
-> 25 files changed, 26 insertions(+), 28 deletions(-)
+> tests/tcg/plugins/bb.c        | 4 ++--
+> tests/tcg/plugins/discons.c   | 4 ++--
+> tests/tcg/plugins/empty.c     | 4 ++--
+> tests/tcg/plugins/inline.c    | 4 ++--
+> tests/tcg/plugins/insn.c      | 4 ++--
+> tests/tcg/plugins/mem.c       | 4 ++--
+> tests/tcg/plugins/patch.c     | 4 ++--
+> tests/tcg/plugins/reset.c     | 8 ++++----
+> tests/tcg/plugins/setpc.c     | 4 ++--
+> 26 files changed, 58 insertions(+), 53 deletions(-)
 >
 >diff --git a/contrib/plugins/bbv.c b/contrib/plugins/bbv.c
->index 0ad1301a1de..7e9e72477d7 100644
+>index 7e9e72477d7..0e6ec673d97 100644
 >--- a/contrib/plugins/bbv.c
 >+++ b/contrib/plugins/bbv.c
 >@@ -102,7 +102,7 @@ static void vcpu_interval_exec(unsigned int vcpu_index, void *udata)
 >     fputc('\n', vcpu->file);
 > }
 > 
->-static void vcpu_tb_trans(qemu_plugin_id_t id, struct qemu_plugin_tb *tb)
->+static void vcpu_tb_trans(struct qemu_plugin_tb *tb)
+>-static void vcpu_tb_trans(struct qemu_plugin_tb *tb)
+>+static void vcpu_tb_trans(struct qemu_plugin_tb *tb, void *userdata)
 > {
 >     uint64_t n_insns = qemu_plugin_tb_n_insns(tb);
 >     uint64_t vaddr = qemu_plugin_tb_vaddr(tb);
+>@@ -157,7 +157,7 @@ QEMU_PLUGIN_EXPORT int qemu_plugin_install(qemu_plugin_id_t id,
+>     vcpus = qemu_plugin_scoreboard_new(sizeof(Vcpu));
+>     qemu_plugin_register_atexit_cb(id, plugin_exit, NULL);
+>     qemu_plugin_register_vcpu_init_cb(id, vcpu_init, NULL);
+>-    qemu_plugin_register_vcpu_tb_trans_cb(id, vcpu_tb_trans);
+>+    qemu_plugin_register_vcpu_tb_trans_cb(id, vcpu_tb_trans, NULL);
+> 
+>     return 0;
+> }
 >diff --git a/contrib/plugins/cache.c b/contrib/plugins/cache.c
->index f41ddb0aa43..c9d61de26c9 100644
+>index c9d61de26c9..0a5349f131e 100644
 >--- a/contrib/plugins/cache.c
 >+++ b/contrib/plugins/cache.c
 >@@ -462,7 +462,7 @@ static void vcpu_insn_exec(unsigned int vcpu_index, void *userdata)
 >     g_mutex_unlock(&l2_ucache_locks[cache_idx]);
 > }
 > 
->-static void vcpu_tb_trans(qemu_plugin_id_t id, struct qemu_plugin_tb *tb)
->+static void vcpu_tb_trans(struct qemu_plugin_tb *tb)
+>-static void vcpu_tb_trans(struct qemu_plugin_tb *tb)
+>+static void vcpu_tb_trans(struct qemu_plugin_tb *tb, void *userdata)
 > {
 >     size_t n_insns;
 >     size_t i;
+>@@ -844,7 +844,7 @@ int qemu_plugin_install(qemu_plugin_id_t id, const qemu_info_t *info,
+>     l1_icache_locks = g_new0(GMutex, cores);
+>     l2_ucache_locks = use_l2 ? g_new0(GMutex, cores) : NULL;
+> 
+>-    qemu_plugin_register_vcpu_tb_trans_cb(id, vcpu_tb_trans);
+>+    qemu_plugin_register_vcpu_tb_trans_cb(id, vcpu_tb_trans, NULL);
+>     qemu_plugin_register_atexit_cb(id, plugin_exit, NULL);
+> 
+>     miss_ht = g_hash_table_new_full(g_int64_hash, g_int64_equal, NULL, insn_free);
 >diff --git a/contrib/plugins/cflow.c b/contrib/plugins/cflow.c
->index 4d00879ccad..9a850c8c0cc 100644
+>index 9a850c8c0cc..319a7a7fc07 100644
 >--- a/contrib/plugins/cflow.c
 >+++ b/contrib/plugins/cflow.c
 >@@ -297,7 +297,7 @@ static void vcpu_tb_branched_exec(unsigned int cpu_index, void *udata)
 >  * instructions for their execution.
 >  *
 >  */
->-static void vcpu_tb_trans(qemu_plugin_id_t id, struct qemu_plugin_tb *tb)
->+static void vcpu_tb_trans(struct qemu_plugin_tb *tb)
+>-static void vcpu_tb_trans(struct qemu_plugin_tb *tb)
+>+static void vcpu_tb_trans(struct qemu_plugin_tb *tb, void *userdata)
 > {
 >     uint64_t pc = qemu_plugin_tb_vaddr(tb);
 >     size_t insns = qemu_plugin_tb_n_insns(tb);
+>@@ -387,7 +387,7 @@ int qemu_plugin_install(qemu_plugin_id_t id, const qemu_info_t *info,
+> 
+>     plugin_init();
+> 
+>-    qemu_plugin_register_vcpu_tb_trans_cb(id, vcpu_tb_trans);
+>+    qemu_plugin_register_vcpu_tb_trans_cb(id, vcpu_tb_trans, NULL);
+>     qemu_plugin_register_atexit_cb(id, plugin_exit, NULL);
+>     return 0;
+> }
 >diff --git a/contrib/plugins/cpp.cpp b/contrib/plugins/cpp.cpp
->index 0673c4f074d..34243cc922f 100644
+>index 34243cc922f..a0bb261fbe8 100644
 >--- a/contrib/plugins/cpp.cpp
 >+++ b/contrib/plugins/cpp.cpp
 >@@ -363,7 +363,7 @@
 > 
 > QEMU_PLUGIN_EXPORT int qemu_plugin_version = QEMU_PLUGIN_VERSION;
 > 
->-static void vcpu_tb_trans(qemu_plugin_id_t id, struct qemu_plugin_tb *tb)
->+static void vcpu_tb_trans(struct qemu_plugin_tb *tb)
+>-static void vcpu_tb_trans(struct qemu_plugin_tb *tb)
+>+static void vcpu_tb_trans(struct qemu_plugin_tb *tb, void *userdata)
 > {
 > }
 > 
+>@@ -371,6 +371,6 @@ QEMU_PLUGIN_EXPORT int qemu_plugin_install(qemu_plugin_id_t id,
+>                                            const qemu_info_t *info,
+>                                            int argc, char **argv)
+> {
+>-    qemu_plugin_register_vcpu_tb_trans_cb(id, vcpu_tb_trans);
+>+    qemu_plugin_register_vcpu_tb_trans_cb(id, vcpu_tb_trans, NULL);
+>     return 0;
+> }
 >diff --git a/contrib/plugins/drcov.c b/contrib/plugins/drcov.c
->index 458c0d2084d..2dc08512d44 100644
+>index 2dc08512d44..5a18a8f48b4 100644
 >--- a/contrib/plugins/drcov.c
 >+++ b/contrib/plugins/drcov.c
 >@@ -119,7 +119,7 @@ static void vcpu_tb_exec(unsigned int cpu_index, void *udata)
 >     g_mutex_unlock(&lock);
 > }
 > 
->-static void vcpu_tb_trans(qemu_plugin_id_t id, struct qemu_plugin_tb *tb)
->+static void vcpu_tb_trans(struct qemu_plugin_tb *tb)
+>-static void vcpu_tb_trans(struct qemu_plugin_tb *tb)
+>+static void vcpu_tb_trans(struct qemu_plugin_tb *tb, void *userdata)
 > {
 >     uint64_t pc = qemu_plugin_tb_vaddr(tb);
 >     size_t n = qemu_plugin_tb_n_insns(tb);
+>@@ -156,7 +156,7 @@ int qemu_plugin_install(qemu_plugin_id_t id, const qemu_info_t *info,
+> 
+>     plugin_init();
+> 
+>-    qemu_plugin_register_vcpu_tb_trans_cb(id, vcpu_tb_trans);
+>+    qemu_plugin_register_vcpu_tb_trans_cb(id, vcpu_tb_trans, NULL);
+>     qemu_plugin_register_atexit_cb(id, plugin_exit, NULL);
+> 
+>     return 0;
 >diff --git a/contrib/plugins/execlog.c b/contrib/plugins/execlog.c
->index 2d02816a184..8329112305c 100644
+>index 8329112305c..74325495cce 100644
 >--- a/contrib/plugins/execlog.c
 >+++ b/contrib/plugins/execlog.c
 >@@ -177,7 +177,7 @@ static void vcpu_insn_exec(unsigned int cpu_index, void *udata)
 >  * QEMU convert code by translation block (TB). By hooking here we can then hook
 >  * a callback on each instruction and memory access.
 >  */
->-static void vcpu_tb_trans(qemu_plugin_id_t id, struct qemu_plugin_tb *tb)
->+static void vcpu_tb_trans(struct qemu_plugin_tb *tb)
+>-static void vcpu_tb_trans(struct qemu_plugin_tb *tb)
+>+static void vcpu_tb_trans(struct qemu_plugin_tb *tb, void *userdata)
 > {
 >     struct qemu_plugin_insn *insn;
 >     bool skip = (imatches || amatches);
+>@@ -482,7 +482,7 @@ QEMU_PLUGIN_EXPORT int qemu_plugin_install(qemu_plugin_id_t id,
+> 
+>     /* Register init, translation block and exit callbacks */
+>     qemu_plugin_register_vcpu_init_cb(id, vcpu_init, NULL);
+>-    qemu_plugin_register_vcpu_tb_trans_cb(id, vcpu_tb_trans);
+>+    qemu_plugin_register_vcpu_tb_trans_cb(id, vcpu_tb_trans, NULL);
+>     qemu_plugin_register_atexit_cb(id, plugin_exit, NULL);
+> 
+>     return 0;
 >diff --git a/contrib/plugins/hotblocks.c b/contrib/plugins/hotblocks.c
->index 92859872ac9..682b160019a 100644
+>index 682b160019a..ea746b513a1 100644
 >--- a/contrib/plugins/hotblocks.c
 >+++ b/contrib/plugins/hotblocks.c
 >@@ -121,7 +121,7 @@ static void vcpu_tb_exec(unsigned int cpu_index, void *udata)
 >  * Otherwise a helper is inserted which calls the vcpu_tb_exec
 >  * callback.
 >  */
->-static void vcpu_tb_trans(qemu_plugin_id_t id, struct qemu_plugin_tb *tb)
->+static void vcpu_tb_trans(struct qemu_plugin_tb *tb)
+>-static void vcpu_tb_trans(struct qemu_plugin_tb *tb)
+>+static void vcpu_tb_trans(struct qemu_plugin_tb *tb, void *userdata)
 > {
 >     ExecCount *cnt;
 >     uint64_t pc = qemu_plugin_tb_vaddr(tb);
+>@@ -186,7 +186,7 @@ int qemu_plugin_install(qemu_plugin_id_t id, const qemu_info_t *info,
+> 
+>     plugin_init();
+> 
+>-    qemu_plugin_register_vcpu_tb_trans_cb(id, vcpu_tb_trans);
+>+    qemu_plugin_register_vcpu_tb_trans_cb(id, vcpu_tb_trans, NULL);
+>     qemu_plugin_register_atexit_cb(id, plugin_exit, NULL);
+>     return 0;
+> }
 >diff --git a/contrib/plugins/hotpages.c b/contrib/plugins/hotpages.c
->index a6d83b06c75..d8321a73303 100644
+>index d8321a73303..56e5698ce1d 100644
 >--- a/contrib/plugins/hotpages.c
 >+++ b/contrib/plugins/hotpages.c
 >@@ -148,7 +148,7 @@ static void vcpu_haddr(unsigned int cpu_index, qemu_plugin_meminfo_t meminfo,
 >     g_mutex_unlock(&lock);
 > }
 > 
->-static void vcpu_tb_trans(qemu_plugin_id_t id, struct qemu_plugin_tb *tb)
->+static void vcpu_tb_trans(struct qemu_plugin_tb *tb)
+>-static void vcpu_tb_trans(struct qemu_plugin_tb *tb)
+>+static void vcpu_tb_trans(struct qemu_plugin_tb *tb, void *userdata)
 > {
 >     size_t n = qemu_plugin_tb_n_insns(tb);
 >     size_t i;
+>@@ -197,7 +197,7 @@ int qemu_plugin_install(qemu_plugin_id_t id, const qemu_info_t *info,
+> 
+>     plugin_init();
+> 
+>-    qemu_plugin_register_vcpu_tb_trans_cb(id, vcpu_tb_trans);
+>+    qemu_plugin_register_vcpu_tb_trans_cb(id, vcpu_tb_trans, NULL);
+>     qemu_plugin_register_atexit_cb(id, plugin_exit, NULL);
+>     return 0;
+> }
 >diff --git a/contrib/plugins/howvec.c b/contrib/plugins/howvec.c
->index 75728896198..feabc10bf44 100644
+>index feabc10bf44..55db9ff8028 100644
 >--- a/contrib/plugins/howvec.c
 >+++ b/contrib/plugins/howvec.c
 >@@ -310,7 +310,7 @@ static struct qemu_plugin_scoreboard *find_counter(
 >     return NULL;
 > }
 > 
->-static void vcpu_tb_trans(qemu_plugin_id_t id, struct qemu_plugin_tb *tb)
->+static void vcpu_tb_trans(struct qemu_plugin_tb *tb)
+>-static void vcpu_tb_trans(struct qemu_plugin_tb *tb)
+>+static void vcpu_tb_trans(struct qemu_plugin_tb *tb, void *userdata)
 > {
 >     size_t n = qemu_plugin_tb_n_insns(tb);
 >     size_t i;
+>@@ -392,7 +392,7 @@ QEMU_PLUGIN_EXPORT int qemu_plugin_install(qemu_plugin_id_t id,
+> 
+>     plugin_init();
+> 
+>-    qemu_plugin_register_vcpu_tb_trans_cb(id, vcpu_tb_trans);
+>+    qemu_plugin_register_vcpu_tb_trans_cb(id, vcpu_tb_trans, NULL);
+>     qemu_plugin_register_atexit_cb(id, plugin_exit, NULL);
+>     return 0;
+> }
 >diff --git a/contrib/plugins/hwprofile.c b/contrib/plugins/hwprofile.c
->index b7f96117e94..fcc993015d7 100644
+>index fcc993015d7..87b0267ffe3 100644
 >--- a/contrib/plugins/hwprofile.c
 >+++ b/contrib/plugins/hwprofile.c
 >@@ -242,7 +242,7 @@ static void vcpu_haddr(unsigned int cpu_index, qemu_plugin_meminfo_t meminfo,
 >     }
 > }
 > 
->-static void vcpu_tb_trans(qemu_plugin_id_t id, struct qemu_plugin_tb *tb)
->+static void vcpu_tb_trans(struct qemu_plugin_tb *tb)
+>-static void vcpu_tb_trans(struct qemu_plugin_tb *tb)
+>+static void vcpu_tb_trans(struct qemu_plugin_tb *tb, void *userdata)
 > {
 >     size_t n = qemu_plugin_tb_n_insns(tb);
 >     size_t i;
+>@@ -319,7 +319,7 @@ int qemu_plugin_install(qemu_plugin_id_t id, const qemu_info_t *info,
+> 
+>     plugin_init();
+> 
+>-    qemu_plugin_register_vcpu_tb_trans_cb(id, vcpu_tb_trans);
+>+    qemu_plugin_register_vcpu_tb_trans_cb(id, vcpu_tb_trans, NULL);
+>     qemu_plugin_register_atexit_cb(id, plugin_exit, NULL);
+>     return 0;
+> }
 >diff --git a/contrib/plugins/ips.c b/contrib/plugins/ips.c
->index 2c110906731..a1fcba7c5d6 100644
+>index a1fcba7c5d6..6f7ac1587ec 100644
 >--- a/contrib/plugins/ips.c
 >+++ b/contrib/plugins/ips.c
 >@@ -110,7 +110,7 @@ static void every_quantum_insn(unsigned int cpu_index, void *udata)
 >     update_system_time(vcpu);
 > }
 > 
->-static void vcpu_tb_trans(qemu_plugin_id_t id, struct qemu_plugin_tb *tb)
->+static void vcpu_tb_trans(struct qemu_plugin_tb *tb)
+>-static void vcpu_tb_trans(struct qemu_plugin_tb *tb)
+>+static void vcpu_tb_trans(struct qemu_plugin_tb *tb, void *userdata)
 > {
 >     size_t n_insns = qemu_plugin_tb_n_insns(tb);
 >     qemu_plugin_u64 quantum_insn =
+>@@ -206,7 +206,7 @@ QEMU_PLUGIN_EXPORT int qemu_plugin_install(qemu_plugin_id_t id,
+>     time_handle = qemu_plugin_request_time_control();
+>     g_assert(time_handle);
+> 
+>-    qemu_plugin_register_vcpu_tb_trans_cb(id, vcpu_tb_trans);
+>+    qemu_plugin_register_vcpu_tb_trans_cb(id, vcpu_tb_trans, NULL);
+>     qemu_plugin_register_vcpu_init_cb(id, vcpu_init, NULL);
+>     qemu_plugin_register_vcpu_exit_cb(id, vcpu_exit, NULL);
+>     qemu_plugin_register_atexit_cb(id, plugin_exit, NULL);
 >diff --git a/contrib/plugins/lockstep.c b/contrib/plugins/lockstep.c
->index c1c2b0aca8e..dc527ad56e2 100644
+>index dc527ad56e2..ed9d18460fe 100644
 >--- a/contrib/plugins/lockstep.c
 >+++ b/contrib/plugins/lockstep.c
 >@@ -249,7 +249,7 @@ static void vcpu_tb_exec(unsigned int cpu_index, void *udata)
 >     log = g_slist_prepend(log, exec);
 > }
 > 
->-static void vcpu_tb_trans(qemu_plugin_id_t id, struct qemu_plugin_tb *tb)
->+static void vcpu_tb_trans(struct qemu_plugin_tb *tb)
+>-static void vcpu_tb_trans(struct qemu_plugin_tb *tb)
+>+static void vcpu_tb_trans(struct qemu_plugin_tb *tb, void *userdata)
 > {
 >     BlockInfo *bi = g_new0(BlockInfo, 1);
 >     bi->pc = qemu_plugin_tb_vaddr(tb);
+>@@ -392,7 +392,7 @@ QEMU_PLUGIN_EXPORT int qemu_plugin_install(qemu_plugin_id_t id,
+> 
+>     our_id = id;
+> 
+>-    qemu_plugin_register_vcpu_tb_trans_cb(id, vcpu_tb_trans);
+>+    qemu_plugin_register_vcpu_tb_trans_cb(id, vcpu_tb_trans, NULL);
+>     qemu_plugin_register_atexit_cb(id, plugin_exit, (void *)id);
+>     return 0;
+> }
 >diff --git a/contrib/plugins/stoptrigger.c b/contrib/plugins/stoptrigger.c
->index 40f8fd313d7..222a3f92ae0 100644
+>index 222a3f92ae0..3babd014171 100644
 >--- a/contrib/plugins/stoptrigger.c
 >+++ b/contrib/plugins/stoptrigger.c
 >@@ -64,7 +64,7 @@ static void exit_address_reached(unsigned int cpu_index, void *udata)
 >     exit_emulation(ei->exit_code, msg);
 > }
 > 
->-static void vcpu_tb_trans(qemu_plugin_id_t id, struct qemu_plugin_tb *tb)
->+static void vcpu_tb_trans(struct qemu_plugin_tb *tb)
+>-static void vcpu_tb_trans(struct qemu_plugin_tb *tb)
+>+static void vcpu_tb_trans(struct qemu_plugin_tb *tb, void *userdata)
 > {
 >     size_t tb_n = qemu_plugin_tb_n_insns(tb);
 >     for (size_t i = 0; i < tb_n; i++) {
+>@@ -150,7 +150,7 @@ QEMU_PLUGIN_EXPORT int qemu_plugin_install(qemu_plugin_id_t id,
+>     }
+> 
+>     /* Register translation block and exit callbacks */
+>-    qemu_plugin_register_vcpu_tb_trans_cb(id, vcpu_tb_trans);
+>+    qemu_plugin_register_vcpu_tb_trans_cb(id, vcpu_tb_trans, NULL);
+>     qemu_plugin_register_atexit_cb(id, plugin_exit, NULL);
+> 
+>     return 0;
 >diff --git a/contrib/plugins/uftrace.c b/contrib/plugins/uftrace.c
->index 8be8409dce2..a1b10f9cf59 100644
+>index a1b10f9cf59..9b0a4963aee 100644
 >--- a/contrib/plugins/uftrace.c
 >+++ b/contrib/plugins/uftrace.c
 >@@ -838,7 +838,7 @@ static void track_callstack(unsigned int cpu_index, void *udata)
 >     trace_enter_stack(t, cs, timestamp);
 > }
 > 
->-static void vcpu_tb_trans(qemu_plugin_id_t id, struct qemu_plugin_tb *tb)
->+static void vcpu_tb_trans(struct qemu_plugin_tb *tb)
+>-static void vcpu_tb_trans(struct qemu_plugin_tb *tb)
+>+static void vcpu_tb_trans(struct qemu_plugin_tb *tb, void *userdata)
 > {
 >     size_t n_insns = qemu_plugin_tb_n_insns(tb);
 >     uintptr_t tb_pc = qemu_plugin_tb_vaddr(tb);
+>@@ -987,7 +987,7 @@ QEMU_PLUGIN_EXPORT int qemu_plugin_install(qemu_plugin_id_t id,
+>     score = qemu_plugin_scoreboard_new(sizeof(Cpu));
+>     qemu_plugin_register_vcpu_init_cb(id, vcpu_init, NULL);
+>     qemu_plugin_register_atexit_cb(id, at_exit, (void *) info->system_emulation);
+>-    qemu_plugin_register_vcpu_tb_trans_cb(id, vcpu_tb_trans);
+>+    qemu_plugin_register_vcpu_tb_trans_cb(id, vcpu_tb_trans, NULL);
+> 
+>     return 0;
+> }
 >diff --git a/include/plugins/qemu-plugin.h b/include/plugins/qemu-plugin.h
->index 60d27d8d9c1..8242e054054 100644
+>index 8242e054054..53daa09fc72 100644
 >--- a/include/plugins/qemu-plugin.h
 >+++ b/include/plugins/qemu-plugin.h
->@@ -417,11 +417,9 @@ enum qemu_plugin_cond {
-> 
+>@@ -418,13 +418,16 @@ enum qemu_plugin_cond {
 > /**
 >  * typedef qemu_plugin_vcpu_tb_trans_cb_t - translation callback
->- * @id: unique plugin id
 >  * @tb: opaque handle used for querying and instrumenting a block.
+>+ * @userdata: any plugin data to pass to the @cb
 >  */
->-typedef void (*qemu_plugin_vcpu_tb_trans_cb_t)(qemu_plugin_id_t id,
->-                                               struct qemu_plugin_tb *tb);
->+typedef void (*qemu_plugin_vcpu_tb_trans_cb_t)(struct qemu_plugin_tb *tb);
+>-typedef void (*qemu_plugin_vcpu_tb_trans_cb_t)(struct qemu_plugin_tb *tb);
+>+typedef void (*qemu_plugin_vcpu_tb_trans_cb_t)(struct qemu_plugin_tb *tb,
+>+                                               void *userdata);
 > 
 > /**
 >  * qemu_plugin_register_vcpu_tb_trans_cb() - register a translate cb
+>  * @id: plugin ID
+>  * @cb: callback function
+>+ * @userdata: any plugin data to pass to the @cb
+>  *
+>  * The @cb function is called every time a translation occurs. The @cb
+>  * function is passed an opaque qemu_plugin_type which it can query
+>@@ -435,7 +438,8 @@ typedef void (*qemu_plugin_vcpu_tb_trans_cb_t)(struct qemu_plugin_tb *tb);
+>  */
+> QEMU_PLUGIN_API
+> void qemu_plugin_register_vcpu_tb_trans_cb(qemu_plugin_id_t id,
+>-                                           qemu_plugin_vcpu_tb_trans_cb_t cb);
+>+                                           qemu_plugin_vcpu_tb_trans_cb_t cb,
+>+                                           void *userdata);
+> 
+> /**
+>  * qemu_plugin_register_vcpu_tb_exec_cb() - register execution callback
+>diff --git a/plugins/api.c b/plugins/api.c
+>index 849790fe13b..774b1b80214 100644
+>--- a/plugins/api.c
+>+++ b/plugins/api.c
+>@@ -195,9 +195,10 @@ void qemu_plugin_register_vcpu_mem_inline_per_vcpu(
+> }
+> 
+> void qemu_plugin_register_vcpu_tb_trans_cb(qemu_plugin_id_t id,
+>-                                           qemu_plugin_vcpu_tb_trans_cb_t cb)
+>+                                           qemu_plugin_vcpu_tb_trans_cb_t cb,
+>+                                           void *userdata)
+> {
+>-    plugin_register_cb(id, QEMU_PLUGIN_EV_VCPU_TB_TRANS, cb);
+>+    plugin_register_cb_udata(id, QEMU_PLUGIN_EV_VCPU_TB_TRANS, cb, userdata);
+> }
+> 
+> void qemu_plugin_register_vcpu_syscall_cb(qemu_plugin_id_t id,
 >diff --git a/plugins/core.c b/plugins/core.c
->index 3c3212aedda..c77da4d36fd 100644
+>index c77da4d36fd..d891da93040 100644
 >--- a/plugins/core.c
 >+++ b/plugins/core.c
 >@@ -487,7 +487,7 @@ void qemu_plugin_tb_trans_cb(CPUState *cpu, struct qemu_plugin_tb *tb)
 >         qemu_plugin_vcpu_tb_trans_cb_t func = cb->f.vcpu_tb_trans;
 > 
 >         qemu_plugin_set_cb_flags(cpu, QEMU_PLUGIN_CB_RW_REGS);
->-        func(cb->ctx->id, tb);
->+        func(tb);
+>-        func(tb);
+>+        func(tb, cb->udata);
 >         qemu_plugin_set_cb_flags(cpu, QEMU_PLUGIN_CB_NO_REGS);
 >     }
 > }
 >diff --git a/tests/tcg/plugins/bb.c b/tests/tcg/plugins/bb.c
->index ba605246eb0..713063f4945 100644
+>index 713063f4945..90adb3ebd97 100644
 >--- a/tests/tcg/plugins/bb.c
 >+++ b/tests/tcg/plugins/bb.c
 >@@ -77,7 +77,7 @@ static void vcpu_tb_exec(unsigned int cpu_index, void *udata)
 >     count->bb_count++;
 > }
 > 
->-static void vcpu_tb_trans(qemu_plugin_id_t id, struct qemu_plugin_tb *tb)
->+static void vcpu_tb_trans(struct qemu_plugin_tb *tb)
+>-static void vcpu_tb_trans(struct qemu_plugin_tb *tb)
+>+static void vcpu_tb_trans(struct qemu_plugin_tb *tb, void *userdata)
 > {
 >     size_t n_insns = qemu_plugin_tb_n_insns(tb);
 > 
+>@@ -127,7 +127,7 @@ QEMU_PLUGIN_EXPORT int qemu_plugin_install(qemu_plugin_id_t id,
+>         qemu_plugin_register_vcpu_idle_cb(id, vcpu_idle, NULL);
+>     }
+> 
+>-    qemu_plugin_register_vcpu_tb_trans_cb(id, vcpu_tb_trans);
+>+    qemu_plugin_register_vcpu_tb_trans_cb(id, vcpu_tb_trans, NULL);
+>     qemu_plugin_register_atexit_cb(id, plugin_exit, NULL);
+>     return 0;
+> }
 >diff --git a/tests/tcg/plugins/discons.c b/tests/tcg/plugins/discons.c
->index 5ab645705e3..d2a163a5714 100644
+>index d2a163a5714..45f24397047 100644
 >--- a/tests/tcg/plugins/discons.c
 >+++ b/tests/tcg/plugins/discons.c
 >@@ -147,7 +147,7 @@ static void insn_exec(unsigned int vcpu_index, void *userdata)
 >     }
 > }
 > 
->-static void vcpu_tb_trans(qemu_plugin_id_t id, struct qemu_plugin_tb *tb)
->+static void vcpu_tb_trans(struct qemu_plugin_tb *tb)
+>-static void vcpu_tb_trans(struct qemu_plugin_tb *tb)
+>+static void vcpu_tb_trans(struct qemu_plugin_tb *tb, void *userdata)
 > {
 >     size_t n_insns = qemu_plugin_tb_n_insns(tb);
 >     for (size_t i = 0; i < n_insns; i++) {
+>@@ -215,7 +215,7 @@ QEMU_PLUGIN_EXPORT int qemu_plugin_install(qemu_plugin_id_t id,
+> 
+>     qemu_plugin_register_vcpu_discon_cb(id, QEMU_PLUGIN_DISCON_ALL,
+>                                         vcpu_discon, NULL);
+>-    qemu_plugin_register_vcpu_tb_trans_cb(id, vcpu_tb_trans);
+>+    qemu_plugin_register_vcpu_tb_trans_cb(id, vcpu_tb_trans, NULL);
+> 
+>     return 0;
+> }
 >diff --git a/tests/tcg/plugins/empty.c b/tests/tcg/plugins/empty.c
->index 8fa6bacd93d..5927507c18e 100644
+>index 5927507c18e..286b3035e61 100644
 >--- a/tests/tcg/plugins/empty.c
 >+++ b/tests/tcg/plugins/empty.c
->@@ -20,7 +20,7 @@ QEMU_PLUGIN_EXPORT int qemu_plugin_version = QEMU_PLUGIN_VERSION;
+>@@ -20,13 +20,13 @@ QEMU_PLUGIN_EXPORT int qemu_plugin_version = QEMU_PLUGIN_VERSION;
 >  * This allows us to measure the overhead of injecting and then
 >  * removing empty instrumentation.
 >  */
->-static void vcpu_tb_trans(qemu_plugin_id_t id, struct qemu_plugin_tb *tb)
->+static void vcpu_tb_trans(struct qemu_plugin_tb *tb)
+>-static void vcpu_tb_trans(struct qemu_plugin_tb *tb)
+>+static void vcpu_tb_trans(struct qemu_plugin_tb *tb, void *userdata)
 > { }
 > 
 > QEMU_PLUGIN_EXPORT int qemu_plugin_install(qemu_plugin_id_t id,
+>                                            const qemu_info_t *info,
+>                                            int argc, char **argv)
+> {
+>-    qemu_plugin_register_vcpu_tb_trans_cb(id, vcpu_tb_trans);
+>+    qemu_plugin_register_vcpu_tb_trans_cb(id, vcpu_tb_trans, NULL);
+>     return 0;
+> }
 >diff --git a/tests/tcg/plugins/inline.c b/tests/tcg/plugins/inline.c
->index 1d17884b40b..3f5c49f5ede 100644
+>index 3f5c49f5ede..436223db0e6 100644
 >--- a/tests/tcg/plugins/inline.c
 >+++ b/tests/tcg/plugins/inline.c
 >@@ -223,7 +223,7 @@ static void vcpu_mem_access(unsigned int cpu_index,
 >     g_mutex_unlock(&mem_lock);
 > }
 > 
->-static void vcpu_tb_trans(qemu_plugin_id_t id, struct qemu_plugin_tb *tb)
->+static void vcpu_tb_trans(struct qemu_plugin_tb *tb)
+>-static void vcpu_tb_trans(struct qemu_plugin_tb *tb)
+>+static void vcpu_tb_trans(struct qemu_plugin_tb *tb, void *userdata)
 > {
 >     void *tb_store = tb;
 >     qemu_plugin_register_vcpu_tb_exec_inline_per_vcpu(
+>@@ -303,7 +303,7 @@ int qemu_plugin_install(qemu_plugin_id_t id, const qemu_info_t *info,
+>     data_tb = qemu_plugin_scoreboard_u64_in_struct(data, CPUData, data_tb);
+>     data_mem = qemu_plugin_scoreboard_u64_in_struct(data, CPUData, data_mem);
+> 
+>-    qemu_plugin_register_vcpu_tb_trans_cb(id, vcpu_tb_trans);
+>+    qemu_plugin_register_vcpu_tb_trans_cb(id, vcpu_tb_trans, NULL);
+>     qemu_plugin_register_atexit_cb(id, plugin_exit, NULL);
+> 
+>     return 0;
 >diff --git a/tests/tcg/plugins/insn.c b/tests/tcg/plugins/insn.c
->index d9f94888d6f..a303275ea1b 100644
+>index a303275ea1b..4ab30d6df8c 100644
 >--- a/tests/tcg/plugins/insn.c
 >+++ b/tests/tcg/plugins/insn.c
 >@@ -138,7 +138,7 @@ static void vcpu_insn_matched_exec_before(unsigned int cpu_index, void *udata)
 >     }
 > }
 > 
->-static void vcpu_tb_trans(qemu_plugin_id_t id, struct qemu_plugin_tb *tb)
->+static void vcpu_tb_trans(struct qemu_plugin_tb *tb)
+>-static void vcpu_tb_trans(struct qemu_plugin_tb *tb)
+>+static void vcpu_tb_trans(struct qemu_plugin_tb *tb, void *userdata)
 > {
 >     size_t n = qemu_plugin_tb_n_insns(tb);
 >     size_t i;
+>@@ -297,7 +297,7 @@ QEMU_PLUGIN_EXPORT int qemu_plugin_install(qemu_plugin_id_t id,
+> 
+>     /* Register init, translation block and exit callbacks */
+>     qemu_plugin_register_vcpu_init_cb(id, vcpu_init, NULL);
+>-    qemu_plugin_register_vcpu_tb_trans_cb(id, vcpu_tb_trans);
+>+    qemu_plugin_register_vcpu_tb_trans_cb(id, vcpu_tb_trans, NULL);
+>     qemu_plugin_register_atexit_cb(id, plugin_exit, NULL);
+>     return 0;
+> }
 >diff --git a/tests/tcg/plugins/mem.c b/tests/tcg/plugins/mem.c
->index 5cdf71c7e49..24a3bce0bfd 100644
+>index 24a3bce0bfd..e56d10574bd 100644
 >--- a/tests/tcg/plugins/mem.c
 >+++ b/tests/tcg/plugins/mem.c
 >@@ -266,7 +266,7 @@ static void print_access(unsigned int cpu_index, qemu_plugin_meminfo_t meminfo,
 >     qemu_plugin_outs(out->str);
 > }
 > 
->-static void vcpu_tb_trans(qemu_plugin_id_t id, struct qemu_plugin_tb *tb)
->+static void vcpu_tb_trans(struct qemu_plugin_tb *tb)
+>-static void vcpu_tb_trans(struct qemu_plugin_tb *tb)
+>+static void vcpu_tb_trans(struct qemu_plugin_tb *tb, void *userdata)
 > {
 >     size_t n = qemu_plugin_tb_n_insns(tb);
 >     size_t i;
+>@@ -374,7 +374,7 @@ QEMU_PLUGIN_EXPORT int qemu_plugin_install(qemu_plugin_id_t id,
+>     mem_count = qemu_plugin_scoreboard_u64_in_struct(
+>         counts, CPUCount, mem_count);
+>     io_count = qemu_plugin_scoreboard_u64_in_struct(counts, CPUCount, io_count);
+>-    qemu_plugin_register_vcpu_tb_trans_cb(id, vcpu_tb_trans);
+>+    qemu_plugin_register_vcpu_tb_trans_cb(id, vcpu_tb_trans, NULL);
+>     qemu_plugin_register_atexit_cb(id, plugin_exit, NULL);
+>     return 0;
+> }
 >diff --git a/tests/tcg/plugins/patch.c b/tests/tcg/plugins/patch.c
->index eba2f8b8d6c..8fcf0bd409b 100644
+>index 8fcf0bd409b..59215f8546e 100644
 >--- a/tests/tcg/plugins/patch.c
 >+++ b/tests/tcg/plugins/patch.c
 >@@ -130,7 +130,7 @@ static void patch_vaddr(unsigned int vcpu_index, void *userdata)
 > /*
 >  * Callback on translation of a translation block.
 >  */
->-static void vcpu_tb_trans_cb(qemu_plugin_id_t id, struct qemu_plugin_tb *tb)
->+static void vcpu_tb_trans_cb(struct qemu_plugin_tb *tb)
+>-static void vcpu_tb_trans_cb(struct qemu_plugin_tb *tb)
+>+static void vcpu_tb_trans_cb(struct qemu_plugin_tb *tb, void *userdata)
 > {
 >     g_autoptr(GByteArray) insn_data = g_byte_array_new();
 >     uintptr_t addr = 0;
+>@@ -245,7 +245,7 @@ QEMU_PLUGIN_EXPORT int qemu_plugin_install(qemu_plugin_id_t id,
+>         return -1;
+>     }
+> 
+>-    qemu_plugin_register_vcpu_tb_trans_cb(id, vcpu_tb_trans_cb);
+>+    qemu_plugin_register_vcpu_tb_trans_cb(id, vcpu_tb_trans_cb, NULL);
+> 
+>     return 0;
+> }
 >diff --git a/tests/tcg/plugins/reset.c b/tests/tcg/plugins/reset.c
->index ef5a32781b2..1fdf114e5e0 100644
+>index 1fdf114e5e0..949f2d6160a 100644
 >--- a/tests/tcg/plugins/reset.c
 >+++ b/tests/tcg/plugins/reset.c
 >@@ -27,7 +27,7 @@ static void tb_exec_after_reset(unsigned int vcpu_index, void *userdata)
 >     qemu_plugin_uninstall(plugin_id, after_uninstall, NULL);
 > }
 > 
->-static void tb_trans_after_reset(qemu_plugin_id_t id, struct qemu_plugin_tb *tb)
->+static void tb_trans_after_reset(struct qemu_plugin_tb *tb)
+>-static void tb_trans_after_reset(struct qemu_plugin_tb *tb)
+>+static void tb_trans_after_reset(struct qemu_plugin_tb *tb, void *userdata)
 > {
 >     g_assert(was_reset && !was_uninstalled);
 >     qemu_plugin_register_vcpu_tb_exec_cb(tb, tb_exec_after_reset,
+>@@ -40,7 +40,7 @@ static void after_reset(void *userdata)
+>     g_assert(!was_reset && !was_uninstalled);
+>     qemu_plugin_outs("reset done\n");
+>     was_reset = true;
+>-    qemu_plugin_register_vcpu_tb_trans_cb(id, tb_trans_after_reset);
+>+    qemu_plugin_register_vcpu_tb_trans_cb(id, tb_trans_after_reset, NULL);
+> }
+> 
+> static void tb_exec_before_reset(unsigned int vcpu_index, void *userdata)
 >@@ -49,7 +49,7 @@ static void tb_exec_before_reset(unsigned int vcpu_index, void *userdata)
 >     qemu_plugin_reset(plugin_id, after_reset, (void *) plugin_id);
 > }
 > 
->-static void tb_trans_before_reset(qemu_plugin_id_t id, struct qemu_plugin_tb *tb)
->+static void tb_trans_before_reset(struct qemu_plugin_tb *tb)
+>-static void tb_trans_before_reset(struct qemu_plugin_tb *tb)
+>+static void tb_trans_before_reset(struct qemu_plugin_tb *tb, void *userdata)
 > {
 >     g_assert(!was_reset && !was_uninstalled);
 >     qemu_plugin_register_vcpu_tb_exec_cb(tb, tb_exec_before_reset,
+>@@ -61,7 +61,7 @@ QEMU_PLUGIN_EXPORT int qemu_plugin_install(qemu_plugin_id_t id,
+>                                            int argc, char **argv)
+> {
+>     plugin_id = id;
+>-    qemu_plugin_register_vcpu_tb_trans_cb(id, tb_trans_before_reset);
+>+    qemu_plugin_register_vcpu_tb_trans_cb(id, tb_trans_before_reset, NULL);
+>     return 0;
+> }
+> 
 >diff --git a/tests/tcg/plugins/setpc.c b/tests/tcg/plugins/setpc.c
->index 8f2d025e245..44cea064783 100644
+>index 44cea064783..595571cdfd9 100644
 >--- a/tests/tcg/plugins/setpc.c
 >+++ b/tests/tcg/plugins/setpc.c
 >@@ -73,7 +73,7 @@ static void vcpu_mem_access(unsigned int vcpu_index,
 >     }
 > }
 > 
->-static void vcpu_tb_trans(qemu_plugin_id_t id, struct qemu_plugin_tb *tb)
->+static void vcpu_tb_trans(struct qemu_plugin_tb *tb)
+>-static void vcpu_tb_trans(struct qemu_plugin_tb *tb)
+>+static void vcpu_tb_trans(struct qemu_plugin_tb *tb, void *userdata)
 > {
 >     size_t insns = qemu_plugin_tb_n_insns(tb);
 >     for (size_t i = 0; i < insns; i++) {
+>@@ -100,6 +100,6 @@ QEMU_PLUGIN_EXPORT int qemu_plugin_install(qemu_plugin_id_t id,
+> {
+> 
+>     qemu_plugin_register_vcpu_syscall_filter_cb(id, vcpu_syscall_filter);
+>-    qemu_plugin_register_vcpu_tb_trans_cb(id, vcpu_tb_trans);
+>+    qemu_plugin_register_vcpu_tb_trans_cb(id, vcpu_tb_trans, NULL);
+>     return 0;
+> }
 >-- 
 >2.43.0
 >
