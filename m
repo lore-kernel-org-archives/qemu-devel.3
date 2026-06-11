@@ -4,55 +4,55 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D44E6CD98C6
-	for <qemu-devel@archiver.kernel.org>; Thu, 11 Jun 2026 06:54:03 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 08482CD8CB9
+	for <qemu-devel@archiver.kernel.org>; Thu, 11 Jun 2026 06:54:18 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wXZIP-00005t-BI; Thu, 11 Jun 2026 02:53:45 -0400
+	id 1wXZIf-00007s-SZ; Thu, 11 Jun 2026 02:54:01 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <junjie.cao@intel.com>)
- id 1wXZIN-00005k-Oh
- for qemu-devel@nongnu.org; Thu, 11 Jun 2026 02:53:43 -0400
+ id 1wXZIc-00007k-Vb
+ for qemu-devel@nongnu.org; Thu, 11 Jun 2026 02:53:59 -0400
 Received: from mgamail.intel.com ([198.175.65.15])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <junjie.cao@intel.com>)
- id 1wXZIM-0007XG-Au
- for qemu-devel@nongnu.org; Thu, 11 Jun 2026 02:53:43 -0400
+ id 1wXZIb-0007XG-6b
+ for qemu-devel@nongnu.org; Thu, 11 Jun 2026 02:53:58 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1781160823; x=1812696823;
+ t=1781160838; x=1812696838;
  h=from:to:cc:subject:date:message-id:in-reply-to:
  references:mime-version:content-transfer-encoding;
- bh=CcoznjziQF4d1eDXcs4Y72p3P/Kd8w83UdlGdptqyPI=;
- b=Oo3kvjADpw4jhRYKA6i7J/9weCntdMwOPknQ+zkBy+Mn8ase4/JjMXh9
- nsVx5w6lP0DIEHbTb6CWzFhAtnHmglckAgxuHirmcUjJkbeLnHp0kZtaW
- g2FebWI+ybRHGnLEVVvQadY9pdqZrjmsw/5zAaBYJnsq8wK/WFfFOeE+p
- AvV9VjUPAcZX81Zct/tPi1BOmTizISrKVIQgiA4At8ZZMiGk4QaePs+B6
- t5BPID4J/x8P7Tyci6rWzcitQz3if/ypxcbT5EObSeoDKfwo5LH02kEUV
- 70ZUEzXS1qCQsFu393W8y5e1/5uU4bSwOeXc8KjXSHq5R04PPfxBxxHVG g==;
-X-CSE-ConnectionGUID: zlx6Uk+cSiuMVC+7zzAO3Q==
-X-CSE-MsgGUID: xcfMlKsdTM+Bhoaou7Ve4w==
-X-IronPort-AV: E=McAfee;i="6800,10657,11813"; a="85595451"
-X-IronPort-AV: E=Sophos;i="6.24,198,1774335600"; d="scan'208";a="85595451"
+ bh=bjCmdxXe78AH05DYv6kC/9KUguuQjGAQp6spxywWFHo=;
+ b=PevG2r9Et0pf8/SvRmC1utHbENERXsMY8SR2LOnhahrwriw4FDyrVWk2
+ z0iTG6oeOU1Ab5d5G41RHqz3VJJiTbz8EtCGPW7y3sNYbM8Z5TRzN9uVs
+ hiuYz5cj13GT3VlqBNnuFi+cKWBEZMU+915XoJ1bGG0IxWBuoqx2JHGx5
+ +p44HeW+/rDtoSKCysGYryhviCCioFXbEPKlc0tsCPDn+N77B7QwOT77i
+ 6ArwazhiOJMJTTTvwDnGpr30sPR245xUva00jDQ0GLgoYVCcsAaTIhs4p
+ f/hDANnw/B3kaVnMtXKybBTMVIlzsLzFkqNk6CdX3N0NxfqabLauEQsKS A==;
+X-CSE-ConnectionGUID: qVB02jnTT7C7VxDsRYVNyA==
+X-CSE-MsgGUID: iSlN7QBLShyxR2T3MiBXTQ==
+X-IronPort-AV: E=McAfee;i="6800,10657,11813"; a="85595482"
+X-IronPort-AV: E=Sophos;i="6.24,198,1774335600"; d="scan'208";a="85595482"
 Received: from orviesa007.jf.intel.com ([10.64.159.147])
  by orvoesa107.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 10 Jun 2026 23:53:42 -0700
-X-CSE-ConnectionGUID: xfEkZdzxTZCMTCfAcdPOJg==
-X-CSE-MsgGUID: zz+fC0XlRVSsLQNZ5OPqAw==
+ 10 Jun 2026 23:53:57 -0700
+X-CSE-ConnectionGUID: Oc6XA8rdTryoyY9ABve7LA==
+X-CSE-MsgGUID: NbzhNLcVQpK5YutRdt3wSA==
 X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.24,198,1774335600"; d="scan'208";a="246469751"
+X-IronPort-AV: E=Sophos;i="6.24,198,1774335600"; d="scan'208";a="246469819"
 Received: from junjie-desk-dev.bj.intel.com ([10.238.152.71])
  by orviesa007-auth.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 10 Jun 2026 23:53:40 -0700
+ 10 Jun 2026 23:53:55 -0700
 From: Junjie Cao <junjie.cao@intel.com>
 To: jic23@kernel.org
 Cc: fan.ni@samsung.com, qemu-devel@nongnu.org, linux-cxl@vger.kernel.org,
  junjie.cao@intel.com
-Subject: [PATCH v2 1/5] hw/cxl: introduce trace-events infrastructure
-Date: Thu, 11 Jun 2026 14:30:23 +0800
-Message-ID: <20260611063027.1166493-2-junjie.cao@intel.com>
+Subject: [PATCH v2 4/5] hw/cxl: trace event log insertion, overflow and clear
+Date: Thu, 11 Jun 2026 14:30:26 +0800
+Message-ID: <20260611063027.1166493-5-junjie.cao@intel.com>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20260611063027.1166493-1-junjie.cao@intel.com>
 References: <20260611063027.1166493-1-junjie.cao@intel.com>
@@ -82,47 +82,101 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The CXL subsystem currently has no trace-events file.  Create one under
-hw/cxl/ and register it in the top-level meson.build
-trace_events_subdirs list so that subsequent patches can add trace
-points incrementally.
+Add trace events for CXL event log activity.  Event insertion, overflow,
+and clearing are exercised on every error injection or dynamic capacity
+event, but the interaction with the per-log overflow counter was
+previously opaque.
+
+Three trace points are added:
+
+  cxl_event_insert   - successful enqueue, with log type and resulting
+                       occupancy (queue depth after insert)
+  cxl_event_overflow - overflow threshold hit, event dropped, with
+                       cumulative overflow count
+  cxl_event_clear    - bulk clear with log type and number of records
+                       removed
+
+As a minor optimisation, cache the result of cxl_event_count() in a
+local variable so the O(n) queue walk is performed once per insert
+rather than twice.
 
 Signed-off-by: Junjie Cao <junjie.cao@intel.com>
 ---
- hw/cxl/trace-events | 1 +
- hw/cxl/trace.h      | 2 ++
- meson.build         | 1 +
- 3 files changed, 4 insertions(+)
- create mode 100644 hw/cxl/trace-events
- create mode 100644 hw/cxl/trace.h
+ hw/cxl/cxl-events.c | 13 +++++++++++--
+ hw/cxl/trace-events |  5 +++++
+ 2 files changed, 16 insertions(+), 2 deletions(-)
 
+diff --git a/hw/cxl/cxl-events.c b/hw/cxl/cxl-events.c
+index 5356dfb5b3..685ef5dc44 100644
+--- a/hw/cxl/cxl-events.c
++++ b/hw/cxl/cxl-events.c
+@@ -13,6 +13,7 @@
+ #include "hw/pci/msix.h"
+ #include "hw/cxl/cxl.h"
+ #include "hw/cxl/cxl_events.h"
++#include "trace.h"
+ 
+ /* Artificial limit on the number of events a log can hold */
+ #define CXL_TEST_EVENT_OVERFLOW 8
+@@ -98,6 +99,7 @@ bool cxl_event_insert(CXLDeviceState *cxlds, CXLEventLogType log_type,
+     uint64_t time;
+     CXLEventLog *log;
+     CXLEvent *entry;
++    int occupancy;
+ 
+     if (log_type >= CXL_EVENT_TYPE_MAX) {
+         return false;
+@@ -109,12 +111,15 @@ bool cxl_event_insert(CXLDeviceState *cxlds, CXLEventLogType log_type,
+ 
+     QEMU_LOCK_GUARD(&log->lock);
+ 
+-    if (cxl_event_count(log) >= CXL_TEST_EVENT_OVERFLOW) {
++    occupancy = cxl_event_count(log);
++
++    if (occupancy >= CXL_TEST_EVENT_OVERFLOW) {
+         if (log->overflow_err_count == 0) {
+             log->first_overflow_timestamp = time;
+         }
+         log->overflow_err_count++;
+         log->last_overflow_timestamp = time;
++        trace_cxl_event_overflow(log_type, log->overflow_err_count);
+         return false;
+     }
+ 
+@@ -133,8 +138,10 @@ bool cxl_event_insert(CXLDeviceState *cxlds, CXLEventLogType log_type,
+     QSIMPLEQ_INSERT_TAIL(&log->events, entry, node);
+     cxl_event_set_status(cxlds, log_type, true);
+ 
++    trace_cxl_event_insert(log_type, occupancy + 1);
++
+     /* Count went from 0 to 1 */
+-    return cxl_event_count(log) == 1;
++    return occupancy == 0;
+ }
+ 
+ void cxl_discard_all_event_records(CXLDeviceState *cxlds)
+@@ -234,6 +241,8 @@ CXLRetCode cxl_event_clear_records(CXLDeviceState *cxlds,
+         entry = cxl_event_get_head(log);
+     }
+ 
++    trace_cxl_event_clear(log_type, nr);
++
+     return CXL_MBOX_SUCCESS;
+ }
+ 
 diff --git a/hw/cxl/trace-events b/hw/cxl/trace-events
-new file mode 100644
-index 0000000000..23bc9b19b9
---- /dev/null
+index 609def2dec..17f9e7059c 100644
+--- a/hw/cxl/trace-events
 +++ b/hw/cxl/trace-events
-@@ -0,0 +1 @@
-+# See docs/devel/tracing.rst for syntax documentation.
-diff --git a/hw/cxl/trace.h b/hw/cxl/trace.h
-new file mode 100644
-index 0000000000..ab87f3e98f
---- /dev/null
-+++ b/hw/cxl/trace.h
-@@ -0,0 +1,2 @@
-+/* SPDX-License-Identifier: GPL-2.0-or-later */
-+#include "trace/trace-hw_cxl.h"
-diff --git a/meson.build b/meson.build
-index 19e123423b..c229199d5d 100644
---- a/meson.build
-+++ b/meson.build
-@@ -3596,6 +3596,7 @@ if have_system
-     'hw/audio',
-     'hw/block',
-     'hw/char',
-+    'hw/cxl',
-     'hw/display',
-     'hw/dma',
-     'hw/fsi',
+@@ -4,3 +4,8 @@
+ cxl_mailbox_cmd(uint8_t set, uint8_t cmd, const char *name, size_t len_in) "set=0x%02x cmd=0x%02x [%s] len_in=%zu"
+ cxl_mailbox_cmd_done(uint8_t set, uint8_t cmd, int ret, size_t len_out) "set=0x%02x cmd=0x%02x ret=%d len_out=%zu"
+ cxl_mailbox_payload_error(uint8_t set, uint8_t cmd, const char *name, size_t len_in) "set=0x%02x cmd=0x%02x [%s] len_in=%zu"
++
++# cxl-events.c
++cxl_event_insert(int log_type, int occupancy) "log_type=%d occupancy=%d"
++cxl_event_overflow(int log_type, uint16_t overflow_count) "log_type=%d overflow_count=%u"
++cxl_event_clear(int log_type, int nr_recs) "log_type=%d nr_recs=%d"
 -- 
 2.43.0
 
