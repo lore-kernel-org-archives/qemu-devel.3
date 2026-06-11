@@ -4,118 +4,149 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E53A7CD98C7
-	for <qemu-devel@archiver.kernel.org>; Thu, 11 Jun 2026 19:18:54 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id F2081CD98D2
+	for <qemu-devel@archiver.kernel.org>; Thu, 11 Jun 2026 19:24:19 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wXkvF-00015Z-JZ; Thu, 11 Jun 2026 15:18:37 -0400
+	id 1wXl0I-0001vT-Ut; Thu, 11 Jun 2026 15:23:50 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <milesg@linux.ibm.com>)
- id 1wXkvE-00015B-6i; Thu, 11 Jun 2026 15:18:36 -0400
-Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
+ (Exim 4.90_1) (envelope-from <pierrick.bouvier@oss.qualcomm.com>)
+ id 1wXl0H-0001ul-B4
+ for qemu-devel@nongnu.org; Thu, 11 Jun 2026 15:23:49 -0400
+Received: from mx0b-0031df01.pphosted.com ([205.220.180.131])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <milesg@linux.ibm.com>)
- id 1wXkvC-00088i-3u; Thu, 11 Jun 2026 15:18:35 -0400
-Received: from pps.filterd (m0353725.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 65BCEshp1742328; Thu, 11 Jun 2026 19:18:31 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
- :content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:reply-to:subject:to; s=pp1;
- bh=+jkPVLCV4+1lT13kc4vKx2dXh9jm96hSHVM72mrA72w=; b=KcTGFrOt3dmt
- I+x71H71aZtMS/aHzS6JLZrwDmiLi3PCmtCVTCE7zciKzkMlOudC5/zw0FlnB6M1
- vi9wnTZjOpzmUakV6EHrDtwnYiLOls5a9+aCaMyDJ9f+/+fL70/M63YtUTPgC5mv
- Vx1wvclaEA+CILYLN0HBBpId+eenNkKR3SH1tkZ7K9UYkw2EDwx+wk6iHpjDIDfg
- lkp7Za0wE7P2HvkTfgvmwK6xjCGcKQMAcVDR5a7YAXgL6hA9A2SHxC1LU9YRWpmj
- Z6/qOUGvWnvE1tNwX++N12mGDYVgkPkPquzQUSuXbGgFANSikk6qrApWclit96+T
- 8j0x/oHsbg==
-Received: from ppma13.dal12v.mail.ibm.com
- (dd.9e.1632.ip4.static.sl-reverse.com [50.22.158.221])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4eqe8bnckp-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Thu, 11 Jun 2026 19:18:30 +0000 (GMT)
-Received: from pps.filterd (ppma13.dal12v.mail.ibm.com [127.0.0.1])
- by ppma13.dal12v.mail.ibm.com (8.18.1.7/8.18.1.7) with ESMTP id 65BJ4d1V003636;
- Thu, 11 Jun 2026 19:18:29 GMT
-Received: from smtprelay05.dal12v.mail.ibm.com ([172.16.1.7])
- by ppma13.dal12v.mail.ibm.com (PPS) with ESMTPS id 4eqe09vn2w-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Thu, 11 Jun 2026 19:18:29 +0000 (GMT)
-Received: from smtpav01.wdc07v.mail.ibm.com (smtpav01.wdc07v.mail.ibm.com
- [10.39.53.228])
- by smtprelay05.dal12v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 65BJISkg14746216
- (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Thu, 11 Jun 2026 19:18:28 GMT
-Received: from smtpav01.wdc07v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 79AC85804B;
- Thu, 11 Jun 2026 19:18:28 +0000 (GMT)
-Received: from smtpav01.wdc07v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 16FAC58059;
- Thu, 11 Jun 2026 19:18:27 +0000 (GMT)
-Received: from mambor8.rchland.ibm.com (unknown [9.10.239.198])
- by smtpav01.wdc07v.mail.ibm.com (Postfix) with ESMTP;
- Thu, 11 Jun 2026 19:18:26 +0000 (GMT)
-Message-ID: <1c2a47848384c57ceb2d2ed929d3ccdf16d72ed3.camel@linux.ibm.com>
-Subject: Re: [RFC PATCH 00/28] target/ppc: Moving instructions to decodetree
- specification
-From: Miles Glenn <milesg@linux.ibm.com>
-To: Chinmay Rath <rathc@linux.ibm.com>, qemu-devel@nongnu.org,
- qemu-ppc@nongnu.org, npiggin@gmail.com, harshpb@linux.ibm.com,
- richard.henderson@linaro.org, peter.maydell@linaro.org, stefanha@redhat.com
-Cc: vishalc@linux.ibm.com, tshah@linux.ibm.com, shivangu@linux.ibm.com,
- ojaswin@linux.ibm.com, aboorvad@linux.ibm.com, amachhiw@linux.ibm.com,
- sv@linux.ibm.com, shivani@linux.ibm.com, mkchauras@gmail.com,
- uverma@linux.ibm.com, nikhilks@linux.ibm.com
-Date: Thu, 11 Jun 2026 14:18:26 -0500
-In-Reply-To: <f96c5fde-b4d6-48ee-8778-7255ecb3236e@linux.ibm.com>
-References: <20260520160728.2283628-1-rathc@linux.ibm.com>
- <285fdd30-f22d-4d4b-b8ee-5f04fccfca6d@linux.ibm.com>
- <4ef1791085a32802185b2c68686aab273f4dfcbd.camel@linux.ibm.com>
- <f96c5fde-b4d6-48ee-8778-7255ecb3236e@linux.ibm.com>
-Organization: IBM
-Content-Type: text/plain; charset="UTF-8"
-X-Mailer: Evolution 3.28.5 (3.28.5-27.el8_10) 
-Mime-Version: 1.0
-Content-Transfer-Encoding: 7bit
-X-TM-AS-GCONF: 00
-X-Proofpoint-Reinject: loops=2 maxloops=12
-X-Authority-Analysis: v=2.4 cv=Xfa5Co55 c=1 sm=1 tr=0 ts=6a2b0a06 cx=c_pps
- a=AfN7/Ok6k8XGzOShvHwTGQ==:117 a=AfN7/Ok6k8XGzOShvHwTGQ==:17
- a=IkcTkHD0fZMA:10 a=FelO9ux0wxsA:10 a=VkNPw1HP01LnGYTKEx00:22
- a=RnoormkPH1_aCDwRdu11:22 a=V8glGbnc2Ofi9Qvn3v5h:22 a=p0WdMEafAAAA:8
- a=rW9r5uX3dROKkisGniEA:9 a=QEXdDO2ut3YA:10
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNjExMDE5MiBTYWx0ZWRfX6BXLyqtuaDdC
- 8uu52fqK/r4wnNcO9MpkzlUhwtQHyOeqx2/KWtXuKa/43xfXajKzIHwlx4KxQe5Em73aaCzBPRr
- llwdNAwewsUGRIcCe9pIdxCYcrRtmqlTXrYg8jer+hMZ2IAG2GZh04ajLJhYd1WtlC4nIpupMEE
- gIPFnBicx95qcaojQmdMRsH+COkgeHMORp1oVFclO52BH5CM5JjiFGSzevoRvtnsC5xpLq6HJ+G
- xWrYFsryB8fLdSLY/Tc2H8g2AYyP0Fkdgh8sq7iw0x36tmOZzLn0Z+TDelpSsXj4ZOKZqEPEWEr
- AXnORw2/+19g82czxceA5YMkisAHJEG/oEqxgQg367V2qqgzcE3pWms2J4wcyzQ+IIfy/gkNqBL
- 6m2aqgU6/La4MzcJ5H9x5SLZAt/pSQWaz415PZEw3fmRhG3OFS9HyjjjT3lmRQu4Kwn0xMkFVYG
- /nSnwcKydQSijWRFAXw==
-X-Proofpoint-Spam-Info: AW1haW4tMjYwNjExMDE5MiBTYWx0ZWRfX8gLk+3PDrhhW
- xQ8NjDH6WHvWXm744nZJoyo+pEIYH52ABPEVSiQIYd88hAPE0+t+cStz2dTpC2X/gPqfKxTPFF7
- 5mC/JFCni72UY0xkv9KMb1dKOO8PNR4=
-X-Proofpoint-ORIG-GUID: 1a0YBX028gRjQwW6eeuGJDMwmOlD72HJ
-X-Proofpoint-GUID: diPdYVJSBBhpSMZjwhO5SY2p4BhqiF0q
+ (Exim 4.90_1) (envelope-from <pierrick.bouvier@oss.qualcomm.com>)
+ id 1wXl0F-0003Au-MT
+ for qemu-devel@nongnu.org; Thu, 11 Jun 2026 15:23:49 -0400
+Received: from pps.filterd (m0279868.ppops.net [127.0.0.1])
+ by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
+ 65BJEBHS1400710
+ for <qemu-devel@nongnu.org>; Thu, 11 Jun 2026 19:23:44 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+ cc:content-transfer-encoding:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+ 60jDMnGtWGLcdzOG3GSmfEmet+r0TOwibA8TTaUTlp4=; b=i4tg7gKpS9UmmInd
+ b4POASWl1MUpX1ajv9FrdDPHxVTHq1logd0lJrJI0yOe8OZClgB4GbcYLUWYQmXx
+ 4nY+A5OU3kDm0yYIIHf+9eQ6v7TCXzgy4TPLALqdDjgMQcBpCKIwOKj1YAexxsjB
+ 4mZQAAsGd3kLddjTbzLWErXu420oed5If+hEuAaY6yl2sEVI3YRvrZNMr9JQD19u
+ 1wZB5936T6temhaReHdq6O6sqL7U288RuJtbQRbOnZjZqyqp+1VkuoYZd7PtLeYm
+ G9lU2pT/Qe0XxTKqLula18ltzYAwAjwBDjNqSzskkyG/wUwjGrAI9ZNMskrA13ot
+ DXxoaQ==
+Received: from mail-pg1-f200.google.com (mail-pg1-f200.google.com
+ [209.85.215.200])
+ by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4er30g81cw-1
+ (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
+ for <qemu-devel@nongnu.org>; Thu, 11 Jun 2026 19:23:44 +0000 (GMT)
+Received: by mail-pg1-f200.google.com with SMTP id
+ 41be03b00d2f7-c8596e4272aso134659a12.2
+ for <qemu-devel@nongnu.org>; Thu, 11 Jun 2026 12:23:43 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=oss.qualcomm.com; s=google; t=1781205823; x=1781810623; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:content-language:from
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=60jDMnGtWGLcdzOG3GSmfEmet+r0TOwibA8TTaUTlp4=;
+ b=OQXs529T83Xepyyt0R+Lt4xbLLiH69SniF2Vp9z51DqctVEd0jAv1WiUUYLk4BYCIj
+ AHKcuuRS+esdMQwdE7F8YpPgNvWHf2Ghg8zqfVvCPeu0ncMGECGQWNbb/RHkYljFHg1N
+ 8IOAZzWseTi8VgSCHp7GESQ1a2xTKZKPllQZ1bOjtXX93CHHWEVFP0uXxCh5uT33vxh6
+ sYb1lZfF9aYbB/gEHWIINMZDmMnZNh5iuTqCoY2PJL9H7+Szr4XpWplcS5Y1Z9eJ5a4l
+ jQqy5fuHInbdGpMP3o8q97fG+u63BXPQd/9gknvEWucf0A7lKZBoRYM6eCQJ/ehg90gx
+ 8X+A==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1781205823; x=1781810623;
+ h=content-transfer-encoding:in-reply-to:content-language:from
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=60jDMnGtWGLcdzOG3GSmfEmet+r0TOwibA8TTaUTlp4=;
+ b=NFkxPXoJxXNwYEIeFC8FEYF8xfuScF05skjMEQB8IeFXtflkWV5Qx1PrlT9VVh92a3
+ 3ifdwOo7GUmyK8YjiYV0Wpx1JN1lyuXifMC71g/stkedbGY9ceXbfgoFM+MVb7c63+PF
+ yRRNx3miS5F0DOI63vLRKrMZSMgZooNvPm9NFrFbABlPI82wBgJRDwlyfOdEgAyRQQfD
+ RlFfDw3Zu1iNO4mz+5HOuE77GKurQEk7UeyeuQwLIAawDd4cmzp9MOhtKaALwEARnLX7
+ 7Bnzp0JDz3H3rM2uvuBBtGnshhOBGWSvTLYwaPe/po8aLuiQv0IRDQuDeEYlojNGBr8t
+ SarQ==
+X-Gm-Message-State: AOJu0YxfpUPD4s2iP7+WbsGPR7b6aX+BCScljW4Xn2DQRraiZUWQbj9/
+ cqRsUwBf4DYai5XRY7ZdtuEiPRRZD6mWHMjmYWprfRUIjIzzL6tH79KtkgTLXNkv6Hk5zvY4+7I
+ pZy9WmyQF1tG3N4iqI6gBqGMp5EqgNW+9F3EzkKI5E4jOvMpiaLtYRuThyA==
+X-Gm-Gg: Acq92OG+WyAZAJm4n2H2h0dYwZpAcWuN+HOs5YsfBUTNj4H56dEank1Y8I2YCdYwMzV
+ bZ+0/QAfUNlsrIhaNfgaYlylMNI49hvLXL9BRFcvh8PBsL1rU/82Iy6IGbDX/utgZfNeCetlKd0
+ Q4PmEkbJN5AnsDcN6S9SAsgFJmZs5hqPiG0gIQQoZn9ub8yu94SHVNdzwF3p0LxxV4BeopxBfP6
+ HSKy6U+otjAQeOp5RMz7YPk8MEOMiM5Dd8+4cSShkkhoNFHOA4hoPjsrcbxN1fwPaVZvCd+QxCZ
+ blsby1ChACuAi5NpwKts1ZM/YEMVJIobO1J6dKnp7aS+8Ry9yNuY7zOSilyelwbcLQ9E4aFde8o
+ /ROXOtbNy6Fw9ed4mQWC4aR82xYrh9rDuZpy0/yWjjz9SSmLKMEiLcIfILh6mTSHkP23yG7opPq
+ Lh5lmTpGMTMFCfzw==
+X-Received: by 2002:a05:6a21:1519:b0:3aa:f9cb:d43a with SMTP id
+ adf61e73a8af0-3b5e317308dmr4730015637.5.1781205823117; 
+ Thu, 11 Jun 2026 12:23:43 -0700 (PDT)
+X-Received: by 2002:a05:6a21:1519:b0:3aa:f9cb:d43a with SMTP id
+ adf61e73a8af0-3b5e317308dmr4729982637.5.1781205822679; 
+ Thu, 11 Jun 2026 12:23:42 -0700 (PDT)
+Received: from [192.168.1.170] (216-71-219-44.dyn.novuscom.net.
+ [216.71.219.44]) by smtp.gmail.com with ESMTPSA id
+ 41be03b00d2f7-c866325d1c8sm51295a12.9.2026.06.11.12.23.41
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Thu, 11 Jun 2026 12:23:42 -0700 (PDT)
+Message-ID: <49ef4614-1d8d-44c7-bdbf-485d971be02c@oss.qualcomm.com>
+Date: Thu, 11 Jun 2026 12:23:40 -0700
+MIME-Version: 1.0
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 00/27] tests/tcg: run tests with meson
+To: Paolo Bonzini <pbonzini@redhat.com>
+Cc: qemu-devel@nongnu.org, Thomas Huth <thuth@redhat.com>,
+ Manos Pitsidianakis <manos.pitsidianakis@linaro.org>,
+ =?UTF-8?Q?Daniel_P_=2E_Berrang=C3=A9?= <berrange@redhat.com>,
+ =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ qemu-arm@nongnu.org, Richard Henderson <richard.henderson@linaro.org>,
+ =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ Alexandre Iooss <erdnaxe@crans.org>, Peter Maydell
+ <peter.maydell@linaro.org>, Gustavo Romero <gustavo.romero@linaro.org>
+References: <20260609214745.772536-1-pierrick.bouvier@oss.qualcomm.com>
+ <0a0a1116-a5f3-45f2-b079-f66e6b17f672@redhat.com>
+ <c5945f76-ae18-4a8c-ae58-d22be7a7f6bd@oss.qualcomm.com>
+ <CABgObfYy48HzQmJTJ4r_dswGjmgMkeuy=1OiY_VbEupC1UX6ww@mail.gmail.com>
+From: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
+Content-Language: en-US
+In-Reply-To: <CABgObfYy48HzQmJTJ4r_dswGjmgMkeuy=1OiY_VbEupC1UX6ww@mail.gmail.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+X-Proofpoint-Spam-Info: AW1haW4tMjYwNjExMDE5NSBTYWx0ZWRfX9uX29VMAIfeB
+ QuyDU2MhKbgaf+a9CNTzRQJToK6LuEp6QaJMlahyjqiEHDIOwYbFFpQpygFfo0cngEfEa20d4gz
+ CiV4KMojWfZwqUd51DvLKoMzeSB/B4o=
+X-Proofpoint-GUID: tlVdc5dwKiNALPivx1DD8TBYR0aGqVUN
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNjExMDE5NSBTYWx0ZWRfXy+/nMYcQD9c0
+ 2d1FnG8opNudbSIvklcNpmU5fUzf1oHvaiqwTiPMnvcO3Sch7T4cYo5O+Y4sO17EnSUsA9tcY5x
+ pnsgk/5hqCpA3txPnbRuyNgiiJKno/GAGxQqCRPb6H5Rzb86RLJhlp1plQIijE3h2t3UsEx68s2
+ XfnCmmVAgOE0OicIHNnGV7Ct9hOYWHLTOECNeXT/0Se1c4QbRhKoLMwnnxC5dTJ0dRjW6JhtxuR
+ j9dDfh0q2A812rr+vKvrsBQ5A+nO/tItTvDy3KI8O10M49a8MZ+tdFQoh3chDmNAkmmQBOdNl9+
+ TVR0pOoiK+ThegHO/bzuytgMxTGsMbu4nidNBNVeD81AZ9sYnhSEr4DLlZiCa50/D/u8B2Jl93Q
+ veyMfrsyPZ4wQ4+evARzQI8A5j+nBozNZdu5wzwQkhQbwz0k9/tIlMioLtrW9/SW/aksbQMBE8h
+ ipGSe5p6gXUNupyjDWw==
+X-Authority-Analysis: v=2.4 cv=evnvCIpX c=1 sm=1 tr=0 ts=6a2b0b40 cx=c_pps
+ a=oF/VQ+ItUULfLr/lQ2/icg==:117 a=iLqgmErQAxjCjdq5jj1Aqg==:17
+ a=IkcTkHD0fZMA:10 a=FelO9ux0wxsA:10 a=s4-Qcg_JpJYA:10
+ a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=ZpdpYltYx_vBUK5n70dp:22
+ a=EUspDBNiAAAA:8 a=VI0ZA3KHNYDXwnx6_70A:9 a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
+ a=3WC7DwWrALyhR5TkjVHa:22
+X-Proofpoint-ORIG-GUID: tlVdc5dwKiNALPivx1DD8TBYR0aGqVUN
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.125,FMLib:17.12.100.49
  definitions=2026-06-11_04,2026-06-11_01,2025-10-01_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- malwarescore=0 spamscore=0 bulkscore=0 priorityscore=1501 lowpriorityscore=0
- impostorscore=0 suspectscore=0 clxscore=1015 phishscore=0 adultscore=0
+ clxscore=1015 suspectscore=0 bulkscore=0 priorityscore=1501 phishscore=0
+ spamscore=0 impostorscore=0 malwarescore=0 adultscore=0 lowpriorityscore=0
  classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2606040000 definitions=main-2606110192
-Received-SPF: pass client-ip=148.163.158.5; envelope-from=milesg@linux.ibm.com;
- helo=mx0b-001b2d01.pphosted.com
-X-Spam_score_int: -26
-X-Spam_score: -2.7
+ reason=mlx scancount=1 engine=8.22.0-2606040000 definitions=main-2606110195
+Received-SPF: pass client-ip=205.220.180.131;
+ envelope-from=pierrick.bouvier@oss.qualcomm.com;
+ helo=mx0b-0031df01.pphosted.com
+X-Spam_score_int: -27
+X-Spam_score: -2.8
 X-Spam_bar: --
-X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
- RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
+X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -129,144 +160,53 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-To: milesg@linux.ibm.com
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, 2026-06-04 at 15:59 +0530, Chinmay Rath wrote:
-> On 6/3/26 19:40, Miles Glenn wrote:
-> > On Wed, 2026-06-03 at 17:09 +0530, Chinmay Rath wrote:
-> > > On 5/20/26 21:37, Chinmay Rath wrote:
-> > > > We recently had a QEMU decodetree hackathon at our org focusing on moving
-> > > > instructions to decodetree specification. I have consolidated the patches
-> > > > generated out of this effort in this series. Though I have done a round
-> > > > of review on all of them, might share some more review comments later.
-> > > > 
-> > > > The checkpatch.pl script emits false error for a couple of patches which
-> > > > are of the following nature :
-> > > > 
-> > > > TRANS(STWAT, do_st_atomic, DEF_MEMOP(MO_UL))
-> > > > 
-> > > > static bool trans_LDAT(DisasContext *ctx, arg_LDAT *a)
-> > > >                                                       ^
-> > > > I see this happening in the last pointer argument in function
-> > > > definitions after macros (like TRANS(..) in this case).
-> > > > 
-> > > > Richard, Peter, Stefan,
-> > > > Could you please advise if it would be okay to have the above false
-> > > > positive in the patches ?
-> > > Hi Chao,
-> > > I was wondering if you would be able to advise a way forward for this
-> > > checkpatch issue ? TIA.
-> > > > Gitlab CI: https://gitlab.com/rathc/qemu/-/pipelines/2540725424
-> > > > Please note that check-python-tox and migration-compat-aarch64 from CI
-> > > > fails in the upstream master branch as seen in the following:
-> > > > https://gitlab.com/rathc/qemu/-/pipelines/2537246569
-> > > > 
-> > > > Thanks,
-> > > > Chinmay
-> > > Hi Glenn,
-> > > If possible, would you like to have a look at this series when you get a
-> > > chance ? TIA.
-> > Hi Chinmay,
-> > 
-> > First, I'd like to thank you and everyone that worked on this for their
-> > efforts!  This seems like one of those tasks that everyone knows is
-> > needed but everyone would rather work on other more interesting things
-> > (myself included).  I would like to take a look at this series when I
-> > get the chance.  I do have a lot on my plate right now, but hopefully I
-> > can get to it in the next week or so.
-> > 
-> > Thanks,
-> > 
-> > Glenn
-> Sure Glenn, thanks !
+On 6/11/2026 7:49 AM, Paolo Bonzini wrote:
+> On Wed, Jun 10, 2026 at 7:01 PM Pierrick Bouvier
+> <pierrick.bouvier@oss.qualcomm.com> wrote:
+>> Your idea is to have one project per target, and use meson cross compile
+>> support for this?
+> 
+> Yes, that was the idea.
+> 
+>> `make check-tcg-aarch64-softmu` is supported out of the box with this
+>> series, without having to write a single line of Makefile. You can still
+>> do what you like: see cover letter usage, to run a suite or a single test.
+>> I don't see rewriting the cc_feat part in meson directly as a problem to
+>> be honest. Not all architectures needs to check specific feat (only
+>> aarch64, arm, i386, ppc64 and s390x).
+>>
+>> Also, calling:
+>>   supported = run_command[cc, check_cflags, flags].returncode() == 0
+>> vs
+>>   cc.get_supported_arguments(flags)
+>> is not really much more complex IMHO, and not a huge reinvention.
+>>
+>> Also, the custom target is hidden inside tcg/tests/meson.build and not
+>> exposed to arch files. Even if we had multiple projects, I would stick
+>> to not exposing test() and executable() in arch files.
+> 
+> Fair enough.
+> 
+>> I would expect this file to disappear completely, and to rely on make
+>> check-tcg-arch-* targets at top level instead. Would that work for you?
+> 
+> Yeah, you're right that at this point TCG tests are the last
+> stragglers in that file. That tilts the balance for me, it does make
+> sense to do this with custom_target() until Meson grows support for
+> something like multi-machine projects. Just please add an alias_target
+> 'build-tcg-tests-...' for compatibility with tests/Makefile.include.
+>
 
-I had a little time to look over the changes today and I didn't see any
-major issues.  I did notice that the change, "Refactor sleep and its
-variants to use a common helper", didn't seem related to moving things
-into decodetree, so maybe that should be reviewed separately?  There
-was also a lot of moving of implementation code out of translate.c into
-more specific files, like fixedpoint-impl.c.inc.  This didn't seem
-required in order to use decodetree either, so perhaps those changes
-should be split out into another patch?
+Sure, that's a good idea.
+I was wondering as well if we should build those tests by default (as
+part of 'all' target). We should do this only if cross compiler is not
+using any container, to avoid triggering a confusing container build.
+Any opinion?
 
-Otherwise, I think it looks pretty good.
-
-Thanks,
-
-Glenn
-
-
-> -Chinmay
-> > > Thanks,
-> > > Chinmay
-> > > > Aboorva Devarajan (3):
-> > > >     target/ppc: Move vector merge instructions to decodetree
-> > > >     target/ppc: Move vector pack instructions to decodetree
-> > > >     target/ppc: Move GPR atomic load/store instructions to decodetree
-> > > > 
-> > > > Amit Machhiwal (2):
-> > > >     target/ppc: Move fixed-point Shift insns to decodetree
-> > > >     target/ppc: Move fixed-point byte-reversal store insns to decodetree
-> > > > 
-> > > > Mukesh Kumar Chaurasiya (IBM) (2):
-> > > >     target/ppc: convert slw,srw instruction via decode spec
-> > > >     target/ppc: convert sraw[i] instruction via decode spec
-> > > > 
-> > > > Nikhil Kumar Singh (3):
-> > > >     target/ppc: Migrate extswsli to decodetree
-> > > >     target/ppc: Migrate atomic loads to decodetree
-> > > >     target/ppc: Convert cache instructions to decodetree
-> > > > 
-> > > > Ojaswin Mujoo (7):
-> > > >     target/ppc: Move isync instruction to decodetree.
-> > > >     target/ppc: Convert b{a, l, la} to decode tree
-> > > >     target/ppc: move various conditional branch insns to decodetree
-> > > >     target/ppc: Fix TRANS* macro variadic arguments handling
-> > > >     target/ppc: Move wait instruction to decodetree
-> > > >     target/ppc: Move sleep & friends to decodetree
-> > > >     target/ppc: Refactor sleep and its variants to use a common helper
-> > > > 
-> > > > Shivang Upadhyay (4):
-> > > >     target/ppc: Move Condition Register access instructions to decodetree.
-> > > >     target/ppc: Move Condition Register logical instructions to
-> > > >       decodetree.
-> > > >     target/ppc: Move Fixed-Point Load/Store String instructions to
-> > > >       decodetree.
-> > > >     target/ppc: Move VMX integer arithmetic and BCD instructions to
-> > > >       decodetree.
-> > > > 
-> > > > Shivani Nittor (1):
-> > > >     target/ppc : Convert mcrf to decode tree
-> > > > 
-> > > > Tanushree Shah (2):
-> > > >     target/ppc: Move rlwimi, rlwinm instructions to decodetree
-> > > >     target/ppc: Move lmw, stmw instructions to decodetree
-> > > > 
-> > > > Utkarsh Verma (1):
-> > > >     target/ppc: Move st{b, h, w, d, q}cx instructions to decodetree
-> > > > 
-> > > > Vishal Chourasia (3):
-> > > >     target/ppc: Move mfmsr, mtmsr[d] instructions to decodetree
-> > > >     target/ppc: Move byte-reverse instructions to decodetree
-> > > >     target/ppc: Move system call and rfi instructions to decodetree
-> > > > 
-> > > >    target/ppc/helper.h                           |  100 +-
-> > > >    target/ppc/insn32.decode                      |  244 ++
-> > > >    target/ppc/int_helper.c                       |   76 +-
-> > > >    target/ppc/internal.h                         |    7 -
-> > > >    target/ppc/mem_helper.c                       |   18 +-
-> > > >    target/ppc/tcg-excp_helper.c                  |   10 +-
-> > > >    target/ppc/translate.c                        | 2592 ++++-------------
-> > > >    target/ppc/translate/branch-impl.c.inc        |  181 ++
-> > > >    target/ppc/translate/fixedpoint-impl.c.inc    |  936 ++++++
-> > > >    target/ppc/translate/misc-impl.c.inc          |  175 ++
-> > > >    .../ppc/translate/processor-ctrl-impl.c.inc   |   30 +
-> > > >    target/ppc/translate/storage-ctrl-impl.c.inc  |  117 +
-> > > >    target/ppc/translate/vmx-impl.c.inc           |  360 +--
-> > > >    target/ppc/translate/vmx-ops.c.inc            |   41 -
-> > > >    14 files changed, 2529 insertions(+), 2358 deletions(-)
-> > > > 
+> Paolo
+> 
 
 
