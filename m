@@ -4,64 +4,142 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7CE2CCD98CC
-	for <qemu-devel@archiver.kernel.org>; Thu, 11 Jun 2026 12:24:14 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D147BCD98CE
+	for <qemu-devel@archiver.kernel.org>; Thu, 11 Jun 2026 12:27:59 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wXeRv-0006KD-8M; Thu, 11 Jun 2026 08:23:55 -0400
+	id 1wXeVW-0008DN-5N; Thu, 11 Jun 2026 08:27:38 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <odaki@rsg.ci.i.u-tokyo.ac.jp>)
- id 1wXeRr-0006Jv-Us
- for qemu-devel@nongnu.org; Thu, 11 Jun 2026 08:23:51 -0400
-Received: from www3579.sakura.ne.jp ([49.212.243.89])
+ (Exim 4.90_1) (envelope-from <philmd@oss.qualcomm.com>)
+ id 1wXeVU-0008DF-Fv
+ for qemu-devel@nongnu.org; Thu, 11 Jun 2026 08:27:36 -0400
+Received: from mx0b-0031df01.pphosted.com ([205.220.180.131])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <odaki@rsg.ci.i.u-tokyo.ac.jp>)
- id 1wXeRp-0006OR-7u
- for qemu-devel@nongnu.org; Thu, 11 Jun 2026 08:23:51 -0400
-Received: from [133.11.54.183] (h183.csg.ci.i.u-tokyo.ac.jp [133.11.54.183])
- (authenticated bits=0)
- by www3579.sakura.ne.jp (8.16.1/8.16.1) with ESMTPSA id 65BCNZAL059704
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NO);
- Thu, 11 Jun 2026 21:23:35 +0900 (JST)
- (envelope-from odaki@rsg.ci.i.u-tokyo.ac.jp)
-DKIM-Signature: a=rsa-sha256; bh=Afcei/M8ty+xccoEhYQUHWAmnuThpQgeyXJmAilfHpc=; 
- c=relaxed/relaxed; d=rsg.ci.i.u-tokyo.ac.jp;
- h=From:Message-ID:To:Subject:Date;
- s=rs20250326; t=1781180615; v=1;
- b=uOnJYRVRRlfeE5Qbjn8jo7iGPxeg2uT6zA/6911i4kCd0XsvivemJfIwy6Na89Ax
- ur+mHEsmSEG9j5/Nu0E1bNWJWk/E9PEELM0V0DulwiOQNuFxM/ENgp4gOJ7PYT5Q
- VOhSzMEEcH77h4XHNc9caFV9VAt0OOq9qgdeblHKeVuepXhGyEfIIV3kxDwkLQiQ
- a10NXv9T9LabzJrTqiqDIvmA5llqSzz4BmG/ufhTRERwsCBhCBltA0Tun1EKDB1J
- D/alfgH11uYn3abqKejZQPnadmOzCQCZjoSf6KSZVvK6jWqt9s8exqoLA6nmnyGq
- KanaClLb2MmZtOY0oQayyw==
-Message-ID: <a8dd5b48-dc1e-4a67-9402-8e661294b8af@rsg.ci.i.u-tokyo.ac.jp>
-Date: Thu, 11 Jun 2026 21:23:35 +0900
+ (Exim 4.90_1) (envelope-from <philmd@oss.qualcomm.com>)
+ id 1wXeVS-0008HF-S1
+ for qemu-devel@nongnu.org; Thu, 11 Jun 2026 08:27:36 -0400
+Received: from pps.filterd (m0279868.ppops.net [127.0.0.1])
+ by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
+ 65BA1ScD168127
+ for <qemu-devel@nongnu.org>; Thu, 11 Jun 2026 12:27:33 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+ cc:content-transfer-encoding:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+ H9m2xUR4o8CM53VHNf9Sq2MRp9vSmevwL/9aMxbSUdQ=; b=E9X6UOLuH0eh1rGC
+ S1Bsr0A94rGmqtZOS23CT4AYFun82icNjt7LGXH8z2rZ005JA3Yk6AZVOwL7GHW/
+ G13TmgkMs6LQab/2Rm4h7HWRBr0coiEiBQIb9UWrfnUy6Hg9l+CtUFsfE88gBrUM
+ pXHO2i+v2HwjkAHaR5NsNNwUviHuiJAZ9BQL3iQoCPb1Z9Vb2WHIdQLwdeyIlnBX
+ /R3KerAl6lH+7SNCpOEXyifGcPMr1Q8LweyqRe4NJ3bP94xT0z5jJ1YAbXbNM/Nl
+ xk9NyggtN5yIPdwS1cBqEpwjI6Oap94tHjP+PfXgLmgUT1RgDP6r0Y++8qAA8ceT
+ 6nxn+A==
+Received: from mail-qt1-f199.google.com (mail-qt1-f199.google.com
+ [209.85.160.199])
+ by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4eqe6ubc7h-1
+ (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
+ for <qemu-devel@nongnu.org>; Thu, 11 Jun 2026 12:27:33 +0000 (GMT)
+Received: by mail-qt1-f199.google.com with SMTP id
+ d75a77b69052e-517e0cdf99fso45285471cf.2
+ for <qemu-devel@nongnu.org>; Thu, 11 Jun 2026 05:27:32 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=oss.qualcomm.com; s=google; t=1781180852; x=1781785652; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=H9m2xUR4o8CM53VHNf9Sq2MRp9vSmevwL/9aMxbSUdQ=;
+ b=OBD0wTEsbDK7m433kzohvhM897GcshBNI5lHB4zgrAElkcVGqPF6PkkRGCZ737V8cD
+ 9DbcaRfOgmX7fmK3QhiFG7U1CZ+Wa54oH6/Cz52mYB9gJBuBFK+D0xvsXTg2+F+H2qxA
+ /foR7BKn+kUUrcFZ+e4/tcIRvtxw+uiJHeO2m0wK4k1gIlKlx40TzUggEUBDL4uZ/3F6
+ uy4g40Ap7mwaA9DC+rkttUyNGnBNJZ5aIb/T9rpV0TLVLAI7leCESGgILjcIEOgeoeAV
+ cC/e8zN1HMJczecw27WukpKv+Q5zXfClUdfO7HZu6Lq4rKZ9LZlwqRQMaZoHS4baW36o
+ 9Oeg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1781180852; x=1781785652;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=H9m2xUR4o8CM53VHNf9Sq2MRp9vSmevwL/9aMxbSUdQ=;
+ b=nFzVC64V2vHrT/D233/tdZNGYsrqbM+mi3CUz1/X+Gj7CdYYdy+zqyJJbXH/+PamxM
+ 8wxR/+UDjaN3W8kPowdKv3dfA5eOdPTxuLAoPlX+pP/GiDJ0gvYtAHXckvfEjQWNmDuc
+ +oDhLyXBq3X3CTo0TUUDBqrqdeSCp4ZeUBZW6qNyZAIEuuQw9TLUQr1sd3HKlOKgL1+N
+ gOlQDeGtgOiVz/YWEbsOCWCmwzm5/lnMYxk/ypy5BndL9Ejujmp4ztQiIYUkKkyTLgR6
+ GYGf1dFiytkVeF2NJEczeuINUZXfMGRjA+mIbF+Wi+IJ2iVVfI8bMyqvypXxVIff5r1a
+ WnPw==
+X-Forwarded-Encrypted: i=1;
+ AFNElJ8r/ynAgzTveETtM4HCnBk6U17KENIwOBzilXMHHV1nl+1LN6aBo3YAG4bhZxRuNyXsgcC/gmq3sNB+@nongnu.org
+X-Gm-Message-State: AOJu0YwuenjbCSIuW/SIQXiOtUqpq8fqLPRn4ubMZOgbsOpU0a92se5Z
+ uAD5txH4lFfkq+ViJQrk7ljnfZRK0+yaPuHeTYueu7sAt26gutRsUSXTzWQ9OJRMGg4FVTP7IQd
+ iazNWfYbjjTIcPyKqoFqM4MhS5+7G7pXxYjvr8rNUsCk033+NlQlkEvCt/g==
+X-Gm-Gg: Acq92OHkwQ94XpvrAnmaX/hhNQtDtRexidjb6GNLmHHMlIvyY4qB8DZ/8ggQanzfB23
+ aOctAU35jbodkpLHR3HzcWqdhhDxHqzz53XgJfsWTM2+7PUmvSeydtUVuHZhoP1nxmLZ+F6RTYG
+ G/K8xKkBT2McBKpqcykDrKZ6nS9pmJXFgOXDCu1gLPJY818P86KS4do3wUGZNQZltQUfQUhmTrY
+ /TDvZ3v0L6uLB1wJAtCWbqjnYud/bBOy2mK0ByLOwZ2pIo/cYewoJvNAxaepVF67EimhIkD0CTO
+ m9nGtZfdg9PBFzsYKAd+RvEq42dv5MkJpqmo/htb7I0+VfPKkyQg9ILkxXL38Advs1FJ3WnZxdW
+ 13otdvSqi00Wa2SNqGNRZQwwzr3ozDqciYab0cbnqYVroECLKJSQbtcnzKzHCITGt37wYrPvq9W
+ ktrGbqurU=
+X-Received: by 2002:a05:622a:144:b0:517:2c1e:8b6 with SMTP id
+ d75a77b69052e-517ee27e445mr39344791cf.38.1781180852317; 
+ Thu, 11 Jun 2026 05:27:32 -0700 (PDT)
+X-Received: by 2002:a05:622a:144:b0:517:2c1e:8b6 with SMTP id
+ d75a77b69052e-517ee27e445mr39344291cf.38.1781180851770; 
+ Thu, 11 Jun 2026 05:27:31 -0700 (PDT)
+Received: from [192.168.69.208] (88-187-86-199.subs.proxad.net.
+ [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-490e2c7ea52sm67022875e9.2.2026.06.11.05.27.30
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Thu, 11 Jun 2026 05:27:30 -0700 (PDT)
+Message-ID: <5c42a81c-e7a0-47e8-acc9-2be70c8a3380@oss.qualcomm.com>
+Date: Thu, 11 Jun 2026 14:27:29 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 1/5] igb: Define TRL registers and core state
-To: Josh Hilke <jrhilke@google.com>, qemu-devel@nongnu.org
-Cc: Sriram Yagnaraman <sriram.yagnaraman@ericsson.com>,
- Jason Wang <jasowang@redhat.com>, Fabiano Rosas <farosas@suse.de>,
- Laurent Vivier <lvivier@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>,
- David Matlack <dmatlack@google.com>,
- Alex Williamson <alex.williamson@nvidia.com>
-References: <20260611023028.102071-1-jrhilke@google.com>
- <20260611023028.102071-2-jrhilke@google.com>
+Subject: Re: [PATCH v6 00/28] Hexagon system emulation - Part 2/3
 Content-Language: en-US
-From: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
-In-Reply-To: <20260611023028.102071-2-jrhilke@google.com>
+To: Brian Cain <brian.cain@oss.qualcomm.com>, qemu-devel@nongnu.org
+Cc: matheus.bernardino@oss.qualcomm.com, pierrick.bouvier@oss.qualcomm.com,
+ ltaylorsimpson@gmail.com, philmd@mailo.org
+References: <20260611053249.3918491-1-brian.cain@oss.qualcomm.com>
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>
+In-Reply-To: <20260611053249.3918491-1-brian.cain@oss.qualcomm.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=49.212.243.89;
- envelope-from=odaki@rsg.ci.i.u-tokyo.ac.jp; helo=www3579.sakura.ne.jp
-X-Spam_score_int: -16
-X-Spam_score: -1.7
-X-Spam_bar: -
-X-Spam_report: (-1.7 / 5.0 requ) BAYES_00=-1.9, DKIM_INVALID=0.1,
- DKIM_SIGNED=0.1, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=no autolearn_force=no
+X-Proofpoint-Spam-Info: AW1haW4tMjYwNjExMDEyNSBTYWx0ZWRfX9sWrGMM8imep
+ lgDqAp5j0MqP6razRVqcTRReVjyhvbN0ihn8KigA75q+aRSbINXBhIBFfhdPxdDht/6/xbmHSdy
+ QhP7PGP3a69pyT021tU16wVMmj+kNTc=
+X-Authority-Analysis: v=2.4 cv=atOCzyZV c=1 sm=1 tr=0 ts=6a2aa9b5 cx=c_pps
+ a=WeENfcodrlLV9YRTxbY/uA==:117 a=4s3hRJSeHn4rkQlkrse1kQ==:17
+ a=IkcTkHD0fZMA:10 a=FelO9ux0wxsA:10 a=M51BFTxLslgA:10 a=s4-Qcg_JpJYA:10
+ a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=ZpdpYltYx_vBUK5n70dp:22
+ a=MCic4ayNfnv8SDYzCDkA:9 a=QEXdDO2ut3YA:10 a=kacYvNCVWA4VmyqE58fU:22
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNjExMDEyNSBTYWx0ZWRfX6ggqH+3u2O2U
+ WVcI56H3Py7qVgBg6JSFXdgSksYc+UDpV3LExTCPWQAspl66vEYZZ03umUnw12iH7xQmYGp3EJQ
+ vedhh7x19b3ZctqQPvIgVv6xhFNPKdSQUybB0sMVeqtTxpCETSmH5+0KMkg7y+dgb5GTF6NdGEZ
+ vuIAXLdl8IAi9pVfDC92lsgqTIJ23GrtL3D51Fa4KlHvXXh2LO7nHQCCJNyFWb3zFIYOv8dgkfE
+ IDHnMjIzGmzrY8+3EKZsuOYH+xRifXzrPGGhcOORS8vq/Hpxcku9ufxM6tmV7ymQpvntcnRddZc
+ umznoF4h/kP3luVCR7bWKf7GESvMySPOonYwRWEj0yMPAmSd3nT2EtrWN9cSO2AWU/XvYaBjkgO
+ 8QaZcdQFC52S/JGE7UMoUpIqDesyn1PgHl2tJ7KOhp7urqnzdOXj9dvG92mkeoQfbNoXshoC9tp
+ jJIqmjuGlD8uuHOlDYQ==
+X-Proofpoint-GUID: bTqg6RN4bwT_nuJs740T5pZ-e1XGUAIR
+X-Proofpoint-ORIG-GUID: bTqg6RN4bwT_nuJs740T5pZ-e1XGUAIR
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.125,FMLib:17.12.100.49
+ definitions=2026-06-11_02,2026-06-09_02,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ adultscore=0 impostorscore=0 bulkscore=0 clxscore=1015 spamscore=0
+ malwarescore=0 phishscore=0 priorityscore=1501 lowpriorityscore=0
+ suspectscore=0 classifier=typeunknown authscore=0 authtc= authcc=
+ route=outbound adjust=0 reason=mlx scancount=1 engine=8.22.0-2606040000
+ definitions=main-2606110125
+Received-SPF: pass client-ip=205.220.180.131;
+ envelope-from=philmd@oss.qualcomm.com; helo=mx0b-0031df01.pphosted.com
+X-Spam_score_int: -27
+X-Spam_score: -2.8
+X-Spam_bar: --
+X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -77,137 +155,11 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 2026/06/11 11:30, Josh Hilke wrote:
-> Introduce register offsets and bitmask constants for the Transmit Rate
-> Limiter (TRL). Add the IGBTrlTimer structure and corresponding fields to
-> IGBCore to track TRL state (timers, throttling status, and target rates)
-> per queue. Initialize and free these timers during the device
-> realize/uninit lifecycle, and reset them on device reset.
+On 11/6/26 07:32, Brian Cain wrote:
+> This is Part 2 of the hexagon system emulation (sysemu) patch series,
+> building on the infrastructure from Part 1 to implement the runtime
+> helpers and CPU operations needed for full-system emulation.
 
-The added state should be included in VMState.
-Please see: docs/devel/migration/main.rst
-
-Regards,
-Akihiko Odaki
-
-> 
-> Signed-off-by: Josh Hilke <jrhilke@google.com>
-> ---
->   hw/net/igb_common.h |  1 +
->   hw/net/igb_core.c   | 17 +++++++++++++++++
->   hw/net/igb_core.h   | 11 +++++++++++
->   hw/net/igb_regs.h   | 11 +++++++++++
->   4 files changed, 40 insertions(+)
-> 
-> diff --git a/hw/net/igb_common.h b/hw/net/igb_common.h
-> index b316a5b..8c0a0cf 100644
-> --- a/hw/net/igb_common.h
-> +++ b/hw/net/igb_common.h
-> @@ -148,6 +148,7 @@ enum {
->       defreg(MTA_A),
->   
->       defreg(VTIVAR), defreg(VTIVAR_MISC),
-> +    defreg(TRLDQSEL), defreg(TRLRC),
->   };
->   
->   uint64_t igb_mmio_read(void *opaque, hwaddr addr, unsigned size);
-> diff --git a/hw/net/igb_core.c b/hw/net/igb_core.c
-> index 45d8fd7..64f21c1 100644
-> --- a/hw/net/igb_core.c
-> +++ b/hw/net/igb_core.c
-> @@ -4282,6 +4282,11 @@ igb_autoneg_resume(IGBCore *core)
->       }
->   }
->   
-> +static void igb_trl_timer_cb(void *opaque)
-> +{
-> +    /* Stub */
-> +}
-> +
->   void
->   igb_core_pci_realize(IGBCore        *core,
->                        const uint16_t *eeprom_templ,
-> @@ -4296,6 +4301,11 @@ igb_core_pci_realize(IGBCore        *core,
->   
->       for (i = 0; i < IGB_NUM_QUEUES; i++) {
->           net_tx_pkt_init(&core->tx[i].tx_pkt, E1000E_MAX_TX_FRAGS);
-> +        core->trl_timer[i].timer =
-> +            timer_new_ns(QEMU_CLOCK_VIRTUAL, igb_trl_timer_cb,
-> +                         &core->trl_timer[i]);
-> +        core->trl_timer[i].core = core;
-> +        core->trl_timer[i].queue_idx = i;
->       }
->   
->       net_rx_pkt_init(&core->rx_pkt);
-> @@ -4319,6 +4329,7 @@ igb_core_pci_uninit(IGBCore *core)
->   
->       for (i = 0; i < IGB_NUM_QUEUES; i++) {
->           net_tx_pkt_uninit(core->tx[i].tx_pkt);
-> +        timer_free(core->trl_timer[i].timer);
->       }
->   
->       net_rx_pkt_uninit(core->rx_pkt);
-> @@ -4469,6 +4480,12 @@ static void igb_reset(IGBCore *core, bool sw)
->   
->       igb_intrmgr_reset(core);
->   
-> +    for (i = 0; i < IGB_NUM_QUEUES; i++) {
-> +        timer_del(core->trl_timer[i].timer);
-> +        core->trl_throttled[i] = false;
-> +        core->trl_target_rate[i] = 0;
-> +    }
-> +
->       memset(core->phy, 0, sizeof core->phy);
->       memcpy(core->phy, igb_phy_reg_init, sizeof igb_phy_reg_init);
->   
-> diff --git a/hw/net/igb_core.h b/hw/net/igb_core.h
-> index d70b54e..ffd45ed 100644
-> --- a/hw/net/igb_core.h
-> +++ b/hw/net/igb_core.h
-> @@ -63,6 +63,12 @@ typedef struct IGBIntrDelayTimer_st {
->       IGBCore *core;
->   } IGBIntrDelayTimer;
->   
-> +typedef struct IGBTrlTimer_st {
-> +    QEMUTimer *timer;
-> +    IGBCore *core;
-> +    int queue_idx;
-> +} IGBTrlTimer;
-> +
->   struct IGBCore {
->       uint32_t mac[E1000E_MAC_SIZE];
->       uint16_t phy[MAX_PHY_REG_ADDRESS + 1];
-> @@ -99,6 +105,11 @@ struct IGBCore {
->       void (*owner_start_recv)(PCIDevice *d);
->   
->       int64_t timadj;
-> +
-> +    /* Transmit Rate Limiting */
-> +    IGBTrlTimer trl_timer[IGB_NUM_QUEUES];
-> +    bool trl_throttled[IGB_NUM_QUEUES];
-> +    uint64_t trl_target_rate[IGB_NUM_QUEUES]; /* in bytes per second */
->   };
->   
->   void
-> diff --git a/hw/net/igb_regs.h b/hw/net/igb_regs.h
-> index 4dc4c31..f7895ef 100644
-> --- a/hw/net/igb_regs.h
-> +++ b/hw/net/igb_regs.h
-> @@ -718,4 +718,15 @@ static inline uint8_t igb_ivar_entry_tx(uint8_t i)
->       return i < 8 ? i * 4 + 1 : (i - 8) * 4 + 3;
->   }
->   
-> +/* Transmit Rate Limiting */
-> +#define E1000_TRLDQSEL 0x03604
-> +#define E1000_TRLRC    0x036B0
-> +
-> +#define E1000_TRLRC_RS_ENA      BIT(31)
-> +#define E1000_TRLRC_RF_DEC_MASK 0x3FFF
-> +#define E1000_TRLRC_RF_INT_MASK 0x3FF
-> +
-> +/* 1 Gbps link rate in bytes per second (1,000,000,000 bits/s / 8) */
-> +#define E1000_LINK_RATE_1GBPS 125000000ULL
-> +
->   #endif
-
+For some reason this series is missing ordering, but is fully
+reviewed AFAICT, so good to go?
 
