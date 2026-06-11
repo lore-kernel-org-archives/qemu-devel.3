@@ -4,92 +4,91 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id EACEACD98C7
-	for <qemu-devel@archiver.kernel.org>; Thu, 11 Jun 2026 08:32:00 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5FA4ACD98D2
+	for <qemu-devel@archiver.kernel.org>; Thu, 11 Jun 2026 08:37:13 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wXaor-00086H-Se; Thu, 11 Jun 2026 04:31:21 -0400
+	id 1wXatw-000147-6E; Thu, 11 Jun 2026 04:36:36 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <marcandre.lureau@gmail.com>)
- id 1wXaop-000863-TJ
- for qemu-devel@nongnu.org; Thu, 11 Jun 2026 04:31:19 -0400
-Received: from mail-dy1-x132c.google.com ([2607:f8b0:4864:20::132c])
+ id 1wXatu-00013V-Iv
+ for qemu-devel@nongnu.org; Thu, 11 Jun 2026 04:36:34 -0400
+Received: from mail-dy1-x1329.google.com ([2607:f8b0:4864:20::1329])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <marcandre.lureau@gmail.com>)
- id 1wXaoo-0000kR-DQ
- for qemu-devel@nongnu.org; Thu, 11 Jun 2026 04:31:19 -0400
-Received: by mail-dy1-x132c.google.com with SMTP id
- 5a478bee46e88-307631dbfedso526583eec.0
- for <qemu-devel@nongnu.org>; Thu, 11 Jun 2026 01:31:17 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1781166676; cv=none;
+ id 1wXats-0002Ol-Uc
+ for qemu-devel@nongnu.org; Thu, 11 Jun 2026 04:36:34 -0400
+Received: by mail-dy1-x1329.google.com with SMTP id
+ 5a478bee46e88-3074adb8fcaso2734446eec.0
+ for <qemu-devel@nongnu.org>; Thu, 11 Jun 2026 01:36:32 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1781166991; cv=none;
  d=google.com; s=arc-20240605;
- b=LlhgSWJehdA5F06UbgoP4iksbg2sQQGV140NbTwLfRoxeRg2dgMdvQFtLym2rMliR0
- m+ViDxOVtqqr8Im6p3TLBTzHVrHEztfdX+wJ6PVrwETV6SVlVOxMAvLTXgOrMxnRUFFw
- vBzyvHSFGNk2BRssOBcXNZOm1go6ly1etC/y3Da2oQohrKCBBfa/PM8WNzgi8P9v2MvT
- ZtZgBIHtywT2t6vpw62uJDRFA5SLurb6NJNboRa0U7Aj8nZa0glsAuuxptqcP85rEyBU
- ov0ldfHOwCAdpjLggDodwufquitcJpHJ40k/su/e5+F9e/f4nJqyce9A4icv1aK9lDkh
- HpRQ==
+ b=HqL9MYaylLVGahJh5SlGb1tSlG1EHSsQ/gr51H4tOgMc9tyh3oLBoxC+4bp+emYDSZ
+ kRqXAwjZZ4ednOTU/nne468+nl2izkxt+BonwHTSq3JCJmrtCO2ZrcVcDzhduKv+8zwu
+ pEHmVX59c+O2Gcfs0Ycwtm8ZZVQi+wlNV20Jv0zcywZyvHu5abuHPlOU754SEA8ohGdN
+ FEoSUZkzJRMl+3mnoaIVYiZFArNXB+tNxzTT+st8QdC/ZmbnoWNZ6M97sH3oMZO0T2JF
+ Tlvy/0bbSFglzEfbjva4/p1XV5yYL0G3bDDXLmEYT2LpgKqb1yjjwUiX6ky+buuAAK7q
+ kqBQ==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
  s=arc-20240605; 
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:dkim-signature;
- bh=J8n+5coUrKAXZcW60GtWGL9jL9B1lxqrRPUFPq8t4Ek=;
+ bh=SS9duF1cOZPDt17W4MVd8R88Ihqq20H2vSVKyFBYKpQ=;
  fh=AZkZ0b1lNOWrPAvx6utUMPvNnVTPoQb/VE06IgS7KRU=;
- b=Od6E53FVoTrvVxrPvsbqaIgm51rCgSViejCvh9xwkwqrcc3PPEOQAoZnY1iIsE4rvr
- x4IPWKiI4SYXLHJTVyMGg68ahzWcxxzP4tX/ZwM4pizxMf9E5sgK/rPqe8rl8R8M3WVI
- 4KzhAuKTSePPwiqANc9hSFy2BA+bIzSTY9TXwBAwZIOhdtVzouILqjUMtrs/0nIlbtAQ
- 53FFsawszuOEuiUZxZPiegsRj+34g5DIUX0iuiWqvcLjRjMRK6eglkinFrrFE+e6HaOo
- Ss45459ilury1baLx0S2dUyFsvazZ438zS+D9nNRM+kB7C179Jrz7ZrA9HoqjF3U3d5j
- c2gA==; darn=nongnu.org
+ b=ZZ2JxKKgCkzlMhu1wTgzvRkfyEqxZQCGFWwThFO1XM4PWocDhvqoD33PojRUGacF7I
+ ItGvXT9MPUnHwxmnuTS6+dXljdDGpABUogvv66XZWkkIQC9QJ2QGRHIHeK3gK92uuOpX
+ 7vo9hj7D/retAHLS1WeFXXJgKMU6qas1Ktob9POe5QdEPv7oREi6gXx2DJ4tnT4cr8Tz
+ 8NmGs4pPTIb/o4oTOoeAWRRai2ApuyRoTlsks4OCNwb2Pc7IYnDCPybDotWweOBtBSjL
+ yzJ0SF0sZWALEBsD0ajE54NAt4v/o7JoCCVeFpEArShA5HttuiMCIXXAsMJAsjtvl7Jw
+ rzYw==; darn=nongnu.org
 ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1781166676; x=1781771476; darn=nongnu.org;
+ d=redhat.com; s=google; t=1781166991; x=1781771791; darn=nongnu.org;
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:from:to:cc:subject:date
  :message-id:reply-to;
- bh=J8n+5coUrKAXZcW60GtWGL9jL9B1lxqrRPUFPq8t4Ek=;
- b=hxXR3dgaIWNESk6DR87PF0VUUnvcu0wjropYViPYGdcRc2AnaiwAY4YtVAbBCa1LUp
- ysiTksDZdkE9g5mwIy0TsWg/FD2TLeNK4MHJRvIJkKT+4PPuCnvbd8ApxsCAZOKkRNl8
- XetD1y18tcMvwRvPgFxh0K3jNhPKCKaOQbdKvqpMS2Ck7uqEgG/0f5rvZfh3/3J2BItm
- CiKW2XfbuqC/GOPoSuLo4bBE06l4vhdAPxB7OVwqq6ioyElBsZ+zUAh9vCbEDgei9U3E
- PwjpBaDo/Jz05UrBmdmWo8F8sTGrKmglkB6EfymV1yxyCchbdE9oTL9iV+48m3ITIRz2
- /iKg==
+ bh=SS9duF1cOZPDt17W4MVd8R88Ihqq20H2vSVKyFBYKpQ=;
+ b=FQwQEct0yczSZ1CLoxM/jtjDm8+xayNLyuL1t1YuF90GBEDSw5r7mFtg0+f6kYU8TQ
+ zHNc0Pl+/74WGhTASo8WW6YjxZFPyN1wPv/9UlWTrwBXFw47z7Yk1ui0ew3RQvC33J6x
+ dPJBPl5RDyrDypWEK7egVT1NNCU+iu32ixWkUqhnO1XWPFGQzmQEwHL2VHiyP6MgCkpF
+ pl7OVz0gMctgmauD18lpYRMCG+6/H0b+oFskSw61h5Hg1vjksUhG+JDIesoWfXzpYDgh
+ P/pnNnv3b4gBDzNsDIKwfUKtyA7f58474L11AmA2vtywOBvTKiTK7HpuQNjOy68iLnt/
+ F1+w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1781166676; x=1781771476;
+ d=1e100.net; s=20251104; t=1781166991; x=1781771791;
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to;
- bh=J8n+5coUrKAXZcW60GtWGL9jL9B1lxqrRPUFPq8t4Ek=;
- b=D4Xan2tESxXyhLRoEJVSsgsqecsSp/mClbiwfxLFGjLhr/0pJOZTOyP87LShsEWKjI
- /RSdt72FjjS7fehmzcA5X6acanghJ1nSkzVtsxwoxPP4Vi80sn9qXtvVYgEE5EG13NGs
- efGQnYTLm344R25XASzNAmjmIq8ntIxLF/m2oOg9ZQwIn2B9SBOZW339tk9I8EHNU+Dk
- KS+ewqO+rb+rd0pMduCD/p6573AAqPeaymxh3Hf3+CtQ6dG8MWD4EPFswoA9HCmfOt1n
- DcABEE0W0nKfBrNqtzDijuT2LYBP7gTGPnVhsXsODKFOrmyZhzufszdPxkuT4LF8J/Bf
- Fapw==
-X-Gm-Message-State: AOJu0YzyGgvgC4TCRjrpEhz7btNcm6bUphTHZzMGjIG1deCx2pYMQmoI
- R5S/sXCSKdp91cxqCZQ4jOAQ5yrFrWhqZjc+npixZsa77ZTzSAfQH3IzyOS3ZLxn2fvJaAR2gy4
- QsKSjHrPx8NmT1oXnXTCJBX64FkBlX7Q=
-X-Gm-Gg: Acq92OFTA4Jyk11SHJMKDH6n6vnE28GvYSgtmRdeK2TSG38OaDt4BF1YTJoN8/6COCQ
- CAgYW+J9MezoPgGowZplG/yFo7cUMpmS9FbyS4s6J7Tc1Ym48nGeguw/B/1wg9hk+D8hL8ahQrw
- fFxH5OutW+OqzgBeMRPSmW1I+FNFXJyiaOvqrqoUC5qRHjy8QHV8l7ouNUsZSNYdsooB/1iW/zE
- 0Sx8KbGhXlV0zMEa7DiphWJO93nUt4GfvSwYxY/hkpPFrWVa3WpFz8ga2jsn3I0ylyBqRu6oC7R
- 9UI21ykQtQeom7+TZwtp6ZSQPH75WRDD8+yFM5kNAQldvBrkcw==
-X-Received: by 2002:a05:7300:5713:b0:2ea:b7a9:580d with SMTP id
- 5a478bee46e88-308047f2728mr1493274eec.9.1781166676027; Thu, 11 Jun 2026
- 01:31:16 -0700 (PDT)
+ bh=SS9duF1cOZPDt17W4MVd8R88Ihqq20H2vSVKyFBYKpQ=;
+ b=lg4OP/XARazHA90193wxM7fDCYYE0dm427TGj7mH+897ZZ4vZDMBC7uvrmDw0cqY+d
+ MgyT9dIxQ4i2H9tTia/SU6dfyH1lD0JxL7rJYHBi5qJznKdwkc4n/FrqdH/VvnCbbf/k
+ hw/jZUY9QzCJc1inI1YQK/TKLWK2w8Em5NyatYZN6wx9HhCFv3Es9KOocS1b5OmHhHt1
+ imWMfkDeIOOzXhprbSa7PZBEWWyfa5eiNbQHwgy7m0w9H1nT5PxI6SbRM6DZEWFMOzRG
+ I40eO0+pFEdgCQbcIppmzGbYWfVGWh57UGK5wiaeBIpl+bCvR8FduChFNjJf3wlx5C5Y
+ No2A==
+X-Gm-Message-State: AOJu0YwWAJN1bWb+bXUHmSyuS+PURWUPskWrdGbc9Ey49vF++0+3cuzt
+ iqLQQZLS/B19OU4TWInjFKNf605FBfalZ9rw6zfhPmL0pxPR63u7UkZA85a74yoE3qMBoxNsYND
+ GjgKTTjGqprH3YxX9L8ABKr38N6py1QU=
+X-Gm-Gg: Acq92OHQHu3/GJ85wgWLV261ovj14vnQcq8XZZs/AiXphdENKognMt1NqWADUjf+piz
+ jCbMcxURkiGewiB6vceCqHLtYeulvbM0pTarVEoE8oz4RhFxrCBpuMvRwmwHwbZ4/mPvj0VzQiZ
+ kFpNXVnnEfC0Bm5WPtv9UojW3PZIAGJvmkgKP4yFiLh5WYv+3LqgyHzoMdLqjclhTsA2EClQXKi
+ EaLf5cPR/owPFevb66BiDM/c+DNiwCYT0zDBQ+7Wwb9hv9xwlFQOAxpCJ+/FLH+kfkeeuGgnisD
+ rTEA9vYisF6ZzTwbAAYja7loZZRkZPjXBiXpWPwVCwwIlWVYAw==
+X-Received: by 2002:a05:7300:a886:b0:304:ba84:a0cc with SMTP id
+ 5a478bee46e88-30804b9667cmr1348795eec.33.1781166990997; Thu, 11 Jun 2026
+ 01:36:30 -0700 (PDT)
 MIME-Version: 1.0
 References: <20260608-b4-ui-v2-0-9ea6355ea08f@redhat.com>
- <20260608-b4-ui-v2-30-9ea6355ea08f@redhat.com>
- <ab53b726-97dc-48e4-93c3-7a32eacf65a5@rsg.ci.i.u-tokyo.ac.jp>
-In-Reply-To: <ab53b726-97dc-48e4-93c3-7a32eacf65a5@rsg.ci.i.u-tokyo.ac.jp>
+ <20260608-b4-ui-v2-21-9ea6355ea08f@redhat.com>
+ <a75178b2-de9d-4c63-89c6-74938ea13fa4@rsg.ci.i.u-tokyo.ac.jp>
+In-Reply-To: <a75178b2-de9d-4c63-89c6-74938ea13fa4@rsg.ci.i.u-tokyo.ac.jp>
 From: =?UTF-8?B?TWFyYy1BbmRyw6kgTHVyZWF1?= <marcandre.lureau@redhat.com>
-Date: Thu, 11 Jun 2026 12:31:03 +0400
-X-Gm-Features: AVVi8CfWHm_gtOb3agZNP6HJUEVXrofn74K1Tr0tOsjWp-3ZQqhMewKZ6JVkZAc
-Message-ID: <CAJ+F1CKN7gmmM=Od0pXKj1qOLM1w5W+HNPuxWo7U+DerzK7h9w@mail.gmail.com>
-Subject: Re: [PATCH v2 30/33] ui/console: register console in QOM tree
- dynamically
+Date: Thu, 11 Jun 2026 12:36:18 +0400
+X-Gm-Features: AVVi8Cci2Xdyn4eM9IH2kD1l-1tKKgXp7h1vznVjx_38qVcqC4wtIJSmXzUB4Rg
+Message-ID: <CAJ+F1C+yP9bx_KoQpKKMAHwRUP5Cvs6unyGbe=TBSy6RGkMCAA@mail.gmail.com>
+Subject: Re: [PATCH v2 21/33] ui/gtk: implement display cleanup
 To: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
 Cc: qemu-devel@nongnu.org, Paolo Bonzini <pbonzini@redhat.com>, 
  =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>, 
@@ -101,8 +100,8 @@ Cc: qemu-devel@nongnu.org, Paolo Bonzini <pbonzini@redhat.com>,
  Peter Maydell <peter.maydell@linaro.org>
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2607:f8b0:4864:20::132c;
- envelope-from=marcandre.lureau@gmail.com; helo=mail-dy1-x132c.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::1329;
+ envelope-from=marcandre.lureau@gmail.com; helo=mail-dy1-x1329.google.com
 X-Spam_score_int: -16
 X-Spam_score: -1.7
 X-Spam_bar: -
@@ -126,68 +125,117 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi
-
-On Thu, Jun 11, 2026 at 11:51=E2=80=AFAM Akihiko Odaki
+On Thu, Jun 11, 2026 at 11:56=E2=80=AFAM Akihiko Odaki
 <odaki@rsg.ci.i.u-tokyo.ac.jp> wrote:
 >
 > On 2026/06/08 16:16, Marc-Andr=C3=A9 Lureau wrote:
-> > Consoles created after init_displaystate() (e.g. hotplugged
-> > display devices) were never added to the /backend/console[N]
-> > QOM tree. Extract qemu_console_add_to_qom() and call it from
-> > qemu_console_register() when the display is already initialized.
+> > Add gtk_display_cleanup() to properly tear down GTK display state:
+> > remove console and mouse notifiers, unregister clipboard peer,
+> > destroy the main window and virtual consoles.
 > >
 > > Signed-off-by: Marc-Andr=C3=A9 Lureau <marcandre.lureau@redhat.com>
 > > ---
-> >   ui/console.c | 17 ++++++++++++-----
-> >   1 file changed, 12 insertions(+), 5 deletions(-)
+> >   include/ui/gtk.h   |  1 +
+> >   ui/gtk-clipboard.c | 15 +++++++++++++++
+> >   ui/gtk.c           | 18 ++++++++++++++++++
+> >   3 files changed, 34 insertions(+)
 > >
-> > diff --git a/ui/console.c b/ui/console.c
-> > index 975eaf15706..e01d893df4b 100644
-> > --- a/ui/console.c
-> > +++ b/ui/console.c
-> > @@ -376,6 +376,13 @@ void qemu_text_console_put_string(QemuTextConsole =
-*s, const char *str, int len)
-> >       }
+> > diff --git a/include/ui/gtk.h b/include/ui/gtk.h
+> > index 3e6ce3cb48c..5156a049509 100644
+> > --- a/include/ui/gtk.h
+> > +++ b/include/ui/gtk.h
+> > @@ -225,6 +225,7 @@ int gd_gl_area_make_current(DisplayGLCtx *dgc,
+> >
+> >   /* gtk-clipboard.c */
+> >   void gd_clipboard_init(GtkDisplayState *gd);
+> > +void gd_clipboard_cleanup(GtkDisplayState *gd);
+> >
+> >   void gd_update_scale(VirtualConsole *vc, int ww, int wh, int fbw, int=
+ fbh);
+> >
+> > diff --git a/ui/gtk-clipboard.c b/ui/gtk-clipboard.c
+> > index ea9444be70f..476e6b8303c 100644
+> > --- a/ui/gtk-clipboard.c
+> > +++ b/ui/gtk-clipboard.c
+> > @@ -235,3 +235,18 @@ void gd_clipboard_init(GtkDisplayState *gd)
+> >       g_signal_connect(gd->gtkcb[QEMU_CLIPBOARD_SELECTION_SECONDARY],
+> >                        "owner-change", G_CALLBACK(gd_owner_change), gd)=
+;
+> >   }
+> > +
+> > +void gd_clipboard_cleanup(GtkDisplayState *gd)
+> > +{
+> > +    if (!gd->cbpeer.name) {
+> > +        return;
+> > +    }
+> > +    qemu_clipboard_peer_unregister(&gd->cbpeer);
+> > +    g_signal_handlers_disconnect_by_data(
+> > +        gd->gtkcb[QEMU_CLIPBOARD_SELECTION_CLIPBOARD], gd);
+> > +    g_signal_handlers_disconnect_by_data(
+> > +        gd->gtkcb[QEMU_CLIPBOARD_SELECTION_PRIMARY], gd);
+> > +    g_signal_handlers_disconnect_by_data(
+> > +        gd->gtkcb[QEMU_CLIPBOARD_SELECTION_SECONDARY], gd);
+> > +    gd->cbpeer.name =3D NULL;
+> > +}
+> > diff --git a/ui/gtk.c b/ui/gtk.c
+> > index 2ee826b56fb..c26dc83ac3e 100644
+> > --- a/ui/gtk.c
+> > +++ b/ui/gtk.c
+> > @@ -2505,6 +2505,7 @@ static void gd_create_menus(GtkDisplayState *s, D=
+isplayOptions *opts)
 > >   }
 > >
-> > +static void qemu_console_add_to_qom(QemuConsole *con)
+> >
+> > +static GtkDisplayState *gtk_display_state;
+> >   static gboolean gtkinit;
+> >
+> >   static void gtk_display_init(DisplayState *ds, DisplayOptions *opts)
+> > @@ -2523,6 +2524,7 @@ static void gtk_display_init(DisplayState *ds, Di=
+splayOptions *opts)
+> >       }
+> >       assert(opts->type =3D=3D DISPLAY_TYPE_GTK);
+> >       s =3D g_malloc0(sizeof(*s));
+> > +    gtk_display_state =3D s;
+> >       s->opts =3D opts;
+> >
+> >       theme =3D gtk_icon_theme_get_default();
+> > @@ -2681,10 +2683,26 @@ static void early_gtk_display_init(DisplayOptio=
+ns *opts)
+> >   #endif
+> >   }
+> >
+> > +static void gtk_display_cleanup(void)
 > > +{
-> > +    g_autofree gchar *name =3D g_strdup_printf("console[%d]", con->ind=
-ex);
-> > +    object_property_add_child(object_get_container("backend"),
-> > +                              name, OBJECT(con));
+> > +    GtkDisplayState *s =3D gtk_display_state;
+> > +
+> > +    if (!s) {
+> > +        return;
+> > +    }
+> > +
+> > +    qemu_remove_mouse_mode_change_notifier(&s->mouse_mode_notifier);
+>
+> qemu_del_vm_change_state_handler() should be called too.
+
+ack
+
+>
+> Regards,
+> Akihiko Odaki
+>
+> > +    gd_clipboard_cleanup(s);
+> > +    g_clear_pointer(&s->window, gtk_widget_destroy);
+> > +    g_clear_object(&s->null_cursor);
+> > +    g_clear_pointer(&gtk_display_state, g_free);
 > > +}
 > > +
-> >   static void
-> >   qemu_console_register(QemuConsole *c)
-> >   {
-> > @@ -413,6 +420,10 @@ qemu_console_register(QemuConsole *c)
-> >               }
-> >           }
-> >       }
-> > +
-> > +    if (phase_check(PHASE_MACHINE_READY)) {
-> > +        qemu_console_add_to_qom(c);
-> > +    }
+> >   static QemuDisplay qemu_display_gtk =3D {
+> >       .type       =3D DISPLAY_TYPE_GTK,
+> >       .early_init =3D early_gtk_display_init,
+> >       .init       =3D gtk_display_init,
+> > +    .cleanup    =3D gtk_display_cleanup,
+> >       .vc         =3D "vc",
+> >   };
+> >
+> >
 >
-> Coldplugged consoles are not added to the QOM tree when -preconfig is
-> specified because x-exit-preconfig will happen after init_displaystate()
-> but before phase_advance(PHASE_MACHINE_READY). Below is an LLM-written
-> reproduction case:
->
-> build/qemu-system-x86_64 \
->    -machine q35 -nodefaults -display none -S -preconfig \
->    -device bochs-display,id=3Dgfx0 -qmp stdio <<'EOF'
-> {"execute":"qmp_capabilities"}
-> {"execute":"qom-list","arguments":{"path":"/backend"}}
-> {"execute":"x-exit-preconfig"}
-> {"execute":"qom-list","arguments":{"path":"/backend"}}
-> {"execute":"qom-list","arguments":{"path":"/machine/peripheral"}}
-> {"execute":"qom-list","arguments":{"path":"/backend/console[0]"}}
-> {"execute":"quit"}
-> EOF
-
-good catch, I will have to introduce a state for when display is initialize=
-d.
 
