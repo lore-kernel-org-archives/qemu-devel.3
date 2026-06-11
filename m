@@ -4,110 +4,188 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4BF6DCD8C9D
-	for <qemu-devel@archiver.kernel.org>; Thu, 11 Jun 2026 20:55:36 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3F983CD8C9D
+	for <qemu-devel@archiver.kernel.org>; Thu, 11 Jun 2026 20:58:26 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wXmQZ-0004OH-AS; Thu, 11 Jun 2026 16:55:03 -0400
+	id 1wXmTL-0005fa-Bm; Thu, 11 Jun 2026 16:57:55 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1wXmQX-0004O4-Vy
- for qemu-devel@nongnu.org; Thu, 11 Jun 2026 16:55:02 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <deller@gmx.de>) id 1wXmTB-0005f1-N2
+ for qemu-devel@nongnu.org; Thu, 11 Jun 2026 16:57:48 -0400
+Received: from mout.gmx.net ([212.227.15.19])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1wXmQU-00037a-VG
- for qemu-devel@nongnu.org; Thu, 11 Jun 2026 16:55:01 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1781211297;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=ax6mCs2EE1riUYJP6428hU6jTaztbD/y/OZ9SMF/EDU=;
- b=UUj1WzLZIz733W+XvVBNRXiIImojPQQenRGAg4tjsDdUwi+QBr4pjMvHrxP6pn0m/sbpPI
- xGp3A3XDs1TDbj9UmxdL/y5tRoQpjnm4dOuCsU90muxcF9oB9AgVv8oagqPCfeGoR64N51
- JEmxUq6VXLrC1R9+XdsZEQUbHa1aueU=
-Received: from mail-qt1-f200.google.com (mail-qt1-f200.google.com
- [209.85.160.200]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-664-mgyeSDyANWmJazlVHmD4Aw-1; Thu, 11 Jun 2026 16:54:55 -0400
-X-MC-Unique: mgyeSDyANWmJazlVHmD4Aw-1
-X-Mimecast-MFC-AGG-ID: mgyeSDyANWmJazlVHmD4Aw_1781211295
-Received: by mail-qt1-f200.google.com with SMTP id
- d75a77b69052e-5175a1e32e3so5314941cf.0
- for <qemu-devel@nongnu.org>; Thu, 11 Jun 2026 13:54:55 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1781211295; x=1781816095; darn=nongnu.org;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
- bh=ax6mCs2EE1riUYJP6428hU6jTaztbD/y/OZ9SMF/EDU=;
- b=Ydw/Bq2ErEbyNo8wxGjWxsR8s+1tmsby00WWGOni2JRbkde0l4GcT5X+R70z5N5qOS
- cEUfOq6yfqbYOOoBPKEXFabi4sjsjaUrel43KSLboD39CoUFKYwGi+GHWS5TWrNezSRd
- Oprp/0O36/opetXRUzkZr+wQjyHO0xhFEr/ViPeM6hH+T7d4kDwpgv6Y8CFSMp1V6gYf
- Vv9dyUWjMNhZ9/Y9dZeq9O7VQkqy1PlKbZ3Cr1QGw8xP7RqCRe+ZC5xTcclfj0IWQp3f
- 20T8iIdGtk5Br6281U2HlGP0w2CYqEIwFfA5BpeUyEBwsCoIbiZQHJTa9aEnkt60Phg3
- mlCg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1781211295; x=1781816095;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=ax6mCs2EE1riUYJP6428hU6jTaztbD/y/OZ9SMF/EDU=;
- b=gxlmJzriqReq+12rC1CS22U+Ph2paOxpwSDXl5vukn2AJa5qclB14vJQOEwqxCUGXo
- lPF3t1BmVHmwjh+uKRFpNezSoc92FOFibhxZ8wFseAoIF9BLRbr8i4qGxE0h9lU1OJdo
- iqN+nIHxNLrrO+aGJsTQ9lP4sU/iT8NTv7KR8uxlspyuF2q/J+cy6OsFoCL6gH57edmO
- QnRnQbdjNf3Lcbt6cvIARPxHJ6UJ45P9NZlUjeAMD5ifgDdWqsbw65OT8bUsjJ9B+r+S
- nKD/jF0eSdBtatCmw6IDApoIlpprCCmoQ7VfOI8wkzal1g3rwNvpvHJAy0Ra9iRmGKvG
- Tu2Q==
-X-Gm-Message-State: AOJu0Yy/1kC9dqm+3douxNVl4FzexW22Un/vUCKI8VCfI4LEGkqmgoeX
- QYraLTVgueLTBOogzQA9I8Aa8hARPB2WsJxSzLy+xnIpw6XSYNValewP8wyDBBSA7axDC13H6SC
- FumdurEJMRDoHdRyWvZeJglb40zFYBP29JzTaIDjCdpMDGnAcXgU9KBPQ
-X-Gm-Gg: Acq92OGeb+lW+ksOrekfJskCYgIkJ3cH9otMveSukbHH2sPErwJHzQZ+lkyDWuedqlf
- tba5ES0XpnfXqmXIBzsnX9mv7hj4yLAThjWsgwpVk2DATNijdECb89DptpQ3LwITh0VXzTSNUJd
- YZlpQ42s+2iFeDTUUMZA5vXroCMoyoTJkCSvrSaIsR3t64krWP2+XzFZ8IZq5DA+PNBuSfCjc8M
- mbhw7gDPMdFNH1b4WfRn/cfuQonRrxh+s2mpT7FG/l/Tz2wIW916Tiyx2mOI+GPloTF+bRuj0Wl
- Vqa17JyGo+OvRTu6Ud3w+Yh7C3vTOUVSwh17FNGmry9zHIDesyCVaELFCW9miD3giGchFefVGDY
- dYwLPJeaCVZSQwGQ=
-X-Received: by 2002:ac8:5a43:0:b0:50e:a1ab:67ea with SMTP id
- d75a77b69052e-517ee27e43amr69839671cf.40.1781211294945; 
- Thu, 11 Jun 2026 13:54:54 -0700 (PDT)
-X-Received: by 2002:ac8:5a43:0:b0:50e:a1ab:67ea with SMTP id
- d75a77b69052e-517ee27e43amr69839131cf.40.1781211294150; 
- Thu, 11 Jun 2026 13:54:54 -0700 (PDT)
-Received: from x1.local ([142.189.10.167]) by smtp.gmail.com with ESMTPSA id
- d75a77b69052e-517fb841970sm3295991cf.30.2026.06.11.13.54.52
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 11 Jun 2026 13:54:53 -0700 (PDT)
-Date: Thu, 11 Jun 2026 16:54:51 -0400
-From: Peter Xu <peterx@redhat.com>
-To: Michael Roth <michael.roth@amd.com>
-Cc: qemu-devel@nongnu.org, Juraj Marcin <jmarcin@redhat.com>,
- David Hildenbrand <david@kernel.org>, Paolo Bonzini <pbonzini@redhat.com>,
- Chenyi Qiang <chenyi.qiang@intel.com>,
- Fabiano Rosas <farosas@suse.de>, Alexey Kardashevskiy <aik@amd.com>,
- Li Xiaoyao <xiaoyao.li@intel.com>
-Subject: Re: [PATCH v3 00/12] KVM/hostmem: Support init-shared guest-memfd as
- VM backends
-Message-ID: <aisgm-Kk2OGxJ5XN@x1.local>
-References: <20251215205203.1185099-1-peterx@redhat.com>
- <rjqfiwh57gip3u3psqg33jhmo7ixaj2qwzupc7zdk7f3d26qnu@tglactz67ogk>
- <aiCAFWKEAHkPLCO5@x1.local>
- <lpkcfd2crgparcd64ydry3ocryx3sfc5gj5pzrrms4nwvw6j4c@ulc3wa3rmefo>
- <aiLj3o7IIixCvX2A@x1.local>
- <osgeqdz7fukls5irhg2e3zi23yl7ej4depttlrphhinb76zlws@5gtyfdw4u3yu>
+ (Exim 4.90_1) (envelope-from <deller@gmx.de>) id 1wXmSz-0004VJ-MH
+ for qemu-devel@nongnu.org; Thu, 11 Jun 2026 16:57:39 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmx.de;
+ s=s31663417; t=1781211441; x=1781816241; i=deller@gmx.de;
+ bh=gsM3Tjii6pn1sPUxd49ZswKbdWmkIMGmy6tjSlMHQFU=;
+ h=X-UI-Sender-Class:Message-ID:Date:MIME-Version:Subject:To:Cc:
+ References:From:In-Reply-To:Content-Type:
+ Content-Transfer-Encoding:cc:content-transfer-encoding:
+ content-type:date:from:message-id:mime-version:reply-to:subject:
+ to;
+ b=l44bf1PzQsc/ddES75V+lvVfFjEgT3ESPp0d9/B76uyyf43fjeKS/XXPtJxvjCy+
+ Sewwuu7sDxmA9CerFzKj5mFIDCqKL5aNxAdtAyle9T64D95Ja0n4HFSLClonc7uVG
+ rQWURBBi4tZo0+0psWzo7AA/KIvLH9pfJXjdwrfnwpBgCI0o00rsRS68PAh+FC9KK
+ Z6MDAiwGOQv4KvRxr5z4RFIOf71rUD1x/VlhZwj4qwr4PsSr2/58h3d55fW0Z7ndc
+ mW1vol+5vOXwtbWKm8CfBRa83MSBohGc+OHbLGO7tfdv8synaQJfuNBhJRgUFcKl1
+ ujriZvNhTvs6+Enq8Q==
+X-UI-Sender-Class: 724b4f7f-cbec-4199-ad4e-598c01a50d3a
+Received: from client.hidden.invalid by mail.gmx.net (mrgmx005
+ [212.227.17.190]) with ESMTPSA (Nemesis) id 1MEV3I-1wQcmZ1Kzi-00FMue; Thu, 11
+ Jun 2026 22:57:21 +0200
+Message-ID: <49c7c9a8-f467-43fa-be24-0795af85d14c@gmx.de>
+Date: Thu, 11 Jun 2026 22:57:19 +0200
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <osgeqdz7fukls5irhg2e3zi23yl7ej4depttlrphhinb76zlws@5gtyfdw4u3yu>
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=peterx@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -24
-X-Spam_score: -2.5
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH] linux-user: add preadv2/preadv2
+To: Dominique Martinet <dominique.martinet@atmark-techno.com>,
+ qemu-devel@nongnu.org
+Cc: Laurent Vivier <laurent@vivier.eu>,
+ Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
+References: <20260610-preadv2-v1-1-cac1737308bd@atmark-techno.com>
+Content-Language: en-US
+From: Helge Deller <deller@gmx.de>
+Autocrypt: addr=deller@gmx.de; keydata=
+ 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
+In-Reply-To: <20260610-preadv2-v1-1-cac1737308bd@atmark-techno.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: quoted-printable
+X-Provags-ID: V03:K1:A8fEpehKdBS8DGIWdZdHcYWkONqL4oiuyyI+qtH18NuzR7EhO7E
+ 7ci6nsj8Df/w1aRxrzdaD4biCx2eADCErDNxn0Jul+84lChZ9FQk+qSDNiJNHcMc6yi8/gz
+ /1YF2MFUoemGqs82/mJJWRqbaR1pzesUufKlPfVrzC6W2x8CQhEP4x7+3w0Pgr+S2/Q0Yck
+ EV/g3VuwZISSgGIOy0dnQ==
+UI-OutboundReport: notjunk:1;M01:P0:D03SU6IsW5A=;CKh/8jSa6/LzYh5DLHl5XnFqnYf
+ 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
+ fPS1EQ==
+Received-SPF: pass client-ip=212.227.15.19; envelope-from=deller@gmx.de;
+ helo=mout.gmx.net
+X-Spam_score_int: -27
+X-Spam_score: -2.8
 X-Spam_bar: --
-X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.445,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_MSPIKE_H2=0.001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -123,393 +201,38 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Mon, Jun 08, 2026 at 12:59:55PM -0500, Michael Roth wrote:
-> On Fri, Jun 05, 2026 at 10:57:34AM -0400, Peter Xu wrote:
-> > On Thu, Jun 04, 2026 at 05:36:42PM -0500, Michael Roth wrote:
-> > > > IIUC it's a matter of if we expect future property of guest-memfd that will
-> > > > stop applying to memfd anymore?
-> > > 
-> > > Yah, I think that's the main thing to consider. There's a few things in the
-> > > pipeline where the options associated with guest_memfd might diverage
-> > > quite a bit from memfd:
-> > 
-> > Thanks for all these contexts.  I'll throw some random questions below,
-> > some of them may not be directly related to the current discussion, but
-> > please bare with me.
-> > 
-> > > 
-> > >   - hugetlb: yes, these could potentially use the same options memfd
-> > >     uses, and I'm guessing that will end up being the case, but one
-> > >     large gap there is that shared memory is always split to 4K, which
-> > >     we've accepted for now, but if you consider use-cases like DPDK
-> > >     there can still be major performance bottlenecks that would drive
-> > >     us to try to enable larger mappings for the shared ranges, and then
-> > >     we'd end up with guest-memfd-specific parameters intermix with
-> > >     normal memfd options, and our related documentation would need to
-> > >     covers these differences case by case
-> > 
-> > The first thing I thought about is mTHP and how it can also be similarly
-> > applied to normal memfd (now, or in the future, that I'm not sure).
-> 
-> That might work, though for some architectures the shared pages might
-> benefit from a wider range of hugepage granularities than private. For
-> instance with SNP it might make sense to expose 1GB hugepages but then
-> limit them to 2MB granularity for private (since private pages get 2MB
-> TLB entries anyway so rebuilding from 2MB->1GB is a waste)
-> 
-> https://github.com/AMDESE/amdsev#prepare-hostBut IIUC that sort of support will likely depend on some mm/ changes
-> are refcounting that probably won't be completed any time soon so it's
-> hard to say to anticipate what that'll end up looking like.
-> 
-> > 
-> > Before that..  shouldn't the whole concept of private mem / gmem about
-> > reducing the area of mapping the host (including dpdk, if we're talking
-> > about things like OpenVswitch)?  Can you roughly describe how huge mapping
-> > is expected to be allowed in such case?  Does it mean the guest driver
-> > should also be aware to allocate huge continuous physical mem for DMA only?
-> 
-> Guest drivers would generally end up either going through SWIOTLB to get
-> access to shared memory, or convert their pages to shared directly prior
-> to use. Optimizations for hugepages would work roughly the same as any
-> optimizations that have already been done for the non-confidential case.
-> Shared guest allocations/conversions at granularities smaller than the
-> backing page/hugepage size are where confidential VMs start to pay an
-> extra tax in guest_memfd and potentially with the security architecture
-> (e.g. extra RMP table checks for SNP, not just the TLB/TLB misses).
-> 
-> It seems to be in everyone's best interest to have a common shared
-> memory pool that gets initialized/converted/replenished at hugepage-sized
-> granularities. Here's one patchset[1] that takes the natural choice of
-> doing this through SWIOTLB. Not sure that's ultimately what it will look
-> like but I think it's safe to expect some level of optimization.
+On 6/10/26 09:54, Dominique Martinet wrote:
+> Some programs apparently use these, like the python test suite.
+>=20
+> The flags argument (rwf_t) is an int, with values shared on all arches
+> and does not need translating.
+>=20
+> This was tested manually with the following python script:
+> ```
+> import os
+> fd =3D os.open('test', os.O_RDWR|os.O_CREAT)
+> os.pwritev(fd, [b'test', b'ok'], 0, os.RWF_HIPRI)
+> buf =3D [bytearray(3), bytearray(10)]
+> os.preadv(fd, buf, 0, os.RWF_HIPRI)
+> print(buf[0])
+> print(buf[1])
+> ```
+>=20
+> Signed-off-by: Dominique Martinet <dominique.martinet@atmark-techno.com>
+> ---
+> (the 80-column checkpatch warning made me wrap a couple of long lines
+> I'd find easier to read with 81 columns, so if you prefer I'd be happy
+> to resend without wrapping for pwrite2 safe_syscall6() declaration and
+> call, but it doesn't matter much either way)
+>=20
+> Thanks!
+> ---
+>   linux-user/syscall.c | 38 ++++++++++++++++++++++++++++++++++++++
+>   1 file changed, 38 insertions(+)
 
-[sorry for a late response]
+Reviewed-by: Helge Deller <deller@gmx.de>
 
-OK, yes this sounds reasonable in general.
-
-> 
-> So with all these pieces in play, what I would expect is that DPDK
-> applications could access these shared buffers using hugepages both in
-> the guest and host-side as they do today, since the whole hugepage/folio
-
-So even if physical continous chunks (each 2M in size) are preserved, it's
-still part of gmem page cache (based on either 2M or larger huge pages).
-
-Then I assume if we want to have OVS-DPDK be able to hugely map it, we'll
-need to support in gmem's fault handler when seeing some shared huge 2M and
-do the job right.  There seems to have some details missing (e.g. I wonder
-if it's still safer to only map 4K by default..), but it sounds working
-indeed.
-
-> will be homogenous with the above guest optimizations... but that still
-> requires the above-mentioned mm/ rework for refcounting to allow hugepages
-> for shared ranges so this is another thing that we probably won't need to
-> deal with any time soon, but I think that's roughly what we could expect
-> it to look like eventually.
-> 
-> [1] https://lkml.org/lkml/2024/1/12/65
-> 
-> > 
-> > >   - DAX-like stuff: there are some proposals for making device memory
-> > >     available to use as private guest memory, and since 'guest-memfd'
-> > >     is generally responsible for managing private memory, it will
-> > >     likely end up being extended to handle this at some point. One
-> > >     proposal/PoC[1] would involve at least needing additional options
-> > >     for the /dev/dax path, but there have also been discussions about
-> > >     having a general notion of custom allocators that can be plugged
-> > >     into guest_memfd, and some of these might have overlapping options
-> > >     WRT things like hugepages/etc. But at a high-level, DAX would map
-> > >     more to memory-backend-file than memory-backend-memfd, so we'd
-> > >     already be crossing up some wires there.
-> > 
-> > I have no deep understanding on this, but IIUC we used to stick with
-> > memory-backend-file for dax.  Why switch to memory-backend-guest-memfd?
-> > Are we still exposing a dax via a file path ultimately, even with CoCo?
-> 
-> I touched on this a bit below, but I don't necessarily think
-> memory-backend-guest-memfd should handle DAX, it's just one example
-> where we clearly need to think beyond 'memfd', but are still potentially
-> in the realm of 'guest_memfd' depending on what the API ends up looking
-> like.
-> 
-> But I agree with your below point that we don't need the backend to
-> match up with implementation details of how guest_memfd works
-> internally, and that the core point that memory-backend-file might still
-> end up seeming like the most appropriate way for a QEMU user to specify
-> a DAX path, even if internally it's still using guest_memfd.
-> 
-> Though going that route, we'd still have a
-> memory-backend-file,...,guest_memfd=on that brings 'memfd's' back into
-> the discussion. We could take it a step further and rename the
-> 'guest_memfd' backend option to 'securable', but maybe this is ends up
-> being that right level of balance between 'i need to open a file that
-> can do guest_memfd-related stuff', and 'i need to create a guest_memfd
-> instance can handle a DAX path'.
-
-What I have in mind is, when used as CoCo where we will need to apply the
-machine property first saying "this is a CoCo VM", we shouldn't need to
-specify "guest-memfd=on" all over the places anymore. QEMU should be able
-to identify it's required to initialize everything to use guest-memfd, or
-fail when it's not supported.
-
-I introduced "guest-memfd" parameter in this series because this series
-still haven't gone as far: unlike CoCo+in-place-conversion or the old CoCo
-with two-layered backends, init-shared is an opt-in feature, and there's no
-machine property to imply anything. It's different from CoCo VMs.
-
-I wonder if you think that's a good idea.  So I found it redundant to
-specify guest-memfd=on for CoCo VMs for all such backends (unless if we
-decide to go with memory-backend-guest-memfd, then it's fine).
-
-Say, after in-place conversion ready, we should specify this:
-
-  $QEMU -M $SOME_COCO_PARAMS,in-place-conversion=on -object memory-backend-memfd,id=*
-  (without guest-memfd=on)
-
-Then that memory-backend-memfd should automatically notice "ok this is a
-CoCo VM with in-place conversion enabled, we don't do dual-layer, this must
-be a gmemfd".
-
-> 
-> My thinking was that since the hugepage PoC already implements the notion
-> of custom allocators in the uAPI, and that there's been talk of 'pluggable'
-> backends for guest_memfd, that the kernel would also need to do a reasonable
-> job in creating a consistent uAPI/documentation, such that the hugepage/DAX
-> cases would end up looking something like:
-> 
->   memory-backend-guest-memfd,allocator=hugetlb,pagesize=2M,...
->   memory-backend-guest-memfd,allocator=dax,path=/dev/daxX,pagesize=2M,...
-
-So far I'm still a bit conservative to introduce a path= parameter to a
-memfd backend.. but we can hold the discussion until the idea becomes
-clearer.
-
-> 
-> which is firmly on the 'i need to create a guest_memfd instance that's
-> back by a DAX path' end of the spectrum, compared to the more abstracted
-> approach you're suggesting, and so for the most part we'd be passing
-> through the kernel options/documentation to users vs. abstracting it and
-> then touching on it case-by-case in 'memfd'/'file'/etc. documentation.
-
-If you agree with my above idea, we don't need to document anything special
-for CoCo.  We support all things internally, no doc change needed except
-telling people how to enable CoCo.
-
-Say, if we have a command line that works for QEMU without CoCo:
-
-  $QEMU -M ... -object memory-backend-memfd,id=...
-
-Then my imagination is if we want to boot that same VM but with CoCo, the
-cmdline should be:
-
-  $QEMU $COCO_PARAMS1 -M ...,$COCO_PARAMS2 -object memory-backend-memfd,id=...
-  (again, no guest-memfd=on anywhere)
-
-I wish it will just work all like before, except that it now boots a
-confidential VM, so safety guaranteed.
-
-I agree that's the ideal case, and I may over look things.. Please correct
-me if I missed some.
-
-> 
-> Personally, I'm not sure at this point which approach will end up being
-> the more workable one. But it is harder/more-confusing to start with
-> memory-backend-guest-memfd, and then go back to e.g.
-> memory-backend-file,guest_memfd=on later for future extensions. So I'm
-> start to lean toward doing the minimal
-> '<existing_backend>,guest_memfd=on' thing for now, and then just
-> deprecating it if we really feel like we need a more direct interface
-> that memory-backend-guest-memfd down the road.
-> 
-> Does that seem reasonable for a starting point? I feel like we'll be
-> better positioned to make a better long-term decision once some of these
-> patchsets are further along.
-
-The more I read into it, the more I feel like we should settle this early..
-It might be a good timing to discuss this.
-
-Again, I don't actually have any strong opinion right now, say, duplicating
-the current memfd backend file isn't a huge deal. Now, I'm uncertain
-slightly more about the future, and whether that's the right start to
-future's QEMU cmdline interfacing with CoCo.
-
-> 
-> > 
-> > Note, here I want to differenciate two concepts: QEMU interfacing and
-> > kernel/KVM interfacing.  I mean, I have a gut feeling that for coco dax we
-> > could still stick with memory-backend-file, even if internally we can still
-> > use new KVM ioctls to set them up: there's no rule to say only
-> > memory-backend-guest-memfd can use the KVM ioctl.  IMHO they're different
-> > stories, and here I'm focused more on the QEMU interfacing that we're
-> > discussing here.
-> > 
-> > IMHO for QEMU's interfacing, any memory-backend should play one solo role
-> > which is to point to QEMU (as a hypervisor) a backing store for some piece
-> > of resource that can be used as guest memory backend.  It doesn't need to
-> > have any implication on how we implement that backend internally.
-> > 
-> > >   - live update: there's work[2] on enabling preservation of confidential
-> > >     guest memory across kexec by preserving it through guest_memfd. This
-> > >     one is still a bit mind-blowing to me but I could see us needing
-> > >     some additional options here that would really make no sense for
-> > >     memfd.
-> > 
-> > Could you elaborate what kind of parameter you would expect?
-> 
-> I was thinking stuff like the metadata that would be needed to rebuild a
-> KVM instance with the same GPA->HPA mappings to the pages previously
-> allocated by guest_memfd. It makes semse that each backend has it's own
-> associated metadata so that each can be restored in-turn, but yes there
-> would also need to be some common state like KVM itself that needs to be
-> serialized, and this would probably have separate options. So in theory it
-> wouldn't need to be tied to the backend, but IMO it feels very natural
-> to imagine the options like something like that.
-
-So live update should ideally work both for CoCo and non-CoCo, and work for
-all memory-backends, am I right?  I'm not sure if it means gmem is not
-special in this case, because they should all be reserved on save(), and
-recovered on load().
-
-If you put everything above into this picture, live update (or CPR) only
-means: let's do a migration with this VM, no matter if it's CoCo or not.
-It hopefully shouldn't care some parameter the memfd (gmem or not) has.
-
-> 
-> > 
-> > I'm not sure if you have investigated QEMU's CPR approach, now memfd
-> > backend is really the core of supporting such infrastructure, where fds can
-> > be persisted.  For live update, it'll be persisted across kexec and kernel
-> > switchover.  For CPR, it actually also works when with cpr-reboot with its
-> > own tricky way to persist memory.
-> > 
-> > In general, what I want to say is, I really think they should play the same
-> > in term of live update case too: if we need to register some fd for
-> > persistency, we need to register gmem, kvm, but also memfd if some of them
-> > are attached to the current VM, right?
-> 
-> I definitely need to look into this more (and intra-host live update for
-> guest_memfd/in-place converison in general), but for guest memory
-> persistence it seems like we'd generally be relying on
-> memory-backend-file=<path> as a target/src for serializing guest memory
-> to persistent storage for normal/'memfd' case.
-> 
-> But for confidential VMs we don't just need the data for a particular GPA,
-> but the original HPA and maybe details like the associated shared/private
-> memory attributes, which is why I'm thinking we might need something like a
-> separate path argument for that, or maybe QEMU abstracting this out into its
-> own user-configurable format.
-> 
-> > 
-> > >   - directmap removal: these[3] patches allow a new guest_memfd flag to
-> > >     be set to unmap guest_memfd pages from kernel directmap to help
-> > >     mitigate speculative attacks, probably would involve a new option
-> > >     as well that wouldn't be applicable to normal memfds
-> > 
-> > Now the question is, do we want to remove directmap for "some" memory
-> > backend, or do we want to remove it per-VM?
-> > 
-> > This is another thing I want to make sure we're on the same page: I want to
-> > make sure we don't introduce per-VM setup for memory backends.
-> > 
-> > Say, "init-shared" or "in-place CoCo", what should we use for one gmem fd?
-> > IMHO it shouldn't be a parameter in the memory-backend.  It should be a
-> > parameter for the -machine or some similar per-vm setup, which will apply
-> > to all gmemfd across the current VM.
-> > 
-> > My understanding is directmap removal is similar in this case, which seems
-> > to be a per-VM (rather than per-memory-backend) attribute?  We can still
-> > operate on that per-memory-backend, but then it'll be internally, the
-> > backends need to understand the VM setup and do things properly, IMHO.
-> 
-> I think all-or-nothing would be most common, but it's completely
-> controlled at the guest_memfd inode level so it would support that sort
-> of flexibility if needed. One side effect is that setting it currently
-> sets AS_NO_DIRECT_MAP which can have some performance downsides...
-> maaaaaybe that's enough for someone to want to fine-tune 'isolated' vs.
-> 'non-isolated' GPA ranges?
-
-Yes, it sounds possible, but it sounds non-trivial to do any fine tuning..
-and maybe the admin will just go take or not take the penalty. :)
-
-I'll see how you think about my above comments in general, the summary is
-whether we can relying on a machine prop to define the VM completely on all
-internal things, rather than needing to touch everything.  If that's a good
-idea, then maybe we don't need a new backend for the same reason, because
-memfd backend "must" be guest-memfd backend for CoCo.
-
-This made me also thought about when CPR was introduced: not relevant to
-"live update" perspective, but similarly we need something special all over
-the places, and what CPR does was exactly requiring one global -M parameter
-with:
-
--machine aux-ram-share=on
-
-That enables all internal RAMs allocated (like, ROMs) to be fully fd-based.
-All rest QEMU cmdlines untouched to support CPR.
-
-CPR hided quite some tricky checks all over the place.  Sometimes I don't
-like it, but I think what I don't like is not the interfacing part, only
-when it hides things too deep in stack..  Logically the idea still makes
-sense and it's similar here on one knob controlling everything.
-
-https://www.qemu.org/docs/master/devel/migration/CPR.html
-
-Thanks again for all the details!
-
-> 
-> So I think it's pretty safe to say we don't *need* to expose this
-> functionality per-backend/inode initially, and if we end up preferring a
-> global option then that's probably fine too. So we can probably set this
-> example aside for now.
-> 
-> > 
-> > > 
-> > > It could also end up that even memory-backend-guest-memfd is too
-> > > generic, and that some of these would involve a more specialized memory
-> > > backend where may they can share a common base class for some of the
-> > > core guest_memfd stuff but otherwise be separate backends with their
-> > > own specific options. So to me, starting off building up
-> > > memory-backend-memfd seems like a potential misstep, whereas we don't
-> > > really lose much to start with a clean slate.
-> > > 
-> > > [1] DAX: https://lwn.net/ml/all/20260423170219.281618-1-dave.jiang@intel.com/
-> > > [2] LUO: https://lore.kernel.org/all/cover.1779080766.git.tarunsahu@google.com/#r
-> > > [3] directmap removal: https://lore.kernel.org/kvm/20260317141031.514-1-kalyazin@amazon.com/
-> > > 
-> > > > 
-> > > > > 
-> > > > > I also saw you were open to having someone pick up these patches if you
-> > > > > don't think you'll have a chance to get to them near-term, so I'd be
-> > > > > happy to pick them up if that's preferable.
-> > > > 
-> > > > Sure!  Indeed I don't have bandwidth to keep working on this one in the
-> > > > near future. Please feel free to pick whatever needed into your series.
-> > > 
-> > > Ok, sounds good, I'll pick these up for my next posting and incorporate
-> > > any changes/comments that might still be pending at that time.
-> > > 
-> > > Thanks for getting things to this stage!
-> > 
-> > Thanks for picking it up!  Juraj in our team may have some future
-> > exploration on gmem over 1G for postcopy on init-shared, so it's great the
-> > code is moving closer to that direction.
-> 
-> Nice, lots of interesting work ahead it seems :)
-> 
-> Thanks,
-> 
-> Mike
-> 
-> > 
-> > Thanks,
-> > 
-> > -- 
-> > Peter Xu
-> > 
-> > 
-> 
-
--- 
-Peter Xu
-
+I've picked it up into the linux-user git tree as-is.
+Thanks!
+Helge
 
