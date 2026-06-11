@@ -4,77 +4,74 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 67304CD8CB9
-	for <qemu-devel@archiver.kernel.org>; Thu, 11 Jun 2026 06:37:35 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D8CE3CD8CB9
+	for <qemu-devel@archiver.kernel.org>; Thu, 11 Jun 2026 06:39:13 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wXZ25-0002h4-F3; Thu, 11 Jun 2026 02:36:53 -0400
+	id 1wXZ4J-0004Uv-60; Thu, 11 Jun 2026 02:39:11 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <odaki@rsg.ci.i.u-tokyo.ac.jp>)
- id 1wXZ1t-0002a3-0C; Thu, 11 Jun 2026 02:36:41 -0400
-Received: from www3579.sakura.ne.jp ([49.212.243.89])
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1wXZ4H-0004Ug-CT
+ for qemu-devel@nongnu.org; Thu, 11 Jun 2026 02:39:09 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <odaki@rsg.ci.i.u-tokyo.ac.jp>)
- id 1wXZ1o-0002av-OF; Thu, 11 Jun 2026 02:36:40 -0400
-Received: from h183.csg.ci.i.u-tokyo.ac.jp (h183.csg.ci.i.u-tokyo.ac.jp
- [133.11.54.183]) (authenticated bits=0)
- by www3579.sakura.ne.jp (8.16.1/8.16.1) with ESMTPSA id 65B6ZnFM023462
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NO);
- Thu, 11 Jun 2026 15:35:59 +0900 (JST)
- (envelope-from odaki@rsg.ci.i.u-tokyo.ac.jp)
-DKIM-Signature: a=rsa-sha256; bh=aXY+9PaZ9XaHKvBSIeH+b5AgPj/NnaHzLDwsmvH8hlQ=; 
- c=relaxed/relaxed; d=rsg.ci.i.u-tokyo.ac.jp;
- h=From:Message-Id:To:Subject:Date;
- s=rs20250326; t=1781159759; v=1;
- b=abu4GAEI/P1NSGdIuUf+LkZxJ9arCs1yM0WmvQC22lVukFMsafVQiyBskXulpTEa
- QFlcZDFxcxcLBuXmNOqo2ulBDLK9Zop1QUDuKIm+ZDQ3+cpnTBKOtwLi6RLg7PFO
- 46vO1YoXM9DePYwhUsZdMFmUB87WBxv3fblz9fiJstitAdb5lr6LBpTGtgpwzk9e
- FnD1lKU9Zd4bRui5tRKhB6km+2fFNZGaiEgTIrl7bvZQ2/FMgziCYDvr9cS5xuxz
- msA2DGW9Si7chAeX3eKHvXpIjzKbJ46q/YigcI2DjnOKOZ5AOAHtjkSFRQagRJ51
- +GeF8IppeFQtrtMu6KA62g==
-From: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
-Date: Thu, 11 Jun 2026 15:35:49 +0900
-Subject: [PATCH 2/3] system/physmem: Notify RAMBlock migratable and idstr
- changes
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1wXZ4G-0003Gs-4T
+ for qemu-devel@nongnu.org; Thu, 11 Jun 2026 02:39:09 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1781159946;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=4OHBsff89JWjzBR93uz5oGEknLQXgqpb/pCWV6t4m44=;
+ b=JXjmLLsaDVEnmRFUWZtUtDwUM0s/Sb00utIDk4lrU6zXmHHtqImGId3LwJLQnUKDQ22iqq
+ JGplPnyL+meT7WVxIGZmy0n46F19LwJnyRjF5hW76estuyift9ryeC4alUru+HU7GU6OiW
+ 9gmOvK7NCPedYF5Lg0thAwLPEnqcQis=
+Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-496-UL6vQwdeNYKZWKntwSlMbw-1; Thu,
+ 11 Jun 2026 02:39:01 -0400
+X-MC-Unique: UL6vQwdeNYKZWKntwSlMbw-1
+X-Mimecast-MFC-AGG-ID: UL6vQwdeNYKZWKntwSlMbw_1781159940
+Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id B7454180AC4F; Thu, 11 Jun 2026 06:38:59 +0000 (UTC)
+Received: from blackfin.pond.sub.org (unknown [10.44.22.28])
+ by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 473861954B10; Thu, 11 Jun 2026 06:38:59 +0000 (UTC)
+Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
+ id E197421E6A01; Thu, 11 Jun 2026 08:38:56 +0200 (CEST)
+From: Markus Armbruster <armbru@redhat.com>
+To: John Snow <jsnow@redhat.com>
+Cc: qemu-devel@nongnu.org,  Michael Roth <michael.roth@amd.com>,  Mauro
+ Carvalho Chehab <mchehab+huawei@kernel.org>,  Pierrick Bouvier
+ <pierrick.bouvier@oss.qualcomm.com>,  Cleber Rosa <crosa@redhat.com>,
+ Peter Maydell <peter.maydell@linaro.org>
+Subject: Re: [PATCH v4 00/13] qapi: add formal "intro" section
+In-Reply-To: <87o6hhfw4z.fsf@pond.sub.org> (Markus Armbruster's message of
+ "Thu, 11 Jun 2026 08:07:08 +0200")
+References: <20260611042332.482979-1-jsnow@redhat.com>
+ <87o6hhfw4z.fsf@pond.sub.org>
+Date: Thu, 11 Jun 2026 08:38:56 +0200
+Message-ID: <878q8lfunz.fsf@pond.sub.org>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-Id: <20260611-ram-v1-2-a2dacf699718@rsg.ci.i.u-tokyo.ac.jp>
-References: <20260611-ram-v1-0-a2dacf699718@rsg.ci.i.u-tokyo.ac.jp>
-In-Reply-To: <20260611-ram-v1-0-a2dacf699718@rsg.ci.i.u-tokyo.ac.jp>
-To: qemu-devel@nongnu.org
-Cc: Kevin Wolf <kwolf@redhat.com>, Hanna Reitz <hreitz@redhat.com>,
- =?utf-8?q?Philippe_Mathieu-Daud=C3=A9?= <philmd@mailo.com>,
- Zhao Liu <zhao1.liu@intel.com>,
- Stefano Stabellini <sstabellini@kernel.org>,
- Anthony PERARD <anthony@xenproject.org>,
- "Edgar E. Iglesias" <edgar.iglesias@gmail.com>,
- Peter Xu <peterx@redhat.com>, Fabiano Rosas <farosas@suse.de>,
- Paolo Bonzini <pbonzini@redhat.com>, Reinoud Zandijk <reinoud@netbsd.org>,
- Marcelo Tosatti <mtosatti@redhat.com>, Alex Williamson <alex@shazbot.org>,
- =?utf-8?q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>,
- qemu-block@nongnu.org, xen-devel@lists.xenproject.org,
- kvm@vger.kernel.org, Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
-X-Mailer: b4 0.16-dev-16047
-X-Developer-Signature: v=1; a=openpgp-sha256; l=4261;
- i=odaki@rsg.ci.i.u-tokyo.ac.jp; h=from:subject:message-id;
- bh=QBBxWW4P2EOIbBSc38NXTlVjZmTEVPegIdLf55t33Pg=;
- b=owGbwMvMwCWmMbc20y1CyJDxtFoSQ5ZWuE/SPP21AppC647OfWojwvszKfyx32yd33uyFScEF
- XTz6j7qKGVhEONikBVTZEkp2s2tEV37qTAhvgVmDisTyBAGLk4BmEjYa4b/iXJikZXL8vYxWvQ9
- 73hUPLtWf8ISdZ6ZnA38Df0NWlGrGBm2SB7ytVy0e8HWD4+/PitSz5ZfwHeh+UPomqS/1vtm12z
- hAwA=
-X-Developer-Key: i=odaki@rsg.ci.i.u-tokyo.ac.jp; a=openpgp;
- fpr=AEDC03C9AF734F2EC26A7BFFA4BAEAA73536753C
-Received-SPF: pass client-ip=49.212.243.89;
- envelope-from=odaki@rsg.ci.i.u-tokyo.ac.jp; helo=www3579.sakura.ne.jp
-X-Spam_score_int: -16
-X-Spam_score: -1.7
-X-Spam_bar: -
-X-Spam_report: (-1.7 / 5.0 requ) BAYES_00=-1.9, DKIM_INVALID=0.1,
- DKIM_SIGNED=0.1, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=no autolearn_force=no
+Content-Type: text/plain
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.12
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=armbru@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -24
+X-Spam_score: -2.5
+X-Spam_bar: --
+X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.445,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -90,124 +87,6 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The RAM migration code assumes that the set of migratable RAMBlocks and
-their idstr values do not change while migration is running. Add
-RAMBlockNotifier callbacks for RAM_MIGRATABLE flag and idstr changes so
-migration can detect attempts to make such changes at runtime and abort
-with a clear error.
-
-Signed-off-by: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
----
- include/system/ramlist.h |  6 ++++++
- hw/core/numa.c           | 36 ++++++++++++++++++++++++++++++++++++
- system/physmem.c         |  9 +++++++++
- 3 files changed, 51 insertions(+)
-
-diff --git a/include/system/ramlist.h b/include/system/ramlist.h
-index 32157cc84305..e96de5573eed 100644
---- a/include/system/ramlist.h
-+++ b/include/system/ramlist.h
-@@ -66,6 +66,9 @@ struct RAMBlockNotifier {
-                             void *host, size_t size, size_t max_size);
-     void (*ram_block_removed)(RAMBlockNotifier *n, const RAMBlock *rb,
-                               void *host, size_t size, size_t max_size);
-+    void (*ram_block_set_migratable)(RAMBlockNotifier *n, const RAMBlock *rb);
-+    void (*ram_block_unset_migratable)(RAMBlockNotifier *n, const RAMBlock *rb);
-+    void (*ram_block_set_idstr)(RAMBlockNotifier *n, const RAMBlock *rb);
-     void (*ram_block_resized)(RAMBlockNotifier *n, RAMBlock *rb,
-                               size_t new_size);
-     QLIST_ENTRY(RAMBlockNotifier) next;
-@@ -81,6 +84,9 @@ void ram_block_notify_add(const RAMBlock *rb,
-                           void *host, size_t size, size_t max_size);
- void ram_block_notify_remove(const RAMBlock *rb,
-                              void *host, size_t size, size_t max_size);
-+void ram_block_notify_set_migratable(const RAMBlock *rb);
-+void ram_block_notify_unset_migratable(const RAMBlock *rb);
-+void ram_block_notify_set_idstr(const RAMBlock *rb);
- void ram_block_notify_resize(RAMBlock *rb, size_t new_size);
- 
- GString *ram_block_format(void);
-diff --git a/hw/core/numa.c b/hw/core/numa.c
-index 40acb98bdd0b..0685cd1c6ccc 100644
---- a/hw/core/numa.c
-+++ b/hw/core/numa.c
-@@ -887,6 +887,42 @@ void ram_block_notify_remove(const RAMBlock *rb,
-     }
- }
- 
-+void ram_block_notify_set_migratable(const RAMBlock *rb)
-+{
-+    RAMBlockNotifier *notifier;
-+    RAMBlockNotifier *next;
-+
-+    QLIST_FOREACH_SAFE(notifier, &ram_list.ramblock_notifiers, next, next) {
-+        if (notifier->ram_block_set_migratable) {
-+            notifier->ram_block_set_migratable(notifier, rb);
-+        }
-+    }
-+}
-+
-+void ram_block_notify_unset_migratable(const RAMBlock *rb)
-+{
-+    RAMBlockNotifier *notifier;
-+    RAMBlockNotifier *next;
-+
-+    QLIST_FOREACH_SAFE(notifier, &ram_list.ramblock_notifiers, next, next) {
-+        if (notifier->ram_block_unset_migratable) {
-+            notifier->ram_block_unset_migratable(notifier, rb);
-+        }
-+    }
-+}
-+
-+void ram_block_notify_set_idstr(const RAMBlock *rb)
-+{
-+    RAMBlockNotifier *notifier;
-+    RAMBlockNotifier *next;
-+
-+    QLIST_FOREACH_SAFE(notifier, &ram_list.ramblock_notifiers, next, next) {
-+        if (notifier->ram_block_set_idstr) {
-+            notifier->ram_block_set_idstr(notifier, rb);
-+        }
-+    }
-+}
-+
- void ram_block_notify_resize(RAMBlock *rb, size_t new_size)
- {
-     RAMBlockNotifier *notifier;
-diff --git a/system/physmem.c b/system/physmem.c
-index 6d00e99270c7..83c9243236a5 100644
---- a/system/physmem.c
-+++ b/system/physmem.c
-@@ -1911,11 +1911,17 @@ bool qemu_ram_is_migratable(const RAMBlock *rb)
- 
- void qemu_ram_set_migratable(RAMBlock *rb)
- {
-+    /* Notify before modifying the ram block. */
-+    ram_block_notify_set_migratable(rb);
-+
-     rb->flags |= RAM_MIGRATABLE;
- }
- 
- void qemu_ram_unset_migratable(RAMBlock *rb)
- {
-+    /* Notify before modifying the ram block. */
-+    ram_block_notify_unset_migratable(rb);
-+
-     rb->flags &= ~RAM_MIGRATABLE;
- }
- 
-@@ -1937,6 +1943,9 @@ void qemu_ram_set_idstr(RAMBlock *new_block, const char *name, DeviceState *dev)
-     assert(new_block);
-     assert(!new_block->idstr[0]);
- 
-+    /* Notify before modifying the ram block. */
-+    ram_block_notify_set_idstr(new_block);
-+
-     if (dev) {
-         char *id = qdev_get_dev_path(dev);
-         if (id) {
-
--- 
-2.54.0
+Queued.  Thanks!
 
 
