@@ -4,56 +4,57 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B121FCD98D4
-	for <qemu-devel@archiver.kernel.org>; Thu, 11 Jun 2026 09:07:29 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1EF2CCD98C7
+	for <qemu-devel@archiver.kernel.org>; Thu, 11 Jun 2026 09:07:38 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wXbMV-00066S-85; Thu, 11 Jun 2026 05:06:07 -0400
+	id 1wXbMp-0006Cx-Ho; Thu, 11 Jun 2026 05:06:27 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1wXbMU-000651-1r
- for qemu-devel@nongnu.org; Thu, 11 Jun 2026 05:06:06 -0400
+ id 1wXbMk-0006CX-4G
+ for qemu-devel@nongnu.org; Thu, 11 Jun 2026 05:06:22 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1wXbMS-0005EH-Iu
- for qemu-devel@nongnu.org; Thu, 11 Jun 2026 05:06:05 -0400
+ id 1wXbMi-0005MS-4k
+ for qemu-devel@nongnu.org; Thu, 11 Jun 2026 05:06:21 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1781168763;
+ s=mimecast20190719; t=1781168779;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=L1PMzPwuEXW67aOzPq+tpb4RknWUk4HcTWyNDmnQBKs=;
- b=Ww7O1SIHQrUWi5c44OVuHE7EeqqH3JYL0nPNikBqdua89iHkRMJv3F4aseelmQUIIk8klh
- 0Dx/PpSevg/upHlFauYV+T9269NNIdyCRZk6/1mW7rCDpWukJDsT8bUe9LBQ1p3S8+4ScV
- Z+m53eNUaRA/DyqNQYZtElMJ/itGM6o=
-Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
+ bh=PXp6IDcQDWTnCpWDPYd10qxyz4SzrMGhedvswMrxwag=;
+ b=RahwR32w/1dApZHhU29WdQuV+KfwyGQ4aVeEH/qppeWDW7NBsrrRYbmoI8wi4BhQGPDjbC
+ QVzgYnZxRzIXVHE8h8lErIGrIArdw4ntv4w1EfnTYv05kJn0gtLFlKPvKyvNqmzACnO38D
+ kOA4KF3oEf5bHtHVsSBYRWsx8oTxO/w=
+Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-468-qIE0g4ZjNIKZ0iZ40iE9ug-1; Thu,
- 11 Jun 2026 05:06:00 -0400
-X-MC-Unique: qIE0g4ZjNIKZ0iZ40iE9ug-1
-X-Mimecast-MFC-AGG-ID: qIE0g4ZjNIKZ0iZ40iE9ug_1781168758
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-672-9mZrpGpoPY62YSBKbxjy0w-1; Thu,
+ 11 Jun 2026 05:06:16 -0400
+X-MC-Unique: 9mZrpGpoPY62YSBKbxjy0w-1
+X-Mimecast-MFC-AGG-ID: 9mZrpGpoPY62YSBKbxjy0w_1781168774
 Received: from mx-prod-int-10.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-10.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.95])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id AE9C4180ACF5; Thu, 11 Jun 2026 09:05:58 +0000 (UTC)
+ by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id B416F195D02B; Thu, 11 Jun 2026 09:06:14 +0000 (UTC)
 Received: from localhost (unknown [10.44.24.21])
  by mx-prod-int-10.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 2619D30A8; Thu, 11 Jun 2026 09:05:56 +0000 (UTC)
+ id 5DAD731D2; Thu, 11 Jun 2026 09:06:12 +0000 (UTC)
 From: =?utf-8?q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>
-Date: Thu, 11 Jun 2026 13:03:41 +0400
-Subject: [PATCH v3 26/35] ui/console-vc: fire ADDED/REMOVED notifications
+Date: Thu, 11 Jun 2026 13:03:44 +0400
+Subject: [PATCH v3 29/35] ui/gtk: fix tab re-insertion order on window
+ close
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
-Message-Id: <20260611-b4-ui-v3-26-72bcbbea0fae@redhat.com>
+Message-Id: <20260611-b4-ui-v3-29-72bcbbea0fae@redhat.com>
 References: <20260611-b4-ui-v3-0-72bcbbea0fae@redhat.com>
 In-Reply-To: <20260611-b4-ui-v3-0-72bcbbea0fae@redhat.com>
 To: qemu-devel@nongnu.org
@@ -67,34 +68,35 @@ Cc: Paolo Bonzini <pbonzini@redhat.com>,
  Peter Maydell <peter.maydell@linaro.org>, 
  Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>, 
  =?utf-8?q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>
-X-Developer-Signature: v=1; a=openpgp-sha256; l=1532;
+X-Developer-Signature: v=1; a=openpgp-sha256; l=2010;
  i=marcandre.lureau@redhat.com; h=from:subject:message-id;
- bh=YapQn9Mbsz473V4fTJPToKR0zvzbCFqEf4qxDOs0Qtc=;
- b=owEBbQKS/ZANAwAKAdro4Ql1lpzlAcsmYgBqKnnhFSngo1bDyM927u/cfdEFlUh+pgnYfa52f
- ki2ZS/wu62JAjMEAAEKAB0WIQSHqb2TP4fGBtJ29i3a6OEJdZac5QUCaip54QAKCRDa6OEJdZac
- 5Tj0D/91jX0kbby7vaccX21/fQ1W4kVrW0XWdZnGZ0EnDx3gqw+skWlWy9O0lvHKRDYS82PhqCp
- 4Ly9ijSrbeiXXezCpgJVtcpz+mYj33SJD74ilBefs4tGr3e16L1Ov8JgJde9AGH+wiJVjDmphtP
- 3+q+hM1zu9WM9tHkAV2BM9FCJMNbUeJ6+wZIzVmPvS1AjwoRmkscyCt+J4h2j5K9FwFBdaGO2Su
- MIg50ozXpD9sBzf2gK4pg3E5v4Er9qb3JBY91VWhhzJ2sD8GYi232sgf/1LPMm3u5dtE9zoLr5X
- qjZXrmGIJkYtd5Zfeo0Ek+1VbXLz4VUoxhv54H79viq699XuaGL7jNYUPnm2b6xNJYm4mn7EU7E
- s/1yUSDH2S//4gXeJcCtbIKyKJbFKrJUVFEFzAVG+PUwvlwv0Rl6w/bkqR7sWmH9IrmuAi8HhIq
- ndDHK4U4PHf7ZlGiw419+TxorbKlxtcuxy878dIQZvpEPZpr7WmaNVDbsF5pTge0SK2dXu21Yhs
- JLVn06Su9GkD5dO32fGQB+1GN/FIAFwB/NzAy9Nrnw5JgFl4+fvS3wgM73dFkuH6EG3e9ge0YOG
- iU9Klf/c9LCMm0ghJQ5MPCeEdNCcAP4aEAygfRmgsqZBZXsHxQUV8c5O+sQBGmJUEhX4Ktrj58/
- vMCKfF1lwDmmFqg==
+ bh=xP4Iks1pyzqBMR8iuAQ0TMhb5HtWj5rEEvbuyLR4l2o=;
+ b=owEBbQKS/ZANAwAKAdro4Ql1lpzlAcsmYgBqKnnhKoe/4hRwzr6q0Ya9eLLtgN6CuZdQgnXlH
+ Q/CIdneJ5+JAjMEAAEKAB0WIQSHqb2TP4fGBtJ29i3a6OEJdZac5QUCaip54QAKCRDa6OEJdZac
+ 5aEUEAC3qBpph5jTp3elbqk84Z0zRvVXMgXTiYBInFChBzal91/mJlgiRezxDDlQSLcHR5OJt31
+ BRlizjEi2Z/JxjjpVaQJSb+cd4Qlx8FdxYCUEUrWR1Vnr4Nf/l1rzstmggnmwTK0vTpNgoZisRN
+ CL3MDBmU9sKNpgqe79PBOMXmBH9EM/Fx5XJ1kqnCwRtfKuKR91y8XDoDu3Ear04CXH9E/amJSi+
+ SnZs9bt/X8fSQVYjf/q3sMdlNy8zytOXlMm82F4GqVPNNRoPd8I9JrAyamxRd4A+Lkmw8e4Keyj
+ 0od9awKREDW8aDeNS+AzvSVMQoUbjU47ZuOqN98Uf7KjgcEY8op4leZbhQmgsciUoqz8wBx481c
+ QNo5PI79YH5KjIYjc/WIpq6mGQFmnH1Ga+YcvtYrXFdGz2oUGialhcD2HO2MZTHXJUaMS9AgR3h
+ oUyvuN2MA/XqDgHOnHoZtsRBwwZr3rpdO+URoL3uYHWexR5qqPSDNJCCI5AjcLWsdfyZw1InBCu
+ c1zmGBU5+5fB3KhvlG8wwkFHWnwPaHKAFMM1Ig+yOFhBXCtZvsBSXKfiyN5HMzIFDCRHCrIinst
+ udXVRcDcRAzvmjTFKKCO9o5krTDJ6MJNeZYUq8ZrsqSpNlp4NzFFA2vedZquFvEHOeQDQrYdowe
+ IkRpmyOcq1dYCdg==
 X-Developer-Key: i=marcandre.lureau@redhat.com; a=openpgp;
  fpr=87A9BD933F87C606D276F62DDAE8E10975969CE5
 X-Scanned-By: MIMEDefang 3.6 on 10.30.177.95
 Received-SPF: pass client-ip=170.10.133.124;
  envelope-from=marcandre.lureau@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -24
-X-Spam_score: -2.5
-X-Spam_bar: --
-X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.445,
+X-Spam_score_int: 8
+X-Spam_score: 0.8
+X-Spam_bar: /
+X-Spam_report: (0.8 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.445,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_SBL_CSS=3.335, SPF_HELO_PASS=-0.001,
+ SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -110,55 +112,62 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Fire CONSOLE_ADDED when the chardev is opened.
+Add gd_vc_notebook_pos() which computes the correct notebook position
+for a console by counting only non-detached (non-windowed) tabs before
+it. Use it in gd_tab_window_close() so a re-attached tab is inserted
+at its logical position rather than appended at the end.
 
-Fire CONSOLE_REMOVED in char_vc_finalize() before dropping the console
-reference, so the console is still in a valid state when listeners
-handle the event. Also fixes a console object leak by adding the
-missing object_unref().
-
+Reviewed-by: Daniel P. Berrangé <berrange@redhat.com>
 Signed-off-by: Marc-André Lureau <marcandre.lureau@redhat.com>
 ---
- ui/console-vc.c | 13 +++++++++++++
- 1 file changed, 13 insertions(+)
+ ui/gtk.c | 27 ++++++++++++++++++++++++---
+ 1 file changed, 24 insertions(+), 3 deletions(-)
 
-diff --git a/ui/console-vc.c b/ui/console-vc.c
-index 828e78c41ea..53d9e9d39b3 100644
---- a/ui/console-vc.c
-+++ b/ui/console-vc.c
-@@ -255,6 +255,7 @@ static bool vc_chr_open(Chardev *chr, ChardevBackend *backend, Error **errp)
-     }
- 
-     qemu_chr_be_event(chr, CHR_EVENT_OPENED);
-+    qemu_console_notify(QEMU_CONSOLE_ADDED, QEMU_CONSOLE(s));
-     return true;
+diff --git a/ui/gtk.c b/ui/gtk.c
+index 929e4cf43f7..741f7bfe373 100644
+--- a/ui/gtk.c
++++ b/ui/gtk.c
+@@ -1464,16 +1464,37 @@ static void gd_menu_show_tabs(GtkMenuItem *item, void *opaque)
+     gd_update_windowsize(vc);
  }
  
-@@ -327,12 +328,24 @@ static void char_vc_init(Object *obj)
-     vc->encoding = CHARDEV_VC_ENCODING_UTF8;
- }
- 
-+static void char_vc_finalize(Object *obj)
++static int gd_vc_notebook_pos(GtkDisplayState *s, VirtualConsole *target)
 +{
-+    VCChardev *vc = VC_CHARDEV(obj);
-+    QemuConsole *con = QEMU_CONSOLE(vc->console);
++    int pos = 0;
++    guint i;
 +
-+    if (con) {
-+        qemu_console_notify(QEMU_CONSOLE_REMOVED, con);
-+        object_unref(con);
++    for (i = 0; i < s->vcs->len; i++) {
++        VirtualConsole *vc = g_ptr_array_index(s->vcs, i);
++        if (vc == target) {
++            return pos;
++        }
++        if (!vc->window) {
++            pos++;
++        }
 +    }
++    g_assert_not_reached();
 +}
 +
- static const TypeInfo char_vc_type_info = {
-     .name = TYPE_CHARDEV_VC,
-     .parent = TYPE_CHARDEV,
-     .instance_size = sizeof(VCChardev),
-     .instance_init = char_vc_init,
-     .instance_post_init = object_apply_compat_props,
-+    .instance_finalize = char_vc_finalize,
-     .class_init = char_vc_class_init,
- };
+ static gboolean gd_tab_window_close(GtkWidget *widget, GdkEvent *event,
+                                     void *opaque)
+ {
+     VirtualConsole *vc = opaque;
+     GtkDisplayState *s = vc->s;
++    int page;
  
+     gtk_widget_set_sensitive(vc->menu_item, true);
+-    gd_widget_reparent(vc->window, s->notebook, vc->tab_item);
+-    gtk_notebook_set_tab_label_text(GTK_NOTEBOOK(s->notebook),
+-                                    vc->tab_item, vc->label);
++    g_object_ref(vc->tab_item);
++    gtk_container_remove(GTK_CONTAINER(vc->window), vc->tab_item);
++    page = gd_vc_notebook_pos(s, vc);
++    gtk_notebook_insert_page(GTK_NOTEBOOK(s->notebook),
++                             vc->tab_item, gtk_label_new(vc->label), page);
++    g_object_unref(vc->tab_item);
+     gtk_widget_destroy(vc->window);
+     vc->window = NULL;
+ #if defined(CONFIG_OPENGL)
 
 -- 
 2.54.0
