@@ -4,97 +4,92 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E0985CD98C7
-	for <qemu-devel@archiver.kernel.org>; Thu, 11 Jun 2026 00:09:07 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 44F3CCD98C6
+	for <qemu-devel@archiver.kernel.org>; Thu, 11 Jun 2026 01:08:12 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wXSyB-0005RU-7i; Wed, 10 Jun 2026 20:08:27 -0400
+	id 1wXTtH-0005Yi-Ph; Wed, 10 Jun 2026 21:07:29 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <cupidazul@gmail.com>)
- id 1wXS9T-0005RS-2k
- for qemu-devel@nongnu.org; Wed, 10 Jun 2026 19:16:03 -0400
-Received: from mail-ua1-x933.google.com ([2607:f8b0:4864:20::933])
+ (Exim 4.90_1) (envelope-from <jeuk20.kim@gmail.com>)
+ id 1wXTtA-0005Wr-J7
+ for qemu-devel@nongnu.org; Wed, 10 Jun 2026 21:07:21 -0400
+Received: from mail-pl1-x62c.google.com ([2607:f8b0:4864:20::62c])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <cupidazul@gmail.com>)
- id 1wXS9R-00032J-IT
- for qemu-devel@nongnu.org; Wed, 10 Jun 2026 19:16:02 -0400
-Received: by mail-ua1-x933.google.com with SMTP id
- a1e0cc1a2514c-9640111c168so2519701241.2
- for <qemu-devel@nongnu.org>; Wed, 10 Jun 2026 16:15:58 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1781133357; cv=none;
- d=google.com; s=arc-20240605;
- b=EN3pxHNX5FCNTSoKnKpYqqd2aoBAWiysLzLtysw4Ez7gAty3oS/JJ2risBfOy9tkaV
- ovzn7d2pje2QqMkXx2EwgunWuJaaqPA1WBlb3CsrdY9xVBii9ec4krRYFqSHss6YX5+g
- 69Uo19iLx5TZrrYi/77nQcQQlp2pyRnkq/IqVlshRu5kxvn461DWo0FITrIV3KSrF1Mq
- DsRl9cGHuW5C689HEpdq6Yx/daudf56YFgqmA/uuWVJrqA2ltjMLQlGb0g8BxPy7AsI6
- ND0UJPbfUfhnv7iK+MLclBRPnk4EumUQo4O3T4MRH372xWw5YwhJQlg7qV8s73/P7sqB
- 5hFQ==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
- s=arc-20240605; 
- h=to:subject:message-id:date:from:mime-version:dkim-signature;
- bh=d94HJddahxxFvyKpbs9he4TMhK9zwAeO1hC7BvIt+AY=;
- fh=PnYt+qEB9tAfMKoqBm2xjKOFpYyFFGPudh5cVIoieJM=;
- b=cHxD3xOGEsi8O4h09rmsDhxeUgptpxhlmTyqDw+FrbMuMa/erc5gZ2M6k6Koyt+nEs
- aZ9x0qeZ5Dv72KKfl6+ecBMDlk+GyVwd7h4S4M7QL3Zx77rAg2thgjxNjAcydhI8AZPd
- 3q6wS9gE+MpYJ+tYbs/mfU4SkF4mQu0rUMODtNciQot2yNTt0jZ2TfRU2ZrtiORB76rg
- WsdiItDQLpvjBoyhpkCK9nHQT1Z3CSwSG2VeEfxvzLZnxIIXyep7XeX1nVzIckBSFsI/
- /RuxbpBE9HLEvOenbSLcpMLgMbksuJW8Q3AEk4aOz0u+gh5HxB3ebPzhH0iAULgA97Tz
- 1KiQ==; darn=nongnu.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
+ (Exim 4.90_1) (envelope-from <jeuk20.kim@gmail.com>)
+ id 1wXTt4-0003a5-G8
+ for qemu-devel@nongnu.org; Wed, 10 Jun 2026 21:07:18 -0400
+Received: by mail-pl1-x62c.google.com with SMTP id
+ d9443c01a7336-2c0c3543590so49980165ad.2
+ for <qemu-devel@nongnu.org>; Wed, 10 Jun 2026 18:07:12 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1781133357; x=1781738157; darn=nongnu.org;
- h=to:subject:message-id:date:from:mime-version:from:to:cc:subject
- :date:message-id:reply-to;
- bh=d94HJddahxxFvyKpbs9he4TMhK9zwAeO1hC7BvIt+AY=;
- b=NdtCRH9U5uBfmZu+QE3ldwNmiy88nlyMYp4XboV9y3hhVFiUq8HlwB/ht3ySNRqAPC
- 0Mq+ih1vvb/HmL3uCInKpUC+/+zQ6uua2Uw1+9oOohubPkfY6cW/nmdLQhtaJnnsJg7W
- 63KUM+AN0GmXYhSq+FVLZx9EFZu1WjCkTeClyB/cAR8bEIL9yOiUEb4wC5WazKWP46hI
- nN5laqHP6VEs5H7cXVxn8oBLmxaf3KROFBcuT5fF8w8M2YX9HE6PdBPtSqGkuTGU7oi1
- 34XpSmvqRIv03aQ6t1eVt2GUAqz7AK/0TtUUV/iq+8AV6nOS8PwnaGifD8m6d2+puKHw
- igKg==
+ d=gmail.com; s=20251104; t=1781140031; x=1781744831; darn=nongnu.org;
+ h=message-id:date:references:in-reply-to:cc:to:subject
+ :content-transfer-encoding:mime-version:from:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=n5o1cuuY9nGSqFrglzq++CmaLm1actRWQeFt9D5TqC4=;
+ b=Smh13zP3QHudathEvuT0I/DfndA1NasPhNOhGmpbnR5kTOxFDW9ee1BOWFNtzhoyXI
+ 27mn8i6r1t2kYRYhvdYie0veT/aeyNbbf+sA+Y94/8GbRyjPWN8S/iqRc+3k3i8+StAN
+ jI5wBEK+Cl2Rjr9H6b2zWtCfupQSqdg6HzJOqc5Fd2aanz6cjKNE55prDxYfGbojGJHb
+ IKmhuC0FhcmXgNjqEsQT86c48PBYhK7cMqRWz3EKzDmQV3ztfPDV6sgzz7rKTY91eiZT
+ W5QQJHenRqXNGuhxbvYMpLWF0TMZJej2yrGyAvTOLgric3HBj0Idt0jf5fgjqyO19daZ
+ lyOg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1781133357; x=1781738157;
- h=to:subject:message-id:date:from:mime-version:x-gm-gg
+ d=1e100.net; s=20251104; t=1781140031; x=1781744831;
+ h=message-id:date:references:in-reply-to:cc:to:subject
+ :content-transfer-encoding:mime-version:from:x-gm-gg
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=d94HJddahxxFvyKpbs9he4TMhK9zwAeO1hC7BvIt+AY=;
- b=oIsOhvUWsGiye368xxUO/4Xu4vNETImNPPbl6dYsGczRbOnaWZQR7Hf+bpcaaePntD
- qMU/HB8Y8I/0zd0bzsAY6WJ5N/F5dA11WYigm4hMWq5INs7peJPgPvx9I1cmJD6TCz7X
- 8HOgyw/jRRBQaPyU9jBqiNwSIX4Wjpw2Jkvdbjl5Ii+2qpsYsaGBpYBCk5fZ//cc1gw3
- mvrqn3P0KxL6qaMCJHukCHKrYtl44IvnzZZIReEflMSpHmVQrFzjITaCh5H/6Yu/c4U/
- 6jfrmNVvnU3rD7XO43o937PjnKmEmgHGlwldc11XbvFnzroC6yfCzqCHkBbmxePvvNTK
- RSZg==
-X-Gm-Message-State: AOJu0YwHVkuCJV+PsPf/1MM8NP/afqAwRscs05FuoEX8sxrG7PhMaAKL
- f+OJh9Nagx8U/sNcon5x336b12ZjmAUP6dn2kPiQnXVznShN9VFDkPqUN5rFO8Jzzz3HvGDJHjQ
- 7hkO5RKGfCXFYbICRmgAPqy8dlexLVFplLw==
-X-Gm-Gg: Acq92OFGQMxUmZ10tUPQuxdABm79dima/e/y02wHdYdoN6RotzJ/qLEn3kzNn8hZ+a8
- Af/Be4Lm6Br5Wx105Ulwfut4Mjlp0R/hHFPjOQVucnnRo/86yCrZkEMJzzEd5VQMHyDdc6LoBZc
- qJ2ApsrUlVkg21+SbKrwubLMGSGqxNXK9QCjfJ2l74FOYUjhrNfMKEy/JvyV+QtnyyI/C7cNllK
- ukEN1E88gk8E8wYl9Z+jPSsrg23UDDErniHjqD5ZNQrXfevVgERXjge0Rp6VdT78EyjwVFTIc6h
- LWTsOEG/Cpt+Mesffqs=
-X-Received: by 2002:a05:6122:3293:b0:575:fea0:559 with SMTP id
- 71dfb90a1353d-5b634d49010mr6038705e0c.4.1781133357045; Wed, 10 Jun 2026
- 16:15:57 -0700 (PDT)
+ bh=n5o1cuuY9nGSqFrglzq++CmaLm1actRWQeFt9D5TqC4=;
+ b=e0dkUv50mvfxz9b6JVz2oTcDowKivUvD+hO/z/O2m7/vg33hUe8ZTSypexgAn5frLu
+ heOaety9b+0+TEh0qfPo2cKhkESvIvETyo8hPu/z9wY0a0HuqMxkUFFbpiFk1/LsmbWn
+ AGvNEIEjRJxg6JulyDvwjapuT3AhFZhiNuoYk4cNxkWLpxPjX+3xX6m1k63JSrWqIIo4
+ NjtoRurH8L+2UFx4O0BKzaUN80idqwskAml6eMJ0KseUdr5c5ckB7kOT0GwIVG5z3QOt
+ TehkrGWTDgxjGfa9j+jUfio1j8XR0fkNk/zrckuHDUBDLKs8uzMB7BdKAhkbTrDfO12a
+ K5uw==
+X-Gm-Message-State: AOJu0YzjuJkLihvi6Vow81DAMWsEkfrFxd87LF+KT58bg1C0i34Njs30
+ a9KRM9lOVczU0EEUQP/B8V6rp02F8ZDSQLPZgB6yj2L/q+G5WqYE4ieZ
+X-Gm-Gg: Acq92OF2yMJ9DKSW4HBT/g9NhHTHBxzPlaJsnnOyfVFtzVCevXXTFzc6azXstrmd6sO
+ /nnMem00u/en0FLZVOTCIbiEEYMLQNCFWsEd/uPYwoUSqemspKjyjNiYxl+03FbJ3gfM+HjkgG/
+ DyUeG8h/eGofW2qWx75gfdobcKxEsrRWp4bypJRQU6BHOLfQ44la0s7hHEuA8mxlIUJJVZR45Gp
+ Jy4ZjRuW50IKNqBmU28W2lLPHY/B8WjQ1a3nl+o8z06Avv36vlndf6+P5Sw0MRLtTzvUKyBaEJX
+ WTNldoNAYFRWFE8umO1n0L/VHavkWo6lCx4VefQ5rUy/RnR82DyTmIcRzZwyuDZ5z1AsUX2SxgQ
+ EF+3Aegmik93C30DnSbkkibh0bpernDPawnUsqdrdXMnPq98E75Mz/E1ixvp81c87py4KQwWtmD
+ AiyANgsuKnPY98NtHAAhOGxa9+qixU7/gYZHvOEA==
+X-Received: by 2002:a17:903:1aed:b0:2bf:800:19f8 with SMTP id
+ d9443c01a7336-2c2f21a1baamr4914905ad.17.1781140031468; 
+ Wed, 10 Jun 2026 18:07:11 -0700 (PDT)
+Received: from [127.0.1.1] ([211.226.54.223]) by smtp.gmail.com with ESMTPSA id
+ d9443c01a7336-2c164f84335sm258633595ad.19.2026.06.10.18.07.08
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Wed, 10 Jun 2026 18:07:10 -0700 (PDT)
+From: Jeuk Kim <jeuk20.kim@gmail.com>
+X-Google-Original-From: Jeuk Kim <jeuk20.kim@samsung.com>
 MIME-Version: 1.0
-From: =?UTF-8?Q?Ant=C3=B3nio_Pedro_Santos?= <cupidazul@gmail.com>
-Date: Thu, 11 Jun 2026 00:15:43 +0100
-X-Gm-Features: AVVi8CfP-6-8hMIszEMRWXCkVkpr1nSVo_-0B5Wkyhf7275OpYmsX7NW4yK4CsI
-Message-ID: <CABS7-FOxBfVg5Y2CERMFRVdH8D-1Y99u_JHVFA+FGixqR2zurQ@mail.gmail.com>
-Subject: Qube1.0
-To: qemu-devel@nongnu.org
-Content-Type: multipart/alternative; boundary="0000000000000b5cf80653ee6dc7"
-Received-SPF: pass client-ip=2607:f8b0:4864:20::933;
- envelope-from=cupidazul@gmail.com; helo=mail-ua1-x933.google.com
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+Subject: Re: [PATCH 0/2] hw/ufs: Add Host Initiated Defragmentation (HID)
+ support
+To: Jeuk Kim <jeuk20.kim@samsung.com>, kwolf@redhat.com, hreitz@redhat.com, 
+ farosas@suse.de, lvivier@redhat.com, pbonzini@redhat.com, 
+ keosung.park@samsung.com
+Cc: qemu-devel@nongnu.org, qemu-block@nongnu.org
+In-Reply-To: <20260609023909epcms2p3f8856f12fed093168aff636f8dc8f994@epcms2p3>
+References: <CGME20260609023909epcms2p3f8856f12fed093168aff636f8dc8f994@epcms2p3>
+ <20260609023909epcms2p3f8856f12fed093168aff636f8dc8f994@epcms2p3>
+Date: Thu, 11 Jun 2026 10:06:50 +0900
+Message-Id: <178114001094.7450.10496801056596423325.b4-review@b4>
+X-Mailer: b4 0.15.2
+Received-SPF: pass client-ip=2607:f8b0:4864:20::62c;
+ envelope-from=jeuk20.kim@gmail.com; helo=mail-pl1-x62c.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
- HTML_MESSAGE=0.001, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
-X-Mailman-Approved-At: Wed, 10 Jun 2026 20:08:23 -0400
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -109,26 +104,19 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
---0000000000000b5cf80653ee6dc7
-Content-Type: text/plain; charset="UTF-8"
+On Tue, 09 Jun 2026 11:39:09 +0900, Keoseong Park <keosung.park@samsung.com> wrote:
+> [...]
+>  include/block/ufs.h    |  18 +++
+>  tests/qtest/ufs-test.c | 290 +++++++++++++++++++++++++++++++++++++++++
+>  6 files changed, 480 insertions(+), 7 deletions(-)
+> 
+> --
+> 2.25.1
 
-Hi team.
+Thank you for your contribution.
 
-I've developed a cli for qemu:
-https://github.com/MagicWond/qube
+Reviewed-by: Jeuk Kim <jeuk20.kim@samsung.com>
 
-Let me know what you think.
-Pedro
-
---0000000000000b5cf80653ee6dc7
-Content-Type: text/html; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-
-<div dir=3D"auto">Hi team.<div dir=3D"auto"><br></div><div dir=3D"auto">I&#=
-39;ve developed a cli for qemu:</div><div dir=3D"auto"><a href=3D"https://g=
-ithub.com/MagicWond/qube">https://github.com/MagicWond/qube</a></div><div d=
-ir=3D"auto"><br></div><div dir=3D"auto">Let me know what you think.</div><d=
-iv dir=3D"auto">Pedro</div></div>
-
---0000000000000b5cf80653ee6dc7--
+-- 
+Jeuk Kim <jeuk20.kim@samsung.com>
 
