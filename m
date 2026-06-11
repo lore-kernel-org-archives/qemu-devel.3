@@ -4,82 +4,98 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1B195CD8C9D
-	for <qemu-devel@archiver.kernel.org>; Thu, 11 Jun 2026 18:05:16 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 188CFCD98CF
+	for <qemu-devel@archiver.kernel.org>; Thu, 11 Jun 2026 18:09:40 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wXjm7-0006KX-5W; Thu, 11 Jun 2026 14:05:07 -0400
+	id 1wXjpn-000727-AX; Thu, 11 Jun 2026 14:08:55 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1wXjm5-0006JF-Sl
- for qemu-devel@nongnu.org; Thu, 11 Jun 2026 14:05:05 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1wXjm3-0007ac-Sg
- for qemu-devel@nongnu.org; Thu, 11 Jun 2026 14:05:05 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1781201101;
- h=from:from:reply-to:reply-to:subject:subject:date:date:
- message-id:message-id:to:to:cc:cc:mime-version:mime-version:
- content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=4ezN+kAtIQ2A5KGxOj+qFbSPPUbOKbgFZgQc3byGRV8=;
- b=N0/4b/E2tVgdoJy8i92fzB/ln5+IuwPaWel3Q+3A2eShF+fqX5dGSocCeBVkkouYnSkBvo
- bBH7kkn+m38JsjsXDT3ivxcCN8T4nSk0gzLLtyy7Io9XtdSH7H09iqu877axdRDcdEIfe0
- HiRsQ12Ws4hPXUOCngk4nPXSflCydq0=
-Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-43-byHPUjESNsW_B5tlKzGxTA-1; Thu,
- 11 Jun 2026 14:04:58 -0400
-X-MC-Unique: byHPUjESNsW_B5tlKzGxTA-1
-X-Mimecast-MFC-AGG-ID: byHPUjESNsW_B5tlKzGxTA_1781201097
-Received: from mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.17])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id DB82A197701D; Thu, 11 Jun 2026 18:04:56 +0000 (UTC)
-Received: from redhat.com (unknown [10.44.50.8])
- by mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 0F3A819540C5; Thu, 11 Jun 2026 18:04:52 +0000 (UTC)
-Date: Thu, 11 Jun 2026 19:04:49 +0100
-From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
-To: marcandre.lureau@redhat.com
-Cc: qemu-devel@nongnu.org,
- Alex =?utf-8?Q?Benn=C3=A9e?= <alex.bennee@linaro.org>,
- Christian Brauner <brauner@kernel.org>, devel@lists.libvirt.org,
- Markus Armbruster <armbru@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>,
- "Dr. David Alan Gilbert" <dave@treblig.org>,
- Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@mailo.com>
-Subject: Re: [PATCH v2 06/35] monitor: add 'chardev' property to Monitor base
- class
-Message-ID: <air4wQp7LewEfBMu@redhat.com>
-References: <20260610123415.2883603-1-berrange@redhat.com>
- <20260610123415.2883603-7-berrange@redhat.com>
- <178112600325.209622.9037016260369859761.b4-review@b4>
+ (Exim 4.90_1) (envelope-from <alexander@mihalicyn.com>)
+ id 1wXjpl-000703-39
+ for qemu-devel@nongnu.org; Thu, 11 Jun 2026 14:08:53 -0400
+Received: from mail-wm1-x32a.google.com ([2a00:1450:4864:20::32a])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <alexander@mihalicyn.com>)
+ id 1wXjph-0002H1-TZ
+ for qemu-devel@nongnu.org; Thu, 11 Jun 2026 14:08:52 -0400
+Received: by mail-wm1-x32a.google.com with SMTP id
+ 5b1f17b1804b1-490c1915793so872095e9.2
+ for <qemu-devel@nongnu.org>; Thu, 11 Jun 2026 11:08:49 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=mihalicyn.com; s=mihalicyn; t=1781201328; x=1781806128; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=PEkWfPanh7q59TrWlqY0t/+OQLGLErZaOJuxqlzy6nE=;
+ b=E8GgoU3UYxtEYUQHfU9Is0oaROwXUJklr5gwEXAnsNVRFakDi4fz0eMG37MTzi4DY7
+ kcfmj7/D6Ad2Bj2oHftHseJ4krY6gJ6bqKgVPXZFvSiDJTdkaWHAFE3JYzkF0eUB4wC+
+ xNAuZzKDoQwF1kb3HKqvG/ApX1b2uv4odhmM8=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1781201328; x=1781806128;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=PEkWfPanh7q59TrWlqY0t/+OQLGLErZaOJuxqlzy6nE=;
+ b=ZY2IeSJPcALmI2wIlq3OCl9R6LieZJGjg4UzQ4VRXnpcG1qBOT5HX8Nwlm8c0ac8a9
+ lOvWzaTQiAtlSd0LfM25CNzXqrSJ/TilHpM9EGDrHU8aVOQI9kJ1+fmyvSKD5X+40qOr
+ lXVHxQu0RqALoyvKHGDawiawUb3v1WTINvHPn0j/rn1pXBWYWHj0FoHEZFTfckz7CG9T
+ 9jFBIomKrrSfDcf4YQWNayH8mkYVWhDH3WB58ep+O68GzdZP9lqql8650WW1FAFNavIK
+ MTqw6RuZH2en4c3CqWYPB/0fmLrNXfBxIlOyOaRoPstU21FXR9Kax29l6fUalVCE/owt
+ 5e3Q==
+X-Gm-Message-State: AOJu0YxUqF1XW2AKY0TFGiUB7MFPOALvce2n21hxI4UOkyv7anVmcWgC
+ 4ybWGzSZiUXZpV501s9/QLVhgB7t1WecHYwIEnKZcstQsZis960/kGA/mFdGQ8ofmayg1/pSCHR
+ l0idF29U=
+X-Gm-Gg: Acq92OG/SzeheTdeCSDIkgO3VqOIHt641C8Um+8NZov9txGpQzo05ldZHa7kP+o/KUQ
+ s++vJbT5xTDmBx8t5z9n9alhqn4T34nnQggM5Izp2SnNtDEgGrCVnq/fAFb7YKm6zHE7RY/QCPm
+ eLLZ8VT6UNpA0/4xwIj24uRyzmFsanwpk9VyN71cA7PPADINVfl8prbSYJNxmkvsqtGLruQFy9d
+ 2AdkZuV2hHgbT4boHpMQSzm4ZK1wKxm+0MfS9WuZtRg8EK0hAkftv3Jdlus0P1R+wcdkuZy+CdI
+ xbdDmzSHgRCg1bm/tFT2rQshJGhMR1it/QVYONXJzYd3JQSXnAgcL605DJA/Ke3WoQpSWCFp3D/
+ MLtNQJDCzdP1T5/eG5oybHFOLgFWPcalWx3N+QqVUOdUC+MXYHNC94VOzbv5t5b7T2nrcpIDWq9
+ Fy6BQZ1wl/qAqHT9UyuwKpRaoQhAtaVOsYpqjrbLadP+wGWmxS3c8sqsoQre7r0VFfd0j5Be8Rv
+ ql1rW6SxK6FChg+Zx7yWop9NGnrBqiRJA==
+X-Received: by 2002:a05:600c:8902:b0:490:e1cd:ea25 with SMTP id
+ 5b1f17b1804b1-490e55fee98mr51634245e9.23.1781201328261; 
+ Thu, 11 Jun 2026 11:08:48 -0700 (PDT)
+Received: from alex-laptop.lan
+ (p200300cf570ffe006f778db3bc22ef81.dip0.t-ipconnect.de.
+ [2003:cf:570f:fe00:6f77:8db3:bc22:ef81])
+ by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-490ea4a128csm6563345e9.0.2026.06.11.11.08.47
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Thu, 11 Jun 2026 11:08:47 -0700 (PDT)
+From: Alexander Mikhalitsyn <alexander@mihalicyn.com>
+To: qemu-devel@nongnu.org
+Cc: Klaus Jensen <its@irrelevant.dk>, Peter Xu <peterx@redhat.com>,
+ Kevin Wolf <kwolf@redhat.com>, Fabiano Rosas <farosas@suse.de>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Keith Busch <kbusch@kernel.org>,
+ =?UTF-8?q?St=C3=A9phane=20Graber?= <stgraber@stgraber.org>,
+ Zhao Liu <zhao1.liu@intel.com>,
+ Alexander Mikhalitsyn <alexander@mihalicyn.com>, qemu-block@nongnu.org,
+ Laurent Vivier <lvivier@redhat.com>, Stefan Hajnoczi <stefanha@redhat.com>,
+ Paolo Bonzini <pbonzini@redhat.com>, Hanna Reitz <hreitz@redhat.com>,
+ Jesper Devantier <foss@defmacro.it>, Fam Zheng <fam@euphon.net>,
+ Alexander Mikhalitsyn <aleksandr.mikhalitsyn@futurfusion.io>,
+ Klaus Jensen <k.jensen@samsung.com>
+Subject: [PATCH v10 4/8] hw/nvme: set CQE.sq_id earlier in nvme_process_sq
+Date: Thu, 11 Jun 2026 20:08:37 +0200
+Message-ID: <20260611180842.6390-5-alexander@mihalicyn.com>
+X-Mailer: git-send-email 2.47.3
+In-Reply-To: <20260611180842.6390-1-alexander@mihalicyn.com>
+References: <20260611180842.6390-1-alexander@mihalicyn.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <178112600325.209622.9037016260369859761.b4-review@b4>
-User-Agent: Mutt/2.3.2 (2026-04-26)
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.17
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=berrange@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: 8
-X-Spam_score: 0.8
-X-Spam_bar: /
-X-Spam_report: (0.8 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.445,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_SBL_CSS=3.335, SPF_HELO_PASS=-0.001,
- SPF_PASS=-0.001 autolearn=no autolearn_force=no
+Received-SPF: pass client-ip=2a00:1450:4864:20::32a;
+ envelope-from=alexander@mihalicyn.com; helo=mail-wm1-x32a.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -92,54 +108,47 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, Jun 11, 2026 at 01:13:23AM +0400, marcandre.lureau@redhat.com wrote:
-> On Wed, 10 Jun 2026 13:33:46 +0100, Daniel P. Berrangé <berrange@redhat.com> wrote:
-> > diff --git a/monitor/monitor.c b/monitor/monitor.c
-> > index a497c25c543..1f1f5fe9fe3 100644
-> > --- a/monitor/monitor.c
-> > +++ b/monitor/monitor.c
-> > @@ -77,10 +77,30 @@ OBJECT_DEFINE_TYPE(Monitor, monitor, MONITOR, OBJECT);
-> > [ ... skip 14 lines ... ]
-> > +
-> > +static void monitor_set_chardev_id(Object *obj, const char *str, Error **errp)
-> > +{
-> > +    Monitor *mon = MONITOR(obj);
-> > +
-> > +    mon->chardev_id = g_strdup(str);
-> 
-> missing g_free(mon->chardev_id) before.
+From: Alexander Mikhalitsyn <aleksandr.mikhalitsyn@futurfusion.io>
 
-Yep, will add.
+Instead of filling req->cqe.sq_id in nvme_post_cqes, let's set it earlier
+in nvme_process_sq.
 
-> 
-> >
-> > diff --git a/monitor/qmp.c b/monitor/qmp.c
-> > index 5231ed506a5..3a4e2ae0e7a 100644
-> > --- a/monitor/qmp.c
-> > +++ b/monitor/qmp.c
-> > @@ -527,7 +527,7 @@ static void monitor_qmp_setup_handlers_bh(void *opaque)
-> >      monitor_list_append(&mon->parent_obj);
-> >  }
-> >  
-> > -void monitor_new_qmp(Chardev *chr, bool pretty, Error **errp)
-> > +void monitor_new_qmp(const char *chardev_id, bool pretty, Error **errp)
-> >  {
-> >      MonitorQMP *mon;
-> >      static int counter;
-> 
-> Add ERRP_GUARD(), like monitor_new_hmp()
+This shouldn't cause any issues, because req->cqe.sq_id never changes
+during lifetime of req.
 
-Will add.
+This will help us for migration support.
 
-With regards,
-Daniel
+Reviewed-by: Klaus Jensen <k.jensen@samsung.com>
+Acked-by: Stefan Hajnoczi <stefanha@redhat.com>
+Signed-off-by: Alexander Mikhalitsyn <aleksandr.mikhalitsyn@futurfusion.io>
+---
+ hw/nvme/ctrl.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/hw/nvme/ctrl.c b/hw/nvme/ctrl.c
+index dcdb9bd66f8..4040d24073b 100644
+--- a/hw/nvme/ctrl.c
++++ b/hw/nvme/ctrl.c
+@@ -1522,7 +1522,6 @@ static void nvme_post_cqes(void *opaque)
+ 
+         sq = req->sq;
+         req->cqe.status = cpu_to_le16((req->status << 1) | cq->phase);
+-        req->cqe.sq_id = cpu_to_le16(sq->sqid);
+         req->cqe.sq_head = cpu_to_le16(sq->head);
+         addr = cq->dma_addr + (cq->tail << NVME_CQES);
+         ret = pci_dma_write(PCI_DEVICE(n), addr, (void *)&req->cqe,
+@@ -7852,6 +7851,7 @@ static void nvme_process_sq(void *opaque)
+         QTAILQ_REMOVE(&sq->req_list, req, entry);
+         QTAILQ_INSERT_TAIL(&sq->out_req_list, req, entry);
+         nvme_req_clear(req);
++        req->cqe.sq_id = cpu_to_le16(sq->sqid);
+         req->cqe.cid = cmd.cid;
+         memcpy(&req->cmd, &cmd, sizeof(NvmeCmd));
+ 
 -- 
-|: https://berrange.com       ~~        https://hachyderm.io/@berrange :|
-|: https://libvirt.org          ~~          https://entangle-photo.org :|
-|: https://pixelfed.art/berrange   ~~    https://fstop138.berrange.com :|
+2.47.3
 
 
