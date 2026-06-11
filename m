@@ -4,106 +4,117 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 37CDBCD98CE
-	for <qemu-devel@archiver.kernel.org>; Thu, 11 Jun 2026 15:21:10 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9BC43CD98CC
+	for <qemu-devel@archiver.kernel.org>; Thu, 11 Jun 2026 15:25:41 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wXhDK-0001rA-OB; Thu, 11 Jun 2026 11:21:02 -0400
+	id 1wXhHU-00033V-Ey; Thu, 11 Jun 2026 11:25:20 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <eric.auger@redhat.com>)
- id 1wXhDJ-0001qt-RB
- for qemu-devel@nongnu.org; Thu, 11 Jun 2026 11:21:01 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1wXhHN-00030i-Au
+ for qemu-devel@nongnu.org; Thu, 11 Jun 2026 11:25:14 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <eric.auger@redhat.com>)
- id 1wXhDI-0000d5-54
- for qemu-devel@nongnu.org; Thu, 11 Jun 2026 11:21:01 -0400
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1wXhHK-0002rN-Cb
+ for qemu-devel@nongnu.org; Thu, 11 Jun 2026 11:25:12 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1781191259;
- h=from:from:reply-to:reply-to:subject:subject:date:date:
- message-id:message-id:to:to:cc:cc:mime-version:mime-version:
- content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
+ s=mimecast20190719; t=1781191508;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  in-reply-to:in-reply-to:references:references;
- bh=9Fz4ngEemTfRX43QTNklXVbKpAIdwdzZW3sogLDWlgw=;
- b=BquFQGHOSRNVLllKXQNZYC+of4fM2tYxKrrA9gSgKy6YHgXnbmir3xgdlJiE/EvyHLTQqH
- d9SkPXUxUD7IedNZAasxc6KZNBX97qV5OjDEU9OXeN5v37f3bcKvBmOuwxNKdWxzsQE9nA
- qDfsZ7cB4sl2ofu6PcsnsZtMCEOji+s=
-Received: from mail-wm1-f71.google.com (mail-wm1-f71.google.com
- [209.85.128.71]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=oGEbTDOU2CgdQssJEZtGBvPOfy/V7Xa2owILyEWv7LU=;
+ b=eBwNqNFneIeS1g/FxwRQmkxbIRs6X5EkMPJAa9X9w9OMg5siLeyQM0JVXQ3qQUJfDvWeeO
+ kDMugi3HRANzAadtzvtikThpRoe8ejCbgUWYDazWZibAAKak3yftJTrbL1k+gkmSK7IL5p
+ /7eWz9Et6VkzivqH249AOGggbbOfNXw=
+Received: from mail-wr1-f71.google.com (mail-wr1-f71.google.com
+ [209.85.221.71]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-400-_fNxRSyWPoGSOytWqZwWkA-1; Thu, 11 Jun 2026 11:20:57 -0400
-X-MC-Unique: _fNxRSyWPoGSOytWqZwWkA-1
-X-Mimecast-MFC-AGG-ID: _fNxRSyWPoGSOytWqZwWkA_1781191256
-Received: by mail-wm1-f71.google.com with SMTP id
- 5b1f17b1804b1-490b37e1f47so69085915e9.0
- for <qemu-devel@nongnu.org>; Thu, 11 Jun 2026 08:20:56 -0700 (PDT)
+ us-mta-17-JiEw34gXOAu9Mi1De1pQng-1; Thu, 11 Jun 2026 11:25:07 -0400
+X-MC-Unique: JiEw34gXOAu9Mi1De1pQng-1
+X-Mimecast-MFC-AGG-ID: JiEw34gXOAu9Mi1De1pQng_1781191506
+Received: by mail-wr1-f71.google.com with SMTP id
+ ffacd0b85a97d-45eecec7667so5658512f8f.3
+ for <qemu-devel@nongnu.org>; Thu, 11 Jun 2026 08:25:06 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=redhat.com; s=google; t=1781191506; x=1781796306; darn=nongnu.org;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+ bh=oGEbTDOU2CgdQssJEZtGBvPOfy/V7Xa2owILyEWv7LU=;
+ b=b8Ge9yL5R23WUKJMx43SoGu7Rjt9EuO7ETV934fys6M1nJrE8btp0lb8LSwMTEPnBz
+ FNp45q1xHhInqPXLVUFf60oGUh73EDLHKzgFevB+en6wEb0LpnXWHNFzjSPEUw9xLPm5
+ oSohYaU3lC6AO5HZN9QLFqa4F8AdX1nw+yMywXM4Jd+Sye/fILNRG5cPGvHV+CbC0pBs
+ KrjWKJ98P4ENa84JYMNmahdp4Nl7cwUI6jBBoJfNHChLCsTfYA/xD2YpfLL3To68AEfc
+ DMVBZSx/3uGIev6ViG06kPZ5J0FYzZ113EknxuaH+O9siP6hy/PvKZtci6sHDX+4NF2+
+ QHJQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1781191256; x=1781796056;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:reply-to:user-agent:mime-version:date
- :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=9Fz4ngEemTfRX43QTNklXVbKpAIdwdzZW3sogLDWlgw=;
- b=rPfyD6F7ZPkzmNSJexROEtwHlw6EyTz+Eh7NxGFOK77IpBnyui+4Yu3zFBxT9qD8LV
- ktubHJOe52+Vi9dqN+Xg/zG1ayuH36j/+jIaJAQOfOzW8MWDU/OIdidV5pagcWKy/zVK
- 4JMhJXIaxdx8zTtLpYJxvcPNrr9qWiDfREOq5u1eRg/WbWtaWGoxQst6Ka2ESXGiDktI
- C90Nb4IFqG2L9gNoO+nkkWNtHWi+Os31UndB0XsqfNIiDnzQjKldWqhY7mkSr7v0WEh4
- +kCXRoRcQkJwWiQ8MP1j94rG1ve/Uobh75yAT9zFVxTIlrMUFwRVBZGFdJrALWS8Qt4i
- KhXA==
+ d=1e100.net; s=20251104; t=1781191506; x=1781796306;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=oGEbTDOU2CgdQssJEZtGBvPOfy/V7Xa2owILyEWv7LU=;
+ b=BCZtrVTcjmZPXm5fdiUaE0raQLu469CUPPa4zGEXH3csMWyxzNKH9q3GaYjkNRES7H
+ jGEzax6ikVYwYdtwLY3h6sLybgf9Qb/o4v3cVniyOftq6dGQwkYIIdW/9x5SFtSICdO2
+ V3A2S0yqmpczeiUp2ltsTU1xLSCWAC/D9QEusDLU97bnnecUt92VvPThqP0sPqrRPQnU
+ GhUvTg/jw7QRPutugD7PpXGUkEf883bge2URzIp7gHLqBvMUYE6zcb7tnNVu3MhA6j40
+ E74aQeTDjtzz/eL0PyNivskncyu6ym3svf/TNmS80YYBpINeuN8LHeEf6kNp26jTubsQ
+ 3hYA==
 X-Forwarded-Encrypted: i=1;
- AFNElJ8yNGdtClTx2F7vxpdeQhJ3vgBpaHvXLS7rlJMdM98qiGER6VtP9RZ8je8cEAWnu0zmyZwdWtQrBcr2@nongnu.org
-X-Gm-Message-State: AOJu0Yy6frp7uVoCZFakJjESI6ibqjwZuNhvn4ylwGuTwXQ7r2kUPezc
- eFAAlt4k9gauDbLoa1whrTGi1iwE3XUGu47oKZJL/gljewy9LTDdlHeTIun4wRGalnXdz2k91YW
- fuKG2nX2vZ76xHj3IFSYW260NhgkLfVruOuZfniFl55KLxHUvgQaH+5EO
-X-Gm-Gg: Acq92OHEvhRSxDlPvpHiw+3O8C9WszKvEOlPd2PCsKaRWziEUKvp4WrAe14LmA9sZ/o
- h6pdbFksLX4bGPhi1+AYfRc0bI8AvkLcMaiLFGyG7Fe+8p9+LrbC8CrFLewrspG9+i5nCNaTsk3
- Aj4CYccF9zWWZdim+7ZLPVXpuFbhHlavBARGy+wUD0NTUjgbESDB1PvpDf8+xOxEl8szPb8wwOc
- eMYGFjrTfOqaviWRdReNBNHe4erdie/oGT7Dy+Dz759M8kS07cv7X8vJijy0xitxN0VMi6642ez
- kpqqUuIZ9+GjSmMD7YwcG6yx0Zh6yAApSLdu9kSaU8GdtmM4J34wF5Ffphcl+vFwjBsnC7y9tRT
- W05oKquw86cGwkNxTILisjlmroBUHtzq2DAbkjAuDQ81obwtBD2/R5w8w8PU3EtJHbaLnh7mg6j
- NSMlJ6
-X-Received: by 2002:a05:600c:a386:b0:490:b591:b5a3 with SMTP id
- 5b1f17b1804b1-490e5619b45mr27877155e9.32.1781191255708; 
- Thu, 11 Jun 2026 08:20:55 -0700 (PDT)
-X-Received: by 2002:a05:600c:a386:b0:490:b591:b5a3 with SMTP id
- 5b1f17b1804b1-490e5619b45mr27876705e9.32.1781191255281; 
- Thu, 11 Jun 2026 08:20:55 -0700 (PDT)
-Received: from ?IPV6:2a01:e0a:f0e:9070:527b:9dff:feef:3874?
- ([2a01:e0a:f0e:9070:527b:9dff:feef:3874])
+ AFNElJ9WZSZgBdYaYXj7vk0y+eoLikEVl1P39IdGPG61MZIW8XO1OR4doHc35x414wPcnbDJB3UvBsT8OK6z@nongnu.org
+X-Gm-Message-State: AOJu0YzpazXDUaF0c7Q28Ym+iIhDEm2Wby/Th8g9VgEVXwGsgXcsqoNT
+ rFsvG8xEmmrSIJw/HiK+TK1qK/rzg6amytefv7DYP65qUrITXFeqzmXy7n+Uz2zZZN5e44Xn5VB
+ +ICRD/rSMgCsa1oX8VvvanqG1tgPiYDcAEbsz19n/Ux4x3c1zNTixlULl
+X-Gm-Gg: Acq92OG3IhtGcGYz4QC3L56NTt8qfbFDBALpw1qXhPKE9MOolvg9thT/sye1ZHSI4F2
+ 7DrtbsW7osVHvcJ60LOU2Ofivsfv1ISHUSvrkXABmjP8z/Vr8GDvZUcE5nhTAbbW6swUgqk+Z1Q
+ QR276PanvvLtItTraQ8dJE7z9MBUOMUKPfjuTJnWGfeq03O53S1EWhe2nSWt6rM2amDVAIym7Xy
+ QdBVNiIaaCIPR7OKFDs82K2ch6Xe9Yz5xC/Yir7G9cFlZTnUNZ2oMHJR6rkcIbJFtYU9oVCICXv
+ YZz2t2fLFv+/x5OQX7ilk+Yg4QQ4WHhEbNZ1QN76mUs5c5twsUCdWN4R/yuAMcDRElpLKu3AHNE
+ BWtyyOk1gEKQuHquP6FH5hB0GcujKpHXTZblNj6iHlUI+yGCR24QXdw==
+X-Received: by 2002:a05:600c:a31c:b0:490:b8e2:6380 with SMTP id
+ 5b1f17b1804b1-490e55f95fbmr42461805e9.12.1781191505739; 
+ Thu, 11 Jun 2026 08:25:05 -0700 (PDT)
+X-Received: by 2002:a05:600c:a31c:b0:490:b8e2:6380 with SMTP id
+ 5b1f17b1804b1-490e55f95fbmr42461075e9.12.1781191505041; 
+ Thu, 11 Jun 2026 08:25:05 -0700 (PDT)
+Received: from redhat.com (IGLD-80-230-85-71.inter.net.il. [80.230.85.71])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-490e2ca21f4sm72817225e9.7.2026.06.11.08.20.54
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 11 Jun 2026 08:20:54 -0700 (PDT)
-Message-ID: <69634184-c265-4cba-9e0e-49e383df7d71@redhat.com>
-Date: Thu, 11 Jun 2026 17:20:53 +0200
+ ffacd0b85a97d-4601f2dcb13sm83075506f8f.2.2026.06.11.08.25.03
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Thu, 11 Jun 2026 08:25:04 -0700 (PDT)
+Date: Thu, 11 Jun 2026 11:25:01 -0400
+From: "Michael S. Tsirkin" <mst@redhat.com>
+To: Peter Maydell <peter.maydell@linaro.org>
+Cc: Gavin Shan <gshan@redhat.com>, Peter Xu <peterx@redhat.com>,
+ Pavel Hrdina <phrdina@redhat.com>,
+ Daniel =?iso-8859-1?Q?P=2E_Berrang=E9?= <berrange@redhat.com>,
+ qemu-devel@nongnu.org, qemu-arm@nongnu.org, jugraham@redhat.com,
+ shan.gavin@gmail.com, Alex Williamson <alex@shazbot.org>,
+ David Hildenbrand <david@kernel.org>
+Subject: Re: [PATCH RFCv1] virtio: Inherit max bounce buffer size from bus
+ parent if possible
+Message-ID: <20260611112248-mutt-send-email-mst@kernel.org>
+References: <20260610121026-mutt-send-email-mst@kernel.org>
+ <1e9515c9-7e32-4d95-9b73-aab8bf10bddc@redhat.com>
+ <20260611012217-mutt-send-email-mst@kernel.org>
+ <3726a607-6cac-41f1-b402-0eed7c4e3fe3@redhat.com>
+ <20260611023428-mutt-send-email-mst@kernel.org>
+ <0c3f1dba-3b2c-43c5-b181-1426f6da0951@redhat.com>
+ <CAFEAcA8Q9qEaZS8wCpZQ-4jpAnQ9JXvnb7iSeRTdhJ9Y3BcCRg@mail.gmail.com>
+ <20260611093049-mutt-send-email-mst@kernel.org>
+ <CAFEAcA-8Hv0o3PibjH=8jixsHyunH2HkOAMQVqHkGr34b1Ascg@mail.gmail.com>
+ <20260611110156-mutt-send-email-mst@kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v7 21/31] hw/arm/tegra241-cmdqv: Use mmap'd host VINTF
- page0 for virtual VINTF page0
-Content-Language: en-US
-To: Shameer Kolothum <skolothumtho@nvidia.com>, qemu-arm@nongnu.org,
- qemu-devel@nongnu.org
-Cc: peter.maydell@linaro.org, clg@redhat.com, alex@shazbot.org,
- nicolinc@nvidia.com, nathanc@nvidia.com, mochs@nvidia.com, jan@nvidia.com,
- jgg@nvidia.com, zhenzhong.duan@intel.com, kjaju@nvidia.com,
- phrdina@redhat.com
-References: <20260609112552.378999-1-skolothumtho@nvidia.com>
- <20260609112552.378999-22-skolothumtho@nvidia.com>
-From: Eric Auger <eric.auger@redhat.com>
-In-Reply-To: <20260609112552.378999-22-skolothumtho@nvidia.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=170.10.133.124;
- envelope-from=eric.auger@redhat.com; helo=us-smtp-delivery-124.mimecast.com
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20260611110156-mutt-send-email-mst@kernel.org>
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=mst@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -24
 X-Spam_score: -2.5
 X-Spam_bar: --
 X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.445,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
  SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -117,119 +128,215 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-To: eric.auger@redhat.com
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+On Thu, Jun 11, 2026 at 11:05:35AM -0400, Michael S. Tsirkin wrote:
+> On Thu, Jun 11, 2026 at 03:55:12PM +0100, Peter Maydell wrote:
+> > On Thu, 11 Jun 2026 at 15:10, Michael S. Tsirkin <mst@redhat.com> wrote:
+> > >
+> > > On Thu, Jun 11, 2026 at 01:48:51PM +0100, Peter Maydell wrote:
+> > > > On Thu, 11 Jun 2026 at 13:34, Gavin Shan <gshan@redhat.com> wrote:
+> > > > >
+> > > > > Let me try to summarize what I understood. As VFIO is concerned, there
+> > > > > are multiple memory regions for one particular PCI BAR, and they're stacked
+> > > > > up. The memory regions for PCI BAR#4 of the GH100 card looks as below.
+> > > > >
+> > > > >    (qemu) info mtree
+> > > > >               :
+> > > > >    address-space: pci_bridge_pci_mem
+> > > > >      0000000000000000-ffffffffffffffff (prio 0, container): pci_bridge_pci
+> > > > >        0000042000000000-0000043fffffffff (prio 1, i/o): 0009:01:00.0 base BAR 4          <---- (1) VFIOBAR::mr
+> > > > >          0000042000000000-0000043fffffffff (prio 0, i/o): 0009:01:00.0 BAR 4             <---- (2) VFIOBAR::VFIORegion::mem
+> > > > >            0000042000000000-000004379fffffff (prio 0, ramd): 0009:01:00.0 BAR 4 mmaps[0] <---- (3) VFIOBAR::VFIORegion::VFIOMap::mem
+> > > > >
+> > > > >    (1) Its MemoryRegionOps is NULL. No data accesses are routed to this region
+> > > > >    (2) The data accesses routed to this region is handled by pread() and pwrite()
+> > > > >    (3) The data accesses routed to this region is handled by memcpy() before
+> > > > >        commit 4a2e242bbb.
+> > > > >
+> > > > > There are identified PCI devices who have quirks, see vfio_bar_quirk_setup().
+> > > > > Accesses to part of the PCI BAR have to be emulated by the extra IO regions,
+> > > > > something like below for rtl8168 PCI device, where two extra IO regions are
+> > > > > stacked up for the quirks.
+> > > > >
+> > > > >    address-space: pci_bridge_pci_mem
+> > > > >      0000000000000000-ffffffffffffffff (prio 0, container): pci_bridge_pci
+> > > > >        0000042000000000-0000043fffffffff (prio 1, i/o): 0009:01:00.0 base BAR 4          <---- (1) VFIOBAR::mr
+> > > > >          0000042000000000-0000043fffffffff (prio 0, i/o): 0009:01:00.0 BAR 4             <---- (2) VFIOBAR::VFIORegion::mem
+> > > > >            0000042000000000-000004379fffffff (prio 0, ramd): 0009:01:00.0 BAR 4 mmaps[0] <---- (3) VFIOBAR::VFIORegion::VFIOMap::mem
+> > > > >            0000042000000010-0000042000000014 (prio 1, i/o): 0009:01:00.0 BAR 4 quirk[0]  <---- (4) quirk[0]
+> > > > >            0000042000000018-000004200000001c (prio 1, i/o): 0009:01:00.0 BAR 4 quirk[1]  <---- (5) quirk[1]
+> > > > >
+> > > > > Access on 0000042000000010-0000042000000014 should be routed to region (4) quirk[0]
+> > > > > and access on 0000042000000018-000004200000001c should be routed to region (5) quirk[1].
+> > > > > However, accesses to 0000042000000000-0000042000000020 are routed to region (3) before
+> > > > > commit 4a2e242bbb and the data transfer is done by memcpy(), bypassing region (4) and
+> > > > > (5). It's not the expected behavior and why memcpy() isn't expected on device rtl8168's
+> > > > > PCI BAR due to the quirks, answering your question.
+> > > > >
+> > > > > With commit 4a2e242bbb applied, the accesses will be routed to the correct region.
+> > > >
+> > > > The way I read 4a2e242bbb's commit message, it isn't about things being routed
+> > > > to the wrong region. It's about the handling of areas which aren't in the small
+> > > > quirk regions but which are in the same 4K page as them. These have to
+> > > > be handled
+> > > > via the memory subsystem's "subpage" mechanism. This does route
+> > > > everything to the
+> > > > correct region, but if the region (3) is marked as "direct access is OK" then
+> > > > QEMU assumes that any kind of direct access is OK, i.e. this behaves
+> > > > like true RAM.
+> > > > It then does a memcpy access to a BAR that's really a bank of device registers,
+> > > > and this goes wrong.
+> > > >
+> > > > > Back to our case (GH100 card), there are no quirks for the PCI BAR (0009:01:00.0 BAR 4)
+> > > > > so it's fine mark the RAM DEVICE region as directly accessible. We perhaps needn't host
+> > > > > to export the capability (VFIO_REGION_INFO_CAP_DIRECT_ACCESS) suggested by you. It's
+> > > > > safe to mark any PCI BARs as directly accessible if they have no quirks attached. All
+> > > > > the devices except those listed in vfio_bar_quirk_setup() are capable of this.
+> > > >
+> > > > I still feel like there are different kinds of PCI BAR here ("this BAR is
+> > > > true RAM and can be accessed arbitrarily" vs "this BAR is full of registers
+> > > > and can't be handled that way") and the vfio code in QEMU needs to set up
+> > > > the memory regions differently for the two cases. For your example I think
+> > > > it would be fine to have direct-access even if there were some kind of
+> > > > quirk memory region, because for the parts of the BAR that aren't covered
+> > > > by a quirk overlay the underlying BAR still allows "entirely like RAM,
+> > > > any alignment and size is OK" accesses.
+> > 
+> > > Yea, and I feel this is the main part:
+> > >
+> > >     The assumption here is that accesses initiated by the VM are
+> > >     driven by a device specific driver, which knows the device
+> > >     capabilities.
+> > >
+> > >
+> > > Frankly I don't get why a big hammer of disabling direct access
+> > > was taken, when all we apparently need to do is to make sure
+> > > small aligned accesses through BAR stay aligned and same size.
+> > 
+> > If you say an MR is OK for direct access then in my view you are
+> > saying "any access of any kind is OK", because you're permitting
+> > the pointer to be directly returned as a host pointer from
+> > address_space_map() (at which point the caller might do anything
+> > with that memory). That is not OK for every BAR, only for ones where
+> > it's really RAM.
+> >
+> 
+> What is "OK"? If the BAR is RAM and I write into it, I will overwrite
+> data guest stored there. Is that "OK"?
+> 
+> 
+> 
+>  
+> > > I guess it felt safe - a vfio specific change, and emulating device
+> > > accesses was assumed to be slow path, anyway.
+> > >
+> > > Except it no longer is with people wanting to do direct io
+> > > into device BARs.
+> > 
+> > > Isn't it basically the below?
+> > > At least I checked asm and it produces the correct code.
+> > > And then the whole pile of hacks can be reverted?
+> > >
+> > >
+> > > diff --git a/system/physmem.c b/system/physmem.c
+> > > index 7bcbf87573..aab4390d40 100644
+> > > --- a/system/physmem.c
+> > > +++ b/system/physmem.c
+> > > @@ -3272,7 +3272,29 @@ static MemTxResult flatview_write_continue_step(MemTxAttrs attrs,
+> > >          uint8_t *ram_ptr = qemu_ram_ptr_length(mr->ram_block, mr_addr, l,
+> > >                                                 false, true);
+> > >
+> > > -        memmove(ram_ptr, buf, *l);
+> > > +        switch (*l) {
+> > > +        case 1:
+> > > +            __builtin_memmove(ram_ptr, buf, 1);
+> > > +            break;
+> > > +        case 2:
+> > > +            __builtin_memmove(ram_ptr, buf, 2);
+> > > +            break;
+> > > +        case 4:
+> > > +            __builtin_memmove(ram_ptr, buf, 4);
+> > > +            break;
+> > > +        case 8:
+> > > +            __builtin_memmove(ram_ptr, buf, 8);
+> > 
+> > Nothing says that __builtin_memmove() is required to do only a single
+> > access of the right size.
+> > memmove() can do all kinds of things.
+> > For instance on aarch64 if you get into the actual glibc memmove then
+> > a memmove of 1 byte will actually store the same byte multiple times.
+> > Or an architecture might decide that it's more efficient to do an
+> > 8-byte write with two 4-byte writes even if there is an 8-byte access
+> > instruction.
+> > 
+> > If and where we need to provide guarantees about "this access will
+> > really definitely only do this size access and it won't break it
+> > apart or anything like that" then we need to either be using compiler
+> > atomics or else inline asm.
+> > 
+> > (I think there are places where we do need to be more careful about
+> > what we do with accesses to real RAM, for where we're emulating a
+> > device write to RAM that's updating a data structure shared with the
+> > guest, and things like writing multiple times can cause problems.
+> > https://lore.kernel.org/qemu-devel/CAFEAcA8dwHV8F48kb-013rxkG9kKcZhym9_qarKmoeUfeh0YWw@mail.gmail.com/
+> > is an unrelated example of that, which I haven't done detailed
+> > analysis of yet.)
+> > 
+> > thanks
+> > -- PMM
+> 
+> If it does not work, then QEMU is broken:
+> 
+> 
+> /*
+>  * Any compiler worth its salt will turn these memcpy into native unaligned
+>  * operations.  Thus we don't need to play games with packed attributes, or
+>  * inline byte-by-byte stores.
+>  * Some compilation environments (eg some fortify-source implementations)
+>  * may intercept memcpy() in a way that defeats the compiler optimization,
+>  * though, so we use __builtin_memcpy() to give ourselves the best chance
+>  * of good performance.
+>  */
+> 
+> static inline int lduw_he_p(const void *ptr)
+> {
+>     uint16_t r;
+>     __builtin_memcpy(&r, ptr, sizeof(r));
+>     return r;
+> }
+> 
+> static inline int ldsw_he_p(const void *ptr)
+> {
+>     int16_t r;
+>     __builtin_memcpy(&r, ptr, sizeof(r));
+>     return r;
+> }
+> 
+> static inline void stw_he_p(void *ptr, uint16_t v)
+> {
+>     __builtin_memcpy(ptr, &v, sizeof(v));
+> }
+> 
+> 
 
 
-On 6/9/26 1:25 PM, Shameer Kolothum wrote:
-> From: Nicolin Chen <nicolinc@nvidia.com>
->
-> Install the mmap'd host VINTF page0 as a RAM-device MemoryRegion
-> backing the guest's virtual VINTF Page 0 aperture (guest MMIO offset
-> 0x30000) when VINTF is enabled, and remove it on VINTF disable or
-> reset. This eliminates QEMU trapping for hot-path CONS/PROD index
-> updates via that aperture.
->
-> After this patch, the two VCMDQ Page 0 apertures use different
-> access paths: the direct aperture (0x10000) remains QEMU-trapped,
-> while the VINTF aperture (0x30000) is a guest-direct RAM mapping.
->
-> The direct aperture is intentionally kept trapped (not aliased to
-> the host VINTF mmap) so that writes to an unallocated VCMDQ remain
-> well-defined. The CMDQV architecture allows software to program a
-> VCMDQ through the direct aperture without first allocating it to a
-> VINTF; aliasing would route those writes to unallocated logical
-> slots in the VINTF page, where the hardware silently drops them.
->
-> Signed-off-by: Nicolin Chen <nicolinc@nvidia.com>
-> Tested-by: Nicolin Chen <nicolinc@nvidia.com>
-> Co-developed-by: Shameer Kolothum <skolothumtho@nvidia.com>
-> Signed-off-by: Shameer Kolothum <skolothumtho@nvidia.com>
+In fact, it's not even complete, mmapped version does memmove,
+which only happens to be same as memcpy because the compiler
+is not insane.
 
-Reviewed-by: Eric Auger <eric.auger@redhat.com>
+In short, it's a pile of hacks, so if Alex can confirm his usecase
+still works with above flatview tweak, I think we can revert the
+whole thing.
 
-Eric
-> ---
->  hw/arm/tegra241-cmdqv.h |  1 +
->  hw/arm/tegra241-cmdqv.c | 37 +++++++++++++++++++++++++++++++++++++
->  2 files changed, 38 insertions(+)
->
-> diff --git a/hw/arm/tegra241-cmdqv.h b/hw/arm/tegra241-cmdqv.h
-> index 84499b840d..01cd6af97d 100644
-> --- a/hw/arm/tegra241-cmdqv.h
-> +++ b/hw/arm/tegra241-cmdqv.h
-> @@ -49,6 +49,7 @@ typedef struct Tegra241CMDQV {
->      IOMMUFDVeventq *veventq;
->      IOMMUFDHWqueue *vcmdq[TEGRA241_CMDQV_MAX_CMDQ];
->      void *vintf_page0;
-> +    MemoryRegion *mr_vintf_page0;
->  
->      /* CMDQ-V Config page register cache */
->      uint32_t config;
-> diff --git a/hw/arm/tegra241-cmdqv.c b/hw/arm/tegra241-cmdqv.c
-> index 63fe0ac681..7264b4bfa9 100644
-> --- a/hw/arm/tegra241-cmdqv.c
-> +++ b/hw/arm/tegra241-cmdqv.c
-> @@ -26,6 +26,40 @@ static void tegra241_cmdqv_reset_vcmdq_cache(Tegra241CMDQV *cmdqv, int index)
->      cmdqv->vcmdq_gerrorn[index] = 0;
->  }
->  
-> +static void tegra241_cmdqv_guest_unmap_vintf_page0(Tegra241CMDQV *cmdqv)
-> +{
-> +    if (!cmdqv->mr_vintf_page0) {
-> +        return;
-> +    }
-> +
-> +    memory_region_del_subregion(&cmdqv->mmio_cmdqv, cmdqv->mr_vintf_page0);
-> +    object_unparent(OBJECT(cmdqv->mr_vintf_page0));
-> +    g_free(cmdqv->mr_vintf_page0);
-> +    cmdqv->mr_vintf_page0 = NULL;
-> +}
-> +
-> +static void tegra241_cmdqv_guest_map_vintf_page0(Tegra241CMDQV *cmdqv)
-> +{
-> +    char *name;
-> +
-> +    if (cmdqv->mr_vintf_page0) {
-> +        return;
-> +    }
-> +
-> +    name = g_strdup_printf("%s vintf-page0",
-> +                           memory_region_name(&cmdqv->mmio_cmdqv));
-> +    cmdqv->mr_vintf_page0 = g_malloc0(sizeof(*cmdqv->mr_vintf_page0));
-> +    memory_region_init_ram_device_ptr(cmdqv->mr_vintf_page0,
-> +                                      memory_region_owner(&cmdqv->mmio_cmdqv),
-> +                                      name, VINTF_PAGE_SIZE,
-> +                                      cmdqv->vintf_page0);
-> +    memory_region_set_skip_iommu_map(cmdqv->mr_vintf_page0, true);
-> +    memory_region_add_subregion_overlap(&cmdqv->mmio_cmdqv,
-> +                                        CMDQV_VINTF_PAGE0_BASE,
-> +                                        cmdqv->mr_vintf_page0, 1);
-> +    g_free(name);
-> +}
-> +
->  static void tegra241_cmdqv_free_vcmdq(Tegra241CMDQV *cmdqv, int index)
->  {
->      IOMMUFDViommu *viommu = cmdqv->s_accel->viommu;
-> @@ -430,7 +464,9 @@ static void tegra241_cmdqv_config_vintf_write(Tegra241CMDQV *cmdqv,
->               * enabled need their hw_queue allocated now.
->               */
->              tegra241_cmdqv_setup_all_vcmdq(cmdqv, errp);
-> +            tegra241_cmdqv_guest_map_vintf_page0(cmdqv);
->          } else {
-> +            tegra241_cmdqv_guest_unmap_vintf_page0(cmdqv);
->              tegra241_cmdqv_free_all_vcmdq(cmdqv);
->              cmdqv->vintf_status &= ~R_VINTF0_STATUS_ENABLE_OK_MASK;
->          }
-> @@ -772,6 +808,7 @@ static void tegra241_cmdqv_reset(SMMUv3State *s)
->          return;
->      }
->  
-> +    tegra241_cmdqv_guest_unmap_vintf_page0(cmdqv);
->      tegra241_cmdqv_free_all_vcmdq(cmdqv);
->  }
->  
+
+> 
+> Somehow things have worked for years without atomics,
+> but if you want to fix that, be my guest.
+> 
+> 
+> -- 
+> MST
 
 
