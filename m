@@ -4,141 +4,97 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 061FCCD98CE
-	for <qemu-devel@archiver.kernel.org>; Thu, 11 Jun 2026 05:36:36 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 72960CD98CF
+	for <qemu-devel@archiver.kernel.org>; Thu, 11 Jun 2026 05:36:37 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wXY2V-0000ua-VE; Thu, 11 Jun 2026 01:33:16 -0400
+	id 1wXY3Y-0002oM-2W; Thu, 11 Jun 2026 01:34:20 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <brian.cain@oss.qualcomm.com>)
- id 1wXY2S-0000ZG-8N
- for qemu-devel@nongnu.org; Thu, 11 Jun 2026 01:33:12 -0400
-Received: from mx0a-0031df01.pphosted.com ([205.220.168.131])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <brian.cain@oss.qualcomm.com>)
- id 1wXY2Q-0002ZS-Dj
- for qemu-devel@nongnu.org; Thu, 11 Jun 2026 01:33:11 -0400
-Received: from pps.filterd (m0279862.ppops.net [127.0.0.1])
- by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 65B5GLVD3725008
- for <qemu-devel@nongnu.org>; Thu, 11 Jun 2026 05:33:09 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
- cc:content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
- 4hsqE0JDPfvXJ30nhCZ/CCXuACFuBC+IpE9moxChOvw=; b=NccfXo09r3VYJmen
- H17mmcS4wIZQsBQ6ZCtSQhCF6ZyNurOXYYiJn7xm8amsrVmymrXkyQo6um00LJaW
- 9R0Tc82lJwdPpm/koxTqT8J2Zu+Tfs84Ev/YW2ZTrwUD+nqogMpt3rAt0YF3hsXc
- xGfurrznbiqAOcS1PlsL6W7ckPg4l0hXMzCRRxavVgbkyRSmMrCTG/wHOOOyogou
- uH9QPiHmVpskUJyjKTGLn2LjFMvqaamj6wnxAFDyJiIeibXAz0am0J7zzcBu0O/s
- NN7s/QdZByBrsTAmpkmXtYh/Ar98AFDNbibU9s0cimYPGIQta4HV7eds215YxZQQ
- Muz0pQ==
-Received: from mail-dy1-f198.google.com (mail-dy1-f198.google.com
- [74.125.82.198])
- by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4eqe6v9qsp-1
- (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
- for <qemu-devel@nongnu.org>; Thu, 11 Jun 2026 05:33:08 +0000 (GMT)
-Received: by mail-dy1-f198.google.com with SMTP id
- 5a478bee46e88-307625ee07fso11482402eec.1
- for <qemu-devel@nongnu.org>; Wed, 10 Jun 2026 22:33:08 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <manos.pitsidianakis@linaro.org>)
+ id 1wXY3O-0002XS-MS
+ for qemu-devel@nongnu.org; Thu, 11 Jun 2026 01:34:13 -0400
+Received: from mail-wm1-x334.google.com ([2a00:1450:4864:20::334])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <manos.pitsidianakis@linaro.org>)
+ id 1wXY3N-0002zj-0G
+ for qemu-devel@nongnu.org; Thu, 11 Jun 2026 01:34:10 -0400
+Received: by mail-wm1-x334.google.com with SMTP id
+ 5b1f17b1804b1-490cdae130cso27089025e9.0
+ for <qemu-devel@nongnu.org>; Wed, 10 Jun 2026 22:34:08 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=oss.qualcomm.com; s=google; t=1781155988; x=1781760788; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=4hsqE0JDPfvXJ30nhCZ/CCXuACFuBC+IpE9moxChOvw=;
- b=iHxo8AcJeXmuRVvPPRsc/b3C9Ko+zmH7a/0NuZWozl/Akt8SHPvYt7+2rDIZCv04WO
- tUr7BsD4HujkhG9rwv0nZwddxcNY9JUxuHZwRBAmy4y83hwaL17rUfVYOw3Epf+YSNxJ
- +S7gJY009i4tRes0t3m6JKKkDufj+u47Jcvfsgx/USQ3jmQi5fd8PzrjfQBIe6nDd6vr
- 8eZ/0JtKo2+K5jOZ5fGOCU6/1ASwstRj0AyBVDRhqvex1tkO6WGRby4EjtxXQhcSlDNl
- 9s2/FnhB7wlYrrxCXzVYTeyxk5DeBKjqZG1x335JgGsBUUU5m0E2jn+NpFs5UBS4tOeT
- VarQ==
+ d=linaro.org; s=google; t=1781156046; x=1781760846; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:in-reply-to
+ :references:user-agent:subject:cc:to:from:date:from:to:cc:subject
+ :date:message-id:reply-to;
+ bh=dOQ9Io+5rRVFfhQ6TTxM9xsHGMZl1mSwb8+LNpNYYvw=;
+ b=ZIhJ0iI1C0bsRXvN84tFyKg1U6nvI4gnO6gW3CRJVe9GWbHWZaACLHbcAAuB6LNKLe
+ uc+bIvvFPKQHHDkWTM7RoH3k10icVVl08T45fEI5tMLDtmaxjflpuL2WiFwvybgzwbm2
+ PwveaGkGKY7wnkW6CfJnLp27Q/8zeMmqjoyAIIExaoUsxrP1oF868W2q7iLpETtAIjmO
+ /dLUdaTmmK1LOx7SgWZ4rWzxokMD08VolOJfeDLWK3Tqm0d8akybNFN+y8BjpvvlfHOC
+ DBH64ft95xQHhPXeDVirfLoTiHdc8i66cKl/bWqYrtlnUYHaejkepHmvh8UZbufBhDwP
+ tKCA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1781155988; x=1781760788;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to;
- bh=4hsqE0JDPfvXJ30nhCZ/CCXuACFuBC+IpE9moxChOvw=;
- b=CEH5WpSvLGLUL5DgMmI9q8B9L9eCYN0Nt00dH0uRtFg2txHona1NDgS2ixKhpwrOTw
- aE1EkA0STQlmNtguO063apkg2SyAlTIApRPXH/NxWVbcs4k7o9yS9Q3DdORSZcdA5If0
- Vg+P8h/jmFP8x4ygG3F20q5bIs58q81+H9FK2+Zs2zhgq8+tmAxh8uuFgOquOglwSJtq
- Ippp2GpPK41gOQ1/nuHSjPCAAa6700Y9j5myof9aHNRlE+bZcSra3DcpSTORhQuho4tv
- XHUxJ/26eIif90N/P91vn1UkXKpUWO1okuVQ8+3zOtjnTnm3Jrm0LY7h8+g9L8g1+HO1
- N7Pg==
-X-Gm-Message-State: AOJu0YzsVvqev5Qdv64rpp7cXyeI416rFseGRWZUuR5u0Q3bbpl0hBV9
- YaxSIBkDdO0tLDC+ef5c2C4Yqeh6H5eKdQjhBZETkGN3ikybSNyXFSu7472S7HEx9Ja5LQROOhO
- INZ8cigOpbmwGTSRFeV8UwQt8iOnxeqrgF/sSArEE8ps6cvsLhrNepMOmNxffFL/kNQ==
-X-Gm-Gg: Acq92OFKMVf+WrwSDJTxQJ1W9MSZLiT3gsAlIFOG4g5UWQT6XS16lFm2USqgXzJZ6Dy
- 74ljVzC4xoDtYju/pcAE+qkBWKapSdv6zsJhbeir7bDBklsZk3uM0iI88Xl76GH8EqGzuMpzSh3
- yK/L9zuIY8B32k/V59yx0poWeUMEvuZXGYErWQcHXVbd51sqV5oGdK30562zNdj3p9YfBk9iJCJ
- 2Rfs51l0r8pprogG576ZxKozCto6BddkgblhX88y0F3KFYrCmiPoRlskC1AlZcWFBbKm4Jpt9ao
- 9mBx9/AU1Z3wDvMB/BwikPJEkDgog+f2mN/c1/7+B/ChjvNSy7Cq6+5Kh+LMHD0FBKNzMmj1Kho
- SwU1lFWqMPGFFO4ak2YcMc7Y1r4xX3mzvIbtkGN0gI+v2z4ar3Ty50WEL0B3cgvclL7mKwGgnnn
- /X+yZm
-X-Received: by 2002:a05:7300:542:b0:2ee:ade0:e0bf with SMTP id
- 5a478bee46e88-30804b96826mr1128683eec.30.1781155988207; 
- Wed, 10 Jun 2026 22:33:08 -0700 (PDT)
-X-Received: by 2002:a05:7300:542:b0:2ee:ade0:e0bf with SMTP id
- 5a478bee46e88-30804b96826mr1128673eec.30.1781155987715; 
- Wed, 10 Jun 2026 22:33:07 -0700 (PDT)
-Received: from hu-bcain-lv.qualcomm.com (Global_NAT1.qualcomm.com.
- [129.46.96.20]) by smtp.gmail.com with ESMTPSA id
- 5a478bee46e88-30806ee207asm720800eec.29.2026.06.10.22.33.06
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 10 Jun 2026 22:33:06 -0700 (PDT)
-From: Brian Cain <brian.cain@oss.qualcomm.com>
-To: qemu-devel@nongnu.org
-Cc: brian.cain@oss.qualcomm.com, matheus.bernardino@oss.qualcomm.com,
- pierrick.bouvier@oss.qualcomm.com, ltaylorsimpson@gmail.com,
- philmd@mailo.org, philmd@oss.qualcomm.com,
- Brian Cain <bcain@quicinc.com>, Laurent Vivier <laurent@vivier.eu>,
- Helge Deller <deller@gmx.de>
-Subject: [PATCH v6] target/hexagon: Implement hex_tlb_entry_get_perm()
-Date: Wed, 10 Jun 2026 22:32:28 -0700
-Message-Id: <20260611053249.3918491-8-brian.cain@oss.qualcomm.com>
-X-Mailer: git-send-email 2.34.1
-In-Reply-To: <20260611053249.3918491-1-brian.cain@oss.qualcomm.com>
-References: <20260611053249.3918491-1-brian.cain@oss.qualcomm.com>
+ d=1e100.net; s=20251104; t=1781156046; x=1781760846;
+ h=content-transfer-encoding:mime-version:message-id:in-reply-to
+ :references:user-agent:subject:cc:to:from:date:x-gm-gg
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=dOQ9Io+5rRVFfhQ6TTxM9xsHGMZl1mSwb8+LNpNYYvw=;
+ b=N9YeBQgXI2z6vMloLoh1Xuq5WTwM8hhSfbhNUbrvcC8gMzXVhvSk+tJ1Uc40F+MUWc
+ c7cSRx6JJEnfle+ftWJbmB+5o2LNr/Wrol5uPT2OKq5XAYCQWJpz9TqETQKlojPRvJFb
+ RVXFOb3wcf+O9bBWsKvZeCy9JGsy42hWlfw6nmIaEPf3Z817wixwWvmusSeGBMeIhfJa
+ vNlEDjoBb7ydgyfmUll33J18u93CAqyhVpWscj19V+lTMZad/GMAJzE0bf242XycUMj3
+ Td/8razXhaxAJ57jzDLJYXXBS1Ci445pyd+eLkzn4SUt7W/DpLVRt4O86p609ibaX05A
+ +umg==
+X-Gm-Message-State: AOJu0YwW3SqL+HJ0GMavv65i4PD85S3q1LLz8c9JzvHDNI+tuaekeUK+
+ ZRzvIWRzox+/ssCksNJ/JTseXXLAWCBsTxGiQBvRhSYVrv/Ksz46NIqQ8C4/OoRJx4fZK1LW7pG
+ J1RcRkjs=
+X-Gm-Gg: Acq92OGvfUm7LMA8TdGaKefY53SWGS4diHS4yxcgLRFt7PAumptTBZyyNFDmrhZEnyr
+ oHuIuzJiGrRzPbfD8esntNBCEBetwcQ2gA1l2sXWM/hMOBiTjxOudg3kSltiF9FDQqwFqo3dQt7
+ rL7rL6fIwaf7TCoh+AeVDi/m3D78pknpZ9k3qxvZKa/O+rxxugvA4FmmCREqD5ojkpgqheaucfv
+ jSu4bzC1ePqLG5l6vJfXShg02rS8HMX/GfQfT5xYLzhdn+Fvm1mR/y1a1OvBXdCwGT4/gtK89ol
+ 2XXXId+268dKLypoQwm/RaJT2canPLaGKQORDmg/wJXnG3fryMFP8H1V7sCh2nKhk95NsR2yWH0
+ 8MxFzDAxn+KVlp98W7ilnc4Vz02mOf5r0eLgcpx3X1hMBOeJp+fme1zahPCyQm+9FnPA1I77aZv
+ juVR5UXcv+AGO88Tvl8HXj+H+GU0WUEPpViX4WgxxxD7XRWMJDCyqXg1Kg/UeIGXyC6y39zMw85
+ HoUnlfXe3QPM+Gq037amoL807dyX5RfZ2PvnEA5EIxa0saHf6WfI3jSfpkDPA==
+X-Received: by 2002:a05:600c:1f90:b0:48a:75b9:b0bc with SMTP id
+ 5b1f17b1804b1-490e561b747mr10653125e9.29.1781156046526; 
+ Wed, 10 Jun 2026 22:34:06 -0700 (PDT)
+Received: from meli-email.org (ppp-2-86-135-61.home.otenet.gr. [2.86.135.61])
+ by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-490e47b35ffsm18437795e9.2.2026.06.10.22.34.06
+ (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
+ Wed, 10 Jun 2026 22:34:06 -0700 (PDT)
+Date: Thu, 11 Jun 2026 08:33:20 +0300
+From: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
+To: qemu-devel@nongnu.org, Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
+Cc: Chao Liu <chao.liu.zevorn@gmail.com>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ Brian Cain <brian.cain@oss.qualcomm.com>,
+ Philippe Mathieu-Daud=?UTF-8?B?w6kg?=<philmd@linaro.org>,
+ Alex Benn=?UTF-8?B?w6k=?=e <alex.bennee@linaro.org>,
+ Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
+ Alexandre Iooss <erdnaxe@crans.org>
+Subject: Re: [PATCH 10/25] plugins: add userdata to
+ qemu_plugin_register_vcpu_resume_cb
+User-Agent: meli/0.8.13
+References: <20260603205152.1440291-1-pierrick.bouvier@oss.qualcomm.com>
+ <20260603205152.1440291-11-pierrick.bouvier@oss.qualcomm.com>
+In-Reply-To: <20260603205152.1440291-11-pierrick.bouvier@oss.qualcomm.com>
+Message-ID: <tggcst.2jv53sm0l1vc6@linaro.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: base64
-X-Proofpoint-ORIG-GUID: Lf2otiJraZ2zFDxlZFtsTKKcM4wfGVqd
-X-Proofpoint-Spam-Info: AW1haW4tMjYwNjExMDA1MiBTYWx0ZWRfX+3EF2gmowlmS
- /7EbXzZ9oneQWf18UaxRJe69QsvmO2Lr1KQtWHngdmdmFuNyEQCgMXr7YLLcK2ZNAdgg45x6nrI
- Fn5PhDX/dISjRftoBoZzTEh0vSbk7v0=
-X-Proofpoint-GUID: Lf2otiJraZ2zFDxlZFtsTKKcM4wfGVqd
-X-Authority-Analysis: v=2.4 cv=UsRT8ewB c=1 sm=1 tr=0 ts=6a2a4894 cx=c_pps
- a=wEP8DlPgTf/vqF+yE6f9lg==:117 a=ouPCqIW2jiPt+lZRy3xVPw==:17
- a=IkcTkHD0fZMA:10 a=FelO9ux0wxsA:10 a=s4-Qcg_JpJYA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=_K5XuSEh1TEqbUxoQ0s3:22
- a=COk6AnOGAAAA:8 a=pGLkceISAAAA:8 a=EUspDBNiAAAA:8 a=RKVJoAg1yBLoogzcrgwA:9
- a=QEXdDO2ut3YA:10 a=bBxd6f-gb0O0v-kibOvt:22 a=TjNXssC_j7lpFel5tvFf:22
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNjExMDA1MiBTYWx0ZWRfX8xQ7ATfTvtDu
- HAiD/O/OG5f9YytK93mvwpfiu2Pw3A2/vELb8hb37OCZdwTLJUbEru/4siYk5guulcIPRxHX7NU
- 1dawd0maldeGmn4nrkHZj734ukarQNv0pvmy9ol3irQv01l1yN7ubmEFc1TxGbW5Bezuu6tfEN2
- S4EdOG2SwDZ3za90edBg7mX7w3X/VIOf+W2rMBkX6/CBAYIpolcKzvj+cvuAO/DPgmzY9PYkRe3
- BalbIsrzMm/JI0PqomBQABp3cXcEb7zUDHGASToqCicibWiaOlvXE2USl6BZvctR4YLCHC1yfSA
- hLCT39vcDzuTic9M+pneHGNd+KSmvmHD0ZD2bHdsyYreHgz4uD36IwhoY7ERjT3oVItF7kkJpRF
- nzdIH+8o40RIkPJKQyY2n67x68pFLOZ3cOCy6QQbIKe24yagdYuvhLcF4VeQR7r1vSh4XkXE0RG
- oyWmLe5MO8YuUBGj9GQ==
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.125,FMLib:17.12.100.49
- definitions=2026-06-11_01,2026-06-09_02,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- priorityscore=1501 phishscore=0 clxscore=1015 lowpriorityscore=0 spamscore=0
- adultscore=0 bulkscore=0 suspectscore=0 impostorscore=0 malwarescore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2606040000 definitions=main-2606110052
-Received-SPF: pass client-ip=205.220.168.131;
- envelope-from=brian.cain@oss.qualcomm.com; helo=mx0a-0031df01.pphosted.com
-X-Spam_score_int: -27
-X-Spam_score: -2.8
+Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=utf-8; format=flowed
+Received-SPF: pass client-ip=2a00:1450:4864:20::334;
+ envelope-from=manos.pitsidianakis@linaro.org; helo=mail-wm1-x334.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_MSPIKE_H2=0.001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001, TVD_SPACE_RATIO=0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -154,22 +110,102 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-RnJvbTogQnJpYW4gQ2FpbiA8YmNhaW5AcXVpY2luYy5jb20+CgpSZXZpZXdlZC1ieTogVGF5bG9y
-IFNpbXBzb24gPGx0YXlsb3JzaW1wc29uQGdtYWlsLmNvbT4KU2lnbmVkLW9mZi1ieTogQnJpYW4g
-Q2FpbiA8YnJpYW4uY2FpbkBvc3MucXVhbGNvbW0uY29tPgotLS0KIGxpbnV4LXVzZXIvaGV4YWdv
-bi9jcHVfbG9vcC5jIHwgNyArKysrKysrCiAxIGZpbGUgY2hhbmdlZCwgNyBpbnNlcnRpb25zKCsp
-CgpkaWZmIC0tZ2l0IGEvbGludXgtdXNlci9oZXhhZ29uL2NwdV9sb29wLmMgYi9saW51eC11c2Vy
-L2hleGFnb24vY3B1X2xvb3AuYwppbmRleCA5ZjU0YzdiM2Y5Ni4uMDk1OGM1MWZiYjMgMTAwNjQ0
-Ci0tLSBhL2xpbnV4LXVzZXIvaGV4YWdvbi9jcHVfbG9vcC5jCisrKyBiL2xpbnV4LXVzZXIvaGV4
-YWdvbi9jcHVfbG9vcC5jCkBAIC02Myw2ICs2MywxMyBAQCB2b2lkIGNwdV9sb29wKENQVUhleGFn
-b25TdGF0ZSAqZW52KQogICAgICAgICAgICAgYnJlYWs7CiAgICAgICAgIGNhc2UgSEVYX0VWRU5U
-X1BSRUNJU0U6CiAgICAgICAgICAgICBzd2l0Y2ggKGVudi0+Y2F1c2VfY29kZSkgeworICAgICAg
-ICAgICAgY2FzZSBIRVhfQ0FVU0VfRkVUQ0hfTk9fVVBBR0U6CisgICAgICAgICAgICBjYXNlIEhF
-WF9DQVVTRV9QUklWX05PX1VSRUFEOgorICAgICAgICAgICAgY2FzZSBIRVhfQ0FVU0VfUFJJVl9O
-T19VV1JJVEU6CisgICAgICAgICAgICBmb3JjZV9zaWdfZmF1bHQoVEFSR0VUX1NJR1NFR1YsIFRB
-UkdFVF9TRUdWX01BUEVSUiwKKyAgICAgICAgICAgICAgICAgICAgZW52LT5ncHJbSEVYX1JFR19Q
-Q10pOworCisgICAgICAgICAgICBicmVhazsKICAgICAgICAgICAgIGNhc2UgSEVYX0NBVVNFX1BS
-SVZfVVNFUl9OT19HSU5TTjoKICAgICAgICAgICAgIGNhc2UgSEVYX0NBVVNFX1BSSVZfVVNFUl9O
-T19TSU5TTjoKICAgICAgICAgICAgIGNhc2UgSEVYX0NBVVNFX0lOVkFMSURfUEFDS0VUOgotLSAK
-Mi4zNC4xCgo=
+On Wed, 03 Jun 2026 23:51, Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com> wrote:
+>Signed-off-by: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
+>---
+
+Reviewed-by: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
+
+> include/plugins/qemu-plugin.h |  4 +++-
+> plugins/core.c                | 31 +++++--------------------------
+> 2 files changed, 8 insertions(+), 27 deletions(-)
+>
+>diff --git a/include/plugins/qemu-plugin.h b/include/plugins/qemu-plugin.h
+>index 75d2a69a3bd..8c146ea49c2 100644
+>--- a/include/plugins/qemu-plugin.h
+>+++ b/include/plugins/qemu-plugin.h
+>@@ -285,12 +285,14 @@ void qemu_plugin_register_vcpu_idle_cb(qemu_plugin_id_t id,
+>  * qemu_plugin_register_vcpu_resume_cb() - register a vCPU resume callback
+>  * @id: plugin ID
+>  * @cb: callback function
+>+ * @userdata: any plugin data to pass to the @cb
+>  *
+>  * The @cb function is called every time a vCPU resumes execution.
+>  */
+> QEMU_PLUGIN_API
+> void qemu_plugin_register_vcpu_resume_cb(qemu_plugin_id_t id,
+>-                                         qemu_plugin_vcpu_simple_cb_t cb);
+>+                                         qemu_plugin_vcpu_udata_cb_t cb,
+>+                                         void *userdata);
+> 
+> /**
+>  * qemu_plugin_register_vcpu_discon_cb() - register a discontinuity callback
+>diff --git a/plugins/core.c b/plugins/core.c
+>index 111ceeea285..aa9240fe21a 100644
+>--- a/plugins/core.c
+>+++ b/plugins/core.c
+>@@ -78,29 +78,6 @@ void plugin_unregister_cb__locked(struct qemu_plugin_ctx *ctx,
+>     }
+> }
+> 
+>-/*
+>- * Disable CFI checks.
+>- * The callback function has been loaded from an external library so we do not
+>- * have type information
+>- */
+>-QEMU_DISABLE_CFI
+>-static void plugin_vcpu_cb__simple(CPUState *cpu, enum qemu_plugin_event ev)
+>-{
+>-    struct qemu_plugin_cb *cb, *next;
+>-
+>-    switch (ev) {
+>-    case QEMU_PLUGIN_EV_VCPU_RESUME:
+>-        /* iterate safely; plugins might uninstall themselves at any time */
+>-        QLIST_FOREACH_SAFE_RCU(cb, &plugin.cb_lists[ev], entry, next) {
+>-            qemu_plugin_vcpu_simple_cb_t func = cb->f.vcpu_simple;
+>-            func(cpu->cpu_index);
+>-        }
+>-        break;
+>-    default:
+>-        g_assert_not_reached();
+>-    }
+>-}
+>-
+> /*
+>  * Disable CFI checks.
+>  * The callback function has been loaded from an external library so we do not
+>@@ -114,6 +91,7 @@ static void plugin_vcpu_cb__udata(CPUState *cpu, enum qemu_plugin_event ev)
+>     switch (ev) {
+>     case QEMU_PLUGIN_EV_VCPU_INIT:
+>     case QEMU_PLUGIN_EV_VCPU_IDLE:
+>+    case QEMU_PLUGIN_EV_VCPU_RESUME:
+>     case QEMU_PLUGIN_EV_VCPU_EXIT:
+>         QLIST_FOREACH_SAFE_RCU(cb, &plugin.cb_lists[ev], entry, next) {
+>             qemu_plugin_vcpu_udata_cb_t func = cb->f.vcpu_udata;
+>@@ -635,7 +613,7 @@ void qemu_plugin_vcpu_resume_cb(CPUState *cpu)
+> {
+>     if (cpu->cpu_index < plugin.num_vcpus) {
+>         qemu_plugin_set_cb_flags(cpu, QEMU_PLUGIN_CB_RW_REGS_PC);
+>-        plugin_vcpu_cb__simple(cpu, QEMU_PLUGIN_EV_VCPU_RESUME);
+>+        plugin_vcpu_cb__udata(cpu, QEMU_PLUGIN_EV_VCPU_RESUME);
+>         qemu_plugin_set_cb_flags(cpu, QEMU_PLUGIN_CB_NO_REGS);
+>     }
+> }
+>@@ -666,9 +644,10 @@ void qemu_plugin_register_vcpu_idle_cb(qemu_plugin_id_t id,
+> }
+> 
+> void qemu_plugin_register_vcpu_resume_cb(qemu_plugin_id_t id,
+>-                                         qemu_plugin_vcpu_simple_cb_t cb)
+>+                                         qemu_plugin_vcpu_udata_cb_t cb,
+>+                                         void *userdata)
+> {
+>-    plugin_register_cb(id, QEMU_PLUGIN_EV_VCPU_RESUME, cb);
+>+    plugin_register_cb_udata(id, QEMU_PLUGIN_EV_VCPU_RESUME, cb, userdata);
+> }
+> 
+> void qemu_plugin_register_vcpu_discon_cb(qemu_plugin_id_t id,
+>-- 
+>2.43.0
+>
+>
 
