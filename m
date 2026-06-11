@@ -4,100 +4,94 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E4EE0CD98CC
-	for <qemu-devel@archiver.kernel.org>; Thu, 11 Jun 2026 10:31:27 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1A468CD98CC
+	for <qemu-devel@archiver.kernel.org>; Thu, 11 Jun 2026 10:51:32 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wXcgD-0005vq-IW; Thu, 11 Jun 2026 06:30:33 -0400
+	id 1wXczr-0006M7-H8; Thu, 11 Jun 2026 06:50:52 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jay.chang@sifive.com>)
- id 1wXcg0-0005tm-RJ
- for qemu-devel@nongnu.org; Thu, 11 Jun 2026 06:30:29 -0400
-Received: from mail-ej1-x630.google.com ([2a00:1450:4864:20::630])
+ (Exim 4.90_1) (envelope-from <max.chou@sifive.com>)
+ id 1wXczn-0006Lk-R4
+ for qemu-devel@nongnu.org; Thu, 11 Jun 2026 06:50:49 -0400
+Received: from mail-pf1-x435.google.com ([2607:f8b0:4864:20::435])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <jay.chang@sifive.com>)
- id 1wXcfy-0004qq-Rk
- for qemu-devel@nongnu.org; Thu, 11 Jun 2026 06:30:20 -0400
-Received: by mail-ej1-x630.google.com with SMTP id
- a640c23a62f3a-bebde89cfd3so999982466b.2
- for <qemu-devel@nongnu.org>; Thu, 11 Jun 2026 03:30:17 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <max.chou@sifive.com>)
+ id 1wXczl-0002XW-L0
+ for qemu-devel@nongnu.org; Thu, 11 Jun 2026 06:50:47 -0400
+Received: by mail-pf1-x435.google.com with SMTP id
+ d2e1a72fcca58-84229481d44so3245649b3a.0
+ for <qemu-devel@nongnu.org>; Thu, 11 Jun 2026 03:50:44 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=sifive.com; s=google; t=1781173817; x=1781778617; darn=nongnu.org;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=p77B0xYauOL4J7Ev1UzSvLivahywcH0/3Wx4E1msO2c=;
- b=d6/k2GsBZDBpfMKFXphH/Rkl6R4v7EQMf2H1ahfBBBzGEsURI6e0h7a9/XGNzEuU/W
- Z6bnnfdNFewGoqr4eus4rmRtKihifI/w5LkCPHB9zGxQzm4JNVxlNOq/+KExFuL6nQDk
- 3vz61+9SjsbDPgl4PyqtkMRgqhB5noBGEzFZWy3C+q9gmOkAI4wmEvwMGuR7Tr5eHBfH
- sjuLS2op/A94qPOdOASvlJGUnI8xxNmDfOGGZitvGpT4yd07N0MOQ6VfkOqrWmhB5AXH
- etJevA4LZwcsGYFLMymGMgFlV8+kZz7F31qc4jaSEfCysbfeb4unv7FVcjKWnNN/yGd6
- bbtA==
+ d=sifive.com; s=google; t=1781175044; x=1781779844; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:from:to:cc:subject:date:message-id:reply-to;
+ bh=Rd+4cRtGN3SmQC/zhJnnLLKTs3tW0tLvUsOUlwiyHHM=;
+ b=ZOPOdzWxJ40fIdmEasd3eQIBWeft9x4X06CkWzjshfPcjY0wo+3X4VBF2uRad46c+l
+ WXC0y8byU5dxthuCQ2TKAD8Z9q/v+q21tvHKOga7VI8kUsNI1YshAhjFhVMjnQgbee45
+ 0tpktEIU8NLkyfAZpP/z70yz/l5Z4NtuHBlpnS1xJxCxaNfm2svI6sSLJN8DU7fIcorw
+ Sr0+ly3pXtF6hmnD8nX0Uz0T8Nev7g28UUjgIZtHnF1UHeqcc9ZZyEihz7k+AXTK3k3E
+ QWBQoeWY6UbyZ9Mwcnq6fA0ktSEW0e4VUO/l0G6xnmc9EqDSDFOP2UzI7GeJuFFqCu0i
+ mGtQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1781173817; x=1781778617;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ d=1e100.net; s=20251104; t=1781175044; x=1781779844;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
  :message-id:reply-to;
- bh=p77B0xYauOL4J7Ev1UzSvLivahywcH0/3Wx4E1msO2c=;
- b=qf8jHP9l+qJ8LUWlu7faxI/+npb/A5Or8dJxoU0LsZAYPosKUeVy5kyvsL+zLz7xKB
- PFmjK1cVD+uGFd4YWKsulwl+3gTwuyzgedN+QSkEvRGflDUE57FQICyJ9ce7n1Rag4j/
- 4ucBui9gBxfcmwtnPs/pXdmHTelkM9gt4EIowg2dlwLtj28RlWB6jLbyer2tjbQGSsRQ
- W5Q8wXUBHFRVZ34KZ/cTH5qyuY7ZkMYqUxiloykvd/9xDmTuH2pcVhtJwNqiQdimOXAi
- j8mNJ3StT0b0p7qstGCLe2UOBcVpoLv7oYMotU9MAUc96ozoy46sdawogF9fAASCvi2e
- xK9g==
-X-Gm-Message-State: AOJu0Yxzw7jyHUAgz2LYeKXII4SVENXwXjd62Wietv9jYpG8Ow9+/4Fr
- bIZS7hJgWieTdxRWZD95iU2NkGkCk7rTkFiRIzIqbsMdfePOnoxf+XWgKq3WcpcWmIq0QVKGG28
- RYO3YbeGErMv2UMN7lTLaaIofbXFY0UGe20njdsptVe7O70UEJYcGimXTyNk8Ud8TEqwWxE5HKA
- s2QNLmNAsuGopWPqhCRxbGt5vfU+CSc2T/XaYnUPZ3wWE=
-X-Gm-Gg: Acq92OFMNiNav+mkVjZVtL0tHQSkftUqbiTYTALWe5J0RPBllwMBMke16R1pcGw0+S5
- 4mNMRr3yzB0gu9/kiP2eJnOQSJebBPUwD/YCg4fQ58ZImrl2XLq9Ua6rFnggxMBS8IrCH6EJu3N
- R61xSXPys8Ys80aMee3ck2J7xU1jnOx3uCAoMttSwtFbAa0cZxAb6SuKj640vONVPxqppoZRe45
- yOWNlIKcqk1pON4pcUb1MAdtuuGdbMyCCowex+mIewpDTg5yRWt9dpX5MgNr0Gh6F9LDUajRyui
- P5CIdA9+J9dIXebMrz3hT5mvotdZEUo8S2ruAgUawlcQBdHwZg/BqnmhKjg5hiEiwOWYkj+FPFt
- vzvEbmr5JYaZ5DKA9/wjLPkDR1YToblL+jeRNt/6IAt39W5+DtlPEvwYgo31iyjO+9fS+E63YS1
- 32WvXthVeQzH/8jpzEbjx7RSsG6wSHOoXvWWolwpahjug575LDqSH00FhCjWxKMRZns56RNG0=
-X-Received: by 2002:a17:907:2707:b0:bdb:e19d:525c with SMTP id
- a640c23a62f3a-bfc88206125mr70729166b.33.1781173816575; 
- Thu, 11 Jun 2026 03:30:16 -0700 (PDT)
-Received: from mail-ed1-f42.google.com (mail-ed1-f42.google.com.
- [209.85.208.42]) by smtp.gmail.com with ESMTPSA id
- a640c23a62f3a-bfcb0f14edbsm45733866b.3.2026.06.11.03.30.14
- for <qemu-devel@nongnu.org>
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 11 Jun 2026 03:30:14 -0700 (PDT)
-Received: by mail-ed1-f42.google.com with SMTP id
- 4fb4d7f45d1cf-68f36e1663cso13998875a12.3
- for <qemu-devel@nongnu.org>; Thu, 11 Jun 2026 03:30:14 -0700 (PDT)
-X-Received: by 2002:a05:6402:1466:b0:691:956a:cf72 with SMTP id
- 4fb4d7f45d1cf-6930e32ccc2mr974940a12.17.1781173814308; Thu, 11 Jun 2026
- 03:30:14 -0700 (PDT)
+ bh=Rd+4cRtGN3SmQC/zhJnnLLKTs3tW0tLvUsOUlwiyHHM=;
+ b=XHFS0O0oCJ1vNbHL6ohxVYumL3of9MDefLPjPWsv69MLEvy5dQIiKM2QzVEIw/0MJW
+ Einte61HXeO+aS0yNyEr7dvgahwSFTuQxRBLm7Nax4i94SDuL7TnkKWZU7uWCihGZDXT
+ yueGLLiP/N6PyGcdCYYigSKoKEi7lrnRngm5jSy1c6IMTYuU8mFp0W3ZOTY7ZP0I+nXj
+ 7qCQUFO0IRcSu6YvZ2x37JRY3Xt8Occys5IzYJdbtiMwzq3HIitIxcrAwb92UKfY5xKs
+ +jiqLZtMdQMSRdyVnXDwfsJCQbQ6FlZDBg08iGrSG9pkPWBgTWiM6PL79cbf+4gfUINO
+ baWg==
+X-Gm-Message-State: AOJu0YxWXl0KLU85YYtLvb1f7VTtXT658WZ4yqZYX7MmFIPd8QKa3Vml
+ d2XyjkbDxKvnqIa0lb67lRk11rUJgWnkM87m15I386RKSgG8UaNivX2oIVjIUun8gWPH1RXTOT8
+ vv4Fej8Yx4+1USowo5t4XmmmN7Cdk5T0pQXQ1DkryyGKxC8as0YOS+5OkNnDKNUZ3y5hYqxBc1N
+ +ZrgJAV6XJylBGfNbwrtW/1iFOjgY91QR0iwmWQ0U=
+X-Gm-Gg: Acq92OHImF91SaaRWsLPqmcm2wieGbInD1aYivQuXrKbK5Gt+OmzUzL9/N5TeAfRaNM
+ oHd3jWhf45QTOl1g0HuVN1tQUMz3OtJhnl6d4DKHS5IIecPZ4asTVQngJCu9hUmwAiVyVS1/UWI
+ z1w97GVLypyc3B4essnxfXkM4T8LN8bwMQWlXf7JlIRwxujYRFQJn3vtIiY+Sh4n7TjbVOz6gox
+ 4l4Yos1gpHIuKz/r2cIZzWDuTd6L2mnhV+ssA3yvFPxYoux9r8/IFu0e1jpWDcZZZne0X9eaPdN
+ Brx+3+kQxUBkgvCZN7U9lrQrIgVKMSPoeq0sB6lZVtH+ZJgSDF15jZm1Ce1RkrtKluF0eAbl5Bp
+ vDvnbaHY7KXDe/NqRynTeBIhqeCnn5xwsA75DAPNt1Q7oh1rfSxBs+xm7VJSnAHcDxITCTIu7sd
+ RtTP6t1KctiTVJy/C/e1fp1qjcsNJPIANStUrJ/74AbUpyUOOXfWPqnup2F2ylNjnXDWI4Cdl+3
+ JZnWuBdx+jmPCOgZJRdg7ICrDIkR8wewkghYA==
+X-Received: by 2002:a05:6a00:6017:b0:81e:ef16:b288 with SMTP id
+ d2e1a72fcca58-84336a9e365mr2590189b3a.22.1781175043455; 
+ Thu, 11 Jun 2026 03:50:43 -0700 (PDT)
+Received: from duncan.localdomain (114-35-142-126.hinet-ip.hinet.net.
+ [114.35.142.126]) by smtp.gmail.com with ESMTPSA id
+ d2e1a72fcca58-843383197e5sm1657818b3a.52.2026.06.11.03.50.41
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Thu, 11 Jun 2026 03:50:42 -0700 (PDT)
+From: Max Chou <max.chou@sifive.com>
+To: qemu-devel@nongnu.org,
+	qemu-riscv@nongnu.org
+Cc: Palmer Dabbelt <palmer@dabbelt.com>,
+ Alistair Francis <alistair.francis@wdc.com>,
+ Weiwei Li <liwei1518@gmail.com>,
+ Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>,
+ Liu Zhiwei <zhiwei_liu@linux.alibaba.com>,
+ Chao Liu <chao.liu.zevorn@gmail.com>, Max Chou <max.chou@sifive.com>
+Subject: [PATCH 0/2] target/riscv: Fix mstatus.FS dirty tracking for FP
+ exception-raising instructions
+Date: Thu, 11 Jun 2026 18:50:35 +0800
+Message-ID: <20260611105037.157773-1-max.chou@sifive.com>
+X-Mailer: git-send-email 2.43.0
 MIME-Version: 1.0
-References: <20260318185238.99143-1-luisccunha8@gmail.com>
- <20260318185238.99143-3-luisccunha8@gmail.com>
-In-Reply-To: <20260318185238.99143-3-luisccunha8@gmail.com>
-From: Jay Chang <jay.chang@sifive.com>
-Date: Thu, 11 Jun 2026 18:30:02 +0800
-X-Gmail-Original-Message-ID: <CAMXXpfZEr0aChYeq+HQRj3WnjtjiF-cqo8sd5HVbqP6S8z0VDg@mail.gmail.com>
-X-Gm-Features: AVVi8CftBZgSovfDygZljDPOBtIbRXeRU2B7Bv1ik7oU_qqkIv74cJ7OpPvmnVM
-Message-ID: <CAMXXpfZEr0aChYeq+HQRj3WnjtjiF-cqo8sd5HVbqP6S8z0VDg@mail.gmail.com>
-Subject: Re: [RFC PATCH 2/6] target/riscv: Add SPMP CSR configuration
-To: luisccc <luisccunha8@gmail.com>
-Cc: qemu-devel@nongnu.org, Palmer Dabbelt <palmer@dabbelt.com>, 
- Alistair Francis <alistair.francis@wdc.com>, Weiwei Li <liwei1518@gmail.com>, 
- Daniel Henrique Barboza <dbarboza@ventanamicro.com>,
- Liu Zhiwei <zhiwei_liu@linux.alibaba.com>, 
- "open list:RISC-V TCG CPUs" <qemu-riscv@nongnu.org>, frank.chang@sifive.com
-Content-Type: multipart/alternative; boundary="0000000000007c35d10653f7d80a"
-Received-SPF: pass client-ip=2a00:1450:4864:20::630;
- envelope-from=jay.chang@sifive.com; helo=mail-ej1-x630.google.com
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::435;
+ envelope-from=max.chou@sifive.com; helo=mail-pf1-x435.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, HTML_MESSAGE=0.001,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -113,162 +107,57 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
---0000000000007c35d10653f7d80a
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+The RISC-V privileged architecture specification 3.1.6 defines
+mstatus.FS that
 
-On Thu, Mar 19, 2026 at 3:46=E2=80=AFAM luisccc <luisccunha8@gmail.com> wro=
-te:
+  "The FS field encodes the status of the floating-point unit state,
+   including the floating-point registers f0–f31 and the CSRs fcsr,
+   frm, and fflags."
 
-> diff --git a/target/riscv/csr.c b/target/riscv/csr.c
-> +static bool xiselect_spmp_range(target_ulong isel)
-> +{
-> +    return (ISELECT_SPMP_BASE <=3D isel &&
-> +            isel <=3D ISELECT_SPMP_BASE + MAX_RISCV_SPMPS);
-> +}
->
-0 <=3D isel <=3D 64 indicates that there are 65 valid entries in total.
+Any instruction that modifies this state must transition mstatus.FS
+to dirty. In particular, fflags is part of the tracked state, so any
+instruction that sets a new bit in fflags (e.g. raises a FP exception
+flag — must set mstatus.FS to dirty).
 
-> +static int rmw_xireg_spmp(CPURISCVState *env, int csrno,
-> +                        target_ulong isel, target_ulong *val,
-> +                        target_ulong new_val, target_ulong wr_mask)
-> +{
-> +    int index =3D 0;
-> +    bool m_mode_access =3D false;
-> +
-> +    /* Read 0 and write ignore if no rules are delegated */
-> +    if (env->spmp_state.num_deleg_rules =3D=3D 0) {
-> +        *val =3D 0;
->
-Maybe we should avoid dereferencing NULL
-if (val) {
-*val =3D 0;
-}
+But current implementation was failing to set mstatus.FS to dirty:
 
-> +        return 0;
-> +    }
-> +
-> +    index =3D isel - ISELECT_SPMP_BASE;
-> +
-> +    switch (csrno) {
-> +    case CSR_MIREG:
-> +        /* If M mode, signal it */
-> +        m_mode_access =3D true;
-> +        [[fallthrough]];
-> +    case CSR_SIREG:
-> +        if (val) {
-> +            *val =3D spmpaddr_csr_read(env, index);
-> +        }
-> +
-> +        spmpaddr_csr_write(env, index, new_val & wr_mask, m_mode_access)=
-;
-> +        break;
-> +    case CSR_MIREG2:
-> +        /* If M mode, signal it */
-> +        m_mode_access =3D true;
-> +        [[fallthrough]];
-> +    case CSR_SIREG2:
-> +        index =3D isel - ISELECT_SPMP_BASE;
->
-Duplicate setting index ?
+1. Scalar FP instructions that write integer registers (comparisons
+   and FP-to-integer conversions):
 
-Spec says : The mireg3 through mireg6 are reserved.
-Maybe
-    /* Reserved as WPRI - read returns 0, write ignored */
-    case CSR_SIREG3:
-        /* fallthrough */
-    case CSR_SIREG4 ... CSR_SIREG6:
-        /* fallthrough */
-    case CSR_MIREG3:
-        /* fallthrough */
-    case CSR_MIREG4 ... CSR_MIREG6:
-        if (val) {
-            *val =3D 0;
-        }
-        break;
+Instructions such as FEQ.S, FLT.D, FLE.H, FCVT.W.S, FCVT.WU.D,
+and FCVTMOD.W.D write their results to integer registers, so
+mark_fs_dirty is correctly not called to set fs to dirty at
+translation time. However, following scalar instructions may raise FP
+exception flags:
+- Comparisons: fle/fleq/flt/fltq/feq
+  — raise NV on NaN operands
+- FP-to-integer: fcvt.[w|wu|l|lu]/fcvtmod.w.d
+  — raise NX on inexact or NV on out-of-range
 
---=20
-> 2.43.0
->
->
->
+2. Vector FP instructions (all arithmetic, comparison, conversion, and
+   reduction operations in the V extension):
 
---0000000000007c35d10653f7d80a
-Content-Type: text/html; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+When a vector FP instruction raises a FP exception (e.g., vfdiv.vv
+producing a divide-by-zero, or vmflt.vv comparing NaN values), it
+modifies fflags — an FP CSR — but current implementation did not dirty
+mstatus.FS.
 
-<div dir=3D"ltr"><div dir=3D"ltr"><br></div><br><div class=3D"gmail_quote g=
-mail_quote_container"><div dir=3D"ltr" class=3D"gmail_attr">On Thu, Mar 19,=
- 2026 at 3:46=E2=80=AFAM luisccc &lt;<a href=3D"mailto:luisccunha8@gmail.co=
-m">luisccunha8@gmail.com</a>&gt; wrote:</div><blockquote class=3D"gmail_quo=
-te" style=3D"margin:0px 0px 0px 0.8ex;border-left:1px solid rgb(204,204,204=
-);padding-left:1ex">
-diff --git a/target/riscv/csr.c b/target/riscv/csr.c<br>
-+static bool xiselect_spmp_range(target_ulong isel)<br>
-+{<br>
-+=C2=A0 =C2=A0 return (ISELECT_SPMP_BASE &lt;=3D isel &amp;&amp;<br>
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 isel &lt;=3D ISELECT_SPMP_BASE +=
- MAX_RISCV_SPMPS);<br>
-+}<br></blockquote><div><code class=3D"gmail-p8i6j0f">0 &lt;=3D isel &lt;=
-=3D 64</code> indicates that there are 65 valid entries in total.</div><blo=
-ckquote class=3D"gmail_quote" style=3D"margin:0px 0px 0px 0.8ex;border-left=
-:1px solid rgb(204,204,204);padding-left:1ex">
-+static int rmw_xireg_spmp(CPURISCVState *env, int csrno,<br>
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
-=A0 =C2=A0 target_ulong isel, target_ulong *val,<br>
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
-=A0 =C2=A0 target_ulong new_val, target_ulong wr_mask)<br>
-+{<br>
-+=C2=A0 =C2=A0 int index =3D 0;<br>
-+=C2=A0 =C2=A0 bool m_mode_access =3D false;<br>
-+<br>
-+=C2=A0 =C2=A0 /* Read 0 and write ignore if no rules are delegated */<br>
-+=C2=A0 =C2=A0 if (env-&gt;spmp_state.num_deleg_rules =3D=3D 0) {<br>
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 *val =3D 0;<br></blockquote><div>Maybe we shou=
-ld avoid dereferencing NULL<br>if (val) {</div><div>*val =3D 0;</div><div>}=
-=C2=A0</div><blockquote class=3D"gmail_quote" style=3D"margin:0px 0px 0px 0=
-.8ex;border-left:1px solid rgb(204,204,204);padding-left:1ex">
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 return 0;<br>
-+=C2=A0 =C2=A0 }<br>
-+<br>
-+=C2=A0 =C2=A0 index =3D isel - ISELECT_SPMP_BASE;<br>
-+<br>
-+=C2=A0 =C2=A0 switch (csrno) {<br>
-+=C2=A0 =C2=A0 case CSR_MIREG:<br>
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 /* If M mode, signal it */<br>
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 m_mode_access =3D true;<br>
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 [[fallthrough]];<br>
-+=C2=A0 =C2=A0 case CSR_SIREG:<br>
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 if (val) {<br>
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 *val =3D spmpaddr_csr_read(env, =
-index);<br>
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 }<br>
-+<br>
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 spmpaddr_csr_write(env, index, new_val &amp; w=
-r_mask, m_mode_access);<br>
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 break;<br>
-+=C2=A0 =C2=A0 case CSR_MIREG2:<br>
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 /* If M mode, signal it */<br>
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 m_mode_access =3D true;<br>
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 [[fallthrough]];<br>
-+=C2=A0 =C2=A0 case CSR_SIREG2:<br>
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 index =3D isel - ISELECT_SPMP_BASE;<br></block=
-quote><div>Duplicate setting index ?</div><div><br>Spec says :=C2=A0The mir=
-eg3 through mireg6 are reserved.<br>Maybe<br>=C2=A0 =C2=A0 /* Reserved as W=
-PRI - read returns 0, write ignored */<br>=C2=A0 =C2=A0 case CSR_SIREG3:<br=
->=C2=A0 =C2=A0 =C2=A0 =C2=A0 /* fallthrough */<br>=C2=A0 =C2=A0 case CSR_SI=
-REG4 ... CSR_SIREG6:<br>=C2=A0 =C2=A0 =C2=A0 =C2=A0 /* fallthrough */<br>=
-=C2=A0 =C2=A0 case CSR_MIREG3:<br>=C2=A0 =C2=A0 =C2=A0 =C2=A0 /* fallthroug=
-h */<br>=C2=A0 =C2=A0 case CSR_MIREG4 ... CSR_MIREG6:<br>=C2=A0 =C2=A0 =C2=
-=A0 =C2=A0 if (val) {<br>=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 *val =3D=
- 0;<br>=C2=A0 =C2=A0 =C2=A0 =C2=A0 }<br>=C2=A0 =C2=A0 =C2=A0 =C2=A0 break;<=
-br><br></div><blockquote class=3D"gmail_quote" style=3D"margin:0px 0px 0px =
-0.8ex;border-left:1px solid rgb(204,204,204);padding-left:1ex">
--- <br>
-2.43.0<br>
-<br>
-<br>
-</blockquote></div></div>
+This patchset fixes this issue by
+1. Save float_exception_flags before the softfloat operation
+2. Perform the operation
+3. If any new exception bits are set, set fs to dirty
 
---0000000000007c35d10653f7d80a--
+Max Chou (2):
+  target/riscv: Set mstatus.FS dirty when scalar FP raises exceptions
+  target/riscv: rvv: Set mstatus.FS dirty when vector FP raises
+    exceptions
+
+ target/riscv/cpu.h           |   1 +
+ target/riscv/fpu_helper.c    | 157 +++++++++++++++++++----
+ target/riscv/vector_helper.c | 241 +++++++++++++++++++----------------
+ 3 files changed, 258 insertions(+), 141 deletions(-)
+
+-- 
+2.43.7
+
 
