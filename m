@@ -4,59 +4,60 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 379FBCD98D5
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 351E0CD98D4
 	for <qemu-devel@archiver.kernel.org>; Thu, 11 Jun 2026 09:04:18 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wXbKV-000074-Si; Thu, 11 Jun 2026 05:04:03 -0400
+	id 1wXbKF-000058-OO; Thu, 11 Jun 2026 05:03:47 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1wXbKU-00006r-Hv
- for qemu-devel@nongnu.org; Thu, 11 Jun 2026 05:04:02 -0400
+ id 1wXbKE-0008WP-5N
+ for qemu-devel@nongnu.org; Thu, 11 Jun 2026 05:03:46 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1wXbKS-0004WA-Q0
- for qemu-devel@nongnu.org; Thu, 11 Jun 2026 05:04:02 -0400
+ id 1wXbKC-0004Np-1V
+ for qemu-devel@nongnu.org; Thu, 11 Jun 2026 05:03:45 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1781168640;
+ s=mimecast20190719; t=1781168622;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=Smidf6FMOj3LuQCqpb0c6LifDKbvfiyh56oQEfYvK00=;
- b=TYZNuqXP9lx8azGrv2Bq4vZ5TGlQiJQOHmgB3zAxAUCSXq4ubVgZDIvUBTfpfoPbCEHi/a
- jsBJk1eFvAKRYwSaXH3UXnwMx07+zhMAtZVQJM+q+FLxSXGM8fUZkEA9qYD1tEBzmWyqei
- UJs6HEdpmy2PLyxyH8v1kux/0u0tf10=
-Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ content-transfer-encoding:content-transfer-encoding;
+ bh=Y8Y4MaxhkcWmKmOUNUCvyy9DmUpyOcCJZgTBXrpBrGU=;
+ b=dDKvT5ye54RxrcFhh4QISwRo93pUCfCBfcR/y2bhEO7GSWo3iRSR7CaHxiKMxTS3wkpGBo
+ cS0UvjJ83CeeKDTtp7zdUi2IFoj8knv98RFOveXAnU05nnNYKalm7JRLBcLCUq6Lu60jmC
+ KZZ4F4atVeRFUWcP81Gc1E74pPzbDFE=
+Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-587-Zs8AfaNpP7-digZY3Tad2w-1; Thu,
- 11 Jun 2026 05:03:56 -0400
-X-MC-Unique: Zs8AfaNpP7-digZY3Tad2w-1
-X-Mimecast-MFC-AGG-ID: Zs8AfaNpP7-digZY3Tad2w_1781168635
-Received: from mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.17])
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-225-yZoQpV5PMFeOPWKtrhXqxw-1; Thu,
+ 11 Jun 2026 05:03:39 -0400
+X-MC-Unique: yZoQpV5PMFeOPWKtrhXqxw-1
+X-Mimecast-MFC-AGG-ID: yZoQpV5PMFeOPWKtrhXqxw_1781168618
+Received: from mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.93])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 3AB6019560A1; Thu, 11 Jun 2026 09:03:55 +0000 (UTC)
+ by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 3B127180060B; Thu, 11 Jun 2026 09:03:37 +0000 (UTC)
 Received: from localhost (unknown [10.44.24.21])
- by mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 664DD19541B2; Thu, 11 Jun 2026 09:03:52 +0000 (UTC)
+ by mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id 7D321180057F; Thu, 11 Jun 2026 09:03:34 +0000 (UTC)
 From: =?utf-8?q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>
-Date: Thu, 11 Jun 2026 13:03:18 +0400
-Subject: [PATCH v3 03/35] irq: add per-IRQ observer to fix
- qemu_irq_intercept_in leak
+Subject: [PATCH v3 00/35] ui: better console hotplug support
+Date: Thu, 11 Jun 2026 13:03:15 +0400
+Message-Id: <20260611-b4-ui-v3-0-72bcbbea0fae@redhat.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
-Message-Id: <20260611-b4-ui-v3-3-72bcbbea0fae@redhat.com>
-References: <20260611-b4-ui-v3-0-72bcbbea0fae@redhat.com>
-In-Reply-To: <20260611-b4-ui-v3-0-72bcbbea0fae@redhat.com>
+X-B4-Tracking: v=1; b=H4sIAAAAAAAC/12N0Q6CIBhGX8VxHQ1BCLrqPVoXoL/5t6UOlNWc7
+ x7YWqvLs33nfAsJ4BECORYL8RAx4NAnELuC1J3tr0CxSUw444pJbqir6IzUMONaq4w8CEnSdvT
+ Q4mPrnC9vDrO7QT1lOS86DNPgn9tRLPPuvxlLyqhunGBKV7yE9uSh6ey0r4c7ydHIv5pi+qPxp
+ BmwSkgJlulfbV3XF1aJFFPkAAAA
+X-Change-ID: 20260529-b4-ui-909bfa695735
 To: qemu-devel@nongnu.org
 Cc: Paolo Bonzini <pbonzini@redhat.com>, 
  =?utf-8?q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>, 
@@ -68,35 +69,34 @@ Cc: Paolo Bonzini <pbonzini@redhat.com>,
  Peter Maydell <peter.maydell@linaro.org>, 
  Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>, 
  =?utf-8?q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>
-X-Developer-Signature: v=1; a=openpgp-sha256; l=4758;
+X-Developer-Signature: v=1; a=openpgp-sha256; l=6101;
  i=marcandre.lureau@redhat.com; h=from:subject:message-id;
- bh=AgfY59Jw3FWwwFgiVCxaDztJQCKR319w+PzxgVpWWCs=;
- b=owEBbQKS/ZANAwAKAdro4Ql1lpzlAcsmYgBqKnndGPJZOIJsbGpAfn8IeXH89XuarbByT8S5m
- hwl8xDjIm6JAjMEAAEKAB0WIQSHqb2TP4fGBtJ29i3a6OEJdZac5QUCaip53QAKCRDa6OEJdZac
- 5YCOD/9Yt88JPH/wzCnpf1kwyN2iI51uAwkjqzYBIlBgDcJ1JvDUxokEExEVFQ1oJAyhSWVwvuV
- aJTaag/GKjjouwlAKVUF8yiMoo8sDF3wP0qY7Gkxo/8ttkkW5aPTKxg8qzsc/jCMl0JWkULjodw
- 2S/J2zCIjwnrUdclj8eB63xey2p1fMyv3v8v7wCMz08klNcVbaMs/tfyzEW5OUF2Wffqy8Yndxl
- SKEnCv1ROdnLJNASWbemeiJfoylCrphMIom1K8qwqQ4eEXpGc7XV4z/UInGoQ1o8iEM4TQBafHt
- T3olxQPYgMTFQjcKsrhQmAFZdybnh2rPyNsRuI5MXgZWrMHZlRclGl/dhX3xaHxvfDNI49oi2lh
- oysbBOKnkzJWyQ6iqbpnHQfEWvxDA3lCiyFp5bGZLHdW9QRy4ou8bxRRIZav1fLZJODq9fJv/ml
- pdibDwqiNw3B6+ociPn+0qwPB7l8eFSPrc20f3xKTZ//BoK+5IcNRrmk0muyVMGz2wlbi6xhmU0
- pCmgGjDAXYtvIAMXqW+XdNXKnJyeYqIk3YKvmKpHl6WoIcsNwieimJmBICEUR2IniaLxp+9lusd
- j+PQ2+327ez7+tccBF9U7QArk2b3V3jeoAZaaruSTEIpS9HRJSWY1z7RwMkL8CTmAXM5UQEdt+w
- BLasrAXhP7c2++A==
+ bh=L888QriIUJxW/nHZ/ceM76r9oYXO93nludNayH9jUp0=;
+ b=owEBbQKS/ZANAwAKAdro4Ql1lpzlAcsmYgBqKnnct4a+8xWk7IIGmDsSXl+620cwYIFXI8ozs
+ 7W6ZBKNU4CJAjMEAAEKAB0WIQSHqb2TP4fGBtJ29i3a6OEJdZac5QUCaip53AAKCRDa6OEJdZac
+ 5bAtEACjle2uTWFW+CmfbXKwE4NyyuZPW29/Jr3WS/Hiyk0Lc0zfNmd4Co3Bk1pRA4GxURi7UzV
+ 80UWTPKJakCukYvrfvjFx6Cp1nBqkBy877cP68iNdngsYHnBEzhcbYa8A1/VqUIV4/s9/3PacaA
+ 9IEWGcDaIJINU/3CVF0p+Pep1GiH2XNm9uoOlZgVnlqVYgBfVjNxvsh4qiGNHIpFmVU6vnL7ZhI
+ DheUKtuGr1gc38mcJMO9CKaI9rpe3g6O05K7RfwoTnzfqB+Twf/pKdEaKDteFwIYqjTOg4+aHoa
+ pcGPx8Ml3nnHZ7r23tSTIARR7MQwQqHeH2JLOGcbMft1kuDj9GCHk0s9PEUKJxkEN872qHHkJxL
+ hl/899kaWw1JhzJ9+mREcrtUgYNWmfF2fmpTbEweRPsKMbC7SKOS+tRpXEr5OcmSihtb+D4dI3e
+ Dv4yawUp9/2OFfCemr9HXMhZNLezf5Zs7nTRMP2YL9OhsfXfmrYcpyNA9fBv6aDxC61Kr8Yhwh/
+ iETiwIlxsY87L4J3T3o6Tu4iQJ6vhpdLdpohs0n55eZO2YAN9rf3dZV65m+e+qdOkVkrmoD9z31
+ REsJlZxKgka+dn+7KsJT5qmz+oLIitmOVrORZPg3eZ/TeWuEpjv6XQVbcAZZP6aJuzvr0PSGg/y
+ JDQ0Zn2ckoGgByw==
 X-Developer-Key: i=marcandre.lureau@redhat.com; a=openpgp;
  fpr=87A9BD933F87C606D276F62DDAE8E10975969CE5
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.17
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.93
 Received-SPF: pass client-ip=170.10.129.124;
  envelope-from=marcandre.lureau@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: 8
-X-Spam_score: 0.8
-X-Spam_bar: /
-X-Spam_report: (0.8 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.445,
+X-Spam_score_int: -24
+X-Spam_score: -2.5
+X-Spam_bar: --
+X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.445,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_SBL_CSS=3.335, SPF_HELO_PASS=-0.001,
- SPF_PASS=-0.001 autolearn=no autolearn_force=no
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -112,132 +112,144 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-qemu_irq_intercept_in() saves original IRQ handlers by allocating
-new QOM objects, which are never freed. On a PC machine, this leaks
-IRQ objects (one per IOAPIC pin) on every qtest run.
+Hi,
 
-Rather than tracking allocations to free later, avoid them: add an
-"observer" field to IRQState, called by qemu_set_irq() after the
-real handler. Interception sets the observer instead of rewriting
-handlers, so there's nothing to save and nothing to leak.
+This series improves handling of dynamic consoles in ui/ (commit
+9588d67e72 "console: minimal hotplug suport" added basic unplug &
+replug).  It allows for better hotplug of vfio-pci display devices or
+bochs-display (the other device supporting hotplug today), with GTK and
+D-Bus backends.
 
-Fix qemu_notirq() to route through qemu_set_irq() so inverted IRQs
-trigger observers too. Drop the LSan suppression.
+As usual, the first patches are various preliminary cleanups and fixes I
+hit while developping the rest, they could be merged earlier. I improved
+the display cleanup to replace the scattered atexit() handler, making
+leaks more visible to sanitizers.
 
-Reviewed-by: Fabiano Rosas <farosas@suse.de>
+Then console ADDED/REMOVED notifications are added, so display backends
+can react to hotplug. The GTK code is rework a bit to allow easier
+hotplug events handling. Finally, D-Bus supports is implemented with a
+qtest to exercise it.
+
+thanks
+
 Signed-off-by: Marc-André Lureau <marcandre.lureau@redhat.com>
 ---
- include/hw/core/irq.h         |  6 +++---
- hw/core/irq.c                 | 12 ++++++------
- system/qtest.c                |  5 +----
- scripts/lsan_suppressions.txt |  8 --------
- 4 files changed, 10 insertions(+), 21 deletions(-)
+Changes in v3:
+- added "docs: start a vfio-pci document" patch
+- gtk: some cleanup order fixes in gd_vc_free()
+- gtk: drop unwanted show-tabs on console-add
+- added "util: make notifer_remove() safer" 
+- made dbus led handler removal idempotent
+- vfio: close dmabufs before closing console
+- vfio: removed bad set_display_gl_ctx(NULL) call
+- vfio: fixed dpy->region exit/finalize with pre-check
+- fix console registration after x-exit-preconfig
+- rebased & collected patch trailers
+- Link to v2: https://lore.kernel.org/qemu-devel/20260608-b4-ui-v2-0-9ea6355ea08f@redhat.com
 
-diff --git a/include/hw/core/irq.h b/include/hw/core/irq.h
-index 291fdd67df4..299a4a9a8ce 100644
---- a/include/hw/core/irq.h
-+++ b/include/hw/core/irq.h
-@@ -14,6 +14,7 @@ struct IRQState {
-     qemu_irq_handler handler;
-     void *opaque;
-     int n;
-+    qemu_irq_handler observer;
- };
- 
- void qemu_set_irq(qemu_irq irq, int level);
-@@ -96,9 +97,8 @@ void qemu_free_irq(qemu_irq irq);
- /* Returns a new IRQ with opposite polarity.  */
- qemu_irq qemu_irq_invert(qemu_irq irq);
- 
--/* For internal use in qtest.  Similar to qemu_irq_split, but operating
--   on an existing vector of qemu_irq.  */
--void qemu_irq_intercept_in(qemu_irq *gpio_in, qemu_irq_handler handler, int n);
-+/* For internal use in qtest. */
-+void qemu_irq_set_observer(qemu_irq *gpio_in, qemu_irq_handler handler, int n);
- 
- /**
-  * qemu_irq_is_connected: Return true if IRQ line is wired up
-diff --git a/hw/core/irq.c b/hw/core/irq.c
-index 106805e2417..1b610e75e15 100644
---- a/hw/core/irq.c
-+++ b/hw/core/irq.c
-@@ -32,6 +32,9 @@ void qemu_set_irq(qemu_irq irq, int level)
-         return;
- 
-     irq->handler(irq->opaque, irq->n, level);
-+    if (unlikely(irq->observer)) {
-+        irq->observer(irq->opaque, irq->n, level);
-+    }
- }
- 
- static void init_irq_fields(IRQState *irq, qemu_irq_handler handler,
-@@ -111,7 +114,7 @@ static void qemu_notirq(void *opaque, int line, int level)
- {
-     IRQState *irq = opaque;
- 
--    irq->handler(irq->opaque, irq->n, !level);
-+    qemu_set_irq(irq, !level);
- }
- 
- qemu_irq qemu_irq_invert(qemu_irq irq)
-@@ -121,14 +124,11 @@ qemu_irq qemu_irq_invert(qemu_irq irq)
-     return qemu_allocate_irq(qemu_notirq, irq, 0);
- }
- 
--void qemu_irq_intercept_in(qemu_irq *gpio_in, qemu_irq_handler handler, int n)
-+void qemu_irq_set_observer(qemu_irq *gpio_in, qemu_irq_handler handler, int n)
- {
-     int i;
--    qemu_irq *old_irqs = qemu_allocate_irqs(NULL, NULL, n);
-     for (i = 0; i < n; i++) {
--        *old_irqs[i] = *gpio_in[i];
--        gpio_in[i]->handler = handler;
--        gpio_in[i]->opaque = &old_irqs[i];
-+        gpio_in[i]->observer = handler;
-     }
- }
- 
-diff --git a/system/qtest.c b/system/qtest.c
-index fd37bcbfaab..cf301239177 100644
---- a/system/qtest.c
-+++ b/system/qtest.c
-@@ -326,9 +326,6 @@ void qtest_sendf(CharFrontend *chr, const char *fmt, ...)
- 
- static void qtest_irq_handler(void *opaque, int n, int level)
- {
--    qemu_irq old_irq = *(qemu_irq *)opaque;
--    qemu_set_irq(old_irq, level);
--
-     if (irq_levels[n] != level) {
-         CharFrontend *chr = &qtest->qtest_chr;
-         irq_levels[n] = level;
-@@ -421,7 +418,7 @@ static void qtest_process_command(CharFrontend *chr, gchar **words)
-                     interception_succeeded = true;
-                 }
-             } else {
--                qemu_irq_intercept_in(ngl->in, qtest_irq_handler,
-+                qemu_irq_set_observer(ngl->in, qtest_irq_handler,
-                                       ngl->num_in);
-                 interception_succeeded = true;
-             }
-diff --git a/scripts/lsan_suppressions.txt b/scripts/lsan_suppressions.txt
-index f88bbab18b8..30256bc6d01 100644
---- a/scripts/lsan_suppressions.txt
-+++ b/scripts/lsan_suppressions.txt
-@@ -16,11 +16,3 @@ leak:/lib64/libxkbcommon.so.0
- # https://github.com/GNOME/glib/blob/main/tools/glib.supp
- # This avoids false positive leak reports for the qga-ssh-test.
- leak:g_set_user_dirs
--
--# qemu_irq_intercept_in is only used by the qtest harness, and
--# its API inherently involves a leak.
--# While we could keep track of the old IRQ data structure
--# in order to free it, it doesn't seem very important to fix
--# since it is only used by the qtest test harness.
--# Just ignore the leak, at least for the moment.
--leak:qemu_irq_intercept_in
+Changes in v2:
+- add "ui/dbus: remove led handler", suggested by Akihiko
+- fix compilation with -Dvte=disabled
+- rebased, collect trailers
+- Link to v1: https://lore.kernel.org/qemu-devel/20260529-b4-ui-v1-0-8db3068421ef@redhat.com
 
--- 
-2.54.0
+To: qemu-devel@nongnu.org
+Cc: Marc-André Lureau <marcandre.lureau@redhat.com>
+Cc: Paolo Bonzini <pbonzini@redhat.com>
+Cc: "Daniel P. Berrangé" <berrange@redhat.com>
+Cc: Philippe Mathieu-Daudé <philmd@mailo.com>
+Cc: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
+Cc: Fabiano Rosas <farosas@suse.de>
+Cc: Laurent Vivier <lvivier@redhat.com>
+Cc: Alex Williamson <alex@shazbot.org>
+Cc: Cédric Le Goater <clg@redhat.com>
+Cc: Peter Maydell <peter.maydell@linaro.org>
+Cc: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
+
+---
+Marc-André Lureau (35):
+      ui/gtk: fix bad widget realize on non-GFX VC
+      build-sys: build with -fno-omit-frame-pointer with ASAN
+      irq: add per-IRQ observer to fix qemu_irq_intercept_in leak
+      scripts/lsan_suppressions: suppress fontconfig leaks
+      vfio/pci: close display console during unrealize, not finalize
+      docs: start a vfio-pci document
+      glib-compat: add fallback for g_clear_fd/g_autofd
+      util: make notifer_remove() safer
+      ui/dbus: remove mouse handler on dispose
+      ui/dbus: remove led handler
+      ui/qmp: keep a reference of console across yield
+      ui: stop ui timer when closing
+      ui/console: init gl_unblock_timer in qemu_console_init
+      ui/spice: remove dead spice_displays
+      ui/spice: add cleanup on shutdown
+      ui: add display cleanup infrastructure
+      ui/curses: implement display cleanup
+      ui/sdl2: implement display cleanup
+      ui/spice-app: implement display cleanup
+      ui/egl: implement display and EGL cleanup
+      ui/cocoa: implement display cleanup
+      ui/dbus: implement display cleanup
+      ui/gtk: implement display cleanup
+      ui/console: add console event notifier infrastructure
+      ui/console: fire console ADDED/REMOVED notifications
+      ui/console-vc: fire ADDED/REMOVED notifications
+      ui/gtk: convert VirtualConsole storage from fixed array to GPtrArray
+      ui/gtk: move global display settings out of per-console init
+      ui/gtk: fix tab re-insertion order on window close
+      ui/gtk: centralize console menu and shortcut management
+      ui/gtk: handle console hotplug/unplug events
+      ui/console: register console in QOM tree dynamically
+      ui/console: unregister console from QOM tree on close
+      ui/dbus: handle console hotplug/unplug events
+      tests/qtest: add D-Bus display hotplug test
+
+ MAINTAINERS                     |   1 +
+ docs/devel/index-internals.rst  |   1 +
+ docs/devel/vfio-mdpy.rst        |  83 +++++++++
+ meson.build                     |   2 +
+ hw/vfio/pci.h                   |   1 +
+ include/glib-compat.h           |  29 ++++
+ include/hw/core/irq.h           |   6 +-
+ include/ui/console.h            |  20 +++
+ include/ui/egl-helpers.h        |   1 +
+ include/ui/gtk.h                |   7 +-
+ include/ui/qemu-spice-module.h  |   1 +
+ include/ui/qemu-spice.h         |   9 +-
+ ui/dbus.h                       |   3 +
+ hw/core/irq.c                   |  12 +-
+ hw/vfio/display.c               |  29 ++--
+ hw/vfio/pci.c                   |   1 +
+ system/qtest.c                  |   5 +-
+ system/runstate.c               |   4 +-
+ tests/qtest/dbus-display-test.c | 101 ++++++++++-
+ ui/console-vc.c                 |  13 ++
+ ui/console.c                    |  77 ++++++++-
+ ui/curses.c                     |  17 +-
+ ui/dbus-console.c               |  14 +-
+ ui/dbus.c                       | 106 ++++++++++--
+ ui/egl-headless.c               |  31 ++++
+ ui/egl-helpers.c                |  19 ++
+ ui/gtk-clipboard.c              |  15 ++
+ ui/gtk.c                        | 375 +++++++++++++++++++++++++++++++---------
+ ui/sdl2.c                       |  23 ++-
+ ui/spice-app.c                  |  10 +-
+ ui/spice-core.c                 |  25 ++-
+ ui/spice-display.c              |  52 ++++++
+ ui/spice-input.c                |  52 ++++--
+ ui/spice-module.c               |   5 +
+ ui/ui-qmp-cmds.c                |   3 +
+ util/notify.c                   |   2 +-
+ scripts/lsan_suppressions.txt   |  15 +-
+ ui/cocoa.m                      |  19 +-
+ ui/meson.build                  |   4 +-
+ 39 files changed, 1004 insertions(+), 189 deletions(-)
+---
+base-commit: de5d8bfd6105d3dd3ae668df9762df244a6d1506
+change-id: 20260529-b4-ui-909bfa695735
+
+Best regards,
+--  
+Marc-André Lureau <marcandre.lureau@redhat.com>
 
 
