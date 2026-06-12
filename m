@@ -4,171 +4,150 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7781ECD4F2C
-	for <qemu-devel@archiver.kernel.org>; Fri, 12 Jun 2026 09:06:54 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id DF12ECD8CA8
+	for <qemu-devel@archiver.kernel.org>; Fri, 12 Jun 2026 09:33:53 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wXxqF-0000zW-2a; Fri, 12 Jun 2026 05:06:19 -0400
+	id 1wXyGA-0006KS-OI; Fri, 12 Jun 2026 05:33:06 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <john.levon@nutanix.com>)
- id 1wXxqD-0000z9-G1
- for qemu-devel@nongnu.org; Fri, 12 Jun 2026 05:06:17 -0400
-Received: from mx0a-002c1b01.pphosted.com ([148.163.151.68])
+ (Exim 4.90_1) (envelope-from <slopezpa@redhat.com>)
+ id 1wXyG9-0006IJ-7d
+ for qemu-devel@nongnu.org; Fri, 12 Jun 2026 05:33:05 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <john.levon@nutanix.com>)
- id 1wXxqB-00020l-SF
- for qemu-devel@nongnu.org; Fri, 12 Jun 2026 05:06:17 -0400
-Received: from pps.filterd (m0127838.ppops.net [127.0.0.1])
- by mx0a-002c1b01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 65C38aq31683126; Fri, 12 Jun 2026 02:06:04 -0700
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=nutanix.com; h=
- cc:content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=
- proofpoint20171006; bh=nTWCzIO1K5lb3e/Dcnz9BZsyCqRmEy6DsmAZgRm5l
- 0s=; b=TuvptFrTW+2P9hCfFFNiQXhqB0iRGkCvFUVmNVf9tVj2CZx7B6W47/7Hj
- xTt79VRWTrNMJnhISxW4qRoxpmDFtkOpIkN5HYyH+TdvDqfkP0jtx3w9JWhN0PaA
- fa/orGgGGMehORSJfS5bx/xrmKi2eh4IgcOc7NBXBof3YQ1cAz4Ed+kwtGFTt6p/
- KaQ4k9sAQSnSlpcwQK14+4S35rCYhAqOOOZGo5FmIXyIeIajSl0/5fXxzm2bvGls
- 27rpOlDYEjTJ4ljGKZCdXKCmp8VChHhcIbjzCqYvXSSNs5vwxsIb+BVOsLuUQTMZ
- HocQ1EeU9k2meX/ulGNjpvD7ZYsHA==
-Received: from byapr05cu005.outbound.protection.outlook.com
- (mail-westusazon11020084.outbound.protection.outlook.com [52.101.85.84])
- by mx0a-002c1b01.pphosted.com (PPS) with ESMTPS id 4er8ud8sq2-1
- (version=TLSv1.3 cipher=TLS_AES_256_GCM_SHA384 bits=256 verify=NOT);
- Fri, 12 Jun 2026 02:06:04 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=Tr0FpmrbUMjxlH0ymJNG76PNtADAwPMlB93UswvYCqa2BfaRSmG+Lpllrxv1L0syuWADRPVtyxKBxrBHbBfS33YUuGIE2/evlIrd/ML2eO2kK2LJs08jOSXofWvFD8NDx5ydU7xbOLVeAhNKvq5xeE9c3EaXpDirfExTL7xqdJYO9eU4JZ6Vk9nU/Ljt8b8O3ATxsFJTNbF06ujEdb2WIA9Mmfw7fSqLHufzUc3LpvBg1Q1vFRmEn8L86Eicx/7uI4AHkOWq6mUgTIglvWchUkGYeafM9diOq0fMksGrWTAwYOiwWf6LCHnn1C0iBu0ZhQvRxU02lqmLDCkY7fFdwA==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=1REn+F3nn/xmRzGNDqn3JfIpd7VItfou4bdXhlruZVE=;
- b=G6tiXX6SIQ4EzwrKLHn+lrKSyMKIBj4wz8akNABU9UkTwP4prHSfFAWqXkrI/Ris18WUgFulGQYkpDNInXtC20rNNazh60woczj1i4tU6eDAg5Ehh/era5KjIG9/o48OXplBp32bVWhvjdQZM0Ardcbo5caBhmgkCzP8OoH58zQn8JSAGHf7ylL+UA06/zn7NYEedeYHy6aqgRg6gFs7xFQZn8HcxnIfFDQPBkU601OREU53LBi+oguUWcMrnIu92MlPjcGYVJ5dGoCkOdEiuYQ4IGC6GuHhpyPtcg09vcmkSQWYaqWgoRieUoFkdyZmlXwuJNj1XFy+ldSaYJNhuw==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=nutanix.com; dmarc=pass action=none header.from=nutanix.com;
- dkim=pass header.d=nutanix.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=nutanix.com;
- s=selector1;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=1REn+F3nn/xmRzGNDqn3JfIpd7VItfou4bdXhlruZVE=;
- b=nY+Ij58z2nRUYsADweSdJlN1TC4Z8R//IrehQMkGHNiGrOeJzocxw2IHv6Da5uzsPVqsIov/iPSxwPrYcuxv7rGrb8XyvsUzgC6HNAEryiCvI/r5tlP770d2HwPpeG/VtY4PTulZQep1+krquu+u3q0GyWmyD0acsegCeG/NlovPfCq0mohEfRzpVQ3MakDTXW6OmiD0a7U7izSuKJGpa09NKf9aYzuLEZ4/nEOrW44QryKEL1wIQO9RIzAcEqx++MjZ49gb+wAyl0aObHpauKgcpPnIVB67VZV9y/RdzV2oCIRreK7MHLc22U9SmiLiiBU5LvBklCvONA7fGqVi6w==
-Received: from BY5PR02MB6753.namprd02.prod.outlook.com (2603:10b6:a03:209::17)
- by DM3PR02MB10232.namprd02.prod.outlook.com (2603:10b6:0:43::16) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.113.13; Fri, 12 Jun
- 2026 09:06:01 +0000
-Received: from BY5PR02MB6753.namprd02.prod.outlook.com
- ([fe80::a343:65a8:bffc:5a57]) by BY5PR02MB6753.namprd02.prod.outlook.com
- ([fe80::a343:65a8:bffc:5a57%7]) with mapi id 15.21.0113.013; Fri, 12 Jun 2026
- 09:06:01 +0000
-Date: Fri, 12 Jun 2026 10:05:57 +0100
-From: John Levon <john.levon@nutanix.com>
-To: =?iso-8859-1?Q?C=E9dric?= Le Goater <clg@redhat.com>
-Cc: zhaoguohan@kylinos.cn, Thanos Makatos <thanos.makatos@nutanix.com>,
- qemu-devel@nongnu.org
-Subject: Re: [PATCH] vfio-user: validate VERSION replies
-Message-ID: <aivL9a2bpFXKmEN7@lent>
-References: <20260603062138.4008583-1-zhaoguohan@kylinos.cn>
- <fbcf6e7f-c25e-4e37-a171-46a484a162d8@redhat.com>
-Content-Type: text/plain; charset=iso-8859-1
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <fbcf6e7f-c25e-4e37-a171-46a484a162d8@redhat.com>
-X-Url: http://www.movementarian.org/
-X-ClientProxiedBy: LO4P265CA0049.GBRP265.PROD.OUTLOOK.COM
- (2603:10a6:600:2ac::12) To BY5PR02MB6753.namprd02.prod.outlook.com
- (2603:10b6:a03:209::17)
+ (Exim 4.90_1) (envelope-from <slopezpa@redhat.com>)
+ id 1wXyG7-0007q3-Hs
+ for qemu-devel@nongnu.org; Fri, 12 Jun 2026 05:33:04 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1781256781;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=4ugUvZ8pmP5tA3+NjmnLX/ds4sniDzhyr85r315k2Pw=;
+ b=iB4W2zSGiQou17NzXpBwALidsvQBhBt9Nypf/FVXZ3B7pt0QIJpMkVFfBhFectrr8D9sb3
+ GB4I2iie5KNwwLMy6xfwzESQ+CRuf88/a7Y/VOzHdj2wHGsOnAgzouVNF0xgrMHfTzT5DC
+ WzSlk8C5ml1Axak8quZ2/RYXEVRqg6o=
+Received: from mail-qt1-f198.google.com (mail-qt1-f198.google.com
+ [209.85.160.198]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-649-yXjt1Sp-MLuJtr2UkvNQgQ-1; Fri, 12 Jun 2026 05:31:13 -0400
+X-MC-Unique: yXjt1Sp-MLuJtr2UkvNQgQ-1
+X-Mimecast-MFC-AGG-ID: yXjt1Sp-MLuJtr2UkvNQgQ_1781256672
+Received: by mail-qt1-f198.google.com with SMTP id
+ d75a77b69052e-5177f07eb05so14892031cf.3
+ for <qemu-devel@nongnu.org>; Fri, 12 Jun 2026 02:31:13 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1781256672; cv=none;
+ d=google.com; s=arc-20240605;
+ b=Nh/ur3DAn+L3jZj4D9epeNuIIT3bSzANJKYKWpeNbY8ARA72EA44pAhTb2ZyRsKX/T
+ 5/kaC3Gcq6CcAzsnIf1QhkSnaTvHGbrH3WHwkic/TQq2vo47jG+lkq4RDfHWsIArvIU8
+ juk2W9Dl06hVxdBHrMfGxY5xygqvvo9CDx85vCrUEa+DCd1Y9XruyZbYrCqu7ymYTrJz
+ c2Qf7H9W4TIf8stxXJ+26CeYhLNJ3ms8P33oUBxXNwrKEKPe8ymd1+Qe9KLBc0cq9g2Y
+ ehWNYhG7hHN8mx6sTX+tYFs+qcM20KG0yUL/jPiSwg3tvwy5VlrU7ZsD+e9+TWS3I0FQ
+ CQBg==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
+ s=arc-20240605; 
+ h=content-transfer-encoding:cc:to:subject:message-id:date
+ :mime-version:references:in-reply-to:from:dkim-signature;
+ bh=4ugUvZ8pmP5tA3+NjmnLX/ds4sniDzhyr85r315k2Pw=;
+ fh=F2byhdnG07VYbHu6vGcL1csWBk7lDxGuko6VKTg5tKY=;
+ b=D6OVX5BSu5Xeg/oJhDz0/FED5dQchFE6sPLDYzRKkroGZ42Cu7fSwNMpZPNIXXwmzw
+ BirUQTPNinPwZIVZwFFOVfTuyQErzMMxJ4NYMSJKuRr264lH9XSTnFk8kFFg/X5si7H3
+ mJoTashcEwqcF3wcFQHNoxiLZrwxbOmBouwjprapM5OPAxRnqnXxYUcchLubt/p8AdZT
+ C7JdDjc/bBDFxkRQ3a1GKDQlFl3BBZdt21JK1QAMb0Yy8sbZVFaEMrd+iKAFgl1MJTEr
+ FVyTc4SgmwPvHHWaaVvcV9eJZtgyRNQ5IalAqKrlLOtY1jKIYIBjlcHBya57GBIDEXdD
+ kpiw==; darn=nongnu.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=redhat.com; s=google; t=1781256672; x=1781861472; darn=nongnu.org;
+ h=content-transfer-encoding:cc:to:subject:message-id:date
+ :mime-version:references:in-reply-to:from:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=4ugUvZ8pmP5tA3+NjmnLX/ds4sniDzhyr85r315k2Pw=;
+ b=BBNKuIDFErphtkj/+2LRjxxdsc41knQOKh/PppYtdj6nw271F7H60X6nqxYYBkPEud
+ jZYcE54JZ78rGLA/AoaDHCe0cLNLKtPpolzTYzpW3sByWTtG1r+ot85HXOw2lI7MJqHp
+ 009xetATcSaDL5hd9K6I6K0vJ+7R8I83V1mGyrV/+XaayUfRMipwazSB1HURE9UTj1Yg
+ CqJDmVicjpy1kl59Im5tkWO5+vARTVcz82zZz8/pRN9FaqhfQMwZIdhZE6prmoIx+JTH
+ uJ45c+IxefT6Ao8QRC9/4/g+wUsY9YDpHXy2u+r1WWo9MEeRdUbkqOVMsT0yTe7ygfwA
+ lfKw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1781256672; x=1781861472;
+ h=content-transfer-encoding:cc:to:subject:message-id:date
+ :mime-version:references:in-reply-to:from:x-gm-gg:x-gm-message-state
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=4ugUvZ8pmP5tA3+NjmnLX/ds4sniDzhyr85r315k2Pw=;
+ b=qmNPOaPLFks5v2PdsCtGSae5Wx+bYRvGFk9k4IadVsX204oO2rbS+0Dk5fad2PP8Yd
+ AAnuQeqKlZwI/7I2WSHZ/H8+n7Xa5OuQGbzcBG1vQ0CEzC/c/+GBWC8XoqAfodQxaUZd
+ WijbxHQaCzlCnY2A6eGW/Numb5MePdFs4oR0ClLFh3MxOikjTjK9lYMQfxw3wKbIj2oK
+ pYGlEfFpV3NYK7fimcjzRDSdNs8xdGik1NYQgo98sPoybNeXo5x7FKcGDEgno52F8iiC
+ MbNjqA1mux+xA23N2Zs835RY0lphDaWEWjLQFJiQoifJ12QcadTGPEeJLHsIk6aZ3m29
+ 7Lzg==
+X-Forwarded-Encrypted: i=1;
+ AFNElJ+a5jHJqAUJeTFEru8509uAaCpmHtLsIDfgX6PIF4a0wtMNuPbhHRDJpb11kh1GlKPS5SzkuN+ZlnX8@nongnu.org
+X-Gm-Message-State: AOJu0YwoontLqcU31tjbz5MK2M4q9NfPLWaVUcYcL2xKNeDq/YI4vYt8
+ wslwrU8l+LSkUVpvhCusFN9PxRNmlvQkCGYqNbVk+cM7nSyDY9Izi45p7yrMCNHoBJFA3rb6Wdy
+ GwE5t36Pt8tE0SmERquNkksOZnsxofHm8dWEUDSSGV1eYwb2nyK1qPhTtJiWkVA37CpK7QN4aQN
+ kUSDnnuJFUV9PdGCKrBzn0YJ/YyIOCoWU=
+X-Gm-Gg: Acq92OHUp/wfEtQtNUsxFoTNGhF9yYbFyc/kWnvbf836ej9hF1gF17mZXpTaBHsPRA1
+ vdK26v76sM7VPKUBNT5SrRs/WLh4Sk0BPkOzuau8+VYDmfgFSiA0RIBR+9VLZWcixdV6O9z0/hr
+ P00IUEe8WEmgl8BTIyfrkhZxUwdjrEEWuymSprgyHQbIQEkVr7b31+seonwVneOWhGCg7VGOzzv
+ RRV
+X-Received: by 2002:a05:622a:8c19:b0:516:e136:5fcf with SMTP id
+ d75a77b69052e-517fe2449a4mr26475761cf.14.1781256672374; 
+ Fri, 12 Jun 2026 02:31:12 -0700 (PDT)
+X-Received: by 2002:a05:622a:8c19:b0:516:e136:5fcf with SMTP id
+ d75a77b69052e-517fe2449a4mr26475201cf.14.1781256671917; Fri, 12 Jun 2026
+ 02:31:11 -0700 (PDT)
+Received: from 753933720722 named unknown by gmailapi.google.com with
+ HTTPREST; Fri, 12 Jun 2026 05:31:11 -0400
+Received: from 753933720722 named unknown by gmailapi.google.com with
+ HTTPREST; Fri, 12 Jun 2026 05:31:11 -0400
+From: Sergio Lopez Pascual <slp@redhat.com>
+In-Reply-To: <20260611203915.GB237427@fedora>
+References: <CADSE00+ziHc8W2FqNT-aJU0Lt4sZ=NfQLc65m16vpT++pZM+xQ@mail.gmail.com>
+ <20260601151815.GC411459@fedora>
+ <20260601160352-mutt-send-email-mst@kernel.org>
+ <CACzuRyxedVMHNGkRf7AVyPWUTMgBMa6_DBnSHn+V6H7wN7XzWw@mail.gmail.com>
+ <20260604162853.GC115597@fedora>
+ <CAJSP0QXR6MyqoE1Uh-X7DzsOabbbN69TUyxf8r6ghUDCQnrP=w@mail.gmail.com>
+ <CAFEAcA_Kd5_k+XyagUbB2+YVEMB0Sb0AB=oUZu6bGDot9TaFrQ@mail.gmail.com>
+ <CAJSP0QVuSvVwa1szAy_3WVtWOjGK=oYAXjqAzbg5YoEvgybRjA@mail.gmail.com>
+ <CAFEAcA9ZkbNK5kRL5+OiqgN2hk3JAmFN8Qd3cytqyTEm9hBkvg@mail.gmail.com>
+ <aikiB90tij642pEZ@redhat.com> <20260611203915.GB237427@fedora>
 MIME-Version: 1.0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: BY5PR02MB6753:EE_|DM3PR02MB10232:EE_
-X-MS-Office365-Filtering-Correlation-Id: d9e04330-8818-49bf-436b-08dec861d30a
-x-proofpoint-crosstenant: true
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam: BCL:0;
- ARA:13230040|376014|23010399003|366016|1800799024|4143699003|56012099006|18002099003|22082099003;
-X-Microsoft-Antispam-Message-Info: ek++bxgy+TqZ8XQq04k+uD5v0J5t/2yq3dARtrmE08Rbd1QDcsa1FQMrD8Oj8+LLjQBjrQ9vAtiAPLe1hj/U3F7dhUgS/xDv3FIekZwPb7rql1NAFrK/wWI841vAxzQn1gpEFRhFgetXu3zQVd8+VhYbRXjCwpcjmfEtso3lZraqK/UIGhzISzJH+3Odb8whRJGRM+GOX20XstyFgWxj2AaS4APEl8QiimcxCBkutNEWIvuKW/NRyKizV+JRjGJVyk4rIKGUyP+h/00JlRlVMWL3uyCHEtdPz7HDmhoZFRtvtUaTLT7K2S/SxDrMAp70DDBwSJMEeWBvi9rxANVPmWvpjPVAzuDRk5ryvuaaopZKE7Gyw0N2fdnqBPk0TWclcODrKKGH4eb22qXBJLRCnmp5qKD2XdVAXoSbqDKcrgoHTfNN79pBNXyPFu4yFNlNPF4p10eLwvBgYN9yFnIpmMb2/787ia4ZUbL69XMzdK8L7yD9zh+hpJm/NGkDl8W0kJ8xsVHOFfGp1ZwVSxEhljVndA3Fw8WV6AKEL9Fo8XJh4l4US0k+EVSXCceRM5hXLOoCbsSn3y83h50BPXMrsCJOvSzscbI239NL11UvK5MuB2VnbfOKYBqsY7rURuYXF26jyYN5ytWKc/H/MB5BopoW35StJ/mShC61gTCvHl0vf5d0aX48Kweg4VfRZMdX
-X-Forefront-Antispam-Report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
- IPV:NLI; SFV:NSPM; H:BY5PR02MB6753.namprd02.prod.outlook.com; PTR:; CAT:NONE;
- SFS:(13230040)(376014)(23010399003)(366016)(1800799024)(4143699003)(56012099006)(18002099003)(22082099003);
- DIR:OUT; SFP:1102; 
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0: =?iso-8859-1?Q?sc+lODwJIpSmd3wECH6TkIzza0nD0benp2cbnAxo55a0JI6BbRSMxmIUF8?=
- =?iso-8859-1?Q?oC2pajbsaTQvgh3gQoZP2HlAEobD3iz3F1xN7bKnk+zTbD6rRcnQndk5ys?=
- =?iso-8859-1?Q?Emfv5P6WwcPzpsbsuWJY+uexZO0oMxohtDntIzsZ1WJ3uGVJTq9pMHc19P?=
- =?iso-8859-1?Q?ZbvrLiSchG5h4pHWdUkAD1cCZWC+X1j1GkCOjcGSquSU2OApjIF91Pajp8?=
- =?iso-8859-1?Q?ScEBavpqVth8aLke0MMP0xhKXCWEHWSSt5w+5iXFGaXLa2IVrkckcXNXok?=
- =?iso-8859-1?Q?T3l1xHomzAYmfJi6zbeo93jly6nEwrkDyOa5G0zJjA6sHMcUM5v0nNbUmI?=
- =?iso-8859-1?Q?tlXAkkvQCBcfb903NWMnIGW91gNWY4Shi9nbthVPkjB/lj3G8PhD/jzaPv?=
- =?iso-8859-1?Q?tWslgNYRdV3rCUqiQf+75Yn5t/ldmrBHRGYLdegUenGoyEpQKYRdpPoQM1?=
- =?iso-8859-1?Q?tqNL4/RjXGUU0L2kIbjnkBPv/JlsWybYSDrlTZs0KarzFP3vHrL2bEDchX?=
- =?iso-8859-1?Q?Aae4TcClJz1d59Q8TDq7bmuYpQCTSjhEslMXLSPvr0/xK1rIeVXYn4T7KN?=
- =?iso-8859-1?Q?55j9d2/X1TjQcKgqr4m/uR7dsPh9XkvDaPRjgelcCAtyAYMXbnH9Iahu1F?=
- =?iso-8859-1?Q?6NkUxz5vICOmi7TQMYCTg+t5qzK9XEu6QXIn62w5Yg6QK4M1wWkzGDAuHo?=
- =?iso-8859-1?Q?zHBiC3sgKXYSaM0IQOA8FXICwFr5EKW32eseefxl4MnhtDCtO9NcpyRQW5?=
- =?iso-8859-1?Q?tEaNFqqrxoYN3CILrEvLWHnqJq5d7ca+twgan5h7YEljUCJSlDKbQ6RvA/?=
- =?iso-8859-1?Q?WBXanO/0+prhulUQnJxUW2rH7DufOHVRWBhl+PhZ5o1ZXHIPAGyZGTRKcW?=
- =?iso-8859-1?Q?Mp71rNQFCeHZVc20k/xRPPKhd/lGN4IlmVZ4oT9KVbgK1zOL12k5x5TVlY?=
- =?iso-8859-1?Q?XFeEVbMupBc0t11pPYOwNKrKNDb+ZjiJte0YnQAPFbXxulbSzmZVD3GUyf?=
- =?iso-8859-1?Q?GNYbp8H40qstYe7KIUyoBKZj2lHRIva03Q/jy5JiVJS1/KooZc1/rrfq78?=
- =?iso-8859-1?Q?b6OrnVzx8H+PpJaauGsTi/80x2NIucJE4G9kULZRo6Zs0B4DB0NlXjpCyE?=
- =?iso-8859-1?Q?uBykHtwWuy1pcEtb8hILEqYBTHek4nddgjOXWhgc9QdFUGNp0HBh82Kn8t?=
- =?iso-8859-1?Q?BiOO8SUFPmTgJ45tM0SCUWm2+cPzrZEDpjWqLWcOrG9wYA+yM8hziijiva?=
- =?iso-8859-1?Q?ZzSHO9B0XDCqEUG/GBNcvGYVEL0w9Xbn+qnSrxMMWLPmlBv++xzV/vvttI?=
- =?iso-8859-1?Q?Ta7ZS4uIvfiJRpqbvr4HX2FK+1TaqYzrgNSxcfmj9X9WON5Wkm3sCRZeyd?=
- =?iso-8859-1?Q?7zE6cCyA69G3AmA95+Kec02ndCCMoBvCQfc81DcTCuXD3whwTStNAZG4R7?=
- =?iso-8859-1?Q?gl1Nz7pZ+zGMFPHja4mozVEWLySvUAiwy3b12hrgsY+Wi1GHk5bgrR80PD?=
- =?iso-8859-1?Q?9aYCEP0NkFEEG7UPU7poRhaGp+bjuSIcLnedk1fZHzEFZgwptKOHImYk8e?=
- =?iso-8859-1?Q?3eagEuzuRJIPewL4vkrAZ/530O6q5Q8MMVvgAf5qcHwLJCF1hlvkthzcNn?=
- =?iso-8859-1?Q?PHwZmz9YgJIp6Qt9BrRQwY1QO/3QBwvfJZdgn+0LzQFD3J1sbWrUXWX9uj?=
- =?iso-8859-1?Q?dMrYzZxxKEwwMPJKVOycsWiVozEmcMTVVmSgUCSk6syicTl6lfhI26UUZu?=
- =?iso-8859-1?Q?G1IIupLilY9RgSYCgujHXsRMRed1xrcejDHlB33WWrm3clYOvAAdQObnCt?=
- =?iso-8859-1?Q?4IlqqhZLOw=3D=3D?=
-X-Exchange-RoutingPolicyChecked: E/i9RfyZXY6XHp8sU4hk7A4T+7lUSvvxh1fHCxdyuHo6jz7g1feW+FuYBCrr2l9mhslYqipq1hI78yPasEdV1pLgFtSv4yXLhtwACb6w9CvLCtcBlw0NIrypbWkGw6MJZOEHIK2RnGw1CT/VX1vF1At/cGxuauDYxWvZu931rnhHMoQmUReA0e3yo3zilal0BtVQyNH1+H5DvfkJlgonmPgImCkIihZD8rKyesgUfD4OCIJgFoLUMRSzODQuufpSoT/pF7a7tY6ZykKv66/oO46ndhtI/F7xHA1ytHwoRtm5WM6XTb4I1ES7r1vZyjxlq2IBt1sIh2dLN1hTekJ5pA==
-X-OriginatorOrg: nutanix.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: d9e04330-8818-49bf-436b-08dec861d30a
-X-MS-Exchange-CrossTenant-AuthSource: BY5PR02MB6753.namprd02.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 12 Jun 2026 09:06:01.3115 (UTC)
-X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
-X-MS-Exchange-CrossTenant-Id: bb047546-786f-4de1-bd75-24e5b6f79043
-X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: SFx7Am+h1/wA4vwpXGlEoD/ubeR0+NgHO/EDtEHpb+FagautHBpgb75dhpg6muW2u56PH7runU4n/a35cx8KZQ==
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: DM3PR02MB10232
-X-Proofpoint-ORIG-GUID: SKBS3BmvQ8J0yxK1yqNUtt23Yt32_mwK
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNjEyMDA4MiBTYWx0ZWRfXwdRkMC+LfGgp
- AOlKCPMbfl60CD7gjU7dMuG2Cz8E8XYuTdBPxPq5YVUMF+TRCiwxWu9K64JLNIkyz9Bzuev6CEf
- LY96ldYT9mxA78Kg4bfrLpF1HdfFGFUmM322RWYJ+tuMu8cAXuDr07iPhnF5MaME9PoZ73uQOei
- 3oFomGjdcsOpeIoeOBwHi7NxOOVFpwN2VvPe2P8MyL+IFV+ydCWmYZk1mWKc1TjViuYwuRwEUJB
- J9o8aYfgGWt6En+4drT+GTAaOVlgdlJfDwN7cqL2qbGjcaXEhQARpUPvWH6Ot2koWGswK/UY2Vc
- GLjWLJVgJzNvpEtVk3CByMoTjx3YpAKUeHp7G7+Krx+y/xfzeHHdOSqwYvtGYgy9XKLtNF15YQE
- 6xMXEbJ+D0XmtvN7IyszQxocqNKZmByOmhPSh8tMiPYOQ9ZoNRdpfg3cJtmYaQaPn9RfDMzI0gK
- pBtiZn6umzNQj6Qg5BQ==
-X-Authority-Analysis: v=2.4 cv=AfKB2XXG c=1 sm=1 tr=0 ts=6a2bcbfc cx=c_pps
- a=1XJinUMeHr/5msdtnNmmhA==:117 a=6eWqkTHjU83fiwn7nKZWdM+Sl24=:19
- a=z/mQ4Ysz8XfWz/Q5cLBRGdckG28=:19 a=lCpzRmAYbLLaTzLvsPZ7Mbvzbb8=:19
- a=xqWC_Br6kY4A:10 a=8nJEP1OIZ-IA:10 a=FelO9ux0wxsA:10 a=0kUYKlekyDsA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=VofLwUrZ8Iiv6rRUPXIb:22 a=1L6crL_YRTbalZ11mEUO:22
- a=lMLPEW2cRtEjdLPvwssA:9 a=3ZKOabzyN94A:10 a=wPNLvfGTeEIA:10
- a=QYH75iMubAgA:10
-X-Proofpoint-GUID: SKBS3BmvQ8J0yxK1yqNUtt23Yt32_mwK
-X-Proofpoint-Spam-Info: AW1haW4tMjYwNjEyMDA4MiBTYWx0ZWRfX38ZXGjI3vqxp
- 6ar3BuZfmDBCfrt7NVbqhg42qOaX9tl52GTQ+U+TzunKkmG/uqkhNg5kk+dAciIjo5fnJCKPKnp
- znzsw4iWyfhxzguKHxxWdI3Fsj630s8=
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.125,FMLib:17.12.100.49
- definitions=2026-06-12_01,2026-06-11_01,2025-10-01_01
-X-Proofpoint-Spam-Reason: safe
-Received-SPF: pass client-ip=148.163.151.68;
- envelope-from=john.levon@nutanix.com; helo=mx0a-002c1b01.pphosted.com
-X-Spam_score_int: -31
-X-Spam_score: -3.2
-X-Spam_bar: ---
-X-Spam_report: (-3.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.445,
+Date: Fri, 12 Jun 2026 05:31:11 -0400
+X-Gm-Features: AVVi8CcKM1kpWzrfDXUOp8c4BzZOhBeMjK7lIC_DI4Oy3zorwd53Uql1rJXjLDM
+Message-ID: <CAAiTLFW0oMWWhKnkvtRHPqT-7eUX3vxbyDxeRJiad-sURYj==w@mail.gmail.com>
+Subject: Re: Where should the vhost-user specification live?
+To: Stefan Hajnoczi <stefanha@redhat.com>,
+ =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>
+Cc: Peter Maydell <peter.maydell@linaro.org>,
+ Stefan Hajnoczi <stefanha@gmail.com>, 
+ "Michael S. Tsirkin" <mst@redhat.com>, Dorinda Bassey <dbassey@redhat.com>,
+ Albert Esteve <aesteve@redhat.com>, 
+ =?UTF-8?B?QWxleCBCZW5uw6ll?= <alex.bennee@linaro.org>, 
+ qemu-devel <qemu-devel@nongnu.org>, virtio-comment@lists.linux.dev, 
+ dev@lists.cloudhypervisor.org, rust-vmm@lists.opendev.org, 
+ Stefano Garzarella <sgarzare@redhat.com>,
+ Manos Pitsidianakis <manos.pitsidianakis@linaro.org>, 
+ Demi Marie Obenour <demi@invisiblethingslab.com>, Alyssa Ross <hi@alyssa.is>, 
+ Mark Burton <MBURTON@qti.qualcomm.com>, Matti Moell <matti@qti.qualcomm.com>, 
+ Viresh Kumar <viresh.kumar@linaro.org>, Vishwanath Seshagiri <vishs@meta.com>, 
+ Rob Bradford <rbradford@meta.com>, Zhengyu Zhao <zhaozhengyu@bytedance.com>, 
+ "Jorge E. Moreira" <jemoreira@google.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=slopezpa@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -24
+X-Spam_score: -2.5
+X-Spam_bar: --
+X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.445,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -184,14 +163,105 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Fri, Jun 12, 2026 at 11:00:35AM +0200, Cédric Le Goater wrote:
+$Stefan Hajnoczi <stefanha@redhat.com> writes:
 
-> John, Thanos,
-> 
-> Does this change look good to you ?
+> On Wed, Jun 10, 2026 at 09:37:10AM +0100, Daniel P. Berrang=C3=A9 wrote:
+>> On Tue, Jun 09, 2026 at 08:51:15PM +0100, Peter Maydell wrote:
+>> > On Tue, 9 Jun 2026 at 20:45, Stefan Hajnoczi <stefanha@gmail.com> wrot=
+e:
+>> > >
+>> > > On Tue, Jun 9, 2026 at 2:51=E2=80=AFPM Peter Maydell <peter.maydell@=
+linaro.org> wrote:
+>> > > >
+>> > > > On Tue, 9 Jun 2026 at 19:00, Stefan Hajnoczi <stefanha@gmail.com> =
+wrote:
+>> > > > > I'm not sure if anyone brought up this topic on qemu-devel and w=
+ith
+>> > > > > Michael before. As I mentioned in my reply, there are ways to av=
+oid
+>> > > > > blocking vhost-user spec changes when qemu.git is frozen:
+>> > > > >
+>> > > > > The simplest approach is to keep merging vhost-user.rst changes =
+during
+>> > > > > freeze since it does not jeopardize the release or introduce
+>> > > > > instability.
+>>
+>> snip
+>>
+>> > I tend to view the specs subsection of the docs as being
+>> > for things where either QEMU really is the authoritative
+>> > source (eg fw_cfg), or where the spec is for something that's
+>> > basically moribund and has no better home. If vhost-user is
+>> > a cross-project specification that it so active that it
+>> > cannot live within QEMU's release process, then I think
+>> > it deserves to have its own independent home.
+>>
+>> Yes, the main impression I get having read through this whole thread
+>> is that vhost-user spec should have its own home outside QEMU.
+>>
+>> We can come up with all sorts of rationalizations for how to make
+>> things work in the context of QEMU, but they all just come across
+>> as excuses to avoid changing the fairly arbitrary historical use
+>> of qemu.git. Even if as QEMU maintainers we consider that we're a
+>> "neutral" home, I can understand why it might not be perceived that
+>> way from the outside.
+>>
+>> If people want agility such that we need to make exceptions for
+>> our rules during freeze that is one flag that it doesn't belong
+>> with the main qemu.git, but there are broader points that are
+>> pushing my view in that direction too.
+>>
+>>
+>> Not mentioned is that engaging with the QEMU mailing list as a
+>> non-regular QEMU contributor is not a very attractive task.
+>> While QEMU may be satisfied with email, QEMU are in a tiny
+>> minority these days. The rest of the OSS community has
+>> decided that git forges are the better way to collaborate.
+>>
+>> Our dev list is very high volume, with changes very easily (and
+>> often) lost in the noise, even from regular contributors, such
+>> that we have to teach people to (repeatedly) "ping" to attract
+>> attention.
+>
+> A separate repo in a git forge definitely has the advantage of making
+> communication easier to follow for anyone interested only in the
+> vhost-user protocol.
+>
+>> If we want agility though, IMHO it is best to stay away from the
+>> bureucracy of the OASIS virtio spec / committee, which is a big
+>> turn off IME.
+>
+> Yes, OASIS adds overhead.
+>
+> The downside is that vhost-user suffers from being outside the VIRTIO
+> spec umbrella. It's really a VIRTIO Transport and would benefit from the
+> discipline of actually being part of the spec as such. At the moment
+> vhost-user is not really bound to VIRTIO through any interface (i.e.
+> VIRTIO Transport) or device lifecycle that is guaranteed to align with
+> the VIRTIO spec. This has led to both design problems and bugs that
+> would be prevented by making it a VIRTIO Transport.
+>
+> In addition to the OASIS overhead you mentioned, the other issue is that
+> moving vhost-user into the VIRTIO spec would require reconciling the
+> the vhost-user protocol with the VIRITO Transport's interface and also
+> rewriting parts of the vhost-user spec that are not up to the level
+> (e.g. adding conformance clauses, eliminating some informal language,
+> etc).
+>
+> In other words, it's a bunch of work. Although from a purist perspective
+> I think it's the right place for vhost-user, I think it would be an
+> unpopular solution.
 
-Sorry for the delay, it's in my inbox and I'll try to get to it soon
+While I agree getting it into OASIS it's a lot of work and not something
+particularly enticing, I also feel obligated to point that, in my
+experience, vhost-user is not seen as an standard to be follow to the
+same degree VIRTIO is across the industry.
 
-regards
-john
+If there's a lightweight mechanism for getting it included (as Michael
+hinted there could be), getting vhost-user into VIRTIO could be useful
+to strengthen and solidify it as an industry-wide specification.
+
+Thanks,
+Sergio.
+
 
