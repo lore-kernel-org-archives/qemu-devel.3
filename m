@@ -4,65 +4,67 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id BF848CD98CE
-	for <qemu-devel@archiver.kernel.org>; Fri, 12 Jun 2026 14:39:59 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4F0F1CD98CE
+	for <qemu-devel@archiver.kernel.org>; Fri, 12 Jun 2026 14:47:11 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wY32P-0003nn-QS; Fri, 12 Jun 2026 10:39:13 -0400
+	id 1wY39Z-0005lM-Im; Fri, 12 Jun 2026 10:46:37 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <stefanha@redhat.com>)
- id 1wY32O-0003nX-Pd
- for qemu-devel@nongnu.org; Fri, 12 Jun 2026 10:39:12 -0400
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1wY39X-0005lD-UP
+ for qemu-devel@nongnu.org; Fri, 12 Jun 2026 10:46:35 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <stefanha@redhat.com>)
- id 1wY32L-00024D-Cp
- for qemu-devel@nongnu.org; Fri, 12 Jun 2026 10:39:12 -0400
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1wY39W-0006wl-6R
+ for qemu-devel@nongnu.org; Fri, 12 Jun 2026 10:46:35 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1781275147;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ s=mimecast20190719; t=1781275591;
+ h=from:from:reply-to:reply-to:subject:subject:date:date:
+ message-id:message-id:to:to:cc:cc:mime-version:mime-version:
+ content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=VZju0TE/4Mx+fbTPxbsK0je3tsuAF/nvOvactB6CSfI=;
- b=AUPFThCfnvBIGjB+gOtVIwwmVhYmUdb7FSGSKkTI+S/5/q/h85cVs0wN/Q+B5JP00Nq0NN
- QHyijuJWhH7ezh33j8SyM9jBq+qA6TJI1sDphWnbPBn0zrv5x5uuxMp5guj5E37OcZ9qxC
- f6wyjUOJs+PHp5A2kLYJx5rQCNQ+VLc=
+ bh=vtwyGSXYCZPY0MplIhU9HGV8EdpqftPeWK68tAP6ELc=;
+ b=MKH4GUR+KiW5Fa4QaDHYgZR/jvDvRP1Sf6fD/ixyRtr1lb1yZwhQLzCE95BFkKeppkIs5K
+ t/WOlhXMA7N7XJ4MYlBk79biYorar4SULMoSasaftFy74KPJr3uTx/aWKtlHF/elCdrViS
+ z7xRGRQKRWH14wuWaWgKwgvimJmoOVQ=
 Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-615-hvqTFi3hOKesoNemZ5Abmg-1; Fri,
- 12 Jun 2026 10:39:04 -0400
-X-MC-Unique: hvqTFi3hOKesoNemZ5Abmg-1
-X-Mimecast-MFC-AGG-ID: hvqTFi3hOKesoNemZ5Abmg_1781275143
-Received: from mx-prod-int-10.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-10.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.95])
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-115-6Dz__DgLNWORUH-pFq20jw-1; Fri,
+ 12 Jun 2026 10:46:29 -0400
+X-MC-Unique: 6Dz__DgLNWORUH-pFq20jw-1
+X-Mimecast-MFC-AGG-ID: 6Dz__DgLNWORUH-pFq20jw_1781275588
+Received: from mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.111])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
  by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id E9A5C18601F7; Fri, 12 Jun 2026 14:39:01 +0000 (UTC)
-Received: from localhost (unknown [10.2.16.134])
- by mx-prod-int-10.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 65BD736917; Fri, 12 Jun 2026 14:38:59 +0000 (UTC)
-Date: Fri, 12 Jun 2026 10:38:58 -0400
-From: Stefan Hajnoczi <stefanha@redhat.com>
-To: Jeuk Kim <jeuk20.kim@gmail.com>
-Cc: qemu-devel@nongnu.org, stefanha@redhat.com, kwolf@redhat.com,
- hreitz@redhat.com, farosas@suse.de, lvivier@redhat.com,
- pbonzini@redhat.com, qemu-block@nongnu.org, jeuk20.kim@samsung.com,
- j-young.choi@samsung.com
-Subject: Re: [PULL 0/2] ufs queue
-Message-ID: <20260612143858.GA273007@fedora>
-References: <cover.1781223925.git.jeuk20.kim@samsung.com>
+ id 0209F18005A6; Fri, 12 Jun 2026 14:46:28 +0000 (UTC)
+Received: from redhat.com (unknown [10.44.32.218])
+ by mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id D54841800347; Fri, 12 Jun 2026 14:46:25 +0000 (UTC)
+Date: Fri, 12 Jun 2026 15:46:22 +0100
+From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
+To: Alex =?utf-8?Q?Benn=C3=A9e?= <alex.bennee@linaro.org>
+Cc: qemu-devel@nongnu.org, Thomas Huth <th.huth+qemu@posteo.eu>,
+ Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@mailo.com>
+Subject: Re: [RFC PATCH v2] tests/functional: tell pylint not to check
+ c-modules
+Message-ID: <aiwbvq-FtkmHWdhX@redhat.com>
+References: <20260612140531.3530387-1-alex.bennee@linaro.org>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
- protocol="application/pgp-signature"; boundary="A9hRdibEVJSeF2vK"
+Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <cover.1781223925.git.jeuk20.kim@samsung.com>
-X-Scanned-By: MIMEDefang 3.6 on 10.30.177.95
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=stefanha@redhat.com;
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <20260612140531.3530387-1-alex.bennee@linaro.org>
+User-Agent: Mutt/2.3.2 (2026-04-26)
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.111
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=berrange@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -24
 X-Spam_score: -2.5
@@ -83,33 +85,32 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+On Fri, Jun 12, 2026 at 03:05:31PM +0100, Alex Bennée wrote:
+> To fix:
+> 
+>   qemu-test.test_pylint "/home/alex/lsrc/qemu.git/tests/functional/arm/test_integratorcp.py:83: I1101: Module 'cv2' has no 'imread' member, but source is unavailable. Consider adding this module to extension-pkg-allow-list if you want to perform analysis based on run-time introspection of living objects. (c-extension-no-member)"
+> 
+> Manually running python3 showed I could indeed import cv2 and call
+> those functions. Rather than allowing pylint to introspect lets just
+> tell it to skip c modules.
+> 
+> Signed-off-by: Alex Bennée <alex.bennee@linaro.org>
+> ---
+>  tests/functional/pylintrc | 1 +
+>  1 file changed, 1 insertion(+)
 
---A9hRdibEVJSeF2vK
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
+Reviewed-by: Daniel P. Berrangé <berrange@redhat.com>
 
-Applied, thanks.
 
-Please update the changelog at https://wiki.qemu.org/ChangeLog/11.1 for any user-visible changes.
-
---A9hRdibEVJSeF2vK
-Content-Type: application/pgp-signature; name=signature.asc
-
------BEGIN PGP SIGNATURE-----
-
-iQEzBAEBCgAdFiEEhpWov9P5fNqsNXdanKSrs4Grc8gFAmosGgEACgkQnKSrs4Gr
-c8g8tAgAx7VKdr9WxTKv+Ib/s6Fu9YFm+10mQ0sIC1nShm8KFe9+YLmVD7kgXFFd
-K6vfU3PpwDjclfXb8boX3mP/REZzHUSkuAwXQBeWV5hxW1a9JJwiplC2VM6velus
-xg3Z8Yqw48oJK361JF5Ilk20OH3na++EKZ8EHR0RT0swOMd6CGDeMYMojJHiZBsF
-iTF+JOS6oJVZS2tZqK5ffH+S+10TjzKaMVqNIoTohs1U1EhfCAH2wY/iWUV7T+i+
-xiwOxt6TlIlybumUisST8rbSjoUdm8isz+tojcrf3lXhxdc0O5JHVZETm6k7Zq9A
-Xctm7L/wG5aq7bbYGJPSOSB8fL8nGg==
-=aZWA
------END PGP SIGNATURE-----
-
---A9hRdibEVJSeF2vK--
+With regards,
+Daniel
+-- 
+|: https://berrange.com       ~~        https://hachyderm.io/@berrange :|
+|: https://libvirt.org          ~~          https://entangle-photo.org :|
+|: https://pixelfed.art/berrange   ~~    https://fstop138.berrange.com :|
 
 
