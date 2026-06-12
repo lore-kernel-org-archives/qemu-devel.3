@@ -4,116 +4,86 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B0912CD98CF
-	for <qemu-devel@archiver.kernel.org>; Fri, 12 Jun 2026 21:26:23 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2C070CD98CE
+	for <qemu-devel@archiver.kernel.org>; Fri, 12 Jun 2026 21:51:29 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wY9NO-00075a-Jb; Fri, 12 Jun 2026 17:25:18 -0400
+	id 1wY9m9-00025t-VM; Fri, 12 Jun 2026 17:50:53 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1wY9NI-000711-Vd
- for qemu-devel@nongnu.org; Fri, 12 Jun 2026 17:25:14 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1wY9NG-0001k5-C5
- for qemu-devel@nongnu.org; Fri, 12 Jun 2026 17:25:12 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1781299497;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=kf/0p+kM/RyZrZMZCQeWzkoZNn7wAKkWoBPGpCtjdAE=;
- b=VflOfrQNQvkqorg20qeAxfJHJGv16bH7fj7NgL4OcnG0UqbTQU/31fGzi/Lrc/HZl/dwPh
- vBdkZQdW9KzmqX+7cba6uG8YQA0/3tjDdpQuRlQDzlOnN5I21jRlZgAMmItiR1feQBEnBR
- pbWGXjaCWgWkWf8L8dj3+2XtY6zV5Dg=
-Received: from mail-qv1-f72.google.com (mail-qv1-f72.google.com
- [209.85.219.72]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-54-j_CWcTBWMP-6GnmGnlvWOw-1; Fri, 12 Jun 2026 17:24:56 -0400
-X-MC-Unique: j_CWcTBWMP-6GnmGnlvWOw-1
-X-Mimecast-MFC-AGG-ID: j_CWcTBWMP-6GnmGnlvWOw_1781299495
-Received: by mail-qv1-f72.google.com with SMTP id
- 6a1803df08f44-8cceb0317b3so21365166d6.2
- for <qemu-devel@nongnu.org>; Fri, 12 Jun 2026 14:24:56 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from
+ <3OH8sagcKCkEmuklonhjrrjoh.frpthpx-ghyhoqrqjqx.ruj@flex--jrhilke.bounces.google.com>)
+ id 1wY9m8-00025T-84
+ for qemu-devel@nongnu.org; Fri, 12 Jun 2026 17:50:52 -0400
+Received: from mail-pf1-x449.google.com ([2607:f8b0:4864:20::449])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from
+ <3OH8sagcKCkEmuklonhjrrjoh.frpthpx-ghyhoqrqjqx.ruj@flex--jrhilke.bounces.google.com>)
+ id 1wY9m6-0005KI-83
+ for qemu-devel@nongnu.org; Fri, 12 Jun 2026 17:50:51 -0400
+Received: by mail-pf1-x449.google.com with SMTP id
+ d2e1a72fcca58-8425a9979e1so980530b3a.2
+ for <qemu-devel@nongnu.org>; Fri, 12 Jun 2026 14:50:49 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1781299495; x=1781904295; darn=nongnu.org;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
- bh=kf/0p+kM/RyZrZMZCQeWzkoZNn7wAKkWoBPGpCtjdAE=;
- b=R9xNEHjjIjxozmjOUCobq8N/hRkKyUE92Xnq1nSKWsNWU7SZdrzVxz4t0fU7qxIHYR
- 6D8W4lpbeLFLwRCj4k/EenNBOK3yHUkvUbZrWyJmyFWf4JgXIqtzQJ8t+U4E13+C+/Xo
- +jDj0ZVaoPUr9kPE7HDyzgYDsOUlFTabT9SYwdWDKBcnW29ksCGRZGp2mHEe5Y2doA8O
- s1Jh9xA+BUGzZbuuI3zP3uG+vUvimW2oBnU/OhYzdAszclUPA3W2D0gtfbqs+1E4Zmz4
- hN9AnKmhd4Wc29rgtBV0E9HRUetwk7HubVAcZ5wgEr/KcldyqylJKJpXd4fp0AhDDLmc
- bvnA==
+ d=google.com; s=20251104; t=1781301048; x=1781905848; darn=nongnu.org;
+ h=cc:to:from:subject:message-id:references:mime-version:in-reply-to
+ :date:from:to:cc:subject:date:message-id:reply-to;
+ bh=+O1dHWDOSJ55QHlZapXvR2r6qYGjNQa+WWJ3hC2i0oc=;
+ b=f6yrnvqUSllyaI9R5yFknNJ85T6g+49y1wVTsZhrz3xy8Y+WY6TAtE3urITR7MrTYZ
+ ncqQoeEat/cOb54Sq9XIR3/gv3DF4CtnzM9smaOBgNS0diKivzb1VXS1wNWgZJCiHnPG
+ ZMPSD4nzxMbWn0lSd1nInxtay7Qo444uAISzOBFJlh6atFAgV9J0UWtS8YwFjm9mjcGO
+ ZpDWZx2/lyCDCyJAfeSAmsCAk1PYDcNUDStMZjxHidDCJvKvYNP45EHxCHSDHpeGi2rm
+ u0ei9OLNugOXw4Gn6Hp9LYe+lrXX9as2dIpXqnSdq1ZCq+gEWMBt1R1KG8PEjLl0SkUV
+ 8Nxw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1781299495; x=1781904295;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=kf/0p+kM/RyZrZMZCQeWzkoZNn7wAKkWoBPGpCtjdAE=;
- b=RIBNlr+xO8jnU2XcUKeb0vr5V/YQUB6zNBOKVZf7j8aX8AJ1NBaiXMoGAYo2R6YHnc
- 2kWG+Zqs9J95FQgeF2mfPyXCszc/JpPau5OuudnkmezXFzCjl/PaYBE2KCiuZDeTW6Y/
- 6LBhfSQ8gRdx++hF3Z+E3d2xEyJxivUnLBHtjnOrOIEu1k0grIXAKS/FC5QSDCQJ3w/G
- uB/99OEZ+sEHo6sA4KPvEugcO1qz5xSfUwpc8hNy7uuvJ8ny2d8gOYxR+1c4nWLtu/Fx
- 2ToH4ymfXdj8mmM4PIybL9s5kwSwy99o9kNNTV9+lNqZ5+IYLjDaauE6jug9zZM1p3RO
- P0Aw==
+ d=1e100.net; s=20251104; t=1781301048; x=1781905848;
+ h=cc:to:from:subject:message-id:references:mime-version:in-reply-to
+ :date:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=+O1dHWDOSJ55QHlZapXvR2r6qYGjNQa+WWJ3hC2i0oc=;
+ b=GeuTdnkB3AMEv3po83/gghdCZZvYTamYZ7MNz4Mc9nj1rc/cXiiJO5FFDG/pYKxUIP
+ bs7/p0vzq2z+VhJLv2H60FcQHMb46g0IgfhZrHvWgV6EzQSfLISOpjFBV92LXGTKgm4O
+ OwZ5GyharwZkCncnM+jClYWRg1dYZSt1FYnTsapEnjo0cizlxfrhmrcr0IlckrZ78nN/
+ pBbYUo9rFXON9lU9KP2W8zu2lM4HQ0kvfjCFwiiMzeZPKHMYHG0JnKkqd4+IRbcxKLK1
+ pS4DughRnK6Z+iImy+LVIfIU4KBCUfaL69n8VXCsM0wPGstAzMcoSK8fPlTOtAN4ia1u
+ w94g==
 X-Forwarded-Encrypted: i=1;
- AFNElJ8WFQXxz6ame17ebZErweh54bPrTEind9GQmjtqJvK+LATFQQq04ozrCnypjhPgVltA5b6snw5y2XSO@nongnu.org
-X-Gm-Message-State: AOJu0Yz236YoTbtVTOq2g9E8vCVyzIA5D0Rbzo74Qz5Z8cYfsVQ4qGcF
- iBqjL9NY4cicBAX3oYbxt4lGddOpNChJE9wExOWTRdcYD7uVcXuzI/z/9/X98SfT6QNg+5rTtuY
- 8Fbzm/0fSVzy0J7ArPzyebyD3BTYjCl/OgZCFc01RLN/qk1Dmzj3Ao6QV
-X-Gm-Gg: Acq92OFGs1ElEEaxZdG+9qSJzegj/XrRCrQ0bmIw3x8DNRcGF4QF5uyPyVO0HAvmmhf
- C2m9GUhLcopA41XK6pGlFaoujMvHOy0SFK4JM4M0AvzeNNh51y2RdFvsbX35BEYrwP/z807ur7W
- blhtWnc/i+fIgPzWS3r1VqVUAZeMZIVhpcF4Ax9k3sEVjeL1HbYonMVDpP8wY8x3t/+SM6mjLrk
- 74ULU3oTNKr+xdGmxXWzY1W5I5SZzteOLhiTXPNGtcUTkbEQPQSwcUPvEShOPP657Tr8jICu/DO
- 7PQI8fanmHOMZCdX0ltyY7x9lM+D+f6G2qxfFM2viTUxIUsJdqEMwKZq4c99EAh9WOSUJBXbBAX
- rZJEY245ZA8IpYyk=
-X-Received: by 2002:a05:620a:230d:20b0:915:a34e:cb68 with SMTP id
- af79cd13be357-9161bcb2c3bmr517691985a.34.1781299495272; 
- Fri, 12 Jun 2026 14:24:55 -0700 (PDT)
-X-Received: by 2002:a05:620a:230d:20b0:915:a34e:cb68 with SMTP id
- af79cd13be357-9161bcb2c3bmr517686685a.34.1781299494670; 
- Fri, 12 Jun 2026 14:24:54 -0700 (PDT)
-Received: from x1.local ([142.189.10.167]) by smtp.gmail.com with ESMTPSA id
- af79cd13be357-9161a006ef0sm314103185a.24.2026.06.12.14.24.53
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 12 Jun 2026 14:24:54 -0700 (PDT)
-Date: Fri, 12 Jun 2026 17:24:52 -0400
-From: Peter Xu <peterx@redhat.com>
-To: Alex Williamson <alex@shazbot.org>
-Cc: "Michael S. Tsirkin" <mst@redhat.com>,
- Peter Maydell <peter.maydell@linaro.org>,
- Gavin Shan <gshan@redhat.com>, Pavel Hrdina <phrdina@redhat.com>,
- Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>,
- qemu-devel@nongnu.org, qemu-arm@nongnu.org, jugraham@redhat.com,
- shan.gavin@gmail.com, David Hildenbrand <david@kernel.org>
-Subject: Re: [PATCH RFCv1] virtio: Inherit max bounce buffer size from bus
- parent if possible
-Message-ID: <aix5JKoRXYlS8hbC@x1.local>
-References: <CAFEAcA_2oZepwCoPS+cMgdnrSTj=mCGzdFZf5gGRHJK13yqaKQ@mail.gmail.com>
- <20260611114811-mutt-send-email-mst@kernel.org>
- <CAFEAcA9HUGfDgHjvCemPPNkp6FfvQp+4y7qCnw+ROFpG3+ybMw@mail.gmail.com>
- <20260611123952-mutt-send-email-mst@kernel.org>
- <CAFEAcA8vOMd64cCkfCyc1wNbjEY+bnhFPce-V_WbAuXrUnP8cw@mail.gmail.com>
- <20260611130037-mutt-send-email-mst@kernel.org>
- <air8hrlhrkaoJ4wi@x1.local>
- <20260611164624-mutt-send-email-mst@kernel.org>
- <aismn4D1wXI6tipv@x1.local> <20260612134423.648c335a@shazbot.org>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <20260612134423.648c335a@shazbot.org>
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=peterx@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -24
-X-Spam_score: -2.5
-X-Spam_bar: --
-X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.445,
+ AFNElJ8Ni6Y4CN/OaykhTMh4LAhqreJbT0V8MwRygV2Rh/XBLOUi8ylBYQ0P96kJEzVv6/b0TJ8wUSt83/eT@nongnu.org
+X-Gm-Message-State: AOJu0YzOtRJNleaoJBRBtbQLOtwPd2q2/xf66MTdgW18qoj5k4CElkMO
+ Ofe9+iJuix5n0inBSqJpLIkwtbilGDKCFcAI/6gU608NFlHYoPSTKRG+qIwZVqPatlS5OZswaNA
+ sZmgdU5j2
+X-Received: from pfog9.prod.google.com ([2002:aa7:8749:0:b0:842:84df:faf0])
+ (user=jrhilke job=prod-delivery.src-stubby-dispatcher) by
+ 2002:a05:6a00:1d21:b0:842:7992:bdd3
+ with SMTP id d2e1a72fcca58-8434ce50e94mr4705895b3a.4.1781301048319; Fri, 12
+ Jun 2026 14:50:48 -0700 (PDT)
+Date: Fri, 12 Jun 2026 21:50:18 +0000
+In-Reply-To: <20260612-igb-trl-v3-0-19607f9a3dde@google.com>
+Mime-Version: 1.0
+References: <20260612-igb-trl-v3-0-19607f9a3dde@google.com>
+X-Mailer: b4 0.14.3
+Message-ID: <20260612-igb-trl-v3-7-19607f9a3dde@google.com>
+Subject: [PATCH v3 7/7] igb: Add QTest for Transmit Rate Limiter traffic
+ throttling
+From: Josh Hilke <jrhilke@google.com>
+To: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>, qemu-devel@nongnu.org
+Cc: Josh Hilke <jrhilke@google.com>,
+ Sriram Yagnaraman <sriram.yagnaraman@ericsson.com>, 
+ Jason Wang <jasowang@redhat.com>, Fabiano Rosas <farosas@suse.de>, 
+ Laurent Vivier <lvivier@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>, 
+ David Matlack <dmatlack@google.com>,
+ Alex Williamson <alex.williamson@nvidia.com>
+Content-Type: text/plain; charset="utf-8"
+Received-SPF: pass client-ip=2607:f8b0:4864:20::449;
+ envelope-from=3OH8sagcKCkEmuklonhjrrjoh.frpthpx-ghyhoqrqjqx.ruj@flex--jrhilke.bounces.google.com;
+ helo=mail-pf1-x449.google.com
+X-Spam_score_int: -95
+X-Spam_score: -9.6
+X-Spam_bar: ---------
+X-Spam_report: (-9.6 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_MED=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ USER_IN_DEF_DKIM_WL=-7.5 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -129,197 +99,225 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Fri, Jun 12, 2026 at 01:44:23PM -0600, Alex Williamson wrote:
-> On Thu, 11 Jun 2026 17:20:31 -0400
-> Peter Xu <peterx@redhat.com> wrote:
-> 
-> > On Thu, Jun 11, 2026 at 04:52:20PM -0400, Michael S. Tsirkin wrote:
-> > > On Thu, Jun 11, 2026 at 02:20:54PM -0400, Peter Xu wrote:  
-> > > > On Thu, Jun 11, 2026 at 01:02:34PM -0400, Michael S. Tsirkin wrote:  
-> > > > > On Thu, Jun 11, 2026 at 05:53:54PM +0100, Peter Maydell wrote:  
-> > > > > > On Thu, 11 Jun 2026 at 17:42, Michael S. Tsirkin <mst@redhat.com> wrote:  
-> > > > > > >
-> > > > > > > On Thu, Jun 11, 2026 at 05:16:09PM +0100, Peter Maydell wrote:  
-> > > > > > > > On Thu, 11 Jun 2026 at 16:57, Michael S. Tsirkin <mst@redhat.com> wrote:  
-> > > > > > > > > Then I'd like to see an example where we have an actual good reason
-> > > > > > > > > to do execute arbitrary width accesses on device RAM when the
-> > > > > > > > > driver does not execute them, please.  
-> > > > > > > >
-> > > > > > > > That's the case we started with, with this GPU where the
-> > > > > > > > virtio data structures are in this PCI BAR. We want the
-> > > > > > > > virtio backend to have the freedom to say "I'm just going
-> > > > > > > > to assume the ring buffer etc is in RAM, and I don't need to
-> > > > > > > > care about carefully ensuring that I only do word accesses".  
-> > > > > > >
-> > > > > > > virtio backend does not need to assume anything. any spec
-> > > > > > > compliant guest guarantees it. any address given to
-> > > > > > > a virtio device is ram.  
-> > > > > > 
-> > > > > > OK, but how do we tell if the mmap() PCI BAR we have is RAM
-> > > > > > or not ? Some of them are, some of them aren't...
-> > > > > > 
-> > > > > > -- PMM  
-> > > > > 
-> > > > > We don't care? If guest asked a virtio device to access
-> > > > > memory then that memory better support accesses guest
-> > > > > requested, and on virtio that means any width.  
-> > > > 
-> > > > Yes that's also my understanding that QEMU shouldn't care, if on bare metal
-> > > > if it is a grey area with undefined behavior, then QEMU should also be fine
-> > > > to make it undefined.
-> > > > 
-> > > > Only one (IMHO, very slight..) concern is, if such "undefined behavior"
-> > > > operation may crash QEMU rather than causing a sigbus like what normally
-> > > > would happen on a bare metal.  
-> > > 
-> > > bus errors are uncommon on bare metal. they aren't usually
-> > > handled all that well.  
-> > 
-> > Ah, not something I was expecting to happen regularly.
-> > 
-> > In this case, the whole concern is about a possible malicious guest that
-> > might have installed a VFIO assigned device MMIO region (which may be
-> > register based; RAM-based is non-issue) to be a DMA target of anything.
-> > 
-> > >   
-> > > >  I'll put that discussion at last since I
-> > > > don't know if it's that important.
-> > > > 
-> > > > So taking that e1000 bug into account,  
-> > > 
-> > > Won't the patch I sent resolve e1000 too?  
-> > 
-> > If you mean:
-> > 
-> > https://lore.kernel.org/r/20260611093049-mutt-send-email-mst@kernel.org
-> > 
-> > Roughly, yes. But it is only to show the idea, not really a real patch?
-> > 
-> > I think we need to cover all the rest details (I mentioned all these in my
-> > previous reply too below):
-> > 
-> > - we should better leave memcpy()/memmove() as before for non-ram-device,
-> >   only do that for ram-devices
-> > 
-> > - per PeterM's comment, __builtin_memmove() may still have unwanted side
-> >   effects (I agree, it looks broken before and maybe we were lucky?)  need
-> >   to switch to atomics?
-> > 
-> > - two spots missing per my previous email here:
-> > 
-> >   https://lore.kernel.org/all/aimEl9QQ_LTRPLtd@x1.local/
-> > 
-> >   IIUC we should also fix these two, or is it intended to be left?
-> > 
-> >   address_space_read()
-> >   address_space_write_rom()
-> > 
-> > >   
-> > > > looks like we have more of such user
-> > > > that wants explicit control over the memory operations, likely with
-> > > > attibutes:
-> > > > 
-> > > > - Aligned only
-> > > > 
-> > > > - No vectored inst
-> > > > 
-> > > > - No possible duplication (perhaps it means, only use atomic access??? per
-> > > >   PeterM's explanation in another email)
-> > > > 
-> > > > I wonder if we should do this by default to all IOs, I think it might have
-> > > > an unwanted impact on general perf.  One idea is we can introduce a new bit
-> > > > in MemTxAttrs: say, mmio_strict, which will follow above stricter rule of
-> > > > doing IO.
-> > > > 
-> > > > Then for ram_device, when doing memory access we should also use the same
-> > > > set, hence something like:
-> > > > 
-> > > >   if (memory_access_is_direct(mr, ...)) {
-> > > >     if (MemTxAttrs.mmio_strict || memory_region_is_ram_device(mr)) {
-> > > >         memmove_strict_mmio(); // or memmove_no_vector(), or ...
-> > > >     }
-> > > >   }
-> > > > 
-> > > > I also want to bring us to the same page on differenciating two things:
-> > > > 
-> > > > - about direct access definition: so far, I want to define this almost as
-> > > >   "it is directly accessible from host virtual address space".  It means
-> > > >   ram_device definitely falls into this category, so it's a sub-category
-> > > >   only but enforces strict mmio as above
-> > > > 
-> > > > - bounce buffer: I want to make sure we're on the same page this is
-> > > >   something totally solving different problem of what we're looking at for
-> > > >   ram_device.  Essentially this is only needed if mem is not "direct
-> > > >   access".  Otherwise we shouldn't need it (including ram_device).  
-> > > 
-> > > 
-> > > I think ram_device_direct_access is a hack that should go away.
-> > > It's a work around for a memory core bug that we should just fix.  
-> > 
-> > I didn't find ram_device_direct_access, if you meant ram_device_mem_ops, I
-> > agree it'll be nice if we can avoid it.
-> > 
-> > > 
-> > > 
-> > >   
-> > > > I'm not sure if above sounds reasonable.  The hope is with that we should
-> > > > fix both this GPU and e1000 issues (e1000, and maybe other places, needs to
-> > > > start passing MemTxAttrs.mmio_strict, though, if we want to keep the
-> > > > default to be still fast-path to use memcpy()/memmove()?).
-> > > > 
-> > > > Thanks,
-> > > > 
-> > > > =========================
-> > > > 
-> > > > Two cases here on the concern:
-> > > > 
-> > > > (1) if fully emulated device, non-issue afaiu because whatever DMA does
-> > > > (with vectored ops) will only apply to QEMU process (like a bounce
-> > > > buffer..) so it won't crash,
-> > > > 
-> > > > (2) if it's a VFIO device (not the GPU case, but when like realtek and some
-> > > > guest driver registers it as a DMA target), logically the guest should
-> > > > receive a bus error, but for QEMU's case it may crash QEMU with SIGBUS:  
-> > > 
-> > > what and why would crash qemu?  
-> > 
-> > If what Alex described issue happened in commit 4a2e242bbb ("memory: Don't
-> > use memcpy for ram_device regions"), IIUC it will crash qemu, but maybe I
-> > was wrong.  Alex knows the best.
-> > 
-> > So in general, we don't want malicious guest to be able to DoS the host
-> > process (hence, to me "niche security use case"..).
-> 
-> Trying to figure out where to jump into this thread.  4a2e242bbb was
-> required because memcpy will be optimized to use instructions that
-> shouldn't target MMIO.  IIRC, in the case of the RTL NIC we were
-> getting SSE instructions to MMIO.  At the time, we weren't thinking
-> about P2P DMA, the virtualized access was a result of the quirks for
-> RTL causing the trap into QEMU rather than directly accessing through
-> the mmap.  Performance and bulk transfers were not a priority.
-> 
-> Alignment was really not a consideration.  The commit log even refers
-> to unaligned accesses.  It was just a matter of chunking to the maximum
-> width available for the size.
-> 
-> If a more optimized path is now necessary, I'd just recommend not using
-> something like memcpy or memmove, make sure it's restricted to
-> operations that are valid for MMIO address spaces.  Bouncing through
-> QEMU should not introduce RAM-specific memory optimizations.  Thanks,
+Add a test for the IGB transmit rate limiting functionality. The test
+verifies that TRL is enabled by setting the appropriate registers and
+that data is transmitted at the appropriate rate based on chosen
+target rate.
 
-I assume that aligns with the plan, thanks Alex.
+Signed-off-by: Josh Hilke <jrhilke@google.com>
+---
+ tests/qtest/igb-test.c | 158 +++++++++++++++++++++++++++++++++++++++++++++++++
+ 1 file changed, 158 insertions(+)
+
+diff --git a/tests/qtest/igb-test.c b/tests/qtest/igb-test.c
+index 119be6a..153f5fb 100644
+--- a/tests/qtest/igb-test.c
++++ b/tests/qtest/igb-test.c
+@@ -34,9 +34,11 @@
+ #include "qemu/iov.h"
+ #include "qemu/module.h"
+ #include "qemu/bitops.h"
++#include "qemu/timer.h"
+ #include "libqos/libqos-malloc.h"
+ #include "libqos/e1000e.h"
+ #include "hw/net/igb_regs.h"
++#include "hw/pci/pci_regs.h"
  
-So is that rtl8168 device?  I wonder if it could reproduce with other
-similar cases too.
-
-Any suggestion if we want to double check a new change don't regress the
-use case (e.g. the old guest tests that triggered this)?  Or I wonder if
-you think code reviews on this would be enough (by being sure about the
-vectored instruction is the core of problem).
-
-Thanks,
+ #ifndef _WIN32
+ 
+@@ -59,6 +61,58 @@ static uint32_t igb_trl_get_rate_factor(uint64_t rate_bytes_s)
+     return (E1000_LINK_RATE_1GBPS << 14) / rate_bytes_s;
+ }
+ 
++static void igb_trl_enable(QE1000E *d, uint64_t rate_bytes_s)
++{
++    /* Select Queue 0 */
++    e1000e_macreg_write(d, E1000_TRLDQSEL, 0);
++    /* Enable TRL with target rate */
++    e1000e_macreg_write(d, E1000_TRLRC,
++                        E1000_TRLRC_RS_ENA |
++                        igb_trl_get_rate_factor(rate_bytes_s));
++}
++
++static void igb_trl_disable(QE1000E *d)
++{
++    /* Select Queue 0 */
++    e1000e_macreg_write(d, E1000_TRLDQSEL, 0);
++    /* Disable TRL */
++    e1000e_macreg_write(d, E1000_TRLRC, 0);
++}
++
++static void igb_msix_clear_pending(QPCIDevice *dev, uint16_t entry)
++{
++    uint64_t vector_offset =
++        dev->msix_table_off + (entry * PCI_MSIX_ENTRY_SIZE);
++    uint32_t val = qpci_io_readl(dev, dev->msix_table_bar,
++                                 vector_offset + PCI_MSIX_ENTRY_VECTOR_CTRL);
++
++    /* Unmask (clears pending bit in QEMU) */
++    qpci_io_writel(dev, dev->msix_table_bar,
++                    vector_offset + PCI_MSIX_ENTRY_VECTOR_CTRL,
++                    val & ~PCI_MSIX_ENTRY_CTRL_MASKBIT);
++
++    /* Mask again */
++    qpci_io_writel(dev, dev->msix_table_bar,
++                    vector_offset + PCI_MSIX_ENTRY_VECTOR_CTRL,
++                    val | PCI_MSIX_ENTRY_CTRL_MASKBIT);
++}
++
++static void igb_read_tx_tail(QE1000E *d, void *descr)
++{
++    QE1000E_PCI *d_pci = container_of(d, QE1000E_PCI, e1000e);
++    uint32_t last_entry;
++    uint32_t tail;
++    uint32_t len;
++
++    tail = e1000e_macreg_read(d, E1000_TDT_A(0));
++    len = e1000e_macreg_read(d, E1000_TDLEN_A(0)) / E1000_RING_DESC_LEN;
++    last_entry = (tail + len - 1) % len;
++
++    qtest_memread(d_pci->pci_dev.bus->qts,
++                  d->tx_ring + last_entry * E1000_RING_DESC_LEN, descr,
++                  E1000_RING_DESC_LEN);
++}
++
+ static void igb_send_verify(QE1000E *d, int *test_sockets, QGuestAllocator *alloc)
+ {
+     union e1000_adv_tx_desc descr;
+@@ -84,6 +138,14 @@ static void igb_send_verify(QE1000E *d, int *test_sockets, QGuestAllocator *allo
+     /* Wait for TX WB interrupt */
+     e1000e_wait_isr(d, E1000E_TX0_MSG_ID);
+ 
++    /*
++     * Read the descriptor back from guest memory again, now that WB has
++     * occurred. This is required because if the packet was delayed by the
++     * trasmit rate limiter, e1000e_tx_ring_push read it back before QEMU
++     * actually processed it.
++     */
++    igb_read_tx_tail(d, &descr);
++
+     /* Check DD bit */
+     g_assert_cmphex(le32_to_cpu(descr.wb.status) & E1000_TXD_STAT_DD, ==,
+                     E1000_TXD_STAT_DD);
+@@ -147,6 +209,29 @@ static void igb_receive_verify(QE1000E *d, int *test_sockets, QGuestAllocator *a
+     guest_free(alloc, data);
+ }
+ 
++/* Returns the amount of microseconds it takes to transmit a 64-byte packet.*/
++static uint64_t igb_send_and_measure(QE1000E *d, int *test_sockets,
++                                     QGuestAllocator *alloc)
++{
++    QE1000E_PCI *d_pci = container_of(d, QE1000E_PCI, e1000e);
++    QPCIDevice *pdev = &d_pci->pci_dev;
++    QTestState *qts = global_qtest;
++    uint64_t start_time, end_time;
++
++    /* Clear any stale pending interrupt for this vector before we start */
++    igb_msix_clear_pending(pdev, E1000E_TX0_MSG_ID);
++
++    /* Clear EICR to allow new interrupts to be raised in MSI-X mode */
++    e1000e_macreg_write(d, E1000_EICR, 0xFFFFFFFF);
++
++    /* Send a test packet and measure the time it takes. */
++    start_time = qtest_clock_step(qts, 1);
++    igb_send_verify(d, test_sockets, alloc);
++    end_time = qtest_clock_step(qts, 1);
++
++    return end_time - start_time;
++}
++
+ static void test_e1000e_init(void *obj, void *data, QGuestAllocator * alloc)
+ {
+     /* init does nothing */
+@@ -240,6 +325,77 @@ static void test_igb_transmit_rate_limiter_regs(void *obj, void *data,
+     g_assert_cmphex(e1000e_macreg_read(d, E1000_TRLRC), ==, val1);
+ }
+ 
++/*
++ * Test for Transmit Rate Limiter (TRL) traffic throttling.
++ *
++ * Verifies that:
++ * 1. Packets are transmitted without delay when TRL is disabled.
++ * 2. Enabling TRL on a queue throttles subsequent transmissions.
++ * 3. The delay matches the expected transmission time calculated from the
++ *    packet size and the configured target rate.
++ * 4. Disabling TRL restores normal (unthrottled) transmission behavior.
++ */
++static void test_igb_transmit_rate_limiter(void *obj, void *data,
++                                           QGuestAllocator *alloc)
++{
++    QOSGraphObject *e_object = obj;
++    QE1000E_PCI *e1000e = obj;
++    QPCIDevice *dev = e_object->get_driver(e_object, "pci-device");
++    QE1000E *d = &e1000e->e1000e;
++    const uint64_t expected_baseline_elapsed = 10 * SCALE_US;
++    const uint64_t expected_max_elapsed = 530 * SCALE_US;
++    const uint64_t expected_min_elapsed = 500 * SCALE_US;
++    uint64_t elapsed;
++
++    if (qpci_check_buggy_msi(dev)) {
++        return;
++    }
++
++    /* Send a test packet to verify there's no rate limit. */
++    elapsed = igb_send_and_measure(d, data, alloc);
++
++    /*
++     * QEMU doesn't emulate the hardware line rate of the device, so the packet
++     * is processed instantly (requiring 0 clock steps in wait_isr, which steps
++     * by 10us). Give a 10us margin for error.
++     */
++    g_assert_cmpint(elapsed, <, expected_baseline_elapsed);
++
++    /*
++     * Enable TRL and set the target rate to:
++     * (E1000_LINK_RATE_1GBPS / 1000) = 125 KB/s.
++     */
++    igb_trl_enable(d, E1000_LINK_RATE_1GBPS / 1000);
++
++    /*
++     * Send Packet 1 (no delay)
++     * The first packet triggers rate limiting for subsequent transmissions.
++     */
++    elapsed = igb_send_and_measure(d, data, alloc);
++    g_assert_cmpint(elapsed, <, expected_baseline_elapsed);
++
++    /* Send Packet 2 (should be delayed) */
++    elapsed = igb_send_and_measure(d, data, alloc);
++    /*
++     * Expected delay: 64 byte packet / 125 KB/s = 512 us.
++     * Since QEMU steps the clock by 10 us on each wait_isr iteration,
++     * the delay is rounded up to the next 10 us step, which is 520 us.
++     */
++    g_assert_cmpint(elapsed, >=, expected_min_elapsed);
++    g_assert_cmpint(elapsed, <=, expected_max_elapsed);
++
++    /* Send Packet 3 (should also be delayed) */
++    elapsed = igb_send_and_measure(d, data, alloc);
++    g_assert_cmpint(elapsed, >=, expected_min_elapsed);
++    g_assert_cmpint(elapsed, <=, expected_max_elapsed);
++
++    igb_trl_disable(d);
++
++    /* Send Packet 4 (no delay since TRL is disabled) */
++    elapsed = igb_send_and_measure(d, data, alloc);
++    g_assert_cmpint(elapsed, <, expected_baseline_elapsed);
++}
++
+ static void data_test_clear(void *sockets)
+ {
+     int *test_sockets = sockets;
+@@ -298,6 +454,8 @@ static void register_igb_test(void)
+                  test_igb_multiple_transfers, &opts);
+     qos_add_test("transmit_rate_limiter_regs", "igb",
+                  test_igb_transmit_rate_limiter_regs, &opts);
++    qos_add_test("transmit_rate_limiter", "igb",
++                 test_igb_transmit_rate_limiter, &opts);
+ #endif
+ 
+     opts.before = data_test_init_no_socket;
 
 -- 
-Peter Xu
+2.54.0.1136.gdb2ca164c4-goog
 
 
