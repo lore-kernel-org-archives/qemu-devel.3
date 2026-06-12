@@ -4,39 +4,41 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6828ECD98D2
-	for <qemu-devel@archiver.kernel.org>; Fri, 12 Jun 2026 19:01:12 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2F89FCD98D2
+	for <qemu-devel@archiver.kernel.org>; Fri, 12 Jun 2026 19:01:21 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wY774-00016g-Tp; Fri, 12 Jun 2026 15:00:18 -0400
+	id 1wY777-00017Q-J1; Fri, 12 Jun 2026 15:00:21 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1)
- (envelope-from <f81a387a2de4f2172fd5830c5654f49d78102254@kylie.crudebyte.com>)
- id 1wY772-00015v-BI; Fri, 12 Jun 2026 15:00:16 -0400
+ (envelope-from <9471786bc47b93e822f6c6233a83f2b9f61e6c82@kylie.crudebyte.com>)
+ id 1wY775-00016i-JX; Fri, 12 Jun 2026 15:00:19 -0400
 Received: from kylie.crudebyte.com ([5.189.157.229])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1)
- (envelope-from <f81a387a2de4f2172fd5830c5654f49d78102254@kylie.crudebyte.com>)
- id 1wY770-0000HP-LQ; Fri, 12 Jun 2026 15:00:16 -0400
+ (envelope-from <9471786bc47b93e822f6c6233a83f2b9f61e6c82@kylie.crudebyte.com>)
+ id 1wY774-0000IN-0K; Fri, 12 Jun 2026 15:00:19 -0400
 DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
- d=crudebyte.com; s=kylie; h=Cc:To:Subject:Date:From:Message-ID:Content-Type:
- Content-Transfer-Encoding:MIME-Version:References:In-Reply-To:Content-ID:
- Content-Description; bh=Sio1SWXYvc02xa8MgERLDYT1YFIJZK26XHMBNPIB4Fg=; b=ER8oI
- NFS04fV+EGH9fAxJKfEADuKcs2JJmw796vZlPjSEz0E1+wqhD6ktAcykk5pAtZAaYUpTqtXzV/M8Z
- ctLVr0zKIjQMOw08tDEnn6yV5A1XClpLfN9QdJDqbnTKVtlXTWLY+VrkxjehuYkgOrjrfp8FXlfvl
- fKboKwmgRhBJ8XaDBoMJpAX68Ob5rtdwDSZFEJ0Zv4lXMcnLfhfpG08gor4mzcFASGen/YB88ElzU
- i44cbtNfsmrXOCKDerBGszE27rjMyzr6gkRarYtSTfBwQG3NQwcP9ck1htT3RUxXBYuuYUaEqq9tp
- i5VCfciYKm2MAiaXkhujz784y2sOCq0iSEUslv6JafAS778yL+khoGyd3Y06z6JTpdOkGhUqtgVLR
- JpxVEPNtECp3O/esWf/4C2f3/UUKy4emMo4fqUb4UWIodPGxl/epZS2Yb2ah4psCa9+9vMwEUPHWY
- OSL0LQdLQU44queuAnjiaLZrTHRj2QNPMYns8PB2iLTkrInJ8TSXYUWgZaMDHAbadM89lGUEI18m+
- jdPOPuvUz59dsPo2R/DEcowjWxYWFc+O0a72qh6lSa773mO5TzaiqVjk9CPTt+2+foh5pn6qgz8Jq
- oYcyCBH616+Hmn3nwjnXoeLlv88WsNid5ym0Q41EHawZPPHQez/sYUC/MQlepg=;
-Message-ID: <cover.1781287774.git.qemu_oss@crudebyte.com>
+ d=crudebyte.com; s=kylie; h=Cc:To:Subject:Date:From:References:In-Reply-To:
+ Message-ID:Content-Type:Content-Transfer-Encoding:MIME-Version:Content-ID:
+ Content-Description; bh=C2I/oAnjmmS/23juNsNQKAlgvmKnqj9OP4tqoHgG1e0=; b=JE/ms
+ YFb8pgmOE/NVeGu7bVc5DUD9wNAosspTE8MxpCRnpISmVdCtsxTZpa6ET+HlfNaJwmlCBoBEoBmBc
+ 5aIBRiPtqLJJn3WqUztWna/Bz5LsIIrCiiQ9czVl+NKb2jlY1O9itKzhSAuIY4mORu8zT4JrvbQA0
+ +sHwmUtmijKF/NFymXMQ2uBT4boKemiHM0CXo+2J+CCXqzMt0oLIVr7BBESXPuDDoqbUMMgCW3zyh
+ 3EdkrE0EKAffjkeDhfgfbCrliDSYvga6ycZLMQrlRDwOFNA67I1j1tmHbel9E/HP3J4SDwwLgXZcY
+ AgBdkFmd92qLs0Z/6NFOWx76biZBgOcRpBqoy2Y+edDrLZUwAV7f+feJ1fAKkiVO7V77ADJoVOsDo
+ 9jvR/7lVDsG6fKjqzCDHSwhA5JyRzOG9XQOgOKS2kTVOhE6cKIOXjO48oj4ZaGqgzxqgMIqwzTK5V
+ 5y+jNHB97CFVE3ej+xNdYofgeb6cnr31z4/mej0YORuiXYMdt4m1oz8ZUUlhyQIkk9EHgDyK3CP/2
+ jUvncGt4bnZ3u+Dfbhk6NDgJ26ec8/CRYNKEdJNvcNKARmuOV59o1iv9031KLXxvsySZybmAYGcdd
+ 5X7wpQIxWsvOB7qkwUyQ1R37PkF07fQIG54kqi8/ohc2iWuS/hrZcIJ1iD6OuI=;
+Message-ID: <9471786bc47b93e822f6c6233a83f2b9f61e6c82.1781287774.git.qemu_oss@crudebyte.com>
+In-Reply-To: <cover.1781287774.git.qemu_oss@crudebyte.com>
+References: <cover.1781287774.git.qemu_oss@crudebyte.com>
 From: Christian Schoenebeck <qemu_oss@crudebyte.com>
 Date: Fri, 12 Jun 2026 20:22:52 +0200
-Subject: [PATCH v2 0/8] 9pfs: fix DoS via Treaddir (CVE-2026-9238)
+Subject: [PATCH v2 3/8] 9pfs/xen: implement msize_limit callback
 To: qemu-devel@nongnu.org,
     qemu-stable@nongnu.org
 Cc: Greg Kurz <groug@kaod.org>, Feifan Qian <bea1e@proton.me>,
@@ -44,7 +46,7 @@ Cc: Greg Kurz <groug@kaod.org>, Feifan Qian <bea1e@proton.me>,
  Anthony PERARD <anthony@xenproject.org>,
  "Edgar E. Iglesias" <edgar.iglesias@gmail.com>
 Received-SPF: pass client-ip=5.189.157.229;
- envelope-from=f81a387a2de4f2172fd5830c5654f49d78102254@kylie.crudebyte.com;
+ envelope-from=9471786bc47b93e822f6c6233a83f2b9f61e6c82@kylie.crudebyte.com;
  helo=kylie.crudebyte.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
@@ -67,64 +69,56 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Feifan Qian reported a potential DoS and unbound host allocation via Treaddir
-request due to msize not being capped on Tversion handshake, and allocation
-size in Treaddir being capped too late.
+Add and implement the msize_limit callback for the Xen transport.
 
-Attack Vector of Vulnerability:
+The limit is calculated using XEN_FLEX_RING_SIZE() based on the
+negotiated ring_order. For the theoretical maximum ring_order of 9,
+this results in a maximum 'msize' of 1048576 bytes (1 MiB).
 
-A malicious guest can negotiate a large 9P msize during Tversion handshake and
-then send Treaddir request with a large 'count' parameter. The 9p server would
-allocate host memory proportional to the negotiated 'msize' for collecting
-directory entries, before validating that the actual reply buffer can hold the
-response. If the reply buffer is smaller than what was allocated, the response
-marshalling fails, but the memory has already been consumed.
+The minimum limit of all rings is picked, because multiple rings
+could theoretically have different ring_orders.
 
-This can lead to:
+Signed-off-by: Christian Schoenebeck <qemu_oss@crudebyte.com>
+---
+ hw/9pfs/xen-9p-backend.c | 19 +++++++++++++++++++
+ 1 file changed, 19 insertions(+)
 
- - Unbound host memory allocation proportional to the negotiated msize.
- - Denial of service against the QEMU process.
- - Potential OOM conditions affecting entire host system.
-
-This series fixes this vulnerability on two layers.
-
-Summary of patches fixing this vulnerability:
-
- - Layer 1: Patches 1..4 cap msize during Tversion handshake to reasonable
-   maximum value. It does so by limiting msize to the theoretical maximum
-   msize value supported by transport implementation.
-
- - Layer 2: Patches 5..8 cap the allocated host memory in the Treaddir handler
-   specifically to the current, real response buffer size of transport
-   implementation.
-
-v2:
-  - Patch 3:
-    - Pick the smallest limit from all Xen rings.
-    - Return zero if Xen's ring count is zero.
-  - Patch 7:
-    - Use a local iovec in_sg[2] array variable to avoid potential NULL
-      pointer dereference.
-  - Patch 8:
-    - Fix potential underflow if response_buffer_size() returned a value
-      smaller than 11.
-
-Christian Schoenebeck (8):
-  hw/9pfs: add msize_limit transport callback
-  9pfs/virtio: implement msize_limit callback
-  9pfs/xen: implement msize_limit callback
-  hw/9pfs: cap negotiated msize to transport limit
-  hw/9pfs: add response_buffer_size transport callback
-  9pfs/virtio: implement response_buffer_size callback
-  9pfs/xen: implement response_buffer_size callback
-  hw/9pfs: cap Treaddir allocation (CVE-2026-9238)
-
- hw/9pfs/9p.c               | 34 ++++++++++++++++++++++++++++++++--
- hw/9pfs/9p.h               |  2 ++
- hw/9pfs/virtio-9p-device.c | 17 +++++++++++++++++
- hw/9pfs/xen-9p-backend.c   | 31 +++++++++++++++++++++++++++++++
- 4 files changed, 82 insertions(+), 2 deletions(-)
-
+diff --git a/hw/9pfs/xen-9p-backend.c b/hw/9pfs/xen-9p-backend.c
+index ca0fff5fa9..e31124bcf5 100644
+--- a/hw/9pfs/xen-9p-backend.c
++++ b/hw/9pfs/xen-9p-backend.c
+@@ -250,12 +250,31 @@ static void xen_9pfs_push_and_notify(V9fsPDU *pdu)
+     qemu_bh_schedule(ring->bh);
+ }
+ 
++static size_t xen_9p_msize_limit(V9fsState *s)
++{
++    Xen9pfsDev *xen_9pfs = container_of(s, Xen9pfsDev, state);
++    size_t limit;
++    int i;
++
++    if (!xen_9pfs->num_rings) {
++        return 0;
++    }
++
++    limit = XEN_FLEX_RING_SIZE(xen_9pfs->rings[0].ring_order);
++    for (i = 1; i < xen_9pfs->num_rings; i++) {
++        limit = MIN(limit, XEN_FLEX_RING_SIZE(xen_9pfs->rings[i].ring_order));
++    }
++
++    return limit;
++}
++
+ static const V9fsTransport xen_9p_transport = {
+     .pdu_vmarshal = xen_9pfs_pdu_vmarshal,
+     .pdu_vunmarshal = xen_9pfs_pdu_vunmarshal,
+     .init_in_iov_from_pdu = xen_9pfs_init_in_iov_from_pdu,
+     .init_out_iov_from_pdu = xen_9pfs_init_out_iov_from_pdu,
+     .push_and_notify = xen_9pfs_push_and_notify,
++    .msize_limit = xen_9p_msize_limit,
+ };
+ 
+ static int xen_9pfs_init(struct XenLegacyDevice *xendev)
 -- 
 2.47.3
 
