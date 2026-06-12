@@ -4,130 +4,100 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 45DCCCD98CE
-	for <qemu-devel@archiver.kernel.org>; Fri, 12 Jun 2026 07:50:07 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 565D8CD98D6
+	for <qemu-devel@archiver.kernel.org>; Fri, 12 Jun 2026 07:53:51 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wXwdu-0002Ga-0s; Fri, 12 Jun 2026 03:49:30 -0400
+	id 1wXwhh-0002uE-7U; Fri, 12 Jun 2026 03:53:25 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <sgarzare@redhat.com>)
- id 1wXwds-0002GB-8T
- for qemu-devel@nongnu.org; Fri, 12 Jun 2026 03:49:28 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <sgarzare@redhat.com>)
- id 1wXwdo-0001SO-Gs
- for qemu-devel@nongnu.org; Fri, 12 Jun 2026 03:49:28 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1781250563;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=8/CQVyzkU0UAPREehS/SE9ug4vHgXSzleoaRx+VNsGk=;
- b=hQhROVebXZSx7blZZQB2ZpQhj6aotG3RRLx0AZnsCim7RlpJ9m3JtKCD1oFujleYjhQAEs
- Wg0servCFHf6nRJ4HbCGm6e++JiStU6pSFbVbTdDLJcJ3+rT9oySAYqbnfCDF4tdOPI29L
- RMHPUaLhw8eJqrCn9Y2nPy7cemFZUzE=
-Received: from mail-wr1-f70.google.com (mail-wr1-f70.google.com
- [209.85.221.70]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-509-X-MuReURNLqkltx3FjwV_A-1; Fri, 12 Jun 2026 03:49:21 -0400
-X-MC-Unique: X-MuReURNLqkltx3FjwV_A-1
-X-Mimecast-MFC-AGG-ID: X-MuReURNLqkltx3FjwV_A_1781250561
-Received: by mail-wr1-f70.google.com with SMTP id
- ffacd0b85a97d-45efb6e60e4so600875f8f.0
- for <qemu-devel@nongnu.org>; Fri, 12 Jun 2026 00:49:21 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <jay.chang@sifive.com>)
+ id 1wXwhY-0002tp-W7
+ for qemu-devel@nongnu.org; Fri, 12 Jun 2026 03:53:17 -0400
+Received: from mail-ej1-x62a.google.com ([2a00:1450:4864:20::62a])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <jay.chang@sifive.com>)
+ id 1wXwhX-0003Tk-2m
+ for qemu-devel@nongnu.org; Fri, 12 Jun 2026 03:53:16 -0400
+Received: by mail-ej1-x62a.google.com with SMTP id
+ a640c23a62f3a-bebbc325000so92852766b.0
+ for <qemu-devel@nongnu.org>; Fri, 12 Jun 2026 00:53:14 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1781250560; x=1781855360; darn=nongnu.org;
- h=in-reply-to:content-transfer-encoding:content-disposition
- :mime-version:references:message-id:subject:cc:to:from:date:from:to
- :cc:subject:date:message-id:reply-to;
- bh=8/CQVyzkU0UAPREehS/SE9ug4vHgXSzleoaRx+VNsGk=;
- b=s6nzW9gRRazv0Rz86ylbg36oQD3mzriBhpqPG1941LHlEF1AhyM9rObGkj9xfHPtJu
- NM7JxfKhzdI71+kL1+cATcKaNbkIJxOW5RhMC88s6EYb5xtzOFXeSM+ie4CcFnbl//RJ
- 6cGzw1oqCyZJeujFuZ9jj1/Sk9oMUYwr6qd6CxgW+mvtCItGTbYPAYK2nD5ow4xgOnJn
- ovcsVrjf3rEyNowBTTy6QyJAcOGPn61tNfPZ2zjr/1DfWhP0pXI/n93m1CCwjEtgy4Qj
- 3r/LSFvn2FCXM7ZslPfQGyYgp1zMhkXZMwbs417umrcosJlewKjbmrSV1h8R6/cd4hZL
- i1gw==
+ d=sifive.com; s=google; t=1781250793; x=1781855593; darn=nongnu.org;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:from:to:cc:subject:date:message-id:reply-to;
+ bh=4fIcVgXFYPBqzvJwBT5R+2Yn1/DmIdtEkQC/Et7LRhQ=;
+ b=g0dGrj0haJuPg5QRsPbQs/DizBUvwlIw6rb4VX009jHtyX7cIdTWrhCF1rMbAodqW7
+ XuCeh8N2B33LF5pUoGl6iN1MPOeNc0NO4mNZN6qy/kINcs/WaXfFLB5KY0PbbL3+oG3a
+ DE8lu/g/d8Xy8j8CGikP/3BDAqK1EOjnWxORk/x20aglrLCyDSz44Hn6HDZ2y8Wo/Dtv
+ TCpucmGS8nfdj/PIh6DtWDblLGEcA1jARLCtC2xinzQcr1SEgESlbsROtMQSpsgj+DTA
+ gJ57mmzxUftcuC4yrEHknp7K3EGwhcFeDOUagLNu9yDH6Q7Sh8E1hEiFcXwFMRhhBJMK
+ 687A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1781250560; x=1781855360;
- h=in-reply-to:content-transfer-encoding:content-disposition
- :mime-version:references:message-id:subject:cc:to:from:date:x-gm-gg
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=8/CQVyzkU0UAPREehS/SE9ug4vHgXSzleoaRx+VNsGk=;
- b=ohKcKHDE0OUHkIbk3FUZvH0IJXx1cDgHoGwNvXLiFottnasY1J85o7BoCR09Jc0o93
- 8BzpxEMJJe7Ct89YORWmJxlcgkfxe9bOA+7TGuYNmz4Wv1HBB1l11LJCYyON4Jjjf5oH
- KFb+2ujlY/WZ7Cu6OjV1Skrzcp0+yRZxZQGXffdLO2RyZr19/ZvJPaUWa28jzTyQIvH3
- yimG2WVXCFIIknXHhjHdsL+F3Abkq/QriSnAzBqZIzEYwlTNmm4g+wDxxl6JPnm6R/rO
- 8QtP6nRlaOxB96jt+/chWYSGFrMFXvTQXwT99bwH73Vk6ukepZKcEkpdDjUGZmTkQEK6
- kGYg==
-X-Forwarded-Encrypted: i=1;
- AFNElJ/Av1SVQuW/u+wSFIy940lzx12VzZ/Dc0nEmkiNZZvVZJTCh96hqOhKVWDDVotOwnRNG1EFcZWfYKmG@nongnu.org
-X-Gm-Message-State: AOJu0Yy8UlA/WYVkkyjW3rsSCrdhklRyPqQHqLiAOTqbP6yZtW1B5HTh
- LtzvtdLaEkuYrOwrvN4AFSK7qTlmcLAsEHyCAsXgNN7mPpzgxQwTCzDos/qRGCc4Yrx0wftBlga
- eIVbwvBpTdNntH3bYNIGRkUKczDAApdB1YloVrfPs1UHNTOTIofVYQrV6
-X-Gm-Gg: Acq92OFUW6QxplDLde+iFqi7glzkwCZlsuiz0EIXXYtWwZU8TDlh1aBlsKE0izR/B+4
- TxUQpTPf535MBsUgr6zSivG3QGT6lezANLx66o1M2odjdvvyHyRD6DPkIW42LEFnIx58eru5/Qg
- vdLOTrkYN0+35UX9cyJJn5rD1l1dYgifLHSF1+0j9P6HiR09OZJgK/wE9Xpt+BsdIxJRuPMgExN
- vh1FURkZo/fVnHUP6kjzIgjgcGlZmzdtLYDXbmjx7di9dYF2bt4Uxf0k3TXr+T+G0J/t+Rpnnz6
- DdFvc+OaBBw91Kl0zCzpt34YTfu3ZhEWo7LxXz/ARO61lxUC2lOnzxFYtwNvPVszsykrmrOnmYp
- viXWIsC989zsOObFswv5c5TGukXWHhyiwUl0iuNd7FkIQgKgjxQA/x/wS+gDvLBcf+r0aMpE=
-X-Received: by 2002:a5d:5d0e:0:b0:460:3210:434a with SMTP id
- ffacd0b85a97d-4606dbc6b71mr2436937f8f.43.1781250560475; 
- Fri, 12 Jun 2026 00:49:20 -0700 (PDT)
-X-Received: by 2002:a5d:5d0e:0:b0:460:3210:434a with SMTP id
- ffacd0b85a97d-4606dbc6b71mr2436839f8f.43.1781250559362; 
- Fri, 12 Jun 2026 00:49:19 -0700 (PDT)
-Received: from sgarzare-redhat (host-82-53-135-12.retail.telecomitalia.it.
- [82.53.135.12]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-4606f26393asm3159156f8f.5.2026.06.12.00.49.17
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 12 Jun 2026 00:49:18 -0700 (PDT)
-Date: Fri, 12 Jun 2026 09:49:13 +0200
-From: Stefano Garzarella <sgarzare@redhat.com>
-To: "Michael S. Tsirkin" <mst@redhat.com>
-Cc: Stefan Hajnoczi <stefanha@redhat.com>, 
- Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>,
- Peter Maydell <peter.maydell@linaro.org>, 
- Stefan Hajnoczi <stefanha@gmail.com>, Dorinda Bassey <dbassey@redhat.com>, 
- Albert Esteve <aesteve@redhat.com>,
- Alex =?utf-8?Q?Benn=C3=A9e?= <alex.bennee@linaro.org>, 
- qemu-devel <qemu-devel@nongnu.org>, virtio-comment@lists.linux.dev,
- dev@lists.cloudhypervisor.org, rust-vmm@lists.opendev.org,
- Manos Pitsidianakis <manos.pitsidianakis@linaro.org>, 
- Demi Marie Obenour <demi@invisiblethingslab.com>, Alyssa Ross <hi@alyssa.is>, 
- Mark Burton <MBURTON@qti.qualcomm.com>, Matti Moell <matti@qti.qualcomm.com>, 
- Viresh Kumar <viresh.kumar@linaro.org>, Sergio Lopez <slp@redhat.com>, 
- Vishwanath Seshagiri <vishs@meta.com>, Rob Bradford <rbradford@meta.com>, 
- Zhengyu Zhao <zhaozhengyu@bytedance.com>,
- "Jorge E. Moreira" <jemoreira@google.com>
-Subject: Re: Where should the vhost-user specification live?
-Message-ID: <aiu26_Ha5NvyZUI0@sgarzare-redhat>
-References: <20260601160352-mutt-send-email-mst@kernel.org>
- <CACzuRyxedVMHNGkRf7AVyPWUTMgBMa6_DBnSHn+V6H7wN7XzWw@mail.gmail.com>
- <20260604162853.GC115597@fedora>
- <CAJSP0QXR6MyqoE1Uh-X7DzsOabbbN69TUyxf8r6ghUDCQnrP=w@mail.gmail.com>
- <CAFEAcA_Kd5_k+XyagUbB2+YVEMB0Sb0AB=oUZu6bGDot9TaFrQ@mail.gmail.com>
- <CAJSP0QVuSvVwa1szAy_3WVtWOjGK=oYAXjqAzbg5YoEvgybRjA@mail.gmail.com>
- <CAFEAcA9ZkbNK5kRL5+OiqgN2hk3JAmFN8Qd3cytqyTEm9hBkvg@mail.gmail.com>
- <aikiB90tij642pEZ@redhat.com> <20260611203915.GB237427@fedora>
- <20260611164404-mutt-send-email-mst@kernel.org>
+ d=1e100.net; s=20251104; t=1781250793; x=1781855593;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=4fIcVgXFYPBqzvJwBT5R+2Yn1/DmIdtEkQC/Et7LRhQ=;
+ b=ZilvDoFRORn5SkUQoeCqHkRHgz+X7dV3ysEgibYH58eqBt8wbQ+0F2JqGL1WIB6/8R
+ 0xL3f9wM0txmXIdG0DdR68fr3eU9X6ID+gR7VeMS2p5K20jcn5xv2Y9qqLpfWUmWocNo
+ GB5tlXFESd1fMkHUwpej3ZXzWexHd9GiyxK9CV4V8JySlSXUEKwiWqSzq6c6aXP0nkdu
+ q38IwLyNG4N+muZwA4YZCxq3Opebqxt0OPaPIvCQSZmSNNHNpHRD8hwmLT3sleooqIeu
+ XKSViTCdmwhxmWzm48BZjVU53CHhPT5LOzqLenqD+SOkUmrDKhvHMUEI/S1s1LNXiVyw
+ NwPw==
+X-Gm-Message-State: AOJu0YwrPnVzZdpKCFdN00D8nDUg/xK6C5xlcUU3cRCXqP/eAji6JOoZ
+ cwOuy2/e5AQn6/pzrmNDb4icIlxtm7+DrToUrk6owDDLlTbJnzOGGL5mOOj99j1+UHR+Wkojmdz
+ HHwAM14cNnY54L0E4hyuAAPSOF1SqhoJp5S9B6KYRMnOS+TGjBg7NoJ9tBA2MoKcnKefdzK+8Wi
+ EReF8NeEQOxeiaK8zYmD/mSqSc8sSg4fSiPDvgAWai5G4=
+X-Gm-Gg: Acq92OGSINjtc4+yc4AmbbWXd7NFtnGdnYRi0WPljxOEhcjhw1gAwH6GuDy/4/3L5My
+ wLOPYteW72Sjey6EBzgTUNwQBCTJI1UMv7HT4YTkYCtKjTb0OYo0qos8sHAauMgf/cMbBikG85e
+ JzwTCagXnBi4gNKUDctlufz3TR3w74TP4fUGwVLsdYi+zk3GJz17dg0e8VI862BCdoKZOrOUbFM
+ yqTq8uIbI/WIKS/2PbX3AM6VT2H2bJcHvom99lVuwJoswmioGEoz35dvSf5m2wmlPS6RiE3AXcq
+ BP+LLkcJuzRk6tbsrOLVYDdlHcejWJriKc/902hAi4/wmEPyqtcNVUtUgT7rqCV2XFIU1XQphs5
+ XF5uFLb90DvP0tPLrkHbFGuPfqm6JMPDzpUO6KvG4Zo9QoP4VUwajvQaE6q7ChGxST+Lvhv9krs
+ bTzjfy5KMpJxB8yhOpWq+r/oj30wZ5fuA8fbNXIMEA+a2QofEa/jWB3D8/jQZb
+X-Received: by 2002:a17:907:1dcd:b0:bcc:e8f:c3a8 with SMTP id
+ a640c23a62f3a-bfe29227170mr52459966b.29.1781250793300; 
+ Fri, 12 Jun 2026 00:53:13 -0700 (PDT)
+Received: from mail-ed1-f49.google.com (mail-ed1-f49.google.com.
+ [209.85.208.49]) by smtp.gmail.com with ESMTPSA id
+ a640c23a62f3a-bfdb83420e9sm69418466b.45.2026.06.12.00.53.12
+ for <qemu-devel@nongnu.org>
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Fri, 12 Jun 2026 00:53:12 -0700 (PDT)
+Received: by mail-ed1-f49.google.com with SMTP id
+ 4fb4d7f45d1cf-687ed9aabb3so1286631a12.1
+ for <qemu-devel@nongnu.org>; Fri, 12 Jun 2026 00:53:12 -0700 (PDT)
+X-Received: by 2002:a17:907:96a2:b0:bef:36f3:7277 with SMTP id
+ a640c23a62f3a-bfe29229916mr77631766b.23.1781250791996; Fri, 12 Jun 2026
+ 00:53:11 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <20260611164404-mutt-send-email-mst@kernel.org>
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=sgarzare@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -24
-X-Spam_score: -2.5
+References: <20260318185238.99143-1-luisccunha8@gmail.com>
+ <20260318185238.99143-6-luisccunha8@gmail.com>
+In-Reply-To: <20260318185238.99143-6-luisccunha8@gmail.com>
+From: Jay Chang <jay.chang@sifive.com>
+Date: Fri, 12 Jun 2026 15:53:00 +0800
+X-Gmail-Original-Message-ID: <CAMXXpfYvTWgTyc-Yn+sVUYBOAwV0oJNdu7Tgthw-XXdzjUOJqw@mail.gmail.com>
+X-Gm-Features: AVVi8CdPh2UFOlFKg1PufLNqd2acMLlLtkiVPhojU7BLc4EWAuff7h6CUKad4dI
+Message-ID: <CAMXXpfYvTWgTyc-Yn+sVUYBOAwV0oJNdu7Tgthw-XXdzjUOJqw@mail.gmail.com>
+Subject: Re: [RFC PATCH 5/6] target/riscv: Enable SPMP support in CPU
+To: luisccc <luisccunha8@gmail.com>
+Cc: qemu-devel@nongnu.org, Palmer Dabbelt <palmer@dabbelt.com>, 
+ Alistair Francis <alistair.francis@wdc.com>, Weiwei Li <liwei1518@gmail.com>, 
+ Daniel Henrique Barboza <dbarboza@ventanamicro.com>,
+ Liu Zhiwei <zhiwei_liu@linux.alibaba.com>, 
+ "open list:RISC-V TCG CPUs" <qemu-riscv@nongnu.org>, frank.chang@sifive.com
+Content-Type: multipart/alternative; boundary="000000000000b68398065409c4d6"
+Received-SPF: pass client-ip=2a00:1450:4864:20::62a;
+ envelope-from=jay.chang@sifive.com; helo=mail-ej1-x62a.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.445,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, HTML_MESSAGE=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -143,126 +113,137 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, Jun 11, 2026 at 04:45:10PM -0400, Michael S. Tsirkin wrote:
->On Thu, Jun 11, 2026 at 04:39:15PM -0400, Stefan Hajnoczi wrote:
->> On Wed, Jun 10, 2026 at 09:37:10AM +0100, Daniel P. Berrangé wrote:
->> > On Tue, Jun 09, 2026 at 08:51:15PM +0100, Peter Maydell wrote:
->> > > On Tue, 9 Jun 2026 at 20:45, Stefan Hajnoczi <stefanha@gmail.com> wrote:
->> > > >
->> > > > On Tue, Jun 9, 2026 at 2:51 PM Peter Maydell <peter.maydell@linaro.org> wrote:
->> > > > >
->> > > > > On Tue, 9 Jun 2026 at 19:00, Stefan Hajnoczi <stefanha@gmail.com> wrote:
->> > > > > > I'm not sure if anyone brought up this topic on qemu-devel and with
->> > > > > > Michael before. As I mentioned in my reply, there are ways to avoid
->> > > > > > blocking vhost-user spec changes when qemu.git is frozen:
->> > > > > >
->> > > > > > The simplest approach is to keep merging vhost-user.rst changes during
->> > > > > > freeze since it does not jeopardize the release or introduce
->> > > > > > instability.
->> >
->> > snip
->> >
->> > > I tend to view the specs subsection of the docs as being
->> > > for things where either QEMU really is the authoritative
->> > > source (eg fw_cfg), or where the spec is for something that's
->> > > basically moribund and has no better home. If vhost-user is
->> > > a cross-project specification that it so active that it
->> > > cannot live within QEMU's release process, then I think
->> > > it deserves to have its own independent home.
->> >
->> > Yes, the main impression I get having read through this whole thread
->> > is that vhost-user spec should have its own home outside QEMU.
->> >
->> > We can come up with all sorts of rationalizations for how to make
->> > things work in the context of QEMU, but they all just come across
->> > as excuses to avoid changing the fairly arbitrary historical use
->> > of qemu.git. Even if as QEMU maintainers we consider that we're a
->> > "neutral" home, I can understand why it might not be perceived that
->> > way from the outside.
->> >
->> > If people want agility such that we need to make exceptions for
->> > our rules during freeze that is one flag that it doesn't belong
->> > with the main qemu.git, but there are broader points that are
->> > pushing my view in that direction too.
->> >
->> >
->> > Not mentioned is that engaging with the QEMU mailing list as a
->> > non-regular QEMU contributor is not a very attractive task.
->> > While QEMU may be satisfied with email, QEMU are in a tiny
->> > minority these days. The rest of the OSS community has
->> > decided that git forges are the better way to collaborate.
->> >
->> > Our dev list is very high volume, with changes very easily (and
->> > often) lost in the noise, even from regular contributors, such
->> > that we have to teach people to (repeatedly) "ping" to attract
->> > attention.
->>
->> A separate repo in a git forge definitely has the advantage of making
->> communication easier to follow for anyone interested only in the
->> vhost-user protocol.
->>
->> > If we want agility though, IMHO it is best to stay away from the
->> > bureucracy of the OASIS virtio spec / committee, which is a big
->> > turn off IME.
->>
->> Yes, OASIS adds overhead.
->>
->> The downside is that vhost-user suffers from being outside the VIRTIO
->> spec umbrella. It's really a VIRTIO Transport and would benefit from the
->> discipline of actually being part of the spec as such. At the moment
->> vhost-user is not really bound to VIRTIO through any interface (i.e.
->> VIRTIO Transport) or device lifecycle that is guaranteed to align with
->> the VIRTIO spec. This has led to both design problems and bugs that
->> would be prevented by making it a VIRTIO Transport.
->>
->> In addition to the OASIS overhead you mentioned, the other issue is 
->> that
->> moving vhost-user into the VIRTIO spec would require reconciling the
->> the vhost-user protocol with the VIRITO Transport's interface and also
->> rewriting parts of the vhost-user spec that are not up to the level
->> (e.g. adding conformance clauses, eliminating some informal language,
->> etc).
+--000000000000b68398065409c4d6
+Content-Type: text/plain; charset="UTF-8"
+
 >
->And possibly getting an agreement to OASIS IPR from major past contributors.
+> static int get_physical_address_spmp(CPURISCVState *env, int *prot, hwaddr
+> addr,
+> +                                    int size, int access_type,
+> +                                    int mode)
+> +{
+> +    spmp_priv_t spmp_priv;
+> +
+> +    if (!riscv_cpu_cfg(env)->spmp) {
+> +        *prot = PAGE_READ | PAGE_WRITE | PAGE_EXEC;
+> +        return TRANSLATE_SUCCESS;
+> +    }
+> +
+> +    if (!spmp_hart_has_privs(env, addr, size, 1 << access_type,
+> &spmp_priv,
+> +                            mode)) {
+> +        *prot = 0;
+> +        return TRANSLATE_SPMP_FAIL;
+> +    }
+> +
+> +    *prot = spmp_priv_to_page_prot(spmp_priv);
+> +
+> +    return TRANSLATE_SUCCESS;
+> +}
+> +
+> +
+
+There is one extra blank
+
+
+> @@ -1634,7 +1671,8 @@ static void raise_mmu_exception(CPURISCVState *env,
+> target_ulong address,
+>      case MMU_DATA_LOAD:
+>          if (pmp_violation) {
+>              cs->exception_index = RISCV_EXCP_LOAD_ACCESS_FAULT;
+> -        } else if (two_stage && !first_stage) {
+> +        } else if ((two_stage && !first_stage) ||
+> +                    (env->virt_enabled && spmp_violation)) {
 >
->> In other words, it's a bunch of work. Although from a purist perspective
->> I think it's the right place for vhost-user, I think it would be an
->> unpopular solution.
->>
+Nit: align the parameters.
 
-Yep, agree on this.
+>              cs->exception_index = RISCV_EXCP_LOAD_GUEST_ACCESS_FAULT;
+>          } else {
+>              cs->exception_index = RISCV_EXCP_LOAD_PAGE_FAULT;
+> @@ -1643,7 +1681,8 @@ static void raise_mmu_exception(CPURISCVState *env,
+> target_ulong address,
+>      case MMU_DATA_STORE:
+>          if (pmp_violation) {
+>              cs->exception_index = RISCV_EXCP_STORE_AMO_ACCESS_FAULT;
+> -        } else if (two_stage && !first_stage) {
+> +        } else if ((two_stage && !first_stage) ||
+> +                    (env->virt_enabled && spmp_violation)) {
+>
+Nit: align the parameters.
 
-About the current workflow, Working on both QEMU and rust-vmm, I've seen 
-people a bit scared by the QEMU review process when all they want is to 
-propose a protocol change. As Daniel pointed out, our mailing list is 
-high volume and unfamiliar to many. That's a real barrier both for 
-contributors and perhaps also for those who would like to follow the 
-development.
+--000000000000b68398065409c4d6
+Content-Type: text/html; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-What about creating a new organization (e.g. "virtio") on gitlab or 
-github, and hosting the vhost-user spec there in its own repo, using 
-MRs/PRs for changes?
+<div dir=3D"ltr"><div class=3D"gmail_quote gmail_quote_container"><blockquo=
+te class=3D"gmail_quote" style=3D"margin:0px 0px 0px 0.8ex;border-left:1px =
+solid rgb(204,204,204);padding-left:1ex">static int get_physical_address_sp=
+mp(CPURISCVState *env, int *prot, hwaddr addr,<br>
++=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
+=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 int size, int access_t=
+ype,<br>
++=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
+=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 int mode)<br>
++{<br>
++=C2=A0 =C2=A0 spmp_priv_t spmp_priv;<br>
++<br>
++=C2=A0 =C2=A0 if (!riscv_cpu_cfg(env)-&gt;spmp) {<br>
++=C2=A0 =C2=A0 =C2=A0 =C2=A0 *prot =3D PAGE_READ | PAGE_WRITE | PAGE_EXEC;<=
+br>
++=C2=A0 =C2=A0 =C2=A0 =C2=A0 return TRANSLATE_SUCCESS;<br>
++=C2=A0 =C2=A0 }<br>
++<br>
++=C2=A0 =C2=A0 if (!spmp_hart_has_privs(env, addr, size, 1 &lt;&lt; access_=
+type, &amp;spmp_priv,<br>
++=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
+=A0 =C2=A0 =C2=A0 =C2=A0 mode)) {<br>
++=C2=A0 =C2=A0 =C2=A0 =C2=A0 *prot =3D 0;<br>
++=C2=A0 =C2=A0 =C2=A0 =C2=A0 return TRANSLATE_SPMP_FAIL;<br>
++=C2=A0 =C2=A0 }<br>
++<br>
++=C2=A0 =C2=A0 *prot =3D spmp_priv_to_page_prot(spmp_priv);<br>
++<br>
++=C2=A0 =C2=A0 return TRANSLATE_SUCCESS;<br>
++}<br>
++<br>
++</blockquote><div>There is one extra blank</div><div><br></div><blockquote=
+ class=3D"gmail_quote" style=3D"margin:0px 0px 0px 0.8ex;border-left:1px so=
+lid rgb(204,204,204);padding-left:1ex"><br></blockquote><blockquote class=
+=3D"gmail_quote" style=3D"margin:0px 0px 0px 0.8ex;border-left:1px solid rg=
+b(204,204,204);padding-left:1ex">
+@@ -1634,7 +1671,8 @@ static void raise_mmu_exception(CPURISCVState *env, t=
+arget_ulong address,<br>
+=C2=A0 =C2=A0 =C2=A0case MMU_DATA_LOAD:<br>
+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0if (pmp_violation) {<br>
+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0cs-&gt;exception_index =3D =
+RISCV_EXCP_LOAD_ACCESS_FAULT;<br>
+-=C2=A0 =C2=A0 =C2=A0 =C2=A0 } else if (two_stage &amp;&amp; !first_stage) =
+{<br>
++=C2=A0 =C2=A0 =C2=A0 =C2=A0 } else if ((two_stage &amp;&amp; !first_stage)=
+ ||<br>
++=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 (env=
+-&gt;virt_enabled &amp;&amp; spmp_violation)) {<br></blockquote><div>Nit: a=
+lign the parameters.</div><blockquote class=3D"gmail_quote" style=3D"margin=
+:0px 0px 0px 0.8ex;border-left:1px solid rgb(204,204,204);padding-left:1ex"=
+>
+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0cs-&gt;exception_index =3D =
+RISCV_EXCP_LOAD_GUEST_ACCESS_FAULT;<br>
+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0} else {<br>
+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0cs-&gt;exception_index =3D =
+RISCV_EXCP_LOAD_PAGE_FAULT;<br>
+@@ -1643,7 +1681,8 @@ static void raise_mmu_exception(CPURISCVState *env, t=
+arget_ulong address,<br>
+=C2=A0 =C2=A0 =C2=A0case MMU_DATA_STORE:<br>
+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0if (pmp_violation) {<br>
+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0cs-&gt;exception_index =3D =
+RISCV_EXCP_STORE_AMO_ACCESS_FAULT;<br>
+-=C2=A0 =C2=A0 =C2=A0 =C2=A0 } else if (two_stage &amp;&amp; !first_stage) =
+{<br>
++=C2=A0 =C2=A0 =C2=A0 =C2=A0 } else if ((two_stage &amp;&amp; !first_stage)=
+ ||<br>
++=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 (env=
+-&gt;virt_enabled &amp;&amp; spmp_violation)) {<br></blockquote><div>Nit: a=
+lign the parameters.=C2=A0</div></div></div>
 
-Under the same organization we could keep a read-only mirror of the 
-OASIS virtio-spec repo. That wouldn't change virtio governance in any 
-way, OASIS stays the authoritative source, but it gives a single place 
-to find everything virtio-related.
-As a side note, it could also serve as a starting point if the virtio 
-community ever wanted to move the spec outside OASIS, but that's 
-a completely separate discussion and not something I'm pushing for.
-
-For the vhost-user spec itself, I think we should invite co-maintainers 
-from other projects, and keep requiring a broadly complete 
-implementation before merging non-trivial spec changes, but that's what 
-we already tried to do for both vhost-user and virtio spce changes.
-
-That said, honestly, this might lead to fragmentation (although the goal 
-is to create a single hub for virtio), so perhaps the idea of having a 
-repository in QEMU gitlab or rust-vmm github might be better.
-
-I'm happy to help with the setup if we reach consensus.
-
-Thanks,
-Stefano
-
+--000000000000b68398065409c4d6--
 
