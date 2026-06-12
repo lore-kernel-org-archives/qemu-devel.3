@@ -4,144 +4,116 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 19811CD98CE
-	for <qemu-devel@archiver.kernel.org>; Fri, 12 Jun 2026 20:55:55 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B0912CD98CF
+	for <qemu-devel@archiver.kernel.org>; Fri, 12 Jun 2026 21:26:23 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wY8ui-0003wy-PO; Fri, 12 Jun 2026 16:55:40 -0400
+	id 1wY9NO-00075a-Jb; Fri, 12 Jun 2026 17:25:18 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <nathanc@nvidia.com>)
- id 1wY8uh-0003wc-PF
- for qemu-devel@nongnu.org; Fri, 12 Jun 2026 16:55:39 -0400
-Received: from mail-southcentralusazon11012039.outbound.protection.outlook.com
- ([40.93.195.39] helo=SN4PR2101CU001.outbound.protection.outlook.com)
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1wY9NI-000711-Vd
+ for qemu-devel@nongnu.org; Fri, 12 Jun 2026 17:25:14 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <nathanc@nvidia.com>)
- id 1wY8ue-0004vD-6J
- for qemu-devel@nongnu.org; Fri, 12 Jun 2026 16:55:38 -0400
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=KqAam8M4ptqetsApbH2BCy2NJYTiD0guKPHJN5MX0RvPKosu1wQQeiyHVefj2yO2h3s6xh3HQNl4UgzZP2cVrxMtlYEqkujAoEr8VmsBeezPm12lGU+LDhg0ro7S5p2u3F6cZV6Zu/P4Q15kJeTjeGpF4wLAkIfrl16CVl6QZgpj7GioqfV7wtuiTtSn3qW/fJ4p6I92GvVVULpobRJWbhpraRQHjdmKWM7vlVFs7zDD3OwBG81OybVkGTHM/k/CxFXCbs6atoZjHkqnd6RtD7JwbUKIhYE8aaE8xAN5Tzb7NRjRvMbk7a/uRn4e0RyuEGiAWwohbSxtR/WY0snsUA==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=QzHlSIQIsD/dGu/hr7XkBhDFipLlNwojS3r4RO7knbE=;
- b=yLIJlpVdD+GA2cKJIEteGNLYJZ4GZDzjiOmdJBAkFSTvU70bDKTNoip4RVqZrY6zl0g+/yof9/2SOy/3VKxwz1o3zjYZXk/sYgMLuyBOjrWBO7Pja0cniMrc89gfiz4ddeXioAm2UELEofn+2hc4ZTZTHqk69QGdmoEvNNosnalMjEnR7ZUcJLv+NMhNgL5rLgZorbHfCDjZszIAQTkHFJ6g+ywWNAxI/cEZP2qIvOcc0NsLcTyjht2BXno+sSEJYlBOTDuKdq5EIzzGbC/0NXo+i3RkRNL9l2hribHemA7oLmzyDtaexCVQbn3Qk2f/2W7PK1o76X8WU5tqDv0P1Q==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=nvidia.com; dmarc=pass action=none header.from=nvidia.com;
- dkim=pass header.d=nvidia.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=Nvidia.com;
- s=selector2;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=QzHlSIQIsD/dGu/hr7XkBhDFipLlNwojS3r4RO7knbE=;
- b=rjYTKG2eOu7KuK/na81FkOiyTqq4ZIl8kee6zdwcxrY4cHprRxF4e+3wu+Ogb1lb0ehjFXidXkgFXhqtPw+HPSlzDEbFBxOsdov5+AmuTaSKSIR60udLOW59Y80+5fCfh89252xGXM6Nc5HpgHGwLKfoE3/TMAvwDmEMQY/caR6R2D3WnB/0y+K9V3/x/Z4Q9+gKh/zxST+/jMlxy01gL/W4C8g0SanwfdjAAy50rCHEXYt3AT1HbKWv1K5wgWi9KIfw+mwzi7alC5MoPBuiWq/XnYE2LmHaQvz7A/9U1SC0HIR5xntkgJRhTc2330Z/mQATBOlqkibgluAXKV05mQ==
-Authentication-Results: dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=nvidia.com;
-Received: from DM4PR12MB5390.namprd12.prod.outlook.com (2603:10b6:5:389::15)
- by MW6PR12MB7070.namprd12.prod.outlook.com (2603:10b6:303:238::7) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.113.13; Fri, 12 Jun
- 2026 20:50:27 +0000
-Received: from DM4PR12MB5390.namprd12.prod.outlook.com
- ([fe80::2815:c27e:a0a:2720]) by DM4PR12MB5390.namprd12.prod.outlook.com
- ([fe80::2815:c27e:a0a:2720%6]) with mapi id 15.21.0113.014; Fri, 12 Jun 2026
- 20:50:27 +0000
-Message-ID: <7825db6f-c999-430f-8829-57b36312ab2d@nvidia.com>
-Date: Fri, 12 Jun 2026 13:50:24 -0700
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 2/3] vfio/pci: Add ats property
-To: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>, qemu-devel@nongnu.org
-Cc: Yi Liu <yi.l.liu@intel.com>, Eric Auger <eric.auger@redhat.com>,
- Zhenzhong Duan <zhenzhong.duan@intel.com>,
- =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@mailo.com>,
- Zhao Liu <zhao1.liu@intel.com>, Alex Williamson <alex@shazbot.org>,
- Matt Ochs <mochs@nvidia.com>, Nicolin Chen <nicolinc@nvidia.com>,
- Shameer Kolothum <skolothumtho@nvidia.com>
-References: <20260612014322.2918836-1-nathanc@nvidia.com>
- <20260612014322.2918836-3-nathanc@nvidia.com>
- <b2ab0072-c7de-45d4-920b-4fce5645f329@redhat.com>
-Content-Language: en-US
-From: Nathan Chen <nathanc@nvidia.com>
-In-Reply-To: <b2ab0072-c7de-45d4-920b-4fce5645f329@redhat.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-X-ClientProxiedBy: SJ0PR05CA0188.namprd05.prod.outlook.com
- (2603:10b6:a03:330::13) To DM4PR12MB5390.namprd12.prod.outlook.com
- (2603:10b6:5:389::15)
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1wY9NG-0001k5-C5
+ for qemu-devel@nongnu.org; Fri, 12 Jun 2026 17:25:12 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1781299497;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=kf/0p+kM/RyZrZMZCQeWzkoZNn7wAKkWoBPGpCtjdAE=;
+ b=VflOfrQNQvkqorg20qeAxfJHJGv16bH7fj7NgL4OcnG0UqbTQU/31fGzi/Lrc/HZl/dwPh
+ vBdkZQdW9KzmqX+7cba6uG8YQA0/3tjDdpQuRlQDzlOnN5I21jRlZgAMmItiR1feQBEnBR
+ pbWGXjaCWgWkWf8L8dj3+2XtY6zV5Dg=
+Received: from mail-qv1-f72.google.com (mail-qv1-f72.google.com
+ [209.85.219.72]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-54-j_CWcTBWMP-6GnmGnlvWOw-1; Fri, 12 Jun 2026 17:24:56 -0400
+X-MC-Unique: j_CWcTBWMP-6GnmGnlvWOw-1
+X-Mimecast-MFC-AGG-ID: j_CWcTBWMP-6GnmGnlvWOw_1781299495
+Received: by mail-qv1-f72.google.com with SMTP id
+ 6a1803df08f44-8cceb0317b3so21365166d6.2
+ for <qemu-devel@nongnu.org>; Fri, 12 Jun 2026 14:24:56 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=redhat.com; s=google; t=1781299495; x=1781904295; darn=nongnu.org;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+ bh=kf/0p+kM/RyZrZMZCQeWzkoZNn7wAKkWoBPGpCtjdAE=;
+ b=R9xNEHjjIjxozmjOUCobq8N/hRkKyUE92Xnq1nSKWsNWU7SZdrzVxz4t0fU7qxIHYR
+ 6D8W4lpbeLFLwRCj4k/EenNBOK3yHUkvUbZrWyJmyFWf4JgXIqtzQJ8t+U4E13+C+/Xo
+ +jDj0ZVaoPUr9kPE7HDyzgYDsOUlFTabT9SYwdWDKBcnW29ksCGRZGp2mHEe5Y2doA8O
+ s1Jh9xA+BUGzZbuuI3zP3uG+vUvimW2oBnU/OhYzdAszclUPA3W2D0gtfbqs+1E4Zmz4
+ hN9AnKmhd4Wc29rgtBV0E9HRUetwk7HubVAcZ5wgEr/KcldyqylJKJpXd4fp0AhDDLmc
+ bvnA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1781299495; x=1781904295;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=kf/0p+kM/RyZrZMZCQeWzkoZNn7wAKkWoBPGpCtjdAE=;
+ b=RIBNlr+xO8jnU2XcUKeb0vr5V/YQUB6zNBOKVZf7j8aX8AJ1NBaiXMoGAYo2R6YHnc
+ 2kWG+Zqs9J95FQgeF2mfPyXCszc/JpPau5OuudnkmezXFzCjl/PaYBE2KCiuZDeTW6Y/
+ 6LBhfSQ8gRdx++hF3Z+E3d2xEyJxivUnLBHtjnOrOIEu1k0grIXAKS/FC5QSDCQJ3w/G
+ uB/99OEZ+sEHo6sA4KPvEugcO1qz5xSfUwpc8hNy7uuvJ8ny2d8gOYxR+1c4nWLtu/Fx
+ 2ToH4ymfXdj8mmM4PIybL9s5kwSwy99o9kNNTV9+lNqZ5+IYLjDaauE6jug9zZM1p3RO
+ P0Aw==
+X-Forwarded-Encrypted: i=1;
+ AFNElJ8WFQXxz6ame17ebZErweh54bPrTEind9GQmjtqJvK+LATFQQq04ozrCnypjhPgVltA5b6snw5y2XSO@nongnu.org
+X-Gm-Message-State: AOJu0Yz236YoTbtVTOq2g9E8vCVyzIA5D0Rbzo74Qz5Z8cYfsVQ4qGcF
+ iBqjL9NY4cicBAX3oYbxt4lGddOpNChJE9wExOWTRdcYD7uVcXuzI/z/9/X98SfT6QNg+5rTtuY
+ 8Fbzm/0fSVzy0J7ArPzyebyD3BTYjCl/OgZCFc01RLN/qk1Dmzj3Ao6QV
+X-Gm-Gg: Acq92OFGs1ElEEaxZdG+9qSJzegj/XrRCrQ0bmIw3x8DNRcGF4QF5uyPyVO0HAvmmhf
+ C2m9GUhLcopA41XK6pGlFaoujMvHOy0SFK4JM4M0AvzeNNh51y2RdFvsbX35BEYrwP/z807ur7W
+ blhtWnc/i+fIgPzWS3r1VqVUAZeMZIVhpcF4Ax9k3sEVjeL1HbYonMVDpP8wY8x3t/+SM6mjLrk
+ 74ULU3oTNKr+xdGmxXWzY1W5I5SZzteOLhiTXPNGtcUTkbEQPQSwcUPvEShOPP657Tr8jICu/DO
+ 7PQI8fanmHOMZCdX0ltyY7x9lM+D+f6G2qxfFM2viTUxIUsJdqEMwKZq4c99EAh9WOSUJBXbBAX
+ rZJEY245ZA8IpYyk=
+X-Received: by 2002:a05:620a:230d:20b0:915:a34e:cb68 with SMTP id
+ af79cd13be357-9161bcb2c3bmr517691985a.34.1781299495272; 
+ Fri, 12 Jun 2026 14:24:55 -0700 (PDT)
+X-Received: by 2002:a05:620a:230d:20b0:915:a34e:cb68 with SMTP id
+ af79cd13be357-9161bcb2c3bmr517686685a.34.1781299494670; 
+ Fri, 12 Jun 2026 14:24:54 -0700 (PDT)
+Received: from x1.local ([142.189.10.167]) by smtp.gmail.com with ESMTPSA id
+ af79cd13be357-9161a006ef0sm314103185a.24.2026.06.12.14.24.53
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Fri, 12 Jun 2026 14:24:54 -0700 (PDT)
+Date: Fri, 12 Jun 2026 17:24:52 -0400
+From: Peter Xu <peterx@redhat.com>
+To: Alex Williamson <alex@shazbot.org>
+Cc: "Michael S. Tsirkin" <mst@redhat.com>,
+ Peter Maydell <peter.maydell@linaro.org>,
+ Gavin Shan <gshan@redhat.com>, Pavel Hrdina <phrdina@redhat.com>,
+ Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>,
+ qemu-devel@nongnu.org, qemu-arm@nongnu.org, jugraham@redhat.com,
+ shan.gavin@gmail.com, David Hildenbrand <david@kernel.org>
+Subject: Re: [PATCH RFCv1] virtio: Inherit max bounce buffer size from bus
+ parent if possible
+Message-ID: <aix5JKoRXYlS8hbC@x1.local>
+References: <CAFEAcA_2oZepwCoPS+cMgdnrSTj=mCGzdFZf5gGRHJK13yqaKQ@mail.gmail.com>
+ <20260611114811-mutt-send-email-mst@kernel.org>
+ <CAFEAcA9HUGfDgHjvCemPPNkp6FfvQp+4y7qCnw+ROFpG3+ybMw@mail.gmail.com>
+ <20260611123952-mutt-send-email-mst@kernel.org>
+ <CAFEAcA8vOMd64cCkfCyc1wNbjEY+bnhFPce-V_WbAuXrUnP8cw@mail.gmail.com>
+ <20260611130037-mutt-send-email-mst@kernel.org>
+ <air8hrlhrkaoJ4wi@x1.local>
+ <20260611164624-mutt-send-email-mst@kernel.org>
+ <aismn4D1wXI6tipv@x1.local> <20260612134423.648c335a@shazbot.org>
 MIME-Version: 1.0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: DM4PR12MB5390:EE_|MW6PR12MB7070:EE_
-X-MS-Office365-Filtering-Correlation-Id: 2bbd0318-cadb-481c-31f9-08dec8c43bb7
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam: BCL:0;
- ARA:13230040|366016|1800799024|376014|23010399003|18002099003|22082099003|6133799003|56012099006|11063799006|4143699003;
-X-Microsoft-Antispam-Message-Info: 4wcWC3xtMSzCY7179iN0cCI+0yuGAi/i5qo9dsyqBBlFYKi3oVHvPUlAni7xOQDiO9+JXTL78DyNscQTUtF4AE/83ZsIqp1wp6vfrJR4ekYWSXSJH5s5DHEpgPdT4k5qxajQP78tsQ5DmMjNeeBBaqvPSVMuT6aaKQnPwF0BebxIFLqZRpLr+lHr/3fRegq1wJAFj0P/5dKOm9vMFm0QR0ItLrWBeaj6AeakunfDz2PrX+GyOey9MC/3w8r/Zko2nXXodV3TkBoV0iP8+4QLHjDUK5o5Pu9fSmDX3WxH6sAXcG7B8brEo/iscoeomzHkH357Yp7SRc5dT1O324t3AWLSIB+Hes/VzKrCBKU2pMyMd603sg8seGuDLvWeRL+t1so/Jr9EXYGPnQJWR7xtEKIrCpltJvJSyPJWIeXqUvcXQWv1KR879YPwtoVdjlhq1RRJg6/106Yg42aMHmJpR1SDZ+e+UgnNApiGdo+enaM+Z88XwM2aFc4/wijp/ZG7aTlJ33W2esUHO/dhV8bod1n0s8IBgWVeysfWZpVd1xtzwjcEfM8rz1M9wlgTr5fnyuM8YBPh6bQFtxU0ee8ddyInTz+535Ri9TAey5K2t6IfFHpYsH5vubPV1GnuQ2BjQR0xmw63yalqvTetfvRjH5ZSwsR1ov4kRhVTjQnuClfYbORITBJo9tZpJ9kDQ7uk
-X-Forefront-Antispam-Report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
- IPV:NLI; SFV:NSPM; H:DM4PR12MB5390.namprd12.prod.outlook.com; PTR:; CAT:NONE;
- SFS:(13230040)(366016)(1800799024)(376014)(23010399003)(18002099003)(22082099003)(6133799003)(56012099006)(11063799006)(4143699003);
- DIR:OUT; SFP:1101; 
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0: =?utf-8?B?UWVoZ1JJcDF1U3ZiK0hZc2Y3Ui9kTEgyZjhJTlFtekJRSzBqSHNkRURYY05D?=
- =?utf-8?B?a3A4UzI3TFRuRHZqZzF0cFlNTXE1b21OYm5SdmN2YW43U0RSM2dPYlVhSDRp?=
- =?utf-8?B?V013WUlBQmR4Z0t4TjV0ZUY3TU5QR0VKWWRMSWEwTlVVQnpJclhzb1dwWS92?=
- =?utf-8?B?Vm9jdVRsUThzb0VqMXRXNVhnUzYvekhsWXNsSU1TUHgvWEhxTFV4M1JNVkFz?=
- =?utf-8?B?ZDYwRnd1dWNpZ0I0ZU9PazZtRzFlczYwNkNSVTZ3c1RrTkU2Z2xBNktmMk5V?=
- =?utf-8?B?ZEVGY2NicGNGZzlHZVc0Z2YxUEZkVUk4Snk4RFhycHlKTmlZS2tDMFZSSTEy?=
- =?utf-8?B?anlzZ1RFa0tDbXkyQ2pYRzJMTGtjRUo1NXNQR3lFaWd2dWltQzNVMWozdktK?=
- =?utf-8?B?MXpqNUUrak9Hdm1rbFRLUUtSakk0UGRQVmlWcDZNZVE3UlpEOXNTcEdFT0dr?=
- =?utf-8?B?VjVGdE5GaCtDTWtOTHBYbFJlYWlWcWplOTl0ZjRpdHZYUXRDQUExTXpsWTdm?=
- =?utf-8?B?THFHOVBUNFpjdi9jR1pLRGp6ZS93WnhYQ0F4ZXZ2YnhQT0JCS2piVlFpaDBF?=
- =?utf-8?B?TnNvaEwzT1dQNVY3VzMwQnhFcDFqVlVZYmFKdklKZitNbW52UEtuZjZxQlRz?=
- =?utf-8?B?bFMxRzNkVFVUWm1uT00rNm5SMXFkOVYyWmZsYzZRRzJwTkNkMFg5RUZxaTZ3?=
- =?utf-8?B?TGZpN0VRblhBa3JCVldYMDZ5blpZRnorTnZkVkFLdk9EcWJzcjREWXpqT3RF?=
- =?utf-8?B?MUdZMWJJblBBa21RK0IxYk5uNDB0ZCtuYWxBVjZOZHVWSytTSEEzQkNKQ1A2?=
- =?utf-8?B?SFBGNnFvUTFTVDc0L2NFcTRlaVBTOUxSZVQyR2lBTmhVeXhYb1NkMU0vYldt?=
- =?utf-8?B?WHdjdFhub3JtaUJuZk0rb3U2Qy9wcXZRNURLS2R5QWFJejMwZkpyMmtZQ3ox?=
- =?utf-8?B?RWF5TTJUZ3RLTkpPcHBqUElkOElpMDBicVRhZE85TmRYZnpqWFE1M3YrVXFY?=
- =?utf-8?B?aDRPZDViZUU5Z2dpZmhJOFlxLzBZd051WkdVblJLNVgxRU03ZDFzNDFFRllq?=
- =?utf-8?B?S0lSd0pXc2VlSGVUSURIc0dyT0hoUjdRYXV4SlJ3TU5rMTV5bEIxOERrbmg5?=
- =?utf-8?B?L0ptSXoxU2FZUnRJbWZvSFliTy90TlBKd0NTbER4VVR2MGwxVUJBWnpSMS9v?=
- =?utf-8?B?V0pGSk90eDZqQyt5U2U1V001OVcyTmw5S0Z1b25YNXhwVUZJOFBuWks0UnBS?=
- =?utf-8?B?aE5pNTVUellyMTg3dVZGVUVuUW0vWnJzbVN4OHdxWndBa1VHaWR0cWQ3RlBv?=
- =?utf-8?B?VVlhTVQ0R0JVaFltTjRUN0o0VlVtazhqVUhTS0hiZkJUcXY0ZUNsQVA1bkNX?=
- =?utf-8?B?SFhEa1h0T3pkOHhORUJHcyt0VUNXRHFqU0FieUk2TitJMjRqWmVNRDk5cmxI?=
- =?utf-8?B?T3g5N3IvV04vZ0hrOExwYk9EKy80cHRKbU5XMDV4cnBwWDhLdFRjRlRHN0Jl?=
- =?utf-8?B?Zk5yMWVEaGZ3THFGQVFUZFJrUTRZaGhaOGp4UFIzTEdqTm1wZGdSWUxQT0dJ?=
- =?utf-8?B?VUxNaDQyRjl3RHpiWmhWenA4Q0w2RlB3U0pLWHVaZlBnbklHU21EbDNZZ2hF?=
- =?utf-8?B?RmVPcXlHc1Y4NW1QaU5aMytEbGZ1RUpXL0txQmRyc2RBQmF1aDB3aDcwV0lM?=
- =?utf-8?B?RWdyVnBodkxSVHlXRzhEdTJqcHVnY0hoTU9xZzJGS3FmWXNFaytxNENPTndN?=
- =?utf-8?B?ZXhMd2MvN2l0Y1JNc3BXam5ySVFnaXMwd3ZyUHhBT003c0p3aS9mYUZPbnVM?=
- =?utf-8?B?ZjVDOU1ua2EyNUwzSVZadmVWZUNLbkkvelVQQ0ZMTGdFcVRCOElMa09vb3hK?=
- =?utf-8?B?cjlUcDJBVFlLdGNEQTU5eHBLOHV3VmJxL3lmeC9tQndFOVVnbUxnemFZSjhl?=
- =?utf-8?B?a1lFSGVDYVhiSG5wbk5XaXZtWWE2cDU2MEM3M3g5WjhRUW1XVk1pUWdVemxQ?=
- =?utf-8?B?SlF5TEJYVEZuR3VveEw4aS9RKzQ5UE5ScWNrQ2FRcFJCZzdKOXpDRHVsenR6?=
- =?utf-8?B?R0grWU5nQ29DZHpMOWFBek5XSWRjdTB0UDVTaVQ4MUxhRWNKUWpEZ1dOOTBq?=
- =?utf-8?B?QUoxQXhLN09LQ0tZZTBPemkxSXQ4RUpCemx6TmFNWk81WmYyZFNiSHc1c3Nn?=
- =?utf-8?B?bzc1TW1pVnRzY05CKzFwU2xIS0YrWDNON3F0LzAxWEhVLy9yMHZCc0xRT0JQ?=
- =?utf-8?B?NENzejQ5bDRnZTYvK2ZkNG1UWHA0VTJpYTFTMWdYZmZwdHNKT0xSbElUb3VO?=
- =?utf-8?B?ZjRmYWFWQ09VQWdZYTFWOGg5clNnVHFiY3R1Y1FYMGNZdHNOZ2lZUT09?=
-X-OriginatorOrg: Nvidia.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 2bbd0318-cadb-481c-31f9-08dec8c43bb7
-X-MS-Exchange-CrossTenant-AuthSource: DM4PR12MB5390.namprd12.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 12 Jun 2026 20:50:27.5410 (UTC)
-X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
-X-MS-Exchange-CrossTenant-Id: 43083d15-7273-40c1-b7db-39efd9ccc17a
-X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: SjdrSHCtN6yEE4hl1qs13LIA0qu3v5Pd24E/W2MwoSNC/D0Oww2R+22teYWKvZUCqoqG0ARa3SR3NIk2hRQU1Q==
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: MW6PR12MB7070
-Received-SPF: permerror client-ip=40.93.195.39;
- envelope-from=nathanc@nvidia.com;
- helo=SN4PR2101CU001.outbound.protection.outlook.com
-X-Spam_score_int: -14
-X-Spam_score: -1.5
-X-Spam_bar: -
-X-Spam_report: (-1.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.445,
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <20260612134423.648c335a@shazbot.org>
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=peterx@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -24
+X-Spam_score: -2.5
+X-Spam_bar: --
+X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.445,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- FORGED_SPF_HELO=1, RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001,
- SPF_HELO_PASS=-0.001, SPF_NONE=0.001 autolearn=no autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -157,206 +129,197 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+On Fri, Jun 12, 2026 at 01:44:23PM -0600, Alex Williamson wrote:
+> On Thu, 11 Jun 2026 17:20:31 -0400
+> Peter Xu <peterx@redhat.com> wrote:
+> 
+> > On Thu, Jun 11, 2026 at 04:52:20PM -0400, Michael S. Tsirkin wrote:
+> > > On Thu, Jun 11, 2026 at 02:20:54PM -0400, Peter Xu wrote:  
+> > > > On Thu, Jun 11, 2026 at 01:02:34PM -0400, Michael S. Tsirkin wrote:  
+> > > > > On Thu, Jun 11, 2026 at 05:53:54PM +0100, Peter Maydell wrote:  
+> > > > > > On Thu, 11 Jun 2026 at 17:42, Michael S. Tsirkin <mst@redhat.com> wrote:  
+> > > > > > >
+> > > > > > > On Thu, Jun 11, 2026 at 05:16:09PM +0100, Peter Maydell wrote:  
+> > > > > > > > On Thu, 11 Jun 2026 at 16:57, Michael S. Tsirkin <mst@redhat.com> wrote:  
+> > > > > > > > > Then I'd like to see an example where we have an actual good reason
+> > > > > > > > > to do execute arbitrary width accesses on device RAM when the
+> > > > > > > > > driver does not execute them, please.  
+> > > > > > > >
+> > > > > > > > That's the case we started with, with this GPU where the
+> > > > > > > > virtio data structures are in this PCI BAR. We want the
+> > > > > > > > virtio backend to have the freedom to say "I'm just going
+> > > > > > > > to assume the ring buffer etc is in RAM, and I don't need to
+> > > > > > > > care about carefully ensuring that I only do word accesses".  
+> > > > > > >
+> > > > > > > virtio backend does not need to assume anything. any spec
+> > > > > > > compliant guest guarantees it. any address given to
+> > > > > > > a virtio device is ram.  
+> > > > > > 
+> > > > > > OK, but how do we tell if the mmap() PCI BAR we have is RAM
+> > > > > > or not ? Some of them are, some of them aren't...
+> > > > > > 
+> > > > > > -- PMM  
+> > > > > 
+> > > > > We don't care? If guest asked a virtio device to access
+> > > > > memory then that memory better support accesses guest
+> > > > > requested, and on virtio that means any width.  
+> > > > 
+> > > > Yes that's also my understanding that QEMU shouldn't care, if on bare metal
+> > > > if it is a grey area with undefined behavior, then QEMU should also be fine
+> > > > to make it undefined.
+> > > > 
+> > > > Only one (IMHO, very slight..) concern is, if such "undefined behavior"
+> > > > operation may crash QEMU rather than causing a sigbus like what normally
+> > > > would happen on a bare metal.  
+> > > 
+> > > bus errors are uncommon on bare metal. they aren't usually
+> > > handled all that well.  
+> > 
+> > Ah, not something I was expecting to happen regularly.
+> > 
+> > In this case, the whole concern is about a possible malicious guest that
+> > might have installed a VFIO assigned device MMIO region (which may be
+> > register based; RAM-based is non-issue) to be a DMA target of anything.
+> > 
+> > >   
+> > > >  I'll put that discussion at last since I
+> > > > don't know if it's that important.
+> > > > 
+> > > > So taking that e1000 bug into account,  
+> > > 
+> > > Won't the patch I sent resolve e1000 too?  
+> > 
+> > If you mean:
+> > 
+> > https://lore.kernel.org/r/20260611093049-mutt-send-email-mst@kernel.org
+> > 
+> > Roughly, yes. But it is only to show the idea, not really a real patch?
+> > 
+> > I think we need to cover all the rest details (I mentioned all these in my
+> > previous reply too below):
+> > 
+> > - we should better leave memcpy()/memmove() as before for non-ram-device,
+> >   only do that for ram-devices
+> > 
+> > - per PeterM's comment, __builtin_memmove() may still have unwanted side
+> >   effects (I agree, it looks broken before and maybe we were lucky?)  need
+> >   to switch to atomics?
+> > 
+> > - two spots missing per my previous email here:
+> > 
+> >   https://lore.kernel.org/all/aimEl9QQ_LTRPLtd@x1.local/
+> > 
+> >   IIUC we should also fix these two, or is it intended to be left?
+> > 
+> >   address_space_read()
+> >   address_space_write_rom()
+> > 
+> > >   
+> > > > looks like we have more of such user
+> > > > that wants explicit control over the memory operations, likely with
+> > > > attibutes:
+> > > > 
+> > > > - Aligned only
+> > > > 
+> > > > - No vectored inst
+> > > > 
+> > > > - No possible duplication (perhaps it means, only use atomic access??? per
+> > > >   PeterM's explanation in another email)
+> > > > 
+> > > > I wonder if we should do this by default to all IOs, I think it might have
+> > > > an unwanted impact on general perf.  One idea is we can introduce a new bit
+> > > > in MemTxAttrs: say, mmio_strict, which will follow above stricter rule of
+> > > > doing IO.
+> > > > 
+> > > > Then for ram_device, when doing memory access we should also use the same
+> > > > set, hence something like:
+> > > > 
+> > > >   if (memory_access_is_direct(mr, ...)) {
+> > > >     if (MemTxAttrs.mmio_strict || memory_region_is_ram_device(mr)) {
+> > > >         memmove_strict_mmio(); // or memmove_no_vector(), or ...
+> > > >     }
+> > > >   }
+> > > > 
+> > > > I also want to bring us to the same page on differenciating two things:
+> > > > 
+> > > > - about direct access definition: so far, I want to define this almost as
+> > > >   "it is directly accessible from host virtual address space".  It means
+> > > >   ram_device definitely falls into this category, so it's a sub-category
+> > > >   only but enforces strict mmio as above
+> > > > 
+> > > > - bounce buffer: I want to make sure we're on the same page this is
+> > > >   something totally solving different problem of what we're looking at for
+> > > >   ram_device.  Essentially this is only needed if mem is not "direct
+> > > >   access".  Otherwise we shouldn't need it (including ram_device).  
+> > > 
+> > > 
+> > > I think ram_device_direct_access is a hack that should go away.
+> > > It's a work around for a memory core bug that we should just fix.  
+> > 
+> > I didn't find ram_device_direct_access, if you meant ram_device_mem_ops, I
+> > agree it'll be nice if we can avoid it.
+> > 
+> > > 
+> > > 
+> > >   
+> > > > I'm not sure if above sounds reasonable.  The hope is with that we should
+> > > > fix both this GPU and e1000 issues (e1000, and maybe other places, needs to
+> > > > start passing MemTxAttrs.mmio_strict, though, if we want to keep the
+> > > > default to be still fast-path to use memcpy()/memmove()?).
+> > > > 
+> > > > Thanks,
+> > > > 
+> > > > =========================
+> > > > 
+> > > > Two cases here on the concern:
+> > > > 
+> > > > (1) if fully emulated device, non-issue afaiu because whatever DMA does
+> > > > (with vectored ops) will only apply to QEMU process (like a bounce
+> > > > buffer..) so it won't crash,
+> > > > 
+> > > > (2) if it's a VFIO device (not the GPU case, but when like realtek and some
+> > > > guest driver registers it as a DMA target), logically the guest should
+> > > > receive a bus error, but for QEMU's case it may crash QEMU with SIGBUS:  
+> > > 
+> > > what and why would crash qemu?  
+> > 
+> > If what Alex described issue happened in commit 4a2e242bbb ("memory: Don't
+> > use memcpy for ram_device regions"), IIUC it will crash qemu, but maybe I
+> > was wrong.  Alex knows the best.
+> > 
+> > So in general, we don't want malicious guest to be able to DoS the host
+> > process (hence, to me "niche security use case"..).
+> 
+> Trying to figure out where to jump into this thread.  4a2e242bbb was
+> required because memcpy will be optimized to use instructions that
+> shouldn't target MMIO.  IIRC, in the case of the RTL NIC we were
+> getting SSE instructions to MMIO.  At the time, we weren't thinking
+> about P2P DMA, the virtualized access was a result of the quirks for
+> RTL causing the trap into QEMU rather than directly accessing through
+> the mmap.  Performance and bulk transfers were not a priority.
+> 
+> Alignment was really not a consideration.  The commit log even refers
+> to unaligned accesses.  It was just a matter of chunking to the maximum
+> width available for the size.
+> 
+> If a more optimized path is now necessary, I'd just recommend not using
+> something like memcpy or memmove, make sure it's restricted to
+> operations that are valid for MMIO address spaces.  Bouncing through
+> QEMU should not introduce RAM-specific memory optimizations.  Thanks,
 
+I assume that aligns with the plan, thanks Alex.
+ 
+So is that rtl8168 device?  I wonder if it could reproduce with other
+similar cases too.
 
-On 6/12/2026 1:02 AM, Cédric Le Goater wrote:
-> On 6/12/26 03:43, Nathan Chen wrote:
->> From: Nathan Chen <nathanc@nvidia.com>
->>
->> Add an "ats" OnOffAuto property to vfio-pci. When the device has an ATS
->> extended capability in config space but we should not expose it (ats=off,
->> or ats=auto and kernel reports IOMMU_HW_CAP_PCI_ATS_NOT_SUPPORTED), mask
->> the capability so the guest does not see it.
->>
->> If ATS is explicitly requested but not supported by the kernel, fail
->> device realize.
->>
->> This aligns with the kernel's per-device effective ATS reporting and 
->> allows
->> vfio-pci to mask ATS when the host kernel reports ATS as unsupported.
->>
->> Suggested-by: Shameer Kolothum <skolothumtho@nvidia.com>
->> Signed-off-by: Nathan Chen <nathanc@nvidia.com>
->> ---
->>   hw/vfio/pci.h |  1 +
->>   hw/vfio/pci.c | 74 ++++++++++++++++++++++++++++++++++++++++++++++++---
->>   2 files changed, 72 insertions(+), 3 deletions(-)
->>
->> diff --git a/hw/vfio/pci.h b/hw/vfio/pci.h
->> index c3a1f53d35..b48138870e 100644
->> --- a/hw/vfio/pci.h
->> +++ b/hw/vfio/pci.h
->> @@ -191,6 +191,7 @@ struct VFIOPCIDevice {
->>       VFIODisplay *dpy;
->>       Notifier irqchip_change_notifier;
->>       VFIOPCICPR cpr;
->> +    OnOffAuto ats;
-> 
-> I would move this new property field close to the other property fields
-> in VFIOPCIDevice.
-> 
-Ok, I will move this closer.
-
->>   };
->>   /* Use uin32_t for vendor & device so PCI_ANY_ID expands and cannot 
->> match hw */
->> diff --git a/hw/vfio/pci.c b/hw/vfio/pci.c
->> index 9c06b25e63..6edb3bf5db 100644
->> --- a/hw/vfio/pci.c
->> +++ b/hw/vfio/pci.c
->> @@ -2546,7 +2546,49 @@ static bool 
->> vfio_pci_synthesize_pasid_cap(VFIOPCIDevice *vdev, Error **errp)
->>       return true;
->>   }
->> -static void vfio_add_ext_cap(VFIOPCIDevice *vdev)
->> +/*
->> + * Determine whether ATS capability should be advertised for @vdev, 
->> based on
->> + * whether it was enabled on the command line and whether it is 
->> supported
->> + * according to the kernel's IOMMU_HW_CAP_PCI_ATS_NOT_SUPPORTED bit.
->> + *
->> + * Store whether ATS capability should be advertised in @ats_needed.
->> + *
->> + * Returns false only when ats=on is explicitly requested but the kernel
->> + * reports IOMMU_HW_CAP_PCI_ATS_NOT_SUPPORTED. Returns true in all 
->> other cases.
->> + */
->> +static bool vfio_pci_ats_requested_and_supported(VFIOPCIDevice *vdev,
->> +                                                 bool *ats_needed, 
->> Error **errp)
->> +{
->> +    HostIOMMUDevice *hiod = vdev->vbasedev.hiod;
->> +    HostIOMMUDeviceClass *hiodc;
->> +    bool ats_supported;
->> +
->> +    if (vdev->ats == ON_OFF_AUTO_OFF) {
->> +        *ats_needed = false;
-> 
-> Why not set '*ats_needed' to false by default here too. I see it is done in
-> vfio_pci_add_capabilities() but it looks safer.
-> 
-Right, I'll set it to false at the top of this function in case it is 
-given a non-initialized ats_needed input.
-
-> 
->> +        return true;
->> +    }
->> +
->> +    *ats_needed = true;
->> +    if (!hiod) {
->> +        return true;
->> +    }
->> +    hiodc = HOST_IOMMU_DEVICE_GET_CLASS(hiod);
->> +    if (!hiodc || !hiodc->support_ats) {
->> +        return true;
->> +    }
->> +
->> +    ats_supported = hiodc->support_ats(hiod);
->> +    if (vdev->ats == ON_OFF_AUTO_ON && !ats_supported) {
->> +        error_setg(errp, "vfio: ATS requested but not supported by 
->> kernel");
-> 
->   "vfio-pci: ..."
-Noted, I will update this in the next refresh.
-
-> 
->> +        *ats_needed = false;
->> +        return false;
->> +    }
->> +
->> +    *ats_needed = ats_supported;
->> +    return true;
->> +}
->> +
->> +static void vfio_add_ext_cap(VFIOPCIDevice *vdev, bool ats_needed)
->>   {
->>       PCIDevice *pdev = PCI_DEVICE(vdev);
->>       bool pasid_cap_added = false;
->> @@ -2635,7 +2677,18 @@ static void vfio_add_ext_cap(VFIOPCIDevice *vdev)
->>            */
->>           case PCI_EXT_CAP_ID_PASID:
->>               pasid_cap_added = true;
->> -            /* fallthrough */
->> +            pcie_add_capability(pdev, cap_id, cap_ver, next, size);
->> +            break;
->> +        case PCI_EXT_CAP_ID_ATS:
->> +            /*
->> +             * If ATS is requested and supported according to the 
->> kernel, add
->> +             * the ATS capability. If not supported according to the 
->> kernel or
->> +             * disabled on the qemu command line, omit the ATS cap.
->> +             */
->> +            if (ats_needed) {
->> +                pcie_add_capability(pdev, cap_id, cap_ver, next, size);
->> +            }
->> +            break;
->>           default:
->>               pcie_add_capability(pdev, cap_id, cap_ver, next, size);
->>           }
->> @@ -2657,6 +2710,7 @@ static void vfio_add_ext_cap(VFIOPCIDevice *vdev)
->>   bool vfio_pci_add_capabilities(VFIOPCIDevice *vdev, Error **errp)
->>   {
->>       PCIDevice *pdev = PCI_DEVICE(vdev);
->> +    bool ats_needed = false;
->>       if (!(pdev->config[PCI_STATUS] & PCI_STATUS_CAP_LIST) ||
->>           !pdev->config[PCI_CAPABILITY_LIST]) {
->> @@ -2667,7 +2721,11 @@ bool vfio_pci_add_capabilities(VFIOPCIDevice 
->> *vdev, Error **errp)
->>           return false;
->>       }
->> -    vfio_add_ext_cap(vdev);
->> +    if (!vfio_pci_ats_requested_and_supported(vdev, &ats_needed, 
->> errp)) {
->> +        return false;
->> +    }
->> +
->> +    vfio_add_ext_cap(vdev, ats_needed);
->>       return true;
->>   }
->> @@ -3815,6 +3873,7 @@ static const Property vfio_pci_properties[] = {
->>       DEFINE_PROP_BOOL("skip-vsc-check", VFIOPCIDevice, 
->> skip_vsc_check, true),
->>       DEFINE_PROP_UINT16("x-vpasid-cap-offset", VFIOPCIDevice,
->>                          vpasid_cap_offset, 0),
->> +    DEFINE_PROP_ON_OFF_AUTO("ats", VFIOPCIDevice, ats, 
->> ON_OFF_AUTO_AUTO),
->>   };
->>   static void vfio_pci_set_fd(Object *obj, const char *str, Error **errp)
->> @@ -3973,6 +4032,15 @@ static void vfio_pci_class_init(ObjectClass 
->> *klass, const void *data)
->>                                             "a vIOMMU. A value of 0 
->> (default) places the capability at the "
->>                                             "end of the extended 
->> configuration space. The offset must be "
->>                                             "4-byte aligned and within 
->> the PCIe extended configuration space");
->> +   object_class_property_set_description(klass, /* 11.1 */
->> +                                          "ats",
->> +                                          "Control guest visibility 
->> of the ATS PCIe extended capability. "
->> +                                          "Valid values are on, off, 
->> and auto (default). "
->> +                                          "'off' always masks ATS. "
->> +                                          "'on' requires ATS support 
->> for the device and fails realize if the "
->> +                                          "host kernel reports 
->> IOMMU_HW_CAP_PCI_ATS_NOT_SUPPORTED. "
-> 
-> Again, IOMMU_HW_CAP_PCI_ATS_NOT_SUPPORTED is a kernel UAPI bit and it is
-> a bit too low-level/internal a QEMU for property documentation.
-> 
-> What about :
-> 
->    "'on' requires ATS support for the device and fails realize if the "
->    "host kernel reports ATS as unavailable for this device. "
->    "'auto' masks ATS only when the host kernel reports ATS as unavailable."
-> 
-> ?
-Yes I agree, I will update the descriptions here accordingly.
+Any suggestion if we want to double check a new change don't regress the
+use case (e.g. the old guest tests that triggered this)?  Or I wonder if
+you think code reviews on this would be enough (by being sure about the
+vectored instruction is the core of problem).
 
 Thanks,
-Nathan
+
+-- 
+Peter Xu
 
 
