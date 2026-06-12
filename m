@@ -4,193 +4,73 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8B71CCD8CA8
-	for <qemu-devel@archiver.kernel.org>; Fri, 12 Jun 2026 11:03:23 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 58AD0CD98CE
+	for <qemu-devel@archiver.kernel.org>; Fri, 12 Jun 2026 11:04:01 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wXzeu-0002zp-24; Fri, 12 Jun 2026 07:02:44 -0400
+	id 1wXzft-0003Vp-UX; Fri, 12 Jun 2026 07:03:45 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <khushit.shah@nutanix.com>)
- id 1wXzeT-0002tt-4N; Fri, 12 Jun 2026 07:02:20 -0400
-Received: from mx0a-002c1b01.pphosted.com ([148.163.151.68])
+ (Exim 4.90_1) (envelope-from <gshan@redhat.com>) id 1wXzfr-0003Uo-QP
+ for qemu-devel@nongnu.org; Fri, 12 Jun 2026 07:03:43 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <khushit.shah@nutanix.com>)
- id 1wXzeR-0000cu-C7; Fri, 12 Jun 2026 07:02:16 -0400
-Received: from pps.filterd (m0127837.ppops.net [127.0.0.1])
- by mx0a-002c1b01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 65C38Jml1585237; Fri, 12 Jun 2026 04:01:33 -0700
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=nutanix.com; h=
- cc:content-id:content-transfer-encoding:content-type:date:from
- :in-reply-to:message-id:mime-version:references:subject:to; s=
- proofpoint20171006; bh=lJ/CJuvtD52uGNWYR/3MbsekWfbAiuJZoNZC27Wph
- /s=; b=zGauljS4VeRlSOWd28yfdQIsLK2vzk95si2PQ8SGB8V68yzcPLhESu6Ve
- FjmetoybchYs7ou7ORqFbqwqn0dPQhjMRLPQVAxZUaZRymOYqBArRmi/lUqLAxgf
- KYQU7AQXLOVnN2iC7SdvAgUsQ7gkt1hMc0IiwZk4Cm5LjfN3C8Oxi1WvxSMsM7O3
- BrHO3je9Ctua7Hi4CbtaWITS90peq2czMp4LheHZH5hger60DRDUm6A0MX5NRiu2
- wOfVbtFpwtzVcUGWQtf0IJ18RRR+oUMyMHguVcYv8EfM+y5zg4nb6gC530Of/rrk
- Eo1G6RXNzv9zUU/uwNZMI+8mOfoAQ==
-Received: from co1pr03cu002.outbound.protection.outlook.com
- (mail-westus2azon11020115.outbound.protection.outlook.com [52.101.46.115])
- by mx0a-002c1b01.pphosted.com (PPS) with ESMTPS id 4eqe5j50pe-1
- (version=TLSv1.3 cipher=TLS_AES_256_GCM_SHA384 bits=256 verify=NOT);
- Fri, 12 Jun 2026 04:01:33 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=kzXWxlN8sKwoLeMlx0KWUyUECjEXRNOUFRFpkfSrjvq4xDRdn+KavFhI+1Y6w2KQt7o2G+/UlU7ZkEFRcQIz5dmM+urJmu317GmzMV/BnI59L2EX7TVVh2f/yl7L6gLs7hMa1RNlavmLiMwI4CnE9gXsWTaNnB8Vk6orUY3Tbw9F3XkYKm64xp44bDVxQ0+sCgvAXZXlUR9uwAri8xKTf/GCrskiGcFdaV1hfMgZD5ZPnjuFHTJaMjn7KI1uIPbBzGOnScg+VPraJS1J/Y3cxzvHk0MTtvHTfQrWFJNNYxDt7RSbaqYmQlqEU9ntGaEIrkAcLbvqjVnKoCdZvvdkzg==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=lJ/CJuvtD52uGNWYR/3MbsekWfbAiuJZoNZC27Wph/s=;
- b=FQcozResugghasqEVOXu9KNs/ZNs5zYIppDsOmBlC3JNmBGpkNn1tmoJK5gEZHullvMJPsolx+zV/BBy/HRZgMHOzR7bzL6vI/SlSr3pPwxLD1evuua4XNjcwI7T62ZtsE7clYEWI5vZe2k+VkZ6aFuGzaLKAWyHhunCfXiJiK7YMjzfIsvbXOaAqVdy4jkUCuMn3iJvcY4V6nI+BGnsL3ucp6XWtq2RX9aQ3UP4XuF/tmn/iDWkpCMOalxPlL/Yk4SRmdB3sYGl1tV4g5rr1l8OO57yBSoxml0ZyUgLmNPutDteONxPKJGIAap/xTQn4bE1YuXsRmxVeyu9JrgM8Q==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=nutanix.com; dmarc=pass action=none header.from=nutanix.com;
- dkim=pass header.d=nutanix.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=nutanix.com;
- s=selector1;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=lJ/CJuvtD52uGNWYR/3MbsekWfbAiuJZoNZC27Wph/s=;
- b=S3P7s4sr6soz0CTU0RXP29vGKY0Y0kmwJUDWiE3EzfgeDu+t6HcPAlR1chmxQMYnRif1uT/QPKB++1Njes1SwMpHExuyLf6mydJzXFk/2o2yIYB4mbzQPUoOb6UlBM6gHMHJ8OiX/blKonUOYiEsGCu9QGyoa7FkgvU7T8Wk7H+P01/xqTAB7kHlN1g1jBQZMwnOZZ+WdexNntr/IBb91knjTZtzh7pvMwQAvYS5IJRV8b80CI/xedHMDXWiT9jqYDNBnvxqAJf3aWZ/cX+HgC5o8QkxXQ/EhuzZULO3EbMf91p4Q2vM6hohN2kBDhszmZogKNe5ovehePkxYCqpWg==
-Received: from SA2PR02MB7564.namprd02.prod.outlook.com (2603:10b6:806:146::23)
- by CH3PR02MB9932.namprd02.prod.outlook.com (2603:10b6:610:174::15)
- with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.113.13; Fri, 12 Jun
- 2026 11:01:31 +0000
-Received: from SA2PR02MB7564.namprd02.prod.outlook.com
- ([fe80::1ea5:acb6:ebe1:e1c4]) by SA2PR02MB7564.namprd02.prod.outlook.com
- ([fe80::1ea5:acb6:ebe1:e1c4%5]) with mapi id 15.21.0113.014; Fri, 12 Jun 2026
- 11:01:30 +0000
-From: Khushit Shah <khushit.shah@nutanix.com>
-To: "eric.auger@redhat.com" <eric.auger@redhat.com>
-CC: "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>, "qemu-arm@nongnu.org"
- <qemu-arm@nongnu.org>, "kvmarm@lists.linux.dev" <kvmarm@lists.linux.dev>,
- Cornelia Huck <cohuck@redhat.com>,
- Peter Maydell <peter.maydell@linaro.org>,
- Richard Henderson <richard.henderson@linaro.org>, Marc Zyngier
- <maz@kernel.org>, Oliver Upton <oliver.upton@linux.dev>,
- =?utf-8?B?RGFuaWVsIFAgLiBCZXJyYW5nw6k=?= <berrange@redhat.com>, Andrea
- Bolognani <abologna@redhat.com>, Jiri Denemark <jdenemar@redhat.com>, Gavin
- Shan <gshan@redhat.com>, Shameer Kolothum <skolothumtho@nvidia.com>,
- Sebastian Ott <sebott@redhat.com>, Markus Armbruster <armbru@redhat.com>,
- =?utf-8?B?UGhpbGlwcGUgTWF0aGlldS1EYXVkw6k=?= <philmd@linaro.org>, Jinqian
- Yang <yangjinqian1@huawei.com>, Shaju Abraham <shaju.abraham@nutanix.com>,
- Mark Cave-Ayland <mark.caveayland@nutanix.com>
-Subject: Re: [RFC PATCH v2 02/29] target/arm: Add ID Register field
- descriptions in cpu-idregs.h.inc
-Thread-Topic: [RFC PATCH v2 02/29] target/arm: Add ID Register field
- descriptions in cpu-idregs.h.inc
-Thread-Index: AQHc9MdWrrCTilo4XUyVl1SfTS/ydrY6s+6AgAAYG4A=
-Date: Fri, 12 Jun 2026 11:01:30 +0000
-Message-ID: <4FCC55AC-5079-4647-B4FA-220E15F46A77@nutanix.com>
-References: <20260605083358.1320563-1-khushit.shah@nutanix.com>
- <20260605083358.1320563-3-khushit.shah@nutanix.com>
- <ea4c9d58-1993-4b61-8318-7c72f1650bc2@redhat.com>
-In-Reply-To: <ea4c9d58-1993-4b61-8318-7c72f1650bc2@redhat.com>
-Accept-Language: en-GB, en-US
-Content-Language: en-US
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-x-ms-publictraffictype: Email
-x-ms-traffictypediagnostic: SA2PR02MB7564:EE_|CH3PR02MB9932:EE_
-x-ms-office365-filtering-correlation-id: a4c9792b-222b-41a1-9de1-08dec871f561
-x-proofpoint-crosstenant: true
-x-ms-exchange-senderadcheck: 1
-x-ms-exchange-antispam-relay: 0
-x-microsoft-antispam: BCL:0;
- ARA:13230040|7416014|366016|376014|1800799024|23010399003|4143699003|56012099006|22082099003|38070700021|18002099003;
-x-microsoft-antispam-message-info: 05iA3KiOrE1R+HJ6aPE7pjFqkC9+Q14Sp+0afH+26ZQXvNNc1wIL3qtyP/O2MMjNXCzRayY/GtpU38j4KrXfg2MTySvk5mW83iQIrAOmSCVDrCHe953B6hvweG4X+yYnx9QGlWrP+Kq7Q2RQCaRpZrHysvZQNZ2I11wgrkAp5KK3EuELcw+WFZYA9/vvNGZbR23hCTuGJGHpjsM+9C3Y46nSh3bWlGEWyFq74Yev0DmZ+jnd4oINglJQjFR1LaahR50bhvx83Iy3OJvQWHbxAH3/Il1N6mM0YrqgSU2aKwfllVTDEIgKlSxq8ipcf1/EUXXoaa3RF6ImJrGD4W+k1ixc5L+Qa3ctBaFdWcI+MocJCKuTDF8TWIyxAqrCFy9AuKfvsBOXLMsyY8mpmFNm6D37uZfT6V7vMUBYJjZTilmGyt51/L1nKcmW/WpY7A+yuLkp8HS229qmLYRjyxkYR4EzqxJwECp07gQUrNJH7PP8ZaUpfjFCsyVqw8JQCnJGGi1MNZZ4s8UyRZxffGilZUCpB1tqs9eQ5+cSxv6thxkEwwPjooLCZ/+qHqtrYpD0Wl43zKJdTgIZ7GHYWynd8hbU+V7oGIWIzL66qwbc813CyQ2DcFts9hLOzYuZpcYKRfsfGKocqAWsVnG+LsTCTN87NyFSNJ83lWj2Bneltpn17qUa8gemcALzKbyAAGOeU8IK5pdiZi/lwoo5KhDKEVj0F651U9OcHladL6Owwy6qKD5jzPayNmcIm4BlaeLr
-x-forefront-antispam-report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
- IPV:NLI; SFV:NSPM; H:SA2PR02MB7564.namprd02.prod.outlook.com; PTR:; CAT:NONE;
- SFS:(13230040)(7416014)(366016)(376014)(1800799024)(23010399003)(4143699003)(56012099006)(22082099003)(38070700021)(18002099003);
- DIR:OUT; SFP:1102; 
-x-ms-exchange-antispam-messagedata-chunkcount: 1
-x-ms-exchange-antispam-messagedata-0: =?utf-8?B?NTE5c0hjQjZocXB3MlNCQTVRVGg5WVd5aU14bEkvSnNORE5jRStwd29XNTlM?=
- =?utf-8?B?ZTBmaG5JMkxqSURoc1FRYXpXOGpLTDRmaTdOeWdTMTl1RDgrcHkwSU44Wm5m?=
- =?utf-8?B?TC9rNFhBS3Mwak0wakM5bjROZlNISUdUOU1JMnU4cUduYjBVeXgvN2Z1Q0t1?=
- =?utf-8?B?UHp0cnFmN0FuTXRSOExKc2tlMmR5RVdXZnAzYzdML0Qvd1dBSlVFYXFiWFM5?=
- =?utf-8?B?OWJpNHZWbHdyVVYwaW1UclQvT3BCVXhVVFNtdUJzTjJLdmNJQ1FTL2FCVHdG?=
- =?utf-8?B?U2J6K0Qrd3lvRXVOdU5NT3NVNU01RFBYOTN4M0pJTzFNc2lwLzRzWXlOUldR?=
- =?utf-8?B?ckJLemlPN0s5Y29ndlFFRGVYeDVROUhlUDVRd3MvaFRXeFhmcmxLTVVUUlVh?=
- =?utf-8?B?MFlDRStNMmVmODZVSTZkamRXY1RNMDlIVzViWGx1UDlYQ0ZKNVVBN3hpc3pY?=
- =?utf-8?B?SzE0c2NQM0t0Z25GVkdmQ01EL2dZYkE2L1ROWmVNU3ozU0tzdjNnRkRYdDM5?=
- =?utf-8?B?Qnlnb0JWbDU0UEp5WkZZeEUrOFZDK1Z0TjFPT2JEZ3cwYk9nSFJlbzIzamk1?=
- =?utf-8?B?bG1VNjRxZ2VNVE9aMXVCMzh1STFpenJSd295bUNyN29SeXRoUWpmVHE0Ymcy?=
- =?utf-8?B?U08rb3laYU0vY3l3RWdlaElPaENJMHhvaHZSTDV6ZnNTemRxWGZMcTM5cjEr?=
- =?utf-8?B?VEEyYnBZS3QxK1lqZnplWVRQSTdKdS9TTnloQmM2Q0ZRQlc4RmdjMDFpQVhM?=
- =?utf-8?B?YkpWS0FCYXJrQ3k4QnJKbVBzdEhML3hkR3hEVG9wL1VKVjJKdHVNK0k4a055?=
- =?utf-8?B?YzJDQmJYVnRWVExVeithZWsza3dsTU01YitGejc0V1phSXcrbkc2S3Z2YmUr?=
- =?utf-8?B?RXF1SWt0V3lWWjdFVmVkN3d1U2F1d3N0bnU2L25pSGtTUHBpSmFSRlVacWhu?=
- =?utf-8?B?cTlpY3JyUENNOUJLelYzSnhCUHBPM3ZoVXJoS0lwTmNEOWJPL2RodnNNU3Nx?=
- =?utf-8?B?SXJDSVZxQnRlWERsK3lCbW9PWm5hcjRqcWc0OFJlVm5URkVGOUZjb2pUVjlJ?=
- =?utf-8?B?c3lJM1V5R2M2bVlBbzd4YWczTWlPTUZuQS9oOGJRU1oxUE1FbHZQbmVhQUYw?=
- =?utf-8?B?b2RFVWtaWExwTzJiWmxNRGJTYWZsZjIvZ09VMGFDekl5RGpIdHlvY3RVdDJS?=
- =?utf-8?B?cFk5eFkybUlBZWVnYUlNcHdCTGt1clRUSDJNYTVwY04raW5xdHFkOHdlTDU0?=
- =?utf-8?B?OEcydXFtU0hwYW9xWERxZ2ZtTFJxRFFCZmY3TkVlbm9IY2xPd3NLYkpvVW1y?=
- =?utf-8?B?Y0c2T2RnTXlwMHRKVVMybHBzVkFjRFYxU1F3alZlZ0M1TWVRazMzOHJZTjda?=
- =?utf-8?B?OW1PaWN6cmtXcGd3WlVpOExhNmdZSXh2ckJybE5UbUtuRXg2c1Y0ak1RNDZi?=
- =?utf-8?B?dXV2aDFhd0RXTmxKdWp3OUE0Vk1BekVjN1pZeEZURTI4eWlhanJIMWIzZHV2?=
- =?utf-8?B?ZW5EYzR3b3p1ZG1XWG5TZEZRbXpaeFhRVUtPQnBlN1RWS1JDQlFUcnhLdHJy?=
- =?utf-8?B?WVF5Rnc4b0lQdmZzS3NmUnIvMXlYdXA4ajVqQU5kQmhjOW9uRFlSTmNaUDJu?=
- =?utf-8?B?NUVZcjQzNUtxdkpUencxN0djdVBsL2MvVWM1czRmQXdVL2YrLzlBcXB3Z253?=
- =?utf-8?B?d29NMVJpRUlvSEFxZnVvWmY4S1cwSzllV1E1WmZkdVJUbU5mNm9tU0NHa0Y5?=
- =?utf-8?B?cmRUUGtFU0RjTytiSUNNYzZjWlQ1dVUvMmZqMjY0L1ZFeG91aGMvQ2VWbDZM?=
- =?utf-8?B?YytSVmNpU0JhRms4Ry9sMVBmVGczKzBXOVRrbEVrU2ZsdHo4REY1L2JGazBm?=
- =?utf-8?B?dU5xbEpVWHphTHBRRUxNN29xV3A3aDFUMU5XL0ZWRnJpZFpBTG41UTd5ZG9G?=
- =?utf-8?B?SjNMeXozcEYzSXR4SVJVdEI4b1hPb3ZzcWpWZUttRXdrQ3Q2a3R4RU5vc2Zm?=
- =?utf-8?B?alJGTWppSm4yajgzY0p4WGpZbHkzUUJpTm1jMmZUazhZOEd2dWVWcjJVbVF4?=
- =?utf-8?B?ZGVwanlUMmtXSDB2SHc5VjR6OXkxSVNiZ0pVdEhtTTB3UWtmZlRva0tyMDB4?=
- =?utf-8?B?NzEwTDJxZkpHb3pYVUE1Q3pHeXVnczQ5UE0xTnFOM055aXk2TWx6U1BUN1BT?=
- =?utf-8?B?eHJzakFRT1ZnempwWU5hQTdLMnF3OFI2MmRWNytMTitBMXVOdWZRdFNQWWVj?=
- =?utf-8?B?VFFMUW1POHNvZDArVWQ5aElNZjcvK3BiSE0yck1JWkFETHh2UUNyMXR0Rk93?=
- =?utf-8?B?NUx6TjlHdzlqc2FUdW1WcUluVnRKWmZFK2t3MHQrZzNTSXBEcVBWd25IQVdW?=
- =?utf-8?Q?tExe2WBP9J8dg0TU=3D?=
-Content-Type: text/plain; charset="utf-8"
-Content-ID: <5FDE7DF847B92845980993997DDCC631@namprd02.prod.outlook.com>
-Content-Transfer-Encoding: base64
+ (Exim 4.90_1) (envelope-from <gshan@redhat.com>) id 1wXzfm-0001FM-Ck
+ for qemu-devel@nongnu.org; Fri, 12 Jun 2026 07:03:40 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1781262217;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=3kVl/pTwoeqYvE7JfzO0Xo2V9g6eW0C/dnKycWsXo0U=;
+ b=BxPVfbn7lXeq5O9ii/Nws4z1rgfdv3v1cGFQh5dfdbbk3ytDZiVo9F9y2IWYf03h4mZSLc
+ 1TtFKSh60TA6QwLNfOrHzapPuJZQ1XPGvogKbKey9o+cVJtaDUFHbNm7AJB1SFDOiMAr08
+ lWv4MNNWX4nQx1x+iLeWrv2R0q3cBlk=
+Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-687-ihGY4vHmMz66KL8Al3K-qg-1; Fri,
+ 12 Jun 2026 07:03:36 -0400
+X-MC-Unique: ihGY4vHmMz66KL8Al3K-qg-1
+X-Mimecast-MFC-AGG-ID: ihGY4vHmMz66KL8Al3K-qg_1781262214
+Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 8932B19540E1; Fri, 12 Jun 2026 11:03:34 +0000 (UTC)
+Received: from gshan-thinkpadx1nanogen2.rmtau.csb (unknown [10.64.136.3])
+ by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id EBBCD1955BC4; Fri, 12 Jun 2026 11:03:27 +0000 (UTC)
+From: Gavin Shan <gshan@redhat.com>
+To: qemu-arm@nongnu.org
+Cc: qemu-devel@nongnu.org, peterx@redhat.com, mst@redhat.com,
+ peter.maydell@linaro.org, berrange@redhat.com, david@kernel.org,
+ alex@shazbot.org, clg@redhat.com, pbonzini@redhat.com, philmd@mailo.com,
+ phrdina@redhat.com, jugraham@redhat.com, shan.gavin@gmail.com
+Subject: [PATCH 1/2] system/memory: Use __builtin_mem{cpy,
+ move} in accessors of ram device region
+Date: Fri, 12 Jun 2026 21:03:06 +1000
+Message-ID: <20260612110307.1264798-2-gshan@redhat.com>
+In-Reply-To: <20260612110307.1264798-1-gshan@redhat.com>
+References: <20260612110307.1264798-1-gshan@redhat.com>
 MIME-Version: 1.0
-X-Exchange-RoutingPolicyChecked: B7Zxs5yAUGYgCMynm2Y7WfcCckR8HHAr+xjldN6Bs8Z8R6/fSMGoww/F9i1doKfEMnxscA6vmZdE0x04rN2O84GDp/VtvmSg3AupNJ/BMpRBwLe8QtU5EgK0zZOnAsXVAsMpSxCwde0IUrTUTugmmZvcaCb9+XhUiU+ptUoby/24OZ+IBU727regdKDlAOXdkLGIbk7RsFfoLYlXW2IzFsvWcMab+CyBreW+pyKI6xqPAFejWF60E3uMGBemS5ltHDxgk4jZgwYo/zwb7NOm2ZI9KBotXu8+DAPXUknKHLj/st35hYcF5kjcmIkhD1JsGGoBofqmTjeoaFftJXCk0Q==
-X-OriginatorOrg: nutanix.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-AuthSource: SA2PR02MB7564.namprd02.prod.outlook.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: a4c9792b-222b-41a1-9de1-08dec871f561
-X-MS-Exchange-CrossTenant-originalarrivaltime: 12 Jun 2026 11:01:30.6774 (UTC)
-X-MS-Exchange-CrossTenant-fromentityheader: Hosted
-X-MS-Exchange-CrossTenant-id: bb047546-786f-4de1-bd75-24e5b6f79043
-X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
-X-MS-Exchange-CrossTenant-userprincipalname: 468JQZInDCsEdsKqZA8LAUJxZOXL+CRp1/qP+FdwdJB76JutBDb0FW8QEen1Dzlsq8c6P5E0zQFuFEMK/two2FfglCa7HwXd8tyE4i6FJS8=
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: CH3PR02MB9932
-X-Proofpoint-GUID: 5rzVzl0Bdx8aHG54KISwdUPYw2sk2iEu
-X-Proofpoint-Spam-Info: AW1haW4tMjYwNjEyMDA5OSBTYWx0ZWRfXxYJfqFGMd+YX
- rTC7SnApJqO82wfXqzELgJkrfXHbVTbFmDmEOzFU79MWoxZXuZvy94UbByBsQA3z+2w7FlMVWoP
- ljzjHwQVCRQlDZm7qLhWNmxLuqMmjLE=
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNjEyMDA5OSBTYWx0ZWRfX4TwL/FgkP481
- BOcCMckBn/6Sta6Bhz9boc661Xb2e/pHKHtgU3dGwDF+9CPBp561pUApjZO2ZRLT0b6/hkgQb0r
- bXYH4KrsdQPQLUT3QHzMfRPJlVNEVeLnb3O0UJtXWtmkzxv5XXNVip7igBfhAfGkJULfARJ3p9w
- o34V+iqSEBQ11bCsNgw5ijXcax5pXoRnrvOiwkKiQeOZGlEzyv8YOBHRVhaRNo2jHCbMMGMobf7
- xBbEy7b8GMitZlNb2/9PWPvChkj/Rn+mpY03ViYd4kY5ecq78+lCXbCtvMIS3GtG3HrdytV3tZH
- bmlcBwF+diPnH8Xe+JIy22hS4BsJXJ38DErkO8ovSCbi2EVqnD20JhrspkZUU3D5b5smkSU2rDA
- lxL7CapgrEqDZ3ZJ/1O6dGhrDx1Wsy/keq8KY4KqGxmE3X+o7oHfyrnW1P40/F6OaT+49p9c66j
- mttNsSJM8ChxOcHLTuQ==
-X-Authority-Analysis: v=2.4 cv=OfKoyBTY c=1 sm=1 tr=0 ts=6a2be70d cx=c_pps
- a=3+BHtXVVVEj9tth3MIVLhA==:117 a=z/mQ4Ysz8XfWz/Q5cLBRGdckG28=:19
- a=lCpzRmAYbLLaTzLvsPZ7Mbvzbb8=:19 a=xqWC_Br6kY4A:10 a=IkcTkHD0fZMA:10
- a=FelO9ux0wxsA:10 a=0kUYKlekyDsA:10 a=VkNPw1HP01LnGYTKEx00:22
- a=VofLwUrZ8Iiv6rRUPXIb:22 a=Ap8k9tRZuQ82DLYWQqG7:22 a=20KFwNOVAAAA:8
- a=tcjJa4N0bUe3Ez2rcQwA:9 a=QEXdDO2ut3YA:10
-X-Proofpoint-ORIG-GUID: 5rzVzl0Bdx8aHG54KISwdUPYw2sk2iEu
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.125,FMLib:17.12.100.49
- definitions=2026-06-12_01,2026-06-11_01,2025-10-01_01
-X-Proofpoint-Spam-Reason: safe
-Received-SPF: pass client-ip=148.163.151.68;
- envelope-from=khushit.shah@nutanix.com; helo=mx0a-002c1b01.pphosted.com
-X-Spam_score_int: -31
-X-Spam_score: -3.2
-X-Spam_bar: ---
-X-Spam_report: (-3.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.445,
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.12
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=gshan@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: 8
+X-Spam_score: 0.8
+X-Spam_bar: /
+X-Spam_report: (0.8 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.445,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- UPPERCASE_50_75=0.008 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_SBL_CSS=3.335, SPF_HELO_PASS=-0.001,
+ SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -206,19 +86,185 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-DQoNCj4gT24gMTIgSnVuIDIwMjYsIGF0IDM6MDXigK9QTSwgRXJpYyBBdWdlciA8ZXJpYy5hdWdl
-ckByZWRoYXQuY29tPiB3cm90ZToNCj4gDQo+IEFmdGVyIHJld29ya2luZyB0aGUgcHl0aG9uIHNj
-cmlwdCB0aGF0IGV4dHJhY3Qgc2RhdGEgZnJvbSBSZWdpc3RlcnMuanNvbg0KPiBJIGNhbiBnZW5l
-cmF0ZQ0KPiANCj4gSURSRUdfU1RBUlQoSURfQUE2NElTQVIxX0VMMSkNCj4gICAgIElEUkVHX0ZJ
-RUxEKElEX0FBNjRJU0FSMV9FTDEsIExTNjQsIDYwLCA0KQ0KPiAgICAgICAgIElEUkVHX0ZJRUxE
-X0FSQ0hfVkFMKElEX0FBNjRJU0FSMV9FTDEsIExTNjQsIDApDQo+ICAgICAgICAgSURSRUdfRklF
-TERfQVJDSF9WQUwoSURfQUE2NElTQVIxX0VMMSwgTFM2NCwgMSkNCj4gICAgICAgICBJRFJFR19G
-SUVMRF9BUkNIX1ZBTChJRF9BQTY0SVNBUjFfRUwxLCBMUzY0LCAyKQ0KPiAgICAgICAgIElEUkVH
-X0ZJRUxEX0FSQ0hfVkFMKElEX0FBNjRJU0FSMV9FTDEsIExTNjQsIDMpDQo+ICAgICAgICAgSURS
-RUdfRklFTERfQVJDSF9WQUwoSURfQUE2NElTQVIxX0VMMSwgTFM2NCwgNCkNCj4gICAgIElEUkVH
-X0ZJRUxEKElEX0FBNjRJU0FSMV9FTDEsIFhTLCA1NiwgNCkNCj4gICAgICAgICBJRFJFR19GSUVM
-RF9BUkNIX1ZBTChJRF9BQTY0SVNBUjFfRUwxLCBYUywgMCkNCj4gICAgICAgICBJRFJFR19GSUVM
-RF9BUkNIX1ZBTChJRF9BQTY0SVNBUjFfRUwxLCBYUywgMSkNCj4gDQo+IC4uLy4uDQoNCkFtYXpp
-bmchIFRoYXQgd2lsbCBiZSBoZWxwZnVsLiANCg0KV2FybSBSZWdhcmRzLA0KS2h1c2hpdA0KDQo+
-IFRoYW5rcw0KPiANCj4gRXJpYw0KDQoNCg==
+All ram device regions was turned to be indirectly accessible by commit
+4a2e242bbb ("memory: Don't use memcpy for ram_device regions"). This leads
+to guest hang on compiling 'cuda-samples' as reported by Julia. The guest
+is started by the following command lines, with a GH100 GPU card.
+
+   host$ lspci | grep GH100
+   0009:01:00.0 3D controller: NVIDIA Corporation GH100 [GH200 120GB / 480GB] (rev a1)
+   host$ /home/sandbox/gavin/qemu.main/build/qemu-system-aarch64            \
+         -machine virt,gic-version=host,ras=on,highmem-mmio-size=4T         \
+         -accel kvm -cpu host -smp cpus=48 -m size=8G                       \
+         -drive file=/home/gavin/sandbox/images/disk.qcow2,if=none,id=d0    \
+         -device virtio-blk-pci,id=vb0,bus=pcie.0,drive=d0,num-queues=4     \
+         -device vfio-pci-nohotplug,host=0009:01:00.0,bus=pcie.1.0
+           :
+   guest$ cd cuda-samples/build
+   guest$ make -j 20 clean
+   guest$ make -j 20
+           :
+   [ 54%] Linking CUDA executable graphMemoryNodes
+   [ 54%] Built target graphMemoryNodes
+   <no more output afterwards, guest becomes frozen here>
+
+   guest$ qemu-system-aarch64: virtio: bogus descriptor or out of resources
+   [  555.814025] virtio_blk virtio0: [vda] new size: 268435456 512-byte logical blocks (137 GB/128 GiB)
+
+When the GPU's driver (NVidia open driver) is loaded on guest bootup,
+the memory blocks residing in the PCI BAR#4 can be presented to the
+guest through memory hot-add. The page cache can be allocated from the
+hot added memory blocks when cuda-samples is being compiled. Afterwards,
+the page cache is sent to QEMU's virtio-blk device as part of the DMA
+request, the bounce buffer has to be used to accomodate the request as
+the corresponding memory region (MemoryRegion) is a RAM DEVICE region
+and indirectly accessible in qemu. However, the max bounce bufer size
+is only 4096 bytes by default. We're running out of that space quickly.
+
+  QEMU
+  ====
+  virtio_blk_handle_output
+    virtio_blk_handle_vq
+      virtio_blk_get_request
+        virtqueue_pop
+          virtqueue_split_pop
+            virtqueue_map_desc
+              address_space_map
+                memory_access_is_direct         # Return false
+                  memory_region_supports_direct_access
+
+  (qemu) info mtree
+  memory-region: pci_bridge_pci
+    0000000000000000-ffffffffffffffff (prio 0, container): pci_bridge_pci
+      0000042000000000-0000043fffffffff (prio 1, i/o): 0009:01:00.0 base BAR 4
+        0000042000000000-0000043fffffffff (prio 0, i/o): 0009:01:00.0 BAR 4
+          0000042000000000-000004379fffffff (prio 0, ramd): 0009:01:00.0 BAR 4 mmaps[0]
+
+This replaces mem{cpy, move} with __builtin_mem{cpy, move} in the memory
+accessors to ram device memory region, preparatory work to make ram device
+region directly accessible and bypass the bounce buffer in the DMA path
+in next patch.
+
+Reported-by: Julia Graham <jugraham@redhat.com>
+Suggested-by: Michael S. Tsirkin <mst@redhat.com>
+Suggested-by: Peter Xu <peterx@redhat.com>
+Signed-off-by: Gavin Shan <gshan@redhat.com>
+---
+ hw/remote/vfio-user-obj.c |  4 ++--
+ include/system/memory.h   | 42 ++++++++++++++++++++++++++++++++++++++-
+ system/physmem.c          |  8 ++++----
+ 3 files changed, 47 insertions(+), 7 deletions(-)
+
+diff --git a/hw/remote/vfio-user-obj.c b/hw/remote/vfio-user-obj.c
+index 87fa7b6572..fe6f661fe2 100644
+--- a/hw/remote/vfio-user-obj.c
++++ b/hw/remote/vfio-user-obj.c
+@@ -375,9 +375,9 @@ static int vfu_object_mr_rw(MemoryRegion *mr, uint8_t *buf, hwaddr offset,
+         ram_ptr = memory_region_get_ram_ptr(mr);
+ 
+         if (is_write) {
+-            memcpy((ram_ptr + offset), buf, size);
++            address_space_memcpy(ram_ptr + offset, buf, size);
+         } else {
+-            memcpy(buf, (ram_ptr + offset), size);
++            address_space_memcpy(buf, ram_ptr + offset, size);
+         }
+ 
+         return 0;
+diff --git a/include/system/memory.h b/include/system/memory.h
+index 1417132f6d..6bb2e13eea 100644
+--- a/include/system/memory.h
++++ b/include/system/memory.h
+@@ -2938,6 +2938,46 @@ static inline bool memory_access_is_direct(const MemoryRegion *mr,
+     return true;
+ }
+ 
++static inline void address_space_memcpy(void *dest, const void *src, size_t n)
++{
++    switch (n) {
++    case 1:
++        __builtin_memcpy(dest, src, 1);
++        break;
++    case 2:
++        __builtin_memcpy(dest, src, 2);
++        break;
++    case 4:
++        __builtin_memcpy(dest, src, 4);
++        break;
++    case 8:
++        __builtin_memcpy(dest, src, 8);
++        break;
++    default:
++        __builtin_memcpy(dest, src, n);
++    }
++}
++
++static inline void address_space_memmove(void *dest, const void *src, size_t n)
++{
++    switch (n) {
++    case 1:
++        __builtin_memmove(dest, src, 1);
++        break;
++    case 2:
++        __builtin_memmove(dest, src, 2);
++        break;
++    case 4:
++        __builtin_memmove(dest, src, 4);
++        break;
++    case 8:
++        __builtin_memmove(dest, src, 8);
++        break;
++    default:
++        __builtin_memmove(dest, src, n);
++    }
++}
++
+ /**
+  * address_space_read: read from an address space.
+  *
+@@ -2970,7 +3010,7 @@ MemTxResult address_space_read(AddressSpace *as, hwaddr addr,
+             mr = flatview_translate(fv, addr, &addr1, &l, false, attrs);
+             if (len == l && memory_access_is_direct(mr, false, attrs)) {
+                 ptr = qemu_map_ram_ptr(mr->ram_block, addr1);
+-                memcpy(buf, ptr, len);
++                __builtin_memcpy(buf, ptr, len);
+             } else {
+                 result = flatview_read_continue(fv, addr, attrs, buf, len,
+                                                 addr1, l, mr);
+diff --git a/system/physmem.c b/system/physmem.c
+index 7bcbf87573..5f46a9d676 100644
+--- a/system/physmem.c
++++ b/system/physmem.c
+@@ -3272,7 +3272,7 @@ static MemTxResult flatview_write_continue_step(MemTxAttrs attrs,
+         uint8_t *ram_ptr = qemu_ram_ptr_length(mr->ram_block, mr_addr, l,
+                                                false, true);
+ 
+-        memmove(ram_ptr, buf, *l);
++        address_space_memmove(ram_ptr, buf, *l);
+         invalidate_and_set_dirty(mr, mr_addr, *l);
+ 
+         return MEMTX_OK;
+@@ -3365,7 +3365,7 @@ static MemTxResult flatview_read_continue_step(MemTxAttrs attrs, uint8_t *buf,
+         uint8_t *ram_ptr = qemu_ram_ptr_length(mr->ram_block, mr_addr, l,
+                                                false, false);
+ 
+-        memcpy(buf, ram_ptr, *l);
++        address_space_memcpy(buf, ram_ptr, *l);
+ 
+         return MEMTX_OK;
+     }
+@@ -3503,8 +3503,8 @@ MemTxResult address_space_write_rom(AddressSpace *as, hwaddr addr,
+             l = memory_access_size(mr, l, addr1);
+         } else {
+             /* ROM/RAM case */
+-            void *ram_ptr = qemu_map_ram_ptr(mr->ram_block, addr1);
+-            memcpy(ram_ptr, buf, l);
++            address_space_memcpy(qemu_map_ram_ptr(mr->ram_block, addr1),
++                                 buf, l);
+             invalidate_and_set_dirty(mr, addr1, l);
+         }
+         len -= l;
+-- 
+2.54.0
+
 
