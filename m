@@ -4,83 +4,81 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 33DF3CD98CE
-	for <qemu-devel@archiver.kernel.org>; Fri, 12 Jun 2026 16:17:56 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 46E4BCD98CE
+	for <qemu-devel@archiver.kernel.org>; Fri, 12 Jun 2026 16:18:14 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wY4ZB-0001kx-VX; Fri, 12 Jun 2026 12:17:11 -0400
+	id 1wY4Zv-0001rH-Kt; Fri, 12 Jun 2026 12:17:55 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1wY4Z3-0001jq-2V
- for qemu-devel@nongnu.org; Fri, 12 Jun 2026 12:17:05 -0400
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1wY4Zt-0001qe-KC
+ for qemu-devel@nongnu.org; Fri, 12 Jun 2026 12:17:53 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1wY4Z1-0001dA-CG
- for qemu-devel@nongnu.org; Fri, 12 Jun 2026 12:17:00 -0400
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1wY4Zs-0001zQ-0t
+ for qemu-devel@nongnu.org; Fri, 12 Jun 2026 12:17:53 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1781281017;
+ s=mimecast20190719; t=1781281071;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=u6CunMj2d0uUtUd04hrxqrEzEhaxszuG2OebnVgnXr0=;
- b=XYmR7iKfdMqU86QYi1dacKzT7XSI8Uo8UxH6jbvCu/GqAWaLRDC8q38J81qQRQUKNNk8uP
- aL7o+Ma9NgveNTR9kr68nOGsw93uVm3GkMWHcHcA4ecW9VyIV9AwhgDuAReNxpQmJ1MVMc
- x1x5KaM0f8AGLVS8jd82dMToMTHGZtQ=
-Received: from mail-qk1-f198.google.com (mail-qk1-f198.google.com
- [209.85.222.198]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=Idq3/53DiGnRE6P+qYJzic48F217iWQA++IUAzNbg8o=;
+ b=LUGXYtXhcjg3nh9eeu/+5HVncKhtkWdmTzK09ONDuvLLF4vxDgTPmyxcfIonPYFUy2FLmu
+ JPcKbRF3Aisw0hOoBTkR3iUlL00eD9NX3qvuL34yvqtDwHA+KKtMxqvCmjgaJSC+/aNqMr
+ rdC86uoJWniWaPzQDPm2rmcATLSvD6E=
+Received: from mail-qk1-f199.google.com (mail-qk1-f199.google.com
+ [209.85.222.199]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-173-_ZoFotwsOiq_eC3o3QT81g-1; Fri, 12 Jun 2026 12:16:55 -0400
-X-MC-Unique: _ZoFotwsOiq_eC3o3QT81g-1
-X-Mimecast-MFC-AGG-ID: _ZoFotwsOiq_eC3o3QT81g_1781281015
-Received: by mail-qk1-f198.google.com with SMTP id
- af79cd13be357-9159c4b210aso176853585a.1
- for <qemu-devel@nongnu.org>; Fri, 12 Jun 2026 09:16:55 -0700 (PDT)
+ us-mta-681-i5V6wZguN8io3cmpVFF_nA-1; Fri, 12 Jun 2026 12:17:50 -0400
+X-MC-Unique: i5V6wZguN8io3cmpVFF_nA-1
+X-Mimecast-MFC-AGG-ID: i5V6wZguN8io3cmpVFF_nA_1781281070
+Received: by mail-qk1-f199.google.com with SMTP id
+ af79cd13be357-915757be497so156935285a.2
+ for <qemu-devel@nongnu.org>; Fri, 12 Jun 2026 09:17:50 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1781281015; x=1781885815; darn=nongnu.org;
- h=in-reply-to:content-transfer-encoding:content-disposition
- :mime-version:references:message-id:subject:cc:to:from:date:from:to
- :cc:subject:date:message-id:reply-to;
- bh=u6CunMj2d0uUtUd04hrxqrEzEhaxszuG2OebnVgnXr0=;
- b=m50iskCMIR8T/HbIt1SO2d8SFZv7rm/FoYBqzP5h2IOzlOhWnSuIYN/RTX/+1Wss2i
- uj8zawEko56Ps7IYpNFF1cm+Bpn8YuEFNvVJsqhHz/ff04KMi9ueXsRNDbQ6q2TLoWYo
- SHBajJ7Iz43L1R4j6Z+0GcrtxBwbi793gMqBK3e9IM015F1gA1HkJm47OBvueC9VJ/HO
- yxdTYJ9OAqx54N9CIoTVic9PbWC/pg/WX6jDzC5p6h61/R0x/FLQagYGysaNoAr+H812
- U3afLheN8SlzA2tQ1jCc5LHfPWXURhN0z2gMuNHtkNmQNVxIVoN3m3RA0Pfcpm2/PiGC
- xsJQ==
+ d=redhat.com; s=google; t=1781281070; x=1781885870; darn=nongnu.org;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+ bh=Idq3/53DiGnRE6P+qYJzic48F217iWQA++IUAzNbg8o=;
+ b=eGq7k0rUwapqhBpxXcqXm0+Kr5oIah+YUS2SPidp5pngO5zNTy96tQZos3dt+ogITi
+ 3WUzmEx5g298dtycf2iF37popgybgOgk5xTq7BB1tj5KMuxFxqCVADvo+rMllVKZ4Fp/
+ xDxBdKRdMvmfTaZqUq82jix0QQCJ29ddoEj+wPFpr/DwutEMgvXuvkdFnz8odfl5HL+T
+ qbA5n2jO2tjKgODRFcgMefahDOqLVVvs0fMMKK1awbqzoVQ6dFuvdDQkVVKZNUFZlQsk
+ +rYD2dgTSpMS1CdRnxErHENX4sUFEoxFxlEd7CMEmMACoxzbfEFlNzzTwLqo4FlgazfR
+ JTHg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1781281015; x=1781885815;
- h=in-reply-to:content-transfer-encoding:content-disposition
- :mime-version:references:message-id:subject:cc:to:from:date:x-gm-gg
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=u6CunMj2d0uUtUd04hrxqrEzEhaxszuG2OebnVgnXr0=;
- b=Y4ZkITq0t5ktzSU5RKiX26hv+OUH1/NXvJraa6003gZR9ITjcVvQ+31ozPr5IiInj9
- 2Sf5MSiOAfZ+ZcJoEU70O47xq6MnrZmQ/6MCPt+8T4qOdVBMQstSmBKtrV5i2VFyqjvh
- L0gU03wVeO6qluSL9Nt1xm0c2JkoBxMnw1zGgf9iObIOoqQxT6oHyB5F29IRKg0pQ+1M
- StC65BZ7xLf4qWJKbPKwMjK4Hsvh4wwCu3PezL5jbYzWzTbg86TobKGzV3nzt6uvb+P5
- Ym4VhLSJG1FSccpfbufupd8WPvES4em0ZsIEhCoanpKvTxmQis4lntrpk1r3OrZkyKYz
- CL/Q==
-X-Gm-Message-State: AOJu0Ywq9zdkpmG6OPxmR7Oqa2ToD9ijER7c2u4Ytb/yko4FMT98NibR
- jlSJoF1/Bsv2DL6qUbkjJleXxRmz9J69IlD5NSeeRjyTFmR09alxEh5an0KbMxFAoVh96Yd4oX/
- moxh20dbDjDQTe7IK35RAUm/zgdAmWZKH9Flg+e7Uq43iOzKBD57/SA8k
-X-Gm-Gg: Acq92OHXAnlBL/KPXmI1/dYtWnPg5rydYzes/34jRIben+OkkOA2KPh7oS75U8++WQC
- ds/4fLVYezdSP5AIvIuKnf8GGxp2JOSimOWn3GGQgmEcmn4hfXllSIs5vr0x7xrammhzihTnPZU
- 6p79xsUA2iUter5GPmzNzUG/3iJKPTx+ooNp4iUXdyrRqL0sdi5WYVj6p1fNxsaxZZ9+b/fngW0
- aJHwhVEXv3+/lbaTAmv7D/4rbLKzBO1jvAp4IYFiSSKJZqyiLnhpe8raYvWmw0sJtm1WG3pwKL+
- oW9AmE3TqcfOocOiOPN4gcU5bJCvABQa08+cEXTbYODG0O70Ley880pHuNVuQdoh4LFgdGA8Yvs
- OYLyIc9r2kNmSvWU=
-X-Received: by 2002:a05:620a:288d:b0:916:5f5:de22 with SMTP id
- af79cd13be357-91619dfb646mr515348785a.12.1781281015174; 
- Fri, 12 Jun 2026 09:16:55 -0700 (PDT)
-X-Received: by 2002:a05:620a:288d:b0:916:5f5:de22 with SMTP id
- af79cd13be357-91619dfb646mr515342785a.12.1781281014546; 
- Fri, 12 Jun 2026 09:16:54 -0700 (PDT)
+ d=1e100.net; s=20251104; t=1781281070; x=1781885870;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=Idq3/53DiGnRE6P+qYJzic48F217iWQA++IUAzNbg8o=;
+ b=WOPotm6ASVSkwFP9nvB1ehld5iT6iFfcMIBER/aMpVSOGVNGs5SCsQJd/IZl1y3bDW
+ 8wP7VF1M3KO2USW/qfADvH1FyFEKhk+5RK/96KggtcYV6tISkkZ7UCxWOkV0jSI62ajI
+ IIHxqhC42Ws6FlAcvvttCDbIaA0M/bn6vI8PtYpdD39K9AQ/wvefYZO+cQ0dULftjCG0
+ YO3iBdF11CEDa8IvXTyCRFDSPgpHp3DzuEAzYoIwmiTTWaYjt+OU4oQYtqLIsa9IQ4Sb
+ dFy9g/YI0l4LL7Ca8i+oxnv+0FVVEKkKUL35JD5pGLV+phk3B9cWdk6QE3HS/yrhlSJ4
+ 1xXg==
+X-Gm-Message-State: AOJu0YwtoiHScjASpfdVH2Z8Tnk9Ur9oQ6vACERcroc9Qmh8j+rJXaYe
+ GOaCYqyNyjROouRiJ6yLFLo2SFbm01409NYNTN9AKwlRxn9JdFlC+480pCrOhvKwN4+Ozxn9cVx
+ Jc5WZVb6SjVCmlRdDkxCkJBWAs2fJJ4wR3Rfqh3ZBaIaAvK4erJgvzj1O
+X-Gm-Gg: Acq92OHiQRQZif2J8iOjYAsWxDXNRCEHu5vHdnJ99X9/AbamPeH1ZA1N6NV2TApnNrG
+ FL563++FErbAe+zqF3j0/PmX6R1PDfBztBW8hS92KFIcK9EEHWD8PtF8hAu1/lOiStDjGdffwlg
+ eC3hzfeDZ0ccgaCaSTyms628S3zPbXnEcet5WbJfh3RxRYGLOWs3AtBLpyVMhYelOBoyMbhqdM+
+ p0o1n0dJtbsY1gbQ2QG2QcCRXc0qW0qkynW1FIZpST3hf5bUuqTSSYlzXBOGqwg0n94LufjtNFL
+ /EL0FYNglYV3gkmZmXsVUkG2UMY1wTm74cVuUSK/KdvKUzRjLgK14gYlZhSYEoV34vqedj57Pob
+ 0tW0IzY+Uf1jFDc8=
+X-Received: by 2002:a05:620a:2948:b0:915:b9f6:718c with SMTP id
+ af79cd13be357-9161bd3b1abmr453361885a.28.1781281069556; 
+ Fri, 12 Jun 2026 09:17:49 -0700 (PDT)
+X-Received: by 2002:a05:620a:2948:b0:915:b9f6:718c with SMTP id
+ af79cd13be357-9161bd3b1abmr453353785a.28.1781281069052; 
+ Fri, 12 Jun 2026 09:17:49 -0700 (PDT)
 Received: from x1.local ([142.189.10.167]) by smtp.gmail.com with ESMTPSA id
- af79cd13be357-9161a00598fsm250767385a.31.2026.06.12.09.16.53
+ af79cd13be357-9161a0541d3sm246871185a.39.2026.06.12.09.17.47
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 12 Jun 2026 09:16:54 -0700 (PDT)
-Date: Fri, 12 Jun 2026 12:16:50 -0400
+ Fri, 12 Jun 2026 09:17:48 -0700 (PDT)
+Date: Fri, 12 Jun 2026 12:17:45 -0400
 From: Peter Xu <peterx@redhat.com>
 To: Avihai Horon <avihaih@nvidia.com>
 Cc: qemu-devel@nongnu.org, Alex Williamson <alex@shazbot.org>,
@@ -99,15 +97,15 @@ Cc: qemu-devel@nongnu.org, Alex Williamson <alex@shazbot.org>,
  Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>,
  John Snow <jsnow@redhat.com>, Markus Armbruster <armbru@redhat.com>,
  Maor Gottlieb <maorg@nvidia.com>
-Subject: Re: [PATCH v3 07/14] migration: Make switchover-ack re-usable
-Message-ID: <aiww8tN6dRLA3t_R@x1.local>
+Subject: Re: [PATCH v3 08/14] migration: Fail migration if switchover-ack is
+ requested after switchover decision
+Message-ID: <aiwxKUF9uKAgYuK7@x1.local>
 References: <20260609075812.32067-1-avihaih@nvidia.com>
- <20260609075812.32067-8-avihaih@nvidia.com>
+ <20260609075812.32067-9-avihaih@nvidia.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <20260609075812.32067-8-avihaih@nvidia.com>
+In-Reply-To: <20260609075812.32067-9-avihaih@nvidia.com>
 Received-SPF: pass client-ip=170.10.129.124; envelope-from=peterx@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -24
@@ -132,27 +130,26 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, Jun 09, 2026 at 10:58:05AM +0300, Avihai Horon wrote:
-> diff --git a/hw/core/machine.c b/hw/core/machine.c
-> index 4d8b15d99e..8219f13779 100644
-> --- a/hw/core/machine.c
-> +++ b/hw/core/machine.c
-> @@ -43,6 +43,7 @@ GlobalProperty hw_compat_11_0[] = {
->      { "chardev-vc", "encoding", "cp437" },
->      { "tpm-crb", "cap-chunk", "off" },
->      { "tpm-crb", "x-allow-chunk-migration", "off" },
-> +    { "migration", "switchover-ack-legacy", "on" },
->  };
-
-This line needs to be moved to the last patch, or people will get very
-confused on last patch flipping default without caring about old behavior..
-
-After move, feel free to take:
+On Tue, Jun 09, 2026 at 10:58:06AM +0300, Avihai Horon wrote:
+> Switchover ACK is checked only during precopy while the guest is still
+> running. The last migration_can_switchover() decision and guest stop are
+> not atomic, so a device may want to request another switchover ACK in
+> the gap after switchover decision has been made but before the guest is
+> stopped. Migration would then miss that request, which can increase
+> downtime.
+> 
+> Cover this case by failing the migration if a switchover-ack was
+> requested during that time.
+> 
+> Ideally, precopy iterations should be resumed in this case, however,
+> VFIO doesn't support going back to precopy after being stopped, so
+> implementing such logic would require non-trivial changes to the guest
+> start/stop flow. Given the above and that this case should be rare,
+> failing the migration seems reasonable.
+> 
+> Signed-off-by: Avihai Horon <avihaih@nvidia.com>
 
 Reviewed-by: Peter Xu <peterx@redhat.com>
-
-PS: If Cédric feels comfortable updating that while queuing it'll be fine
-too.
 
 -- 
 Peter Xu
