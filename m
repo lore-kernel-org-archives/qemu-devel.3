@@ -4,50 +4,91 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 49D61CD98CF
-	for <qemu-devel@archiver.kernel.org>; Fri, 12 Jun 2026 15:38:33 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9DCABCD98CE
+	for <qemu-devel@archiver.kernel.org>; Fri, 12 Jun 2026 15:40:37 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wY3xZ-0005JK-Uh; Fri, 12 Jun 2026 11:38:17 -0400
+	id 1wY3zT-00063c-CE; Fri, 12 Jun 2026 11:40:15 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <bea1e@proton.me>) id 1wY3xU-0005GT-Tu
- for qemu-devel@nongnu.org; Fri, 12 Jun 2026 11:38:13 -0400
-Received: from mail-08.mail-europe.com ([57.129.93.249])
+ (Exim 4.90_1) (envelope-from <alex@shazbot.org>) id 1wY3zR-00063E-Pi
+ for qemu-devel@nongnu.org; Fri, 12 Jun 2026 11:40:13 -0400
+Received: from fout-a4-smtp.messagingengine.com ([103.168.172.147])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <bea1e@proton.me>) id 1wY3xR-00024h-F1
- for qemu-devel@nongnu.org; Fri, 12 Jun 2026 11:38:12 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=proton.me;
- s=protonmail; t=1781278680; x=1781537880;
- bh=L7PcrWyepfXUOm7T87FgfiufUdTrrkrZsVvBXSpMJ0I=;
- h=Date:To:From:Cc:Subject:Message-ID:Feedback-ID:From:To:Cc:Date:
- Subject:Reply-To:Feedback-ID:Message-ID:BIMI-Selector;
- b=Vuq9yaMoBrS9YEfmVrqvUD1+AqN2IgF4YKTTTJ9RbL77Pa5RR9r6u23vHQLtICk+V
- 5uD6RpNg9Doa20EXypd3/7H3wQI3RMa4JR2XHTnrJfe9JcElwwaEpybnrLEcpmnaBT
- L/0RSzwfa0bgraQy7L/zmV/6pXEfR4eKQ+wsPYXdNEDba5YuKzV4/owxD85SltVWbB
- 3/vmRIFLYUb5mDGgbr9u3q5ppTsDA3M2FdtnzfTBQS0kQUkMJlyDqWcAFwDnkLCyZt
- e4tw9L/p/Y0fmWQhw6NpXwV8AHwnxgpV250tbzLywaOjBzE9cwdt66TCDpPLtwm225
- MmM5PsCGBgtDQ==
-Date: Fri, 12 Jun 2026 15:37:53 +0000
-To: "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>
-From: Feifan Qian <bea1e@proton.me>
-Cc: Jonathan Cameron <jonathan.cameron@huawei.com>, Fan Ni <fan.ni@samsung.com>
-Subject: [PATCH] hw/cxl: Validate Set Feature payload bounds
-Message-ID: <lRjjre9PPucf_bjrOAOLVko0OB0QYPcKJOBHmSHGG4xmSTNr2Y_dHzRiCT5BDRWfoPma6hC4iMdI4n6X5COoum79U7Kj1JgB1B7E703GOWA=@proton.me>
-Feedback-ID: 93226294:user:proton
-X-Pm-Message-ID: 5500746943177fbbe1ad09ae65f1bf8c4b558851
+ (Exim 4.90_1) (envelope-from <alex@shazbot.org>) id 1wY3zP-0002qT-UL
+ for qemu-devel@nongnu.org; Fri, 12 Jun 2026 11:40:13 -0400
+Received: from phl-compute-06.internal (phl-compute-06.internal [10.202.2.46])
+ by mailfout.phl.internal (Postfix) with ESMTP id 596A2EC018C;
+ Fri, 12 Jun 2026 11:40:07 -0400 (EDT)
+Received: from phl-frontend-03 ([10.202.2.162])
+ by phl-compute-06.internal (MEProxy); Fri, 12 Jun 2026 11:40:07 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=shazbot.org; h=
+ cc:cc:content-transfer-encoding:content-type:content-type:date
+ :date:from:from:in-reply-to:in-reply-to:message-id:mime-version
+ :references:reply-to:subject:subject:to:to; s=fm3; t=1781278807;
+ x=1781365207; bh=sGuxrTjuh3TSJebZuQHTiuZjkiERsjhaBexx6E/upJc=; b=
+ M9xL2GXPemMCW5pJAgDKw52lYY6lVXjeXSdZjFSZfEv9gx7+/W9RmKTBIuwlPm0e
+ OPsHfpVu4LpBalm9CJObDacZg0grzsIP4jG5zqAFxQ1zweR7/y37s0I1CYrsCOPm
+ GTLRyDGl/A+FgWsl5xu5QqWyBSMGgpH4xMVxH6n+0lS48mLWg3EYZcf2eDE5LNcq
+ NNJmseHcgBEBlyOXX1+Zv+6xJ5TNvGTqcL5v7mDBCrCsDsC8cGrwAPeok1e1V9uG
+ 1mW6PHBrBlTwRpLaX1fPTLFDFPpjGYq9bDogBAW+0IorV/FqcRJMyVn4wzI0+NUb
+ m4ep6SCqoTNk0l4o/qz38Q==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+ messagingengine.com; h=cc:cc:content-transfer-encoding
+ :content-type:content-type:date:date:feedback-id:feedback-id
+ :from:from:in-reply-to:in-reply-to:message-id:mime-version
+ :references:reply-to:subject:subject:to:to:x-me-proxy
+ :x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=1781278807; x=
+ 1781365207; bh=sGuxrTjuh3TSJebZuQHTiuZjkiERsjhaBexx6E/upJc=; b=E
+ uvOAkRKyKXL0b5HX0fqaj97z5CyOA/bTVwxkYVyutj1TbgaWAnOKfBw3Dk2GDYpZ
+ AmSH25cG9RBhsSIPo4BAT3a3cXFNMLgpTNEYgEFSYABc4L5/xAIuWpLkAMemQd/w
+ pi5+irbIx2Sh1rEj8HomwqX8wLqkbhfIN/57RMY96VojygND17cA69MteH9Ldv+P
+ IkTjHIOxpVHgm8N6DcOiLBuligiP+g0cklkTZbLtZ/pzxE6RSDSRjQY58ZtSLB3u
+ LacgR4cJqyHv0xoAAqFNb4HoiKMDEyCasB/tqxvTfTG55XxU3mvciD+Npxdl1Zvv
+ 8ryPmvimZ3/zRIKsr66IQ==
+X-ME-Sender: <xms:VygsaimPS8XY0QvdMm6mERMdG21iLAz5D6lmH3Pgoy2gZ0om0X1a1A>
+ <xme:VygsauK1LgnC5nv6rL2NYoar-B_MmYDpX7Qcljw98k3HEzEz0rwZngt96zd8xb9gr
+ ZEvZI2_FmBCFbhvrsv-f6C3AqkvI_LzUH7Li3qDiw10xuwzEZjixw>
+X-ME-Received: <xmr:VygsavwvOWRLucecY7zjnxeMGV_9W3RC10mflsXbtiex2iulj49icdSBRbg>
+X-ME-Proxy-Cause: dmFkZTGpTARreE7ymm2K4FpvbdJX1xeLP96X7f0ttXzlA9Sjmu/3VZylkxLmskxpp34A2u
+ YCibG2ah3CGxOWELqqumGt3/3oU0zHTr9BF1tdmISlWBhvhxLpXZu27n6Nn6jN4DXhJvJ0
+ jfREFJwp+kYbI6jhNj3AjMlzYeIuQFCf1WWaZJYIpYvdFc9DeGnMdALjnGroLGstkaUWuN
+ OQi7YkLbua4vrCYv0IFTSP0CwYAz60TdSMY/p2iDjB7+7r4jv+cnwkoCz/4Pim3xOdzO9n
+ QjfHLctguhLrFdNlyvPui3GVKgzJjUvmnCrzTCmyhsPQq+BACPTWziI5lWReRV5Suc7zYN
+ eQTh9rNmtvQdp9UEgcZeZhurwQitYwtEqyMycdO5Vm0SS410OCH/vdgK8b9mJX1/3T+BZ/
+ 2aVt+i3hVLda8LTX9n0ltiEuvAiXZZto/a4Ojb/kQ42Rj8I8PycOGeeVAUJaNadoH41nZG
+ k3YxSkxsh9/8Tl5KrDkNxKe+fjzzTxYdK3fqT14fL+EL+UPpQrmEGR9c3vtwx/GOz7ctzv
+ gMYa2Ni1QAuTZ8mFAH64/IpzC70yd2f2dCl24CsCicQCXaAFrmjwcETfr0Bi5QeDRaQt/d
+ 6MbIF0a0IgbfWapPVN3M+WZA3Gg4C83KpSxv7SCll05x5j6OZhsriy2G/xAw
+X-ME-Proxy: <xmx:VygsauvNl4NlgYtqxHGvYt7w7lIEMiE918DMGWOxCIlzb7c17Jejmw>
+ <xmx:VygsamvXxT0lxIY4EzSi4fzZBKbHzecF3_DKWcyrnq8F7abF0VBaPw>
+ <xmx:VygsajNeNVYp7-q4aNjCrWWi3iHLdaO0rsBnb06JR7mlP83Z6gdYaw>
+ <xmx:Vygsak1pwCKL6mP-Xv9-1x4heceU94tDW5iXqqMdz0i9d-8sqOHgTw>
+ <xmx:VygsagzK3H1jAahCzyGWp2Pb_2kWM2p9vGmSUweyiz9O85eAM4pTinP9>
+Feedback-ID: i03f14258:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
+ 12 Jun 2026 11:40:06 -0400 (EDT)
+Date: Fri, 12 Jun 2026 09:40:03 -0600
+From: Alex Williamson <alex@shazbot.org>
+To: =?UTF-8?B?Q8OpZHJpYw==?= Le Goater <clg@redhat.com>
+Cc: qemu-devel@nongnu.org, alex@shazbot.org
+Subject: Re: [PATCH] vfio/iommufd: Merge .dma_map_file() into .dma_map()
+Message-ID: <20260612094003.44eb3cb6@shazbot.org>
+In-Reply-To: <20260608055758.359002-1-clg@redhat.com>
+References: <20260608055758.359002-1-clg@redhat.com>
+X-Mailer: Claws Mail 4.4.0 (GTK 3.24.52; x86_64-pc-linux-gnu)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=57.129.93.249; envelope-from=bea1e@proton.me;
- helo=mail-08.mail-europe.com
+Received-SPF: pass client-ip=103.168.172.147; envelope-from=alex@shazbot.org;
+ helo=fout-a4-smtp.messagingengine.com
 X-Spam_score_int: -27
 X-Spam_score: -2.8
 X-Spam_bar: --
 X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001,
+ RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_PASS=-0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -64,143 +105,24 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-cmd_features_set_feature() derives bytes_to_copy from the mailbox input
-length and uses hdr->offset as the destination offset into per-feature
-write attribute buffers.
+On Mon,  8 Jun 2026 07:57:58 +0200
+C=C3=A9dric Le Goater <clg@redhat.com> wrote:
 
-The patrol scrub and ECS paths already reject writes where hdr->offset
-plus bytes_to_copy exceeds the destination structure. Add the same check
-to the soft PPR, hard PPR and memory sparing feature paths before
-copying into their write attribute buffers.
+> Simplify the VFIOIOMMUClass interface by removing the dma_map_file
+> handler. Move the logic to decide between the standard virtual and
+> file-backed mapping into the IOMMUFD backend, utilizing the
+> MemoryRegion already passed to the dma_map handler.
+>=20
+> This removes redundant dispatch logic from the generic container layer
+> and let backends to manage their own mapping strategies. This is
+> similar to the vfio-user implementation.
+>=20
+> Signed-off-by: C=C3=A9dric Le Goater <clg@redhat.com>
+> ---
+>  include/hw/vfio/vfio-container.h | 15 ----------
+>  hw/vfio/container.c              | 38 ------------------------
+>  hw/vfio/iommufd.c                | 50 +++++++++++++++++++++++---------
+>  3 files changed, 37 insertions(+), 66 deletions(-)
 
-Without the check, a malformed Set Feature request can write past the
-selected write attribute object and corrupt adjacent CXL type 3 device
-state.
-
-Fixes: 5e5a86bab830 ("hw/cxl: Add support for Maintenance command and Post =
-Package Repair (PPR)")
-Fixes: da5cafdc4ddd ("hw/cxl: Add emulation for memory sparing control feat=
-ure")
-Signed-off-by: Feifan Qian <bea1e@proton.me>
----
-This is submitted as a regular bug fix for the CXL non-virtualization
-use case.
-
-=C2=A0hw/cxl/cxl-mailbox-utils.c | 24 ++++++++++++++++++++++++
-=C2=A01 file changed, 24 insertions(+)
-
-diff --git a/hw/cxl/cxl-mailbox-utils.c b/hw/cxl/cxl-mailbox-utils.c
-index d8ba7e8625..1724b09a6d 100644
---- a/hw/cxl/cxl-mailbox-utils.c
-+++ b/hw/cxl/cxl-mailbox-utils.c
-@@ -1813,6 +1813,10 @@ static CXLRetCode cmd_features_set_feature(const str=
-uct cxl_cmd *cmd,
-=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0return CXL_MBOX_UNSUPPORTED=
-;
-=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0}
-
-+ =C2=A0 =C2=A0 =C2=A0 =C2=A0if ((uint32_t)hdr->offset + bytes_to_copy >
-+ =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0sizeof(ct3d->soft_ppr_wr_attrs))=
- {
-+ =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0return CXL_MBOX_INVALID_PAYLOAD_=
-LENGTH;
-+ =C2=A0 =C2=A0 =C2=A0 =C2=A0}
-=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0memcpy((uint8_t *)&ct3d->soft_ppr_wr_attr=
-s + hdr->offset,
-=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 sppr_write_attrs, b=
-ytes_to_copy);
-=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0set_feat_info->data_size +=3D bytes_to_co=
-py;
-@@ -1832,6 +1836,10 @@ static CXLRetCode cmd_features_set_feature(const str=
-uct cxl_cmd *cmd,
-=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0return CXL_MBOX_UNSUPPORTED=
-;
-=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0}
-
-+ =C2=A0 =C2=A0 =C2=A0 =C2=A0if ((uint32_t)hdr->offset + bytes_to_copy >
-+ =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0sizeof(ct3d->hard_ppr_wr_attrs))=
- {
-+ =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0return CXL_MBOX_INVALID_PAYLOAD_=
-LENGTH;
-+ =C2=A0 =C2=A0 =C2=A0 =C2=A0}
-=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0memcpy((uint8_t *)&ct3d->hard_ppr_wr_attr=
-s + hdr->offset,
-=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 hppr_write_attrs, b=
-ytes_to_copy);
-=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0set_feat_info->data_size +=3D bytes_to_co=
-py;
-@@ -1851,6 +1859,10 @@ static CXLRetCode cmd_features_set_feature(const str=
-uct cxl_cmd *cmd,
-=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0return CXL_MBOX_UNSUPPORTED=
-;
-=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0}
-
-+ =C2=A0 =C2=A0 =C2=A0 =C2=A0if ((uint32_t)hdr->offset + bytes_to_copy >
-+ =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0sizeof(ct3d->cacheline_sparing_w=
-r_attrs)) {
-+ =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0return CXL_MBOX_INVALID_PAYLOAD_=
-LENGTH;
-+ =C2=A0 =C2=A0 =C2=A0 =C2=A0}
-=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0memcpy((uint8_t *)&ct3d->cacheline_sparin=
-g_wr_attrs + hdr->offset,
-=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 mem_sparing_write_a=
-ttrs, bytes_to_copy);
-=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0set_feat_info->data_size +=3D bytes_to_co=
-py;
-@@ -1869,6 +1881,10 @@ static CXLRetCode cmd_features_set_feature(const str=
-uct cxl_cmd *cmd,
-=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0return CXL_MBOX_UNSUPPORTED=
-;
-=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0}
-
-+ =C2=A0 =C2=A0 =C2=A0 =C2=A0if ((uint32_t)hdr->offset + bytes_to_copy >
-+ =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0sizeof(ct3d->row_sparing_wr_attr=
-s)) {
-+ =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0return CXL_MBOX_INVALID_PAYLOAD_=
-LENGTH;
-+ =C2=A0 =C2=A0 =C2=A0 =C2=A0}
-=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0memcpy((uint8_t *)&ct3d->row_sparing_wr_a=
-ttrs + hdr->offset,
-=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 mem_sparing_write_a=
-ttrs, bytes_to_copy);
-=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0set_feat_info->data_size +=3D bytes_to_co=
-py;
-@@ -1887,6 +1903,10 @@ static CXLRetCode cmd_features_set_feature(const str=
-uct cxl_cmd *cmd,
-=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0return CXL_MBOX_UNSUPPORTED=
-;
-=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0}
-
-+ =C2=A0 =C2=A0 =C2=A0 =C2=A0if ((uint32_t)hdr->offset + bytes_to_copy >
-+ =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0sizeof(ct3d->bank_sparing_wr_att=
-rs)) {
-+ =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0return CXL_MBOX_INVALID_PAYLOAD_=
-LENGTH;
-+ =C2=A0 =C2=A0 =C2=A0 =C2=A0}
-=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0memcpy((uint8_t *)&ct3d->bank_sparing_wr_=
-attrs + hdr->offset,
-=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 mem_sparing_write_a=
-ttrs, bytes_to_copy);
-=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0set_feat_info->data_size +=3D bytes_to_co=
-py;
-@@ -1905,6 +1925,10 @@ static CXLRetCode cmd_features_set_feature(const str=
-uct cxl_cmd *cmd,
-=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0return CXL_MBOX_UNSUPPORTED=
-;
-=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0}
-
-+ =C2=A0 =C2=A0 =C2=A0 =C2=A0if ((uint32_t)hdr->offset + bytes_to_copy >
-+ =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0sizeof(ct3d->rank_sparing_wr_att=
-rs)) {
-+ =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0return CXL_MBOX_INVALID_PAYLOAD_=
-LENGTH;
-+ =C2=A0 =C2=A0 =C2=A0 =C2=A0}
-=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0memcpy((uint8_t *)&ct3d->rank_sparing_wr_=
-attrs + hdr->offset,
-=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 mem_sparing_write_a=
-ttrs, bytes_to_copy);
-=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0set_feat_info->data_size +=3D bytes_to_co=
-py;
---
-2.43.0
+Reviewed-by: Alex Williamson <alex@shazbot.org>
 
