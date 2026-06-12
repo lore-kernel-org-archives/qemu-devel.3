@@ -4,47 +4,49 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0AA16CD98CF
-	for <qemu-devel@archiver.kernel.org>; Fri, 12 Jun 2026 19:00:41 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A266ECD98D2
+	for <qemu-devel@archiver.kernel.org>; Fri, 12 Jun 2026 19:01:07 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wY770-00012H-3n; Fri, 12 Jun 2026 15:00:14 -0400
+	id 1wY77G-0001Al-5B; Fri, 12 Jun 2026 15:00:30 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1)
- (envelope-from <5bbed2768f7a0da8fa2be183e75928c5d1ef691d@kylie.crudebyte.com>)
- id 1wY76x-0000zO-No; Fri, 12 Jun 2026 15:00:11 -0400
+ (envelope-from <2105e9a3578c6f751bb64af55c16dd953f393f20@kylie.crudebyte.com>)
+ id 1wY77E-0001AT-RI; Fri, 12 Jun 2026 15:00:28 -0400
 Received: from kylie.crudebyte.com ([5.189.157.229])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1)
- (envelope-from <5bbed2768f7a0da8fa2be183e75928c5d1ef691d@kylie.crudebyte.com>)
- id 1wY76w-0000GH-3L; Fri, 12 Jun 2026 15:00:11 -0400
+ (envelope-from <2105e9a3578c6f751bb64af55c16dd953f393f20@kylie.crudebyte.com>)
+ id 1wY77D-0000LE-DD; Fri, 12 Jun 2026 15:00:28 -0400
 DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
  d=crudebyte.com; s=kylie; h=Cc:To:Subject:Date:From:References:In-Reply-To:
  Message-ID:Content-Type:Content-Transfer-Encoding:MIME-Version:Content-ID:
- Content-Description; bh=alpHi4/PFoi3yPOlBsVk76F8rFaLq0t1rgSAqoTTaO0=; b=Gm2kf
- hqn3dvIZ0idm9wVpTrQwQwLr7ldCj0xjkf/MUaxXRFrNOlTjBWI4yteYg8zZD6yKoTa7Qy+Tcfer5
- YyIWOuSIIi/9sqviu/adFfoGL+5aj8SNzFZwDBCXU/hnBs/Qt6/KDo2VaJoUMl456axgJNYuMo/mM
- yK3gHfuS/HZxx0v50m1NlVtxXKIC14NuPpKNP4TY/gxx+T7m4zTqqy6OOWmMmRzx/vkcUxCxrIhOP
- 3iKJuYSyDmt4acJmGRlh3SCCjp2H3rAsb6Yt48qud1p15n/M/wZaSgYe4N53c70Mf67YsdHUmwuEC
- TEwIBcE0LQDzMv89UyUB4QiLv0hVamUvDSEDgcvX7ISH7v34gwwdwdchxmm7b34ALuGkcrTmctmfb
- O0Of9vV+jtt233QBOnaPLl3OXb0tMJukxwKZMl43/BNEeSad7a+1ZQ64xp9WaEL03HkQ5C76zQcGd
- GeiQN1rgduiVvJL+ud1EYZs66jloGHgWqefDFMDEQyBbNKcSc9MQeI3Yj3/XUraQOrjvT46Ug/Ymt
- aqqLkiiORGp699wsScEL7jD5ndCnCAjBaZ692ToYaPOq27x4lm92g13wxgD0Kde2uO/wyL4afgYNj
- Ebyj1y2w2ld5rphV99q86ogcT/+DLG2BJXqf+5PpLhU60qFzzUH6D7ChAV3Cck=;
-Message-ID: <5bbed2768f7a0da8fa2be183e75928c5d1ef691d.1781287774.git.qemu_oss@crudebyte.com>
+ Content-Description; bh=EdZ3qDjoTlsu0Vpm6oK1beSP8+9sfvWnMcVTHk6OlsI=; b=WdsRK
+ th2+EZcmBKwGsMSsdNz/cR7TbjWd5zMFKyTgdhp1s/Tkm2pWeTOBWHgCOrdQqhRuWAWk/v+Dxt/S5
+ b1/XrOYo/AN0KrvSsjO8OEzAJFYMZf0IqX5y0VpKIu4zLxd2FDzj2lv1YHVIoFZLnhpFyEmrt0jM9
+ 1BNvPThKR+tTULt61IowZmWrhwNr1VlPhGla8kckppjRZp0b5iS8SmXdaSzfeBUld6Yu8cvF+hpoj
+ RP2/t73OwvZkN+X0y/V74tocxMrUUlMIMHJVYuy3N9fxGxPTLJLp/tKXEwTsUcuJC9nBkovKFwIF7
+ Bb9fd3L2oKblZFhNWnVg6q3eH4044wKPcDLgHCZzNEO8o2Wzhp8I/L5vkNfQ8DVWxplDGyYN5dxly
+ r79YV83vgWgkbN8ZHAWIfAZZBWd0KKT3QuEM8BTNwihggHyGA3pdg47yLmRFLKzYklLEqQITTfSzK
+ uROlclKQX66UxrXXnx2yDSGe7jNItiicpppF0StGM+U1zQIyqNLDFTKuAc6sJPoeeCZCHU0xELfVS
+ hPQXr/+rGGcB4jjn4pQhJw2RSm+K10u5SWvcAX5iErdl/ZpGF6Q6XamTa18579o979Tln+IXAPQJH
+ lrj1SfMoXP6RZ7We0L+GdhNO2qXl6SL54rMUGCrKHANmizS75jGM+ocZ1+qxLI=;
+Message-ID: <2105e9a3578c6f751bb64af55c16dd953f393f20.1781287774.git.qemu_oss@crudebyte.com>
 In-Reply-To: <cover.1781287774.git.qemu_oss@crudebyte.com>
 References: <cover.1781287774.git.qemu_oss@crudebyte.com>
 From: Christian Schoenebeck <qemu_oss@crudebyte.com>
 Date: Fri, 12 Jun 2026 20:22:52 +0200
-Subject: [PATCH v2 6/8] 9pfs/virtio: implement response_buffer_size callback
+Subject: [PATCH v2 4/8] hw/9pfs: cap negotiated msize to transport limit
 To: qemu-devel@nongnu.org,
     qemu-stable@nongnu.org
 Cc: Greg Kurz <groug@kaod.org>, Feifan Qian <bea1e@proton.me>,
- Stefano Stabellini <sstabellini@kernel.org>
+ Stefano Stabellini <sstabellini@kernel.org>,
+ Anthony PERARD <anthony@xenproject.org>,
+ "Edgar E. Iglesias" <edgar.iglesias@gmail.com>
 Received-SPF: pass client-ip=5.189.157.229;
- envelope-from=5bbed2768f7a0da8fa2be183e75928c5d1ef691d@kylie.crudebyte.com;
+ envelope-from=2105e9a3578c6f751bb64af55c16dd953f393f20@kylie.crudebyte.com;
  helo=kylie.crudebyte.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
@@ -67,46 +69,47 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Add and implement the response_buffer_size callback for the virtio
-transport.
+The 'msize' parameter negotiated during Tversion handshake can be
+arbitrarily large as requested by the guest. So far 9p server accepted
+any msize value suggested by guest, i.e. server did not cap it at all,
+no matter how large, as in practice the upper limit of msize is a client
+capability. But as subsequent's security patch shows, capping msize on
+server side makes sense as additional safety-net.
 
-Returns the actual current virtio response buffer size for the supplied
-PDU, which will be used as safety guard for limiting the response size
-when generating a 9p response.
+Let's cap msize to transport's theoretical limit for msize, mainly to
+prevent a bad client from triggering excessive host memory allocations
+throughout the session.
+
+We intentionally don't cap msize to transport's current, real response
+buffer size, as the response buffer size may vary between individual
+requests.
 
 Signed-off-by: Christian Schoenebeck <qemu_oss@crudebyte.com>
 ---
- hw/9pfs/virtio-9p-device.c | 10 ++++++++++
+ hw/9pfs/9p.c | 10 ++++++++++
  1 file changed, 10 insertions(+)
 
-diff --git a/hw/9pfs/virtio-9p-device.c b/hw/9pfs/virtio-9p-device.c
-index 8c5d86cb66..50dc93091d 100644
---- a/hw/9pfs/virtio-9p-device.c
-+++ b/hw/9pfs/virtio-9p-device.c
-@@ -198,6 +198,15 @@ static size_t virtio_9p_msize_limit(V9fsState *s)
-     return (VIRTQUEUE_MAX_SIZE - 2) * guestPageSize;
- }
+diff --git a/hw/9pfs/9p.c b/hw/9pfs/9p.c
+index e2713b9eee..2bb42dfc2e 100644
+--- a/hw/9pfs/9p.c
++++ b/hw/9pfs/9p.c
+@@ -1456,6 +1456,16 @@ static void coroutine_fn v9fs_version(void *opaque)
+         goto out;
+     }
  
-+static size_t virtio_9p_response_buffer_size(V9fsPDU *pdu)
-+{
-+    V9fsState *s = pdu->s;
-+    V9fsVirtioState *v = container_of(s, V9fsVirtioState, state);
-+    VirtQueueElement *elem = v->elems[pdu->idx];
++    /* cap msize to transport's theoretical limit */
++    if (s->transport->msize_limit) {
++        size_t limit = s->transport->msize_limit(s);
++        if (s->msize > limit) {
++            s->msize = limit;
++            warn_report_once("9p: client msize capped to %zu (transport limit)",
++                             limit);
++        }
++    }
 +
-+    return iov_size(elem->in_sg, elem->in_num);
-+}
-+
- static const V9fsTransport virtio_9p_transport = {
-     .pdu_vmarshal = virtio_pdu_vmarshal,
-     .pdu_vunmarshal = virtio_pdu_vunmarshal,
-@@ -205,6 +214,7 @@ static const V9fsTransport virtio_9p_transport = {
-     .init_out_iov_from_pdu = virtio_init_out_iov_from_pdu,
-     .push_and_notify = virtio_9p_push_and_notify,
-     .msize_limit = virtio_9p_msize_limit,
-+    .response_buffer_size = virtio_9p_response_buffer_size,
- };
- 
- static void virtio_9p_device_realize(DeviceState *dev, Error **errp)
+     /* 8192 is the default msize of Linux clients */
+     if (s->msize <= 8192 && !(s->ctx.export_flags & V9FS_NO_PERF_WARN)) {
+         warn_report_once(
 -- 
 2.47.3
 
