@@ -4,93 +4,92 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 937E7CD8CA8
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 93825CD98CF
 	for <qemu-devel@archiver.kernel.org>; Fri, 12 Jun 2026 08:03:28 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wXwrG-0005TI-CG; Fri, 12 Jun 2026 04:03:18 -0400
+	id 1wXwr2-0005Rb-DU; Fri, 12 Jun 2026 04:03:05 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1wXwrC-0005Sy-LH
- for qemu-devel@nongnu.org; Fri, 12 Jun 2026 04:03:14 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1wXwqu-0005RI-TZ
+ for qemu-devel@nongnu.org; Fri, 12 Jun 2026 04:02:58 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1wXwrB-0000jM-8h
- for qemu-devel@nongnu.org; Fri, 12 Jun 2026 04:03:14 -0400
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1wXwqs-0000S5-R3
+ for qemu-devel@nongnu.org; Fri, 12 Jun 2026 04:02:56 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1781251392;
+ s=mimecast20190719; t=1781251373;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=cDnqMiJ8sHHyBuq3SMJ6rvVjG/BmlNmgHVGwf46DOqE=;
- b=Dfl4JrxmYCWUXv0HLvs1is3dypc0IcyOi+vt0RnyiAJrOviwZKydViNeusPcw3DPEUv6PC
- f/9/aBgxtwdmLCeNPXGUGyHWv9qiZvxg/7yEMLmIAkgNzOeFDW/kSBHjWhdWPqxFJIP91p
- /dxnAt8wmSA+1ioajnCwjdGgvQ87/Ys=
-Received: from mail-wr1-f72.google.com (mail-wr1-f72.google.com
- [209.85.221.72]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=GlzQV7YLA+n/h3baoVoug+EbvWWC6oAkD7Z86NJNEVg=;
+ b=VLk7xjzttZk8uQi3rtLYNfAaTLtV1gdKCCGEyiFte0koRXMPFGsFssIy+dgifRvJ8p66ml
+ rUx1nFBBctM87UPMQjxBM50e+OuKtbdkikBXauZWUPvYvWE6XCLvHOBiVq6QF3TyhD5NFO
+ H4DjWRnI/boPWm9btO4MqOXzAhEFLaE=
+Received: from mail-wr1-f70.google.com (mail-wr1-f70.google.com
+ [209.85.221.70]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-180-YIhX_lpCNNu2lzhHLsr_kg-1; Fri, 12 Jun 2026 04:03:11 -0400
-X-MC-Unique: YIhX_lpCNNu2lzhHLsr_kg-1
-X-Mimecast-MFC-AGG-ID: YIhX_lpCNNu2lzhHLsr_kg_1781251390
-Received: by mail-wr1-f72.google.com with SMTP id
- ffacd0b85a97d-45eec2badc4so334793f8f.2
- for <qemu-devel@nongnu.org>; Fri, 12 Jun 2026 01:03:10 -0700 (PDT)
+ us-mta-321-Je5035QINJmE5FqfkO1P5g-1; Fri, 12 Jun 2026 04:02:52 -0400
+X-MC-Unique: Je5035QINJmE5FqfkO1P5g-1
+X-Mimecast-MFC-AGG-ID: Je5035QINJmE5FqfkO1P5g_1781251371
+Received: by mail-wr1-f70.google.com with SMTP id
+ ffacd0b85a97d-45ef5e38a18so292577f8f.1
+ for <qemu-devel@nongnu.org>; Fri, 12 Jun 2026 01:02:52 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1781251390; x=1781856190; darn=nongnu.org;
+ d=redhat.com; s=google; t=1781251371; x=1781856171; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:autocrypt:from
  :content-language:references:cc:to:subject:user-agent:mime-version
  :date:message-id:from:to:cc:subject:date:message-id:reply-to;
- bh=cDnqMiJ8sHHyBuq3SMJ6rvVjG/BmlNmgHVGwf46DOqE=;
- b=I3ZqL1QuWgncxUaSQnFhOMqYJgFJK2s6EqedZnXCR3mKEcSh+VMhuLVOVs593p6J0O
- e2xNAfnGQ+zDtqgIOkY7J7m6xoiDenxF8IPEEr2ALAcnJJKygAWAgNTGJbq0J3XOI1Ww
- UAR0TeqHrFfzaMjqyHlg/0Ant39LbisgSw/WkgwlYc8QZjsmcRthZYXSex/PLtKcRoFd
- dHlauBX7y0kbsmjDRTm0wagaKSJDPYyLRuh9QamJdTqquyVwRQWMev68LDFyRAdIdsx7
- GRdABZsY9Htrx+eF/oo2N6E4tkRRxfk9sV/+lpuIRKBMWwISfFtlSdH+HJvrwDoefD/D
- CBgQ==
+ bh=GlzQV7YLA+n/h3baoVoug+EbvWWC6oAkD7Z86NJNEVg=;
+ b=V4rG8no5Qds4MkazrV0fvH1OwppOUGAPR5uqwLshtzjrbAKKBRvzUbZzKF3/pK2c77
+ CzMFe8Bwlo1G8W+PUsL6EZ4yHqCmm7eu9mzZ7ZBPgOBWbxHQ0yrisX7JOToe0rbltwQ2
+ Xixd+UOJWyhad8SQ4SRXpUMFbqeopN1t6FiWrwXCl19vjdel4TSSnPtCRqHKUzXDkcPW
+ hglJum2NWYyaKLwVhRsob+5dZJx8G7xiJ6qUqz550m5O3tmewpM70UCyTD/9TyR85wHA
+ /M8TRhWUe3X9zIwDuNSjRB7y/Duh4oufPYr6e5GcdObuZ/AT5iaznxOdmG0XgbYNMQIF
+ RcDQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1781251390; x=1781856190;
+ d=1e100.net; s=20251104; t=1781251371; x=1781856171;
  h=content-transfer-encoding:in-reply-to:autocrypt:from
  :content-language:references:cc:to:subject:user-agent:mime-version
  :date:message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
  :message-id:reply-to;
- bh=cDnqMiJ8sHHyBuq3SMJ6rvVjG/BmlNmgHVGwf46DOqE=;
- b=dNQ2CCKEV/gsrmN85rPaZG5msy+yv5/SnPPcDCXYg+OL4/inR4j+jucyHo8L//122K
- +WZYIpxXzACB0Mf/ZJWnFfpwQujCqFjH8Xj1Avj0tODV/XpR2HrofIJus7BUQvLX3NX7
- E6m559Bd5UojS+2amFmRtMpCHuWvWKcIqGeF5Ut3MuUAwE6tWPrwlC8IiFqrf+Mtguox
- vVqlGzLbaA26/k2xXh0cw1GEz0FTYjxU9ia0Ovwh4cYqHOqtx0aQtuZ61Bx7tVRxX0ok
- sVREmaflw1XxuqK9+R6/fE5uIgMQ8n07fXDPj8Hw2+ZgpvAOMeKPHet4+rPO9RwLFW69
- ax7w==
+ bh=GlzQV7YLA+n/h3baoVoug+EbvWWC6oAkD7Z86NJNEVg=;
+ b=rhxna5NUDBoLqI2V41R98TU6nrpjH4wBVuWdOvPL4To5k3W49TvcnJzWrTN+/80YOH
+ 3V+F7WTJeoT72/ucKKh7iYcWo2QHZ66AXn/wkCdgGJwOMzyeImjGksVyev8RNvBQFkGx
+ bXJRPFKgMOz66ho58wehnHqpJ/Z+IN/WQDqEmnQHIe8Z4VlJD3CpIgm7V8aCpmedN/Mw
+ ZNePoJrWzUjSXxw9LYUpkSWhNfRGj3XzrBI6EB2w+phkuHf2HZT3sJJ5zE0J9iDnGf6/
+ Qy2CM4VoGaQZ77UWbuB1E+niTB++tAldmsaT0OhtPq9Hro/DIX4xBnFVKicC6aFArDeG
+ HFPg==
 X-Forwarded-Encrypted: i=1;
- AFNElJ+Qui5cHpzUvLCLQntIaBBw1exlwgPFHzY3Ndi0eE1KaKjbVU1D9L4EYeXTSK25F4nihPvGFSqyhp9E@nongnu.org
-X-Gm-Message-State: AOJu0Yy0ap/SYR0+z35oWenUZamGAVFZ5bfCX2aZ+5ywguegMUXAgEFf
- 3Xd3+5W1gVPRHX3sNQh6qllGLMBW1u/UPZR9eIHvN7pdalWEYhLuKi3LxFAlU4BQtAtVZicgWIR
- apyTxsRK8XBSRKwWvbMnqP98bjo0P1e3WEbM+A8NtQTs0SrpBGiP+vHjZ
-X-Gm-Gg: Acq92OEYGt+Py51DTSv+b7BuAMlFYHCZ7xL5L0vLEPgZg72uKZfnQTKVijDjEmV5M3z
- yO65wfNPotDJ8rlFvbFSLZUwMxHR/UYvsVYeE+gULRlQD2qDAtTVE08KKzbINV8ya+s5I71+Inb
- Veyemx5QkX10U5H/jE9+86bvF4gPAfcXdXrm4hYc1gOD+eswfVWLjZcPLipqiqvT/kaUFmlBllc
- 7B2WvfMKG8M+f9Llt8H6p0sllr5sWLSwdwBHPEcLs18O32lOv5YU77EmuV4tkSfzaaWLNuIeTzr
- NSWC9ReJbSmaGB1iPfZVxBRA+D9YYE8WDOXBQHO5/rXpEb268MLoUMUsfQCoYjdMavB2oi7xzg8
- nzbVfX78OK5jFM+zZm9ldsV73cgyq5jmE7gh+aLBvuHfBCE5XVRzPu94TNOvs
-X-Received: by 2002:a05:6000:290a:b0:43c:fc5c:a9fe with SMTP id
- ffacd0b85a97d-4606dba4105mr2363901f8f.20.1781251389669; 
- Fri, 12 Jun 2026 01:03:09 -0700 (PDT)
-X-Received: by 2002:a05:6000:290a:b0:43c:fc5c:a9fe with SMTP id
- ffacd0b85a97d-4606dba4105mr2363821f8f.20.1781251389087; 
- Fri, 12 Jun 2026 01:03:09 -0700 (PDT)
+ AFNElJ+d5iV+UGDjLdroDS8He5GuLW5dFErC6p08+Qmxubje3uva7Knr6EDPBOWWjcklbK5ihpiSfBUmE1pI@nongnu.org
+X-Gm-Message-State: AOJu0YxhOw94TiJLMvjGsGSVnD20f9z+vYRwOLiE/K5TcqFV9RNNkx/A
+ 06WGaohIJpeTHUE6kMIQqtHjkJnsC3arRbYB+1sbyuOerO8A/UIWT45nWBfg2ECcO6hEAOCCOaH
+ 9iVEIMSg8ivPfUAXSZWjCIGC3uweUrCMTAD/jxY6S41PfuR7OSALDHCHI
+X-Gm-Gg: Acq92OGCu51klM7bFNj0CMe7HD8ul3ohj0rqcPDdYNlebdMsGT3C2CPy7T2LdCFfkkB
+ JVSRaJQ1TZl17zSx92xyNZYpdTZvjWxCZvybG0DC2KFz42vdcEUkuEwARIAz7zrOmXHAY2N4NnY
+ gUPB9Da8JzT4L5sjtZnHihAoz3qXBXg2WyDsmMQvzkqJKVUJqyu1wi0slvMb2+3RdUE7c80A3Nv
+ 5bjyWaaZN8G6ilOaIU5BnoGOkqB1kiWBnUdu/agRaJjVIHQnQmLRc9HIfXJ29qEo5VM+j8gMXtk
+ kI5HoIQvzWyqeZpo/xdhIoO8jCw32CApZGcViZfY/6sRbsHG43h/NkfFMz1bAy/N9n9qvJ9njgZ
+ 8639gpkMq9/hDyhEz6K2BYHYgZiszd+r+EM4ZkKSD7NlKg2ZHG3rxv6wEd2pN
+X-Received: by 2002:a05:6000:400c:b0:460:3233:f992 with SMTP id
+ ffacd0b85a97d-4606dbc110amr2299659f8f.41.1781251370884; 
+ Fri, 12 Jun 2026 01:02:50 -0700 (PDT)
+X-Received: by 2002:a05:6000:400c:b0:460:3233:f992 with SMTP id
+ ffacd0b85a97d-4606dbc110amr2299597f8f.41.1781251370380; 
+ Fri, 12 Jun 2026 01:02:50 -0700 (PDT)
 Received: from ?IPV6:2a01:e0a:280:24f0:576b:abc6:6396:ed4a?
  ([2a01:e0a:280:24f0:576b:abc6:6396:ed4a])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-4606f2e6a8fsm3425377f8f.37.2026.06.12.01.03.07
+ ffacd0b85a97d-4606f26f4f6sm3608796f8f.16.2026.06.12.01.02.49
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Fri, 12 Jun 2026 01:03:08 -0700 (PDT)
-Message-ID: <dc06f80d-4853-4d33-83a7-3f3b79180f5c@redhat.com>
-Date: Fri, 12 Jun 2026 10:03:06 +0200
+ Fri, 12 Jun 2026 01:02:49 -0700 (PDT)
+Message-ID: <b2ab0072-c7de-45d4-920b-4fce5645f329@redhat.com>
+Date: Fri, 12 Jun 2026 10:02:48 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 3/3] hw/core/machine: Add new compat for vfio-pci ats
- property
+Subject: Re: [PATCH 2/3] vfio/pci: Add ats property
 To: Nathan Chen <nathanc@nvidia.com>, qemu-devel@nongnu.org
 Cc: Yi Liu <yi.l.liu@intel.com>, Eric Auger <eric.auger@redhat.com>,
  Zhenzhong Duan <zhenzhong.duan@intel.com>,
@@ -99,7 +98,7 @@ Cc: Yi Liu <yi.l.liu@intel.com>, Eric Auger <eric.auger@redhat.com>,
  Matt Ochs <mochs@nvidia.com>, Nicolin Chen <nicolinc@nvidia.com>,
  Shameer Kolothum <skolothumtho@nvidia.com>
 References: <20260612014322.2918836-1-nathanc@nvidia.com>
- <20260612014322.2918836-4-nathanc@nvidia.com>
+ <20260612014322.2918836-3-nathanc@nvidia.com>
 Content-Language: en-US, fr
 From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>
 Autocrypt: addr=clg@redhat.com; keydata=
@@ -145,17 +144,17 @@ Autocrypt: addr=clg@redhat.com; keydata=
  HQoPn9qrDJgsgcbBVc1gkUT6hnxShKPp4PlsZVMNjvPAnr5TEBgHkk54HQRhhwcYv1T2QumQ
  izDiU6iOrUzBThaMhZO3i927SG2DwWDVzZltKrCMD1aMPvb3NU8FOYRhNmIFR3fcalYr+9gD
  uVKe8BVz4atMOoktmt0GWTOC8P4=
-In-Reply-To: <20260612014322.2918836-4-nathanc@nvidia.com>
+In-Reply-To: <20260612014322.2918836-3-nathanc@nvidia.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=clg@redhat.com;
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=clg@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -24
 X-Spam_score: -2.5
 X-Spam_bar: --
 X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.445,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
  SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -175,31 +174,183 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 On 6/12/26 03:43, Nathan Chen wrote:
 > From: Nathan Chen <nathanc@nvidia.com>
 > 
-> Introduce a new compat for the changed default for vfio-pci device ATS
-> property, from "on" to "auto".
+> Add an "ats" OnOffAuto property to vfio-pci. When the device has an ATS
+> extended capability in config space but we should not expose it (ats=off,
+> or ats=auto and kernel reports IOMMU_HW_CAP_PCI_ATS_NOT_SUPPORTED), mask
+> the capability so the guest does not see it.
 > 
+> If ATS is explicitly requested but not supported by the kernel, fail
+> device realize.
+> 
+> This aligns with the kernel's per-device effective ATS reporting and allows
+> vfio-pci to mask ATS when the host kernel reports ATS as unsupported.
+> 
+> Suggested-by: Shameer Kolothum <skolothumtho@nvidia.com>
 > Signed-off-by: Nathan Chen <nathanc@nvidia.com>
 > ---
->   hw/core/machine.c | 1 +
->   1 file changed, 1 insertion(+)
+>   hw/vfio/pci.h |  1 +
+>   hw/vfio/pci.c | 74 ++++++++++++++++++++++++++++++++++++++++++++++++---
+>   2 files changed, 72 insertions(+), 3 deletions(-)
 > 
-> diff --git a/hw/core/machine.c b/hw/core/machine.c
-> index 4d8b15d99e..c0cdf7c9da 100644
-> --- a/hw/core/machine.c
-> +++ b/hw/core/machine.c
-> @@ -43,6 +43,7 @@ GlobalProperty hw_compat_11_0[] = {
->       { "chardev-vc", "encoding", "cp437" },
->       { "tpm-crb", "cap-chunk", "off" },
->       { "tpm-crb", "x-allow-chunk-migration", "off" },
-> +    { "vfio-pci", "ats", "on" },
->   };
->   const size_t hw_compat_11_0_len = G_N_ELEMENTS(hw_compat_11_0);
->   
+> diff --git a/hw/vfio/pci.h b/hw/vfio/pci.h
+> index c3a1f53d35..b48138870e 100644
+> --- a/hw/vfio/pci.h
+> +++ b/hw/vfio/pci.h
+> @@ -191,6 +191,7 @@ struct VFIOPCIDevice {
+>       VFIODisplay *dpy;
+>       Notifier irqchip_change_notifier;
+>       VFIOPCICPR cpr;
+> +    OnOffAuto ats;
 
-Reviewed-by: Cédric Le Goater <clg@redhat.com>
+I would move this new property field close to the other property fields
+in VFIOPCIDevice.
+
+>   };
+>   
+>   /* Use uin32_t for vendor & device so PCI_ANY_ID expands and cannot match hw */
+> diff --git a/hw/vfio/pci.c b/hw/vfio/pci.c
+> index 9c06b25e63..6edb3bf5db 100644
+> --- a/hw/vfio/pci.c
+> +++ b/hw/vfio/pci.c
+> @@ -2546,7 +2546,49 @@ static bool vfio_pci_synthesize_pasid_cap(VFIOPCIDevice *vdev, Error **errp)
+>       return true;
+>   }
+>   
+> -static void vfio_add_ext_cap(VFIOPCIDevice *vdev)
+> +/*
+> + * Determine whether ATS capability should be advertised for @vdev, based on
+> + * whether it was enabled on the command line and whether it is supported
+> + * according to the kernel's IOMMU_HW_CAP_PCI_ATS_NOT_SUPPORTED bit.
+> + *
+> + * Store whether ATS capability should be advertised in @ats_needed.
+> + *
+> + * Returns false only when ats=on is explicitly requested but the kernel
+> + * reports IOMMU_HW_CAP_PCI_ATS_NOT_SUPPORTED. Returns true in all other cases.
+> + */
+> +static bool vfio_pci_ats_requested_and_supported(VFIOPCIDevice *vdev,
+> +                                                 bool *ats_needed, Error **errp)
+> +{
+> +    HostIOMMUDevice *hiod = vdev->vbasedev.hiod;
+> +    HostIOMMUDeviceClass *hiodc;
+> +    bool ats_supported;
+> +
+> +    if (vdev->ats == ON_OFF_AUTO_OFF) {
+> +        *ats_needed = false;
+
+Why not set '*ats_needed' to false by default here too. I see it is done in
+vfio_pci_add_capabilities() but it looks safer.
+
+
+> +        return true;
+> +    }
+> +
+> +    *ats_needed = true;
+> +    if (!hiod) {
+> +        return true;
+> +    }
+> +    hiodc = HOST_IOMMU_DEVICE_GET_CLASS(hiod);
+> +    if (!hiodc || !hiodc->support_ats) {
+> +        return true;
+> +    }
+> +
+> +    ats_supported = hiodc->support_ats(hiod);
+> +    if (vdev->ats == ON_OFF_AUTO_ON && !ats_supported) {
+> +        error_setg(errp, "vfio: ATS requested but not supported by kernel");
+
+  "vfio-pci: ..."
+
+> +        *ats_needed = false;
+> +        return false;
+> +    }
+> +
+> +    *ats_needed = ats_supported;
+> +    return true;
+> +}
+> +
+> +static void vfio_add_ext_cap(VFIOPCIDevice *vdev, bool ats_needed)
+>   {
+>       PCIDevice *pdev = PCI_DEVICE(vdev);
+>       bool pasid_cap_added = false;
+> @@ -2635,7 +2677,18 @@ static void vfio_add_ext_cap(VFIOPCIDevice *vdev)
+>            */
+>           case PCI_EXT_CAP_ID_PASID:
+>               pasid_cap_added = true;
+> -            /* fallthrough */
+> +            pcie_add_capability(pdev, cap_id, cap_ver, next, size);
+> +            break;
+> +        case PCI_EXT_CAP_ID_ATS:
+> +            /*
+> +             * If ATS is requested and supported according to the kernel, add
+> +             * the ATS capability. If not supported according to the kernel or
+> +             * disabled on the qemu command line, omit the ATS cap.
+> +             */
+> +            if (ats_needed) {
+> +                pcie_add_capability(pdev, cap_id, cap_ver, next, size);
+> +            }
+> +            break;
+>           default:
+>               pcie_add_capability(pdev, cap_id, cap_ver, next, size);
+>           }
+> @@ -2657,6 +2710,7 @@ static void vfio_add_ext_cap(VFIOPCIDevice *vdev)
+>   bool vfio_pci_add_capabilities(VFIOPCIDevice *vdev, Error **errp)
+>   {
+>       PCIDevice *pdev = PCI_DEVICE(vdev);
+> +    bool ats_needed = false;
+>   
+>       if (!(pdev->config[PCI_STATUS] & PCI_STATUS_CAP_LIST) ||
+>           !pdev->config[PCI_CAPABILITY_LIST]) {
+> @@ -2667,7 +2721,11 @@ bool vfio_pci_add_capabilities(VFIOPCIDevice *vdev, Error **errp)
+>           return false;
+>       }
+>   
+> -    vfio_add_ext_cap(vdev);
+> +    if (!vfio_pci_ats_requested_and_supported(vdev, &ats_needed, errp)) {
+> +        return false;
+> +    }
+> +
+> +    vfio_add_ext_cap(vdev, ats_needed);
+>       return true;
+>   }
+>   
+> @@ -3815,6 +3873,7 @@ static const Property vfio_pci_properties[] = {
+>       DEFINE_PROP_BOOL("skip-vsc-check", VFIOPCIDevice, skip_vsc_check, true),
+>       DEFINE_PROP_UINT16("x-vpasid-cap-offset", VFIOPCIDevice,
+>                          vpasid_cap_offset, 0),
+> +    DEFINE_PROP_ON_OFF_AUTO("ats", VFIOPCIDevice, ats, ON_OFF_AUTO_AUTO),
+>   };
+>   
+>   static void vfio_pci_set_fd(Object *obj, const char *str, Error **errp)
+> @@ -3973,6 +4032,15 @@ static void vfio_pci_class_init(ObjectClass *klass, const void *data)
+>                                             "a vIOMMU. A value of 0 (default) places the capability at the "
+>                                             "end of the extended configuration space. The offset must be "
+>                                             "4-byte aligned and within the PCIe extended configuration space");
+> +   object_class_property_set_description(klass, /* 11.1 */
+> +                                          "ats",
+> +                                          "Control guest visibility of the ATS PCIe extended capability. "
+> +                                          "Valid values are on, off, and auto (default). "
+> +                                          "'off' always masks ATS. "
+> +                                          "'on' requires ATS support for the device and fails realize if the "
+> +                                          "host kernel reports IOMMU_HW_CAP_PCI_ATS_NOT_SUPPORTED. "
+
+Again, IOMMU_HW_CAP_PCI_ATS_NOT_SUPPORTED is a kernel UAPI bit and it is
+a bit too low-level/internal a QEMU for property documentation.
+
+What about :
+
+   "'on' requires ATS support for the device and fails realize if the "
+   "host kernel reports ATS as unavailable for this device. "
+   "'auto' masks ATS only when the host kernel reports ATS as unavailable."
+
+?
 
 Thanks,
 
 C.
+
+> +                                          "'auto' masks ATS only when the host kernel reports "
+> +                                          "IOMMU_HW_CAP_PCI_ATS_NOT_SUPPORTED.");
+>   }
+>   
+>   static const TypeInfo vfio_pci_info = {
 
 
