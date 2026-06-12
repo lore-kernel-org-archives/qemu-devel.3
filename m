@@ -4,46 +4,46 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id AB2C4CD98CE
-	for <qemu-devel@archiver.kernel.org>; Fri, 12 Jun 2026 12:59:19 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B99CACD98CE
+	for <qemu-devel@archiver.kernel.org>; Fri, 12 Jun 2026 13:02:01 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wY1T8-0003kY-HP; Fri, 12 Jun 2026 08:58:42 -0400
+	id 1wY1Vq-0004fm-Ul; Fri, 12 Jun 2026 09:01:30 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <qemu_oss@crudebyte.com>)
- id 1wY1T5-0003jv-5r; Fri, 12 Jun 2026 08:58:39 -0400
+ id 1wY1Vp-0004fS-Hb; Fri, 12 Jun 2026 09:01:29 -0400
 Received: from kylie.crudebyte.com ([5.189.157.229])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <qemu_oss@crudebyte.com>)
- id 1wY1T3-0006Sl-CJ; Fri, 12 Jun 2026 08:58:38 -0400
+ id 1wY1Vo-0000Be-13; Fri, 12 Jun 2026 09:01:29 -0400
 DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
  d=crudebyte.com; s=kylie; h=Content-Type:Content-Transfer-Encoding:
  MIME-Version:References:In-Reply-To:Message-ID:Date:Subject:Cc:To:From:
  Content-ID:Content-Description;
- bh=5rBYs/HHIm4y/csun9bEP5nLvmtERZGT6ES+fZMlzpI=; b=dgfEGnnvO2o4mSLYqvbL6EZlDR
- qkofI3DaZpi1Wy63cokHVZ9ouFD0Y/FfqSx5qgCzjnp1XvGJC8Ja3kKOpvApO6ot/7nsm3hi96V/X
- QloN5KD0aAeysaCZTAUr39ya8Jp+szzLKK/NhDqry0MeJ0GUVcETCZZs5D9schQ3zY+R4zPEPzqNh
- KWUtn4nQX+2NSYKwHfEO9hChgYqfGII4G3dgDFrX+vYYmWx6+K4TDXNRrrIWifSicu3iRYdLmnoRP
- 4sED9FFMeSCoB9wjNWi5E5gzK/mEBab5Yew96XFHi2Sm0qYXhLY55xDl1E0UCPCNlZuqw7Mlgc51v
- 6Tclm0x2tJfAl/JJeurE5NDsb8FikkTCi6xXnnIDd1r/v4TPfZjbTr11975FU/sv8xKUGFiXGIxo2
- Z4Nlc2t7ez6DtVhDmlpUsr9jtpb42rIfhnGPzPEMEVMO1ts6BFnTqGT146K0e4a2ykAMalctxe7qm
- 0I0l/XZoTDlWUGsjPLAaHVfgptH0BMCFyanj9L0PaQyK+kzZb5bqmdtOikPgI1hA+/y4gxDBgspCF
- bYG1KyJC5msqfvYvzQH9w/xaVS+2THtSXQabxRAhkatC90Yb3Mnx45d1VYYRHmeMkzjiIG+6pwNZh
- d2JfAOW7g/cGsGG2yYbtmjsykmSqM3sr3SP4l9Vys=;
+ bh=vJ45C6il/cedgVfjU5hfc9yXy0yB7Im6Pxt+DCwc6YI=; b=fjxWhK7VnxhpVStUcPyAFBiqsR
+ NKBbgPXlcr4jMbO0kY2EzsszO5Y7DKCkmzvPGV4GZ1TG97OlKAC4sFyyqMaQWlwx2hbq0mdx7bea7
+ 9c6fzQc5Y0LfK/TOBIS4EeohJdOzohRdkzuUuZmztFeEDbQ9h1z+/vqUzckO7N+xLuR6fJkyVQSqA
+ zwNHiUru6CH3yY16+0tdu8AJxmRj2oHSRzKtxUuoCDMw+kI9tZnU8lk++gbMWnNjD+c/C02gMn0F9
+ bxHEUSXoZlB05MojWtcTwfvZT4YRd8qhpKouI1Z4qzp8rQBHp0VsgVgXF8gU3j5iVdCWreblAJUMy
+ LhYqaKtjtN8/SzJmvsL0/o7T8T6RmT1/EaytOIL9FDYBlnindJi287C5BWFJZudAyKkwfLshLLhoz
+ kI1bHMb3bnmGnRMcnHRxrSDSCD1HY3WGcF9drmBJAvyCZuWNI0liT+ZERGAELIAeHq8LDHK63Lw8Q
+ eyWQTBhYOoMIDPHaihTWXCy0kepDwxPO6CLKw+/FqH8hpW3RPGRi78pP0cqSGpQtGCZj46g8XjK6U
+ GdaiJkKWuCcSSDPzZehdAOg/JUZvdZ7hTmrgMXPWrT35CuUJD/H84OOaWGYr7ggwDqQqN4qEWitYd
+ /ATEegw4grMssfXxhLlczLVPDIlX47ysosOBq769A=;
 From: Christian Schoenebeck <qemu_oss@crudebyte.com>
 To: qemu-devel@nongnu.org, Stefano Stabellini <sstabellini@kernel.org>
 Cc: qemu-stable@nongnu.org, Greg Kurz <groug@kaod.org>,
  Feifan Qian <bea1e@proton.me>, Anthony PERARD <anthony@xenproject.org>,
  "Edgar E. Iglesias" <edgar.iglesias@gmail.com>
-Subject: Re: [PATCH 7/8] 9pfs/xen: implement response_buffer_size callback
-Date: Fri, 12 Jun 2026 14:58:33 +0200
-Message-ID: <4740637.LvFx2qVVIh@weasel>
-In-Reply-To: <alpine.DEB.2.22.394.2606111710000.368315@ubuntu-linux-20-04-desktop>
+Subject: Re: [PATCH 8/8] hw/9pfs: cap Treaddir allocation (CVE-2026-9238)
+Date: Fri, 12 Jun 2026 15:01:24 +0200
+Message-ID: <1958510.tdWV9SEqCh@weasel>
+In-Reply-To: <alpine.DEB.2.22.394.2606111720190.368315@ubuntu-linux-20-04-desktop>
 References: <cover.1779916560.git.qemu_oss@crudebyte.com>
- <95ab978f1919cf91ea1f2a5de6c870e30e420b32.1779916560.git.qemu_oss@crudebyte.com>
- <alpine.DEB.2.22.394.2606111710000.368315@ubuntu-linux-20-04-desktop>
+ <6c22c43668b995a71b0880bd146f09ae5f8956cc.1779916560.git.qemu_oss@crudebyte.com>
+ <alpine.DEB.2.22.394.2606111720190.368315@ubuntu-linux-20-04-desktop>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 7Bit
 Content-Type: text/plain; charset="utf-8"
@@ -70,45 +70,54 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Friday, 12 June 2026 02:23:15 CEST Stefano Stabellini wrote:
+On Friday, 12 June 2026 02:23:08 CEST Stefano Stabellini wrote:
 > On Wed, 27 May 2026, Christian Schoenebeck wrote:
-> > Add and implement the response_buffer_size callback for the Xen
-> > transport.
+> > Constrain max_count in v9fs_readdir() to transport's current, real
+> > response buffer size before calling v9fs_do_readdir() to prevent
+> > excessive host memory allocation by bad clients.
 > > 
-> > Returns the size of the response buffer from the rings in_sg, as limit
-> > for 9p server while generating a response for supplied PDU.
+> > Client may send a Treaddir request with a large 'count' parameter, and
+> > while the negotiated 'msize' provides some limit, it accounts for guest
+> > being somewhat faithful on the negotiated 'msize' value throughout the
+> > session.
 > > 
+> > A bad guest client could have negotiated a large 'msize' but provide a
+> > small reply buffer for Treaddir request, causing QEMU to allocate host
+> > memory proportional to 'msize' before discovering the reply cannot fit.
+> > 
+> > Possible consequence was a potential DoS by a priviliged guest, causing
+> > a disconnection of guest communication due to transport device being
+> > marked as "broken", however QEMU process would have continued to run with
+> > potentially giant host memory allocation, which might have negative
+> > impact on other services running on host.
+> > 
+> > Fixes: CVE-2026-9238
+> > Fixes: 2149675b195f ("9pfs: add new function v9fs_co_readdir_many()")
+> > Reported-by: Feifan Qian <bea1e@proton.me>
 > > Signed-off-by: Christian Schoenebeck <qemu_oss@crudebyte.com>
 > > ---
 > > 
-> >  hw/9pfs/xen-9p-backend.c | 11 +++++++++++
+> >  hw/9pfs/9p.c | 18 ++++++++++++++++--
+> >  1 file changed, 16 insertions(+), 2 deletions(-)
+> > 
+> > diff --git a/hw/9pfs/9p.c b/hw/9pfs/9p.c
 [...]
-> > +static size_t xen_9pfs_response_buffer_size(V9fsPDU *pdu)
-> > +{
-> > +    Xen9pfsDev *priv = container_of(pdu->s, Xen9pfsDev, state);
-> > +    Xen9pfsRing *ring = &priv->rings[pdu->tag % priv->num_rings];
-> > +    int num;
-> > +
-> > +    xen_9pfs_in_sg(ring, ring->sg, &num, pdu->idx, 0);
-> > +    return iov_size(ring->sg, num);
-> > +}
+> >      /* Enough space for a R_readdir header: size[4] Rreaddir tag[2]
+> >      count[4] */
+> > 
+> > -    if (max_count > s->msize - 11) {
+> > -        max_count = s->msize - 11;
+> > +    if (max_count > max_resp_sz - 11) {
 > 
-> xen_9pfs_init_out_iov_from_pdu and xen_9pfs_init_in_iov_from_pdu
-> allocate ring->sg, but it would seem xen_9pfs_response_buffer_size could
-> be called before xen_9pfs_init_out_iov_from_pdu and
-> xen_9pfs_init_in_iov_from_pdu, therefore ring->sg could be NULL here.
-> 
-> If we do it this way, we avoid the NULL dereference.
-> 
->    struct iovec in_sg[2];
-> 
->    xen_9pfs_in_sg(ring, in_sg, &num, pdu->idx, 0);
->    return iov_size(in_sg, num);
+> max_resp_sz - 11 causes an underflow
 
 Good catch!
 
-/Christian
+I'll prepare a v2 with all your suggestions.
 
+Thanks for your reviews, much appreciated!
+
+/Christian
 
 
 
