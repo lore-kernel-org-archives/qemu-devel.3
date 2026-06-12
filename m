@@ -4,151 +4,171 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8D034CD8CA8
-	for <qemu-devel@archiver.kernel.org>; Fri, 12 Jun 2026 09:01:23 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7781ECD4F2C
+	for <qemu-devel@archiver.kernel.org>; Fri, 12 Jun 2026 09:06:54 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wXxks-0007om-Dt; Fri, 12 Jun 2026 05:00:46 -0400
+	id 1wXxqF-0000zW-2a; Fri, 12 Jun 2026 05:06:19 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1wXxkq-0007mH-QD
- for qemu-devel@nongnu.org; Fri, 12 Jun 2026 05:00:44 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <john.levon@nutanix.com>)
+ id 1wXxqD-0000z9-G1
+ for qemu-devel@nongnu.org; Fri, 12 Jun 2026 05:06:17 -0400
+Received: from mx0a-002c1b01.pphosted.com ([148.163.151.68])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1wXxkp-0005el-0H
- for qemu-devel@nongnu.org; Fri, 12 Jun 2026 05:00:44 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1781254841;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=5NhEHxZ6hI0beLeWp6qgypW+fgnxBRyBUQAZPd30UWk=;
- b=YDcQ2hgNTiUBRoM+xW8ZtDbXPmTg4fgLnC3AQ4I4Bw+CwBj9skEEMkP6KHiX5KaVIj2qe+
- GNXA6855L/Pg4mY88gDPpyNvPsbxW5IgiSI1rkWHgHTLRSxBtOfYZuvjfLyfG3pY/5X+lz
- oAW3/a0istQryTI7tFG+J5F8H30iNik=
-Received: from mail-ej1-f72.google.com (mail-ej1-f72.google.com
- [209.85.218.72]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-615-u1o-JyP_MxK38jVKp0ZYIA-1; Fri, 12 Jun 2026 05:00:39 -0400
-X-MC-Unique: u1o-JyP_MxK38jVKp0ZYIA-1
-X-Mimecast-MFC-AGG-ID: u1o-JyP_MxK38jVKp0ZYIA_1781254838
-Received: by mail-ej1-f72.google.com with SMTP id
- a640c23a62f3a-bec440e6b9fso59896466b.0
- for <qemu-devel@nongnu.org>; Fri, 12 Jun 2026 02:00:39 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1781254838; x=1781859638; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:autocrypt:from
- :content-language:references:cc:to:subject:user-agent:mime-version
- :date:message-id:from:to:cc:subject:date:message-id:reply-to;
- bh=5NhEHxZ6hI0beLeWp6qgypW+fgnxBRyBUQAZPd30UWk=;
- b=Af6KsqcgUtD/EjmLwU+BDi+P4+owW70SqSlJdvHlmtpAckCZeqs1cUJX0JIlx1dWTy
- woD9GWOLNRsAl+gwaEUNv4fPDqUQ7a7Gp9cFhDyuQHgNdujxoZ3A5wuGu6pws3j2DxAU
- Y6oA/F0vVAKUdF+cz1J/uAciyZYPmEovE2W/+2DMwa6RA5oqTHngruw1KFAZU+zXzQ0g
- cMQ5XhYZX7PCSPlwRp3jpjvU8oQNsUsvcIXPH3Mui/PaTU2mgkWlV6d56X4l+r86NwQm
- vedgsAnyKicFuq75f8W10wcUCIXAcyY49NKL5GSjiJ0bfCCmWjFdtF5leTfnbrzoQv+l
- TphQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1781254838; x=1781859638;
- h=content-transfer-encoding:in-reply-to:autocrypt:from
- :content-language:references:cc:to:subject:user-agent:mime-version
- :date:message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=5NhEHxZ6hI0beLeWp6qgypW+fgnxBRyBUQAZPd30UWk=;
- b=d8cD+bi1Vt37d18GqoUGYz4aMa3Lm7SAUPa3D9n93jgQdedZ3OyC6tHNDb283CVwZa
- pM396wVEE+fpps4ccTJIEQVjRS1U2AySzl3f/RMfuxT+bixiNqYzIGZGj6oc7J9TEmTe
- 0SRVGdZDmHEHYTELUGntP69+QgIFgYHh5bT4nw4+WtjIxGW2jWodeeHtt0fzCrQjvLgB
- sDHYnVdyM1OjLikh/NKT3JDUrVVcl8bbqwLOALXmO4tKW3NiU9QNXwIT51XbBrHEmekI
- 09/HjxE++uDMWXLdzKSNrbLBERPAEAPqON1gqFjubBd16A7a8WRgyMEv7ck7vbr5d03F
- zY2w==
-X-Gm-Message-State: AOJu0YwtfELjshPMJcren6pYHnDEBIv5m3XJWvuTk2OR5VjOVTROcCVM
- U4c9D3h5FrzPSuhdiaFLJtrGxSNVUMKCDzN0Mzi3LdvVUvtWI02rZl51Or6vzAzsAeaOST18J5o
- yck2lElQzf/bDxmQwEDkjtcNaVO8G6GJ7EhfIhn713qsn0BUpOh0BFCfi
-X-Gm-Gg: Acq92OGHaELW9Psluxxetf7MYXgsj78jxjACqt21usbK01qfZZllw3N0o8bhq/vlS4N
- /+RrqPvmz7FQEM1k5KDhrBD2OY1XgxEvBKWBnwHTqST97K84bbXDPsbO1s9K9VmFtajsWt3lh6O
- gn1p2Ddn12vLYheppapX51Wnw45zvXGV2l6VFkN5At50bmUEVNS7blC5XstbVSh4EMx/rBLiNNg
- 7X4JoRG/kvBQgZ3jajVQPt8MyvCKyz38GBIdqkrxY3BmVT3Ae3mTFzK1E7lsoZi9nWsERuFkAYr
- MYOAMSqHvh3ItPRm1u9FS1w4sKg6QxOx5w3nzaulxFVzv0PS/87vjzPVp9mZD8U+oBtwpNON53u
- gtr6ODIk7pDp07GFKLIvL/dhhzr0QdpaH3qf5/B/KOJWnRJoca9EY3G/gPweL
-X-Received: by 2002:a17:907:3fa7:b0:bd3:cb24:ae61 with SMTP id
- a640c23a62f3a-bfe27830142mr86269666b.6.1781254837736; 
- Fri, 12 Jun 2026 02:00:37 -0700 (PDT)
-X-Received: by 2002:a17:907:3fa7:b0:bd3:cb24:ae61 with SMTP id
- a640c23a62f3a-bfe27830142mr86266566b.6.1781254836972; 
- Fri, 12 Jun 2026 02:00:36 -0700 (PDT)
-Received: from ?IPV6:2a01:e0a:280:24f0:576b:abc6:6396:ed4a?
- ([2a01:e0a:280:24f0:576b:abc6:6396:ed4a])
- by smtp.gmail.com with ESMTPSA id
- a640c23a62f3a-bfdb83420e9sm78333266b.45.2026.06.12.02.00.35
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Fri, 12 Jun 2026 02:00:36 -0700 (PDT)
-Message-ID: <fbcf6e7f-c25e-4e37-a171-46a484a162d8@redhat.com>
-Date: Fri, 12 Jun 2026 11:00:35 +0200
-MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
+ (Exim 4.90_1) (envelope-from <john.levon@nutanix.com>)
+ id 1wXxqB-00020l-SF
+ for qemu-devel@nongnu.org; Fri, 12 Jun 2026 05:06:17 -0400
+Received: from pps.filterd (m0127838.ppops.net [127.0.0.1])
+ by mx0a-002c1b01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
+ 65C38aq31683126; Fri, 12 Jun 2026 02:06:04 -0700
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=nutanix.com; h=
+ cc:content-transfer-encoding:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to; s=
+ proofpoint20171006; bh=nTWCzIO1K5lb3e/Dcnz9BZsyCqRmEy6DsmAZgRm5l
+ 0s=; b=TuvptFrTW+2P9hCfFFNiQXhqB0iRGkCvFUVmNVf9tVj2CZx7B6W47/7Hj
+ xTt79VRWTrNMJnhISxW4qRoxpmDFtkOpIkN5HYyH+TdvDqfkP0jtx3w9JWhN0PaA
+ fa/orGgGGMehORSJfS5bx/xrmKi2eh4IgcOc7NBXBof3YQ1cAz4Ed+kwtGFTt6p/
+ KaQ4k9sAQSnSlpcwQK14+4S35rCYhAqOOOZGo5FmIXyIeIajSl0/5fXxzm2bvGls
+ 27rpOlDYEjTJ4ljGKZCdXKCmp8VChHhcIbjzCqYvXSSNs5vwxsIb+BVOsLuUQTMZ
+ HocQ1EeU9k2meX/ulGNjpvD7ZYsHA==
+Received: from byapr05cu005.outbound.protection.outlook.com
+ (mail-westusazon11020084.outbound.protection.outlook.com [52.101.85.84])
+ by mx0a-002c1b01.pphosted.com (PPS) with ESMTPS id 4er8ud8sq2-1
+ (version=TLSv1.3 cipher=TLS_AES_256_GCM_SHA384 bits=256 verify=NOT);
+ Fri, 12 Jun 2026 02:06:04 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=Tr0FpmrbUMjxlH0ymJNG76PNtADAwPMlB93UswvYCqa2BfaRSmG+Lpllrxv1L0syuWADRPVtyxKBxrBHbBfS33YUuGIE2/evlIrd/ML2eO2kK2LJs08jOSXofWvFD8NDx5ydU7xbOLVeAhNKvq5xeE9c3EaXpDirfExTL7xqdJYO9eU4JZ6Vk9nU/Ljt8b8O3ATxsFJTNbF06ujEdb2WIA9Mmfw7fSqLHufzUc3LpvBg1Q1vFRmEn8L86Eicx/7uI4AHkOWq6mUgTIglvWchUkGYeafM9diOq0fMksGrWTAwYOiwWf6LCHnn1C0iBu0ZhQvRxU02lqmLDCkY7fFdwA==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=1REn+F3nn/xmRzGNDqn3JfIpd7VItfou4bdXhlruZVE=;
+ b=G6tiXX6SIQ4EzwrKLHn+lrKSyMKIBj4wz8akNABU9UkTwP4prHSfFAWqXkrI/Ris18WUgFulGQYkpDNInXtC20rNNazh60woczj1i4tU6eDAg5Ehh/era5KjIG9/o48OXplBp32bVWhvjdQZM0Ardcbo5caBhmgkCzP8OoH58zQn8JSAGHf7ylL+UA06/zn7NYEedeYHy6aqgRg6gFs7xFQZn8HcxnIfFDQPBkU601OREU53LBi+oguUWcMrnIu92MlPjcGYVJ5dGoCkOdEiuYQ4IGC6GuHhpyPtcg09vcmkSQWYaqWgoRieUoFkdyZmlXwuJNj1XFy+ldSaYJNhuw==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=nutanix.com; dmarc=pass action=none header.from=nutanix.com;
+ dkim=pass header.d=nutanix.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=nutanix.com;
+ s=selector1;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=1REn+F3nn/xmRzGNDqn3JfIpd7VItfou4bdXhlruZVE=;
+ b=nY+Ij58z2nRUYsADweSdJlN1TC4Z8R//IrehQMkGHNiGrOeJzocxw2IHv6Da5uzsPVqsIov/iPSxwPrYcuxv7rGrb8XyvsUzgC6HNAEryiCvI/r5tlP770d2HwPpeG/VtY4PTulZQep1+krquu+u3q0GyWmyD0acsegCeG/NlovPfCq0mohEfRzpVQ3MakDTXW6OmiD0a7U7izSuKJGpa09NKf9aYzuLEZ4/nEOrW44QryKEL1wIQO9RIzAcEqx++MjZ49gb+wAyl0aObHpauKgcpPnIVB67VZV9y/RdzV2oCIRreK7MHLc22U9SmiLiiBU5LvBklCvONA7fGqVi6w==
+Received: from BY5PR02MB6753.namprd02.prod.outlook.com (2603:10b6:a03:209::17)
+ by DM3PR02MB10232.namprd02.prod.outlook.com (2603:10b6:0:43::16) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.113.13; Fri, 12 Jun
+ 2026 09:06:01 +0000
+Received: from BY5PR02MB6753.namprd02.prod.outlook.com
+ ([fe80::a343:65a8:bffc:5a57]) by BY5PR02MB6753.namprd02.prod.outlook.com
+ ([fe80::a343:65a8:bffc:5a57%7]) with mapi id 15.21.0113.013; Fri, 12 Jun 2026
+ 09:06:01 +0000
+Date: Fri, 12 Jun 2026 10:05:57 +0100
+From: John Levon <john.levon@nutanix.com>
+To: =?iso-8859-1?Q?C=E9dric?= Le Goater <clg@redhat.com>
+Cc: zhaoguohan@kylinos.cn, Thanos Makatos <thanos.makatos@nutanix.com>,
+ qemu-devel@nongnu.org
 Subject: Re: [PATCH] vfio-user: validate VERSION replies
-To: zhaoguohan@kylinos.cn, John Levon <john.levon@nutanix.com>,
- Thanos Makatos <thanos.makatos@nutanix.com>
-Cc: qemu-devel@nongnu.org
+Message-ID: <aivL9a2bpFXKmEN7@lent>
 References: <20260603062138.4008583-1-zhaoguohan@kylinos.cn>
-Content-Language: en-US, fr
-From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>
-Autocrypt: addr=clg@redhat.com; keydata=
- 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
- uVKe8BVz4atMOoktmt0GWTOC8P4=
-In-Reply-To: <20260603062138.4008583-1-zhaoguohan@kylinos.cn>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=clg@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -24
-X-Spam_score: -2.5
-X-Spam_bar: --
-X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.445,
+ <fbcf6e7f-c25e-4e37-a171-46a484a162d8@redhat.com>
+Content-Type: text/plain; charset=iso-8859-1
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <fbcf6e7f-c25e-4e37-a171-46a484a162d8@redhat.com>
+X-Url: http://www.movementarian.org/
+X-ClientProxiedBy: LO4P265CA0049.GBRP265.PROD.OUTLOOK.COM
+ (2603:10a6:600:2ac::12) To BY5PR02MB6753.namprd02.prod.outlook.com
+ (2603:10b6:a03:209::17)
+MIME-Version: 1.0
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: BY5PR02MB6753:EE_|DM3PR02MB10232:EE_
+X-MS-Office365-Filtering-Correlation-Id: d9e04330-8818-49bf-436b-08dec861d30a
+x-proofpoint-crosstenant: true
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam: BCL:0;
+ ARA:13230040|376014|23010399003|366016|1800799024|4143699003|56012099006|18002099003|22082099003;
+X-Microsoft-Antispam-Message-Info: ek++bxgy+TqZ8XQq04k+uD5v0J5t/2yq3dARtrmE08Rbd1QDcsa1FQMrD8Oj8+LLjQBjrQ9vAtiAPLe1hj/U3F7dhUgS/xDv3FIekZwPb7rql1NAFrK/wWI841vAxzQn1gpEFRhFgetXu3zQVd8+VhYbRXjCwpcjmfEtso3lZraqK/UIGhzISzJH+3Odb8whRJGRM+GOX20XstyFgWxj2AaS4APEl8QiimcxCBkutNEWIvuKW/NRyKizV+JRjGJVyk4rIKGUyP+h/00JlRlVMWL3uyCHEtdPz7HDmhoZFRtvtUaTLT7K2S/SxDrMAp70DDBwSJMEeWBvi9rxANVPmWvpjPVAzuDRk5ryvuaaopZKE7Gyw0N2fdnqBPk0TWclcODrKKGH4eb22qXBJLRCnmp5qKD2XdVAXoSbqDKcrgoHTfNN79pBNXyPFu4yFNlNPF4p10eLwvBgYN9yFnIpmMb2/787ia4ZUbL69XMzdK8L7yD9zh+hpJm/NGkDl8W0kJ8xsVHOFfGp1ZwVSxEhljVndA3Fw8WV6AKEL9Fo8XJh4l4US0k+EVSXCceRM5hXLOoCbsSn3y83h50BPXMrsCJOvSzscbI239NL11UvK5MuB2VnbfOKYBqsY7rURuYXF26jyYN5ytWKc/H/MB5BopoW35StJ/mShC61gTCvHl0vf5d0aX48Kweg4VfRZMdX
+X-Forefront-Antispam-Report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
+ IPV:NLI; SFV:NSPM; H:BY5PR02MB6753.namprd02.prod.outlook.com; PTR:; CAT:NONE;
+ SFS:(13230040)(376014)(23010399003)(366016)(1800799024)(4143699003)(56012099006)(18002099003)(22082099003);
+ DIR:OUT; SFP:1102; 
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0: =?iso-8859-1?Q?sc+lODwJIpSmd3wECH6TkIzza0nD0benp2cbnAxo55a0JI6BbRSMxmIUF8?=
+ =?iso-8859-1?Q?oC2pajbsaTQvgh3gQoZP2HlAEobD3iz3F1xN7bKnk+zTbD6rRcnQndk5ys?=
+ =?iso-8859-1?Q?Emfv5P6WwcPzpsbsuWJY+uexZO0oMxohtDntIzsZ1WJ3uGVJTq9pMHc19P?=
+ =?iso-8859-1?Q?ZbvrLiSchG5h4pHWdUkAD1cCZWC+X1j1GkCOjcGSquSU2OApjIF91Pajp8?=
+ =?iso-8859-1?Q?ScEBavpqVth8aLke0MMP0xhKXCWEHWSSt5w+5iXFGaXLa2IVrkckcXNXok?=
+ =?iso-8859-1?Q?T3l1xHomzAYmfJi6zbeo93jly6nEwrkDyOa5G0zJjA6sHMcUM5v0nNbUmI?=
+ =?iso-8859-1?Q?tlXAkkvQCBcfb903NWMnIGW91gNWY4Shi9nbthVPkjB/lj3G8PhD/jzaPv?=
+ =?iso-8859-1?Q?tWslgNYRdV3rCUqiQf+75Yn5t/ldmrBHRGYLdegUenGoyEpQKYRdpPoQM1?=
+ =?iso-8859-1?Q?tqNL4/RjXGUU0L2kIbjnkBPv/JlsWybYSDrlTZs0KarzFP3vHrL2bEDchX?=
+ =?iso-8859-1?Q?Aae4TcClJz1d59Q8TDq7bmuYpQCTSjhEslMXLSPvr0/xK1rIeVXYn4T7KN?=
+ =?iso-8859-1?Q?55j9d2/X1TjQcKgqr4m/uR7dsPh9XkvDaPRjgelcCAtyAYMXbnH9Iahu1F?=
+ =?iso-8859-1?Q?6NkUxz5vICOmi7TQMYCTg+t5qzK9XEu6QXIn62w5Yg6QK4M1wWkzGDAuHo?=
+ =?iso-8859-1?Q?zHBiC3sgKXYSaM0IQOA8FXICwFr5EKW32eseefxl4MnhtDCtO9NcpyRQW5?=
+ =?iso-8859-1?Q?tEaNFqqrxoYN3CILrEvLWHnqJq5d7ca+twgan5h7YEljUCJSlDKbQ6RvA/?=
+ =?iso-8859-1?Q?WBXanO/0+prhulUQnJxUW2rH7DufOHVRWBhl+PhZ5o1ZXHIPAGyZGTRKcW?=
+ =?iso-8859-1?Q?Mp71rNQFCeHZVc20k/xRPPKhd/lGN4IlmVZ4oT9KVbgK1zOL12k5x5TVlY?=
+ =?iso-8859-1?Q?XFeEVbMupBc0t11pPYOwNKrKNDb+ZjiJte0YnQAPFbXxulbSzmZVD3GUyf?=
+ =?iso-8859-1?Q?GNYbp8H40qstYe7KIUyoBKZj2lHRIva03Q/jy5JiVJS1/KooZc1/rrfq78?=
+ =?iso-8859-1?Q?b6OrnVzx8H+PpJaauGsTi/80x2NIucJE4G9kULZRo6Zs0B4DB0NlXjpCyE?=
+ =?iso-8859-1?Q?uBykHtwWuy1pcEtb8hILEqYBTHek4nddgjOXWhgc9QdFUGNp0HBh82Kn8t?=
+ =?iso-8859-1?Q?BiOO8SUFPmTgJ45tM0SCUWm2+cPzrZEDpjWqLWcOrG9wYA+yM8hziijiva?=
+ =?iso-8859-1?Q?ZzSHO9B0XDCqEUG/GBNcvGYVEL0w9Xbn+qnSrxMMWLPmlBv++xzV/vvttI?=
+ =?iso-8859-1?Q?Ta7ZS4uIvfiJRpqbvr4HX2FK+1TaqYzrgNSxcfmj9X9WON5Wkm3sCRZeyd?=
+ =?iso-8859-1?Q?7zE6cCyA69G3AmA95+Kec02ndCCMoBvCQfc81DcTCuXD3whwTStNAZG4R7?=
+ =?iso-8859-1?Q?gl1Nz7pZ+zGMFPHja4mozVEWLySvUAiwy3b12hrgsY+Wi1GHk5bgrR80PD?=
+ =?iso-8859-1?Q?9aYCEP0NkFEEG7UPU7poRhaGp+bjuSIcLnedk1fZHzEFZgwptKOHImYk8e?=
+ =?iso-8859-1?Q?3eagEuzuRJIPewL4vkrAZ/530O6q5Q8MMVvgAf5qcHwLJCF1hlvkthzcNn?=
+ =?iso-8859-1?Q?PHwZmz9YgJIp6Qt9BrRQwY1QO/3QBwvfJZdgn+0LzQFD3J1sbWrUXWX9uj?=
+ =?iso-8859-1?Q?dMrYzZxxKEwwMPJKVOycsWiVozEmcMTVVmSgUCSk6syicTl6lfhI26UUZu?=
+ =?iso-8859-1?Q?G1IIupLilY9RgSYCgujHXsRMRed1xrcejDHlB33WWrm3clYOvAAdQObnCt?=
+ =?iso-8859-1?Q?4IlqqhZLOw=3D=3D?=
+X-Exchange-RoutingPolicyChecked: E/i9RfyZXY6XHp8sU4hk7A4T+7lUSvvxh1fHCxdyuHo6jz7g1feW+FuYBCrr2l9mhslYqipq1hI78yPasEdV1pLgFtSv4yXLhtwACb6w9CvLCtcBlw0NIrypbWkGw6MJZOEHIK2RnGw1CT/VX1vF1At/cGxuauDYxWvZu931rnhHMoQmUReA0e3yo3zilal0BtVQyNH1+H5DvfkJlgonmPgImCkIihZD8rKyesgUfD4OCIJgFoLUMRSzODQuufpSoT/pF7a7tY6ZykKv66/oO46ndhtI/F7xHA1ytHwoRtm5WM6XTb4I1ES7r1vZyjxlq2IBt1sIh2dLN1hTekJ5pA==
+X-OriginatorOrg: nutanix.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: d9e04330-8818-49bf-436b-08dec861d30a
+X-MS-Exchange-CrossTenant-AuthSource: BY5PR02MB6753.namprd02.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 12 Jun 2026 09:06:01.3115 (UTC)
+X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
+X-MS-Exchange-CrossTenant-Id: bb047546-786f-4de1-bd75-24e5b6f79043
+X-MS-Exchange-CrossTenant-MailboxType: HOSTED
+X-MS-Exchange-CrossTenant-UserPrincipalName: SFx7Am+h1/wA4vwpXGlEoD/ubeR0+NgHO/EDtEHpb+FagautHBpgb75dhpg6muW2u56PH7runU4n/a35cx8KZQ==
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: DM3PR02MB10232
+X-Proofpoint-ORIG-GUID: SKBS3BmvQ8J0yxK1yqNUtt23Yt32_mwK
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNjEyMDA4MiBTYWx0ZWRfXwdRkMC+LfGgp
+ AOlKCPMbfl60CD7gjU7dMuG2Cz8E8XYuTdBPxPq5YVUMF+TRCiwxWu9K64JLNIkyz9Bzuev6CEf
+ LY96ldYT9mxA78Kg4bfrLpF1HdfFGFUmM322RWYJ+tuMu8cAXuDr07iPhnF5MaME9PoZ73uQOei
+ 3oFomGjdcsOpeIoeOBwHi7NxOOVFpwN2VvPe2P8MyL+IFV+ydCWmYZk1mWKc1TjViuYwuRwEUJB
+ J9o8aYfgGWt6En+4drT+GTAaOVlgdlJfDwN7cqL2qbGjcaXEhQARpUPvWH6Ot2koWGswK/UY2Vc
+ GLjWLJVgJzNvpEtVk3CByMoTjx3YpAKUeHp7G7+Krx+y/xfzeHHdOSqwYvtGYgy9XKLtNF15YQE
+ 6xMXEbJ+D0XmtvN7IyszQxocqNKZmByOmhPSh8tMiPYOQ9ZoNRdpfg3cJtmYaQaPn9RfDMzI0gK
+ pBtiZn6umzNQj6Qg5BQ==
+X-Authority-Analysis: v=2.4 cv=AfKB2XXG c=1 sm=1 tr=0 ts=6a2bcbfc cx=c_pps
+ a=1XJinUMeHr/5msdtnNmmhA==:117 a=6eWqkTHjU83fiwn7nKZWdM+Sl24=:19
+ a=z/mQ4Ysz8XfWz/Q5cLBRGdckG28=:19 a=lCpzRmAYbLLaTzLvsPZ7Mbvzbb8=:19
+ a=xqWC_Br6kY4A:10 a=8nJEP1OIZ-IA:10 a=FelO9ux0wxsA:10 a=0kUYKlekyDsA:10
+ a=VkNPw1HP01LnGYTKEx00:22 a=VofLwUrZ8Iiv6rRUPXIb:22 a=1L6crL_YRTbalZ11mEUO:22
+ a=lMLPEW2cRtEjdLPvwssA:9 a=3ZKOabzyN94A:10 a=wPNLvfGTeEIA:10
+ a=QYH75iMubAgA:10
+X-Proofpoint-GUID: SKBS3BmvQ8J0yxK1yqNUtt23Yt32_mwK
+X-Proofpoint-Spam-Info: AW1haW4tMjYwNjEyMDA4MiBTYWx0ZWRfX38ZXGjI3vqxp
+ 6ar3BuZfmDBCfrt7NVbqhg42qOaX9tl52GTQ+U+TzunKkmG/uqkhNg5kk+dAciIjo5fnJCKPKnp
+ znzsw4iWyfhxzguKHxxWdI3Fsj630s8=
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.125,FMLib:17.12.100.49
+ definitions=2026-06-12_01,2026-06-11_01,2025-10-01_01
+X-Proofpoint-Spam-Reason: safe
+Received-SPF: pass client-ip=148.163.151.68;
+ envelope-from=john.levon@nutanix.com; helo=mx0a-002c1b01.pphosted.com
+X-Spam_score_int: -31
+X-Spam_score: -3.2
+X-Spam_bar: ---
+X-Spam_report: (-3.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.445,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -164,79 +184,14 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-John, Thanos,
+On Fri, Jun 12, 2026 at 11:00:35AM +0200, Cédric Le Goater wrote:
 
-Does this change look good to you ?
-
-Thanks,
-
-C.
-
-
-On 6/3/26 08:21, zhaoguohan@kylinos.cn wrote:
-> From: GuoHan Zhao <zhaoguohan@kylinos.cn>
+> John, Thanos,
 > 
-> The vfio-user protocol makes the VERSION payload optional, so a
-> reply may legally stop after the major and minor fields.
-> 
-> vfio_user_validate_version() currently assumes a capabilities string is
-> always present and NUL-terminated. When the server replies without
-> version data, QEMU ends up reusing the request-side capabilities buffer
-> and the terminating-NUL check underflows. Replies shorter than the fixed
-> VERSION header are also accessed before they are validated.
-> 
-> Reject replies shorter than the fixed VERSION header and only parse
-> capabilities when the reply actually carries version data.
-> 
-> Fixes: 36227628d824 (vfio-user: implement message send infrastructure)
-> Signed-off-by: GuoHan Zhao <zhaoguohan@kylinos.cn>
-> ---
->   hw/vfio-user/proxy.c | 21 ++++++++++++++-------
->   1 file changed, 14 insertions(+), 7 deletions(-)
-> 
-> diff --git a/hw/vfio-user/proxy.c b/hw/vfio-user/proxy.c
-> index 0f7d8425d614..197aee07bf7a 100644
-> --- a/hw/vfio-user/proxy.c
-> +++ b/hw/vfio-user/proxy.c
-> @@ -1292,7 +1292,7 @@ bool vfio_user_validate_version(VFIOUserProxy *proxy, Error **errp)
->   {
->       g_autofree VFIOUserVersion *msgp = NULL;
->       GString *caps;
-> -    char *reply;
-> +    const char *reply = "";
->       int size, caplen;
->   
->       caps = caps_json();
-> @@ -1322,17 +1322,24 @@ bool vfio_user_validate_version(VFIOUserProxy *proxy, Error **errp)
->           return false;
->       }
->   
-> -    reply = msgp->capabilities;
-> -    if (reply[msgp->hdr.size - sizeof(*msgp) - 1] != '\0') {
-> -        error_setg(errp, "corrupt version reply");
-> +    if (msgp->hdr.size < sizeof(*msgp)) {
-> +        error_setg(errp, "short version reply");
->           return false;
->       }
->   
-> -    if (!caps_check(proxy, msgp->minor, reply, errp)) {
-> -        return false;
-> +    if (msgp->hdr.size > sizeof(*msgp)) {
-> +        reply = msgp->capabilities;
-> +        if (reply[msgp->hdr.size - sizeof(*msgp) - 1] != '\0') {
-> +            error_setg(errp, "corrupt version reply");
-> +            return false;
-> +        }
-> +
-> +        if (!caps_check(proxy, msgp->minor, reply, errp)) {
-> +            return false;
-> +        }
->       }
->   
-> -    trace_vfio_user_version(msgp->major, msgp->minor, msgp->capabilities);
-> +    trace_vfio_user_version(msgp->major, msgp->minor, reply);
->       return true;
->   }
->   
+> Does this change look good to you ?
 
+Sorry for the delay, it's in my inbox and I'll try to get to it soon
+
+regards
+john
 
