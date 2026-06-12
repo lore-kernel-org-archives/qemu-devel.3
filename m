@@ -4,100 +4,143 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 31FD7CD8CA8
-	for <qemu-devel@archiver.kernel.org>; Fri, 12 Jun 2026 05:37:13 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6F5D1CD8CA8
+	for <qemu-devel@archiver.kernel.org>; Fri, 12 Jun 2026 05:54:45 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wXuZ3-0008E0-0m; Fri, 12 Jun 2026 01:36:21 -0400
+	id 1wXuq3-0002IK-Je; Fri, 12 Jun 2026 01:53:55 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <chao.liu.zevorn@gmail.com>)
- id 1wXuZ1-0008Dd-2L
- for qemu-devel@nongnu.org; Fri, 12 Jun 2026 01:36:19 -0400
-Received: from mail-dy1-x1344.google.com ([2607:f8b0:4864:20::1344])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <chao.liu.zevorn@gmail.com>)
- id 1wXuYy-0001sK-Du
- for qemu-devel@nongnu.org; Fri, 12 Jun 2026 01:36:18 -0400
-Received: by mail-dy1-x1344.google.com with SMTP id
- 5a478bee46e88-307263ad0cbso989682eec.0
- for <qemu-devel@nongnu.org>; Thu, 11 Jun 2026 22:36:15 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1781242574; x=1781847374; darn=nongnu.org;
- h=in-reply-to:content-transfer-encoding:content-disposition
- :mime-version:references:message-id:subject:cc:to:from:date:from:to
- :cc:subject:date:message-id:reply-to;
- bh=1lksxLlJXxD4Ja1JGJLQOQpQFhJ/myfx88cj4NaMbUM=;
- b=bO8I0IjYl0/FXfTnjR5GBeE5R8MtX8mjiLBRTldMvCvJPlKqk0PI7jgBTfaxEKzusv
- hKuty0ddcrKp8PjrdwdmJ2dhWC/V09XuZ7dvH+qau7SEYT6RAdgb3SX4Ku4AhRFRcv1y
- FeJWwuZGaSj1sB0c6Ioxg/lvhbiN4xSMrU5dawUuZJ61RjKXwXoGKHb2QqouV7ub8gYY
- ewMT3R4Kt0i0T3VVUZITuh43ZbPmJAWulBxCWUqzVcgfVxXs+RBXzp5U5MkprrvX26Fz
- dQ7uy2DRz6rgnHAj78qw8j9wn0oFmOfUpa+4ZJ7jmMEZg0DijR4qU1RtS+3P4Br+e4z9
- kPHA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1781242574; x=1781847374;
- h=in-reply-to:content-transfer-encoding:content-disposition
- :mime-version:references:message-id:subject:cc:to:from:date:x-gm-gg
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=1lksxLlJXxD4Ja1JGJLQOQpQFhJ/myfx88cj4NaMbUM=;
- b=BOC+hN5go20s5Qz+2izre+FsxOyZNBa+gOTXU3gIQiN9tu8OxdYTiOyCnXpdmLI18x
- zwR87kQO6knl01EpCxeIwD/p0ijAERg5/AjUdbw+6u+vedPP4DXJKKVbpvQjG/s2Zo0s
- lk5N05o/75IbtRDLO8kaUXJZvAzNL1oI0Bw5bfLI7wM/t0IevEwErN8qwNFClUkADLPU
- UMS2tjOvttifB0oQqYrV3mcV6z50efyjkvEeo1DoasizvbCmdh5OanitpyqX6aDjLwQm
- I8TetlswqCYm02nqSUsdr3a9vc4kyrWl3rjlfjhS1zgeM4FEuTQqh1O9OR5QtCu92GQP
- JHpw==
-X-Forwarded-Encrypted: i=1;
- AFNElJ++mS1MKOKDnGgGaAkEMotIWudHZfIB3evTKgnVv45N2G5cW3byohrOZTguhG4SyHk6tEj4EV3ptVtz@nongnu.org
-X-Gm-Message-State: AOJu0YxAiTmsKk6CAEG7CC6G0SoejI+dvZXAPjvUpIVHM/Q/VSJvLIVp
- YbtxZeyMfHfe4P4tAjJ+4Sitc6h7XmA6H+WRk96v6GX4pukW1IRaOfFc
-X-Gm-Gg: Acq92OGaVr54KcGorXRVOZtw1fyPfHUlk2yyVmOrT6v9TFArBw+8ckbHW+lw6bKXPs2
- b9Z+LlJ1C6Cic9MTuM1LtduAoOIDfvLJNjXjv2zP7GFT8RUVxuQuQWglyQB3apj0UO09hOFC9eY
- h/8CDi/FnXuK1ZC26nSf5PBXFLYMIcbLFZGpxnVrVuy3gsu0E61tAn9VX059jYaoV0E/7a9NLC9
- zpPJK5aa0PZvqR3HWNe0tIc/wSSmyhBwVrZ5TGXxtYpEjX2RcTyARC9/8/cQrtacO4f646QoNIB
- LG3aRmcVYvE3u/knTTdNi8VT0ChVSrLpaGau1PRZmzdZYm0AHNZUoVeTiEVtCUer4EfJKXwHpl4
- 1k5zgDi5UBcCnwriCYNJn7Cs5kl/dKGW+JCLJyMKWcBr1VafMXfxUDrXA3yPn4fTL9qIRNBGTb/
- jU1TKErxSD/NsrGuQYfgjJsbC4ZC7t75ohF9qaRJVULkdpSMFIVGGhwoFWyQA=
-X-Received: by 2002:a05:7300:8cab:b0:304:ab8:f87c with SMTP id
- 5a478bee46e88-3081ff7c07fmr856959eec.12.1781242574334; 
- Thu, 11 Jun 2026 22:36:14 -0700 (PDT)
-Received: from localhost ([64.186.250.142]) by smtp.gmail.com with ESMTPSA id
- 5a478bee46e88-3081ddaf69asm2086363eec.0.2026.06.11.22.36.13
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 11 Jun 2026 22:36:13 -0700 (PDT)
-Date: Fri, 12 Jun 2026 13:36:11 +0800
-From: Chao Liu <chao.liu.zevorn@gmail.com>
-To: Alistair Francis <alistair23@gmail.com>
-Cc: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>, 
- Palmer Dabbelt <palmer@dabbelt.com>,
- Alistair Francis <alistair.francis@wdc.com>, 
- Weiwei Li <liwei1518@gmail.com>,
- Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>, 
- Liu Zhiwei <zhiwei_liu@linux.alibaba.com>, Paolo Bonzini <pbonzini@redhat.com>,
- Christoph Muellner <christoph.muellner@vrull.eu>,
- Fabiano Rosas <farosas@suse.de>, 
- Laurent Vivier <lvivier@redhat.com>, qemu-devel@nongnu.org,
- qemu-riscv@nongnu.org, 
- Chao Liu <chao.liu@zevorn.cn>, Mig Yang <temashking@foxmail.com>, 
- Daniel Henrique Barboza <dbarboza@ventanamicro.com>
-Subject: Re: [PATCH v7 4/5] tests/qtest: add test for K230 watchdog
-Message-ID: <aiuYsOG0QFkMc4eO@ChaodeMacBook-Pro.local>
-References: <cover.1778516731.git.chao.liu.zevorn@gmail.com>
- <69be8c8a8b47f4b6283a4a89850fff8cde300137.1778516731.git.chao.liu.zevorn@gmail.com>
- <CAKmqyKOF8KpDTtmtHpJvQ-uu6trSQZ3=NNs-R3AkW3RUMLP98g@mail.gmail.com>
+ (Exim 4.90_1) (envelope-from <gaurav.sharma_7@nxp.com>)
+ id 1wXuq1-0002I8-Ha
+ for qemu-devel@nongnu.org; Fri, 12 Jun 2026 01:53:53 -0400
+Received: from mail-northeuropeazon11012063.outbound.protection.outlook.com
+ ([52.101.66.63] helo=DUZPR83CU001.outbound.protection.outlook.com)
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <gaurav.sharma_7@nxp.com>)
+ id 1wXupz-0007eC-AV
+ for qemu-devel@nongnu.org; Fri, 12 Jun 2026 01:53:53 -0400
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=IP3CftSmOHBk1YCm9LCtHd0M4YefBeZHaZoUivpxxCC9sxUk/Pe4Imf8F7zD85d8eABZjv8hkbBBdL7jQp5pT2iFq/8lz2CuAbfUBRAY21sYa9b+WVS5Yg7qs7R2I6h2YgkuZMI3MfhIrwunsuq9d0HlgMbt0XPQ+OguDbR78543nP4+9aYgM67KF8S/pJ8Y4Lk2rzGLXfF2FB5HEO3EEm8KOwAJUhRSZkKoHfiUZmlxxhRdqW8jvALUdkiXfI92JAgl777y727nsps2INr2krmSkOauygZJP/BoS+XGmNUoHwyJdLGZ69JPdruv8gAR8KqLJGC0WIljFQo2alvchw==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=mFQaBOaZIHMT6mqA7n6RrfnDjDkw9iDN+o7z2egA38E=;
+ b=L9WWRsgmOEEW/BGrFG/X1eCIJv8y18z09OxMdjKakhyCGKnH4W+70/YFVYos9ITrN/5RAbU5NesgChYwJreUHVIUfVFnati3fGUVxvno0jTLGeDi437DbFhzSUpwPxbx6pLolkO9HLM6zj64b7O8XLw/u1ZkRlFXtccPE/sMesgW8YuN8s6ADZU74BOS78slL2BS9814nx00BaWJuq6R+QENc/6SGStB2pUVSKqBOX4IRVorGpdGN0L1HcA7hW3vYQg9QrJY6w9b0ljbSxp67xXMV+MCXVzEh20s2TR+vqt0QORrOsf401j2Tnr8CxlbBP21EL/M1j5XpRPmq+G4aw==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=nxp.com; dmarc=pass action=none header.from=nxp.com; dkim=pass
+ header.d=nxp.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=nxp.com; s=selector1; 
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=mFQaBOaZIHMT6mqA7n6RrfnDjDkw9iDN+o7z2egA38E=;
+ b=AmXNrSv/cRuAUb8/EE61GfaAr7WQhkEjO40/ZQO+3L8G8y6vZI3EWD8TVs+nJpLg3gW4Ivkb9OvtFEX4H8gyi4PGcKXNCyJQUHVYTkv5157caaryoHiM2cJkE6Y+1HTN0YT0tz00fUG5fac4nivrfglYX1BmvjXwTTzdHh4gCnWAz4TlacXp5G3SrTTGhxoMJnl6SjvhkSjkXsAl/FT1ESN4/hs/mmAwTEpA3FuqhWrb6h0RrbJE4Wgy6zSH8sF2Cf35rMw+NowonpcmlnxYm2a9sdNBrrK/BiQiQxnFvSy4VmmPYlqDxUrnPLmXuOhiWrxQVaRAScSP+GUlXUAIxg==
+Received: from DB8PR04MB7177.eurprd04.prod.outlook.com (2603:10a6:10:127::23)
+ by VI0PR04MB12662.eurprd04.prod.outlook.com (2603:10a6:800:343::19)
+ with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.113.14; Fri, 12 Jun
+ 2026 05:48:45 +0000
+Received: from DB8PR04MB7177.eurprd04.prod.outlook.com
+ ([fe80::cf7b:6007:220b:97a2]) by DB8PR04MB7177.eurprd04.prod.outlook.com
+ ([fe80::cf7b:6007:220b:97a2%4]) with mapi id 15.21.0113.013; Fri, 12 Jun 2026
+ 05:48:45 +0000
+From: Gaurav Sharma <gaurav.sharma_7@nxp.com>
+To: Bernhard Beschow <shentey@gmail.com>, "qemu-devel@nongnu.org"
+ <qemu-devel@nongnu.org>
+CC: "pbonzini@redhat.com" <pbonzini@redhat.com>, "peter.maydell@linaro.org"
+ <peter.maydell@linaro.org>
+Subject: RE: [EXT] Re: [PATCHv1 0/7] hw/arm: Adding Cortex-M7 Asymmetric
+ Multiprocessing boot support for i.MX8MP
+Thread-Topic: [EXT] Re: [PATCHv1 0/7] hw/arm: Adding Cortex-M7 Asymmetric
+ Multiprocessing boot support for i.MX8MP
+Thread-Index: AQHc57japbF9zYMUCk+sqgi5ImZErLYg3SaAgAEzEACABsB0gIARvKkw
+Date: Fri, 12 Jun 2026 05:48:45 +0000
+Message-ID: <DB8PR04MB717743A2AEA1A39AE3C70A5E87182@DB8PR04MB7177.eurprd04.prod.outlook.com>
+References: <20260519175635.3245229-1-gaurav.sharma_7@nxp.com>
+ <D6AE3A65-8ED9-47B9-B7D5-51D8500B47AF@gmail.com>
+ <AM0PR04MB4370F0A97B0CF2363BFE9CA187082@AM0PR04MB4370.eurprd04.prod.outlook.com>
+ <A626B2F1-D50B-4E0B-857C-2E101B6FFB1A@gmail.com>
+In-Reply-To: <A626B2F1-D50B-4E0B-857C-2E101B6FFB1A@gmail.com>
+Accept-Language: en-US
+Content-Language: en-US
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+authentication-results: dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=nxp.com;
+x-ms-publictraffictype: Email
+x-ms-traffictypediagnostic: DB8PR04MB7177:EE_|VI0PR04MB12662:EE_
+x-ms-office365-filtering-correlation-id: 5633951e-3bdf-4cc7-2e08-08dec846443c
+x-ms-exchange-senderadcheck: 1
+x-ms-exchange-antispam-relay: 0
+x-microsoft-antispam: BCL:0;
+ ARA:13230040|376014|23010399003|366016|19092799006|1800799024|18096099006|3023799007|17096099006|6133799003|56012099006|5023799004|4143699003|11063799006|38070700021|18002099003|22082099003;
+x-microsoft-antispam-message-info: pcaseP2PsaqNmOdidtEfQaDvtJX9rYhPPKKyZqanBKC6Gsw9xIw7+QzUvu5fNEcoCXQGzg80jD+NMFodq55lhBghP2peUNbtTGnMw98Yr5HNxRgIwPkoM7u57sbSk/4fPUl6vYUk6kxC8JL/x/PMAZOIxwm5o2pSh4iVOM+hi5nIFQ0UY7b3DNGak9HcVJQOYxFP2MI6UuiH6IjdEWZvR3b2U9YHwfkLIzNVhLeoH5W1kLQwanfXC5d6NG/aIV9BD/6oyPBYmq3hCoxQlM06skDMcTBie+YHVFPcSU0fq85j7TV0iyBk+Y6xq780CzvY8UeLS6hXBG+mNIvhD7WSywyviiq8UY7vfeLiL6NYZut+WjumieINwdJO4iLlbs870gAq/ZBJI0mDRr0AnTwZqhu+VBrgFgxUHJs2NbNZQbZkURYku86SW0j1QEdqO4lr4FtOTPtb8zuHaTgk1hy9OMO6Vpu73GWOoUQp+WmAJCDQOcn4aUB4LXSLRGaWUDevUoXeBfZ1uX4Qh4pUKg1w5l7OaZyUpgOh8kToPC4ekJGxhtMD4mZ6kVk7mDIHv/az3RAqC5J88kQ5rJeR1t/cVhV9f7Sa3nAWUOlVkoj9TSOd+CKK9OQzcunQBAjvVxB4+9vkQLb1ZpzLIlOtbQk6k75Iq94WrBNKj7bF6VdLUDl0BOueqtkIsInscjEddMa4+JDcIOy2cGc8D0zSs9ly7bvZ4TO03A8AQxIx22kToO2EaxbGpsNNXDsDNSeE7/uZ
+x-forefront-antispam-report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
+ IPV:NLI; SFV:NSPM; H:DB8PR04MB7177.eurprd04.prod.outlook.com; PTR:; CAT:NONE;
+ SFS:(13230040)(376014)(23010399003)(366016)(19092799006)(1800799024)(18096099006)(3023799007)(17096099006)(6133799003)(56012099006)(5023799004)(4143699003)(11063799006)(38070700021)(18002099003)(22082099003);
+ DIR:OUT; SFP:1101; 
+x-ms-exchange-antispam-messagedata-chunkcount: 1
+x-ms-exchange-antispam-messagedata-0: =?utf-8?B?RXQvbjJMS3hVaHpialJBaksvYlUwbi96NG1FVW1nUDJxajFZYm91QzNyK2d0?=
+ =?utf-8?B?WnNCU0dadlV3VTdCSkh5RjJWallOcXVjUk1rY1phQ3dndHNRZEVaUHdvSWY2?=
+ =?utf-8?B?em5MbXdoemdGQTB3ZFpsQ0JJdy8reTFTN2xMeENnWlJZQlZsRnlWamJ3N0FX?=
+ =?utf-8?B?UU9XcTUwb2FxeENDOWtKdm8wQnp2R3BEaFc0N1NseU8xRWp0a011TnBGRXZa?=
+ =?utf-8?B?TXF5SHNKL1pvV21hNnNZUHIyNldMSUp3ZnRhdVVvdTEwMGQ1OVFuajBWUFlS?=
+ =?utf-8?B?SnUxS1RYQXBLWjNHS3RMRVlNSkkxUDZQRGliN2FRN2lFTUVNclNuOU82SFpU?=
+ =?utf-8?B?MmFJTXNRZkNrem1sRGFhaW4yWWhEUXVwMXUxMHJ6RzdCMmdZdU9jS3RzRkR6?=
+ =?utf-8?B?TWZMODd0N01hcWtlMGliRFR3eDdFQmgyRXR6ejczVkZiZUV3cFZ0ckw2RGpI?=
+ =?utf-8?B?L0h0Wk9MTDhTOTdiQ0FRY3hNUlpuOHEyT0tsR3dUbzVGeGRaK0NMTjFta2hu?=
+ =?utf-8?B?N3NLMzVDV2dIU2ZPYmszVVlTT1BYdVFpdmlpaHVLTUhUU2ErUmNBR0hTblA4?=
+ =?utf-8?B?aFVKdHFrVk5CVUgzVEhlTWhWSkdxZTRwcXgzcDdNZDVSSGk0amp4OHpLczht?=
+ =?utf-8?B?S0VuSUxHMVVPNkhGeTFpM0F5MW1Yejc4dUpvdjBSZThlN0NxQkRCVDZjZEts?=
+ =?utf-8?B?V3ZPRUtvOG4wdTl1RW5lRDNDR2taOG9MZ1ZyalF2UHJEL1JDRHZRTExvRFBW?=
+ =?utf-8?B?SS9lMjJZcjRQTVEvL053R0VodDRld0g1TjUvaHBqYmJVdW1DaEQ1bDhXMklZ?=
+ =?utf-8?B?aFN2UjJzaXJuV2RoVVJhL0VXQlkvU2NLSWNIWGdrVEtmUHc3RlhkRXFQR2pl?=
+ =?utf-8?B?WU52NXFYR3l4dVJESVdyc0MzVE5Ob1Z0V3NpTjBMa2FJNkRRajhnZHRUMHNr?=
+ =?utf-8?B?RWxPMDd3dTY4VHlXMklVeDJuS3pKWVdnclZVNlFRY0dnSndlc1kvT3hXajB4?=
+ =?utf-8?B?alp1ZWQxbmtRMXU2TCtPQzJMbHkyVGZxazhEZEtVdjF1amxYdGp0N3BZdTN1?=
+ =?utf-8?B?aEhBK3o0WUpWRGJNNFFXTVlrVUd2YWtjUEMzTjcySnZZcTlFb1FZUVdseEJG?=
+ =?utf-8?B?QTNMSys3UkpwcGdIRXVENWFndzRMaHdkcGdYMVhsTmY0czl3MnNOY0sxblVG?=
+ =?utf-8?B?NjNJRU5MM1VqREtCZWI4VEZyb0pic2R0cHJtanowTTlEUHNDcGN1anBGRkR5?=
+ =?utf-8?B?cSs4RnVJZjE2cFgxREZaOWw3VlJTYzBIdUMvaHVYZEczc0V2QlRRdEdUYlhR?=
+ =?utf-8?B?VHJDMEIxbmxoQ1V2eGdQYitBQVZCQTBnUko1ZzVldVNkMUprZVRpYVd4bUx2?=
+ =?utf-8?B?d29FVUNVOFl2d2VzcHJHYmVJOWZIWDNpZk1ESHFWMi9IRXA5YUlxZDdkQ3B2?=
+ =?utf-8?B?TWFoMHg3TnNuMU9iLzcyM2pETTFUL0IwQU1Zd0thRjNwcW44OVNyaVpsQ1Yv?=
+ =?utf-8?B?QUF5T0RFbU5rOHc2akRHbGRWaW96d3l0dlkyK0lUd1FCeFRtTElqV2lDMll6?=
+ =?utf-8?B?dCtRL1o2cFVaUksxTGRZTjBVa0x6dGdzMHFzUjFKN0RJQloyR2UzN1VkcnhB?=
+ =?utf-8?B?U2RlV1c3NGprd3Vidy9Mc3hHWVpVbzFVWTBocjB6S2dGTmZyK1FEbGpJd3pB?=
+ =?utf-8?B?VFE2dG5aQnpzSXlqL2xySVRRTjk2cEZJYTdqRlFTU1hXM2Z2NS9vTURTclMr?=
+ =?utf-8?B?NXNDVnRuajZnR2YyTENoQStRUDNXQzlvbXU2Y1hYMkhnZUZHc2k1STZmZzFJ?=
+ =?utf-8?B?bHh5dE41dWc2aW9xRm9VdVpxb1FxSlVkTktVUEE4aDJEWkNPTFBqU0dqbGEr?=
+ =?utf-8?B?NkpiRFJEYm5VdlB6ejRwUTMwcjVrdUFsYXovN2Q4Ny9UVzd2U0VZSlZVbU8v?=
+ =?utf-8?B?eUFQZ1VSYklBM3Q3bHd5dEFVd3lSMzNSTFFZZi9kV1hGYXNTaTNJQldIcVIz?=
+ =?utf-8?B?dnNvNlJDcFNBcnN4WEhDbVJmRHRtQ3k5MFZWZXpYenJFejJDN2ZGcm14d01Q?=
+ =?utf-8?B?TG9MRTV5NWZ3ZXVNcXVheElaNGJPd3Q0RVBXbCtCOElpMXlneDNtNG4xMVJr?=
+ =?utf-8?B?ayt5QUpzNjc3dm05TGxyQzlmUHFVNjE0WG8xSVZsaE5hNmVYVjdMRGlJRHdS?=
+ =?utf-8?B?cTJ4L3FabkREVGZoQ2JwWDlUb2F5SzVLV1hqdDRLU21TbEgxZkZZWElBV2Mw?=
+ =?utf-8?B?WS9FNVJSUmV0d1hVREp1YzdaK20zbmFtUFZuZmZrMDdDYXRQQk5LRjF4dDBF?=
+ =?utf-8?B?WFpJZFJSa0xuL0dhTjdNT01vZStPc3hDQ0VKeDVXYitkVFc4akoyUT09?=
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: base64
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <CAKmqyKOF8KpDTtmtHpJvQ-uu6trSQZ3=NNs-R3AkW3RUMLP98g@mail.gmail.com>
-Received-SPF: pass client-ip=2607:f8b0:4864:20::1344;
- envelope-from=chao.liu.zevorn@gmail.com; helo=mail-dy1-x1344.google.com
+X-OriginatorOrg: nxp.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-AuthSource: DB8PR04MB7177.eurprd04.prod.outlook.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: 5633951e-3bdf-4cc7-2e08-08dec846443c
+X-MS-Exchange-CrossTenant-originalarrivaltime: 12 Jun 2026 05:48:45.0987 (UTC)
+X-MS-Exchange-CrossTenant-fromentityheader: Hosted
+X-MS-Exchange-CrossTenant-id: 686ea1d3-bc2b-4c6f-a92c-d99c5c301635
+X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
+X-MS-Exchange-CrossTenant-userprincipalname: tPL6+X6VKa5THMsnmKtniRZn+dvQEBnwfoWo2Ijt8olXWKxP00yghxGi+cNfz8H/OYjQJLSe/ui6U+qkFXsw7g==
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: VI0PR04MB12662
+Received-SPF: pass client-ip=52.101.66.63;
+ envelope-from=gaurav.sharma_7@nxp.com;
+ helo=DUZPR83CU001.outbound.protection.outlook.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001, SPF_HELO_PASS=-0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -114,305 +157,138 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Fri, Jun 12, 2026 at 12:37:03PM +0800, Alistair Francis wrote:
-> On Tue, May 12, 2026 at 2:33 AM Chao Liu <chao.liu.zevorn@gmail.com> wrote:
-> >
-> > From: Chao Liu <chao.liu@zevorn.cn>
-> >
-> > Testing the Basic Functions of K230 WDT:
-> > 1. Reset Function
-> > 2. Timeout Check
-> > 3. Interrupt Function
-> >
-> > Signed-off-by: Mig Yang <temashking@foxmail.com>
-> > Reviewed-by: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
-> > Acked-by: Fabiano Rosas <farosas@suse.de>
-> > Signed-off-by: Chao Liu <chao.liu.zevorn@gmail.com>
-> 
-> This fails `make check` for me. I guess the `k230` machine wasn't built?
->
-I've tested the case on my local machine and it's running fine.
-
-However, since the patch set is already a month old, maybe need rebase
-next branch.
-
-And I found an issue in the first patch while looking through the Milk-V
-Duo patches.
-
-https://lore.kernel.org/qemu-devel/agZFchak-jsc2moK@ZEVORN-PC.localdomain/
-
-I'll fix it and send out a V8 version shortly. You can test it again
-once that's out.
-
-Thanks,
-Chao
-> 541/542 qemu:qtest+qtest-aarch64 / qtest-aarch64/bios-tables-test
->                OK              91.02s   15 subtests passed
-> ▶ 542/542 /riscv64/k230-wdt/register_read_write -
-> ERROR:../tests/qtest/libqtest.c:558:qtest_connect: assertion failed:
-> (s->fd >= 0 && s->qmp_fd >= 0) FAIL
-> ▶ 542/542
->                ERROR
-> 542/542 qemu:qtest+qtest-riscv64 / qtest-riscv64/k230-wdt-test
->                ERROR           51.60s   killed by signal 6 SIGABRT
-> >>> PYTHON=/var/mnt/scratch/alistair/software/qemu/build/pyvenv/bin/python3 MSAN_OPTIONS=halt_on_error=1:abort_on_error=1:print_summary=1:print_stacktrace=1 QTEST_QEMU_VNC_BINARY=./tools/qemu-vnc/qemu-vnc UBSAN_OPTIONS=halt_on_error=1:abort_on_error=1:print_summary=1:print_stacktrace=1 MESON_TEST_ITERATION=1 QTEST_QEMU_IMG=./qemu-img RUST_BACKTRACE=1 G_TEST_DBUS_DAEMON=/var/mnt/scratch/alistair/software/qemu/tests/dbus-daemon.sh MALLOC_PERTURB_=94 QTEST_QEMU_STORAGE_DAEMON_BINARY=./storage-daemon/qemu-storage-daemon ASAN_OPTIONS=halt_on_error=1:abort_on_error=1:print_summary=1 QTEST_QEMU_BINARY=./qemu-system-riscv64 /var/mnt/scratch/alistair/software/qemu/build/tests/qtest/k230-wdt-test --tap -k
-> ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
-> ✀  ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
-> stderr:
-> qemu-system-riscv64: unsupported machine type: "k230"
-> Use -machine help to list supported machines
-> socket_accept failed: Resource temporarily unavailable
-> **
-> ERROR:../tests/qtest/libqtest.c:558:qtest_connect: assertion failed:
-> (s->fd >= 0 && s->qmp_fd >= 0)
-> ../tests/qtest/libqtest.c:201: kill_qemu() tried to terminate QEMU
-> process but encountered exit status 1 (expected 0)
-> 
-> (test program exited with status code -6)
-> ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
-> 
-> 
-> Summary of Failures:
-> 
-> 542/542 qemu:qtest+qtest-riscv64 / qtest-riscv64/k230-wdt-test
->       ERROR           51.60s   killed by signal 6 SIGABRT
-> 
-> Ok:                 510
-> Expected Fail:      0
-> Fail:               1
-> Unexpected Pass:    0
-> Skipped:            31
-> Timeout:            0
-> 
-> Alistair
-> 
-> > ---
-> >  MAINTAINERS                 |   1 +
-> >  tests/qtest/k230-wdt-test.c | 189 ++++++++++++++++++++++++++++++++++++
-> >  tests/qtest/meson.build     |   3 +-
-> >  3 files changed, 192 insertions(+), 1 deletion(-)
-> >  create mode 100644 tests/qtest/k230-wdt-test.c
-> >
-> > diff --git a/MAINTAINERS b/MAINTAINERS
-> > index e5ec6367ca..e7e3ed0c5c 100644
-> > --- a/MAINTAINERS
-> > +++ b/MAINTAINERS
-> > @@ -1788,6 +1788,7 @@ F: hw/riscv/k230.c
-> >  F: hw/watchdog/k230_wdt.c
-> >  F: include/hw/riscv/k230.h
-> >  F: include/hw/watchdog/k230_wdt.h
-> > +F: tests/qtest/k230-wdt-test.c
-> >
-> >  RX Machines
-> >  -----------
-> > diff --git a/tests/qtest/k230-wdt-test.c b/tests/qtest/k230-wdt-test.c
-> > new file mode 100644
-> > index 0000000000..c8eaeaf1ae
-> > --- /dev/null
-> > +++ b/tests/qtest/k230-wdt-test.c
-> > @@ -0,0 +1,189 @@
-> > +/*
-> > + * QTest testcase for K230 Watchdog
-> > + *
-> > + * Copyright (c) 2025 Mig Yang <temashking@foxmail.com>
-> > + *
-> > + * SPDX-License-Identifier: GPL-2.0-or-later
-> > + *
-> > + * Provides a board compatible with the kendryte K230 SDK
-> > + *
-> > + * K230 Technical Reference Manual V0.3.1 (2024-11-18):
-> > + * https://github.com/revyos/external-docs/blob/master/K230/en-us/K230_Technical_Reference_Manual_V0.3.1_20241118.pdf
-> > + *
-> > + * For more information, see <https://www.kendryte.com/en/proDetail/230>
-> > + */
-> > +
-> > +#include "qemu/osdep.h"
-> > +#include "qemu/timer.h"
-> > +#include "qemu/bitops.h"
-> > +#include "libqtest.h"
-> > +#include "hw/watchdog/k230_wdt.h"
-> > +
-> > +/* K230 WDT0 base address */
-> > +#define K230_WDT0_BASE 0x91106000
-> > +#define K230_WDT1_BASE 0x91106800
-> > +
-> > +/* Test WDT0 by default */
-> > +#define WDT_BASE K230_WDT0_BASE
-> > +
-> > +static void test_register_read_write(void)
-> > +{
-> > +    QTestState *qts = qtest_init("-machine k230");
-> > +
-> > +    /* Test Control Register (CR) read/write */
-> > +    qtest_writel(qts, WDT_BASE + K230_WDT_CR, 0xFFFFFFFF);
-> > +    g_assert_cmphex(qtest_readl(qts, WDT_BASE + K230_WDT_CR), ==,
-> > +                    (K230_WDT_CR_RPL_MASK << K230_WDT_CR_RPL_SHIFT) |
-> > +                    K230_WDT_CR_RMOD | K230_WDT_CR_WDT_EN);
-> > +
-> > +    /* Test Timeout Range Register (TORR) read/write */
-> > +    qtest_writel(qts, WDT_BASE + K230_WDT_TORR, 0xFFFFFFFF);
-> > +    g_assert_cmphex(qtest_readl(qts, WDT_BASE + K230_WDT_TORR), ==,
-> > +                    K230_WDT_TORR_TOP_MASK);
-> > +
-> > +    /* Test Protection Level Register read/write */
-> > +    qtest_writel(qts, WDT_BASE + K230_WDT_PROT_LEVEL, 0xFFFFFFFF);
-> > +    g_assert_cmphex(qtest_readl(qts, WDT_BASE + K230_WDT_PROT_LEVEL), ==, 0x7);
-> > +
-> > +    qtest_quit(qts);
-> > +}
-> > +
-> > +static void test_counter_restart(void)
-> > +{
-> > +    QTestState *qts = qtest_init("-machine k230");
-> > +
-> > +    /* Enable watchdog and set timeout */
-> > +    qtest_writel(qts, WDT_BASE + K230_WDT_CR, K230_WDT_CR_WDT_EN);
-> > +    qtest_writel(qts, WDT_BASE + K230_WDT_TORR, 0x5); /* TOP = 5 */
-> > +
-> > +    /* Read current counter value */
-> > +    uint32_t initial_count = qtest_readl(qts, WDT_BASE + K230_WDT_CCVR);
-> > +    g_assert_cmpuint(initial_count, >, 0);
-> > +
-> > +    /* Restart counter with magic value */
-> > +    qtest_writel(qts, WDT_BASE + K230_WDT_CRR, K230_WDT_CRR_RESTART);
-> > +
-> > +    /* Wait for time */
-> > +    qtest_clock_step(qts, NANOSECONDS_PER_SECOND * 2);
-> > +
-> > +    /* Counter should be reset to timeout value */
-> > +    uint32_t new_count = qtest_readl(qts, WDT_BASE + K230_WDT_CCVR);
-> > +    g_assert_cmpuint(new_count, >, 0);
-> > +    g_assert_cmpuint(new_count, !=, initial_count);
-> > +
-> > +    qtest_quit(qts);
-> > +}
-> > +
-> > +static void test_interrupt_mode(void)
-> > +{
-> > +    QTestState *qts = qtest_init("-machine k230 --trace k230_*,file=k230.log");
-> > +
-> > +    /* Set interrupt mode and enable watchdog */
-> > +    qtest_writel(qts, WDT_BASE + K230_WDT_CR,
-> > +                 K230_WDT_CR_RMOD | K230_WDT_CR_WDT_EN);
-> > +    qtest_writel(qts, WDT_BASE + K230_WDT_TORR, 0x1); /* Short timeout */
-> > +
-> > +    /* Wait for timeout to trigger interrupt */
-> > +    qtest_clock_step(qts, NANOSECONDS_PER_SECOND * 10);
-> > +
-> > +    /* Check interrupt status */
-> > +    uint32_t stat = qtest_readl(qts, WDT_BASE + K230_WDT_STAT);
-> > +    g_assert_cmphex(stat & K230_WDT_STAT_INT, ==, K230_WDT_STAT_INT);
-> > +
-> > +    /* Clear interrupt */
-> > +    qtest_writel(qts, WDT_BASE + K230_WDT_EOI, 0x1);
-> > +    stat = qtest_readl(qts, WDT_BASE + K230_WDT_STAT);
-> > +    g_assert_cmphex(stat & K230_WDT_STAT_INT, ==, 0);
-> > +
-> > +    qtest_quit(qts);
-> > +}
-> > +
-> > +static void test_reset_mode(void)
-> > +{
-> > +    QTestState *qts = qtest_init("-machine k230 -no-reboot");
-> > +
-> > +    /* Set reset mode and enable watchdog */
-> > +    qtest_writel(qts, WDT_BASE + K230_WDT_CR, K230_WDT_CR_WDT_EN);
-> > +    qtest_writel(qts, WDT_BASE + K230_WDT_TORR, 0x1); /* Short timeout */
-> > +
-> > +    /* Wait for timeout to trigger reset */
-> > +    qtest_clock_step(qts, NANOSECONDS_PER_SECOND * 2);
-> > +
-> > +    /* In reset mode, the system should reset */
-> > +    /* This test verifies that reset mode is properly configured */
-> > +
-> > +    qtest_quit(qts);
-> > +}
-> > +
-> > +static void test_timeout_calculation(void)
-> > +{
-> > +    QTestState *qts = qtest_init("-machine k230");
-> > +
-> > +    /* Test different timeout values */
-> > +    for (uint32_t top = 0; top <= 15; top++) {
-> > +        qtest_writel(qts, WDT_BASE + K230_WDT_TORR, top);
-> > +        qtest_writel(qts, WDT_BASE + K230_WDT_CR, K230_WDT_CR_WDT_EN);
-> > +
-> > +        /* Read current counter value */
-> > +        uint32_t count = qtest_readl(qts, WDT_BASE + K230_WDT_CCVR);
-> > +        g_assert_cmpuint(count, >, 0);
-> > +
-> > +        /* Disable watchdog for next iteration */
-> > +        qtest_writel(qts, WDT_BASE + K230_WDT_CR, 0);
-> > +    }
-> > +
-> > +    qtest_quit(qts);
-> > +}
-> > +
-> > +static void test_wdt1_registers(void)
-> > +{
-> > +    QTestState *qts = qtest_init("-machine k230");
-> > +
-> > +    /* Test WDT1 registers (second watchdog) */
-> > +    qtest_writel(qts, K230_WDT1_BASE + K230_WDT_CR, 0xFFFFFFFF);
-> > +    g_assert_cmphex(qtest_readl(qts, K230_WDT1_BASE + K230_WDT_CR), ==,
-> > +                    (K230_WDT_CR_RPL_MASK << K230_WDT_CR_RPL_SHIFT) |
-> > +                    K230_WDT_CR_RMOD | K230_WDT_CR_WDT_EN);
-> > +
-> > +    qtest_writel(qts, K230_WDT1_BASE + K230_WDT_TORR, 0xFFFFFFFF);
-> > +    g_assert_cmphex(qtest_readl(qts, K230_WDT1_BASE + K230_WDT_TORR), ==,
-> > +                    K230_WDT_TORR_TOP_MASK);
-> > +
-> > +    qtest_quit(qts);
-> > +}
-> > +
-> > +static void test_enable_disable(void)
-> > +{
-> > +    QTestState *qts = qtest_init("-machine k230");
-> > +
-> > +    /* Initially disabled */
-> > +    uint32_t cr = qtest_readl(qts, WDT_BASE + K230_WDT_CR);
-> > +    g_assert_cmphex(cr & K230_WDT_CR_WDT_EN, ==, 0);
-> > +
-> > +    /* Enable watchdog */
-> > +    qtest_writel(qts, WDT_BASE + K230_WDT_CR, K230_WDT_CR_WDT_EN);
-> > +    cr = qtest_readl(qts, WDT_BASE + K230_WDT_CR);
-> > +    g_assert_cmphex(cr & K230_WDT_CR_WDT_EN, ==, K230_WDT_CR_WDT_EN);
-> > +
-> > +    /* Disable watchdog */
-> > +    qtest_writel(qts, WDT_BASE + K230_WDT_CR, 0);
-> > +    cr = qtest_readl(qts, WDT_BASE + K230_WDT_CR);
-> > +    g_assert_cmphex(cr & K230_WDT_CR_WDT_EN, ==, 0);
-> > +
-> > +    qtest_quit(qts);
-> > +}
-> > +
-> > +int main(int argc, char *argv[])
-> > +{
-> > +    g_test_init(&argc, &argv, NULL);
-> > +
-> > +    qtest_add_func("/k230-wdt/register_read_write", test_register_read_write);
-> > +    qtest_add_func("/k230-wdt/counter_restart", test_counter_restart);
-> > +    qtest_add_func("/k230-wdt/interrupt_mode", test_interrupt_mode);
-> > +    qtest_add_func("/k230-wdt/reset_mode", test_reset_mode);
-> > +    qtest_add_func("/k230-wdt/timeout_calculation", test_timeout_calculation);
-> > +    qtest_add_func("/k230-wdt/wdt1_registers", test_wdt1_registers);
-> > +    qtest_add_func("/k230-wdt/enable_disable", test_enable_disable);
-> > +
-> > +    return g_test_run();
-> > +}
-> > diff --git a/tests/qtest/meson.build b/tests/qtest/meson.build
-> > index 43f83ffd3a..45c4898454 100644
-> > --- a/tests/qtest/meson.build
-> > +++ b/tests/qtest/meson.build
-> > @@ -290,7 +290,8 @@ qtests_riscv64 = ['riscv-csr-test'] + \
-> >    (unpack_edk2_blobs ? ['bios-tables-test'] : []) + \
-> >    (config_all_devices.has_key('CONFIG_IOMMU_TESTDEV') and
-> >     config_all_devices.has_key('CONFIG_RISCV_IOMMU') ?
-> > -   ['iommu-riscv-test'] : [])
-> > +   ['iommu-riscv-test'] : []) + \
-> > +  (config_all_devices.has_key('CONFIG_K230') ? ['k230-wdt-test'] : [])
-> >
-> >  qos_test_ss = ss.source_set()
-> >  qos_test_ss.add(
-> >
+DQoNCj4gLS0tLS1PcmlnaW5hbCBNZXNzYWdlLS0tLS0NCj4gRnJvbTogQmVybmhhcmQgQmVzY2hv
+dyA8c2hlbnRleUBnbWFpbC5jb20+DQo+IFNlbnQ6IDAxIEp1bmUgMjAyNiAwNDoyMg0KPiBUbzog
+R2F1cmF2IFNoYXJtYSA8Z2F1cmF2LnNoYXJtYV83QG54cC5jb20+OyBxZW11LWRldmVsQG5vbmdu
+dS5vcmcNCj4gQ2M6IHBib256aW5pQHJlZGhhdC5jb207IHBldGVyLm1heWRlbGxAbGluYXJvLm9y
+Zw0KPiBTdWJqZWN0OiBSRTogW0VYVF0gUmU6IFtQQVRDSHYxIDAvN10gaHcvYXJtOiBBZGRpbmcg
+Q29ydGV4LU03IEFzeW1tZXRyaWMNCj4gTXVsdGlwcm9jZXNzaW5nIGJvb3Qgc3VwcG9ydCBmb3Ig
+aS5NWDhNUA0KPiANCj4gQ2F1dGlvbjogVGhpcyBpcyBhbiBleHRlcm5hbCBlbWFpbC4gUGxlYXNl
+IHRha2UgY2FyZSB3aGVuIGNsaWNraW5nIGxpbmtzIG9yDQo+IG9wZW5pbmcgYXR0YWNobWVudHMu
+IFdoZW4gaW4gZG91YnQsIHJlcG9ydCB0aGUgbWVzc2FnZSB1c2luZyB0aGUgJ1JlcG9ydA0KPiB0
+aGlzIGVtYWlsJyBidXR0b24NCj4gDQo+IA0KPiBBbSAyNy4gTWFpIDIwMjYgMTc6MzQ6MzMgVVRD
+IHNjaHJpZWIgR2F1cmF2IFNoYXJtYQ0KPiA8Z2F1cmF2LnNoYXJtYV83QG54cC5jb20+Og0KPiA+
+DQo+ID4NCj4gPj4gLS0tLS1PcmlnaW5hbCBNZXNzYWdlLS0tLS0NCj4gPj4gRnJvbTogQmVybmhh
+cmQgQmVzY2hvdyA8c2hlbnRleUBnbWFpbC5jb20+DQo+ID4+IFNlbnQ6IDI3IE1heSAyMDI2IDAy
+OjU2DQo+ID4+IFRvOiBHYXVyYXYgU2hhcm1hIDxnYXVyYXYuc2hhcm1hXzdAbnhwLmNvbT47IHFl
+bXUtDQo+IGRldmVsQG5vbmdudS5vcmcNCj4gPj4gQ2M6IHBib256aW5pQHJlZGhhdC5jb207IHBl
+dGVyLm1heWRlbGxAbGluYXJvLm9yZw0KPiA+PiBTdWJqZWN0OiBbRVhUXSBSZTogW1BBVENIdjEg
+MC83XSBody9hcm06IEFkZGluZyBDb3J0ZXgtTTcgQXN5bW1ldHJpYw0KPiA+PiBNdWx0aXByb2Nl
+c3NpbmcgYm9vdCBzdXBwb3J0IGZvciBpLk1YOE1QDQo+ID4+DQo+ID4+IENhdXRpb246IFRoaXMg
+aXMgYW4gZXh0ZXJuYWwgZW1haWwuIFBsZWFzZSB0YWtlIGNhcmUgd2hlbiBjbGlja2luZw0KPiA+
+PiBsaW5rcyBvciBvcGVuaW5nIGF0dGFjaG1lbnRzLiBXaGVuIGluIGRvdWJ0LCByZXBvcnQgdGhl
+IG1lc3NhZ2UgdXNpbmcNCj4gPj4gdGhlICdSZXBvcnQgdGhpcyBlbWFpbCcgYnV0dG9uDQo+ID4+
+DQo+ID4+DQo+ID4+IEFtIDE5LiBNYWkgMjAyNiAxNzo1NjoyOCBVVEMgc2NocmllYiBHYXVyYXYg
+U2hhcm1hDQo+ID4+IDxnYXVyYXYuc2hhcm1hXzdAbnhwLmNvbT46DQo+ID4+ID5DaGFuZ2VzIGlu
+IHYxOg0KPiA+PiA+DQo+ID4+ID5UaGlzIHNlcmllcyBhZGRzIEFzeW1tZXRyaWMgTXVsdGlwcm9j
+ZXNzaW5nIChBTVApIGJvb3Qgc3VwcG9ydCBmb3INCj4gPj4gPnRoZQ0KPiA+PiA+Q29ydGV4LU03
+IGNvcmUgb24gdGhlIGkuTVg4TVAgU29DLiBUaGUgTTcgZmlybXdhcmUgY2FuIGJlIGxvYWRlZA0K
+PiBhbmQNCj4gPj4gPnN0YXJ0ZWQgZnJvbSBMaW51eCBydW5uaW5nIG9uIHRoZSBDb3J0ZXgtQTUz
+IGNvcmVzIHZpYSB0aGUNCj4gPj4gPnJlbW90ZXByb2MgZnJhbWV3b3JrLg0KPiA+PiA+DQo+ID4+
+ID5UaGUgc2VyaWVzIGludHJvZHVjZXMgdGhlIGZvbGxvd2luZyBwZXJpcGhlcmFsIG1vZGVscyBu
+ZWVkZWQgZm9yIEFNUDoNCj4gPj4gPiAgLSBHUEMgKEdlbmVyYWwgUG93ZXIgQ29udHJvbGxlcikN
+Cj4gPj4gPiAgLSBHUFIgKEdlbmVyYWwgUHVycG9zZSBSZWdpc3RlcnMpDQo+ID4+ID4gIC0gU1JD
+IChTeXN0ZW0gUmVzZXQgQ29udHJvbGxlcikgYXV0aG9yZWQgYnkgQmVybmhhcmQgQmVzY2hvdw0K
+PiA+PiA+PHNoZW50ZXlAZ21haWwuY29tPg0KPiA+PiA+ICAtIE1VIChNZXNzYWdpbmcgVW5pdCkN
+Cj4gPj4gPiAgLSBFeHRlbmRzIHRoZSBDQ00gd2l0aCBNNyBjbG9jayBvdXRwdXRzIGFuZCB3aXJl
+cyBpbnRvIHRoZSBpLk1YOE1QDQo+ID4+ID5Tb0MNCj4gPj4gPiAgLSBFbmFibGUgQ29ydGV4LU03
+IGJvb3QgaW4gaS5NWDhNUCBFVksgZnVuY3Rpb25hbCB0ZXN0DQo+ID4+DQo+ID4+IEF3ZXNvbWUg
+d29yayENCj4gPj4NCj4gPj4gSSdkIGxpa2UgdG8gZXhwZXJpbWVudCB3aXRoIHRoaXMgc2VyaWVz
+IG15c2VsZi4gQ291bGQgdGhlcmUgYmUgc29tZQ0KPiA+PiAiY29va2luZyByZWNpcGUiIGluIHRo
+ZSBib2FyZCBkb2N1bWVudGF0aW9uIGZvciBlYXN5DQo+ID4+IHJlcHJvZHVjdGlvbi9mYWlsc2Fm
+ZSB0dXRvcmlhbD8gSXMgdGhlcmUgcGVyaGFwcyBzb21lIEJ1aWxkcm9vdA0KPiA+PiBkZWZjb25m
+aWcgd2l0aCB0aGUgYXBwcm9wcmlhdGUgc3VwcG9ydCBlbmFibGVkPyBPciBldmVuIGJldHRlcjog
+QXJlDQo+ID4+IHRoZXJlIGFueSBiaW5hcnkgaW1hZ2VzIHRoYXQgY291bGQgYmUgdXNlZCBpbiBh
+IGZ1bmN0aW9uYWwgdGVzdCBpbiBhZGRpdGlvbj8NCj4gPj4NCj4gPg0KPiA+SGV5IEJlcm5oYXJk
+LA0KPiA+VGhhbmtzIGZvciB5b3VyIGZlZWRiYWNrIQ0KPiA+DQo+ID5UaGVyZSdzIGFuIGFwcGxp
+Y2F0aW9uIG5vdGUgdGhhdCBjb3ZlcnMgdGhpcyB1c2UtY2FzZSAoQU41MzE3LCByZWZlcmVuY2Vk
+IGluDQo+IHRoZSByc3QgZG9jKS4gSG93ZXZlciwgdGhlIGNvbXBsZXRlIHNldHVwIHJlcXVpcmVz
+IGNvbWJpbmluZyBpbmZvcm1hdGlvbg0KPiBmcm9tIG11bHRpcGxlIHNvdXJjZXMuDQo+ID4NCj4g
+PlJlcXVpcmVtZW50cyB0byBleGVyY2lzZSBNNyBpbWFnZSBsb2FkaW5nIHZpYSBMaW51eDoNCj4g
+Pg0KPiA+MS4gUlBNU0ctc3BlY2lmaWMgZGV2aWNlIHRyZWUgd2l0aCBNNyBERFIgYWxpYXMgLSBj
+b3ZlcmVkIGluIEFONTMxNyAyLg0KPiA+QmFyZS1tZXRhbCBFTEYgZXhlY3V0YWJsZSBsaW5rZWQg
+dG8gcnVuIGZyb20gRERSIC0gcmVxdWlyZXMgYnVpbGRpbmcNCj4gPmZyb20gTUNVWHByZXNzbyBT
+REsNCj4gPg0KPiA+QnVpbGRpbmcgdGhlIE03IGZpcm13YXJlOg0KPiA+DQo+ID4xLiBEb3dubG9h
+ZCB0aGUgTUNVWHByZXNzbyBTREsgZm9yIGkuTVg4TVAgMi4gQnVpbGQgYSBERFItbGlua2VkDQo+
+ID5leGFtcGxlIHVzaW5nIHRoZSBBUk0gR0NDIHRvb2xjaGFpbiAoZS5nLiwNCj4gPmJvYXJkcy9l
+dmttaW14OG1wL2RyaXZlcl9leGFtcGxlcy91YXJ0L3BvbGxpbmcpDQo+ID4zLiBDb3B5IHRoZSBy
+ZXN1bHRpbmcgRUxGIHRvIHRoZSBndWVzdCBMaW51eCBmaWxlc3lzdGVtIDQuIExvYWQgdmlhDQo+
+ID5yZW1vdGVwcm9jIGFzIGRvY3VtZW50ZWQgaW4gdGhlIHJzdA0KPiA+DQo+ID5DdXJyZW50bHkg
+dGhlcmUgaXNuJ3QgYSBzaW5nbGUgb2ZmaWNpYWwgZG9jdW1lbnQgY292ZXJpbmcgdGhlIGNvbXBs
+ZXRlIGVuZC10by0NCj4gZW5kIGZsb3cuIFVzZXJzIG1pZ2h0IG5lZWQgdG8gcmVmZXIgdHdvIGRp
+ZmZlcmVudCBzb3VyY2VzIGF0IGJlc3QuIEkgY2FuIGFkZA0KPiBjb25jaXNlIGJ1aWxkIGluc3Ry
+dWN0aW9ucyB0byB0aGUgcnN0IGRvYyBpdHNlbGYsIHByb3ZpZGluZyBhIHNlbGYtY29udGFpbmVk
+DQo+IHJlZmVyZW5jZS4gSG93IGRvZXMgdGhhdCBzb3VuZD8NCj4gDQo+IFllcywgc291bmRzIGdv
+b2QhIE9uZSB3YXkgdG8gdGhpbmsgYWJvdXQgaXQgaXMgdG8gcHJvdmlkZSBkZXRhaWxlZCBpbnN0
+cnVjdGlvbnMNCj4gZm9yIGNvbmR1Y3RpbmcgYSBtYW51YWwgdGVzdCBmb3Igc29tZWJvZHkgd2hv
+IGhhcyBuZXZlciBkb25lIHRoaXMgYmVmb3JlLg0KPiANCj4gPg0KPiA+UmVnYXJkaW5nIGJpbmFy
+eSBpbWFnZXM6IFdlIGNhbiBwcm92aWRlIGEgcHJlLWJ1aWx0IHRlc3QgRUxGIGZvciBmdW5jdGlv
+bmFsDQo+IHRlc3RpbmcsIHRob3VnaCB1c2VycyB3b3VsZCBzdGlsbCBuZWVkIHRoZSBhcHByb3By
+aWF0ZSBkZXZpY2UgdHJlZQ0KPiBjb25maWd1cmF0aW9uLg0KPiANCj4gSSB0aGluayBiaW5hcnkg
+aW1hZ2VzIHdvdWxkIG9ubHkgYmUgbmVlZGVkIGZvciBmdWxseSBhdXRvbWF0ZWQgZnVuY3Rpb25h
+bA0KPiB0ZXN0cy4gQUZBSVUgdGhpcyByZXF1aXJlcyBrZXJuZWwgc3VwcG9ydCBmb3IgZS5nLiBy
+ZW1vdGVwcm9jIC0tIGRvIG5vcm1hbA0KPiBMaW51eCBkaXN0cmlidXRpb25zIGVuYWJsZSB0aGlz
+PyBUaGVuIHRoZSBkZXZpY2UgdHJlZSBibG9iIHdvdWxkIG5lZWQgdG8gYmUNCj4gcGF0Y2hlZCBh
+bmQgdGhlIE03IEVMRiBiZSBpbmplY3RlZCBpbnRvIHRoZSBndWVzdC4gSSB3b25kZXIgaWYgdGhl
+IGZ1bmN0aW9uYWwNCj4gdGVzdGluZyBmcmFtZXdvcmsgY2FuIGRvIHRoaXM/DQo+IA0KDQpPbiBO
+WFAncyBsaW51eC1pbXggcmVwbywgdGhlIHJlbW90ZXByb2MgaXMgdHlwaWNhbGx5IGVuYWJsZWQg
+aW4gbGludXggYnkgZGVmYXVsdCBzbyBhbGwgd2UgbmVlZCBpcyBkdGIgdG8gZ2V0IGl0IHdvcmtp
+bmcuIE5vdCBzdXJlIGFib3V0IHRoZSBidWlsZHJvb3QgZGVmY29uZmlncyB0aG91Z2guDQoNCj4g
+QW55aG93LCB0aGlzIGlzIGp1YXQgYW4gaWRlYSBmb3IgZnVsbHkgYXV0b21hdGVkIHRlc3RzIHdo
+aWNoIFFFTVUgZW5jdXJhZ2VzLg0KPiBJZiBpdCBpcyBpbmZlYXNpYmxlIGl0IHNoYWxsIG5vdCBi
+bG9jayB0aGlzIHNlcmllcy4NCj4gDQo+ID4NCj4gPj4gTGFzdCBidXQgbm90IGxlYXN0OiBXb3Vs
+ZG4ndCBpdCBiZSB1c2VmdWwgaWYgeW91IGJlY2FtZSBjby1tYWludGFpbmVyDQo+ID4+IG9mIHRo
+ZSBpbXg4bXAtZXZrPyBQZXJoYXBzIHRoZSB0d28gc2VjdGlvbnMgaW4gdGhlIE1BSU5UQUlORVJT
+IGZpbGUNCj4gPj4gY291bGQgYmUgbWVyZ2VkLg0KPiA+Pg0KPiA+DQo+ID5TdXJlLiBJIGNhbiBh
+ZGQgbXlzZWxmIHRvIHRoZSBNQUlOVEFJTkVSUyBvZiBpbXg4bXAtZXZrLCBidXQgd2hhdCBkbyB5
+b3UNCj4gbWVhbiBieSBtZXJnaW5nIHRoZSB0d28gc2VjdGlvbnMgaW4gdGhlIE1BSU5UQUlORVJT
+IGZpbGUgPw0KPiANCj4gSSB3YXMgdGhpbmtpbmcgYWJvdXQgbWVyZ2luZyB0aGUgaW14OG1tIGFu
+ZCBpbXg4bXAgc2VjdGlvbnMgaW4gdGhlDQo+IE1BSU5UQUlORVJTIGZpbGUsIHNpbWlsYXIgdG8g
+dGhlIE1QUzIgYW5kIE1QUzMgZmFtaWx5IG9mIGJvYXJkcy4gSXQgc2VlbXMNCj4gdGhhdCBtb3Jl
+IHNoYXJlZCBkZXZpY2UgbW9kZWxzIG1pZ2h0IGV2b2x2ZSBpbiB0aGUgZnV0dXJlIHdoZXJlIGNo
+b29zaW5nDQo+IGJldHdlZW4gaW14OG1tIGFuZCBpbXg4bXAgc2VjdGlvbnMgYmVjb21lcyBhd2t3
+YXJkLiBNb3Jlb3Zlciwgd2hlbg0KPiBtb2RpZnlpbmcgb25lIFNvQywgdGhlIG90aGVyIG9uZSBz
+aG91bGQgcHJvYmFibHkgYmUga2VwdCBpbiBzeW5jLiBIZW5jZSBpdA0KPiBtaWdodCBtYWtlIHNl
+bnNlIHRvIG1lcmdlIHRoZSBzZWN0aW9ucy4gV2hhdCBkbyB5b3UgdGhpbms/DQo+IA0KDQpZZXMs
+IHRoYXQgbWFrZXMgc2Vuc2UuIA0KDQo+ID4NCj4gPj4gQmVzdCByZWdhcmRzLA0KPiA+PiBCZXJu
+aGFyZA0KPiA+Pg0KPiA+PiA+DQo+ID4+ID5TaWduZWQtb2ZmLWJ5OiBHYXVyYXYgU2hhcm1hIDxn
+YXVyYXYuc2hhcm1hXzdAbnhwLmNvbT4NCj4gPj4gPg0KPiA+PiA+QmVybmhhcmQgQmVzY2hvdyAo
+MSk6DQo+ID4+ID4gIGh3L21pc2M6IEFkZCBTUkMgKFN5c3RlbSBSZXNldCBDb250cm9sbGVyKSB0
+byBpLk1YOE1QDQo+ID4+ID4NCj4gPj4gPkdhdXJhdiBTaGFybWEgKDYpOg0KPiA+PiA+ICBody9t
+aXNjOiBBZGQgaS5NWDhNUCBHUEMgKEdlbmVyYWwgUG93ZXIgQ29udHJvbGxlcikgSVANCj4gPj4g
+PiAgaHcvbWlzYzogQWRkIEdQUiAoR2VuZXJhbCBQdXJwb3NlIFJlZ2lzdGVyKSBJUCB0byBpTVg4
+TVANCj4gPj4gPiAgaHcvbWlzYzogQWRkIE1VIChNZXNzYWdpbmcgVW5pdCkgSVAgdG8gaS5NWDhN
+UCBkZXZpY2UgbW9kZWwNCj4gPj4gPiAgaHcvbWlzYzogRXh0ZW5kIGkuTVg4TVAgQ0NNIHdpdGgg
+Q29ydGV4LU03IGNsb2NrIG91dHB1dHMNCj4gPj4gPiAgaHcvYXJtOiBFbmFibGUgQ29ydGV4LU03
+IEFNUCBib290IG9uIGkuTVg4TVANCj4gPj4gPiAgdGVzdHMvZnVuY3Rpb25hbDogRW5hYmxlIENv
+cnRleC1NNyBib290IGluIGkuTVg4TVAgRVZLIGZ1bmN0aW9uYWwNCj4gPj4gPnRlc3QNCj4gPj4g
+Pg0KPiA+PiA+IGRvY3Mvc3lzdGVtL2FybS9pbXg4bS5yc3QgICAgICAgICAgICAgICAgICAgfCAg
+OTAgKysrLQ0KPiA+PiA+IGh3L2FybS9LY29uZmlnICAgICAgICAgICAgICAgICAgICAgICAgICAg
+ICAgfCAgIDQgKw0KPiA+PiA+IGh3L2FybS9mc2wtaW14OG1wLmMgICAgICAgICAgICAgICAgICAg
+ICAgICAgfCAyMTIgKysrKysrKysrKw0KPiA+PiA+IGh3L21pc2MvS2NvbmZpZyAgICAgICAgICAg
+ICAgICAgICAgICAgICAgICAgfCAgMTIgKw0KPiA+PiA+IGh3L21pc2MvaW14OG1wX2NjbS5jICAg
+ICAgICAgICAgICAgICAgICAgICAgfCAgIDkgKw0KPiA+PiA+IGh3L21pc2MvaW14OG1wX2dwYy5j
+ICAgICAgICAgICAgICAgICAgICAgICAgfCAxMjQgKysrKysrDQo+ID4+ID4gaHcvbWlzYy9pbXg4
+bXBfZ3ByLmMgICAgICAgICAgICAgICAgICAgICAgICB8IDEyOSArKysrKysNCj4gPj4gPiBody9t
+aXNjL2lteDhtcF9tdS5jICAgICAgICAgICAgICAgICAgICAgICAgIHwgMzA4ICsrKysrKysrKysr
+KysrDQo+ID4+ID4gaHcvbWlzYy9pbXg4bXBfc3JjLmMgICAgICAgICAgICAgICAgICAgICAgICB8
+IDQzMSArKysrKysrKysrKysrKysrKysrKw0KPiA+PiA+IGh3L21pc2MvbWVzb24uYnVpbGQgICAg
+ICAgICAgICAgICAgICAgICAgICAgfCAgIDQgKw0KPiA+PiA+IGh3L21pc2MvdHJhY2UtZXZlbnRz
+ICAgICAgICAgICAgICAgICAgICAgICAgfCAgIDUgKw0KPiA+PiA+IGluY2x1ZGUvaHcvYXJtL2Zz
+bC1pbXg4bXAuaCAgICAgICAgICAgICAgICAgfCAgMjkgKy0NCj4gPj4gPiBpbmNsdWRlL2h3L21p
+c2MvaW14OG1wX2NjbS5oICAgICAgICAgICAgICAgIHwgICAzICsNCj4gPj4gPiBpbmNsdWRlL2h3
+L21pc2MvaW14OG1wX2dwYy5oICAgICAgICAgICAgICAgIHwgIDM0ICsrDQo+ID4+ID4gaW5jbHVk
+ZS9ody9taXNjL2lteDhtcF9ncHIuaCAgICAgICAgICAgICAgICB8ICA1NiArKysNCj4gPj4gPiBp
+bmNsdWRlL2h3L21pc2MvaW14OG1wX211LmggICAgICAgICAgICAgICAgIHwgIDUzICsrKw0KPiA+
+PiA+IGluY2x1ZGUvaHcvbWlzYy9pbXg4bXBfc3JjLmggICAgICAgICAgICAgICAgfCAgMzIgKysN
+Cj4gPj4gPiB0ZXN0cy9mdW5jdGlvbmFsL2FhcmNoNjQvdGVzdF9pbXg4bXBfZXZrLnB5IHwgICAz
+ICstDQo+ID4+ID4gMTggZmlsZXMgY2hhbmdlZCwgMTUzNSBpbnNlcnRpb25zKCspLCAzIGRlbGV0
+aW9ucygtKSBjcmVhdGUgbW9kZQ0KPiA+PiA+IDEwMDY0NCBody9taXNjL2lteDhtcF9ncGMuYyBj
+cmVhdGUgbW9kZSAxMDA2NDQNCj4gaHcvbWlzYy9pbXg4bXBfZ3ByLmMNCj4gPj4gPiBjcmVhdGUg
+bW9kZSAxMDA2NDQgaHcvbWlzYy9pbXg4bXBfbXUuYyBjcmVhdGUgbW9kZSAxMDA2NDQNCj4gPj4g
+PiBody9taXNjL2lteDhtcF9zcmMuYyBjcmVhdGUgbW9kZSAxMDA2NDQNCj4gPj4gaW5jbHVkZS9o
+dy9taXNjL2lteDhtcF9ncGMuaA0KPiA+PiA+IGNyZWF0ZSBtb2RlIDEwMDY0NCBpbmNsdWRlL2h3
+L21pc2MvaW14OG1wX2dwci5oIGNyZWF0ZSBtb2RlDQo+IDEwMDY0NA0KPiA+PiA+IGluY2x1ZGUv
+aHcvbWlzYy9pbXg4bXBfbXUuaCBjcmVhdGUgbW9kZSAxMDA2NDQNCj4gPj4gPiBpbmNsdWRlL2h3
+L21pc2MvaW14OG1wX3NyYy5oDQo+ID4+ID4NCg==
 
