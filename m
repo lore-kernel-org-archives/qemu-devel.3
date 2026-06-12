@@ -4,41 +4,39 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A266ECD98D2
-	for <qemu-devel@archiver.kernel.org>; Fri, 12 Jun 2026 19:01:07 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6828ECD98D2
+	for <qemu-devel@archiver.kernel.org>; Fri, 12 Jun 2026 19:01:12 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wY77G-0001Al-5B; Fri, 12 Jun 2026 15:00:30 -0400
+	id 1wY774-00016g-Tp; Fri, 12 Jun 2026 15:00:18 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1)
- (envelope-from <2105e9a3578c6f751bb64af55c16dd953f393f20@kylie.crudebyte.com>)
- id 1wY77E-0001AT-RI; Fri, 12 Jun 2026 15:00:28 -0400
+ (envelope-from <f81a387a2de4f2172fd5830c5654f49d78102254@kylie.crudebyte.com>)
+ id 1wY772-00015v-BI; Fri, 12 Jun 2026 15:00:16 -0400
 Received: from kylie.crudebyte.com ([5.189.157.229])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1)
- (envelope-from <2105e9a3578c6f751bb64af55c16dd953f393f20@kylie.crudebyte.com>)
- id 1wY77D-0000LE-DD; Fri, 12 Jun 2026 15:00:28 -0400
+ (envelope-from <f81a387a2de4f2172fd5830c5654f49d78102254@kylie.crudebyte.com>)
+ id 1wY770-0000HP-LQ; Fri, 12 Jun 2026 15:00:16 -0400
 DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
- d=crudebyte.com; s=kylie; h=Cc:To:Subject:Date:From:References:In-Reply-To:
- Message-ID:Content-Type:Content-Transfer-Encoding:MIME-Version:Content-ID:
- Content-Description; bh=EdZ3qDjoTlsu0Vpm6oK1beSP8+9sfvWnMcVTHk6OlsI=; b=WdsRK
- th2+EZcmBKwGsMSsdNz/cR7TbjWd5zMFKyTgdhp1s/Tkm2pWeTOBWHgCOrdQqhRuWAWk/v+Dxt/S5
- b1/XrOYo/AN0KrvSsjO8OEzAJFYMZf0IqX5y0VpKIu4zLxd2FDzj2lv1YHVIoFZLnhpFyEmrt0jM9
- 1BNvPThKR+tTULt61IowZmWrhwNr1VlPhGla8kckppjRZp0b5iS8SmXdaSzfeBUld6Yu8cvF+hpoj
- RP2/t73OwvZkN+X0y/V74tocxMrUUlMIMHJVYuy3N9fxGxPTLJLp/tKXEwTsUcuJC9nBkovKFwIF7
- Bb9fd3L2oKblZFhNWnVg6q3eH4044wKPcDLgHCZzNEO8o2Wzhp8I/L5vkNfQ8DVWxplDGyYN5dxly
- r79YV83vgWgkbN8ZHAWIfAZZBWd0KKT3QuEM8BTNwihggHyGA3pdg47yLmRFLKzYklLEqQITTfSzK
- uROlclKQX66UxrXXnx2yDSGe7jNItiicpppF0StGM+U1zQIyqNLDFTKuAc6sJPoeeCZCHU0xELfVS
- hPQXr/+rGGcB4jjn4pQhJw2RSm+K10u5SWvcAX5iErdl/ZpGF6Q6XamTa18579o979Tln+IXAPQJH
- lrj1SfMoXP6RZ7We0L+GdhNO2qXl6SL54rMUGCrKHANmizS75jGM+ocZ1+qxLI=;
-Message-ID: <2105e9a3578c6f751bb64af55c16dd953f393f20.1781287774.git.qemu_oss@crudebyte.com>
-In-Reply-To: <cover.1781287774.git.qemu_oss@crudebyte.com>
-References: <cover.1781287774.git.qemu_oss@crudebyte.com>
+ d=crudebyte.com; s=kylie; h=Cc:To:Subject:Date:From:Message-ID:Content-Type:
+ Content-Transfer-Encoding:MIME-Version:References:In-Reply-To:Content-ID:
+ Content-Description; bh=Sio1SWXYvc02xa8MgERLDYT1YFIJZK26XHMBNPIB4Fg=; b=ER8oI
+ NFS04fV+EGH9fAxJKfEADuKcs2JJmw796vZlPjSEz0E1+wqhD6ktAcykk5pAtZAaYUpTqtXzV/M8Z
+ ctLVr0zKIjQMOw08tDEnn6yV5A1XClpLfN9QdJDqbnTKVtlXTWLY+VrkxjehuYkgOrjrfp8FXlfvl
+ fKboKwmgRhBJ8XaDBoMJpAX68Ob5rtdwDSZFEJ0Zv4lXMcnLfhfpG08gor4mzcFASGen/YB88ElzU
+ i44cbtNfsmrXOCKDerBGszE27rjMyzr6gkRarYtSTfBwQG3NQwcP9ck1htT3RUxXBYuuYUaEqq9tp
+ i5VCfciYKm2MAiaXkhujz784y2sOCq0iSEUslv6JafAS778yL+khoGyd3Y06z6JTpdOkGhUqtgVLR
+ JpxVEPNtECp3O/esWf/4C2f3/UUKy4emMo4fqUb4UWIodPGxl/epZS2Yb2ah4psCa9+9vMwEUPHWY
+ OSL0LQdLQU44queuAnjiaLZrTHRj2QNPMYns8PB2iLTkrInJ8TSXYUWgZaMDHAbadM89lGUEI18m+
+ jdPOPuvUz59dsPo2R/DEcowjWxYWFc+O0a72qh6lSa773mO5TzaiqVjk9CPTt+2+foh5pn6qgz8Jq
+ oYcyCBH616+Hmn3nwjnXoeLlv88WsNid5ym0Q41EHawZPPHQez/sYUC/MQlepg=;
+Message-ID: <cover.1781287774.git.qemu_oss@crudebyte.com>
 From: Christian Schoenebeck <qemu_oss@crudebyte.com>
 Date: Fri, 12 Jun 2026 20:22:52 +0200
-Subject: [PATCH v2 4/8] hw/9pfs: cap negotiated msize to transport limit
+Subject: [PATCH v2 0/8] 9pfs: fix DoS via Treaddir (CVE-2026-9238)
 To: qemu-devel@nongnu.org,
     qemu-stable@nongnu.org
 Cc: Greg Kurz <groug@kaod.org>, Feifan Qian <bea1e@proton.me>,
@@ -46,7 +44,7 @@ Cc: Greg Kurz <groug@kaod.org>, Feifan Qian <bea1e@proton.me>,
  Anthony PERARD <anthony@xenproject.org>,
  "Edgar E. Iglesias" <edgar.iglesias@gmail.com>
 Received-SPF: pass client-ip=5.189.157.229;
- envelope-from=2105e9a3578c6f751bb64af55c16dd953f393f20@kylie.crudebyte.com;
+ envelope-from=f81a387a2de4f2172fd5830c5654f49d78102254@kylie.crudebyte.com;
  helo=kylie.crudebyte.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
@@ -69,47 +67,64 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The 'msize' parameter negotiated during Tversion handshake can be
-arbitrarily large as requested by the guest. So far 9p server accepted
-any msize value suggested by guest, i.e. server did not cap it at all,
-no matter how large, as in practice the upper limit of msize is a client
-capability. But as subsequent's security patch shows, capping msize on
-server side makes sense as additional safety-net.
+Feifan Qian reported a potential DoS and unbound host allocation via Treaddir
+request due to msize not being capped on Tversion handshake, and allocation
+size in Treaddir being capped too late.
 
-Let's cap msize to transport's theoretical limit for msize, mainly to
-prevent a bad client from triggering excessive host memory allocations
-throughout the session.
+Attack Vector of Vulnerability:
 
-We intentionally don't cap msize to transport's current, real response
-buffer size, as the response buffer size may vary between individual
-requests.
+A malicious guest can negotiate a large 9P msize during Tversion handshake and
+then send Treaddir request with a large 'count' parameter. The 9p server would
+allocate host memory proportional to the negotiated 'msize' for collecting
+directory entries, before validating that the actual reply buffer can hold the
+response. If the reply buffer is smaller than what was allocated, the response
+marshalling fails, but the memory has already been consumed.
 
-Signed-off-by: Christian Schoenebeck <qemu_oss@crudebyte.com>
----
- hw/9pfs/9p.c | 10 ++++++++++
- 1 file changed, 10 insertions(+)
+This can lead to:
 
-diff --git a/hw/9pfs/9p.c b/hw/9pfs/9p.c
-index e2713b9eee..2bb42dfc2e 100644
---- a/hw/9pfs/9p.c
-+++ b/hw/9pfs/9p.c
-@@ -1456,6 +1456,16 @@ static void coroutine_fn v9fs_version(void *opaque)
-         goto out;
-     }
- 
-+    /* cap msize to transport's theoretical limit */
-+    if (s->transport->msize_limit) {
-+        size_t limit = s->transport->msize_limit(s);
-+        if (s->msize > limit) {
-+            s->msize = limit;
-+            warn_report_once("9p: client msize capped to %zu (transport limit)",
-+                             limit);
-+        }
-+    }
-+
-     /* 8192 is the default msize of Linux clients */
-     if (s->msize <= 8192 && !(s->ctx.export_flags & V9FS_NO_PERF_WARN)) {
-         warn_report_once(
+ - Unbound host memory allocation proportional to the negotiated msize.
+ - Denial of service against the QEMU process.
+ - Potential OOM conditions affecting entire host system.
+
+This series fixes this vulnerability on two layers.
+
+Summary of patches fixing this vulnerability:
+
+ - Layer 1: Patches 1..4 cap msize during Tversion handshake to reasonable
+   maximum value. It does so by limiting msize to the theoretical maximum
+   msize value supported by transport implementation.
+
+ - Layer 2: Patches 5..8 cap the allocated host memory in the Treaddir handler
+   specifically to the current, real response buffer size of transport
+   implementation.
+
+v2:
+  - Patch 3:
+    - Pick the smallest limit from all Xen rings.
+    - Return zero if Xen's ring count is zero.
+  - Patch 7:
+    - Use a local iovec in_sg[2] array variable to avoid potential NULL
+      pointer dereference.
+  - Patch 8:
+    - Fix potential underflow if response_buffer_size() returned a value
+      smaller than 11.
+
+Christian Schoenebeck (8):
+  hw/9pfs: add msize_limit transport callback
+  9pfs/virtio: implement msize_limit callback
+  9pfs/xen: implement msize_limit callback
+  hw/9pfs: cap negotiated msize to transport limit
+  hw/9pfs: add response_buffer_size transport callback
+  9pfs/virtio: implement response_buffer_size callback
+  9pfs/xen: implement response_buffer_size callback
+  hw/9pfs: cap Treaddir allocation (CVE-2026-9238)
+
+ hw/9pfs/9p.c               | 34 ++++++++++++++++++++++++++++++++--
+ hw/9pfs/9p.h               |  2 ++
+ hw/9pfs/virtio-9p-device.c | 17 +++++++++++++++++
+ hw/9pfs/xen-9p-backend.c   | 31 +++++++++++++++++++++++++++++++
+ 4 files changed, 82 insertions(+), 2 deletions(-)
+
 -- 
 2.47.3
 
