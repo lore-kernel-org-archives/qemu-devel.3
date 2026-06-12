@@ -4,28 +4,28 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 88551CD98D9
-	for <qemu-devel@archiver.kernel.org>; Fri, 12 Jun 2026 12:17:08 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4F4C7CD8CA8
+	for <qemu-devel@archiver.kernel.org>; Fri, 12 Jun 2026 12:17:11 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wY0nR-0001Tb-5d; Fri, 12 Jun 2026 08:15:37 -0400
+	id 1wY0nR-0001U1-Mz; Fri, 12 Jun 2026 08:15:37 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <chao.liu@processmission.com>)
- id 1wXvxD-0002VC-TQ; Fri, 12 Jun 2026 03:05:25 -0400
+ id 1wXvxO-0002kH-9G; Fri, 12 Jun 2026 03:05:34 -0400
 Received: from mail-japaneastazlp170120005.outbound.protection.outlook.com
  ([2a01:111:f403:c405::5] helo=TYPPR03CU001.outbound.protection.outlook.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <chao.liu@processmission.com>)
- id 1wXvx8-0005yW-VE; Fri, 12 Jun 2026 03:05:22 -0400
+ id 1wXvxK-0005yW-To; Fri, 12 Jun 2026 03:05:33 -0400
 ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=xwKrDIsJyNWL1LCCALkQQc+wvy5MkPOXLTTkjOdk5IQS2IMmiS9YSpRDtaJ9nny8PNIuDMLcZ5bR8o6F5uu/qMbHqP57mh5JBE4/tDSNfJvatNixlhXmbkyREgix669Y8/ShvFiHcycKcvdEmIkFT34KQNgubZ6seet3fH5trqOTm8dmAR5wo4UU70NWurzTVkQDJbqA5fxPI/hw7pfUf4Dpoce84B7FAtcXsSMoG6nabtNqLqbXTZkdzIcuJLUl+HPoW3Z2EViP/3/99HOu5x9Ebp00T01wBqCJQFL2M2JZLy+0ndyw2TNy+cHyiB0xe6jrrlhUqr2W9VbkHdHFUA==
+ b=fCxdFy01qF7ymqunD5x0cuMerdHKkhcn9mF0ugtYahU1U7bCPHANKvW3azy9bJUj6ENEvX1myTo35Cca8zJinAvriO0ne1HRJN0dGMZ8XOmwqgylZOt5iWPkYg0Vw/YZcbleR78KV9Oh1qPE+Frgil/N6eJQDIfe79INAHAI/q6TcxXaULuuxEBO3OMcdyRl+E9fe0VDxF7mwRatX17ujliOZMiKu0Z4a9T0CdR43y8McHqQHg8JoSAgbMRdmYiULLwjiY9spjzdDMnhOG+eC/XTwVOXTYU/uiS8061lqNm4PVOOO5HE1nKwck9EYu0RxPhdNL901MQx2ocLbiAUNA==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
  s=arcselector10001;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=kOPwvlW4x2dfC8mWahWncUMlIYyUWIfZwJKNZKQzCig=;
- b=OEoUuFoksc8hYwJ7+4DFL0W5YPBrmK5dSUPSFbGX26gMerA0gWMBNXSmBWY9G2xla9iGauxeY4oa4ZjghqELMm1GkMNhEQKmPyTXIW6AY9+2DQhaK9MeSH/cDjwJINMkjfCSqjH0RolpVsn7uo/wlFAm2a2vtH0bLOM3/zoe6xpECCOftD5aCw3uj4Hvaio7REsRUX3c6cZJnlHlnbzYCCdktYjeBalQefCqu/e0oRCXlq7bjLerWEYIbH4pBEcAwFBPIBv8SJMKCTi8PVKLnBKyFmstqb9Hsnql1QXdHfAmWMABfx4yfry5BBc7pYs1M+ri5GheNmmdaFWx75gWtw==
+ bh=62m7hhWTstcB45G6mpdgTxwxIE9/qYsDOQo3+vXATI0=;
+ b=DasHQ+E9K5YJyzw5Q39SZupk63LU+3J6o9++9GDOEAdtbaheX+UOP3FV/5XQeP+KB5tG0RIjiaQws/xDdMsKsE0wiyMSLNmiFTPdPiMwhRQc4xs/gAFGmovEXXI9koj7k1ilxi7MYOSPOH+41g2221AqKBlvzQWSKdJjHA/qugWx01DUtqz8UcgrHOPD5IXeNhotGCQEdtfzDsc2jxLL8ISIeYZppwLf+GhjDcJSxB/M74jBFX1xe5XB+Jv/fP0wKfoQMy7fC/QtfI3bYOejKJVm8VUZDDjziMq01CrTZkky8/6BAiXCDY4q/hzEeDtjLQwFewPcun2O5f38yT8Cpw==
 ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
  smtp.mailfrom=processmission.com; dmarc=pass action=none
  header.from=processmission.com; dkim=pass header.d=processmission.com;
@@ -33,19 +33,19 @@ ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=processmission.com;
  s=selector1;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=kOPwvlW4x2dfC8mWahWncUMlIYyUWIfZwJKNZKQzCig=;
- b=YZNFJKhmx3M/VUPQRhok/MOMfTJ6h6FTSq813p62oL6xtxFcmOqRZwGaaOpCR6VZ+DkRZ1jqcERwA7SASrBbBTUPHwhNUHCnOj7zeP72+rHezizpffrjufly13BFWPsY7MrZKmJbsUAqA6Px2qHpPnNgH2TP8bmnQKuLzXifw2CCxwVxvH3ERgWR3hqsiibDywuf3SpNP2FWUb0bUIyFZwKjC+p850Tonud7g5lNcC+Cq9KTzRKdbKzy6afZAqT++979524J6Z77C0yEkSvUwpN+ipEf54t8LE+op8p6ZcZ0GAsbILeTx1KyJJq9C2u58cLWP5KyxzAeU0JgADhGUg==
+ bh=62m7hhWTstcB45G6mpdgTxwxIE9/qYsDOQo3+vXATI0=;
+ b=dAr+gjBJI6QP3X8qVv2CZhw/Rl7tbz0nMR4egvy1NT9IHTykd/yHqUKBL77RHyuj5NC/GknxsHUWmH6L6JGlAB7Ub8y8orI3FO4Ah/N3buJZkhU8j82gskgnbHeQOqaWwgn1Nb4Vy8QnxuZ+RwCh5Zc/7weOnSolAuXFKkK/ZKSU0lTS+JYO06bjgE6DF7oHx5cjEgSKwKu8aAWL5DGrSTEgy/Qpgcj6Imi9b+GPH/ny5xuUX/gsxywtrodX74L/RWyjoSYEredShiWdsWIvvT/mU8gRLOeHoSN5qE2i+mbSYZInGbc5RiuRjJNEP2iLf2SqtxPhyPlXVw553qg7hQ==
 Authentication-Results: dkim=none (message not signed)
  header.d=none;dmarc=none action=none header.from=processmission.com;
 Received: from TYNPR02MB9351.apcprd02.prod.outlook.com (2603:1096:405:3d0::15)
  by SEYPR02MB6457.apcprd02.prod.outlook.com (2603:1096:101:13b::11)
  with Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.113.14; Fri, 12 Jun
- 2026 07:05:05 +0000
+ 2026 07:05:15 +0000
 Received: from TYNPR02MB9351.apcprd02.prod.outlook.com
  ([fe80::e5f3:5fb7:3d29:5934]) by TYNPR02MB9351.apcprd02.prod.outlook.com
  ([fe80::e5f3:5fb7:3d29:5934%4]) with mapi id 15.21.0092.017; Fri, 12 Jun 2026
- 07:05:05 +0000
+ 07:05:15 +0000
 From: Chao Liu <chao.liu@processmission.com>
 To: Alistair Francis <alistair.francis@wdc.com>
 Cc: Chao Liu <chao.liu.zevorn@gmail.com>,
@@ -57,12 +57,11 @@ Cc: Chao Liu <chao.liu.zevorn@gmail.com>,
  Christoph Muellner <christoph.muellner@vrull.eu>,
  Fabiano Rosas <farosas@suse.de>, Laurent Vivier <lvivier@redhat.com>,
  qemu-devel@nongnu.org, qemu-riscv@nongnu.org,
- Chao Liu <chao.liu@zevorn.cn>,
- Daniel Henrique Barboza <dbarboza@ventanamicro.com>,
- Peng Jiang <3160104094@zju.edu.cn>
-Subject: [PATCH v8 1/5] target/riscv: add thead-c908 cpu support
-Date: Fri, 12 Jun 2026 15:04:04 +0800
-Message-ID: <a3e232ace12afd93adb60aed198cac3284daa56c.1781246408.git.chao.liu@processmission.com>
+ Chao Liu <chao.liu@zevorn.cn>, Mig Yang <temashking@foxmail.com>,
+ Daniel Henrique Barboza <dbarboza@ventanamicro.com>
+Subject: [PATCH v8 3/5] hw/watchdog: add k230 watchdog initial support
+Date: Fri, 12 Jun 2026 15:04:06 +0800
+Message-ID: <805a04d9467556ee6a5f4742c9eb4bbb6fc7898c.1781246408.git.chao.liu@processmission.com>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <cover.1781246408.git.chao.liu@processmission.com>
 References: <cover.1781246408.git.chao.liu@processmission.com>
@@ -74,56 +73,56 @@ X-ClientProxiedBy: PH8PR07CA0046.namprd07.prod.outlook.com
 MIME-Version: 1.0
 X-MS-PublicTrafficType: Email
 X-MS-TrafficTypeDiagnostic: TYNPR02MB9351:EE_|SEYPR02MB6457:EE_
-X-MS-Office365-Filtering-Correlation-Id: 7b65daac-e9b0-4186-7c68-08dec850ee2e
+X-MS-Office365-Filtering-Correlation-Id: 7c49ed54-df3b-4a45-28ac-08dec850f419
 X-MS-Exchange-SenderADCheck: 1
 X-MS-Exchange-AntiSpam-Relay: 0
 X-Microsoft-Antispam: BCL:0;
- ARA:13230040|23010399003|1800799024|34096008|366016|7416014|586017|376014|3023799007|56012099006|6133799003|18002099003|22082099003;
-X-Microsoft-Antispam-Message-Info: cDLNHFEXkYwA95eQ0+PWTCcqGOpIuZYk30azCO8UPLxk92rtt8glvA92sWkZbSK660jKCZF3QLEKAU6sLDuO5Os6P5pafwqZ++9d/MsputegB/Qtj6VXYoUqmdlcmFdY6lGuTZKPuDtDPg3hkbIXZfdjN0G1zuvVlkTfJHBo1XCWHdDqUyL+y79vPup35mEA154EvX4orWxQjxcaHuFlsIyU/5cHOpd9CY0wYs86e6a68qcWRMsy88BfLz1N5IFOsUV7Rncto8VwjoXvW5hF7javT71z6ZUeAASaTQt4c3Fm/E2XMCwr+JS6TFXTG4c/WnhPIEt6ZKcQs6ZAd0QKJlXoffUjs3DrL52BUQlADaQPzGtwOkgjGBItY4rN564fHgmJ+WzWx+PK4JQgibAd3NOJ/BMExV3dWKdNh/KADEMK79JQHIFb2jsZDaNnBCLE0KIb3APr39lbSlxoV8KYdk8xSBbyRlZoHud5pwcaQd18p1zLu4WutHfh2FMDb8QINHerjtivRLesGMHIH/BnY+9xZmsMlN8yCedXBe+hHaC2P5n2yTfGxxdnDHBzJyPd8QI0a5JTZ6ejNkAurMDFV+M5426OI+VTGbp2im9NptfOV9OJCssBHcDW6UeauOVcVFyYYOFInpbYiDzEmfe2mubDeCGhOIY+dDmAb8/9GPppynuZtgSRynDShIt3Rm2p
+ ARA:13230040|23010399003|1800799024|34096008|366016|7416014|586017|376014|3023799007|56012099006|6133799003|13003099007|18002099003|22082099003;
+X-Microsoft-Antispam-Message-Info: NpIw5ei4EHxvMpYHtakRO7TUuAtRbcnkaKBfT8y+7w2g+94TCLdupryk4NOBtZKIEoY5FIdb1ZrY61RHTo0AwXCvXIDifuSEmRJmODZGgIf7dLwO2ini1R3wlA2SBL9oTaV9n2SBfrFfj400f4OjPjP94lG2MrqdcynVtPgo1oCsSsmG6quk7SzD6syVclwLuDotoF2UIUc2RMVUeNuBvCAnzfydKLuVOAROLU0JDHknepGp04GpWKNKoGmxNWzdE+bg5UodYf7Qd7+otVZOIOQzuC99MF2/EAcjKJY4fIJZIkfDLiL5SZogP7p/CxH86K89D6mmj0jIxcKhVTTTqHsWKlyQ+zMj0IPJI7RJAgALl8TkbQAqPXIq1eD/1HybJrPrXDgCwGOKjrhqf+ROKesLr9KlBG1QkwqZuwlljLkATy8u5PbGiMQRk0qubxROoI7NWcgJ7vOKld7k6XjFluFZabttgxVP5dqJwbdPckgvVhebvw2URTvHOCsVmd8m3soD1AReDPVSVO6K570mUONatlygSQrrkfigMsHFCQ9dq0WovFZbTlJQmCMXjqqA63mTWm7yXl/jNkvs8ifzwzd305scpP16zxYA0QJLI5XlkvDUcAOQFsVb9azp6JuyN2fsGJFJFCzavjPWEMmXaA==
 X-Forefront-Antispam-Report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
  IPV:NLI; SFV:NSPM; H:TYNPR02MB9351.apcprd02.prod.outlook.com; PTR:; CAT:NONE;
- SFS:(13230040)(23010399003)(1800799024)(34096008)(366016)(7416014)(586017)(376014)(3023799007)(56012099006)(6133799003)(18002099003)(22082099003);
+ SFS:(13230040)(23010399003)(1800799024)(34096008)(366016)(7416014)(586017)(376014)(3023799007)(56012099006)(6133799003)(13003099007)(18002099003)(22082099003);
  DIR:OUT; SFP:1102; 
 X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0: =?us-ascii?Q?ztmtw+sNK7TiG/zN3nO/KFZ8l1/6gmyuhpMYrwdccDD6YM/yBsxSUm9nB5Bx?=
- =?us-ascii?Q?Gfj9nZm4/uW1sfXfyeM/xGAAySsxKbcwNeTM1c5sZIuTFAC2cqZBUhC6Cncn?=
- =?us-ascii?Q?n0Y1wT7Y5tWrI2O7MjyVafa2srPyGBBFlmi69vtzy2VpAQ/bHrH0T0TmPbzn?=
- =?us-ascii?Q?g4ANK687vLObVvYGPYnpugvZ6to9QbaTTJ6nNFQ4t7/zzZ5SyhWNPzStmuKf?=
- =?us-ascii?Q?O0MvUjt2I5qrt3KugziM9Fo9nL3X/r08XtxykVOYafdauEsy3VlRPIiCSmFA?=
- =?us-ascii?Q?Uet/fbCCvrnjIbRaRokgV6CuSzMVhkLvlLmmEic7GT2kmA4mNb1kSt2gmXiK?=
- =?us-ascii?Q?M3WbMDBmpv6jiPt82fJ9dFw9JMeqWr/F52Drp+FcEXDH6uR0A5LuZEuJyTmu?=
- =?us-ascii?Q?kCY58VhY1Rkc/tezylllssKOLhV/FdXC7RAIPXt1a4B9vLWkBIUTzDjef055?=
- =?us-ascii?Q?dgVoh3hmM0vk1YxsMjuJoTtjR5WM7D2TtbmtADAZghkjg97KEd8GCCsJF3Ba?=
- =?us-ascii?Q?mwfUiK+w/AnmsAgw2RebphtLdUgOp7nopP6a2v6/vgIBtEKDAehOKfu7zWBT?=
- =?us-ascii?Q?WnnFoUvoimdRKtIH5prUJe28U603MEDhLPTX4BW6Q7KgeyElDAycdKd7VVxE?=
- =?us-ascii?Q?fcJVAchQyyCpfczYl3w/5ybGjRbQUntDxG3FJ65Okz4ePQAt1Ldo5E9Ae+FW?=
- =?us-ascii?Q?as0RODkL9ESvc6Om8tpZU9XgKrv6PK6dQ9CueArFEUcKjtohsU+A3wkYhoFy?=
- =?us-ascii?Q?01iVKSNIpkB3/TcQ1uIlHdvVRomG/gm0JTlDmUpwwpUULwvD2WxkACXb7j0b?=
- =?us-ascii?Q?+ukTWoWvtdEhxvIo51K1POHmdzOrgaK96O1Kug4SYwqrj3MiKtjLtYCKBdwx?=
- =?us-ascii?Q?r+uUACr5pJOrjgCMnHWVqySYlS2KNOkFUtINfTBnO6fq0FqyxZUCisiYb0xN?=
- =?us-ascii?Q?P1Xx8/KQut2aB+pzeD6NS1wXaia9PtwFdXY1u7uS4bJ7vhrZ6lCx4oj9+Jo+?=
- =?us-ascii?Q?rC1gdhyLC7TiJBT1ZvdO4XJ9Vil3ytBIFfdYjDbHxN0dVq+RWQtzaHYvIBT/?=
- =?us-ascii?Q?PVGqpWiRk+Shh98Ue59w4JhdeXJnaFgfGvc7aMrqveuYvituGLfreKwisLk4?=
- =?us-ascii?Q?PYirXpJ0qDtKGipYcL6T+ogY7AUBDXLjXsgnGg2YOO/WvoB+CYWjV2iqrCHV?=
- =?us-ascii?Q?g8XQaxGrUL6VQDCjlrW1/9xa3zZ+/ihMs5KEhcn0pfhNQaSKseR22g5qXL/+?=
- =?us-ascii?Q?TNrFpZK1DEuunlqBTW3MuZ4QyLQf5TDQGhcjYM72DrSwD8m3EGJprXSds5Bf?=
- =?us-ascii?Q?lnGZ3Faicg9Ilk1PEdp4WPPAzt9UCRfe3TYFKZOGeCLuXAxvNt0fY0XFAH5S?=
- =?us-ascii?Q?SHyOS8yP2l1Ix/i0A5p884EXI84xlf0IB5Nc73OfW+xK4IoFMvF1wZxuwcLX?=
- =?us-ascii?Q?Swg94bCQASv3jO0z3utLjyUo717fY+jQgX3VEFmhxBU0XgcIxopX2xu5xTuu?=
- =?us-ascii?Q?WVbD2I8qTx6lqs6xY+PRRd7HFrMuIDfq8fgMATwMb6+CDmhvJ/Xu91kfbNdM?=
- =?us-ascii?Q?MS939iG0Up+1iMytEHO0QJxQWrlpHlW5tpbjZHkqPb/lX8TCQH90lfBaF9rK?=
- =?us-ascii?Q?CMuRhWJm5jOStai/5WKH8rdqpvst4P9dn60/z3EGtJpx2co77IwQkv+2udZ2?=
- =?us-ascii?Q?yoOVxhD0HypMsAVTpvhi3+lDiab/WwWufwLPD4MwmjQi2JGUIwcBFxbjp8EP?=
- =?us-ascii?Q?3hYTO3OJEABdGo9Z3LMrfo1SnVggli4=3D?=
+X-MS-Exchange-AntiSpam-MessageData-0: =?us-ascii?Q?sylc2pkQ++5O0QvW9Cp4BSKZxIojWszkhAmIbRam5SL5Ko2GfU1c19egWxCJ?=
+ =?us-ascii?Q?eQ7RWAofBAQvwNxCMePpQdlrdZuBMt4YvnUHcTvRgD2YWr49S1JurbmKNDzk?=
+ =?us-ascii?Q?KJwF89Lim7vnAFGAs7pFwQQPHLUvuoLLFtVgE2x8+wCeYWjwNxTgKodC14s7?=
+ =?us-ascii?Q?+9S/ScQmgOy7vOU7JBffLe6E0sM8HISYSRdlnIiDGincMkHTyx9ABgFhDhkF?=
+ =?us-ascii?Q?AhQ4XNBk8BwYgoOgHIwwfPhblFx21sz/dNtBxfzfW2OeVjjLMV+PVI748hN1?=
+ =?us-ascii?Q?5hgyigrGhwExrfRpR1QrnZTeTIrxx3U8S88yJ7GECciR0sUnVYQrtO70dn9h?=
+ =?us-ascii?Q?W3IBdcPwRmG+D7Eq4F5WguNKbPQBkMegGySVBPlsfishLcoiWup27t84HuUK?=
+ =?us-ascii?Q?IiAwcNwF+U+J9Jh5UnZpbYjpUc7EEwEjIIDt2jC3iUj1pDDCXA/gcHsbDTVE?=
+ =?us-ascii?Q?gGUVsjshm3+5IOGI9P7oOOSsR28PRCIEJZXjkIcvqqUNucmUUZ4c1UnacBKU?=
+ =?us-ascii?Q?7XDSyOCMTTQiJ92nQj/pmjW288hUwd0hHeR5ieqld2PXBiz6I1E4+p5c37lE?=
+ =?us-ascii?Q?CUwJLeauvVqxA0+1IUvOShS8TAecvFRbk811+lramw7C0NzSxtBuH/dL5WQX?=
+ =?us-ascii?Q?V5XfWeC+ZUsF3gpAKS/bO0l75HOI+eiyda1z3CA0KaG2PX5Gtf4Ll3WLb/xB?=
+ =?us-ascii?Q?OYLDJuE/0z3fZfdxh9oUWTHy4WYeMTbrtwFJ3ZNQ8J+bJYiUNfqa4B1d1gyd?=
+ =?us-ascii?Q?jdKreGFPopn0qXACYd5xogBQYTUtaQpQxxXG9j2b5dY0qyd0921oxr+d5iUT?=
+ =?us-ascii?Q?XrcKCYiog+upBQ7tCFw1h7pPe3KAzoSGCaXZbyCQd69qP6dhiEmyaiLRt5Gw?=
+ =?us-ascii?Q?Tvw0xvwG10aYcY2o1883uOD75pJWOjw/5b+D2i/wLTQ155fh8cbTMqnd+ZKa?=
+ =?us-ascii?Q?zOuitc58NSoq3tIcJp21tjYUMQRX3t9DaD86WiLxJxTfKftwgrpmC6wcbB0e?=
+ =?us-ascii?Q?9+zIg+QwopTKCoaQivuIuvJp3n0xdo6l0wQ6tHrNCnCCq73MDd9PPhhYkmw1?=
+ =?us-ascii?Q?eGkVx5Q7tiJ4Khh9KiDSC6UiKbARtRbOB16svCDoWR8Z5NUvM8sBFMNHaert?=
+ =?us-ascii?Q?rxAEZKWxv7elHnq6y0EHSxRwMZVa+exR6zm2wqx0b/xzbraxXYxYIW5pI+jM?=
+ =?us-ascii?Q?BvQiyYSFWAR30uJ05exBcvp4jsuO7yrlH4tvke7VUnZCIIN33LEgJMUHZCYk?=
+ =?us-ascii?Q?7AV0cm2dfcFixBHET25F+brE4hYbMtoTmzCO2NHnTo+XAfbfadElGBRuc4b2?=
+ =?us-ascii?Q?GxK0QNIU0bFaTEf2oUIl89ANfD0zuwYIb8/n7l/XOCvnGpptEdUhT6Tx8/Lf?=
+ =?us-ascii?Q?64OW+3YxUIb/aN9EVcGmzrTxLNLlSoppwTdrImbz8Rqmv7Oj+Fa2QXGAHY3A?=
+ =?us-ascii?Q?PLYGmQ5DpSvf1SfnrJtA1Yree3rsaX+BX+IwL0hs7CemCc0UUmou3/HY/6aY?=
+ =?us-ascii?Q?L3E/8VGS9QaR5VZzY2pje/QnApPs28vP37HqEEzuWBcgMsSN0IwuPpad3aNd?=
+ =?us-ascii?Q?i78QtyoxLSzZGvoGUWFQHs2a1HcXqTMyKf1kd1BJYrtSKO4PyPFk7igYhYXE?=
+ =?us-ascii?Q?fEsz1Qu6QMONGT+CYD5OWF78owOFYhtacDEyGijRthPkSlEib/AtUTfMEMUh?=
+ =?us-ascii?Q?VyYeRUnT4sHi5/KTwJb/ri34RlbmcXbaerLqO4l2OP7EO9uVP5cjFnKQw4Ta?=
+ =?us-ascii?Q?VZk9gMvKy00T1wMYgxyUcBJu9QSSUIg=3D?=
 X-OriginatorOrg: processmission.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 7b65daac-e9b0-4186-7c68-08dec850ee2e
+X-MS-Exchange-CrossTenant-Network-Message-Id: 7c49ed54-df3b-4a45-28ac-08dec850f419
 X-MS-Exchange-CrossTenant-AuthSource: TYNPR02MB9351.apcprd02.prod.outlook.com
 X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 12 Jun 2026 07:05:05.4948 (UTC)
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 12 Jun 2026 07:05:15.2965 (UTC)
 X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
 X-MS-Exchange-CrossTenant-Id: e0544bf7-9765-4630-ab69-0b266dc2169c
 X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: 8rl0XT3/HFJNkfjB/lar+Gx06KOyIFhDW9XxeEy4WNGVo9lqUnNANMT6NrMz4+dKRGVhISMr4qbYfedAET05JbBnTZuv1+GHGOLaV0QKKZ8=
+X-MS-Exchange-CrossTenant-UserPrincipalName: lBNSNNpP0afP0nALIZk1pL1sq9xGQnis4xTbVbpVQApEK+IAUl45ftJIc8eKhnbJH5xnIxO6rxFPucF/uqUt8rZ8Ies9T4A4RK/PGNpbClo=
 X-MS-Exchange-Transport-CrossTenantHeadersStamped: SEYPR02MB6457
 Received-SPF: pass client-ip=2a01:111:f403:c405::5;
  envelope-from=chao.liu@processmission.com;
@@ -153,519 +152,585 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Chao Liu <chao.liu@zevorn.cn>
 
-The C908 processor is based on the RV64GCB[V] instruction
-set, compatible to RVA22 Profile and implements the XIE
-(XuanTie Instruction Extension) technology.
+Add programmable Watchdog Timer (WDT) peripheral for K230 machine.
 
+Signed-off-by: Mig Yang <temashking@foxmail.com>
 Signed-off-by: Chao Liu <chao.liu.zevorn@gmail.com>
-Suggested-by: LIU Zhiwei <zhiwei_liu@linux.alibaba.com>
 Reviewed-by: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
-Tested-by: Peng Jiang <3160104094@zju.edu.cn>
-Acked-by: Alistair Francis <alistair.francis@wdc.com>
 ---
- target/riscv/cpu-qom.h |   2 +
- target/riscv/cpu.c     |  51 ++++++
- target/riscv/th_csr.c  | 376 ++++++++++++++++++++++++++++++++++++++++-
- 3 files changed, 428 insertions(+), 1 deletion(-)
+ MAINTAINERS                    |   2 +
+ hw/riscv/Kconfig               |   1 +
+ hw/riscv/k230.c                |  18 ++
+ hw/watchdog/Kconfig            |   4 +
+ hw/watchdog/k230_wdt.c         | 296 +++++++++++++++++++++++++++++++++
+ hw/watchdog/meson.build        |   1 +
+ hw/watchdog/trace-events       |   9 +
+ include/hw/riscv/k230.h        |   4 +
+ include/hw/watchdog/k230_wdt.h | 121 ++++++++++++++
+ 9 files changed, 456 insertions(+)
+ create mode 100644 hw/watchdog/k230_wdt.c
+ create mode 100644 include/hw/watchdog/k230_wdt.h
 
-diff --git a/target/riscv/cpu-qom.h b/target/riscv/cpu-qom.h
-index 30dcdcfaae..1a28f1369c 100644
---- a/target/riscv/cpu-qom.h
-+++ b/target/riscv/cpu-qom.h
-@@ -52,6 +52,8 @@
- #define TYPE_RISCV_CPU_SIFIVE_U34       RISCV_CPU_TYPE_NAME("sifive-u34")
- #define TYPE_RISCV_CPU_SIFIVE_U54       RISCV_CPU_TYPE_NAME("sifive-u54")
- #define TYPE_RISCV_CPU_THEAD_C906       RISCV_CPU_TYPE_NAME("thead-c906")
-+#define TYPE_RISCV_CPU_THEAD_C908       RISCV_CPU_TYPE_NAME("thead-c908")
-+#define TYPE_RISCV_CPU_THEAD_C908V      RISCV_CPU_TYPE_NAME("thead-c908v")
- #define TYPE_RISCV_CPU_VEYRON_V1        RISCV_CPU_TYPE_NAME("veyron-v1")
- #define TYPE_RISCV_CPU_TT_ASCALON       RISCV_CPU_TYPE_NAME("tt-ascalon")
- #define TYPE_RISCV_CPU_XIANGSHAN_NANHU  RISCV_CPU_TYPE_NAME("xiangshan-nanhu")
-diff --git a/target/riscv/cpu.c b/target/riscv/cpu.c
-index a74384a091..fa497e5e8a 100644
---- a/target/riscv/cpu.c
-+++ b/target/riscv/cpu.c
-@@ -3121,6 +3121,57 @@ static const TypeInfo riscv_cpu_type_infos[] = {
- #endif
-     ),
+diff --git a/MAINTAINERS b/MAINTAINERS
+index a21796ac6f..06db33a107 100644
+--- a/MAINTAINERS
++++ b/MAINTAINERS
+@@ -1791,7 +1791,9 @@ M: Chao Liu <chao.liu.zevorn@gmail.com>
+ L: qemu-riscv@nongnu.org
+ S: Maintained
+ F: hw/riscv/k230.c
++F: hw/watchdog/k230_wdt.c
+ F: include/hw/riscv/k230.h
++F: include/hw/watchdog/k230_wdt.h
  
-+    DEFINE_RISCV_CPU(TYPE_RISCV_CPU_THEAD_C908, TYPE_RISCV_VENDOR_CPU,
-+        .misa_mxl_max = MXL_RV64,
-+        .misa_ext = RVI | RVM | RVA | RVF | RVD | RVC | RVS | RVU,
-+        .priv_spec = PRIV_VERSION_1_12_0,
+ RX Machines
+ -----------
+diff --git a/hw/riscv/Kconfig b/hw/riscv/Kconfig
+index f512ed65ac..54e41a6afc 100644
+--- a/hw/riscv/Kconfig
++++ b/hw/riscv/Kconfig
+@@ -148,3 +148,4 @@ config K230
+     select RISCV_IMSIC
+     select SERIAL_MM
+     select UNIMP
++    select K230_WDT
+diff --git a/hw/riscv/k230.c b/hw/riscv/k230.c
+index 26d1e20c99..502281c52c 100644
+--- a/hw/riscv/k230.c
++++ b/hw/riscv/k230.c
+@@ -108,6 +108,9 @@ static void k230_soc_init(Object *obj)
+     RISCVHartArrayState *cpu0 = &s->c908_cpu;
+ 
+     object_initialize_child(obj, "c908-cpu", cpu0, TYPE_RISCV_HART_ARRAY);
++    object_initialize_child(obj, "k230-wdt0", &s->wdt[0], TYPE_K230_WDT);
++    object_initialize_child(obj, "k230-wdt1", &s->wdt[1], TYPE_K230_WDT);
 +
-+        /* ISA extensions */
-+        .cfg.ext_xtheadba = true,
-+        .cfg.ext_xtheadbb = true,
-+        .cfg.ext_xtheadbs = true,
-+        .cfg.ext_xtheadcmo = true,
-+        .cfg.ext_xtheadcondmov = true,
-+        .cfg.ext_xtheadfmv = true,
-+        .cfg.ext_xtheadfmemidx = true,
-+        .cfg.ext_xtheadmac = true,
-+        .cfg.ext_xtheadmemidx = true,
-+        .cfg.ext_xtheadmempair = true,
-+        .cfg.ext_xtheadsync = true,
-+        .cfg.ext_smepmp = true,
-+        .cfg.ext_sscofpmf = true,
-+        .cfg.ext_sstc = true,
-+        .cfg.ext_svpbmt = true,
-+        .cfg.ext_svinval = true,
-+        .cfg.ext_svnapot = true,
-+        .cfg.ext_zba = true,
-+        .cfg.ext_zbb = true,
-+        .cfg.ext_zbc = true,
-+        .cfg.ext_zbs = true,
-+        .cfg.ext_zkt = true,
-+        .cfg.ext_zbkc = true,
-+        .cfg.ext_zicsr = true,
-+        .cfg.ext_zifencei = true,
-+        .cfg.ext_zihintpause = true,
-+        .cfg.ext_zicbom = true,
-+        .cfg.ext_zicboz = true,
+     qdev_prop_set_uint32(DEVICE(cpu0), "hartid-base", 0);
+     qdev_prop_set_string(DEVICE(cpu0), "cpu-type", TYPE_RISCV_CPU_THEAD_C908);
+     qdev_prop_set_uint64(DEVICE(cpu0), "resetvec",
+@@ -188,6 +191,21 @@ static void k230_soc_realize(DeviceState *dev, Error **errp)
+         k230_create_uart(sys_mem, DEVICE(s->c908_plic), i);
+     }
+ 
++    /* Watchdog */
++    for (int i = 0; i < 2; i++) {
++        if (!sysbus_realize(SYS_BUS_DEVICE(&s->wdt[i]), errp)) {
++            return;
++        }
++    }
 +
-+        .cfg.pmp = true,
-+        .cfg.mmu = true,
-+        .cfg.max_satp_mode = VM_1_10_SV48,
++    sysbus_mmio_map(SYS_BUS_DEVICE(&s->wdt[0]), 0, memmap[K230_DEV_WDT0].base);
++    sysbus_connect_irq(SYS_BUS_DEVICE(&s->wdt[0]), 0,
++                       qdev_get_gpio_in(DEVICE(s->c908_plic), K230_WDT0_IRQ));
 +
-+        .cfg.marchid = 0x8d143000,
-+        .cfg.mvendorid = THEAD_VENDOR_ID,
-+#ifndef CONFIG_USER_ONLY
-+        .custom_csrs = th_csr_list,
-+#endif
-+    ),
++    sysbus_mmio_map(SYS_BUS_DEVICE(&s->wdt[1]), 0, memmap[K230_DEV_WDT1].base);
++    sysbus_connect_irq(SYS_BUS_DEVICE(&s->wdt[1]), 0,
++                       qdev_get_gpio_in(DEVICE(s->c908_plic), K230_WDT1_IRQ));
 +
-+    DEFINE_RISCV_CPU(TYPE_RISCV_CPU_THEAD_C908V, TYPE_RISCV_CPU_THEAD_C908,
-+        .misa_ext = RVI | RVM | RVA | RVF | RVD | RVC | RVS | RVU | RVV,
-+        .vext_spec = VEXT_VERSION_1_00_0,
-+    ),
+     /* unimplemented devices */
+     create_unimplemented_device("kpu.l2-cache",
+                                 memmap[K230_DEV_KPU_L2_CACHE].base,
+diff --git a/hw/watchdog/Kconfig b/hw/watchdog/Kconfig
+index 861fd00334..55f77c5c84 100644
+--- a/hw/watchdog/Kconfig
++++ b/hw/watchdog/Kconfig
+@@ -18,6 +18,10 @@ config WDT_DIAG288
+ config WDT_IMX2
+     bool
+ 
++config K230_WDT
++    bool
++    select PTIMER
 +
-     DEFINE_RISCV_CPU(TYPE_RISCV_CPU_TT_ASCALON, TYPE_RISCV_VENDOR_CPU,
-         .misa_mxl_max = MXL_RV64,
-         .misa_ext = RVG | RVC | RVS | RVU | RVH | RVV,
-diff --git a/target/riscv/th_csr.c b/target/riscv/th_csr.c
-index a4ea4ce391..431f4cc286 100644
---- a/target/riscv/th_csr.c
-+++ b/target/riscv/th_csr.c
-@@ -2,6 +2,9 @@
-  * T-Head-specific CSRs.
-  *
-  * Copyright (c) 2024 VRULL GmbH
+ config WDT_SBSA
+     bool
+ 
+diff --git a/hw/watchdog/k230_wdt.c b/hw/watchdog/k230_wdt.c
+new file mode 100644
+index 0000000000..1f83b499e8
+--- /dev/null
++++ b/hw/watchdog/k230_wdt.c
+@@ -0,0 +1,296 @@
++/*
++ * K230 Watchdog Compatible with kendryte K230 SDK
++ *
++ * Copyright (c) 2025 Mig Yang <temashking@foxmail.com>
 + * Copyright (c) 2025 Chao Liu <chao.liu.zevorn@gmail.com>
 + *
-+ * For more information, see XuanTie-C908-UserManual_xrvm_20240530.pdf
-  *
-  * This program is free software; you can redistribute it and/or modify it
-  * under the terms and conditions of the GNU General Public License,
-@@ -21,13 +24,84 @@
- #include "cpu_vendorid.h"
- #include "target/riscv/csr.h"
- 
--#define CSR_TH_SXSTATUS 0x5c0
-+/* Extended M-mode control registers of T-Head */
-+#define CSR_TH_MXSTATUS        0x7c0
-+#define CSR_TH_MHCR            0x7c1
-+#define CSR_TH_MCOR            0x7c2
-+#define CSR_TH_MCCR2           0x7c3
-+#define CSR_TH_MHINT           0x7c5
-+#define CSR_TH_MRVBR           0x7c7
-+#define CSR_TH_MCOUNTERWEN     0x7c9
-+#define CSR_TH_MCOUNTERINTEN   0x7ca
-+#define CSR_TH_MCOUNTEROF      0x7cb
-+#define CSR_TH_MCINS           0x7d2
-+#define CSR_TH_MCINDEX         0x7d3
-+#define CSR_TH_MCDATA0         0x7d4
-+#define CSR_TH_MCDATA1         0x7d5
-+#define CSR_TH_MSMPR           0x7f3
-+#define CSR_TH_CPUID           0xfc0
-+#define CSR_TH_MAPBADDR        0xfc1
++ * SPDX-License-Identifier: GPL-2.0-or-later
++ *
++ * Provides a board compatible with the kendryte K230 SDK
++ *
++ * K230 Technical Reference Manual V0.3.1 (2024-11-18):
++ * https://github.com/revyos/external-docs/blob/master/K230/en-us/K230_Technical_Reference_Manual_V0.3.1_20241118.pdf
++ *
++ * For more information, see <https://www.kendryte.com/en/proDetail/230>
++ */
++#include "qemu/osdep.h"
++#include "qemu/bitops.h"
++#include "qemu/module.h"
++#include "system/watchdog.h"
++#include "migration/vmstate.h"
++#include "hw/core/qdev-properties.h"
++#include "hw/watchdog/k230_wdt.h"
++#include "trace.h"
 +
-+/* TH_MXSTATUS bits */
-+#define TH_MXSTATUS_UCME        BIT(16)
-+#define TH_MXSTATUS_MAEE        BIT(21)
-+#define TH_MXSTATUS_THEADISAEE  BIT(22)
-+
-+/* Extended S-mode control registers of T-Head */
-+#define CSR_TH_SXSTATUS        0x5c0
-+#define CSR_TH_SHCR            0x5c1
-+#define CSR_TH_SCER2           0x5c2
-+#define CSR_TH_SCER            0x5c3
-+#define CSR_TH_SCOUNTERINTEN   0x5c4
-+#define CSR_TH_SCOUNTEROF      0x5c5
-+#define CSR_TH_SCYCLE          0x5e0
-+#define CSR_TH_SHPMCOUNTER3    0x5e3
-+#define CSR_TH_SHPMCOUNTER4    0x5e4
-+#define CSR_TH_SHPMCOUNTER5    0x5e5
-+#define CSR_TH_SHPMCOUNTER6    0x5e6
-+#define CSR_TH_SHPMCOUNTER7    0x5e7
-+#define CSR_TH_SHPMCOUNTER8    0x5e8
-+#define CSR_TH_SHPMCOUNTER9    0x5e9
-+#define CSR_TH_SHPMCOUNTER10   0x5ea
-+#define CSR_TH_SHPMCOUNTER11   0x5eb
-+#define CSR_TH_SHPMCOUNTER12   0x5ec
-+#define CSR_TH_SHPMCOUNTER13   0x5ed
-+#define CSR_TH_SHPMCOUNTER14   0x5ee
-+#define CSR_TH_SHPMCOUNTER15   0x5ef
-+#define CSR_TH_SHPMCOUNTER16   0x5f0
-+#define CSR_TH_SHPMCOUNTER17   0x5f1
-+#define CSR_TH_SHPMCOUNTER18   0x5f2
-+#define CSR_TH_SHPMCOUNTER19   0x5f3
-+#define CSR_TH_SHPMCOUNTER20   0x5f4
-+#define CSR_TH_SHPMCOUNTER21   0x5f5
-+#define CSR_TH_SHPMCOUNTER22   0x5f6
-+#define CSR_TH_SHPMCOUNTER23   0x5f7
-+#define CSR_TH_SHPMCOUNTER24   0x5f8
-+#define CSR_TH_SHPMCOUNTER25   0x5f9
-+#define CSR_TH_SHPMCOUNTER26   0x5fa
-+#define CSR_TH_SHPMCOUNTER27   0x5fb
-+#define CSR_TH_SHPMCOUNTER28   0x5fc
-+#define CSR_TH_SHPMCOUNTER29   0x5fd
-+#define CSR_TH_SHPMCOUNTER30   0x5fe
-+#define CSR_TH_SHPMCOUNTER31   0x5ff
-+#define CSR_TH_SMIR            0x9c0
-+#define CSR_TH_SMLO0           0x9c1
-+#define CSR_TH_SMEH            0x9c2
-+#define CSR_TH_SMCIR           0x9c3
-+
-+/* Extended U-mode control registers of T-Head */
-+#define CSR_TH_FXCR            0x800
- 
- /* TH_SXSTATUS bits */
- #define TH_SXSTATUS_UCME        BIT(16)
- #define TH_SXSTATUS_MAEE        BIT(21)
- #define TH_SXSTATUS_THEADISAEE  BIT(22)
- 
-+static RISCVException mmode(CPURISCVState *env, int csrno)
++static void k230_wdt_timeout(void *opaque)
 +{
-+    return RISCV_EXCP_NONE;
++    K230WdtState *s = K230_WDT(opaque);
++
++    trace_k230_wdt_timeout();
++
++    /* Set interrupt status if in interrupt mode */
++    if (s->cr & K230_WDT_CR_RMOD) {
++        s->stat |= K230_WDT_STAT_INT;
++        s->interrupt_pending = true;
++        qemu_set_irq(s->irq, 1);
++        trace_k230_wdt_interrupt();
++    } else {
++        /* Direct reset mode */
++        trace_k230_wdt_reset();
++        watchdog_perform_action();
++    }
++
++    /* Restart counter */
++    s->current_count = s->timeout_value;
++    ptimer_set_count(s->timer, s->current_count);
++    ptimer_run(s->timer, 1);
 +}
 +
- static RISCVException smode(CPURISCVState *env, int csrno)
- {
-     if (riscv_has_ext(env, RVS)) {
-@@ -37,11 +111,31 @@ static RISCVException smode(CPURISCVState *env, int csrno)
-     return RISCV_EXCP_ILLEGAL_INST;
- }
- 
-+static RISCVException any(CPURISCVState *env, int csrno)
++static void k230_wdt_reset(DeviceState *dev)
 +{
-+    return RISCV_EXCP_NONE;
++    K230WdtState *s = K230_WDT(dev);
++
++    trace_k230_wdt_reset_device();
++
++    ptimer_transaction_begin(s->timer);
++    ptimer_stop(s->timer);
++    ptimer_transaction_commit(s->timer);
++
++    /* Reset registers to default values */
++    s->cr = 0;
++    s->torr = 0;
++    s->ccvr = 0xFFFFFFFF;
++    s->stat = 0;
++    s->prot_level = 0x2;
++
++    s->interrupt_pending = false;
++    s->enabled = false;
++    s->timeout_value = 0;
++    s->current_count = 0xFFFFFFFF;
 +}
 +
- static bool test_thead_mvendorid(RISCVCPU *cpu)
- {
-     return cpu->cfg.mvendorid == THEAD_VENDOR_ID;
- }
- 
-+static RISCVException read_th_mxstatus(CPURISCVState *env, int csrno,
-+                                       target_ulong *val)
++static uint64_t k230_wdt_read(void *opaque, hwaddr addr, unsigned int size)
 +{
-+    /* We don't set MAEE here, because QEMU does not implement MAEE. */
-+    *val = TH_MXSTATUS_UCME | TH_MXSTATUS_THEADISAEE;
-+    return RISCV_EXCP_NONE;
++    K230WdtState *s = K230_WDT(opaque);
++    uint32_t value = 0;
++
++    switch (addr) {
++    case K230_WDT_CR:
++        value = s->cr;
++        break;
++    case K230_WDT_TORR:
++        value = s->torr;
++        break;
++    case K230_WDT_CCVR:
++        if (s->enabled) {
++            value = ptimer_get_count(s->timer);
++        } else {
++            value = s->current_count;
++        }
++        break;
++    case K230_WDT_STAT:
++        value = s->stat;
++        break;
++    case K230_WDT_PROT_LEVEL:
++        value = s->prot_level;
++        break;
++    case K230_WDT_COMP_PARAM_5:
++        value = 0; /* Upper limit of Timeout Period parameters */
++        break;
++    case K230_WDT_COMP_PARAM_4:
++        value = 0; /* Upper limit of Initial Timeout Period parameters */
++        break;
++    case K230_WDT_COMP_PARAM_3:
++        value = 0; /* Derived from WDT_TOP_RST parameter */
++        break;
++    case K230_WDT_COMP_PARAM_2:
++        value = 0xFFFFFFFF; /* Derived from WDT_RST_CNT parameter */
++        break;
++    case K230_WDT_COMP_PARAM_1:
++        /* Component parameters */
++        value = (32 << K230_WDT_CNT_WIDTH_SHIFT) |  /* 32-bit counter */
++                (0 << K230_WDT_DFLT_TOP_INIT_SHIFT) |
++                (0 << K230_WDT_DFLT_TOP_SHIFT) |
++                (K230_WDT_RPL_16_CYCLES << K230_WDT_DFLT_RPL_SHIFT) |
++                (2 << K230_WDT_APB_DATA_WIDTH_SHIFT) | /* 32-bit APB */
++                K230_WDT_USE_FIX_TOP; /* Use fixed timeout values */
++        break;
++    case K230_WDT_COMP_VERSION:
++        value = K230_WDT_COMP_VERSION_VAL;
++        break;
++    case K230_WDT_COMP_TYPE:
++        value = K230_WDT_COMP_TYPE_VAL;
++        break;
++    default:
++        /* Other registers return 0 */
++        break;
++    }
++
++    trace_k230_wdt_read(addr, value);
++    return value;
 +}
 +
-+static RISCVException read_unimp_th_csr(CPURISCVState *env, int csrno,
-+                                        target_ulong *val)
++static void k230_wdt_update_timer(K230WdtState *s)
 +{
-+    *val = 0;
-+    return RISCV_EXCP_NONE;
++    ptimer_transaction_begin(s->timer);
++
++    if (s->enabled && s->timeout_value > 0) {
++        ptimer_set_count(s->timer, s->current_count);
++        ptimer_run(s->timer, 1);
++    } else {
++        ptimer_stop(s->timer);
++    }
++
++    ptimer_transaction_commit(s->timer);
 +}
 +
- static RISCVException read_th_sxstatus(CPURISCVState *env, int csrno,
-                                        target_ulong *val)
- {
-@@ -51,10 +145,290 @@ static RISCVException read_th_sxstatus(CPURISCVState *env, int csrno,
- }
++static uint32_t k230_wdt_calculate_timeout(uint32_t top_value)
++{
++    /* Calculate timeout based on TOP value */
++    /* For fixed timeout mode: 2^(16 + top_value) */
++    if (top_value <= 15) {
++        return 1 << (16 + top_value);
++    }
++    return 1 << 31; /* Maximum value for 32-bit counter */
++}
++
++static void k230_wdt_write(void *opaque, hwaddr addr,
++                           uint64_t value, unsigned int size)
++{
++    K230WdtState *s = K230_WDT(opaque);
++
++    trace_k230_wdt_write(addr, value);
++
++    switch (addr) {
++    case K230_WDT_CR:
++        s->cr = value & (K230_WDT_CR_RPL_MASK << K230_WDT_CR_RPL_SHIFT |
++                         K230_WDT_CR_RMOD | K230_WDT_CR_WDT_EN);
++
++        /* Update enabled state */
++        s->enabled = (s->cr & K230_WDT_CR_WDT_EN) != 0;
++
++        /* Update timer */
++        k230_wdt_update_timer(s);
++        break;
++
++    case K230_WDT_TORR:
++        s->torr = value & K230_WDT_TORR_TOP_MASK;
++
++        /* Calculate new timeout value */
++        s->timeout_value = k230_wdt_calculate_timeout(s->torr);
++        s->current_count = s->timeout_value;
++
++        /* Update timer if enabled */
++        if (s->enabled) {
++            k230_wdt_update_timer(s);
++        }
++        break;
++
++    case K230_WDT_CRR:
++        /* Restart counter with magic value 0x76 */
++        if ((value & 0xFF) == K230_WDT_CRR_RESTART) {
++            trace_k230_wdt_restart();
++            s->current_count = s->timeout_value;
++
++            /* Clear interrupt if pending */
++            if (s->interrupt_pending) {
++                s->stat &= ~K230_WDT_STAT_INT;
++                s->interrupt_pending = false;
++                qemu_set_irq(s->irq, 0);
++            }
++
++            /* Update timer */
++            k230_wdt_update_timer(s);
++        }
++        break;
++
++    case K230_WDT_EOI:
++        /* Clear interrupt */
++        s->stat &= ~K230_WDT_STAT_INT;
++        s->interrupt_pending = false;
++        qemu_set_irq(s->irq, 0);
++        break;
++
++    case K230_WDT_PROT_LEVEL:
++        s->prot_level = value & 0x7;
++        break;
++
++    default:
++        /* Read-only registers, ignore writes */
++        break;
++    }
++}
++
++static const MemoryRegionOps k230_wdt_ops = {
++    .read  = k230_wdt_read,
++    .write = k230_wdt_write,
++    .endianness = DEVICE_LITTLE_ENDIAN,
++    .impl = {
++        .min_access_size = 4,
++        .max_access_size = 4,
++        .unaligned = false,
++    },
++};
++
++static const VMStateDescription vmstate_k230_wdt = {
++    .name = "k230.wdt",
++    .fields = (const VMStateField[]) {
++        VMSTATE_PTIMER(timer, K230WdtState),
++        VMSTATE_UINT32(cr, K230WdtState),
++        VMSTATE_UINT32(torr, K230WdtState),
++        VMSTATE_UINT32(ccvr, K230WdtState),
++        VMSTATE_UINT32(stat, K230WdtState),
++        VMSTATE_UINT32(prot_level, K230WdtState),
++        VMSTATE_BOOL(interrupt_pending, K230WdtState),
++        VMSTATE_BOOL(enabled, K230WdtState),
++        VMSTATE_UINT32(timeout_value, K230WdtState),
++        VMSTATE_UINT32(current_count, K230WdtState),
++        VMSTATE_END_OF_LIST()
++    }
++};
++
++static void k230_wdt_realize(DeviceState *dev, Error **errp)
++{
++    K230WdtState *s = K230_WDT(dev);
++    SysBusDevice *sbd = SYS_BUS_DEVICE(dev);
++
++    memory_region_init_io(&s->mmio, OBJECT(dev),
++                          &k230_wdt_ops, s,
++                          TYPE_K230_WDT,
++                          K230_WDT_MMIO_SIZE);
++    sysbus_init_mmio(sbd, &s->mmio);
++    sysbus_init_irq(sbd, &s->irq);
++
++    s->timer = ptimer_init(k230_wdt_timeout, s,
++                           PTIMER_POLICY_NO_IMMEDIATE_TRIGGER |
++                           PTIMER_POLICY_NO_IMMEDIATE_RELOAD |
++                           PTIMER_POLICY_NO_COUNTER_ROUND_DOWN);
++
++    ptimer_transaction_begin(s->timer);
++    ptimer_set_freq(s->timer, K230_WDT_DEFAULT_FREQ);
++    ptimer_transaction_commit(s->timer);
++}
++
++static void k230_wdt_class_init(ObjectClass *klass, const void *data)
++{
++    DeviceClass *dc = DEVICE_CLASS(klass);
++
++    dc->realize = k230_wdt_realize;
++    device_class_set_legacy_reset(dc, k230_wdt_reset);
++    dc->vmsd = &vmstate_k230_wdt;
++    dc->desc = "K230 watchdog timer";
++    set_bit(DEVICE_CATEGORY_WATCHDOG, dc->categories);
++}
++
++static const TypeInfo k230_wdt_info = {
++    .name          = TYPE_K230_WDT,
++    .parent        = TYPE_SYS_BUS_DEVICE,
++    .instance_size = sizeof(K230WdtState),
++    .class_init    = k230_wdt_class_init,
++};
++
++static void k230_wdt_register_type(void)
++{
++    type_register_static(&k230_wdt_info);
++}
++type_init(k230_wdt_register_type)
+diff --git a/hw/watchdog/meson.build b/hw/watchdog/meson.build
+index 15370565bd..5edae65a36 100644
+--- a/hw/watchdog/meson.build
++++ b/hw/watchdog/meson.build
+@@ -6,5 +6,6 @@ system_ss.add(when: 'CONFIG_WDT_IB700', if_true: files('wdt_ib700.c'))
+ system_ss.add(when: 'CONFIG_WDT_DIAG288', if_true: files('wdt_diag288.c'))
+ system_ss.add(when: 'CONFIG_ASPEED_SOC', if_true: files('wdt_aspeed.c'))
+ system_ss.add(when: 'CONFIG_WDT_IMX2', if_true: files('wdt_imx2.c'))
++system_ss.add(when: 'CONFIG_K230_WDT', if_true: files('k230_wdt.c'))
+ system_ss.add(when: 'CONFIG_WDT_SBSA', if_true: files('sbsa_gwdt.c'))
+ specific_ss.add(when: 'CONFIG_PSERIES', if_true: files('spapr_watchdog.c'))
+diff --git a/hw/watchdog/trace-events b/hw/watchdog/trace-events
+index ad3be1e9bd..d85b3ca769 100644
+--- a/hw/watchdog/trace-events
++++ b/hw/watchdog/trace-events
+@@ -33,3 +33,12 @@ spapr_watchdog_expired(uint64_t num, unsigned action) "num=%" PRIu64 " action=%u
+ # watchdog.c
+ watchdog_perform_action(unsigned int action) "action=%u"
+ watchdog_set_action(unsigned int action) "action=%u"
++
++# k230_wdt.c
++k230_wdt_read(uint64_t addr, uint32_t data) "K230 WDT read: [0x%" PRIx64 "] -> 0x%" PRIx32
++k230_wdt_write(uint64_t addr, uint64_t data) "K230 WDT write: [0x%" PRIx64 "] <- 0x%" PRIx64
++k230_wdt_timeout(void) "K230 WDT timeout"
++k230_wdt_interrupt(void) "K230 WDT interrupt"
++k230_wdt_reset(void) "K230 WDT system reset"
++k230_wdt_restart(void) "K230 WDT restart"
++k230_wdt_reset_device(void) "K230 WDT device reset"
+diff --git a/include/hw/riscv/k230.h b/include/hw/riscv/k230.h
+index dcfde39096..592e1c26bf 100644
+--- a/include/hw/riscv/k230.h
++++ b/include/hw/riscv/k230.h
+@@ -17,6 +17,7 @@
  
- const RISCVCSR th_csr_list[] = {
-+    {
-+        .csrno = CSR_TH_MXSTATUS,
-+        .insertion_test = test_thead_mvendorid,
-+        .csr_ops = { "th.mxstatus", mmode, read_th_mxstatus }
-+    },
-+    {
-+        .csrno = CSR_TH_MHCR,
-+        .insertion_test = test_thead_mvendorid,
-+        .csr_ops = { "th.mhcr", mmode, read_unimp_th_csr }
-+    },
-+    {
-+        .csrno = CSR_TH_MCOR,
-+        .insertion_test = test_thead_mvendorid,
-+        .csr_ops = { "th.mcor", mmode, read_unimp_th_csr }
-+    },
-+    {
-+        .csrno = CSR_TH_MCCR2,
-+        .insertion_test = test_thead_mvendorid,
-+        .csr_ops = { "th.mccr2", mmode, read_unimp_th_csr }
-+    },
-+    {
-+        .csrno = CSR_TH_MHINT,
-+        .insertion_test = test_thead_mvendorid,
-+        .csr_ops = { "th.mhint", mmode, read_unimp_th_csr }
-+    },
-+    {
-+        .csrno = CSR_TH_MRVBR,
-+        .insertion_test = test_thead_mvendorid,
-+        .csr_ops = { "th.mrvbr", mmode, read_unimp_th_csr }
-+    },
-+    {
-+        .csrno = CSR_TH_MCOUNTERWEN,
-+        .insertion_test = test_thead_mvendorid,
-+        .csr_ops = { "th.mcounterwen", mmode, read_unimp_th_csr }
-+    },
-+    {
-+        .csrno = CSR_TH_MCOUNTERINTEN,
-+        .insertion_test = test_thead_mvendorid,
-+        .csr_ops = { "th.mcounterinten", mmode, read_unimp_th_csr }
-+    },
-+    {
-+        .csrno = CSR_TH_MCOUNTEROF,
-+        .insertion_test = test_thead_mvendorid,
-+        .csr_ops = { "th.mcounterof", mmode, read_unimp_th_csr }
-+    },
-+    {
-+        .csrno = CSR_TH_MCINS,
-+        .insertion_test = test_thead_mvendorid,
-+        .csr_ops = { "th.mcins", mmode, read_unimp_th_csr }
-+    },
-+    {
-+        .csrno = CSR_TH_MCINDEX,
-+        .insertion_test = test_thead_mvendorid,
-+        .csr_ops = { "th.mcindex", mmode, read_unimp_th_csr }
-+    },
-+    {
-+        .csrno = CSR_TH_MCDATA0,
-+        .insertion_test = test_thead_mvendorid,
-+        .csr_ops = { "th.mcdata0", mmode, read_unimp_th_csr }
-+    },
-+    {
-+        .csrno = CSR_TH_MCDATA1,
-+        .insertion_test = test_thead_mvendorid,
-+        .csr_ops = { "th.mcdata1", mmode, read_unimp_th_csr }
-+    },
-+    {
-+        .csrno = CSR_TH_MSMPR,
-+        .insertion_test = test_thead_mvendorid,
-+        .csr_ops = { "th.msmpr", mmode, read_unimp_th_csr }
-+    },
-+    {
-+        .csrno = CSR_TH_CPUID,
-+        .insertion_test = test_thead_mvendorid,
-+        .csr_ops = { "th.cpuid", mmode, read_unimp_th_csr }
-+    },
-+    {
-+        .csrno = CSR_TH_MAPBADDR,
-+        .insertion_test = test_thead_mvendorid,
-+        .csr_ops = { "th.mapbaddr", mmode, read_unimp_th_csr }
-+    },
-     {
-         .csrno = CSR_TH_SXSTATUS,
-         .insertion_test = test_thead_mvendorid,
-         .csr_ops = { "th.sxstatus", smode, read_th_sxstatus }
-     },
-+    {
-+        .csrno = CSR_TH_SHCR,
-+        .insertion_test = test_thead_mvendorid,
-+        .csr_ops = { "th.shcr", smode, read_unimp_th_csr }
-+    },
-+    {
-+        .csrno = CSR_TH_SCER2,
-+        .insertion_test = test_thead_mvendorid,
-+        .csr_ops = { "th.scer2", smode, read_unimp_th_csr }
-+    },
-+    {
-+        .csrno = CSR_TH_SCER,
-+        .insertion_test = test_thead_mvendorid,
-+        .csr_ops = { "th.scer", smode, read_unimp_th_csr }
-+    },
-+    {
-+        .csrno = CSR_TH_SCOUNTERINTEN,
-+        .insertion_test = test_thead_mvendorid,
-+        .csr_ops = { "th.scounterinten", smode, read_unimp_th_csr }
-+    },
-+    {
-+        .csrno = CSR_TH_SCOUNTEROF,
-+        .insertion_test = test_thead_mvendorid,
-+        .csr_ops = { "th.scounterof", smode, read_unimp_th_csr }
-+    },
-+    {
-+        .csrno = CSR_TH_SCYCLE,
-+        .insertion_test = test_thead_mvendorid,
-+        .csr_ops = { "th.scycle", smode, read_unimp_th_csr }
-+    },
-+    {
-+        .csrno = CSR_TH_SHPMCOUNTER3,
-+        .insertion_test = test_thead_mvendorid,
-+        .csr_ops = { "th.shpmcounter3", smode, read_unimp_th_csr }
-+    },
-+    {
-+        .csrno = CSR_TH_SHPMCOUNTER4,
-+        .insertion_test = test_thead_mvendorid,
-+        .csr_ops = { "th.shpmcounter4", smode, read_unimp_th_csr }
-+    },
-+    {
-+        .csrno = CSR_TH_SHPMCOUNTER5,
-+        .insertion_test = test_thead_mvendorid,
-+        .csr_ops = { "th.shpmcounter5", smode, read_unimp_th_csr }
-+    },
-+    {
-+        .csrno = CSR_TH_SHPMCOUNTER6,
-+        .insertion_test = test_thead_mvendorid,
-+        .csr_ops = { "th.shpmcounter6", smode, read_unimp_th_csr }
-+    },
-+    {
-+        .csrno = CSR_TH_SHPMCOUNTER7,
-+        .insertion_test = test_thead_mvendorid,
-+        .csr_ops = { "th.shpmcounter7", smode, read_unimp_th_csr }
-+    },
-+    {
-+        .csrno = CSR_TH_SHPMCOUNTER8,
-+        .insertion_test = test_thead_mvendorid,
-+        .csr_ops = { "th.shpmcounter8", smode, read_unimp_th_csr }
-+    },
-+    {
-+        .csrno = CSR_TH_SHPMCOUNTER9,
-+        .insertion_test = test_thead_mvendorid,
-+        .csr_ops = { "th.shpmcounter9", smode, read_unimp_th_csr }
-+    },
-+    {
-+        .csrno = CSR_TH_SHPMCOUNTER10,
-+        .insertion_test = test_thead_mvendorid,
-+        .csr_ops = { "th.shpmcounter10", smode, read_unimp_th_csr }
-+    },
-+    {
-+        .csrno = CSR_TH_SHPMCOUNTER11,
-+        .insertion_test = test_thead_mvendorid,
-+        .csr_ops = { "th.shpmcounter11", smode, read_unimp_th_csr }
-+    },
-+    {
-+        .csrno = CSR_TH_SHPMCOUNTER12,
-+        .insertion_test = test_thead_mvendorid,
-+        .csr_ops = { "th.shpmcounter12", smode, read_unimp_th_csr }
-+    },
-+    {
-+        .csrno = CSR_TH_SHPMCOUNTER13,
-+        .insertion_test = test_thead_mvendorid,
-+        .csr_ops = { "th.shpmcounter13", smode, read_unimp_th_csr }
-+    },
-+    {
-+        .csrno = CSR_TH_SHPMCOUNTER14,
-+        .insertion_test = test_thead_mvendorid,
-+        .csr_ops = { "th.shpmcounter14", smode, read_unimp_th_csr }
-+    },
-+    {
-+        .csrno = CSR_TH_SHPMCOUNTER15,
-+        .insertion_test = test_thead_mvendorid,
-+        .csr_ops = { "th.shpmcounter15", smode, read_unimp_th_csr }
-+    },
-+    {
-+        .csrno = CSR_TH_SHPMCOUNTER16,
-+        .insertion_test = test_thead_mvendorid,
-+        .csr_ops = { "th.shpmcounter16", smode, read_unimp_th_csr }
-+    },
-+    {
-+        .csrno = CSR_TH_SHPMCOUNTER17,
-+        .insertion_test = test_thead_mvendorid,
-+        .csr_ops = { "th.shpmcounter17", smode, read_unimp_th_csr }
-+    },
-+    {
-+        .csrno = CSR_TH_SHPMCOUNTER18,
-+        .insertion_test = test_thead_mvendorid,
-+        .csr_ops = { "th.shpmcounter18", smode, read_unimp_th_csr }
-+    },
-+    {
-+        .csrno = CSR_TH_SHPMCOUNTER19,
-+        .insertion_test = test_thead_mvendorid,
-+        .csr_ops = { "th.shpmcounter19", smode, read_unimp_th_csr }
-+    },
-+    {
-+        .csrno = CSR_TH_SHPMCOUNTER20,
-+        .insertion_test = test_thead_mvendorid,
-+        .csr_ops = { "th.shpmcounter20", smode, read_unimp_th_csr }
-+    },
-+    {
-+        .csrno = CSR_TH_SHPMCOUNTER21,
-+        .insertion_test = test_thead_mvendorid,
-+        .csr_ops = { "th.shpmcounter21", smode, read_unimp_th_csr }
-+    },
-+    {
-+        .csrno = CSR_TH_SHPMCOUNTER22,
-+        .insertion_test = test_thead_mvendorid,
-+        .csr_ops = { "th.shpmcounter22", smode, read_unimp_th_csr }
-+    },
-+    {
-+        .csrno = CSR_TH_SHPMCOUNTER23,
-+        .insertion_test = test_thead_mvendorid,
-+        .csr_ops = { "th.shpmcounter23", smode, read_unimp_th_csr }
-+    },
-+    {
-+        .csrno = CSR_TH_SHPMCOUNTER24,
-+        .insertion_test = test_thead_mvendorid,
-+        .csr_ops = { "th.shpmcounter24", smode, read_unimp_th_csr }
-+    },
-+    {
-+        .csrno = CSR_TH_SHPMCOUNTER25,
-+        .insertion_test = test_thead_mvendorid,
-+        .csr_ops = { "th.shpmcounter25", smode, read_unimp_th_csr }
-+    },
-+    {
-+        .csrno = CSR_TH_SHPMCOUNTER26,
-+        .insertion_test = test_thead_mvendorid,
-+        .csr_ops = { "th.shpmcounter26", smode, read_unimp_th_csr }
-+    },
-+    {
-+        .csrno = CSR_TH_SHPMCOUNTER27,
-+        .insertion_test = test_thead_mvendorid,
-+        .csr_ops = { "th.shpmcounter27", smode, read_unimp_th_csr }
-+    },
-+    {
-+        .csrno = CSR_TH_SHPMCOUNTER28,
-+        .insertion_test = test_thead_mvendorid,
-+        .csr_ops = { "th.shpmcounter28", smode, read_unimp_th_csr }
-+    },
-+    {
-+        .csrno = CSR_TH_SHPMCOUNTER29,
-+        .insertion_test = test_thead_mvendorid,
-+        .csr_ops = { "th.shpmcounter29", smode, read_unimp_th_csr }
-+    },
-+    {
-+        .csrno = CSR_TH_SHPMCOUNTER30,
-+        .insertion_test = test_thead_mvendorid,
-+        .csr_ops = { "th.shpmcounter30", smode, read_unimp_th_csr }
-+    },
-+    {
-+        .csrno = CSR_TH_SHPMCOUNTER31,
-+        .insertion_test = test_thead_mvendorid,
-+        .csr_ops = { "th.shpmcounter31", smode, read_unimp_th_csr }
-+    },
-+    {
-+        .csrno = CSR_TH_SMIR,
-+        .insertion_test = test_thead_mvendorid,
-+        .csr_ops = { "th.smir", smode, read_unimp_th_csr }
-+    },
-+    {
-+        .csrno = CSR_TH_SMLO0,
-+        .insertion_test = test_thead_mvendorid,
-+        .csr_ops = { "th.smlo0", smode, read_unimp_th_csr }
-+    },
-+    {
-+        .csrno = CSR_TH_SMEH,
-+        .insertion_test = test_thead_mvendorid,
-+        .csr_ops = { "th.smeh", smode, read_unimp_th_csr }
-+    },
-+    {
-+        .csrno = CSR_TH_SMCIR,
-+        .insertion_test = test_thead_mvendorid,
-+        .csr_ops = { "th.smcir", smode, read_unimp_th_csr }
-+    },
-+    {
-+        .csrno = CSR_TH_FXCR,
-+        .insertion_test = test_thead_mvendorid,
-+        .csr_ops = { "th.fxcr", any, read_unimp_th_csr }
-+    },
-     { }
+ #include "hw/core/boards.h"
+ #include "hw/riscv/riscv_hart.h"
++#include "hw/watchdog/k230_wdt.h"
+ 
+ #define C908_CPU_HARTID   (0)
+ 
+@@ -31,6 +32,7 @@ typedef struct K230SoCState {
+     /*< public >*/
+     RISCVHartArrayState c908_cpu; /* Small core */
+ 
++    K230WdtState wdt[2];
+     MemoryRegion sram;
+     MemoryRegion bootrom;
+ 
+@@ -125,6 +127,8 @@ enum {
+     K230_UART2_IRQ  = 18,
+     K230_UART3_IRQ  = 19,
+     K230_UART4_IRQ  = 20,
++    K230_WDT0_IRQ   = 107,
++    K230_WDT1_IRQ   = 108,
  };
+ 
+ #define K230_UART_COUNT 5
+diff --git a/include/hw/watchdog/k230_wdt.h b/include/hw/watchdog/k230_wdt.h
+new file mode 100644
+index 0000000000..ba194abebe
+--- /dev/null
++++ b/include/hw/watchdog/k230_wdt.h
+@@ -0,0 +1,121 @@
++/*
++ * K230 Watchdog Timer
++ *
++ * K230 Technical Reference Manual V0.3.1 (2024-11-18):
++ * https://github.com/revyos/external-docs/blob/master/K230/en-us/K230_Technical_Reference_Manual_V0.3.1_20241118.pdf
++ *
++ * Copyright (c) 2025 Mig Yang <temashking@foxmail.com>
++ * Copyright (c) 2025 Chao Liu <chao.liu.zevorn@gmail.com>
++ *
++ * SPDX-License-Identifier: GPL-2.0-or-later
++ */
++
++#ifndef K230_WDT_H
++#define K230_WDT_H
++
++#include "qemu/bitops.h"
++#include "hw/core/sysbus.h"
++#include "hw/core/irq.h"
++#include "hw/core/ptimer.h"
++#include "qom/object.h"
++
++#define TYPE_K230_WDT "riscv.k230.wdt"
++OBJECT_DECLARE_SIMPLE_TYPE(K230WdtState, K230_WDT)
++
++#define K230_WDT_DEFAULT_FREQ (32768)
++
++/* K230 Watchdog Register Map */
++enum K230WdtRegisters {
++    K230_WDT_CR      = 0x00,  /* Control Register */
++    K230_WDT_TORR    = 0x04,  /* Timeout Range Register */
++    K230_WDT_CCVR    = 0x08,  /* Current Counter Value Register */
++    K230_WDT_CRR     = 0x0c,  /* Counter Restart Register */
++    K230_WDT_STAT    = 0x10,  /* Interrupt Status Register */
++    K230_WDT_EOI     = 0x14,  /* Interrupt Clear Register */
++    K230_WDT_PROT_LEVEL = 0x1c, /* Protection Level Register */
++    K230_WDT_COMP_PARAM_5 = 0xe4, /* Component Parameters Register 5 */
++    K230_WDT_COMP_PARAM_4 = 0xe8, /* Component Parameters Register 4 */
++    K230_WDT_COMP_PARAM_3 = 0xec, /* Component Parameters Register 3 */
++    K230_WDT_COMP_PARAM_2 = 0xf0, /* Component Parameters Register 2 */
++    K230_WDT_COMP_PARAM_1 = 0xf4, /* Component Parameters Register 1 */
++    K230_WDT_COMP_VERSION = 0xf8, /* Component Version Register */
++    K230_WDT_COMP_TYPE = 0xfc, /* Component Type Register */
++};
++
++#define K230_WDT_MMIO_SIZE 0x100
++
++/* Control Register (WDT_CR) definitions */
++#define K230_WDT_CR_RPL_MASK    0x7        /* Reset Pulse Length */
++#define K230_WDT_CR_RPL_SHIFT   2
++#define K230_WDT_CR_RMOD        BIT(1)     /* Response Mode */
++#define K230_WDT_CR_WDT_EN      BIT(0)     /* Watchdog Enable */
++
++/* Reset Pulse Length values */
++#define K230_WDT_RPL_2_CYCLES   0x0
++#define K230_WDT_RPL_4_CYCLES   0x1
++#define K230_WDT_RPL_8_CYCLES   0x2
++#define K230_WDT_RPL_16_CYCLES  0x3
++#define K230_WDT_RPL_32_CYCLES  0x4
++#define K230_WDT_RPL_64_CYCLES  0x5
++#define K230_WDT_RPL_128_CYCLES 0x6
++#define K230_WDT_RPL_256_CYCLES 0x7
++
++/* Timeout Range Register (WDT_TORR) definitions */
++#define K230_WDT_TORR_TOP_MASK  0xf        /* Timeout Period */
++
++/* Interrupt Status Register (WDT_STAT) definitions */
++#define K230_WDT_STAT_INT       BIT(0)     /* Interrupt Status */
++
++/* Counter Restart Register (WDT_CRR) magic value */
++#define K230_WDT_CRR_RESTART    0x76       /* Restart command */
++
++/* Component Parameters Register 1 (WDT_COMP_PARAM_1) definitions */
++#define K230_WDT_CNT_WIDTH_MASK 0x1f000000 /* Counter Width */
++#define K230_WDT_CNT_WIDTH_SHIFT 24
++#define K230_WDT_DFLT_TOP_INIT_MASK 0xf00000 /* Default Initial Timeout */
++#define K230_WDT_DFLT_TOP_INIT_SHIFT 20
++#define K230_WDT_DFLT_TOP_MASK  0xf0000    /* Default Timeout */
++#define K230_WDT_DFLT_TOP_SHIFT 16
++#define K230_WDT_DFLT_RPL_MASK  0x7        /* Default Reset Pulse Length */
++#define K230_WDT_DFLT_RPL_SHIFT 10
++#define K230_WDT_APB_DATA_WIDTH_MASK 0x3   /* APB Data Width */
++#define K230_WDT_APB_DATA_WIDTH_SHIFT 8
++#define K230_WDT_USE_FIX_TOP    BIT(6)     /* Use Fixed Timeout Values */
++#define K230_WDT_HC_TOP         BIT(5)     /* Hard-coded Timeout */
++#define K230_WDT_HC_RPL         BIT(4)     /* Hard-coded Reset Pulse Length */
++#define K230_WDT_HC_RMOD        BIT(3)     /* Hard-coded Response Mode */
++#define K230_WDT_DUAL_TOP       BIT(2)     /* Dual Timeout Period */
++#define K230_WDT_DFLT_RMOD      BIT(1)     /* Default Response Mode */
++#define K230_WDT_ALWAYS_EN      BIT(0)     /* Always Enabled */
++
++/* Component Type Register value */
++#define K230_WDT_COMP_TYPE_VAL  0x44570120
++
++/* Component Version Register value */
++#define K230_WDT_COMP_VERSION_VAL 0x3131302a  /* "110*" */
++
++struct K230WdtState {
++    /* <private> */
++    SysBusDevice parent_obj;
++
++    /*< public >*/
++    MemoryRegion mmio;
++    qemu_irq irq;
++
++    struct ptimer_state *timer;
++
++    /* Register state */
++    uint32_t cr;           /* Control Register */
++    uint32_t torr;         /* Timeout Range Register */
++    uint32_t ccvr;         /* Current Counter Value Register */
++    uint32_t stat;         /* Interrupt Status Register */
++    uint32_t prot_level;   /* Protection Level Register */
++
++    /* Internal state */
++    bool interrupt_pending;
++    bool enabled;
++    uint32_t timeout_value;
++    uint32_t current_count;
++};
++
++#endif /* K230_WDT_H */
 -- 
 2.54.0
 
