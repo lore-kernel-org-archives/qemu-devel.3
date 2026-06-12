@@ -4,43 +4,46 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 98856CD98CE
-	for <qemu-devel@archiver.kernel.org>; Fri, 12 Jun 2026 17:00:48 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 13379CD98CE
+	for <qemu-devel@archiver.kernel.org>; Fri, 12 Jun 2026 17:00:50 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wY5Et-00053r-4g; Fri, 12 Jun 2026 13:00:17 -0400
+	id 1wY5F6-0005E6-DN; Fri, 12 Jun 2026 13:00:31 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wY5Ek-00051u-P9; Fri, 12 Jun 2026 13:00:08 -0400
+ id 1wY5Eo-00052p-SX; Fri, 12 Jun 2026 13:00:10 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wY5Eg-0005s0-4d; Fri, 12 Jun 2026 13:00:04 -0400
+ id 1wY5Em-0005ud-AF; Fri, 12 Jun 2026 13:00:09 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1781283582; bh=jf+LqF354WIcd0Q9aHL/iR3YqHUyqXbyNzoQ0gowshI=;
- h=From:To:Cc:Subject:Date;
- b=EpgATw+VzKGLFQZDY5tF06xzoPQsCstCunGbYz1SQBh+IKjyNl0D68TmYUMMIURYz
- dN1JgcNuEMZkhPW728KekAKqJuGs8tqbCjIQ5T5eIRh1GTAlIKLNOjttKR7HzZd5EQ
- RL0m8VdfNge/M2RqWoHgJDTrU/1mVuOXJderIeNZR1wsLLfeImYgpYgTYrUGhcD4Uo
- yIchT/Kd04T61rMYbmf79mkBgSTAFMbHUj3EkfXbN+jser+pWqasWj7ty2gaoraN3y
- mn/12bBMJkfNq0OIlYJQbfFQG1kpvKpT60IE8EXxlXdaDKMfPf+L96LPHSSsB2LF4v
- AOgf8QwhRPSUA==
+ t=1781283582; bh=x2ze/TUTv2U7VDOjDq7Vmk/XORxJT4W40E0/zxPPzXU=;
+ h=From:To:Cc:Subject:Date:In-Reply-To:References;
+ b=JF8S2RvRyQyKnAjIm/Gm5WjtOs59xacpHB2tJIZ03GQdHS+cVA/tb4Mr4IsBqXO+4
+ 0xh4iw/zcZV0HptHrTrxHIyy5Q4zDrFQHb1+VjWc6uudoPGwpWvrAgZUa+w3Qg+5Ko
+ 5i+RRIZqX3tWrUBc0783DSfPV3R6eN5UAdfBUhNmd5FUnB9+hXUGm/+bIx4vde0yrN
+ ZDsnG9f32s6X9G8a6QO67Q4aC6bPQ8Lq5y9ytwomvWfk+abCl7MkhBmCP222tkBYwN
+ b/f/Ot1rVgvYWorQFz1/+vABacfJB1JmYYX4CxJz6lzSb3PN6hdWSLQc4p9VoPUXIO
+ iXjU0bjiqpxAw==
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 0BAFF1B6BC5;
+ by isrv.corpit.ru (Postfix) with ESMTP id 1217D1B6BC8;
  Fri, 12 Jun 2026 19:59:42 +0300 (MSK)
 Received: from think4mjt.tls.msk.ru (mjtthink.wg.tls.msk.ru [192.168.177.146])
- by tsrv.corpit.ru (Postfix) with ESMTP id 7A7593CE162;
+ by tsrv.corpit.ru (Postfix) with ESMTP id AD5BF3CE165;
  Fri, 12 Jun 2026 19:59:57 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: Michael Tokarev <mjt@tls.msk.ru>,
-	qemu-trivial@nongnu.org
-Subject: [PULL 0/8] Trivial patches for 2026-06-12
-Date: Fri, 12 Jun 2026 19:59:44 +0300
-Message-ID: <20260612165957.1779082-1-mjt@tls.msk.ru>
+Cc: Thomas Huth <thuth@redhat.com>, qemu-trivial@nongnu.org,
+ Michael Tokarev <mjt@tls.msk.ru>
+Subject: [PULL 3/8] system/rtc: Fix a possible year-2038 integer overflow
+ problem
+Date: Fri, 12 Jun 2026 19:59:47 +0300
+Message-ID: <20260612165957.1779082-4-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
+In-Reply-To: <20260612165957.1779082-1-mjt@tls.msk.ru>
+References: <20260612165957.1779082-1-mjt@tls.msk.ru>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -67,55 +70,45 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The following changes since commit 193963218accbcf65f28ab1efa773ac6d1cc634c:
+From: Thomas Huth <thuth@redhat.com>
 
-  Merge tag 'pull-ufs-20260612' of https://gitlab.com/jeuk20.kim/qemu into staging (2026-06-12 09:01:07 -0400)
+rtc_realtime_clock_offset is initialized with:
 
-are available in the Git repository at:
+  rtc_realtime_clock_offset = qemu_clock_get_ms(QEMU_CLOCK_REALTIME) / 1000;
 
-  https://gitlab.com/mjt0k/qemu.git tags/pull-trivial-patches
+And QEMU_CLOCK_REALTIME might be based on gettimeofday() in certain
+cases (see get_clock_realtime() in include/qemu/timer.h). So this
+counter will exceed 32 bits in the year 2038, thus we should not
+store this value in a normal integer variable. Change it to a time_t
+to fix the problem.
+And while we're at it, also adjust the nearby rtc_host_datetime_offset
+variable to be on the safe side in the related code.
 
-for you to fetch changes up to 2a57339f89f47b4b1686f419fa2bbd6c0ea6e016:
+Signed-off-by: Thomas Huth <thuth@redhat.com>
+Reviewed-by: Daniel P. Berrangé <berrange@redhat.com>
+Reviewed-by: Laurent Vivier <laurent@vivier.eu>
+Reviewed-by: Michael Tokarev <mjt@tls.msk.ru>
+Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
+---
+ system/rtc.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-  qemu-options: fix typo in spelling of 'scheduler' (2026-06-12 19:43:21 +0300)
+diff --git a/system/rtc.c b/system/rtc.c
+index f13dd392a7..018609a4f9 100644
+--- a/system/rtc.c
++++ b/system/rtc.c
+@@ -41,8 +41,8 @@ static enum {
+     RTC_BASE_DATETIME,
+ } rtc_base_type = RTC_BASE_UTC;
+ static time_t rtc_ref_start_datetime;
+-static int rtc_realtime_clock_offset; /* used only with QEMU_CLOCK_REALTIME */
+-static int rtc_host_datetime_offset = -1; /* valid & used only with
++static time_t rtc_realtime_clock_offset; /* used only with QEMU_CLOCK_REALTIME */
++static time_t rtc_host_datetime_offset = -1; /* valid & used only with
+                                              RTC_BASE_DATETIME */
+ QEMUClockType rtc_clock;
+ /***********************************************************/
+-- 
+2.47.3
 
-----------------------------------------------------------------
-trivial patches for 2026-06-12
-
-a few small things here and there.
-
-the hostfwd one hasn't been reviewed for a few months, but it's
-simple enough.
-----------------------------------------------------------------
-Ajinkya Udgirkar (1):
-      hw/xtensa: replace calloc with g_new0 in mx_pic
-
-Ani Sinha (1):
-      igvm: spit out region size on error
-
-BALATON Zoltan (1):
-      hw/display/vga: Fix debug message
-
-Evgeny Kolmakov (2):
-      net/colo-compare: Use QEMU_LOCK_GUARD to simplify mutex handling
-      block/io: Use QEMU_LOCK_GUARD to simplify mutex handling
-
-Fiona Ebner (1):
-      qemu-options: fix typo in spelling of 'scheduler'
-
-Michael Tokarev (1):
-      net/slirp: allow hostfwd socket paths with dashes
-
-Thomas Huth (1):
-      system/rtc: Fix a possible year-2038 integer overflow problem
-
- backends/igvm.c    | 4 ++--
- block/io.c         | 4 +---
- hw/display/vga.c   | 2 +-
- hw/xtensa/mx_pic.c | 2 +-
- net/colo-compare.c | 8 ++------
- net/slirp.c        | 5 +++--
- qemu-options.hx    | 4 ++--
- system/rtc.c       | 4 ++--
- 8 files changed, 14 insertions(+), 19 deletions(-)
 
