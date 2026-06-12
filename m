@@ -4,66 +4,56 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id CA1DCCD98CE
-	for <qemu-devel@archiver.kernel.org>; Fri, 12 Jun 2026 12:49:40 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 55995CD98CE
+	for <qemu-devel@archiver.kernel.org>; Fri, 12 Jun 2026 12:54:48 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wY1Jg-0001sb-VH; Fri, 12 Jun 2026 08:48:56 -0400
+	id 1wY1Oc-0002xo-DI; Fri, 12 Jun 2026 08:54:03 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <functioner@sjtu.edu.cn>)
- id 1wY1JB-0001pp-6O
- for qemu-devel@nongnu.org; Fri, 12 Jun 2026 08:48:26 -0400
-Received: from smtp186.sjtu.edu.cn ([202.120.2.186])
+ (Exim 4.90_1) (envelope-from <qemu_oss@crudebyte.com>)
+ id 1wY1OZ-0002xE-8F; Fri, 12 Jun 2026 08:53:59 -0400
+Received: from kylie.crudebyte.com ([5.189.157.229])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <functioner@sjtu.edu.cn>)
- id 1wY1J8-00032R-7w
- for qemu-devel@nongnu.org; Fri, 12 Jun 2026 08:48:24 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=sjtu.edu.cn;
- s=default; t=1781268491;
- bh=Dp9/QpixrUQwl0m1O4IGpeJh2gGSl8J9nef1+f6foFE=;
- h=Date:Subject:To:Cc:References:From:In-Reply-To;
- b=GPabOskqKNqE5tNrci9a0OrTLYLoH14+yhz1UFxgtQS0WokGKHiviNV4c8RMUVho8
- yD/QekSfMRTDGegTYtmZ+qXZpSQEF8vz6oTIV7B8roJu6ualJ+Q19ZBQ4yFdesZRQm
- V4Bnh4A4WUK3UuJieZmj72JjlbVchhiFlIotBnbXe8lZVruOnMZdbv7PuKdhBMPS4X
- LnQ24c3f/+oPzUiLMOcRv0qViexhoKU8zjwF6wO+xW6TZfgtgQACbdzAHTEFopVK6E
- nU2tW+hb2Q/NY3xN5cbtX7u0vp1gcDc+/AK2tQSYxRdXlWgErChfbV8XKpAG389irO
- WKpxNrPL0BMcQ==
-Received: from proxy188.sjtu.edu.cn (smtp188.sjtu.edu.cn [202.120.2.188])
- by smtp186.sjtu.edu.cn (Postfix) with ESMTPS id D0F8A2FF3FD;
- Fri, 12 Jun 2026 12:48:11 +0000 (UTC)
-Received: from [10.0.1.62] (unknown [202.120.40.100])
- by proxy188.sjtu.edu.cn (Postfix) with ESMTPSA id 9A8F837C934;
- Fri, 12 Jun 2026 20:48:10 +0800 (CST)
-Message-ID: <bd162496-6325-4f96-8ad7-72fbfb3e89f8@sjtu.edu.cn>
-Date: Fri, 12 Jun 2026 20:48:09 +0800
+ (Exim 4.90_1) (envelope-from <qemu_oss@crudebyte.com>)
+ id 1wY1OX-00088D-Q6; Fri, 12 Jun 2026 08:53:59 -0400
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
+ d=crudebyte.com; s=kylie; h=Content-Type:Content-Transfer-Encoding:
+ MIME-Version:References:In-Reply-To:Message-ID:Date:Subject:Cc:To:From:
+ Content-ID:Content-Description;
+ bh=dLpcH3O/3vYaM1ueO0Vy/CQAIqSbwW8P5PnqTon6A9I=; b=DgP6IJNHPU08BW7O/vfBhVfxjE
+ O+3LXtisiMa3khRIdOQgqIo16l2K8H8aG/IOUGxoxmRsogbDz3L1x72UAcXRmPIfDjvuc0YfOXH+c
+ 72BLOSgPrYFfKtlqxCXPrLp3PVbWkpp52ai1awcP5K/ja6cgTjAVL30Qop+Vnrsd1MW42l/lIb/Zj
+ 2sYxKs2D1+kf3jPsZUB6+zNDdYUD6XilTRW3Khuxmc8/oyXyDNQlxZgF+ecUMTV2oLn30rW6qBcwY
+ BYx9Ry+Pe/zfjIK2UkYYPU0W+4Ovz2xPE624bCHcMbENTke9timv2mwxCOx41dYAvR5bF7PxMzz1M
+ 6Hp8xP5xH2r5/KQTh6/uwYxjg8DbbfkDISRLxDg+2Xs56tAD9pf/gA3u1C2jX1c6G7Qo3+wrcnFvF
+ rrv+cIAOlqVsDjC2qix1WicljAGH2xNgzP8FARcFy74n6+wNWiEQrpD/7EUrMhV9LCeBiZsc8rrde
+ wdgMyZ1/UvOhIakYAGIvjLm91rx36IFXl2LESR0RucW4/OZUj9cJMB6duvuTiFy1GXjqVGE/Zd4q5
+ moLSX9kPRS6LMpnBnw1ekhziocwl6ZX+V/hreiEO0Kukx5q79oGRRF6/JaAuOthF0plOrEpu46Q+S
+ rKkP43663aGCHeLfTunZMLSDs+Q2FplxAvIJ0NTsA=;
+From: Christian Schoenebeck <qemu_oss@crudebyte.com>
+To: qemu-devel@nongnu.org, Stefano Stabellini <sstabellini@kernel.org>
+Cc: qemu-stable@nongnu.org, Greg Kurz <groug@kaod.org>,
+ Feifan Qian <bea1e@proton.me>, Anthony PERARD <anthony@xenproject.org>,
+ "Edgar E. Iglesias" <edgar.iglesias@gmail.com>
+Subject: Re: [PATCH 3/8] 9pfs/xen: implement msize_limit callback
+Date: Fri, 12 Jun 2026 14:53:51 +0200
+Message-ID: <6275293.lOV4Wx5bFT@weasel>
+In-Reply-To: <alpine.DEB.2.22.394.2606111638240.368315@ubuntu-linux-20-04-desktop>
+References: <cover.1779916560.git.qemu_oss@crudebyte.com>
+ <7f592f8cdeeea8b91998363ad9599dfb1f2b3108.1779916560.git.qemu_oss@crudebyte.com>
+ <alpine.DEB.2.22.394.2606111638240.368315@ubuntu-linux-20-04-desktop>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 1/1] plugins: use int64_t for the syscall filter return
- value
-To: =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
-Cc: qemu-devel <qemu-devel@nongnu.org>, Riku Voipio <riku.voipio@iki.fi>,
- Laurent Vivier <laurent@vivier.eu>, Alexandre Iooss <erdnaxe@crans.org>,
- Mahmoud Mandour <ma.mandourr@gmail.com>,
- Pierrick Bouvier <pierrick.bouvier@linaro.org>,
- Richard Henderson <richard.henderson@linaro.org>,
- Zhengwei Qi <qizhwei@sjtu.edu.cn>, Yun Wang <yunwang94@sjtu.edu.cn>,
- Mingyuan Xia <xiamy@ultrarisc.com>, Kailiang Xu <xukl2019@sjtu.edu.cn>
-References: <20260612055642.589337-1-functioner@sjtu.edu.cn>
- <20260612055642.589337-2-functioner@sjtu.edu.cn>
- <87se6sdonm.fsf@draig.linaro.org>
-From: Ziyang Zhang <functioner@sjtu.edu.cn>
-In-Reply-To: <87se6sdonm.fsf@draig.linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=202.120.2.186;
- envelope-from=functioner@sjtu.edu.cn; helo=smtp186.sjtu.edu.cn
+Content-Transfer-Encoding: 7Bit
+Content-Type: text/plain; charset="utf-8"
+Received-SPF: pass client-ip=5.189.157.229;
+ envelope-from=qemu_oss@crudebyte.com; helo=kylie.crudebyte.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_PASS=-0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -80,32 +70,46 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Fri, 12 Jun 2026 11:43:57 +0100, Alex Bennée wrote:
-> All of the arguments here are abi_long which go to int32_t or
-> target_long->int64_t so perhaps we should be using that for all args to
-> ensure signedness is correct?
-You're right that abi_long is signed. I only changed the return value to
-keep this callback consistent with the two syscall callbacks that
-existed from the first version of the plugin syscall API:
-qemu_plugin_vcpu_syscall_cb_t and qemu_plugin_vcpu_syscall_ret_cb_t.
-Both use int64_t for num and int64_t for the return value, while the
-entry callback passes a1..a8 as uint64_t. This patch matches that.
+On Friday, 12 June 2026 01:49:25 CEST Stefano Stabellini wrote:
+> On Wed, 27 May 2026, Christian Schoenebeck wrote:
+> > Add and implement the msize_limit callback for the Xen transport.
+> > 
+> > The limit is calculated using XEN_FLEX_RING_SIZE() based on the
+> > negotiated ring_order. For the theoretical maximum ring_order of 9,
+> > this results in a maximum 'msize' of 1048576 bytes (1 MiB).
+> > 
+> > Signed-off-by: Christian Schoenebeck <qemu_oss@crudebyte.com>
+> > ---
+[...]
+> > +static size_t xen_9p_msize_limit(V9fsState *s)
+> > +{
+> > +    Xen9pfsDev *xen_9pfs = container_of(s, Xen9pfsDev, state);
+> > +    return XEN_FLEX_RING_SIZE(xen_9pfs->rings[0].ring_order);
+> > +}
+> 
+> This is correct as a computation. But there are multiple rings with
+> potentially different ring_orders (although I have never seen it in
+> practice.)
+> 
+> So I think something like this would be better:
+> 
+> ---
+> size_t limit = XEN_FLEX_RING_SIZE(xen_9pfs->rings[0].ring_order);
+> for (i = 1; i < xen_9pfs->num_rings; i++) {
+>     limit = MIN(limit, XEN_FLEX_RING_SIZE(xen_9pfs->rings[i].ring_order));
+> }
+> return limit;
 
-I'd prefer to keep the arguments as uint64_t. They don't share a single
-signedness: pointers and size_t are unsigned, while offsets and fds are
-signed. At this boundary they are just register-width words that the
-handler casts per syscall, so the correct extension is per-argument-type
-(glibc handles them that way too [1]), and forcing them all to int64_t
-would be wrong for pointer arguments in particular.
+Agreed, I'll take your solution and just precede it with:
 
-Changing the whole argument vector would also touch several APIs and all
-their callers, which is well beyond the scope of this small signedness
-fix. So I'd rather keep it to the return value, the one part of this
-interface with a well-defined signed meaning.
+  if (!xen_9pfs->num_rings) {
+      return 0;
+  }
 
-[1] 
-https://github.com/bminor/glibc/blob/master/sysdeps/unix/sysv/linux/x86_64/x32/sysdep.h#L50
+I understand it is not really needed as min. one Xen ring is guaranteed, but 
+it's still a separate subsystem and it doesn't cost much.
 
-Thanks,
-Ziyang Zhang
+/Christian 
+
+
 
