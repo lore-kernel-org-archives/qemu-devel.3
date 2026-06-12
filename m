@@ -4,86 +4,59 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 598C2CD98CE
-	for <qemu-devel@archiver.kernel.org>; Fri, 12 Jun 2026 21:52:15 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 53B15CD98CE
+	for <qemu-devel@archiver.kernel.org>; Fri, 12 Jun 2026 22:58:44 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wY9m8-00025V-En; Fri, 12 Jun 2026 17:50:52 -0400
+	id 1wYAp9-0004L4-Kj; Fri, 12 Jun 2026 18:58:04 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from
- <3N38sagcKCkAltjknmgiqqing.eqosgow-fgxgnpqpipw.qti@flex--jrhilke.bounces.google.com>)
- id 1wY9m7-00024r-Gq
- for qemu-devel@nongnu.org; Fri, 12 Jun 2026 17:50:51 -0400
-Received: from mail-pf1-x44a.google.com ([2607:f8b0:4864:20::44a])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from
- <3N38sagcKCkAltjknmgiqqing.eqosgow-fgxgnpqpipw.qti@flex--jrhilke.bounces.google.com>)
- id 1wY9m5-0005K5-Up
- for qemu-devel@nongnu.org; Fri, 12 Jun 2026 17:50:51 -0400
-Received: by mail-pf1-x44a.google.com with SMTP id
- d2e1a72fcca58-84235f9b91fso1123299b3a.2
- for <qemu-devel@nongnu.org>; Fri, 12 Jun 2026 14:50:48 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=google.com; s=20251104; t=1781301048; x=1781905848; darn=nongnu.org;
- h=cc:to:from:subject:message-id:references:mime-version:in-reply-to
- :date:from:to:cc:subject:date:message-id:reply-to;
- bh=vT+G6PpVv3/b6AactbiPBfLDgfqkldAmvTCmGPSl+Vg=;
- b=H24A0sYeozfA4fmn0ae47gV54o6E58jIH4L/Y9v4pYeuWtVOvcEAfBADEEXcHcQcrJ
- d/t95OAbbUqzl74qf/eIxmpyTfU2VjE4c5I7tlPW+sbE0V/jjaP1kjBiQENavZ8twud+
- 6U5nx//AV32hYGHp8ivGLlSFowL5gNIySXpsz7FL48op8x4Lx2zl05cN+LZgDhPBKyzE
- njYpGrIrRupfdzeeduVBu1/JgV+cvz4XNZuiXb4c3r+oJzFjDoj9bwjEhPT7hkKHVO1I
- lK8O829QHW7IBapba+q0KylSYbnihVZqRLD0VBH0q8rmicX+fczTM6/2sEMNjzWrDSN8
- oayw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1781301048; x=1781905848;
- h=cc:to:from:subject:message-id:references:mime-version:in-reply-to
- :date:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=vT+G6PpVv3/b6AactbiPBfLDgfqkldAmvTCmGPSl+Vg=;
- b=mOU3LRcnUYLGHzYWIfACHXUdmZoWYlaqvIqgJMswAapTUL2x7pNGckYiJmAhihMicm
- gHeU+KIMAZh5OPf9/RwgFPkp9zCX21I64nyTE0Ug7JzkrHqAa0xMcJGX5XvfY0j77CU/
- +dUYF5nqKCi+RyIgE3R7nfHN+Zdnn2hy6Kx30ZR/V6kirXGFvmyy0hTkxEN/zFdzfXIr
- rPUvuQE++Y3yLM2InEic0xL0mTpr1ShGNtSJh3Wyy8j+NNKrHfo6fG1XJWtjhX6u+DUt
- V338iDkUdwnqpuEkmZaIC4U/wC81GVS84GP5bVVAPm2SLDkSfgwL/m4HIcpxFuZXBEg8
- 8lmg==
-X-Forwarded-Encrypted: i=1;
- AFNElJ89NOWunpMYGbKlszgdLOiqWWlGvRXWzPGqIaus9VK5GAvYpdGCCsi4l+/+YOc0A+QCJpVN2TC13icG@nongnu.org
-X-Gm-Message-State: AOJu0Yy9PqwP2CohipX1R7MZag3hO8znxIwIz6ovFhJ789we9gbiFonA
- SV0wkqCNokL6GSl2g3+7rxwuRgGmr3NibkhTww/kZNb/ZGhiVQJHDsSBj2RCzCHodgUAMoOxcwD
- 6mqAheuMh
-X-Received: from pfbk8.prod.google.com ([2002:a05:6a00:b008:b0:842:5241:cda4])
- (user=jrhilke job=prod-delivery.src-stubby-dispatcher) by
- 2002:a05:6a00:3c95:b0:842:5719:4552
- with SMTP id d2e1a72fcca58-8434cefd3eamr5229573b3a.46.1781301047534; Fri, 12
- Jun 2026 14:50:47 -0700 (PDT)
-Date: Fri, 12 Jun 2026 21:50:17 +0000
-In-Reply-To: <20260612-igb-trl-v3-0-19607f9a3dde@google.com>
-Mime-Version: 1.0
-References: <20260612-igb-trl-v3-0-19607f9a3dde@google.com>
-X-Mailer: b4 0.14.3
-Message-ID: <20260612-igb-trl-v3-6-19607f9a3dde@google.com>
-Subject: [PATCH v3 6/7] igb: Add QTest for Transmit Rate Limiter register
- multiplexing
-From: Josh Hilke <jrhilke@google.com>
-To: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>, qemu-devel@nongnu.org
-Cc: Josh Hilke <jrhilke@google.com>,
- Sriram Yagnaraman <sriram.yagnaraman@ericsson.com>, 
- Jason Wang <jasowang@redhat.com>, Fabiano Rosas <farosas@suse.de>, 
- Laurent Vivier <lvivier@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>, 
- David Matlack <dmatlack@google.com>,
- Alex Williamson <alex.williamson@nvidia.com>
-Content-Type: text/plain; charset="utf-8"
-Received-SPF: pass client-ip=2607:f8b0:4864:20::44a;
- envelope-from=3N38sagcKCkAltjknmgiqqing.eqosgow-fgxgnpqpipw.qti@flex--jrhilke.bounces.google.com;
- helo=mail-pf1-x44a.google.com
-X-Spam_score_int: -95
-X-Spam_score: -9.6
-X-Spam_bar: ---------
-X-Spam_report: (-9.6 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_MED=-0.001,
+ (Exim 4.90_1) (envelope-from <sstabellini@kernel.org>)
+ id 1wYAp5-0004Ks-GE; Fri, 12 Jun 2026 18:57:59 -0400
+Received: from tor.source.kernel.org ([172.105.4.254])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <sstabellini@kernel.org>)
+ id 1wYAp3-0003wb-BZ; Fri, 12 Jun 2026 18:57:58 -0400
+Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
+ by tor.source.kernel.org (Postfix) with ESMTP id 5624B60008;
+ Fri, 12 Jun 2026 22:57:48 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EDE091F000E9;
+ Fri, 12 Jun 2026 22:57:46 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
+ s=k20260515; t=1781305068;
+ bh=nHF7+r1PmMOMQa9vqhVm7/Ftq4mJCbCOAoxHu9C7nbE=;
+ h=Date:From:To:cc:Subject:In-Reply-To:References;
+ b=jvcNY2rU6C39PA/p4ZM65gtNlTzoeeYxVhNOKgzNYjUHJVehBPDF/kt9yBZ4vtCJy
+ chkokb0xxnNnJL7MfC//39LKfkaINHEfMXDrOGrh7Toqc6FQ/FZKJ9ZeQDbaDpnYXP
+ 2TS33Fv+AW8WVJ+zzfxnDcMEETYB8+Cz8dFtofUkNMi7AX6g1SUa9jCRT4tGtoo/7v
+ YnLcbwkmJTM1/fgJ4/te6+gOJIQSmHi0g3eTpfdU+OpzLodoRm9rkGnNEyk/jBTLvK
+ qysjX2I6Fzy+DMuHEbEglGh2xMCrurXq56OJwgOEkdFQk1s9jaHWcBJnJKFDwVyi7v
+ d44ZwsyDAFDng==
+Date: Fri, 12 Jun 2026 15:57:44 -0700 (PDT)
+From: Stefano Stabellini <sstabellini@kernel.org>
+X-X-Sender: sstabellini@ubuntu-linux-20-04-desktop
+To: Christian Schoenebeck <qemu_oss@crudebyte.com>
+cc: qemu-devel@nongnu.org, qemu-stable@nongnu.org, Greg Kurz <groug@kaod.org>, 
+ Feifan Qian <bea1e@proton.me>, Stefano Stabellini <sstabellini@kernel.org>,
+ Anthony PERARD <anthony@xenproject.org>, 
+ "Edgar E. Iglesias" <edgar.iglesias@gmail.com>
+Subject: Re: [PATCH v2 3/8] 9pfs/xen: implement msize_limit callback
+In-Reply-To: <9471786bc47b93e822f6c6233a83f2b9f61e6c82.1781287774.git.qemu_oss@crudebyte.com>
+Message-ID: <alpine.DEB.2.22.394.2606121557170.368315@ubuntu-linux-20-04-desktop>
+References: <cover.1781287774.git.qemu_oss@crudebyte.com>
+ <9471786bc47b93e822f6c6233a83f2b9f61e6c82.1781287774.git.qemu_oss@crudebyte.com>
+User-Agent: Alpine 2.22 (DEB 394 2020-01-19)
+MIME-Version: 1.0
+Content-Type: text/plain; charset=US-ASCII
+Received-SPF: pass client-ip=172.105.4.254;
+ envelope-from=sstabellini@kernel.org; helo=tor.source.kernel.org
+X-Spam_score_int: -24
+X-Spam_score: -2.5
+X-Spam_bar: --
+X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.445,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- USER_IN_DEF_DKIM_WL=-7.5 autolearn=ham autolearn_force=no
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -99,93 +72,61 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Add a unit test to verify register writes/reads to the rate limit
-register (TRLC) return the correct value based on which queue is
-currently selected in the queue selection register (TRLDQSEL).
+On Fri, 12 Jun 2026, Christian Schoenebeck wrote:
+> Add and implement the msize_limit callback for the Xen transport.
+> 
+> The limit is calculated using XEN_FLEX_RING_SIZE() based on the
+> negotiated ring_order. For the theoretical maximum ring_order of 9,
+> this results in a maximum 'msize' of 1048576 bytes (1 MiB).
+> 
+> The minimum limit of all rings is picked, because multiple rings
+> could theoretically have different ring_orders.
+> 
+> Signed-off-by: Christian Schoenebeck <qemu_oss@crudebyte.com>
 
-Signed-off-by: Josh Hilke <jrhilke@google.com>
----
- tests/qtest/igb-test.c | 51 ++++++++++++++++++++++++++++++++++++++++++++++++++
- 1 file changed, 51 insertions(+)
+Reviewed-by: Stefano Stabellini <sstabellini@kernel.org>
 
-diff --git a/tests/qtest/igb-test.c b/tests/qtest/igb-test.c
-index 3d397ea..119be6a 100644
---- a/tests/qtest/igb-test.c
-+++ b/tests/qtest/igb-test.c
-@@ -45,6 +45,20 @@ static const struct eth_header packet = {
-     .h_source = E1000E_ADDRESS,
- };
- 
-+/*
-+ * Calculate TRL rate factor for a given target rate.
-+ *
-+ * Rate Factor = 1 Gbps / Target Rate.
-+ *
-+ * The hardware TRLRC register stores the rate factor as a fixed-point number
-+ * with 14 fractional bits. Scale 1Gbps by 2^14 before dividing to preserve
-+ * precision in integer arithmetic.
-+ */
-+static uint32_t igb_trl_get_rate_factor(uint64_t rate_bytes_s)
-+{
-+    return (E1000_LINK_RATE_1GBPS << 14) / rate_bytes_s;
-+}
-+
- static void igb_send_verify(QE1000E *d, int *test_sockets, QGuestAllocator *alloc)
- {
-     union e1000_adv_tx_desc descr;
-@@ -191,6 +205,41 @@ static void test_igb_multiple_transfers(void *obj, void *data,
- 
- }
- 
-+/*
-+ * Verify the rate limit value register (TRLC) returns the correct value based
-+ * on which queue is selected (TRLDQSEL).
-+ */
-+static void test_igb_transmit_rate_limiter_regs(void *obj, void *data,
-+                                                QGuestAllocator *alloc)
-+{
-+    QOSGraphObject *e_object = obj;
-+    QE1000E_PCI *e1000e = obj;
-+    QPCIDevice *dev = e_object->get_driver(e_object, "pci-device");
-+    QE1000E *d = &e1000e->e1000e;
-+    const int qidx0 = 0, qidx1 = 1;
-+    uint32_t val0, val1;
-+
-+    if (qpci_check_buggy_msi(dev)) {
-+        return;
-+    }
-+
-+    e1000e_macreg_write(d, E1000_TRLDQSEL, qidx0);
-+    val0 = E1000_TRLRC_RS_ENA |
-+           igb_trl_get_rate_factor(E1000_LINK_RATE_1GBPS / 1000);
-+    e1000e_macreg_write(d, E1000_TRLRC, val0);
-+
-+    e1000e_macreg_write(d, E1000_TRLDQSEL, qidx1);
-+    val1 = E1000_TRLRC_RS_ENA |
-+           igb_trl_get_rate_factor(E1000_LINK_RATE_1GBPS / 500);
-+    e1000e_macreg_write(d, E1000_TRLRC, val1);
-+
-+    e1000e_macreg_write(d, E1000_TRLDQSEL, qidx0);
-+    g_assert_cmphex(e1000e_macreg_read(d, E1000_TRLRC), ==, val0);
-+
-+    e1000e_macreg_write(d, E1000_TRLDQSEL, qidx1);
-+    g_assert_cmphex(e1000e_macreg_read(d, E1000_TRLRC), ==, val1);
-+}
-+
- static void data_test_clear(void *sockets)
- {
-     int *test_sockets = sockets;
-@@ -247,6 +296,8 @@ static void register_igb_test(void)
-     qos_add_test("rx", "igb", test_igb_rx, &opts);
-     qos_add_test("multiple_transfers", "igb",
-                  test_igb_multiple_transfers, &opts);
-+    qos_add_test("transmit_rate_limiter_regs", "igb",
-+                 test_igb_transmit_rate_limiter_regs, &opts);
- #endif
- 
-     opts.before = data_test_init_no_socket;
-
--- 
-2.54.0.1136.gdb2ca164c4-goog
-
+> ---
+>  hw/9pfs/xen-9p-backend.c | 19 +++++++++++++++++++
+>  1 file changed, 19 insertions(+)
+> 
+> diff --git a/hw/9pfs/xen-9p-backend.c b/hw/9pfs/xen-9p-backend.c
+> index ca0fff5fa9..e31124bcf5 100644
+> --- a/hw/9pfs/xen-9p-backend.c
+> +++ b/hw/9pfs/xen-9p-backend.c
+> @@ -250,12 +250,31 @@ static void xen_9pfs_push_and_notify(V9fsPDU *pdu)
+>      qemu_bh_schedule(ring->bh);
+>  }
+>  
+> +static size_t xen_9p_msize_limit(V9fsState *s)
+> +{
+> +    Xen9pfsDev *xen_9pfs = container_of(s, Xen9pfsDev, state);
+> +    size_t limit;
+> +    int i;
+> +
+> +    if (!xen_9pfs->num_rings) {
+> +        return 0;
+> +    }
+> +
+> +    limit = XEN_FLEX_RING_SIZE(xen_9pfs->rings[0].ring_order);
+> +    for (i = 1; i < xen_9pfs->num_rings; i++) {
+> +        limit = MIN(limit, XEN_FLEX_RING_SIZE(xen_9pfs->rings[i].ring_order));
+> +    }
+> +
+> +    return limit;
+> +}
+> +
+>  static const V9fsTransport xen_9p_transport = {
+>      .pdu_vmarshal = xen_9pfs_pdu_vmarshal,
+>      .pdu_vunmarshal = xen_9pfs_pdu_vunmarshal,
+>      .init_in_iov_from_pdu = xen_9pfs_init_in_iov_from_pdu,
+>      .init_out_iov_from_pdu = xen_9pfs_init_out_iov_from_pdu,
+>      .push_and_notify = xen_9pfs_push_and_notify,
+> +    .msize_limit = xen_9p_msize_limit,
+>  };
+>  
+>  static int xen_9pfs_init(struct XenLegacyDevice *xendev)
+> -- 
+> 2.47.3
+> 
 
