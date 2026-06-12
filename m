@@ -4,46 +4,46 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 55995CD98CE
-	for <qemu-devel@archiver.kernel.org>; Fri, 12 Jun 2026 12:54:48 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id AB2C4CD98CE
+	for <qemu-devel@archiver.kernel.org>; Fri, 12 Jun 2026 12:59:19 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wY1Oc-0002xo-DI; Fri, 12 Jun 2026 08:54:03 -0400
+	id 1wY1T8-0003kY-HP; Fri, 12 Jun 2026 08:58:42 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <qemu_oss@crudebyte.com>)
- id 1wY1OZ-0002xE-8F; Fri, 12 Jun 2026 08:53:59 -0400
+ id 1wY1T5-0003jv-5r; Fri, 12 Jun 2026 08:58:39 -0400
 Received: from kylie.crudebyte.com ([5.189.157.229])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <qemu_oss@crudebyte.com>)
- id 1wY1OX-00088D-Q6; Fri, 12 Jun 2026 08:53:59 -0400
+ id 1wY1T3-0006Sl-CJ; Fri, 12 Jun 2026 08:58:38 -0400
 DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
  d=crudebyte.com; s=kylie; h=Content-Type:Content-Transfer-Encoding:
  MIME-Version:References:In-Reply-To:Message-ID:Date:Subject:Cc:To:From:
  Content-ID:Content-Description;
- bh=dLpcH3O/3vYaM1ueO0Vy/CQAIqSbwW8P5PnqTon6A9I=; b=DgP6IJNHPU08BW7O/vfBhVfxjE
- O+3LXtisiMa3khRIdOQgqIo16l2K8H8aG/IOUGxoxmRsogbDz3L1x72UAcXRmPIfDjvuc0YfOXH+c
- 72BLOSgPrYFfKtlqxCXPrLp3PVbWkpp52ai1awcP5K/ja6cgTjAVL30Qop+Vnrsd1MW42l/lIb/Zj
- 2sYxKs2D1+kf3jPsZUB6+zNDdYUD6XilTRW3Khuxmc8/oyXyDNQlxZgF+ecUMTV2oLn30rW6qBcwY
- BYx9Ry+Pe/zfjIK2UkYYPU0W+4Ovz2xPE624bCHcMbENTke9timv2mwxCOx41dYAvR5bF7PxMzz1M
- 6Hp8xP5xH2r5/KQTh6/uwYxjg8DbbfkDISRLxDg+2Xs56tAD9pf/gA3u1C2jX1c6G7Qo3+wrcnFvF
- rrv+cIAOlqVsDjC2qix1WicljAGH2xNgzP8FARcFy74n6+wNWiEQrpD/7EUrMhV9LCeBiZsc8rrde
- wdgMyZ1/UvOhIakYAGIvjLm91rx36IFXl2LESR0RucW4/OZUj9cJMB6duvuTiFy1GXjqVGE/Zd4q5
- moLSX9kPRS6LMpnBnw1ekhziocwl6ZX+V/hreiEO0Kukx5q79oGRRF6/JaAuOthF0plOrEpu46Q+S
- rKkP43663aGCHeLfTunZMLSDs+Q2FplxAvIJ0NTsA=;
+ bh=5rBYs/HHIm4y/csun9bEP5nLvmtERZGT6ES+fZMlzpI=; b=dgfEGnnvO2o4mSLYqvbL6EZlDR
+ qkofI3DaZpi1Wy63cokHVZ9ouFD0Y/FfqSx5qgCzjnp1XvGJC8Ja3kKOpvApO6ot/7nsm3hi96V/X
+ QloN5KD0aAeysaCZTAUr39ya8Jp+szzLKK/NhDqry0MeJ0GUVcETCZZs5D9schQ3zY+R4zPEPzqNh
+ KWUtn4nQX+2NSYKwHfEO9hChgYqfGII4G3dgDFrX+vYYmWx6+K4TDXNRrrIWifSicu3iRYdLmnoRP
+ 4sED9FFMeSCoB9wjNWi5E5gzK/mEBab5Yew96XFHi2Sm0qYXhLY55xDl1E0UCPCNlZuqw7Mlgc51v
+ 6Tclm0x2tJfAl/JJeurE5NDsb8FikkTCi6xXnnIDd1r/v4TPfZjbTr11975FU/sv8xKUGFiXGIxo2
+ Z4Nlc2t7ez6DtVhDmlpUsr9jtpb42rIfhnGPzPEMEVMO1ts6BFnTqGT146K0e4a2ykAMalctxe7qm
+ 0I0l/XZoTDlWUGsjPLAaHVfgptH0BMCFyanj9L0PaQyK+kzZb5bqmdtOikPgI1hA+/y4gxDBgspCF
+ bYG1KyJC5msqfvYvzQH9w/xaVS+2THtSXQabxRAhkatC90Yb3Mnx45d1VYYRHmeMkzjiIG+6pwNZh
+ d2JfAOW7g/cGsGG2yYbtmjsykmSqM3sr3SP4l9Vys=;
 From: Christian Schoenebeck <qemu_oss@crudebyte.com>
 To: qemu-devel@nongnu.org, Stefano Stabellini <sstabellini@kernel.org>
 Cc: qemu-stable@nongnu.org, Greg Kurz <groug@kaod.org>,
  Feifan Qian <bea1e@proton.me>, Anthony PERARD <anthony@xenproject.org>,
  "Edgar E. Iglesias" <edgar.iglesias@gmail.com>
-Subject: Re: [PATCH 3/8] 9pfs/xen: implement msize_limit callback
-Date: Fri, 12 Jun 2026 14:53:51 +0200
-Message-ID: <6275293.lOV4Wx5bFT@weasel>
-In-Reply-To: <alpine.DEB.2.22.394.2606111638240.368315@ubuntu-linux-20-04-desktop>
+Subject: Re: [PATCH 7/8] 9pfs/xen: implement response_buffer_size callback
+Date: Fri, 12 Jun 2026 14:58:33 +0200
+Message-ID: <4740637.LvFx2qVVIh@weasel>
+In-Reply-To: <alpine.DEB.2.22.394.2606111710000.368315@ubuntu-linux-20-04-desktop>
 References: <cover.1779916560.git.qemu_oss@crudebyte.com>
- <7f592f8cdeeea8b91998363ad9599dfb1f2b3108.1779916560.git.qemu_oss@crudebyte.com>
- <alpine.DEB.2.22.394.2606111638240.368315@ubuntu-linux-20-04-desktop>
+ <95ab978f1919cf91ea1f2a5de6c870e30e420b32.1779916560.git.qemu_oss@crudebyte.com>
+ <alpine.DEB.2.22.394.2606111710000.368315@ubuntu-linux-20-04-desktop>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 7Bit
 Content-Type: text/plain; charset="utf-8"
@@ -70,46 +70,45 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Friday, 12 June 2026 01:49:25 CEST Stefano Stabellini wrote:
+On Friday, 12 June 2026 02:23:15 CEST Stefano Stabellini wrote:
 > On Wed, 27 May 2026, Christian Schoenebeck wrote:
-> > Add and implement the msize_limit callback for the Xen transport.
+> > Add and implement the response_buffer_size callback for the Xen
+> > transport.
 > > 
-> > The limit is calculated using XEN_FLEX_RING_SIZE() based on the
-> > negotiated ring_order. For the theoretical maximum ring_order of 9,
-> > this results in a maximum 'msize' of 1048576 bytes (1 MiB).
+> > Returns the size of the response buffer from the rings in_sg, as limit
+> > for 9p server while generating a response for supplied PDU.
 > > 
 > > Signed-off-by: Christian Schoenebeck <qemu_oss@crudebyte.com>
 > > ---
+> > 
+> >  hw/9pfs/xen-9p-backend.c | 11 +++++++++++
 [...]
-> > +static size_t xen_9p_msize_limit(V9fsState *s)
+> > +static size_t xen_9pfs_response_buffer_size(V9fsPDU *pdu)
 > > +{
-> > +    Xen9pfsDev *xen_9pfs = container_of(s, Xen9pfsDev, state);
-> > +    return XEN_FLEX_RING_SIZE(xen_9pfs->rings[0].ring_order);
+> > +    Xen9pfsDev *priv = container_of(pdu->s, Xen9pfsDev, state);
+> > +    Xen9pfsRing *ring = &priv->rings[pdu->tag % priv->num_rings];
+> > +    int num;
+> > +
+> > +    xen_9pfs_in_sg(ring, ring->sg, &num, pdu->idx, 0);
+> > +    return iov_size(ring->sg, num);
 > > +}
 > 
-> This is correct as a computation. But there are multiple rings with
-> potentially different ring_orders (although I have never seen it in
-> practice.)
+> xen_9pfs_init_out_iov_from_pdu and xen_9pfs_init_in_iov_from_pdu
+> allocate ring->sg, but it would seem xen_9pfs_response_buffer_size could
+> be called before xen_9pfs_init_out_iov_from_pdu and
+> xen_9pfs_init_in_iov_from_pdu, therefore ring->sg could be NULL here.
 > 
-> So I think something like this would be better:
+> If we do it this way, we avoid the NULL dereference.
 > 
-> ---
-> size_t limit = XEN_FLEX_RING_SIZE(xen_9pfs->rings[0].ring_order);
-> for (i = 1; i < xen_9pfs->num_rings; i++) {
->     limit = MIN(limit, XEN_FLEX_RING_SIZE(xen_9pfs->rings[i].ring_order));
-> }
-> return limit;
+>    struct iovec in_sg[2];
+> 
+>    xen_9pfs_in_sg(ring, in_sg, &num, pdu->idx, 0);
+>    return iov_size(in_sg, num);
 
-Agreed, I'll take your solution and just precede it with:
+Good catch!
 
-  if (!xen_9pfs->num_rings) {
-      return 0;
-  }
+/Christian
 
-I understand it is not really needed as min. one Xen ring is guaranteed, but 
-it's still a separate subsystem and it doesn't cost much.
-
-/Christian 
 
 
 
