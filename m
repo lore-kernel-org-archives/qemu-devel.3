@@ -4,121 +4,116 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3BD98CD98CE
-	for <qemu-devel@archiver.kernel.org>; Fri, 12 Jun 2026 07:39:08 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 831C0CD98CE
+	for <qemu-devel@archiver.kernel.org>; Fri, 12 Jun 2026 07:41:43 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wXwTN-0000f8-U9; Fri, 12 Jun 2026 03:38:37 -0400
+	id 1wXwW0-0001Rw-IH; Fri, 12 Jun 2026 03:41:20 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <eric.auger@redhat.com>)
- id 1wXwTJ-0000eq-N2
- for qemu-devel@nongnu.org; Fri, 12 Jun 2026 03:38:35 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <shivangu@linux.ibm.com>)
+ id 1wXwVx-0001Rc-JB; Fri, 12 Jun 2026 03:41:17 -0400
+Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <eric.auger@redhat.com>)
- id 1wXwTH-0005Fi-Ty
- for qemu-devel@nongnu.org; Fri, 12 Jun 2026 03:38:33 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1781249910;
- h=from:from:reply-to:reply-to:subject:subject:date:date:
- message-id:message-id:to:to:cc:cc:mime-version:mime-version:
- content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=36OuNx9nK8T/nKzXs0flx3BkMIs014GXg11EFPwESHM=;
- b=OIYk3vOzh/ZM9avUEs+ZjZcU0V+eQ5OQVphRWn8mvZupjn6YqdnT9usHUT/trZkuPtnTQC
- /0ZQKWZfVXLHW7fBzg0DoP4KL6hewB1IzEIvSGYXyknkxoofC9NfQvMiUUdcKCguKh1LK9
- FVRce312cRzARbPxlKuxgAbR8luoNCo=
-Received: from mail-wr1-f69.google.com (mail-wr1-f69.google.com
- [209.85.221.69]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-687-odawv3VBN0y_NozFhjExTQ-1; Fri, 12 Jun 2026 03:38:29 -0400
-X-MC-Unique: odawv3VBN0y_NozFhjExTQ-1
-X-Mimecast-MFC-AGG-ID: odawv3VBN0y_NozFhjExTQ_1781249908
-Received: by mail-wr1-f69.google.com with SMTP id
- ffacd0b85a97d-45f3d008865so516699f8f.0
- for <qemu-devel@nongnu.org>; Fri, 12 Jun 2026 00:38:29 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1781249908; x=1781854708;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:reply-to:user-agent:mime-version:date
- :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=36OuNx9nK8T/nKzXs0flx3BkMIs014GXg11EFPwESHM=;
- b=RnsSmRvFWGz72MfvrWbOtdpJtPfqjqskezAS+3wL1lGD+/08GBmJMmnEmVIntj34LR
- KNprb7psp95y0cr8RlNCdk/7yX9MZ/mKYIYVX+cjj969cTPg4y7nWBaPqhUbEDYhxnmI
- Vpa+ywKP69dmYv+wcdt/lWoBJcy7ryBEEo/qszzRVHJ9EUAir1RRcEWWvThTvsVxhXH9
- bL841apEy4mVBi4jIYdOP9p0ZbkVj5A7eds820FtT28sox8zNyuc59CYjtaTOazjWzTo
- Lbq+RQVCruGd0qZmSyMNfykEf2cmix+nFCRMfT09sugYfZEFUfWvX+eEY6OTAyNmjqFZ
- L3XQ==
-X-Forwarded-Encrypted: i=1;
- AFNElJ92znfA0knfz48CpwPOo5dhhrxhwxkC+AmQrcy8Muwy5f/ddS/2wR+KGLfTqePNVidDnZ5tWzZHdaBJ@nongnu.org
-X-Gm-Message-State: AOJu0Yydffu+S08sNA0mMX7qnXC/mCQP1qDb/4l33861adXY1lnTbhel
- VRLVeYhFK0+03QWtgCP1DndKzRylfN7dtBG+0zVx0iu8duV2m+AMOTegIsTSDoRMU7+BLqkxCEG
- 2PMJGVtjT6TbK99etvWvSGFc7R95dJooQ4Qix5IpseqK3F3k9Dq/8FNne
-X-Gm-Gg: Acq92OHVC1/A/xE+TluXubQGa0lCb5NYC0mP4LWXkTZ84Q2Sp25/NahTR2Hpz5BHG7r
- DaXBu6F76qbisxFyArIJEl9ldUpPs4X46WIhW6aAP9mTgsgDgoeHKp/C/8aDT+yx0VQ1aCbfCSe
- g5h9Q+nlYg46dR5meYFKr4YQo87MKLXvQ7yydf1XjF7qlKZUPgljuUOQFSVrHZfgwMp5Kq7e5lN
- ID+ivG8ESANKn3CalBFC3obnKBkJPxls2ipsqx7UVyZQFC0LDLn4XNTSJ95WTfEgy4pJkmZCT7O
- YZ5TwWZNdlMY6jpxRbKJ+n4qygg6X8hFQxXq/iq9dsnc7XGqcQuRYmGLwOzUunOXhO7b9jh990g
- 6Ju6oKf2QjTK/qO3Oiz2oFuSRGDDGBhraFyy+MlbMqEIiLuf85fS9VmCBf/UpoOyLaDRGhA==
-X-Received: by 2002:a05:6000:2586:b0:460:684d:d565 with SMTP id
- ffacd0b85a97d-4606f255ab8mr1753989f8f.15.1781249907946; 
- Fri, 12 Jun 2026 00:38:27 -0700 (PDT)
-X-Received: by 2002:a05:6000:2586:b0:460:684d:d565 with SMTP id
- ffacd0b85a97d-4606f255ab8mr1753954f8f.15.1781249907598; 
- Fri, 12 Jun 2026 00:38:27 -0700 (PDT)
-Received: from ?IPV6:2a01:e0a:f0e:9070:527b:9dff:feef:3874?
- ([2a01:e0a:f0e:9070:527b:9dff:feef:3874])
- by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-4606f26f726sm3028887f8f.15.2026.06.12.00.38.26
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Fri, 12 Jun 2026 00:38:26 -0700 (PDT)
-Message-ID: <51ba045f-6ecf-4703-92c6-f362724c408e@redhat.com>
-Date: Fri, 12 Jun 2026 09:38:25 +0200
+ (Exim 4.90_1) (envelope-from <shivangu@linux.ibm.com>)
+ id 1wXwVw-0006oK-1i; Fri, 12 Jun 2026 03:41:17 -0400
+Received: from pps.filterd (m0360072.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
+ 65C0MsQo677346; Fri, 12 Jun 2026 07:41:12 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
+ :content-transfer-encoding:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to; s=pp1; bh=N5IUqo
+ FG9klRJM6wCXLVMFQ6uG4V1fVy+z+7D+JF6UQ=; b=L4ShN82c7e2DQtEzSTpG4g
+ nuoExoQfpDBhE9PccmIukGJbbdRuP2Xo+J1wQ5YK8PdG0ARcIAscPekaivdIcvP9
+ mJ+t/vY+mAlQLkDRo5uDoTw4i8H1Ox3Dll7zZSlIpiirraMSJoBFdv4isnE72waJ
+ +sVppag8gsr+CsAjYtnuyl2CqxfxGPvSoHLEKXcWiSy27I+NxIKzNyUkQlXKnJ3H
+ z5Vb4LcydVR9eGPzgjYlPIfMnmH3OL9B3OOsK4P+Zp60Y7O1TFqdqrClfCKLuXJo
+ jCTYKGY7d1gLZi2EYKyVUyzlvV68IHvTuruGX93hdc8hX2LNADiROcxc6aztXcOw
+ ==
+Received: from ppma23.wdc07v.mail.ibm.com
+ (5d.69.3da9.ip4.static.sl-reverse.com [169.61.105.93])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4eqe8aqgp1-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Fri, 12 Jun 2026 07:41:12 +0000 (GMT)
+Received: from pps.filterd (ppma23.wdc07v.mail.ibm.com [127.0.0.1])
+ by ppma23.wdc07v.mail.ibm.com (8.18.1.7/8.18.1.7) with ESMTP id 65C7YZAD023370;
+ Fri, 12 Jun 2026 07:41:11 GMT
+Received: from smtprelay04.fra02v.mail.ibm.com ([9.218.2.228])
+ by ppma23.wdc07v.mail.ibm.com (PPS) with ESMTPS id 4eqe0a6u2m-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Fri, 12 Jun 2026 07:41:11 +0000 (GMT)
+Received: from smtpav04.fra02v.mail.ibm.com (smtpav04.fra02v.mail.ibm.com
+ [10.20.54.103])
+ by smtprelay04.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 65C7f7vL28770892
+ (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Fri, 12 Jun 2026 07:41:07 GMT
+Received: from smtpav04.fra02v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id B5F8520040;
+ Fri, 12 Jun 2026 07:41:07 +0000 (GMT)
+Received: from smtpav04.fra02v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 2D10720043;
+ Fri, 12 Jun 2026 07:41:05 +0000 (GMT)
+Received: from shivang.upadyay (unknown [9.123.12.247])
+ by smtpav04.fra02v.mail.ibm.com (Postfix) with ESMTP;
+ Fri, 12 Jun 2026 07:41:04 +0000 (GMT)
+Message-ID: <1493ce3f9eb33b680bcc41fcd433af3e2098d725.camel@linux.ibm.com>
+Subject: Re: [PATCH 1/4] tests/functional: Add remote interrupts test for
+ PowerNV
+From: Shivang Upadhyay <shivangu@linux.ibm.com>
+To: Aditya Gupta <adityag@linux.ibm.com>, qemu-devel@nongnu.org,
+ qemu-ppc@nongnu.org, Harsh Prateek Bora <harshpb@linux.ibm.com>
+Cc: Sourabh Jain <sourabhjain@linux.ibm.com>, Hari Bathini
+ <hbathini@linux.ibm.com>, Nicholas Piggin <npiggin@gmail.com>, Miles Glenn
+ <milesg@linux.ibm.com>, Fabiano Rosas <farosas@suse.de>, Laurent Vivier
+ <lvivier@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>, Misbah Anjum N
+ <misanjum@linux.ibm.com>
+Date: Fri, 12 Jun 2026 13:11:04 +0530
+In-Reply-To: <20260610090235.3665904-2-adityag@linux.ibm.com>
+References: <20260610090235.3665904-1-adityag@linux.ibm.com>
+ <20260610090235.3665904-2-adityag@linux.ibm.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+User-Agent: Evolution 3.58.3 (3.58.3-1.fc43) 
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v5 04/18] arm/cpu: Add infra to handle generated ID
- register definitions
-Content-Language: en-US
-To: Shameer Kolothum Thodi <skolothumtho@nvidia.com>,
- "eric.auger.pro@gmail.com" <eric.auger.pro@gmail.com>,
- "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>,
- "qemu-arm@nongnu.org" <qemu-arm@nongnu.org>,
- "kvmarm@lists.linux.dev" <kvmarm@lists.linux.dev>,
- "peter.maydell@linaro.org" <peter.maydell@linaro.org>,
- "shaju.abraham@nutanix.com" <shaju.abraham@nutanix.com>,
- "khushit.shah@nutanix.com" <khushit.shah@nutanix.com>,
- "yangjinqian1@huawei.com" <yangjinqian1@huawei.com>,
- "cohuck@redhat.com" <cohuck@redhat.com>,
- "richard.henderson@linaro.org" <richard.henderson@linaro.org>,
- "sebott@redhat.com" <sebott@redhat.com>,
- "philmd@linaro.org" <philmd@linaro.org>
-Cc: "maz@kernel.org" <maz@kernel.org>,
- "oliver.upton@linux.dev" <oliver.upton@linux.dev>,
- "pbonzini@redhat.com" <pbonzini@redhat.com>,
- "armbru@redhat.com" <armbru@redhat.com>,
- "berrange@redhat.com" <berrange@redhat.com>,
- "abologna@redhat.com" <abologna@redhat.com>,
- "jdenemar@redhat.com" <jdenemar@redhat.com>
-References: <20260519132905.145643-1-eric.auger@redhat.com>
- <20260519132905.145643-5-eric.auger@redhat.com>
- <CH3PR12MB7548D1CA4348E04A14725645AB152@CH3PR12MB7548.namprd12.prod.outlook.com>
-From: Eric Auger <eric.auger@redhat.com>
-In-Reply-To: <CH3PR12MB7548D1CA4348E04A14725645AB152@CH3PR12MB7548.namprd12.prod.outlook.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.129.124;
- envelope-from=eric.auger@redhat.com; helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -24
-X-Spam_score: -2.5
+X-TM-AS-GCONF: 00
+X-Proofpoint-Reinject: loops=2 maxloops=12
+X-Proofpoint-ORIG-GUID: Ntwr-EV6C-D4d677VEXaLpGIfKVDInJq
+X-Authority-Analysis: v=2.4 cv=TdKmcxQh c=1 sm=1 tr=0 ts=6a2bb818 cx=c_pps
+ a=3Bg1Hr4SwmMryq2xdFQyZA==:117 a=3Bg1Hr4SwmMryq2xdFQyZA==:17
+ a=IkcTkHD0fZMA:10 a=FelO9ux0wxsA:10 a=VkNPw1HP01LnGYTKEx00:22
+ a=RnoormkPH1_aCDwRdu11:22 a=RzCfie-kr_QcCd8fBx8p:22 a=mZFYVFaK0y8dwRNDiu8A:9
+ a=QEXdDO2ut3YA:10
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNjEyMDA2NyBTYWx0ZWRfX+UaECgrNGikw
+ XPkBrFverjLnucpH8Ty2OUct09Mb7wbufOhbKLweft48y/0iVlMIrMqt1iGabnl3T6bMdcSeOIW
+ 4Tw5OOX1Cyo0lh+tJZg7U4955GYpa1SrTlXZzSZQ+DZSxEHl8fektuYkvtlOKi3sTPoktejqFKx
+ zDdxRx6BdhTuvfMyn59HQtdY0RRiru2RMwXwd07PRI5c8led0eSQY+ByyUS30Pu3XRkmswmsXrp
+ zZyd6ifLwcD5B6yzQQnh5jWxInpwtLJbJ2jdm+PqGiVAFAuyZFpcrimjeqBAEpVZNAdsLx0Ttas
+ BQP4gqr9LYEJngfdTmtkYWlbBZomhpIG1KenBhkTNjlVoR+tc8bP83WByoX9iwJV0kkVjtRWEGu
+ TU9E2NmmuWYjN69oDzzwrKfXNMcDBOXVAtRmLhqSkLtAGm91o/xTb1x/ZHpXMN4eey6GMHpPwQJ
+ YxFyRxz/DjpiNM1oV6w==
+X-Proofpoint-GUID: 7HhrXR4EUym5apAjC07iPhT9zx4IgZH9
+X-Proofpoint-Spam-Info: AW1haW4tMjYwNjEyMDA2NyBTYWx0ZWRfX13p+c7mQVbbI
+ UsQcspaVqk6VujaFyItaQkK7JqYB3TpGL5nwQet4Naz26/BvNvciJz5nNF75NXuATY5oeF4MbY9
+ uFnNSdQkjvJzr0qA034+Q8x7UZjVq/M=
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.125,FMLib:17.12.100.49
+ definitions=2026-06-12_01,2026-06-11_01,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ phishscore=0 malwarescore=0 clxscore=1011 impostorscore=0 adultscore=0
+ bulkscore=0 priorityscore=1501 lowpriorityscore=0 spamscore=0 suspectscore=0
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.22.0-2606040000 definitions=main-2606120067
+Received-SPF: pass client-ip=148.163.158.5;
+ envelope-from=shivangu@linux.ibm.com; helo=mx0b-001b2d01.pphosted.com
+X-Spam_score_int: -26
+X-Spam_score: -2.7
 X-Spam_bar: --
-X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.445,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
+ RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -131,118 +126,74 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-To: eric.auger@redhat.com
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi Shameer,
 
-On 6/1/26 4:28 PM, Shameer Kolothum Thodi wrote:
-> Hi Eric,
->
->> -----Original Message-----
->> From: Eric Auger <eric.auger@redhat.com>
->> Sent: 19 May 2026 14:27
->> To: eric.auger.pro@gmail.com; eric.auger@redhat.com; qemu-
->> devel@nongnu.org; qemu-arm@nongnu.org; kvmarm@lists.linux.dev;
->> peter.maydell@linaro.org; shaju.abraham@nutanix.com;
->> khushit.shah@nutanix.com; yangjinqian1@huawei.com;
->> cohuck@redhat.com; richard.henderson@linaro.org; sebott@redhat.com;
->> Shameer Kolothum Thodi <skolothumtho@nvidia.com>; philmd@linaro.org
->> Cc: maz@kernel.org; oliver.upton@linux.dev; pbonzini@redhat.com;
->> armbru@redhat.com; berrange@redhat.com; abologna@redhat.com;
->> jdenemar@redhat.com
->> Subject: [PATCH v5 04/18] arm/cpu: Add infra to handle generated ID register
->> definitions
->>
->> External email: Use caution opening links or attachments
->>
->>
->> The known ID regs are populated in a new initialization function
->> named initialize_cpu_sysreg_properties(). That code will be
->> automatically generated from AARCHMRS Registers.json. For the
->> time being let's just describe a single id reg, CTR_EL0. In this
->> description we only care about non RES/RAZ fields, ie. named fields.
->>
->> The registers are populated in an array indexed by ARMIDRegisterIdx
->> and their fields are added in a sorted list.
->>
->> Signed-off-by: Eric Auger <eric.auger@redhat.com>
->> Signed-off-by: Cornelia Huck <cohuck@redhat.com>
->>
->> ---
->>
->> v4 -> v5
->> - ifdef TARGET_ARM_CPU_IDREGS_H
->> - s/g_list_append/g_list_prepend
->> - void arm64_sysreg_add_field()
+On Wed, 2026-06-10 at 14:32 +0530, Aditya Gupta wrote:
+>=20
+> +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 '#', =
+self.panic_message)
+> +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 exec_command_and_wait_for_pat=
+tern(self,
+> +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=
+ "CTL_IRQ=3D$(grep 'eth0$' /proc/interrupts | awk '{print
+> $1}' | tr -d ':')",
+> +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 '#', =
+self.panic_message)
+> +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 exec_command_and_wait_for_pat=
+tern(self,
+> +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 "echo=
+ 1 > /proc/irq/$RX_IRQ/smp_affinity_list",
+> +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 '#', =
+self.panic_message)
+> +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 exec_command_and_wait_for_pat=
+tern(self,
+> +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 "echo=
+ 2 > /proc/irq/$TX_IRQ/smp_affinity_list",
+> +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 '#', =
+self.panic_message)
+> +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 exec_command_and_wait_for_pat=
+tern(self,
+> +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 "echo=
+ 3 > /proc/irq/$CTL_IRQ/smp_affinity_list",
+> +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 '#', =
+self.panic_message)
+> +
+> +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 # Generate network traffic to=
+ trigger remote interrupts
+> +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 # Ping QEMU's user-mode netwo=
+rk gateway (10.0.2.2)
+> +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 exec_command_and_wait_for_pat=
+tern(self,
+> +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 "ping=
+ -W2 -c5 10.0.2.2",
+> +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 '#', =
+self.panic_message)
+Hi Aditya,=20
 
-Effectively the whole commit desc is outdated now that I have migrated
-to Khushit description of idregs and their fields. No need for list nor 
+Thanks for this amazing test. But when I was tinkering with this test
+case, Even if i changed command to "asdf" it seemed to pass. Also, in
+the logs, sometime ping sometime it might fail.
 
-arm64_sysreg_add_field anymore.
+pasta:review-aditya-qtests$ ./build/run python3
+./tests/functional/ppc64/test_powernv.py
+PowernvMachine.test_linux_remote_interrupts -v
+TAP version 13
+ok 1 test_powernv.PowernvMachine.test_linux_remote_interrupts
+1..1
+pasta:review-aditya-qtests$ cat
+build/tests/functional/ppc64/test_powernv.PowernvMachine.test_linux_rem
+ote_interrupts/console.log | grep -C5 "ping"
+...
+2026-06-12 12:59:26,316: ping -W2 -c5 10.0.2.2
+2026-06-12 12:59:26,340: PING 10.0.2.2 (10.0.2.2): 56 data bytes
+2026-06-12 12:59:26,343: ping: sendto: Network is unreachable
+...
+pasta:review-aditya-qtests$=20
 
-Arrays are populated in [PATCH v5 08/18] target/arm/cpu_idregs: generate tables for Arm64 ID registers and fields
-This is much nicer.
+Also the interrupt counters, I think we need to verify the cpu where
+the intrrupt is actually triggering.
 
-Thanks
-
-Eric
-
-> Looks like this patch is missing the above and file:
-> target/arm/cpu-sysreg-properties.c
->
-> Please check.
->
-> Thanks,
-> Shameer
->
->> ---
->>  target/arm/cpu-idregs.h | 33 +++++++++++++++++++++++++++++++++
->>  1 file changed, 33 insertions(+)
->>  create mode 100644 target/arm/cpu-idregs.h
->>
->> diff --git a/target/arm/cpu-idregs.h b/target/arm/cpu-idregs.h
->> new file mode 100644
->> index 0000000000..664e2d6ddd
->> --- /dev/null
->> +++ b/target/arm/cpu-idregs.h
->> @@ -0,0 +1,33 @@
->> +/*
->> + * handle ID registers and their fields
->> + *
->> + * SPDX-License-Identifier: GPL-2.0-or-later
->> + */
->> +#ifndef TARGET_ARM_CPU_IDREGS_H
->> +#define TARGET_ARM_CPU_IDREGS_H
->> +
->> +#include "qemu/osdep.h"
->> +#include "qemu/error-report.h"
->> +#include "cpu.h"
->> +#include "cpu-sysregs.h"
->> +
->> +typedef struct ARM64SysRegField {
->> +    const char *name; /* name of the field, for instance CTR_EL0_IDC */
->> +    ARMIDRegisterIdx index; /* parent register, e.g. CTR_EL0_IDX */
->> +    int shift; /* lsb of the field in the register */
->> +    int length; /* highest bit number */
->> +} ARM64SysRegField;
->> +
->> +typedef struct ARM64SysReg {
->> +    const char *name;   /* name of the sysreg, for instance CTR_EL0 */
->> +    ARMIDRegisterIdx index; /* register index, e.g. CTR_EL0_IDX */
->> +    struct ARM64SysRegField *fields;
->> +    uint32_t fields_count;
->> +} ARM64SysReg;
->> +
->> +/*
->> + * List of exposed ID regs (automatically populated from AARCHMRS
->> Registers.json)
->> + */
->> +extern ARM64SysReg arm64_id_regs[NUM_ID_IDX];
->> +
->> +#endif
->> --
->> 2.53.0
-
+~Shivang.
 
