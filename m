@@ -4,53 +4,96 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 18424CD98CF
-	for <qemu-devel@archiver.kernel.org>; Fri, 12 Jun 2026 18:33:00 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 110AFCD98CF
+	for <qemu-devel@archiver.kernel.org>; Fri, 12 Jun 2026 18:51:41 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wY6fT-0003M7-AV; Fri, 12 Jun 2026 14:31:47 -0400
+	id 1wY6y3-0007QO-Ah; Fri, 12 Jun 2026 14:50:59 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1)
- (envelope-from <4c34426bc906e19423e7e2389c419c2e972d9b9b@kylie.crudebyte.com>)
- id 1wY6fQ-0003LO-4i; Fri, 12 Jun 2026 14:31:45 -0400
-Received: from kylie.crudebyte.com ([5.189.157.229])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1)
- (envelope-from <4c34426bc906e19423e7e2389c419c2e972d9b9b@kylie.crudebyte.com>)
- id 1wY6fN-00014u-W0; Fri, 12 Jun 2026 14:31:43 -0400
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
- d=crudebyte.com; s=kylie; h=Cc:To:Subject:Date:From:References:In-Reply-To:
- Message-ID:Content-Type:Content-Transfer-Encoding:MIME-Version:Content-ID:
- Content-Description; bh=+XShxksSpz7jVIKWXrCLHZd5r7rA2GfVQktD6w9pGYI=; b=mB0CO
- 0nmWuqvh7G+Lval3x2s8JW4NAlEE1SQXlwxBHU+PsfzCo+Fi5Nbm3H8lNv+YXZcg8OAyBIlHnKQfB
- ETVkeSPuAfV9/t4BFA8+UIxnAIPTyQvA5gUL8ytbiwaoaAdBd+Y0pYtWXjKY2BMlZE2J5m9aiKm9/
- ohzgXcL9OZPMjHS1VGU9e+6WGuCiM+xEDbdy/GhJPuF/ypRna04q2aI92/gC3EnBDKWMW/taNVwIg
- a1/j6Ppv0xYnHIKDuqyxx2nsixZBucIMCk2bRMxm2Z2DKh+BVBZAugcXAic2Jct2elG1OsKDfZ3xd
- BfMzP1cNRcy7GoxUsx6I753bxwNRPOXL/xiMK9TsNwWx+OQ5h2ZtsN/dv7VTdVzH3YS/YtgHOYKGK
- vea64lGg+Id1yC/Cy00ImGLWCw2GcTvorBcL+8NdJZez5m3jN0Os+TJpfWcOYdnc2nRAUam7p2PRl
- HVLiuBaDYArBdX5nsjTU6meu3g9SkmL9Ao2rPsZvDOX7e9gId9BJyFXoGdtlX0tLJSbH/Bj9bUGC7
- F620FCymSoUv/ScIx654YXH+YwMehTmgRXjNdbZno2yJWyktdjWbf6x9phmLWp8CnacvuTiT0aoeF
- yIiULXMekzdcsTYjz78Px4GYf0QRaT7CD1xQa+Js4lFfmOYNNTjXLUd3OrMzzA=;
-Message-ID: <4c34426bc906e19423e7e2389c419c2e972d9b9b.1781287774.git.qemu_oss@crudebyte.com>
-In-Reply-To: <cover.1781287774.git.qemu_oss@crudebyte.com>
-References: <cover.1781287774.git.qemu_oss@crudebyte.com>
-From: Christian Schoenebeck <qemu_oss@crudebyte.com>
-Date: Fri, 12 Jun 2026 20:22:52 +0200
-Subject: [PATCH v2 2/8] 9pfs/virtio: implement msize_limit callback
-To: qemu-devel@nongnu.org,
-    qemu-stable@nongnu.org
-Cc: Greg Kurz <groug@kaod.org>, Feifan Qian <bea1e@proton.me>,
- Stefano Stabellini <sstabellini@kernel.org>
-Received-SPF: pass client-ip=5.189.157.229;
- envelope-from=4c34426bc906e19423e7e2389c419c2e972d9b9b@kylie.crudebyte.com;
- helo=kylie.crudebyte.com
+ (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
+ id 1wY6y1-0007PT-7d
+ for qemu-devel@nongnu.org; Fri, 12 Jun 2026 14:50:57 -0400
+Received: from mail-wm1-x334.google.com ([2a00:1450:4864:20::334])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
+ id 1wY6xz-0003Hm-1Z
+ for qemu-devel@nongnu.org; Fri, 12 Jun 2026 14:50:56 -0400
+Received: by mail-wm1-x334.google.com with SMTP id
+ 5b1f17b1804b1-490b211ee6aso9490985e9.3
+ for <qemu-devel@nongnu.org>; Fri, 12 Jun 2026 11:50:54 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1781290253; x=1781895053; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:user-agent
+ :references:in-reply-to:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=9d5XdG4nK+gC6Q3Lj8SelKF0sJUz9ob8Vfp1Hz7sKDY=;
+ b=ARKB0T4HX4naOG/YR7BiIBicJltwp/+pgLBD1vLgQTsUBZYZwp7EHelI8QjdOP2Ikg
+ XCUDsKeqpT9xOxLn2szXaQLMTXjcV5W1JZmTrjNPjftsaprnv9uZYSlYxr/UzBuRAVXT
+ UF41qZB6KDEPLDwm7EObnla3rZAM9C89Yb8/tzCC2O9MG2wtV78xd2y1ad59RZSyIrnI
+ xdnTr4fLTh27JEp8+dzop28p5zdgoOgHoO97hPaKYJ2D3qKihEwrxnWwsceKSeMDE4W9
+ MzOU7OoWYYFEYy4f6+0Oqwwrk1xGOyzV8/sjHeWpWCbP1LZTQo98iVHH7t1U41ZMnrbj
+ tkaQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1781290253; x=1781895053;
+ h=content-transfer-encoding:mime-version:message-id:date:user-agent
+ :references:in-reply-to:subject:cc:to:from:x-gm-gg
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=9d5XdG4nK+gC6Q3Lj8SelKF0sJUz9ob8Vfp1Hz7sKDY=;
+ b=IVGs4+pIYlnE7YLQCUxHUr3AJuI/aHHKFmllLd8Q+3+kvHhnsvBCskwYXUk+zSAz8p
+ 188wjg5pO/ST4cdF0+yLodCsudEEr2p1vKjtkntheeOz5UPv52aTYlUDjZGYRMluVMEw
+ adel1Ap4RZjNv15dTAry2fGgZDK2bsPw0jjyuM6Junh9vI//qOCx7R1eEATqbh1veMBM
+ wIGHI/EIi0Jm6qkb+CyMBsZ7BqVD92CPkLHjMqlExog+fKe+D0MIFtFB6t+95dYxZ8oy
+ P9V/zgbAqLdlci4OExzu3MeEjW5It+j5KJTO7JTfL/JfLBbOmWfvIMquPFq+YtvwFS5E
+ 39kw==
+X-Gm-Message-State: AOJu0YyaQiTO3230QVCDriJlddUSsJgGOhVrySyc+1/Q8C32WWYK/Ocl
+ 8wQVViyapgXNwV7+KPLu/3SV5cW+KGFAHy86I09pViiXELv5axnI9RWrgUwo9O3/ET4=
+X-Gm-Gg: Acq92OGSydze0dT3kzegLORZpefCeZhvBx+fZ6NDZaE1hDVy2roOW769wqiI8evD8to
+ Tm6++j5ZodQk0GigKQaOnvidGQf155BjLhzG/I6YAYiCWdZGk+zjFSrhIoMJNYpr6LtWsrH0UkY
+ i9NP32Zzp7vTHbQ7TGAaJTNVXx4rquEPThYU0yJy9aUabA4FLiI5a3FSLKyBKo6xaXOxVfMJRrB
+ mrXRKDRdcY578TFxoC9SgD9EF2z8S5PSfYV0KI99r0L4/e2GobkBUXCx4kZebrt/g1BuOaHeHrn
+ FdtyaDNU8O2D2gVhBC+qtNoPEgjARFBNqhz+/7JJ9nG+1cmydfkDFYwGsSquUvPQLgJNY5YDB/l
+ lM/BVA3UM6krGt5DQHHSBQioEsfsttjyw15mOSHQNR1ZDXg56yvlT8VeT1WDGuqGJcWz0dGCcZT
+ IdJ/BZH711ljhrHN53IswgJ1A=
+X-Received: by 2002:a05:600c:638d:b0:492:1e36:d16f with SMTP id
+ 5b1f17b1804b1-4921e36d1b4mr21725105e9.37.1781290252735; 
+ Fri, 12 Jun 2026 11:50:52 -0700 (PDT)
+Received: from draig.lan ([185.124.0.195]) by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-49220345528sm9705825e9.8.2026.06.12.11.50.52
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Fri, 12 Jun 2026 11:50:52 -0700 (PDT)
+Received: from draig (localhost [IPv6:::1])
+ by draig.lan (Postfix) with ESMTP id DA3A85F814;
+ Fri, 12 Jun 2026 19:50:50 +0100 (BST)
+From: =?utf-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
+To: Peter Maydell <peter.maydell@linaro.org>
+Cc: qemu-devel@nongnu.org,  Paolo Bonzini <pbonzini@redhat.com>,  Alexander
+ Graf <agraf@csgraf.de>,  Mohamed Mediouni <mohamed@unpredictable.fr>,
+ Pedro Barbuda <pbarbuda@microsoft.com>,  qemu-arm@nongnu.org,
+ kvm@vger.kernel.org
+Subject: Re: [PATCH v7 0/8] target/arm: fully model WFxT instructions for
+ A-profile
+In-Reply-To: <CAFEAcA8yNGiKeMpN_wgWtc5EnfjsnxSvG6an4-UjBf6XG+4Yvw@mail.gmail.com>
+ (Peter Maydell's message of "Fri, 12 Jun 2026 18:46:48 +0100")
+References: <20260529082948.363931-1-alex.bennee@linaro.org>
+ <CAFEAcA94+mh_pigFDi+tEPRJ416fSWfxsQ1Lj8Byemug9kBp6w@mail.gmail.com>
+ <87h5n7ekxw.fsf@draig.linaro.org>
+ <CAFEAcA8yNGiKeMpN_wgWtc5EnfjsnxSvG6an4-UjBf6XG+4Yvw@mail.gmail.com>
+User-Agent: mu4e 1.14.1; emacs 30.1
+Date: Fri, 12 Jun 2026 19:50:50 +0100
+Message-ID: <87bjdfegol.fsf@draig.linaro.org>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2a00:1450:4864:20::334;
+ envelope-from=alex.bennee@linaro.org; helo=mail-wm1-x334.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_PASS=-0.001,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -67,59 +110,60 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Add and implement the msize_limit callback for the virtio transport.
+Peter Maydell <peter.maydell@linaro.org> writes:
 
-This new callback function provides the theoretical maximum 'msize'
-value supported by this virtio transport.
+> On Fri, 12 Jun 2026 at 18:18, Alex Benn=C3=A9e <alex.bennee@linaro.org> w=
+rote:
+>>
+>> Peter Maydell <peter.maydell@linaro.org> writes:
+>>
+>> > On Fri, 29 May 2026 at 09:29, Alex Benn=C3=A9e <alex.bennee@linaro.org=
+> wrote:
+>> >>
+>> >> This series fully models the behaviour of WFxT instructions. We
+>> >> already had support for WFE for M-profile but we left off A-profile as
+>> >> it has more potential sources of wake-ups. The main one is the event
+>> >> stream which includes events from significant bits of the timer
+>> >> ticking over.
+>> >>
+>> >> The refactoring from the previous iterations of the patch have now
+>> >> been merged.
+>> >>
+>> >> I've dropped trying to fully model the global monitor in favour of
+>> >> taking advantage of the architectural flexibility to have an IMPDEF
+>> >> event wake up for any reason. We treat the setting of exclusive_addr
+>> >> as such a reason because it indicates the current vCPU is in a ldstx
+>> >> exclusive region and we don't want the guest to deadlock. This does m=
+ean
+>> >> the system won't sleep on WFE enabled locks but people shouldn't be
+>> >> relying on QEMU to model real world sleep patterns anyway given the
+>> >> efficiency of emulation compared to real HW.
+>> >>
+>> >> I've written a test case using kvm-unit-tests:
+>> >>
+>> >>   Message-ID: <20260527111822.1563679-1-alex.bennee@linaro.org>
+>> >>   Date: Wed, 27 May 2026 12:18:21 +0100
+>> >>   Subject: [kvm-unit-tests PATCH v2] arm: add wfx test case
+>> >>   From: =3D?UTF-8?q?Alex=3D20Benn=3DC3=3DA9e?=3D <alex.bennee@linaro.=
+org>
+>> >>
+>> >> All patches are now reviewed.
+>> >
+>> >
+>> >
+>> > Applied to target-arm.next, thanks.
+>>
+>> Is it too late to drop them? I've a fix for 2/8:
+>
+> That change is already in upstream git, so you'll need to
+> send the fix as a standalone patch, I'm afraid.
 
-The limit is calculated as (VIRTQUEUE_MAX_SIZE - 2) * 4096 bytes,
-where 2 virtio descriptors are lost exactly for:
+No worries, I'll fix it up in the re-base.
 
-  - 1 descriptor for the original request (typically being small)
+>
+> -- PMM
 
-  - 1 descriptor as indirect table pointer (when used), which just
-    contains a pointer to the separate sglist containing the
-    response's actual payload data
-
-And 4096 bytes are assumed as standard page size used by Linux 9p
-client. This results in a maximum 'msize' of 4186112 bytes.
-
-Theoretically Linux client could support a much larger size, e.g. by
-using multiple consecutive pages per sg entry / descriptor. However
-that's currently not the case and unlikely to change any time soon.
-And due to recent security issues, let's handle this limit
-conservatively until really necessary to be raised.
-
-Signed-off-by: Christian Schoenebeck <qemu_oss@crudebyte.com>
----
- hw/9pfs/virtio-9p-device.c | 7 +++++++
- 1 file changed, 7 insertions(+)
-
-diff --git a/hw/9pfs/virtio-9p-device.c b/hw/9pfs/virtio-9p-device.c
-index 9f70e2338c..8c5d86cb66 100644
---- a/hw/9pfs/virtio-9p-device.c
-+++ b/hw/9pfs/virtio-9p-device.c
-@@ -192,12 +192,19 @@ static void virtio_init_out_iov_from_pdu(V9fsPDU *pdu, struct iovec **piov,
-     *pniov = elem->out_num;
- }
- 
-+static size_t virtio_9p_msize_limit(V9fsState *s)
-+{
-+    const size_t guestPageSize = 4096;
-+    return (VIRTQUEUE_MAX_SIZE - 2) * guestPageSize;
-+}
-+
- static const V9fsTransport virtio_9p_transport = {
-     .pdu_vmarshal = virtio_pdu_vmarshal,
-     .pdu_vunmarshal = virtio_pdu_vunmarshal,
-     .init_in_iov_from_pdu = virtio_init_in_iov_from_pdu,
-     .init_out_iov_from_pdu = virtio_init_out_iov_from_pdu,
-     .push_and_notify = virtio_9p_push_and_notify,
-+    .msize_limit = virtio_9p_msize_limit,
- };
- 
- static void virtio_9p_device_realize(DeviceState *dev, Error **errp)
--- 
-2.47.3
-
+--=20
+Alex Benn=C3=A9e
+Virtualisation Tech Lead @ Linaro
 
