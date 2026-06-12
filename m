@@ -4,103 +4,129 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E8D6FCD98CF
-	for <qemu-devel@archiver.kernel.org>; Fri, 12 Jun 2026 16:49:49 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id DFCD8CD98CE
+	for <qemu-devel@archiver.kernel.org>; Fri, 12 Jun 2026 16:51:42 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wY53q-0007hf-GB; Fri, 12 Jun 2026 12:48:50 -0400
+	id 1wY56Z-0001dH-6Q; Fri, 12 Jun 2026 12:51:39 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <prvs=4623e61353=eblot@meta.com>)
- id 1wY53o-0007gj-Kc; Fri, 12 Jun 2026 12:48:48 -0400
-Received: from mx0a-00082601.pphosted.com ([67.231.145.42])
+ (Exim 4.90_1) (envelope-from <andrey.drobyshev@virtuozzo.com>)
+ id 1wY56V-0001cM-OJ
+ for qemu-devel@nongnu.org; Fri, 12 Jun 2026 12:51:37 -0400
+Received: from mail-northeuropeazlp170100001.outbound.protection.outlook.com
+ ([2a01:111:f403:c200::1] helo=DB3PR0202CU003.outbound.protection.outlook.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <prvs=4623e61353=eblot@meta.com>)
- id 1wY53k-0007n8-TA; Fri, 12 Jun 2026 12:48:48 -0400
-Received: from pps.filterd (m0109334.ppops.net [127.0.0.1])
- by mx0a-00082601.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 65C5xnXj1867365; Fri, 12 Jun 2026 09:48:08 -0700
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=meta.com; h=cc
- :content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=s2048-2025-q2;
- bh=fecuNYpO3jgkeAr5YgJRz4sKV9sQ8BBxOXSBkur0UwA=; b=DZabqYVHLP4u
- Ehf4A/JYO3NY5QzPaEeUKPUhYa+ZxzHBh5RnceN7SnsfFotSyGC4aauD/8QBRcpO
- gZS7up2P+4/shz03yPGkgiogyhKOnzZHBovqYwpl0qKtGQ2rUCLg3xw286Vk4oWr
- btEt2qFG6WMMUG4F5nmH+Y0tQXpu5ND+qm91is5x66jrysyl+nIj1oSmcCY43gr2
- jcWVVIHvrpc8pkqmD76QJzl7qIriUjPGrx6x3gXx1icjVqj6IMFIM7w/HYOd0orI
- vm4waD+olZoMttRYjwKK/H0KarkHcqub7dqRajdRHQOHeaTP639Azs7dk14Cuubc
- 5lVFngFhRA==
-Received: from mail.thefacebook.com ([163.114.134.16])
- by mx0a-00082601.pphosted.com (PPS) with ESMTPS id 4ercf034qp-2
- (version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT);
- Fri, 12 Jun 2026 09:48:07 -0700 (PDT)
-Received: from localhost (2620:10d:c085:108::4) by mail.thefacebook.com
- (2620:10d:c08b:78::2ac9) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id 15.2.2562.41; Fri, 12 Jun
- 2026 16:48:06 +0000
-From: Emmanuel Blot <eblot@meta.com>
-Date: Fri, 12 Jun 2026 18:47:01 +0200
-Subject: [PATCH 2/4] tests/qtest: adc128d818: add test suite
-MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
+ (Exim 4.90_1) (envelope-from <andrey.drobyshev@virtuozzo.com>)
+ id 1wY56Q-0000Xb-Ji
+ for qemu-devel@nongnu.org; Fri, 12 Jun 2026 12:51:32 -0400
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=bF7zPWA8EOE1I/yw7U3hWA0SbMYaP1X6q7iJ+iit1UbGCxlB7haaDkrZELWHnhmFKqyzctKMGkffWz/Ctr0q5/NNFj9bgpKTI5T+tCfzkF2GQ4gUVwr7BhBHU+F58YGSlUS1grmtKrmkQoGF11IwRylK2zEhgDKLwDrZjeZQ3WBnMu3c2fajIxeGpGrv5n/r+8UwXs3OS4x5VB/soEsm9g3ysSjOWKqDxMsCvBPZOxIlaDuxHfg7zRzyIlFycsFwBaDyO1ddnuaT1pUqoo0FoeJJ6KDS0h4vMS7ZHxHa0+aOcPunV1bxnIX4LMcY82lML8vb+wqFUUJPjmMOe/mhrw==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=eDZj37Zu2ivERaK+LvIolt+6x6ueCESby+SKChOjqtA=;
+ b=aljqES1lzQjfpDW7vYXJhNUNBRplSBZhxcLU/f5NFQbMpBi6BJnoXRmq68C3EX60Pyt/WzVDthONi2RpOsIT46+6YXyhiV/aH0FuY6vF6LrotUCwA6EriQvyp2No/WRfmGC+qwmSGZ5sqzf9EbJsyxLvjXZeW+EnT8M1DFUoXW8NsTi1Q3IUYDmN7aTaJrQBqixPr/D1hJGmb635qT+cF0EyNOyVE1gxmRZZ+yH8dqJEIz5RglvHP/iG9i9jj2L7kxHTd4nJNXiqV76dM7kjLk64zyJQ3G3+YcuWt1RcQGfe4BwQpFRebSBqrsQrDtv3uPF2buskPZiSDmlo2OvlGw==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=virtuozzo.com; dmarc=pass action=none
+ header.from=virtuozzo.com; dkim=pass header.d=virtuozzo.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=virtuozzo.com;
+ s=selector2;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=eDZj37Zu2ivERaK+LvIolt+6x6ueCESby+SKChOjqtA=;
+ b=kXl/64GIQG5YC+RVYTIdt6v8T2j8CLkpm2g4xCoJFirBv3b5iQ1LdHMc/a+hkccwB/k8yuQY1j+fpOhxUGehhkkBfqCeilWO8iIgAwTKD/6vG4/wXgPn2wtnOd3EC+CrmWlyaPUP3IXzgXipVSg94olPDHXHKvzNCeD+tWwi2MxS+jH2jsFUv4MgLmsDPD6HkZAmSBqAc9U6E8MPkBiemHkOljrL8e4j0HQWyvgG/W1AjlmULX0mwYR5XQSWPN1SzLEyoZPhc5FrL/GFdTx21ERvA8vXkhaueQukm4lyE4VNkCwyg/G2fTxmBQXRDoscMm0SdXWxfuk5eLIEcAwsuQ==
+Authentication-Results: dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=virtuozzo.com;
+Received: from VI0PR08MB10656.eurprd08.prod.outlook.com
+ (2603:10a6:800:20a::12) by PAWPR08MB9097.eurprd08.prod.outlook.com
+ (2603:10a6:102:330::9) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.92.18; Fri, 12 Jun
+ 2026 16:51:22 +0000
+Received: from VI0PR08MB10656.eurprd08.prod.outlook.com
+ ([fe80::4e37:b189:ddcd:3dd8]) by VI0PR08MB10656.eurprd08.prod.outlook.com
+ ([fe80::4e37:b189:ddcd:3dd8%5]) with mapi id 15.21.0113.013; Fri, 12 Jun 2026
+ 16:51:22 +0000
+From: Andrey Drobyshev <andrey.drobyshev@virtuozzo.com>
+To: qemu-devel@nongnu.org
+Cc: mst@redhat.com, sgarzare@redhat.com, farosas@suse.de, peterx@redhat.com,
+ maciej.szmigiero@oracle.com, bchaney@akamai.com, mark.kanda@oracle.com,
+ den@openvz.org, andrey.drobyshev@virtuozzo.com
+Subject: [PATCH 2/5] migration: stop VM earlier for CPR
+Date: Fri, 12 Jun 2026 19:51:07 +0300
+Message-ID: <20260612165110.431376-3-andrey.drobyshev@virtuozzo.com>
+X-Mailer: git-send-email 2.47.1
+In-Reply-To: <20260612165110.431376-1-andrey.drobyshev@virtuozzo.com>
+References: <20260612165110.431376-1-andrey.drobyshev@virtuozzo.com>
 Content-Transfer-Encoding: 8bit
-Message-ID: <20260612-i2c-adc128d818-anacapa-v1-2-9e4640cd164b@meta.com>
-References: <20260612-i2c-adc128d818-anacapa-v1-0-9e4640cd164b@meta.com>
-In-Reply-To: <20260612-i2c-adc128d818-anacapa-v1-0-9e4640cd164b@meta.com>
-To: <qemu-devel@nongnu.org>
-CC: Paolo Bonzini <pbonzini@redhat.com>,
- =?utf-8?q?Philippe_Mathieu-Daud=C3=A9?= <philmd@mailo.com>, Fabiano Rosas
- <farosas@suse.de>, Laurent Vivier <lvivier@redhat.com>, Peter Maydell
- <peter.maydell@linaro.org>,
- =?utf-8?q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>,
- Steven Lee <steven_lee@aspeedtech.com>, Troy Lee <leetroy@gmail.com>,
- "Jamin Lin" <jamin_lin@aspeedtech.com>,
- Kane Chen <kane_chen@aspeedtech.com>,
- "Andrew Jeffery" <andrew@codeconstruct.com.au>, Joel Stanley
- <joel@jms.id.au>, Alexander Hansen <alexander.hansen@9elements.com>,
- William de Abreu Pinho <williampinho@meta.com>, <qemu-arm@nongnu.org>,
- Emmanuel Blot <eblot@meta.com>
-X-Mailer: b4 0.15.2
-X-Developer-Signature: v=1; a=ed25519-sha256; t=1781282877; l=33954;
- i=eblot@meta.com; s=20260602; h=from:subject:message-id;
- bh=O4Qz7agWjSKnPKCMX1TJlQVikrhT8O+vTz3HZIfdxLg=;
- b=eAYvPqx2KDdgCfjcbG/43o/a6Rl6AxJNOM8PUDXufwV6iQE6giL+VYoN5t2GuXPWuAY5bgyVR
- f7Cpf1vZ6KlAOzzyA7ITzBpp86IydQgddwl1MQg/xkhiKin0fO9I7Ke
-X-Developer-Key: i=eblot@meta.com; a=ed25519;
- pk=0qFrZ21FAAN8OfVsSoVcCFTk/NMYOWzxJz4paSAVm0g=
-X-Originating-IP: [2620:10d:c085:108::4]
-X-Proofpoint-Spam-Info: AW1haW4tMjYwNjEyMDE1NSBTYWx0ZWRfX2w8p1IkvUqJi
- od58DUMZTG6Eei9nfwUS655byyJhkatcjlfyamDL/eyQdCzq/8h43WQnoC5HYSBz+SQxfFJQ4gt
- AQQOn0yxnWV3E18dyrNEh4QUwHQr6oc=
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNjEyMDE1NSBTYWx0ZWRfXwWdy+vXsoihH
- nDD4zMWEhREtO3sPdRWJB8Pv2nnG4rTJVcv1vMTI5aaUrbdTOnLvaaLCuvdGSafL0WL5q8lVjy/
- W5TwLR0AMnqhvkwihm0JNkdchW4aCHMyyzawZjg3UK0qB57a6YkRJNWX/ajdlqwLNwlN7GhAOlr
- u/d6Zx06KTBAhz+uzXL7pEDULFG7AZLH4iYI59R15gFUNYmT7V9KLhCOOhtkyUqIJu6k3lg0OKG
- LtBtgfRllltFVJr1xbGQ9+SrWx0AonA59KLmAyFVDxkYXlH5UStxDLr74ApSruUh8sdnkvuHABo
- 0tBSKa9/vHJHJ6O9BGhQr5zgC3Cj4QSuo+tXAWi1po/Li0Jgrzxv6xMiAbZLuMgRU3Se/fsGYV1
- s0sd9xQYcnuPPH4w1/S4RSQpuLyt02qrNwt2QkVMQuPllMgQOReQZa6Ng4wBNE5We6vBEOmtkAr
- kDewg8ZNnZGlTcAPLzg==
-X-Proofpoint-ORIG-GUID: MU1_BkCuIcQrxhDBX3NhsO6e6eI5VuDB
-X-Authority-Analysis: v=2.4 cv=QYhWeMbv c=1 sm=1 tr=0 ts=6a2c3847 cx=c_pps
- a=CB4LiSf2rd0gKozIdrpkBw==:117 a=CB4LiSf2rd0gKozIdrpkBw==:17
- a=IkcTkHD0fZMA:10 a=FelO9ux0wxsA:10 a=VkNPw1HP01LnGYTKEx00:22
- a=7x6HtfJdh03M6CCDgxCd:22 a=crHB47gyY4rKiduisYu9:22 a=VabnemYjAAAA:8
- a=6gxeLL3OCge1nV_BnqEA:9 a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
- a=gKebqoRLp9LExxC7YDUY:22
-X-Proofpoint-GUID: MU1_BkCuIcQrxhDBX3NhsO6e6eI5VuDB
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.125,FMLib:17.12.100.49
- definitions=2026-06-12_02,2026-06-12_03,2025-10-01_01
-Received-SPF: pass client-ip=67.231.145.42;
- envelope-from=prvs=4623e61353=eblot@meta.com; helo=mx0a-00082601.pphosted.com
-X-Spam_score_int: -27
-X-Spam_score: -2.8
+Content-Type: text/plain
+X-ClientProxiedBy: VI1PR0202CA0021.eurprd02.prod.outlook.com
+ (2603:10a6:803:14::34) To VI0PR08MB10656.eurprd08.prod.outlook.com
+ (2603:10a6:800:20a::12)
+MIME-Version: 1.0
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: VI0PR08MB10656:EE_|PAWPR08MB9097:EE_
+X-MS-Office365-Filtering-Correlation-Id: 627f853b-95b0-49be-27f2-08dec8a2d566
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam: BCL:0;
+ ARA:13230040|366016|23010399003|376014|52116014|1800799024|56012099006|22082099003|18002099003|38350700014;
+X-Microsoft-Antispam-Message-Info: tbnra3yqjkxJ2a1QatVWhV+bboAh43I+PiAsgLuC921L4iMcOU71+g1Z/B4cR0tC+3P1SyHsWHT09c6ZupYmT7XMQBG7qX9Dsv6L9fjrYzCUEf2LpfeoMQeY0tZt6hPxyRQFG5zm8e4AlGrq1KOIXQFgs9QQneOnUrXKZgb5DSG5gqpNF6pbTO3CZ90cdb8U/zpedlg/pdM/v33PABMxSEK3rREwBblfNZ95U7N2zqBAzg8EgPyrNEu96On4dShE6hobSJwiBFwTr3h9VE3gGma45BZLK95sEm88bdd5ZTweNK7IphXt9KIoUql9cEivWYPkffzwwFZUcfFtJ1KDqHdYYtoNDypAcsw5gvsP+ri50GFQAb24AJuYeVcgsXA3ykqcddif8x086xDv26kgTysbAzna5N4+hwOhzOaEo6PgixKrpkw2T+CykGpeFVFnw7MIx3U8cmgk2kdnXLEY5eWIeBbmJkKq/nmE4VfGYl6pQLMJZQ2SYuV61QE0WkHdakVjA8t1o1+CQTkev1uIj8DcuRJpCtzTna9MG4XN6/Xb74DF9VdiGm8S8e0hpIjfAoqYJiHFCsr/mp7Z51mEcxyl0p5rZVJZrvXQ21y6umJxT4lKHkhiAJNtpGZQOu2FRwm5V6ogrPENt0TC8Aek8FVOgqIPmaO9E7eFRLmeV/ESMvvNyMw1WpwqP9MzhbLl2mcwNw0nYgbGvIev8yjkkfLF0x/Ie4u2+VUMg7CZi3uzxsgkZGyrzzqVxoqFxC/J
+X-Forefront-Antispam-Report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
+ IPV:NLI; SFV:NSPM; H:VI0PR08MB10656.eurprd08.prod.outlook.com; PTR:; CAT:NONE;
+ SFS:(13230040)(366016)(23010399003)(376014)(52116014)(1800799024)(56012099006)(22082099003)(18002099003)(38350700014);
+ DIR:OUT; SFP:1102; 
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0: =?us-ascii?Q?aFK5ya6OTipsfAds3bb6rmc+QqTThd/TfLSN4PxxVXgoHiPvL2U3u4ziFsuj?=
+ =?us-ascii?Q?kixd3QvxYwFt7lr+yegplIotAPYTsr0no9+0S/qp6dAggGVfTjZTHjo/oMUt?=
+ =?us-ascii?Q?4wf/4ShxYYSqMxSosbdJ/9b8hrHGEV1DM3AS9p4WBX0zsMEexcPFd9ARiXND?=
+ =?us-ascii?Q?BvwCQlrkAmfFIGfX0br0phNAlcvTC2A4G1JV/94q/40bMED1eRtf8BhQaM3v?=
+ =?us-ascii?Q?ssjsv726d0GrOlPxPHc3Co8/ywpIMFLuKiNBn3xtTKbBLVGMVTJr2CSa6/qz?=
+ =?us-ascii?Q?Goyx4rjjvxo2ZueyvgVK110IdChGspI0LRSgRkEsRTBZvoaZ+/Mwz68QipuI?=
+ =?us-ascii?Q?qOiQGRb6a2bcd5me7Y5nvICXghySHoVRdIM4hB2rdLPE+nrrVd/c0oeKSbiN?=
+ =?us-ascii?Q?jZuNPGV51nH5g3ClSp5SS1W5niKBidvTHkHtS2MLaU+JZ2q6oMWyfFfitJ9K?=
+ =?us-ascii?Q?yle+CeXAP3+8WHg6x/cNhsqJCW8emeg6eBFRVSGlN6jaf0sWu1CbTwekUJ74?=
+ =?us-ascii?Q?rAWab8bN0PxaQhWzVP/aZyEmJ+LF7mT/NnAa1it6kbREFK4NMaZqSqsqVW3U?=
+ =?us-ascii?Q?RCaGFQqoFlaRPhUGzQkstcbvSeXy2V7RHlA6xYRvOVbejjjj980YAq7eoMPL?=
+ =?us-ascii?Q?DDZpfq+h07UMzBNXlRTTCJmV9LuIwftzFbLJ3KgkXIm5H4BcCilD330QAgtj?=
+ =?us-ascii?Q?0kFRyVNbfQuLhZMwYlGMAtMb0BmAWr0i9mLePsJh/+0tVixHFDF7CzCw3EeI?=
+ =?us-ascii?Q?fhJRThdVEa9cf9Z7uvmAHcYLf5xGI2dE4NBsxb5ZTlI4JtfyxPVa2RDt31+D?=
+ =?us-ascii?Q?AZGB5/kLkQRBwbGfBFylCpWf6BK+dEv7a56+HSxgSQo75l/YAbxcMIv9Q5lg?=
+ =?us-ascii?Q?Yjh7nOPbe0q8Oae82VlgGVY9wa/1zuswxlqScjzgsjE0oNqb/FuJct+DVxE9?=
+ =?us-ascii?Q?HLxNEwv38ynu7qC4wdmrpeFjfGvPwjIJnN3t+P5sb5jVZs/lMFOqazbwkbkm?=
+ =?us-ascii?Q?8gX3GGIM1Wy2w5jqsB1aLCsFpiwofM94vAo/7UREItgc1S0gXmyfIaQsSB1B?=
+ =?us-ascii?Q?nNAsxTs5eGJWWqVcaIRlZ3IXOvdQeChT4TumihTs1PwzVeovyMV0l4O4/8fM?=
+ =?us-ascii?Q?9bMnbCUd1f0HrJyXCbAiW1M51xxPOLXab2zGkw2jzBEiyHuXVgmG50SFUDFP?=
+ =?us-ascii?Q?p9TH0skMrjj7MSw2jQ0Rm9GEjf3QHK1xxXpdPGkTyoDC4y87ifmsf9Y8tQgk?=
+ =?us-ascii?Q?w3jnUygDyOEfVLdDo1N04G+/z+m0yRpNo6+yb+ApLjDdtwrCh66BNb/Vb5n3?=
+ =?us-ascii?Q?/JKc1Heh88qX4M6EQW6ObA08RZutq6GU/cQ2Be1+dyvCGW+liSHOzznsJc9J?=
+ =?us-ascii?Q?Kq4yvamySl5dDYEswz8q3hEEjP0TUH2b23A2hR+LMGfReIyvdCcLvCXA8vqc?=
+ =?us-ascii?Q?revPhhJS9LRjhb/hAqMlG7PMkF6edqqT4U5Cr4oTuDZZMqbpKKQOrALxKYa/?=
+ =?us-ascii?Q?230XA48d3zcYAfotW4Z9RsT/eGkGs5p963iI8FaOSySRRKpxl2vZm0ijQW3n?=
+ =?us-ascii?Q?CNG0fIpoy5hJz5S8Yi3oAgD23ThsGCGTqfwhBvHQlGflDR1UDpewmEyR5JGZ?=
+ =?us-ascii?Q?rEU9Z11alMGRc79Ayy3BMDCC6YBPqeIPnaMRTGWArx/OM5iBAejHH2XEvZNZ?=
+ =?us-ascii?Q?VaUNe6rcTrtRNKsUyCIzl71c5A1Pig1oyqejRyNHsWvr7pUF+PXquDx39Sbp?=
+ =?us-ascii?Q?156+YnWTelZKn0p8OkpYsoPcC+kZhow=3D?=
+X-OriginatorOrg: virtuozzo.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: 627f853b-95b0-49be-27f2-08dec8a2d566
+X-MS-Exchange-CrossTenant-AuthSource: VI0PR08MB10656.eurprd08.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 12 Jun 2026 16:51:22.4630 (UTC)
+X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
+X-MS-Exchange-CrossTenant-Id: 0bc7f26d-0264-416e-a6fc-8352af79c58f
+X-MS-Exchange-CrossTenant-MailboxType: HOSTED
+X-MS-Exchange-CrossTenant-UserPrincipalName: K11MnJzGREeZ1oP1yro+FXKwG3x8AvIdPlzxXlxmVMimhQdAb7yCU1WoyP7rxIhcSrBaMV4l5WHip493SQjNrNYIi6Mvqee1VcCG7VCq0ng=
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: PAWPR08MB9097
+Received-SPF: pass client-ip=2a01:111:f403:c200::1;
+ envelope-from=andrey.drobyshev@virtuozzo.com;
+ helo=DB3PR0202CU003.outbound.protection.outlook.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_PASS=-0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -116,908 +142,141 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Add QOS-based QTest coverage for the ADC128D818:
+For CPR-style migration, we need the VM to stop earlier on, before
+cpr_state_save() fires.  That is to prevent the race between source I/O
+and target device init, as well as make sure VHOST_RESET_OWNER and
+VHOST_SET_OWNER are fired in the right order (cpr-transfer case).  Thus,
+for CPR case migration, let's move the stop to qmp_migrate(), directly
+before launching cpr_state_save().
 
- - manufacturer and revision ID registers
- - power-on-reset defaults
- - software reset
- - voltage conversion and edge cases
- - all channels with distinct values simultaneously
- - temperature conversion and edge cases
- - external voltage reference
- - per-channel interrupt status
- - INT_CLEAR bit suppresses interrupt assertion
- - channel disable prevents conversion
- - one-shot conversion in shutdown mode
- - deep shutdown blocks conversion
- - BUSY_STATUS NOT_READY flag lifecycle
- - operating mode selection
- - mode 2 pseudo-differential pairs
- - mode 3 mixed single-ended and differential
- - mode-change reset of readings and interrupt status
- - QOM-triggered reconversion
+This patch is a rework of the change originally proposed by Steve and
+Ben at [0].
 
-Signed-off-by: Emmanuel Blot <eblot@meta.com>
+[0] https://lore.kernel.org/qemu-devel/20260128-cpr-tap-v4-0-48e334d4216b@akamai.com
+
+Originally-by: Steve Sistare <steven.sistare@oracle.com>
+Originally-by: Ben Chaney <bchaney@akamai.com>
+Signed-off-by: Andrey Drobyshev <andrey.drobyshev@virtuozzo.com>
 ---
- tests/qtest/adc128d818-test.c | 855 ++++++++++++++++++++++++++++++++++++++++++
- tests/qtest/meson.build       |   1 +
- 2 files changed, 856 insertions(+)
+ migration/migration.c | 73 +++++++++++++++++++++++++++++++++----------
+ 1 file changed, 56 insertions(+), 17 deletions(-)
 
-diff --git a/tests/qtest/adc128d818-test.c b/tests/qtest/adc128d818-test.c
-new file mode 100644
-index 0000000000..f9b54b33d0
---- /dev/null
-+++ b/tests/qtest/adc128d818-test.c
-@@ -0,0 +1,855 @@
-+/*
-+ * QTest testcase for the ADC128D818 ADC
-+ *
-+ * SPDX-License-Identifier: GPL-2.0-or-later
-+ */
-+
-+#include "qemu/osdep.h"
-+#include "qemu/bitops.h"
-+#include "libqos/i2c.h"
-+#include "libqos/qgraph.h"
-+#include "libqtest-single.h"
-+#include "qobject/qdict.h"
-+
-+/* clang-format off */
-+#define ADC128D818_TEST_ID      "adc128d818-test"
-+#define ADC128D818_TEST_ADDR    0x1F
-+
-+/* Register addresses */
-+#define REG_CONFIG              0x00u
-+#define REG_INT_STATUS          0x01u
-+#define REG_INT_MASK            0x03u
-+#define REG_CONV_RATE           0x07u
-+#define REG_CH_DISABLE          0x08u
-+#define REG_ONE_SHOT            0x09u
-+#define REG_DEEP_SHUTDOWN       0x0Au
-+#define REG_ADV_CONFIG          0x0Bu
-+#define REG_BUSY_STATUS         0x0Cu
-+
-+/* Channel Reading Registers (16-bit, read-only) */
-+#define REG_CH_READING_BASE     0x20u
-+
-+/* Limit Registers (8-bit, read/write) */
-+#define REG_LIMIT_BASE          0x2Au
-+
-+/* ID Registers (read-only) */
-+#define REG_MANUFACTURER_ID     0x3Eu
-+#define REG_REVISION_ID         0x3Fu
-+
-+/* Configuration Register (0x00) bitfields */
-+#define CONFIG_START            BIT(0)
-+#define CONFIG_INT_ENABLE       BIT(1)
-+#define CONFIG_INT_CLEAR        BIT(3)
-+#define CONFIG_INITIALIZATION   BIT(7)
-+
-+/* Advanced Configuration Register (0x0B) bitfields */
-+#define ADV_CONFIG_EXT_REF_EN   BIT(0)
-+#define ADV_CONFIG_MODE_1       (1u << 1u)
-+#define ADV_CONFIG_MODE_2       (2u << 1u)
-+#define ADV_CONFIG_MODE_3       (3u << 1u)
-+
-+/* Number of channels */
-+#define NUM_CHANNELS            8u
-+
-+/* Internal VREF in mV */
-+#define INTERNAL_VREF_MV        2560u
-+
-+/* TAP-compatible diagnostic output (g_test_message is silent in TAP mode) */
-+#define test_log(fmt, ...) \
-+    fprintf(stderr, "# " fmt "\n", ## __VA_ARGS__)
-+/* clang-format on */
-+
-+/* QMP helpers for setting device properties */
-+
-+static void qmp_adc128d818_set(const char *property, int value)
-+{
-+    QDict *resp;
-+
-+    resp = qmp("{ 'execute': 'qom-set', 'arguments':"
-+               " { 'path': %s, 'property': %s, 'value': %d } }",
-+               ADC128D818_TEST_ID, property, value);
-+    g_assert(qdict_haskey(resp, "return"));
-+    qobject_unref(resp);
-+}
-+
-+static int qmp_adc128d818_get(const char *property)
-+{
-+    QDict *resp;
-+    int ret;
-+
-+    resp = qmp("{ 'execute': 'qom-get', 'arguments':"
-+               " { 'path': %s, 'property': %s } }",
-+               ADC128D818_TEST_ID, property);
-+    g_assert(qdict_haskey(resp, "return"));
-+    ret = qdict_get_int(resp, "return");
-+    qobject_unref(resp);
-+    return ret;
-+}
-+
-+/* Manufacturer and Revision ID registers */
-+static void test_id_registers(void *obj, void *data, QGuestAllocator *alloc)
-+{
-+    QI2CDevice *dev = (QI2CDevice *)obj;
-+
-+    g_assert_cmphex(i2c_get8(dev, REG_MANUFACTURER_ID), ==, 0x01);
-+    g_assert_cmphex(i2c_get8(dev, REG_REVISION_ID), ==, 0x09);
-+}
-+
-+/* Power-on-reset default values */
-+static void test_defaults(void *obj, void *data, QGuestAllocator *alloc)
-+{
-+    QI2CDevice *dev = (QI2CDevice *)obj;
-+    unsigned ch;
-+
-+    g_assert_cmphex(i2c_get8(dev, REG_CONFIG), ==, 0x08);
-+    g_assert_cmphex(i2c_get8(dev, REG_INT_STATUS), ==, 0x00);
-+    g_assert_cmphex(i2c_get8(dev, REG_INT_MASK), ==, 0x00);
-+    g_assert_cmphex(i2c_get8(dev, REG_CONV_RATE), ==, 0x00);
-+    g_assert_cmphex(i2c_get8(dev, REG_CH_DISABLE), ==, 0x00);
-+    g_assert_cmphex(i2c_get8(dev, REG_DEEP_SHUTDOWN), ==, 0x00);
-+    g_assert_cmphex(i2c_get8(dev, REG_ADV_CONFIG), ==, 0x00);
-+    g_assert_cmphex(i2c_get8(dev, REG_BUSY_STATUS), ==, 0x02);
-+
-+    for (ch = 0u; ch < NUM_CHANNELS; ch++) {
-+        g_assert_cmphex(i2c_get8(dev, REG_LIMIT_BASE + ch * 2u), ==, 0xFF);
-+        g_assert_cmphex(i2c_get8(dev, REG_LIMIT_BASE + ch * 2u + 1u), ==, 0x00);
-+    }
-+}
-+
-+/* Software reset via INITIALIZATION bit */
-+static void test_soft_reset(void *obj, void *data, QGuestAllocator *alloc)
-+{
-+    QI2CDevice *dev = (QI2CDevice *)obj;
-+
-+    i2c_set8(dev, REG_INT_MASK, 0xAA);
-+    i2c_set8(dev, REG_CH_DISABLE, 0x55);
-+    i2c_set8(dev, REG_LIMIT_BASE, 0x42);
-+
-+    g_assert_cmphex(i2c_get8(dev, REG_INT_MASK), ==, 0xAA);
-+    g_assert_cmphex(i2c_get8(dev, REG_CH_DISABLE), ==, 0x55);
-+    g_assert_cmphex(i2c_get8(dev, REG_LIMIT_BASE), ==, 0x42);
-+
-+    i2c_set8(dev, REG_CONFIG, CONFIG_INITIALIZATION);
-+
-+    g_assert_cmphex(i2c_get8(dev, REG_CONFIG), ==, 0x08);
-+    g_assert_cmphex(i2c_get8(dev, REG_INT_MASK), ==, 0x00);
-+    g_assert_cmphex(i2c_get8(dev, REG_CH_DISABLE), ==, 0x00);
-+    g_assert_cmphex(i2c_get8(dev, REG_LIMIT_BASE), ==, 0xFF);
-+    g_assert_cmphex(i2c_get8(dev, REG_BUSY_STATUS), ==, 0x02);
-+}
-+
-+/* Voltage conversion */
-+static void test_voltage_conversion(void *obj, void *data,
-+                                    QGuestAllocator *alloc)
-+{
-+    QI2CDevice *dev = (QI2CDevice *)obj;
-+    uint16_t reading;
-+
-+    qmp_adc128d818_set("ain0", 1280);
-+    test_log("Injected ain0 = 1280 mV");
-+    i2c_set8(dev, REG_CONFIG, CONFIG_START);
-+
-+    reading = i2c_get16(dev, REG_CH_READING_BASE);
-+    test_log("Read ch0: raw 0x%04x -> %u mV", reading,
-+             (reading >> 4u) * INTERNAL_VREF_MV / 4096u);
-+    g_assert_cmphex(reading, ==, 0x8000);
-+
-+    qmp_adc128d818_set("ain1", 2560);
-+    test_log("Injected ain1 = 2560 mV");
-+    reading = i2c_get16(dev, REG_CH_READING_BASE + 1u);
-+    test_log("Read ch1: raw 0x%04x -> %u mV", reading,
-+             (reading >> 4u) * INTERNAL_VREF_MV / 4096u);
-+    g_assert_cmphex(reading, ==, 0xFFF0);
-+
-+    qmp_adc128d818_set("ain2", 0);
-+    test_log("Injected ain2 = 0 mV");
-+    reading = i2c_get16(dev, REG_CH_READING_BASE + 2u);
-+    test_log("Read ch2: raw 0x%04x -> %u mV", reading,
-+             (reading >> 4u) * INTERNAL_VREF_MV / 4096u);
-+    g_assert_cmphex(reading, ==, 0x0000);
-+}
-+
-+/* Temperature conversion (mode 0, channel 7 = temperature) */
-+static void
-+test_temperature_conversion(void *obj, void *data, QGuestAllocator *alloc)
-+{
-+    QI2CDevice *dev = (QI2CDevice *)obj;
-+    uint16_t reading;
-+
-+    qmp_adc128d818_set("temperature", 25000);
-+    test_log("Injected temperature = 25000 mC (25.0 deg C)");
-+    i2c_set8(dev, REG_CONFIG, CONFIG_START);
-+
-+    reading = i2c_get16(dev, REG_CH_READING_BASE + 7u);
-+    test_log("Read ch7: raw 0x%04x -> %d mC", reading,
-+             (int16_t)(reading & 0xFF80u) * 500 / 128);
-+    g_assert_cmphex(reading, ==, 0x1900);
-+}
-+
-+/* Interrupt status set on limit violation; persists while fault remains */
-+static void test_interrupt_status(void *obj, void *data, QGuestAllocator *alloc)
-+{
-+    QI2CDevice *dev = (QI2CDevice *)obj;
-+    uint8_t status;
-+
-+    i2c_set8(dev, REG_LIMIT_BASE, 0x10);
-+    test_log("Set ch0 high limit = 0x10");
-+
-+    qmp_adc128d818_set("ain0", 2560);
-+    test_log("Injected ain0 = 2560 mV (exceeds limit)");
-+
-+    i2c_set8(dev, REG_CONFIG, CONFIG_START | CONFIG_INT_ENABLE);
-+
-+    status = i2c_get8(dev, REG_INT_STATUS);
-+    test_log("INT_STATUS = 0x%02x (expect bit 0 set)", status);
-+    g_assert_cmphex(status & 0x01u, ==, 0x01);
-+
-+    status = i2c_get8(dev, REG_INT_STATUS);
-+    test_log("INT_STATUS after re-read = 0x%02x (expect bit 0 still set)",
-+             status);
-+    g_assert_cmphex(status & 0x01u, ==, 0x01);
-+
-+    qmp_adc128d818_set("ain0", 80);
-+    test_log("Injected ain0 = 80 mV (within limit)");
-+    status = i2c_get8(dev, REG_INT_STATUS);
-+    test_log("INT_STATUS after fault cleared = 0x%02x (expect bit 0 clear)",
-+             status);
-+    g_assert_cmphex(status & 0x01u, ==, 0x00);
-+}
-+
-+/* INT_CLEAR stops the round-robin monitoring loop */
-+static void test_int_clear(void *obj, void *data, QGuestAllocator *alloc)
-+{
-+    QI2CDevice *dev = (QI2CDevice *)obj;
-+    uint8_t status;
-+
-+    i2c_set8(dev, REG_LIMIT_BASE, 0x10);
-+    qmp_adc128d818_set("ain0", 2560);
-+
-+    i2c_set8(dev, REG_CONFIG,
-+             CONFIG_START | CONFIG_INT_ENABLE | CONFIG_INT_CLEAR);
-+    status = i2c_get8(dev, REG_INT_STATUS);
-+    test_log("INT_STATUS with INT_CLEAR set = 0x%02x (expect 0x00)", status);
-+    g_assert_cmphex(status, ==, 0x00);
-+
-+    i2c_set8(dev, REG_CONFIG, CONFIG_START | CONFIG_INT_ENABLE);
-+    status = i2c_get8(dev, REG_INT_STATUS);
-+    test_log("INT_STATUS after INT_CLEAR cleared = 0x%02x (expect bit 0)",
-+             status);
-+    g_assert_cmphex(status & 0x01u, ==, 0x01);
-+}
-+
-+/* Channel disable prevents conversion */
-+static void test_channel_disable(void *obj, void *data, QGuestAllocator *alloc)
-+{
-+    QI2CDevice *dev = (QI2CDevice *)obj;
-+    uint16_t reading;
-+
-+    i2c_set8(dev, REG_CH_DISABLE, 0x01);
-+    test_log("Disabled channel 0");
-+
-+    qmp_adc128d818_set("ain0", 1280);
-+    test_log("Injected ain0 = 1280 mV (disabled)");
-+    i2c_set8(dev, REG_CONFIG, CONFIG_START);
-+
-+    reading = i2c_get16(dev, REG_CH_READING_BASE);
-+    test_log("Read ch0 (disabled): raw 0x%04x", reading);
-+    g_assert_cmphex(reading, ==, 0x0000);
-+
-+    qmp_adc128d818_set("ain1", 1280);
-+    test_log("Injected ain1 = 1280 mV (enabled)");
-+    reading = i2c_get16(dev, REG_CH_READING_BASE + 1u);
-+    test_log("Read ch1 (enabled): raw 0x%04x -> %u mV", reading,
-+             (reading >> 4u) * INTERNAL_VREF_MV / 4096u);
-+    g_assert_cmphex(reading, ==, 0x8000);
-+}
-+
-+/* One-shot conversion in shutdown mode */
-+static void test_one_shot(void *obj, void *data, QGuestAllocator *alloc)
-+{
-+    QI2CDevice *dev = (QI2CDevice *)obj;
-+    uint16_t reading;
-+
-+    qmp_adc128d818_set("ain0", 1280);
-+    test_log("Injected ain0 = 1280 mV (device stopped)");
-+
-+    reading = i2c_get16(dev, REG_CH_READING_BASE);
-+    test_log("Read ch0 before one-shot: raw 0x%04x", reading);
-+    g_assert_cmphex(reading, ==, 0x0000);
-+
-+    g_assert_cmphex(i2c_get8(dev, REG_ONE_SHOT), ==, 0x00);
-+
-+    i2c_set8(dev, REG_ONE_SHOT, 0x00);
-+    test_log("Triggered one-shot conversion with value 0x00");
-+
-+    reading = i2c_get16(dev, REG_CH_READING_BASE);
-+    test_log("Read ch0 after one-shot: raw 0x%04x -> %u mV", reading,
-+             (reading >> 4u) * INTERNAL_VREF_MV / 4096u);
-+    g_assert_cmphex(reading, ==, 0x8000);
-+}
-+
-+/* Mode 1 makes channel 7 a voltage input instead of temperature */
-+static void test_mode_selection(void *obj, void *data, QGuestAllocator *alloc)
-+{
-+    QI2CDevice *dev = (QI2CDevice *)obj;
-+    uint16_t reading;
-+
-+    i2c_set8(dev, REG_ADV_CONFIG, ADV_CONFIG_MODE_1);
-+    test_log("Set mode 1 (all voltage channels)");
-+
-+    qmp_adc128d818_set("ain7", 1280);
-+    qmp_adc128d818_set("temperature", 50000);
-+    test_log("Injected ain7 = 1280 mV, temperature = 50000 mC");
-+
-+    i2c_set8(dev, REG_CONFIG, CONFIG_START);
-+
-+    reading = i2c_get16(dev, REG_CH_READING_BASE + 7u);
-+    test_log("Read ch7 (mode 1): raw 0x%04x -> %u mV", reading,
-+             (reading >> 4u) * INTERNAL_VREF_MV / 4096u);
-+    g_assert_cmphex(reading, ==, 0x8000);
-+}
-+
-+/* Mode 2 — 4 pseudo-differential pairs */
-+static void test_mode2_diff(void *obj, void *data, QGuestAllocator *alloc)
-+{
-+    QI2CDevice *dev = (QI2CDevice *)obj;
-+    uint16_t reading;
-+
-+    i2c_set8(dev, REG_ADV_CONFIG, ADV_CONFIG_MODE_2);
-+    test_log("Set mode 2 (4 pseudo-differential pairs)");
-+
-+    qmp_adc128d818_set("ain0", 2000);
-+    qmp_adc128d818_set("ain1", 720);
-+    i2c_set8(dev, REG_CONFIG, CONFIG_START);
-+
-+    reading = i2c_get16(dev, REG_CH_READING_BASE);
-+    test_log("Pair 0 (IN0-IN1): raw 0x%04x (expect 0x8000)", reading);
-+    g_assert_cmphex(reading, ==, 0x8000);
-+
-+    qmp_adc128d818_set("ain3", 1920);
-+    qmp_adc128d818_set("ain2", 640);
-+
-+    reading = i2c_get16(dev, REG_CH_READING_BASE + 1u);
-+    test_log("Pair 1 (IN3-IN2): raw 0x%04x (expect 0x8000)", reading);
-+    g_assert_cmphex(reading, ==, 0x8000);
-+
-+    qmp_adc128d818_set("ain4", 1500);
-+    qmp_adc128d818_set("ain5", 220);
-+
-+    reading = i2c_get16(dev, REG_CH_READING_BASE + 2u);
-+    test_log("Pair 2 (IN4-IN5): raw 0x%04x (expect 0x8000)", reading);
-+    g_assert_cmphex(reading, ==, 0x8000);
-+
-+    qmp_adc128d818_set("ain7", 2560);
-+    qmp_adc128d818_set("ain6", 1280);
-+
-+    reading = i2c_get16(dev, REG_CH_READING_BASE + 3u);
-+    test_log("Pair 3 (IN7-IN6): raw 0x%04x (expect 0x8000)", reading);
-+    g_assert_cmphex(reading, ==, 0x8000);
-+
-+    reading = i2c_get16(dev, REG_CH_READING_BASE + 4u);
-+    test_log("Reserved ch4: raw 0x%04x (expect 0x0000)", reading);
-+    g_assert_cmphex(reading, ==, 0x0000);
-+
-+    qmp_adc128d818_set("ain0", 500);
-+    qmp_adc128d818_set("ain1", 1000);
-+
-+    reading = i2c_get16(dev, REG_CH_READING_BASE);
-+    test_log("Pair 0 negative ΔV: raw 0x%04x (expect 0x0000)", reading);
-+    g_assert_cmphex(reading, ==, 0x0000);
-+}
-+
-+/* Mode 3 — 4 single-ended + 2 pseudo-differential pairs */
-+static void test_mode3_mixed(void *obj, void *data, QGuestAllocator *alloc)
-+{
-+    QI2CDevice *dev = (QI2CDevice *)obj;
-+    uint16_t reading;
-+
-+    i2c_set8(dev, REG_ADV_CONFIG, ADV_CONFIG_MODE_3);
-+    test_log("Set mode 3 (4 single-ended + 2 differential)");
-+
-+    qmp_adc128d818_set("ain0", 1280);
-+    i2c_set8(dev, REG_CONFIG, CONFIG_START);
-+
-+    reading = i2c_get16(dev, REG_CH_READING_BASE);
-+    test_log("Ch0 single-ended: raw 0x%04x (expect 0x8000)", reading);
-+    g_assert_cmphex(reading, ==, 0x8000);
-+
-+    qmp_adc128d818_set("ain4", 1500);
-+    qmp_adc128d818_set("ain5", 220);
-+
-+    reading = i2c_get16(dev, REG_CH_READING_BASE + 4u);
-+    test_log("Ch4 diff (IN4-IN5): raw 0x%04x (expect 0x8000)", reading);
-+    g_assert_cmphex(reading, ==, 0x8000);
-+
-+    qmp_adc128d818_set("ain7", 2560);
-+    qmp_adc128d818_set("ain6", 1280);
-+
-+    reading = i2c_get16(dev, REG_CH_READING_BASE + 5u);
-+    test_log("Ch5 diff (IN7-IN6): raw 0x%04x (expect 0x8000)", reading);
-+    g_assert_cmphex(reading, ==, 0x8000);
-+
-+    reading = i2c_get16(dev, REG_CH_READING_BASE + 6u);
-+    test_log("Reserved ch6: raw 0x%04x (expect 0x0000)", reading);
-+    g_assert_cmphex(reading, ==, 0x0000);
-+
-+    qmp_adc128d818_set("temperature", 25000);
-+
-+    reading = i2c_get16(dev, REG_CH_READING_BASE + 7u);
-+    test_log("Ch7 temperature: raw 0x%04x (expect 0x1900)", reading);
-+    g_assert_cmphex(reading, ==, 0x1900);
-+}
-+
-+/* Mode change resets channel readings and interrupt status */
-+static void test_mode_change_reset(void *obj, void *data,
-+                                   QGuestAllocator *alloc)
-+{
-+    QI2CDevice *dev = (QI2CDevice *)obj;
-+    uint16_t reading;
-+    uint8_t status;
-+
-+    qmp_adc128d818_set("ain0", 1280);
-+    i2c_set8(dev, REG_CONFIG, CONFIG_START);
-+
-+    reading = i2c_get16(dev, REG_CH_READING_BASE);
-+    test_log("Before mode change, ch0: raw 0x%04x", reading);
-+    g_assert_cmphex(reading, !=, 0x0000);
-+
-+    i2c_set8(dev, REG_CONFIG, 0x00);
-+    i2c_set8(dev, REG_LIMIT_BASE, 0x10);
-+    qmp_adc128d818_set("ain0", 2560);
-+    i2c_set8(dev, REG_CONFIG, CONFIG_START);
-+
-+    i2c_set8(dev, REG_CONFIG, 0x00);
-+    i2c_set8(dev, REG_ADV_CONFIG, ADV_CONFIG_MODE_2);
-+
-+    reading = i2c_get16(dev, REG_CH_READING_BASE);
-+    test_log("After mode change, ch0: raw 0x%04x (expect 0x0000)", reading);
-+    g_assert_cmphex(reading, ==, 0x0000);
-+
-+    status = i2c_get8(dev, REG_INT_STATUS);
-+    test_log("After mode change, INT_STATUS: 0x%02x (expect 0x00)", status);
-+    g_assert_cmphex(status, ==, 0x00);
-+
-+    g_assert_cmphex(i2c_get8(dev, REG_LIMIT_BASE), ==, 0x10);
-+    test_log("Limit register preserved after mode change");
-+}
-+
-+/* QOM property changes trigger correct differential conversion */
-+static void test_diff_qom_trigger(void *obj, void *data,
-+                                  QGuestAllocator *alloc)
-+{
-+    QI2CDevice *dev = (QI2CDevice *)obj;
-+    uint16_t reading;
-+
-+    i2c_set8(dev, REG_CONFIG, CONFIG_INITIALIZATION);
-+    i2c_set8(dev, REG_ADV_CONFIG, ADV_CONFIG_MODE_2);
-+
-+    qmp_adc128d818_set("ain0", 0);
-+    qmp_adc128d818_set("ain1", 0);
-+    qmp_adc128d818_set("ain2", 0);
-+    qmp_adc128d818_set("ain3", 0);
-+    i2c_set8(dev, REG_CONFIG, CONFIG_START);
-+
-+    qmp_adc128d818_set("ain0", 2000);
-+    reading = i2c_get16(dev, REG_CH_READING_BASE);
-+    test_log("After ain0=2000, ain1=0: pair0 = 0x%04x (expect 0xC800)",
-+             reading);
-+    g_assert_cmphex(reading, ==, 0xC800);
-+
-+    qmp_adc128d818_set("ain1", 720);
-+    reading = i2c_get16(dev, REG_CH_READING_BASE);
-+    test_log("After ain1=720: pair0 = 0x%04x (expect 0x8000)", reading);
-+    g_assert_cmphex(reading, ==, 0x8000);
-+
-+    qmp_adc128d818_set("ain3", 1920);
-+    qmp_adc128d818_set("ain2", 640);
-+    reading = i2c_get16(dev, REG_CH_READING_BASE + 1u);
-+    test_log("Pair 1 (IN3-IN2) via QOM: 0x%04x (expect 0x8000)", reading);
-+    g_assert_cmphex(reading, ==, 0x8000);
-+}
-+
-+/* Channels with distinct voltages */
-+static void test_all_channels(void *obj, void *data, QGuestAllocator *alloc)
-+{
-+    QI2CDevice *dev = (QI2CDevice *)obj;
-+    /* clang-format off */
-+    static const uint16_t ain_mv[NUM_CHANNELS] = {
-+        0, 320, 640, 960, 1280, 1920, 2240, 2560
-+    };
-+    static const uint16_t expect[NUM_CHANNELS] = {
-+        0x0000, 0x2000, 0x4000, 0x6000, 0x8000, 0xC000, 0xE000, 0xFFF0
-+    };
-+    /* clang-format on */
-+    uint16_t reading;
-+    unsigned ch;
-+
-+    i2c_set8(dev, REG_CONFIG, CONFIG_INITIALIZATION);
-+    i2c_set8(dev, REG_ADV_CONFIG, ADV_CONFIG_MODE_1);
-+
-+    for (ch = 0u; ch < NUM_CHANNELS; ch++) {
-+        char name[8];
-+        snprintf(name, sizeof(name), "ain%u", ch);
-+        qmp_adc128d818_set(name, ain_mv[ch]);
+diff --git a/migration/migration.c b/migration/migration.c
+index 3c70467d314..c02f1da8b0e 100644
+--- a/migration/migration.c
++++ b/migration/migration.c
+@@ -1380,10 +1380,13 @@ static void migration_cleanup(MigrationState *s)
+ 
+     /*
+      * FAILED notification should have already happened.  Notify DONE if
+-     * migration completed successfully.
++     * migration completed successfully.  On a failed/canceled path,
++     * resume VM for the CPR case.
+      */
+     if (!migration_has_failed(s)) {
+         migration_call_notifiers(MIG_EVENT_DONE, NULL);
++    } else if (migrate_mode_is_cpr()) {
++        vm_resume(s->vm_old_state);
+     }
+ 
+     yank_unregister_instance(MIGRATION_YANK_INSTANCE);
+@@ -2130,6 +2133,45 @@ void qmp_migrate(const char *uri, bool has_channels,
+      */
+     Error *local_err = NULL;
+ 
++    /*
++     * CPR-transfer  ordering:
++     *
++     *   SOURCE                              TARGET
++     *   ------                              ------
++     *                                       cpr_state_load() blocks
++     *   |                                        |
++     *   |  1. migration_stop_vm()                |
++     *   |     VM stopped, devices quiesced       |
++     *   |                                        | Waiting for
++     *   |  2. notifiers (SETUP)                  | FDs from source
++     *   |     vhost_reset_owner() releases       |
++     *   |     device ownership                   |
++     *   |                                        |
++     *   |  3. cpr_state_save() ---- FDs -------> |
++     *   |                                        |
++     *   v                                        v
++     *   postmigrate                         Device init begins
++     *                                       - cpr_find_fd()
++     *                                       - vhost_dev_init()
++     *                                       - VHOST_SET_OWNER
++     *
++     * Step 3 is the synchronization/cut-over point. Target proceeds immediately
++     * upon receiving FDs, so steps 1-2 must complete otherwise:
++     * - Target's VHOST_SET_OWNER fails with -EBUSY (source still owns)
++     * - Race between source I/O and target device init
++     *
++     *  We stop the VM early (before FD transfer) to prevent this race.
++     *  Unlike regular migration, CPR-transfer passes memory via FD (memfd)
++     *  rather than copying RAM, so early VM stop should have minimal downtime.
++     */
++    if (migrate_mode_is_cpr()) {
++        int ret = migration_stop_vm(s, RUN_STATE_FINISH_MIGRATE);
++        if (ret < 0) {
++            error_setg(&local_err, "migration_stop_vm failed, error %d", -ret);
++            goto out;
++        }
 +    }
 +
-+    i2c_set8(dev, REG_CONFIG, CONFIG_START);
-+
-+    for (ch = 0u; ch < NUM_CHANNELS; ch++) {
-+        reading = i2c_get16(dev, REG_CH_READING_BASE + ch);
-+        test_log("ch%u: ain %u mV -> raw 0x%04x (expect 0x%04x)",
-+                 ch, ain_mv[ch], reading, expect[ch]);
-+        g_assert_cmphex(reading, ==, expect[ch]);
-+    }
-+}
-+
-+/* Voltage conversion edge cases */
-+static void test_voltage_edges(void *obj, void *data, QGuestAllocator *alloc)
-+{
-+    QI2CDevice *dev = (QI2CDevice *)obj;
-+    uint16_t reading;
-+
-+    i2c_set8(dev, REG_CONFIG, CONFIG_INITIALIZATION);
-+    i2c_set8(dev, REG_ADV_CONFIG, ADV_CONFIG_MODE_1);
-+
-+    qmp_adc128d818_set("ain0", 3000);
-+    i2c_set8(dev, REG_CONFIG, CONFIG_START);
-+
-+    reading = i2c_get16(dev, REG_CH_READING_BASE);
-+    test_log("Over-range 3000 mV: raw 0x%04x (expect 0xFFF0)", reading);
-+    g_assert_cmphex(reading, ==, 0xFFF0);
-+
-+    qmp_adc128d818_set("ain1", 1);
-+    reading = i2c_get16(dev, REG_CH_READING_BASE + 1u);
-+    test_log("1 mV: raw 0x%04x (expect 0x0010)", reading);
-+    g_assert_cmphex(reading, ==, 0x0010);
-+
-+    qmp_adc128d818_set("ain2", 640);
-+    reading = i2c_get16(dev, REG_CH_READING_BASE + 2u);
-+    test_log("640 mV (quarter): raw 0x%04x (expect 0x4000)", reading);
-+    g_assert_cmphex(reading, ==, 0x4000);
-+
-+    qmp_adc128d818_set("ain3", 1920);
-+    reading = i2c_get16(dev, REG_CH_READING_BASE + 3u);
-+    test_log("1920 mV (3/4): raw 0x%04x (expect 0xC000)", reading);
-+    g_assert_cmphex(reading, ==, 0xC000);
-+}
-+
-+/* Temperature conversion edge cases */
-+static void test_temperature_edges(void *obj, void *data,
-+                                   QGuestAllocator *alloc)
-+{
-+    QI2CDevice *dev = (QI2CDevice *)obj;
-+    uint16_t reading;
-+
-+    i2c_set8(dev, REG_CONFIG, CONFIG_INITIALIZATION);
-+
-+    qmp_adc128d818_set("temperature", 0);
-+    i2c_set8(dev, REG_CONFIG, CONFIG_START);
-+    reading = i2c_get16(dev, REG_CH_READING_BASE + 7u);
-+    test_log("0 C: raw 0x%04x (expect 0x0000)", reading);
-+    g_assert_cmphex(reading, ==, 0x0000);
-+
-+    qmp_adc128d818_set("temperature", -25000);
-+    reading = i2c_get16(dev, REG_CH_READING_BASE + 7u);
-+    test_log("-25 C: raw 0x%04x (expect 0xE700)", reading);
-+    g_assert_cmphex(reading, ==, 0xE700);
-+
-+    qmp_adc128d818_set("temperature", 127500);
-+    reading = i2c_get16(dev, REG_CH_READING_BASE + 7u);
-+    test_log("+127.5 C: raw 0x%04x (expect 0x7F80)", reading);
-+    g_assert_cmphex(reading, ==, 0x7F80);
-+
-+    qmp_adc128d818_set("temperature", -128000);
-+    reading = i2c_get16(dev, REG_CH_READING_BASE + 7u);
-+    test_log("-128 C: raw 0x%04x (expect 0x8000)", reading);
-+    g_assert_cmphex(reading, ==, 0x8000);
-+
-+    qmp_adc128d818_set("temperature", 200000);
-+    reading = i2c_get16(dev, REG_CH_READING_BASE + 7u);
-+    test_log("200 C (clamped): raw 0x%04x (expect 0x7F80)", reading);
-+    g_assert_cmphex(reading, ==, 0x7F80);
-+
-+    qmp_adc128d818_set("temperature", -200000);
-+    reading = i2c_get16(dev, REG_CH_READING_BASE + 7u);
-+    test_log("-200 C (clamped): raw 0x%04x (expect 0x8000)", reading);
-+    g_assert_cmphex(reading, ==, 0x8000);
-+}
-+
-+/* External voltage reference */
-+static void test_ext_vref(void *obj, void *data, QGuestAllocator *alloc)
-+{
-+    QI2CDevice *dev = (QI2CDevice *)obj;
-+    uint16_t reading;
-+
-+    i2c_set8(dev, REG_CONFIG, CONFIG_INITIALIZATION);
-+    i2c_set8(dev, REG_ADV_CONFIG, ADV_CONFIG_MODE_1);
-+
-+    qmp_adc128d818_set("ext-vref-mv", 4096);
-+    i2c_set8(dev, REG_ADV_CONFIG, ADV_CONFIG_EXT_REF_EN | ADV_CONFIG_MODE_1);
-+
-+    qmp_adc128d818_set("ain0", 1000);
-+    i2c_set8(dev, REG_CONFIG, CONFIG_START);
-+
-+    reading = i2c_get16(dev, REG_CH_READING_BASE);
-+    test_log("1000 mV / 4096 mV VREF: raw 0x%04x (expect 0x3E80)", reading);
-+    g_assert_cmphex(reading, ==, 0x3E80);
-+
-+    qmp_adc128d818_set("ain1", 2048);
-+    reading = i2c_get16(dev, REG_CH_READING_BASE + 1u);
-+    test_log("2048 mV / 4096 mV VREF: raw 0x%04x (expect 0x8000)", reading);
-+    g_assert_cmphex(reading, ==, 0x8000);
-+}
-+
-+/* One-shot conversion works in deep shutdown */
-+static void test_deep_shutdown(void *obj, void *data, QGuestAllocator *alloc)
-+{
-+    QI2CDevice *dev = (QI2CDevice *)obj;
-+    uint16_t reading;
-+
-+    i2c_set8(dev, REG_CONFIG, CONFIG_INITIALIZATION);
-+
-+    qmp_adc128d818_set("ain0", 1280);
-+    i2c_set8(dev, REG_CONFIG, CONFIG_START);
-+    reading = i2c_get16(dev, REG_CH_READING_BASE);
-+    g_assert_cmphex(reading, ==, 0x8000);
-+
-+    i2c_set8(dev, REG_DEEP_SHUTDOWN, 0x01);
-+    test_log("DEEP_SHUTDOWN write while running rejected");
-+    g_assert_cmphex(i2c_get8(dev, REG_DEEP_SHUTDOWN), ==, 0x00);
-+
-+    i2c_set8(dev, REG_CONFIG, 0x00);
-+    i2c_set8(dev, REG_DEEP_SHUTDOWN, 0x01);
-+    qmp_adc128d818_set("ain0", 0);
-+
-+    reading = i2c_get16(dev, REG_CH_READING_BASE);
-+    test_log("Deep shutdown, no one-shot: raw 0x%04x (expect 0x8000)", reading);
-+    g_assert_cmphex(reading, ==, 0x8000);
-+
-+    i2c_set8(dev, REG_ONE_SHOT, 0x01);
-+    reading = i2c_get16(dev, REG_CH_READING_BASE);
-+    test_log("Deep shutdown one-shot: raw 0x%04x (expect 0x0000)", reading);
-+    g_assert_cmphex(reading, ==, 0x0000);
-+
-+    g_assert_cmphex(i2c_get8(dev, REG_DEEP_SHUTDOWN), ==, 0x01);
-+
-+    i2c_set8(dev, REG_DEEP_SHUTDOWN, 0x00);
-+    qmp_adc128d818_set("ain0", 1280);
-+    i2c_set8(dev, REG_ONE_SHOT, 0x01);
-+    reading = i2c_get16(dev, REG_CH_READING_BASE);
-+    test_log("After exit shutdown: raw 0x%04x (expect 0x8000)", reading);
-+    g_assert_cmphex(reading, ==, 0x8000);
-+}
-+
-+/* BUSY_STATUS NOT_READY clears after first conversion */
-+static void test_busy_status(void *obj, void *data, QGuestAllocator *alloc)
-+{
-+    QI2CDevice *dev = (QI2CDevice *)obj;
-+
-+    i2c_set8(dev, REG_CONFIG, CONFIG_INITIALIZATION);
-+
-+    g_assert_cmphex(i2c_get8(dev, REG_BUSY_STATUS) & 0x02, ==, 0x02);
-+    test_log("After reset: BUSY_STATUS = 0x%02x (NOT_READY set)",
-+             i2c_get8(dev, REG_BUSY_STATUS));
-+
-+    qmp_adc128d818_set("ain0", 0);
-+    i2c_set8(dev, REG_CONFIG, CONFIG_START);
-+
-+    g_assert_cmphex(i2c_get8(dev, REG_BUSY_STATUS) & 0x02, ==, 0x00);
-+    test_log("After conversion: BUSY_STATUS = 0x%02x (NOT_READY cleared)",
-+             i2c_get8(dev, REG_BUSY_STATUS));
-+}
-+
-+/* Low-limit interrupt triggers correctly */
-+static void test_low_limit(void *obj, void *data, QGuestAllocator *alloc)
-+{
-+    QI2CDevice *dev = (QI2CDevice *)obj;
-+    uint8_t status;
-+
-+    i2c_set8(dev, REG_CONFIG, CONFIG_INITIALIZATION);
-+
-+    i2c_set8(dev, REG_LIMIT_BASE + 3u, 0x80);
-+    test_log("Set ch1 low limit = 0x80");
-+
-+    i2c_set8(dev, REG_LIMIT_BASE + 5u, 0x80);
-+    test_log("Set ch2 low limit = 0x80");
-+
-+    qmp_adc128d818_set("ain1", 640);
-+    qmp_adc128d818_set("ain2", 1280);
-+    qmp_adc128d818_set("ain0", 1280);
-+    i2c_set8(dev, REG_CONFIG, CONFIG_START | CONFIG_INT_ENABLE);
-+
-+    status = i2c_get8(dev, REG_INT_STATUS);
-+    test_log("INT_STATUS = 0x%02x (expect bits 1 and 2 set)", status);
-+    g_assert_cmphex(status & 0x02u, ==, 0x02);
-+    g_assert_cmphex(status & 0x04u, ==, 0x04);
-+
-+    g_assert_cmphex(status & 0x01u, ==, 0x00);
-+}
-+
-+/* Verify ain property readback via QMP */
-+static void test_ain_property(void *obj, void *data, QGuestAllocator *alloc)
-+{
-+    int value;
-+
-+    qmp_adc128d818_set("ain3", 1500);
-+    value = qmp_adc128d818_get("ain3");
-+    test_log("Set ain3 = 1500 mV, readback = %d mV", value);
-+    g_assert_cmpint(value, ==, 1500);
-+
-+    qmp_adc128d818_set("temperature", 37500);
-+    value = qmp_adc128d818_get("temperature");
-+    test_log("Set temperature = 37500 mC, readback = %d mC", value);
-+    g_assert_cmpint(value, ==, 37500);
-+}
-+
-+/* Programming Channel Disable resets channel readings */
-+static void test_chan_disable_clears(void *obj, void *data,
-+                                     QGuestAllocator *alloc)
-+{
-+    QI2CDevice *dev = (QI2CDevice *)obj;
-+    uint16_t reading;
-+
-+    i2c_set8(dev, REG_CONFIG, CONFIG_INITIALIZATION);
-+
-+    qmp_adc128d818_set("ain0", 1280);
-+    i2c_set8(dev, REG_CONFIG, CONFIG_START);
-+    g_assert_cmphex(i2c_get16(dev, REG_CH_READING_BASE), ==, 0x8000);
-+
-+    i2c_set8(dev, REG_CONFIG, 0x00);
-+    i2c_set8(dev, REG_CH_DISABLE, 0x02);
-+    reading = i2c_get16(dev, REG_CH_READING_BASE);
-+    test_log("After CH_DISABLE write: ch0 raw 0x%04x (expect 0x0000)", reading);
-+    g_assert_cmphex(reading, ==, 0x0000);
-+}
-+
-+/* Programming Advanced Configuration always resets channel readings */
-+static void test_adv_config_clears(void *obj, void *data,
-+                                   QGuestAllocator *alloc)
-+{
-+    QI2CDevice *dev = (QI2CDevice *)obj;
-+    uint16_t reading;
-+
-+    i2c_set8(dev, REG_CONFIG, CONFIG_INITIALIZATION);
-+
-+    qmp_adc128d818_set("ain0", 1280);
-+    i2c_set8(dev, REG_CONFIG, CONFIG_START);
-+    g_assert_cmphex(i2c_get16(dev, REG_CH_READING_BASE), ==, 0x8000);
-+
-+    i2c_set8(dev, REG_CONFIG, 0x00);
-+    i2c_set8(dev, REG_ADV_CONFIG, 0x00);
-+    reading = i2c_get16(dev, REG_CH_READING_BASE);
-+    test_log("After same-mode ADV_CONFIG: ch0 0x%04x (expect 0x0000)", reading);
-+    g_assert_cmphex(reading, ==, 0x0000);
-+
-+    i2c_set8(dev, REG_CONFIG, CONFIG_START);
-+    g_assert_cmphex(i2c_get16(dev, REG_CH_READING_BASE), ==, 0x8000);
-+    i2c_set8(dev, REG_CONFIG, 0x00);
-+    qmp_adc128d818_set("ext-vref-mv", 4096);
-+    i2c_set8(dev, REG_ADV_CONFIG, ADV_CONFIG_EXT_REF_EN);
-+    reading = i2c_get16(dev, REG_CH_READING_BASE);
-+    test_log("After ext-vref toggle: ch0 0x%04x (expect 0x0000)", reading);
-+    g_assert_cmphex(reading, ==, 0x0000);
-+}
-+
-+/* Temperature high-limit interrupt with hysteresis */
-+static void test_temp_hysteresis(void *obj, void *data,
-+                                 QGuestAllocator *alloc)
-+{
-+    QI2CDevice *dev = (QI2CDevice *)obj;
-+    uint8_t status;
-+
-+    i2c_set8(dev, REG_CONFIG, CONFIG_INITIALIZATION);
-+
-+    i2c_set8(dev, REG_LIMIT_BASE + 7u * 2u, 0x32);
-+    i2c_set8(dev, REG_LIMIT_BASE + 7u * 2u + 1u, 0x28);
-+
-+    qmp_adc128d818_set("temperature", 25000);
-+    i2c_set8(dev, REG_CONFIG, CONFIG_START);
-+
-+    status = i2c_get8(dev, REG_INT_STATUS);
-+    test_log("25 C: INT_STATUS = 0x%02x (temp bit expect clear)", status);
-+    g_assert_cmphex(status & 0x80u, ==, 0x00);
-+
-+    qmp_adc128d818_set("temperature", 55000);
-+    status = i2c_get8(dev, REG_INT_STATUS);
-+    test_log("55 C: INT_STATUS = 0x%02x (temp bit expect set)", status);
-+    g_assert_cmphex(status & 0x80u, ==, 0x80);
-+
-+    qmp_adc128d818_set("temperature", 45000);
-+    status = i2c_get8(dev, REG_INT_STATUS);
-+    test_log("45 C (hysteresis): INT_STATUS = 0x%02x (temp bit expect set)",
-+             status);
-+    g_assert_cmphex(status & 0x80u, ==, 0x80);
-+
-+    qmp_adc128d818_set("temperature", 35000);
-+    status = i2c_get8(dev, REG_INT_STATUS);
-+    test_log("35 C: INT_STATUS = 0x%02x (temp bit expect clear)", status);
-+    g_assert_cmphex(status & 0x80u, ==, 0x00);
-+}
-+
-+/* Conversion Rate register may only be programmed while in shutdown */
-+static void test_conv_rate(void *obj, void *data, QGuestAllocator *alloc)
-+{
-+    QI2CDevice *dev = (QI2CDevice *)obj;
-+
-+    i2c_set8(dev, REG_CONFIG, CONFIG_INITIALIZATION);
-+
-+    i2c_set8(dev, REG_CONV_RATE, 0x01);
-+    g_assert_cmphex(i2c_get8(dev, REG_CONV_RATE), ==, 0x01);
-+
-+    i2c_set8(dev, REG_CONFIG, CONFIG_START);
-+    i2c_set8(dev, REG_CONV_RATE, 0x00);
-+    test_log("CONV_RATE while running: 0x%02x (expect unchanged 0x01)",
-+             i2c_get8(dev, REG_CONV_RATE));
-+    g_assert_cmphex(i2c_get8(dev, REG_CONV_RATE), ==, 0x01);
-+}
-+
-+static void adc128d818_register_nodes(void)
-+{
-+    /* clang-format off */
-+    QOSGraphEdgeOptions opts = {
-+        .extra_device_opts = "id=" ADC128D818_TEST_ID
-+                             ",address=0x1f"
-+    };
-+    /* clang-format on */
-+    add_qi2c_address(&opts, &(QI2CAddress) { ADC128D818_TEST_ADDR });
-+
-+    qos_node_create_driver("adc128d818", i2c_device_create);
-+    qos_node_consumes("adc128d818", "i2c-bus", &opts);
-+
-+    qos_add_test("id-registers", "adc128d818", test_id_registers, NULL);
-+    qos_add_test("defaults", "adc128d818", test_defaults, NULL);
-+    qos_add_test("soft-reset", "adc128d818", test_soft_reset, NULL);
-+    qos_add_test("voltage-conversion", "adc128d818", test_voltage_conversion,
-+                 NULL);
-+    qos_add_test("temperature-conversion", "adc128d818",
-+                 test_temperature_conversion, NULL);
-+    qos_add_test("interrupt-status", "adc128d818", test_interrupt_status, NULL);
-+    qos_add_test("int-clear", "adc128d818", test_int_clear, NULL);
-+    qos_add_test("channel-disable", "adc128d818", test_channel_disable, NULL);
-+    qos_add_test("one-shot", "adc128d818", test_one_shot, NULL);
-+    qos_add_test("mode-selection", "adc128d818", test_mode_selection, NULL);
-+    qos_add_test("mode2-diff", "adc128d818", test_mode2_diff, NULL);
-+    qos_add_test("mode3-mixed", "adc128d818", test_mode3_mixed, NULL);
-+    qos_add_test("mode-change-reset", "adc128d818", test_mode_change_reset,
-+                 NULL);
-+    qos_add_test("diff-qom-trigger", "adc128d818", test_diff_qom_trigger,
-+                 NULL);
-+    qos_add_test("all-channels", "adc128d818", test_all_channels, NULL);
-+    qos_add_test("voltage-edges", "adc128d818", test_voltage_edges, NULL);
-+    qos_add_test("temperature-edges", "adc128d818", test_temperature_edges,
-+                 NULL);
-+    qos_add_test("ext-vref", "adc128d818", test_ext_vref, NULL);
-+    qos_add_test("deep-shutdown", "adc128d818", test_deep_shutdown, NULL);
-+    qos_add_test("busy-status", "adc128d818", test_busy_status, NULL);
-+    qos_add_test("low-limit", "adc128d818", test_low_limit, NULL);
-+    qos_add_test("chan-disable-clears", "adc128d818", test_chan_disable_clears,
-+                 NULL);
-+    qos_add_test("adv-config-clears", "adc128d818", test_adv_config_clears,
-+                 NULL);
-+    qos_add_test("temp-hysteresis", "adc128d818", test_temp_hysteresis, NULL);
-+    qos_add_test("conv-rate", "adc128d818", test_conv_rate, NULL);
-+    qos_add_test("ain-property", "adc128d818", test_ain_property, NULL);
-+}
-+libqos_init(adc128d818_register_nodes);
-diff --git a/tests/qtest/meson.build b/tests/qtest/meson.build
-index 45ea497fa5..defa0d9941 100644
---- a/tests/qtest/meson.build
-+++ b/tests/qtest/meson.build
-@@ -296,6 +296,7 @@ qtests_riscv64 = ['riscv-csr-test'] + \
- qos_test_ss = ss.source_set()
- qos_test_ss.add(
-   'ac97-test.c',
-+  'adc128d818-test.c',
-   'adm1272-test.c',
-   'adm1266-test.c',
-   'ds1338-test.c',
-
+     /* Notify before starting migration thread and before starting CPR */
+     if (migration_call_notifiers(MIG_EVENT_SETUP, &local_err)) {
+         goto out;
+@@ -3482,13 +3524,19 @@ static void migration_iteration_finish(MigrationState *s)
+          */
+         migration_call_notifiers(MIG_EVENT_FAILED, NULL);
+ 
+-        if (runstate_is_live(s->vm_old_state)) {
+-            if (!runstate_check(RUN_STATE_SHUTDOWN)) {
+-                vm_start();
+-            }
+-        } else {
+-            if (runstate_check(RUN_STATE_FINISH_MIGRATE)) {
+-                runstate_set(s->vm_old_state);
++        /*
++         * For cpr the VM resume on failure is centralized in
++         * migration_cleanup(), so don't resume here as well.
++         */
++        if (!migrate_mode_is_cpr()) {
++            if (runstate_is_live(s->vm_old_state)) {
++                if (!runstate_check(RUN_STATE_SHUTDOWN)) {
++                    vm_start();
++                }
++            } else {
++                if (runstate_check(RUN_STATE_FINISH_MIGRATE)) {
++                    runstate_set(s->vm_old_state);
++                }
+             }
+         }
+         break;
+@@ -3903,7 +3951,6 @@ void migration_start_outgoing(MigrationState *s)
+     Error *local_err = NULL;
+     uint64_t rate_limit;
+     bool resume = (s->state == MIGRATION_STATUS_POSTCOPY_RECOVER_SETUP);
+-    int ret;
+ 
+     if (resume) {
+         /* This is a resumed migration */
+@@ -3944,14 +3991,6 @@ void migration_start_outgoing(MigrationState *s)
+         return;
+     }
+ 
+-    if (migrate_mode_is_cpr()) {
+-        ret = migration_stop_vm(s, RUN_STATE_FINISH_MIGRATE);
+-        if (ret < 0) {
+-            error_setg(&local_err, "migration_stop_vm failed, error %d", -ret);
+-            goto fail;
+-        }
+-    }
+-
+     /*
+      * Take a refcount to make sure the migration object won't get freed by
+      * the main thread already in migration_shutdown().
 -- 
-2.50.1
+2.47.1
 
 
