@@ -4,108 +4,104 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 106E7CD98CF
-	for <qemu-devel@archiver.kernel.org>; Fri, 12 Jun 2026 16:37:57 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A769FCD98D6
+	for <qemu-devel@archiver.kernel.org>; Fri, 12 Jun 2026 16:49:29 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wY4sR-0006E4-85; Fri, 12 Jun 2026 12:37:03 -0400
+	id 1wY53p-0007h4-DQ; Fri, 12 Jun 2026 12:48:49 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1wY4sO-0006Co-TD
- for qemu-devel@nongnu.org; Fri, 12 Jun 2026 12:37:00 -0400
-Received: from mail-yx1-xb133.google.com ([2607:f8b0:4864:20::b133])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1wY4sM-00010g-E2
- for qemu-devel@nongnu.org; Fri, 12 Jun 2026 12:37:00 -0400
-Received: by mail-yx1-xb133.google.com with SMTP id
- 956f58d0204a3-66077e90382so1069503d50.3
- for <qemu-devel@nongnu.org>; Fri, 12 Jun 2026 09:36:55 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1781282214; cv=none;
- d=google.com; s=arc-20240605;
- b=KPD/HciZNmYZB8b2HGPdwdB2Q+JuvjCl2OJjATqHgfFd6xvA6Ygf20vpCAv057EBKd
- 1v8SUVWpqNdv5W94uFgGZ8CQyVKLenPo0/EtEwea2IVTPtgCaMN4h0+I30geD7FWfk4m
- nxmdqKT1MaW2/CDpq8MZ/g4nPAigRrCk+dyqY8MPVqr/GxNUUFfD0v/PRsrSTGHaWCro
- U4muOnLRlP+GU+VUm28kAgfoBumdU72LBGU7OJIRmK7UgLpZ8OPsFqOnLvXf+lDLMyVG
- 7nx/2H7Rs6QFnAh/mGtPPela7jC8qkKe1kkatQoeFhLoNtsaUQoRutpiUEpNIaofjLeO
- DM8w==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
- s=arc-20240605; 
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:dkim-signature;
- bh=zwXYwFMmWcXDkYRzgXTSPi/0vzhQdUkmxVByW2NUFQg=;
- fh=Eg8x1WyjqL0q/IaDrW/ejocW3XPmdMUVZlOOJFJ3ANU=;
- b=JH7pHNz+yls4q+z5mE8fYAk2R8/yI9aK4eBQymkRgx+iv/9cVYv0HDH2sI4/HS4MQp
- OdnUo63nj7o4fXOrzKzDeUk3RA4XHOl1c/1kVwxP5rE4jNRf8iRvxDK/C77IHoi9GEoO
- dxhI6D61PdzKsrxwObR/2ExuMrpRoJG04GTDtI+SufdACy6PEn2ac8HryV5Kq4RbxxI4
- 3g8G2erTeLgrBYC74xj2bCydKtKDs0ZjCfy9fC3lz6FUs8wchk6KvPKHU891XUjepDsP
- UTedwjoiJWRVnDsEmCfxe205CVJvzoVUaQD7Qeehzxwzs+fISyJ5+d6rKoy7s3L0MNwe
- EDWA==; darn=nongnu.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1781282214; x=1781887014; darn=nongnu.org;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=zwXYwFMmWcXDkYRzgXTSPi/0vzhQdUkmxVByW2NUFQg=;
- b=stIBaXpyvSOdPPtgdZdfSs1K3A+XQkWcb7eEDLQ4aVRMACPQV8hm13B8peqEBZUlC7
- oYSv9ZyV7HHvCsc/Z28Z6430G3nk+TyoinLBOrmS+LkNaLZ1INfEsL6CEcJqUv21KNc5
- MaZx9WmW5cuLl9jAEnv3CMd1BYA7+TQXt7+vNvoB9EVPQKF4DQfisOYx7VUsr0F/9fnV
- jMQ44b2ndk9pIBP/sPriZd0IpDIzaOAHIslcuK5vlUh++qUbLUUt2LhCRO3xYaKwCUmN
- Dt1Wjt4Im4IUPE5LXA9g3MrUDVGnuiBjQwPtTn2RGbbWPaT7ZnEsT50nFP/d4NCR9Vdw
- QxNg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1781282214; x=1781887014;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=zwXYwFMmWcXDkYRzgXTSPi/0vzhQdUkmxVByW2NUFQg=;
- b=CdC81HlsXM3+cLSBN+/w/7XGVcdbOU/DirZT8FvHZtsSwO62qwdp/i+kL8G/2MWTQn
- ielwT5pN40K9W1yDfJfUod3uME0RpI+i8PL7GOkw82CFSojCBEG3OXbBkwp1YYljqJMf
- fqty74yg7ucuaOt6Ezt4y/mo1mcQEDZgSuUJPSAadin5lBUlhKZ8y4f7dQDNpGMoaWrA
- kzFxXDO6iTmbdkGTsFNK3w2pU+osMTvUU6CMYoRUcXaWS+pa7vIG4ctIdfLIpp8/z/iG
- rGDg80j9HY56fCFiee7MAIYBdVESl0G2HTS41FElVouYqF5GmSb/LRt2EsXDLbRU8bR+
- pA+Q==
-X-Forwarded-Encrypted: i=1;
- AFNElJ9kD48Ym4ECaD5sOFagSgzv9SZDUS2fdDPToao27oxHYq6GkZQxu1ex7W2KwaxGleeex8l78TNpEioh@nongnu.org
-X-Gm-Message-State: AOJu0Yw6hVK2xIt2NxcW0IfOc+625N/anSgl+YY4P60qogfwO2QwGVqt
- M86ix6pKl0ytO/gRN4Qkl/VkRezwzl7VJXsRnUCbMJt5JeInNLpsoukNLqlf4Lpl7HrXtdYkIGI
- 0d/L0hlk8BLHDvMIaw52OBdJEwygcnmwg7q4tyRzWHw==
-X-Gm-Gg: Acq92OFBEHFfveCCAghXA/xGqSW6Z/2aYuqrxzpbRsInNVxCB2HM/6xN5PU1dAU9XCD
- PtXOOKyEdz5CtsjgIyh+X3I5jXS4tNLK8b6SMNJbe4jj6E5KrPdxqAC3j0LQ3+pDeKQ0gS08U2z
- NLVY3ZC3kxkCFFRz2YdUtUknOzRyWzAaVbPZz4Nn93pM59Fwqooxm9qyPQsC3meGBX8AiViiQXD
- LDT4PQ1FmC5CwzWaOk7CpgJUah75Zy3XNIL8bOWWJMoATrVVbdUPj1P5bkqzld9vMc8sY7+3nt3
- 6GkURK94yvU8F8nP+7j77toFElWZjrdYWnH657Vo7sRiG575cXc5GO2OaTaXogWtGQc=
-X-Received: by 2002:a05:690e:4194:b0:660:3b5c:69f8 with SMTP id
- 956f58d0204a3-66278365e0dmr3046602d50.59.1781282214471; Fri, 12 Jun 2026
- 09:36:54 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <prvs=4623e61353=eblot@meta.com>)
+ id 1wY53o-0007g7-3c; Fri, 12 Jun 2026 12:48:48 -0400
+Received: from mx0b-00082601.pphosted.com ([67.231.153.30])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <prvs=4623e61353=eblot@meta.com>)
+ id 1wY53l-0007nH-44; Fri, 12 Jun 2026 12:48:47 -0400
+Received: from pps.filterd (m0528006.ppops.net [127.0.0.1])
+ by mx0a-00082601.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
+ 65CEWqvq4026335; Fri, 12 Jun 2026 09:48:02 -0700
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=meta.com; h=cc
+ :content-transfer-encoding:content-type:date:from:message-id
+ :mime-version:subject:to; s=s2048-2025-q2; bh=qqgVGuxYuHHijleUyX
+ 9CrcOTDWUcGInSWB2y8qSLIds=; b=okNofTdH7zKchqORM584ppl7Ox+5091PZS
+ Kd7yw6Gqtc+A415Tv5z4sLcUY44x7IugG1M5mdJ5ZwtjssMpxeQTQnrZjJPQlpCz
+ T/YwVR57CH4YS66mIYYu6sKOlgLv7crE+TNyrfRqa0XvCc+5RuomA6vFx/W8RgVZ
+ lVf2J5PxlpHlatASnXXV1ar9bjwIhPpVaxcRjHCbXFXREckbiX3qTSKdlJmwQsnt
+ EBre1pHriQdI9VNaJP8l7bHHcfznFdapPsf9k7EwUj1ijTwRyCO/xy9gtJ3jWDYk
+ 2Pi37dTABh9/5JPGUUhFX78WqPHP8wAUqyh76DaFIHloYz09Ng2g==
+Received: from mail.thefacebook.com ([163.114.134.16])
+ by mx0a-00082601.pphosted.com (PPS) with ESMTPS id 4erkymgvg4-2
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT);
+ Fri, 12 Jun 2026 09:48:02 -0700 (PDT)
+Received: from localhost (2620:10d:c085:108::4) by mail.thefacebook.com
+ (2620:10d:c08b:78::c78f) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id 15.2.2562.41; Fri, 12 Jun
+ 2026 16:48:00 +0000
+From: Emmanuel Blot <eblot@meta.com>
+Subject: [PATCH 0/4] hw/sensor: Add new device emulation for TI ADC128D818
+Date: Fri, 12 Jun 2026 18:46:59 +0200
+Message-ID: <20260612-i2c-adc128d818-anacapa-v1-0-9e4640cd164b@meta.com>
 MIME-Version: 1.0
-References: <20260612110307.1264798-1-gshan@redhat.com>
- <20260612110307.1264798-2-gshan@redhat.com>
- <223f5f94-b9b7-46b0-8466-5be655203a0e@linaro.org>
-In-Reply-To: <223f5f94-b9b7-46b0-8466-5be655203a0e@linaro.org>
-From: Peter Maydell <peter.maydell@linaro.org>
-Date: Fri, 12 Jun 2026 17:36:42 +0100
-X-Gm-Features: AVVi8CdMu-7uYvT4bAX8tK5C71T05n1JYXUMFvRcSVuF3kTgZjpRWZEMgAwuw5A
-Message-ID: <CAFEAcA-TgP_BM0WQo3rysZmvhNN17Gc_nrSYB6pXn-mvs5w13g@mail.gmail.com>
-Subject: Re: [PATCH 1/2] system/memory: Use __builtin_mem{cpy, move} in
- accessors of ram device region
-To: Richard Henderson <richard.henderson@linaro.org>
-Cc: Gavin Shan <gshan@redhat.com>, qemu-arm@nongnu.org, qemu-devel@nongnu.org, 
- peterx@redhat.com, mst@redhat.com, berrange@redhat.com, david@kernel.org, 
- alex@shazbot.org, clg@redhat.com, pbonzini@redhat.com, philmd@mailo.com, 
- phrdina@redhat.com, jugraham@redhat.com, shan.gavin@gmail.com
-Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2607:f8b0:4864:20::b133;
- envelope-from=peter.maydell@linaro.org; helo=mail-yx1-xb133.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+X-B4-Tracking: v=1; b=H4sIAAAAAAAC/yXMMQ7CMAxA0atUnrEUu1IIXAUxuI4LZghVAgip6
+ t0JML7h/xWaVbcGx2GFai9vfi8dtBtAr1Iuhp67gQPHEInRWVGyEqecKKEUUVkEadQ42mE/Tzl
+ Aj5dqs79/49P57/acbqaP7w227QOxAa4qegAAAA==
+X-Change-ID: 20260612-i2c-adc128d818-anacapa-13c63e97fbd0
+To: <qemu-devel@nongnu.org>
+CC: Paolo Bonzini <pbonzini@redhat.com>,
+ =?utf-8?q?Philippe_Mathieu-Daud=C3=A9?= <philmd@mailo.com>, Fabiano Rosas
+ <farosas@suse.de>, Laurent Vivier <lvivier@redhat.com>, Peter Maydell
+ <peter.maydell@linaro.org>,
+ =?utf-8?q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>,
+ Steven Lee <steven_lee@aspeedtech.com>, Troy Lee <leetroy@gmail.com>,
+ "Jamin Lin" <jamin_lin@aspeedtech.com>,
+ Kane Chen <kane_chen@aspeedtech.com>,
+ "Andrew Jeffery" <andrew@codeconstruct.com.au>, Joel Stanley
+ <joel@jms.id.au>, Alexander Hansen <alexander.hansen@9elements.com>,
+ William de Abreu Pinho <williampinho@meta.com>, <qemu-arm@nongnu.org>,
+ Emmanuel Blot <eblot@meta.com>
+X-Mailer: b4 0.15.2
+X-Developer-Signature: v=1; a=ed25519-sha256; t=1781282877; l=1478;
+ i=eblot@meta.com; s=20260602; h=from:subject:message-id;
+ bh=8vfMJAKErHFkVvv+/skB8+BQHSiZXVpI90E9qaPpwgk=;
+ b=kV6TqA12OEVF0KSvDe0R65xrViGkHXeKSbYPQeKkXKgcuefE8GvAVqXRSF75NzUruevyAhyRt
+ vf9U0WLYdOyDqJkQ/adn5BUldyCLI9ZpHeAj9tS70G+wFti2Dkygehj
+X-Developer-Key: i=eblot@meta.com; a=ed25519;
+ pk=0qFrZ21FAAN8OfVsSoVcCFTk/NMYOWzxJz4paSAVm0g=
+X-Originating-IP: [2620:10d:c085:108::4]
+X-Proofpoint-ORIG-GUID: zno6GEpZzgmyHmXLOIIOKWWPD5jOjD70
+X-Proofpoint-Spam-Info: AW1haW4tMjYwNjEyMDE1NSBTYWx0ZWRfX+cKIVlVjb/5r
+ WTOOOY/K+4X45weVqhl8CYrRBtVH2Um15DaJ55dFkfZTBRdMMM1wjN8oTrLkaMzaHMQpD3mfsIV
+ IBUeNq+SaAf+IN8oqg2FQv/pz8YWDbQ=
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNjEyMDE1NSBTYWx0ZWRfX0yNxXdlPOWry
+ h//v5dXcldNpX5K9rM0CuYumM44FLs4QJ5QLeY+D2VnAaO7izfGxwvRW5vkVWicD2WGhcEOFcQP
+ 9rjQjiOECiQw7hVnd7nMs/1cBji5gLV1hFwA0DEbejwSw0bNmnlGaUt7EapqFK3PyTb2neCRuWj
+ 35d8JmPGhHSJlkP8Ly+/xxtJQxUzaN845QOGbwpbnHDVmPAYieTuPO63ZpQClJBTKWq45+F/aPF
+ RdX5hKYzFoGajAQsdVWk4RBtHhnH3l/T4s22pnjNGBo8um0ieVlIizLiyWfUC/toB/uyfpknDeK
+ 5pYAqc93DCyYLx7QblUyAU89WZHiQ/WMA0EbCNHk3i3oJNYIJ6YBfjwMsj/4eZANBQ2Lh/2kefk
+ Jq1deHeBoa6VkmZEHa1awuCF/mEjyfWevAZGSss2LbbRl+EnmGbkE/+yncA+AvocnGk0Rj2Ml8T
+ FHB/GomirmqD7RTWw/Q==
+X-Authority-Analysis: v=2.4 cv=TK91jVla c=1 sm=1 tr=0 ts=6a2c3842 cx=c_pps
+ a=CB4LiSf2rd0gKozIdrpkBw==:117 a=CB4LiSf2rd0gKozIdrpkBw==:17
+ a=IkcTkHD0fZMA:10 a=FelO9ux0wxsA:10 a=VkNPw1HP01LnGYTKEx00:22
+ a=7x6HtfJdh03M6CCDgxCd:22 a=kkcUborcUVj0H7zxAXTl:22 a=sozttTNsAAAA:8
+ a=VabnemYjAAAA:8 a=EkK5wCPZol7t6GGdW4wA:9 a=QEXdDO2ut3YA:10
+ a=gKebqoRLp9LExxC7YDUY:22
+X-Proofpoint-GUID: zno6GEpZzgmyHmXLOIIOKWWPD5jOjD70
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.125,FMLib:17.12.100.49
+ definitions=2026-06-12_02,2026-06-12_03,2025-10-01_01
+Received-SPF: pass client-ip=67.231.153.30;
+ envelope-from=prvs=4623e61353=eblot@meta.com; helo=mx0b-00082601.pphosted.com
+X-Spam_score_int: -27
+X-Spam_score: -2.8
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -121,64 +117,42 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Fri, 12 Jun 2026 at 16:29, Richard Henderson
-<richard.henderson@linaro.org> wrote:
->
-> On 6/12/26 04:03, Gavin Shan wrote:
-> > This replaces mem{cpy, move} with __builtin_mem{cpy, move} in the memory
-> > accessors to ram device memory region, preparatory work to make ram device
-> > region directly accessible and bypass the bounce buffer in the DMA path
-> > in next patch.
->
-> memcpy/memmove *always* compile to __builtin_memcpy/memmove, and the compiler later
-> decides whether or not to expand inline.
+This is a 12-bit, 8-channel ADC I2C device, which is used on several
+OpenBMC platforms.
 
-Yes, but if you pass it a fixed small integer, then it is likely
-to expand it inline, whereas if you pass it a variable then it
-is likely not to... The patch is attempting to persuade the
-compiler to definitely do an inline access for 1, 2, 4, 8
-byte access.
+QOM properties can be used to change input ADC values and external VREF at
+run time.
 
-> So, this doesn't do what you think it does.
-> My real question is: what are you attempting to achieve?
->
-> (1) is the problem unaligned access to a mapped physical device?
-> (2) is the problem vector access to a mapped physical device?
-> (3) something else?
+Add it to AST2600-based Anacapa machine, along with some functional tests
+that use QOM properties to inject voltage values into analog inputs.
 
-I think there are two problems we're trying to fix here:
+Datasheet: https://www.ti.com/lit/gpn/ADC128D818
 
-(1) If a device does e.g. a pci_dma_write() with size 1, we want
-this to turn into exactly 1 byte write into guest memory, for the
-normal case where the guest memory is real host RAM.
-This deals with the e1000 bug where the pci_dma_write() turns into
-a call to glibc memmove() with size 1 and glibc's implementation
-turns that into 3 writes of the byte to the same address,
-and then a guest write/read might interleave badly with
-the extra writes.[*] Similarly some devices specify that they
-do definitely do DMA accesses in a particular way (e.g. the
-Arm SMMU spec says that the SMMU reads 64-bit page table entries
-as single-copy atomic accesses).
+Signed-off-by: Emmanuel Blot <eblot@meta.com>
+---
+Emmanuel Blot (4):
+      hw/sensor: adc128d818: add 12-bit 8-channel ADC device
+      tests/qtest: adc128d818: add test suite
+      hw/arm: anacapa: add ADC128D818 devices
+      test/functional: anacapa: test ADC128D818
 
-(2) If a vCPU (emulated or KVM) does a 4 byte access to an
-address which is in the PCI BAR of a vfio-passthrough device,
-we want this to turn into exactly a 4-byte access to the
-mmap()ed memory which is the BAR of the host device. This
-is because that address might be a real hardware device
-register, so it's important to access it exactly the way
-the guest vCPU asked for, and not do multiple accesses or
-misaligned accesses or whatever.
+ hw/arm/Kconfig                              |   1 +
+ hw/arm/aspeed_ast2600_anacapa.c             |  19 +-
+ hw/sensor/Kconfig                           |   4 +
+ hw/sensor/adc128d818.c                      | 703 +++++++++++++++++++++++
+ hw/sensor/meson.build                       |   1 +
+ hw/sensor/trace-events                      |   8 +
+ include/hw/sensor/adc128d818.h              |  12 +
+ tests/functional/arm/test_aspeed_anacapa.py |  92 ++-
+ tests/qtest/adc128d818-test.c               | 855 ++++++++++++++++++++++++++++
+ tests/qtest/meson.build                     |   1 +
+ 10 files changed, 1688 insertions(+), 8 deletions(-)
+---
+base-commit: 193963218accbcf65f28ab1efa773ac6d1cc634c
+change-id: 20260612-i2c-adc128d818-anacapa-13c63e97fbd0
 
-(The reason we make pass-through BARs not "direct access"
-but instead go via the bounce buffer is that we were working
-around (2).)
+Best regards,
+--  
+Emmanuel Blot <eblot@meta.com>
 
-[*] I have not fully investigated the e1000 situation so it's
-possible that there is some other issue also there, e.g.
-guest or device model getting barrier semantics wrong. But
-writing the byte with the "done with this descriptor" bit
-3 times rather than once seems like asking for trouble.
-
-thanks
--- PMM
 
