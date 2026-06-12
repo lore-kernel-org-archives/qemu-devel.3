@@ -4,50 +4,54 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B857DCD98CE
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D10D4CD98D6
 	for <qemu-devel@archiver.kernel.org>; Fri, 12 Jun 2026 15:51:20 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wY49l-00016M-MM; Fri, 12 Jun 2026 11:50:53 -0400
+	id 1wY49u-00018E-68; Fri, 12 Jun 2026 11:51:02 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <deller@kernel.org>) id 1wY49j-00015t-QS
- for qemu-devel@nongnu.org; Fri, 12 Jun 2026 11:50:51 -0400
-Received: from sea.source.kernel.org ([172.234.252.31])
+ (Exim 4.90_1) (envelope-from <deller@kernel.org>) id 1wY49q-00017a-JE
+ for qemu-devel@nongnu.org; Fri, 12 Jun 2026 11:51:00 -0400
+Received: from tor.source.kernel.org ([2600:3c04:e001:324:0:1991:8:25])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <deller@kernel.org>) id 1wY49h-00083e-Nk
- for qemu-devel@nongnu.org; Fri, 12 Jun 2026 11:50:51 -0400
+ (Exim 4.90_1) (envelope-from <deller@kernel.org>) id 1wY49o-0008Cw-S7
+ for qemu-devel@nongnu.org; Fri, 12 Jun 2026 11:50:58 -0400
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
- by sea.source.kernel.org (Postfix) with ESMTP id 730664343E;
- Fri, 12 Jun 2026 15:50:47 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 027FB1F000E9;
- Fri, 12 Jun 2026 15:50:45 +0000 (UTC)
+ by tor.source.kernel.org (Postfix) with ESMTP id DDFE260008;
+ Fri, 12 Jun 2026 15:50:55 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E14B61F000E9;
+ Fri, 12 Jun 2026 15:50:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
- s=k20260515; t=1781279447;
- bh=5yGmPHU1PVAtwTAieQykahpVXwILS8ZcqQaz8aSZVsQ=;
- h=From:To:Cc:Subject:Date;
- b=bMK8DuFsRnjrAC0fOU/0L/06leTCu74hSgcDdtjnk83sIxRQXc6ixa2ts+TUc8QoM
- NgnSOKT0xXtGuUCFjkPxX1dCOE1YvFbQBizsb2iahHKEdPJIo0roT0lTNo6WQM/pWq
- x+RHSP6u0ClslJb/XbcjWKWlNv5sUl+eW9BvGqNaeHvgUiJYGgMrwf8L7ezVIIfmvg
- y3OyrJkhDlTEKFpU4RyZuob67iSwDTcVSeLJddPXXYd0I7WW19F3j/XydnzeF/Irz2
- rY7G0+Um4UIV9uXd6d88XpAvjxBo68+0lUYMmVLYZ4zRXCZeWF4J1L+ebDd0qvmAfa
- YLEbGLekD8C2g==
+ s=k20260515; t=1781279455;
+ bh=cCWxnWBTELIri7mBIrY3nW5i67rK3zVx7spuTib8SAk=;
+ h=From:To:Cc:Subject:Date:In-Reply-To:References;
+ b=HNqovlGo/yD7eLzbzFHTkCnHNDKBAijHpg5taJl1lOKjGfAgNtpiTEz4/B7nsWSoP
+ qk6t5o1rp1+TEc1gsAjisr/AbvoUuZ+oBNO91JLwfRy2DoFNA/9qfotK5266fpupxD
+ +uY7wHw/v5OsF8kRgUmUHdcxVokIlU2PG6BmknBB4eKxCnXJFGCDsGlPsaY8tE39hm
+ yISPKg8LYvvHs8PDguooSEHRdALRSOgl9VY9acFLOdfBwiB6WN0PImS4y0IzHqWkm/
+ AniNiKFz0n03oE42pHPe+oZSJsOtCZxx7uyQ2ZaPxgpCIxKyFi+1Hq+f2g9JqztQLD
+ lmX5DaxkBcd8Q==
 From: Helge Deller <deller@kernel.org>
 To: Stefan Hajnoczi <stefanha@gmail.com>,
 	qemu-devel@nongnu.org
 Cc: Helge Deller <deller@gmx.de>,
  Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
- Laurent Vivier <laurent@vivier.eu>, Max Filippov <jcmvbkbc@gmail.com>
-Subject: [PULL 0/4] Linux user patches
-Date: Fri, 12 Jun 2026 17:50:39 +0200
-Message-ID: <20260612155043.3552-1-deller@kernel.org>
+ Laurent Vivier <laurent@vivier.eu>, Max Filippov <jcmvbkbc@gmail.com>,
+ Matt Turner <mattst88@gmail.com>,
+ Richard Henderson <richard.henderson@linaro.org>
+Subject: [PULL 4/4] linux-user/xtensa: save/restore FP registers across signal
+ delivery
+Date: Fri, 12 Jun 2026 17:50:43 +0200
+Message-ID: <20260612155043.3552-5-deller@kernel.org>
 X-Mailer: git-send-email 2.54.0
+In-Reply-To: <20260612155043.3552-1-deller@kernel.org>
+References: <20260612155043.3552-1-deller@kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=172.234.252.31; envelope-from=deller@kernel.org;
- helo=sea.source.kernel.org
+Received-SPF: pass client-ip=2600:3c04:e001:324:0:1991:8:25;
+ envelope-from=deller@kernel.org; helo=tor.source.kernel.org
 X-Spam_score_int: -24
 X-Spam_score: -2.5
 X-Spam_bar: --
@@ -69,46 +73,183 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Helge Deller <deller@gmx.de>
+From: Matt Turner <mattst88@gmail.com>
 
-The following changes since commit ec6a1f43989c6bbf2de1ab84959a70ee35fa1b57:
+Add support for saving and restoring f0-f15 across signal delivery.
+The target_xtensa_xtregs_fp struct carries 32-bit f-regs for cores
+with XTENSA_OPTION_FP_COPROCESSOR; target_xtensa_xtregs_dfp carries
+64-bit f-regs for cores with XTENSA_OPTION_DFP_COPROCESSOR.
 
-  Merge tag 'linux-user-pull-request' of https://github.com/hdeller/qemu-hppa into staging (2026-06-11 13:22:50 -0400)
+Lock the xtregs region via lock_user before reading on sigreturn,
+since sc_xtregs is a user-space pointer that may lie outside the
+locked sigframe.
 
-are available in the Git repository at:
+Signed-off-by: Matt Turner <mattst88@gmail.com>
+Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+Signed-off-by: Helge Deller <deller@gmx.de>
+---
+ linux-user/xtensa/signal.c | 96 ++++++++++++++++++++++++++++++++++----
+ 1 file changed, 88 insertions(+), 8 deletions(-)
 
-  https://github.com/hdeller/qemu-hppa.git tags/linux-user-pull-request
-
-for you to fetch changes up to 6858e3a71cc41510937bec0950eb4e42e33ba5f2:
-
-  linux-user/xtensa: save/restore FP registers across signal delivery (2026-06-12 17:47:27 +0200)
-
-----------------------------------------------------------------
-linux-user patches
-
-Add preadv2/preadv2 syscalls, fix FP registers across signals on xtensa, and
-add emulation for /proc/cpuinfo for ppc CPUs
-
-----------------------------------------------------------------
-
-Dominique Martinet (1):
-  linux-user: add preadv2/preadv2
-
-Helge Deller (1):
-  linux-user: Implement /proc/cpuinfo for ppc cpus
-
-Matt Turner (2):
-  target/xtensa: add cpu_set_fcr/fsr helpers to sync fp_status
-  linux-user/xtensa: save/restore FP registers across signal delivery
-
- linux-user/ppc/cpu_loop.c    |  2 +-
- linux-user/ppc/target_proc.h | 91 +++++++++++++++++++++++++++++++++-
- linux-user/syscall.c         | 38 ++++++++++++++
- linux-user/xtensa/signal.c   | 96 +++++++++++++++++++++++++++++++++---
- target/xtensa/cpu.h          |  4 ++
- target/xtensa/fpu_helper.c   | 71 ++++++++++++++------------
- 6 files changed, 261 insertions(+), 41 deletions(-)
-
+diff --git a/linux-user/xtensa/signal.c b/linux-user/xtensa/signal.c
+index ef8b0c3a27..e3f9da322b 100644
+--- a/linux-user/xtensa/signal.c
++++ b/linux-user/xtensa/signal.c
+@@ -21,6 +21,7 @@
+ #include "user-internals.h"
+ #include "signal-common.h"
+ #include "linux-user/trace.h"
++#include "target/xtensa/cpu.h"
+ 
+ struct target_sigcontext {
+     abi_ulong sc_pc;
+@@ -43,10 +44,25 @@ struct target_ucontext {
+     target_sigset_t tuc_sigmask;
+ };
+ 
++struct target_xtensa_xtregs_fp {
++    uint32_t f[16];
++    uint32_t fcr;
++    uint32_t fsr;
++};
++
++struct target_xtensa_xtregs_dfp {
++    uint64_t f[16];
++    uint32_t fcr;
++    uint32_t fsr;
++};
++
+ struct target_rt_sigframe {
+     target_siginfo_t info;
+     struct target_ucontext uc;
+-    /* TODO: xtregs */
++    union {
++        struct target_xtensa_xtregs_fp fp;
++        struct target_xtensa_xtregs_dfp dfp;
++    } xtregs;
+     uint8_t retcode[6];
+     abi_ulong window[4];
+ };
+@@ -107,6 +123,7 @@ static int flush_window_regs(CPUXtensaState *env)
+ }
+ 
+ static int setup_sigcontext(struct target_rt_sigframe *frame,
++                            abi_ulong frame_addr,
+                             CPUXtensaState *env)
+ {
+     struct target_sigcontext *sc = &frame->uc.tuc_mcontext;
+@@ -123,8 +140,25 @@ static int setup_sigcontext(struct target_rt_sigframe *frame,
+     for (i = 0; i < 16; ++i) {
+         __put_user(env->regs[i], sc->sc_a + i);
+     }
+-    __put_user(0, &sc->sc_xtregs);
+-    /* TODO: xtregs */
++    if (xtensa_option_enabled(env->config, XTENSA_OPTION_DFP_COPROCESSOR)) {
++        for (i = 0; i < 16; ++i) {
++            __put_user(env->fregs[i].f64, &frame->xtregs.dfp.f[i]);
++        }
++        __put_user(env->uregs[FCR], &frame->xtregs.dfp.fcr);
++        __put_user(cpu_get_fsr(env), &frame->xtregs.dfp.fsr);
++        __put_user(frame_addr + offsetof(struct target_rt_sigframe, xtregs),
++                   &sc->sc_xtregs);
++    } else if (xtensa_option_enabled(env->config, XTENSA_OPTION_FP_COPROCESSOR)) {
++        for (i = 0; i < 16; ++i) {
++            __put_user(env->fregs[i].f32[FP_F32_LOW], &frame->xtregs.fp.f[i]);
++        }
++        __put_user(env->uregs[FCR], &frame->xtregs.fp.fcr);
++        __put_user(cpu_get_fsr(env), &frame->xtregs.fp.fsr);
++        __put_user(frame_addr + offsetof(struct target_rt_sigframe, xtregs),
++                   &sc->sc_xtregs);
++    } else {
++        __put_user(0, &sc->sc_xtregs);
++    }
+     return 1;
+ }
+ 
+@@ -190,7 +224,7 @@ void setup_rt_frame(int sig, struct target_sigaction *ka,
+     __put_user(0, &frame->uc.tuc_flags);
+     __put_user(0, &frame->uc.tuc_link);
+     target_save_altstack(&frame->uc.tuc_stack, env);
+-    if (!setup_sigcontext(frame, env)) {
++    if (!setup_sigcontext(frame, frame_addr, env)) {
+         unlock_user_struct(frame, frame_addr, 0);
+         goto give_sigsegv;
+     }
+@@ -243,8 +277,8 @@ give_sigsegv:
+     force_sigsegv(sig);
+ }
+ 
+-static void restore_sigcontext(CPUXtensaState *env,
+-                               struct target_rt_sigframe *frame)
++static int restore_sigcontext(CPUXtensaState *env,
++                              struct target_rt_sigframe *frame)
+ {
+     struct target_sigcontext *sc = &frame->uc.tuc_mcontext;
+     uint32_t ps;
+@@ -266,7 +300,51 @@ static void restore_sigcontext(CPUXtensaState *env,
+     for (i = 0; i < 16; ++i) {
+         __get_user(env->regs[i], sc->sc_a + i);
+     }
+-    /* TODO: xtregs */
++    {
++        abi_ulong xtregs_addr;
++
++        __get_user(xtregs_addr, &sc->sc_xtregs);
++        if (xtregs_addr) {
++            if (xtensa_option_enabled(env->config,
++                                      XTENSA_OPTION_DFP_COPROCESSOR)) {
++                struct target_xtensa_xtregs_dfp *xtregs;
++                uint32_t fcr, fsr;
++
++                xtregs = lock_user(VERIFY_READ, xtregs_addr,
++                                   sizeof(*xtregs), 1);
++                if (!xtregs) {
++                    return 0;
++                }
++                for (i = 0; i < 16; ++i) {
++                    __get_user(env->fregs[i].f64, &xtregs->f[i]);
++                }
++                __get_user(fcr, &xtregs->fcr);
++                __get_user(fsr, &xtregs->fsr);
++                unlock_user(xtregs, xtregs_addr, 0);
++                cpu_set_fcr(env, fcr);
++                cpu_set_fsr(env, fsr);
++            } else if (xtensa_option_enabled(env->config,
++                                             XTENSA_OPTION_FP_COPROCESSOR)) {
++                struct target_xtensa_xtregs_fp *xtregs;
++                uint32_t fcr, fsr;
++
++                xtregs = lock_user(VERIFY_READ, xtregs_addr,
++                                   sizeof(*xtregs), 1);
++                if (!xtregs) {
++                    return 0;
++                }
++                for (i = 0; i < 16; ++i) {
++                    __get_user(env->fregs[i].f32[FP_F32_LOW], &xtregs->f[i]);
++                }
++                __get_user(fcr, &xtregs->fcr);
++                __get_user(fsr, &xtregs->fsr);
++                unlock_user(xtregs, xtregs_addr, 0);
++                cpu_set_fcr(env, fcr);
++                cpu_set_fsr(env, fsr);
++            }
++        }
++    }
++    return 1;
+ }
+ 
+ long do_rt_sigreturn(CPUXtensaState *env)
+@@ -282,7 +360,9 @@ long do_rt_sigreturn(CPUXtensaState *env)
+     target_to_host_sigset(&set, &frame->uc.tuc_sigmask);
+     set_sigmask(&set);
+ 
+-    restore_sigcontext(env, frame);
++    if (!restore_sigcontext(env, frame)) {
++        goto badframe;
++    }
+     target_restore_altstack(&frame->uc.tuc_stack, env);
+ 
+     unlock_user_struct(frame, frame_addr, 0);
 -- 
 2.54.0
 
