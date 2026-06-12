@@ -4,111 +4,100 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0A3AACD4F2C
-	for <qemu-devel@archiver.kernel.org>; Fri, 12 Jun 2026 08:21:56 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1BBCACD8CA8
+	for <qemu-devel@archiver.kernel.org>; Fri, 12 Jun 2026 08:23:12 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wXx8W-0008Eq-Um; Fri, 12 Jun 2026 04:21:08 -0400
+	id 1wXx9y-0000I0-6I; Fri, 12 Jun 2026 04:22:38 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <shivangu@linux.ibm.com>)
- id 1wXx8V-0008Eb-Sv; Fri, 12 Jun 2026 04:21:07 -0400
-Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <shivangu@linux.ibm.com>)
- id 1wXx8U-0004lv-1V; Fri, 12 Jun 2026 04:21:07 -0400
-Received: from pps.filterd (m0353729.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 65BN3bDn4146938; Fri, 12 Jun 2026 08:21:03 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
- :content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=pp1; bh=aQVbaR
- XVaZHiCNp/nbMczn8YBpGzUovu2Xdsvx/xcCY=; b=a3Alc/rbo+IfjKpq/dGRvl
- 4nrrmdZS4VnDPtQavjEzeK9PwpLOix3cpjMuhdsRxkro4fRJ0PZhqLTviQEG+q4q
- aJSuVaKI4sCQSGqyR/31yj7vQq5RpipdbbhdRD0DOtg23rW4AgmKVOCTrvCQQuBA
- umvgRXj4blE236kTAW7RT95JiL6ofxVyPx+AYJ/qCWLPvBy5KI/EzAA1MdXCkQXR
- G++agau1BEIEZ2a5ncyGOgZGj61lO/OTxj6dGWoELY4qprvZHbpDl/q04eAf6F35
- v8qp4sEHd+0axpAZiK68kkmRcJ+PdQv7T5yNR4L75VZCRxd6feFxyOIESvZOhHkA
- ==
-Received: from ppma13.dal12v.mail.ibm.com
- (dd.9e.1632.ip4.static.sl-reverse.com [50.22.158.221])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4eqe8c7y8e-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Fri, 12 Jun 2026 08:21:03 +0000 (GMT)
-Received: from pps.filterd (ppma13.dal12v.mail.ibm.com [127.0.0.1])
- by ppma13.dal12v.mail.ibm.com (8.18.1.7/8.18.1.7) with ESMTP id 65C8JhDh000451;
- Fri, 12 Jun 2026 08:21:02 GMT
-Received: from smtprelay07.fra02v.mail.ibm.com ([9.218.2.229])
- by ppma13.dal12v.mail.ibm.com (PPS) with ESMTPS id 4eqe09xy2y-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Fri, 12 Jun 2026 08:21:02 +0000 (GMT)
-Received: from smtpav07.fra02v.mail.ibm.com (smtpav07.fra02v.mail.ibm.com
- [10.20.54.106])
- by smtprelay07.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 65C8Kv3I26542546
- (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Fri, 12 Jun 2026 08:20:57 GMT
-Received: from smtpav07.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id AF05220040;
- Fri, 12 Jun 2026 08:20:57 +0000 (GMT)
-Received: from smtpav07.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 61B212004B;
- Fri, 12 Jun 2026 08:20:56 +0000 (GMT)
-Received: from shivang.upadyay (unknown [9.123.12.247])
- by smtpav07.fra02v.mail.ibm.com (Postfix) with ESMTP;
- Fri, 12 Jun 2026 08:20:56 +0000 (GMT)
-Message-ID: <4b7da748b92e9105503d62dcb73039337ad81471.camel@linux.ibm.com>
-Subject: Re: [PATCH v2] ppc/spapr: make fadump collect regs for maxcpus
-From: Shivang Upadhyay <shivangu@linux.ibm.com>
-To: Aditya Gupta <adityag@linux.ibm.com>, qemu-devel@nongnu.org,
- qemu-ppc@nongnu.org
-Cc: anushree.mathur@linux.vnet.ibm.com, harshpb@linux.ibm.com,
- mahesh@linux.ibm.com, sourabhjain@linux.ibm.com
-Date: Fri, 12 Jun 2026 13:50:55 +0530
-In-Reply-To: <0dc91b46-a643-4e2f-b452-59ee2ec49ded@linux.ibm.com>
-References: <20260429065127.366813-1-shivangu@linux.ibm.com>
- <20260520092857.1079193-1-shivangu@linux.ibm.com>
- <0dc91b46-a643-4e2f-b452-59ee2ec49ded@linux.ibm.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-User-Agent: Evolution 3.58.3 (3.58.3-1.fc43) 
+ (Exim 4.90_1) (envelope-from <jay.chang@sifive.com>)
+ id 1wXx9t-0000HT-TQ
+ for qemu-devel@nongnu.org; Fri, 12 Jun 2026 04:22:34 -0400
+Received: from mail-ed1-x530.google.com ([2a00:1450:4864:20::530])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <jay.chang@sifive.com>)
+ id 1wXx9s-0005g3-9w
+ for qemu-devel@nongnu.org; Fri, 12 Jun 2026 04:22:33 -0400
+Received: by mail-ed1-x530.google.com with SMTP id
+ 4fb4d7f45d1cf-69170548d0eso977541a12.2
+ for <qemu-devel@nongnu.org>; Fri, 12 Jun 2026 01:22:31 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=sifive.com; s=google; t=1781252551; x=1781857351; darn=nongnu.org;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:from:to:cc:subject:date:message-id:reply-to;
+ bh=1JOSGinv+7tUEI5gb4kXt7A3fvxesQBbn1jYZ30EgYc=;
+ b=ZwVStloBwS+eKk3rldcmJcokW6CKhfUn9AzIJ6qba7FJZdzpgAf1lE/fzHphVXo1Ac
+ kT1eVYNFFNUU/zd1J8n3oWkjHe0+jMfz/FXzJXrkcIEEcGb2x43g+TQMg/VHjsyvyAV5
+ 3us7LJsrYOI8ikjlbtCYmAlVbZqh/dIjsaWDTXcs0qgLafqwDtrMDC4K+260Is5L8mU7
+ uT1bLLiYLhgJKIxQk1izizBnlfqNbEUsFC4nvLuQ9Fz1vO5Ykpp7c0p39PJz7Lxa6H/D
+ h2lr+euq++c52o4d/ydmNiOZv8rJGNVechT6qEr0NViKAFq1yrZzk38+4arE+4JFhgQv
+ VrEA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1781252551; x=1781857351;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=1JOSGinv+7tUEI5gb4kXt7A3fvxesQBbn1jYZ30EgYc=;
+ b=RjNYDZNbakC+ick4I4wGpKNXzhkEJXXD7BiK0U0IpEpWHc2033iLzXHI0ISttUzMQ5
+ oqIGEt4r5wB0tZ4ebhco34JdJ/0rcHRKarkQ1e50dXqZvm2z7hQUOD7fX6RELWyY/gdk
+ IxtWBIE0BLbqUwKc+W0rNxBtzNCIJu1+sqEy91v/+5ZVPluJi/a2Opmfon7bAuThAn/x
+ yku5nfQY9W4/R/rW31pItcEneW0a0B32pClknZKCRC6FvcWsKXOROvs1Ga1ouqFKa1m/
+ eEbXmZ0/VX4tZIUbu4hVQqwWx39gSDSdStqLmyKIqA5j3A9fdMDTIOA6zPb+I2n3xsFS
+ /2tA==
+X-Gm-Message-State: AOJu0YwkkGrQz8UwYbAx+GURQA4p99AmTTKllEzyz2Q5heqv1qp2H8Zh
+ G1wP2kjwQWAqIuqU95pWI7Kw8gNFC680KHBHAMioctX7XApFqCmB0ivn/k3tCjbkWw56V3YQy/d
+ bZStEnvOBJRWpE01NNVgg/aTkBxFdfMua/r4u2rsWBarrks2lgdEsUiqsx2q5qf/4yTVLzoW7DY
+ PN9wL5NGOrRA8TH7G0fYaMla+71G1Z1Pui1XzNHwwyFdw=
+X-Gm-Gg: Acq92OENLRbqSsYimeAI82xb0JGvyItVEdaPlVbFkIxR+PIWRagpMp6eJX6vKKk+nxZ
+ z9ZbQTXHO77SGLssdMSKcWwMdFCxr6TAxgRkqxtg373NVh3gpOg6gr4IDX/9NenHxnqOOsIjF1X
+ lAiPu49Vqa89BXMYf4exwqJVp3UWQVHP2CoQ1bB5nFM8MfgRE+7hgtNQ5lFGfTPZS30IezZ1NZ/
+ KY661xz0e7J8oKqm0RfAva0e9Zl/3yIsMI2R0JiMIxdcywbIf09mOAWVr3cuStKfAFxjKR7Ivxe
+ pb8JwXqtWnooFSvSrw+MssgaCA/1vuJXwSpFKZ8oTnSf4HgkNPG4Xl4b6bJ3ayuTDJO1ceR4Nbp
+ jt+kyHj+E3NAcwf5wmdeDVdqR6JDReo2M+iAQy/gxQcbwoIXR6h2u6ow/C8tzO17R0ArQw3a8xO
+ JuEp+TLVJyhF+wST09HE1QzYSiCjPFhq9ytKo83Ajwf+Sk0mCU8z9w4jvMVhP+VwvZ6+w4RFM=
+X-Received: by 2002:a05:6402:1f01:b0:68d:ad45:5cac with SMTP id
+ 4fb4d7f45d1cf-69378601f3dmr726331a12.3.1781252550612; 
+ Fri, 12 Jun 2026 01:22:30 -0700 (PDT)
+Received: from mail-ed1-f44.google.com (mail-ed1-f44.google.com.
+ [209.85.208.44]) by smtp.gmail.com with ESMTPSA id
+ 4fb4d7f45d1cf-6937938ab02sm340292a12.17.2026.06.12.01.22.29
+ for <qemu-devel@nongnu.org>
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Fri, 12 Jun 2026 01:22:29 -0700 (PDT)
+Received: by mail-ed1-f44.google.com with SMTP id
+ 4fb4d7f45d1cf-691c5776f35so1158958a12.3
+ for <qemu-devel@nongnu.org>; Fri, 12 Jun 2026 01:22:29 -0700 (PDT)
+X-Received: by 2002:a05:6402:e02:b0:68c:3994:45f1 with SMTP id
+ 4fb4d7f45d1cf-6937860404emr676301a12.6.1781252548784; Fri, 12 Jun 2026
+ 01:22:28 -0700 (PDT)
 MIME-Version: 1.0
-X-TM-AS-GCONF: 00
-X-Proofpoint-Spam-Info: AW1haW4tMjYwNjEyMDA3MiBTYWx0ZWRfXwc9BfTLTyQd1
- WByZyW7bQetx5hNT85QpvmwsH2bFa5mGOldg9ed3gI1+Nyfe/n8XcdFi4uHp0g9m25HaFStvT/W
- A++VbZCgZNj6hdh9pxaqrrZoxE17dVI=
-X-Authority-Analysis: v=2.4 cv=AYCB2XXG c=1 sm=1 tr=0 ts=6a2bc16f cx=c_pps
- a=AfN7/Ok6k8XGzOShvHwTGQ==:117 a=AfN7/Ok6k8XGzOShvHwTGQ==:17
- a=IkcTkHD0fZMA:10 a=FelO9ux0wxsA:10 a=VkNPw1HP01LnGYTKEx00:22
- a=RnoormkPH1_aCDwRdu11:22 a=uAbxVGIbfxUO_5tXvNgY:22 a=P-IC7800AAAA:8
- a=egPWfHYs18hlGN6UQSsA:9 a=QEXdDO2ut3YA:10 a=d3PnA9EDa4IxuAV0gXij:22
-X-Proofpoint-GUID: xLbrmO2kCrQ33uIAHXBW-MNyN4PJkhfn
-X-Proofpoint-ORIG-GUID: xLbrmO2kCrQ33uIAHXBW-MNyN4PJkhfn
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNjEyMDA3MiBTYWx0ZWRfX0qRYaFMNCpqq
- JvcjRj9hmlUCyGbMt1vz3m/hAmtC9vf9u98YiBb0pUToxjA0WoPdn0wWbdCTbQ9xyzap8Yzompf
- zVnv8Snohy/O8FaFvqHF4izWUXWdzkCti8eWwPJf2ZYgxJVNfuQ0LpRjmmHoUT1FBqc5PgQoZsH
- 3deoTlSthUGfgwGyGdwur50X3rfy5C2XrY1EpFV2xR9/9hBPwauBWN7lDvtk6DOPEOZHKBLqe28
- X04VHKQlDBhMKa6BikZ1MVKnb7oSRkbcltoiD3gWmPEccwYkBpHzTwQyV5R/OaAQY0KRLm1wH4v
- RFtRP2mi3UPzV3HRwRn9W3Bo3UfYdJ/8+0ySGIIQKm4tfVhy1Ta53XLXgVjKhi+wo00B2KX/v+G
- JaCaY+OeRS3sG93LDRNAf5ojTcbmLgBN/mNtainDeOjnSUYg8lGdk76vWByFBExKXX/lPyMkRHh
- e+3wQdAYu1qrTbOEnQA==
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.125,FMLib:17.12.100.49
- definitions=2026-06-12_01,2026-06-11_01,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- impostorscore=0 suspectscore=0 malwarescore=0 spamscore=0 phishscore=0
- lowpriorityscore=0 bulkscore=0 adultscore=0 priorityscore=1501 clxscore=1015
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2606040000 definitions=main-2606120072
-Received-SPF: pass client-ip=148.163.156.1;
- envelope-from=shivangu@linux.ibm.com; helo=mx0a-001b2d01.pphosted.com
-X-Spam_score_int: -26
-X-Spam_score: -2.7
+References: <20260318185238.99143-1-luisccunha8@gmail.com>
+ <20260318185238.99143-7-luisccunha8@gmail.com>
+In-Reply-To: <20260318185238.99143-7-luisccunha8@gmail.com>
+From: Jay Chang <jay.chang@sifive.com>
+Date: Fri, 12 Jun 2026 16:22:17 +0800
+X-Gmail-Original-Message-ID: <CAMXXpfZTOA2KyL+ab9C=ut6a9VUtOL7WawzL0rokZLpaKw3__w@mail.gmail.com>
+X-Gm-Features: AVVi8Cd8mz00-7dTryuYE5-Lu26EU77p5kuOf2zN3ZBisuQINgaxe3Suxd2G_1Y
+Message-ID: <CAMXXpfZTOA2KyL+ab9C=ut6a9VUtOL7WawzL0rokZLpaKw3__w@mail.gmail.com>
+Subject: Re: [RFC PATCH 6/6] target/riscv: Add CPU properties for SPMP and
+ sspmpen
+To: luisccc <luisccunha8@gmail.com>
+Cc: qemu-devel@nongnu.org, Palmer Dabbelt <palmer@dabbelt.com>, 
+ Alistair Francis <alistair.francis@wdc.com>, Weiwei Li <liwei1518@gmail.com>, 
+ Daniel Henrique Barboza <dbarboza@ventanamicro.com>,
+ Liu Zhiwei <zhiwei_liu@linux.alibaba.com>, 
+ "open list:RISC-V TCG CPUs" <qemu-riscv@nongnu.org>, frank.chang@sifive.com
+Content-Type: multipart/alternative; boundary="0000000000006d273406540a2df3"
+Received-SPF: pass client-ip=2a00:1450:4864:20::530;
+ envelope-from=jay.chang@sifive.com; helo=mail-ed1-x530.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
- RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, HTML_MESSAGE=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -125,104 +114,70 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, 2026-06-10 at 22:33 +0530, Aditya Gupta wrote:
-> On 20/05/26 14:58, Shivang Upadhyay wrote:
->=20
-> > When a ppc machine is started with maxcpus greater than the number
-> > > of present CPUs (e.g., -smp cpus=3D2,maxcpus=3D8), firmware allocates
-> > >=20
-> the CPU state data buffer based on maxcpus and advertises this size >
-> to=20
-> the kernel during fadump registration. > > However, fadump currently=20
-> fails to generate a vmcore during the > rebooted kernel because: > >
-> 1.=20
-> The CPU state buffer length does not match what firmware > advertised
-> (QEMU only populates entries for present CPUs, not > maxcpus) > 2.
-> The=20
-> kernel cannot find CPU data for all maxcpus slots
-> Hello Shivang, same thing from our discussion offline, can you see if
-> this
-> fix belongs in the kernel instead of qemu ?
->=20
-> PAPR (section H.1) states:
->=20
-> > Only CPUs that are online at the start of the Firmware Assisted
-> > Dump > will have their register data saved.
-> QEMU's implementation is aligned with PAPR.
-> The PAPR doesn't say anything about the offline CPUs, so that may be
-> considered as undefined.
-> Let's see if it's an assumption from kernel side, and if it's
-> possible to be
-> fixed there, else if we will take this patch in qemu.
->=20
-> Thanks,
-> - Aditya G
+--0000000000006d273406540a2df3
+Content-Type: text/plain; charset="UTF-8"
 
-Hi Aditya,
+>
+> +static void prop_sspmpen_set(Object *obj, Visitor *v, const char *name,
+> +                         void *opaque, Error **errp)
+> +{
+> +    RISCVCPU *cpu = RISCV_CPU(obj);
+> +    bool value;
+> +
+> +    visit_type_bool(v, name, &value, errp);
+> +
+> +    if (cpu->cfg.spmp != value && riscv_cpu_is_vendor(obj)) {
+> +        cpu_set_prop_err(cpu, name, errp);
+> +        return;
+> +    }
+> +
+> +    cpu_option_add_user_setting(name, value);
+> +    cpu->cfg.ext_sspmpen = value;
+> +
+> +    /* Enable necessary extensions */
+> +    if (value) {
+> +        cpu->cfg.spmp = true;
+> +        cpu->cfg.ext_sscsrind = true;
+> +        cpu->cfg.ext_smcsrind = true;
+> +    }
+> +}
 
- I get your point about PAPR, it just mentions about saving online CPUs
-and doesnt go in detail about the case of offline/inactive/not-added
-CPUs.
+ Why do we need to set it again ? So if we enable sspmpen means enable spmp
+at the same time?
 
-But the case of DLPAR'ed cpus is interested. It would be important to
-save the state of new CPUs, as per me.=20
+--0000000000006d273406540a2df3
+Content-Type: text/html; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-Anyways regarding the Kernel fix. there is this concerning line in
-kernel[1].=20
+<div dir=3D"ltr"><div class=3D"gmail_quote gmail_quote_container"><blockquo=
+te class=3D"gmail_quote" style=3D"margin:0px 0px 0px 0.8ex;border-left:1px =
+solid rgb(204,204,204);padding-left:1ex">+static void prop_sspmpen_set(Obje=
+ct *obj, Visitor *v, const char *name,<br>
++=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
+=A0 =C2=A0 =C2=A0void *opaque, Error **errp)<br>
++{<br>
++=C2=A0 =C2=A0 RISCVCPU *cpu =3D RISCV_CPU(obj);<br>
++=C2=A0 =C2=A0 bool value;<br>
++<br>
++=C2=A0 =C2=A0 visit_type_bool(v, name, &amp;value, errp);<br>
++<br>
++=C2=A0 =C2=A0 if (cpu-&gt;cfg.spmp !=3D value &amp;&amp; riscv_cpu_is_vend=
+or(obj)) {<br>
++=C2=A0 =C2=A0 =C2=A0 =C2=A0 cpu_set_prop_err(cpu, name, errp);<br>
++=C2=A0 =C2=A0 =C2=A0 =C2=A0 return;<br>
++=C2=A0 =C2=A0 }<br>
++<br>
++=C2=A0 =C2=A0 cpu_option_add_user_setting(name, value);<br>
++=C2=A0 =C2=A0 cpu-&gt;cfg.ext_sspmpen =3D value;<br>
++<br>
++=C2=A0 =C2=A0 /* Enable necessary extensions */<br>
++=C2=A0 =C2=A0 if (value) {<br>
++=C2=A0 =C2=A0 =C2=A0 =C2=A0 cpu-&gt;cfg.spmp =3D true;<br>
++=C2=A0 =C2=A0 =C2=A0 =C2=A0 cpu-&gt;cfg.ext_sscsrind =3D true;<br>
++=C2=A0 =C2=A0 =C2=A0 =C2=A0 cpu-&gt;cfg.ext_smcsrind =3D true;<br>
++=C2=A0 =C2=A0 }<br>
++}</blockquote><div>=C2=A0Why do we need to set it again ? So if we enable =
+sspmpen=C2=A0means enable spmp at the same time?</div></div></div>
 
-
-switch (type) {
-		case RTAS_FADUMP_CPU_STATE_DATA:
-		case RTAS_FADUMP_HPTE_REGION:
-		case RTAS_FADUMP_REAL_MODE_REGION:
-			if (fdm_active->rgn[i].error_flags !=3D 0) {
-				pr_err("Dump taken by platform is not
-valid (%d)\n", i);
-				rc =3D -EINVAL;
-			}
-			if (fdm_active->rgn[i].bytes_dumped !=3D
-fdm_active->rgn[i].source_len) {
-				pr_err("Dump taken by platform is
-incomplete (%d)\n", i);
-				rc =3D -EINVAL;
-			}
-
-
-Basically it panics if the size advertised by Firmware is not the same
-as the size it recieves at the fadump time. in qemu the advertiesed
-size comes from here. [2]
-
-    /*
-     * CPU State Data contains multiple fields such as header, num_cpus
-and
-     * register entries
-     *
-     * Calculate the maximum CPU State Data size, according to maximum
-     * possible CPUs the QEMU VM can have
-     *
-     * This calculation must match the 'cpu_state_len' calculation done
-in
-     * 'populate_cpu_state_data' in spapr_fadump.c
-     */
-    fadump_cpu_state_size +=3D sizeof(struct FadumpRegSaveAreaHeader);
-    fadump_cpu_state_size +=3D 0xc;                      /* padding as in
-PAPR */
-    fadump_cpu_state_size +=3D sizeof(uint32_t);         /* num_cpus */
-    fadump_cpu_state_size +=3D max_possible_cpus   *     /* reg entries
-*/
-                             FADUMP_PER_CPU_REG_ENTRIES *
-                             sizeof(struct FadumpRegEntry);
-
-
-So its the same problem here. It too advertizes to kernel that
-collection needs to happen on max_possible_cpus. atleast this change
-need to be made. But if we make this change, what will we fill the
-empty cpu's slot with?
-
-~Shivang.
-
-[1]https://elixir.bootlin.com/linux/v6.15.6/source/arch/powerpc/platforms/p=
-series/rtas-fadump.c#L458
-
-[2]https://elixir.bootlin.com/qemu/v11.0.1/source/hw/ppc/spapr.c#L941
+--0000000000006d273406540a2df3--
 
