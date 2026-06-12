@@ -4,67 +4,70 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 54C87CD98CE
-	for <qemu-devel@archiver.kernel.org>; Fri, 12 Jun 2026 11:04:19 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7A426CD8CA8
+	for <qemu-devel@archiver.kernel.org>; Fri, 12 Jun 2026 11:04:24 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wXzfl-0003Kz-Ak; Fri, 12 Jun 2026 07:03:37 -0400
+	id 1wXzg1-0003YP-IR; Fri, 12 Jun 2026 07:03:53 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <gshan@redhat.com>) id 1wXzfj-0003Fj-IF
- for qemu-devel@nongnu.org; Fri, 12 Jun 2026 07:03:35 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <gshan@redhat.com>) id 1wXzfz-0003WB-L3
+ for qemu-devel@nongnu.org; Fri, 12 Jun 2026 07:03:51 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <gshan@redhat.com>) id 1wXzfh-0001Bv-Q1
- for qemu-devel@nongnu.org; Fri, 12 Jun 2026 07:03:35 -0400
+ (Exim 4.90_1) (envelope-from <gshan@redhat.com>) id 1wXzfx-0001K0-U2
+ for qemu-devel@nongnu.org; Fri, 12 Jun 2026 07:03:51 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1781262212;
+ s=mimecast20190719; t=1781262229;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding;
- bh=0D5VYBTm+M39AGUV1HBH/FzeUtRKZMMTIMaAxqlpmMg=;
- b=SIt1gYL8KSlQjGGIhBfnCmNnidudoKYilIP0PGSHufC0VHFkWRFOpVGebdpCGuB8uHH0y5
- W0dQ8eHzFCxqOl5eZhrC2e0z29WXH69Z1jR+KFzg9/Qc4+epNKk3/5tlnTh1PkeEGoE9r5
- y1DYkyVs33u3AURnhNZ1sQG9OP7wzkw=
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=sb0vXByTjHXCfPJQeiZkLPVssme/omDG5VeOp/DkR+8=;
+ b=gisjvQjzbRom3zCIEyMRlSr3SyShOb2vgnTe4TbyAWuAk8SvxoYtfWf7Ve3dimdvcd7she
+ GXYRkuP0HpSsDNwVyPnL4WEkddq/I3RPo6D4GtAozyvbcN/uhUyZli//KWGCRecadufntT
+ dthZ7WQETZj+uSH5h6KOcoY7R3pnuZM=
 Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-613-bjnq5cPSOhK-NNiyxYAF4w-1; Fri,
- 12 Jun 2026 07:03:28 -0400
-X-MC-Unique: bjnq5cPSOhK-NNiyxYAF4w-1
-X-Mimecast-MFC-AGG-ID: bjnq5cPSOhK-NNiyxYAF4w_1781262207
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-316-SHqdejfbMnOfHVPrOI4H_A-1; Fri,
+ 12 Jun 2026 07:03:44 -0400
+X-MC-Unique: SHqdejfbMnOfHVPrOI4H_A-1
+X-Mimecast-MFC-AGG-ID: SHqdejfbMnOfHVPrOI4H_A_1781262221
 Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
  by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 061EA1800A7B; Fri, 12 Jun 2026 11:03:27 +0000 (UTC)
+ id 5EC8D180025C; Fri, 12 Jun 2026 11:03:41 +0000 (UTC)
 Received: from gshan-thinkpadx1nanogen2.rmtau.csb (unknown [10.64.136.3])
  by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 9550E1955BC4; Fri, 12 Jun 2026 11:03:20 +0000 (UTC)
+ id 3112E1955BC4; Fri, 12 Jun 2026 11:03:34 +0000 (UTC)
 From: Gavin Shan <gshan@redhat.com>
 To: qemu-arm@nongnu.org
 Cc: qemu-devel@nongnu.org, peterx@redhat.com, mst@redhat.com,
  peter.maydell@linaro.org, berrange@redhat.com, david@kernel.org,
  alex@shazbot.org, clg@redhat.com, pbonzini@redhat.com, philmd@mailo.com,
  phrdina@redhat.com, jugraham@redhat.com, shan.gavin@gmail.com
-Subject: [PATCH 0/2] system/memory: Make ram device region directly accessible
-Date: Fri, 12 Jun 2026 21:03:05 +1000
-Message-ID: <20260612110307.1264798-1-gshan@redhat.com>
+Subject: [PATCH 2/2] system/memory: Make ram device region directly accessible
+Date: Fri, 12 Jun 2026 21:03:07 +1000
+Message-ID: <20260612110307.1264798-3-gshan@redhat.com>
+In-Reply-To: <20260612110307.1264798-1-gshan@redhat.com>
+References: <20260612110307.1264798-1-gshan@redhat.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 X-Scanned-By: MIMEDefang 3.0 on 10.30.177.12
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=gshan@redhat.com;
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=gshan@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -24
 X-Spam_score: -2.5
 X-Spam_bar: --
 X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.445,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
  SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -81,44 +84,117 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-All ram device regions was turned to be indirectly accessible by commit
-4a2e242bbb ("memory: Don't use memcpy for ram_device regions"). This leads
-to a hanged guest where a NVidia GH100 GPU is passed from host. The memory
-in its PCI BAR#4 can be allocated as DMA target buffer. qemu has to take
-DMA bounce buffer in address_space_map() to cover the DMA request. However,
-the bounce buffer size is 4096 bytes and we're overrunning it easily when
-the guest has significant disk activities on compiling 'cuda-samples'.
-The full log and problem description can be found from PATCH[1/2]'s commit
-log.
+This basically reverts 4a2e242bbb30 ("memory: Don't use memcpy for
+ram_device regions") to make ram device region directly accessible
+again. With this, the bounce buffer is bypassed in address_space_map()
+when a ram device region is involved, potentially avoid to overrun
+the bounce buffer.
 
-Try to fix the issue handled in commit 4a2e242bbb by replacing mem{cpy, move}
-with __builtin_mem{cpy, move} in the accessors to the ram device regions.
-With this, we can basically revert that commit to make ram device region
-directly accessible again and bypass the bounce buffer in address_space_map()
-where the guest hang is caused.
+Reported-by: Julia Graham <jugraham@redhat.com>
+Suggested-by: Michael S. Tsirkin <mst@redhat.com>
+Suggested-by: Peter Xu <peterx@redhat.com>
+Signed-off-by: Gavin Shan <gshan@redhat.com>
+---
+ include/system/memory.h | 11 ++---------
+ system/memory.c         | 41 +----------------------------------------
+ system/trace-events     |  2 --
+ 3 files changed, 3 insertions(+), 51 deletions(-)
 
-PATCH[1] replaces mem{cpy, move} with __builtin_mem{cpy, move}
-PATCH[2] makes ram device region directly accessible again
-
-Changelog
-=========
-RFCv1 -> v1:
-  * https://lists.nongnu.org/archive/html/qemu-arm/2026-06/msg00307.html
-  * Reworked solution based on suggestions from Peter Xu, Peter Maydell
-    and Michael S. Tsirkin
-
-Gavin Shan (2):
-  system/memory: Use __builtin_mem{cpy, move} in accessors of ram device
-    region
-  system/memory: Make ram device region directly accessible
-
- hw/remote/vfio-user-obj.c |  4 +--
- include/system/memory.h   | 53 +++++++++++++++++++++++++++++++--------
- system/memory.c           | 41 +-----------------------------
- system/physmem.c          |  8 +++---
- system/trace-events       |  2 --
- 5 files changed, 50 insertions(+), 58 deletions(-)
-
+diff --git a/include/system/memory.h b/include/system/memory.h
+index 6bb2e13eea..3ca6155805 100644
+--- a/include/system/memory.h
++++ b/include/system/memory.h
+@@ -2914,15 +2914,8 @@ static inline bool memory_region_supports_direct_access(const MemoryRegion *mr)
+     if (memory_region_is_romd(mr)) {
+         return true;
+     }
+-    if (!memory_region_is_ram(mr)) {
+-        return false;
+-    }
+-    /*
+-     * RAM DEVICE regions can be accessed directly using memcpy, but it might
+-     * be MMIO and access using mempy can be wrong (e.g., using instructions not
+-     * intended for MMIO access). So we treat this as IO.
+-     */
+-    return !memory_region_is_ram_device(mr);
++
++    return memory_region_is_ram(mr);
+ }
+ 
+ static inline bool memory_access_is_direct(const MemoryRegion *mr,
+diff --git a/system/memory.c b/system/memory.c
+index 739ba11da6..9549dd1a94 100644
+--- a/system/memory.c
++++ b/system/memory.c
+@@ -1362,43 +1362,6 @@ const MemoryRegionOps unassigned_mem_ops = {
+     .endianness = DEVICE_NATIVE_ENDIAN,
+ };
+ 
+-static uint64_t memory_region_ram_device_read(void *opaque,
+-                                              hwaddr addr, unsigned size)
+-{
+-    MemoryRegion *mr = opaque;
+-    uint64_t data = ldn_he_p(mr->ram_block->host + addr, size);
+-
+-    trace_memory_region_ram_device_read(get_cpu_index(), mr, addr, data, size);
+-
+-    return data;
+-}
+-
+-static void memory_region_ram_device_write(void *opaque, hwaddr addr,
+-                                           uint64_t data, unsigned size)
+-{
+-    MemoryRegion *mr = opaque;
+-
+-    trace_memory_region_ram_device_write(get_cpu_index(), mr, addr, data, size);
+-
+-    stn_he_p(mr->ram_block->host + addr, size, data);
+-}
+-
+-static const MemoryRegionOps ram_device_mem_ops = {
+-    .read = memory_region_ram_device_read,
+-    .write = memory_region_ram_device_write,
+-    .endianness = HOST_BIG_ENDIAN ? DEVICE_BIG_ENDIAN : DEVICE_LITTLE_ENDIAN,
+-    .valid = {
+-        .min_access_size = 1,
+-        .max_access_size = 8,
+-        .unaligned = true,
+-    },
+-    .impl = {
+-        .min_access_size = 1,
+-        .max_access_size = 8,
+-        .unaligned = true,
+-    },
+-};
+-
+ bool memory_region_access_valid(MemoryRegion *mr,
+                                 hwaddr addr,
+                                 unsigned size,
+@@ -1676,10 +1639,8 @@ void memory_region_init_ram_device_ptr(MemoryRegion *mr, Object *owner,
+                                        const char *name, uint64_t size,
+                                        void *ptr)
+ {
+-    memory_region_init_io(mr, owner, &ram_device_mem_ops, mr, name, size);
+-    mr->ram = true;
++    memory_region_init_ram_ptr(mr, owner, name, size, ptr);
+     mr->ram_device = true;
+-    memory_region_set_ram_ptr(mr, size, ptr);
+ }
+ 
+ void memory_region_init_alias(MemoryRegion *mr, Object *owner,
+diff --git a/system/trace-events b/system/trace-events
+index e6e1b61279..34af0a3a1e 100644
+--- a/system/trace-events
++++ b/system/trace-events
+@@ -20,8 +20,6 @@ memory_region_ops_read(int cpu_index, void *mr, uint64_t addr, uint64_t value, u
+ memory_region_ops_write(int cpu_index, void *mr, uint64_t addr, uint64_t value, unsigned size, const char *name) "cpu %d mr %p addr 0x%"PRIx64" value 0x%"PRIx64" size %u name '%s'"
+ memory_region_subpage_read(int cpu_index, void *mr, uint64_t offset, uint64_t value, unsigned size) "cpu %d mr %p offset 0x%"PRIx64" value 0x%"PRIx64" size %u"
+ memory_region_subpage_write(int cpu_index, void *mr, uint64_t offset, uint64_t value, unsigned size) "cpu %d mr %p offset 0x%"PRIx64" value 0x%"PRIx64" size %u"
+-memory_region_ram_device_read(int cpu_index, void *mr, uint64_t addr, uint64_t value, unsigned size) "cpu %d mr %p addr 0x%"PRIx64" value 0x%"PRIx64" size %u"
+-memory_region_ram_device_write(int cpu_index, void *mr, uint64_t addr, uint64_t value, unsigned size) "cpu %d mr %p addr 0x%"PRIx64" value 0x%"PRIx64" size %u"
+ memory_region_sync_dirty(const char *mr, const char *listener, int global) "mr '%s' listener '%s' synced (global=%d)"
+ flatview_new(void *view, void *root) "%p (root %p)"
+ flatview_destroy(void *view, void *root) "%p (root %p)"
 -- 
 2.54.0
 
