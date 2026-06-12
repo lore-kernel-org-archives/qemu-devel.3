@@ -4,97 +4,105 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 110AFCD98CF
-	for <qemu-devel@archiver.kernel.org>; Fri, 12 Jun 2026 18:51:41 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 78893CD98CF
+	for <qemu-devel@archiver.kernel.org>; Fri, 12 Jun 2026 18:52:13 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wY6y3-0007QO-Ah; Fri, 12 Jun 2026 14:50:59 -0400
+	id 1wY6z0-0007md-W4; Fri, 12 Jun 2026 14:51:59 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1wY6y1-0007PT-7d
- for qemu-devel@nongnu.org; Fri, 12 Jun 2026 14:50:57 -0400
-Received: from mail-wm1-x334.google.com ([2a00:1450:4864:20::334])
+ (Exim 4.90_1) (envelope-from <wlosh@bsdimp.com>) id 1wY6yz-0007mE-QI
+ for qemu-devel@nongnu.org; Fri, 12 Jun 2026 14:51:57 -0400
+Received: from mail-yx1-xb12d.google.com ([2607:f8b0:4864:20::b12d])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1wY6xz-0003Hm-1Z
- for qemu-devel@nongnu.org; Fri, 12 Jun 2026 14:50:56 -0400
-Received: by mail-wm1-x334.google.com with SMTP id
- 5b1f17b1804b1-490b211ee6aso9490985e9.3
- for <qemu-devel@nongnu.org>; Fri, 12 Jun 2026 11:50:54 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <wlosh@bsdimp.com>) id 1wY6yx-0004DN-Jw
+ for qemu-devel@nongnu.org; Fri, 12 Jun 2026 14:51:57 -0400
+Received: by mail-yx1-xb12d.google.com with SMTP id
+ 956f58d0204a3-660390a8999so1563455d50.3
+ for <qemu-devel@nongnu.org>; Fri, 12 Jun 2026 11:51:54 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1781290314; cv=none;
+ d=google.com; s=arc-20240605;
+ b=WD7qlxIehL88dYI1U7ndxvARf+UQx58zUh7MYDO21xTTCoYlcREjhK1b8K1s5tdXsK
+ FhSFCE0gpRJlM/C/T9bJ6erv21KfppgI5j+IR3+O6D2Yf4N03jKjI95Ij17b23QhtAFS
+ Nm9AjMhxiP2xhtK2USq+tgr67rR5Foqk5kIvDKqn5OjuQgF5Db/bi8DsNHgBaGz3KjQN
+ DipFEXeuEbHI2IbiqFfdQ83jbkM0vMzCZI0tnNn/IFQZMt2Rc8f1m0JUijtkq2g/yEwO
+ b3o5QF1gNy44sBjedmMYoYtc8+QRqCUMAbzEVwxaqcYjmr+OeQXrSv76jIAhhp+s3ZJk
+ r/PA==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
+ s=arc-20240605; 
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:dkim-signature;
+ bh=nItO1iK+AI4fN7aNZ3blkxKNyLt+powS95ANb0OLSIo=;
+ fh=VzQn70hT2MC4IC7u0R3/uSZ2e5K88XuxZuzwH4Te4/o=;
+ b=eFJEiWo6oFkmtXrHQvRxNYcQ0cvJFlmW9SEJXDBGfa4XS/sxXEdKwuB5E35BvxiInu
+ tw49OY25MXfchUHv/cFzQYz8ORhXyUvueL2dxBqXpfiYOjDwLmg9wRrqWIVuPFomtNv5
+ R6hegSBoIoZJGv53YYIOrxJ6bbv9sSctuhlwXuJki+8trteEZfl7BdNu5fDfMivOAsfM
+ QBda11daqFCFbcRa2x8WTmc78anmNadyWSo7T+MQowOLwHo08RNMOS0sSsznji2Z3ZYc
+ rtvJaUkb/L143ZVrQBnxVkypLSEUFgERaiWi2QGIpTUYa5eEbYtB5djYQI0lvzJIgc5K
+ 0AGg==; darn=nongnu.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1781290253; x=1781895053; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:user-agent
- :references:in-reply-to:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=9d5XdG4nK+gC6Q3Lj8SelKF0sJUz9ob8Vfp1Hz7sKDY=;
- b=ARKB0T4HX4naOG/YR7BiIBicJltwp/+pgLBD1vLgQTsUBZYZwp7EHelI8QjdOP2Ikg
- XCUDsKeqpT9xOxLn2szXaQLMTXjcV5W1JZmTrjNPjftsaprnv9uZYSlYxr/UzBuRAVXT
- UF41qZB6KDEPLDwm7EObnla3rZAM9C89Yb8/tzCC2O9MG2wtV78xd2y1ad59RZSyIrnI
- xdnTr4fLTh27JEp8+dzop28p5zdgoOgHoO97hPaKYJ2D3qKihEwrxnWwsceKSeMDE4W9
- MzOU7OoWYYFEYy4f6+0Oqwwrk1xGOyzV8/sjHeWpWCbP1LZTQo98iVHH7t1U41ZMnrbj
- tkaQ==
+ d=bsdimp-com.20251104.gappssmtp.com; s=20251104; t=1781290314; x=1781895114;
+ darn=nongnu.org; 
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:from:to:cc:subject:date:message-id:reply-to;
+ bh=nItO1iK+AI4fN7aNZ3blkxKNyLt+powS95ANb0OLSIo=;
+ b=tpeYThf5mFZvO4aj5JD7wHMTG6O0VHendc7l9iLM3UQbzUr8JWq6bpwN8EW9ujjZQj
+ N7xpkHZARjhhQuwCV1eWVxJMZRdP7TvyKf9hnxAKOO9di0RJIFxuwlDtsxlinUUyi7N8
+ 7yJvMd4tdr5xSMiGxSa5mTfNsIYFEWHRhiKHT91KEmULDyxPXYYZaYcnmT/IkWNmYe9G
+ nCnBSHn5+H88myn/6c978va5DYpKWiNMLrx4Xf/8dVI0w4wBSX6jOZFDZdipeURmtlSy
+ wF3XMLBvwT//4tDD4mQOrPhGlb1CmnZfTh7i7lmBKMGHQRfdp+Ty6RAgXQA682mAPdKU
+ KxOA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1781290253; x=1781895053;
- h=content-transfer-encoding:mime-version:message-id:date:user-agent
- :references:in-reply-to:subject:cc:to:from:x-gm-gg
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=9d5XdG4nK+gC6Q3Lj8SelKF0sJUz9ob8Vfp1Hz7sKDY=;
- b=IVGs4+pIYlnE7YLQCUxHUr3AJuI/aHHKFmllLd8Q+3+kvHhnsvBCskwYXUk+zSAz8p
- 188wjg5pO/ST4cdF0+yLodCsudEEr2p1vKjtkntheeOz5UPv52aTYlUDjZGYRMluVMEw
- adel1Ap4RZjNv15dTAry2fGgZDK2bsPw0jjyuM6Junh9vI//qOCx7R1eEATqbh1veMBM
- wIGHI/EIi0Jm6qkb+CyMBsZ7BqVD92CPkLHjMqlExog+fKe+D0MIFtFB6t+95dYxZ8oy
- P9V/zgbAqLdlci4OExzu3MeEjW5It+j5KJTO7JTfL/JfLBbOmWfvIMquPFq+YtvwFS5E
- 39kw==
-X-Gm-Message-State: AOJu0YyaQiTO3230QVCDriJlddUSsJgGOhVrySyc+1/Q8C32WWYK/Ocl
- 8wQVViyapgXNwV7+KPLu/3SV5cW+KGFAHy86I09pViiXELv5axnI9RWrgUwo9O3/ET4=
-X-Gm-Gg: Acq92OGSydze0dT3kzegLORZpefCeZhvBx+fZ6NDZaE1hDVy2roOW769wqiI8evD8to
- Tm6++j5ZodQk0GigKQaOnvidGQf155BjLhzG/I6YAYiCWdZGk+zjFSrhIoMJNYpr6LtWsrH0UkY
- i9NP32Zzp7vTHbQ7TGAaJTNVXx4rquEPThYU0yJy9aUabA4FLiI5a3FSLKyBKo6xaXOxVfMJRrB
- mrXRKDRdcY578TFxoC9SgD9EF2z8S5PSfYV0KI99r0L4/e2GobkBUXCx4kZebrt/g1BuOaHeHrn
- FdtyaDNU8O2D2gVhBC+qtNoPEgjARFBNqhz+/7JJ9nG+1cmydfkDFYwGsSquUvPQLgJNY5YDB/l
- lM/BVA3UM6krGt5DQHHSBQioEsfsttjyw15mOSHQNR1ZDXg56yvlT8VeT1WDGuqGJcWz0dGCcZT
- IdJ/BZH711ljhrHN53IswgJ1A=
-X-Received: by 2002:a05:600c:638d:b0:492:1e36:d16f with SMTP id
- 5b1f17b1804b1-4921e36d1b4mr21725105e9.37.1781290252735; 
- Fri, 12 Jun 2026 11:50:52 -0700 (PDT)
-Received: from draig.lan ([185.124.0.195]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-49220345528sm9705825e9.8.2026.06.12.11.50.52
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 12 Jun 2026 11:50:52 -0700 (PDT)
-Received: from draig (localhost [IPv6:::1])
- by draig.lan (Postfix) with ESMTP id DA3A85F814;
- Fri, 12 Jun 2026 19:50:50 +0100 (BST)
-From: =?utf-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
-To: Peter Maydell <peter.maydell@linaro.org>
-Cc: qemu-devel@nongnu.org,  Paolo Bonzini <pbonzini@redhat.com>,  Alexander
- Graf <agraf@csgraf.de>,  Mohamed Mediouni <mohamed@unpredictable.fr>,
- Pedro Barbuda <pbarbuda@microsoft.com>,  qemu-arm@nongnu.org,
- kvm@vger.kernel.org
-Subject: Re: [PATCH v7 0/8] target/arm: fully model WFxT instructions for
- A-profile
-In-Reply-To: <CAFEAcA8yNGiKeMpN_wgWtc5EnfjsnxSvG6an4-UjBf6XG+4Yvw@mail.gmail.com>
- (Peter Maydell's message of "Fri, 12 Jun 2026 18:46:48 +0100")
-References: <20260529082948.363931-1-alex.bennee@linaro.org>
- <CAFEAcA94+mh_pigFDi+tEPRJ416fSWfxsQ1Lj8Byemug9kBp6w@mail.gmail.com>
- <87h5n7ekxw.fsf@draig.linaro.org>
- <CAFEAcA8yNGiKeMpN_wgWtc5EnfjsnxSvG6an4-UjBf6XG+4Yvw@mail.gmail.com>
-User-Agent: mu4e 1.14.1; emacs 30.1
-Date: Fri, 12 Jun 2026 19:50:50 +0100
-Message-ID: <87bjdfegol.fsf@draig.linaro.org>
+ d=1e100.net; s=20251104; t=1781290314; x=1781895114;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=nItO1iK+AI4fN7aNZ3blkxKNyLt+powS95ANb0OLSIo=;
+ b=IxPR5E6nOQIxF0Hq/YQijT7U9gaAlGTFeA3w1Rmu5ITw9ggC/2hSMFks12vHu57iiC
+ qEaWNM2vpfYnI4hN/ADCG3Lj1phlIT8qyc5wqBc4dow/tjFkV57sacY82IyxXEI2fAvz
+ aa8qHcLkfrdShanI1at2mnhHmXhqFBn938Rs2UBoJQv25AFGAo45oqHU74Kq/I+N6aGt
+ AUJ3IuIhGH2ppO4iBmEfMorc8oVR2vkwHdIvTJPaoyCK9ZZi1tZjZHq6/p+yxXfSQWA+
+ /oEasQi+q0RQDJgFn0ejMrQMRGJqs8hrNyW/+RLLf0tH+7khu/A43O6Ri2s58noGGSD+
+ 9RQQ==
+X-Gm-Message-State: AOJu0YyzWFcRoAeMA0l2QiTHGZAekZkxImcjbJjJtOVJ/9kNEWZYsMMV
+ A76QxGPggt8wRp/hB7U1Qsu6v8iobEUW/fanxEu0fnakqrCj3fyHWq1VZFHCdNEe1Lan72eOI+q
+ 5gYC9nH43I+k31Ad06hKa2x2A1m865hsEjeToHtctvA==
+X-Gm-Gg: Acq92OG8KC2eck2Y0i26X1FPMxUt16mXsiGH9goRAcQZBH1gt83o0uq5B3e/R/HdjCR
+ AiiqI2uWxH9UlVKHrSSm4uTicE+yHz4q789ESkDR/MHl/Qr9EGkd08i3RIksQYgSz7GFOITXJKb
+ KIMMYouevHUPImkYcHz0DyBkv6vUqw/ZP2yACDkSfVU4i9D22ebcdSTTAJ+avYHYF4yJyc+8icV
+ 3YamM4ZZR5AyOcC7A1aZI0IuobdXIm4zESF4Jvv0OpVAyIIcUjgchc3Ea7/ygTCDuOhNobXlbTH
+ vGasrcxsNE3Wd5F4puoS/kvXNzp5mLFikRPLdg==
+X-Received: by 2002:a05:690e:c4a:b0:660:877f:a5bb with SMTP id
+ 956f58d0204a3-662851248bemr776635d50.51.1781290313925; Fri, 12 Jun 2026
+ 11:51:53 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::334;
- envelope-from=alex.bennee@linaro.org; helo=mail-wm1-x334.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+References: <20260518-misc-2026q2-v2-0-6c16fe448301@bsdimp.com>
+ <f6c93a7b-b5d7-4d36-b9b9-0302fe912465@oss.qualcomm.com>
+In-Reply-To: <f6c93a7b-b5d7-4d36-b9b9-0302fe912465@oss.qualcomm.com>
+From: Warner Losh <imp@bsdimp.com>
+Date: Fri, 12 Jun 2026 12:51:41 -0600
+X-Gm-Features: AVVi8Ce5M4hZl3S6ZwDg5IIeo-b_QhOKczb3TCPmCRap0_1AESCcbiNOkScSlXg
+Message-ID: <CANCZdfou33EWKkwr4g0wLAn9TuqMp_nxPpOe3HUs8092TEyUTw@mail.gmail.com>
+Subject: Re: [PATCH v2 00/37] bsd-user: Upstream most of the remaining system
+ calls
+To: =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@oss.qualcomm.com>
+Cc: qemu-devel@nongnu.org, Kyle Evans <kevans@freebsd.org>, 
+ Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
+ Stacey Son <sson@freebsd.org>, Jessica Clarke <jrtc27@jrtc27.com>,
+ =?UTF-8?Q?Mika=C3=ABl_Urankar?= <mikael.urankar@gmail.com>, 
+ Michal Meloun <mmel@freebsd.org>, Sean Bruno <sbruno@freebsd.org>, 
+ Karim Taha <kariem.taha2.7@gmail.com>, Alexander Kabaev <kan@freebsd.org>
+Content-Type: multipart/alternative; boundary="000000000000675624065412f8ad"
+Received-SPF: none client-ip=2607:f8b0:4864:20::b12d;
+ envelope-from=wlosh@bsdimp.com; helo=mail-yx1-xb12d.google.com
+X-Spam_score_int: -18
+X-Spam_score: -1.9
+X-Spam_bar: -
+X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, HTML_MESSAGE=0.001, RCVD_IN_DNSWL_NONE=-0.0001,
+ SPF_HELO_NONE=0.001, SPF_NONE=0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -110,60 +118,59 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Peter Maydell <peter.maydell@linaro.org> writes:
+--000000000000675624065412f8ad
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-> On Fri, 12 Jun 2026 at 18:18, Alex Benn=C3=A9e <alex.bennee@linaro.org> w=
-rote:
->>
->> Peter Maydell <peter.maydell@linaro.org> writes:
->>
->> > On Fri, 29 May 2026 at 09:29, Alex Benn=C3=A9e <alex.bennee@linaro.org=
-> wrote:
->> >>
->> >> This series fully models the behaviour of WFxT instructions. We
->> >> already had support for WFE for M-profile but we left off A-profile as
->> >> it has more potential sources of wake-ups. The main one is the event
->> >> stream which includes events from significant bits of the timer
->> >> ticking over.
->> >>
->> >> The refactoring from the previous iterations of the patch have now
->> >> been merged.
->> >>
->> >> I've dropped trying to fully model the global monitor in favour of
->> >> taking advantage of the architectural flexibility to have an IMPDEF
->> >> event wake up for any reason. We treat the setting of exclusive_addr
->> >> as such a reason because it indicates the current vCPU is in a ldstx
->> >> exclusive region and we don't want the guest to deadlock. This does m=
-ean
->> >> the system won't sleep on WFE enabled locks but people shouldn't be
->> >> relying on QEMU to model real world sleep patterns anyway given the
->> >> efficiency of emulation compared to real HW.
->> >>
->> >> I've written a test case using kvm-unit-tests:
->> >>
->> >>   Message-ID: <20260527111822.1563679-1-alex.bennee@linaro.org>
->> >>   Date: Wed, 27 May 2026 12:18:21 +0100
->> >>   Subject: [kvm-unit-tests PATCH v2] arm: add wfx test case
->> >>   From: =3D?UTF-8?q?Alex=3D20Benn=3DC3=3DA9e?=3D <alex.bennee@linaro.=
-org>
->> >>
->> >> All patches are now reviewed.
->> >
->> >
->> >
->> > Applied to target-arm.next, thanks.
->>
->> Is it too late to drop them? I've a fix for 2/8:
+On Thu, Jun 11, 2026 at 3:13=E2=80=AFPM Philippe Mathieu-Daud=C3=A9 <
+philmd@oss.qualcomm.com> wrote:
+
+> Hi Warner,
 >
-> That change is already in upstream git, so you'll need to
-> send the fix as a standalone patch, I'm afraid.
-
-No worries, I'll fix it up in the re-base.
-
+> On 18/5/26 23:27, Warner Losh wrote:
+> > Upstream the file, thread, socket and remaining signal system calls (to=
+o
+> > numerous to list here).
 >
-> -- PMM
+> While looking at other CPU related code path, I noticed the
+> CPUState::random_seed field is left uninitialized. On Linux
+> emulation it is initialized during SYS_fork. Add to your TODO?
+>
+> Again, this should be handled as common-user/, but that is for
+> another day.
+>
 
---=20
-Alex Benn=C3=A9e
-Virtualisation Tech Lead @ Linaro
+Yea, I think I'll add another commit to this series to cope with it. I'm
+just getting around to dealing with the get/setsocketopt review comments so
+I'll fold that in.
+
+Warner
+
+--000000000000675624065412f8ad
+Content-Type: text/html; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+
+<div dir=3D"ltr"><div dir=3D"ltr"><br></div><br><div class=3D"gmail_quote g=
+mail_quote_container"><div dir=3D"ltr" class=3D"gmail_attr">On Thu, Jun 11,=
+ 2026 at 3:13=E2=80=AFPM Philippe Mathieu-Daud=C3=A9 &lt;<a href=3D"mailto:=
+philmd@oss.qualcomm.com">philmd@oss.qualcomm.com</a>&gt; wrote:<br></div><b=
+lockquote class=3D"gmail_quote" style=3D"margin:0px 0px 0px 0.8ex;border-le=
+ft:1px solid rgb(204,204,204);padding-left:1ex">Hi Warner,<br>
+<br>
+On 18/5/26 23:27, Warner Losh wrote:<br>
+&gt; Upstream the file, thread, socket and remaining signal system calls (t=
+oo<br>
+&gt; numerous to list here).<br>
+<br>
+While looking at other CPU related code path, I noticed the<br>
+CPUState::random_seed field is left uninitialized. On Linux<br>
+emulation it is initialized during SYS_fork. Add to your TODO?<br>
+<br>
+Again, this should be handled as common-user/, but that is for<br>
+another day.<br></blockquote><div><br></div><div>Yea, I think I&#39;ll add =
+another commit to this series to cope with it. I&#39;m just getting around =
+to dealing with the get/setsocketopt review comments so I&#39;ll fold that =
+in.</div><div><br></div><div>Warner=C2=A0</div></div></div>
+
+--000000000000675624065412f8ad--
 
