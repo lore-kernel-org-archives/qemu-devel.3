@@ -4,109 +4,97 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id CC445CD98CC
-	for <qemu-devel@archiver.kernel.org>; Fri, 12 Jun 2026 04:58:44 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 01A2ECD8CA8
+	for <qemu-devel@archiver.kernel.org>; Fri, 12 Jun 2026 04:59:40 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wXtxm-00033V-Jz; Fri, 12 Jun 2026 00:57:50 -0400
+	id 1wXtz7-0003gV-UL; Fri, 12 Jun 2026 00:59:14 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1wXtxk-00033F-No
- for qemu-devel@nongnu.org; Fri, 12 Jun 2026 00:57:48 -0400
-Received: from mail-ed1-x52a.google.com ([2a00:1450:4864:20::52a])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1wXtxg-0000Lh-Mv
- for qemu-devel@nongnu.org; Fri, 12 Jun 2026 00:57:47 -0400
-Received: by mail-ed1-x52a.google.com with SMTP id
- 4fb4d7f45d1cf-68d234218bcso961410a12.2
- for <qemu-devel@nongnu.org>; Thu, 11 Jun 2026 21:57:44 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1781240263; cv=none;
- d=google.com; s=arc-20240605;
- b=HlZePxhCQZOc0bF7Hsmu9eTHUGWnN2D6tmtmfn4ftL5lGerJuDWreUNzEHAro6EyqD
- 9yMWb7d9r91ZTlq69C99mbjaLYY+eIG01cnwn4ael2KhvYwfQE69rVMtC1iNp7Umildb
- SoZ8zSWXPupf0uvRP5bpJ0+U/yd5e3JtM6619JMBaOIaEvX2UavHXUQlPtCIPLiQTRhZ
- ppgxwasKtD8MXfcduhtn+wHdyYcWYouPv9eu8d+1hNU5cr7YOacOAQihNGZJOwOEbImu
- hl1Q5DUdfDqQdFWRu0t67Tw00k2SJ8ODUaMuvwFAkL7zIp31C5MGZY+VKGfO3wsReJd2
- rjFg==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
- s=arc-20240605; 
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:dkim-signature;
- bh=GrWsgLLE0QF9Y5SzQ9tCmrMtpXKzoSOeSixVmsHiDiE=;
- fh=XErS4XjkAQDBkClscxjQUC7TY1MVaIkgq5whaEGujtU=;
- b=SqwWqKKIaNbYwHViSpG9w0KpiyeQvCbSF3OkaP1KM4eZTFAp5ZyvIjxksj++wbz8dc
- wEEtXEHxkZ7fZagl/VW/jh0Jfk/RV/Le0m0TbUOJpWHnciDBCbHZNL+dM1TwOBUmAsf7
- i+Er4cwjFi6o1NGsqhg53uYPR5CQVFnmRr7VnkdKA5pCeHKPYnXdt/hU241JrAwmO68J
- +FC5vpHowwNIrSqZMW4RlYnAhpnV441NjBjvtFJTETL+O66c5REpCPicoFl+CgOtJOnd
- o8HLUn4ggTo1S5y0DKI+EZxvcJTHaJQ3aEsuuAa5TxrJc8lD1Fu4Wvo5WDk0wGslHU3a
- 1IqQ==; darn=nongnu.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1781240263; x=1781845063; darn=nongnu.org;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:from:to:cc:subject:date
- :message-id:reply-to;
- bh=GrWsgLLE0QF9Y5SzQ9tCmrMtpXKzoSOeSixVmsHiDiE=;
- b=pc37tFVhcwZJ8UuAl4mp+Ajp35P/lTG4RipDTtDmivFnTMZadu2KEWpkFJUnjAdLyL
- R7U5hVMr57ol9Gf8tNeXdN0KLks1PGeixcBV1h8S9WwqSv6e17ynxR/aWNZzMIcv9KHw
- fFbSNi2EnMNiratU3A7mzIgX3qJCZPxD/oVzzBjQztbEd+NNokcTPavY5GoPBaBw70ls
- 2F0y9KYZYxFA1QkYnF7suL2edq5OANLxX9eEOTg7RLGmNciOOcF8bmSGwHXH1H7G0msU
- rW//cBJrE3ylAvFi8sS1VTi2bfUJgvksYUFBoBRdhFAxuCOa6MZcAsaD9mVsrvv5+O2A
- WwbQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1781240263; x=1781845063;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to;
- bh=GrWsgLLE0QF9Y5SzQ9tCmrMtpXKzoSOeSixVmsHiDiE=;
- b=MkrJaz5VMgC1kdQHk1mcWfrIHf2kW95+ynZo7L6fOeD5idwqLhvpZKwjKU8SxK4lZX
- MboCaom8hepwKd8yKyDS1n0dI7BA1OElRCY0Sk75BlSyV4Nc8GLmLqL6pwA/xG9OEmxd
- UGTYfzQGcPRGCedFd4ZhA9nCeBF1VsifkHzXuUWb827MaoB8IO6IV1KDfYYcgm68ZCQ0
- 8qyC2mH9j8uAooNP2cLSHdxBztEBhmgKeaO9+HLYNPpOUokwuvu3AS30mO4M77v0tXI6
- 0ehw1C3On7etILZvSGZR6z5UxG7PLjw1BC46ukMe4nTjdhOLZEG2qp2aq9usqIWi62Sw
- y7uQ==
-X-Gm-Message-State: AOJu0Yw4Ojlg4/rKmephhjBHiTzZRd0FFa2pR4V4IUZCs50rbHxHH+77
- 16NkFDreOafrxkrGW/dkdBWo2pabaH5nOkg2BKcCdZDha9O9jT2hAhnWKJNgfjevAuMQ8Rn/5Cu
- HfE7XaRwp+L7ieCeVRWWpx5SEI806rRg=
-X-Gm-Gg: Acq92OHn/pQ2P8wF6ini5QVzpVQgxEbjH/fTFfld+rhkX1vlKxhSoQahWtQWhLj+fS+
- qEQCDIIT7SLiCnYHqyR/tq8qhwbTPGpk4fxvBNZQT6LkpjxJPtea5gOFhG7eZ8ELpIZIbvv1pua
- GY5ZTuPX6bhl2NEZJvtIt5UiHDnKUr3Ohq/6RHVLVh4nvCfSQ5p2od6d7/J0Iwo2QwK7Qo1qDov
- r5c3pujMlvvLPks2lvtqoKcJ6sKeI9pqNi2Q8MpMd0pFWp1kKhYmBSMIADQSm8wYY76sfGZvbzR
- xS3UcTmaq17LpyLRbj/hkvYGWp5nBCMiP5GgfQ==
-X-Received: by 2002:a05:6402:5005:b0:687:1c98:a19a with SMTP id
- 4fb4d7f45d1cf-69378a4ba21mr441406a12.13.1781240262965; Thu, 11 Jun 2026
- 21:57:42 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
+ id 1wXtz5-0003fc-Vy; Fri, 12 Jun 2026 00:59:12 -0400
+Received: from isrv.corpit.ru ([212.248.84.144])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
+ id 1wXtz3-000178-E0; Fri, 12 Jun 2026 00:59:11 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
+ t=1781240312; bh=inJl10zqnuT0NBw1meAJM8DQd03xzcM7WH5aWf+1aKk=;
+ h=Date:Subject:To:Cc:References:From:In-Reply-To;
+ b=j6EP4odRKYqSsGCJabF6rJ3TkwCepbZ8YzFcvCfNSwmXvUC9eRgUiC8+QcHcxJ4nL
+ upEapcV8jxpVWRM/XYBGGc74bLbURtgH+Nu0Xc7VTOuXaX1uCGnjcneMlM7kjCy7it
+ NtAtuTGjnDXL6MGzpe4RhYj6MHnHLSiKk5PyKBvObJvpSJEoY8fg5iz+mcyXpEpgYt
+ SxTOO0pEEtNtIwTMHzpdxcjuQ1GctERP6QNAtcrj+XIcbEGlv2y4YzkBtgjufIHBzG
+ kBkrEt4nmB8U2iW+vZr5Vdh7LUm1dQCRM8C1KVbV/O082MlNqBsiDqywiRLp0kTtW1
+ kQR8LI+aSeXkw==
+Received: from [192.168.177.146] (mjtthink.wg.tls.msk.ru [192.168.177.146])
+ by isrv.corpit.ru (Postfix) with ESMTP id 5D89F1B6A38;
+ Fri, 12 Jun 2026 07:58:32 +0300 (MSK)
+Message-ID: <8526d8cd-e45d-4a03-9199-73c72d6e41cb@tls.msk.ru>
+Date: Fri, 12 Jun 2026 07:58:47 +0300
 MIME-Version: 1.0
-References: <20260611105037.157773-1-max.chou@sifive.com>
-In-Reply-To: <20260611105037.157773-1-max.chou@sifive.com>
-From: Alistair Francis <alistair23@gmail.com>
-Date: Fri, 12 Jun 2026 14:57:15 +1000
-X-Gm-Features: AVVi8CdJgddAST_SwdQTsK7KGjji_gvVr4Fxz5Bx1lATR6wdHao38tbBmLsBeHw
-Message-ID: <CAKmqyKMsnxr7xEu-JarHXk6Dd6FpJFcR=FE-jvuWxJJdr6XS2g@mail.gmail.com>
-Subject: Re: [PATCH 0/2] target/riscv: Fix mstatus.FS dirty tracking for FP
- exception-raising instructions
-To: Max Chou <max.chou@sifive.com>
-Cc: qemu-devel@nongnu.org, qemu-riscv@nongnu.org, 
- Palmer Dabbelt <palmer@dabbelt.com>,
- Alistair Francis <alistair.francis@wdc.com>, 
- Weiwei Li <liwei1518@gmail.com>, 
- Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>,
- Liu Zhiwei <zhiwei_liu@linux.alibaba.com>, 
- Chao Liu <chao.liu.zevorn@gmail.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::52a;
- envelope-from=alistair23@gmail.com; helo=mail-ed1-x52a.google.com
-X-Spam_score_int: -17
-X-Spam_score: -1.8
-X-Spam_bar: -
-X-Spam_report: (-1.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 0/2] linux-user: implement fsmount(2) series of syscalls
+To: Xinhui Yang <cyan@cyano.uk>, qemu-devel@nongnu.org
+Cc: Laurent Vivier <laurent@vivier.eu>, Helge Deller <deller@gmx.de>,
+ Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
+ Mingcong Bai <jeffbai@aosc.io>, qemu-stable <qemu-stable@nongnu.org>
+References: <cover.1779850946.git.cyan@cyano.uk>
+Content-Language: en-US, ru-RU
+From: Michael Tokarev <mjt@tls.msk.ru>
+Autocrypt: addr=mjt@tls.msk.ru; keydata=
+ xsFNBGYpLkcBEACsajkUXU2lngbm6RyZuCljo19q/XjZTMikctzMoJnBGVSmFV66kylUghxs
+ HDQQF2YZJbnhSVt/mP6+V7gG6MKR5gYXYxLmypgu2lJdqelrtGf1XtMrobG6kuKFiD8OqV6l
+ 2M5iyOZT3ydIFOUX0WB/B9Lz9WcQ6zYO9Ohm92tiWWORCqhAnwZy4ua/nMZW3RgO7bM6GZKt
+ /SFIorK9rVqzv40D6KNnSyeWfqf4WN3EvEOozMfWrXbEqA7kvd6ShjJoe1FzCEQ71Fj9dQHL
+ DZG+44QXvN650DqEtQ4RW9ozFk3Du9u8lbrXC5cqaCIO4dx4E3zxIddqf6xFfu4Oa5cotCM6
+ /4dgxDoF9udvmC36qYta+zuDsnAXrYSrut5RBb0moez/AR8HD/cs/dS360CLMrl67dpmA+XD
+ 7KKF+6g0RH46CD4cbj9c2egfoBOc+N5XYyr+6ejzeZNf40yjMZ9SFLrcWp4yQ7cpLsSz08lk
+ a0RBKTpNWJdblviPQaLW5gair3tyJR+J1ER1UWRmKErm+Uq0VgLDBDQoFd9eqfJjCwuWZECp
+ z2JUO+zBuGoKDzrDIZH2ErdcPx3oSlVC2VYOk6H4cH1CWr9Ri8i91ClivRAyVTbs67ha295B
+ y4XnxIVaZU+jJzNgLvrXrkI1fTg4FJSQfN4W5BLCxT4sq8BDtwARAQABzSBNaWNoYWVsIFRv
+ a2FyZXYgPG1qdEB0bHMubXNrLnJ1PsLBlAQTAQoAPhYhBJ2L4U4/Kp3XkZko8WGtPZjs3yyO
+ BQJmKS5HAhsDBQkSzAMABQsJCAcCBhUKCQgLAgQWAgMBAh4BAheAAAoJEGGtPZjs3yyOZSAP
+ /ibilK1gbHqEI2zR2J59Dc0tjtbByVmQ8IMh0SYU3j1jeUoku2UCgdnGKpwvLXtwZINgdl6Q
+ cEaDBRX6drHLJFAi/sdgwVgdnDxaWVJO/ZIN/uJI0Tx7+FSAk8CWSa4IWUOzPNmtrDfb4z6v
+ G36rppY8bTNKbX6nWFXuv2LXQr7g6+kKnbwv4QFpD+UFF1CrLm3byMq4ikdBXpZx030qBL61
+ b7PrfXcBLao0357kWGH6C2Zu4wBnDUJwGi68pI5rzSRAFyAQsE89sjLdR1yFoBH8NiFnAQXP
+ LA8Am9FMsC7D/bi/kwKTJdcZvzdGU1HG6tJvXLWC+nqGpJNBzRdDpjqtxNuL76vVd/JbsFMS
+ JchLN+01fNQ5FHglvkd6md7vO+ULq+r9An5hMiDoRbYVUOBN8uiYNk+qKbdgSfbhsgPURqHi
+ 1bXkgMeMasqWbGMe7iBW/YH2ePfZ6HuKLNQDCkiWZYPQZvyXHvQHjuJJ5+US81tkqM+Q6Snq
+ 0L/O/LD0qLlbinHrcx0abg06VXBoYmGICJpf/3hhWQM4f+B/5w4vpl8q0B6Osz01pBUBfYak
+ CiYCNHMWWVZkW9ZnY7FWiiPOu8iE1s5oPYqBljk3FNUk04SDKMF5TxL87I2nMBnVnvp0ZAuY
+ k9ojiLqlhaKnZ1+zwmwmPmXzFSwlyMczPUMSzsFNBGYpLkcBEAC0mxV2j5M1x7GiXqxNVyWy
+ OnlWqJkbkoyMlWFSErf+RUYlC9qVGwUihgsgEhQMg0nJiSISmU3vsNEx5j0T13pTEyWXWBdS
+ XtZpNEW1lZ2DptoGg+6unpvxd2wn+dqzJqlpr4AY3vc95q4Za/NptWtSCsyJebZ7DxCCkzET
+ tzbbnCjW1souCETrMy+G916w1gJkz4V1jLlRMEEoJHLrr1XKDdJRk/34AqXPKOzILlWRFK6s
+ zOWa80/FNQV5cvjc2eN1HsTMFY5hjG3zOZb60WqwTisJwArjQbWKF49NLHp/6MpiSXIxF/FU
+ jcVYrEk9sKHN+pERnLqIjHA8023whDWvJide7f1V9lrVcFt0zRIhZOp0IAE86E3stSJhZRhY
+ xyIAx4dpDrw7EURLOhu+IXLeEJbtW89tp2Ydm7TVAt5iqBubpHpGTWV7hwPRQX2w2MBq1hCn
+ K5Xx79omukJisbLqG5xUCR1RZBUfBlYnArssIZSOpdJ9wWMK+fl5gn54cs+yziUYU3Tgk0fJ
+ t0DzQsgfd2JkxOEzJACjJWti2Gh3szmdgdoPEJH1Og7KeqbOu2mVCJm+2PrNlzCybOZuHOV5
+ +vSarkb69qg9nU+4ZGX1m+EFLDqVUt1g0SjY6QmM5yjGBA46G3dwTEV0/u5Wh7idNT0mRg8R
+ eP/62iTL55AM6QARAQABwsF8BBgBCgAmFiEEnYvhTj8qndeRmSjxYa09mOzfLI4FAmYpLkcC
+ GwwFCRLMAwAACgkQYa09mOzfLI53ag/+ITb3WW9iqvbjDueV1ZHwUXYvebUEyQV7BFofaJbJ
+ Sr7ek46iYdV4Jdosvq1FW+mzuzrhT+QzadEfYmLKrQV4EK7oYTyQ5hcch55eX00o+hyBHqM2
+ RR/B5HGLYsuyQNv7a08dAUmmi9eAktQ29IfJi+2Y+S1okAEkWFxCUs4EE8YinCrVergB/MG5
+ S7lN3XxITIaW00faKbqGtNqij3vNxua7UenN8NHNXTkrCgA+65clqYI3MGwpqkPnXIpTLGl+
+ wBI5S540sIjhgrmWB0trjtUNxe9QcTGHoHtLeGX9QV5KgzNKoUNZsyqh++CPXHyvcN3OFJXm
+ VUNRs/O3/b1capLdrVu+LPd6Zi7KAyWUqByPkK18+kwNUZvGsAt8WuVQF5telJ6TutfO8xqT
+ FUzuTAHE+IaRU8DEnBpqv0LJ4wqqQ2MeEtodT1icXQ/5EDtM7OTH231lJCR5JxXOnWPuG6el
+ YPkzzso6HT7rlapB5nulYmplJZSZ4RmE1ATZKf+wUPocDu6N10LtBNbwHWTT5NLtxNJAJAvl
+ ojis6H1kRWZE/n5buyPY2NYeyWfjjrerOYt3er55n4C1I88RSCTGeejVmXWuo65QD2epvzE6
+ 3GgKngeVm7shlp7+d3D3+fAAHTvulQQqV3jOodz+B4yzuZ7WljkNrmrWrH8aI4uA98c=
+In-Reply-To: <cover.1779850946.git.cyan@cyano.uk>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=212.248.84.144; envelope-from=mjt@tls.msk.ru;
+ helo=isrv.corpit.ru
+X-Spam_score_int: -19
+X-Spam_score: -2.0
+X-Spam_bar: --
+X-Spam_report: (-2.0 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -123,70 +111,38 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, Jun 11, 2026 at 8:52=E2=80=AFPM Max Chou <max.chou@sifive.com> wrot=
-e:
->
-> The RISC-V privileged architecture specification 3.1.6 defines
-> mstatus.FS that
->
->   "The FS field encodes the status of the floating-point unit state,
->    including the floating-point registers f0=E2=80=93f31 and the CSRs fcs=
-r,
->    frm, and fflags."
->
-> Any instruction that modifies this state must transition mstatus.FS
-> to dirty. In particular, fflags is part of the tracked state, so any
-> instruction that sets a new bit in fflags (e.g. raises a FP exception
-> flag =E2=80=94 must set mstatus.FS to dirty).
->
-> But current implementation was failing to set mstatus.FS to dirty:
->
-> 1. Scalar FP instructions that write integer registers (comparisons
->    and FP-to-integer conversions):
->
-> Instructions such as FEQ.S, FLT.D, FLE.H, FCVT.W.S, FCVT.WU.D,
-> and FCVTMOD.W.D write their results to integer registers, so
-> mark_fs_dirty is correctly not called to set fs to dirty at
-> translation time. However, following scalar instructions may raise FP
-> exception flags:
-> - Comparisons: fle/fleq/flt/fltq/feq
->   =E2=80=94 raise NV on NaN operands
-> - FP-to-integer: fcvt.[w|wu|l|lu]/fcvtmod.w.d
->   =E2=80=94 raise NX on inexact or NV on out-of-range
->
-> 2. Vector FP instructions (all arithmetic, comparison, conversion, and
->    reduction operations in the V extension):
->
-> When a vector FP instruction raises a FP exception (e.g., vfdiv.vv
-> producing a divide-by-zero, or vmflt.vv comparing NaN values), it
-> modifies fflags =E2=80=94 an FP CSR =E2=80=94 but current implementation =
-did not dirty
-> mstatus.FS.
->
-> This patchset fixes this issue by
-> 1. Save float_exception_flags before the softfloat operation
-> 2. Perform the operation
-> 3. If any new exception bits are set, set fs to dirty
->
-> Max Chou (2):
->   target/riscv: Set mstatus.FS dirty when scalar FP raises exceptions
->   target/riscv: rvv: Set mstatus.FS dirty when vector FP raises
->     exceptions
+On 27.05.2026 06:23, Xinhui Yang wrote:
+> The motivation of the implementation is to make the systemd-nspawn
+> container to boot guest OSes with systemd v259+, otherwise any systemd
+> service requires importing credentials will fail, including journald,
+> D-Bus service and getty. We used to work around this issue by patching
+> systemd to retry the clone() without CLONE_NEWNS, which is not and can
+> not be implemented in QEMU user emulation.
+> 
+> mount(8) from util-linux works because it will fallback to the old
+> mount(2) syscall if fsmount(8) series of syscalls is not available.
+> 
+> Tested good on an x86-64 host, with:
+> 
+> - an AOSC OS mips64r6el guest, which boots successfully with full systemd
+>    support using systemd-nspawn(1).
+> - a Gentoo ppc (big endian) guest, which boots successfully with full
+>    systemd support, using systemd-nspawn(1).
+> 
+> Xinhui Yang (2):
+>    linux-user: implement fsmount(2) series of syscalls
+>    linux-user/strace: add fsmount series of syscalls
+> 
+>   linux-user/strace.c    | 102 +++++++++++++++++++++++++++++++++++++++++
+>   linux-user/strace.list |  15 ++++++
+>   linux-user/syscall.c   |  77 +++++++++++++++++++++++++++++++
+>   3 files changed, 194 insertions(+)
 
-Thanks!
+I'm picking this up for the active qemu stable series.  This is a new
+feature, but the new interfaces are used in more and more software, so
+it becomes a defect not to have that interface :)
 
-Applied to riscv-to-apply.next
+Thanks,
 
-Alistair
-
->
->  target/riscv/cpu.h           |   1 +
->  target/riscv/fpu_helper.c    | 157 +++++++++++++++++++----
->  target/riscv/vector_helper.c | 241 +++++++++++++++++++----------------
->  3 files changed, 258 insertions(+), 141 deletions(-)
->
-> --
-> 2.43.7
->
->
+/mjt
 
