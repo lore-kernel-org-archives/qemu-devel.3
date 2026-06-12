@@ -4,108 +4,144 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id CB972CD98DA
-	for <qemu-devel@archiver.kernel.org>; Fri, 12 Jun 2026 19:45:12 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 90887CD98CF
+	for <qemu-devel@archiver.kernel.org>; Fri, 12 Jun 2026 20:40:00 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wY7nu-0002hG-S5; Fri, 12 Jun 2026 15:44:34 -0400
+	id 1wY8ey-0000xu-Up; Fri, 12 Jun 2026 16:39:24 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <alex@shazbot.org>)
- id 1wY7ns-0002gj-Vf; Fri, 12 Jun 2026 15:44:32 -0400
-Received: from fout-a8-smtp.messagingengine.com ([103.168.172.151])
+ (Exim 4.90_1) (envelope-from <nathanc@nvidia.com>)
+ id 1wY8ex-0000xj-Gl
+ for qemu-devel@nongnu.org; Fri, 12 Jun 2026 16:39:23 -0400
+Received: from mail-westus2azlp170100005.outbound.protection.outlook.com
+ ([2a01:111:f403:c005::5] helo=CO1PR03CU002.outbound.protection.outlook.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <alex@shazbot.org>)
- id 1wY7np-0004TD-Ix; Fri, 12 Jun 2026 15:44:31 -0400
-Received: from phl-compute-09.internal (phl-compute-09.internal [10.202.2.49])
- by mailfout.phl.internal (Postfix) with ESMTP id A2813EC01DC;
- Fri, 12 Jun 2026 15:44:26 -0400 (EDT)
-Received: from phl-frontend-03 ([10.202.2.162])
- by phl-compute-09.internal (MEProxy); Fri, 12 Jun 2026 15:44:26 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=shazbot.org; h=
- cc:cc:content-transfer-encoding:content-type:content-type:date
- :date:from:from:in-reply-to:in-reply-to:message-id:mime-version
- :references:reply-to:subject:subject:to:to; s=fm3; t=1781293466;
- x=1781379866; bh=HuXYP+Aj3laQcHpMTers+ERgOBjBPCFBB/8Noddz7ZM=; b=
- MPZDzgi7FcDRroNjkUGXdb1thYcuMLqkL4oPWR4LO1/FEkzkR6SsRYP0k1Ns3gzn
- BKcJQAr+fiW2iW1c0tBFLaoeHI0k5J1ZATNPTQRKEtr+zKEWB6HaDz/q9+J+XFFX
- xCSNERazrqI/GQaahG3Hrpfshm+AYsU5ea1g3IjhWucyq7SW2m/trQQhoB2beO+G
- wk8o/odnK5m8rVLM+oOrPo6/fGBad9WAszQfKzhlAis+48L/SBJGaProqFMzGjRZ
- qcOZchKJlb9RbNz0OOqWh1oBfuJhEIVl9eq1XrEewVhCUknmzNOD703rQiCmrB95
- 1W0fUP2VFYEpM6w/92h50w==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
- messagingengine.com; h=cc:cc:content-transfer-encoding
- :content-type:content-type:date:date:feedback-id:feedback-id
- :from:from:in-reply-to:in-reply-to:message-id:mime-version
- :references:reply-to:subject:subject:to:to:x-me-proxy
- :x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=1781293466; x=
- 1781379866; bh=HuXYP+Aj3laQcHpMTers+ERgOBjBPCFBB/8Noddz7ZM=; b=T
- 6WRknST308l4yYHe7ssjOhGpMFkZGwPk8wBs6ASEV/iGVkKKF0YmsNHHnt9QJ/Vs
- WbT9kLTi7/v47JTvHss5m8vJAH3BZpAYZEdk5v8PBLbIAMlGOexbW4bXHozVYRQm
- yo6KjDjV/2hZFBMSeclBby+0C4dfRH3vPc9qb9ujuXU4NHNw4sM+cBhH2kABwPpl
- Rukg7iUSBizPCc+a0VNw1GRSfn5j3tbAyAb1MCdB7qItq1mofKTUMu+AiZLKj+wm
- ZOfyP88CES+yXMqn64jCBmI2mYQnAdcJh3LpBzmqoQVrwSsh7ANusiwN6wLQVY3N
- N1ky6kdzmwi+BkhmOawpw==
-X-ME-Sender: <xms:mmEsagYyp_8AHS6qce7UY5D2YHsolMnuyZNu6K216JRcG6s2eWZLLA>
- <xme:mmEsanSDjllOxbW40OVXvum6RdAftIaP_hQpPhgXLdG3cJSNQ4GAHK4I2ky01QCqb
- oFnBfao0WjqBKxQIHwL1eKNR5t_6h8wbHvoWPS_FShbZAluMXiyEQ>
-X-ME-Received: <xmr:mmEsan9Lg8Lw2j4o5Z5Vl4yQQykiD39m6ur6U5ljpPB3Fypz_mHBjUFIwsI>
-X-ME-Proxy-Cause: dmFkZTF2u0RqDkegq/YU7MpUcVqqmaiI5X1YON9MTXR4DJ80XiijTlz03NdkMNOyCpD2qA
- Vo8DbVTg5bZ4JqIRdqKq6KA4Cmk+TK6lOJDSIPC7cJJ9A869Dv6KZS3KTiHulqLC8JOihu
- PSxCiUtmhAqBEBtgNJOXZFxgHUaoSAQGBEcF5UiKyGwfDZ81o6/TGra03pUDQFRKMsbm29
- hnbte6ukIMuKjmO1WHa0B3Ad9KeTWiiihI9DK2EhdXS9RRPCuq2JB7bzmbsrW19zum1f3p
- 2RJMdh1QFMifm5L+mINyFtZtxYDKv0YARDUg7/lChMc2Kz29mfAoszK4m5uZhlmzJ8ErWZ
- u7mOm97zwgVVXaYQKcjxAT1TS8BOZNinvVnWFb/ReW267FsfcnoSoAfSyZFx3NnVFLLk0t
- XUErkKOgdB5LejvYhF3ztcfMPCNGPNyZ7jy3U0dwNPTOkNMj6arElj2Blae0p24C4QMpP1
- +jLanUxpzLxLsyqHUASEE87oVHUHDuIqV4PasfGqqhIgex/3Knvkp4gOejVvZe8SmEB1Kw
- rhBSyTB4qNvJ+oCIPmf+S0uNqzH+nFMVANV/sN89MExVM4n7G+vyMVR+u83X1WMcWw+EYi
- SZDbcYNvejGxx45ls4/dZdK15Fdp9mM2vDn0DpPHficmdJxaxgMeFsBiXgRg
-X-ME-Proxy: <xmx:mmEsavipAEBJabm57vV3GFofPVWmI57J3SZoqn--fJMIw5ryjtmdFw>
- <xmx:mmEsagZo7mFZKk5CDDWIJMCxTHnWXb0doRoiG6pawp95LECYaDWJ1A>
- <xmx:mmEsas_rLTBJ97KtJHEJUMtswIAff3nqCNQwIa6Wox3WOGBEJhuyIg>
- <xmx:mmEsaqP3x_AHe1GQeUUXDUtare8xkF9yogCih4xjVgmF_J2W3v9sIw>
- <xmx:mmEsaod8_twuJ8F3YfDToQqGOkFHWzb7Wk1E19IrbFWwd9LBkZG-TdSf>
-Feedback-ID: i03f14258:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
- 12 Jun 2026 15:44:25 -0400 (EDT)
-Date: Fri, 12 Jun 2026 13:44:23 -0600
-From: Alex Williamson <alex@shazbot.org>
-To: Peter Xu <peterx@redhat.com>
-Cc: "Michael S. Tsirkin" <mst@redhat.com>, Peter Maydell
- <peter.maydell@linaro.org>, Gavin Shan <gshan@redhat.com>, Pavel Hrdina
- <phrdina@redhat.com>, "Daniel P. =?UTF-8?B?QmVycmFuZ8Op?="
- <berrange@redhat.com>, qemu-devel@nongnu.org, qemu-arm@nongnu.org,
- jugraham@redhat.com, shan.gavin@gmail.com, David Hildenbrand
- <david@kernel.org>, alex@shazbot.org
-Subject: Re: [PATCH RFCv1] virtio: Inherit max bounce buffer size from bus
- parent if possible
-Message-ID: <20260612134423.648c335a@shazbot.org>
-In-Reply-To: <aismn4D1wXI6tipv@x1.local>
-References: <CAFEAcA-8Hv0o3PibjH=8jixsHyunH2HkOAMQVqHkGr34b1Ascg@mail.gmail.com>
- <20260611110156-mutt-send-email-mst@kernel.org>
- <CAFEAcA_2oZepwCoPS+cMgdnrSTj=mCGzdFZf5gGRHJK13yqaKQ@mail.gmail.com>
- <20260611114811-mutt-send-email-mst@kernel.org>
- <CAFEAcA9HUGfDgHjvCemPPNkp6FfvQp+4y7qCnw+ROFpG3+ybMw@mail.gmail.com>
- <20260611123952-mutt-send-email-mst@kernel.org>
- <CAFEAcA8vOMd64cCkfCyc1wNbjEY+bnhFPce-V_WbAuXrUnP8cw@mail.gmail.com>
- <20260611130037-mutt-send-email-mst@kernel.org>
- <air8hrlhrkaoJ4wi@x1.local>
- <20260611164624-mutt-send-email-mst@kernel.org>
- <aismn4D1wXI6tipv@x1.local>
-X-Mailer: Claws Mail 4.4.0 (GTK 3.24.52; x86_64-pc-linux-gnu)
+ (Exim 4.90_1) (envelope-from <nathanc@nvidia.com>)
+ id 1wY8ev-0004je-SO
+ for qemu-devel@nongnu.org; Fri, 12 Jun 2026 16:39:23 -0400
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=lcUbdUBPAFPJL/TdrOiTL0Hs+XX2Z2Mcop7+b6mnTe3Gb4s+GCfPnqMU0/8KpWbmwVWHHIDBCIPDKYpELhIceQoNko6uMjCOH8y/vHaeW7CtnouWfQBv2YTLp36jBnYp8sEyb7ohZZmaDSjLpwIa/1dLvq0iqg6nqQuvQhpfigLu0FoNOQCB6YdLh/fxzOiSZ5WPeUICujSJy1bHZdmaK7sZmlrRsoPgXFQS+b4QEkvq1M0GGfsCllpVHZxBJfLUxCgQSR1q51KpgH4Novk3dZsHdynhb3x34H9g1d13lPl6N8/+45efm7jVnxroWmQbUv5YuMvxAuGWeBEXLStIBQ==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=tp1Sw8AiqIUX+TyqCwwutmHHzs2Qine9/d5LfsnUNrc=;
+ b=WsLlBbhuVqPLBpM92HCZSFsjFQHXZvrSYHO4tb810d6ouXotqiuEXa2dcG0aF2S81MWOneEnOeKPujZQdbIuJ+TtlTJk4y2P2wdcNsRWjJW9iMvdaGgKZDnmHhAYRHAmyP2xqvxvgCIkEHq4X+PN1Zd6zW3u0M5XcQEdPcZ7Jp0+SesV/E2bTuAB/v1AgaHducjMA63yQllKdVF70gK/gqzCsh4VP6Lcwft6hMnIdGlqB07N041IZDAcsE7XwU1VuYmoNBTzBQnGIrspxmQ1NmUsfubJOlpwREC5B1/9BuTBOOLC6EOwzsWlw+aGaXzBo78L8sI5A2vCyWFY4zg3Tw==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=nvidia.com; dmarc=pass action=none header.from=nvidia.com;
+ dkim=pass header.d=nvidia.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=Nvidia.com;
+ s=selector2;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=tp1Sw8AiqIUX+TyqCwwutmHHzs2Qine9/d5LfsnUNrc=;
+ b=uEh3FyisF5/4NLw2EgEgupl18o7RAOPhsFMFoETIkRBDrzQmkVnmpHujzgpCg35m8f1D2zH32QaP9eJ3Ny13cyEVmM8whQNGvOPd1tkOiklN9a5dIQxKULL1tsW22v4eoKM3Rumn+90cn5kH5GuBnnljTcKW0WTLFJs87v1kC3BGR3/tiVAVxi1U+OyQF7HOY4KjStamNDNQ56xnPI8BJSO/7ij7MUd6QoUsFJyTaIjD3iKejd6SzrDUp+M4etu3ggz4VkJ+hWni9tYqcwHb0JuduqKPg9+LVXy04xNX0r6BVYfNjByR8qlnm8cZY1uRjKULdqEvM5r5sF7UEOUKrA==
+Authentication-Results: dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=nvidia.com;
+Received: from DM4PR12MB5390.namprd12.prod.outlook.com (2603:10b6:5:389::15)
+ by CH2PR12MB4037.namprd12.prod.outlook.com (2603:10b6:610:7a::20) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.113.14; Fri, 12 Jun
+ 2026 20:39:15 +0000
+Received: from DM4PR12MB5390.namprd12.prod.outlook.com
+ ([fe80::2815:c27e:a0a:2720]) by DM4PR12MB5390.namprd12.prod.outlook.com
+ ([fe80::2815:c27e:a0a:2720%6]) with mapi id 15.21.0113.014; Fri, 12 Jun 2026
+ 20:39:15 +0000
+Message-ID: <c67ab585-a12d-486c-9a73-80a09b579aa9@nvidia.com>
+Date: Fri, 12 Jun 2026 13:39:12 -0700
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 1/3] iommufd: Introduce handler for device ATS support
+To: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>, qemu-devel@nongnu.org
+Cc: Yi Liu <yi.l.liu@intel.com>, Eric Auger <eric.auger@redhat.com>,
+ Zhenzhong Duan <zhenzhong.duan@intel.com>,
+ =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@mailo.com>,
+ Zhao Liu <zhao1.liu@intel.com>, Alex Williamson <alex@shazbot.org>,
+ Matt Ochs <mochs@nvidia.com>, Nicolin Chen <nicolinc@nvidia.com>,
+ Shameer Kolothum <skolothumtho@nvidia.com>
+References: <20260612014322.2918836-1-nathanc@nvidia.com>
+ <20260612014322.2918836-2-nathanc@nvidia.com>
+ <f158c795-8b68-4aa0-9853-022bcf115c7a@redhat.com>
+Content-Language: en-US
+From: Nathan Chen <nathanc@nvidia.com>
+In-Reply-To: <f158c795-8b68-4aa0-9853-022bcf115c7a@redhat.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+X-ClientProxiedBy: SJ0PR13CA0088.namprd13.prod.outlook.com
+ (2603:10b6:a03:2c4::33) To DM4PR12MB5390.namprd12.prod.outlook.com
+ (2603:10b6:5:389::15)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=103.168.172.151; envelope-from=alex@shazbot.org;
- helo=fout-a8-smtp.messagingengine.com
-X-Spam_score_int: -27
-X-Spam_score: -2.8
-X-Spam_bar: --
-X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_MSPIKE_H2=0.001, SPF_HELO_PASS=-0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: DM4PR12MB5390:EE_|CH2PR12MB4037:EE_
+X-MS-Office365-Filtering-Correlation-Id: b849362a-009d-4ad7-df0a-08dec8c2ab0a
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam: BCL:0;
+ ARA:13230040|23010399003|376014|1800799024|366016|4143699003|56012099006|11063799006|18002099003|22082099003;
+X-Microsoft-Antispam-Message-Info: 8knFuUKMfutTDYIuzm4D56eSxzEE1B5cDMkyFMbLpl/iYTvBZr3PLZzT8LQlyVbue1gGN/qfZNUtMEKu5HjNY5EIZ1E+gTCQuT8Cncz8fG1eNXaFmqZp5PCksEsJNw1Be0yd/MdDzZFMMTyAX9851CvnJTH+NOVZTI3O5MrIWji8xcQkxAx5GFhdwPyoTVm3peWf8FmRvEnR9ApwbMH8JdMtJAKIc9S3i5Fa+0mrFypOJBgpw0RTrl5c2TZYvpzWOsgK4x8B681rqUyCe9dAum29XoxZ3hr6uzix7dQIcGvnqKHY6xT3DplbJjttKxGxC21gaV77rzj90zp0lg1C7/R6u8g/Mjr0P3MEmAKPS1+vC5tYejySLAgIM0TXLSx0TNR1H6rtyO/O8Z7axlPwQTIiw53/VL8y23OpW4FM6Fjne2HEDjhS5zWJR2BsLZJJkUpB5NbrFdM8AKX5JOBLb7IaFQeq1U9bFY02+USnU+KYYDthWbsdybmZR1fJAQKTLcTT8I+fqAiU2YL88ihbO+0YceGLMZFZBPd6gawB+ft5z0PQRvLQinIHh9o2KnZl+6KYsEeP3jUTNz3Ts7A5H3l1Mg5szd5JrzE4rcgyFAYnYVtWNTbQsLN4aYAjlyeQkj9kz7w+EnvR6yXNCF7JKhTZK3yP4w2hSJ1F3xFGz6kKa6R/RAlAoVo8jDLjX20n
+X-Forefront-Antispam-Report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
+ IPV:NLI; SFV:NSPM; H:DM4PR12MB5390.namprd12.prod.outlook.com; PTR:; CAT:NONE;
+ SFS:(13230040)(23010399003)(376014)(1800799024)(366016)(4143699003)(56012099006)(11063799006)(18002099003)(22082099003);
+ DIR:OUT; SFP:1101; 
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0: =?utf-8?B?OW5IenhuZ1lFZXMvVXREUldvajltLzhZZks4dmFoN2psYWkxK0oyYXpJdkpa?=
+ =?utf-8?B?Rms3QW16WWh6S0ltbTBBN3hhTk1TOXBqYjZ0aXI4SHVTUndaV2Q5NWQvRFZS?=
+ =?utf-8?B?UkpSaUtkcURWbVovQWV0SzlGeXcxTTNFcWZJVHdwRUdqYjBoYWRGanFLbE84?=
+ =?utf-8?B?Um9GWFFBS1R4ZnlTRGFDb2xyY1JxZFhYOFBMWkRPWkd5RjZ3Z1NlMElDRmVC?=
+ =?utf-8?B?UFVBNmxvMXFkVGxOQ3dkbWdxVGJwRnFwREFEN05UYlpIZ3V3NXVuN25zTHdj?=
+ =?utf-8?B?Z0JZMVh2aGUzUjFyZ1EwM3lQL29SQzhOSit3QUFrcnlrUWF4cURLaWQ2ZWNL?=
+ =?utf-8?B?NlBWOFZoKzluL29RN0JTcW9ScFJ0aEsvOFJEbTV5c2pQajdFSzR6SmdLSU1w?=
+ =?utf-8?B?bjN0a3RPY090eVJ3b2ZiOHk5bUgxYlRqMld6ZUw0cmpxb3laM1Jzcm4zRjlx?=
+ =?utf-8?B?aXp0TWgxNnhSN2xNRno0dVhmV251emhRNGg4NkRDdkVDa3JYbW9JU0Uybmtk?=
+ =?utf-8?B?aHhpbnc3M2NjZnZhZk1QMEI4THQwL0ROWmcwSkdmVUhMeEFDWFNMa3FPZE5V?=
+ =?utf-8?B?NlpMRit2eUF1UmIvQW13ZFpHNERWemsrTnJYNThYMnFyUThYUVFJUk9sNGx0?=
+ =?utf-8?B?dm9DWnl6ZEFYbFBNbElNZW1mZTMxVkdVVzdZaW1MelVDY2ZyNlV0eWdNREN5?=
+ =?utf-8?B?R0RoVnFSWHN5SmxJOXVZSGZ0cEd3UVQrTHlvVG1yVWJ4VktwZE80bFB2RFI1?=
+ =?utf-8?B?OG9MZkJaN2N6R1EzdDh6L1djVS8zeElxRjNabVBSVENlK2NQeWJHUGxJT245?=
+ =?utf-8?B?V2tLQ05PbzBZTEtkSEUvQjNoaEM5MmdGRlg5THJBMldndHpzaXRiVmpsTGNN?=
+ =?utf-8?B?dldkWXBKdWhvdEY5bDhFM3ZKZjRVN21FWUpDdEUyeWJKUXVKZjZPNXVlOFdY?=
+ =?utf-8?B?S0RzeHRCYWpic0JJMTN2M0lWNDdWV3RsU1IySitOejNhRWlhZmZEYzV2SnlY?=
+ =?utf-8?B?YjlmalZtdTZqOFZ0c2xxY09JUjZrWFFtMHRZZ0xkZWorZk9uSVhIQnRTbnM4?=
+ =?utf-8?B?dVhpWjNIbEIzVGZTUVZJMWc3YlpYQ2E3b3djK0RGbXF4UEFmL1pZUU9pMGNa?=
+ =?utf-8?B?V0hMdzZRaVlHOSs0cU1Fa1psZytId0VmNFVWZDZ2WUdrQ3JrMkF2MTBhcXov?=
+ =?utf-8?B?UExEcFpRbGg3UGxPTnROeUVKUEtnWXFLUHV3RnNQQmpKMlpvSkM4MTNwTWVY?=
+ =?utf-8?B?a3RKNU5JUzg3WkNaWVpjVTd2OW1FcVVvd2hEc09QazJOM1pnYk1VSFk5bFBG?=
+ =?utf-8?B?VFpXajdRWUYwc0VtK2dsUnVjYjBXSnBTT3FndTBTL1ovZEpoNklZWEM5a0Vw?=
+ =?utf-8?B?cFFncVNML0lhOXdkUWo0VEtVOHc2MG5BLzc3RW1xSTdLbFdOVExXYlRnWFE1?=
+ =?utf-8?B?eTBvV2NMUDU0d2grWmtodlFjVnp1QVVPcWYvNytkeVI0amtEMEtwbjd0b2xq?=
+ =?utf-8?B?ODRtZVdlTGQ4akphOUVIZlNxdHBseFJHeFdHN2sxQlM0RGxjS3VoMnFCZEFH?=
+ =?utf-8?B?czRIaEduck1qRGxhaHBWTG41RktFc2lCcjFmZ3QxdzFIeUlXbHc0dy9CN2l4?=
+ =?utf-8?B?Q2dzRGxZQ2dZMmRrbXRBM09UcXpaSXppa0JBUlNlZkg1UUp2Mk1uT3U0N0du?=
+ =?utf-8?B?ZElsa2k0ajZuU05kQ3pZUzVqc3NhSE9JZU1MTkNIZ3BJVnI1RElYVmJWMWxv?=
+ =?utf-8?B?cWkvWGpRZ2N2OER4TTU3akw2bVRMNndZQmpOaGhSSXBZaU5Nd0dIL3VxWlhn?=
+ =?utf-8?B?U0ttRXRaVjE1TTJIWXBCK2MydXVaQUxyS3F5cmtHZVFtU29IY3FGQTRIYWZU?=
+ =?utf-8?B?SC9rWWdzdVY2UnpsSFp3bjB4Q0ZSa05EL21CdG9nMVJRKzA4MFg3Wkw4c2Vs?=
+ =?utf-8?B?VXpzOTBVcDM0aXcvZGs5NXVwdzdGbXBGWnhCZDNDak1KY2N4cUZ6WWZ1Rml2?=
+ =?utf-8?B?TUU1UWl4OXpWRWhwUGthQVNzQzJWbkZ3djVXanJuUURaeGdIek00c3VBL0px?=
+ =?utf-8?B?dW5UNW0wSkgrSVJmTnF3VDlaNVRjZ0M3U1JMR0RVK3Z6YUgvV1lHK3lVTnFO?=
+ =?utf-8?B?RE1jdmppQmIwRE5aUERkc1R5ZVZkTkJoekhYRzBXUmo4UkhBa0QvVFhvc2Yz?=
+ =?utf-8?B?ajRLbkwzNk01aDhDcjJlQXduSjcydG9VMmhaOVBDM0ZEOWxGSEVzRXZFZlhK?=
+ =?utf-8?B?QWtOa3lEZHAvMmtUMkVVWktNNThubngwWWlQZTI0eWdjWEx2aDVhb09UdmpQ?=
+ =?utf-8?B?RGRFUmFyWDVWdDNKeG0rZmNlNTZRNXprZExjR1FQUWk4NTV5NDJ2Zz09?=
+X-OriginatorOrg: Nvidia.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: b849362a-009d-4ad7-df0a-08dec8c2ab0a
+X-MS-Exchange-CrossTenant-AuthSource: DM4PR12MB5390.namprd12.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 12 Jun 2026 20:39:15.3752 (UTC)
+X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
+X-MS-Exchange-CrossTenant-Id: 43083d15-7273-40c1-b7db-39efd9ccc17a
+X-MS-Exchange-CrossTenant-MailboxType: HOSTED
+X-MS-Exchange-CrossTenant-UserPrincipalName: PNHJLaX/lbmQZALNaTit2sRxjJ7PhGARwQ+mTqbN3d1jvFI0oymymbaBJz1jrOTwlMwl99t97Y4rcGKs3mWNDQ==
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: CH2PR12MB4037
+Received-SPF: permerror client-ip=2a01:111:f403:c005::5;
+ envelope-from=nathanc@nvidia.com;
+ helo=CO1PR03CU002.outbound.protection.outlook.com
+X-Spam_score_int: -14
+X-Spam_score: -1.5
+X-Spam_bar: -
+X-Spam_report: (-1.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.445,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ FORGED_SPF_HELO=1, SPF_HELO_PASS=-0.001,
+ SPF_NONE=0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -121,182 +157,52 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, 11 Jun 2026 17:20:31 -0400
-Peter Xu <peterx@redhat.com> wrote:
 
-> On Thu, Jun 11, 2026 at 04:52:20PM -0400, Michael S. Tsirkin wrote:
-> > On Thu, Jun 11, 2026 at 02:20:54PM -0400, Peter Xu wrote:  
-> > > On Thu, Jun 11, 2026 at 01:02:34PM -0400, Michael S. Tsirkin wrote:  
-> > > > On Thu, Jun 11, 2026 at 05:53:54PM +0100, Peter Maydell wrote:  
-> > > > > On Thu, 11 Jun 2026 at 17:42, Michael S. Tsirkin <mst@redhat.com> wrote:  
-> > > > > >
-> > > > > > On Thu, Jun 11, 2026 at 05:16:09PM +0100, Peter Maydell wrote:  
-> > > > > > > On Thu, 11 Jun 2026 at 16:57, Michael S. Tsirkin <mst@redhat.com> wrote:  
-> > > > > > > > Then I'd like to see an example where we have an actual good reason
-> > > > > > > > to do execute arbitrary width accesses on device RAM when the
-> > > > > > > > driver does not execute them, please.  
-> > > > > > >
-> > > > > > > That's the case we started with, with this GPU where the
-> > > > > > > virtio data structures are in this PCI BAR. We want the
-> > > > > > > virtio backend to have the freedom to say "I'm just going
-> > > > > > > to assume the ring buffer etc is in RAM, and I don't need to
-> > > > > > > care about carefully ensuring that I only do word accesses".  
-> > > > > >
-> > > > > > virtio backend does not need to assume anything. any spec
-> > > > > > compliant guest guarantees it. any address given to
-> > > > > > a virtio device is ram.  
-> > > > > 
-> > > > > OK, but how do we tell if the mmap() PCI BAR we have is RAM
-> > > > > or not ? Some of them are, some of them aren't...
-> > > > > 
-> > > > > -- PMM  
-> > > > 
-> > > > We don't care? If guest asked a virtio device to access
-> > > > memory then that memory better support accesses guest
-> > > > requested, and on virtio that means any width.  
-> > > 
-> > > Yes that's also my understanding that QEMU shouldn't care, if on bare metal
-> > > if it is a grey area with undefined behavior, then QEMU should also be fine
-> > > to make it undefined.
-> > > 
-> > > Only one (IMHO, very slight..) concern is, if such "undefined behavior"
-> > > operation may crash QEMU rather than causing a sigbus like what normally
-> > > would happen on a bare metal.  
-> > 
-> > bus errors are uncommon on bare metal. they aren't usually
-> > handled all that well.  
-> 
-> Ah, not something I was expecting to happen regularly.
-> 
-> In this case, the whole concern is about a possible malicious guest that
-> might have installed a VFIO assigned device MMIO region (which may be
-> register based; RAM-based is non-issue) to be a DMA target of anything.
-> 
-> >   
-> > >  I'll put that discussion at last since I
-> > > don't know if it's that important.
-> > > 
-> > > So taking that e1000 bug into account,  
-> > 
-> > Won't the patch I sent resolve e1000 too?  
-> 
-> If you mean:
-> 
-> https://lore.kernel.org/r/20260611093049-mutt-send-email-mst@kernel.org
-> 
-> Roughly, yes. But it is only to show the idea, not really a real patch?
-> 
-> I think we need to cover all the rest details (I mentioned all these in my
-> previous reply too below):
-> 
-> - we should better leave memcpy()/memmove() as before for non-ram-device,
->   only do that for ram-devices
-> 
-> - per PeterM's comment, __builtin_memmove() may still have unwanted side
->   effects (I agree, it looks broken before and maybe we were lucky?)  need
->   to switch to atomics?
-> 
-> - two spots missing per my previous email here:
-> 
->   https://lore.kernel.org/all/aimEl9QQ_LTRPLtd@x1.local/
-> 
->   IIUC we should also fix these two, or is it intended to be left?
-> 
->   address_space_read()
->   address_space_write_rom()
-> 
-> >   
-> > > looks like we have more of such user
-> > > that wants explicit control over the memory operations, likely with
-> > > attibutes:
-> > > 
-> > > - Aligned only
-> > > 
-> > > - No vectored inst
-> > > 
-> > > - No possible duplication (perhaps it means, only use atomic access??? per
-> > >   PeterM's explanation in another email)
-> > > 
-> > > I wonder if we should do this by default to all IOs, I think it might have
-> > > an unwanted impact on general perf.  One idea is we can introduce a new bit
-> > > in MemTxAttrs: say, mmio_strict, which will follow above stricter rule of
-> > > doing IO.
-> > > 
-> > > Then for ram_device, when doing memory access we should also use the same
-> > > set, hence something like:
-> > > 
-> > >   if (memory_access_is_direct(mr, ...)) {
-> > >     if (MemTxAttrs.mmio_strict || memory_region_is_ram_device(mr)) {
-> > >         memmove_strict_mmio(); // or memmove_no_vector(), or ...
-> > >     }
-> > >   }
-> > > 
-> > > I also want to bring us to the same page on differenciating two things:
-> > > 
-> > > - about direct access definition: so far, I want to define this almost as
-> > >   "it is directly accessible from host virtual address space".  It means
-> > >   ram_device definitely falls into this category, so it's a sub-category
-> > >   only but enforces strict mmio as above
-> > > 
-> > > - bounce buffer: I want to make sure we're on the same page this is
-> > >   something totally solving different problem of what we're looking at for
-> > >   ram_device.  Essentially this is only needed if mem is not "direct
-> > >   access".  Otherwise we shouldn't need it (including ram_device).  
-> > 
-> > 
-> > I think ram_device_direct_access is a hack that should go away.
-> > It's a work around for a memory core bug that we should just fix.  
-> 
-> I didn't find ram_device_direct_access, if you meant ram_device_mem_ops, I
-> agree it'll be nice if we can avoid it.
-> 
-> > 
-> > 
-> >   
-> > > I'm not sure if above sounds reasonable.  The hope is with that we should
-> > > fix both this GPU and e1000 issues (e1000, and maybe other places, needs to
-> > > start passing MemTxAttrs.mmio_strict, though, if we want to keep the
-> > > default to be still fast-path to use memcpy()/memmove()?).
-> > > 
-> > > Thanks,
-> > > 
-> > > =========================
-> > > 
-> > > Two cases here on the concern:
-> > > 
-> > > (1) if fully emulated device, non-issue afaiu because whatever DMA does
-> > > (with vectored ops) will only apply to QEMU process (like a bounce
-> > > buffer..) so it won't crash,
-> > > 
-> > > (2) if it's a VFIO device (not the GPU case, but when like realtek and some
-> > > guest driver registers it as a DMA target), logically the guest should
-> > > receive a bus error, but for QEMU's case it may crash QEMU with SIGBUS:  
-> > 
-> > what and why would crash qemu?  
-> 
-> If what Alex described issue happened in commit 4a2e242bbb ("memory: Don't
-> use memcpy for ram_device regions"), IIUC it will crash qemu, but maybe I
-> was wrong.  Alex knows the best.
-> 
-> So in general, we don't want malicious guest to be able to DoS the host
-> process (hence, to me "niche security use case"..).
 
-Trying to figure out where to jump into this thread.  4a2e242bbb was
-required because memcpy will be optimized to use instructions that
-shouldn't target MMIO.  IIRC, in the case of the RTL NIC we were
-getting SSE instructions to MMIO.  At the time, we weren't thinking
-about P2P DMA, the virtualized access was a result of the quirks for
-RTL causing the trap into QEMU rather than directly accessing through
-the mmap.  Performance and bulk transfers were not a priority.
+On 6/12/2026 12:24 AM, Cédric Le Goater wrote:
+> On 6/12/26 03:43, Nathan Chen wrote:
+>> From: Nathan Chen <nathanc@nvidia.com>
+>>
+>> Introduce a support_ats() handler that returns whether ATS is supported
+>> for a device associated with a host IOMMU device, checking if the
+>> IOMMU_HW_CAP_PCI_ATS_NOT_SUPPORTED capability bit is set.
+>>
+>> Implement this handler in a new function for iommufd.
+>>
+>> Suggested-by: Shameer Kolothum <skolothumtho@nvidia.com>
+>> Signed-off-by: Nathan Chen <nathanc@nvidia.com>
+>> ---
+>>   include/system/host_iommu_device.h | 10 ++++++++++
+>>   backends/iommufd.c                 |  8 ++++++++
+>>   2 files changed, 18 insertions(+)
+>>
+>> diff --git a/include/system/host_iommu_device.h b/include/system/ 
+>> host_iommu_device.h
+>> index f000301583..5615d6cb57 100644
+>> --- a/include/system/host_iommu_device.h
+>> +++ b/include/system/host_iommu_device.h
+>> @@ -133,6 +133,16 @@ struct HostIOMMUDeviceClass {
+>>        * Returns: true on success, false on failure.
+>>        */
+>>       bool (*get_pasid_info)(HostIOMMUDevice *hiod, PasidInfo 
+>> *pasid_info);
+>> +    /**
+>> +     *  @support_ats: Return whether ATS is supported for the device
+>> +     *  associated with @hiod host IOMMU device, checking if the
+>> +     *  IOMMU_HW_CAP_PCI_ATS_NOT_SUPPORTED capability bit is set.
+> 
+> IOMMU_HW_CAP_PCI_ATS_NOT_SUPPORTED is low level implementation detail,
+> which could differ on a future host IOMMU backend.
+> 
+> I would remove "checking if the IOMMU_HW_CAP_PCI_ATS_NOT_SUPPORTED
+> capability bit is set."
+> 
+> Something like this is more generic :
+> 
+>    Returns true if ATS can be used by the device, false if the host IOMMU
+>    reports it is unavailable.
+Ok, I will re-word this comment on the next revision.
 
-Alignment was really not a consideration.  The commit log even refers
-to unaligned accesses.  It was just a matter of chunking to the maximum
-width available for the size.
-
-If a more optimized path is now necessary, I'd just recommend not using
-something like memcpy or memmove, make sure it's restricted to
-operations that are valid for MMIO address spaces.  Bouncing through
-QEMU should not introduce RAM-specific memory optimizations.  Thanks,
-
-Alex
+Thanks,
+Nathan
 
