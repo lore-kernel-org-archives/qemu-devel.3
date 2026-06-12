@@ -4,53 +4,53 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8E36ECD98CF
-	for <qemu-devel@archiver.kernel.org>; Fri, 12 Jun 2026 20:54:37 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 19811CD98CE
+	for <qemu-devel@archiver.kernel.org>; Fri, 12 Jun 2026 20:55:55 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wY8tM-0003Ow-0g; Fri, 12 Jun 2026 16:54:16 -0400
+	id 1wY8ui-0003wy-PO; Fri, 12 Jun 2026 16:55:40 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <nathanc@nvidia.com>)
- id 1wY8tK-0003OF-Uo
- for qemu-devel@nongnu.org; Fri, 12 Jun 2026 16:54:14 -0400
-Received: from mail-northcentralusazlp170130007.outbound.protection.outlook.com
- ([2a01:111:f403:c105::7] helo=CH4PR04CU002.outbound.protection.outlook.com)
+ id 1wY8uh-0003wc-PF
+ for qemu-devel@nongnu.org; Fri, 12 Jun 2026 16:55:39 -0400
+Received: from mail-southcentralusazon11012039.outbound.protection.outlook.com
+ ([40.93.195.39] helo=SN4PR2101CU001.outbound.protection.outlook.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <nathanc@nvidia.com>)
- id 1wY8tJ-0004Wu-GI
- for qemu-devel@nongnu.org; Fri, 12 Jun 2026 16:54:14 -0400
+ id 1wY8ue-0004vD-6J
+ for qemu-devel@nongnu.org; Fri, 12 Jun 2026 16:55:38 -0400
 ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=kDs3vms0zAbJ6r54hMBIwaEu8QscYQytajPPdlZ6+GnHHOLUtaY3daBbSB8a8nfMH0B1LsxQFFCmTKVJXl8EO94NoWy0cofS0jwrcncdwN3GPKiKOSBomognUCpHxvaVr48JTRpfgjOVE3q1SzYt+p8o2Rfn2QAwUhaNSdOfOStFTON4ceKW/fY2eff9OQ/rsmbFSoFhgj57oi9xSrw2ndjrN/xuxUXkkUf2tlkmGf0iWgwFQkHK761RijAGle5E7T1Sx90xZEGmV5MqeaM5YX/1Ko2kMMd82XLXyG+zpVerOef04qQ+phO2zVF+Mcxtl9r4qtV2t4bifrbld5jckQ==
+ b=KqAam8M4ptqetsApbH2BCy2NJYTiD0guKPHJN5MX0RvPKosu1wQQeiyHVefj2yO2h3s6xh3HQNl4UgzZP2cVrxMtlYEqkujAoEr8VmsBeezPm12lGU+LDhg0ro7S5p2u3F6cZV6Zu/P4Q15kJeTjeGpF4wLAkIfrl16CVl6QZgpj7GioqfV7wtuiTtSn3qW/fJ4p6I92GvVVULpobRJWbhpraRQHjdmKWM7vlVFs7zDD3OwBG81OybVkGTHM/k/CxFXCbs6atoZjHkqnd6RtD7JwbUKIhYE8aaE8xAN5Tzb7NRjRvMbk7a/uRn4e0RyuEGiAWwohbSxtR/WY0snsUA==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
  s=arcselector10001;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=aZrt4fC/nEXOAKh07xGt2vE0ryk6ngEwgk61RPlLHAE=;
- b=Igk20PYEnRlmV4NN5C/IkF2q1VpjDM9KGQ6EemrXtayp7i5M54cswbB+iNFY0lGY1uP0tlHa8ErPQ0ZtZR9Q2pS5uB4e/6EjtgI+X+7shIMZC2ivKig/RDg1nwWfwxBIoFrIV6eouideRXn6wp4onvkhLmHPlTrLU8bfY9HFaKo/OcojzrMUy6nkVCkEqwgZgEH87GrFWoL7gOEtcvCW6o3WxwhbbmuKfVuN9l1HrS5HHikxCtlHSHpi2JwxJw98tg17ptFwOjNHiC4VRhlqFCoZS8gatQnJWtiNatNyFQbhFlERtStf1Nba6mA2UdcPGpUBGC5ae0RcUi7lkYC3NA==
+ bh=QzHlSIQIsD/dGu/hr7XkBhDFipLlNwojS3r4RO7knbE=;
+ b=yLIJlpVdD+GA2cKJIEteGNLYJZ4GZDzjiOmdJBAkFSTvU70bDKTNoip4RVqZrY6zl0g+/yof9/2SOy/3VKxwz1o3zjYZXk/sYgMLuyBOjrWBO7Pja0cniMrc89gfiz4ddeXioAm2UELEofn+2hc4ZTZTHqk69QGdmoEvNNosnalMjEnR7ZUcJLv+NMhNgL5rLgZorbHfCDjZszIAQTkHFJ6g+ywWNAxI/cEZP2qIvOcc0NsLcTyjht2BXno+sSEJYlBOTDuKdq5EIzzGbC/0NXo+i3RkRNL9l2hribHemA7oLmzyDtaexCVQbn3Qk2f/2W7PK1o76X8WU5tqDv0P1Q==
 ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
  smtp.mailfrom=nvidia.com; dmarc=pass action=none header.from=nvidia.com;
  dkim=pass header.d=nvidia.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=Nvidia.com;
  s=selector2;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=aZrt4fC/nEXOAKh07xGt2vE0ryk6ngEwgk61RPlLHAE=;
- b=ITTkax/LZ+3w2QqNa9Z4ZvFAPylwasFbW/RzUXGuYw9m047w5HBbOcfrTR8I/vKQ7cbOZeU6zTgrZwpa20XVvl5RVncvMYVT2dvIaIb/8klsYnbLH9ql2Vg2cByiyEbcCVS1+jH9Tk015UFPZQtsk+h5laIFtco6K9cxNfk2Z2fE4Lh35eJ2t9FW3ynNyfkg4HLKL91UZbFACyv8o1VA2jed+Tds/RmLTINE3r1vIfSYEbRIPk05NtHw0n5TbsAQtJDag9rtHfCPhGFKPkFaeed7W9pEO+z3Sp/N3Wq6EmH+A1RrJKddB2xfkusoSAtdLOw8j6DCLrew+swVeJ/HsQ==
+ bh=QzHlSIQIsD/dGu/hr7XkBhDFipLlNwojS3r4RO7knbE=;
+ b=rjYTKG2eOu7KuK/na81FkOiyTqq4ZIl8kee6zdwcxrY4cHprRxF4e+3wu+Ogb1lb0ehjFXidXkgFXhqtPw+HPSlzDEbFBxOsdov5+AmuTaSKSIR60udLOW59Y80+5fCfh89252xGXM6Nc5HpgHGwLKfoE3/TMAvwDmEMQY/caR6R2D3WnB/0y+K9V3/x/Z4Q9+gKh/zxST+/jMlxy01gL/W4C8g0SanwfdjAAy50rCHEXYt3AT1HbKWv1K5wgWi9KIfw+mwzi7alC5MoPBuiWq/XnYE2LmHaQvz7A/9U1SC0HIR5xntkgJRhTc2330Z/mQATBOlqkibgluAXKV05mQ==
 Authentication-Results: dkim=none (message not signed)
  header.d=none;dmarc=none action=none header.from=nvidia.com;
 Received: from DM4PR12MB5390.namprd12.prod.outlook.com (2603:10b6:5:389::15)
- by DS0PR12MB8219.namprd12.prod.outlook.com (2603:10b6:8:de::10) with
+ by MW6PR12MB7070.namprd12.prod.outlook.com (2603:10b6:303:238::7) with
  Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.113.14; Fri, 12 Jun
- 2026 20:54:08 +0000
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.113.13; Fri, 12 Jun
+ 2026 20:50:27 +0000
 Received: from DM4PR12MB5390.namprd12.prod.outlook.com
  ([fe80::2815:c27e:a0a:2720]) by DM4PR12MB5390.namprd12.prod.outlook.com
  ([fe80::2815:c27e:a0a:2720%6]) with mapi id 15.21.0113.014; Fri, 12 Jun 2026
- 20:54:08 +0000
-Message-ID: <932f0b51-3120-4240-847f-3637beae9c76@nvidia.com>
-Date: Fri, 12 Jun 2026 13:54:05 -0700
+ 20:50:27 +0000
+Message-ID: <7825db6f-c999-430f-8829-57b36312ab2d@nvidia.com>
+Date: Fri, 12 Jun 2026 13:50:24 -0700
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 0/3] vfio/pci: add vfio-pci ATS control property
+Subject: Re: [PATCH 2/3] vfio/pci: Add ats property
 To: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>, qemu-devel@nongnu.org
 Cc: Yi Liu <yi.l.liu@intel.com>, Eric Auger <eric.auger@redhat.com>,
  Zhenzhong Duan <zhenzhong.duan@intel.com>,
@@ -59,88 +59,89 @@ Cc: Yi Liu <yi.l.liu@intel.com>, Eric Auger <eric.auger@redhat.com>,
  Matt Ochs <mochs@nvidia.com>, Nicolin Chen <nicolinc@nvidia.com>,
  Shameer Kolothum <skolothumtho@nvidia.com>
 References: <20260612014322.2918836-1-nathanc@nvidia.com>
- <981b9398-6da9-4862-a5c6-370b220b2bc9@redhat.com>
+ <20260612014322.2918836-3-nathanc@nvidia.com>
+ <b2ab0072-c7de-45d4-920b-4fce5645f329@redhat.com>
 Content-Language: en-US
 From: Nathan Chen <nathanc@nvidia.com>
-In-Reply-To: <981b9398-6da9-4862-a5c6-370b220b2bc9@redhat.com>
+In-Reply-To: <b2ab0072-c7de-45d4-920b-4fce5645f329@redhat.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-X-ClientProxiedBy: SJ0PR13CA0172.namprd13.prod.outlook.com
- (2603:10b6:a03:2c7::27) To DM4PR12MB5390.namprd12.prod.outlook.com
+X-ClientProxiedBy: SJ0PR05CA0188.namprd05.prod.outlook.com
+ (2603:10b6:a03:330::13) To DM4PR12MB5390.namprd12.prod.outlook.com
  (2603:10b6:5:389::15)
 MIME-Version: 1.0
 X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: DM4PR12MB5390:EE_|DS0PR12MB8219:EE_
-X-MS-Office365-Filtering-Correlation-Id: 0f972561-dce7-4692-156d-08dec8c4bf2c
+X-MS-TrafficTypeDiagnostic: DM4PR12MB5390:EE_|MW6PR12MB7070:EE_
+X-MS-Office365-Filtering-Correlation-Id: 2bbd0318-cadb-481c-31f9-08dec8c43bb7
 X-MS-Exchange-SenderADCheck: 1
 X-MS-Exchange-AntiSpam-Relay: 0
 X-Microsoft-Antispam: BCL:0;
- ARA:13230040|1800799024|366016|376014|23010399003|18002099003|22082099003|6133799003|56012099006|4143699003|11063799006;
-X-Microsoft-Antispam-Message-Info: s657AaBNk4d8+3yt6fV3GAsSD8atdkT+rStIIAWe4GbYB+0vU/niTQCzfmzNgASX9mVCpobbJFTDw3j62iBCsWP6BODmpKzjVIw6PFFxnNUejDZ4weNLN0gZQHdWtIPRm3BC2QEd7GwgXTJyT6wosXZBy6WIq6UNcvfa3JrCTgu8yA+1sJCeE1Sp7HV1cTwJqeWL/1GOg6YEQL590Q18u36STOO4UyWLC8mDT6SQynrEEEWpse+QThIkcXmbdU96Ok0pkbZtzqCmpuTy23aV2mN3MGSXbTdeej/89mRsa4h1Qbty7vRfl77oHQFgLIafxdLjQjLW/aEZAyw5wIYDDVTB39lqTuWJ0ZjonJKqm9HqFlA5WgvSS4gzVqKcXDm/qW2wqN9gULj6NKQO31tuzbqcLWOVxGxUJxNZsmRT5gr0ZUYz8cDFdTqEHeF0JEw8edxU2wXYu14xHynjrqI/TG25RzL/M0qE4jPQzVyUvSe82+/U1JpA1HDotV3HjBTyGCXU3IslmBG17Xt61+740h0qFT+mDXoehOL95w8GDSeC0krb7V8q5Rrs+M0Aea/LEF8dS5uwFaKqkm7HXRqDuc9CE23JUV0ujCoOJZKqiyB7p+lz7+/LqO8d2msrHNALu/d3ZSQKzvsT+/Y4DXT5fc3nKGFdfwenQch65lGrjFNhJbTlI0Pw0Oib+Z0wxUFE
+ ARA:13230040|366016|1800799024|376014|23010399003|18002099003|22082099003|6133799003|56012099006|11063799006|4143699003;
+X-Microsoft-Antispam-Message-Info: 4wcWC3xtMSzCY7179iN0cCI+0yuGAi/i5qo9dsyqBBlFYKi3oVHvPUlAni7xOQDiO9+JXTL78DyNscQTUtF4AE/83ZsIqp1wp6vfrJR4ekYWSXSJH5s5DHEpgPdT4k5qxajQP78tsQ5DmMjNeeBBaqvPSVMuT6aaKQnPwF0BebxIFLqZRpLr+lHr/3fRegq1wJAFj0P/5dKOm9vMFm0QR0ItLrWBeaj6AeakunfDz2PrX+GyOey9MC/3w8r/Zko2nXXodV3TkBoV0iP8+4QLHjDUK5o5Pu9fSmDX3WxH6sAXcG7B8brEo/iscoeomzHkH357Yp7SRc5dT1O324t3AWLSIB+Hes/VzKrCBKU2pMyMd603sg8seGuDLvWeRL+t1so/Jr9EXYGPnQJWR7xtEKIrCpltJvJSyPJWIeXqUvcXQWv1KR879YPwtoVdjlhq1RRJg6/106Yg42aMHmJpR1SDZ+e+UgnNApiGdo+enaM+Z88XwM2aFc4/wijp/ZG7aTlJ33W2esUHO/dhV8bod1n0s8IBgWVeysfWZpVd1xtzwjcEfM8rz1M9wlgTr5fnyuM8YBPh6bQFtxU0ee8ddyInTz+535Ri9TAey5K2t6IfFHpYsH5vubPV1GnuQ2BjQR0xmw63yalqvTetfvRjH5ZSwsR1ov4kRhVTjQnuClfYbORITBJo9tZpJ9kDQ7uk
 X-Forefront-Antispam-Report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
  IPV:NLI; SFV:NSPM; H:DM4PR12MB5390.namprd12.prod.outlook.com; PTR:; CAT:NONE;
- SFS:(13230040)(1800799024)(366016)(376014)(23010399003)(18002099003)(22082099003)(6133799003)(56012099006)(4143699003)(11063799006);
+ SFS:(13230040)(366016)(1800799024)(376014)(23010399003)(18002099003)(22082099003)(6133799003)(56012099006)(11063799006)(4143699003);
  DIR:OUT; SFP:1101; 
 X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0: =?utf-8?B?S1h3LzJLcjVSZFlxaE5kWFdoSlhiWm1FSGE4UUxVY1lSdENxUjU2OWFRbUxY?=
- =?utf-8?B?NXBzL0IyU2s2M0R2aWswSkM2QkR6em4yVjRQblFGNG1iZzdmNTN4VFQ4YjFw?=
- =?utf-8?B?R1lsNGhSbjFwaFZmRWVsYVpDRngvQjZpbjhQQVRPK1lsd0JQUWVmMmVzTmNB?=
- =?utf-8?B?YW5BYmwramlRSFVqQTJmNDF5T3g3ZnJGWlQ5Qk9vRXMvYS9QT1RtRThPQjcx?=
- =?utf-8?B?V3BNNURxRExEUjIxUnVxSzFCYkxnQ0p1dVpQQUVnTzNkTktnZUVPNm9pc0g5?=
- =?utf-8?B?UFZ1REpzTkpkYURoWHFkVEswc3JmSGZCT0F0WHlVVzRTdTN4V0VibDlBbU9S?=
- =?utf-8?B?K3U4SjIzSnIwMWZ5cmdzbksvWjZXaXlTKzhROHUrSHE1aTljbmJ0WWhIMGs3?=
- =?utf-8?B?Yy80YTErakN3VklsOENvci9oeUdyQXRORFp6N3ZuY1o3M0FKU0lOUFRaQWlQ?=
- =?utf-8?B?MHp4WGRWVkMwSUh5d2RPcVBoUE5Qa1B5cU5BSVN1aTZKLzFBeFNEUkFQQ3VW?=
- =?utf-8?B?dTFQR3RpaTFaOTRvb1FDR210Sit5N0YrdmZxWGtQdHozWk41TjZPZlR1c3Fx?=
- =?utf-8?B?aUtQSFRQa2E4R1REZjhKcmhTcWJVRVhlTXAvVTdncjI5VWRWdVVHM0I5NXdM?=
- =?utf-8?B?anJSOW81Mi9VUHdhelNVTmZvUlNXZE5PNDRIMFFtcDkwRkdrdzNoWklhdmNl?=
- =?utf-8?B?UlpRNk8yQlJKSStiSlVHcXVWZWpBRXBoSVcrVFk2dmZtNWY2RCtWeElOM0lM?=
- =?utf-8?B?amxxcDhqeDh1SHF3ZDM5aEloVHlzN3U3L0EyZWJpR0pqampXS3Z2WEYvbzZm?=
- =?utf-8?B?bWtFK0lISE5pRXNXcHppVUJLSVJmQ3FXYTBJL2p3WmFtTmd6cEZBTUxhcHJV?=
- =?utf-8?B?LzA2Rm5DMmIrcXpmYW0za2ZGVlZSWjhXbFM2U2E2VVB2MjRCckZWRU9TWTBZ?=
- =?utf-8?B?WXNwN2NiUHZZMFJ6UzJBQnZlRzZ6NGRNZ1ZTMi8wYmVZVTZLNjlBUWpNaU5E?=
- =?utf-8?B?QzhyLzZVWXRtUGNVeUhCQ0o4R2ZPaEU1eFdDb3I3eklnZ1FZUmVlZ0NlSThB?=
- =?utf-8?B?QUtpMWNqak1LVHFTSVBFNzJPOE5RRnh1SDUvWXpOMnVpcVVDQmFjMnFmeXkv?=
- =?utf-8?B?T285VlB3VFRBTHJWblkrNUd5eWEzK01maDJTY1VVT1BPTUZYSHpMTGdKbTNE?=
- =?utf-8?B?ZlVWODJwdWFzdXgzdFB0endncURRYlhRVHFyNEl1UmlWNE1reEl3cnB1NXlk?=
- =?utf-8?B?M3kyT0NnUUFIWnp5QWVVRW85MlB4TVBLZGlobXBRZnBBaHRZajY5R1o3OUFF?=
- =?utf-8?B?WDluNkxLQUpCdzhOS1hMdDdXRlJxaDh4d1I2cWxLVGhRM1NxMGM5ZEpkMlEy?=
- =?utf-8?B?UHUyTjFlT0NLL0NHSjhTSWxHYUpaSk9tb2hNNXBoNXgza0V3c2kvL2pOS05q?=
- =?utf-8?B?VjFiTjE5YU9QOWkzcVN6eDZHZG1ybXZLYnZ3WTREWVovckZIRUJjR3lMUS9w?=
- =?utf-8?B?V2hxd28vanJwbzFrMDFrM0hXS1dTNitBMndlTmFxdVhpNWk1RVpTRzgyeU5Q?=
- =?utf-8?B?N3ltS2VIMVFNUnVnVmp3dks1THFYMXRXaVdMeTZuQlI0bGF6ck9icFQ2ZmI0?=
- =?utf-8?B?UitJQy9mVm5XSmdXM2VCRkpxZlg4VlFwL3J4YUlqNVg4dW1jNFVlOWpjQUo2?=
- =?utf-8?B?anRSTkptSk5oaW83amFlU2RSVVQzZkFLZ0loRXRvUUFhMzg5UFAveHhBb2ZW?=
- =?utf-8?B?aklvVFhUSjVRSklpck1rNi9aQWZkb1A5V1hvZU1pT0Z3ZzdYaXR3dVFMTXhT?=
- =?utf-8?B?TGJwRkcxeUp2L3BxQUp6N1ByTlliVFdDeThiN09tcU1lRDJlWU44RHNZelky?=
- =?utf-8?B?cGdVMUFjWUlyVXUvN055bTNxNDJvRS9UNENjWktMekZ5MmtjTmpBejNSNEVL?=
- =?utf-8?B?UkRvNnN3L0o0eS9QdFNFZ1VNR1FqUi9wZjBjZEcxTnB5Q2hHYTFjcGxxTXRl?=
- =?utf-8?B?TFVyQ0c2czFGaHpFK3ZWSmk4d2JWSmZxVkhzL29XcGFqdEY0dU1CZlpRajBD?=
- =?utf-8?B?aU8wemc3UjRBWWdHRG5FUDFxbHlaOHdNRStva1JCNUlpSUNESnF0TnRhWE1X?=
- =?utf-8?B?VXZhbEZ5TFRPdjZyUlZaOUhzMlpYSmdaeUdhQXA4b08xT0lUSW5KRUdhMGdF?=
- =?utf-8?B?bkxSeTYwd3luYjl3Qy93ZHFFV0ZlMm9WUEQ5S05FTlBJb0tEaFRhTmV3elRt?=
- =?utf-8?B?OGlLcGtiWWZOTlZ0dDJGemZ1TktINklSZmhuTDE5dytDRzBmTXcrTFpPSDkr?=
- =?utf-8?B?K2lMYWdCUkF1T0lpZ21BZjloS2Zka3JDM3hkNDBhSlJVdnJLWUJOdz09?=
+X-MS-Exchange-AntiSpam-MessageData-0: =?utf-8?B?UWVoZ1JJcDF1U3ZiK0hZc2Y3Ui9kTEgyZjhJTlFtekJRSzBqSHNkRURYY05D?=
+ =?utf-8?B?a3A4UzI3TFRuRHZqZzF0cFlNTXE1b21OYm5SdmN2YW43U0RSM2dPYlVhSDRp?=
+ =?utf-8?B?V013WUlBQmR4Z0t4TjV0ZUY3TU5QR0VKWWRMSWEwTlVVQnpJclhzb1dwWS92?=
+ =?utf-8?B?Vm9jdVRsUThzb0VqMXRXNVhnUzYvekhsWXNsSU1TUHgvWEhxTFV4M1JNVkFz?=
+ =?utf-8?B?ZDYwRnd1dWNpZ0I0ZU9PazZtRzFlczYwNkNSVTZ3c1RrTkU2Z2xBNktmMk5V?=
+ =?utf-8?B?ZEVGY2NicGNGZzlHZVc0Z2YxUEZkVUk4Snk4RFhycHlKTmlZS2tDMFZSSTEy?=
+ =?utf-8?B?anlzZ1RFa0tDbXkyQ2pYRzJMTGtjRUo1NXNQR3lFaWd2dWltQzNVMWozdktK?=
+ =?utf-8?B?MXpqNUUrak9Hdm1rbFRLUUtSakk0UGRQVmlWcDZNZVE3UlpEOXNTcEdFT0dr?=
+ =?utf-8?B?VjVGdE5GaCtDTWtOTHBYbFJlYWlWcWplOTl0ZjRpdHZYUXRDQUExTXpsWTdm?=
+ =?utf-8?B?THFHOVBUNFpjdi9jR1pLRGp6ZS93WnhYQ0F4ZXZ2YnhQT0JCS2piVlFpaDBF?=
+ =?utf-8?B?TnNvaEwzT1dQNVY3VzMwQnhFcDFqVlVZYmFKdklKZitNbW52UEtuZjZxQlRz?=
+ =?utf-8?B?bFMxRzNkVFVUWm1uT00rNm5SMXFkOVYyWmZsYzZRRzJwTkNkMFg5RUZxaTZ3?=
+ =?utf-8?B?TGZpN0VRblhBa3JCVldYMDZ5blpZRnorTnZkVkFLdk9EcWJzcjREWXpqT3RF?=
+ =?utf-8?B?MUdZMWJJblBBa21RK0IxYk5uNDB0ZCtuYWxBVjZOZHVWSytTSEEzQkNKQ1A2?=
+ =?utf-8?B?SFBGNnFvUTFTVDc0L2NFcTRlaVBTOUxSZVQyR2lBTmhVeXhYb1NkMU0vYldt?=
+ =?utf-8?B?WHdjdFhub3JtaUJuZk0rb3U2Qy9wcXZRNURLS2R5QWFJejMwZkpyMmtZQ3ox?=
+ =?utf-8?B?RWF5TTJUZ3RLTkpPcHBqUElkOElpMDBicVRhZE85TmRYZnpqWFE1M3YrVXFY?=
+ =?utf-8?B?aDRPZDViZUU5Z2dpZmhJOFlxLzBZd051WkdVblJLNVgxRU03ZDFzNDFFRllq?=
+ =?utf-8?B?S0lSd0pXc2VlSGVUSURIc0dyT0hoUjdRYXV4SlJ3TU5rMTV5bEIxOERrbmg5?=
+ =?utf-8?B?L0ptSXoxU2FZUnRJbWZvSFliTy90TlBKd0NTbER4VVR2MGwxVUJBWnpSMS9v?=
+ =?utf-8?B?V0pGSk90eDZqQyt5U2U1V001OVcyTmw5S0Z1b25YNXhwVUZJOFBuWks0UnBS?=
+ =?utf-8?B?aE5pNTVUellyMTg3dVZGVUVuUW0vWnJzbVN4OHdxWndBa1VHaWR0cWQ3RlBv?=
+ =?utf-8?B?VVlhTVQ0R0JVaFltTjRUN0o0VlVtazhqVUhTS0hiZkJUcXY0ZUNsQVA1bkNX?=
+ =?utf-8?B?SFhEa1h0T3pkOHhORUJHcyt0VUNXRHFqU0FieUk2TitJMjRqWmVNRDk5cmxI?=
+ =?utf-8?B?T3g5N3IvV04vZ0hrOExwYk9EKy80cHRKbU5XMDV4cnBwWDhLdFRjRlRHN0Jl?=
+ =?utf-8?B?Zk5yMWVEaGZ3THFGQVFUZFJrUTRZaGhaOGp4UFIzTEdqTm1wZGdSWUxQT0dJ?=
+ =?utf-8?B?VUxNaDQyRjl3RHpiWmhWenA4Q0w2RlB3U0pLWHVaZlBnbklHU21EbDNZZ2hF?=
+ =?utf-8?B?RmVPcXlHc1Y4NW1QaU5aMytEbGZ1RUpXL0txQmRyc2RBQmF1aDB3aDcwV0lM?=
+ =?utf-8?B?RWdyVnBodkxSVHlXRzhEdTJqcHVnY0hoTU9xZzJGS3FmWXNFaytxNENPTndN?=
+ =?utf-8?B?ZXhMd2MvN2l0Y1JNc3BXam5ySVFnaXMwd3ZyUHhBT003c0p3aS9mYUZPbnVM?=
+ =?utf-8?B?ZjVDOU1ua2EyNUwzSVZadmVWZUNLbkkvelVQQ0ZMTGdFcVRCOElMa09vb3hK?=
+ =?utf-8?B?cjlUcDJBVFlLdGNEQTU5eHBLOHV3VmJxL3lmeC9tQndFOVVnbUxnemFZSjhl?=
+ =?utf-8?B?a1lFSGVDYVhiSG5wbk5XaXZtWWE2cDU2MEM3M3g5WjhRUW1XVk1pUWdVemxQ?=
+ =?utf-8?B?SlF5TEJYVEZuR3VveEw4aS9RKzQ5UE5ScWNrQ2FRcFJCZzdKOXpDRHVsenR6?=
+ =?utf-8?B?R0grWU5nQ29DZHpMOWFBek5XSWRjdTB0UDVTaVQ4MUxhRWNKUWpEZ1dOOTBq?=
+ =?utf-8?B?QUoxQXhLN09LQ0tZZTBPemkxSXQ4RUpCemx6TmFNWk81WmYyZFNiSHc1c3Nn?=
+ =?utf-8?B?bzc1TW1pVnRzY05CKzFwU2xIS0YrWDNON3F0LzAxWEhVLy9yMHZCc0xRT0JQ?=
+ =?utf-8?B?NENzejQ5bDRnZTYvK2ZkNG1UWHA0VTJpYTFTMWdYZmZwdHNKT0xSbElUb3VO?=
+ =?utf-8?B?ZjRmYWFWQ09VQWdZYTFWOGg5clNnVHFiY3R1Y1FYMGNZdHNOZ2lZUT09?=
 X-OriginatorOrg: Nvidia.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 0f972561-dce7-4692-156d-08dec8c4bf2c
+X-MS-Exchange-CrossTenant-Network-Message-Id: 2bbd0318-cadb-481c-31f9-08dec8c43bb7
 X-MS-Exchange-CrossTenant-AuthSource: DM4PR12MB5390.namprd12.prod.outlook.com
 X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 12 Jun 2026 20:54:08.0942 (UTC)
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 12 Jun 2026 20:50:27.5410 (UTC)
 X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
 X-MS-Exchange-CrossTenant-Id: 43083d15-7273-40c1-b7db-39efd9ccc17a
 X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: uByS/pqXVhL7dbfxcFsD/LF6ROcIRxqqS68sWgPOPVLwnNPjxia5x4aQtD38MwxxVyUipZgQHaA6KG0ZJD5Vvg==
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: DS0PR12MB8219
-Received-SPF: permerror client-ip=2a01:111:f403:c105::7;
+X-MS-Exchange-CrossTenant-UserPrincipalName: SjdrSHCtN6yEE4hl1qs13LIA0qu3v5Pd24E/W2MwoSNC/D0Oww2R+22teYWKvZUCqoqG0ARa3SR3NIk2hRQU1Q==
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: MW6PR12MB7070
+Received-SPF: permerror client-ip=40.93.195.39;
  envelope-from=nathanc@nvidia.com;
- helo=CH4PR04CU002.outbound.protection.outlook.com
+ helo=SN4PR2101CU001.outbound.protection.outlook.com
 X-Spam_score_int: -14
 X-Spam_score: -1.5
 X-Spam_bar: -
 X-Spam_report: (-1.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.445,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- FORGED_SPF_HELO=1, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_PASS=-0.001,
- SPF_NONE=0.001 autolearn=no autolearn_force=no
+ FORGED_SPF_HELO=1, RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001,
+ SPF_HELO_PASS=-0.001, SPF_NONE=0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -156,58 +157,204 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi Cédric,
 
-On 6/12/2026 12:56 AM, Cédric Le Goater wrote:
-> Hello Nathan,
-> 
+
+On 6/12/2026 1:02 AM, Cédric Le Goater wrote:
 > On 6/12/26 03:43, Nathan Chen wrote:
->> Hi,
+>> From: Nathan Chen <nathanc@nvidia.com>
 >>
->> This series adds an ATS control property to vfio-pci and wires iommufd
->> support reporting so vfio-pci can decide whether to expose the ATS PCIe
->> extended capability to the guest. This series is a follow-up to the
->> previous patch included in the "hw/arm/smmuv3-accel: Resolve AUTO
->> properties" series [0].
+>> Add an "ats" OnOffAuto property to vfio-pci. When the device has an ATS
+>> extended capability in config space but we should not expose it (ats=off,
+>> or ats=auto and kernel reports IOMMU_HW_CAP_PCI_ATS_NOT_SUPPORTED), mask
+>> the capability so the guest does not see it.
 >>
->> The new vfio-pci property is:
->>    ats=on|off|auto (default: auto)
+>> If ATS is explicitly requested but not supported by the kernel, fail
+>> device realize.
 >>
->> Behavior:
->> - off: always masks ATS from guest view
->> - on: requires ATS support; fails realize if kernel reports
->>        IOMMU_HW_CAP_PCI_ATS_NOT_SUPPORTED
->> - auto: masks ATS only when kernel reports
->>          IOMMU_HW_CAP_PCI_ATS_NOT_SUPPORTED
+>> This aligns with the kernel's per-device effective ATS reporting and 
+>> allows
+>> vfio-pci to mask ATS when the host kernel reports ATS as unsupported.
 >>
->> To preserve machine compatibility for older machine types, this series 
->> adds:
->>    { "vfio-pci", "ats", "on" } to hw_compat_11_0.
+>> Suggested-by: Shameer Kolothum <skolothumtho@nvidia.com>
+>> Signed-off-by: Nathan Chen <nathanc@nvidia.com>
+>> ---
+>>   hw/vfio/pci.h |  1 +
+>>   hw/vfio/pci.c | 74 ++++++++++++++++++++++++++++++++++++++++++++++++---
+>>   2 files changed, 72 insertions(+), 3 deletions(-)
 >>
->> Please note that no linux-headers sync patch is included in this series
->> because IOMMU_HW_CAP_PCI_ATS_NOT_SUPPORTED is already present in
->> linux-headers/linux/iommufd.h in the current base.
->>
->> Testing:
->> Verified ATS capability visibility changes with vfio-pci ats=off/on/auto
->> on an NVIDIA Grace system:
->> - ats=on + ATS supported by kernel => propagate ATS extended cap to
->>    guest view
->> - ats=auto + ATS supported by kernel => propagate ATS extended cap to
->>    guest view
->> - ats=on + hiod_iommufd_support_ats modified to return false (mimic
->>    kernel-reported unsupported ATS) => realize failure
->> - ats=auto + hiod_iommufd_support_ats modified to return false (mimic
->>    kernel-reported unsupported ATS) => ATS masked
->> - ats=off => ATS masked
+>> diff --git a/hw/vfio/pci.h b/hw/vfio/pci.h
+>> index c3a1f53d35..b48138870e 100644
+>> --- a/hw/vfio/pci.h
+>> +++ b/hw/vfio/pci.h
+>> @@ -191,6 +191,7 @@ struct VFIOPCIDevice {
+>>       VFIODisplay *dpy;
+>>       Notifier irqchip_change_notifier;
+>>       VFIOPCICPR cpr;
+>> +    OnOffAuto ats;
 > 
-> What about ats=on and no ATS support in the physical device ?
+> I would move this new property field close to the other property fields
+> in VFIOPCIDevice.
 > 
-> I agree it is a bit of a corner case. A warning would be nice,
-> it can be addressed as a follow up change.
+Ok, I will move this closer.
 
-Right, I had missed that case. I will look into accounting for it in the 
-next refresh.
+>>   };
+>>   /* Use uin32_t for vendor & device so PCI_ANY_ID expands and cannot 
+>> match hw */
+>> diff --git a/hw/vfio/pci.c b/hw/vfio/pci.c
+>> index 9c06b25e63..6edb3bf5db 100644
+>> --- a/hw/vfio/pci.c
+>> +++ b/hw/vfio/pci.c
+>> @@ -2546,7 +2546,49 @@ static bool 
+>> vfio_pci_synthesize_pasid_cap(VFIOPCIDevice *vdev, Error **errp)
+>>       return true;
+>>   }
+>> -static void vfio_add_ext_cap(VFIOPCIDevice *vdev)
+>> +/*
+>> + * Determine whether ATS capability should be advertised for @vdev, 
+>> based on
+>> + * whether it was enabled on the command line and whether it is 
+>> supported
+>> + * according to the kernel's IOMMU_HW_CAP_PCI_ATS_NOT_SUPPORTED bit.
+>> + *
+>> + * Store whether ATS capability should be advertised in @ats_needed.
+>> + *
+>> + * Returns false only when ats=on is explicitly requested but the kernel
+>> + * reports IOMMU_HW_CAP_PCI_ATS_NOT_SUPPORTED. Returns true in all 
+>> other cases.
+>> + */
+>> +static bool vfio_pci_ats_requested_and_supported(VFIOPCIDevice *vdev,
+>> +                                                 bool *ats_needed, 
+>> Error **errp)
+>> +{
+>> +    HostIOMMUDevice *hiod = vdev->vbasedev.hiod;
+>> +    HostIOMMUDeviceClass *hiodc;
+>> +    bool ats_supported;
+>> +
+>> +    if (vdev->ats == ON_OFF_AUTO_OFF) {
+>> +        *ats_needed = false;
+> 
+> Why not set '*ats_needed' to false by default here too. I see it is done in
+> vfio_pci_add_capabilities() but it looks safer.
+> 
+Right, I'll set it to false at the top of this function in case it is 
+given a non-initialized ats_needed input.
+
+> 
+>> +        return true;
+>> +    }
+>> +
+>> +    *ats_needed = true;
+>> +    if (!hiod) {
+>> +        return true;
+>> +    }
+>> +    hiodc = HOST_IOMMU_DEVICE_GET_CLASS(hiod);
+>> +    if (!hiodc || !hiodc->support_ats) {
+>> +        return true;
+>> +    }
+>> +
+>> +    ats_supported = hiodc->support_ats(hiod);
+>> +    if (vdev->ats == ON_OFF_AUTO_ON && !ats_supported) {
+>> +        error_setg(errp, "vfio: ATS requested but not supported by 
+>> kernel");
+> 
+>   "vfio-pci: ..."
+Noted, I will update this in the next refresh.
+
+> 
+>> +        *ats_needed = false;
+>> +        return false;
+>> +    }
+>> +
+>> +    *ats_needed = ats_supported;
+>> +    return true;
+>> +}
+>> +
+>> +static void vfio_add_ext_cap(VFIOPCIDevice *vdev, bool ats_needed)
+>>   {
+>>       PCIDevice *pdev = PCI_DEVICE(vdev);
+>>       bool pasid_cap_added = false;
+>> @@ -2635,7 +2677,18 @@ static void vfio_add_ext_cap(VFIOPCIDevice *vdev)
+>>            */
+>>           case PCI_EXT_CAP_ID_PASID:
+>>               pasid_cap_added = true;
+>> -            /* fallthrough */
+>> +            pcie_add_capability(pdev, cap_id, cap_ver, next, size);
+>> +            break;
+>> +        case PCI_EXT_CAP_ID_ATS:
+>> +            /*
+>> +             * If ATS is requested and supported according to the 
+>> kernel, add
+>> +             * the ATS capability. If not supported according to the 
+>> kernel or
+>> +             * disabled on the qemu command line, omit the ATS cap.
+>> +             */
+>> +            if (ats_needed) {
+>> +                pcie_add_capability(pdev, cap_id, cap_ver, next, size);
+>> +            }
+>> +            break;
+>>           default:
+>>               pcie_add_capability(pdev, cap_id, cap_ver, next, size);
+>>           }
+>> @@ -2657,6 +2710,7 @@ static void vfio_add_ext_cap(VFIOPCIDevice *vdev)
+>>   bool vfio_pci_add_capabilities(VFIOPCIDevice *vdev, Error **errp)
+>>   {
+>>       PCIDevice *pdev = PCI_DEVICE(vdev);
+>> +    bool ats_needed = false;
+>>       if (!(pdev->config[PCI_STATUS] & PCI_STATUS_CAP_LIST) ||
+>>           !pdev->config[PCI_CAPABILITY_LIST]) {
+>> @@ -2667,7 +2721,11 @@ bool vfio_pci_add_capabilities(VFIOPCIDevice 
+>> *vdev, Error **errp)
+>>           return false;
+>>       }
+>> -    vfio_add_ext_cap(vdev);
+>> +    if (!vfio_pci_ats_requested_and_supported(vdev, &ats_needed, 
+>> errp)) {
+>> +        return false;
+>> +    }
+>> +
+>> +    vfio_add_ext_cap(vdev, ats_needed);
+>>       return true;
+>>   }
+>> @@ -3815,6 +3873,7 @@ static const Property vfio_pci_properties[] = {
+>>       DEFINE_PROP_BOOL("skip-vsc-check", VFIOPCIDevice, 
+>> skip_vsc_check, true),
+>>       DEFINE_PROP_UINT16("x-vpasid-cap-offset", VFIOPCIDevice,
+>>                          vpasid_cap_offset, 0),
+>> +    DEFINE_PROP_ON_OFF_AUTO("ats", VFIOPCIDevice, ats, 
+>> ON_OFF_AUTO_AUTO),
+>>   };
+>>   static void vfio_pci_set_fd(Object *obj, const char *str, Error **errp)
+>> @@ -3973,6 +4032,15 @@ static void vfio_pci_class_init(ObjectClass 
+>> *klass, const void *data)
+>>                                             "a vIOMMU. A value of 0 
+>> (default) places the capability at the "
+>>                                             "end of the extended 
+>> configuration space. The offset must be "
+>>                                             "4-byte aligned and within 
+>> the PCIe extended configuration space");
+>> +   object_class_property_set_description(klass, /* 11.1 */
+>> +                                          "ats",
+>> +                                          "Control guest visibility 
+>> of the ATS PCIe extended capability. "
+>> +                                          "Valid values are on, off, 
+>> and auto (default). "
+>> +                                          "'off' always masks ATS. "
+>> +                                          "'on' requires ATS support 
+>> for the device and fails realize if the "
+>> +                                          "host kernel reports 
+>> IOMMU_HW_CAP_PCI_ATS_NOT_SUPPORTED. "
+> 
+> Again, IOMMU_HW_CAP_PCI_ATS_NOT_SUPPORTED is a kernel UAPI bit and it is
+> a bit too low-level/internal a QEMU for property documentation.
+> 
+> What about :
+> 
+>    "'on' requires ATS support for the device and fails realize if the "
+>    "host kernel reports ATS as unavailable for this device. "
+>    "'auto' masks ATS only when the host kernel reports ATS as unavailable."
+> 
+> ?
+Yes I agree, I will update the descriptions here accordingly.
 
 Thanks,
 Nathan
