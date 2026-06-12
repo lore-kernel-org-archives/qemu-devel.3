@@ -4,112 +4,93 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id CA6D5CD98CE
-	for <qemu-devel@archiver.kernel.org>; Fri, 12 Jun 2026 15:17:43 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E169BCD98CE
+	for <qemu-devel@archiver.kernel.org>; Fri, 12 Jun 2026 15:30:31 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wY3d4-0001cu-BD; Fri, 12 Jun 2026 11:17:07 -0400
+	id 1wY3pE-0003Yb-OE; Fri, 12 Jun 2026 11:29:40 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <shivangu@linux.ibm.com>)
- id 1wY3ck-0001c4-MR; Fri, 12 Jun 2026 11:16:47 -0400
-Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <shivangu@linux.ibm.com>)
- id 1wY3ci-0001G4-Rs; Fri, 12 Jun 2026 11:16:46 -0400
-Received: from pps.filterd (m0356517.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 65C0ZtJW3872942; Fri, 12 Jun 2026 15:16:41 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=
- content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=pp1; bh=r23yJa
- OFctilcxBR0WQfypszN5gMartS/dWnA0jdrjk=; b=saXbdjAnz2a3zp9WTluV7U
- kr9kbE/QwW/+8AKWxHC+ZKFI1oCvM0g5WR6myRSF09s9SBQgGo8vr84Tcc1ipjBr
- Xy+sYEipsJ5MmgQGE5GklPrl8ZmSLqYQ5sSw0EsNJlMSoIZj+vz3GFtRMYcexbnn
- eWAwqoBpdCwnNPRqErEPVM87rbTcpjSV9rh6YkLDs7kjoCr9mOTpy3Ra1LTqiBkS
- 85LIxD2qc3GxSL6faHqNJkA8JoznGWgWbvA8MhqYsOPpvMJvmwcLNpgDzMADvamh
- iBv8pv3MKXt6s1vWbxGoizjXF2pmXAO0gOHkjW2EV93zc684LYMWjpKcugRuptog
- ==
-Received: from ppma22.wdc07v.mail.ibm.com
- (5c.69.3da9.ip4.static.sl-reverse.com [169.61.105.92])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4eqe8f1my8-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Fri, 12 Jun 2026 15:16:41 +0000 (GMT)
-Received: from pps.filterd (ppma22.wdc07v.mail.ibm.com [127.0.0.1])
- by ppma22.wdc07v.mail.ibm.com (8.18.1.7/8.18.1.7) with ESMTP id 65CF4bdK028064;
- Fri, 12 Jun 2026 15:16:40 GMT
-Received: from smtprelay01.fra02v.mail.ibm.com ([9.218.2.227])
- by ppma22.wdc07v.mail.ibm.com (PPS) with ESMTPS id 4eqe090ddy-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Fri, 12 Jun 2026 15:16:39 +0000 (GMT)
-Received: from smtpav04.fra02v.mail.ibm.com (smtpav04.fra02v.mail.ibm.com
- [10.20.54.103])
- by smtprelay01.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 65CFGaOm50856294
- (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Fri, 12 Jun 2026 15:16:36 GMT
-Received: from smtpav04.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id E88FD2004E;
- Fri, 12 Jun 2026 15:16:35 +0000 (GMT)
-Received: from smtpav04.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id BE61A20043;
- Fri, 12 Jun 2026 15:16:32 +0000 (GMT)
-Received: from shivang.upadyay (unknown [9.39.27.203])
- by smtpav04.fra02v.mail.ibm.com (Postfix) with ESMTP;
- Fri, 12 Jun 2026 15:16:32 +0000 (GMT)
-Message-ID: <abd149464ebb8c0dcff389b09ff7d1158c237feb.camel@linux.ibm.com>
-Subject: Re: [RFC PATCH 11/28] target/ppc: Move fixed-point byte-reversal
- store insns to decodetree
-From: Shivang Upadhyay <shivangu@linux.ibm.com>
-To: amachhiw@linux.ibm.com, Chinmay Rath <rathc@linux.ibm.com>,
- qemu-devel@nongnu.org, qemu-ppc@nongnu.org, npiggin@gmail.com,
- harshpb@linux.ibm.com, richard.henderson@linaro.org,
- peter.maydell@linaro.org, stefanha@redhat.com
-Date: Fri, 12 Jun 2026 20:46:19 +0530
-In-Reply-To: <20260520160728.2283628-12-rathc@linux.ibm.com>
-References: <20260520160728.2283628-1-rathc@linux.ibm.com>
- <20260520160728.2283628-12-rathc@linux.ibm.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-User-Agent: Evolution 3.58.3 (3.58.3-1.fc43) 
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1wY3pD-0003YM-VF
+ for qemu-devel@nongnu.org; Fri, 12 Jun 2026 11:29:39 -0400
+Received: from mail-pg1-x535.google.com ([2607:f8b0:4864:20::535])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1wY3pC-0007LL-6Z
+ for qemu-devel@nongnu.org; Fri, 12 Jun 2026 11:29:39 -0400
+Received: by mail-pg1-x535.google.com with SMTP id
+ 41be03b00d2f7-c859878eb48so478403a12.0
+ for <qemu-devel@nongnu.org>; Fri, 12 Jun 2026 08:29:37 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1781278176; x=1781882976; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:content-language:from
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=xSPDG2Gv8G0uKlSMK8i5QtDw48PlCxK1P5Vtx4fk0Kc=;
+ b=riMXxfIuMEsbSnYJECtJFMb0C+l0xHC4CUen/ysnwR6b710E914K+Jp66lXOuRnNRc
+ 1R/SyZoIeWanDMi+uwuR16YKDrqDVLW0wr6VRFL6Esa2zy5+uwaR2AO3iVxo3LqfrjK3
+ jUfa7Hyjs5atcJZDGs7NaHXMfgpUB4WCKb+y+4uypAmdZCnWcb0xcPyi2aM00txplbJa
+ C/zWtE4MiPhExi35yfBVBkxclnTZ6fyn8n6rd26bYvA/1lvmqOHqKaSCpmABdEfvZ8jq
+ SeW9i4hV0AFC6zQaYyqojADGg8v32saJXt1w7xIrW5IyS+BmQEPpeEbXgnBv4hxawIio
+ byLA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1781278176; x=1781882976;
+ h=content-transfer-encoding:in-reply-to:content-language:from
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=xSPDG2Gv8G0uKlSMK8i5QtDw48PlCxK1P5Vtx4fk0Kc=;
+ b=Wcil0rJPONby2kQZDFJCn+jOeJiS3DDBtWRTnxOYqw8r4O25Vi7Lep0+4K1ZzyNkm5
+ arWmK3gpjujeKgOntHm+K1c2rZDjoJXNE/+UusjihsaY5Orb4UdncFWcpcNUfnAtW/lD
+ o5mTUKtsaDGwYD63a4pAo48ck8WsyvGt5mA5H/ja1MoLhNJ29mPYXk1Y3gxNkc39NFxm
+ NGEGd4LvgGWDANx6Ar7hXjBeEqH4pTkRYYk85mr1CgU2BfYIsgi9ayz6Ai8xqWzfehGF
+ HAT9eqQTp38iSMkj1KT+cCbf/YMQ9245KleBWgntLFFicOe84VvUnPg66MReJ+2pOU74
+ 0h7Q==
+X-Gm-Message-State: AOJu0Yx58L5sOcagSsk4AM9EICPb/lfUNMS3Nhi0v8cb4dx3MhqZOEke
+ SrAAKcZXctMMBmdtte7rExDD0JPcqcsjwGBbHUQg7a2a0cUd+aSrSjZC125lOFLKQxE=
+X-Gm-Gg: Acq92OHiLZVnNSZuzKiORWa2VQbHumFcmcIzzxDDJfK2w37u8iUYpR6gvzlgiSyAocY
+ fz+jbC5v4RKouIG7E/Pq09dBllvaBI9pRMFLBbTK54YCiAf416slpaHgYHDr/sRqE68VH8TQHq0
+ NMa4bT2F9vDTpqwLm5fKOZvW4sOjFAwP5mLBgHFivMCMA4BGMUoho4E88ryRIF1aUOfLGFERkMu
+ 6J6GCZcQM1QSiOapmyipjhtI98CErmAuLnzic/Z5iLhddqkVZ4oPG5oGcClpI5PNQRX+GNWGhrM
+ WV6wK4wO4vjYBgJtIfD5Q9wXV60Mfk1EjhpAMoAm+4hxJMAcPqvTfz3gh+NPtW7+bkwtMuIh8yi
+ BUj9Qib2fhingMYZw1hDO/KRB80QvUe+enyRnhPISd4tZXFz8+ntE+gdgO3a4cjtsPcQn7HLHCq
+ wh7vg7uB5omG2/8786eSEU+ZvYGsdxUsrpqryt2iNsdC5qSEA=
+X-Received: by 2002:a05:6a21:6190:b0:3b4:81b4:9b79 with SMTP id
+ adf61e73a8af0-3b79642264bmr46318637.40.1781278176428; 
+ Fri, 12 Jun 2026 08:29:36 -0700 (PDT)
+Received: from [192.168.0.4] ([71.212.142.33])
+ by smtp.gmail.com with ESMTPSA id
+ d2e1a72fcca58-8434b020b53sm2591115b3a.47.2026.06.12.08.29.35
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Fri, 12 Jun 2026 08:29:35 -0700 (PDT)
+Message-ID: <223f5f94-b9b7-46b0-8466-5be655203a0e@linaro.org>
+Date: Fri, 12 Jun 2026 08:29:34 -0700
 MIME-Version: 1.0
-X-TM-AS-GCONF: 00
-X-Proofpoint-Reinject: loops=2 maxloops=12
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNjEyMDEzOSBTYWx0ZWRfX7bYxCEwoqqEY
- sT9ZVZZu6qFRQ89UNXex6mHki53EJiM8BkHXYyHtJU+A+lQxfUh+VpcHF0+mygcGCK5LntYh9R4
- LwkB0DvxwtE49RNBs3JfjuA1RwbmPTaWeWnUREM6phdX7iTZlYs/YvENTzuxh2Kh4tjM7Rmwu4x
- eIc3GOUqmcroRCGJhvYlYVjiDNUSgECTCsB/lmU9Fm97x/m1UO+xlcon4tjqaBp0s6RDo+Edr2m
- w/1dO42JnKoJsLArSAVdveazr3AEdc6m51Dv983EqtGWl2DLk8J57OYg/emUidYQ8LX53mY64Ut
- mjwoFdejoMzAJkimMRliNyqPzbWDr9fHV+uRHrHDS0MqpS54PxO6hmNI/vjBHduTnbRGyoRTII2
- V2Ywjfq+yvhKBwBTypzsHW4RfuguEDt1qijZLH7mxSTR+YO5N1Vpv/BdWfCFQDyaJ/68nyMbBsB
- NOiOOTGlh6XwwGd91mQ==
-X-Authority-Analysis: v=2.4 cv=dr7rzVg4 c=1 sm=1 tr=0 ts=6a2c22d9 cx=c_pps
- a=5BHTudwdYE3Te8bg5FgnPg==:117 a=5BHTudwdYE3Te8bg5FgnPg==:17
- a=IkcTkHD0fZMA:10 a=FelO9ux0wxsA:10 a=VkNPw1HP01LnGYTKEx00:22
- a=RnoormkPH1_aCDwRdu11:22 a=U7nrCbtTmkRpXpFmAIza:22 a=zKdSJwAEEZ6l6oyJNpgA:9
- a=QEXdDO2ut3YA:10
-X-Proofpoint-ORIG-GUID: N6BkMT-UUMiP1LQrmT8b1xGx_1ZweUsp
-X-Proofpoint-GUID: IjGnBafpcuATGPtwS-GsC4lWPybloc1-
-X-Proofpoint-Spam-Info: AW1haW4tMjYwNjEyMDEzOSBTYWx0ZWRfX3xnxyASNxYlh
- 1b9ClrU2S1Uf7rf/vsdQp11VcqibHxab6wTiK4vM+26jLbBIe29UOW8y+nwaDWjjSm4IosSeld8
- s1cEKqLAuEZb0ZAys7gw3MQmDgz9Ph4=
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.125,FMLib:17.12.100.49
- definitions=2026-06-12_01,2026-06-12_03,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- spamscore=0 adultscore=0 suspectscore=0 priorityscore=1501 phishscore=0
- clxscore=1015 bulkscore=0 impostorscore=0 lowpriorityscore=0 malwarescore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2606040000 definitions=main-2606120139
-Received-SPF: pass client-ip=148.163.156.1;
- envelope-from=shivangu@linux.ibm.com; helo=mx0a-001b2d01.pphosted.com
-X-Spam_score_int: -26
-X-Spam_score: -2.7
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 1/2] system/memory: Use __builtin_mem{cpy, move} in
+ accessors of ram device region
+To: Gavin Shan <gshan@redhat.com>, qemu-arm@nongnu.org
+Cc: qemu-devel@nongnu.org, peterx@redhat.com, mst@redhat.com,
+ peter.maydell@linaro.org, berrange@redhat.com, david@kernel.org,
+ alex@shazbot.org, clg@redhat.com, pbonzini@redhat.com, philmd@mailo.com,
+ phrdina@redhat.com, jugraham@redhat.com, shan.gavin@gmail.com
+References: <20260612110307.1264798-1-gshan@redhat.com>
+ <20260612110307.1264798-2-gshan@redhat.com>
+From: Richard Henderson <richard.henderson@linaro.org>
+Content-Language: en-US
+In-Reply-To: <20260612110307.1264798-2-gshan@redhat.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::535;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pg1-x535.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
- RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -126,32 +107,76 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, 2026-05-20 at 21:37 +0530, Chinmay Rath wrote:
-> --- a/target/ppc/insn32.decode
-> +++ b/target/ppc/insn32.decode
-> @@ -372,6 +372,14 @@ STVDX=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=
-=A0=C2=A0=C2=A0 011111 ..... ..... .....
-> 0010010001 -=C2=A0=C2=A0 @X
-> =C2=A0STSKU=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 1=
-11110 ..... ..... ............. 0 11=C2=A0=C2=A0 @DD
-> =C2=A0STCXU=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 1=
-11110 ..... ..... ............. 1 11=C2=A0=C2=A0 @DD
-> =C2=A0
-> +STDBRX		011111 ..... ..... ..... 1010010100 -	@X
-> +STDCIX		011111 ..... ..... ..... 1111110101 -	@X
-> +STWCIX		011111 ..... ..... ..... 1110010101 -	@X
-> +STHCIX		011111 ..... ..... ..... 1110110101 -	@X
-> +STBCIX		011111 ..... ..... ..... 1111010101 -	@X
-> +STHBRX		011111 ..... ..... ..... 1110010110 -	@X
-> +STWBRX		011111 ..... ..... ..... 1010010110 -	@X
-> +
-> =C2=A0### Fixed-Point Compare Instructions
-> =C2=A0
+On 6/12/26 04:03, Gavin Shan wrote:
+> All ram device regions was turned to be indirectly accessible by commit
+> 4a2e242bbb ("memory: Don't use memcpy for ram_device regions"). This leads
+> to guest hang on compiling 'cuda-samples' as reported by Julia. The guest
+> is started by the following command lines, with a GH100 GPU card.
+> 
+>     host$ lspci | grep GH100
+>     0009:01:00.0 3D controller: NVIDIA Corporation GH100 [GH200 120GB / 480GB] (rev a1)
+>     host$ /home/sandbox/gavin/qemu.main/build/qemu-system-aarch64            \
+>           -machine virt,gic-version=host,ras=on,highmem-mmio-size=4T         \
+>           -accel kvm -cpu host -smp cpus=48 -m size=8G                       \
+>           -drive file=/home/gavin/sandbox/images/disk.qcow2,if=none,id=d0    \
+>           -device virtio-blk-pci,id=vb0,bus=pcie.0,drive=d0,num-queues=4     \
+>           -device vfio-pci-nohotplug,host=0009:01:00.0,bus=pcie.1.0
+>             :
+>     guest$ cd cuda-samples/build
+>     guest$ make -j 20 clean
+>     guest$ make -j 20
+>             :
+>     [ 54%] Linking CUDA executable graphMemoryNodes
+>     [ 54%] Built target graphMemoryNodes
+>     <no more output afterwards, guest becomes frozen here>
+> 
+>     guest$ qemu-system-aarch64: virtio: bogus descriptor or out of resources
+>     [  555.814025] virtio_blk virtio0: [vda] new size: 268435456 512-byte logical blocks (137 GB/128 GiB)
+> 
+> When the GPU's driver (NVidia open driver) is loaded on guest bootup,
+> the memory blocks residing in the PCI BAR#4 can be presented to the
+> guest through memory hot-add. The page cache can be allocated from the
+> hot added memory blocks when cuda-samples is being compiled. Afterwards,
+> the page cache is sent to QEMU's virtio-blk device as part of the DMA
+> request, the bounce buffer has to be used to accomodate the request as
+> the corresponding memory region (MemoryRegion) is a RAM DEVICE region
+> and indirectly accessible in qemu. However, the max bounce bufer size
+> is only 4096 bytes by default. We're running out of that space quickly.
+> 
+>    QEMU
+>    ====
+>    virtio_blk_handle_output
+>      virtio_blk_handle_vq
+>        virtio_blk_get_request
+>          virtqueue_pop
+>            virtqueue_split_pop
+>              virtqueue_map_desc
+>                address_space_map
+>                  memory_access_is_direct         # Return false
+>                    memory_region_supports_direct_access
+> 
+>    (qemu) info mtree
+>    memory-region: pci_bridge_pci
+>      0000000000000000-ffffffffffffffff (prio 0, container): pci_bridge_pci
+>        0000042000000000-0000043fffffffff (prio 1, i/o): 0009:01:00.0 base BAR 4
+>          0000042000000000-0000043fffffffff (prio 0, i/o): 0009:01:00.0 BAR 4
+>            0000042000000000-000004379fffffff (prio 0, ramd): 0009:01:00.0 BAR 4 mmaps[0]
+> 
+> This replaces mem{cpy, move} with __builtin_mem{cpy, move} in the memory
+> accessors to ram device memory region, preparatory work to make ram device
+> region directly accessible and bypass the bounce buffer in the DMA path
+> in next patch.
 
-Hi Amit,=20
- It would be good to align the instruction format with the other
-instructions currently it looks little odd.
+memcpy/memmove *always* compile to __builtin_memcpy/memmove, and the compiler later 
+decides whether or not to expand inline.
 
-Otherwise LGTM.
-~Shivang.
+So, this doesn't do what you think it does.
+My real question is: what are you attempting to achieve?
+
+(1) is the problem unaligned access to a mapped physical device?
+(2) is the problem vector access to a mapped physical device?
+(3) something else?
+
+
+r~
 
