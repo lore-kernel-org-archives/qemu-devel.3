@@ -4,99 +4,108 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id EF6ACCD8CA8
-	for <qemu-devel@archiver.kernel.org>; Fri, 12 Jun 2026 17:26:29 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A5E98CD8CA8
+	for <qemu-devel@archiver.kernel.org>; Fri, 12 Jun 2026 17:47:55 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wY5dW-0005zR-Fs; Fri, 12 Jun 2026 13:25:42 -0400
+	id 1wY5yR-00021J-3o; Fri, 12 Jun 2026 13:47:20 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1wY5dV-0005yz-66
- for qemu-devel@nongnu.org; Fri, 12 Jun 2026 13:25:41 -0400
-Received: from mail-pl1-x62b.google.com ([2607:f8b0:4864:20::62b])
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1wY5yA-0001yV-GO
+ for qemu-devel@nongnu.org; Fri, 12 Jun 2026 13:47:03 -0400
+Received: from mail-yx1-xb131.google.com ([2607:f8b0:4864:20::b131])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1wY5dT-0001Js-Aw
- for qemu-devel@nongnu.org; Fri, 12 Jun 2026 13:25:40 -0400
-Received: by mail-pl1-x62b.google.com with SMTP id
- d9443c01a7336-2bf237e1433so14715295ad.1
- for <qemu-devel@nongnu.org>; Fri, 12 Jun 2026 10:25:38 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1wY5y8-000741-Vu
+ for qemu-devel@nongnu.org; Fri, 12 Jun 2026 13:47:02 -0400
+Received: by mail-yx1-xb131.google.com with SMTP id
+ 956f58d0204a3-6611669cd16so1429944d50.0
+ for <qemu-devel@nongnu.org>; Fri, 12 Jun 2026 10:47:00 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1781286419; cv=none;
+ d=google.com; s=arc-20240605;
+ b=G64P7PRfi3JwXBp/QYekq75WTbWfOLk2S9b9eX5GtNNAQwalyP56AqSY2EpqtzxaHK
+ Ruy/F19pdPbV4CY04VTJzOMCRhhUlFF43XKAVGQ5Z0Cibobfk6a4wh7vFmLGpVNAfWZp
+ OpJOLvwplQVGOOjHaOPGKgSDkpK18zrr/HTIxwCfJGCBtzGYjGzJxWCuYQQRAl4L1C2/
+ EiHJzoyXMwLv1ytk6rnWirhw7eIl/3ZRPVthN9UHUQY3vDeWpcDEqAdC17sgwVMEADxH
+ ta22ZZhZS9Uplob78rZgQeiWjsAMyT09Qir9S2prXi/Zoig8Q+CTbG1ho+QyyCvbszfJ
+ JpYQ==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
+ s=arc-20240605; 
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:dkim-signature;
+ bh=6NYLGsou+SrQn1Uo3K1b+FXzLLeRzUniiiOLWmx22qQ=;
+ fh=27JGi1vXTNl9hrhX20mPbsADtWPes3gHon/d+U8mG1k=;
+ b=McLqx4wdJEhFa0easBDk1+jNpha8Qn0GG8oyYUSYdJArDNqt+SYvfLpbvkaN8rZg/8
+ STRpnvCQlO7X82XqJT2jQuUyRtFE7zfhYglH2zaKa10YO8nGvWPm/TJJle6Dx7lpTfNn
+ Kyn71G6z/LaIvSpZIlVaDrK35IlUw4KOxwWaRbdf5yy8YQ/vmDDX08S5C93+0uJYJooE
+ nc+QQMhf8RTDJt62GX6mjvEbS9NmqlAVxozah9MmEBMoWqvWZhyJ+XWULzndN4Vv5n2z
+ jAleWaJaNGqv7haWbTvAL7EUe6RaYcCprFHD9XZdsnY57w99eBYp0JACcvR2c6I4YlkE
+ tAhg==; darn=nongnu.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1781285138; x=1781889938; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:content-language:from
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=Ap3zR4q8wn/pUeHvTArAj5xBgHaQc1AEBeZjVAImwK4=;
- b=byaC6Truy8jpgQBvQmXMjsjZDTdOOsOlOHlxOTcvrcLvp8NVvyUqKEQslNKK/1RHhN
- 4cfGtWuea215wEQdyEnQ8pNyV4s72CPENaL22V50oOXK9gPw7R4pW2Zsvh53jpYjGd10
- aHlm8sk40OkXvXrPXpaeT24782ehJw3ihkSYvflbb247Btt9atkFLA0sxzMrqBkcQf1y
- nAoLdADtEMFwkarhVQ89rteVtVtNegR0Gmc/82xk40f658Nu+LTFuXQWPSHIRhzbPEd0
- WFPSvN2y0xd3Frh9WPGRhsqKn1djH4qxqYH0n0MMpDsGWcOSQC1KSmqb9Np+9L1tjadu
- 40Aw==
+ d=linaro.org; s=google; t=1781286419; x=1781891219; darn=nongnu.org;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=6NYLGsou+SrQn1Uo3K1b+FXzLLeRzUniiiOLWmx22qQ=;
+ b=TnAiUDYVIT7N8eZEQbjzC6GRnJU8UoMs4h4UioG3w00x0ikvJ8pne3sNnb7YSsdcFM
+ RmoL3iZwB+VUQq8vbNj/Kr8i3OehPEBBkHJtQO00KvcGjhx2eaFsb/3W8+SI2gyw4taB
+ L7gJOrePFthuqAwKC8lutKrMEEBYpZ6FYWu8yTBpgxVsW1Fhykk6rXYKDwd2ZFJkr40E
+ GCdKDQenfNyjnUr1Tu4EUiwuSWYEDYCcXnDTrUd5HjBATXlRDu7Mej1qKBilb+1oJccl
+ O9idX1cho0ZjaPsog884JuEqVxLu5FYIkbRzX32BMBRJamoFeuVpLmjntM7VRl+JMp8Q
+ edjQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1781285138; x=1781889938;
- h=content-transfer-encoding:in-reply-to:content-language:from
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=Ap3zR4q8wn/pUeHvTArAj5xBgHaQc1AEBeZjVAImwK4=;
- b=NlZ2mY2GM+hqR7HJ4WyWxjQ1N47lKD+3a5eFT2vi3J/SkQiTlFy6T9RRiWcfUEc7V5
- Olk3WBcnc3E6Ou4XvcaxM8A2HRHL6ddKfNOT45Y0QIBR0pgu/PWDAmBddqQLzTSQo5W+
- BrfDWNPrlKfvnNdutyo10326L5qkZYWHhDFM+ude0R/8SD4bm+D5jYx8EP57ASvvreiO
- E7jJHzL1JhnlqWmZxGieDt57V6KWKz4+d6jajcMDtr6YkGYoQf2U8zpAf5sus8AvlUsx
- dy1GTLc3Lch0wYuAlWMeiGMM+shurekFIFGOQHzV8iI5x+z6EKP8uyZ6JumkP9Jipram
- QW6g==
-X-Forwarded-Encrypted: i=1;
- AFNElJ/rypyO/BoJKyyRSDqJ+6s2MvAczDAgprYNhc2w025+0fmF7cn99hM/ndU5XHsafX7HNRo+Z4cIixry@nongnu.org
-X-Gm-Message-State: AOJu0Yz/ULN9dEGiNThZqjIqUN43q1zswqYUZ5slwWDjbVbepeqJlInV
- mhU0rTnbMQ30EL06BK6Yu59BTH7xjfGXPR2Xiu4FFvmKeuFtWNFENzSqZ/yxr2ipEQ0=
-X-Gm-Gg: Acq92OFW8F3aB3Qg309/Y+3FFYnE7h9eigpsl03n3r8q3tyax1azCE5mhdTAeL6eV8d
- NlAPpFTGZDK6N6uRSqFeGdqgV0eqlqdZX3HOLw6iE1HHgfcnI/YG+V8iKQdLf2BaFLaZkN32X9N
- KGTzmSRu/VfKF9LyLGu84GXlkLo7zgurUlfQ++vIRzEDF7OKS2AsJXCeYx9aEMefOFvXI2G3aA3
- buvKsCBl5CPpTnUN+VtGNdI4tpfXN0yC+2RQX2JJ4tryid9nheESs8ZLR06KY02qXpNnuLiKb49
- NTnDFrkQhDzmyfjCbP8Cks9OzToHuAWi0bG6hw6I09u43c4B9uLLiMETq3VCxzq5UTeIq7/Zkj7
- H+QH+KRyWmrRfsFfBC/hh0RINSZrI6Ulb923YwI41/7AejS1B+AjK+VH7QL56hihS1P3BMa7sVa
- yduAiJEQ1dUNeMPH7RCJ7A8aY7PgXlyZThETcp
-X-Received: by 2002:a17:902:e750:b0:2c1:e04d:7cb5 with SMTP id
- d9443c01a7336-2c412841372mr46331635ad.34.1781285137718; 
- Fri, 12 Jun 2026 10:25:37 -0700 (PDT)
-Received: from [192.168.0.4] ([71.212.142.33])
- by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-2c432d86501sm25776505ad.61.2026.06.12.10.25.36
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Fri, 12 Jun 2026 10:25:37 -0700 (PDT)
-Message-ID: <123d9e80-d731-42c7-81cc-71de47bb13d3@linaro.org>
-Date: Fri, 12 Jun 2026 10:25:35 -0700
+ d=1e100.net; s=20251104; t=1781286419; x=1781891219;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=6NYLGsou+SrQn1Uo3K1b+FXzLLeRzUniiiOLWmx22qQ=;
+ b=hXrSIXLd1WIVRxZbXlUISRzAaC0aHeVmQAQi2A/5qPIxuQ7bc77aoRff+RwMkm8RWf
+ ZLj/FRliJGyxJiywem1fANUJLOMkgQCNAW7oGY8JBvrqswm57LAhlzVy6kt7zbqyH7nY
+ /YquKlNYgjyQwY9592tAMavJBhtUUPT+ZfJ2Lqo7bAzv91M/Ob24i1RS/MpfSbgNUfOA
+ 1ssjQNOqoHC4KeWYa8kY1htZa/TV/jqr/hO5vMc7+eP5je4BEpFF871It4vd7DM5K/Vf
+ 8oHxkgX+BUrkcqcMpLVeZtfTlfRdmQTepWyJXUJjeqR5ZSuW78JnNmHdfGW4piGTLn2p
+ GP7Q==
+X-Gm-Message-State: AOJu0YzQf6gYqhhGW4ZXndnbL/ibk0+9wHTbnTqoT7sfvHn8tuvIWivx
+ 9+qQ41huBXPSBOouY67MygjO8c5f6xmCIOMqxnHxtaRI2daRN0HOLynv9CIloq23xOcQv9KnYOj
+ R0Aw4l13ISpbTmoeh5u2hM+ZHSvqS4ewwnNoY6DDyCw==
+X-Gm-Gg: Acq92OENVlvHx3AsM0KOoe0PQeOozu/nIFwwfQXkURhNbkMAcCkZNjKw8hYgdT4bdCo
+ kbeN2U8ZJnI1LEbhZpdGwauxcB5dCpu+A7tJABLT4QRSmMS/aaafdhSKD4z2/EqueFyfZVk350F
+ v/wu+0sFQvbc5051xWSSBJRtlQdSQmGQdAKOdmUUhY7noj5oiZn0ohowMQr3qGfkMheUbIuhMPM
+ JnfpMEHG5A11/qzhVplRgZgdPq0sm4cuVmCqlpZN5loCaJbpEE3CKNTXKhB9Bw8DKvxEHImLKHY
+ 1QDa6JgG7MV0G3sRIPNkUMRNFl6O2ys31OyruiCPG5+KTZyACHP9YZZ9oRlkDnurRnk=
+X-Received: by 2002:a05:690e:b82:b0:660:1a82:223b with SMTP id
+ 956f58d0204a3-662780081f5mr3382004d50.29.1781286419274; Fri, 12 Jun 2026
+ 10:46:59 -0700 (PDT)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 1/2] system/memory: Use __builtin_mem{cpy, move} in
- accessors of ram device region
-To: Peter Maydell <peter.maydell@linaro.org>
-Cc: Gavin Shan <gshan@redhat.com>, qemu-arm@nongnu.org,
- qemu-devel@nongnu.org, peterx@redhat.com, mst@redhat.com,
- berrange@redhat.com, david@kernel.org, alex@shazbot.org, clg@redhat.com,
- pbonzini@redhat.com, philmd@mailo.com, phrdina@redhat.com,
- jugraham@redhat.com, shan.gavin@gmail.com
-References: <20260612110307.1264798-1-gshan@redhat.com>
- <20260612110307.1264798-2-gshan@redhat.com>
- <223f5f94-b9b7-46b0-8466-5be655203a0e@linaro.org>
- <CAFEAcA-TgP_BM0WQo3rysZmvhNN17Gc_nrSYB6pXn-mvs5w13g@mail.gmail.com>
-From: Richard Henderson <richard.henderson@linaro.org>
-Content-Language: en-US
-In-Reply-To: <CAFEAcA-TgP_BM0WQo3rysZmvhNN17Gc_nrSYB6pXn-mvs5w13g@mail.gmail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::62b;
- envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x62b.google.com
+References: <20260529082948.363931-1-alex.bennee@linaro.org>
+ <CAFEAcA94+mh_pigFDi+tEPRJ416fSWfxsQ1Lj8Byemug9kBp6w@mail.gmail.com>
+ <87h5n7ekxw.fsf@draig.linaro.org>
+In-Reply-To: <87h5n7ekxw.fsf@draig.linaro.org>
+From: Peter Maydell <peter.maydell@linaro.org>
+Date: Fri, 12 Jun 2026 18:46:48 +0100
+X-Gm-Features: AVVi8Cfx4_sZkUhwcX_oNU5Emb8YeLHTOGRvGVAOZ3vEMDeOVNiiOkvDqj4FcZg
+Message-ID: <CAFEAcA8yNGiKeMpN_wgWtc5EnfjsnxSvG6an4-UjBf6XG+4Yvw@mail.gmail.com>
+Subject: Re: [PATCH v7 0/8] target/arm: fully model WFxT instructions for
+ A-profile
+To: =?UTF-8?B?QWxleCBCZW5uw6ll?= <alex.bennee@linaro.org>
+Cc: qemu-devel@nongnu.org, Paolo Bonzini <pbonzini@redhat.com>, 
+ Alexander Graf <agraf@csgraf.de>, Mohamed Mediouni <mohamed@unpredictable.fr>, 
+ Pedro Barbuda <pbarbuda@microsoft.com>, qemu-arm@nongnu.org,
+ kvm@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2607:f8b0:4864:20::b131;
+ envelope-from=peter.maydell@linaro.org; helo=mail-yx1-xb131.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -112,68 +121,51 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 6/12/26 09:36, Peter Maydell wrote:
-> On Fri, 12 Jun 2026 at 16:29, Richard Henderson
-> <richard.henderson@linaro.org> wrote:
->>
->> On 6/12/26 04:03, Gavin Shan wrote:
->>> This replaces mem{cpy, move} with __builtin_mem{cpy, move} in the memory
->>> accessors to ram device memory region, preparatory work to make ram device
->>> region directly accessible and bypass the bounce buffer in the DMA path
->>> in next patch.
->>
->> memcpy/memmove *always* compile to __builtin_memcpy/memmove, and the compiler later
->> decides whether or not to expand inline.
-> 
-> Yes, but if you pass it a fixed small integer, then it is likely
-> to expand it inline, whereas if you pass it a variable then it
-> is likely not to... The patch is attempting to persuade the
-> compiler to definitely do an inline access for 1, 2, 4, 8
-> byte access.
+On Fri, 12 Jun 2026 at 18:18, Alex Benn=C3=A9e <alex.bennee@linaro.org> wro=
+te:
+>
+> Peter Maydell <peter.maydell@linaro.org> writes:
+>
+> > On Fri, 29 May 2026 at 09:29, Alex Benn=C3=A9e <alex.bennee@linaro.org>=
+ wrote:
+> >>
+> >> This series fully models the behaviour of WFxT instructions. We
+> >> already had support for WFE for M-profile but we left off A-profile as
+> >> it has more potential sources of wake-ups. The main one is the event
+> >> stream which includes events from significant bits of the timer
+> >> ticking over.
+> >>
+> >> The refactoring from the previous iterations of the patch have now
+> >> been merged.
+> >>
+> >> I've dropped trying to fully model the global monitor in favour of
+> >> taking advantage of the architectural flexibility to have an IMPDEF
+> >> event wake up for any reason. We treat the setting of exclusive_addr
+> >> as such a reason because it indicates the current vCPU is in a ldstx
+> >> exclusive region and we don't want the guest to deadlock. This does me=
+an
+> >> the system won't sleep on WFE enabled locks but people shouldn't be
+> >> relying on QEMU to model real world sleep patterns anyway given the
+> >> efficiency of emulation compared to real HW.
+> >>
+> >> I've written a test case using kvm-unit-tests:
+> >>
+> >>   Message-ID: <20260527111822.1563679-1-alex.bennee@linaro.org>
+> >>   Date: Wed, 27 May 2026 12:18:21 +0100
+> >>   Subject: [kvm-unit-tests PATCH v2] arm: add wfx test case
+> >>   From: =3D?UTF-8?q?Alex=3D20Benn=3DC3=3DA9e?=3D <alex.bennee@linaro.o=
+rg>
+> >>
+> >> All patches are now reviewed.
+> >
+> >
+> >
+> > Applied to target-arm.next, thanks.
+>
+> Is it too late to drop them? I've a fix for 2/8:
 
-Sure, for hosts with unaligned accesses.  We still have sparc64 and (some?) riscv64 that 
-don't automatically have such and will compile to more than one host instruction.
+That change is already in upstream git, so you'll need to
+send the fix as a standalone patch, I'm afraid.
 
->> My real question is: what are you attempting to achieve?
->>
->> (1) is the problem unaligned access to a mapped physical device?
->> (2) is the problem vector access to a mapped physical device?
->> (3) something else?
-> 
-> I think there are two problems we're trying to fix here:
-> 
-> (1) If a device does e.g. a pci_dma_write() with size 1, we want
-> this to turn into exactly 1 byte write into guest memory, for the
-> normal case where the guest memory is real host RAM.
-> This deals with the e1000 bug where the pci_dma_write() turns into
-> a call to glibc memmove() with size 1 and glibc's implementation
-> turns that into 3 writes of the byte to the same address...
-
-Gotcha.  Easily handled by not using memcpy/memmove at all.
-
-	*(char *)ptr = val;
-
-is sufficient for all hosts.
-
-> (2) If a vCPU (emulated or KVM) does a 4 byte access to an
-> address which is in the PCI BAR of a vfio-passthrough device,
-> we want this to turn into exactly a 4-byte access to the
-> mmap()ed memory which is the BAR of the host device. This
-> is because that address might be a real hardware device
-> register, so it's important to access it exactly the way
-> the guest vCPU asked for, and not do multiple accesses or
-> misaligned accesses or whatever.
-> 
-> (The reason we make pass-through BARs not "direct access"
-> but instead go via the bounce buffer is that we were working
-> around (2).)
-
-That's going to require qatomic and alignment checks.
-
-That's also going to beg the question of the intended behaviour anything that isn't a 
-naturally aligned access of size in {1,2,4,8}: fall back to N operations of the minimum of 
-alignment and size?
-
-
-r~
+-- PMM
 
