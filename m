@@ -4,109 +4,71 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C11AACD8CA8
-	for <qemu-devel@archiver.kernel.org>; Fri, 12 Jun 2026 17:58:38 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 356B3CD98CF
+	for <qemu-devel@archiver.kernel.org>; Fri, 12 Jun 2026 18:04:35 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wY68S-0004m0-HM; Fri, 12 Jun 2026 13:57:40 -0400
+	id 1wY6Ee-0005zg-Tu; Fri, 12 Jun 2026 14:04:04 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1wY68R-0004lj-Hz
- for qemu-devel@nongnu.org; Fri, 12 Jun 2026 13:57:39 -0400
-Received: from mail-yx1-xb12f.google.com ([2607:f8b0:4864:20::b12f])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1wY68P-0005oO-Qz
- for qemu-devel@nongnu.org; Fri, 12 Jun 2026 13:57:39 -0400
-Received: by mail-yx1-xb12f.google.com with SMTP id
- 956f58d0204a3-66077e90382so1147147d50.3
- for <qemu-devel@nongnu.org>; Fri, 12 Jun 2026 10:57:37 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1781287056; cv=none;
- d=google.com; s=arc-20240605;
- b=SHEKnOkt5F5i6qMyhcZ+h1Ce4FfUlnqyQ+cRcHyqV8d1DXt9a+aEc3MaSu0upDtonr
- PzbdLiof0TpAdBHel1YU9MwVODj6lIWjVBQEBDVu4H7vYz/4pApSmnlAFaKmJhUSl1YH
- qEOf22nulny8HZQ00Ja3NqcAx/AjbD2yhMzBIYFKetbhoqBkTBiNPVi9nhGLYd/HC80z
- ub2ByLnfYtLWFCx2m0arE4/4xHSiz/CldMtXH3WIv+p4t8jRjBinFvt0ag2jFaQpkBc3
- KVNxnVGPQJzNdaFytGTvzTHn0CMLPLkgLgaxT6rKJtEokyCPCIJnGLz7vMdmMeaPry+l
- Xrqg==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
- s=arc-20240605; 
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:dkim-signature;
- bh=3THv8Qi4hyunfp/vz0tV3yj1xibK7B5wQwcsxGjL5kc=;
- fh=wyVvCrsMe6MeCQNsJkDrVvdse2ndH9dR9kJ1daeu/b8=;
- b=fZSuGtgJrshAhx1FVGNtY/g8WpB6JhDuKTXY8Vft7X30+tGP9qm3I73DlWdEWDQqg5
- 1pahsf5fFFLzn6icpD//3TPwen6QSvbSBJieUGJm9UvUmRzfon8NG7FuMIPxZ/Wx+LBW
- I6TzTRU8Tug2LtOW2hOIUgWpRs6PCPir0uVZD2A62bbNtXv8vr/YmeVp0jB5qtVKriKg
- Pczd3AhPkSYbLKTK8Pd9amCRjUBHwo4XMFOSXYf2KONhC2Jhy0VT9p3xPAGCd4BeKUdo
- UKYaAbSV73qW6K/CvxscJBkntzbVbkFQoJgBVtgOtX/HkOYAUCV6JETHccuvnB4nIIgB
- BAXg==; darn=nongnu.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1781287056; x=1781891856; darn=nongnu.org;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=3THv8Qi4hyunfp/vz0tV3yj1xibK7B5wQwcsxGjL5kc=;
- b=EelvOZ+Totzk/AgpsVDxBMi0EgAgJRGyzNZRbu5n041qLBZmcV6Yag5cGPvtdTnS6u
- 3X9VV9m8U46oiK6/asW56Mc+rwV/I/qIRhp7zhqDnkuz33dQWP2blgjxk0QK/nTDvjTh
- t3ClCnGqJaam9No67lZCCyNs0NXIfykqBychfTWskNhbZ7uMug7IGhyM5JQjzPj/n8By
- GoGpD7n63xrRquyFqUK2/V7BWXU+NjJ0gzuhEPqXH4j2bWnM/MKUHzZZR3yEJfgbSHdn
- JjxLJBmHQ710K8Lc8gPSV8n5tNSQLciIgTAZVik8CGOdUcItmJ0uEj9i916m1nhpOD7H
- HAAg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1781287056; x=1781891856;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=3THv8Qi4hyunfp/vz0tV3yj1xibK7B5wQwcsxGjL5kc=;
- b=i7sFbLqty98pipnbMgDhdArqoH2IWI3zAc3RAlY7Ny+AhKlca/m3CRUoBwQlJOLJLT
- LiFUxvzn4SR8BIF25+0wtCVtWLtABkxgFU2b70ah6DPIiGYeJUnSfwrdfKvtStL8wtOB
- bSdu+OmTVNmeNjhQUl/q1tqh0YllYaosSy6gvJlvnkxalYCItiVDchIP8LBvR+BnBigz
- CmZOxEfdpW3b5vcm4jo03oai7p+Z56SSd1q0iKc0yixyl7diBhqc+h1esrvkWMA6QCeP
- zwWg6ozy3Bro2wFkNjD0BzHdlFvIh52Ztowk/y2Mq3nMQ3czZBEcrJJGCBCbmSojN8eV
- 1XiQ==
-X-Forwarded-Encrypted: i=1;
- AFNElJ+VKN2LNeYxzBJRqae098xTAzTc8mh8qyN0hwNhvEdvQwpRM4t6QsKF4F+D8mnVqBwwuAoIygJN6v7M@nongnu.org
-X-Gm-Message-State: AOJu0YycXH5oJqmXWrYWCX8zOCg3yaIM9LekCg/bLoNHlv1L3rpUtC0s
- DUnD0bxWn3Fr8iVuOBgb6RRQUSoUk//cxjFEJ5hs64aPXoBI9jsNc82gjRO30KMItBfPbmPwPwc
- bkEsuTwmncseWQiLgwahkWGytirw9Jepv4jpycupNvg==
-X-Gm-Gg: Acq92OHalHWhPqA7b47K01gdsPRC1y+eCZxgtAx9qVR028hL952Zdma9QVDMddGy75X
- d6OHaomVytRErKVtrCyNfEXDEXMpLp3miJc5mcrClLYDM5SStT+H3SjyUQstbkDjCEbVzAw/xh/
- 0jEZiUNeXwoEGVAy/Kwlsnq+AFVQvXjBXoWNk69t7iOAQXGcxu45EOxQ1bQmP3Qwtsy0twDXMSb
- /2rEz7/Wy5FdjEXLx1SIK6VAkOLV7nMFAQ8gQ9T3J5p1Y3vgs3Ifi4GO7zARiCkHkEhF+Sypmrf
- OJL6UqYx74fg9DtTkO+VbQkKng/iT6Z/VxY3IXYxEK6n4NTUNQhZmzBSx9IoawfFNNM=
-X-Received: by 2002:a05:690e:1917:b0:660:ea2f:61e with SMTP id
- 956f58d0204a3-66277f22ddbmr3391830d50.6.1781287056286; Fri, 12 Jun 2026
- 10:57:36 -0700 (PDT)
+ (Exim 4.90_1)
+ (envelope-from <frederic.petrot@univ-grenoble-alpes.fr>)
+ id 1wY6Ea-0005xx-S9
+ for qemu-devel@nongnu.org; Fri, 12 Jun 2026 14:04:00 -0400
+Received: from zm-mta-out-3.u-ga.fr ([152.77.200.56])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1)
+ (envelope-from <frederic.petrot@univ-grenoble-alpes.fr>)
+ id 1wY6EY-0000Yo-Dj
+ for qemu-devel@nongnu.org; Fri, 12 Jun 2026 14:04:00 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+ d=univ-grenoble-alpes.fr; s=2020; t=1781287434;
+ bh=r5yIP2Q4ILfJcIWsHFE12PI8Ouc0eJDYGoFsNYLFVgU=;
+ h=From:To:Cc:Subject:Date:From;
+ b=pGB+dTX0WN3U/ktwHh+9TfobnXGm11PXdl6qsC+sgGa0O2oYUFlJwA+lw1AQecs8S
+ CLFL/OkjZexfAPWzWdWI5+Mlj7lT+nfc2X7+sG5xL6dBMW6UFzhGeAm8pY9/HzJwc9
+ PirI7rCEx0kkpbCuYIdMNEK2yad7U9uK3VEHF+8oLF3gbnQDOTKSJeL9AK/a4zKjsF
+ Ee6Ub39IL6dKofXALMs1x54hPMCTE79ouSDQ+EgyVRnwUNV+izsK7Ldpzs4e/s8E+h
+ AJX79By1U32CJkSM9MkpL3dxbgEsc+A7jZJrcPGbSP4vQnxeiux3ihUGa1A1C5yrvJ
+ eTXMS07waRIjw==
+Received: from mailhub-1.u-ga.fr (mailhub-1.u-ga.fr [129.88.178.98])
+ by zm-mta-out-3.u-ga.fr (Postfix) with ESMTP id 2753C4028C;
+ Fri, 12 Jun 2026 20:03:54 +0200 (CEST)
+Received: from smtps.univ-grenoble-alpes.fr (smtps2.u-ga.fr [152.77.18.2])
+ by mailhub-1.u-ga.fr (Postfix) with ESMTP id 23CC5FF852;
+ Fri, 12 Jun 2026 20:03:54 +0200 (CEST)
+Received: from naga.. (unknown [37.167.227.134])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ (Authenticated sender: petrotf@univ-grenoble-alpes.fr)
+ by smtps.univ-grenoble-alpes.fr (Postfix) with ESMTPSA id 37F15140101;
+ Fri, 12 Jun 2026 20:03:53 +0200 (CEST)
+From: =?UTF-8?q?Fr=C3=A9d=C3=A9ric=20P=C3=A9trot?=
+ <frederic.petrot@univ-grenoble-alpes.fr>
+To: philmd@mailo.com, pierrick.bouvier@oss.qualcomm.com, mst@redhat.com,
+ richard.henderson@linaro.org, qemu-devel@nongnu.org
+Cc: =?UTF-8?q?Fr=C3=A9d=C3=A9ric=20P=C3=A9trot?=
+ <frederic.petrot@univ-grenoble-alpes.fr>
+Subject: [PATCH 1/2] include/qemu/bswap.h: Add support for Int128 byte swaps
+Date: Fri, 12 Jun 2026 20:03:45 +0200
+Message-ID: <20260612180346.890429-1-frederic.petrot@univ-grenoble-alpes.fr>
+X-Mailer: git-send-email 2.43.0
 MIME-Version: 1.0
-References: <20260612110307.1264798-1-gshan@redhat.com>
- <20260612110307.1264798-2-gshan@redhat.com>
- <223f5f94-b9b7-46b0-8466-5be655203a0e@linaro.org>
- <CAFEAcA-TgP_BM0WQo3rysZmvhNN17Gc_nrSYB6pXn-mvs5w13g@mail.gmail.com>
- <123d9e80-d731-42c7-81cc-71de47bb13d3@linaro.org>
-In-Reply-To: <123d9e80-d731-42c7-81cc-71de47bb13d3@linaro.org>
-From: Peter Maydell <peter.maydell@linaro.org>
-Date: Fri, 12 Jun 2026 18:57:22 +0100
-X-Gm-Features: AVVi8CeKmPXisQypjXAMmpFlZAVb1milQvGtLbXyNaM3PExZ-b4d8OEY68lFBSI
-Message-ID: <CAFEAcA_3AdNjGhk_Jv2N6rFAFCFpHujwGL4gkmcCFNN2AYKJWQ@mail.gmail.com>
-Subject: Re: [PATCH 1/2] system/memory: Use __builtin_mem{cpy, move} in
- accessors of ram device region
-To: Richard Henderson <richard.henderson@linaro.org>
-Cc: Gavin Shan <gshan@redhat.com>, qemu-arm@nongnu.org, qemu-devel@nongnu.org, 
- peterx@redhat.com, mst@redhat.com, berrange@redhat.com, david@kernel.org, 
- alex@shazbot.org, clg@redhat.com, pbonzini@redhat.com, philmd@mailo.com, 
- phrdina@redhat.com, jugraham@redhat.com, shan.gavin@gmail.com
-Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2607:f8b0:4864:20::b12f;
- envelope-from=peter.maydell@linaro.org; helo=mail-yx1-xb12f.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+X-Greylist: Whitelist-UGA SMTP Authentifie (petrotf@univ-grenoble-alpes.fr)
+ via submission-587 ACL (41)
+Received-SPF: pass client-ip=152.77.200.56;
+ envelope-from=frederic.petrot@univ-grenoble-alpes.fr;
+ helo=zm-mta-out-3.u-ga.fr
+X-Spam_score_int: -43
+X-Spam_score: -4.4
+X-Spam_bar: ----
+X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ RCVD_IN_DNSWL_MED=-2.3, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -123,92 +85,216 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Fri, 12 Jun 2026 at 18:25, Richard Henderson
-<richard.henderson@linaro.org> wrote:
->
-> On 6/12/26 09:36, Peter Maydell wrote:
-> > On Fri, 12 Jun 2026 at 16:29, Richard Henderson
-> > <richard.henderson@linaro.org> wrote:
-> >>
-> >> On 6/12/26 04:03, Gavin Shan wrote:
-> >>> This replaces mem{cpy, move} with __builtin_mem{cpy, move} in the memory
-> >>> accessors to ram device memory region, preparatory work to make ram device
-> >>> region directly accessible and bypass the bounce buffer in the DMA path
-> >>> in next patch.
-> >>
-> >> memcpy/memmove *always* compile to __builtin_memcpy/memmove, and the compiler later
-> >> decides whether or not to expand inline.
-> >
-> > Yes, but if you pass it a fixed small integer, then it is likely
-> > to expand it inline, whereas if you pass it a variable then it
-> > is likely not to... The patch is attempting to persuade the
-> > compiler to definitely do an inline access for 1, 2, 4, 8
-> > byte access.
->
-> Sure, for hosts with unaligned accesses.  We still have sparc64 and (some?) riscv64 that
-> don't automatically have such and will compile to more than one host instruction.
+The recent introduction of endianness support is providing
+a clean framework for the standard integer data types.
+This patch adds support for the non-standard Int128 type QEMU provides.
+Note that the ldn and sdn functions still keep an uint64_t as argument
+and return value to avoid performance overhead.
 
-Good point.
+Signed-off-by: Frédéric Pétrot <frederic.petrot@univ-grenoble-alpes.fr>
+---
+ include/qemu/bswap.h | 63 +++++++++++++++++++++++++++++++++++++++++---
+ 1 file changed, 59 insertions(+), 4 deletions(-)
 
-> >> My real question is: what are you attempting to achieve?
-> >>
-> >> (1) is the problem unaligned access to a mapped physical device?
-> >> (2) is the problem vector access to a mapped physical device?
-> >> (3) something else?
-> >
-> > I think there are two problems we're trying to fix here:
-> >
-> > (1) If a device does e.g. a pci_dma_write() with size 1, we want
-> > this to turn into exactly 1 byte write into guest memory, for the
-> > normal case where the guest memory is real host RAM.
-> > This deals with the e1000 bug where the pci_dma_write() turns into
-> > a call to glibc memmove() with size 1 and glibc's implementation
-> > turns that into 3 writes of the byte to the same address...
->
-> Gotcha.  Easily handled by not using memcpy/memmove at all.
->
->         *(char *)ptr = val;
->
-> is sufficient for all hosts.
+diff --git a/include/qemu/bswap.h b/include/qemu/bswap.h
+index 387d65c0b0..bdc335c63f 100644
+--- a/include/qemu/bswap.h
++++ b/include/qemu/bswap.h
+@@ -40,20 +40,20 @@ static inline void bswap64s(uint64_t *s)
+ 
+ #if HOST_BIG_ENDIAN
+ #define be_bswap(v, size) (v)
+-#define le_bswap(v, size) glue(__builtin_bswap, size)(v)
++#define le_bswap(v, size) glue(bswap, size)(v)
+ #define be_bswap24(v) (v)
+ #define le_bswap24(v) bswap24(v)
+ #define be_bswaps(v, size)
+ #define le_bswaps(p, size) \
+-            do { *p = glue(__builtin_bswap, size)(*p); } while (0)
++            do { *p = glue(bswap, size)(*p); } while (0)
+ #else
+ #define le_bswap(v, size) (v)
+ #define be_bswap24(v) bswap24(v)
+ #define le_bswap24(v) (v)
+-#define be_bswap(v, size) glue(__builtin_bswap, size)(v)
++#define be_bswap(v, size) glue(bswap, size)(v)
+ #define le_bswaps(v, size)
+ #define be_bswaps(p, size) \
+-            do { *p = glue(__builtin_bswap, size)(*p); } while (0)
++            do { *p = glue(bswap, size)(*p); } while (0)
+ #endif
+ 
+ /**
+@@ -64,9 +64,11 @@ static inline void bswap64s(uint64_t *s)
+  * uint16_t le16_to_cpu(uint16_t v);
+  * uint32_t le32_to_cpu(uint32_t v);
+  * uint64_t le64_to_cpu(uint64_t v);
++ * Int128 le128_to_cpu(Int128 v);
+  * uint16_t be16_to_cpu(uint16_t v);
+  * uint32_t be32_to_cpu(uint32_t v);
+  * uint64_t be64_to_cpu(uint64_t v);
++ * Int128 be128_to_cpu(Int128 v);
+  *
+  * Convert the value @v from the specified format to the native
+  * endianness of the host CPU by byteswapping if necessary, and
+@@ -75,9 +77,11 @@ static inline void bswap64s(uint64_t *s)
+  * uint16_t cpu_to_le16(uint16_t v);
+  * uint32_t cpu_to_le32(uint32_t v);
+  * uint64_t cpu_to_le64(uint64_t v);
++ * Int128 cpu_to_le128(Int128 v);
+  * uint16_t cpu_to_be16(uint16_t v);
+  * uint32_t cpu_to_be32(uint32_t v);
+  * uint64_t cpu_to_be64(uint64_t v);
++ * Int128 cpu_to_be128(Int128 v);
+  *
+  * Convert the value @v from the native endianness of the host CPU to
+  * the specified format by byteswapping if necessary, and return
+@@ -86,9 +90,11 @@ static inline void bswap64s(uint64_t *s)
+  * void le16_to_cpus(uint16_t *v);
+  * void le32_to_cpus(uint32_t *v);
+  * void le64_to_cpus(uint64_t *v);
++ * void le128_to_cpus(Int128 *v);
+  * void be16_to_cpus(uint16_t *v);
+  * void be32_to_cpus(uint32_t *v);
+  * void be64_to_cpus(uint64_t *v);
++ * void be128_to_cpus(Int128 *v);
+  *
+  * Do an in-place conversion of the value pointed to by @v from the
+  * specified format to the native endianness of the host CPU.
+@@ -96,9 +102,11 @@ static inline void bswap64s(uint64_t *s)
+  * void cpu_to_le16s(uint16_t *v);
+  * void cpu_to_le32s(uint32_t *v);
+  * void cpu_to_le64s(uint64_t *v);
++ * void cpu_to_le128s(Int128 *v);
+  * void cpu_to_be16s(uint16_t *v);
+  * void cpu_to_be32s(uint32_t *v);
+  * void cpu_to_be64s(uint64_t *v);
++ * void cpu_to_be128s(Int128 *v);
+  *
+  * Do an in-place conversion of the value pointed to by @v from the
+  * native endianness of the host CPU to the specified format.
+@@ -138,10 +146,12 @@ static inline void cpu_to_ ## endian ## size ## s(type *p)\
+ CPU_CONVERT(be, 16, uint16_t)
+ CPU_CONVERT(be, 32, uint32_t)
+ CPU_CONVERT(be, 64, uint64_t)
++CPU_CONVERT(be, 128, Int128)
+ 
+ CPU_CONVERT(le, 16, uint16_t)
+ CPU_CONVERT(le, 32, uint32_t)
+ CPU_CONVERT(le, 64, uint64_t)
++CPU_CONVERT(le, 128, Int128)
+ 
+ #undef CPU_CONVERT
+ 
+@@ -149,6 +159,8 @@ CPU_CONVERT(le, 64, uint64_t)
+  * Same as cpu_to_le{16,32,64}, except that gcc will figure the result is
+  * a compile-time constant if you pass in a constant.  So this can be
+  * used to initialize static variables.
++ * The 128 case is ruled out because we must call int128_funcs during
++ * this initialization.
+  */
+ #if HOST_BIG_ENDIAN
+ # define const_le64(_x)                          \
+@@ -200,6 +212,7 @@ CPU_CONVERT(le, 64, uint64_t)
+  *   24: 24 bits
+  *   l: 32 bits
+  *   q: 64 bits
++ *   o: 128 bits
+  *
+  * endian is:
+  *   he   : host endian
+@@ -296,6 +309,18 @@ static inline void stq_he_p(void *ptr, uint64_t v)
+     __builtin_memcpy(ptr, &v, sizeof(v));
+ }
+ 
++static inline Int128 ldo_he_p(const void *ptr)
++{
++    Int128 r;
++    __builtin_memcpy(&r, ptr, sizeof(r));
++    return r;
++}
++
++static inline void sto_he_p(void *ptr, Int128 v)
++{
++    __builtin_memcpy(ptr, &v, sizeof(v));
++}
++
+ static inline int lduw_le_p(const void *ptr)
+ {
+     return (uint16_t)le_bswap(lduw_he_p(ptr), 16);
+@@ -316,6 +341,11 @@ static inline uint64_t ldq_le_p(const void *ptr)
+     return le_bswap(ldq_he_p(ptr), 64);
+ }
+ 
++static inline Int128 ldo_le_p(const void *ptr)
++{
++    return le_bswap(ldo_he_p(ptr), 128);
++}
++
+ static inline void stw_le_p(void *ptr, uint16_t v)
+ {
+     stw_he_p(ptr, le_bswap(v, 16));
+@@ -336,6 +366,11 @@ static inline void stq_le_p(void *ptr, uint64_t v)
+     stq_he_p(ptr, le_bswap(v, 64));
+ }
+ 
++static inline void sto_le_p(void *ptr, Int128 v)
++{
++    sto_he_p(ptr, le_bswap(v, 128));
++}
++
+ static inline int lduw_be_p(const void *ptr)
+ {
+     return (uint16_t)be_bswap(lduw_he_p(ptr), 16);
+@@ -356,6 +391,11 @@ static inline uint64_t ldq_be_p(const void *ptr)
+     return be_bswap(ldq_he_p(ptr), 64);
+ }
+ 
++static inline Int128 ldo_be_p(const void *ptr)
++{
++    return be_bswap(ldo_he_p(ptr), 128);
++}
++
+ static inline void stw_be_p(void *ptr, uint16_t v)
+ {
+     stw_he_p(ptr, be_bswap(v, 16));
+@@ -376,6 +416,11 @@ static inline void stq_be_p(void *ptr, uint64_t v)
+     stq_he_p(ptr, be_bswap(v, 64));
+ }
+ 
++static inline void sto_be_p(void *ptr, Int128 v)
++{
++    sto_he_p(ptr, be_bswap(v, 128));
++}
++
+ 
+ /**
+  * ldm_p: Load value from host memory (byteswapping if necessary)
+@@ -526,6 +571,11 @@ static inline uint64_t ldq_p(const void *ptr)
+     LOAD_IMPL(q, ptr);
+ }
+ 
++static inline Int128 ldo_p(const void *ptr)
++{
++    LOAD_IMPL(o, ptr);
++}
++
+ static inline uint64_t ldn_p(const void *ptr, int sz)
+ {
+     LOAD_IMPL(n, ptr, sz);
+@@ -559,6 +609,11 @@ static inline void stq_p(void *ptr, uint64_t v)
+     STORE_IMPL(q, ptr, v);
+ }
+ 
++static inline void sto_p(void *ptr, Int128 v)
++{
++    STORE_IMPL(o, ptr, v);
++}
++
+ static inline void stn_p(void *ptr, int sz, uint64_t v)
+ {
+     STORE_IMPL(n, ptr, sz, v);
+-- 
+2.43.0
 
-That helps e1000 because it happens to be doing byte writes,
-but the same effect probably occurs for word writes in other
-devices...
-
-> > (2) If a vCPU (emulated or KVM) does a 4 byte access to an
-> > address which is in the PCI BAR of a vfio-passthrough device,
-> > we want this to turn into exactly a 4-byte access to the
-> > mmap()ed memory which is the BAR of the host device. This
-> > is because that address might be a real hardware device
-> > register, so it's important to access it exactly the way
-> > the guest vCPU asked for, and not do multiple accesses or
-> > misaligned accesses or whatever.
-> >
-> > (The reason we make pass-through BARs not "direct access"
-> > but instead go via the bounce buffer is that we were working
-> > around (2).)
->
-> That's going to require qatomic and alignment checks.
->
-> That's also going to beg the question of the intended behaviour
-> anything that isn't a naturally aligned access of size in {1,2,4,8}:
->fall back to N operations of the minimum of alignment and size?
-
-I think in practice we can probably say we don't care and
-fall back to memmove: anything unaligned here is almost
-certainly going to real RAM and not going to have any
-particular ordering requirements (and/or might be caused
-by the guest misprogramming a device DMA address).
-
-I feel like we handle "unaligned access, maybe need to split it"
-already in multiple parts of QEMU (for TCG accesses we do that
-in accel/tcg; system/memory.c has a TODO comment about unaligned
-accesses at the IO MemoryRegion read/writefn level and there's
-a patchseries that tries to fix that), so if we find ourselves
-really needing to do "handle this unaligned access by splitting
-it into pieces" again here we ought to take a wider look at
-whether we can consolidate that at all...
-
-thanks
--- PMM
 
