@@ -4,104 +4,120 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8A36ACD8CA8
-	for <qemu-devel@archiver.kernel.org>; Fri, 12 Jun 2026 06:29:28 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C8475CD98CE
+	for <qemu-devel@archiver.kernel.org>; Fri, 12 Jun 2026 06:37:13 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wXvNh-0005Pb-Fk; Fri, 12 Jun 2026 02:28:41 -0400
+	id 1wXvVP-0007Z0-6r; Fri, 12 Jun 2026 02:36:39 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <infra.ai.cloud@bitdeer.com>)
- id 1wXvNb-0005NZ-M3
- for qemu-devel@nongnu.org; Fri, 12 Jun 2026 02:28:37 -0400
-Received: from mail-lj1-x232.google.com ([2a00:1450:4864:20::232])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <infra.ai.cloud@bitdeer.com>)
- id 1wXvNZ-0004Fe-F2
- for qemu-devel@nongnu.org; Fri, 12 Jun 2026 02:28:35 -0400
-Received: by mail-lj1-x232.google.com with SMTP id
- 38308e7fff4ca-39677c434efso5505661fa.3
- for <qemu-devel@nongnu.org>; Thu, 11 Jun 2026 23:28:33 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1781245711; cv=none;
- d=google.com; s=arc-20240605;
- b=C7+GYxtB3fu+K9NLPxdX/zLpIjcKWcGhIWdHHezuH1519f+8Zy+G9A46GPA3tzaeVT
- GDngvkoBxXgrwtb6bTkTsJvZMYhgDRIME3LnezN/lg59Yjh0Qk1rAVeFz+5eF4OScClD
- a+kTIiMvW4JDaUSBZsetmUSETxsvNaTs3D4Nd04XFLyfYwm4td1ex03g2rqwQyZiiCO7
- UdDPt3/1wprWLmYWabBc71U+pwLzENWfGamuW0ynOg4vJNYjnC0HdS4qwWhUlqYUisDZ
- dF37eKv57sqc23K0GuZT76cMF+LcsBzOjyoYiNL5+KPRSlWcU3/2uRTG2+GCQXaMRsFb
- CEdQ==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
- s=arc-20240605; 
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:dkim-signature;
- bh=Lm0s/PYdb5KfIW3ILjskCu/zVHzSHJXxYmOeyKdYUbU=;
- fh=GhP5mtbGI/sLUMsFC6azrmEsmwMvRvKDnmbSOujsopI=;
- b=jP3rrgkxTkAMwGMp9/ebqWtU5wg3KfQE4IdsnXIy+8r3jnJlM9cO62kYEk3jhn2WWC
- jYWuPqIhHNM/GS9jxI8LjEyfDlpdnpZo8VtSYUPs6A5Rxs/EVh4940zu60QlgHcUJSoH
- SG8Jk9xwGih+JntbK1OHloXT8ns9wij9w0P3LcnCETHWQ3f4scZXx95lTfeceGxJNsL4
- GzX7K3RUyF8r6qDGbI+j57n7r3oWAhXmUXrEJTyYZqNnxZ/tiIbiz1kHL+ADlM76B/Ap
- ZLnUca/RrYl+lycBHZUXubrinDAIdDJM8EV2W9Y3QX5prCN/wPpXvYvYSCuaWcgX7duh
- mNHw==; darn=nongnu.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=bitdeer.com; s=google; t=1781245711; x=1781850511; darn=nongnu.org;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:from:to:cc:subject:date
- :message-id:reply-to;
- bh=Lm0s/PYdb5KfIW3ILjskCu/zVHzSHJXxYmOeyKdYUbU=;
- b=ZnTy2m9VIfLnj5gx6XNcH66MA+kB3AcsBGnOwRDKrXyfsablxZoo8dhblWh41n/IQ2
- 9uTbOa+OCn+OoW/KejZtQjFFE9dSBtE9FrjEUXacnQtPb0X3VgoDjleJ7qbEXeo9/QJn
- V7W0b/emOTo3jF5bOGzlE2Wcq7XgeQWrh7xZgghyh2xiIyQBzIZkv4H5GwfUKH5o7Ynm
- Zdpq6oRvOLNcU7x4sDDDmzI2TNohHjgNuW9gva1QKQwJ3EoJOkt8qGkhVhkiPaXL+eN4
- rhQora+eyPOzFihIWLXpDx+aA2Zs+U7E2EaZTdFP/zshKZlxQn+XrCmkHpF9Ff3YldZg
- cx6w==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1781245711; x=1781850511;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to;
- bh=Lm0s/PYdb5KfIW3ILjskCu/zVHzSHJXxYmOeyKdYUbU=;
- b=TqS6HUvnPdNgF3ZHXMzjplWBp0Hmz/e4EDwl6GeVSv8SmC7pL/V9QspDCP2cjEcRyJ
- E7ss091P1A6tAaYS3jpWDwuv2HIWRY7+bjDqQ+msccbdIs20Ya18dE7G7DcMomRCff6l
- 2uXqTtAHkuXMOP6dPUX8wMhfYkEIfADoCRZGtlQCUioMyWCSqsIQ9aAmj3yvwpAa+c+b
- SMdFNJnBU4Ysu59xAeeN+lUB4CrRmWRa1myML/YEknsF+0jwE9/VRM/GtHsYk6jDfeiz
- RSCVL1n3EcZxSne+4Gh7Nf0sedfceXFsfr+QdZfrwGXTpdh/sijsgiwDocmVixa+zNIe
- L3nA==
-X-Gm-Message-State: AOJu0YysQ9CdLVUE1dzCXtcMp1UV4tNQyU87sOcW4feEA4QOW9hcSGfm
- oylXwcYLJ0x0ScafRrR0wqMeQ3adcZs46rQlTOtBsKTIe0JZPZdnR+E6dNzsaxWVAg2NmmiYZyZ
- mJAZOfsWvCTpg77k9w00J1cctgoZvP2cReeEENUTuVg==
-X-Gm-Gg: Acq92OFU4Ov526t4aN82YGxxaAZlLb+emG3Xgj5Q1i2hDeTHTzzQMBO3uKl8ceCM2j3
- K5UztZX88axqeBlgZqBB8ntb/ovfUdKxrTRjXUPeWg2MNTo/p2vicPkmuJL1/xhfcfgqg9O0VRr
- LAtWaVpWHogYI8nvOUL6gNRVVVra01MgUYCT6qUdiaf0UgHlaKyMMsfUKmVl1UIJhrql/D9Gbis
- wkUvTeA5wPukLNfIr/Ziq8/VU+t9roZFXsSR2rhvrQNloHHlBHwrx6dKYSWtb/BA1DZUKTVuASV
- APNEvSg=
-X-Received: by 2002:a05:651c:90a:b0:396:9598:aa2d with SMTP id
- 38308e7fff4ca-3992afd9455mr4192081fa.1.1781245711432; Thu, 11 Jun 2026
- 23:28:31 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <adityag@linux.ibm.com>)
+ id 1wXvVB-0007Xx-TW; Fri, 12 Jun 2026 02:36:25 -0400
+Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <adityag@linux.ibm.com>)
+ id 1wXvVA-000730-46; Fri, 12 Jun 2026 02:36:25 -0400
+Received: from pps.filterd (m0353729.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
+ 65BMHHTJ4146662; Fri, 12 Jun 2026 06:36:18 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
+ :content-transfer-encoding:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to; s=pp1; bh=+1rWn+
+ CZ2B26mcHtKcZuLefpGwJd27vWkvu9PDRRlzI=; b=b7yMeEpiWhKRU5UPIt9IqN
+ YXtv3/1BIlJAQOwp6YNhCe4o9NT/rnh9exrBZ8JLeMEUxqXATbY1msyc1Q2bD7SG
+ ntaAtiODg5vtfPVE9YE0Jr9q6jSjOqP3RsOflxyFY5KLxcCobFPDsKl4PFqTqTUF
+ laGtgdkdZelADe4C2KJDZaOV6CJyf0VgbwsIzUdezfGc74fRLMQdMuqRUEZKCxOw
+ gBhXdDCz5qA16Vc9Ii2acW175dsiRqgMyEe5gm44ric+BvhbgqcwQvz0RLrCl172
+ 72ZcuQTUEzbpiB0RetB1iawU1ESjLaHdzwpMO14xpX+9eGWriss95fa+kzp/QCTA
+ ==
+Received: from ppma22.wdc07v.mail.ibm.com
+ (5c.69.3da9.ip4.static.sl-reverse.com [169.61.105.92])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4eqe8c7jj9-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Fri, 12 Jun 2026 06:36:17 +0000 (GMT)
+Received: from pps.filterd (ppma22.wdc07v.mail.ibm.com [127.0.0.1])
+ by ppma22.wdc07v.mail.ibm.com (8.18.1.7/8.18.1.7) with ESMTP id 65C6Yc6G008900;
+ Fri, 12 Jun 2026 06:36:16 GMT
+Received: from smtprelay01.fra02v.mail.ibm.com ([9.218.2.227])
+ by ppma22.wdc07v.mail.ibm.com (PPS) with ESMTPS id 4eqe08xmd0-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Fri, 12 Jun 2026 06:36:16 +0000 (GMT)
+Received: from smtpav07.fra02v.mail.ibm.com (smtpav07.fra02v.mail.ibm.com
+ [10.20.54.106])
+ by smtprelay01.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 65C6aDrD49873170
+ (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Fri, 12 Jun 2026 06:36:13 GMT
+Received: from smtpav07.fra02v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id EC89820043;
+ Fri, 12 Jun 2026 06:36:12 +0000 (GMT)
+Received: from smtpav07.fra02v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id A943420040;
+ Fri, 12 Jun 2026 06:36:07 +0000 (GMT)
+Received: from [9.124.211.181] (unknown [9.124.211.181])
+ by smtpav07.fra02v.mail.ibm.com (Postfix) with ESMTP;
+ Fri, 12 Jun 2026 06:36:07 +0000 (GMT)
+Message-ID: <e87e7d6f-2ee2-423e-9111-19b7f14f376e@linux.ibm.com>
+Date: Fri, 12 Jun 2026 12:06:05 +0530
 MIME-Version: 1.0
-References: <cover.1781095539.git.yong.huang@bitdeer.com>
- <CAJSP0QU_tx+ygBJZG-vWdTK0ec+NVtiSaVnt-6FMdV1nsw9tpQ@mail.gmail.com>
-In-Reply-To: <CAJSP0QU_tx+ygBJZG-vWdTK0ec+NVtiSaVnt-6FMdV1nsw9tpQ@mail.gmail.com>
-From: Hy Man <infra.ai.cloud@bitdeer.com>
-Date: Fri, 12 Jun 2026 14:28:20 +0800
-X-Gm-Features: AVVi8CfuSC_ls2GE695t5DilKPQ6LtPUZJI1nrpGYO3vTwgbR8taMxd49ik_Elo
-Message-ID: <CAFWXh4zVKJ_3j9B=61q6Rq1_Ysr92iG3A0eM9fLXU_PAaf1sBA@mail.gmail.com>
-Subject: Re: [PULL 0/1] dirtylimit improvement
-To: Stefan Hajnoczi <stefanha@gmail.com>
-Cc: qemu-devel@nongnu.org, Hyman Huang <yong.huang@bitdeer.com>, 
- Peter Xu <peterx@redhat.com>, Fabiano Rosas <farosas@suse.de>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::232;
- envelope-from=infra.ai.cloud@bitdeer.com; helo=mail-lj1-x232.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 3/4] ppc/pnv: Remove Power8E and Power8NVL spapr cores
+To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>,
+ qemu-devel@nongnu.org, qemu-ppc@nongnu.org,
+ Harsh Prateek Bora <harshpb@linux.ibm.com>
+Cc: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
+ Nicholas Piggin <npiggin@gmail.com>,
+ Miles Glenn <milesg@linux.ibm.com>, Fabiano Rosas <farosas@suse.de>,
+ Laurent Vivier <lvivier@redhat.com>,
+ Paolo Bonzini <pbonzini@redhat.com>, devel@lists.libvirt.org,
+ kvm@vger.kernel.org, Misbah Anjum N <misanjum@linux.ibm.com>,
+ Shivang Upadhyay <shivangu@linux.ibm.com>
+References: <20260610090800.3672832-1-adityag@linux.ibm.com>
+ <20260610090800.3672832-4-adityag@linux.ibm.com>
+ <2610e4bd-7ddc-4880-808d-3f55bb166938@oss.qualcomm.com>
+Content-Language: en-US
+From: Aditya Gupta <adityag@linux.ibm.com>
+In-Reply-To: <2610e4bd-7ddc-4880-808d-3f55bb166938@oss.qualcomm.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+X-TM-AS-GCONF: 00
+X-Proofpoint-Reinject: loops=2 maxloops=12
+X-Proofpoint-Spam-Info: AW1haW4tMjYwNjEyMDA1OCBTYWx0ZWRfX+nwDxc+/Zh3P
+ QQgmv4hdp9JxoSnYYpuatN4ePapVX4FWTzBSiXNjLZ9udr2/0rxc90XjeSHGgpZBUdHBgxgbQ2o
+ 8XAQqnwlXlXt9nRXi5N1a6sYmbBcDBI=
+X-Authority-Analysis: v=2.4 cv=AYCB2XXG c=1 sm=1 tr=0 ts=6a2ba8e2 cx=c_pps
+ a=5BHTudwdYE3Te8bg5FgnPg==:117 a=5BHTudwdYE3Te8bg5FgnPg==:17
+ a=IkcTkHD0fZMA:10 a=FelO9ux0wxsA:10 a=VkNPw1HP01LnGYTKEx00:22
+ a=RnoormkPH1_aCDwRdu11:22 a=uAbxVGIbfxUO_5tXvNgY:22 a=VnNF1IyMAAAA:8
+ a=MFgsVc_P71K-EoIa1lMA:9 a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
+X-Proofpoint-GUID: zko1NFm39B5RYfWzefPsOq9Zl13t8aEo
+X-Proofpoint-ORIG-GUID: AbRD2TZNRJE-OGv-lwpMI5Ula9L1zne2
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNjEyMDA1OCBTYWx0ZWRfX7NVrGtLpjENA
+ b9T8bFDiNxDdt7z8M7E2aMRmobQcNjt+LMBaG0g3kI8e0dLEVYXXXeTpQQC6emHvaT8iyECg4NV
+ f1S0ycUnc9/IADJiJvf31ZJq+GFuBSXsbPlZ6Jdk/tAwPIn8svjmSpNEF6k25BSSqKpyvGWR93t
+ tJueHfj6h0vu8Da01R1EFJ5+usNrlIeNUf7cmpc8P19Q2SghNCRdC3PMAr2kr5rJ+uT0ZW/d9xs
+ eSkGp/dU5dz2Yj6Ebyizqj+nVGqcvcuWRneLN4bBRPAKrbGXYhj+Y2OhPv4I1USP/vwvtboX4Rp
+ wIH/I1rRsdQVX+5hR+BFeBMCcTGPbRjU8+ap2Ecri1XwJcpgENFkwpwY2tNTyejnA+f/LRZj6Z6
+ FPuD/y/I9y6CT7fuujEZtEJ0uihdagGElvxKP7JCuGoP5UOw9Pp8Lhu66Szpy/HhA7dumZdKkXx
+ ur0MRnozRKrP55PKNhQ==
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.125,FMLib:17.12.100.49
+ definitions=2026-06-12_01,2026-06-11_01,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ impostorscore=0 suspectscore=0 malwarescore=0 spamscore=0 phishscore=0
+ lowpriorityscore=0 bulkscore=0 adultscore=0 priorityscore=1501 clxscore=1011
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.22.0-2606040000 definitions=main-2606120058
+Received-SPF: pass client-ip=148.163.156.1; envelope-from=adityag@linux.ibm.com;
+ helo=mx0a-001b2d01.pphosted.com
+X-Spam_score_int: -16
+X-Spam_score: -1.7
+X-Spam_bar: -
+X-Spam_report: (-1.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
+ RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001, TVD_SUBJ_WIPE_DEBT=1.004 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -117,66 +133,27 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, Jun 11, 2026 at 11:19=E2=80=AFPM Stefan Hajnoczi <stefanha@gmail.co=
-m> wrote:
->
-> On Wed, Jun 10, 2026 at 9:15=E2=80=AFPM <infra.ai.cloud@bitdeer.com> wrot=
-e:
-> >
-> > From: Hyman Huang <yong.huang@bitdeer.com>
->
-> Hi Hyman Huang,
-> Is this pull request intended for qemu.git/master?
->
-> I did not see any previous pull requests from you in QEMU's git log.
-> It looks like your previous dirtylimit work went through the migration
-> tree. Do you intend to start sending pull requests now and are the
-> migration maintainers aware?
->
-> Please follow the pull request process and sign your pull request with
-> your GPG key:
-> https://www.qemu.org/docs/master/devel/submitting-a-pull-request.html
->
-> Thanks,
-> Stefan
+On 11/06/26 12:12, Philippe Mathieu-Daudé wrote:
 
-Thanks for the heads-up and suggestions. Let's wait for Paolo's reply. :)
-
+> On 10/6/26 11:07, Aditya Gupta wrote:
+>> Power8E and Power8NVL were deprecated since QEMU 10.1, with
+>> commit 264a604e7163 ("target/ppc: Deprecate Power8E and Power8NVL")
+>>
+>> Remove the corresponding 8E and 8NVL CPU cores from spapr/pseries
+>>
+>> Signed-off-by: Aditya Gupta <adityag@linux.ibm.com>
+>> ---
+>>   docs/system/ppc/pseries.rst | 2 +-
+>>   hw/ppc/spapr_cpu_core.c     | 2 --
+>>   2 files changed, 1 insertion(+), 3 deletions(-)
 >
-> >
-> > The following changes since commit de5d8bfd6105d3dd3ae668df9762df244a6d=
-1506:
-> >
-> >   Merge tag 'pull-loongarch-20260609' of https://github.com/gaosong715/=
-qemu into staging (2026-06-09 14:00:28 -0400)
-> >
-> > are available in the Git repository at:
-> >
-> >   https://github.com/newfriday/qemu.git tags/dirtylimit-dirtyrate-pull-=
-request-20260611
-> >
-> > for you to fetch changes up to 3b224b1c7df1ddefd6bca34f201264d72846c397=
-:
-> >
-> >   accel/kvm: event-driven wakeup for dirty ring reaper thread (2026-06-=
-11 08:22:50 +0800)
-> >
-> > ----------------------------------------------------------------
-> > dirtylimit: refactor dirty ring reaper thread with event-driven wakeup
-> >
-> > ----------------------------------------------------------------
-> > Bin Guo (1):
-> >       accel/kvm: event-driven wakeup for dirty ring reaper thread
-> >
-> >  accel/kvm/kvm-all.c      | 42 ++++++++++++++++++++++++++++++++++------
-> >  accel/stubs/kvm-stub.c   |  4 ++++
-> >  include/system/kvm.h     |  7 +++++++
-> >  include/system/kvm_int.h |  3 +++
-> >  system/dirtylimit.c      |  2 ++
-> >  5 files changed, 52 insertions(+), 6 deletions(-)
-> >
-> > --
-> > 2.43.0
-> >
-> >
+> Squash with following?
+>
+Sure, you mean squash into patch #4, the target/ppc change ?
+
+
+Thanks for reviewing !
+
+- Aditya G
+
 
