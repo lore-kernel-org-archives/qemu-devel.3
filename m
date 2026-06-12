@@ -4,56 +4,94 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2C9B9CD98D9
-	for <qemu-devel@archiver.kernel.org>; Fri, 12 Jun 2026 17:02:06 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5DF3ECD8CA8
+	for <qemu-devel@archiver.kernel.org>; Fri, 12 Jun 2026 17:19:53 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wY5FW-0005Qd-Cu; Fri, 12 Jun 2026 13:00:54 -0400
+	id 1wY5X7-0004Q0-16; Fri, 12 Jun 2026 13:19:05 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wY5Es-00054d-Hm; Fri, 12 Jun 2026 13:00:15 -0400
-Received: from isrv.corpit.ru ([212.248.84.144])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wY5Eq-0005vc-Iz; Fri, 12 Jun 2026 13:00:14 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1781283582; bh=gFKr/H9SOcM/QTiHEp6PPei+Z9A4s5bUhNKp/y/6VkY=;
- h=From:To:Cc:Subject:Date:In-Reply-To:References;
- b=RWFDhAMMg0lj2pNvyucYTst7MHNQXP9d+qipmDlT9cw+Mi+N1/arSBylUx3J5+jLZ
- PzCm4zIRIPm3juXblVQ5ks9gP/R3dvGZAPDapmMdMHMZzgacyR5wMXVWh/UYoej45F
- K5Rvap7jRdh2OTRyufOHGdbVSszK1/UxPHhwwPW4HcK7pLpruUCmioMtk1JC8PQi2t
- +ahKxNyyTjMABF0AprGjV1xrScyTzX01Jp4WN49a/TJp3cOq/fFk5XJJ7SWawR09sT
- xJn43joFoULy8fEGEy0Dk/et67HPtjFdFEzeEGDB5QckxiFbCSGZCJFw7z7lwvFP6/
- 8o13LWEVhps9Q==
-Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 13B821B6BC9;
- Fri, 12 Jun 2026 19:59:42 +0300 (MSK)
-Received: from think4mjt.tls.msk.ru (mjtthink.wg.tls.msk.ru [192.168.177.146])
- by tsrv.corpit.ru (Postfix) with ESMTP id BB9E23CE166;
- Fri, 12 Jun 2026 19:59:57 +0300 (MSK)
-From: Michael Tokarev <mjt@tls.msk.ru>
-To: qemu-devel@nongnu.org
-Cc: Evgeny Kolmakov <randomjack94dev@gmail.com>, qemu-trivial@nongnu.org,
- Michael Tokarev <mjt@tls.msk.ru>
-Subject: [PULL 4/8] net/colo-compare: Use QEMU_LOCK_GUARD to simplify mutex
- handling
-Date: Fri, 12 Jun 2026 19:59:48 +0300
-Message-ID: <20260612165957.1779082-5-mjt@tls.msk.ru>
-X-Mailer: git-send-email 2.47.3
-In-Reply-To: <20260612165957.1779082-1-mjt@tls.msk.ru>
-References: <20260612165957.1779082-1-mjt@tls.msk.ru>
+ (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
+ id 1wY5Wz-0004PY-9w
+ for qemu-devel@nongnu.org; Fri, 12 Jun 2026 13:18:57 -0400
+Received: from mail-wm1-x32c.google.com ([2a00:1450:4864:20::32c])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
+ id 1wY5Wx-0004P4-Hx
+ for qemu-devel@nongnu.org; Fri, 12 Jun 2026 13:18:57 -0400
+Received: by mail-wm1-x32c.google.com with SMTP id
+ 5b1f17b1804b1-490d1e54b3bso15982545e9.1
+ for <qemu-devel@nongnu.org>; Fri, 12 Jun 2026 10:18:54 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1781284733; x=1781889533; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:user-agent
+ :references:in-reply-to:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=DuOtHeBbJw1YDeqbXCJ3sEezGFxNJJSYyUp7OFWdCrE=;
+ b=csfa43W+/Owo314DeDZ8OLMymlIO2yntLNVwP9J8pWLdsvRPrMS0cfhTbfAUSGSUKd
+ JA5Plloov75yF6PShmEInvXYXXnHUmbRClCh42s7+naAF4XSeEOMb25Y0jeXBFpjAb+y
+ URfw0Lbgm/tmiC7FIpuLyMbjsT0jndQ9SeK8h2TFFNNEn7y+OEpq90A6AVOu35sLHLmJ
+ /+0spye9pd0p/xvm5oN+SSrL2av0LZCq2SN6M5IIL1w7moNrl66P1wwEZpbLkIOBwE+y
+ vVDk8BsiJsjnPKfIpW/jkMdnpwwLtJu/jDpkYlFSGYFzhqmLeYzPk5WYwVdGFLUN/Rzc
+ a/3w==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1781284733; x=1781889533;
+ h=content-transfer-encoding:mime-version:message-id:date:user-agent
+ :references:in-reply-to:subject:cc:to:from:x-gm-gg
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=DuOtHeBbJw1YDeqbXCJ3sEezGFxNJJSYyUp7OFWdCrE=;
+ b=J/X4Wrv5SZEHNGJwNiRpGau+8uDdRxSUb7AsL0ZK5vvUv0nab7AiG8CA7xJZdumfvT
+ Mk04NHqAGpgw4OqdoN8Azkpk+ijFUI2VuNBELqPlE7lSvyneauCAu3DRV5bqtB2hWKh6
+ x2JEd7q4wj8F5lIuWR+oAuAtPDckh/d6AWYkwZzbzbt9CjMRsnhLZX/S+6xNP5Dvpr8E
+ v1vcupwadTOFV1HJoi3BOEaMVgyaLpJTgtw2z91xv8hNvgIeIsn+lng3O0XyTPi6rCNE
+ LB9549HaP0Cb9jhMRdi9EnarsguwYqsZ/51vIvH68EC4AXH/uxa1Pfy5dq35XPUuXG3o
+ nzVA==
+X-Gm-Message-State: AOJu0YxiYz7zPW7yjeiznFuRN75nAlEIKTB1xXE/MBltoLWTAl5cuKpr
+ DmG3vIWD1fjqt2MIUcKuI2GQ88rp9X27yEhWEl20HqcboX5CsPabEu0EQRdFgkMWyGI=
+X-Gm-Gg: Acq92OHCjdBSa7YT/EpDi7ntDE+NlBm21wiWPWMvu1X6IYxOigCnxYJKzL85jof+6mP
+ tOMnAARbNdNj7bafmWedg4yamplVPvIYaZmhEKTfaq+zQHFG14xOG6h24/1JBrtflGm0mUYScYe
+ s9p/PRzK0ZCg4+8+7DqFyH4PvD35WhqlxCsu57LtIwgPFDf2pirjilDF0JQHFPu2Z3bjy5P8HfG
+ Wx9V2HP+Z2SfYnARAjTdGlXTGMzpoNeUJWEsA+v1qCogssEMYyK9wWWe4RD9/7IoWqL+tqdLcf2
+ r2un3dMPtEYTgMlOisXra5by2dKz1n7+Xk1xlTqXHmCUqg64d2WbIZaSmYg5hjeUn+PUHzXPJ43
+ ve0U7yOTrucBxj+kXzMwOi6VhRhDOjfu9JgryUkf9CRTgNRpZcxXKa10jDpLFuNgoqHx0fJudLu
+ 1ndDsRms+9ToPuJgfd5i787DA=
+X-Received: by 2002:a05:600c:83c8:b0:492:1e36:d16e with SMTP id
+ 5b1f17b1804b1-4921e36d1a9mr17505975e9.36.1781284733060; 
+ Fri, 12 Jun 2026 10:18:53 -0700 (PDT)
+Received: from draig.lan ([185.124.0.195]) by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-4922035b4absm3694975e9.11.2026.06.12.10.18.52
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Fri, 12 Jun 2026 10:18:52 -0700 (PDT)
+Received: from draig (localhost [IPv6:::1])
+ by draig.lan (Postfix) with ESMTP id 65D125F814;
+ Fri, 12 Jun 2026 18:18:51 +0100 (BST)
+From: =?utf-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
+To: Peter Maydell <peter.maydell@linaro.org>
+Cc: qemu-devel@nongnu.org,  Paolo Bonzini <pbonzini@redhat.com>,  Alexander
+ Graf <agraf@csgraf.de>,  Mohamed Mediouni <mohamed@unpredictable.fr>,
+ Pedro Barbuda <pbarbuda@microsoft.com>,  qemu-arm@nongnu.org,
+ kvm@vger.kernel.org
+Subject: Re: [PATCH v7 0/8] target/arm: fully model WFxT instructions for
+ A-profile
+In-Reply-To: <CAFEAcA94+mh_pigFDi+tEPRJ416fSWfxsQ1Lj8Byemug9kBp6w@mail.gmail.com>
+ (Peter Maydell's message of "Mon, 8 Jun 2026 14:51:24 +0100")
+References: <20260529082948.363931-1-alex.bennee@linaro.org>
+ <CAFEAcA94+mh_pigFDi+tEPRJ416fSWfxsQ1Lj8Byemug9kBp6w@mail.gmail.com>
+User-Agent: mu4e 1.14.1; emacs 30.1
+Date: Fri, 12 Jun 2026 18:18:51 +0100
+Message-ID: <87h5n7ekxw.fsf@draig.linaro.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=212.248.84.144; envelope-from=mjt@tls.msk.ru;
- helo=isrv.corpit.ru
-X-Spam_score_int: -19
-X-Spam_score: -2.0
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2a00:1450:4864:20::32c;
+ envelope-from=alex.bennee@linaro.org; helo=mail-wm1-x32c.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.0 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, SPF_HELO_NONE=0.001,
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -70,51 +108,91 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Evgeny Kolmakov <randomjack94dev@gmail.com>
+Peter Maydell <peter.maydell@linaro.org> writes:
 
-Replace qemu_mutex_(un)lock() calls with the QEMU_LOCK_GUARD().
+> On Fri, 29 May 2026 at 09:29, Alex Benn=C3=A9e <alex.bennee@linaro.org> w=
+rote:
+>>
+>> This series fully models the behaviour of WFxT instructions. We
+>> already had support for WFE for M-profile but we left off A-profile as
+>> it has more potential sources of wake-ups. The main one is the event
+>> stream which includes events from significant bits of the timer
+>> ticking over.
+>>
+>> The refactoring from the previous iterations of the patch have now
+>> been merged.
+>>
+>> I've dropped trying to fully model the global monitor in favour of
+>> taking advantage of the architectural flexibility to have an IMPDEF
+>> event wake up for any reason. We treat the setting of exclusive_addr
+>> as such a reason because it indicates the current vCPU is in a ldstx
+>> exclusive region and we don't want the guest to deadlock. This does mean
+>> the system won't sleep on WFE enabled locks but people shouldn't be
+>> relying on QEMU to model real world sleep patterns anyway given the
+>> efficiency of emulation compared to real HW.
+>>
+>> I've written a test case using kvm-unit-tests:
+>>
+>>   Message-ID: <20260527111822.1563679-1-alex.bennee@linaro.org>
+>>   Date: Wed, 27 May 2026 12:18:21 +0100
+>>   Subject: [kvm-unit-tests PATCH v2] arm: add wfx test case
+>>   From: =3D?UTF-8?q?Alex=3D20Benn=3DC3=3DA9e?=3D <alex.bennee@linaro.org>
+>>
+>> All patches are now reviewed.
+>
+>
+>
+> Applied to target-arm.next, thanks.
 
-Signed-off-by: Evgeny Kolmakov <randomjack94dev@gmail.com>
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Reviewed-by: Zhang Chen <zhangckid@gmail.com>
-Reviewed-by: Michael Tokarev <mjt@tls.msk.ru>
-Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
----
- net/colo-compare.c | 8 ++------
- 1 file changed, 2 insertions(+), 6 deletions(-)
+Is it too late to drop them? I've a fix for 2/8:
 
-diff --git a/net/colo-compare.c b/net/colo-compare.c
-index 823b8aa323..5986fb1e88 100644
---- a/net/colo-compare.c
-+++ b/net/colo-compare.c
-@@ -902,14 +902,13 @@ static void check_old_packet_regular(void *opaque)
- void colo_notify_compares_event(void *opaque, int event, Error **errp)
- {
-     CompareState *s;
--    qemu_mutex_lock(&colo_compare_mutex);
-+    QEMU_LOCK_GUARD(&colo_compare_mutex);
- 
-     if (!colo_compare_active) {
--        qemu_mutex_unlock(&colo_compare_mutex);
-         return;
+--8<---------------cut here---------------start------------->8---
+modified   =EF=83=BD include/hw/core/sysemu-cpu-ops.h
+@@ -18,6 +18,9 @@
+ typedef struct SysemuCPUOps {
+     /**
+      * @has_work: Callback for checking if there is work to do.
++     *
++     * This function should be idempotent (i.e. not change state) as
++     * it will likely be queried multiple times before a CPU resumes.
+      */
+     bool (*has_work)(CPUState *cpu); /* MANDATORY NON-NULL */
+     /**
+modified   =EE=98=9E target/arm/cpu.c
+@@ -158,7 +158,6 @@ static bool arm_cpu_has_work(CPUState *cs)
+      * A wake-up event should only wake us if we are halted on a WFE
+      */
+     if (cpu->env.halt_reason =3D=3D HALT_WFE && cpu->env.event_register) {
+-        cpu->env.halt_reason =3D NOT_HALTED;
+         return true;
      }
- 
--    qemu_mutex_lock(&event_mtx);
-+    QEMU_LOCK_GUARD(&event_mtx);
-     QTAILQ_FOREACH(s, &net_compares, next) {
-         s->event = event;
-         qemu_bh_schedule(s->event_bh);
-@@ -919,9 +918,6 @@ void colo_notify_compares_event(void *opaque, int event, Error **errp)
-     while (event_unhandled_count > 0) {
-         qemu_cond_wait(&event_complete_cond, &event_mtx);
+=20
+@@ -170,7 +169,6 @@ static bool arm_cpu_has_work(CPUState *cs)
+                            | CPU_INTERRUPT_NMI | CPU_INTERRUPT_VINMI | CPU=
+_INTERRUPT_VFNMI
+                            | CPU_INTERRUPT_VFIQ | CPU_INTERRUPT_VIRQ | CPU=
+_INTERRUPT_VSERR
+                            | CPU_INTERRUPT_EXITTB)) {
+-        cpu->env.halt_reason =3D NOT_HALTED;
+         return true;
      }
--
--    qemu_mutex_unlock(&event_mtx);
--    qemu_mutex_unlock(&colo_compare_mutex);
+=20
+@@ -874,6 +872,8 @@ bool arm_cpu_exec_halt(CPUState *cs)
+         if (cpu->wfxt_timer) {
+             timer_del(cpu->wfxt_timer);
+         }
++        /* clear the halt reason */
++        cpu->env.halt_reason =3D NOT_HALTED;
+     }
+     return leave_halt;
  }
- 
- static void colo_compare_timer_init(CompareState *s)
--- 
-2.47.3
+--8<---------------cut here---------------end--------------->8---
 
+
+>
+> -- PMM
+
+--=20
+Alex Benn=C3=A9e
+Virtualisation Tech Lead @ Linaro
 
