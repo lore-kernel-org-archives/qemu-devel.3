@@ -4,92 +4,55 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id BB92ACD98D2
-	for <qemu-devel@archiver.kernel.org>; Fri, 12 Jun 2026 18:28:37 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2EE73CD98CF
+	for <qemu-devel@archiver.kernel.org>; Fri, 12 Jun 2026 18:32:34 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wY6bl-0002Av-OX; Fri, 12 Jun 2026 14:27:57 -0400
+	id 1wY6fU-0003Md-AP; Fri, 12 Jun 2026 14:31:48 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1wY6bj-0002Ad-R0
- for qemu-devel@nongnu.org; Fri, 12 Jun 2026 14:27:55 -0400
-Received: from mail-pg1-x536.google.com ([2607:f8b0:4864:20::536])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1wY6bi-0007FU-BV
- for qemu-devel@nongnu.org; Fri, 12 Jun 2026 14:27:55 -0400
-Received: by mail-pg1-x536.google.com with SMTP id
- 41be03b00d2f7-c858cc9870aso1079989a12.0
- for <qemu-devel@nongnu.org>; Fri, 12 Jun 2026 11:27:53 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1781288873; x=1781893673; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:content-language:from
- :references:to:subject:user-agent:mime-version:date:message-id:from
- :to:cc:subject:date:message-id:reply-to;
- bh=Qj3+qqun5Miycu0p45/x8O2Ir+QOavDLOB6l4yBGeRs=;
- b=bud8dQ2P34lfv96QMtzqrrTXef0rPQGH/2Tk8jGs2esQUsYNzw6mON39qaTIqXSnKu
- q7bE+Yo7gG64PrnUW6qyjIb1wFZ8KBB0vaeWu3i5vPnJ2uR7No/ZySmwTTNZ6LzJZYCg
- 9fLVf+zNrkzG7AMDYObWHp+ko6CWuIdRv1V4lbEtMv1slKTEfchj7WR8Acl8g0qELABS
- GrWTGF9KvpeqfPLX/wDKY/sI3E2cfty1QpVrfnmfUQG//kNR/dx0TVrN3Fkv7Zu/bUY5
- bO8VT7DhDrj4eguBYnl7nJWE635inQV42BZHr8e3vpwOfDz658dzMdV0p9l67j9+H3O1
- euZw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1781288873; x=1781893673;
- h=content-transfer-encoding:in-reply-to:content-language:from
- :references:to:subject:user-agent:mime-version:date:message-id
- :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=Qj3+qqun5Miycu0p45/x8O2Ir+QOavDLOB6l4yBGeRs=;
- b=sCfSBlC2l3VALFI9ORA4eZZEYfvhdx6iTRQCmi6yJLAjCoLWs+J6Kk0i+kTwnxzQlM
- CR6fPJ2ytlmF1zlbVH6/jYEd0gsae6rfCrfeAzR4mglUs63COPwlOlxB1TgafkA/GnGg
- ogK7Z7/F8Q8XjY1U4K7EuKVtpgKdeTLKFxlQeq50fr/uwRM9K6+NpzpgvK974QYU8+mr
- 3Bzr7ZM57nQfZBZ52+2gXWNplbID4VwWyCBIxfvwS/QDZyxjk+9bZdIoOx6pvPsUCQxP
- KWUnBKYtPwD/R0X3opi84oXP8RHp9nJVVLSKNGnuUQahPYBODwVfH3UTgzpAZeXjo4Q2
- DUig==
-X-Forwarded-Encrypted: i=1;
- AFNElJ8KmvK9ojm94DEKruqON5MJ3OWMdR+FcWP9MLzG6xcwmz2GvOv+nMyWMC9xeewHvxDyuAbkZpvZiQ0/@nongnu.org
-X-Gm-Message-State: AOJu0Yz9jSwg3iYCWYmgccybJxDj92KUc7zrPlPbt5gAkqGHKGdxyfPL
- Gl1yTGW1N5Pjo5mnMnFDfDRfSHJwkJyNp/PndZDBSdqy+nR6BCrhDkOSUQRUMT/BHgg=
-X-Gm-Gg: Acq92OHD1BOqkiLpMj3sSo71c+uMm7rgQEjQWUW7K3V4QM5yDR6pUTM+G68vWh3KUfd
- xWK6Mc86ar3WGiGeqtnH02cebzIP/xKZdUQU7vT2ITD81Xq+iG5Hw8L5PzL/IW5scdxqMRhPYnt
- n5ZvfFUMtpJ2OocTdT4Bf2gFtmoMZeNgqyhvI+3rcciEaCehl+DDRVQBI2yuy1xyjFJaHdSg3UZ
- kRNKbMZ48miF9286caFwYeU22wlE5qJ/O7Z05ZFBH4clojWiK8lbPiajL5alpic/dq59yV9KicL
- o1wY8uAW4FHxLaM98zl3Bp8ZTqQSXU4v6ky93LmF+ID7q03IzdmCHtVB9m664oVdvTL79V8pQuB
- LFF5ZDySjRlK6s8K7R+VRAFfIehrFflERKRg31B5UaV2m7HJCT/JFAZakKtF70DCi808VaRzaf6
- ebyXFbQjq1EFWRPrNWHTNicxCvzkB1as0DfZZq
-X-Received: by 2002:a17:902:f552:b0:2c6:6425:b343 with SMTP id
- d9443c01a7336-2c66425b436mr5582155ad.6.1781288872445; 
- Fri, 12 Jun 2026 11:27:52 -0700 (PDT)
-Received: from [192.168.0.4] ([71.212.142.33])
- by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-2c433078264sm27999505ad.65.2026.06.12.11.27.51
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Fri, 12 Jun 2026 11:27:51 -0700 (PDT)
-Message-ID: <7e681b2e-48fb-48c3-b143-cb9c15c76747@linaro.org>
-Date: Fri, 12 Jun 2026 11:27:50 -0700
-MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 1/2] include/qemu/bswap.h: Add support for Int128 byte
- swaps
-To: =?UTF-8?B?RnLDqWTDqXJpYyBQw6l0cm90?=
- <frederic.petrot@univ-grenoble-alpes.fr>, philmd@mailo.com,
- pierrick.bouvier@oss.qualcomm.com, mst@redhat.com, qemu-devel@nongnu.org
-References: <20260612180346.890429-1-frederic.petrot@univ-grenoble-alpes.fr>
-From: Richard Henderson <richard.henderson@linaro.org>
-Content-Language: en-US
-In-Reply-To: <20260612180346.890429-1-frederic.petrot@univ-grenoble-alpes.fr>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::536;
- envelope-from=richard.henderson@linaro.org; helo=mail-pg1-x536.google.com
+ (Exim 4.90_1)
+ (envelope-from <7c4e53eb73c0580d7a321dbf3823ba5647652298@kylie.crudebyte.com>)
+ id 1wY6fM-0003L4-63; Fri, 12 Jun 2026 14:31:40 -0400
+Received: from kylie.crudebyte.com ([5.189.157.229])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1)
+ (envelope-from <7c4e53eb73c0580d7a321dbf3823ba5647652298@kylie.crudebyte.com>)
+ id 1wY6fH-0000qj-43; Fri, 12 Jun 2026 14:31:36 -0400
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
+ d=crudebyte.com; s=kylie; h=Cc:To:Subject:Date:From:References:In-Reply-To:
+ Message-ID:Content-Type:Content-Transfer-Encoding:MIME-Version:Content-ID:
+ Content-Description; bh=LwNhhI3hE8IqgimhjcIWZMiFUZFgeoXrAM8FKvGMPZM=; b=ceXq2
+ Iu1T9ML0mHSY3V3SPuojr47Td0vR1gj/V+Fftr13yQ9ddGwxJ6T67Wv4b0opg1uKlp/r4knbp1ZJ4
+ qgLVvNM+AUGuovZbtMU7JqaZEujLEbn+bt/ESpZRiQm95dlDwYqeNjYUsXz3trf/yf575HInDoYh9
+ YK7ami/kh45/GkqqQPubn9/cZ1h6oQZ8HDVR365WL2wxcPppUHKYW4DRKJHZU8jqJHpvq++ZYYUqC
+ Lqag1MFKzoFvX3sehdFiywPPJRRV8k2cfl1/gXlxQkmmbJZf51ZMN3eII7WBbrqalWhmQ/M6vquGW
+ Qu0MwVNc9q0WdBLBfO0sdTUS0UDJOyDv5kWaav5pM2RUpvMIiwHmycjcLDyZzSGvBicXCGFZolV6t
+ 7S3hAzeQKs0LV9tmaaxcCuUSS3jLvesArFEMXgiWK2kTFRcF3npgLLs6+EhsbcbhbnMhFx8jA0nnF
+ 1nHG7eS5c/Wm3RYwiQ5X4n77zEaFfvpRDkyihvXsc4d9RKARCTYTfsBo5M4aBnwSLc8oE+QShzL29
+ TWgt7xrivoyLclrlHZsn3SPEX2Z5/CujQNTN6BWxSXB8xLmQN0FefBiVyZgE5DASyMNGAE4YtxOKw
+ J6g8sMfjhIZ9xc4GhcnmInuQZql+uSLhwNr9mjaO/5HwUouX/6QG3+pEhoagWc=;
+Message-ID: <7c4e53eb73c0580d7a321dbf3823ba5647652298.1781287774.git.qemu_oss@crudebyte.com>
+In-Reply-To: <cover.1781287774.git.qemu_oss@crudebyte.com>
+References: <cover.1781287774.git.qemu_oss@crudebyte.com>
+From: Christian Schoenebeck <qemu_oss@crudebyte.com>
+Date: Fri, 12 Jun 2026 20:22:52 +0200
+Subject: [PATCH v2 1/8] hw/9pfs: add msize_limit transport callback
+To: qemu-devel@nongnu.org,
+    qemu-stable@nongnu.org
+Cc: Greg Kurz <groug@kaod.org>, Feifan Qian <bea1e@proton.me>,
+ Stefano Stabellini <sstabellini@kernel.org>,
+ Anthony PERARD <anthony@xenproject.org>,
+ "Edgar E. Iglesias" <edgar.iglesias@gmail.com>
+Received-SPF: pass client-ip=5.189.157.229;
+ envelope-from=7c4e53eb73c0580d7a321dbf3823ba5647652298@kylie.crudebyte.com;
+ helo=kylie.crudebyte.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_PASS=-0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -106,20 +69,30 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 6/12/26 11:03, Frédéric Pétrot wrote:
-> The recent introduction of endianness support is providing
-> a clean framework for the standard integer data types.
-> This patch adds support for the non-standard Int128 type QEMU provides.
-> Note that the ldn and sdn functions still keep an uint64_t as argument
-> and return value to avoid performance overhead.
-> 
-> Signed-off-by: Frédéric Pétrot<frederic.petrot@univ-grenoble-alpes.fr>
-> ---
->   include/qemu/bswap.h | 63 +++++++++++++++++++++++++++++++++++++++++---
->   1 file changed, 59 insertions(+), 4 deletions(-)
+Add a new callback 'msize_limit' to the V9fsTransport structure.
 
-Who is going to use this?  I won't add this for no reason...
+This allows each transport implementation to provide its theoretical
+maximum 'msize' value, which will be used to cap the negotiated
+msize during Tversion handshake.
 
+Signed-off-by: Christian Schoenebeck <qemu_oss@crudebyte.com>
+---
+ hw/9pfs/9p.h | 1 +
+ 1 file changed, 1 insertion(+)
 
-r~
+diff --git a/hw/9pfs/9p.h b/hw/9pfs/9p.h
+index 65cc45e344..14111e041a 100644
+--- a/hw/9pfs/9p.h
++++ b/hw/9pfs/9p.h
+@@ -481,6 +481,7 @@ struct V9fsTransport {
+     void        (*init_out_iov_from_pdu)(V9fsPDU *pdu, struct iovec **piov,
+                                          unsigned int *pniov, size_t size);
+     void        (*push_and_notify)(V9fsPDU *pdu);
++    size_t      (*msize_limit)(V9fsState *s);
+ };
+ 
+ #endif
+-- 
+2.47.3
+
 
