@@ -4,109 +4,98 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1C7E2CD98C7
-	for <qemu-devel@archiver.kernel.org>; Fri, 12 Jun 2026 02:38:11 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 10849CD98CC
+	for <qemu-devel@archiver.kernel.org>; Fri, 12 Jun 2026 03:43:48 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wXrm5-0008UA-DV; Thu, 11 Jun 2026 22:37:37 -0400
+	id 1wXsn4-0008GM-MO; Thu, 11 Jun 2026 23:42:42 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1wXrm3-0008Tj-MQ
- for qemu-devel@nongnu.org; Thu, 11 Jun 2026 22:37:35 -0400
-Received: from mail-ed1-x534.google.com ([2a00:1450:4864:20::534])
+ id 1wXsn2-0008G7-R3
+ for qemu-devel@nongnu.org; Thu, 11 Jun 2026 23:42:40 -0400
+Received: from mail-ed1-x52e.google.com ([2a00:1450:4864:20::52e])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1wXrm1-0001QO-3h
- for qemu-devel@nongnu.org; Thu, 11 Jun 2026 22:37:35 -0400
-Received: by mail-ed1-x534.google.com with SMTP id
- 4fb4d7f45d1cf-68d233bf083so716990a12.1
- for <qemu-devel@nongnu.org>; Thu, 11 Jun 2026 19:37:32 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1781231852; cv=none;
+ id 1wXsn0-0004lF-Vj
+ for qemu-devel@nongnu.org; Thu, 11 Jun 2026 23:42:40 -0400
+Received: by mail-ed1-x52e.google.com with SMTP id
+ 4fb4d7f45d1cf-687ed9aabb3so974965a12.1
+ for <qemu-devel@nongnu.org>; Thu, 11 Jun 2026 20:42:38 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1781235757; cv=none;
  d=google.com; s=arc-20240605;
- b=QpcG07mfC7PnTlVluytxQ46pN3yYB8uL6sq3+7WLNjGQeB5pfmFNXfGRCchFkKKDKM
- KXy0iz495/bq6ZxLYD1U8oXkB3N4BE3ZhcTHJGrOMfYfmDZ0dMAkfVblLTahNn1YsBSC
- s8ctW3muuVw+W/1sQ3AQfMjI8wGJV8J4yOHC1feXCCGkNIyOy4JMZzhxJfSF4iAQf+fA
- CyuZpS3J+P3Q4Iw5kkTuG1RkLqlRxIjPuvbaXLDizdGm6ge9lpEmWw/tCJp3M4EfzJjH
- O0lNlfwBBHvNEsBmFwSik857vLkz0nF+Mv5qTfJDrR02UVEgQmaIj+NWcHqP2edBHIgq
- ZOIw==
+ b=dcIWFs3RoRkKlPztsRMMn4XGxdXPKU/ulsP/r0JLeI2MOnqLHfO9dzXZ1ANgfEu2Xx
+ dTskrM3n2L/tlMugoNvPpNeAbLL5Sukc08NOIreGD2pqyJymKcANr0tTXK3+HdTBNM5l
+ 8ArnuLxWPAOhzIKivxW1t9leeeKXH+09YQHsBIZcPrT1RRYPIRzy32Yi3A7AaC8EkVv+
+ yjh5znG+FeFWBPQe7MBdsGDbRe4PzKJhPPF1JUzgl2BeVyr6N7qhZOzflGh5sxYXy/q5
+ ostNZDXEJbr6PD+BPveXUzuABXdbiT9JzQHb10paQ8JzE0l56CkCX8tSx4xGgT3D+Lfo
+ lDWg==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
  s=arc-20240605; 
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:dkim-signature;
- bh=g5+kqjJaZ6QVl2vMFXU0POzN1KhlUcnn3TpNAumXc1Y=;
- fh=Yded5KN308544J2CLevpc9ddF7CVlbT0CSYTJEHACjA=;
- b=I4EmWYP0D4RDaf1m9kxYeY7bPCUwiZ3sC8l+qKc1f3h55Fh2Xqy+3jreN7132Eg1jU
- mlCy580BYH0eCSnAt6xRW7CTIDa26IK2Otoi9q3thdwQAPuHD6UvYT7x3Qbs43Eoi0xa
- YI5Mc+jpozKNQwXxB64Km4cwSkIeqNX8cUYAeF2bUn8pSxfDMBTwq33Cq3cZN1t0gUZF
- jMvGW5fweNz0uwGMN3txPwDq1Y5OGWYnGecUd+W009mUXc6bb3c6EnwOUQONOT0c9HGv
- xMlDsA6JuUnLRIKO8oyiD6HJzhbdDOm3k65TGpRxzz+gp6UPajgYeeZywwlNRzSC9skQ
- zzig==; darn=nongnu.org
+ bh=BKXwUyc2mOYHmyhUSoE6yPyt7YlrIeEESabXVthSip8=;
+ fh=261oot2FMbPVGnpcrb7kLMaV0fTVsfTOM7iBWmcFpKQ=;
+ b=WM4vOgmTs9MfEu5FzpEHgC/+MZqThQV+mUnDU4+lEkt3akw20RZPIvpPnGm6zUPSgq
+ /4jdQAM0rFf3ppv+bg2iE3CQwFuTF8/2Tc6xm1FXr3DTYw1yoEojqdx2A1+dKgPYPLaX
+ OssYjPQK9POjk10SbWHn2ttdVon9olswr7T8SPR88MiN9JDRgQASfhM+2Umx4IRTOJtV
+ GEtvG1t4o7S8H0VYfipvGaJ35a+dkMwb+zLn5P7mkS5GVaKuSvD3+gn91w6YR4E/t+E5
+ 72+JZrQk/BownXxiblwLCKV0B+4NyO+YHmS82BNmJpuEe25GDgET5rcZnWHKTQo6xZFI
+ 1hIw==; darn=nongnu.org
 ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1781231852; x=1781836652; darn=nongnu.org;
+ d=gmail.com; s=20251104; t=1781235757; x=1781840557; darn=nongnu.org;
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:from:to:cc:subject:date
  :message-id:reply-to;
- bh=g5+kqjJaZ6QVl2vMFXU0POzN1KhlUcnn3TpNAumXc1Y=;
- b=oAaz2PDmbfyK8uVKahMuljlX1NJO+ygrQerHF/QDQzd60SwZaJp4waQJVrqheWrt8t
- E9aVYrsC0mQp2jyZ/wqkFx5ffOzDSvMLsbhVSFrV8fiYEzZqtqkvpa5rvlVvIL0akfQj
- h1iCSB5v7n8NBdnXnzJj1aZzgYXodfRsMMFNQscqvHbJTBP1ds9mJmYQQz/FgitPwGah
- T5PoX7BKAhJC/FwlhkB/JDcRbvgnHyK87AyO1jSArhnhps/gBoNfQzVT7bhmEo+m90J7
- Pkw99lhyad04+CHG+Pz/6/G60lho6YrNDnIYooURmoMyYmRE1GNXXB24H5/NNz3aP8tG
- PXDw==
+ bh=BKXwUyc2mOYHmyhUSoE6yPyt7YlrIeEESabXVthSip8=;
+ b=hW1t0NjuoYhd9o9CLSEK3cHqK6yCECQWlsMGHZm6p+HWE9LMICThX3ErATmNqY81gW
+ SEwmq/aqEdpsF/QBkEAyTanBNfflBV49NWXRwcY4JU6k0kt33hLToPWIy8Y10BnWkiX6
+ MhHzjuOwjcvGVTcasfp/+K5HnXCcNc0EHyFTanTkLg1Bme0eeXUVyNePAmOjCK0iiUyM
+ gTeD74VInHCljjUNYzcUSdfBmFQ/0E0oXuvw3OZUmY9xawoQXYoylxUlG+JD+o0V4iBT
+ HcTSIGAxj9FLxPsqaPXHvTpIm0pkslML0eWlfQfLgRfwgYa62QfWDIYCR560jlGZgOIR
+ KOOQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1781231852; x=1781836652;
+ d=1e100.net; s=20251104; t=1781235757; x=1781840557;
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to;
- bh=g5+kqjJaZ6QVl2vMFXU0POzN1KhlUcnn3TpNAumXc1Y=;
- b=LHgkNiR2lrw8K3kM2CAtPQtiPnew0K+/xnKEmxNstfmlm4ogr0/ZiKRVQhp5abKN+o
- pW+JGG2LydV1dnh9lMWjR54AAx773P+Z37L36miUxQqSaTno3VrwIUK8i0kfWEmTujmZ
- YbJsiY6Key1UHddrJxjDXRJg9mv+qYJkxsPXuZTjdt7foxtkwsL3hHjKTJNjhD+2uGhN
- EWN3iyiRKd0z4gsXOx5fh51G7h/fr9HfhNQXShxoCewn0/kXoWVGiUKIkvqgJCQFkDW2
- jGlmhgvz0QyX+yU6ApyKbEEKRKUYgbyxLWWl6cTytVvWhQpVB9Ch+1+kDzFhaDocnh6E
- fAqw==
-X-Forwarded-Encrypted: i=1;
- AFNElJ8gO4M2Cm9U2A7ITeIwH9ZXRPD9vA4FJM4aeixvr06I82/qZT6DtWDn1wdFrULF7vn3Ejq1Ugvv8ldp@nongnu.org
-X-Gm-Message-State: AOJu0YzN1KRiYT+dEl8IMH2tDl2csK66AG2hEhejnGnilJq4q3SlTAdY
- ud0Z9GgbLEjtR50/JRpngW7UMtN/L9uZ7J4+XQydgEiQxoylG2Ha6hFpDdbfPlCegSAR9hxFTxc
- Tu3VWbBNKSxL9g43gY3nqrHVxnfiKI18=
-X-Gm-Gg: Acq92OGjyIZXtAUbF66Jzr6ragAWpd0F4GJmNiiP47+hyE5NVFyY4LTYWcO4XCCO0J4
- 9ceLWrJ4F0eRciU5Q0Xb1rgi++5TPo0CT6QH6mP5oz1a2Sp80pynD0/adeIIUaJLFw+1PWzzU33
- M1yr3Nki3j9BE+RHijn8mtW4q1BQB+8HheMu3C0hKUXJ21+UizIIJSYR+edFGFG4EG0F6PnF3BZ
- DetZ7C+EzrDoIavyD0EjSyFo5KMSivBM29WLncZD16DqeTLt8Bb/wSq1uF+qvI8I4sgjl2N3xve
- c0kicWhKmhOQBL2XvUvHbDoOdLVBhYcZlad+qw==
-X-Received: by 2002:a17:906:45a3:b0:bed:4603:805f with SMTP id
- a640c23a62f3a-bfe28e12257mr19006466b.24.1781231851647; Thu, 11 Jun 2026
- 19:37:31 -0700 (PDT)
+ bh=BKXwUyc2mOYHmyhUSoE6yPyt7YlrIeEESabXVthSip8=;
+ b=kSQhULdZj5U0WPKu5UbL0RMuEfOgdUjb7eIJCxsXUsgJPhXIlm4JQA2qZ7R28fo28x
+ RXPvJs4kDD8MOA+9x4/h9Nac8zwjI8F+wjLfiGdZZqSG79X/ow9keL/QHXUA3G/oU1Ho
+ Adbsjx9P5EwZPZvdHsDd7Vq50OYokvIGgZUYGgG4fto0qmYjYuXhnZzULW7/ZiDl9nzO
+ kXjXM91pOXyrgcDILo/qSWdmIszyNQv3X1wexIHW+guvOvYNNEl4k+HtacXN44StByEP
+ UzXbsaEAnEgJQXZ19c5epN5HkIrBUkpVFpOcqBOcgNB9hsf/OXFIWymCDZOlMsmJPY4o
+ 3leQ==
+X-Gm-Message-State: AOJu0YyxiXazH2EZWNlb2obBjuX2Ulum4SkMNWHjPlREyw1KSNFkl9IE
+ q9J8trm+C7QZJlJ3sPj3B4e/9wyjRfOx7sDLde5vwY5k6gwg2qT5LRzxosBdwZiAkJGVSNova1I
+ JeO+Gkz31evgXijgO1p7z43RHTYGQ5PA=
+X-Gm-Gg: Acq92OEfXqgQrsfE1i8NirXDE8I5wLZ52h0ImhmqYEINKp4I9D+POTrSddRztoJHdqV
+ w3SDtVy4Hrn9Za/8NXEbeASmlIhYrm+aBVERBFhfBfsAadWN0YHH57NLUn3mNZYHJXKAv/DS9Ln
+ xGLhta+re2RkhGd5pGDDPeORhhRqoN4dXS19ZCJfVA0ItYV9dATTmif5iTxuhCHS2ihkFijvK1u
+ 9xwrErNPa4jevpHRQZk0eENLxmLj3acWi8//Bwdgor1CtPE2q9HXxBAL0EHDMNfX3JqTnbnDk8P
+ 1mg9Eh0TABkPY6BZrgx1d4kNyv9yBvz3C5avOg==
+X-Received: by 2002:a05:6402:540c:b0:66f:2ea5:c269 with SMTP id
+ 4fb4d7f45d1cf-69378a4d387mr337720a12.15.1781235756904; Thu, 11 Jun 2026
+ 20:42:36 -0700 (PDT)
 MIME-Version: 1.0
-References: <cover.1778516731.git.chao.liu.zevorn@gmail.com>
- <69be8c8a8b47f4b6283a4a89850fff8cde300137.1778516731.git.chao.liu.zevorn@gmail.com>
-In-Reply-To: <69be8c8a8b47f4b6283a4a89850fff8cde300137.1778516731.git.chao.liu.zevorn@gmail.com>
+References: <20260606145520.34152-1-imaginos32@gmail.com>
+In-Reply-To: <20260606145520.34152-1-imaginos32@gmail.com>
 From: Alistair Francis <alistair23@gmail.com>
-Date: Fri, 12 Jun 2026 12:37:03 +1000
-X-Gm-Features: AVVi8CdyAWL_EPwCCHzKRIPGXqGqeSDZNpSmSvmM-BAgJ-cXVmqc12-5a73TNck
-Message-ID: <CAKmqyKOF8KpDTtmtHpJvQ-uu6trSQZ3=NNs-R3AkW3RUMLP98g@mail.gmail.com>
-Subject: Re: [PATCH v7 4/5] tests/qtest: add test for K230 watchdog
-To: Chao Liu <chao.liu.zevorn@gmail.com>
-Cc: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
- Palmer Dabbelt <palmer@dabbelt.com>, 
- Alistair Francis <alistair.francis@wdc.com>, Weiwei Li <liwei1518@gmail.com>, 
- Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>,
- Liu Zhiwei <zhiwei_liu@linux.alibaba.com>, 
- Paolo Bonzini <pbonzini@redhat.com>,
- Christoph Muellner <christoph.muellner@vrull.eu>, 
- Fabiano Rosas <farosas@suse.de>, Laurent Vivier <lvivier@redhat.com>,
- qemu-devel@nongnu.org, 
- qemu-riscv@nongnu.org, Chao Liu <chao.liu@zevorn.cn>, 
- Mig Yang <temashking@foxmail.com>, 
- Daniel Henrique Barboza <dbarboza@ventanamicro.com>
+Date: Fri, 12 Jun 2026 13:42:10 +1000
+X-Gm-Features: AVVi8CfU8fhGCf-_u7nYDSpn_yuEfplfHfZs2EPv8C3uLJpm0HxIv9HaNhWD6J4
+Message-ID: <CAKmqyKMA2GfZOjoyHo_7=cgbU3k8EuiCAY2DQqaLVZxY2n7YWA@mail.gmail.com>
+Subject: Re: [PATCH] disas/riscv: enable `mnret` disassembly
+To: imaginos <imaginos32@gmail.com>
+Cc: qemu-devel@nongnu.org, qemu-riscv@nongnu.org, 
+ Palmer Dabbelt <palmer@dabbelt.com>,
+ Alistair Francis <Alistair.Francis@wdc.com>, 
+ Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::534;
- envelope-from=alistair23@gmail.com; helo=mail-ed1-x534.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::52e;
+ envelope-from=alistair23@gmail.com; helo=mail-ed1-x52e.google.com
 X-Spam_score_int: -17
 X-Spam_score: -1.8
 X-Spam_bar: -
@@ -130,346 +119,59 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, May 12, 2026 at 2:33=E2=80=AFAM Chao Liu <chao.liu.zevorn@gmail.com=
-> wrote:
+On Sun, Jun 7, 2026 at 1:32=E2=80=AFAM imaginos <imaginos32@gmail.com> wrot=
+e:
 >
-> From: Chao Liu <chao.liu@zevorn.cn>
+> The translator has supported mnret since commit 3157a553ec6b9a
+> ("target/riscv: Add Smrnmi mnret instruction"), but the
+> disassembler still renders it as illegal. Add it unguarded,
+> since the encoding does not overlap any other extension.
 >
-> Testing the Basic Functions of K230 WDT:
-> 1. Reset Function
-> 2. Timeout Check
-> 3. Interrupt Function
->
-> Signed-off-by: Mig Yang <temashking@foxmail.com>
-> Reviewed-by: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
-> Acked-by: Fabiano Rosas <farosas@suse.de>
-> Signed-off-by: Chao Liu <chao.liu.zevorn@gmail.com>
+> Signed-off-by: imaginos <imaginos32@gmail.com>
 
-This fails `make check` for me. I guess the `k230` machine wasn't built?
-
-541/542 qemu:qtest+qtest-aarch64 / qtest-aarch64/bios-tables-test
-               OK              91.02s   15 subtests passed
-=E2=96=B6 542/542 /riscv64/k230-wdt/register_read_write -
-ERROR:../tests/qtest/libqtest.c:558:qtest_connect: assertion failed:
-(s->fd >=3D 0 && s->qmp_fd >=3D 0) FAIL
-=E2=96=B6 542/542
-               ERROR
-542/542 qemu:qtest+qtest-riscv64 / qtest-riscv64/k230-wdt-test
-               ERROR           51.60s   killed by signal 6 SIGABRT
->>> PYTHON=3D/var/mnt/scratch/alistair/software/qemu/build/pyvenv/bin/pytho=
-n3 MSAN_OPTIONS=3Dhalt_on_error=3D1:abort_on_error=3D1:print_summary=3D1:pr=
-int_stacktrace=3D1 QTEST_QEMU_VNC_BINARY=3D./tools/qemu-vnc/qemu-vnc UBSAN_=
-OPTIONS=3Dhalt_on_error=3D1:abort_on_error=3D1:print_summary=3D1:print_stac=
-ktrace=3D1 MESON_TEST_ITERATION=3D1 QTEST_QEMU_IMG=3D./qemu-img RUST_BACKTR=
-ACE=3D1 G_TEST_DBUS_DAEMON=3D/var/mnt/scratch/alistair/software/qemu/tests/=
-dbus-daemon.sh MALLOC_PERTURB_=3D94 QTEST_QEMU_STORAGE_DAEMON_BINARY=3D./st=
-orage-daemon/qemu-storage-daemon ASAN_OPTIONS=3Dhalt_on_error=3D1:abort_on_=
-error=3D1:print_summary=3D1 QTEST_QEMU_BINARY=3D./qemu-system-riscv64 /var/=
-mnt/scratch/alistair/software/qemu/build/tests/qtest/k230-wdt-test --tap -k
-=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=
-=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=
-=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=
-=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=
-=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=
-=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=
-=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=
-=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=
-=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95
-=E2=9C=80  =E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=
-=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=
-=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=
-=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=
-=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=
-=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=
-=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=
-=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=
-=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=
-=95=E2=80=95
-stderr:
-qemu-system-riscv64: unsupported machine type: "k230"
-Use -machine help to list supported machines
-socket_accept failed: Resource temporarily unavailable
-**
-ERROR:../tests/qtest/libqtest.c:558:qtest_connect: assertion failed:
-(s->fd >=3D 0 && s->qmp_fd >=3D 0)
-../tests/qtest/libqtest.c:201: kill_qemu() tried to terminate QEMU
-process but encountered exit status 1 (expected 0)
-
-(test program exited with status code -6)
-=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=
-=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=
-=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=
-=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=
-=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=
-=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=
-=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=
-=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=
-=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=
-=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=
-=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=
-=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=
-=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=
-=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=
-=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=
-=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=
-=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=
-=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=
-=E2=80=95=E2=80=95=E2=80=95=E2=80=95
-
-
-Summary of Failures:
-
-542/542 qemu:qtest+qtest-riscv64 / qtest-riscv64/k230-wdt-test
-      ERROR           51.60s   killed by signal 6 SIGABRT
-
-Ok:                 510
-Expected Fail:      0
-Fail:               1
-Unexpected Pass:    0
-Skipped:            31
-Timeout:            0
+Acked-by: Alistair Francis <alistair.francis@wdc.com>
 
 Alistair
 
 > ---
->  MAINTAINERS                 |   1 +
->  tests/qtest/k230-wdt-test.c | 189 ++++++++++++++++++++++++++++++++++++
->  tests/qtest/meson.build     |   3 +-
->  3 files changed, 192 insertions(+), 1 deletion(-)
->  create mode 100644 tests/qtest/k230-wdt-test.c
+>  disas/riscv.c | 7 +++++++
+>  1 file changed, 7 insertions(+)
 >
-> diff --git a/MAINTAINERS b/MAINTAINERS
-> index e5ec6367ca..e7e3ed0c5c 100644
-> --- a/MAINTAINERS
-> +++ b/MAINTAINERS
-> @@ -1788,6 +1788,7 @@ F: hw/riscv/k230.c
->  F: hw/watchdog/k230_wdt.c
->  F: include/hw/riscv/k230.h
->  F: include/hw/watchdog/k230_wdt.h
-> +F: tests/qtest/k230-wdt-test.c
+> diff --git a/disas/riscv.c b/disas/riscv.c
+> index d416a4d6b3..065985992b 100644
+> --- a/disas/riscv.c
+> +++ b/disas/riscv.c
+> @@ -985,6 +985,7 @@ typedef enum {
+>      rv_op_ssamoswap_d =3D 953,
+>      rv_op_c_sspush =3D 954,
+>      rv_op_c_sspopchk =3D 955,
+> +    rv_op_mnret =3D 956,
+>  } rv_op;
 >
->  RX Machines
->  -----------
-> diff --git a/tests/qtest/k230-wdt-test.c b/tests/qtest/k230-wdt-test.c
-> new file mode 100644
-> index 0000000000..c8eaeaf1ae
-> --- /dev/null
-> +++ b/tests/qtest/k230-wdt-test.c
-> @@ -0,0 +1,189 @@
-> +/*
-> + * QTest testcase for K230 Watchdog
-> + *
-> + * Copyright (c) 2025 Mig Yang <temashking@foxmail.com>
-> + *
-> + * SPDX-License-Identifier: GPL-2.0-or-later
-> + *
-> + * Provides a board compatible with the kendryte K230 SDK
-> + *
-> + * K230 Technical Reference Manual V0.3.1 (2024-11-18):
-> + * https://github.com/revyos/external-docs/blob/master/K230/en-us/K230_T=
-echnical_Reference_Manual_V0.3.1_20241118.pdf
-> + *
-> + * For more information, see <https://www.kendryte.com/en/proDetail/230>
-> + */
-> +
-> +#include "qemu/osdep.h"
-> +#include "qemu/timer.h"
-> +#include "qemu/bitops.h"
-> +#include "libqtest.h"
-> +#include "hw/watchdog/k230_wdt.h"
-> +
-> +/* K230 WDT0 base address */
-> +#define K230_WDT0_BASE 0x91106000
-> +#define K230_WDT1_BASE 0x91106800
-> +
-> +/* Test WDT0 by default */
-> +#define WDT_BASE K230_WDT0_BASE
-> +
-> +static void test_register_read_write(void)
-> +{
-> +    QTestState *qts =3D qtest_init("-machine k230");
-> +
-> +    /* Test Control Register (CR) read/write */
-> +    qtest_writel(qts, WDT_BASE + K230_WDT_CR, 0xFFFFFFFF);
-> +    g_assert_cmphex(qtest_readl(qts, WDT_BASE + K230_WDT_CR), =3D=3D,
-> +                    (K230_WDT_CR_RPL_MASK << K230_WDT_CR_RPL_SHIFT) |
-> +                    K230_WDT_CR_RMOD | K230_WDT_CR_WDT_EN);
-> +
-> +    /* Test Timeout Range Register (TORR) read/write */
-> +    qtest_writel(qts, WDT_BASE + K230_WDT_TORR, 0xFFFFFFFF);
-> +    g_assert_cmphex(qtest_readl(qts, WDT_BASE + K230_WDT_TORR), =3D=3D,
-> +                    K230_WDT_TORR_TOP_MASK);
-> +
-> +    /* Test Protection Level Register read/write */
-> +    qtest_writel(qts, WDT_BASE + K230_WDT_PROT_LEVEL, 0xFFFFFFFF);
-> +    g_assert_cmphex(qtest_readl(qts, WDT_BASE + K230_WDT_PROT_LEVEL), =
-=3D=3D, 0x7);
-> +
-> +    qtest_quit(qts);
-> +}
-> +
-> +static void test_counter_restart(void)
-> +{
-> +    QTestState *qts =3D qtest_init("-machine k230");
-> +
-> +    /* Enable watchdog and set timeout */
-> +    qtest_writel(qts, WDT_BASE + K230_WDT_CR, K230_WDT_CR_WDT_EN);
-> +    qtest_writel(qts, WDT_BASE + K230_WDT_TORR, 0x5); /* TOP =3D 5 */
-> +
-> +    /* Read current counter value */
-> +    uint32_t initial_count =3D qtest_readl(qts, WDT_BASE + K230_WDT_CCVR=
-);
-> +    g_assert_cmpuint(initial_count, >, 0);
-> +
-> +    /* Restart counter with magic value */
-> +    qtest_writel(qts, WDT_BASE + K230_WDT_CRR, K230_WDT_CRR_RESTART);
-> +
-> +    /* Wait for time */
-> +    qtest_clock_step(qts, NANOSECONDS_PER_SECOND * 2);
-> +
-> +    /* Counter should be reset to timeout value */
-> +    uint32_t new_count =3D qtest_readl(qts, WDT_BASE + K230_WDT_CCVR);
-> +    g_assert_cmpuint(new_count, >, 0);
-> +    g_assert_cmpuint(new_count, !=3D, initial_count);
-> +
-> +    qtest_quit(qts);
-> +}
-> +
-> +static void test_interrupt_mode(void)
-> +{
-> +    QTestState *qts =3D qtest_init("-machine k230 --trace k230_*,file=3D=
-k230.log");
-> +
-> +    /* Set interrupt mode and enable watchdog */
-> +    qtest_writel(qts, WDT_BASE + K230_WDT_CR,
-> +                 K230_WDT_CR_RMOD | K230_WDT_CR_WDT_EN);
-> +    qtest_writel(qts, WDT_BASE + K230_WDT_TORR, 0x1); /* Short timeout *=
-/
-> +
-> +    /* Wait for timeout to trigger interrupt */
-> +    qtest_clock_step(qts, NANOSECONDS_PER_SECOND * 10);
-> +
-> +    /* Check interrupt status */
-> +    uint32_t stat =3D qtest_readl(qts, WDT_BASE + K230_WDT_STAT);
-> +    g_assert_cmphex(stat & K230_WDT_STAT_INT, =3D=3D, K230_WDT_STAT_INT)=
-;
-> +
-> +    /* Clear interrupt */
-> +    qtest_writel(qts, WDT_BASE + K230_WDT_EOI, 0x1);
-> +    stat =3D qtest_readl(qts, WDT_BASE + K230_WDT_STAT);
-> +    g_assert_cmphex(stat & K230_WDT_STAT_INT, =3D=3D, 0);
-> +
-> +    qtest_quit(qts);
-> +}
-> +
-> +static void test_reset_mode(void)
-> +{
-> +    QTestState *qts =3D qtest_init("-machine k230 -no-reboot");
-> +
-> +    /* Set reset mode and enable watchdog */
-> +    qtest_writel(qts, WDT_BASE + K230_WDT_CR, K230_WDT_CR_WDT_EN);
-> +    qtest_writel(qts, WDT_BASE + K230_WDT_TORR, 0x1); /* Short timeout *=
-/
-> +
-> +    /* Wait for timeout to trigger reset */
-> +    qtest_clock_step(qts, NANOSECONDS_PER_SECOND * 2);
-> +
-> +    /* In reset mode, the system should reset */
-> +    /* This test verifies that reset mode is properly configured */
-> +
-> +    qtest_quit(qts);
-> +}
-> +
-> +static void test_timeout_calculation(void)
-> +{
-> +    QTestState *qts =3D qtest_init("-machine k230");
-> +
-> +    /* Test different timeout values */
-> +    for (uint32_t top =3D 0; top <=3D 15; top++) {
-> +        qtest_writel(qts, WDT_BASE + K230_WDT_TORR, top);
-> +        qtest_writel(qts, WDT_BASE + K230_WDT_CR, K230_WDT_CR_WDT_EN);
-> +
-> +        /* Read current counter value */
-> +        uint32_t count =3D qtest_readl(qts, WDT_BASE + K230_WDT_CCVR);
-> +        g_assert_cmpuint(count, >, 0);
-> +
-> +        /* Disable watchdog for next iteration */
-> +        qtest_writel(qts, WDT_BASE + K230_WDT_CR, 0);
-> +    }
-> +
-> +    qtest_quit(qts);
-> +}
-> +
-> +static void test_wdt1_registers(void)
-> +{
-> +    QTestState *qts =3D qtest_init("-machine k230");
-> +
-> +    /* Test WDT1 registers (second watchdog) */
-> +    qtest_writel(qts, K230_WDT1_BASE + K230_WDT_CR, 0xFFFFFFFF);
-> +    g_assert_cmphex(qtest_readl(qts, K230_WDT1_BASE + K230_WDT_CR), =3D=
-=3D,
-> +                    (K230_WDT_CR_RPL_MASK << K230_WDT_CR_RPL_SHIFT) |
-> +                    K230_WDT_CR_RMOD | K230_WDT_CR_WDT_EN);
-> +
-> +    qtest_writel(qts, K230_WDT1_BASE + K230_WDT_TORR, 0xFFFFFFFF);
-> +    g_assert_cmphex(qtest_readl(qts, K230_WDT1_BASE + K230_WDT_TORR), =
-=3D=3D,
-> +                    K230_WDT_TORR_TOP_MASK);
-> +
-> +    qtest_quit(qts);
-> +}
-> +
-> +static void test_enable_disable(void)
-> +{
-> +    QTestState *qts =3D qtest_init("-machine k230");
-> +
-> +    /* Initially disabled */
-> +    uint32_t cr =3D qtest_readl(qts, WDT_BASE + K230_WDT_CR);
-> +    g_assert_cmphex(cr & K230_WDT_CR_WDT_EN, =3D=3D, 0);
-> +
-> +    /* Enable watchdog */
-> +    qtest_writel(qts, WDT_BASE + K230_WDT_CR, K230_WDT_CR_WDT_EN);
-> +    cr =3D qtest_readl(qts, WDT_BASE + K230_WDT_CR);
-> +    g_assert_cmphex(cr & K230_WDT_CR_WDT_EN, =3D=3D, K230_WDT_CR_WDT_EN)=
-;
-> +
-> +    /* Disable watchdog */
-> +    qtest_writel(qts, WDT_BASE + K230_WDT_CR, 0);
-> +    cr =3D qtest_readl(qts, WDT_BASE + K230_WDT_CR);
-> +    g_assert_cmphex(cr & K230_WDT_CR_WDT_EN, =3D=3D, 0);
-> +
-> +    qtest_quit(qts);
-> +}
-> +
-> +int main(int argc, char *argv[])
-> +{
-> +    g_test_init(&argc, &argv, NULL);
-> +
-> +    qtest_add_func("/k230-wdt/register_read_write", test_register_read_w=
-rite);
-> +    qtest_add_func("/k230-wdt/counter_restart", test_counter_restart);
-> +    qtest_add_func("/k230-wdt/interrupt_mode", test_interrupt_mode);
-> +    qtest_add_func("/k230-wdt/reset_mode", test_reset_mode);
-> +    qtest_add_func("/k230-wdt/timeout_calculation", test_timeout_calcula=
-tion);
-> +    qtest_add_func("/k230-wdt/wdt1_registers", test_wdt1_registers);
-> +    qtest_add_func("/k230-wdt/enable_disable", test_enable_disable);
-> +
-> +    return g_test_run();
-> +}
-> diff --git a/tests/qtest/meson.build b/tests/qtest/meson.build
-> index 43f83ffd3a..45c4898454 100644
-> --- a/tests/qtest/meson.build
-> +++ b/tests/qtest/meson.build
-> @@ -290,7 +290,8 @@ qtests_riscv64 =3D ['riscv-csr-test'] + \
->    (unpack_edk2_blobs ? ['bios-tables-test'] : []) + \
->    (config_all_devices.has_key('CONFIG_IOMMU_TESTDEV') and
->     config_all_devices.has_key('CONFIG_RISCV_IOMMU') ?
-> -   ['iommu-riscv-test'] : [])
-> +   ['iommu-riscv-test'] : []) + \
-> +  (config_all_devices.has_key('CONFIG_K230') ? ['k230-wdt-test'] : [])
+>  /* register names */
+> @@ -2255,6 +2256,7 @@ const rv_opcode_data rvi_opcode_data[] =3D {
+>        rv_op_sspush, 0 },
+>      { "c.sspopchk", rv_codec_cmop_ss, rv_fmt_rs1, NULL, rv_op_sspopchk,
+>        rv_op_sspopchk, 0 },
+> +    { "mnret", rv_codec_none, rv_fmt_none, NULL, 0, 0, 0 },
+>  };
 >
->  qos_test_ss =3D ss.source_set()
->  qos_test_ss.add(
+>  /* CSR names */
+> @@ -4050,6 +4052,11 @@ static void decode_inst_opcode(rv_decode *dec, rv_=
+isa isa)
+>                      case 64: op =3D rv_op_mret; break;
+>                      }
+>                      break;
+> +                case 1792:
+> +                    switch ((inst >> 15) & 0b1111111111) {
+> +                    case 64: op =3D rv_op_mnret; break;
+> +                    }
+> +                    break;
+>                  case 1952:
+>                      switch ((inst >> 15) & 0b1111111111) {
+>                      case 576: op =3D rv_op_dret; break;
+> --
+> 2.43.0
+>
 >
 
