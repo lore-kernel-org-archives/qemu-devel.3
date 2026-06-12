@@ -4,28 +4,28 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E6E6CCD8CA8
-	for <qemu-devel@archiver.kernel.org>; Fri, 12 Jun 2026 12:16:26 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id EBA7FCD8CA8
+	for <qemu-devel@archiver.kernel.org>; Fri, 12 Jun 2026 12:17:01 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wY0nS-0001VL-Qs; Fri, 12 Jun 2026 08:15:38 -0400
+	id 1wY0nR-0001TM-4d; Fri, 12 Jun 2026 08:15:37 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <chao.liu@processmission.com>)
- id 1wXvx7-0002Tr-0E; Fri, 12 Jun 2026 03:05:25 -0400
+ id 1wXvxU-0002tL-T1; Fri, 12 Jun 2026 03:05:41 -0400
 Received: from mail-japaneastazlp170120005.outbound.protection.outlook.com
  ([2a01:111:f403:c405::5] helo=TYPPR03CU001.outbound.protection.outlook.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <chao.liu@processmission.com>)
- id 1wXvx0-0005yW-Eh; Fri, 12 Jun 2026 03:05:13 -0400
+ id 1wXvxS-0005yW-Nr; Fri, 12 Jun 2026 03:05:40 -0400
 ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=Y50Fko5lOX55EPq5KnVoCliHmtnO1Z4+xI+AztrnoDzYC+IXM9Tr1Z7EbDsUBfKsCq1cn3Y0ecZ0Zjw3q43PrNeDYfcdwx4RzM4NgMcHDf0mGleZ5dq5+8Oc0tIAO3wlKH4AhIIv4smIeja+BaDOZLaGtQ2wHbvMpv6ep7bZH9aAiYydISZKhA1a7LAb4qkGXTb9a2VYl75IzmaP1gYIi3N8c5b7nz16MpSNTSNNMP5YAhJeZFrfO7/STGbOo9BDsn7UX21XphF1ikdpngAQCOpmgI3kN3le0ESJ3ekisKDZoF0+xwhOVvaq+Mg0nnVibnRkAx3ZyVkoCTh1TYJXGA==
+ b=jwFGz/ubf0OneDWmrWcY8snsEGfguyZ5fwUHxailQOQTQWEE+C0fUCsOeYXKP6uSGd6XDMxdFMHg4QNrcQUQL6axVk0KnZJzHTXjjfJfY7AHmd/z/n7/DC18kNfRVtBkKHCN1dVcJQcBh2qJYvB3kB3ejLR7Cpo0Vgvoo4HEG+x4Hu2Ny7mHYaIBAdZOD7rrPAOZbN9fOQsTLga8Q5XuI5//PLSlnbM7RjYGDRNJMoZwoWBk6Zijl7UcE7ed78Re7KM2T9nmIX3NJ1vFWUrIEQRhd3KRinvjrcU8xcu48okhsuLgzbwA/xWpGBf6yrHAoI6nBSsxdXfG8Gytn3KNyA==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
  s=arcselector10001;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=fQrap3sVwYDyBJO/0G1dMwoK7cZ9NW9PmuC8IGDqn1Y=;
- b=tSsI01a6B+JN2QwW2Y8WV0EXzhUxo2a9QOTaPr54Wb0UTXjudTRmOFT7MpYNWkS1RfayP+Ikl37PXSECE9vTHKQaCXh/QHtE5wR9JIyymbSs9h24wr+LIb7s3vFk5t5LuRaphKJyrWsBDvcPeOUyMUK+UeY55YwVHEEWS5fe/DnAcshjRNmpZCYD8LdWpHvADyHqATHuqbywQ+AgRfPtHlgNFzit76EDMyZuKLMopjrN3HejXN/2BYz4WQsmKaSXdwi8f4ZTkgVriiWS9fXCpZehNU6eWBI0BxBZYRtS1Kca3r4Tq6KbcsHYDG4UKGrnl3w3iyaLx6afae/+6YPMJw==
+ bh=XOUbFphJ2hiU7vmiaaMoOfaAdsGCnvVCpbgFx/HgfDk=;
+ b=iHWx5KCb/EvCb6fFkfKFbU+85hQ7knLmg9ydfDOUn0YE8qAE6QMiWh+xjVhN8iMeZg//BzMNGVvLPkCbaHIXEmeZznCVT+m8hOyjU9DPjWouRDItsbMsrdXbPdRIf6vPZwmep0vtcSfYZpQoo+aoxP6QjAhqVY23oGT/TRLuUIzjup2ESnNosD2UY9d1b15GuYalYoCmVz2PMEjvESqd5chcCwxez+tkykHhZPJ1sWU4JjbJzM8k0QOfW0YwTUobx/7AnX4E07jDE5oyvsH4X/Vw1Cj27IgMJtUsmP3oRqYHIKEIN3oUnsDhoVAizJaEPCCNFtPtAUTst2mSQckvhQ==
 ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
  smtp.mailfrom=processmission.com; dmarc=pass action=none
  header.from=processmission.com; dkim=pass header.d=processmission.com;
@@ -33,19 +33,19 @@ ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=processmission.com;
  s=selector1;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=fQrap3sVwYDyBJO/0G1dMwoK7cZ9NW9PmuC8IGDqn1Y=;
- b=GddqFQKDJIXrupxBvvLV4HFObNw9rugEF3hYUhgZZp+p94oKeAV89B1uIciCsHRfjEXEPr2ejmkLoBhBBAxVN4KH7917zwUpwZAl9bnCYRsz+dbyl3TVTCCvlXMaBgKhjHZ/1qJ/yeo149KaaDG0aIenoWOk7vPjA0K39Dt7Iie1PZ//lXv8yd0CZ+R68y/QVxhwTQUzqtw4GnYt7mgetUljANDXHiDL+HakD954GnMCjMMSq6uy4DajUDhn+GKxQksMHZYtP1ifiBGrMwOtpncg9p+6XWyN6cGW9uivAxKbeMjj7GTQOIHiznKxP2fckMyfuZ7rpQ47WDEB5Oz11g==
+ bh=XOUbFphJ2hiU7vmiaaMoOfaAdsGCnvVCpbgFx/HgfDk=;
+ b=DE9Qr2gQ5sV7Dq4pvb3Hl9414OMSdpfG3c1kkXsmZyW86WrRjf2byFcUjh3+AJUuotV8aQdg7QTkVgM2n0vVXU1PTrUOfNjzmHVsm3HEGWz6SvD/9m5imqlJxDiOO7OPTUGVO7tZvBKlLMzah5l8ujBMzaVL+y0t3xtaa61P8qpV51h+0Op2b2kIacBvTcdKDPG5VOz0PBnwSH6gvpUKJFaw/Cgfy7dF9UDkutQ+efumHOuOqstAxVNljdHlkzWKLlfNIgLHauibojd9u3Jooa43MKmMEFeIwCUtCkywCUHgwoHzWG45xTMJC7uuQYIKOPDpIKPoi2uZO5EBd3tbzg==
 Authentication-Results: dkim=none (message not signed)
  header.d=none;dmarc=none action=none header.from=processmission.com;
 Received: from TYNPR02MB9351.apcprd02.prod.outlook.com (2603:1096:405:3d0::15)
  by SEYPR02MB6457.apcprd02.prod.outlook.com (2603:1096:101:13b::11)
  with Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.113.14; Fri, 12 Jun
- 2026 07:05:00 +0000
+ 2026 07:05:25 +0000
 Received: from TYNPR02MB9351.apcprd02.prod.outlook.com
  ([fe80::e5f3:5fb7:3d29:5934]) by TYNPR02MB9351.apcprd02.prod.outlook.com
  ([fe80::e5f3:5fb7:3d29:5934%4]) with mapi id 15.21.0092.017; Fri, 12 Jun 2026
- 07:05:00 +0000
+ 07:05:25 +0000
 From: Chao Liu <chao.liu@processmission.com>
 To: Alistair Francis <alistair.francis@wdc.com>
 Cc: Chao Liu <chao.liu.zevorn@gmail.com>,
@@ -56,70 +56,81 @@ Cc: Chao Liu <chao.liu.zevorn@gmail.com>,
  Paolo Bonzini <pbonzini@redhat.com>,
  Christoph Muellner <christoph.muellner@vrull.eu>,
  Fabiano Rosas <farosas@suse.de>, Laurent Vivier <lvivier@redhat.com>,
- qemu-devel@nongnu.org, qemu-riscv@nongnu.org,
- Chao Liu <chao.liu@processmission.com>
-Subject: [PATCH v8 0/5] Add support for K230 board
-Date: Fri, 12 Jun 2026 15:04:03 +0800
-Message-ID: <cover.1781246408.git.chao.liu@processmission.com>
+ qemu-devel@nongnu.org, qemu-riscv@nongnu.org
+Subject: [PATCH v8 5/5] docs/system/riscv: add documentation for k230 machine
+Date: Fri, 12 Jun 2026 15:04:08 +0800
+Message-ID: <81d2e2fa42ecabf638f841321cf36cee8f10af01.1781246408.git.chao.liu@processmission.com>
 X-Mailer: git-send-email 2.54.0
+In-Reply-To: <cover.1781246408.git.chao.liu@processmission.com>
+References: <cover.1781246408.git.chao.liu@processmission.com>
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Content-Type: text/plain
 X-ClientProxiedBy: PH8PR07CA0046.namprd07.prod.outlook.com
  (2603:10b6:510:2cf::24) To TYNPR02MB9351.apcprd02.prod.outlook.com
  (2603:1096:405:3d0::15)
 MIME-Version: 1.0
 X-MS-PublicTrafficType: Email
 X-MS-TrafficTypeDiagnostic: TYNPR02MB9351:EE_|SEYPR02MB6457:EE_
-X-MS-Office365-Filtering-Correlation-Id: 31904f5c-4c84-465c-2bfe-08dec850eb2c
+X-MS-Office365-Filtering-Correlation-Id: db90eee8-366b-4651-7817-08dec850f9dc
 X-MS-Exchange-SenderADCheck: 1
 X-MS-Exchange-AntiSpam-Relay: 0
 X-Microsoft-Antispam: BCL:0;
- ARA:13230040|23010399003|1800799024|34096008|366016|7416014|586017|376014|56012099006|18002099003;
-X-Microsoft-Antispam-Message-Info: Gx7UGUHjpbsxU+JC3K+N4DPOFebbRAwAMALuLxCqIdziEp/pPSGCaDA4weqXt6GUDI56sMHhlUNEo2Ea0zCka0mCp4T6/GWghRGZUrkSG9BZ2zMAhMxeT97/Mamtk1qTWgDm9dq5KACI8nabHlyqiksebj1PrXGQpGyCq7lG0StWPwAMuNbQ+4O+icmu0aD7oU1e/ENot7NokA5YY+T9nIVIKibi/IN1jrIExckB2qN30ynQ1Z1dV1AfaLf7ivZH57dDY7ozRskQBM16XGGm5iQn8ZUItnNAHiFVBeUOK0G8qv7Dj/EQZXdcY1w/pavCsrk1LMwbNMBUbnCc3i490cSnb+Sog5OLHln419gz8t1lN1/Hvf8ZQAwORLjGsdNOfWbVC0681yDOnWrZrdQNlNjF1975KQIt2pDioc+zMsGoDEyf3Bh7ghkKws425KI4cdBG1S4aj8WDmmhpwN58PD9bVyRHqv/LTvdIs+4XDysBYFZGUR6/0eYYLyBRapeBSV9C76B/JvpX5kSpH/e6uMq7ObbfAxH2hhIeFyjY/YkF41aF8eWcjSzTW4k86OfY+NncrR8K6uTFj1NyrCLNulG+aXsDEHuL7QvqcaH5QSzUubmHK6dQmYqDdBqVc1cA2bb/1T408qpZAmvyrdi6Y2wkoVpLc5j/E3VVcfkz1W3S5T0wjGN5yfnaMoFh38MHahOD12LpUvHDJDog0hAuzw==
+ ARA:13230040|23010399003|1800799024|34096008|366016|7416014|586017|376014|3023799007|56012099006|18002099003|22082099003;
+X-Microsoft-Antispam-Message-Info: 5ZSSnxdUiMa8f3Mx1SnvD5UmHSvRCLCiKJgffKsOSfUmCDreLuZrt5yOLTeIAbiiEFugxodxXEFcANW7Hi+GYIOXn0huLA8PiU4abx9r+qG1DozK0Sny3kUcagKjGSBpsYFGZwIcvB6ESVgnTAIcN4PLHrWvMW4loG4QAmuPzqtCSiF4ynZuWUQfPkMjOpi4pGADCRR3IU5qPWYSwQZmM5QtG7znqU4fIfCZBIHwmsXAGrcrfRSMZYpBsg5PKxynRncX4smg5auXgwNiH2RvIVwPkGbdfrH7OGOySPUsU5XKKhmITWGGrq6RRMF/6isJiFpSRUALkjjZ133VERCrWWEzKd6wbFlLpKFzTkhBMSuJCH4X2DSa/LCkpbG4BmDLkwg5CGDYsMv+GS9C+pbs8YrToIymRlvJMhU/VlQyLrTzyemL0GAni0z/AL5vrxYCbssuaHt2mqbuIxYmtHnjS4QLGfQvPKAQDeVJ8X53yXe2Vga603IbyNVOggkVqT6Zh46udq9/kl4cpMCayJud8vW+W3El5oNsIlmhNRMSLlkIyWrqKgdihgmfvR8QiOMW8MfhDeDYgSb2dxwALABTmJYMCmnhoehdKAdK1+ET+pQvrapf71ud74bsxUrNlhLGKggaZrjR0/lWRP9Q7JYzBg==
 X-Forefront-Antispam-Report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
  IPV:NLI; SFV:NSPM; H:TYNPR02MB9351.apcprd02.prod.outlook.com; PTR:; CAT:NONE;
- SFS:(13230040)(23010399003)(1800799024)(34096008)(366016)(7416014)(586017)(376014)(56012099006)(18002099003);
+ SFS:(13230040)(23010399003)(1800799024)(34096008)(366016)(7416014)(586017)(376014)(3023799007)(56012099006)(18002099003)(22082099003);
  DIR:OUT; SFP:1102; 
 X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0: =?us-ascii?Q?ahsEToLM2zu2GLp08KCVo21HfGhlJGdvZW220L+MTc4GORoM6D8xlaff7B+s?=
- =?us-ascii?Q?UWSE+g/MDI0g9kWWzXkcMt8zH4quV2/I7g/lWQNnDHeVqla3ZdkA9gfW5Qz4?=
- =?us-ascii?Q?jUigQCYQVfbuhWXAIHWcUNkUGMyMzfKScTKUBKxAsHh58jr6rlrwP7zhnWMl?=
- =?us-ascii?Q?pOW2NlYgkd+fathIQLFJk7YE1n4eD069uIzoFGcsCcsiFIR6XY/Jt56VKS18?=
- =?us-ascii?Q?WBtF4aEd52aNwPGATw3rtbgY1PeyTkGGysvPaUgWNscykwJ9bpb661Z+1/lh?=
- =?us-ascii?Q?NjtrjB6BfYa6t2czC3O7KUC1E2LKSSnGtIhigaVHIPpuTeODS33jyVbZYrQn?=
- =?us-ascii?Q?+Y1HgQEKJT5d4OOWmWWo8cRPrzITSEP/nAH+C9/TvhoTLrKWDbHe+vdahPn4?=
- =?us-ascii?Q?ZxVXnc9pQ7/hRLhWmwTOznDhDqj3Hqqk3zvnIG9/m3iitqrn9cfznN0SoiU6?=
- =?us-ascii?Q?Q25QBUzcHcNutcQhcmlatPLvyEAw6EIZZEN4BA3i2PXIT1Zz2Edkm4WoPre9?=
- =?us-ascii?Q?/rnyKSyMstDd+ZMHEhfcoXD645i7CEQX2NdeozApuGLthIC/UXhGhXHQRppU?=
- =?us-ascii?Q?KdiUZz/PI+NzGgIa1eNaP1Ebkz40ZozUB7T/HtzBYSLr0DZEN+VJZ9K9bRoW?=
- =?us-ascii?Q?Fq6h/1HkoJop3UBI04tDI5svGGD9sMLJWfhXEmB/kbug8piar1WQqn8KiRmM?=
- =?us-ascii?Q?vmEHlsJFxg9i6YGrpTWy4Bu3g37weQCBrQFrf9hGc1FcjSioWQVFZKgxArPn?=
- =?us-ascii?Q?mCHXG4zFDiMLDpvYzrsP9leRe4wKmR0p8e9a6ZCWnRMxTn/GOvGwSFV92rX7?=
- =?us-ascii?Q?a5lQWHODCWqBb/ywL3ozhOrurQwDZ3lDmxOYzTZSZ3HgAdbHUmdaP4hEcwBI?=
- =?us-ascii?Q?hPYYlCNQr9tXMDMt5xRf/baFB7miWLSErHrhYhvYVewEJJc1bYxgSsimH71t?=
- =?us-ascii?Q?+TJSbJuv+MIfE80njbeueH+K7oELnYVyOnknHD//N0Waes5Eg9WmF8aL3waJ?=
- =?us-ascii?Q?Fjd+BcK23DzpHtQ9SZ/deOPOk+DsMtG8V922u8aJ5nkKvrXJ22t3O6DZSnZ8?=
- =?us-ascii?Q?ZxIRYOAnBxdsBmt2qj7+N71n6Sbi1guFxHko0cS8CeW4Xx4xOXTz2l52mYIE?=
- =?us-ascii?Q?JIoPl26f1cGk3XaKhUW3vLkci9fDjH4Yse37kHeU0LgaljcstiGaaXrtaUzA?=
- =?us-ascii?Q?HRiUtGLA8FcMYHwDu1Lot8ICvbESBlyYQHVlCfaivp1zintFhwqNLR+DndT6?=
- =?us-ascii?Q?bRk/buQb3MhzfLksLmlQewUzanBonpQfKmltxmXMvCO3po5BJceyxX5vK2EG?=
- =?us-ascii?Q?mgwxWrXGFF8z34MnPbBpj1UtOL6TQncbHd+EvzKmRodOu3DHei9r9hP8ObWU?=
- =?us-ascii?Q?Kd8Yl/9wHDSXDbjIVBHQYfXeTVGCkOSF8efaSwnDVjRJ9ljBOIVEY1EQYdJN?=
- =?us-ascii?Q?1nZs3V4OhjhcPxJ1RxkZ85550o/YmyN82b64KlyxCjHN/PnIEud0m9cXvpvX?=
- =?us-ascii?Q?tprK+92jAvAxwaoftCHGCYZsvUZc4DuCs6pC8OBG7zhVS9UQGS/MVPJh2FJ0?=
- =?us-ascii?Q?M+i+pzFm7rcvVfTfbg8isqFkRuY+gOndOU5vfSkE9QEwLnsZU842JdqdpN/H?=
- =?us-ascii?Q?+zdxextzjGyc7ByFWyiBnY/bWtMaghgXR2n8ELXM6fET3FykaNn4HCEO6JY/?=
- =?us-ascii?Q?jEBpHBvPR7kXVZvvakw6/0/9OmTPaw+lv9LvTwx261scZLSyoDgBAO6QXW3c?=
- =?us-ascii?Q?aParCSdi0JcrUQHt0EugjxR4Jcm/qXQ=3D?=
+X-MS-Exchange-AntiSpam-MessageData-0: =?utf-8?B?VWl0LzBDT1ZzVHZjMnI0M3FiVjZHUTIxVFMwODBIQTJvcWdYeDVxY0JwUjZT?=
+ =?utf-8?B?NnFTdFFYRkptUStCNXBsakpBMlVlWjFZTTZwU2VjcEZBSzlRUW9SNHd3REo1?=
+ =?utf-8?B?U1RnZS9TRmtNVU4xTGdPeGdkelJPeDRWUmZRcFk0ejhEU3VtdHdkYVpKWHEr?=
+ =?utf-8?B?VzRwNmtjTytJeXVHZDg1WDNQRTNLRUJmdEZvNGtmYWU0WnkvMkFmWk9nb3Nq?=
+ =?utf-8?B?aXpCQStzNDZsaW9VK3J5cHRNam9TSXd0bkVVNGkyOTFpYUlOODJlWTRzN3kv?=
+ =?utf-8?B?YUludk51OENJaEN6NVhVd0o2Y1k3WUtKQjhRaWhubDRpck1xeVR3cUpvVmtR?=
+ =?utf-8?B?OGlQYWJrSzRxZWdLNnVCVnlRclEyMlljejlFNytHK2JGRGkyMlBWMzlRVlB4?=
+ =?utf-8?B?ZWRvNkE1UHJETzRRMzBBV3k0c3VQZjI2bVoxSnpzTW00SmFWNnFVOTZwWmwv?=
+ =?utf-8?B?aW9uakVzUWMzSXFOMm5ZeHlnYVZSQzRKVm5ZVno5Z21lVysrQThYcnlOY2hP?=
+ =?utf-8?B?RGdjaHVYQXpJNC9LSVYyN1VoWWpvZ205cnI5ZnlLWVhjT0c0WXVUWk41NVA0?=
+ =?utf-8?B?U3VuQlRsUVBsMzMvQ2s1aDJNQnhLajA2MzJiYjJzRnRNbHJmaTdtZ2dRcndQ?=
+ =?utf-8?B?R2twN3l2N3Q5L3pkZGFtRnF5YkpLbUZXWFJWdjNUb05hNFJ2b0xqeWw2K3hK?=
+ =?utf-8?B?UGtuQjRhKzg2dS92cnJZL0g1bDdzc2FRZzgyYmhJaW8wT1licHU2SUIvcXVx?=
+ =?utf-8?B?YXFGQzFKUEltcVlXVFF3T1ptOGVuVSs0aC8vbjZ5VjVQL1pheHduSzg1eUU0?=
+ =?utf-8?B?ZWxDZldUQWJWMU9VTUlDd0UwakQ0TUg4Q1psMTcwVU5Nb1FmaUJJOXdJbU0z?=
+ =?utf-8?B?czdYMGxNQVhSR0JMNXNjTzhPRmkyMFNFdGRIS1IzVTM0anl1OURoa2x1VDJ5?=
+ =?utf-8?B?SnF0dENwOEVURm9veHZ6TFA2YzcvcVVYNmZIRFZNZU1DZ0E1aEx2b1cxb0Fs?=
+ =?utf-8?B?b0JJZm9JME1jVVE4ZXd6clpHMWFCSE5KV2ZGTWQ4U1NRR2VQb2plUHI2QjZB?=
+ =?utf-8?B?eE0xcHVyeG1uMmd2cFY2THNzUlVIUnNYeVpRQjh2WVF2ZTgrS0h3RHJZL2Iz?=
+ =?utf-8?B?MisrM0FScFRxc09DYkJzVGlyM1paNndPM21vUFZ4NWNQT2lLVFUzNGY4Vlcz?=
+ =?utf-8?B?N2NWNkV4S3hVOU52LzFUU1pMTW1jd1dWNk1iY3JjZkNISkxZODlSREkxNElh?=
+ =?utf-8?B?WEJKdkw2dVU4bHJ4NEFXOEJGK3AyR0dxVGdQYWFxQkZRdmZnc1dscFVqbkJU?=
+ =?utf-8?B?cnZCOHhQaE16VVR1VWlvQ1E5Q1VrTy9pUDhHei9nQmxxbE1qeXRnOTNUaUVu?=
+ =?utf-8?B?WGtWK3N5TVdXQUxaQ0pUU2dBMjI2NXNUMGtNY2QwODByS2l1MmlBanFXT0ZU?=
+ =?utf-8?B?dWY1bkw1OWZXTWpXLzRLaHlqVm01Vk9kYmVYL0FmcHRlRFhPR28rQ2p5clBC?=
+ =?utf-8?B?TjY3TXJYTGUvWmdaOVRnbDl0VGZxbmxOK3hqazRpWnplKzN0djRjRmhKbUE3?=
+ =?utf-8?B?R3RQaEc3RUd6L1hYcllGOVhTV0p1RE9UakcrdHgwOXRyQnhTUEQ4ZktUZUFR?=
+ =?utf-8?B?aTdCaTJRTXpPQXJqaTl1d0hNZWJZS2pBT2ozenFaNFVJbHp1TmtOZ2VFSXNn?=
+ =?utf-8?B?UDg1SUJQMDhUT09QczUxTG9tcWErOXZSUSt1aUsvTVBGSGY5cGY2c3NGcFNJ?=
+ =?utf-8?B?UG1mTSsrYWhLL3kxbGtLemRLZEZwOVROTjFxU0dTM1BlOEt5M1BwMlhJbGpm?=
+ =?utf-8?B?ZHNybVgycGdhMmN2RUdLVzd2QnVIcUlxVEh1V1JyZkRFYU1iQ3pIdzQ3Ukpm?=
+ =?utf-8?B?dzRkTSsydE1abENrem1EaDFjVDlQL3k0d0tYKzdhN0NUR21tbjJPRE9CSitQ?=
+ =?utf-8?B?aUJRd3BOU1d6Qy9IaWxmYkdSNWR1N3prMjlHWUMxajgrNkNXdkdTZ3UvT3dp?=
+ =?utf-8?B?ckhSRURGSjFDMVFGdlNjQlIwZlNqc2RFRDBzQkZ0U2F0cWpNMzVFaXRsRi9Q?=
+ =?utf-8?B?ZHJLWWdTd2dTKzhXM2oyNnU4Vzlrd21sSlNKWEtKTzc5YXpHOVFoTzZtUjJ5?=
+ =?utf-8?B?V0dlalZQOFhnNmRoOWt4R0xtUlZFUGFlNGQ3R0diNTFsYlp0WDJxRml1K0tW?=
+ =?utf-8?B?Uzg3S3d3NzVPUnZnMHBlT05HdG9tM2pxUG13Q1JKeXo1OVJNR0VhWk43M3pz?=
+ =?utf-8?B?bnYxSmt1cXdmSHp2UmFYYlJ3RUFkcU8wbWpzVUZxMkhULzRtY1RMVXpDT1JR?=
+ =?utf-8?B?UmlXQURhWXRYakt0OGRRaHN0TXZ3TnNHYkczWGxmZmV6anZvcGpxbTNQU3dE?=
+ =?utf-8?Q?Iic9T4QAbQrKa5ks=3D?=
 X-OriginatorOrg: processmission.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 31904f5c-4c84-465c-2bfe-08dec850eb2c
+X-MS-Exchange-CrossTenant-Network-Message-Id: db90eee8-366b-4651-7817-08dec850f9dc
 X-MS-Exchange-CrossTenant-AuthSource: TYNPR02MB9351.apcprd02.prod.outlook.com
 X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 12 Jun 2026 07:05:00.2218 (UTC)
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 12 Jun 2026 07:05:24.9533 (UTC)
 X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
 X-MS-Exchange-CrossTenant-Id: e0544bf7-9765-4630-ab69-0b266dc2169c
 X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: 2SCkuHuiae8rIuDQRLlnXdBzVkVQG6gYsdMYvlsM3UPeMBwj101FAz3e37/GQqLyl6tTWBK5qxWCgdKj+dkjXoc88mDoOY4r3fqPAuxMeVw=
+X-MS-Exchange-CrossTenant-UserPrincipalName: sM33HaxqQnyJ6mLAmqYsn9BC228gHw0HnSkhMosvie9rrSyBFnbXON+wq9Lz60Tc6+gxjp8GzFtukFHXNKJ1jGUnFaABo1lmVy8ZfX943uo=
 X-MS-Exchange-Transport-CrossTenantHeadersStamped: SEYPR02MB6457
 Received-SPF: pass client-ip=2a01:111:f403:c405::5;
  envelope-from=chao.liu@processmission.com;
@@ -147,119 +158,160 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi Alistair,
+From: Chao Liu <chao.liu.zevorn@gmail.com>
 
-I rebased the K230 patchset on your latest riscv-to-apply.next branch and
-made some adjustments.
-
-Please review the patchset when you have time. Thanks!
-
+Signed-off-by: Chao Liu <chao.liu.zevorn@gmail.com>
+Acked-by: Alistair Francis <alistair.francis@wdc.com>
 ---
-
-This patch series adds support for U-Boot + OpenSBI + standard Linux kernel on
-K230 board. Thanks to Peng Jiang, Mig Yang, Renzao Ren, Yao Zi for their help.
-
-Test command with the direct Linux boot:
-
-```
-$QEMU -M k230 \
-      -kernel [Image] \
-      -dtb [k230-qemu.dtb] \
-      -initrd [rootfs.cpio.gz] \
-      -nographic
-```
-
-The k230-boot-assets repo [1] provides K230 Linux kernel images built with
-k230-sdk and Yocto.
-
-For more information, see docs/system/riscv/k230.rst.
-
----
-
-PATCH v8 changelog:
-- Patches: Rebased on Alistair's riscv-to-apply.next branch.
-- Patch 1: Fixed mmode() check bug, see Milk-v Duo patchset thread [2].
-- Patch 2: Registered riscv64_machine_interfaces for K230 machine.
-
-PATCH v7 changelog:
-- Patches: Removed invalid tags for patchset.
-- Patches: Updated the K230 datasheet link in the patchset comment header.
-- Patch 2: Removed the unnecessary changes to MAINTAINERS.
-- Patch 2: Fixed an Oops caused by accesses to an unimpl UART MMIO address.
-- Patch 2: Adjusted the K230 machine hart count to 1.
-- Patch 2: Supported direct boot linux with `-kernel`.
-- Patch 3: Aligned the WDT interrupt number with the K230 datasheet.
-- Patch 5: Updated k230.rst Linux boot docs.
-
-PATCH v6 changelog:
-- Patches: Rebased on the latest Alistair's riscv-to-apply.next branch.
-- Patch 4: Picked up Fabiano's Acked-by.
-
-PATCH v5 changelog:
-- Patches: Rebased on Alistair's riscv-to-apply.next branch.
-- Patch 2: Fixed reset vector ROM jump to trap-handler bug.
-
-PATCH v4 changelog:
-- Patches: Rebased on the latest master branch.
-- Patches: No functional changes from v3.
-
-PATCH v3 changelog:
-- Patch 1: Align T-Head C908 CPU's RISC-V extension with XUANTIE-QEMU.
-- Patch 2: Adjust PLIC and CLINT addresses to match K230 datasheet.
-
-PATCH v2 changelog:
-- Patch 1: Add Svpbmt extension support for the T-Head C908 CPU.
-- Patch 2: Move the k230.rst definition from MAINTAINERS to Patch 5.
-- Patch 5: Apply Daniel's bugfix to build the k230 documentation successfully.
-
-PATCH v1 changelog:
-- Patch 1: Add T-Head C908 and C908v CPU support.
-- Patch 2: Add K230 board initial support(big core is not supported yet).
-- Patch 3: Add Programmable Watchdog Timer (WDT) peripheral support.
-- Patch 4: Add QEMU test for K230 watchdog.
-- Patch 5: Add documentation for K230 machine.
-
----
-
-Link:
-[1] https://github.com/zevorn/k230-boot-assets
-[2] https://lore.kernel.org/qemu-devel/agZFchak-jsc2moK@ZEVORN-PC.localdomain/
-
-Thanks,
-Chao
-
-Chao Liu (5):
-  target/riscv: add thead-c908 cpu support
-  hw/riscv: add k230 board initial support
-  hw/watchdog: add k230 watchdog initial support
-  tests/qtest: add test for K230 watchdog
-  docs/system/riscv: add documentation for k230 machine
-
- MAINTAINERS                    |  11 +
- docs/system/riscv/k230.rst     | 113 +++++++
- docs/system/target-riscv.rst   |   1 +
- hw/riscv/Kconfig               |  11 +
- hw/riscv/k230.c                | 526 +++++++++++++++++++++++++++++++++
- hw/riscv/meson.build           |   2 +-
- hw/watchdog/Kconfig            |   4 +
- hw/watchdog/k230_wdt.c         | 296 +++++++++++++++++++
- hw/watchdog/meson.build        |   1 +
- hw/watchdog/trace-events       |   9 +
- include/hw/riscv/k230.h        | 149 ++++++++++
- include/hw/watchdog/k230_wdt.h | 121 ++++++++
- target/riscv/cpu-qom.h         |   2 +
- target/riscv/cpu.c             |  51 ++++
- target/riscv/th_csr.c          | 376 ++++++++++++++++++++++-
- tests/qtest/k230-wdt-test.c    | 189 ++++++++++++
- tests/qtest/meson.build        |   3 +-
- 17 files changed, 1862 insertions(+), 3 deletions(-)
+ MAINTAINERS                  |   1 +
+ docs/system/riscv/k230.rst   | 113 +++++++++++++++++++++++++++++++++++
+ docs/system/target-riscv.rst |   1 +
+ 3 files changed, 115 insertions(+)
  create mode 100644 docs/system/riscv/k230.rst
- create mode 100644 hw/riscv/k230.c
- create mode 100644 hw/watchdog/k230_wdt.c
- create mode 100644 include/hw/riscv/k230.h
- create mode 100644 include/hw/watchdog/k230_wdt.h
- create mode 100644 tests/qtest/k230-wdt-test.c
 
+diff --git a/MAINTAINERS b/MAINTAINERS
+index 44654b5798..4fc073b7ee 100644
+--- a/MAINTAINERS
++++ b/MAINTAINERS
+@@ -1790,6 +1790,7 @@ K230 Machines
+ M: Chao Liu <chao.liu.zevorn@gmail.com>
+ L: qemu-riscv@nongnu.org
+ S: Maintained
++F: docs/system/riscv/k230.rst
+ F: hw/riscv/k230.c
+ F: hw/watchdog/k230_wdt.c
+ F: include/hw/riscv/k230.h
+diff --git a/docs/system/riscv/k230.rst b/docs/system/riscv/k230.rst
+new file mode 100644
+index 0000000000..cea8202e55
+--- /dev/null
++++ b/docs/system/riscv/k230.rst
+@@ -0,0 +1,113 @@
++Kendryte K230 virt reference platform (``k230``)
++==========================================================================
++The ``k230`` machine is compatible with the Kendryte K230 SDK.
++
++The K230 is a chip from the AIoT SoC series made by Kendryte ® — a part of
++Canaan Inc. It uses a brand-new multi-heterogeneous unit accelerated computing
++structure.
++
++This chip has 2 RISC-V computing cores and a new-generation KPU (Knowledge
++Process Unit) smart computing unit.
++
++For more information, see <https://www.kendryte.com/en/proDetail/230>
++
++Supported devices
++-----------------
++The ``k230`` machine supports the following devices:
++
++* 1 c908 cores (little core)
++* Core Local Interruptor (CLINT)
++* Platform-Level Interrupt Controller (PLIC)
++* 2 K230 Watchdog Timer
++* 5 UART
++
++Boot options
++------------
++The ``k230`` machine supports K230 SDK boot through M-mode U-Boot, which then
++starts OpenSBI/Linux with ``bootm``. It also supports direct Linux boot.
++
++K230 SDK Linux kernels use T-HEAD C9xx private MAEE page table attributes. QEMU
++does not implement MAEE in the generic RISC-V MMU, so such kernels need to be
++built with standard RISC-V PTE bits before they can boot under QEMU.
++
++Running
++-------
++
++Direct Linux boot
++~~~~~~~~~~~~~~~~~
++
++This flow lets QEMU load OpenSBI, Linux, initrd, and DTB directly, without
++running SDK U-Boot. The Linux Image must be rebuilt with standard RISC-V PTE
++bits before running under QEMU.
++
++.. code-block:: bash
++
++   $ SDK=k230_sdk/output/k230_canmv_defconfig
++   $ qemu-system-riscv64 -machine k230 \
++      -kernel "$SDK/images/little-core/Image" \
++      -dtb "/tmp/user-k230-qemu.dtb" \
++      -initrd "$SDK/images/little-core/rootfs.cpio.gz" \
++      -append "console=ttyS0,115200 earlycon=sbi cma=0" \
++      -nographic
++
++Direct boot uses the SDK little-core RAM layout for OpenSBI at
++``0x08000000``, Linux at ``0x08200000``, and the DTB at ``0x0a000000``. The
++initrd is placed by QEMU's generic RISC-V boot helper, and QEMU writes the
++initrd range and kernel command line into ``/chosen``. The DTB passed with
++``-dtb`` should be derived from ``$SDK/images/little-core/k230.dtb`` and must
++describe that initrd location as usable memory and disable any devices that are
++not emulated by this machine.
++
++U-Boot boot
++~~~~~~~~~~~
++
++This flow starts SDK U-Boot in M-mode with ``-bios``. Until the SDK storage
++path is modeled, place OpenSBI, Linux, initrd, and DTB in RAM with loader
++devices and run ``bootm`` manually. The Linux Image must be rebuilt with
++standard RISC-V PTE bits before running under QEMU.
++
++.. code-block:: bash
++
++   $ SDK=k230_sdk/output/k230_canmv_defconfig
++   $ IMAGE=$SDK/images/little-core/Image
++   $ INITRD=$SDK/images/little-core/rootfs.cpio.gz
++   $ DTB=$SDK/images/little-core/k230.dtb
++   $ FWJUMP_UIMAGE=/tmp/k230-fw-jump.uImage
++   $ INITRD_END=$(printf "0x%x" $((0x0a100000 + $(stat -c %s "$INITRD"))))
++   $ "$SDK/little/buildroot-ext/host/bin/mkimage" \
++      -A riscv -O linux -T kernel -C none \
++      -a 0x8000000 -e 0x8000000 -n opensbi \
++      -d "$SDK/images/little-core/fw_jump.bin" "$FWJUMP_UIMAGE"
++   $ qemu-system-riscv64 -machine k230 \
++      -bios "$SDK/little/uboot/u-boot" \
++      -device loader,file="$FWJUMP_UIMAGE",addr=0xc100000,force-raw=on \
++      -device loader,file="$IMAGE",addr=0x8200000,force-raw=on \
++      -device loader,file="$INITRD",addr=0xa100000,force-raw=on \
++      -device loader,file="$DTB",addr=0xa000000,force-raw=on \
++      -nographic
++
++The loader addresses mirror the SDK ``k230_canmv_defconfig`` output. Read the
++U-Boot addresses from the generated environment, and read the Linux RAM base
++from the generated ``hw/k230.dts.txt``. This replaces the SDK storage and
++decompression steps.
++
++Press Enter to stop autoboot. At the U-Boot prompt, run these commands:
++
++.. code-block:: bash
++
++   K230# setenv bootargs console=ttyS0,115200 earlycon=sbi cma=0
++   K230# fdt addr 0xa000000
++   K230# fdt resize 8192
++   K230# fdt set /chosen linux,initrd-start <0x0 0xa100000>
++   K230# fdt set /chosen linux,initrd-end <0x0 ${INITRD_END}>
++   K230# fdt set /soc/sdhci0@91580000 status disabled
++   K230# fdt set /soc/sdhci1@91581000 status disabled
++   K230# bootm 0xc100000 - 0xa000000
++
++Use ``setenv`` so ``bootm`` writes the kernel command line into
++``/chosen/bootargs``. The ``fdt`` commands select the loaded DTB, add space for
++edits, describe the initrd range in ``/chosen``, and disable SDHCI nodes because
++this machine does not emulate those controllers yet. Replace ``${INITRD_END}``
++with the host-calculated value above when typing the command. ``cma=0`` avoids
++the SDK kernel reserving too much of the little-core memory window for initramfs
++boot.
+diff --git a/docs/system/target-riscv.rst b/docs/system/target-riscv.rst
+index afd86ca2ba..896f14e78b 100644
+--- a/docs/system/target-riscv.rst
++++ b/docs/system/target-riscv.rst
+@@ -66,6 +66,7 @@ undocumented; you can get a complete list by running
+ .. toctree::
+    :maxdepth: 1
+ 
++   riscv/k230
+    riscv/microblaze-v-generic
+    riscv/microchip-icicle-kit
+    riscv/mips
 -- 
 2.54.0
 
