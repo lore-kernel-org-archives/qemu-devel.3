@@ -4,41 +4,41 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2F89FCD98D2
-	for <qemu-devel@archiver.kernel.org>; Fri, 12 Jun 2026 19:01:21 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8DC19CD98CF
+	for <qemu-devel@archiver.kernel.org>; Fri, 12 Jun 2026 19:01:33 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wY777-00017Q-J1; Fri, 12 Jun 2026 15:00:21 -0400
+	id 1wY77D-00019f-9P; Fri, 12 Jun 2026 15:00:27 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1)
- (envelope-from <9471786bc47b93e822f6c6233a83f2b9f61e6c82@kylie.crudebyte.com>)
- id 1wY775-00016i-JX; Fri, 12 Jun 2026 15:00:19 -0400
+ (envelope-from <703ed8ce4401c4550ef2cd99f30ab808665d6e85@kylie.crudebyte.com>)
+ id 1wY77B-00019R-Tp; Fri, 12 Jun 2026 15:00:25 -0400
 Received: from kylie.crudebyte.com ([5.189.157.229])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1)
- (envelope-from <9471786bc47b93e822f6c6233a83f2b9f61e6c82@kylie.crudebyte.com>)
- id 1wY774-0000IN-0K; Fri, 12 Jun 2026 15:00:19 -0400
+ (envelope-from <703ed8ce4401c4550ef2cd99f30ab808665d6e85@kylie.crudebyte.com>)
+ id 1wY77A-0000Kp-Ge; Fri, 12 Jun 2026 15:00:25 -0400
 DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
  d=crudebyte.com; s=kylie; h=Cc:To:Subject:Date:From:References:In-Reply-To:
  Message-ID:Content-Type:Content-Transfer-Encoding:MIME-Version:Content-ID:
- Content-Description; bh=C2I/oAnjmmS/23juNsNQKAlgvmKnqj9OP4tqoHgG1e0=; b=JE/ms
- YFb8pgmOE/NVeGu7bVc5DUD9wNAosspTE8MxpCRnpISmVdCtsxTZpa6ET+HlfNaJwmlCBoBEoBmBc
- 5aIBRiPtqLJJn3WqUztWna/Bz5LsIIrCiiQ9czVl+NKb2jlY1O9itKzhSAuIY4mORu8zT4JrvbQA0
- +sHwmUtmijKF/NFymXMQ2uBT4boKemiHM0CXo+2J+CCXqzMt0oLIVr7BBESXPuDDoqbUMMgCW3zyh
- 3EdkrE0EKAffjkeDhfgfbCrliDSYvga6ycZLMQrlRDwOFNA67I1j1tmHbel9E/HP3J4SDwwLgXZcY
- AgBdkFmd92qLs0Z/6NFOWx76biZBgOcRpBqoy2Y+edDrLZUwAV7f+feJ1fAKkiVO7V77ADJoVOsDo
- 9jvR/7lVDsG6fKjqzCDHSwhA5JyRzOG9XQOgOKS2kTVOhE6cKIOXjO48oj4ZaGqgzxqgMIqwzTK5V
- 5y+jNHB97CFVE3ej+xNdYofgeb6cnr31z4/mej0YORuiXYMdt4m1oz8ZUUlhyQIkk9EHgDyK3CP/2
- jUvncGt4bnZ3u+Dfbhk6NDgJ26ec8/CRYNKEdJNvcNKARmuOV59o1iv9031KLXxvsySZybmAYGcdd
- 5X7wpQIxWsvOB7qkwUyQ1R37PkF07fQIG54kqi8/ohc2iWuS/hrZcIJ1iD6OuI=;
-Message-ID: <9471786bc47b93e822f6c6233a83f2b9f61e6c82.1781287774.git.qemu_oss@crudebyte.com>
+ Content-Description; bh=nz0jGzs/Ah602Nv6FwI476PLtl2CK7ANoNulNygqAu8=; b=Y+cH1
+ 4RWz6YpD7zUDMBFk5RF91u1wsXKwVl9CO4MLfyFxCaObuCW/y+M8/xZJ+yjOwq6Me8RL//Y7kfCcE
+ WIfk8g0/sw4jfu1j+1WZq5VbOWUCjOEgAAteKR0oj0CS3sT8a7WpdhHkfC4qw8ruLs+nun3YJg0Vt
+ WPfRCYRnJ8J+BGUrDkDo6qS+luAdte6ggFjq0mg4Kz99MrdsUw/DeKZzgGOa9MIl5JXEgoQqSrFaJ
+ t2d0fi5usAkEQ/ZmnphCtI2f499AIcVjq2Dw05DgPczFUk31EKyC51vpiXQidn1neWpfJPag2x18J
+ pGeU1IqleDkJvLYmouuqNlJUWhoAFY3sM7X22YTcnW9RdmwbyJVKRjHr/j1SZK/YN3O+3sRQ1VPp8
+ XUnxcJO3uTEwae4QlIobo/eKBx1N1Ft0NrbzXJAuOvJpy1JaaF08qDe66+y+KEzc5Xi+0PWDJhOwL
+ uxCbTd+ZSWKVX7B+9yGySIT4QxVU9ScVsdxwyQ+geyN5z5miCO2FzStAmssEDc8+ECJsr0NO4ZRaq
+ nei/q6+7SEboYy8CWJ6E3AWdqhFCqToymgf64s/zIaLbsL8O88aJ+vEC+Kmwfbppph2Fc3KdolTxH
+ KyEOPGHRphVLCKrqokEsuJOmyTNKvOPsCnQJ/axtpUe+3HN/ft1hCBPLevq5Yo=;
+Message-ID: <703ed8ce4401c4550ef2cd99f30ab808665d6e85.1781287774.git.qemu_oss@crudebyte.com>
 In-Reply-To: <cover.1781287774.git.qemu_oss@crudebyte.com>
 References: <cover.1781287774.git.qemu_oss@crudebyte.com>
 From: Christian Schoenebeck <qemu_oss@crudebyte.com>
 Date: Fri, 12 Jun 2026 20:22:52 +0200
-Subject: [PATCH v2 3/8] 9pfs/xen: implement msize_limit callback
+Subject: [PATCH v2 5/8] hw/9pfs: add response_buffer_size transport callback
 To: qemu-devel@nongnu.org,
     qemu-stable@nongnu.org
 Cc: Greg Kurz <groug@kaod.org>, Feifan Qian <bea1e@proton.me>,
@@ -46,7 +46,7 @@ Cc: Greg Kurz <groug@kaod.org>, Feifan Qian <bea1e@proton.me>,
  Anthony PERARD <anthony@xenproject.org>,
  "Edgar E. Iglesias" <edgar.iglesias@gmail.com>
 Received-SPF: pass client-ip=5.189.157.229;
- envelope-from=9471786bc47b93e822f6c6233a83f2b9f61e6c82@kylie.crudebyte.com;
+ envelope-from=703ed8ce4401c4550ef2cd99f30ab808665d6e85@kylie.crudebyte.com;
  helo=kylie.crudebyte.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
@@ -69,56 +69,36 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Add and implement the msize_limit callback for the Xen transport.
+Add a new callback to the V9fsTransport interface that allows each transport
+to provide the real size of its current response buffer.
 
-The limit is calculated using XEN_FLEX_RING_SIZE() based on the
-negotiated ring_order. For the theoretical maximum ring_order of 9,
-this results in a maximum 'msize' of 1048576 bytes (1 MiB).
+This is needed for subsequent safety guards that will limit generated
+responses appropriately before trying to allocate, generate, and send a
+response to guest.
 
-The minimum limit of all rings is picked, because multiple rings
-could theoretically have different ring_orders.
+This is especially required for request handlers that need to allocate
+dynamic and potentially large host memory for generating a response. These
+safety guards are mandatory to counter bad clients that try to trick server
+by supplying response buffers being smaller than the previously negotiated
+msize value.
 
 Signed-off-by: Christian Schoenebeck <qemu_oss@crudebyte.com>
 ---
- hw/9pfs/xen-9p-backend.c | 19 +++++++++++++++++++
- 1 file changed, 19 insertions(+)
+ hw/9pfs/9p.h | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/hw/9pfs/xen-9p-backend.c b/hw/9pfs/xen-9p-backend.c
-index ca0fff5fa9..e31124bcf5 100644
---- a/hw/9pfs/xen-9p-backend.c
-+++ b/hw/9pfs/xen-9p-backend.c
-@@ -250,12 +250,31 @@ static void xen_9pfs_push_and_notify(V9fsPDU *pdu)
-     qemu_bh_schedule(ring->bh);
- }
- 
-+static size_t xen_9p_msize_limit(V9fsState *s)
-+{
-+    Xen9pfsDev *xen_9pfs = container_of(s, Xen9pfsDev, state);
-+    size_t limit;
-+    int i;
-+
-+    if (!xen_9pfs->num_rings) {
-+        return 0;
-+    }
-+
-+    limit = XEN_FLEX_RING_SIZE(xen_9pfs->rings[0].ring_order);
-+    for (i = 1; i < xen_9pfs->num_rings; i++) {
-+        limit = MIN(limit, XEN_FLEX_RING_SIZE(xen_9pfs->rings[i].ring_order));
-+    }
-+
-+    return limit;
-+}
-+
- static const V9fsTransport xen_9p_transport = {
-     .pdu_vmarshal = xen_9pfs_pdu_vmarshal,
-     .pdu_vunmarshal = xen_9pfs_pdu_vunmarshal,
-     .init_in_iov_from_pdu = xen_9pfs_init_in_iov_from_pdu,
-     .init_out_iov_from_pdu = xen_9pfs_init_out_iov_from_pdu,
-     .push_and_notify = xen_9pfs_push_and_notify,
-+    .msize_limit = xen_9p_msize_limit,
+diff --git a/hw/9pfs/9p.h b/hw/9pfs/9p.h
+index 14111e041a..1efe000f6f 100644
+--- a/hw/9pfs/9p.h
++++ b/hw/9pfs/9p.h
+@@ -482,6 +482,7 @@ struct V9fsTransport {
+                                          unsigned int *pniov, size_t size);
+     void        (*push_and_notify)(V9fsPDU *pdu);
+     size_t      (*msize_limit)(V9fsState *s);
++    size_t      (*response_buffer_size)(V9fsPDU *pdu);
  };
  
- static int xen_9pfs_init(struct XenLegacyDevice *xendev)
+ #endif
 -- 
 2.47.3
 
