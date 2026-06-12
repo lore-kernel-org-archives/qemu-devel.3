@@ -4,110 +4,113 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 76585CD98CE
-	for <qemu-devel@archiver.kernel.org>; Fri, 12 Jun 2026 15:09:05 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id CA6D5CD98CE
+	for <qemu-devel@archiver.kernel.org>; Fri, 12 Jun 2026 15:17:43 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wY3V0-0000Z4-1V; Fri, 12 Jun 2026 11:08:46 -0400
+	id 1wY3d4-0001cu-BD; Fri, 12 Jun 2026 11:17:07 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1wY3Uy-0000Yf-MZ
- for qemu-devel@nongnu.org; Fri, 12 Jun 2026 11:08:44 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <shivangu@linux.ibm.com>)
+ id 1wY3ck-0001c4-MR; Fri, 12 Jun 2026 11:16:47 -0400
+Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1wY3Uw-0005cc-Pp
- for qemu-devel@nongnu.org; Fri, 12 Jun 2026 11:08:44 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1781276920;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=DtfpKfNkGBrYaAjBDalL46vJazpq/yTtZu3slAzi/5k=;
- b=GsQACE21gOH0Q/HN0bQsGPaJCCkV52UDfCYgAK3i+2gnxHSbPNCkmSgbsal//ZX9m3xflh
- 3yqirbowSICV27qT8w24rqAnZ402P2qbkY2SwLsjpxfKpzhHFQELLJg2Z8Lq81312q4YGs
- 7BsvC9heCGjwTHh3T8BqfjM2RQ4GioM=
-Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-657-xu9HiwYxOSCzdZKC9A9W2g-1; Fri,
- 12 Jun 2026 11:08:39 -0400
-X-MC-Unique: xu9HiwYxOSCzdZKC9A9W2g-1
-X-Mimecast-MFC-AGG-ID: xu9HiwYxOSCzdZKC9A9W2g_1781276918
-Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 95840195609E
- for <qemu-devel@nongnu.org>; Fri, 12 Jun 2026 15:08:38 +0000 (UTC)
-Received: from [10.44.32.88] (unknown [10.44.32.88])
- by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 839A61955BD4; Fri, 12 Jun 2026 15:08:37 +0000 (UTC)
-Message-ID: <eeff3845-a564-4871-9b7f-bf91ba3f2295@redhat.com>
-Date: Fri, 12 Jun 2026 17:08:34 +0200
+ (Exim 4.90_1) (envelope-from <shivangu@linux.ibm.com>)
+ id 1wY3ci-0001G4-Rs; Fri, 12 Jun 2026 11:16:46 -0400
+Received: from pps.filterd (m0356517.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
+ 65C0ZtJW3872942; Fri, 12 Jun 2026 15:16:41 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=
+ content-transfer-encoding:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to; s=pp1; bh=r23yJa
+ OFctilcxBR0WQfypszN5gMartS/dWnA0jdrjk=; b=saXbdjAnz2a3zp9WTluV7U
+ kr9kbE/QwW/+8AKWxHC+ZKFI1oCvM0g5WR6myRSF09s9SBQgGo8vr84Tcc1ipjBr
+ Xy+sYEipsJ5MmgQGE5GklPrl8ZmSLqYQ5sSw0EsNJlMSoIZj+vz3GFtRMYcexbnn
+ eWAwqoBpdCwnNPRqErEPVM87rbTcpjSV9rh6YkLDs7kjoCr9mOTpy3Ra1LTqiBkS
+ 85LIxD2qc3GxSL6faHqNJkA8JoznGWgWbvA8MhqYsOPpvMJvmwcLNpgDzMADvamh
+ iBv8pv3MKXt6s1vWbxGoizjXF2pmXAO0gOHkjW2EV93zc684LYMWjpKcugRuptog
+ ==
+Received: from ppma22.wdc07v.mail.ibm.com
+ (5c.69.3da9.ip4.static.sl-reverse.com [169.61.105.92])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4eqe8f1my8-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Fri, 12 Jun 2026 15:16:41 +0000 (GMT)
+Received: from pps.filterd (ppma22.wdc07v.mail.ibm.com [127.0.0.1])
+ by ppma22.wdc07v.mail.ibm.com (8.18.1.7/8.18.1.7) with ESMTP id 65CF4bdK028064;
+ Fri, 12 Jun 2026 15:16:40 GMT
+Received: from smtprelay01.fra02v.mail.ibm.com ([9.218.2.227])
+ by ppma22.wdc07v.mail.ibm.com (PPS) with ESMTPS id 4eqe090ddy-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Fri, 12 Jun 2026 15:16:39 +0000 (GMT)
+Received: from smtpav04.fra02v.mail.ibm.com (smtpav04.fra02v.mail.ibm.com
+ [10.20.54.103])
+ by smtprelay01.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 65CFGaOm50856294
+ (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Fri, 12 Jun 2026 15:16:36 GMT
+Received: from smtpav04.fra02v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id E88FD2004E;
+ Fri, 12 Jun 2026 15:16:35 +0000 (GMT)
+Received: from smtpav04.fra02v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id BE61A20043;
+ Fri, 12 Jun 2026 15:16:32 +0000 (GMT)
+Received: from shivang.upadyay (unknown [9.39.27.203])
+ by smtpav04.fra02v.mail.ibm.com (Postfix) with ESMTP;
+ Fri, 12 Jun 2026 15:16:32 +0000 (GMT)
+Message-ID: <abd149464ebb8c0dcff389b09ff7d1158c237feb.camel@linux.ibm.com>
+Subject: Re: [RFC PATCH 11/28] target/ppc: Move fixed-point byte-reversal
+ store insns to decodetree
+From: Shivang Upadhyay <shivangu@linux.ibm.com>
+To: amachhiw@linux.ibm.com, Chinmay Rath <rathc@linux.ibm.com>,
+ qemu-devel@nongnu.org, qemu-ppc@nongnu.org, npiggin@gmail.com,
+ harshpb@linux.ibm.com, richard.henderson@linaro.org,
+ peter.maydell@linaro.org, stefanha@redhat.com
+Date: Fri, 12 Jun 2026 20:46:19 +0530
+In-Reply-To: <20260520160728.2283628-12-rathc@linux.ibm.com>
+References: <20260520160728.2283628-1-rathc@linux.ibm.com>
+ <20260520160728.2283628-12-rathc@linux.ibm.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+User-Agent: Evolution 3.58.3 (3.58.3-1.fc43) 
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3 2/7] json-parser: replace with a push parser
-To: Markus Armbruster <armbru@redhat.com>
-Cc: qemu-devel@nongnu.org
-References: <20260525150503.393743-1-pbonzini@redhat.com>
- <20260525150503.393743-3-pbonzini@redhat.com> <87v7bnvnz1.fsf@pond.sub.org>
-Content-Language: en-US
-From: Paolo Bonzini <pbonzini@redhat.com>
-Autocrypt: addr=pbonzini@redhat.com; keydata=
- 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
-In-Reply-To: <87v7bnvnz1.fsf@pond.sub.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.12
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=pbonzini@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: 8
-X-Spam_score: 0.8
-X-Spam_bar: /
-X-Spam_report: (0.8 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.445,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_SBL_CSS=3.335, SPF_HELO_PASS=-0.001,
- SPF_PASS=-0.001 autolearn=no autolearn_force=no
+X-TM-AS-GCONF: 00
+X-Proofpoint-Reinject: loops=2 maxloops=12
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNjEyMDEzOSBTYWx0ZWRfX7bYxCEwoqqEY
+ sT9ZVZZu6qFRQ89UNXex6mHki53EJiM8BkHXYyHtJU+A+lQxfUh+VpcHF0+mygcGCK5LntYh9R4
+ LwkB0DvxwtE49RNBs3JfjuA1RwbmPTaWeWnUREM6phdX7iTZlYs/YvENTzuxh2Kh4tjM7Rmwu4x
+ eIc3GOUqmcroRCGJhvYlYVjiDNUSgECTCsB/lmU9Fm97x/m1UO+xlcon4tjqaBp0s6RDo+Edr2m
+ w/1dO42JnKoJsLArSAVdveazr3AEdc6m51Dv983EqtGWl2DLk8J57OYg/emUidYQ8LX53mY64Ut
+ mjwoFdejoMzAJkimMRliNyqPzbWDr9fHV+uRHrHDS0MqpS54PxO6hmNI/vjBHduTnbRGyoRTII2
+ V2Ywjfq+yvhKBwBTypzsHW4RfuguEDt1qijZLH7mxSTR+YO5N1Vpv/BdWfCFQDyaJ/68nyMbBsB
+ NOiOOTGlh6XwwGd91mQ==
+X-Authority-Analysis: v=2.4 cv=dr7rzVg4 c=1 sm=1 tr=0 ts=6a2c22d9 cx=c_pps
+ a=5BHTudwdYE3Te8bg5FgnPg==:117 a=5BHTudwdYE3Te8bg5FgnPg==:17
+ a=IkcTkHD0fZMA:10 a=FelO9ux0wxsA:10 a=VkNPw1HP01LnGYTKEx00:22
+ a=RnoormkPH1_aCDwRdu11:22 a=U7nrCbtTmkRpXpFmAIza:22 a=zKdSJwAEEZ6l6oyJNpgA:9
+ a=QEXdDO2ut3YA:10
+X-Proofpoint-ORIG-GUID: N6BkMT-UUMiP1LQrmT8b1xGx_1ZweUsp
+X-Proofpoint-GUID: IjGnBafpcuATGPtwS-GsC4lWPybloc1-
+X-Proofpoint-Spam-Info: AW1haW4tMjYwNjEyMDEzOSBTYWx0ZWRfX3xnxyASNxYlh
+ 1b9ClrU2S1Uf7rf/vsdQp11VcqibHxab6wTiK4vM+26jLbBIe29UOW8y+nwaDWjjSm4IosSeld8
+ s1cEKqLAuEZb0ZAys7gw3MQmDgz9Ph4=
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.125,FMLib:17.12.100.49
+ definitions=2026-06-12_01,2026-06-12_03,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ spamscore=0 adultscore=0 suspectscore=0 priorityscore=1501 phishscore=0
+ clxscore=1015 bulkscore=0 impostorscore=0 lowpriorityscore=0 malwarescore=0
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.22.0-2606040000 definitions=main-2606120139
+Received-SPF: pass client-ip=148.163.156.1;
+ envelope-from=shivangu@linux.ibm.com; helo=mx0a-001b2d01.pphosted.com
+X-Spam_score_int: -26
+X-Spam_score: -2.7
+X-Spam_bar: --
+X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
+ RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -123,125 +126,32 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 6/12/26 16:21, Markus Armbruster wrote:
-> Paolo Bonzini <pbonzini@redhat.com> writes:
-> 
->> In order to avoid stashing all the tokens corresponding to a JSON value,
->> embed the parsing stack and state machine in JSONParser.  This is more
->> efficient and allows for more prompt error recovery; it also does not
->> make the code substantially larger than the current recursive descent
->> parser, though the state machine is probably a bit harder to follow.
->>
->> The stack consists of QLists and QDicts corresponding to open
->> brackets and braces, plus optionally a QString with the current
->> key on top of each QDict.
->>
->> After each value is parsed, it is added to the top array or dictionary
->> or, if the stack is empty, json_parser_feed returns the complete
->> QObject.
->>
->> For now, json-streamer.c keeps tracking the tokens up until braces
->> and brackets are balanced, and then shoves the whole queue of tokens
->> into the push parser.  The only logic change is that JSON_END_OF_INPUT
->> always triggers the emptying of the queue; the parser takes notice and
->> checks that there is nothing on the stack.  Not using brace_count
->> and bracket_count for this is the first step towards improved separation
->> of concerns between json-parser.c and json-streamer.c.
->>
->> Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
->> ---
->>   include/qobject/json-parser.h |   6 +
->>   qobject/json-parser-int.h     |   5 +-
->>   qobject/json-parser.c         | 551 ++++++++++++++++++++--------------
->>   qobject/json-streamer.c       |  21 +-
->>   4 files changed, 345 insertions(+), 238 deletions(-)
->>
->> diff --git a/include/qobject/json-parser.h b/include/qobject/json-parser.h
->> index 7345a9bd5cb..05346fa816b 100644
->> --- a/include/qobject/json-parser.h
->> +++ b/include/qobject/json-parser.h
->> @@ -20,6 +20,12 @@ typedef struct JSONLexer {
->>       int x, y;
->>   } JSONLexer;
->>   
->> +typedef struct JSONParserContext {
->> +    Error *err;
->> +    GQueue *stack;
->> +    va_list *ap;
->> +} JSONParserContext;
->> +
->>   typedef struct JSONMessageParser {
->>       void (*emit)(void *opaque, QObject *json, Error *err);
->>       void *opaque;
->> diff --git a/qobject/json-parser-int.h b/qobject/json-parser-int.h
->> index 8c01f236276..1f435cb8eb2 100644
->> --- a/qobject/json-parser-int.h
->> +++ b/qobject/json-parser-int.h
->> @@ -49,6 +49,9 @@ void json_message_process_token(JSONLexer *lexer, GString *input,
->>   
->>   /* json-parser.c */
->>   JSONToken *json_token(JSONTokenType type, int x, int y, GString *tokstr);
->> -QObject *json_parser_parse(GQueue *tokens, va_list *ap, Error **errp);
->> +void json_parser_init(JSONParserContext *ctxt, va_list *ap);
->> +void json_parser_reset(JSONParserContext *ctxt);
->> +QObject *json_parser_feed(JSONParserContext *ctxt, const JSONToken *token, Error **errp);
->> +void json_parser_destroy(JSONParserContext *ctxt);
->>   
->>   #endif
->> diff --git a/qobject/json-parser.c b/qobject/json-parser.c
->> index f6622b82b0a..3b5edc5bae4 100644
->> --- a/qobject/json-parser.c
->> +++ b/qobject/json-parser.c
->> @@ -31,12 +31,105 @@ struct JSONToken {
->>       char str[];
->>   };
->>   
->> -typedef struct JSONParserContext {
->> -    Error *err;
->> -    JSONToken *current;
->> -    GQueue *buf;
->> -    va_list *ap;
->> -} JSONParserContext;
->> +/*
->> + * The JSON parser is a push parser, returning to the caller after every
->> + * token.
-> 
-> The thing that returns after every token is json_parser_feed(), right?
-> 
-> Detail not mentioned here: the value it returns.  Leaving that to
-> json_parser_feed()'s contract feels fine, but pointing from here to
-> there could be useful.
+On Wed, 2026-05-20 at 21:37 +0530, Chinmay Rath wrote:
+> --- a/target/ppc/insn32.decode
+> +++ b/target/ppc/insn32.decode
+> @@ -372,6 +372,14 @@ STVDX=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=
+=A0=C2=A0=C2=A0 011111 ..... ..... .....
+> 0010010001 -=C2=A0=C2=A0 @X
+> =C2=A0STSKU=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 1=
+11110 ..... ..... ............. 0 11=C2=A0=C2=A0 @DD
+> =C2=A0STCXU=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 1=
+11110 ..... ..... ............. 1 11=C2=A0=C2=A0 @DD
+> =C2=A0
+> +STDBRX		011111 ..... ..... ..... 1010010100 -	@X
+> +STDCIX		011111 ..... ..... ..... 1111110101 -	@X
+> +STWCIX		011111 ..... ..... ..... 1110010101 -	@X
+> +STHCIX		011111 ..... ..... ..... 1110110101 -	@X
+> +STBCIX		011111 ..... ..... ..... 1111010101 -	@X
+> +STHBRX		011111 ..... ..... ..... 1110010110 -	@X
+> +STWBRX		011111 ..... ..... ..... 1010010110 -	@X
+> +
+> =C2=A0### Fixed-Point Compare Instructions
+> =C2=A0
 
-"returning a completed top-level object, an error, or NULL (if the 
-object is incomplete and no error happened) after every token"?
->> + * // The initial state is BEFORE_VALUE.
->> + * input :=  value         -> END_OF_VALUE -> return parsed value
->> + *           END_OF_INPUT  -> check stack is empty
-> 
-> How can the stack *not* be empty here?
+Hi Amit,=20
+ It would be good to align the instruction format with the other
+instructions currently it looks little odd.
 
-Right, this is not END_OF_INPUT in the middle of the stream.  Will delete.
->> + * // entered on BEFORE_KEY, with TOS being a QDict
->> + * dict_pairs := (STRING | INTERP) -> push QString -> END_OF_KEY
->> + *         ':'             -> BEFORE_VALUE
->> + *         value           -> pop QString + add pair to QDict -> END_OF_VALUE
->> + *         ('}'            -> pop completed QDict -> END_OF_VALUE
->> + *          | ','          -> BEFORE_KEY
->> + *            dict_pairs)  -> END_OF_VALUE
->> + */
-> 
-> This is useful.
-> 
-> It doesn't mention how we do parse errors.  Leaving that to
-> json_parser_feed()'s contract feels fine.
-
-Right---parse errors are out of the scope because recovery happens in 
-json-streamer.c.
-
-I can add a note for this and everything else, thanks for the review! 
-Rewrites are not the most enticing form of thing to receive, or the most 
-polite to send.
-
-Paolo
-
+Otherwise LGTM.
+~Shivang.
 
