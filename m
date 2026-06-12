@@ -4,95 +4,96 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 79F3FCD8CA8
-	for <qemu-devel@archiver.kernel.org>; Fri, 12 Jun 2026 10:56:06 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C1BE4CD8CA8
+	for <qemu-devel@archiver.kernel.org>; Fri, 12 Jun 2026 10:57:14 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wXzXi-0000gE-5g; Fri, 12 Jun 2026 06:55:18 -0400
+	id 1wXzZB-0001aQ-TI; Fri, 12 Jun 2026 06:56:49 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <marcandre.lureau@gmail.com>)
- id 1wXzXg-0000eM-M9
- for qemu-devel@nongnu.org; Fri, 12 Jun 2026 06:55:16 -0400
+ id 1wXzZA-0001a4-K5
+ for qemu-devel@nongnu.org; Fri, 12 Jun 2026 06:56:48 -0400
 Received: from mail-dy1-x132c.google.com ([2607:f8b0:4864:20::132c])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <marcandre.lureau@gmail.com>)
- id 1wXzXd-0004v3-EQ
- for qemu-devel@nongnu.org; Fri, 12 Jun 2026 06:55:16 -0400
+ id 1wXzZ8-00065l-NV
+ for qemu-devel@nongnu.org; Fri, 12 Jun 2026 06:56:48 -0400
 Received: by mail-dy1-x132c.google.com with SMTP id
- 5a478bee46e88-3078e0dcd67so1062246eec.0
- for <qemu-devel@nongnu.org>; Fri, 12 Jun 2026 03:55:12 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1781261711; cv=none;
+ 5a478bee46e88-30759632453so1793217eec.1
+ for <qemu-devel@nongnu.org>; Fri, 12 Jun 2026 03:56:46 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1781261805; cv=none;
  d=google.com; s=arc-20240605;
- b=Pc2ddBsqBDG89d5PnvYhlNhD4A6B3Gp31IrBVGrJ+yAvD5pkF1voaalJYVKswI/vDk
- X0vItnD3r2LQfLGm1bvOZb654M8KbRwiqLI67Pbed/YT1UCdMz13H8M5b9c+IsI0aJ5i
- kP40zRQWEuU+x+sGt7UYcUrOB/XDWmAxVVjR1IVfOEJBemRR2u5VZvm8wazboaiPsuCa
- Z8GzxC2aEqKymOulK2Guex2csPIuVlSOLDDBAuxlVG7MjnLqV6R3HOyKpnxDhoh+t7d/
- nIfEIvYfApIV6l7hd3UkhHHFTuofWQdhcnzDaYRkMOZUvbRV3KkAARcpH3KykBpPD8C7
- OmMA==
+ b=j3bskNyZ7IvH4zKmYP85fy1sBTyJGtLvfxXkF5/02VQQqGGOcMt/FWtuTWzWune5cg
+ AR02vhF4maLxoT6vblDRZWWT0bVBuJYE+RO+HbC0a23OsGcUkNaDontQuRoWi69zE4db
+ UnHasu8caKHf+maI/TYEj1ZeRmTw/E+jGt8h6nOD+qoHPfRJwlaOPmfT8tztq3LOgUmN
+ ufMl66fTfTYjce4vK+h1uxJGNSJTIWsCPeazHcZNwFwHe+62PGX1XXhwjznf3aAsLgFV
+ 6W7NmysrAGY/wktkQtSrY4p3vLrWlO35ydWG9iqlE0/dJAMpuGHolv1YnrkhehHYQGHw
+ GI0Q==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
  s=arc-20240605; 
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:dkim-signature;
- bh=2ODMwCf71FQqa44jIJu/H1M440+mEdp0RjOvbuzbclw=;
- fh=k1zQqcZIuBvSrbmEz+KUzDMXlXOzM9Ueirzfbp+KxpI=;
- b=TlHSOXNDExMmMW+FdJbil3FevU7jzUXjO4Tl8WWtl5QYcOz2gXuj/7U5etxD//YBvB
- fXoddV7nFEh3kL6RW975R73EC+ihCXn12SUvuOYuHnILSVgEN7XBfAp/ruNchXX25cpp
- GKGu7JbuYU67IewNc4ZjUW8zpmcERSLzRa1n09X1BdNWPrJzEd1VaZIW/Ggr6ij4OXy6
- VOfaiz9f91XlbtCIQsY0AYCSHUzPUuqYzYp9e5N2oZVjxe7Spzr/aRL//feTblRGeKYI
- 1euz1izmnIr5DO0G63VhBhe0ssHveUcZf8YfZ3q8idznqrdM53Z3m63KQ4ENDvSesVsF
- rzcQ==; darn=nongnu.org
+ bh=nYYpCvm2SZmMpv6tV3ILno5Ow5s3NTn/DerpNOVdXmo=;
+ fh=1eo/jwNdyOy/c2a5x8T+QMNS65Pp6U4Ap+2Pg3Vt3uI=;
+ b=XhTkiD1QdUIK+TUpyoKmEoWHRBPLp3nosRfF/fWdBtSURegN3P/iMm2A0jg/sTHLVA
+ 1qGnOeXB+Sv2Yx50OIXIXpUpIvopqyr7sHGRyHbO0AxKcwPBA5ld9x0rde3wFlrVAoVf
+ TGEkyrGe58Kp94WDUbhPSv1I9bjAu0SoTwC7vAt1rpbjeEeETcvCl4Mgur2ElYA2GE9G
+ EaSLUSgxdESGgczXwbpTT3o/K9O1mijYwLJksUKECURMtOlB9Wm7Ug7nfeft8qC0LORP
+ JnC5cmwWyMelJHAXTXQSr1WVyGXGl4O80RhDi4V0wofLUhodPMtTHPm/BIGy3mGxuMj4
+ qBcg==; darn=nongnu.org
 ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1781261711; x=1781866511; darn=nongnu.org;
+ d=redhat.com; s=google; t=1781261805; x=1781866605; darn=nongnu.org;
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:from:to:cc:subject:date
  :message-id:reply-to;
- bh=2ODMwCf71FQqa44jIJu/H1M440+mEdp0RjOvbuzbclw=;
- b=EMQxBuJU8HgxkQTtDyYoROT3oA3awu9UEsn36NRKjFmVb9ybUoMTwYEVmK6CRQkUVU
- Im1OUlij58SIyR1W5Nkf/LpS6SPGB5LvTxsXtGapIROf/XOp+Pp4e8UsdxTa7huPfaHI
- 7hsj/26n4DcRfTuCg//QcFO7puiZa3Xwp1JZlcs+cJCx6/X8SiQW9252vmWHIc3kGugX
- 2rex/pBfy0amiLGqeKPmNReSYR76opXJTAVs7ViBLUmXsDY3X5Y3PCpV1dxTSvDxOzpg
- pPcRqRckyyOV4Lib7YswB4EWakZwLmtuGD6SwA/cKYqILUIkWe3/pS+ADZWGDhJt6lVc
- h9kQ==
+ bh=nYYpCvm2SZmMpv6tV3ILno5Ow5s3NTn/DerpNOVdXmo=;
+ b=DrOTerSKT7xn5jp77GrtVx13h9Pix6BHiE+JWNDesapY3NhKpB1rEU1duwXgpV1xJs
+ DC0Wy/3O5ZI77WzeMOcAWCiK/rDKFOelW2LS8iggMTIlJC+O+0JdL70kb37KOvopouTt
+ P6RDsEue16eeWEK9SFvV/JElw9/JgnB6a/paibUHk8e1mdKojqYcTGd9I0ItVDECfLCl
+ sRBaF4Fr4b6px8KobTM3/pVgPj+5UL+IvP+XG+9Dw1bGdkXWa8SVbMQpxPSr7yyQ+H4s
+ 0SmIwcik2kdj6ERVlrsDxAAYUUO/0etEPWxMZbQcOmFesMEiCJgua/ZCDkvoavKOvGHi
+ HS5A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1781261711; x=1781866511;
+ d=1e100.net; s=20251104; t=1781261805; x=1781866605;
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to;
- bh=2ODMwCf71FQqa44jIJu/H1M440+mEdp0RjOvbuzbclw=;
- b=rpkD19NMcp1cOwcDAM7oC8cXpCob9cQKYmsHaV/4QnkB/LPXOiEyiT4nXi3gwARu8c
- DsysoICUQJy8+Yd4atFm90Ko3JaaOJgXzf9sxFrlmm/s9N1S3xjEogs3QJmn0qPVVozy
- sqRL3R4xvYLOyy4lylcfSdx6Nz9oLUXJQiplxHbj9nE5P0ax6NjbmW/oPeYZg6qWf0qI
- 1Nt+c++utfLre6VKoMThz11FDm+vMqCTblpF/EZEpzPUlSXXzZ/Mt1vL6MuIgKB+PP6q
- DfFtowylwn17ApBfLWfbdKbyu3kqEKTmieYjE28lX1yVj6U1ne2Dw244Q4yxh4ZVjfKH
- HCwg==
-X-Gm-Message-State: AOJu0YzATY8GgrvTdBRRQw7PgbZ1tvSZc5sXGAeG+5MaTH15Ol/avfSW
- fGEeJ6YzJOhviERcqpMKhEF+742gvX8wOsY8/0IWz063E+ArQmsro9vg63JTY6kNxeah5FElhyP
- QUPML+1qldUSbPH28yFQhtkZThPxNWEhaYSMC
-X-Gm-Gg: Acq92OG3qunwwPdu2baHH5fhI4ZfCcyQl1sSEs2EFr9bQ57e4lJ6YgIqvzlhad8oXRs
- 2vLIlaGlN4LFsvxaQCPeKN+kTSlzMm/fv5Wi0Y4bGWTB/jFiGoi1PP7WCDACkR528dEuqRhlOXs
- Y+ooMZcMSfzcp09E2o9oe1oQVGcWHxeSJWki2SIcNTLChENAq32GElCM/TXfoeowxL4LzjpRaDC
- U+W4Dxn4On5ovBTMrapaT0FtI88jww9hy/SFI5dB0IKqSmKIxMq0UMPd/x5MaMNlw9C4ayv2U88
- H8NqXAsrg1V9/5zzik8FrCDoHp6DWvLb9uxNdcM=
-X-Received: by 2002:a05:7300:80c5:b0:304:b14:ec53 with SMTP id
- 5a478bee46e88-308200bc57cmr1368659eec.27.1781261711008; Fri, 12 Jun 2026
- 03:55:11 -0700 (PDT)
+ bh=nYYpCvm2SZmMpv6tV3ILno5Ow5s3NTn/DerpNOVdXmo=;
+ b=EOoyszpL+T2mvpKLxvLqc9GlVVA3Rd7IX+TD5MpsDl/PxyENZZgggDfxHZKpA+Rtjh
+ 11JkPHqG9jLxsuMR4vYsU7p6TzoFOEuJclLtfDXeCGWxV2H6wdK4mrd7NezLCwAR/m8Q
+ EKraytv2ejmrTbbSgmyjYwqy9yK1yNEj4QC4xiW3Rb1MM1FWi+LbWQWMM0Cqs0LLUJzA
+ ktBGYjkOLALmgXbZfFg7g7zKOUgCQ954lUYkxxp8Q4RTJZRHIYC9efBaT2vSh0D8AafK
+ 5DBbrV1iahJ/YeFcAlVfrRZ1fcEZCZvGeOtCyZG/i+0hBk8CNS/+jNMd5xmZU6qUa07u
+ ruGw==
+X-Gm-Message-State: AOJu0YwXDapauHTDQbGjAbyEIoVobxV8P/6qy32ae+bmNNB2t4qgcy/4
+ U+WNCz1GCYqVFjAnOrk/lUb667fgj64zzaHBYcRSo/33UJWMVNNT1f1tbqRFtbdH/Sa5jXkLTX6
+ jrWwk6/ZFm6Sw3nF38y9H1rG1ubxu1gqQYSZP+6E=
+X-Gm-Gg: Acq92OG60eIR43/EmRjQ4q/W0Uch+Ou2Gl4UAoJhb5SOPiAVISsF9GRSOTmRWbE02kD
+ EzNvf/XPCDUfIc3JOPPGutuosa4hv0WShEYArgA3RVOjbFX2GTlUxaj/ifEitBS/WLXCF5S/p9o
+ O5QUbx0n6TSg/ZH7vANlqXpTGOBtIpCTiD/fLEmYYkTFIoXpNqiFszztzzr7SLJFxwwLB0aSBtA
+ ouXXOQ4R9g2Ahhm3HVqinqqEaLsZvx5PMxo/MOVyKiwbEBrITyVSXlFKd4Fo4pLUqlklV4DsIvG
+ 7IHjCVsGZSQTGtnRdA9ZuJAbeAwk/H+Kdt2B4KU=
+X-Received: by 2002:a05:7300:6da8:b0:2dd:6937:79d1 with SMTP id
+ 5a478bee46e88-3081ffba7e9mr1545747eec.15.1781261804971; Fri, 12 Jun 2026
+ 03:56:44 -0700 (PDT)
 MIME-Version: 1.0
 References: <20260610-ui-input-v2-0-f68452dd6a22@redhat.com>
- <20260610-ui-input-v2-3-f68452dd6a22@redhat.com>
-In-Reply-To: <20260610-ui-input-v2-3-f68452dd6a22@redhat.com>
+ <20260610-ui-input-v2-4-f68452dd6a22@redhat.com>
+In-Reply-To: <20260610-ui-input-v2-4-f68452dd6a22@redhat.com>
 From: =?UTF-8?B?TWFyYy1BbmRyw6kgTHVyZWF1?= <marcandre.lureau@redhat.com>
-Date: Fri, 12 Jun 2026 14:54:59 +0400
-X-Gm-Features: AVVi8CcdZdjmByY568ivZvmJfn-OmPwH2pz6BHwWDc-WiDtswF3jSeQueoR2dlk
-Message-ID: <CAJ+F1CLXwmdyksawoiarWARwxyt1AyRRTEbkq1Wi3=wSmeYTcw@mail.gmail.com>
-Subject: Re: [PATCH v2 03/22] hw/i386/vmmouse: convert to QemuInputHandler API
-To: qemu-devel@nongnu.org
+Date: Fri, 12 Jun 2026 14:56:32 +0400
+X-Gm-Features: AVVi8CerR3BtCOIEAB087ohne4DH40vYf9KgCByeNXYWKBlDq9MgojrXBnKR5v4
+Message-ID: <CAJ+F1CLQbTf8tnJ5eJe2r3K7r0x1ZKatjopr0KYaU-RmdBqw-Q@mail.gmail.com>
+Subject: Re: [PATCH v2 04/22] hw/usb/dev-wacom: convert to modern
+ QemuInputHandler API
+To: qemu-devel@nongnu.org, Gerd Hoffmann <kraxel@redhat.com>
 Cc: "Dr. David Alan Gilbert" <dave@treblig.org>,
  Paolo Bonzini <pbonzini@redhat.com>, 
  Richard Henderson <richard.henderson@linaro.org>,
- "Michael S. Tsirkin" <mst@redhat.com>, Gerd Hoffmann <kraxel@redhat.com>,
+ "Michael S. Tsirkin" <mst@redhat.com>, 
  =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@oss.qualcomm.com>, 
  Jan Kiszka <jan.kiszka@web.de>, Peter Maydell <peter.maydell@linaro.org>,
  qemu-arm@nongnu.org, 
@@ -130,49 +131,60 @@ Hi
 On Wed, Jun 10, 2026 at 2:58=E2=80=AFPM Marc-Andr=C3=A9 Lureau
 <marcandre.lureau@redhat.com> wrote:
 >
-> Replace the legacy QEMUPutMouseEvent callback with a proper
-> QemuInputHandler registration. This eliminates one of the two
-> remaining users of the legacy input adapter in ui/input-legacy.c.
+> Replace the legacy QEMUPutMouseEvent callbacks with a proper
+> QemuInputHandler registration. The device now receives typed
+> input events (BTN/ABS/REL) directly.
 >
 > Signed-off-by: Marc-Andr=C3=A9 Lureau <marcandre.lureau@redhat.com>
 
 One of the 2 patches missing ack/review in this series,
+
 thanks
 
+
 > ---
->  hw/i386/vmmouse.c    | 115 +++++++++++++++++++++++++++++++++++++--------=
+>  hw/usb/dev-wacom.c | 155 ++++++++++++++++++++++++++++++++---------------=
 ------
->  hw/i386/trace-events |   2 +-
->  2 files changed, 85 insertions(+), 32 deletions(-)
+>  1 file changed, 94 insertions(+), 61 deletions(-)
 >
-> diff --git a/hw/i386/vmmouse.c b/hw/i386/vmmouse.c
-> index d54adb34a88..e289bce8e2e 100644
-> --- a/hw/i386/vmmouse.c
-> +++ b/hw/i386/vmmouse.c
-> @@ -68,7 +68,10 @@ struct VMMouseState {
->      uint16_t nb_queue;
->      uint16_t status;
->      uint8_t absolute;
-> -    QEMUPutMouseEntry *entry;
+> diff --git a/hw/usb/dev-wacom.c b/hw/usb/dev-wacom.c
+> index 14d07e81281..c69e247f7b7 100644
+> --- a/hw/usb/dev-wacom.c
+> +++ b/hw/usb/dev-wacom.c
+> @@ -42,10 +42,10 @@
+>  struct USBWacomState {
+>      USBDevice dev;
+>      USBEndpoint *intr;
+> -    QEMUPutMouseEntry *eh_entry;
+> -    int dx, dy, dz, buttons_state;
+> -    int x, y;
+> -    int mouse_grabbed;
 > +    QemuInputHandlerState *hs;
 > +    int axis[INPUT_AXIS__MAX];
 > +    int dz;
 > +    bool btns[INPUT_BUTTON__MAX];
->      ISAKBDState *i8042;
+>      enum {
+>          WACOM_MODE_HID =3D 1,
+>          WACOM_MODE_WACOM =3D 2,
+> @@ -188,29 +188,37 @@ static const USBDesc desc_wacom =3D {
+>      .str  =3D desc_strings,
 >  };
 >
-> @@ -99,39 +102,78 @@ static uint32_t vmmouse_get_status(VMMouseState *s)
->      return (s->status << 16) | s->nb_queue;
->  }
->
-> -static void vmmouse_mouse_event(void *opaque, int x, int y, int dz, int =
-buttons_state)
-> +static void vmmouse_input_event(DeviceState *dev, QemuConsole *src,
-> +                                QemuInputEvent *evt)
+> -static void usb_mouse_event(void *opaque,
+> -                            int dx1, int dy1, int dz1, int buttons_state=
+)
+> +static void usb_wacom_input_event(DeviceState *dev, QemuConsole *src,
+> +                                  QemuInputEvent *evt)
 >  {
-> -    VMMouseState *s =3D opaque;
-> +    VMMouseState *s =3D VMMOUSE(dev);
-> +
+> -    USBWacomState *s =3D opaque;
+> +    USBWacomState *s =3D USB_WACOM(dev);
+>
+> -    s->dx +=3D dx1;
+> -    s->dy +=3D dy1;
+> -    s->dz +=3D dz1;
+> -    s->buttons_state =3D buttons_state;
+> -    s->changed =3D 1;
+> -    usb_wakeup(s->intr, 0);
 > +    switch (evt->type) {
 > +    case INPUT_EVENT_KIND_BTN:
 > +        if (evt->btn.down) {
@@ -185,19 +197,7 @@ buttons_state)
 > +        s->btns[evt->btn.button] =3D evt->btn.down;
 > +        break;
 > +    case INPUT_EVENT_KIND_ABS:
-> +        if (evt->abs.axis =3D=3D INPUT_AXIS_X) {
-> +            s->axis[INPUT_AXIS_X] =3D
-> +                qemu_input_scale_axis(evt->abs.value,
-> +                                      INPUT_EVENT_ABS_MIN, INPUT_EVENT_A=
-BS_MAX,
-> +                                      VMMOUSE_MIN_X, VMMOUSE_MAX_X);
-> +        } else if (evt->abs.axis =3D=3D INPUT_AXIS_Y) {
-> +            s->axis[INPUT_AXIS_Y] =3D
-> +                qemu_input_scale_axis(evt->abs.value,
-> +                                      INPUT_EVENT_ABS_MIN, INPUT_EVENT_A=
-BS_MAX,
-> +                                      VMMOUSE_MIN_Y, VMMOUSE_MAX_Y);
-> +        }
+> +        s->axis[evt->abs.axis] =3D evt->abs.value;
 > +        break;
 > +    case INPUT_EVENT_KIND_REL:
 > +        s->axis[evt->rel.axis] +=3D evt->rel.value;
@@ -205,133 +205,199 @@ BS_MAX,
 > +    default:
 > +        break;
 > +    }
+>  }
+>
+> -static void usb_wacom_event(void *opaque,
+> -                            int x, int y, int dz, int buttons_state)
+> +static void usb_wacom_input_sync(DeviceState *dev)
+>  {
+> -    USBWacomState *s =3D opaque;
+> +    USBWacomState *s =3D USB_WACOM(dev);
+>
+> -    /* scale to Penpartner resolution */
+> -    s->x =3D (x * 5040 / 0x7FFF);
+> -    s->y =3D (y * 3780 / 0x7FFF);
+> -    s->dz +=3D dz;
+> -    s->buttons_state =3D buttons_state;
+>      s->changed =3D 1;
+>      usb_wakeup(s->intr, 0);
+>  }
+> @@ -225,32 +233,57 @@ static inline int int_clamp(int val, int vmin, int =
+vmax)
+>          return val;
+>  }
+>
+> +static void usb_wacom_register_input_handler(USBWacomState *s, bool abso=
+lute)
+> +{
+> +    static const QemuInputHandler usb_wacom_abs_handler =3D {
+> +        .name  =3D "QEMU PenPartner tablet",
+> +        .mask  =3D INPUT_EVENT_MASK_BTN | INPUT_EVENT_MASK_ABS,
+> +        .event =3D usb_wacom_input_event,
+> +        .sync  =3D usb_wacom_input_sync,
+> +    };
+> +
+> +    static const QemuInputHandler usb_wacom_rel_handler =3D {
+> +        .name  =3D "QEMU PenPartner tablet",
+> +        .mask  =3D INPUT_EVENT_MASK_BTN | INPUT_EVENT_MASK_REL,
+> +        .event =3D usb_wacom_input_event,
+> +        .sync  =3D usb_wacom_input_sync,
+> +    };
+> +
+> +    const QemuInputHandler *h =3D absolute ?
+> +        &usb_wacom_abs_handler : &usb_wacom_rel_handler;
+> +
+> +    g_clear_pointer(&s->hs, qemu_input_handler_unregister);
+> +
+> +    s->hs =3D qemu_input_handler_register(DEVICE(s), h);
+> +    qemu_input_handler_activate(s->hs);
 > +}
 > +
-> +static void vmmouse_input_sync(DeviceState *dev)
-> +{
-> +    VMMouseState *s =3D VMMOUSE(dev);
->      int buttons =3D 0;
+>  static int usb_mouse_poll(USBWacomState *s, uint8_t *buf, int len)
+>  {
+>      int dx, dy, dz, b, l;
 >
-> -    if (s->nb_queue > (VMMOUSE_QUEUE_SIZE - 4))
-> +    if (s->nb_queue > (VMMOUSE_QUEUE_SIZE - 4)) {
->          return;
-> +    }
->
-> -    trace_vmmouse_mouse_event(x, y, dz, buttons_state);
-> -
-> -    if ((buttons_state & MOUSE_EVENT_LBUTTON))
-> +    if (s->btns[INPUT_BUTTON_LEFT]) {
->          buttons |=3D VMMOUSE_LEFT_BUTTON;
-> -    if ((buttons_state & MOUSE_EVENT_RBUTTON))
-> +    }
-> +    if (s->btns[INPUT_BUTTON_RIGHT]) {
->          buttons |=3D VMMOUSE_RIGHT_BUTTON;
-> -    if ((buttons_state & MOUSE_EVENT_MBUTTON))
-> +    }
-> +    if (s->btns[INPUT_BUTTON_MIDDLE]) {
->          buttons |=3D VMMOUSE_MIDDLE_BUTTON;
-> -
-> -    if (s->absolute) {
-> -        x =3D qemu_input_scale_axis(x,
-> -                                  INPUT_EVENT_ABS_MIN, INPUT_EVENT_ABS_M=
-AX,
-> -                                  VMMOUSE_MIN_X, VMMOUSE_MAX_X);
-> -        y =3D qemu_input_scale_axis(y,
-> -                                  INPUT_EVENT_ABS_MIN, INPUT_EVENT_ABS_M=
-AX,
-> -                                  VMMOUSE_MIN_Y, VMMOUSE_MAX_Y);
-> -    } else{
-> -        /* add for guest vmmouse driver to judge this is a relative pack=
-et. */
-> +    }
-> +    if (!s->absolute) {
->          buttons |=3D VMMOUSE_RELATIVE_PACKET;
+> -    if (!s->mouse_grabbed) {
+> -        s->eh_entry =3D qemu_add_mouse_event_handler(usb_mouse_event, s,=
+ 0,
+> -                        "QEMU PenPartner tablet");
+> -        qemu_activate_mouse_event_handler(s->eh_entry);
+> -        s->mouse_grabbed =3D 1;
+> +    if (!s->hs) {
+> +        usb_wacom_register_input_handler(s, false);
 >      }
 >
-> +    trace_vmmouse_queue_event(s->axis[INPUT_AXIS_X], s->axis[INPUT_AXIS_=
-Y],
-> +                              s->dz, buttons);
-> +
->      s->queue[s->nb_queue++] =3D buttons;
-> -    s->queue[s->nb_queue++] =3D x;
-> -    s->queue[s->nb_queue++] =3D y;
-> -    s->queue[s->nb_queue++] =3D dz;
-> +    s->queue[s->nb_queue++] =3D s->axis[INPUT_AXIS_X];
-> +    s->queue[s->nb_queue++] =3D s->axis[INPUT_AXIS_Y];
-> +    s->queue[s->nb_queue++] =3D s->dz;
-> +    s->dz =3D 0;
-> +
-> +    if (!s->absolute) {
-> +        s->axis[INPUT_AXIS_X] =3D 0;
-> +        s->axis[INPUT_AXIS_Y] =3D 0;
+> -    dx =3D int_clamp(s->dx, -128, 127);
+> -    dy =3D int_clamp(s->dy, -128, 127);
+> +    dx =3D int_clamp(s->axis[INPUT_AXIS_X], -128, 127);
+> +    dy =3D int_clamp(s->axis[INPUT_AXIS_Y], -128, 127);
+>      dz =3D int_clamp(s->dz, -128, 127);
+>
+> -    s->dx -=3D dx;
+> -    s->dy -=3D dy;
+> +    s->axis[INPUT_AXIS_X] -=3D dx;
+> +    s->axis[INPUT_AXIS_Y] -=3D dy;
+>      s->dz -=3D dz;
+>
+>      b =3D 0;
+> -    if (s->buttons_state & MOUSE_EVENT_LBUTTON)
+> +    if (s->btns[INPUT_BUTTON_LEFT]) {
+>          b |=3D 0x01;
+> -    if (s->buttons_state & MOUSE_EVENT_RBUTTON)
+> +    }
+> +    if (s->btns[INPUT_BUTTON_RIGHT]) {
+>          b |=3D 0x02;
+> -    if (s->buttons_state & MOUSE_EVENT_MBUTTON)
+> +    }
+> +    if (s->btns[INPUT_BUTTON_MIDDLE]) {
+>          b |=3D 0x04;
 > +    }
 >
->      /* need to still generate PS2 events to notify driver to
->         read from queue */
-> @@ -140,14 +182,25 @@ static void vmmouse_mouse_event(void *opaque, int x=
-, int y, int dz, int buttons_
+>      buf[0] =3D b;
+>      buf[1] =3D dx;
+> @@ -265,32 +298,40 @@ static int usb_mouse_poll(USBWacomState *s, uint8_t=
+ *buf, int len)
 >
->  static void vmmouse_remove_handler(VMMouseState *s)
+>  static int usb_wacom_poll(USBWacomState *s, uint8_t *buf, int len)
 >  {
-> -    if (s->entry) {
-> -        qemu_remove_mouse_event_handler(s->entry);
-> -        s->entry =3D NULL;
+> -    int b;
+> +    int b, x, y;
+>
+> -    if (!s->mouse_grabbed) {
+> -        s->eh_entry =3D qemu_add_mouse_event_handler(usb_wacom_event, s,=
+ 1,
+> -                        "QEMU PenPartner tablet");
+> -        qemu_activate_mouse_event_handler(s->eh_entry);
+> -        s->mouse_grabbed =3D 1;
+> +    if (!s->hs) {
+> +        usb_wacom_register_input_handler(s, true);
+>      }
+>
+>      b =3D 0;
+> -    if (s->buttons_state & MOUSE_EVENT_LBUTTON)
+> +    if (s->btns[INPUT_BUTTON_LEFT]) {
+>          b |=3D 0x01;
+> -    if (s->buttons_state & MOUSE_EVENT_RBUTTON)
+> +    }
+> +    if (s->btns[INPUT_BUTTON_RIGHT]) {
+>          b |=3D 0x40;
+> -    if (s->buttons_state & MOUSE_EVENT_MBUTTON)
+> +    }
+> +    if (s->btns[INPUT_BUTTON_MIDDLE]) {
+>          b |=3D 0x20; /* eraser */
+> +    }
+>
+> -    if (len < 7)
+> +    if (len < 7) {
+>          return 0;
+> +    }
+> +
+> +    x =3D qemu_input_scale_axis(s->axis[INPUT_AXIS_X],
+> +                              INPUT_EVENT_ABS_MIN, INPUT_EVENT_ABS_MAX,
+> +                              0, 5040);
+> +    y =3D qemu_input_scale_axis(s->axis[INPUT_AXIS_Y],
+> +                              INPUT_EVENT_ABS_MIN, INPUT_EVENT_ABS_MAX,
+> +                              0, 3780);
+>
+>      buf[0] =3D s->mode;
+>      buf[5] =3D 0x00 | (b & 0xf0);
+> -    buf[1] =3D s->x & 0xff;
+> -    buf[2] =3D s->x >> 8;
+> -    buf[3] =3D s->y & 0xff;
+> -    buf[4] =3D s->y >> 8;
+> +    buf[1] =3D x & 0xff;
+> +    buf[2] =3D x >> 8;
+> +    buf[3] =3D y & 0xff;
+> +    buf[4] =3D y >> 8;
+>      if (b & 0x3f) {
+>          buf[6] =3D 0;
+>      } else {
+> @@ -302,15 +343,13 @@ static int usb_wacom_poll(USBWacomState *s, uint8_t=
+ *buf, int len)
+>
+>  static void usb_wacom_handle_reset(USBDevice *dev)
+>  {
+> -    USBWacomState *s =3D (USBWacomState *) dev;
+> +    USBWacomState *s =3D USB_WACOM(dev);
+>
+> -    s->dx =3D 0;
+> -    s->dy =3D 0;
+> +    memset(s->axis, 0, sizeof(s->axis));
+> +    memset(s->btns, 0, sizeof(s->btns));
+>      s->dz =3D 0;
+> -    s->x =3D 0;
+> -    s->y =3D 0;
+> -    s->buttons_state =3D 0;
+>      s->mode =3D WACOM_MODE_HID;
+> +    g_clear_pointer(&s->hs, qemu_input_handler_unregister);
+>  }
+>
+>  static void usb_wacom_handle_control(USBDevice *dev, USBPacket *p,
+> @@ -337,10 +376,7 @@ static void usb_wacom_handle_control(USBDevice *dev,=
+ USBPacket *p,
+>          }
+>          break;
+>      case WACOM_SET_REPORT:
+> -        if (s->mouse_grabbed) {
+> -            qemu_remove_mouse_event_handler(s->eh_entry);
+> -            s->mouse_grabbed =3D 0;
+> -        }
+> +        g_clear_pointer(&s->hs, qemu_input_handler_unregister);
+>          s->mode =3D data[0];
+>          break;
+>      case WACOM_GET_REPORT:
+> @@ -400,10 +436,7 @@ static void usb_wacom_unrealize(USBDevice *dev)
+>  {
+>      USBWacomState *s =3D (USBWacomState *) dev;
+>
+> -    if (s->mouse_grabbed) {
+> -        qemu_remove_mouse_event_handler(s->eh_entry);
+> -        s->mouse_grabbed =3D 0;
 > -    }
 > +    g_clear_pointer(&s->hs, qemu_input_handler_unregister);
 >  }
 >
->  static void vmmouse_update_handler(VMMouseState *s, int absolute)
->  {
-> +    static const QemuInputHandler vmmouse_abs_handler =3D {
-> +        .name  =3D "vmmouse",
-> +        .mask  =3D INPUT_EVENT_MASK_BTN | INPUT_EVENT_MASK_ABS,
-> +        .event =3D vmmouse_input_event,
-> +        .sync  =3D vmmouse_input_sync,
-> +    };
-> +
-> +    static const QemuInputHandler vmmouse_rel_handler =3D {
-> +        .name  =3D "vmmouse",
-> +        .mask  =3D INPUT_EVENT_MASK_BTN | INPUT_EVENT_MASK_REL,
-> +        .event =3D vmmouse_input_event,
-> +        .sync  =3D vmmouse_input_sync,
-> +    };
-> +
->      if (s->status !=3D 0) {
->          return;
->      }
-> @@ -155,11 +208,11 @@ static void vmmouse_update_handler(VMMouseState *s,=
- int absolute)
->          s->absolute =3D absolute;
->          vmmouse_remove_handler(s);
->      }
-> -    if (s->entry =3D=3D NULL) {
-> -        s->entry =3D qemu_add_mouse_event_handler(vmmouse_mouse_event,
-> -                                                s, s->absolute,
-> -                                                "vmmouse");
-> -        qemu_activate_mouse_event_handler(s->entry);
-> +    if (s->hs =3D=3D NULL) {
-> +        const QemuInputHandler *h =3D s->absolute ?
-> +            &vmmouse_abs_handler : &vmmouse_rel_handler;
-> +        s->hs =3D qemu_input_handler_register(DEVICE(s), h);
-> +        qemu_input_handler_activate(s->hs);
->      }
->  }
->
-> diff --git a/hw/i386/trace-events b/hw/i386/trace-events
-> index 5fa5e93b68d..1920212332a 100644
-> --- a/hw/i386/trace-events
-> +++ b/hw/i386/trace-events
-> @@ -133,7 +133,7 @@ port92_write(uint8_t val) "port92: write 0x%02x"
->
->  # vmmouse.c
->  vmmouse_get_status(void) ""
-> -vmmouse_mouse_event(int x, int y, int dz, int buttons_state) "event: x=
-=3D%d y=3D%d dz=3D%d state=3D%d"
-> +vmmouse_queue_event(int x, int y, int dz, int buttons_state) "event: x=
-=3D%d y=3D%d dz=3D%d state=3D%d"
->  vmmouse_init(void) ""
->  vmmouse_read_id(void) ""
->  vmmouse_request_relative(void) ""
+>  static void usb_wacom_realize(USBDevice *dev, Error **errp)
 >
 > --
 > 2.54.0
