@@ -4,60 +4,110 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 22BCCCD98CF
-	for <qemu-devel@archiver.kernel.org>; Fri, 12 Jun 2026 23:04:46 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 473B8CD98CF
+	for <qemu-devel@archiver.kernel.org>; Fri, 12 Jun 2026 23:36:16 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wYAvC-0005o0-Iy; Fri, 12 Jun 2026 19:04:18 -0400
+	id 1wYBPI-0000ld-0a; Fri, 12 Jun 2026 19:35:24 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <sstabellini@kernel.org>)
- id 1wYAvA-0005nl-Tb; Fri, 12 Jun 2026 19:04:17 -0400
-Received: from sea.source.kernel.org ([172.234.252.31])
+ (Exim 4.90_1) (envelope-from <gshan@redhat.com>) id 1wYBPG-0000lK-AD
+ for qemu-devel@nongnu.org; Fri, 12 Jun 2026 19:35:22 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <sstabellini@kernel.org>)
- id 1wYAv9-0006rJ-4Z; Fri, 12 Jun 2026 19:04:16 -0400
-Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
- by sea.source.kernel.org (Postfix) with ESMTP id 655CE43D9B;
- Fri, 12 Jun 2026 23:04:12 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3F3F51F000E9;
- Fri, 12 Jun 2026 23:04:11 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
- s=k20260515; t=1781305452;
- bh=QWV8ZzYKJf4ZvcssleFuSWdQJicCUKyF0vtOl+hVNLA=;
- h=Date:From:To:cc:Subject:In-Reply-To:References;
- b=X9UIxM5UBmT8mrJBaqHleGJQvKefthMOm1YrDqlH8EkVkdzPin7b6+sRam843Ls5r
- VK6yInHY76JG9Q53ZsYzcX1/AF9bJF3g3pmxCHbof7yWEMamg9vK5DgEzV4F8VqITE
- ctDMePWIuxj8ufSUf1D//gB6tK3hKQY9p1O186+54reQg0tkmbg2NS48jtMe9N/FOI
- jSLINXJKPtNaGpl9DKnWeJNQYkNwLqlsheTpAtZVlLZ+vFS0uk75/tH4k+lnz5iC9a
- IhDcBycJvHNPS0/25ygUc3IazlxMp7tdlx+GtTm25YOadYkGIXHk8fpca6VIU+6i2N
- U2LgpzOOav9Bw==
-Date: Fri, 12 Jun 2026 16:04:08 -0700 (PDT)
-From: Stefano Stabellini <sstabellini@kernel.org>
-X-X-Sender: sstabellini@ubuntu-linux-20-04-desktop
-To: Christian Schoenebeck <qemu_oss@crudebyte.com>
-cc: qemu-devel@nongnu.org, qemu-stable@nongnu.org, Greg Kurz <groug@kaod.org>, 
- Feifan Qian <bea1e@proton.me>, Stefano Stabellini <sstabellini@kernel.org>,
- Anthony PERARD <anthony@xenproject.org>, 
- "Edgar E. Iglesias" <edgar.iglesias@gmail.com>
-Subject: Re: [PATCH v2 8/8] hw/9pfs: cap Treaddir allocation
- (CVE-2026-9238)
-In-Reply-To: <f81a387a2de4f2172fd5830c5654f49d78102254.1781287774.git.qemu_oss@crudebyte.com>
-Message-ID: <alpine.DEB.2.22.394.2606121603590.368315@ubuntu-linux-20-04-desktop>
-References: <cover.1781287774.git.qemu_oss@crudebyte.com>
- <f81a387a2de4f2172fd5830c5654f49d78102254.1781287774.git.qemu_oss@crudebyte.com>
-User-Agent: Alpine 2.22 (DEB 394 2020-01-19)
+ (Exim 4.90_1) (envelope-from <gshan@redhat.com>) id 1wYBPE-0007Vp-K0
+ for qemu-devel@nongnu.org; Fri, 12 Jun 2026 19:35:22 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1781307318;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=RNC+ZgjL7TXzhh5eX1Rz2Ygkx6ktozTkZMaMpEWA9co=;
+ b=ZYvRG6GSMyo9JdLp+qDlah3a2lToufqiImKOYhHm47cpfeoCDjGxCNRymsWljn4sXGAEjZ
+ e/VoTBZtoYYEZtDgAgnHN5MjYZheTi/ntwTr3rTAg6CPYnt4YuK4/T5U6wqJVMnelk09T/
+ mFnXbbqo+5u2Es6zvW8KcEET7TxH0gQ=
+Received: from mail-pl1-f199.google.com (mail-pl1-f199.google.com
+ [209.85.214.199]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-15-K_IYfTVWNY6Fx2-5GZXAEg-1; Fri, 12 Jun 2026 19:35:17 -0400
+X-MC-Unique: K_IYfTVWNY6Fx2-5GZXAEg-1
+X-Mimecast-MFC-AGG-ID: K_IYfTVWNY6Fx2-5GZXAEg_1781307316
+Received: by mail-pl1-f199.google.com with SMTP id
+ d9443c01a7336-2c2d0a8b5beso15898105ad.1
+ for <qemu-devel@nongnu.org>; Fri, 12 Jun 2026 16:35:17 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=redhat.com; s=google; t=1781307316; x=1781912116; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:content-language:references
+ :cc:to:from:subject:user-agent:mime-version:date:message-id:from:to
+ :cc:subject:date:message-id:reply-to;
+ bh=RNC+ZgjL7TXzhh5eX1Rz2Ygkx6ktozTkZMaMpEWA9co=;
+ b=pNgVoTZ8WSPo4vtTJ7SVZu9gBsdeVoUBMlC9alZLAil40d1yW65TgfjmCibx9w4cXz
+ Tnp8D0H0Cpn6NSzJjWrVCEsHn8gHk+go0N3kOq/e8uMEzgUXNYiKHYq9mStuMlRYSDAX
+ q1pbYdVxtYd9O34qZmahMo1u4RXzahVE3oJfVpum61xMd7YyBCB7SJpZycRODHuOIkg4
+ Ia+fEnwNlBZ+GWXNKd6gyKPU8eILaSxY/qwlx2EUlw1wGNk5xWFFjPLnfM6n3o4QsEJf
+ jWXtFAm0+lnoJI/YkZ/z0V+el0p6PQp4UiQeSwmRp3RM8oomhBgeNmJhCxhS5EJIGPQe
+ atJA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1781307316; x=1781912116;
+ h=content-transfer-encoding:in-reply-to:content-language:references
+ :cc:to:from:subject:user-agent:mime-version:date:message-id:x-gm-gg
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=RNC+ZgjL7TXzhh5eX1Rz2Ygkx6ktozTkZMaMpEWA9co=;
+ b=Dc6RiwT8nlrbXVzuZ0zvgx439TSE4PnRM95kQobE0iPgQyiEb1rG4qvfEY8M71vN3E
+ 4NALUvxMpkVKF8lt0/zzNKjvuyLbke0MYz2xsLgjaiIhcDMACrkXVYw6+iEwEPE6FPE9
+ 2doFsj80lu4wr1s90zAI0bk1dMoqjNym+O13aH2X0GfQEA2Q9K9StNiyFOuMbkciOl+R
+ 0XfSCoQagfVOjpAjDj7DW4COZqLrxWWbE1CoM8HJU18KCdjiYN5kIf6xtyEyfiCmr0Ek
+ 5e751dQMLdpi+5Z6DHa54vIkELrsOcWB5NoiotS5daCT1JRoyDJKYoMl3ePFoMEo0pbP
+ +FJw==
+X-Gm-Message-State: AOJu0YycMJLU/68v5IH6JX/HMxMeg5/1jz3pVKdr1i7u6mvPTX/LWz2g
+ HsbGtp7PXlmGkwdq51mJO9o1NTyNEoKZCAik3kGXaTNtiAngI1gvvpXcaMcMg+WqTSLV+YA4HmI
+ T4jNAM+AiNbDvffJKx90ADAU2fccFKJdca7xtqz6SdNSnRyXZqi36qZv/
+X-Gm-Gg: Acq92OF/ULsL0AX2dyjvycq0Lt7mSL2+NDWVPICiDT11lY4QIbaKewDixT13I1Z82Uk
+ aElhM6vFrFXDD10Jw4z/C5Gx2tBaZA4rSZLLBUuHsXHNZFRkEq3MUpVkCjnvrz12ijwAnnDBmwY
+ YihXp4hTSwYKPwlDVRClbGLuABIF5Ed2YkWOS8xu5hxwtEl3DNLyLj+dOPLPPbilzXj54AVD9bu
+ 8GbpqtRxrx3jLZ60hMXcdG2AtG7/y2MQT6r+T6SFp721RYgvQyXVwD2pP5ufrJeTb166Ut/Nhw4
+ qyUkkw7P1AM9B3DiRLBRADptBprooR6wF0GIrbpVCeJjESc/+wL8fh0KDAtrGAqAPLEfXJuI5mc
+ uvbuxlQHzVNtxVVDHOnbTNa8Nzh2PZ1D6uKmg2tMparBl9mQkrI2AcTXU8XZCxOP6
+X-Received: by 2002:a17:903:2f89:b0:2c1:8fea:4dbf with SMTP id
+ d9443c01a7336-2c4104113a0mr53580745ad.8.1781307315974; 
+ Fri, 12 Jun 2026 16:35:15 -0700 (PDT)
+X-Received: by 2002:a17:903:2f89:b0:2c1:8fea:4dbf with SMTP id
+ d9443c01a7336-2c4104113a0mr53580415ad.8.1781307315488; 
+ Fri, 12 Jun 2026 16:35:15 -0700 (PDT)
+Received: from [192.168.68.51] (n175-34-8-244.mrk21.qld.optusnet.com.au.
+ [175.34.8.244]) by smtp.gmail.com with ESMTPSA id
+ d9443c01a7336-2c4327ac631sm31167195ad.44.2026.06.12.16.35.09
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Fri, 12 Jun 2026 16:35:14 -0700 (PDT)
+Message-ID: <311f0568-facf-49de-83e8-7844f5c60e29@redhat.com>
+Date: Sat, 13 Jun 2026 09:35:07 +1000
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Received-SPF: pass client-ip=172.234.252.31;
- envelope-from=sstabellini@kernel.org; helo=sea.source.kernel.org
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 0/2] system/memory: Make ram device region directly
+ accessible
+From: Gavin Shan <gshan@redhat.com>
+To: qemu-arm@nongnu.org
+Cc: qemu-devel@nongnu.org, peterx@redhat.com, mst@redhat.com,
+ peter.maydell@linaro.org, berrange@redhat.com, david@kernel.org,
+ alex@shazbot.org, clg@redhat.com, pbonzini@redhat.com, philmd@mailo.com,
+ phrdina@redhat.com, jugraham@redhat.com, shan.gavin@gmail.com,
+ liugang24219@sangfor.com.cn, dinghui@sangfor.com.cn
+References: <20260612110307.1264798-1-gshan@redhat.com>
+Content-Language: en-US
+In-Reply-To: <20260612110307.1264798-1-gshan@redhat.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=gshan@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -24
 X-Spam_score: -2.5
 X-Spam_bar: --
 X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.445,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -73,83 +123,55 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Fri, 12 Jun 2026, Christian Schoenebeck wrote:
-> Constrain max_count in v9fs_readdir() to transport's current, real
-> response buffer size before calling v9fs_do_readdir() to prevent
-> excessive host memory allocation for specific, crafted, huge
-> directories (large amount of entries) by bad clients.
-> 
-> Client may send a Treaddir request with a large 'count' parameter, and
-> while the negotiated 'msize' provides some limit, it accounts for guest
-> being somewhat faithful on the negotiated 'msize' value throughout the
-> session.
-> 
-> A bad guest client could have negotiated a large 'msize' but provide a
-> small reply buffer for Treaddir request, causing QEMU to allocate host
-> memory proportional to 'msize' before discovering the reply cannot fit.
-> 
-> Possible consequence was a potential DoS by a priviliged guest, causing
-> a disconnection of guest communication due to transport device being
-> marked as "broken", however QEMU process would have continued to run with
-> potentially giant host memory allocation, which might have negative
-> impact on other services running on host.
-> 
-> Fixes: CVE-2026-9238
-> Fixes: 2149675b195f ("9pfs: add new function v9fs_co_readdir_many()")
-> Reported-by: Feifan Qian <bea1e@proton.me>
-> Signed-off-by: Christian Schoenebeck <qemu_oss@crudebyte.com>
+[Cc Liu Gang and Ding hui]
 
-Reviewed-by: Stefano Stabellini <sstabellini@kernel.org>
-
-
-> ---
->  hw/9pfs/9p.c | 24 ++++++++++++++++++++++--
->  1 file changed, 22 insertions(+), 2 deletions(-)
+On 6/12/26 9:03 PM, Gavin Shan wrote:
+> All ram device regions was turned to be indirectly accessible by commit
+> 4a2e242bbb ("memory: Don't use memcpy for ram_device regions"). This leads
+> to a hanged guest where a NVidia GH100 GPU is passed from host. The memory
+> in its PCI BAR#4 can be allocated as DMA target buffer. qemu has to take
+> DMA bounce buffer in address_space_map() to cover the DMA request. However,
+> the bounce buffer size is 4096 bytes and we're overrunning it easily when
+> the guest has significant disk activities on compiling 'cuda-samples'.
+> The full log and problem description can be found from PATCH[1/2]'s commit
+> log.
 > 
-> diff --git a/hw/9pfs/9p.c b/hw/9pfs/9p.c
-> index 2bb42dfc2e..c3e78779b7 100644
-> --- a/hw/9pfs/9p.c
-> +++ b/hw/9pfs/9p.c
-> @@ -2652,6 +2652,7 @@ static void coroutine_fn v9fs_readdir(void *opaque)
->      uint32_t max_count;
->      V9fsPDU *pdu = opaque;
->      V9fsState *s = pdu->s;
-> +    size_t max_resp_sz;
->  
->      retval = pdu_unmarshal(pdu, offset, "dqd", &fid,
->                             &initial_offset, &max_count);
-> @@ -2660,9 +2661,28 @@ static void coroutine_fn v9fs_readdir(void *opaque)
->      }
->      trace_v9fs_readdir(pdu->tag, pdu->id, fid, initial_offset, max_count);
->  
-> +    max_resp_sz = s->msize;
-> +
-> +    /*
-> +     * Constrain max_count to transport's current, actual response buffer size.
-> +     * A bad client might provide a response buffer < msize.
-> +     */
-> +    if (s->transport->response_buffer_size) {
-> +        size_t buf_size = s->transport->response_buffer_size(pdu);
-> +        if (max_resp_sz > buf_size) {
-> +            max_resp_sz = buf_size;
-> +        }
-> +    }
-> +
->      /* Enough space for a R_readdir header: size[4] Rreaddir tag[2] count[4] */
-> -    if (max_count > s->msize - 11) {
-> -        max_count = s->msize - 11;
-> +    if (max_resp_sz > 11) {
-> +        max_resp_sz -= 11;
-> +    } else {
-> +        max_resp_sz = 0;
-> +    }
-> +
-> +    if (max_count > max_resp_sz) {
-> +        max_count = max_resp_sz;
->          warn_report_once(
->              "9p: bad client: T_readdir with count > msize - 11"
->          );
-> -- 
-> 2.47.3
+> Try to fix the issue handled in commit 4a2e242bbb by replacing mem{cpy, move}
+> with __builtin_mem{cpy, move} in the accessors to the ram device regions.
+> With this, we can basically revert that commit to make ram device region
+> directly accessible again and bypass the bounce buffer in address_space_map()
+> where the guest hang is caused.
 > 
+> PATCH[1] replaces mem{cpy, move} with __builtin_mem{cpy, move}
+> PATCH[2] makes ram device region directly accessible again
+> 
+
+Liu and Ding, Could you give this series a try to see if your e1000 issue gets
+fixed by this?
+
+   https://lore.kernel.org/qemu-devel/20260527091711.3901-1-liugang24219@sangfor.com.cn/
+
+> Changelog
+> =========
+> RFCv1 -> v1:
+>    * https://lists.nongnu.org/archive/html/qemu-arm/2026-06/msg00307.html
+>    * Reworked solution based on suggestions from Peter Xu, Peter Maydell
+>      and Michael S. Tsirkin
+> 
+> Gavin Shan (2):
+>    system/memory: Use __builtin_mem{cpy, move} in accessors of ram device
+>      region
+>    system/memory: Make ram device region directly accessible
+> 
+>   hw/remote/vfio-user-obj.c |  4 +--
+>   include/system/memory.h   | 53 +++++++++++++++++++++++++++++++--------
+>   system/memory.c           | 41 +-----------------------------
+>   system/physmem.c          |  8 +++---
+>   system/trace-events       |  2 --
+>   5 files changed, 50 insertions(+), 58 deletions(-)
+> 
+
+Thanks,
+Gavin
+
 
