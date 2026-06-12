@@ -4,59 +4,86 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id DE54FCD98C7
-	for <qemu-devel@archiver.kernel.org>; Fri, 12 Jun 2026 00:24:02 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 42AB5CD98D6
+	for <qemu-devel@archiver.kernel.org>; Fri, 12 Jun 2026 00:31:17 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wXpgF-0001zg-FS; Thu, 11 Jun 2026 20:23:27 -0400
+	id 1wXpmv-0003FG-5d; Thu, 11 Jun 2026 20:30:21 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <sstabellini@kernel.org>)
- id 1wXpg8-0001zJ-0a; Thu, 11 Jun 2026 20:23:21 -0400
-Received: from tor.source.kernel.org ([2600:3c04:e001:324:0:1991:8:25])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <sstabellini@kernel.org>)
- id 1wXpg6-00046t-HS; Thu, 11 Jun 2026 20:23:19 -0400
-Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
- by tor.source.kernel.org (Postfix) with ESMTP id 1A67660213;
- Fri, 12 Jun 2026 00:23:17 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8D92A1F000E9;
- Fri, 12 Jun 2026 00:23:16 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
- s=k20260515; t=1781223796;
- bh=8TYK6kA6oWDeS0+holxo/I9eQcUxDQjC49dKzEVfUiU=;
- h=Date:From:To:cc:Subject:In-Reply-To:References;
- b=npFpkTrs3Qfr5b/PjPWUFESt8QfuoOqTQuU9dZK4yasP+UUAydeLHoR2UBIIJ5NiI
- ftPuyRw+kHNBepp2RG0+aDko2x4PoLHfO51EFomnew/XVMrBPkJ8kU8oY7bSHK+26i
- PaVMAVOsp0eZ2dZzfyWHjrhAT3DUAXiGnA+GJHrKBiYOPRh+qvLKZb1qd1XcEet8la
- k2lXD1DG2J0QggRv+ERUnR12NVQJMGeIdUnu5teFX/hXBT8Fuoeb5m5wR03nd2llwn
- mTkWYosXTgS9kcdTWmJEhv0yxsiPwgt+Gj78OGXyuUHn0WJQAi9aU69ir7sntVI4qY
- /eu5M0h42bgOQ==
-Date: Thu, 11 Jun 2026 17:23:15 -0700 (PDT)
-From: Stefano Stabellini <sstabellini@kernel.org>
-X-X-Sender: sstabellini@ubuntu-linux-20-04-desktop
-To: Christian Schoenebeck <qemu_oss@crudebyte.com>
-cc: qemu-devel@nongnu.org, qemu-stable@nongnu.org, Greg Kurz <groug@kaod.org>, 
- Feifan Qian <bea1e@proton.me>, Stefano Stabellini <sstabellini@kernel.org>,
- Anthony PERARD <anthony@xenproject.org>, 
- "Edgar E. Iglesias" <edgar.iglesias@gmail.com>
-Subject: Re: [PATCH 7/8] 9pfs/xen: implement response_buffer_size callback
-In-Reply-To: <95ab978f1919cf91ea1f2a5de6c870e30e420b32.1779916560.git.qemu_oss@crudebyte.com>
-Message-ID: <alpine.DEB.2.22.394.2606111710000.368315@ubuntu-linux-20-04-desktop>
-References: <cover.1779916560.git.qemu_oss@crudebyte.com>
- <95ab978f1919cf91ea1f2a5de6c870e30e420b32.1779916560.git.qemu_oss@crudebyte.com>
-User-Agent: Alpine 2.22 (DEB 394 2020-01-19)
+ (Exim 4.90_1) (envelope-from <jeuk20.kim@gmail.com>)
+ id 1wXpmu-0003Et-0j
+ for qemu-devel@nongnu.org; Thu, 11 Jun 2026 20:30:20 -0400
+Received: from mail-pj1-x1031.google.com ([2607:f8b0:4864:20::1031])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <jeuk20.kim@gmail.com>)
+ id 1wXpms-0007Lg-Dx
+ for qemu-devel@nongnu.org; Thu, 11 Jun 2026 20:30:19 -0400
+Received: by mail-pj1-x1031.google.com with SMTP id
+ 98e67ed59e1d1-36ba285e98bso492406a91.2
+ for <qemu-devel@nongnu.org>; Thu, 11 Jun 2026 17:30:17 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=gmail.com; s=20251104; t=1781224217; x=1781829017; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:from:to:cc:subject:date:message-id:reply-to;
+ bh=fYrC45hA6fYQ24jxVW3958vXmUWxFbqrVsn8tQmoB88=;
+ b=j35fZM0lH+N0kIu28w6ozVZ2beRu1G5GyQ0ocjKTJhH+pRac3kNvjd0Hzz+EPx82CK
+ XDcX9+QQ0Z5XsfoD4i6pa7S/EclDghNyxSU1yeHB7h3tQI2AAdYOWbJNzkL+sUQfL8Xd
+ fUh4HcytdjuEOtgLHxI12vr7zZaoH72kvb/ppHz2SiZZQmsu4Ie1OSyrmYq8qUjTlpo3
+ d9GbwrRERdUkyZ6J8OSflsbmoh3/WX7D96LX+dJS9k3oYYr+FIgaA3T0/Jq2zpzJgYEd
+ UzL1ClERBVTS2gvXRe4Qu1jKTOaWzmSdTT0ScCw74J1lMzMEW33uNrzzJ2YnGiC5w0zC
+ hSGw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1781224217; x=1781829017;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=fYrC45hA6fYQ24jxVW3958vXmUWxFbqrVsn8tQmoB88=;
+ b=s2fX3F5HkL+5wPuD83F5Cmutj8RxBnYQlkfPkn09L24GWY6K60480VffB4Tw2DRMT8
+ L1sgPRRfoTTozYUWHb+CZBSckYK6YX1wMyvvJNttN98DiqjRf5zRH0wwd51WAwKxci6G
+ qHF/pGM87qPZZT2Y7WPOTi+Dqewre6R95SbX9ed/xoJwXZpU1ucj/R+gwRQ5vbgdwBEQ
+ ZlqS8OvBBb7x4AWupHWNoFOdObO/CfpQBesSuiBuPTnuuStJtbzdBoNIsWYbXG8Ryd3t
+ Ct1thaOGvAvdjowOPMb4Tw5tOiLCyu+Q/esyoKXdtpVGS8Ruisc+fPIbp9vEFsNqQAac
+ kxRg==
+X-Gm-Message-State: AOJu0YzG0ywXo7l9BQZ93nbaA5JutO3xZgrfa0rBvV5I2WIXS0mir8C4
+ HteJOQUH2haG0qfOOmxfG5zWAGnXpWo+sPL3y1hccwg1uxDmuYqxu466ndVJEw==
+X-Gm-Gg: Acq92OHzwz+x+cqiB5sLEm+EOJccDN/is/2hQnN8GMXpYiPHzIHAC9h3ZF7n5AOO2Sr
+ k6foeii+Zzi5f3oxo43OCvANrGDN6uSLC4j+8dxPA06cfqusNXmbxKvgndA/lOjhj7bxXGRwjz0
+ XyflpRlNPpW8IDcwhAoEslPanZ8M/QYmP6KEK+NqV1kcXw5w0c6PzurEW0HMkFqEDR0f9XjeOUq
+ sq/q4/1y8zPgVJN60ZW/Wdc0P3bkNNc3SCiIJSya8Gv+wGdnDgZkT59O/75xzcpGx6koCuZMYVQ
+ 8jly2APZRJX4225NM7INb5WSPeLG9V6aDtFZdvnGiqLv3AGU4p0mDFbxZrZJXXpnYYpneewgT2r
+ oDZco9glzBG9qdgwKCDNrSD9VE4zvP4y26POihZB+S602IuLlO/MuhK2jvmSUggNPvPPPsPgjrZ
+ ZyMtSHbSeLrVOhlb/F7bBbrnQLmGNk
+X-Received: by 2002:a17:90b:4b8c:b0:36e:2106:ded8 with SMTP id
+ 98e67ed59e1d1-37a040b3449mr594387a91.25.1781224216605; 
+ Thu, 11 Jun 2026 17:30:16 -0700 (PDT)
+Received: from jeuk-MS-7D42.. ([211.226.54.223])
+ by smtp.gmail.com with ESMTPSA id
+ 98e67ed59e1d1-379e79396d7sm336989a91.1.2026.06.11.17.30.13
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Thu, 11 Jun 2026 17:30:16 -0700 (PDT)
+From: Jeuk Kim <jeuk20.kim@gmail.com>
+To: qemu-devel@nongnu.org,
+	stefanha@redhat.com
+Cc: kwolf@redhat.com, hreitz@redhat.com, farosas@suse.de, lvivier@redhat.com,
+ pbonzini@redhat.com, qemu-block@nongnu.org, jeuk20.kim@samsung.com,
+ j-young.choi@samsung.com
+Subject: [PULL 0/2] ufs queue
+Date: Fri, 12 Jun 2026 09:29:54 +0900
+Message-ID: <cover.1781223925.git.jeuk20.kim@samsung.com>
+X-Mailer: git-send-email 2.43.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Received-SPF: pass client-ip=2600:3c04:e001:324:0:1991:8:25;
- envelope-from=sstabellini@kernel.org; helo=tor.source.kernel.org
-X-Spam_score_int: -24
-X-Spam_score: -2.5
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::1031;
+ envelope-from=jeuk20.kim@gmail.com; helo=mail-pj1-x1031.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.445,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -72,62 +99,35 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, 27 May 2026, Christian Schoenebeck wrote:
-> Add and implement the response_buffer_size callback for the Xen
-> transport.
-> 
-> Returns the size of the response buffer from the rings in_sg, as limit
-> for 9p server while generating a response for supplied PDU.
-> 
-> Signed-off-by: Christian Schoenebeck <qemu_oss@crudebyte.com>
-> ---
->  hw/9pfs/xen-9p-backend.c | 11 +++++++++++
->  1 file changed, 11 insertions(+)
-> 
-> diff --git a/hw/9pfs/xen-9p-backend.c b/hw/9pfs/xen-9p-backend.c
-> index 94654022fe..258a1f2ec7 100644
-> --- a/hw/9pfs/xen-9p-backend.c
-> +++ b/hw/9pfs/xen-9p-backend.c
-> @@ -256,6 +256,16 @@ static size_t xen_9p_msize_limit(V9fsState *s)
->      return XEN_FLEX_RING_SIZE(xen_9pfs->rings[0].ring_order);
->  }
->  
-> +static size_t xen_9pfs_response_buffer_size(V9fsPDU *pdu)
-> +{
-> +    Xen9pfsDev *priv = container_of(pdu->s, Xen9pfsDev, state);
-> +    Xen9pfsRing *ring = &priv->rings[pdu->tag % priv->num_rings];
-> +    int num;
-> +
-> +    xen_9pfs_in_sg(ring, ring->sg, &num, pdu->idx, 0);
-> +    return iov_size(ring->sg, num);
-> +}
+From: Jeuk Kim <jeuk20.kim@samsung.com>
 
-xen_9pfs_init_out_iov_from_pdu and xen_9pfs_init_in_iov_from_pdu
-allocate ring->sg, but it would seem xen_9pfs_response_buffer_size could
-be called before xen_9pfs_init_out_iov_from_pdu and
-xen_9pfs_init_in_iov_from_pdu, therefore ring->sg could be NULL here.
+The following changes since commit ec6a1f43989c6bbf2de1ab84959a70ee35fa1b57:
 
-If we do it this way, we avoid the NULL dereference.
+  Merge tag 'linux-user-pull-request' of https://github.com/hdeller/qemu-hppa into staging (2026-06-11 13:22:50 -0400)
 
-   struct iovec in_sg[2];
+are available in the Git repository at:
 
-   xen_9pfs_in_sg(ring, in_sg, &num, pdu->idx, 0);
-   return iov_size(in_sg, num);
+  https://gitlab.com/jeuk20.kim/qemu.git tags/pull-ufs-20260612
 
+for you to fetch changes up to 6b1215d82f7cd8a0b562a02a1473aa6714759eed:
 
+  tests/qtest: Add UFS HID qtest (2026-06-12 09:21:28 +0900)
 
->  static const V9fsTransport xen_9p_transport = {
->      .pdu_vmarshal = xen_9pfs_pdu_vmarshal,
->      .pdu_vunmarshal = xen_9pfs_pdu_vunmarshal,
-> @@ -263,6 +273,7 @@ static const V9fsTransport xen_9p_transport = {
->      .init_out_iov_from_pdu = xen_9pfs_init_out_iov_from_pdu,
->      .push_and_notify = xen_9pfs_push_and_notify,
->      .msize_limit = xen_9p_msize_limit,
-> +    .response_buffer_size = xen_9pfs_response_buffer_size,
->  };
->  
->  static int xen_9pfs_init(struct XenLegacyDevice *xendev)
-> -- 
-> 2.47.3
-> 
+----------------------------------------------------------------
+ufs queue
+
+- Add Host Initiated Defragmentation (HID) support
+
+----------------------------------------------------------------
+Keoseong Park (2):
+      hw/ufs: Add Host Initiated Defragmentation (HID) support
+      tests/qtest: Add UFS HID qtest
+
+ hw/ufs/lu.c            |  16 ++-
+ hw/ufs/trace-events    |   4 +
+ hw/ufs/ufs.c           | 154 +++++++++++++++++++++++++--
+ hw/ufs/ufs.h           |   4 +
+ include/block/ufs.h    |  18 ++++
+ tests/qtest/ufs-test.c | 275 +++++++++++++++++++++++++++++++++++++++++++++++++
+ 6 files changed, 463 insertions(+), 8 deletions(-)
 
