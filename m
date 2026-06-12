@@ -4,81 +4,81 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E86D1CD98CE
-	for <qemu-devel@archiver.kernel.org>; Fri, 12 Jun 2026 16:00:13 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 33B98CD98CE
+	for <qemu-devel@archiver.kernel.org>; Fri, 12 Jun 2026 16:03:47 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wY4IF-000515-Bv; Fri, 12 Jun 2026 11:59:39 -0400
+	id 1wY4Lf-0006zk-OM; Fri, 12 Jun 2026 12:03:11 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1wY4ID-0004ya-9L
- for qemu-devel@nongnu.org; Fri, 12 Jun 2026 11:59:37 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1wY4Lc-0006xp-KB
+ for qemu-devel@nongnu.org; Fri, 12 Jun 2026 12:03:08 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1wY4IB-000334-Hy
- for qemu-devel@nongnu.org; Fri, 12 Jun 2026 11:59:36 -0400
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1wY4Lb-00044a-1c
+ for qemu-devel@nongnu.org; Fri, 12 Jun 2026 12:03:08 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1781279973;
+ s=mimecast20190719; t=1781280185;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  in-reply-to:in-reply-to:references:references;
- bh=IZBnaTIqCP0dfLgrceR7aG1MN5jEfzgwfRp9h8dkhK8=;
- b=TCRzFxGI2qkhGxTwrDazBvFauDWeQhIvNiB5m3bHar6BEZaXD+hWKz5SYReH6a200x0/SM
- ntZTuKvrKz5J736dore5prMuP2GX8FfvOSkHI2XvqlWb7vrdiMjWxaFp0DDJIiO+jDXXGM
- 7S8aJC7yLFFaMRWtInVKjhGddi74LFw=
-Received: from mail-qt1-f197.google.com (mail-qt1-f197.google.com
- [209.85.160.197]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=NTMm2D0fEQyJoHj6G9esQdJ55OZeVXOyWjEb3gMZkLE=;
+ b=RwNxZgD0J+0rdh9cQk8CWP87bdymkP5gaAeWmlPpTkpfwICUG6NW7/AJsXMwKpnNG1k26Z
+ bKL+HD3Ambw4j/mYXKz65ZHhwe/yX+wUUm6Tc49gfHF/LNHcX2MuMOzE//5XW9fQWZLCKT
+ n7c1vbvVfxT5hDv/Iwb5xmGL5h06ilo=
+Received: from mail-vk1-f199.google.com (mail-vk1-f199.google.com
+ [209.85.221.199]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-543-TaXkdQg5PRS0l98-w-_Geg-1; Fri, 12 Jun 2026 11:59:31 -0400
-X-MC-Unique: TaXkdQg5PRS0l98-w-_Geg-1
-X-Mimecast-MFC-AGG-ID: TaXkdQg5PRS0l98-w-_Geg_1781279970
-Received: by mail-qt1-f197.google.com with SMTP id
- d75a77b69052e-5175b7946d5so9100591cf.0
- for <qemu-devel@nongnu.org>; Fri, 12 Jun 2026 08:59:30 -0700 (PDT)
+ us-mta-590-fvfoHAQKNcKtVgGB8Rlb6g-1; Fri, 12 Jun 2026 12:03:04 -0400
+X-MC-Unique: fvfoHAQKNcKtVgGB8Rlb6g-1
+X-Mimecast-MFC-AGG-ID: fvfoHAQKNcKtVgGB8Rlb6g_1781280184
+Received: by mail-vk1-f199.google.com with SMTP id
+ 71dfb90a1353d-5a2afc494efso1296610e0c.2
+ for <qemu-devel@nongnu.org>; Fri, 12 Jun 2026 09:03:04 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1781279970; x=1781884770; darn=nongnu.org;
+ d=redhat.com; s=google; t=1781280184; x=1781884984; darn=nongnu.org;
  h=in-reply-to:content-disposition:mime-version:references:message-id
  :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
- bh=IZBnaTIqCP0dfLgrceR7aG1MN5jEfzgwfRp9h8dkhK8=;
- b=pqrVOpkMD8SFTV4yb7NM16T+1+laUkCiJxLnHWQ/v8sUemPFB2JO/IwRQ5Ikrp3Hpv
- CUFvT6gtQPsdxw6y0HFMgf4vqR6MbpmDNARVdbbX8fuLfO9fKuK984/Y0lpruOvGbA4e
- deD9DRj0CMNWFtMb2qMgTT90HGAJQy+YOpskXw6Z5K4jIDgGHNlnVgBmbO2UkL2rdzZQ
- T4M/YdsuINzLEbJDjZtSZAwOvtyW3XYcm50zkTPMxaQ1FjwimMKbxQdheSH95JGpYj2x
- 7SyGUeTIa1XgcRe0kYZFhkDhVPkwU+dIrdzC3WI219wWNkHcBqNdaNtOTmSuiIl+gru3
- Xh0w==
+ bh=NTMm2D0fEQyJoHj6G9esQdJ55OZeVXOyWjEb3gMZkLE=;
+ b=PL7L2tgJlHcXCZ0KsKzyX8Q+1o7m0wIPcayCdQZcyhxEcIti0tvZdPvdzjg8hITg7w
+ pHu+PZkOx/ysjdKmwXoF3eJlXNFl3gF9g19VdlPnTHKK3IBh9eYq4ln9uIUfC7NvMcjS
+ XnZ86Ue12LYe1VXBA+X8+gRQ7Ui/aYePl2qFuXEdWwfpwxl4Oc+uXAUH6vybxlssK6ra
+ U3gIB4T7nIhdIkayAGgaaSb7DVwvFjW/DLteS+e3UJDEQXjPDJc81VbYcoHNCcpJQwGY
+ SJAz4YE4LJfCSJJBr104OmTssAe73DuMP9DOFHg45ocgHM1gsvamsNODpSN8/qR70quz
+ r7pg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1781279970; x=1781884770;
+ d=1e100.net; s=20251104; t=1781280184; x=1781884984;
  h=in-reply-to:content-disposition:mime-version:references:message-id
  :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=IZBnaTIqCP0dfLgrceR7aG1MN5jEfzgwfRp9h8dkhK8=;
- b=KI4Lm1JLLk15CDEcy30d8ZEg2GRHp+8Q+xUtI88NATp+sfaHxsHusgwbJuRNA+UaH6
- 9G6HZ151Brg+kMeT9dj4fN3VAHGijyvwZWDCQ1Fu9EktR6qwCONWIWMY2QMKIfaxpc1s
- c+mCcBs3VrqjBN/U+UDsYVv9C0HzYevyV9dl5X+gjk7p0Ko4ciVu0hP659jZZfzkC9Oy
- SEFehy18KwZ7GnyfdMl5dAQFK94jXAqO1rscayunKD9zyTuHFT3z/Tlt0LigPuMSlPVm
- nGDUeT33brmh3hcbtQMkIkvJzJkckAadEs7XVDu/DyvB0vGApEWfMEdx6RZiqCAbrZ/H
- 3Qkg==
-X-Gm-Message-State: AOJu0Ywi31JkXKVuEc6CgKIJmYPFjPsFtGFUVCFTSEd1EbudMpzZRgjB
- yMkVqfOEuzhXr6ORkmUgN+xDTAQIuK97NNoxw84pdBFSOl2jIFwoLDROBiGGTPrYyjcCqbr2FD5
- cqGjovgDMEIzPvsKGBeAUNgrTDTBMRg6LV5nFWU3Z9guojGP8Wvpcol3E
-X-Gm-Gg: Acq92OFWgzHAJklzxmkPPf3Pu3eWmWsW0ndYoS3NL33x735MxZyvxyeC03sINBZy4Xo
- K2qm9ZuzIpE+QpISP8SnxxfKiKPTARMqlcGaOYQzSVrbWJAjQVRWl9I3mu2KKxH5b3M4J+mqOlT
- sjq62C2lnUUwrQXI+2aECW4lRs8i7yVwwNnC0IpxT0W0P30TtRHN8LjFVNQbocYWKUWP6tFBStj
- +qs+LJ89rE/z4kdpHdYjUypoVGZBGlTIaedt5Xe/J4wu3CwNDbW9xNtZJDT65MmIGY246l7QL7L
- vWAnsq8yj5kViiEbLdvRb6nBefYWsbon97Yk8f1fFJV3Msc2VYG0NUVd1SDzKRnzVi9l9lxAjDo
- vWqC/TQXyDRXi63M=
-X-Received: by 2002:a05:622a:834d:b0:517:82a1:351d with SMTP id
- d75a77b69052e-517fe4ffac9mr38074731cf.20.1781279969614; 
- Fri, 12 Jun 2026 08:59:29 -0700 (PDT)
-X-Received: by 2002:a05:622a:834d:b0:517:82a1:351d with SMTP id
- d75a77b69052e-517fe4ffac9mr38074011cf.20.1781279969107; 
- Fri, 12 Jun 2026 08:59:29 -0700 (PDT)
+ bh=NTMm2D0fEQyJoHj6G9esQdJ55OZeVXOyWjEb3gMZkLE=;
+ b=lVgU6hofjDEzvxuM4lFx13+5XabnlTWFhE/ZURXGQNex5g1bD/GWwmp5J0UnjHk/Ad
+ mQDRrOBTHFn+KaFE6z0PDkmWn4B1QbwgpInukYn/MwFakUiQDdP19h863NgErJgngDnv
+ 8h+ELXKDpCymr5sZYpMmtNY3ylf9yI/v8O51ecTInrl3y1ZL63tksr8qKTJOJoqNgss7
+ axf9nLuXP7msot/LCQmeN5ZTW9niUHcjCGdyfb/gKvFFXB/DHghYFJHHdh3ORlfkoWF1
+ mJOyLPrtbCNdqXcIxThzgNC6q8C52Omvbv7JgIw6sowv6WJl7K1aw7lv1wDC+cqufUkR
+ SBLQ==
+X-Gm-Message-State: AOJu0Yyoy3o//kQoqjaBiBEyjwFyvSXKy+neoi7sXWABLYf1/EQ6SaYu
+ 1uMnJgbuLiIHb9a+5EQYJah63/GGCarzSBtb/EeqygadY1LUQFR2OpWqlM6SF6lonrkzBYf/JQP
+ Sr2j81DAiH5+cxWO8MCaHJn2fRyqpMbkUTDKY/URYk1QqVCqtRy+OSwyn
+X-Gm-Gg: Acq92OERWakyry28OyzxNT/wSVIm3hvoOdesYX02DMd+PlLx+n0SnVqweGWzNJO2c1j
+ ceY03rOi4HDaiKhhfKvutqxDpa7FXHR7YJLQH4aHFbET9xK7R56m3Tyv/KZiKw0GNpIfh19IOLA
+ xV3S8Oh+TYoEDF5Cg6VM66zu2t8MI3G/38qgcHCGMD1LtYAx58XPr0zC9RiPXfLGBACZjiAq72A
+ DgZzvAov8cU9HNMD+ryGIZEFm9JS7jGExrey9gsVni+b1Podjz4+r02uMIjqsR/ni3+JuCtv4XH
+ WXmZo3OLC16gpUFObfqrzKA1nyj6xbPP2iguKq2DJA852zSU0syHyNqz5Sa7NFaRk31R0EgoU4O
+ NPlSA0uGej/RxlPM=
+X-Received: by 2002:a05:6122:1da2:b0:56b:9b7b:83e7 with SMTP id
+ 71dfb90a1353d-5bb6c02821bmr2177762e0c.7.1781280183488; 
+ Fri, 12 Jun 2026 09:03:03 -0700 (PDT)
+X-Received: by 2002:a05:6122:1da2:b0:56b:9b7b:83e7 with SMTP id
+ 71dfb90a1353d-5bb6c02821bmr2177647e0c.7.1781280182709; 
+ Fri, 12 Jun 2026 09:03:02 -0700 (PDT)
 Received: from x1.local ([142.189.10.167]) by smtp.gmail.com with ESMTPSA id
- d75a77b69052e-517fb642541sm24859251cf.10.2026.06.12.08.59.27
+ 71dfb90a1353d-5bb69270c4asm2844020e0c.18.2026.06.12.09.03.01
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 12 Jun 2026 08:59:28 -0700 (PDT)
-Date: Fri, 12 Jun 2026 11:59:26 -0400
+ Fri, 12 Jun 2026 09:03:02 -0700 (PDT)
+Date: Fri, 12 Jun 2026 12:03:00 -0400
 From: Peter Xu <peterx@redhat.com>
 To: Avihai Horon <avihaih@nvidia.com>
 Cc: qemu-devel@nongnu.org, Alex Williamson <alex@shazbot.org>,
@@ -96,25 +96,24 @@ Cc: qemu-devel@nongnu.org, Alex Williamson <alex@shazbot.org>,
  Cornelia Huck <cohuck@redhat.com>, Eric Blake <eblake@redhat.com>,
  Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>,
  John Snow <jsnow@redhat.com>, Markus Armbruster <armbru@redhat.com>,
- Maor Gottlieb <maorg@nvidia.com>, Gavin Shan <gshan@redhat.com>,
- Wei Wang <wei.w.wang@intel.com>
-Subject: Re: [PATCH v3 02/14] migration/ram: Use
- migration_bitmap_sync_precopy() for postcopy discard
-Message-ID: <aiws3u2yanOQMVtv@x1.local>
+ Maor Gottlieb <maorg@nvidia.com>
+Subject: Re: [PATCH v3 03/14] migration: Run final save_query_pending at
+ switchover
+Message-ID: <aiwttEue4ssDrwS6@x1.local>
 References: <20260609075812.32067-1-avihaih@nvidia.com>
- <20260609075812.32067-3-avihaih@nvidia.com>
+ <20260609075812.32067-4-avihaih@nvidia.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <20260609075812.32067-3-avihaih@nvidia.com>
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=peterx@redhat.com;
+In-Reply-To: <20260609075812.32067-4-avihaih@nvidia.com>
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=peterx@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -24
 X-Spam_score: -2.5
 X-Spam_bar: --
 X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.445,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
  SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -131,24 +130,21 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, Jun 09, 2026 at 10:58:00AM +0300, Avihai Horon wrote:
-> ram_postcopy_send_discard_bitmap() performs the final RAM dirty bitmap
-> sync at postcopy switchover, before sending discard bitmap to the
-> destination. Unlike the precopy switchover path, it currently calls the
-> raw migration_bitmap_sync() helper and passes last_stage=false.
+On Tue, Jun 09, 2026 at 10:58:01AM +0300, Avihai Horon wrote:
+> Before switchover, the source needs one last exact pending query so
+> modules can flush dirty state. This is currently done ad hoc in modules
+> handlers. For example, RAM syncs its dirty bitmap in its save_complete
+> handler.
 > 
-> Postcopy switchover is also a stopped-VM final sync point, so use
-> migration_bitmap_sync_precopy(true). This keeps RAM final bitmap sync
-> handling consistent across precopy and postcopy switchover, including
-> the precopy bitmap-sync notifier wrapper. Current notifier users are
-> safe in postcopy: virtio-balloon free-page hinting already opts out when
-> postcopy-ram is enabled [1].
+> This should be a general concept relevant for any module, so extract it
+> to migration core instead by running a final save_query_pending before
+> switchover.
 > 
-> This prepares for moving the final sync out of RAM completion/discard
-> paths and into migration_switchover_start(), where the migration core
-> can run a final save_query_pending pass for all modules uniformly.
-> 
-> [1] fd51e54fa102 ("virtio-balloon: don't start free page hinting if postcopy is possible")
+> The final query requires special handling by modules (e.g., it's called
+> with BQL locked, during VM stop), so extend save_query_pending
+> SaveVMHandlers callback and qemu_savevm_query_pending() with a "final"
+> flag so migration modules can tell the last pending query during
+> switchover from periodic iteration queries.
 > 
 > Signed-off-by: Avihai Horon <avihaih@nvidia.com>
 
