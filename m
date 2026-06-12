@@ -4,101 +4,157 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 31370CD8CA8
-	for <qemu-devel@archiver.kernel.org>; Fri, 12 Jun 2026 07:56:56 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 720A3CD8CA8
+	for <qemu-devel@archiver.kernel.org>; Fri, 12 Jun 2026 07:57:11 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wXwki-0003cD-86; Fri, 12 Jun 2026 03:56:32 -0400
+	id 1wXwl2-0003h0-2h; Fri, 12 Jun 2026 03:56:52 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jay.chang@sifive.com>)
- id 1wXwkf-0003Yp-5N
- for qemu-devel@nongnu.org; Fri, 12 Jun 2026 03:56:29 -0400
-Received: from mail-ej1-x62b.google.com ([2a00:1450:4864:20::62b])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <jay.chang@sifive.com>)
- id 1wXwkd-0005dV-28
- for qemu-devel@nongnu.org; Fri, 12 Jun 2026 03:56:28 -0400
-Received: by mail-ej1-x62b.google.com with SMTP id
- a640c23a62f3a-bec450b950dso92585566b.2
- for <qemu-devel@nongnu.org>; Fri, 12 Jun 2026 00:56:26 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1wXwkz-0003gV-V7
+ for qemu-devel@nongnu.org; Fri, 12 Jun 2026 03:56:50 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1wXwkx-0005fH-Sh
+ for qemu-devel@nongnu.org; Fri, 12 Jun 2026 03:56:49 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1781251006;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
+ bh=XmD44FnM2EE1iQdmLWVSFo+TF1q0GBI3+JlCE2dcAbo=;
+ b=Zrh6WI70II3sPpoErDnEExQ65PbSvjZU7FP/1zvF5M3JOnipUW7Wcgry0HP7P8ELmdkgJx
+ c33C/ykZtoYcaU8gTbkfNY7ZNIVnXrfH5KCRiuZKLBPFKulXa49In+BLrhxjNTjYIet8kI
+ aDWWCLbggtgtEh5U2wUV/kUokBELSI0=
+Received: from mail-wr1-f71.google.com (mail-wr1-f71.google.com
+ [209.85.221.71]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-590-jfpJHYgbNhyZ3F43OF4wbw-1; Fri, 12 Jun 2026 03:56:45 -0400
+X-MC-Unique: jfpJHYgbNhyZ3F43OF4wbw-1
+X-Mimecast-MFC-AGG-ID: jfpJHYgbNhyZ3F43OF4wbw_1781251004
+Received: by mail-wr1-f71.google.com with SMTP id
+ ffacd0b85a97d-46010392f89so603703f8f.2
+ for <qemu-devel@nongnu.org>; Fri, 12 Jun 2026 00:56:45 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=sifive.com; s=google; t=1781250985; x=1781855785; darn=nongnu.org;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=3DrFaGSZKbNXW4A1RFDqCT6Sm0R+Ztztc5wQVzZLhOY=;
- b=e1fyIRkzNR77J32Qnw4XsiykMlwt2Sq93p9J890L2Rfm7F8FGC6LWa6cs6JGpnCTb+
- emlHDyYN6BcJmbxB+FmWPZdO5X2+QwvzM5tv3Am8/9DghIWA8JbOvEcWOEQmSwiE8a2t
- iehVSbgJBdJPHNL6gYUDrtNWKBtZqRpTGbFONWygOvsabLSmFy622XB0zUXbqGZJJVwd
- CbcdOf3RLIa5gW69nEOEKBRMO7rJdC6n/Ik8SlzepYOd8/OLkOuR+3UdVuRWqJYmADpm
- 0Ey549Cnt3slWJudB0eiJC2skwtZ8PjQ2mpKstiokJeBM50m4/XyHRI2+0GpRWR73L7g
- nNcQ==
+ d=redhat.com; s=google; t=1781251004; x=1781855804; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:autocrypt:from
+ :content-language:references:cc:to:subject:user-agent:mime-version
+ :date:message-id:from:to:cc:subject:date:message-id:reply-to;
+ bh=XmD44FnM2EE1iQdmLWVSFo+TF1q0GBI3+JlCE2dcAbo=;
+ b=T+9jW7wGyoQxyllCdCMPH98/tnXTnOpNJCvSUOvHc1sU0nkrvUBYQF1MMZCJ50qaiH
+ s98h+VqJXpZ1RhbjAJz8iI08CvgGtGsQExTjX/DezaZXbsD32E09fQcxzEFQHegNJeeX
+ f98QRnwWeFB7QaE9vhzgT+kZnHOYWV6r7Su0HxDYXM6rcS0JGTwGdc6kRS9rXk2q0gOX
+ IyLTnuthVWF26fUG+cBpUcWAcRb8sdDrvLI9KitHWlevUhqx9JWg2dv6Lmcw3+WRv+a9
+ WRLnowbMfc0UW4aoM0II0fiX2Ox21K/ubmHp64VZa51wTs1Bd2k2K4yXg82XJ8iM+49A
+ JR7w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1781250985; x=1781855785;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ d=1e100.net; s=20251104; t=1781251004; x=1781855804;
+ h=content-transfer-encoding:in-reply-to:autocrypt:from
+ :content-language:references:cc:to:subject:user-agent:mime-version
+ :date:message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
  :message-id:reply-to;
- bh=3DrFaGSZKbNXW4A1RFDqCT6Sm0R+Ztztc5wQVzZLhOY=;
- b=sIJ7aSX2vYn+etk2d39z1AV+5h/caawfsSNlbXEcuPzu9FugnOjwIIdkzbdum9I7yL
- HY8YwkDsD/hb70yN+y4pDhHPKkXiZXWHPrINaJTd991IeBZF+K0Z9RPG2HeU4E629UHv
- TPw3Yjv5RiMRWGzhBbYntz4JxqE8FAP3p85Am4RqVVNzO4pNuS2z5zOQnVCI3ToY9Kt/
- ptwo+hBuZS1djjG4NakLSCf4gs91TOjrdEXhulksteW7kZoCF5VeeC0oHwae0Blb/zxN
- csuWeBroIfqd+R4L8akCUn2z8fjz+eH0C6iL8t3F5cfQeSYMeJMOSl+3TLA1chzD5A8u
- Qm3g==
-X-Gm-Message-State: AOJu0YyZqpdZ/Q47yt3dIig4WQ7wUsPCOooFZvODlpYDMzCr96SozkLZ
- byocpOU7AqTyncxKQccncRrCaocIK/QOyblrR3AfobtmD/L8czUMZj0D+6EicZFqWKkJx4uAEI8
- pek8auNkhz05FIfe4sdVkcYiT9zPndohgqUXoUX18ONqnSXbmb8WnOQeYyCRk+nLI7ms6yzu6lB
- nPTW/SqM241sqAR2SOrrmUoGzu+B1//iID/W9Ju+Z7xd4=
-X-Gm-Gg: Acq92OHn19jSxaHe6hW+kZOiYr28gkhbwqH+7Y+XC72KDiwtabcfvUlC+Krp1gy3ewT
- 7ko0oM97Vdja+H9Htcs3zhasknaMfbSphYgcHrW8ruwhkQ1idYbX8PpXRbU9Xnor31JeL1xieaY
- +DnmL9hfSs4WzJKtcj6OpCja/Om+NRHYEbygRW5pd6/A3yf7SdBg3xnPwYrczKLlBf7XJ3pCDvw
- YXnyGXenQ45gASmdfucRlGmhFjDGmZXTEymPay3Rng3D7jdI+6zojSslnefcbcscus8YYDaoSz/
- +P3BJPVt2P2BHJA7JOnJ6yRyhb2nRYe8VLzqbcWkmpMmXJ5rVP+EK3z2giwVszvaW+0UI/ezRO/
- 6LP2ksY7BJWi1vSwRtzHCs/K78bcv3jTZ1sESmLScltYyoBlImUcE7rvugedAB2SblIAsSNxcuZ
- hZnL0heDmJ86sk7eNwdhkTgjSvLRKZRvhVl9xjo2OeQFm4FYgXwn+KyBNSqFKq
-X-Received: by 2002:a17:907:9725:b0:bec:d077:c4dd with SMTP id
- a640c23a62f3a-bfe28f178b4mr79639966b.32.1781250985357; 
- Fri, 12 Jun 2026 00:56:25 -0700 (PDT)
-Received: from mail-ed1-f47.google.com (mail-ed1-f47.google.com.
- [209.85.208.47]) by smtp.gmail.com with ESMTPSA id
- a640c23a62f3a-bfdb4d1b856sm71220466b.20.2026.06.12.00.56.24
- for <qemu-devel@nongnu.org>
+ bh=XmD44FnM2EE1iQdmLWVSFo+TF1q0GBI3+JlCE2dcAbo=;
+ b=Yx4Cm08MKEFUZpBFFzlSAg92uWINDJhx2uS+LudfwCtn2gQvGZGYJyU340/jQQmZYP
+ 5aATlBl0csmX+kAiLZOhbJVx4CbvyEea2l/s1FdSfO9U06NLLgIUzfjzZ97bLfFhREBI
+ eAxREh7CURydQLkdhlSky5VMEKen8yR8e7muGn/asvztkbnUQ++9qtNOdIXsW70bZPl6
+ jafdVwAJZAdYz9yFu/IbHW4ThM+RvdU5tniQJ1ey3jOALkd9p8kR6v/9RYfce1IXtN69
+ ftbRVhrdWJafn1UAsj1OZFb83CFsGiRcLrsE3MILdRA51AXTCBo3NHNkfSTjLIgBP8u8
+ BYFQ==
+X-Forwarded-Encrypted: i=1;
+ AFNElJ/zKAkM9v1BpJQXKRhaIDWDCwaqIj5MIZ6oHRRyG7z0yvCJMhMfJ1mzP+ysaXZpxNLk/V9oFV21EuEP@nongnu.org
+X-Gm-Message-State: AOJu0YxCvzW65521euFihLfiffSlB0RH0dRqsE9sIcxXpOJ+xTFQHPuW
+ BFQwRQquBBh0pPH8i9h2LDQRT2jZznfnC3Y7SwcDFUBUisuhWT77MseRCuRfaU4xVdwy7jXdO74
+ oPvTiVr2jJd7yY7lrL5pdyydzNVmm44a9weszA113orHyNfsv24t2gIYo
+X-Gm-Gg: Acq92OExMaI93B2RtGhyP6MWJmgarEOjlAZKUaE23brhG0ynpEvvEDCVQTcSBKDD0PV
+ S1Km+bDcW+biHYRuIOShHqaEEm9WJ8cAvN4I5bnX8ikCPOLzDFSG+WHqw6ABt9ELBfv47QtfvWV
+ uZl0eYpZRoQA266o30Rv17w9ufO1ZWCIDaJhy5ZZnvX7Eb8ga9X17R3DjLBaEg/p10dAwucZjBO
+ EUf5cZJMWYil1hrcbFa43nImooFEXaq1qv8I+4+/QaYbKWPg+iGl1TZWOg6mDhAG+owoPykMist
+ d/RM7IC8b2UQZuI+dZzcxspO7kmit6QilK3BBgcimU1mU8Iohi3tkji1ChSqQwr1wxqq7WEesN+
+ gqSFzWoeYMVnglyaJjd4dH+fauU2dKyH7DlnGlOKX6mXW79ms7XZDrp+u+SxO
+X-Received: by 2002:a05:6000:4615:b0:43b:5b25:67f8 with SMTP id
+ ffacd0b85a97d-4606dbdf91emr2382619f8f.20.1781251004110; 
+ Fri, 12 Jun 2026 00:56:44 -0700 (PDT)
+X-Received: by 2002:a05:6000:4615:b0:43b:5b25:67f8 with SMTP id
+ ffacd0b85a97d-4606dbdf91emr2382574f8f.20.1781251003702; 
+ Fri, 12 Jun 2026 00:56:43 -0700 (PDT)
+Received: from ?IPV6:2a01:e0a:280:24f0:576b:abc6:6396:ed4a?
+ ([2a01:e0a:280:24f0:576b:abc6:6396:ed4a])
+ by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-4606f2b0c35sm3527331f8f.22.2026.06.12.00.56.42
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Fri, 12 Jun 2026 00:56:24 -0700 (PDT)
-Received: by mail-ed1-f47.google.com with SMTP id
- 4fb4d7f45d1cf-68d233bf083so1010629a12.1
- for <qemu-devel@nongnu.org>; Fri, 12 Jun 2026 00:56:24 -0700 (PDT)
-X-Received: by 2002:a05:6402:528e:b0:68d:4e6:7187 with SMTP id
- 4fb4d7f45d1cf-69378a45e9fmr678632a12.23.1781250983948; Fri, 12 Jun 2026
- 00:56:23 -0700 (PDT)
+ Fri, 12 Jun 2026 00:56:43 -0700 (PDT)
+Message-ID: <981b9398-6da9-4862-a5c6-370b220b2bc9@redhat.com>
+Date: Fri, 12 Jun 2026 09:56:41 +0200
 MIME-Version: 1.0
-References: <20260318185238.99143-1-luisccunha8@gmail.com>
- <20260318185238.99143-5-luisccunha8@gmail.com>
-In-Reply-To: <20260318185238.99143-5-luisccunha8@gmail.com>
-From: Jay Chang <jay.chang@sifive.com>
-Date: Fri, 12 Jun 2026 15:56:12 +0800
-X-Gmail-Original-Message-ID: <CAMXXpfa6E6evwjdpe62pdoWwednaoV_JiFqhzwygWEP9Pq2S2w@mail.gmail.com>
-X-Gm-Features: AVVi8Cc_fxKReAfiFbIMHZs_tHKnoP8WH92nNFdYIQIs8eOpWyiI6SgNqcn81Ic
-Message-ID: <CAMXXpfa6E6evwjdpe62pdoWwednaoV_JiFqhzwygWEP9Pq2S2w@mail.gmail.com>
-Subject: Re: [RFC PATCH 4/6] target/riscv: Implement extension for Optimizing
- Context Switching (Sspmpen)
-To: luisccc <luisccunha8@gmail.com>
-Cc: qemu-devel@nongnu.org, Palmer Dabbelt <palmer@dabbelt.com>, 
- Alistair Francis <alistair.francis@wdc.com>, Weiwei Li <liwei1518@gmail.com>, 
- Daniel Henrique Barboza <dbarboza@ventanamicro.com>,
- Liu Zhiwei <zhiwei_liu@linux.alibaba.com>, 
- "open list:RISC-V TCG CPUs" <qemu-riscv@nongnu.org>, frank.chang@sifive.com
-Content-Type: multipart/alternative; boundary="000000000000278726065409d058"
-Received-SPF: pass client-ip=2a00:1450:4864:20::62b;
- envelope-from=jay.chang@sifive.com; helo=mail-ej1-x62b.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 0/3] vfio/pci: add vfio-pci ATS control property
+To: Nathan Chen <nathanc@nvidia.com>, qemu-devel@nongnu.org
+Cc: Yi Liu <yi.l.liu@intel.com>, Eric Auger <eric.auger@redhat.com>,
+ Zhenzhong Duan <zhenzhong.duan@intel.com>,
+ =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@mailo.com>,
+ Zhao Liu <zhao1.liu@intel.com>, Alex Williamson <alex@shazbot.org>,
+ Matt Ochs <mochs@nvidia.com>, Nicolin Chen <nicolinc@nvidia.com>,
+ Shameer Kolothum <skolothumtho@nvidia.com>
+References: <20260612014322.2918836-1-nathanc@nvidia.com>
+Content-Language: en-US, fr
+From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>
+Autocrypt: addr=clg@redhat.com; keydata=
+ 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
+ uVKe8BVz4atMOoktmt0GWTOC8P4=
+In-Reply-To: <20260612014322.2918836-1-nathanc@nvidia.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=clg@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -24
+X-Spam_score: -2.5
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, HTML_MESSAGE=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.445,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -114,366 +170,87 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
---000000000000278726065409d058
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Hello Nathan,
 
-Reviewed-by: Jay Chang <jay,chang@sifive.com>
+On 6/12/26 03:43, Nathan Chen wrote:
+> Hi,
+> 
+> This series adds an ATS control property to vfio-pci and wires iommufd
+> support reporting so vfio-pci can decide whether to expose the ATS PCIe
+> extended capability to the guest. This series is a follow-up to the
+> previous patch included in the "hw/arm/smmuv3-accel: Resolve AUTO
+> properties" series [0].
+> 
+> The new vfio-pci property is:
+>    ats=on|off|auto (default: auto)
+> 
+> Behavior:
+> - off: always masks ATS from guest view
+> - on: requires ATS support; fails realize if kernel reports
+>        IOMMU_HW_CAP_PCI_ATS_NOT_SUPPORTED
+> - auto: masks ATS only when kernel reports
+>          IOMMU_HW_CAP_PCI_ATS_NOT_SUPPORTED
+> 
+> To preserve machine compatibility for older machine types, this series adds:
+>    { "vfio-pci", "ats", "on" } to hw_compat_11_0.
+> 
+> Please note that no linux-headers sync patch is included in this series
+> because IOMMU_HW_CAP_PCI_ATS_NOT_SUPPORTED is already present in
+> linux-headers/linux/iommufd.h in the current base.
+> 
+> Testing:
+> Verified ATS capability visibility changes with vfio-pci ats=off/on/auto
+> on an NVIDIA Grace system:
+> - ats=on + ATS supported by kernel => propagate ATS extended cap to
+>    guest view
+> - ats=auto + ATS supported by kernel => propagate ATS extended cap to
+>    guest view
+> - ats=on + hiod_iommufd_support_ats modified to return false (mimic
+>    kernel-reported unsupported ATS) => realize failure
+> - ats=auto + hiod_iommufd_support_ats modified to return false (mimic
+>    kernel-reported unsupported ATS) => ATS masked
+> - ats=off => ATS masked
 
-Thanks
+What about ats=on and no ATS support in the physical device ?
 
-On Thu, Mar 19, 2026 at 3:45=E2=80=AFAM luisccc <luisccunha8@gmail.com> wro=
-te:
+I agree it is a bit of a corner case. A warning would be nice,
+it can be addressed as a follow up change.
 
-> Signed-off-by: Luis Cunha <luisccunha8@gmail.com>
-> ---
->  target/riscv/cpu_bits.h           |  4 ++
->  target/riscv/cpu_cfg_fields.h.inc |  1 +
->  target/riscv/csr.c                | 67 +++++++++++++++++++++++++++++++
->  target/riscv/spmp.c               |  6 ++-
->  4 files changed, 77 insertions(+), 1 deletion(-)
->
-> diff --git a/target/riscv/cpu_bits.h b/target/riscv/cpu_bits.h
-> index 36f7c1e873..0a8cfedc5d 100644
-> --- a/target/riscv/cpu_bits.h
-> +++ b/target/riscv/cpu_bits.h
-> @@ -255,6 +255,10 @@
->  #define CSR_SCTRSTATUS      0x14f
->  #define CSR_SCTRDEPTH       0x15f
->
-> +/* S-mode Physical Memory Protection (SPMP) */
-> +#define CSR_SPMPEN          0x183
-> +#define CSR_SPMPENH         0x193
-> +
->  /* VS-Level Control transfer records CSRs */
->  #define CSR_VSCTRCTL        0x24e
->
-> diff --git a/target/riscv/cpu_cfg_fields.h.inc
-> b/target/riscv/cpu_cfg_fields.h.inc
-> index 772cc176d0..88edac21ca 100644
-> --- a/target/riscv/cpu_cfg_fields.h.inc
-> +++ b/target/riscv/cpu_cfg_fields.h.inc
-> @@ -120,6 +120,7 @@ BOOL_FIELD(rvv_ma_all_1s)
->  BOOL_FIELD(rvv_vl_half_avl)
->  BOOL_FIELD(rvv_vsetvl_x0_vill)
->  BOOL_FIELD(ext_smpmpdeleg)
-> +BOOL_FIELD(ext_sspmpen)
->  /* Named features  */
->  BOOL_FIELD(ext_svade)
->  BOOL_FIELD(ext_zic64b)
-> diff --git a/target/riscv/csr.c b/target/riscv/csr.c
-> index 4b9fa11540..a11d7e6704 100644
-> --- a/target/riscv/csr.c
-> +++ b/target/riscv/csr.c
-> @@ -769,6 +769,16 @@ static RISCVException spmp(CPURISCVState *env, int
-> csrno)
->      return smode(env, csrno);
->  }
->
-> +static RISCVException sspmpen(CPURISCVState *env, int csrno)
-> +{
-> +    if (!riscv_cpu_cfg(env)->ext_sspmpen) {
-> +        return RISCV_EXCP_ILLEGAL_INST;
-> +    }
-> +
-> +    /* SSPMPEN can only exist, if spmp exists */
-> +    return spmp(env, csrno);
-> +}
-> +
->  static RISCVException have_mseccfg(CPURISCVState *env, int csrno)
->  {
->      if (riscv_cpu_cfg(env)->ext_smepmp) {
-> @@ -5389,6 +5399,61 @@ static RISCVException rmw_mpmpdeleg(CPURISCVState
-> *env, int csrno,
->      return RISCV_EXCP_NONE;
->  }
->
-> +static RISCVException rmw_spmpen64(CPURISCVState *env, int csrno,
-> +                                    uint64_t *ret_val,
-> +                                    uint64_t new_val, uint64_t wr_mask)
-> +{
-> +    uint64_t new_spmpen =3D (env->spmp_state.spmpen & ~wr_mask) |
-> +                            (new_val & wr_mask);
-> +
-> +    if (env->spmp_state.num_deleg_rules =3D=3D 0) {
-> +        if (ret_val) {
-> +            *ret_val =3D 0;
-> +        }
-> +
-> +        return RISCV_EXCP_NONE;
-> +    }
-> +
-> +    if (ret_val) {
-> +        *ret_val =3D env->spmp_state.spmpen;
-> +    }
-> +
-> +    sspmpen_csr_write(env, new_spmpen);
-> +
-> +    return RISCV_EXCP_NONE;
-> +}
-> +
-> +static RISCVException rmw_spmpen(CPURISCVState *env, int csrno,
-> +                                  target_ulong *ret_val,
-> +                                  target_ulong new_val, target_ulong
-> wr_mask)
-> +{
-> +    uint64_t rval =3D 0;
-> +    RISCVException ret;
-> +    ret =3D rmw_spmpen64(env, csrno, &rval, new_val, wr_mask);
-> +    if (ret_val) {
-> +        *ret_val =3D rval;
-> +    }
-> +
-> +    return ret;
-> +}
-> +
-> +static RISCVException rmw_spmpenh(CPURISCVState *env, int csrno,
-> +                                   target_ulong *ret_val,
-> +                                   target_ulong new_val,
-> +                                   target_ulong wr_mask)
-> +{
-> +    uint64_t rval =3D 0;
-> +    RISCVException ret;
-> +
-> +    ret =3D rmw_spmpen64(env, csrno, &rval,
-> +        ((uint64_t)new_val) << 32, ((uint64_t)wr_mask) << 32);
-> +    if (ret_val) {
-> +        *ret_val =3D rval >> 32;
-> +    }
-> +
-> +    return ret;
-> +}
-> +
->  static RISCVException read_tselect(CPURISCVState *env, int csrno,
->                                     target_ulong *val)
->  {
-> @@ -6388,6 +6453,8 @@ riscv_csr_operations csr_ops[CSR_TABLE_SIZE] =3D {
->
->      /* S-mode Physical Memory Protection */
->      [CSR_MPMPDELEG]   =3D { "mpmpdeleg", spmp, NULL, NULL, rmw_mpmpdeleg=
- },
-> +    [CSR_SPMPEN]  =3D { "spmpen", sspmpen, NULL, NULL, rmw_spmpen },
-> +    [CSR_SPMPENH] =3D { "spmpenh", sspmpen, NULL, NULL, rmw_spmpenh },
->
->      /* Debug CSRs */
->      [CSR_TSELECT]   =3D  { "tselect",  debug, read_tselect,  write_tsele=
-ct
-> },
-> diff --git a/target/riscv/spmp.c b/target/riscv/spmp.c
-> index 85c5259b33..1615c207df 100644
-> --- a/target/riscv/spmp.c
-> +++ b/target/riscv/spmp.c
-> @@ -147,7 +147,11 @@ static uint8_t spmp_is_in_range(CPURISCVState *env,
-> int spmp_index,
->
->  static bool spmp_get_spmpen_bit(CPURISCVState *env, int index)
->  {
-> -    return true;
-> +    if (!riscv_cpu_cfg(env)->ext_sspmpen) {
-> +        return true;
-> +    }
-> +
-> +    return (env->spmp_state.spmpen >> index) & 0x1;
->  }
->
->  /*
-> --
-> 2.43.0
->
->
->
+Thanks,
 
---000000000000278726065409d058
-Content-Type: text/html; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+C.
 
-<div dir=3D"ltr"><span class=3D"gmail-il">Reviewed-by</span>: Jay Chang &lt=
-;jay,<a href=3D"mailto:chang@sifive.com">chang@sifive.com</a>&gt;<br><br>Th=
-anks</div><br><div class=3D"gmail_quote gmail_quote_container"><div dir=3D"=
-ltr" class=3D"gmail_attr">On Thu, Mar 19, 2026 at 3:45=E2=80=AFAM luisccc &=
-lt;<a href=3D"mailto:luisccunha8@gmail.com">luisccunha8@gmail.com</a>&gt; w=
-rote:<br></div><blockquote class=3D"gmail_quote" style=3D"margin:0px 0px 0p=
-x 0.8ex;border-left:1px solid rgb(204,204,204);padding-left:1ex">Signed-off=
--by: Luis Cunha &lt;<a href=3D"mailto:luisccunha8@gmail.com" target=3D"_bla=
-nk">luisccunha8@gmail.com</a>&gt;<br>
----<br>
-=C2=A0target/riscv/cpu_bits.h=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0|=C2=
-=A0 4 ++<br>
-=C2=A0target/riscv/cpu_cfg_fields.h.inc |=C2=A0 1 +<br>
-=C2=A0target/riscv/csr.c=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =
-=C2=A0 | 67 +++++++++++++++++++++++++++++++<br>
-=C2=A0target/riscv/spmp.c=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =
-=C2=A0|=C2=A0 6 ++-<br>
-=C2=A04 files changed, 77 insertions(+), 1 deletion(-)<br>
-<br>
-diff --git a/target/riscv/cpu_bits.h b/target/riscv/cpu_bits.h<br>
-index 36f7c1e873..0a8cfedc5d 100644<br>
---- a/target/riscv/cpu_bits.h<br>
-+++ b/target/riscv/cpu_bits.h<br>
-@@ -255,6 +255,10 @@<br>
-=C2=A0#define CSR_SCTRSTATUS=C2=A0 =C2=A0 =C2=A0 0x14f<br>
-=C2=A0#define CSR_SCTRDEPTH=C2=A0 =C2=A0 =C2=A0 =C2=A00x15f<br>
-<br>
-+/* S-mode Physical Memory Protection (SPMP) */<br>
-+#define CSR_SPMPEN=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 0x183<br>
-+#define CSR_SPMPENH=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A00x193<br>
-+<br>
-=C2=A0/* VS-Level Control transfer records CSRs */<br>
-=C2=A0#define CSR_VSCTRCTL=C2=A0 =C2=A0 =C2=A0 =C2=A0 0x24e<br>
-<br>
-diff --git a/target/riscv/cpu_cfg_fields.h.inc b/target/riscv/cpu_cfg_field=
-s.h.inc<br>
-index 772cc176d0..88edac21ca 100644<br>
---- a/target/riscv/cpu_cfg_fields.h.inc<br>
-+++ b/target/riscv/cpu_cfg_fields.h.inc<br>
-@@ -120,6 +120,7 @@ BOOL_FIELD(rvv_ma_all_1s)<br>
-=C2=A0BOOL_FIELD(rvv_vl_half_avl)<br>
-=C2=A0BOOL_FIELD(rvv_vsetvl_x0_vill)<br>
-=C2=A0BOOL_FIELD(ext_smpmpdeleg)<br>
-+BOOL_FIELD(ext_sspmpen)<br>
-=C2=A0/* Named features=C2=A0 */<br>
-=C2=A0BOOL_FIELD(ext_svade)<br>
-=C2=A0BOOL_FIELD(ext_zic64b)<br>
-diff --git a/target/riscv/csr.c b/target/riscv/csr.c<br>
-index 4b9fa11540..a11d7e6704 100644<br>
---- a/target/riscv/csr.c<br>
-+++ b/target/riscv/csr.c<br>
-@@ -769,6 +769,16 @@ static RISCVException spmp(CPURISCVState *env, int csr=
-no)<br>
-=C2=A0 =C2=A0 =C2=A0return smode(env, csrno);<br>
-=C2=A0}<br>
-<br>
-+static RISCVException sspmpen(CPURISCVState *env, int csrno)<br>
-+{<br>
-+=C2=A0 =C2=A0 if (!riscv_cpu_cfg(env)-&gt;ext_sspmpen) {<br>
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 return RISCV_EXCP_ILLEGAL_INST;<br>
-+=C2=A0 =C2=A0 }<br>
-+<br>
-+=C2=A0 =C2=A0 /* SSPMPEN can only exist, if spmp exists */<br>
-+=C2=A0 =C2=A0 return spmp(env, csrno);<br>
-+}<br>
-+<br>
-=C2=A0static RISCVException have_mseccfg(CPURISCVState *env, int csrno)<br>
-=C2=A0{<br>
-=C2=A0 =C2=A0 =C2=A0if (riscv_cpu_cfg(env)-&gt;ext_smepmp) {<br>
-@@ -5389,6 +5399,61 @@ static RISCVException rmw_mpmpdeleg(CPURISCVState *e=
-nv, int csrno,<br>
-=C2=A0 =C2=A0 =C2=A0return RISCV_EXCP_NONE;<br>
-=C2=A0}<br>
-<br>
-+static RISCVException rmw_spmpen64(CPURISCVState *env, int csrno,<br>
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
-=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 uint64_t *ret_val,<br>
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
-=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 uint64_t new_val, uint=
-64_t wr_mask)<br>
-+{<br>
-+=C2=A0 =C2=A0 uint64_t new_spmpen =3D (env-&gt;spmp_state.spmpen &amp; ~wr=
-_mask) |<br>
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
-=A0 =C2=A0 =C2=A0 =C2=A0 (new_val &amp; wr_mask);<br>
-+<br>
-+=C2=A0 =C2=A0 if (env-&gt;spmp_state.num_deleg_rules =3D=3D 0) {<br>
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 if (ret_val) {<br>
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 *ret_val =3D 0;<br>
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 }<br>
-+<br>
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 return RISCV_EXCP_NONE;<br>
-+=C2=A0 =C2=A0 }<br>
-+<br>
-+=C2=A0 =C2=A0 if (ret_val) {<br>
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 *ret_val =3D env-&gt;spmp_state.spmpen;<br>
-+=C2=A0 =C2=A0 }<br>
-+<br>
-+=C2=A0 =C2=A0 sspmpen_csr_write(env, new_spmpen);<br>
-+<br>
-+=C2=A0 =C2=A0 return RISCV_EXCP_NONE;<br>
-+}<br>
-+<br>
-+static RISCVException rmw_spmpen(CPURISCVState *env, int csrno,<br>
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
-=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 target_ulong *ret_val,<br>
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
-=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 target_ulong new_val, target_=
-ulong wr_mask)<br>
-+{<br>
-+=C2=A0 =C2=A0 uint64_t rval =3D 0;<br>
-+=C2=A0 =C2=A0 RISCVException ret;<br>
-+=C2=A0 =C2=A0 ret =3D rmw_spmpen64(env, csrno, &amp;rval, new_val, wr_mask=
-);<br>
-+=C2=A0 =C2=A0 if (ret_val) {<br>
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 *ret_val =3D rval;<br>
-+=C2=A0 =C2=A0 }<br>
-+<br>
-+=C2=A0 =C2=A0 return ret;<br>
-+}<br>
-+<br>
-+static RISCVException rmw_spmpenh(CPURISCVState *env, int csrno,<br>
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
-=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0target_ulong *ret_val,<=
-br>
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
-=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0target_ulong new_val,<b=
-r>
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
-=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0target_ulong wr_mask)<b=
-r>
-+{<br>
-+=C2=A0 =C2=A0 uint64_t rval =3D 0;<br>
-+=C2=A0 =C2=A0 RISCVException ret;<br>
-+<br>
-+=C2=A0 =C2=A0 ret =3D rmw_spmpen64(env, csrno, &amp;rval,<br>
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 ((uint64_t)new_val) &lt;&lt; 32, ((uint64_t)wr=
-_mask) &lt;&lt; 32);<br>
-+=C2=A0 =C2=A0 if (ret_val) {<br>
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 *ret_val =3D rval &gt;&gt; 32;<br>
-+=C2=A0 =C2=A0 }<br>
-+<br>
-+=C2=A0 =C2=A0 return ret;<br>
-+}<br>
-+<br>
-=C2=A0static RISCVException read_tselect(CPURISCVState *env, int csrno,<br>
-=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
-=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 target_ulong *val)<br>
-=C2=A0{<br>
-@@ -6388,6 +6453,8 @@ riscv_csr_operations csr_ops[CSR_TABLE_SIZE] =3D {<br=
->
-<br>
-=C2=A0 =C2=A0 =C2=A0/* S-mode Physical Memory Protection */<br>
-=C2=A0 =C2=A0 =C2=A0[CSR_MPMPDELEG]=C2=A0 =C2=A0=3D { &quot;mpmpdeleg&quot;=
-, spmp, NULL, NULL, rmw_mpmpdeleg },<br>
-+=C2=A0 =C2=A0 [CSR_SPMPEN]=C2=A0 =3D { &quot;spmpen&quot;, sspmpen, NULL, =
-NULL, rmw_spmpen },<br>
-+=C2=A0 =C2=A0 [CSR_SPMPENH] =3D { &quot;spmpenh&quot;, sspmpen, NULL, NULL=
-, rmw_spmpenh },<br>
-<br>
-=C2=A0 =C2=A0 =C2=A0/* Debug CSRs */<br>
-=C2=A0 =C2=A0 =C2=A0[CSR_TSELECT]=C2=A0 =C2=A0=3D=C2=A0 { &quot;tselect&quo=
-t;,=C2=A0 debug, read_tselect,=C2=A0 write_tselect=C2=A0 },<br>
-diff --git a/target/riscv/spmp.c b/target/riscv/spmp.c<br>
-index 85c5259b33..1615c207df 100644<br>
---- a/target/riscv/spmp.c<br>
-+++ b/target/riscv/spmp.c<br>
-@@ -147,7 +147,11 @@ static uint8_t spmp_is_in_range(CPURISCVState *env, in=
-t spmp_index,<br>
-<br>
-=C2=A0static bool spmp_get_spmpen_bit(CPURISCVState *env, int index)<br>
-=C2=A0{<br>
--=C2=A0 =C2=A0 return true;<br>
-+=C2=A0 =C2=A0 if (!riscv_cpu_cfg(env)-&gt;ext_sspmpen) {<br>
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 return true;<br>
-+=C2=A0 =C2=A0 }<br>
-+<br>
-+=C2=A0 =C2=A0 return (env-&gt;spmp_state.spmpen &gt;&gt; index) &amp; 0x1;=
-<br>
-=C2=A0}<br>
-<br>
-=C2=A0/*<br>
--- <br>
-2.43.0<br>
-<br>
-<br>
-</blockquote></div>
+  
+> Changes from "Resolve AUTO properties" series:
+> - Split into separate patches for support_ats() handler introduction and
+>    iommufd implementation, "ats" property addition, and compat property fix
+> - Rebase on vfio-next
+> - Remove unnecessary includes for hw/vfio/pci.c
+> - Rename ats_need to ats_needed for vfio_pci_ats_requested_and_supported()
+> - Move the vfio_pci_ats_requested_and_supported() call to
+>    vfio_pci_add_capabilities() so we can propagate the Error **, and then pass
+>    ats_needed as a new input arg to vfio_add_ext_cap
+> - Fix indent error in vfio_add_ext_cap()
+> - Break and add a pcie_add_capability() call for the PASID case in
+>    vfio_add_ext_cap()
+> - Update comment about return value for support_ats()
+> 
+> Thanks,
+> Nathan
+> 
+> [0] https://lore.kernel.org/qemu-devel/20260401010231.4166776-5-nathanc@nvidia.com/
+> 
+> Nathan Chen (3):
+>    iommufd: Introduce handler for device ATS support
+>    vfio/pci: Add ats property
+>    hw/core/machine: Add new compat for vfio-pci ats property
+> 
+>   hw/vfio/pci.h                      |  1 +
+>   include/system/host_iommu_device.h | 10 ++++
+>   backends/iommufd.c                 |  8 ++++
+>   hw/core/machine.c                  |  1 +
+>   hw/vfio/pci.c                      | 74 ++++++++++++++++++++++++++++--
+>   5 files changed, 91 insertions(+), 3 deletions(-)
+> 
 
---000000000000278726065409d058--
 
