@@ -4,42 +4,43 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 17149CD98CE
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2C9B9CD98D9
 	for <qemu-devel@archiver.kernel.org>; Fri, 12 Jun 2026 17:02:06 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wY5FY-0005UQ-6a; Fri, 12 Jun 2026 13:00:56 -0400
+	id 1wY5FW-0005Qd-Cu; Fri, 12 Jun 2026 13:00:54 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wY5Eu-000558-3p; Fri, 12 Jun 2026 13:00:19 -0400
+ id 1wY5Es-00054d-Hm; Fri, 12 Jun 2026 13:00:15 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wY5Es-00062m-Ba; Fri, 12 Jun 2026 13:00:15 -0400
+ id 1wY5Eq-0005vc-Iz; Fri, 12 Jun 2026 13:00:14 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1781283582; bh=PVRmFnUyvgeskurDtjhxSJQvHRrpe17ZA3bTgUIHziY=;
+ t=1781283582; bh=gFKr/H9SOcM/QTiHEp6PPei+Z9A4s5bUhNKp/y/6VkY=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References;
- b=Rw0nzIRrhla9umcz5QIja6oNWfMmhCg2IeYCoRvbW3aFfbTiidANC1goeJJiKrkKJ
- VmWJPGRG/Z9ezSt/ga1PV2wdGTDUi5LTnLCX0h8rl8vZBi3Zh+j7GH1q0s7Ty3BvnB
- 4Nsd76cdnmfnR2kphjXFNIzQjWMMGP9AV3Q22nS1uVNiIOcatLbMs1PDi/L9/nf+rW
- K+fP1L5MKv7hpr3j02koA0760BPc2CkIBFuSIZ0oFFnrHbo/ek5RwEzs5B09veLkje
- XbriDcNUg8rRn9iAAGIR+MOPtr/eSfbHPzUuCfqcs3qng8vrXYKPqfmVser4VC6ud7
- 4St/W6oQiPo5g==
+ b=RWFDhAMMg0lj2pNvyucYTst7MHNQXP9d+qipmDlT9cw+Mi+N1/arSBylUx3J5+jLZ
+ PzCm4zIRIPm3juXblVQ5ks9gP/R3dvGZAPDapmMdMHMZzgacyR5wMXVWh/UYoej45F
+ K5Rvap7jRdh2OTRyufOHGdbVSszK1/UxPHhwwPW4HcK7pLpruUCmioMtk1JC8PQi2t
+ +ahKxNyyTjMABF0AprGjV1xrScyTzX01Jp4WN49a/TJp3cOq/fFk5XJJ7SWawR09sT
+ xJn43joFoULy8fEGEy0Dk/et67HPtjFdFEzeEGDB5QckxiFbCSGZCJFw7z7lwvFP6/
+ 8o13LWEVhps9Q==
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 17EB61B6BCA;
+ by isrv.corpit.ru (Postfix) with ESMTP id 13B821B6BC9;
  Fri, 12 Jun 2026 19:59:42 +0300 (MSK)
 Received: from think4mjt.tls.msk.ru (mjtthink.wg.tls.msk.ru [192.168.177.146])
- by tsrv.corpit.ru (Postfix) with ESMTP id CA2DC3CE167;
+ by tsrv.corpit.ru (Postfix) with ESMTP id BB9E23CE166;
  Fri, 12 Jun 2026 19:59:57 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
 Cc: Evgeny Kolmakov <randomjack94dev@gmail.com>, qemu-trivial@nongnu.org,
  Michael Tokarev <mjt@tls.msk.ru>
-Subject: [PULL 5/8] block/io: Use QEMU_LOCK_GUARD to simplify mutex handling
-Date: Fri, 12 Jun 2026 19:59:49 +0300
-Message-ID: <20260612165957.1779082-6-mjt@tls.msk.ru>
+Subject: [PULL 4/8] net/colo-compare: Use QEMU_LOCK_GUARD to simplify mutex
+ handling
+Date: Fri, 12 Jun 2026 19:59:48 +0300
+Message-ID: <20260612165957.1779082-5-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <20260612165957.1779082-1-mjt@tls.msk.ru>
 References: <20260612165957.1779082-1-mjt@tls.msk.ru>
@@ -71,7 +72,7 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Evgeny Kolmakov <randomjack94dev@gmail.com>
 
-Replace qemu_mutex_(un)lock() calls with QEMU_LOCK_GUARD().
+Replace qemu_mutex_(un)lock() calls with the QEMU_LOCK_GUARD().
 
 Signed-off-by: Evgeny Kolmakov <randomjack94dev@gmail.com>
 Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
@@ -79,29 +80,40 @@ Reviewed-by: Zhang Chen <zhangckid@gmail.com>
 Reviewed-by: Michael Tokarev <mjt@tls.msk.ru>
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 ---
- block/io.c | 4 +---
- 1 file changed, 1 insertion(+), 3 deletions(-)
+ net/colo-compare.c | 8 ++------
+ 1 file changed, 2 insertions(+), 6 deletions(-)
 
-diff --git a/block/io.c b/block/io.c
-index 6c0bbdcf1e..a916b236c3 100644
---- a/block/io.c
-+++ b/block/io.c
-@@ -719,14 +719,12 @@ BdrvTrackedRequest *coroutine_fn bdrv_co_get_self_request(BlockDriverState *bs)
-     Coroutine *self = qemu_coroutine_self();
-     IO_CODE();
+diff --git a/net/colo-compare.c b/net/colo-compare.c
+index 823b8aa323..5986fb1e88 100644
+--- a/net/colo-compare.c
++++ b/net/colo-compare.c
+@@ -902,14 +902,13 @@ static void check_old_packet_regular(void *opaque)
+ void colo_notify_compares_event(void *opaque, int event, Error **errp)
+ {
+     CompareState *s;
+-    qemu_mutex_lock(&colo_compare_mutex);
++    QEMU_LOCK_GUARD(&colo_compare_mutex);
  
--    qemu_mutex_lock(&bs->reqs_lock);
-+    QEMU_LOCK_GUARD(&bs->reqs_lock);
-     QLIST_FOREACH(req, &bs->tracked_requests, list) {
-         if (req->co == self) {
--            qemu_mutex_unlock(&bs->reqs_lock);
-             return req;
-         }
+     if (!colo_compare_active) {
+-        qemu_mutex_unlock(&colo_compare_mutex);
+         return;
      }
--    qemu_mutex_unlock(&bs->reqs_lock);
  
-     return NULL;
+-    qemu_mutex_lock(&event_mtx);
++    QEMU_LOCK_GUARD(&event_mtx);
+     QTAILQ_FOREACH(s, &net_compares, next) {
+         s->event = event;
+         qemu_bh_schedule(s->event_bh);
+@@ -919,9 +918,6 @@ void colo_notify_compares_event(void *opaque, int event, Error **errp)
+     while (event_unhandled_count > 0) {
+         qemu_cond_wait(&event_complete_cond, &event_mtx);
+     }
+-
+-    qemu_mutex_unlock(&event_mtx);
+-    qemu_mutex_unlock(&colo_compare_mutex);
  }
+ 
+ static void colo_compare_timer_init(CompareState *s)
 -- 
 2.47.3
 
