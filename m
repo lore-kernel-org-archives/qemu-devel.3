@@ -4,71 +4,64 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7A426CD8CA8
-	for <qemu-devel@archiver.kernel.org>; Fri, 12 Jun 2026 11:04:24 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 11252CD98CE
+	for <qemu-devel@archiver.kernel.org>; Fri, 12 Jun 2026 11:18:30 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wXzg1-0003YP-IR; Fri, 12 Jun 2026 07:03:53 -0400
+	id 1wXztR-0007fo-H8; Fri, 12 Jun 2026 07:17:46 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <gshan@redhat.com>) id 1wXzfz-0003WB-L3
- for qemu-devel@nongnu.org; Fri, 12 Jun 2026 07:03:51 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <odaki@rsg.ci.i.u-tokyo.ac.jp>)
+ id 1wXztO-0007fN-VE
+ for qemu-devel@nongnu.org; Fri, 12 Jun 2026 07:17:43 -0400
+Received: from www3579.sakura.ne.jp ([49.212.243.89])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <gshan@redhat.com>) id 1wXzfx-0001K0-U2
- for qemu-devel@nongnu.org; Fri, 12 Jun 2026 07:03:51 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1781262229;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=sb0vXByTjHXCfPJQeiZkLPVssme/omDG5VeOp/DkR+8=;
- b=gisjvQjzbRom3zCIEyMRlSr3SyShOb2vgnTe4TbyAWuAk8SvxoYtfWf7Ve3dimdvcd7she
- GXYRkuP0HpSsDNwVyPnL4WEkddq/I3RPo6D4GtAozyvbcN/uhUyZli//KWGCRecadufntT
- dthZ7WQETZj+uSH5h6KOcoY7R3pnuZM=
-Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-316-SHqdejfbMnOfHVPrOI4H_A-1; Fri,
- 12 Jun 2026 07:03:44 -0400
-X-MC-Unique: SHqdejfbMnOfHVPrOI4H_A-1
-X-Mimecast-MFC-AGG-ID: SHqdejfbMnOfHVPrOI4H_A_1781262221
-Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 5EC8D180025C; Fri, 12 Jun 2026 11:03:41 +0000 (UTC)
-Received: from gshan-thinkpadx1nanogen2.rmtau.csb (unknown [10.64.136.3])
- by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 3112E1955BC4; Fri, 12 Jun 2026 11:03:34 +0000 (UTC)
-From: Gavin Shan <gshan@redhat.com>
-To: qemu-arm@nongnu.org
-Cc: qemu-devel@nongnu.org, peterx@redhat.com, mst@redhat.com,
- peter.maydell@linaro.org, berrange@redhat.com, david@kernel.org,
- alex@shazbot.org, clg@redhat.com, pbonzini@redhat.com, philmd@mailo.com,
- phrdina@redhat.com, jugraham@redhat.com, shan.gavin@gmail.com
-Subject: [PATCH 2/2] system/memory: Make ram device region directly accessible
-Date: Fri, 12 Jun 2026 21:03:07 +1000
-Message-ID: <20260612110307.1264798-3-gshan@redhat.com>
-In-Reply-To: <20260612110307.1264798-1-gshan@redhat.com>
-References: <20260612110307.1264798-1-gshan@redhat.com>
+ (Exim 4.90_1) (envelope-from <odaki@rsg.ci.i.u-tokyo.ac.jp>)
+ id 1wXztL-0001px-VD
+ for qemu-devel@nongnu.org; Fri, 12 Jun 2026 07:17:42 -0400
+Received: from [133.11.54.183] (h183.csg.ci.i.u-tokyo.ac.jp [133.11.54.183])
+ (authenticated bits=0)
+ by www3579.sakura.ne.jp (8.16.1/8.16.1) with ESMTPSA id 65CBHMBv027098
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NO);
+ Fri, 12 Jun 2026 20:17:22 +0900 (JST)
+ (envelope-from odaki@rsg.ci.i.u-tokyo.ac.jp)
+DKIM-Signature: a=rsa-sha256; bh=9w3h1Zq5WRjGTFRqaeqUgyMwUvrWPJHWXaie8WL4nr8=; 
+ c=relaxed/relaxed; d=rsg.ci.i.u-tokyo.ac.jp;
+ h=From:Message-ID:To:Subject:Date;
+ s=rs20250326; t=1781263042; v=1;
+ b=bVo2g73WpTy6cBApnoKiycyOg+vyM1kaw5l8ql5YeYpxmPy5XJyWO8aT+Df0G1gN
+ Kx+BN9I2mAka4iEoNOvNBz07ZEpw7hDDgLkJkX3xI51qOO8+hdivU2mXc6wVWjXA
+ BAtfJs/HqET0Q4glltkDcHG1pSGmp0tNr18Y7o9Q6tNKR9L/y95qCuExFP0vSSF2
+ vi+PxGqjCFRGFCaKsbBreL5NmSoNua3Hcz2ZYIG4jy6s8uUCeNH2Bli2t+u0k0KY
+ 7q1vdMnHIEdtKUsUK0R8ppz2Zs0rV6zQZSKFgip9br0U3tW6kGXAVTbsAPtiYwAB
+ VFFl6RE0FM9t+ffNdbNgGA==
+Message-ID: <1a37cf72-ec21-4c77-8554-fb07394eb3c7@rsg.ci.i.u-tokyo.ac.jp>
+Date: Fri, 12 Jun 2026 20:17:22 +0900
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.12
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=gshan@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -24
-X-Spam_score: -2.5
-X-Spam_bar: --
-X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.445,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v2 1/7] igb: Define TRL registers and core state
+To: Josh Hilke <jrhilke@google.com>, qemu-devel@nongnu.org
+Cc: Sriram Yagnaraman <sriram.yagnaraman@ericsson.com>,
+ Jason Wang <jasowang@redhat.com>, Fabiano Rosas <farosas@suse.de>,
+ Laurent Vivier <lvivier@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>,
+ David Matlack <dmatlack@google.com>,
+ Alex Williamson <alex.williamson@nvidia.com>
+References: <20260611-igb-trl-v2-0-bd58de9eb0fa@google.com>
+ <20260611-igb-trl-v2-1-bd58de9eb0fa@google.com>
+Content-Language: en-US
+From: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
+In-Reply-To: <20260611-igb-trl-v2-1-bd58de9eb0fa@google.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=49.212.243.89;
+ envelope-from=odaki@rsg.ci.i.u-tokyo.ac.jp; helo=www3579.sakura.ne.jp
+X-Spam_score_int: -16
+X-Spam_score: -1.7
+X-Spam_bar: -
+X-Spam_report: (-1.7 / 5.0 requ) BAYES_00=-1.9, DKIM_INVALID=0.1,
+ DKIM_SIGNED=0.1, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -84,118 +77,140 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-This basically reverts 4a2e242bbb30 ("memory: Don't use memcpy for
-ram_device regions") to make ram device region directly accessible
-again. With this, the bounce buffer is bypassed in address_space_map()
-when a ram device region is involved, potentially avoid to overrun
-the bounce buffer.
+On 2026/06/12 6:11, Josh Hilke wrote:
+> Introduce register offsets and bitmask constants for the Transmit Rate
+> Limiter (TRL). Add the IGBTrlQueue structure and corresponding fields to
+> IGBCore to track TRL state (timers, throttling status, and target rates)
+> per queue. Initialize and free these timers during the device
+> realize/uninit lifecycle, and reset them on device reset.
+> 
+> Signed-off-by: Josh Hilke <jrhilke@google.com>
+> ---
+>   hw/net/igb_common.h |  1 +
+>   hw/net/igb_core.c   | 17 +++++++++++++++++
+>   hw/net/igb_core.h   | 11 +++++++++++
+>   hw/net/igb_regs.h   | 11 +++++++++++
+>   4 files changed, 40 insertions(+)
+> 
+> diff --git a/hw/net/igb_common.h b/hw/net/igb_common.h
+> index b316a5b..8c0a0cf 100644
+> --- a/hw/net/igb_common.h
+> +++ b/hw/net/igb_common.h
+> @@ -148,6 +148,7 @@ enum {
+>       defreg(MTA_A),
+>   
+>       defreg(VTIVAR), defreg(VTIVAR_MISC),
+> +    defreg(TRLDQSEL), defreg(TRLRC),
+>   };
+>   
+>   uint64_t igb_mmio_read(void *opaque, hwaddr addr, unsigned size);
+> diff --git a/hw/net/igb_core.c b/hw/net/igb_core.c
+> index 45d8fd7..05d8241 100644
+> --- a/hw/net/igb_core.c
+> +++ b/hw/net/igb_core.c
+> @@ -4282,6 +4282,11 @@ igb_autoneg_resume(IGBCore *core)
+>       }
+>   }
+>   
+> +static void igb_trl_timer_cb(void *opaque)
+> +{
+> +    /* Stub */
+> +}
+> +
+>   void
+>   igb_core_pci_realize(IGBCore        *core,
+>                        const uint16_t *eeprom_templ,
+> @@ -4296,6 +4301,11 @@ igb_core_pci_realize(IGBCore        *core,
+>   
+>       for (i = 0; i < IGB_NUM_QUEUES; i++) {
+>           net_tx_pkt_init(&core->tx[i].tx_pkt, E1000E_MAX_TX_FRAGS);
+> +        core->trl[i].timer =
+> +            timer_new_ns(QEMU_CLOCK_VIRTUAL, igb_trl_timer_cb,
+> +                         &core->trl[i]);
+> +        core->trl[i].core = core;
+> +        core->trl[i].queue_idx = i;
+>       }
+>   
+>       net_rx_pkt_init(&core->rx_pkt);
+> @@ -4319,6 +4329,7 @@ igb_core_pci_uninit(IGBCore *core)
+>   
+>       for (i = 0; i < IGB_NUM_QUEUES; i++) {
+>           net_tx_pkt_uninit(core->tx[i].tx_pkt);
+> +        timer_free(core->trl[i].timer);
+>       }
+>   
+>       net_rx_pkt_uninit(core->rx_pkt);
+> @@ -4469,6 +4480,12 @@ static void igb_reset(IGBCore *core, bool sw)
+>   
+>       igb_intrmgr_reset(core);
+>   
+> +    for (i = 0; i < IGB_NUM_QUEUES; i++) {
+> +        timer_del(core->trl[i].timer);
+> +        core->trl[i].trlrc = 0;
+> +        core->trl[i].target_rate = 0;
+> +    }
+> +
+>       memset(core->phy, 0, sizeof core->phy);
+>       memcpy(core->phy, igb_phy_reg_init, sizeof igb_phy_reg_init);
+>   
+> diff --git a/hw/net/igb_core.h b/hw/net/igb_core.h
+> index d70b54e..49733b1 100644
+> --- a/hw/net/igb_core.h
+> +++ b/hw/net/igb_core.h
+> @@ -63,6 +63,14 @@ typedef struct IGBIntrDelayTimer_st {
+>       IGBCore *core;
+>   } IGBIntrDelayTimer;
+>   
+> +typedef struct IGBTrlQueue_st {
+> +    QEMUTimer *timer;
+> +    IGBCore *core;
+> +    int queue_idx;
+> +    uint32_t trlrc;
+> +    uint64_t target_rate;
 
-Reported-by: Julia Graham <jugraham@redhat.com>
-Suggested-by: Michael S. Tsirkin <mst@redhat.com>
-Suggested-by: Peter Xu <peterx@redhat.com>
-Signed-off-by: Gavin Shan <gshan@redhat.com>
----
- include/system/memory.h | 11 ++---------
- system/memory.c         | 41 +----------------------------------------
- system/trace-events     |  2 --
- 3 files changed, 3 insertions(+), 51 deletions(-)
+I suggest removing target_rate and solely rely on trlrc instead. Keeping 
+two variables is a common source of bug. Having it inside VMState also 
+requires to keep two copies forever even if one of the data 
+representations becomes useless in the future.
 
-diff --git a/include/system/memory.h b/include/system/memory.h
-index 6bb2e13eea..3ca6155805 100644
---- a/include/system/memory.h
-+++ b/include/system/memory.h
-@@ -2914,15 +2914,8 @@ static inline bool memory_region_supports_direct_access(const MemoryRegion *mr)
-     if (memory_region_is_romd(mr)) {
-         return true;
-     }
--    if (!memory_region_is_ram(mr)) {
--        return false;
--    }
--    /*
--     * RAM DEVICE regions can be accessed directly using memcpy, but it might
--     * be MMIO and access using mempy can be wrong (e.g., using instructions not
--     * intended for MMIO access). So we treat this as IO.
--     */
--    return !memory_region_is_ram_device(mr);
-+
-+    return memory_region_is_ram(mr);
- }
- 
- static inline bool memory_access_is_direct(const MemoryRegion *mr,
-diff --git a/system/memory.c b/system/memory.c
-index 739ba11da6..9549dd1a94 100644
---- a/system/memory.c
-+++ b/system/memory.c
-@@ -1362,43 +1362,6 @@ const MemoryRegionOps unassigned_mem_ops = {
-     .endianness = DEVICE_NATIVE_ENDIAN,
- };
- 
--static uint64_t memory_region_ram_device_read(void *opaque,
--                                              hwaddr addr, unsigned size)
--{
--    MemoryRegion *mr = opaque;
--    uint64_t data = ldn_he_p(mr->ram_block->host + addr, size);
--
--    trace_memory_region_ram_device_read(get_cpu_index(), mr, addr, data, size);
--
--    return data;
--}
--
--static void memory_region_ram_device_write(void *opaque, hwaddr addr,
--                                           uint64_t data, unsigned size)
--{
--    MemoryRegion *mr = opaque;
--
--    trace_memory_region_ram_device_write(get_cpu_index(), mr, addr, data, size);
--
--    stn_he_p(mr->ram_block->host + addr, size, data);
--}
--
--static const MemoryRegionOps ram_device_mem_ops = {
--    .read = memory_region_ram_device_read,
--    .write = memory_region_ram_device_write,
--    .endianness = HOST_BIG_ENDIAN ? DEVICE_BIG_ENDIAN : DEVICE_LITTLE_ENDIAN,
--    .valid = {
--        .min_access_size = 1,
--        .max_access_size = 8,
--        .unaligned = true,
--    },
--    .impl = {
--        .min_access_size = 1,
--        .max_access_size = 8,
--        .unaligned = true,
--    },
--};
--
- bool memory_region_access_valid(MemoryRegion *mr,
-                                 hwaddr addr,
-                                 unsigned size,
-@@ -1676,10 +1639,8 @@ void memory_region_init_ram_device_ptr(MemoryRegion *mr, Object *owner,
-                                        const char *name, uint64_t size,
-                                        void *ptr)
- {
--    memory_region_init_io(mr, owner, &ram_device_mem_ops, mr, name, size);
--    mr->ram = true;
-+    memory_region_init_ram_ptr(mr, owner, name, size, ptr);
-     mr->ram_device = true;
--    memory_region_set_ram_ptr(mr, size, ptr);
- }
- 
- void memory_region_init_alias(MemoryRegion *mr, Object *owner,
-diff --git a/system/trace-events b/system/trace-events
-index e6e1b61279..34af0a3a1e 100644
---- a/system/trace-events
-+++ b/system/trace-events
-@@ -20,8 +20,6 @@ memory_region_ops_read(int cpu_index, void *mr, uint64_t addr, uint64_t value, u
- memory_region_ops_write(int cpu_index, void *mr, uint64_t addr, uint64_t value, unsigned size, const char *name) "cpu %d mr %p addr 0x%"PRIx64" value 0x%"PRIx64" size %u name '%s'"
- memory_region_subpage_read(int cpu_index, void *mr, uint64_t offset, uint64_t value, unsigned size) "cpu %d mr %p offset 0x%"PRIx64" value 0x%"PRIx64" size %u"
- memory_region_subpage_write(int cpu_index, void *mr, uint64_t offset, uint64_t value, unsigned size) "cpu %d mr %p offset 0x%"PRIx64" value 0x%"PRIx64" size %u"
--memory_region_ram_device_read(int cpu_index, void *mr, uint64_t addr, uint64_t value, unsigned size) "cpu %d mr %p addr 0x%"PRIx64" value 0x%"PRIx64" size %u"
--memory_region_ram_device_write(int cpu_index, void *mr, uint64_t addr, uint64_t value, unsigned size) "cpu %d mr %p addr 0x%"PRIx64" value 0x%"PRIx64" size %u"
- memory_region_sync_dirty(const char *mr, const char *listener, int global) "mr '%s' listener '%s' synced (global=%d)"
- flatview_new(void *view, void *root) "%p (root %p)"
- flatview_destroy(void *view, void *root) "%p (root %p)"
--- 
-2.54.0
+Regards,
+Akihiko Odaki
+
+> +} IGBTrlQueue;
+> +
+>   struct IGBCore {
+>       uint32_t mac[E1000E_MAC_SIZE];
+>       uint16_t phy[MAX_PHY_REG_ADDRESS + 1];
+> @@ -99,6 +107,9 @@ struct IGBCore {
+>       void (*owner_start_recv)(PCIDevice *d);
+>   
+>       int64_t timadj;
+> +
+> +    /* Transmit Rate Limiting */
+> +    IGBTrlQueue trl[IGB_NUM_QUEUES];
+>   };
+>   
+>   void
+> diff --git a/hw/net/igb_regs.h b/hw/net/igb_regs.h
+> index 4dc4c31..f7895ef 100644
+> --- a/hw/net/igb_regs.h
+> +++ b/hw/net/igb_regs.h
+> @@ -718,4 +718,15 @@ static inline uint8_t igb_ivar_entry_tx(uint8_t i)
+>       return i < 8 ? i * 4 + 1 : (i - 8) * 4 + 3;
+>   }
+>   
+> +/* Transmit Rate Limiting */
+> +#define E1000_TRLDQSEL 0x03604
+> +#define E1000_TRLRC    0x036B0
+> +
+> +#define E1000_TRLRC_RS_ENA      BIT(31)
+> +#define E1000_TRLRC_RF_DEC_MASK 0x3FFF
+> +#define E1000_TRLRC_RF_INT_MASK 0x3FF
+> +
+> +/* 1 Gbps link rate in bytes per second (1,000,000,000 bits/s / 8) */
+> +#define E1000_LINK_RATE_1GBPS 125000000ULL
+> +
+>   #endif
+> 
 
 
