@@ -4,101 +4,121 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B5D26CD4F2C
-	for <qemu-devel@archiver.kernel.org>; Fri, 12 Jun 2026 07:29:49 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3BD98CD98CE
+	for <qemu-devel@archiver.kernel.org>; Fri, 12 Jun 2026 07:39:08 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wXwKR-0007Dn-PO; Fri, 12 Jun 2026 03:29:23 -0400
+	id 1wXwTN-0000f8-U9; Fri, 12 Jun 2026 03:38:37 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jay.chang@sifive.com>)
- id 1wXwKP-0007CN-9H
- for qemu-devel@nongnu.org; Fri, 12 Jun 2026 03:29:21 -0400
-Received: from mail-ed1-x532.google.com ([2a00:1450:4864:20::532])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <jay.chang@sifive.com>)
- id 1wXwKN-0001Yi-Fv
- for qemu-devel@nongnu.org; Fri, 12 Jun 2026 03:29:20 -0400
-Received: by mail-ed1-x532.google.com with SMTP id
- 4fb4d7f45d1cf-68b90fc6a1dso1386479a12.1
- for <qemu-devel@nongnu.org>; Fri, 12 Jun 2026 00:29:18 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=sifive.com; s=google; t=1781249357; x=1781854157; darn=nongnu.org;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=JbubdKVEEeVDhmtZ20UfxUpGZTQuBLzZdBV6ViDmMUY=;
- b=JG/BD62iIxdTcn7fykbFVqx8ftJtyxJkwgq2QtYn/l3kzpdSo0JpHC1KsBd/EDc/Lx
- 5v33H9YCwRCD9QFADjsHyo/A92bcGIpT1Lwm8Dltu5o64xLa0LakgsGZBFNfLlMLUBri
- qaB97+eBW3xBB9aCH/Xr3qBgGB3SLO5FIXeD7kvOgZw48dhP329jfLoSfWxMNPCIOMjl
- b3Yg00k1WHRN5DWapZ/6RTZDL4Csz6DhKJc9tCI+YtRJH+HP19dWAYIQYuTtkEmjY3FC
- 6TT8wqaY7JZJTdhm/O72Do1Kr2cDat+1CTsrZqJApGjMcZyWbwEhtvkfgaTV8abVM3YW
- s3sA==
+ (Exim 4.90_1) (envelope-from <eric.auger@redhat.com>)
+ id 1wXwTJ-0000eq-N2
+ for qemu-devel@nongnu.org; Fri, 12 Jun 2026 03:38:35 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <eric.auger@redhat.com>)
+ id 1wXwTH-0005Fi-Ty
+ for qemu-devel@nongnu.org; Fri, 12 Jun 2026 03:38:33 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1781249910;
+ h=from:from:reply-to:reply-to:subject:subject:date:date:
+ message-id:message-id:to:to:cc:cc:mime-version:mime-version:
+ content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=36OuNx9nK8T/nKzXs0flx3BkMIs014GXg11EFPwESHM=;
+ b=OIYk3vOzh/ZM9avUEs+ZjZcU0V+eQ5OQVphRWn8mvZupjn6YqdnT9usHUT/trZkuPtnTQC
+ /0ZQKWZfVXLHW7fBzg0DoP4KL6hewB1IzEIvSGYXyknkxoofC9NfQvMiUUdcKCguKh1LK9
+ FVRce312cRzARbPxlKuxgAbR8luoNCo=
+Received: from mail-wr1-f69.google.com (mail-wr1-f69.google.com
+ [209.85.221.69]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-687-odawv3VBN0y_NozFhjExTQ-1; Fri, 12 Jun 2026 03:38:29 -0400
+X-MC-Unique: odawv3VBN0y_NozFhjExTQ-1
+X-Mimecast-MFC-AGG-ID: odawv3VBN0y_NozFhjExTQ_1781249908
+Received: by mail-wr1-f69.google.com with SMTP id
+ ffacd0b85a97d-45f3d008865so516699f8f.0
+ for <qemu-devel@nongnu.org>; Fri, 12 Jun 2026 00:38:29 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1781249357; x=1781854157;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ d=1e100.net; s=20251104; t=1781249908; x=1781854708;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:reply-to:user-agent:mime-version:date
+ :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
  :message-id:reply-to;
- bh=JbubdKVEEeVDhmtZ20UfxUpGZTQuBLzZdBV6ViDmMUY=;
- b=PtTJdEHHiQlJKlZWiibEsr7IhOi0rIDk0EN/u6fAcRsgupnfQNymA/VeN730qsyzWG
- b+1hYGeHTpkzrD7zC/qbHqoH3heBWqvlqVw32kn7gj6OE2qnxOygfg8bLAEd69tGIBzc
- z4oC+PQLme4Iet9skDXOgszSAQCfxIKPt6IEtJrFrpAZxGPmKb/2LhF7+tc1B2pLokAM
- LPQr6sQSGkd03AD9urm0Ew2nK2yftZ+C7692ZtstW2JLO9lwpaLMH5t1hHZw7sdWGnm4
- tD3ltonSZy4HGfK4+hPJVPtZKie2LeUzwufcz5Eb1WdKgNAlk9Dj17sNPNaJ911au89T
- gozQ==
-X-Gm-Message-State: AOJu0YwCXAiY2UtIw+1OMhRK59U8UbKd84xkfAgUj0Dh8GzlVJOSUxWP
- x6TmQmH1j34IPzed7E9wvYNgMfZJFAuwS11cnjxWwQscKUN1h9ZtsX8PkxFnKN3qo2IwHLyYGqd
- 9AtX0NtXsuRDa9kEbrFLn+wh0tTbKvRNIhoq87AgulMRc6OA9Y47ikcMCllGTDKaujqMQC6N2jp
- 37bebkywPxxvz4tfH6qFymrWMU0CDSwHQS4pWXIfZHsTw=
-X-Gm-Gg: Acq92OFlhvteRpRANc5T4Z3eaEtL8wLHV4z8Ccmqympdafw39jfIEWCpl9o1wHyAd+v
- pz5rLTv4Nny5W069czvA76/M+bO4+SM4DkdzhY8ap7mieIBpUQix5g0d88m8zv5bvrod5ZQoUd2
- m9EPMvfvEu0KZ1le2olThVOI/qrEto4pWYO2NLDKXlvK0xevyRY2BEw5NxXywiQiLqpQTq+c8Mx
- RFnAWCKS5gX2S/oT44s5ndWLWAZ60MOn2WKmBiwphsuSUHgN5ldo8sVOde1ThU928Tnu9dT7Cho
- l70wVV0ZjAZltCe8kv5K4kHGaWvHgHwr1bRNM5+A4OOhS2/7h/7z9MbJNx+EWsE7Y+JSetoB6h2
- tupW7jTJuLwbLmW0v0c5Q1RjxqQMHkp8wjIu2BgGNwJrnryztiu26jOgUkLwEE8VeUjKy5fA7pS
- n98zMOuIfEy7gK55xt8HzmhXzvRdrYrEyx3Uq5DRD7WtM6T9Txo6Qx1t9oHXir
-X-Received: by 2002:a05:6402:a204:10b0:68a:d002:e20a with SMTP id
- 4fb4d7f45d1cf-6936833f82fmr526966a12.3.1781249357360; 
- Fri, 12 Jun 2026 00:29:17 -0700 (PDT)
-Received: from mail-ed1-f51.google.com (mail-ed1-f51.google.com.
- [209.85.208.51]) by smtp.gmail.com with ESMTPSA id
- 4fb4d7f45d1cf-6937949bcbfsm278604a12.24.2026.06.12.00.29.14
- for <qemu-devel@nongnu.org>
+ bh=36OuNx9nK8T/nKzXs0flx3BkMIs014GXg11EFPwESHM=;
+ b=RnsSmRvFWGz72MfvrWbOtdpJtPfqjqskezAS+3wL1lGD+/08GBmJMmnEmVIntj34LR
+ KNprb7psp95y0cr8RlNCdk/7yX9MZ/mKYIYVX+cjj969cTPg4y7nWBaPqhUbEDYhxnmI
+ Vpa+ywKP69dmYv+wcdt/lWoBJcy7ryBEEo/qszzRVHJ9EUAir1RRcEWWvThTvsVxhXH9
+ bL841apEy4mVBi4jIYdOP9p0ZbkVj5A7eds820FtT28sox8zNyuc59CYjtaTOazjWzTo
+ Lbq+RQVCruGd0qZmSyMNfykEf2cmix+nFCRMfT09sugYfZEFUfWvX+eEY6OTAyNmjqFZ
+ L3XQ==
+X-Forwarded-Encrypted: i=1;
+ AFNElJ92znfA0knfz48CpwPOo5dhhrxhwxkC+AmQrcy8Muwy5f/ddS/2wR+KGLfTqePNVidDnZ5tWzZHdaBJ@nongnu.org
+X-Gm-Message-State: AOJu0Yydffu+S08sNA0mMX7qnXC/mCQP1qDb/4l33861adXY1lnTbhel
+ VRLVeYhFK0+03QWtgCP1DndKzRylfN7dtBG+0zVx0iu8duV2m+AMOTegIsTSDoRMU7+BLqkxCEG
+ 2PMJGVtjT6TbK99etvWvSGFc7R95dJooQ4Qix5IpseqK3F3k9Dq/8FNne
+X-Gm-Gg: Acq92OHVC1/A/xE+TluXubQGa0lCb5NYC0mP4LWXkTZ84Q2Sp25/NahTR2Hpz5BHG7r
+ DaXBu6F76qbisxFyArIJEl9ldUpPs4X46WIhW6aAP9mTgsgDgoeHKp/C/8aDT+yx0VQ1aCbfCSe
+ g5h9Q+nlYg46dR5meYFKr4YQo87MKLXvQ7yydf1XjF7qlKZUPgljuUOQFSVrHZfgwMp5Kq7e5lN
+ ID+ivG8ESANKn3CalBFC3obnKBkJPxls2ipsqx7UVyZQFC0LDLn4XNTSJ95WTfEgy4pJkmZCT7O
+ YZ5TwWZNdlMY6jpxRbKJ+n4qygg6X8hFQxXq/iq9dsnc7XGqcQuRYmGLwOzUunOXhO7b9jh990g
+ 6Ju6oKf2QjTK/qO3Oiz2oFuSRGDDGBhraFyy+MlbMqEIiLuf85fS9VmCBf/UpoOyLaDRGhA==
+X-Received: by 2002:a05:6000:2586:b0:460:684d:d565 with SMTP id
+ ffacd0b85a97d-4606f255ab8mr1753989f8f.15.1781249907946; 
+ Fri, 12 Jun 2026 00:38:27 -0700 (PDT)
+X-Received: by 2002:a05:6000:2586:b0:460:684d:d565 with SMTP id
+ ffacd0b85a97d-4606f255ab8mr1753954f8f.15.1781249907598; 
+ Fri, 12 Jun 2026 00:38:27 -0700 (PDT)
+Received: from ?IPV6:2a01:e0a:f0e:9070:527b:9dff:feef:3874?
+ ([2a01:e0a:f0e:9070:527b:9dff:feef:3874])
+ by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-4606f26f726sm3028887f8f.15.2026.06.12.00.38.26
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Fri, 12 Jun 2026 00:29:15 -0700 (PDT)
-Received: by mail-ed1-f51.google.com with SMTP id
- 4fb4d7f45d1cf-68b90fc6a1dso1386402a12.1
- for <qemu-devel@nongnu.org>; Fri, 12 Jun 2026 00:29:14 -0700 (PDT)
-X-Received: by 2002:a05:6402:44d7:b0:671:9dec:ba3 with SMTP id
- 4fb4d7f45d1cf-69369d7b16emr703854a12.13.1781249354280; Fri, 12 Jun 2026
- 00:29:14 -0700 (PDT)
+ Fri, 12 Jun 2026 00:38:26 -0700 (PDT)
+Message-ID: <51ba045f-6ecf-4703-92c6-f362724c408e@redhat.com>
+Date: Fri, 12 Jun 2026 09:38:25 +0200
 MIME-Version: 1.0
-References: <20260318185238.99143-1-luisccunha8@gmail.com>
- <20260318185238.99143-4-luisccunha8@gmail.com>
-In-Reply-To: <20260318185238.99143-4-luisccunha8@gmail.com>
-From: Jay Chang <jay.chang@sifive.com>
-Date: Fri, 12 Jun 2026 15:29:02 +0800
-X-Gmail-Original-Message-ID: <CAMXXpfabjF1SFFj+C=95WRWmdB2c_ejk6wy8pO6=t3ko+n+THw@mail.gmail.com>
-X-Gm-Features: AVVi8CdjqQ3aRn_07XLDSXGaNUTL5UDewtCpjISEYsbe4-TVb3Hdi4zrOMVcB2Q
-Message-ID: <CAMXXpfabjF1SFFj+C=95WRWmdB2c_ejk6wy8pO6=t3ko+n+THw@mail.gmail.com>
-Subject: Re: [RFC PATCH 3/6] target/riscv: Implement extension for Sharing
- Hardware Resources (Smpmpdeleg)
-To: luisccc <luisccunha8@gmail.com>
-Cc: qemu-devel@nongnu.org, Palmer Dabbelt <palmer@dabbelt.com>, 
- Alistair Francis <alistair.francis@wdc.com>, Weiwei Li <liwei1518@gmail.com>, 
- Daniel Henrique Barboza <dbarboza@ventanamicro.com>,
- Liu Zhiwei <zhiwei_liu@linux.alibaba.com>, 
- "open list:RISC-V TCG CPUs" <qemu-riscv@nongnu.org>, frank.chang@sifive.com
-Content-Type: multipart/alternative; boundary="00000000000004b6040654096f69"
-Received-SPF: pass client-ip=2a00:1450:4864:20::532;
- envelope-from=jay.chang@sifive.com; helo=mail-ed1-x532.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v5 04/18] arm/cpu: Add infra to handle generated ID
+ register definitions
+Content-Language: en-US
+To: Shameer Kolothum Thodi <skolothumtho@nvidia.com>,
+ "eric.auger.pro@gmail.com" <eric.auger.pro@gmail.com>,
+ "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>,
+ "qemu-arm@nongnu.org" <qemu-arm@nongnu.org>,
+ "kvmarm@lists.linux.dev" <kvmarm@lists.linux.dev>,
+ "peter.maydell@linaro.org" <peter.maydell@linaro.org>,
+ "shaju.abraham@nutanix.com" <shaju.abraham@nutanix.com>,
+ "khushit.shah@nutanix.com" <khushit.shah@nutanix.com>,
+ "yangjinqian1@huawei.com" <yangjinqian1@huawei.com>,
+ "cohuck@redhat.com" <cohuck@redhat.com>,
+ "richard.henderson@linaro.org" <richard.henderson@linaro.org>,
+ "sebott@redhat.com" <sebott@redhat.com>,
+ "philmd@linaro.org" <philmd@linaro.org>
+Cc: "maz@kernel.org" <maz@kernel.org>,
+ "oliver.upton@linux.dev" <oliver.upton@linux.dev>,
+ "pbonzini@redhat.com" <pbonzini@redhat.com>,
+ "armbru@redhat.com" <armbru@redhat.com>,
+ "berrange@redhat.com" <berrange@redhat.com>,
+ "abologna@redhat.com" <abologna@redhat.com>,
+ "jdenemar@redhat.com" <jdenemar@redhat.com>
+References: <20260519132905.145643-1-eric.auger@redhat.com>
+ <20260519132905.145643-5-eric.auger@redhat.com>
+ <CH3PR12MB7548D1CA4348E04A14725645AB152@CH3PR12MB7548.namprd12.prod.outlook.com>
+From: Eric Auger <eric.auger@redhat.com>
+In-Reply-To: <CH3PR12MB7548D1CA4348E04A14725645AB152@CH3PR12MB7548.namprd12.prod.outlook.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=170.10.129.124;
+ envelope-from=eric.auger@redhat.com; helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -24
+X-Spam_score: -2.5
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, HTML_MESSAGE=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.445,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -111,140 +131,118 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-To: eric.auger@redhat.com
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
---00000000000004b6040654096f69
-Content-Type: text/plain; charset="UTF-8"
+Hi Shameer,
 
+On 6/1/26 4:28 PM, Shameer Kolothum Thodi wrote:
+> Hi Eric,
 >
->      pmp_unlock_entries(env);
-> +
-> +    /* Is SPMP enabled? */
-> +    if (riscv_cpu_cfg(env)->spmp) {
-> +        env->mpmpdeleg = MPMP_DELEG_DEFAULT;
-> +        env->spmp_state.num_deleg_rules = 64 - MPMP_DELEG_DEFAULT;
+>> -----Original Message-----
+>> From: Eric Auger <eric.auger@redhat.com>
+>> Sent: 19 May 2026 14:27
+>> To: eric.auger.pro@gmail.com; eric.auger@redhat.com; qemu-
+>> devel@nongnu.org; qemu-arm@nongnu.org; kvmarm@lists.linux.dev;
+>> peter.maydell@linaro.org; shaju.abraham@nutanix.com;
+>> khushit.shah@nutanix.com; yangjinqian1@huawei.com;
+>> cohuck@redhat.com; richard.henderson@linaro.org; sebott@redhat.com;
+>> Shameer Kolothum Thodi <skolothumtho@nvidia.com>; philmd@linaro.org
+>> Cc: maz@kernel.org; oliver.upton@linux.dev; pbonzini@redhat.com;
+>> armbru@redhat.com; berrange@redhat.com; abologna@redhat.com;
+>> jdenemar@redhat.com
+>> Subject: [PATCH v5 04/18] arm/cpu: Add infra to handle generated ID register
+>> definitions
+>>
+>> External email: Use caution opening links or attachments
+>>
+>>
+>> The known ID regs are populated in a new initialization function
+>> named initialize_cpu_sysreg_properties(). That code will be
+>> automatically generated from AARCHMRS Registers.json. For the
+>> time being let's just describe a single id reg, CTR_EL0. In this
+>> description we only care about non RES/RAZ fields, ie. named fields.
+>>
+>> The registers are populated in an array indexed by ARMIDRegisterIdx
+>> and their fields are added in a sorted list.
+>>
+>> Signed-off-by: Eric Auger <eric.auger@redhat.com>
+>> Signed-off-by: Cornelia Huck <cohuck@redhat.com>
+>>
+>> ---
+>>
+>> v4 -> v5
+>> - ifdef TARGET_ARM_CPU_IDREGS_H
+>> - s/g_list_append/g_list_prepend
+>> - void arm64_sysreg_add_field()
+
+Effectively the whole commit desc is outdated now that I have migrated
+to Khushit description of idregs and their fields. No need for list nor 
+
+arm64_sysreg_add_field anymore.
+
+Arrays are populated in [PATCH v5 08/18] target/arm/cpu_idregs: generate tables for Arm64 ID registers and fields
+This is much nicer.
+
+Thanks
+
+Eric
+
+> Looks like this patch is missing the above and file:
+> target/arm/cpu-sysreg-properties.c
 >
-Can we replace the const number with a macro?
-
-+        spmp_unlock_entries(env);
-> +    }
->  #else
->      env->priv = PRV_U;
->      env->senvcfg = 0;
-> diff --git a/target/riscv/cpu.h b/target/riscv/cpu.h
-> index c265098324..e19c1216ea 100644
-> --- a/target/riscv/cpu.h
-> +++ b/target/riscv/cpu.h
-> @@ -179,6 +179,7 @@ extern RISCVCPUImpliedExtsRule
-> *riscv_multi_ext_implied_rules[];
->  #define MIN_RISCV_PMP_GRANULARITY 4
+> Please check.
 >
->  #define MAX_RISCV_SPMPS (64)
-> +#define MPMP_DELEG_DEFAULT (64)
+> Thanks,
+> Shameer
 >
-Why do we need MPMP_DELEG_DEFAULT?
-Since SPMP and PMP share the same PMP entries, maybe we can directly use
-MAX_RISCV_PMPS instead?
+>> ---
+>>  target/arm/cpu-idregs.h | 33 +++++++++++++++++++++++++++++++++
+>>  1 file changed, 33 insertions(+)
+>>  create mode 100644 target/arm/cpu-idregs.h
+>>
+>> diff --git a/target/arm/cpu-idregs.h b/target/arm/cpu-idregs.h
+>> new file mode 100644
+>> index 0000000000..664e2d6ddd
+>> --- /dev/null
+>> +++ b/target/arm/cpu-idregs.h
+>> @@ -0,0 +1,33 @@
+>> +/*
+>> + * handle ID registers and their fields
+>> + *
+>> + * SPDX-License-Identifier: GPL-2.0-or-later
+>> + */
+>> +#ifndef TARGET_ARM_CPU_IDREGS_H
+>> +#define TARGET_ARM_CPU_IDREGS_H
+>> +
+>> +#include "qemu/osdep.h"
+>> +#include "qemu/error-report.h"
+>> +#include "cpu.h"
+>> +#include "cpu-sysregs.h"
+>> +
+>> +typedef struct ARM64SysRegField {
+>> +    const char *name; /* name of the field, for instance CTR_EL0_IDC */
+>> +    ARMIDRegisterIdx index; /* parent register, e.g. CTR_EL0_IDX */
+>> +    int shift; /* lsb of the field in the register */
+>> +    int length; /* highest bit number */
+>> +} ARM64SysRegField;
+>> +
+>> +typedef struct ARM64SysReg {
+>> +    const char *name;   /* name of the sysreg, for instance CTR_EL0 */
+>> +    ARMIDRegisterIdx index; /* register index, e.g. CTR_EL0_IDX */
+>> +    struct ARM64SysRegField *fields;
+>> +    uint32_t fields_count;
+>> +} ARM64SysReg;
+>> +
+>> +/*
+>> + * List of exposed ID regs (automatically populated from AARCHMRS
+>> Registers.json)
+>> + */
+>> +extern ARM64SysReg arm64_id_regs[NUM_ID_IDX];
+>> +
+>> +#endif
+>> --
+>> 2.53.0
 
-+/* S-mode Physical Memory Protection */
-> +static RISCVException rmw_mpmpdeleg(CPURISCVState *env, int csrno,
-> +                                    target_ulong *ret_val,
-> +                                    target_ulong new_val, target_ulong
-> wr_mask)
-> +{
-> +    uint16_t new_mpmpdeleg = (env->mpmpdeleg & ~wr_mask) | (new_val &
-> wr_mask);
-> +
-> +    if (ret_val) {
-> +        *ret_val = env->mpmpdeleg;
-> +    }
-> +
-> +    /*
-> +     * pmpnum is locked if MSECCFG_MML is set
-> +     * and if new_mpmpdeleg is higher than last locked rule
-> +     */
-> +    if (!(env->mseccfg & MSECCFG_MML) &&
-> +        (new_mpmpdeleg & 0x7F) > env->pmp_state.last_locked_rule) {
-> +        env->mpmpdeleg = new_mpmpdeleg & 0x7F;
-> +    }
-> +
-> +    env->spmp_state.num_deleg_rules = MPMP_DELEG_DEFAULT - env->mpmpdeleg;
-> +    return RISCV_EXCP_NONE;
-> +}
-> +
->
-Do we need to flush tlb here ?
-
---00000000000004b6040654096f69
-Content-Type: text/html; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-
-<div dir=3D"ltr"><div class=3D"gmail_quote gmail_quote_container"><blockquo=
-te class=3D"gmail_quote" style=3D"margin:0px 0px 0px 0.8ex;border-left:1px =
-solid rgb(204,204,204);padding-left:1ex">=C2=A0 =C2=A0 =C2=A0pmp_unlock_ent=
-ries(env);<br>
-+<br>
-+=C2=A0 =C2=A0 /* Is SPMP enabled? */<br>
-+=C2=A0 =C2=A0 if (riscv_cpu_cfg(env)-&gt;spmp) {<br>
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 env-&gt;mpmpdeleg =3D MPMP_DELEG_DEFAULT;<br>
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 env-&gt;spmp_state.num_deleg_rules =3D 64 - MP=
-MP_DELEG_DEFAULT;<br></blockquote><div>Can we replace the const number with=
- a macro?</div><div><br></div><blockquote class=3D"gmail_quote" style=3D"ma=
-rgin:0px 0px 0px 0.8ex;border-left:1px solid rgb(204,204,204);padding-left:=
-1ex">
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 spmp_unlock_entries(env);<br>
-+=C2=A0 =C2=A0 }<br>
-=C2=A0#else<br>
-=C2=A0 =C2=A0 =C2=A0env-&gt;priv =3D PRV_U;<br>
-=C2=A0 =C2=A0 =C2=A0env-&gt;senvcfg =3D 0;<br>
-diff --git a/target/riscv/cpu.h b/target/riscv/cpu.h<br>
-index c265098324..e19c1216ea 100644<br>
---- a/target/riscv/cpu.h<br>
-+++ b/target/riscv/cpu.h<br>
-@@ -179,6 +179,7 @@ extern RISCVCPUImpliedExtsRule *riscv_multi_ext_implied=
-_rules[];<br>
-=C2=A0#define MIN_RISCV_PMP_GRANULARITY 4<br>
-<br>
-=C2=A0#define MAX_RISCV_SPMPS (64)<br>
-+#define MPMP_DELEG_DEFAULT (64)<br></blockquote><div>Why do we need MPMP_D=
-ELEG_DEFAULT?<br>Since SPMP and PMP share the same PMP entries, maybe we ca=
-n directly use MAX_RISCV_PMPS instead?</div><div><br></div><blockquote clas=
-s=3D"gmail_quote" style=3D"margin:0px 0px 0px 0.8ex;border-left:1px solid r=
-gb(204,204,204);padding-left:1ex">
-+/* S-mode Physical Memory Protection */<br>
-+static RISCVException rmw_mpmpdeleg(CPURISCVState *env, int csrno,<br>
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
-=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 target_ulong *ret_val,=
-<br>
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
-=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 target_ulong new_val, =
-target_ulong wr_mask)<br>
-+{<br>
-+=C2=A0 =C2=A0 uint16_t new_mpmpdeleg =3D (env-&gt;mpmpdeleg &amp; ~wr_mask=
-) | (new_val &amp; wr_mask);<br>
-+<br>
-+=C2=A0 =C2=A0 if (ret_val) {<br>
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 *ret_val =3D env-&gt;mpmpdeleg;<br>
-+=C2=A0 =C2=A0 }<br>
-+<br>
-+=C2=A0 =C2=A0 /*<br>
-+=C2=A0 =C2=A0 =C2=A0* pmpnum is locked if MSECCFG_MML is set<br>
-+=C2=A0 =C2=A0 =C2=A0* and if new_mpmpdeleg is higher than last locked rule=
-<br>
-+=C2=A0 =C2=A0 =C2=A0*/<br>
-+=C2=A0 =C2=A0 if (!(env-&gt;mseccfg &amp; MSECCFG_MML) &amp;&amp;<br>
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 (new_mpmpdeleg &amp; 0x7F) &gt; env-&gt;pmp_st=
-ate.last_locked_rule) {<br>
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 env-&gt;mpmpdeleg =3D new_mpmpdeleg &amp; 0x7F=
-;<br>
-+=C2=A0 =C2=A0 }<br>
-+<br>
-+=C2=A0 =C2=A0 env-&gt;spmp_state.num_deleg_rules =3D MPMP_DELEG_DEFAULT - =
-env-&gt;mpmpdeleg;<br>
-+=C2=A0 =C2=A0 return RISCV_EXCP_NONE;<br>
-+}<br>
-+<br></blockquote><div>Do we need to flush tlb here ?</div></div></div>
-
---00000000000004b6040654096f69--
 
