@@ -4,117 +4,150 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 37B7ACD8CA8
-	for <qemu-devel@archiver.kernel.org>; Fri, 12 Jun 2026 08:43:20 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8D034CD8CA8
+	for <qemu-devel@archiver.kernel.org>; Fri, 12 Jun 2026 09:01:23 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wXxTr-0003vp-Jq; Fri, 12 Jun 2026 04:43:11 -0400
+	id 1wXxks-0007om-Dt; Fri, 12 Jun 2026 05:00:46 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1wXxTq-0003vh-9u
- for qemu-devel@nongnu.org; Fri, 12 Jun 2026 04:43:10 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1wXxkq-0007mH-QD
+ for qemu-devel@nongnu.org; Fri, 12 Jun 2026 05:00:44 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1wXxTo-0003Bk-F7
- for qemu-devel@nongnu.org; Fri, 12 Jun 2026 04:43:10 -0400
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1wXxkp-0005el-0H
+ for qemu-devel@nongnu.org; Fri, 12 Jun 2026 05:00:44 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1781253787;
+ s=mimecast20190719; t=1781254841;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=CiQsaORxtMIvHq95jZcjcnF36rd1YYR82LOVNgV3M+Q=;
- b=h8d3WuOEDyJzMt3/m1R30CdCVoAfLvhL1R3lPR9PgcE3CVWSDpttttDTfpwaI3UzwFoMnN
- Xk/obQy/CBnloAKgmh3rtUEVVcBOUidg6O11Pi0/BVW7FNa1aWMqrUnIqFLS2Bz78HreTr
- afj/PTQgxdC550VlEPxeYrn51zFtooE=
-Received: from mail-wm1-f71.google.com (mail-wm1-f71.google.com
- [209.85.128.71]) by relay.mimecast.com with ESMTP with STARTTLS
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
+ bh=5NhEHxZ6hI0beLeWp6qgypW+fgnxBRyBUQAZPd30UWk=;
+ b=YDcQ2hgNTiUBRoM+xW8ZtDbXPmTg4fgLnC3AQ4I4Bw+CwBj9skEEMkP6KHiX5KaVIj2qe+
+ GNXA6855L/Pg4mY88gDPpyNvPsbxW5IgiSI1rkWHgHTLRSxBtOfYZuvjfLyfG3pY/5X+lz
+ oAW3/a0istQryTI7tFG+J5F8H30iNik=
+Received: from mail-ej1-f72.google.com (mail-ej1-f72.google.com
+ [209.85.218.72]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-614-AKCFif8GMXm8HRbtqWXo1w-1; Fri, 12 Jun 2026 04:43:05 -0400
-X-MC-Unique: AKCFif8GMXm8HRbtqWXo1w-1
-X-Mimecast-MFC-AGG-ID: AKCFif8GMXm8HRbtqWXo1w_1781253784
-Received: by mail-wm1-f71.google.com with SMTP id
- 5b1f17b1804b1-490bde3d239so4306345e9.1
- for <qemu-devel@nongnu.org>; Fri, 12 Jun 2026 01:43:05 -0700 (PDT)
+ us-mta-615-u1o-JyP_MxK38jVKp0ZYIA-1; Fri, 12 Jun 2026 05:00:39 -0400
+X-MC-Unique: u1o-JyP_MxK38jVKp0ZYIA-1
+X-Mimecast-MFC-AGG-ID: u1o-JyP_MxK38jVKp0ZYIA_1781254838
+Received: by mail-ej1-f72.google.com with SMTP id
+ a640c23a62f3a-bec440e6b9fso59896466b.0
+ for <qemu-devel@nongnu.org>; Fri, 12 Jun 2026 02:00:39 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1781253784; x=1781858584; darn=nongnu.org;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
- bh=CiQsaORxtMIvHq95jZcjcnF36rd1YYR82LOVNgV3M+Q=;
- b=leV3HJP4gqnBu5nb/WXRZ9vvgbAMJRFojoDyFIGBj14dIln8S8HIQ6ntlcphBJm9xY
- u8E9a3Q7symVHoeF3+d4C2rytTWOrT5qklSLO2i2zfD7yKUWQTvNQxTBHtJZsUakr6ql
- WmyF4V48677nEOmQGird1uBd10QLl5tJP+f5e64wMZ1lwNliB8Oa1543G/fVPmgobfNV
- aldDGsAMb9fQqj3Q45pOy077UvyzJPoFi/FfcNdvSqJtmpmAu0dsoai7B62BijPQ2bsR
- Oqa5h8vrcOnxRcwtGuUeZuUVRZXibgStDm/Rtu5roxFB/5XrRczi8FaN+ldR8fXBazYc
- Rqbw==
+ d=redhat.com; s=google; t=1781254838; x=1781859638; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:autocrypt:from
+ :content-language:references:cc:to:subject:user-agent:mime-version
+ :date:message-id:from:to:cc:subject:date:message-id:reply-to;
+ bh=5NhEHxZ6hI0beLeWp6qgypW+fgnxBRyBUQAZPd30UWk=;
+ b=Af6KsqcgUtD/EjmLwU+BDi+P4+owW70SqSlJdvHlmtpAckCZeqs1cUJX0JIlx1dWTy
+ woD9GWOLNRsAl+gwaEUNv4fPDqUQ7a7Gp9cFhDyuQHgNdujxoZ3A5wuGu6pws3j2DxAU
+ Y6oA/F0vVAKUdF+cz1J/uAciyZYPmEovE2W/+2DMwa6RA5oqTHngruw1KFAZU+zXzQ0g
+ cMQ5XhYZX7PCSPlwRp3jpjvU8oQNsUsvcIXPH3Mui/PaTU2mgkWlV6d56X4l+r86NwQm
+ vedgsAnyKicFuq75f8W10wcUCIXAcyY49NKL5GSjiJ0bfCCmWjFdtF5leTfnbrzoQv+l
+ TphQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1781253784; x=1781858584;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=CiQsaORxtMIvHq95jZcjcnF36rd1YYR82LOVNgV3M+Q=;
- b=EPievysyYdWblwjS0gxxJ1IU3VQDIUMvPS+hOgr7YAyeaXRyWrlnzvfEqgPjJfsPPt
- nJTRkUAaKR4pBXStqLJOdcvv6LaenG5rJK6SqwwymIstkzZzJtEFIfl8u61E3/oUN22A
- Laji06OhOYCDIXd4p22v6wsqLB3Zr02Ozr0/Yz5RJ7eJyxRHHbSELW8D0OYGy78MvcPA
- t3lgsVpkVIU7Y6l6Mx4jj5KkcoGwGuTb0Y1VCRmTtK2QaVnyrr3hcCfW7T4Sm0QBHosn
- TAkpNvX9MZeeHD82+7WskA4URz0cs9oANDYMhJN/rB9Vjwh8+Wit+M2SM126lYIfR/SD
- sXDw==
-X-Forwarded-Encrypted: i=1;
- AFNElJ89SOarLQo0+EznzFYdOrtLqjSLcNjepGVqd+vr3z7zhnunr41pRG0Zg/1b8ZZLV5BjPCCBuUjzGTFz@nongnu.org
-X-Gm-Message-State: AOJu0Yz4H0Mx+1EnGOxBM9+UZM7C5dcc2Jn3fYbBPFXARNSor6A5jqU5
- WWNbQ/sF++mZD6j5NBYTTdKDq9dZ9JyuxpnWrg6Owh07ABX2+Jb7jCwfipSESIA2U5NtISchT6e
- LFjdX8w9raRR4jMqUCXXD8SgwNx4mWBDUEOkxQBXnqN92Oax5Mjv4UjqN
-X-Gm-Gg: Acq92OFVM7uUfACFaOO2t6dV6+AyQ2eYKl9EFVbc9DuXVvo3nBIikHdvMm0ZYaPhoWW
- qrqCkJLMAQz9/FtGaE2JRJleJ3GLsRBwz8shnNn4rRCreRP4nC//kyzFzJRSuIU0e9UEvwqh1r1
- V4SQxaSF3+33D+a33y2DFnPIvgknzafSMlQsHRo8ZgUUi1UzqQNm4IfxagIaqDXSjz2UdOfmBzh
- rmNAXfKBmPBePGX2gsbtGPFDrsJpfJoaVKWc+V3UDKsI3em4KJL6WUGu87WjpKP3CNK/1/7RRiZ
- 5YnRINo7/+NREsvc1vFz1aqpGNzMr9embaRtOPS76pPnNlrMC4iwluOk6ZJRLwK52aKNCrYlf5Q
- PQ/gitJhmHZIAu7nMRQYaSMZ4pc/Y9dSwt1UOJfNEAzo=
-X-Received: by 2002:a05:600c:820c:b0:490:bcf6:46bf with SMTP id
- 5b1f17b1804b1-490ec4cdf95mr21839285e9.9.1781253784338; 
- Fri, 12 Jun 2026 01:43:04 -0700 (PDT)
-X-Received: by 2002:a05:600c:820c:b0:490:bcf6:46bf with SMTP id
- 5b1f17b1804b1-490ec4cdf95mr21838565e9.9.1781253783662; 
- Fri, 12 Jun 2026 01:43:03 -0700 (PDT)
-Received: from redhat.com (IGLD-80-230-85-71.inter.net.il. [80.230.85.71])
+ d=1e100.net; s=20251104; t=1781254838; x=1781859638;
+ h=content-transfer-encoding:in-reply-to:autocrypt:from
+ :content-language:references:cc:to:subject:user-agent:mime-version
+ :date:message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=5NhEHxZ6hI0beLeWp6qgypW+fgnxBRyBUQAZPd30UWk=;
+ b=d8cD+bi1Vt37d18GqoUGYz4aMa3Lm7SAUPa3D9n93jgQdedZ3OyC6tHNDb283CVwZa
+ pM396wVEE+fpps4ccTJIEQVjRS1U2AySzl3f/RMfuxT+bixiNqYzIGZGj6oc7J9TEmTe
+ 0SRVGdZDmHEHYTELUGntP69+QgIFgYHh5bT4nw4+WtjIxGW2jWodeeHtt0fzCrQjvLgB
+ sDHYnVdyM1OjLikh/NKT3JDUrVVcl8bbqwLOALXmO4tKW3NiU9QNXwIT51XbBrHEmekI
+ 09/HjxE++uDMWXLdzKSNrbLBERPAEAPqON1gqFjubBd16A7a8WRgyMEv7ck7vbr5d03F
+ zY2w==
+X-Gm-Message-State: AOJu0YwtfELjshPMJcren6pYHnDEBIv5m3XJWvuTk2OR5VjOVTROcCVM
+ U4c9D3h5FrzPSuhdiaFLJtrGxSNVUMKCDzN0Mzi3LdvVUvtWI02rZl51Or6vzAzsAeaOST18J5o
+ yck2lElQzf/bDxmQwEDkjtcNaVO8G6GJ7EhfIhn713qsn0BUpOh0BFCfi
+X-Gm-Gg: Acq92OGHaELW9Psluxxetf7MYXgsj78jxjACqt21usbK01qfZZllw3N0o8bhq/vlS4N
+ /+RrqPvmz7FQEM1k5KDhrBD2OY1XgxEvBKWBnwHTqST97K84bbXDPsbO1s9K9VmFtajsWt3lh6O
+ gn1p2Ddn12vLYheppapX51Wnw45zvXGV2l6VFkN5At50bmUEVNS7blC5XstbVSh4EMx/rBLiNNg
+ 7X4JoRG/kvBQgZ3jajVQPt8MyvCKyz38GBIdqkrxY3BmVT3Ae3mTFzK1E7lsoZi9nWsERuFkAYr
+ MYOAMSqHvh3ItPRm1u9FS1w4sKg6QxOx5w3nzaulxFVzv0PS/87vjzPVp9mZD8U+oBtwpNON53u
+ gtr6ODIk7pDp07GFKLIvL/dhhzr0QdpaH3qf5/B/KOJWnRJoca9EY3G/gPweL
+X-Received: by 2002:a17:907:3fa7:b0:bd3:cb24:ae61 with SMTP id
+ a640c23a62f3a-bfe27830142mr86269666b.6.1781254837736; 
+ Fri, 12 Jun 2026 02:00:37 -0700 (PDT)
+X-Received: by 2002:a17:907:3fa7:b0:bd3:cb24:ae61 with SMTP id
+ a640c23a62f3a-bfe27830142mr86266566b.6.1781254836972; 
+ Fri, 12 Jun 2026 02:00:36 -0700 (PDT)
+Received: from ?IPV6:2a01:e0a:280:24f0:576b:abc6:6396:ed4a?
+ ([2a01:e0a:280:24f0:576b:abc6:6396:ed4a])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-4606f2e6a8fsm3701992f8f.37.2026.06.12.01.43.01
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 12 Jun 2026 01:43:03 -0700 (PDT)
-Date: Fri, 12 Jun 2026 04:43:00 -0400
-From: "Michael S. Tsirkin" <mst@redhat.com>
-To: Gavin Shan <gshan@redhat.com>
-Cc: Peter Maydell <peter.maydell@linaro.org>, Peter Xu <peterx@redhat.com>,
- Pavel Hrdina <phrdina@redhat.com>,
- Daniel =?iso-8859-1?Q?P=2E_Berrang=E9?= <berrange@redhat.com>,
- qemu-devel@nongnu.org, qemu-arm@nongnu.org, jugraham@redhat.com,
- shan.gavin@gmail.com, Alex Williamson <alex@shazbot.org>,
- David Hildenbrand <david@kernel.org>
-Subject: Re: [PATCH RFCv1] virtio: Inherit max bounce buffer size from bus
- parent if possible
-Message-ID: <20260612044147-mutt-send-email-mst@kernel.org>
-References: <20260610095712-mutt-send-email-mst@kernel.org>
- <aimEl9QQ_LTRPLtd@x1.local>
- <20260610121026-mutt-send-email-mst@kernel.org>
- <1e9515c9-7e32-4d95-9b73-aab8bf10bddc@redhat.com>
- <20260611012217-mutt-send-email-mst@kernel.org>
- <3726a607-6cac-41f1-b402-0eed7c4e3fe3@redhat.com>
- <20260611023428-mutt-send-email-mst@kernel.org>
- <0c3f1dba-3b2c-43c5-b181-1426f6da0951@redhat.com>
- <CAFEAcA8Q9qEaZS8wCpZQ-4jpAnQ9JXvnb7iSeRTdhJ9Y3BcCRg@mail.gmail.com>
- <ec32c5ae-782c-4c83-8432-23d979552fbe@redhat.com>
+ a640c23a62f3a-bfdb83420e9sm78333266b.45.2026.06.12.02.00.35
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Fri, 12 Jun 2026 02:00:36 -0700 (PDT)
+Message-ID: <fbcf6e7f-c25e-4e37-a171-46a484a162d8@redhat.com>
+Date: Fri, 12 Jun 2026 11:00:35 +0200
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <ec32c5ae-782c-4c83-8432-23d979552fbe@redhat.com>
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=mst@redhat.com;
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH] vfio-user: validate VERSION replies
+To: zhaoguohan@kylinos.cn, John Levon <john.levon@nutanix.com>,
+ Thanos Makatos <thanos.makatos@nutanix.com>
+Cc: qemu-devel@nongnu.org
+References: <20260603062138.4008583-1-zhaoguohan@kylinos.cn>
+Content-Language: en-US, fr
+From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>
+Autocrypt: addr=clg@redhat.com; keydata=
+ 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
+ uVKe8BVz4atMOoktmt0GWTOC8P4=
+In-Reply-To: <20260603062138.4008583-1-zhaoguohan@kylinos.cn>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=clg@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -24
 X-Spam_score: -2.5
 X-Spam_bar: --
 X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.445,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
  SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -131,112 +164,79 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Fri, Jun 12, 2026 at 02:25:07PM +1000, Gavin Shan wrote:
-> On 6/11/26 10:48 PM, Peter Maydell wrote:
-> > On Thu, 11 Jun 2026 at 13:34, Gavin Shan <gshan@redhat.com> wrote:
-> > > 
-> > > Let me try to summarize what I understood. As VFIO is concerned, there
-> > > are multiple memory regions for one particular PCI BAR, and they're stacked
-> > > up. The memory regions for PCI BAR#4 of the GH100 card looks as below.
-> > > 
-> > >     (qemu) info mtree
-> > >                :
-> > >     address-space: pci_bridge_pci_mem
-> > >       0000000000000000-ffffffffffffffff (prio 0, container): pci_bridge_pci
-> > >         0000042000000000-0000043fffffffff (prio 1, i/o): 0009:01:00.0 base BAR 4          <---- (1) VFIOBAR::mr
-> > >           0000042000000000-0000043fffffffff (prio 0, i/o): 0009:01:00.0 BAR 4             <---- (2) VFIOBAR::VFIORegion::mem
-> > >             0000042000000000-000004379fffffff (prio 0, ramd): 0009:01:00.0 BAR 4 mmaps[0] <---- (3) VFIOBAR::VFIORegion::VFIOMap::mem
-> > > 
-> > >     (1) Its MemoryRegionOps is NULL. No data accesses are routed to this region
-> > >     (2) The data accesses routed to this region is handled by pread() and pwrite()
-> > >     (3) The data accesses routed to this region is handled by memcpy() before
-> > >         commit 4a2e242bbb.
-> > > 
-> > > There are identified PCI devices who have quirks, see vfio_bar_quirk_setup().
-> > > Accesses to part of the PCI BAR have to be emulated by the extra IO regions,
-> > > something like below for rtl8168 PCI device, where two extra IO regions are
-> > > stacked up for the quirks.
-> > > 
-> > >     address-space: pci_bridge_pci_mem
-> > >       0000000000000000-ffffffffffffffff (prio 0, container): pci_bridge_pci
-> > >         0000042000000000-0000043fffffffff (prio 1, i/o): 0009:01:00.0 base BAR 4          <---- (1) VFIOBAR::mr
-> > >           0000042000000000-0000043fffffffff (prio 0, i/o): 0009:01:00.0 BAR 4             <---- (2) VFIOBAR::VFIORegion::mem
-> > >             0000042000000000-000004379fffffff (prio 0, ramd): 0009:01:00.0 BAR 4 mmaps[0] <---- (3) VFIOBAR::VFIORegion::VFIOMap::mem
-> > >             0000042000000010-0000042000000014 (prio 1, i/o): 0009:01:00.0 BAR 4 quirk[0]  <---- (4) quirk[0]
-> > >             0000042000000018-000004200000001c (prio 1, i/o): 0009:01:00.0 BAR 4 quirk[1]  <---- (5) quirk[1]
-> > > 
-> > > Access on 0000042000000010-0000042000000014 should be routed to region (4) quirk[0]
-> > > and access on 0000042000000018-000004200000001c should be routed to region (5) quirk[1].
-> > > However, accesses to 0000042000000000-0000042000000020 are routed to region (3) before
-> > > commit 4a2e242bbb and the data transfer is done by memcpy(), bypassing region (4) and
-> > > (5). It's not the expected behavior and why memcpy() isn't expected on device rtl8168's
-> > > PCI BAR due to the quirks, answering your question.
-> > > 
-> > > With commit 4a2e242bbb applied, the accesses will be routed to the correct region.
-> > 
-> > The way I read 4a2e242bbb's commit message, it isn't about things being routed
-> > to the wrong region. It's about the handling of areas which aren't in the small
-> > quirk regions but which are in the same 4K page as them. These have to
-> > be handled
-> > via the memory subsystem's "subpage" mechanism. This does route
-> > everything to the
-> > correct region, but if the region (3) is marked as "direct access is OK" then
-> > QEMU assumes that any kind of direct access is OK, i.e. this behaves
-> > like true RAM.
-> > It then does a memcpy access to a BAR that's really a bank of device registers,
-> > and this goes wrong.
-> > 
+John, Thanos,
+
+Does this change look good to you ?
+
+Thanks,
+
+C.
+
+
+On 6/3/26 08:21, zhaoguohan@kylinos.cn wrote:
+> From: GuoHan Zhao <zhaoguohan@kylinos.cn>
 > 
-> Ok, thanks for your followup and explanation. I also spent some time going through
-> system/memory.h and system/physmem.c. I think I fully understood the issue now. There
-> are two concerning paths as mentioned by Peter Xu in another reply: (a) vCPU accessors
-> like address_space_rw(), address_space_write_rom(), address_space_ldq(), address_space_stq()
-> and their variants; (b) functions used in the DMA path like address_space_map() and
-> address_space_unmap().
+> The vfio-user protocol makes the VERSION payload optional, so a
+> reply may legally stop after the major and minor fields.
 > 
-> For (a), memmove() and memcpy() are used, and they can be replaced something else that
-> is safe. However, the replacement in (a) can't fix the issue existing in (b). In (b),
-> the host's pointer is returned by address_space_map() and the memory block (perhaps not
-> a real RAM block) can be accessed in all means after that. I guess we have to ensure
-> the memory region is a real RAM block before the pointer can be returned in (b). Otherwise,
-> we still fall back to the bounce buffer in (b).
-
-
-No guest will DMA into a "non RAM block". Whatever is a DMA target, is a
-'real RAM block'.
-
-> > > Back to our case (GH100 card), there are no quirks for the PCI BAR (0009:01:00.0 BAR 4)
-> > > so it's fine mark the RAM DEVICE region as directly accessible. We perhaps needn't host
-> > > to export the capability (VFIO_REGION_INFO_CAP_DIRECT_ACCESS) suggested by you. It's
-> > > safe to mark any PCI BARs as directly accessible if they have no quirks attached. All
-> > > the devices except those listed in vfio_bar_quirk_setup() are capable of this.
-> > 
-> > I still feel like there are different kinds of PCI BAR here ("this BAR is
-> > true RAM and can be accessed arbitrarily" vs "this BAR is full of registers
-> > and can't be handled that way") and the vfio code in QEMU needs to set up
-> > the memory regions differently for the two cases. For your example I think
-> > it would be fine to have direct-access even if there were some kind of
-> > quirk memory region, because for the parts of the BAR that aren't covered
-> > by a quirk overlay the underlying BAR still allows "entirely like RAM,
-> > any alignment and size is OK" accesses.
-> > 
+> vfio_user_validate_version() currently assumes a capabilities string is
+> always present and NUL-terminated. When the server replies without
+> version data, QEMU ends up reusing the request-side capabilities buffer
+> and the terminating-NUL check underflows. Replies shorter than the fixed
+> VERSION header are also accessed before they are validated.
 > 
-> Agreed. If the PCI BAR is a 'real RAM block' is determined by hardware vendor. I
-> think the solution proposed by Michael is a nice one as this specific case is concerned:
-> A flag (capability) is returned by nvgrace_gpu_vfio_pci driver to indicate that the
-> PCI BAR is a 'real RAM block' and tolerant to all kinds of memory accessor. QEMU marks
-> the memory region for this PCI BAR as directly accessible. Alternatively, qemu also
-> can determine the capability by the PCI device's vendor/device/subsystem/version information
-> in hw/vfio/region.c.
+> Reject replies shorter than the fixed VERSION header and only parse
+> capabilities when the reply actually carries version data.
 > 
-
-
-I sent it before I understood the issue.
-
-> > -- PMM
-> > 
+> Fixes: 36227628d824 (vfio-user: implement message send infrastructure)
+> Signed-off-by: GuoHan Zhao <zhaoguohan@kylinos.cn>
+> ---
+>   hw/vfio-user/proxy.c | 21 ++++++++++++++-------
+>   1 file changed, 14 insertions(+), 7 deletions(-)
 > 
-> Thanks,
-> Gavin
+> diff --git a/hw/vfio-user/proxy.c b/hw/vfio-user/proxy.c
+> index 0f7d8425d614..197aee07bf7a 100644
+> --- a/hw/vfio-user/proxy.c
+> +++ b/hw/vfio-user/proxy.c
+> @@ -1292,7 +1292,7 @@ bool vfio_user_validate_version(VFIOUserProxy *proxy, Error **errp)
+>   {
+>       g_autofree VFIOUserVersion *msgp = NULL;
+>       GString *caps;
+> -    char *reply;
+> +    const char *reply = "";
+>       int size, caplen;
+>   
+>       caps = caps_json();
+> @@ -1322,17 +1322,24 @@ bool vfio_user_validate_version(VFIOUserProxy *proxy, Error **errp)
+>           return false;
+>       }
+>   
+> -    reply = msgp->capabilities;
+> -    if (reply[msgp->hdr.size - sizeof(*msgp) - 1] != '\0') {
+> -        error_setg(errp, "corrupt version reply");
+> +    if (msgp->hdr.size < sizeof(*msgp)) {
+> +        error_setg(errp, "short version reply");
+>           return false;
+>       }
+>   
+> -    if (!caps_check(proxy, msgp->minor, reply, errp)) {
+> -        return false;
+> +    if (msgp->hdr.size > sizeof(*msgp)) {
+> +        reply = msgp->capabilities;
+> +        if (reply[msgp->hdr.size - sizeof(*msgp) - 1] != '\0') {
+> +            error_setg(errp, "corrupt version reply");
+> +            return false;
+> +        }
+> +
+> +        if (!caps_check(proxy, msgp->minor, reply, errp)) {
+> +            return false;
+> +        }
+>       }
+>   
+> -    trace_vfio_user_version(msgp->major, msgp->minor, msgp->capabilities);
+> +    trace_vfio_user_version(msgp->major, msgp->minor, reply);
+>       return true;
+>   }
+>   
 
 
