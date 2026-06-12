@@ -4,57 +4,59 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 356B3CD98CF
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 86D86CD8CA8
 	for <qemu-devel@archiver.kernel.org>; Fri, 12 Jun 2026 18:04:35 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wY6Ee-0005zg-Tu; Fri, 12 Jun 2026 14:04:04 -0400
+	id 1wY6Ec-0005yD-FA; Fri, 12 Jun 2026 14:04:03 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1)
  (envelope-from <frederic.petrot@univ-grenoble-alpes.fr>)
- id 1wY6Ea-0005xx-S9
+ id 1wY6Ea-0005xp-MF
  for qemu-devel@nongnu.org; Fri, 12 Jun 2026 14:04:00 -0400
 Received: from zm-mta-out-3.u-ga.fr ([152.77.200.56])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1)
  (envelope-from <frederic.petrot@univ-grenoble-alpes.fr>)
- id 1wY6EY-0000Yo-Dj
+ id 1wY6EY-0000ZU-Dh
  for qemu-devel@nongnu.org; Fri, 12 Jun 2026 14:04:00 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
  d=univ-grenoble-alpes.fr; s=2020; t=1781287434;
- bh=r5yIP2Q4ILfJcIWsHFE12PI8Ouc0eJDYGoFsNYLFVgU=;
- h=From:To:Cc:Subject:Date:From;
- b=pGB+dTX0WN3U/ktwHh+9TfobnXGm11PXdl6qsC+sgGa0O2oYUFlJwA+lw1AQecs8S
- CLFL/OkjZexfAPWzWdWI5+Mlj7lT+nfc2X7+sG5xL6dBMW6UFzhGeAm8pY9/HzJwc9
- PirI7rCEx0kkpbCuYIdMNEK2yad7U9uK3VEHF+8oLF3gbnQDOTKSJeL9AK/a4zKjsF
- Ee6Ub39IL6dKofXALMs1x54hPMCTE79ouSDQ+EgyVRnwUNV+izsK7Ldpzs4e/s8E+h
- AJX79By1U32CJkSM9MkpL3dxbgEsc+A7jZJrcPGbSP4vQnxeiux3ihUGa1A1C5yrvJ
- eTXMS07waRIjw==
-Received: from mailhub-1.u-ga.fr (mailhub-1.u-ga.fr [129.88.178.98])
- by zm-mta-out-3.u-ga.fr (Postfix) with ESMTP id 2753C4028C;
+ bh=rN7AqZT+PyyD1qQHm8Fh0d1KVRLGIZG6xv1nnDT0dzM=;
+ h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
+ b=4DWhgaFh4qpSPjfpIHpi6ae1htQF91bnpoghVBnUsGgbpIU6YPmaxsPbrMxqc0r8v
+ sEE4PCrCYOhz6GLC5d/wOIt4C3SWFVzKN16rctf4gxI0lQgW26CZ9JqOPNHEAwtCgS
+ F8xaSzS60axiS1UIb4xRwBR1enkufPEuDOskGZB/wb2iKCiaqcAgF0NEOPD080fNt8
+ zzL719QZz4erSFE6hga5QtXd16NpRqwiMi6YlfsaUzaPAk7h/RrdRMQM/7TfpN/Tbi
+ UXsJaIIA4WExr9de+sMFBvYwK4mbXK8awuHNXG/u8B8y34pOxZwMtaOk/CGD+eGFdp
+ mlBt7q5KXjoPA==
+Received: from mailhub-2.u-ga.fr (mailhub-2.u-ga.fr [129.88.178.102])
+ by zm-mta-out-3.u-ga.fr (Postfix) with ESMTP id BCA714028F;
  Fri, 12 Jun 2026 20:03:54 +0200 (CEST)
 Received: from smtps.univ-grenoble-alpes.fr (smtps2.u-ga.fr [152.77.18.2])
- by mailhub-1.u-ga.fr (Postfix) with ESMTP id 23CC5FF852;
+ by mailhub-2.u-ga.fr (Postfix) with ESMTP id B930FFF853;
  Fri, 12 Jun 2026 20:03:54 +0200 (CEST)
 Received: from naga.. (unknown [37.167.227.134])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
  (Authenticated sender: petrotf@univ-grenoble-alpes.fr)
- by smtps.univ-grenoble-alpes.fr (Postfix) with ESMTPSA id 37F15140101;
- Fri, 12 Jun 2026 20:03:53 +0200 (CEST)
+ by smtps.univ-grenoble-alpes.fr (Postfix) with ESMTPSA id 3E8BD140101;
+ Fri, 12 Jun 2026 20:03:54 +0200 (CEST)
 From: =?UTF-8?q?Fr=C3=A9d=C3=A9ric=20P=C3=A9trot?=
  <frederic.petrot@univ-grenoble-alpes.fr>
 To: philmd@mailo.com, pierrick.bouvier@oss.qualcomm.com, mst@redhat.com,
  richard.henderson@linaro.org, qemu-devel@nongnu.org
 Cc: =?UTF-8?q?Fr=C3=A9d=C3=A9ric=20P=C3=A9trot?=
  <frederic.petrot@univ-grenoble-alpes.fr>
-Subject: [PATCH 1/2] include/qemu/bswap.h: Add support for Int128 byte swaps
-Date: Fri, 12 Jun 2026 20:03:45 +0200
-Message-ID: <20260612180346.890429-1-frederic.petrot@univ-grenoble-alpes.fr>
+Subject: [PATCH 2/2] test/unit: Byte-swap tests
+Date: Fri, 12 Jun 2026 20:03:46 +0200
+Message-ID: <20260612180346.890429-2-frederic.petrot@univ-grenoble-alpes.fr>
 X-Mailer: git-send-email 2.43.0
+In-Reply-To: <20260612180346.890429-1-frederic.petrot@univ-grenoble-alpes.fr>
+References: <20260612180346.890429-1-frederic.petrot@univ-grenoble-alpes.fr>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -85,215 +87,138 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The recent introduction of endianness support is providing
-a clean framework for the standard integer data types.
-This patch adds support for the non-standard Int128 type QEMU provides.
-Note that the ldn and sdn functions still keep an uint64_t as argument
-and return value to avoid performance overhead.
+Test to check byte-swap macros, in particular for Int128.
 
 Signed-off-by: Frédéric Pétrot <frederic.petrot@univ-grenoble-alpes.fr>
 ---
- include/qemu/bswap.h | 63 +++++++++++++++++++++++++++++++++++++++++---
- 1 file changed, 59 insertions(+), 4 deletions(-)
+ tests/unit/meson.build  |   1 +
+ tests/unit/test-bswap.c | 105 ++++++++++++++++++++++++++++++++++++++++
+ 2 files changed, 106 insertions(+)
+ create mode 100644 tests/unit/test-bswap.c
 
-diff --git a/include/qemu/bswap.h b/include/qemu/bswap.h
-index 387d65c0b0..bdc335c63f 100644
---- a/include/qemu/bswap.h
-+++ b/include/qemu/bswap.h
-@@ -40,20 +40,20 @@ static inline void bswap64s(uint64_t *s)
- 
- #if HOST_BIG_ENDIAN
- #define be_bswap(v, size) (v)
--#define le_bswap(v, size) glue(__builtin_bswap, size)(v)
-+#define le_bswap(v, size) glue(bswap, size)(v)
- #define be_bswap24(v) (v)
- #define le_bswap24(v) bswap24(v)
- #define be_bswaps(v, size)
- #define le_bswaps(p, size) \
--            do { *p = glue(__builtin_bswap, size)(*p); } while (0)
-+            do { *p = glue(bswap, size)(*p); } while (0)
- #else
- #define le_bswap(v, size) (v)
- #define be_bswap24(v) bswap24(v)
- #define le_bswap24(v) (v)
--#define be_bswap(v, size) glue(__builtin_bswap, size)(v)
-+#define be_bswap(v, size) glue(bswap, size)(v)
- #define le_bswaps(v, size)
- #define be_bswaps(p, size) \
--            do { *p = glue(__builtin_bswap, size)(*p); } while (0)
-+            do { *p = glue(bswap, size)(*p); } while (0)
- #endif
- 
- /**
-@@ -64,9 +64,11 @@ static inline void bswap64s(uint64_t *s)
-  * uint16_t le16_to_cpu(uint16_t v);
-  * uint32_t le32_to_cpu(uint32_t v);
-  * uint64_t le64_to_cpu(uint64_t v);
-+ * Int128 le128_to_cpu(Int128 v);
-  * uint16_t be16_to_cpu(uint16_t v);
-  * uint32_t be32_to_cpu(uint32_t v);
-  * uint64_t be64_to_cpu(uint64_t v);
-+ * Int128 be128_to_cpu(Int128 v);
-  *
-  * Convert the value @v from the specified format to the native
-  * endianness of the host CPU by byteswapping if necessary, and
-@@ -75,9 +77,11 @@ static inline void bswap64s(uint64_t *s)
-  * uint16_t cpu_to_le16(uint16_t v);
-  * uint32_t cpu_to_le32(uint32_t v);
-  * uint64_t cpu_to_le64(uint64_t v);
-+ * Int128 cpu_to_le128(Int128 v);
-  * uint16_t cpu_to_be16(uint16_t v);
-  * uint32_t cpu_to_be32(uint32_t v);
-  * uint64_t cpu_to_be64(uint64_t v);
-+ * Int128 cpu_to_be128(Int128 v);
-  *
-  * Convert the value @v from the native endianness of the host CPU to
-  * the specified format by byteswapping if necessary, and return
-@@ -86,9 +90,11 @@ static inline void bswap64s(uint64_t *s)
-  * void le16_to_cpus(uint16_t *v);
-  * void le32_to_cpus(uint32_t *v);
-  * void le64_to_cpus(uint64_t *v);
-+ * void le128_to_cpus(Int128 *v);
-  * void be16_to_cpus(uint16_t *v);
-  * void be32_to_cpus(uint32_t *v);
-  * void be64_to_cpus(uint64_t *v);
-+ * void be128_to_cpus(Int128 *v);
-  *
-  * Do an in-place conversion of the value pointed to by @v from the
-  * specified format to the native endianness of the host CPU.
-@@ -96,9 +102,11 @@ static inline void bswap64s(uint64_t *s)
-  * void cpu_to_le16s(uint16_t *v);
-  * void cpu_to_le32s(uint32_t *v);
-  * void cpu_to_le64s(uint64_t *v);
-+ * void cpu_to_le128s(Int128 *v);
-  * void cpu_to_be16s(uint16_t *v);
-  * void cpu_to_be32s(uint32_t *v);
-  * void cpu_to_be64s(uint64_t *v);
-+ * void cpu_to_be128s(Int128 *v);
-  *
-  * Do an in-place conversion of the value pointed to by @v from the
-  * native endianness of the host CPU to the specified format.
-@@ -138,10 +146,12 @@ static inline void cpu_to_ ## endian ## size ## s(type *p)\
- CPU_CONVERT(be, 16, uint16_t)
- CPU_CONVERT(be, 32, uint32_t)
- CPU_CONVERT(be, 64, uint64_t)
-+CPU_CONVERT(be, 128, Int128)
- 
- CPU_CONVERT(le, 16, uint16_t)
- CPU_CONVERT(le, 32, uint32_t)
- CPU_CONVERT(le, 64, uint64_t)
-+CPU_CONVERT(le, 128, Int128)
- 
- #undef CPU_CONVERT
- 
-@@ -149,6 +159,8 @@ CPU_CONVERT(le, 64, uint64_t)
-  * Same as cpu_to_le{16,32,64}, except that gcc will figure the result is
-  * a compile-time constant if you pass in a constant.  So this can be
-  * used to initialize static variables.
-+ * The 128 case is ruled out because we must call int128_funcs during
-+ * this initialization.
-  */
- #if HOST_BIG_ENDIAN
- # define const_le64(_x)                          \
-@@ -200,6 +212,7 @@ CPU_CONVERT(le, 64, uint64_t)
-  *   24: 24 bits
-  *   l: 32 bits
-  *   q: 64 bits
-+ *   o: 128 bits
-  *
-  * endian is:
-  *   he   : host endian
-@@ -296,6 +309,18 @@ static inline void stq_he_p(void *ptr, uint64_t v)
-     __builtin_memcpy(ptr, &v, sizeof(v));
+diff --git a/tests/unit/meson.build b/tests/unit/meson.build
+index 01cc540a45..6ad4412322 100644
+--- a/tests/unit/meson.build
++++ b/tests/unit/meson.build
+@@ -50,6 +50,7 @@ tests = {
+   'test-interval-tree': [],
+   'test-fifo': [],
+   'test-envlist': [],
++  'test-bswap': [],
  }
  
-+static inline Int128 ldo_he_p(const void *ptr)
+ if have_system or have_tools
+diff --git a/tests/unit/test-bswap.c b/tests/unit/test-bswap.c
+new file mode 100644
+index 0000000000..1c05b677ed
+--- /dev/null
++++ b/tests/unit/test-bswap.c
+@@ -0,0 +1,105 @@
++/*
++ * SPDX-License-Identifier: GPL-2.0-or-later
++ *
++ * Unit-tests for byte-swaps.
++ *
++ * Copyright (C) 2026, Université Grenoble Alpes
++ * Frédéric Pétrot <frederic.petrot@univ-grenoble-alpes.fr>
++ */
++
++#include "qemu/osdep.h"
++#include "qemu/bswap.h"
++#include "qemu/int128.h"
++
++#define TEST_HI_VAL 0x0011223344556677ULL
++#define TEST_LO_VAL 0x8899AABBCCDDEEFFULL
++
++static void test_basic_bswap(void)
 +{
++    g_assert_cmphex(bswap16(0x1234), ==, 0x3412);
++    g_assert_cmphex(bswap32(0x12345678), ==, 0x78563412);
++    g_assert_cmphex(bswap64(0x1122334455667788ULL), ==, 0x8877665544332211ULL);
++    /* Checking the 128-bit case is a bit more involved */
++    Int128 v = int128_make128(TEST_LO_VAL, TEST_HI_VAL);
++    Int128 r = bswap128(v);
++    uint64_t hi = int128_gethi(r);
++    uint64_t lo = int128_getlo(r);
++    g_assert_cmphex(bswap64(hi), ==, TEST_LO_VAL);
++    g_assert_cmphex(bswap64(lo), ==, TEST_HI_VAL);
++}
++
++static void test_le_target_octoword(void)
++{
++    uint8_t buf[16];
++    Int128 v = int128_make128(TEST_LO_VAL, TEST_HI_VAL);
 +    Int128 r;
-+    __builtin_memcpy(&r, ptr, sizeof(r));
-+    return r;
++
++    /* LSB first comparison stream */
++    const uint8_t expected_le_stream[16] = {
++        0xFF, 0xEE, 0xDD, 0xCC, 0xBB, 0xAA, 0x99, 0x88,
++        0x77, 0x66, 0x55, 0x44, 0x33, 0x22, 0x11, 0x00
++    };
++
++    sto_le_p(buf, v);
++    g_assert_cmpmem(buf, 16, expected_le_stream, 16);
++    r = ldo_le_p(buf);
++    g_assert(int128_eq(v, r));
 +}
 +
-+static inline void sto_he_p(void *ptr, Int128 v)
++static void test_be_target_octoword(void)
 +{
-+    __builtin_memcpy(ptr, &v, sizeof(v));
++    uint8_t buf[16];
++    Int128 v = int128_make128(TEST_LO_VAL, TEST_HI_VAL);
++    Int128 r;
++
++    /* MSB first comparison stream */
++    const uint8_t expected_be_stream[16] = {
++        0x00, 0x11, 0x22, 0x33, 0x44, 0x55, 0x66, 0x77,
++        0x88, 0x99, 0xAA, 0xBB, 0xCC, 0xDD, 0xEE, 0xFF
++    };
++
++    sto_be_p(buf, v);
++    g_assert_cmpmem(buf, 16, expected_be_stream, 16);
++    r = ldo_be_p(buf);
++    g_assert(int128_eq(v, r));
 +}
 +
- static inline int lduw_le_p(const void *ptr)
- {
-     return (uint16_t)le_bswap(lduw_he_p(ptr), 16);
-@@ -316,6 +341,11 @@ static inline uint64_t ldq_le_p(const void *ptr)
-     return le_bswap(ldq_he_p(ptr), 64);
- }
- 
-+static inline Int128 ldo_le_p(const void *ptr)
++static void test_host_conversions_octoword(void)
 +{
-+    return le_bswap(ldo_he_p(ptr), 128);
++    Int128 v = int128_make128(TEST_LO_VAL, TEST_HI_VAL);
++    Int128 r, s;
++    Int128 p = int128_make128(bswap64(TEST_HI_VAL), bswap64(TEST_LO_VAL));
++
++    r = le128_to_cpu(v);
++    s = cpu_to_le128(v);
++    #if HOST_BIG_ENDIAN
++        g_assert(int128_eq(r, p));
++        g_assert(int128_eq(s, p));
++    #else
++        g_assert(int128_eq(r, v));
++        g_assert(int128_eq(s, v));
++    #endif
++
++    r = be128_to_cpu(v);
++    s = cpu_to_be128(v);
++    #if HOST_BIG_ENDIAN
++        g_assert(int128_eq(r, v));
++        g_assert(int128_eq(s, v));
++    #else
++        g_assert(int128_eq(r, p));
++        g_assert(int128_eq(s, p));
++    #endif
 +}
 +
- static inline void stw_le_p(void *ptr, uint16_t v)
- {
-     stw_he_p(ptr, le_bswap(v, 16));
-@@ -336,6 +366,11 @@ static inline void stq_le_p(void *ptr, uint64_t v)
-     stq_he_p(ptr, le_bswap(v, 64));
- }
- 
-+static inline void sto_le_p(void *ptr, Int128 v)
++int main(int argc, char **argv)
 +{
-+    sto_he_p(ptr, le_bswap(v, 128));
-+}
++    g_test_init(&argc, &argv, NULL);
 +
- static inline int lduw_be_p(const void *ptr)
- {
-     return (uint16_t)be_bswap(lduw_he_p(ptr), 16);
-@@ -356,6 +391,11 @@ static inline uint64_t ldq_be_p(const void *ptr)
-     return be_bswap(ldq_he_p(ptr), 64);
- }
- 
-+static inline Int128 ldo_be_p(const void *ptr)
-+{
-+    return be_bswap(ldo_he_p(ptr), 128);
-+}
++    g_test_add_func("/bswap/basic", test_basic_bswap);
++    g_test_add_func("/bswap/le_target_octoword", test_le_target_octoword);
++    g_test_add_func("/bswap/be_target_octoword", test_be_target_octoword);
++    g_test_add_func("/bswap/host_conversions_octoword",
++                    test_host_conversions_octoword);
 +
- static inline void stw_be_p(void *ptr, uint16_t v)
- {
-     stw_he_p(ptr, be_bswap(v, 16));
-@@ -376,6 +416,11 @@ static inline void stq_be_p(void *ptr, uint64_t v)
-     stq_he_p(ptr, be_bswap(v, 64));
- }
- 
-+static inline void sto_be_p(void *ptr, Int128 v)
-+{
-+    sto_he_p(ptr, be_bswap(v, 128));
++    return g_test_run();
 +}
-+
- 
- /**
-  * ldm_p: Load value from host memory (byteswapping if necessary)
-@@ -526,6 +571,11 @@ static inline uint64_t ldq_p(const void *ptr)
-     LOAD_IMPL(q, ptr);
- }
- 
-+static inline Int128 ldo_p(const void *ptr)
-+{
-+    LOAD_IMPL(o, ptr);
-+}
-+
- static inline uint64_t ldn_p(const void *ptr, int sz)
- {
-     LOAD_IMPL(n, ptr, sz);
-@@ -559,6 +609,11 @@ static inline void stq_p(void *ptr, uint64_t v)
-     STORE_IMPL(q, ptr, v);
- }
- 
-+static inline void sto_p(void *ptr, Int128 v)
-+{
-+    STORE_IMPL(o, ptr, v);
-+}
-+
- static inline void stn_p(void *ptr, int sz, uint64_t v)
- {
-     STORE_IMPL(n, ptr, sz, v);
 -- 
 2.43.0
 
