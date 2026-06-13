@@ -4,48 +4,51 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C7764CD98DC
-	for <qemu-devel@archiver.kernel.org>; Sat, 13 Jun 2026 20:09:05 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A2355CD98CF
+	for <qemu-devel@archiver.kernel.org>; Sat, 13 Jun 2026 20:09:09 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wYUem-0005xy-Ab; Sat, 13 Jun 2026 16:08:40 -0400
+	id 1wYUdc-0003OH-98; Sat, 13 Jun 2026 16:07:30 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wYUdP-0003Cd-BD; Sat, 13 Jun 2026 16:07:16 -0400
+ id 1wYUcM-0001fJ-Vz; Sat, 13 Jun 2026 16:06:12 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wYUdN-0001fV-Ho; Sat, 13 Jun 2026 16:07:15 -0400
+ id 1wYUcK-0000bH-Mz; Sat, 13 Jun 2026 16:06:10 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1781381068; bh=01u5170ETxPbIZHUjN6tH/hLORHcyT1482VamT7nDEg=;
+ t=1781381068; bh=DJZuAd6uoTybgvHP17Px/QZ+fzo7XTUkf9sXHlZo+24=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References;
- b=CIOZHXo8GaazIxFPn8pudmrRevnwRbTWKKNqCYUD+8gfcHQ6j0qkjLcWKPjR2/1ho
- ToDu1XBHAfhsbvmDwxN2q0vhUvGT6jvNxzkOq2rH9Cch85i1CxqHZxHZh4D+lrKtqT
- SHcV+oXZJYnazigU4E7SwZM0PbfmFPKW+bzwqi2sUmS+MkxOv4dVHBYvQJHyUU3HEM
- kdUHb57rdpLpZp3d+dl2CngH0EhThk6YAYKgSCX2i69Voz7wRGoJVZd8OzCP1nwNog
- f7ytn7O1rnNTHRE/S8HVog3XsDk0ppgQeXUq6RGNhlWf1769r7yDbvnKUfl/G+fVJj
- tkeJn9CdMwFBw==
+ b=tffcVPVdOIqYv1CY8KA9FmPUt3J+XOxdB28H1PomO8frHNIqOGs1RQprLBORkPiuY
+ mQs+V8+xyrHfeY0NmoGRomzZCkq/bJGN4907Pos003WOr9mOaPvgYO7SJ8YRnaIGwb
+ 4ySahaEvFsWgWAZy6nPJLbLmDZi7mxf88FpbzBPMV4lXEdGP1DMxDFk994sm97kzEW
+ Tras/cqDBlLAxFHZoNvMUu0nOHsxPHqrt91ah1IOjLZquF4JW+UYjskDP0GblW+DVW
+ wAtqmhZhSxS/meR3meJemuBrC/pcolBhhQS/zf5SylO3VZ3y/r6N31SLDgwafKzOHd
+ Ox9NlEtuUXnzQ==
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id F15B01B6E87;
+ by isrv.corpit.ru (Postfix) with ESMTP id 35D841B6E7B;
  Sat, 13 Jun 2026 23:04:28 +0300 (MSK)
 Received: from think4mjt.tls.msk.ru (mjtthink.wg.tls.msk.ru [192.168.177.146])
- by tsrv.corpit.ru (Postfix) with ESMTP id 5B04E3CE8E9;
- Sat, 13 Jun 2026 23:04:47 +0300 (MSK)
+ by tsrv.corpit.ru (Postfix) with ESMTP id 8FC773CE8DE;
+ Sat, 13 Jun 2026 23:04:46 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Peter Maydell <peter.maydell@linaro.org>,
- Richard Henderson <richard.henderson@linaro.org>,
+Cc: qemu-stable@nongnu.org, Heechan Kang <gganji11@naver.com>,
+ Feifan Qian <bea1e@proton.me>,
+ =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
+ =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
  Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-10.2.4 31/61] target/arm: Don't assert if 64-bit EL2 AT insn
- sees a Domain fault
-Date: Sat, 13 Jun 2026 23:03:14 +0300
-Message-ID: <20260613200411.1808021-31-mjt@tls.msk.ru>
+Subject: [Stable-10.2.4 20/61] ui: fix validation of VNC extended clipboard
+ data length
+Date: Sat, 13 Jun 2026 23:03:03 +0300
+Message-ID: <20260613200411.1808021-20-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <qemu-stable-10.2.4-20260613224639@cover.tls.msk.ru>
 References: <qemu-stable-10.2.4-20260613224639@cover.tls.msk.ru>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=212.248.84.144; envelope-from=mjt@tls.msk.ru;
  helo=isrv.corpit.ru
@@ -70,54 +73,69 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Peter Maydell <peter.maydell@linaro.org>
+From: Heechan Kang <gganji11@naver.com>
 
-The Domain fault type can only happen for 32-bit short-format
-descriptors.  This means that it almost never needs to be encoded in
-a long-format fault status code.  However, there is one corner case
-where we do need to report it as a long-format FSC: if a 64-bit EL2
-does an AT insn on an AArch32 EL1&0 translation regime that is using
-short-descriptors and that translation operation hits a Domain fault,
-then this is reported in the PAR_EL1 in long-format.
+QEMU's VNC extended clipboard handler inflates a client-controlled
+compressed clipboard payload. The code checks the declared text size
+against the total inflated buffer size:
 
-The PAR_EL1 register description defines that this should be reported
-as 0b111101 for a level 1 Domain fault or 0b111110 for a level 2
-Domain fault.
+    if (tsize < size)
 
-The Arm ARM pseudocode special cases this in the function
-AArch64_PARFaultStatus() (because no other "fault to LFSC" code path
-can be a Domain fault).  For QEMU, implement it in arm_fi_to_lfsc().
+but then copies from:
 
-Cc: qemu-stable@nongnu.org
-Fixes: 1fa498fe0de97 ("target/arm: Provide fault type enum and FSR conversion functions")
-Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/3512
-Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
-Message-id: 20260526174155.2491217-1-peter.maydell@linaro.org
-(cherry picked from commit bb957530471c792a9a51e822a6c2fa8398cc48f6)
+    tbuf = buf + 4;
+    qemu_clipboard_set_data(..., tsize, tbuf, true);
+
+The correct bound is the remaining data length after the 4-byte length
+field, not the total inflated buffer length.
+
+As a result, a VNC client can make QEMU copy up to 3 bytes past the end
+of the inflated heap buffer. With a second VNC client, those copied
+bytes are observable through the normal VNC extended clipboard PROVIDE
+path.
+
+Fixes: CVE-2026-8343
+Reported-by: Heechan Kang <gganji11@naver.com>
+Reported-by: Feifan Qian <bea1e@proton.me>
+Reviewed-by: Daniel P. Berrangé <berrange@redhat.com>
+Signed-off-by: Heechan Kang <gganji11@naver.com>
+[DB: added #include and 'return' statements]
+Signed-off-by: Daniel P. Berrangé <berrange@redhat.com>
+Reviewed-by: Marc-André Lureau <marcandre.lureau@redhat.com>
+Message-ID: <20260512095543.459949-1-berrange@redhat.com>
+(cherry picked from commit e56b4bbff1df260487b80abe1f967f687fa115d3)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/target/arm/internals.h b/target/arm/internals.h
-index 6434331ef2..7dc71776e7 100644
---- a/target/arm/internals.h
-+++ b/target/arm/internals.h
-@@ -871,6 +871,16 @@ static inline uint32_t arm_fi_to_lfsc(ARMMMUFaultInfo *fi)
-         assert(fi->level >= 0 && fi->level <= 3);
-         fsc = 0b001100 | fi->level;
-         break;
-+    case ARMFault_Domain:
-+        /*
-+         * This can only happen when doing an AT insn at EL2 for an AArch32
-+         * stage 1 EL1&0 translation regime using short-descriptors, and
-+         * the translation hits a Domain fault. This needs to be reported in
-+         * the long-format PAR. Compare pseudocode AArch64_PARFaultStatus().
-+         */
-+        assert(fi->level == 1 || fi->level == 2);
-+        fsc = 0b111100 | fi->level;
-+        break;
-     case ARMFault_Translation:
-         assert(fi->level >= -1 && fi->level <= 3);
-         if (fi->level < 0) {
+diff --git a/ui/vnc-clipboard.c b/ui/vnc-clipboard.c
+index 124b6fbd9c..fa05d86f42 100644
+--- a/ui/vnc-clipboard.c
++++ b/ui/vnc-clipboard.c
+@@ -23,6 +23,7 @@
+  */
+ 
+ #include "qemu/osdep.h"
++#include "qemu/error-report.h"
+ #include "vnc.h"
+ #include "vnc-jobs.h"
+ 
+@@ -282,10 +283,16 @@ void vnc_client_cut_text_ext(VncState *vs, int32_t len, uint32_t flags, uint8_t
+             buf && size >= 4) {
+             uint32_t tsize = read_u32(buf, 0);
+             uint8_t *tbuf = buf + 4;
+-            if (tsize < size) {
++            if (tsize <= size - 4) {
+                 qemu_clipboard_set_data(&vs->cbpeer, vs->cbinfo,
+                                         QEMU_CLIPBOARD_TYPE_TEXT,
+                                         tsize, tbuf, true);
++            } else {
++                error_report("vnc: malformed extended clipboard payload "
++                             "with text length %u exceeding available %u",
++                             tsize, size - 4);
++                vnc_client_error(vs);
++                return;
+             }
+         }
+     }
 -- 
 2.47.3
 
