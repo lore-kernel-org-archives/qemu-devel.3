@@ -4,43 +4,45 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id F3FFBCD98CF
-	for <qemu-devel@archiver.kernel.org>; Sat, 13 Jun 2026 19:56:48 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C64B2CD98CF
+	for <qemu-devel@archiver.kernel.org>; Sat, 13 Jun 2026 19:56:53 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wYURR-0007RG-4e; Sat, 13 Jun 2026 15:54:53 -0400
+	id 1wYUQL-0003Xb-Cp; Sat, 13 Jun 2026 15:53:45 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wYURP-0007M6-15; Sat, 13 Jun 2026 15:54:51 -0400
+ id 1wYUPu-00022a-Um; Sat, 13 Jun 2026 15:53:19 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wYURN-0004L6-A7; Sat, 13 Jun 2026 15:54:50 -0400
+ id 1wYUPt-0003pi-4H; Sat, 13 Jun 2026 15:53:18 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1781380260; bh=VhI+fbgmarYkeYX4Ah1lvu9hKCxU9Pd13pZKpXtCVes=;
+ t=1781380259; bh=IpFa7+QIKU+aijfHMlQQl7oLLzt0xPJpnWQaAj6Kelg=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References;
- b=MW4FR9Vp/UtLeXqBXTzwMBF2Qwz5izi5VGeSt6bU7SoEBQgLMnHk0blY9lh93BIXQ
- 0W6t0/af8bXly19hBjZink5uXYnXGF5mtJDcKRgbL9m9Ko4oDifSnnrV0wX2jYabPR
- DgE+WYMuKJ2FGq9jeNWqIsI5l1ZKvBmpObvXwcen7V740NzxJr61lYrjRLc3V7CyKb
- pPEjijLf67xuB24In+2gH8p1x+klXaS83rjaC+J3E4R3CaVKsk6Ghp49XqvuvPhI5I
- pwe2bnyKPUWWWpEH73EaLewfNRf/OzZQPlsMWm+5Xt4cb08iQwwIApNbdSPVAsN5S0
- B8Svr8VtyKK+g==
+ b=smrCWrTmiwC6y0Dy26D8dqP0sAXSa5kkcK1j9cQIRxj8RjqoW/VW387hgFJ83adyQ
+ dJR1n6XF44LOkO6P+PlkqWue+wbzHjGM+9v469nbhcAOqplk+pYQmLHotVW68U47jN
+ sExuxveJ6TjC3voNETT1godTFJDZs+s6kou6EZAj86RXrQB9bxGFjhOzNYxBvdlsWE
+ ISnwC4tEyzzoxenLb26L91Iqkse2ITo5zymbpIrtQiMM/VzkNwCTEzUASQwCCf3naS
+ 0RVzM/SwU4OLuKbFO3GAIOjJWPo0YYru0YUpaZsrHm02Nu0u/PhkOkvX9uQsIw00oT
+ yrYLJ/0CkdDXQ==
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 85EEB1B6E36;
- Sat, 13 Jun 2026 22:51:00 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id 56ED01B6E25;
+ Sat, 13 Jun 2026 22:50:59 +0300 (MSK)
 Received: from think4mjt.tls.msk.ru (mjtthink.wg.tls.msk.ru [192.168.177.146])
- by tsrv.corpit.ru (Postfix) with ESMTP id DF2803CE8B0;
- Sat, 13 Jun 2026 22:51:18 +0300 (MSK)
+ by tsrv.corpit.ru (Postfix) with ESMTP id AAB4E3CE89F;
+ Sat, 13 Jun 2026 22:51:17 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Christian Schoenebeck <qemu_oss@crudebyte.com>,
- Fabiano Rosas <farosas@suse.de>, Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-10.0.11 39/56] tests/qtest/libqos: add
- qvirtqueue_reset_pool() for descriptor pool reset
-Date: Sat, 13 Jun 2026 22:50:53 +0300
-Message-ID: <20260613195116.1807273-39-mjt@tls.msk.ru>
+Cc: qemu-stable@nongnu.org, "Denis V. Lunev" <den@openvz.org>,
+ Kevin Wolf <kwolf@redhat.com>, Hanna Reitz <hreitz@redhat.com>,
+ Stefan Hajnoczi <stefanha@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>,
+ Michael Tokarev <mjt@tls.msk.ru>
+Subject: [Stable-10.0.11 22/56] block/linux-aio: bound ioq_submit() recursion
+ depth
+Date: Sat, 13 Jun 2026 22:50:36 +0300
+Message-ID: <20260613195116.1807273-22-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <qemu-stable-10.0.11-20260613224446@cover.tls.msk.ru>
 References: <qemu-stable-10.0.11-20260613224446@cover.tls.msk.ru>
@@ -69,70 +71,127 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Christian Schoenebeck <qemu_oss@crudebyte.com>
+From: "Denis V. Lunev" <den@openvz.org>
 
-Add a function to reset the virtqueue descriptor pool state without
-reinitializing the device. This is useful for tests that issue a high
-number of requests and are limited by the simplified virtio test
-driver's descriptor tracking, which decrements num_free but never
-increments it back.
+qemu_laio_process_completions() wraps its body in defer_call_begin /
+defer_call_end. Inside the section, completion callbacks wake coroutines
+that queue new aiocbs; laio_do_submit() defers laio_deferred_fn. At the
+bottom of qemu_laio_process_completions() the defer_call_end() fires
+laio_deferred_fn, which calls ioq_submit(), closing the cycle:
 
-The function is safe for synchronous test code where requests are
-sent and completed before the next request is issued.
+  ioq_submit
+    -> io_submit(2)                           // some sync completions
+    -> qemu_laio_process_completions          // defer_call_begin
+         -> aio_co_wake                       // resumes coroutine
+              -> laio_do_submit
+                   -> defer_call(laio_deferred_fn, s)   // enqueued
+         -> defer_call_end                    // nesting drops to 0
+              -> laio_deferred_fn
+                   -> ioq_submit              // +1 stack frame, loop
 
-Acked-by: Fabiano Rosas <farosas@suse.de>
-Link: https://lore.kernel.org/qemu-devel/96cf23eea1204b34443218fe76bd4a5eaf9163e8.1779126034.git.qemu_oss@crudebyte.com
-Signed-off-by: Christian Schoenebeck <qemu_oss@crudebyte.com>
-(cherry picked from commit be33c56898f8b18617cff91525f0b68abee8de07)
+When io_submit(2) returns asynchronously (O_DIRECT) the cycle
+terminates in one extra frame: the fresh aiocb is still in flight, no
+completion is drained, no coroutine wakes, no new submission queues.
+When submissions complete synchronously (non-O_DIRECT, or per-descriptor
+drivers such as vmdk) each level enqueues more work for the next
+defer_call_end() to drain, so recursion grows without bound and QEMU
+crashes with SIGSEGV on the thread guard page.
+
+The cycle was closed by two performance commits, each correct in
+isolation:
+
+  076682885d ("block/linux-aio: convert to blk_io_plug_call() API")
+    -- introduced laio_deferred_fn and wired
+       laio_do_submit -> defer_call(laio_deferred_fn, s).
+
+  84d61e5f36 ("virtio: use defer_call() in virtio_irqfd_notify()")
+    -- added defer_call_begin/end around qemu_laio_process_completions
+       so virtio-irqfd notifications batch across a completion pass.
+
+The supported aio=native + cache=none pairing keeps submissions
+asynchronous, so the cycle stays bounded; nothing in the code enforces
+that contract. Observed in production as a SIGSEGV during a backup job
+configured with --cached + aio=native; reproducible on upstream with
+qemu-io against vmdk.
+
+Cap ioq_submit() recursion with a counter on LaioQueue, which is only
+accessed from the AioContext home thread. On overflow, return without
+submitting. The pending work is drained by s->completion_bh, which
+qemu_laio_process_completions() has already scheduled on entry -- no
+work is lost; one event-loop round-trip of latency is paid only when
+the bound is hit, which cannot happen on a supported configuration.
+
+Signed-off-by: Denis V. Lunev <den@openvz.org>
+CC: Kevin Wolf <kwolf@redhat.com>
+CC: Hanna Reitz <hreitz@redhat.com>
+CC: Stefan Hajnoczi <stefanha@redhat.com>
+CC: Paolo Bonzini <pbonzini@redhat.com>
+Message-ID: <20260520142503.251959-2-den@openvz.org>
+Signed-off-by: Stefan Hajnoczi <stefanha@redhat.com>
+(cherry picked from commit 6864bec553b2e37699739615e604fc3c7bae0e1d)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/tests/qtest/libqos/virtio.c b/tests/qtest/libqos/virtio.c
-index 2e7979652f..dfa94700cb 100644
---- a/tests/qtest/libqos/virtio.c
-+++ b/tests/qtest/libqos/virtio.c
-@@ -442,6 +442,29 @@ bool qvirtqueue_get_buf(QTestState *qts, QVirtQueue *vq, uint32_t *desc_idx,
-     return true;
- }
+diff --git a/block/linux-aio.c b/block/linux-aio.c
+index d0f9bc389a..880549786d 100644
+--- a/block/linux-aio.c
++++ b/block/linux-aio.c
+@@ -36,6 +36,19 @@
+ /* Maximum number of requests in a batch. (default value) */
+ #define DEFAULT_MAX_BATCH 32
  
 +/*
-+ * qvirtqueue_reset_pool:
-+ * @vq: The virtqueue to reset
-+ *
-+ * Reset the descriptor pool state without reinitializing the device.
-+ * This is useful for tests that issue a high number of requests and
-+ * are limited by the simplified virtio test driver's descriptor tracking,
-+ * which decrements num_free but never increments it back.
-+ *
-+ * This is only safe for synchronous test code where requests are
-+ * sent and completed before the next request is issued. Do not use
-+ * with asynchronous code where multiple requests may be in-flight.
-+ *
-+ * Note: This only resets the available descriptor pool (free_head,
-+ * num_free). The used ring position (last_used_idx) is NOT reset
-+ * and should continue to track consumed responses across iterations.
++ * Bound on how deep ioq_submit() may recurse on a single LaioQueue via the
++ * ioq_submit -> qemu_laio_process_completions -> defer_call_end ->
++ * laio_deferred_fn -> ioq_submit cycle. The cycle terminates naturally
++ * when io_submit(2) returns asynchronously (O_DIRECT), but can grow
++ * without bound when submissions complete synchronously. On overflow
++ * the caller returns without submitting; the outermost
++ * qemu_laio_process_completions() has already scheduled s->completion_bh
++ * (via qemu_bh_schedule() at the top of that function), which resumes
++ * submission from the next event-loop dispatch.
 + */
-+void qvirtqueue_reset_pool(QVirtQueue *vq)
-+{
-+    vq->free_head = 0;
-+    vq->num_free = vq->size;
-+}
++#define IOQ_SUBMIT_MAX_DEPTH 8
 +
- void qvirtqueue_set_used_event(QTestState *qts, QVirtQueue *vq, uint16_t idx)
- {
-     g_assert(vq->event);
-diff --git a/tests/qtest/libqos/virtio.h b/tests/qtest/libqos/virtio.h
-index 7adc7cbd10..d6486ba7f9 100644
---- a/tests/qtest/libqos/virtio.h
-+++ b/tests/qtest/libqos/virtio.h
-@@ -148,6 +148,8 @@ void qvirtqueue_kick(QTestState *qts, QVirtioDevice *d, QVirtQueue *vq,
- bool qvirtqueue_get_buf(QTestState *qts, QVirtQueue *vq, uint32_t *desc_idx,
-                         uint32_t *len);
+ struct qemu_laiocb {
+     Coroutine *co;
+     LinuxAioState *ctx;
+@@ -61,6 +74,7 @@ typedef struct {
+     unsigned int in_queue;
+     unsigned int in_flight;
+     bool blocked;
++    unsigned int submit_depth;
+     QSIMPLEQ_HEAD(, qemu_laiocb) pending;
+ } LaioQueue;
  
-+void qvirtqueue_reset_pool(QVirtQueue *vq);
+@@ -331,6 +345,7 @@ static void ioq_init(LaioQueue *io_q)
+     io_q->in_queue = 0;
+     io_q->in_flight = 0;
+     io_q->blocked = false;
++    io_q->submit_depth = 0;
+ }
+ 
+ static void ioq_submit(LinuxAioState *s)
+@@ -340,6 +355,11 @@ static void ioq_submit(LinuxAioState *s)
+     struct iocb *iocbs[MAX_EVENTS];
+     QSIMPLEQ_HEAD(, qemu_laiocb) completed;
+ 
++    if (s->io_q.submit_depth >= IOQ_SUBMIT_MAX_DEPTH) {
++        return;
++    }
++    s->io_q.submit_depth++;
 +
- void qvirtqueue_set_used_event(QTestState *qts, QVirtQueue *vq, uint16_t idx);
+     do {
+         if (s->io_q.in_flight >= MAX_EVENTS) {
+             break;
+@@ -385,6 +405,8 @@ static void ioq_submit(LinuxAioState *s)
+          * pended requests will be submitted from there.
+          */
+     }
++
++    s->io_q.submit_depth--;
+ }
  
- void qvirtio_start_device(QVirtioDevice *vdev);
+ static uint64_t laio_max_batch(LinuxAioState *s, uint64_t dev_max_batch)
 -- 
 2.47.3
 
