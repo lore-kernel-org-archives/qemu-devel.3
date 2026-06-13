@@ -4,45 +4,44 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2F2CDCD98CF
-	for <qemu-devel@archiver.kernel.org>; Sat, 13 Jun 2026 20:39:25 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1E655CD98CF
+	for <qemu-devel@archiver.kernel.org>; Sat, 13 Jun 2026 20:39:32 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wYV6j-0003JG-Mc; Sat, 13 Jun 2026 16:37:33 -0400
+	id 1wYV6m-0003Qj-70; Sat, 13 Jun 2026 16:37:36 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wYV6S-0002tE-PA; Sat, 13 Jun 2026 16:37:17 -0400
+ id 1wYV6X-0002wZ-D6; Sat, 13 Jun 2026 16:37:21 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wYV6P-0003Hu-LI; Sat, 13 Jun 2026 16:37:16 -0400
+ id 1wYV6S-0003QU-Rk; Sat, 13 Jun 2026 16:37:20 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1781382963; bh=Buh3wzvyJ5YPdIEyfbrsL/XcS/pQ3fOnyg/b6Lqqf10=;
+ t=1781382963; bh=EQ1/T6K5U0ItJX7O+kcFKps+jhA1+1znygudWJ+5mdI=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References;
- b=Hk2Hs7qxdMth1iuzpb2xtMblN/M3CtlZTed2w/mQmiuZdNgxHGMJzC8UM4OmGzFOV
- Hf6RgRt3em7HnrxpRZzBR4BVUBO6zZzIpOQjmAH+cHUTYTRLudjkO+XGWTxF+jNXmV
- 24o4uvccUQ+pk+NlOSflJHrTs4BYGIzGzn2DH91Hj2nhATsxdyotmklyIsfozohFWx
- W6Ou2SZdH8Pn8KVDnqdGsKu/j+rRxEsI2zXfUWpmsDRnzlbdMAtkC9Mwn/3tUdhPHO
- ZmKlSTaS/K8awkpVJa43hSkpvLowSSYCZurRzp1M/ehcS9cTwDQDuLFGFwKdciFQ6u
- nX/4TUJVMKq9w==
+ b=H19mQ0RScvm1etEUmSe4J6iDl+jVNFCoHJ1XGZ0UagQR5qQpwDj82vrF9j7EY4ETC
+ cs6ZQW6HxdERPNUbdEtygsB4P8uz81gsAT1YnAoYowyu7J1Fly9cHfUpocWFmoX0La
+ 3zGM3ZF4iRdrMjjB/4jrTLVsRJfmbl6Um6u5E+tlVMzu1OxPG0SqRpFv40aCdRqPIr
+ SsuHwMdLcKWUkSdICw6tmnajKC3WwVMaAxsRziRQl5FbehKUoQCcgBdscMUyV2pLRu
+ JMG4tzv+KWYeWj+kaF2SqfqMfmHNUpCzxp+4QQ2ckJt33fiErBUHM2BTheG+J/o2iE
+ O/Wy6MJRpT86A==
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 2F7E11B6EE7;
+ by isrv.corpit.ru (Postfix) with ESMTP id 3CA6B1B6EE8;
  Sat, 13 Jun 2026 23:36:03 +0300 (MSK)
 Received: from think4mjt.tls.msk.ru (mjtthink.wg.tls.msk.ru [192.168.177.146])
- by tsrv.corpit.ru (Postfix) with ESMTP id 996813CE939;
+ by tsrv.corpit.ru (Postfix) with ESMTP id A647B3CE93A;
  Sat, 13 Jun 2026 23:36:21 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org,
- Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>,
+Cc: qemu-stable@nongnu.org, Portia Stephens <portias@oss.tenstorrent.com>,
  Alistair Francis <alistair.francis@wdc.com>,
  Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-11.0.2 13/72] target/riscv/csr.c: fix read of pmpaddr(0-63)
- CSRs
-Date: Sat, 13 Jun 2026 23:34:39 +0300
-Message-ID: <20260613203542.1809153-13-mjt@tls.msk.ru>
+Subject: [Stable-11.0.2 14/72] target/riscv: Make hpmcounterh return the upper
+ 32-bits
+Date: Sat, 13 Jun 2026 23:34:40 +0300
+Message-ID: <20260613203542.1809153-14-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <qemu-stable-11.0.2-20260613224644@cover.tls.msk.ru>
 References: <qemu-stable-11.0.2-20260613224644@cover.tls.msk.ru>
@@ -71,60 +70,37 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>
+From: Portia Stephens <portias@oss.tenstorrent.com>
 
-The priv spec defines, for RV64, that the upper 10 bits of
-pmpaddr0-pmpaddr63 are WARL and are supposed to be cleared.
+The counter value was not being bitshifted for a hpmcounterh read
+resulting in hpmcounterh returning the bottom 32-bits.
 
-After this patch, using the bug reproducer in [1], writing
-ffffffffffffffff in pmpaddr0 and reading it back now results in
-003fffffffffffff.  Here's the 'diff -cp' dump before and after
-this change:
-
-*************** IN:
-*** 5272,5278 ****
-   pmpcfg10 0000000000000000
-   pmpcfg12 0000000000000000
-   pmpcfg14 0000000000000000
-!  pmpaddr0 ffffffffffffffff
-   pmpaddr1 0000000000000000
-   pmpaddr2 0000000000000000
-   pmpaddr3 0000000000000000
+Fixes:  cfc96df65e01 ("target/riscv: Remove upper_half from riscv_pmu_ctr_get_fixed_counters_val")
+Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/3498
+Cc: qemu-stable@nongnu.org
+Signed-off-by: Portia Stephens <portias@oss.tenstorrent.com>
 Reviewed-by: Alistair Francis <alistair.francis@wdc.com>
-Message-ID: <20260514123342.2139464-1-daniel.barboza@oss.qualcomm.com>
-
+Message-ID: <20260519043352.3685866-1-stephensportia@gmail.com>
 Signed-off-by: Alistair Francis <alistair.francis@wdc.com>
-(cherry picked from commit 53cc9747ed7c9b95ba084d614976dd48c9a57a97)
+(cherry picked from commit 02284108376a6bcfdd56a11de1c6e0bcc3d0e53b)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
 diff --git a/target/riscv/csr.c b/target/riscv/csr.c
-index d65d176fe8..cf1fe6041c 100644
+index cf1fe6041c..0f14ea4689 100644
 --- a/target/riscv/csr.c
 +++ b/target/riscv/csr.c
-@@ -5304,6 +5304,23 @@ static RISCVException read_pmpaddr(CPURISCVState *env, int csrno,
-                                    target_ulong *val)
- {
-     *val = pmpaddr_csr_read(env, csrno - CSR_PMPADDR0);
-+
-+    /*
-+     * For RV64, bits 54-63 of the address registers
-+     * PMPAADDR(0-63) is a WARL zero field (priv spec,
-+     * section "Physical Memory Protection CSRs").
-+     *
-+     * We'll have to add an annoying TARGET_RISCV64 gate
-+     * here to avoid complaints about masking bits 0-53
-+     * of a potential 32 bit target_ulong '*var'.
-+     */
-+#ifdef TARGET_RISCV64
-+    if (env->misa_mxl == MXL_RV64
-+        && csrno >= CSR_PMPADDR0 && csrno <= CSR_PMPADDR63) {
-+        target_ulong read_mask = MAKE_64BIT_MASK(0, 54);
-+        *val &= read_mask;
-+    }
-+#endif
-     return RISCV_EXCP_NONE;
- }
- 
+@@ -1392,8 +1392,9 @@ RISCVException riscv_pmu_read_ctr(CPURISCVState *env, target_ulong *val,
+      */
+     if (riscv_pmu_ctr_monitor_cycles(env, ctr_idx) ||
+         riscv_pmu_ctr_monitor_instructions(env, ctr_idx)) {
+-        *val = riscv_pmu_ctr_get_fixed_counters_val(env, ctr_idx) -
+-                                                    ctr_prev + ctr_val;
++        uint64_t cntr = riscv_pmu_ctr_get_fixed_counters_val(env, ctr_idx) -
++                                                             ctr_prev + ctr_val;
++        *val = extract64(cntr, start, length);
+     } else {
+         *val = ctr_val;
+     }
 -- 
 2.47.3
 
