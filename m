@@ -4,46 +4,44 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0CE6DCD98CF
-	for <qemu-devel@archiver.kernel.org>; Sat, 13 Jun 2026 20:39:11 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8C0C1CD8CA8
+	for <qemu-devel@archiver.kernel.org>; Sat, 13 Jun 2026 20:39:20 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wYV60-0001ZH-DG; Sat, 13 Jun 2026 16:36:49 -0400
+	id 1wYV62-0001aK-Q1; Sat, 13 Jun 2026 16:36:50 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wYV5q-0001Ud-8M; Sat, 13 Jun 2026 16:36:38 -0400
+ id 1wYV5u-0001Xl-TC; Sat, 13 Jun 2026 16:36:42 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wYV5n-0003B1-6w; Sat, 13 Jun 2026 16:36:37 -0400
+ id 1wYV5r-0003DR-NH; Sat, 13 Jun 2026 16:36:41 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1781382962; bh=rsMHcXMYMMN7Tj2tvLEWxPX3ekn7XpT0o/qUhhvEK6Q=;
+ t=1781382962; bh=nmmnp3npEHERyKVMs7WdQEpW4jB59+5sjKmOfypT4CE=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References;
- b=RMyHE17KAS6PwDuvWOEIVGsP3pacqIEVvuiUNX37HFt7vYtOXS8yolw18pr3ljoAa
- 9owaqLB0P/vra7KGATk18LU6STKEjfWahWk9jmQZZmua0G/yZtdJ3RAlR2dWrm4LL3
- MvrTvhWdWMk1t1SOOP+7QWFo+HRKfQFygd3+6eyb33Xy4SN+A9einOXrwWtivD7dNS
- WRLMjucLG/PM7Ywrg3NL/MM2tzdalRqSEtAi3gDcFOMWm6tvR0x9stBV4gjcRAEabq
- FxC6fPdto0wC3B7BiDNuV/icCt8Y8lksO70Hc5xUkYyK1npHBkLcSRCy9I9JHB+FgB
- St2pzqop5AUqA==
+ b=CJ1if3FUZkdjWjOKiRamL2v0pSqXogrSqjsTSWUnvg+mv1dH2jR6MkvABjMB/nXtq
+ E2Wvx3EwepHty+cIdau+EwwT+rrnLld5k85Uj/kbG00XCkbQoMXESh8P9oL+Gt8JPS
+ eNVUJTL8bm3Z8rXm+Sh/4mPsLkSAdF9qtVvTv2pv5EGAH2QH+SUJYXrtCljJNoNE8M
+ szr3nXRqdVnfyw0oH96Au1urFj3e+tNrxQg3AlM8jAs37L4GhQ6qMctOIyriBzzcJT
+ I9VUm8ZOvxh3mSIjq2+SoTajsqk49TitUdvVY5mICWY88f6GElOPh+YeVktP2OpcJq
+ RgKoeTLt0czng==
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 8432C1B6EDD;
+ by isrv.corpit.ru (Postfix) with ESMTP id BB06C1B6EE0;
  Sat, 13 Jun 2026 23:36:02 +0300 (MSK)
 Received: from think4mjt.tls.msk.ru (mjtthink.wg.tls.msk.ru [192.168.177.146])
- by tsrv.corpit.ru (Postfix) with ESMTP id E905A3CE92F;
- Sat, 13 Jun 2026 23:36:20 +0300 (MSK)
+ by tsrv.corpit.ru (Postfix) with ESMTP id 2F51D3CE932;
+ Sat, 13 Jun 2026 23:36:21 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Frank Chang <frank.chang@sifive.com>,
- Max Chou <max.chou@sifive.com>,
- Daniel Henrique Barboza <dbarboza@ventanamicro.com>,
+Cc: qemu-stable@nongnu.org, Anton Blanchard <antonb@tenstorrent.com>,
  Alistair Francis <alistair.francis@wdc.com>,
  Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-11.0.2 03/72] target/riscv: Update MISA.X for non-standard
- extensions
-Date: Sat, 13 Jun 2026 23:34:29 +0300
-Message-ID: <20260613203542.1809153-3-mjt@tls.msk.ru>
+Subject: [Stable-11.0.2 06/72] target/riscv: rvv: Handle source overlap of
+ vector widening reduction instructions
+Date: Sat, 13 Jun 2026 23:34:32 +0300
+Message-ID: <20260613203542.1809153-6-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <qemu-stable-11.0.2-20260613224644@cover.tls.msk.ru>
 References: <qemu-stable-11.0.2-20260613224644@cover.tls.msk.ru>
@@ -72,65 +70,35 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Frank Chang <frank.chang@sifive.com>
+From: Anton Blanchard <antonb@tenstorrent.com>
 
-MISA.X is set if there are any non-standard extensions.
-We should set MISA.X when any of the vendor extensions is enabled.
+Widening reductions read vs2 as a vector of SEW elements and vs1[0] as a
+scalar of 2*SEW. The ISA does not allow the same vector register to be read
+with different EEWs, so they must not overlap.
 
-Signed-off-by: Frank Chang <frank.chang@sifive.com>
-Reviewed-by: Max Chou <max.chou@sifive.com>
-Reviewed-by: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
-Reviewed-by: Alistair Francis <alistair.francis@wdc.com>
-Message-ID: <20260424050509.3935180-3-frank.chang@sifive.com>
+vs1 is read as a scalar from element 0, so it is treated as a single vector
+register (independent of LMUL) when checking overlap.
+
+Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/3208
+Signed-off-by: Anton Blanchard <antonb@tenstorrent.com>
+Acked-by: Alistair Francis <alistair.francis@wdc.com>
+Message-ID: <20260417080328.31918-1-antonb@tenstorrent.com>
 Signed-off-by: Alistair Francis <alistair.francis@wdc.com>
-(cherry picked from commit 613bb1949fffc4aeb9e554e35fecc7d6f7ddd27b)
+(cherry picked from commit caf3bef5f01e85b8bbd24e1851b50616fa03a5bb)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/target/riscv/cpu.h b/target/riscv/cpu.h
-index 35d1f6362c..a6adf6efc6 100644
---- a/target/riscv/cpu.h
-+++ b/target/riscv/cpu.h
-@@ -69,6 +69,7 @@ typedef struct CPUArchState CPURISCVState;
- #define RVH RV('H')
- #define RVG RV('G')
- #define RVB RV('B')
-+#define RVX RV('X')
- 
- extern const uint32_t misa_bits[];
- const char *riscv_get_misa_ext_name(uint32_t bit);
-diff --git a/target/riscv/tcg/tcg-cpu.c b/target/riscv/tcg/tcg-cpu.c
-index 800b7dce5d..c5505414ae 100644
---- a/target/riscv/tcg/tcg-cpu.c
-+++ b/target/riscv/tcg/tcg-cpu.c
-@@ -1188,6 +1188,20 @@ static void riscv_cpu_update_misa_c(RISCVCPU *cpu)
-     }
+diff --git a/target/riscv/insn_trans/trans_rvv.c.inc b/target/riscv/insn_trans/trans_rvv.c.inc
+index 4df9a40b44..d9a0027e0b 100644
+--- a/target/riscv/insn_trans/trans_rvv.c.inc
++++ b/target/riscv/insn_trans/trans_rvv.c.inc
+@@ -3062,6 +3062,7 @@ GEN_OPIVV_TRANS(vredxor_vs, reduction_check)
+ static bool reduction_widen_check(DisasContext *s, arg_rmrr *a)
+ {
+     return reduction_check(s, a) && (s->sew < MO_64) &&
++           !is_overlapped(a->rs1, 1, a->rs2, 1 << MAX(s->lmul, 0)) &&
+            ((s->sew + 1) <= (s->cfg_ptr->elen >> 4));
  }
  
-+/* MISA.X is set when any of the non-standard extensions is enabled. */
-+static void riscv_cpu_update_misa_x(RISCVCPU *cpu)
-+{
-+    CPURISCVState *env = &cpu->env;
-+    const RISCVCPUMultiExtConfig *arr = riscv_cpu_vendor_exts;
-+
-+    for (int i = 0; arr[i].name != NULL; i++) {
-+        if (isa_ext_is_enabled(cpu, arr[i].offset)) {
-+            riscv_cpu_set_misa_ext(env, env->misa_ext | RVX);
-+            break;
-+        }
-+    }
-+}
-+
- void riscv_tcg_cpu_finalize_features(RISCVCPU *cpu, Error **errp)
- {
-     CPURISCVState *env = &cpu->env;
-@@ -1196,6 +1210,7 @@ void riscv_tcg_cpu_finalize_features(RISCVCPU *cpu, Error **errp)
-     riscv_cpu_init_implied_exts_rules();
-     riscv_cpu_enable_implied_rules(cpu);
-     riscv_cpu_update_misa_c(cpu);
-+    riscv_cpu_update_misa_x(cpu);
- 
-     riscv_cpu_validate_misa_priv(env, &local_err);
-     if (local_err != NULL) {
 -- 
 2.47.3
 
