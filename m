@@ -4,44 +4,43 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1E655CD98CF
-	for <qemu-devel@archiver.kernel.org>; Sat, 13 Jun 2026 20:39:32 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8FD04CD98CF
+	for <qemu-devel@archiver.kernel.org>; Sat, 13 Jun 2026 20:39:34 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wYV6m-0003Qj-70; Sat, 13 Jun 2026 16:37:36 -0400
+	id 1wYV7q-0005D5-Sd; Sat, 13 Jun 2026 16:38:43 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wYV6X-0002wZ-D6; Sat, 13 Jun 2026 16:37:21 -0400
+ id 1wYV7R-0004XH-7A; Sat, 13 Jun 2026 16:38:21 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wYV6S-0003QU-Rk; Sat, 13 Jun 2026 16:37:20 -0400
+ id 1wYV7P-0003Yn-7I; Sat, 13 Jun 2026 16:38:16 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1781382963; bh=EQ1/T6K5U0ItJX7O+kcFKps+jhA1+1znygudWJ+5mdI=;
+ t=1781382963; bh=JhsN/767JFqhwqO2AGJRt0GzEC5CwLXGBheFiPVcamw=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References;
- b=H19mQ0RScvm1etEUmSe4J6iDl+jVNFCoHJ1XGZ0UagQR5qQpwDj82vrF9j7EY4ETC
- cs6ZQW6HxdERPNUbdEtygsB4P8uz81gsAT1YnAoYowyu7J1Fly9cHfUpocWFmoX0La
- 3zGM3ZF4iRdrMjjB/4jrTLVsRJfmbl6Um6u5E+tlVMzu1OxPG0SqRpFv40aCdRqPIr
- SsuHwMdLcKWUkSdICw6tmnajKC3WwVMaAxsRziRQl5FbehKUoQCcgBdscMUyV2pLRu
- JMG4tzv+KWYeWj+kaF2SqfqMfmHNUpCzxp+4QQ2ckJt33fiErBUHM2BTheG+J/o2iE
- O/Wy6MJRpT86A==
+ b=wov8GeXecoFRrsEEejqLIm8UzGgbOiWvhyUZ4wU+ZC8XINyu7cvq4t4KT/Awwsr2Y
+ erH3i0gW3N5c2ZcgkF2vsODYXNofaS8ghyOmV7+qfTwL5GgOnNV850Y2KJTJzsBiR2
+ IvSQRJb8PXiE+xN2rhnMcVuAhcwkskdWOAbomMjN+GI91Rq+Ao4zye28SdTQx3wFNt
+ 2Bbn+gcPLqecXcC3GTZ8nRZiGIPpaIaJf3+iOI44HsDSR/LDgOE0K+NbKe7g4o67kX
+ aGmY5KS3E+hpcTlke1Z6nzwT9Vz1kCzbXs66UxiUiVw00QBAqFAPIBEp4Bx3GuXt7c
+ q4Co4znA5dAVw==
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 3CA6B1B6EE8;
+ by isrv.corpit.ru (Postfix) with ESMTP id B6E481B6EF1;
  Sat, 13 Jun 2026 23:36:03 +0300 (MSK)
 Received: from think4mjt.tls.msk.ru (mjtthink.wg.tls.msk.ru [192.168.177.146])
- by tsrv.corpit.ru (Postfix) with ESMTP id A647B3CE93A;
- Sat, 13 Jun 2026 23:36:21 +0300 (MSK)
+ by tsrv.corpit.ru (Postfix) with ESMTP id 2BCC03CE942;
+ Sat, 13 Jun 2026 23:36:22 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Portia Stephens <portias@oss.tenstorrent.com>,
- Alistair Francis <alistair.francis@wdc.com>,
- Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-11.0.2 14/72] target/riscv: Make hpmcounterh return the upper
- 32-bits
-Date: Sat, 13 Jun 2026 23:34:40 +0300
-Message-ID: <20260613203542.1809153-14-mjt@tls.msk.ru>
+Cc: qemu-stable@nongnu.org, Paolo Bonzini <pbonzini@redhat.com>,
+ Wei Che Kao <skps96g313.cs10@gmail.com>, Michael Tokarev <mjt@tls.msk.ru>
+Subject: [Stable-11.0.2 22/72] lsi53c895a: fix use-after-free of cancelled
+ request
+Date: Sat, 13 Jun 2026 23:34:48 +0300
+Message-ID: <20260613203542.1809153-22-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <qemu-stable-11.0.2-20260613224644@cover.tls.msk.ru>
 References: <qemu-stable-11.0.2-20260613224644@cover.tls.msk.ru>
@@ -70,37 +69,82 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Portia Stephens <portias@oss.tenstorrent.com>
+From: Paolo Bonzini <pbonzini@redhat.com>
 
-The counter value was not being bitshifted for a hpmcounterh read
-resulting in hpmcounterh returning the bottom 32-bits.
+When processing the Message Out phase, the lsi53c895a controller
+can cancel a request and the continue by processing more messages.
+When this happens, it is important that a cancelled request is not
+processed further, because scsi_req_cancel can cause the request
+to be freed.
 
-Fixes:  cfc96df65e01 ("target/riscv: Remove upper_half from riscv_pmu_ctr_get_fixed_counters_val")
-Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/3498
+Right now this is happening in two cases, but not when cancelling
+the entire queue of requests after an ABORT, CLEAR QUEUE or
+BUS DEVICE RESET message.  In that case, a subsequent ABORT TAG
+message can use a dangling current_req.
+
+There are three possible fixes:
+
+- add a missing check inside the loop, clearing current_req
+  if p->req == current_req.  This is obvious but complicates the
+  code inside the foreach loop.
+
+- change the conditional prior to the loop from "if (s->current)"
+  to "if (current_req)".  This would work, because s->current != NULL
+  implies current_req != NULL, and would clear current_req correctly.
+  However it is less obvious because the point of the code
+  is to clear the entire queue, which consists of s->current
+  and s->queue; current_req is not special here.
+
+- delay the retrieval of current_req until an ABORT TAG message
+  is seen.  This is the most correct option, because the SCSI
+  protocol only deals with tags; requests are a QEMU concept
+  that only makes sense for the purpose of calling into the
+  SCSI layer.
+
+Reported-by: Wei Che Kao <skps96g313.cs10@gmail.com>
 Cc: qemu-stable@nongnu.org
-Signed-off-by: Portia Stephens <portias@oss.tenstorrent.com>
-Reviewed-by: Alistair Francis <alistair.francis@wdc.com>
-Message-ID: <20260519043352.3685866-1-stephensportia@gmail.com>
-Signed-off-by: Alistair Francis <alistair.francis@wdc.com>
-(cherry picked from commit 02284108376a6bcfdd56a11de1c6e0bcc3d0e53b)
+Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
+(cherry picked from commit 5297a0fc65317ba7f79ef44ce7a44e41d15fdb27)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/target/riscv/csr.c b/target/riscv/csr.c
-index cf1fe6041c..0f14ea4689 100644
---- a/target/riscv/csr.c
-+++ b/target/riscv/csr.c
-@@ -1392,8 +1392,9 @@ RISCVException riscv_pmu_read_ctr(CPURISCVState *env, target_ulong *val,
-      */
-     if (riscv_pmu_ctr_monitor_cycles(env, ctr_idx) ||
-         riscv_pmu_ctr_monitor_instructions(env, ctr_idx)) {
--        *val = riscv_pmu_ctr_get_fixed_counters_val(env, ctr_idx) -
--                                                    ctr_prev + ctr_val;
-+        uint64_t cntr = riscv_pmu_ctr_get_fixed_counters_val(env, ctr_idx) -
-+                                                             ctr_prev + ctr_val;
-+        *val = extract64(cntr, start, length);
+diff --git a/hw/scsi/lsi53c895a.c b/hw/scsi/lsi53c895a.c
+index 54123f7757..0843d325ab 100644
+--- a/hw/scsi/lsi53c895a.c
++++ b/hw/scsi/lsi53c895a.c
+@@ -1000,10 +1000,8 @@ static void lsi_do_msgout(LSIState *s)
+ 
+     if (s->current) {
+         current_tag = s->current->tag;
+-        current_req = s->current;
      } else {
-         *val = ctr_val;
+         current_tag = s->select_tag;
+-        current_req = lsi_find_by_tag(s, current_tag);
      }
+ 
+     trace_lsi_do_msgout(s->dbc);
+@@ -1058,9 +1056,13 @@ static void lsi_do_msgout(LSIState *s)
+         case 0x0d:
+             /* The ABORT TAG message clears the current I/O process only. */
+             trace_lsi_do_msgout_abort(current_tag);
++            if (s->current) {
++                current_req = s->current;
++            } else {
++                current_req = lsi_find_by_tag(s, current_tag);
++            }
+             if (current_req && current_req->req) {
+                 scsi_req_cancel(current_req->req);
+-                current_req = NULL;
+             }
+             lsi_disconnect(s);
+             break;
+@@ -1086,7 +1088,6 @@ static void lsi_do_msgout(LSIState *s)
+             /* clear the current I/O process */
+             if (s->current) {
+                 scsi_req_cancel(s->current->req);
+-                current_req = NULL;
+             }
+ 
+             /* As the current implemented devices scsi_disk and scsi_generic
 -- 
 2.47.3
 
