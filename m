@@ -4,43 +4,46 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A563ACD98D6
-	for <qemu-devel@archiver.kernel.org>; Sat, 13 Jun 2026 20:38:51 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0CE6DCD98CF
+	for <qemu-devel@archiver.kernel.org>; Sat, 13 Jun 2026 20:39:11 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wYV7p-000549-BM; Sat, 13 Jun 2026 16:38:41 -0400
+	id 1wYV60-0001ZH-DG; Sat, 13 Jun 2026 16:36:49 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wYV7R-0004XG-75; Sat, 13 Jun 2026 16:38:21 -0400
+ id 1wYV5q-0001Ud-8M; Sat, 13 Jun 2026 16:36:38 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wYV7P-0003Yo-7m; Sat, 13 Jun 2026 16:38:16 -0400
+ id 1wYV5n-0003B1-6w; Sat, 13 Jun 2026 16:36:37 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1781382963; bh=iBMovGSeLWV0hOg/lRXOTm8xcdar8YmPiwUV+GGbnlA=;
+ t=1781382962; bh=rsMHcXMYMMN7Tj2tvLEWxPX3ekn7XpT0o/qUhhvEK6Q=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References;
- b=vdAPdGmJKXf9KvfixFeF2i0nnCiWHtExtsCwql1p3RG7uTkW4KkT0Rk6K6L4UvBpv
- dOduBTofadyNNx31Eizfcn4Y6uTLbmkYPi2k5jFfcwBmm/Ja9NzC2hvzKK9r7WPU3H
- tyJdwGsYBoyRE8VWt3LaSeQu95Xq9x/nAL1wORC916EeGHYhwWeU/k5VBa/32nUfZW
- Uej6f9wqa3JdE3Y+owa+oS7y5YjWYCsqReUI7gDLzO1YzuDVkkzfiSiA1kSx87tm8n
- ZllMzUQpFz5d+Sldb4iFmMOGR3C6IgE6dL5wL7OB8nP9FZ+sPxcN3Yb1PMWGSzhClj
- zeNUBsMOQPehQ==
+ b=RMyHE17KAS6PwDuvWOEIVGsP3pacqIEVvuiUNX37HFt7vYtOXS8yolw18pr3ljoAa
+ 9owaqLB0P/vra7KGATk18LU6STKEjfWahWk9jmQZZmua0G/yZtdJ3RAlR2dWrm4LL3
+ MvrTvhWdWMk1t1SOOP+7QWFo+HRKfQFygd3+6eyb33Xy4SN+A9einOXrwWtivD7dNS
+ WRLMjucLG/PM7Ywrg3NL/MM2tzdalRqSEtAi3gDcFOMWm6tvR0x9stBV4gjcRAEabq
+ FxC6fPdto0wC3B7BiDNuV/icCt8Y8lksO70Hc5xUkYyK1npHBkLcSRCy9I9JHB+FgB
+ St2pzqop5AUqA==
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id C3E601B6EF2;
- Sat, 13 Jun 2026 23:36:03 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id 8432C1B6EDD;
+ Sat, 13 Jun 2026 23:36:02 +0300 (MSK)
 Received: from think4mjt.tls.msk.ru (mjtthink.wg.tls.msk.ru [192.168.177.146])
- by tsrv.corpit.ru (Postfix) with ESMTP id 39F2F3CE943;
- Sat, 13 Jun 2026 23:36:22 +0300 (MSK)
+ by tsrv.corpit.ru (Postfix) with ESMTP id E905A3CE92F;
+ Sat, 13 Jun 2026 23:36:20 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Paolo Bonzini <pbonzini@redhat.com>,
+Cc: qemu-stable@nongnu.org, Frank Chang <frank.chang@sifive.com>,
+ Max Chou <max.chou@sifive.com>,
+ Daniel Henrique Barboza <dbarboza@ventanamicro.com>,
+ Alistair Francis <alistair.francis@wdc.com>,
  Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-11.0.2 23/72] lsi53c895a: clear tag byte when processing
- messages
-Date: Sat, 13 Jun 2026 23:34:49 +0300
-Message-ID: <20260613203542.1809153-23-mjt@tls.msk.ru>
+Subject: [Stable-11.0.2 03/72] target/riscv: Update MISA.X for non-standard
+ extensions
+Date: Sat, 13 Jun 2026 23:34:29 +0300
+Message-ID: <20260613203542.1809153-3-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <qemu-stable-11.0.2-20260613224644@cover.tls.msk.ru>
 References: <qemu-stable-11.0.2-20260613224644@cover.tls.msk.ru>
@@ -69,40 +72,65 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Paolo Bonzini <pbonzini@redhat.com>
+From: Frank Chang <frank.chang@sifive.com>
 
-Instead of simply ORing the message byte, clear what
-was there before.
+MISA.X is set if there are any non-standard extensions.
+We should set MISA.X when any of the vendor extensions is enabled.
 
-Cc: qemu-stable@nongnu.org
-Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
-(cherry picked from commit 4494dec8c2bfd8a5d9b1eabe4a26ab850a4f6700)
+Signed-off-by: Frank Chang <frank.chang@sifive.com>
+Reviewed-by: Max Chou <max.chou@sifive.com>
+Reviewed-by: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
+Reviewed-by: Alistair Francis <alistair.francis@wdc.com>
+Message-ID: <20260424050509.3935180-3-frank.chang@sifive.com>
+Signed-off-by: Alistair Francis <alistair.francis@wdc.com>
+(cherry picked from commit 613bb1949fffc4aeb9e554e35fecc7d6f7ddd27b)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/hw/scsi/lsi53c895a.c b/hw/scsi/lsi53c895a.c
-index 0843d325ab..1b7f02fc7c 100644
---- a/hw/scsi/lsi53c895a.c
-+++ b/hw/scsi/lsi53c895a.c
-@@ -1041,16 +1041,19 @@ static void lsi_do_msgout(LSIState *s)
-             }
-             break;
-         case 0x20: /* SIMPLE queue */
-+            s->select_tag &= ~0xff;
-             s->select_tag |= lsi_get_msgbyte(s) | LSI_TAG_VALID;
-             trace_lsi_do_msgout_simplequeue(s->select_tag & 0xff);
-             break;
-         case 0x21: /* HEAD of queue */
-             qemu_log_mask(LOG_UNIMP, "lsi_scsi: HEAD queue not implemented\n");
-+            s->select_tag &= ~0xff;
-             s->select_tag |= lsi_get_msgbyte(s) | LSI_TAG_VALID;
-             break;
-         case 0x22: /* ORDERED queue */
-             qemu_log_mask(LOG_UNIMP,
-                           "lsi_scsi: ORDERED queue not implemented\n");
-+            s->select_tag &= ~0xff;
-             s->select_tag |= lsi_get_msgbyte(s) | LSI_TAG_VALID;
-             break;
-         case 0x0d:
+diff --git a/target/riscv/cpu.h b/target/riscv/cpu.h
+index 35d1f6362c..a6adf6efc6 100644
+--- a/target/riscv/cpu.h
++++ b/target/riscv/cpu.h
+@@ -69,6 +69,7 @@ typedef struct CPUArchState CPURISCVState;
+ #define RVH RV('H')
+ #define RVG RV('G')
+ #define RVB RV('B')
++#define RVX RV('X')
+ 
+ extern const uint32_t misa_bits[];
+ const char *riscv_get_misa_ext_name(uint32_t bit);
+diff --git a/target/riscv/tcg/tcg-cpu.c b/target/riscv/tcg/tcg-cpu.c
+index 800b7dce5d..c5505414ae 100644
+--- a/target/riscv/tcg/tcg-cpu.c
++++ b/target/riscv/tcg/tcg-cpu.c
+@@ -1188,6 +1188,20 @@ static void riscv_cpu_update_misa_c(RISCVCPU *cpu)
+     }
+ }
+ 
++/* MISA.X is set when any of the non-standard extensions is enabled. */
++static void riscv_cpu_update_misa_x(RISCVCPU *cpu)
++{
++    CPURISCVState *env = &cpu->env;
++    const RISCVCPUMultiExtConfig *arr = riscv_cpu_vendor_exts;
++
++    for (int i = 0; arr[i].name != NULL; i++) {
++        if (isa_ext_is_enabled(cpu, arr[i].offset)) {
++            riscv_cpu_set_misa_ext(env, env->misa_ext | RVX);
++            break;
++        }
++    }
++}
++
+ void riscv_tcg_cpu_finalize_features(RISCVCPU *cpu, Error **errp)
+ {
+     CPURISCVState *env = &cpu->env;
+@@ -1196,6 +1210,7 @@ void riscv_tcg_cpu_finalize_features(RISCVCPU *cpu, Error **errp)
+     riscv_cpu_init_implied_exts_rules();
+     riscv_cpu_enable_implied_rules(cpu);
+     riscv_cpu_update_misa_c(cpu);
++    riscv_cpu_update_misa_x(cpu);
+ 
+     riscv_cpu_validate_misa_priv(env, &local_err);
+     if (local_err != NULL) {
 -- 
 2.47.3
 
