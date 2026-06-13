@@ -4,51 +4,47 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5C836CD8CA8
-	for <qemu-devel@archiver.kernel.org>; Sat, 13 Jun 2026 20:10:29 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 02E39CD98CF
+	for <qemu-devel@archiver.kernel.org>; Sat, 13 Jun 2026 20:10:30 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wYUe8-0004IZ-9G; Sat, 13 Jun 2026 16:08:01 -0400
+	id 1wYUej-0005RU-HW; Sat, 13 Jun 2026 16:08:37 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wYUdL-00036A-Pl; Sat, 13 Jun 2026 16:07:12 -0400
+ id 1wYUds-0003vh-DA; Sat, 13 Jun 2026 16:07:46 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wYUdJ-0000y6-Vo; Sat, 13 Jun 2026 16:07:11 -0400
+ id 1wYUdq-0002ET-MX; Sat, 13 Jun 2026 16:07:44 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1781381068; bh=gTlxImFIhPbtXt9KMaAuMt3QHywOF5A0bgeUzttkpX8=;
+ t=1781381069; bh=9l0toHTc5UsExhdAtSaYAnSLE1MoQj8QuyNnODhrGOw=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References;
- b=Uy9Pq7cm05ElTdUM5OoVQFVj6G0YFnX9IRRROMzrbiFJibAx8WkpFNiQpIbe7dB4w
- bMUYF41qPfHy7xT/RWLV4VES1HS2H6j7apGerAQ9CksqqCYqsofigBnS2FXWqk46nw
- 3yBbmd67Lnioltd5vlO+pzJlIjMyDxp6UlmT+cIuIJ9/5omPOtDUsXnwKNiphtwLah
- SGw9PDDVKsxyI6G026Jy98bzgOuyGwANYA5/9LkaZgGxPcUZHeHvQr0KqLsRHeALC5
- tRMDMMPaa7X36pYyeB+cqC9wczcSKyHlH0VOHSDXQcqifUCuPcAMtNFdfDaLQPcEY4
- 3FCTOIMGAuBMA==
+ b=rss5fLDnkSaRBON4QNRFcLPpv5TmrWcH//cFFpxYfsv5fkg8ZNbNIJDzmQCWMHkLZ
+ 2oIdSXGlWl3TAZsxGJ2O8n+fqp0bpV/PmBkl2pbA3VMk6MfPkAmMMTXkUiwWEc3PqN
+ gu10BBfP9ioPjrxVG2OXY78FyEh8pkW5SrMMAH1r5qVSfHRz8ohDarefCjLqUdqAyO
+ 1ECfbe+hDFY1LtFgS/RKIMfkYz3S4E+slM2TbG2eaPYR/dmwUCDZo+WJik6KiESDOt
+ XMS1LyU6PygRP8rxDW42iZXfsFzdqZ8etVqE7g7SsqzP4fMO0nliYLhytAl/0FJUTU
+ R7Xen3DV6PebQ==
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id C94881B6E85;
- Sat, 13 Jun 2026 23:04:28 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id 4A5B21B6E8C;
+ Sat, 13 Jun 2026 23:04:29 +0300 (MSK)
 Received: from think4mjt.tls.msk.ru (mjtthink.wg.tls.msk.ru [192.168.177.146])
- by tsrv.corpit.ru (Postfix) with ESMTP id 310C53CE8E7;
+ by tsrv.corpit.ru (Postfix) with ESMTP id A89063CE8EE;
  Sat, 13 Jun 2026 23:04:47 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Chenyi Qiang <chenyi.qiang@intel.com>,
- Farrah Chen <farrah.chen@intel.com>,
- Zhenzhong Duan <zhenzhong.duan@intel.com>,
- =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>,
- Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-10.2.4 29/61] vfio/container: Restrict dma_map_file() to
- shared RAM or RAM devices
-Date: Sat, 13 Jun 2026 23:03:12 +0300
-Message-ID: <20260613200411.1808021-29-mjt@tls.msk.ru>
+Cc: qemu-stable@nongnu.org, Matt Turner <mattst88@gmail.com>,
+ Helge Deller <deller@gmx.de>, Michael Tokarev <mjt@tls.msk.ru>
+Subject: [Stable-10.2.4 36/61] linux-user/mips: save/restore FCSR across
+ signal delivery
+Date: Sat, 13 Jun 2026 23:03:19 +0300
+Message-ID: <20260613200411.1808021-36-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <qemu-stable-10.2.4-20260613224639@cover.tls.msk.ru>
 References: <qemu-stable-10.2.4-20260613224639@cover.tls.msk.ru>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=212.248.84.144; envelope-from=mjt@tls.msk.ru;
  helo=isrv.corpit.ru
@@ -73,84 +69,98 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Chenyi Qiang <chenyi.qiang@intel.com>
+From: Matt Turner <mattst88@gmail.com>
 
-vfio_container_dma_map() uses dma_map_file() whenever a RAMBlock has an
-fd and the VFIO IOMMU backend supports file-based DMA mapping. That is
-not correct for private file-backed guest RAM.
+QEMU keeps the MIPS FPU control/status register (FCSR, fcr31) in
+env->active_fpu.fcr31.  The rounding mode, flush-to-zero (FS), and
+NaN-2008 mode bits in fcr31 are reflected into the derived
+env->active_fpu.fp_status via set_float_rounding_mode() and friends;
+every architectural write to FCSR goes through helper_ctc1() which
+calls restore_fp_status() to keep the two in sync.
 
-dma_map_file() resolves PFNs from the backing file, but private guest
-RAM mappings (MAP_PRIVATE) can run on different PFNs than the file
-because they are subject to copy-on-write (COW) anomalies. As a result,
-using dma_map_file() on a privately mapped RAMBlock can program DMA
-against pages that do not back QEMU's actual guest memory.
+Both target_sigcontext variants (O32 and N32/N64) have an sc_fpc_csr
+field that holds FCSR, but setup_sigcontext() never wrote it and
+restore_sigcontext() never read it.  As a result:
 
-Fix this by using dma_map_file() only for shared mapped RAMBlocks
-(MAP_SHARED) or RAM device regions.
+  - The signal frame always delivered sc_fpc_csr == 0 to the handler,
+    so sigaction(SA_SIGINFO) handlers that inspect the interrupted
+    context see the wrong FCSR.
 
-Fixes: fb32965b6dd8 ("vfio/iommufd: use IOMMU_IOAS_MAP_FILE")
-Reported-by: Farrah Chen <farrah.chen@intel.com>
-Closes: https://bugzilla.kernel.org/show_bug.cgi?id=220776
-Reviewed-by: Zhenzhong Duan <zhenzhong.duan@intel.com>
-Suggested-by: Cédric Le Goater <clg@redhat.com>
-Signed-off-by: Chenyi Qiang <chenyi.qiang@intel.com>
-Link: https://lore.kernel.org/qemu-devel/20260527101109.71781-1-chenyi.qiang@intel.com
-Reviewed-by: Cédric Le Goater <clg@redhat.com>
-Signed-off-by: Cédric Le Goater <clg@redhat.com>
-(cherry picked from commit e6c47bebdf8628e635e1ba970919ca96d572dbbe)
+  - On sigreturn, active_fpu.fcr31 retained whatever value the signal
+    handler last installed (if any), and active_fpu.fp_status was
+    never resynced.  Interrupted code resumed with the wrong rounding
+    mode, FS flag, and NaN-2008 semantics.
+
+Fix setup_sigcontext() to save fcr31 into sc_fpc_csr.  Fix
+restore_sigcontext() to read it back (masked to fcr31_rw_bitmask as
+the kernel does) and call cpu_mips_restore_fp_status() to resync
+fp_status from the restored fcr31.
+
+Add cpu_mips_restore_fp_status() in target/mips/fpu.c (which already
+defines ieee_rm and includes fpu_helper.h), and declare it in cpu.h.
+
+Fixes: 084d0497a0 ("mips-linux-user: Save and restore fpu and dsp from sigcontext")
+Cc: qemu-stable@nongnu.org
+Signed-off-by: Matt Turner <mattst88@gmail.com>
+Signed-off-by: Helge Deller <deller@gmx.de>
+(cherry picked from commit 84b920ccb5ee5287747af2d36d1ece6367b6a40e)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/hw/vfio/container.c b/hw/vfio/container.c
-index 013a691bc5..6efec07e2d 100644
---- a/hw/vfio/container.c
-+++ b/hw/vfio/container.c
-@@ -74,15 +74,43 @@ void vfio_address_space_insert(VFIOAddressSpace *space,
-     bcontainer->space = space;
+diff --git a/linux-user/mips/signal.c b/linux-user/mips/signal.c
+index d69a5d73dd..1b10012726 100644
+--- a/linux-user/mips/signal.c
++++ b/linux-user/mips/signal.c
+@@ -134,6 +134,7 @@ static inline void setup_sigcontext(CPUMIPSState *regs,
+     for (i = 0; i < 32; ++i) {
+         __put_user(regs->active_fpu.fpr[i].d, &sc->sc_fpregs[i]);
+     }
++    __put_user(regs->active_fpu.fcr31, &sc->sc_fpc_csr);
  }
  
-+static bool vfio_container_can_dma_map_file(VFIOContainer *bcontainer,
-+                                            MemoryRegion *mr, int *fd)
+ static inline void
+@@ -165,6 +166,12 @@ restore_sigcontext(CPUMIPSState *regs, struct target_sigcontext *sc)
+     for (i = 0; i < 32; ++i) {
+         __get_user(regs->active_fpu.fpr[i].d, &sc->sc_fpregs[i]);
+     }
++    {
++        uint32_t fcr31;
++        __get_user(fcr31, &sc->sc_fpc_csr);
++        regs->active_fpu.fcr31 = fcr31 & regs->active_fpu.fcr31_rw_bitmask;
++        cpu_mips_restore_fp_status(regs);
++    }
+ }
+ 
+ /*
+diff --git a/target/mips/cpu.h b/target/mips/cpu.h
+index 5cd4c6c818..b49db458c0 100644
+--- a/target/mips/cpu.h
++++ b/target/mips/cpu.h
+@@ -1366,6 +1366,9 @@ void cpu_mips_clock_init(MIPSCPU *cpu);
+ /* helper.c */
+ target_ulong exception_resume_pc(CPUMIPSState *env);
+ 
++/* fpu.c */
++void cpu_mips_restore_fp_status(CPUMIPSState *env);
++
+ /**
+  * mips_cpu_create_with_clock:
+  * @typename: a MIPS CPU type.
+diff --git a/target/mips/fpu.c b/target/mips/fpu.c
+index c7c487c1f9..8b661865ca 100644
+--- a/target/mips/fpu.c
++++ b/target/mips/fpu.c
+@@ -17,6 +17,11 @@ const FloatRoundMode ieee_rm[4] = {
+     float_round_down
+ };
+ 
++void cpu_mips_restore_fp_status(CPUMIPSState *env)
 +{
-+    VFIOIOMMUClass *vioc = VFIO_IOMMU_GET_CLASS(bcontainer);
-+    RAMBlock *rb = mr->ram_block;
-+
-+    if (!vioc->dma_map_file || !rb) {
-+        return false;
-+    }
-+
-+    *fd = qemu_ram_get_fd(rb);
-+    if (*fd < 0) {
-+        return false;
-+    }
-+
-+    /*
-+     * We can use IOMMU DMA mapping (IOMMU_IOAS_MAP_FILE) for :
-+     *
-+     * 1) Guest RAM blocks explicitly configured as shared (MAP_SHARED)
-+     * 2) RAM device sub-regions (MMIO BARs)
-+     *
-+     * Private RAM mappings (MAP_PRIVATE) are strictly excluded. Because
-+     * they are subject to copy-on-write (COW) anomalies, their underlying
-+     * PFNs can permanently diverge from the backing file
-+     */
-+    return qemu_ram_is_shared(rb) || memory_region_is_ram_device(mr);
++    restore_fp_status(env);
 +}
 +
- int vfio_container_dma_map(VFIOContainer *bcontainer,
-                            hwaddr iova, uint64_t size,
-                            void *vaddr, bool readonly, MemoryRegion *mr)
- {
-     VFIOIOMMUClass *vioc = VFIO_IOMMU_GET_CLASS(bcontainer);
--    RAMBlock *rb = mr->ram_block;
--    int mfd = rb ? qemu_ram_get_fd(rb) : -1;
-+    int mfd;
- 
--    if (mfd >= 0 && vioc->dma_map_file) {
-+    if (vfio_container_can_dma_map_file(bcontainer, mr, &mfd)) {
-+        RAMBlock *rb = mr->ram_block;
-         unsigned long start = vaddr - qemu_ram_get_host_addr(rb);
-         unsigned long offset = qemu_ram_get_fd_offset(rb);
- 
+ const char fregnames[32][4] = {
+     "f0",  "f1",  "f2",  "f3",  "f4",  "f5",  "f6",  "f7",
+     "f8",  "f9",  "f10", "f11", "f12", "f13", "f14", "f15",
 -- 
 2.47.3
 
