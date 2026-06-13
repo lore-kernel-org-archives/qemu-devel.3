@@ -4,43 +4,45 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 61F1ACD98CF
-	for <qemu-devel@archiver.kernel.org>; Sat, 13 Jun 2026 20:45:31 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8B902CD98D6
+	for <qemu-devel@archiver.kernel.org>; Sat, 13 Jun 2026 20:45:38 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wYVBj-0006ZV-53; Sat, 13 Jun 2026 16:42:43 -0400
+	id 1wYVAB-0003Cx-4P; Sat, 13 Jun 2026 16:41:07 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wYVBW-0006S3-38; Sat, 13 Jun 2026 16:42:30 -0400
+ id 1wYVA8-00037p-Uh; Sat, 13 Jun 2026 16:41:04 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wYVBU-0005T3-Bv; Sat, 13 Jun 2026 16:42:29 -0400
+ id 1wYVA7-0004uW-7m; Sat, 13 Jun 2026 16:41:04 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1781382966; bh=NeizuiU9CNw1ZzTV6M1T2A/yYQYGEMCvWTUWZVtOwzs=;
+ t=1781382965; bh=L7RCWWMvQS+EFrMDUd1cQg3OODBBHJtF30sWO9d+Tds=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References;
- b=h9PWq3kFe0AjiKNgF5Xa1gh5Cm/cw45RD/kS8MT+2EbVGAuEs2cyaructeJIPpxiX
- fdIdOEQs2y5pziJ5hySO+w5pGrCDWHKo7Xia1ZbawdOxfZ5KZDeiYGa/VQqnIfhN9S
- WFYgAFa2Lw13yC0hxuCjSvJJzuyNejMxwhK3IhXz8gTEo0AYHytWImpDw7tZ7dY/Sn
- 0L1YYJwRDqodFLLV6kD42lDcG7yKtLMb6E5BljEPdiuVR1ZiGcCLR4GQzJ699cFQnC
- qs1ZDoZHQFsTvtaW/+m8dJg5fSOLq1waglGOyay3SFRR0YchcNqk0F3IGyMvzJoKBu
- N75+wvQk2sNDw==
+ b=u1Gh0hEAJ/aOrQR0k8Fd8qIYGVZdFXT9QtTpP9o9LHtdwR+oh140qLxhwNgjAxiRw
+ mOoWmd3GC2n2dWYUbQyeZ20Gq5dA+d+2esXFFg2R+i9lNW8wX8iO7QkD9DaBnbWa/C
+ ZSUXCFYEn+BfOdSEnruy/EZov4DVS+jIaLp+4mdGC9Mg5lERddRLsX8FO5LMQ5YwFU
+ y6eVxZovr0JaxXmCzCS/PjXapmVL3/bh5O5yWXraRa1EQovHP7UMletnQhktulI+Rv
+ KKhBg5aptBHCRQ8/xNiWc3UnPzMBdkfHjoxMOQR0wo46n31ao+TzKst9v3LWywBmov
+ vYkMD5MAjofjg==
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 8067B1B6F22;
- Sat, 13 Jun 2026 23:36:06 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id 907E21B6F14;
+ Sat, 13 Jun 2026 23:36:05 +0300 (MSK)
 Received: from think4mjt.tls.msk.ru (mjtthink.wg.tls.msk.ru [192.168.177.146])
- by tsrv.corpit.ru (Postfix) with ESMTP id E95283CE96B;
+ by tsrv.corpit.ru (Postfix) with ESMTP id 02D393CE95E;
  Sat, 13 Jun 2026 23:36:24 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Kevin Wolf <kwolf@redhat.com>,
- "Denis V. Lunev" <den@openvz.org>, Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-11.0.2 63/72] iotests/046: Test that discard/write_zeroes
- wait for dependencies
-Date: Sat, 13 Jun 2026 23:35:29 +0300
-Message-ID: <20260613203542.1809153-63-mjt@tls.msk.ru>
+Cc: qemu-stable@nongnu.org, "Denis V. Lunev" <den@openvz.org>,
+ Stefan Hajnoczi <stefanha@redhat.com>,
+ Markus Armbruster <armbru@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>,
+ Michael Tokarev <mjt@tls.msk.ru>
+Subject: [Stable-11.0.2 50/72] util/envlist: fix prefix-match in
+ envlist_unsetenv() name lookup
+Date: Sat, 13 Jun 2026 23:35:16 +0300
+Message-ID: <20260613203542.1809153-50-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <qemu-stable-11.0.2-20260613224644@cover.tls.msk.ru>
 References: <qemu-stable-11.0.2-20260613224644@cover.tls.msk.ru>
@@ -69,138 +71,112 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Kevin Wolf <kwolf@redhat.com>
+From: "Denis V. Lunev" <den@openvz.org>
 
-This is a regression test for the bug fixed in the previous commit where
-discard and write_zeroes operations wouldn't consider their dependencies
-in s->cluster_allocs. Without the fix, this results in a corrupted
-image.
+envlist_unsetenv() looked up the entry to remove with
+strncmp(entry->ev_var, env, strlen(env)). The comparison length is
+the requested name's length, so any stored entry whose name *starts*
+with that name compares equal. envlist_setenv() inserts at the head
+of the list, so the first hit wins: with FOO=... stored first and
+FOOBAR=... stored afterward, envlist_unsetenv("FOO") iterates from
+the head, matches FOOBAR=... on the prefix, and drops it instead of
+FOO=...
 
-Signed-off-by: Kevin Wolf <kwolf@redhat.com>
-Message-ID: <20260427170520.101242-5-kwolf@redhat.com>
-Reviewed-by: Denis V. Lunev <den@openvz.org>
-Tested-by: Denis V. Lunev <den@openvz.org>
-Signed-off-by: Kevin Wolf <kwolf@redhat.com>
-(cherry picked from commit 389f5bcc744d3ddc127d550a57261aed9bbba1f3)
+linux-user and bsd-user reach this code via the -U command-line
+switch, so the bug is reachable from a normal qemu-user invocation.
+
+envlist_setenv() used the same strncmp pattern but with
+envname_len = (eq_sign - env + 1), so the '=' byte sat inside the
+compared window and acted as an implicit boundary. setenv was
+therefore not buggy -- but the safety lived in the byte layout of
+ev_var rather than in the entry, so a future edit could easily
+drift the two sites apart again.
+
+Store the name length on each entry at insertion time and compare
+with explicit length equality plus memcmp via a small helper. Use
+the helper at both lookup sites so the boundary becomes a
+structural property of the entry: envlist_unsetenv() stops
+prefix-matching, and envlist_setenv()'s self-search no longer
+depends on the '=' byte serving as a sentinel.
+
+Fixes: 04a6dfebb6b5 ("linux-user: Add generic env variable handling")
+Signed-off-by: Denis V. Lunev <den@openvz.org>
+Reviewed-by: Stefan Hajnoczi <stefanha@redhat.com>
+Message-id: 20260520212628.479772-2-den@openvz.org
+Cc: Stefan Hajnoczi <stefanha@redhat.com>
+Cc: Markus Armbruster <armbru@redhat.com>
+Cc: Paolo Bonzini <pbonzini@redhat.com>
+Signed-off-by: Stefan Hajnoczi <stefanha@redhat.com>
+(cherry picked from commit c131ae56c13ffe6bd7089cf0d9bd00a7c2dbc71f)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/tests/qemu-iotests/046 b/tests/qemu-iotests/046
-index 4c9ed4d26e..e03dd40147 100755
---- a/tests/qemu-iotests/046
-+++ b/tests/qemu-iotests/046
-@@ -184,6 +184,48 @@ aio_write -P 160 0x104000 0x18000
- resume A
- aio_flush
- EOF
-+
-+# Create a pre-allocated zero cluster, then start a write on it and discard it
-+# before the L2 update is made
-+cat  <<EOF
-+write -P 181 0x120000 0x10000
-+write -z 0x120000 0x10000
-+
-+break write_aio A
-+aio_write -P 180 0x120000 0x10000
-+wait_break A
-+aio_discard 0x120000 0x10000
-+resume A
-+aio_flush
-+EOF
-+
-+# Create a pre-allocated zero cluster, then start a write on it and a
-+# concurrent zero write with MAY_UNMAP before the L2 update is made
-+cat  <<EOF
-+write -P 181 0x130000 0x10000
-+write -z 0x130000 0x10000
-+
-+break write_aio A
-+aio_write -P 180 0x130000 0x10000
-+wait_break A
-+aio_write -z -u 0x130000 0x10000
-+resume A
-+aio_flush
-+EOF
-+
-+# Create a pre-allocated zero cluster, then start a write on it and a
-+# concurrent zero write without MAY_UNMAP before the L2 update is made
-+cat  <<EOF
-+write -P 181 0x140000 0x10000
-+write -z 0x140000 0x10000
-+
-+break write_aio A
-+aio_write -P 180 0x140000 0x10000
-+wait_break A
-+aio_write -z 0x140000 0x10000
-+resume A
-+aio_flush
-+EOF
- }
+diff --git a/util/envlist.c b/util/envlist.c
+index 15fdbb109d..196c92c190 100644
+--- a/util/envlist.c
++++ b/util/envlist.c
+@@ -3,7 +3,8 @@
+ #include "qemu/envlist.h"
  
- overlay_io | $QEMU_IO blkdebug::"$TEST_IMG" | _filter_qemu_io |\
-@@ -264,6 +306,10 @@ verify_io()
-     # Undefined content for 0x10c000 0x8000
-     echo read -P 160 0x114000 0x8000
-     echo read -P 17  0x11c000 0x4000
+ struct envlist_entry {
+-    const char *ev_var;            /* actual env value */
++    const char *ev_var;            /* actual env value: "NAME=VALUE" */
++    size_t ev_name_len;            /* length of NAME (offset of '=') */
+     QLIST_ENTRY(envlist_entry) ev_link;
+ };
+ 
+@@ -12,6 +13,13 @@ struct envlist {
+     size_t el_count;                        /* number of entries */
+ };
+ 
++static inline bool envlist_name_eq(const struct envlist_entry *entry,
++                                   const char *name, size_t name_len)
++{
++    return entry->ev_name_len == name_len &&
++           memcmp(entry->ev_var, name, name_len) == 0;
++}
 +
-+    echo read -P 0   0x120000 0x10000
-+    echo read -P 0   0x130000 0x10000
-+    echo read -P 0   0x140000 0x10000
- }
+ /*
+  * Allocates new envlist and returns pointer to it.
+  */
+@@ -67,7 +75,7 @@ envlist_setenv(envlist_t *envlist, const char *env)
+     /* find out first equals sign in given env */
+     if ((eq_sign = strchr(env, '=')) == NULL)
+         return (EINVAL);
+-    envname_len = eq_sign - env + 1;
++    envname_len = eq_sign - env;
  
- verify_io | $QEMU_IO "$TEST_IMG" | _filter_qemu_io
-diff --git a/tests/qemu-iotests/046.out b/tests/qemu-iotests/046.out
-index b1a03f4041..6341df335c 100644
---- a/tests/qemu-iotests/046.out
-+++ b/tests/qemu-iotests/046.out
-@@ -139,6 +139,36 @@ wrote XXX/XXX bytes at offset XXX
- XXX KiB, X ops; XX:XX:XX.X (XXX YYY/sec and XXX ops/sec)
- wrote XXX/XXX bytes at offset XXX
- XXX KiB, X ops; XX:XX:XX.X (XXX YYY/sec and XXX ops/sec)
-+wrote XXX/XXX bytes at offset XXX
-+XXX KiB, X ops; XX:XX:XX.X (XXX YYY/sec and XXX ops/sec)
-+wrote XXX/XXX bytes at offset XXX
-+XXX KiB, X ops; XX:XX:XX.X (XXX YYY/sec and XXX ops/sec)
-+blkdebug: Suspended request 'A'
-+blkdebug: Resuming request 'A'
-+wrote XXX/XXX bytes at offset XXX
-+XXX KiB, X ops; XX:XX:XX.X (XXX YYY/sec and XXX ops/sec)
-+discarded  XXX/XXX bytes at offset XXX
-+XXX KiB, X ops; XX:XX:XX.X (XXX YYY/sec and XXX ops/sec)
-+wrote XXX/XXX bytes at offset XXX
-+XXX KiB, X ops; XX:XX:XX.X (XXX YYY/sec and XXX ops/sec)
-+wrote XXX/XXX bytes at offset XXX
-+XXX KiB, X ops; XX:XX:XX.X (XXX YYY/sec and XXX ops/sec)
-+blkdebug: Suspended request 'A'
-+blkdebug: Resuming request 'A'
-+wrote XXX/XXX bytes at offset XXX
-+XXX KiB, X ops; XX:XX:XX.X (XXX YYY/sec and XXX ops/sec)
-+wrote XXX/XXX bytes at offset XXX
-+XXX KiB, X ops; XX:XX:XX.X (XXX YYY/sec and XXX ops/sec)
-+wrote XXX/XXX bytes at offset XXX
-+XXX KiB, X ops; XX:XX:XX.X (XXX YYY/sec and XXX ops/sec)
-+wrote XXX/XXX bytes at offset XXX
-+XXX KiB, X ops; XX:XX:XX.X (XXX YYY/sec and XXX ops/sec)
-+blkdebug: Suspended request 'A'
-+blkdebug: Resuming request 'A'
-+wrote XXX/XXX bytes at offset XXX
-+XXX KiB, X ops; XX:XX:XX.X (XXX YYY/sec and XXX ops/sec)
-+wrote XXX/XXX bytes at offset XXX
-+XXX KiB, X ops; XX:XX:XX.X (XXX YYY/sec and XXX ops/sec)
+     /*
+      * If there already exists variable with given name
+@@ -76,8 +84,9 @@ envlist_setenv(envlist_t *envlist, const char *env)
+      */
+     for (entry = envlist->el_entries.lh_first; entry != NULL;
+         entry = entry->ev_link.le_next) {
+-        if (strncmp(entry->ev_var, env, envname_len) == 0)
++        if (envlist_name_eq(entry, env, envname_len)) {
+             break;
++        }
+     }
  
- == Verify image content ==
- read 65536/65536 bytes at offset 0
-@@ -239,5 +269,11 @@ read 32768/32768 bytes at offset 1130496
- 32 KiB, X ops; XX:XX:XX.X (XXX YYY/sec and XXX ops/sec)
- read 16384/16384 bytes at offset 1163264
- 16 KiB, X ops; XX:XX:XX.X (XXX YYY/sec and XXX ops/sec)
-+read 65536/65536 bytes at offset 1179648
-+64 KiB, X ops; XX:XX:XX.X (XXX YYY/sec and XXX ops/sec)
-+read 65536/65536 bytes at offset 1245184
-+64 KiB, X ops; XX:XX:XX.X (XXX YYY/sec and XXX ops/sec)
-+read 65536/65536 bytes at offset 1310720
-+64 KiB, X ops; XX:XX:XX.X (XXX YYY/sec and XXX ops/sec)
- No errors were found on the image.
- *** done
+     if (entry != NULL) {
+@@ -90,6 +99,7 @@ envlist_setenv(envlist_t *envlist, const char *env)
+ 
+     entry = g_malloc(sizeof(*entry));
+     entry->ev_var = g_strdup(env);
++    entry->ev_name_len = envname_len;
+     QLIST_INSERT_HEAD(&envlist->el_entries, entry, ev_link);
+ 
+     return (0);
+@@ -119,8 +129,9 @@ envlist_unsetenv(envlist_t *envlist, const char *env)
+     envname_len = strlen(env);
+     for (entry = envlist->el_entries.lh_first; entry != NULL;
+         entry = entry->ev_link.le_next) {
+-        if (strncmp(entry->ev_var, env, envname_len) == 0)
++        if (envlist_name_eq(entry, env, envname_len)) {
+             break;
++        }
+     }
+     if (entry != NULL) {
+         QLIST_REMOVE(entry, ev_link);
 -- 
 2.47.3
 
