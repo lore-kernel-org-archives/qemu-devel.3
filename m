@@ -4,43 +4,43 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0464BCD8CA8
-	for <qemu-devel@archiver.kernel.org>; Sat, 13 Jun 2026 20:05:55 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2A1B4CD98CF
+	for <qemu-devel@archiver.kernel.org>; Sat, 13 Jun 2026 20:06:10 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wYUc0-00017J-Ur; Sat, 13 Jun 2026 16:05:49 -0400
+	id 1wYUc9-0001Ov-Rk; Sat, 13 Jun 2026 16:05:59 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wYUbn-0000nO-Sv; Sat, 13 Jun 2026 16:05:35 -0400
+ id 1wYUbr-0000xY-Nz; Sat, 13 Jun 2026 16:05:41 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wYUbk-0000LY-Q4; Sat, 13 Jun 2026 16:05:34 -0400
+ id 1wYUbo-0000M7-ED; Sat, 13 Jun 2026 16:05:38 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1781381067; bh=VpUXHEeZq4VCjeyy0rgRt2Of/KA2IN5KTxh0zZi1P0I=;
+ t=1781381067; bh=5LTbrdiZZKvPaIrNvB8ScBmmfWMVGkV6wGymiQXW1SQ=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References;
- b=SGr9nygYjurYFm2js2BTMkf0yH6sXDpkIelQN3cyGjkzIJgztONGQBC20LihF8KLc
- ipIX8isFbkUJdSB+/kb9b/0xx4b81kUoIAt2yd5gEzFeR6vFUapCeyvd6zGxSB0LZD
- 3bmSEZH6RVyAkTOifu6Xvbj8R1u88ceMg6Xl0YXNPKulRe90+y3SYo81m6dy/PGm5M
- hnNIOwcm2swIhgO9BcWEutGRmWeAqA5Y2oEpWuzBxCG+i+vQH50kEpQeCLqwZ5I8bq
- puSfqb59obqVm55gDnbp6ex6p+2dmNKDai7LVpCaM55qgzZaH+QS92lULfjFzdWOVJ
- 4uNKHQDG481ng==
+ b=x1PUgjq30v7lgqMV1eOUiyRFySfJjD9gVCvs1qzXQRDn31tB5O9BoQgfPzcUt/K49
+ ssOJ2vf7X7Uc3UMmzv/ZDpgMzK4crBuvB2kwh01pJRkbYTqbOoBVtfDRXjCoDGyfPL
+ ZmSiQiXnMlXHflZ749UwZ2pu3BULu4ZwhegN1yu7O8TRuQwljsHktEAZo5Up2Wojvi
+ Eu7fFOuXiL3+l+e+gAgFVYRhDZv3vvC3ncMkI3FZ02LAZDjh99N3ihkwNQhzAZOmdo
+ xCHJoWOZsYdJ/vD3u/GNUT7mudx9xhMCb0TWNak507Y7261YCFmM6eQuaUjRtTBf6m
+ 1wiZYExJCyrow==
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id C578C1B6E75;
+ by isrv.corpit.ru (Postfix) with ESMTP id D4CE91B6E76;
  Sat, 13 Jun 2026 23:04:27 +0300 (MSK)
 Received: from think4mjt.tls.msk.ru (mjtthink.wg.tls.msk.ru [192.168.177.146])
- by tsrv.corpit.ru (Postfix) with ESMTP id 2F0D53CE8D8;
+ by tsrv.corpit.ru (Postfix) with ESMTP id 3E93F3CE8D9;
  Sat, 13 Jun 2026 23:04:46 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
 Cc: qemu-stable@nongnu.org, Matt Turner <mattst88@gmail.com>,
  Helge Deller <deller@gmx.de>, Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-10.2.4 14/61] linux-user/mips64: fix elf_core_copy_regs
- register layout in core files
-Date: Sat, 13 Jun 2026 23:02:57 +0300
-Message-ID: <20260613200411.1808021-14-mjt@tls.msk.ru>
+Subject: [Stable-10.2.4 15/61] linux-user/mips64: fix mipsn32
+ elf_core_copy_regs entry width
+Date: Sat, 13 Jun 2026 23:02:58 +0300
+Message-ID: <20260613200411.1808021-15-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <qemu-stable-10.2.4-20260613224639@cover.tls.msk.ru>
 References: <qemu-stable-10.2.4-20260613224639@cover.tls.msk.ru>
@@ -72,90 +72,82 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Matt Turner <mattst88@gmail.com>
 
-mips64/elfload.c uses #include "../mips/elfload.c" to share code. When
-the compiler processes mips/elfload.c the quoted #include "target_elf.h"
-resolves relative to the including file's directory, so it picks up
-mips/target_elf.h instead of mips64/target_elf.h.  mips/target_elf.h
-pulls in mips/target_ptrace.h, whose target_pt_regs has a pad0[6] field
-before regs[].  As a result elf_core_copy_regs writes:
+For mipsn32 (TARGET_ABI32=y, TARGET_LONG_BITS=64):
+  abi_ulong = uint32_t (4 bytes) — for pointers and ABI-sized fields
+  target_ulong = uint64_t (8 bytes) — for general-purpose registers
 
-  r->pt.regs[i]   -> reserved[6+i]   (shifted by 6 from the correct index)
-  r->pt.cp0_epc   -> reserved[40]    (correct mips64 N64 index is 34)
+linux-user/elfload.c allocates target_elf_prstatus using the
+mips64/target_elf.h definition where target_elf_gregset_t has
+target_ulong reserved[45] (8 bytes each, 360 bytes total).
 
-The Linux kernel and glibc both use the mips64 N64 layout (no pad0): EPC
-at reserved[34].  Debuggers and libunwind reading the core with N64
-constants therefore see a completely wrong register set — EPC points to
-GP, RA holds the branch target instead of the link address, etc.
+However, in linux-user/mips64/elfload.c, #include "target_elf.h" inside
+the included mips/elfload.c resolves to mips/target_elf.h (compiler
+searches the file's own directory first), where the union uses abi_ulong
+reserved[45].  For mipsn32 this gives 4-byte entries (180 bytes), not
+the 8-byte entries (360 bytes) that elfload.c actually allocated.
 
-Fix by:
- - Guarding the mips32 elf_core_copy_regs in mips/elfload.c with #ifndef
-   TARGET_MIPS64 so it is not compiled for mips64/mipsn32 targets.
- - Providing a mips64-specific elf_core_copy_regs in mips64/elfload.c
-   that writes directly to r->reserved[i] with the correct N64 indices,
-   bypassing the struct field names that are tainted by the wrong header
-   include.
+Writing via r->reserved[34] therefore lands at byte offset 34*4=136
+instead of the correct 34*8=272, silently zeroing the EPC in the core
+file.
 
-The mipsn32 (TARGET_ABI_MIPSN32) and mips64el targets are covered by the
-same mips64/elfload.c and benefit from the same fix.
+Fix by casting the pointer to target_ulong * so writes always use 8-byte
+slots and land at the offsets matching the allocated layout.
+
+This does not change behavior for mips64 (N64) where abi_ulong already
+equals target_ulong (both 8 bytes).
 
 Signed-off-by: Matt Turner <mattst88@gmail.com>
 Cc: qemu-stable@nongnu.org
 Signed-off-by: Helge Deller <deller@gmx.de>
-(cherry picked from commit dd3a906d3505561d9cb3367b82c5475acca50b6b)
+(cherry picked from commit 6033df08e93df313771b6637230de2d66bdc09cb)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/linux-user/mips/elfload.c b/linux-user/mips/elfload.c
-index cc5bbf05ab..1a46e180cf 100644
---- a/linux-user/mips/elfload.c
-+++ b/linux-user/mips/elfload.c
-@@ -131,6 +131,7 @@ const char *get_elf_base_platform(CPUState *cs)
- #undef MATCH_PLATFORM_INSN
- 
- /* See linux kernel: arch/mips/kernel/process.c:elf_dump_regs.  */
-+#ifndef TARGET_MIPS64
- void elf_core_copy_regs(target_elf_gregset_t *r, const CPUMIPSState *env)
- {
-     for (int i = 1; i < ARRAY_SIZE(env->active_tc.gpr); i++) {
-@@ -146,3 +147,4 @@ void elf_core_copy_regs(target_elf_gregset_t *r, const CPUMIPSState *env)
-     r->pt.cp0_status = tswapl(env->CP0_Status);
-     r->pt.cp0_cause = tswapl(env->CP0_Cause);
- }
-+#endif
 diff --git a/linux-user/mips64/elfload.c b/linux-user/mips64/elfload.c
-index b719555e65..9081ae8111 100644
+index 9081ae8111..e4d84a7bd6 100644
 --- a/linux-user/mips64/elfload.c
 +++ b/linux-user/mips64/elfload.c
-@@ -1 +1,30 @@
- #include "../mips/elfload.c"
+@@ -15,16 +15,31 @@
+  */
+ void elf_core_copy_regs(target_elf_gregset_t *r, const CPUMIPSState *env)
+ {
+-    /* R0 is always 0; r->reserved is zero-initialised by the caller */
++    /*
++     * linux-user/elfload.c allocates target_elf_prstatus using the
++     * definition from mips64/target_elf.h, where target_elf_gregset_t
++     * has target_ulong reserved[45] (8 bytes each = 360 bytes total).
++     *
++     * But in this compilation unit, "#include target_elf.h" resolved to
++     * mips/target_elf.h (wrong directory), so our local target_elf_gregset_t
++     * has abi_ulong reserved[45] which is only 4 bytes each for mipsn32.
++     * Using r->reserved[i] would write to the wrong offsets for mipsn32.
++     *
++     * Cast to target_ulong * to always write 8-byte entries at the correct
++     * positions, matching the layout that elfload.c allocated.
++     */
++    target_ulong *regs = (target_ulong *)r;
 +
-+/*
-+ * mips/elfload.c defines elf_core_copy_regs guarded by #ifndef TARGET_MIPS64.
-+ *
-+ * We must provide the mips64 version here.  We cannot use r->pt.regs[] because
-+ * when mips/elfload.c is #include'd above its "#include "target_elf.h"" resolves
-+ * to mips/target_elf.h (compiler searches the including file's directory first),
-+ * which pulls in mips/target_ptrace.h.  That struct has pad0[6] before regs[],
-+ * so r->pt.regs[i] writes to reserved[6+i] — offset by 6 from what the kernel
-+ * and glibc expect for the N64 ABI (EPC at reserved[34], not reserved[40]).
-+ *
-+ * Write directly to reserved[] using the mips64 N64 index layout:
-+ *   R0-R31 at reserved[0..31], LO at [32], HI at [33], EPC at [34].
-+ */
-+void elf_core_copy_regs(target_elf_gregset_t *r, const CPUMIPSState *env)
-+{
-+    /* R0 is always 0; r->reserved is zero-initialised by the caller */
-+    for (int i = 1; i < 32; i++) {
-+        r->reserved[i] = tswap64(env->active_tc.gpr[i]);
-+    }
-+    r->reserved[26] = 0;   /* k0 */
-+    r->reserved[27] = 0;   /* k1 */
-+    r->reserved[32] = tswap64(env->active_tc.LO[0]);
-+    r->reserved[33] = tswap64(env->active_tc.HI[0]);
-+    r->reserved[34] = tswap64(env->active_tc.PC);
-+    r->reserved[35] = tswap64(env->CP0_BadVAddr);
-+    r->reserved[36] = tswap64(env->CP0_Status);
-+    r->reserved[37] = tswap64(env->CP0_Cause);
-+}
++    /* R0 is always 0; buffer is zero-initialised by the caller */
+     for (int i = 1; i < 32; i++) {
+-        r->reserved[i] = tswap64(env->active_tc.gpr[i]);
++        regs[i] = tswap64(env->active_tc.gpr[i]);
+     }
+-    r->reserved[26] = 0;   /* k0 */
+-    r->reserved[27] = 0;   /* k1 */
+-    r->reserved[32] = tswap64(env->active_tc.LO[0]);
+-    r->reserved[33] = tswap64(env->active_tc.HI[0]);
+-    r->reserved[34] = tswap64(env->active_tc.PC);
+-    r->reserved[35] = tswap64(env->CP0_BadVAddr);
+-    r->reserved[36] = tswap64(env->CP0_Status);
+-    r->reserved[37] = tswap64(env->CP0_Cause);
++    regs[26] = 0;   /* k0 */
++    regs[27] = 0;   /* k1 */
++    regs[32] = tswap64(env->active_tc.LO[0]);
++    regs[33] = tswap64(env->active_tc.HI[0]);
++    regs[34] = tswap64(env->active_tc.PC);
++    regs[35] = tswap64(env->CP0_BadVAddr);
++    regs[36] = tswap64(env->CP0_Status);
++    regs[37] = tswap64(env->CP0_Cause);
+ }
 -- 
 2.47.3
 
