@@ -4,50 +4,50 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9AB5CCD98CF
-	for <qemu-devel@archiver.kernel.org>; Sat, 13 Jun 2026 20:45:08 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3450DCD8CA8
+	for <qemu-devel@archiver.kernel.org>; Sat, 13 Jun 2026 20:45:10 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wYVAg-0004wP-2d; Sat, 13 Jun 2026 16:41:38 -0400
+	id 1wYV7M-0004SO-PK; Sat, 13 Jun 2026 16:38:15 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wYVAe-0004rI-5C; Sat, 13 Jun 2026 16:41:36 -0400
+ id 1wYV6y-0004FE-Ty; Sat, 13 Jun 2026 16:37:49 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wYVAc-0005Jg-IA; Sat, 13 Jun 2026 16:41:35 -0400
+ id 1wYV6x-0003TD-Dj; Sat, 13 Jun 2026 16:37:48 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1781382966; bh=7nNrOIUeTfp+RJapRBAV6b2JLZ6fd4BEihLhXZZY+hs=;
+ t=1781382963; bh=ZO2V1hRxjxtkQY97w81DzNP/KhHOgRzafHWy3erJ3rg=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References;
- b=wV+XK7hDEynQqzaEnNwQMvpwKbB+PK6Cdy38UIETxa7DcID3LxuXlZ0SyMN1SEe52
- 5VZPF907AmlB+n8GiiY2u7hMITeMrtDy3s1mALyw031d7zA1gjXq8s47rt7CH/Unvv
- md2Q+pzgldw1G99gywQXWaR5U5qcl4v6z5vt3NRx5wR6XR8mbFDRWBc6cOk5fXOJKt
- cp9gem7fsCPqL78ECC5SoMBpGBSxOZxXNPi+z4pI8kw3O56rEo0RKnMJzCD4+I45T2
- 0GW+qJYs7+rjmKXI5wgMwudr3ik3TgTK8VEaRC8laenx3QyACaSLhXhyFqMN+R8yrO
- DolYM5qhQ1RFw==
+ b=dJ/OOzRmDx6HSiScSikd38QCe8xJ6CPv8TpYkVkMYXrfjiQTuDTJR4CzwnzPt1Sab
+ 7KYWltOS8KTH8t3W9sDmwwIr3qSm2r0mBR3zYC2cSTRks/jOCEfXlNVHyanFJXnJKn
+ S+LMQFeCpbLiVuAunAajBEjUFBBRYG21sp64s9ROLIys4GY3bWNpvWyAvjJIBRuuT2
+ MFAywvrnGGBaD0vAEZyst+vGihpvA2HJGAECXCslUdDHZITtnMpNEiTMPogi+mOmBR
+ iRnpX+2R9PXWyFQwZdI5xqToEDvDd+hn3EiMbdJ8BlLbtBMYgUsBemHVnrtFyclzxS
+ 59mgruLEaofHw==
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 1E6711B6F1B;
- Sat, 13 Jun 2026 23:36:06 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id 789591B6EEC;
+ Sat, 13 Jun 2026 23:36:03 +0300 (MSK)
 Received: from think4mjt.tls.msk.ru (mjtthink.wg.tls.msk.ru [192.168.177.146])
- by tsrv.corpit.ru (Postfix) with ESMTP id 7883D3CE965;
- Sat, 13 Jun 2026 23:36:24 +0300 (MSK)
+ by tsrv.corpit.ru (Postfix) with ESMTP id E05923CE93E;
+ Sat, 13 Jun 2026 23:36:21 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Farhan Ali <alifm@linux.ibm.com>,
- Niklas Schnelle <schnelle@linux.ibm.com>,
- Matthew Rosato <mjrosato@linux.ibm.com>,
- Omar Elghoul <oelghoul@linux.ibm.com>, Cornelia Huck <cohuck@redhat.com>,
+Cc: qemu-stable@nongnu.org,
+ =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
+ boy juju <agx1657748706@gmail.com>,
+ =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
  Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-11.0.2 57/72] s390x/pci: Fix interrupt forwarding disable for
- interpreted devices
-Date: Sat, 13 Jun 2026 23:35:23 +0300
-Message-ID: <20260613203542.1809153-57-mjt@tls.msk.ru>
+Subject: [Stable-11.0.2 18/72] ui/vnc: fix OOB write in VNC stats array
+Date: Sat, 13 Jun 2026 23:34:44 +0300
+Message-ID: <20260613203542.1809153-18-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <qemu-stable-11.0.2-20260613224644@cover.tls.msk.ru>
 References: <qemu-stable-11.0.2-20260613224644@cover.tls.msk.ru>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=212.248.84.144; envelope-from=mjt@tls.msk.ru;
  helo=isrv.corpit.ru
@@ -72,39 +72,55 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Farhan Ali <alifm@linux.ibm.com>
+From: Daniel P. Berrangé <berrange@redhat.com>
 
-Remove the FH_MASK_ENABLE check when disabling interrupt forwarding
-during device reset. This check was broken for the default case in
-the switch statement above, preventing proper cleanup of interrupt
-forwarding.
+The VncSurface struct maintains update statistics in an array:
 
-The pbdev->aif check in s390_pci_kvm_aif_disable() already guards
-against double-disabling of interrupt forwarding.
+    VncRectStat stats[VNC_STAT_ROWS][VNC_STAT_COLS];
 
-Cc: qemu-stable@nongnu.org
-Reported-by: Niklas Schnelle <schnelle@linux.ibm.com>
-Signed-off-by: Farhan Ali <alifm@linux.ibm.com>
-Reviewed-by: Matthew Rosato <mjrosato@linux.ibm.com>
-Tested-by: Omar Elghoul <oelghoul@linux.ibm.com>
-Message-ID: <20260521182946.1607-1-alifm@linux.ibm.com>
-Signed-off-by: Cornelia Huck <cohuck@redhat.com>
-(cherry picked from commit 442f727b8bebabf20a4f6a7536a4ff2885402030)
+where the dimensions are defined as:
+
+  #define VNC_STAT_RECT  64
+  #define VNC_STAT_COLS (VNC_MAX_WIDTH / VNC_STAT_RECT)
+  #define VNC_STAT_ROWS (VNC_MAX_HEIGHT / VNC_STAT_RECT)
+
+If VNC_MAX_WIDTH / VNC_MAX_HEIGHT are not an exact multiple of
+VNC_STAT_REC, the COLS/ROWS will be undersized by 1.
+
+Unfortunately:
+
+  #define VNC_MAX_HEIGHT 2160
+
+is not a multiple of 64, so there is potential for OOB reads and
+writes in the 'stats' array, if the guest surface is over 2112
+pixels in height. An array overflow occurs when vnc_update_stats()
+records new statistics, either scribbling over data later in the
+VncDisplay struct that 'stats' is embedded in, or performing an
+OOB write on the allocated struct memory.
+
+Fixes: CVE-2026-48002
+Reported-by: boy juju <agx1657748706@gmail.com>
+Reviewed-by: Marc-André Lureau <marcandre.lureau@redhat.com>
+Signed-off-by: Daniel P. Berrangé <berrange@redhat.com>
+Message-ID: <20260521103353.1645561-3-berrange@redhat.com>
+(cherry picked from commit c3c6226fa48180edf9d4646d4112fb1becbc149b)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/hw/s390x/s390-pci-bus.c b/hw/s390x/s390-pci-bus.c
-index 4de7b587e8..eb2b6185db 100644
---- a/hw/s390x/s390-pci-bus.c
-+++ b/hw/s390x/s390-pci-bus.c
-@@ -1504,7 +1504,7 @@ static void s390_pci_device_reset(DeviceState *dev)
-         break;
-     }
+diff --git a/ui/vnc.h b/ui/vnc.h
+index ec8d0c91b5..ad41b418b9 100644
+--- a/ui/vnc.h
++++ b/ui/vnc.h
+@@ -92,8 +92,8 @@ typedef void VncSendHextileTile(VncState *vs,
+ #define VNC_DIRTY_BPL(x) (sizeof((x)->dirty) / VNC_MAX_HEIGHT * BITS_PER_BYTE)
  
--    if (pbdev->interp && (pbdev->fh & FH_MASK_ENABLE)) {
-+    if (pbdev->interp) {
-         /* Interpreted devices were using interrupt forwarding */
-         s390_pci_kvm_aif_disable(pbdev);
-     } else if (pbdev->summary_ind) {
+ #define VNC_STAT_RECT  64
+-#define VNC_STAT_COLS (VNC_MAX_WIDTH / VNC_STAT_RECT)
+-#define VNC_STAT_ROWS (VNC_MAX_HEIGHT / VNC_STAT_RECT)
++#define VNC_STAT_COLS DIV_ROUND_UP(VNC_MAX_WIDTH, VNC_STAT_RECT)
++#define VNC_STAT_ROWS DIV_ROUND_UP(VNC_MAX_HEIGHT, VNC_STAT_RECT)
+ 
+ #define VNC_AUTH_CHALLENGE_SIZE 16
+ 
 -- 
 2.47.3
 
