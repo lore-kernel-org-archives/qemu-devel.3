@@ -4,43 +4,46 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id EC4BCCD98DC
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E85D2CD98D6
 	for <qemu-devel@archiver.kernel.org>; Sat, 13 Jun 2026 20:43:31 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wYVBO-0006Ea-DV; Sat, 13 Jun 2026 16:42:22 -0400
+	id 1wYV5y-0001Z2-E1; Sat, 13 Jun 2026 16:36:46 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wYVBC-0005pN-H0; Sat, 13 Jun 2026 16:42:12 -0400
+ id 1wYV5t-0001WK-22; Sat, 13 Jun 2026 16:36:41 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wYVBA-0005Sw-3Y; Sat, 13 Jun 2026 16:42:09 -0400
+ id 1wYV5q-0003D5-In; Sat, 13 Jun 2026 16:36:40 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1781382966; bh=8146qO6KFVKscfnp7ME4DCWZ2VVfJ/m5ZGh/Be/5xEg=;
+ t=1781382962; bh=RRilm8J/FA34uAbj7pNEW/b/xFYBDEIAPFSEmcy+wOg=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References;
- b=TuP4nU6uDBgIvvpUNoU2OsRVNymTIXBXBRyZmZ5ib3ifjxGECu8zR9yI4LP6lytjX
- FGE7uAvGQ9TAjd088qIjhw7ESJ2Dd6cd/LA8BVEdh2vnNPHgzDFkIDTSnIX/TmF1K8
- GNSWjz/ZvbphRXB6jOmGoRC3+qOAUwuKyjjs9UguZ6OTfa9ar5WVFdRs6G4Sl3L6DA
- dWGxcyQ1fUxpq2DAz4xkqBk5AU//tt9z5iEe3Oz3iL876tAgfYcgyVPWWjIrvHObQi
- lk0wiavI8EljrVUMKS0xwpthcOwyNMu3rY02xr9kgnEIV+zaocrDXh91vikaw+WWLH
- clRGFExTNNLtg==
+ b=icNRQL3WGh8mtYBzCljROb/csD1RgpgrJQ1IzVLKoy2Ypt6yZcJnyRtqcGBUAUdy+
+ 841u8laXK2LZTCbzVJzK5Q0DxnqienrdwiobeD6rPQhxgnq9lGbQZGfDtrtP2uicCP
+ ULEa/4t9atD7LtBGuXTlcP+RLUUTpunlmo2dIIfKy/WeUboNDgdldWLCXqFYWKfArO
+ zK4UlYInYA84ZEKF+X4aGIA2wWd94WqV+d33V756il4oORWsPOR4paDXmbg7pidc12
+ TSMF8Q48eSAdnbdzTCNoHml4QvvEUwI1v5jaCP+YYyDb+NdQeVSwzwbjahAajJH08v
+ DDPNURWhpT1ng==
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 713241B6F21;
- Sat, 13 Jun 2026 23:36:06 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id AC0891B6EDF;
+ Sat, 13 Jun 2026 23:36:02 +0300 (MSK)
 Received: from think4mjt.tls.msk.ru (mjtthink.wg.tls.msk.ru [192.168.177.146])
- by tsrv.corpit.ru (Postfix) with ESMTP id D9D553CE96A;
- Sat, 13 Jun 2026 23:36:24 +0300 (MSK)
+ by tsrv.corpit.ru (Postfix) with ESMTP id 1CDE33CE931;
+ Sat, 13 Jun 2026 23:36:21 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Kevin Wolf <kwolf@redhat.com>,
- "Denis V. Lunev" <den@openvz.org>, Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-11.0.2 62/72] qcow2: Fix corruption on discard during write
- with COW
-Date: Sat, 13 Jun 2026 23:35:28 +0300
-Message-ID: <20260613203542.1809153-62-mjt@tls.msk.ru>
+Cc: qemu-stable@nongnu.org, Zishun Yi <vulab@iscas.ac.cn>,
+ Chao Liu <chao.liu.zevorn@gmail.com>,
+ Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>,
+ Alistair Francis <alistair.francis@wdc.com>,
+ Michael Tokarev <mjt@tls.msk.ru>
+Subject: [Stable-11.0.2 05/72] target/riscv: Allow mseccfg access based on
+ ext_zicfilp
+Date: Sat, 13 Jun 2026 23:34:31 +0300
+Message-ID: <20260613203542.1809153-5-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <qemu-stable-11.0.2-20260613224644@cover.tls.msk.ru>
 References: <qemu-stable-11.0.2-20260613224644@cover.tls.msk.ru>
@@ -69,149 +72,47 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Kevin Wolf <kwolf@redhat.com>
+From: Zishun Yi <vulab@iscas.ac.cn>
 
-Most code in qcow2 that accesses (and potentially modifies) L2 tables
-does so while holding s->lock.
+The Zicfilp extension adds the MLPE field to the mseccfg CSR. According
+to the RISC-V Privileged Specification, mseccfg exists if any extension
+that adds a field to it is implemented.
 
-There is one exception, which is allocating writes. They hold the lock
-initially while allocating clusters, but drop it for writing the guest
-payload before taking the lock again for updating the L2 tables. This
-allows concurrent requests that touch other parts of the image file to
-continue in parallel and is an important performance optimisation.
+Currently, the `have_mseccfg()` predicate function checks for Smepmp,
+Zkr, and Smmpm, but misses Zicfilp. As a result, if a CPU is configured
+with `zicfilp=true` but without the other extensions, accessing the
+mseccfg CSR will incorrectly raise an illegal instruction exception.
 
-However, this means that other requests that run while the lock is
-dropped for writing guest data must synchronise with the list of
-allocating requests in s->cluster_allocs and wait if they would overlap.
-For writes, this is done in handle_dependencies(), but discard and write
-zeros operations neglect to synchronise with s->cluster_allocs.
+This patch adds the missing check for `ext_zicfilp` to ensure the CSR
+is properly accessible when the Zicfilp extension is enabled.
 
-This means that discard can free a cluster whose L2 entry will already
-be modified in qcow2_alloc_cluster_link_l2() by a previously started
-write. In the case of a pre-allocated zero cluster that is in the
-process of being overwritten, this means that discard can lead to a
-situation where the cluster is still mapped (because the write will
-restore the L2 entry just without the zero flag), but its refcount has
-been decreased, resulting in a corrupted image.
+This issue was discovered and reported by SpecHunter, an AI-driven
+architecture specification analysis tool.
 
-Add the missing synchronisation to qcow2_cluster_discard() and
-qcow2_subcluster_zeroize() to fix the problem.
-
-Cc: qemu-stable@nongnu.org
-Reported-by: Denis V. Lunev <den@openvz.org>
-Signed-off-by: Kevin Wolf <kwolf@redhat.com>
-Message-ID: <20260427170520.101242-4-kwolf@redhat.com>
-Reviewed-by: Denis V. Lunev <den@openvz.org>
-Tested-by: Denis V. Lunev <den@openvz.org>
-Signed-off-by: Kevin Wolf <kwolf@redhat.com>
-(cherry picked from commit b8bfb1478d61512f851badd0d912c6661a2efee7)
+Link: https://github.com/yizishun/rv-isa-sec/blob/master/output/riscv-isa-manual/pr-2561/qemu.txt
+Signed-off-by: Zishun Yi <vulab@iscas.ac.cn>
+Reviewed-by: Chao Liu <chao.liu.zevorn@gmail.com>
+Reviewed-by: Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>
+Reviewed-by: Alistair Francis <alistair.francis@wdc.com>
+Message-ID: <20260511072705.3015986-1-vulab@iscas.ac.cn>
+Signed-off-by: Alistair Francis <alistair.francis@wdc.com>
+(cherry picked from commit 249483623242c1b9ad4a1600083bea534620917a)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/block/qcow2-cluster.c b/block/qcow2-cluster.c
-index c655bf6df4..8b1e80bd0b 100644
---- a/block/qcow2-cluster.c
-+++ b/block/qcow2-cluster.c
-@@ -1392,6 +1392,9 @@ count_single_write_clusters(BlockDriverState *bs, int nb_clusters,
-  * the same cluster. In this case we need to wait until the previous
-  * request has completed and updated the L2 table accordingly.
-  *
-+ * If allow_shortening == true, instead of waiting for a dependency, *cur_bytes
-+ * can be shortened so that the cluster allocations don't overlap.
-+ *
-  * Returns:
-  *   0       if there was no dependency. *cur_bytes indicates the number of
-  *           bytes from guest_offset that can be read before the next
-@@ -1403,7 +1406,9 @@ count_single_write_clusters(BlockDriverState *bs, int nb_clusters,
-  */
- static int coroutine_fn handle_dependencies(BlockDriverState *bs,
-                                             uint64_t guest_offset,
--                                            uint64_t *cur_bytes, QCowL2Meta **m)
-+                                            uint64_t *cur_bytes,
-+                                            bool allow_shortening,
-+                                            QCowL2Meta **m)
- {
-     BDRVQcow2State *s = bs->opaque;
-     QCowL2Meta *old_alloc;
-@@ -1434,7 +1439,7 @@ static int coroutine_fn handle_dependencies(BlockDriverState *bs,
- 
-         /* Conflict */
- 
--        if (start < old_start) {
-+        if (start < old_start && allow_shortening) {
-             /* Stop at the start of a running allocation */
-             bytes = old_start - start;
-         } else {
-@@ -1469,6 +1474,29 @@ static int coroutine_fn handle_dependencies(BlockDriverState *bs,
-     return 0;
- }
- 
-+static void coroutine_mixed_fn wait_for_dependencies(BlockDriverState *bs,
-+                                                     uint64_t guest_offset,
-+                                                     uint64_t bytes)
-+{
-+    BDRVQcow2State *s = bs->opaque;
-+    QCowL2Meta *m = NULL;
-+    int ret;
-+
-+    /*
-+     * Discard has some non-coroutine callers (creating internal snapshots and
-+     * make empty). They are calling from qemu-img or in a drained section, so
-+     * we know that no writes can be in progress.
-+     */
-+    if (!qemu_in_coroutine()) {
-+        assert(QLIST_EMPTY(&s->cluster_allocs));
-+        return;
+diff --git a/target/riscv/csr.c b/target/riscv/csr.c
+index 29dd596ae4..51e668b46d 100644
+--- a/target/riscv/csr.c
++++ b/target/riscv/csr.c
+@@ -770,6 +770,9 @@ static RISCVException have_mseccfg(CPURISCVState *env, int csrno)
+     if (riscv_cpu_cfg(env)->ext_smmpm) {
+         return RISCV_EXCP_NONE;
+     }
++    if (riscv_cpu_cfg(env)->ext_zicfilp) {
++        return RISCV_EXCP_NONE;
 +    }
-+
-+    do {
-+        ret = handle_dependencies(bs, guest_offset, &bytes, false, &m);
-+    } while (ret == -EAGAIN);
-+}
-+
- /*
-  * Checks how many already allocated clusters that don't require a new
-  * allocation there are at the given guest_offset (up to *bytes).
-@@ -1840,7 +1868,7 @@ again:
-          *         the right synchronisation between the in-flight request and
-          *         the new one.
-          */
--        ret = handle_dependencies(bs, start, &cur_bytes, m);
-+        ret = handle_dependencies(bs, start, &cur_bytes, true, m);
-         if (ret == -EAGAIN) {
-             /* Currently handle_dependencies() doesn't yield if we already had
-              * an allocation. If it did, we would have to clean up the L2Meta
-@@ -2000,6 +2028,15 @@ int qcow2_cluster_discard(BlockDriverState *bs, uint64_t offset,
-     int64_t cleared;
-     int ret;
  
-+    /*
-+     * If we're touching a cluster for which allocating writes are in flight,
-+     * wait for them to complete to avoid conflicting metadata updates.
-+     *
-+     * We don't need to allocate a QCowL2Meta for the discard operation because
-+     * s->lock is held for the duration of the whole operation.
-+     */
-+    wait_for_dependencies(bs, offset, bytes);
-+
-     /* Caller must pass aligned values, except at image end */
-     assert(QEMU_IS_ALIGNED(offset, s->cluster_size));
-     assert(QEMU_IS_ALIGNED(end_offset, s->cluster_size) ||
-@@ -2160,6 +2197,15 @@ int coroutine_fn qcow2_subcluster_zeroize(BlockDriverState *bs, uint64_t offset,
-     int64_t cleared;
-     int ret;
- 
-+    /*
-+     * If we're touching a cluster for which allocating writes are in flight,
-+     * wait for them to complete to avoid conflicting metadata updates.
-+     *
-+     * We don't need to allocate a QCowL2Meta for the zeroize operation because
-+     * s->lock is held for the duration of the whole operation.
-+     */
-+    wait_for_dependencies(bs, offset, bytes);
-+
-     /* If we have to stay in sync with an external data file, zero out
-      * s->data_file first. */
-     if (data_file_is_raw(bs)) {
+     return RISCV_EXCP_ILLEGAL_INST;
+ }
 -- 
 2.47.3
 
