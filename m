@@ -4,46 +4,51 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E13A1CD98D2
-	for <qemu-devel@archiver.kernel.org>; Sat, 13 Jun 2026 19:57:44 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6735CCD8CA8
+	for <qemu-devel@archiver.kernel.org>; Sat, 13 Jun 2026 19:58:04 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wYURo-0008Ie-Op; Sat, 13 Jun 2026 15:55:17 -0400
+	id 1wYUQE-0002fr-Td; Sat, 13 Jun 2026 15:53:39 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wYURm-00085d-3M; Sat, 13 Jun 2026 15:55:14 -0400
+ id 1wYUP4-00010D-Sb; Sat, 13 Jun 2026 15:52:27 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wYURj-0004Me-On; Sat, 13 Jun 2026 15:55:13 -0400
+ id 1wYUP3-0003fA-8I; Sat, 13 Jun 2026 15:52:26 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1781380260; bh=zIjMO7cYvxNr5VKrgmQojc0T7AyXklUFu4iF5bq3erg=;
+ t=1781380258; bh=D0bF6O6cglu36bF7WpkWqpGneCZGlOEdqNmPnjCqDPI=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References;
- b=kVorTBVfxC4PIEPzIUQC1Yw9V8oCfHD66QGlBDs4sYeKZ7BHQqn/OBjmyKgYERva0
- 0I8tU7JMYVLqxag+9vF6t9AGr8zZo0yf/+3SqyDx96tYXc64iAm3abUSTbLZTvHi4q
- AaWbGRRrZuEfupmYZUhP94X1XLC0I5Ldbs/zqb74R7Y0xC003DHn/wDf3r6Pzy4fqz
- GnvgQENCZBCQ2Cj9Uk0sr1hCiv0OeIpe2RvQ9g1veMzTZMssVkDb6lvqZml2tYo83R
- 5QCoxx6h1BOWAS9FvccIJO+qEc67oflSUbFKy3Fp0Y+AZw1wVLNmTzuFWWcVg1KDtW
- HtTsv0fXZ/9ZQ==
+ b=vA1O74ejIM9TDO2+w9Tb0u36ciQtZEQVm5ihic0uljewBppzZByv2nOgvZEiKP2Ni
+ SDc6AsiUMP2UXhFGKzBO029eauNY3qsc1Mif+XNlSq4d7Hen4H2ex7N9EtUibnfFRp
+ qUgij/txw8voX0TENGzx7ufaGmR0QhfOviWCiKwnz13lOU9cGY7WcB3IE3lxVssgpK
+ NLxqZzUo5Yp6AdikK/4dajbe9WWhgUqoAuCi0nopgWGCL/qibiFKDlrzlIJCPzMkug
+ XY4/zKXVbR+6lCLsHaBVI0E25KHEjjn8bNN3uU2pJOIJESj4/QsQ4hDCPStp43z4c3
+ fNytWAyUcrAXg==
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 9438D1B6E37;
- Sat, 13 Jun 2026 22:51:00 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id E3CE11B6E1F;
+ Sat, 13 Jun 2026 22:50:58 +0300 (MSK)
 Received: from think4mjt.tls.msk.ru (mjtthink.wg.tls.msk.ru [192.168.177.146])
- by tsrv.corpit.ru (Postfix) with ESMTP id EEBB83CE8B1;
- Sat, 13 Jun 2026 22:51:18 +0300 (MSK)
+ by tsrv.corpit.ru (Postfix) with ESMTP id 46F293CE899;
+ Sat, 13 Jun 2026 22:51:17 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Christian Schoenebeck <qemu_oss@crudebyte.com>,
+Cc: qemu-stable@nongnu.org,
+ =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
+ boy juju <agx1657748706@gmail.com>,
+ =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
  Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-10.0.11 40/56] tests/9pfs: add deep absolute path test
-Date: Sat, 13 Jun 2026 22:50:54 +0300
-Message-ID: <20260613195116.1807273-40-mjt@tls.msk.ru>
+Subject: [Stable-10.0.11 16/56] ui/vnc: fix OOB read updating VNC update
+ frequency stats
+Date: Sat, 13 Jun 2026 22:50:30 +0300
+Message-ID: <20260613195116.1807273-16-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <qemu-stable-10.0.11-20260613224446@cover.tls.msk.ru>
 References: <qemu-stable-10.0.11-20260613224446@cover.tls.msk.ru>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=212.248.84.144; envelope-from=mjt@tls.msk.ru;
  helo=isrv.corpit.ru
@@ -68,117 +73,45 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Christian Schoenebeck <qemu_oss@crudebyte.com>
+From: Daniel P. Berrangé <berrange@redhat.com>
 
-Add fs_deep_absolute_path test that creates a deep directory
-structure with an absolute path length exceeding 16-bit range
-(i.e. >65536) to verify the previous buffer overflow fix.
+Incorrect loop bounds in vnc_update_freq result in iterating past the
+last row and past the last column in the VNC stats array. With suitably
+chosen dimensions this could be a OOB read that accesses memory beyond
+the VncDisplay struct that the stats array is embedded in.
 
-This is a slow test (may take several seconds) and therefore
-registered as "slow" test and not running by default.
+Should this hit a guard page, it could trigger a guest crash. If it
+does not, then the VNC frequency stats will be updated with garbage.
 
-Use -m slow to run this test.
-
-Link: https://gitlab.com/qemu-project/qemu/-/issues/3358
-Link: https://lore.kernel.org/qemu-devel/933552b2cfc2c442fac7f4e68c777dce20ee8d7e.1779126034.git.qemu_oss@crudebyte.com
-Signed-off-by: Christian Schoenebeck <qemu_oss@crudebyte.com>
-(cherry picked from commit 198627807a6b94e2aab157cf345f98edb1ac1a7a)
+Fixes: CVE-2026-48003
+Reported-by: boy juju <agx1657748706@gmail.com>
+Reviewed-by: Marc-André Lureau <marcandre.lureau@redhat.com>
+Signed-off-by: Daniel P. Berrangé <berrange@redhat.com>
+Message-ID: <20260521103353.1645561-5-berrange@redhat.com>
+(cherry picked from commit d0c7b82d3a89dd9c863f8aa69b07360c648ca9fb)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/tests/qtest/virtio-9p-test.c b/tests/qtest/virtio-9p-test.c
-index ab3a12c816..1af02e9c7b 100644
---- a/tests/qtest/virtio-9p-test.c
-+++ b/tests/qtest/virtio-9p-test.c
-@@ -14,6 +14,7 @@
+diff --git a/ui/vnc.c b/ui/vnc.c
+index faff26454b..3760afe564 100644
+--- a/ui/vnc.c
++++ b/ui/vnc.c
+@@ -3078,12 +3078,14 @@ double vnc_update_freq(VncState *vs, int x, int y, int w, int h)
+     int i, j;
+     double total = 0;
+     int num = 0;
++    int x_end = x + w;
++    int y_end = y + h;
  
- #include "qemu/osdep.h"
- #include "qemu/module.h"
-+#include "libqos/virtio.h"
- #include "libqos/virtio-9p-client.h"
+     x =  QEMU_ALIGN_DOWN(x, VNC_STAT_RECT);
+     y =  QEMU_ALIGN_DOWN(y, VNC_STAT_RECT);
  
- #define twalk(...) v9fs_twalk((TWalkOpt) __VA_ARGS__)
-@@ -737,6 +738,72 @@ static void fs_use_after_unlink(void *obj, void *data,
-     g_assert_cmpint(count, ==, write_count);
- }
- 
-+/* https://gitlab.com/qemu-project/qemu/-/issues/3358 */
-+static void fs_deep_absolute_path(void *obj, void *data,
-+                                  QGuestAllocator *t_alloc)
-+{
-+    QVirtio9P *v9p = obj;
-+    v9fs_set_allocator(t_alloc);
-+
-+    if (!g_test_slow()) {
-+        g_test_skip("This is a slow test, run with -m slow");
-+        return;
-+    }
-+
-+    GString *path = g_string_new("/");
-+    char name[256];
-+    uint32_t current_fid = 0;
-+
-+    tattach({ .client = v9p });
-+
-+    /* Create deep directory structure until absolute path length
-+     * exceeds 16-bit range.
-+     */
-+    while (path->len <= 65536) {
-+        /* use 255-byte name (NAME_MAX) to reduce iterations to ~257 */
-+        memset(name, 'A', 255);
-+        name[255] = '\0';
-+
-+        /* create the directory relative to current FID */
-+        tmkdir({
-+            .client = v9p,
-+            .dfid = current_fid,
-+            .name = name
-+        });
-+
-+        /* just for locally tracking the current path length */
-+        g_string_append(path, name);
-+        g_string_append(path, "/");
-+
-+        /* acquire new FID for the newly created directory */
-+        char *wnames[] = { name };
-+        current_fid = twalk({
-+            .client = v9p,
-+            .fid = current_fid,
-+            .nwname = 1,
-+            .wnames = wnames
-+        }).newfid;
-+
-+        /* Reset descriptor pool to avoid exhaustion. The simplified
-+         * virtio test driver does never free descriptors back to the pool
-+         * after use, so we must manually reset it for the required high
-+         * amount of 9p requests here.
-+         */
-+        qvirtqueue_reset_pool(v9p->vq);
-+    }
-+
-+    /* check if the deepest directory is accessible */
-+    v9fs_attr attr = {};
-+    tgetattr({
-+        .client = v9p,
-+        .fid = current_fid,
-+        .request_mask = P9_GETATTR_BASIC,
-+        .rgetattr.attr = &attr
-+    });
-+
-+    g_string_free(path, TRUE);
-+}
-+
- static void cleanup_9p_local_driver(void *data)
- {
-     /* remove previously created test dir when test is completed */
-@@ -804,6 +871,8 @@ static void register_virtio_9p_test(void)
-                  &opts);
-     qos_add_test("local/use_after_unlink", "virtio-9p", fs_use_after_unlink,
-                  &opts);
-+    qos_add_test("local/deep_absolute_path", "virtio-9p",
-+                 fs_deep_absolute_path, &opts);
- }
- 
- libqos_init(register_virtio_9p_test);
+-    for (j = y; j <= y + h; j += VNC_STAT_RECT) {
+-        for (i = x; i <= x + w; i += VNC_STAT_RECT) {
++    for (j = y; j < y_end; j += VNC_STAT_RECT) {
++        for (i = x; i < x_end; i += VNC_STAT_RECT) {
+             total += vnc_stat_rect(vs->vd, i, j)->freq;
+             num++;
+         }
 -- 
 2.47.3
 
