@@ -4,43 +4,43 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0F967CD98CF
-	for <qemu-devel@archiver.kernel.org>; Sat, 13 Jun 2026 20:45:26 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 61F1ACD98CF
+	for <qemu-devel@archiver.kernel.org>; Sat, 13 Jun 2026 20:45:31 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wYV9M-00010b-En; Sat, 13 Jun 2026 16:40:16 -0400
+	id 1wYVBj-0006ZV-53; Sat, 13 Jun 2026 16:42:43 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wYV9H-0000aY-CD; Sat, 13 Jun 2026 16:40:11 -0400
+ id 1wYVBW-0006S3-38; Sat, 13 Jun 2026 16:42:30 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wYV9F-0004TJ-6e; Sat, 13 Jun 2026 16:40:10 -0400
+ id 1wYVBU-0005T3-Bv; Sat, 13 Jun 2026 16:42:29 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1781382965; bh=Ghl0ZtyIs4gKQ1+JEGboppp/jddtSue3ilOs0f6SYAE=;
+ t=1781382966; bh=NeizuiU9CNw1ZzTV6M1T2A/yYQYGEMCvWTUWZVtOwzs=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References;
- b=EQ+I4tRRn+o61kPH38flIq0SYENNpkEnMUJfo91Qiy/tWCAZXQb2nr2lvOFNp83Cq
- WgUmstwV8CzSKUgt6EI/OcArFZ5SK8vTrXomAov6mSyXtn/4rWwSCC70aLenIFokZJ
- M5S7Y5e+6v4TasubGJO3GggYjFx+xfim/1SB2jvml16bumi5B9expT+b01wiDVjGQc
- RqREW9KXxvJ4M1BjSXe+56o8QKHFaenqvZhjd77mAIzocdF3mHhCcr10Wo6Y2fIK/m
- r1rCFjUkwXZh2Ydp6suIIknfGVQgDibPEPEii+XBy24AJMnuCfj0I6/yUsjkzKHxEN
- l+/Us2miZoo3Q==
+ b=h9PWq3kFe0AjiKNgF5Xa1gh5Cm/cw45RD/kS8MT+2EbVGAuEs2cyaructeJIPpxiX
+ fdIdOEQs2y5pziJ5hySO+w5pGrCDWHKo7Xia1ZbawdOxfZ5KZDeiYGa/VQqnIfhN9S
+ WFYgAFa2Lw13yC0hxuCjSvJJzuyNejMxwhK3IhXz8gTEo0AYHytWImpDw7tZ7dY/Sn
+ 0L1YYJwRDqodFLLV6kD42lDcG7yKtLMb6E5BljEPdiuVR1ZiGcCLR4GQzJ699cFQnC
+ qs1ZDoZHQFsTvtaW/+m8dJg5fSOLq1waglGOyay3SFRR0YchcNqk0F3IGyMvzJoKBu
+ N75+wvQk2sNDw==
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 088F01B6F05;
- Sat, 13 Jun 2026 23:36:05 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id 8067B1B6F22;
+ Sat, 13 Jun 2026 23:36:06 +0300 (MSK)
 Received: from think4mjt.tls.msk.ru (mjtthink.wg.tls.msk.ru [192.168.177.146])
- by tsrv.corpit.ru (Postfix) with ESMTP id 717443CE956;
- Sat, 13 Jun 2026 23:36:23 +0300 (MSK)
+ by tsrv.corpit.ru (Postfix) with ESMTP id E95283CE96B;
+ Sat, 13 Jun 2026 23:36:24 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Matt Turner <mattst88@gmail.com>,
- Helge Deller <deller@gmx.de>, Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-11.0.2 42/72] linux-user/s390x: restore fpu_status rounding
- mode from FPC on sigreturn
-Date: Sat, 13 Jun 2026 23:35:08 +0300
-Message-ID: <20260613203542.1809153-42-mjt@tls.msk.ru>
+Cc: qemu-stable@nongnu.org, Kevin Wolf <kwolf@redhat.com>,
+ "Denis V. Lunev" <den@openvz.org>, Michael Tokarev <mjt@tls.msk.ru>
+Subject: [Stable-11.0.2 63/72] iotests/046: Test that discard/write_zeroes
+ wait for dependencies
+Date: Sat, 13 Jun 2026 23:35:29 +0300
+Message-ID: <20260613203542.1809153-63-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <qemu-stable-11.0.2-20260613224644@cover.tls.msk.ru>
 References: <qemu-stable-11.0.2-20260613224644@cover.tls.msk.ru>
@@ -69,109 +69,138 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Matt Turner <mattst88@gmail.com>
+From: Kevin Wolf <kwolf@redhat.com>
 
-QEMU keeps the s390x floating-point control register (FPC) in env->fpc.
-The rounding mode bits [2:0] of FPC are reflected into the derived
-env->fpu_status via set_float_rounding_mode(); every architectural
-write to FPC goes through HELPER(sfpc) which keeps the two in sync.
+This is a regression test for the bug fixed in the previous commit where
+discard and write_zeroes operations wouldn't consider their dependencies
+in s->cluster_allocs. Without the fix, this results in a corrupted
+image.
 
-restore_sigregs() restored FPC with a direct assignment:
-
-    __get_user(env->fpc, &sc->fpregs.fpc);
-
-This wrote env->fpc correctly but never updated env->fpu_status, so on
-sigreturn the interrupted code resumed with whatever rounding mode the
-signal handler last installed in fpu_status.
-
-Factor the two-step "write fpc + sync fpu_status" logic out of
-HELPER(sfpc) into cpu_s390x_load_fpc(), declare it in cpu.h, and call
-it from restore_sigregs() in place of the direct assignment.
-
-cpu_s390x_load_fpc() partially reuses the sanity check from
-HELPER(sfpc): if the FPC value has an invalid rounding mode or reserved
-bits set, it falls back to 0, matching the kernel's fpu_lfpc_safe()
-behavior where a corrupt signal frame value causes a specification
-exception and 0 is used instead.
-
-HELPER(sfpc) now calls cpu_s390x_load_fpc() after its full
-specification-exception check, including the FEAT_FLOATING_POINT_EXT
-test that is not needed for the signal restore path.
-
-Fixes: 2941e0fa05 ("linux-user/s390x: Save/restore fpc when handling a signal")
-Cc: qemu-stable@nongnu.org
-Signed-off-by: Matt Turner <mattst88@gmail.com>
-Signed-off-by: Helge Deller <deller@gmx.de>
-(cherry picked from commit 2762cd51ee033dccb3167110376dd125244cc819)
+Signed-off-by: Kevin Wolf <kwolf@redhat.com>
+Message-ID: <20260427170520.101242-5-kwolf@redhat.com>
+Reviewed-by: Denis V. Lunev <den@openvz.org>
+Tested-by: Denis V. Lunev <den@openvz.org>
+Signed-off-by: Kevin Wolf <kwolf@redhat.com>
+(cherry picked from commit 389f5bcc744d3ddc127d550a57261aed9bbba1f3)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/linux-user/s390x/signal.c b/linux-user/s390x/signal.c
-index 96d1c8d11c..28ad80bde4 100644
---- a/linux-user/s390x/signal.c
-+++ b/linux-user/s390x/signal.c
-@@ -332,7 +332,11 @@ static void restore_sigregs(CPUS390XState *env, target_sigregs *sc)
-     for (i = 0; i < 16; i++) {
-         __get_user(env->aregs[i], &sc->regs.acrs[i]);
-     }
--    __get_user(env->fpc, &sc->fpregs.fpc);
-+    {
-+        uint32_t fpc;
-+        __get_user(fpc, &sc->fpregs.fpc);
-+        cpu_s390x_load_fpc(env, fpc);
-+    }
-     for (i = 0; i < 16; i++) {
-         __get_user(*get_freg(env, i), &sc->fpregs.fprs[i]);
-     }
-diff --git a/target/s390x/cpu.h b/target/s390x/cpu.h
-index 40bc1f0741..6826cda1c0 100644
---- a/target/s390x/cpu.h
-+++ b/target/s390x/cpu.h
-@@ -896,6 +896,7 @@ void s390_init_sigp(void);
- /* helper.c */
- void s390_cpu_set_psw(CPUS390XState *env, uint64_t mask, uint64_t addr);
- uint64_t s390_cpu_get_psw_mask(CPUS390XState *env);
-+void cpu_s390x_load_fpc(CPUS390XState *env, uint32_t fpc);
- 
- /* outside of target/s390x/ */
- S390CPU *s390_cpu_addr2state(uint16_t cpu_addr);
-diff --git a/target/s390x/tcg/fpu_helper.c b/target/s390x/tcg/fpu_helper.c
-index 122994960a..6152d14aa9 100644
---- a/target/s390x/tcg/fpu_helper.c
-+++ b/target/s390x/tcg/fpu_helper.c
-@@ -952,6 +952,19 @@ static const int fpc_to_rnd[8] = {
-     float_round_to_odd,
- };
- 
-+void cpu_s390x_load_fpc(CPUS390XState *env, uint32_t fpc)
-+{
-+    /*
-+     * Mimic kernel fpu_lfpc_safe(): a corrupt signal frame value that would
-+     * trigger a specification exception instead results in FPC being set to 0.
-+     */
-+    if (fpc_to_rnd[fpc & 0x7] == -1 || fpc & 0x03030088u) {
-+        fpc = 0;
-+    }
-+    env->fpc = fpc;
-+    set_float_rounding_mode(fpc_to_rnd[fpc & 0x7], &env->fpu_status);
-+}
+diff --git a/tests/qemu-iotests/046 b/tests/qemu-iotests/046
+index 4c9ed4d26e..e03dd40147 100755
+--- a/tests/qemu-iotests/046
++++ b/tests/qemu-iotests/046
+@@ -184,6 +184,48 @@ aio_write -P 160 0x104000 0x18000
+ resume A
+ aio_flush
+ EOF
 +
- /* set fpc */
- void HELPER(sfpc)(CPUS390XState *env, uint64_t fpc)
- {
-@@ -959,12 +972,7 @@ void HELPER(sfpc)(CPUS390XState *env, uint64_t fpc)
-         (!s390_has_feat(S390_FEAT_FLOATING_POINT_EXT) && fpc & 0x4)) {
-         tcg_s390_program_interrupt(env, PGM_SPECIFICATION, GETPC());
-     }
--
--    /* Install everything in the main FPC.  */
--    env->fpc = fpc;
--
--    /* Install the rounding mode in the shadow fpu_status.  */
--    set_float_rounding_mode(fpc_to_rnd[fpc & 0x7], &env->fpu_status);
-+    cpu_s390x_load_fpc(env, fpc);
++# Create a pre-allocated zero cluster, then start a write on it and discard it
++# before the L2 update is made
++cat  <<EOF
++write -P 181 0x120000 0x10000
++write -z 0x120000 0x10000
++
++break write_aio A
++aio_write -P 180 0x120000 0x10000
++wait_break A
++aio_discard 0x120000 0x10000
++resume A
++aio_flush
++EOF
++
++# Create a pre-allocated zero cluster, then start a write on it and a
++# concurrent zero write with MAY_UNMAP before the L2 update is made
++cat  <<EOF
++write -P 181 0x130000 0x10000
++write -z 0x130000 0x10000
++
++break write_aio A
++aio_write -P 180 0x130000 0x10000
++wait_break A
++aio_write -z -u 0x130000 0x10000
++resume A
++aio_flush
++EOF
++
++# Create a pre-allocated zero cluster, then start a write on it and a
++# concurrent zero write without MAY_UNMAP before the L2 update is made
++cat  <<EOF
++write -P 181 0x140000 0x10000
++write -z 0x140000 0x10000
++
++break write_aio A
++aio_write -P 180 0x140000 0x10000
++wait_break A
++aio_write -z 0x140000 0x10000
++resume A
++aio_flush
++EOF
  }
  
- /* set fpc and signal */
+ overlay_io | $QEMU_IO blkdebug::"$TEST_IMG" | _filter_qemu_io |\
+@@ -264,6 +306,10 @@ verify_io()
+     # Undefined content for 0x10c000 0x8000
+     echo read -P 160 0x114000 0x8000
+     echo read -P 17  0x11c000 0x4000
++
++    echo read -P 0   0x120000 0x10000
++    echo read -P 0   0x130000 0x10000
++    echo read -P 0   0x140000 0x10000
+ }
+ 
+ verify_io | $QEMU_IO "$TEST_IMG" | _filter_qemu_io
+diff --git a/tests/qemu-iotests/046.out b/tests/qemu-iotests/046.out
+index b1a03f4041..6341df335c 100644
+--- a/tests/qemu-iotests/046.out
++++ b/tests/qemu-iotests/046.out
+@@ -139,6 +139,36 @@ wrote XXX/XXX bytes at offset XXX
+ XXX KiB, X ops; XX:XX:XX.X (XXX YYY/sec and XXX ops/sec)
+ wrote XXX/XXX bytes at offset XXX
+ XXX KiB, X ops; XX:XX:XX.X (XXX YYY/sec and XXX ops/sec)
++wrote XXX/XXX bytes at offset XXX
++XXX KiB, X ops; XX:XX:XX.X (XXX YYY/sec and XXX ops/sec)
++wrote XXX/XXX bytes at offset XXX
++XXX KiB, X ops; XX:XX:XX.X (XXX YYY/sec and XXX ops/sec)
++blkdebug: Suspended request 'A'
++blkdebug: Resuming request 'A'
++wrote XXX/XXX bytes at offset XXX
++XXX KiB, X ops; XX:XX:XX.X (XXX YYY/sec and XXX ops/sec)
++discarded  XXX/XXX bytes at offset XXX
++XXX KiB, X ops; XX:XX:XX.X (XXX YYY/sec and XXX ops/sec)
++wrote XXX/XXX bytes at offset XXX
++XXX KiB, X ops; XX:XX:XX.X (XXX YYY/sec and XXX ops/sec)
++wrote XXX/XXX bytes at offset XXX
++XXX KiB, X ops; XX:XX:XX.X (XXX YYY/sec and XXX ops/sec)
++blkdebug: Suspended request 'A'
++blkdebug: Resuming request 'A'
++wrote XXX/XXX bytes at offset XXX
++XXX KiB, X ops; XX:XX:XX.X (XXX YYY/sec and XXX ops/sec)
++wrote XXX/XXX bytes at offset XXX
++XXX KiB, X ops; XX:XX:XX.X (XXX YYY/sec and XXX ops/sec)
++wrote XXX/XXX bytes at offset XXX
++XXX KiB, X ops; XX:XX:XX.X (XXX YYY/sec and XXX ops/sec)
++wrote XXX/XXX bytes at offset XXX
++XXX KiB, X ops; XX:XX:XX.X (XXX YYY/sec and XXX ops/sec)
++blkdebug: Suspended request 'A'
++blkdebug: Resuming request 'A'
++wrote XXX/XXX bytes at offset XXX
++XXX KiB, X ops; XX:XX:XX.X (XXX YYY/sec and XXX ops/sec)
++wrote XXX/XXX bytes at offset XXX
++XXX KiB, X ops; XX:XX:XX.X (XXX YYY/sec and XXX ops/sec)
+ 
+ == Verify image content ==
+ read 65536/65536 bytes at offset 0
+@@ -239,5 +269,11 @@ read 32768/32768 bytes at offset 1130496
+ 32 KiB, X ops; XX:XX:XX.X (XXX YYY/sec and XXX ops/sec)
+ read 16384/16384 bytes at offset 1163264
+ 16 KiB, X ops; XX:XX:XX.X (XXX YYY/sec and XXX ops/sec)
++read 65536/65536 bytes at offset 1179648
++64 KiB, X ops; XX:XX:XX.X (XXX YYY/sec and XXX ops/sec)
++read 65536/65536 bytes at offset 1245184
++64 KiB, X ops; XX:XX:XX.X (XXX YYY/sec and XXX ops/sec)
++read 65536/65536 bytes at offset 1310720
++64 KiB, X ops; XX:XX:XX.X (XXX YYY/sec and XXX ops/sec)
+ No errors were found on the image.
+ *** done
 -- 
 2.47.3
 
