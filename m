@@ -4,50 +4,47 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 38C39CD98D2
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5BB0FCD98DC
 	for <qemu-devel@archiver.kernel.org>; Sat, 13 Jun 2026 19:57:22 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wYUT0-0002DP-Fn; Sat, 13 Jun 2026 15:56:30 -0400
+	id 1wYURL-0007Fz-7Z; Sat, 13 Jun 2026 15:54:47 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wYUSr-0001tR-Hp; Sat, 13 Jun 2026 15:56:22 -0400
+ id 1wYURJ-0007Cs-T8; Sat, 13 Jun 2026 15:54:45 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wYUSp-0004vr-Ql; Sat, 13 Jun 2026 15:56:21 -0400
+ id 1wYURI-0004EP-5r; Sat, 13 Jun 2026 15:54:45 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1781380261; bh=01hGNxMjvygUiqDA9u2xDGE1FinFk29jK5+QXTOF9Ww=;
+ t=1781380260; bh=vMsRVCuwCDrEku/uByBfWnq0mU9pQrQJkKAYYpa+2IM=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References;
- b=hRi0TV359fGzdKsL/7DbjsAQPQ0Lr2eDmToUClVzeW8h8N/sabXOLJO7J8iJHSkhO
- s0as/exJV+UJY7rFnthygaRQOMlK39KWOlEiT+qOW2ev7jlHkIjmbNQpMcy0DPWhha
- X7e/lf8tXtEA24SPYiEzcYK58mK25jNmNOgXzqQzgJc9Q0UM8JrzQ2B3F4UmDBOZ4Z
- 0gPopAiA6HMYbCJ9m4yKz9m8jK5pwks6bUYzPfy7WU/Aw2XYsDmZPAPeEqbnh0HxFv
- Zfb1I6CvzcYydrlG6OlzNsQPn6hVpJEYzM75XoAJkYhMldq9lw/vPAA4N/dBOFR8a4
- x0Jhb1tbsqmuA==
+ b=TICenNfoSMigDhEiggvRgxFRRpC3XjUdv9pdz9rLC/JkHy3CmFx1CVR8feczAY2z4
+ Ocr0pqO8u0jTz2DkYpLIwM76dqrVyd5rQUVTkV0WE+uQFV/EMw6TfJMjB33XY3ckHa
+ oigF3gk8Pt+ZEzJMQugS78x4ysqtyU3/FKRnI3tEZDUzIQoe+Pqce7gE6ugPekxgq3
+ qbVeT4kt8VpZoGdneyAOcDZWZHQrgdZzregp+H6tRrcQIv9fS0wODgPkuaecYHRUA+
+ eSycpP+3XstrWZqOftGELSERo5Hr7E1n5n1qe+qAsbMb9ZWzpCqBcyV+0B5wvMw9Y/
+ C7QbxCT5FAlHg==
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id A99C11B6E45;
- Sat, 13 Jun 2026 22:51:01 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id 4E5DD1B6E33;
+ Sat, 13 Jun 2026 22:51:00 +0300 (MSK)
 Received: from think4mjt.tls.msk.ru (mjtthink.wg.tls.msk.ru [192.168.177.146])
- by tsrv.corpit.ru (Postfix) with ESMTP id 042D93CE8BF;
- Sat, 13 Jun 2026 22:51:20 +0300 (MSK)
+ by tsrv.corpit.ru (Postfix) with ESMTP id A8E703CE8AD;
+ Sat, 13 Jun 2026 22:51:18 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Richard Henderson <richard.henderson@linaro.org>,
- Peter Maydell <peter.maydell@linaro.org>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>,
+Cc: qemu-stable@nongnu.org, Christian Schoenebeck <qemu_oss@crudebyte.com>,
  Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-10.0.11 54/56] fpu: Handle all rounding modes in
- partsN_uncanon_normal
-Date: Sat, 13 Jun 2026 22:51:08 +0300
-Message-ID: <20260613195116.1807273-54-mjt@tls.msk.ru>
+Subject: [Stable-10.0.11 36/56] hw/9pfs: change V9fsPath.size to size_t and
+ v9fs_path_sprintf() return type
+Date: Sat, 13 Jun 2026 22:50:50 +0300
+Message-ID: <20260613195116.1807273-36-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <qemu-stable-10.0.11-20260613224446@cover.tls.msk.ru>
 References: <qemu-stable-10.0.11-20260613224446@cover.tls.msk.ru>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=212.248.84.144; envelope-from=mjt@tls.msk.ru;
  helo=isrv.corpit.ru
@@ -72,33 +69,79 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Richard Henderson <richard.henderson@linaro.org>
+From: Christian Schoenebeck <qemu_oss@crudebyte.com>
 
-Missed float_round_nearest_even_max when recomputing round.
+- Change V9fsPath.size from uint16_t to size_t to support paths larger
+  than 65536 bytes.
 
-CC: qemu-stable@nongnu.org
-Fixes: 72330260cdb ("softfloat: Add float_round_nearest_even_max")
-Reported-by: Peter Maydell <peter.maydell@linaro.org>
-Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
-Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
-Reviewed-by: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
-Message-id: 20260608190155.637067-2-richard.henderson@linaro.org
-Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
-(cherry picked from commit a6a1f92d5a2368882e9b6851b6ab8b9a56d71a8c)
+- Change v9fs_path_sprintf() return type from void to int to allow error
+  reporting.
+
+Link: https://lore.kernel.org/qemu-devel/2d2348d94ff43fbe4cc0aea24fb312c5c15ee809.1779126034.git.qemu_oss@crudebyte.com
+Signed-off-by: Christian Schoenebeck <qemu_oss@crudebyte.com>
+(cherry picked from commit dbaf84e148b0c8b66dcb47788a6bb13806e401e4)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/fpu/softfloat-parts.c.inc b/fpu/softfloat-parts.c.inc
-index 171bfd06e3..2388e5d3fa 100644
---- a/fpu/softfloat-parts.c.inc
-+++ b/fpu/softfloat-parts.c.inc
-@@ -375,6 +375,7 @@ static void partsN(uncanon_normal)(FloatPartsN *p, float_status *s,
-             /* Need to recompute round-to-even/round-to-odd. */
-             switch (s->float_rounding_mode) {
-             case float_round_nearest_even:
-+            case float_round_nearest_even_max:
-                 if (N > 64 && frac_lsb == 0) {
-                     inc = ((p->frac_hi & 1) ||
-                            (p->frac_lo & round_mask) != frac_lsbm1
+diff --git a/fsdev/file-op-9p.h b/fsdev/file-op-9p.h
+index 4997677460..c453b6494b 100644
+--- a/fsdev/file-op-9p.h
++++ b/fsdev/file-op-9p.h
+@@ -110,7 +110,7 @@ struct FsContext {
+ };
+ 
+ struct V9fsPath {
+-    uint16_t size;
++    size_t size;
+     char *data;
+ };
+ P9ARRAY_DECLARE_TYPE(V9fsPath);
+diff --git a/hw/9pfs/9p.c b/hw/9pfs/9p.c
+index 018402c1a1..c439fecf5c 100644
+--- a/hw/9pfs/9p.c
++++ b/hw/9pfs/9p.c
+@@ -201,16 +201,24 @@ void v9fs_path_free(V9fsPath *path)
+ }
+ 
+ 
+-void v9fs_path_sprintf(V9fsPath *path, const char *fmt, ...)
++int v9fs_path_sprintf(V9fsPath *path, const char *fmt, ...)
+ {
+     va_list ap;
++    int ret;
+ 
+     v9fs_path_free(path);
+ 
+     va_start(ap, fmt);
+-    /* Bump the size for including terminating NULL */
+-    path->size = g_vasprintf(&path->data, fmt, ap) + 1;
++    ret = g_vasprintf(&path->data, fmt, ap);
+     va_end(ap);
++    if (ret < 0) {
++        error_report_once("9pfs: unusual path formatting failure; "
++                         "invalidating associated FID");
++        return -1;
++    }
++    /* Bump the size for including terminating NULL */
++    path->size = ret + 1;
++    return 0;
+ }
+ 
+ void v9fs_path_copy(V9fsPath *dst, const V9fsPath *src)
+diff --git a/hw/9pfs/9p.h b/hw/9pfs/9p.h
+index 65cc45e344..b2df659b0e 100644
+--- a/hw/9pfs/9p.h
++++ b/hw/9pfs/9p.h
+@@ -456,8 +456,8 @@ static inline uint8_t v9fs_request_cancelled(V9fsPDU *pdu)
+ void coroutine_fn v9fs_reclaim_fd(V9fsPDU *pdu);
+ void v9fs_path_init(V9fsPath *path);
+ void v9fs_path_free(V9fsPath *path);
+-void G_GNUC_PRINTF(2, 3) v9fs_path_sprintf(V9fsPath *path, const char *fmt,
+-                                           ...);
++int G_GNUC_PRINTF(2, 3) v9fs_path_sprintf(V9fsPath *path, const char *fmt,
++                                          ...);
+ void v9fs_path_copy(V9fsPath *dst, const V9fsPath *src);
+ size_t v9fs_readdir_response_size(V9fsString *name);
+ int v9fs_name_to_path(V9fsState *s, V9fsPath *dirpath,
 -- 
 2.47.3
 
