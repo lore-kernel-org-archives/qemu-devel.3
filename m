@@ -4,43 +4,45 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E1235CD8CA8
-	for <qemu-devel@archiver.kernel.org>; Sat, 13 Jun 2026 20:08:54 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id DE5D3CD98CF
+	for <qemu-devel@archiver.kernel.org>; Sat, 13 Jun 2026 20:08:59 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wYUep-0006Vi-UN; Sat, 13 Jun 2026 16:08:44 -0400
+	id 1wYUeh-0005HB-Kp; Sat, 13 Jun 2026 16:08:35 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wYUdm-0003oG-O3; Sat, 13 Jun 2026 16:07:38 -0400
+ id 1wYUeE-0004fY-9X; Sat, 13 Jun 2026 16:08:06 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wYUdl-0001qP-0K; Sat, 13 Jun 2026 16:07:38 -0400
+ id 1wYUeB-0002En-Qj; Sat, 13 Jun 2026 16:08:05 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1781381069; bh=fDOrCK2N6Pl6NIhKkdpC1+NkBaVzNlosKwWDNcpyHwA=;
+ t=1781381069; bh=Wqggm+YI9CGOXrC37tB98c0M6KNUDE9ZIppSxjX+MCI=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References;
- b=JuWNck3W6v8Kqc+2cTdH8KQfYG4ggmEmOqV2Odrmg5ITXynBhua8J9qM3p5V5hxcL
- Z8Yt8wjgOBIVcCXutZBPiQwmOfKBeWgBZwiDxk+JGkY4QOGLix3r2LkoyM6eec4kVw
- jgzAxmYREI+y8Kx2nRt//hO4a2ZzmMxUx9lQFurF7dmH/5NEG2Dj5tUIslTUdq+lR4
- U++b99+826p/9W/8F1MUHTgYnU3U2nmzXWJIZU0zQC9ibZeZQ5xvCwWPh/LlIvYrK7
- 8Clf5QUlkGt4GDNURJMrUZe7CzZrVWm0MA+2g2qCOM/2g323aQK6Egtb7khF5pLAF3
- 9+/D1K4Jl+C4A==
+ b=I9pW3OrS0CEJJGmi0aTM7FMMDzA4bgCmNUWDGTxQPSsVEfIhtI/DpQxV/BaJmsQro
+ cdljc1DUS4YgQrclKH/VCkaABmHq+pnx3p71r/xGbobiSbYOg6kHWwWFrMl972KQ9Y
+ +RsM/J1OegTvZVZDU+qnbmO5UZCQy7vr3xyFRK3rN0RyZ4Adw+PfwrtjLNSrQq1XcN
+ 6GWCyrGG/ZfH33UtxH5ocBlhLp1cYgYyLLE5Kq626sHGE1x+IHgEkQzFtumwDeGLQE
+ CemXaMjZ3VbgV60GHoAxY/qdbh6Gdaw+wKT/6J6iaoecCvraXB/f5YDRmrYoB6415B
+ pYBuzY9xVwshw==
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 1C79B1B6E89;
+ by isrv.corpit.ru (Postfix) with ESMTP id 5C50E1B6E8D;
  Sat, 13 Jun 2026 23:04:29 +0300 (MSK)
 Received: from think4mjt.tls.msk.ru (mjtthink.wg.tls.msk.ru [192.168.177.146])
- by tsrv.corpit.ru (Postfix) with ESMTP id 7A41D3CE8EB;
+ by tsrv.corpit.ru (Postfix) with ESMTP id B7A683CE8EF;
  Sat, 13 Jun 2026 23:04:47 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Peter Maydell <peter.maydell@linaro.org>,
- Jason Wang <jasowang@redhat.com>, Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-10.2.4 33/61] hw/net/rocker_of_dpa: Check group ID pointers
- are not NULL
-Date: Sat, 13 Jun 2026 23:03:16 +0300
-Message-ID: <20260613200411.1808021-33-mjt@tls.msk.ru>
+Cc: qemu-stable@nongnu.org, Matt Turner <mattst88@gmail.com>,
+ Yoshinori Sato <yoshinori.sato@nifty.com>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ Helge Deller <deller@gmx.de>, Michael Tokarev <mjt@tls.msk.ru>
+Subject: [Stable-10.2.4 37/61] linux-user/sh4: preserve T/M/Q bits across
+ signal delivery
+Date: Sat, 13 Jun 2026 23:03:20 +0300
+Message-ID: <20260613200411.1808021-37-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <qemu-stable-10.2.4-20260613224639@cover.tls.msk.ru>
 References: <qemu-stable-10.2.4-20260613224639@cover.tls.msk.ru>
@@ -69,56 +71,97 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Peter Maydell <peter.maydell@linaro.org>
+From: Matt Turner <mattst88@gmail.com>
 
-In of_dpa_cmd_add_l2_flood(), we use rocker_tlv_parse_nested()
-to fill in a tlvs[] array. If the guest command is valid then
-the entries should be pointers to TLV data items with group IDs.
-However, if the guest gives us bogus data then rocker_tlv_parse_nested()
-indicates this by leaving the tlvs[] entries NULL. In the other
-places that use this function, we check for this before using
-the value, but here we forgot, and the result is that QEMU can
-crash:
+QEMU keeps the SH4 T, M and Q status-register bits outside env->sr, in
+the dedicated env->sr_t, env->sr_m and env->sr_q fields; cpu_read_sr()
+folds them back into the architectural SR value and cpu_write_sr()
+splits them back out.
 
-#0  __memcpy_avx_unaligned_erms () at ../sysdeps/x86_64/multiarch/memmove-vec-unaligned-erms.S:331
-#1  0x00005555574f7137 in __asan_memcpy ()
-#2  0x0000555558106792 in ldl_he_p (ptr=0x8) at /home/pm215/qemu/include/qemu/bswap.h:278
-#3  0x0000555558106755 in ldl_le_p (ptr=0x8) at /home/pm215/qemu/include/qemu/bswap.h:311
-#4  0x00005555580f85ed in rocker_tlv_get_le32 (tlv=0x0) at ../../hw/net/rocker/rocker_tlv.h:114
-#5  0x000055555810a8ad in of_dpa_cmd_add_l2_flood (of_dpa=0x506000082e38, group=0x503000b4e440, group_tlvs=0x7fff68702c20)
-    at ../../hw/net/rocker/rocker_of_dpa.c:2032
-#6  0x0000555558108a74 in of_dpa_cmd_group_do (of_dpa=0x506000082e38, group_id=1073741824, group=0x503000b4e440, group_tlvs=0x7fff68702c20)
-    at ../../hw/net/rocker/rocker_of_dpa.c:2115
-#7  0x0000555558108730 in of_dpa_cmd_group_add (of_dpa=0x506000082e38, group_id=1073741824, group_tlvs=0x7fff68702c20)
-    at ../../hw/net/rocker/rocker_of_dpa.c:2135
-#8  0x00005555580f66ec in of_dpa_group_cmd
-    (of_dpa=0x506000082e38, info=0x514000072e40, buf=0x5070002356c0 "\001", cmd=7, group_tlvs=0x7fff68702c20)
-    at ../../hw/net/rocker/rocker_of_dpa.c:2194
+setup_sigcontext() saved the bare env->sr (so the T/M/Q bits were always
+zero in the signal frame) and restore_sigcontext() wrote the value
+straight back into env->sr without updating sr_t/sr_m/sr_q. As a result
+the T bit was never preserved across signal delivery: on sigreturn the
+interrupted code resumed with whatever T value the signal handler last
+left behind. Any conditional branch (or addc/subc/rotcl/div1, etc.)
+immediately following the interrupted instruction could then take the
+wrong path.
 
-Check for NULL values and return an error.
+This is the cause of the long-standing intermittent failures of the
+tests/tcg/multiarch/signals.c test on sh4, which was marked BROKEN. With
+a SIGRTMIN timer firing every millisecond across many threads, the race
+was hit a few percent of the time and corrupted the guest heap, surfacing
+as a SIGSEGV in memset, a malloc assertion, or an rseq registration abort.
 
+Traced on a deterministic rr recording: a cmp/hi set T=0, the timer
+signal interrupted the very next instruction (a bf), the handler left
+T=1, and the resumed bf took glibc calloc's MORECORE_CLEARS branch,
+using the old top-chunk size as the clear length for a freshly split
+small chunk and running memset off the end of the heap.
+
+Fix setup_sigcontext()/restore_sigcontext() to use cpu_read_sr() and
+cpu_write_sr() so the T, M and Q bits round-trip correctly, and drop the
+BROKEN annotation on the sh4 signals test.
+
+Fixes: c3b5bc8ab3 ("SH4: Signal handling for the user space emulator, by Magnus Damm.")
 Cc: qemu-stable@nongnu.org
-Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/1851
-Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
-Signed-off-by: Jason Wang <jasowang@redhat.com>
-(cherry picked from commit 8526b7d6b67beda0c83e4a8aec1449475fe5dd65)
+Reviewed-by: Yoshinori Sato <yoshinori.sato@nifty.com>
+Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+Signed-off-by: Matt Turner <mattst88@gmail.com>
+Signed-off-by: Helge Deller <deller@gmx.de>
+(cherry picked from commit 6bf4c0295cccf74f3c5c0b674328b97d6fd1505c)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/hw/net/rocker/rocker_of_dpa.c b/hw/net/rocker/rocker_of_dpa.c
-index 262ceb35f6..005a29e6c1 100644
---- a/hw/net/rocker/rocker_of_dpa.c
-+++ b/hw/net/rocker/rocker_of_dpa.c
-@@ -2024,6 +2024,10 @@ static int of_dpa_cmd_add_l2_flood(OfDpa *of_dpa, OfDpaGroup *group,
-                             group_tlvs[ROCKER_TLV_OF_DPA_GROUP_IDS]);
+diff --git a/linux-user/sh4/signal.c b/linux-user/sh4/signal.c
+index d70be24c38..cc36425c49 100644
+--- a/linux-user/sh4/signal.c
++++ b/linux-user/sh4/signal.c
+@@ -131,8 +131,10 @@ static void setup_sigcontext(struct target_sigcontext *sc,
+     COPY(gregs[14]); COPY(gregs[15]);
+     COPY(gbr); COPY(mach);
+     COPY(macl); COPY(pr);
+-    COPY(sr); COPY(pc);
++    COPY(pc);
+ #undef COPY
++    /* The T, M and Q bits live outside env->sr; fold them back in. */
++    __put_user(cpu_read_sr(regs), &sc->sc_sr);
  
-     for (i = 0; i < group->l2_flood.group_count; i++) {
-+        if (!tlvs[i + 1]) {
-+            err = -ROCKER_EINVAL;
-+            goto err_out;
-+        }
-         group->l2_flood.group_ids[i] = rocker_tlv_get_le32(tlvs[i + 1]);
-     }
+     for (i=0; i<16; i++) {
+         __put_user(regs->fregs[i], &sc->sc_fpregs[i]);
+@@ -159,8 +161,14 @@ static void restore_sigcontext(CPUSH4State *regs, struct target_sigcontext *sc)
+     COPY(gregs[14]); COPY(gregs[15]);
+     COPY(gbr); COPY(mach);
+     COPY(macl); COPY(pr);
+-    COPY(sr); COPY(pc);
++    COPY(pc);
+ #undef COPY
++    /* The T, M and Q bits live outside env->sr; unfold them. */
++    {
++        uint32_t sr;
++        __get_user(sr, &sc->sc_sr);
++        cpu_write_sr(regs, sr);
++    }
  
+     for (i=0; i<16; i++) {
+         __get_user(regs->fregs[i], &sc->sc_fpregs[i]);
+diff --git a/tests/tcg/sh4/Makefile.target b/tests/tcg/sh4/Makefile.target
+index 7852fa62d8..b7a8737be0 100644
+--- a/tests/tcg/sh4/Makefile.target
++++ b/tests/tcg/sh4/Makefile.target
+@@ -3,13 +3,6 @@
+ # SuperH specific tweaks
+ #
+ 
+-# This triggers failures for sh4-linux about 10% of the time.
+-# Random SIGSEGV at unpredictable guest address, cause unknown.
+-run-signals: signals
+-	$(call skip-test, $<, "BROKEN")
+-run-plugin-signals-with-%:
+-	$(call skip-test, $<, "BROKEN")
+-
+ VPATH += $(SRC_PATH)/tests/tcg/sh4
+ 
+ test-macl: CFLAGS += -O -g
 -- 
 2.47.3
 
