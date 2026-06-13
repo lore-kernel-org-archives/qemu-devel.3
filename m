@@ -4,47 +4,50 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 362C2CD98D6
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3BB25CD98DC
 	for <qemu-devel@archiver.kernel.org>; Sat, 13 Jun 2026 20:44:14 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wYV8s-0008Ve-BZ; Sat, 13 Jun 2026 16:39:46 -0400
+	id 1wYVCJ-0000er-TK; Sat, 13 Jun 2026 16:43:20 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wYV8m-0008Rh-W3; Sat, 13 Jun 2026 16:39:41 -0400
+ id 1wYVC9-0000LB-If; Sat, 13 Jun 2026 16:43:10 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wYV8j-0004D9-TP; Sat, 13 Jun 2026 16:39:39 -0400
+ id 1wYVC5-0005e7-8T; Sat, 13 Jun 2026 16:43:06 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1781382964; bh=u9MhEfJFgVBl71EK5UreCe/1IDcR0M1fW4f5yCNMfJM=;
+ t=1781382967; bh=OJlFeqPSPJI/9JHSpoI1kmMeeq87tuzghZZQuthmz0c=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References;
- b=kCs4pd0EtMD7opNWPNFt2RZFEAQHyJpeotMh/mLAE7EdcEaBpRrsGPDBqlcltVbjg
- kbrU6ch4itkiz3cbsLkXhveyJ6sLRX8z4ayHffKbsHo1kOsmedZrwk+nDD5jc4kbzE
- 33MwK07kbpIPpu1cw3N2J1ln7Af+V8ovEkPMyJxMYoE3ZgJCSgNyuZGUb/9eIqauE6
- bgEOzogd+31ifnZXpxx1lQWJCxtqPDVz4QOuIawaDrXDRLubQ1WPfKevlV+kLS4vhX
- YqJEjgkd49fGwg2JaPvoQpyuXT3dgKJtzPJtUwyKXBsLJHpHsVLHn92/yaZ9tLVTId
- FVxGfurL5wMlQ==
+ b=ZL3Z8903nsj+yIyTbtKI7RX0qYQwKDKynMUXLeZAgWdJ8Me6a5VT0ig1NSudmO94n
+ u0rW0DVwOpjICFxzKJ/O7pCHmCtd1clXXbXPzY1uK0x62gnMISMBPM+9+8EyLFAfRp
+ yz2/aHj5NaMr9NaD2Fbg5oErLySxKCJTCZ8FF9LgYhDyf4gAiXOO6xCnMo7Z7lmjhJ
+ +3TEjzV5bJe6cQznLbjBUOyPSkv1iJOV4eO3DHchQsn7yXw7J4q/V6NCXQpMIsI7hm
+ xC9LOMsDGmpLw/QEHKhyd8hvk9htACgfRC3D3n1ZiXtHJNJi/xFRkD/D8yrxRaL5U7
+ VekYOSRo6XD9g==
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id AB9AC1B6F00;
- Sat, 13 Jun 2026 23:36:04 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id 0FD781B6F29;
+ Sat, 13 Jun 2026 23:36:07 +0300 (MSK)
 Received: from think4mjt.tls.msk.ru (mjtthink.wg.tls.msk.ru [192.168.177.146])
- by tsrv.corpit.ru (Postfix) with ESMTP id 20C1B3CE951;
- Sat, 13 Jun 2026 23:36:23 +0300 (MSK)
+ by tsrv.corpit.ru (Postfix) with ESMTP id 6CD3D3CE972;
+ Sat, 13 Jun 2026 23:36:25 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Peter Maydell <peter.maydell@linaro.org>,
- Jason Wang <jasowang@redhat.com>, Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-11.0.2 37/72] hw/net/rocker_of_dpa: Avoid unaligned accesses
- in _of_dpa_flow_match()
-Date: Sat, 13 Jun 2026 23:35:03 +0300
-Message-ID: <20260613203542.1809153-37-mjt@tls.msk.ru>
+Cc: qemu-stable@nongnu.org, Richard Henderson <richard.henderson@linaro.org>,
+ Peter Maydell <peter.maydell@linaro.org>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>,
+ Michael Tokarev <mjt@tls.msk.ru>
+Subject: [Stable-11.0.2 70/72] fpu: Handle all rounding modes in
+ partsN_uncanon_normal
+Date: Sat, 13 Jun 2026 23:35:36 +0300
+Message-ID: <20260613203542.1809153-70-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <qemu-stable-11.0.2-20260613224644@cover.tls.msk.ru>
 References: <qemu-stable-11.0.2-20260613224644@cover.tls.msk.ru>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=212.248.84.144; envelope-from=mjt@tls.msk.ru;
  helo=isrv.corpit.ru
@@ -69,67 +72,33 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Peter Maydell <peter.maydell@linaro.org>
+From: Richard Henderson <richard.henderson@linaro.org>
 
-_of_dpa_flow_match() tries to do masked comparisons of OfDpaFlowkey
-structs by casting pointers to them to uint64_t* and then doing the
-memory accesses as 64-bit. This is undefined behaviour because the
-pointers might not be 64-bit aligned, and the UB sanitizer spots this:
+Missed float_round_nearest_even_max when recomputing round.
 
-../../hw/net/rocker/rocker_of_dpa.c:321:20: runtime error: load of misaligned address 0x512000164044 for type 'uint64_t' (aka 'unsigned long'), which requires 8 byte alignment
-0x512000164044: note: pointer points here
-  02 00 00 00 00 00 ff ff  00 00 00 00 ff ff ff ff  00 00 00 00 00 00 00 00  00 00 00 00 00 00 00 00
-              ^
-
-We do know that OfDpaFlowKey structs must be at least aligned enough
-for uint32_t accesses, because that's the type of the first field.
-Switch to using uint32_t accesses in the loop.
-
-Because the "width" field is always set via the FLOW_KEY_WIDTH macro
-and not exposed to the guest, we can adjust the macro to store the
-number of uint32_t to be checked rather than needing to change the
-loop boundary in the match function.
-
-Cc: qemu-stable@nongnu.org
+CC: qemu-stable@nongnu.org
+Fixes: 72330260cdb ("softfloat: Add float_round_nearest_even_max")
+Reported-by: Peter Maydell <peter.maydell@linaro.org>
+Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
+Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
+Reviewed-by: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
+Message-id: 20260608190155.637067-2-richard.henderson@linaro.org
 Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
-Signed-off-by: Jason Wang <jasowang@redhat.com>
-(cherry picked from commit 71d027cfee8553e2ec28efa1ddd7fd0ecbadcc86)
+(cherry picked from commit a6a1f92d5a2368882e9b6851b6ab8b9a56d71a8c)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/hw/net/rocker/rocker_of_dpa.c b/hw/net/rocker/rocker_of_dpa.c
-index 958f3006c1..3d6f55b512 100644
---- a/hw/net/rocker/rocker_of_dpa.c
-+++ b/hw/net/rocker/rocker_of_dpa.c
-@@ -99,13 +99,13 @@ typedef struct of_dpa_flow_key {
-             } nd;
-         } ipv6;
-     };
--    int width;                       /* how many uint64_t's in key? */
-+    int width;                       /* how many uint32_t's in key? */
- } OfDpaFlowKey;
- 
--/* Width of key which includes field 'f' in u64s, rounded up */
-+/* Width of key which includes field 'f' in u32s, rounded up */
- #define FLOW_KEY_WIDTH(f) \
-     DIV_ROUND_UP(offsetof(OfDpaFlowKey, f) + sizeof_field(OfDpaFlowKey, f), \
--    sizeof(uint64_t))
-+    sizeof(uint32_t))
- 
- typedef struct of_dpa_flow_action {
-     uint32_t goto_tbl;
-@@ -304,9 +304,9 @@ static void _of_dpa_flow_match(void *key, void *value, void *user_data)
- {
-     OfDpaFlow *flow = value;
-     OfDpaFlowMatch *match = user_data;
--    uint64_t *k = (uint64_t *)&flow->key;
--    uint64_t *m = (uint64_t *)&flow->mask;
--    uint64_t *v = (uint64_t *)&match->value;
-+    uint32_t *k = (uint32_t *)&flow->key;
-+    uint32_t *m = (uint32_t *)&flow->mask;
-+    uint32_t *v = (uint32_t *)&match->value;
-     int i;
- 
-     if (flow->key.tbl_id == match->value.tbl_id) {
+diff --git a/fpu/softfloat-parts.c.inc b/fpu/softfloat-parts.c.inc
+index 3c323c0cec..edfcbeb80b 100644
+--- a/fpu/softfloat-parts.c.inc
++++ b/fpu/softfloat-parts.c.inc
+@@ -431,6 +431,7 @@ static void partsN(uncanon_normal)(FloatPartsN *p, float_status *s,
+             /* Need to recompute round-to-even/round-to-odd. */
+             switch (s->float_rounding_mode) {
+             case float_round_nearest_even:
++            case float_round_nearest_even_max:
+                 if (N > 64 && frac_lsb == 0) {
+                     inc = ((p->frac_hi & 1) ||
+                            (p->frac_lo & round_mask) != frac_lsbm1
 -- 
 2.47.3
 
