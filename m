@@ -4,43 +4,46 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2EB2CCD98D6
-	for <qemu-devel@archiver.kernel.org>; Sat, 13 Jun 2026 20:44:50 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9F53ECD8CA8
+	for <qemu-devel@archiver.kernel.org>; Sat, 13 Jun 2026 20:44:58 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wYV96-0000GK-Gd; Sat, 13 Jun 2026 16:40:02 -0400
+	id 1wYVAf-0004uJ-2n; Sat, 13 Jun 2026 16:41:37 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wYV8q-0008Vg-84; Sat, 13 Jun 2026 16:39:44 -0400
+ id 1wYVAd-0004nH-3J; Sat, 13 Jun 2026 16:41:35 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wYV8o-0004EJ-Fq; Sat, 13 Jun 2026 16:39:44 -0400
+ id 1wYVAb-0005JR-CV; Sat, 13 Jun 2026 16:41:34 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1781382964; bh=qPeqdKxBJoa6vMIIrWN4BZr+z637BJiDM9Ba4X2UnAY=;
+ t=1781382966; bh=/yCG3jEExQpedxSgTR2/aw27BcSv2Xz3e8r7g1a46fI=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References;
- b=SZJxBp5o2ecadobl2ALLVl3+9+aCscj9zuNR+L/bPcbpwglPv1AxqEE3v3Ka0/fZB
- u7+WkGCWdQqyW2KBHAFJ9/f69kNzU7vUmlF5qkc/56KyFkHWn0dNLopfXO4IA5Jmst
- 2akntZj4WIEllnZe2WrdtqXA2hrYQwwhMavY4V7AuP9DIwD4rqXPk1fivj+rQHZCML
- y5kPfZ/ZuVRD078rpHOLPmNQ4RqBLT4/PCdDfh0fb4sojGWUuv9KuR+c85htnpkF5E
- +0/d8JCyeQ5V6YE9TVlaEN/uYmpaV9lD30XwpXTsMdNZQqsfkB5ciOyLoTgTe3t2+W
- 81lsn2xV9vt2g==
+ b=nmcUeUPhwgZfgLnqqQp58fnvLLf8Pk5Zgn0S0OGRoJRvaI1IgfvK91uyX/fn7R730
+ rJ0X/bqEtcHHlrwFWssK5VjrG53aSpSsutwpffeCQXM9lQP1oFRou5Rmk165DJiSEl
+ l4CsLi4Rg5G0hkIczar5GPM8+ekMsrl3zEAqwbnB0dWagmr5dPq8tj3ez3TyI1GclK
+ QXUsJtw8HDBmWe6N8ZlA+/IGopc7sFMX6fICmwCFeFs2D2DghghzhpmdWLwa6/aNwa
+ CIIK35ovMy7//4kHBhotp+BUwpBv/99LuZnS998pURP0kK7qb6vO0no3GAqsXpHMso
+ qM/asjKiw4kDg==
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id C94241B6F02;
- Sat, 13 Jun 2026 23:36:04 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id 013EA1B6F1A;
+ Sat, 13 Jun 2026 23:36:06 +0300 (MSK)
 Received: from think4mjt.tls.msk.ru (mjtthink.wg.tls.msk.ru [192.168.177.146])
- by tsrv.corpit.ru (Postfix) with ESMTP id 3E9E43CE953;
- Sat, 13 Jun 2026 23:36:23 +0300 (MSK)
+ by tsrv.corpit.ru (Postfix) with ESMTP id 65DB73CE964;
+ Sat, 13 Jun 2026 23:36:24 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Matt Turner <mattst88@gmail.com>,
- Helge Deller <deller@gmx.de>, Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-11.0.2 39/72] linux-user/mips: save/restore FCSR across
- signal delivery
-Date: Sat, 13 Jun 2026 23:35:05 +0300
-Message-ID: <20260613203542.1809153-39-mjt@tls.msk.ru>
+Cc: qemu-stable@nongnu.org, Alexandra Winter <wintera@linux.ibm.com>,
+ Hendrik Brueckner <brueckner@linux.ibm.com>,
+ Christian Borntraeger <borntraeger@linux.ibm.com>,
+ Gautam Gala <ggala@linux.ibm.com>, Cornelia Huck <cohuck@redhat.com>,
+ Michael Tokarev <mjt@tls.msk.ru>
+Subject: [Stable-11.0.2 56/72] target/s390x: Make container ids in SysIB_15x
+ 1-based
+Date: Sat, 13 Jun 2026 23:35:22 +0300
+Message-ID: <20260613203542.1809153-56-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <qemu-stable-11.0.2-20260613224644@cover.tls.msk.ru>
 References: <qemu-stable-11.0.2-20260613224644@cover.tls.msk.ru>
@@ -69,98 +72,73 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Matt Turner <mattst88@gmail.com>
+From: Alexandra Winter <wintera@linux.ibm.com>
 
-QEMU keeps the MIPS FPU control/status register (FCSR, fcr31) in
-env->active_fpu.fcr31.  The rounding mode, flush-to-zero (FS), and
-NaN-2008 mode bits in fcr31 are reflected into the derived
-env->active_fpu.fp_status via set_float_rounding_mode() and friends;
-every architectural write to FCSR goes through helper_ctc1() which
-calls restore_fp_status() to keep the two in sync.
+The Container Id in a container-type TLE of SysIB_15x is defined as 8-bit
+unsigned nonzero integer. Make stsi fc 15 emulation architecture compliant,
+by starting the container ids at 1 for the lowest numbered container.
 
-Both target_sigcontext variants (O32 and N32/N64) have an sc_fpc_csr
-field that holds FCSR, but setup_sigcontext() never wrote it and
-restore_sigcontext() never read it.  As a result:
+The qemu misbehaviour without this patch becomes obvious due to a recently
+proposed kernel fix. Older linux kernels pass the container ids from stsi
+fc15 unchanged to sysfs, i.e. starting at 1 on s390 hardware. This resulted
+in off-by-one values when compared to the values from HMC. A Linux kernel
+fix is being proposed to correct the sysfs topology ids by -1, so they
+start at 0, e.g. when displayed by 'lscpu -ye'. In case a KVM guest with a
+fixed kernel runs on a host with a qemu without this fix, this can result
+in container ids erroneously being shown as 255.
+Example (Fixed guest on unfixed qemu):
+$ lscpu -ye
+CPU NODE DRAWER BOOK SOCKET CORE L1d:L1i:L2 ONLINE CONFIGURED POLARIZATION ADDRESS
+  0    0    255  255    255    0 0:0:0         yes yes        vert-medium  0
+  1    0    255  255      0    1 1:1:1         yes yes        vert-medium  1
+After this fix:
+$ lscpu -ye
+CPU NODE DRAWER BOOK SOCKET CORE L1d:L1i:L2 ONLINE CONFIGURED POLARIZATION ADDRESS
+  0    0      0    0      0    0 0:0:0         yes yes        vert-medium  0
+  1    0      0    0      1    1 1:1:1         yes yes        vert-medium  1
 
-  - The signal frame always delivered sc_fpc_csr == 0 to the handler,
-    so sigaction(SA_SIGINFO) handlers that inspect the interrupted
-    context see the wrong FCSR.
-
-  - On sigreturn, active_fpu.fcr31 retained whatever value the signal
-    handler last installed (if any), and active_fpu.fp_status was
-    never resynced.  Interrupted code resumed with the wrong rounding
-    mode, FS flag, and NaN-2008 semantics.
-
-Fix setup_sigcontext() to save fcr31 into sc_fpc_csr.  Fix
-restore_sigcontext() to read it back (masked to fcr31_rw_bitmask as
-the kernel does) and call cpu_mips_restore_fp_status() to resync
-fp_status from the restored fcr31.
-
-Add cpu_mips_restore_fp_status() in target/mips/fpu.c (which already
-defines ieee_rm and includes fpu_helper.h), and declare it in cpu.h.
-
-Fixes: 084d0497a0 ("mips-linux-user: Save and restore fpu and dsp from sigcontext")
-Cc: qemu-stable@nongnu.org
-Signed-off-by: Matt Turner <mattst88@gmail.com>
-Signed-off-by: Helge Deller <deller@gmx.de>
-(cherry picked from commit 84b920ccb5ee5287747af2d36d1ece6367b6a40e)
+Fixes: f4f54b582f ("target/s390x/cpu topology: handle STSI(15) and build the SYSIB")
+Signed-off-by: Alexandra Winter <wintera@linux.ibm.com>
+Acked-by: Hendrik Brueckner <brueckner@linux.ibm.com>
+Acked-by: Christian Borntraeger <borntraeger@linux.ibm.com>
+Reviewed-by: Gautam Gala <ggala@linux.ibm.com>
+Message-ID: <20260511134909.43802-1-wintera@linux.ibm.com>
+Signed-off-by: Cornelia Huck <cohuck@redhat.com>
+(cherry picked from commit 1f1ccb6f3c48a2cd80e874d66afeef2dc28a65f3)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/linux-user/mips/signal.c b/linux-user/mips/signal.c
-index d69a5d73dd..1b10012726 100644
---- a/linux-user/mips/signal.c
-+++ b/linux-user/mips/signal.c
-@@ -134,6 +134,7 @@ static inline void setup_sigcontext(CPUMIPSState *regs,
-     for (i = 0; i < 32; ++i) {
-         __put_user(regs->active_fpu.fpr[i].d, &sc->sc_fpregs[i]);
-     }
-+    __put_user(regs->active_fpu.fcr31, &sc->sc_fpc_csr);
- }
+diff --git a/target/s390x/kvm/stsi-topology.c b/target/s390x/kvm/stsi-topology.c
+index c8d6389cd8..af3fd8ad1b 100644
+--- a/target/s390x/kvm/stsi-topology.c
++++ b/target/s390x/kvm/stsi-topology.c
+@@ -90,9 +90,9 @@ static int stsi_topology_fill_sysib(S390TopologyList *topology_list,
+     int last_drawer = -1;
+     int last_book = -1;
+     int last_socket = -1;
+-    int drawer_id = 0;
+-    int book_id = 0;
+-    int socket_id = 0;
++    int drawer_id = 1;
++    int book_id = 1;
++    int socket_id = 1;
+     int n = sizeof(SysIB_151x);
  
- static inline void
-@@ -165,6 +166,12 @@ restore_sigcontext(CPUMIPSState *regs, struct target_sigcontext *sc)
-     for (i = 0; i < 32; ++i) {
-         __get_user(regs->active_fpu.fpr[i].d, &sc->sc_fpregs[i]);
-     }
-+    {
-+        uint32_t fcr31;
-+        __get_user(fcr31, &sc->sc_fpc_csr);
-+        regs->active_fpu.fcr31 = fcr31 & regs->active_fpu.fcr31_rw_bitmask;
-+        cpu_mips_restore_fp_status(regs);
-+    }
- }
- 
- /*
-diff --git a/target/mips/cpu.h b/target/mips/cpu.h
-index ed662135cb..3b4da9887b 100644
---- a/target/mips/cpu.h
-+++ b/target/mips/cpu.h
-@@ -1366,6 +1366,9 @@ void cpu_mips_clock_init(MIPSCPU *cpu);
- /* helper.c */
- target_ulong exception_resume_pc(CPUMIPSState *env);
- 
-+/* fpu.c */
-+void cpu_mips_restore_fp_status(CPUMIPSState *env);
-+
- /**
-  * mips_cpu_create_with_clock:
-  * @typename: a MIPS CPU type.
-diff --git a/target/mips/fpu.c b/target/mips/fpu.c
-index c7c487c1f9..8b661865ca 100644
---- a/target/mips/fpu.c
-+++ b/target/mips/fpu.c
-@@ -17,6 +17,11 @@ const FloatRoundMode ieee_rm[4] = {
-     float_round_down
- };
- 
-+void cpu_mips_restore_fp_status(CPUMIPSState *env)
-+{
-+    restore_fp_status(env);
-+}
-+
- const char fregnames[32][4] = {
-     "f0",  "f1",  "f2",  "f3",  "f4",  "f5",  "f6",  "f7",
-     "f8",  "f9",  "f10", "f11", "f12", "f13", "f14", "f15",
+     QTAILQ_FOREACH(entry, topology_list, next) {
+@@ -103,12 +103,12 @@ static int stsi_topology_fill_sysib(S390TopologyList *topology_list,
+         if (level > 3 && drawer_change) {
+             SYSIB_GUARD(n, sizeof(SYSIBContainerListEntry));
+             p = fill_container(p, 3, drawer_id++);
+-            book_id = 0;
++            book_id = 1;
+         }
+         if (level > 2 && book_change) {
+             SYSIB_GUARD(n, sizeof(SYSIBContainerListEntry));
+             p = fill_container(p, 2, book_id++);
+-            socket_id = 0;
++            socket_id = 1;
+         }
+         if (socket_change) {
+             SYSIB_GUARD(n, sizeof(SYSIBContainerListEntry));
 -- 
 2.47.3
 
