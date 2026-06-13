@@ -4,49 +4,49 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 18EEECD98CF
-	for <qemu-devel@archiver.kernel.org>; Sat, 13 Jun 2026 20:39:22 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2F2CDCD98CF
+	for <qemu-devel@archiver.kernel.org>; Sat, 13 Jun 2026 20:39:25 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wYV80-0006DK-14; Sat, 13 Jun 2026 16:38:52 -0400
+	id 1wYV6j-0003JG-Mc; Sat, 13 Jun 2026 16:37:33 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wYV7y-0005zS-3M; Sat, 13 Jun 2026 16:38:50 -0400
+ id 1wYV6S-0002tE-PA; Sat, 13 Jun 2026 16:37:17 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wYV7w-0003uE-Ba; Sat, 13 Jun 2026 16:38:49 -0400
+ id 1wYV6P-0003Hu-LI; Sat, 13 Jun 2026 16:37:16 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1781382964; bh=rWeJQo1BZj3/v/6iAk7Qi6eblFf1sDgGtXlKWB4QA7Y=;
+ t=1781382963; bh=Buh3wzvyJ5YPdIEyfbrsL/XcS/pQ3fOnyg/b6Lqqf10=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References;
- b=aRbG9l5p4U/g3BQs9lHK1ckadYMBha8Phtd1vBi5KxrlfZl5PBw1gQcNumOFMW6XR
- zhc9oOEPZb708bRuJnr00KDFnjmvCWHdvFDANHAHJt5p0uLWaeKoFpQA8lGPfNoDdV
- gQEY6NS+fW2xMXfuJSe/D1d2xkpcVEBAj498hSH9lGjfW087rmFN7mbJgZ2NtmVe2u
- U7w6BwPoxCOXe+Lht8mKk0q33+FxtDkCz0bvqDzHahxPU3LwDRzIbUzPAmeFk7kCAv
- eRsWCFuY1Ei9/nYhQzPlNMk2uYDv6Z5nk1K7WAXQgrVOkptGl2b9ozCM5wRPRY0sJ6
- z+Yyd/zY2xhEQ==
+ b=Hk2Hs7qxdMth1iuzpb2xtMblN/M3CtlZTed2w/mQmiuZdNgxHGMJzC8UM4OmGzFOV
+ Hf6RgRt3em7HnrxpRZzBR4BVUBO6zZzIpOQjmAH+cHUTYTRLudjkO+XGWTxF+jNXmV
+ 24o4uvccUQ+pk+NlOSflJHrTs4BYGIzGzn2DH91Hj2nhATsxdyotmklyIsfozohFWx
+ W6Ou2SZdH8Pn8KVDnqdGsKu/j+rRxEsI2zXfUWpmsDRnzlbdMAtkC9Mwn/3tUdhPHO
+ ZmKlSTaS/K8awkpVJa43hSkpvLowSSYCZurRzp1M/ehcS9cTwDQDuLFGFwKdciFQ6u
+ nX/4TUJVMKq9w==
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 3B8A21B6EF9;
- Sat, 13 Jun 2026 23:36:04 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id 2F7E11B6EE7;
+ Sat, 13 Jun 2026 23:36:03 +0300 (MSK)
 Received: from think4mjt.tls.msk.ru (mjtthink.wg.tls.msk.ru [192.168.177.146])
- by tsrv.corpit.ru (Postfix) with ESMTP id A33163CE94A;
- Sat, 13 Jun 2026 23:36:22 +0300 (MSK)
+ by tsrv.corpit.ru (Postfix) with ESMTP id 996813CE939;
+ Sat, 13 Jun 2026 23:36:21 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, GuoHan Zhao <zhaoguohan@kylinos.cn>,
- John Levon <john.levon@nutanix.com>,
- =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>,
+Cc: qemu-stable@nongnu.org,
+ Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>,
+ Alistair Francis <alistair.francis@wdc.com>,
  Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-11.0.2 30/72] vfio-user: reject zero DMA page size capability
-Date: Sat, 13 Jun 2026 23:34:56 +0300
-Message-ID: <20260613203542.1809153-30-mjt@tls.msk.ru>
+Subject: [Stable-11.0.2 13/72] target/riscv/csr.c: fix read of pmpaddr(0-63)
+ CSRs
+Date: Sat, 13 Jun 2026 23:34:39 +0300
+Message-ID: <20260613203542.1809153-13-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <qemu-stable-11.0.2-20260613224644@cover.tls.msk.ru>
 References: <qemu-stable-11.0.2-20260613224644@cover.tls.msk.ru>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=212.248.84.144; envelope-from=mjt@tls.msk.ru;
  helo=isrv.corpit.ru
@@ -71,42 +71,59 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: GuoHan Zhao <zhaoguohan@kylinos.cn>
+From: Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>
 
-check_pgsizes() validates that no page-size bits smaller than
-VFIO_USER_DEF_PGSIZE are set, but it still accepts pgsizes=0. This lets a
-malformed server overwrite the default page-size mask with zero.
+The priv spec defines, for RV64, that the upper 10 bits of
+pmpaddr0-pmpaddr63 are WARL and are supposed to be cleared.
 
-Later vfio_user_setup() asserts that proxy->dma_pgsizes is non-zero, so device
-realization aborts instead of reporting a version capability error. Reject a
-zero DMA page-size mask during version capability parsing.
+After this patch, using the bug reproducer in [1], writing
+ffffffffffffffff in pmpaddr0 and reading it back now results in
+003fffffffffffff.  Here's the 'diff -cp' dump before and after
+this change:
 
-Fixes: 36227628d824 (vfio-user: implement message send infrastructure)
-Signed-off-by: GuoHan Zhao <zhaoguohan@kylinos.cn>
-Reviewed-by: John Levon <john.levon@nutanix.com>
-Link: https://lore.kernel.org/qemu-devel/20260522081306.4186242-1-zhaoguohan@kylinos.cn
-Signed-off-by: Cédric Le Goater <clg@redhat.com>
-(cherry picked from commit ab89d02dac6f0f53e35a689f01099602aa2de816)
+*************** IN:
+*** 5272,5278 ****
+   pmpcfg10 0000000000000000
+   pmpcfg12 0000000000000000
+   pmpcfg14 0000000000000000
+!  pmpaddr0 ffffffffffffffff
+   pmpaddr1 0000000000000000
+   pmpaddr2 0000000000000000
+   pmpaddr3 0000000000000000
+Reviewed-by: Alistair Francis <alistair.francis@wdc.com>
+Message-ID: <20260514123342.2139464-1-daniel.barboza@oss.qualcomm.com>
+
+Signed-off-by: Alistair Francis <alistair.francis@wdc.com>
+(cherry picked from commit 53cc9747ed7c9b95ba084d614976dd48c9a57a97)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/hw/vfio-user/proxy.c b/hw/vfio-user/proxy.c
-index 314dfd23d8..3fe5b0138b 100644
---- a/hw/vfio-user/proxy.c
-+++ b/hw/vfio-user/proxy.c
-@@ -1155,9 +1155,11 @@ static bool check_pgsizes(VFIOUserProxy *proxy, QObject *qobj, Error **errp)
-         return false;
-     }
- 
--    /* must be larger than default */
--    if (pgsizes & (VFIO_USER_DEF_PGSIZE - 1)) {
--        error_setg(errp, "pgsize 0x%"PRIx64" too small", pgsizes);
-+    /* must not be zero or smaller than default */
-+    if (pgsizes < VFIO_USER_DEF_PGSIZE ||
-+        (pgsizes & (VFIO_USER_DEF_PGSIZE - 1))) {
-+        error_setg(errp, "%s 0x%"PRIx64" too small",
-+                   VFIO_USER_CAP_PGSIZES, pgsizes);
-         return false;
-     }
+diff --git a/target/riscv/csr.c b/target/riscv/csr.c
+index d65d176fe8..cf1fe6041c 100644
+--- a/target/riscv/csr.c
++++ b/target/riscv/csr.c
+@@ -5304,6 +5304,23 @@ static RISCVException read_pmpaddr(CPURISCVState *env, int csrno,
+                                    target_ulong *val)
+ {
+     *val = pmpaddr_csr_read(env, csrno - CSR_PMPADDR0);
++
++    /*
++     * For RV64, bits 54-63 of the address registers
++     * PMPAADDR(0-63) is a WARL zero field (priv spec,
++     * section "Physical Memory Protection CSRs").
++     *
++     * We'll have to add an annoying TARGET_RISCV64 gate
++     * here to avoid complaints about masking bits 0-53
++     * of a potential 32 bit target_ulong '*var'.
++     */
++#ifdef TARGET_RISCV64
++    if (env->misa_mxl == MXL_RV64
++        && csrno >= CSR_PMPADDR0 && csrno <= CSR_PMPADDR63) {
++        target_ulong read_mask = MAKE_64BIT_MASK(0, 54);
++        *val &= read_mask;
++    }
++#endif
+     return RISCV_EXCP_NONE;
+ }
  
 -- 
 2.47.3
